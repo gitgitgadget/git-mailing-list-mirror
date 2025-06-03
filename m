@@ -1,107 +1,120 @@
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9EA233707
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:03:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527BA231C8D
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:14:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748959440; cv=none; b=qIYpXUdxgQO9aPPuLIQKC8uKp5mwb9QPoFZFE7wPyPhxwpcYU1VkQfwBsj6eA+6rTJoAC4cSNw3ENwATbBabpRi1icSiIeX0Pnjz+a1B5CnA0RYV8js85f7cwDBRBQMHXqtrvOS2glObtBbq8XjPsIEJZ5haMICsa6Nztm+GyTo=
+	t=1748960047; cv=none; b=AGddsAmo7Pd8EN1qI95KETxOtHsnDehlOZe8L+azuGrWynhZt5+yLUDL6CTeAuesyHBJkgzzS7SUPGEY/e2cJueqqL5rV0vTJzaMRgqVRokpGZJH4YGY0dkoc1pXP3V2t4RjYCdJHJio9JnaaMYhqwKQP/y8P2wLV9TdwIVa8U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748959440; c=relaxed/simple;
-	bh=M0xmJ86zAvZkMtiSDQFyuJ8oqwOFd5d22joBqQvr9kE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=H2llxwC4Rfrw+JwOVDDPhCA4Bs01QYIxNV3gNl6DCAujqihKyYulVBo5ZAmWou2HLuznTaK05LC8lpWjb9Ndt+bUF3fzC9DZminr8yuLHPu6jR4/USpxjBsC56s3pOQ8ldlptLqgloXUSw8LB+moGBPd7gy8MnHmFMbpq4rn00Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U2buNAL8; arc=none smtp.client-ip=209.85.219.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748960047; c=relaxed/simple;
+	bh=NZvbEn+FZJqB6yIbH1RHrSl5Gy08GBzMglrTYNe70ac=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YUmROzIEU+87QfDXuE0jbEqM2oLl6IW3liupu50ymNkfIngjxH5lhwLTaDh9PqdeH3v2DsA/zg3YIBPZ195hqje+whSDb7TWo07S4E9QKQzLEss8lOmmb7Ynjhy0lR2PpzjpFSZTQ9wLH3chFEaaDE+V98V/WiOl/c9cFLE9FQo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ms0ypGLA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CJKrfXfS; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U2buNAL8"
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e7d925ff60bso4085879276.2
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 07:03:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748959438; x=1749564238; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3iAUcq8pMVb1lExICy+lUBMunl+GGioADtcjbt7eWmo=;
-        b=U2buNAL8aKmLsKUQuThB2VOV9NLCr3Tg9QkPgUTEpYG2KIoc8MRXvq28OqS18giROu
-         iXbllAc3vkZE8MFoKJ2sew64oinEUSnjhiRBqeK0bH5KlsV7gWtnqPgrlnCyfqdnqUgc
-         Q8Nmv9o9GsWOub3GJfVje86W0LqAR+GANtJsm8sASFIZq/ov++mUixXj2hzbyTjR8BXd
-         5oApqOyBwzRyVwX9Gc3dyNSeMJ2XGU/P8exQV2DArJLkOV0RvXXNdjIRif3hR1tuCXN2
-         D9LB2rYrcQhVC68NVlVTgWNNTrExQLxrzKImKNLzN38x6mCPuOhDv46AlXJp9h5Vy7Sv
-         zaPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748959438; x=1749564238;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3iAUcq8pMVb1lExICy+lUBMunl+GGioADtcjbt7eWmo=;
-        b=s/4qp32FT78ne+AV+9J4Nz3lwBlQh7QCfXqsEg89ws5SrRS4ZCZP9jjQ7DAhBcV6DO
-         hQudCU00LKIflpUWobyTJHj0nH/DwO+X84B2dLLWp67BK20V7IRbKc+E0a8qm+tjs6Lh
-         FuhjRzCTsOJVvN4RHeVnc99XtH3IBpiD1g1FNSXg5gCkiy0CKSTmKrA5tX9Gu2DiPozq
-         zQE67apOSmpiwO56oKuM4mZmjX8bSUHDaOty4DkJazVeHUd/ikgAAoHFOE2iZdt1sLKl
-         CXq99lqLvfsXeVBvC0rS/nF7KMEV7xEkrh2GDSvoqlfUCYWwYia5UkOaFgR4FZ5PtVjo
-         1OCw==
-X-Gm-Message-State: AOJu0Yxyky79Z+W0ipAcbcBQ0syWhrg6DxaKOWLX3sJI/d80LNqPlTID
-	J3DVJVpTrG+NBOGbr6cq4eUXTdgLEFIKv16keZFwwlyIem+m3g3oBXz/Iwb9y1qO/VXOSakxes6
-	8T4hqYFlagnoJitftDWH77gWoa8N/BKDSrzMnIODZCg==
-X-Gm-Gg: ASbGncuNghqChMDUgHPLrvr2wlv48b/ZF5fwPAeLJY85Z0DLwreDGO+M/vih8k8tpI0
-	0kLIftEuDIfG7AB0LL4k5MXgnF+zhH00rekCEnR7Yr814mE3FwpH0psmxMue0PnPMdAR/nlv61I
-	mBfZSr0Gy0w6Q4bUfqvTWfGf9pJXeHNr5qqA==
-X-Google-Smtp-Source: AGHT+IH8aLiAlEOn8AZmfFN1tTrVkFuob3js0bUM9EnjOiU+ey0YtvydmoVGCG8MBic611OnT6dGOHKMcGHBFb2ESfw=
-X-Received: by 2002:a05:6902:2b0d:b0:e7d:c56f:a871 with SMTP id
- 3f1490d57ef6-e7ff5579b84mr20729754276.31.1748959437611; Tue, 03 Jun 2025
- 07:03:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ms0ypGLA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CJKrfXfS"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4A75E1140106;
+	Tue,  3 Jun 2025 10:14:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Tue, 03 Jun 2025 10:14:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1748960045; x=1749046445; bh=lcVSsomf3L
+	JJePbsE9hFbpz0F211ncFT56Z2HqL1n9w=; b=Ms0ypGLA1HcSZrXb+tZAfQH1i+
+	k960pZJTBcEydT+b7vqmo8LlBOp8U+cCfmQIfbPduQzXkRfVUtuQM/QOjY0yOoa9
+	HapvnKFgCKTadR4CDS9c/N1zVCEayCVHflZ1bezVqkABbBjmNRSd4QPLgWewnUm6
+	eS0RJ2ypMjx29SJrmo6uAkXNSJ3y0JazuKKCzVYdC+CFVgzNf+ngwuerPba/Eme6
+	ycJMfX4hL9IRi1U2hMrjOAB18tLt6G6yW9ypZgLNrE7GHYBCEFtxY1vBVJsVyV72
+	rf26wIS9QHWlso12AugLmyWrgdpHg0sHFC3LfYHxNruEF8Jo9cjF8zq8kjRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748960045; x=1749046445; bh=lcVSsomf3LJJePbsE9hFbpz0F211ncFT56Z
+	2HqL1n9w=; b=CJKrfXfSQmbiOXukcxR58a7Cc4VqhvqIjVVF63Jtn1tSjNaUgfo
+	0eDdiLGvaQu0PoDzv4F086dOw/YD6jeOaKmcxVuGmsqAs9648tQvJiOW7nDy/3GR
+	1n9X+JskT8QRumveYtHad5KimCHYykQLzuUkgQSLvqQBcyKYlEH7jXfpnf4HlHLs
+	3/Ba3WZOZHKV3txk7+DHjg9QC9Nh17WDk88xPEDCTJtvKLkF98ZGE//MSOShEAnH
+	FwaeyXp2o1iqSzZ9KVM4muWoWkgmZJsQxgsx2iG7euValjqBxa78DKKZya1ydd9t
+	vuVA9EiParGWqX/hrxzGssvwBv5QMNA+HiQ==
+X-ME-Sender: <xms:LAM_aBN5z0OY5ah4OEZ1QtIrrgX-VA1nVsm_HaeDt1lbkdkeLL3z2w>
+    <xme:LAM_aD-7l6Vkp5Zw9nx_mLKyTA7d7KaygRwXDcBoZLoK-Zo0DuhUl9MxRFhVhWfCU
+    zjO1Q2tgCHsv3NpJA>
+X-ME-Received: <xmr:LAM_aASsSQv5o8w9qpXMqvvZcugDjfT5QnwNSxDURex5LPbk9UfDX_KhAmYiHor3VooV_1vBZf7XjX0WqdG3Pyvzwy3adl72wlVWOf8Z9A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeghecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
+    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
+    enucggtffrrghtthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedu
+    gffhueekhfejvdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
+    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:LAM_aNtBfU-ZHaiV4QxEonF-6XDi1V3mlC_QwyUYtrKfCVAhQH3OQQ>
+    <xmx:LAM_aJeQpz20zFhJvHL5Thc2xPCxaE8jlm0vwUtqUgqE5Ey5umc9TQ>
+    <xmx:LAM_aJ3WWooo2nqz1pBRenJA_BzExzpFZ_GvDjZjj1w8QjWGvAjMOg>
+    <xmx:LAM_aF8A2Pbq2cGx7NhjHhI8Z7IJaO4SojzJmvyOZTydNqc-C68eqw>
+    <xmx:LQM_aJym0f1iD87JFgNDeG1guFhWFMkvenUjWabamWQ2Eo8aesKkwDiV>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Jun 2025 10:14:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2a5945bf (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 3 Jun 2025 14:14:02 +0000 (UTC)
+Date: Tue, 3 Jun 2025 16:14:01 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 02/10] t/unit-tests: convert reftable basics test to
+ use clar test framework
+Message-ID: <aD8DKUrPEi0robtt@pks.im>
+References: <20250602122559.208780-1-kuforiji98@gmail.com>
+ <20250602122559.208780-3-kuforiji98@gmail.com>
+ <aD794N8AjBqw0N43@pks.im>
+ <CAGedMtcaV5r-hVn_aPP=AVCV-Wx0uX-yPqcOijxJh+qTSDJXrA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250602122559.208780-1-kuforiji98@gmail.com> <20250602122559.208780-3-kuforiji98@gmail.com>
- <aD794N8AjBqw0N43@pks.im>
-In-Reply-To: <aD794N8AjBqw0N43@pks.im>
-From: Seyi Kuforiji <kuforiji98@gmail.com>
-Date: Tue, 3 Jun 2025 15:03:45 +0100
-X-Gm-Features: AX0GCFvw1JtJTQ00KLKaIWaUgtH0dDfUG3RbEZ0hhhP5FvluSZ4D4k76c9F83VA
-Message-ID: <CAGedMtcaV5r-hVn_aPP=AVCV-Wx0uX-yPqcOijxJh+qTSDJXrA@mail.gmail.com>
-Subject: Re: [PATCH v3 02/10] t/unit-tests: convert reftable basics test to
- use clar test framework
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGedMtcaV5r-hVn_aPP=AVCV-Wx0uX-yPqcOijxJh+qTSDJXrA@mail.gmail.com>
 
-On Tue, 3 Jun 2025 at 14:51, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Mon, Jun 02, 2025 at 01:25:50PM +0100, Seyi Kuforiji wrote:
-> > Adapt reftable basics test file to clar by using clar assertions
-> > where necessary.Break up test edge case to improve modularity and
->
-> Nit: missing space.
->
-> > clarity.
+On Tue, Jun 03, 2025 at 03:03:45PM +0100, Seyi Kuforiji wrote:
+> On Tue, 3 Jun 2025 at 14:51, Patrick Steinhardt <ps@pks.im> wrote:
+> > On Mon, Jun 02, 2025 at 01:25:50PM +0100, Seyi Kuforiji wrote:
+> > >  Makefile                         |   2 +-
+> > >  t/meson.build                    |   2 +-
+> > >  t/unit-tests/t-reftable-basics.c | 219 -----------------------------
+> > >  t/unit-tests/u-reftable-basics.c | 227 +++++++++++++++++++++++++++++++
+> > >  4 files changed, 229 insertions(+), 221 deletions(-)
+> > >  delete mode 100644 t/unit-tests/t-reftable-basics.c
+> > >  create mode 100644 t/unit-tests/u-reftable-basics.c
 > >
-> > Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-> > ---
-> >  Makefile                         |   2 +-
-> >  t/meson.build                    |   2 +-
-> >  t/unit-tests/t-reftable-basics.c | 219 -----------------------------
-> >  t/unit-tests/u-reftable-basics.c | 227 +++++++++++++++++++++++++++++++
-> >  4 files changed, 229 insertions(+), 221 deletions(-)
-> >  delete mode 100644 t/unit-tests/t-reftable-basics.c
-> >  create mode 100644 t/unit-tests/u-reftable-basics.c
->
-> Hm, these still show as deletion and addition :/ Did you try playing
-> around with the creation factor? What is the exact command that you have
-> used to generate these mails?
->
-> Patrick
+> > Hm, these still show as deletion and addition :/ Did you try playing
+> > around with the creation factor? What is the exact command that you have
+> > used to generate these mails?
+> >
+> > Patrick
+> 
+> This was the only file that came out as a deletion and creation. Below
+> is the command I used:
+> 
+> `git format-patch -v3 --cover-letter --find-renames=20%
+> --range-diff=upstream/master..convert-reftable-clar-v2
+> upstream/master`
 
-This was the only file that came out as a deletion and creation. Below
-is the command I used:
+Ah, true indeed. Never mind then, I think this is good enough :) Thanks!
 
-`git format-patch -v3 --cover-letter --find-renames=20%
---range-diff=upstream/master..convert-reftable-clar-v2
-upstream/master`
-
-Thanks,
-Seyi
+Patrick
