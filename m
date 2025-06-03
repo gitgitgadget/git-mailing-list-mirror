@@ -1,109 +1,164 @@
-Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9711748F
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 19:06:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE99F3D3B8
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 19:12:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748977616; cv=none; b=QhfRHIk9EZY314lS8EgrpJVLqYdBenFi7aR0aB8LYVE9TnL70zXR6iOOl/K+9gZXec3kQPjrf0+moOVXo5nDlWBU/HX9eIYP/znrukB0TQVi3opIQ6aFCd21AFqzL7ntuJn62rj/ghCTMyHugT2IYK7gRXjA1xkP/B0wekk7GKo=
+	t=1748977961; cv=none; b=DDYyMPwLulCYat7ZK6ccLfUFPJXCrp/tZtpwLG80Bc6+ycxgmCtot1MEbL4Bivm7YEHQUCrTsCM9ebPKyzep6WfKI8KMCZ5/NuwyUZBPgE92XL+VujzGk0Nea74+VgffMCk2qxjCMziAY5AetKe8Pg8A9Rt2Nc6txMY87M939kw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748977616; c=relaxed/simple;
-	bh=VP1Vq5Ev9FlO0mHbroLsvNWaIxxSmjUks/x4vQYKmFk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EaEjGI1U0NWVOQNCqwtcJ8EdZGpAofoVJb6Vc5+q8WdwcxbC83pJ4tupDpaRbL8ZiBj/T9ZgCDeVqV3/tp9n9iq5Cxaq34SQVVOHhKLEibqZ+TdEVms/4VJJ0zBYET95AajWAcq7fLAs3LuiiGtIsSQ8ihF1KbpnkoTOYChdW7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=H4VLUOii; arc=none smtp.client-ip=212.159.14.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1748977961; c=relaxed/simple;
+	bh=SpVOOaskgumamnJGzek+PdeBmrC/fvjrjy7Imuete+k=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U6TDKiy6+Q+OuLlBwL/ZBp9+Be0Tr1Q5cC/rnYdQrRC7a+kCvEwTGlbbJea2cw092Iz4vOOYlFFccpXDii7TKC/kdmx/MuKUyXk8b1nIp5R4OOlfeD54ldpOec9D7NQbLc8LSZsNUmibhTPcWEUdp/Jb/ES/LIfGDYu+DCaPhMU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zDtcphwR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KmDcEGq3; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="H4VLUOii"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id MWvEu4Wy7MhRjMWvFu42xF; Tue, 03 Jun 2025 20:03:42 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1748977422; bh=GmSHf4Is8Ftep9JLs5fvR2GdAYMOh1Dca8S5ASo+LH0=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=H4VLUOiiIzkoyTEQms7bLBaCvohvP7PM7XNrNCyeT6Q7W3S6ov7B99p0sxljT53ef
-	 GDTwpAsrxG0f7NQlQqUGfldbReihGT9ET1ra0HeNMuSos8LaN1kOwX6RJDxGBypiGB
-	 TI1t3JjVBKGJJY6dimDSrU08NkOSi9JW59oqadpFqg8BH1vXnWP4X8ecZbGAoIJIjd
-	 T3XDFu5xCrBf/R0LGsoeLQ/jn3nb7dZkqcVEeNrfQLVfWdLrna7RsM14XlK9pb/pCI
-	 nMNsaRplTlVINSsKYOWwVMrR2/xDq4w69yb/+bd5rsxRdw4CQkSIZfqujO3cgGkju1
-	 kVTEp14zwviIw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=Xq9ZOkF9 c=1 sm=1 tr=0 ts=683f470e
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=RXLLBx8KIxhDRXYulpEA:9 a=QEXdDO2ut3YA:10
- a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <780f09cb-5399-4256-91ca-d93a553540c0@ramsayjones.plus.com>
-Date: Tue, 3 Jun 2025 20:03:39 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zDtcphwR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KmDcEGq3"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 151481380138;
+	Tue,  3 Jun 2025 15:12:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 03 Jun 2025 15:12:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748977958; x=1749064358; bh=XIfQJ951gK
+	BgOEq2+VNTZaepC5BSWcKtVRJjVxBbL8k=; b=zDtcphwRpwBufmqlU3uaNqIDxY
+	5qxTIPky+bokOYnGVhA1tNGpE/HRp6e94gyZ4mb35WUj+t5sr6LUMNFtzq9dpSvt
+	ypjnfxviM4DYkwkh3OOt7/OFbOOGz+jy7trG4rJr+Oq3EDrMaeYME76PKfo8EmR/
+	QDFm4QwCiIqnMLSfbIWo5PMvwfUNooB3vgI/On4qz0yQ2HwsrKONfg713N9t6Ylc
+	iKulMerZzusOJdByvTTHtDO5b5VIyh5E+74qu3FqIu0+VsbryPh2FIyp3nAukG6t
+	kJAQbughDeMLsGs8/+N+pTCVEVe2kydNVcosTXeehwD2fEsm1DuwxlzYDR8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748977958; x=1749064358; bh=XIfQJ951gKBgOEq2+VNTZaepC5BSWcKtVRJ
+	jVxBbL8k=; b=KmDcEGq3ZSl8zpG08LBPVCLFBqYUcRrJvQ5iH++EDYGjWYIDEDs
+	5RZJEW3GcO1I4PA8mC0aJTmyqEFP/poCzkMq789IvMc2Oq/x+EBL/QV6TF+x77vl
+	w9cqlSNJMP29zefzEmWjSlkEjHuE0NRIXrCWeyNCTKWOcfoHN99unjf1Po2lpceh
+	h1NfkWccCgRdIZhSoHmjUbZCInRoFRQGe5fE50l1ZJWRT5TTLzMcEKWSu4nolx52
+	b0Dna6/0ti7WM35cEqJtKXLd0bNO9e+t4kW5PJdep6qnH7E71+t+WH3NM8Jt3y0p
+	c3hE2vVnyS29Kff8mXJ8RFx0GmMheI1TDQg==
+X-ME-Sender: <xms:JUk_aO0IZjoPzMKM29DQzpucNXLlTGdzl-eO2wLUCZgjOztrwBGxzg>
+    <xme:JUk_aBHX6JEQASeECFc0Adhy5f2WDjeXyClQz01asp_Cv_hLG-cEP2PgXdbNJakea
+    wOJmkN_GUt8dkaQ4A>
+X-ME-Received: <xmr:JUk_aG4waUqMcs7GDE-90coafzlcHldVKC9shycvooA6iNYDywerZ7O9oHMAlWHLwHdQMTdwQWQay0mGLAyF-09F0sAW6FwIvbwk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddutdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
+    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdr
+    tghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:JUk_aP3el361_U9gT2CE556YZ9p-we62HKRaKGzySLsUF65cwO_fyA>
+    <xmx:JUk_aBEEgYxVNL5exOTORRWubBsf49NvSmQ0lt3Q04C-PSE1ZrBPTw>
+    <xmx:JUk_aI-dKLt1slbss57_YrEMp0pPbUGd1RlAT6_uPLDHgOIXehtuxg>
+    <xmx:JUk_aGkhS-IWp8D1lBc2QDtw5RhKjinsQ_a8G1JduRY9Mb-CqrfVYQ>
+    <xmx:Jkk_aFP9l9Wkx5KkoG45SS8z7ipvD67j0_V0OjplbPzOQ2D5bdJl6als>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Jun 2025 15:12:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Cc: Seyi Kuforiji <kuforiji98@gmail.com>,  ps@pks.im,
+  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 06/10] t/unit-tests: convert reftable table test to
+ use clar
+In-Reply-To: <xmqq7c1uszu6.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
+	02 Jun 2025 12:33:37 -0700")
+References: <20250602122559.208780-1-kuforiji98@gmail.com>
+	<20250602122559.208780-7-kuforiji98@gmail.com>
+	<xmqq7c1uszu6.fsf@gitster.g>
+Date: Tue, 03 Jun 2025 12:12:35 -0700
+Message-ID: <xmqqbjr4iqqk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: v2.25.0-rc0 test failure on cygwin
-To: Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Adam Dinwoodie
- <git@dinwoodie.org>, Patrick Steinhardt <ps@pks.im>
-References: <771677b1-2ce5-40ce-a704-752ff57ba0d3@ramsayjones.plus.com>
- <xmqq5xhcpzyp.fsf@gitster.g>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqq5xhcpzyp.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfB3KfRb9ih+2UN7UuN4LKDbowhlo2zDuCfpLt3g72/4iKp1x1mBRn9mAwErtLhl4mnnLd5yODCzsNfqrqzA8uzvWLRylXP3FyFkVB86BheHBd5IoveWE
- /FU5Ouk1JNcpES64gp2cXl75E9OjCYcHSTSvetuu9X6faXxrf5HuuYXDPWQWf5LPQocbYPhT9ai64zB3XKmEgk1HVKU88PmQ2m8=
+Content-Type: text/plain
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+>> diff --git a/Makefile b/Makefile
+>> index 3cccc73073..0227fdb3e1 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> ...
+>> @@ -3972,4 +3972,4 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+>>  	$(OBJCOPY) --localize-hidden $^ $@
+>>  
+>>  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+>> -	$(AR) $(ARFLAGS) $@ $^
+>> +	$(AR) $(ARFLAGS) $@ $^
+>> \ No newline at end of file
+>
+> Can anybody tell, without running "make <something>", what this
+> accidental and unintended change breaks?  It may be rather
+> surprising ;-)
+
+After dropping the last newline from the top-level Makefile, 
+
+    $ make check-docs
+
+ends like this:
+
+    $ make check-docs
+    make -C Documentation lint-docs
+    make[1]: Entering directory '/home/gitster/git.git/Documentation'
+        GEN lint-docs-manpages
+    removed but documented: git
+    removed but documented: git-add
+    ...
+    removed but documented: git-write-tree
+    removed but documented: scalar
+    removed but listed: git-add
+    removed but listed: git-am
+    ...
+    removed but listed: git-write-tree
+    removed but listed: scalar
+    make[1]: *** [Makefile:504: lint-docs-manpages] Error 1
+    make[1]: Leaving directory '/home/gitster/git.git/Documentation'
+    make: *** [Makefile:3829: check-docs] Error 2
+
+This is because of a cute Makefile trick used in lint-manpages
+script is not written robustly enough, but that is not much less
+interesting than the lesson we learn from this episode.
 
 
+A more robust and traditional way to use the same Makefile trick is
+to apply this patch to Documentation/lint-manpages.sh by the way.
 
-On 03/06/2025 17:11, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> 
-[snip]
->> A quick squint at the failing tests made it clear that the failure was
->> caused by the cygwin build treating a quoted glob character sequence
->> (e.g. '\*') as a directory separator char followed by a glob character.
-> 
-> Should we revert ec727e18 (dir.c: literal match with wildcard in
-> pathspec should still glob, 2025-05-03) before deciding to how to
-> proceed, as we will be deep in prerelease freeze?
+ Documentation/lint-manpages.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Heh, that decision is above my pay grade! :)
-
-BTW, I realized earlier today why we had not seen any CI failures
-on windows (yes I'm a bit slow on the uptake!); the test has this
-conditional at the top:
-
-  test_have_prereq FUNNYNAMES || {
-         skip_all='skipping: needs FUNNYNAMES (non-Windows only)'
-         test_done
-  }
-
-And FUNNYNAMES (as indicated) is set on MINGW/Gfw, but not cygwin.
-(cygwin can cope with many 'funny' filenames, but it can't change
-the use of '\' as a win32 directory separator).
-
-> It's not a "fix" for something that is gravely wrong but a glitch
-> people have lived with almost forever, so it can be reattempted in
-> the next cycle without hurting much.
-
-The POSIX/win32 pathname syntax 'issue' is not going away anytime
-soon, so I suspect that just skipping these tests (or the entire
-test file ala Gfw) is probably the best it gets. ;)
-
-[see Patrick's commit 5f8af25ff9 (t5500, t5601: skip tests which
-exercise paths with '[::1]' on Cygwin, 2024-10-16), which had been
-failing from v2.25.0-rc0 (25 Dec 2019) to v2.48.0-rc0 (16 Dec 2024),
-which was actually caused by a commit which started allowing a win32
-drive 'letter' to be an multi-byte UTF8 Unicode char! :) ]
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
+diff --git c/Documentation/lint-manpages.sh w/Documentation/lint-manpages.sh
+index a0ea572382..65758a3159 100755
+--- c/Documentation/lint-manpages.sh
++++ w/Documentation/lint-manpages.sh
+@@ -2,11 +2,11 @@
+ 
+ extract_variable () {
+ 	(
+-		cat ../Makefile
+ 		cat <<EOF
+ print_variable:
+ 	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
+ EOF
++		cat ../Makefile
+ 	) |
+ 	make -C .. -f - print_variable 2>/dev/null |
+ 	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
