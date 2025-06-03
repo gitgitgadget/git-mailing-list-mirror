@@ -1,140 +1,146 @@
 Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E622745E
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:18:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECE9239E7E
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:37:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748960318; cv=none; b=Zfv2SGGpBeEgU44zkv2cUvH8+B74Utazknj2Ru4MDoaD/ldwc4fMEcLkTdckIjGphfyopLQ0DkWmzyjT3ENfQiBxEgFdGbL/G8thsIsYpnFbQf55JGJY57z9PN1tAVleSoU0IW3CY4MtCyVtXlqqTy49uVhu8vp5bD8v3cighSA=
+	t=1748961478; cv=none; b=eIf7uxmCkGynXdcce/0MamoI2nUMxZubrImq1Z4P2hrkkUVg5MfV+l/a7dQSIyqI18JcHcS8NyIDTIxsUAPIWhnR4oir7Rig6IuOtNTZQQyBMbpXKUQMYuc9Yu1+EB67pMYri+VD2JJs3tE9c9w2rQW2Gr94LYVCybVTQWnTs8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748960318; c=relaxed/simple;
-	bh=EMRHvVAlhG7NnqzJIi3jC8MGm1PpLG7iGO92sbst5Qw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h7/Y8OmhL/EZEwUQ5jeGdGXfVbXxUGmsMK0RsSZGyATjxX1Bg9occ+FcIvKZTPgq9JhDRsY4G5C3SgfUSDhlgDkLrHH+ECHQQqD1cN+vbgVcrhnQbuvabq1z/1R/38ZGO3ttTUr89Lsp/esXQcojoctgXRfdvP/hueK3AfSBKjc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XEaKyHay; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LPUcka3e; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748961478; c=relaxed/simple;
+	bh=y3b557sh1z8gt51zlDT0pO6uUooev9vRCnJJ375uaE8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a1FBppA8btcOLXgKLvjqo0aqOoupuK3lKdsrugT70bzSXkjuPJ7yr7ACAO8FdMtGUxlmSCpCxxxWbbPKQqg1vwZWL6FKGQz5JJHohnfTB7iiRzFZgv3FRxY4qkYtoIN69CTaMSsDPoUmAxUySAkYGnYuXSMaS+M5v0lG+n2tPUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xNGXnyuZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EDWmesw4; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XEaKyHay";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LPUcka3e"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id B070A114012A;
-	Tue,  3 Jun 2025 10:18:35 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Jun 2025 10:18:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xNGXnyuZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EDWmesw4"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id A6EF211400DD;
+	Tue,  3 Jun 2025 10:37:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 03 Jun 2025 10:37:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748960315; x=1749046715; bh=6OmxASUSYh
-	gmG08fIEgJ8yhCOkAhuakjDG4T0DPOLh8=; b=XEaKyHaySJAL+bctay3G9T+gb6
-	RAidCMXSYbnr40hmEvrx7mVskknfdAqP7P36IGtWp0rRUilu2al5I+8vJ+cQHZMX
-	I/iLkJ/o0yX1kwTR5+ByJj9xdYJboMXZrG1gDIyvEenAPkypm0rFR6yWOyNSH8ji
-	urU2tUHjDGWyhm86ebz0B23UqjNWFXK60JEb2YVmTbSQeOhEy0vz48IEfOAotDKG
-	irVyhUBouGrVrGe/P3IXdcq0Sn5Im4p+BI5NYgD3OF3gSS91cwiyDy1yDPlP98ta
-	0p430DcjdyK/CQak5Iq1oWq/18ouFS4+Knvv3Hyg4FiNED3eF+xy4iX4Gs+g==
+	:subject:to:to; s=fm3; t=1748961474; x=1749047874; bh=wMiv4IXcCl
+	WVecXT3DRWIhb8CfGYk7VnM7HeAiFvhFU=; b=xNGXnyuZ3KDYenPc2ytGGhTP6s
+	aD3bQUHRLb6wQx1BFOXjogCPbD0lGVdQZrKOyouX/PyBpVgvcTMEivTNRKsY/Bdn
+	egLBl9qPsB4K4pMi/MxlAaWhUzDGM0kCtRxZKiglCT3+nFUJluEYJh110IvTGukb
+	LKJE8w3mVB4dx5InrLZVRCH4gl1IuSdbKMLT5PFOJkkXdQSTsG42ePbXX6Tjz9xl
+	sAjT9hL7LefeTACh2TJPUs/2AXhzO5qYVlq8TvcG/uBMK4UklzDrlktXdYSdBGAY
+	gGjbK8vw7ZXI4MveVdYc6vpNfWoxNn8rzY9iODHd0nZ33DSoS+dpOnPI8Viw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748960315; x=1749046715; bh=6OmxASUSYhgmG08fIEgJ8yhCOkAhuakjDG4
-	T0DPOLh8=; b=LPUcka3eGTiIGHBmN+jN6tD2OggnnXUsnwJMJNuCl/xIw75bFKJ
-	VfsPxFl44lAg5Sgb+HTtBP4Sfz9UG3cPKd4e4Rx0kZY7x2hhpqVFWqBYMcfRtMYs
-	Ucv90KHS+0KGlZfYtXEg5ZtLJEtfqBtW4OhtWuvMJjwR4SveV8wKQSre0sjOfAjp
-	mFuFEJrdieD0Tb9DDbJ12Yctvl5Iz1oFSJK02830/bPL4WTZOa0xuKTxhZ786Dfi
-	M+ETTVQRkMGlSydscpO/Ef8CJnl7MHpQ0BdQZq/aw+iXtLmZH+kPaYQKra6iC+ll
-	PXAVv9k3Ad3mN982BTQQkDuu1bKxt+PS66g==
-X-ME-Sender: <xms:OwQ_aIW5ysnloz7SBYVthK4AfAMZwUfSSVcYM4W_7EkrcS8SaU-S_A>
-    <xme:OwQ_aMmXkLI89EMTX5ASlT6jpr34yvEAmT0tyrjCYJezqoMSQdDQifcDy9MV0ljsB
-    oEa33kbYwUP8emAjg>
-X-ME-Received: <xmr:OwQ_aMaOmyIoNXt3stMotjGpk2UGUGG5JdayeQsSVqU2sqozWmuEIJdR4_iQM-lML5VBHhv15Cs4jMdGL1Bx3Kr3IXUCeNLuChg73SXbjw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegiecutefuodetggdotefrodftvf
+	1748961474; x=1749047874; bh=wMiv4IXcClWVecXT3DRWIhb8CfGYk7VnM7H
+	eAiFvhFU=; b=EDWmesw4LFO8XljKd8/MHK0SYks8/6s6SqVCMHLeje+72p0N6B3
+	SfLE0cO3bcIx2fHbBlw9xwVcwfFOHVKk/TjkLNMqpKHqMKg7gMo0FT8/yhvdI5H8
+	uI9Hg8x4DMV0lj7Svh4dGdHA5HhBRRTOTD6xpDHl4oo/OMD6Cak3ECZ/IYkxlSL2
+	2x+t3S6eEWVx5T0Roh0oIG3N0BzVoeoih0sPE4Kx54cBiAxx4aKKq4rCOhnsY6K2
+	3ckRHpM+Dl/SdGv5gvb6cp3E4APWqC6P2uw64OlIxwzPALojHDNBbNoprJ9rIHkR
+	9AQtQ0ZMveTw21R3BifPPCU+6qZmr3mZvvg==
+X-ME-Sender: <xms:wgg_aPj0YSXkq8BUJzenzEwEn50pdo-DhUIlxA6bRBPMJT3W945Q3A>
+    <xme:wgg_aMA5Yhmmz-b5XL9fh-A1ZmtxDIItKp5Bp9Buorijd7hx3NpbBgHF8SKmCUJHE
+    L_VoV-ACXzcS6XD1Q>
+X-ME-Received: <xmr:wgg_aPFuFcNx_gXmEibBqyIgk_TZXIfFIIg0IZcqPo6XE-F-dSN3dmKTPj6i1PkEjzzNb5RG9b7HkQuCZZM_XTtO66NZFzFppsIY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeglecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeeuieeuudfhvefhkeeigfekgfegleejtdffteehheethffh
-    vdeludekkeffhfffvdenucffohhmrghinhepghhoohhglhgvrdgtohhmnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhih
-    hllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepkhhufhho
-    rhhijhhileeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:OwQ_aHUa7RUPq_vTsRBaXcf4jwygAaKXXpwiqoiJDgtG5ubxlqejPw>
-    <xmx:OwQ_aCkm2XHaUl93XPVrPxa7-341JDkGn2xFZi1aysoCGWgICXvf7g>
-    <xmx:OwQ_aMexcM5wDoEDd4P86us9Mozldh7Y1-wP-5UjlMGlMlEBVTiMLg>
-    <xmx:OwQ_aEENxg1bIjYnKXANgwayyMnAE069VoeviKLNlMW4zjVDptiVBA>
-    <xmx:OwQ_aA-nT4fjZLDNR2DQaE93UJW94v6druXgWFlV-52iJ5qPbPxgCmnz>
-Feedback-ID: i197146af:Fastmail
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
+    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtohhllhhinhdrfhhunh
+    hkudesghhmrghilhdrtghomhdprhgtphhtthhopegsrhgrugestghomhhsthihlhgvrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wgg_aMQu3Nr4kOLAw0sE9kacO-3HuSwu3qbXc5njoWPv9tXwURCjNQ>
+    <xmx:wgg_aMzFt1JETu6qFxVRXWjH-BtS0230LkNSONFY-C4OdVX8oVh17A>
+    <xmx:wgg_aC4c6xS3CC8Jib72obRZxPqiAMRCsMKKj3BEGpz4iHlVnylNSw>
+    <xmx:wgg_aBzlcXRNSrWk7F7VHbMhvnz7ePgIfn_kTQ_NPH7OX5HchFmtrg>
+    <xmx:wgg_aC0gwOTo54xLB0fsLTWllDMcINLc-AOtpcOfYDhD8n4Q8NmIR02s>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 10:18:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 32811f6e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 3 Jun 2025 14:18:33 +0000 (UTC)
-Date: Tue, 3 Jun 2025 16:18:32 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 03/10] t/unit-tests: convert reftable block test to
- use clar
-Message-ID: <aD8EOE1BWWfXxOij@pks.im>
-References: <20250602122559.208780-1-kuforiji98@gmail.com>
- <20250602122559.208780-4-kuforiji98@gmail.com>
+ 3 Jun 2025 10:37:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Brad Smith <brad@comstyle.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
+In-Reply-To: <87y0u9qxk8.fsf@gmail.com> (Collin Funk's message of "Mon, 02 Jun
+	2025 21:05:43 -0700")
+References: <87wm9ut3uo.fsf@gmail.com>
+	<47c58a78-d38b-4170-87fc-c9332618d0da@comstyle.com>
+	<87y0u9qxk8.fsf@gmail.com>
+Date: Tue, 03 Jun 2025 07:37:52 -0700
+Message-ID: <xmqqwm9sriv3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250602122559.208780-4-kuforiji98@gmail.com>
+Content-Type: text/plain
 
-On Mon, Jun 02, 2025 at 01:25:51PM +0100, Seyi Kuforiji wrote:
-> diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/u-reftable-block.c
-> similarity index 74%
-> rename from t/unit-tests/t-reftable-block.c
-> rename to t/unit-tests/u-reftable-block.c
-> index 52f1dae1c9..5d1419b801 100644
-> --- a/t/unit-tests/t-reftable-block.c
-> +++ b/t/unit-tests/u-reftable-block.c
-> @@ -6,14 +6,15 @@ license that can be found in the LICENSE file or at
->  https://developers.google.com/open-source/licenses/bsd
->  */
->  
-> -#include "test-lib.h"
-> +#include "unit-test.h"
-> +#include "lib-reftable-clar.h"
->  #include "reftable/block.h"
->  #include "reftable/blocksource.h"
->  #include "reftable/constants.h"
->  #include "reftable/reftable-error.h"
->  #include "strbuf.h"
->  
-> -static void t_ref_block_read_write(void)
-> +void test_reftable_block__index_read_write(void)
->  {
->  	const int header_off = 21; /* random */
->  	struct reftable_record recs[30];
+Collin Funk <collin.funk1@gmail.com> writes:
 
-The name here still looks wrong to me. This is about writing ref blocks,
-not index blocks.
+> Brad Smith <brad@comstyle.com> writes:
+> ...
+>> But as said, it is harmless. I can leave it in if desired.
+> ...
+> I would prefer just leaving it for any old system that may need it.
 
-> @@ -220,12 +222,12 @@ static void t_obj_block_read_write(void)
->  	struct reftable_buf block_data = REFTABLE_BUF_INIT;
->  
->  	REFTABLE_CALLOC_ARRAY(block_data.buf, block_size);
-> -	check(block_data.buf != NULL);
-> +	cl_assert(block_data.buf != NULL);
->  	block_data.len = block_size;
->  
->  	ret = block_writer_init(&bw, REFTABLE_BLOCK_TYPE_OBJ, (uint8_t *) block_data.buf, block_size,
->  				header_off, hash_size(REFTABLE_HASH_SHA1));
-> -	check(!ret);
-> +	cl_assert(ret == 0);
+OK, here is what I will queue.
 
-All of these could be retained as `cl_assert(!ret)`, which is more
-idiomatic in our codebase. Either that, or these should use
-`cl_assert_equal_i()` to give better diagnostics.
+-------- >8 --------
+From: Brad Smith <brad@comstyle.com>
+Date: Mon, 2 Jun 2025 03:29:02 -0400
+Subject: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
 
-Patrick
+Handle OpenBSD and NetBSD as FreeBSD / DragonFly are. OpenBSD would
+need _XOPEN_SOURCE to be set to 700. Its simpler to just not set
+_XOPEN_SOURCE.
+
+    CC strbuf.o
+strbuf.c:645:6: warning: call to undeclared function 'getdelim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        r = getdelim(&sb->buf, &sb->alloc, term, fp);
+            ^
+1 warning generated.
+
+Signed-off-by: Brad Smith <brad@comstyle.com>
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ compat/posix.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/compat/posix.h b/compat/posix.h
+index f4c71f9427..067a00f33b 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -60,11 +60,11 @@
+ # else
+ # define _XOPEN_SOURCE 500
+ # endif
+-#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
+-      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
+-      !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__) && \
+-      !defined(__CYGWIN__)
+-#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
++#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && \
++      !defined(__OpenBSD__) && !defined(__DragonFly__) && !defined(__MirBSD__) && \
++      !defined(__USLC__) && !defined(_M_UNIX) && !defined(__sgi) && \
++      !defined(__TANDEM) && !defined(__QNX__) && !defined(__CYGWIN__)
++#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500 */
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+ #endif
+ #define _ALL_SOURCE 1
+-- 
+2.50.0-rc0-176-g427db30fd9
+
