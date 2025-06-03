@@ -1,164 +1,150 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE99F3D3B8
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 19:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD8A1A0B08
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 20:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748977961; cv=none; b=DDYyMPwLulCYat7ZK6ccLfUFPJXCrp/tZtpwLG80Bc6+ycxgmCtot1MEbL4Bivm7YEHQUCrTsCM9ebPKyzep6WfKI8KMCZ5/NuwyUZBPgE92XL+VujzGk0Nea74+VgffMCk2qxjCMziAY5AetKe8Pg8A9Rt2Nc6txMY87M939kw=
+	t=1748983066; cv=none; b=b20qma/7HTZ+4SHcvV9R6rasOalAg1JAym36kYpK8bN6Wso4kOmeEiZrLOJfoRfEk5SFeeMsvVDJCDepF86jzDoxwQrlxuUBqDda2qBbxjs/uLBq7bAb6ij9eQbHys+b+k2Kbazbmt5A8nJr47hB2VONxARIdXlYyLARsDpF/1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748977961; c=relaxed/simple;
-	bh=SpVOOaskgumamnJGzek+PdeBmrC/fvjrjy7Imuete+k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U6TDKiy6+Q+OuLlBwL/ZBp9+Be0Tr1Q5cC/rnYdQrRC7a+kCvEwTGlbbJea2cw092Iz4vOOYlFFccpXDii7TKC/kdmx/MuKUyXk8b1nIp5R4OOlfeD54ldpOec9D7NQbLc8LSZsNUmibhTPcWEUdp/Jb/ES/LIfGDYu+DCaPhMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zDtcphwR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KmDcEGq3; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748983066; c=relaxed/simple;
+	bh=GnBsDnp1k3UiG4hxRb3vfgHH9uUylRV4+1KBhLGq7E8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iag+51GhAzhMy5GbNpLEm4aAjUXMB1y3rIq5xJ1C3uPHcVqItynkXXhtEFdpo0L2DlowmABLGlNTTgrWpClslgqUUeYcYQbEnNZw86JAEDQpvEyNxI/jenytXCmWf9o9oIohrxQgzquw/n9TDYaLo2PSdd0wncdc+ZXEQC0JkZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJpUiteg; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zDtcphwR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KmDcEGq3"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 151481380138;
-	Tue,  3 Jun 2025 15:12:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 03 Jun 2025 15:12:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748977958; x=1749064358; bh=XIfQJ951gK
-	BgOEq2+VNTZaepC5BSWcKtVRJjVxBbL8k=; b=zDtcphwRpwBufmqlU3uaNqIDxY
-	5qxTIPky+bokOYnGVhA1tNGpE/HRp6e94gyZ4mb35WUj+t5sr6LUMNFtzq9dpSvt
-	ypjnfxviM4DYkwkh3OOt7/OFbOOGz+jy7trG4rJr+Oq3EDrMaeYME76PKfo8EmR/
-	QDFm4QwCiIqnMLSfbIWo5PMvwfUNooB3vgI/On4qz0yQ2HwsrKONfg713N9t6Ylc
-	iKulMerZzusOJdByvTTHtDO5b5VIyh5E+74qu3FqIu0+VsbryPh2FIyp3nAukG6t
-	kJAQbughDeMLsGs8/+N+pTCVEVe2kydNVcosTXeehwD2fEsm1DuwxlzYDR8w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748977958; x=1749064358; bh=XIfQJ951gKBgOEq2+VNTZaepC5BSWcKtVRJ
-	jVxBbL8k=; b=KmDcEGq3ZSl8zpG08LBPVCLFBqYUcRrJvQ5iH++EDYGjWYIDEDs
-	5RZJEW3GcO1I4PA8mC0aJTmyqEFP/poCzkMq789IvMc2Oq/x+EBL/QV6TF+x77vl
-	w9cqlSNJMP29zefzEmWjSlkEjHuE0NRIXrCWeyNCTKWOcfoHN99unjf1Po2lpceh
-	h1NfkWccCgRdIZhSoHmjUbZCInRoFRQGe5fE50l1ZJWRT5TTLzMcEKWSu4nolx52
-	b0Dna6/0ti7WM35cEqJtKXLd0bNO9e+t4kW5PJdep6qnH7E71+t+WH3NM8Jt3y0p
-	c3hE2vVnyS29Kff8mXJ8RFx0GmMheI1TDQg==
-X-ME-Sender: <xms:JUk_aO0IZjoPzMKM29DQzpucNXLlTGdzl-eO2wLUCZgjOztrwBGxzg>
-    <xme:JUk_aBHX6JEQASeECFc0Adhy5f2WDjeXyClQz01asp_Cv_hLG-cEP2PgXdbNJakea
-    wOJmkN_GUt8dkaQ4A>
-X-ME-Received: <xmr:JUk_aG4waUqMcs7GDE-90coafzlcHldVKC9shycvooA6iNYDywerZ7O9oHMAlWHLwHdQMTdwQWQay0mGLAyF-09F0sAW6FwIvbwk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddutdduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:JUk_aP3el361_U9gT2CE556YZ9p-we62HKRaKGzySLsUF65cwO_fyA>
-    <xmx:JUk_aBEEgYxVNL5exOTORRWubBsf49NvSmQ0lt3Q04C-PSE1ZrBPTw>
-    <xmx:JUk_aI-dKLt1slbss57_YrEMp0pPbUGd1RlAT6_uPLDHgOIXehtuxg>
-    <xmx:JUk_aGkhS-IWp8D1lBc2QDtw5RhKjinsQ_a8G1JduRY9Mb-CqrfVYQ>
-    <xmx:Jkk_aFP9l9Wkx5KkoG45SS8z7ipvD67j0_V0OjplbPzOQ2D5bdJl6als>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 15:12:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Seyi Kuforiji <kuforiji98@gmail.com>,  ps@pks.im,
-  phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 06/10] t/unit-tests: convert reftable table test to
- use clar
-In-Reply-To: <xmqq7c1uszu6.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	02 Jun 2025 12:33:37 -0700")
-References: <20250602122559.208780-1-kuforiji98@gmail.com>
-	<20250602122559.208780-7-kuforiji98@gmail.com>
-	<xmqq7c1uszu6.fsf@gitster.g>
-Date: Tue, 03 Jun 2025 12:12:35 -0700
-Message-ID: <xmqqbjr4iqqk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJpUiteg"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-addda47ebeaso446175766b.1
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 13:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748983063; x=1749587863; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EYWr+un1sGVXNw+yuwbohxWiMzzmDJtyw0pteGh/EhY=;
+        b=BJpUitegjByrwiNsiJ1/UKhUZRebADO2Eb0cXShqfV5ffVJFxf3vueVPI834/6bVTJ
+         +i+7FMbJOfdobrboawPMDAsTr8TwOvBDh1RwSB1pzGUEldvmBo1TPfKXFxe8kAsQ40Xt
+         ZDlEMf78dcPY8BCxZboVA/27cKJhBNkDaOarqJnofapCmzgtuGzh/50PrErw23reM8fc
+         lGWTEvJ+e2p2v2mQRNR5CWfO8pfWT3fDGv679w4OviO1PIQWZT9SLIat49HNeLuWwfCl
+         9ntY2qpCO+jmb9LOps5vEJHRE1rUAsf8puPQZhKeTXQjIdeG3a6Ggpl3yFAk9Tv1HEXx
+         WipQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748983063; x=1749587863;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EYWr+un1sGVXNw+yuwbohxWiMzzmDJtyw0pteGh/EhY=;
+        b=qCdmYs+rqYqbirlBrbkUthRUZjDMdSwGHwGkWXy6UmPleJzso/qSZK5YL+xYECa7Fo
+         dzN8J3R2mR/ESPa41/8XT6YeMvH/unXwnF9RzSpfxjo7O10EiZPtuiR6KmxwBm/G672Q
+         ijKzOs6Y6eQbYCADf6s0/AmcPGWyGVFKLank3tSofdkZcVw/JSFlUdhh/DIoPIe5kpva
+         4HhddHoSmsFGidIsQAKmXt0PU8adXmdf9fYC8frnZBJoJBIgCKgympxMGWwbrrtR4tMA
+         DE3L/+jpp6Xnp0Mmnk/FaNo4XCiX1xYslpwUiq6niDP35vA4PPtqXPlMi2ulkXpJTF2p
+         UbmQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW54llVer1nFXaSYrtb4iS4Zmt8WgP5V3wpqmAiJGZEugjLXLpO5geI//0ofCrfEalp/Ps=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywo9/joz2zZwd/lbR/2L76r+PNlandrFNegIYU3LeADYsoAkmdB
+	oHEuXYP96xi8ZNa7IZBlOL738Gk8hqAdPkFQ7reCy8BrqdeFPkYd3MVaB6i9cwWusOsvN238DqR
+	HgdmVvvih7ZSCCv2NtuGELlJZgoBXhrI=
+X-Gm-Gg: ASbGnctbR8apuyIcFArwj0SGDq5Nvfaw4IKo9YjpPnsh/OTmGzgvySjlWwCSuLA9hn4
+	f94HTLoKz1QtdSIoOyHdbIiobQ4bq7qhd90hAa8UmYIZi1WOTTx1kWgwNMp+75ODohdsPYDvkRO
+	idJjjvflpslCzh2o7QlN62uKE8HAmSA+vkz2C82oXRXkrkLGj5o6X8aO7dhS19iBCOmA==
+X-Google-Smtp-Source: AGHT+IFxHjAeM+ubAwzMSYGANrvKK9/tMQM5ZBxITd1nmyVMSbQSUp8C2SKnuJEkcL+ixzw/3JPO1x89tqyccKFne5k=
+X-Received: by 2002:a17:907:7f8a:b0:ad8:9e80:6ba3 with SMTP id
+ a640c23a62f3a-addf8cca365mr807866b.7.1748983062813; Tue, 03 Jun 2025 13:37:42
+ -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+ <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
+In-Reply-To: <xmqq5xhmvuol.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 3 Jun 2025 16:37:31 -0400
+X-Gm-Features: AX0GCFv8eE3bduhtVU7iY8ILAAaQfvgRmQl0uklgydR_DIMl2WvCJ-gD41zerGY
+Message-ID: <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, kristofferhaugsbakk@fastmail.com, 
+	git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
-
->> diff --git a/Makefile b/Makefile
->> index 3cccc73073..0227fdb3e1 100644
->> --- a/Makefile
->> +++ b/Makefile
->> ...
->> @@ -3972,4 +3972,4 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
->>  	$(OBJCOPY) --localize-hidden $^ $@
->>  
->>  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
->> -	$(AR) $(ARFLAGS) $@ $^
->> +	$(AR) $(ARFLAGS) $@ $^
->> \ No newline at end of file
+On Tue, May 27, 2025 at 1:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> Can anybody tell, without running "make <something>", what this
-> accidental and unintended change breaks?  It may be rather
-> surprising ;-)
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+>
+> > Hi Kristoffer
+> >
+> > On 24/05/2025 22:35, kristofferhaugsbakk@fastmail.com wrote:
+> >> diff --git a/builtin/notes.c b/builtin/notes.c
+> >> index a3f433ca4c0..ca4782eca19 100644
+> >> --- a/builtin/notes.c
+> >> +++ b/builtin/notes.c
+> >> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const s=
+truct object_id *object)
+> >>      if (strbuf_read(&buf, show.out, 0) < 0)
+> >>              die_errno(_("could not read 'show' output"));
+> >>      strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_=
+str);
+> >> +    /* strip trailing whitespace introduced by blank lines */
+> >> +    strbuf_stripspace(&cbuf, NULL);
+> >
+> > It doesn't make any difference at the moment but I'd be happier if we
+> > stripped the trailing space from the commit message before commenting
+> > it out.
+>
+> Yes.  I had the same thought.  If Kristof does not like the fact
+> that one automated source of information consistently indents its
+> output lines, even an empty one, and if users may have legitimate
+> reason to place in the final output a trailing whitespace in the
+> comment, it is better for the patch not to close the door to the
+> others.
+>
+> In this case I am not all that sympathetic to the idea of the patch.
+> The consistently indented lines makes it more clear from which line
+> to which line came from a commit log message; running stripspace
+> would break them into paragraph pieces.  These editors that complain
+> probaly can be fixed?
 
-After dropping the last newline from the top-level Makefile, 
+My editor doesn't complain, but it does highlight trailing whitespace
+at my behest, and it tends to be an eyesore (on purpose: that way I
+clean it up). Perhaps Kistoffer is coming from a similar place?
 
-    $ make check-docs
+>
+> Alternatively, if it bothers users of certain editing environments
+> too much, perhaps the indent code in the output phase of "git show"
+> should lose the indents for empty lines uniformly, shoudln't it?  It
+> probably should be a fairly isolated change, like the way how the
+> expand_tabs_in_log bit is handled in pretty.c; give another bit and
+> teach pp_handle_indent to return when that bit is set and the
+> payload it was asked to show with indentation is empty, or something
+> like that.
 
-ends like this:
+I think this suggestion would also help folks who "git commit -v,"
+which IIRC is also indented in the template.
 
-    $ make check-docs
-    make -C Documentation lint-docs
-    make[1]: Entering directory '/home/gitster/git.git/Documentation'
-        GEN lint-docs-manpages
-    removed but documented: git
-    removed but documented: git-add
-    ...
-    removed but documented: git-write-tree
-    removed but documented: scalar
-    removed but listed: git-add
-    removed but listed: git-am
-    ...
-    removed but listed: git-write-tree
-    removed but listed: scalar
-    make[1]: *** [Makefile:504: lint-docs-manpages] Error 1
-    make[1]: Leaving directory '/home/gitster/git.git/Documentation'
-    make: *** [Makefile:3829: check-docs] Error 2
-
-This is because of a cute Makefile trick used in lint-manpages
-script is not written robustly enough, but that is not much less
-interesting than the lesson we learn from this episode.
+>
+> > Should that be " \$"? What you've got seems to work with dash but I'm
+> > not sure if it is POSIX compliant or not.
+>
+> "2.6 Word Expansions" ends with this sentence:
+>
+>     If a '$' that is neither within single-quotes nor escaped by a
+>     <backslash> is immediately followed by a <space>, <tab>, or a
+>     <newline>, or is not followed by any character, the '$' shall be
+>     treated as a literal character.
+>
+> Taken together with "2.2.3 Double-Quotes", I'd read it as blessing a
+> lone '$' at the end of double-quoted string as a literal dollar sign.
+>
+> Thanks.
+>
 
 
-A more robust and traditional way to use the same Makefile trick is
-to apply this patch to Documentation/lint-manpages.sh by the way.
-
- Documentation/lint-manpages.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git c/Documentation/lint-manpages.sh w/Documentation/lint-manpages.sh
-index a0ea572382..65758a3159 100755
---- c/Documentation/lint-manpages.sh
-+++ w/Documentation/lint-manpages.sh
-@@ -2,11 +2,11 @@
- 
- extract_variable () {
- 	(
--		cat ../Makefile
- 		cat <<EOF
- print_variable:
- 	@\$(foreach b,\$($1),echo XXX \$(b:\$X=) YYY;)
- EOF
-+		cat ../Makefile
- 	) |
- 	make -C .. -f - print_variable 2>/dev/null |
- 	sed -n -e 's/.*XXX \(.*\) YYY.*/\1/p'
+--=20
+D. Ben Knoble
