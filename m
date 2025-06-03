@@ -1,221 +1,136 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E534224AF3
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 12:40:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B5F3FB1B
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 13:16:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748954422; cv=none; b=sIByDecQLDZBPG9M5Ye3rZavTcwPfdPQT0yd3JnBoPvCNc6SqlOIeOkR859PzlYBPYHUjy5GBrN7ifogFHVEp8a0s+wG8UtHG1UY/UC+wZCxa06ecXiJv+qirld5ZIhVy41R5jZlBcvk1Qxunbs98o+GWBL9QmMcLoDyNqyGF20=
+	t=1748956565; cv=none; b=rsTOPQyHLEA5LCKyUontTmRGwkJXwb8+xFDVYip9F8N+4y0e88tIj8vUZtxkpuMdLoYMIjACRcG8u3jLymRGZL2AXBWiJ9DpBG0Nk/Rrt+Qexb+zZvQqh0r/iYp1lhYHTrcHo4OANAlegxfapbKqT+4LTj/4p0wTopwNM8eildE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748954422; c=relaxed/simple;
-	bh=ltpz01u517xB4dnlthjRegBzRpOiANwvUrwZsxk+3Jc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p8i9Akh+Wb2Z+rhZ8YSLGAgGR2xq3hsodUm/dmD4dR4Gpfq18Jni5RGF/TkD6OAn6GS2RDp7H2UW1uBmf/IVU68qAULZ+YdDqSlLH5wUgKtOzPZ2jPlyjZ/xPd2UtPu/Lb//fUDBeeiDDIopCAlYz8PlDX+K3pHkNvjK94zPQ7k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YESUneeq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Uu0BnyLu; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748956565; c=relaxed/simple;
+	bh=d2H/R+/B0tGCRv5zZzxWZc58JTB1QQtYJWXR0JZqeGs=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=XzFbuZikLvfgTPbZuydQaY6ctaDtXqa7ptayY9wyqEmJpNuftY3dK7VfZtObyD1JzaXXging6T+wd3+NOZZS4ObaCJvFF2Rsic0XTSo1epWBRbe/84VjYbz6VitKl2qsTcSZO47txQFp9trEVVfGsGB9X7oBj3Tcyp1H0D0cszs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=TFgxbC2L; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YESUneeq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Uu0BnyLu"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 06CD4114012B;
-	Tue,  3 Jun 2025 08:40:17 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Tue, 03 Jun 2025 08:40:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748954416; x=1749040816; bh=jiv/gdWDv5
-	Bjd05H6dMIo4ilmDuXzaShr4A/Lb9z26w=; b=YESUneeqehid2+WCqhwQjMJHfK
-	Sv5MQj4k/ouqQC2B8flEpDic/MUo99bSfXk2p0iR2fGH2FDHh4FxSptJERNSO47P
-	roViv5O/6QlJ8+luCrVR4Z8dVcItncA0mQIoQ394H1L7k2vOuMmN5HdhjFD3W6Jq
-	AirUixZ7WmEuAE4OqA9L05cdnpsl11uLLccT8hOJ7GwFzsWef09PPkdt29eL30uI
-	fW/na4EP7ytLQv4GyE7+s+EwybcEnlDEp7PNipRi2H5j/kN31FFl7Ar+sDX0eG94
-	8S4o7QyqVcdqjvNbJC/42CHojt89BkZPJ3AKJr8MoehSkgJcNQsmTr/7tvaw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748954416; x=1749040816; bh=jiv/gdWDv5Bjd05H6dMIo4ilmDuXzaShr4A
-	/Lb9z26w=; b=Uu0BnyLudn7mxgayA9sQZMDaMFbyFpGn1qV0vWC3+mcu6j1APdV
-	AoSDTFdssc/MK4TiF2jb3zRgFAkq1yNGYQAx8z/HVvm0F3l4UmSd3RsQC2ApgXMQ
-	D9a/b/QQ85XsTiuZR/M+b34aRfbGwNDbHjVXVnwXLKSiFn6W4X3eUcCLrEv6ZNVh
-	vjfxfYOzdty8LKS9GahtdzPAjtBFlOP8O23JQgWsGKoae2sXU0QHGCkX169Yw67b
-	+mzmXUhHatv50GwLdBX45O5OzqqES0P4fWiUTDFKKC0ofcm/CaPvrjyD4qisVE1R
-	MTme4d5AHlxn5SlVhKAvMptVnSml+M3+FsQ==
-X-ME-Sender: <xms:MO0-aLNJhHv5S-qoow9cjOXMZLh24Btiq5NpZK3WoirbnBakRBinEQ>
-    <xme:MO0-aF9PhOT7N16Y8TcdV00Zv9aKBdA8vWSYWbDWjDvvjsZRY_GuwrgyRnajw4oN2
-    sXAs6HG-eCqYlx79Q>
-X-ME-Received: <xmr:MO0-aKR9mbDwtet3yauXS0VeTd5bU3w9E5tEdJGolXejQ2gNMWMDH2Lt76f5n_7iFCoK8w2QdsmTVlQtTFK4ofq4PfHwGv2Hvhslup4Z3A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddviecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecu
-    hfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqe
-    enucggtffrrghtthgvrhhnpeelvddtudehhfejudegudelheelfeduteekjeffhfetvdei
-    gfeutdeftdehheekgfenucffohhmrghinhepghhithhlrggsrdgtohhmpdhgihhthhhusg
-    drtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuth
-    dprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
-    hlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudek
-    keesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:MO0-aPtCT2jQ8nH5MgVSE3NwNwyo6d4dsRhvaUJZQIAgJ2Q05IRZsw>
-    <xmx:MO0-aDfLlEWki47dxQsgGjqafNhqrjCOgRv_vJiQbdt5_IG6oP4kJg>
-    <xmx:MO0-aL2MiNjTGDSOHJG74TWH0NwurCkXN_DAxQ75Dvh8tatrvkN5CQ>
-    <xmx:MO0-aP9Lb_ccNs4M0DUaz-2Qm1meeZ5TjnFKlmwZ1ugLFsFjHpt-xQ>
-    <xmx:MO0-aK0qV_MmFHMTDTIlHRUb7hJlVMPX9i1KmCmBt7-_dGzZYAL9u-8a>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 08:40:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4fb6a2db (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 3 Jun 2025 12:40:13 +0000 (UTC)
-Date: Tue, 3 Jun 2025 14:40:09 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org,
-	karthik.188@gmail.com
-Subject: Re: [PATCH v2 2/2] builtin/receive-pack: add option to skip
- connectivity check
-Message-ID: <aD7tKfXD7YxprSZh@pks.im>
-References: <20250520014920.201736-1-jltobler@gmail.com>
- <20250520163218.263921-1-jltobler@gmail.com>
- <20250520163218.263921-3-jltobler@gmail.com>
- <74668a00-5b90-2450-52c5-d9f00dcb42b9@gmx.de>
- <gw6j5enpzcit2zquafoaiujreoa4kbv3n6feq6yeqylcfynqim@s53ctnlg7tmm>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="TFgxbC2L"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-4a43972dcd7so66366031cf.3
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 06:16:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1748956562; x=1749561362; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:message-id
+         :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=geJVDvagmMktLYaqC8+ZSA0KTMdYnYWPIa4KQpiY9PQ=;
+        b=TFgxbC2LHaPTicEPcPz80ZDnwuO4cmem8H871qPDiFdyRK0MhRo5lUs9frZd/IjS9X
+         3bJO9zL7MIxPj1Ytu1aDAWilwD8JL/Cuq6DHgxzuI+Su7NgfzKUKDc3xIOB8sgxgRNw+
+         72w+5ZEwpE/P1SG9LnrlA0qY8pLkQoCltVAB8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748956562; x=1749561362;
+        h=content-transfer-encoding:mime-version:references:message-id
+         :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=geJVDvagmMktLYaqC8+ZSA0KTMdYnYWPIa4KQpiY9PQ=;
+        b=igfD2X1LxLXrZktCLFsAg3HSCs5A7TBsk4KlcKkuB93yRTC/bLRYX+woqID/tFB8kd
+         DRciRFlL1fLs48Iel3rm/X02UTC3XjZcPPk8fl+sOEK/gSqkWtO1/tKjwhywLc+/JHxl
+         ARAU3Hfb0/Wj+OcRESGIKKCz8bw6BGCjfcDpK85fR+urYZbdx5zXJ2nbZXVnewAYMyQ4
+         CHdoh6N/RZQANNfksX3eT1LCzfFJuH2PbueRrct2xTO+MPv8DeXz4J1vLLZ+WPc+3WVf
+         vNBafveomSs5052eqlscCAtlPENDimOFdR7oQoirVDB9MTNXzkiuh9LNEx+Vrau1mLP2
+         V9sg==
+X-Forwarded-Encrypted: i=1; AJvYcCXrT/f1+3kLMq0BPAyj3eCyIf/ML+XEguEpzAm9CX8ubHRtzPqHbb8qLmqAruN+c8hEZuA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxzVU+14lowkumOsZkpeSshhkyPFVws3fxEqE+GANiV3DuaR3S3
+	2fb3/9nny4Jj7SK0DhDL3yYxEcAhGrIz5nXVkwtd6jviIPRqOfKcF1nYlX1LyQx3VQ==
+X-Gm-Gg: ASbGncupE1vjG1kBY8Yo4ybmNdZDyYQITZuFZ3YDusivnZCka/7xJrZQjRL9iyAcFZl
+	UgrEXFU/NnnIlDx9Tqg4V5oI7an0RHpsoAF/U75gbRDZHzAau0CDyqsXO1NHWeCCjuLZnrdgax0
+	98lYGW58tdPqMwQtbvpCJsD10xCpckGMhzfiPsAwcBSEQevU3l/g7KnarqeLh6mnbx0qnwpNnC1
+	iLb9g6xgBbdhmXeR+x3srUuvh/uVZ2mSEJ4UaspaO6IRfAdahrSE66De+WxsPz/dmAz5kado2ty
+	lN5K0T/yOemo2IHt1Ovj/Jn18GwgE8rsWZGGImiBQ4r9aIHps/9NOOS+xwlwKJSnIkSzWFrIFpa
+	0EaEGkL5WZlQxRi3LWp/O6ekmlYH9fgbnqvqodXY=
+X-Google-Smtp-Source: AGHT+IGjXZny47fnOpQi34ZnH3baNRGaSD8R5tpaIcCSTnPMrg6wy1aI/MgAe9WXP2KpXvyneAoeRQ==
+X-Received: by 2002:a0c:f096:0:10b0:6fa:d95d:d0b0 with SMTP id 6a1803df08f44-6fad95dd17amr117905516d6.29.1748956562125;
+        Tue, 03 Jun 2025 06:16:02 -0700 (PDT)
+Received: from [2600:4040:9ce0:6400:a8dd:c57f:7e21:e7b2] ([2600:4040:9ce0:6400:a8dd:c57f:7e21:e7b2])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fac6d5b04asm80055636d6.51.2025.06.03.06.16.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jun 2025 06:16:01 -0700 (PDT)
+Date: Tue, 3 Jun 2025 09:15:54 -0400 (EDT)
+From: Mark Mentovai <mark@chromium.org>
+To: =?ISO-8859-15?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
+cc: Junio C Hamano <gitster@pobox.com>, Git Development <git@vger.kernel.org>, 
+    Eric Sunshine <sunshine@sunshineco.com>, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] t: run tests from a normalized working directory
+In-Reply-To: <20250603050256.GA9449@tb-raspi4>
+Message-ID: <08b9b990-9ddc-740e-99ab-82d09fb30ef3@chromium.org>
+References: <20250523193722.68344-1-mark@chromium.org> <20250528201737.55268-1-mark@chromium.org> <20250528230804.GA16856@tb-raspi4> <xmqqfrgmhep3.fsf@gitster.g> <20250531054618.GA30443@tb-raspi4> <xmqqcybnxvr2.fsf@gitster.g> <f0d4c85a-b833-c52d-b54f-77ab81f22451@chromium.org>
+ <xmqqy0u9subw.fsf@gitster.g> <20250603050256.GA9449@tb-raspi4>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <gw6j5enpzcit2zquafoaiujreoa4kbv3n6feq6yeqylcfynqim@s53ctnlg7tmm>
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Mon, Jun 02, 2025 at 10:59:53AM -0500, Justin Tobler wrote:
-> On 25/06/02 05:01PM, Johannes Schindelin wrote:
-> > Hi Justin,
-> > 
-> > On Tue, 20 May 2025, Justin Tobler wrote:
-> > 
-> > > diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-> > > index 9afea54a26..f76a22943e 100755
-> > > --- a/t/t5410-receive-pack.sh
-> > > +++ b/t/t5410-receive-pack.sh
-> > > @@ -62,4 +62,26 @@ test_expect_success 'receive-pack missing objects fails connectivity check' '
-> > >  	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
-> > >  '
-> > >  
-> > > +test_expect_success 'receive-pack missing objects bypasses connectivity check' '
-> > > +	test_when_finished rm -rf repo remote.git setup.git &&
-> > > +
-> > > +	git init repo &&
-> > > +	git -C repo commit --allow-empty -m 1 &&
-> > > +	git clone --bare repo setup.git &&
-> > > +	git -C repo commit --allow-empty -m 2 &&
-> > > +
-> > > +	# Capture git-send-pack(1) output sent to git-receive-pack(1).
-> > > +	git -C repo send-pack ../setup.git --all \
-> > > +		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
-> > > +
-> > > +	# Replay captured git-send-pack(1) output on new empty repository.
-> > > +	git init --bare remote.git &&
-> > > +	git receive-pack --skip-connectivity-check remote.git <out >actual 2>err &&
-> > > +
-> > > +	test_grep ! "missing necessary objects" actual &&
-> > > +	test_must_be_empty err &&
-> > > +	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
-> > > +	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
-> > > +'
-> > > +
-> > >  test_done
-> > 
-> > This test case seems to hang occasionally in the "win+Meson test" jobs on
-> > GitHub (I tried to find the same failure at
-> > https://gitlab.com/gitlab-org/git/-/pipelines but couldn't find any). See
-> > for example
-> > https://github.com/gitgitgadget/git/actions/runs/15383915635/job/43279134837#step:6:627
-> > 
-> > Note that this problem afflicts only the "win+Meson test" jobs; The
-> > corresponding "win test" job seems not to hang.
-> > 
-> > Even in the Git for Windows project, where the `win+VS test` jobs are run,
-> > the t5410 test passes within a dozen seconds or so, see e.g.
-> > https://github.com/git-for-windows/git/actions/runs/15383945895/job/43279689086#step:5:143
-> > (confusingly, the subset of tests run in the matrix jobs differs between
-> > the `win+Meson test` jobs and the `win+VS test` jobs, but if you click
-> > through all of the `win+Meson test` jobs, expand the `test` step,
-> > patiently wait a few seconds for the log to be lazy loaded "enough" for
-> > the search to work, you will notice that t5410 is not mentioned in any of
-> > them, and the only one that times out after 4h37m11s is
-> > https://github.com/git-for-windows/git/actions/runs/15383945895/job/43279753911,
-> > likely while running 5410, too).
-> > 
-> > Do you have any idea why this particular test case, in conjunction with
-> > Windows and Meson (and only on GitHub) acts up like this?
-> 
-> Thanks Johannes for the report. I'm not quite sure yet what is going on
-> here, but I'll dig into this a bit and see what I can figure out. :)
+Torsten Bögershausen wrote:
+> On Mon, Jun 02, 2025 at 02:32:35PM -0700, Junio C Hamano wrote:
+>> Mark Mentovai <mark@chromium.org> writes:
+>>
+>>> `realpath` is a library interface that transforms paths to those
+>>> having the semantics at issue, but it's somewhat obscure, and easily
+>>> confused with "real path" whose meaning would be entirely
+>>> ambiguous. realpath(3) documentation from POSIX[4] explains the
+>>> semantics fully; glibc[5], and Linux man-pages[6] provide full
+>>> explanation while also using the term "canonicalize".
+>>>
+>>> "Canonicalize" alone is too generic, because there are several axes of
+>>
+>> Yes.  You need to specify what you are canonicalizing to, and once
+>> you are going to do so, there is no need for that heavy verb, i.e.
+>> you do not need to say "canonicalize it to realpath"---you say "turn
+>> it into realpath" and you convey what you want to say just fine.
+>>
+>>> All of this illustrates the difficulty in choosing a single term to
+>>> unambiguously convey the meaning. I chose to write a commit message
+>>> that favored technical precision, even if it meant tending toward what
+>>> Junio called "the more verbose and repetitive side". I believed that
+>>> to be necessary to fully explain the background, the problem, and the
+>>> solution.
+>>
+>> Yup, that is why I said I thought your original was clear enough.
+>>
+>> I am tempted to say that we take what we have from you and merge it
+>> down.
+>>
+>
+> Thanks for the long explanations.
+> I still stumble across the headline:
+> t: run tests from a normalized working directory
+>
+> Re-reading the help for realpath() and pwd, would this makes sense:
+> t: run tests from an absolute pathname
 
-I've been banging my head against this issue for a bit today. A couple
-of findings:
+No. As I wrote earlier:
 
-  - The issue is specific to Git for Windows, I could only reproduce it
-    when working with aa550efd0bb (fixup??? survey: add command line
-    opts to select references, 2025-05-08).
+> An "absolute" path is well-defined and commonly understood to have a
+> singular meaning. These paths are relative to the root directory, and are 
+> identified by a leading separator (/). POSIX specifies this at XBD.3.2[1] 
+> and XBD.4.16[2].
+>
+> This change is not concerned with absolute paths. All of the paths in
+> question are absolute, both before and after this change.
+[...]
+> [1] https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap03.html#tag_03_02
+> [2] https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap04.html#tag_04_16
 
-  - When working on top of the above commit the bug is consistent. It
-    doesn't only happen in GitHub, but also happens in GitLab CI [1].
+Making a path absolute is a different transformation than what is at issue 
+here. You may have been misled by the fact that pwd -P and realpath both 
+make paths absolute in addition to performing symbolic link resolution. 
+The latter is what's operative here.
 
-  - That being said, I still can't reproduce it locally?! This one is
-    quite puzzling to me. I have tried to get my environment as close as
-    possible to the environment we have in the CI systems.
-
-  - I have a fix, see the patch further down. But I don't understand
-    that fix just yet.
-
-I saw that all other sites where inject a custom receive-pack command
-also use a wrapper script, so it's not the worst thing to do. But it
-would be great to understand why this issue exists in the first place.
-
-Patrick
-
-[1]: https://github.com/pks-t/git/actions/runs/15416185892/job/43379399861
-
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index f76a22943ef..112da408d45 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -49,9 +49,13 @@ test_expect_success 'receive-pack missing objects fails connectivity check' '
- 	git clone --bare repo setup.git &&
- 	git -C repo commit --allow-empty -m 2 &&
- 
-+	write_script receive-pack-wrapper <<-EOF &&
-+	tee "$(pwd)/out" | git-receive-pack "\$@"
-+	EOF
-+
- 	# Capture git-send-pack(1) output sent to git-receive-pack(1).
- 	git -C repo send-pack ../setup.git --all \
--		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
-+		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" &&
- 
- 	# Replay captured git-send-pack(1) output on new empty repository.
- 	git init --bare remote.git &&
-@@ -70,9 +74,13 @@ test_expect_success 'receive-pack missing objects bypasses connectivity check' '
- 	git clone --bare repo setup.git &&
- 	git -C repo commit --allow-empty -m 2 &&
- 
-+	write_script receive-pack-wrapper <<-EOF &&
-+	tee "$(pwd)/out" | git-receive-pack "\$@"
-+	EOF
-+
- 	# Capture git-send-pack(1) output sent to git-receive-pack(1).
- 	git -C repo send-pack ../setup.git --all \
--		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
-+		--receive-pack="${SQ}$(pwd)${SQ}/receive-pack-wrapper" &&
- 
- 	# Replay captured git-send-pack(1) output on new empty repository.
- 	git init --bare remote.git &&
+As I've explained, the paths in question are already absolute in git's 
+test suite today, even without the proposed change. It's not correct to 
+summarize the change as making paths absolute, when that's neither 
+changing nor the crux of the problem.
