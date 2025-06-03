@@ -1,115 +1,119 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871F125B9
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 06:22:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01FB4A1E
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 06:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748931784; cv=none; b=YsjZdcgpkd6YDK4pDIIgohTEzZiF2SRMbfdhhPcE/78rGfG95dYwgq0HuqBRVcFFu/GnrUom0nEtA234btCW1sLtCjkfCA+cfCHecVDtvO6Au9wMTl+6zTONnanS1O4zF7dSzDo7L41l9EZA4mZEUGE/yMTBbfqmcgXkMCfeDuQ=
+	t=1748932499; cv=none; b=OS5wJAEJkZr9a2w6kXowaSU0L9l4DhQrLC9BwsQuhVvlNqVUcIU2O1/pYw6D54FDpJeifMi2oOFJmfx02jeZQ4ZrgqjPnWrcnrjtMvK4WDfJYU8x5+GQNl75hAbPyqJt52eCnBP5a2kvb7RkBfvviW3g4kgZ7Kg2HUQwXBHbqp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748931784; c=relaxed/simple;
-	bh=bLklumOYaKtYw47bWp/sqlqXypLCR5LgXfwnI5/14aE=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=CodbY8cAJlAya/tnRtWB0W+fVNJBKh+HnNVSHuhLrRQPumpmZIIyPTF3qQNb0QL1vbu0UA9gOcXPkRfsqJJ2ArcHL4hT4LXW4FRHt5VvuUBcTz+2QZ45L4FbyPasb1wM6WK2SnDfl0V3CGblie0ucrylefNeueQYepHO/BvMZdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: zesmtpgz6t1748931741t3edc2f9c
-X-QQ-Originating-IP: UsdGkSFuNmq36wShTgQ8i1m7XtdyNHO/bK3XCKUUUcU=
-Received: from smtpclient.apple ( [36.152.24.158])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 03 Jun 2025 14:22:19 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 8944345138388384496
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1748932499; c=relaxed/simple;
+	bh=jjtp13TPHDWH1ueQ234Hog2trasoGLnIM7Ut7XNwzMw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WDFSlz4ntLFoqLVtYkciO6+6B0tvE6+0B8Do9nCeHxWX5syovZB7vju65eb7pm8I9dzqCBcfT1oKcjs6ooj8vdLJ4LInuvis4w6+sQINdfGJNQW+Wf56SN6Sp3jYQ+zLWY03M4QJMDrKxVsRdrcdyDkr2Hh4XNFKwgl3GKSbr4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c1s9CBTh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DZU8GEte; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c1s9CBTh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DZU8GEte"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6541E254018B;
+	Tue,  3 Jun 2025 02:34:56 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Jun 2025 02:34:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748932496;
+	 x=1749018896; bh=3IMkMeFRLdifasYv3j9q7YkL5w1e+zkSMRXkNF2ch98=; b=
+	c1s9CBTh8JCedeeTPDh+P8eS/wi1+mZdegQCjA+hJMOKKFNBOnkzWlS8E8FUWk8T
+	Xm8b6QjDNqlmnQjR7mYqYc+8opf1wqKCWIKcpRzi0/cLUJtCsx0sq3/4R+U9MOvq
+	DE4x5g5N7Bpa8HujIH6NRFxGyqjkmAXGNEVsWtOzFHlSMhcKXauxfuUPMgP30eu8
+	XClIPqtzFyqD0SFmMXptEuXFShh+IK9yI3N+VL28O2KUufg5R2WEHsE5+tGDqWBd
+	Tn1vlZ9l/H0q6O5OoA+6fTRTPH5Kfsj2N63z7HxmW08s8ejW6kSokX/3A9rZfKlc
+	ZgWxV+QCeKHEecIz6ZGnqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748932496; x=
+	1749018896; bh=3IMkMeFRLdifasYv3j9q7YkL5w1e+zkSMRXkNF2ch98=; b=D
+	ZU8GEteCCn+wXOM7Q4jH/W8J0l8TUTa+3wSJgVE5FhyGcYJY44tQ9zbOjciuehuQ
+	ox2gATWnTGaLDqNaBT3A/YaBjmPyHaDTc+R2HLVXwkcBuo06DD0sXPheaH+yXndz
+	udUTzHAKjiOcQm1iwLj0o/u7nG6yfqcaib7VfFch1zsIVyFlq477ZL8RU/HEPyEh
+	mmRtec6+Aa0fOiUQTIm4p7b7VGtHcfPowfIq1aWrz6B6us6l9WoBJS5pVAYMI9BK
+	VoiTQ/yx3Bpexp8iILLNvSVdX7hNOmA7mRkndiTgi2PfIjSGFBTa4tF254zW1rIe
+	05DlBf85JAiLIKEFLmKKQ==
+X-ME-Sender: <xms:j5c-aBfEZH3Tqd7nQ_etXJFK7FYJDLKaKRhbIP8kqk-7rASXDkMUkg>
+    <xme:j5c-aPNDPutOask9873Lm2dmWKIMBtPr696QbTh9onzMpG8-mkILrCK6dCbszq-0q
+    4qW6ozJH-wXhnNK2g>
+X-ME-Received: <xmr:j5c-aKiY82-V4Wc-BfNkxcmVP6f89oqySmOHlHgvVYmsptYS7CltoL7XqKFeEv-XN8iFzEtu_FBHWv6iLRN7u6Q5HUagZsz9WgOqUZVgJg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleekgeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
+    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleeh
+    ieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
+    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehkrhhishhtohhf
+    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehnrg
+    hsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeihrhhothhhsehprghlohgrlhhtohhnvg
+    htfihorhhkshdrtghomhdprhgtphhtthhopegurghsrhgrfhelsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:j5c-aK9bojUgSQNR7A5LgL2LMeYg81kTBEhxc_TZepfR-c68Bva1mw>
+    <xmx:j5c-aNsHGDiQ582CUvnBhs4dyYxN1GraXly2aJyUqKrLKPbrJsJD-g>
+    <xmx:j5c-aJG2FCKjrmXQGiL9WsqWMwH7jO_gbYWN-1ZPxg7yNCXVJvRjdg>
+    <xmx:j5c-aEOTIZ3fIvDueNuUX-4F_kR7D6CDo-rxr4MTC_sE9hZiuwCYpg>
+    <xmx:kJc-aNNM9EIsoHQYCgjUFk7zuHfs-ED8zfU-WloVviM3El5K3YCSm1Mo>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Jun 2025 02:34:54 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b61d4859 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 3 Jun 2025 06:34:52 +0000 (UTC)
+Date: Tue, 3 Jun 2025 08:34:47 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, Yonatan Roth <yroth@paloaltonetworks.com>,
+	david asraf <dasraf9@gmail.com>,
+	Emily Shaffer <nasamuffin@google.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v3 09/12] builtin/maintenance: fix locking race when
+ packing refs and reflogs
+Message-ID: <aD6Xh8kKUu0Y7sr-@pks.im>
+References: <20250602-b4-pks-maintenance-ref-lock-race-v3-0-587d44252dcb@pks.im>
+ <20250602-b4-pks-maintenance-ref-lock-race-v3-9-587d44252dcb@pks.im>
+ <cab8e175-e977-41b1-b53d-6b9170c9e416@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v3] pack-bitmap: remove checks before bitmap_free
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <xmqq1ps1s698.fsf@gitster.g>
-Date: Tue, 3 Jun 2025 14:22:09 +0800
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>,
- Eric Sunshine <sunshine@sunshineco.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <0BFD6581-2BB9-439B-9837-767FA98900C5@smail.nju.edu.cn>
-References: <pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com>
- <pull.1977.v3.git.git.1748915181113.gitgitgadget@gmail.com>
- <xmqq1ps1s698.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: N0mS+7D7RQfjyfk76+YTZgQMVzQr/tA73RTZgxagEisuqjXYX4mm38x5
-	jBGJEbRbdZDTAPz55/RFQTo6qKcOvg/hPO9G8kwRvCh7Ssbe10jy22M2fbbzg0UyTDd8kIs
-	E0h9SKZxtV5KbwA5aOhwz+97LhavHVnA9oNtII74BtFDA0inysiCdXAnTxI/vkgre3c7VwR
-	xMn1NAjvgL01C2d8fnY8Hlzi3yDj5TJKrH+h5JV+DancGd6nUq4EGKDKnNe0+x7NSyV/UBp
-	oPZlppCETnZzW9BRQDy4m/FgvQjYhuc7crbTPmuXCwo1Df4XEDwwJcRtbGt3jgwp2y6y0GB
-	t0oQvx8+NTjp+9WaVP5pYIL2t0KnP3sKbIhKniLarHPrtTpt+XZRhG00b1nBKSPBLOkfkOX
-	LHRCkicvEv+SvTyHGpmLaUjfDpatyvF+ueUnx6/CvDSgMV2OetOG8iQHfPvp7FXJ8GiPXUM
-	JaDUyCwB2qQeJrEPq7eNxLA22HhukJK0w36QdSq9WNZzCe6iEYgaI2Zk7Sfsur+XQdUVCKT
-	TNSNcJkXDIg6Bj0+qYP4kyeawqI34p8ijaNpZsO1bDRxX48ghFhWgHzEAc9IIWczo3+vHN/
-	cuy8auzbGGnq9OOY9NRHcMLITzG09hLXKHAtD7i/tM4kKJXT1Nig/vkQsauEzi3EWvW8oYk
-	9cjljZK0WZXCQINyjQCVgnTTdlaqW6jH4cNr8ZSni8cEDRdyfETYDywjjm69nLFbC+JhEbn
-	b68JyquvtHNbDgPsp6nMy1xx0w9WlBIDvh5BVg25IAREGIGUNwZ0GPumL06BTWv854M506Y
-	06S/Chz4soRPHGCpXHeRBvwd+nnSoUfd1JamvjEG/eENc3/piDPGIEjOdaMWz4FZ8uDI6vm
-	PQHBY+NLEG/sGutghgjdhjddHwbiQ6S4KYUG+Yf7Td0DGYLKen7rVOI3SdIpDrGRZABZdJR
-	Aav8gMBNg/zGLcRwegy/rbMDtDNK6yrBN668PEeXQIWOx0vNQaxVAPwTMf9DcGlr1thDhup
-	ZvtWiudUrVRZp/OoW3yIB6q1Yt+LM=
-X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cab8e175-e977-41b1-b53d-6b9170c9e416@app.fastmail.com>
 
-2025=E5=B9=B46=E6=9C=883=E6=97=A5 14:12=EF=BC=8CJunio C Hamano =
-<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
->> +test_expect_success 'use pseudo-merge in boundary traversal' '
->> + git init pseudo-merge-boundary-traversal &&
->> + (
->> + cd pseudo-merge-boundary-traversal &&
->> +
->> + git config bitmapPseudoMerge.test.pattern refs/ &&
->> + git config bitmapPseudoMerge.test.threshold now &&
->> + git config bitmapPseudoMerge.test.stableThreshold now &&
->=20
->=20
->> + GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=3D1 &&
->=20
-> Either before or after that line, don't you need to=20
->=20
-> export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL &&
->=20
-> as well?
->=20
-> And if the test passed without exporting the variable, is it really
-> testing what we want to test?
->=20
+On Mon, Jun 02, 2025 at 12:03:21PM +0200, Kristoffer Haugsbakk wrote:
+> On Mon, Jun 2, 2025, at 09:17, Patrick Steinhardt wrote:
+> > As explained in the preceding commit, git-gc(1) knows to detach only
+> > after it has already packed references and reflogs. This is done to
+> 
+> I’m a naïve reader.  When I read this I immediately thought that reflogs
+> can be packed now.  But going by the last paragraph it is packed
+> references and expired reflogs?
 
-Sorry about that. I should put =
-GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL
-In front of `git rev-list =E2=80=A6` so that when traverse bitmap it =
-enters `pack-bitmap:find_boundary_objects()`.
+Yeah, I see how this is misleading. But indeed, it is packing refs and
+expiring reflogs. I've rephrased this locally, but if that's okay with
+you I'll hold off sending a new version for just this change.
 
->> + test_commit A &&
->> + git repack -adb &&
->> + test_commit B &&
->> +
->> + echo '1' >expect &&
->> + git rev-list --count --use-bitmap-index HEAD~1..HEAD >actual &&
->> + test_cmp expect actual
->> + )
->> +'
->> +
->> test_done
->>=20
->> base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
->=20
+Thanks!
 
+Patrick
