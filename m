@@ -1,55 +1,55 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9277239581
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:01:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 073872397AA
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:01:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748959285; cv=none; b=CXTVMrcCgSSBGLJok2QqDPFoPU3r8ALmmNre6wcqhl4X6Qsz0Jt93UzFkzzaQvagCrkmTKg/N4FK63XT92MrFyMapKXm52VWWfo6yVRkO6TbuKXIbxXzICojJd/wzauxCwwWAiZw8c6PpRd/iAg35xyRjg7CcyJv2EWhwHeRdb4=
+	t=1748959286; cv=none; b=Au4uOMeZtSbC68gFA8yRLshjEYgBhH5sf2a+TQTQQuaaDBPVNNF8YHj/zRWPupUL4c7HINLuyRnvPdjC846+ycKGDr36zDOa21BVbZGCvC7ipiyIo4nQpoKknl7/FZyCf6pSsqLjpKYFHwIZInkKn1I85JSSXuiVQ3q9NDQlRS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748959285; c=relaxed/simple;
-	bh=ZxAdrZxoinaIGXPBJuU36AMgf2T5J4e0LWz/vCBimAI=;
+	s=arc-20240116; t=1748959286; c=relaxed/simple;
+	bh=sqTYdPN8weVWfpZw6wwovNCzXsqqBkDFHHsyQWvtdG4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=MoN8ayAqukcPJ3BrT9jEh6FH8GThZCeu10AxhaY7s0PgmiFNb2g7ytCtaFc2F8Gbq1mlBPnFzWUmk2KvXOQwgcohqUn27d2iE+LAXw33PHlKiWDON1F6tyH73wTFkYMrPOxpOUvcbEAbp8GjxPFfHBxsa99ONQAr54Dn+8otcqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DiGZG0P0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ffeFJ09y; arc=none smtp.client-ip=202.12.124.146
+	 In-Reply-To:To:Cc; b=TomWxDjRgJytA3sjX9HXpBZfUBSA+0Drx8iiDVWrum+8MOg3pavD/1ljkDFxlOlabnbuGGf3ee2ndWBLALkbJ9rgh5cp/6AMWPI/zjf7fXwU8BKw9EaEm9wfhIzeTLTUISRycEBrKyaY45Hjcl73620m3F1pgCeAbM1LrBfoZW0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AWZEmeW3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hKrV9EPL; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DiGZG0P0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ffeFJ09y"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id A6DD311400EA;
-	Tue,  3 Jun 2025 10:01:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AWZEmeW3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hKrV9EPL"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E53B425400D4;
+	Tue,  3 Jun 2025 10:01:23 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 03 Jun 2025 10:01:21 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 03 Jun 2025 10:01:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748959281;
-	 x=1749045681; bh=pzTZ2yQNnqPm4SaT0MFL7MMCYU6InVZTCVDRTpNvJ7g=; b=
-	DiGZG0P0WgiFZ+zYSDzZ2yYv7j0mTLWmM7+qjmo3KT2sc3JWfpFJqLIkPcxTzDUI
-	j2OsOyDbIXr9xlkPYD8Q3IABZEzVOUAlYS9WwMYeEFZWA24D97JFWGotTdCirAwJ
-	G7RqdCM6UaQPaqOdNMwZ/QknBS+voWBkX2+vs4kkE4gz8hpo8cncTHuSjLvTy8nR
-	AufVTkgpvQ6B90YpbSiksJDOAY/Gl90wuqw7S6YQKZLSD5txrtWSgb3kkPaml10u
-	5GK1B0QftfijyDrfr4SjHvw4x7EJZe60LliqCUxaWISoSb/f8Y0xbzIdfPYVfWpH
-	fNE5fmvL02bdBJmNugNwWQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748959283;
+	 x=1749045683; bh=M55H5v+2c7bOeWHUWap7xegTM3DkcfOPUm1nftBKTc8=; b=
+	AWZEmeW3xOA8JEVq/OPDDSyOJptisbgNfaDVsvz5rZ5No2GXvOcAmJqHSj4uftLf
+	/OdRK/kW/TiA+/0gWIxfXp/d9SrEstTdQNihvjYQa3olyf+TFTG0x2GFNBVT5yrX
+	KUoT5GK2lPX1C4QOZ+I/VgU5AMvZQzsI8IfgOReU5zA4HTcD8zV1Hz3F9/b4IVp8
+	rPG+94ZD+Xb+dpHAdnk3+u0LdAkttSWNAY3WcJqmGnpsNc3XmfXG//SaeDqq9SER
+	hKTCsSVOjUvYUxg2vC87mJxVPUUR53mJwshyn0s39VhydrH0XwMvV2WYQSsfvubH
+	r6byjqZDkSCekxgQxFF/Qw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748959281; x=
-	1749045681; bh=pzTZ2yQNnqPm4SaT0MFL7MMCYU6InVZTCVDRTpNvJ7g=; b=f
-	feFJ09yihi7Xjn5EcBqsyVNn88EJv/dYnMi3/y+LLEfzwjTU5emcL1JuKlogyUDX
-	puYONhvBJBLjC1Gy9NsQprdWx0LpAhbcInnbU+2EpBKgZb+/lj3xkCPKaekB3GoI
-	oUpGSfffbU02AKGrr+w4PXyrV060DYwmsCeDApuZtawugjOJOoMFrq+d+qcbztdl
-	45gU+azSkNl1IsYQ/EWH6j8J3Gwy1Ju4b+NcHBB3o4/MreSqkNx5Aio6obOaThzF
-	lcW6wkqnjNL1lbgz67RbAQ05znh1x0YEL/3He6/6fvY4iz5kk4YyIXoUPHRhpFyp
-	YYJhd6Y/wTiHRhhk3GIgA==
-X-ME-Sender: <xms:MQA_aK6vnK29DlljhTb3eSJfBDYTTAVdTbaMM8sw6gy4-RVjeEjewA>
-    <xme:MQA_aD4969Fy69NkMgpxgwm8Hfw408SeA_y9y2OMNmFovWSdZsLMf1_RCjebxOqqc
-    IO0pyGacR51Eza8eQ>
-X-ME-Received: <xmr:MQA_aJcft-qgFXT4FyyqGtkUOXgjTLcTg1D6KQkPl-RVjcGDnaBbJ9P4zjO2hR5K-8vOBcnnvA8yef4gabb5aaTXfGXHRMx4KJiHbNf46w>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748959283; x=
+	1749045683; bh=M55H5v+2c7bOeWHUWap7xegTM3DkcfOPUm1nftBKTc8=; b=h
+	KrV9EPL6y2bFsMygtz0ahM2avpu7R1JwGVwVl1/YKw1Zpbda8xEd4nwR6aLOzIhs
+	KDgqMXhbJmM6htDG4wwuevaJ1GvNIWpb8gZmTNQHaWprFeD+G3Ofwdj7bw82hLHC
+	PivTi8hvld+7zXCbybzIKMCWQ9yrUnNJuzIJkEvNxgQXvsgzx6Jt3HHPpf4Cl4L7
+	QRtATcReHVaKRcQXKvEkZbZ2m4xutMhrWk9qyLP+/cLXcQKwPRtMBPF0/epV5A1M
+	kur84W6Tn+2L91Fr/L8IyAnEZr+DgCwmOxEcUJb4urHVJiCqeuWhfTp4Ea+NvCvT
+	VeEfRIMdDaMwpNLAeZ1nA==
+X-ME-Sender: <xms:MwA_aA9a4S1lzCjt2QKHdhNMvNZiSu3EesgAl89f0FSbwnzCHz1-Lg>
+    <xme:MwA_aIvupk_1cUMk7hi-vZN44paeysHdPH0z8HswmxatAmWZiSSZOpLwr46dFaIKd
+    gRHXn3OfYKZZoNWlg>
+X-ME-Received: <xmr:MwA_aGDL6E1eJl7Jqstd_f5WRsijjZDwAiEbKCNviu3XDEtpwHUljVvm4pFSxAy-kHfKbIfKnx7wcvhIoNcTVBK4qFflQTp4vB1D09vwpA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -58,29 +58,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegvdcutefuodetggdote
     eqnecuggftrfgrthhtvghrnhepffeuiedujedvkeehuedvkeefffeivdeuleetkeduheej
     teekgedvudfgtdfgieelnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
     hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepuggrshhrrghfleesghhmrghilhdrtghomhdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopeihrhho
-    thhhsehprghlohgrlhhtohhnvghtfihorhhkshdrtghomhdprhgtphhtthhopehrrghmsh
-    grhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepsggvnhdr
-    khhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:MQA_aHKJccwOP6h5h_DNQ4Mmyr3lgyuovpbzeB-Tokxa9ltK7bk1yw>
-    <xmx:MQA_aOK1L9vdgkElH52-cHxCoLM0xdzH5gKtLE4YNunrXwxxl--r7w>
-    <xmx:MQA_aIwZ-Fm1o1J--VW8XHyhAFC_zbXheGeFcWqOLQk72GHVqaFhxw>
-    <xmx:MQA_aCI6RJ3QtlsC4fFI56EwMP6vUxOSi6pY75974cIffeRUlgdj2w>
-    <xmx:MQA_aNKv87Xcezjz0qZpzFxbmPa1-NSOm6cmDCzB2A7AHNbD5yfA0OvA>
+    mhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrh
+    grmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohephihrohhthhesphgr
+    lhhorghlthhonhgvthifohhrkhhsrdgtohhmpdhrtghpthhtohepuggrshhrrghfleesgh
+    hmrghilhdrtghomh
+X-ME-Proxy: <xmx:MwA_aAdEOlTEAGZKahGHoAHqJS-ZdxDf0BVdPJ1kjsa4-xil6-GAWw>
+    <xmx:MwA_aFMFpTot5mAfPBiPZAPjf5f6CJxtgTg2zPKsib9I8H_VsDSqfw>
+    <xmx:MwA_aKlydp7K0uas1XqtDAvUJqqQuRRl-WjWzU260ah9-QBUTts_FQ>
+    <xmx:MwA_aHs53JdFiv_UbaQaXl8DXJKXOK0oRMHujCdCrjwSvqnByFeERg>
+    <xmx:MwA_aAODAUhXJZI0mBL6p2SuyV8N9xihYTf9ITUi0fmeotE1MQzfggzY>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 10:01:19 -0400 (EDT)
+ 3 Jun 2025 10:01:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d624fee8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 3 Jun 2025 14:01:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 88c61e6b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 3 Jun 2025 14:01:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 03 Jun 2025 16:01:09 +0200
-Subject: [PATCH v4 01/12] builtin/gc: use designated field initializers for
- maintenance tasks
+Date: Tue, 03 Jun 2025 16:01:11 +0200
+Subject: [PATCH v4 03/12] builtin/maintenance: centralize configuration of
+ explicit tasks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250603-b4-pks-maintenance-ref-lock-race-v4-1-52f5cf7b7e99@pks.im>
+Message-Id: <20250603-b4-pks-maintenance-ref-lock-race-v4-3-52f5cf7b7e99@pks.im>
 References: <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
 In-Reply-To: <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
 To: git@vger.kernel.org
@@ -101,96 +101,155 @@ Cc: Yonatan Roth <yroth@paloaltonetworks.com>,
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-Convert the array of maintenance tasks to use designated field
-initializers. This makes it easier to add more fields to the struct
-without having to modify all tasks.
+Users of git-maintenance(1) can explicitly ask it to run specific tasks
+by passing the `--task=` command line option. This option can be passed
+multiple times, which causes us to execute tasks in the same order as
+the tasks have been provided by the user.
+
+The order in which tasks are run is computed in `task_option_parse()`:
+every time we parse such a command line argument, we modify the global
+array of tasks by seting the selected index for that specific task.
+This has two downsides:
+
+  - We modify global state, which makes it hard to follow the logic.
+
+  - The configuration of tasks is split across multiple different
+    functions, so it is not easy to figure out the different factors
+    that play a role in selecting tasks.
+
+Refactor the logic so that `task_option_parse()` does not modify global
+state anymore. Instead, this function now only collects the list of
+configured tasks. The logic to configure ordering of the respective
+tasks is then deferred to `initialize_task_config()`.
+
+This refactoring solves the second problem, that the configuration of
+tasks is spread across multiple different locations. The first problem,
+that we modify global state, will be fixed in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 54 +++++++++++++++++++++++++++---------------------------
- 1 file changed, 27 insertions(+), 27 deletions(-)
+ builtin/gc.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index e33ba946e43..54fc7f299a9 100644
+index 7adda8d2d0d..c4af9b11287 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1550,49 +1550,49 @@ enum maintenance_task_label {
+@@ -1690,15 +1690,22 @@ static void initialize_maintenance_strategy(void)
+ 	}
+ }
  
- static struct maintenance_task tasks[] = {
- 	[TASK_PREFETCH] = {
--		"prefetch",
--		maintenance_task_prefetch,
-+		.name = "prefetch",
-+		.fn = maintenance_task_prefetch,
- 	},
- 	[TASK_LOOSE_OBJECTS] = {
--		"loose-objects",
--		maintenance_task_loose_objects,
--		loose_object_auto_condition,
-+		.name = "loose-objects",
-+		.fn = maintenance_task_loose_objects,
-+		.auto_condition = loose_object_auto_condition,
- 	},
- 	[TASK_INCREMENTAL_REPACK] = {
--		"incremental-repack",
--		maintenance_task_incremental_repack,
--		incremental_repack_auto_condition,
-+		.name = "incremental-repack",
-+		.fn = maintenance_task_incremental_repack,
-+		.auto_condition = incremental_repack_auto_condition,
- 	},
- 	[TASK_GC] = {
--		"gc",
--		maintenance_task_gc,
--		need_to_gc,
--		1,
-+		.name = "gc",
-+		.fn = maintenance_task_gc,
-+		.auto_condition = need_to_gc,
-+		.enabled = 1,
- 	},
- 	[TASK_COMMIT_GRAPH] = {
--		"commit-graph",
--		maintenance_task_commit_graph,
--		should_write_commit_graph,
-+		.name = "commit-graph",
-+		.fn = maintenance_task_commit_graph,
-+		.auto_condition = should_write_commit_graph,
- 	},
- 	[TASK_PACK_REFS] = {
--		"pack-refs",
--		maintenance_task_pack_refs,
--		pack_refs_condition,
-+		.name = "pack-refs",
-+		.fn = maintenance_task_pack_refs,
-+		.auto_condition = pack_refs_condition,
- 	},
- 	[TASK_REFLOG_EXPIRE] = {
--		"reflog-expire",
--		maintenance_task_reflog_expire,
--		reflog_expire_condition,
-+		.name = "reflog-expire",
-+		.fn = maintenance_task_reflog_expire,
-+		.auto_condition = reflog_expire_condition,
- 	},
- 	[TASK_WORKTREE_PRUNE] = {
--		"worktree-prune",
--		maintenance_task_worktree_prune,
--		worktree_prune_condition,
-+		.name = "worktree-prune",
-+		.fn = maintenance_task_worktree_prune,
-+		.auto_condition = worktree_prune_condition,
- 	},
- 	[TASK_RERERE_GC] = {
--		"rerere-gc",
--		maintenance_task_rerere_gc,
--		rerere_gc_condition,
-+		.name = "rerere-gc",
-+		.fn = maintenance_task_rerere_gc,
-+		.auto_condition = rerere_gc_condition,
- 	},
- };
+-static void initialize_task_config(int schedule)
++static void initialize_task_config(const struct string_list *selected_tasks,
++				   int schedule)
+ {
+-	int i;
+ 	struct strbuf config_name = STRBUF_INIT;
  
++	for (size_t i = 0; i < TASK__COUNT; i++)
++		tasks[i].selected_order = -1;
++	for (size_t i = 0; i < selected_tasks->nr; i++) {
++		struct maintenance_task *task = selected_tasks->items[i].util;
++		task->selected_order = i;
++	}
++
+ 	if (schedule)
+ 		initialize_maintenance_strategy();
+ 
+-	for (i = 0; i < TASK__COUNT; i++) {
++	for (size_t i = 0; i < TASK__COUNT; i++) {
+ 		int config_value;
+ 		char *config_str;
+ 
+@@ -1722,33 +1729,28 @@ static void initialize_task_config(int schedule)
+ 	strbuf_release(&config_name);
+ }
+ 
+-static int task_option_parse(const struct option *opt UNUSED,
++static int task_option_parse(const struct option *opt,
+ 			     const char *arg, int unset)
+ {
+-	int i, num_selected = 0;
+-	struct maintenance_task *task = NULL;
++	struct string_list *selected_tasks = opt->value;
++	size_t i;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 
+-	for (i = 0; i < TASK__COUNT; i++) {
+-		if (tasks[i].selected_order >= 0)
+-			num_selected++;
+-		if (!strcasecmp(tasks[i].name, arg)) {
+-			task = &tasks[i];
+-		}
+-	}
+-
+-	if (!task) {
++	for (i = 0; i < TASK__COUNT; i++)
++		if (!strcasecmp(tasks[i].name, arg))
++			break;
++	if (i >= TASK__COUNT) {
+ 		error(_("'%s' is not a valid task"), arg);
+ 		return 1;
+ 	}
+ 
+-	if (task->selected_order >= 0) {
++	if (unsorted_string_list_has_string(selected_tasks, arg)) {
+ 		error(_("task '%s' cannot be selected multiple times"), arg);
+ 		return 1;
+ 	}
+ 
+-	task->selected_order = num_selected + 1;
++	string_list_append(selected_tasks, arg)->util = &tasks[i];
+ 
+ 	return 0;
+ }
+@@ -1756,8 +1758,8 @@ static int task_option_parse(const struct option *opt UNUSED,
+ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 			   struct repository *repo UNUSED)
+ {
+-	int i;
+ 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
++	struct string_list selected_tasks = STRING_LIST_INIT_DUP;
+ 	struct gc_config cfg = GC_CONFIG_INIT;
+ 	struct option builtin_maintenance_run_options[] = {
+ 		OPT_BOOL(0, "auto", &opts.auto_flag,
+@@ -1769,7 +1771,7 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 			     maintenance_opt_schedule),
+ 		OPT_BOOL(0, "quiet", &opts.quiet,
+ 			 N_("do not report progress or other information over stderr")),
+-		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
++		OPT_CALLBACK_F(0, "task", &selected_tasks, N_("task"),
+ 			N_("run a specific task"),
+ 			PARSE_OPT_NONEG, task_option_parse),
+ 		OPT_END()
+@@ -1778,9 +1780,6 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 
+ 	opts.quiet = !isatty(2);
+ 
+-	for (i = 0; i < TASK__COUNT; i++)
+-		tasks[i].selected_order = -1;
+-
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_maintenance_run_options,
+ 			     builtin_maintenance_run_usage,
+@@ -1790,13 +1789,15 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 		die(_("use at most one of --auto and --schedule=<frequency>"));
+ 
+ 	gc_config(&cfg);
+-	initialize_task_config(opts.schedule);
++	initialize_task_config(&selected_tasks, opts.schedule);
+ 
+ 	if (argc != 0)
+ 		usage_with_options(builtin_maintenance_run_usage,
+ 				   builtin_maintenance_run_options);
+ 
+ 	ret = maintenance_run_tasks(&opts, &cfg);
++
++	string_list_clear(&selected_tasks, 0);
+ 	gc_config_release(&cfg);
+ 	return ret;
+ }
 
 -- 
 2.50.0.rc0.629.g846fc57c9e.dirty
