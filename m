@@ -1,83 +1,72 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793881E8356
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 18:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB6B748F
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 18:56:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748976099; cv=none; b=Ccoi2BstJJWjDmDJXF1wJdtZpfurBDkFDtKSwpWHW0v0tSKYSUDM3VDXXuaxcQXmlTqkFVQDZ8kGtkuZps0XCvZ7YaXWfBYK6mATjw9mGMuTCgJWCvFAd4Ff4ciqnQMWlvMRpQmZ20CEKZNPVawc496CjhmEAhDdPXFRKO3xuDY=
+	t=1748977000; cv=none; b=kXfzLrSTms3hUp2Oa86MdKl1lPRX0MJ0bVnVh3b9Y9tiAMjqlRLsJXvth9/x2PzJLCFdwNXRQLiEE8AdFvmGZJWgfIJYOobt2GooRvODm7eVuBOagbQyd78tUfyo5nZLkvyUtgKkR72xwgEzSzh290PCrK8lZxTQgM4hT936y90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748976099; c=relaxed/simple;
-	bh=LG6nrm74DTxPe36FHF++mP63j03GGv9tbqPw79DbLtM=;
+	s=arc-20240116; t=1748977000; c=relaxed/simple;
+	bh=JbfVYHnfNv+hUWZjgbvXxCjYYHnOW0Qf8RZQBgqLWSM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=reTYoUOxDDeQcwDKezntq4JZnFuANgPcfLOsFsN3v/cgAp5EnV/1joaffFg2C3jHwCaLnWnK4wDVYopXdz81G26Cxqy4YWGSXWFI3pYJ7hmWca+Y9OcIrNBg9KGXtod0EBY39ieqirODf29+7sriquvVdmpz8QvU3GXlVd2mF3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KrHQ+8FU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MC3Ojw+8; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=OgLk/NuAHS+N71M2dOqaGQF+WtlWTFjssEVEeRE6qlJEBW+QOygswEjdmpTIHfMEeVENQNagu5vddGQW0Hup5t2nC+7owSsQfeqySvhs91GrG0eDX2HgoDWnMuEmALnFOQUmOB1gudQkQNeVvy2ePGgFhRxV6maODQADE7DQR1g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RI65I9Yu; arc=none smtp.client-ip=209.85.215.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KrHQ+8FU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MC3Ojw+8"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9324111400D7;
-	Tue,  3 Jun 2025 14:41:36 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 03 Jun 2025 14:41:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748976096; x=1749062496; bh=kQhaEm2tEG
-	NFSmfwWATLz+iEmEPxvOPQVvsPIhpIjIs=; b=KrHQ+8FUA7GpigxgVmLz8huZQd
-	Mh/uK0LezBkPDlag+cDPdTF9KsPO53D191ye8sqdh+JW0YEqOxXO8M7BBf37bxOW
-	QR4r9/4THXf+CJTEHSFc1z2FVmzMhlWe/kt1CfY2v+ViPSIjYSO6bcIs4DJCD8Ea
-	TRq6URAVnGfutgeaAtnMJX4gHL1O97gBJyx33hK/UO7L6AldgpxzU4RqDSkEj6D9
-	nLjaT/+zOoVCJzViODz1mRsMHK/aa5WCsCJJ8HKEevO+dCV/7iBhDyMBylACclgF
-	vFjXqMFuwroEOcoXP6+tXWcElzcjjO9dFrYWOsdbQmZvAjMw4TAhPVYyqI+A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748976096; x=1749062496; bh=kQhaEm2tEGNFSmfwWATLz+iEmEPxvOPQVvs
-	PIhpIjIs=; b=MC3Ojw+8fm50EE+3IwfQ6ohXjKfWE3M0VyhtcCZRL2bvKJAjm/v
-	jOOfH33RlqgJAyLYo4GfiNbxywfHQ2yUhFBNf4tZA557D9R0isClCAo9LhGAN8NQ
-	rC3mEvIwKMGjVdvwGqDfjRBaD/Tvf1nJqAtmBq7cP+2AV4b8cqNhCXIGvMe0BlTa
-	uS+hub26yMI2AUJzyu31pCVxsadIZ4wOw0K2RYLwQ+ZjkzXfAMR4uU6F9euu6UQo
-	/UHpxKNKo52jwrxMUIvoqzd+xHIFeX3lnJV7MLYrZK/eUcOKVBz9eVyZD7cVOHTR
-	oTmMmnrlpJA4DzCNW6SIM9D28GRxLAYsLHQ==
-X-ME-Sender: <xms:30E_aGYw2fb7cxfOkJNAjKqAIVvW3aTV2TAd3kEaPiFcLOdvbzswvQ>
-    <xme:30E_aJZb85WsY0EwbnDtqPBI2LBHnZZg2kdX3u3f0gpuHcUt_RdWgZ2lp3DN2Yn0h
-    lNRwhsn8LINtndNpQ>
-X-ME-Received: <xmr:30E_aA8bj_ZVixSRz0z7aOa3azgWJt1z4Yu79a0ABm-vzrBjOIQWuuIe_w9GEkz_z07k60147ubzN2Bf_3WsMIIcKCedW9lFOJLc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeljecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuhhfohhrihhjihelke
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehphhhilhhlihhprd
-    ifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:30E_aIpr9cXNAEQ-1bupv_9hY11O7Y1br9ZNd9YJW_mG9wU8oMO8dA>
-    <xmx:30E_aBqKmNOsh3GOpwxdL3Boyh5qEOzyNzI6_C0BhWQT-0ZkLsiUOA>
-    <xmx:30E_aGTF5IBUXjvmBU8dvBo_ExL7y-0Tz_dmeChNawB9VK4Cw-mQ8Q>
-    <xmx:30E_aBp1jY3nARU6nvxR_tQTN3Qs0o59mgrwe7wPImKCs4Q5pxTixg>
-    <xmx:4EE_aDC9kYbPwirXrOmfT5j2nzJ-KLt08UY0Ogc_Oc0BOhYH8bqF8VI0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 14:41:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 00/10] t/unit-tests: convert unit-tests to use clar
-In-Reply-To: <20250602122559.208780-1-kuforiji98@gmail.com> (Seyi Kuforiji's
-	message of "Mon, 2 Jun 2025 13:25:48 +0100")
-References: <20250602122559.208780-1-kuforiji98@gmail.com>
-Date: Tue, 03 Jun 2025 11:41:34 -0700
-Message-ID: <xmqqldq8is69.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RI65I9Yu"
+Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-7fd35b301bdso5784613a12.2
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 11:56:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748976999; x=1749581799; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zCyJI0Ts9x+gZrJYhP4PKYCguzXIvlKp7cu2R2eEFjw=;
+        b=RI65I9Yu0ommMal6mUag7kynIocXHRRGWIjw4kmrI+9jHH4PEKjr8gBtMq587kXZOw
+         An4A/0FAnkxuE2fwcTxtKfTk6SouZ2Uui7g9YZYWZvku77A8W9A/Ph+C+8lD9QFJhDs/
+         BriUn6cnc20J0tTQpJtqjy1jMxxN+TM4wyq1HxdL+01/4y81isVraEi75frNZCed6xXz
+         P47nyFMBRXbtDAb/EXCDJf1BxH1gsrQPv6DjotLL10vcVZs3F3Km3QCblRmqQRxnqUZa
+         ucyuuzMU0uH++TcwXzIpMmJ3CJwyTClGlqIG8gB4v8T8dtaO33Majx5s4eZqp1in+/mH
+         FyXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748976999; x=1749581799;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zCyJI0Ts9x+gZrJYhP4PKYCguzXIvlKp7cu2R2eEFjw=;
+        b=L8ptK6ktQnjCvjewhYI4a05v/UIA6HiEXHZ4dR50phD9jJ8OdrdErxMGQ5zlKwAoh2
+         zFFOOpdDJ/n/633vpb595vtJw84uZjpaMkf6KktFkMNFPv4WZNGgY14ppu32jZk9Bo+1
+         E2g8q7ol6aLyGB78kHFhQqyMAkYyxiOD2HDhys53OJTGdPeHoQbiVfG3lcgwdiFM4jAP
+         2ZOhC6MRClOR3K5cHa4RNnaCoOSsEFv5a6FD7vdKpTlfgyp7N0aLeKu+E5XQVjOtPXEB
+         MWns6Igoe4mJCjwnqMXtfAKOd+jEHGwXnQasbDLku/AjjtFV2QIKQ9Vqs9OHWOESxIaC
+         hTzw==
+X-Gm-Message-State: AOJu0YxpIGsKfK7R+dLwOE/LAXHsXs/ryqwthqwKhM1B7eqzisJnHcE7
+	2JFxL+MkUVXKpM3YxwHhEv5m8vk49W6PGRE2Jcfpu8/BMHE9r4RLXulv+rJMwQ==
+X-Gm-Gg: ASbGncsSmVeEQqC/o8qi5L/eZMOcxMA395KVDg5MxXotjTgbUKa2eyhw42B9gCRje7Q
+	7sNG+HLnmQ1rBPXB41UPvyN5UPM3al7bjOfRPoV7KZHVgsENlLFBTvSEuPTEdPRrBrBSoPtRdoh
+	ywy9353dcnCMrRhPUB/Bw5awASVxuSTCjtWdzJiQt158CpQ7JqN/FtUv1cIC986QjTr32aQ0jnB
+	cOpDVvaGbv/SzEJ1mWms82Wq2jA6ZeSRmrAm2XivTOQ7klNvFU7llQEe8PZkArsDFQxuUEJvrMm
+	4XkMwJXTe/bxWjueRBqdyvmTdfTYTSo=
+X-Google-Smtp-Source: AGHT+IGdthzoJfIVMJmyvVW90SRXctKzLrXjNL935W5elTU6SkxKHK3+W17muDTbEjR1kiex7GeyDw==
+X-Received: by 2002:a05:6a20:a11c:b0:215:e60b:3bc7 with SMTP id adf61e73a8af0-21ae00895damr23714883637.26.1748976998711;
+        Tue, 03 Jun 2025 11:56:38 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::9eb])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afe9648dsm9758148b3a.6.2025.06.03.11.56.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jun 2025 11:56:38 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH] CodingGuidelines: document formatting required by
+ generate-configlist.sh.
+In-Reply-To: <xmqqiklcri3o.fsf@gitster.g>
+References: <xmqqplflsmic.fsf@gitster.g>
+	<45c586122afab8ae3624be6963d64e770b7396b2.1748911713.git.collin.funk1@gmail.com>
+	<xmqqiklcri3o.fsf@gitster.g>
+Date: Tue, 03 Jun 2025 11:56:37 -0700
+Message-ID: <87sekgpsbe.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,25 +76,63 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Seyi Kuforiji <kuforiji98@gmail.com> writes:
+Hi Junio,
 
-> This small patch series marks the final batch of our existing unit test
-> files transitioned to the Clar testing framework. It covers all the
-> reftable-related test files, and is part of our ongoing effort to
-> standardize our testing framework to enhance its maintainability.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Collin Funk <collin.funk1@gmail.com> writes:
 >
-> Changes in v3:
->  - some code refactoring based on review, which includes initial creation
->  of reftable helper functions to
->  t/unit-tests/lib-reftable-clar-test.{c,h} files in the initial commit
+>> + When documenting multiple related `git config` variables, place them on
+>> + a separate line instead of separating them by commas. For example:
+>> +   core.var1::
+>> +   core.var2::
+>> +  	This is a description of 'core.var1' and 'core.var2'.
+>
+> As `core.varN` in the above example are all what the end-user would
+> give literally, just like `git config` command name in the first
+> sentence, they should be marked up as literal strings, i.e.
+>
+>     ... For example, do not write this:
+>
+>     `core.var1`, `core.var2`::
+> 	Description common to `core.var1` and `core.var2`.
+> 	
+>     Instead write this:
+>
+>     `core.var1`::
+>     `core.var2`::
+> 	Description common to `core.var1` and `core.var2`.
 
-I guess this is no longer a "small patch series" ;-)
+This markup is different than what is used in
+Documentation/config/*.adoc though. Here is just one example:
 
-Are we done iterating, or will there be a small and final finishing
-touch interation?
+    $ head -n 3 Documentation/config/core.adoc 
+    core.fileMode::
+    	Tells Git if the executable bit of files in the working tree
+    	is to be honored.
 
-No need to rush, as we won't be merging things down to 'master'
-until the 2.50 final gets tagged, but preparing a reasonably well
-cooked topic in 'next' for the next cycle is always a good idea.
+That was my reasoning for writing it how I did in the patch. Are you
+saying that all of these should be changed? I do not have any experience
+with AsciiDoc so I am not sure if that is correct.
 
-Thanks.
+>> +This format is required for the `generate-configlist.sh` script to
+>> +properly generate "config-list.h".
+>
+> It is not wrong per-se, but this tempts people to "fix" the
+> generate-configlist.sh script so that it can grok the comma
+> separated list "again".  And when that fix is done and reviewed
+> carelessly, we'd again break some implementations of sed the same
+> way and we will come back full circle ;-)
+> [...]
+> we explained that the reason why we want to do so is because it is
+> easier to "grep".  Does this "do not comma-list variables, but list
+> them one per line" also give us better greppability, and if so we
+> want to explain that way, perhaps?
+>
+>     $ git grep '`core\.var1`::' Documentation/config/
+
+Yes, that is a good side affect of the change that can be documented.
+
+I will send V2 after clarification on the other point.
+
+Collin
