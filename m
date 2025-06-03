@@ -1,93 +1,126 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C58DE1474B8
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 20:46:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CFBF213237
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 21:12:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748983586; cv=none; b=FtiCXeDdN1QlJIFVlbTPyrYMAgKdVn6HUeJDJ8I4hfTxPYiJb72WHJLGZDQ+lKT9TCPXxKdAhG8bTTF31kUVI3OpPKQAA1/XNnJoUVgGRcwaGdA69XPkkt/r0UJ4Pv3GnvhjS8wFL8JV+7WHKHvy5p70ZQfbycS5JqPBMN1aoSw=
+	t=1748985160; cv=none; b=pPikRczT5rhO0ilzOyEyIYAp1ESPIKUw6yoGzplZ4fkZbHxaYX+TIJHizfc0bwUIjBCas/9Sjb1CGl2uAYTgjQiDwLXpHhyERaKefjQuDBG1Gh4a6vCYEMiLlhHKgSJB/qm1YQFR4G+knSGtkQbXdmN5A4tYkOsNu8lwZomCQkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748983586; c=relaxed/simple;
-	bh=eQcCBxrYrejEg5Q7XYF62r/4Q+sfYe6R2QIDB/K2UpE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MrvlPr4ZbYziSdOqgiWoxfjShNXUPjc//z09w+nU3Z1WOl2rcWKOPDT6Psi8lqQuIZT2aBAE3x5s7QVb24xfb6oYS+atZZG83KWn4JbRMqVxVEu0aKbpQloeyIjbzeA1i6ZdKwtc6o94IkTCKJ75r9kj2zrxW4owPl+BJ0+BkiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7d0a61e6c0fso62684285a.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 13:46:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748983583; x=1749588383;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=C2ZBFoPN9ONSvfZ4f25HZAC155mNasXWAdwqLKSjMs8=;
-        b=OGU499lcm4HMNkB7rr2ZulWVptwcslxUELCTvYxbiRiP2lRn9iwFYn705VfhLMpZ7p
-         +LkaKH+7SjZh9ksQMcu0FPaOgO8UnT1Yn1zqonvXWejTq3z+s5L/1MiCMif9yK3/qunO
-         UYgyseP1xAwRVk8Q3bfy4hF0mONhQQkXFkp0C3zH1HTl7pxoP838U6APi4KyXeU3PjNw
-         0DjYe90+HBR0XiIDomU2B0RqJio/hDaKe3daX3ES363pdQ/t1rg04STjPsVQDScfSO0I
-         /d2w1kdNrUGmeMB+JxjYI/mGUNSRxmkArYnYaQ1ySP2f+R3AwLdo8e+dzSsoOQBraA9I
-         pCIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVnuQp4paMvHpBAtO+vpBd8gvdsKpuGQI6NIf0f3ACogrpyksPr85fd/45P5zRG8N1q/wc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVFgyMPuUIHo5cReOHHuttcxMkmuw9fNhpuhlB6X9Tl0MuB03g
-	w5fm9UaKtPMt00QgTrkK/GXkOeJeSlwjcWmsEVQYReU5ZkG+A/XdIseBcvzDkuIXbZmpjatRAxU
-	ZZ7ypg5W9wt3cJ78Sp6Ce+PhxoPZwgXs=
-X-Gm-Gg: ASbGncsFqZ+ELAAPo3ChtV70HEAXS9krxm7km/Kcn/N3tNFrc8A30+K7pauy0dvG4F7
-	U4q8ks7BeswNyyvPOyjjQE6TWV97bP02J4qKAOuWVYXiHe89L0urqy1pgfDLab350mt72gmjodG
-	K7DPeu4Vc2nrUFSsRz8q1wMo5uujy2iaDl7Fu/ycAU24QuUHWXxkdDZ/FqYvvq4nR27A==
-X-Google-Smtp-Source: AGHT+IHsKYNHEi8ag+OiEweWwQoBJjf93et1bHLnMnrAb2MDJBqvMWarnu0bf28VqoGeV5cmzkPK85N/+DkgfJzH+Ik=
-X-Received: by 2002:ad4:5bae:0:b0:6fa:b9e4:f010 with SMTP id
- 6a1803df08f44-6faf6fef88cmr982956d6.4.1748983583539; Tue, 03 Jun 2025
- 13:46:23 -0700 (PDT)
+	s=arc-20240116; t=1748985160; c=relaxed/simple;
+	bh=F7hzwso2LqLakC6clv9Yd2hJ6I1euHTWGEW7xFNceaQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jOA8Rb4qnig/Va+PyyxbqXO91qNdtw34nYMF7e9y49IF+HtEdC6DPZdQFrjibp8qQ6XGooh7z/YQa/6IlAGokc9a5OWjGZfHhqr+VbdvwyrUYeKUbzIozRiDZINYYjMBTW7rl29ELHTFfUTwUx07hd2m2Kk3l+6lg/VkNL3BXLw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SbitesbV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ld24D4XI; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SbitesbV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ld24D4XI"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id F398013802B8;
+	Tue,  3 Jun 2025 17:12:36 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 03 Jun 2025 17:12:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748985156; x=1749071556; bh=dGIEByXXe7
+	DCvEfEZcJHCb2Qf65n37/TaS9jDG1rzXw=; b=SbitesbVFBFdt1vVibzt1WJ2Zp
+	g1SkRsm+whEjnH6S154BbMxv2Id5nk48f147iQdQ8bpwHsUl0N/cfHPMg8HiLE/R
+	o89y1EDHkBw72Y/zR/3EFNdOmQmykxapRk6us8eeLiMZNhlurldo5lsgGkwh5t9h
+	kF10fmP7nV4XaypUAYx84M1Iz9XSE3rfd8/l6H2Hdj6yP2J6G8hRJ0Wd5/x+n384
+	k1nVgcJO3nSEmBTWGb9qBbh1/RWu4sUMMdcNX+PQzvHMe/TydkA0TX7CAHXk4FNp
+	31HwbYT2EqJmhJP47Grf7+/oI0FLL48fIZI4YMeIkrK+Bo9v7GPVqURD4z6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748985156; x=1749071556; bh=dGIEByXXe7DCvEfEZcJHCb2Qf65n37/TaS9
+	jDG1rzXw=; b=ld24D4XI2DffctYjdRbk/uDmkowchzB3TexdJaue9/FCtXcQNYO
+	bENUqnT4IxT8Y1jWC5IjLmPhumxJHuE70v9IbRMysC99kigmQFHtgUhGNBQWUYNy
+	elFnZUDtawK7HO9bl8i7AoxZ90+Y0i65fNLaFNUHaIxqr7uZGAxWqJI20NQf1RX3
+	s+0BepAASnjBUpQD6gPZyhNf9HTlkmCCnHGDgY/dAJWf6lBn/ZQMLPJTJEOncx6j
+	Vz4gGp2leDe0P0W9ziy2K4t0vlpWoNjLFmgnFqLh4v7D08Wl4HYp5IgirB095hhk
+	liVgJ9HdJ4+p+ErHZi+fcmc+XebyqV8dISw==
+X-ME-Sender: <xms:RGU_aA92iLG-S0BUiDOZxjysha_w8diaaOlh4sNM3lZyA90Zfu4qlA>
+    <xme:RGU_aIva9VCF7FaatfCNpbUShhkN0geXGpj9LAR8oj9Ct_0raSwoZnBwSOEY78oo6
+    YYl6YcB5me00UHpOQ>
+X-ME-Received: <xmr:RGU_aGBHi1SWuupOcvFEGBxwFgx1-Y4M8wAPo5O2v1uS15H3fKtvsErI5YNXM3BD-dKxLkQUr7PkSENs9qoWkZYq7qlPFNA5fnja>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduuddvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrtghosgdrvgdrkh
+    gvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RGU_aAcQ0XLHaDsI85HyFxsegrvw3YsmUFk70hD_OIYIvNQDilQNjA>
+    <xmx:RGU_aFPhIcwJy3RKjAUM_NhkQJaoaWJqQd082SooiSpHjYuayCfERw>
+    <xmx:RGU_aKkeSI6QWBTn3fF3N3iZQXq6uE_iQMJt63Nsg0wXraGxktsB0w>
+    <xmx:RGU_aHt1qqQHnHDw1pFbALDMc0aEZFQY4ZzbbgA9njqBP5wqsQNLxA>
+    <xmx:RGU_aCY_WGt-5KSee897FBTfmiQ1TICSQ3D04KRB73C3nLpLv7g7yC8L>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Jun 2025 17:12:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 0/3] diff: add pathspec support to --no-index
+In-Reply-To: <20250521232917.2333291-1-jacob.e.keller@intel.com> (Jacob
+	Keller's message of "Wed, 21 May 2025 16:29:14 -0700")
+References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
+Date: Tue, 03 Jun 2025 14:12:35 -0700
+Message-ID: <xmqq1ps0il6k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
- <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g> <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
-In-Reply-To: <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 3 Jun 2025 16:46:12 -0400
-X-Gm-Features: AX0GCFsM9Hpz_clAIMFKEX1F2hvXNYf8aKGAiXmyXYZ8LnELbGnTbYsT15_XoFc
-Message-ID: <CAPig+cRTeZosWC=b=9MOjKaUwPodp7P=X2pwuXVgiRorx_+jmg@mail.gmail.com>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, 
-	kristofferhaugsbakk@fastmail.com, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Jun 3, 2025 at 4:37=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
- wrote:
-> On Tue, May 27, 2025 at 1:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
-> > In this case I am not all that sympathetic to the idea of the patch.
-> > The consistently indented lines makes it more clear from which line
-> > to which line came from a commit log message; running stripspace
-> > would break them into paragraph pieces.  These editors that complain
-> > probaly can be fixed?
->
-> My editor doesn't complain, but it does highlight trailing whitespace
-> at my behest, and it tends to be an eyesore (on purpose: that way I
-> clean it up). Perhaps Kistoffer is coming from a similar place?
->
-> > Alternatively, if it bothers users of certain editing environments
-> > too much, perhaps the indent code in the output phase of "git show"
-> > should lose the indents for empty lines uniformly, shoudln't it?  It
-> > probably should be a fairly isolated change, like the way how the
-> > expand_tabs_in_log bit is handled in pretty.c; give another bit and
-> > teach pp_handle_indent to return when that bit is set and the
-> > payload it was asked to show with indentation is empty, or something
-> > like that.
->
-> I think this suggestion would also help folks who "git commit -v,"
-> which IIRC is also indented in the template.
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-For what it's worth, there was a previous attempt at something along
-these lines after which a discussion ensued.
+> From: Jacob Keller <jacob.keller@gmail.com>
+>
+> This series adds support for using pathspecs to limit the comparison when
+> using git diff --no-index. This is similar to how you can limit what is
+> included with pathspecs when comparing inside a repository.
+>
+> This version uses only one set of pathspecs and instead uses some logic to
+> skip past the root of each directory tree being scanned. This avoids needing
+> to parse pathspecs multiple times, and is overall a simpler approach.
+>
+> I also opted to add a match_leading_pathspec() instead of exposing the
+> match_pathspec_with_flags(), since I didn't how DO_MATCH_EXCLUDES wasn't
+> exposed. It felt messy.
+>
+> I tried a couple of different methods for skipping past the leading portion
+> of a path, including skip_prefix. Ultimately just the index to skip to
+> seemed like the simplest solution. I like that it means we only need a
+> single pathspec array now, and that we no longer have to worry about
+> changing prefix_path_gently.
+>
+> Changes since v3:
+> * Drop the patch modifying prefix_path(_gently).
+> * Instead of exposing the do_match_pathspec flags, create a
+>   match_leading_pathspec() variant that sets both flags when is_dir is true.
+> * Use some simple logic to skip past the starting portions of each path
+>   before calling match_leading_pathspec
+> * Re-write the commit message for the final patch
+> * Add a couple more test cases
+> * Simplify existing test cases to use --name-status
+> * Drop remaining TODOs
 
-https://lore.kernel.org/git/20210830072118.91921-4-sunshine@sunshineco.com/=
-T/
+Anybody, other than Jacob and I, interested in this series?  We
+haven't seen any support or review and I am considering merging it
+down for the next cycle sometime in coming weeks.
+
+Thanks.
