@@ -1,364 +1,145 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99BEF22FE0E
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:41:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C13231A55
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 14:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748961717; cv=none; b=H4/aMFBERSxwUjAM5keu/ONgTHBg0VsriXjFwYAsw3oVIFzqsKioTbjc9RGD/5GmjzlX5GIw2i/mSiNaGIyOl1xWkJCn18lG3qeoSFbjDkkR25jxwwsg8xTeVDfKviPOQgK5kLeu/NdUUfQCt8MLk9XMCB04iSwlrlr0gZgFg/I=
+	t=1748962464; cv=none; b=N3Ya79zfSt9w5za2UJrGYyGDUzRxXGT8co+1++jpnvKzw8H9CGqL+xfpldej7psvteI3fMDqaAZ+pxye8KMryPAhOFn4D2J6ND4XGUq4mLtVL8zifowSJGxZjJ+Nea3iMWMaxVk1QMDklXHgHAMMrVuVzSEVcxnENC71Mbpgsmw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748961717; c=relaxed/simple;
-	bh=Dgg+OG2QXNFR1phlccMXO5E1B6aMvv5+1YlNF0Gv2H4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WIyZbyBSXYgGSdvSWIfnVX6GnnUyQbaI5GMb2I29nhbtHvKDY0iAaaX+ejJwlopvxIxnsD5fDVxIZRUdftGepokZ49CaVGNuGeQ/G+KuX9qxawa6BwB6gDP7qyaZCn0MUgVydpzvosm7i99ycGZmQYU+2cDkmLf45v81ttlg9WQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jcy3r4VI; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748962464; c=relaxed/simple;
+	bh=ATjCcvqKZ25+zymCtp96IRqel+xqDD5iXICR3nvTjgE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DYgqNxPXVg0WPB1aAeKQNxszfH5bjyIRAkcgSkRtjyJPz1PmRtY0GDefiP7m+/j7SZKX+Jz7qCM/3XsMD9Pt6aAvsiL0bfWZEjGaAqbcjg8DXL+L+j+QF2w9c+NqRULKV6dgULr/AINXRyUtVgbEEuQcyTSoHK4suud0ro0NxfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vE6IaOF5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UnGKkbdz; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jcy3r4VI"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4a589b7dd5fso36496761cf.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 07:41:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748961714; x=1749566514; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hZsIp/VDvdKQgJUEN+pBtZlPaOvzjGyl3SAt7gMXDcY=;
-        b=Jcy3r4VI25+yCOk/BLPz4PjJ9ImK/wBpUSMhZA71GwNaMOtCqb8I0QKjB9gP0qZRAE
-         GJELKnLRn7+7E0k9EH47tiwkxxHnaANZUyLbvZbgWu6J+ptKJjXnFJ9SAckCh/YSXckj
-         81gyTUCaTLtx93lBpUustLIdKgzz+MqEvl/T5dfK6KTtxKHsoiH9S4+TdrgRJvCVRC8V
-         YuS5m0iV/p++Bht5nnQqWucYpAEpQJd7bfbKrzL9IecH4OJxJrHaZDGcYiqCOHDbY65S
-         nBc3FhFa6FLuRWNliaNT1kbsJZmTsRDAv8sKGNv/4Jb36DdLYTS2GaYudz+L0jAeaVjC
-         /NIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748961714; x=1749566514;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=hZsIp/VDvdKQgJUEN+pBtZlPaOvzjGyl3SAt7gMXDcY=;
-        b=QWVF9qCM1oa+Osfi94JrrAUkhRA45nEnKIqlb548Xku6lhJff6cPVl4l52J+d/kth5
-         ppPygYECdpVVJvafxPYp8qCQ4uhBERfWujWgCIhMXFPDoHCUbk14SUjjCJJ52R5Vqf5V
-         THuhvVCpHXNhytMyXC1jMv4Ah3G2Q4SqeZydKMYDuX3bI+zLanWoO0fmfwjXIjFI8zQI
-         7oxXm8wF18bSVwlyJXNttPOcWuekljZs2kZZ21Rw5gcu+JLmkCFdijyHkraAOtAMDO2a
-         5jBdI0M4AIf1yuEohM12fjf4LqH4L0vMnjtQkD1KovJbZV6ZniVekrWJ24WCpfcH/aiR
-         AIzA==
-X-Gm-Message-State: AOJu0YyHn/G/74VurH91IxlRgoMxE6ke2/J/cpus0SuHG7UK1jg2NCHi
-	ySQQff5IlmQjnDnLf1K4yMkVaUCJY/+lLLjc/2RR30B5nYvQYBvMhKjokUEe76LIX6C2dxeyOjE
-	Yoc6PAamitoNr5GfumxIpdOexUwNjCKA=
-X-Gm-Gg: ASbGnctl5Y52rCCrPC2kWCyMKKeFPeek/6k9Lj70mRI2vt2Y8s6C7ubgiioDRkbHvD9
-	bYpmh/39Dc1wBjgGfIE/Xc77LxE4c6l2KlSUfL26O0NUcuZtJuH6aEkWtHRa3nTGUgs4fZDg7gj
-	HaDE1O/x2wQYlZIefQ6SGYw3OfM99CsA6GGsaH97qfIH3r80tsKqk4RRePBci6SxBN
-X-Google-Smtp-Source: AGHT+IHTAUhaekj9Gnbgh/QQ5UN3Tmz9+kU+yVumTL8XiOJBVgSHB1ndrfRx4M+OoN5KQ0LYka389xOz1zsRiC/e5YM=
-X-Received: by 2002:a05:622a:5c93:b0:4a4:4166:6076 with SMTP id
- d75a77b69052e-4a443c4dd8cmr295252901cf.5.1748961714281; Tue, 03 Jun 2025
- 07:41:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vE6IaOF5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UnGKkbdz"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C7CE0254010F;
+	Tue,  3 Jun 2025 10:54:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Tue, 03 Jun 2025 10:54:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748962461; x=1749048861; bh=QRGmY1TSTi
+	9LjyNCCvAVi+KRcrWg/u7ntFeAClF+Z4I=; b=vE6IaOF5lECcbMdgJ2F4Ma6oTF
+	kOZChxHq+y4fYeLm1V+sy5/CtpSkPTHJVIWZzBEaDeghaAu0SYuU2lMoSVEjEfb9
+	phRuGqURGnsaov5l6xG5z63gtFHZO3TA3mZ3lguodEi3klkFQCnrXzaogkVTjgL6
+	iKHpUT4X/uiboHzrdeyOJrrFjJLoH6SNJB1sDvaKPcuHrLQbIINDu4vjU9ruWupm
+	46la5SLg/PvwT7FmkH7oy4m0/O+KxzTbEqrM4oKC/H+ix1ZsWqeH53xSyzCpikFW
+	7BpJ98PA7j2226nP94ax82NV4a8a8E8CCwPyz5wF8UmCNTMORc6rljNIp3kw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748962461; x=1749048861; bh=QRGmY1TSTi9LjyNCCvAVi+KRcrWg/u7ntFe
+	AClF+Z4I=; b=UnGKkbdzaWcWWPeS2r2dW6TLmdj+uqQVdQc/vwv+mVBd1qiECHr
+	kgDVkBJ7exVAn/AHX76LkTGnz27mF2pY7t4eZ1N/7v4tVK18JjD81XzrcjefktuA
+	Kz1jEqo0litBvNTgOOMjYIDPZvo22OpJDd1iFQUbCeyxzb834q67SVpsC20ZkORv
+	z8n7eH+xt3UMLOwwYzYcnDRiAPiw3XzxOAYP15q7H6hSD6U+b5nBkE4C0tRrb01t
+	ModJEod4ef5jrf7wC+WapxCCsCJbtsAo2OmU2Oq4l5MOfkJlJqh9llpTGhiG5BSZ
+	MoHNtXn1KdjcFdoC9oU/l8AUF+BcnUzrZ3w==
+X-ME-Sender: <xms:nQw_aAt4Hpyc5xrlhDhLcSdJiNgw99H_SoPHSeeUVjNgYAtzuqBt3g>
+    <xme:nQw_aNca7VRMrl9TnlziNTjzNibj0ejH5QxYlRV86ovO-vhXz18i2ZSvN4-HckQ80
+    XCYFlQlbhDBRR3Nmw>
+X-ME-Received: <xmr:nQw_aLzvpVY5Fmww2NZjCZdku6kgGlTMNZ5f0xCZTQHhctIdWlDSozutwtXczcBRfqb6e8SrSVGCtEapnjNlOrTdkRh-dgidofIZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdehfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
+    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeeitdeuieeuveetheelgfegveduhfekvdeluddv
+    teefgeehkeevleevgfejuedvtdenucffohhmrghinhepvhgrrhdvrdgrshenucevlhhush
+    htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprh
+    gtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhnrdgrvhhilh
+    grsehfrhgvvgdrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:nQw_aDNnPUiarJUen8qx_kCnqvATeHadwduSiZC3HgW67R6YqLtCZg>
+    <xmx:nQw_aA-HJIYa2NU9DVhJkaJcbL7ikpxZ1zPRczhMYm_ACyC_QrGbDQ>
+    <xmx:nQw_aLWXn_Ppikwi7PvTSRWkPWzssSK6d1UNtCGr96OM2j7DhjOmlw>
+    <xmx:nQw_aJfHuWANhLARkeHWPh648eLk0Rj-NuEq_KTov4ms0v3pFpnC4Q>
+    <xmx:nQw_aMi2CQ3CxQIlV1VlPilQ3v1VKi3pTTlP4cgYC8_rvb4l7Vn9zk53>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 3 Jun 2025 10:54:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH] CodingGuidelines: document formatting required by
+ generate-configlist.sh.
+In-Reply-To: <45c586122afab8ae3624be6963d64e770b7396b2.1748911713.git.collin.funk1@gmail.com>
+	(Collin Funk's message of "Mon, 2 Jun 2025 17:49:12 -0700")
+References: <xmqqplflsmic.fsf@gitster.g>
+	<45c586122afab8ae3624be6963d64e770b7396b2.1748911713.git.collin.funk1@gmail.com>
+Date: Tue, 03 Jun 2025 07:54:19 -0700
+Message-ID: <xmqqiklcri3o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <771677b1-2ce5-40ce-a704-752ff57ba0d3@ramsayjones.plus.com>
-In-Reply-To: <771677b1-2ce5-40ce-a704-752ff57ba0d3@ramsayjones.plus.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 3 Jun 2025 20:11:42 +0530
-X-Gm-Features: AX0GCFuJVoqNxIJcjJExZz7ETjEQ_QSAvsd4Q4NTutG8lxfmwVJNVsMVnPqgLJk
-Message-ID: <CA+rGoLcbtYCZ6Jr8YtinTq+KrdJBCv6JgA9+OQ1Hvj0+Yr1Hig@mail.gmail.com>
-Subject: Re: v2.25.0-rc0 test failure on cygwin
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Adam Dinwoodie <git@dinwoodie.org>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Ramsay,
+Collin Funk <collin.funk1@gmail.com> writes:
 
-On Tue, Jun 3, 2025 at 4:03=E2=80=AFAM Ramsay Jones <ramsay@ramsayjones.plu=
-s.com> wrote:
->
->
-> I noticed on Friday, while testing the v2.25.0-rc0 build, that test t6137
-> failed on cygwin:
->
->   $ tail test-out-2-50-rc0
->   Test Summary Report
->   -------------------
->   t6137-pathspec-wildcards-literal.sh              (Wstat: 256 (exited 1)=
- Tests: 25 Failed: 11)
->     Failed tests:  2, 7, 9, 11, 14-15, 17, 19, 21, 23, 25
->     Non-zero exit status: 1
->   Files=3D1023, Tests=3D30946, 21783 wallclock secs (19.08 usr 42.17 sys =
-+ 4031.65 cusr 12965.78 csys =3D 17058.68 CPU)
->   Result: FAIL
->   make[1]: *** [Makefile:78: prove] Error 1
->   make[1]: Leaving directory '/home/ramsay/git/t'
->   make: *** [Makefile:3286: test] Error 2
->   $
->
-> A quick squint at the failing tests made it clear that the failure was
-> caused by the cygwin build treating a quoted glob character sequence
-> (e.g. '\*') as a directory separator char followed by a glob character.
->
-> To show this, I quickly hacked up a patch which causes the test to pass:
->
->
->   diff --git a/abspath.h b/abspath.h
->   index 4653080d5e..a5e30a3033 100644
->   --- a/abspath.h
->   +++ b/abspath.h
->   @@ -27,7 +27,7 @@ char *prefix_filename_except_for_dash(const char *pre=
-fix, const char *path);
->
->    static inline int is_absolute_path(const char *path)
->    {
->   -     return is_dir_sep(path[0]) || has_dos_drive_prefix(path);
->   +     return /*is_dir_sep(path[0])*/ path[0] =3D=3D '/' || has_dos_driv=
-e_prefix(path);
->    }
->
->    /**
->   diff --git a/path.c b/path.c
->   index 3b598b2847..f000b9ffff 100644
->   --- a/path.c
->   +++ b/path.c
->   @@ -1223,13 +1223,15 @@ int normalize_path_copy_len(char *dst, const ch=
-ar *src, int *prefix_len)
->         end =3D src + offset_1st_component(src);
->         while (src < end) {
->                 char c =3D *src++;
->   +#ifdef DUMMY
->                 if (is_dir_sep(c))
->                         c =3D '/';
->   +#endif
->                 *dst++ =3D c;
->         }
->         dst0 =3D dst;
->
->   -     while (is_dir_sep(*src))
->   +     while (/*is_dir_sep(*src)*/ *src =3D=3D '/')
->                 src++;
->
->         for (;;) {
->   @@ -1247,10 +1249,10 @@ int normalize_path_copy_len(char *dst, const ch=
-ar *src, int *prefix_len)
->                         if (!src[1]) {
->                                 /* (1) */
->                                 src++;
->   -                     } else if (is_dir_sep(src[1])) {
->   +                     } else if (/*is_dir_sep(src[1])*/ src[1] =3D=3D '=
-/') {
->                                 /* (2) */
->                                 src +=3D 2;
->   -                             while (is_dir_sep(*src))
->   +                             while (/*is_dir_sep(*src)*/ *src =3D=3D '=
-/')
->                                         src++;
->                                 continue;
->                         } else if (src[1] =3D=3D '.') {
->   @@ -1258,10 +1260,10 @@ int normalize_path_copy_len(char *dst, const ch=
-ar *src, int *prefix_len)
->                                         /* (3) */
->                                         src +=3D 2;
->                                         goto up_one;
->   -                             } else if (is_dir_sep(src[2])) {
->   +                             } else if (/*is_dir_sep(src[2])*/ src[2] =
-=3D=3D '/') {
->                                         /* (4) */
->                                         src +=3D 3;
->   -                                     while (is_dir_sep(*src))
->   +                                     while (/*is_dir_sep(*src)*/ *src =
-=3D=3D '/')
->                                                 src++;
->                                         goto up_one;
->                                 }
->   @@ -1269,11 +1271,11 @@ int normalize_path_copy_len(char *dst, const ch=
-ar *src, int *prefix_len)
->                 }
->
->                 /* copy up to the next '/', and eat all '/' */
->   -             while ((c =3D *src++) !=3D '\0' && !is_dir_sep(c))
->   +             while ((c =3D *src++) !=3D '\0' && !(/*is_dir_sep(c)*/ c =
-=3D=3D '/'))
->                         *dst++ =3D c;
->   -             if (is_dir_sep(c)) {
->   +             if (/*is_dir_sep(c)*/ c =3D=3D '/') {
->                         *dst++ =3D '/';
->   -                     while (is_dir_sep(c))
->   +                     while (/*is_dir_sep(c)*/ c =3D=3D '/')
->                                 c =3D *src++;
->                         src--;
->                 } else if (!c)
->
+> + When documenting multiple related `git config` variables, place them on
+> + a separate line instead of separating them by commas. For example:
+> +   core.var1::
+> +   core.var2::
+> +  	This is a description of 'core.var1' and 'core.var2'.
 
-Hmmm interesting
+As `core.varN` in the above example are all what the end-user would
+give literally, just like `git config` command name in the first
+sentence, they should be marked up as literal strings, i.e.
 
-> In other words, in 'is_absolute_path()' and 'normalize_path_copy_len()', =
-then
-> just disable the '\' character as a path separator! ;)
->
-> This was just to demonstrate the problem, not a serious patch, of course!
->
-> I was away for the weekend and was expecting to see a patch to fix this
-> on Gfw when I got back, but to my surprise there has been no mention of
-> it on the mailing list (having now waded through the backlog!).
->
-> To be clear, I can not imagine that this test passes on Gfw. However, thi=
-s
-> should have been failing the windows CI for ages, so ... perhaps I don't
-> have a sufficiently vivid imagination. :)
->
-> Anyway, the patch below 'fixes' the issue on cygwin.
->
-> Thanks.
->
-> ATB,
-> Ramsay Jones
->
->
-> ---- >8 ----
-> From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> Date: Mon, 2 Jun 2025 22:51:33 +0100
-> Subject: [PATCH] t6137: disable 'quoted glob' pathspecs on cygwin
->
-> The backslash in a 'quoted glob' character is treated as a directory
-> separator character on cygwin, which causes all such tests to fail.
-> Skip all such tests on cygwin using the !CYGWIN prerequisite. While
-> here, fix a few test titles as well.
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
-> ---
->  t/t6137-pathspec-wildcards-literal.sh | 24 ++++++++++++------------
->  1 file changed, 12 insertions(+), 12 deletions(-)
->
-> diff --git a/t/t6137-pathspec-wildcards-literal.sh b/t/t6137-pathspec-wil=
-dcards-literal.sh
-> index 20abad5667..229e48282e 100755
-> --- a/t/t6137-pathspec-wildcards-literal.sh
-> +++ b/t/t6137-pathspec-wildcards-literal.sh
-> @@ -39,7 +39,7 @@ test_expect_success 'add wildcard *' '
->         )
->  '
->
-> -test_expect_success 'add literal \*' '
-> +test_expect_success !CYGWIN 'add literal \*' '
->         git init test-asterisk-literal &&
->         (
->                 cd test-asterisk-literal &&
-> @@ -125,7 +125,7 @@ test_expect_success 'add wildcard f*' '
->         )
->  '
->
-> -test_expect_success 'add literal f\*' '
-> +test_expect_success !CYGWIN 'add literal f\*' '
->         git init test-f-lit &&
->         (
->                 cd test-f-lit &&
-> @@ -156,7 +156,7 @@ test_expect_success 'add wildcard f**' '
->         )
->  '
->
-> -test_expect_success 'add literal f\*\*' '
-> +test_expect_success !CYGWIN 'add literal f\*\*' '
->         git init test-fdstar-lit &&
->         (
->                 cd test-fdstar-lit &&
-> @@ -184,7 +184,7 @@ test_expect_success 'add wildcard f?z' '
->         )
->  '
->
-> -test_expect_success 'add literal \? literal' '
-> +test_expect_success !CYGWIN 'add literal \? literal' '
->         git init test-q-lit &&
->         (
->                 cd test-q-lit &&
-> @@ -227,7 +227,7 @@ test_expect_success 'add wildcard hello?world' '
->         )
->  '
->
-> -test_expect_success 'add literal hello\?world' '
-> +test_expect_success !CYGWIN 'add literal hello\?world' '
->         git init test-hellolit &&
->         (
->                 cd test-hellolit &&
-> @@ -241,7 +241,7 @@ test_expect_success 'add literal hello\?world' '
->         )
->  '
->
-> -test_expect_success 'add literal [abc]' '
-> +test_expect_success !CYGWIN 'add literal \[abc\]' '
->         git init test-brackets-lit &&
->         (
->                 cd test-brackets-lit &&
-> @@ -280,7 +280,7 @@ test_expect_success 'commit: wildcard *' '
->         )
->  '
->
-> -test_expect_success 'commit: literal *' '
-> +test_expect_success !CYGWIN 'commit: literal \*' '
->         git init test-c-asterisk-lit &&
->         (
->                 cd test-c-asterisk-lit &&
-> @@ -313,7 +313,7 @@ test_expect_success 'commit: wildcard f*' '
->         )
->  '
->
-> -test_expect_success 'commit: literal f\*' '
-> +test_expect_success !CYGWIN 'commit: literal f\*' '
->         git init test-c-flit &&
->         (
->                 cd test-c-flit &&
-> @@ -328,7 +328,7 @@ test_expect_success 'commit: literal f\*' '
->         )
->  '
->
-> -test_expect_success 'commit: wildcard pathspec limits commit' '
-> +test_expect_success 'commit: wildcard f**' '
->         git init test-c-pathlimit &&
->         (
->                 cd test-c-pathlimit &&
-> @@ -346,7 +346,7 @@ test_expect_success 'commit: wildcard pathspec limits=
- commit' '
->         )
->  '
->
-> -test_expect_success 'commit: literal f\*\*' '
-> +test_expect_success !CYGWIN 'commit: literal f\*\*' '
->         git init test-c-fdstar-lit &&
->         (
->                 cd test-c-fdstar-lit &&
-> @@ -379,7 +379,7 @@ test_expect_success 'commit: wildcard ?' '
->         )
->  '
->
-> -test_expect_success 'commit: literal \?' '
-> +test_expect_success !CYGWIN 'commit: literal \?' '
->         git init test-c-qlit &&
->         (
->                 cd test-c-qlit &&
-> @@ -411,7 +411,7 @@ test_expect_success 'commit: wildcard hello?world' '
->         )
->  '
->
-> -test_expect_success 'commit: literal hello\?world' '
-> +test_expect_success !CYGWIN 'commit: literal hello\?world' '
->         git init test-c-hellolit &&
->         (
->                 cd test-c-hellolit &&
-> --
-> 2.49.0
+    ... For example, do not write this:
+
+    `core.var1`, `core.var2`::
+	Description common to `core.var1` and `core.var2`.
+	
+    Instead write this:
+
+    `core.var1`::
+    `core.var2`::
+	Description common to `core.var1` and `core.var2`.
+
+> +This format is required for the `generate-configlist.sh` script to
+> +properly generate "config-list.h".
+
+It is not wrong per-se, but this tempts people to "fix" the
+generate-configlist.sh script so that it can grok the comma
+separated list "again".  And when that fix is done and reviewed
+carelessly, we'd again break some implementations of sed the same
+way and we will come back full circle ;-)
 
 
-This is an interesting breakdown of the problem
-thanks for digging into it.
-Just to clarify :) My change was limited to a minor condition in
-`dir.c` to ensure that `MATCHED_EXACTLY` only proceeds when the
-`nowildcard_len` matches the full pathspec length (i.e., it's a true
-literal). I didn=E2=80=99t touch the `is_dir_sep()` logic or normalization
-functions, so your debug trail really helped surface a side effect I
-hadn=E2=80=99t anticipated.
+When we standardized writing negatable options this way
 
-That said, I'm more than happy to help work toward a more permanent
-solution if needed, beyond the `!CYGWIN` skip. Let me know how you'd
-prefer to proceed.
+    `--option`::
+    `--no-option`::
+	Description of `--option` that can be turned off with
+	`--no-option`.
 
-- Jayatheerth
+instead of
+
+    `--[no-]option`::
+	Description of `--option` that can be turned off with
+	`--no-option`.
+
+we explained that the reason why we want to do so is because it is
+easier to "grep".  Does this "do not comma-list variables, but list
+them one per line" also give us better greppability, and if so we
+want to explain that way, perhaps?
+
+    $ git grep '`core\.var1`::' Documentation/config/
+
+Thanks.
