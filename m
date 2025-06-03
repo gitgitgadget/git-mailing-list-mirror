@@ -1,119 +1,121 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3C41D47AD
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 07:08:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4612C3271
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 08:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748934519; cv=none; b=MvSpKV1R7hd63tkuW3viMUdPC98HrI6E0VQVft6KwOHkqwu1I2Z2AbVNj4vOvBleWrWsqgl24TjWpc4ypy7nT1HYN+ztjGH4Pa8CXn3SpuMHgUnVqm/ZUdPVxRasDbKjO9xuwMz7hlpq20Hj2fTFsYJfAkPt9IbJoJtAwM6msrg=
+	t=1748939467; cv=none; b=e+eCQ12oTWBaHHgAM5glDjlsLImBvmCRj+TfH78QnX7nNCUrLxIQTCCj3zqMR34zs94ylUBAGyYl2JX9KpGKKYtM1TOEv4oLFdN4Q/63MirVUQVhZzNkDQtEOtAosD1CIA2wVGUunnHkesHiWFEe7+uxO1NKgSXG03eoukw0xZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748934519; c=relaxed/simple;
-	bh=hPE3EL+8T4OqWG3PWJaMzAu0Pta0q6bDlHF32wQEWQs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=szrM1wFXE/AWd6g5F+Ivv+f2G3Mig439aOgkDY0YUHEBiv0TFnNgX6odZ+tYuxCUZ2sgP4NGALuzSkOAwTGG+I9vofi0yNyBbCBzbS755MaoQumlOtsHzA+sAlJPwnpDmFnYdFjh/x/5onTQJioNTijYcRNa5ITFmXCMZOalt+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RcaKKXae; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MHb0lWvX; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1748939467; c=relaxed/simple;
+	bh=QCOKzyCsI5ZjGM0tDkIJGlMnKqhbgj44muske20pRCI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=egH5XycaIo/d50Vcp9RA4lDLl4yjGMYxN7lvjYPZ3EJ1hFU8HKztlHzBoogbkY7o5WEP9ia17Pb34hkQinFssREX9uVSMqe4wzxyMDXxj5kV32iADkyJbC9hjwF3Cid8f1Yn1/ILosCtm5OGoedhgST/Yq26V/AwJH+gPl2hsfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LMYIglY2; arc=none smtp.client-ip=209.85.221.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RcaKKXae";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MHb0lWvX"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0900411400E7;
-	Tue,  3 Jun 2025 03:08:36 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 03 Jun 2025 03:08:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748934515;
-	 x=1749020915; bh=Xzfn+02wsNJJE4BTomPRsJndzcPbEZYwdVATuR775k0=; b=
-	RcaKKXaeZKoHJduUIc8LHR5UZzUi0IsIasZhCOYHZboqPHEdjWqENKtLpAD5ipwq
-	sZvrggoNC4AgQy6vZ8o+EDTX6y1QavROr5yLp5AsL2sx/lVm+rbCMYS3TgM4bSnv
-	D2x4/IBmq0dHMTchzZjrJSmK9w8PFb7eo7yFIKPzJ0+JLPV4reIju129n6HveI/n
-	HXOVN9fDvrbxiliH9P/qBq3uvLpFlSVyGHEptrvrvTe+dTDKQebwL69EIq16BLnm
-	hI9UZaRRFENMgAJmAwXXlLjEbFudI9TdknB2fOkgkqR+DfUhAb3wwfufXS4HTwMM
-	7UIE+bx9397UNf5hCQrJEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748934515; x=
-	1749020915; bh=Xzfn+02wsNJJE4BTomPRsJndzcPbEZYwdVATuR775k0=; b=M
-	Hb0lWvXXHJuwOmYh9IARu7RWZqZrmTSQC+47yxDey0wsvSaJmQWo3cQxYJ3rVUeb
-	DDtfMKEymoL2iiExLgcON3R9Xp7jvMxIne7Kp/itu/owLmL4wDldv2kOxgAvmcbx
-	GzvShriDsAz0r9d4Jj2Av5njJEYYVByEBWIRKbC5s5yUG75HTxvHPh/M6ezWa7cc
-	oqbMHPqNqU+z8KbixJxoMIlDOFKNivnRA4s4B2iNOolgzstx1WD75Fxi7U2LbA6D
-	ze3M/xWIeZ0xTgwNwxT0yBKxeruO8sKptLHjuoq/B4AbV4rfvMP+LIELMoOUxpIC
-	IiYL8JyRUEyt8fqo+ByUw==
-X-ME-Sender: <xms:c58-aLA_upSEDeJ0hNA-OwV9-4zE2wgaUZNNJsQR_kluu_1AVQ6DXdc>
-    <xme:c58-aBhau0aH9gNQbrtg0f-HXSffTYBWFYxXel7E2izCb3rGxtUQD08952CzDn7OT
-    rx6b99Wr0Ev-OVOGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleeludculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
-    jghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruh
-    hgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelge
-    duudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epuggrshhrrghfleesghhmrghilhdrtghomhdprhgtphhtthhopehnrghsrghmuhhffhhi
-    nhesghhoohhglhgvrdgtohhmpdhrtghpthhtohephihrohhthhesphgrlhhorghlthhonh
-    gvthifohhrkhhsrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
-    pehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:c58-aGlEN0ZtsqWnGm_IPp2BecuCHNlQ4XjKF58Ss-5j47iXVUZyFA>
-    <xmx:c58-aNzirfAOYI5mlmV2LeBS7znokBIRZciq13DqHV53GWnsebbMSA>
-    <xmx:c58-aAQE79oyGZW-XPI8Js0mz4r3XsRkuo0IAuDXVk6CHn-_OU8xAA>
-    <xmx:c58-aAbq9qHygoHMAx-F-ZbWEnHgkTdFx4e9IEw0IbV5cnN-8agTnw>
-    <xmx:c58-aERlP58B-bs7CvW94kq8TSOoZUQd_zrhYdfP50eDh7QiyPa6q_kH>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id ED8CF1EA0060; Tue,  3 Jun 2025 03:08:34 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LMYIglY2"
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-527a2b89a11so2038307e0c.2
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 01:31:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748939462; x=1749544262; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=QCOKzyCsI5ZjGM0tDkIJGlMnKqhbgj44muske20pRCI=;
+        b=LMYIglY2LVcHYxMaQpdHOOcqcwW+nfjsGMqfAvyUJTGE+xpUOaU0KZEyIJg9slW94s
+         mT9sosmt2SD9KAe0j+56rEJtGFecXSGQ3H1bcyE65owA4jVbS73l3cAA8V08ehT2cmqc
+         R1K9N1uH+d9io7s3ubWqt+27ntRIEGMpcLD2R7XUYzzs7blrdiYEWruZVWOlE0VDJr7I
+         Kx2J+AvFkps7k/HLwnst7ROnc8hpKrpMXIfM0PWWPNihDSAUC5qJ7/6Y15O0hYq0nvHx
+         QrbgUsXYppKcPGKf32+yIvDmBGd0UwlSZaNlX8ygJT4V//uko4zhUOwK4u4fBxS6hYhN
+         kM/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748939462; x=1749544262;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=QCOKzyCsI5ZjGM0tDkIJGlMnKqhbgj44muske20pRCI=;
+        b=XoWC9kVdw7rJ7w0sfeCHZAmhdQUEwzEodCARjwTIk1LQgk6M2wAWMAbjFuU3D+myP7
+         yQTEHGv2IDwfHp+meigCiosu/E62e/lncIzAb+MC8/dwVsEWf5X1tx6Wab/X2KeYB7KH
+         DsMYArdFIzshxlAwe2WFRuO+G6XR+nDw8YJgIvPPkyEAdcILERVf7fc4Ycd7vEHjhNR9
+         vEEHb1wz/M1H6ghASGF7p1G1s9Z0DiWz9jGDLuMn3rh5fz666uTP63vhSUrIBxwdq96W
+         +FKxT7PQgADMVGEJTjO7zqdHnFdbe5LQxtJgckbEq4dAgn5jn9O8T3SGKY11dIfXGD9w
+         nOnQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXBq5gE10c4pd9Db8kuzr9VC2r7Zb5uMgrZQ6RzTRfBTfGkWApFVgMULRN6pmr26COFnQc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywx6Sr/8ljf4xRRt85jiLV+ulnqPxhnYQ2xCX91sBeVoYeiCEBa
+	mE4a9XQLqaUH45ZONyrsZXdVLk+qz8WbTKvetVucZnWKUghfYZm4BZyEvulxM6HzcsJYZkTsHiT
+	VwEH7ZiQ/AqgExDIcxDu03S070aTS0e0=
+X-Gm-Gg: ASbGnct5Op/fmrvawGaydesaytLB+U6UEKuPtFrn7lliEz6VKJimzzQsfyosbMXMi7w
+	uT/bnnjtHWkmdMeisynH4tNKwR3V48C00nXojgnWaVivu3saUD/yxA5AAOQ19dX5mu/l3/Nr8ai
+	lZHYUddWw+Odr7XZnkPdyFbNedr16HEci9CsoIyY3iIWj4Wrzta7mjheYzhJkKtFx775U=
+X-Google-Smtp-Source: AGHT+IFfHsJ4r+HWOHdK+UW5u/gSUs02HimBqYVQxXOXLQnkKDP9R1vjQjwOVVbrSzfaEtVtKx7ZlfvsHL+3gz0+Vpc=
+X-Received: by 2002:a05:6122:1350:b0:530:7e05:2009 with SMTP id
+ 71dfb90a1353d-53080f73eb1mr14097934e0c.3.1748939461774; Tue, 03 Jun 2025
+ 01:31:01 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 3 Jun 2025 01:31:01 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 3 Jun 2025 01:31:01 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250602-b4-pks-maintenance-ref-lock-race-v3-10-587d44252dcb@pks.im>
+References: <20250602-b4-pks-maintenance-ref-lock-race-v3-0-587d44252dcb@pks.im>
+ <20250602-b4-pks-maintenance-ref-lock-race-v3-10-587d44252dcb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Tbe012f02e624288d
-Date: Tue, 03 Jun 2025 09:08:06 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, "Yonatan Roth" <yroth@paloaltonetworks.com>,
- "david asraf" <dasraf9@gmail.com>, "Emily Shaffer" <nasamuffin@google.com>,
- "Ramsay Jones" <ramsay@ramsayjones.plus.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Message-Id: <99de4d2e-ee78-463c-ba92-0f21bb1a4f27@app.fastmail.com>
-In-Reply-To: <aD6Xh8kKUu0Y7sr-@pks.im>
-References: 
- <20250602-b4-pks-maintenance-ref-lock-race-v3-0-587d44252dcb@pks.im>
- <20250602-b4-pks-maintenance-ref-lock-race-v3-9-587d44252dcb@pks.im>
- <cab8e175-e977-41b1-b53d-6b9170c9e416@app.fastmail.com>
- <aD6Xh8kKUu0Y7sr-@pks.im>
-Subject: Re: [PATCH v3 09/12] builtin/maintenance: fix locking race when packing refs
- and reflogs
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date: Tue, 3 Jun 2025 01:31:01 -0700
+X-Gm-Features: AX0GCFvWI562rOzarNnhRraFGhl7dQKTFXBc9wPCvnfhOV3R59y5ResHC5H02vw
+Message-ID: <CAOLa=ZTLvL52UpZZbXtMefHPE+s5PWhUR4ZLgB6T_JMFjqfBZg@mail.gmail.com>
+Subject: Re: [PATCH v3 10/12] usage: allow dying without writing an error message
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Yonatan Roth <yroth@paloaltonetworks.com>, david asraf <dasraf9@gmail.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
+	Ben Knoble <ben.knoble@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000005a6c0b0636a6b3b2"
 
-On Tue, Jun 3, 2025, at 08:34, Patrick Steinhardt wrote:
->> [snip]
->> I=E2=80=99m a na=C3=AFve reader.  When I read this I immediately thou=
-ght that reflogs
->> can be packed now.  But going by the last paragraph it is packed
->> references and expired reflogs?
+--0000000000005a6c0b0636a6b3b2
+Content-Type: text/plain; charset="UTF-8"
+
+Patrick Steinhardt <ps@pks.im> writes:
+
+> Sometimes code wants to die in a situation where it already has written
+> an error message. To use the same error code as `die()` we have to open
+> code the code with a call to `exit(128)` in such cases, which is easy to
+
+Nit: This reads a little weird.
+
+> get wrong and leaves magical numbers all over our codebase.
 >
-> Yeah, I see how this is misleading. But indeed, it is packing refs and
-> expiring reflogs. I've rephrased this locally, but if that's okay with
-> you I'll hold off sending a new version for just this change.
+> Teach `die_message_builtin()` to not print any error when passed a
+> `NULL` pointer as error string. Like this, such users can now call
+> `die(NULL)` to achieve the same result without any hardcoded error
+> codes.
+>
+> Adapt a couple of builtins to use this new pattern to demonstrate that
+> there is a need for such a helper.
+>
 
-Certainly!  I forgot to prefix: nit
+[snip]
 
---=20
-Kristoffer Haugsbakk
+--0000000000005a6c0b0636a6b3b2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: fb01cb72d886949b_0.1
 
-=20
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nK3NzTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOThvREFDZVU3aWdoM1J0NVRjL0svQmJiQS8yOStvOQpsSmZZMCtTQTRo
+d2RJVVhreXlEK3F5cEdsaXVrR1lZUldueFZLbklRT3dUclkvQzdtdFdOWmlQemRzRVh6Sy9hCnRQ
+dDRsVE5VajZCSm9Sck1ucy92b3NZOEszd3ptK1JHUmRTcTFVYTluWkdvSTFBZkhjYnVxZklINm1t
+MXFITVkKdVQ5TWlCYXpOYTc2ODZVZUs0UmFNVDFyMUI4bC9CcmJBaUZqWmdRMU92dlFjZzMwYTAz
+SHJSaERaY0lBbnRDTwpDS2t6TUJTbzIxY0xzdHkyajVzNFRFRlZGMkRFYWVBb1BBN1hVSGNYSzlx
+Wm5uajZZT2NjdzJLUEZ4ZDIrNS9vCkhxOFhHRVZHd3o3OWZpeXljRFdZTnU3NW1McDkrbHJac2NP
+dE5ka2xwQU5Gc3JyZjRPaWdjYnhncDMwWEQyaUQKZExGd2hQNE5XTTZoTVFSVkVnbmZTTnZvcEd0
+a1A5NnlDVkN2bDhKeEFNM2dhUFY1blNPS0N4blZJZVJ3L3h5TApiN28yN09BMTF0eG9IeTdmNTJP
+VUpXUTVkRllsM2JDMkNjaEpPT2c1UTFaUTdsdnBWZ1VrMEhnNXpMUklUSDhZClhSRTZuaUt3b1VD
+NHorTWFvbDFzWVdaUUpZWGc2MnBOUzFLMFl2RT0KPUVneW8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005a6c0b0636a6b3b2--
