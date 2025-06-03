@@ -1,73 +1,74 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF50252903
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:23:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D552253F2
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:27:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748989388; cv=none; b=kFMBJX/YIOMowsyebEeYJ5bqLSlDL57I1ElHkxHYpEMWGv1bXvXiIZJ4f36FellMRXPGTA3UpHADtzpHynHc8erdoPYOuA6p10DO4ieei9H73uqV7b90QpdvAIZo4CB4gj8wWHXeSwCxPtsKe4cgDJPhlUOYEp3Lg0s7jexBw9Q=
+	t=1748989638; cv=none; b=qSBOrJoGrnbB1y3jlCdLS0bvxjhEMljBmuUNv0Q99+H90NnM7+G9VqU+LIoUNCrMW/a0Dw7vJElk7j5Xg4aoccaCA/NDdNOPuItzicql4EDdq3UzHIYcjfvgfQii08OLVaLquYWkIpyKsfNvrGjPqQyvgv76xa/nmAFZKV4b8FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748989388; c=relaxed/simple;
-	bh=Gn8b9OzesogqsHFR7iHQafsDhpVhkHhs7r6/PakHz/8=;
+	s=arc-20240116; t=1748989638; c=relaxed/simple;
+	bh=iWYHm03zRR0/ljjnNRNpSHE/6eZ5hPvaRxeYBVPhgDA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eXv3vlpFoLkvIqKm2zOoS1XhXo05rdsxzSGkzYBM8bpYdwhcjgIsWZSKtwLK7o7aXj/uZnlmox/tDer2uGKM8NHggNG3onqx2MVHNgZteDXQG/WXybAI5u6gdGvEOkv4cpFClNlARxbV9bXsJ+4DmTQwXPJUD5KhajLia+MGP10=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=VWOjNo7m; arc=none smtp.client-ip=209.85.219.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=mVzac8NxiFqF3ZN5JthjGU2Y/5fMV5ny6wIyP+xU08fK4gQ4wmOi0pLEf/cF19z0ygkJzBRNTINtZGUkJR5gmI5NJxEP+sYXLD2Mv/ZAyOFPWJMCQOk3QLE0cSl0BuYkNVnkuzzCkLxBLLEdA3v5YWL5tZNWJlr/gtzkyqNJEUw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=phO+ay5V; arc=none smtp.client-ip=209.85.128.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="VWOjNo7m"
-Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e812c817de0so3399337276.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:23:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="phO+ay5V"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-6ff4faf858cso41701667b3.2
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:27:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1748989385; x=1749594185; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1748989635; x=1749594435; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Qx40CODAx7KPXzWGHpJnhFcvCtAzhm6MksWntkLfvEE=;
-        b=VWOjNo7mthmlLtl+xKwhizo7YQzXRPcXWN0qcsbVQl7bHLbzA9dpsL9cKDKnOri+bW
-         ROuxCstG4EvmWsRKEM9/BfQ/URsx1OUfAUFePHFTWR8o9jlYqPVNE2a2inA0ZZMVjWm9
-         tkQ6E/mckYZRL9AhSDxU5mGC1biAfWiInXn4sfFIQvZ134n4rjcynnIFkX9zZenaH5qt
-         cPlHAO2x9VMSs5V+PzYvu/Sh0yeW8yh7uJiEg/xAzPwzpNX+MX7Ze1Ha3tndsy8KWo0R
-         X/Ddcz9Bj9VsDAJ+DOmF0QJoYZ2msOH9lJ5LxMp7s3R7egv1TgdIb0tfeGANCqJDaG7L
-         wEAw==
+        bh=/PjT+RhmSuHYPh4jtHUb9hMgPIx3ryCn/kEe7EwPXuo=;
+        b=phO+ay5VL9kqwna3fN2GHVx/vI2PVR+qjKQI3rKVtI10iWqSIjf9ZpzS1WhwG9QXj/
+         9vgq9IJqzuf6afFW6KcC5luIs2EnGgveNX1YEDTzTyWNSZUfk/piu8f574Pt6oao28nM
+         ipbVui6oGUEqnz4rzRqFH7enwb9vc2/a29XBg+00ayQf+C93neQ+Tw2CO5seLpHwkuyW
+         Ntzq/8akiq/zhBnyxBd+Uu6QsrM9rHgfq4sUV44cnFk+Jira1zY1aLNPnUvepLZwR0Vg
+         lMW8AmF16JALcjvqCVAlTLlI2U3Lv2b4t1IziROYBOxYwTk6zyI5U9IsvQrzxu0IVf7A
+         q/aQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748989385; x=1749594185;
+        d=1e100.net; s=20230601; t=1748989635; x=1749594435;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Qx40CODAx7KPXzWGHpJnhFcvCtAzhm6MksWntkLfvEE=;
-        b=ePWGRg7vrWtqivFPDDABHxDNrzSj1m5IzyhRFJ2A3qLfCy4vuj/AKCh8I7JYcA0bH3
-         UeVMvlTDYxLlT6A4lONQ+82ifl8Eqs3+7D/loUkzwun0vRmtQw1QzlnqJRljjJS6KZ2x
-         zJGyR7t+r2dS2OFcA/fHEVVKYkdgVgxW9lXMsamEpzL4bdg//tPS2J0QFSwJUwDEhYnk
-         /byuyqomddCdSUus5MxAf3VZuSiStRU9BoJe5UTnygCYzZcVV/I6ubTmrcxVIZLM2vV7
-         R2Pa4oq3To5J+hhzxtb+CtsRQlH2KAlHebyEkQl1BcyforPfKK7D2wb2m1KBGu08YZqm
-         C2ng==
-X-Gm-Message-State: AOJu0YyO8FB+NFU1B1trZF8O0uMMXFoLgzE9Icm+NWj9x44NYruMBjZK
-	np5irpzTc7umqVn84dx+mqzewjJVoRwAuOC5O3iH6alR4xconmT2pfYr1/NxPnJUkpo=
-X-Gm-Gg: ASbGncuiZeZhJvazVisWDa+0F1uHLHkngSUB9Klrgp+D+vLg6Ob5Igjisxxpvmec8cZ
-	DB7eDsWiYNlIQhF/0ih3uXQKSrFrGlyqqxNMcX8n3E/V5YxK0Fg8SPmjl5w5cSf+taK2XS5eAQ8
-	xAwkzaVb/sbdq+a8d++OskyCqa415FaX4pWDvZxZ2g0A+Mzxjw300Zb0Ru70vhVR8u8kE5zAp3o
-	s0hgxCYT87TQQLueZSURNPkOwU06BAdoM3P/awV0rEPBCRRJTKk+c4EVkxJaCINrWevdLSlOVFV
-	eowMxo3XapPW3zm89IBiB+l4uP5jtGYasux8RCS3Rz7M+WyuJtWA7l6SnoAe1z86Hmam0v93bxi
-	cuuwgW5ocxhnwxrhqlu796LNkXiJ7UytUwQ==
-X-Google-Smtp-Source: AGHT+IE2WZbnsAfCh/5jLARd9sBckMj6uRbmgzxzDcAt0HNppE7qkv7G6m8DBWyQrYlugLiRBbV/uw==
-X-Received: by 2002:a05:6902:2b90:b0:e7f:f638:4a9e with SMTP id 3f1490d57ef6-e8179c59f52mr849869276.15.1748989385463;
-        Tue, 03 Jun 2025 15:23:05 -0700 (PDT)
+        bh=/PjT+RhmSuHYPh4jtHUb9hMgPIx3ryCn/kEe7EwPXuo=;
+        b=JjRTgkrCBJClGwpwisqNHjvyOPTXEbFFckU09LkUrUtZoIZW+VzsDD77ZGA4uEjrN6
+         qMDTkOQVkqimcfCQeJ9tmvrdakplgq5uV3aCUcScRJ9d7i0nxzKyZOaCo6f9VSFx8k38
+         PNTlHyjEzsPqgnUuPT/y/txlUuhGNqG3idX2+qKQWr929mjoMFHWt6kdjKu5Ur4tUHxX
+         Txrbc6mGjI4e70mKmr9wz6nmuOw1HgRyd3ezeyHM7WLxoB33Zh8TfF85I1MEPkSmzPas
+         rVaDMnazfHDQS5C6FraGogqq1Vag2ivki22VTRmYNvP/0z3EldDWVQOC4N3IBfNZOeCd
+         d6yw==
+X-Gm-Message-State: AOJu0YwVrnBxcLKIHLBvmpJHse8goRDCpMzAD/vk2YxjCm71A3+LKJky
+	+5Cu7wHLHV2VEHe/BYSuF4Ez/aDjEQiUafq9fJqeaH8LOqoRHtF44bVl7Lt9KfpYP+40WjmeUIJ
+	AVRmw
+X-Gm-Gg: ASbGncu+IzGg7HagMwQCG2ULOogwPy8eECQ15Bizw8/Sp/HMQXxophtUHC2VyhP7ZV/
+	v/f/yGU2e41nWXrpMvVj5RFBs8I7pBve5UUKaMIZ9Adc7PxVEeQFSNcDbAkIlg63GpL7gqAmhgm
+	Cn2SCQ2ror/t2ShNWxESjPAQIRluP5NuUjSvPHFtPpBZID6aSLi1qW6sC2AitpVqkukYhabkTHG
+	+azDm8krMd3URaxgaqI2pZFMFVBL6JiySNXE14m5qPspETrMNac8f9PG7VSv0xMMov5ixTFoRk8
+	an9PPLc8AudqJXophDJojBKDMYvTBVH/SmDrK4n0I3znLK3HROkPpny4h+1IedBfv6TMRzU8hz8
+	Hr0Gw9f2YLrTmc6IOQqt/4cQ=
+X-Google-Smtp-Source: AGHT+IGvkQN2RWJYj0YZEb8IDTuZ9CiuNBHcx+nak6UZUEOQ0/sZlEuH0QeqT/yJbWYcgb7QDrkCjQ==
+X-Received: by 2002:a05:690c:28b:b0:70d:ecdd:9bd3 with SMTP id 00721157ae682-710d9db78cfmr6929217b3.27.1748989635394;
+        Tue, 03 Jun 2025 15:27:15 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e8128d5a14bsm1848138276.35.2025.06.03.15.23.05
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-70f8ad007e2sm27276727b3.108.2025.06.03.15.27.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 15:23:05 -0700 (PDT)
-Date: Tue, 3 Jun 2025 18:23:04 -0400
+        Tue, 03 Jun 2025 15:27:15 -0700 (PDT)
+Date: Tue, 3 Jun 2025 18:27:14 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 1/4] midx: access pack names through
- `nth_midxed_pack_name()`
-Message-ID: <aD91yE8rKkjwe3mf@nand.local>
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 4/4] midx: return a `packed_git` pointer from
+ `prepare_midx_pack()`
+Message-ID: <aD92wu6Mk/S9Qm4t@nand.local>
 References: <cover.1748198489.git.me@ttaylorr.com>
  <cover.1748473122.git.me@ttaylorr.com>
- <d3508d3cfbddb512dbca4c2177731fffb5827084.1748473122.git.me@ttaylorr.com>
- <xmqqmsavjg3s.fsf@gitster.g>
+ <e3e21db673f3ae6e574333d4678a0450fa44fb9c.1748473122.git.me@ttaylorr.com>
+ <20250530065034.GC1321283@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,40 +77,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqmsavjg3s.fsf@gitster.g>
+In-Reply-To: <20250530065034.GC1321283@coredump.intra.peff.net>
 
-On Thu, May 29, 2025 at 01:51:03PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+On Fri, May 30, 2025 at 02:50:34AM -0400, Jeff King wrote:
+> On Wed, May 28, 2025 at 06:59:09PM -0400, Taylor Blau wrote:
 >
-> > Accessing a MIDX's 'pack_names' array is somewhat error-prone when
-> > dealing with incremental MIDX chains, where the (global) pack_int_id for
-> > some pack may differ from the containing layer's index for that pack.
+> > Let's instead have prepare_midx_pack() return a pointer to the
+> > packed_git structure itself, hiding the above as an implementation
+> > detail of prepare_midx_pack(). This patch turns the above snippet into:
 > >
-> > Introduce `nth_midxed_pack_name()` in an effort to reduce a common
-> > source of errors by discouraging external callers from accessing a
-> > layer's `pack_names` array directly.
+> >     struct packed_git *p = prepare_midx_pack(the_repository, some_midx,
+> >                                              some_pack_int_id);
+> >     if (!p)
+> >         die("could not load pack xyz");
 > >
-> > Signed-off-by: Taylor Blau <me@ttaylorr.com>
-> > ---
-> >  midx.c                    | 7 +++++++
-> >  midx.h                    | 2 ++
-> >  pack-bitmap.c             | 4 ++--
-> >  t/helper/test-read-midx.c | 7 ++++---
-> >  4 files changed, 15 insertions(+), 5 deletions(-)
+> > making it far easier and less error-prone to access packs by their
+> > pack_int_id in a MIDX chain.
 >
-> One thing I forgot to ask.  Should we expect that
+> So obviously I like this direction, but a few small comments:
 >
-> 	$ git grep -E -e '(\.|->)pack_names\['
+> > (In the future, we may want to consider similar treatment for, e.g., the
+> > pack_names array. Likewise, it might make sense to rename the "packs"
+> > member of the MIDX structure to suggest that it shouldn't be accessed
+> > directly outside of midx.c.)
 >
-> to give hits only from the implementation of nth_midxed_pack_name()?
+> Is this note still valid for v2? It looks like patch 1 adds
+> nth_midxed_pack_name() and tries to use it everywhere.
 
-I waffled on this a bit... and I think the answer is "almost". Certainly
-callers outside of midx.c or midx-write.c should not be touching
-"pack_names" directly.
+Yeah, we should get rid of this. I had written it before I wrote what is
+now the first patch in this series, and neglected to remove it before
+sending out the latest round.
 
-But there are a couple of spots in midx-write.c that are really more
-convenient to directly look at the pack_names array rather than going
-through the accessor.
+> > @@ -1649,9 +1646,9 @@ static int want_included_pack(struct repository *r,
+> >
+> >  	ASSERT(m && !m->base_midx);
+> >
+> > -	if (prepare_midx_pack(r, m, pack_int_id))
+> > +	p = prepare_midx_pack(r, m, pack_int_id);
+> > +	if (!p)
+> >  		return 0;
+> > -	p = m->packs[pack_int_id];
+> >  	if (!pack_kept_objects && p->pack_keep)
+> >  		return 0;
+> >  	if (p->is_cruft)
+>
+> The ASSERT() in the context is from earlier in the series. But do we
+> need it once we have this patch? We no longer look at pack_int_id except
+> to pass it to prepare_midx_pack(), which handles non-base midx slices
+> just fine.
+>
+> So we could loosen the assertion now. Or we could wait for later when
+> somebody wants/needs to do so, but I'm not sure how easy they would find
+> it to dig in the history. They would find the commit that added the
+> ASSERT(), but may not realize that this later commit made it OK to
+> loosen.
+>
+> I didn't check the other ASSERT() spots from that earlier patch (IIRC,
+> some of them may actually look use the pack_int_id for other things, and
+> wouldn't be ready for non-base slices).
+
+We could loosen the assertion here, but part of me likes keeping it as a
+self-documenting note that this function is only intended to be used for
+non-incremental MIDXs.
+
+> > -int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
+> > -		      uint32_t pack_int_id)
+> > +struct packed_git *prepare_midx_pack(struct repository *r,
+> > +				     struct multi_pack_index *m,
+> > +				     uint32_t pack_int_id)
+>
+> We used to return "1" for failure and "0" for success. Now we're
+> reversed: we return NULL for failure and non-zero for success.
+>
+> So code like:
+>
+>   if (prepare_midx_pack(...))
+> 	return error("yikes");
+>
+> needs to be updated, but the compiler won't help us because it is happy
+> to convert both an int and a pointer into a boolean check.
+>
+> Should we rename the function to make sure we catch any callers for
+> topics in flight?
+>
+> I'd have thought we could call it nth_midxed_pack(), but that seems to
+> exist already, with the caveat that it never prepares the pack, but only
+> serves what's in the cache. I wonder if we could simply replace that
+> with what prepare_midx_pack() does, but it may be more conservative to
+> leave the two separate. So I guess nth_midxed_pack_load() or something.
+
+In general there aren't a ton of in-flight changes in the MIDX code at
+any given time, so I think we could get away without renaming it. But I
+don't mind erring on the side of caution here, either.
 
 Thanks,
 Taylor
