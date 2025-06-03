@@ -1,138 +1,109 @@
-Received: from EUR03-VI1-obe.outbound.protection.outlook.com (mail-vi1eur03olkn2051.outbound.protection.outlook.com [40.92.57.51])
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 003BE16E863
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 19:04:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.57.51
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748977447; cv=fail; b=XFy1zT704oKi8treJI17lfJ3UPF4oxiz9CPcQVjMsX9Qjd0ZCOY8xwm+SVdnSy720QfZbPvvoV2LPEJjrLcH033Hp0YxcSsXL6496b9eQeLLFeRV+RLN5BjVIq9g9Eq75oo4mJxqCNMKTyPCRmLEzxC1XkMoAlp0SVxBLdflIUs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748977447; c=relaxed/simple;
-	bh=aiH7DHYzEh5scGFcUj8UXrpb9QP1WPtwa/04Ncu1PKw=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=G9hgNQS/hIdbQEQHr3V/y/LtC8kYdhzEY2e2RdRES5ZrXDFtQ6py8yZKKG0tNKcTXU81V+NVc+VYviv0r0QJ0t4K5EwRnfpz58JU1Y9SeqXnBVP1RB7GPqBWXl2AL2DzTS5OhTNu8rKufCdrGGsSeXqXNOL36l1LbYivoWlezAw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=VvjIaLAo; arc=fail smtp.client-ip=40.92.57.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9711748F
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 19:06:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748977616; cv=none; b=QhfRHIk9EZY314lS8EgrpJVLqYdBenFi7aR0aB8LYVE9TnL70zXR6iOOl/K+9gZXec3kQPjrf0+moOVXo5nDlWBU/HX9eIYP/znrukB0TQVi3opIQ6aFCd21AFqzL7ntuJn62rj/ghCTMyHugT2IYK7gRXjA1xkP/B0wekk7GKo=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748977616; c=relaxed/simple;
+	bh=VP1Vq5Ev9FlO0mHbroLsvNWaIxxSmjUks/x4vQYKmFk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=EaEjGI1U0NWVOQNCqwtcJ8EdZGpAofoVJb6Vc5+q8WdwcxbC83pJ4tupDpaRbL8ZiBj/T9ZgCDeVqV3/tp9n9iq5Cxaq34SQVVOHhKLEibqZ+TdEVms/4VJJ0zBYET95AajWAcq7fLAs3LuiiGtIsSQ8ihF1KbpnkoTOYChdW7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=H4VLUOii; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="VvjIaLAo"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QJN5t699qoj5xvhoORyP1PVQu+nlW5jxgCrQX4pK86D1pftDacW+FY0zbKrStG1QFzXTjbekTfAscwVgayWgpcEFVGkDDXA+1bH2XZU5mYKArGYFXCWXaCp04MF+VmhLfRKi4j2PzoXxwOKP7fE+fdeLo7+nY/nAumjvy5nJ98l/lk/LDUcsGS1+BslNJcZcUrdvx14rtxjheoF1Lz+LAjhEkzfzETJpxrOMPIHpGxMsovc1+AFL8jYIMpQ9h1/PdEzcc12THRllqyrPC+c/sD+u5s4p6SYxDnZOhDDn70nZNVwQnyexI4psIrHItA+3GkzV+rl72mXevv9ObXi9JA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aiH7DHYzEh5scGFcUj8UXrpb9QP1WPtwa/04Ncu1PKw=;
- b=v2jr8bLxaPveEjVYShaIEl61eDFJ0n8vXeTPHAqvfhIpkyIuuR6dp1tLd+8o87Ir7AAkQbNMQ9y687c3PeG5Wn5ZwOBfw8FgZXXh3HxUohXy+8WE1COfHJ0z+1wE9aKLW2s/b/+yfVmtOWbIkCOjg0fmyOmxgpLoJO0NdpbrNNpOS/YFl3uMxH8J74v3Mo5uqWwr/ThcogQbmTnrZVS8Dqm8tqkZwmoiEDdyW4YFg7qJmE9/hNwn7LZbAbkviB+JrBeU70dRGuNByKHBoxT9vPWOLmEWKo6tHcMIYGn/BEVgOMzlVqf1n0mm9nXF5nzVCSb/s/UALuw7Q5INXquS8g==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aiH7DHYzEh5scGFcUj8UXrpb9QP1WPtwa/04Ncu1PKw=;
- b=VvjIaLAoo6WE3yXxZbt3aUP7mEG1G2xr5Aegw+xH8X1hlbuLMOVTUkH6j0SZ1Lo05wp5IrKnIClkIoQIX+zDEjCXUIv3laURD9tL+ddK0p+ZHDTgRx860qdZw4gLfCkCow7FZ8eX6P4TPznEqlkXIyQLrqkEHAV9fL70IkxzQPYQ9x1pw3ZgzBa5iwMBDjSDZc4mgKeOJOH9LmbgqjyN0ofUr1rzfz/uhVr0FSpGzYwKLzaQVC8z2orwdl2/CHbGqyQtCsMFqO/Sm1n2hWlz1jelBSW206jyk4ZW0Gn14/mJRyTz1nxnZxvgDjtqmQ4rGqTeS5kgRwFueUyNqotfhw==
-Received: from DB9P194MB1875.EURP194.PROD.OUTLOOK.COM (2603:10a6:10:39a::13)
- by PA4P194MB1021.EURP194.PROD.OUTLOOK.COM (2603:10a6:102:c9::23) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Tue, 3 Jun
- 2025 19:04:03 +0000
-Received: from DB9P194MB1875.EURP194.PROD.OUTLOOK.COM
- ([fe80::cd1:cffc:b1ee:b3c]) by DB9P194MB1875.EURP194.PROD.OUTLOOK.COM
- ([fe80::cd1:cffc:b1ee:b3c%5]) with mapi id 15.20.8792.034; Tue, 3 Jun 2025
- 19:04:03 +0000
-From: Sara Pots <julei.pots346@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: # git@vger.kernel.org Offer  report Re :Increase Website Search
- Visibility
-Thread-Topic: # git@vger.kernel.org Offer  report Re :Increase Website Search
- Visibility
-Thread-Index: AdvUsEA1bXEEMIdDTqCGnaovSmBLYA==
-Date: Tue, 3 Jun 2025 19:04:03 +0000
-Message-ID:
- <DB9P194MB18755BEF84F3D8876E4CD804B76DA@DB9P194MB1875.EURP194.PROD.OUTLOOK.COM>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB9P194MB1875:EE_|PA4P194MB1021:EE_
-x-ms-office365-filtering-correlation-id: 99927add-a738-45a9-5d3f-08dda2d167f6
-x-ms-exchange-slblob-mailprops:
- Vs63Iqe4sQlaWPeXpnF+2P0N5cr88TRD7bGFHJ8inLxK6RGf61EXXISU/Pqr3XDK9SxXMtvWwpVQteLOcfWIfFKEGfOL8UjNRGxlSPj4FThdK3Tp5GSJBcXjkFyCsG6n2sAsroMv9xDexs9zt1rRfls3LlN36G600LsTGU2x6H15px2qGjafUTfQM8rnCU7clVK3Y38U7BItiatkAUVIvKcK6llyNqbQv1nOpsznn2M9ZBhUM5iXHqBo2SJhb/tS4JrXV+AI+tmu2jYJCB+nFR4ZxNIhtHTv7WaEr7cLW6aKeF8zRRveTfyy8SmYNoeBKB22Ohkp0CDOxmKshBYOarzjJo8XjTiqmBpYyStcgvmZHsMsNPPhXf+FpfBJRvrTe6rqUJb3vgjLMd3qeDImCG/m1OHL1vz4hH4PuilcpsOti4M4LdnfNVq7fJCH9JmJ0EExnu5f9IgHhrxW2D23qj1MyHQWYNTh+sC7xhJfVhLItA/K6Dyg1wIkY7KxnLLM/F28D7USmdCNcv16/Hl07lviLDLqnJRCC0DqT+j8xJd1u2LRwp3rlXf2LS0uygoJjVTFvmqqc0PvPtiJ9xDNkYSK37DH41SNb0UkFcSxHLe6aZaXvOAVnI43vhs7SBHMngx8XDjVWAYXnkDj8yKr7JwDfPhwsUa1HnwNzGVBvmFpmYdXBajUQBHsaGMadFOaZiiPhL4xokQbqiIFs4Fwfprk32pF4oA+Ix+Ho5IHmrc=
-x-microsoft-antispam:
- BCL:0;ARA:14566002|15080799009|19110799006|8062599006|8060799009|5062599005|36102599003|461199028|3412199025|440099028|11031999003|12091999003|102099032|56899033;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?1tbPwzlk5qZTay83JZxKozqucF2M2n4tZztnky3AgigUjjAmwU5QGjj3OqHF?=
- =?us-ascii?Q?ZF7dPsIAsyI3CHtrkjHjggCVz6tlGFJJnq0EO8XYErfXQ/Erf2dmQVblv5Ai?=
- =?us-ascii?Q?XJm9o6oJR9Tu50GCP+d67mupcpNj16uyt0O7lGAXKWfS+HJbMqihidiejEm4?=
- =?us-ascii?Q?N9jYNzM2em2gYnEHolgxmdawQxDqVuo7u1kuZlOqNNifCcb/ilbz+qwpePD9?=
- =?us-ascii?Q?PHVofscRrmx34qFub0QdXyDGBv/L/59ROn7ECAxsHr7tTwRaE10q804rjL5t?=
- =?us-ascii?Q?su7V2nnASiuXBTN44ZkjqIUwfsDcFF5NCR+347fTgLmVcz0b2yrzF7/ZNNMf?=
- =?us-ascii?Q?ybASmuADucpV0JPsQ3A7wpXYIL/3RXvL8MIQ00mRnmdqr1UPfu0/LkLhs6iB?=
- =?us-ascii?Q?99XAs6HQaihNowVJa0MOXl7WxrYAB2rGRM95yPTbIBJBNAeieMj4n02GIP3V?=
- =?us-ascii?Q?1h4ikreXn7QI/Wrx0n1rv20TwvBw1Js4+6I9ynLyVIwomr0vtQnXN71sH4Ng?=
- =?us-ascii?Q?k18ykimBS7ttegky2XXWRX9n+dssBLqMUoMrQ5efTEXX3lILYrWNP0gz+fnM?=
- =?us-ascii?Q?Nlb4KI1aFcT5fboSYHJ3rzBKpoYOM9Y3zNxGGY+C6kWFHuvMayXLuV1zdoAO?=
- =?us-ascii?Q?bzbaTQH2S1tlQvrxcjLAFVqairtsIPMDsWDdcmL4Y6jd0dGb5C9Ul2du8+9l?=
- =?us-ascii?Q?EUVydC+XPp07RDe7FRLMVyK5x0Y7/pWzz/w5J7mobVjeI5E9p2m+uTiH8f7v?=
- =?us-ascii?Q?iU6Z0pxnSLbKKb/Z28EsolpUd2emvzx87+xfOGq6LRAES1uz7DwdeJs7hZzG?=
- =?us-ascii?Q?muGoIM1cucYRkeLLDUEJ787jljpGnGx9oWunwiF7nwEXYzZUVEmnJY0qM4Og?=
- =?us-ascii?Q?u/tmIFHC3yzRZQh9cMXOGy5BdyQMfPGj8P2rXgnOvAkPEEwl72HQQh64hadR?=
- =?us-ascii?Q?9v5HAI9UnzM4dJTcD6NqFsbhvWbhpqa9RCxRRxL6+NnTawWKfWvR3pcFmv/S?=
- =?us-ascii?Q?WSkhvSxJY6A/CuIerqAC/uhxbWkX5jETRVdT9yCyu/n7tJd++ZpiS7AtSCsB?=
- =?us-ascii?Q?8j4w3WLVTK/R9ngsiKuxDfGDRlN53LiYUKMVMbosNnWI11fHx9oopdQaw85t?=
- =?us-ascii?Q?CqJhWqqxaXKlVqFcrt6+pnYtfz7dBocH585mkQWcBTa5jEdmVTTyliriwi86?=
- =?us-ascii?Q?CLukygyeB2ZfQjodZox65S0wV6sDLgRo4uyEpA=3D=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?sXbrR/A2jhmtNAHWAv9CLL60tMRlbYtZdC4umQP2MKFqJl6LefRfK59BW45p?=
- =?us-ascii?Q?ybT2N5irZ4PXJQ611VhAm1Jq6owmT8Wrxk0PZJU3bTCQdV9+R6OQ/AX3XNWo?=
- =?us-ascii?Q?i1OWGEoSp7x39Kc8Ysy294Tzka+hsdrBB1vfwt7TC6gUQkvWOeFNGbJU/tDG?=
- =?us-ascii?Q?ncxmcXy25LBsUN8F7H0YIq4ceqczfmR/oHYV/wplgHvSxZJeCvPLRPlAjpcC?=
- =?us-ascii?Q?exMQne6jvBJ2qs+6zJbGO8HxKOeXh9UdbeGrMBF1RViYMwq3Xdj+1IuKp8sZ?=
- =?us-ascii?Q?lRhOjxwh/K0wQza62Qxf6mmFJKWDQPyADD6VwggYNrPyjEnxZhiSfAx7cOzS?=
- =?us-ascii?Q?FviGAAG1vyIwCNDaEdRBwm1DPJrLlmvA2TMEwHzPKvTdjmlv5BwhlvmhT7ty?=
- =?us-ascii?Q?t8D+x/CTPpI4mI5nSl1DYua6Ol40juiEUEVcwQEKpRdNEPyTcFCEtM6rzR7L?=
- =?us-ascii?Q?BOQMXEVFj7tj5jisaGNloTF0HXLiuAjw1FS2vcDQfYOd9YTbmvu3RJLk/NBN?=
- =?us-ascii?Q?23KwnmSSqdqVZ4WVAS6tcxhQmX3LJNLi8adOxHaMZbGXVc1+JH3dcm3BOsm9?=
- =?us-ascii?Q?9a32HZ0gKbU2LQl1+Zc2V6N0kmsSmKi5FmQM7o7cqdIDCdpVv80e8l8PIVBQ?=
- =?us-ascii?Q?BQjaVdQxCG481bLn9Sm7qfamJ9YjvFVR5QW30dfGzWIAnx8XCddh4uwkuUPH?=
- =?us-ascii?Q?zZfWB/GwyaJ8CNRuHXVIg4haCgSw5UN0RjC8d7dP/50AgGlRXgbzlJSEqTNM?=
- =?us-ascii?Q?DK/RwO0LQzrHnImqhvOQBFfBZE1KPX9PeKzg1VhKCRbPlWoSrJlbcjC9KbVW?=
- =?us-ascii?Q?9MVxj3qNz6MxIo7x44/DJWKCa29Nc2MsuhKTEdqW1zTCMHw/1czaZWbBucxe?=
- =?us-ascii?Q?r5PwFcHBl3Z08qI6Yd/F07YqKC5ub+lboWi/YbHlp47sAU8IL2+L0knhirHj?=
- =?us-ascii?Q?tiEF3S5l8Ncf34IRsIJ8T/GLYcFNom9csOwegBvWG3kS04pEJIFZeLRzO9eu?=
- =?us-ascii?Q?EVHaWqDYxfDaHXFvgiEvyClyu5QeqaXlqAAEwbBAgShP/NSVMAteIVZnGyHQ?=
- =?us-ascii?Q?reecPKuVEXrWINIbnWiG74cz+JvVl2+Gke5uG756HHVfqzqBCQcUFwCHpt2M?=
- =?us-ascii?Q?m1ah7h1R84vvKbWzBLIOlngc4+fqZ3/jb7qSHdr6fJFEC7q6xtaLWB/hUmCR?=
- =?us-ascii?Q?mWFneADSBLeK4kjZA+c0esFQPcBWQywM1zqXPa+dPNB9eG1CKlsHOCt0f5Q?=
- =?us-ascii?Q?=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="H4VLUOii"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id MWvEu4Wy7MhRjMWvFu42xF; Tue, 03 Jun 2025 20:03:42 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1748977422; bh=GmSHf4Is8Ftep9JLs5fvR2GdAYMOh1Dca8S5ASo+LH0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=H4VLUOiiIzkoyTEQms7bLBaCvohvP7PM7XNrNCyeT6Q7W3S6ov7B99p0sxljT53ef
+	 GDTwpAsrxG0f7NQlQqUGfldbReihGT9ET1ra0HeNMuSos8LaN1kOwX6RJDxGBypiGB
+	 TI1t3JjVBKGJJY6dimDSrU08NkOSi9JW59oqadpFqg8BH1vXnWP4X8ecZbGAoIJIjd
+	 T3XDFu5xCrBf/R0LGsoeLQ/jn3nb7dZkqcVEeNrfQLVfWdLrna7RsM14XlK9pb/pCI
+	 nMNsaRplTlVINSsKYOWwVMrR2/xDq4w69yb/+bd5rsxRdw4CQkSIZfqujO3cgGkju1
+	 kVTEp14zwviIw==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=Xq9ZOkF9 c=1 sm=1 tr=0 ts=683f470e
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=RXLLBx8KIxhDRXYulpEA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <780f09cb-5399-4256-91ca-d93a553540c0@ramsayjones.plus.com>
+Date: Tue, 3 Jun 2025 20:03:39 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-9bdce.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DB9P194MB1875.EURP194.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 99927add-a738-45a9-5d3f-08dda2d167f6
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2025 19:04:03.2324
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4P194MB1021
+User-Agent: Mozilla Thunderbird
+Subject: Re: v2.25.0-rc0 test failure on cygwin
+To: Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Adam Dinwoodie
+ <git@dinwoodie.org>, Patrick Steinhardt <ps@pks.im>
+References: <771677b1-2ce5-40ce-a704-752ff57ba0d3@ramsayjones.plus.com>
+ <xmqq5xhcpzyp.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqq5xhcpzyp.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfB3KfRb9ih+2UN7UuN4LKDbowhlo2zDuCfpLt3g72/4iKp1x1mBRn9mAwErtLhl4mnnLd5yODCzsNfqrqzA8uzvWLRylXP3FyFkVB86BheHBd5IoveWE
+ /FU5Ouk1JNcpES64gp2cXl75E9OjCYcHSTSvetuu9X6faXxrf5HuuYXDPWQWf5LPQocbYPhT9ai64zB3XKmEgk1HVKU88PmQ2m8=
 
-Hello git@vger.kernel.org ,=20
-Greetings for the morning.=20
-I have your site [git@vger.kernel.org] It has great graphics, but it
-doesn't rank well on Google and other major search engines.
 
-I am an SEO expert services provider and have helped over 250 companies
-get on (Google's first page). My price is very cheap.
 
->> Can you send me a complete offer?=20
- Thank you.=20
+On 03/06/2025 17:11, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+[snip]
+>> A quick squint at the failing tests made it clear that the failure was
+>> caused by the cygwin build treating a quoted glob character sequence
+>> (e.g. '\*') as a directory separator char followed by a glob character.
+> 
+> Should we revert ec727e18 (dir.c: literal match with wildcard in
+> pathspec should still glob, 2025-05-03) before deciding to how to
+> proceed, as we will be deep in prerelease freeze?
+
+Heh, that decision is above my pay grade! :)
+
+BTW, I realized earlier today why we had not seen any CI failures
+on windows (yes I'm a bit slow on the uptake!); the test has this
+conditional at the top:
+
+  test_have_prereq FUNNYNAMES || {
+         skip_all='skipping: needs FUNNYNAMES (non-Windows only)'
+         test_done
+  }
+
+And FUNNYNAMES (as indicated) is set on MINGW/Gfw, but not cygwin.
+(cygwin can cope with many 'funny' filenames, but it can't change
+the use of '\' as a win32 directory separator).
+
+> It's not a "fix" for something that is gravely wrong but a glitch
+> people have lived with almost forever, so it can be reattempted in
+> the next cycle without hurting much.
+
+The POSIX/win32 pathname syntax 'issue' is not going away anytime
+soon, so I suspect that just skipping these tests (or the entire
+test file ala Gfw) is probably the best it gets. ;)
+
+[see Patrick's commit 5f8af25ff9 (t5500, t5601: skip tests which
+exercise paths with '[::1]' on Cygwin, 2024-10-16), which had been
+failing from v2.25.0-rc0 (25 Dec 2019) to v2.48.0-rc0 (16 Dec 2024),
+which was actually caused by a commit which started allowing a win32
+drive 'letter' to be an multi-byte UTF8 Unicode char! :) ]
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
 
