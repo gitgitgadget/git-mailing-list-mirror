@@ -1,107 +1,109 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFFC633E1
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 00:36:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1FFF3D69
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 00:50:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748910972; cv=none; b=s7hz47stukLBdp1qqKAtfZ6/kC8ysgJOLwWOaOS+XTsKokGRsBlmQboy/Iz2i+cpKfSNxk3vhCSSAaH5a5cQeT94t8UOspgoaIdY3kFq36beP2GYv+6NO4Xn+MHXB/afBaRF8sdCY80SnUvLbcNUEme8Cx8/Pb5+jLeU8xwR530=
+	t=1748911808; cv=none; b=srMbD+LETRabS+W57O0jwf1IhDw9azIWjF5nI8Aspy/9EZ+0rKKgo6DpNv14FCuuKs8QTzi40YtuP+hlRKuJa00HlcpGa00yWVggrNmScOOJaAiga0yIaSz74JmDcUPEi7BqirvVIa/7cqIdvuDo6pPortADRJGOSUa4CutPOCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748910972; c=relaxed/simple;
-	bh=EilRYCrYjkImv07Yv2CQnNYCCawivSejA1mRDyUSZ5c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LLd967HMV2E3+tV3Rf5I2QVfY7ZeAsJ3XXPigDsNAtU8CbGA7l59UV8ZBDP2RegqJXI8RhohPnrF12Q+vYV2OgMC6ICA/zM0HvxpEMLJnLAmbSM915zUSsA/w4zyoFVbIvLpYnwfaLuzPSsoAyU5F8Lbtz90aOEzBfHNYZPh7Dw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vHP9KI25; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WZHEF+RN; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748911808; c=relaxed/simple;
+	bh=nq1ZGu/Mt8NXgTU3ZzqvPR742zD5o7Vlp5CGhqxhfro=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=HrB6M3h1X8hIPOUSg4BuQ7ax5i3S/KdAFnk58Q22xQUQoGb6+WhfTRssNwNFQOcwx+ZudFHSsyvb5EAykIJTUPpoctNT2aV4T8+6Iw/ycYeor0BMVG9ZI55FYr3A3/5dRVN0YQ013eqlW7RL3hdMVYGejvV6jsBSbvlh/ghUNT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RuFd8k4c; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vHP9KI25";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WZHEF+RN"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BFE1211401D2;
-	Mon,  2 Jun 2025 20:36:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Jun 2025 20:36:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748910969; x=1748997369; bh=zRHtxXohvr
-	otAjpsj+oVZF9/+sg3zOoTGsSB30TQ61E=; b=vHP9KI25amBZZhEn7NMMDVZqzp
-	pkQW8cF/oDRO66SLs+Yoan8faogEzcF3xfYumJDplRHB9KtlFj8PGNARTt/+vuE1
-	iYDF/5Rd3tXszfg789VIRqlmBKmceOR4iwvAKLCJ/t9PMaGgvmrkxyEmLiOdrtQN
-	+e8FIIsBOSVUlw7AN9WbMSo6OGtrb1WZ4HkQKxXbxlG+/REjY1ITbk9JXdLq+BZ9
-	1M2hvrmG1LWRKjaVlDRW9HEqJG6vizvfuupLxGcA1CQpzZ5IH//I5zLKBlFf2y2x
-	SAOhXL0Q3nW42ceCvU4MovUfAzMhHbGqLuSrC9+3eJaZ4mAUO0O4inxCP0Sw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748910969; x=1748997369; bh=zRHtxXohvrotAjpsj+oVZF9/+sg3zOoTGsS
-	B30TQ61E=; b=WZHEF+RN8hhnIbP+D4EsApWF1R1wvle8C7uUl8yozOeUITol690
-	PVDo6jyy+QkzvoJYkf+1ED1dAxxrlzKHCT5/JZPTS72PmTBbZ1hb9Q5cyZ+P+PFc
-	kI0um8QeJ5RBm3mXNIH4sTUGtb1/OkTerCC+KwHXh0vLuhdO2ghPVvccuY2mL8mE
-	gmvx6V+ivTmAoPc9BJ7P47k3CQFEl6GTpK9RktJMQJi5AzZYer/+LAgmdayU/O5f
-	2UzRt0nSvv/yesRUhzuxdtzBcMTkpL815H5wZYLQZ1mq34qbyFQgiCj5hperQdXC
-	RFd0muJpntmoS0Z3rv5BO1kPgyob4ymIvFQ==
-X-ME-Sender: <xms:eUM-aPw0YgEXYzsx4ZuHXo4aYWaTPCz3VusFyN9SPewD1nw0uq6COw>
-    <xme:eUM-aHQTsXpMqsrQdXwt0OAn14-yIWH5duV4xtviIV7xe_bf2qFXNAgLAk1qELK8t
-    MkP0Bam7UtGZUedyQ>
-X-ME-Received: <xmr:eUM-aJXYL9ON5LJu6dioqvCrY6SlX8rEiihEQZBazCiQt9QPFYvwGCAMMKCIDqlYiXIq24bg3dP8efANib50fHYljdqT2OHNUSMe>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefledufeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopegs
-    rhgrugestghomhhsthihlhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eUM-aJiBNAzaJaqmG18KnK9s8dEsrAOv1zZPj5VHROcVnMH3pWZTpQ>
-    <xmx:eUM-aBCCLeOzxH8maxWeVKquzpRZ1UdbuMMS7vtcrNI2B1prjmGdAQ>
-    <xmx:eUM-aCJd4eRWrekU62y6Q7imJPo50QRe4KvxPj2IAf7JbrbImr-mtQ>
-    <xmx:eUM-aADFlrdrOYpvx9X2ja7FsEg0AzaRYxO6x393wXVsrVtRY3y-jw>
-    <xmx:eUM-aJF9hDafwH-fX4AiHFbGNZcwJU_5u9pQdgLhcfw4_8CXLMO2HgI2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 20:36:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Brad Smith <brad@comstyle.com>,  git@vger.kernel.org
-Subject: Re: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
-In-Reply-To: <87wm9ut3uo.fsf@gmail.com> (Collin Funk's message of "Mon, 02 Jun
-	2025 11:06:55 -0700")
-References: <87wm9ut3uo.fsf@gmail.com>
-Date: Mon, 02 Jun 2025 17:36:07 -0700
-Message-ID: <xmqqfrghslu0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RuFd8k4c"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-742af84818cso3371119b3a.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 17:50:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748911806; x=1749516606; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iXAjlqdkiopVtqjTrbc5pEeaVFJmeJ5b0PP/yWIqiis=;
+        b=RuFd8k4cS5gjl3WTrqwtyQyOFTZ484mJqY+nacfk7qQK+81PsLjxpo6srAFq+3pfOO
+         UCDRQeS35VEfxJh7eIsDbfvOJ5gNWeCvTid90Y6pwPe41rS8Vr7rIQRUnEtF56j/SeGp
+         5Eux9DtmZu0ffVh6N2TkLe3RjRmlvAmQkzn43Wdzjv5ddRJdC70Jj8eNHxO6jsj7+ofK
+         9HE8FX9Mtr9a/Tz6FCwNk3HV0kTb7If3V95fGkkCiZsSFlhGK5Mi9ilMuu3Ws0msRs/z
+         idSnNZdkSBnbG/FdPT96IMEnEW9UuwVMkOXbZQz1fHMN2wOC7d7faptYobYoCrhffaR9
+         bhdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748911806; x=1749516606;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iXAjlqdkiopVtqjTrbc5pEeaVFJmeJ5b0PP/yWIqiis=;
+        b=dGrF7HvmMlYl+/n3UqqgSpG096gq9Puvh01TqDS8HWjLbCbIAypwM1HwGjPjDVKTQx
+         RBz78EULEmKB4OO5CRXU9TLY9KJHoyC4O3Vd+pWnKKCOZr0AI2mWsg/Lq3GNJjEadonV
+         aBjJq5IDrOnRHy96IwhwX18qyQ9NPR2T97TdGzDttgtXCDQT+/j8r5D2XqoEbvPIJ6yr
+         hIyRf8yjTiBMCiaHZ0RYP+UtUY/9N1bNGGaIkeJnoVVkCRSpCOs8RAbR8/ZJ5eaKgKp2
+         4nOMnLXTE80MUd2Cq+s20HjcEFoH3h5FSFSwVBD4Urnul/SO8LLKYxrxFatiEqmkP2Dq
+         snbQ==
+X-Gm-Message-State: AOJu0YyDPjkcv7JvIOnucLvwTzyLvtZwDJbNpdepFMgYBSOu5woJ7aaL
+	Ai00R8o3G0POKopRbxSf1NI0yRhJmBExQ1Qwp2FTc/wj9vTR1cw++zAHke+8qw==
+X-Gm-Gg: ASbGncs+MR13GTBtz5wqOeH+d9jheumWgV1Prkvp2GCmVxKRu9u1nbVIdy1uTMw/Fp3
+	S5FD4rKUf85f/1JrkCwYaCiIsvak55nPT1kAz6iM5i3YlmE99Gh0KcvoXP/5UcpE5I8B1n3lzYQ
+	w+rE71kZ8mnVpdqIUJbuWTkROY6fe72qed+oQPp+gW86MP+mjoyZTJnwtfftzW0SUzdb8nrIBKJ
+	ftuX9CrAou69XiP1d68t4pui1WG2ZkbVmw4aaRWRy4yc0nVWq0WtNL0wluktWyKnDXK7ZfQXBHo
+	72ZE7p7hFN7F4fe1IT8QMIa2jY2mbHtPkg==
+X-Google-Smtp-Source: AGHT+IGwfxh+JM+Ko1RV8rxHm+Tj+rzTUZGgijtsfR1+3a0bNTB0dJe76S7B8St5JK/uDIHYIkyxCg==
+X-Received: by 2002:a05:6a21:7e0d:b0:215:ce2e:8b1e with SMTP id adf61e73a8af0-21ad97d9019mr19226310637.26.1748911805886;
+        Mon, 02 Jun 2025 17:50:05 -0700 (PDT)
+Received: from fedora.. ([2601:646:8081:3770::9eb])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2eceb9711asm5282959a12.57.2025.06.02.17.50.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jun 2025 17:50:05 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: git@vger.kernel.org
+Cc: Collin Funk <collin.funk1@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH] CodingGuidelines: document formatting required by generate-configlist.sh.
+Date: Mon,  2 Jun 2025 17:49:12 -0700
+Message-ID: <45c586122afab8ae3624be6963d64e770b7396b2.1748911713.git.collin.funk1@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <xmqqplflsmic.fsf@gitster.g>
+References: <xmqqplflsmic.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Collin Funk <collin.funk1@gmail.com> writes:
+Document that related `git config` variables should be placed
+one-per-line instead of separated by commas.
 
-> Just one question about this chunk:
->
->>  #define _DEFAULT_SOURCE 1
->> -#define _NETBSD_SOURCE 1
->
-> Why remove this definition? I think it might be useful on some older
-> systems and seems harmless otherwise.
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+---
+ Documentation/CodingGuidelines | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-Yes, it is curious.
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index c1046abfb7..3a7e644acf 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -877,6 +877,15 @@ Characters are also surrounded by underscores:
+ As a side effect, backquoted placeholders are correctly typeset, but
+ this style is not recommended.
+ 
++ When documenting multiple related `git config` variables, place them on
++ a separate line instead of separating them by commas. For example:
++   core.var1::
++   core.var2::
++  	This is a description of 'core.var1' and 'core.var2'.
++
++This format is required for the `generate-configlist.sh` script to
++properly generate "config-list.h".
++
+ Synopsis Syntax
+ 
+  The synopsis (a paragraph with [synopsis] attribute) is automatically
+-- 
+2.49.0
 
->
-> Other than that, I tested on OpenBSD 7.6 and NetBSD 10.0 and this patch
-> fixes the missing declarations. So:
->
-> Reviewed-by: Collin Funk <collin.funk1@gmail.com>
->
-> Collin
