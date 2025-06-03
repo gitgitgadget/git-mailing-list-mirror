@@ -1,73 +1,71 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32801531D5
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:13:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725974C98
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:14:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748988839; cv=none; b=Fqy6pJcA2RwQuUUIIQ1hMymH2HdQ7BYFfrrvHdrVkyek79qC+NGoKIezxB12V8zhbaLXlRN7BbqzxdgjIa/gC6HAIMPEYrUyaqCaRct64TpigLfNHBva2wbd6BGSz6Odgmxkif62r5RK22KXFv6S3cijfHqfvzk30WXWJj6Cb2w=
+	t=1748988900; cv=none; b=LdAISVVNc9PH0NLTPKMlczqB55tmux5QyREDcUrZdDUwgYr1RKvdzb1YXS+mbL9taYJQpcVq0ExWp/St9I2bJfkCpybhxSftWA/jRkO0+2jLLhfu9hoNHxycTgQh/VkAUq+VWeyi9Pq/vy2KjZVfNzSM/Rix5p+DZUQvD9ZhRnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748988839; c=relaxed/simple;
-	bh=Wi1te2tk7Yjewldo6UilCDIAuX7osZBhiyanhGcegmI=;
+	s=arc-20240116; t=1748988900; c=relaxed/simple;
+	bh=gtRQfW68ysV+neB9bke+NOUeqBTva7q8wHWe0qxN9vQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BSFinCbRgj5f7EuLvtWhHilusgowdAROxyZp9txTK3d6ndDQ9leEShX/46l/gjXk7WF+/336gRFy90JaVRGeatDzfP2U0Fgy/Ykkv0NpdpTsIw3lSihvBtuypwdaBI0MUqjjXq/Gb5kJLD8yM+UU1Zm6HTRfxRlK6VMdb9bqOMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=OBJQ9y70; arc=none smtp.client-ip=209.85.219.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=jeMEWWeKLk7LnQQXb9Vkd3Vr/HuXfbTqm7Ba1q/Xg8znBWyswBE5+Hi0KH7Mh+N33HTft4mxnUwjCA7lzjh1et7U5u/Wo+CCK3MGqrJbHGpUVBxlLFmYxa6a+IPI+dlwASsWJlYc0eTULWlYKO3GdkCu/i5ZwqEQJmJYTB2TmsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Tpi9hjwM; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="OBJQ9y70"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e7311e66a8eso5272561276.2
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:13:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Tpi9hjwM"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e803de44766so4255965276.3
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:14:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1748988836; x=1749593636; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1748988898; x=1749593698; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lhQdMxQkvhyOuMPuwBI64Jo+4Mv+d2zySxy42wG/H8Y=;
-        b=OBJQ9y70CSdTCXNoM1aan33yaIhjs0rGFgmp3aUba4G+54wdpn4yuRzPFDMOcmjzzq
-         SJLWY7HZyre4kKAPSWhNGgZQKke378NFMCrA80hai3PpUO3ATMPyLX7g2wD9SqVkOcZb
-         x+ieQ5fuXyRlMinErhBqvF8PqgovGjDEFZmTR1ORAdzK3xUDCowwA5tkW9KnvdvrgPOJ
-         3OGKLcnQcCjZ0tVPIrX8q700STRQFb+4Hdis46N8uLaVjVvIm2FYylLbH5z7lbpB9M3K
-         Iaw6OTCsPdUAKup/jZL9pNoFdYgvd1XBHcSDpzz5JQeAzP8Dn2P2ewHjueUu/5Q3Jdpc
-         pDRw==
+        bh=lyRWva2jIt9WfJBOCelKZ+OjFPkw7ryIRH9qbmdIjXw=;
+        b=Tpi9hjwMlB9/EWnJ11lqd+8kH9lZr6IFVpyxtVF0EnF37LVaK8K3XfuSaF37KXIuJl
+         S879UKyf7knyHt79uSgmxTpjXJObcMZZHYVYb/+r950CyzrucXrOyfjCXmV9XhjLjmQc
+         ncen+W9FHB0EOTKjfugsFgsTO1frsD9D+IwPHbgcMgDLn8rmUTwgbxsqLCo0kZzB/MAt
+         4HO1ahfecC65yZM7rYumVnxopWecF4/+Q9u+D88BuknulkblDarwngQBE3lHUxILpePL
+         hFyf3lwZAB8xoZmxmoFX3J9E21rdbVWOc522pajSGhv5fBRaWIqAKBFqr6pjSvLEj0o3
+         MYmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748988836; x=1749593636;
+        d=1e100.net; s=20230601; t=1748988898; x=1749593698;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lhQdMxQkvhyOuMPuwBI64Jo+4Mv+d2zySxy42wG/H8Y=;
-        b=IQ7CTcWB9oB6hN8Dep9IsTk6dRcvPvB5VjiD/dM+BS0DWSHdRnXXPS71VddvjoYteL
-         KC9isiTZgq7GnNKu+nFU6v0EwlZ7LrxbLFimNb09NiAUs92FfDEwvB2v3i2GvBgiUdPb
-         LBpWPK8IvH9l32HhJvsUEXnEqgwBl4tpQrmwVcU6uFXJDyZC/d4u0jQBnEuZzMQslbHf
-         7OrQyO1zUd8D46WgLz8MZs8OzoXOm1ygyo9Dw3JG/2ORqJ2smKu7Qt1LrjYdEtuJMtJ8
-         k6N5MTiIoaFdKwiMBW87PgGLKV3mIZzCffHEezW3W+ejkllLlwgFrziXNRvAXizbMPQ8
-         NYtg==
-X-Gm-Message-State: AOJu0Yzj4K7iaxOwbKWxpe4ScyvEMDLgaRxuDH/BHIoRlKYiTy3eS4bL
-	1kslb9jhK0SYu45swzTpdRzx3iKeKml08hiReMf/ipvehxLUVVigti6q+vth7YOa1fA7iU3z8Xa
-	JbMFR
-X-Gm-Gg: ASbGncsKWoc/8jMJ8UzQQmXBEIeWg6k2H4o1dSy9j0SG3CaLIcefJkcbd9OvHOKYBP1
-	3iZhRqV9VS9tu26qhTo4Bxs3cqlCI18zrXMooPMGh0evW/AdoG/CbLP4gozSbKJFhwMP0kRhy1A
-	/Qj2jIJQY0VIz6ilDUJyYbhCh9BsnBgkhWgkQ1WIV+o8cBJQF65u9Amttcj2ldTcrUxNtt4y5vC
-	FB3Pus0GzhL1bMmo/LK63r47LrkMpGmxqQsr8PolaF6iTtB+onoN9zlVvKDJga7QZsTx494wyb/
-	7A3ZLqYaJyuE8J4fwoMFHFBNm5EhlqcyFNpoXUjgobMtBNHwKIKrRsD+pkDZz1kAr+nVQBqd2aI
-	d52vlXnj029vINu/CwUTSGW2fALY0bZFQOA==
-X-Google-Smtp-Source: AGHT+IHkGDwr+6WDyYSUO7bofhy9/473qpI1j7358a/Mnnppd/1HFcZ9/uG18fpNqdnaPOMPCm28fw==
-X-Received: by 2002:a05:6902:1148:b0:e7e:fa65:8fe7 with SMTP id 3f1490d57ef6-e8179c5a039mr695393276.11.1748988836496;
-        Tue, 03 Jun 2025 15:13:56 -0700 (PDT)
+        bh=lyRWva2jIt9WfJBOCelKZ+OjFPkw7ryIRH9qbmdIjXw=;
+        b=gSBBkvBF8UnG5FiYQbt2X1gvTFa1y1LufRdIuJ9RYT/eWFYOU6V7fsv7PolNUdK7nz
+         N1VhnQ0oLRbfHrTQwYweiSLfAD8Vj1OzM/ikDQ0IncAPhddPug+rJYWPorQ1zYlAsssF
+         MB0HHWxhigM7HQ4YYGZHUB8HHvk21scp6m9H6qHCSy+oBPvrTkxKuKa2ihQ8Eyz1wRjx
+         e6ZppfYqytftdvWcWAHKjeYnWAhA17gmrDotBsZrhFXUxmiyjVvtvUPprcwMu2UeUeMz
+         NCi1pbzSxyan/DU3RKZecxFpj9zNoVD33WHZ2U28j8vBeyfg46PbAD0kXd9kwvOhxlxP
+         jDmw==
+X-Gm-Message-State: AOJu0YwevB2pciGn3gfgDcCUPT4hY/Vt8vJJMXstE0aXrIn8mZsrV2h+
+	zbrUFNU7FOIDd8XlSjLlcU3gMHtDhmzIeG8yJ0aKrmsJUp0zycz8IE3mXV2l4pdRZCg3ExC7Clt
+	zvuqZ
+X-Gm-Gg: ASbGncuExX9WefndqeOZMv17i/TgoBgExp2re0wWC7Lz151Ivbb0Sd2xF3QH0Np+HfL
+	QbUtSOFZgOZf9Ecf1q7oW/rlbL5qdQoXj2OxfuDHxgJww9FnmKC0hrtj96ThM1pVga3MgQDL1Ew
+	bYj7w9OADAz7IciVbsTyuEktauHR15N6kfYMBwJV63PUVvR36P641hGB+fGgFN0P8Xt1fT4sPln
+	xCBm8NcaUfLPlqDV93ka+gDuR30VaR7PWtKwTR5GT/fMheiJNLKDQkGZ3bOSvRk+mgkFmb/2jSR
+	5mtq+BacG+6wbUwjC10c8NiFpFO4jEkL7vdLFm4zB2YIOvFpmBWA98NiNE4+Ok2b9OqnZEBEWbI
+	n0wO9MDi+8k2G3G0GyA8P1Rs=
+X-Google-Smtp-Source: AGHT+IHWxjFHLgZr7HbdR4c81xG43pyR2kGlnLMpW2d3mRYSQ3pfPa2oHVrDjhxOCFk5JLT+2XY9Ig==
+X-Received: by 2002:a05:6902:1083:b0:e81:7690:247f with SMTP id 3f1490d57ef6-e8179c0e6b8mr885882276.15.1748988898442;
+        Tue, 03 Jun 2025 15:14:58 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e7f73522de4sm2869760276.54.2025.06.03.15.13.56
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e7f733aed2fsm2889361276.12.2025.06.03.15.14.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 15:13:56 -0700 (PDT)
-Date: Tue, 3 Jun 2025 18:13:55 -0400
+        Tue, 03 Jun 2025 15:14:58 -0700 (PDT)
+Date: Tue, 3 Jun 2025 18:14:57 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v5 2/3] pack-bitmap: reword comments in
- test_bitmap_commits()
-Message-ID: <aD9zo30dXflldlGt@nand.local>
+Subject: Re: [PATCH v5 0/3] pack-bitmap: fix memory leak if load_bitmap failed
+Message-ID: <aD9z4bVNSLi0TuRq@nand.local>
 References: <pull.1962.v4.git.git.1748140983.gitgitgadget@gmail.com>
  <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
- <a75d0a3cc7fc78d13e7703bd02a7e30fbd601831.1748920445.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,59 +74,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a75d0a3cc7fc78d13e7703bd02a7e30fbd601831.1748920445.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
 
-On Tue, Jun 03, 2025 at 03:14:03AM +0000, Lidong Yan via GitGitGadget wrote:
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+On Tue, Jun 03, 2025 at 03:14:01AM +0000, Lidong Yan via GitGitGadget wrote:
+> Lidong Yan (2):
+>   pack-bitmap: reword comments in test_bitmap_commits()
+>   pack-bitmap: add load corrupt bitmap test
 >
-> In pack-bitmap.c:test_bitmap_commits(), it comments
->
->     /*
->      * As this function is only used to print bitmap selected
->      * commits, we don't have to read the commit table.
->      */
->
+> Taylor Blau (1):
+>   pack-bitmap: fix memory leak if load_bitmap() failed
 
-There is no need to include the original comment here, since it is clear
-from the patch below what you're referring to.
+This version looks pretty good to me. There's a pair of minor
+suggestions that I left on the second patch, but otherwise I think the
+result is ready to start merging down.
 
-I don't think this alone is worth rerolling the series, but others may
-feel differently.
-
-> This suggests that we can avoid reading the commit table altogether.
-> However, this comment is misleading. The reason we load bitmap entries here
-> is because test_bitmap_commits() needs to print the commit IDs from the
-> bitmap, and we must read the bitmap entries to obtain those commit IDs.
-> So reword this comment.
->
-> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-> ---
->  pack-bitmap.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index fd19c2255163..e514c9da239b 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -2839,8 +2839,9 @@ int test_bitmap_commits(struct repository *r)
->  		die(_("failed to load bitmap indexes"));
->
->  	/*
-> -	 * As this function is only used to print bitmap selected
-> -	 * commits, we don't have to read the commit table.
-> +	 * Since this function needs to print bitmap selected
-
-The phrase "bitmap selected commits" is a little awkward. I might have
-written either "the bitmapped commits", or "the set of commits which
-have bitmaps".
-
-> +	 * commits, bypass the commit lookup table (if one exists)
-> +	 * by forcing the bitmap to eagerly load its entries.
->  	 */
->  	if (bitmap_git->table_lookup) {
->  		if (load_bitmap_entries_v1(bitmap_git) < 0)
-> --
-> gitgitgadget
->
 Thanks,
 Taylor
