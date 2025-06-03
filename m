@@ -1,82 +1,83 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6A1B85C5
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 23:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72FBA1B85C5
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 23:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748994702; cv=none; b=Q8ZIveuNBTbMTTolPDkoooR1bZTlNsuZZ1+NxwLBTFYg5AuZIyegtzwiumteue+TJK6DjDtn6Joio2wv0uIPY55gNWdKmS0VkCVw1h13lNPCHhmLPyB5mDWY5IXJhsXmLeQBmSrFjHcNMwyEAqmc1laxaGDus6JOx1hskrwPqSU=
+	t=1748995034; cv=none; b=DLfuHazQToNSKAL7ccBehseur/mf1xOsAILiM+fKsIdBwLOF8t2yZYXebgBXrq0WbOekhbVuCdFeX/B4WfL89hMJ/NzUij5FBjSpWy0Tbn61DWTCLuUVuUktkrR442AyaclPgFp6Uk2D4Fw48CFCjJrZrecNVYqpoXbB2V9DA30=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748994702; c=relaxed/simple;
-	bh=lsytpROr6bNZYes/uCX1yuESr0pGJz2iOQbOoeDcZUo=;
+	s=arc-20240116; t=1748995034; c=relaxed/simple;
+	bh=uYtpDg3R9Sa+5WjzygjR8MCvuj21rAIJy78lUz8ABcE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=OTTyT3101dqyE+BpKJsHTSIim9RuLdxU6rMUkLGlVLwwu/olaIZB9wa4r+sn8FKBWkmnT7J7b0bQXl6UYf9TB9CdEFtcS390MttGQ18UZYHBZ4Fa7iYGihFBzOBHLdAdwZFeuR1etmQ+4tSFIH0BoTz3mQCu2b4KRyhHiPN5zOs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ELB1rTCE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jIUhkR7j; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=djkFKWe61GOmNHPNTItk0ys3kgFYqHcCrjx9HpGxUMTwoJeyXIF5uUK77bWAVrxjNwykBJd0Cgi6AwsejkBrFn7yXWv3F8pI3liIRxyWKd7kRnoT8MAliWdFMv69CUWJt7IJJxo5TqKH942DVfnoqBSJq7x/Luu/4/kXpcuhHuU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vgldoWap; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OcHZ61e8; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ELB1rTCE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jIUhkR7j"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 156891140106;
-	Tue,  3 Jun 2025 19:51:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 03 Jun 2025 19:51:40 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vgldoWap";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OcHZ61e8"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 54D1F114012C;
+	Tue,  3 Jun 2025 19:57:11 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 03 Jun 2025 19:57:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748994700; x=1749081100; bh=HRKQMQwtpN
-	xB25/IT4NgPc2X5D5IAJBEc6qhmsBUDk8=; b=ELB1rTCEQeNHWDY86E9JXriwsl
-	yCMajskiOULkiGGhkTkDIT2mwMXoGbETCRfhEpe73Sxs2OE1Chxkx4tX8tDFuUkE
-	FpLPRzbCzyv8PM+SGtoHgGsoReIKqzCV3Tsu4v25dZwg/HnynimusukqSUTE0h2O
-	FQ4mqKAsL7dnfa39RfSMO2m1T3EOBuAQREFJ7quL+cVrAlAoiSr32ynENMKxq240
-	8mrOpMD2fVFhvr1FKLSecQrN1FYOvXIJbMf52nmluBiKBggWTthwkuVtYq8kcnGG
-	H588aKaAzmhM5PLuX+zmHgXT3lPSdHzXJQA6b3c9Z4dLy8IHnoZs/o2LOl3Q==
+	:subject:to:to; s=fm3; t=1748995031; x=1749081431; bh=yO7ciw67+d
+	1/7Ufa7JGhT8jKLktrJXm896GrnB2rLP0=; b=vgldoWap1fC//3NhbuoCxv8IeN
+	OkW8voDUEVAVy5aaveyD3XvIB7+LT6TUMIOR2mNVMhBcjlm+6pcn2VIwqz9nYppf
+	+7fP0sAMnJZ3vbepTY3e9vzzYjR5TBbt/1kn1QZC8T0TcRG8ONO3GoWi02bm0Evs
+	JtI2QUcowF7+csMXCCjA0DIdJjdZwmV3qIVgTmMKDU7q+2VQnE7/Rs1+i8dFqkkS
+	HIwJYeQTpO4rFw2J43t6plH+mi8vpClPCoJPL6q0VNA41DCZdCLHTjtnlXCKyjTp
+	cqXnzTSlLJ5VbLXbTuuK0/WHgtjZWKgtCXnN9PplME4JfB3K5R0loAlGDeVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748994700; x=1749081100; bh=HRKQMQwtpNxB25/IT4NgPc2X5D5IAJBEc6q
-	hmsBUDk8=; b=jIUhkR7jitfYxJXgAaNKsUeUj+N0JUOe+3Zbr6p+87aWQATE2Ms
-	rr2cKqlo194sc3WHqkTGM77VMtTmRtpbRi2Bm25dOIxh8dz+qB7eSkbYMv8p1qLd
-	b3Ls5lqkJkWttRKB+Q2Fqg0ZbLl/P/2tOJUfMuYV5SS2JZivxfDz9iGsz06BIHmF
-	RCfXkhrLoQspsSiskYPiTTkRigUOA0ME9+D6iFkRzZXefBHGH1xwBiirCugAZe8+
-	MTQC5rSMouHhrckJam/++jzOrURzLhDa8pIlmcvj0NKDr/74R3qKA4UIXPoWGyxp
-	slRUWbkrNiWdQt5ZE84hkd0f+hAkvT3XmfQ==
-X-ME-Sender: <xms:i4o_aLral0HSbisw_8MkwTj7NDVR_vjpbGKgrfdDlGp_ec5XQzU9-Q>
-    <xme:i4o_aFpZmZOWu-q8EboyKtM-w2FoH1PXEuMLTtXAETkZkPJuZ0jqWbXv2jQ9IWm7Q
-    FRcty2Ecux7OqiewA>
-X-ME-Received: <xmr:i4o_aIM_6gBP1o_vJ-hiQs8Qjbd14oaHZdAFbvvf0f5DBiLBLbUIStsGL2zZspkPhEyodaEReAc4Cfv1FNpkjsj0gaV6u787iIqK>
+	1748995031; x=1749081431; bh=yO7ciw67+d1/7Ufa7JGhT8jKLktrJXm896G
+	rnB2rLP0=; b=OcHZ61e8rzZlM2562ad9yFGIGyo7bR9XpmgRj4T0s32obeozCwd
+	fqIDLUhCVeUrBqjrZRvpgVR0eQnAFHBABpuk/yUs5AxqwF2Qt/fR1tLIPP5zuYvI
+	yvPMI4rx1ZwWHdkgTfZV6leihl8E5Mv+eL+Zg+01zYJ/PkTKwqViwD14hJ9JgVzE
+	b6Ayx1GWgZZ84ofCkrUeGBh4A8GPMkAm5dLXwDsidqNV1tTXFx/1m3DwnB0i2vjA
+	pQzTf8r4J6sB5Fr3T7iGt6I3cEsN+5lv2KuS0Tc7NOazQVVodJVuBk2yY4kkXDyo
+	CSFyHBvOHuGeGlD0fOcK+S30tv1wFbgvGhA==
+X-ME-Sender: <xms:14s_aIVuWIQ9Z1BufNaR51Mngz8BFXM9udFSq7ti9VJeJhWCUqN1UA>
+    <xme:14s_aMmohE3x15PRSlCIBeUvGgbOROYwc1RQEwlO9CeCf9qyPo90cgZBOZHs-4ucr
+    JDkrnQCZ5Mk2M-XZQ>
+X-ME-Received: <xmr:14s_aMbLzA9yO3e7j8MpAp2dgECGG7RqRbI60-ZJHiJiVi4zeF4zdimV8L1_eoHMNMz00LHZqaHiMzIxY_dxjvHNjtMGyt0xk5aQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduvdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhhsehglhgrnhguih
-    humhdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:i4o_aO4odERlXP5I07dpB7RCH2_vhYrxvUaVgpqrmysB-EfQWG8S8g>
-    <xmx:i4o_aK4F592Qd2r9Nnb_82e4oZ6EJZiiMmrNjG1WAs-fWBOpEo7MNw>
-    <xmx:i4o_aGhbxquCcaYp2HoZqGaH-dbJBNwd8-y9CaSWhuIdUhCgCqb_6Q>
-    <xmx:i4o_aM7sEUAi5kgquyUeAZK8tMOPbr1F8Xxi9xAgBb2ZeJ2U3pqTlQ>
-    <xmx:jIo_aLS-8OTUPqn1Y6Ll6TYNI931PRlNXRlL9OJd2rEWTbW5SFsG9VPS>
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptgholhhlihhnrdhfuh
+    hnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:14s_aHUTsoy7WJcA2nj6k6OVIiprZm7EYqYb-refbSbbxtq2vZTdvQ>
+    <xmx:14s_aCkrbYdu5XoECaLaQ82IbRD_jkLiCv5Ui8DZx4EcKbtPJL1EhA>
+    <xmx:14s_aMfS9JZeEBSROvv_YtLfolWAS67GIvemHkvQtaO0m0ylrlDuZg>
+    <xmx:14s_aEEaro8-Xh-4xTJjTXwUGCZiT9KeWKWpfEyAcoqMCpmIPcpFlQ>
+    <xmx:14s_aMSJBgguJBnIedFKWhnZ6fLbunTy0E_DpB_ovyKk1nfGmY8PJK8_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 19:51:39 -0400 (EDT)
+ 3 Jun 2025 19:57:10 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Mike Hommey <mh@glandium.org>
+To: Collin Funk <collin.funk1@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/4] Fix comma warnings with clang on Windows
-In-Reply-To: <20250603230646.2322671-3-mh@glandium.org> (Mike Hommey's message
-	of "Wed, 4 Jun 2025 08:06:45 +0900")
-References: <20250603230646.2322671-1-mh@glandium.org>
-	<20250603230646.2322671-3-mh@glandium.org>
-Date: Tue, 03 Jun 2025 16:51:38 -0700
-Message-ID: <xmqqplfkfkol.fsf@gitster.g>
+Subject: Re: [PATCH v2] CodingGuidelines: document formatting of similar
+ config variables.
+In-Reply-To: <802402a288f0976765f1ba1c82d14c2289c8cf72.1748990700.git.collin.funk1@gmail.com>
+	(Collin Funk's message of "Tue, 3 Jun 2025 15:45:39 -0700")
+References: <45c586122afab8ae3624be6963d64e770b7396b2.1748911713.git.collin.funk1@gmail.com>
+	<802402a288f0976765f1ba1c82d14c2289c8cf72.1748990700.git.collin.funk1@gmail.com>
+Date: Tue, 03 Jun 2025 16:57:09 -0700
+Message-ID: <xmqqldq8fkfe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,28 +87,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Mike Hommey <mh@glandium.org> writes:
+Collin Funk <collin.funk1@gmail.com> writes:
 
-> Subject: Re: [PATCH 3/4] Fix comma warnings with clang on Windows
+> Document that related `git config` variables should be placed
+> one-per-line instead of separated by commas.
+>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+> ---
+>  Documentation/CodingGuidelines | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 
-Common to all four patches, as "Fix" does not quite tell the story,
-please choose more appropriate verb.  For example, judging from how
-this was rewritten ...
+Looks good.  Thanks.
 
-> -	if ((oflags & ~O_CREAT) != (O_WRONLY | O_APPEND))
-> -		return errno = ENOSYS, -1;
-> +	if ((oflags & ~O_CREAT) != (O_WRONLY | O_APPEND)) {
-> +		errno = ENOSYS;
-> +		return -1;
-> +	}
-
-... the warning is a false positive (i.e. the code does what the
-author intended it to do), so this is more like "squelching" the
-warning.
-
-I obviously like the style after this patch.  I just thought that
-the proposed log message, especially its title, were not clear
-enough to tell which ones are real fixes and which ones are
-workarounds.
-
-Thanks.
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+> index c1046abfb7..3dd339f802 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -877,6 +877,17 @@ Characters are also surrounded by underscores:
+>  As a side effect, backquoted placeholders are correctly typeset, but
+>  this style is not recommended.
+>  
+> + When documenting multiple related `git config` variables, place them on
+> + a separate line instead of separating them by commas.  For example, do
+> + not write this:
+> +   `core.var1`, `core.var2`::
+> +  	Description common to `core.var1` and `core.var2`.
+> +
+> +Instead write this:
+> +   `core.var1`::
+> +   `core.var2`::
+> +  	Description common to `core.var1` and `core.var2`.
+> +
+>  Synopsis Syntax
+>  
+>   The synopsis (a paragraph with [synopsis] attribute) is automatically
