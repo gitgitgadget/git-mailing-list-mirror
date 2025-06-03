@@ -1,71 +1,73 @@
-Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725974C98
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:14:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3291474DA
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748988900; cv=none; b=LdAISVVNc9PH0NLTPKMlczqB55tmux5QyREDcUrZdDUwgYr1RKvdzb1YXS+mbL9taYJQpcVq0ExWp/St9I2bJfkCpybhxSftWA/jRkO0+2jLLhfu9hoNHxycTgQh/VkAUq+VWeyi9Pq/vy2KjZVfNzSM/Rix5p+DZUQvD9ZhRnM=
+	t=1748989327; cv=none; b=BB2A2NMSUm1rFg629l20UZ4no5aJcH1YWI3mIo6Gq12wrwlQRbgMzhPMJhOwY+LOLWt2D5pDtJBbpUBE+G5Z+YdtpNg1g32BgSY4fRl+I5K9coohvNy7K70BTqedR0vF+qInFdmW0vbKxWuDK+3tiw44oy7CYlJXg/Una0o0BeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748988900; c=relaxed/simple;
-	bh=gtRQfW68ysV+neB9bke+NOUeqBTva7q8wHWe0qxN9vQ=;
+	s=arc-20240116; t=1748989327; c=relaxed/simple;
+	bh=1ZAdo83PzQRilQtGRgIpDzoq2NmcWhFQSp69o2WEKD0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jeMEWWeKLk7LnQQXb9Vkd3Vr/HuXfbTqm7Ba1q/Xg8znBWyswBE5+Hi0KH7Mh+N33HTft4mxnUwjCA7lzjh1et7U5u/Wo+CCK3MGqrJbHGpUVBxlLFmYxa6a+IPI+dlwASsWJlYc0eTULWlYKO3GdkCu/i5ZwqEQJmJYTB2TmsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=Tpi9hjwM; arc=none smtp.client-ip=209.85.219.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q7A0Dqfvzx1BAOB6HWEkmsuALNb5KEv3kOHJZI3zEC8xCfsxA6A3ZRifQ2RaGEm/MJNlDtqblQQW7ZeIgfFqKw5dChAz+YP4ZoBw+R+vPg8xz3jt8RqbUhT1N/v/fJeMUYwAVdSs/f+Wnsmlb6oXZeu1qjf+EHoksOHIf+6NK0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=YvVrC0DU; arc=none smtp.client-ip=209.85.128.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="Tpi9hjwM"
-Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e803de44766so4255965276.3
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:14:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="YvVrC0DU"
+Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-70e5599b795so61229607b3.3
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 15:22:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1748988898; x=1749593698; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1748989324; x=1749594124; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lyRWva2jIt9WfJBOCelKZ+OjFPkw7ryIRH9qbmdIjXw=;
-        b=Tpi9hjwMlB9/EWnJ11lqd+8kH9lZr6IFVpyxtVF0EnF37LVaK8K3XfuSaF37KXIuJl
-         S879UKyf7knyHt79uSgmxTpjXJObcMZZHYVYb/+r950CyzrucXrOyfjCXmV9XhjLjmQc
-         ncen+W9FHB0EOTKjfugsFgsTO1frsD9D+IwPHbgcMgDLn8rmUTwgbxsqLCo0kZzB/MAt
-         4HO1ahfecC65yZM7rYumVnxopWecF4/+Q9u+D88BuknulkblDarwngQBE3lHUxILpePL
-         hFyf3lwZAB8xoZmxmoFX3J9E21rdbVWOc522pajSGhv5fBRaWIqAKBFqr6pjSvLEj0o3
-         MYmA==
+        bh=n5gsnK6wvYWflxLn5Zn3u00Wt7sEmHv97+uJaVlvOD0=;
+        b=YvVrC0DU8Gz+9PrXBmbZzHK09Vk7FIniRbRXTZqMe+H8FLWWNFxEFuAHYEgHYvd9gc
+         tzG8HW/ByOrbv8C6hTJKT3BVIu2ctojrVbfhkeTROM5fl99CPLPGjW3WpMNy58jw1ms0
+         ja9Hh3wu7H/KyeEvM1pwJSzbpRTlk1+tlf73t7Fx1rHpbL402R00zPr3dkrDeq7ydDol
+         ZvNgY9yVay3oWBTKRKf5ZyRCNsmj5OyHK/Ea7MqXfyvz1qZdzpDY10he0dzxrorYL0la
+         5E4rEhgX84rbzfCrEKovB7C/nROeCr1xcBak2eZtT6cmUfo4MsRzHwcE/hlDtGBR0gut
+         3KOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748988898; x=1749593698;
+        d=1e100.net; s=20230601; t=1748989324; x=1749594124;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=lyRWva2jIt9WfJBOCelKZ+OjFPkw7ryIRH9qbmdIjXw=;
-        b=gSBBkvBF8UnG5FiYQbt2X1gvTFa1y1LufRdIuJ9RYT/eWFYOU6V7fsv7PolNUdK7nz
-         N1VhnQ0oLRbfHrTQwYweiSLfAD8Vj1OzM/ikDQ0IncAPhddPug+rJYWPorQ1zYlAsssF
-         MB0HHWxhigM7HQ4YYGZHUB8HHvk21scp6m9H6qHCSy+oBPvrTkxKuKa2ihQ8Eyz1wRjx
-         e6ZppfYqytftdvWcWAHKjeYnWAhA17gmrDotBsZrhFXUxmiyjVvtvUPprcwMu2UeUeMz
-         NCi1pbzSxyan/DU3RKZecxFpj9zNoVD33WHZ2U28j8vBeyfg46PbAD0kXd9kwvOhxlxP
-         jDmw==
-X-Gm-Message-State: AOJu0YwevB2pciGn3gfgDcCUPT4hY/Vt8vJJMXstE0aXrIn8mZsrV2h+
-	zbrUFNU7FOIDd8XlSjLlcU3gMHtDhmzIeG8yJ0aKrmsJUp0zycz8IE3mXV2l4pdRZCg3ExC7Clt
-	zvuqZ
-X-Gm-Gg: ASbGncuExX9WefndqeOZMv17i/TgoBgExp2re0wWC7Lz151Ivbb0Sd2xF3QH0Np+HfL
-	QbUtSOFZgOZf9Ecf1q7oW/rlbL5qdQoXj2OxfuDHxgJww9FnmKC0hrtj96ThM1pVga3MgQDL1Ew
-	bYj7w9OADAz7IciVbsTyuEktauHR15N6kfYMBwJV63PUVvR36P641hGB+fGgFN0P8Xt1fT4sPln
-	xCBm8NcaUfLPlqDV93ka+gDuR30VaR7PWtKwTR5GT/fMheiJNLKDQkGZ3bOSvRk+mgkFmb/2jSR
-	5mtq+BacG+6wbUwjC10c8NiFpFO4jEkL7vdLFm4zB2YIOvFpmBWA98NiNE4+Ok2b9OqnZEBEWbI
-	n0wO9MDi+8k2G3G0GyA8P1Rs=
-X-Google-Smtp-Source: AGHT+IHWxjFHLgZr7HbdR4c81xG43pyR2kGlnLMpW2d3mRYSQ3pfPa2oHVrDjhxOCFk5JLT+2XY9Ig==
-X-Received: by 2002:a05:6902:1083:b0:e81:7690:247f with SMTP id 3f1490d57ef6-e8179c0e6b8mr885882276.15.1748988898442;
-        Tue, 03 Jun 2025 15:14:58 -0700 (PDT)
+        bh=n5gsnK6wvYWflxLn5Zn3u00Wt7sEmHv97+uJaVlvOD0=;
+        b=ndvhdxaGJjDUWohNSKOvQICgTcLvBg6cAmnn5JiJCaAzWsxnCJhGBEZ2fx7bsz5ffX
+         gXO4lpbLsyoVb5zB9xcKfJnn0n8SkZNE51BJK1rBVoGfUjlF4xq6lY+eg9+o+YgJa71e
+         HiQRBXPEKdRCI7Tg0ZAOxGCzr71RvhIqCCNu8rJCi+oiav2bVFpYI9wdS8k3BW59FarE
+         hBQAzSJ6J+pJPZpCRHdaZinquQhbqKR+fn8LxMniBiT+s+mKRdWw/d/+MRndgGJYxuQW
+         0Hqg0FhIBSHcgv3AvU4TNEBXy7WmGuEbn/6PjfmoV4ZxuwBk+mzI7RjFzVMwGsV5HjEU
+         dirw==
+X-Gm-Message-State: AOJu0Yz4ykfuSBjnCjfjOsR20q1O+CAPzbxhn0sQG4rtcxBYI0jle+qt
+	6B9PjdrcMMgBqSHv7MmcjjwJJ1hUz/F1uK0N1q2gpbV+caKRa5hmUFAjFM1fkn41JKk=
+X-Gm-Gg: ASbGncswPqgxru6VVvj/abGBT+ZodBjCgL6gUfORxqRKK1nSz9G2WJgJvmUxiuAv4p0
+	6j9uDX2jEbNxZghS4vjlk8eBu3GGGgcJry2Z1N4zfXqOPPxuB7Jgz8Ok+T9ss5Y61H92uPlutd9
+	bWZlmQKCw/Stw0zaDSPZR+MpPuBVdQ6wetov318tgv0RqqotTpHbKZF/Ygj1T4vfpeF4e+RrIWu
+	aTjBK+9L4IYFCJCSMgijWBtZsmvMjwmGKT5737Ja08PehJekVGC3iG5sZpg4Eb7a+nGnqcjnDTM
+	Edhf0DXRpZNovJEv68avGwMeH5ue04MOgP1BF2bbgiFsJds7KIEaGL0Bgk0TXcqZIZsEMUdT2Go
+	4h7aKNUIVBe2siGyHg7/c6h4=
+X-Google-Smtp-Source: AGHT+IFzeK8WJh5T+u0B7d8kAKZ2+aLxuQ9JRL7gO36XgQHwrmzaGEhf/nfUJar4P28tPjv0crBm/A==
+X-Received: by 2002:a05:690c:62c5:b0:70e:19e6:6f1e with SMTP id 00721157ae682-710d9d512b9mr7628067b3.1.1748989324162;
+        Tue, 03 Jun 2025 15:22:04 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e7f733aed2fsm2889361276.12.2025.06.03.15.14.58
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-70f8abee875sm27225867b3.34.2025.06.03.15.22.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 15:14:58 -0700 (PDT)
-Date: Tue, 3 Jun 2025 18:14:57 -0400
+        Tue, 03 Jun 2025 15:22:03 -0700 (PDT)
+Date: Tue, 3 Jun 2025 18:22:02 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v5 0/3] pack-bitmap: fix memory leak if load_bitmap failed
-Message-ID: <aD9z4bVNSLi0TuRq@nand.local>
-References: <pull.1962.v4.git.git.1748140983.gitgitgadget@gmail.com>
- <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2 1/4] midx: access pack names through
+ `nth_midxed_pack_name()`
+Message-ID: <aD91ivFa2x1VBGRo@nand.local>
+References: <cover.1748198489.git.me@ttaylorr.com>
+ <cover.1748473122.git.me@ttaylorr.com>
+ <d3508d3cfbddb512dbca4c2177731fffb5827084.1748473122.git.me@ttaylorr.com>
+ <xmqqr007jg9b.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,19 +76,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
+In-Reply-To: <xmqqr007jg9b.fsf@gitster.g>
 
-On Tue, Jun 03, 2025 at 03:14:01AM +0000, Lidong Yan via GitGitGadget wrote:
-> Lidong Yan (2):
->   pack-bitmap: reword comments in test_bitmap_commits()
->   pack-bitmap: add load corrupt bitmap test
+On Thu, May 29, 2025 at 01:47:44PM -0700, Junio C Hamano wrote:
+> > diff --git a/pack-bitmap.c b/pack-bitmap.c
+> > index b9f1d86604..8ddc150778 100644
+> > --- a/pack-bitmap.c
+> > +++ b/pack-bitmap.c
+> > @@ -490,7 +490,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
+> >  	for (i = 0; i < bitmap_git->midx->num_packs + bitmap_git->midx->num_packs_in_base; i++) {
+> >  		if (prepare_midx_pack(bitmap_repo(bitmap_git), bitmap_git->midx, i)) {
+> >  			warning(_("could not open pack %s"),
+> > -				bitmap_git->midx->pack_names[i]);
+> > +				nth_midxed_pack_name(bitmap_git->midx, i));
 >
-> Taylor Blau (1):
->   pack-bitmap: fix memory leak if load_bitmap() failed
+> This loop runs from 0 to (num_packs + num_packs_in_base).  I
+> understand if it runs from num_packs_in_base to (num_packs +
+> num_packs_in_base), iterating only on this layer, but probably this
+> just tries to open everything (i.e. in addition to num_packs we
+> have, we know num_packs_in_base packs are there in our base layer(s),
+> so we iterate from 0 to that number).
+>
+> The updated code converts the global 'i', which runs from 0 to
+> "everything under us" num_packs + num_packs_in_base, to
+> corresponding layer midx plus offset in it, so it looks good, but
+> then, is the original reference to bitmap_git->midx->pack_names[i]
+> even correct?  If we have a base, i can run larger than
+> bitmap_git->midx->num_packs, which is the size of the array
+> bitmap_git->midx->pack_names[].
+>
+> Or, unlike how the proposed log message portrayed this change as
+> (i.e. code clean up), does this patch fix real bugs that manifest
+> only when midx files are chained?
 
-This version looks pretty good to me. There's a pair of minor
-suggestions that I left on the second patch, but otherwise I think the
-result is ready to start merging down.
+Right; the original code was buggy if we had a failure opening a MIDX'd
+pack outside of the base layer in an incremental MIDX bitmap. Reading
+the proposed log message again, I see what you're saying. I am happy to
+clarify that this is indeed a bugfix, not just a cleanup.
+
+> > @@ -2469,7 +2469,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
+> >  			struct bitmapped_pack pack;
+> >  			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
+> >  				warning(_("unable to load pack: '%s', disabling pack-reuse"),
+> > -					bitmap_git->midx->pack_names[i]);
+> > +					nth_midxed_pack_name(bitmap_git->midx, i));
+> >  				free(packs);
+> >  				return;
+> >  			}
+>
+> Similar to the above, this is also in a loop that runs from 0 to
+> num_packs+num_packs_in_base.  Is the array access to find the name
+> for the error message in the original even correct when midx are
+> chained?
+
+Right; this spot suffers from the same bug as the previous hunk.
+
+> > diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+> > index ac81390899..fbed0f6919 100644
+> > --- a/t/helper/test-read-midx.c
+> > +++ b/t/helper/test-read-midx.c
+> > @@ -53,8 +53,9 @@ static int read_midx_file(const char *object_dir, const char *checksum,
+> >  	printf("\nnum_objects: %d\n", m->num_objects);
+> >
+> >  	printf("packs:\n");
+> > -	for (i = 0; i < m->num_packs; i++)
+> > -		printf("%s\n", m->pack_names[i]);
+> > +	for (i = m->num_packs_in_base; i < m->num_packs + m->num_packs_in_base;
+> > +	     i++)
+> > +		printf("%s\n", nth_midxed_pack_name(m, i));
+>
+> OK.  This used to iterate from 0 to num_packs using the local
+> offset.  Now it iterates from num_packs_in_base to num_packs_in_base+num_packs,
+> meaning we iterate over packs in the given midx.  No change in
+> behaviour, as accesses to m->pack_names[i] using the local offset in
+> the original was correct, and the updated code iterates using the
+> global offset.  This is not a bugfix but is a code cleanup.
+
+Right.
+
+> > @@ -108,7 +109,7 @@ static int read_midx_preferred_pack(const char *object_dir)
+> >  		return 1;
+> >  	}
+> >
+> > -	printf("%s\n", midx->pack_names[preferred_pack]);
+> > +	printf("%s\n", nth_midxed_pack_name(midx, preferred_pack));
+>
+> Again, is the original buggy when midx are chained?
+
+This is also a bugfix.
 
 Thanks,
 Taylor
