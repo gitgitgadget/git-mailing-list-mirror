@@ -1,56 +1,56 @@
 Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EAF4A1A
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 10:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42EFF4A1A
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 10:09:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749031760; cv=none; b=m25SLgOlPG/mjaHo7RaCX/a7PPYHD6Wal+/BbGAIC1i0Z32jCA32AVMkjgfzSLQ3pGOUveIx2lHzYXsKUhW4HEkoNkT/X48lCjSm3dgB/X0V6nwL3fBOba33QKK+gZHUeJ1z8IfIxlbCHohkbrnx+umEAlhV8jw5vc87r88RnVQ=
+	t=1749031788; cv=none; b=RrHIvWCkWkCSzes6lhSZyS1kCa4Uk39HT6HcfFpvdNhIGTICiaoUjc9nx9MefU1u+mZT/furdP1zISs9OORHAg1ThxsPkZiWuyenZEn86pQJVH3nXuaqFX6w/Zopta6vwBAsvdDOWiNh+fHLlHceW42/VFkvDuxnYTH6qzlG4rs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749031760; c=relaxed/simple;
-	bh=794ytLGHul+RZqi0cRK1tTa389EPgiw5UznT2lSGrDo=;
+	s=arc-20240116; t=1749031788; c=relaxed/simple;
+	bh=+vTdL0bGbrTlVE0/o3ge83j7GZsc36R3gMsU9oPsoNQ=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ERON0dCaLNPV4z4LxtuCG6XmgI+Dh905NaLiG/Ks18YkYTagpsyHne3liAHp6NTHvflhs7GjSWpMrtRJcolg9OZ5+/CKxgOmWPMe7sbYPlV851E9nRby5nZhPCaxU67q/vyS4GpBAP+w1R8/wIi0kegcqC+UQLELaIMWme6LsX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gb4F3e61; arc=none smtp.client-ip=209.85.128.171
+	 To:Cc:Content-Type; b=m4qupYTLCiwwJlUeaywBSv2P0Sb07edy2WFHrEZ9aw1znHGYwwzgqDcV+IXVjyuDGRBggAAtizh306RKPk6KpcR03KMSeph60hop7vnJWJ/681vdFVaVbQ7dSSDLzGeDBxGVToCBNx5zwYFmK+6o7mh7Gy6Bsewttoc6gQqfjiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PmYncnIg; arc=none smtp.client-ip=209.85.128.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gb4F3e61"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-70e5e6ab7b8so60907727b3.1
-        for <git@vger.kernel.org>; Wed, 04 Jun 2025 03:09:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PmYncnIg"
+Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-70e1d8c2dc2so58764387b3.3
+        for <git@vger.kernel.org>; Wed, 04 Jun 2025 03:09:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749031757; x=1749636557; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749031786; x=1749636586; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=0SV6XlA4vfsDUhsMJO7CzBLN5i0auRGiZZ7PQSdirhU=;
-        b=gb4F3e61rycmV8BlL6AfVGzomdysmIN3JGDX41Js8rlQQdlb6N5AIAaMhirdZFpsEI
-         Q0o7eGhZ8uGrlpVxD68ockKGYrd8yTZlLG4Li/U/Z2Kd1gA2l3BQUKbnkwE5gssOmfYp
-         S5N2XMI/bjuPSVAYd3RMRhvxQcfa9UYKylQzczSS4rW9eR9358nZDWE6MGF5N1Sv6dTF
-         iiqOMWIVYsvkLzDizpFbGbkh5DWv6bHxYaTydZPnrabC+TXCopQXrDXg1+noO3wRullQ
-         94YBI8uDoYIzDk3VWuOvd+Ivii98Oc6y6ryJRZ3PBOvT7HzRWrCQSe7ywvkLRfc0/M8a
-         5utQ==
+        bh=nAxmcoW1GYNE9PEHakxo81QGB22Sj/mWqNIn1qebDes=;
+        b=PmYncnIgFxuieQnxojjNENXBvEmSdnGR8+biD1eiz9z1O9TDTR2mIVXQ+9w6vxbqMi
+         g679SlixH/DBJSt0wmz5rRjG2p2PjxVeu7vZ7VIf7FuwfEehsrNoicGo1NXqekfBGGJf
+         kUkAIt5llIv+yD5oEWnSDgT/sBPMdJUdmS5MG4rSL3DlfzpEAwjWLVPhiq7Gfcx4ysW8
+         UHk14pMcDN4mYMJQ21JH7/5PrVPaIVYZU9CSxpeTQITNKcQ4EhJ6TLeBTeoo4/cMWlS+
+         hjKeKgS5X1tTXlnEcQKgoHxcfMASPR5PZ8NSCt/IA5zb49GqRUoNc1TuCtlpbu3cxo6n
+         +wzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749031757; x=1749636557;
+        d=1e100.net; s=20230601; t=1749031786; x=1749636586;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=0SV6XlA4vfsDUhsMJO7CzBLN5i0auRGiZZ7PQSdirhU=;
-        b=oXG+VySZQvWzmccOCIL/LZIQVQcZIkLxtRa+/Bc31pYGqkQc4sX5Sk8rajKt+C1hXu
-         oSH1nb7qE8XSZEA1D2yqBxtpJqtEWHH9x4z+mmf3jKDE1I0W6bbKs8LohzPDCLD+66oc
-         wgqMpGvIIx95GPoxHIam9ARpkCnItczLLllinK7BNaprI4aizVNFLsqWkWOcPehUAg9x
-         tFvfsZB1MKJ7s5BYFOqSXb1D/FAKORWQIYd3ycP9XuqHgZMb6L9ILknUFFIs4jnyOeqN
-         Oj6A6rDUALelw4fR+mrUNx8TTEpIcHE2EfnKErJDj+s5r/nlOwXVvENRQ3NU1lhfXkXj
-         hdaA==
-X-Gm-Message-State: AOJu0YxAPbnKWqJqKjgTPEdHEp96dCc+tTYUDIPcgFjk8zAfnUV1c3IT
-	Mp1Ge2vzYM3R4uxSekgDJ/+pM1GUmomW7Pi5aTwLZj4+Z5VlpbXwM06uaa+z4VvemSNHdvmTjmw
-	OpqHtCeOwqR03+WCwJMWp6RFFxvXxMgojJJ4RRjNkAw==
-X-Gm-Gg: ASbGnctQJDjmwk08+scqTS0kz5PyT7zmQQPQoYi1fBDMJ2Ej6Y0HzY4kQCSS4SIOja/
-	STAe7Jt5zcFqfLTMIlbc04jJ4igFajx3JqPHAcAh8pZAVaQdO1NjpVyvUr4iKFjLkGxYAEsRwK2
-	+4J03vNoRdrx9SJFBZFIlQ2hgKKtqkXghl0/4=
-X-Google-Smtp-Source: AGHT+IEq/wJHpOhFAWP5/Q3KyuPya+XvhU3reKhb1PlBUMDFWirw9EQL+6KvH29ESjP7ko6sm4IAOeyRVEt7kTbw1tE=
-X-Received: by 2002:a05:690c:7008:b0:70e:7638:a3a9 with SMTP id
- 00721157ae682-710da1cea1amr28081397b3.18.1749031756924; Wed, 04 Jun 2025
- 03:09:16 -0700 (PDT)
+        bh=nAxmcoW1GYNE9PEHakxo81QGB22Sj/mWqNIn1qebDes=;
+        b=VCw2yEGI1l/aSzJ8BHQtWzz1JDyz35lBGjqJS09pZb+axYh7Y15jK+TjhIZixtVzWi
+         sWJzh+nrkbocVbUZX4CH6nDg0jDBz2VmwTTYXBno03Ehxspo7I03K8ZKKdN/BoJiG4Cb
+         kunjPy/bd3gDljGdHdwYhOQrvhyb4FOW8VskvIGlg+wVeIqXIt0jYVyHGYxHk1QieSxX
+         ChT927fwbMFZA5hX3Tm/EzRmGHM37FY8yw7ybgRHKH7zhlcpvabFNBKaZtv2pK/iAvVb
+         bWBnTnUkA+I+D2a/MJyXNSih73P96KJXrrqP45oNS/WWazHs+/foRyLrIl/odfDOobIR
+         XCZw==
+X-Gm-Message-State: AOJu0Yzjt9McBise/24jCm4+fo9kwkvSA2NNzrr3DgHZhvERhFlkAy6I
+	vrXs7/2fzj9CBEN3BqAOXSexJwK1MF5wqhB2jltxReufv5EEtkaBw6UYkBP/yF2otKubg6PvL5o
+	KvMryh56UapN99Magy8kxleyRGVv9AS8=
+X-Gm-Gg: ASbGncsZ1oqTMR4OiAEO6bDTcUmTPUt+z57Etktm8WNqPyVSNaC5MPcvx6KETuWDH8U
+	vJ/FxG2HBBDWUjnk+F1wOhwIG5yEDqOTj0SMBIfXdSdij2+PeJry/7MRpAkynr9IVyqJoNNz6L+
+	G4GhZBSrLmLvy/sqzn78NgOXSimzvkIo2pYBg=
+X-Google-Smtp-Source: AGHT+IE34lN85A51ygDXBOe4KrWojnM5FM0FpDEZanJDV0Hrmblgd4N+IGmZ05P7/HdXukp6G7OhMitGDTZiKjC6DAY=
+X-Received: by 2002:a05:690c:28b:b0:70e:326:6aef with SMTP id
+ 00721157ae682-710d9da69bemr28652577b3.18.1749031786145; Wed, 04 Jun 2025
+ 03:09:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,20 +60,13 @@ MIME-Version: 1.0
 References: <20250602122559.208780-1-kuforiji98@gmail.com> <xmqqldq8is69.fsf@gitster.g>
 In-Reply-To: <xmqqldq8is69.fsf@gitster.g>
 From: Seyi Kuforiji <kuforiji98@gmail.com>
-Date: Wed, 4 Jun 2025 11:09:04 +0100
-X-Gm-Features: AX0GCFsRit7JxpYMkj-IQuHZkPTBEZXgQWFA7FWWgWiiNQH669XIyajAMMhmZuA
-Message-ID: <CAGedMtdV87hx7BvFEnH+oqgojcT9CO6m1fTScMqey057TpMggQ@mail.gmail.com>
+Date: Wed, 4 Jun 2025 11:09:34 +0100
+X-Gm-Features: AX0GCFtI6A_dKARVkH22e3G2AxLNgm569sQWAF5U7QPyVah_KXcRr_QDoKXVyxQ
+Message-ID: <CAGedMtcdTDYON5sPh6n6JXkzBVFDzoLPcCNWBGZwYF5K6Ufeqg@mail.gmail.com>
 Subject: Re: [PATCH v3 00/10] t/unit-tests: convert unit-tests to use clar
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
 Content-Type: text/plain; charset="UTF-8"
-
-Hi Junio,
-
-I'll make a v4 patch to clean up and finalize the series :)
-
-Thanks
-Seyi
 
 On Tue, 3 Jun 2025 at 19:41, Junio C Hamano <gitster@pobox.com> wrote:
 >
@@ -99,3 +92,10 @@ On Tue, 3 Jun 2025 at 19:41, Junio C Hamano <gitster@pobox.com> wrote:
 > cooked topic in 'next' for the next cycle is always a good idea.
 >
 > Thanks.
+
+Hi Junio,
+
+I'll make a v4 patch to clean up and finalize the series :)
+
+Thanks
+Seyi
