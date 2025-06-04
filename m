@@ -1,90 +1,125 @@
-Received: from avasout-ptp-003.plus.net (avasout-ptp-003.plus.net [84.93.230.244])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F6D29A2
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 22:06:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.244
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2004224AF2
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 23:22:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749074785; cv=none; b=Kz7tJnVerne9gNPW89ZQuzmfGnTxHW8mFUjZI4vlW++C6pRKQgWgtUwwp/Px7OEk7RmT1gS58+rlpEOaEN0LonmjGs/0+NuwQM4fJtNkuGQoJuKouQxPZD4y6A6jIri3R5zA5JgPlA9J4k+jol0hCU2sT1vp4bUD48pbm4uAPWI=
+	t=1749079359; cv=none; b=N50Y+yHBlQbpHFd66oocbnoKFrcsuaGzPwCxoJoOACL24aeQ52XI/xkaWxNYG3cSkUJadHDIM04ZsdKNCJmkylKtvK92cCE+xbQ4lp8GbzNFkkRyoMTXp/NSP7iBqHLLoXOWTLaGQW6ruvxvyTWN9Dvf36h2iFS+ROVgUy7govs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749074785; c=relaxed/simple;
-	bh=XFnKwTFakTz3o4RVlFON1QTxuh1+yyEq17VjYzgbc9Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=pUARz42ZAaZkJNiUkdUNx7lfp45oXsQKGvGeewdj6BEF2fpNwUBs199i47Fj7/s82vqyC1cOS1y0qsEKotFOGgcn+jj8J+jZ78a1l5GVi68DYrLUr5sgyrcsL6X4NwVdCjj0dN8rpMoZOLF3wwM0r3+Uf/+DdcThhTjBLDCgEfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=fail (2048-bit key) header.d=plus.com header.i=@plus.com header.b=jElIjPKH reason="signature verification failed"; arc=none smtp.client-ip=84.93.230.244
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1749079359; c=relaxed/simple;
+	bh=4u/NCr7GXFd0dhXkbKD8sZvpW8SwoXLsdwJjavTk81w=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TbVIL0+NECGzQ3yVt8X+A9mrZdqMcSok6xAacpgsrc0QcT18n818pWdNqVzRQ/GRXtbacSgQ2KKO0S1Nz3+5eihE0ZegdfogeFP60jk5pUaxCLdB09nD1mZPwTk5QhuYOl+fBDCg+5pvQVXzT8M+tOMiOxEU/S/lHKSGdbbjFs8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WM1gLdPn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hLOYpdCk; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="signature verification failed" (2048-bit key) header.d=plus.com header.i=@plus.com header.b="jElIjPKH"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id MwCVuZll2FvhQMwCWu6xD7; Wed, 04 Jun 2025 23:03:12 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1749074592; bh=TUOxhbCLsv6KjZUsmhSk9/LwBfoxrk7Di5nqmlXANtw=;
-	h=Date:Subject:To:References:From:In-Reply-To;
-	b=jElIjPKHd2DPhGXWK0z7FQyf1W4GWky2ogpshiukhhUNYUvtOSVtXEjUoBPTRC9GD
-	 1dYOxFVFcpBzA5CRo74f5izCXhSgti9I87UVLDqvHChPpeoy810rNqpGWB25NG2ubl
-	 GYLBI//HsQ4eUCWMoyhk5n7B64PCz2iD+hEYI4rzUcaPKibxvnRZoBizqAlWowmRCl
-	 DoVwmcobvDYGiS1XEGjJCcvQbuyqLbcLe+97eMfxm50csWc7+OS9ce7P/sEa7RwrCJ
-	 QADfxuJTdarG6py57lMyJQN+6gt+4A3S2W2xzTScXIfCv/P8Tayc98wkCTAF4QyYJb
-	 nfi4Y2ZQc2OmA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=AdwSHGXG c=1 sm=1 tr=0 ts=6840c2a0
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=PrCtm78Qjd_wrglpL1MA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <769e85c6-c7f7-4732-881a-5765c6ca2410@ramsayjones.plus.com>
-Date: Wed, 4 Jun 2025 23:03:10 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WM1gLdPn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hLOYpdCk"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id F40C413805B1;
+	Wed,  4 Jun 2025 19:22:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 04 Jun 2025 19:22:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749079355;
+	 x=1749165755; bh=rVmnei0I7n+U6sYEIVM7NVY1Fh7XImhxqAa5vIJLS6s=; b=
+	WM1gLdPnvCgU4JanB7ZIGbvcI9NVfv0eZalfuMLRCPIBH0e298ht7FPw5wj287x4
+	MIOTEpzgvjuJQjg6E3RoM8ofpAmcsfBwwsr5rU6kw/RE/yrYWNQ6WmIT/02oRNGo
+	fe7s9hPVzHZA75dtncka42fqDBCpnnQ71TH1GvSqkUr/AtsuMABhOjAwFC0ETeeo
+	1SxJCJFlOeMZ4ZM3JgwZkMvoR2H30VNC9UFzNwqGQBntq7RdnzQJB3l291v/CC37
+	BIxxy4mnzTDxDUZtnHduJnEqJ2rlVSKEavbfIkWQPUZwnEjBwhz8mTPQo+o1ITqm
+	577P0nUdX/ehV1LD8yXWlg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749079355; x=
+	1749165755; bh=rVmnei0I7n+U6sYEIVM7NVY1Fh7XImhxqAa5vIJLS6s=; b=h
+	LOYpdCk+0hbl2NshOYry/Udou9DkVfSbvIzHR/2gzLC8FcuVuynwzndQitOecRAJ
+	tfaX0t8USlEcgh2J83D8U1gBrsvjfmGAsrAxOw5Frwn1r32V1GiZm4gKOr4RpyFU
+	Y1TONRJYn1PwDUu7bdLJD7spFUsWZPDC6Dkv8/rGO7FmbpKDCNCEjydcp01WdeGb
+	8U8SxdzmK+zjZVFtDjHi/s0uWi86TObCuAON477012+TJ4UPRxwNPdFhmFiDqTge
+	rLcydhIhBehTSODQ8Bt7TS0pa5osBUyd5pVxygf8NTrwNBjplZonNTwjwd2yaCmM
+	76L8I3LZgk31KZlUH3yRA==
+X-ME-Sender: <xms:O9VAaHhHuYDQjexUPdEqFSsyeVl9HrYnXNmvm8VCjwE4UkYXqEEmEw>
+    <xme:O9VAaEBar39-Br26AQ28RZ0bkdAzrSXW61zwlJxNLiFmUWpucf6Pmj-WCEivrtBFN
+    -eDQTvd5CmIbktjWw>
+X-ME-Received: <xmr:O9VAaHFFH5P7a52IhFJSyuUBN2ZIOn-9X2X3h4hChIs0sEyNwxDb9oMZi1OTrhMjsXKVp6hnTy_nHgzZufOfbJJrp5HK33wKpHYM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvkeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeef
+    heeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhes
+    ihhnthgvlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:O9VAaESDwwOeV-WRj-Cl6itfiqT3StAKRvSLNAYflhwa4KgsQuYn4A>
+    <xmx:O9VAaEzAIXmYZ2wEbLNWn3xVDj7ks2I52Ayy6lgOH_Km7UqQ6JUppQ>
+    <xmx:O9VAaK7EGZVJOrwc-ujwyxHpD6hGvpWbkKlhZN1onOOZsLBfm1Gb0g>
+    <xmx:O9VAaJyjskmNtakzni2Yelt1VEIwu62NcFOt91r9SRXefmKHVUjcAw>
+    <xmx:O9VAaEMTJW838tUqjaUHOfJ2XBmJ1V_ZC5GSAG2HN5lrbHpJBVj3YVvs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 19:22:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org,  Jacob
+ Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 3/3] diff --no-index: support limiting by pathspec
+In-Reply-To: <CALnO6CDUVpn-G20sFJviwjXX0xfjkG=HiUAMnWw96JCX+qyqgw@mail.gmail.com>
+	(D. Ben Knoble's message of "Wed, 4 Jun 2025 17:36:06 -0400")
+References: <20250521232917.2333291-4-jacob.e.keller@intel.com>
+	<374BC043-8FB8-4052-BDE7-6BAE7F182994@gmail.com>
+	<f41be4aa-b16a-4072-8999-3c5874f2bce5@intel.com>
+	<xmqqcybjb6pk.fsf@gitster.g>
+	<04ea6073-16fe-43b6-919a-08187de030ba@intel.com>
+	<CALnO6CDUVpn-G20sFJviwjXX0xfjkG=HiUAMnWw96JCX+qyqgw@mail.gmail.com>
+Date: Wed, 04 Jun 2025 16:22:34 -0700
+Message-ID: <xmqq4iwvay85.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] silencing warnings with curl 8.14
-To: Jeff King <peff@peff.net>, git@vger.kernel.org
-References: <20250604205505.GA1510724@coredump.intra.peff.net>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20250604205505.GA1510724@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfFGPjFt/EXbxWViBkKgEPdYIVfcuauF4ygQ05N3PV6XnHk7jx0N66FZPwdopyazLRZqxfSKz64bRB832fHflLcOo5mIy8JbeZZojgi7gFET+9Msp6hcN
- NMSx/2qFg443FP9iZ34TIjQ1Iqxi80RxEEKd38QgD7AQkUgcj9LOYnbKHWkxti2QZ8T3jRmsw5Exnx+/wSeEXHYBJ3SC2SxFKzY=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
+> On Wed, Jun 4, 2025 at 5:05 PM Jacob Keller <jacob.e.keller@intel.com> wrote:
+>>
+>>
+>>
+>> On 6/4/2025 1:19 PM, Junio C Hamano wrote:
+>> > Jacob Keller <jacob.e.keller@intel.com> writes:
+>> >
+>> >> Would you like a v5 with an updated commit message?
+>> >
+>> > What we had was already plenty readable to me, but if you think you
+>> > can improve it further, I do not mind waiting for another round of
+>> > update.
+>> >
+>> > Thanks.
+>>
+>> I'm fine with it as-is. I think the minor nits from Ben aren't worth a
+>> re-roll since there is no functional change, but wanted to confirm my
+>> opinion :)
+>>
+>> Thanks,
+>> Jake
+>
+> Fine by me as well, thanks.
 
-On 04/06/2025 21:55, Jeff King wrote:
-> The new version of curl (which hit Debian unstable a few days ago)
-> causes a bunch of compiler warnings because we are passing regular ints
-> to curl_easy_setopt() instead of longs. Passing longs has always been
-> what you're supposed to do, but the new version is better about
-> generating warnings with gcc (I think the type-check has been there for
-> a long time, but I gather it was broken and recently fixed).
-
-Yep, I updated cygwin the other night and curl had been updated, so I
-saw exactly the same ...
-
-> 
-> I split this into three patches since the solutions vary slightly (well,
-> the last two are the same, but my pontificating on the solution varies).
-> 
->   [1/3]: curl: fix integer constant typechecks with curl_easy_setopt()
->   [2/3]: curl: fix integer variable typechecks with curl_easy_setopt()
->   [3/3]: curl: fix symbolic constant typechecks with curl_easy_setopt()
-
-.. and came up with the same (single) patch, which I was going to split
-into three! :)
-
-However, I also looked into what a patch to curl would look like to change
-the constants in patch #3 to long constants. Until I read your commit
-message, I didn't think there would be much of a problem ... :)
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
-
+Thanks.  Let's move it forward, then.
