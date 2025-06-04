@@ -1,146 +1,102 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D9A42A87
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:56:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61EC12557C
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:57:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749045365; cv=none; b=l8xUZX/L+OnjsEqpnKjbBxRW1XQYTTUvjoiYxzgGjdj/tSMBNrHKuQnOR9+nm+KKA6JK3fPWg7JJItT3NZHy5hDdRWykKYsQoawlRINOzDhonyPlm/F/8liWoEOkjC8yD/1Ke6soRLb0tIsf6wjnqNJzygPFyqJNgM27rbAZkNg=
+	t=1749045425; cv=none; b=DZneKkovmKfxQbry1dLWoIB7PA97p+y1ij7Rm+H8EqOPzQFfGSgJUmVxMsUu6vo9rEhTyWrqezYOT/p73179+GO5KlqD6h/NYpOiM+oW4MFpUKn7MTDYOfq480ia0sbujS39AAfs23dSxkJs2OtuVLhSKFDBqO4m1cLBuWZiMNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749045365; c=relaxed/simple;
-	bh=VtnwpGpLLpuFonGM+l11ip/Ahy77JdbKaTaUvkB3H48=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T4pw5xUbqKqL9MFqMU9wEvjjfAXinS8kiNKK7rwVCRsuKMYVwaWbGMRarbjA3ycqZwc2p20tWuc0UE/tmR1HWpM828NQRwg2+KDCjH/XmjJJzvznPAV6WDehPmG37FQBRrcSUqpzdaJZd1dxzv9fa9OZa2l7J8q+1EQZKZloHdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c8ZjIVlJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XgTiifrO; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1749045425; c=relaxed/simple;
+	bh=1Bl1DJmxZ2bGvymzAtszpeJT0mFnm4vHcaHOS8GZwCQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uYbiTOpcNKkkcDfBFR6pKrXLdlhf0VbCith+zoH8/Sc4qtKwGVziVCe10WK0tcF8RNv2n5WtZw6dTYhP1INWLqFw4QH4CmgVKbuBxmfnDlApjSYgH+rhXr17kO3UgqYnYYr9wWDyPKGqIgrOY+bFmuOQZ93mwA2dtUcZ0PgoaL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nutrient.io; spf=pass smtp.mailfrom=pspdfkit.com; dkim=pass (2048-bit key) header.d=nutrient.io header.i=@nutrient.io header.b=Y2WDIs4Y; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nutrient.io
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pspdfkit.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c8ZjIVlJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XgTiifrO"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92AAC13804C7;
-	Wed,  4 Jun 2025 09:56:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Jun 2025 09:56:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749045361; x=1749131761; bh=0b1pFYjVzg
-	+llTX7mRjKvUMy81hC9ZaLHhi5TleqeIw=; b=c8ZjIVlJIgvyyDhj2LjmQJZEWb
-	JDamaimJwbhMFFer1xZeWZLIjxw7/HKybp+k+JefGoDad52bhkcz2Lx2m1/HU3dw
-	yCj6GlLS2OflQeRZiJGaDJj37b627SoQ80lNbxdRxzug7yLPCDN/xX8P92e/pZKS
-	/YcODVV8gZaJz6tLGkFQOSm55fgNQZBXFYQUIJoz8EzQyUBvfOqHCg7duTykGu0Z
-	qrkOYUZin+8jV79vGCh3K+ITz4IaW5dzrIZnwtxVuOKHfvAVv9xlxmThgzZBix6S
-	RbY6LYJT+lqcGunR4s7+g6+kYB12f6yhD0YKCFl9LHvum2KN9JowopLBrPjA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749045361; x=1749131761; bh=0b1pFYjVzg+llTX7mRjKvUMy81hC9ZaLHhi
-	5TleqeIw=; b=XgTiifrOG4dOhYjI4GQiSuxblQ3R73LlO/iN4MrBiPGND6NYZLV
-	ey3eGVRuN5FoomHqPtx4/9RqySqkca7uyRDleM8e0K18XUqxGZ3LGPhblZPNlKW/
-	VyM7DWy2GPB/Lp0Ii4WGuChhEGebIkaWC52flg7g0Fl6wC0dxVwDzONrZpkIegpj
-	sLdCnQAAog7VRZ2gBKHPHQcDKPk+sJ1LUbvcUEoNwvtGuELr24l3Oj5XHb5drmQz
-	DP1x5J/2OV0lmfvNfH63cI4TaOshjmPjD4R/Kvs205RpYJnOGzdi+N/NCjCV3Ey7
-	kM6dV/nAr/qIHZ8Eh98W0o23SlIErrxCFSQ==
-X-ME-Sender: <xms:cVBAaCWS0c-2bbWWLnt0qjjqVVXt2A22lEsB0-hB5DktXCUKlvxg3A>
-    <xme:cVBAaOmTmt1Htw8Vo5ti2UFsZ4Q06fTny6Bykz9ym6bm4F85KEqQjwrATpzqMACrM
-    ae0oexWe90nQs1TXg>
-X-ME-Received: <xmr:cVBAaGao4JuvcKP_RUqSySYkPKs6AFQXqovdQnW_f8dFhlSftC9p8I85ZWpBHnndponuWPBXhCfIEDSEtwCKd61NzDdMhAJmPMDl8svNC0bB>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:cVBAaJXD3iz-Pt9r9PXXMtREljAPDN-ZiaPmPIZekj_3-hXvJpvCaw>
-    <xmx:cVBAaMnoMP6tg724ofWvz_jK34KQQ_HNBa_2R6vrGEaK31APUBmJfQ>
-    <xmx:cVBAaOdPKpTydMakjyH-iGZ2jIBviqehGQCvtrL4XhiZ0cn_XFcCpA>
-    <xmx:cVBAaOEgX4epwLsukJ7pldsIDjGQ84T2KLmLFLJVVU2hIVGVydUp8A>
-    <xmx:cVBAaE-4TtAPe9QvLQWtlk_C2BwSg6fEgnO8iPIVHPOuqg-BoBDjvBS8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 09:56:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c636d25 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 4 Jun 2025 13:55:58 +0000 (UTC)
-Date: Wed, 4 Jun 2025 15:55:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 02/17] object-store: rename `object_directory` to
- `odb_source`
-Message-ID: <aEBQbWre85PSrWqt@pks.im>
-References: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
- <20250602-pks-object-store-wo-the-repository-v4-2-e986804a7c62@pks.im>
- <875xhb3ahw.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=nutrient.io header.i=@nutrient.io header.b="Y2WDIs4Y"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-acae7e7587dso978072166b.2
+        for <git@vger.kernel.org>; Wed, 04 Jun 2025 06:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=nutrient.io; s=google; t=1749045421; x=1749650221; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BCljNj5Gqv2s49hX4PwnLmlKzLqd3ghLfIW4a1qpZ6M=;
+        b=Y2WDIs4Yq+dpROpI8Ls2YKNR3nups0LoBpY+mjExzuG1MoMk2cxJN89nqZd7EJKw09
+         KVSbtUyTukQHD4qDEapg5k43/BydcCyamK2eFinqMx275d4Y9IZe5QKD0+J5Ydj8wW6X
+         GQcbiwoSymz+9hHNl4awOGn6nK3UdNN5jBWx0IwhDZpMvAuqudbkw81dBoZLMNT6ol3G
+         6lMWHKvC41JlvAkVXZH412z8Ti8GssVjVATNreoBDPYQmUw+5f7j0BIc+kVq+tGdKXTl
+         NHw8XnRqDp7mpm8FGfJl+eVwNHLVblzf8et6WGi/OEEwTXN2VT4oEbfHZwGWwcotlGRy
+         oS9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749045421; x=1749650221;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=BCljNj5Gqv2s49hX4PwnLmlKzLqd3ghLfIW4a1qpZ6M=;
+        b=DaIgugtcRn1TYjH5WNgP5l+GwOm6nVcGw7GkNqbQr6mhot6vzVQaWcV7nyvCyql65K
+         WEAS70bEyleemntkOHTfOazpTYFK+O4Jp1MhyanMfFd7UKo3pXuxO34Wy7/4YKSo/3Uw
+         dLolGEnNf3ICmg8yYtkskmJTkIKATznntoeQ9ocw5kq5D2JV1VtmYQloDvjepuLVU2uF
+         3zM7HYcXQcXFu+p+VXAj4BO/2QVTK3qOQMBjUKc2heAx3x1Zb/4nw3FAxV/fkVK0U6Fe
+         KDlQGuYwdjw4IbRQWKukS1byDQDFt7iAuvEr1+5AYxOinQ29BidzSlTgfN8O9TLmvBxm
+         yk4A==
+X-Forwarded-Encrypted: i=1; AJvYcCV1v3Zxm7Qqqnrp7f+UAG1VdGKtWIHV3xuU/JSeWgFZOJaZon8UM/s9ZOkmrJ3FlzNtlos=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyn4hMf6Miqv/0mq5QzcI3L/Wzb9D81ooaV7M1Jhbv7QJpl+UFq
+	veUYBzOcSVTjQwy349B4pkNT+8moxf8iagBWCCy+fF55nJcEmrgQW13azDt6lybauX4hW0pxrpc
+	QpiWuNOabZ+ZOgp8b9xKK30ymlibMSuisviRmfb+U5g==
+X-Gm-Gg: ASbGncum7d75SpyzJbQemyWt6TqtQEm8UbHqC+cFLVTo+xJychc4q5pO284M5qo5Zul
+	DD2fXEVJU29kmIWWxAMopqcU264YH6H+da98mhbucWCunFrnyzqJaJarEuA12bVM1oHfc5uPPH1
+	wco9Asz70cmJTpBGtiXj89g5rtwH7PBJPwXQ==
+X-Google-Smtp-Source: AGHT+IHFNHjJk8CfmmimcjbP9J2sWlBDwsvOTl5Z421x25rS+MmfBfJsQpdmAMJ3NuvBbBnrbNsIxa0kJxB4AYtiiuE=
+X-Received: by 2002:a17:907:c13:b0:ad8:9ab7:a270 with SMTP id
+ a640c23a62f3a-addf8e986e3mr276587666b.38.1749045421390; Wed, 04 Jun 2025
+ 06:57:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <875xhb3ahw.fsf@iotcl.com>
+References: <pull.1928.git.1748882439.gitgitgadget@gmail.com>
+ <fe7e918ba1831fffead46791441da350223998f7.1748882439.git.gitgitgadget@gmail.com>
+ <CALnO6CDk4cP1Mef07F6Z8Sm-1MxwWWd-rYEfL-e5_Nnq50B4ng@mail.gmail.com>
+In-Reply-To: <CALnO6CDk4cP1Mef07F6Z8Sm-1MxwWWd-rYEfL-e5_Nnq50B4ng@mail.gmail.com>
+From: Patrik Weiskircher <patrik.weiskircher@nutrient.io>
+Date: Wed, 4 Jun 2025 09:56:50 -0400
+X-Gm-Features: AX0GCFujnlAxp85xFthLbqi13ipX7O1C0Umg23i7fdAny0ApJrk_h4EetAQYWAk
+Message-ID: <CANMzfzjhe=mxrcxgyXYqOD3GJ0UdX=xsP7oq3H8OGPfuwOphow@mail.gmail.com>
+Subject: Re: [PATCH 1/2] contrib/subtree: parse using --stuck-long
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Patrik Weiskircher via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, apenwarr@gmail.com, 
+	Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 04, 2025 at 03:24:43PM +0200, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > The `object_directory` structure is used as an access point for a single
-> > object directory like ".git/objects". While the structure isn't yet
-> > fully self-contained, the intent is for it to eventually contain all
-> > information required to access objects in one specific location.
+On Tue, Jun 3, 2025 at 4:42=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
+ wrote:
+>
+> On Mon, Jun 2, 2025 at 12:41=E2=80=AFPM Patrik Weiskircher via GitGitGadg=
+et
+> <gitgitgadget@gmail.com> wrote:
 > >
-> > While the name "object directory" is a good fit for now, this will
-> > change over time as we continue with the agenda to make pluggable object
-> > databases a thing. Eventually, objects may not be accessed via any kind
-> > of directory at all anymore, but they could instead be backed by any
-> > kind of durable storage mechanism. While it seems quite far-fetched for
-> > now, it is thinkable that eventually this might even be some form of a
-> > database, for example.
+> > From: Patrik Weiskircher <patrik@pspdfkit.com>
 > >
-> > As such, the current name of this structure will become worse over time
-> > as we evolve into the direction of pluggable ODBs. Immediate next steps
-> > will start to carve out proper self-contained object directories, which
-> > requires us to pass in these object directories as parameters. Based on
-> > our modern naming schema this means that those functions should then be
-> > named after their subsystem, which means that we would start to bake the
-> > current name into the codebase more and more.
-> >
-> > Let's preempt this by renaming the structure. There have been a couple
-> > alternatives that were discussed:
-> >
-> >   - `odb_backend` was discarded because it led to the association that
-> >     one object database has a single backend, but the model is that one
-> >     alternate has one backend. Furthermore, "backend" is more about the
-> >     actual backing implementation and less about the high-level concept.
-> >
-> >   - `odb_alternate` was discarded because it is a bit of a stretch to
-> >     also call the main object directory an "alternate".
-> >
-> > Instead, pick `odb_source` as the new name. It makes it sufficiently
-> > clear that there can be multiple sources and does not cause confusion
-> > when mixed with the already-existing "alternate" terminology.
-> >
-> > In the future, this change allows us to easily introduce for example a
-> > `odb_files_source` and other format-specific implementations.
-> 
-> Sorry for being pedantic (but I guess this series is all about naming
-> anyway, so better get it right), but wouldn't this be
-> `odb_files_backend`?
+> > -S/--gpg-sign requires an optional parameter. Optional parameter
+> > handling only works unambiguous with git rev-parse --parseopt when usin=
+g
+> > the --stuck-long option.
+>
+> Here we mention "-S", but that flag isn't implemented yet, right?
+>
+> Perhaps something like:
+>
+>     Optional parameter handling only works unambiguous with git rev-parse
+>     --parseopt when using the --stuck-long option. To prepare for future =
+commits
+>     which add flags with optional parameters, parse with --stuck-long.
+>
 
-Maybe, maybe not. In any case, we can still decide that at a later point
-in time -- it's only part of the commit message, so this part is not set
-in stone and can be discussed once we introduce such backends.
-
-Patrick
+Makes sense! Changing that. What is a good policy to resubmit
+something? Should I wait longer? Sorry, very new here!
