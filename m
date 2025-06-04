@@ -1,117 +1,106 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from bg5.exmail.qq.com (bg5.exmail.qq.com [43.154.197.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA85433B3
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:42:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AB18C11
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.154.197.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749022960; cv=none; b=h1poPEEFr7fhOCC18TS8omHUh1t08EGz9dyXrCdiE0Jbu8S9T/Z81yCsxVUlKfQOuhAIb3AMaotEhFyV5t7OihHLt417uqIBeddJyBogM7Wmtf3tOgKeVWGDLQo/NSOZh6Ok9wwN5b75QyNVcaYYKkUK4fBl/NTH2TOj5E5aPao=
+	t=1749023314; cv=none; b=tMnq6b5SqmuTauiiHhgSoI1L8D83bwPVpd/LbXYrdCrm2HMkeqleFovVjXlWV8qOwSmqcSZw2M7mLlQNBcg+RH/P2Rqqwv2tggHpbXXsV/84KpX75rM658HpSOXgP33gqzYCMxAwzapYA+4X6GVJxvUiA4/L1fuevt9pbqJ1gt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749022960; c=relaxed/simple;
-	bh=h8hHDh3fFlC/RmlYyxJWpJ86bHphxDDcLZ/l9APv1Kw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Lc7AJ7Z5txBDFQp6vWjhIdGCW4w28hfwiMUftLo9qRgKKAjDdS6lXRt8oKfAkPRD4SrrCSmHFiq/fnZWd/snXIju/7nLIeMpREuzV9D20B0Wx2WFgbr7/Grrf+ghZ59Ug27TEQzPu5Sqnuh8rK9eaGcXPbGDFmF5PXkk0D31nK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=F7O3okwY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Un94KJdU; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="F7O3okwY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Un94KJdU"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 099A711401FC;
-	Wed,  4 Jun 2025 03:42:38 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 04 Jun 2025 03:42:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749022958; x=1749109358; bh=ldN34OQejL
-	fx2vDjWIaZVakwPQJS+7igUHEY1kVqr4Y=; b=F7O3okwYgvORPeH4XadMMIAoDf
-	EpDyxwSePoZL+N+/Vs63ffrOA3Pvp59aFDL5KcVHkc1+f51No4lV9OGE1rNmDKxu
-	kErlyYTn/IDaiae2arzrfK4YmNg2FZdgTK7jW95vSVigfouBBBEOLvBBJsHcJh3H
-	1+cErgnnO5/48wXTQ0tgN5XcmjxKZF7Tms1bn9HseoGlMfLMn7phtEp57EWHSAvl
-	LUQ8ra/WeJ24TUkCDlTO4Ee/QmKtQ65XH4RNcdmAnRvkPbPzkJuohACU7dExR6CS
-	xmszFNW5rd5z7rcHtlh8/unVIlS9o9PvgNuPiSxaELzk8au6d5Fm4eK2WycA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749022958; x=1749109358; bh=ldN34OQejLfx2vDjWIaZVakwPQJS+7igUHE
-	Y1kVqr4Y=; b=Un94KJdU9gD3pSVqKsY+U50ydNiSLlbjwlyANzEcCNNdDAs4Aiu
-	slAHOYTP8E6ANVlLI0bzWsfMRFai0/9hTeDzhzMnyZMPOT5kBmMWfeyZDygN1fZn
-	W5hLydb426kr1xa6DF1W4nkr5YyBCrCFgY6126m/wFtdL6IvXqrHBm+mJEF2LWy9
-	iALWT/cc0JOd8PjgaYI/Wuu0OfvxR+tSNT7rDyZV+6NCZ5BVlW9+BwXMKi3yQ5WQ
-	6LByNp+fNubqCW3QT3VJJnwvR5fCFWm//G2/uZCoeusqOOqUHc+VG/wkPSHh0Ic8
-	Ub8Am8d9YwalSN8Pgjo4mFWMtRZWAaMFoHw==
-X-ME-Sender: <xms:7fg_aPyCULKNIbBdt7Jc9ZC2-RxgRl4Nupur_eszgL3RWQo3I8HqQA>
-    <xme:7fg_aHRJPNIXhj9a7fiBALVQnw9HWGuBCX8onHbIA09KMv-I9GZNlPQUWg5lNCCF3
-    BHQN_c0bmjFqxeR0A>
-X-ME-Received: <xmr:7fg_aJXW-fPCOYP_g9WQp1nuG2MhpHn4nHY-U1Tk5AE2viIngJE79PRgL-r5heIYQ4zDF1SunDPj0bs9ie0jgK1Dqhl6ySBdjwqP0QHHcE-I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjh
-    hurdgvughurdgtnhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:7fg_aJinaaS8g6EcObg_nBqv4qRBdFIod7kQOtTwiqwa1rcltuBySA>
-    <xmx:7fg_aBCw8nmU5bpDOpQZkpX-wXhuxwP9ToXueqk2g_CjxBbFmdyQaw>
-    <xmx:7fg_aCLzKaapra_J3XR6_lStkpqsJE83YmLPyHjDDk-AEbE-W8n7Rw>
-    <xmx:7fg_aACjQoIqWWHoBwbuyCG-ht4tgLuKjMyps1O7seuCiGbrnxXKZw>
-    <xmx:7vg_aC-OwkDCiPowDe5I-UR3zf_We5GZ-hAjMhila8Mm7UDW3uyTBMRM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 03:42:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id db146405 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 4 Jun 2025 07:42:34 +0000 (UTC)
-Date: Wed, 4 Jun 2025 09:42:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] commit-graph: fix start_delayed_progress() leak
-Message-ID: <aD_46Qxh9oVj-P3U@pks.im>
-References: <pull.1986.git.git.1749006675784.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1749023314; c=relaxed/simple;
+	bh=MGupEqg/5mFNNEtvIpqYdtZDwbFpyT+8IKD7NId579k=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=hAMAPyIHIrXlx62UsI2NYDZKoP7ziTpw16POZeTNwPBj4Bg+4hc0Rl20DjlcA867Tc/69EQt7yytg8uzVNqXHv6go7/lzlPnfsHsY24OAq6jke8WkSP1KfjD1UGE1DXdsQ6G9JqqYsdrxwCocL9RfvsoBGi3jAI7OFtkCFBKVRc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=43.154.197.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpsz9t1749023259t7055e207
+X-QQ-Originating-IP: E1RY2HNLEY48ojfMja3awNMyF0jDT7GSjkJ8+jCt7rw=
+Received: from smtpclient.apple ( [58.213.8.105])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 04 Jun 2025 15:47:38 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 6465757338677845911
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <pull.1986.git.git.1749006675784.gitgitgadget@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH] commit-graph: fix start_delayed_progress() leak
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <aD_46Qxh9oVj-P3U@pks.im>
+Date: Wed, 4 Jun 2025 15:47:28 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CB88AA24-6D26-4BED-B430-62A453E6B9D6@smail.nju.edu.cn>
+References: <pull.1986.git.git.1749006675784.gitgitgadget@gmail.com>
+ <aD_46Qxh9oVj-P3U@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: MF9wS9BzufCcp04xufz0Bn3C2LGKD2ujFiyEcbyjG8o/PJp4xeXkN0ZR
+	uHagznvKqLV27o5pLqUP74KywUiVAe9hMvpA1fs7FELj1QLMVrM3bTvuham5BeKFZirCF9x
+	7v2ftLw8w/XNV0hKmiMmC+viF6CbAROCY0C1KFm6Xpei3MzZUqSwa+8DJBqllm/K7wAiFqs
+	VHwwOrTUvupW55DYGtpjW/+KK8iYdDzCDHVFfPv7reUDgkOfl/nj3D2q7sEDl+rnRFnbx84
+	SRCtulicp9ii5FdCm0Ja9+j20nhliCrlv/syVy3fxQM5M0JJfnCG9r5obrXQd0gA/4t64Kn
+	zomfAcC5Fxwr1NvwGQ1M5C/SlXwPu5K5GnIl8+Z5s1wU2f/Y7tbUJj1X5KYFkkJPz001gvI
+	/wdQjLRB4S3k6m6Zh6ciOF48bOC41hVM1tAJv87l28UtEv+4peDUmSYLynGNlgRD/vBy99l
+	TTLQOgrLxp/xLDh8KTyU3ml9IfCLiENMcawR6GrifonfeXVPxuOZKEChXEOJ6gSahTmsWGx
+	bnA5zzH0hkD7jwUHXEgihYlRy+L86I5KKz42A+dEoeg6N80Kxvgip7TZJE77D7eReEfFX9Q
+	d17xyxXIyoA/fP8gTLkp01/sqbyaAE9/6GkuCESqJFtegvgZnHFkP7mpz9ISwyk+QmTx72e
+	SdslIghiXGG8F2FFfA4E/pTwdm3MTf3YxA7w/EsIJo2Xq88FKg3ytKkhLimvvLSXkbB5rpG
+	k/qhdtEbqqQwAPMeVbOakNlA5mvyWcFWPtrNqI6MAOEBUqmG2JX7R0BMCOqbBT306yAgkjJ
+	HE19tIRZhv28/6mkGGBUjaoNCCdtMf2O/LnRFRZsXLV0rQXuJTh1PnpTn3I+5Par4o3qj7s
+	m0W8sNq3LEwFPlzQ8QArWfVjQuuUYRxp4Wbc+c2fDLOSupW9epQpq10LWD/5sAu1uGnWK5x
+	IG/jtSScrI1WL441ACArMno4jBry6U+mEhDcjM3Osn22lUUUw+Q+5HU4hgOJe9a6Y8Ng=
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
 
-On Wed, Jun 04, 2025 at 03:11:15AM +0000, Lidong Yan via GitGitGadget wrote:
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
-> 
-> In commit-graph.c:graph_write(), if read_one_commit() failed,
-> progress allocated in start_delayed_progress() will leak. Add
-> stop_progress() before goto cleanup.
-> 
-> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+2025=E5=B9=B46=E6=9C=884=E6=97=A5 15:42=EF=BC=8CPatrick Steinhardt =
+<ps@pks.im> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> On Wed, Jun 04, 2025 at 03:11:15AM +0000, Lidong Yan via GitGitGadget =
+wrote:
+>> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+>>=20
+>> In commit-graph.c:graph_write(), if read_one_commit() failed,
+>> progress allocated in start_delayed_progress() will leak. Add
+>> stop_progress() before goto cleanup.
+>>=20
+>> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+>=20
+> Nit: it might make sense to send multiple patches that are related, =
+like
+> your memory leak fixes, in the same patch series. That makes it a bit
+> easier for reviewers to group together related reviews.
 
-Nit: it might make sense to send multiple patches that are related, like
-your memory leak fixes, in the same patch series. That makes it a bit
-easier for reviewers to group together related reviews.
+Got it, though I think this is the last time I send leak-fix patches.
 
-> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-> index a783a86e797..ee48980248f 100644
-> --- a/builtin/commit-graph.c
-> +++ b/builtin/commit-graph.c
-> @@ -311,6 +311,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
->  		while (strbuf_getline(&buf, stdin) != EOF) {
->  			if (read_one_commit(&commits, progress, buf.buf)) {
->  				result = 1;
-> +				stop_progress(&progress);
+>=20
+>> diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+>> index a783a86e797..ee48980248f 100644
+>> --- a/builtin/commit-graph.c
+>> +++ b/builtin/commit-graph.c
+>> @@ -311,6 +311,7 @@ static int graph_write(int argc, const char =
+**argv, const char *prefix,
+>> while (strbuf_getline(&buf, stdin) !=3D EOF) {
+>> if (read_one_commit(&commits, progress, buf.buf)) {
+>> result =3D 1;
+>> + stop_progress(&progress);
+>=20
+> This function calls `stop_progress_msg()`, which knows to exit in case
+> `*progress` is a NULL pointer. We thus don't have to guard this line
+> with `if (progress)`. So the patch looks good to me, thanks!
+>=20
+> Patrick
+>=20
 
-This function calls `stop_progress_msg()`, which knows to exit in case
-`*progress` is a NULL pointer. We thus don't have to guard this line
-with `if (progress)`. So the patch looks good to me, thanks!
+Thanks,
+Lidong
 
-Patrick
