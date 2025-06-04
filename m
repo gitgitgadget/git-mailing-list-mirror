@@ -1,36 +1,36 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9807E79D0
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 20:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5932879D0
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 20:55:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749070517; cv=none; b=lvgfpDBeOSx5msaZoX5DGhieYKA4XYoGCiZIz86eHweVKXaGGdHws+22QgG1AYsAHg5pk0KdY/MtBXHbwVHVDA7nct0PpRVRx7p8MsyMcMa2ma38BCupFFKv63EhB8zuVJk4h32fIopKAbhY2swrRnqfkvxgaDS95lYop97zC4o=
+	t=1749070556; cv=none; b=gpStyP83kV91ekzSHSNHq1pi2YAMQ0fnQHgchVRPES0Fcng8iI2KBPUqbzKXkeV7GD57meFQVAtqPbBA06TrVEVbqSL+miu4G4SvKqxz/ETAgRfWCw3c+LYThEoQ/5HtRwmp7Ap02UPOpkfGF+sdrrqrol3xLKSqSgnzLGJuVSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749070517; c=relaxed/simple;
-	bh=VFeoUDJ/8CVB4iixr1hZLDPq9C8fBlfbjLHC7WH2zlE=;
+	s=arc-20240116; t=1749070556; c=relaxed/simple;
+	bh=9QX0pgyd6bxzVwfRK8RaQZLbZfcRJQWeiYcA3mZKMdU=;
 	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=n99STZFwE4olCqnbR3NXJ1vs1hUop8l4GodvmgQN0cUEGp7SZCMapikV1Ogfg/zzzXGsrV6wALJs7xl+FP/avXP/+MC2ya1FbAI7MXrNHvyfycwMumC6FEuv60gWNRMsD+e5qlLQTbIiHXYetgpcAIMFXUDEn5WGQOj2vsxiaTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=eP20donF; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=ZwtCSkINoAUhdrt3pd3nK4i5aFAni0QtH6T1tKycgQM+L+awEPtmu000a3p926IQpE4YbCvN298b4snJ3gVkOq1+ghqAYl9vCi1Kwv6TpYPBvgG0bk1rHtOsJZ75KnFt5IJXETZBmlitbDABkA7ZYqAf/7/PvJBHI+XXG09UUbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Q553ViLT; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="eP20donF"
-Received: (qmail 14298 invoked by uid 109); 4 Jun 2025 20:55:13 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=VFeoUDJ/8CVB4iixr1hZLDPq9C8fBlfbjLHC7WH2zlE=; b=eP20donFpI5683VF3eMom4oPst47uogIMaTzyZHN0D9/G/Jkr84xbM717hA1keVcbrLll/FN0EDqYXvjLK3fg2syfPLXFz79X20ppDndnCbsSPX51KULqFTHEuhDqM2tuMQxW2sBKIDrpcAQcEYq9g1UfDSslkAn/b40TpFoI6K2shdUi1yUxLZihWCgolMUmCxgIwJ4/JvmPP0sb9P7icfy5d0+uxy86oX/kfI7BBw5ovZSubzDKCWLKE5P4QUiPwYpgmuWnwdmzKKm0yLUIv/lhqq/tv43bw7JKDaUcCyPZopCZ406Bzx/h6hA4+szgxidpZiRo/+O1IkevmdcOQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Q553ViLT"
+Received: (qmail 14301 invoked by uid 109); 4 Jun 2025 20:55:53 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=9QX0pgyd6bxzVwfRK8RaQZLbZfcRJQWeiYcA3mZKMdU=; b=Q553ViLTRLt5tlOTjiEm/7s4AfRiYWmeMyxj+kg0Omp0xsRAj7pQq+VKKlyrawkmLCzPMdcyZU4ZWNvcyAagUH7AnQw6LwNeI5jGvVcgaG6fYmlcWN3oV+5pkdfLQXfwO+Ibo482JTSWG0Du3YOyJ1NXZbTmB2L1MROMoSuphIlcf/tK7vmbvwq0sAGzvsWg3AhS+jpfdBSOEDfs6n4pR+4EA0o+j+P48vsZhStPpeL2kr4gr1zKWWV3fqRV9mULtczw8RzxRXpXPDFSIFRkzATmEQTlX2lC/4VZkCEN66kjgiYrDaaKyVVjyZsaSz5uP9/M/IZQpcQlsEGGgGuVog==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Jun 2025 20:55:13 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Jun 2025 20:55:53 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13759 invoked by uid 111); 4 Jun 2025 20:55:15 -0000
+Received: (qmail 13765 invoked by uid 111); 4 Jun 2025 20:55:55 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Jun 2025 16:55:15 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Jun 2025 16:55:55 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 4 Jun 2025 16:55:13 -0400
+Date: Wed, 4 Jun 2025 16:55:52 -0400
 From: Jeff King <peff@peff.net>
 To: git@vger.kernel.org
-Subject: [PATCH 1/3] curl: fix integer constant typechecks with
+Subject: [PATCH 2/3] curl: fix integer variable typechecks with
  curl_easy_setopt()
-Message-ID: <20250604205513.GA1510819@coredump.intra.peff.net>
+Message-ID: <20250604205552.GB1510819@coredump.intra.peff.net>
 References: <20250604205505.GA1510724@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -42,114 +42,60 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <20250604205505.GA1510724@coredump.intra.peff.net>
 
-The curl documentation specifies that curl_easy_setopt() takes either:
+As discussed in the previous commit, we should be passing long integers,
+not regular ones, to curl_easy_setopt(), and compiling against curl 8.14
+loudly complains if we don't.
 
-  ...a long, a function pointer, an object pointer or a curl_off_t,
-  depending on what the specific option expects.
+That patch fixed integer constants by adding an "L". This one deals with
+actual variables.
 
-But when we pass an integer constant like "0", it will by default be a
-regular non-long int. This has always been wrong, but seemed to work in
-practice (I didn't dig into curl's implementation to see whether this
-might actually be triggering undefined behavior, but it seems likely and
-regardless we should do what the docs say).
+Arguably these variables could just be declared as "long" in the first
+place. But it's actually kind of awkward due to other code which uses
+them:
 
-This is especially important since curl has a type-checking macro that
-causes building against curl 8.14 to produce many warnings. The specific
-commit is due to their 79b4e56b3 (typecheck-gcc.h: fix the typechecks,
-2025-04-22). Curiously, it does only seem to trigger when compiled with
--O2 for me.
+  - port is conceptually a short, and we even call htons() on it (though
+    weirdly it is defined as a regular int).
 
-We can fix it by just marking the constants with a long "L".
+  - ssl_verify is conceptually a bool, and we assign to it from
+    git_config_bool().
+
+So I think we could probably switch these out for longs without hurting
+anything, but it just feels a bit weird. Doubly so because if you don't
+set USE_CURL_FOR_IMAP_SEND set, then the current types are fine!
+
+So let's just cast these to longs in the curl calls, which makes what's
+going on obvious. There aren't that many spots to modify (and as you can
+see from the context, we already have some similar casts).
 
 Signed-off-by: Jeff King <peff@peff.net>
 ---
- http-push.c   |  2 +-
- http.c        | 14 +++++++-------
- remote-curl.c |  6 +++---
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ imap-send.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/http-push.c b/http-push.c
-index f9e67cabd4..591e46ab26 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -195,7 +195,7 @@ static char *xml_entities(const char *s)
- static void curl_setup_http_get(CURL *curl, const char *url,
- 		const char *custom_req)
- {
--	curl_easy_setopt(curl, CURLOPT_HTTPGET, 1);
-+	curl_easy_setopt(curl, CURLOPT_HTTPGET, 1L);
- 	curl_easy_setopt(curl, CURLOPT_URL, url);
- 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
- 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_null);
-diff --git a/http.c b/http.c
-index 3c029cf894..cce2ea7287 100644
---- a/http.c
-+++ b/http.c
-@@ -1019,13 +1019,13 @@ static CURL *get_curl_handle(void)
- 		die("curl_easy_init failed");
+diff --git a/imap-send.c b/imap-send.c
+index 27dc033c7f..2e812f5a6e 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1420,7 +1420,7 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
  
- 	if (!curl_ssl_verify) {
--		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
--		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0L);
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0L);
- 	} else {
- 		/* Verify authenticity of the peer's certificate */
--		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1L);
- 		/* The name in the cert must match whom we tried to connect */
--		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
-+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2L);
- 	}
+ 	curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+ 	strbuf_release(&path);
+-	curl_easy_setopt(curl, CURLOPT_PORT, srvc->port);
++	curl_easy_setopt(curl, CURLOPT_PORT, (long)srvc->port);
  
-     if (curl_http_version) {
-@@ -1117,7 +1117,7 @@ static CURL *get_curl_handle(void)
- 				 curl_low_speed_time);
- 	}
+ 	if (srvc->auth_method) {
+ 		struct strbuf auth = STRBUF_INIT;
+@@ -1433,8 +1433,8 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+ 	if (!srvc->use_ssl)
+ 		curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_TRY);
  
--	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
-+	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20L);
- 	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+-	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, srvc->ssl_verify);
+-	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, srvc->ssl_verify);
++	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, (long)srvc->ssl_verify);
++	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, (long)srvc->ssl_verify);
  
- #ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
-@@ -1151,7 +1151,7 @@ static CURL *get_curl_handle(void)
- 		user_agent ? user_agent : git_user_agent());
+ 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
  
- 	if (curl_ftp_no_epsv)
--		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
-+		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0L);
- 
- 	if (curl_ssl_try)
- 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
-@@ -1254,7 +1254,7 @@ static CURL *get_curl_handle(void)
- 	}
- 	init_curl_proxy_auth(result);
- 
--	curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1);
-+	curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1L);
- 
- 	if (curl_tcp_keepidle > -1)
- 		curl_easy_setopt(result, CURLOPT_TCP_KEEPIDLE,
-diff --git a/remote-curl.c b/remote-curl.c
-index 590b228f67..6183772191 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -877,12 +877,12 @@ static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
- 	headers = curl_slist_append(headers, rpc->hdr_content_type);
- 	headers = curl_slist_append(headers, rpc->hdr_accept);
- 
--	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
--	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
-+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
-+	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, NULL);
- 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, "0000");
--	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
-+	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4L);
- 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
- 	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &buf);
 -- 
 2.50.0.rc1.276.g7db1193dde
 
