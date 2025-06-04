@@ -1,115 +1,154 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DFB6FC3
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 16:33:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB75A18DB24
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 17:11:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749054785; cv=none; b=kXV/8kQHg0E0gxbPOh9lHUvJbdNmTQzUQsW9AR5SCZEapMJWA1l2ynpW0woVb97W3nsaqGuJUBxORmjvfOHnCaMBzqs7r+z/tknkkVbU0BF3EZ5RJBBGm2zGvc067rm99BMxHvtigu0RBGqTouIGv1P8UTeCxqKoAAjwvrsp6t4=
+	t=1749057087; cv=none; b=nC5VxlcZMrbhKztT2YD3PdQ1UNFhAkg1oYTVvgb7RxWyyiY4vXLCPLlX6+tn6X6B4Gqj/elyYspmgz/nuUy2pEH/XtZriaBVzgrfWub5gjmrysU5Z+BwZvXPbZ4envy3ijzHmkczo07j3HJ3vSR/8CWo+nvzizLRPDq7id4qUQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749054785; c=relaxed/simple;
-	bh=5fAHA46PO0OtKOjiHHxBhz4okF9vgR2uBmB5TI7UyZg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rG318XFbLSNxWAH/Fj1LR1s1RoszIKD4ZyrWmKULz7Bpd0iGQK8zNyf7q3CZsarQ+Aq/v9KCAL0XOGVa6B3PTLQ4oHHVhyc0t9DKWf7lvK67GDkUleJfiL+rBmu7BhQGulgs9G71uGr1dz4LkHQI7UD/ju4NDM5kmN7Qtoljut4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DSpUPkOG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mrLcMc9N; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749057087; c=relaxed/simple;
+	bh=j2pJu/0cLXVoHpi4LuzwUFNvqT6KEOt+6afZbz0e38s=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=qhkBrW9Gx7CWDdB+ke/RBu99SuJNES5EaaRx4sKAWtYa+R0vAV9BAfeWcMhSFITIhHxwx0A5IoUmmtQf1Ms4U8wkMO0nOGl8OJg3En6e+o1eoRqSqVAt9d7SXmRHjVMvBqTbYeks4i/Pn3RiwYTsbF+vNljF9lM0Cu69JeTiVv0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a1deJD5r; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DSpUPkOG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mrLcMc9N"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1BF5B138044C;
-	Wed,  4 Jun 2025 12:33:03 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 04 Jun 2025 12:33:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749054783; x=1749141183; bh=z4C7MshDOM
-	Kcey4vXyFVpNYhcX3MLH8ijq7cPAPYqSY=; b=DSpUPkOGC5B37ZDOI59g85hgHE
-	3ST0TvF+IlNKfgvaKDS4AJkxEoRPTkxJu0Lq80WVu9i6GtG++GJnkwcSMwTCfjcI
-	bQautLBihrOU9RjqXZZgKZAudJwd5o0lAqy8XnvW/f9pmCUH7NHwWtWLog22Qvfv
-	OSJqOIDV6NZdBwNMJu9Ihr+yaObaeIWWkH05t0B2XlX8wUVTpq1cVhwwaZjmcoX6
-	TijnsL2sQIyMZ69XCKxTDgaJZpx05IN9QmhnFTxv2iRawx/ZbVzVZP0sKz7BeyVF
-	V5wnENqo2L/lHBmutzM73rD3L4HIrCIWorNBzTqayuUtIhZ+qzJBsZ+bojJg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749054783; x=1749141183; bh=z4C7MshDOMKcey4vXyFVpNYhcX3MLH8ijq7
-	cPAPYqSY=; b=mrLcMc9NNC9QXoL4YvuiIpPNP+qc4tzcclrtXbYkBx54HKFuS+X
-	s+JYaYdmpjKnjywI21VCxxN9RDO1PNWUvQkR5a4GsKk87yIfavEzvJ1Pg73Ndmyg
-	v300g9RSVJgAeX0mYom7bBSNTDktqJx7rXpzHSA3nr1bOkWyu4Yluvq968ugDNbV
-	swCBgI6IKhvR9ftmJzPcBb4I3rIIxZDkqeYzJW63Q+uyCMIuIDlNT+HYe+ZllyhZ
-	HJcXnPZb9FwtzlfYH9EYiCaPKAXlJ2I9m7AmzNk4xCy7w1iLp4MHAR7J5QwUsMoK
-	XauOlqixP+N3VSuacBtd/iqtOtEUp+S1eUw==
-X-ME-Sender: <xms:PnVAaJmOCRePTIUOdCdSXHg5mQ6Zpq5tfzCElGPPpUcEDf8tPFuPJQ>
-    <xme:PnVAaE1JMdDvGRWpOJeX9y6wNuyBZ6O77KYG81PQVZFsMH8dcgGZOCn0B90p1xyYE
-    dZD3ElhhDtHlh7jTQ>
-X-ME-Received: <xmr:PnVAaPq7Mz0xE_lAvYIzSi82in-ibY5otLdjZeZKcVr2_EAFNta84GTQMMkSeZKeSoFPMMXZSQsOicOyrae3uluQSZUJZlv1LUOO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvfeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrug
-    hgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegrphgvnhifrghrrhesghhmrghilhdrtghomhdprhgtph
-    htthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehprght
-    rhhikhdrfigvihhskhhirhgthhgvrhesnhhuthhrihgvnhhtrdhiohdprhgtphhtthhope
-    hkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgt
-    phhtthhopehprghtrhhikhesphhsphgufhhkihhtrdgtohhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PnVAaJkRReUHPS6Z_8NruCKSckppCrTePPMqq6FrsqTRlaQH3SfaLg>
-    <xmx:PnVAaH24h88VRQfyoYLnvRGu0mHo0MM1Fipdw3LXzJyRWOa1qlstmA>
-    <xmx:PnVAaIt3rEY-Skoy9PjQcOrnJBigjOFDyYTpZr0GQ0ozbY81IEYvxw>
-    <xmx:PnVAaLVZlzswEGKbs1IlHHDZxqPYIhS5l8ozeWK5AxOTlg1126rjbQ>
-    <xmx:P3VAaCiuUYeyu0NDJ4rhv1MKFtbBosXbd0RUfwwQZRs38b_cOYegza4H>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 12:33:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Patrik Weiskircher via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  apenwarr@gmail.com,  "D. Ben Knoble"
- <ben.knoble@gmail.com>,  Patrik Weiskircher
- <patrik.weiskircher@nutrient.io>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Patrik Weiskircher
- <patrik@pspdfkit.com>
-Subject: Re: [PATCH v2 0/2] contrib/subtree: Add -S/-gpg-sign
-In-Reply-To: <pull.1928.v2.git.1749046597.gitgitgadget@gmail.com> (Patrik
-	Weiskircher via GitGitGadget's message of "Wed, 04 Jun 2025 14:16:35
-	+0000")
-References: <pull.1928.git.1748882439.gitgitgadget@gmail.com>
-	<pull.1928.v2.git.1749046597.gitgitgadget@gmail.com>
-Date: Wed, 04 Jun 2025 09:33:01 -0700
-Message-ID: <xmqqldq7bh6q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a1deJD5r"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a3771c0f8cso28210f8f.3
+        for <git@vger.kernel.org>; Wed, 04 Jun 2025 10:11:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749057084; x=1749661884; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fGU13a8hi5xxhscAjI3S1Im+huIQhHJTcmk0sEUizpA=;
+        b=a1deJD5rEZzuSOCEuF1T3RIH9bu8Snd67kInbbDxA1p1aIEXlnLHWBtu4PFWKF9JZv
+         3EdsbIVeYjVdrdVqXDn7oYiZi4UA/TyA0yDoZ+M/moeDtINyzhG9tPuoEDQtp+J3aSMw
+         mj6QFh3QJpFEU/MeWTZxacVHXKlT54X051D9JB2KJmF7KmMvoYGCzZ7Xe/eF4kR2Xq34
+         Ww+nI75UMtCS/DGmXAYCy2ru0OJ43qxLIE/4LPHqCrWJpCMDeqp1Lx9DppLv0T904Vrj
+         zRRSVxf+wfOxy+6LgJEXPdemhV9vWshYn9t/ts2YS6C6Q9LiI6ftF8CN7dQlqsMjHyK2
+         I1yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749057084; x=1749661884;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fGU13a8hi5xxhscAjI3S1Im+huIQhHJTcmk0sEUizpA=;
+        b=ITAwajbnx6PV6xDYN1pxJuR6jKunDJ7YFUrP+L9XdkyIolHLubx4r/4ele8K2CmMGz
+         Fbd4pLoaP3GpM67v6JO4st9c9SF+OKYNBB8/PASk968nvfQOPiFd0hmznSsHF6d2+kzr
+         bG/5xAZ9HZj74m2qphY1Yapt5PxsWXJz38qBs+rFcAERod4SvXbA2PmVHECCU+0qhyOD
+         5KIDTwwxAThcdBeH231o45KkHSrvvC34SmwDw4VtGzHVxHpqBY9TZ+lehXRPQMe9GMmH
+         8dLEizq0eO6KZ71v83kNOHqWnlocnMS2MjH1O7j7drbQ0KdZR+fMUVXtT+spwB4yeOaz
+         ePGA==
+X-Gm-Message-State: AOJu0Yy9gLNSPB+uK15Koke8DpyTf2QMzq3hEn0E+V0mH9E92GC8LpdM
+	RFFwRZuyy/jo4MMVwIv7IhwCuZvkMSqaKv/75fxZpPR4bnI0cpIU1nF6hrCu0Q==
+X-Gm-Gg: ASbGnctIrt02pWNYQO2MRpzIjj4ZGhHxv1CqAJwSDgRfm4jRhvJexC8nGruU/snWmtc
+	z3mGZM/QLAO6ARW9hZcu5vyQ1zlFkvgpW8gAwRepYQE+v1o/dQCJ8IJPUgz4rKGZ1bQwmvrEyyZ
+	lP2ZATZIWyOLP7mcDXsa+Vh9JJgj+/z7uLPVnRs5EAaDJccTCQZsfhczCWY8EvIGqAXlQ8dOW2v
+	O6xd7rhCFwMBs1thYWrDVYP/IVBKl6hMvl0mFTAoP8YsOQceluTawx8p5VmYXvHCbe33kNdRZaj
+	sacr9AIK50Z34kDgNYl1aGbLRzRunIWvkAmCrfy+/iLf+RTdOFVpadVhwEhuogw=
+X-Google-Smtp-Source: AGHT+IGXTlxhxoCir0GnEJjgHu7DRRRawsOIyE6DYTqQY3qgupGfPdrOJlYvTQ62rw105p5DOJvaZg==
+X-Received: by 2002:a05:6000:2082:b0:3a3:71c2:f753 with SMTP id ffacd0b85a97d-3a51d96cc21mr3314523f8f.34.1749057083451;
+        Wed, 04 Jun 2025 10:11:23 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f009748fsm21999854f8f.80.2025.06.04.10.11.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Jun 2025 10:11:22 -0700 (PDT)
+Message-Id: <pull.1985.v2.git.git.1749057081918.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1985.git.git.1749023960409.gitgitgadget@gmail.com>
+References: <pull.1985.git.git.1749023960409.gitgitgadget@gmail.com>
+From: "Jan Mazur via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 04 Jun 2025 17:11:21 +0000
+Subject: [PATCH v2] bundle-uri: send debug output to given FILE * stream
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: "Derrick Stolee [ ]" <stolee@gmail.com>,
+    Jan Mazur <mzr@meta.com>,
+    Jan Mazur <mzr@fb.com>
 
-"Patrik Weiskircher via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+From: Jan Mazur <mzr@fb.com>
 
-> Changes since v1:
->
->  * Adjusted commit message to not mention the not implemented flag yet.
->
-> Patrik Weiskircher (2):
->   contrib/subtree: parse using --stuck-long
->   contrib/subtree: add -S/--gpg-sign
->
->  contrib/subtree/git-subtree.adoc   |  19 +++--
->  contrib/subtree/git-subtree.sh     |  66 ++++++++---------
->  contrib/subtree/t/t7900-subtree.sh | 113 +++++++++++++++++++++++++++++
->  3 files changed, 158 insertions(+), 40 deletions(-)
+d796cedb (bundle-uri: unit test "key=value" parsing, 2022-10-12)
+introduced the print_bundle_list() function, which takes a "FILE
+*fp" to write the output to.  Later with c93c3d2f (bundle-uri:
+parse bundle.heuristic=creationToken, 2023-01-31) the function
+started showing additional information, which is always written
+to the standard output stream.
 
-Still looking good.  Will queue.  Thanks.
+It does not look like a deliberate decision to do so, and it
+does not hurt, as all callers of the function passes stdout to
+it.
+
+We could change the function not to take fp and always write to
+the standard output to simplify, but let's use the FILE *fp
+provided by the caller consistently to write out output.
+
+Signed-off-by: Jan Mazur <mzr@meta.com>
+---
+    bundle-uri: send debug output to given FILE * stream
+    
+    Small fix to bundle-uri convenience debug function.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1985%2Fmzr%2Fbundle_uri__print_bundle_list_fix-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1985/mzr/bundle_uri__print_bundle_list_fix-v2
+Pull-Request: https://github.com/git/git/pull/1985
+
+Range-diff vs v1:
+
+ 1:  83cbf182253 ! 1:  38f05164811 bundle-uri: replace printf with fprintf in print_bundle_uri function
+     @@ Metadata
+      Author: Jan Mazur <mzr@fb.com>
+      
+       ## Commit message ##
+     -    bundle-uri: replace printf with fprintf in print_bundle_uri function
+     +    bundle-uri: send debug output to given FILE * stream
+     +
+     +    d796cedb (bundle-uri: unit test "key=value" parsing, 2022-10-12)
+     +    introduced the print_bundle_list() function, which takes a "FILE
+     +    *fp" to write the output to.  Later with c93c3d2f (bundle-uri:
+     +    parse bundle.heuristic=creationToken, 2023-01-31) the function
+     +    started showing additional information, which is always written
+     +    to the standard output stream.
+     +
+     +    It does not look like a deliberate decision to do so, and it
+     +    does not hurt, as all callers of the function passes stdout to
+     +    it.
+     +
+     +    We could change the function not to take fp and always write to
+     +    the standard output to simplify, but let's use the FILE *fp
+     +    provided by the caller consistently to write out output.
+      
+          Signed-off-by: Jan Mazur <mzr@meta.com>
+      
+
+
+ bundle-uri.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 9accf157b44..c9d65aa0ce8 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -122,7 +122,7 @@ void print_bundle_list(FILE *fp, struct bundle_list *list)
+ 		int i;
+ 		for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
+ 			if (heuristics[i].heuristic == list->heuristic) {
+-				printf("\theuristic = %s\n",
++				fprintf(fp, "\theuristic = %s\n",
+ 				       heuristics[list->heuristic].name);
+ 				break;
+ 			}
+
+base-commit: b07857f7dcffee4d3b428df8dce6c9b49a57c9c1
+-- 
+gitgitgadget
