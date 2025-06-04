@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3077D1FECBD
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:28:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C9A433B3
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:36:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749022141; cv=none; b=oMWg8MsWRzQgMtQ9vwhgIwZqsChn34cNCzBURgbXjY2a8J/lg9X+3Gim82iPhIvqQSaqXI8zWSIR8z/JrnDKFjMWelwHVe+rrIxgTJgS1pSpTvazICaugKzrGlL1fR+wfmeC+Uvz2NRDleXH7HclnqmKGauRW6FkJ25/zjO1XVs=
+	t=1749022570; cv=none; b=lqyQ548COHz/xLOMzsN1E1ueqCVg96mFWEv85Ly/A5k/xpuW0RSXVnt/KQN30Rp5tYQhXJtTTGCmDKQJ1dw/p0rXOTAYDjLVL/SC8AhzrelGdoTq3yzwSIDrsQ7ca3wbxPjbOpRfuJaPsERMfkEzqJ8aIsfVYVy1hYLIaX4cZzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749022141; c=relaxed/simple;
-	bh=nlh85euDA7Brw6Bllwv+4z+3fb5qD1WJNHUI0xRCdIQ=;
+	s=arc-20240116; t=1749022570; c=relaxed/simple;
+	bh=0SBMW9gqrzALElqadw4FzOKYvnOvOgq0tAGD+adOnrw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=EcjwTeNqAC1oDcyH9+E0LlkRnRvhJSHKchnOWc0AHx1wPPiakUZ/8KdQfZV5nfPajsGyP/oGxUE9G914eRbDgbQ1KDzc8E8/U0/AI/ygZAEIky0Et+YQjy5NAW2f2KJUAwoP636s1ZnAJxMfPaj4OCw0DsDRGhThgItdhGmDStc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A5GFA5kc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pguc1HdQ; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=et977R4LjY6+GdEa3amk8H88ZIVXIQpAH2C2hmJiexR93f2cHSZUt9FXi0BDoVKQMPw4seR0p2z5iR4O2+q1QRGdjk/Oqt4ISgOjQeXjJkYUBG33ECaAOMTbEkwqgJw//8Q0SdHaimq0PMIURn3wdh4f9ESUBci26q5+SVIJHUE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=IqGskci6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b9zA3tmd; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A5GFA5kc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pguc1HdQ"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EABE511401D8;
-	Wed,  4 Jun 2025 03:28:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="IqGskci6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b9zA3tmd"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id D55551380408;
+	Wed,  4 Jun 2025 03:36:06 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 04 Jun 2025 03:28:56 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 04 Jun 2025 03:36:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1749022136;
-	 x=1749108536; bh=42OXwLPvjHVFE9+Qtu2FZqSJQbRSpMxfIXhFWM3fXk4=; b=
-	A5GFA5kcMbatr59W3x4ra9XCWY5deCRYTeTbLPOQap2tiNFOMvYKyenO05jTWNGj
-	PsY9AUtrU8wb7VHM9nHHylG8x3lZ5SFQw8YizOFujs54SKs0XKTOgDCWU43xTXmV
-	rbfHG+JVHw+WGnn8tTjUGzPayl6qK5nuw156OoIViMIX3pCYaNTl82udxiP8NXVG
-	IpMVoyoPTdB5PTejrPNxzPpLO6MJ5dr1hBBGvOub5Dgc6jXyhbwW9Zr+Tdv6qEgW
-	pdH/BQdZrvdkRfrSQQs8kGKjVXxrnGQ+l5Sq/LfoDVgKAJ7T1AXuBkyzue10SeeF
-	dBnqq2lw+fB5pDnCO8bgtg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749022566;
+	 x=1749108966; bh=ZLguOOhFDFNZo9QlAYntsAj/f0jml5nn0buFjWjblS4=; b=
+	IqGskci6MJQQxwKj5KjJ1BX8bL6NW7Vq/+0h522RKdNo6JCllmXZHrvXFidzy9P5
+	+bhze9xgTrx8X/cMlBjr3H7lzXcY5T3BDB66Ccf0ttef33ZVFUglE0/jVBh+9AkZ
+	jiwrCDizbhG1vjo4pp6B99KCb0CqekUFC47D8R6GyTvtV4f/Y0AVVzRxulIRdNhA
+	4pYXrc7PLaxF9kvUg7Q3Av+WAW69kHpWtUT7cshJLzMDwBJRPINTYIBOWIR66hgR
+	nkHyrdV0nDjd5wFX2KJbCJxXjI/aWu+tL0P8wcTY04K0vftjvIGQ6DxmQAlmxGMP
+	Ze++KsXZ5HGPQTnFzS0lFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749022136; x=
-	1749108536; bh=42OXwLPvjHVFE9+Qtu2FZqSJQbRSpMxfIXhFWM3fXk4=; b=p
-	guc1HdQHJAm9+gJ84yLnXPdhQ7Jbg0UxrDDDVf44BpbFP40/7YSpDIJz51BKJOzV
-	8JQRSG+TZ0eSss+aOg9vwiWkZ4fhMM+Al+e2vS+a9cF50fKP+9PlfIXHnS1o2DHc
-	tC1wwPffn3xDy284AGKuWzxXKYaIPnKD3DxcVFC6Wczt/tQ2fW5q5huS7EkOkOOI
-	5VU3tXmYYi7zpTLgEE2Hp0RJLPAexsE4fTQc5ZgO7wjTen0HMvmwebkVwFnTS7uY
-	naD4uq09f2x5bS4XzFu0T7cI2y9ag5Bphe7MfdsEbLwSZE53zb2uMp36aMphHfXl
-	tUX1H7BpCSzaCQVsh+P1Q==
-X-ME-Sender: <xms:uPU_aMeprkFa54wYcv-Y359Ww_o4hRF4pL7w8Cto2UJEYHEB93I7QQ>
-    <xme:uPU_aOMvUUE03WX9D9uKf8xnT8i8hF7YJB3ttQFc1IUvcpHV9XFsF-eiZS4NLIURX
-    Kg0yhqjIsTySOH-_g>
-X-ME-Received: <xmr:uPU_aNitO7eQgSd9_nx6jXa6De9OXOTvV8XCcOlsxDL_W8E5wFt9Nz9n3ewSoWlhVO9En-9GnkVlSr7sWMBJvLppSm0Rm_X2smR333JhksLH>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749022566; x=
+	1749108966; bh=ZLguOOhFDFNZo9QlAYntsAj/f0jml5nn0buFjWjblS4=; b=b
+	9zA3tmd2y6EfPcGLlzUnFRsG7psomCOJKiPM5q506AZu39pEAuPzq+r2LEfzMiDr
+	88rirUy3UpiCzhDZgczVKKqi5r1f0OsmyVsW2NyTd5lyaJaaN1Y6tPu9b2XHDHhR
+	UyIqNFvvhWTdNB630RBQB5U+m8B6la0wMW4l6B823kA8+z7BYsxMI5WvhrV9kYgr
+	dO3MWhF7ZiQC1GyZwl6VmeaO//K53Ro0xDq7L5Vyy0AOkJqXFuJcMduMWDrB+PEw
+	yMBGrVVIbgsk1ldmWHACW4w5+CCubUXR6qYVpbkHVVJdCoqM9gsL+oE2wJLHm4bJ
+	PTiS+dJC1Rqri/9RmGyRQ==
+X-ME-Sender: <xms:Zvc_aIf5pwua2oXgLnvnUKbPvL-1DtAne3ZZX_DMwqwFvN7DpSyvIA>
+    <xme:Zvc_aKOkHkOJ43ePDIqs4qjQFnw0boBr23A_FFUk_7QtTRo4Rafwjd9BbVUe52Cjs
+    9lRP0h41Pkxn_GM_Q>
+X-ME-Received: <xmr:Zvc_aJjjmjO0lEH7tOe6xFGPYnbyxyo7Qp7Ecc7K-nJdEyuV06xM5-QewlcsCc2PMGzH-MPBRUEHBgSqC2lj68uZ19Mrco4cK5Y9JovLvOl_>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -57,33 +57,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeejucetufdoteggod
     necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
     hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
     ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
-    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:uPU_aB-BnHo5wA1ocIfwvYCTA1yDbsBUtMMeB5oTzXmXMEMFjZnihw>
-    <xmx:uPU_aIuYfPdsSbDMStIyIZMt7a4OUJKY4YYoVel5IYkOITMtVU7dCA>
-    <xmx:uPU_aIFxJPwWv0jKni36pyph70zqb4QnW_fV1QyTlu2sAGxUiZC_LA>
-    <xmx:uPU_aHPLBw1lnW1oz5fzXUBqQXqQWLCXZncX2_t5u2hNAYSBYmWJfw>
-    <xmx:uPU_aH2VNXchgsYFFm5R0ylVOtc5tACGvEyp_xTX7IZ3NpVxeR1BkIks>
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehmhhesghhlrghnughiuhhmrdhorhhgpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Zvc_aN_jcAahVhnWELR_kc92YuQ4pkUt0f7A-e_Cc4gt_AUIgUbVNg>
+    <xmx:Zvc_aEsko9oQQEv2vpbdLIDQDsrdrOTkmvp5eNa32APseGbpepgnPw>
+    <xmx:Zvc_aEFyHKrf4trFEdw6L_gqfMcs7AxM9oknkmN_lz0WGgTz2PjFPA>
+    <xmx:Zvc_aDOdTCGu4DeBAZXRy-3WvhnLwUWIZugoSPitEAXjOPNn5yJrHw>
+    <xmx:Zvc_aDUsUr8QJusQpWqbWySrpzBSC3X2l1ssK8jcUcdj7zCgh-X_yoD0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 03:28:55 -0400 (EDT)
+ 4 Jun 2025 03:36:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 73a55526 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 4 Jun 2025 07:28:53 +0000 (UTC)
-Date: Wed, 4 Jun 2025 09:28:52 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 085fe314 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 4 Jun 2025 07:36:04 +0000 (UTC)
+Date: Wed, 4 Jun 2025 09:36:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Ben Knoble <ben.knoble@gmail.com>
-Cc: Ayush Chandekar <ayu.chandekar@gmail.com>, git@vger.kernel.org,
-	christian.couder@gmail.com, shyamthakkar001@gmail.com
-Subject: Re: [GSOC PATCH] environment: move access to "core.sparsecheckout"
- into repo_settings
-Message-ID: <aD_1tD-H74SOh1Xx@pks.im>
-References: <CAE7as+Y0hzkPUC-q7dd-eSJVi0H_nwzQL1AGZJnKMyYcrX1dLw@mail.gmail.com>
- <4F074544-4E25-472D-A42C-C50A1E1CAC69@gmail.com>
+To: Mike Hommey <mh@glandium.org>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH 1/4] Fix maybe-uninitialized warning with GCC at -O3
+Message-ID: <aD_3Y0PQtfg8Dd9z@pks.im>
+References: <20250603230646.2322671-1-mh@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,53 +88,21 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <4F074544-4E25-472D-A42C-C50A1E1CAC69@gmail.com>
+In-Reply-To: <20250603230646.2322671-1-mh@glandium.org>
 
-On Tue, Jun 03, 2025 at 10:20:38PM -0400, Ben Knoble wrote:
-> > Le 3 juin 2025 à 12:21, Ayush Chandekar <ayu.chandekar@gmail.com> a écrit :
-> >>> +{
-> >>> +     return repo->settings.core_apply_sparse_checkout;
-> >>> +}
-> >>> +
-> >>> +void repo_settings_set_apply_sparse_checkout(struct repository *repo, int value)
-> >>> +{
-> >>> +     repo->settings.core_apply_sparse_checkout = value;
-> >>> +}
-> >> Getters and setters only really help in the case where they actually
-> >> provide a benefit. These don't though, so it's dubious whether we should
-> >> have them.
-> 
-> My thoughts exactly; see below.
-> 
-> >> Also, shouldn't these functions call `prepare_repo_settings()`?
-> >> Otherwise we cannot guarantee that those settings have already been
-> >> parsed at all. And for the setter it could happen that the settings get
-> >> overwritten by the next caller of `prepare_repo_settings()`.
-> > 
-> > Oh, yeah, you're right. So, if we use `prepare_repo_settings()` in
-> > them, wouldn't
-> > it be better to use getter and setter functions? Otherwise, I'd have to call
-> > `prepare_repo_settings()` everywhere I'm using the setting.
-> 
-> Aren’t most of the consumers builtins? And from a recent look, don’t
-> they (all?) initialize the repo settings? I agree it is relatively
-> painful to require developers to make sure that prepare_repo_settings
-> has been called on each (new) code path that reads this variable, but
-> OTOH I would expect that to be a straightforward audit during this
-> change and then (see following) relatively easy to catch going
-> forward. Is already a code convention that reading things in
-> repo->settings depends on having prepared them?
+On Wed, Jun 04, 2025 at 08:06:43AM +0900, Mike Hommey wrote:
+> ```
+> In file included from parse-options.c:1:
+> git-compat-util.h: In function ‘get_value’:
+> git-compat-util.h:489:21: error: ‘arg’ may be used uninitialized [-Werror=maybe-uninitialized]
+>   489 | #define error(...) (error(__VA_ARGS__), const_error())
+>       |                     ^~~~~
+> parse-options.c:76:21: note: ‘arg’ was declared here
+>    76 |         const char *arg;
+>       |                     ^~~
+> ```
 
-Yes, it is a code convention. We have two patterns though:
-
-  - Those that access the repo settings fields directly _always_ call
-    `prepare_repo_settings()` manually beforehand.
-
-  - Those that use a getter/setter rely on those to call
-    `prepare_repo_settings()`.
-
-So if you add the call to `prepare_repo_settings()` the getter and
-setter do provide additional value. So in that case it may be sensible
-to retain them indeed.
+A bit more explanation whether this warning is a false positive or
+whether this may be an actual issue would be welcome.
 
 Patrick
