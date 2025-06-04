@@ -1,133 +1,145 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1C817AE11
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 04:22:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3077D1FECBD
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:28:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749010961; cv=none; b=omLZwEVQZb/U/mnrvHbcYQt/E/H7sbLy4uhZM13y2HWiVbeH2HbyE/GVrIk6kGeU9IYQev1spTRWN8xkMB+Uyf0JuC2hkQey7Kwlqbk2mW8t6u/m4UtCWp8GvZDnqHyrIkMeYFbpaVDKMARmpdb8FKATm/++fqcQj24HRzumBsE=
+	t=1749022141; cv=none; b=oMWg8MsWRzQgMtQ9vwhgIwZqsChn34cNCzBURgbXjY2a8J/lg9X+3Gim82iPhIvqQSaqXI8zWSIR8z/JrnDKFjMWelwHVe+rrIxgTJgS1pSpTvazICaugKzrGlL1fR+wfmeC+Uvz2NRDleXH7HclnqmKGauRW6FkJ25/zjO1XVs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749010961; c=relaxed/simple;
-	bh=WCJIUOQxEUwni6J0PLL+/x7FxXXEx1CAtH/P5oGEGw4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uCBMmstHwNgRt06BHM3PiMNDfpl4JA6qCSddhlch7j8R2VW6wLH+SfmMU3n8JQanoZQkcpVAp37gbE0p0SBxWX3xKOIhvVBx62WxD02ciCnpN7e+fxbNxaSMOS4aGrKnCUllCgmUPfqqaEPqz7p2WNDVA/z3SzLpNqD5GbXJ3ao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UBi3vbRN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ak3kyZVU; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749022141; c=relaxed/simple;
+	bh=nlh85euDA7Brw6Bllwv+4z+3fb5qD1WJNHUI0xRCdIQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EcjwTeNqAC1oDcyH9+E0LlkRnRvhJSHKchnOWc0AHx1wPPiakUZ/8KdQfZV5nfPajsGyP/oGxUE9G914eRbDgbQ1KDzc8E8/U0/AI/ygZAEIky0Et+YQjy5NAW2f2KJUAwoP636s1ZnAJxMfPaj4OCw0DsDRGhThgItdhGmDStc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=A5GFA5kc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pguc1HdQ; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UBi3vbRN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ak3kyZVU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 7C8CA1140174;
-	Wed,  4 Jun 2025 00:22:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 04 Jun 2025 00:22:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749010957; x=1749097357; bh=GrWlPt3kud
-	DO8pjo/wl53Xsb/qjogM6PlEfkeZWQmyc=; b=UBi3vbRNfmuHmeeLKPWQeCwiHU
-	CL6Kdq/UdysZGf7drOWnXloy09TdyX32qH3oGnBGN2ypWQPbRhx8NAthiNywCC2D
-	BGTMu3yFW1xRb4SmCZ41nJFyIos4DqASNgRwtoTFoyWPWedA3v4F7xQY6ysK1rKt
-	EtoUrwvwJ2V+Sc/rp572TpT5V1pzN/MFIt+EhtM5SV7a9LVs4Dlw3mk4KIvtkvhO
-	wDTwZQPL4biDgLuPkd9lbUQtFmhcI0me3QBaUgFB55wnLWzk4l6BVp+a1oiRYtOF
-	T0jv0HgJ/S5aWnikKxUrKCnZBHR8Y9+1l9QdCD2hplQd/RqLMxJiUrpgFPaw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="A5GFA5kc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pguc1HdQ"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EABE511401D8;
+	Wed,  4 Jun 2025 03:28:56 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 04 Jun 2025 03:28:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749022136;
+	 x=1749108536; bh=42OXwLPvjHVFE9+Qtu2FZqSJQbRSpMxfIXhFWM3fXk4=; b=
+	A5GFA5kcMbatr59W3x4ra9XCWY5deCRYTeTbLPOQap2tiNFOMvYKyenO05jTWNGj
+	PsY9AUtrU8wb7VHM9nHHylG8x3lZ5SFQw8YizOFujs54SKs0XKTOgDCWU43xTXmV
+	rbfHG+JVHw+WGnn8tTjUGzPayl6qK5nuw156OoIViMIX3pCYaNTl82udxiP8NXVG
+	IpMVoyoPTdB5PTejrPNxzPpLO6MJ5dr1hBBGvOub5Dgc6jXyhbwW9Zr+Tdv6qEgW
+	pdH/BQdZrvdkRfrSQQs8kGKjVXxrnGQ+l5Sq/LfoDVgKAJ7T1AXuBkyzue10SeeF
+	dBnqq2lw+fB5pDnCO8bgtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749010957; x=1749097357; bh=GrWlPt3kudDO8pjo/wl53Xsb/qjogM6PlEf
-	keZWQmyc=; b=Ak3kyZVU4R8R1Lo+0xJ6LhHC+r2/dQdyRK18PcPMZWhbEItkDU4
-	76bOc/muYurrsJ+TpN10I4B0juLe1I3NfCC7m+5zr9y+RBEdoNILve+Ju9SiOYW4
-	Fi8TfHuKipQgjyhto77u8lDYcYnRQp8I1ixEHTZ59Ol+Sht60kzS/9pnpDHsxjbd
-	AAtS/enwP7yKCf91kTtNnUfXAiibSjWxh+vLwTBlp1ODY5+fOPXJKkB5+zc42pSi
-	TeBJgxjSbUpILaFfaV1wVDSA+h9kvtWdgUaewlIte0tqnjz6t/ix35kL4clJgNH5
-	NGRjeJ6+fkq7sZRuI3JJKyiLczAlX3PTNlA==
-X-ME-Sender: <xms:Dco_aGw1YAgPIzvMVw8v677Z4CVJczSnb_XNs76GVACap8BWt4Dg_w>
-    <xme:Dco_aCTjezDS_-_4FLP6eqrlHNuF1zQlAsLIIQWa8-GJrwIj5elhWbmAoYTKQF8wv
-    h5zW4FKuvwhDvWnyQ>
-X-ME-Received: <xmr:Dco_aIVmYod75mRI7zb31q481yYllIHEc1KCOqWv7rsSyiQF3pgAkGl4osXLiHH-oYOzHlUAd5ma6-my30tJ9-CDJnc81emk1jik>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749022136; x=
+	1749108536; bh=42OXwLPvjHVFE9+Qtu2FZqSJQbRSpMxfIXhFWM3fXk4=; b=p
+	guc1HdQHJAm9+gJ84yLnXPdhQ7Jbg0UxrDDDVf44BpbFP40/7YSpDIJz51BKJOzV
+	8JQRSG+TZ0eSss+aOg9vwiWkZ4fhMM+Al+e2vS+a9cF50fKP+9PlfIXHnS1o2DHc
+	tC1wwPffn3xDy284AGKuWzxXKYaIPnKD3DxcVFC6Wczt/tQ2fW5q5huS7EkOkOOI
+	5VU3tXmYYi7zpTLgEE2Hp0RJLPAexsE4fTQc5ZgO7wjTen0HMvmwebkVwFnTS7uY
+	naD4uq09f2x5bS4XzFu0T7cI2y9ag5Bphe7MfdsEbLwSZE53zb2uMp36aMphHfXl
+	tUX1H7BpCSzaCQVsh+P1Q==
+X-ME-Sender: <xms:uPU_aMeprkFa54wYcv-Y359Ww_o4hRF4pL7w8Cto2UJEYHEB93I7QQ>
+    <xme:uPU_aOMvUUE03WX9D9uKf8xnT8i8hF7YJB3ttQFc1IUvcpHV9XFsF-eiZS4NLIURX
+    Kg0yhqjIsTySOH-_g>
+X-ME-Received: <xmr:uPU_aNitO7eQgSd9_nx6jXa6De9OXOTvV8XCcOlsxDL_W8E5wFt9Nz9n3ewSoWlhVO9En-9GnkVlSr7sWMBJvLppSm0Rm_X2smR333JhksLH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
-    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
-    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
-    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
-    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrih
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdej
+    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
+    hmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedvveet
+    ffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
+    shhmthhpohhuthdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrih
     hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Dco_aMiQgCpVujKf-hcooS32dsYEZynqxvh-7BDQ9jCG2y0e020QAg>
-    <xmx:Dco_aIAZdb91eeQ_LcUcACIN3DrATXnZ1xegYOUC-oKX2YIXsCppGA>
-    <xmx:Dco_aNJ3q7wdA_Zk1D4GaQOOkz3Lfg9ygbmfBCbLJpMAbMQTPjkkjA>
-    <xmx:Dco_aPBB3mbl_RCtUHszIb3ozL1IC0gDRqqvx9GVGO6iWAAX-wj_GA>
-    <xmx:Dco_aN8jMQmnLKWPP9o7gveFO7i_SJm1ZXfR1tLKA7coNh65809Q9xck>
-Feedback-ID: if26b431b:Fastmail
+    phhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtph
+    htthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:uPU_aB-BnHo5wA1ocIfwvYCTA1yDbsBUtMMeB5oTzXmXMEMFjZnihw>
+    <xmx:uPU_aIuYfPdsSbDMStIyIZMt7a4OUJKY4YYoVel5IYkOITMtVU7dCA>
+    <xmx:uPU_aIFxJPwWv0jKni36pyph70zqb4QnW_fV1QyTlu2sAGxUiZC_LA>
+    <xmx:uPU_aHPLBw1lnW1oz5fzXUBqQXqQWLCXZncX2_t5u2hNAYSBYmWJfw>
+    <xmx:uPU_aH2VNXchgsYFFm5R0ylVOtc5tACGvEyp_xTX7IZ3NpVxeR1BkIks>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 00:22:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v7 2/2] submodule: skip redundant active entries when
- pattern covers path
-In-Reply-To: <CA+rGoLfpj2tepMSWLfNeVkwXfzHZB7Vc8_GJ+_=bWkQSzZ+Sjg@mail.gmail.com>
-	(JAYATHEERTH K.'s message of "Thu, 29 May 2025 09:53:23 +0530")
-References: <20250524073628.58944-1-jayatheerthkulkarni2005@gmail.com>
-	<20250524073628.58944-3-jayatheerthkulkarni2005@gmail.com>
-	<xmqqcyburu6z.fsf@gitster.g>
-	<CA+rGoLfpj2tepMSWLfNeVkwXfzHZB7Vc8_GJ+_=bWkQSzZ+Sjg@mail.gmail.com>
-Date: Tue, 03 Jun 2025 21:22:35 -0700
-Message-ID: <xmqqh60wf850.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 4 Jun 2025 03:28:55 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 73a55526 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 4 Jun 2025 07:28:53 +0000 (UTC)
+Date: Wed, 4 Jun 2025 09:28:52 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>, git@vger.kernel.org,
+	christian.couder@gmail.com, shyamthakkar001@gmail.com
+Subject: Re: [GSOC PATCH] environment: move access to "core.sparsecheckout"
+ into repo_settings
+Message-ID: <aD_1tD-H74SOh1Xx@pks.im>
+References: <CAE7as+Y0hzkPUC-q7dd-eSJVi0H_nwzQL1AGZJnKMyYcrX1dLw@mail.gmail.com>
+ <4F074544-4E25-472D-A42C-C50A1E1CAC69@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4F074544-4E25-472D-A42C-C50A1E1CAC69@gmail.com>
 
-JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
+On Tue, Jun 03, 2025 at 10:20:38PM -0400, Ben Knoble wrote:
+> > Le 3 juin 2025 à 12:21, Ayush Chandekar <ayu.chandekar@gmail.com> a écrit :
+> >>> +{
+> >>> +     return repo->settings.core_apply_sparse_checkout;
+> >>> +}
+> >>> +
+> >>> +void repo_settings_set_apply_sparse_checkout(struct repository *repo, int value)
+> >>> +{
+> >>> +     repo->settings.core_apply_sparse_checkout = value;
+> >>> +}
+> >> Getters and setters only really help in the case where they actually
+> >> provide a benefit. These don't though, so it's dubious whether we should
+> >> have them.
+> 
+> My thoughts exactly; see below.
+> 
+> >> Also, shouldn't these functions call `prepare_repo_settings()`?
+> >> Otherwise we cannot guarantee that those settings have already been
+> >> parsed at all. And for the setter it could happen that the settings get
+> >> overwritten by the next caller of `prepare_repo_settings()`.
+> > 
+> > Oh, yeah, you're right. So, if we use `prepare_repo_settings()` in
+> > them, wouldn't
+> > it be better to use getter and setter functions? Otherwise, I'd have to call
+> > `prepare_repo_settings()` everywhere I'm using the setting.
+> 
+> Aren’t most of the consumers builtins? And from a recent look, don’t
+> they (all?) initialize the repo settings? I agree it is relatively
+> painful to require developers to make sure that prepare_repo_settings
+> has been called on each (new) code path that reads this variable, but
+> OTOH I would expect that to be a straightforward audit during this
+> change and then (see following) relatively easy to catch going
+> forward. Is already a code convention that reading things in
+> repo->settings depends on having prepared them?
 
->> The new helper is a maintenance burden to keep in sync with
->> submodule.c:is_tree_submodule_active(); if we really want to go this
->> route, the patch should extract that "ah, submodule.active is set so
->> let's turn it into pathspec and see if the path matches" part of the
->> logic to make sure the logic is shared.  But I am wondering if we
->> can do this without any new helper.
->
-> I've actually done something like this, but I've wrapped the core logic within
-> the if else after checking [1]
+Yes, it is a code convention. We have two patterns though:
 
-I do not think I follow what you want to say here.  Care to rephrase?
+  - Those that access the repo settings fields directly _always_ call
+    `prepare_repo_settings()` manually beforehand.
 
->> I.e.  Can we replace this if() condition with something like this?
->>
->>         /*
->>          * Explicitly set 'submodule.<name>.active' only if it is not
->>          * 'active' due to other reasons.
->>          */
->>         if (!is_submodule_active(the_repository, add_data->sm_path)) {
->>
->> That is, we ask if the submodule is already active (we are before
->> adding submodule.<name>.active for this thing---if may be active due
->> to submodule.active or submodule.<name>.url) and enter the block
->> only when it is not yet.
->>
->> That way, this codepath does not have to worry about the exact logic
->> that determines if a submodule is 'active' even when its .active
->> configuration variable is not set.
->>
->> >               key = xstrfmt("submodule.%s.active", add_data->sm_name);
->> >               git_config_set_gently(key, "true");
->> >               free(key);
->
->
-> I've done the exact thing in a bit different way
+  - Those that use a getter/setter rely on those to call
+    `prepare_repo_settings()`.
 
-I am confused again, as this reads as if it is an oxymoron --- did
-you write the exactly the same thing as suggested above, or did you
-write something different?
+So if you add the call to `prepare_repo_settings()` the getter and
+setter do provide additional value. So in that case it may be sensible
+to retain them indeed.
 
+Patrick
