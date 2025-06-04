@@ -1,115 +1,121 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from smtpbgsg1.qq.com (smtpbgsg1.qq.com [54.254.200.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46C3128F51A
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 12:32:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77423202C43
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 12:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749040363; cv=none; b=AoL7CD5e4lZmjxOjdGuxDnmOn7UrA9z4FmMj3nQWXHUy5QPTIri4kh9zJXRZO2hE/yauWtZl3KP1Mbg/pRApbEjZz1ckiTG5/EGOl8CLkXfN6Yb7FVY+dBmg9eiTtHGSPC1vabljeQXYVpafMRogHMRobTB9eolSMr46IaF6TDY=
+	t=1749041092; cv=none; b=d8nFgSJccnd9qnAd5pNWcgZRgB7wc5oJE6fYX/Orx7KnXNVLs7ukGot5vE3ijj7oFHxn9X4/R5sLAAJuOnsiN6IvEBrjKuJcCFr8DrBVAqu/PcYQK9tsRSKnO6+um/AKAoNXr55QUb4lT57GPrYdBjVzvOUmrk27BJV7MFhdaHU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749040363; c=relaxed/simple;
-	bh=yK+jqEK3EaYh750Lm5U0n2i+vHVoSRJ0Wlob/momoq0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=h4lOdkI969BVVmwBN5Lu6cdQ3ygDEdYrEb246HMh1PuyH7SYVLIwsalqm3JDeE7p/njBnhSqpz6Jx2dUiBVdJVSqJEEQR62jU41/C9tEo6Awc+2SVuTZsxVQE9kwMxeEJfj6tuygqzQJEcRWwgA6ZNNv/rn/SBqvDhIQCl5Il9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jq/PVs1X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EpXinTbd; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jq/PVs1X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EpXinTbd"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 317A713804D9;
-	Wed,  4 Jun 2025 08:32:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 04 Jun 2025 08:32:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749040360; x=1749126760; bh=K9trtx4ae3
-	mFdbTQjrWoG3gAXG07+xSv7Ntcrb//UCA=; b=Jq/PVs1X/HqqMybHGveGuRKaCj
-	DJCyCV5vI1uuSgWKSI+eYq7vzJME1RGlZfJvVQAI8HUM67fwXWlwivftHobiQlBa
-	7/19OaBiHUajSRE4MSCvC6XA6Om5Oi0M2NiNtCW3IAJxAhCUXTeuRJCcnFHZ0FjT
-	SQG/mg+MTjkGRpRrrLTSQO06xF18DWAH5UpZ5gpXLlsf3b1a4h5iU9+uuRkmEk8f
-	nox93on0vkGDpUE96bfqmrU0YpdunhkXa4sCYDAfl8n0YAdxkJlVKFHtJBCW4EAd
-	L+uwEaDLrnK2n1480/jN4hb+CmNnhsuLNVSFF9vUx3grLF+NFZSkA+rAS1Jg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749040360; x=1749126760; bh=K9trtx4ae3mFdbTQjrWoG3gAXG07+xSv7Nt
-	crb//UCA=; b=EpXinTbdw5Kw1PwK3SaXxPO0EnYbkNaIDNOBqJWmdXrt0tIl076
-	5vGcOFJqNasB6C8nNbqyMgsgL2TbA2jDCB8zbal+dhCRCrS+HIV0bmnZm6dBQv11
-	MrLI3UD+TIBX8fsb6kw4ttXoK7GCIkACZM8uQgRo2iw9DOJYiRy488d+9DAexk9y
-	QBE/lui2Qwf6fSPodGYzXNXLfVBvEGzFIqKixaQTfNsxpC3xsZxi6WDf3Im1xepq
-	GacvyBvrW58RM8WIKo0mSgvtbARBjTZDIu7W6G1BDz0axwZOXWMngHVZPtFmCr1D
-	7ymB+7irZOy+YefzWT33eBnHeDlaKTxo77Q==
-X-ME-Sender: <xms:5zxAaBreZkBPrgRsKPXHKRANdvNZ4SWW7CyNnvxpSdGrKE83jSVPaQ>
-    <xme:5zxAaDoJRmuR4Gbt72x-I-V70YjNzsGL11Nu8u_RRGaalMHwEtEja70xTi4c5LwBT
-    ZAVC14KYxyzS3m6Bg>
-X-ME-Received: <xmr:5zxAaONh9F1o9Mge6SkNyLORj9i-f5NbHUCEaEPVaEVDEfMcQewJ7m7ny_KhyDZin5Np2Q_KMD56hEEZIJ9Xw9Oi8PkcTzNMEnfE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepuddtpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrghgrughith
-    ihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
-    hmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhn
-    vghtpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpdhrtg
-    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjrggtohgsrdgvrdhk
-    vghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopeiiihihrghoseguihhsrhhooh
-    htrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
-    shhtmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:5zxAaM4LJ-2ChLr6u0I03cuj9EwvbalAJ_m3RrPDvfdZXXMnAUVSVQ>
-    <xmx:5zxAaA7fZtBvXJa6dP-bRW-wEghx6RcwNs_wNCW-ywmLW39aYntcQg>
-    <xmx:5zxAaEgpAm6hhRCm3LI4JeevwSv9FRmxKoIFsOUD4aZeHofA6iRezA>
-    <xmx:5zxAaC7V_7jc0ymGhoDrnkdlKxZZUfK4KqrxA4SEtYPeU-_hsH3wWA>
-    <xmx:6DxAaBwmaG9pihSEiN8NrClWxh1Q4cZsv97KiGboUhURh9sK73afSoq6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 08:32:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
- <sunshine@sunshineco.com>,  "sandals@crustytoothpaste.net"
- <sandals@crustytoothpaste.net>,  Julian Swagemakers
- <julian@swagemakers.org>,  Jeff King <peff@peff.net>,  Jacob Keller
- <jacob.e.keller@intel.com>,  Zi Yao <ziyao@disroot.org>,  Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v6 2/2] send-email: show the new message id assigned by
- outlook in the logs
-In-Reply-To: <PN0PR01MB9588AF2A370D8A1F50745C97B866A@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Thu, 29 May 2025 21:48:46 +0530")
-References: <cover.1748529954.git.gargaditya08@live.com>
-	<caf46596a709df7205495b75da569baef2c7c9a2.1748529954.git.gargaditya08@live.com>
-	<xmqq5xhjmmno.fsf@gitster.g>
-	<PN0PR01MB9588AF2A370D8A1F50745C97B866A@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 04 Jun 2025 05:32:37 -0700
-Message-ID: <xmqq8qm7g00q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1749041092; c=relaxed/simple;
+	bh=6HCFqgjS3G93SZ50YiMjVFq9moAleFtyiCvfzjF52NY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=EZjC2D2asi83K8yBrQtUDUaaaGx71F3Oh3FTAljrIFiLdTm0Yvq4KMg8Az5OVnIOjVQLJiIegjtyUN+6PnyPPFSut//X9l6gXbVP5gjy3mi/WTm48M6PsWIp34HJxB6d8hNj3ENFmJPnVqA9vqOFeZDt0jmUK+3Zw6hcjNnNkAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.254.200.92
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpsz6t1749041041t066a5351
+X-QQ-Originating-IP: 82ss+fmJiLjmZc94LW1YKqBaddqk2BVHOrdz3sbaexY=
+Received: from smtpclient.apple ( [202.119.41.185])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Wed, 04 Jun 2025 20:43:59 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 3253840494251508180
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v3] pack-bitmap: remove checks before bitmap_free
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqqcybjg00s.fsf@gitster.g>
+Date: Wed, 4 Jun 2025 20:43:49 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>,
+ Eric Sunshine <sunshine@sunshineco.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <60E19C19-2910-46E7-9409-58D26190722A@smail.nju.edu.cn>
+References: <pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com>
+ <pull.1977.v3.git.git.1748915181113.gitgitgadget@gmail.com>
+ <xmqq1ps1s698.fsf@gitster.g>
+ <0BFD6581-2BB9-439B-9837-767FA98900C5@smail.nju.edu.cn>
+ <xmqqwm9sq2lq.fsf@gitster.g>
+ <B7032488-F47A-46B9-AF9C-D059AFC31FE8@smail.nju.edu.cn>
+ <xmqqcybjg00s.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: ObRDf3flJ9WfXwHACw4CpobVWoz2CcAkJkjrln5oRXw1CEM/kqg9yBCI
+	CuoxDxhWogD/LomJ0pzeq5qIkC3uG1y9XQArKlCqIL3AHTHV6FInD7n9cvXkNZrH6wxEw75
+	emM6zQkbpCDd3VCTlUC6jO8bDVIVe5C+Ov/x0ScaQ7jogfTalyzMA/10Fy5yc7jmmYrXLQv
+	MGxA9NM2MSYrxcuMUTB/Ts6VvjTlo5Ye1ykM0++AZvR9HNqtPvWPGSyTAH1ozHcRTpoMyrV
+	dCqBw9DmnJTldYCkKVEmsOQyMur26tsIYhXRFEvgFtJRRdb0Qc599gTIPTJEMMT07HXR/sO
+	c1NsfUCoW6w8HTk/afRmv3aM0zlDyE6+or1nGPdrBPfp2RmvxnMfz4t2aulUCilDXcj0IVk
+	gbNlqm2AyktERAWVbVAfqR5D2HwE697FjMkJ6ihqf8C1v5m24UXbIbeSBhkvUYp7hR1e1fT
+	abZrg0FkGjPl5DRMieo4Fx7bPmpMwRXgZvnwxZbf3zplvvLvBNpeqAJSYjWyxnLSwPQksBW
+	0HUvgE0HZgVhpM+elHMVgveraa4c2WyMqx6NRpgrniVIwK4rWLbZ41+AQQ5eQeuaMsDALBL
+	FtAkAI6BbRe/9/vpYqJp+8v2T9CRyIfh1PplUjElxPfZIixpGchgzh83/ZK50OfJ3CTPaJ3
+	rZUYkJlGZ3HzlzwfcUAzYzhDBKaJVsUHhdKosGR1jCs9Uw5ORDQdVGFIHjD/hrqZaya9Zns
+	SqvpkA8exa7+ArQbVezR4dnbUEb27oQMEeS44DXLCyfpkx4kTJALslrP4vMoGEq/GLChwOg
+	MwCZnv00HGUvneWRiHEs8T/+gaYZJ4MethJkR7gXHyw/Td3jAzu9+yI9LM4Kv6+UL+chvmK
+	v8TlPEk6qt4AlweF5uYeKZN9G/+DK5EHlK7Qeo92O6cTKRQy6XjqApbIrXnWGEvOZf49Z5D
+	gkn5kSV1IMMqmnujqhmG28j6vKZo2fv1ekaL23+Rkg0X9QcQs+1f1UBiwjfKCG/RdmdvhvB
+	zLtUH77OROKeLWy1Kt+hGUUQRIWrda6i2J+hIZ04rGsP3i6LEi
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
+X-QQ-RECHKSPAM: 0
 
-Aditya Garg <gargaditya08@live.com> writes:
+2025=E5=B9=B46=E6=9C=884=E6=97=A5 20:32=EF=BC=8CJunio C Hamano =
+<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> lidongyan <502024330056@smail.nju.edu.cn> writes:
+>=20
+>> No, this test case should only fail when =E2=80=99SANITIZE_LEAK=E2=80=99=
+ is set. I heard
+>> that other developer call this type of test as prereq. So only when =
+git is
+>> compiled with `-fsanitize=3Daddress` and `export =
+ASAN_OPTION=3Ddetect_leaks=3D1`
+>> and without changes as
+>>=20
+>> - if (!cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap))
+>> - bitmap_free(roots_bitmap);
+>> + cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap);
+>> + bitmap_free(roots_bitmap);
+>>=20
+>> This test case would fail.
+>=20
+> If the test tickles the code path that used to be broken (and
+> corrected by the patch), temporarily reverting only the code changes
+> to pack-bitmap.c and then this test (under leak sanitizer, of
+> course) should have failed.  And if the test passed with such an
+> experiment, you would have noticed that something is wrong.
+>=20
+> But you didn't notice it and sent the patch, so I'd assume that you
+> saw such a test still failed.  IOW, with "export" forgotten in the
+> test, the original (unfixed) code still leaked, without using the
+> bitmap traversal, right?
+>=20
+> Which was where my question came from.
+>=20
+> Or perhaps you didn't do that "is my test really tickling the bug I
+> fixed and makes the original code without my fix fail?" test?  Which
+> also explains why lack of "export" was not noticed.
 
->> We do not say "This patch does X" or "I do Y" when describing a
->> change.  Rather, you give an order to somebody who is modifying the
->> codebase to "make it so".  Something like ...
->> ...
-> Ok. Want me to send another revision, or we good for now?
+The test case in v0 with =E2=80=9Cexport=E2=80=9D would fail, but =
+test-lint in CI shouts. To make
+CI happy, I delete =E2=80=9Cexport=E2=80=9D and submit immediately. So I =
+am sure now in
+v3 this test truly test what we want. But I make two mistakes that I =
+haven=E2=80=99t
+pass all CI test before submit. I apologize for the oversight. I'll =
+double-check
+my tests more carefully in the future to avoid similar issues.
 
-As the codebase will be frozen during the rc period, I am not in a
-hurry.  But submitting hopefully a small and final reroll would be a
-good way to conclude the cycle.
-
-Thanks.
+Thanks,
+Lidong=
