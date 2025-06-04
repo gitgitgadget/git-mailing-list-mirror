@@ -1,107 +1,93 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88F42459F2
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:59:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A314280A39
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 08:01:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749023965; cv=none; b=I/BKgV0EF0Nu3uugXbBmKm0j8Di39rI8xlTpEL90RuRpLM0A38uJ5EnYdvFvPcb/Eo0AtKUD25uuDFGT0s6Jlqa/lctV2OA3GsRtTmYjyCtnpPf5OfxLcgwWQgYQVNN0sx4/MXM9qgsKLneUvVo7/U+ZHEfaPpv1XKZY+D5l3fs=
+	t=1749024075; cv=none; b=YnSfZsiTKqOdzFqVOst9AFKnPkR7TsupTlks+7DmTsoRKAd7TUA3bBZx3Qiq8ct2C9SuyN8l+sdJV55qcUQcNilTV7DPbD3NO2ORoMFuyiCfoQQjAFVk7jqUQBjk1F4iDGyqunoDdB4t2+4epZLmcw047PrTlTwGkVbj6XmXvxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749023965; c=relaxed/simple;
-	bh=y/2pEmEJt5fthUq6cD0d1oV3u6bGmlnCLJKLZPzgy9Q=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ez8CbVJ141mTgwzRffKqdtx3dfefcC+8KugEc/RO2lntZ5rzgJ4JwDaPJl47ZjK4+Nb4z4PJcHNcbGf/BPhhbI+pC141RHKQnLBFA30LztJKNQOwodyU04s3z0QSysmIbeQpGKlJV1GH4wJDk24PFic+rumuWfTMLFrJ9NVTLWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nbymYIpX; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1749024075; c=relaxed/simple;
+	bh=MDpdN4kNTpLwc7wS3eZTOoxqnRaurdfZFoDe00t9yCA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=gMO9mhnYbXB7d4udFHxDdkTP5G9MvSYkay+V2K1k1ImgNgZ84ECYW/hjaYP5p4btrqrnByqEAi/vUKo6Zd39r2zs2ENwRciG0Qb41ALTfAvwKbYzHipfWcx0ZFfrscNJIYiqanVlIehf7IQSDHkj5A2xRFmQNuSZnW27zbYp35U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LWasjOuV; arc=none smtp.client-ip=209.85.215.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nbymYIpX"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a3771c0f8cso4009547f8f.3
-        for <git@vger.kernel.org>; Wed, 04 Jun 2025 00:59:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LWasjOuV"
+Received: by mail-pg1-f182.google.com with SMTP id 41be03b00d2f7-b271f3ae786so4586576a12.3
+        for <git@vger.kernel.org>; Wed, 04 Jun 2025 01:01:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749023961; x=1749628761; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=7TitnAqaIIxsP6QqYBpuH2FbiBma4z3ZahZ7ZFr7ujY=;
-        b=nbymYIpXZ3tmS+yclLp7UYoFCSyUYUyxPrqjUNU0bqf0VMBSH8+yV4aoTFapo03Es1
-         wLXFxmJ4JbXpIRcMUUn5El9eBcDiOCYexxwgR9J0HivFUOtZRFtt5R6gy4pRCRkBlBb4
-         fR8tFHqr7h/2t7aHPGJyPaKiwCWqjc1fpb7vrJr787QmNjZH+yrHoaws2rCaM3oFpFwO
-         kRs/u0B2Rn75M7ZRtJxa04356FvFYaRtVi89+GZ0wf6LTS88Xv/WSrEffWLAZiu/nL5v
-         1f3cWq3IWlwZ74tJcGADjMUSaqQKNNKWFlfiAxuPSXx3jnqu9k9vWftrbIsXGlX7XK5b
-         mZQg==
+        d=gmail.com; s=20230601; t=1749024074; x=1749628874; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=MDpdN4kNTpLwc7wS3eZTOoxqnRaurdfZFoDe00t9yCA=;
+        b=LWasjOuVkBvGlfYd5/jUboD7RGYTsZZnO7Xfyoe6u6MPCQaDshmkY/Kq1EJ+/WvLBm
+         qvztjTzKKDUgv5vrC0+BYJlNt7bD/2rwWzA4lhdIcJ254/mbnxGGtOFXfc5HmF+bBUtR
+         JDZpZu8gdUg1vIH/hOFpllS35o5X2dzm3It4PxJwqXJHmqmmGnC/oHdXttzeMDted8KM
+         psfNZbagRsppPWqJG4R03qLtD96NzKpGMVYCjSApmud7D/AFyc5m2/M2gsYd6ar85z6y
+         GRP/B43YrroXbPqRZnYjFU1D5tLe4r2rQdEu9cGYklP6kQl6+CMDTrxPjd2/rnFEkYxY
+         yWPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749023961; x=1749628761;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7TitnAqaIIxsP6QqYBpuH2FbiBma4z3ZahZ7ZFr7ujY=;
-        b=m4KkCSpzWeswstYQqbNasYELmRv5mg9B5x3mCOr+p9BROSLHEb8/LuEsqnxvBFt71D
-         +whRQVd482t6e3dJeec1l620q4Ivaye3ddn8nP413VWNLJfAPXcf0aau6VXU2ZV9Nce/
-         ImTv0m26Vb0vr7nunzuYlShDrPaGUxfSkGKN+CXk945pHwb1e7cJCrCw0S6oqH5c+Oiy
-         Gv3b3+zwP2UMTf75J3wxWWSLBxvYmlROqdI7d4B6bHberMdDDVBZfhA8wiblMnWgpFxi
-         vP+7QXtJsMLX0LriJn9InJTQJ4OZkT6hn2VKdm6UTpBII+f1PvnzIU7b27X/lAoII/Oq
-         /IjA==
-X-Gm-Message-State: AOJu0Yx2Sqsiqc2fT8qQ4xodOUkC+vsU1gLt4NjFKjby3MSh/Z9mumFl
-	Q5eB+oDAUyjyTB0H9Wa69LXvIOm9AbCIgwJ2nPFN6XGveQsI3muo5ULYNTkPMw==
-X-Gm-Gg: ASbGncsGSqvjT0Nq0MV+0RK8Ii8dAsuxNBOIQCFhA4qv+5OHJc5Ot6YM7UXI/HM00IE
-	jCqu5WGFJITxQFvTYplROXBSTC9d1mVx2oau7PfGnCsUHkR3Bx/Ya/cEf+tzu8iG8tyKBqrGrx5
-	JDtaorDiEN7ej3elUAlkNB0Q8ul9RRfUM7fEzlpBI/ZzaGMqJ3S89WPVB2ffwuKADfDsrTYXwfI
-	HOnkeMc/f4x/Uiat4WfXUN986gwxwyCE/bJ/bxvdP1ykr/Gxde+ywdZPYnluOBjGR63w2Pqv7Cp
-	aO4bWccB32tVuiEHW1XGfcxco594f8JB8pV54MQ3v2D0WokKIkVt
-X-Google-Smtp-Source: AGHT+IHI/I4vMP5CpvXu49SV6dB3Ep5BuuqLI/RFwyBbAwQma9J5xfW0MxzdXxytpwdy691DBr76Tw==
-X-Received: by 2002:a5d:64e2:0:b0:3a4:e5bc:9892 with SMTP id ffacd0b85a97d-3a51d9305e1mr1304544f8f.21.1749023961376;
-        Wed, 04 Jun 2025 00:59:21 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00a02cdsm21008570f8f.94.2025.06.04.00.59.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jun 2025 00:59:21 -0700 (PDT)
-Message-Id: <pull.1985.git.git.1749023960409.gitgitgadget@gmail.com>
-From: "Jan Mazur via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Jun 2025 07:59:20 +0000
-Subject: [PATCH] bundle-uri: replace printf with fprintf in print_bundle_uri
- function
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1749024074; x=1749628874;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=MDpdN4kNTpLwc7wS3eZTOoxqnRaurdfZFoDe00t9yCA=;
+        b=uUUQ5hQ70UEJ/twy1p/mbMeQDQqTmjsmn7qFScEdxKT7BFCmIzeH+vEnnXKKIuoByh
+         WDoxzEho3JiA3fZxKm5QozIoVVZ/hn80OaTqIzK6V00UIoo4wX+vBuGrq1oTKhLUFFO3
+         smstAeSJ8Q2d4JcAaBhQzlEfOTMhv7rDM6h96CQh7yc0X3CUQqArdkTGv0ORjKUMbclN
+         ncOq7CMvV6ekv9JQfNj9vQz0k8rQ8DqCWPI2ZnXU8E0mCHZo/afwpra/mDUAVcGHKcUC
+         s//gbicU4ATMxdTUY1YFKqbq4xVhkl8d13hnfBh3HqbJqq/0r4riwJ3b/uTiTPzJlPmm
+         d/tQ==
+X-Gm-Message-State: AOJu0YxclOgQa2G8aiRyH6PJ3/YvKNHYM+fnS2bS2E4LThkWU49iZGRx
+	6K/xvBgBRti/JNwEXX526thwxh7zlvSmR2b8Ny7mF/CHUdg/TGlCBTErEO/qri/19aTEcYRPoiu
+	cGQm8ENHgxVOT4XWlND9Sw7g8daNFvZpcgtn6
+X-Gm-Gg: ASbGnculgI5F6FKUuKZAG9smumpqcm8z6GfEcJn9blPeSMFgmV4dnIzl+hLBu11NtgF
+	tUu72yNofVrqqDNaJ2uX7Op/MJqN2BZZEXIAoO5IxM6P9u6q77L7olZ5U32ZSMoFyw3ff4vqAPi
+	Iry8uegf0QReprSjLrrweeDJB6V/EYGDRwwIvXlDLJaq4=
+X-Google-Smtp-Source: AGHT+IErr5mJ3GbSbtoJl0w8BBz/9LKqfCUZ/DIr1sm5Db6XTA3sNqi7rUDJzpJtqzmcNiSawh9FT2sZeRr8l6hUdi8=
+X-Received: by 2002:a17:90b:1e09:b0:312:eaea:af8e with SMTP id
+ 98e67ed59e1d1-31311024b47mr2429512a91.18.1749024073548; Wed, 04 Jun 2025
+ 01:01:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+From: Nathan Royce <nroycea+kernel@gmail.com>
+Date: Wed, 4 Jun 2025 03:00:37 -0500
+X-Gm-Features: AX0GCFvL-v91XSSuWvXbQDMK6CH3ceN8nLRtYl1bPvl7breZGdrsf3rXVqOQh8Y
+Message-ID: <CALaQ_hoWoovjJHMYz_0f1cE1sqt6upqpivv0qNXLy25vEUuonw@mail.gmail.com>
+Subject: Redirecting Checkout Output To Variable And Tee StdErr
 To: git@vger.kernel.org
-Cc: "Derrick Stolee [ ]" <stolee@gmail.com>,
-    Jan Mazur <mzr@meta.com>,
-    Jan Mazur <mzr@fb.com>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jan Mazur <mzr@fb.com>
+Assigning the subshell output for a `clone` to a variable, while
+simultaneously outputting to the user works.
+With `checkout`, it does not.
 
-Signed-off-by: Jan Mazur <mzr@meta.com>
----
-    bundle-uri: replace printf with fprintf in print_bundle_uri function
-    
-    Small fix to bundle-uri convenience debug function.
+This was brought up in IRC #git and #bash, and JAA (most of all) and
+jast and others have contributed well to this finding.
+This came about by my need to clone part of texlive (which supposedly
+would otherwise be 6GB (it was already 700MB @ 8%), when I only needed
+the source, so I used the great `--filter=blob:none`. (I have been
+made aware of (in the tug ML) the nice `git svn` feature, but wanted
+something that'd apply to all git repos I come across.)
+With this blobless clone, it'll only be like 8MB.
+My intent is to be able to have the user know progress is happening as
+git `--progress`es, but also grab the output and act on messages that
+may come up (like any error, where I act on a string of the error).
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1985%2Fmzr%2Fbundle_uri__print_bundle_list_fix-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1985/mzr/bundle_uri__print_bundle_list_fix-v1
-Pull-Request: https://github.com/git/git/pull/1985
+Test:
+$ cloneVar=$(git clone --progress --branch trunk --depth 1
+--filter=blob:none --no-checkout -- git://git.texlive.info/texlive
+2>&1 | tee /dev/stderr)
+$ checkoutVar=$(git checkout --progress trunk -- Build/source 2>&1 |
+tee /dev/stderr)
 
- bundle-uri.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 9accf157b44..c9d65aa0ce8 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -122,7 +122,7 @@ void print_bundle_list(FILE *fp, struct bundle_list *list)
- 		int i;
- 		for (i = 0; i < BUNDLE_HEURISTIC__COUNT; i++) {
- 			if (heuristics[i].heuristic == list->heuristic) {
--				printf("\theuristic = %s\n",
-+				fprintf(fp, "\theuristic = %s\n",
- 				       heuristics[list->heuristic].name);
- 				break;
- 			}
-
-base-commit: b07857f7dcffee4d3b428df8dce6c9b49a57c9c1
--- 
-gitgitgadget
+`GIT_TRACE=1` was also mentioned, and that certainly provides
+output... And while I saw `fetch` being mentioned in it, I saw no
+reference to `Build/source` in the output to draw on (in case I could
+manually use `fetch` itself to only get a subpath (which isn't even
+looking like it's an option)).
