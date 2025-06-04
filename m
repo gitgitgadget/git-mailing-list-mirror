@@ -1,95 +1,160 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB22E1A5B90
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:54:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EF986353
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 07:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749023668; cv=none; b=X3l+jXp9ravzGWJ8vOWwm5cULs24DTfOGqmeEiDBci5/i81rhpSYJIjyMFlimvhwmh4fMiyb9KtowlGMt/J4HdoIEmWhmjxM14y0x6PuHTCZUelKYKf2NRSJrVcgD3oJHczSpM7I9tvkZYje1mMP/yJ2V+2gCR2Imt95IqSXN1E=
+	t=1749023805; cv=none; b=jCy498ckjcMqnY3vBkHKR5ShcE8oX4tDsCH8sDjEFu2PLr9y5HIxe/gxRr5jvBzQUq86IccAus23a0+2qYzsvVklldi04MEh3piaz15x/ootSPvtTqHL+w3hMXai2kumy1TrlDSUg0alKtbIroTsN6WqKpFVy4i5PN/puOZe6gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749023668; c=relaxed/simple;
-	bh=fWuxSfOyiPAQ5EAuPnCFZYKhPSRZsGCOYgJgbo8K7b0=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=p4tiI/w1Y7lUhdgLHhyjQEBbOrlvu35xzZLM+ICAMUL+E9KcatqzPflpNlR/5t0Ix5+voOrExTOZaADH2Dbc2Qdytqwjp/9L9hhffgWDsEAWgVHKoZZIlQeuhPKL+CSXU6jT6AjVfLEDzH2+6Gb0370U8Z3c3hju4TTyePedIko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: esmtpsz18t1749023636t8ba0eb60
-X-QQ-Originating-IP: pjLb7tYxlH2LLeYjH5e+G2BQSbnTZ0iZp367XBdgejM=
-Received: from smtpclient.apple ( [218.94.142.86])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 04 Jun 2025 15:53:55 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 13653396715585505073
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1749023805; c=relaxed/simple;
+	bh=8WiNz5JKtZHjO0gdvrnmmwTkvYahGj1ih72Ge4kvAoI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=EENeChqVN1T8kFGlZ7JZ8YEDEWtmMbeBFZRi1Nk7I13N7Y9QVb6hOFpmPCoCxA/HnBoPIuvhlGYcIM///V0VhtnEbx7xmZJ+eZuVg4jRfmt6GZgKrfGkme5U36TWlqcXqZI4y2z/oL+6Bz7LZaytO8KywmCX6dgR4uUr8Fh7bWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=MERRNMjg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iWXj1YEi; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="MERRNMjg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iWXj1YEi"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C9D9013803BA;
+	Wed,  4 Jun 2025 03:56:42 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 04 Jun 2025 03:56:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1749023802; x=1749110202; bh=fuVvfFIfTi
+	6j1oHoBO4VxShyURP4tuXKFZHdcAV4Bb4=; b=MERRNMjgrSI3MMjflVoIe2VszF
+	LuGRC4O+KtTDpKqUpv9lXQNk6kXBgDRJtHRKqYXveLX0cVtqUZhioZRjNkCUSSFj
+	833s25CudCS9nbtEQBzg6dgDTRDiKQtLK2Is3Yt5rpilp2o962F3BpljdBIlFamn
+	6/7K0u8EdabEZDEDGUH4FiHpqOt7XrlEqGKFgT1KF13qjHsM6bnZ3i1OzL8J3ete
+	pHkbCdWVjvmd+m8uo6wNgcmQ15bvVI5hCTC6U3YyVnSp1wpX3Xz5U4eZlCvy287K
+	LKb8rYb01QnylQ4lYJILUkQbV6owJSMuHUr9oYuOoE2TYf5Jx/pPnhKwqvnQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749023802; x=1749110202; bh=fuVvfFIfTi6j1oHoBO4VxShyURP4tuXKFZH
+	dcAV4Bb4=; b=iWXj1YEi29Fy7fg22/FroCyDnUgECWDvmiWXZbR9iIBHO9XwRQN
+	3rZrf+gillyO+r8CdUXge3et0umcQU3kzYjOhyaT52pnRVayOnIYk8OYYLcnH3qF
+	dsIL74NTQQkHNML7EqIX/7wqS2qlOSOy/FcT2xhpD88Fsd4D/KCW0nqjL4mqq109
+	MRKCnjCaW8iTmVhY/mZpBs74S6N5uoVgN7jDEdLTcUGrd934uCTzzgViaDowdYJi
+	E10pUdhz1yE/Y88NzvMk9QAN/oivUWGoxqbWZRg6FhR9ioOR+gAuN4E69vA+I98V
+	PLn1NDo39PyoRG7nVwsC8xuW8AegwLTAjzg==
+X-ME-Sender: <xms:Ovw_aKIluPSeHSQuNE0djR26HASXKRR9Klc0z4OUL2et0_0BgwyTsQ>
+    <xme:Ovw_aCKuhRlquV9qGMWchXRDx1rF42_sZRPn_18oyeRCVmcxTZdvTZMQ5soXlreU1
+    uODk2-GvSakqNCjYQ>
+X-ME-Received: <xmr:Ovw_aKsIFvO0TzczEzVlPLYnGpOAUEbDedut0-FClrSWLY123_7wqDd_aPqMjFFf7J-MIdWIAlRobG-YOO6oP9D5IN1UcKU_mEDUYK6aL0qD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopeehtddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghn
+    pdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:Ovw_aPa-stjDd3x1KtQC3MXroUvs1kZ8eX9qr1jTD2UnbrhrT3kRSQ>
+    <xmx:Ovw_aBYXuHZOVqokv92Vy73L53jGajmoD9VPFXnORQlLs8yAJGNaYQ>
+    <xmx:Ovw_aLA0Ts52KgqmfTBxKUzTFMLEWRAdfleU9y0yQSHQHgroMkAAvA>
+    <xmx:Ovw_aHYggL-YzXFWX2Y7kyRUKnZXtaHFL68vkGzS0mHPFQ5Ae7ciow>
+    <xmx:Ovw_aF1YiQ6dE3bhV6UiZBkCC-z9Hq6KKaw639Ftq4M1aLspAetuXKDG>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 03:56:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2b434b1a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 4 Jun 2025 07:56:40 +0000 (UTC)
+Date: Wed, 4 Jun 2025 09:56:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH] repo_logmsg_reencode: fix memory leak when use
+ repo_logmsg_reencode()
+Message-ID: <aD_8NxMi6Dk7CmSl@pks.im>
+References: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH] revision: fix memory leak in prepare_show_merge()
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <aD_6T0lUOsqrb5sH@pks.im>
-Date: Wed, 4 Jun 2025 15:53:44 +0800
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <F36BE5E5-6754-4E31-9988-B4D0B3078B29@smail.nju.edu.cn>
-References: <pull.1989.git.git.1749006537271.gitgitgadget@gmail.com>
- <aD_6T0lUOsqrb5sH@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: M7dxyDFn9MPmjMd0oMYqlJHiRX+IwhCKUAGUa5XG9jkQxzla1fdA7Xb+
-	hVULiGBTkruvLqP+4WIuOm7owgB9OisbYEIi9hstmn99Yn6Mv6ZZnWlolTtEDqd0H1k9cF2
-	Eutz+/imnKn3zE6riBO3VwVYAoctD37LvQd+00QxM6wAig7erNHZqw7IvLccnqMJWN9I/8I
-	sciGr8hnZQiRECpgOHZh0FG0hJZ+d7p7Hp2o30ct6Ijv7UWMX9U4NzMBIwBCXNp6wx3sS0C
-	ul9bAJzNtI/xdgbDU8FfRldO3LZYV16k/iUlaTLFrx+QhdXsjg3J4gZICFEZr44M9qV1eb/
-	BZffBnood+jxY2Qa6Pk+kiQDeEeIab0Mhm2rsgxa+5N8HayhBa95SIexAEzNNe85rhf6Fkp
-	daCahfpKBXrqNaeeRgO71y09AVmY0kzqLKgX+YBv6Tl3/ElUyNzMBMIfRhZ6Bhfh3gUl7g5
-	UNk5tnpcKzalJYQoC1rQ6iYS92Hk1UceNXtsiRGLAIMBWAfNWEdsrDCHVmxDhCRxBzcWgTZ
-	n0Ur0RC57SHK2rqqhRfu9LUlD4hLATXLh+A4msqXZluwTEJxN9XzwS4V2Qxh5SeNX3FXgmk
-	MQcVfKkv1oSKDJX9UIhatTTNM9kvyiLOntzv0wPfahvaH9F47bVT0kVopd5WGIDXjc4Tgyc
-	Z4pZc6ExgCpLQzkGoafLqarSJafJsV+0HEx2YaTMI6XUTEP9W36Arr6a/wGchNysoTH+Nu5
-	44ftdl3I/YC+AIBDgZLVYHW8dTn6yainOb2VT4zby4dMBWeT8jhC4ycj+z1EGcUORC0G3fS
-	1CsD26iVXndsQeuGCwMmKfXp0DChYmDOfSuH9pF+kkRt0yHUiaIwEM6iwGS2P5dPeTULwKY
-	YDnSLHryOCBzWWh1vVLH0QGQMeEzUvUAtwyWKOYNF9/OpT4bimnTupVmy+oADrhUy3YGK5m
-	lfXRVGJjJhcBSY5cQWzEBXeTbQLjuvlN1kpyGdM6XSTLPlp7HelBzJNdLmaO4oLyONTQPaz
-	HeuqqhAQ==
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
 
-2025=E5=B9=B46=E6=9C=884=E6=97=A5 15:48=EF=BC=8CPatrick Steinhardt =
-<ps@pks.im> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Wed, Jun 04, 2025 at 03:08:56AM +0000, Lidong Yan via GitGitGadget =
-wrote:
->> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->>=20
->> In revision.c:prepare_show_merge(), we allocated an array in prune
->> but forget to free it. Since parse_pathspec is not responsible to
->> free prune, we should add `free(prune)` in the end of =
-prepare_show_merge().
->=20
-> That is a rather obvious memory leak indeed. Do you know why we never
-> detected the leak in our CI? Is this code path not exercised at all by
-> our tests?
->=20
-> Patrick
->=20
+On Wed, Jun 04, 2025 at 03:10:07AM +0000, Lidong Yan via GitGitGadget wrote:
+> diff --git a/builtin/replay.c b/builtin/replay.c
+> index 225cef08807..6172c8aacc9 100644
+> --- a/builtin/replay.c
+> +++ b/builtin/replay.c
+> @@ -84,6 +84,7 @@ static struct commit *create_commit(struct repository *repo,
+>  	obj = parse_object(repo, &ret);
+>  
+>  out:
+> +	repo_unuse_commit_buffer(the_repository, based_on, message);
+>  	free_commit_extra_headers(extra);
+>  	free_commit_list(parents);
+>  	strbuf_release(&msg);
 
-I don=E2=80=99t know why CI test doesn=E2=80=99t cover this leak, but I =
-am happy to add
-a prereq test for this case.
+Makes sense. This one _looks_ like a leak that I'd expect to hit in our
+test suite as it's not part of an error path.
 
-p.s. I also like to ask that it there anyway to run test locally? How do =
-you
-developers normally run test without open an pull request.
+> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+> index 30075b67be8..dfc7e85ae96 100644
+> --- a/builtin/shortlog.c
+> +++ b/builtin/shortlog.c
+> @@ -186,8 +186,10 @@ static void insert_records_from_trailers(struct shortlog *log,
+>  	commit_buffer = repo_logmsg_reencode(the_repository, commit, NULL,
+>  					     ctx->output_encoding);
+>  	body = strstr(commit_buffer, "\n\n");
+> -	if (!body)
+> +	if (!body) {
+> +		repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
+>  		return;
+> +	}
+>  
+>  	trailer_iterator_init(&iter, body);
+>  	while (trailer_iterator_advance(&iter)) {
 
-Thanks,
-Lidong
+Should this one maybe be converted into a `goto out` so that we can
+release resources in a single location, only? Something like the below
+patch.
 
+Patrick
+
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 30075b67be8..dd08bc40161 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -177,7 +177,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 	struct strbuf ident = STRBUF_INIT;
+ 
+ 	if (!log->trailers.nr)
+-		return;
++		goto out;
+ 
+ 	/*
+ 	 * Using repo_format_commit_message("%B") would be simpler here, but
+@@ -187,7 +187,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 					     ctx->output_encoding);
+ 	body = strstr(commit_buffer, "\n\n");
+ 	if (!body)
+-		return;
++		goto out;
+ 
+ 	trailer_iterator_init(&iter, body);
+ 	while (trailer_iterator_advance(&iter)) {
+@@ -206,6 +206,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 	}
+ 	trailer_iterator_release(&iter);
+ 
++out:
+ 	strbuf_release(&ident);
+ 	repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
+ }
