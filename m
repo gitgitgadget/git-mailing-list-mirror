@@ -1,234 +1,133 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7602C4C6E
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 00:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4799D3D6D
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 02:20:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748997350; cv=none; b=R+n+f1g2OGp6brzkF3HE8ljr19ErB5Q//+9ntlXzFqr+8+mqpHdp7VpqEvJLEvn8DrSdppD3NzbMhSVAh4zMR8t/MNLi/M2GJfV8ISroOGPBihgFYjmMMjbXHjf1jtczE9r4p6pIKpC1EACLSwgpu0+R/jqY1AG+Dnh0NFQXh7s=
+	t=1749003651; cv=none; b=egL0e16Et6TzYMbkj8fMMg4ZtwtSyU36kBc82cgmJ+AcYMfdtr8P35sc8rITkiMQc7znr9Llzpq82w3laSo5gOYQMFc1p9sU1BaiYi06uHeBWCxw0KIYyqY/kVRNDD3dcineV21Wt6w2l1zka6lvzDZ5Nrr2eA4q1fXlQewApts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748997350; c=relaxed/simple;
-	bh=AijiBhHQhCVStjueobSl6pnCL+hzPhfOs+t5jyzPfzU=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=ABHEQFU/GUfU+1p4KfN2qLXf3CejFBZGKETaNBsxL3O8BjncwZJf7bRJmggFMZjS3c7J4wxpvgyYaJyuc2Ixk9+BrUmjWfVYH3Cw880NAzH05uMhggmy+SHil/o4qYfH13G0YL4nDLQKZtdN06lwqmnL4zuh9wWYEeiOAUQYWsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XxFR7zrv; arc=none smtp.client-ip=209.85.219.180
+	s=arc-20240116; t=1749003651; c=relaxed/simple;
+	bh=PPkXcvSRmiQ7DTx+jAPNmKck2seMUNywC6V+IakakLA=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=U6yqArZ35FnsmjzvVx2ANVHHCEo1urmzri6NtdXVdzjUs/NUUQAsFtUvWDdu4bbR56I1tsvj//rcZtnpHUUKuXIuwL6UuduwNcPwSGoZhyCmjTsDsf0ipEvf6hI9A1C/H9DLV1jRp8Grp+bu+VZG3urQBEpd18aqRMYQkPCUq3Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C/3mn8pW; arc=none smtp.client-ip=209.85.128.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XxFR7zrv"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e7d8eb10c06so4308138276.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 17:35:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C/3mn8pW"
+Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-70e4b1acf41so53033827b3.3
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 19:20:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748997347; x=1749602147; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FP9BZf+KqGA9JlTR6Xh+UKwZRE5+dirq6SkxB7F4rhw=;
-        b=XxFR7zrv/dyRs7wuOmICKaR5TX6/MY6uwot668IwETVXqrj4iF6d4K3DOpQLbIZzFS
-         R8LwdGT/0XK/deWr9kvgZkDrVYZ8/g/zisCoLIT22i9rqEJBdg4bNXECUCE8hJ3ebkuI
-         94C8W1olBGY1QaU3WsrJksrUcpXGdr98JUciIBE4hpLv8fe65KcJZzD6E+72uGsSs6fB
-         u0Aszk/yYVDxjfyCBrtv9vD9zR9CGwSf0d1v224e5UasSIAejsg2iBmTJ9TBISpj+8Qh
-         fW4i0xRO8ayxoHE0RjGSwdEZTH++0w//wF5CbM241C/trRVhcDvn4hk/Chi1SpaFncTd
-         ERLQ==
+        d=gmail.com; s=20230601; t=1749003649; x=1749608449; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=t8Ezvqx11elXGx67xYv2+OPQGmzA5NpQn9xJBiPo67o=;
+        b=C/3mn8pWeHiPQPqaDunF690wyyYlAToDP5K59EoKGA8iYBPdr0QpH7rHE+ibcPN174
+         /Q36Sp8XjzUkFnSzzNxX9exFEjwefLZH/8l5mxKSn2wr73Bn34kfk0xVzbuovE2fX7Cb
+         7d3Tf3BAVTzi97wrmZMzOUGKkQRsgLBby+aImk4qRU0W6U2O6g9/18LvQeOt1o3q1HmX
+         fT+uURC5rUoxIgt9uu7rDD4nnTIy8FkU3no8QujMvDoV47Iqw+nbmogCFk3jzqdl01oi
+         j3LnrDSn8m3l14kYQBUot6K5aHVIMu+oYlA7HaIHNHYVU7u4ObHaQD+PHlA1XJDUIahI
+         tXfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748997347; x=1749602147;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FP9BZf+KqGA9JlTR6Xh+UKwZRE5+dirq6SkxB7F4rhw=;
-        b=OQi1cMcgqqphCh7IV6b2XD5t8uqbXHg5W55wVcYszaUytvdd037bNrK1nF0E2MqcFV
-         R+MtIpYVmzulkcNRfjSCa+aG8MyAz4kbGgFTgE0C9mBak4PQL8RlLddQnm+PBRhaaIJE
-         qRk6g3PKD2Amsa3sHslxOfjBeqy5ghWBo0D9teA7aE+mIp7iujoArW4noykL13/D/9yn
-         4zxJsfg4u3+3Zte1C31hQchyZCffaMQAix6R/BHxZfwT+oc8UVIgbZydaFFm510JnHoz
-         3XOgXDMsRKZmvh3bu1UfexlXaJqgEJh69X6fZF9C00z5FhjVpmOlGZt99Paj19jkqcgr
-         yn3w==
-X-Gm-Message-State: AOJu0YyRKmf8UTaEUM9cxTswhKEMcDinxldGCIBtBg3wZA+Sqmv7bQKz
-	Rj/hovaHCuSkKae1vK9DS8ROgVzrcXf3sIlJ2SPP+p67qinlt1oeFWVU
-X-Gm-Gg: ASbGncv6/vo/MpXaUv0ADEs/5YvzIUtZfzDE7Nb7SFCp+t39xmiBi016VXpiYY5Yb22
-	/r1dp2C81vf1FJ2lgdohTEm5jVW2qwXPGFxik0ASvFryezhQT6cx2zxNKN4MGeu908TOBALU00k
-	D1Qy0zWmPEv176RbLtxvfEV8Um1w5FazYgoGM8g7cLBWX9hUtp1DgDpKw1S4t7uWZ1SLs9YL3Am
-	rzRI1992E8bS5M2TMI1xNZ5ovOdcpAfeEYjDgH6FTvtSYiCfxNUcd8EKJKQfwSSrIcvKe+vVeRT
-	e48mhvmA8I7kBhDz+x4UvzFvoK/tgtrLMzA+xJshxYvDDfsVJxLCeG5jD2jhwgmEIXxYNFnaohm
-	mVjVr
-X-Google-Smtp-Source: AGHT+IHIlIuHdqAMU4vxFipXZ3/5jULEnUicsAWJ+9K31yAoUBdyLbIxJIRhsZe5W28BDMoEm8ynRA==
-X-Received: by 2002:a05:6902:2c03:b0:e81:4b5a:82a6 with SMTP id 3f1490d57ef6-e8179d9ea59mr832533276.46.1748997347251;
-        Tue, 03 Jun 2025 17:35:47 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749003649; x=1749608449;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=t8Ezvqx11elXGx67xYv2+OPQGmzA5NpQn9xJBiPo67o=;
+        b=hEm5tzpJf/Mk1IPGrfa4AFICdZ7AbnnAm6YHf6nZo9GLcGn70B7YTXyth/LNbbdbwd
+         9rbo0sT75qudnkxnEjRVAyci0XuChi3dg6Zd04RA1tLPUjbZ86fwmynl8B9N7Ye2HovR
+         D0c0Y6RL7GFNJrt2Wwb12RDw/jMacFhbFFxC9HN7w2hMZki+jDkqd4I1rHB8Oy3MeYdW
+         hqPjfOmcY3AX/+9T49wufSw9fRsf6Wla7gfkmKMz0M0OLg6LG3fJQEBHL3wLywWJKZ7H
+         rA7+AsEjzXzuJfMQE4X+OOw73IcDEWb/Rn0Ukh8m2qvfK8S/6Kqy0cHVcCGUvlYfK2+J
+         38mg==
+X-Forwarded-Encrypted: i=1; AJvYcCWTMKPQh6udbvSRbYmDN2Zfr0uhjAmb/VskCMGILcAWDgi0B2mOLY6fAz71sU6bCI14MW0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9p5FbXuMS8J8j/Bn2Eupl2zHRPtW/bs+ey8rk6FzkBVh4hutW
+	2ovVRx8IvqT1ec2s4nDQ1xj/XBDtwaW4OBlVK91SSa7z+57wsQgNez/UKZ5MhmJP
+X-Gm-Gg: ASbGnctS42sPrQsE3btLMxtbCYo1EYU0jEJ36d+25YpjUMZPzQIc6ic5X6V1RNkaQvg
+	114Y7Pwr7Uhc29H5hgwviNPNh8yEmdLMBTpKYjjq1yhItOda1c+95QXrt0Ry0vQrDXFTaawgb0B
+	vaxyNnI8l5MyHBzVtnhI6x1fKzZ0J1LyKx27nu6zu2okvw00uLYMhC/7aIUD+SDkQ34Wb4uYAna
+	lxhibE3MmeMEOrkz6fVOh9oo/E6huY1AcOvyFq2FnsUtODRya0DZzN6BxI6xbcgTiFamEGOF1Qx
+	RpWnC4xuJMBWBQ82TnruZQFMp/AKjoQuPXkufcP5u5T7bFrpNUKzVi8kCuJ6GWSb/KoxkM15BKK
+	GfC5Z
+X-Google-Smtp-Source: AGHT+IE4S4c1N/0NMjGz8zxtwm7nyb8gGaVqNQC/TEZ7uS5dH8WHjKPZ0CxNV3f9TcS6UlMyA1mrpA==
+X-Received: by 2002:a05:690c:ece:b0:710:c8bf:9929 with SMTP id 00721157ae682-710da018651mr14284377b3.34.1749003649055;
+        Tue, 03 Jun 2025 19:20:49 -0700 (PDT)
 Received: from smtpclient.apple ([2605:a601:90a6:1600:9ca7:9478:f3c6:e1eb])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e812693b973sm1945356276.42.2025.06.03.17.35.46
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-70f8ad003d6sm27913037b3.103.2025.06.03.19.20.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jun 2025 17:35:46 -0700 (PDT)
+        Tue, 03 Jun 2025 19:20:48 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v4 00/12] builtin/maintenance: fix ref lock races when detaching
-Date: Tue, 3 Jun 2025 20:35:36 -0400
-Message-Id: <BEB56610-BFED-4DF1-A2C1-7BBE812850B7@gmail.com>
-References: <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
-Cc: git@vger.kernel.org, Yonatan Roth <yroth@paloaltonetworks.com>,
- david asraf <dasraf9@gmail.com>, Emily Shaffer <nasamuffin@google.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
+Subject: Re: [GSOC PATCH] environment: move access to "core.sparsecheckout" into repo_settings
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <CAE7as+Y0hzkPUC-q7dd-eSJVi0H_nwzQL1AGZJnKMyYcrX1dLw@mail.gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+ christian.couder@gmail.com, shyamthakkar001@gmail.com
+Date: Tue, 3 Jun 2025 22:20:38 -0400
+Message-Id: <4F074544-4E25-472D-A42C-C50A1E1CAC69@gmail.com>
+References: <CAE7as+Y0hzkPUC-q7dd-eSJVi0H_nwzQL1AGZJnKMyYcrX1dLw@mail.gmail.com>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
 X-Mailer: iPhone Mail (21F90)
 
 
+> Le 3 juin 2025 =C3=A0 12:21, Ayush Chandekar <ayu.chandekar@gmail.com> a =C3=
+=A9crit :
 >=20
-> Le 3 juin 2025 =C3=A0 10:01, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
+> =EF=BB=BF
+>> The config is called "core.sparseCheckout", so why is the variable
+>> called `core_apply_sparse_checkout`? `core_sparse_checkout` I would've
+>> understood, but where does "apply" come from? Also, for brevity I think
+>> we could just call it `settings.sparse_checkout`.
+> Yes, I had this thought as well that adding "apply" doesn't make a lot of s=
+ense.
+> But I thought since the global variable has this name for a long time, the=
+re
+> must have been some reason. I can change the name if the "apply" doesn't h=
+old
+> any value.
+
+Perhaps "git log -S core_apply_sparse_checkout config.c" or similar will rev=
+eal a reason? Or point us at a patch series that has some discussion?
 
 >=20
-> =EF=BB=BFHi,
+>>> +{
+>>> +     return repo->settings.core_apply_sparse_checkout;
+>>> +}
+>>> +
+>>> +void repo_settings_set_apply_sparse_checkout(struct repository *repo, i=
+nt value)
+>>> +{
+>>> +     repo->settings.core_apply_sparse_checkout =3D value;
+>>> +}
+>> Getters and setters only really help in the case where they actually
+>> provide a benefit. These don't though, so it's dubious whether we should
+>> have them.
+
+My thoughts exactly; see below.
+
+>> Also, shouldn't these functions call `prepare_repo_settings()`?
+>> Otherwise we cannot guarantee that those settings have already been
+>> parsed at all. And for the setter it could happen that the settings get
+>> overwritten by the next caller of `prepare_repo_settings()`.
 >=20
-> this patch series fixes races around locking the "packed-refs" file when
-> auto-maintenance decides to repack it. This issue has been reported e.g.
-> via [1] and [2].
->=20
-> The root cause is that git-gc(1) used to know to detach _after_ having
-> repacked references. As such, callers wouldn't continue with their thing
-> until we have already packed refs, and thus the race does not exist
-> there. git-maintenance(1) didn't have the same split though, so this
-> patch series retrofits that logic.
->=20
-> The series is structured as follows:
->=20
->  - Patches 1 and 2 do some light refactorings.
->=20
->  - Patches 3 to 5 refactor how we set up the list of tasks to not rely
->    on globals anymore. Instead, we now have a single source of truth
->    for which tasks exactly will be run.
->=20
->  - The remaining patches introduce the split of before/after-detach
->    tasks and wire them up for "pack-refs", "reflog-expire" and "gc"
->    tasks.
->=20
-> Changes in v2:
->  - A couple of commit message improvements.
->  - Introduce `die(NULL)` to die with the correct exit code but no error
->    message. This gets rid of some magic numbers.
->  - Introduce an enum to discern the phases before and after detach.
->  - Link to v1: https://lore.kernel.org/r/20250527-b4-pks-maintenance-ref-l=
-ock-race-v1-0-e1ceb2dea66e@pks.im
->=20
-> Changes in v3:
->  - Rework logic to talk about foreground/background tasks instead of
->    before/after detach.
->  - Link to v2: https://lore.kernel.org/r/20250530-b4-pks-maintenance-ref-l=
-ock-race-v2-0-d04e2f93e51f@pks.im
->=20
-> Changes in v4:
->  - Some more massaging of commit messages.
->  - Link to v3: https://lore.kernel.org/r/20250602-b4-pks-maintenance-ref-l=
-ock-race-v3-0-587d44252dcb@pks.im
->=20
-> Thanks!
->=20
-> Patrick
->=20
-> [1]: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
-> [2]: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
->=20
-> ---
-> Patrick Steinhardt (12):
->      builtin/gc: use designated field initializers for maintenance tasks
->      builtin/gc: drop redundant local variable
->      builtin/maintenance: centralize configuration of explicit tasks
->      builtin/maintenance: mark "--task=3D" and "--schedule=3D" as incompat=
-ible
->      builtin/maintenance: stop modifying global array of tasks
->      builtin/maintenance: extract function to run tasks
->      builtin/maintenance: fix typedef for function pointers
->      builtin/maintenance: split into foreground and background tasks
->      builtin/maintenance: fix locking race with refs and reflogs tasks
->      usage: allow dying without writing an error message
->      builtin/gc: avoid global state in `gc_before_repack()`
->      builtin/maintenance: fix locking race when handling "gc" task
->=20
-> builtin/am.c                |   4 +-
-> builtin/checkout.c          |   4 +-
-> builtin/fetch.c             |   2 +-
-> builtin/gc.c                | 410 +++++++++++++++++++++++++---------------=
-----
-> builtin/submodule--helper.c |  12 +-
-> t/t7900-maintenance.sh      |  19 +-
-> usage.c                     |   2 +
-> 7 files changed, 263 insertions(+), 190 deletions(-)
->=20
-> Range-diff versus v3:
->=20
-> 1:  e46a65951b9 =3D  1:  280f13d2895 builtin/gc: use designated field init=
-ializers for maintenance tasks
-> 2:  73cd67f3e1a =3D  2:  16a017fb819 builtin/gc: drop redundant local vari=
-able
-> 3:  a02452a6d6f =3D  3:  0ab3344ddb0 builtin/maintenance: centralize confi=
-guration of explicit tasks
-> 4:  ccd7691e4d5 =3D  4:  69e768cb54e builtin/maintenance: mark "--task=3D"=
- and "--schedule=3D" as incompatible
-> 5:  0e243fd81e6 =3D  5:  295e9e5ee9f builtin/maintenance: stop modifying g=
-lobal array of tasks
-> 6:  c95bd62823e =3D  6:  d94b0c86622 builtin/maintenance: extract function=
- to run tasks
-> 7:  43d28434d8e =3D  7:  0bbba671cd0 builtin/maintenance: fix typedef for f=
-unction pointers
-> 8:  d5740a5c9d9 =3D  8:  4ce38539bb6 builtin/maintenance: split into foreg=
-round and background tasks
-> 9:  168eb3a9372 !  9:  28092b9bed1 builtin/maintenance: fix locking race w=
-hen packing refs and reflogs
->    @@ Metadata
->     Author: Patrick Steinhardt <ps@pks.im>
->=20
->      ## Commit message ##
->    -    builtin/maintenance: fix locking race when packing refs and reflog=
-s
->    +    builtin/maintenance: fix locking race with refs and reflogs tasks
->=20
->         As explained in the preceding commit, git-gc(1) knows to detach on=
-ly
->    -    after it has already packed references and reflogs. This is done t=
-o
->    -    avoid racing around their respective lockfiles.
->    +    after it has already packed references and expired reflogs. This i=
-s done
->    +    to avoid racing around their respective lockfiles.
->=20
->         Adapt git-maintenance(1) accordingly and run the "pack-refs" and
->         "reflog-expire" tasks in the foreground. Note that the "gc" task h=
-as the
-> 10:  0ff01f6e2aa ! 10:  b8ed080c67d usage: allow dying without writing an e=
-rror message
->    @@ Commit message
->         usage: allow dying without writing an error message
->=20
->         Sometimes code wants to die in a situation where it already has wr=
-itten
->    -    an error message. To use the same error code as `die()` we have to=
- open
->    -    code the code with a call to `exit(128)` in such cases, which is e=
-asy to
->    -    get wrong and leaves magical numbers all over our codebase.
->    +    an error message. To use the same error code as `die()` we have to=
- use
->    +    `exit(128)`, which is easy to get wrong and leaves magic numbers a=
+> Oh, yeah, you're right. So, if we use `prepare_repo_settings()` in
+> them, wouldn't
+> it be better to use getter and setter functions? Otherwise, I'd have to ca=
 ll
->    +    over our codebase.
->=20
->         Teach `die_message_builtin()` to not print any error when passed a=
+> `prepare_repo_settings()` everywhere I'm using the setting.
 
->         `NULL` pointer as error string. Like this, such users can now call=
-
-> 11:  93f53000e47 =3D 11:  5b149886263 builtin/gc: avoid global state in `g=
-c_before_repack()`
-> 12:  01095d1bf88 =3D 12:  9ba01f143b3 builtin/maintenance: fix locking rac=
-e when handling "gc" task
->=20
-> ---
-> base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
-> change-id: 20250527-b4-pks-maintenance-ref-lock-race-11ae5d68e06f
-
-Range-diff vs v3 (and v2!) looks good to me; thanks for taking the time!=
+Aren=E2=80=99t most of the consumers builtins? And from a recent look, don=E2=
+=80=99t they (all?) initialize the repo settings? I agree it is relatively p=
+ainful to require developers to make sure that prepare_repo_settings has bee=
+n called on each (new) code path that reads this variable, but OTOH I would e=
+xpect that to be a straightforward audit during this change and then (see fo=
+llowing) relatively easy to catch going forward. Is already a code conventio=
+n that reading things in repo->settings depends on having prepared them?=
