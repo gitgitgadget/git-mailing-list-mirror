@@ -1,81 +1,88 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67342A87
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:51:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D9A42A87
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:56:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749045113; cv=none; b=IEiD4aeMX/RszPE5tp0aJcY+o7H4Qw6FJjs0/k3U4EjdEwv9YlFp87BdbYASUIh04ulJUjb/28EKAGPn5i4ifB7ks32YUwYyuuuBASIzczgKsDzKDMzpLc7id4ShTYh6D7wCRw0bhQG4cQ1e0e2kR9vKSYKroTFRWiXQHd5Yte0=
+	t=1749045365; cv=none; b=l8xUZX/L+OnjsEqpnKjbBxRW1XQYTTUvjoiYxzgGjdj/tSMBNrHKuQnOR9+nm+KKA6JK3fPWg7JJItT3NZHy5hDdRWykKYsQoawlRINOzDhonyPlm/F/8liWoEOkjC8yD/1Ke6soRLb0tIsf6wjnqNJzygPFyqJNgM27rbAZkNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749045113; c=relaxed/simple;
-	bh=JxWirD6eCUinZ4AIa6oxbhxax2mB2Hhhvo4GFT4q7lo=;
+	s=arc-20240116; t=1749045365; c=relaxed/simple;
+	bh=VtnwpGpLLpuFonGM+l11ip/Ahy77JdbKaTaUvkB3H48=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SoJ2eU+Pu5JUFuXCIzXIwsCl83ALL6xQYzsh7a9feu7w5QbAT1pGdt2vcLeu/YRoolsuBlP8BABZV8CUyMU8/DDZeC5daYdhsF91f0MK3uGMAnOnN85gzEIQE5uDou3M34l1z5xhMtc5FjBOTNhJAzBwJPKt/Ax+VLuLGyT8mEQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VWlwnS89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JW2+C3Mo; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=T4pw5xUbqKqL9MFqMU9wEvjjfAXinS8kiNKK7rwVCRsuKMYVwaWbGMRarbjA3ycqZwc2p20tWuc0UE/tmR1HWpM828NQRwg2+KDCjH/XmjJJzvznPAV6WDehPmG37FQBRrcSUqpzdaJZd1dxzv9fa9OZa2l7J8q+1EQZKZloHdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c8ZjIVlJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XgTiifrO; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VWlwnS89";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JW2+C3Mo"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2D9BC1140184;
-	Wed,  4 Jun 2025 09:51:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c8ZjIVlJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XgTiifrO"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 92AAC13804C7;
+	Wed,  4 Jun 2025 09:56:01 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Wed, 04 Jun 2025 09:51:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+  by phl-compute-04.internal (MEProxy); Wed, 04 Jun 2025 09:56:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749045110; x=1749131510; bh=qcJLtJ0bc3
-	g9SA+lDAJROmDRtz4dtZQeTcw4oJnDJ4Q=; b=VWlwnS89t6PchHQZJfP80vpE/k
-	ZjA0aqLMQ1D9t0J3CTgsGzu23WQ0ioMdorOHZSFT4wIPSm36bx46YzNCcGVf5Z40
-	muGioP1C4xqclEt6NOTOj6+8VrrnZeAgU07fTm9qFIZW9RX7NekOFjzLjRzVcSMN
-	3+SdpZm/TEGdCNLpXDN9MJYXcHxCgpY9Y7VayVElJXQGa7ilZgXcD4kyCXh36yih
-	CF6KKfW1si1obSNeT2PkWvi17qidT1RFhP6zH3HgaGrfisOvaPg/Eiz+P23uujzH
-	YAI7GiTFz572vAFnAtTrUSo6jcHjh0eCNidPtEv1readM48tbWnxGnne7bog==
+	:subject:to:to; s=fm1; t=1749045361; x=1749131761; bh=0b1pFYjVzg
+	+llTX7mRjKvUMy81hC9ZaLHhi5TleqeIw=; b=c8ZjIVlJIgvyyDhj2LjmQJZEWb
+	JDamaimJwbhMFFer1xZeWZLIjxw7/HKybp+k+JefGoDad52bhkcz2Lx2m1/HU3dw
+	yCj6GlLS2OflQeRZiJGaDJj37b627SoQ80lNbxdRxzug7yLPCDN/xX8P92e/pZKS
+	/YcODVV8gZaJz6tLGkFQOSm55fgNQZBXFYQUIJoz8EzQyUBvfOqHCg7duTykGu0Z
+	qrkOYUZin+8jV79vGCh3K+ITz4IaW5dzrIZnwtxVuOKHfvAVv9xlxmThgzZBix6S
+	RbY6LYJT+lqcGunR4s7+g6+kYB12f6yhD0YKCFl9LHvum2KN9JowopLBrPjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749045110; x=1749131510; bh=qcJLtJ0bc3g9SA+lDAJROmDRtz4dtZQeTcw
-	4oJnDJ4Q=; b=JW2+C3MoNwFkL7rJ4m9Na40ySuR4i8leCRqvs/2chiLukXn/ARN
-	NRKav764MzsE9BqjMFkZJ9KSYE7OE7jOZgcCmNfvInv+lcwT/VLdEMhaOYqqHumF
-	mYHloRHPz6B/tZe4kH6OvyCjDdVyzVl+fqx54UhuOWCAv/ulPIzKpjyZ7G+ecDhd
-	nlEMQ8x9notWpP7W7ZImqfHBTbHNP/mQ7qPbQFuixRFFk1C+EGXre42H1/yp6xCR
-	Te2+lW2hbkcoXdFyjerH03fuAQY2D0dRB9pPb5ergqyJlcNwjFsdPRLKpYCxDE7i
-	zUa5wJ1k4eMJu5BVzetP9NASb6a9eGC7NdA==
-X-ME-Sender: <xms:dU9AaDVjJpl1D5oimwcr7erX_Du3BWUemFfabEc10DdhkTGQAmI7Cw>
-    <xme:dU9AaLn3S2VXyla1DqZ_KTg8kdWsdlnvbgdZ3IF_Aen8jn38naiY9w4PD19mSBk7P
-    B5IerQVZXWeyWNrWQ>
-X-ME-Received: <xmr:dU9AaPYH1SWP8O4cqYip7Z8QQ9cuiIB2saAkrIVAFc-upsfAd8X7bn8hcDHFEuLPxtT8QIqUprQPK6t55ZcXtjG07rWBgZXMIigxwPzjT02AqvwGHWe6>
+	1749045361; x=1749131761; bh=0b1pFYjVzg+llTX7mRjKvUMy81hC9ZaLHhi
+	5TleqeIw=; b=XgTiifrOG4dOhYjI4GQiSuxblQ3R73LlO/iN4MrBiPGND6NYZLV
+	ey3eGVRuN5FoomHqPtx4/9RqySqkca7uyRDleM8e0K18XUqxGZ3LGPhblZPNlKW/
+	VyM7DWy2GPB/Lp0Ii4WGuChhEGebIkaWC52flg7g0Fl6wC0dxVwDzONrZpkIegpj
+	sLdCnQAAog7VRZ2gBKHPHQcDKPk+sJ1LUbvcUEoNwvtGuELr24l3Oj5XHb5drmQz
+	DP1x5J/2OV0lmfvNfH63cI4TaOshjmPjD4R/Kvs205RpYJnOGzdi+N/NCjCV3Ey7
+	kM6dV/nAr/qIHZ8Eh98W0o23SlIErrxCFSQ==
+X-ME-Sender: <xms:cVBAaCWS0c-2bbWWLnt0qjjqVVXt2A22lEsB0-hB5DktXCUKlvxg3A>
+    <xme:cVBAaOmTmt1Htw8Vo5ti2UFsZ4Q06fTny6Bykz9ym6bm4F85KEqQjwrATpzqMACrM
+    ae0oexWe90nQs1TXg>
+X-ME-Received: <xmr:cVBAaGao4JuvcKP_RUqSySYkPKs6AFQXqovdQnW_f8dFhlSftC9p8I85ZWpBHnndponuWPBXhCfIEDSEtwCKd61NzDdMhAJmPMDl8svNC0bB>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghulhhlihhnghgv
-    rhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefgveefveeihf
-    ehhefhgeethfdvffehfeehueelheeiffeuvddvuefhveffiefgueenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrdgtoh
-    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehr
-    shgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrgh
-X-ME-Proxy: <xmx:dU9AaOXThnD-fmbuzrN8bTrNODs1BHuXs4CfOch7yVLtjs55zXctMw>
-    <xmx:dU9AaNm6JzXS_Qd7iw9qiQg9GsVDWQuVAWanQqq7SEBwvmvnCjaV5w>
-    <xmx:dU9AaLcgvEJPUoaCqneCb58bDqnWOYWoLhGbVkj2BVPHskAf5xfqqA>
-    <xmx:dU9AaHHpz7wUVQgZaOspznvvkuSANfBxqKi4rKyOW3ZDvnNwnfl2jg>
-    <xmx:dk9AaJuBNC3KtbAT2DgwZ9am4M2xwOhMgMoESA-pz7XDUfdMgJGUUtZG>
-Feedback-ID: ia13843cf:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:cVBAaJXD3iz-Pt9r9PXXMtREljAPDN-ZiaPmPIZekj_3-hXvJpvCaw>
+    <xmx:cVBAaMnoMP6tg724ofWvz_jK34KQQ_HNBa_2R6vrGEaK31APUBmJfQ>
+    <xmx:cVBAaOdPKpTydMakjyH-iGZ2jIBviqehGQCvtrL4XhiZ0cn_XFcCpA>
+    <xmx:cVBAaOEgX4epwLsukJ7pldsIDjGQ84T2KLmLFLJVVU2hIVGVydUp8A>
+    <xmx:cVBAaE-4TtAPe9QvLQWtlk_C2BwSg6fEgnO8iPIVHPOuqg-BoBDjvBS8>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 09:51:49 -0400 (EDT)
-Date: Wed, 4 Jun 2025 09:51:48 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: rsbecker@nexbridge.com
-Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
-Message-ID: <aEBPdFXpIca7lMls@teonanacatl.net>
-References: <xmqqsekgn4gk.fsf@gitster.g>
- <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
- <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
+ 4 Jun 2025 09:56:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 7c636d25 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 4 Jun 2025 13:55:58 +0000 (UTC)
+Date: Wed, 4 Jun 2025 15:55:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 02/17] object-store: rename `object_directory` to
+ `odb_source`
+Message-ID: <aEBQbWre85PSrWqt@pks.im>
+References: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
+ <20250602-pks-object-store-wo-the-repository-v4-2-e986804a7c62@pks.im>
+ <875xhb3ahw.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,34 +91,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
+In-Reply-To: <875xhb3ahw.fsf@iotcl.com>
 
-rsbecker@nexbridge.com wrote:
->>I hit a new issue during the test phase.
->>
->>Makefile:200: recipe for target 'lib/tclIndex' failed
->>
->>Is there any way to suppress this? I don't think we need TCL - don't have it anyway
->>on NonStop.
+On Wed, Jun 04, 2025 at 03:24:43PM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> More info:
+> > The `object_directory` structure is used as an access point for a single
+> > object directory like ".git/objects". While the structure isn't yet
+> > fully self-contained, the intent is for it to eventually contain all
+> > information required to access objects in one specific location.
+> >
+> > While the name "object directory" is a good fit for now, this will
+> > change over time as we continue with the agenda to make pluggable object
+> > databases a thing. Eventually, objects may not be accessed via any kind
+> > of directory at all anymore, but they could instead be backed by any
+> > kind of durable storage mechanism. While it seems quite far-fetched for
+> > now, it is thinkable that eventually this might even be some form of a
+> > database, for example.
+> >
+> > As such, the current name of this structure will become worse over time
+> > as we evolve into the direction of pluggable ODBs. Immediate next steps
+> > will start to carve out proper self-contained object directories, which
+> > requires us to pass in these object directories as parameters. Based on
+> > our modern naming schema this means that those functions should then be
+> > named after their subsystem, which means that we would start to bake the
+> > current name into the codebase more and more.
+> >
+> > Let's preempt this by renaming the structure. There have been a couple
+> > alternatives that were discussed:
+> >
+> >   - `odb_backend` was discarded because it led to the association that
+> >     one object database has a single backend, but the model is that one
+> >     alternate has one backend. Furthermore, "backend" is more about the
+> >     actual backing implementation and less about the high-level concept.
+> >
+> >   - `odb_alternate` was discarded because it is a bit of a stretch to
+> >     also call the main object directory an "alternate".
+> >
+> > Instead, pick `odb_source` as the new name. It makes it sufficiently
+> > clear that there can be multiple sources and does not cause confusion
+> > when mixed with the already-existing "alternate" terminology.
+> >
+> > In the future, this change allows us to easily introduce for example a
+> > `odb_files_source` and other format-specific implementations.
 > 
-> The actual more complete error is:
-> 
-> /usr/coreutils/bin/bash generate-git-gui.sh "git-gui.sh" "git-gui" ./GIT-GUI-BUILD-OPTIONS ./GIT-VERSION-FILE
-> /usr/coreutils/bin/bash generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS 
-> usage: generate-tclindex.sh <BUILD_DIR> <BUILD_OPTIONS> <LIBFILE> [<LIBFILE>...]
-> Makefile:200: recipe for target 'lib/tclIndex' failed
-> 
-> This seems like a legit problem to be fixed rather than ignored.
+> Sorry for being pedantic (but I guess this series is all about naming
+> anyway, so better get it right), but wouldn't this be
+> `odb_files_backend`?
 
-If you don't have TCL, are you not setting NO_TCLTK for your
-builds?
+Maybe, maybe not. In any case, we can still decide that at a later point
+in time -- it's only part of the commit message, so this part is not set
+in stone and can be discussed once we introduce such backends.
 
-I don't think that's changed in ages, but perhaps something
-has changed in the build process or your build system which
-now exposes that you aren't setting it, which then tries to
-build git-gui (and would surely try to build gitk as well).
-
--- 
-Todd
+Patrick
