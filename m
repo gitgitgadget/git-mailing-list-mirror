@@ -1,152 +1,139 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2844520E030
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 19:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 483061F0E26
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 19:42:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749065802; cv=none; b=HZReojSzKmP44SbRv+GIbTYByTgyZzILDNWKYa9FdAywPfML8E7ZK62FrK4xjXhUC/afm9SWOU3aH8OO5VHTswlVj7M0+5IaYhSYT/txJgirM86Br3nFhVQLGGuZqWNmuirBsjFAQs/KPx+PXT6GfZKyQZzkju/OZU7P0RgyqpQ=
+	t=1749066180; cv=none; b=j3srProVYNC26J08qS3YUag6ijbSULTVDsP5ZuZsxPCd8Ty2zi3emdmIhGJBmJ8sg5LOgpOZyKLnrpP53A9s5okXc9sy2vN0ONo0bclcZVh74zGNVYUnfEffzYpBndDFJ3aJBLN05rpPeULJDPOMOD6ajwfg55Pt8VXu95wk24E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749065802; c=relaxed/simple;
-	bh=lqwF5iQ177IeBlVBNJr4P4XjN0Q4UtJ5F9TEhZ7aobo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Z4LREnjAFnfdr0HIgx8IWsz6/1U/8PMmazyeNp0HIRvUT5mmqwYUNhWJEJaVGrumpyohsZUcEQJu8OwRw/x8OlHt6iaJJ795g/2dlCr1ywo/+GIxLovpXonpTMyth6stTwMbI6j3K2JeWjG5bHlcEZXUPYErJlrnfMrm9zZEM9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U0vL5js4; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1749066180; c=relaxed/simple;
+	bh=jDaks2NmOJsJfv/uOf1cGK+yFlDHAvPXHT7Pw9qt2Ms=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=bgmmVEA6vCd4rx4bxLTv95xKValxDZcZtpcqQvRiPNEhHVoGa8ChLRjNm/rWpo/6MNLYfdVSYxNRbDnCfF3SpQrRIY+GuknwuP24m4jBQ23VMRsON5Ysw6VrRHvRJkQGIoAnqKMaf+6ZvrWSUjpDUA4/5eHUsGgDzjtKbgg9YNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=OZ0dHrp7; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U0vL5js4"
-Received: (qmail 13596 invoked by uid 109); 4 Jun 2025 19:36:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=lqwF5iQ177IeBlVBNJr4P4XjN0Q4UtJ5F9TEhZ7aobo=; b=U0vL5js44nMzZsKpEF/SubcqKk4yxXiVjoDdwG+USmdHkA5JKGDqCewJ0ahj2KAL9aL45+HLIGJ+BaA8Qk23jbWvrdbkk+paTC2EQNel4xWa0Mxpbw6ydgVOSUgSIxlpIYT+PE9qjjO6IougHgLj+ffX2xWvXmq3q/CgUHCI/aK5GL2zh6YyOGwykaCnNC//O4Dt4rAdgDpJfc3kcQixWZvmDRUoGMShJZ1G1E76fXCq55DLz9RuY9qLI0XQHbZXtPY0zpry1c48ZPujKySqwKtkR7K4APdvK7RB/d86KLURIwxhwq9f/a5uf5wgAzXrW2oqyzjDvKYUaG858jZtAA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 04 Jun 2025 19:36:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12863 invoked by uid 111); 4 Jun 2025 19:36:33 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 04 Jun 2025 15:36:33 -0400
-Authentication-Results: peff.net; auth=none
-Date: Wed, 4 Jun 2025 15:36:31 -0400
-From: Jeff King <peff@peff.net>
-To: Victoria Dye via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, Victoria Dye <vdye@github.com>
-Subject: Re: [PATCH 2/3] cat-file: add %(objectmode) atom
-Message-ID: <20250604193631.GA1500045@coredump.intra.peff.net>
-References: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
- <1ff39aa3c6e613137edde9e05321a7df5c165e99.1748890555.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="OZ0dHrp7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1749066175; x=1749670975;
+	i=johannes.schindelin@gmx.de;
+	bh=KuXrilGf5Y9+fsanfts2uD0GU1X1T2G9xHv6wMU9KuA=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=OZ0dHrp7PBM0l3IFL7ex96bqwUKB89xO1MNto6MVlA2DEta9uPME6QXCwNPCN34J
+	 UaPAlEWI4FxARI4OHpTKzfZ7z97yBQ76f9avcyjcaT5vrnAC3hwZcZ/WLWsQyWjqK
+	 gApp6NLdXjupvbPE0p95fSW3odlY7Os4SvME1tgTTkN9fdnZdU2Pj0OO9L7zDrxMT
+	 qSFi7du1fpi1DZOE6ysfXPafDVqFowCAG3yidXyYxK746nqnFgsSjg+5gZstcUnoh
+	 P5/lWxo8FE6GY1+b9Glzfweqzx1YAQLQcAqQ/Rpdg7bAcWiDb+4sV/ybNBofnrCjv
+	 wG4Y6PKyOW53iJfyag==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.53]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MbAh0-1uyAdT185w-00aHgA; Wed, 04
+ Jun 2025 21:42:55 +0200
+Date: Wed, 4 Jun 2025 21:42:53 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.50.0-rc1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1ff39aa3c6e613137edde9e05321a7df5c165e99.1748890555.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1MmUHj-1v507a1K1R-00kz3r@mail.gmx.net>
+X-Provags-ID: V03:K1:CJfCfGOdAH9Hgf/kNsnCXvFNFjiMKc8/pzxTMhA5JaODjZYDA0i
+ k/3+PIQo44IYGwJ0RhOMgzVMHa5/LgelXIrPW1LWkQm0LcIxVX9SldgX5BHo80Humu+HKfE
+ sKJFTzTFZybXFiWz7ZVEiF4k0oeTCrbNB/12EW9Q91Ilcs55AWLQvBF5wWQ8ZGHr9uopFnV
+ tLGT1zptOBAthWlmoa7NQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:47k+/MYK7fI=;3tPLqzUHTI8XS4786FWjOsXe+3H
+ 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
+ RFOoyYByDpwM7Nzj
 
-On Mon, Jun 02, 2025 at 06:55:54PM +0000, Victoria Dye via GitGitGadget wrote:
+Dear Git users,
 
-> Add a formatting atom, used with the --batch-check/--batch-command options,
-> that prints the octal representation of the object mode if a given revision
-> includes that information, e.g. one that follows the format
-> <tree-ish>:<path>. If the mode information does not exist, an empty string
-> is printed instead.
+I hereby announce that Git for Windows 2.50.0-rc1 is available from:
 
-Overall, this looks good to me. I have a few small comments below,
-though I'm not sure if they merit a re-roll or not.
+    https://github.com/git-for-windows/git/releases/tag/v2.50.0-rc1.windows.1
 
-> @@ -345,6 +347,9 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
->  		else
->  			strbuf_addstr(sb,
->  				      oid_to_hex(&data->delta_base_oid));
-> +	} else if (is_atom("objectmode", atom, len)) {
-> +		if (!data->mark_query && !(S_IFINVALID == data->mode))
-> +			strbuf_addf(sb, "%06o", data->mode);
->  	} else
->  		return 0;
->  	return 1;
+Changes since Git for Windows v2.49.0 (March 17th 2025)
 
-Looking at this hunk raised a few questions. Fortunately with answers. ;)
+New Features
 
-First, in other parts of this if/else chain, when mark_query is set we
-need to perform some action (usually setting up the object_info
-pointers). But we _don't_ need to do that here, since we get the mode
-info "for free" from get_oid_with_context(). Good.
+  * Comes with Git v2.50.0-rc1.
+  * Comes with MinTTY v3.7.8.
+  * Comes with OpenSSH v10.0.P1.
+  * Comes with the MSYS2 runtime (Git for Windows flavor) based on
+    Cygwin v3.6.2.
+  * Comes with cURL v8.14.1.
 
-Second, how do we reliably get S_IFINVALID? We can see that the
-expand_data struct is now initialized with it:
+Bug Fixes
 
-> +#define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
+  * On Windows Server 2022, Git v2.48.1 introduced a regression where
+    it failed to write files on ReFS drives, which was fixed.
+  * Git for Windows 2.48.1 introduced a regression when fetching long
+    branches under core.longPaths = true, which was fixed.
+  * Git for Windows' installer used a non-writable file for testing
+    custom editors, which was fixed.
 
-But that seems like it would be a bug, since we only initialize it once,
-in batch_objects():
+Git-2.50.0-rc1-64-bit.exe | 4946a0762c4773153e96797473184d94a1649651d7ce9d87ff47d2800f4747a9
+Git-2.50.0-rc1-arm64.exe | c7d7da0f2a78c5f7ee760f1d1b132cf8ce1c64f568f6d062fdb1a1c2d9fe5628
+PortableGit-2.50.0-rc1-64-bit.7z.exe | 1e5f17d255622424dbb7954545c3ab4de5df11243f2fbb4ac60bb4d6ade09d22
+PortableGit-2.50.0-rc1-arm64.7z.exe | 2493fd9e1168d5126a73b35763cb84aadc3469b681ee56f885d8aa0971a4a4e8
+MinGit-2.50.0-rc1-64-bit.zip | 75762d02fa0833e222a9bfdbcbe07e45e40b434234dcf72a8c91a7703f1e32d5
+MinGit-2.50.0-rc1-arm64.zip | 8fa9ce7af2066d46da0dea6fbe735e062b8eacffce0104619ad89cfca8494ec9
+MinGit-2.50.0-rc1-32-bit.zip | 422099ae16744fff2a76d12bbe238b05936fe722171c6792ff322ce044bac799
+MinGit-2.50.0-rc1-busybox-64-bit.zip | 4f557c8ae906d4770a055c323d2d0c43360bb7310743ff4412bf7ef1ed34aa1e
+MinGit-2.50.0-rc1-busybox-32-bit.zip | a176f99d074cabefface32a76493c24990f8fdbbcf887a46aad5ddbe02b009b5
+Git-2.50.0-rc1-64-bit.tar.bz2 | d29e17b2e8d531f1b8deca33b3eeca925d3109e4d6c61b1359cb36fbf6222d3b
+Git-2.50.0-rc1-arm64.tar.bz2 | a4e0daf8300f4ee56f6483d18abc018cb497c1f0da367a558375d0508dbfa780
 
-> @@ -866,7 +872,7 @@ static int batch_objects(struct batch_options *opt)
->  {
->  	struct strbuf input = STRBUF_INIT;
->  	struct strbuf output = STRBUF_INIT;
-> -	struct expand_data data;
-> +	struct expand_data data = EXPAND_DATA_INIT;
->  	int save_warning;
->  	int retval = 0;
->  
-> @@ -875,7 +881,6 @@ static int batch_objects(struct batch_options *opt)
->  	 * object_info to be handed to oid_object_info_extended for each
->  	 * object.
->  	 */
-> -	memset(&data, 0, sizeof(data));
->  	data.mark_query = 1;
->  	expand_format(&output,
->  		      opt->format ? opt->format : DEFAULT_FORMAT,
->  
->  static int is_atom(const char *atom, const char *s, int slen)
->  {
-
-...and then call batch_one_object() over and over. So at first glance,
-doing this:
-
-  (echo HEAD:Makefile; echo HEAD) |
-  git cat-file --batch-check='%(objectmode)'
-
-would let the mode from the first object bleed over into the second. But
-that doesn't happen, because we overwrite expand_data.mode for each
-object unconditionally, here:
-
-> @@ -613,6 +618,7 @@ static void batch_one_object(const char *obj_name,
->  		goto out;
->  	}
->  
-> +	data->mode = ctx.mode;
->  	batch_object_write(obj_name, scratch, opt, data, NULL, 0);
->  
->  out:
-
-And there we are relying on ctx.mode, which we get from
-get_oid_with_context(), which always falls back to S_IFINVALID if no
-mode is available. Good.
-
-But I think that means that the value set in EXPAND_DATA_INIT is never
-used, and we could continue to zero-initialize the struct with memset?
-
-That said, it's probably OK to err on the side of over-initializing. The
-worst case is probably somebody later reading the code being confused
-about the importance of the line. And at best it may prevent a future
-code path from unexpectedly reading a funny value.
-
-
-And on to the third question. In the non-batch code path of
-cat_one_file(), we do:
-
-          if (obj_context.mode == S_IFINVALID)
-                  obj_context.mode = 0100644;
-
-which made me wonder if we should be harmonizing our behavior. But that
-mode is used only for passing to filter_object() and textconv_object().
-Neither of which really care about the mode, and this is mostly just
-saying "eh, do your regular thing as if it were a blob we found at
---path". I suspect we could get the same effect by just passing a
-hard-coded 100644 to those functions, but probably not worth changing
-now (and certainly very orthogonal to your patch). But the important
-thing is we do not really need to worry about being consistent with this
-line. Good.
-
--Peff
+Ciao,
+Johannes
