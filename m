@@ -1,111 +1,117 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B463175A5
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:32:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67342A87
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:51:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749043960; cv=none; b=BNZjyKxoxu0uPNoJZ1hTqmGVwBWJ/aZ/vofbZLh66m57BW5lej0ZcXW8AqlqAZD26cwrYTJvd0/Mekw5XQGu5Md7W1uWsLMssQxQZm+b1Wyh9xLlWb4XWokruzWMmsWqluZmC+hoF7WKX4wR/z/h7K2VKZArJA7mFQm3CMJz60Y=
+	t=1749045113; cv=none; b=IEiD4aeMX/RszPE5tp0aJcY+o7H4Qw6FJjs0/k3U4EjdEwv9YlFp87BdbYASUIh04ulJUjb/28EKAGPn5i4ifB7ks32YUwYyuuuBASIzczgKsDzKDMzpLc7id4ShTYh6D7wCRw0bhQG4cQ1e0e2kR9vKSYKroTFRWiXQHd5Yte0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749043960; c=relaxed/simple;
-	bh=KJZXj7QYTvV678PBMFzeGOa0LcIz0cINmr61FcxsVD0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mp8V8Th+WSQ6pJxAiGgtUL4NH4dx5SoE+SkuoLLH1UHZC1HXUtFmcc1n4+AYaSA/QDuXLsgiOkB9d1LVS4/JHfw+ELNXzCc3uZeD35FSq7ShI3RXPS+qIVjFPdrWAEj0Lnpu1GG0SKWmqktfsOZ6RpVrMMy1ZYOvXJnn9qZdBOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BzGSWdbY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MxAQSNvA; arc=none smtp.client-ip=103.168.172.157
+	s=arc-20240116; t=1749045113; c=relaxed/simple;
+	bh=JxWirD6eCUinZ4AIa6oxbhxax2mB2Hhhvo4GFT4q7lo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SoJ2eU+Pu5JUFuXCIzXIwsCl83ALL6xQYzsh7a9feu7w5QbAT1pGdt2vcLeu/YRoolsuBlP8BABZV8CUyMU8/DDZeC5daYdhsF91f0MK3uGMAnOnN85gzEIQE5uDou3M34l1z5xhMtc5FjBOTNhJAzBwJPKt/Ax+VLuLGyT8mEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VWlwnS89; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JW2+C3Mo; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BzGSWdbY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MxAQSNvA"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 439CF1140257;
-	Wed,  4 Jun 2025 09:32:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 04 Jun 2025 09:32:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VWlwnS89";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JW2+C3Mo"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2D9BC1140184;
+	Wed,  4 Jun 2025 09:51:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Wed, 04 Jun 2025 09:51:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749043957; x=1749130357; bh=JMwQyn34is
-	JxlMD+mjno+SDMfv6cfX84nOIJpCmkVZs=; b=BzGSWdbYPPu9YM8JdY09yipzsq
-	g8h65w7zlNFvsaYOEcvszuE0dP+qGoGnT6Z3JE4NmKMk/lAPzycergzv6TSA0RaW
-	SeQPSOohqkh+N0gN5wjBmg/o5kJfR89Em5EyBqs++2vUhy1C+FCUKSPcrygm/54h
-	kBTYM8CY99KUJ1pABZgDjUyWgM7qBWhU6ofgGux9vfOOX9mCJ7Ga6nR18tttBGvM
-	Lrtyz5WXsYUitAWj/fO5qfdWS3M2J2scfFaq2/AqJUgaEDolJ8blHNH8DA3a9+E0
-	QQ4BkjX3ycsKJI59V13F3IqXZX3dOTcSknNkFJI0TLlsDAH7XHrMNpVWnK1A==
+	:subject:to:to; s=fm3; t=1749045110; x=1749131510; bh=qcJLtJ0bc3
+	g9SA+lDAJROmDRtz4dtZQeTcw4oJnDJ4Q=; b=VWlwnS89t6PchHQZJfP80vpE/k
+	ZjA0aqLMQ1D9t0J3CTgsGzu23WQ0ioMdorOHZSFT4wIPSm36bx46YzNCcGVf5Z40
+	muGioP1C4xqclEt6NOTOj6+8VrrnZeAgU07fTm9qFIZW9RX7NekOFjzLjRzVcSMN
+	3+SdpZm/TEGdCNLpXDN9MJYXcHxCgpY9Y7VayVElJXQGa7ilZgXcD4kyCXh36yih
+	CF6KKfW1si1obSNeT2PkWvi17qidT1RFhP6zH3HgaGrfisOvaPg/Eiz+P23uujzH
+	YAI7GiTFz572vAFnAtTrUSo6jcHjh0eCNidPtEv1readM48tbWnxGnne7bog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749043957; x=1749130357; bh=JMwQyn34isJxlMD+mjno+SDMfv6cfX84nOI
-	JpCmkVZs=; b=MxAQSNvA3krPJlzrcYB9apmRWbFiTVZRB0OVigWz5lzVWzxA2vD
-	YxLIgIZ7urdjDxUTxBQkvtXnB26xcOGxiqz+eX0hhn0bu/lU+JH0nW7JcCZRDCLo
-	vAURcqUXKETp4ReZaK32hRFFTLZnAZ3s4/WBlyOfOG94UxrCfj4VbWohcVFUDq9k
-	1eo/kRdzaImzBwdVw2k0EVvdhe1fCu2XtQbnwBKwxQ+jC8PPUW6aDRVmV3j5l1sl
-	5T+mS7JT/A1waWcARCxJkk1RSoNtksWGWQFC9FhvPJzD9TR3/0jYfM7zZAZH8BSy
-	aQ/7j7a+Pt/YsqRtGk+H09ozAUIaA+7bewA==
-X-ME-Sender: <xms:9UpAaCBboaR_8DgDmbFREQpn-mBSEkgbu9EHr_mhAdqgh1wUfFxyxw>
-    <xme:9UpAaMioCBpAzLK9HdtDsVmGrjVkoZ53mP7A1cJOYfHy-285V5_KqKSWqunjCdzDZ
-    oGw2PofA2TxXVdv1g>
-X-ME-Received: <xmr:9UpAaFnlE93gv6kHzj3erQBxKXx1yHyhEjthDb8JTz66Dve2sYak1oTZ8HLdvWPVJyhTZwJYBPvFkxQjO82mykZJLXQBVZQ2nfG8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvvdduucetufdoteggodetrfdotf
+	1749045110; x=1749131510; bh=qcJLtJ0bc3g9SA+lDAJROmDRtz4dtZQeTcw
+	4oJnDJ4Q=; b=JW2+C3MoNwFkL7rJ4m9Na40ySuR4i8leCRqvs/2chiLukXn/ARN
+	NRKav764MzsE9BqjMFkZJ9KSYE7OE7jOZgcCmNfvInv+lcwT/VLdEMhaOYqqHumF
+	mYHloRHPz6B/tZe4kH6OvyCjDdVyzVl+fqx54UhuOWCAv/ulPIzKpjyZ7G+ecDhd
+	nlEMQ8x9notWpP7W7ZImqfHBTbHNP/mQ7qPbQFuixRFFk1C+EGXre42H1/yp6xCR
+	Te2+lW2hbkcoXdFyjerH03fuAQY2D0dRB9pPb5ergqyJlcNwjFsdPRLKpYCxDE7i
+	zUa5wJ1k4eMJu5BVzetP9NASb6a9eGC7NdA==
+X-ME-Sender: <xms:dU9AaDVjJpl1D5oimwcr7erX_Du3BWUemFfabEc10DdhkTGQAmI7Cw>
+    <xme:dU9AaLn3S2VXyla1DqZ_KTg8kdWsdlnvbgdZ3IF_Aen8jn38naiY9w4PD19mSBk7P
+    B5IerQVZXWeyWNrWQ>
+X-ME-Received: <xmr:dU9AaPYH1SWP8O4cqYip7Z8QQ9cuiIB2saAkrIVAFc-upsfAd8X7bn8hcDHFEuLPxtT8QIqUprQPK6t55ZcXtjG07rWBgZXMIigxwPzjT02AqvwGHWe6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvvdefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishestghhrh
-    hishguohifnhdrnhgrmhgvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehkvghrnhgvlhdqthgvrghmsehfsgdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9UpAaAwJduKMMovSLMp3abNf1nB29S5gg1AHM4b_TrtwDF3b3rd4CQ>
-    <xmx:9UpAaHRmtnMUOJ5FA2ZHr38V_SeVcrV7NivqRUjqvNzZneZkj0qibw>
-    <xmx:9UpAaLZzjLCCvz3GwJ25EhaSTNzLhQTf2zr1e9LyPj7w5x2Grp8WSw>
-    <xmx:9UpAaARaKE6WUgfrX1rVJ56UAuDq1uYKla8PmGNvHE18QOmeT_oubQ>
-    <xmx:9UpAaGPJjt_geymY2vzrWql6LJLpIjtKD5CIlJBgpVS8ECsqOLAHLrQl>
-Feedback-ID: if26b431b:Fastmail
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
+    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghulhhlihhnghgv
+    rhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefgveefveeihf
+    ehhefhgeethfdvffehfeehueelheeiffeuvddvuefhveffiefgueenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpohgsohigrdgtoh
+    hmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehr
+    shgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:dU9AaOXThnD-fmbuzrN8bTrNODs1BHuXs4CfOch7yVLtjs55zXctMw>
+    <xmx:dU9AaNm6JzXS_Qd7iw9qiQg9GsVDWQuVAWanQqq7SEBwvmvnCjaV5w>
+    <xmx:dU9AaLcgvEJPUoaCqneCb58bDqnWOYWoLhGbVkj2BVPHskAf5xfqqA>
+    <xmx:dU9AaHHpz7wUVQgZaOspznvvkuSANfBxqKi4rKyOW3ZDvnNwnfl2jg>
+    <xmx:dk9AaJuBNC3KtbAT2DgwZ9am4M2xwOhMgMoESA-pz7XDUfdMgJGUUtZG>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 4 Jun 2025 09:32:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Down <chris@chrisdown.name>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org,
-  kernel-team@fb.com
-Subject: Re: [PATCH] commit: Add commit.signoff configuration option
-In-Reply-To: <aD6cJxFXdGfN2XGc@chrisdown.name> (Chris Down's message of "Mon,
-	2 Jun 2025 23:54:31 -0700")
-References: <aCM5JY25NVPgyYRP@chrisdown.name>
-	<CALnO6CBdhYFsDN=HPo9HbKeoZH7bb=xVVXUCK7nUdadLg-U_Pw@mail.gmail.com>
-	<aCTI7VjK5QMht3ws@chrisdown.name> <xmqqy0uy4thk.fsf@gitster.g>
-	<aCXqqj6gKc7-fjoF@chrisdown.name> <xmqqldqwya5p.fsf@gitster.g>
-	<aCdT-UQtaaTQ8gyD@chrisdown.name> <aD6cJxFXdGfN2XGc@chrisdown.name>
-Date: Wed, 04 Jun 2025 06:32:35 -0700
-Message-ID: <xmqq4iwvfx8s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 4 Jun 2025 09:51:49 -0400 (EDT)
+Date: Wed, 4 Jun 2025 09:51:48 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: rsbecker@nexbridge.com
+Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
+Message-ID: <aEBPdFXpIca7lMls@teonanacatl.net>
+References: <xmqqsekgn4gk.fsf@gitster.g>
+ <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+ <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
 
-Chris Down <chris@chrisdown.name> writes:
+rsbecker@nexbridge.com wrote:
+>>I hit a new issue during the test phase.
+>>
+>>Makefile:200: recipe for target 'lib/tclIndex' failed
+>>
+>>Is there any way to suppress this? I don't think we need TCL - don't have it anyway
+>>on NonStop.
+> 
+> More info:
+> 
+> The actual more complete error is:
+> 
+> /usr/coreutils/bin/bash generate-git-gui.sh "git-gui.sh" "git-gui" ./GIT-GUI-BUILD-OPTIONS ./GIT-VERSION-FILE
+> /usr/coreutils/bin/bash generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS 
+> usage: generate-tclindex.sh <BUILD_DIR> <BUILD_OPTIONS> <LIBFILE> [<LIBFILE>...]
+> Makefile:200: recipe for target 'lib/tclIndex' failed
+> 
+> This seems like a legit problem to be fixed rather than ignored.
 
-> Looking at public dotfiles, many users already work around this with
-> global shell aliases for "commit --signoff". This creates the exact
-> problem
+If you don't have TCL, are you not setting NO_TCLTK for your
+builds?
 
-Users conciously using a general customization mechanism to express
-specific intent like the above is one thing.  Project giving users a
-tool that is specifically designed to casually set and forget before
-even understanding the implications is another.
+I don't think that's changed in ages, but perhaps something
+has changed in the build process or your build system which
+now exposes that you aren't setting it, which then tries to
+build git-gui (and would surely try to build gitk as well).
 
-So no, anything that specifically targets commit.signoff would not
-fall into the same category as end-users creating aliases for
-themselves to use, I would have to say.  And we do not want to give
-an impression that we give tools specifically designed to encourage
-users making casual sign-offs.
-
+-- 
+Todd
