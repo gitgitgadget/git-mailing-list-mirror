@@ -1,110 +1,133 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C33B6125B9
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 03:11:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1C817AE11
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 04:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749006682; cv=none; b=WPP4pPLLOqVYannNaUwUnZG0E8NrS66ZpEvvHLAoWdGk1go21k15BUJKcUCjAJEbtgpqHORgulzoGfeeEWq+il72r8vKGd7TK23fWLGshKs94jR18vosK+f/SjpYrjUwCx0Mx9BaOAWvDlwsPmgiKCiCkZN/YVTw6sa+/JP+Q6M=
+	t=1749010961; cv=none; b=omLZwEVQZb/U/mnrvHbcYQt/E/H7sbLy4uhZM13y2HWiVbeH2HbyE/GVrIk6kGeU9IYQev1spTRWN8xkMB+Uyf0JuC2hkQey7Kwlqbk2mW8t6u/m4UtCWp8GvZDnqHyrIkMeYFbpaVDKMARmpdb8FKATm/++fqcQj24HRzumBsE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749006682; c=relaxed/simple;
-	bh=c1ysInGluMQSvshwt5clWalgzcU5X8RkBfHEkgthMY4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=O3ZeA00ArEVUIyVzCmLMH9jB+51pqruJpdFC9iT1Uo+JTrG56jmYZpO8RW+CClkrQ06/L4rPLSPHuKZxWz5hAYFwLK0EGlkYa3cod3gPBswtoYo9DRhBRNqWBmTmwuYERZO0az7SeGY3bsmcbDxndvf6GEXwM4u/gRgRzdgH7is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m44g/oA0; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749010961; c=relaxed/simple;
+	bh=WCJIUOQxEUwni6J0PLL+/x7FxXXEx1CAtH/P5oGEGw4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uCBMmstHwNgRt06BHM3PiMNDfpl4JA6qCSddhlch7j8R2VW6wLH+SfmMU3n8JQanoZQkcpVAp37gbE0p0SBxWX3xKOIhvVBx62WxD02ciCnpN7e+fxbNxaSMOS4aGrKnCUllCgmUPfqqaEPqz7p2WNDVA/z3SzLpNqD5GbXJ3ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UBi3vbRN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ak3kyZVU; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m44g/oA0"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-450d37d4699so31257335e9.0
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 20:11:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749006677; x=1749611477; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=TJpsr5XTa15OVqNPrnGGZpZfUtB4g6n6nq+oXO3ERGE=;
-        b=m44g/oA0/SUGqP/jfna/vNqlzlCO92aWCQZPXqPmQjq2krhuP/v0m6Mwcd1IdXMXJ6
-         gheOZBTMWnLeUAw7oKEsNljC3CLB57qiJM+Xt6DxT8oKd0XY9/Vb5kyxy9mX243Ibyg6
-         WrvKHVTx8WyYkFwVR9A50LI/hwhmJO0jxqYZtJ/8K0809ULze4asCTbqwcECmEIFMu+X
-         KeB6F5yI5f7tiaIe1h9J4NAxWBVKAxnHhd543mVuV2OdEE3rsV/6WlZSM3i6wzy4PtX0
-         eRGMxiDRyTMTVUKv5yv/f2Wi621+Lzio8Kwa2389co8cDOlSas4YodM2fL5/9POj1ZBR
-         3BNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749006677; x=1749611477;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TJpsr5XTa15OVqNPrnGGZpZfUtB4g6n6nq+oXO3ERGE=;
-        b=f3WhysD2eu8GRtwPEpIt0+qs34kvJQtlQqBeTlunty+7xavb5TEuKnNhGm+Gr0896r
-         Rx7wmwTRZ3NyGaK0pYp7a3i6vy7xFpD7735c1wymrvA9FRkk672YZtUJvUORdumjBWI4
-         bEiF07Ksa2ufTahoVVJv9NIuTA80xPkYXob6w0a2O91Bjsx8f5ul1XZTaijaqg23rEcD
-         1nEB93/u3nBmm4XpORpVGit/YtWpTepk7dYKTl0Atw1CcplzUadGCfVr2d/vMBxUw+q/
-         5DE0IMWUtdhwgb5IVCSeZZCAu8TZB+VQlYN8vOmzzwI3+SnN7UStH4OSrspNIp8Q2K/+
-         BXiw==
-X-Gm-Message-State: AOJu0YyAQtF4pvAGEGuQsk+R90xpj+JoQfsjWx1PKk7DproqknRG99fn
-	oKK17jzLHHvqsMwCdOYmVrVlcbrBBjz29REFVt08b/wDk+TWLozLJjBnKEUWrw==
-X-Gm-Gg: ASbGnctX/qjpFFEnpoYy9JSfdGUar0h30puzG+qi9btXNxqZWXf55sT5iAoW4R+X5D8
-	b1N+0DjAVYcZQpauCXpMcvbBM4BQiYbjZdcUUnfY8NLw95JjYBXoPoSjPYF0sUmVMtUPcflFQhd
-	fOcvBU3MpvC+76JlNl23nIXduuSy6tv+LRhapZiA8PrU57N0192mkbPtBPHEd+CHRLuuP93FMrF
-	14nKJhpaqazpuTjAevztIp+ClBt28uoo2FT0IyxSgPNoibLsBdodtkZ2bvU84A9jsdfj3ye6XiE
-	MjmMqeToqpofLi9ratE2AY3IueF/+ZdM93aQ93pLMYjoYtaodm8afsQweHFraMY=
-X-Google-Smtp-Source: AGHT+IGklUVzXjJtfXXMdGEegdG/VY0AnWpMXzPJHk2BnZkLZfjf7YYT/ZS50sDyzV3gK1/7QABZrA==
-X-Received: by 2002:a05:600c:8288:b0:43c:ec4c:25b4 with SMTP id 5b1f17b1804b1-451f0f2fc9dmr8180895e9.10.1749006676747;
-        Tue, 03 Jun 2025 20:11:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fb86d2sm183914975e9.30.2025.06.03.20.11.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jun 2025 20:11:16 -0700 (PDT)
-Message-Id: <pull.1986.git.git.1749006675784.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 04 Jun 2025 03:11:15 +0000
-Subject: [PATCH] commit-graph: fix start_delayed_progress() leak
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UBi3vbRN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ak3kyZVU"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 7C8CA1140174;
+	Wed,  4 Jun 2025 00:22:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 04 Jun 2025 00:22:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749010957; x=1749097357; bh=GrWlPt3kud
+	DO8pjo/wl53Xsb/qjogM6PlEfkeZWQmyc=; b=UBi3vbRNfmuHmeeLKPWQeCwiHU
+	CL6Kdq/UdysZGf7drOWnXloy09TdyX32qH3oGnBGN2ypWQPbRhx8NAthiNywCC2D
+	BGTMu3yFW1xRb4SmCZ41nJFyIos4DqASNgRwtoTFoyWPWedA3v4F7xQY6ysK1rKt
+	EtoUrwvwJ2V+Sc/rp572TpT5V1pzN/MFIt+EhtM5SV7a9LVs4Dlw3mk4KIvtkvhO
+	wDTwZQPL4biDgLuPkd9lbUQtFmhcI0me3QBaUgFB55wnLWzk4l6BVp+a1oiRYtOF
+	T0jv0HgJ/S5aWnikKxUrKCnZBHR8Y9+1l9QdCD2hplQd/RqLMxJiUrpgFPaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749010957; x=1749097357; bh=GrWlPt3kudDO8pjo/wl53Xsb/qjogM6PlEf
+	keZWQmyc=; b=Ak3kyZVU4R8R1Lo+0xJ6LhHC+r2/dQdyRK18PcPMZWhbEItkDU4
+	76bOc/muYurrsJ+TpN10I4B0juLe1I3NfCC7m+5zr9y+RBEdoNILve+Ju9SiOYW4
+	Fi8TfHuKipQgjyhto77u8lDYcYnRQp8I1ixEHTZ59Ol+Sht60kzS/9pnpDHsxjbd
+	AAtS/enwP7yKCf91kTtNnUfXAiibSjWxh+vLwTBlp1ODY5+fOPXJKkB5+zc42pSi
+	TeBJgxjSbUpILaFfaV1wVDSA+h9kvtWdgUaewlIte0tqnjz6t/ix35kL4clJgNH5
+	NGRjeJ6+fkq7sZRuI3JJKyiLczAlX3PTNlA==
+X-ME-Sender: <xms:Dco_aGw1YAgPIzvMVw8v677Z4CVJczSnb_XNs76GVACap8BWt4Dg_w>
+    <xme:Dco_aCTjezDS_-_4FLP6eqrlHNuF1zQlAsLIIQWa8-GJrwIj5elhWbmAoYTKQF8wv
+    h5zW4FKuvwhDvWnyQ>
+X-ME-Received: <xmr:Dco_aIVmYod75mRI7zb31q481yYllIHEc1KCOqWv7rsSyiQF3pgAkGl4osXLiHH-oYOzHlUAd5ma6-my30tJ9-CDJnc81emk1jik>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefve
+    etteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Dco_aMiQgCpVujKf-hcooS32dsYEZynqxvh-7BDQ9jCG2y0e020QAg>
+    <xmx:Dco_aIAZdb91eeQ_LcUcACIN3DrATXnZ1xegYOUC-oKX2YIXsCppGA>
+    <xmx:Dco_aNJ3q7wdA_Zk1D4GaQOOkz3Lfg9ygbmfBCbLJpMAbMQTPjkkjA>
+    <xmx:Dco_aPBB3mbl_RCtUHszIb3ozL1IC0gDRqqvx9GVGO6iWAAX-wj_GA>
+    <xmx:Dco_aN8jMQmnLKWPP9o7gveFO7i_SJm1ZXfR1tLKA7coNh65809Q9xck>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 00:22:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v7 2/2] submodule: skip redundant active entries when
+ pattern covers path
+In-Reply-To: <CA+rGoLfpj2tepMSWLfNeVkwXfzHZB7Vc8_GJ+_=bWkQSzZ+Sjg@mail.gmail.com>
+	(JAYATHEERTH K.'s message of "Thu, 29 May 2025 09:53:23 +0530")
+References: <20250524073628.58944-1-jayatheerthkulkarni2005@gmail.com>
+	<20250524073628.58944-3-jayatheerthkulkarni2005@gmail.com>
+	<xmqqcyburu6z.fsf@gitster.g>
+	<CA+rGoLfpj2tepMSWLfNeVkwXfzHZB7Vc8_GJ+_=bWkQSzZ+Sjg@mail.gmail.com>
+Date: Tue, 03 Jun 2025 21:22:35 -0700
+Message-ID: <xmqqh60wf850.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
 
-In commit-graph.c:graph_write(), if read_one_commit() failed,
-progress allocated in start_delayed_progress() will leak. Add
-stop_progress() before goto cleanup.
+>> The new helper is a maintenance burden to keep in sync with
+>> submodule.c:is_tree_submodule_active(); if we really want to go this
+>> route, the patch should extract that "ah, submodule.active is set so
+>> let's turn it into pathspec and see if the path matches" part of the
+>> logic to make sure the logic is shared.  But I am wondering if we
+>> can do this without any new helper.
+>
+> I've actually done something like this, but I've wrapped the core logic within
+> the if else after checking [1]
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    commit-graph: fix start_delayed_progress() leak
-    
-    In commit-graph.c:graph_write(), if read_one_commit() failed, progress
-    allocated in start_delayed_progress() will leak. Add stop_progress()
-    before goto cleanup.
+I do not think I follow what you want to say here.  Care to rephrase?
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1986%2Fbrandb97%2Ffix-graph-write-leak-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1986/brandb97/fix-graph-write-leak-v1
-Pull-Request: https://github.com/git/git/pull/1986
+>> I.e.  Can we replace this if() condition with something like this?
+>>
+>>         /*
+>>          * Explicitly set 'submodule.<name>.active' only if it is not
+>>          * 'active' due to other reasons.
+>>          */
+>>         if (!is_submodule_active(the_repository, add_data->sm_path)) {
+>>
+>> That is, we ask if the submodule is already active (we are before
+>> adding submodule.<name>.active for this thing---if may be active due
+>> to submodule.active or submodule.<name>.url) and enter the block
+>> only when it is not yet.
+>>
+>> That way, this codepath does not have to worry about the exact logic
+>> that determines if a submodule is 'active' even when its .active
+>> configuration variable is not set.
+>>
+>> >               key = xstrfmt("submodule.%s.active", add_data->sm_name);
+>> >               git_config_set_gently(key, "true");
+>> >               free(key);
+>
+>
+> I've done the exact thing in a bit different way
 
- builtin/commit-graph.c | 1 +
- 1 file changed, 1 insertion(+)
+I am confused again, as this reads as if it is an oxymoron --- did
+you write the exactly the same thing as suggested above, or did you
+write something different?
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index a783a86e797..ee48980248f 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -311,6 +311,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
- 		while (strbuf_getline(&buf, stdin) != EOF) {
- 			if (read_one_commit(&commits, progress, buf.buf)) {
- 				result = 1;
-+				stop_progress(&progress);
- 				goto cleanup;
- 			}
- 		}
-
-base-commit: 7014b55638da979331baf8dc31c4e1d697cf2d67
--- 
-gitgitgadget
