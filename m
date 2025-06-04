@@ -1,42 +1,89 @@
-Received: from out-180.mta0.migadu.com (out-180.mta0.migadu.com [91.218.175.180])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7C7175A5
-	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:24:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B463175A5
+	for <git@vger.kernel.org>; Wed,  4 Jun 2025 13:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749043501; cv=none; b=TmY/QjVH9afi4YXXCAQWdG6J6R1iG9j1mVw3crL45cQq3JNeXfC9nH8ILP/f3Twhs0NFXkmvAHq51swYsoE+mUzpSltTPkwy7BnYIoO2F0qaBSF5MQTvDAG/zxggs4cPOBs0gAO3xQFI2ZP0mB1/7Dgymyyd6nIYovyBINhbM8A=
+	t=1749043960; cv=none; b=BNZjyKxoxu0uPNoJZ1hTqmGVwBWJ/aZ/vofbZLh66m57BW5lej0ZcXW8AqlqAZD26cwrYTJvd0/Mekw5XQGu5Md7W1uWsLMssQxQZm+b1Wyh9xLlWb4XWokruzWMmsWqluZmC+hoF7WKX4wR/z/h7K2VKZArJA7mFQm3CMJz60Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749043501; c=relaxed/simple;
-	bh=8W/IUvAGn6Ijp56A6FdipIGuDacyJPRx5ZoPQrB4qCQ=;
+	s=arc-20240116; t=1749043960; c=relaxed/simple;
+	bh=KJZXj7QYTvV678PBMFzeGOa0LcIz0cINmr61FcxsVD0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AC26R55Fha2pbppQNJ/XcKTV4QGHTOH4LogJU4mb/1wnjGlPXQJfknfhPTnCEBjM49UiCoEEyK06RxTeOqFUkRFaAVESGTq/cxX7B2vJ/hpeCSF+ZxxYOMrIkst+VADTrSniS4OwFkjUHkFZOnCe/IY3usfLFhHghAb7F7xNj0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oVYBtC9u; arc=none smtp.client-ip=91.218.175.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	 MIME-Version:Content-Type; b=mp8V8Th+WSQ6pJxAiGgtUL4NH4dx5SoE+SkuoLLH1UHZC1HXUtFmcc1n4+AYaSA/QDuXLsgiOkB9d1LVS4/JHfw+ELNXzCc3uZeD35FSq7ShI3RXPS+qIVjFPdrWAEj0Lnpu1GG0SKWmqktfsOZ6RpVrMMy1ZYOvXJnn9qZdBOU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BzGSWdbY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MxAQSNvA; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oVYBtC9u"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1749043493;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=nR1Uwkm2XO/eW+G2gCXjUW4bbxFs5p4Ko9oCOtYykCw=;
-	b=oVYBtC9utKiFs6Rc1T6avrJtVN4vdVn5hHDNEY8uQYfEie2sSfLrJhU/gyhfCvOx4VHeWn
-	RMfAq1FOjli2GjFQWQCGJL4X9/7A6Man5A0n62ZOYHhbLFZOEg/xnsuiJkat4xmk55U4B+
-	bDGZbkCMVD31dx4d9pq6wPQuwE9Vxoo=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
- Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v4 02/17] object-store: rename `object_directory` to
- `odb_source`
-In-Reply-To: <20250602-pks-object-store-wo-the-repository-v4-2-e986804a7c62@pks.im>
-References: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
- <20250602-pks-object-store-wo-the-repository-v4-2-e986804a7c62@pks.im>
-Date: Wed, 04 Jun 2025 15:24:43 +0200
-Message-ID: <875xhb3ahw.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BzGSWdbY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MxAQSNvA"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 439CF1140257;
+	Wed,  4 Jun 2025 09:32:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 04 Jun 2025 09:32:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749043957; x=1749130357; bh=JMwQyn34is
+	JxlMD+mjno+SDMfv6cfX84nOIJpCmkVZs=; b=BzGSWdbYPPu9YM8JdY09yipzsq
+	g8h65w7zlNFvsaYOEcvszuE0dP+qGoGnT6Z3JE4NmKMk/lAPzycergzv6TSA0RaW
+	SeQPSOohqkh+N0gN5wjBmg/o5kJfR89Em5EyBqs++2vUhy1C+FCUKSPcrygm/54h
+	kBTYM8CY99KUJ1pABZgDjUyWgM7qBWhU6ofgGux9vfOOX9mCJ7Ga6nR18tttBGvM
+	Lrtyz5WXsYUitAWj/fO5qfdWS3M2J2scfFaq2/AqJUgaEDolJ8blHNH8DA3a9+E0
+	QQ4BkjX3ycsKJI59V13F3IqXZX3dOTcSknNkFJI0TLlsDAH7XHrMNpVWnK1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749043957; x=1749130357; bh=JMwQyn34isJxlMD+mjno+SDMfv6cfX84nOI
+	JpCmkVZs=; b=MxAQSNvA3krPJlzrcYB9apmRWbFiTVZRB0OVigWz5lzVWzxA2vD
+	YxLIgIZ7urdjDxUTxBQkvtXnB26xcOGxiqz+eX0hhn0bu/lU+JH0nW7JcCZRDCLo
+	vAURcqUXKETp4ReZaK32hRFFTLZnAZ3s4/WBlyOfOG94UxrCfj4VbWohcVFUDq9k
+	1eo/kRdzaImzBwdVw2k0EVvdhe1fCu2XtQbnwBKwxQ+jC8PPUW6aDRVmV3j5l1sl
+	5T+mS7JT/A1waWcARCxJkk1RSoNtksWGWQFC9FhvPJzD9TR3/0jYfM7zZAZH8BSy
+	aQ/7j7a+Pt/YsqRtGk+H09ozAUIaA+7bewA==
+X-ME-Sender: <xms:9UpAaCBboaR_8DgDmbFREQpn-mBSEkgbu9EHr_mhAdqgh1wUfFxyxw>
+    <xme:9UpAaMioCBpAzLK9HdtDsVmGrjVkoZ53mP7A1cJOYfHy-285V5_KqKSWqunjCdzDZ
+    oGw2PofA2TxXVdv1g>
+X-ME-Received: <xmr:9UpAaFnlE93gv6kHzj3erQBxKXx1yHyhEjthDb8JTz66Dve2sYak1oTZ8HLdvWPVJyhTZwJYBPvFkxQjO82mykZJLXQBVZQ2nfG8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishestghhrh
+    hishguohifnhdrnhgrmhgvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehkvghrnhgvlhdqthgvrghmsehfsgdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:9UpAaAwJduKMMovSLMp3abNf1nB29S5gg1AHM4b_TrtwDF3b3rd4CQ>
+    <xmx:9UpAaHRmtnMUOJ5FA2ZHr38V_SeVcrV7NivqRUjqvNzZneZkj0qibw>
+    <xmx:9UpAaLZzjLCCvz3GwJ25EhaSTNzLhQTf2zr1e9LyPj7w5x2Grp8WSw>
+    <xmx:9UpAaARaKE6WUgfrX1rVJ56UAuDq1uYKla8PmGNvHE18QOmeT_oubQ>
+    <xmx:9UpAaGPJjt_geymY2vzrWql6LJLpIjtKD5CIlJBgpVS8ECsqOLAHLrQl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 09:32:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Chris Down <chris@chrisdown.name>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org,
+  kernel-team@fb.com
+Subject: Re: [PATCH] commit: Add commit.signoff configuration option
+In-Reply-To: <aD6cJxFXdGfN2XGc@chrisdown.name> (Chris Down's message of "Mon,
+	2 Jun 2025 23:54:31 -0700")
+References: <aCM5JY25NVPgyYRP@chrisdown.name>
+	<CALnO6CBdhYFsDN=HPo9HbKeoZH7bb=xVVXUCK7nUdadLg-U_Pw@mail.gmail.com>
+	<aCTI7VjK5QMht3ws@chrisdown.name> <xmqqy0uy4thk.fsf@gitster.g>
+	<aCXqqj6gKc7-fjoF@chrisdown.name> <xmqqldqwya5p.fsf@gitster.g>
+	<aCdT-UQtaaTQ8gyD@chrisdown.name> <aD6cJxFXdGfN2XGc@chrisdown.name>
+Date: Wed, 04 Jun 2025 06:32:35 -0700
+Message-ID: <xmqq4iwvfx8s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,53 +91,21 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
 
-Patrick Steinhardt <ps@pks.im> writes:
+Chris Down <chris@chrisdown.name> writes:
 
-> The `object_directory` structure is used as an access point for a single
-> object directory like ".git/objects". While the structure isn't yet
-> fully self-contained, the intent is for it to eventually contain all
-> information required to access objects in one specific location.
->
-> While the name "object directory" is a good fit for now, this will
-> change over time as we continue with the agenda to make pluggable object
-> databases a thing. Eventually, objects may not be accessed via any kind
-> of directory at all anymore, but they could instead be backed by any
-> kind of durable storage mechanism. While it seems quite far-fetched for
-> now, it is thinkable that eventually this might even be some form of a
-> database, for example.
->
-> As such, the current name of this structure will become worse over time
-> as we evolve into the direction of pluggable ODBs. Immediate next steps
-> will start to carve out proper self-contained object directories, which
-> requires us to pass in these object directories as parameters. Based on
-> our modern naming schema this means that those functions should then be
-> named after their subsystem, which means that we would start to bake the
-> current name into the codebase more and more.
->
-> Let's preempt this by renaming the structure. There have been a couple
-> alternatives that were discussed:
->
->   - `odb_backend` was discarded because it led to the association that
->     one object database has a single backend, but the model is that one
->     alternate has one backend. Furthermore, "backend" is more about the
->     actual backing implementation and less about the high-level concept.
->
->   - `odb_alternate` was discarded because it is a bit of a stretch to
->     also call the main object directory an "alternate".
->
-> Instead, pick `odb_source` as the new name. It makes it sufficiently
-> clear that there can be multiple sources and does not cause confusion
-> when mixed with the already-existing "alternate" terminology.
->
-> In the future, this change allows us to easily introduce for example a
-> `odb_files_source` and other format-specific implementations.
+> Looking at public dotfiles, many users already work around this with
+> global shell aliases for "commit --signoff". This creates the exact
+> problem
 
-Sorry for being pedantic (but I guess this series is all about naming
-anyway, so better get it right), but wouldn't this be
-`odb_files_backend`?
+Users conciously using a general customization mechanism to express
+specific intent like the above is one thing.  Project giving users a
+tool that is specifically designed to casually set and forget before
+even understanding the implications is another.
 
--- 
-Cheers,
-Toon
+So no, anything that specifically targets commit.signoff would not
+fall into the same category as end-users creating aliases for
+themselves to use, I would have to say.  And we do not want to give
+an impression that we give tools specifically designed to encourage
+users making casual sign-offs.
+
