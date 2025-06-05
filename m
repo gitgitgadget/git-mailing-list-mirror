@@ -1,40 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5C633C2F
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 07:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F653C2F
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 07:25:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749108194; cv=none; b=qWJ7+++7HK6ULzggs8nSquyTTzOB91AdTzc0m/x8Q61JlJIdWpin1L2Mk3DjWe1Zohx2JcQlpxhjMMaueOG18DNXzQRPCaWAfC+PbJZphz9Nf2Y69gmLg30U6YYlxyCnYBd7G9PXg2mIGWBWEjnCbANtNL0dbLEratXhaSnl7Og=
+	t=1749108308; cv=none; b=I934ag7t+yX757pzUQOy3sEVh7uZxqgn2Ce9K8bDaix7FcvkeTvcOxacKWlCVkoT0jO5iUqDQeCEtdFLfOBad/3zzJcmN7pvx5IcchRSS2qpa576BBya1ROhK55eUAoVxJSiCZ5NXdk+xXE65yX7Ysic3+HmTciKJ9oNgSkT9OI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749108194; c=relaxed/simple;
-	bh=0oiHwkc1W+zct074p8unW9Nm9yF3yE5bIstTmjaSOhE=;
+	s=arc-20240116; t=1749108308; c=relaxed/simple;
+	bh=KQ9ItMm0C27Loj+2IaWuiN2BVsddG0xtwCU225hFV9c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MD6kb9oJlfJx6uKtS784vTLPc7GyPrknheE1sPonhvc82/SDX+GFaH4C0gzi4tXvHW6R7I/wXSiyViGeQ3LZ7iw8P8gJFQwDJqNwjm0jchy3O4ORtd5X5FDtfAgtgUIkSJZ0AUahgsvJpHKjIIZGeHwRoe8jbqhlJhOUk2AWY1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LTqUUpmT; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=q4mFF1TFmjc2aJwEHUEOyvPfkTelfIiwZ4ZcmEfQhYbu6sjbuAbUJZ3OGPiOO7TC59uqwEKhcyykfZkLCgKgPCSnPD1N3Prgq2a0e6bUUYs+kd+wLPYmRViL8fFUEu0UsA93LDwPJcDiiv4kJkHzgK0phbQ94/kCspCxumJhKcQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JrfmyoWH; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LTqUUpmT"
-Received: (qmail 17264 invoked by uid 109); 5 Jun 2025 07:23:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0oiHwkc1W+zct074p8unW9Nm9yF3yE5bIstTmjaSOhE=; b=LTqUUpmTSoOy9U6fiagaSu07JiP3RHc5Do38ucEYEDbc6jNlVGsxe9zejsqjXO8iyd9cV1njHwhJpd3L3O3oBKHBEBEncNV/Ww9Cd9nEyB+qxzeqemVJctEdVlbw36Z9BdPJKSlwXJ1BPNNY0Al6bGw3qiIyC18Hh1XYTF1LbRs6NbJ2CwuJ3taaoTWdYS6JBfTNi6K7OQ10VaTjsOptmZbpCKxJ//F08RLpnggpPdpzIRpMiL2YmdmJpDLBagH9n5Gz2n5JdLdDvHHhrqM+uDLqMo7RtmgSQ14GKh1PmhszkTB/STlqodFgGpQl0mUYKVvHiFIPv5JzhL/rEcoN7w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JrfmyoWH"
+Received: (qmail 17280 invoked by uid 109); 5 Jun 2025 07:25:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KQ9ItMm0C27Loj+2IaWuiN2BVsddG0xtwCU225hFV9c=; b=JrfmyoWHrmR0I70C6oXMWCdea0Eq3uZ4/ilPR9g6jogSWwZm0fEXi0iDARfB7RmorgSpccGL3xDIFchjx5Vem72wvNd6glupj8syXwsDqqsQTkje+WWwD00EKOyvB3D+woOKufFPAdAfxsEAazPXS+TtcXWAod326cR7j6clXOVA4DI+DC9MTlUhTXwyrHBPhrSaXk1ezx9YNdz0ZjD1pqnql8NKUaJEDFPQ0okBBLybPut3dEXgCbRiCCLRZ1PmRD/wQkICkGx4Ce9cwVlN1es8ZQMLKTispkm9rbUdkMUwPxs6hjZ6zBl38pYm+vgKmV189UIzqTRUOzVJ2gtxJw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Jun 2025 07:23:10 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Jun 2025 07:25:05 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21110 invoked by uid 111); 5 Jun 2025 07:23:12 -0000
+Received: (qmail 21138 invoked by uid 111); 5 Jun 2025 07:25:09 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Jun 2025 03:23:12 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Jun 2025 03:25:09 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Jun 2025 03:23:08 -0400
+Date: Thu, 5 Jun 2025 03:25:04 -0400
 From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] repo_logmsg_reencode: fix memory leak when use
- repo_logmsg_reencode()
-Message-ID: <20250605072308.GA2066712@coredump.intra.peff.net>
-References: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
- <aD_8NxMi6Dk7CmSl@pks.im>
+To: Daniel Stenberg <daniel@haxx.se>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/3] curl: fix symbolic constant typechecks with
+ curl_easy_setopt()
+Message-ID: <20250605072504.GB2066712@coredump.intra.peff.net>
+References: <20250604205505.GA1510724@coredump.intra.peff.net>
+ <20250604205622.GC1510819@coredump.intra.peff.net>
+ <r1197994-o3so-6453-q16n-6n3on33n4nrp@unkk.fr>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,105 +43,29 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aD_8NxMi6Dk7CmSl@pks.im>
+In-Reply-To: <r1197994-o3so-6453-q16n-6n3on33n4nrp@unkk.fr>
 
-On Wed, Jun 04, 2025 at 09:56:39AM +0200, Patrick Steinhardt wrote:
+On Thu, Jun 05, 2025 at 08:13:09AM +0200, Daniel Stenberg wrote:
 
-> On Wed, Jun 04, 2025 at 03:10:07AM +0000, Lidong Yan via GitGitGadget wrote:
-> > diff --git a/builtin/replay.c b/builtin/replay.c
-> > index 225cef08807..6172c8aacc9 100644
-> > --- a/builtin/replay.c
-> > +++ b/builtin/replay.c
-> > @@ -84,6 +84,7 @@ static struct commit *create_commit(struct repository *repo,
-> >  	obj = parse_object(repo, &ret);
-> >  
-> >  out:
-> > +	repo_unuse_commit_buffer(the_repository, based_on, message);
-> >  	free_commit_extra_headers(extra);
-> >  	free_commit_list(parents);
-> >  	strbuf_release(&msg);
+> On Wed, 4 Jun 2025, Jeff King wrote:
 > 
-> Makes sense. This one _looks_ like a leak that I'd expect to hit in our
-> test suite as it's not part of an error path.
-
-We'll usually never flag a leak for commit buffers, because they are
-stored in (and owned by) a commit-slab. So the memory is not leaked
-exactly, but we may hold on to it longer than we need to. This mostly
-only becomes obvious when we do it for every commit in a code path that
-touches a lot of commits (e.g., "git log" or something).
-
-The exception is if we actually had re-encode, which requires a mismatch
-between the commit and output encodings (which both default to UTF-8).
-And then it really is a leak.
-
-If we add a hack like this:
-
-diff --git a/utf8.c b/utf8.c
-index 35a0251939..d7b7d372c5 100644
---- a/utf8.c
-+++ b/utf8.c
-@@ -3,6 +3,7 @@
- #include "git-compat-util.h"
- #include "strbuf.h"
- #include "utf8.h"
-+#include "parse.h"
- 
- /* This code is originally from https://www.cl.cam.ac.uk/~mgk25/ucs/ */
- 
-@@ -442,6 +443,12 @@ int is_encoding_utf8(const char *name)
- int same_encoding(const char *src, const char *dst)
- {
- 	static const char utf8[] = "UTF-8";
-+	static int always_reencode = -1;
-+
-+	if (always_reencode < 0)
-+		always_reencode = git_env_bool("GIT_TEST_ALWAYS_REENCODE", 0);
-+	if (always_reencode)
-+		return 0;
- 
- 	if (!src)
- 		src = utf8;
-
-then running:
-
-  GIT_TEST_ALWAYS_REENCODE=1 make SANITIZE=leak test
-
-turns up this leak via t3650-replay-basics.sh (as well as in t6429).
-
-It's probably a bit too specialized to carry around as a permanent test
-mode, though. I thought it might find other cases, but it doesn't. The
-other one in this patch only triggers when the commit message has no
-header separator, which is not very likely.
-
-> > -	if (!body)
-> > +	if (!body) {
-> > +		repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
-> >  		return;
-> > +	}
-> >  
-> >  	trailer_iterator_init(&iter, body);
-> >  	while (trailer_iterator_advance(&iter)) {
+> > It seems kind of weird to me that curl doesn't define these constants as
+> > longs, since the point of them is to pass to curl_easy_setopt().
 > 
-> Should this one maybe be converted into a `goto out` so that we can
-> release resources in a single location, only? Something like the below
-> patch.
+> Agreed. Mostly just because of my lack of imagination when I added them a
+> long time ago.
 
-Yeah, I think that is nicer, though...
+Oh, OK. :)
 
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index 30075b67be8..dd08bc40161 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -177,7 +177,7 @@ static void insert_records_from_trailers(struct shortlog *log,
->  	struct strbuf ident = STRBUF_INIT;
->  
->  	if (!log->trailers.nr)
-> -		return;
-> +		goto out;
+> We have over recent times updated several public option related defines to
+> better help applications to get int vs long right, but I have clearly missed
+> to do that for this particular set.
+> 
+> I intend to fix this omission, but since you want to support building with
+> lots of old curl versions as well, this correction probably won't help you
+> for another decade or so... :-)
 
-If you convert this hunk, then we'd look at the uninitialized
-commit_buffer variable after we jump to the out label. I think the v2
-just posted is OK, though (it touches only the one conditional that
-needs the goto).
+Sounds like a good plan. But yeah, we'll want to continue with the casts
+here for a while.
 
 -Peff
