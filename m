@@ -1,75 +1,103 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB9B63C17
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 11:17:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71B61EF39E
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 12:51:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749122226; cv=none; b=TuNdwuIsZQrftW17JM8mWeWb08Vds+bo0AT32wN8ZL0lDGLeliVjdY4xl8hvcDFXnBD56g5HBWWzMgDZOG/98q4wl8SvkjrSioB+uMyQZh66KBe1O0nPCbCPPbhsJkrhV0vckRht1kGJuixxXp+FPsEqA/RGaEX0zubKnUFlzWc=
+	t=1749127887; cv=none; b=t1FilRUru0sMzLW4wGHOCpwwC4NtdsGOdYYNA2MJIamhJVMgxlBHkNYhr7hYU848rLz5kXoHdoTWnAb2wvs7T+2LJ1TYwyN2CSvSs0gMRO547ALmS7xcqnOgefgb9f2kiIyL5jw8LrHXytMySiIDjNSkHaZPbbFM1bZ7W3tLOOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749122226; c=relaxed/simple;
-	bh=B29Xcz/OVW5xutkdKKnM1rIzrAAemtoC0FtpmgNHt9k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=exu7ats0VOcvOqa1SvZBpxkBKW5QctKZT3TieU0NfY1dzmgfGhqYlxZh6IQsfK5LzfS+xyRsElBLqCBQ+zip/NpdyRO6dnTRK5ujXPtvAHctwgCuvANd14s0Teez0AMLbU4PQjYCVA9R4QRxGyX1CAOZSX78Kks1R330E7AAUck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AkKT3qkh; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749127887; c=relaxed/simple;
+	bh=RjW2F4nVXi1ti0a/NFZDJ0XPUqZiQx1Z/JjUuVZvjSY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s9gqhz/JEmT/15q+eJ3ajPCocP9olbzbfeU/DcUVB+bNnNuH77XmVZTI5v+CTIaEUYHOqjjInONMXGgMKEOYJFj/pJtgOhlcjW2t/RG76g9JzpN7wc9PkFfEA1TwHp9etXx4fnzz6vF0pzw86acOGngW5f5s0CwP5B9o58YCjr0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PMH975DZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QM2XM7mU; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkKT3qkh"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ad89dc2d8b4so13105366b.3
-        for <git@vger.kernel.org>; Thu, 05 Jun 2025 04:17:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749122223; x=1749727023; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=B29Xcz/OVW5xutkdKKnM1rIzrAAemtoC0FtpmgNHt9k=;
-        b=AkKT3qkhsmDKV8vpbwgF/4Qk2uNhHWCLrhprN7UzW/eEz4GYLx7ZELJVeS8dlM/e5U
-         KMNmIwXIm11jmGro+QwOOAn3rXYnEfzkM15B7aRREVIZNkyGIL9Sh5PsIVPdlZ22ms9b
-         YlLqRpICWwJrK+1SFBJHoFgGqJGZ+udp2aRNlrJKbWdMyCm4+4bzB3LyQBeGRFVcLkwH
-         XctM+nY6d6jvECQ9gvomXHp1ATa4yrIl4X0sHH8PiECE0LNXKU4VjyEnf80yuzDmy2Wh
-         meS7/WXMSyApzxCHxOFrHWIh4EuO3RaxSlAbi7aD+96dRIu6OKSIv0i1vS0/50BOeLmj
-         FSxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749122223; x=1749727023;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B29Xcz/OVW5xutkdKKnM1rIzrAAemtoC0FtpmgNHt9k=;
-        b=G+xLEaiVPu7SDpilO97W3/0X02pgcQp2C+ZjzkOKXArAU9im4yfg78HfB9KBdclzsR
-         cALM1C5MAjKkxQPvt1LjCYnelMd/rwUN8ODGv9q6UdCVZTiEA4m5ntf1gJU7Hk4E7Z7b
-         pE8tPdfaWyLIOktkKdaXktNTpzJX4UxxlN5c7PgSdJQaOVMG6kmPp6dspPl3B3CACe6y
-         T5R7ZQ/Okenc0/uEx4EGM5qn5bzttRj5olLClCjmgueMkyuhKzF+6zoIk9PBSBHcehwo
-         Wf1dbMlDlAdRFFFvIEgzfU1injqDVlxq0vX8qm9fC0nS69Y3UTiU2hhCZOUlPGuKmeTV
-         h8QQ==
-X-Gm-Message-State: AOJu0YxNmqVQcpS6RmwLj2ym5Oc8WQ6jW4Qk1y6FRR2GGBivMOjoR9Ba
-	BMBmk/WZip4/zEtYsrUsyuH8lgR91rNaMNhmd/FI9bAbKsOb/pakjqcDyzZyikemDuZBAkIoPjD
-	OyNVY+CcybCpG8EvgHfeGpbymY/tRTvDd5seq
-X-Gm-Gg: ASbGncvjFZjio1F1UJ2Eh1HGucQEJ1EfJzEsOf3jkxB0M2b0De68sAB5xVpcLQD7LLP
-	dSPL6OWTrT+4XGrPm6rVrZbapAsrJS379OSi7caHwRmUo9ObMIe1ebagnq++DngJHlqcPhh1fqJ
-	EHMT2QSm/Ye8GQWy5hx1xyZbxkKLRhgPAzfB6AaiV77ys=
-X-Google-Smtp-Source: AGHT+IHh64PRJGW/84ZMU6OQgafLpQMVUDg1VwnlImqXBoothuzLYjW7jmfWqMrPlApTjJzakAu1TXhl85MLAx+70Mk=
-X-Received: by 2002:a17:907:3d8f:b0:ad8:8200:ecfc with SMTP id
- a640c23a62f3a-addf8cecb9emr226901266b.5.1749122222663; Thu, 05 Jun 2025
- 04:17:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PMH975DZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QM2XM7mU"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DF11F25400D5;
+	Thu,  5 Jun 2025 08:51:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 05 Jun 2025 08:51:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749127883; x=1749214283; bh=W5TzSN1/VZ
+	phTWTFek9Q6Y6U8mUPi7PiE0ohc8uvbV0=; b=PMH975DZK0uj8/S+NJL7uvLdoh
+	TfS/UMXiNopRD94RGea9X0hWK5gFr4CmjKd9uS0lL493bTlIT61YAs0Ili0dlj4G
+	SqOjy6DUk/5HIophoDVLapbrtkIiDdKWCa4AfpGxFDcm9VwsOqPZcXwkdInttcjh
+	huMYW2UrUxFOkVUU119G4Y5mtuH2M5HJWBjaFmS85nsFnH1FinuAT9jcOOr1pNVl
+	dHKN/tYRBvJKB7KWt+iLROuEE+FtpoX+rf4vgfv3Q84RkZJgIM3waIYcbCLSvkng
+	vwsptJkz245tBmW4Z0LTOCBo1yE09Hiu5B+Wota12osDUn2cmX0QKmGo9sNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749127883; x=1749214283; bh=W5TzSN1/VZphTWTFek9Q6Y6U8mUPi7PiE0o
+	hc8uvbV0=; b=QM2XM7mU/aAwqVpBz5J/pFvDG2aHfnDItbP9dTVjwOthZbfkNSh
+	wA/9CoNCRR05Mew3X90sVMnFI7W+tJcKDLv05o5iHjsH1x3SJPSazUmIGbGmcrUl
+	gCaM+czRQ13l75u2zGA16v25YPszma96PRPWMydIp7kClZlHwHYDCY8xQsqcgYbf
+	nyPmlY1/DuJlXvmHy8VHZsbaJjvwylmu3yh5Aast/mgNvHIethOC8q8SksmyDxiB
+	smnpvr+KxNs4Ispm2GAlWVDO1vqRHI6TBD8RNluoTwMEKYhXv3inoIpCkUlsOgVr
+	RjFpw+T74lbrprRe5vp5fiP/SvQFSVjV8rw==
+X-ME-Sender: <xms:y5JBaCMBNJmzy34nlc84KSqaQaRcXNTjKRckiOjhKt5-SxNoCfsN9w>
+    <xme:y5JBaA8KZKJHwz77oqngtMZ5EBP1hP1q8Nyht2ijmRoEffPhmUcFwQ3cozQFIM5Rb
+    dDu7XLAkxEbRJjLIg>
+X-ME-Received: <xmr:y5JBaJQa1kTu8Zx2YoccpslS4URnGdEuhwYhXVfW7moeTqeKA_4Dvm-65q9LkYqAh_o5DXAFrlphy3OvZdROvvuPx4FlGjiFV1mM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefieehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiphhhih
+    hlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:y5JBaCu1XcjQKcnOGN9afY3OtSslL8wY1gzphSyXT9oslVFF5XR7ug>
+    <xmx:y5JBaKeJkgoCnLIWTll9indjgpj5mfLs12FWbPX_jNaY-ZZ8DkKW5g>
+    <xmx:y5JBaG1C62CxCCTrceHiTyOW5WW_CIrH_5Nv1VyD0eSH0mxLurMQhg>
+    <xmx:y5JBaO_H8tY-lSfpwkIX_gqr0qyDDCpFPiflxv-YT8CEDYpP0NdvLw>
+    <xmx:y5JBaIr-a3De8V4zYu8NYoVAnjJRN6aBm7jOoFFsNY4PfkJbxx6ttVMX>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Jun 2025 08:51:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Apr 2025, #01; Mon, 7)
+In-Reply-To: <e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com> (Philippe
+	Blain's message of "Wed, 9 Apr 2025 07:24:36 -0400")
+References: <xmqqtt6znch3.fsf@gitster.g>
+	<e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com>
+Date: Thu, 05 Jun 2025 05:51:21 -0700
+Message-ID: <xmqqzfem9ws6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqs=kJtPcMrWC8Dayd+VW7BvC1rmzS0zT+EwQXfLOpZ3Tfg@mail.gmail.com>
-In-Reply-To: <CAGJzqs=kJtPcMrWC8Dayd+VW7BvC1rmzS0zT+EwQXfLOpZ3Tfg@mail.gmail.com>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Thu, 5 Jun 2025 12:16:26 +0100
-X-Gm-Features: AX0GCFs7-1WXG7loiIoYtRUx61JEKLSw8vrgOOQTuxsJkHRiqfdRk8X_qbIlhv8
-Message-ID: <CAGJzqskDumbMSbC3rdYT8fZ8gNJ5MOjR_o8RAo9QS-nuvbBinQ@mail.gmail.com>
-Subject: Fetch remote only if remote hasn't been fetched recently
-To: M Hickford <mirth.hickford@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi. I'd like to fetch from a particular remote, but only if that
-remote hasn't been fetched in the last hour. How could I achieve this?
-Is there a relevant option for `git fetch`?
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-https://git-scm.com/docs/git-fetch
+>> * pb/status-rebase-fixes (2025-03-28) 4 commits
+> ...
+> Yes, I will address the reviewer feedback and send a new version.
+
+Perhaps you got busy after sending this, and I do not mean to rush
+anybody (as we are now in pre-release freeze anyway).  I'm in the
+process of decluttering my tree, and I'll drop the topic soonish.
+
+These topic lost for decluttering can come back by sending updated
+iteration, of course ;-).
+
+Thanks.
