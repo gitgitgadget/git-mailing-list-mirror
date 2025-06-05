@@ -1,91 +1,111 @@
-Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9B520330
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 21:44:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45E241FC7D2
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 22:06:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749159899; cv=none; b=twm0KIzljWrQyIOj4S/yq8j2X1Fj//VaXHLWhuRRDPviGZutn3WeVBTZ9op3O7qCzFgQ/dE94jhCC93Oeln3TX6wA6QP+tNGKZ0KNt+wnu4xPdWz+eUwjfOJmm1AjqDdTYSmFWPcK31ykpU/Z3DOBePntwq6I8kYrkg9v04q8nY=
+	t=1749161209; cv=none; b=YQNqg5svtuWXhvEjns1NqmoJg09m5wo8ZLtdQYcMKERcMED77k6k/RPMtJ0yDEoK0wcGj7pE0vs/k6oeOrpHkQsM8vmZ0Yu97cl/Q3V5DPkZAavUd/ypniCAkNzga2nZyEgQR3cFl//yUcMzC/9qhFZod8NKWd/9cDN+E2HLhhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749159899; c=relaxed/simple;
-	bh=WkA71kmMGOHot2bQj++0kfyfPKDZD1JOySMYCNLw73Y=;
-	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
-	 MIME-Version:Content-Type; b=edneiWjwTP7On7iKfb3LNDvj+0+czcoHzrojpst7YZ2ipdLqFGdxkffDo0G+Kj8OhmIa3OD57pvdrNS27TZdl2zdBZ29t/J2mAsuvMe3uf9uDoci4HIERWD9Rfe+77jEvzKAJjIPXLM14oSDtRhHzbrXykzFf5mxoB8RmpKdj80=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
-X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
-Received: from Mazikeen ([185.122.133.20])
-	(authenticated bits=0)
-	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 555Limei771605
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 5 Jun 2025 21:44:49 GMT
-Reply-To: <rsbecker@nexbridge.com>
-From: <rsbecker@nexbridge.com>
-To: "'Johannes Sixt'" <j6t@kdbg.org>, "'Patrick Steinhardt'" <ps@pks.im>
-Cc: "'Junio C Hamano'" <gitster@pobox.com>, <git@vger.kernel.org>,
-        "'Todd Zullinger'" <tmz@pobox.com>
-References: <xmqqsekgn4gk.fsf@gitster.g> <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com> <007d01dbd4d9$356ded70$a049c850$@nexbridge.com> <aEBPdFXpIca7lMls@teonanacatl.net> <xmqqjz5rcz90.fsf@gitster.g> <44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org> <010b01dbd5f1$3c26ec20$b474c460$@nexbridge.com> <aEFb0Sjj0Xuu-t7l@pks.im> <014201dbd658$4da75680$e8f60380$@nexbridge.com> <f2ed8920-347d-45d3-a0bb-df94ece0d9df@kdbg.org>
-In-Reply-To: <f2ed8920-347d-45d3-a0bb-df94ece0d9df@kdbg.org>
-Subject: RE: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
-Date: Thu, 5 Jun 2025 17:44:41 -0400
-Organization: Nexbridge Inc.
-Message-ID: <014f01dbd663$0ef73530$2ce59f90$@nexbridge.com>
+	s=arc-20240116; t=1749161209; c=relaxed/simple;
+	bh=ELNHga1pMJFPfB0nDAVgnxd4j4DsKoOLTgYdRsZhS2A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=A8DtpjWTtGRAqMouAtnLFlfgLMicqnCWyNqez+EWgknFSAvXpyUrDIceKIqgIQBg7HCd8mSFyKsn1Yv1WawXpo/q+9NWLUqPQqEiDpxVdLxLT2tv2/RbD9xlHnh81JO1UJCP0/cPQByOfbOQA6ed71WBE+LDTvEvZggbWXrceLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IBxHXamF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VQ/KirK0; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IBxHXamF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VQ/KirK0"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 359C9114011A;
+	Thu,  5 Jun 2025 18:06:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 05 Jun 2025 18:06:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749161206; x=1749247606; bh=/sfBeeFkSj
+	3mBT2btfuRRealhGTIdIaROHf6m/v2n/Q=; b=IBxHXamFYpmwkshhC/89l/c1Vx
+	Q9hQT8b9ytoaGsN9/sY/tY/aCq0CFDRCxLKXItXAzI165bZAjc3y35j3NYa3Ae+Q
+	Lg1ZGCwILWv85TciR20RHXBn/Zlw7n0C72t7WTitSa+jLZsZt7NlFMxXxfFf/Nkg
+	uu3nl/+BpyiArbvVnJKBqJN3SFp+mMf6l7ePJqB0VRO6PCuOx//fqjzPsH2px6pR
+	50xaphVWoieJzkg6wOp9Sa4XCRSMdNMEl99/ngdfYbSanyibCb2eJWM72u567K0a
+	RHD6jOJXnbIfoqc6AI9DZwMXQEVRpT1L5NlOG5xa2DxcPhXrCpU+WqgxgCBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749161206; x=1749247606; bh=/sfBeeFkSj3mBT2btfuRRealhGTIdIaROHf
+	6m/v2n/Q=; b=VQ/KirK0pEfLTDegNKLCCZMBrXOjLtroMevm31Pfyc24Je1Yg2Y
+	pBi0sqn8ey0UIpImEZMrI1LDfCa5qYtElxDj+kjXolO0r0aj/2LW0nVqYcrQEo1X
+	PqHwlfPjwzWbSzVsGxNWsjASp7WnV7Acxfpl2Ob195rhuFJgU2LkdxzohMc99Gv4
+	EJ+T3D8MzS2imWJ9Ak1m4i80Esoq2OgsQBwrRefBq2poI2FWWCQ3wb0xbGVy37v/
+	2armJyYkRPMpL/h6YhAv1lsO4ApKbBj8u4oggdeVoh/X5jdZGO814hV/uygpZOrs
+	JZZVi9BhVv+EKsXPNSc7+94aRkqJXwSMtbQ==
+X-ME-Sender: <xms:9RRCaDki6UtFo-eUyJ7jh1-3kKOm96G1ATzJxgDCFrj5xZ8t83_Dkg>
+    <xme:9RRCaG3khAl7PYqK4o0uoIkrCRdrRFBBcRZlBiucd8TaX9mcmwEgR1eJSWwqVFIoZ
+    9dByOowvAr0QSNjcA>
+X-ME-Received: <xmr:9RRCaJqIq4Sxcr6kJA8mzxjUyEp946MJS98AYXNmdVEq0yQYTdvCgjKe_Z5vC5NcBHSeTkeKyBbjuzWbmDyMy7PUxm87Q35_OKcE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhhssggvtghkvghrse
+    hnvgigsghrihgughgvrdgtohhmpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhr
+    tghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepthhmiiesphhosghogidrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:9RRCaLnxnljg_l5D7hxlx7nmZsVUIr4yN_rtp0RYEgjL-80ApaCTpQ>
+    <xmx:9RRCaB3mqAlHIvK8IvCBwlOTxjXZ3alK-v3bQ-6KtX34PKqsd8_sTA>
+    <xmx:9RRCaKukSqXT7UrQAmKpsIcZ_zfKzNRLdlxUEPYaENzq1mfLEVlr2g>
+    <xmx:9RRCaFVQ-_qw7xCs9p_tcoPodObXXwjLtdfg9VAAyfv_kU8cNa3KBw>
+    <xmx:9hRCaH8tdtYOna9b8nAoXNcBRqVB9hJStVsz5ns1umsoUKPGY9te9O5R>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 5 Jun 2025 18:06:45 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: <rsbecker@nexbridge.com>
+Cc: "'Johannes Sixt'" <j6t@kdbg.org>,  "'Patrick Steinhardt'" <ps@pks.im>,
+  <git@vger.kernel.org>,  "'Todd Zullinger'" <tmz@pobox.com>
+Subject: Re: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
+In-Reply-To: <014f01dbd663$0ef73530$2ce59f90$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Thu, 5 Jun 2025 17:44:41 -0400")
+References: <xmqqsekgn4gk.fsf@gitster.g>
+	<007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+	<007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
+	<aEBPdFXpIca7lMls@teonanacatl.net> <xmqqjz5rcz90.fsf@gitster.g>
+	<44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org>
+	<010b01dbd5f1$3c26ec20$b474c460$@nexbridge.com>
+	<aEFb0Sjj0Xuu-t7l@pks.im>
+	<014201dbd658$4da75680$e8f60380$@nexbridge.com>
+	<f2ed8920-347d-45d3-a0bb-df94ece0d9df@kdbg.org>
+	<014f01dbd663$0ef73530$2ce59f90$@nexbridge.com>
+Date: Thu, 05 Jun 2025 15:06:44 -0700
+Message-ID: <xmqq7c1p7si3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQE/8OENAHtdeNmfXNuu5L7gSMXaAQGPhlBYAT32OawCDCTCZQHcPefDAfT2uzQCU1eiuwIb33kTAnEuQ6cB9MdkjLSg5BGA
-Content-Language: en-ca
-X-Antivirus: Norton (VPS 250605-8, 6/5/2025), Outbound message
-X-Antivirus-Status: Clean
+Content-Type: text/plain
 
-On June 5, 2025 5:12 PM, Johannes Sixt wrote:
->Am 05.06.25 um 22:27 schrieb rsbecker@nexbridge.com:
->> The *.tcl files in git-gui/lib are gone after the above command. I
->> noticed a few things run by the above - this did not happen in 2.49.
->>
->> /usr/coreutils/bin/make -C git-gui
->> gitexecdir='/usr/local-ssl3.5/libexec/git-core' all
->> make[1]: Entering directory
->> '/home/jenkinsbuild/.jenkins/workspace/Git_Pipeline/git-gui'
->> GITGUI_VERSION=0.21.GITGUI
->> /usr/coreutils/bin/bash generate-git-gui.sh "git-gui.sh" "git-gui"
->> ./GIT-GUI-BUILD-OPTIONS ./GIT-VERSION-FILE /usr/coreutils/bin/bash
->> generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS lib/merge.tcl
->> lib/error.tcl lib/chord.tcl lib/date.tcl lib/encoding.tcl
->...
->> generate-tclindex.sh: line 21: tclsh: command not found
->>     * tclsh failed; using unoptimized loading
->>
->> It appears the above removes the *.tcl files. That causes the
->> subsequent failure.
->
->Interesting. We have this in generate-tclindex.sh:
->
->...
->else
->         echo >&2 "    * $TCL_PATH failed; using unoptimized loading"
->         rm -f $@
->         echo '# Autogenerated by git-gui Makefile' >lib/tclIndex ...
->
->This $@ was taken literally from the Makefile, where it means something very
->different than in the shell script. The line could be
->
->         rm -f lib/tclIndex
->
->or it could be deleted because the next line overwrites the file anyway.
->
->In the meantime, setting NO_TCLTK=NoThanks in config.mak is probably the
->quickest fix for you.
->
->Thank you for the report.
+<rsbecker@nexbridge.com> writes:
 
-Can I pass this in via command line? Instead of modifying config.mak?
+> Can I pass this in via command line? Instead of modifying config.mak?
+
+    make NO_TCLTK=NoThanks
+
+just like you are passing V=1 on the command line of "make" in your
+earlier message.  That would not build or install gitk and git-gui.
+
+By the way, I do not think writing into config.mak qualifies as
+"modifying", as we do not ship one ourselves.
 
