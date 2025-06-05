@@ -1,55 +1,55 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBB51FE44B
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 06:47:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01CA41FC0E6
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 06:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749106028; cv=none; b=rFfP0eR3lip1nwE/vtHwzKDuSSzZRCKNYdtLTIqJznRXQrPw4yDHK9vLsApVQI+AKQ4q1F879TogR6z51pmXG8ZlpS4PIXOgLUgevvbaHXd0yCasMTXfA+ZaYNqSa1nyad/HuAaMl8OCrXQbLHlX66kbRu1gaiBwhCOSuSEicPY=
+	t=1749106029; cv=none; b=iDL8uxoY1F/+sFPbUm1Ajtruu4BwL/W6HLUhYKdAeJkuo4u/uWfhSveotJJfDnz3a8tHnT8OULTaKb5vS1DxPkCMvTp/q0mVFJuE49Ao+muSI0iUiqIPMSXcIaffXRo3drXaOA2ACaSxqYePYuDdy/1tnVhiAN9ycnmjcuB/r0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749106028; c=relaxed/simple;
-	bh=QXBAw06wFI9Me7HARVajL6LM4yT3Gjy4SBZM7kKNftw=;
+	s=arc-20240116; t=1749106029; c=relaxed/simple;
+	bh=R5qm+enVcDbb6nfYJStHA2sDn016L+L5GAk1aSz0cH4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=STTxfOOk35nGt8R8NKX8AAIhB0M+KN/k+Z2XSAzjnpPbihkb7iob/VWq7m4sfQd7SM6x9pfFmPd8r2SB8S0IhyTlbe+ifACu0u1ew6ntu3z78rg3qzcpU4cMe1Ci7YPVNd8J4M5sAjN1kZEE4nIHJ6kGh5bva+SypcqhMJhogr8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gzxR6p11; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OG77dYOW; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=thVXE9Ffzfs2PT2m3qzsqsPCi8deDXNJVCdCuEuEKL4dU5vF7WGtynxH0VEjuf5e09bKAm6ZzbG1xoaocF3H65jKl6ypPOnmqpdA6rU9rVJWjL4I/KSmm+ldrsim/XwscKmHipiOfuU4OUV6FDO7ZeUev1L28aRCz/kWC/Bd2YU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gnrotvpM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cIxxtx6Q; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gzxR6p11";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OG77dYOW"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8646A11400E0;
-	Thu,  5 Jun 2025 02:47:05 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 05 Jun 2025 02:47:05 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gnrotvpM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cIxxtx6Q"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DD26125400E6;
+	Thu,  5 Jun 2025 02:47:03 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-08.internal (MEProxy); Thu, 05 Jun 2025 02:47:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1749106025;
-	 x=1749192425; bh=4RnAyy0QpfGuHeqoTJ83vfKpMPVGP4dtYpbD38XdAwk=; b=
-	gzxR6p11GYhbfngqbNHSpMEGJCp4D3qXT7RtCNJ8yQOHGqyNcEvFPPZImxHD/mrk
-	hjXTdo5RjXH9ECyXFw/816naP2udtc6Q++hOVvhyWenSzqO6WMu6xBXD+LuqMZkF
-	pMKDm9pwmTcDDrOnAlrEZtdK+8pg+oiRFxdkbWMWsBqW24Y8i7XypySiR3wLNhkJ
-	Y6zKMjVCHSr9hYmJZ0lvaTqdoHDzh6nmc6vXTDRfiflkw1VspG5rFx6pJw4silEo
-	48yt6pAW29GPpfQzKACl548GaM6/fW9MzdIDFvOUsZTbJec3VyCDk69/6HqY8+m7
-	uWf/qpWc/m8z5qkhBKjG2w==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749106023;
+	 x=1749192423; bh=9rzG1Pu8P/dw4jdpKf1uJj/RML/rmYt2vEINPxodhf4=; b=
+	gnrotvpMvvBSHp/hgvrzDWrLRhF7cFPHHYwJLPyFH1lYB3dLfF4BnAGwfUf+5Pv5
+	EFtM0Af4ip8UUIQANlW5I+EAQTWge8iMc0Itb2r1jFpdJU1kWsN1SBNGSMhhV8Y9
+	+Iq02+cpXPdup/uQFBaxismHFveCSB3RKVITSsG58B+HCCxu+F/wZNiCduRkUBga
+	McR1J0YMAxBwzxRR4Baq/SDcrpy5yq3/iU4OAjSoxv43KBgOuqEk8V6XVENPHyZ+
+	CCeRVyT770EVUPa/gj7F4SfZ3Q5kYFTzgB1+vfjGxA3S4oFT0/+q/5dPPQEBZMc3
+	tBHHB6PAo7iN86oWsJAMNA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749106025; x=
-	1749192425; bh=4RnAyy0QpfGuHeqoTJ83vfKpMPVGP4dtYpbD38XdAwk=; b=O
-	G77dYOWCTXHcDRQ3XyVJoAwKBmszCOxDtKA/GSi14WwUJ/LrbP/fWhW4Kt4lFS4X
-	rSun5oO1RlfRkQean76K+JiC7S0Xbrd0zZ+QgwqWGkBTJ5yuYpWJaE4E1wRkJO25
-	6YEP7zsfemq287VzIGAc01rlrK2EUgQNPDyPEe0aemsfcprohsW7xn2n5bjk9V/t
-	FFEUYTDfiPC2WRwF/hf6orLEGqOGTfaNr0aq81lcQn+oBQr6Ye1ZR9MTOwIU9/1h
-	7vMPB3s/A4ZyhZTXuhzjL0knRpufDACOkTg6DaMC6W4G+pFDxruvPFST/OdJuOE0
-	SkFcdZNu0wc6m3gFTW++A==
-X-ME-Sender: <xms:aT1BaL_aqIFXtNdRnwNeFCiOOxj5AnzQpfkJtHocr3v1rgSbxX9-qg>
-    <xme:aT1BaHvZdnuv9juGT5KOCrWy4s7TJchhMJ5QDMjuTNr6qGRM9j4aM79gDKtdpwN4c
-    fWsx4tGjtEhrohf3w>
-X-ME-Received: <xmr:aT1BaJBzw3eST84WQ12p2YVMDwhxlrSdZwWXKw_Nh-etzKbwwuq4m3EqW5I7euwKicXncfYOl-y5hmiR2mVWuCsmCzj2LiYKwtXxIYo2bQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749106023; x=
+	1749192423; bh=9rzG1Pu8P/dw4jdpKf1uJj/RML/rmYt2vEINPxodhf4=; b=c
+	Ixxtx6QCAjPVrT53f/hStu3yi4rfhMoEo7eZxDPj3dx3Ql6Gdq6/BCDfB5n1f+BW
+	27pQMRkCar44wCtvF8q0thq0DDURQV+oyrEK9PEAx9AQaGSKdfwxT7UACkvJG8Ay
+	BRzW3uPKaNR76lg+rsIvBuORt3uAgoQtYzd35SPia6cXMjDNIog0pVP6jP14HJpc
+	ZP2igmdBzylgPjiMC0xThfZAvKQs8D/CHCVKlPlAvIzUd17C6PpbyjQegtDJtxdB
+	9wU6jhZKeUoxdUifwINo9/7+aW5ywcNNK4j9LujyB08nctTaH2/B7lDVhPpUr2JI
+	gwtN2hq867ds3biSRPsWw==
+X-ME-Sender: <xms:Zz1BaADKvPIYDXLe6KSNzT7kX-EcVHcP2C3wjUa9Sz5ko7z8FU4oXA>
+    <xme:Zz1BaCge1HcQl8C3WsG4rqkKdCXiIhyzV63gGEKLFZ6xrXgEOE5r0R9kx9_Kv-PNj
+    05H0Y5Iv0oDHoneaA>
+X-ME-Received: <xmr:Zz1BaDkfqQxH73DIDE4Mjz2msCxGEKSsDNEqTWbKr_mZt4dbxO64tZLOQqylpiomJ1tvbbyKrQk9d4zhm6W8mToQ1Eau4VaVhul48V6IIQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefvdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -58,25 +58,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefvdejucetufdoteggod
     hmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteekudeh
     jeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
     grihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthho
-    sghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:aT1BaHcAr0XCAFQxBeT5A7_JwTsFimkap3kayL63y3Db8d_h1er0CQ>
-    <xmx:aT1BaAPh5cGfYgYlsASLZItZoVB0AY9WJOSqdjysJYvayEudPg5RPA>
-    <xmx:aT1BaJkctKBG6WChG_oTpFs3GIOpKbQSpM9PAJAmuCwrd_E6WzQmgQ>
-    <xmx:aT1BaKs0C7xgqvVHJ2hkMsONDhffVweN68bfkP1_6hXOtO5aRi_F1w>
-    <xmx:aT1BaBHmuEj-U2ZMXQnarl9Ryhh1YmByZjfA2-uD78u1mF7Dkr57d8c8>
+    shhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghl
+    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomh
+X-ME-Proxy: <xmx:Zz1BaGztftH0aa6SuzNfVqLNKOOGaXUzrQU_iAODnQbNssz-ozjxzQ>
+    <xmx:Zz1BaFTjLQCYExv7CjVfDnGWxDLOV8BMvFS2akHoFkemIOyvorA52Q>
+    <xmx:Zz1BaBbfHTjh-1f_sOAuVtdXnp2RFB6wDBku3mCyUVxw5FzA-gF2aw>
+    <xmx:Zz1BaORRC-pa4etkwg1xSyL_xjPuhBR_OKPNXZvP2nqXhn8iOr2DhA>
+    <xmx:Zz1BaDYB_JUAaVwY55iBCIJtAbVZg8IBX6hke3mEh4Rewi5NMe73aHSd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Jun 2025 02:47:04 -0400 (EDT)
+ 5 Jun 2025 02:47:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 029ad569 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 5 Jun 2025 06:47:03 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 5479a94f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 5 Jun 2025 06:46:59 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 05 Jun 2025 08:46:58 +0200
-Subject: [PATCH v5 08/17] odb: get rid of `the_repository` when handling
- alternates
+Date: Thu, 05 Jun 2025 08:46:53 +0200
+Subject: [PATCH v5 03/17] object-store: rename files to "odb.{c,h}"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250605-pks-object-store-wo-the-repository-v5-8-779d1c28774b@pks.im>
+Message-Id: <20250605-pks-object-store-wo-the-repository-v5-3-779d1c28774b@pks.im>
 References: <20250605-pks-object-store-wo-the-repository-v5-0-779d1c28774b@pks.im>
 In-Reply-To: <20250605-pks-object-store-wo-the-repository-v5-0-779d1c28774b@pks.im>
 To: git@vger.kernel.org
@@ -93,496 +92,1794 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-The functions to manage alternates all depend on `the_repository`.
-Refactor them to accept an object database as parameter and adjusting
-all callers. The functions are renamed accordingly.
-
-Note that right now the situation is still somewhat weird because we end
-up using the path provided by the object store's repository anyway. This
-will be adapted over time though so that we instead store the path to
-the primary object directory in the object database itself.
+In the preceding commits we have renamed the structures contained in
+"object-store.h" to `struct object_database` and `struct odb_backend`.
+As such, the code files "object-store.{c,h}" are confusingly named now.
+Rename them to "odb.{c,h}" accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/clone.c           | 10 +++++----
- builtin/fsck.c            |  6 +++---
- builtin/grep.c            |  2 +-
- builtin/repack.c          |  3 ++-
- commit-graph.c            |  4 ++--
- loose.c                   |  2 +-
- object-file.c             | 10 ++++-----
- object-name.c             |  2 +-
- odb.c                     | 44 ++++++++++++++++++---------------------
- odb.h                     | 53 ++++++++++++++++++++++++++++++++---------------
- packfile.c                |  4 ++--
- submodule.c               |  3 ++-
- t/helper/test-ref-store.c |  2 +-
- tmp-objdir.c              |  2 +-
- 14 files changed, 83 insertions(+), 64 deletions(-)
+ Makefile                                | 2 +-
+ apply.c                                 | 2 +-
+ archive-tar.c                           | 2 +-
+ archive-zip.c                           | 2 +-
+ archive.c                               | 2 +-
+ attr.c                                  | 2 +-
+ bisect.c                                | 2 +-
+ blame.c                                 | 2 +-
+ builtin/backfill.c                      | 2 +-
+ builtin/blame.c                         | 2 +-
+ builtin/cat-file.c                      | 2 +-
+ builtin/checkout.c                      | 2 +-
+ builtin/clone.c                         | 2 +-
+ builtin/commit-graph.c                  | 2 +-
+ builtin/commit-tree.c                   | 2 +-
+ builtin/describe.c                      | 2 +-
+ builtin/difftool.c                      | 2 +-
+ builtin/fast-export.c                   | 2 +-
+ builtin/fast-import.c                   | 2 +-
+ builtin/fetch.c                         | 2 +-
+ builtin/fsck.c                          | 2 +-
+ builtin/grep.c                          | 2 +-
+ builtin/hash-object.c                   | 2 +-
+ builtin/index-pack.c                    | 2 +-
+ builtin/log.c                           | 2 +-
+ builtin/ls-files.c                      | 2 +-
+ builtin/ls-tree.c                       | 2 +-
+ builtin/merge-file.c                    | 2 +-
+ builtin/merge-tree.c                    | 2 +-
+ builtin/mktag.c                         | 2 +-
+ builtin/mktree.c                        | 2 +-
+ builtin/multi-pack-index.c              | 2 +-
+ builtin/notes.c                         | 2 +-
+ builtin/pack-objects.c                  | 2 +-
+ builtin/pack-redundant.c                | 2 +-
+ builtin/prune.c                         | 2 +-
+ builtin/receive-pack.c                  | 2 +-
+ builtin/remote.c                        | 2 +-
+ builtin/repack.c                        | 2 +-
+ builtin/replace.c                       | 2 +-
+ builtin/rev-list.c                      | 2 +-
+ builtin/show-ref.c                      | 2 +-
+ builtin/submodule--helper.c             | 2 +-
+ builtin/tag.c                           | 2 +-
+ builtin/unpack-file.c                   | 2 +-
+ builtin/unpack-objects.c                | 2 +-
+ bulk-checkin.c                          | 2 +-
+ bundle-uri.c                            | 2 +-
+ bundle.c                                | 2 +-
+ cache-tree.c                            | 2 +-
+ combine-diff.c                          | 2 +-
+ commit-graph.c                          | 2 +-
+ commit-graph.h                          | 2 +-
+ commit.c                                | 2 +-
+ config.c                                | 2 +-
+ connected.c                             | 2 +-
+ contrib/coccinelle/the_repository.cocci | 2 +-
+ diagnose.c                              | 2 +-
+ diff.c                                  | 2 +-
+ entry.c                                 | 2 +-
+ fetch-pack.c                            | 2 +-
+ fmt-merge-msg.c                         | 2 +-
+ fsck.c                                  | 2 +-
+ grep.c                                  | 2 +-
+ http-backend.c                          | 2 +-
+ http-push.c                             | 2 +-
+ http-walker.c                           | 2 +-
+ http.c                                  | 2 +-
+ list-objects-filter.c                   | 2 +-
+ list-objects.c                          | 2 +-
+ loose.c                                 | 2 +-
+ mailmap.c                               | 2 +-
+ match-trees.c                           | 2 +-
+ merge-blobs.c                           | 2 +-
+ merge-ort.c                             | 2 +-
+ meson.build                             | 2 +-
+ notes-cache.c                           | 2 +-
+ notes-merge.c                           | 2 +-
+ notes.c                                 | 2 +-
+ object-file.c                           | 2 +-
+ object-file.h                           | 2 +-
+ object-store.c => odb.c                 | 2 +-
+ object-store.h => odb.h                 | 6 +++---
+ oss-fuzz/fuzz-pack-idx.c                | 2 +-
+ pack-bitmap-write.c                     | 2 +-
+ pack-bitmap.c                           | 2 +-
+ pack-check.c                            | 2 +-
+ pack-mtimes.c                           | 2 +-
+ pack-objects.h                          | 2 +-
+ pack-revindex.c                         | 2 +-
+ packfile.c                              | 2 +-
+ packfile.h                              | 4 ++--
+ path.c                                  | 2 +-
+ promisor-remote.c                       | 2 +-
+ protocol-caps.c                         | 2 +-
+ read-cache.c                            | 2 +-
+ ref-filter.c                            | 2 +-
+ reflog.c                                | 2 +-
+ refs.c                                  | 2 +-
+ remote.c                                | 2 +-
+ replace-object.c                        | 2 +-
+ replace-object.h                        | 2 +-
+ repository.c                            | 2 +-
+ rerere.c                                | 2 +-
+ revision.c                              | 2 +-
+ send-pack.c                             | 2 +-
+ sequencer.c                             | 2 +-
+ server-info.c                           | 2 +-
+ shallow.c                               | 2 +-
+ streaming.c                             | 2 +-
+ submodule-config.c                      | 2 +-
+ submodule.c                             | 2 +-
+ t/helper/test-find-pack.c               | 2 +-
+ t/helper/test-pack-mtimes.c             | 2 +-
+ t/helper/test-partial-clone.c           | 2 +-
+ t/helper/test-read-graph.c              | 2 +-
+ t/helper/test-read-midx.c               | 2 +-
+ t/helper/test-ref-store.c               | 2 +-
+ tag.c                                   | 2 +-
+ tmp-objdir.c                            | 2 +-
+ tree-walk.c                             | 2 +-
+ tree.c                                  | 2 +-
+ unpack-trees.c                          | 2 +-
+ upload-pack.c                           | 2 +-
+ walker.c                                | 2 +-
+ xdiff-interface.c                       | 2 +-
+ 126 files changed, 129 insertions(+), 129 deletions(-)
 
+diff --git a/Makefile b/Makefile
+index 70d1543b6b8..4b1bf897791 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1085,8 +1085,8 @@ LIB_OBJS += notes.o
+ LIB_OBJS += object-file-convert.o
+ LIB_OBJS += object-file.o
+ LIB_OBJS += object-name.o
+-LIB_OBJS += object-store.o
+ LIB_OBJS += object.o
++LIB_OBJS += odb.o
+ LIB_OBJS += oid-array.o
+ LIB_OBJS += oidmap.o
+ LIB_OBJS += oidset.o
+diff --git a/apply.c b/apply.c
+index 8bbe6ed2240..e778b4e911d 100644
+--- a/apply.c
++++ b/apply.c
+@@ -14,7 +14,7 @@
+ #include "abspath.h"
+ #include "base85.h"
+ #include "config.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "delta.h"
+ #include "diff.h"
+ #include "dir.h"
+diff --git a/archive-tar.c b/archive-tar.c
+index 282b48196f9..249164ea77d 100644
+--- a/archive-tar.c
++++ b/archive-tar.c
+@@ -11,7 +11,7 @@
+ #include "hex.h"
+ #include "tar.h"
+ #include "archive.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strbuf.h"
+ #include "streaming.h"
+ #include "run-command.h"
+diff --git a/archive-zip.c b/archive-zip.c
+index 405da6f3d83..df8866d5bae 100644
+--- a/archive-zip.c
++++ b/archive-zip.c
+@@ -12,7 +12,7 @@
+ #include "hex.h"
+ #include "streaming.h"
+ #include "utf8.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strbuf.h"
+ #include "userdiff.h"
+ #include "write-or-die.h"
+diff --git a/archive.c b/archive.c
+index 8309ea213e6..7fa2cc2596a 100644
+--- a/archive.c
++++ b/archive.c
+@@ -14,7 +14,7 @@
+ #include "pretty.h"
+ #include "setup.h"
+ #include "refs.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+diff --git a/attr.c b/attr.c
+index 86b6109fc4e..e5680db7f65 100644
+--- a/attr.c
++++ b/attr.c
+@@ -22,7 +22,7 @@
+ #include "read-cache-ll.h"
+ #include "refs.h"
+ #include "revision.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "setup.h"
+ #include "thread-utils.h"
+ #include "tree-walk.h"
+diff --git a/bisect.c b/bisect.c
+index a327468c75b..a7939216d00 100644
+--- a/bisect.c
++++ b/bisect.c
+@@ -20,7 +20,7 @@
+ #include "commit-slab.h"
+ #include "commit-reach.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "dir.h"
+ 
+diff --git a/blame.c b/blame.c
+index 57daa45e899..0ceea080a80 100644
+--- a/blame.c
++++ b/blame.c
+@@ -3,7 +3,7 @@
+ 
+ #include "git-compat-util.h"
+ #include "refs.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "cache-tree.h"
+ #include "mergesort.h"
+ #include "commit.h"
+diff --git a/builtin/backfill.c b/builtin/backfill.c
+index fa82ad2f6ff..0b49baa39fa 100644
+--- a/builtin/backfill.c
++++ b/builtin/backfill.c
+@@ -13,7 +13,7 @@
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "object.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "oidset.h"
+ #include "promisor-remote.h"
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 944952e30eb..15eda60af90 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -28,7 +28,7 @@
+ #include "line-log.h"
+ #include "progress.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pager.h"
+ #include "blame.h"
+ #include "refs.h"
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 67a5ff2b9eb..f3a925a8183 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -24,7 +24,7 @@
+ #include "pack-bitmap.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "promisor-remote.h"
+ #include "mailmap.h"
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index d185982f3a6..e7dd66173dd 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -20,7 +20,7 @@
+ #include "merge-ort-wrappers.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "parse-options.h"
+ #include "path.h"
+ #include "preload-index.h"
 diff --git a/builtin/clone.c b/builtin/clone.c
-index 1eafeefb48d..3aabdf6570b 100644
+index 91b9cd0d164..1eafeefb48d 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -171,7 +171,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
- 	} else {
- 		struct strbuf sb = STRBUF_INIT;
- 		strbuf_addf(&sb, "%s/objects", ref_git);
--		add_to_alternates_file(sb.buf);
-+		odb_add_to_alternates_file(the_repository->objects, sb.buf);
- 		strbuf_release(&sb);
- 	}
+@@ -25,7 +25,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "unpack-trees.h"
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 98a84315342..f04eaba5259 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -6,7 +6,7 @@
+ #include "hex.h"
+ #include "parse-options.h"
+ #include "commit-graph.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "progress.h"
+ #include "replace-object.h"
+ #include "strbuf.h"
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index ad6b2c93209..546069f8682 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -9,7 +9,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
  
-@@ -212,12 +212,14 @@ static void copy_alternates(struct strbuf *src, const char *src_repo)
- 		if (!line.len || line.buf[0] == '#')
- 			continue;
- 		if (is_absolute_path(line.buf)) {
--			add_to_alternates_file(line.buf);
-+			odb_add_to_alternates_file(the_repository->objects,
-+						   line.buf);
- 			continue;
- 		}
- 		abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
- 		if (!normalize_path_copy(abs_path, abs_path))
--			add_to_alternates_file(abs_path);
-+			odb_add_to_alternates_file(the_repository->objects,
-+						   abs_path);
- 		else
- 			warning("skipping invalid relative alternate: %s/%s",
- 				src_repo, line.buf);
-@@ -352,7 +354,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
- 		struct strbuf alt = STRBUF_INIT;
- 		get_common_dir(&alt, src_repo);
- 		strbuf_addstr(&alt, "/objects");
--		add_to_alternates_file(alt.buf);
-+		odb_add_to_alternates_file(the_repository->objects, alt.buf);
- 		strbuf_release(&alt);
- 	} else {
- 		struct strbuf src = STRBUF_INIT;
+ #include "commit.h"
+ #include "parse-options.h"
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 2d50883b729..96cb68e5e5d 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -19,7 +19,7 @@
+ #include "setup.h"
+ #include "strvec.h"
+ #include "run-command.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "list-objects.h"
+ #include "commit-slab.h"
+ #include "wildmatch.h"
+diff --git a/builtin/difftool.c b/builtin/difftool.c
+index a3b64ce6942..fac613e3bc3 100644
+--- a/builtin/difftool.c
++++ b/builtin/difftool.c
+@@ -30,7 +30,7 @@
+ #include "strbuf.h"
+ #include "lockfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "dir.h"
+ #include "entry.h"
+ #include "setup.h"
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index 37c01d6c6fe..0505f289a94 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -14,7 +14,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "object.h"
+ #include "tag.h"
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index b2839c5f439..52c792488e1 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -24,7 +24,7 @@
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "mem-pool.h"
+ #include "commit-reach.h"
+ #include "khash.h"
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index a890e2864d1..b842bc9c51b 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -14,7 +14,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oidset.h"
+ #include "oid-array.h"
+ #include "commit.h"
 diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 9abd7b25580..014aa1344e2 100644
+index 6e1474f63d5..9abd7b25580 100644
 --- a/builtin/fsck.c
 +++ b/builtin/fsck.c
-@@ -997,7 +997,7 @@ int cmd_fsck(int argc,
- 		for_each_packed_object(the_repository,
- 				       mark_packed_for_connectivity, NULL, 0);
- 	} else {
--		prepare_alt_odb(the_repository);
-+		odb_prepare_alternates(the_repository->objects);
- 		for (source = the_repository->objects->sources; source; source = source->next)
- 			fsck_object_dir(source->path);
- 
-@@ -1108,7 +1108,7 @@ int cmd_fsck(int argc,
- 	if (the_repository->settings.core_commit_graph) {
- 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
- 
--		prepare_alt_odb(the_repository);
-+		odb_prepare_alternates(the_repository->objects);
- 		for (source = the_repository->objects->sources; source; source = source->next) {
- 			child_process_init(&commit_graph_verify);
- 			commit_graph_verify.git_cmd = 1;
-@@ -1126,7 +1126,7 @@ int cmd_fsck(int argc,
- 	if (the_repository->settings.core_multi_pack_index) {
- 		struct child_process midx_verify = CHILD_PROCESS_INIT;
- 
--		prepare_alt_odb(the_repository);
-+		odb_prepare_alternates(the_repository->objects);
- 		for (source = the_repository->objects->sources; source; source = source->next) {
- 			child_process_init(&midx_verify);
- 			midx_verify.git_cmd = 1;
+@@ -17,7 +17,7 @@
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "read-cache-ll.h"
+ #include "replace-object.h"
 diff --git a/builtin/grep.c b/builtin/grep.c
-index a1d7ee7af39..336cfcab6fb 100644
+index 76b1938bba5..a1d7ee7af39 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -462,7 +462,7 @@ static int grep_submodule(struct grep_opt *opt,
+@@ -26,7 +26,7 @@
+ #include "submodule-config.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "pager.h"
+ #include "path.h"
+diff --git a/builtin/hash-object.c b/builtin/hash-object.c
+index 6a99ec250d0..e28f000221f 100644
+--- a/builtin/hash-object.c
++++ b/builtin/hash-object.c
+@@ -11,7 +11,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "blob.h"
+ #include "quote.h"
+ #include "parse-options.h"
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index bb7925bd29f..1aabe6b8ee2 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -21,7 +21,7 @@
+ #include "packfile.h"
+ #include "pack-revindex.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "oidset.h"
+ #include "path.h"
+diff --git a/builtin/log.c b/builtin/log.c
+index b450cd3bde8..fe9cc5ebecb 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -15,7 +15,7 @@
+ #include "hex.h"
+ #include "refs.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pager.h"
+ #include "color.h"
+ #include "commit.h"
+diff --git a/builtin/ls-files.c b/builtin/ls-files.c
+index be74f0a03b2..821339b07d4 100644
+--- a/builtin/ls-files.c
++++ b/builtin/ls-files.c
+@@ -25,7 +25,7 @@
+ #include "setup.h"
+ #include "sparse-index.h"
+ #include "submodule.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "hex.h"
  
- 	/*
- 	 * NEEDSWORK: repo_read_gitmodules() might call
--	 * add_to_alternates_memory() via config_from_gitmodules(). This
-+	 * odb_add_to_alternates_memory() via config_from_gitmodules(). This
- 	 * operation causes a race condition with concurrent object readings
- 	 * performed by the worker threads. That's why we need obj_read_lock()
- 	 * here. It should be removed once it's no longer necessary to add the
+ 
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index 8aafc30ca48..62b6fd58c16 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -10,7 +10,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "tree.h"
+ #include "path.h"
+ #include "quote.h"
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index 2b16b10d2ca..9464f275629 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -7,7 +7,7 @@
+ #include "hex.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "config.h"
+ #include "gettext.h"
+ #include "setup.h"
+diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+index 7f41665dfd7..b1a17787bcf 100644
+--- a/builtin/merge-tree.c
++++ b/builtin/merge-tree.c
+@@ -10,7 +10,7 @@
+ #include "commit-reach.h"
+ #include "merge-ort.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "parse-options.h"
+ #include "blob.h"
+ #include "merge-blobs.h"
+diff --git a/builtin/mktag.c b/builtin/mktag.c
+index 7ac11c46d53..1809b38f937 100644
+--- a/builtin/mktag.c
++++ b/builtin/mktag.c
+@@ -6,7 +6,7 @@
+ #include "strbuf.h"
+ #include "replace-object.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "fsck.h"
+ #include "config.h"
+ 
+diff --git a/builtin/mktree.c b/builtin/mktree.c
+index 4b478034675..016b0e5b224 100644
+--- a/builtin/mktree.c
++++ b/builtin/mktree.c
+@@ -12,7 +12,7 @@
+ #include "tree.h"
+ #include "parse-options.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ static struct treeent {
+ 	unsigned mode;
+diff --git a/builtin/multi-pack-index.c b/builtin/multi-pack-index.c
+index f55bf53da83..aa25b06f9d0 100644
+--- a/builtin/multi-pack-index.c
++++ b/builtin/multi-pack-index.c
+@@ -7,7 +7,7 @@
+ #include "midx.h"
+ #include "strbuf.h"
+ #include "trace2.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "repository.h"
+ 
+diff --git a/builtin/notes.c b/builtin/notes.c
+index a3f433ca4c0..783d4932ca6 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -16,7 +16,7 @@
+ #include "notes.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ 
+ #include "pretty.h"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 8b33edc2ff5..99b63cb0980 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -32,7 +32,7 @@
+ #include "list.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "dir.h"
+ #include "midx.h"
+diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
+index 5d1fc781761..3134cb8c689 100644
+--- a/builtin/pack-redundant.c
++++ b/builtin/pack-redundant.c
+@@ -13,7 +13,7 @@
+ #include "hex.h"
+ 
+ #include "packfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strbuf.h"
+ 
+ #define BLKSIZE 512
+diff --git a/builtin/prune.c b/builtin/prune.c
+index e930caa0c0a..7bbfb14c2be 100644
+--- a/builtin/prune.c
++++ b/builtin/prune.c
+@@ -17,7 +17,7 @@
+ #include "replace-object.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "shallow.h"
+ 
+ static const char * const prune_usage[] = {
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index a317d6c278d..0f5958c4a66 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -33,7 +33,7 @@
+ #include "packfile.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "protocol.h"
+ #include "commit-reach.h"
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 0d6755bcb71..ac5b8d2a1a6 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -14,7 +14,7 @@
+ #include "rebase.h"
+ #include "refs.h"
+ #include "refspec.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strvec.h"
+ #include "commit-reach.h"
+ #include "progress.h"
 diff --git a/builtin/repack.c b/builtin/repack.c
-index 16782320058..8145474cf8d 100644
+index 59214dbdfdf..16782320058 100644
 --- a/builtin/repack.c
 +++ b/builtin/repack.c
-@@ -1256,7 +1256,8 @@ int cmd_repack(int argc,
- 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
- 		die(_(incremental_bitmap_conflict_error));
+@@ -17,7 +17,7 @@
+ #include "midx.h"
+ #include "packfile.h"
+ #include "prune-packed.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "promisor-remote.h"
+ #include "shallow.h"
+ #include "pack.h"
+diff --git a/builtin/replace.c b/builtin/replace.c
+index 48c7c6a2d56..11c7e2d4c0c 100644
+--- a/builtin/replace.c
++++ b/builtin/replace.c
+@@ -19,7 +19,7 @@
+ #include "run-command.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "tag.h"
+ #include "wildmatch.h"
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0984b607bf0..0ee37a32cb2 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -14,7 +14,7 @@
+ #include "object.h"
+ #include "object-name.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pack-bitmap.h"
+ #include "parse-options.h"
+ #include "log-tree.h"
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 623a52a45f8..90ec1de78f9 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -5,7 +5,7 @@
+ #include "hex.h"
+ #include "refs/refs-internal.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "object.h"
+ #include "string-list.h"
+ #include "parse-options.h"
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 758bc6d0f24..84f7fa53424 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -28,7 +28,7 @@
+ #include "diff.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "advice.h"
+ #include "branch.h"
+ #include "list-objects-filter-options.h"
+diff --git a/builtin/tag.c b/builtin/tag.c
+index 4742b27d16e..cf2ea4b4993 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -19,7 +19,7 @@
+ #include "refs.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "tag.h"
+ #include "parse-options.h"
+diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
+index e33acfc4ee4..b92fd4710a9 100644
+--- a/builtin/unpack-file.c
++++ b/builtin/unpack-file.c
+@@ -4,7 +4,7 @@
+ #include "hex.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
  
--	if (write_bitmaps && po_args.local && has_alt_odb(the_repository)) {
-+	if (write_bitmaps && po_args.local &&
-+	    odb_has_alternates(the_repository->objects)) {
- 		/*
- 		 * When asked to do a local repack, but we have
- 		 * packfiles that are inherited from an alternate, then
+ static char *create_temp_file(struct object_id *oid)
+ {
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index e905d5f4e19..7bf395eec84 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -9,7 +9,7 @@
+ #include "git-zlib.h"
+ #include "hex.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "object.h"
+ #include "delta.h"
+ #include "pack.h"
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 678e2ecc2c2..55406a539e7 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -17,7 +17,7 @@
+ #include "tmp-objdir.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ static int odb_transaction_nesting;
+ 
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 9accf157b44..2e623f8627a 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -14,7 +14,7 @@
+ #include "fetch-pack.h"
+ #include "remote.h"
+ #include "trace2.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ static struct {
+ 	enum bundle_list_heuristic heuristic;
+diff --git a/bundle.c b/bundle.c
+index 2ce7525f90d..e09e3c2f58c 100644
+--- a/bundle.c
++++ b/bundle.c
+@@ -7,7 +7,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "repository.h"
+ #include "object.h"
+ #include "commit.h"
+diff --git a/cache-tree.c b/cache-tree.c
+index fa3858e2829..9786b32b3a1 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -10,7 +10,7 @@
+ #include "cache-tree.h"
+ #include "bulk-checkin.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "read-cache-ll.h"
+ #include "replace-object.h"
+ #include "repository.h"
+diff --git a/combine-diff.c b/combine-diff.c
+index dfae9f7995d..cf23a753407 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -2,7 +2,7 @@
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "git-compat-util.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "convert.h"
+ #include "diff.h"
 diff --git a/commit-graph.c b/commit-graph.c
-index 6ced5b366e7..59265f89385 100644
+index 12d32cdad1d..6ced5b366e7 100644
 --- a/commit-graph.c
 +++ b/commit-graph.c
-@@ -649,7 +649,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
- 	count = st->st_size / (the_hash_algo->hexsz + 1);
- 	CALLOC_ARRAY(oids, count);
+@@ -13,7 +13,7 @@
+ #include "refs.h"
+ #include "hash-lookup.h"
+ #include "commit-graph.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "path.h"
+ #include "alloc.h"
+diff --git a/commit-graph.h b/commit-graph.h
+index 0e661db1b54..78ab7b875b2 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -1,7 +1,7 @@
+ #ifndef COMMIT_GRAPH_H
+ #define COMMIT_GRAPH_H
  
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
+-#include "object-store.h"
++#include "odb.h"
+ #include "oidset.h"
  
- 	for (i = 0; i < count; i++) {
- 		struct odb_source *source;
-@@ -778,7 +778,7 @@ static int prepare_commit_graph(struct repository *r)
- 	if (!commit_graph_compatible(r))
- 		return 0;
+ #define GIT_TEST_COMMIT_GRAPH "GIT_TEST_COMMIT_GRAPH"
+diff --git a/commit.c b/commit.c
+index e915b2b9a12..1d30f8ce15a 100644
+--- a/commit.c
++++ b/commit.c
+@@ -9,7 +9,7 @@
+ #include "hex.h"
+ #include "repository.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "utf8.h"
+ #include "diff.h"
+ #include "revision.h"
+diff --git a/config.c b/config.c
+index b18b5617fcd..883dd066827 100644
+--- a/config.c
++++ b/config.c
+@@ -31,7 +31,7 @@
+ #include "hashmap.h"
+ #include "string-list.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pager.h"
+ #include "path.h"
+ #include "utf8.h"
+diff --git a/connected.c b/connected.c
+index 4415388beba..18c13245d8e 100644
+--- a/connected.c
++++ b/connected.c
+@@ -3,7 +3,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "run-command.h"
+ #include "sigchain.h"
+ #include "connected.h"
+diff --git a/contrib/coccinelle/the_repository.cocci b/contrib/coccinelle/the_repository.cocci
+index 765ad689678..ea7fe1c8db7 100644
+--- a/contrib/coccinelle/the_repository.cocci
++++ b/contrib/coccinelle/the_repository.cocci
+@@ -77,7 +77,7 @@
+ |
+ - diff_setup
+ + repo_diff_setup
+-// object-store.h
++// odb.h
+ |
+ - read_object_file
+ + repo_read_object_file
+diff --git a/diagnose.c b/diagnose.c
+index d08d5643aac..ad0d5c12465 100644
+--- a/diagnose.c
++++ b/diagnose.c
+@@ -7,7 +7,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "strvec.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "parse-options.h"
+ #include "repository.h"
+diff --git a/diff.c b/diff.c
+index 90e8003dd11..3af108115b3 100644
+--- a/diff.c
++++ b/diff.c
+@@ -23,7 +23,7 @@
+ #include "color.h"
+ #include "run-command.h"
+ #include "utf8.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "userdiff.h"
+ #include "submodule.h"
+ #include "hashmap.h"
+diff --git a/entry.c b/entry.c
+index f36ec5ad242..75d55038d7c 100644
+--- a/entry.c
++++ b/entry.c
+@@ -1,7 +1,7 @@
+ #define USE_THE_REPOSITORY_VARIABLE
  
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources;
- 	     !r->objects->commit_graph && source;
- 	     source = source->next)
+ #include "git-compat-util.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "dir.h"
+ #include "environment.h"
+ #include "gettext.h"
+diff --git a/fetch-pack.c b/fetch-pack.c
+index fa4231fee74..cf157f5d7e5 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -24,7 +24,7 @@
+ #include "oid-array.h"
+ #include "oidset.h"
+ #include "packfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "connected.h"
+ #include "fetch-negotiator.h"
+diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
+index 501b5acdd44..1a8c972adf3 100644
+--- a/fmt-merge-msg.c
++++ b/fmt-merge-msg.c
+@@ -6,7 +6,7 @@
+ #include "environment.h"
+ #include "refs.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "diff.h"
+ #include "diff-merges.h"
+ #include "hex.h"
+diff --git a/fsck.c b/fsck.c
+index 8dc8472ceb3..e69baab3af7 100644
+--- a/fsck.c
++++ b/fsck.c
+@@ -4,7 +4,7 @@
+ #include "date.h"
+ #include "dir.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "repository.h"
+ #include "object.h"
+diff --git a/grep.c b/grep.c
+index f8d535182c3..dc77e6c4631 100644
+--- a/grep.c
++++ b/grep.c
+@@ -5,7 +5,7 @@
+ #include "gettext.h"
+ #include "grep.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pretty.h"
+ #include "userdiff.h"
+ #include "xdiff-interface.h"
+diff --git a/http-backend.c b/http-backend.c
+index 0c575aa88aa..ad8c4037493 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -18,7 +18,7 @@
+ #include "url.h"
+ #include "strvec.h"
+ #include "packfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "protocol.h"
+ #include "date.h"
+ #include "write-or-die.h"
+diff --git a/http-push.c b/http-push.c
+index f9e67cabd4b..d1b1bb23711 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -20,7 +20,7 @@
+ #include "url.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit-reach.h"
+ 
+ #ifdef EXPAT_NEEDS_XMLPARSE_H
+diff --git a/http-walker.c b/http-walker.c
+index c374e6b2056..05fb9ce714a 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -10,7 +10,7 @@
+ #include "transport.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ struct alt_base {
+ 	char *base;
+diff --git a/http.c b/http.c
+index 5e15bbab3f1..8f4f701a818 100644
+--- a/http.c
++++ b/http.c
+@@ -19,7 +19,7 @@
+ #include "packfile.h"
+ #include "string-list.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "tempfile.h"
+ 
+ static struct trace_key trace_curl = TRACE_KEY_INIT(CURL);
+diff --git a/list-objects-filter.c b/list-objects-filter.c
+index 78b397bc194..80fe48a52c8 100644
+--- a/list-objects-filter.c
++++ b/list-objects-filter.c
+@@ -12,7 +12,7 @@
+ #include "oidmap.h"
+ #include "oidset.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ /* Remember to update object flag allocation in object.h */
+ /*
+diff --git a/list-objects.c b/list-objects.c
+index 597114281f6..c50b9578584 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -14,7 +14,7 @@
+ #include "list-objects-filter.h"
+ #include "list-objects-filter-options.h"
+ #include "packfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "trace.h"
+ #include "environment.h"
+ 
 diff --git a/loose.c b/loose.c
-index fab4041c03d..519f5db7935 100644
+index fe65d5b9b0f..fab4041c03d 100644
 --- a/loose.c
 +++ b/loose.c
-@@ -112,7 +112,7 @@ int repo_read_loose_object_map(struct repository *repo)
- 	if (!should_use_loose_object_map(repo))
- 		return 0;
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
+ #include "hash.h"
+ #include "path.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "hex.h"
+ #include "repository.h"
+ #include "wrapper.h"
+diff --git a/mailmap.c b/mailmap.c
+index 9e2642a043b..b18e74c2110 100644
+--- a/mailmap.c
++++ b/mailmap.c
+@@ -6,7 +6,7 @@
+ #include "string-list.h"
+ #include "mailmap.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "setup.h"
  
--	prepare_alt_odb(repo);
-+	odb_prepare_alternates(repo->objects);
+ char *git_mailmap_file;
+diff --git a/match-trees.c b/match-trees.c
+index 72922d5d64e..4704f95c340 100644
+--- a/match-trees.c
++++ b/match-trees.c
+@@ -7,7 +7,7 @@
+ #include "tree.h"
+ #include "tree-walk.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "repository.h"
  
- 	for (source = repo->objects->sources; source; source = source->next) {
- 		if (load_one_loose_object_map(repo, source) < 0) {
+ static int score_missing(unsigned mode)
+diff --git a/merge-blobs.c b/merge-blobs.c
+index 53f36dbc175..ba8a3fdfd82 100644
+--- a/merge-blobs.c
++++ b/merge-blobs.c
+@@ -4,7 +4,7 @@
+ #include "merge-ll.h"
+ #include "blob.h"
+ #include "merge-blobs.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ static int fill_mmfile_blob(mmfile_t *f, struct blob *obj)
+ {
+diff --git a/merge-ort.c b/merge-ort.c
+index 47b3d1730ec..9f693ab1d36 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -39,7 +39,7 @@
+ #include "mem-pool.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "path.h"
+ #include "promisor-remote.h"
+diff --git a/meson.build b/meson.build
+index 596f5ac7110..3fad0e39987 100644
+--- a/meson.build
++++ b/meson.build
+@@ -396,8 +396,8 @@ libgit_sources = [
+   'object-file-convert.c',
+   'object-file.c',
+   'object-name.c',
+-  'object-store.c',
+   'object.c',
++  'odb.c',
+   'oid-array.c',
+   'oidmap.c',
+   'oidset.c',
+diff --git a/notes-cache.c b/notes-cache.c
+index 150241b15e0..344f67762b8 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -3,7 +3,7 @@
+ #include "git-compat-util.h"
+ #include "notes-cache.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pretty.h"
+ #include "repository.h"
+ #include "commit.h"
+diff --git a/notes-merge.c b/notes-merge.c
+index dae8e6a281a..de6a52e2e7f 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -8,7 +8,7 @@
+ #include "refs.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "repository.h"
+ #include "diff.h"
+diff --git a/notes.c b/notes.c
+index 0a128f1de98..fc000e501d2 100644
+--- a/notes.c
++++ b/notes.c
+@@ -8,7 +8,7 @@
+ #include "notes.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "utf8.h"
+ #include "strbuf.h"
+ #include "tree-walk.h"
 diff --git a/object-file.c b/object-file.c
-index 2d3af8a77c0..04da19a1a3b 100644
+index 6bad1d3dd1c..2d3af8a77c0 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -106,7 +106,7 @@ static int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
- {
- 	struct odb_source *source;
+@@ -21,7 +21,7 @@
+ #include "loose.h"
+ #include "object-file-convert.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oidtree.h"
+ #include "pack.h"
+ #include "packfile.h"
+diff --git a/object-file.h b/object-file.h
+index 9a18859b2e0..5066638f8ec 100644
+--- a/object-file.h
++++ b/object-file.h
+@@ -3,7 +3,7 @@
  
--	prepare_alt_odb(the_repository);
-+	odb_prepare_alternates(the_repository->objects);
- 	for (source = the_repository->objects->sources->next; source; source = source->next) {
- 		if (check_and_freshen_odb(source, oid, freshen))
- 			return 1;
-@@ -205,7 +205,7 @@ static int stat_loose_object(struct repository *r, const struct object_id *oid,
- 	struct odb_source *source;
- 	static struct strbuf buf = STRBUF_INIT;
+ #include "git-zlib.h"
+ #include "object.h"
+-#include "object-store.h"
++#include "odb.h"
  
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources; source; source = source->next) {
- 		*path = odb_loose_path(source, &buf, oid);
- 		if (!lstat(*path, st))
-@@ -227,7 +227,7 @@ static int open_loose_object(struct repository *r,
- 	int most_interesting_errno = ENOENT;
- 	static struct strbuf buf = STRBUF_INIT;
+ struct index_state;
  
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources; source; source = source->next) {
- 		*path = odb_loose_path(source, &buf, oid);
- 		fd = git_open(*path);
-@@ -246,7 +246,7 @@ static int quick_has_loose(struct repository *r,
- {
- 	struct odb_source *source;
- 
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources; source; source = source->next) {
- 		if (oidtree_contains(odb_loose_cache(source, oid), oid))
- 			return 1;
-@@ -1439,7 +1439,7 @@ int for_each_loose_object(each_loose_object_fn cb, void *data,
- {
- 	struct odb_source *source;
- 
--	prepare_alt_odb(the_repository);
-+	odb_prepare_alternates(the_repository->objects);
- 	for (source = the_repository->objects->sources; source; source = source->next) {
- 		int r = for_each_loose_file_in_objdir(source->path, cb, NULL,
- 						      NULL, data);
-diff --git a/object-name.c b/object-name.c
-index 544634d0f40..381536e900e 100644
---- a/object-name.c
-+++ b/object-name.c
-@@ -376,7 +376,7 @@ static int init_object_disambiguation(struct repository *r,
- 	ds->hex_pfx[len] = '\0';
- 	ds->repo = r;
- 	ds->bin_pfx.algo = algo ? hash_algo_by_ptr(algo) : GIT_HASH_UNKNOWN;
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	return 0;
- }
- 
-diff --git a/odb.c b/odb.c
-index 73410920a88..42862ef7fe7 100644
---- a/odb.c
+diff --git a/object-store.c b/odb.c
+similarity index 99%
+rename from object-store.c
+rename to odb.c
+index 5c04a1018f7..d1025ac182d 100644
+--- a/object-store.c
 +++ b/odb.c
-@@ -272,10 +272,11 @@ static void read_info_alternates(struct object_database *odb,
- 	free(path);
- }
- 
--void add_to_alternates_file(const char *reference)
-+void odb_add_to_alternates_file(struct object_database *odb,
-+				const char *reference)
- {
- 	struct lock_file lock = LOCK_INIT;
--	char *alts = repo_git_path(the_repository, "objects/info/alternates");
-+	char *alts = repo_git_path(odb->repo, "objects/info/alternates");
- 	FILE *in, *out;
- 	int found = 0;
- 
-@@ -308,22 +309,23 @@ void add_to_alternates_file(const char *reference)
- 		fprintf_or_die(out, "%s\n", reference);
- 		if (commit_lock_file(&lock))
- 			die_errno(_("unable to move new alternates file into place"));
--		if (the_repository->objects->loaded_alternates)
--			link_alt_odb_entries(the_repository->objects, reference,
-+		if (odb->loaded_alternates)
-+			link_alt_odb_entries(odb, reference,
- 					     '\n', NULL, 0);
- 	}
- 	free(alts);
- }
- 
--void add_to_alternates_memory(const char *reference)
-+void odb_add_to_alternates_memory(struct object_database *odb,
-+				  const char *reference)
- {
- 	/*
- 	 * Make sure alternates are initialized, or else our entry may be
- 	 * overwritten when they are.
- 	 */
--	prepare_alt_odb(the_repository);
-+	odb_prepare_alternates(odb);
- 
--	link_alt_odb_entries(the_repository->objects, reference,
-+	link_alt_odb_entries(odb, reference,
- 			     '\n', NULL, 0);
- }
- 
-@@ -335,7 +337,7 @@ struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy)
- 	 * Make sure alternates are initialized, or else our entry may be
- 	 * overwritten when they are.
- 	 */
--	prepare_alt_odb(the_repository);
-+	odb_prepare_alternates(the_repository->objects);
- 
- 	/*
- 	 * Make a new primary odb and link the old primary ODB in as an
-@@ -379,12 +381,6 @@ void restore_primary_odb(struct odb_source *restore_alt, const char *old_path)
- 	free_object_directory(cur_alt);
- }
- 
--/*
-- * Compute the exact path an alternate is at and returns it. In case of
-- * error NULL is returned and the human readable error is added to `err`
-- * `path` may be relative and should point to $GIT_DIR.
-- * `err` must not be null.
-- */
- char *compute_alternate_path(const char *path, struct strbuf *err)
- {
- 	char *ref_git = NULL;
-@@ -455,7 +451,7 @@ struct odb_source *odb_find_source(struct object_database *odb, const char *obj_
- 	char *obj_dir_real = real_pathdup(obj_dir, 1);
- 	struct strbuf odb_path_real = STRBUF_INIT;
- 
--	prepare_alt_odb(odb->repo);
-+	odb_prepare_alternates(odb);
- 	for (source = odb->sources; source; source = source->next) {
- 		strbuf_realpath(&odb_path_real, source->path, 1);
- 		if (!strcmp(obj_dir_real, odb_path_real.buf))
-@@ -573,7 +569,7 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
- 	struct odb_source *alternate;
- 	int r = 0;
- 
--	prepare_alt_odb(the_repository);
-+	odb_prepare_alternates(the_repository->objects);
- 	for (alternate = the_repository->objects->sources->next; alternate; alternate = alternate->next) {
- 		r = fn(alternate, cb);
- 		if (r)
-@@ -582,21 +578,21 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
- 	return r;
- }
- 
--void prepare_alt_odb(struct repository *r)
-+void odb_prepare_alternates(struct object_database *odb)
- {
--	if (r->objects->loaded_alternates)
-+	if (odb->loaded_alternates)
- 		return;
- 
--	link_alt_odb_entries(r->objects, r->objects->alternate_db, PATH_SEP, NULL, 0);
-+	link_alt_odb_entries(odb, odb->alternate_db, PATH_SEP, NULL, 0);
- 
--	read_info_alternates(r->objects, r->objects->sources->path, 0);
--	r->objects->loaded_alternates = 1;
-+	read_info_alternates(odb, odb->sources->path, 0);
-+	odb->loaded_alternates = 1;
- }
- 
--int has_alt_odb(struct repository *r)
-+int odb_has_alternates(struct object_database *odb)
- {
--	prepare_alt_odb(r);
--	return !!r->objects->sources->next;
-+	odb_prepare_alternates(odb);
-+	return !!odb->sources->next;
- }
- 
- int obj_read_use_lock = 0;
-diff --git a/odb.h b/odb.h
-index 5de952608f3..eba16929a81 100644
---- a/odb.h
+@@ -13,7 +13,7 @@
+ #include "loose.h"
+ #include "object-file-convert.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "path.h"
+ #include "promisor-remote.h"
+diff --git a/object-store.h b/odb.h
+similarity index 99%
+rename from object-store.h
+rename to odb.h
+index d199d757d76..6f56b168e46 100644
+--- a/object-store.h
 +++ b/odb.h
-@@ -13,6 +13,14 @@ struct oidtree;
- struct strbuf;
- struct repository;
+@@ -1,5 +1,5 @@
+-#ifndef OBJECT_STORE_H
+-#define OBJECT_STORE_H
++#ifndef ODB_H
++#define ODB_H
  
-+/*
-+ * Compute the exact path an alternate is at and returns it. In case of
-+ * error NULL is returned and the human readable error is added to `err`
-+ * `path` may be relative and should point to $GIT_DIR.
-+ * `err` must not be null.
-+ */
-+char *compute_alternate_path(const char *path, struct strbuf *err);
-+
- /*
-  * The source is the part of the object database that stores the actual
-  * objects. It thus encapsulates the logic to read and write the specific
-@@ -65,27 +73,11 @@ struct odb_source {
- 	char *path;
- };
+ #include "hashmap.h"
+ #include "object.h"
+@@ -352,4 +352,4 @@ void *read_object_with_reference(struct repository *r,
+ 				 unsigned long *size,
+ 				 struct object_id *oid_ret);
  
--void prepare_alt_odb(struct repository *r);
--int has_alt_odb(struct repository *r);
--char *compute_alternate_path(const char *path, struct strbuf *err);
- typedef int alt_odb_fn(struct odb_source *, void *);
- int foreach_alt_odb(alt_odb_fn, void*);
- typedef void alternate_ref_fn(const struct object_id *oid, void *);
- void for_each_alternate_ref(alternate_ref_fn, void *);
+-#endif /* OBJECT_STORE_H */
++#endif /* ODB_H */
+diff --git a/oss-fuzz/fuzz-pack-idx.c b/oss-fuzz/fuzz-pack-idx.c
+index 609a343ee3e..d2a92f34d98 100644
+--- a/oss-fuzz/fuzz-pack-idx.c
++++ b/oss-fuzz/fuzz-pack-idx.c
+@@ -1,5 +1,5 @@
+ #include "git-compat-util.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
  
--/*
-- * Add the directory to the on-disk alternates file; the new entry will also
-- * take effect in the current process.
-- */
--void add_to_alternates_file(const char *dir);
--
--/*
-- * Add the directory to the in-memory list of alternates (along with any
-- * recursive alternates it points to), but do not modify the on-disk alternates
-- * file.
-- */
--void add_to_alternates_memory(const char *dir);
--
- /*
-  * Replace the current writable object directory with the specified temporary
-  * object directory; returns the former primary object directory.
-@@ -124,7 +116,7 @@ struct object_database {
- 	/*
- 	 * A list of alternate object directories loaded from the environment;
- 	 * this should not generally need to be accessed directly, but will
--	 * populate the "sources" list when prepare_alt_odb() is run.
-+	 * populate the "sources" list when odb_prepare_alternates() is run.
- 	 */
- 	char *alternate_db;
+ int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size);
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 7f400ee0121..37648b57125 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -4,7 +4,7 @@
+ #include "environment.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "diff.h"
+ #include "revision.h"
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index ac6d62b980c..a695a794e9b 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -17,7 +17,7 @@
+ #include "packfile.h"
+ #include "repository.h"
+ #include "trace2.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "list-objects-filter-options.h"
+ #include "midx.h"
+ #include "config.h"
+diff --git a/pack-check.c b/pack-check.c
+index 874897d6cba..67cb2cf72f2 100644
+--- a/pack-check.c
++++ b/pack-check.c
+@@ -8,7 +8,7 @@
+ #include "progress.h"
+ #include "packfile.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
  
-@@ -209,6 +201,33 @@ struct odb_source *odb_find_source(struct object_database *odb, const char *obj_
- int odb_mkstemp(struct object_database *odb,
- 		struct strbuf *temp_filename, const char *pattern);
+ struct idx_entry {
+ 	off_t                offset;
+diff --git a/pack-mtimes.c b/pack-mtimes.c
+index 20900ca88d3..8e1f2dec0ef 100644
+--- a/pack-mtimes.c
++++ b/pack-mtimes.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "pack-mtimes.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "strbuf.h"
  
-+/*
-+ * Prepare alternate object sources for the given database by reading
-+ * "objects/info/alternates" and opening the respective sources.
-+ */
-+void odb_prepare_alternates(struct object_database *odb);
-+
-+/*
-+ * Check whether the object database has any alternates. The primary object
-+ * source does not count as alternate.
-+ */
-+int odb_has_alternates(struct object_database *odb);
-+
-+/*
-+ * Add the directory to the on-disk alternates file; the new entry will also
-+ * take effect in the current process.
-+ */
-+void odb_add_to_alternates_file(struct object_database *odb,
-+				const char *dir);
-+
-+/*
-+ * Add the directory to the in-memory list of alternate sources (along with any
-+ * recursive alternates it points to), but do not modify the on-disk alternates
-+ * file.
-+ */
-+void odb_add_to_alternates_memory(struct object_database *odb,
-+				  const char *dir);
-+
- void *repo_read_object_file(struct repository *r,
- 			    const struct object_id *oid,
- 			    enum object_type *type,
+diff --git a/pack-objects.h b/pack-objects.h
+index 475a2d67ce3..1ac8644201b 100644
+--- a/pack-objects.h
++++ b/pack-objects.h
+@@ -1,7 +1,7 @@
+ #ifndef PACK_OBJECTS_H
+ #define PACK_OBJECTS_H
+ 
+-#include "object-store.h"
++#include "odb.h"
+ #include "thread-utils.h"
+ #include "pack.h"
+ #include "packfile.h"
+diff --git a/pack-revindex.c b/pack-revindex.c
+index ffcde48870d..0cc422a1e67 100644
+--- a/pack-revindex.c
++++ b/pack-revindex.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "pack-revindex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "strbuf.h"
+ #include "trace2.h"
 diff --git a/packfile.c b/packfile.c
-index 346c2f9ce90..ac0e29e99b9 100644
+index 60661ad0095..346c2f9ce90 100644
 --- a/packfile.c
 +++ b/packfile.c
-@@ -1034,7 +1034,7 @@ static void prepare_packed_git(struct repository *r)
- 	if (r->objects->packed_git_initialized)
- 		return;
+@@ -19,7 +19,7 @@
+ #include "tree-walk.h"
+ #include "tree.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "midx.h"
+ #include "commit-graph.h"
+ #include "pack-revindex.h"
+diff --git a/packfile.h b/packfile.h
+index 826eb7f475f..53c3b7d3b43 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -3,10 +3,10 @@
  
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
- 	for (source = r->objects->sources; source; source = source->next) {
- 		int local = (source == r->objects->sources);
- 		prepare_multi_pack_index_one(r, source->path, local);
-@@ -1059,7 +1059,7 @@ void reprepare_packed_git(struct repository *r)
- 	 * the lifetime of the process.
- 	 */
- 	r->objects->loaded_alternates = 0;
--	prepare_alt_odb(r);
-+	odb_prepare_alternates(r->objects);
+ #include "list.h"
+ #include "object.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oidset.h"
  
- 	for (source = r->objects->sources; source; source = source->next)
- 		odb_clear_loose_cache(source);
+-/* in object-store.h */
++/* in odb.h */
+ struct object_info;
+ 
+ struct packed_git {
+diff --git a/path.c b/path.c
+index c347829aa66..7f56eaf9930 100644
+--- a/path.c
++++ b/path.c
+@@ -15,7 +15,7 @@
+ #include "submodule-config.h"
+ #include "path.h"
+ #include "packfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "lockfile.h"
+ #include "exec-cmd.h"
+ 
+diff --git a/promisor-remote.c b/promisor-remote.c
+index 9d058586dfa..2baa286bfd0 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -3,7 +3,7 @@
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "promisor-remote.h"
+ #include "config.h"
+ #include "trace2.h"
+diff --git a/protocol-caps.c b/protocol-caps.c
+index 9b8db37a210..3022f69a1bd 100644
+--- a/protocol-caps.c
++++ b/protocol-caps.c
+@@ -6,7 +6,7 @@
+ #include "hash.h"
+ #include "hex.h"
+ #include "object.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "repository.h"
+ #include "string-list.h"
+ #include "strbuf.h"
+diff --git a/read-cache.c b/read-cache.c
+index c0bb760ad47..c3fa9686766 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -20,7 +20,7 @@
+ #include "refs.h"
+ #include "dir.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "tree.h"
+ #include "commit.h"
+diff --git a/ref-filter.c b/ref-filter.c
+index 7a274633cfc..4ce45440ad1 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -12,7 +12,7 @@
+ #include "refs.h"
+ #include "wildmatch.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "repo-settings.h"
+ #include "repository.h"
+diff --git a/reflog.c b/reflog.c
+index 15d81ebea97..4f8a3b717cd 100644
+--- a/reflog.c
++++ b/reflog.c
+@@ -5,7 +5,7 @@
+ #include "config.h"
+ #include "gettext.h"
+ #include "parse-options.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "reflog.h"
+ #include "refs.h"
+ #include "revision.h"
+diff --git a/refs.c b/refs.c
+index 5f6a386cc93..0ff0e582a6b 100644
+--- a/refs.c
++++ b/refs.c
+@@ -19,7 +19,7 @@
+ #include "run-command.h"
+ #include "hook.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "object.h"
+ #include "path.h"
+ #include "submodule.h"
+diff --git a/remote.c b/remote.c
+index 4099183cacd..17a842f5684 100644
+--- a/remote.c
++++ b/remote.c
+@@ -12,7 +12,7 @@
+ #include "refs.h"
+ #include "refspec.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "commit.h"
+ #include "diff.h"
+diff --git a/replace-object.c b/replace-object.c
+index f8c5f68837f..3eae0510745 100644
+--- a/replace-object.c
++++ b/replace-object.c
+@@ -2,7 +2,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "oidmap.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "refs.h"
+ #include "repository.h"
+diff --git a/replace-object.h b/replace-object.h
+index 3052e96a620..4c9f2a2383d 100644
+--- a/replace-object.h
++++ b/replace-object.h
+@@ -3,7 +3,7 @@
+ 
+ #include "oidmap.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ struct replace_object {
+ 	struct oidmap_entry original;
+diff --git a/repository.c b/repository.c
+index 7528beccddf..13426db0f2b 100644
+--- a/repository.c
++++ b/repository.c
+@@ -1,7 +1,7 @@
+ #include "git-compat-util.h"
+ #include "abspath.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "config.h"
+ #include "object.h"
+ #include "lockfile.h"
+diff --git a/rerere.c b/rerere.c
+index 3cd37c5f0ae..951e4bf8b41 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -18,7 +18,7 @@
+ #include "path.h"
+ #include "pathspec.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strmap.h"
+ 
+ #define RESOLVED 0
+diff --git a/revision.c b/revision.c
+index 2c36a9c179e..cdefe7d6e48 100644
+--- a/revision.c
++++ b/revision.c
+@@ -8,7 +8,7 @@
+ #include "hex.h"
+ #include "object-name.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oidset.h"
+ #include "tag.h"
+ #include "blob.h"
+diff --git a/send-pack.c b/send-pack.c
+index 86592ce526d..abca2dd38a7 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -4,7 +4,7 @@
+ #include "date.h"
+ #include "gettext.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "run-command.h"
+diff --git a/sequencer.c b/sequencer.c
+index 1ee0abbd451..2432d0a39ec 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -13,7 +13,7 @@
+ #include "dir.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "object.h"
+ #include "pager.h"
+ #include "commit.h"
+diff --git a/server-info.c b/server-info.c
+index d6cd20a39d7..9bb30d9ab71 100644
+--- a/server-info.c
++++ b/server-info.c
+@@ -11,7 +11,7 @@
+ #include "packfile.h"
+ #include "path.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "server-info.h"
+ #include "strbuf.h"
+ #include "tempfile.h"
+diff --git a/shallow.c b/shallow.c
+index faeeeb45f98..d379756e39a 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -5,7 +5,7 @@
+ #include "repository.h"
+ #include "tempfile.h"
+ #include "lockfile.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "tag.h"
+ #include "pkt-line.h"
+diff --git a/streaming.c b/streaming.c
+index 6d6512e2e0d..81c42673a23 100644
+--- a/streaming.c
++++ b/streaming.c
+@@ -10,7 +10,7 @@
+ #include "streaming.h"
+ #include "repository.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "replace-object.h"
+ #include "packfile.h"
+ 
+diff --git a/submodule-config.c b/submodule-config.c
+index b30d9365fbd..9c80f9f7b66 100644
+--- a/submodule-config.c
++++ b/submodule-config.c
+@@ -13,7 +13,7 @@
+ #include "submodule.h"
+ #include "strbuf.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "parse-options.h"
+ #include "thread-utils.h"
+ #include "tree-walk.h"
 diff --git a/submodule.c b/submodule.c
-index 9b1018877df..386be234230 100644
+index ead3fb5dadc..9b1018877df 100644
 --- a/submodule.c
 +++ b/submodule.c
-@@ -189,7 +189,8 @@ int register_all_submodule_odb_as_alternates(void)
- 	int ret = added_submodule_odb_paths.nr;
+@@ -27,7 +27,7 @@
+ #include "parse-options.h"
+ #include "object-file.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit-reach.h"
+ #include "read-cache-ll.h"
+ #include "setup.h"
+diff --git a/t/helper/test-find-pack.c b/t/helper/test-find-pack.c
+index 76c2f4eba85..611a13a3261 100644
+--- a/t/helper/test-find-pack.c
++++ b/t/helper/test-find-pack.c
+@@ -2,7 +2,7 @@
  
- 	for (i = 0; i < added_submodule_odb_paths.nr; i++)
--		add_to_alternates_memory(added_submodule_odb_paths.items[i].string);
-+		odb_add_to_alternates_memory(the_repository->objects,
-+					     added_submodule_odb_paths.items[i].string);
- 	if (ret) {
- 		string_list_clear(&added_submodule_odb_paths, 0);
- 		trace2_data_intmax("submodule", the_repository,
+ #include "test-tool.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "parse-options.h"
+ #include "setup.h"
+diff --git a/t/helper/test-pack-mtimes.c b/t/helper/test-pack-mtimes.c
+index fdf1b13437b..d51aaa3dc40 100644
+--- a/t/helper/test-pack-mtimes.c
++++ b/t/helper/test-pack-mtimes.c
+@@ -3,7 +3,7 @@
+ #include "test-tool.h"
+ #include "hex.h"
+ #include "strbuf.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "packfile.h"
+ #include "pack-mtimes.h"
+ #include "setup.h"
+diff --git a/t/helper/test-partial-clone.c b/t/helper/test-partial-clone.c
+index 34f1aee5581..dba227259a2 100644
+--- a/t/helper/test-partial-clone.c
++++ b/t/helper/test-partial-clone.c
+@@ -1,7 +1,7 @@
+ #include "test-tool.h"
+ #include "hex.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "setup.h"
+ 
+ /*
+diff --git a/t/helper/test-read-graph.c b/t/helper/test-read-graph.c
+index 53b633e2ba6..ef5339bbee9 100644
+--- a/t/helper/test-read-graph.c
++++ b/t/helper/test-read-graph.c
+@@ -3,7 +3,7 @@
+ #include "test-tool.h"
+ #include "commit-graph.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "bloom.h"
+ #include "setup.h"
+ 
+diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
+index ac81390899a..da2aa036b57 100644
+--- a/t/helper/test-read-midx.c
++++ b/t/helper/test-read-midx.c
+@@ -4,7 +4,7 @@
+ #include "hex.h"
+ #include "midx.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "pack-bitmap.h"
+ #include "packfile.h"
+ #include "setup.h"
 diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
-index 2920ca59d72..8d9a271845c 100644
+index 4cfc7c90b59..2920ca59d72 100644
 --- a/t/helper/test-ref-store.c
 +++ b/t/helper/test-ref-store.c
-@@ -79,7 +79,7 @@ static const char **get_store(const char **argv, struct ref_store **refs)
- 		if (!repo_submodule_path_append(the_repository,
- 						&sb, gitdir, "objects/"))
- 			die("computing submodule path failed");
--		add_to_alternates_memory(sb.buf);
-+		odb_add_to_alternates_memory(the_repository->objects, sb.buf);
- 		strbuf_release(&sb);
- 
- 		*refs = repo_get_submodule_ref_store(the_repository, gitdir);
+@@ -5,7 +5,7 @@
+ #include "refs.h"
+ #include "setup.h"
+ #include "worktree.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "path.h"
+ #include "repository.h"
+ #include "strbuf.h"
+diff --git a/tag.c b/tag.c
+index 05be39067cf..5f6868bf7b1 100644
+--- a/tag.c
++++ b/tag.c
+@@ -5,7 +5,7 @@
+ #include "environment.h"
+ #include "tag.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "tree.h"
+ #include "blob.h"
 diff --git a/tmp-objdir.c b/tmp-objdir.c
-index bef2f917cd2..4120badf5ce 100644
+index 056484404be..bef2f917cd2 100644
 --- a/tmp-objdir.c
 +++ b/tmp-objdir.c
-@@ -304,7 +304,7 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
+@@ -10,7 +10,7 @@
+ #include "strbuf.h"
+ #include "strvec.h"
+ #include "quote.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "repository.h"
  
- void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
- {
--	add_to_alternates_memory(t->path.buf);
-+	odb_add_to_alternates_memory(t->repo->objects, t->path.buf);
- }
- 
- void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
+ struct tmp_objdir {
+diff --git a/tree-walk.c b/tree-walk.c
+index 90655d52378..34b0fff4873 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -6,7 +6,7 @@
+ #include "gettext.h"
+ #include "hex.h"
+ #include "object-file.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "trace2.h"
+ #include "tree.h"
+ #include "pathspec.h"
+diff --git a/tree.c b/tree.c
+index b85f56267fb..341b7c2ff3f 100644
+--- a/tree.c
++++ b/tree.c
+@@ -4,7 +4,7 @@
+ #include "hex.h"
+ #include "tree.h"
+ #include "object-name.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "alloc.h"
+ #include "tree-walk.h"
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 471837f0329..f38c761ab98 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -26,7 +26,7 @@
+ #include "symlinks.h"
+ #include "trace2.h"
+ #include "fsmonitor.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "promisor-remote.h"
+ #include "entry.h"
+ #include "parallel-checkout.h"
+diff --git a/upload-pack.c b/upload-pack.c
+index 26f29b85b55..e994d6a901b 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -10,7 +10,7 @@
+ #include "pkt-line.h"
+ #include "sideband.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "oid-array.h"
+ #include "object.h"
+ #include "commit.h"
+diff --git a/walker.c b/walker.c
+index b470d43e54d..a8abe8a2e78 100644
+--- a/walker.c
++++ b/walker.c
+@@ -5,7 +5,7 @@
+ #include "hex.h"
+ #include "walker.h"
+ #include "repository.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "commit.h"
+ #include "strbuf.h"
+ #include "tree.h"
+diff --git a/xdiff-interface.c b/xdiff-interface.c
+index 1edcd319e6e..01e6e378ea6 100644
+--- a/xdiff-interface.c
++++ b/xdiff-interface.c
+@@ -5,7 +5,7 @@
+ #include "gettext.h"
+ #include "config.h"
+ #include "hex.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "strbuf.h"
+ #include "xdiff-interface.h"
+ #include "xdiff/xtypes.h"
 
 -- 
 2.50.0.rc1.591.g9c95f17f64.dirty
