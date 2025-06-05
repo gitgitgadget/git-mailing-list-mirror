@@ -1,126 +1,137 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5DC122FDE8
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 13:25:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B02EC23A578
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 13:30:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749129904; cv=none; b=GpyAvai0/kwE6kJ1CCMVSVkEruVMPTUUgY/zGEgM2bUTKUc69OuhSPfFZwxe0bFBgiEKdD/7TbDqIyo9HEpOt4essrr7m6yg8/yKIofaGYQaFKYgKgavET3HgY0Vy/882Ls8leyxZJOerlELodsaFcGGlPahUOB9W95E9PHcPF8=
+	t=1749130213; cv=none; b=urf5z2/TkeunqMIij3Em0VMdPzUfx1cyeW6Q7c9xqwy/SbbzNApX6GSQ0niT5wS2oMNeafTn/4xrd+0k6boKV6z5/dJeoyHA+v/0aXyeFzWUH4sQzjaykFcDsEfY0ce1dR+FnrkQNHi4HeC4lL0tptEI0tcobPNPeHwUsnzKHnI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749129904; c=relaxed/simple;
-	bh=Zt2nPPjrERdEcJo4aE0ZkxrfYgoSyAVhmmvmfhyegHM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sQL2pOA2oDnx6clbIbsphn/d+gPaxOr1+5CmqOfzSl2dFW38vU7fbJ9Efm/Ow3ZBXKaLLN50JHWTg9NDayPNcQve9djTmhsTEQ2Hr9mi67PTcFZq/BOS/UDSCQSmSLJQFZ/uI69CwBHC6I41OmOoTBrG2dRWJHbYBbLiKmhO7nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYnakv0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F+uPBBGO; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1749130213; c=relaxed/simple;
+	bh=lqAnkooIeV/gLfBe41GHZHu2JcQmUkBFVtynqPDxlzk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ad8XxJBWFiHNTOVxnoDEvfjyNJWoBI5e37NMh7HSgjWnL7Y8dexBsB8wKopw5og6fo5bOIvk/Tv9C7h9nkyL5+eJTjktoZdX9OWPgaMAcVT+3VATjZjqheN7h/7D39CGhDy7qpu2OJJ1yG7F9GdCwShs+APl8gZMwM+LtuBUwXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wVBRgV6h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GeHBgNJz; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYnakv0i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F+uPBBGO"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C0F8C2540102;
-	Thu,  5 Jun 2025 09:25:01 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Thu, 05 Jun 2025 09:25:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wVBRgV6h";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GeHBgNJz"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 92324114012F;
+	Thu,  5 Jun 2025 09:30:09 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 05 Jun 2025 09:30:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749129901; x=1749216301; bh=VT3v6Dm69A
-	XcQcFoRVh3YjlYMTD7vBjHfXXKn6xHq0g=; b=RYnakv0i0KGsdXFtJ2sjC2StdZ
-	BriJWuYK8nPXdDdVwQUU0Ky/4FMs6R47HRjS2Ghc4PEFizHwz0kw/RtMnHN61JzW
-	vmTdkgqvvV0TWEhnpW2HVCL0TepmAVo3Cp+JP/lBiwzUNYBxBRLs8xw1dCYSPFID
-	FrnNYhXtigFRfG82fAZ38danOZyk2tuYOODdHZ18MHwj6puMhDfPADQBZ+daJbgS
-	+tN8Ka2ANybQnaKKH44kK+y4LxqGJMskpBOuPdHUe+dgjO14i8FVRGoWUDQnjYhp
-	OE7FB0Hz0FiGyHc8JAf9nngMbeyWKDOUWK9AoU5SJuf5BDWBpmYJD1Oc4dIw==
+	:subject:to:to; s=fm3; t=1749130209; x=1749216609; bh=3eXKw5eUw9
+	c8RxF5WmtnNY01XrWIyOcuJ4nuxwkDJyc=; b=wVBRgV6hRCWAD8OgDhk9ZR0GvQ
+	KYCj27CDC6oNXVBMr0Pc0JytJo/pAH7qeabRI8s6h6KDh1iEbBKGuFN7M2x+Hod8
+	jnoRjzeevoRaiETUOwbseZgu2ciBQ6v1tUTyfHrZOVfkCjzMwlxpf9ZoBRhhHMoH
+	pNAXo1mTcwqIl1u26CpXsJezC1XIQS1KCcr+YygPEiAGpZDgte3+j0Qqo/7TfV4+
+	KaVPOAmfzm6AhRXeGMjDrjssvxI4Y8QDtGoSQpdNpNL3QDqZ+g0buozNepD/dd7y
+	XJOTfQCC/pnA/FbuJapSZxXyZuf3qqugKM9+/pquesR+XK2HLuEl9ZrBJORw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749129901; x=1749216301; bh=VT3v6Dm69AXcQcFoRVh3YjlYMTD7vBjHfXX
-	Kn6xHq0g=; b=F+uPBBGOGPMUcF74NlBIfUV1sHPa0D4WM46GdSYqwIAjssxzjCM
-	/NYEQX1zXLfYUj6g85q1DXpQ6VDUe0wUtEiYr2WP0oofTCDpTQmru1vdXNFRZHYG
-	a1l/DtDmDZjGXeyji/a0dXHaemiD4iKHAtsvSKK55rczSUOvEZZ4Ep4U6bb/rf1l
-	KtYYjBtKsFadZGx8199jymgc1tuvGKnE16OddG2dH/PNlN1Zvha0P3DcF8vpnzBU
-	rfmBW/Q5zStK+UbmRn2rExy4jXTEjyDF8JAB4JFDFLTLNy2AbnGDP1y6IxR0zcZy
-	PZD9/iwn6krA6W8p4kuajjgMycIJiJ5hT4g==
-X-ME-Sender: <xms:rZpBaPtl6TEqPXbrklKe9IeqZBLJIMQfiT6Ob6Mft2vtT-sbp81f0w>
-    <xme:rZpBaAcKWueaPGZ-QuoZYXBVUpdrLD32MQ3uHcrL8u69Q22FK-2efACthcnhWEjGX
-    bg8ZzzAyfN2fmI6Hw>
-X-ME-Received: <xmr:rZpBaCznLK6WiUiV_AvB9ByVouMQZVYb6ldBjgXANwzDoE3uH2584LDnbtB6IMtCkOP0yT3d4axrM3CMG5-Zdb6kBKqW92aGtAGZMLqYpQ>
+	1749130209; x=1749216609; bh=3eXKw5eUw9c8RxF5WmtnNY01XrWIyOcuJ4n
+	uxwkDJyc=; b=GeHBgNJz/pjgrHPSAGb/VF9eU8zADGXPpZpX2SHkOsR7C+1EyCf
+	kcyl/ROMo5DOxjoWw7J1SlakH9JQZPFhcIjB8lPuB8yxspztUA0B5Uubrl6+xB3n
+	eYFXFYxPsBsEv0vEQ8UwoRX9fwzC9CMC2kDH4AL/nDcahgRpUjHh+09rB/B3nZEK
+	hIa41RAkjDyquB8+/wkIVovR2tWFtbxUJ1u2rqfGFHB3nCezj7upLjibxbV62H2M
+	sJpsz8uebRWN6xdQ/VWfHXNoQGpjajTyzpFx6unyLPvVjL9yP3BC6yLTphvY/rng
+	p7SnNOxuSwvM1mQS9mATN97LdiDKW5o+d8A==
+X-ME-Sender: <xms:4ZtBaGtDjlQqy3GYJZ8AfdP10B3hXUV75321XWl1iRijsufUt2AUdQ>
+    <xme:4ZtBaLfyvgnzuRiLa2Bogw4dVLU-remdHxmfqqAU4yDA3FlBQ7KP-nvyVYw00itDb
+    -T8ZAmBF4Xz8J-rdg>
+X-ME-Received: <xmr:4ZtBaBwach6PwwbdbJIoMUuuqljioHoXfeoozlXzqXbw8l8UTcqWEj1mEDZIevdJJZ6SkBx3i9-0BUugmFnMgY038yTudVIY3IBN>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefieelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    hhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukh
-X-ME-Proxy: <xmx:rZpBaONhQwpTJCo6Rvqs0grh7EN0ZhSWR2zJwkvEimJX9mJ8IdlfpA>
-    <xmx:rZpBaP9jKjwGs1CgcvstuK4u9W7VGhRYLn2S4sdpM8Ni-xO3coTAxw>
-    <xmx:rZpBaOVJ3oVjRY6mykbRW5wdy1QP2hRnyMGfNghZA8rjc-kKX6ubeQ>
-    <xmx:rZpBaAfGwt3WcYxlIf6gS5CUWZ3dOYa7s39-Q004wissKBrC6DOGng>
-    <xmx:rZpBaGSQtsNerheZxE6kbta5WIEl3ilYG4AtpYGCDR2hodTqPFZeH3aU>
-Feedback-ID: i197146af:Fastmail
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeekveet
+    veevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
+    mhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:4ZtBaBOyvRiIpoim6_-It5I4gQQfhBQ-hING8A8GFYCQRUcxbHWRzQ>
+    <xmx:4ZtBaG-oidZRaF6iAEKnvNdU83lpjf1FE60QS_iPoeK7_H55Z1PMMg>
+    <xmx:4ZtBaJUNKw9RoYIplUUFg-nGA5OhkqWKlc6vi2xKMqm8jM7zIdEo8A>
+    <xmx:4ZtBaPc3glFOSOhUePl0psYLfsZ6o5xX2q2Dt3qGoMsfCW6YpI1JVg>
+    <xmx:4ZtBaP18562GijgEvve9hnNM0eouH0HcS3Q2ojY_SoqzMdtuakGx09qK>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Jun 2025 09:25:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6a91ec05 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 5 Jun 2025 13:24:58 +0000 (UTC)
-Date: Thu, 5 Jun 2025 15:24:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 10/10] t/unit-tests: finalize migration of
- reftable-related tests
-Message-ID: <aEGaqZU2FdLqL79L@pks.im>
-References: <20250602122559.208780-1-kuforiji98@gmail.com>
- <20250602122559.208780-11-kuforiji98@gmail.com>
- <aD793WJpsHm3d3Q8@pks.im>
- <CAGedMtdaDR1E9YWXQOQKKtKj7rgjmRy6cLMC+A+7B39r=u5Amg@mail.gmail.com>
+ 5 Jun 2025 09:30:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] t5410: avoid hangs in CI runs in the win+Meson test jobs
+In-Reply-To: <pull.1932.git.1749118606047.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Thu, 05 Jun 2025 10:16:45
+	+0000")
+References: <pull.1932.git.1749118606047.gitgitgadget@gmail.com>
+Date: Thu, 05 Jun 2025 06:30:07 -0700
+Message-ID: <xmqqseke9uzk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGedMtdaDR1E9YWXQOQKKtKj7rgjmRy6cLMC+A+7B39r=u5Amg@mail.gmail.com>
+Content-Type: text/plain
 
-On Thu, Jun 05, 2025 at 01:56:43PM +0100, Seyi Kuforiji wrote:
-> On Tue, 3 Jun 2025 at 14:51, Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > On Mon, Jun 02, 2025 at 01:25:58PM +0100, Seyi Kuforiji wrote:
-> > > diff --git a/Makefile b/Makefile
-> > > index 8ed8f234f4..8d8f2d574d 100644
-> > > --- a/Makefile
-> > > +++ b/Makefile
-> > > @@ -1380,13 +1380,11 @@ CLAR_TEST_SUITES += u-urlmatch-normalization
-> > >  CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
-> > >  CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-> > >  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
-> > > -CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-> > >  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
-> > > -CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
-> > > +CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
-> > > +CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-> > >
-> > > -UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
-> > >  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-> >
-> > Can't "test-lib.c" also be deleted now?
-> >
-> > Patrick
-> 
-> I don't think we can just yet, as `t/helper/test-example-tap` imports
-> the `test-lib.h.h` header file. Fixing that would be beyond the scope
-> of this patch series, don't you think?
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Yup, agreed. It may be useful to point out this detail in the commit
-message.
+> ...
+> This bug in the MSYS2 runtime has been fixed in the meantime, which is
+> the reason why the same test case causes no problems in the `win test`
+> and the `vs test` jobs.
+>
+> This will continue to be the case until the Git for Windows version on
+> the GitHub runners is upgraded to a version that distributes a newer
+> MSYS2 runtime version. However, as of time of writing, this _is_ the
+> latest Git for Windows version, and will be for another 1.5 weeks, until
+> Git v2.50.0 is scheduled to appear (and shortly thereafter Git for
+> Windows v2.50.0). Traditionally it takes a while before the runners pick
+> up the new version.
+> ...
+>     I finally had a chance to look more closely at this problem. Here is my
+>     alternative to what Patrick proposed in
+>     https://lore.kernel.org/git/aD7tKfXD7YxprSZh@pks.im/.
 
-Patrick
+Superb.  It must have taken a truly heroic effort.
+
+Thanks and congratulations for finally solving the puzzle.
+
+I do agree that Patrick's "wrap the same in a script" smelled like
+shifting a timing issue and not truly a solution.
+
+> +# The `tee.exe` shipped in Git for Windows v2.49.0 is known to hang frequently
+> +# when spawned from `git.exe` and piping its output to `git.exe`. This seems
+> +# related to MSYS2 runtime bug fixes regarding the signal handling; Let's just
+> +# skip the tests that need to exercise this when the faulty MSYS2 runtime is
+> +# detected; The test cases are exercised enough in other matrix jobs of the CI
+> +# runs.
+> +test_lazy_prereq TEE_DOES_NOT_HANG '
+> +	test_have_prereq !MINGW &&
+> +	case "$(uname -a)" in *3.5.7-463ebcdc.x86_64*) false;; esac
+> +'
+
+That's very specific ;-).
+
+As this is not in a library-ish part, it does not have to be lazy.
+Anybody running this test script need to tell if their environment
+satisfies the prerequisite, but lazy one does have a documentation
+value, I guess, and a bit of extra indirection does not hurt.
+
+Will queue.  Thanks again.
