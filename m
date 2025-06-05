@@ -1,73 +1,110 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FCF420298E
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:00:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EE71C27
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:10:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749110405; cv=none; b=eBvoLU72r8WVczBfqtZd/0K7eKRFTDACXm/FkGi+wEulMGlqHjA7VeTbU9WQJbY13fHaffiX++tZEgWswGDUw025GjZN2CYsnSCHWWMHXXtGvu/22bbiOfkDBk7AU8u78GcqlmQ72abbN2rCvuQjl1Qlpe9IYpft9wnoo43rIuo=
+	t=1749111018; cv=none; b=YuDV+mng+jX18hnEFwtvMNXO/PVQBL8mJ5ndpKV6DBrHjGwWD3HVYmzRdKp9iQuZewqIuvzyNJgjvaJ839t11A7GsX0WccyEyVW5zRlM969LzV0tazadAYbB9SXeatfLLdmbaNGHKmyyDpuuP0fZ1vDXovGBPQ1SE/BBbUhIcR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749110405; c=relaxed/simple;
-	bh=DPHjFJ7jBxiF1JddYvbBs+UbT0/34BGhx8KbNB7RFSg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L+JM48KNf9mWdoGNBX06r+06EA3W5BSp2emZ86r16HkCLPr/YDxqQamOrENsbqSNdP+aBLk3/ISivPF8HAmKFJgTTmhtoac9SSTO05Z5sOCaTHeCwWvaZAK+fdNvBUTbZidX5jzxF1Wq+o+GpQweApa/UPj2dus4/lLuqtpMWIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=A4RiU/Ml; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="A4RiU/Ml"
-Received: (qmail 17380 invoked by uid 109); 5 Jun 2025 08:00:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=DPHjFJ7jBxiF1JddYvbBs+UbT0/34BGhx8KbNB7RFSg=; b=A4RiU/Ml9EBtnaLHpDkWpW+M2J9ODfLhq+EEeIfUDF7P/bT/y3D9wCo6kuFY0vRLSoL09528mpM9M5pijGuZgt8ZiC4DN0xRpnc+k37ZursTSOw24Um4rdEpNKVUmxIhPqOvU88pvx20NrQZ0sW2A3Qdc3cYcUdC3EHvxzHRTzITMvpTp0WucBTIPaVjgB5DHZsgjl68md6qH7SliWmSttttIre382QwobFnvRyBZraQVB/qIh4U4tTWSVIcrtZHjuFNNjn/ijxJ2YHZB7txW9XbSLIJIHKUELDFKD9+WwPUbvDJDMUehZce/a73lYCD/xFbXt/kiVWKWZdu+bI83Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 05 Jun 2025 08:00:02 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21623 invoked by uid 111); 5 Jun 2025 08:00:07 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 05 Jun 2025 04:00:07 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 5 Jun 2025 04:00:02 -0400
-From: Jeff King <peff@peff.net>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Eric Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v12 02/10] imap-send: add support for OAuth2.0
- authentication
-Message-ID: <20250605080002.GA2998537@coredump.intra.peff.net>
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597D3BADD7CDE568825A2D0B862A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597D1C148578224A02B9773B862A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	s=arc-20240116; t=1749111018; c=relaxed/simple;
+	bh=HcdlDgKaR7Z9xD7ke9CRkS7KaP+kU3lRlqwelBxpRxM=;
+	h=From:To:Cc:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iDqyS88y6Me7Jn6Ya7UqdGiqugFAcKE72VLcLwGpdOzph2fm3CqeDbfXD3gXvdOGwcFW7k4rYZxnk6cPP3T0hMxO3mZ7yg0HitToo2+JFfJme2byEfYd3AYqfiT17gnm6KWWQydRgYAoEs3sBIzd4kh3ACchSEGY5IWUHQpO74c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen ([185.122.133.20])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 5558A07A619197
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 5 Jun 2025 08:10:01 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: "'Johannes Sixt'" <j6t@kdbg.org>, "'Junio C Hamano'" <gitster@pobox.com>
+Cc: <git@vger.kernel.org>, "'Todd Zullinger'" <tmz@pobox.com>
+References: <xmqqsekgn4gk.fsf@gitster.g> <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com> <007d01dbd4d9$356ded70$a049c850$@nexbridge.com> <aEBPdFXpIca7lMls@teonanacatl.net> <xmqqjz5rcz90.fsf@gitster.g> <44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org>
+In-Reply-To: <44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org>
+Subject: RE: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
+Date: Thu, 5 Jun 2025 04:09:54 -0400
+Organization: Nexbridge Inc.
+Message-ID: <010b01dbd5f1$3c26ec20$b474c460$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <PN3PR01MB9597D1C148578224A02B9773B862A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE/8OENAHtdeNmfXNuu5L7gSMXaAQGPhlBYAT32OawCDCTCZQHcPefDAfT2uzS05qiI4A==
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250604-12, 6/4/2025), Outbound message
+X-Antivirus-Status: Clean
 
-On Mon, Jun 02, 2025 at 04:29:33PM +0530, Aditya Garg wrote:
+On June 4, 2025 3:25 PM, Johannes Sixt wrote:
+>Am 04.06.25 um 17:17 schrieb Junio C Hamano:
+>> So the build procedure for git-gui (but not gitk) has changed rather
+>> extensively after we tagged the preview before -rc1?  Honestly, I
+>> would have preferred to see a change with this impact go through the
+>> regular 'seen' to 'next' to 'master' way before -rc0, but that is
+>> water under the bridge.
+>
+>I don't think we ever had such a cycle for gitk and git-gui. I carry =
+inofficial branches
+>'j6t-testing' in my repositories that interested parties could track =
+instead of 'master'.
+>I would be happy to hear that people actually do use them.
+>
+>> I do not spot anything obviously wrong (and it is not expected that I
+>> would---we wouldn't have this code sent to me in the first place if
+>> this is something I can immediately notice).  git-gui/Makefile sets
+>> ALL_LIBFILES to $(wildcard lib/*.tcl) and then does
+>>
+>>     $(SHELL_PATH) generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS
+>> $(ALL_LIBFILES)
+>>
+>> So the error message in Becker's message, i.e.
+>>
+>>> /usr/coreutils/bin/bash generate-tclindex.sh .
+>>> ./GIT-GUI-BUILD-OPTIONS
+>>> usage: generate-tclindex.sh <BUILD_DIR> <BUILD_OPTIONS> <LIBFILE>
+>>> [<LIBFILE>...]
+>>> Makefile:200: recipe for target 'lib/tclIndex' failed
+>>
+>> suggests that $(wildcard lib/*tcl) expanded to *nothing*, which =
+sounds
+>> horribly wrong.  They are source material and should exist in an
+>> unmodified checkout or a tarball extract.
+>
+>I don't see anything wrong, either. I can easily verify your theory =
+that the
+>$(wildcard) produces an empty list by modifying the pattern.
+>
+>Randall, would it be possible for you to find out why $(wildcard
+>lib/*tcl) produces an empty list in your case?
 
-> @@ -1405,7 +1558,11 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
->  
->  	server_fill_credential(srvc, cred);
->  	curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
-> -	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
-> +
-> +	if (!srvc->auth_method ||
-> +	    strcmp(srvc->auth_method, "XOAUTH2") ||
-> +	    strcmp(srvc->auth_method, "OAUTHBEARER"))
-> +		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+I can verify that $(wildcard lib/*tcl) is correctly reporting an empty =
+list.
 
-Coverity complains that this "if" will always be true, since one of the
-strcmp() calls must return non-zero (srvc->auth_method cannot match both
-strings!).
+There are three directories name lib in the 2.50.0-rc1 commit:
+./git-gui/lib
+./gitweb/static/js/lib
+./perl/build/lib
+None have any files ending in tcl:
+$ ls git-gui/lib
+git-gui.ico  meson.build  tclIndex  win32_shortcut.js
+$ ls gitweb/static/js/lib
+common-lib.js  cookies.js  datetime.js
+$ ls perl/build/lib
+FromCPAN  Git  Git.pm
 
-I'm not sure what the logic is supposed to be here. If we are matching
-either string, it should be !strcmp() for both. If we want to match
-neither, then it should be &&, not ||.
+If it possible that your workspace has extra stuff that does not exist =
+at the time make
+is run. Note that I am using gnu Make 4.2.1 with bash to perform the =
+built/test cycle.
 
--Peff
+
