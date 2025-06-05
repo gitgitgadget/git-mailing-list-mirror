@@ -1,43 +1,43 @@
 Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010003.outbound.protection.outlook.com [52.103.67.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29949202997
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:42:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBAF20E718
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:42:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.3
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749112951; cv=fail; b=m7dX1RiuuFkybkp2Au8ZBFnokXFLDNtdFm63qXCUFiGGwhAtrqzFRXnwuimFH3GjI0dCJdI7bdwY8DHphRKfBJ9Zqc/AlnnO0coWXdg92zsF+IocA+0/fS3F1hbetmypgRAn9i6N7Z+vz1j+IqFdC3r29BpfR7JWj3wSVS9PGA0=
+	t=1749112953; cv=fail; b=VhgKEUtp8srW00ITTPZjESZ742cGBAgS0Ojj4VpY1IXF215EgUvwS+nwAzWALvlH+SfVAUVgwdywgdpBI8ysylM53WcnERWZISoDCqgRQjbbThCaQkjr1v+bFZPDmq1O9HOvdLU2KgXOkTh8/Ok2yK126EX9cRCIfpnhd5AK9X8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749112951; c=relaxed/simple;
-	bh=60Wujm626cdP/GNxMbtPmJLAHjBWF6c82A04tFbDxAM=;
+	s=arc-20240116; t=1749112953; c=relaxed/simple;
+	bh=Zpw8YwqmnAQNztsilgoPQ374c8AhBifkvPCQAwYpN30=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=BB7uJ26BPX2RFX8femn2QaL5GYF5N0fJMdNb6mRGK4mY7FpqkWOgBNFTiuWtCUUtVgdDxThZpPyMSN8uCevJY+jQOWs0NKs/LSHQbD4oUIHzEI/jW4ZPI6r92uAxipy4LZk6nHRjB0KaSUMPB0EQb7v84sUYO2wkFodF1AElHV8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=X8GxEMCe; arc=fail smtp.client-ip=52.103.67.3
+	 Content-Type:MIME-Version; b=AvLD9grTOsk5TyBz6TCTliUW37Tl8z33ml2KmjsURDlG6H3gfY6mR5Hf6EGU8+nEoI3cvk6YoeWqJ3Rm6TYm1l0rOJXImwpVdNuY88w+WGWNQzoQ3vvy5kjSPTz66WwHgTfUIRkUhQpJzUTpvFl1tYpwFj2fic0on4YlYHfwHQs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=Z8KtyoZQ; arc=fail smtp.client-ip=52.103.67.3
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="X8GxEMCe"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="Z8KtyoZQ"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=r9p4IPJmzqkThSVqITGdg38b0N0e9XfZr3L1XNhzDmjIf5IfA87oI3SgCce4x54w+wqIk66gld2zy3SVISb5rlBZdE9mezW7ePVZNMrUMNpkzCSC2WMApg9MO64ZRDXd3UpQP7iYbrEHxWqq7SqpNBbRB0U7WfLvfvga/TUnP58GmD8us22OgB5EdH43OWB/XdBfe9Toda5JxvW7fhfPzfc7FYxtfG28qe8u2k3zFR104JTlZj1yZlFIxQhzMuzNAZROyN4vas35127beJ5RPFLmKWl/bf2VibrOvPnoOBkq+gS3LyMCiA0NMvexhGWl9SOyGEjjrB2OV9HG8xFDew==
+ b=KC8snO9V8tu0KGMoDcOaGIILi3UZnG/gj8J9NN7Qq6LmrbpLBOGXTOeo+S5L7kU+hri6fU/7e4QkhY9e/Z5ZBD53WOdgXa4nagzchT/XDPvBX505NsiXWhZvBv/L4ofo9gGeyeE22WhTawQwI1S9dExr3ZCXNugtnWCSdNmoCSHzGR1lgxltdTnPJQ8pI8mCp9tcGpO7uyybQJsdgsIIo6a0EZmtzh7l2KennGGVaNmymWvDUCU5kB4EVX8z2RyTETH/GHVI5nQ1kL/valtE//lqIhuBe5pD5jXH8OrRgssC456EVIdVqVnd5TeMiWrP2srQQxuLVBVBxSTfyR5WMQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8PvI1+23UUG8yxwnIF5s8/YjE8rMiOVkToHP5LqrZp0=;
- b=R1bhGvk6Pqf0gD3qq3bcFGUtSGDL66vKsl8fyAUJAz7KR4CeQiDZArcRImbHTK2P6qm03xK+O0khTx9RmeFzB837IAj3JkS+PAt4eSb2eGr3QA8ubkZjl7g81YYVUXn5nWfmZ/XbrqpA9X0FgzO9bdiEV4lhktNNuAN1Vuavq48HmHNXgLCBmw9XKb2b+ELwPtegB9p6492EWyPsgl6eMkF/XgdDQuG+jh9Hzs5EdU5IsT2Qln8/eq9Qvm1S6hUky16J/w5avkda1KoAx5LbZQuKEHB1wUGFN/FBxT5UdUnPcHMAsKIO1pwdAFw88wEOW4hOxdH8aw86BxY6pjNfQw==
+ bh=NsNSJUXPSgK2/Z8tkMZ6cNwOV5UqbSGHv9f8Y45LYPw=;
+ b=w4N83s7t4Ch5pOFWwfsC1h/oCKk/sTdFu7yxfFQqylGdPXmS8ZQLYLGwFXcHZr5S9bonN/jQQkO/+Xv68TkCTkY3UF6JlPjsXzHHc1poC1mZHYRMG5YGxWiVeV1HBkFuh0B7Pf8LWev+HzLwvQs94AJ4Rm06iZ8+nOI0VYkh9JmRmcXKlO7SaXACrBaPz4DSfGAkM5v3L4lAkVVVGAhryKtbNTFpg+xypt0vAN6ySnrG4/zI84KgPtQlYHopH+XunpcfotNiZJ7QoBwUQIau2p8racVHiVKZZtJwaDealMXA19An36FT4Ztj2sG48+0nEdEKnorV4oGSX2hwxynjEw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8PvI1+23UUG8yxwnIF5s8/YjE8rMiOVkToHP5LqrZp0=;
- b=X8GxEMCeVCDvE318baOoPoKzN4VuiGMvdlrvu7A6RO6Qn5Cd0uRR1oupyWTFQ2Pu730LLH8CmK2nsgC8w1VHl6LaHMDu4YbSdtXICwh4JeM7tDhFnOD9OljOxEaOHSStoQCZliKp2q4fmYDdoK6qCZacIH+v4MAK3a+mIxkxOm59sxZESTm+CrXwEogTKLdEcB93OX+5KJHtQgoyIMXsASwrWnqmPNNJ5RMy62Sr4ayit3oJ27tEsLUOd0+qJFfOgeNouvkssBNp+rlddPY6as3fmj8TMOzyQ4qwyZqcCC5fpGSDqtKCgnJVxI1hYzBZS6t0nU2jRYIE1CcrjrWknQ==
+ bh=NsNSJUXPSgK2/Z8tkMZ6cNwOV5UqbSGHv9f8Y45LYPw=;
+ b=Z8KtyoZQdslC8lTbX5qSILzfyd+K29F4BRapxm1J26FetH9FGodUjsS1BEWymI19r5o/bGRTQmHXQa15qs6MdAA8G5sCYDjIprzM2Bdn0sF3OrPEiW1s6LgRt72qPyRNJLUCkLExidHm2I732HyWUPoOityV7qXjJrvER4co5IYstNSi6kvL5P3JM9vWIeEUHOPDmJRIbwsomwLBf6MF1T0PO7rV5wGPP2MCp7w18k3TvKqS+kb9uHRVwxjrZUYjmEYIxtXq6KSb9P89QyqsdVSu8Rj70VhzZQAvZDV0DSHe765ELRG4ovK1vS0D9bztcjEmjlICIvksILwbTIa1TQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PN2PPFFC37E0415.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c04:1::1e1) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.21; Thu, 5 Jun
- 2025 08:42:23 +0000
+ 2025 08:42:24 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.020; Thu, 5 Jun 2025
- 08:42:23 +0000
+ 08:42:24 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
 	<git@vger.kernel.org>
@@ -45,72 +45,72 @@ CC: Eric Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>,
 	"brian m . carlson" <sandals@crustytoothpaste.net>, Jeff King
 	<peff@peff.net>, Ben Knoble <ben.knoble@gmail.com>, Phillip Wood
 	<phillip.wood123@gmail.com>
-Subject: [PATCH v13 00/10] imap-send: make it usable again and add OAuth2.0
- support
-Thread-Topic: [PATCH v13 00/10] imap-send: make it usable again and add
- OAuth2.0 support
-Thread-Index: AQHb1fXBcFdovuckXEaD7yRtm75J5Q==
-Date: Thu, 5 Jun 2025 08:42:23 +0000
-Message-ID: <cover.1749112640.git.gargaditya08@live.com>
-References:
- <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To:
- <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Subject: [PATCH v13 01/10] imap-send: fix bug causing cfg->folder being set to
+ NULL
+Thread-Topic: [PATCH v13 01/10] imap-send: fix bug causing cfg->folder being
+ set to NULL
+Thread-Index: AQHb1fXCYmz9h4eWYEGy7DQK+vfWUA==
+Date: Thu, 5 Jun 2025 08:42:24 +0000
+Message-ID:
+ <3e3ddf70772a9c319170064d77404ae858dac314.1749112640.git.gargaditya08@live.com>
+References: <cover.1749112640.git.gargaditya08@live.com>
+In-Reply-To: <cover.1749112640.git.gargaditya08@live.com>
 Accept-Language: en-IN, en-US
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PN2PPFFC37E0415:EE_
-x-ms-office365-filtering-correlation-id: 1b259dc7-c016-4101-d810-08dda40ce478
+x-ms-office365-filtering-correlation-id: 2b2610fa-f4a5-4d47-c393-08dda40ce4f4
 x-microsoft-antispam:
- BCL:0;ARA:14566002|38102599003|8022599003|461199028|7092599006|8060799009|8062599006|15080799009|19110799006|3412199025|440099028|102099032;
+ BCL:0;ARA:14566002|38102599003|8022599003|461199028|7092599006|8060799009|8062599006|15080799009|19110799006|41001999006|3412199025|440099028|102099032|12091999003;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?SOsCTPSWX5QiwQAiifmb41kUnd/ZM8vgnSPE+0Epx1sZ9HtACBUXjNfx4x?=
- =?iso-8859-1?Q?HyycCScz3Tdk7qEK269+zA4Q9mwRmRRB6HPVn71nsyBksfReCJb8tAhLrL?=
- =?iso-8859-1?Q?ejCTI9T3u6BjvW9jktPEPfNOEEKvbZpLehjrw3rBiUlQZ85KtO1EMtLFB1?=
- =?iso-8859-1?Q?QtLRRCYudpwBnKZXU4pYF2MiTJm2BnyZQ062zlrbJis6m+IA0ydmPOMal7?=
- =?iso-8859-1?Q?nNCXyDzt5YdM1dR5eGCP6SaLLQaquu2GvZxumoyoGWc531IrOr8DrqZ5GP?=
- =?iso-8859-1?Q?2FLL+sMdAr5c1HI+OVX4qx6ykv/49IHs8GKICzA5ucGJJl3L7WiO3QbH0f?=
- =?iso-8859-1?Q?a3RBcGCd4QV+gS8franqfi/ncyYHy8nfWkrPrvX86Eg8XGYZ0sJEPuAg3W?=
- =?iso-8859-1?Q?v5xDdN4k7jVfjYIb1SeRS62MIuDo71glkHkwuPedGs+/A9F8RQ1GZMFX5G?=
- =?iso-8859-1?Q?Lrxn6IX/vLyLpLTRNbbvkyNhJ9L0rVBNEuWxuYrQWV+jUFL6WkBoUZ7m3O?=
- =?iso-8859-1?Q?ilYgIskxbFCZDXfYZMlkmc8iHTRIivdsJ6MMFVuXAW9JmdDkGStq2ddgs0?=
- =?iso-8859-1?Q?T3kWObVBnqNevjtK5nsJxZxaRYbchLQtq77b3N37W0dTGSqnQP3QVKfynr?=
- =?iso-8859-1?Q?m7Qxu3xVjfDrx/ncCBAh3YVjqmuexG1XNO/MCreyIZAbjbhhtgYxMtmoAI?=
- =?iso-8859-1?Q?jCBZ10isqltMknEenErEKoMUfpvrZ9Rc5yFjKxiReNUiMWpNIz1yKZZFh7?=
- =?iso-8859-1?Q?Qkku3hlyCAUyIdmDs2aYemR3Ynq/bx1R+Kz9BrxVwxdnvT3axLwbmSTafA?=
- =?iso-8859-1?Q?tc3QWyFq/ZOq0wXbWdoNh+/1RB7YDMzNJv4oeIQiTzo010VEl7y37OyMIL?=
- =?iso-8859-1?Q?bDrJiogoI09etBPsIEqND7S7q2Ivl61+mZ5OGjNsvO8wWblaSogVFqFnNz?=
- =?iso-8859-1?Q?+8r0PhKc//6Jeqz+qTpMsgZDcqTSSJer76qoPMm1N4MUuisr/20M860dT4?=
- =?iso-8859-1?Q?dwUPmiDRGbJ7QA0NdKFZaKRGS8+16ZxzJV1iWKZ/dFLV1/7X+p/CeObTXS?=
- =?iso-8859-1?Q?V3q2s2Nqkqii+zaKnS+acKt13I4ZUVfZXoSh0+cDo0LDDnKMKH0XkMMt1u?=
- =?iso-8859-1?Q?5FYnhUkk0CM0bQWDuudlBQpiWsjKJaZVt+4taLSfXwdivP/ObOVKTSqIDH?=
- =?iso-8859-1?Q?Ml65SpK5xveZ4+Y7+4ENiHFUyIluNe44k8M=3D?=
+ =?iso-8859-1?Q?ksC4vSAUcJpFzjFLPz5HLrbyoqJk4TXO3bIHokl7vMsPZL5EUUMHTlIND7?=
+ =?iso-8859-1?Q?phWmjtgyOzLvoGNZ1ksScqZzbh/s8lwRDlCnWMfr5a5grv8BGTRsmigf1n?=
+ =?iso-8859-1?Q?Xuyr0W2oTldWVTVFCLTpC63K0T+f+VUhuCn2ApFGScyWutQNk9E9CiqQYq?=
+ =?iso-8859-1?Q?chBDfnwz2wX6OlJ5hVCTRfcA6SJYAG8+FLJiuKCln9i9qLdBoV9bbwBtTO?=
+ =?iso-8859-1?Q?pMoVcS50dPgFXj8YRmtmuMiY68/HcbR35zcgOzgcZSIOdNRYtK6sxOxDyJ?=
+ =?iso-8859-1?Q?Dq9gsvRElT2oVJnVvD1YpiYTrZPrOAlzkorN9aZtZX6BjYKj1zkH3Sfo/X?=
+ =?iso-8859-1?Q?mitRjn3mm92r2gwJMhG9OlppNvSzFQ31XLCoLFlNMC2W/QgT8Gmcpw8Jaz?=
+ =?iso-8859-1?Q?SvE24PlDPcebSAyxAAMoyRKoFyTg0xIoseXtxG69WTrkLlTyGJfWK16OqR?=
+ =?iso-8859-1?Q?aD62XBiUaZbrqf7oWm7HJxzeA/1vjSI5pahhw2vVw9Z0s0/K5MbNxLsmKy?=
+ =?iso-8859-1?Q?JiuqdQ+DKpnQTuOhgdzzNOxjxtXSxxXnzb4pXDlUBuFO9u7DlbYMhHkZjL?=
+ =?iso-8859-1?Q?3T+vPU7783ko5cbOw1oCxLloMRsD4V70DtjPx+IZ6K1Vk+vCRgbZTVb6d7?=
+ =?iso-8859-1?Q?Sviqo4BoTWp0CAQ9Reaz4qFyVoQTuN3Qva4Kl3t9lIiEGUmgew18DddQUN?=
+ =?iso-8859-1?Q?BP315kyDEXtCKfnPXmmgrb9PZq88ZZdE7MfQM3AzQ49u1wr8c2uCZCFzOc?=
+ =?iso-8859-1?Q?/319O/h8Ar2U5XxWavRq5wvPYjT9YTjwZ3ZwnQRoJltKrmCLJUJRufpl8N?=
+ =?iso-8859-1?Q?X1pkYvoEeYOQzGdlokViWIlLXLGfBfP0sJpMD66qjZ9d1t7rwYvmVAddB7?=
+ =?iso-8859-1?Q?yjdns5+5OkOvkMxriIVpeHu4ERPS+q6yZ+IqHJG0RqcBmUwq9yTPEZM/Sl?=
+ =?iso-8859-1?Q?QU8ygXsT2f5R7A7oedzQl2mKpNrPxBxjv+2J1189MgYPtu+0vmeux/Q6+b?=
+ =?iso-8859-1?Q?XNC7k8E9T2daCanIOZAeni/iymd2roFAp/itl5MblK7KZCh9XhdMyiqd1u?=
+ =?iso-8859-1?Q?a0FTvqSxEXJ5WQx8ZlVhk4hw2na2KQzx8iV3MrB0GBAHXVy8DMPj8xjgtf?=
+ =?iso-8859-1?Q?3k/xi7evxd+/MrVjnNPON/LeyHFFgJ8HoUvlvx3fJOPOwz+BHbtZ4Dkfot?=
+ =?iso-8859-1?Q?9q7miMPMCriFmVCO33biHEPnqZVbzh7SIiTlzSueCj9LPiFTj7BO6X+hZ1?=
+ =?iso-8859-1?Q?K89V/nt9c183llMv3GXc6ChSgNMu/osyAulVN1lDM=3D?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?jmPhf7qMQ5sYnlsQ3AhdtgZwcqll4SgrLPGo7OLWnNRaRlxYAetQ2ZBHbw?=
- =?iso-8859-1?Q?ec1Paqc64/48IuwlWydIfj+K0fIqNoKw5rq6T8ukSScI4i0pRiZwXmaYEL?=
- =?iso-8859-1?Q?xk1WP+D7KAuapgdkjiQHLp071TZFuDtoBAWmyw/a0wbEJMFbiCnaCrHf8R?=
- =?iso-8859-1?Q?NDaiZ9VuBMes/XNht0XUWinpo92uAcbbsjlYm5WT9meZ/fLO9AMBNt6/w7?=
- =?iso-8859-1?Q?vn6DFjsEdG2plvfbefCAJ/WdRzvqd+6IRzfM4zibMXQGnnk3aM9tOEm5Aj?=
- =?iso-8859-1?Q?lEMNFUjPAXi6XnBeFil6pNFJi/OFU6OSmpcdE/XvBAkjoUPc3nOkyMLB4R?=
- =?iso-8859-1?Q?9l6icJvl2+wKzHnXUhbdiVrv59cmM8qN1k2k7bUZ/xyZ7OdPoJhx9hHO/b?=
- =?iso-8859-1?Q?SNGozwpvkeqo4BV686OAEHMsmXoOPhFB4D65hs+BtPlQu1AnoIJd6YoAyU?=
- =?iso-8859-1?Q?N0bD2+/SsPIW8Llrnj3TSwk7XkNmznWD4/c0DeNkvQxNIFpoGbkojUaDQO?=
- =?iso-8859-1?Q?CDv3uhViH3EEP5ZY2ZQxWQqFpvgx/0SKPuzQfpUqQ5Fs4oFV4oqfyirqtS?=
- =?iso-8859-1?Q?7KZxN4o5PilBxdO6EqN0fA/CYXw1EoXMGfZNwNVcmTkDX0m34/gUnqBeBx?=
- =?iso-8859-1?Q?O+YIBAHeXjHApCsnz79jVUBsVlFtom9fPHbu5M+ErXuk1qw8vCpktj1ipq?=
- =?iso-8859-1?Q?VrW3xXZF5Hp9aGzidEcyYYna75NhmN+8TBDaDH30FVzgdKJD4z+Nw7cK4C?=
- =?iso-8859-1?Q?1zlVmlf3J1HrA4Jqcxcgjw+ujoOAkQLclGXjzUr/034B5YnQnoJHpFtwuj?=
- =?iso-8859-1?Q?eE7LN+IjkEESSWUZqbI197IRQ9rGPWi/i5f8mKbzaJ+OICcR1AeXlzPLZ9?=
- =?iso-8859-1?Q?FoYn8axCkbU3p8hfG9R4KeCWb2ERMgVEHMtQ4B7eako10YvIx7cO6c5UBM?=
- =?iso-8859-1?Q?dnyj25PRUY9puiaG9wJhn9z3UtXb0iZOpzBn6zZGzWwlymZexaxQlPCcwD?=
- =?iso-8859-1?Q?JjIa4sGfl6q1/W9xcm3phjg/orFBElOjBhQ9N3T7Pe05CHzXDRRCyqXTNY?=
- =?iso-8859-1?Q?AqSUdrPzCraz/ABU2Q1fwBhJdgQtxci80zVoocMcKUxeKskYVwem/HsdZ+?=
- =?iso-8859-1?Q?kcA5JeY6nAnBnsGL9N9IWxktk185RT4y45zf1cs8yRfjfFQ1a0J/kH7M7C?=
- =?iso-8859-1?Q?vMAzXoOHcdV1pcxd0uTue8NE9YTBQE0Pp93n8s/ZJ418loCGbjergNhgHu?=
- =?iso-8859-1?Q?rpqQvzHTNO0MFXyW6cHcNbAaEXr0ZFXa0N1up/ez8=3D?=
+ =?iso-8859-1?Q?Cm7xRL/DxIzBVcL2qg2hip8PT/YFtveVRqeevzLANSp8jAK4RyKfwpaDq5?=
+ =?iso-8859-1?Q?A5ucz1a3lXBxPdRa0rIYRFQdQD2aYy8L9hhRLhRURcOQnRoOErxF8NPOiB?=
+ =?iso-8859-1?Q?F63g15LU6MDUnp2uC7ANq51MABa57X1EbwgqpoLTYO6VuowmksJXWQaBG9?=
+ =?iso-8859-1?Q?Pbhb+wzSrit4bZ5E6na/RJ8fiics/v3dWCBv9rPBrqDZeZ/53LOuP9gWmu?=
+ =?iso-8859-1?Q?VY7Adyfpy28OBq3yoVvb8Nx5TwLxGRN3kN80T2uv9hmrzIwm+Acz1gooMl?=
+ =?iso-8859-1?Q?YYB1qU0hwVA3tHTtKDWxfkPJgIQXkjA5ATRwnpyRB390IY/Q0meFbJA/Pk?=
+ =?iso-8859-1?Q?ma5YsROKQU4ZRa6VOy0qVkKCs99OK6vrSTihwm/9/S6IT2QupZdJ5roEbE?=
+ =?iso-8859-1?Q?ADQP/k/qlq5SPM1IxEhMhi3XDuOdKXs4SDoqQXrXgf9ns56wOsUP6TuBux?=
+ =?iso-8859-1?Q?XqJzqilGXFpgWWNfC0o6jIb3gAVOiotwtaJpVTFZhvM9EUm3vD1IwdKmvv?=
+ =?iso-8859-1?Q?3a+uf0gAaEEHmd7lX6r5OoxHUwVUuWDDm4ndqVt1qEOi7Wj4JbKznws8f+?=
+ =?iso-8859-1?Q?gXXO3r39qotrf2deup8DhAprRDTn5FPls+HTGBYemi0cQKFLKQu2vJl44U?=
+ =?iso-8859-1?Q?WUbg64w1BGYJqnAA6AM9BBAT4ylewaZhr7LZVu+eAJ6CrxDrxlLIOsmhv+?=
+ =?iso-8859-1?Q?PoQ8/pFmq5TP5FdoI8uxLtAxKVDVpXgw6IoXu5ZmbPcV2chOiHQD/S+ULp?=
+ =?iso-8859-1?Q?E7vmWjv1lw+CTvEQJKZZeDiGbWgyM2fi9tUzedhDvI2ZDRrrDyuI7xX80K?=
+ =?iso-8859-1?Q?tQtXlonN0B3PeSVcKdnp6qn7fhSlQD3lVgkurek1tSvUon1L1qaokR9TGR?=
+ =?iso-8859-1?Q?n7w/NpKoapgrLrcMGFE9JwSxBAOKB5Tz9+guZAaiBEc3FVTyfASpUCSnWN?=
+ =?iso-8859-1?Q?TN9KTxCIn8/rGkxperL24NXunoEZbtQt8iwR/TNDnYE3Fx9LM4+Qdl10P7?=
+ =?iso-8859-1?Q?3yKfGwtivkg+NBQtMKDjM5bwTE0B3w7qwRdck7XTczuzBtOSj+cUQjU4R8?=
+ =?iso-8859-1?Q?59QYMD0Mt4iAj1XYynB3K0MEE0PtGIHRvokKG3be9h7SJMJahCQ824PzUm?=
+ =?iso-8859-1?Q?BqYu9jdbyhXDVf0gMgzzXDb1Qr5WAIvSVHmrnmOBehv2Foe59uXjyGS8wG?=
+ =?iso-8859-1?Q?hZlzaUMEcSYKsOEK5J2Eq4z1a+2U5LxRbd8YVWjlX/tH4kwmW2BFJkDSGC?=
+ =?iso-8859-1?Q?pSrH0Zpm4YFtC9dO9OopryRzvCX6LZFjYr1ELwVsw=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -123,113 +123,55 @@ X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1b259dc7-c016-4101-d810-08dda40ce478
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2025 08:42:23.5772
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2b2610fa-f4a5-4d47-c393-08dda40ce4f4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 05 Jun 2025 08:42:24.4082
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PPFFC37E0415
 
-This patch series does the following things:
-Firstly it basically makes the imap-send command usable again since it
-was broken because of not being able to correctly parse the config file.
+6d1f198f34 (imap-send: fix leaking memory in `imap_server_conf`, 2024-06-07=
+)
+resulted a change in static int git_imap_config which resulted in cfg->fold=
+er
+being incorrectly set to NULL in case imap.user, imap.pass, imap.tunnel and
+imap.authmethod were defined. Because of this, since Git 2.46.0,
+git-imap-send is not usable at all. The bug seems to have been unnoticed fo=
+r
+a long time, likely due to better options like git-send-email.
 
-Further it adds support for OAuth2.0 and PLAIN authentication to git
-imap-send.
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ imap-send.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Last, it does some minor improvements including adding the ability to
-specify the folder using the command line and ability to list the
-available folders by adding a `--list` option.
-
-P.S.: I am surprised this thing even exists xD.
-
-v2:  - Added support for OAuth2.0 with curl.
-     - Fixed the memory leak in case auth_cram_md5 fails.
-v3:  - Improve wording in first patch
-     - Change misleading message if OAuth2.0 is used without OpenSSL
-v4:  - Add PLAIN authentication mechanism for OpenSSL
-     - Improved wording in the first patch a bit more
-v5:  - Add ability to specify destination folder using the command line
-     - Add ability to set a default between curl and openssl using the conf=
-ig
-v6:  - Fix minor mistakes in --folder documentation
-v7:  - Fix spelling and grammar mistakes in logs shown to the user when run=
-ning imap-send
-     - Display port alongwith host when git credential is invoked and asks =
-for a password
-     - Display the destination mailbox when sending a message
-v8:  - Drop the patch that enabled user to choose between libcurl and opens=
-sl using the config
-     - Add ability to list the available folders by adding a `--list` optio=
-n
-v9:  - Encourage users to use OAuth2.0 for Gmail (similar change done for s=
-end-email docs).
-v10: - Fix comment styles
-     - Fix failing tests
-v11: - Use lower case letters for the first word of a sendtence in an error=
- message
-       and avoid using full stops at the end of a sentence.
-v12: - Gracefully exit PLAIN, CRAM-MD5, OAUTHBEARER and XOAUTH2 authenticat=
-ion methods
-       if OpenSSL support is not compiled in, but is requested by the user.
-     - Use backticks for string literals.
-     - Wrap documentation text to 75 columns.
-     - End the last member of enum CAPABILITY with a trailing comma.
-v13: - Fix logic error which was using || instead of && when checking if
-       the authentication method is neither XOAUTH2 nor OAUTHBEARER.
-
-Aditya Garg (10):
-  imap-send: fix bug causing cfg->folder being set to NULL
-  imap-send: add support for OAuth2.0 authentication
-  imap-send: add PLAIN authentication method to OpenSSL
-  imap-send: fix memory leak in case auth_cram_md5 fails
-  imap-send: gracefully fail if CRAM-MD5 authentication is requested
-    without OpenSSL
-  imap-send: enable specifying the folder using the command line
-  imap-send: fix minor mistakes in the logs
-  imap-send: display port alongwith host when git credential is invoked
-  imap-send: display the destination mailbox when sending a message
-  imap-send: add ability to list the available folders
-
- Documentation/config/imap.adoc   |  11 +-
- Documentation/git-imap-send.adoc |  68 ++++-
- imap-send.c                      | 425 +++++++++++++++++++++++++++----
- 3 files changed, 441 insertions(+), 63 deletions(-)
-
-Range-diff against v12:
- -:  ---------- >  1:  3e3ddf7077 imap-send: fix bug causing cfg->folder be=
-ing set to NULL
- 1:  ab12f713d2 !  2:  0d28e337cf imap-send: add support for OAuth2.0 authe=
-ntication
-    @@ imap-send.c: static CURL *setup_curl(struct imap_server_conf *srvc, =
-struct crede
-     -	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
-     +
-     +	if (!srvc->auth_method ||
-    -+	    strcmp(srvc->auth_method, "XOAUTH2") ||
-    -+	    strcmp(srvc->auth_method, "OAUTHBEARER"))
-    ++	    (strcmp(srvc->auth_method, "XOAUTH2") &&
-    ++	    strcmp(srvc->auth_method, "OAUTHBEARER")))
-     +		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
-     =20
-      	strbuf_addstr(&path, srvc->use_ssl ? "imaps://" : "imap://");
- 2:  ba9c3fb756 =3D  3:  d934bdcb82 imap-send: add PLAIN authentication met=
-hod to OpenSSL
- 3:  3d1a66da57 =3D  4:  f2773c646f imap-send: fix memory leak in case auth=
-_cram_md5 fails
- 4:  70bb9388b8 =3D  5:  c111ee6bc1 imap-send: gracefully fail if CRAM-MD5 =
-authentication is requested without OpenSSL
- 5:  0d00a5e135 =3D  6:  f12713f24b imap-send: enable specifying the folder=
- using the command line
- 6:  999c65438f =3D  7:  d38caeae5e imap-send: fix minor mistakes in the lo=
-gs
- 7:  d0315aebd4 =3D  8:  3ba02f2b0c imap-send: display port alongwith host =
-when git credential is invoked
- 8:  73352a18cf =3D  9:  6dbd0bf0bc imap-send: display the destination mail=
-box when sending a message
- 9:  36d50d01f0 =3D 10:  f77f2423e1 imap-send: add ability to list the avai=
-lable folders
+diff --git a/imap-send.c b/imap-send.c
+index 27dc033c7f..37f94a37e8 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -1316,16 +1316,16 @@ static int git_imap_config(const char *var, const c=
+har *val,
+ 		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->folder, var, val);
+ 	} else if (!strcmp("imap.user", var)) {
+-		FREE_AND_NULL(cfg->folder);
++		FREE_AND_NULL(cfg->user);
+ 		return git_config_string(&cfg->user, var, val);
+ 	} else if (!strcmp("imap.pass", var)) {
+-		FREE_AND_NULL(cfg->folder);
++		FREE_AND_NULL(cfg->pass);
+ 		return git_config_string(&cfg->pass, var, val);
+ 	} else if (!strcmp("imap.tunnel", var)) {
+-		FREE_AND_NULL(cfg->folder);
++		FREE_AND_NULL(cfg->tunnel);
+ 		return git_config_string(&cfg->tunnel, var, val);
+ 	} else if (!strcmp("imap.authmethod", var)) {
+-		FREE_AND_NULL(cfg->folder);
++		FREE_AND_NULL(cfg->auth_method);
+ 		return git_config_string(&cfg->auth_method, var, val);
+ 	} else if (!strcmp("imap.port", var)) {
+ 		cfg->port =3D git_config_int(var, val, ctx->kvi);
 --=20
 2.49.0.639.gf77f2423e1
 
