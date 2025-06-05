@@ -1,134 +1,87 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D15223DF1
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 20:56:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4767327AC30
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 21:11:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749157005; cv=none; b=ejVi/7f2YWa6jFpS5DERQ6y3tjgCiISZihkDmr9Kz2c5VgEPJ2yOOk8ibFxRS8n1P+hEidXauFfTiPUYpcj9dQ+Z5+eHVxFgvcOkp8LywFTTO0oxRcP+ahfIPjw9r+B5DvE06CrMK4aIIThjl+SStQj7IGAHWC38kUSr9bg4JSg=
+	t=1749157901; cv=none; b=Lm6EuM5ra4/54VnHQjcDjC34qYo4r0+kjNcYFm6BO9Iyg4yw6yA72PQKF2G0BYfYVeXBh6JwKUgcHAGi/3GeqnZfPNoIjwo6/+80QLahtawW9LiQhUx99ord9EmmfZII138klu112CmDhYrHSDJXFoUMZxa9old4aaDDfq6EGvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749157005; c=relaxed/simple;
-	bh=3AO6R4zzT7XQyxydj5fMeMvvbNgz+FWt6aGLxGm2ukk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XLQow2ZarwjW9RAml35iamYIMhesdyWzi93wbHi9n3nQBLnkxqsKoVYwsM/9321RkzqWodDdnHqtsbgTWPKPtMyRqppsdXlBDMBEgCoM8xziO64o6Ezk+ToVhRnoYVwv9Ewsn0UkyPihvlP6821UwdWokUtAFdW0URz5BzyZNP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FJtrRo5b; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P1bn7vo1; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FJtrRo5b";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P1bn7vo1"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 761C0254010B;
-	Thu,  5 Jun 2025 16:56:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Thu, 05 Jun 2025 16:56:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749157002; x=1749243402; bh=6JM74digNX
-	FcxQVAMkJRbjPF4KvtXhgSmR3YuRA0Q7g=; b=FJtrRo5buIGnim0FcucwaNQ64H
-	EUVXo1u3zsZm8apmfLMbv3be6QcYWU23lsSrMFENIgk68njNgr4J26JWFG7O8zG1
-	N0lUdWfcC7yhtFPykV+vewd0fDlWpjp2/EBOPsgFTy7mnhAFq9Rd3u7yMsGk3iiN
-	sxEJIJvXAvFh1lAkstni0OV/ZjSBIWXU5IC5YQ35a6MNTSTBLh1UiySOddNfii37
-	XwvemZm6ovrGxH4t2G2wOPl8utree1HENIia0m2AXj6z/t9hdh4u1RApb+6OWWL0
-	y4py9fBJegnYDswyiOMX/qw+b6Nd0B0GM5GL1Af6kQinqhNkFHyX/RwbO7kg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749157002; x=1749243402; bh=6JM74digNXFcxQVAMkJRbjPF4KvtXhgSmR3
-	YuRA0Q7g=; b=P1bn7vo1J6Tx2F2fxzK4BmOxMj6ORPP9NUQ8sZG6uPFhUWimDWj
-	H7Z8B/7j0zbFJK3XlLXYfAc6CJJQGvOvFZBhAYMGYlF7DDViRJQy4XhltgbclOip
-	xwyFnGlhNzehYg+rSUksBDKlX7US9hglkURAFwavaLkNsaX+M6KzAdGlgS/vDoTM
-	eBf/BvsXibqXYraeJaxfYvIjMTTJJdEjLZ9KGJw9mGeDNzY4OyhYVxMzQsJKgZvb
-	9Sc90yRfgaAIXwhEU967nbwjbTf6K31Qh4pBXLdbzUvavGA3oJ0Hw+EFIKYxifZu
-	zzDMvo8DSnWYteNEuB7i3OFo3BgBESql17g==
-X-ME-Sender: <xms:iARCaAs1h0wFIQeISV7G5LBvDrOyHUOtoqjftyC1yHXCWz_rO9u42Q>
-    <xme:iARCaNeTU8fTiH7Uc7Msoq_KIhJX90Rw8RDK2HGchIIHOjuO6I60VnXne1wEGpP_E
-    o_fZbvrDvlloptHYg>
-X-ME-Received: <xmr:iARCaLx0_ag5nDFtQCRUbrL6cqAUZYbKtAGFJRMknmHWO-LM-ifj7rBAnva16qTn3CeRLmcyTRZaROQ8X5OuA1xUq3tu9nju1Ucb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegudegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephedtvddtvd
-    egfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:iARCaDMI_5RzvY2QgljEFE7W0NHFGNWCjIazl889lvFE41qx8KA5oQ>
-    <xmx:iARCaA8UPJeuXFcsat62YLo-rDnzNX0o0uq6WE3UksJnrbdhzqqyIg>
-    <xmx:iARCaLWgVF9BPSHM8ZLxz6Hp9TxvpOyLSzWe9q_hQepqOURpoV0pdA>
-    <xmx:iARCaJec5C7ZbTQXIsI4A8TATlXWtiPeBgKAY-ZmokTvPiND-mXEPQ>
-    <xmx:igRCaA008FayHJkO4zkgsUBOL0f7RpUCH4NLvuKzs5YTD4VNSMQ_FAWm>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Jun 2025 16:56:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] revision: fix memory leak in prepare_show_merge()
-In-Reply-To: <aD_6T0lUOsqrb5sH@pks.im> (Patrick Steinhardt's message of "Wed,
-	4 Jun 2025 09:48:31 +0200")
-References: <pull.1989.git.git.1749006537271.gitgitgadget@gmail.com>
-	<aD_6T0lUOsqrb5sH@pks.im>
-Date: Thu, 05 Jun 2025 13:56:38 -0700
-Message-ID: <xmqqmsal7vqx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1749157901; c=relaxed/simple;
+	bh=2AGwCTHlh2ekbxnTcl3yUKIIvhSzHJvocerlaIloAyQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Btz+vnUcdc71TILZFsiSuZGtyBtV/yXyP0bLQCnFuZuhlMpAOr07+v5u5wzweyuWGae7wOVsqA5rdJaT/r28nFeWuDnVGAaP7P8SJg630mHkLJMltJubWmuPsJn7IYKN37cfymyuwh1ZBnclhDBRnyJh1qB86TBOmI0cZZF0pQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.100] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4bCxvq5TbtzRnmS;
+	Thu,  5 Jun 2025 23:11:35 +0200 (CEST)
+Message-ID: <f2ed8920-347d-45d3-a0bb-df94ece0d9df@kdbg.org>
+Date: Thu, 5 Jun 2025 23:11:35 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
+Content-Language: en-US
+To: rsbecker@nexbridge.com, 'Patrick Steinhardt' <ps@pks.im>
+Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org,
+ 'Todd Zullinger' <tmz@pobox.com>
+References: <xmqqsekgn4gk.fsf@gitster.g>
+ <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+ <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
+ <aEBPdFXpIca7lMls@teonanacatl.net> <xmqqjz5rcz90.fsf@gitster.g>
+ <44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org>
+ <010b01dbd5f1$3c26ec20$b474c460$@nexbridge.com> <aEFb0Sjj0Xuu-t7l@pks.im>
+ <014201dbd658$4da75680$e8f60380$@nexbridge.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <014201dbd658$4da75680$e8f60380$@nexbridge.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Am 05.06.25 um 22:27 schrieb rsbecker@nexbridge.com:
+> The *.tcl files in git-gui/lib are gone after the above command. I noticed a
+> few things run by the above - this did not happen in 2.49.
+> 
+> /usr/coreutils/bin/make -C git-gui
+> gitexecdir='/usr/local-ssl3.5/libexec/git-core' all
+> make[1]: Entering directory
+> '/home/jenkinsbuild/.jenkins/workspace/Git_Pipeline/git-gui'
+> GITGUI_VERSION=0.21.GITGUI
+> /usr/coreutils/bin/bash generate-git-gui.sh "git-gui.sh" "git-gui"
+> ./GIT-GUI-BUILD-OPTIONS ./GIT-VERSION-FILE
+> /usr/coreutils/bin/bash generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS
+> lib/merge.tcl lib/error.tcl lib/chord.tcl lib/date.tcl lib/encoding.tcl
+...
+> generate-tclindex.sh: line 21: tclsh: command not found
+>     * tclsh failed; using unoptimized loading
+> 
+> It appears the above removes the *.tcl files. That causes the subsequent
+> failure.
 
-> On Wed, Jun 04, 2025 at 03:08:56AM +0000, Lidong Yan via GitGitGadget wrote:
->> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->> 
->> In revision.c:prepare_show_merge(), we allocated an array in prune
->> but forget to free it. Since parse_pathspec is not responsible to
->> free prune, we should add `free(prune)` in the end of prepare_show_merge().
->
-> That is a rather obvious memory leak indeed. Do you know why we never
-> detected the leak in our CI? Is this code path not exercised at all by
-> our tests?
+Interesting. We have this in generate-tclindex.sh:
 
-I think we have no "show --merge" test.  Something like this may be
-minimally sufficient.
+...
+else
+         echo >&2 "    * $TCL_PATH failed; using unoptimized loading"
+         rm -f $@
+         echo '# Autogenerated by git-gui Makefile' >lib/tclIndex
+...
 
- t/t7007-show.sh | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+This $@ was taken literally from the Makefile, where it means something
+very different than in the shell script. The line could be
 
-diff --git c/t/t7007-show.sh w/t/t7007-show.sh
-index d6cc69e0f2..99f4d0b963 100755
---- c/t/t7007-show.sh
-+++ w/t/t7007-show.sh
-@@ -167,4 +167,19 @@ test_expect_success 'show --graph is forbidden' '
-   test_must_fail git show --graph HEAD
- '
- 
-+test_expect_success 'unmerged index' '
-+	git reset --hard &&
-+	git commit --allow-empty -m initial &&
-+	git rev-parse HEAD >.git/MERGE_HEAD &&
-+	blob1=$(echo hello | git hash-object -w --stdin) &&
-+	blob2=$(echo goodbye | git hash-object -w --stdin) &&
-+	blob3=$(echo world | git hash-object -w --stdin) &&
-+	git update-index --add --index-info <<-EOF &&
-+	100644 $blob1 1	conflicting
-+	100644 $blob2 2	conflicting
-+	100755 $blob3 3	conflicting
-+	EOF
-+	git show --merge HEAD
-+'
-+
- test_done
+         rm -f lib/tclIndex
+
+or it could be deleted because the next line overwrites the file anyway.
+
+In the meantime, setting NO_TCLTK=NoThanks in config.mak is probably the
+quickest fix for you.
+
+Thank you for the report.
+-- Hannes
+
