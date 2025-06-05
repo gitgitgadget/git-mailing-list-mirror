@@ -1,192 +1,281 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A2F1DDC1A
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 10:16:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D821DDC1A
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 10:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749118611; cv=none; b=Qo7CyTjjtC+mQ5qx2YBrJxeED5hovNSQmb9AWR7B3yc5axTczXdAKqSX0jeOfJqTLtf99IHEQVTTUffzW6GAm4Z11FZKL/19UQzV2YAy54apcegB7nxMCzlm7mWvkY78J3KdCe1SOPn1Zne9rEkjDVM4luP835UopVMlz98/Jng=
+	t=1749118647; cv=none; b=tUH5roS3GZo42TssWP0qEcCTR6+t8rH6W4JIceJZDszrY/ACDrBC+3JdQ8Q8ZHlO2Xy4OC4BGCd+/chmpKljRxEUeHGi6lMmU7HyI6XxZLMj1rmaZs0cSknJxHwyS+gtR6BAXtQT07Px66Mm7Olf+WXJzh4N+Z1A8r3uRhIn/RY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749118611; c=relaxed/simple;
-	bh=VtvBEgYIDLFsoPV2HA7TGj8cpMdKGAM/HVjlfT/cvB0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Z4rmX1QmSCsX/L2nJDzXn48VO1ER2mYNySzRPGEnDFjXK7c6meX8CGkr6FHR6jlbBlt8X0PdGIh7Fylgxn4jp281Ge4K/PqG2uBOXv5AWdDACKs1wKzgEivrQqI9RFKPJUN+cBXUNNRa4vOQFzbiOrPX8wCQAN6pi1lxbZRJ9fw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c0df2oc1; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749118647; c=relaxed/simple;
+	bh=H6snI+WWvHPRPQAfsiWBA6hVDGCa6u9gumlDXzSOEQM=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=ZHg1sWQDMxbiop1ubt+oFJp9eNKNsn78xi2KacjDr30zavk+Jgjv+QAk/chdPCOaTNLJ6a2v2hBWZTm8+nvd8BqEMf4Hipams9LaGY3fkaYKvJu2T0vX7DQeWOJJcTfZugcgJMaVcOUeBAQmW4cIgZQ9DX2odZjQkBQFI1nHgi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=bHVDzmRo; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c0df2oc1"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so8410895e9.1
-        for <git@vger.kernel.org>; Thu, 05 Jun 2025 03:16:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749118607; x=1749723407; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=O3DXmB3K00TQgGlJaiuIsTuJ1Jy1l/DG5jjd0QK7QEU=;
-        b=c0df2oc1VygPyK/BzCExqhmoswfe/EUrLKRI7WvQhvcuW2AyRIiMgXtgCt9Ir7ZRTQ
-         GyuAzb0ARvwaD1Sp1I0ihzH1LF4P0RHWW6cychCBdlS9T3DEN+bD0weBY2DNrAK3YR17
-         NfrCeTFw9F4/q0axIlEYXBzvrbD9/3LKUNsrCRLBULXPC58grHIRJCS+xzTYqv1qScWe
-         J3/0P8etKcH4D3a6e9pFAhlZ43eF4dnBRWkHFpnVf5R9cblo+coxy4A7fjNx+OBcbbWZ
-         n4LSLZApih2aHWn/n0oY8GodITeVSc6DN3rvl1w2ikPwey2Js6s/gRG0T3SXeQqEbEC+
-         Tj8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749118607; x=1749723407;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=O3DXmB3K00TQgGlJaiuIsTuJ1Jy1l/DG5jjd0QK7QEU=;
-        b=T7eS3qX0VNbd9BjrkDHoMTa38UkiPWR4hl9P5DG4dIGEJL6Cf48+lGR1GGWAALOiJm
-         x6rN/kZVVXIafCmR2z5SeUWt/B2fGiL9ZgiVSDy6D/BE2SXrBNmBLbX8wsB1/3ShIr4E
-         HSuXpqAgSbc5rJvQ3Kt/LpqiAHJydknmvn6TLlJ6a4p+t7Z9I17eQxUu31Wdq1MW1G3O
-         ieVL3fkNTHYuxQzi7bdIzvtFmXV1+d13IjD0l1nHYe03z2PVY+RpMVbIyQh/tkA//I5g
-         oHVbgcuN97ZqebCKaXlm/QryC5VwSPNeg/bo7o2tZg7jlQmQzbe0K1yckJC/x330mU2O
-         Dtgw==
-X-Gm-Message-State: AOJu0Ywr49qbGpgz6QLetqrCF5nscgs3u5yr6iJYhwhss1nyQgmeNw8f
-	KL1FavNc70ZN7frDXlNW1UQoWzKw6o/MgIEnO6y1QY3ErIjtz09Jxnd4DtIecA==
-X-Gm-Gg: ASbGncum90aRomcI09Kdv7BW9uabTrOPn04SjZmYXkDy0i1SBgIdUS2pAhqQ+RHdajH
-	qArmf3A9vF/yAtdYQ8KvgN/d41Z9lGohLCnsDdoA9R79es5i1tSTC4GbAzGyziIL2rFm72P+2jC
-	djGDlwOc0OS2vlKKkB5ANtXz7LhXfZs+lsSCc9E3cVGCSyqBwuZLaE+d7U1xE+iuSiZsDe7QJAq
-	/9ISG8UCF9fzNVk+6r3LHL0G/VvZPhcSWaJzZq+PoBuOaPGif7JmSyGoX4Z3PrrCtfVsQijMHwY
-	GeBZvqAzq8vxhGpB/TQPnwXbLFu1SHxKXk5bjt3rMpw5qXSuRgJs
-X-Google-Smtp-Source: AGHT+IGIo+NoS2UrtXc5RJlnaaAmkImjQppknxykOr9gQ7uBSs8bxU8QuAgaop/NsAWAOJ5Mi5NiQw==
-X-Received: by 2002:a05:600c:1c15:b0:442:cab1:e092 with SMTP id 5b1f17b1804b1-451f0aa1786mr57906215e9.11.1749118607092;
-        Thu, 05 Jun 2025 03:16:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a522ab67dbsm3645916f8f.62.2025.06.05.03.16.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Jun 2025 03:16:46 -0700 (PDT)
-Message-Id: <pull.1932.git.1749118606047.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Jun 2025 10:16:45 +0000
-Subject: [PATCH] t5410: avoid hangs in CI runs in the win+Meson test jobs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="bHVDzmRo"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1749118639; x=1749723439;
+	i=johannes.schindelin@gmx.de;
+	bh=tb88+LwPxIbABlKbXTVl8ZwdXVso+BSesGSvYULOf6M=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=bHVDzmRoM3ircziKRqAz0vnwkzgz61eVJMJVo8RiMJIRwZxpHtdrgFt5dXXvM5wd
+	 ySik6oD9MK19YK6wOars5jJ+/9rFQAJX8lVmZtiy7XLKPPeUexzoh4OOwQkbn4HdT
+	 5nQ+ypePvlTz6lFynXoXj4bNmGaDlOABT+JtTcdbuXX8N3A2G/yBqEW0PmnMw7ulk
+	 9paHdabLgM6KT4ykRQmVsQ8rsFE+9Fey31Jq2zDr7mr/BuwgkxBOkUGS6FaH2cMc0
+	 RlekoRHiQAia7CubhWUW2hkwsSc6ZnlAC9dbpO97Cqy2bwQaAObsTZNBAGV8rMvob
+	 ibJDkPdzhCwFa6ALHA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.53]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8GMq-1uryJT1y8O-012IbC; Thu, 05
+ Jun 2025 12:17:19 +0200
+Date: Thu, 5 Jun 2025 12:17:17 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, 
+    karthik.188@gmail.com
+Subject: Re: [PATCH v2 2/2] builtin/receive-pack: add option to skip connectivity
+ check
+In-Reply-To: <aD7tKfXD7YxprSZh@pks.im>
+Message-ID: <0c2cc369-f57d-e03c-88b4-2e3206953101@gmx.de>
+References: <20250520014920.201736-1-jltobler@gmail.com> <20250520163218.263921-1-jltobler@gmail.com> <20250520163218.263921-3-jltobler@gmail.com> <74668a00-5b90-2450-52c5-d9f00dcb42b9@gmx.de> <gw6j5enpzcit2zquafoaiujreoa4kbv3n6feq6yeqylcfynqim@s53ctnlg7tmm>
+ <aD7tKfXD7YxprSZh@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:+AYtHJQ4/Go9Py57XKJtO7Ss91+zavjfZVFNDjFk4Ahqa12JXN4
+ KBv1jeZHaYd6Vin34j2LnZz/2Ty+kJ2+qcY7M/1pVIJpiXK9mn60Ygj4w7e2YNaUQr3WjMv
+ qtHjPc7ohIECQRBJGZ56UwSsdnemF+DBX3tArjk/1g1gVFmM4fM5m4nLlzRxF7vkoj41opL
+ wV4UY83fOVd+TaXpPBYQQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:60Q5BPfP6R8=;MajuxnH27IbYN5UDk16Rwjud6Ip
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+Hi Patrick,
 
-In the GitHub workflow used in Git's CI builds, the `vs test` jobs use a
-subset of a specific revision of Git for Windows' SDK to run Git's test
-suite. This revision is validated by another CI workflow to ensure that
-said revision _can_ run Git's test suite successfully, skipping buggy
-updates in Git for Windows' SDK.
+On Tue, 3 Jun 2025, Patrick Steinhardt wrote:
 
-The `win+Meson test` jobs do things differently, quite differently. They
-use the Bash of the Git for Windows version that is installed on the
-runners to run Git's test suite.
+> On Mon, Jun 02, 2025 at 10:59:53AM -0500, Justin Tobler wrote:
+> > On 25/06/02 05:01PM, Johannes Schindelin wrote:
+> > > Hi Justin,
+> > >=20
+> > > On Tue, 20 May 2025, Justin Tobler wrote:
+> > >=20
+> > > > diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+> > > > index 9afea54a26..f76a22943e 100755
+> > > > --- a/t/t5410-receive-pack.sh
+> > > > +++ b/t/t5410-receive-pack.sh
+> > > > @@ -62,4 +62,26 @@ test_expect_success 'receive-pack missing objec=
+ts fails connectivity check' '
+> > > >  	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-p=
+arse HEAD)
+> > > >  '
+> > > > =20
+> > > > +test_expect_success 'receive-pack missing objects bypasses connec=
+tivity check' '
+> > > > +	test_when_finished rm -rf repo remote.git setup.git &&
+> > > > +
+> > > > +	git init repo &&
+> > > > +	git -C repo commit --allow-empty -m 1 &&
+> > > > +	git clone --bare repo setup.git &&
+> > > > +	git -C repo commit --allow-empty -m 2 &&
+> > > > +
+> > > > +	# Capture git-send-pack(1) output sent to git-receive-pack(1).
+> > > > +	git -C repo send-pack ../setup.git --all \
+> > > > +		--receive-pack=3D"tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" =
+&&
+> > > > +
+> > > > +	# Replay captured git-send-pack(1) output on new empty repositor=
+y.
+> > > > +	git init --bare remote.git &&
+> > > > +	git receive-pack --skip-connectivity-check remote.git <out >actu=
+al 2>err &&
+> > > > +
+> > > > +	test_grep ! "missing necessary objects" actual &&
+> > > > +	test_must_be_empty err &&
+> > > > +	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
+> > > > +	test_must_fail git -C remote.git rev-list $(git -C repo rev-pars=
+e HEAD)
+> > > > +'
+> > > > +
+> > > >  test_done
+> > >=20
+> > > This test case seems to hang occasionally in the "win+Meson test" jo=
+bs on
+> > > GitHub (I tried to find the same failure at
+> > > https://gitlab.com/gitlab-org/git/-/pipelines but couldn't find any)=
+. See
+> > > for example
+> > > https://github.com/gitgitgadget/git/actions/runs/15383915635/job/432=
+79134837#step:6:627
+> > >=20
+> > > Note that this problem afflicts only the "win+Meson test" jobs; The
+> > > corresponding "win test" job seems not to hang.
+> > >=20
+> > > Even in the Git for Windows project, where the `win+VS test` jobs ar=
+e run,
+> > > the t5410 test passes within a dozen seconds or so, see e.g.
+> > > https://github.com/git-for-windows/git/actions/runs/15383945895/job/=
+43279689086#step:5:143
+> > > (confusingly, the subset of tests run in the matrix jobs differs bet=
+ween
+> > > the `win+Meson test` jobs and the `win+VS test` jobs, but if you cli=
+ck
+> > > through all of the `win+Meson test` jobs, expand the `test` step,
+> > > patiently wait a few seconds for the log to be lazy loaded "enough" =
+for
+> > > the search to work, you will notice that t5410 is not mentioned in a=
+ny of
+> > > them, and the only one that times out after 4h37m11s is
+> > > https://github.com/git-for-windows/git/actions/runs/15383945895/job/=
+43279753911,
+> > > likely while running 5410, too).
+> > >=20
+> > > Do you have any idea why this particular test case, in conjunction w=
+ith
+> > > Windows and Meson (and only on GitHub) acts up like this?
+> >=20
+> > Thanks Johannes for the report. I'm not quite sure yet what is going o=
+n
+> > here, but I'll dig into this a bit and see what I can figure out. :)
+>=20
+> I've been banging my head against this issue for a bit today. A couple
+> of findings:
+>=20
+>   - The issue is specific to Git for Windows, I could only reproduce it
+>     when working with aa550efd0bb (fixup??? survey: add command line
+>     opts to select references, 2025-05-08).
 
-This difference has consequences.
+I can reproduce it consistently with Git's `master`, see e.g.
+https://github.com/git/git/actions/runs/15454602308/job/43504424816#step:6=
+:627
 
-When 68cb0b5253a0 (builtin/receive-pack: add option to skip connectivity
-check, 2025-05-20) introduced a test case that uses `tee <file> | git
-receive-pack` as `--receive-pack` parameter (imitating an existing
-pattern in the same test script), it hit just the sweet spot to trigger
-a bug in the MSYS2 runtime shipped in Git for Windows v2.49.0. This
-version is the one currently installed on GitHub's runners.
+>   - When working on top of the above commit the bug is consistent. It
+>     doesn't only happen in GitHub, but also happens in GitLab CI [1].
+>=20
+>   - That being said, I still can't reproduce it locally?! This one is
+>     quite puzzling to me. I have tried to get my environment as close as
+>     possible to the environment we have in the CI systems.
 
-The problem is that the `git receive-pack` process finishes while the
-`tee` process does not need to write anything anymore and therefore does
-not receive an EOF. Instead, it should receive a SIGPIPE, but the bug in
-the MSYS2 runtime prevents that from working as intended. As a
-consequence, the `tee` process waits for more input from the `git.exe
-send-pack` process but none is coming, and the test script patiently
-waits until the 6h timeout hits.
+I, too, was unable to reproduce locally (probably because of the way the
+runners start the processes, without an initial Win32 Console and all). So
+I took to mxschmitt/action-tmate to debug on the runner itself. It is a
+bit tricky to do, as MSVC's debugger runs in a graphical IDE and gdb is
+unable to find the symbols.
 
-Only every once in a while, the `git receive-pack` process manages to
-send an EOF to the `tee` process and no hang occurs. Therefore, the
-problem can be worked around by cancelling the clearly-hanging job after
-twenty or so minutes and re-running it, repeating the process about half
-a dozen times, until the hang was successfully avoided.
+>   - I have a fix, see the patch further down. But I don't understand
+>     that fix just yet.
 
-This bug in the MSYS2 runtime has been fixed in the meantime, which is
-the reason why the same test case causes no problems in the `win test`
-and the `vs test` jobs.
+I would like to propose an alternative:
+https://lore.kernel.org/git/pull.1932.git.1749118606047.gitgitgadget@gmail=
+.com
 
-This will continue to be the case until the Git for Windows version on
-the GitHub runners is upgraded to a version that distributes a newer
-MSYS2 runtime version. However, as of time of writing, this _is_ the
-latest Git for Windows version, and will be for another 1.5 weeks, until
-Git v2.50.0 is scheduled to appear (and shortly thereafter Git for
-Windows v2.50.0). Traditionally it takes a while before the runners pick
-up the new version.
+The reason why I prefer that solution is that I suspect the extra script
+to make the conditions only less likely, but not impossible, for the bug
+to rear its ugly head.
 
-We could just wait it out, six hours at a time.
+Ciao,
+Johannes
 
-Here, I opt for an alternative: Detect the buggy MSYS2 runtime and
-simply skip the test case. It's not like the `receive-pack` test cases
-are specific to Windows, and even then, to my chagrin the CI runs in
-git-for-windows/git spend around ten hours of compute time each and
-every time to run the entire test suite on all the platforms, even the
-tests that cover cross-platform code, and for Windows alone we do that
-three times: with GCC, with MSVC, and with MSVC via Meson. Therefore, I
-deem it more than acceptable to skip this test case in one of those
-matrices.
-
-For good luck, also the preceding test case is skipped in that scenario,
-as it uses the same `--receive-pack=tee <file> | git receive-pack`
-pattern, even though I never observed that test case to hang in
-practice.
-
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    t5410: avoid hangs in CI runs in the win+Meson test jobs
-    
-    I finally had a chance to look more closely at this problem. Here is my
-    alternative to what Patrick proposed in
-    https://lore.kernel.org/git/aD7tKfXD7YxprSZh@pks.im/.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1932%2Fdscho%2Ft5410-hangs-in-win%2BMeson-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1932/dscho/t5410-hangs-in-win+Meson-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1932
-
- t/t5410-receive-pack.sh | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
-
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index f76a22943ef..09d6bfd2a10 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -41,7 +41,19 @@ test_expect_success 'with core.alternateRefsPrefixes' '
- 	test_cmp expect actual.haves
- '
- 
--test_expect_success 'receive-pack missing objects fails connectivity check' '
-+# The `tee.exe` shipped in Git for Windows v2.49.0 is known to hang frequently
-+# when spawned from `git.exe` and piping its output to `git.exe`. This seems
-+# related to MSYS2 runtime bug fixes regarding the signal handling; Let's just
-+# skip the tests that need to exercise this when the faulty MSYS2 runtime is
-+# detected; The test cases are exercised enough in other matrix jobs of the CI
-+# runs.
-+test_lazy_prereq TEE_DOES_NOT_HANG '
-+	test_have_prereq !MINGW &&
-+	case "$(uname -a)" in *3.5.7-463ebcdc.x86_64*) false;; esac
-+'
-+
-+test_expect_success TEE_DOES_NOT_HANG \
-+	'receive-pack missing objects fails connectivity check' '
- 	test_when_finished rm -rf repo remote.git setup.git &&
- 
- 	git init repo &&
-@@ -62,7 +74,8 @@ test_expect_success 'receive-pack missing objects fails connectivity check' '
- 	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
- '
- 
--test_expect_success 'receive-pack missing objects bypasses connectivity check' '
-+test_expect_success TEE_DOES_NOT_HANG \
-+	'receive-pack missing objects bypasses connectivity check' '
- 	test_when_finished rm -rf repo remote.git setup.git &&
- 
- 	git init repo &&
-
-base-commit: 0d42fbd9a1f30c63cf0359a1c5aaa77020972f72
--- 
-gitgitgadget
+>=20
+> I saw that all other sites where inject a custom receive-pack command
+> also use a wrapper script, so it's not the worst thing to do. But it
+> would be great to understand why this issue exists in the first place.
+>=20
+> Patrick
+>=20
+> [1]: https://github.com/pks-t/git/actions/runs/15416185892/job/433793998=
+61
+>=20
+> diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+> index f76a22943ef..112da408d45 100755
+> --- a/t/t5410-receive-pack.sh
+> +++ b/t/t5410-receive-pack.sh
+> @@ -49,9 +49,13 @@ test_expect_success 'receive-pack missing objects fai=
+ls connectivity check' '
+>  	git clone --bare repo setup.git &&
+>  	git -C repo commit --allow-empty -m 2 &&
+> =20
+> +	write_script receive-pack-wrapper <<-EOF &&
+> +	tee "$(pwd)/out" | git-receive-pack "\$@"
+> +	EOF
+> +
+>  	# Capture git-send-pack(1) output sent to git-receive-pack(1).
+>  	git -C repo send-pack ../setup.git --all \
+> -		--receive-pack=3D"tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
+> +		--receive-pack=3D"${SQ}$(pwd)${SQ}/receive-pack-wrapper" &&
+> =20
+>  	# Replay captured git-send-pack(1) output on new empty repository.
+>  	git init --bare remote.git &&
+> @@ -70,9 +74,13 @@ test_expect_success 'receive-pack missing objects byp=
+asses connectivity check' '
+>  	git clone --bare repo setup.git &&
+>  	git -C repo commit --allow-empty -m 2 &&
+> =20
+> +	write_script receive-pack-wrapper <<-EOF &&
+> +	tee "$(pwd)/out" | git-receive-pack "\$@"
+> +	EOF
+> +
+>  	# Capture git-send-pack(1) output sent to git-receive-pack(1).
+>  	git -C repo send-pack ../setup.git --all \
+> -		--receive-pack=3D"tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
+> +		--receive-pack=3D"${SQ}$(pwd)${SQ}/receive-pack-wrapper" &&
+> =20
+>  	# Replay captured git-send-pack(1) output on new empty repository.
+>  	git init --bare remote.git &&
+>=20
