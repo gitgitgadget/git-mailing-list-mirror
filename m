@@ -1,224 +1,142 @@
-Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EACD17E792
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 09:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ABA1FC0E6
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 09:25:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749114528; cv=none; b=qDdteP6vFgfBJeOyIRnKRBt79FPuCGO6VZ1Khq1znKrVDCM34W/WuuPeHs/mHjWIFS8U6p+M2YZuHwWfXJxnBgL7bT535mzZxN0lgG99WAh7iCLPBtxL3qaiuZElKkal3WntffqGJdMsRQ0PDJJ2y4Yo1iys1CIbF28K5D2KW0Q=
+	t=1749115550; cv=none; b=ez4aaX6qh2FYtDnkJlcy/+EWW/f578UqW/BXDS6Fyot765qLXHlKoLRdbAGGUDU3vRNx8cAyxAn1MxRpYwaZGKKwgPZznzLJHro3U4gC9sErUUkWIXFc9AALb21yHNfynMtfGaNCEMyhz0YaRrxPFsF2r8uKr8R2teVL9f07F9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749114528; c=relaxed/simple;
-	bh=B29chimeT0EA5YfIyuKDszIZNu4Z2Kc+I1WbRkEYxac=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oHLHnWNWF1P8+wWfpIualVYaG8GH+cYmX+3QGul8krUCVPxWRqpsi8Aa9XfsP7Ol7O3IKeaoDIBgzVjQnNOJt183bqkv+4RmEXzRiZOLNZKQ4O12dqrTphz04zxTXK4hTnFdzsr+Wz+Ywqz77G2+1o9ujC6goYEFlJDEOTUkvk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RSzx9uwH; arc=none smtp.client-ip=209.85.221.172
+	s=arc-20240116; t=1749115550; c=relaxed/simple;
+	bh=YuGqQhloHgXTbXiQmLgVjkegoE8A9VSQILSqv4Vds4k=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=S++4yC9BZM3by1L3Bs/TBPUzBgwBdpESuGFx++0xUfymeo48eGEnm1lhjvRiiVTnh+WdNyPIf2CeF3bQVxfO1JdHNq/9ozlT3m7dpZuQ5nRQ35JvTjtN7neeh2nkcxRHP2Apy9+B4QDdtGD4eW4C4Gvow44BPCMA5H0ziaF6Zq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eeHInrJp; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RSzx9uwH"
-Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-52934f4fb23so577939e0c.1
-        for <git@vger.kernel.org>; Thu, 05 Jun 2025 02:08:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eeHInrJp"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-450cf2291bbso2402085e9.0
+        for <git@vger.kernel.org>; Thu, 05 Jun 2025 02:25:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749114526; x=1749719326; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MofgJqYCxG79MHAaG8ao49t4m6jEavnhjN04J6TS/zU=;
-        b=RSzx9uwHL+NfGhDpmH4G6/bAuvSN5oCu0FnaH5zpQXIqdVmGcu65yKrSGND5MeCJ+u
-         p4trF6iXQXvSzxjqJsTCdWWxsJn6T0HUPWioYOIdeLI4ZjIZ3MPO4nxNiN8mliOK0lZ6
-         yKsTd6shBxoAqeLpT8N/HW6zW8ZCdi/IcYK065PfbUyDHedVrTDCvMk92eDtSCSmkhS6
-         pvROxdBEjDOz6hoEdn2DYEvLl6KAAVEmSBIl+Ccv6SA0Y6tPRRHakDTchmAKfk//jo+g
-         6Qq102U6g7gskZiHIMy2xIiYBb/WyNHTf1Y95DQq24TJJEz/9YyI+m2UkpqrNbud74cL
-         uPQA==
+        d=gmail.com; s=20230601; t=1749115547; x=1749720347; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UFXAENxNfMURfSdRs+aOBA0sjG7Duih40zSJqoU2ZIo=;
+        b=eeHInrJps25nB1cs1rYXHyvhkyXn+eggCqJ/C4gDR0Ht/e2dwCtCw1vxGrKqMAr177
+         tX8df4bFZggS+xra22mh5i5RwIpOUpVX94QZW1xiFnbirJdixj+S4CL7yqJWAVn3sX5j
+         PuwecaDPunSPLDOj1OzqDKlRbVxwE46uzqBW1DGi7tXOqoQakSNDC7LMid1wklsz9sby
+         Qcxdhz17kptKxYIDd0eGaJrrW0PfOoifYL4NynjwxUJcVOQGpmoW7ddKlkP187yHLh6I
+         R8IYvQbl2mdaly2P1+X3HzgRnrHkDKFhz3iI+QIAycDzspzsn7Ceioa0qVfUmEB+mGws
+         mkeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749114526; x=1749719326;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MofgJqYCxG79MHAaG8ao49t4m6jEavnhjN04J6TS/zU=;
-        b=BgHUv9dBXGhf1VxwLLpmv18kPXzeEsvYz7ZqaMBjUIgH/NsS1EokQwIIL3MAz4kQpD
-         cAX/yZp21bjalr+XE7BausTZbiPR3iXRXLQEFTzesC50piV+uEKKkDXGf23xZnb2JsPK
-         cC1BC/V02E9Na8W5Pqiqd547tCWqRV39qQA1qT9kn9trw4xFTSKMat4ZqfQSd+wAy9oC
-         IJe/UKXOHlga4UQcfxr15fTGTdpgl5d1kp19hNnr+3wFPsO++0T7PxYGZbCUfPIdqamo
-         qkjTfjK4Vees6j4k0smnvkr1S69sGd/ImW1Vi+qeEH+AxaDIM28FnLwb+0FvGkODWGyk
-         gFFQ==
-X-Gm-Message-State: AOJu0YxDw2Fic1NKoNUywnzqSn1MckwOZ/V88jrkI+6C/ObmThfj0NLh
-	tQ+GIl+j732oUxeQtcQMeEIxZ5p7KRpS022Tvm9DMBUgU7e+59bJNHYcxQu6CwUdPFkFlgJt7ke
-	Q2A7IXpMiRYh+G4iPTRRtNwFQ41AgjREkQBuk
-X-Gm-Gg: ASbGncvQdrJ11w05DeqZZAc3RQ63vS3llvTB0/MvVHWrPniyu/NqDHeASPebLnGOXkF
-	5/sOqugm98qa98rtiY0q7Vt3FOOAifHocW+YtrQPZ3q01Q+hnle/PMJuuxkB6IqPiBibMwxK1ot
-	2KekSclinTXwexqn0lsQGD7OIr3FesjwPxHKOQi6QSKwJgd36H57mEND184BXBZU4rUng=
-X-Google-Smtp-Source: AGHT+IEuq0PdmOCxiGYcMGTusumkG3v017+dV8agYyUK8j5O+RWzsRPPNOhDTCSHjFTuVXv+d+UuL60xbjJUYA6SF8Q=
-X-Received: by 2002:a05:6102:3e0c:b0:4e5:9138:29ab with SMTP id
- ada2fe7eead31-4e746e18b70mr4853297137.15.1749114511096; Thu, 05 Jun 2025
- 02:08:31 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Jun 2025 04:08:30 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 5 Jun 2025 04:08:30 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aEFZnmjoxjopv2xF@pks.im>
-References: <20250605-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v2-0-26cd05b8a79e@gmail.com>
- <20250605-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v2-2-26cd05b8a79e@gmail.com>
- <aEFZnmjoxjopv2xF@pks.im>
+        d=1e100.net; s=20230601; t=1749115547; x=1749720347;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UFXAENxNfMURfSdRs+aOBA0sjG7Duih40zSJqoU2ZIo=;
+        b=fiPQW2e9JYOBGGDbZFQsYiCumSL/WdDSxKL3bFGYmtzbJpQhmQWA+Kq1UpgMvxkY+v
+         w+D4kYjjKMHNeV/pBpl2AQ8JTl94Bz67ymGtK1BczqrewkjQzo9vN7Z50KOGTQn5wQ7k
+         soaVOtjc5cwK+pipPS5xWK+OX6EEGLwYH/GoNHH2t9UM6N7Ru4LYu7kJWwKBueixplln
+         89clR8C0sGkleFAnXrj0AZ2ViLcfOOSV9jK2rxN0Q9Ydom0Ai/7ov5gbHD2UydmEbcAU
+         z5X1NmT1NEEiM8HLASyrTSai8dDPAdWA7hvq7K+BDpbuCBR1vOzkMncZVP5Y2UMbNexR
+         GL3g==
+X-Forwarded-Encrypted: i=1; AJvYcCUq+GRauNNCkZD41Nr9zBlTkojy6z5jV0wF8KFCsahVCR7SEeKb5jPl80/7FD0CkihjkpM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyo8YvPFcPr0k/amsqY0DDFvWUnFRSFPO+DAc+7/hMA4CUA70gq
+	WE1D7dp/2uTc7K9G/SUTE3WbW7qP8se7Fai8kau7ndJ7jg6xBmrxhPQwEHg23g==
+X-Gm-Gg: ASbGncuzsth0jNzXmxZPX4mJ8BaRB1l+m/8sBjcsm0ZslL7GpaOLPIyfWV9GRopO9gP
+	umulTTF5/EqAnnUMf0c8565oIKVgN8yqtH/YB8KNS3f2diVgBHbNJ3G/I88UFVpKFgmAlPjzYni
+	O9Fx4Dll4ki83K9FlBCYI0dF1Veekeuj7iMOIA/jV8pQSGj77hprrfh+E6BRjp6qCbHLGJndOoD
+	ZoEeho42oYD3f7xBo2hxLFbzCzWCk5ANk5XgUPimDl5c4QIuZYWyOmsix4dfcfwstZAd+P1Bejf
+	bml6yz+rFH9afIZTSbUnPsXlyEHmFknKL49EaEw+FcH1T5995cEQUT27KIfuwAk9SPpx+2CD34/
+	7DxZHN/tBhZI+ciSIN2i5Wy0RTYw=
+X-Google-Smtp-Source: AGHT+IGMC5dlQGjwBFYtwOtOxYQCKOuu8LPUJ9U2zF0RPueCra09YyAVtJy0bmSHiyC1FlNZdBhb/w==
+X-Received: by 2002:adf:ed0d:0:b0:3a5:2b75:56b3 with SMTP id ffacd0b85a97d-3a52b7558fdmr1021635f8f.24.1749115546878;
+        Thu, 05 Jun 2025 02:25:46 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe5b8besm24285353f8f.16.2025.06.05.02.25.45
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Jun 2025 02:25:46 -0700 (PDT)
+Message-ID: <127d9d03-e94e-4928-9c6d-07a5396ca325@gmail.com>
+Date: Thu, 5 Jun 2025 10:25:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 5 Jun 2025 04:08:30 -0500
-X-Gm-Features: AX0GCFt5Pvgq2ktSop6uITGmVr4GpTK5H3umwbIEBgKaLuRSMaoS7tyHwept6RQ
-Message-ID: <CAOLa=ZQVyU63pWgaHONj2bCdCw3XmXLDVqANWkw9TkVzPQshoQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] receive-pack: handle reference deletions separately
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, jltobler@gmail.com, gitster@pobox.com, 
-	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000001b29550636cf75f8"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 3/4] builtin/stash: provide a way to export stashes to
+ a ref
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <20250522185524.18398-2-sandals@crustytoothpaste.net>
+ <20250601223225.464076-1-sandals@crustytoothpaste.net>
+ <20250601223225.464076-4-sandals@crustytoothpaste.net>
+Content-Language: en-US
+In-Reply-To: <20250601223225.464076-4-sandals@crustytoothpaste.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000001b29550636cf75f8
-Content-Type: text/plain; charset="UTF-8"
+Hi brian
 
-Patrick Steinhardt <ps@pks.im> writes:
+There are a couple of points outstanding from my last review. The first 
+point below about the option handling definitely needs fixing, the other 
+is more of a matter of personal taste.
 
-> On Thu, Jun 05, 2025 at 10:19:55AM +0200, Karthik Nayak wrote:
->> In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
->> we updated the 'git-receive-pack(1)' command to use batched reference
->> updates. One edge case which was missed during this implementation was
->> when a user pushes multiple branches such as:
->>
->>   delete refs/heads/branch/conflict
->>   create refs/heads/branch
->>
->> Before using batched updates, the references would be applied
->> sequentially and hence no conflicts would arise. With batched updates,
->> while the first update applies, the second fails due to F/D conflict. A
->> similar issue was present in 'git-fetch(1)' and was fixed by using
->> separating out reference pruning into a separate transaction. Apply a
->> similar mechanism for 'git-receive-pack(1)' and separate out reference
->> deletions into its own batch.
->>
->> This means 'git-receive-pack(1)' will now use exactly two transactions,
->> whereas before using batched updates it would use _at least_ two
->> transactions. So using batched updates is the still the better option.
->
-> s/the still the/still the/
->
+On 01/06/2025 23:32, brian m. carlson wrote:
+> 
+> diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+> index 1a5177f498..e8efd43ba4 100644
+> --- a/Documentation/git-stash.adoc
+> +++ b/Documentation/git-stash.adoc
+> @@ -23,6 +23,7 @@ SYNOPSIS
+>   'git stash' clear
+>   'git stash' create [<message>]
+>   'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
+> +'git stash' export (--print | --to-ref <ref>) [<stash>...]
+>   
+>   DESCRIPTION
+>   -----------
+> @@ -154,6 +155,12 @@ store::
+>   	reflog.  This is intended to be useful for scripts.  It is
+>   	probably not the command you want to use; see "push" above.
+>   
+> +export ( --print | --to-ref <ref> ) [<stash>...]::
 
-Will fix.
+--print and --to-ref are documented as mutually exclusive but that is 
+not implemented in the code.
 
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index 9e3cfb85cf..34db4377ca 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -1867,47 +1867,66 @@ static void execute_commands_non_atomic(struct command *commands,
->>  	const char *reported_error = NULL;
->>  	struct strmap failed_refs = STRMAP_INIT;
->>
->> -	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
->> -						  REF_TRANSACTION_ALLOW_FAILURE, &err);
->> -	if (!transaction) {
->> -		rp_error("%s", err.buf);
->> -		strbuf_reset(&err);
->> -		reported_error = "transaction failed to start";
->> -		goto failure;
->> -	}
->> +	/*
->> +	 * Reference updates, where F/D conflicts shouldn't arise due to
->> +	 * one reference being deleted, while the other being created
->> +	 * are treated as conflicts in batched updates. This is because
->> +	 * we don't do conflict resolution inside a transaction. To
->> +	 * mitigate this, delete references in a separate batch.
->> +	 */
->> +	enum processing_phase {
->> +		PHASE_DELETIONS,
->> +		PHASE_OTHERS
->> +	};
->>
->> -	for (cmd = commands; cmd; cmd = cmd->next) {
->> -		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
->> -			continue;
->> +	for (int phase = PHASE_DELETIONS; phase <= PHASE_OTHERS; phase++) {
->
-> s/int/enum processing_phase/
->
-> Doesn't make any difference, but it feels a bit cleaner.
->
+     git stash export --print --to-ref refs/exported-stash
 
-Yeah, agreed.
+creates refs/exported-stash but does not print the object id. We should 
+either ensure they are actually mutually exclusive or just allow both. I 
+don't have a strong preference either way - I'm not sure it is 
+particularly useful for the user to be able to specify both but it 
+doesn't do any harm so long as we honor both options.
 
->> +		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
->> +							  REF_TRANSACTION_ALLOW_FAILURE, &err);
->> +		if (!transaction) {
->> +			rp_error("%s", err.buf);
->> +			strbuf_reset(&err);
->> +			reported_error = "transaction failed to s1tart";
->> +			goto failure;
->> +		}
->
-> So if the transaction doesn't contain any deletions we'd now commit an
-> empty transaction. The same is true the other way round, in case there
-> are only deletions. Do we maybe want to skip phases when there is no
-> match? Ideally, we wouldn't even be starting a transaction.
->
-> We could for example skip forward to the first command that we would
-> have to queue. If there is no such command we continue the loop, if
-> there is we can remember that command, begin the transaction and start
-> queueing from there.
->
+>   
+> +static int write_commit_with_parents(struct repository *r,
+> +				     struct object_id *out,
+> +				     const struct object_id *oid,
+> +				     struct commit_list *parents)
+> +{
+> [...]
+> +out:
+> +	strbuf_release(&msg);
+> +	repo_unuse_commit_buffer(r, this, buffer);
+> +	free_commit_list(parents);
 
-I think that's a fair point, and very simple to implement. I'll add that
-in. Thanks.
+I think taking ownership of function parameters like this makes the code 
+harder to reason about because C has no way for the function prototype 
+to signal to the reader that the ownership is transferred. It would be 
+easier to see that the list of parent commits was not leaked if it was 
+freed by the caller.
 
->> @@ -2024,6 +2043,9 @@ static void execute_commands(struct command *commands,
->>  	/*
->>  	 * If there is no command ready to run, should return directly to destroy
->>  	 * temporary data in the quarantine area.
->> +	 *
->> +	 * Check if any reference deletions exist, these are batched together in
->> +	 * a separate transaction to avoid F/D conflicts with other updates.
->>  	 */
->
-> Is this comment still accurate?
->
+Best Wishes
 
-Nope, will remove this.
+Phillip
 
->>  	for (cmd = commands; cmd && cmd->error_string; cmd = cmd->next)
->>  		; /* nothing */
->> diff --git a/t/t1416-ref-transaction-hooks.sh b/t/t1416-ref-transaction-hooks.sh
->> index d91dd3a3b5..b2aaa1908f 100755
->> --- a/t/t1416-ref-transaction-hooks.sh
->> +++ b/t/t1416-ref-transaction-hooks.sh
->> @@ -119,6 +119,8 @@ test_expect_success 'interleaving hook calls succeed' '
->>  	EOF
->>
->>  	cat >expect <<-EOF &&
->> +		hooks/reference-transaction prepared
->> +		hooks/reference-transaction committed
->
-> Yeah, this shows the empty commits indeed.
->
-
-Yup, thanks for the quick review.
-
-> Patrick
-
---0000000000001b29550636cf75f8
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 43370b0f6b37e97_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oQlhvd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meS9SQy85QUU1M1doNUFzVnFVd3o4UCt1QXQ5ZTJnMwpBUFJEMHlkUk15
-NXVrRE9ZMFdMSFN1NHp2UXgwaG1pMDF2UjlyOW42aDFHREYvS25KeE5qdlF0UERRNmFHODVCCndU
-Y0hmTUs4ekdINFdWQVl0TDJVd2RXcCtmeWkxRVJPUUhqRXptVWRyb1ZPUjNpa004ZjM3Nmo3RmZs
-Q0JSKysKaFdoYkYveG5yYTlHZFN4aXphTlJSZXpZOTFmQjNJdDdqZktIYVlHY1pCb01ZWUlqbUhF
-MTE3am9wTXdrbmxwYQpQWEZHL2d0MTVrSlc1OStxU2ZBSDRTdTJ1a05DSXdHOUpDL2FwbEJ5QTR3
-Zm55UVMwaENxSjZWSUdFM2ZRMjYvCk1tbTMvUk96N2U5NTl3a1psMWZZUDlFU0xXdGlBSkwvNDYx
-MEJ4YTBuVFRPdEQxd0Q3Y2hwdFBBYlZEdEFIR1AKNFFPTkpoT0o0UkhnMElKdThpQlBHeDVUelZu
-NisweXpjNjg1U3o1b1NIUUREakpWNFVVTkpYMDYxRlVHZTEwdgpTUmRDbk9mY2VET29OT2Vuekhw
-d2xqZlFqQmwwWm1VazhjbW9iTlFwWmdZbUlmUzl1VTl6SlF1LzJ2SytEMXpDClNNTUlxQlVrbHJs
-alpSWE1ZenRkUTJTaTkvNHc1M0RNY1FQcXoxTT0KPXRaR0gKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001b29550636cf75f8--
