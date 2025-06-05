@@ -1,67 +1,68 @@
 Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EAF52566
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 06:24:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F612566
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 06:27:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749104673; cv=none; b=hSbnQKh6jlrZ1IDB9/ixJ9imkJQF5dxaJAlHliGVGueThzBV5qBQceuIReY09zdr/kKz++BDm2U4sKYg5rNt3RUKIbQsdZVz6mzkMruQlInfNK+pHZwXdtUoT7qoe8cTtQsjz2OEBqjQj096+2lDjdnXoL1VPquc0Rr7cttWgDU=
+	t=1749104851; cv=none; b=mzwr5nYNVKxNUSkSqDYb1S+wiIoLzDFlJq5KkdOEED0S9++Q134WklUGGA0l2Ucm6g0NtcBgKHIbVQagzWn2BbK1T9BPwq/vaNnGQ3VvB6q/qTtWLMEGKHXqGq5b3AzrRGoxaOvMErEqAykz+tqY0lsokbScU5L21qZs/v/m9mQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749104673; c=relaxed/simple;
-	bh=PMlN2ZS9DdICVuZzN5V2sKL8y8x9A7yv3HN9VTg0nS8=;
+	s=arc-20240116; t=1749104851; c=relaxed/simple;
+	bh=CrCqvLyJiu0vRugLGK7JEHIKj0M3WwXCuQdlCV/G69g=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=QJ9mmBi7yuhzAQPy09FE0QsuvFiMHT9xpBaOOcm5ixM7j4IF/L7nr4u4QYOj9VqBdHMSOb+xqbHFR7lqE6kmhQTXYNeOkW4dLMjVXIZV1xw+efH4WT/qimH/im5C17JaG6e8SNJ/pk/STJV5GaMJPeOTl/pAM9yP6vC5Aw7IDsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E/oNUv36; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=IlKDaoflp9L3j7gxytVN3KgVlM/EApKWMY53s5vRwq3w96AC++cS8HYIFI6ywYrX5j9nv4KUC6vbD6X1d+YlAUMHkSjQEfgRdvyHoxB3cAaqsOLFH+KXqLzFYZBl/k4F8HZ8M0Ihe9+1Orx13Lb7N79UndEYIpF3fhLyLg/9Z98=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FA/TI+fV; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E/oNUv36"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451d41e1ad1so4251355e9.1
-        for <git@vger.kernel.org>; Wed, 04 Jun 2025 23:24:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FA/TI+fV"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451d54214adso4268455e9.3
+        for <git@vger.kernel.org>; Wed, 04 Jun 2025 23:27:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749104669; x=1749709469; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749104848; x=1749709648; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Sziat50AcSf9CYAFSgPwvevB71lj+dZ/C7tPKtVB8pc=;
-        b=E/oNUv36V5/IZ33H9Iy7a9rbWxehgz2/yov0XXmPgJjp+NKJeJdhgjKg8R6di9Pv2J
-         kQqY2CiPDsYWq55x2JtorVpQhYVzjD+D5BOiG70Yafre2mKVxE6Adnb7XSw554GPT1qw
-         Em6aic489ag+l2rYDfLARZsLVLlW8quH2B5xhuRgisGLl3ORFNSOWmbRDI156KdUqjGO
-         JyxllRRLs/z4o0cXieAlSWlacSl4bQlSe/YLFruXL8TcseuDmbmVaoR0L6taJsSwamJn
-         In9psD2O6CWKXxjUHqb8CuSqT/35dp+C4IwncBxBCYT5bUElsUiQ8BM+1iK5rC2uyqlY
-         hUWw==
+        bh=m6hkdkXklH2vda1T+3VuQ1vBo7x5DYEzTQA/dTC4XqM=;
+        b=FA/TI+fV+NjE2oAqZU5D7tVo6thw46uIxAC8Xs1p9oWUnVdRQkVAdfq7DyUtfdFuUt
+         OxiaGTVhugRaWECDAhshBxp12WGMdy+bOQoRK+IN9zn0E5TxaSzU1Jx+zieZfHj6CbN8
+         ymIkRW7MOgIkghqPiClyg28oLXLNsRvX4sYQWQmnLeS+h2wnnBAr1lxV2L5oaRCTDWPA
+         9qDk6PuRFoldJSsADOnF2iJPOcq7cg+jLR1hzNayMsIKjso32/kk6a9/OipcRcMQUPtC
+         BMxXmC0Pa90Q6qOL+UEM9M+J4liiGpIoFOqFPuV0PSBcjv3TvCm7uP+sLs8nvUoGA+l8
+         RQdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749104669; x=1749709469;
+        d=1e100.net; s=20230601; t=1749104848; x=1749709648;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Sziat50AcSf9CYAFSgPwvevB71lj+dZ/C7tPKtVB8pc=;
-        b=c+3tqqvQt7ZOh0ZpHFnNOn9w4nCia5cE2/BCmKZCQOJ2wmVvXjKZKR/PoLjq9qdfOz
-         M0+hb/DdCKCzrejnmlP1GD/fqPO9NuSQC6654vN6MYEpwJ5mgcqs3DMyVtSZ45xZp9Nn
-         ADWB7M3WHGlXCx9BsGdYeV4Fwk0L5ju8v2us7/8YeuaJuNBmoqhtAz48SK9NssfidNy1
-         iVM4VZg6DaARMDVU78dQRnDYW0jLYqjbz+P6aNYRlZjSG7UojwF0sadFYzxLzQjjsPLj
-         8/QOmJ+SNQCdHYCypADX550fiNs8+zF1EBHWvBU2zxSrvu/oF3YW96+TASLHBbopJ1Az
-         J7NQ==
-X-Gm-Message-State: AOJu0YzfAF/TBvJrdV/vxZRdCG4D0SfMnPdqSkxdWEn3rzO8+pRAidzp
-	mGbItMnbvOU/PyWtyceeXO512/wgII/+/opYuZDus0ShIxjKIdvKt1osLCagSw==
-X-Gm-Gg: ASbGncscs/GTYc5jexhaxlgxJaTgICrFRXA3hTCsYky2HwxnfMMxtw2PSZI+SV4t5YX
-	iNwhBhbHPB6hx1Ug34m5ivHlyaYiInatdyquzVPl+JPne1w5ifdvsRpMPxnGFgZTTAi5Eo71YKA
-	gmvus6xQytD7/LvV9+0cYq3MumyESUzbbywba1XAwCRcgYJS8rVe0PnVVdJNazsSurmaUQA8PeT
-	YIQza94gfwvebKuu8K6BICK0adOWP4/7MDTpqDKjZ5ZnkUsNrn+VvE9OSakd3mytjcVYToh7txy
-	tQmcjwOa403iGX3fOxWp/3Zh/d07RUl8+lrO46psFmH7tdkthLCj
-X-Google-Smtp-Source: AGHT+IEB2ktq99XJRjEZQicRoisab1KLmnk/vw1aWke4HMu+KAre7lv641/dtWndFefPLLjmrGRvWA==
-X-Received: by 2002:a05:6000:24c7:b0:3a4:d8b6:ca3f with SMTP id ffacd0b85a97d-3a51dbe7304mr4293434f8f.30.1749104668926;
-        Wed, 04 Jun 2025 23:24:28 -0700 (PDT)
+        bh=m6hkdkXklH2vda1T+3VuQ1vBo7x5DYEzTQA/dTC4XqM=;
+        b=l/RaIUFESbk4zPeQvpG9NjVNAdP3e75CEyE3OMrsNXzKV6DRY9ClWB68zQ6RqvYMa4
+         4mu2qGMKWBVumGfoqWabzjcw9fCpi7v/+i1PEvFRO2D1fw7MtDGGoRhaINy+Fki1LarJ
+         OxnFVdWGLjPBweQot8bdgMY2yG9PnVG4UafvpFCQNi+2ql5kGafpoTROQ4zDorPdmK75
+         9ctact9WFnmxZyi3xUe/fRHGs0UOxIefpoxIhbiKp4VO/oUME7X83As/OyABGpowZFkx
+         Am+G+/EapFS1mdjYHaS0IhCQouNfed51C5P2lC15cqiFUEXMU2i/SjoXWuwNvhNK/M9F
+         SGqA==
+X-Gm-Message-State: AOJu0YzlHPL5/fhHQqoREMdhgPrTUZX7B3P6/tU2DYrucZKzILCj9ByC
+	3FI6k9GRFyNsif7XrCI5jncVJ1X98ZxdviI9TMTr97ppPS5YIq9WRWw5DDoxhA==
+X-Gm-Gg: ASbGnctsiKR5EPfHDl+5ns723ESX2IQrUQM3J5rodroXIAOTOEFG21okX3QDdIjCG0p
+	p+7eWeuFqyy+Mxg1s6KxWvB9omEZBUfmsLoQUoUz+5UFEr6/sVjbqFd8uN9X96NIeoqSeyF3P6a
+	+sVEG84d5t5nZ33Z+cmdH3UV2mvW7yoEkmgUFwn8OgFtuDScmM5PfVYSVjbElWotHaizECOsADP
+	B++i3ise8n1/oaS+Y99K0QsSL7Dd0WfvK995cmJSJS1OiUmo/hfk+KcpgSOIZRL/5uQ3sPW5lKC
+	qhm0R+OOHU3pd95hpWeslbT7dpURyNzo0OduWBouShWdLJcSQ6wG
+X-Google-Smtp-Source: AGHT+IG/aoG6KRlZhIygIFfNSODASdXw8NdLi90wvnRI9Kv3fOAD9KCSOOjc7KWrLAj2ffHdzQjY3g==
+X-Received: by 2002:a05:600c:3106:b0:43d:5ec:b2f4 with SMTP id 5b1f17b1804b1-451f0a76df0mr63785755e9.10.1749104847561;
+        Wed, 04 Jun 2025 23:27:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a526ddb8afsm1476793f8f.0.2025.06.04.23.24.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451f9662cd1sm13778625e9.0.2025.06.04.23.27.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Jun 2025 23:24:28 -0700 (PDT)
-Message-Id: <pull.1977.v5.git.git.1749104667618.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1977.v4.git.git.1748931650166.gitgitgadget@gmail.com>
-References: <pull.1977.v4.git.git.1748931650166.gitgitgadget@gmail.com>
+        Wed, 04 Jun 2025 23:27:27 -0700 (PDT)
+Message-Id: <pull.1988.v2.git.git.1749104846531.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
+References: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
 From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 05 Jun 2025 06:24:27 +0000
-Subject: [PATCH v5] pack-bitmap: remove checks before bitmap_free
+Date: Thu, 05 Jun 2025 06:27:26 +0000
+Subject: [PATCH v2] repo_logmsg_reencode: fix memory leak when use
+ repo_logmsg_reencode()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,135 +74,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
-    Eric Sunshine <sunshine@sunshineco.com>,
-    Taylor Blau <me@ttaylorr.com>,
     Lidong Yan <502024330056@smail.nju.edu.cn>,
     Lidong Yan <502024330056@smail.nju.edu.cn>
 
 From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-In pack-bitmap.c:find_boundary_objects(), the roots_bitmap is only freed
-if cascade_pseudo_merges_1() fails. Since cascade_pseudo_merges_1() only
-use roots_bitmap as a mutable reference but not takes roots_bitmap's
-ownership. Once cascade_pseudo_merges_1 succeed(), roots_bitmap leaks.
-And this leak currently lacks a dedicated test to detect it.
-
-To fix this leak, remove if cascade_pseudo_merges_1() succeed check and
-always calling bitmap_free(roots_bitmap);
-
-To trigger this leak, we need roots_bitmap contains at least one pseudo
-merge. So that we can use pseudo merge bitmap when we compute roots
-reachable bitmap. Here we create two commits: first A then B. Add A
-to the pseudo-merge and perform a traversal over the range A..B.
-In this scenario, the "haves" set will be {A}, and cascade_pseudo_merges_1
-will succeed, thereby exposing the leak due to the missing roots_bitmap
-cleanup.
+pretty.c:repo_logmsg_reencode() allocated memory should be freed with
+repo_unuse_commit_buffer(). Callers sometimes forgot free it at exit
+point. Add `repo_unuse_commit_buffer()` in insert_records_from_trailers
+at builtin/shortlog.c and create_commit at builtin/replay.c
 
 Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
-    pack-bitmap: remove checks before bitmap_free
+    repo_logmsg_reencode: fix memory leak when use repo_logmsg_reencode()
     
-    In pack-bitmap.c:find_boundary_objects, remove cascade success check and
-    always free roots_bitmap afterward to make static analysis tool works
-    better.
+    pretty.c:repo_logmsg_reencode() allocated memory should be freed with
+    repo_unuse_commit_buffer(). Callers sometimes forgot free it at exit
+    point. Add repo_unuse_commit_buffer() in insert_records_from_trailers at
+    builtin/shortlog.c and create_commit at builtin/replay.c.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1977%2Fbrandb97%2Fremove-check-before-bitmap-free-v5
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1977/brandb97/remove-check-before-bitmap-free-v5
-Pull-Request: https://github.com/git/git/pull/1977
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1988%2Fbrandb97%2Ffix-reencode-leak-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1988/brandb97/fix-reencode-leak-v2
+Pull-Request: https://github.com/git/git/pull/1988
 
-Range-diff vs v4:
+Range-diff vs v1:
 
- 1:  fa443065436 ! 1:  4bc90c83a40 pack-bitmap: remove checks before bitmap_free
-     @@ Commit message
-          To fix this leak, remove if cascade_pseudo_merges_1() succeed check and
-          always calling bitmap_free(roots_bitmap);
+ 1:  a414074f167 ! 1:  f5165d6a102 repo_logmsg_reencode: fix memory leak when use repo_logmsg_reencode()
+     @@ builtin/replay.c: static struct commit *create_commit(struct repository *repo,
       
-     -    To trigger this leak, we need a pseudo-merge whose size is equal to
-     -    or smaller than roots_bitmap (which corresponds to the set of "haves"
-     -    commits in prepare_bitmap_walk()). To do this, we can create two
-     -    commits: A and B. Add A to the pseudo-merge list and perform a traversal
-     -    over the range A..B. In this scenario, the "haves" set will be {A},
-     -    and cascade_pseudo_merges_1() will succeed, thereby exposing the leak
-     -    due to the missing roots_bitmap cleanup.
-     +    To trigger this leak, we need roots_bitmap contains at least one pseudo
-     +    merge. So that we can use pseudo merge bitmap when we compute roots
-     +    reachable bitmap. Here we create two commits: first A then B. Add A
-     +    to the pseudo-merge and perform a traversal over the range A..B.
-     +    In this scenario, the "haves" set will be {A}, and cascade_pseudo_merges_1
-     +    will succeed, thereby exposing the leak due to the missing roots_bitmap
-     +    cleanup.
-      
-          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-     @@ t/t5333-pseudo-merge-bitmaps.sh: test_expect_success 'pseudo-merge closure' '
-      +		cd pseudo-merge-boundary-traversal &&
-      +
-      +		git config bitmapPseudoMerge.test.pattern refs/ &&
-     -+		git config bitmapPseudoMerge.test.threshold now &&
-     -+		git config bitmapPseudoMerge.test.stableThreshold now &&
-     ++		git config pack.useBitmapBoundaryTraversal true &&
-      +
-      +		test_commit A &&
-      +		git repack -adb &&
-      +		test_commit B &&
-      +
-     -+		echo '1' >expect &&
-     -+		GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1 \
-     -+			git rev-list --count --use-bitmap-index HEAD~1..HEAD >actual &&
-     -+		test_cmp expect actual
-     ++		nr=$(git rev-list --count --use-bitmap-index HEAD~1..HEAD) &&
-     ++		test 1 -eq "$nr"
-      +	)
-      +'
-      +
+       ## builtin/shortlog.c ##
+      @@ builtin/shortlog.c: static void insert_records_from_trailers(struct shortlog *log,
+     - 	commit_buffer = repo_logmsg_reencode(the_repository, commit, NULL,
+       					     ctx->output_encoding);
+       	body = strstr(commit_buffer, "\n\n");
+     --	if (!body)
+     -+	if (!body) {
+     -+		repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
+     - 		return;
+     -+	}
+     + 	if (!body)
+     +-		return;
+     ++		goto out;
+       
+       	trailer_iterator_init(&iter, body);
+       	while (trailer_iterator_advance(&iter)) {
+     +@@ builtin/shortlog.c: static void insert_records_from_trailers(struct shortlog *log,
+     + 	}
+     + 	trailer_iterator_release(&iter);
+     + 
+     ++out:
+     + 	strbuf_release(&ident);
+     + 	repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
+     + }
 
 
- pack-bitmap.c                   |  4 ++--
- t/t5333-pseudo-merge-bitmaps.sh | 17 +++++++++++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+ builtin/replay.c   | 1 +
+ builtin/shortlog.c | 3 ++-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index ac6d62b980c..8727f316de9 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1363,8 +1363,8 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
- 			bitmap_set(roots_bitmap, pos);
- 		}
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 225cef08807..6172c8aacc9 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -84,6 +84,7 @@ static struct commit *create_commit(struct repository *repo,
+ 	obj = parse_object(repo, &ret);
  
--		if (!cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap))
--			bitmap_free(roots_bitmap);
-+		cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap);
-+		bitmap_free(roots_bitmap);
+ out:
++	repo_unuse_commit_buffer(the_repository, based_on, message);
+ 	free_commit_extra_headers(extra);
+ 	free_commit_list(parents);
+ 	strbuf_release(&msg);
+diff --git a/builtin/shortlog.c b/builtin/shortlog.c
+index 30075b67be8..fe15e114973 100644
+--- a/builtin/shortlog.c
++++ b/builtin/shortlog.c
+@@ -187,7 +187,7 @@ static void insert_records_from_trailers(struct shortlog *log,
+ 					     ctx->output_encoding);
+ 	body = strstr(commit_buffer, "\n\n");
+ 	if (!body)
+-		return;
++		goto out;
+ 
+ 	trailer_iterator_init(&iter, body);
+ 	while (trailer_iterator_advance(&iter)) {
+@@ -206,6 +206,7 @@ static void insert_records_from_trailers(struct shortlog *log,
  	}
+ 	trailer_iterator_release(&iter);
  
- 	/*
-diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-index 56674db562f..ba5ae6a00c9 100755
---- a/t/t5333-pseudo-merge-bitmaps.sh
-+++ b/t/t5333-pseudo-merge-bitmaps.sh
-@@ -445,4 +445,21 @@ test_expect_success 'pseudo-merge closure' '
- 	)
- '
- 
-+test_expect_success 'use pseudo-merge in boundary traversal' '
-+	git init pseudo-merge-boundary-traversal &&
-+	(
-+		cd pseudo-merge-boundary-traversal &&
-+
-+		git config bitmapPseudoMerge.test.pattern refs/ &&
-+		git config pack.useBitmapBoundaryTraversal true &&
-+
-+		test_commit A &&
-+		git repack -adb &&
-+		test_commit B &&
-+
-+		nr=$(git rev-list --count --use-bitmap-index HEAD~1..HEAD) &&
-+		test 1 -eq "$nr"
-+	)
-+'
-+
- test_done
++out:
+ 	strbuf_release(&ident);
+ 	repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
+ }
 
-base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
+base-commit: 7014b55638da979331baf8dc31c4e1d697cf2d67
 -- 
 gitgitgadget
