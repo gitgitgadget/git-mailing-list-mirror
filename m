@@ -1,101 +1,311 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7926B1A76D4
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 05:21:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9231F8724
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 05:51:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749100909; cv=none; b=tJ4FiVal97F1SNdk9feSos5PgnLmmTH49nNVL6E4rBgW3hP7O7gURnLCpnL3AK58RNQNPjP3nDzg7CL4sOJRZoyIBGSQZpKuhlvmrCb8jGzINgjDQUsmaFs0V7URP8cA35wCfOWAI+gcnrI5ddeQxObeqBBceeDGNXTpM8bmsvc=
+	t=1749102684; cv=none; b=m+M/4ydSoEIrB3SVrDNaOnylM9jZgBooZ21lcCsmoNPu8xcUrQmLX2byBQeyNSU6J1LHtViXMO4buoUA55IPfZX239VddsbFyb2tsZ+bu92xF9uFo5g2LClazEMJTVDMgY3pEiMi4ZqHbLFHfA8RDGjBBc51UnyPKAr2DnbS0ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749100909; c=relaxed/simple;
-	bh=gENuRg9fs5zFHPcKBj/3ivgJRJpTf9GH8Sqh066sta0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PLmfkjUcn+XVVzvKZQCkPvj+J/Hk39yhvXuCHef6t0b25tG95aAMtZFu4NGNYk+Q5oqpvLuRPiVY1a1EiTPEccEMJXLZ8qsZZwKKAgzDy4Wlrz+XYW5pxqFHiFfNfJFbD5OJTbkH5UMJMlx1/ylFNFyHJFL+ctoegmB7hle/Ppc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=apbzxgIy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OiIVTJc8; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="apbzxgIy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OiIVTJc8"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 104971380456;
-	Thu,  5 Jun 2025 01:21:45 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Thu, 05 Jun 2025 01:21:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749100905; x=1749187305; bh=akilIgS8re
-	79csBy+Em50+0KNNaF9lgrnNv9pWt/BAo=; b=apbzxgIybnBEWXwCZJ/mjNFPHX
-	yeRxFrQrr3Ix83/WL9veu9AptPAvz3lFaBLBGpKjNZWHRZ47x2zoCBwU0l7jZAKo
-	W4Bo0JxZryf4xsyOp+vtvX5zGfbkJ0fMJWFWaKZcI/vu1wEJJhCMKiNJKDPXMdzs
-	i4NghvF5WbBB7jqKYo7r30ioteD8qqT2bfTztDEDOOcPMBkfb5VPw99Z2xbXw0EN
-	EmkgDJ/WE5nG/OQ3vMJDLeJDpMNyk55MA+xyHQko0nDzA8ZSuYdKou+18ooWcEkq
-	LIOHLTx9B4Tb59ZjwgEu6ZAFBGDAQTMBZle2L+o6BS9f00k1n4zQyGIvvycg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749100905; x=1749187305; bh=akilIgS8re79csBy+Em50+0KNNaF9lgrnNv
-	9pWt/BAo=; b=OiIVTJc8Ih9NH+S1rYfWXN3BKfOCj0OXgmc/VPHMmKhjbR494Dy
-	k0Csv7un7W8wkoWO01cgFcNEPCsji8V4rZ0bmGzYAnqtrfhIuY8NEK1fKlzuqHhO
-	yj8wGwIrnqhddz+FRxDSuHkFcDCgwijbD0Vk7M2XideE6UonlzRG5j8TvTB5c3kW
-	C5u2MQrtTxiyiilN4LmEC6mKBmXDoQ9FBNWcgppqevcGJ/OZOMKpCw/Eh++Q1GVI
-	xle1kC7C5Hw76lxGy8YwLCvZ7Y+jEmn9DDDGtdJ0WAtLRkOTaPxayUebz2fgfakL
-	oO5pH3cP1vrLDGpUJRLPqesfKzn+K6Q+00g==
-X-ME-Sender: <xms:aClBaHYdWdwAzYqKw801_2u9nrKQrNVbXAA6TE0q5mDVe86m-uonUA>
-    <xme:aClBaGarJ6fLasVi9Sh5JrUy0pxVovzy90sL1-o8x5jco_6WdiVFP9dnbRaAzn2A3
-    f6NT8mbkAYqbYORqQ>
-X-ME-Received: <xmr:aClBaJ_2ST24ouHpD9kgNltdO-HQFHZ5lt1-riDN6Rka3tPD6FuYiE3_aYKo4oFZO_i0qRC84wJBWXGZJmZuXMB7MS3oAPOlR2V-BcAO1Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefudekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvve
-    fukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhn
-    hhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhie
-    dtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-X-ME-Proxy: <xmx:aClBaNpHiA1vyTFIPvg0o0aCSue6_BSbbC1F5KaCj6tXlD3XTX4Qmw>
-    <xmx:aClBaCo40LjNImEhaW4C71UsNkBOKtUauqosiDSLEP7GMH185GI6LA>
-    <xmx:aClBaDRCvHb5POGqsIzubTcr30eBBo-gFOuLhyol-Nhu8AysNs21Gw>
-    <xmx:aClBaKp5MERNzfeIQwrzW7deOWT5vkLvafLIiKixYbQNXxOOm8NMPQ>
-    <xmx:aSlBaHhBcTm2r2qO-9u2CjeTjCfG4HysHk38hzG-AATUxPWJwr7-LMFs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Jun 2025 01:21:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ac3981d8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 5 Jun 2025 05:21:42 +0000 (UTC)
-Date: Thu, 5 Jun 2025 07:21:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/3] silencing warnings with curl 8.14
-Message-ID: <aEEpYQsE36skWxk5@pks.im>
-References: <20250604205505.GA1510724@coredump.intra.peff.net>
+	s=arc-20240116; t=1749102684; c=relaxed/simple;
+	bh=BRUzB4Zivs1RG4TmF78mv40iOyHN64pB9pT3qXXrvHA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=RMPDpot/NCpXvT41N/dZHvbH2Esi7Yb8DEf37B1xwJmx3zcB6kqntjBaRUK8IoZzYXRPO2d+sPj5RRGkhES++8YUIabe4zqUlozCXAIhUZAkxgEXzf1hxIxX7qq2jkB5lOJZoznRk9s99BfA/rQCOB6vmy4MROzHHPXckRYbeLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.101])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4bCYTt1pndz7R1Kx
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 07:51:14 +0200 (CEST)
+Received: from [192.168.0.100] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4bCYTj5YfmzRnPp;
+	Thu,  5 Jun 2025 07:51:05 +0200 (CEST)
+Message-ID: <4deb24c2-98f2-40f8-b50c-c74485ebc10d@kdbg.org>
+Date: Thu, 5 Jun 2025 07:51:05 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250604205505.GA1510724@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [GSoC PATCH 1/1] userdiff: add javascript diff driver
+To: "Derick W. de M. Frias" <derick.william.moraes@gmail.com>
+References: <20250604094100.80598-1-derick.william.moraes@gmail.com>
+ <20250604094100.80598-2-derick.william.moraes@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <20250604094100.80598-2-derick.william.moraes@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jun 04, 2025 at 04:55:05PM -0400, Jeff King wrote:
-> The new version of curl (which hit Debian unstable a few days ago)
-> causes a bunch of compiler warnings because we are passing regular ints
-> to curl_easy_setopt() instead of longs. Passing longs has always been
-> what you're supposed to do, but the new version is better about
-> generating warnings with gcc (I think the type-check has been there for
-> a long time, but I gather it was broken and recently fixed).
+Thank you for your contribution. We have had a number of submissions for
+Javascript or Typescript drivers in the past, but none of them were
+followed through to be integrated.
+
+Typescript:
+
+https://lore.kernel.org/git/20240404163827.5855-1-utsavp0213@gmail.com/
+https://lore.kernel.org/git/pull.1746.git.git.1721061218993.gitgitgadget@gmail.com/
+
+Javascript:
+
+https://lore.kernel.org/git/20240301074048.188835-1-sergiusnyah@gmail.com/
+https://lore.kernel.org/git/20220403132508.28196-1-a97410985new@gmail.com/
+
+Please review these submission and the responses that they received.
+Perhaps you can find inspiration for improvement from them.
+
+Since this patch is marked as [GSoC], I'll comment on the style a bit,
+but do not go into the depth of the patch itself too far, yet. Please
+let us know if one of the earlier submissions can be revived or reused
+in some way.
+
+Am 04.06.25 um 11:35 schrieb Derick W. de M. Frias:
+> Add a userdiff pattern for javascript, and 13 test cases for instances
+> of function declarations in javascript.
+
+This is written in imperative mood, which is good. A minor
+recommendation: Don't mention the number of test cases here; it might go
+stale if the patch is updated.
+
 > 
-> I split this into three patches since the solutions vary slightly (well,
-> the last two are the same, but my pontificating on the solution varies).
+> Signed-off-by: Derick W. de M. Frias <derick.william.moraes@gmail.com>
+> ---
+>  .../javascript-anonymous-function-assigned    |  4 +++
+>  t/t4018/javascript-arrow-function-assigned    |  4 +++
+>  t/t4018/javascript-arrow-function-assigned-2  |  1 +
+>  t/t4018/javascript-async-function             |  4 +++
+>  t/t4018/javascript-async-function-assigned    |  4 +++
+>  t/t4018/javascript-class-function             |  6 ++++
+>  t/t4018/javascript-function                   |  4 +++
+>  t/t4018/javascript-function-assigned          |  4 +++
+>  t/t4018/javascript-generator-function         |  5 ++++
+>  t/t4018/javascript-generator-function-2       |  5 ++++
+>  .../javascript-generator-function-assigned    |  5 ++++
+>  .../javascript-generator-function-assigned-2  |  5 ++++
+>  t/t4018/javascript-method-function            |  6 ++++
+>  userdiff.c                                    | 28 +++++++++++++++++++
+>  14 files changed, 85 insertions(+)
+>  create mode 100644 t/t4018/javascript-anonymous-function-assigned
+>  create mode 100644 t/t4018/javascript-arrow-function-assigned
+>  create mode 100644 t/t4018/javascript-arrow-function-assigned-2
+>  create mode 100644 t/t4018/javascript-async-function
+>  create mode 100644 t/t4018/javascript-async-function-assigned
+>  create mode 100644 t/t4018/javascript-class-function
+>  create mode 100644 t/t4018/javascript-function
+>  create mode 100644 t/t4018/javascript-function-assigned
+>  create mode 100644 t/t4018/javascript-generator-function
+>  create mode 100644 t/t4018/javascript-generator-function-2
+>  create mode 100644 t/t4018/javascript-generator-function-assigned
+>  create mode 100644 t/t4018/javascript-generator-function-assigned-2
+>  create mode 100644 t/t4018/javascript-method-function
+> 
+> diff --git a/t/t4018/javascript-anonymous-function-assigned b/t/t4018/javascript-anonymous-function-assigned
+> new file mode 100644
+> index 0000000000..d3c1728dd8
+> --- /dev/null
+> +++ b/t/t4018/javascript-anonymous-function-assigned
+> @@ -0,0 +1,4 @@
+> +const RIGHT = function (a, b) {	
+> +
+> +    return a + b;
+> +};
+> \ No newline at end of file
 
-All of these look good to me, thanks!
+We avoid incomplete last lines in this code base if it is not mandated
+for some reason.
 
-Patrick
+Here and in the later test cases, the word "ChangeMe" is missing. How
+did these ever pass the tests?
+
+> diff --git a/t/t4018/javascript-arrow-function-assigned b/t/t4018/javascript-arrow-function-assigned
+> new file mode 100644
+> index 0000000000..5f0b056f61
+> --- /dev/null
+> +++ b/t/t4018/javascript-arrow-function-assigned
+> @@ -0,0 +1,4 @@
+> +const RIGHT = (a, b) => {
+> +	
+> +    return a + b;
+> +};
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-arrow-function-assigned-2 b/t/t4018/javascript-arrow-function-assigned-2
+> new file mode 100644
+> index 0000000000..9e923f4261
+> --- /dev/null
+> +++ b/t/t4018/javascript-arrow-function-assigned-2
+> @@ -0,0 +1 @@
+> +const RIGHT = a => a+1;
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-async-function b/t/t4018/javascript-async-function
+> new file mode 100644
+> index 0000000000..7f99b8c89a
+> --- /dev/null
+> +++ b/t/t4018/javascript-async-function
+> @@ -0,0 +1,4 @@
+> +async function RIGHT (a, b) {
+> +	
+> +    return a + b;
+> +};
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-async-function-assigned b/t/t4018/javascript-async-function-assigned
+> new file mode 100644
+> index 0000000000..9a01d9701f
+> --- /dev/null
+> +++ b/t/t4018/javascript-async-function-assigned
+> @@ -0,0 +1,4 @@
+> +const RIGHT = async function (a, b) {
+> +	
+> +    return a + b;
+> +};
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-class-function b/t/t4018/javascript-class-function
+> new file mode 100644
+> index 0000000000..9f216d7174
+> --- /dev/null
+> +++ b/t/t4018/javascript-class-function
+> @@ -0,0 +1,6 @@
+> +class Test {
+> +  RIGHT() {
+> +    let a = 1;
+> +    let b = Value;
+> +  }
+> +}
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-function b/t/t4018/javascript-function
+> new file mode 100644
+> index 0000000000..d11ad34aff
+> --- /dev/null
+> +++ b/t/t4018/javascript-function
+> @@ -0,0 +1,4 @@
+> +function RIGHT (a, b) {
+> +	
+> +    return a + b;
+> +};
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-function-assigned b/t/t4018/javascript-function-assigned
+> new file mode 100644
+> index 0000000000..38eaecafc6
+> --- /dev/null
+> +++ b/t/t4018/javascript-function-assigned
+> @@ -0,0 +1,4 @@
+> +const RIGHT = function test (a, b) {
+> +	
+> +    return a + b;
+> +};
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-generator-function b/t/t4018/javascript-generator-function
+> new file mode 100644
+> index 0000000000..af7cbb50a3
+> --- /dev/null
+> +++ b/t/t4018/javascript-generator-function
+> @@ -0,0 +1,5 @@
+> +function* RIGHT() {
+> +  
+> +  yield 1;
+> +  yield 2;
+> +}
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-generator-function-2 b/t/t4018/javascript-generator-function-2
+> new file mode 100644
+> index 0000000000..d40b395f5c
+> --- /dev/null
+> +++ b/t/t4018/javascript-generator-function-2
+> @@ -0,0 +1,5 @@
+> +function *RIGHT() {
+> +  
+> +  yield 1;
+> +  yield 2;
+> +}
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-generator-function-assigned b/t/t4018/javascript-generator-function-assigned
+> new file mode 100644
+> index 0000000000..b45d069949
+> --- /dev/null
+> +++ b/t/t4018/javascript-generator-function-assigned
+> @@ -0,0 +1,5 @@
+> +const RIGHT = function* (){
+> +  
+> +  yield 1;
+> +  yield 2;
+> +}
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-generator-function-assigned-2 b/t/t4018/javascript-generator-function-assigned-2
+> new file mode 100644
+> index 0000000000..2c4bc271ab
+> --- /dev/null
+> +++ b/t/t4018/javascript-generator-function-assigned-2
+> @@ -0,0 +1,5 @@
+> +const RIGHT = function *(){
+> +  
+> +  yield 1;
+> +  yield 2;
+> +}
+> \ No newline at end of file
+> diff --git a/t/t4018/javascript-method-function b/t/t4018/javascript-method-function
+> new file mode 100644
+> index 0000000000..37e380cc6f
+> --- /dev/null
+> +++ b/t/t4018/javascript-method-function
+> @@ -0,0 +1,6 @@
+> +const Test = {
+> +  RIGHT() {
+> +    let a = 1;
+> +    let b = Value;
+> +  }
+> +}
+> \ No newline at end of file
+> diff --git a/userdiff.c b/userdiff.c
+> index 05776ccd10..94134e5b09 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -237,6 +237,34 @@ PATTERNS("java",
+>  	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
+>  	 "|[-+*/<>%&^|=!]="
+>  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+> +PATTERNS("javascript",
+
+The following lines are indented by spaces. We use TAB here.
+
+> +     /* conventional named functions */
+> +     "^[ \t]*(async[ \t]+)?function[ \t]*\\*?[ \t]*([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*\\(.*$|"
+> +     /* assigned functions */
+> +     "^[ \t]*(const|let|var)[ \t]+([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*="
+> +     "[ \t]*(async[ \t]+)?function[ \t]*\\*?[ \t]*([$_a-zA-Z][$_a-zA-Z0-9]*)?[ \t]*\\(.*$|"
+> +     /* arrow functions */
+> +     "^[ \t]*(const|let|var)[ \t]+([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*="
+> +     "[ \t]*(\\([^\\)]*\\)|[$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*=>[ \t]*\\{?.*$|"
+> +     /* functions declared inside classes and objects */
+> +     "^[ \t]*(static[ \t]+)?(async[ \t]+)?(get[ \t]+|set[ \t]+)?\\*?[ \t]*"
+> +     "([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*\\([^)]*\\)[ \t]*\\{.*$",
+> +     /* identifiers */
+> +	 "[$_A-Za-z][$_A-Za-z0-9]*|"
+> +     /* hexadecimal and big hexadecimal */
+> +     "0[xX](?:[0-9a-fA-F](?:_?[0-9a-fA-F])*)n?|"
+> +     /* octa and big octa */
+> +     "0[oO](?:[0-7](?:_?[0-7])*)n?|"
+> +     /* binary and big binary */
+> +     "0[bB](?:[01](?:_?[01])*)n?|"
+> +     /* decimal, floting point and exponent notation (eE) */
+> +     "(?:0|[1-9](?:_?[0-9])*)(?:\\.(?:[0-9](?:_?[0-9])*))?(?:[eE][+-]?(?:[0-9](?:_?[0-9])*))?|"
+> +     /* big decimal */
+> +     "(?:0|[1-9](?:_?[0-9])*)n|"
+> +	 /* punctuation */
+> +	 "\\{|\\}|\\(|\\)|\\.|\\.{3}|;|,|<|>|<=|>=|==|!=|={3}|!==|\\+|-|\\*|/|%|\\*{2}|"
+> +	 "\\+{2}|--|<<|>>|>>>|&|\\||\\^|!|~|&&|\\|{2}|\\?{1,2}|:|=|\\+=|-=|\\*=|%=|\\*{2}=|"
+> +	 "<<=|>>=|>>>=|&=|\\|=|\\^=|&&=|\\|{2}=|\\?{2}=|=>"),
+
+You do not have to include single-character punctuation; these are
+recognized as words automatically.
+
+Personally I prefer |===| over |={3}| (and similar for the others)
+because it is easier to understand.
+
+>  PATTERNS("kotlin",
+>  	 "^[ \t]*(([a-z]+[ \t]+)*(fun|class|interface)[ \t]+.*)$",
+>  	 /* -- */
+
+-- Hannes
+
