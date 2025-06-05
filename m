@@ -1,53 +1,53 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B361E5B64
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 16:28:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1324E27465A
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 16:33:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749140904; cv=none; b=EX/DNeUd5AgpPuThHpOj0BlwTz9v3ccphO61vjernTpo59mXBd3n70sf/+USZtwlYDJ0rd3qPb1l16pF3ZmSL5E681XxRpRbTfKgSyV5jXak1bRb9A82dzw7Z4uxVRMvceNpLP+5zaZXXVnhdE/IgE/JndEwqaAVCQL2kaRheOY=
+	t=1749141237; cv=none; b=pi8NkTCMmX0LSDbNmCzGkVlUixauZa4ccDHOLD+CSj59ZaVXiE4gQCm9mP2eZpWO3tp91c6wqjNRZrDbybMi9zZJJUhFLYtjzOvtr5qhn2LAqv8/ABoESNHAAQ1y3kHkS2cXXYunHHK2kb0vgyY37Gz0Bu3sih97mG9K5ZFDuM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749140904; c=relaxed/simple;
-	bh=1OIh+WDTzOtuEIO64MusOPL+aGTyUDHJoBzGTPR/My4=;
+	s=arc-20240116; t=1749141237; c=relaxed/simple;
+	bh=mjjy9ZL61w6RaJv1vqt+h0cXueP3+hqSFNztKU/IKM4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RvUHcdncJPRBcFnAuwVmVS3KQVjzdB4R/V2+bOJ0y4SBGLlB7r0QeRaPVg0Q5aue8JjajWqSuanR7dTgwnULgckw2yUZlFQymIlL/1AsYdjKKj8LAVqV14Yz6dZvD8cljA6D3uHBLGpyWmaTMOe6duIoy1CqSfc95dcxB/tXfs0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FuoKhzIJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EaEeKZSR; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=WuAbIAf4hhrK1o8E1+f2rV7dwfs7ECCgonSSTpVtZXhGXUkxKqQyoWQWTAVjyL9TiPbv1siAMo9ZZ8u0LrpCZ8BzLh/4xgR/JhcT1wHU8Cp0FFC2VcfzpHSsG23RqBMIqQE3HFlTur0F1jBkQ6aYDKZU5F9Z1bfu0HjjZvmt7J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KjiKucNL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N78fWdZy; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FuoKhzIJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EaEeKZSR"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6C9CF2540110;
-	Thu,  5 Jun 2025 12:28:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KjiKucNL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N78fWdZy"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 03DF0114012D;
+	Thu,  5 Jun 2025 12:33:53 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 05 Jun 2025 12:28:21 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 05 Jun 2025 12:33:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749140900; x=1749227300; bh=BCrCGwN1Su
-	HzxSXHrH1tFMyuLQq/1BHHTuBZfyccCgM=; b=FuoKhzIJUFnsS5UNQ4fre3A3Ap
-	/IDtsw65jdm7/DGWMM04icNhZOrNmTIxZF1NhFsbuBEq5hcUdnRHkSp2zVz4aF8N
-	Jbl64T23exIxgJu7+8DimFmUJV+XwXZqOhcqk0YI388+dWCcB8ZkeSinQIQKCqU9
-	l7JTgVOEm/f4OJdH+pQ6LSTqqwzzborrepXK7B1JZ1/1n+gRwhX+k4rEwigA4POl
-	U9yhIEyOF+Ud8JhoMuLFYCCxRWwsIei+4YdSKLu4Cr2BbzRfQr+JKNVYPmyr/o8J
-	U+LrddMmeIOEJSjjjg0dbMdKScWRUYC6L/SSkT8ZaLfVTcAD0Rl7Gfg048IQ==
+	:subject:to:to; s=fm3; t=1749141233; x=1749227633; bh=N9TtL/pvNc
+	tto8xt9bMKTLSefhvIH+8ZV15YJpGWtMA=; b=KjiKucNLFUi1wLhf3W7PHTNCgT
+	z/noL2lNfOVYW0XzVZvwCJZZ/a9rwh5sSEZFeDJD3STTLUjeYnIXHlv4weEphmKM
+	tz03DlHC/REeOLwyDpLX7sJLX5NJ5rGUbdS+pHa5Y1aOEdq+3NPRMc283t5BweZi
+	4v3LKCknr004/znG/3q1GO6FEDrSSUVJzAyYyA9QH6rm1HgCq8zRT4EX1Ub2t67u
+	vBs2gHbnB7jGNJVTRmHuxc2vfWYTrbZ/V96wDkH7IWqAsA0HssY419oR527kAm6T
+	Amm6/NZB3NHpWtvjr01c/K5LziAbTBw/ZQkbqhBuPiUv3IfMdKYSeEzc/lWQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749140900; x=1749227300; bh=BCrCGwN1SuHzxSXHrH1tFMyuLQq/1BHHTuB
-	ZfyccCgM=; b=EaEeKZSR78UIPO+4w8/5nKCdmIqc1/lRusLka09zYotvaaNIJZF
-	XoYm6bR/RIAjgbyYw8RZiozPGNC4EnZn/sooWI9N9NpSECYkB5RS4x3haqqVm8ed
-	5v/r1uqcOHCw/pkZIFKBnrI0yypJD22VlDgwZEs0K2hbkJ0Ao2Y2yeYy+ADgLUVp
-	3iut/9uJdqNezweBsXxtIrBB+AbD5hwh0ZjF+9bPRcvwlwZ4TqiKt+gSHY/UgaE5
-	Ox2sMcAKO9Xkd7z1MG9AEtLHBBHwX+idOHCye2ORn/gB4cNVHDD9c8XsZ6PSCUdH
-	HnHcL21fRXleiHC8vJWwrb3oUDvYlNCXPNQ==
-X-ME-Sender: <xms:o8VBaLGJBW7k_UR98lyEh6iQQ7IorIsOH4owRD9YbeLh_Iux6eIyQA>
-    <xme:o8VBaIXCMofniJXYRLe3IqbCU7bpk4R54Th_qR0IgOJ2jNWNeMhZvDFnPKfnb9EVD
-    CT4ScP6JrxEr30DCg>
-X-ME-Received: <xmr:o8VBaNKoXMv3tXwIdWuOSWcCUv7nAqhIg14HGiqJh_OHqSMQO65vj7K0KcMCXQHzetjVkrnneaQH_4akAAjnjjGPxmkd_fPFtr2y>
+	1749141233; x=1749227633; bh=N9TtL/pvNctto8xt9bMKTLSefhvIH+8ZV15
+	YJpGWtMA=; b=N78fWdZyfdZMbEIPRMLyKAoLCriTvKUjmpYAOD8pRHIapsAx0Cg
+	JpAL9D8EVAzzGzML8C6wkQkd9lro12eytyIuySCgqygv3rrDZT/cwQ0uwAYqEzat
+	uAWJ3pOgk+GbOMdf5XpRC6VuMNGiNjEm0bGvlWZPwVC04JbiXzXx9sIIG7sF+4K8
+	BZRGt62+EJKRy8MvB6ZjCPBedjeL9WUyWvbZ36RXH7w7q4LxYUird7QmZyXvpFU5
+	h+StqnNdMNQvh3AAbhieplE6TRFT5Bg6cOyVSribS+Sdr3Ytrjru/w5Sd7I4KaHK
+	Fs+ZdJ1blGcXFYQpFQt+Jsec6zBXZe3LeQA==
+X-ME-Sender: <xms:8cZBaClfXmROZbcL7rXgK5Qsnyqjm3tHyZjfFirsz_i6kFr00FtDPA>
+    <xme:8cZBaJ12bxUgEo1KFq5TXj3gJPFYUAb6v8tUCB5k4JqX6QCma95zK9uE3Ykv2xpxj
+    rDrZqtjJfN32_CLMQ>
+X-ME-Received: <xmr:8cZBaArnIrsTLFrSUmzgII2avYCU4tS43ftnczgBHzrWCL5_2i887fI_qC8A1RWIhcW7_XAs-0TPZpWdrUmLRFgo8Y-5-idpwM5j>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefkeekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,38 +56,36 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefkeekucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuh
-    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepiihihigrohes
-    ughishhrohhothdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtoh
-    hothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
+    grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
     lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
     gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:o8VBaJH5m9ihzl1-GYwpiTdRnnJtPzLH4p1RjIpN-VxH3etC27Pkaw>
-    <xmx:pMVBaBVNkWhVAWr6mAvKva18kPEYjPPaE-Yy6s2J1JoxGUCgDGmOBw>
-    <xmx:pMVBaENMYddWnLTl2z5OReS8-mJkVR5FfQw5ZeIfUcU0Dpu8deUn7g>
-    <xmx:pMVBaA08U_mnoIznn2LRXFAbBMqp2BGAWn62jPjvUrymvm-nXtpoXw>
-    <xmx:pMVBaOQ--OhOfF8moYxtyg9iSvROKO4oQWMjRhm8XM6p3DaARtCBueYH>
+X-ME-Proxy: <xmx:8cZBaGnHiveSZMawstv1fGCiZYPYg9kbC1qK2F7EZszuX6vh6OSU2w>
+    <xmx:8cZBaA0CTzTthu0fquHE9CZT-I2l7Gr0W_j2NHnQA0MYvI1hSFdFuw>
+    <xmx:8cZBaNspXuxpDRZC9aBOLvJ6uiN4E64gizBTX_gu0xaLHWiwEOQG6g>
+    <xmx:8cZBaMUlNDCtqmqoVoEbftykYrKMIEEmZPtLp0j5cMBSqOopCJhwEw>
+    <xmx:8cZBaDyPBDfwzC_5XiVIfPW4Rl1mQ3rmSd3VKTPFGNBUpCC0sNy49l_D>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 5 Jun 2025 12:28:19 -0400 (EDT)
+ 5 Jun 2025 12:33:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Aditya Garg <gargaditya08@live.com>,  git@vger.kernel.org,  Eric
- Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,  "brian m
- . carlson" <sandals@crustytoothpaste.net>,  Ben Knoble
- <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v12 02/10] imap-send: add support for OAuth2.0
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,  "brian m .
+ carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,  Ben
+ Knoble <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v13 02/10] imap-send: add support for OAuth2.0
  authentication
-In-Reply-To: <20250605080002.GA2998537@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 5 Jun 2025 04:00:02 -0400")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597D3BADD7CDE568825A2D0B862A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597D1C148578224A02B9773B862A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<20250605080002.GA2998537@coredump.intra.peff.net>
-Date: Thu, 05 Jun 2025 09:28:18 -0700
-Message-ID: <xmqq34ce9mql.fsf@gitster.g>
+In-Reply-To: <0d28e337cfe7ce3c52490544875474b3502d2081.1749112640.git.gargaditya08@live.com>
+	(Aditya Garg's message of "Thu, 5 Jun 2025 08:42:25 +0000")
+References: <cover.1749112640.git.gargaditya08@live.com>
+	<0d28e337cfe7ce3c52490544875474b3502d2081.1749112640.git.gargaditya08@live.com>
+Date: Thu, 05 Jun 2025 09:33:51 -0700
+Message-ID: <xmqqy0u687ww.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,36 +95,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> On Mon, Jun 02, 2025 at 04:29:33PM +0530, Aditya Garg wrote:
->
->> @@ -1405,7 +1558,11 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
->>  
->>  	server_fill_credential(srvc, cred);
->>  	curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
->> -	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
->> +
->> +	if (!srvc->auth_method ||
->> +	    strcmp(srvc->auth_method, "XOAUTH2") ||
->> +	    strcmp(srvc->auth_method, "OAUTHBEARER"))
->> +		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
->
-> Coverity complains that this "if" will always be true, since one of the
-> strcmp() calls must return non-zero (srvc->auth_method cannot match both
-> strings!).
->
-> I'm not sure what the logic is supposed to be here. If we are matching
-> either string, it should be !strcmp() for both. If we want to match
-> neither, then it should be &&, not ||.
+> +			} else if (!strcmp(srvc->auth_method, "OAUTHBEARER")) {
+> +				if (!CAP(AUTH_OAUTHBEARER)) {
+> +					fprintf(stderr, "You specified "
+> +						"OAUTHBEARER as authentication method, "
+> +						"but %s doesn't support it.\n", srvc->host);
+> +					goto bail;
+> +				}
+> +
+> +				#ifdef NO_OPENSSL
+> +				fprintf(stderr, "You are trying to use OAUTHBEARER authentication mechanism "
+> +					"with OpenSSL library, but its support has not been compiled in.");
+> +				goto bail;
+> +				#endif
 
-"If XOAUTH2 or OAUTHBEARER, use the password" sounds somewhat
-strange (unless the bearer token is stored in .pass and passed as if
-it is a password).
+Ugly.  Can we avoid #ifdef/#endif in the middle of such a main flow
+of the logic?  Hiding such ugliness by indenting the #ifdef/#endif
+directives as if they are just one of the code lines is doubly ugly.
 
-"Unless XOAUTH2 or OAUTHBEARER, use the password" sounds even more
-strange.  What about other methods that are not a plain simple
-password authentication?  Will we remember extending this code when
-we add yet another one to exclude it like XOAUTH2 and OAUTHBEARER
-are excluded with this patch?
+>  	server_fill_credential(srvc, cred);
+>  	curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
+> -	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+> +
+> +	if (!srvc->auth_method ||
+> +	    (strcmp(srvc->auth_method, "XOAUTH2") &&
+> +	    strcmp(srvc->auth_method, "OAUTHBEARER")))
+> +		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+
+Can we clarify this part, possibly with an in-code comment?
+
+"Unless XOAUTH2 or OAUTHBEARER, use the password" sounds a bit
+strange.  What about methods other than these two that are not a
+plain simple password authentication?  Will we remember extending
+this code when we add yet another one to exclude it like XOAUTH2 and
+OAUTHBEARER are excluded with this patch?
 
