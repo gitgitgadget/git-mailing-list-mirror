@@ -1,104 +1,103 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B5D21F8BBD
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:32:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88EA01E7C03
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 08:42:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749112355; cv=none; b=bjA95DmKSiD7sEM5StvcKC05w2jDE5D9TJCiPtXXg8hmhhWV3Y/eeoFzQtyUTf/ylJoc9S4vQWFhvg0EE0/bI8Wlb/x6RgRMWD4plSXqqwJG5EiQ3McHHfgxPW74n4fvcGlguEbfIhufgWcT0IT5b7FJ4TT/p7Gkzp6XJX2fveo=
+	t=1749112924; cv=none; b=qB3jv+4F8ox1qbpCGr9G/9eHTQonNhFdaN0DsVG9tyQXb+65TbQW9994f/qflFBoeZg2NyaCDkMISUqlZbNYMfhnR37BjceK2tqVLOKREiw4hPmItYh9SuENyk4MHwgHBSCEKcADOSlHWND2kdXvGPZI5TNQy/KAxzQh7gqUWBs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749112355; c=relaxed/simple;
-	bh=M8WLkqAIyH9hN5Si/bF9+gKO6sfUwf5nX/HmhdB5h3E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pXzrR3SPBSaflBJVbLGiP4tqXmxLykxHCtd8n89trkajZ5FYTbu2fmqrglDmrcWjVJT2PWztwFZ4LaMQI6F4QZ2tHTog0p1LuIIg64IFK8APcbIuAwSx8LCBH/307sRg1HOr2rCER2mn3M4VOfUkccj0j7IGrA+Lyk6eRiS8+F8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=nkz3hyIE; arc=none smtp.client-ip=91.218.175.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1749112924; c=relaxed/simple;
+	bh=Bz28Jfiex5RkJ9O/naiTtyQUjfMHSo7vjd30pLHG9dc=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=svOUVpxRY7SGowe6Pu2pmtuqZmMNzN02uZGZ5kis4bAKyvfpIKV8G/mS2ekT9AMbBYDfSwarTIKL7PyRIwGfgIeFw+NhYoUympdN/1loHDHiauklnaC/D9Dw5okibx4LdTl4/39ZW2pkHWr6BCYx2ZR9NdVcpFiCTFlDBmnXkZs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=eSQFGZSN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mmVfzdtc; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="nkz3hyIE"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1749112345;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=9tDOH5cz1brWZcXLdqxPzM+rjmYiXrX4jgV/F5k+zLo=;
-	b=nkz3hyIEBW/exD64O0jTjKPaPHO3x8ce5OTGHYWCq46+6Lf2bc4HtAZ3fTyYzpsUdlFTVz
-	ukiF/xlqtKiMrUA+GIKHmlZn26EIqemyk1VAgMB/YlCgQfhaQnkKTq4iS9J0CyYFF4VJNG
-	uxq33lQbq93TBT8SL42a/enahI87ZV8=
-From: Toon Claes <toon@iotcl.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
- <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
- =?utf-8?B?QXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v2 1/5] last-modified: new subcommand to show when
- files were last modified
-In-Reply-To: <zz2xv667flcb46gp4scqu4wmrxviiecqz2ru35glalbsaluc3p@kmymzn5lxapk>
-References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
- <20250523-toon-new-blame-tree-v2-1-101e4ca4c1c9@iotcl.com>
- <zz2xv667flcb46gp4scqu4wmrxviiecqz2ru35glalbsaluc3p@kmymzn5lxapk>
-Date: Thu, 05 Jun 2025 10:32:11 +0200
-Message-ID: <8734ce37xw.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="eSQFGZSN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mmVfzdtc"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3276C1380370;
+	Thu,  5 Jun 2025 04:42:00 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Thu, 05 Jun 2025 04:42:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749112920;
+	 x=1749199320; bh=Bz28Jfiex5RkJ9O/naiTtyQUjfMHSo7vjd30pLHG9dc=; b=
+	eSQFGZSNXEGmrGVnYVYNktWQyYm7qoVmIeyTLWpxZzmjhUCOEqBewRvI3DGbYLhe
+	rPFpfuHm4E6L+06bzpUu7fTYyrQIbScyZPGHayBQTmCwkL8NMBGKux9e5K1Btaac
+	Ir+9PmbzwCnWeegFo6XnooUtuRvvl1i2ocNGf/Vl9zDAhFyzpRc5+yF9hYFHFD4x
+	Lrkfl8ftO+5/x/8nvvXJsd3BH+SOVUeVS2PlqA9u+Z6lGfof3/Rh2yNA8fDLy+Dl
+	58lfQBxmj/2xqJboPFBn40OyPEqwSmH4qCM3CJlVKDLMiyE/Bx2H03PYZiecJn1z
+	zbAEqg/OPO2T0gSHur+bMg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749112920; x=
+	1749199320; bh=Bz28Jfiex5RkJ9O/naiTtyQUjfMHSo7vjd30pLHG9dc=; b=m
+	mVfzdtc6BRI/1yDnCnM8YQUyrZkefzIr3t9nqA0BYeqSSOgFk+zvfplOEgusEFsp
+	Lq41V+0nnnVZ3lVIj9oehCqcVk/fmqF/a+JII5lTLBvjTJmLz79vvcCasA9I/54Y
+	aq2jmrQmQK5fbgC5oRRZ58coblexT4/hB3rjXo0UA9kus0naR1/T35RxqyK2RBYf
+	iGgBifex5ZPGh3imw5rObNYenaOVJotHJZ317xvcot0rKV4EYX66V7Kf+EwK7i4y
+	Xc5MwOr3qjkI8A0seDExYEWkp99DD9JtMx7rw/Lra8dGFtzohYA/9Yx5e7GNXbWN
+	IMj31W82uqOgliYx8AC+A==
+X-ME-Sender: <xms:V1hBaEpcKn5M-3vEOz8NdLbnGJ93T_WEeV9AKl8Z4eooPkXjlyOglLk>
+    <xme:V1hBaKrjIU8QvUYEzNbF40xuzzN31F5SeA_a1_F_JE42RiBDPAnUWtoEHLOmoIjJ1
+    iiOl2OG2RtSUdP1Tw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdefgedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnhephedugfevgfefgfffvdfhffdvveevgeehhedutedvgfeuffejveejudegve
+    efvdefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigv
+    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssg
+    grkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:WFhBaJMDEWgxKUiM8roZcXnUyzLYYyU6CY8VUbqpUDD2P4lT9PZ1ew>
+    <xmx:WFhBaL4D3KJRe8xczO45lo0175b5sFKRnCPsf2lcqw_zUdnOFwMsHg>
+    <xmx:WFhBaD4QdnaomYTPJPrytixD02AFIhyHv77jMIDClD6RJH2mUj39Kw>
+    <xmx:WFhBaLg668AJSks4HaZJxkdb8KzjKD0uHJNZKUtdvG8VHPVrTM3BHw>
+    <xmx:WFhBaMWPSZ3WZBkDGgx3QrEGWoC7gH7g2Dq3LjvckPTh2a_iBM7qocXe>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id E6AEB1EA0060; Thu,  5 Jun 2025 04:41:59 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+X-ThreadId: T27486159c85bd9ee
+Date: Thu, 05 Jun 2025 10:41:24 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Johannes Schindelin" <johannes.schindelin@gmx.de>,
+ "Jeff King" <peff@peff.net>
+Message-Id: <b6e10e5d-45e4-45dd-83f9-d889eacd3034@app.fastmail.com>
+In-Reply-To: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
+References: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] curl: pass `long` values where expected
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-> On 25/05/23 11:33AM, Toon Claes wrote:
->> +-r::
->> +	Recurse into subtrees.
->> +
->> +-t::
->> +	Show tree entry itself as well as subtrees.  Implies `-r`.
+On Thu, Jun 5, 2025, at 10:31, Johannes Schindelin via GitGitGadget wrot=
+e:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> This left me wondering about the default behavior regarding displaying
-> trees when neither `-t` and `-r` are specified. If we omit showing when
-> a tree was last mostified?
+> As of Homebrew's update to cURL v8.14.0, there are new compile errors =
+to
+> be observed in the `osx-gcc` job of Git's CI builds:
 
-When omitting both the command returns the commit that last modified the
-tree. Basically without any of both options it return which commit
-touched a tree entry last, it doesn't care if that tree entry is a tree
-or a blob.
-
-I shall add something to the docs for `-r` that explains what happens if
-it is omitted.
-
->> +[--] <path>...::
->> +	For each _<path>_ given, the commit which last modified it is returned.
->> +	Without an optional path parameter, all files and subdirectories
->> +	of the current working directory are included in the
->
-> are include in the? I assume you meant to say the search/operation.
-
-Whoops.
-
->> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
->> new file mode 100644
->> index 0000000000..0d4733f666
->> --- /dev/null
->> +++ b/builtin/last-modified.c
->> @@ -0,0 +1,43 @@
->> +#include "git-compat-util.h"
->> +#include "last-modified.h"
->> +#include "hex.h"
->> +#include "quote.h"
->> +#include "config.h"
->> +#include "object-name.h"
->> +#include "parse-options.h"
->> +#include "builtin.h"
->
-> For builtins, "builtin.h" should be included at the top and
-> "git-compat-util.h" should be omitted.
-
-Thanks, will address.
-
--- 
-Cheers,
-Toon
+This overlaps with King=E2=80=99s https://lore.kernel.org/git/2025060420=
+5505.GA1510724@coredump.intra.peff.net/
