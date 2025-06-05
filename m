@@ -1,106 +1,183 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73FC1E1E12
-	for <git@vger.kernel.org>; Thu,  5 Jun 2025 15:53:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E5F1A38E4
+	for <git@vger.kernel.org>; Thu,  5 Jun 2025 15:53:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749138817; cv=none; b=PSJ2fdzpfU9iUKU0tUfC/YlQYuGr6EaxL64zSazDan+ltREqjg2HO4eLzcyXt/y2zXGXYQUkyDhcgHy1yEWv4nQkcJHLlydQmIaLh2GU9L9OfPdLeRkE94wc4+gieUlnIUf6oXVamd/waezS5W+C8COHmnWilnM4UxHJZgEFIfk=
+	t=1749138826; cv=none; b=Ims136Kmibg2bhsINXU2rdpeAZK6vPGnlDXMecM2koJjZsgu1Z5dGPoGy0hEwiCd9M3wigW+aBoVly7Acd+pOcGYzbkKK6GB1rvadInek8LgV9jTHvmOz7PxC/OhiGkphQIjYPHnppwBUPLwtHhq0KFpyormCA2wfivVv2BOgwo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749138817; c=relaxed/simple;
-	bh=I41VUwG9dg1uG3zvJHv5rB1qN7TCPETdOYbK5jmptaE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=TQM6drfxd9Yf6SUHkXiWINPdCNe18Bntj8lUAWX7IE+CWr2LSctLoC8+21334cVp2ixBDA4gV7GM7JQweB4eHdsN5EoUc5/VrDC7/LQxOg1qbiMM7ekstjtAVXJZjcNAHveyEiyi3BT5rfu4zSkvGqK1Pwn+FkgOBytjx9bum8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DbIb6dgu; arc=none smtp.client-ip=209.85.128.172
+	s=arc-20240116; t=1749138826; c=relaxed/simple;
+	bh=4KEX9Zvxjb+kfGxKwwQlqXGZNJu69rzyuHQ/nexCR3Y=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=f+ayP5Y8uQNzCYeyCOt5cE6cHZUo4xyXxiEx+zqL5cY1xaZ9yvC/+YT4jUvw0bJhzFMKgb+0dJmiREiFWI6ZPRxQbjc3mRpSftHPJGr2ZqtqNhl+zyn57Ytr6HcTJGEZjSQoNufqkAlOhQSn6UydI8ZMJw1eknOH+piZPR5EWek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZOoK2N4g; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DbIb6dgu"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-70e78e04e48so10007517b3.1
-        for <git@vger.kernel.org>; Thu, 05 Jun 2025 08:53:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZOoK2N4g"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a507e88b0aso1096443f8f.1
+        for <git@vger.kernel.org>; Thu, 05 Jun 2025 08:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749138814; x=1749743614; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mlZ0mwVEjUB88Pprr2cjCSn/3B0JDxZzqNONmusfOto=;
-        b=DbIb6dguPMb5Ep8i7b4kmWXDLG6lqOCjbIQo2HkLcLcK4Rx34mH4wqopcDBZgoWtqk
-         5NuwJ0Ar/1sjxWeENyWyHkukhrLA0zy/4UaJr820Fs8S6y0JE2OFgHYntCVZ8st6MiQq
-         IZmPgboJYbjLMHi9IaszDW928QimulrCZgP4pITrXgONTy5MnimZyuTheZkmjWlzHMcl
-         N9Hexw2v7OMSLVog5PAhcKft//do5lli3xzJ/ctVw3KUmZGSSwPQrstPTrYt9QeQldDC
-         4XpZu9yvgTl7j+eKluQTXEWqzVWFEJLhjsKUB+3Me4ZldZaG7lphMEg0PgL/Lk8wefwf
-         sKiA==
+        d=gmail.com; s=20230601; t=1749138822; x=1749743622; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=djCS5O9lZrmDvETb56radbYnD4NxPsAGtcm3Hw3RMoE=;
+        b=ZOoK2N4g7Ibz6adT7fDoU23w4w71xleiAzWgOW3Sq+SQarb3zl4jLQoR5nEENebDtr
+         5oLqpxTX4DSDAt+gPiuFH39C052hqVuBm/5tlWLddp4/ilNNtyBaz8JCSTdqNrKMwMKo
+         q0ThIIeUhRBCOIJROfgniTk0F9JhgrZJX9uJgtD+NE5wYBeZIDrfitTvNXpkWDNiIcaI
+         LfkaMUUNnzqxxa3idoA4MvQxuRRS4hyQl7+WIKilAVCLg1UqScr8VDZub5xAZHJEBQD5
+         BxowFSp9aS3oNpshgLfm+z9U/sV3Py/lpffAyU5TADAIwiN/QS2V8Nzym8bbAQ4VQdXA
+         kYOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749138814; x=1749743614;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mlZ0mwVEjUB88Pprr2cjCSn/3B0JDxZzqNONmusfOto=;
-        b=nUEn/l7uqeNVleGeyIWQdEGHRA26B9n7X5KKzVN2YFwPjzJ1yv1cAoA1UmU86nGejm
-         ESDlCUR63WdUKW1vfLkK0yTMJnvkoc0e2c1nlZe4XySpEq/hmXkZbJjFuR76UkEt248W
-         sr1cesUmqMveTGXgqFy6b5Ox/n8mY91tkDtea1iEzOmKGrPm8cFZ+6jMj3PYYg/ytL7g
-         MxnqHMBsWBWtMemkWueuWIJiw6/IlSQVhnuEHC8A6rgwR0NkUUfA7367ZjRc3YfYVk1p
-         Y6/PdFUblIGZZLFULMMmaTQrGb2QE2BZn0r37JsPomJGlrYpefn27WFkgQQOgKULJBbe
-         e1RA==
-X-Forwarded-Encrypted: i=1; AJvYcCWK053izV9QvDdTmeLjynbFzqkiBOZcJXDGfC0RxIyFi2bzRiteCd2R/oGmCVNmklSS7gI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy9dgEE1cZDVwaaVss7VyCG4bJ9g1+wvMGra9TGtjxa/rhPbKlE
-	1HVuXyINE0kVnzYCWea198lC8kVmbGNbUOs5/W3oVpxnchD9HwkwN9QG
-X-Gm-Gg: ASbGncvsPhbjCewcqtrvZST2YiLRYHzT172V5hQ7uaxkUqnNfZk3OXBfT/JO2yE/wSN
-	+V6wcoyjmD849NxZK5Vi/g0e6KguMoyOGH3djDKfWmr6AvwHu5rrKcy+YzmesxFRZ0nFmWTL2M3
-	5vLfM33zIxMdK/aPqvr3oBUtN7ZH29/76b/Xpjf/LxSR5jhgRtGWPV3CKTzjY3zEyxAtOOLUgDL
-	Ibz0V5mlQEJGlaAeMpyzjF6iI0h3zleQ8v7uQVAxUdd9CEJQ7Egl9gQm8HGN/tNqtmCDGnR1cww
-	DVaL3SiZAUk+pYUbgKPwIpraTEajBZf8H7vFVInyUN065XB5D4de5Lnx1gNfvikj5DqPenjENDX
-	C8N3hl4HxKDlEsSQZfPXx9IOC9U5Rc65NJs9HDQ==
-X-Google-Smtp-Source: AGHT+IEaqEYvhACB4vquUHdCkHgHj7+vF5UERB35XC3HgCbj8HpFczKYH/WCmtmPoxfXRtOnypquuA==
-X-Received: by 2002:a05:690c:450e:b0:6fb:a696:b23b with SMTP id 00721157ae682-710d9fe0dfamr98569317b3.33.1749138813729;
-        Thu, 05 Jun 2025 08:53:33 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:b0b8:1731:c2b2:54d2? ([2600:1700:60ba:9810:b0b8:1731:c2b2:54d2])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-710ec2b78a5sm3081117b3.60.2025.06.05.08.53.32
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jun 2025 08:53:33 -0700 (PDT)
-Message-ID: <4a8b02fc-09b1-4e7a-9b44-49a526b1da48@gmail.com>
-Date: Thu, 5 Jun 2025 11:53:32 -0400
+        d=1e100.net; s=20230601; t=1749138822; x=1749743622;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=djCS5O9lZrmDvETb56radbYnD4NxPsAGtcm3Hw3RMoE=;
+        b=Bx3GuszOxaPMcKrqcDY1qRAgkKgpx2a1T8Z0Y31GcjRhslWXeEC2vyYyvjoFBKhmYv
+         UiZflwHAVLHCYQxpaPjmJ1FUSwXg+6vQ31wnDm47pJMJ2fmOOebUZXgnomB8TTt5QhnP
+         +roJiYYj39gSez6uRzX9N+SqSEyrPZFwxzGiLE9aReNPB3HQOZBbmmPzdSIxGK280VCC
+         WcTcHD4hd4h0RztpHUtmDJdNuH1RLhTK6iL9Q7JOpxIyy80Q15Ea9iJDXZ5GacqanTAq
+         svrPPT7GNe0ToLqyryMGx99CMH77YUxGU3bN9HDyVN3ipdGiDQDhigMKOm7HZ12AnMbE
+         ywjQ==
+X-Gm-Message-State: AOJu0YwdshEsC21mRw7fC/GjEfG4RwjrA8UTtGTDXq/uisqP8yq0yjBe
+	4XQW6uVXr9jQs0HzJUsEk5W91SEqVQlqFO6QoIbz8UC9fkfeYl6Rp7n8SFZx6w==
+X-Gm-Gg: ASbGncvO7Er1oyUK97FfdyTsd1agtwp2Z1IIKzPBRuleGZsbNSsV9IckDO4hZxm2J0Y
+	BHJhdjiQeNXFME4PZ8mjGa9RzLMp6zm4kVwzrzM8ah0wZEPQlogCy4zc2apH4mi2vroNzg5Xb2K
+	FfCu16TdOoTvQF+uIAlI1MzEX35q+oq0mC777IdVpxC5qHGl9D+mL1z/Blgim4EHOq5R4G7Jaiy
+	ZQNbl1HSUqLWk5CnELfgsTqVROIiOXwnLgbvm0nT3LH2rEwrVaP1JwDhy54y/n/TvU+NxigKt0j
+	T6vH8A+yZkbPOe+7ghI68BqhHF20HG1rN2OA/i7IgGXGASSqjvRC
+X-Google-Smtp-Source: AGHT+IEuqA7FxC32TyTIUCycidEND9UogmPEwg+gNHy1iwVsDvmPA3I2N+SVI30XXBDKn9EYypKA0w==
+X-Received: by 2002:a5d:64e2:0:b0:3a4:e6c6:b8bf with SMTP id ffacd0b85a97d-3a51d978963mr6495780f8f.52.1749138821829;
+        Thu, 05 Jun 2025 08:53:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451fb177afcsm23255795e9.9.2025.06.05.08.53.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jun 2025 08:53:41 -0700 (PDT)
+Message-Id: <pull.1977.v6.git.git.1749138820241.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1977.v5.git.git.1749104667618.gitgitgadget@gmail.com>
+References: <pull.1977.v5.git.git.1749104667618.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 05 Jun 2025 15:53:39 +0000
+Subject: [PATCH v6] pack-bitmap: remove checks before bitmap_free
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/12] builtin/maintenance: fix ref lock races when
- detaching
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Cc: Yonatan Roth <yroth@paloaltonetworks.com>, david asraf
- <dasraf9@gmail.com>, Emily Shaffer <nasamuffin@google.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>, Ben Knoble
- <ben.knoble@gmail.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Karthik Nayak <karthik.188@gmail.com>
-References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
- <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Eric Sunshine <sunshine@sunshineco.com>,
+    Taylor Blau <me@ttaylorr.com>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-On 6/3/2025 10:01 AM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series fixes races around locking the "packed-refs" file when
-> auto-maintenance decides to repack it. This issue has been reported e.g.
-> via [1] and [2].
-> 
-> The root cause is that git-gc(1) used to know to detach _after_ having
-> repacked references. As such, callers wouldn't continue with their thing
-> until we have already packed refs, and thus the race does not exist
-> there. git-maintenance(1) didn't have the same split though, so this
-> patch series retrofits that logic.
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-Thanks for making these changes. I read this v4 and only found an
-opportunity to improve our docs relative to the more helpful errors
-around using --schedule and --task together. I sent a diff that could
-be squashed in or skipped.
+In pack-bitmap.c:find_boundary_objects(), the roots_bitmap is only freed
+if cascade_pseudo_merges_1() fails. Since cascade_pseudo_merges_1() only
+use roots_bitmap as a mutable reference but not takes roots_bitmap's
+ownership. Once cascade_pseudo_merges_1() succeeds, roots_bitmap leaks.
+And this leak currently lacks a dedicated test to detect it.
 
-Thanks,
--Stolee
+To fix this leak, remove if cascade_pseudo_merges_1() succeed check and
+always calling bitmap_free(roots_bitmap);
+
+To trigger this leak, we need roots_bitmap that contains at least one
+pseudo merge. So that we can use pseudo merge bitmap when we compute roots
+reachable bitmap. Here we create two commits: first A then B. Add A
+to the pseudo-merge and perform a traversal over the range A..B.
+In this scenario, the "haves" set will be {A}, and cascade_pseudo_merges_1
+will succeed, thereby exposing the leak due to the missing roots_bitmap
+cleanup.
+
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+    pack-bitmap: remove checks before bitmap_free
+    
+    In pack-bitmap.c:find_boundary_objects, remove cascade success check and
+    always free roots_bitmap afterward to make static analysis tool works
+    better.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1977%2Fbrandb97%2Fremove-check-before-bitmap-free-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1977/brandb97/remove-check-before-bitmap-free-v6
+Pull-Request: https://github.com/git/git/pull/1977
+
+Range-diff vs v5:
+
+ 1:  4bc90c83a40 ! 1:  43cdce190dc pack-bitmap: remove checks before bitmap_free
+     @@ Commit message
+          In pack-bitmap.c:find_boundary_objects(), the roots_bitmap is only freed
+          if cascade_pseudo_merges_1() fails. Since cascade_pseudo_merges_1() only
+          use roots_bitmap as a mutable reference but not takes roots_bitmap's
+     -    ownership. Once cascade_pseudo_merges_1 succeed(), roots_bitmap leaks.
+     +    ownership. Once cascade_pseudo_merges_1() succeeds, roots_bitmap leaks.
+          And this leak currently lacks a dedicated test to detect it.
+      
+          To fix this leak, remove if cascade_pseudo_merges_1() succeed check and
+          always calling bitmap_free(roots_bitmap);
+      
+     -    To trigger this leak, we need roots_bitmap contains at least one pseudo
+     -    merge. So that we can use pseudo merge bitmap when we compute roots
+     +    To trigger this leak, we need roots_bitmap that contains at least one
+     +    pseudo merge. So that we can use pseudo merge bitmap when we compute roots
+          reachable bitmap. Here we create two commits: first A then B. Add A
+          to the pseudo-merge and perform a traversal over the range A..B.
+          In this scenario, the "haves" set will be {A}, and cascade_pseudo_merges_1
+
+
+ pack-bitmap.c                   |  4 ++--
+ t/t5333-pseudo-merge-bitmaps.sh | 17 +++++++++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index ac6d62b980c..8727f316de9 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -1363,8 +1363,8 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
+ 			bitmap_set(roots_bitmap, pos);
+ 		}
+ 
+-		if (!cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap))
+-			bitmap_free(roots_bitmap);
++		cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap);
++		bitmap_free(roots_bitmap);
+ 	}
+ 
+ 	/*
+diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
+index 56674db562f..ba5ae6a00c9 100755
+--- a/t/t5333-pseudo-merge-bitmaps.sh
++++ b/t/t5333-pseudo-merge-bitmaps.sh
+@@ -445,4 +445,21 @@ test_expect_success 'pseudo-merge closure' '
+ 	)
+ '
+ 
++test_expect_success 'use pseudo-merge in boundary traversal' '
++	git init pseudo-merge-boundary-traversal &&
++	(
++		cd pseudo-merge-boundary-traversal &&
++
++		git config bitmapPseudoMerge.test.pattern refs/ &&
++		git config pack.useBitmapBoundaryTraversal true &&
++
++		test_commit A &&
++		git repack -adb &&
++		test_commit B &&
++
++		nr=$(git rev-list --count --use-bitmap-index HEAD~1..HEAD) &&
++		test 1 -eq "$nr"
++	)
++'
++
+ test_done
+
+base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
+-- 
+gitgitgadget
