@@ -1,293 +1,394 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36882857E6
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 08:41:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A946827468
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 09:29:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749199293; cv=none; b=hmQc7thI1TNFLb2cQubSm1jaVyfUUQWp7TIIhBy/kq6F/JaFysW5uG9h4v8m4lqfoKlFIP7rbr/sVMLQCfJVnq9nw7M9udh1afJjNBIQYwXkXt1QBNxjb4wZ+FU63QLpHWcyO5LiJ16T690GzlzU/bcn1ayeA8LmYE50H2J/eNA=
+	t=1749202170; cv=none; b=rHq2wwr9kkByFV4NFNkSXYGIjEDFhi/GrlXg4jcIgwHBL3fQo5tEShbm3ZKXHsiJSWkp18RKekIX6PGQh0CY4Uj4uUt/JdtpPygIrzfivlCaH+NrYGv1rzKh1U0JqrZRN1hU1WJyXvLMdXwpEQzzpH82udhVFxBDCJFDnOAdVMA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749199293; c=relaxed/simple;
-	bh=LFsFcyMNuAbq2Sqm8X37nIY2ukDVJAk0JXAwDg6eurA=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=EXbUZI+DUSpu7HtzgnZsIAiv3WUirtbjTJRPKP1Ds/xvI8EHJHeuC6azw+Xd7W2/ydY2JmrtAtQknvobIw69eqQ+KNHaTHouRLcFNNWOgV5fFdZkV1B3ssvAOfIbNq6lOZbLuHuTK9cdtCy9TFnf33DCSWYgzIj/qddOz0tSrQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jNtnLtBE; arc=none smtp.client-ip=209.85.208.46
+	s=arc-20240116; t=1749202170; c=relaxed/simple;
+	bh=tTNcq04+5yfXexplAbRpyZKErOhmbVsv8cfsLAo/+4w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=hr2hzrBZSRJVlltLubsQwMSQaqfmRup6yKqFd6uufdL8EDSAayXpggvPzm41UVeonv30Jnxx8/clvRL89CI0Q040LIsA3qlmhxbiwmgLCUz70YoLNYckwl2Y2MDhVRnXLJYHCnbWYA6Z3haeYieW2r/BIMoXPYP22swwEemwNbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LA2KSYd2; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jNtnLtBE"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6077e0f2697so647624a12.0
-        for <git@vger.kernel.org>; Fri, 06 Jun 2025 01:41:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LA2KSYd2"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a528243636so1154514f8f.3
+        for <git@vger.kernel.org>; Fri, 06 Jun 2025 02:29:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749199290; x=1749804090; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BU/mJ4DPLgei9StXHjujOtx3JzUuQxQ+Dqzl4Xko23w=;
-        b=jNtnLtBEChBav3dirIdb+bDcsKuneWrFXbJnQNH33OnVuMWbQAqZqaqtfggiLb4SzU
-         ao9oiQz+4NX6EluYhr1t28sPh+MRx8vjDatUWWjHmyfzX+GZru//2jxHNG1WRvCwVsSM
-         nvy2NC4EHmdiTUYlIQ/PTlNx/Rli0yfYPdaZUD39tvXEwBU1TJ640SoAhlaZ7ew+x8rH
-         Gul4k00NrPhspEHgXujXUiIH94A0fVyVr9L1TAhTVUNHbRfOeRWMxPa2JxumYX7dBhXd
-         iPTT/bMDGOtyJGbPbS5Q0NfjZ9cRd4y0s4xFQOPMfZkPUiblf+gH6O9uvPcmbNL0qk3A
-         ZEFQ==
+        d=gmail.com; s=20230601; t=1749202166; x=1749806966; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qmV2vh8DTSDa7NX1VOBfrUzfJ+YFz2Wrinq/oV/VIfc=;
+        b=LA2KSYd25OMyAXRSjD19raM2atZj0mH/mQbEkVT2NcENPjzDXyjc1qKdHJe6AeGjRL
+         5aa8LRq84zbTSI1Rxz3+obBel2Q5ZPotdxOQXEr9EFuBar1LAzjdvkOtQVyWoQOvehAc
+         S8Q0333dmNd7BJB+TyHit0mslMutu4lkd9s2QFkKQmxt7HBOu0XCtsZHni+jvf4IlgW6
+         Lp77SaSTwgpWk9fP7wxIG1cHm+z0PLeyoND9Koues7beWUl5fLe13dN0RwW8f19pacn8
+         TNgbsWqVLxJgS6E64b4L7S3QDNzNwvoqSOO0rVU5AWAaf2pd/D358SY41uHBe5JubN3l
+         5szg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749199290; x=1749804090;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1749202166; x=1749806966;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BU/mJ4DPLgei9StXHjujOtx3JzUuQxQ+Dqzl4Xko23w=;
-        b=ZToauLCDqJeA83NXniT8AeAGjj7+6H9flBLW5tvkTcFztqk+SUPeMf0+OzHFsgkVC4
-         aRI0aUYCaCja1RqwcL0ZyH1tXfocBZHwyqwP9CoZne1pVRk8di6/pkwR0c88p8NaPpwo
-         RFCtMpi+foTJfvFUPekALbzYv+fdrMq3Z+y8AtsRxMI5Yq7prc9lD9Qf+hKmJQO4pxln
-         Yj/VSwchrpNhCmC3WXR6/i1s4Yw5+3xJF50ncI1+4DP+s1ikvOv0bsosoBYaQ5j2h/E0
-         dszJo9riobcej+Oz5AIlj5Con8MATI7W/C8qkeDllofSfnO4KkrIxuVtskffWTLYXotl
-         YsuA==
-X-Gm-Message-State: AOJu0Yxab1OI70eMn1oDO+x+jIPQNrZq40fD4GmZQi/XykYvtt+supqa
-	a2JR//ZeoxeJAE5RdVArGoBgDDQ6BwRLhB35wbPIvTKB/O8ZgXSguPoz
-X-Gm-Gg: ASbGncv4o2uZKOmAKOJDAGKabPJADIMjIxeOV/RZcfxKIHQSB7Ed5SeFmXa+MeX2naX
-	133VR+f+4Gwm9rPwZwmdewAiO07fw1FqG7muMbd+pKrG91jjIrM3mTTU+7kbPVLD69Nh7+6Dxwh
-	d4Jc8kEQEvSwqZG/kfEDg/8k7Tq2iqpTV5+Cb3AyNe4mbpP5Z2p4L3P22dD7CQXxj5DfYVdgEhi
-	+8POsuFcOyzyYB+dGbsJZSRwwYS5+NPML+1WOZeOWD/ML7pfEOwJ29J45n02/5BRELIyJkjgnuH
-	4j5rcVnTC1uXyyhr3X9coTyed82j+OcCIp8=
-X-Google-Smtp-Source: AGHT+IFKSnFJwDd4iLrDRaow7iz+3pi5rb0JwSHWmK2gGMzG+S0PP/e+5thXPEI6gTJ3CioD9jH7uQ==
-X-Received: by 2002:a05:6402:164d:b0:607:77ed:3629 with SMTP id 4fb4d7f45d1cf-60777ed3639mr1291758a12.1.1749199290248;
-        Fri, 06 Jun 2025 01:41:30 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2455:8268:bc00:1baf:dad2:9556:ca27])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-607783e654asm706910a12.69.2025.06.06.01.41.27
+        bh=qmV2vh8DTSDa7NX1VOBfrUzfJ+YFz2Wrinq/oV/VIfc=;
+        b=aksxN/cYDm/mGRLmW5QvPHq3EMKglc5LpN2rCMPYXvybYByGvkwu2LaDoqahMPkqER
+         KaYk+tNeVEM15l6CXDhyj13ypczeU5S8G/oAhQNLa4F6/GNGkgwY/PCt/gcqQ+8/Qmeq
+         spVQrKpN5YXqSshlaRrib3c1K9XFKmmS8TlPvhRwKdUQE2DVwRpu0iaEsysxRWtPt4sd
+         q9ZOJfsunHcIXOTa7lP/CYFVInuRgjhhqPRPgt3DY87gsYl7fOw8p8MmNwDm0ya8CwUN
+         MDlJl+6QcojMEFO0Wa9o+cruEgIZUAtj584Sbb6EyddeWTvK0MEWWKjtK981n40IhBzG
+         taQA==
+X-Gm-Message-State: AOJu0Yy5y+30atPIxgBM1Pv4IcAfbT8dcYoemM+vjEX0HJbUSAIERzvx
+	kknu6x80RZN6Lm9lO+2vmX0hbz/08Dt3Ftmw6IMe0Lp7aZXLS9EM/hXqImVITg==
+X-Gm-Gg: ASbGncsNaqZVikgMXeX0JQAsliY/KWVQrcCQ92sn7JgaSoqymehHBnSSSGOeSbCHGKM
+	CVC+AiSCUDEJkY1ohIQiJ/+u24WvOSP6GHg3xH///gXLrKUj9JYfOn8fnhiZTWoQpdjoO2yg4nJ
+	GEw9T9wSjCEtAaLGZR/tFlBzfGX19kQP0OojBYGZ9k6dPYpbT3vDUhmUgjHhXALaG7Fqjhn+30c
+	f1EYltUpLXDEeIfqLGNHHlqy9aOu+tQt7o11jM3nGzLVRkTFv9hKL87/Q31pQFo53T6UOqPIhL9
+	2WLqMlc93igDB3T+Ew9AanG67M/tTP5tiwiN5TVjkQIuLG0gdmXdYuAiQ8p9e54=
+X-Google-Smtp-Source: AGHT+IFqWziZoOu9fv3thvjuDanZrF0qd89bIOLMfDCL3okL2GFLN8A3PKw8kczSUH2pWZ59PoAjEw==
+X-Received: by 2002:a05:6000:2512:b0:3a3:67bb:8f46 with SMTP id ffacd0b85a97d-3a531abd9c3mr2245247f8f.57.1749202166229;
+        Fri, 06 Jun 2025 02:29:26 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-452ec06d9aesm11112275e9.15.2025.06.06.02.29.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jun 2025 01:41:28 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 06 Jun 2025 10:41:11 +0200
-Subject: [PATCH v3 2/2] receive-pack: handle reference deletions separately
+        Fri, 06 Jun 2025 02:29:25 -0700 (PDT)
+Message-Id: <pull.1931.v2.git.1749202164.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
+References: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 06 Jun 2025 09:29:20 +0000
+Subject: [PATCH v2 0/4] curl: pass long values where expected
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-2-e1c41693bd35@gmail.com>
-References: <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-0-e1c41693bd35@gmail.com>
-In-Reply-To: <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-0-e1c41693bd35@gmail.com>
 To: git@vger.kernel.org
-Cc: jltobler@gmail.com, ps@pks.im, gitster@pobox.com, 
- sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6717; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=LFsFcyMNuAbq2Sqm8X37nIY2ukDVJAk0JXAwDg6eurA=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhCqa8DGmxgz53qrKUNDbB5SNoQFmvEo8Gia
- hpFCXwN5aLN/okBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoQqmvAAoJED7VnySO
- Rox/3IYL/RlQl6DisKRlYQrCXvHZ8UAtr3EWVCtFFbY6oovUUETKkGtUIlxPy/uwC4VKUs44Y1f
- N3n63Ov0xetu3eXTEfmDKadcde/Gw0bOqkhRKb2g7P6hvqJY15wG1FXDwayuNDWBIRprBj7G/Ld
- nCLQYt87E3/N+mwlDaypwbbO5xpUMz16Ebj8aOyO4i1Nl74/SQXn7QTs3FKx8AHwfsUUBJ+OUPW
- fLpPET1CEyTgPHBsx4h5lEFM6r7CIMMOyxbO/di8DTZBqor/G67MFuDKYqnaoOidN7kqfl/fwcK
- I+5gPHEf0rf/B1ZBkkaf3w4fdDShKTnXc6e3BqbjVJxx/baSMoJIe4sJ2QN0z+AnDcauwNWsKGY
- zQCBbwYo3sPWNBmxSSgrO3LNF5pPF0PCAfwyphsTt92yr6IMIjksQHUm43F1GXD1xh0EVZf8gZE
- piBYlXRODpa/iYyCByCEwUJUsXTGbMEiRBHB4tXciRFxWp62jqFSUeUaeXsLYb2UIyMxYk74c84
- iI=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Jeff King <peff@peff.net>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
-we updated the 'git-receive-pack(1)' command to use batched reference
-updates. One edge case which was missed during this implementation was
-when a user pushes multiple branches such as:
+This came up during the release process of Git for Windows v2.50.0-rc1.
 
-  delete refs/heads/branch/conflict
-  create refs/heads/branch
+Changes since v1:
 
-Before using batched updates, the references would be applied
-sequentially and hence no conflicts would arise. With batched updates,
-while the first update applies, the second fails due to F/D conflict. A
-similar issue was present in 'git-fetch(1)' and was fixed by using
-separating out reference pruning into a separate transaction. Apply a
-similar mechanism for 'git-receive-pack(1)' and separate out reference
-deletions into its own batch.
+ * Rebased on top of jk/curl-easy-setopt-typefix.
 
-This means 'git-receive-pack(1)' will now use upto two transactions,
-whereas before using batched updates it would use _at least_ two
-transactions. So using batched updates is still the better option.
+Jeff King (3):
+  curl: fix integer constant typechecks with curl_easy_setopt()
+  curl: fix integer variable typechecks with curl_easy_setopt()
+  curl: fix symbolic constant typechecks with curl_easy_setopt()
 
-Add a test to validate this behavior.
+Johannes Schindelin (1):
+  curl: pass `long` values where expected
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- builtin/receive-pack.c | 100 ++++++++++++++++++++++++++++++++-----------------
- t/t5516-fetch-push.sh  |  17 +++++++--
- 2 files changed, 79 insertions(+), 38 deletions(-)
+ http-push.c   |  8 ++++----
+ http.c        | 50 +++++++++++++++++++++++++-------------------------
+ imap-send.c   |  6 +++---
+ remote-curl.c | 12 ++++++------
+ 4 files changed, 38 insertions(+), 38 deletions(-)
 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 9e3cfb85cf..8ee792d2f8 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1867,47 +1867,79 @@ static void execute_commands_non_atomic(struct command *commands,
- 	const char *reported_error = NULL;
- 	struct strmap failed_refs = STRMAP_INIT;
- 
--	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
--						  REF_TRANSACTION_ALLOW_FAILURE, &err);
--	if (!transaction) {
--		rp_error("%s", err.buf);
--		strbuf_reset(&err);
--		reported_error = "transaction failed to start";
--		goto failure;
--	}
-+	/*
-+	 * Reference updates, where F/D conflicts shouldn't arise due to
-+	 * one reference being deleted, while the other being created
-+	 * are treated as conflicts in batched updates. This is because
-+	 * we don't do conflict resolution inside a transaction. To
-+	 * mitigate this, delete references in a separate batch.
-+	 */
-+	enum processing_phase {
-+		PHASE_DELETIONS,
-+		PHASE_OTHERS
-+	};
- 
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
--			continue;
-+	for (enum processing_phase phase = PHASE_DELETIONS; phase <= PHASE_OTHERS; phase++) {
-+		for (cmd = commands; cmd; cmd = cmd->next) {
-+			if (!should_process_cmd(cmd) || cmd->run_proc_receive)
-+				continue;
- 
--		cmd->error_string = update(cmd, si);
--	}
-+			if (phase == PHASE_DELETIONS && !is_null_oid(&cmd->new_oid))
-+				continue;
-+			else if (phase == PHASE_OTHERS && is_null_oid(&cmd->new_oid))
-+				continue;
- 
--	if (ref_transaction_commit(transaction, &err)) {
--		rp_error("%s", err.buf);
--		reported_error = "failed to update refs";
--		goto failure;
--	}
-+			/*
-+			 * Lazily create a transaction only when we know there are
-+			 * updates to be added.
-+			 */
-+			if (!transaction) {
-+				transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-+									  REF_TRANSACTION_ALLOW_FAILURE, &err);
-+				if (!transaction) {
-+					rp_error("%s", err.buf);
-+					strbuf_reset(&err);
-+					reported_error = "transaction failed to s1tart";
-+					goto failure;
-+				}
-+			}
- 
--	ref_transaction_for_each_rejected_update(transaction,
--						 ref_transaction_rejection_handler,
--						 &failed_refs);
-+			cmd->error_string = update(cmd, si);
-+		}
- 
--	if (strmap_empty(&failed_refs))
--		goto cleanup;
-+		/*
-+		 * If no transaction was created, there is nothing to commit.
-+		 */
-+		if (!transaction)
-+			goto cleanup;
- 
--failure:
--	for (cmd = commands; cmd; cmd = cmd->next) {
--		if (reported_error)
--			cmd->error_string = reported_error;
--		else if (strmap_contains(&failed_refs, cmd->ref_name))
--			cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
--	}
-+		if (ref_transaction_commit(transaction, &err)) {
-+			rp_error("%s", err.buf);
-+			reported_error = "failed to update refs";
-+			goto failure;
-+		}
- 
--cleanup:
--	ref_transaction_free(transaction);
--	strmap_clear(&failed_refs, 0);
--	strbuf_release(&err);
-+		ref_transaction_for_each_rejected_update(transaction,
-+							 ref_transaction_rejection_handler,
-+							 &failed_refs);
-+
-+		if (strmap_empty(&failed_refs))
-+			goto cleanup;
-+
-+	failure:
-+		for (cmd = commands; cmd; cmd = cmd->next) {
-+			if (reported_error)
-+				cmd->error_string = reported_error;
-+			else if (strmap_contains(&failed_refs, cmd->ref_name))
-+				cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
-+		}
-+
-+	cleanup:
-+		ref_transaction_free(transaction);
-+		transaction = NULL;
-+		strmap_clear(&failed_refs, 0);
-+		strbuf_release(&err);
-+	}
- }
- 
- static void execute_commands_atomic(struct command *commands,
-diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-index dabcc5f811..1649667441 100755
---- a/t/t5516-fetch-push.sh
-+++ b/t/t5516-fetch-push.sh
-@@ -744,8 +744,8 @@ test_expect_success 'pushing valid refs triggers post-receive and post-update ho
- 		EOF
- 
- 		cat >update.expect <<-EOF &&
--		refs/heads/main $orgmain $newmain
- 		refs/heads/next $orgnext $newnext
-+		refs/heads/main $orgmain $newmain
- 		EOF
- 
- 		cat >post-receive.expect <<-EOF &&
-@@ -808,8 +808,8 @@ test_expect_success 'deletion of a non-existent ref is not fed to post-receive a
- 		EOF
- 
- 		cat >update.expect <<-EOF &&
--		refs/heads/main $orgmain $newmain
- 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
-+		refs/heads/main $orgmain $newmain
- 		EOF
- 
- 		cat >post-receive.expect <<-EOF &&
-@@ -868,10 +868,10 @@ test_expect_success 'mixed ref updates, deletes, invalid deletes trigger hooks w
- 		EOF
- 
- 		cat >update.expect <<-EOF &&
--		refs/heads/main $orgmain $newmain
- 		refs/heads/next $orgnext $newnext
--		refs/heads/seen $orgseen $newseen
- 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
-+		refs/heads/main $orgmain $newmain
-+		refs/heads/seen $orgseen $newseen
- 		EOF
- 
- 		cat >post-receive.expect <<-EOF &&
-@@ -1909,4 +1909,13 @@ test_expect_success 'push with config push.useBitmaps' '
- 		--thin --delta-base-offset -q --no-use-bitmap-index <false
- '
- 
-+test_expect_success 'push with F/D conflict with deletion and creation' '
-+	test_when_finished "git branch -D branch" &&
-+	git branch branch/conflict &&
-+	mk_test testrepo heads/branch/conflict &&
-+	git branch -D branch/conflict &&
-+	git branch branch &&
-+	git push testrepo :refs/heads/branch/conflict refs/heads/branch
-+'
-+
- test_done
+
+base-commit: 0bd2d791cc9f745ebaedafc0e1cbebdebe41343e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1931%2Fdscho%2Fcurl-options-want-long-instead-of-int-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1931/dscho/curl-options-want-long-instead-of-int-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1931
+
+Range-diff vs v1:
+
+ -:  ----------- > 1:  6f11c42e8ed curl: fix integer constant typechecks with curl_easy_setopt()
+ -:  ----------- > 2:  30325e23ba0 curl: fix integer variable typechecks with curl_easy_setopt()
+ -:  ----------- > 3:  4558c8f84b2 curl: fix symbolic constant typechecks with curl_easy_setopt()
+ 1:  803e235837e ! 4:  80de7491d24 curl: pass `long` values where expected
+     @@ Commit message
+          The most likely explanation is the entry "typecheck-gcc.h: fix the
+          typechecks" in cURL's release notes (https://curl.se/ch/8.14.0.html).
+      
+     -    Let's explicitly convert all `int` parameters in `curl_easy_setopt()`
+     -    calls to `long` parameters.
+     +    Nearly identical compile errors afflicted recently-updated Debian
+     +    setups, which have been addressed by `jk/curl-easy-setopt-typefix`.
+     +
+     +    However, on macOS Git is built with different build options, which
+     +    uncovered more instances of `int` values that need to be cast to
+     +    constants, which were not covered by 6f11c42e8edc (curl: fix integer
+     +    constant typechecks with curl_easy_setopt(), 2025-06-04). Let's
+     +    explicitly convert even those remaining `int` constants in
+     +    `curl_easy_setopt()` calls to `long` parameters.
+     +
+     +    In addition to looking at the compile errors of the `osx-gcc` job, I
+     +    verified that there are no other instances of the same issue that need
+     +    to be handled in this manner (and that might not be caught by our CI
+     +    builds because of yet other build options that might skip those code
+     +    parts), I ran the following command and inspected all 23 results
+     +    manually to ensure that the fix is now actually complete:
+     +
+     +      git grep -n curl_easy_setopt |
+     +      grep -ve ',.*, *[A-Za-z_"&]' \
+     +        -e ',.*, *[-0-9]*L)' \
+     +        -e ',.*,.* (long)'
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+       ## http-push.c ##
+     -@@ http-push.c: static char *xml_entities(const char *s)
+     - static void curl_setup_http_get(CURL *curl, const char *url,
+     - 		const char *custom_req)
+     - {
+     --	curl_easy_setopt(curl, CURLOPT_HTTPGET, 1);
+     -+	curl_easy_setopt(curl, CURLOPT_HTTPGET, 1l);
+     - 	curl_easy_setopt(curl, CURLOPT_URL, url);
+     - 	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
+     - 	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, fwrite_null);
+      @@ http-push.c: static void curl_setup_http(CURL *curl, const char *url,
+       		const char *custom_req, struct buffer *buffer,
+       		curl_write_callback write_fn)
+       {
+      -	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+     -+	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1l);
+     ++	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+       	curl_easy_setopt(curl, CURLOPT_URL, url);
+       	curl_easy_setopt(curl, CURLOPT_INFILE, buffer);
+       	curl_easy_setopt(curl, CURLOPT_INFILESIZE, buffer->buf.len);
+     @@ http-push.c: static void curl_setup_http(CURL *curl, const char *url,
+       	curl_easy_setopt(curl, CURLOPT_SEEKDATA, buffer);
+       	curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_fn);
+      -	curl_easy_setopt(curl, CURLOPT_NOBODY, 0);
+     -+	curl_easy_setopt(curl, CURLOPT_NOBODY, 0l);
+     ++	curl_easy_setopt(curl, CURLOPT_NOBODY, 0L);
+       	curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, custom_req);
+      -	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+     -+	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1l);
+     ++	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+       }
+       
+       static struct curl_slist *get_dav_token_headers(struct remote_lock *lock, enum dav_header_flag options)
+      
+       ## http.c ##
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 		die("curl_easy_init failed");
+     - 
+     - 	if (!curl_ssl_verify) {
+     --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
+     --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
+     -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0l);
+     -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0l);
+     - 	} else {
+     - 		/* Verify authenticity of the peer's certificate */
+     --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1);
+     -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 1l);
+     - 		/* The name in the cert must match whom we tried to connect */
+     --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2);
+     -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 2l);
+     - 	}
+     - 
+     -     if (curl_http_version) {
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 
+     - 	if (http_ssl_backend && !strcmp("schannel", http_ssl_backend) &&
+     - 	    !http_schannel_check_revoke) {
+     --		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, CURLSSLOPT_NO_REVOKE);
+     -+		curl_easy_setopt(result, CURLOPT_SSL_OPTIONS, (long)CURLSSLOPT_NO_REVOKE);
+     - 	}
+     - 
+     - 	if (http_proactive_auth != PROACTIVE_AUTH_NONE)
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 				 curl_low_speed_time);
+     - 	}
+     - 
+     --	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20);
+     --	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
+     -+	curl_easy_setopt(result, CURLOPT_MAXREDIRS, 20l);
+     -+	curl_easy_setopt(result, CURLOPT_POSTREDIR, (long)CURL_REDIR_POST_ALL);
+     - 
+     - #ifdef GIT_CURL_HAVE_CURLOPT_PROTOCOLS_STR
+     - 	{
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 		user_agent ? user_agent : git_user_agent());
+     - 
+     - 	if (curl_ftp_no_epsv)
+     --		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+     -+		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0l);
+     - 
+     - 	if (curl_ssl_try)
+     - 		curl_easy_setopt(result, CURLOPT_USE_SSL, CURLUSESSL_TRY);
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 
+     - 		if (starts_with(curl_http_proxy, "socks5h"))
+     - 			curl_easy_setopt(result,
+     --				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5_HOSTNAME);
+     -+				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS5_HOSTNAME);
+     - 		else if (starts_with(curl_http_proxy, "socks5"))
+     - 			curl_easy_setopt(result,
+     --				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS5);
+     -+				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS5);
+     - 		else if (starts_with(curl_http_proxy, "socks4a"))
+     - 			curl_easy_setopt(result,
+     --				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4A);
+     -+				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS4A);
+     - 		else if (starts_with(curl_http_proxy, "socks"))
+     - 			curl_easy_setopt(result,
+     --				CURLOPT_PROXYTYPE, CURLPROXY_SOCKS4);
+     -+				CURLOPT_PROXYTYPE, (long)CURLPROXY_SOCKS4);
+     - 		else if (starts_with(curl_http_proxy, "https")) {
+     --			curl_easy_setopt(result, CURLOPT_PROXYTYPE, CURLPROXY_HTTPS);
+     -+			curl_easy_setopt(result, CURLOPT_PROXYTYPE, (long)CURLPROXY_HTTPS);
+     - 
+     - 			if (http_proxy_ssl_cert)
+     - 				curl_easy_setopt(result, CURLOPT_PROXY_SSLCERT, http_proxy_ssl_cert);
+     -@@ http.c: static CURL *get_curl_handle(void)
+     - 	}
+     - 	init_curl_proxy_auth(result);
+     - 
+     --	curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1);
+     -+	curl_easy_setopt(result, CURLOPT_TCP_KEEPALIVE, 1l);
+     - 
+     - 	if (curl_tcp_keepidle > -1)
+     - 		curl_easy_setopt(result, CURLOPT_TCP_KEEPIDLE,
+      @@ http.c: struct active_request_slot *get_active_slot(void)
+       	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, NULL);
+       	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, NULL);
+     @@ http.c: struct active_request_slot *get_active_slot(void)
+      -	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0);
+      -	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+      -	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0l);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1l);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1l);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_UPLOAD, 0L);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1L);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 1L);
+       	curl_easy_setopt(slot->curl, CURLOPT_RANGE, NULL);
+       
+       	/*
+     @@ http.c: struct active_request_slot *get_active_slot(void)
+       	 */
+       	if (http_follow_config == HTTP_FOLLOW_ALWAYS)
+      -		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1);
+     -+		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1l);
+     ++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1L);
+       	else
+      -		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 0);
+     -+		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 0l);
+     ++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 0L);
+       
+       	curl_easy_setopt(slot->curl, CURLOPT_IPRESOLVE, git_curl_ipresolve);
+       	curl_easy_setopt(slot->curl, CURLOPT_HTTPAUTH, http_auth_methods);
+     @@ http.c: static int http_request(const char *url,
+       
+       	slot = get_active_slot();
+      -	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1l);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_HTTPGET, 1L);
+       
+       	if (!result) {
+      -		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1);
+     -+		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1l);
+     ++		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 1L);
+       	} else {
+      -		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+     -+		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0l);
+     ++		curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
+       		curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, result);
+       
+       		if (target == HTTP_REQUEST_FILE) {
+     @@ http.c: static int http_request(const char *url,
+       	if (options && options->initial_request &&
+       	    http_follow_config == HTTP_FOLLOW_INITIAL)
+      -		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1);
+     -+		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1l);
+     ++		curl_easy_setopt(slot->curl, CURLOPT_FOLLOWLOCATION, 1L);
+       
+       	headers = curl_slist_append(headers, buf.buf);
+       
+     @@ http.c: static int http_request(const char *url,
+       	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+       	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+      -	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0l);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0L);
+       
+       	ret = run_one_slot(slot, &results);
+       
+     @@ http.c: struct http_object_request *new_http_object_request(const char *base_url
+       
+       	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEDATA, freq);
+      -	curl_easy_setopt(freq->slot->curl, CURLOPT_FAILONERROR, 0);
+     -+	curl_easy_setopt(freq->slot->curl, CURLOPT_FAILONERROR, 0l);
+     ++	curl_easy_setopt(freq->slot->curl, CURLOPT_FAILONERROR, 0L);
+       	curl_easy_setopt(freq->slot->curl, CURLOPT_WRITEFUNCTION, fwrite_sha1_file);
+       	curl_easy_setopt(freq->slot->curl, CURLOPT_ERRORBUFFER, freq->errorstr);
+       	curl_easy_setopt(freq->slot->curl, CURLOPT_URL, freq->url);
+      
+     - ## imap-send.c ##
+     -@@ imap-send.c: static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+     - 
+     - 	curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+     - 	strbuf_release(&path);
+     --	curl_easy_setopt(curl, CURLOPT_PORT, srvc->port);
+     -+	curl_easy_setopt(curl, CURLOPT_PORT, (long)srvc->port);
+     - 
+     - 	if (srvc->auth_method) {
+     - 		struct strbuf auth = STRBUF_INIT;
+     -@@ imap-send.c: static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+     - 	if (!srvc->use_ssl)
+     - 		curl_easy_setopt(curl, CURLOPT_USE_SSL, (long)CURLUSESSL_TRY);
+     - 
+     --	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, srvc->ssl_verify);
+     --	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, srvc->ssl_verify);
+     -+	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, (long)srvc->ssl_verify);
+     -+	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, (long)srvc->ssl_verify);
+     - 
+     - 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
+     - 
+     -
+       ## remote-curl.c ##
+     -@@ remote-curl.c: static int probe_rpc(struct rpc_state *rpc, struct slot_results *results)
+     - 	headers = curl_slist_append(headers, rpc->hdr_content_type);
+     - 	headers = curl_slist_append(headers, rpc->hdr_accept);
+     - 
+     --	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+     --	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0l);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_POST, 1l);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, NULL);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDS, "0000");
+     --	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_POSTFIELDSIZE, 4l);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_HTTPHEADER, headers);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_WRITEFUNCTION, fwrite_buffer);
+     - 	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &buf);
+      @@ remote-curl.c: retry:
+       
+       	slot = get_active_slot();
+       
+      -	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
+      -	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0l);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_POST, 1l);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
+       	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
+       	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+       
+     @@ remote-curl.c: retry:
+       	memset(&rpc_in_data.pktline_state, 0, sizeof(rpc_in_data.pktline_state));
+       	curl_easy_setopt(slot->curl, CURLOPT_WRITEDATA, &rpc_in_data);
+      -	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0);
+     -+	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0l);
+     ++	curl_easy_setopt(slot->curl, CURLOPT_FAILONERROR, 0L);
+       
+       
+       	rpc->any_written = 0;
 
 -- 
-2.49.0
-
+gitgitgadget
