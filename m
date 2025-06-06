@@ -1,129 +1,102 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.67.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4276A2CA6
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 05:23:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9264E10E0
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 05:50:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.67.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749187391; cv=none; b=Uefve93e/Wxw34VpWtjDozMES6Ljzj0OJbeGB/n5hmPcgeJMFPXd5d7txPYWNsaOY+EFhFCPazaY7sjWjiCbUnUVNbIw9/0OT0JtRpFfG+F6+EUV1D+gP+aCl03djh4Y2rcD9vm8h5ICKQNGDLPhXOZG6lgc9v1e+DTxUzAe8Oc=
+	t=1749189024; cv=none; b=REWk/8mdCDPtP3OHDvbVWuWAM522xisEsry4CftVFzMQ5JGRc9oxl40glKTeKtZM3yTZ9ogdeEI0/jVSBt1/+qZKzCMW3yicWGMp8hBp3QyS3PQcLpwhAZIbWuTtEBksGOt6xsfyERvak5xBrGNcFtuoqqVR9lYeZPAGrhhTF7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749187391; c=relaxed/simple;
-	bh=4Ur5I1Er0wmSJciRiqKHXFjsPRgz4e+fGpx/1eFTXzA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OYCmrxYKaNe7n4/As38UftZV+WCDdVxqjHFiNIwyA788SZx3jxFCFtsat4xMTg1loK3/rwA7vQHuWLgVQ8tYmDYrJw2W6S4A6xRzgm6KKTkjuO1RkUpzJnvDImdg18bcY704s+RP9iUQt4TTGRC/6/aN5To3UNdGGdXtko1jvqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mNM4HLwd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SW4Cc6VZ; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mNM4HLwd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SW4Cc6VZ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0B5A31140139;
-	Fri,  6 Jun 2025 01:23:07 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 06 Jun 2025 01:23:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749187386; x=1749273786; bh=8lrZGB6aWY
-	o+9bRzfuRrhWd5qtFBFTzzgF2mzEp9jwM=; b=mNM4HLwdVJwB8orojemhOX6dNw
-	rXmg7Wl4h7xwQuHyVBwiPGc5+qbqQ4V2WoKFB2/xeWnNv3bq6SftIZ/W5oGce+1w
-	76Vt8LbOeGgmBJBM7URxwPTwh4ErHjOC5VcN1wdWQlg6Qx74/MiLXzeNEvDxrF/r
-	+hxQuQFDwoUj1GECHCkTm7pqWuSf7kIiyV2GazNKsetp5/E9pHTedio0+yuF0X8y
-	MIYgz5a7XwuCiWUzPlwxLmEVzNk9AR3wChA0TZjDZryZTv7IZC9zFRnEQCn69i31
-	/ZVmY43xzeBSI9icBmRKj7X98AJjMrCKldbC1QmuprfzgH9/TiRipv7ke7Ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749187386; x=1749273786; bh=8lrZGB6aWYo+9bRzfuRrhWd5qtFBFTzzgF2
-	mzEp9jwM=; b=SW4Cc6VZBnb8gZA2AVvI1dMn6egxDhmylCpLa4OUUgWUMortrKB
-	zGOXqaGjVf23w4MuYj6ySkg7nh6kPb/le8Yu0x0VE98KsAPhd+/LvQA95yyrrgox
-	fcscni9zkonwQI7VudOqPGz8Eu1SNRgLmgaq97TsTK96IVuU+0cyVSkA2qa84OQi
-	yp/PYg8Bw3dOO/DWRiIzXQ0mW+1m0ATvAqNhk5/Zrg7XVu/0Mkeka7E+MIjp7Tf0
-	aqEZQVJdpNrk1b/hK2ujyqgE2FZaN4+hoi1xrNWNV1Aav9mTivh3Ecdmpj7Fnmqa
-	5cnuxwgp9VMamIn6JPNfh8UZQc82HcE/mzQ==
-X-ME-Sender: <xms:OntCaEdvEH7Lpg4fRbCi6KMxNQtrnZW4bfC1bNjIdz1HhD1Lgr5GzQ>
-    <xme:OntCaGNHY-CFMDJ4IFAQ4J-NxupZt3A_wegia202DNaUjVyDHT5PRLorQmTFhjLf8
-    KlQQX1KXSn_mTsdcQ>
-X-ME-Received: <xmr:OntCaFivDF1sVBFwpyDHTGlecKJCXQDkvVUAl_i13RJEbAMBGujZJFDyWKpH_JdW_b0xYzci5lLIQGRBJTybVwL4AHnd2Zh8f4ZJ4HH8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdegieegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepledpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohephihrohhthhesphgrlhhorghlthhonhgvthifohhrkh
-    hsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
-    homhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphht
-    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepuggrshhrrghfleesghhmrghilhdr
-    tghomhdprhgtphhtthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtg
-    hpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomh
-X-ME-Proxy: <xmx:OntCaJ8k8z0MJLL_Vmu7AAnHf2JHYMy65Ncs3m0eB76bCtgEO870kg>
-    <xmx:OntCaAs2RbRKt24yuG_fxLlyK4z6ZrQpWtEXPgy8AeYC8hebq5klMw>
-    <xmx:OntCaAGBEM2h9U8NZ-ABDL7DiZWREYbSNhJB9PJ05-J_UNMpuIQF2w>
-    <xmx:OntCaPNkd2F_vVq4il4-PB_ITYNClc3lroXR6nzn5tUphnfA_iAvEQ>
-    <xmx:OntCaB8S5Bdj4NMi_Fy3hnw3CZqp0SPSLOe_KLVNoi7ab_1LGHfCTsjM>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Jun 2025 01:23:04 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 50794a9a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 6 Jun 2025 05:23:02 +0000 (UTC)
-Date: Fri, 6 Jun 2025 07:23:01 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org, Yonatan Roth <yroth@paloaltonetworks.com>,
-	david asraf <dasraf9@gmail.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v4 00/12] builtin/maintenance: fix ref lock races when
- detaching
-Message-ID: <aEJ7NW6A-FBpDTnw@pks.im>
-References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
- <20250603-b4-pks-maintenance-ref-lock-race-v4-0-52f5cf7b7e99@pks.im>
- <4a8b02fc-09b1-4e7a-9b44-49a526b1da48@gmail.com>
+	s=arc-20240116; t=1749189024; c=relaxed/simple;
+	bh=OnYzGyGgoh2neJFWCNoTsbQrkrRS7PwcHsOiqi4T+3w=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=RmDP1b4J/0adHdbRuqo1XuRgRXgc3vTIbFb5FFF1xdRIXL/Xy6XUAAgodBZeMIsA5pZgtaqFZv9C+cC+GRcGzaM6Hc0y92wsUhynnRjDVDe3ocK0KKMoODQD8rhs3/gMb2F/5/tQCbIHrih0aRp4WAmy3TSI1/4UQVD85JMXZCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=114.132.67.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz9t1749188974tb63ca647
+X-QQ-Originating-IP: Fbjs77KZcH7FnQekzYrTw+YpcZK6QEySWHMzJK2/XTg=
+Received: from smtpclient.apple ( [36.152.24.182])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 06 Jun 2025 13:49:33 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 12450379250851108544
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4a8b02fc-09b1-4e7a-9b44-49a526b1da48@gmail.com>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v6] pack-bitmap: remove checks before bitmap_free
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqqplfh64lc.fsf@gitster.g>
+Date: Fri, 6 Jun 2025 13:49:23 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Patrick Steinhardt <ps@pks.im>,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Taylor Blau <me@ttaylorr.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E2C28248-2486-4E2A-846E-1C6233E7CE6A@smail.nju.edu.cn>
+References: <pull.1977.v5.git.git.1749104667618.gitgitgadget@gmail.com>
+ <pull.1977.v6.git.git.1749138820241.gitgitgadget@gmail.com>
+ <xmqqplfh64lc.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: NDtUtlvFer7vzFJn6YqnEUEfC6qt7tBD74FTMz4g5m08V7MEH1oH8LhB
+	pa3ZVVkr+XT/tGPBHubOjqTqm46lXLg5RdfOMqwNryjtEXK9NX7kb7Ozjubk4kqzMYOepuq
+	kstoabZG4iXLS42LuCepso6SkHxcrZbYZ0v+IRlR+BlC2uqB4BMngeGSgi29YhRA92CA/RZ
+	FL9lF8yiU0zeof04iuS661df84WHd3LJcGehCY4vYmoRFDykNxfGEICvQll3w4fnN3YdnjM
+	xkG3keZZ0y8JdGw3VT/yKQHDKURMkUteKwbzRCxwILTmpycfJV4CdDoPl5l1u7IpHO1PXLd
+	YV46E4z+CZr1V6BICJj938EKicTkaP/iRuv0PBAkk+/e+o8A4F0Oy+P4kFcf4LvGh81cfZc
+	N/mDLg/Pou7fwdSA+cJpkouiLtE+up4qdmaNYLX833iXf1Bztd3KpoowUe7G+jzI8y20eo6
+	RvK3Pn+BEr02wEikFoqQh1ehLXEKvHpFZlAbOkgfmrGZk+If+Np0U+AWY5fbx9HZZK3nAdD
+	IMEbeCDHV1fwwZ4KCXlmWoNAK1aPwosh6TzCP1lJPp7SeE6JzONVV3cgjewmNP6HS1VjSyT
+	nAyIyHhn7LM9a1boLfnDBoWPwGQrV093z2tLzRRhWA2m4KyCmf9vw65ITCw7fTpbRQ17Olw
+	eaboRbHPkCqCcXdQW5D6d3VgqfZe8FM/+TAJ6v3i8FiWTtjab8teOXKNu1elaW0XFtP44qR
+	mSJMmqMQhkv3VDEIHExQYd3pM9O1KG4siz7Oe0HmdXhxvbXisex+aSBl+hqf2Qn3rpeNMCV
+	Sr70Tz7ymNPJVxV2PKjfQrdyzsQKQHoACDxU/W+KwjkQep0efXXA8oTWhtL5S4rFDZTjG0D
+	TXBabjMC9KKeKW47NO0ZTcYR/C7ovisk87TP3FoGyUgQDl0TL2QQvF25atsiGhbj70vEqmK
+	kndPX5Zff8NPxeHn0WwoqRyro1xMtjL4LTOgyI0DjRIFm+cVCoXsu2WgS
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
+X-QQ-RECHKSPAM: 0
 
-On Thu, Jun 05, 2025 at 11:53:32AM -0400, Derrick Stolee wrote:
-> On 6/3/2025 10:01 AM, Patrick Steinhardt wrote:
-> > Hi,
-> > 
-> > this patch series fixes races around locking the "packed-refs" file when
-> > auto-maintenance decides to repack it. This issue has been reported e.g.
-> > via [1] and [2].
-> > 
-> > The root cause is that git-gc(1) used to know to detach _after_ having
-> > repacked references. As such, callers wouldn't continue with their thing
-> > until we have already packed refs, and thus the race does not exist
-> > there. git-maintenance(1) didn't have the same split though, so this
-> > patch series retrofits that logic.
-> 
-> Thanks for making these changes. I read this v4 and only found an
-> opportunity to improve our docs relative to the more helpful errors
-> around using --schedule and --task together. I sent a diff that could
-> be squashed in or skipped.
+2025=E5=B9=B46=E6=9C=886=E6=97=A5 09:28=EF=BC=8CJunio C Hamano =
+<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+>>=20
+>> In pack-bitmap.c:find_boundary_objects(), the roots_bitmap is only =
+freed
+>> if cascade_pseudo_merges_1() fails. Since cascade_pseudo_merges_1() =
+only
+>> use roots_bitmap as a mutable reference but not takes roots_bitmap's
+>> ownership.
+>=20
+> Sorry but I cannot parse the last sentence above.  I would have
+> expected that "Since/Because X" to be followed by comma and a
+> sentence that describes the consequence of X.  Also "but not takes"
+> -> "but does not take", probably.
 
-I see that the series got merged yesterday, so your mail overlapped with
-that. I think it's a good addition though, so would you mind sending the
-diff as a follow-up patch?
 
-Thanks for your review!
-
-Patrick
+You are right, I should use a grammar checker (chatgpt) on my log =
+message.
+How about
+=E2=80=9C
+Since cascade_pseudo_merges_1() only
+use roots_bitmap as a mutable reference but not takes roots_bitmap's
+ownership. Once cascade_pseudo_merges_1() succeeds, roots_bitmap leaks.
+=E2=80=9D
+->
+=E2=80=9C
+However, cascade_pseudo_merges_1() uses roots_bitmap as a=20
+mutable reference without taking ownership of it. As a result, if=20
+cascade_pseudo_merges_1() succeeds, roots_bitmap is leaked.
+=E2=80=9D=
