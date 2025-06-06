@@ -1,107 +1,97 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74FE81724
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 10:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D2826A0DB
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 11:20:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749204364; cv=none; b=N/zjwm2/ZmTM8wNO+z8Omam/ANf5ibvgvY/jSAiwnPehdKmGfAnLQa43NDRK/ZVDUqFwGyfh1IAjlE2Zb+lVjFArsFeN4To5hRhneEotGyDSUqWsRMIEsTjdLLtt/bRs1e0/IPhz/LkO2RECzrzJnNYU6hT4Oz+Pqyj9St0gWGQ=
+	t=1749208844; cv=none; b=NyqQYcVS/7OYJb5TbKMgDJi4q2xE2nXu+tYQdlLZAd7nbZ+LxHYNQ84OYJOO6hmMrTTbmD9uMh94QF/msH88WqSg8L7Zozj9t8bkhylGmqL1/M7dU61QNcsi+tjHbGloU/hdIBH9lUThWu8zt2TkquFgxBBSaYMgNZnmpmgizts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749204364; c=relaxed/simple;
-	bh=FqMlgUz4UB1fLwFDjiLl8vsPnnHh2GwJM3G8I+BCPfA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cQWtRI8sq1cY2Tos1QaX9RZcfF2cYWi96iH5tSrsM9O/cCK7WGTMfebAoSGe0dZ/4Upzb9hDAH45jAMdIw6/sGBpG62FVPfIa7pn3hCW2H2Kq1NOJsgY93qX54ubCJ/OV7zDqPabZszQPOxxB2rTi/uVi2MIrO+fZ/zRQ3b5Ra4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=cuhTAHFN; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1749208844; c=relaxed/simple;
+	bh=hACgUkS4NXH8iEHMnCtOMQBIktV+qF6EGT/d6aZuTKc=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=MpO5U20eMFsi09vJkkjrqz6CvXIWjQLVq9tITjDd6L4hKExnyCJ6yLXyUM2AzoaGqeqvof8SeDTJEjF3QnVutxtpg3GkeYwgiE/XRV7Blw1PiCJRxSn/Joj2tV6TzsA/udTg0/fFTmAyGcL8OCU4QsGMlWfoxmYmup4VBbBjUEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JE9YtMyW; arc=none smtp.client-ip=209.85.166.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="cuhTAHFN"
-Received: (qmail 27416 invoked by uid 109); 6 Jun 2025 10:06:00 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FqMlgUz4UB1fLwFDjiLl8vsPnnHh2GwJM3G8I+BCPfA=; b=cuhTAHFNg9COzl/6u/Wo88Iq2e1aPlyX1MSbu7fzjnMKD2ZQyoXS5d4WXDsPWJEmij+k6lNDUbpbCeERqRejSxCTkufLbmjXvw77SCusRrZtBlTJgwNfhfXGlK4JvjSo14ZARG50e9/WngJDFs1djSvUpgpojN90WqupQJvhcQYxeWMXkxqrDTQE/HfWzMIfiLifSQU7nzTJZK+8OweXLXn6OZAUf435eLSK6pW0CM7MqXdnMdsvHqvv/jr3350mqKpYR/KVEhpVJMG8YgyKUafcslUUvwB0BvM863/nF2+uSR+uUWTAc0dZqgJMrMvtQCfCz0fUVNYPuPFmS2Ehcg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 06 Jun 2025 10:06:00 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8449 invoked by uid 111); 6 Jun 2025 10:06:03 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 06 Jun 2025 06:06:03 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 6 Jun 2025 06:05:58 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v2 4/4] curl: pass `long` values where expected
-Message-ID: <20250606100558.GA3591871@coredump.intra.peff.net>
-References: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
- <pull.1931.v2.git.1749202164.gitgitgadget@gmail.com>
- <80de7491d24fb51c6b2c3b2fc1728db30e2477f7.1749202164.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JE9YtMyW"
+Received: by mail-io1-f51.google.com with SMTP id ca18e2360f4ac-8731c3473c3so57639139f.1
+        for <git@vger.kernel.org>; Fri, 06 Jun 2025 04:20:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749208842; x=1749813642; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=HFt1zRDpdnNRmuaGiTdOt4N31Ye+AqZu0sVW8sgQfLw=;
+        b=JE9YtMyWevIPgDZGkdlaxF/cu18xH5jmLdfC19sezgG3s+1t3rbUUnyF//DOKmohuz
+         AgsRvYQMUQCX1MFz9FOG50Tl+y1Rm40j9IpGcUkCV7CV7007kst/LiGy/yWHRZ2WBKJ9
+         wQXmPhZwQTSu5ds5FhnHNiGalWssgQd94bzp4au1AynYZ9rg2Domxk+Ot9CKCnvtE5Oo
+         r42FMN43O4VztdDSpGfKFSig0yZCgH8AmfQhXNpzD5yFPgiNNKhGAvYSgWVEm7eRznAM
+         j8OnUVxbRGIzoFLfL0BItew8jcqCc3TuXkNugYtEtZBKfizzankzL0XIoxGDdOawh8PG
+         /5tQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749208842; x=1749813642;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=HFt1zRDpdnNRmuaGiTdOt4N31Ye+AqZu0sVW8sgQfLw=;
+        b=DRVhGq1YrDBQJtgZ2a32bXkgCgGGjd1SECYtJ3nggpMJk96zWMX05iG4K+6ITCUE+6
+         ovrAbz7busSvxdmYp9SbHpbEwSYn72yCHQlqMwkDWOYbQhG4LZlntot4fHLx5IG6b52N
+         quzWMejQ2iKnjWETYFJ1aC9d3GjPZ5PEv01z6+VM3Kq6J4wLzrGOjHOJFPN0ffzrWK+S
+         wFyNRP/FyLjmnpM9C84PsgKwXBAo75mCAq/JLK4Khh5YTH1TGL2h3nDLnUQFkoyECwdT
+         X85D6U1E3v8K8xFmSSE+hqp8g5csdSZ+w/xQPQalEUzV/khmaFvxFn6bBV+no701PbU+
+         2jzg==
+X-Gm-Message-State: AOJu0YyDpVisg+1wMG6bjf3xH169izTiLuF+RHRTPksDnpcSYOgifgrD
+	wfnToQaLa/m9SRGO5SBYi/FPIlmFSKPPutXORc4RPQDBzpeohPLtdVXj2Cv/IzXNzIgyEbeByr2
+	l//e0L7ASfR8rgnhKROz5ViK2fW/ieAiwFniW
+X-Gm-Gg: ASbGncu7zgBWz9gdQO7XBr/KRT2fY+DOw8yGLdeCmrN1MGmoJbOAJIpZ14meDM+OVfw
+	b4d4y6CMrIAuFpYY13x4DYGH6GsjMW19QV0UKitCFIvitv6Fvwf8b8svkmHbSTJziweYRvxC376
+	p2ZVJxLVw0NxcoyKlwt+kJffNLywpWlZo=
+X-Google-Smtp-Source: AGHT+IGaVMs3EuXnS4/YMAitu7/Nv9GsM2tBXpalrEULijHhgMkE0T6MASRKZZqTcgDkhiILnHUhKCkffKZlxiji2lc=
+X-Received: by 2002:a05:6e02:18ce:b0:3dd:88da:e804 with SMTP id
+ e9e14a558f8ab-3ddce4533a8mr37058005ab.18.1749208841717; Fri, 06 Jun 2025
+ 04:20:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <80de7491d24fb51c6b2c3b2fc1728db30e2477f7.1749202164.git.gitgitgadget@gmail.com>
+From: Ondra Medek <xmedeko@gmail.com>
+Date: Fri, 6 Jun 2025 13:20:30 +0200
+X-Gm-Features: AX0GCFtHz-a7UIAf7oLNuCfXVb-hEPXS0Fpxfbafk3YVubqXHObywsFL9fI4Tr0
+Message-ID: <CAJsoDaFKRz8om1d4YPtaqdyuBuPAiC-xHDuvmYW=VQWEzzXAtg@mail.gmail.com>
+Subject: Git push tries to delete branch twice and fails
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jun 06, 2025 at 09:29:24AM +0000, Johannes Schindelin via GitGitGadget wrote:
+I have a git 2.49.0 (Windows) and one local working tree is kind of
+broken, when I try:
 
-> Nearly identical compile errors afflicted recently-updated Debian
-> setups, which have been addressed by `jk/curl-easy-setopt-typefix`.
-> 
-> However, on macOS Git is built with different build options, which
-> uncovered more instances of `int` values that need to be cast to
-> constants, which were not covered by 6f11c42e8edc (curl: fix integer
-> constant typechecks with curl_easy_setopt(), 2025-06-04). Let's
-> explicitly convert even those remaining `int` constants in
-> `curl_easy_setopt()` calls to `long` parameters.
+$ git push origin branch1
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0 (from 0)
+To file:///c:/...
+ * [new branch]            branch1 -> branch1
+Everything up-to-date
 
-What different build options? The extra fixes are in code that is
-compiled on all platforms. E.g.:
+$ git push origin :branch1
+To file:///c:/...
+ - [deleted]               branch1
+error: unable to delete 'branch1': remote ref does not exist
+error: failed to push some refs to 'file:///c:/...'
 
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -970,8 +970,8 @@ retry:
->  
->  	slot = get_active_slot();
->  
-> -	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0);
-> -	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
-> +	curl_easy_setopt(slot->curl, CURLOPT_NOBODY, 0L);
-> +	curl_easy_setopt(slot->curl, CURLOPT_POST, 1L);
->  	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
->  	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
+So, the same `git push` command first deletes the branch and then
+fails because it does not exist. It worked well until something
+happened and since that time it's broken. I've tried `git gc
+--aggressive --prune`, but it didn't help.
 
-So I think the root cause of the difference remains a mystery.
+When I do `git clone` of the same repository to another local working
+tree, then it's OK - the branch is deleted without the error.
 
-Curiously, if I build libcurl from source and link against it on my
-Debian system, I get all of the errors (including the ones you're fixing
-here). But with the exact same compile options (modulo pointing
-CURL_CONFIG at the right spot), building against the Debian-packaged
-libcurl is OK. Weird.
+Is this a Git bug? Is it possible to fix the local working tree except
+for a new git clone?
 
-> In addition to looking at the compile errors of the `osx-gcc` job, I
-> verified that there are no other instances of the same issue that need
-> to be handled in this manner (and that might not be caught by our CI
-> builds because of yet other build options that might skip those code
-> parts), I ran the following command and inspected all 23 results
-> manually to ensure that the fix is now actually complete:
-> 
->   git grep -n curl_easy_setopt |
->   grep -ve ',.*, *[A-Za-z_"&]' \
->     -e ',.*, *[-0-9]*L)' \
->     -e ',.*,.* (long)'
+Note: I am developing an app which uses (creates and deletes) custom
+refs often. So, I've hit this bug when trying to delete a custom ref.
+I have cleared all custom refs and tried that with Git branches.
 
-I don't think that's sufficient for a full audit, because the first
-"grep -v" regex is removing variable names and symbolic constants, which
-might also need to be cast to long (i.e., my patches 2 and 3).
-
-But as your patch fixes the exact set that I also needed when building
-against my custom-built libcurl, I'm content to say we have spent enough
-time digging. If there is some platform or makefile knob combination
-that triggers one we missed, then curl's type-checker will catch it and
-we can fix it then.
-
--Peff
+Cheers
+Andy
