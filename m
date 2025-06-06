@@ -1,102 +1,91 @@
-Received: from bg1.exmail.qq.com (bg1.exmail.qq.com [114.132.67.179])
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9264E10E0
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 05:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.132.67.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22871E1A3B
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 05:57:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749189024; cv=none; b=REWk/8mdCDPtP3OHDvbVWuWAM522xisEsry4CftVFzMQ5JGRc9oxl40glKTeKtZM3yTZ9ogdeEI0/jVSBt1/+qZKzCMW3yicWGMp8hBp3QyS3PQcLpwhAZIbWuTtEBksGOt6xsfyERvak5xBrGNcFtuoqqVR9lYeZPAGrhhTF7I=
+	t=1749189435; cv=none; b=KGGT1HMnYqiCjnujqwau1BaGuDayWYkvndzRfUNr59rkvuXooWr6ywx5QtBHtHVc7i6Hg6fCW8GyKYXg8gPlJ/WunAk9UPRHtq5jGz66AWPfzig+FHhZ1hDb0kkJYWA9Ah+bkYjKS4TqsZcuLMIaGrOqb5uuKZYrRVNO8IllNJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749189024; c=relaxed/simple;
-	bh=OnYzGyGgoh2neJFWCNoTsbQrkrRS7PwcHsOiqi4T+3w=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=RmDP1b4J/0adHdbRuqo1XuRgRXgc3vTIbFb5FFF1xdRIXL/Xy6XUAAgodBZeMIsA5pZgtaqFZv9C+cC+GRcGzaM6Hc0y92wsUhynnRjDVDe3ocK0KKMoODQD8rhs3/gMb2F/5/tQCbIHrih0aRp4WAmy3TSI1/4UQVD85JMXZCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=114.132.67.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: zesmtpgz9t1749188974tb63ca647
-X-QQ-Originating-IP: Fbjs77KZcH7FnQekzYrTw+YpcZK6QEySWHMzJK2/XTg=
-Received: from smtpclient.apple ( [36.152.24.182])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 06 Jun 2025 13:49:33 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 12450379250851108544
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1749189435; c=relaxed/simple;
+	bh=iKwxM1w6bGQaF2K13pId2m/Y/M4PaqzOlNW4M/yTwL0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=I3wJJ7ukvJ1ARpzXUc4pa+DRd6c4fVtXFIEjt+k12Y6dAL8uabn13I6wP9pxY1nWbm/kYZCHzkvfqjCPWp+RA8GVGL7CY14FUPVX4mVfLrwh+FGsEw7XH9GJb4zcPDPDuLONlSmoOx7Xd6wkuROEJjsdFkKD4Y1s3bqGUGntp9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.100] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4bD9Z71yrczRpLG;
+	Fri,  6 Jun 2025 07:57:02 +0200 (CEST)
+Message-ID: <4f390ad8-6c30-493c-952e-d1f079a7f6ac@kdbg.org>
+Date: Fri, 6 Jun 2025 07:57:02 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v6] pack-bitmap: remove checks before bitmap_free
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <xmqqplfh64lc.fsf@gitster.g>
-Date: Fri, 6 Jun 2025 13:49:23 +0800
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- Patrick Steinhardt <ps@pks.im>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Taylor Blau <me@ttaylorr.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <E2C28248-2486-4E2A-846E-1C6233E7CE6A@smail.nju.edu.cn>
-References: <pull.1977.v5.git.git.1749104667618.gitgitgadget@gmail.com>
- <pull.1977.v6.git.git.1749138820241.gitgitgadget@gmail.com>
- <xmqqplfh64lc.fsf@gitster.g>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: [GIT PULL] git-gui: fix for: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
 To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: NDtUtlvFer7vzFJn6YqnEUEfC6qt7tBD74FTMz4g5m08V7MEH1oH8LhB
-	pa3ZVVkr+XT/tGPBHubOjqTqm46lXLg5RdfOMqwNryjtEXK9NX7kb7Ozjubk4kqzMYOepuq
-	kstoabZG4iXLS42LuCepso6SkHxcrZbYZ0v+IRlR+BlC2uqB4BMngeGSgi29YhRA92CA/RZ
-	FL9lF8yiU0zeof04iuS661df84WHd3LJcGehCY4vYmoRFDykNxfGEICvQll3w4fnN3YdnjM
-	xkG3keZZ0y8JdGw3VT/yKQHDKURMkUteKwbzRCxwILTmpycfJV4CdDoPl5l1u7IpHO1PXLd
-	YV46E4z+CZr1V6BICJj938EKicTkaP/iRuv0PBAkk+/e+o8A4F0Oy+P4kFcf4LvGh81cfZc
-	N/mDLg/Pou7fwdSA+cJpkouiLtE+up4qdmaNYLX833iXf1Bztd3KpoowUe7G+jzI8y20eo6
-	RvK3Pn+BEr02wEikFoqQh1ehLXEKvHpFZlAbOkgfmrGZk+If+Np0U+AWY5fbx9HZZK3nAdD
-	IMEbeCDHV1fwwZ4KCXlmWoNAK1aPwosh6TzCP1lJPp7SeE6JzONVV3cgjewmNP6HS1VjSyT
-	nAyIyHhn7LM9a1boLfnDBoWPwGQrV093z2tLzRRhWA2m4KyCmf9vw65ITCw7fTpbRQ17Olw
-	eaboRbHPkCqCcXdQW5D6d3VgqfZe8FM/+TAJ6v3i8FiWTtjab8teOXKNu1elaW0XFtP44qR
-	mSJMmqMQhkv3VDEIHExQYd3pM9O1KG4siz7Oe0HmdXhxvbXisex+aSBl+hqf2Qn3rpeNMCV
-	Sr70Tz7ymNPJVxV2PKjfQrdyzsQKQHoACDxU/W+KwjkQep0efXXA8oTWhtL5S4rFDZTjG0D
-	TXBabjMC9KKeKW47NO0ZTcYR/C7ovisk87TP3FoGyUgQDl0TL2QQvF25atsiGhbj70vEqmK
-	kndPX5Zff8NPxeHn0WwoqRyro1xMtjL4LTOgyI0DjRIFm+cVCoXsu2WgS
-X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
-X-QQ-RECHKSPAM: 0
+Cc: rsbecker@nexbridge.com, 'Patrick Steinhardt' <ps@pks.im>,
+ git@vger.kernel.org, 'Todd Zullinger' <tmz@pobox.com>
+References: <xmqqsekgn4gk.fsf@gitster.g>
+ <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+ <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
+ <aEBPdFXpIca7lMls@teonanacatl.net> <xmqqjz5rcz90.fsf@gitster.g>
+ <44fe8627-5680-443d-bf02-a6e85afd46b4@kdbg.org>
+ <010b01dbd5f1$3c26ec20$b474c460$@nexbridge.com> <aEFb0Sjj0Xuu-t7l@pks.im>
+ <014201dbd658$4da75680$e8f60380$@nexbridge.com>
+ <f2ed8920-347d-45d3-a0bb-df94ece0d9df@kdbg.org> <xmqqikl97u1l.fsf@gitster.g>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <xmqqikl97u1l.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-2025=E5=B9=B46=E6=9C=886=E6=97=A5 09:28=EF=BC=8CJunio C Hamano =
-<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->=20
->> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->>=20
->> In pack-bitmap.c:find_boundary_objects(), the roots_bitmap is only =
-freed
->> if cascade_pseudo_merges_1() fails. Since cascade_pseudo_merges_1() =
-only
->> use roots_bitmap as a mutable reference but not takes roots_bitmap's
->> ownership.
->=20
-> Sorry but I cannot parse the last sentence above.  I would have
-> expected that "Since/Because X" to be followed by comma and a
-> sentence that describes the consequence of X.  Also "but not takes"
-> -> "but does not take", probably.
+The following changes since commit 61f8788fe9d362efb112f69a58cf0510a7e49ee0:
 
+  Merge branch 'pks-meson-support' of github.com:pks-t/git-gui (2025-05-29 10:01:14 +0200)
 
-You are right, I should use a grammar checker (chatgpt) on my log =
-message.
-How about
-=E2=80=9C
-Since cascade_pseudo_merges_1() only
-use roots_bitmap as a mutable reference but not takes roots_bitmap's
-ownership. Once cascade_pseudo_merges_1() succeeds, roots_bitmap leaks.
-=E2=80=9D
-->
-=E2=80=9C
-However, cascade_pseudo_merges_1() uses roots_bitmap as a=20
-mutable reference without taking ownership of it. As a result, if=20
-cascade_pseudo_merges_1() succeeds, roots_bitmap is leaked.
-=E2=80=9D=
+are available in the Git repository at:
+
+  https://github.com/j6t/git-gui.git master
+
+for you to fetch changes up to 765f1db2b5a890c0fa01f8976f197a8483357afe:
+
+  git-gui: don't delete source files when auto_mkindex fails (2025-06-06 07:43:37 +0200)
+
+----------------------------------------------------------------
+commit 765f1db2b5a890c0fa01f8976f197a8483357afe
+Author: Johannes Sixt <j6t@kdbg.org>
+Date:   Fri Jun 6 07:41:42 2025 +0200
+
+    git-gui: don't delete source files when auto_mkindex fails
+    
+    Commit 2cc5b0facfa4 (git-gui: extract script to generate "tclIndex",
+    2025-03-11) converted commands in a Makefile rule to a shell script.
+    In this process, the Makefile variable $@ had to be replaced by the
+    file name that it represents, 'lib/tclIndex'. However, the occurrence
+    in `rm -f $@` was missed. In a shell script, $@ expands to all
+    command line arguments, which happen to be the source files lib/*.tcl
+    in this case. Needless to say that we do not want to remove source
+    files during a build. Replace $@ by the intended 'lib/tclIndex'.
+    
+    Reported-by: Randall S. Becker <rsbecker@nexbridge.com>
+    Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+
+diff --git a/generate-tclindex.sh b/generate-tclindex.sh
+index 36e3a0bd90ee..0b031d8339c4 100755
+--- a/generate-tclindex.sh
++++ b/generate-tclindex.sh
+@@ -23,7 +23,7 @@ then
+ 	: ok
+ else
+ 	 echo >&2 "    * $TCL_PATH failed; using unoptimized loading"
+-	 rm -f $@
++	 rm -f lib/tclIndex
+ 	 echo '# Autogenerated by git-gui Makefile' >lib/tclIndex
+ 	 echo >>lib/tclIndex
+ 	 echo "class.tcl" >>lib/tclIndex
+
