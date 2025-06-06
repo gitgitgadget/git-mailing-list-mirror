@@ -1,196 +1,93 @@
-Received: from bg5.exmail.qq.com (bg5.exmail.qq.com [43.155.80.173])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3615C42AA9
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 12:23:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=43.155.80.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78DEB2882A9
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 12:28:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749212630; cv=none; b=D7E73V0puoXnhTQOWaR2I2xtmyBOP60C2Rf/J4nWqL17WmZqSdFXmZWhoihBJPQcIOgToGJwpgUysOQfoTCkoAleBXPms5tyrn63dWICQ6oE5TKffbyLruwGV4l30hmnJyNAELAm99W1fJVI0LG/u3LLxiLtmV8/hUgTC9uOjqI=
+	t=1749212934; cv=none; b=UhEJVHAbGBFo/5Cq2K+atMFqnegarEcOEsjq21wuGgosR91jvwHnqJ3fE87HQn9wBNzaT9m1ruWGOXuyLdhkiBI2Xa4n1I3EMvZ5dRCzOBjALEXrM9ABJFNxwL8RLHuICd27xY9GAn+C8v4Tbgdso7+RZss4Rm7xksfWyoWWNAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749212630; c=relaxed/simple;
-	bh=8gKf7WkmT4PuU8L7hIFA+kqRGWyzHbTQhnBb1DfvsYE=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ncpdyLLavTBYum933wib0F1H8U125rO56ddC/J24yVFVaF4hiZMY8iIPdicaqo+VmkyG7cdhIlqSi23KDIzY6ADrm9CH5TDFWmO3rI1ro7Y6vUh+ymqbNYwtBjiPS7gaLWRIaLUcBOFFN5XnQ6nCo/vxV/M8FSw/ZjaPwVScwN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=43.155.80.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: esmtpgz11t1749212579tb52bc166
-X-QQ-Originating-IP: SvKxnsh1F5SzKkmRymBqr4rxoF6GpeWMnbT5Vn2ZYNo=
-Received: from smtpclient.apple ( [202.119.45.158])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 06 Jun 2025 20:22:56 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 5232200214794432596
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1749212934; c=relaxed/simple;
+	bh=SzSAQNEDFOMtVOnFscadyctGZPSuAlT0bS/6stbSeik=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VyOBTFTmMRAFj8tgV4Q5Gkky9Y1fHlRDM3+55Ge7sCPPjaxPASQ3c5SwE7fqxEV/EWXSOigSZ0SOYx8/2ugC9dajBVzkAzB4lYsH0C0iFOVJO3NWa4rVZGNqnPGWBSEZwrei3JpK9jDOiKCVqNtxVRN2Fkmbq667ZFvpUilVBJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=oR6md+07; arc=none smtp.client-ip=95.215.58.188
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="oR6md+07"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1749212928;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=JwsPx19+ut0GWUs9szc3BnwggAhmc/LYOI6GaC6BqwI=;
+	b=oR6md+07JB5NPFdSMhoPiIuqIbgZ6xbyfzg0XHZFWphcK252YkkAd/SnKespRqQJABybDJ
+	GxF17jNfGJ7rVRGxpj1jgfmOPmuXWgSE+7/Mf8dPA+xrCWZlyexjLO3p1Q5RH8LnosDAat
+	T+tmdo4rR5isEkDmV9HZ8cT0/b8Gick=
+From: Toon Claes <toon@iotcl.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Martin von Zweigbergk
+ <martinvonz@google.com>
+Cc: Nico Williams <nico@cryptonector.com>, "D. Ben Knoble"
+ <ben.knoble@gmail.com>, Remo Senekowitsch <remo@buenzli.dev>, Theodore
+ Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, Git Mailing List
+ <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, Scott Chacon
+ <scott@gitbutler.com>, "philipmetzger@bluewin.ch"
+ <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+In-Reply-To: <aCJwgWaNoBVjvImJ@tapette.crustytoothpaste.net>
+References: <Z/amMj/eg0RbXdkS@ubby>
+ <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+ <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
+ <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+ <aAgWytQNqtLzg2TU@ubby>
+ <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
+ <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
+ <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com>
+ <aCJi+4q6DZhnfdy+@ubby>
+ <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
+ <aCJwgWaNoBVjvImJ@tapette.crustytoothpaste.net>
+Date: Fri, 06 Jun 2025 14:28:31 +0200
+Message-ID: <87tt4t12c0.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH] repo_logmsg_reencode: fix memory leak when use
- repo_logmsg_reencode()
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <20250605072308.GA2066712@coredump.intra.peff.net>
-Date: Fri, 6 Jun 2025 20:22:46 +0800
-Cc: Patrick Steinhardt <ps@pks.im>,
- Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1487EB97-8D97-4535-ACF2-96AE8C3F5DB2@smail.nju.edu.cn>
-References: <pull.1988.git.git.1749006607791.gitgitgadget@gmail.com>
- <aD_8NxMi6Dk7CmSl@pks.im> <20250605072308.GA2066712@coredump.intra.peff.net>
-To: Jeff King <peff@peff.net>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: M4K5nIxZYv59g9LBb8vPNPxtgoZ0bc2x4NJI3LyZVy97I6Os4qyiUP/W
-	xLUTezRzf/JY/U3JnY+sUjq7OF3SsxonvQCFhulx4QnkrPk5L8WceLiY1ImUIunFG94/ylx
-	hOM1fx+c3qk5NZOWEXuKLYJaU+gDS3CjNdVshE89LW2q+gno+hfsfWjn4jZM2DnGmiGHLhb
-	xTJrbqWOhaCQmvmGj+GyMESqWA8vLPv40hrHK2lgeQDkB7HzpJVWFMQmG811tt8FeCKk6D6
-	8bF90ISGN7LRtiuGMmy4KBzUV5WgohdAGscs7t8oG0/LCR6eHURXzV+rNB6xZ5ysC+bdMpV
-	ntBRZ6ucdVZMHQdnRrBM5q1gDBV5NBg5z0vnRvEAwZ19G3eA5nkJwRZUSoHSZkwuwIhnZ8R
-	A5erT3ZJsw0okQ+F45WMGjdJ8Tv6TIk8l2IswlSUOCv4znTv7bnfFkt3gyWGpoJVYO12h9n
-	6E7hrPAW8nWxSymgeOmd9caOB1UjNNA6R+1Ogh4QrAsWFMlcQGXntGOdLrTcHlzrWskEPr3
-	dODOA+V3EJ8e5emCNtoQr39Ig6J7hI05/Axd8QVhY6U/cM3YzwF+0wn46AF77mHnZDdQmn1
-	uNJzfX4JxDsHL6qmC0JVnVg81K1kUPUqpjRMMlu1GGffgONJEABCIwmxD8+njYqnsIRgJcC
-	vnJeWmYLYJoyJmU5rlz8HPs20nVGW7KZsLXsQ3KRmjWcPzhUD3cwVpA7NZDtuaQJfGvxUc1
-	R1ANi4vkY8iI4pMyB72aPnCXC4+VeohomAwK0vNuM9PDLA1Y0UO6ZpkBqo3Aau7TdfmU140
-	SbDj5LmoyYNcwDx6pHxZPHFBOzZ73EQjjxnN63HCN5LwXEnION2SsllL8V6SK2qKsS1+6te
-	rXH8yUyYunYO5Hw7a5RutIofLnPIbK/x/A3fEyoBu8RmoGVEpV/MI0BTzrAwkEHC0o5Prim
-	ejE4BxKjU3AJivo7YcMQyY+TWEg8l+eiVb8M4gmdC8BoyYtHm/cLgVizoJs2OHhtWzP3QfN
-	W15LBJ5w==
-X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-2025=E5=B9=B46=E6=9C=885=E6=97=A5 15:23=EF=BC=8CJeff King =
-<peff@peff.net> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Wed, Jun 04, 2025 at 09:56:39AM +0200, Patrick Steinhardt wrote:
->=20
->> On Wed, Jun 04, 2025 at 03:10:07AM +0000, Lidong Yan via GitGitGadget =
-wrote:
->>> diff --git a/builtin/replay.c b/builtin/replay.c
->>> index 225cef08807..6172c8aacc9 100644
->>> --- a/builtin/replay.c
->>> +++ b/builtin/replay.c
->>> @@ -84,6 +84,7 @@ static struct commit *create_commit(struct =
-repository *repo,
->>> obj =3D parse_object(repo, &ret);
->>>=20
->>> out:
->>> + repo_unuse_commit_buffer(the_repository, based_on, message);
->>> free_commit_extra_headers(extra);
->>> free_commit_list(parents);
->>> strbuf_release(&msg);
->>=20
->> Makes sense. This one _looks_ like a leak that I'd expect to hit in =
-our
->> test suite as it's not part of an error path.
->=20
-> We'll usually never flag a leak for commit buffers, because they are
-> stored in (and owned by) a commit-slab. So the memory is not leaked
-> exactly, but we may hold on to it longer than we need to. This mostly
-> only becomes obvious when we do it for every commit in a code path =
-that
-> touches a lot of commits (e.g., "git log" or something).
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I understand. The static analysis tool which I used to test git find
-repo_logmsg_reencode() might allocates memory through xstrdup()
-or reencode_string(), then it report a leak. And I find that xstrdup() =
-is
-actually dead code. So only reencode_string() may cause leaks.=20
- =20
-> The exception is if we actually had re-encode, which requires a =
-mismatch
-> between the commit and output encodings (which both default to UTF-8).
-> And then it really is a leak.
->=20
+> On 2025-05-12 at 21:43:46, Martin von Zweigbergk wrote:
+>> Random bytes has worked well for jj.
+>
+> I would like to suggest that we use a deterministic approach.  People
+> rely on Git commits being deterministic, including in my stash
+> import/export series[0].  In addition, it's important to avoid any
+> allegations of side channels or leaking information in commits, which
+> would be a concern in many environments and which a deterministic
+> approach would avoid[1].
+>
+> I'd suggest a simple SHA-256 hash of the original commit data (for both
+> SHA-1 and SHA-256 commits, but one that would change to a new hash if we
+> added one) or an HMAC-SHA-256 with a fixed and documented key.
 
-Agreed.
+I was thinking: you cannot guarantee determinism, because the change-ID
+would remain stable, even when if the underlaying data on which it was
+generated changes. But on second thought, _some_ determinisn *can* be
+useful, for example when different tools try to generate a change-ID for
+the same source commit.
 
-> If we add a hack like this:
->=20
-> diff --git a/utf8.c b/utf8.c
-> index 35a0251939..d7b7d372c5 100644
-> --- a/utf8.c
-> +++ b/utf8.c
-> @@ -3,6 +3,7 @@
-> #include "git-compat-util.h"
-> #include "strbuf.h"
-> #include "utf8.h"
-> +#include "parse.h"
->=20
-> /* This code is originally from https://www.cl.cam.ac.uk/~mgk25/ucs/ =
-*/
->=20
-> @@ -442,6 +443,12 @@ int is_encoding_utf8(const char *name)
-> int same_encoding(const char *src, const char *dst)
-> {
-> static const char utf8[] =3D "UTF-8";
-> + static int always_reencode =3D -1;
-> +
-> + if (always_reencode < 0)
-> + always_reencode =3D git_env_bool("GIT_TEST_ALWAYS_REENCODE", 0);
-> + if (always_reencode)
-> + return 0;
->=20
-> if (!src)
-> src =3D utf8;
->=20
-> then running:
->=20
->  GIT_TEST_ALWAYS_REENCODE=3D1 make SANITIZE=3Dleak test
->=20
-> turns up this leak via t3650-replay-basics.sh (as well as in t6429).
->=20
-> It's probably a bit too specialized to carry around as a permanent =
-test
-> mode, though. I thought it might find other cases, but it doesn't. The
-> other one in this patch only triggers when the commit message has no
-> header separator, which is not very likely.
->=20
->>> - if (!body)
->>> + if (!body) {
->>> + repo_unuse_commit_buffer(the_repository, commit, commit_buffer);
->>> return;
->>> + }
->>>=20
->>> trailer_iterator_init(&iter, body);
->>> while (trailer_iterator_advance(&iter)) {
->>=20
->> Should this one maybe be converted into a `goto out` so that we can
->> release resources in a single location, only? Something like the =
-below
->> patch.
->=20
-> Yeah, I think that is nicer, though...
->=20
->> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
->> index 30075b67be8..dd08bc40161 100644
->> --- a/builtin/shortlog.c
->> +++ b/builtin/shortlog.c
->> @@ -177,7 +177,7 @@ static void insert_records_from_trailers(struct =
-shortlog *log,
->> struct strbuf ident =3D STRBUF_INIT;
->>=20
->> if (!log->trailers.nr)
->> - return;
->> + goto out;
->=20
-> If you convert this hunk, then we'd look at the uninitialized
-> commit_buffer variable after we jump to the out label. I think the v2
-> just posted is OK, though (it touches only the one conditional that
-> needs the goto).
->=20
-> -Peff
+> I would also recommend a config option to avoid creating these IDs for
+> those who don't want them included for privacy reasons.  I expect to set
+> such an option, for instance.
 
-I actually learn from your hack that GIT_TEST_ is something like =
-GIT_TRACE,
-both aids to test and debug.
+Fair enough.
 
-Thanks,
-Lidong
-
+-- 
+Cheers,
+Toon
