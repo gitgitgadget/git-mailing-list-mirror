@@ -1,121 +1,111 @@
-Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466F027F732
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 12:31:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82BB3234
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 13:04:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749213120; cv=none; b=QQCHUibiH+yy+klqy8AIo69TqX4YoQmqc/kMXmtdIMAqnTFjMBZud7aT4rtzdoafY476rLC4aW90uS9UiGhsES8zTuNgwSpuIal9f465+y0xL9y3kOqcjimqu4j4vLCAH+kqPPBA/G5GHhrWZ0qF3GVtxzQ0p9CzMYmBhp/Mx+s=
+	t=1749215094; cv=none; b=g3/pJBMWDypSVGoGI/PY8yZM52UJrllDVSC6auosRiuvVVBra/5wbJCZoSUnO/9YZ7FGDxrIcTxJ8x5CTpioS8nWcQSwsiCfonU7eivem8c7Ypusbt5a4wyntZr7itZDuYGH7GvcF1ABqYiPyzgIwpl5TArqVGcRiwdnpEMauBM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749213120; c=relaxed/simple;
-	bh=ltZQVJGFC/+qEkSURmtDon0Tfc04JwIjL0LLVAIBN0o=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ViWFS+KDR4OYqIKM+S5iASLMfa1GMf5lhkvosULaOUNTZ0O8usl0i23eI0UvhvwZahUGlsxXLA3YiKNOQat1wtgXlmmLh1FQBftYuTEcbaLs2weN9ubMyIiDYkVVhwZhd4b2b+6OvGfEsdZGXlDsb39rQ55/MluPnNUmVivjzDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AQB4mtPk; arc=none smtp.client-ip=209.85.167.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749215094; c=relaxed/simple;
+	bh=G3dthQgPQj2EfdTHha+B72xqSgUnQ/8jaQSmmG9KFYY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q++o58pzJplZQsF6C8VF+ThzhQObmFlLqsbMoN80NASed+8l0ti5ETJfNlT3O/MSOPV0fbLtdeVF9LNfoEyJkaQ+L37NZXlxMsioEwNNFceu7avcntWWQkOmJ6PLriUIaIsidVYABtmSVAlBcfCq1KHm8Qls2eoA8iISlnec6qU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=t7wAIs4B; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AQB4mtPk"
-Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-5535e35b059so1992640e87.1
-        for <git@vger.kernel.org>; Fri, 06 Jun 2025 05:31:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749213117; x=1749817917; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=KnFoUOKmEmEG8jfh9JjNcj/eFo/LkQoP/eNWrex+sks=;
-        b=AQB4mtPkYaIHPaKlWdlcUJxH6C5mCEOWYh1MVNMY1466iCtXHNQfSmcm+CO9s9soui
-         Kpxwgj5tIF7kQD0Jttt8JN0rPEewZduRJkXyKdJEBzJwWoqhbliDttLSX/2ZddkqQ1zC
-         KzkT4d6cWj26ONIb+SS2QafPmcA2CbynGdb31FwLm5Rem8EjZoHrYHsIoV12tDQmqH+B
-         GkvlaWv3B1BNq5QNZr19Il6QFU4wL/uiJhCa6h2vSsN7UEDPFLsk6TiC9n0qcCcxtf0Q
-         /Mw2PgZRcHVIhrpzXvGxFJ22DEqtGOMpzzfJSz5vsEgdJ6qOy/QXUrY6IiiYzGzPKFph
-         ercg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749213117; x=1749817917;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KnFoUOKmEmEG8jfh9JjNcj/eFo/LkQoP/eNWrex+sks=;
-        b=ehitBTr6GRUPTowaM2Ivm3i/eFm8TWFCmIirs8AoGj/MJyluVdn1Og0jUN5q6TZfME
-         Vb1a+DYdERYePcZ5PCueiOIFWZFVtmQMCBLYy1sqOrAAzQLD1Rv6F/262m7aYEEf/1HX
-         E7yulUWvcnl6ZXcJn3dSJgSLyaDgGwiIawJeOw33y8BzjNldwWGRPL50cm5Jm9GC0caU
-         TLOl6OePCuTA32s52UggahfeFyOh1tQRqMpSGeWG41gdxk9db06tHZOMDw8cjXq4WY3P
-         Q0jB1mBHvQcoG6RKTuiPw1qe1g8qAeHHltZ6dzMijtmaj5vEi3K3I20jSKJtsWO2dS4K
-         kCeQ==
-X-Gm-Message-State: AOJu0YyXMydxw6ChNV2OZ+RKiLC0saDS3jdqkn2eCaMFtVvp3HRP9MP4
-	HfqHJYKHZhSb+8rh1ofV/L8n+zyMCAaj37CecQw8Qaem/rgrFsDDL9LTV0GJbw==
-X-Gm-Gg: ASbGncu7nJplzTisLGTeb8PsUSdaSgjz3u9OKlGgu8MA7p/kETc7JHh9vIu0aTwcH9y
-	AZoB3mbUvXJA6dJMQhIZacYa71XArc8TgLc6+/WYJKJ7aFMmstn7EWItlQ70H9rEZ6aKFbREGLV
-	ezjXLkgTZsv1V6Yl4VG7DKabgRso07fdB/bveDOU8INst/vUJZqkroKBb2PT3ryqN0uMyY88XL/
-	3rf9MjnftZBKJEmK6Rt606D/COfR39JhMz031TiopK8fGtI8/6/Fs0keNGlcbUB2pJCZQI8J5Ex
-	wt6bWSW8kGdBOjFW9njNpvqyFsp83IqudK4Yy8pQQsvmVNemi+KHLwQ1G/Ib4/+q7KM/sgTRRjz
-	BFBAGEqmHPgI=
-X-Google-Smtp-Source: AGHT+IFiCXhT0hNmxKKU51wnkXZg8FKd3XK79ZyjU+JDhhKJJTMp3lPd4eKh5hkiQESeWW0oJp7M6Q==
-X-Received: by 2002:a05:6512:2255:b0:553:51a2:440a with SMTP id 2adb3069b0e04-55366c38a41mr785527e87.23.1749213116454;
-        Fri, 06 Jun 2025 05:31:56 -0700 (PDT)
-Received: from kalkyl (h-98-128-167-109.NA.cust.bahnhof.se. [98.128.167.109])
-        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553676d758asm170340e87.55.2025.06.06.05.31.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 06 Jun 2025 05:31:55 -0700 (PDT)
-From: =?UTF-8?q?Martin=20=C3=85gren?= <martin.agren@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] diff-generate-patch.adoc: drop spurious backticks
-Date: Fri,  6 Jun 2025 14:31:36 +0200
-Message-ID: <20250606123138.566178-1-martin.agren@gmail.com>
-X-Mailer: git-send-email 2.50.0.rc1.729.gfc6ec28a5d
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="t7wAIs4B"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1749215088;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zFt0JPUsWSg0XKGrzFwqv6l8Wg6NZBJpyxoE7DruqbQ=;
+	b=t7wAIs4BYkj6NYDIzh0JueJ9uaVHOcN4k1ViMUVwp+7wi5KD/cV7jcmewF7HLHYwD8OBeM
+	IQ1Uab2j9Qm2bPSe3qKnZC+12d5almVXW83eGKTyT4LhK6KaJcTXyZM547RMP3WG4aY1pi
+	/r0hiniAdK2BBACRIZ1so77le4BeS4M=
+From: Toon Claes <toon@iotcl.com>
+To: Martin von Zweigbergk <martinvonz@google.com>, Junio C Hamano
+ <gitster@pobox.com>
+Cc: Remo Senekowitsch <remo@buenzli.dev>, "D. Ben Knoble"
+ <ben.knoble@gmail.com>, Nico Williams <nico@cryptonector.com>, Theodore
+ Ts'o <tytso@mit.edu>, Git Mailing List <git@vger.kernel.org>, Edwin Kempin
+ <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
+ "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+In-Reply-To: <CAESOdVCjc1kvQSKnxGfNNSTvFhLRjH_vzwMauP8ZWQ5hhfBnEw@mail.gmail.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby>
+ <20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby>
+ <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
+ <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+ <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
+ <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+ <D9DIPNY431IJ.23DG6UL5CIQJ@buenzli.dev> <xmqq8qnr3jji.fsf@gitster.g>
+ <CAESOdVDG_tfrWMvV6V_Ad76EqXU3Be+EpJDLvtgPcfCRHoJoYQ@mail.gmail.com>
+ <xmqqjz7a27ww.fsf@gitster.g>
+ <CAESOdVCjc1kvQSKnxGfNNSTvFhLRjH_vzwMauP8ZWQ5hhfBnEw@mail.gmail.com>
+Date: Fri, 06 Jun 2025 15:04:36 +0200
+Message-ID: <87plfh10nv.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Commit 0b080a70ab (doc: git-diff: apply format changes to
-diff-generate-patch, 2024-11-18) wrapped the ".." in
+Martin von Zweigbergk <martinvonz@google.com> writes:
 
-  mode <mode>,<mode>..<mode>
+> On Wed, 23 Apr 2025 at 08:51, Junio C Hamano <gitster@pobox.com> wrote:
+>> Would it make sense, though?  Imagine that a contributor in your
+>> project did not refactor code properly and instead made a
+>> copy-and-paste duplicates of a very similar code.  I find a bug in
+>> one of them, without realizing that the old mistake of duplicating
+>> code (instead of making it a shared helper that is called from the
+>> two places) and create a fix for it.  Later somebody else realizes
+>> the same fix is needed for the other copy---attempting to cherry
+>> pick the original fix may find that remaining copy of a buggy code
+>> as the logic to perform a three-way merge across renames that is
+>> sufficiently clever kicks in.  Shouldn't these two commits to fix
+>> the same bug in two places share the same change ID so that it is
+>> clear to the later developers that the latter fix was derived from
+>> the former one?
+>
+> Maybe it depends on how the forge uses the change id. If the forge is
+> Gerrit, it will use the (change id, target branch) to identify a
+> review (IIUC), so then it will require a new change ID because it
+> requires a new review. If it doesn't have that requirement (maybe it's
+> PR-style forge), then it could at least highlight to the reviewer that
+> there was an old version of the change that has already been merged.
 
-in backticks. Note how the line before is quite similar,
+I've been thinking some more about duplicates.
 
-  index <hash>,<hash>..<hash>
+First, I don't think you can enforce uniqueness. Whenever you're working
+with forks you can have commit A from fork I to have the same change-ID
+as commit B in fork II (because either of them might be rebased).
+Enforcing uniqueness on change-IDs would disallow the user to fetch from
+both forks, or they would need to specify how to resolve the change-id
+conflict.
 
-but did not get any backticks. Remove the backticks, since they confuse
-Asciidoctor.
+I like Martin's idea of having forges ensuring uniqueness, but I was
+wondering if we should take it a step furter: a commit should not be
+able to reach another commit with the same change-id. Verifying this on
+the client-side, helps the user detect issues sooner. Only seeing that
+error when pushing to the forge might be annoying.
 
-The exact failure mode changed with c87b2b3a6f (doc: fix asciidoctor
-synopsis processing of triple-dots, 2025-04-12), and arguably to the
-better. But Asciidoctor (2.0.18) still ends up confused by these
-backticks and leaves the manpage rendering as
+Anyhow on the other hand, what about merges? If people merge the 'main'
+branch into their feature branch, it would no longer be possible to
+merge the feature branch into the 'main' branch.
 
-  index <hash>,<hash>..<hash>
-  mode <mode>,<mode>`..__<mode>__
-  {empty}`new file mode <mode>
+But to circle back to Junio's example. It depends on what you want to
+track. You could consider both changes to be different, and thus
+requiring different change-ids, because one didn't fix all of it.
 
-Drop the backticks. This is a no-op with asciidoc (10.2.0).
-
-Signed-off-by: Martin Ågren <martin.agren@gmail.com>
----
- The error mode changes between 2.49.0 and 2.50.0-rc0, causing this to
- stand out in "doc-diff". But this is strictly speaking not a regression
- fix for 2.50.
-
- Documentation/diff-generate-patch.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/diff-generate-patch.adoc b/Documentation/diff-generate-patch.adoc
-index e5c813c96f..7b6cdd1980 100644
---- a/Documentation/diff-generate-patch.adoc
-+++ b/Documentation/diff-generate-patch.adoc
-@@ -138,7 +138,7 @@ or like this (when the `--cc` option is used):
- +
- [synopsis]
- index <hash>,<hash>..<hash>
--mode <mode>,<mode>`..`<mode>
-+mode <mode>,<mode>..<mode>
- new file mode <mode>
- deleted file mode <mode>,<mode>
- +
 -- 
-2.50.0.rc1.729.gfc6ec28a5d
-
+Cheers,
+Toon
