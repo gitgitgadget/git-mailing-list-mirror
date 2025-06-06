@@ -1,43 +1,43 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010015.outbound.protection.outlook.com [52.103.67.15])
+Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011025.outbound.protection.outlook.com [52.103.67.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D634218EB1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08B1219A80
 	for <git@vger.kernel.org>; Fri,  6 Jun 2025 20:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.15
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.25
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749240542; cv=fail; b=sRlcNOwLgjTABQ7ALcZSzn8+xEU2jT8BpytP09KTRT6Jm18ZU2nNNXlrRa7xDz/2N4aisSQfmHin41HU3pq1JuYRCa7NXgM2+4i318Yi8AsumoKQ5aVW0p129Iod3AcBhOFwJG9LDtK5lhFkU8PoOkz1l5cN1+a9rlYPOPd+NpQ=
+	t=1749240544; cv=fail; b=l0hJtz4A/kAurt+ticcnm0/f710D6gDHLxzv1TLLw/U60mYEMAgSPZgeRuSqkVm4hPxi4Oh5qkdlJUP2xeG5sxBp0F8c27zox1gJV5hg/ou+9xgYrk4GMKxzdCP+Exrk2Ihb0mg3K4Lt74hYYIDAcWGim/o72xE9/6/GMzIkQGw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749240542; c=relaxed/simple;
-	bh=HQCdytBI+3fBlFPCKSGxLPDr4j97p/71M+Qq13OOeWo=;
+	s=arc-20240116; t=1749240544; c=relaxed/simple;
+	bh=VVbZpiqCNA3hF7gKuhJfmTd5CSxwnlF9pUpFrkOJzvg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=i0ooYg+rsFQ0KdBu4g89IhJEpfamv9pg4tgclk+blVilTofqh7oG3yJy2algXfLJ9NxTCCs8wkIIAufe+b3vDx2wat8AKB74Cl7MrC40WAUMkuKufgNqEJIrRLdc2FjdiSKvNlZEb3rc7Bjw5iLHcNo8/GfFkh2G04Mi9fi8Ec0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=e6l2NxJU; arc=fail smtp.client-ip=52.103.67.15
+	 Content-Type:MIME-Version; b=GKkk2SiuYpUFI5mdjbwoevcFSHLMn9hagc5H3Pl7grTxgvYXjB/qYechKpQUsg/bemySEgcrkLc7w7Js3TWdo8npbodT0hk3Pm6XGNz5GxLrbZ+4S98m6HIxWGKA2d4sXPWxe8EYY4t2VoUWR+FdoujbUBLBx3Muu3Fw4/z53Fs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=guTv7vsr; arc=fail smtp.client-ip=52.103.67.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="e6l2NxJU"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="guTv7vsr"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OIkaneWx+a1+GcjxmnzbfJn4eO3hehuhWywRTVHQ+iBnyHoxfbLPv6ttbQJdXFR0kGxrFLhbAIt4iO3AfrcYM3hSQdtez+wQn3xpZWCkCgNDNVbR/dQAHPMOfDkUxR2E5ftbA1dDswMDDvi5j1FF9aaIBMKRhUN2ZQBMJgeIphMTmvUC05yJAldd1Ml9ebx6NnCCwWM6J7FvZiDB7gkxWbVUKq1WNH5OVastAByX0wliul9r8GZb2Dr45NEh6HsAY/TUPo0KbeqN9m3Zd0C8UpwCAXKa/gVQRFBP4e3OBCXh1qe8CULZzwwVLjd8wazlDfl7iee5ymh+MLrePz7iMw==
+ b=UxWOdQahncJm96ESXEg0aTF16uqkTjao5LcFynp9CJS8HslZAxtlWaHjVF+TylZdV8MVfmTlkbiR57E3PzWE2OUsuDIzCmmueUmMbFV6H902m7Dl5DmsIrz5hVEM9ISuDP2aGb5o3nQYlgghtPbqYKOPoQtRh6E6Fsb5RTd+9LlbD0P7WlzWLrURuF01PMb4u3zbDBsQ0rmYJnKqxHeVvGkr3JCgY0qjYi6i1Jy/3SD7uEZuJAwysOxf7EfP/I450zNM7XwUkBLYEzirVbjQzxoOlTahOvEdweY1JzdcwsiAI+KnA03Ht6ztPyC/QrkI8lPXs7DlPaTYJKO+6kAsVg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=N/zT5t4Zhh7WlD619xPwF8CpIwM0gccly9j3NVzLhDQ=;
- b=adbSVZsr00ImYDWAM+OnNHx4pRnk4ZAHbwnjRGu5HG+2g6pHAPX2lRfvLDHK0Xqp9sEtVGlOuNWsYjawUKnOuNxtXhUxmLXftPXc1AS9/2JiH7tOdmfTrkjcmPEfxePgLcoe+G+MoL58vm8K/2g4JrZvxzFtQ8PhOwlZ8bC8zAGe9mU2lqsFkxhVPmcEDHTs3ZsuGlYJNOhkDp1v78DM7B7+161ebA6rScQKAoNnVSroWSmC8+crXj+ylsZN8LACujSdFLcVn59vYbwZ+dWdTPYfCFwhwX/CIsLetWjhCebcufPxS36x71+8frKDNtTIb8T6N+quWkjea6YsaI4JqQ==
+ bh=N93WEbD4oVCzNE329mHZR2tfZANvUQ9hk2MQqFI4AWo=;
+ b=HMHjTjICS8Y2omRwOik80E9yDCMN5g4jIkOROOXKoeqz4WdP6p/E9Cx432ogrrgihAqmRo33FiKyQnXweLEO2emEsZcd2TQYfzuz3fgDb6DzdevOwkZB7omSRWzgrhK1ShdRr6Uq6ZsONcKmZJaLDxY6AkjJWQSEP8mAiqT5gMpVXaJ0dp5cHzEZsOxGhKsYA+IXyl/jsV9Ef8E/9ZpKmYcxQthJwKK9SzN8KefENtVbeWK3vP9OLbAGDQo0RjFlCbp7LLJM83e7w962iJMkd4v6Nyfi6juDiFXPRq6klLyO3JS9zfdtkhVoOSVC9tQ2LgaVHfAm3WwySW2zpfGfYQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=N/zT5t4Zhh7WlD619xPwF8CpIwM0gccly9j3NVzLhDQ=;
- b=e6l2NxJUep76ZsYuitQ0fPvP/pSBgTWsrFWcTv/UMTrkAb9doi3lK4cV08mkUUyG6RNLDoA3Ntb/NC1TKgfFZoihPtmdRM2ipr5ucGXUcZaajKCGdroXLeirSxwITosMOszeI4EvYugnIY6gln5Rbnr2XwLgHvQI5Hof6AD6HXGDFovC63aDkXgNAUfAUvTlNJl7bdCYJYHKk2YI2u33cm3IWC59D1l/PmP2fpcbcHJ1EiXG+nsaAG8fD13MnyZZ76x+ER0Zf7eeRwzguwlZKkQceyirD5Y8KEXbdCjzK5UXLJNqYlUeG3EV/Vy6KWKE0CfcO9OvaKJQP8tfRz8LLg==
+ bh=N93WEbD4oVCzNE329mHZR2tfZANvUQ9hk2MQqFI4AWo=;
+ b=guTv7vsru26q3+BCNiz8d6R8R6061DOgK8OdpY/6/7jrFSHHH7dLrUOfqF5ulYCk4RWqkFHoCOBHFJXySNVHF3NEp2DDHAPuU1t18GEE6In/OieohNNTZXC9N/kx6Xz2eeUVZP5w/4wvgLAau70RMWAM34IeAZgOQB8/HTXYk8eMyCxQCxYUqDN6s5kYOOmKJMXN4EiAdMIup677sdC689Eu3gA4aFfqPPzJD+wkwYimTkJQdlBIHMyoza2CJ0xgIYb6S9JPYiPSqPa6igCJZtpV5d6fs4rdGDLiJmZaAa55pWTJltb9LcHxp+S1NQMmbypXvtqzrtXbHbF3o2nc4Q==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by MAZPR01MB8841.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:d2::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.21; Fri, 6 Jun
- 2025 20:08:51 +0000
+ 2025 20:08:52 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.021; Fri, 6 Jun 2025
- 20:08:51 +0000
+ 20:08:52 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v14 04/10] imap-send: fix memory leak in case auth_cram_md5 fails
-Date: Fri,  6 Jun 2025 20:06:26 +0000
+Subject: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5 authentication is requested without OpenSSL
+Date: Fri,  6 Jun 2025 20:06:27 +0000
 Message-ID:
- <PN3PR01MB9597997B73874E410B64EE62B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB959732DB7232FFE1ED7D38F3B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.49.0.639.g0975df9fc0
 In-Reply-To: <PN3PR01MB9597BB453E9980CC50AA6703B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -61,7 +61,7 @@ X-ClientProxiedBy: PN5PR01CA0015.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:25e::12) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250606200632.43298-5-gargaditya08@live.com>
+ <20250606200632.43298-6-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,61 +71,61 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MAZPR01MB8841:EE_
-X-MS-Office365-Filtering-Correlation-Id: a30a12e0-8d9f-45a4-695f-08dda535f37f
+X-MS-Office365-Filtering-Correlation-Id: c13ca7b7-a831-4a37-53dc-08dda535f3ae
 X-MS-Exchange-SLBlob-MailProps:
-	WaIXnCbdHrOwsKBlx1JOgp74JtkuEUkO2pwN5gSLB/E5LTTS0M+bUdMzRyTzamBnpPCkGKNaXdXmaBurMNiJgT8H2ui3yMb1+LQkTQd3OLOkpjDLzIRraP/4JqZcerHeDCtW4QszqV3qGpM9BQJkjJ2JYQ0QqEp9R3sDf0YX/m98TYkvrUR4ItTrvRdImKV1IRkuZ6H77aoGO2Hq2AtrzerT4NBM7wm55Jah41ZDeWvE2QXCZrhL9aJxe8LuarYtuFRIUnApJ9Z1uegJt74FK3n20riIs6ZWYJHxEmNihai/j3OQhlLey/oI4+MKNBZe01+Q4GwSTYoYFHANnqh8G+uMHCzLqfMOiIvEmTLPQ6OtMlxQsUBbCVbHkXh+n21pbmhMA2D23Q8XJOGFIHmoO5GVRVk+srzVElb4MdcXCmVGMoY7N7UH2vRBLEqzgV5DmWjPdw9PCT9slbfzwFjRihOP4UAvEF/tvrjT6ubzdzY5J+y3hW444M0EDOR6IDcOp6vJpCIUgxO2vgyhtY1JlUsrDA8b+l1AOI2Gc9biqO3qcCKrhipkyfEJ4RIu0Sf65GX+FQAHhr2SxvSvfY/3LLqAx+SmcvmL0oCLxB0vYbYozvlyUh33mnmzap4ZaJMCdQKT3BdKo6mXfKRCsuo7pgAyQOb8jKkjCFHWZk6qvwsffOLDz+mIfR0CDIBTKP6+6HqmYabwA52+IufPRXHFjVxxLwpkG+GLGQu2H5fU+GbvcHqX0qyrT3sCAgWwKGfiyH0RyIulxQE=
+	laRBL560oLRD5RrPfNelPuCpDirA8PgpPLjKKVu37cwp4/K8n/UJLdh88lQa7cBZdMN2FSIC1ZW7ZLOMcRxoAbSuvDF0YXy4aaJqZFS6VJQyreUVq+rmXeBsGLd1BTJ6sy+BbffyDSFxN5mwrXJhUyZE3+Sfn1CP9/5PCyeR5r9THqQUFt2XItGfqydB0vc+ViWKaazdXiAYfzbYaerS12S3+3XgU2xZntKEZldz4URY33Z979Q+1miUH1R48ccadeJDNsXknN5nuip1iZT/3DMgYSWuy5SxAFDFSla5gWoAqXhKQRzfdFTaXdxhgsSdh3ma15O6JE0aX0HRoqfq+JrS3EzHrnVOT8MffnzHvXX3lPbxTHSxgx+dz84PNHi4RGvXPNvfrngXP2coMQNubLcYCVyFGPsK6/jLch6TweHQZnt1CRDXJqx8Hs3ZUk4sD82tMc56eN+VH/APuMMNWbHESr7GKz1YDgE2RcjyTSvik+5eVUYyHfgoPQX1ylIvGXD3sXeFQpuUQQvz+elIkxtRHugUxnkvwQdDqXO2MdmGqqP/xASMEtWWoav/APMGmVHvTz8JQi/OroptzF8QEauxKxpdzeEsQsRf+mK9IVdC/ePgC4r0dnkHisxjenKAPhyNN3Xr+6qQgxiyLHj4VFYweES4g8vQ6TRGhAGsXR23La3qYG8RXmIQ/t6YzKd5xT4/jbE4yKCR8uFX2tDTNW4stTGsZzsFZIP9oU3EU4rzyKbodGeLBTvE5YN24rEmHeHrCEkA0NiD+ZGZm1cbWDLhq+OEulT3
 X-Microsoft-Antispam:
 	BCL:0;ARA:14566002|461199028|41001999006|5072599009|15080799009|19110799006|8060799009|7092599006|440099028|3412199025|12091999003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?msJrjhhkpuqM7JuIVzg1mNw94gLmvFmFrkVGJc/XE11hfCJaIrPkMfMDNB/Q?=
- =?us-ascii?Q?k8XViT8n9VVhb25CwOeLSV6zCXRFiAg+5uAZo34fHr9hvSxCrs1qZ+Qi7pXp?=
- =?us-ascii?Q?86fYB27Wcl7mMvCY6o9mAER+K2OuvNX1f4NqT5nqV45UX7jsVJp93zgyJO8N?=
- =?us-ascii?Q?ZvVhpdR/xgef5b48Ut9OJ0Vm+8xhIpZOqp4vUaS/iqsxpVNrPDuvgHDBdWj7?=
- =?us-ascii?Q?cXKHEhML9kPruGD0MeOtmZt/Q+L/okpUNTlBa9RiTmW4p9S37wPmPq7QexJd?=
- =?us-ascii?Q?f6c+kRmloaMA/FTL4CF8zOOSBINtdN9azsooIpmzQWCGilktPZo3E2g1I385?=
- =?us-ascii?Q?ds/I96Z/qbau41tGQdLWRxGWL2r8eNrDvLNN8uSx/z0HkUntANH1ZP//zdg9?=
- =?us-ascii?Q?wYklKrzAvAxJo9p/KlM2GS5XOKR6k6zr+9eIufXo/vOK+KsWLDnCgzNeRzXt?=
- =?us-ascii?Q?pEdNcBYnBy2M2y68thJ2kAFIqZx2fVZkTfWI4RKc1WaEpuCrTNFAaxio0Jrx?=
- =?us-ascii?Q?JnbJEhxXSepI29r+i1Hed1hOJ7V9PMCGTO/wJf7kKQBeDfIRTr+rUBgB/sPB?=
- =?us-ascii?Q?tYe+AuEGPs4y7soMYIEDBHFRoqiZPgtOk+GoxNguwb2Ibd2Xiph7vpyKUFDU?=
- =?us-ascii?Q?e04RrG4H71MhNftUE9m8MBT+ithAmaRlFHPpdCeMzJfBmEj8Cv6Wwyv457OV?=
- =?us-ascii?Q?Kz26f2Z/OwhEkOK23dufZqNYBmnoh0VJy9RIBb7RK7YXuKIvefaHgL6UG5eH?=
- =?us-ascii?Q?0ULprelKBSCn8pAgUUfFRfIjw6mEF8MCoQl+iDIDwwKwxMX+N5vIwLYS6Ons?=
- =?us-ascii?Q?EtJm1lH3V1qI+dbUG76Y1I02R/2F7nayL9msBvFW4whEgnzch64oHbYj6wy3?=
- =?us-ascii?Q?0E+yNxroDhvOW2QjH7Bbx4Gzd7To4LWMbpoXk6B3P2WbZcVMsSGockSLYg5v?=
- =?us-ascii?Q?tVAaMeqIH8ARaGbLQAUAmJUxBJdWIFAhPDkXF4Ou284DvoxO11pvwvWhIYTX?=
- =?us-ascii?Q?8RdaGUVAP/G9MGTawuENtioNiOSycdoDbqxTl+5ZZuzG5MlqPZzzk7EuIwXA?=
- =?us-ascii?Q?GBsKRK42eBopdGeUjgkhY56f+xLt3Wpgcx53DmrgxuPAjD2od4HsIjQb0VTz?=
- =?us-ascii?Q?kqs697/YDoYNt5nLC57cSqkLaIEanmN9sJsytn64Y/T4BOEfmhyauBQ=3D?=
+	=?us-ascii?Q?KrczShDu2It9EpS74uqxtx0PO9r63BTJWKbC1ctmQSmfLSm6cRscT9UirO6j?=
+ =?us-ascii?Q?c0pN+rpKq2sCHTI8YEd1897mMi2rs1JtbKKMm7A9eaTmzeUoY8R7Y0cnkNxs?=
+ =?us-ascii?Q?tZccatTsI4451l+Wk6gTvFTB8W4kP2PBtWBAcLo/unGtW+rI9PR4FL3qJH2H?=
+ =?us-ascii?Q?u3BM7YUAxNqUI4HyFRA8WH/HoF6VxZ2t6UgmXrM/pC1hczSMmDc5pa/P1MLt?=
+ =?us-ascii?Q?kl2+fzWOsJle3ve+zZGXAbJQALuoutwsy+/ZF9170rG+iFU6REjYWMTv2Uib?=
+ =?us-ascii?Q?RlQgz/khMsf9ilNbHmaKof+JgOTIwFF7F7NybQFprZYZhT2qpcxzI3b6Du5P?=
+ =?us-ascii?Q?TQXz0oBvXmlGBk0LuK+C0oJmUMAn/pZyOj62B4WiKulwM69EoOVJyIPwoP4u?=
+ =?us-ascii?Q?hYi6nFWLVGEwW5OH1tneTRHoUwM/zS/35NXxidODVKkRyc5KJaxQvRUqJ2hW?=
+ =?us-ascii?Q?SqqcwNaXkr40fn2zfc0BwvlUU2wS81HOiQxpD70HXMBoYtPhVD5PfdFDNgnd?=
+ =?us-ascii?Q?FJqGLWXBsAWq2Px7ZYaFNgvREbbO7Zz+kfBDidzb5I61piTL+jjbzY7Hwk8z?=
+ =?us-ascii?Q?Ppp/QZb4rODH1jNuYzmfG1pqwSLO5pB57A5/EHCfHU0tAFCEGiDI4ZebGzkd?=
+ =?us-ascii?Q?fXaWirrqJ5GYqjKo0tNp6gkei0nrtE8w0ZAFloOlJlUCohz3VAtv06/wq5Pb?=
+ =?us-ascii?Q?yl2wIx6WMiehRq7MSbuQ37ie7yoJ70vpfQFtvo1ZdUdHjQ94COXcJFFNGYp9?=
+ =?us-ascii?Q?lNkfkOTTMC/PSlsyNT7OLfydC0IXR1ucD5lhSF2dm/0KiZVCEPZW+plnT80M?=
+ =?us-ascii?Q?BYfnl04K8/F8c2GpDemqAKf4TNsMoKanrOI7RtbrN+bkaXPVRt2jwxurb9WZ?=
+ =?us-ascii?Q?/LrDjj82FctubV5qK6wrbFs/Qn6VjCRLXhBGENPqLIHVSTp164TKy3/4Z5eH?=
+ =?us-ascii?Q?/TE8elEO8R0p365ZmB2xWVbA9jxs7Lhnpt77DILi0X6DUiTAljeVXj1esfIf?=
+ =?us-ascii?Q?Y49RE2RPvCbAN7+80DuQLMlVCoMANRvHJRRUlyfIhqKIWx1biuvm/ahwcGkE?=
+ =?us-ascii?Q?8GZiZjAUOJPc/VamzolJpdS6+joIdGJCLBmTGFKvqAvKwwI+AzybD3mPlHMI?=
+ =?us-ascii?Q?2KGP0ed71Ai52YKzO+gmLy3Kchoucm7qMAMAXLqZH8zvEiaoKBfBiis=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?mCCLthmjR+5DpeGIjfCUNpNQiQeNk2EyTUj8MNxUnnO9VGJM97oZEziligH6?=
- =?us-ascii?Q?gaoMb3WLbkvR1s4fM7RL491v2A2s/QCsK2EG86gZrqiXtR+bNNtYGgc5yPkP?=
- =?us-ascii?Q?HeomX5zcDKFcVkwAsmEM1+u+tZEMxa8xJHG0K+AZvjcFxdpWFsW7IHp1DhGx?=
- =?us-ascii?Q?1SLAI4COD4OAeoft7t3SwC/p4Bm8TXOi1QfuQwoAJpdA+7+52Yr7bMYlSKbi?=
- =?us-ascii?Q?IrL0+I2uklTVAW7lHS7XzPftNRct6PSeNvmbmo8tEgNxWx8TJZzHKVgjGM1y?=
- =?us-ascii?Q?Eyv0FJh3G4kL1h600hLwyaxGvsL4FkcWXp+UAkUyyhHNCQ5IcqfRUbzNEPCE?=
- =?us-ascii?Q?00mYz4+H2zvv4Otq9RumcdUD0O5UocIrThgW7x/iEyWguEvPIFOLnhfXky7h?=
- =?us-ascii?Q?GZ3WFTTzF5W2kGHSuCpEbObHZssHHD5EV09+nHhTEEz3RXh2C7VJPRSvdFjI?=
- =?us-ascii?Q?Q/4MXIQVET5lGfn+Q/scmpSlBaFF9j3yqo0BBBEPWQqGuzLPe3xJ2lA1GvQM?=
- =?us-ascii?Q?N1hvfCRDUObJtFq9OulN4rWl5s1dBlif5zFCVeIrPe4wANua5NvJ4GkgZBFA?=
- =?us-ascii?Q?bo7sz+Kf4J5oinyrSgwr9hz2Vfq3AsuKXlNOr7OJ0x21ny4vVXh7Z00XoscO?=
- =?us-ascii?Q?7Ypr5pGk0S4jnd+WSaBzfWTQDpN9XM/b94r4LQL9uh5A2JEO6wd02RNrxicf?=
- =?us-ascii?Q?qHQBWoRtX+H4sGs6nM6YjftSgJ56Mm31kWkj/NTSpybBx/4mICmHwNDtitPh?=
- =?us-ascii?Q?KjelCRftrnkPfJB6h2EHMpWeP5EibVflCR+V3PjhMz4IwlMBK3o4WWWWld7n?=
- =?us-ascii?Q?PfCylWjVtHkt5EZWaiHtiTkLfVVu7ky/V0eKNoUJVqOlFdDtB/+CoCVxQDC1?=
- =?us-ascii?Q?YFrgvJPo0rJtvijdqc63oIyaeVYwQwEN345cqNglK4tStmwySsgFbSLBulg5?=
- =?us-ascii?Q?siZVGu6fB1F9eEKDiBJLSdCsa4rAyBd5nJcdu9fc2vjlLsgbeZHJu+jqAP1Z?=
- =?us-ascii?Q?0o3bNBaWFiZfUMLaM0j2PYEEWuo2Yk/iAgfgOzyWI0iiY4bWwZo5kNzPNgS3?=
- =?us-ascii?Q?WgzW/kPzGjv5SpZUTzEHgR9gBfiDIdO4D2/EJCBMKWxCDEQuLVLda/tSl03x?=
- =?us-ascii?Q?hgBcCm5QOmOqfPMORz+ZNR2dd81jBDNA7UxyhrPDm/oJ4LRH4hnomsgaXnPK?=
- =?us-ascii?Q?7p8vuJfalBNlGfcTvoF5eQMdhKv0ksRpmnuPhfGEA/GFCc+1YxbUP/lahCk?=
+	=?us-ascii?Q?8qmJBmBeXW64MxQZdCZKZtGFvRE860GsATng0DMzkW/NRWN5eVpJNi37wMS4?=
+ =?us-ascii?Q?CA95XItjZozjC8qLbhOiz3undMCnixcXUtLMaq5xAesx/4I35TQkoBI44s7+?=
+ =?us-ascii?Q?z1as0oyiXPCEzF2pBJpJlvLaKu6rHN3Z+LbLRBtTzPPW67UlNqoYBpPl+n9B?=
+ =?us-ascii?Q?p1C4NbnfvQPuShlP61ndCnhAduKnA8HgxDtdBys3V2MwJ27532YrQHCpnqdG?=
+ =?us-ascii?Q?v2Ad7Ps6GpzD6XA0C/+0SvYv7PQeg41n8TRaKa35eR3LdcGeRTpyXSQFFyUI?=
+ =?us-ascii?Q?Dp00IzAi3YtCgRyNtvqM3a2vPDY7aJHhDkz32rpF87bSjd7hzYPpdYIeHjQd?=
+ =?us-ascii?Q?guohdBvq/npZmivySXQRarlLTuhEhQpHlQ7h797V1/nNFvOSp1T6St1Tw7WH?=
+ =?us-ascii?Q?ewFf+a37JcwiXanaP5BWucgdI8wxi1ezgxRAV4FRr7bICVld8oxd/ClY7RFl?=
+ =?us-ascii?Q?j1xbHn+vYPxm6CaiUUlazOx6sy83e9iq79VY4KjiaLtgGOGatW9cQd43B5sT?=
+ =?us-ascii?Q?ntDBiiWNK+dY9jV8yfz6bCVNiFZbIBoH8JpQm8xfZmKmsVBG9mByP8zbGkyM?=
+ =?us-ascii?Q?510mSe9nERrOtwTiDAn4uqSAT5+0U6+qtc7FbF3+dTnQfe+UpvTrMuypuIXV?=
+ =?us-ascii?Q?nGLhjz73GXqT5n1pd4xBMriCXvNmTl6cygwlRgxBnu2ZwQVvWBPExHniZVgU?=
+ =?us-ascii?Q?Cpb5MVIq1d1EN+bAr5duo8arble6jN9m3V0Qc7vEgm4IFTxQX4QsO+5cT2KD?=
+ =?us-ascii?Q?FU1pjoHYZasZlGF2hmF+9Q37n/iiNPfMgzj+m1nDx0dDwT0YsV02tTSbCQMA?=
+ =?us-ascii?Q?pCP8CsL6PwH5enyhRe9eS2tvjWS0Srer3bRnsqcb+XCMSxtpeBN0d1dPQ3nk?=
+ =?us-ascii?Q?J71ciNWB5hi5azOgoMXLE9Sjedh+GyRH5WkUbEvjzvseR8i2lRi9XzKiejs1?=
+ =?us-ascii?Q?2EZ0SF96rFe9NHdiDVdjmL/X57PBhzHr3DnGIM2GsA3oX07AKZjCF8+oqGBE?=
+ =?us-ascii?Q?gDXWPsY8en9eDfxKeau7jvTpvb1PUcjyMyBdafz+S5ivbBdwhEX3rG5EWg+a?=
+ =?us-ascii?Q?cJU5hY7jJ138swBAU2TxVbvhYatd4fPXktel5WBsX5VKY7aST12fYr/6LkUp?=
+ =?us-ascii?Q?t2FNIaF0dpw9zZ5j+OD1zu3LjVYmCLZLdemSpTFCRbewLNbR4hmRmu8Nfrl4?=
+ =?us-ascii?Q?ImtQpmhJzXDMW0tz8oPFNvbXFewMxs9cbraKnrVL6zXpXOykg80IgTISadI?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: a30a12e0-8d9f-45a4-695f-08dda535f37f
+X-MS-Exchange-CrossTenant-Network-Message-Id: c13ca7b7-a831-4a37-53dc-08dda535f3ae
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2025 20:08:49.5955
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2025 20:08:49.8989
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -133,30 +133,116 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB8841
 
-This patch fixes a memory leak by running free(response) in case
-auth_cram_md5 fails.
+Unlike PLAIN, XOAUTH2 and OAUTHBEARER, CRAM-MD5 authentication is not
+supported by libcurl and requires OpenSSL. If the user tries to use
+CRAM-MD5 authentication without OpenSSL, the previous behaviour was to
+attempt to authenticate and fail with a die(error). Handle this in a
+better way by first checking if OpenSSL is available and then attempting
+to authenticate. If OpenSSL is not available, print an error message and
+exit gracefully.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- imap-send.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ imap-send.c | 61 ++++++++++++++++++-----------------------------------
+ 1 file changed, 20 insertions(+), 41 deletions(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index f7e59397d0..6522f80964 100644
+index 6522f80964..c6e47ddc42 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -1072,8 +1072,10 @@ static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
- 	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
+@@ -1008,6 +1008,24 @@ static int auth_plain(struct imap_store *ctx, const char *prompt UNUSED)
+ 	return 0;
+ }
  
- 	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
--	if (ret != strlen(response))
++static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
++{
++	int ret;
++	char *response;
++
++	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
++
++	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
 +	if (ret != strlen(response)) {
 +		free(response);
- 		return error("IMAP error: sending response failed");
++		return error("IMAP error: sending response failed");
 +	}
++
++	free(response);
++
++	return 0;
++}
++
+ static int auth_oauthbearer(struct imap_store *ctx, const char *prompt UNUSED)
+ {
+ 	int ret;
+@@ -1050,38 +1068,13 @@ static int auth_xoauth2(struct imap_store *ctx, const char *prompt UNUSED)
  
- 	free(response);
+ #else
  
+-static char *cram(const char *challenge_64 UNUSED,
+-		  const char *user UNUSED,
+-		  const char *pass UNUSED)
+-{
+-	die("If you want to use CRAM-MD5 authenticate method, "
+-	    "you have to build git-imap-send with OpenSSL library.");
+-}
+-
+ #define auth_plain NULL
++#define auth_cram_md5 NULL
+ #define auth_oauthbearer NULL
+ #define auth_xoauth2 NULL
+ 
+ #endif
+ 
+-static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+-{
+-	int ret;
+-	char *response;
+-
+-	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
+-
+-	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
+-	if (ret != strlen(response)) {
+-		free(response);
+-		return error("IMAP error: sending response failed");
+-	}
+-
+-	free(response);
+-
+-	return 0;
+-}
+-
+ static void server_fill_credential(struct imap_server_conf *srvc, struct credential *cred)
+ {
+ 	if (srvc->user && srvc->pass)
+@@ -1288,26 +1281,12 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+ 		server_fill_credential(srvc, &cred);
+ 
+ 		if (srvc->auth_method) {
+-			struct imap_cmd_cb cb;
+-
+ 			if (!strcmp(srvc->auth_method, "PLAIN")) {
+ 				if (try_auth_method(srvc, ctx, imap, "PLAIN", AUTH_PLAIN, auth_plain))
+ 					goto bail;
+ 			} else if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
+-				if (!CAP(AUTH_CRAM_MD5)) {
+-					fprintf(stderr, "You specified "
+-						"CRAM-MD5 as authentication method, "
+-						"but %s doesn't support it.\n", srvc->host);
+-					goto bail;
+-				}
+-				/* CRAM-MD5 */
+-
+-				memset(&cb, 0, sizeof(cb));
+-				cb.cont = auth_cram_md5;
+-				if (imap_exec(ctx, &cb, "AUTHENTICATE CRAM-MD5") != RESP_OK) {
+-					fprintf(stderr, "IMAP error: AUTHENTICATE CRAM-MD5 failed\n");
++				if (try_auth_method(srvc, ctx, imap, "CRAM-MD5", AUTH_CRAM_MD5, auth_cram_md5))
+ 					goto bail;
+-				}
+ 			} else if (!strcmp(srvc->auth_method, "OAUTHBEARER")) {
+ 				if (try_auth_method(srvc, ctx, imap, "OAUTHBEARER", AUTH_OAUTHBEARER, auth_oauthbearer))
+ 					goto bail;
 -- 
 2.49.0
 
