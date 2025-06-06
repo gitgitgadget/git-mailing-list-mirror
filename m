@@ -1,111 +1,113 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D82BB3234
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 13:04:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBFD11494DB
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 14:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749215094; cv=none; b=g3/pJBMWDypSVGoGI/PY8yZM52UJrllDVSC6auosRiuvVVBra/5wbJCZoSUnO/9YZ7FGDxrIcTxJ8x5CTpioS8nWcQSwsiCfonU7eivem8c7Ypusbt5a4wyntZr7itZDuYGH7GvcF1ABqYiPyzgIwpl5TArqVGcRiwdnpEMauBM=
+	t=1749220077; cv=none; b=IWL0v752sdS21un+bXhoEJzhkzgDuvClkKkfBUyWVVccFYG3Pvg6dBbEQGFT3NKxOZSv5i5pSMw5IObUlegxqCB+My6HRkh+KDbTKDzO+e+4QcJNG1IjyA0qqDPcLR/SULo8hOLiz6Xio80INUBPZPqgmw695QmKXfDCI88Vs0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749215094; c=relaxed/simple;
-	bh=G3dthQgPQj2EfdTHha+B72xqSgUnQ/8jaQSmmG9KFYY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q++o58pzJplZQsF6C8VF+ThzhQObmFlLqsbMoN80NASed+8l0ti5ETJfNlT3O/MSOPV0fbLtdeVF9LNfoEyJkaQ+L37NZXlxMsioEwNNFceu7avcntWWQkOmJ6PLriUIaIsidVYABtmSVAlBcfCq1KHm8Qls2eoA8iISlnec6qU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=t7wAIs4B; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1749220077; c=relaxed/simple;
+	bh=9UWBJOicQXwF+IhGGq2Y+bWt98wDV3OTTRfGVOnY4E8=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=ijztjIZTHitcIjOf04xF5f10KDDg1jG2kMDWAVGeU9VTX9YcuAsImpnR/TBeJUK9ynZ0EfVqtg3FuQW9Hkn775jTwxvfLh2rTlmG0V62R55V7rG9U7CGgJcFzcxMQQkbtc9ubpmkxU88Q0+RycO4RaVMv9OKVwmxw9/N5chPa/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=EB0dg49q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cNy0mdls; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="t7wAIs4B"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1749215088;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zFt0JPUsWSg0XKGrzFwqv6l8Wg6NZBJpyxoE7DruqbQ=;
-	b=t7wAIs4BYkj6NYDIzh0JueJ9uaVHOcN4k1ViMUVwp+7wi5KD/cV7jcmewF7HLHYwD8OBeM
-	IQ1Uab2j9Qm2bPSe3qKnZC+12d5almVXW83eGKTyT4LhK6KaJcTXyZM547RMP3WG4aY1pi
-	/r0hiniAdK2BBACRIZ1so77le4BeS4M=
-From: Toon Claes <toon@iotcl.com>
-To: Martin von Zweigbergk <martinvonz@google.com>, Junio C Hamano
- <gitster@pobox.com>
-Cc: Remo Senekowitsch <remo@buenzli.dev>, "D. Ben Knoble"
- <ben.knoble@gmail.com>, Nico Williams <nico@cryptonector.com>, Theodore
- Ts'o <tytso@mit.edu>, Git Mailing List <git@vger.kernel.org>, Edwin Kempin
- <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>,
- "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-In-Reply-To: <CAESOdVCjc1kvQSKnxGfNNSTvFhLRjH_vzwMauP8ZWQ5hhfBnEw@mail.gmail.com>
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby>
- <20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
- <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <D9DIPNY431IJ.23DG6UL5CIQJ@buenzli.dev> <xmqq8qnr3jji.fsf@gitster.g>
- <CAESOdVDG_tfrWMvV6V_Ad76EqXU3Be+EpJDLvtgPcfCRHoJoYQ@mail.gmail.com>
- <xmqqjz7a27ww.fsf@gitster.g>
- <CAESOdVCjc1kvQSKnxGfNNSTvFhLRjH_vzwMauP8ZWQ5hhfBnEw@mail.gmail.com>
-Date: Fri, 06 Jun 2025 15:04:36 +0200
-Message-ID: <87plfh10nv.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="EB0dg49q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cNy0mdls"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id DF06A11400B5;
+	Fri,  6 Jun 2025 10:27:54 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 06 Jun 2025 10:27:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749220074;
+	 x=1749306474; bh=yQgN2T0hR1zf5Afv8SAKc6J7df8CusLUpze/LWF/Jms=; b=
+	EB0dg49qNN+pHbfgQexSp8ikDACeOZIkk086pIyiqjaI+SrVxQUj28hoFo/GoRGY
+	cNrbpRhUHvL8l58jrYfDRVGkTqEVhxVLbrsi1eu1hojMwY3kRr+Flj6yhMb5tu3i
+	/cvjXnwia6qUHaxFbtgcBLZnB7LgD+o9tfZOuIyzDm22e1DDDB7nDB74s9Oetnpw
+	GJrl+kDzFdG1TjI6vOMc4UO3bSdT6bH7/H7aEowIHCWkmv+DW4Zwc5R9hQTK+L3Q
+	AnTdhRpTmL1Ukhhzf8YB1Ev/BEro9gGbPvI3Lw26Zhxex+lJubtdhQaaOq1auW2+
+	ltW/G+bigHYr6K4yeVfRjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749220074; x=
+	1749306474; bh=yQgN2T0hR1zf5Afv8SAKc6J7df8CusLUpze/LWF/Jms=; b=c
+	Ny0mdlsxDGDawLOoxExRtMcE3V/DnqzamMurZh2dEfnMntr90AqNFv/1nLNLdnVx
+	Jk1O7VDGvGqYu8GuaRh6DMsqlku9VSheQERk2QKjNsLPH6rvtyaBUA9XqAonyun3
+	r6W/w9qOcdrl0SNkfnGQoy1xaqhwAga4q/EGVnF78U/LTXSxDG8fYy5n8PjpQ16n
+	eSPLySefaLphuLtV5NKzzga72HeH08CDiK4uT3wg7bpwHy/uYMONWM7x5RgocyaD
+	SlCYV/AxF1bE/7CrKAeJHUE78WJz8hzF6U0C7zcrxSAdzvxaOhl6Sim9v9oiN4uJ
+	NivuaXwvt68elH9lkPwgw==
+X-ME-Sender: <xms:6vpCaOpZrX4-ghm_u3vnvrj-5JguScEJWDb9Y38uJrE0n7G2HsC8F3A>
+    <xme:6vpCaMqgRcaRLUDkg6eBwT6GcKrvj3mTH0l8xyqufKZpkF91bvhCT9ypsIfqbxPXd
+    VCLHy2-iuHE3cpzoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdehvdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
+    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhi
+    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrsh
+    gthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhn
+    vghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:6vpCaDNKs1cG9yfifx0hBztaaD10GgFNxqmiUpUefPf1DvR_RYhL2w>
+    <xmx:6vpCaN7V51FG6n7nXVmNSAG02TOF_5H0RMIxKp2XXDbwwCAZiaiyTg>
+    <xmx:6vpCaN5HxxJDsb4M_GE_4XJEgLqIM7URLJvW2Y2BxSrKVDBXzP3iEw>
+    <xmx:6vpCaNip-U4wcXbFFjRALMljAEVp7cs8GI3VHrMt0DNPKFLkgxmebA>
+    <xmx:6vpCaOXq_SbfRNe6agPBV0RTeoTbBrZQwIiOuBEwxw7QnWNqf93nYdrz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 76D0A1EA0060; Fri,  6 Jun 2025 10:27:54 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+X-ThreadId: T3e5cd85e357bf448
+Date: Fri, 06 Jun 2025 16:27:34 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Jeff King" <peff@peff.net>,
+ "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Message-Id: <bf919293-562f-4572-bc0a-aad7f22d1013@app.fastmail.com>
+In-Reply-To: <pull.1931.v2.git.1749202164.gitgitgadget@gmail.com>
+References: <pull.1931.git.1749112304079.gitgitgadget@gmail.com>
+ <pull.1931.v2.git.1749202164.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 0/4] curl: pass long values where expected
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Martin von Zweigbergk <martinvonz@google.com> writes:
+On Fri, Jun 6, 2025, at 11:29, Johannes Schindelin via GitGitGadget wrot=
+e:
+>        ## http.c ##
+>      -@@ http.c: static CURL *get_curl_handle(void)
+>      - 		die("curl_easy_init failed");
+>      -
+>      - 	if (!curl_ssl_verify) {
+>      --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0);
+>      --		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0);
+>      -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYPEER, 0l);
+>      -+		curl_easy_setopt(result, CURLOPT_SSL_VERIFYHOST, 0l);
 
-> On Wed, 23 Apr 2025 at 08:51, Junio C Hamano <gitster@pobox.com> wrote:
->> Would it make sense, though?  Imagine that a contributor in your
->> project did not refactor code properly and instead made a
->> copy-and-paste duplicates of a very similar code.  I find a bug in
->> one of them, without realizing that the old mistake of duplicating
->> code (instead of making it a shared helper that is called from the
->> two places) and create a fix for it.  Later somebody else realizes
->> the same fix is needed for the other copy---attempting to cherry
->> pick the original fix may find that remaining copy of a buggy code
->> as the logic to perform a three-way merge across renames that is
->> sufficiently clever kicks in.  Shouldn't these two commits to fix
->> the same bug in two places share the same change ID so that it is
->> clear to the later developers that the latter fix was derived from
->> the former one?
->
-> Maybe it depends on how the forge uses the change id. If the forge is
-> Gerrit, it will use the (change id, target branch) to identify a
-> review (IIUC), so then it will require a new change ID because it
-> requires a new review. If it doesn't have that requirement (maybe it's
-> PR-style forge), then it could at least highlight to the reviewer that
-> there was an old version of the change that has already been merged.
+Maybe I don=E2=80=99t understand range-diffs enough but it looked like t=
+his was
+using `0l` instead of `0L`.[1]  However the patches do use `<num>L` inst=
+ead
+of `<num>l` throughout.  Which I like
 
-I've been thinking some more about duplicates.
-
-First, I don't think you can enforce uniqueness. Whenever you're working
-with forks you can have commit A from fork I to have the same change-ID
-as commit B in fork II (because either of them might be rebased).
-Enforcing uniqueness on change-IDs would disallow the user to fetch from
-both forks, or they would need to specify how to resolve the change-id
-conflict.
-
-I like Martin's idea of having forges ensuring uniqueness, but I was
-wondering if we should take it a step furter: a commit should not be
-able to reach another commit with the same change-id. Verifying this on
-the client-side, helps the user detect issues sooner. Only seeing that
-error when pushing to the forge might be annoying.
-
-Anyhow on the other hand, what about merges? If people merge the 'main'
-branch into their feature branch, it would no longer be possible to
-merge the feature branch into the 'main' branch.
-
-But to circle back to Junio's example. It depends on what you want to
-track. You could consider both changes to be different, and thus
-requiring different change-ids, because one didn't fix all of it.
-
--- 
-Cheers,
-Toon
+=E2=80=A0 1: Or rather I don=E2=80=99t understand that this is showing `=
+0l`
