@@ -1,120 +1,98 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D712580FF
-	for <git@vger.kernel.org>; Sat,  7 Jun 2025 05:43:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 700D7171C9
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 07:01:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749275025; cv=none; b=MZDbdic3mUsRQPam+l/a1mzfsHg3TwrD0eZmBMwfNOHdyMg6+1PnQkYSBJ9aGpAHG9rXyxqvUazGrYCP5c9n0l4v9rD21y+qeOzf/JaGEsQ/j2PynC6qlk7o4H+cHnxHCFbGL0kkMmWIgUWXXP7SCeq2iYE7PgxDwTNzyV//Yg4=
+	t=1749279717; cv=none; b=Tuk6lC5+W0I6rJlCKBy11dTSMHsePu9+QMqoR4kyfp0BqHiZG/1MvBEtR+z+HEFUEM+0Yj+JSmrPV+jQ3FmhVjoDxsnKW+AavpPnsZbJze6o/kug0w3ykCYExl10g2M+wWAT8v+u7ZYlmuVP/IDMQLzYjlfbjeSRMrIV1UiDEgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749275025; c=relaxed/simple;
-	bh=fLzzo9K0HR/Ham5V9F6qymFCRWaxw2QfTRD7BfHpK4I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FzAA/qXO5d7cjWXZYTnl73U1DDG5g89gSWszEYu+X5lLzmp8IzLgm+zqWKJeprnRyWLMuUAjp2slaMTue5owzMdwcnHz2LOF6FpWoIbH1mP0qNOgtXG2HweAyrB4mjH4rWCXBoxNQpkEhotAAV2kttWONRjxFYPrwj6OWVPNNn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=obYcjbaa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ORkcvsbv; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1749279717; c=relaxed/simple;
+	bh=Kgcf0wt/VtaWNLyISLDyRzjt8VBQ5g96alOHBvyftoQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=d+8R+gpof3/HZksT8Cvyjs0kZdZk5E2nUz38XHih+8rl3wMhEztMgmAlfP39vzV9AeG4S2zRGc0toEamd8qMZsYAaIiaGhxQkswLi0NnoTOQlJ8JrjwKr2yNTXubCRRCbp5U1oiEmnA2/H+W7VlTzh4g2HPa5cZFgI/lPhq2ZQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QnCO4JnF; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="obYcjbaa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ORkcvsbv"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5C430114010C;
-	Sat,  7 Jun 2025 01:43:41 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Sat, 07 Jun 2025 01:43:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1749275021; x=1749361421; bh=LF4x5JEpXM
-	m+OiFmYDYZQRNi9iYjhBnIt/hY1K3KnwM=; b=obYcjbaa/qIqaIJwAud9X0YzOE
-	jgO/XDt0WY3yYCM7ykGBLkSasLnrXKzHGZxVn1lB2x1lIwIkybRdy6cFds7WtoW/
-	XccDBLy0KQP7/DPdc44gMNpWMO0uB6rFyQYXK7dMiZmLZqhcfHW4BsA2DedkKLaD
-	A8NC+X+Pul3sEIcZM9aMdLTcBgCX4UJAfbxBS9njaXbfCfO8vuyns9bFVXqoHq8c
-	APAnbMz0yjsMPuwIz5Q5uKNmfMQ3/EZta1yAd6yJ3kMTURZ9qLqOm+gs5ysiFJP/
-	b1ZNv/15uYFchzJO3FQYMGfJHxiSmzDHd6kvDpQ0kpWFNEP1hsf41BZ3P9lw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749275021; x=1749361421; bh=LF4x5JEpXMm+OiFmYDYZQRNi9iYjhBnIt/h
-	Y1K3KnwM=; b=ORkcvsbvmeJ8GyzmilhAC6MTv4mlIPBnilP1KOBHIrMhCDIRC53
-	zfirUvGbSJlt4G9Poxz/1D7B2FEYczX2/JoXZ6MFNhkVD6d3YE6FncUg6pKpB8oj
-	lBXkD6egr75LbzFNDq1EysdB05rgaWDo0t/nP5+pWWaHNAZ6SDB4ZWzR/BxsA2/j
-	DmFDqzkYJ1lBujYqKW3uDhMwQXY4ECT+UFDo6eBImSynDuVEh1XUghnKUV/8YiK3
-	1Zj8Yyfd4Kh3AbP35KKpXhmfBgvIuV6tLQbZg9Hbn3OHxru7vqDBQNAf0jg1t4RL
-	7VXLxRrKYzDzXNprl2xv1oHRFgS31MNMxXA==
-X-ME-Sender: <xms:jdFDaGanHMsrtpZLo1WH4aAn3XADTOtE3UaQGt2M-7wS9QtYBz0RYQ>
-    <xme:jdFDaJYGl0e_agQj63tsbiJEMs_CZOuOeOQzFUOiy919WnvnCNhaFZVFnzOVj-Ars
-    g2RZqtorxkdvcrJqQ>
-X-ME-Received: <xmr:jdFDaA_q4Eht_9kjOxPenyTLrqwv8sfLadX2U-BkL6TmFmLTKTCEp-I4SHOM1DhugUMTXQ3aUrVotojtHvkhTALKu4Bg6WZMqLoRxtCHlRmd2Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeiuddvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
-    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
-    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:jdFDaIqOxCYuUtu9YDmGZP5zzigXBBkceDHbqJqi3Fe2yBLWRV2oVg>
-    <xmx:jdFDaBpxPGlIHRc3tB-BFcl-Q-ianTzLvM2GdRZXOJHUUnEiMMlARg>
-    <xmx:jdFDaGQgOG1gKOKvjQjrydAlE-9RImWDO5n9962ujhxZOh4fXoS-9A>
-    <xmx:jdFDaBo0zfTm1mVmYEtBN9sXoaoONt2J8rePioey6izB8l5fAFIjeg>
-    <xmx:jdFDaD0XnjBmIFffuWSzAxfxTZyVJxB12FlDKCA-S8s2-emrG6NUI4rf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 7 Jun 2025 01:43:40 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 72a032f3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Sat, 7 Jun 2025 05:43:38 +0000 (UTC)
-Date: Sat, 7 Jun 2025 07:43:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: issue with git submodules and a clone.defaultRemoteName
- different than origin?
-Message-ID: <aEPRiEdJ8c0X4HY5@pks.im>
-References: <4f638125-39e0-43a1-9c58-35c2d433042f@intel.com>
- <xmqq1ps0gzo5.fsf@gitster.g>
- <48c2af0f-348a-4443-a8b7-74ea4b666bff@intel.com>
- <bdf7e50f-aa65-4514-b147-9f7ebed147ab@intel.com>
- <xmqq8qm41m62.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QnCO4JnF"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5f6f86580ecso548573a12.1
+        for <git@vger.kernel.org>; Sat, 07 Jun 2025 00:01:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749279714; x=1749884514; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zy++jWz5Xd/GEwZETntSKLuZJFvEpdswD3Ez4Gdeq+c=;
+        b=QnCO4JnFBMl7EhAx2b8BwHKw1JMrdfUdWx9tz0GJ87bknbd+gSuaPAIoP+ZcY9+SjK
+         4R0zZxNo+tv7xxcqFTlFGz0yOwYuTL3C+v2LZYSe0Qey4iQhOaN369nly3ETips2VHw7
+         4hiZ4WNzrzVDUDKcTXnQJI+v8IWHRNFCeSdSpq/70/cVtwR6us0OC/1jVhCEXgNaEIeg
+         AfUWJ8mXR1MViqRMgLeiBCorFBivKJlt4lFTIJGqu0ceAOaWKC+WS7QYfqCv9Q8TAjoZ
+         ZF20iIXDsxJYlW1DtWmFwCZ5QOqZriuq6joJ8yX3ldx6uYkw3a3mwvsP3N3xiqjxT0ii
+         0tmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749279714; x=1749884514;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zy++jWz5Xd/GEwZETntSKLuZJFvEpdswD3Ez4Gdeq+c=;
+        b=mn/GS1mULHiUTvb989IZXbk4r1vuq1W+bFZVkcWH8lD4HXcwgatvVrMWIrd6BmQ2wd
+         yb7zWVMJEwJBNCAzX6WKDC/stFCG7OcQ2uzQgjG9WOMf2ylFPZrgklzkbN93bILP6lje
+         W0xKbA5FR8jI3yavtJyX7SJgSVvxxOysdT+57ER+py3QDnaWtp+VaDHoGAdqlP9RLv5W
+         1m6Y+h1BRDfHNpwlAi0efcsQKYye5JouGpK1hZO4lkTwlLbdQHUavK8Ut7OrNeiSPJ1m
+         oKktqw0+E9wQYrSAhURiUAcWihY59QLw7T11Ap7nDfj+cF0o0jqoUEwCMXOTSc8XT/QX
+         GOcw==
+X-Forwarded-Encrypted: i=1; AJvYcCV3DHd0fz7VgD+25gMfgSmPnWKwjYaCdvd9741NCCiIkG+x+vrT6Dn79IE8AGV6ufy4KTQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxqKbyofYAv8x+sDhHBdRknAip85X2BQT2V4PkangOJGr3mD+Rz
+	q3RLjC91m+q0Xo+BIW1Oyl0iQyqTNkeQo0PGz6hS0i6/udfcO+bHMmIoeert+WfJ9BKWjKrPibR
+	k5LsBg4vM9KCobAlPWyPbrS2ne3P+fes=
+X-Gm-Gg: ASbGncuC5eJFNW5jtQQ/zQTW9ipbSHuWnf89PEDtJfdbfwJ61B4TBi66WSLHpgzcS3o
+	ApzoUCTh2qXvrKoiKWFgXET7n9d2pRQfyIxHhZBgY98Ab2PDGWl5uNczuyQLhYgHfYdAst7wTTj
+	woeVwAuyP4qlRtPhu4a7KLeyrZWeniFknmqXfQAgZ4Tu/06LYj/AICdzvJcnRCscXvnha+Isnb
+X-Google-Smtp-Source: AGHT+IHVHwiP36MB+PwKUifJhe5u207SZxpav1WAu/VceOyxVuGtRcIm6YRVpjALjDIYkt3GP2W9tPS7xyCdqN4ToKs=
+X-Received: by 2002:a17:907:1c89:b0:ad8:8692:9a0e with SMTP id
+ a640c23a62f3a-ade22b79aa4mr171805166b.13.1749279713600; Sat, 07 Jun 2025
+ 00:01:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq8qm41m62.fsf@gitster.g>
+References: <CAGJzqs=kJtPcMrWC8Dayd+VW7BvC1rmzS0zT+EwQXfLOpZ3Tfg@mail.gmail.com>
+ <CAGJzqskDumbMSbC3rdYT8fZ8gNJ5MOjR_o8RAo9QS-nuvbBinQ@mail.gmail.com> <xmqqtt4u86x2.fsf@gitster.g>
+In-Reply-To: <xmqqtt4u86x2.fsf@gitster.g>
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Sat, 7 Jun 2025 08:00:00 +0100
+X-Gm-Features: AX0GCFspBg2GmfBtVkQBUsBBWCLk4H9XmuUlOn7PFETIniM9qI4UdKz2kl6s94U
+Message-ID: <CAGJzqsksmQmY4o-_7DoPFK8VP-h59ANUjroVv2+++ZG3gDBdUA@mail.gmail.com>
+Subject: Re: Fetch remote only if remote hasn't been fetched recently
+To: Junio C Hamano <gitster@pobox.com>
+Cc: M Hickford <mirth.hickford@gmail.com>, Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jun 06, 2025 at 04:32:21PM -0700, Junio C Hamano wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
-> 
-> > It looks like those end up in the "read_remotes_file" and
-> > "read_branches_file" functions which are deprecated, and planned to be
-> > removed in 3.0...
+On Thu, 5 Jun 2025 at 17:55, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> M Hickford <mirth.hickford@gmail.com> writes:
+>
+> > Hi. I'd like to fetch from a particular remote, but only if that
+> > remote hasn't been fetched in the last hour. How could I achieve this?
+> > Is there a relevant option for `git fetch`?
 > >
-> > Would patches to modify those to take a repository pointer in order to
-> > allow callers of read_config() to work properly with a submodule
-> > repository be acceptable?
-> 
-> The recent trend has been that it generally is very much welcomed to
-> fix such a code path that takes "repo" at an entry point but ends up
-> deep in its callchain to ignore it and use the_repository instead,
-> even without a potential use case to benefit from such a change.
-> 
-> You have a concrete use case, so I would suspect it is even better
-> than "acceptable".  Patrick, what do you think?
+> > https://git-scm.com/docs/git-fetch
+>
+> "git fetch" is "I want to fetch now".  If you want to pace your
+> fetches, you have to keep a record of when you fetched in the past
+> and work from there.
+>
+> I sense there perhaps is an XY problem?
+>
+> If "git fetch" is done outside end-user's supervision and explicit
+> intent, the remote-tracking branches will become much less useful to
+> the human users.  A good solusion that avoids this issue already
+> exists as the "prefetch" task of the "git maintenance" suite.
 
-I definitely agree, yes. It is a long road to get rid of
-`the_repository`. Taking many small steps on this road that have a
-proper motivation is way easier than doing large steps that get rid of
-the variable for the sake of getting rid of it.
+Interesting, thank you.
 
-Patrick
+Suppose my network connection is intermittent. While the machine is
+online, `git fetch --prefetch` runs successfully. Later I am offline.
+How can I complete the fetch?
