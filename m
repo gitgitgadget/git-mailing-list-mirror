@@ -1,98 +1,113 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6B220F090
-	for <git@vger.kernel.org>; Sat,  7 Jun 2025 09:48:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1FA21ABD4
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 12:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749289714; cv=none; b=DXoOjrnrXCIEPunsNDvMOSHeQFQi/ZjGhNJAGgRGYXFkOstICbbukXvycqwQsprMyvuxAp0u6/2gmHZxbfOgSWpBGL56NpcRsLBzGjLtjk4ePe6GV+tYxz2YVgPv9N9ng3W5IWqF692dv/RIRYEwC0/CbG8wG9fSLJ2RNAU2dx0=
+	t=1749301004; cv=none; b=pFmYzM1TeL1gZ2yU5KfCAN8wEh/LASDELuJ6MbiC5hMiaUgmApfnNKXOjS3N1Cq2DlYlN8ZgXcD4y8YNMQpJGho8mMnXoj4Dne1aesvFl/+Sa7MUSBMObq/Da3rI8VBnhFPzyERSky1xibEZuDYZxYgjmmU3mZUdAJVArs5T+98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749289714; c=relaxed/simple;
-	bh=hIi46mgz/unqUqfB9A2eQnjC9Tev8gLdoOBDXsi8fNo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=qNxyCmYsNxflaZ6gPrTwH+MW4P1KkhyWnxEE15OVCtwDoyNZtOMoXSmYZqsavOw6aw7ZGaJwFT1ViALC3Wb08yDQOq5z4pwJY2wO8+guMnHdypCeYh8BL3AoaaarbK/WG33/pMUUxLujAXFGwlnEh5vDlD8BEnkrzyXTs8Dd008=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GfTU9+1Q; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1749301004; c=relaxed/simple;
+	bh=lPX9SjuHEFquYPCzADHcw67JDMDBaiG6YsjzudfpdG4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QS9yP6GafRpthXR59jYD7Nrr0meYUZHMigDMa38MXnB1ss9T9SCRSafP0LFaBKPxK7lRay+Yw7PlF2Pxt22gW7czbFU24FJWSBPBIyStK3XedcmhW5Yl3BN0czkt834x8zmdmRSKnFNm0sq9n/wRtXZGRQu6MNLfBEO8zRwBoxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=daxcO/Gt; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfTU9+1Q"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-451d3f72391so37403995e9.3
-        for <git@vger.kernel.org>; Sat, 07 Jun 2025 02:48:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daxcO/Gt"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a50fc819f2so2282322f8f.2
+        for <git@vger.kernel.org>; Sat, 07 Jun 2025 05:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749289711; x=1749894511; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=14lc6ZsGShcs7B6VACeOIABTeZ0Iuz4qSN+8Xaw3NMo=;
-        b=GfTU9+1Q61xIvlQqwokERjso5X4JBbZek+V5AGOWxlqIePOWTHM/OEix3f6rErvoWW
-         dde41z/xDn/At/1nkY60cfgMruD8i/GsWoKMW1nsElWHpQJ6ROiC+IggjkjpTp9Gv2XF
-         WheLvFz872ON0dPaWCx2cBeuLck9L6B9Sf0b2oqEKDmqpPAiSh4fEgAILV/PKo+3SQ+l
-         QM23IidXi1poSbRMnJSfx3MVmCcoiG3ZnFM65JeCHm5OzRMhu0cgndI5h3pFNuKG/zZF
-         6ZQpJov+5/B2IkkobdX90e95aFLAMri2jPGMyWRMv624PZ0ozY44X9sGZ8kyTLeDKz6a
-         mTRw==
+        d=gmail.com; s=20230601; t=1749301001; x=1749905801; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=q9Au/QFOhbdkvseMfE5bJ6K06wvrbPG/gP1L29xVN+Y=;
+        b=daxcO/GtatxPsBcK0LHDCDdkiKSbwOkxYYVzBM9hfJBVgwSH43DBH+bwX5JdxcVUQl
+         30pWCL9iuP1QF7Q/TFyzByzQIOJz8e8yjSp3aKH2z6Ypi+MC/KST6/11Uzhx/6j3+JNZ
+         1BT5qCebSpnFa4krdi1o2LrOMs2xe1t9V806xGGiEx4oQX9cQCXkz0HwniiGvZNBAPbv
+         ngYk5kRHvF+cKH5YaN+f6YsPQsI/MdirHJT004dZx8JTpTS8+UAIEQ/n5UFOGuLdGr1E
+         GpMcvfnbB//K8hKZupvzjgXAIrRFbD03Y3KUqr0b/mSjwFltontGywPHBkKvb7eo3GGh
+         MjXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749289711; x=1749894511;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1749301001; x=1749905801;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=14lc6ZsGShcs7B6VACeOIABTeZ0Iuz4qSN+8Xaw3NMo=;
-        b=oiMFpzJ09A6xWTd9kyEVgx388+PdbC/mys7bzr+6NC3KkhpAF75VZ7QKql+d3J/QXt
-         8SFHno3zPq5d4C4NLZTzepj15i3zBlpGpWd4gp/Jx0vWe+HlMF7Uh6epf4qlo1dukU/q
-         wRGlEr9uU1AHtm/GdtU1u6lfxq9skk4dxYRMAd+X9ssx8EagYPfXUgky0iQ1qkJdD0pC
-         1gi2Hx1i5hVuWV6DiFHKp5qtJQStDh6SqqqX5GmdRIcnKU9xUzJKDUGFxNZbjsQGz5bb
-         EWItD5rirhFvbLBIssaIM2JgLRx+5dKuIsKUkR7rJccqQPBWJK33IjjFFsi5gbe5qOv7
-         +Qpg==
-X-Forwarded-Encrypted: i=1; AJvYcCV0AnRQNS5O0I42qtB7EZQf129ubWnJb2Kw1zB9ocUCce2+8F6xma7LuRfQoIE2rxlBHnI=@vger.kernel.org
-X-Gm-Message-State: AOJu0YySUB9hed2Dj+JZzCVez1KsItcr8PthYwxW3OdYnovE6UEmhtMP
-	+mkDR/cqjIGOxXA1O/aoAb/Qa4FLx1hahsuVvxms+FSp7mPxujBAF9rl
-X-Gm-Gg: ASbGncuBYBGhYStZ4oB7Pk4l3G2PYE9D9orUzvH53iDNmXb83lHx3yxXv3q8PJTCt9K
-	PfOnzC9zoqn9yEa1tUNpeFS776zpmX294Qmh7CVB0oKd+32bEnNC21Z+AceqUiYfT9srfH9Wn3Z
-	fgdahoMA+DVc4CwKNI85MPHWqOuA7zMzVxndFEX15VWbCqZo7k68dWJIwmMIPVuR05gxViX0+lh
-	nMEvh6CGP7YN249Oyo273qVwUABMQ7qS3WfHQXwmiIBBkIftbLmebaDo3307tG2cDLq4qJ1IHPS
-	pvksalsfjZxA2DPasJBTjmCUkg1iM40/NOsVs7yHz/njU+y6J2mru3WGlqpAfL/o2NlYlgm1sXJ
-	/YRMc47TKqjX+kt+PJEfkxjSUjv8YTw0kojjihw==
-X-Google-Smtp-Source: AGHT+IFPW2+cr/FSLJBmLBaRWqRb/QvfMWrBoOWOq+JGxhWQfOMbcGvZGtGHOa7Eie6IsVe1iY5Srw==
-X-Received: by 2002:a05:6000:40d9:b0:399:6dd9:9f40 with SMTP id ffacd0b85a97d-3a5318823bcmr5452199f8f.9.1749289710782;
-        Sat, 07 Jun 2025 02:48:30 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5324361ffsm4113213f8f.47.2025.06.07.02.48.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Jun 2025 02:48:30 -0700 (PDT)
-Message-ID: <0d7cbeed-e3a6-4cd4-8f38-9253c5c18837@gmail.com>
-Date: Sat, 7 Jun 2025 10:48:29 +0100
+        bh=q9Au/QFOhbdkvseMfE5bJ6K06wvrbPG/gP1L29xVN+Y=;
+        b=j36Dq8qPEEaB+iPYLn/8Jux13JHOyeod8S9/vEPyhR/HTvLsNPrZ4GKcNVNMqePK0S
+         e55w23l/74r7x+KO4HGk1e9RGcarb6hj5noOheEW6ZvykVoSxeVDMJWTImaPh6lCT+kQ
+         mViODpMrw20PN2k8tqWJgM8BMpBhlTXaob7FGCoezbyCurOM9OKB3Dy6ztinQs+LRAkf
+         BhaDx393Kc9Y5AGV/rEtga9dFhcg9OLCeiqBHvUC5A15enJFbM2y/DGvH2d1vP6Tl3FT
+         lx/I7THeSdHhTJ8Qi1u6OJUbCGI0HcmZ+yxAavDbRIg74dVLYd3rRG/cRvuKCIGHC8w9
+         FkFg==
+X-Gm-Message-State: AOJu0YwtEyyx0X02SX/7nTha4u1lmRqCOi/sNvyDwIPpibXuVrozOI0J
+	IMwpnaGnacmvb98y7D5ogSACqZj0+Zqn1bVlI1fUNRQOm6/YuqXKOvpTKjBG8p6AAtzy+rEZw00
+	fDyQKSoBV3W6hmMYQz2GItaaObwDYtE8=
+X-Gm-Gg: ASbGncvlghnGeThYrqLd8Wt7XkVEws29c7b/cNJk3mJbHFsJZO5/7nPtwYgtCd1OgqV
+	HLfEmCleKUml9sRrGFWotfKvAqhM9AiJONH1RXwTp6ZQpvby6NqZCOtxxRYzWxpEp5BwbXA9eRk
+	hu6lVtzQh2AihgdudbXYzsoTQodRf7rHk4CN9IrMtEDlM3
+X-Google-Smtp-Source: AGHT+IGKg/brOR9zXcQx2X2F5QHlz/V2ei9tYv2YOIeKiBJqEqL6oQ3GwWPVSrggtzKEypt8gFVpgl7Fdvs3vgzkBLY=
+X-Received: by 2002:a05:6000:1787:b0:3a4:e502:81b8 with SMTP id
+ ffacd0b85a97d-3a531caf95fmr5603184f8f.43.1749301000640; Sat, 07 Jun 2025
+ 05:56:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: What's cooking in git.git (Jun 2025, #01; Thu, 5)
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtt4t69l4.fsf@gitster.g>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqtt4t69l4.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+ <cover.1749289514.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <cover.1749289514.git.phillip.wood@dunelm.org.uk>
+From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
+Date: Sat, 7 Jun 2025 14:56:28 +0200
+X-Gm-Features: AX0GCFuWivT0VL9IHhqy6DP5BHUMGll9aUE_7TMYdIsM1usQsZz8Yju2E7c89ro
+Message-ID: <CAN0heSotWpNmqd905aknVTfk6WEcYifAwbXBKYfAWkhzxua3ZA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] stash: fix and improve "git stash -p <pathspec>"
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On 06/06/2025 00:40, Junio C Hamano wrote:
-> 
-> * pw/stash-p-pathspec-fixes (2025-05-20) 2 commits
->   - stash: allow "git stash [<options>] --patch <pathspec>" to assume push
->   - stash: allow "git stash -p <pathspec>" to assume push again
-> 
->   "git stash -p <pathspec>" improvements.
-> 
->   Will merge to 'next'?
->   source: <cover.1747733203.git.phillip.wood@dunelm.org.uk>
+Hi Phillip,
 
-I've just sent v3 as <cover.1749289514.git.phillip.wood@dunelm.org.uk> 
-based on Martin's feedback
+On Sat, 7 Jun 2025 at 11:45, Phillip Wood <phillip.wood123@gmail.com> wrote:
+> Range-diff against v2:
 
-Thanks
+>      +test_expect_success 'stash -p <pathspec> stash and restores the file' '
+>     -+  cat file >expect-file &&
+>     -+  echo changed-file >file &&
+>     ++  test_write_lines b c >file &&
+>     ++  git commit -m "add a few lines" file &&
+>     ++  test_write_lines a b c d >file &&
+>     ++  test_write_lines b c d >expect-file &&
+>      +  echo changed-other-file >other-file &&
+>     -+  echo a | git stash -p file &&
+>     ++  test_write_lines s y n | git stash -p file &&
+>      +  test_cmp expect-file file &&
+>      +  echo changed-other-file >expect &&
+>      +  test_cmp expect other-file &&
 
-Phillip
+This range-diff matches what I'd expect. Now this test makes sure we
+really pick up the `-p`. On that note ... I just realized that all of
+these would keep the test passing:
 
+ test_write_lines s y n | git stash -p file # what you have
+ test_write_lines s y n | git stash -p file otherfile
+ test_write_lines s y n | git stash -p .
+ test_write_lines s y n | git stash -p
+
+So the implementation under test could bungle the pathspec, query the
+user for both `file` and `otherfile` (in that order!), get EOF from
+stdin while handling `otherfile`, leave it out of the stash, and end up
+passing the test. We could try to protect against this by providing
+another "y": if git wants to read something after our "s y n" sequence,
+we'll give it a "y" in the hopes that it will trip things up. We do want
+to test the handling of pathspecs here, so maybe tighten this?
+
+>     ++  git checkout HEAD -- file &&
+
+This is better than what I had in my "maybe something like this". This
+explicitly restores the file.
+
+Martin
