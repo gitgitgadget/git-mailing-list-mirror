@@ -1,113 +1,124 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1FA21ABD4
-	for <git@vger.kernel.org>; Sat,  7 Jun 2025 12:56:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D471362
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 15:32:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749301004; cv=none; b=pFmYzM1TeL1gZ2yU5KfCAN8wEh/LASDELuJ6MbiC5hMiaUgmApfnNKXOjS3N1Cq2DlYlN8ZgXcD4y8YNMQpJGho8mMnXoj4Dne1aesvFl/+Sa7MUSBMObq/Da3rI8VBnhFPzyERSky1xibEZuDYZxYgjmmU3mZUdAJVArs5T+98=
+	t=1749310332; cv=none; b=f8zcuQEVVP94232NZwVWQ3ThA6EQs5ae6EwvdTujMhSKcHu3blpMwgOmGAqeve63qaWrC0aOtb6g6EXb2cye4JK9V/fM0baHwKhIjI/1llh1cyCuiETYnR3n37g75YcHfEPV9uRrKek6OS6E+30/ft76vvmnQMyXjHmetAeIvTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749301004; c=relaxed/simple;
-	bh=lPX9SjuHEFquYPCzADHcw67JDMDBaiG6YsjzudfpdG4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=QS9yP6GafRpthXR59jYD7Nrr0meYUZHMigDMa38MXnB1ss9T9SCRSafP0LFaBKPxK7lRay+Yw7PlF2Pxt22gW7czbFU24FJWSBPBIyStK3XedcmhW5Yl3BN0czkt834x8zmdmRSKnFNm0sq9n/wRtXZGRQu6MNLfBEO8zRwBoxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=daxcO/Gt; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749310332; c=relaxed/simple;
+	bh=Sa19cbIB7P3RypFRORYU+NwPajrEeIb9O2IjE3Xb5VQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TfuhuCmyWoMhCLw8vjsKYaaMgP5VnNdAyGTnM1g2WhvhjiB/+mvCQmOEa7u9UBMZNeRb70ImkqAbTh8uaFmdq4h5f1l05TvDFfeTKlpqjg2T0D1FZqpaIaPnDSicIx0GBmQuLvA1QqPXW5zfzUUMozryL7EdzojbMBoWULFpYMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uSpmfYpX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jo2N9R24; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="daxcO/Gt"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a50fc819f2so2282322f8f.2
-        for <git@vger.kernel.org>; Sat, 07 Jun 2025 05:56:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749301001; x=1749905801; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=q9Au/QFOhbdkvseMfE5bJ6K06wvrbPG/gP1L29xVN+Y=;
-        b=daxcO/GtatxPsBcK0LHDCDdkiKSbwOkxYYVzBM9hfJBVgwSH43DBH+bwX5JdxcVUQl
-         30pWCL9iuP1QF7Q/TFyzByzQIOJz8e8yjSp3aKH2z6Ypi+MC/KST6/11Uzhx/6j3+JNZ
-         1BT5qCebSpnFa4krdi1o2LrOMs2xe1t9V806xGGiEx4oQX9cQCXkz0HwniiGvZNBAPbv
-         ngYk5kRHvF+cKH5YaN+f6YsPQsI/MdirHJT004dZx8JTpTS8+UAIEQ/n5UFOGuLdGr1E
-         GpMcvfnbB//K8hKZupvzjgXAIrRFbD03Y3KUqr0b/mSjwFltontGywPHBkKvb7eo3GGh
-         MjXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749301001; x=1749905801;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q9Au/QFOhbdkvseMfE5bJ6K06wvrbPG/gP1L29xVN+Y=;
-        b=j36Dq8qPEEaB+iPYLn/8Jux13JHOyeod8S9/vEPyhR/HTvLsNPrZ4GKcNVNMqePK0S
-         e55w23l/74r7x+KO4HGk1e9RGcarb6hj5noOheEW6ZvykVoSxeVDMJWTImaPh6lCT+kQ
-         mViODpMrw20PN2k8tqWJgM8BMpBhlTXaob7FGCoezbyCurOM9OKB3Dy6ztinQs+LRAkf
-         BhaDx393Kc9Y5AGV/rEtga9dFhcg9OLCeiqBHvUC5A15enJFbM2y/DGvH2d1vP6Tl3FT
-         lx/I7THeSdHhTJ8Qi1u6OJUbCGI0HcmZ+yxAavDbRIg74dVLYd3rRG/cRvuKCIGHC8w9
-         FkFg==
-X-Gm-Message-State: AOJu0YwtEyyx0X02SX/7nTha4u1lmRqCOi/sNvyDwIPpibXuVrozOI0J
-	IMwpnaGnacmvb98y7D5ogSACqZj0+Zqn1bVlI1fUNRQOm6/YuqXKOvpTKjBG8p6AAtzy+rEZw00
-	fDyQKSoBV3W6hmMYQz2GItaaObwDYtE8=
-X-Gm-Gg: ASbGncvlghnGeThYrqLd8Wt7XkVEws29c7b/cNJk3mJbHFsJZO5/7nPtwYgtCd1OgqV
-	HLfEmCleKUml9sRrGFWotfKvAqhM9AiJONH1RXwTp6ZQpvby6NqZCOtxxRYzWxpEp5BwbXA9eRk
-	hu6lVtzQh2AihgdudbXYzsoTQodRf7rHk4CN9IrMtEDlM3
-X-Google-Smtp-Source: AGHT+IGKg/brOR9zXcQx2X2F5QHlz/V2ei9tYv2YOIeKiBJqEqL6oQ3GwWPVSrggtzKEypt8gFVpgl7Fdvs3vgzkBLY=
-X-Received: by 2002:a05:6000:1787:b0:3a4:e502:81b8 with SMTP id
- ffacd0b85a97d-3a531caf95fmr5603184f8f.43.1749301000640; Sat, 07 Jun 2025
- 05:56:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uSpmfYpX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jo2N9R24"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D1FA8254011D;
+	Sat,  7 Jun 2025 11:32:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Sat, 07 Jun 2025 11:32:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749310328; x=1749396728; bh=PN0v5GMWpW
+	CkK4oPT+KiNQLhApFn/Mg3g1UC/6qG4Dw=; b=uSpmfYpXj3kOa+x/fgIv1a5AF0
+	2Hmo/SLyjFb3AD8R97/V3qaotIYLmATgp1sa8OFRvuYykSei3L12HjQ1poBnQTfS
+	tKPXeP/LJx6UnRbSC6u2wU8pIWXC5YkN5Pi6ayG97x1W5ubgIAxwZ2llnEnAJR0n
+	C/r5/NcQfeX9qPChNmYSkwRz16QWs6LV7sDXHubFixwRxuSpGNSiFOsubitwjtpF
+	LioILSWsesEtUGovD5cua01e/Ut696z48W9gU5hrwUOV+cveyQATngnGoHuyvOCn
+	h3D91Wyi4nnMjVzgubbkAAijNgm3gdkzuDzLB88xnGsZxKqYmL49crgKZjvA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749310328; x=1749396728; bh=PN0v5GMWpWCkK4oPT+KiNQLhApFn/Mg3g1U
+	C/6qG4Dw=; b=Jo2N9R24IF6Fz5cCi6YybR866yKtNck5RPTLoqnd0BSlRCe8s8t
+	DOe+na6XO3GRce4vnQhPa0sjlWr7VAoc2dsD+OxTooPhGcyPrs82FpCXydviqyTv
+	2GN5ThMu6/lYBvmCMzebmom2dvvnhwUMxBB2j2z0qdJXkGKccOsoTO/EPaNKFVVr
+	Qhal8J0J67JnsnVhiVDqOneTATQSL+/msQM0bFyiZ7teSVfnWLwSPgHlLjM36Ajb
+	dJxROQ5VaOLZbnmTLjRCiRMB9EauE24JLiAhyVCKIte5Go0CYDhv4ybIVnNJVIRp
+	+8+Lv/S2l/gXLHDnMOiNnfS6pOtU7c0BYNQ==
+X-ME-Sender: <xms:eFtEaALx293txr4c35eCiW8bn0Wjmog0f8Q9MqOSTGpcGCtDV8eqYQ>
+    <xme:eFtEaAKG-0LZRIMIiCKFQEyHpR6Iv1yUpFUOyWqwlxcVDkzo-qxYUAD572GAyrZ80
+    4t2n_Fc5DHonPWuTQ>
+X-ME-Received: <xmr:eFtEaAsztrxry9C3cjT9ymoavCQtCm66tavb-HhVk8tUZthfIYKfKD5gWcgfzTpZnGzcWfXExLXDC2Nkq909K82f5bc0s2FV56q3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeijeduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
+    grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:eFtEaNYJd-j-2MrltV7JbTRhDncwpqMJJT3tqwSHpTlRkdfJOHKAPA>
+    <xmx:eFtEaHY4Ec9iwp7h49jQRdnPqpQKlAcmsImVZhX5zugK5gd-yhuBDQ>
+    <xmx:eFtEaJCqvYTgZtRJJcK6ciGVcNslsleZb5Qp2L0KG9N6oHER1rFg4Q>
+    <xmx:eFtEaNaQXHsn4t5gF4WF52ZssZSrhxsAqeVY0B0Pb9r5AHGVANoC_g>
+    <xmx:eFtEaNn-SDLeZOTUSR295CFlY6lcd7E5zKvC5RuNhJ6-EWbo1sJAdEVE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 7 Jun 2025 11:32:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
+ <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
+  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5
+ authentication is requested without OpenSSL
+In-Reply-To: <PN3PR01MB959732DB7232FFE1ED7D38F3B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Fri, 6 Jun 2025 20:06:27 +0000")
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597BB453E9980CC50AA6703B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB959732DB7232FFE1ED7D38F3B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Sat, 07 Jun 2025 08:32:06 -0700
+Message-ID: <xmqqy0u3zhxl.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
- <cover.1749289514.git.phillip.wood@dunelm.org.uk>
-In-Reply-To: <cover.1749289514.git.phillip.wood@dunelm.org.uk>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Sat, 7 Jun 2025 14:56:28 +0200
-X-Gm-Features: AX0GCFuWivT0VL9IHhqy6DP5BHUMGll9aUE_7TMYdIsM1usQsZz8Yju2E7c89ro
-Message-ID: <CAN0heSotWpNmqd905aknVTfk6WEcYifAwbXBKYfAWkhzxua3ZA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] stash: fix and improve "git stash -p <pathspec>"
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi Phillip,
+Aditya Garg <gargaditya08@live.com> writes:
 
-On Sat, 7 Jun 2025 at 11:45, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> Range-diff against v2:
+> Unlike PLAIN, XOAUTH2 and OAUTHBEARER, CRAM-MD5 authentication is not
+> supported by libcurl and requires OpenSSL. If the user tries to use
+> CRAM-MD5 authentication without OpenSSL, the previous behaviour was to
+> attempt to authenticate and fail with a die(error). Handle this in a
+> better way by first checking if OpenSSL is available and then attempting
+> to authenticate. If OpenSSL is not available, print an error message and
+> exit gracefully.
+>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+>  imap-send.c | 61 ++++++++++++++++++-----------------------------------
+>  1 file changed, 20 insertions(+), 41 deletions(-)
 
->      +test_expect_success 'stash -p <pathspec> stash and restores the file' '
->     -+  cat file >expect-file &&
->     -+  echo changed-file >file &&
->     ++  test_write_lines b c >file &&
->     ++  git commit -m "add a few lines" file &&
->     ++  test_write_lines a b c d >file &&
->     ++  test_write_lines b c d >expect-file &&
->      +  echo changed-other-file >other-file &&
->     -+  echo a | git stash -p file &&
->     ++  test_write_lines s y n | git stash -p file &&
->      +  test_cmp expect-file file &&
->      +  echo changed-other-file >expect &&
->      +  test_cmp expect other-file &&
+This is a good thing to do, but I would have expected that it would
+come a lot earlier in the series, perhaps immediately after 01/10
+fixes the copy-and-paste bug.  If this is moved earlier in the
+series, it would need to introduce the try_auth_method() helper at
+the same time.  Since there is no new authentication methods
+introduced at that stage in the series yet, it would be quite
+straight-forward to read and understand the patch, and on top of
+such a solidified ground, the series can add OAuth2.0 and PLAIN
+support on top.
 
-This range-diff matches what I'd expect. Now this test makes sure we
-really pick up the `-p`. On that note ... I just realized that all of
-these would keep the test passing:
-
- test_write_lines s y n | git stash -p file # what you have
- test_write_lines s y n | git stash -p file otherfile
- test_write_lines s y n | git stash -p .
- test_write_lines s y n | git stash -p
-
-So the implementation under test could bungle the pathspec, query the
-user for both `file` and `otherfile` (in that order!), get EOF from
-stdin while handling `otherfile`, leave it out of the stash, and end up
-passing the test. We could try to protect against this by providing
-another "y": if git wants to read something after our "s y n" sequence,
-we'll give it a "y" in the hopes that it will trip things up. We do want
-to test the handling of pathspecs here, so maybe tighten this?
-
->     ++  git checkout HEAD -- file &&
-
-This is better than what I had in my "maybe something like this". This
-explicitly restores the file.
-
-Martin
+Thanks.
