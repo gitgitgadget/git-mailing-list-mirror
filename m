@@ -1,178 +1,180 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010007.outbound.protection.outlook.com [52.103.68.7])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 072A4A31
-	for <git@vger.kernel.org>; Sat,  7 Jun 2025 17:13:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.7
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749316398; cv=fail; b=KPwzp572Egps1BslfktGemV9C/ykP1kXcF0a/9npeDXZkzo2fKLnHG9hjCYI2yjlrRRGPvrI16tkwuFNSCdaT6aj82Vx3nVSJIk3RpoNI18+3PDXkKEOkdR/JLQPOumcjIxQKTdU5ShBVpPrd6IT9aulRGwRi5H/dXg5iFmUerI=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749316398; c=relaxed/simple;
-	bh=2/Rk9ecQwFW6YsBlvis+cbIMFH8VMklG3mI2Ht9K3xM=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=JhZzxZp6yqc/aNzt8qVa6Dn28eAhK43hCLWkSW39SHTNtTJkzCZ30gxsrkleidYaVEJNoCGo5gfmQ5M/uZnsO8E5QoHxpyG677alG6g1JdKt1BNKHzX2r2HUZE89LSIhRePo/obsPdV6L976/ybIhx2YHGIsMqvbVueWQQaI7jA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=Jlq/DF4U; arc=fail smtp.client-ip=52.103.68.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8838427701
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 17:31:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749317506; cv=none; b=RJ7fg/cMycvAkhbjWlfUWyLVL70SsH8IF9LCmNqptG8uSsqhIPz526Olg9A70M/MOTodMGxUk/R2zVQoDbYLI8WQ8bGOMYon7aKsChCz3W8q3P9sopYdMHZrf5CYi9yX6B9MkNthbySuMvNbTxNOrSIgzWmDgZVcmkrEYjisc4k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749317506; c=relaxed/simple;
+	bh=lpO2/XdImwBgpEclchVo067IwYw3GeOC0IO1tXzsBmc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=dd/wXypPllMm8reqDUfXwujhGSjTsFFcc4OLZpZDntRFxAdPdWkAwcDw+ispRj3YSQ8ZG56/a6PPpguR6jypuCYeP2Phm+5G7aXr6anY70k5h1ELtx6i6FGDSXelTjug9cZzcCVn7obpEeNT/6Bmw81EkztWPuRepwTOTJ/n6hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bN22k+F7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ONE435XW; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="Jlq/DF4U"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=te3kSizRdve038vo3rgA40CSyfYjUgzh6c8KF7vNbqQ3OoABmqXLf5xpk0YVDNphnuWa98+HMKZy67NNEsYhTgw2zPvaTUimf57NlIF3zTwIT8Ijr0zSUgmduCjTsOnPQUQvN4EhMmKJ3JKMQJp4s2d0DAFnWd/0YhkD6w53voRKwlJjHSGLtKGe5T60QI3/j7LB0Vp3XswL5bgsdxkBHkoyJtI4aTxO4GPFw7nm0W8wNmVbRbG+zn3sB8MTd8oNZ6s8TRCdjcNNyAAOF9dTS8OopUOAy9kDBdFRevgF+Qs+N36+qRi960mOuBTKbW9HaLp8Pvz1RUnaqLTV12G8fw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2/Rk9ecQwFW6YsBlvis+cbIMFH8VMklG3mI2Ht9K3xM=;
- b=Y+Ox8qYsrCvOA/KqOl788HIUxIoTcJ5gvRjjCjrfkXNY2dFRvW5W089jZb37U7oWrbdkJ0OfqlTcoR5HP9vgCQGvilBehFhAYxNOWPeFbQjivWcvNQTvltCBfMtMRanDyvLt6fR5QMtAVEB7affrY/PQysWJbtkkutdaIF+CDPDd76DeCmNApq5pCDhbqvFlJxHSF4bj55qxu7j+E30Zp5a8ThJGO7BcoG1G2eHv1MAen7B/hxqmkgrrx7ceSL7gxBcBRy6tTJjnpsKvcxobwsWpoe5NfzKmskdm8scGgzIre48s6r8wQCgKO7xi8Jrh728Ivy6EK2a70DnFtiBvKQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2/Rk9ecQwFW6YsBlvis+cbIMFH8VMklG3mI2Ht9K3xM=;
- b=Jlq/DF4U+JWCty7xam5bOUA6XqbqYA2/nn9n4XOZ2DEGf+Ipyd1HrDkMNeqfue/TAy7adpFMWBuxp9jscaU3RvrHi4bRizERt+gxyGdG1+7bqClf+BsL/QUlAUcelIhXuvxD56vPGn0141Nhyy2Cfucez+4EME3KBEvMp5esP/K2TTcffdEk7j30uh10M2B2FegxFQiA78MSnd34Bu+eudW5bI27dq4kK9tKMmE9YCA53TvFAihvB2Pxj2+lzFhCWVoZ5N+STovrmmv3OinqZhDsIEOaavfP5VPZjiDD/Wx/leUv+zQW0ALpnebtt5RsSnOJwW3RKOtFp6eXSAal2w==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MAYPR01MB10697.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:159::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.24; Sat, 7 Jun
- 2025 17:13:09 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.024; Sat, 7 Jun 2025
- 17:13:08 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>, Eric Sunshine
-	<sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>, brian m carlson
-	<sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, Ben Knoble
-	<ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5
- authentication is requested without OpenSSL
-Thread-Topic: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5
- authentication is requested without OpenSSL
-Thread-Index: AQHb1x7RwmU6j68CikiCTe6h/Egw8rP31HOYgAAcK7U=
-Date: Sat, 7 Jun 2025 17:13:08 +0000
-Message-ID:
- <PN3PR01MB9597C03C260EC7F5F9237A5FB869A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References:
- <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597BB453E9980CC50AA6703B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB959732DB7232FFE1ED7D38F3B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqy0u3zhxl.fsf@gitster.g>
-In-Reply-To: <xmqqy0u3zhxl.fsf@gitster.g>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|MAYPR01MB10697:EE_
-x-ms-office365-filtering-correlation-id: 1153bfc6-940d-4e8a-1519-08dda5e6931c
-x-microsoft-antispam:
- BCL:0;ARA:14566002|8022599003|461199028|6072599003|15080799009|7092599006|8060799009|8062599006|19110799006|3412199025|440099028|102099032|56899033;
-x-microsoft-antispam-message-info:
- =?utf-8?B?Ty9yQ1BiN0JRekQzenR2TVVrT0MxcS9nT1liVm5nSW52aUl3cXdYTVFqUUp3?=
- =?utf-8?B?MGw5TWVvd0ZPMTdsVW1ka2thdjJnS2RiWG10VkhQQnlBNUtDRU9VSFRWRTA3?=
- =?utf-8?B?RUVCRWg0d3lVTHRHRVFPeEt0ajRVTndjRFVVTnRRM2ZTRXcwOFVydTBHRWtl?=
- =?utf-8?B?eEFIT2xabzVuN3BlV1c5QThsd3BMa1pONUN3elp6YXRYZE9aTytOaDVma003?=
- =?utf-8?B?RVRWN1hybzdZT2lSdjdTeEZ1RXliRVVWWDdKUG1jWmhuWUZQYThzcFErdFZ0?=
- =?utf-8?B?T25SWnhHMDNZY0FvSklpUEI4dGVjSnZJOGxrTWxaMFIzR1U0TmRldHZYNHF0?=
- =?utf-8?B?UTdYUjllMDl2R3FaQjloZ3JLczlSWmRERVBabXNvVEFCRVU5T05VOTM1bmMw?=
- =?utf-8?B?ZWNETnJDNDdodTBhcWN4TUxGV3VDM1N6bU4xOHZZQ1NsaElyZC9Tb0gvWlIx?=
- =?utf-8?B?NmU5dGE4Y2hONktNK3B6Z01FeEI5QWtodXNLUG9UNDlUWGo3MnFTbFhDRktR?=
- =?utf-8?B?WWRlVTIrY1JFVksyNGJVV3NpMlRndzBNQVhCUXFwUFppNTlXQSsrTjJQK0hY?=
- =?utf-8?B?Z21NMHB1MFVrTkwyWTkyNWFVTFY3WTVwOVdtUWNwei9CUnNjb05WdFFFSmlU?=
- =?utf-8?B?Q1VQejJueEZnZjYxMmVFU2o4SG53Z0xIT0k2YzQ3VzNoVDh6U2NDVGRsVENn?=
- =?utf-8?B?VTVRejVSdTdOWktwYVZGR2xYYjh1ZlkrY2dVWGkydGVVclRvT1ordGVQemFh?=
- =?utf-8?B?RW5OUENXM2ZpZGdzY1Vabk94VndmQlBhM0sxRnI4b3A3Qnk0cHhTbWNNbTNt?=
- =?utf-8?B?TTZjenFtdW9vaVNBRlpCdHpiYmhLUmNhdXdDcnhuRkUyWnNpTmhrOEJrc3F5?=
- =?utf-8?B?bGVuWitGZUk1NXdzcEdydHExV3FsVXZvd0wvbWNrc3JhdUVyS1VsWlJ1SFRB?=
- =?utf-8?B?NmM5VzVpVmlpcWRNZy9JS3ZsN3N2TVZ0VmVSVklWVTAySW81c2lodkJRL0Fm?=
- =?utf-8?B?czFmK3pqNTJma3NpUnppRzQ5WTBOdFo5NGhsbEVvUWFuVXpJSUEyTHRlOTVT?=
- =?utf-8?B?eGkxbDhoc3o1OWhqelc5S2RVeUoxVVR5N1J5K2RiMTVkOEIzUHdmUW9xNU0v?=
- =?utf-8?B?ZFZzOGFNblFoMG55OWQ0Y3oxVytFY3hBRDZGKzdQUC9YUDNJQzhPZStYVFk3?=
- =?utf-8?B?NGQ5WEpVdWFKZjg2OGFPQjB4WldlWWNQcXFBQ0xuTUUxcTQzaG9YMGJGMGQ4?=
- =?utf-8?B?V0M2VTJxWWRNWm5pRFJSVDMrYW5PZ3d2SEZwZGRYZE1lOTRmdmt1QWpTRXlE?=
- =?utf-8?B?OSs3MWtBQWRnTHFQbEtqRCtyMFljNkFHbkg0MmcyTE5nS20vZnUyR3hLNWFM?=
- =?utf-8?B?K0RwK2E3QU85cU0xeUxRV2FiUHVGWS9WNk5LS0l6bUs0MllXODVFZzIrZUV3?=
- =?utf-8?B?NXZ6Q2VkY1pkTVg3VUhBWGt0MXpkclVsVkU1QTN5RGxmUmFIYy9iN2JJK0ti?=
- =?utf-8?B?MnUwcGdvYlQ1TVVDbUpHYkNVNTFmMVNVZWN6U3hQeC9iTGFpZko1Mkl2Y3VT?=
- =?utf-8?Q?m6PHEAMj6CJT3bkDILSgylaRE=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?MElmN2ZLRzEzN2M2Y2c2YURRMmVtUzliV0VYUURtQUxhRGhpTTl2eEdxSG55?=
- =?utf-8?B?NWFteUpQUlFOR2dGSmFKZmtxNHIyc29BTjNqd3VUZDNValZ4dllpOVJNWGFR?=
- =?utf-8?B?YnZlWHdhWEhKZ1QzWnEyVURsQ1JJMGh0V2grZGEvcERXVW1WMVFNUGgzdFEz?=
- =?utf-8?B?MzNnaG1qR0pna1M3UVppZmZHVTAvZHVNSmdwM1FCWVNDbmF1S09aTE1QUFh0?=
- =?utf-8?B?Y2pGKzYvVjFLTUxMaHF4Nm5lc1laQkxjdXF3V3M5M0xYM0tYcW1kbVJqZE9y?=
- =?utf-8?B?MzBTUGpxK1MwSU5ydytFTzR3MXdMOVJiSVM1dTdIQm1tS1U0cVRycW1pZS9y?=
- =?utf-8?B?ZGFqa1ppQVBVTXVWV0J0RTB6NysyYi9GUVNYMXpwL09Xcm1JWUlVKzA2dVVz?=
- =?utf-8?B?MjhoTEtOR3ZLRTNrVllIYzFFYngxbHhqa2xZTkFoWit1YnFuRmY2cXI5b2ta?=
- =?utf-8?B?d2NCdVZhaWdORGZkb084UEZqT1BCN3ZtWVByUmMrQytTekRGUml1bi9ORjRx?=
- =?utf-8?B?RUNPU2FpZTJkRyt6U3Bzd0tjRGRpSWVsdUQrSmFDbWxBOUYxQU8vbkZ4eUR3?=
- =?utf-8?B?Q2tKTUVvVjZoa0NHZW1xV0lVcmlEaTVRbVRSajdEbmJUVHY3ZmJPNzN2NlRO?=
- =?utf-8?B?aUx2UEhCNFVuR3JhSGdWN1ZIOWdGUXd0VjhXblN4VzE2S0RuLzdiOFBxU2ly?=
- =?utf-8?B?cVRld0drbCtPcmQ0MEJKMnk5QURQaTdwZjFOVENpa1dma2pSTlhraGdaWWRU?=
- =?utf-8?B?YU1WemhRaS8vaXFWSnhQRU0zbUFZVzJJcmpHekR0OW5SQnd1eU5DeFZDUnMy?=
- =?utf-8?B?K0pRWUU1blpSWmhtaWFuUzZyeHM1REUrMEJrak1sSmM2ZGJDOS9qc0k0dFc4?=
- =?utf-8?B?MjNyTWVvc2Y3T0sxOEZ3SUJpWFpySjZXSmNFUGEwa0V2RVZTSVhZSmpaTkJ6?=
- =?utf-8?B?Q09iSjVFREpyeHVkT2QvYzEyS045UnY1TGRCYTlpQWo4T2h2T0VRTFdpcnFI?=
- =?utf-8?B?aDJ3SGQxeHVHZHFZSm9PWEh4WFpTNlo2RDI4eDJzWFVVbWQ0MzRIbnFmV0po?=
- =?utf-8?B?TW5iNVRyQXJSN3FYUXNDRmNXbWQwazdEMXpBTVNmQVpRdUVDUHFOYWNpQ2p4?=
- =?utf-8?B?WXRKdStEUlNpWW9vbzFPUmdLRDNmWTBsRExVb2ZkVmthVTEzS1ZyT0RvOVVC?=
- =?utf-8?B?SmxkVWpoYUJDdzZPV0NkVnhCcVM3VlNpdjNtREdnNTkwYnJabGpSZWVzb055?=
- =?utf-8?B?blpTc1Z1Vm5ZWnZocS9WOTNYOXgreWxBOVgxS1grSVdIeUFWWWszS1poazRu?=
- =?utf-8?B?cERodDZoT0MrS2VvU2s5NXlIZ3FCdEVRRFFwc08xWmdFRHJteEZXQXdtWmgy?=
- =?utf-8?B?Ti8wWWhFdkx1YmR4NW1Nd05WUVdLMC9rMkhkNG41RlJCaVlZSTgyRmg0Y0ZP?=
- =?utf-8?B?a3J2RVRvOTF5VW5FYUlOMkt6ZW5hUUJzN3NFdnl0SlRCelpLbnNsWWNobEd6?=
- =?utf-8?B?TEtHY0pJcWVoZklHcFVWMjhyZVdMNnlvcS9PY1BLMDNUMVBVQnJUVFo3ZE92?=
- =?utf-8?B?WDJJVDJzTjB0N2l1elR3NUtHdnVWSTVRaWFrK0NxRXN4NnpjNG9PbGorWGtG?=
- =?utf-8?Q?nxQ6g+JWZG9ii1FCEgYbJG8s7SmphCr32EhPcvTtmAb4=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bN22k+F7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ONE435XW"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6ED182540104;
+	Sat,  7 Jun 2025 13:31:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Sat, 07 Jun 2025 13:31:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749317502; x=1749403902; bh=6by3DXFaUA
+	TEfS9/W4uQnrkzVZ91vYgv8u7T8fN76H4=; b=bN22k+F7tk+zoa7vKqf/hQpS6o
+	MLsBUs35Jjo2/Q7X2aKnPwvzwWIA8nPx/r/tocvfU8c6nO8+5lI/NFuwH39pduw/
+	6dmSw1Q2lyv8KkodwyzWXFQEmDEDFI30OHIpZPpgCNqiFZZQTh1VOoV4vhaA7Scy
+	eggMNmX6u389Q3Y/ygy46fO6BH+e4LFlpoHgg1ZkZ/Qc8UqIvmvwKRV5m6GkG1VI
+	yoxaWPQcrZ4DLSkyN8bAykPsURDxSPm7R/9W5MqD3GXjuglfXU/gW5J/pBSwqjmv
+	UnQvD7H2Tf/YIizfyPtIRPmuF0CNVK1jGhhy4A2Jl90U5sf9Xr/S1YAFqnBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749317502; x=1749403902; bh=6by3DXFaUATEfS9/W4uQnrkzVZ91vYgv8u7
+	T8fN76H4=; b=ONE435XWUzO0jdu5RoKnt1XIpSz5GQ4HJEEx2/FKhcBtU201KAz
+	4ZOsBtcZcpy5xI6+8eK2hpOtaJs4zKebq3rH+rq2Ht7U/hU0VA8u9OISfqHEdP20
+	ulbE+MKAkPqu9+G50wi3JAVl0m0SLpfC7Rtk/M4vC8Xh2XuXTm84kLt/yTfeymmM
+	cEFrdegcVnCdXUAqAzJ2C3DR+IZix/5Sfm4z1gxHrQrhqLf9NXkhf/okjviGs5/g
+	l9rxW495yUexmY5DATXCV2CQZWqb67qkxWRJMENJsZPMOIeynbVy2slogKFdGVjS
+	Bxhfajge6g9+Av+lv2NzL8w0X3ulT0dMTWg==
+X-ME-Sender: <xms:fndEaH9YRaBuv97779BBZWu7e4Mow5-dP4aAA384857vbsaOeBFlxQ>
+    <xme:fndEaDvkEooDP3boKVe_ep8dsh1feWVcO6iOd8AgDnmusXNMLEmH3apu7gujtcKef
+    csW8egi39KQ9auTCQ>
+X-ME-Received: <xmr:fndEaFCH3Epb-bQ3SG45vFBheOqKOhAfqqQn-RXPE5q6ZogTND7FCQduSXgpgmPT1eGOPELScXSbNKtOfv1GoQWkzgqtiCgG4c56>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeikeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepgfeuveeludefkeefkeelkefguddtkeevleef
+    feevtdegtdffuedvjeeihedtteetnecuffhomhgrihhnpegtohhmphhuthgvrhhnvgifsg
+    drtghomhdpfihikhhiphgvughirgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjrhhnihgv
+    uggvrhesghhmrghilhdrtghomhdprhgtphhtthhopegsrhgrugestghomhhsthihlhgvrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fndEaDfpGmTZ-4kozrb4S2fdQUTfatqmBLpmoFgHw8DcDxjssaHPfg>
+    <xmx:fndEaMN69LnyJWBkhhr2UWxMVspj59uJ9v6z9lIpGLEsKMhOs_V7vQ>
+    <xmx:fndEaFkTDpo_WTlCU3qLG7OvP4SHajbib7kla9rvBVhYQwDSemYy2g>
+    <xmx:fndEaGvECbR06-pQH_2ml4udCEPfMCf2QWiU5UIzgmkMIZ5nHsWh0A>
+    <xmx:fndEaBzrpkAZSy8a4yMIQBOzPmURZxR1GXRHIJAFEwbP1gWzMuTsmS_K>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 7 Jun 2025 13:31:41 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+Cc: Brad Smith <brad@comstyle.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] config.mak.uname: update settings for Solaris 11
+In-Reply-To: <aEP7kpQIHZx94eg6@google.com> (Jonathan Nieder's message of "Sat,
+	7 Jun 2025 10:42:58 +0200")
+References: <aEOlc_PV7ZngUdj0@humpty.home.comstyle.com>
+	<aEP7kpQIHZx94eg6@google.com>
+Date: Sat, 07 Jun 2025 10:31:40 -0700
+Message-ID: <xmqqbjqzzceb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1153bfc6-940d-4e8a-1519-08dda5e6931c
-X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Jun 2025 17:13:08.5453
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAYPR01MB10697
+Content-Type: text/plain
 
-DQoNCj4gT24gNyBKdW4gMjAyNSwgYXQgOTowMuKAr1BNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3Rl
-ckBwb2JveC5jb20+IHdyb3RlOg0KPiANCj4g77u/QWRpdHlhIEdhcmcgPGdhcmdhZGl0eWEwOEBs
-aXZlLmNvbT4gd3JpdGVzOg0KPiANCj4+IFVubGlrZSBQTEFJTiwgWE9BVVRIMiBhbmQgT0FVVEhC
-RUFSRVIsIENSQU0tTUQ1IGF1dGhlbnRpY2F0aW9uIGlzIG5vdA0KPj4gc3VwcG9ydGVkIGJ5IGxp
-YmN1cmwgYW5kIHJlcXVpcmVzIE9wZW5TU0wuIElmIHRoZSB1c2VyIHRyaWVzIHRvIHVzZQ0KPj4g
-Q1JBTS1NRDUgYXV0aGVudGljYXRpb24gd2l0aG91dCBPcGVuU1NMLCB0aGUgcHJldmlvdXMgYmVo
-YXZpb3VyIHdhcyB0bw0KPj4gYXR0ZW1wdCB0byBhdXRoZW50aWNhdGUgYW5kIGZhaWwgd2l0aCBh
-IGRpZShlcnJvcikuIEhhbmRsZSB0aGlzIGluIGENCj4+IGJldHRlciB3YXkgYnkgZmlyc3QgY2hl
-Y2tpbmcgaWYgT3BlblNTTCBpcyBhdmFpbGFibGUgYW5kIHRoZW4gYXR0ZW1wdGluZw0KPj4gdG8g
-YXV0aGVudGljYXRlLiBJZiBPcGVuU1NMIGlzIG5vdCBhdmFpbGFibGUsIHByaW50IGFuIGVycm9y
-IG1lc3NhZ2UgYW5kDQo+PiBleGl0IGdyYWNlZnVsbHkuDQo+PiANCj4+IFNpZ25lZC1vZmYtYnk6
-IEFkaXR5YSBHYXJnIDxnYXJnYWRpdHlhMDhAbGl2ZS5jb20+DQo+PiAtLS0NCj4+IGltYXAtc2Vu
-ZC5jIHwgNjEgKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0NCj4+IDEgZmlsZSBjaGFuZ2VkLCAyMCBpbnNlcnRpb25zKCspLCA0MSBkZWxldGlvbnMo
-LSkNCj4gDQo+IFRoaXMgaXMgYSBnb29kIHRoaW5nIHRvIGRvLCBidXQgSSB3b3VsZCBoYXZlIGV4
-cGVjdGVkIHRoYXQgaXQgd291bGQNCj4gY29tZSBhIGxvdCBlYXJsaWVyIGluIHRoZSBzZXJpZXMs
-IHBlcmhhcHMgaW1tZWRpYXRlbHkgYWZ0ZXIgMDEvMTANCj4gZml4ZXMgdGhlIGNvcHktYW5kLXBh
-c3RlIGJ1Zy4gIElmIHRoaXMgaXMgbW92ZWQgZWFybGllciBpbiB0aGUNCj4gc2VyaWVzLCBpdCB3
-b3VsZCBuZWVkIHRvIGludHJvZHVjZSB0aGUgdHJ5X2F1dGhfbWV0aG9kKCkgaGVscGVyIGF0DQo+
-IHRoZSBzYW1lIHRpbWUuICBTaW5jZSB0aGVyZSBpcyBubyBuZXcgYXV0aGVudGljYXRpb24gbWV0
-aG9kcw0KPiBpbnRyb2R1Y2VkIGF0IHRoYXQgc3RhZ2UgaW4gdGhlIHNlcmllcyB5ZXQsIGl0IHdv
-dWxkIGJlIHF1aXRlDQo+IHN0cmFpZ2h0LWZvcndhcmQgdG8gcmVhZCBhbmQgdW5kZXJzdGFuZCB0
-aGUgcGF0Y2gsIGFuZCBvbiB0b3Agb2YNCj4gc3VjaCBhIHNvbGlkaWZpZWQgZ3JvdW5kLCB0aGUg
-c2VyaWVzIGNhbiBhZGQgT0F1dGgyLjAgYW5kIFBMQUlODQo+IHN1cHBvcnQgb24gdG9wLg0KDQpJ
-IHVuZGVyc3RhbmQgd2hhdCB5b3Ugc2FpZCBpcyB0aGUgaWRlYWwgd2F5IHRvIGRvLCBidXQgc2lu
-Y2UgdGhlIGNyYW0NCm1kNSBwYXRjaCBjYW1lIHVwIG11Y2ggbGF0ZXIsIEkgZm91bmQgaXQgZWFz
-aWVyIHRvIHBsYWNlIGl0IGF0IHRoaXMgcGxhY2UuDQpJIHVzdWFsbHkgdHJ5IHRvIGF2b2lkIGFz
-IG11Y2ggY29uZmxpY3RzIGFzIHBvc3NpYmxlIHdoaWxlIHJlYmFzaW5nLCBzaW5jZQ0KSSBmZWFy
-IGJyZWFraW5nIHNvbWV0aGluZy4gQnV0IGlmIEkgKmhhdmUqIHRvIG1vdmUgaXQgYWJvdmUsIHBs
-ZWFzZSBsZXQgbWUNCmtub3cuDQoNClRoYW5rcw==
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Brad Smith wrote:
+>
+>> Solaris 11.0 and newer have mkdtemp(), memmem(), strcasestr()
+>> and strtoumax().
+>>
+>> Signed-off-by: Brad Smith <brad@comstyle.com>
+>> ---
+>>  config.mak.uname | 28 +++++++++++++++++++++++++---
+>>  1 file changed, 25 insertions(+), 3 deletions(-)
+>
+> Thanks!  That's from more than 10 years ago, so seems very reasonable
+> to rely on.  I assume this is tested :), so lgtm.
+
+One thing I didn't check myself is if the new make directive lines
+(ifeq and endif) are indented with SPs, not HTs.  I heard that newer
+gnumake is pickier than before?
+
+To truly test this you'd have to have access to 5.5 or older, 5.6,
+5.7, 5.8, 5.9, 5.10, and 5.11, unless we declare that it is good
+enough to eyeball and to see the set of variables for these existing
+releases hasn't changed ;-)  At least it does not break 5.10 and 5.11
+
+This patch is good, and I'll queue it as-is; thanks for writing and
+reviewing.
+
+Outside the theme of this patch, should we also attach good-until
+date on each of these entries, with scheduled deprecation/removal
+for old ones?  If [*] and [**] can be believed, 5.6 for example have
+met its EOL in July 2006.
+
+[*] https://computernewb.com/wiki/Oracle_Solaris_End_of_Life_Date
+[**] https://en.wikipedia.org/wiki/Oracle_Solaris#Version_history
+
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> [...]
+>> --- a/config.mak.uname
+>> +++ b/config.mak.uname
+>> @@ -190,9 +190,6 @@ ifeq ($(uname_S),SunOS)
+>>  	SHELL_PATH = /bin/bash
+>>  	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
+>>  	HAVE_ALLOCA_H = YesPlease
+> ...
+> Not about this change: do we want to retire some of the cases for old
+> versions at some point, or to collapse them so they can share more?
+> Seems nice for maintainability.
+
+Heh, I should have read to the end of your message.
+
+Marking for retirement is certainly a good idea.
+
+As there are way too more stale entries than entries for supported
+releases (which are only 5.10 and 5.11 if [*] can be believed),
+restructuring to share more may not be, depending on how it is done.
+The current one already says "These are common to all releases" and
+then independently list additional variables for each and every
+release, so you need to look at only two lists to see which
+variables are applicable to one single release.
+
+We cannot change it to "all releases should use these", followed by
+"if you are at or older than 5.10, additionally use these", followed
+by "if you are at or older than 5.9, additionally use these", ...,
+as we may add or remove these variables as releases progress and
+gain features, which may lose NO_FROTZ that used to signal the lack
+of frotz feature, or may gain HAVE_NITFOL that signals the gain of
+nitfol feature, in a newer release.
+
+The current arrangement allows us to get rid the support for a
+single release fairly safely by just removing its release-specific
+addition part---if it makes some variables in release-specific
+addition part shared across all releases, like NO_UNSETENV and
+NO_SETENV already are, the result may be redundant and more verbose
+than it necessarily is, but cleaning up to move these ones to common
+section can be done independently from such a removal.
+
+And the same argument can be made when you add a new release, like
+this patch does, to separate the addition of a support and cleaning
+up.  It is clear from the patch text that we are losing three from
+the commonly shared part and adding them to all the existing ones,
+plus writing release specific additions for 5.10 and 5.11.
+
+After the dust settles from this patch, we may want to see if there
+are ones like NO_SETENV/NO_UNSETENV/GIT_TEST_CMP that can be shared
+across all releases and move them to the commonly shared part as a
+follow-up patch.
+
+Thanks.
