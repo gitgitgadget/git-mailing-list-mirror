@@ -1,113 +1,135 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 120D142A83
-	for <git@vger.kernel.org>; Fri,  6 Jun 2025 23:32:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D200E8F6B
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 02:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749252747; cv=none; b=DK9zjD9vebThAaAMKUMtzrs4pXRksETgGJzJZt4P9CMDZ2phJligd6FA3+tVaq9XW/wwve7Jb2G3Ib6OKsIDCNXLHgXLUEg93x+L+9TSKt65OeV1iG6gWtrVlEAzsKtqQiFcfo922q1AzV2XlLq4xFlsA2Fwg8vAtZICLTBGaPQ=
+	t=1749263742; cv=none; b=Y49l1dxqJBiG7h2/rX3OSe/S/OZKb3MWvC0WGqfLuwRR3vFIgThvAWbX3f76O1OIm/+RLz5XoVgay9a20SJyIo3nor0kChPhqCEm2Yf9QdubtI4uRHbgA3mQ5Oiba41CCTKGxpq14/kPnM9BrW2xp4HzWdaIzveuIfoBOWROhgY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749252747; c=relaxed/simple;
-	bh=4sggu1dc3SaTXqQRozhbbv090JXc1mw0nXY6+XxYSrA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AAilWSO2HA5HHcB6F0XXw/6Gv5i9yrOKBmQEs2QXM5BZzt/6xsSvxNPEUx64w4+aRT6ya+Aejy0lxGko9DOLEl5WquhSnWHKyWSB1UAKirO+DAKa1fPXTum3mSpZHcVPDY5/D9mNwav4B9TkoXV+2joCXN7DjhDJudE+i861a+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z4AUU3E1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ly5aAGNG; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749263742; c=relaxed/simple;
+	bh=ewZ/cP5at+JuzayeCKCtOb2gqUIe7nyukOrhhFMnI/0=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=fj5s6u0puACuYmNz8J7P7lsjk5RLCyk+qwZ47wNv0K5brH2TAmV5LGoGzsqRcj93aWE0YfRR6zbm6d/XZx4ojpZhHu5hENmW46dUMOIlEIXwCtvkWuaCKZ/z/mzWiz8nY5LAWjgaJhZRrIozo4IBrfcsoDDzV2Iey3UELalDueI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=K8Sgw030; arc=none smtp.client-ip=206.51.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z4AUU3E1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ly5aAGNG"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A1C01140116;
-	Fri,  6 Jun 2025 19:32:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 06 Jun 2025 19:32:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749252744; x=1749339144; bh=LH3E0CdRiT
-	3UZkcOXydlkp253E1m5PI4zvJw/OV41rE=; b=Z4AUU3E1Kv3ydBovVbZbjitJYH
-	L77hpkzgKeNBAUywkrV4RPqgZN+v1M5e2uoN0oMV2iTLJSwodanwzp/ww3rYGPTq
-	927YTHwWUN/VNqh00JMyU2pAOfQTeCypFct3iOICdjIO9tyUw1/JZGLGRV3oYTFN
-	pHCkFBx/19IHl+uh/TvRHDcBECeOzagBuUVVYd7ipOS4yk4FZo4IDsRN88QrkPwc
-	UfxYFo741xkWHAdIuDOPzZ49WjjzR38fDZGY6Qt0kti0pmN5Rpc0jPiCLTI8dVQ2
-	9hmHnOG9HTDVtw8bDPw1e3qbztHFVd70gA8ldkIQV9+z9cNFZ+cP4BXcO0cw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749252744; x=1749339144; bh=LH3E0CdRiT3UZkcOXydlkp253E1m5PI4zvJ
-	w/OV41rE=; b=ly5aAGNGu7mhx6CJdseK72/Kd0lUAy+jytprScbdw10xs0tmTJc
-	c8B/E7GJZ/3TH2g1MaXINvjYDAiQSFGkl0NOWuJKzH+/9BXqRO1NZOpshXg3+Y2g
-	SzOR7E906mDiLV5ziPJ/CfVCJEOA/8IyIdB6E7XOU2oDh1LiQAoVsW1ekGAEy+y+
-	VslBebR6sfFFYvOYsEqljTdxjQL09YfgNQP3j6SQuDxwhTN4KkvyRqLYm+Fcekpt
-	bYCL9untZoGacGjQ5otY/xGmcOMXb83/jEo4DworhhNai/zG6FHSP5MncQcahJ23
-	pX7cnn1kYRegfQZEo8A2XwbZzb5pd7cgByQ==
-X-ME-Sender: <xms:h3pDaBdzdIb1Onr3gXve6eghECALHRENmgyIiiJ27_Fjc5xADPmqLQ>
-    <xme:h3pDaPPGJTJckd5dutG-jG-9RSonfK-DiYZJFt9YbaeIP5WbCcTnAJsaUEUeGzYhQ
-    PEJAXkeGtj4J2NcXA>
-X-ME-Received: <xmr:h3pDaKhfOGSAf2q5QSrci1sKQfBkAb_IMTZS6jH1R1emVc5YcL4mzYx8BfKVkFlPpXi9z5BTedCSLw2Pgv0EtiGMamwf4sY11pTc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdehjeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrtghosgdrvgdrkh
-    gvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:h3pDaK8WtXVauvzVzOKkDCpOOAsGStMKvzDxxu1OHhBK5udPukNWtw>
-    <xmx:h3pDaNumE7h9CfFMu6reysTBInNQODaI45ALE4gmWUyOSJK-1IyFaw>
-    <xmx:h3pDaJFpEUXRW84VukqS4VGFdQusKYHBt7DsNqRbzo4uMhnEbktsAg>
-    <xmx:h3pDaEPKi4_EcbPpXfWbR-rDo7bkaN1bsmdOaMczxJWbBDP-TV4a_Q>
-    <xmx:iHpDaAlSoWJWQtRPDmGDM6FfdexKpr9V55S7X5aAmEEG5ljBA7YLrQhJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Jun 2025 19:32:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-    Patrick Steinhardt <ps@pks.im>
-Subject: Re: issue with git submodules and a clone.defaultRemoteName
- different than origin?
-In-Reply-To: <bdf7e50f-aa65-4514-b147-9f7ebed147ab@intel.com> (Jacob Keller's
-	message of "Fri, 6 Jun 2025 14:29:48 -0700")
-References: <4f638125-39e0-43a1-9c58-35c2d433042f@intel.com>
-	<xmqq1ps0gzo5.fsf@gitster.g>
-	<48c2af0f-348a-4443-a8b7-74ea4b666bff@intel.com>
-	<bdf7e50f-aa65-4514-b147-9f7ebed147ab@intel.com>
-Date: Fri, 06 Jun 2025 16:32:21 -0700
-Message-ID: <xmqq8qm41m62.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="K8Sgw030"
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+	by mail.comstyle.com (Postfix) with ESMTP id 4bDj3907GNz8PbP
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 22:35:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+	:from:to:subject:message-id:mime-version:content-type; s=
+	default; bh=ewZ/cP5at+JuzayeCKCtOb2gqUIe7nyukOrhhFMnI/0=; b=K8Sg
+	w030G+9mG156n3LdVR8Ou19d9jRxZ/pCXVk0Ba4WEwviucgms+c5w0RJuj1xxkqW
+	NR2Yd6ZrKtwH63MX/DdyPji2pD7ehUzdSaUfPBh55d+RXt+gbf4gzzNXCY6ogWGt
+	wK1okXTwtEsc1O6WUEJ6ZEsEkOO53CDiN+Un57w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
+	okTD3U7GSPaPgqnySvqHCPFGO1gxptVYeKKxZLZnaQHbxcTMgepiAo2qNDV5nAJ1
+	K/0CTqNCtZRHyny/Vu9gbW7cDZm1AzpGzZ8i+s8roROydMr98nABr/5KaXyPrD5C
+	TIRRi1YKyk9sQ76CqmWovOcklQC2XQm/ZjZoF4DZGrM=
+Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:531a:1db3:502d:aeac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	(Authenticated sender: brad)
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bDj386ftcz8PbN
+	for <git@vger.kernel.org>; Fri,  6 Jun 2025 22:35:32 -0400 (EDT)
+Date: Fri, 6 Jun 2025 22:35:31 -0400
+From: Brad Smith <brad@comstyle.com>
+To: git@vger.kernel.org
+Subject: [PATCH] config.mak.uname: update settings for Solaris 11
+Message-ID: <aEOlc_PV7ZngUdj0@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Solaris 11.0 and newer have mkdtemp(), memmem(), strcasestr()
+and strtoumax().
 
-> It looks like those end up in the "read_remotes_file" and
-> "read_branches_file" functions which are deprecated, and planned to be
-> removed in 3.0...
->
-> Would patches to modify those to take a repository pointer in order to
-> allow callers of read_config() to work properly with a submodule
-> repository be acceptable?
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+ config.mak.uname | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-The recent trend has been that it generally is very much welcomed to
-fix such a code path that takes "repo" at an entry point but ends up
-deep in its callchain to ignore it and use the_repository instead,
-even without a potential use case to benefit from such a change.
+diff --git a/config.mak.uname b/config.mak.uname
+index 5a0b4200c3..1e933ead1e 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -190,9 +190,6 @@ ifeq ($(uname_S),SunOS)
+ 	SHELL_PATH = /bin/bash
+ 	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
+ 	HAVE_ALLOCA_H = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKDTEMP = YesPlease
+ 	NO_REGEX = YesPlease
+ 	NO_MSGFMT_EXTENDED_OPTIONS = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
+@@ -202,7 +199,10 @@ ifeq ($(uname_S),SunOS)
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRLCPY = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+@@ -212,23 +212,45 @@ ifeq ($(uname_S),SunOS)
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRLCPY = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
+         ifeq ($(uname_R),5.8)
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
+         ifeq ($(uname_R),5.9)
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
++        ifeq ($(uname_R),5.10)
++		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
++		GIT_TEST_CMP = cmp
++        endif
++        ifeq ($(uname_R),5.11)
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		GIT_TEST_CMP = cmp
++        endif
+ 	INSTALL = /usr/ucb/install
+ 	TAR = gtar
+ 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
+-- 
+2.49.0
 
-You have a concrete use case, so I would suspect it is even better
-than "acceptable".  Patrick, what do you think?
-
-
-Thanks.
