@@ -1,91 +1,82 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F455BA45
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 20:50:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6017A31B
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 20:55:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749415857; cv=none; b=mN655N/4Az37JFHJ0p7jjaicK3y/vJXEPZl6S2RwxqE93W51P2JqiRc4Mv35SmAW4hI2Oc1nvNQRf9liNHOjoD9dzDOKvphb6MIPZMNTV17b25iwqA6QnTowrJ8gANYz8toH8cnf46uZGhIpuxPf+4za7eYV/HSibMK1Er6gqZY=
+	t=1749416151; cv=none; b=JoyFSmvMBrvoek9oQx6KESXMQd/8R7xApa0wmWeZkCjjaYyvS6MUR3VZgnu74rRdBjZV+TiuhXdZu4nKzMW66oLyQTXYGHkyK1SbmLLMyMD1aC62xdoG378D7KS/yXlSuBWigojVGazW1SVfllNoJ+B8O/jc94sst4BELJ9LjWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749415857; c=relaxed/simple;
-	bh=2uRxk6FILtk2cPUPgfjqt/CD1manDbrd53lIbuwws98=;
+	s=arc-20240116; t=1749416151; c=relaxed/simple;
+	bh=wBnwd6+gRWaObzuQyRHtI8aiUcAh7+if6Dx8wX6ev2g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WLqW6Bwb6PbhrR1q3LWKi5nfH2CiWVk/nhUAWJOFHg1hHKua4X5Uiec9PhxDNPfY2+HIc2tKGRbM/fVGq1iBDKE6ExzApIYBZ8Q9fxg1fd7/rs9blQQZm6O2NWdfOOqGYf2c5hndjFtBKzawt36lI9Y8HIggyRYn2y/hgoPcsK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R/TH4uJI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PzF4GvGo; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=u1uxWo42z+SbYwP065g4Jhca8QnJwL7+gY0zlHM7ZgWa4fDAl9G+Ewjd5JAEm4RtLveHrfyuyVaYY2AnGMk6ZDDLHjm9zVBSwA4XPdlg6oVbgs84ODzKp+0TWtSljBZSnBTCozX8oiziSKbIOzi66lsjZrR3HOptbKjxKSeb6m8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hmohCSPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d/CzTyBs; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R/TH4uJI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PzF4GvGo"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0027F114013F;
-	Sun,  8 Jun 2025 16:50:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hmohCSPM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d/CzTyBs"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AFA4254010C;
+	Sun,  8 Jun 2025 16:55:48 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Sun, 08 Jun 2025 16:50:54 -0400
+  by phl-compute-07.internal (MEProxy); Sun, 08 Jun 2025 16:55:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749415853; x=1749502253; bh=7hEIKEg8at
-	Z7XJFajSlsT5Lhk15JvVx8LoPC5dJ83F8=; b=R/TH4uJIUR8/8xNMmHKraaSjv0
-	YsCwnzuXFL9Pyp8V3916pz4wJm1cViUHKMgVHoyjymZfE5JcTEbsmVU27T1GxXPV
-	FeZWqDQyA9hTOYXIhP1T32AVTaTsopryRwNmNasZ9dzCije41Zcy2B7U4J/hP7F0
-	Ge7Z6e+gssiJhdhRwVGY6gjcQpD1I0ptyo6/VAOe5tJ8dDCg6ViKZWgjXpgsBhPD
-	D0y7CBuRCLLxDo0Dr0P6p03getXTvomGG/tTYfBZD4GVJlRyV65yC0UhLDqzBW9O
-	b/wLBdNTwuF0+MTHXXfk/ZsFOkPOf85DTSikhmvd03GGPRdQixaq2pAWv1fQ==
+	:subject:to:to; s=fm3; t=1749416148; x=1749502548; bh=wBnwd6+gRW
+	aObzuQyRHtI8aiUcAh7+if6Dx8wX6ev2g=; b=hmohCSPMF197GLB8yCe6ap6v72
+	Ku97GxtKPZX0pj2LwixNSw9T/AAyDYjJuInCtoZilBx6PR2C5fGosO+rBbEwzL2c
+	F/KBsk4H9/DuuCxpVn5F3walCG+MvxtwaJVxFOm3EvkuSCjegRnJ/UtfLomlOWPK
+	4gCsil0J4o27qGXiRGp4tQ169I3YGFR3Y4SJBoQNRr7oAGhiQdusc/43M3OpvMiL
+	zpx1tRPKr8r7hJRiluH3YlUH/Z35C3lvBZdaasKAqWRX6fLU7r2ktsRlPIQLVPNw
+	RXCEnnOS1nKZBECSGm8BFTLvsaoljZQsTIwfCXya+akTMdtIdvXRHJcsUW0Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749415853; x=1749502253; bh=7hEIKEg8atZ7XJFajSlsT5Lhk15JvVx8LoP
-	C5dJ83F8=; b=PzF4GvGoaxwsCKchFRq3hZ/ziQKuEffnHjd8+GSoyuTuOZ1VPUh
-	EeDIudVJ7ObsTMmWCCiJQktaTE2AaLZUgqijiM1zzgEfngWfLRW6+eJEY/gyRu5d
-	7ZueaBrRRP6bYzJIfEGECgcElC+9KJsOEHe9ERqKFUKTe8lcJ6otAaCXXctTs/B/
-	okaRY1I1KvGcmkJL7MwM3TAmtZkGOFxGf9I1u5tAtt5+QWO38roS/qWUpY65CEmh
-	aOF3DD8S7BpZiZHdfSrSCEqiPfsm2RTjKyfiyS+4ABj4dy1YwCazrzawekJqsElV
-	eZuSO0nU1myGrHyCotOcXqFhjeFq3d3+Liw==
-X-ME-Sender: <xms:rfdFaCueq5A-TPbUGleb6KcmrK3RdLrqjaYDIFA_3EW7g7emw9PPaA>
-    <xme:rfdFaHcWxyoV_Slcp8VoC9A2AjVliahIXM1p4jBfxt2mm5Y0mZ03BK_897R-6rsGc
-    KHUqIbNTAirUNlNMQ>
-X-ME-Received: <xmr:rfdFaNzSB_Sc7K3YejvOKgDhYRPWnSTugcGa2HpYMWBtWvJaNV572ZYJcNq5LjpTEgFvA2KZBLBkqHXx-QvbuzsNFKFVbZVoZXzb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdekfeehucetufdoteggodetrfdotf
+	1749416148; x=1749502548; bh=wBnwd6+gRWaObzuQyRHtI8aiUcAh7+if6Dx
+	8wX6ev2g=; b=d/CzTyBsjdlMol/KF3iCXCPrKkTJtUgoHxDVnYI0LqW3NpCGMrR
+	AcpRYXPKI0X8AZB18JWOdUVbJBhvUbl1X7Iaq2E1j0o5xgOIj72McHpk+Ahgp6io
+	OSDR4Di0Bn2eGHelz8JYFjNSEYpgzy1JJuY1RIHn7DwAo5JgK0T6T2hvQszTUPXI
+	lgKdBuibcKBBu8M58byoLe3xalxPqtV1FpIJgxaHWBXMFPZWx0b/8Orm8z7NIWH1
+	IZL3lTGMZAvPcHPZuVlDnxi4dLFfyEdOyK/M4jeVcXxl41+Gd860Xg/AOE4v8WBT
+	ndwK/anrckxtMjnk1wAiDJ7JYhC6bqWW3Kg==
+X-ME-Sender: <xms:0_hFaNa1Ij2f7yTv9fy7W75mTEM8RZA2pUY16_ZG4Vz3aEsUF9R9yQ>
+    <xme:0_hFaEbMY7RuQZlEVhIHaj9iaFD2fHYlAqI0aidM6xNQF6xsz8NOIxhhCZEhPnu1l
+    E2NBHOXTcDTGNlHzg>
+X-ME-Received: <xmr:0_hFaP817XPv8Xje3aOFA6M-lNE2L5452NCIa2Xe9vNPsyfmsPiuTq-RF5wngTkq81vQc1q8gqW_dYeS76Z3_AwwDPbjaGIvXft0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdekfeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertden
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
     ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeei
-    vddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
+    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
     grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:rfdFaNPbeV7q3iQte7d0lQxHaa7UfDEo1ELi_2GSXH8e6eSNHVIvgw>
-    <xmx:rfdFaC_vKZIwDhECkemhcaKkemri0uzXviGvqgB7qBoYAWJ1wnOcgg>
-    <xmx:rfdFaFWt-aq43XbCBFISFfVwi3qOdUUiUlG8QnW-idTwA19qqlLJdQ>
-    <xmx:rfdFaLe8AhGJwOdoTgb-y9mIXrtdPov16UMPCsaH3FKDux7E1d3k7Q>
-    <xmx:rfdFaAZFe3zfVQ3YjKzTSPw0B2vAJ8tCnhwcpK7SmUahWgV10NzIa52N>
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0_hFaLqDeqjhFH2UmkVmtoaBl9GidB129tFNo4KEDwkfAQN1hINioQ>
+    <xmx:0_hFaIr2PsYmtlq8I3aSOz5tt9aummUFGRSBiIG5ZXVbqpxIOGR5_g>
+    <xmx:0_hFaBSRbW6eMDXe0l489CIR2v30hdjbHJPuAEFhKiL__IeL5kFwiQ>
+    <xmx:0_hFaApPDP4NdL57QedLi4ePMZrrik_vmmr3ESViH7STF7z5jRdBfw>
+    <xmx:1PhFaF5vQVRLSngLoRMLWrZUR1DvoxZ_5AiZ_yhaG7xXPr7DccaFm5mV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Jun 2025 16:50:52 -0400 (EDT)
+ 8 Jun 2025 16:55:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
- <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v15 00/10] imap-send: make it usable again and add
- OAuth2.0 support
-In-Reply-To: <PN3PR01MB95975598E2CF61CA5DE050BAB868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Sun, 8 Jun 2025 10:55:09 +0000")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB95975598E2CF61CA5DE050BAB868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Sun, 08 Jun 2025 13:50:51 -0700
-Message-ID: <xmqqcybevtxw.fsf@gitster.g>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Question: is there a short way to merge the last commit to the
+ second last one?
+In-Reply-To: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Mon, 09 Jun 2025 00:00:30 +0530")
+References: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Sun, 08 Jun 2025 13:55:46 -0700
+Message-ID: <xmqq5xh6vtpp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,34 +88,36 @@ Content-Type: text/plain
 
 Aditya Garg <gargaditya08@live.com> writes:
 
-> Aditya Garg (10):
->   imap-send: fix bug causing cfg->folder being set to NULL
->   imap-send: fix memory leak in case auth_cram_md5 fails
->   imap-send: gracefully fail if CRAM-MD5 authentication is requested
->     without OpenSSL
->   imap-send: add support for OAuth2.0 authentication
->   imap-send: add PLAIN authentication method to OpenSSL
->   imap-send: enable specifying the folder using the command line
->   imap-send: fix minor mistakes in the logs
->   imap-send: display port alongwith host when git credential is invoked
->   imap-send: display the destination mailbox when sending a message
->   imap-send: add ability to list the available folders
+> Hi all
+>
+> This is something I usually come across. Sometimes I make a
+> mistake in a commit, and then I create a new commit with a
+> correction. After that I git rebase -i and use the fixup option to
+> make the fixup commit a part of the main commit.
+>
+> I was wondering if there is a command, like git fixup or something
+> that could make this process easier? I know about git squash but I
+> prefer doing fixup.
 
-Very nicely organized, starting from obvious fixes and usability
-polishing at the beginning of the series, followed by feature
-enhancements to add new variants to the existing framework, followed
-by three new features.  The "ok"->"OK" change seems somewhat out of
-place (I would have done it early if the changes are not controversial,
-or very late after the series if the changes looked merely subjective,
-and not in the middle either case), but other than that the series is
-now organized perfectly.
+If your "After that" is "immediately after that before piling any
+more commits on top of the history", then the standard answer would
+be "rebase --autosquash", i.e.
 
-I think the "fixes" and "auth method enhancements" in the earlier
-part are the same as before and I was happy with the resulting code.
+ ... work work work
+ $ git commit [options and arguments]
+ ... oops that needs further change
+ ... work more
+ $ git commit -m 'fixup' [options and arguments]
+ $ git rebase --autosquash HEAD~2
 
-I didn't seriously read the last three or four patches during the
-previous round, so I would say they still need reviews, but the
-early part of the series now looks very well.
+But if it is truly immediately after that", then
 
-Thanks.
+ ... work work work
+ $ git commit [options and arguments]
+ ... oops that needs further change
+ ... work more
+ $ git commit --amend [options and arguments]
+
+would be even simpler.
+
 
