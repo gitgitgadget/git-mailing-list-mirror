@@ -1,238 +1,238 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f174.google.com (mail-lj1-f174.google.com [209.85.208.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749CE2110
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 16:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B342110
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 16:22:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749399613; cv=none; b=YBIaiF8FYB1cgNbWk3AZ2ue5YayFuDsvvzuPA/nyHaW1rDhHvusoREbKBYpWwUz1NRbfuPWSrPx4v2gYzf7946VgP9e8/W9yOzUJvGrMuk8LGQFwFJ1sKPJbR9J+6vRCpW0suv7G3IJMsQDcu1/pMOnWxQtFLSN1PW/73zvaQfA=
+	t=1749399745; cv=none; b=JGVqzf1MRBFa7T2CSWj8l+GNZhFpgB8nq8LMudAFqDiZQSHtEmUVwm1jMsLJI0OsMia3tzmtEKzUe+ZAp4eWErjFRjwY5rPjCkqMVHYoYe63QslRrzSY0/ajI4RFogLD7BLvgoRiQsDTdWyeqLbWlIw5oHmMHQym7i+LgJJI8k0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749399613; c=relaxed/simple;
-	bh=Q5NwaU2nscOQMlP/s5UnT1YcYzVNyQMGjvAJO4uLpS8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=o19vThi77NP9pWhASU6rjZkwsF11I6/Wg7ydVCQ+DsmpcpVxuP5jMrmElHeJZgoE1NQfTOQ7XlNfEbwfupdP/3xCCWc3IP8wgV3uCv2dXNevOX6cmteMwYf8dIJ6RHjtve1SZWATzVKTjYQPZLn5m0wPsApqmMqQ2dPqHiqw+bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0IexlUbz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9XoofTI; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749399745; c=relaxed/simple;
+	bh=/ufoBj1hYcaRt8/I767qSoNfQY8kPhk7sDt8/ztRj88=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=WOoVSbCHxZZak2t20VYRB3U6XT3ok4Z60mK1x46Y/7CwMJuM1Jm+7Ohql81DWrM2BhAbeD8SJlcb8QMtPDAD7Bg7/wIYFn2VAgTDVbIvAr1VhVSUHCXyGtorEkdyHvKrmJ0kkYgDLgpaLInDbxkVpbjAmb9cpmB2jskI3gLUg+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SYWKyzwI; arc=none smtp.client-ip=209.85.208.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0IexlUbz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9XoofTI"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6171925400D3;
-	Sun,  8 Jun 2025 12:20:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 08 Jun 2025 12:20:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749399610; x=1749486010; bh=wj2/nTuAwO
-	gPtdUVibmkIWbz9EEp1K32EMw8pn/75tA=; b=0IexlUbzpfUczt/Q2xdLuUFhAy
-	STQmIv1Y9IB7YrEmxK0oOexAHW3JVLeIck6pvooBTZAnh9TWcqxZALuyayi8IhpZ
-	ucAlgKY4KFyFxcLZamEf4srz85FWARNik/sOWvmP+0xxD1pohASltu+xmQkFrubO
-	eDBoVoxW38VdJgQs9//vuQsEz/GgJpjYLrAvUMtlQgatLbkkQdwc7jXSD75xgscT
-	tkhPhPdrRQagSYqexhgf3Rr5PY30JRtINN0uYPi5t0tuBfOUno/kjAFxMVHXxoPH
-	3BeMIZ4mDyep6PghclMt2maGMkBJe3cEEs3vUQSyhL0VA/K4jRKQIWXTPvgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749399610; x=1749486010; bh=wj2/nTuAwOgPtdUVibmkIWbz9EEp1K32EMw
-	8pn/75tA=; b=F9XoofTIIuKtnYhMF9N+UcXLN3oDFy6DCuBqWK0Q14X2QOMl/09
-	FbuMuLTH7jbhws/tduzml9q6aQ+1E1d9ehEzrrPoqmCr9QnzAThVjUQfgnUDgyrB
-	LGOGNG1SkC6WqCK7ZUD99p+mxsM1j9MrsUZ8D62GyUja6kQxWF6GdGYhhnl0DnIw
-	SMOZ3DkrInOi0IT72JJbUtdc5r9hpXFviyvK2aE4oHs8pbbzs9jh/1rE5BMqdj2B
-	jqRPLKpB3DB057qRd6jL3HrI9ry6U+KlgklBbHQlpgb20Rm3ZQE/U3iKS17jm+Z+
-	Z+NM//9TzuSfkotpkW67DCit9OTrPilwvcg==
-X-ME-Sender: <xms:ObhFaBDZwyh8VeRQ-x6lca6sE00gz97xFccpF6ggXGlNQf6P-nYl7Q>
-    <xme:ObhFaPjnHZP9XWsErlqFA4AJNKJCyNqsnfUO34DlA0KKQQJaF3eVts6pjixE8l8SJ
-    HytgmQlYUJnNeknrw>
-X-ME-Received: <xmr:ObhFaMnsJGIFl56duDPd0Xytfei8Wd6ekiZak54NREvO2Lbs9PNHDJ7FERdPvk1CWyd9X-rRyNa6fVvDOR8iQMMGZ26lOQyCksNk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdektdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvggvrh
-    hthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhs
-    rdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshhmrggtughonhgrlhgusehkrghimhgrghhinhhgrdgtohhmpdhr
-    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ObhFaLzTpNLEOHvhSmWCuoyNM_zi-RNEDAldMnXLwPh_7Xi4f9mwpg>
-    <xmx:ObhFaGTT_DtnmklzGYOH-prhwuqKLZceQrI2QaK8ZR33pTyIxuFFoA>
-    <xmx:ObhFaOZ1qMnzftpd1bkkpkbmxHmEDgB6rz5ufA7x8iwN4uw1dnBOGw>
-    <xmx:ObhFaHRoTM0GGivnwfijF8tdvykmVGJyT7Zp7mX3Co42Iyu4hThVAw>
-    <xmx:OrhFaLKrOFP-YDSaUXzzUvyAfngUBHY9DaJsNGNYkmjQQXKUOCelzYzY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Jun 2025 12:20:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: l.s.r@web.de,  git@vger.kernel.org,  smacdonald@kaimaging.com,
-  sunshine@sunshineco.com
-Subject: Re: [PATCH v2] stash: fix incorrect branch name in stash message
-In-Reply-To: <20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 8 Jun 2025 20:15:42 +0530")
-References: <f46443ac-eb7f-47db-8f4b-a06384e6fde5@web.de>
-	<20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
-Date: Sun, 08 Jun 2025 09:20:07 -0700
-Message-ID: <xmqqo6uyw6h4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SYWKyzwI"
+Received: by mail-lj1-f174.google.com with SMTP id 38308e7fff4ca-32ac42bb4e4so30672511fa.0
+        for <git@vger.kernel.org>; Sun, 08 Jun 2025 09:22:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749399741; x=1750004541; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=DUO/MT8j5hK1MDwojec0SUe1RKiBI4HxsLaMU+dZn4I=;
+        b=SYWKyzwI7nZrRYz2ksMwedHYcfdh6QHZuvLwKW9ObcCfdX4A4yDN4V8ljuH3E5fRJu
+         h2eNtwgQikbrUmvKfxxKvIijFGqODENsH4OIYNyDBpf2XD6R7EY/s/cMAb0Q8siMzMob
+         2goGFh2dHcZ49eH/2rys3Q6kMCYXLO5rf2t9Go7VfhZ3yODy6DzdTIqhTkbSSqvfB7Rm
+         FBmVEgp7qYyuQSgAl+AXgMxXNwh6GCauABCS5wt2I1PiJumAWL9RAbzg2Xm0PZDe4VUz
+         Y+ZNhDcpB8209SxPyoBolo7wNc8J5tNUCY//qodvgp8PwyoB4hJmIhRCNyRNCODo4X69
+         QlnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749399741; x=1750004541;
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DUO/MT8j5hK1MDwojec0SUe1RKiBI4HxsLaMU+dZn4I=;
+        b=Y7ElSAMoAVQZVeON8cnWtTk/Pe4vAhVxfMKt3aoQwC43li7VJoRqdgbAgr8Txr6oPW
+         17lCV74fBlXzLHurIeGDQS5CJj16J/jEam+jUFiSQwJ5b8PXa+Hzx5MUKS2XXxQeudCV
+         xEcHSbJ8pBWbjPnB56ft1wqXuNs5WvUek95qHV/QMMOD+8fIlFLr7h/4V+vhZMKfbZSl
+         l8DSLi9QXlO8RQJHD/iG27ndi0aQdMdn27TLb7T4QdHaWbTY8kYYBjxcNW4UmhQDB4Tb
+         AuVSKPQRdrPTGq7KRRVAO2TJ01taanfsLwuVnQ8zOed6JUO2eGOJPtPLDnX1/yv7x6VA
+         L5Sg==
+X-Gm-Message-State: AOJu0Yyc5EPpiFkRdppTXab5hVO3WTn3WO7UhvzcJhTcHqxxFGfVrmh6
+	7qqK7STpITFnXojDv8P3CMZRjf/JGkcmjbrTUDnn0nzi+gGRQ6S3Y/z8RL7gq1tzs71hhUsyM8y
+	EIZ50gGbjzRD+G+5E5929GFupjaS2HDITs265
+X-Gm-Gg: ASbGncuoihjxL9AYRMImwb77VApKXpx9bw2Md1SZeBPflAuDOKwH21N6RI/ABRLjtsZ
+	CxcvdePk7gXiptrab6OfCX1kx+9w9PesXHCEBhLYVh+H7DFFNilILRMir6JjR95P4J2QvJ1It8t
+	L/7VLreJg8JnsL/D/zdzNmpY3akRQAHqGL3Qer0vNvJw==
+X-Google-Smtp-Source: AGHT+IHORCniBkEG7ET1fssdiAfq9E0R2Rg+iv7d2rwcxst5dfJVCkiX7ESkgGjzvmTJNEcMhoUfY/FYe46YsQVDmD8=
+X-Received: by 2002:a05:651c:1548:b0:32a:8c95:d841 with SMTP id
+ 38308e7fff4ca-32adfb42d4cmr24167291fa.14.1749399741145; Sun, 08 Jun 2025
+ 09:22:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: =?UTF-8?B?TmVsc29uIEJlbsOtdGV6IExlw7Nu?= <nbenitezl@gmail.com>
+Date: Sun, 8 Jun 2025 17:21:44 +0100
+X-Gm-Features: AX0GCFvX4pnu32J3KvL2iuCfOyjehj-Cf6Zy0ChiIE24aNlL-wEabzg1LTtX7ko
+Message-ID: <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
+Subject: [PATCH] completion: new config var to use --sort in for-each-ref
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Nbenitez <nbenitezl@gmail.com>
+Content-Type: multipart/mixed; boundary="000000000000244603063711dedc"
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+--000000000000244603063711dedc
+Content-Type: text/plain; charset="UTF-8"
 
-> When creating a stash, Git uses the current branch name
-> of the superproject to construct the stash commit message.
-> However, in repositories with submodules,
-> the message may mistakenly display the submodule branch name instead.
->
-> This is because `refs_resolve_ref_unsafe()` returns a pointer to a static buffer.
-> Subsequent calls to the same function overwrite the buffer,
-> corrupting the originally fetched `branch_name` used for the stash message.
->
-> Use `xstrdup()` to duplicate the branch name immediately after resolving it,
-> so that later buffer overwrites do not affect the stash message.
->
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-> ---
+Hi, I'm attaching a patch for the Bash completion script, to be able
+to change the default implicit alphabetical ordering used when
+returning refs e.g. when doing "git checkout <TAB>"
 
-Nicely described.
+I wanted the completed refs to be ordered descending by committer date
+i.e. --sort="-committerdate" because that shows on top the branches
+I've been recently working on. The completion script didn't allow to
+set a custom ordering from the default alphabetical one, so I'm
+sending a patch which adds a new config var where the user can set
+their desired custom ordering.
 
-> @@ -1372,6 +1372,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->  	const char *head_short_sha1 = NULL;
->  	const char *branch_ref = NULL;
->  	const char *branch_name = "(no branch)";
-> +	char *branch_name_buf = NULL;
->  	struct commit *head_commit = NULL;
->  	struct commit_list *parents = NULL;
->  	struct strbuf msg = STRBUF_INIT;
-> @@ -1401,11 +1402,16 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->  		ret = 1;
->  		goto done;
->  	}
-> -
-> +	
+I've not added tests because I'm not familiar with the test machinery,
+hopefully this is still useful.
 
-Addition of trailing whitespace?
+Regards,
 
-You can avoid such mistakes in the future by enabling our sample
-pre-commit hook, which essentially does
+PD. I send from Gmail web interface because git send-email for Gmail
+requires 2-factor authentication and I chose not to enable it.
 
-	git diff-index --check --cached $against --
+--000000000000244603063711dedc
+Content-Type: text/x-patch; charset="UTF-8"; 
+	name="0001-completion-new-config-var-to-use-sort-in-for-each-re.patch"
+Content-Disposition: attachment; 
+	filename="0001-completion-new-config-var-to-use-sort-in-for-each-re.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_mbnvd1pp0>
+X-Attachment-Id: f_mbnvd1pp0
 
-where $against is HEAD (or an empty tree object while preparing for
-an initial commit).
-
->  	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
->  					     "HEAD", 0, NULL, &flags);
-> -	if (flags & REF_ISSYMREF)
-> -		skip_prefix(branch_ref, "refs/heads/", &branch_name);
-> +
-> +	if (flags & REF_ISSYMREF) {
-> +		if (skip_prefix(branch_ref, "refs/heads/", &branch_name))
-> +			branch_name = branch_name_buf = xstrdup(branch_name);
-> +	} else
-> +		branch_name = "(no branch)";
-
-Do we need the else clause?  The original did not have it and showed
-the "(no branch)" message without an issue, and I do not see anything
-is changed by what happens inside the other side of this if statement.
-Am I missing something?
-
-> @@ -1495,6 +1501,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
->  	strbuf_release(&msg);
->  	strbuf_release(&untracked_files);
->  	free_commit_list(parents);
-> +	free(branch_name_buf);
->  	return ret;
->  }
-
-Makes sense.
-
-This is a common pattern we use with a variable whose name contains
-"to_free" (e.g., "branch_name_to_free"), but "branch_name_buf" is
-pleanty readable and easy to understand what is going on.
-
-> +test_expect_success 'stash reflog message uses superproject branch, not submodule branch' '
-
-The title looks a bit on the overly-long side.  Would
-
-    stash message records the superproject branch
-
-be sufficient?  The fact that the stash is implemented as reflog
-is invidible and irrelevant at this level, so "reflog message" is
-wasting bytes without adding any useful information.
-
-What we want to make sure is that the message records the current
-branch name, whether the project has any submodules or not, and from
-that point of view,
-
-    stash message records the correct branch name
-
-ought to be good, but not quite, because this test is trying to
-trigger a bug that was present only when there are submodules, so
-not mentioning superproject/submodule at all would not work well.
-
-Would
-
-    submodules does not affect the branch recorded in stash message
-
-work?  That is the best one I can come up with offhand.
-
-> +	git init sub_project &&
-> +	(
-> +		cd sub_project &&
-> +		echo "Initial content in sub_project" >sub_file.txt &&
-> +		git add sub_file.txt &&
-> +		git commit -q -m "Initial commit in sub_project"
-> +	) &&
-
-It is easier to debug the test script if you avoid using --quiet too
-much.  Regular "sh ./t3903-stash.sh" will squelch these output
-anyway, and they can be seen when the test script is run with "-v".
-
-> +	git init main_project &&
-> +	(
-> +		cd main_project &&
-> +		echo "Initial content in main_project" >main_file.txt &&
-> +		git add main_file.txt &&
-> +		git commit -q -m "Initial commit in main_project" &&
-> +
-> +		git -c protocol.file.allow=always submodule add --quiet ../sub_project sub &&
-> +		git commit -q -m "Added submodule sub_project" &&
-> +
-> +		git checkout -q -b feature_main &&
-
-
-> +		cd sub &&
-> +		git checkout -q -b feature_sub &&
-> +		cd .. &&
-
-These three lines can be written more compactly as:
-
-		git -C sub checkout -b feature_sub &&
-
-> +		git checkout -q -b work_branch &&
-> +		echo "Important work to be stashed" >work_item.txt &&
-> +		git add work_item.txt &&
-> +		git stash push -q -m "custom stash for work_branch" &&
-> +
-> +		git stash list >../actual_stash_list.txt &&
-> +		grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
-> +	)
-> +'
-> +
->  test_done
-
-Thanks.
+RnJvbSA3N2EwMmU2ODQ4MTAyNGUxMDQxNDU5NTczMGM2MTM0NTBiN2QzOGU4IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiA9P1VURi04P3E/TmVsc29uPTIwQmVuPUMzPUFEdGV6PTIwTGU9
+QzM9QjNuPz0gPG5iZW5pdGV6bEBnbWFpbC5jb20+CkRhdGU6IFN1biwgOCBKdW4gMjAyNSAxNTo0
+MToxMCArMDEwMApTdWJqZWN0OiBbUEFUQ0hdIGNvbXBsZXRpb246IG5ldyBjb25maWcgdmFyIHRv
+IHVzZSAtLXNvcnQgaW4gZm9yLWVhY2gtcmVmCk1JTUUtVmVyc2lvbjogMS4wCkNvbnRlbnQtVHlw
+ZTogdGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOApDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiA4
+Yml0CgpQcmV2aW91c2x5IHdoZW4gY29tcGxldGluZyByZWZzIGVnLiAiZ2l0IGNoZWNrb3V0IDxU
+QUI+IgphbGwgcmVmcyB3ZXJlIGFscGhhYmV0aWNhbGx5IG9yZGVyZWQsIHRoaXMgd2FzIGFuCmlt
+cGxpY2l0IG9yZGVyaW5nIGFuZCBjb3VsZCBub3QgYmUgY2hhbmdlZC4KClRoaXMgY29tbWl0IGFk
+ZHMgYSBuZXcgY29uZmlnIHZhciB0byBhbGxvdyBzZXR0aW5nCmEgY3VzdG9tIG9yZGVyaW5nLCB0
+aGUgY29uZiB2YWx1ZSB3aWxsIGJlIHVzZWQKZm9yIHRoZSAtLXNvcnQ9PHZhbD4gb2YgZm9yLWVh
+Y2gtcmVmLgoKV2hlbiBhIGN1c3RvbSBvcmRlcmluZyBpcyBub3Qgc2V0IHRoZW4gYWxwaGFiZXRp
+Y2FsCmRlZmF1bHQgaXMga2VwdCwgYnV0IHRoaXMgdGltZSBpcyBleHBsaWNpdCBhcyB3ZQpwYXNz
+IC0tc29ydD0ncmVmbmFtZScKClRoaXMgY29tbWl0IGFsc28gYWRkcyAnLW8gbm9zb3J0JyB0byAn
+Y29tcGxldGUnCnRvIGRpc2FibGUgaXRzIGRlZmF1bHQgYWxwaGFiZXRpY2FsIG9yZGVyaW5nIHNv
+Cm91ciBjdXN0b20gb3JkZXJpbmcgcHJldmFpbHMuCgpTaWduZWQtb2ZmLWJ5OiBOZWxzb24gQmVu
+w610ZXogTGXDs24gPG5iZW5pdGV6bEBnbWFpbC5jb20+Ci0tLQogY29udHJpYi9jb21wbGV0aW9u
+L2dpdC1jb21wbGV0aW9uLmJhc2ggfCA1NiArKysrKysrKysrKysrKysrKysrKystLS0tLQogMSBm
+aWxlIGNoYW5nZWQsIDQ3IGluc2VydGlvbnMoKyksIDkgZGVsZXRpb25zKC0pCgpkaWZmIC0tZ2l0
+IGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2ggYi9jb250cmliL2NvbXBs
+ZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaAppbmRleCBlM2Q4OGIwNjcuLjU5OTY0YTgwNSAxMDA2
+NDQKLS0tIGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKKysrIGIvY29u
+dHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKQEAgLTc3LDE4ICs3Nyw0MyBAQAog
+IwogIyAgIEdJVF9DT01QTEVUSU9OX0lHTk9SRV9DQVNFCiAjCiAjICAgICBXaGVuIHNldCwgdXNl
+cyBmb3ItZWFjaC1yZWYgJy0taWdub3JlLWNhc2UnIHRvIGZpbmQgcmVmcyB0aGF0IG1hdGNoCiAj
+ICAgICBjYXNlIGluc2Vuc2l0aXZlbHksIGV2ZW4gb24gc3lzdGVtcyB3aXRoIGNhc2Ugc2Vuc2l0
+aXZlIGZpbGUgc3lzdGVtcwogIyAgICAgKGUuZy4sIGNvbXBsZXRpbmcgdGFnIG5hbWUgIkZPTyIg
+b24gImdpdCBjaGVja291dCBmPFRBQj4iKS4KKyMKKyMgICBHSVRfQ09NUExFVElPTl9SRUZTX1NP
+UlRfQllfRklFTEROQU1FCisjCisjICAgICBGaWVsZG5hbWUgc3RyaW5nIHRvIHVzZSBmb3IgLS1z
+b3J0IG9wdGlvbiBvZiBmb3ItZWFjaC1yZWYuIElmIGVtcHR5IG9yCisjICAgICBub3QgZGVmaW5l
+ZCBpdCBkZWZhdWx0cyB0byAicmVmbmFtZSIgd2hpY2ggaXMgdGhlIHNhbWUgZGVmYXVsdCBnaXQg
+dXNlcworIyAgICAgd2hlbiBubyAtLXNvcnQgb3B0aW9uIGlzIHByb3ZpZGVkLiBTb21lIGV4YW1w
+bGUgdmFsdWVzOgorIyAgICAgICAnLWNvbW1pdHRlcmRhdGUnIHRvIGRlc2NlbmRpbmcgc29ydCBi
+eSBjb21taXR0ZXIgZGF0ZQorIyAgICAgICAnLXZlcnNpb246cmVmbmFtZScgdG8gZGVzY2VuZGlu
+ZyBzb3J0IGJ5IHJlZm5hbWUgaW50ZXJwcmV0ZWQgYXMgdmVyc2lvbgorIyAgICAgICBNb3JlIGlu
+Zm8gYW5kIGV4YW1wbGVzOiBodHRwczovL2dpdC1zY20uY29tL2RvY3MvZ2l0LWZvci1lYWNoLXJl
+ZiNfZmllbGRfbmFtZXMKIAogY2FzZSAiJENPTVBfV09SREJSRUFLUyIgaW4KICo6KikgOiBncmVh
+dCA7OwogKikgICBDT01QX1dPUkRCUkVBS1M9IiRDT01QX1dPUkRCUkVBS1M6IgogZXNhYwogCisj
+IFJlYWRzIGFuZCB2YWxpZGF0ZXMgR0lUX0NPTVBMRVRJT05fUkVGU19TT1JUX0JZX0ZJRUxETkFN
+RSBjb25maWd1cmF0aW9uIHZhciwKKyMgcmV0dXJuaW5nIHRoZSBjb250ZW50IG9mIGl0IHdoZW4g
+aXQncyB2YWxpZCwgb3IgaWYgbm90IHZhbGlkIG9yIGlzIGVtcHR5IG9yCisjIG5vdCBkZWZpbmVk
+LCB0aGVuIGl0IHJldHVybnMgdGhlIGRvY3VtZW50ZWQgZGVmYXVsdCBpLmUuICdyZWZuYW1lJy4K
+K19fZ2l0X2dldF9zb3J0X2J5X2ZpZWxkbmFtZSAoKQoreworCWlmIFsgLW4gIiR7R0lUX0NPTVBM
+RVRJT05fUkVGU19TT1JUX0JZX0ZJRUxETkFNRS19IiBdOyB0aGVuCisJCSMgVmFsaWRhdGUgYnkg
+dXNpbmcgYSByZWdleCBwYXR0ZXJuIHdoaWNoIG9ubHkgYWxsb3dzIGEgc2V0CisJCSMgb2YgY2hh
+cmFjdGVycyB0aGF0IG1heSBhcHBlYXIgaW4gYSAtLXNvcnQgZXhwcmVzc2lvbgorICAgICAgICBp
+ZiBbWyAiJEdJVF9DT01QTEVUSU9OX1JFRlNfU09SVF9CWV9GSUVMRE5BTUUiID1+IF5bYS16QS1a
+MC05JTo9KigpLF9cIC1dKyQgXV07IHRoZW4KKyAgICAgICAgICAgIGVjaG8gIiRHSVRfQ09NUExF
+VElPTl9SRUZTX1NPUlRfQllfRklFTEROQU1FIgorICAgICAgICAgICAgcmV0dXJuCisgICAgICAg
+IGZpCisJZmkKKwllY2hvICdyZWZuYW1lJworfQorCiAjIERpc2NvdmVycyB0aGUgcGF0aCB0byB0
+aGUgZ2l0IHJlcG9zaXRvcnkgdGFraW5nIGFueSAnLS1naXQtZGlyPTxwYXRoPicgYW5kCiAjICct
+QyA8cGF0aD4nIG9wdGlvbnMgaW50byBhY2NvdW50IGFuZCBzdG9yZXMgaXQgaW4gdGhlICRfX2dp
+dF9yZXBvX3BhdGgKICMgdmFyaWFibGUuCiBfX2dpdF9maW5kX3JlcG9fcGF0aCAoKQogewogCWlm
+IFsgLW4gIiR7X19naXRfcmVwb19wYXRoLX0iIF07IHRoZW4KQEAgLTc0OCwxMyArNzczLDE1IEBA
+IF9fZ2l0X2NvbXBsZXRlX2luZGV4X2ZpbGUgKCkKICMgICAgdW5zZXQgb3IgZW1wdHkpLgogIyAz
+OiBBIHN1ZmZpeCB0byBiZSBhcHBlbmRlZCB0byBlYWNoIGxpc3RlZCBicmFuY2ggKG9wdGlvbmFs
+KS4KIF9fZ2l0X2hlYWRzICgpCiB7CiAJbG9jYWwgcGZ4PSIkezEtfSIgY3VyXz0iJHsyLX0iIHNm
+eD0iJHszLX0iCiAKLQlfX2dpdCBmb3ItZWFjaC1yZWYgLS1mb3JtYXQ9IiR7cGZ4Ly9cJS8lJX0l
+KHJlZm5hbWU6c3RyaXA9Mikkc2Z4IiBcCisJbG9jYWwgc29ydGJ5PSQoX19naXRfZ2V0X3NvcnRf
+YnlfZmllbGRuYW1lKQorCisJX19naXQgZm9yLWVhY2gtcmVmIC0tc29ydD0iJHNvcnRieSIgLS1m
+b3JtYXQ9IiR7cGZ4Ly9cJS8lJX0lKHJlZm5hbWU6c3RyaXA9Mikkc2Z4IiBcCiAJCQkke0dJVF9D
+T01QTEVUSU9OX0lHTk9SRV9DQVNFKy0taWdub3JlLWNhc2V9IFwKIAkJCSJyZWZzL2hlYWRzLyRj
+dXJfKiIgInJlZnMvaGVhZHMvJGN1cl8qLyoqIgogfQogCiAjIExpc3RzIGJyYW5jaGVzIGZyb20g
+cmVtb3RlIHJlcG9zaXRvcmllcy4KICMgMTogQSBwcmVmaXggdG8gYmUgYWRkZWQgdG8gZWFjaCBs
+aXN0ZWQgYnJhbmNoIChvcHRpb25hbCkuCkBAIC03NjIsMjQgKzc4OSwyOCBAQCBfX2dpdF9oZWFk
+cyAoKQogIyAgICB1bnNldCBvciBlbXB0eSkuCiAjIDM6IEEgc3VmZml4IHRvIGJlIGFwcGVuZGVk
+IHRvIGVhY2ggbGlzdGVkIGJyYW5jaCAob3B0aW9uYWwpLgogX19naXRfcmVtb3RlX2hlYWRzICgp
+CiB7CiAJbG9jYWwgcGZ4PSIkezEtfSIgY3VyXz0iJHsyLX0iIHNmeD0iJHszLX0iCiAKLQlfX2dp
+dCBmb3ItZWFjaC1yZWYgLS1mb3JtYXQ9IiR7cGZ4Ly9cJS8lJX0lKHJlZm5hbWU6c3RyaXA9Mikk
+c2Z4IiBcCisJbG9jYWwgc29ydGJ5PSQoX19naXRfZ2V0X3NvcnRfYnlfZmllbGRuYW1lKQorCisJ
+X19naXQgZm9yLWVhY2gtcmVmIC0tc29ydD0iJHNvcnRieSIgLS1mb3JtYXQ9IiR7cGZ4Ly9cJS8l
+JX0lKHJlZm5hbWU6c3RyaXA9Mikkc2Z4IiBcCiAJCQkke0dJVF9DT01QTEVUSU9OX0lHTk9SRV9D
+QVNFKy0taWdub3JlLWNhc2V9IFwKIAkJCSJyZWZzL3JlbW90ZXMvJGN1cl8qIiAicmVmcy9yZW1v
+dGVzLyRjdXJfKi8qKiIKIH0KIAogIyBMaXN0cyB0YWdzIGZyb20gdGhlIGxvY2FsIHJlcG9zaXRv
+cnkuCiAjIEFjY2VwdHMgdGhlIHNhbWUgcG9zaXRpb25hbCBwYXJhbWV0ZXJzIGFzIF9fZ2l0X2hl
+YWRzKCkgYWJvdmUuCiBfX2dpdF90YWdzICgpCiB7CiAJbG9jYWwgcGZ4PSIkezEtfSIgY3VyXz0i
+JHsyLX0iIHNmeD0iJHszLX0iCiAKLQlfX2dpdCBmb3ItZWFjaC1yZWYgLS1mb3JtYXQ9IiR7cGZ4
+Ly9cJS8lJX0lKHJlZm5hbWU6c3RyaXA9Mikkc2Z4IiBcCisJbG9jYWwgc29ydGJ5PSQoX19naXRf
+Z2V0X3NvcnRfYnlfZmllbGRuYW1lKQorCisJX19naXQgZm9yLWVhY2gtcmVmIC0tc29ydD0iJHNv
+cnRieSIgLS1mb3JtYXQ9IiR7cGZ4Ly9cJS8lJX0lKHJlZm5hbWU6c3RyaXA9Mikkc2Z4IiBcCiAJ
+CQkke0dJVF9DT01QTEVUSU9OX0lHTk9SRV9DQVNFKy0taWdub3JlLWNhc2V9IFwKIAkJCSJyZWZz
+L3RhZ3MvJGN1cl8qIiAicmVmcy90YWdzLyRjdXJfKi8qKiIKIH0KIAogIyBMaXN0IHVuaXF1ZSBi
+cmFuY2hlcyBmcm9tIHJlZnMvcmVtb3RlcyB1c2VkIGZvciAnZ2l0IGNoZWNrb3V0JyBhbmQgJ2dp
+dAogIyBzd2l0Y2gnIHRyYWNraW5nIERXSU1lcnkuCkBAIC04MTUsMTMgKzg0NiwxNSBAQCBfX2dp
+dF9kd2ltX3JlbW90ZV9oZWFkcyAoKQogCQkJCXByaW50IEVOVklST05bIlBGWCJdIGJyYW5jaCBF
+TlZJUk9OWyJTRlgiXQogCQkJCWJyZWFrCiAJCQl9CiAJCX0KIAl9CiAJJwotCV9fZ2l0IGZvci1l
+YWNoLXJlZiAtLWZvcm1hdD0nJShyZWZuYW1lKScgcmVmcy9yZW1vdGVzLyB8CisJbG9jYWwgc29y
+dGJ5PSQoX19naXRfZ2V0X3NvcnRfYnlfZmllbGRuYW1lKQorCisJX19naXQgZm9yLWVhY2gtcmVm
+IC0tc29ydD0iJHNvcnRieSIgLS1mb3JtYXQ9JyUocmVmbmFtZSknIHJlZnMvcmVtb3Rlcy8gfAog
+CQlQRlg9IiRwZngiIFNGWD0iJHNmeCIgQ1VSXz0iJGN1cl8iIFwKIAkJCUlHTk9SRV9DQVNFPSR7
+R0lUX0NPTVBMRVRJT05fSUdOT1JFX0NBU0UrMX0gXAogCQkJUkVNT1RFUz0iJChfX2dpdF9yZW1v
+dGVzIHwgc29ydCAtcikiIGF3ayAiJGF3a19zY3JpcHQiIHwKIAkJc29ydCB8IHVuaXEgLXUKIH0K
+IApAQCAtODQ0LDEyICs4NzcsMTMgQEAgX19naXRfcmVmcyAoKQogCWxvY2FsIGxpc3RfcmVmc19m
+cm9tPXBhdGggcmVtb3RlPSIkezEtfSIKIAlsb2NhbCBmb3JtYXQgcmVmcwogCWxvY2FsIHBmeD0i
+JHszLX0iIGN1cl89IiR7NC0kY3VyfSIgc2Z4PSIkezUtfSIKIAlsb2NhbCBtYXRjaD0iJHs0LX0i
+CiAJbG9jYWwgdW1hdGNoPSIkezQtfSIKIAlsb2NhbCBmZXJfcGZ4PSIke3BmeC8vXCUvJSV9IiAj
+ICJlc2NhcGUiIGZvci1lYWNoLXJlZiBmb3JtYXQgc3BlY2lmaWVycworCWxvY2FsIHNvcnRieT0k
+KF9fZ2l0X2dldF9zb3J0X2J5X2ZpZWxkbmFtZSkKIAogCV9fZ2l0X2ZpbmRfcmVwb19wYXRoCiAJ
+ZGlyPSIkX19naXRfcmVwb19wYXRoIgogCiAJaWYgWyAteiAiJHJlbW90ZSIgXTsgdGhlbgogCQlp
+ZiBbIC16ICIkZGlyIiBdOyB0aGVuCkBAIC05MDIsMTMgKzkzNiwxNCBAQCBfX2dpdF9yZWZzICgp
+CiAJCQlmb3JtYXQ9InJlZm5hbWU6c3RyaXA9MiIKIAkJCXJlZnM9KCJyZWZzL3RhZ3MvJG1hdGNo
+KiIgInJlZnMvdGFncy8kbWF0Y2gqLyoqIgogCQkJCSJyZWZzL2hlYWRzLyRtYXRjaCoiICJyZWZz
+L2hlYWRzLyRtYXRjaCovKioiCiAJCQkJInJlZnMvcmVtb3Rlcy8kbWF0Y2gqIiAicmVmcy9yZW1v
+dGVzLyRtYXRjaCovKioiKQogCQkJOzsKIAkJZXNhYwotCQlfX2dpdF9kaXI9IiRkaXIiIF9fZ2l0
+IGZvci1lYWNoLXJlZiAtLWZvcm1hdD0iJGZlcl9wZnglKCRmb3JtYXQpJHNmeCIgXAorCQlfX2dp
+dF9kaXI9IiRkaXIiIF9fZ2l0IGZvci1lYWNoLXJlZiAtLXNvcnQ9IiRzb3J0YnkiIFwKKwkJCS0t
+Zm9ybWF0PSIkZmVyX3BmeCUoJGZvcm1hdCkkc2Z4IiBcCiAJCQkke0dJVF9DT01QTEVUSU9OX0lH
+Tk9SRV9DQVNFKy0taWdub3JlLWNhc2V9IFwKIAkJCSIke3JlZnNbQF19IgogCQlpZiBbIC1uICIk
+dHJhY2siIF07IHRoZW4KIAkJCV9fZ2l0X2R3aW1fcmVtb3RlX2hlYWRzICIkcGZ4IiAiJG1hdGNo
+IiAiJHNmeCIKIAkJZmkKIAkJcmV0dXJuCkBAIC05MjYsMTMgKzk2MSwxNCBAQCBfX2dpdF9yZWZz
+ICgpCiAJKikKIAkJaWYgWyAiJGxpc3RfcmVmc19mcm9tIiA9IHJlbW90ZSBdOyB0aGVuCiAJCQlj
+YXNlICJIRUFEIiBpbgogCQkJJG1hdGNoKnwkdW1hdGNoKikJZWNobyAiJHtwZnh9SEVBRCRzZngi
+IDs7CiAJCQllc2FjCiAJCQlsb2NhbCBzdHJpcD0iJChfX2dpdF9jb3VudF9wYXRoX2NvbXBvbmVu
+dHMgInJlZnMvcmVtb3Rlcy8kcmVtb3RlIikiCi0JCQlfX2dpdCBmb3ItZWFjaC1yZWYgLS1mb3Jt
+YXQ9IiRmZXJfcGZ4JShyZWZuYW1lOnN0cmlwPSRzdHJpcCkkc2Z4IiBcCisJCQlfX2dpdCBmb3It
+ZWFjaC1yZWYgLS1zb3J0PSIkc29ydGJ5IiBcCisJCQkJLS1mb3JtYXQ9IiRmZXJfcGZ4JShyZWZu
+YW1lOnN0cmlwPSRzdHJpcCkkc2Z4IiBcCiAJCQkJJHtHSVRfQ09NUExFVElPTl9JR05PUkVfQ0FT
+RSstLWlnbm9yZS1jYXNlfSBcCiAJCQkJInJlZnMvcmVtb3Rlcy8kcmVtb3RlLyRtYXRjaCoiIFwK
+IAkJCQkicmVmcy9yZW1vdGVzLyRyZW1vdGUvJG1hdGNoKi8qKiIKIAkJZWxzZQogCQkJbG9jYWwg
+cXVlcnlfc3ltcmVmCiAJCQljYXNlICJIRUFEIiBpbgpAQCAtMjg1OCwxMyArMjg5NCwxNCBAQCBf
+X2dpdF9jb21wbGV0ZV9jb25maWdfdmFyaWFibGVfdmFsdWUgKCkKIAkJX19naXRjb21wX25sICIk
+KF9fZ2l0X3JlZnNfcmVtb3RlcyAiJHJlbW90ZSIpIiAiIiAiJGN1cl8iCiAJCXJldHVybgogCQk7
+OwogCXJlbW90ZS4qLnB1c2gpCiAJCWxvY2FsIHJlbW90ZT0iJHt2YXJuYW1lI3JlbW90ZS59Igog
+CQlyZW1vdGU9IiR7cmVtb3RlJS5wdXNofSIKLQkJX19naXRjb21wX25sICIkKF9fZ2l0IGZvci1l
+YWNoLXJlZiBcCisJCWxvY2FsIHNvcnRieT0kKF9fZ2l0X2dldF9zb3J0X2J5X2ZpZWxkbmFtZSkK
+KwkJX19naXRjb21wX25sICIkKF9fZ2l0IGZvci1lYWNoLXJlZiAtLXNvcnQ9IiRzb3J0YnkiIFwK
+IAkJCS0tZm9ybWF0PSclKHJlZm5hbWUpOiUocmVmbmFtZSknIHJlZnMvaGVhZHMpIiAiIiAiJGN1
+cl8iCiAJCXJldHVybgogCQk7OwogCXB1bGwudHdvaGVhZHxwdWxsLm9jdG9wdXMpCiAJCV9fZ2l0
+X2NvbXB1dGVfbWVyZ2Vfc3RyYXRlZ2llcwogCQlfX2dpdGNvbXAgIiRfX2dpdF9tZXJnZV9zdHJh
+dGVnaWVzIiAiIiAiJGN1cl8iCkBAIC0zOTgwLDE0ICs0MDE3LDE1IEBAIF9fZ2l0X2Z1bmNfd3Jh
+cCAoKQogfQogCiBfX19naXRfY29tcGxldGUgKCkKIHsKIAlsb2NhbCB3cmFwcGVyPSJfX2dpdF93
+cmFwJHsyfSIKIAlldmFsICIkd3JhcHBlciAoKSB7IF9fZ2l0X2Z1bmNfd3JhcCAkMiA7IH0iCi0J
+Y29tcGxldGUgLW8gYmFzaGRlZmF1bHQgLW8gZGVmYXVsdCAtbyBub3NwYWNlIC1GICR3cmFwcGVy
+ICQxIDI+L2Rldi9udWxsIFwKLQkJfHwgY29tcGxldGUgLW8gZGVmYXVsdCAtbyBub3NwYWNlIC1G
+ICR3cmFwcGVyICQxCisJY29tcGxldGUgLW8gYmFzaGRlZmF1bHQgLW8gZGVmYXVsdCAtbyBub3Nw
+YWNlIC1vIG5vc29ydCBcCisJCS1GICR3cmFwcGVyICQxIDI+L2Rldi9udWxsIFwKKwkJfHwgY29t
+cGxldGUgLW8gZGVmYXVsdCAtbyBub3NwYWNlIC1vIG5vc29ydCAtRiAkd3JhcHBlciAkMQogfQog
+CiAjIFNldHVwIHRoZSBjb21wbGV0aW9uIGZvciBnaXQgY29tbWFuZHMKICMgMTogY29tbWFuZCBv
+ciBhbGlhcwogIyAyOiBmdW5jdGlvbiB0byBjYWxsIChlLmcuIGBnaXRgLCBgZ2l0a2AsIGBnaXRf
+ZmV0Y2hgKQogX19naXRfY29tcGxldGUgKCkKLS0gCjIuNDkuMAoK
+--000000000000244603063711dedc--
