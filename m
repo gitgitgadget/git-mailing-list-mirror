@@ -1,123 +1,160 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6017A31B
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 20:55:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A8B1553A3
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 21:43:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749416151; cv=none; b=JoyFSmvMBrvoek9oQx6KESXMQd/8R7xApa0wmWeZkCjjaYyvS6MUR3VZgnu74rRdBjZV+TiuhXdZu4nKzMW66oLyQTXYGHkyK1SbmLLMyMD1aC62xdoG378D7KS/yXlSuBWigojVGazW1SVfllNoJ+B8O/jc94sst4BELJ9LjWE=
+	t=1749418986; cv=none; b=JgFIXyYHPeGmZEjbm2GuIMx61cJCUZ0HBZUjn+0c5TSKzH5u9z69SJnTzANrf7xXbmPxDMryGaRidZsiwxkc4ew2IjurIY/8gjn3BPrEUgnUp/O9otR9+5Na4o9hifrIjhB1s7DDWZVSrOUu4ApH3RpT65UPQdLj5SJkotPc1Kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749416151; c=relaxed/simple;
-	bh=wBnwd6+gRWaObzuQyRHtI8aiUcAh7+if6Dx8wX6ev2g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u1uxWo42z+SbYwP065g4Jhca8QnJwL7+gY0zlHM7ZgWa4fDAl9G+Ewjd5JAEm4RtLveHrfyuyVaYY2AnGMk6ZDDLHjm9zVBSwA4XPdlg6oVbgs84ODzKp+0TWtSljBZSnBTCozX8oiziSKbIOzi66lsjZrR3HOptbKjxKSeb6m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hmohCSPM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d/CzTyBs; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749418986; c=relaxed/simple;
+	bh=irlGmo3y6MOSeRm/w+oAAUMyJPhnrrMveDASjXTkExE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gEhAcpvocLUlmsQtP0ItG1K3OtSrxAcQGuLWI/XRWxiNim3tGPFyqEtFka+bOzEIHcd3hI5Au70YujPsPtyszCaJhfb7b2oF06TM3rLn4C0regbYBYpxeKOZ+HLxagIgyw6vJafLsAJInJpAE/kFZIZ7w4eBbjc1Bq3alNLwQts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=T0MF1NeO; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hmohCSPM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d/CzTyBs"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4AFA4254010C;
-	Sun,  8 Jun 2025 16:55:48 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Sun, 08 Jun 2025 16:55:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749416148; x=1749502548; bh=wBnwd6+gRW
-	aObzuQyRHtI8aiUcAh7+if6Dx8wX6ev2g=; b=hmohCSPMF197GLB8yCe6ap6v72
-	Ku97GxtKPZX0pj2LwixNSw9T/AAyDYjJuInCtoZilBx6PR2C5fGosO+rBbEwzL2c
-	F/KBsk4H9/DuuCxpVn5F3walCG+MvxtwaJVxFOm3EvkuSCjegRnJ/UtfLomlOWPK
-	4gCsil0J4o27qGXiRGp4tQ169I3YGFR3Y4SJBoQNRr7oAGhiQdusc/43M3OpvMiL
-	zpx1tRPKr8r7hJRiluH3YlUH/Z35C3lvBZdaasKAqWRX6fLU7r2ktsRlPIQLVPNw
-	RXCEnnOS1nKZBECSGm8BFTLvsaoljZQsTIwfCXya+akTMdtIdvXRHJcsUW0Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749416148; x=1749502548; bh=wBnwd6+gRWaObzuQyRHtI8aiUcAh7+if6Dx
-	8wX6ev2g=; b=d/CzTyBsjdlMol/KF3iCXCPrKkTJtUgoHxDVnYI0LqW3NpCGMrR
-	AcpRYXPKI0X8AZB18JWOdUVbJBhvUbl1X7Iaq2E1j0o5xgOIj72McHpk+Ahgp6io
-	OSDR4Di0Bn2eGHelz8JYFjNSEYpgzy1JJuY1RIHn7DwAo5JgK0T6T2hvQszTUPXI
-	lgKdBuibcKBBu8M58byoLe3xalxPqtV1FpIJgxaHWBXMFPZWx0b/8Orm8z7NIWH1
-	IZL3lTGMZAvPcHPZuVlDnxi4dLFfyEdOyK/M4jeVcXxl41+Gd860Xg/AOE4v8WBT
-	ndwK/anrckxtMjnk1wAiDJ7JYhC6bqWW3Kg==
-X-ME-Sender: <xms:0_hFaNa1Ij2f7yTv9fy7W75mTEM8RZA2pUY16_ZG4Vz3aEsUF9R9yQ>
-    <xme:0_hFaEbMY7RuQZlEVhIHaj9iaFD2fHYlAqI0aidM6xNQF6xsz8NOIxhhCZEhPnu1l
-    E2NBHOXTcDTGNlHzg>
-X-ME-Received: <xmr:0_hFaP817XPv8Xje3aOFA6M-lNE2L5452NCIa2Xe9vNPsyfmsPiuTq-RF5wngTkq81vQc1q8gqW_dYeS76Z3_AwwDPbjaGIvXft0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdekfeeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
-    grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0_hFaLqDeqjhFH2UmkVmtoaBl9GidB129tFNo4KEDwkfAQN1hINioQ>
-    <xmx:0_hFaIr2PsYmtlq8I3aSOz5tt9aummUFGRSBiIG5ZXVbqpxIOGR5_g>
-    <xmx:0_hFaBSRbW6eMDXe0l489CIR2v30hdjbHJPuAEFhKiL__IeL5kFwiQ>
-    <xmx:0_hFaApPDP4NdL57QedLi4ePMZrrik_vmmr3ESViH7STF7z5jRdBfw>
-    <xmx:1PhFaF5vQVRLSngLoRMLWrZUR1DvoxZ_5AiZ_yhaG7xXPr7DccaFm5mV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Jun 2025 16:55:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="T0MF1NeO"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1749418982;
+	bh=irlGmo3y6MOSeRm/w+oAAUMyJPhnrrMveDASjXTkExE=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=T0MF1NeOeFLM524ZOpx4kHuPhmm4TwcmUtrDIR1Im8xiXAW7KGOWExq40qrev8rjT
+	 AJclGIOz3AnUU+EbLc9HsjWO/wkF+LEAuZKShkL3w3m/5GqElX47xCu7CrnC/UIxlD
+	 MIXa08XYuiBbAsfPKI9sA87Z9n6fqdDFbV3PUI9KIvwl50Xx6NsI+vJ6dnFscyDQMo
+	 onevnGkfRM7sFfQaheJapvdqIiWIpAEpf3rxAdMEPid1BIeseQ1KIQmOtF8ubxkKhX
+	 aGMhDCPDXw+XBua6h8oRPTodEJHM3QQFylZu215wV9605RMCeERb6pkUdquzzSIH5/
+	 bu7x0plaZoIsGKBn0kdc9kHdmyKrJkYttF58Vf8y9e90XE6k1ov3QJTzdfZwLuaICC
+	 9snPsJ7li+sFXM89A+CaMNec8pbmy0jJJty/3/9ESvOuIsDo/6aES9OCZxtsTpvS+H
+	 LZiixPG6i3oWTU13HQWbRALANC1bZSL0s1e8RB3u46vtBeJJ6AX
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8334420033;
+	Sun,  8 Jun 2025 21:43:02 +0000 (UTC)
+Date: Sun, 8 Jun 2025 21:43:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Cc: phillip.wood@dunelm.org.uk, Phillip Wood <phillip.wood123@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: Question: is there a short way to merge the last commit to the
  second last one?
-In-Reply-To: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 09 Jun 2025 00:00:30 +0530")
+Message-ID: <aEYD5X940Li_H7KU@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Aditya Garg <gargaditya08@live.com>, phillip.wood@dunelm.org.uk,
+	Phillip Wood <phillip.wood123@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
 References: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Sun, 08 Jun 2025 13:55:46 -0700
-Message-ID: <xmqq5xh6vtpp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <aEXdKMjAbry1aTXe@tapette.crustytoothpaste.net>
+ <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
+ <PN3PR01MB9597D380178A875C6FFA90E0B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Aditya Garg <gargaditya08@live.com> writes:
-
-> Hi all
->
-> This is something I usually come across. Sometimes I make a
-> mistake in a commit, and then I create a new commit with a
-> correction. After that I git rebase -i and use the fixup option to
-> make the fixup commit a part of the main commit.
->
-> I was wondering if there is a command, like git fixup or something
-> that could make this process easier? I know about git squash but I
-> prefer doing fixup.
-
-If your "After that" is "immediately after that before piling any
-more commits on top of the history", then the standard answer would
-be "rebase --autosquash", i.e.
-
- ... work work work
- $ git commit [options and arguments]
- ... oops that needs further change
- ... work more
- $ git commit -m 'fixup' [options and arguments]
- $ git rebase --autosquash HEAD~2
-
-But if it is truly immediately after that", then
-
- ... work work work
- $ git commit [options and arguments]
- ... oops that needs further change
- ... work more
- $ git commit --amend [options and arguments]
-
-would be even simpler.
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ygnfjOXZb8308n3w"
+Content-Disposition: inline
+In-Reply-To: <PN3PR01MB9597D380178A875C6FFA90E0B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
+--ygnfjOXZb8308n3w
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On 2025-06-08 at 19:35:24, Aditya Garg wrote:
+>=20
+>=20
+> On 9 June 2025 1:01:19=E2=80=AFam IST, Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
+> >On 08/06/2025 19:57, brian m. carlson wrote:
+> >>=20
+> >> If your goal is to just do the fixups and squash and not anything else
+> >> interactive, then you can do this:
+> >>=20
+> >>      GIT_SEQUENCE_EDITOR=3Dtrue git rebase -i --autosquash
+> >
+> >Just a quick note to say that since git v2.44.0 you can just run
+> >
+> >	git rebase --autosquash
+> >
+>=20
+> Silly question but how does it get to know what is the fixup commit?
+
+That's actually a great question.  When you do `git commit --squash
+REVISION`, it takes the summary of the commit specified by `REVISION`
+and precedes it with `squash! `, and for `--fixup`, it does `fixup! `.
+
+Then, it's just a matter of re-ordering the squash or fixup commits in
+order after the commit with the corresponding summary.
+
+So with this shell script:
+
+----
+#!/bin/sh
+
+git init --object-format=3Dsha256 test-repo
+cd test-repo
+
+echo abc >file.txt
+git add file.txt
+git commit -m 'Initial commit'
+
+echo def >file.txt
+git add file.txt
+git commit --fixup HEAD
+git show
+----
+
+You get something like this:
+
+----
+Initialized empty Git repository in /tmp/user/1000/test-repo/.git/
+[dev (root-commit) 7327102] Initial commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file.txt
+[dev 8bdd271] fixup! Initial commit
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+commit 8bdd271b6d4e22b7ca697c2d4499fd3e0825977d7d2c917b92e1f1f12383f52c
+Author: brian m. carlson <sandals@crustytoothpaste.net>
+Date:   Sun Jun 8 21:41:43 2025 +0000
+
+    fixup! Initial commit
+
+diff --git a/file.txt b/file.txt
+index e0ef420..559afde 100644
+--- a/file.txt
++++ b/file.txt
+@@ -1 +1 @@
+-abc
++def
+----
+
+Of course, `--autosquash` does require using `--fixup` and `--squash` or
+otherwise naming the commits that way.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--ygnfjOXZb8308n3w
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmhGA+UJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ8bpC1B2MEzP5ne8ku/WMW0w1hFcHtGbEqJLHPwD8SvU
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAAw5AQDX7p0jxE51VS28jgOKAp9TmADg
+0cnDQAJIjEGvcTLcZgD9FeYeg3OeHhE8qyyDVNjjUskou9U0GJYyaYsaDgmOOgA=
+=Jmnn
+-----END PGP SIGNATURE-----
+
+--ygnfjOXZb8308n3w--
