@@ -1,106 +1,173 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010012.outbound.protection.outlook.com [52.103.68.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B817717E4
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 19:31:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749411091; cv=none; b=QLBoHNk1T7GQreLCWU2bEAy9c9Bd5GU2uRHayCs9fIC/2DAW9KsufUYtFZxI1W4pUZTQGzccrl7122OHimMSczAeclVXZB3ZBF/kqhGbqhLJqps4XiUmVfzN92FdqJ9JNfbgBJF0LVdgMz6V/zqNZaGvaRk7WL7qFfq2dBN2TSw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749411091; c=relaxed/simple;
-	bh=XyofXwc3oaWDQmtMrYVuK+UMzikFC7L22i3+eBoYxEY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=gDFf90sywBceWVWZh5OJpfyVtZ3aoqB7GFOybpm527OK1YSAJnU/jefYSs9vm/LMlZzqfKm+AHo5dMLn96Ei9CKoUqikKPp0AVs8kVDEfU0LLVW14O2ktjBI3qxEq2KvmYWw+BtkLSJVMId9G0dWLOq7bzdz3/MQSf3WyBGIIew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WFabZIBq; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F5A194137
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 19:35:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.12
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749411335; cv=fail; b=HVy279AnpTJ+nkEDZ9sQdVJQ+1O1VQMdH9hi6uLCJOvxV9kWRG8AKgETRQcKXaDOFbqih84DrglVL7EYUGd9ceFZMmQTd8eqvUggJYHvkTUEvFRqB/m9lVE+DFRkkiy9XD/4FyOHhOu2rl52X9uqJiIZ7ZJL2sobhUkwwGx2zfY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749411335; c=relaxed/simple;
+	bh=MQOU3Q9h9pRoXi6WR+kWbF/3/BisRReoFbJWC1vG2Oc=;
+	h=Date:From:To:Subject:In-Reply-To:References:Message-ID:
+	 Content-Type:MIME-Version; b=dme3S6yTxNoogNc57AT66igX7NCLGTCyo+kxnv7LDhOFKqLxnjNqgTpyjLV7ZqrAbzSNel6vaUAmbRFtpc8Yi8RUUP6NDcVU0/blxTZstQa8FE14l6sEdtlooGYkVXwFV7XWy6F3px5fjDfXpsXWhGzlgVpayXN0f+G4VyqIm5s=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=WhqOrPpd; arc=fail smtp.client-ip=52.103.68.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WFabZIBq"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-450ce671a08so23129925e9.3
-        for <git@vger.kernel.org>; Sun, 08 Jun 2025 12:31:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749411088; x=1750015888; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9j7RkBQxUiK9OMipQKVbRiVXwTdMNsHiKus/jMMNoeQ=;
-        b=WFabZIBqhp7SPXmM8m3qZIhc+ZfbaDY6LNfM24V4cmLrcbI9hfEJ5b922aTEOGmrOp
-         I5OpxlyAmKyisF3S8lvuVZ3o/KnBQXK41dAsvlyhMjO7p5jO1eq1k62FE98QoO7aBIUr
-         KpY1AVCwBqagYq4v9cUCEkDMvIqqH/C9zIMpfsK7smp3Dzj5AK6d/aAiQAAbj07gPbgE
-         9aZVGWtRgTTmsErGzlm3o0wN8oV6mT9henpExiWhDiZ7N0dkco8iMKEr3uGVmzXS8ARK
-         2P/K2pvSrIJqTSXpPvyEZ3FRenh9/XyRAaJWMy+Vaws+2Y9jIAf4wGuQmzJAGtKr/mtO
-         3vYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749411088; x=1750015888;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9j7RkBQxUiK9OMipQKVbRiVXwTdMNsHiKus/jMMNoeQ=;
-        b=vQLptU8xbgdO0u+Bh35lqg+9MlVtrE1oj9sk0eARZL8ziOO9GJHSAL8xxucIfos0EE
-         n6xXgUsiEPnn18Lj2o+taOgRffaWaxZ+uq3KPqXdByA8okDTO7vUZJChRo0uGeRi/xOQ
-         6PcG89bjm272Kr8eJii2is6nybSd8fYrhhBdzdqv1NAdcw94Ub7Xc/6GmG/n2xg2UlLn
-         7bpi+ioCxY0ExP+jzGaRIKIwWz4Pgk3vPnQ9D1S5RKOUSojxpxxEDoOSVEVopFVwKHrn
-         byikwOeM0/gNAYBjO4MAKtAf1ROLbhswO9O/fXZptEMJqMF1zFYiI8ZGQZ9YB6UmPTUu
-         N5bw==
-X-Forwarded-Encrypted: i=1; AJvYcCWo8CEwzAA06ms8PT4bx4GBVUfpy1oHy7mUzJ/JDic9j+lp6RIAVvrCxu5UsxFR1yDaCY8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwkQVeTRLgjDeuKpfUgWctKLOkybaalKErEABUeMJQIqgUAprfW
-	v4NlgL9F8Yl3ILHs0ilnTzyO0IgtTgBwqHCMkJP28ugC7CH2FaKT8WCR
-X-Gm-Gg: ASbGnctref/bckJI/Oe2cjmEOBV9f93pkTQpG61iAz0XUXhlZzpSRqG6cnflXnTKvy3
-	zLr+KvFwUhsdWCpuSptnmXBP2SExOkoJ19aSBpxsCY80y/iqXBi626qiu3iWqsrJlFm+tNdNEdY
-	0RCj0BWYEcihlOL497d1QclzCrwmMPXic5mfDoYsMuysikz6+XVsRqUfzdcgX3/orggzYPl1OWa
-	AZ4VslOnbm4oqVhBX0Fn0aCJneA1PxnGtOcLpW6e2OxpO67Hb1r8V+w3lB6D9Txfyk6Kw/f4FHG
-	MMabhqwvN8tCNvZFM2nt+phqkV/F2SPHQJgPY2y/UsKudg1gVKKI7ELfswN3KAVcYdBNWXEMul2
-	anFY4SmaklzLt4htcH5wSl9VQJ+U=
-X-Google-Smtp-Source: AGHT+IGA7qZ1aojZuIku6/BAdRTUwMPE1OS0vHfEQ2t78Wz+uGHmyj3TFx9hkO7mZW0NYjgc2PlI1w==
-X-Received: by 2002:a05:600c:19cc:b0:453:1058:f8aa with SMTP id 5b1f17b1804b1-453123f5e09mr12788265e9.15.1749411087655;
-        Sun, 08 Jun 2025 12:31:27 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-452137258bdsm92920815e9.27.2025.06.08.12.31.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 08 Jun 2025 12:31:26 -0700 (PDT)
-Message-ID: <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
-Date: Sun, 8 Jun 2025 20:31:19 +0100
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="WhqOrPpd"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ynWJlCrjA/q0/krh2hA4o1k406lrJfrDY85sD7PUFn7/oD0SQHAUkiqnMl56bfoKLaj37AE+A/pE04f/1OXQe1pLNrVAE4Esjl3YQc5kOOCQDDwP5v1NgYCzLdcDzbTX+MGPtxgSOCwaI7So9pFMg3ZqS7SZGh6Y9mUmOdbI90oogjABLdWMt9j5LQlZRk++YE8m/Albd4ZSKQhRSmH4iyGMhWfQ6nL/xm8MSoDpfCTucj2ZtK8UeBOgg712TIRDtuhX3+j1GIz4POlKTA1KAb9mQtIc194JXR8zsgMdBRDsFzMBP1edtHPWF0ZmkzsiTEcXMtzSHeXUm/i+C+n4kw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PzbWIvf32Vix1AsWluVfiU3UzNnBCCaA7KVmI02C07o=;
+ b=TPzbBDO2wfeJ2A/RmDSzu2EPhtDcd6mBAXsfzQ+JGhtKTTzEvWfFCMfLbM9xJmnlA/LSRfct0dNyVKezS1Oi1VneJcK7aEE4oouPf7wajAdsdxfSdFLfU0QA6BpyoeePGww5nD7hGatb7qqYv80kGnsOvEg6Lc2sXvOSPhhTDNothdvHB6FuWWGHt8fUs6MBaUC1qUm+P3gRr8+dudnwpd5EOSiy4fSAMfnzyttjtCzuKaebJrt/9/9rI3BP7XGwc8I8q617fLIcH68My2G/Sx9TvI3iV+kpi5bEZlw29bEYZzg6XsD+YGgnand9vuJ1D0GsAZ/MW1FKCcnWZBEZaw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PzbWIvf32Vix1AsWluVfiU3UzNnBCCaA7KVmI02C07o=;
+ b=WhqOrPpdfFkjLBuu08YG5EAWuEHeu/9BL83jLkQrWSphrmqldEl5BaPSpEh0aGDObxp/3iUjHI6lrBY2Ln/tzRFyRtyOJ7gsMiBXrAbW3/RpOZWsGH/AnkCdIrmCOB1v3JMFwtY/5T5Si5P+SNrEeWn1P9rEeXew/xPz+6ynIbOhOLZeUQNXXfAciIN9UO1YAmlJ11UUyUJh4uoFSQ2IKqnSS2/U6LVH8KPxOzAplPTiHrmXfUf/zLp7gIzwUdA9qt7UOfkVEA8rXYmgROTdoQi2QSO1KuLGzc1W20irpL5DQquzKaRu+Pi3CSAW+EFacTBl4z+mO3m8bOTFry/5ng==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN3PR01MB7645.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:ce::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.20; Sun, 8 Jun
+ 2025 19:35:28 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.024; Sun, 8 Jun 2025
+ 19:35:28 +0000
+Date: Mon, 09 Jun 2025 01:05:24 +0530
+From: Aditya Garg <gargaditya08@live.com>
+To: phillip.wood@dunelm.org.uk, Phillip Wood <phillip.wood123@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: =?US-ASCII?Q?Re=3A_Question=3A_is_there_a_short_way_to_mer?=
+ =?US-ASCII?Q?ge_the_last_commit_to_the_second_last_one=3F?=
+User-Agent: Thunderbird for Android
+In-Reply-To: <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
+References: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <aEXdKMjAbry1aTXe@tapette.crustytoothpaste.net> <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
+Message-ID:
+ <PN3PR01MB9597D380178A875C6FFA90E0B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: MA0PR01CA0098.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:a01:af::8) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID:
+ <3B51544F-C570-4E14-A8F0-22A6029FEFDC@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Question: is there a short way to merge the last commit to the
- second last one?
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
- Aditya Garg <gargaditya08@live.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-References: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <aEXdKMjAbry1aTXe@tapette.crustytoothpaste.net>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <aEXdKMjAbry1aTXe@tapette.crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB7645:EE_
+X-MS-Office365-Filtering-Correlation-Id: 351f54ef-500b-4449-0dcc-08dda6c39f8b
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|461199028|5072599009|7092599006|15080799009|8060799009|6090799003|19110799006|3412199025|440099028;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?TlZRUkVJUm1mOFNvQ3hHOGQ2T3JaRmxJM0lOZUMvZDhhVlkxZkNSeFVtVUJF?=
+ =?utf-8?B?UFlGWkxsejRaNjJJQWovTi9KWkdaNzlGeWJ5QlBoRXl3dlh2ZVl6cXo1aUNI?=
+ =?utf-8?B?NXQ1R2FDK2tRL3hJOEh0a0NGU0JSNnEwdE0xTkJtVGhHd0pGcjFFNjBtS0Vy?=
+ =?utf-8?B?YUV1Q2lrU3JlVmV2K3hGQlBUbkl0aVhYblc4RjdDRzYyczFMVWZMQjBsRGQ3?=
+ =?utf-8?B?dHpSMnBJMHF5THpFU01TZDZCMDdrdHVCbjdBRDRIZFB6Y2krRFlWL1daVW9Q?=
+ =?utf-8?B?UGFkeGp4SUQ2c1kyQzhuQ2NxSkVrVGpmUWVCY0Z5eDdtdUhlQ0FWbzJ2ejBI?=
+ =?utf-8?B?Z2ZxVHlHdkI2dHVKZDNoT1NGVFpyNDY4WkFROUVwNGVIL3BmaWZqd2cyaWRF?=
+ =?utf-8?B?ZkhvWHpDcTFrQjZTSXFOTGhaQTlXaWdPdVRnSkNBWVpZTE14Zi9rc01BZU92?=
+ =?utf-8?B?RjRjbmVmdTBRUXR6SHlUdzFtb2REc0xSa1JpK3RMUkR1OTNjRi9haXJnU2tT?=
+ =?utf-8?B?K0d3ek0rcEtSNjBxTTM5amxUYWpOTXRFRlNSYlMxNDB4STZ5ZnlJZWd5K081?=
+ =?utf-8?B?TVg2dGkyRCs5TzFTZGRIZUVUTnNuaHZ4MmgxRGdPTGJMYkEva2xKdUV4Q083?=
+ =?utf-8?B?MUQrRzF6U3dOcWFCUDc0TTQwY1JpZ3NUb3VEU3VKVWFMb29WWjlmeVM1aU1s?=
+ =?utf-8?B?cmV3ZlF3NERSTFR4OUR4dUNEcGtqcmFWR2dRYW1wZnhyQXM0clpVelppdFFR?=
+ =?utf-8?B?cEZMS256OE1YQUEvRjhhQm92OS9pbUtBVDU2QkZFQUI5bnJBd3BhRTlMZlRy?=
+ =?utf-8?B?a29uQWxVSHdmOTZpUEVQdXgzQWIrRGdDazFzaHQ2VmdOSVFZT28xbWFnenNI?=
+ =?utf-8?B?QUVwbUFGRjFwZ2tUWEVSdGdWR1A5Mzg2OWZtdURNaXZVTXZNeWE3SzQwYVd5?=
+ =?utf-8?B?ZmJhUXhEYkZGYmIyUnVsSWZGcGIxa3p0Q3VIb01naHk5Z3pDK1ZtNDZzUWZr?=
+ =?utf-8?B?QlhseXcyaXJtLzB4dWYwZkdabmF2bnJtVVNkV00vVVpGN0xHTjFOdElRNTQ2?=
+ =?utf-8?B?RjBwdTFNcWY4SzRydnZPNzlWYzBUb3oyZXBKMGZwODdrOU5iditha0Z0alFX?=
+ =?utf-8?B?YnNVQTIvbHVOS0hYaU5ZUGhINkM2QzhpZmR2TW1td21uTnVieXgxeXM0WHBR?=
+ =?utf-8?B?YU91QjEwTVE3TG9tUVYvdENZMk00K3RMWmN4MFFXdDJCUTNIK3pRVGpFNXdS?=
+ =?utf-8?B?U3FpWjlZS3dyL3VlVmZZY2MveXRrcjBjb3o4T0dwQ2E0SHlBQ0xldldFSk1w?=
+ =?utf-8?B?ZEFIRWRFUDc4TnJjVkR5TnRPc21seFFUZ2tYNmk4NzVUS1lxc3hKMWVvVURC?=
+ =?utf-8?B?MDdld3VDcVhQMEVKVlZNL09pSGxGeHUvV2h2ZVkxdlZjMEw1QVZtZjhiZzJk?=
+ =?utf-8?B?WUxoNUpwU0g2TktUdWlMeFYzNDJPQVo4WVFVNzJqdmlDVWt4RmdhUkl4T3V6?=
+ =?utf-8?B?bG1PdjBhajdjQy8xOXBKNmRWQi9SNHd4QURMdEo3MWRVcEdIT0NXQUw3STNy?=
+ =?utf-8?B?VEFMQT09?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?aGh6T3lURlY0d3p4SkxLM0FtcTJTRzBwTHBkdjVzdmczZ21VNm1oWnF6OWVr?=
+ =?utf-8?B?bExrT3hMdS95WFl1SEZBd3pya0xYZEErY2U2eGFaRDFGT1A1T0g2M0xUSFd2?=
+ =?utf-8?B?Y3IvaTdyRkxQTVg5NllpYVo4dmZCNTVtQ0t6MnRYWUg5YUFzclFpQ0JyNThQ?=
+ =?utf-8?B?eTBESThobnRFZDg2MlA5anc5RHF3MkVUamlkM3hXWDJqS1drNFIwUVZJMVcv?=
+ =?utf-8?B?eGxncDNNLzB3Y1NSSEl2QWg0Z0pTRnlDeEo5VHozSUVsSWNzVmxyYnhUK0dT?=
+ =?utf-8?B?QXk3QW8zVWtqUi9FZFZRb0lBV25zeW5TTzM3TVJONjBWWTRXS2dLWGRVeTZ3?=
+ =?utf-8?B?czFaU2pKR1ZpOWVqRG9JWlFOaEZLc0RacWNWUGRRaHloSjl3SVNlVi9sZ244?=
+ =?utf-8?B?V1NBeXpNdithcG8ySUFoQk45QXljWUpqZHcrR0dFZkRmaCs1cXkxTUN5ZUJ3?=
+ =?utf-8?B?Zm5zN25DUzBUZklheEFROGt2STlkVnRTdU00TTZzRkFsVzJJa3E5REM1S0FP?=
+ =?utf-8?B?Z2d3NTZ0eGtHQmlJeE92MTlJRVFiaVF6QXVXeFp3c21jWUI3a1VYZVBhd3NZ?=
+ =?utf-8?B?TkZKS0xrMEw5QnMwb3NMT0FKWWc3S0ZDWE1mMU5TUkk1Q0NNTW9xV3lnejRw?=
+ =?utf-8?B?aEtvQmtHRXlEQlB0MGdxMFlFeUN0a0xOeGJsRGJYMFFXdkZYRkV6Z1NTaFNq?=
+ =?utf-8?B?a2pSck1TbEpoZW5EUHIxaDBvdGxncnMvSi8waDJYOHBMUjVEMGxlZGFid25l?=
+ =?utf-8?B?eElqMFJoMjJmbTdjTkYzTUpkN05QYU1qL3ZzZU91S2NWVFg1TVdUdTI4dWNi?=
+ =?utf-8?B?QW1CNUxEOVVKNjZwa0xaRUdmcStOZ2M3OVUyL0lHamJWZzA4ZDRLd2hNR2Qv?=
+ =?utf-8?B?QVpMdTVIQTdsdytNY01sdmhxN3djNlI3eG5tcGcrWmJBelNOSHkrektYNm1C?=
+ =?utf-8?B?N0VkWTAySmdMVzFyV2diN1prbHZtdXB5c3p1azR5QTlvNmlzZXR0WkJEenZ3?=
+ =?utf-8?B?a1drNWF1cWRiT045WUo4RDkxTnVPR3ZIakNRSFhHWk1kYTZjTXRTbk81YUw4?=
+ =?utf-8?B?dWN3ckxnd2NlbkNGNFQ5M1NreW83N3RpR1hSS3VnV3EvbDdkL0hHSjBaS3Jm?=
+ =?utf-8?B?V0tLVnZsd3dNRWg5UGNCQjArSFBNTzNqam13UHhLUWtoeXNjVTQ5eTlnbTh4?=
+ =?utf-8?B?cndoMkY3SllFK0lmaTRrd2dWSVlLZWZJTDRMeGo3VEdHdFJHOGlqZ3V3V1B6?=
+ =?utf-8?B?Rjk1OHJXWW45d3YvRzhDM3lXUjVHYXN3N2lNS1dKbjc2eFhDMFF0R0Z1Rzg0?=
+ =?utf-8?B?K0dmZ05OMWRvWnRqUllTNkpFVHpzMGpoY1k5TC80cHJDM3JBMm5DVDBQcWh6?=
+ =?utf-8?B?UFVwdlpUN3ZKTHRXdDhQdktaak0vTTlXQzJ3VEhIUG1GWDMzQjFuRkU5dzFO?=
+ =?utf-8?B?VkRkVDIwQUc5NlFhV2xROHVhcXhETER0cGhPZlZFdGRiWGc3UEJYdXc3ZXgz?=
+ =?utf-8?B?bGRpaWNMcTEzVzU1RzJNNnhkRzJRQnUxdlhrUkVMQnkrNUtYZXQyNk1rOS9D?=
+ =?utf-8?B?VSsyUkZzWkV2blZUeGNNaWFTb0dMUGdpaGprbU5jSzJXenRCQlZhUUpvYzBj?=
+ =?utf-8?B?V0pSYXBMRnFrUnFNWlRhWk1DWUVtVStJQ1YwdDdqa3dMZUJkR3I2L2xZTUlI?=
+ =?utf-8?B?ekkzK2NZL3NKQ3ByK0ZFUzhERzNaYTZ0NDRzQXlabHpxM0l4eTN1WWZGUW1n?=
+ =?utf-8?Q?qnZEt4GXNVoW8R/PK8=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 351f54ef-500b-4449-0dcc-08dda6c39f8b
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2025 19:35:28.4377
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB7645
 
-On 08/06/2025 19:57, brian m. carlson wrote:
-> 
-> If your goal is to just do the fixups and squash and not anything else
-> interactive, then you can do this:
-> 
->      GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash
 
-Just a quick note to say that since git v2.44.0 you can just run
 
-	git rebase --autosquash
+On 9 June 2025 1:01:19=E2=80=AFam IST, Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>On 08/06/2025 19:57, brian m. carlson wrote:
+>>=20
+>> If your goal is to just do the fixups and squash and not anything else
+>> interactive, then you can do this:
+>>=20
+>>      GIT_SEQUENCE_EDITOR=3Dtrue git rebase -i --autosquash
+>
+>Just a quick note to say that since git v2.44.0 you can just run
+>
+>	git rebase --autosquash
+>
 
-and it will squash any fixup commits without asking you to edit the todo 
-list.
+Silly question but how does it get to know what is the fixup commit?
 
-Also "git commit --fixup=amend:HEAD^" allows you to edit the original 
-commit message and this new message will be used when the commit is 
-squashed by "git rebase --autosquash"
-
-Best Wishes
-
-Phillip
-
+>and it will squash any fixup commits without asking you to edit the todo l=
+ist.
+>
+>Also "git commit --fixup=3Damend:HEAD^" allows you to edit the original co=
+mmit message and this new message will be used when the commit is squashed =
+by "git rebase --autosquash"
+>
+>Best Wishes
+>
+>Phillip
+>
