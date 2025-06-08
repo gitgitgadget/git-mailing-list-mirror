@@ -1,75 +1,86 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4612B8F54
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 16:05:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749CE2110
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 16:20:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749398747; cv=none; b=jSjx8ftZ/y0jScy3prFSNwHgJVxs13o9f0MXF+97+VbPsXGcEecnlu7ZTxlElEvnG0sSjZxfCGNKU+9QCX5IXGjxKWL3PKuUuicDa6zyCQW7PKwauMDqdOpRHyD/+x0q4spNKYVDTMFU0Sm5w2dD7s9bYMGu567RdVZhLYCcNM0=
+	t=1749399613; cv=none; b=YBIaiF8FYB1cgNbWk3AZ2ue5YayFuDsvvzuPA/nyHaW1rDhHvusoREbKBYpWwUz1NRbfuPWSrPx4v2gYzf7946VgP9e8/W9yOzUJvGrMuk8LGQFwFJ1sKPJbR9J+6vRCpW0suv7G3IJMsQDcu1/pMOnWxQtFLSN1PW/73zvaQfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749398747; c=relaxed/simple;
-	bh=GHArSQtDx7wPWLZX1ps3cACcvJr7R6aHdbDWk76yDlQ=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ek8G3UN9xZFGGkJ7uYNE1WJLb0gZxWrTi2g7BJ38hY2LqAoQNJXv0xdwXTgKqg1tlz5EPh3vXCYy7ZqvOMtlUdVHWP1MMqeMfNfCtEvbvKpDY5Dm2NSyikHIAQb1sPR6hoHmo5Ae3U7y4kk6SUgir1cdoaIwtgio/eCGa0swmGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e7Tbktmg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BnNcxPo8; arc=none smtp.client-ip=202.12.124.155
+	s=arc-20240116; t=1749399613; c=relaxed/simple;
+	bh=Q5NwaU2nscOQMlP/s5UnT1YcYzVNyQMGjvAJO4uLpS8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=o19vThi77NP9pWhASU6rjZkwsF11I6/Wg7ydVCQ+DsmpcpVxuP5jMrmElHeJZgoE1NQfTOQ7XlNfEbwfupdP/3xCCWc3IP8wgV3uCv2dXNevOX6cmteMwYf8dIJ6RHjtve1SZWATzVKTjYQPZLn5m0wPsApqmMqQ2dPqHiqw+bA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=0IexlUbz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F9XoofTI; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e7Tbktmg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BnNcxPo8"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="0IexlUbz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F9XoofTI"
 Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4910F25400A8;
-	Sun,  8 Jun 2025 12:05:43 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6171925400D3;
+	Sun,  8 Jun 2025 12:20:10 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 08 Jun 2025 12:05:43 -0400
+  by phl-compute-02.internal (MEProxy); Sun, 08 Jun 2025 12:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1749398743; x=1749485143; bh=JpjnClNIofnLi5+KHRj90R8y/sLzt88H
-	JVIVyEcKag8=; b=e7TbktmgFkx1xWg68JtvFBad4cTj+PIRuJuMxObb0mJ3Zi0f
-	ZWm6I4stm164WmnLNhua72e2LvXq8voWAzvL3gIKVNLiXBKeNHwdkHkKVyWxWy4x
-	Ky9KVGtMof1QeTpDU09S68dck+kHk2KPDbehjjy75AG074sjhHKUjiMA/XysYUEk
-	PhoQs17GagRQIu3jhgerwIC9Olr60dBWfTdFQuTqGy9A49wX7OxBVJy0/9ekWF6Q
-	1pEc96/9T9J27URmBqIKZ1s4RH0dlde9Orq+EjgiEpcCVoPWa7jhzvejQHdcDQLq
-	4HzkUVlEPXZMHnPVYmWVII33QVvMf19yAUMbTg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749399610; x=1749486010; bh=wj2/nTuAwO
+	gPtdUVibmkIWbz9EEp1K32EMw8pn/75tA=; b=0IexlUbzpfUczt/Q2xdLuUFhAy
+	STQmIv1Y9IB7YrEmxK0oOexAHW3JVLeIck6pvooBTZAnh9TWcqxZALuyayi8IhpZ
+	ucAlgKY4KFyFxcLZamEf4srz85FWARNik/sOWvmP+0xxD1pohASltu+xmQkFrubO
+	eDBoVoxW38VdJgQs9//vuQsEz/GgJpjYLrAvUMtlQgatLbkkQdwc7jXSD75xgscT
+	tkhPhPdrRQagSYqexhgf3Rr5PY30JRtINN0uYPi5t0tuBfOUno/kjAFxMVHXxoPH
+	3BeMIZ4mDyep6PghclMt2maGMkBJe3cEEs3vUQSyhL0VA/K4jRKQIWXTPvgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749398743; x=
-	1749485143; bh=JpjnClNIofnLi5+KHRj90R8y/sLzt88HJVIVyEcKag8=; b=B
-	nNcxPo8t8yypyj+p5uC7uaMH802o5P1x2K63BoeuKwH7A5Kq2INxHZ58zR3Wdr8K
-	9asaZMgRAs1uHCdxn8aXuc2lFPGF+sswE+sw1xFEohmoU1EtsSFmMNsKSjNfXMXH
-	+WE/sFSaThbDCrJ4i6OyMPu4KK+zefQDYp5KJKAf40D7O0EFpMJgTKRdZRg7nkVo
-	uKciW6rfnPAojMAVY7d8Svh0/M7uPEFWef4lng650cnNCtpSJ0qctvR53iCNoHZe
-	msS/PPlSL/kaFD8uOU41Weh6ahWB1oPqJn7pS0AzrJh0U62WPp/rBQiNLllAGttW
-	Wyx6vuaK5Cdm3T0/q9Sxg==
-X-ME-Sender: <xms:1rRFaPfJGknIgRAMjjE8s6DZhnFcfX_yTOt8Igb8JJFTjNFqRCMy1Q>
-    <xme:1rRFaFMEhtt_JZVb38Rf48W7nILWNRcGMUSgVSJb7SzIU3vRgmf9S8AtYZ2MW5ITC
-    R68ONm7Qmkzme3r7Q>
-X-ME-Received: <xmr:1rRFaIjB1s0MJW3LPBTmTajTkQGAko5sDrBjV8BriZ2FqGT7sHsMUw7msFEvc1L5gYIo5F8S5MmQqd1EMuH-7jrHaO8d3EBvHWnZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdektdejucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749399610; x=1749486010; bh=wj2/nTuAwOgPtdUVibmkIWbz9EEp1K32EMw
+	8pn/75tA=; b=F9XoofTIIuKtnYhMF9N+UcXLN3oDFy6DCuBqWK0Q14X2QOMl/09
+	FbuMuLTH7jbhws/tduzml9q6aQ+1E1d9ehEzrrPoqmCr9QnzAThVjUQfgnUDgyrB
+	LGOGNG1SkC6WqCK7ZUD99p+mxsM1j9MrsUZ8D62GyUja6kQxWF6GdGYhhnl0DnIw
+	SMOZ3DkrInOi0IT72JJbUtdc5r9hpXFviyvK2aE4oHs8pbbzs9jh/1rE5BMqdj2B
+	jqRPLKpB3DB057qRd6jL3HrI9ry6U+KlgklBbHQlpgb20Rm3ZQE/U3iKS17jm+Z+
+	Z+NM//9TzuSfkotpkW67DCit9OTrPilwvcg==
+X-ME-Sender: <xms:ObhFaBDZwyh8VeRQ-x6lca6sE00gz97xFccpF6ggXGlNQf6P-nYl7Q>
+    <xme:ObhFaPjnHZP9XWsErlqFA4AJNKJCyNqsnfUO34DlA0KKQQJaF3eVts6pjixE8l8SJ
+    HytgmQlYUJnNeknrw>
+X-ME-Received: <xmr:ObhFaMnsJGIFl56duDPd0Xytfei8Wd6ekiZak54NREvO2Lbs9PNHDJ7FERdPvk1CWyd9X-rRyNa6fVvDOR8iQMMGZ26lOQyCksNk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdektdekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvffuff
-    fkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceo
-    ghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepledvfedtfe
-    dtkeefueevlefgleetieeuffffkefhgfekveehkefhgfetjefhffegnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosg
-    hogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:1rRFaA8DlDRZEsEtyRIRbwSbSJka38mW6S6f2Qvau3CJ_jhzMI_sZw>
-    <xmx:1rRFaLuL3G3VrkuAW6uJzwRj2UnieYKr3WI9eU6QfidtU7syQuBSlA>
-    <xmx:1rRFaPEcvGfC35nkdiZpolUPCiHulTEsu0541APbWAhxw5mUaM_m1Q>
-    <xmx:1rRFaCNq4ktTWegAozL_zhibBNDDQH9zjh46N4NJAvZMMcrMIS5KyA>
-    <xmx:17RFaLcr51loWBGeXHZKQiSBLl4Yhxn39Pt2GDfoH6yo9aTOUoc2wWfo>
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvggvrh
+    hthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehlrdhs
+    rdhrseifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepshhmrggtughonhgrlhgusehkrghimhgrghhinhhgrdgtohhmpdhr
+    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ObhFaLzTpNLEOHvhSmWCuoyNM_zi-RNEDAldMnXLwPh_7Xi4f9mwpg>
+    <xmx:ObhFaGTT_DtnmklzGYOH-prhwuqKLZceQrI2QaK8ZR33pTyIxuFFoA>
+    <xmx:ObhFaOZ1qMnzftpd1bkkpkbmxHmEDgB6rz5ufA7x8iwN4uw1dnBOGw>
+    <xmx:ObhFaHRoTM0GGivnwfijF8tdvykmVGJyT7Zp7mX3Co42Iyu4hThVAw>
+    <xmx:OrhFaLKrOFP-YDSaUXzzUvyAfngUBHY9DaJsNGNYkmjQQXKUOCelzYzY>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Jun 2025 12:05:42 -0400 (EDT)
+ 8 Jun 2025 12:20:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH] merge/pull: --compact-summary
-Date: Sun, 08 Jun 2025 09:05:41 -0700
-Message-ID: <xmqq5xh6xlpm.fsf@gitster.g>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: l.s.r@web.de,  git@vger.kernel.org,  smacdonald@kaimaging.com,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v2] stash: fix incorrect branch name in stash message
+In-Reply-To: <20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Sun, 8 Jun 2025 20:15:42 +0530")
+References: <f46443ac-eb7f-47db-8f4b-a06384e6fde5@web.de>
+	<20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 08 Jun 2025 09:20:07 -0700
+Message-ID: <xmqqo6uyw6h4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,189 +90,149 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-By default, "git merge" and "git pull" shows "git diff --stat @{1}"
-to show the extent of the changes.  While it gives a good overview,
-one thing that is missing in this output is which paths are created
-and/or deleted.
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-Introduce "--compact-summary" option to these two commands that
-tells it to instead show "git diff --compact-summary @{1}", which
-gives the same diffstat but notes the created or deleted paths.
+> When creating a stash, Git uses the current branch name
+> of the superproject to construct the stash commit message.
+> However, in repositories with submodules,
+> the message may mistakenly display the submodule branch name instead.
+>
+> This is because `refs_resolve_ref_unsafe()` returns a pointer to a static buffer.
+> Subsequent calls to the same function overwrite the buffer,
+> corrupting the originally fetched `branch_name` used for the stash message.
+>
+> Use `xstrdup()` to duplicate the branch name immediately after resolving it,
+> so that later buffer overwrites do not affect the stash message.
+>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-merge.adoc     |  2 +-
- Documentation/merge-options.adoc |  3 +++
- builtin/merge.c                  | 39 ++++++++++++++++++++++++++++----
- builtin/pull.c                   |  3 +++
- t/t7600-merge.sh                 | 28 ++++++++++++++++++++++-
- 5 files changed, 69 insertions(+), 6 deletions(-)
+Nicely described.
 
-diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
-index 12aa859d16..d53923c3b7 100644
---- a/Documentation/git-merge.adoc
-+++ b/Documentation/git-merge.adoc
-@@ -9,7 +9,7 @@ git-merge - Join two or more development histories together
- SYNOPSIS
- --------
- [synopsis]
--git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
-+git merge [-n] [--stat] [--compact-summary] [--no-commit] [--squash] [--[no-]edit]
- 	[--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]]
- 	[--[no-]allow-unrelated-histories]
- 	[--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
-diff --git a/Documentation/merge-options.adoc b/Documentation/merge-options.adoc
-index 078f4f6157..95ef491be1 100644
---- a/Documentation/merge-options.adoc
-+++ b/Documentation/merge-options.adoc
-@@ -113,6 +113,9 @@ include::signoff-option.adoc[]
- With `-n` or `--no-stat` do not show a diffstat at the end of the
- merge.
- 
-+`--compact-summary`::
-+	Show a compact-summary at the end of the merge.
-+
- `--squash`::
- `--no-squash`::
- 	Produce the working tree and index state as if a real merge
-diff --git a/builtin/merge.c b/builtin/merge.c
-index ce90e52fe4..736739d3a9 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -69,7 +69,10 @@ static const char * const builtin_merge_usage[] = {
- 	NULL
- };
- 
--static int show_diffstat = 1, shortlog_len = -1, squash;
-+#define MERGE_SHOW_DIFFSTAT 1
-+#define MERGE_SHOW_COMPACTSUMMARY 2
-+
-+static int show_diffstat = MERGE_SHOW_DIFFSTAT, shortlog_len = -1, squash;
- static int option_commit = -1;
- static int option_edit = -1;
- static int allow_trivial = 1, have_message, verify_signatures;
-@@ -243,12 +246,28 @@ static int option_parse_strategy(const struct option *opt UNUSED,
- 	return 0;
- }
- 
-+static int option_parse_compact_summary(const struct option *opt,
-+					const char *name UNUSED, int unset)
-+{
-+	int *setting = opt->value;
-+
-+	if (unset)
-+		*setting = 0;
-+	else
-+		*setting = MERGE_SHOW_COMPACTSUMMARY;
-+	return 0;
-+}
-+
- static struct option builtin_merge_options[] = {
- 	OPT_SET_INT('n', NULL, &show_diffstat,
- 		N_("do not show a diffstat at the end of the merge"), 0),
- 	OPT_BOOL(0, "stat", &show_diffstat,
- 		N_("show a diffstat at the end of the merge")),
- 	OPT_BOOL(0, "summary", &show_diffstat, N_("(synonym to --stat)")),
-+	OPT_CALLBACK_F(0, "compact-summary", &show_diffstat, N_("compact-summary"),
-+		       N_("show a compactstat at the end of the merge"),
-+		       PARSE_OPT_NOARG,
-+		       option_parse_compact_summary),
- 	{
- 		.type = OPTION_INTEGER,
- 		.long_name = "log",
-@@ -494,8 +513,19 @@ static void finish(struct commit *head_commit,
- 		struct diff_options opts;
- 		repo_diff_setup(the_repository, &opts);
- 		init_diffstat_widths(&opts);
--		opts.output_format |=
--			DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
-+
-+		switch (show_diffstat) {
-+		case MERGE_SHOW_DIFFSTAT: /* 1 */
-+			opts.output_format |=
-+				DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
-+			break;
-+		case MERGE_SHOW_COMPACTSUMMARY: /* 2 */
-+			opts.output_format |= DIFF_FORMAT_DIFFSTAT;
-+			opts.flags.stat_with_summary = 1;
-+			break;
-+		default:
-+			break;
-+		}
- 		opts.detect_rename = DIFF_DETECT_RENAME;
- 		diff_setup_done(&opts);
- 		diff_tree_oid(head, new_head, "", &opts);
-@@ -643,7 +673,8 @@ static int git_merge_config(const char *k, const char *v,
- 	}
- 
- 	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat")) {
--		show_diffstat = git_config_bool(k, v);
-+		show_diffstat = git_config_bool(k, v)
-+			? MERGE_SHOW_DIFFSTAT : 0;
- 	} else if (!strcmp(k, "merge.verifysignatures")) {
- 		verify_signatures = git_config_bool(k, v);
- 	} else if (!strcmp(k, "pull.twohead")) {
-diff --git a/builtin/pull.c b/builtin/pull.c
-index a1ebc6ad33..6e72a2e9a4 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -143,6 +143,9 @@ static struct option pull_options[] = {
- 	OPT_PASSTHRU(0, "summary", &opt_diffstat, NULL,
- 		N_("(synonym to --stat)"),
- 		PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
-+	OPT_PASSTHRU(0, "compact-summary", &opt_diffstat, NULL,
-+		N_("show a compact-summary at the end of the merge"),
-+		PARSE_OPT_NOARG),
- 	OPT_PASSTHRU(0, "log", &opt_log, N_("n"),
- 		N_("add (at most <n>) entries from shortlog to merge commit message"),
- 		PARSE_OPT_OPTARG),
-diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
-index 2a8df29219..ce666efbcc 100755
---- a/t/t7600-merge.sh
-+++ b/t/t7600-merge.sh
-@@ -185,8 +185,19 @@ test_expect_success 'reject non-strategy with a git-merge-foo name' '
- test_expect_success 'merge c0 with c1' '
- 	echo "OBJID HEAD@{0}: merge c1: Fast-forward" >reflog.expected &&
- 
-+	cat >expect <<-EOF &&
-+	Updating FROM..TO
-+	Fast-forward
-+	 file  | 2 +-
-+	 other | 9 +++++++++
-+	 2 files changed, 10 insertions(+), 1 deletion(-)
-+	 create mode 100644 other
-+	EOF
-+
- 	git reset --hard c0 &&
--	git merge c1 &&
-+	git merge c1 >out &&
-+	sed -e "1s/^Updating [0-9a-f.]*/Updating FROM..TO/" out >actual &&
-+	test_cmp expect actual &&
- 	verify_merge file result.1 &&
- 	verify_head "$c1" &&
- 
-@@ -205,6 +216,21 @@ test_expect_success 'merge c0 with c1 with --ff-only' '
- 	verify_head "$c1"
- '
- 
-+test_expect_success 'the same merge with compact summary' '
-+	cat >expect <<-EOF &&
-+	Updating FROM..TO
-+	Fast-forward
-+	 file        | 2 +-
-+	 other (new) | 9 +++++++++
-+	 2 files changed, 10 insertions(+), 1 deletion(-)
-+	EOF
-+
-+	git reset --hard c0 &&
-+	git merge --compact-summary c1 >out &&
-+	sed -e "1s/^Updating [0-9a-f.]*/Updating FROM..TO/" out >actual &&
-+	test_cmp expect actual
-+'
-+
- test_debug 'git log --graph --decorate --oneline --all'
- 
- test_expect_success 'merge from unborn branch' '
--- 
-2.50.0-rc1-276-gda78c2366e
+> @@ -1372,6 +1372,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>  	const char *head_short_sha1 = NULL;
+>  	const char *branch_ref = NULL;
+>  	const char *branch_name = "(no branch)";
+> +	char *branch_name_buf = NULL;
+>  	struct commit *head_commit = NULL;
+>  	struct commit_list *parents = NULL;
+>  	struct strbuf msg = STRBUF_INIT;
+> @@ -1401,11 +1402,16 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>  		ret = 1;
+>  		goto done;
+>  	}
+> -
+> +	
 
+Addition of trailing whitespace?
+
+You can avoid such mistakes in the future by enabling our sample
+pre-commit hook, which essentially does
+
+	git diff-index --check --cached $against --
+
+where $against is HEAD (or an empty tree object while preparing for
+an initial commit).
+
+>  	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+>  					     "HEAD", 0, NULL, &flags);
+> -	if (flags & REF_ISSYMREF)
+> -		skip_prefix(branch_ref, "refs/heads/", &branch_name);
+> +
+> +	if (flags & REF_ISSYMREF) {
+> +		if (skip_prefix(branch_ref, "refs/heads/", &branch_name))
+> +			branch_name = branch_name_buf = xstrdup(branch_name);
+> +	} else
+> +		branch_name = "(no branch)";
+
+Do we need the else clause?  The original did not have it and showed
+the "(no branch)" message without an issue, and I do not see anything
+is changed by what happens inside the other side of this if statement.
+Am I missing something?
+
+> @@ -1495,6 +1501,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>  	strbuf_release(&msg);
+>  	strbuf_release(&untracked_files);
+>  	free_commit_list(parents);
+> +	free(branch_name_buf);
+>  	return ret;
+>  }
+
+Makes sense.
+
+This is a common pattern we use with a variable whose name contains
+"to_free" (e.g., "branch_name_to_free"), but "branch_name_buf" is
+pleanty readable and easy to understand what is going on.
+
+> +test_expect_success 'stash reflog message uses superproject branch, not submodule branch' '
+
+The title looks a bit on the overly-long side.  Would
+
+    stash message records the superproject branch
+
+be sufficient?  The fact that the stash is implemented as reflog
+is invidible and irrelevant at this level, so "reflog message" is
+wasting bytes without adding any useful information.
+
+What we want to make sure is that the message records the current
+branch name, whether the project has any submodules or not, and from
+that point of view,
+
+    stash message records the correct branch name
+
+ought to be good, but not quite, because this test is trying to
+trigger a bug that was present only when there are submodules, so
+not mentioning superproject/submodule at all would not work well.
+
+Would
+
+    submodules does not affect the branch recorded in stash message
+
+work?  That is the best one I can come up with offhand.
+
+> +	git init sub_project &&
+> +	(
+> +		cd sub_project &&
+> +		echo "Initial content in sub_project" >sub_file.txt &&
+> +		git add sub_file.txt &&
+> +		git commit -q -m "Initial commit in sub_project"
+> +	) &&
+
+It is easier to debug the test script if you avoid using --quiet too
+much.  Regular "sh ./t3903-stash.sh" will squelch these output
+anyway, and they can be seen when the test script is run with "-v".
+
+> +	git init main_project &&
+> +	(
+> +		cd main_project &&
+> +		echo "Initial content in main_project" >main_file.txt &&
+> +		git add main_file.txt &&
+> +		git commit -q -m "Initial commit in main_project" &&
+> +
+> +		git -c protocol.file.allow=always submodule add --quiet ../sub_project sub &&
+> +		git commit -q -m "Added submodule sub_project" &&
+> +
+> +		git checkout -q -b feature_main &&
+
+
+> +		cd sub &&
+> +		git checkout -q -b feature_sub &&
+> +		cd .. &&
+
+These three lines can be written more compactly as:
+
+		git -C sub checkout -b feature_sub &&
+
+> +		git checkout -q -b work_branch &&
+> +		echo "Important work to be stashed" >work_item.txt &&
+> +		git add work_item.txt &&
+> +		git stash push -q -m "custom stash for work_branch" &&
+> +
+> +		git stash list >../actual_stash_list.txt &&
+> +		grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
+> +	)
+> +'
+> +
+>  test_done
+
+Thanks.
