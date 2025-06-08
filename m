@@ -1,67 +1,67 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D21B20297C
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 09:09:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E6820B808
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 09:09:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749373795; cv=none; b=lt4s/ZaZGatw48+rtJFp8zy+7lC+kiFodVwCl3rhKMQxg/yaq2vCQ6vXp9QT62QFrjtNtZnNJG5JLV8jS8/5TfBpOvRILlvXtNJdfMfd6TvAqXOXs9cyug6UPu398YFAsrqDsb2KBtVkypgFfIvzkXDC1Rn9Ku9Lacl2Fv3sQjg=
+	t=1749373797; cv=none; b=tHwXHw9XuxW/vMEMI//MiokKz5X6sVfxYjnGHowJ+aAjsVmWYB7iDozmQwQgLK0gFmxh1zQEgFuUHHGnQtXk+an1AhlMW5dUGHBfLEZU9BJqr8K87WXwrbszO72q03c7UT4gVbp8V8oBOq3uXZaKO0qBKiYm2gcyRJAA2AGbz2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749373795; c=relaxed/simple;
-	bh=ycuh470JgOMKOPCZ5ZyCa53f1xY0kKsH2F4D/zhuIJU=;
+	s=arc-20240116; t=1749373797; c=relaxed/simple;
+	bh=J+TwI5tDbYwHeK2A0xCKm4Pvj/DfnC6iS8LfliSFnNI=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=FYuro+YrJmROfSfu2q70NBV3dFNwa7Pgaub0zcpzbrkeAvan1iJZDhkwBgGFVmbvlBpxkIb0ZrDT3WGQaj3L4ZGWV0vqpVebxt9Yz+j/d8KTm7T62EKK0LBb6L1jE79epZKRERxGTO9sKGCXCSBr+pCTH6vfgNcrdNWMtibhuq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Oz/CQAA1; arc=none smtp.client-ip=209.85.128.51
+	 Content-Type:To:Cc; b=YHnfjwBRAY7Pp/AxvpGm7xnjzwgbi8SofstDHwB26GwhRCUJArqMWtGiQyK2G1SJhVZ0ARkh59ruXnNCqnZSMBNEjN0m/g3viaMg15DgjK4ugjin4IoDSqAy0oMSwRyNX0mZFxCnwriFPb0OnKOrYIkzphlT3YnldiJU5UuDiQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O6vH0xjN; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Oz/CQAA1"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so44598835e9.1
-        for <git@vger.kernel.org>; Sun, 08 Jun 2025 02:09:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O6vH0xjN"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-451d6ade159so28775285e9.1
+        for <git@vger.kernel.org>; Sun, 08 Jun 2025 02:09:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749373792; x=1749978592; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749373794; x=1749978594; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CtGLQIoK+r3lkTuRkZEbs3LHqcoKyxr7lYoIjxI11zo=;
-        b=Oz/CQAA11SdD+NY4iV9kzx3elVS/jQFP+JiXNSPCKgydTxtUlLEIToBzuUhnWUWY8o
-         p3w6JrRBdnW05hA6sIZUAAyROsRE2D5KueRscHX+zu8T8i5fidqpy9pS74/abA/Zg1sv
-         8re5RfFMwHgEhKM4o4aUOojTJZ+jRLCR0sJZJPgeK+/PiIFNH5OZIktLMs/fCmeTN8s7
-         6nDMUYlPQsfbgMUkTJRDFm4Y94LlKNR0NMbydTUbP8znUj5VmlH/tfkS05bnkBIMRAm6
-         lvkFxQTtBwINVwVPj/BJKCt2+6x4o6t5Qt+WUOGUDyoNJdHuKFFq6o3/e3dUlvhIdWPw
-         tV5A==
+        bh=EnhpyUjyDQE0OcCdmJj/nun6eZs7+oRCT3ZOV1lGdfY=;
+        b=O6vH0xjNH5wlmAeBuo8chzrPgbgdm7T6W9aQy10g0ip3yl6I4O0PkymiBaa/oRmsQ1
+         OLVQ70jqLuN3f8AiALW51qeHTO4pGl7e15xP057updXHkgwi/R6lW9plMhig/R3PHISY
+         nWBY4RTLf3Z/4btUUd54oz3nXqAXIqOKHIMOUcdQL1SfZIyBk11FKsJkuNm90+p6RWgF
+         DcmOWgjPyRlPWXeFiBMOm/KBbldzGN66W5GR4CNJprIu1sK6DuC/NDUNdHxE2K2K8kdC
+         WP9oHnL6gRvVhKVJkFHVyRAqWZKDuuSm9TBdbm7NyKo/eEBt1SVPMgedcxvG6h5U5VaE
+         Yclw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749373792; x=1749978592;
+        d=1e100.net; s=20230601; t=1749373794; x=1749978594;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CtGLQIoK+r3lkTuRkZEbs3LHqcoKyxr7lYoIjxI11zo=;
-        b=dZSRhPduohIALKC8b3BdDz3O7+d1/dJbj/H/nNqplU6ctohlKLrO7VgbTj9oAyscFY
-         pn44BgOKWhGwYn0U/FGPhN3AQDuc1jx91kXMkI1w5Fzhbr9ONaVeekajr5Wij5pbDslm
-         fPI270Ptldm0n987XCxmopxc/Z8jOiqRp/OTR+Rbyisgq5coEy6IWyx7NbtaMi8wym/V
-         oYfVy6IgGFjbl/kDWQGhf1Nal0OeX1Xm++ovSDxC11iQjQnl4f9rsxAz6JS14oz/ats9
-         ZCTzb584s7rytOEaawNB4p/ZWmkq9GZG+Cni9xMjqdVpltaL6yCHhIGOhUBxVfvkIfNE
-         WTiQ==
-X-Gm-Message-State: AOJu0Ywszs4xuHsK2nOlVGsTphwlH43QuZULd90gTC5YUZ9329A5zSIm
-	aGUPRYTU+mAKkTjJc9eUBvgs6iPUORZrRYplIILLV7d3SlAssn3hTQ3sM7+0aQ==
-X-Gm-Gg: ASbGncvll69xZwYiKXRg2yfH7PJX0OzL2+91y021cWNT9DhdcXhOV43Zj9P+/Jo8Zfc
-	4RcsTqqgAiaEGpaKp467hsDxaoaaW6F8tg3RTlk/ZpoXqrtX0ch8ULBmY4f3/3+OfUjfijWQ1Ak
-	vSe2Q8UCtVHspDyFivXdeXi0GYj3fVTcCsc3bJ+JTpGg4Btq/3rCZAskV74yX+r6kUxMIQwO5qC
-	uxrn0pDy5ccKxmD58FbECIWt19emrVqyOmsgkT0rJKXqeaCWB3J6J1E7AiJ9lEIaKzJQc8+Vyqq
-	+09LFtSUXWeIVEIDd/xkYhiMVu1uU6hW0t8PiE4qakelLislKygcAqU4a5dilYc=
-X-Google-Smtp-Source: AGHT+IFJey89JpRhQ4draDK7vl/kLwx+82aABEhuy49LmGgRsCCFiIFdRMKRIIRQGT88/zDnh1zopQ==
-X-Received: by 2002:a05:6000:4011:b0:3a4:d898:3e2d with SMTP id ffacd0b85a97d-3a5318a0406mr6586325f8f.24.1749373791684;
-        Sun, 08 Jun 2025 02:09:51 -0700 (PDT)
+        bh=EnhpyUjyDQE0OcCdmJj/nun6eZs7+oRCT3ZOV1lGdfY=;
+        b=PJO9crOndTrpSjMOCqdTq5JlNi5lsn5wusMp/jTHYERv8COTsUT1LKA/mrof/9MtRP
+         G0oZwJz5Cvsw54eot7EKNup+CNDOTbgak+xFNok2FZWwKDWUmNz4IZgjOjD302p6tsXu
+         Z3cfAodtoLDuoNybAZUycgYPL5EMrCdDukDTZ6qGfhCtGnZnx3qHga1t4AzGAqnsfAq0
+         hqFx35VtUnfzCKCyCl20Ya+moERinYW8MNxofyGyIAU4YClWhfCogFnGa514RbLmT+a3
+         fgwVlmYak6iXqFxkiQi/+6BMnI2lv35Uc4LPzJbopva05+6D5bpFi1z8CC6gigZd7W5c
+         yxoQ==
+X-Gm-Message-State: AOJu0Yz0NzjZNzBEDiL83z2B5LWPgyvzj9H5ztSV+1CGuXxREPi9ScdD
+	q0WzZoOw4EzScvPZpMrxO816D86CewUkuTs0jIkCk1wMnHww4aZ/JhwxuzWcDw==
+X-Gm-Gg: ASbGncs6LpzUS9nyPebus/XM+dT1rwQDge2BZCb1Mfb2ivQ1o1zjEkAR4Or3HBGZGBb
+	S/979wnZH6AosEyiENwixwwgBIpkJiJptCqPk1Q+iHFouvU+4TXVGC73ZMMnGoOPQfs+C02FhPG
+	5554AN8GpPTzmyPojF9S12x1UbM7tkoI4oQwQQKzOB+tpr7B+XIlwLsyNnRbgjrvLRpgtxoCNqy
+	v3X9/SwUgqQ5Lnz09obtaEEuSh5uCdbPMwjZwYQGQg6UY8CO+WxR4K+eXbNkiuE1y4YKWuTyHF7
+	f+FATftSUqSkjVCxhZyAXtfKTqguq4LiCdqoasDgx6hg5HI4ZR3LSiIguFvNd8s=
+X-Google-Smtp-Source: AGHT+IHIILh9BpBP4kiGy8zpq1BlSO9Lck+vDat+N9lHxsA36OOcww84c+wtFiOWX9ko0wsXvh0DQA==
+X-Received: by 2002:a05:600c:3504:b0:453:1058:f8aa with SMTP id 5b1f17b1804b1-45311481a39mr2744345e9.15.1749373793478;
+        Sun, 08 Jun 2025 02:09:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4521370961csm79242885e9.22.2025.06.08.02.09.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45306b01d77sm31936365e9.31.2025.06.08.02.09.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jun 2025 02:09:51 -0700 (PDT)
-Message-Id: <d451d7f6c0aabfc92c6e6f07fb1fc537cf521926.1749373787.git.gitgitgadget@gmail.com>
+        Sun, 08 Jun 2025 02:09:53 -0700 (PDT)
+Message-Id: <5004a622c3f492dd1de8b2952ba24bf5e82f6f3c.1749373787.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
 References: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 08 Jun 2025 09:09:41 +0000
-Subject: [PATCH 4/9] doc: git-log: convert line range format to new doc format
+Date: Sun, 08 Jun 2025 09:09:43 +0000
+Subject: [PATCH 6/9] doc: git-log: convert pretty options to new doc format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,57 +84,140 @@ these spans.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/line-range-format.adoc | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ Documentation/pretty-options.adoc | 71 ++++++++++++++++---------------
+ 1 file changed, 36 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/line-range-format.adoc b/Documentation/line-range-format.adoc
-index 9b51e9fb6614..3cc2a14544cf 100644
---- a/Documentation/line-range-format.adoc
-+++ b/Documentation/line-range-format.adoc
-@@ -1,30 +1,30 @@
--'<start>' and '<end>' can take one of these forms:
-+_<start>_ and _<end>_ can take one of these forms:
+diff --git a/Documentation/pretty-options.adoc b/Documentation/pretty-options.adoc
+index 23888cd612c9..061e7b97f17a 100644
+--- a/Documentation/pretty-options.adoc
++++ b/Documentation/pretty-options.adoc
+@@ -1,38 +1,38 @@
+---pretty[=<format>]::
+---format=<format>::
++`--pretty[=<format>]`::
++`--format=<format>`::
  
--- number
-+- _<number>_
+ 	Pretty-print the contents of the commit logs in a given format,
+-	where '<format>' can be one of 'oneline', 'short', 'medium',
+-	'full', 'fuller', 'reference', 'email', 'raw', 'format:<string>'
+-	and 'tformat:<string>'.  When '<format>' is none of the above,
+-	and has '%placeholder' in it, it acts as if
+-	'--pretty=tformat:<format>' were given.
++	where '<format>' can be one of `oneline`, `short`, `medium`,
++	`full`, `fuller`, `reference`, `email`, `raw`, `format:<string>`
++	and `tformat:<string>`.  When _<format>_ is none of the above,
++	and has `%<placeholder>` in it, it acts as if
++	`--pretty=tformat:<format>` were given.
  +
--If '<start>' or '<end>' is a number, it specifies an
-+If _<start>_ or _<end>_ is a number, it specifies an
- absolute line number (lines count from 1).
+ See the "PRETTY FORMATS" section for some additional details for each
+-format.  When '=<format>' part is omitted, it defaults to 'medium'.
++format.  When `=<format>` part is omitted, it defaults to `medium.
  +
+-Note: you can specify the default pretty format in the repository
++NOTE: you can specify the default pretty format in the repository
+ configuration (see linkgit:git-config[1]).
  
--- `/regex/`
-+- `/<regex>/`
+---abbrev-commit::
++`--abbrev-commit`::
+ 	Instead of showing the full 40-byte hexadecimal commit object
+ 	name, show a prefix that names the object uniquely.
+-	"--abbrev=<n>" (which also modifies diff output, if it is displayed)
++	`--abbrev=<n>` (which also modifies diff output, if it is displayed)
+ 	option can be used to specify the minimum length of the prefix.
  +
- This form will use the first line matching the given
--POSIX regex. If '<start>' is a regex, it will search from the end of
-+POSIX _<regex>_. If _<start>_ is a regex, it will search from the end of
- the previous `-L` range, if any, otherwise from the start of file.
--If '<start>' is `^/regex/`, it will search from the start of file.
--If '<end>' is a regex, it will search
--starting at the line given by '<start>'.
-+If _<start>_ is `^/<regex>/`, it will search from the start of file.
-+If _<end>_ is a regex, it will search starting at the line given by
-+_<start>_.
- +
+-This should make "--pretty=oneline" a whole lot more readable for
++This should make `--pretty=oneline` a whole lot more readable for
+ people using 80-column terminals.
  
--- +offset or -offset
-+- `+<offset>` or `-<offset>`
- +
--This is only valid for '<end>' and will specify a number
--of lines before or after the line given by '<start>'.
-+This is only valid for _<end>_ and will specify a number
-+of lines before or after the line given by _<start>_.
+---no-abbrev-commit::
++`--no-abbrev-commit`::
+ 	Show the full 40-byte hexadecimal commit object name. This negates
+ 	`--abbrev-commit`, either explicit or implied by other options such
+-	as "--oneline". It also overrides the `log.abbrevCommit` variable.
++	as `--oneline`. It also overrides the `log.abbrevCommit` variable.
  
+---oneline::
+-	This is a shorthand for "--pretty=oneline --abbrev-commit"
++`--oneline`::
++	This is a shorthand for `--pretty=oneline --abbrev-commit`
+ 	used together.
+ 
+---encoding=<encoding>::
++`--encoding=<encoding>`::
+ 	Commit objects record the character encoding used for the log message
+ 	in their encoding header; this option can be used to tell the
+ 	command to re-code the commit log message in the encoding
+@@ -44,22 +44,22 @@ people using 80-column terminals.
+ 	to convert the commit, we will quietly output the original
+ 	object verbatim.
+ 
+---expand-tabs=<n>::
+---expand-tabs::
+---no-expand-tabs::
++`--expand-tabs=<n>`::
++`--expand-tabs`::
++`--no-expand-tabs`::
+ 	Perform a tab expansion (replace each tab with enough spaces
+-	to fill to the next display column that is a multiple of '<n>')
++	to fill to the next display column that is a multiple of _<n>_)
+ 	in the log message before showing it in the output.
+ 	`--expand-tabs` is a short-hand for `--expand-tabs=8`, and
+ 	`--no-expand-tabs` is a short-hand for `--expand-tabs=0`,
+ 	which disables tab expansion.
  +
--If `:<funcname>` is given in place of '<start>' and '<end>', it is a
-+If `:<funcname>` is given in place of _<start>_ and _<end>_, it is a
- regular expression that denotes the range from the first funcname line
--that matches '<funcname>', up to the next funcname line. `:<funcname>`
-+that matches _<funcname>_, up to the next funcname line. `:<funcname>`
- searches from the end of the previous `-L` range, if any, otherwise
- from the start of file. `^:<funcname>` searches from the start of
- file. The function names are determined in the same way as `git diff`
+ By default, tabs are expanded in pretty formats that indent the log
+-message by 4 spaces (i.e.  'medium', which is the default, 'full',
+-and 'fuller').
++message by 4 spaces (i.e.  `medium`, which is the default, `full`,
++and `fuller`).
+ 
+ ifndef::git-rev-list[]
+---notes[=<ref>]::
++`--notes[=<ref>]`::
+ 	Show the notes (see linkgit:git-notes[1]) that annotate the
+ 	commit, when showing the commit log message.  This is the default
+ 	for `git log`, `git show` and `git whatchanged` commands when
+@@ -75,28 +75,29 @@ to display.  The ref can specify the full refname when it begins
+ with `refs/notes/`; when it begins with `notes/`, `refs/` and otherwise
+ `refs/notes/` is prefixed to form the full name of the ref.
+ +
+-Multiple --notes options can be combined to control which notes are
+-being displayed. Examples: "--notes=foo" will show only notes from
+-"refs/notes/foo"; "--notes=foo --notes" will show both notes from
++Multiple `--notes` options can be combined to control which notes are
++being displayed. Examples: "`--notes=foo`" will show only notes from
++`refs/notes/foo`; "`--notes=foo --notes`" will show both notes from
+ "refs/notes/foo" and from the default notes ref(s).
+ 
+---no-notes::
++`--no-notes`::
+ 	Do not show notes. This negates the above `--notes` option, by
+ 	resetting the list of notes refs from which notes are shown.
+ 	Options are parsed in the order given on the command line, so e.g.
+-	"--notes --notes=foo --no-notes --notes=bar" will only show notes
+-	from "refs/notes/bar".
++	"`--notes --notes=foo --no-notes --notes=bar`" will only show notes
++	from `refs/notes/bar`.
+ 
+---show-notes-by-default::
++`--show-notes-by-default`::
+ 	Show the default notes unless options for displaying specific
+ 	notes are given.
+ 
+---show-notes[=<ref>]::
+---[no-]standard-notes::
+-	These options are deprecated. Use the above --notes/--no-notes
++`--show-notes[=<ref>]`::
++`--standard-notes`::
++`--no-standard-notes`::
++	These options are deprecated. Use the above `--notes`/`--no-notes`
+ 	options instead.
+ endif::git-rev-list[]
+ 
+---show-signature::
++`--show-signature`::
+ 	Check the validity of a signed commit object by passing the signature
+ 	to `gpg --verify` and show the output.
 -- 
 gitgitgadget
 
