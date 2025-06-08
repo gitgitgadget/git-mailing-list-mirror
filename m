@@ -1,180 +1,136 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF27BA3F
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 01:07:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFD0BA27
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 01:26:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749344868; cv=none; b=ZjVEK9y4C8Dr5DEWhHyATazpoh7uCkm/KZBK5wTjOKpQ7Ps5mPFYM7VHQqQUXgPMkwqV9F+DGpzeAFOOdLsObn+gCL8swF0AdFg4CHREhsg3CgPtQYw0aOmXXfC5p8LhNsE8PeMFhUHhQKNUTAfRbTNk7DPS0skUG4qIiM438Yo=
+	t=1749346017; cv=none; b=q0j3xnFrtJfZrzbSRVueiY5Jge9hWL1OkbRHH4TCYd1WIzCoj5qjDIKDQAC+cFyywElVk2uKNYUa0LSTZo5hFwhpx+IO0PwCFZPoMU20FJnf6+VYvahQnilcE5Rg4rV2c0WQQ0My7YNgOWr5Xdh6iP28TusSJ1wV5UfJk/SnBkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749344868; c=relaxed/simple;
-	bh=9kAZ5fbhFJ+0a9IKby9fhxCV7EDOoUiMxL1Txps/QNY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkMNd+B3H3Qb+wWsLCqPIwtYKJNLBCWvNiliMu3JUNkdvT2+dC+XAA5J7CCTGIM4gCePVQCPg1DUYo1+iHAId0INi7STSITkLpValYAMxUypCvjn83MLv4WvA8s0hIEn0k8ZgPYb3yh060RR8aWKX5MaQakfg/MbgPZr4GGnJQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y0Tqz4Z8; arc=none smtp.client-ip=209.85.210.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749346017; c=relaxed/simple;
+	bh=emiyNXo/eEDoO/dFrkO0ITcNn9PFHZ6FzDAViC4Pl1E=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=rnS4yoqjx0IkvA5OfEBV/ypJLcUTNv1dg53OC9x9yXLyFn5GwYUZkctDE5LSchxqcw+pDv8cS2VTwdr/qehMje9m2BflVKF84Vla1qArqTb/hIHyKs02e6Q7MyBA7LTS7RULgWfHABJgJ5tj5LrqgnaiGV9Eh3Tiv7lBRCt7qlE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=C7+BRYUd; arc=none smtp.client-ip=206.51.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y0Tqz4Z8"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-742af84818cso2331653b3a.1
-        for <git@vger.kernel.org>; Sat, 07 Jun 2025 18:07:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749344866; x=1749949666; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ct+x3ZpmHVtemRXF1xUDwaGUbtlQL4Ao6yIZHC9XfiM=;
-        b=Y0Tqz4Z80M/TH9YWfhc1L1/Cn8ka4D0szMPJfblqplWnWaMKC/oLm0nL/fJeKoSTO2
-         3FttAFr0o5eUBOYi9yQuF1FbAW8xDLkMKk5UCqIvYb9p/vrabzB/3pEB+xE1TEBmNX+I
-         4f/1+t8MWiYfLEO1bKTI9/30KdBD+lHFrY620ZhUctiNWpPlEhcaL+Ml3p01jR/ZJ/aZ
-         LBBNLlAo+FK6U8rtUIqR8RKdScscFYv6nzqqFsFxnToaT/zm1aBKSKRc5b0gVXFBVnqV
-         svbH4EdTaRRdw9Y/mMVy8xMeekUlSlMk8vxf8xfhVlJ6urPmz3GLk+gpHVKXfooF2jcW
-         wySg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749344866; x=1749949666;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ct+x3ZpmHVtemRXF1xUDwaGUbtlQL4Ao6yIZHC9XfiM=;
-        b=Q4D63QS4GCP9byNg/EU8qNzMLAOXXs6yYxKYRg2tVZ72FbDDgEFSGEUy6mTHAPaqOY
-         3xtpPIGA8HdbPIC5K/y1R5JkO5v1aLyBRW5XJhzogqLrRAnFMutxcWnn4pkmnbCWgH90
-         rfKWcuZHChCqI76kEuOt9mH7r0xVreUwCaYO/cCzeZJ3tmdmepzc3tE3BJqDF0X1RNnE
-         0jxCeQfa5E7MCtv9B2lM/r+5WtcidBpCpTMvfntrIhCLiS9e9j9NkYr6SX3RzHKFJSrV
-         NarteaRW+J2MNnx25sBkVHydI9MDouKWUi1RcdHQxgkvz1FsJLIMxOOqT25y0tamzp9d
-         hTIw==
-X-Gm-Message-State: AOJu0YzWrSHfTg6GVsgfCfMIo0/FVg5ybuMIR/DfuFASDV/t3cc5pO3M
-	UpZU8y4UtR4ekDZu4cxA03eVMNWrRlrczIjbovIzkB6lJHkx6Au1V8N4Ted7dM8M
-X-Gm-Gg: ASbGncuWYB5O+65M9+ljMweKT/C88147oZLXf0ssnxm9ytg8nS9eIgwnKL2jQj6igq7
-	7iC/t03xKLo0gkI5r0FN2NXa4z/AwhWvNYZCvMz2aGnwO6SUG89z47AbtQ5AJI9f7qdsYZD4Y2S
-	2K6c+25wZbbwY3sZ+daAB13GHApe+e+klg0/637aC5RlBpjKK+KqjoECwqmJ+WGP/98Ta7ear6a
-	A2wclpkUG9a7vgDZ7MV01bmvhAoqYAD9ECkbau5gHCzf9YnmQt/IiaJJTvrjiZ1ufXImI1Ydt6b
-	+RQGSwiRXvXQ+HVUDtMtehvtfZWLTA3GRo40Fz/RzPGpXUSXH373oPbtCvpyBJFCGILC
-X-Google-Smtp-Source: AGHT+IFTdiSUv8aCWfQ21lPBWStAPN02ezOZ+Og4jJa+1u9iRjaJMecvYN5PK+pLg6MRN0vhcReSkw==
-X-Received: by 2002:a05:6a21:6481:b0:21f:5532:1e49 with SMTP id adf61e73a8af0-21f5532205dmr2501010637.35.1749344866171;
-        Sat, 07 Jun 2025 18:07:46 -0700 (PDT)
-Received: from thinku.localdomain ([2409:40c2:103a:88af:d97c:9fa4:c832:49bf])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b0836bdsm3451716b3a.93.2025.06.07.18.07.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jun 2025 18:07:45 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="C7+BRYUd"
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+	by mail.comstyle.com (Postfix) with ESMTP id 4bFHTV31xVz8PbP
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 21:26:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+	:from:to:subject:message-id:mime-version:content-type; s=
+	default; bh=emiyNXo/eEDoO/dFrkO0ITcNn9PFHZ6FzDAViC4Pl1E=; b=C7+B
+	RYUdMq7Hylgq4Z/osB9zywJJlzX6CWQPkAR3DmR3ytEYRQ0lJQzcIJEiwY0zzxOD
+	7LX8of9ZpKelMjrgPJwwgwRhIJS+UJTutVxAF0z8SRcyrF4AWKquXqQXdB72w+in
+	+Wpi9Pv1E2yx07ysFgZjt+R+Pxcaf1sZ8wLgxZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
+	Q2dd43h0G8XH3zF6INB5vwaoI2V9U6Hv3+quRU3GoqLGtjaSWh07ldMjfbeoMITA
+	TX3Qs9zRVEYlECbsDDvgb0ERX2uAPFNUCLxadXm/buRjwSfxJ3qTlFtECsYFmFRt
+	0rj6FNn2D7FAFDgqGjpVHgjvQbAfE4QLTpfuVaCG4IM=
+Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:44e5:774d:1e76:8624])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	(Authenticated sender: brad)
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bFHTV27Ppz8PbN
+	for <git@vger.kernel.org>; Sat,  7 Jun 2025 21:26:54 -0400 (EDT)
+Date: Sat, 7 Jun 2025 21:26:52 -0400
+From: Brad Smith <brad@comstyle.com>
 To: git@vger.kernel.org
-Cc: christian.couder@gmail.com,
-	shyamthakkar001@gmail.com,
-	Ayush Chandekar <ayu.chandekar@gmail.com>
-Subject: [GSOC PATCH 2/2] builtin/prune: stop depending on 'the_repository'
-Date: Sun,  8 Jun 2025 06:36:35 +0530
-Message-ID: <9b274efd7dfde90990ace66bfbe5f7e3b6ce30d1.1749343601.git.ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1749343601.git.ayu.chandekar@gmail.com>
-References: <cover.1749343601.git.ayu.chandekar@gmail.com>
+Subject: [PATCH] config.mak.uname: update settings for Solaris 10 and 11
+Message-ID: <aETm3O-FE7EpyoE5@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Refactor builtin/prune.c to remove the dependency on the global
-'the_repository'. Replace all the occurrences of 'the_repository' with
-repo and thus remove the definition '#define
-USE_THE_REPOSITORY_VARIABLE'
+Solaris 10 and newer has strtoumax().
 
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Solaris 11 and newer has mkdtemp(), memmem(), and strcasestr().
+
+Signed-off-by: Brad Smith <brad@comstyle.com>
 ---
- builtin/prune.c | 25 ++++++++++++-------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ config.mak.uname | 28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/prune.c b/builtin/prune.c
-index dab3c19b6f..2c584a6e0e 100644
---- a/builtin/prune.c
-+++ b/builtin/prune.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
-@@ -64,7 +63,7 @@ static void perform_reachability_traversal(struct rev_info *revs)
- 		return;
- 
- 	if (show_progress)
--		progress = start_delayed_progress(the_repository,
-+		progress = start_delayed_progress(revs->repo,
- 						  _("Checking connectivity"), 0);
- 	mark_reachable_objects(revs, 1, expire, progress);
- 	stop_progress(&progress);
-@@ -78,7 +77,7 @@ static int is_object_reachable(const struct object_id *oid,
- 
- 	perform_reachability_traversal(revs);
- 
--	obj = lookup_object(the_repository, oid);
-+	obj = lookup_object(revs->repo, oid);
- 	return obj && (obj->flags & SEEN);
- }
- 
-@@ -99,7 +98,7 @@ static int prune_object(const struct object_id *oid, const char *fullpath,
- 	if (st.st_mtime > expire)
- 		return 0;
- 	if (show_only || verbose) {
--		enum object_type type = oid_object_info(the_repository, oid,
-+		enum object_type type = oid_object_info(revs->repo, oid,
- 							NULL);
- 		printf("%s %s\n", oid_to_hex(oid),
- 		       (type > 0) ? type_name(type) : "unknown");
-@@ -154,7 +153,7 @@ static void remove_temporary_files(const char *path)
- int cmd_prune(int argc,
- 	      const char **argv,
- 	      const char *prefix,
--	      struct repository *repo UNUSED)
-+	      struct repository *repo)
- {
- 	struct rev_info revs;
- 	int exclude_promisor_objects = 0;
-@@ -173,19 +172,19 @@ int cmd_prune(int argc,
- 	expire = TIME_MAX;
- 	save_commit_buffer = 0;
- 	disable_replace_refs();
--	repo_init_revisions(the_repository, &revs, prefix);
-+	repo_init_revisions(repo, &revs, prefix);
- 
- 	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
- 
--	if (the_repository->repository_format_precious_objects)
-+	if (repo->repository_format_precious_objects)
- 		die(_("cannot prune in a precious-objects repo"));
- 
- 	while (argc--) {
- 		struct object_id oid;
- 		const char *name = *argv++;
- 
--		if (!repo_get_oid(the_repository, name, &oid)) {
--			struct object *object = parse_object_or_die(the_repository, &oid,
-+		if (!repo_get_oid(repo, name, &oid)) {
-+			struct object *object = parse_object_or_die(repo, &oid,
- 								    name);
- 			add_pending_object(&revs, object, "");
- 		}
-@@ -200,16 +199,16 @@ int cmd_prune(int argc,
- 		revs.exclude_promisor_objects = 1;
- 	}
- 
--	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
-+	for_each_loose_file_in_objdir(repo_get_object_directory(repo),
- 				      prune_object, prune_cruft, prune_subdir, &revs);
- 
- 	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
--	remove_temporary_files(repo_get_object_directory(the_repository));
--	s = mkpathdup("%s/pack", repo_get_object_directory(the_repository));
-+	remove_temporary_files(repo_get_object_directory(repo));
-+	s = mkpathdup("%s/pack", repo_get_object_directory(repo));
- 	remove_temporary_files(s);
- 	free(s);
- 
--	if (is_repository_shallow(the_repository)) {
-+	if (is_repository_shallow(repo)) {
- 		perform_reachability_traversal(&revs);
- 		prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
- 	}
+diff --git a/config.mak.uname b/config.mak.uname
+index 3e26bb074a..b1c5c4d5e8 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -190,9 +190,6 @@ ifeq ($(uname_S),SunOS)
+ 	SHELL_PATH = /bin/bash
+ 	SANE_TOOL_PATH = /usr/xpg6/bin:/usr/xpg4/bin
+ 	HAVE_ALLOCA_H = YesPlease
+-	NO_STRCASESTR = YesPlease
+-	NO_MEMMEM = YesPlease
+-	NO_MKDTEMP = YesPlease
+ 	NO_REGEX = YesPlease
+ 	NO_MSGFMT_EXTENDED_OPTIONS = YesPlease
+ 	HAVE_DEV_TTY = YesPlease
+@@ -202,7 +199,10 @@ ifeq ($(uname_S),SunOS)
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRLCPY = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+@@ -212,23 +212,45 @@ ifeq ($(uname_S),SunOS)
+ 		NO_IPV6 = YesPlease
+ 		NO_SOCKADDR_STORAGE = YesPlease
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRLCPY = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
+         ifeq ($(uname_R),5.8)
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
+         ifeq ($(uname_R),5.9)
+ 		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
+ 		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
+ 		NO_STRTOUMAX = YesPlease
+ 		GIT_TEST_CMP = cmp
+         endif
++        ifeq ($(uname_R),5.10)
++		NO_UNSETENV = YesPlease
++		NO_MKDTEMP = YesPlease
++		NO_MEMMEM = YesPlease
++		NO_SETENV = YesPlease
++		NO_STRCASESTR = YesPlease
++		GIT_TEST_CMP = cmp
++        endif
++        ifeq ($(uname_R),5.11)
++		NO_UNSETENV = YesPlease
++		NO_SETENV = YesPlease
++		GIT_TEST_CMP = cmp
++        endif
+ 	INSTALL = /usr/ucb/install
+ 	TAR = gtar
+ 	BASIC_CFLAGS += -D__EXTENSIONS__ -D__sun__
 -- 
 2.49.0
 
