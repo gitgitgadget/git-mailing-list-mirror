@@ -1,185 +1,173 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010001.outbound.protection.outlook.com [52.103.68.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564DD20E6F9
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 09:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749373800; cv=none; b=sbhCyxT7/xmoIy4jhg4md67HWCqHGL7Old80mhuOPAU3Zb8rN2GfXSeJUXULTFY+mmbuSKFW0cMwwqG/4o04ISVEasKbTkdqydKQjEdQHNBVxvRc+a2/dhv1S7bmWiapESiIdz8ztcHDR0llH5uH8vkhAMlViJdDsZPxVDuH6fg=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749373800; c=relaxed/simple;
-	bh=DnPFcG8yZ/guSXvPv9Zx6b6YrJ0Mp2NUplCafVVlWU4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=peVWj43M+191ktXkiz64HbJ25hXyVwnTISIPmTSY2uaAqlNJG0H2OxuIloPPu2EEow3R4eZOnipxmJPJfID6LVcDAGBh20TMC7ip97vwXUQputo6x525pjxtL5hvciQz1iBjbA2Hq+VwDXeSINmz7UnMbpcJxHd0rknR+KaKF6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=edVrz5n7; arc=none smtp.client-ip=209.85.128.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3FFA204680
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 10:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.1
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749380203; cv=fail; b=oOll7BaG5jdJq4tpB9SSnl6vnE5Tdf318GXdinMn67i4TwDxbdL5i1HX16bT0jmhen/zmNyVpVz92GQQ/n16MWmtQTe0LGRDo9HUUXx8RrUzckxOu/wadeEQYwcoty5TU/jEQrR1gH+niqfqMdhZfrLZZikW6btuAQZIEkRTrqM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749380203; c=relaxed/simple;
+	bh=rhxYi0aQLPGaxMeeqxRJRpBn+SdLWV4rYQ2bB3ul1Ic=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=NZqN8We2eY/nq+5IH1cC2za/iuFJy/T7Tm0hh3C9dW1yaGkv0URU8YIpik9JyaH2/5/pKTep93iCCF9To0xHFRZ83IlpfdVDuEfM1t6vkNoqLRUVx3EfU1zfXIMAn3GrMeJ4cf9eTaWPSmGvkqcG/NRuIEzAkQvf44rGefc+fMc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=jVou80jZ; arc=fail smtp.client-ip=52.103.68.1
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="edVrz5n7"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-442ea341570so22053815e9.1
-        for <git@vger.kernel.org>; Sun, 08 Jun 2025 02:09:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749373796; x=1749978596; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QC797iEqmqi+rU5uImdVD2AfYEw9J5pKxM+DsNQIOxA=;
-        b=edVrz5n7elQflf7PDt7LIND6O+G8NWlWwyZayOY3x1QrjadkPaIzPMXwdJ167U2jG+
-         ndF/6hnUmzkD/StX4w2HhbkY1NwGtJcF6wZFNg72wIT2YH5JjK25cNY/wMXvmq9DwY0M
-         +5y56bP9q3k+w1TRKzKp44E+A+8OQqnbG3RXIfD1/g2p5LZZbxOIENAZVXRE5s8ua1sz
-         cL1y7ej9hxLVyfOK0+qf47DCPHPxhhpIb8SLJOFwFW1r+szll5SgRpeWZsrRA5Heoz9U
-         C4H+hZOWK7s3tjKWgm//Sj3+gxffrRBok7k0dKfA8wowGkILBV/6+2V2t1OnAcLapMJc
-         jKWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749373796; x=1749978596;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=QC797iEqmqi+rU5uImdVD2AfYEw9J5pKxM+DsNQIOxA=;
-        b=G2YViUFVhAigMoNXtGY6lPR7IVejPLRJaDz2MRuicPaET55sNXuCYu2iTZw0XpG8+4
-         rySORkyyxODSPTOB/7iEqOdzMyE5UJAtaVQVKysAyINH8EUOWi0XDE97eCZM2tWB3ZqQ
-         wXPMZ9Vb2umuCSsXLYiQ1SbaGMgTSLVPXCmKBffJiwXmX6SBWLpnQKVV/N9RUs8Xzkjr
-         oYNJZLo/B2f9S07EcbdJeXHZ6hvGj9oXQrDO/5QsFuU1+cdz3ohCmroFEUybZR8uIGzU
-         DzY2ZWkWTCA7L8MjCyjYPPcAHzFwRPOdLikD11Ul56lH6xZF+WkYU0yNA1qa0vU6/5XL
-         504g==
-X-Gm-Message-State: AOJu0Yzn1sCb+Yec+1KyErT3eMe73mCFFIAwQdW1rEdGy28hAk/rHfTS
-	eISo7RckApvHh4r8ZiIywb2Z4kcn4wmHTop4QpiWITWwU1tiNaKiWU8S69zCZg==
-X-Gm-Gg: ASbGncuCZDXKfOjgvNEBLZi+Mf3GGroW1u1+4VF4EoBbyfni56mhGB82H3bnw2JOZIC
-	1YUWtSCOTYQZ9L7uzuTyKiw9xDapMPkeBBzTmF78rdySloLqxrPILJPVedeJszXfTwG5j+akujc
-	jMttxPif1rJCm7mr36QhI3516fBdsAoUG0YUvVaq4/nwyMT4+7dMHWZSGMrgpHVD/ynQ6U9wuDA
-	HfdGVOixxk5ec2KW39nDLN3AnePqauQM6T1y70m6jx1HiSbRwqoLDNDkXvUWrZ7YS9EbAcy5MVb
-	MdlOMEXBh6eqhFtHFf5+UtB9o3V6l1/TspiRpX4JtzA63Jwg+W2PTIKkF7h1A9A=
-X-Google-Smtp-Source: AGHT+IF+c0HDPaqDqQifwG7ftnDKc668pjdQDZLJ14S/5zNu64hMXFz3VTLQOacdDe22zZsjIPd2CA==
-X-Received: by 2002:a05:6000:430a:b0:3a4:ddde:13e4 with SMTP id ffacd0b85a97d-3a531cedc5cmr7204277f8f.58.1749373796109;
-        Sun, 08 Jun 2025 02:09:56 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45209bc6d3esm79848505e9.6.2025.06.08.02.09.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 08 Jun 2025 02:09:55 -0700 (PDT)
-Message-Id: <fa91d919fa072456ae3f69b9244f3757a493becb.1749373787.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
-References: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
-From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 08 Jun 2025 09:09:46 +0000
-Subject: [PATCH 9/9] doc: git-log: convert log config to new doc format
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="jVou80jZ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=wTp6qFdabXebQM3xQDKztC1nvksBVkxiMeS+Nr2sgwCqIqNXbzraJCbElbI2hN6gDEOxLf4AKnpSBVZ2q01XIkADlpKjandKh9fYShrFiSNlxyVORwn43LSlBP+9CF677+iCRNIYpGavFJ9vpZaOOWHdCXs2c0BLZyuBgC4Q+dt8fDMBICzrinTi8sUccrKjBKb5l4glY0RjdsorZ2Z+kjmAQNRgiI6V/QmSM2oSpjhEWk35VIbxqyj5rcay68Ad1jlLflyp0KoijBjcD31x2L07VsUJ+qCfT2YXKbGbHvtgg4eZHZWm9JukMJ1bsCMJsNOM1JoNDCZh3CYAPW9uCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rhxYi0aQLPGaxMeeqxRJRpBn+SdLWV4rYQ2bB3ul1Ic=;
+ b=meds7U3LYYhSdtf3CK27t8bTK8tjkIOwTNmIVA3nThnL7QoiJfDnhWAaVe3xyT5UJNzktTZPfPomHoQb+vB3H8XOc0tYUrLfEWvL5heNd5uUAvEvAcwWHK1dMEpYN7qlQnHPIBVKseL4wfp6pmm44dd96aH0qklzGGT2R5YVKLuPczwLmBOoi300Qa/Bete4WTmyALtju6n+jvqGBTM+WuAtpIaOxGbhR+bIhuQ/xteLCfkH3qrSox/47cIV9DfBCC1HJYUDnpGKILuKb590eHF5DY56+vKmZN8Ri/i+Mb52+4Pnl2qz7Yw2wLvWItz8jugCv1qvhhhRR20DDHi1pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rhxYi0aQLPGaxMeeqxRJRpBn+SdLWV4rYQ2bB3ul1Ic=;
+ b=jVou80jZi0nuQtrMbT5YrPwm/XRjhzbCOp97pkpURChjCqFXmnBwK9b17cE1d8Q0S6Z5mD472NNRLqEs7bEZlAsU0JRNtn4Da0NtniU18R314vsBJA+piSMPlJFBqqPJ99/zuUlAqv6NwqNheBXNSRkspuvaYnr8YYBqXHbrs8ZLr2ORsbRs7TRvfmhNwq+PUzfoNY2rM4pt5CfWRFS2qwmgTmqNIIDkOm/+5BqhcCAFfh9mYQbc7ESSiakjPIcVcph48ET9zNJ1SLdilXI685v5OAR54BO6YDaIxQM01IUeZ7IzWerNoPtpWoWPEqAMeQudzZzt905qwyzBAA/25w==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN0PR01MB8974.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:123::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.26; Sun, 8 Jun
+ 2025 10:56:35 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.024; Sun, 8 Jun 2025
+ 10:56:35 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, Eric Sunshine
+	<sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>, brian m carlson
+	<sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>, Ben Knoble
+	<ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5
+ authentication is requested without OpenSSL
+Thread-Topic: [PATCH v14 05/10] imap-send: gracefully fail if CRAM-MD5
+ authentication is requested without OpenSSL
+Thread-Index: AQHb1x7RwmU6j68CikiCTe6h/Egw8rP31HOYgAFFTlU=
+Date: Sun, 8 Jun 2025 10:56:34 +0000
+Message-ID:
+ <PN3PR01MB9597F4AB1711886FC47131D6B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References:
+ <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597BB453E9980CC50AA6703B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB959732DB7232FFE1ED7D38F3B86EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <xmqqy0u3zhxl.fsf@gitster.g>
+In-Reply-To: <xmqqy0u3zhxl.fsf@gitster.g>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PN0PR01MB8974:EE_
+x-ms-office365-filtering-correlation-id: 92bda0fd-bd0d-4c57-31c1-08dda67b22af
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|19110799006|7092599006|8062599006|8060799009|6072599003|461199028|15080799009|440099028|3412199025|102099032;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?dFpBRy9mZFFHdHlaRFN6aEErSWZjUWI2YW8zQ3hndVBvQTlCQ0hwc055emxX?=
+ =?utf-8?B?di9PYktteWd0S2l5ZTFuZUVUempGb3J1MmJBNjFiRzFkMkRqYU5XQzlreGlL?=
+ =?utf-8?B?ZTEweGViOGZrZGlFRy9NZjc3cFJPNVEvMERXQVJ5ekpYQ0lzMnYrZ1V3QTJi?=
+ =?utf-8?B?d3Nrc3dIbE5nb0paakxOcVNCS1BHNnhGMlRRSlRCM25WSDNqNWViMWJjczU5?=
+ =?utf-8?B?SE9Dck43VHV4Zld5Vm5QNkxwQjFkZ1dBVExnWmFtTlFvZW9mTk9qUDJzcDRy?=
+ =?utf-8?B?c1hoT2RYV3ZSZnY2WkhhRVcxMmcwcDBTMFlUZnRuNjlZczZZVmJkelFWTnBa?=
+ =?utf-8?B?NnVaaThreW9NN2N0aG81N3p6STkwd0NSMXNqcFdsUlBRMkRqVGpmMmhYNUZE?=
+ =?utf-8?B?VXFzSm5jdFhmY2o3YnVjZjVIS2l0RDhhczRWS1NnQVJja1pTcWc1Q2VpNGZm?=
+ =?utf-8?B?Z0tQci9yMm1lbnd6L2ZEaER5WWZHWUM0TmwwS1JMcWk2c0FVVFlxRU0weWt5?=
+ =?utf-8?B?YksrbmE0Y1ZxTkZjVG9vVGN0ZklKaU04aSt3REVjSlJQYnBWeWNhU2hjMlVX?=
+ =?utf-8?B?S3g1TTdyQmZOZlJ3R3hQWDVtbm5GYUtKRlF4WFRlSFpvYWxtT09pY29nd0I0?=
+ =?utf-8?B?Zk5UWDh5cGpiNDlhVURxN20vSXpyVkI2NDdiaDgyNk1FYU5yRUx0TVdJWUxL?=
+ =?utf-8?B?alNKellXMGNwaWpkQkR1WjlqVHM3ZEhXN3ROTXc2MmQ5WTFoUnQva20wSS9X?=
+ =?utf-8?B?Q0QrTUx2b1E1Sy9yaDdwRC8yYVdLQTJjSFlURWkxTnBpK1V2NXV2QkZ1Z2E3?=
+ =?utf-8?B?ODVUQk5WdXBON3RUaHYvTy9CUGFVSXprREhKWXNEZVovUTV3OS9ESENlZFhr?=
+ =?utf-8?B?TWFCU0pUTURyWlVNK3U1ZzZ6RTdpWXNWM0ZuOXQybXhIRGVLaDArL1BLWldK?=
+ =?utf-8?B?YzFyRUNJVkw3VEszc2hTcjVJWVdSWmFJbzBObGJ6Tnc3YnBSVU05dG5Vb05M?=
+ =?utf-8?B?RTNNY1c3aWRrQm5lakhlT0dRQzFMdlIrd1E2Lzc4bE0yT05tdEVMU2RmcHZG?=
+ =?utf-8?B?cWVBcTdUeUR4RVRXZlZwVVFzUDRVOUMrWmFJRWhSTU83RkQ5ZnorVm5pQ1hx?=
+ =?utf-8?B?b09oUkFaZVM4VjR0Q01SVGRabHJENktDcWliUmlPNFJCNFBUdzVzMnlMQmIx?=
+ =?utf-8?B?ZFpQRFNSZW4rVlYvZ1REbktRL2dXVit4TFJRMWxNMm0vR3Q5WlJMSVIwdXoz?=
+ =?utf-8?B?TjJSc2oxRW9QeTFWZXNPT0R1UmhIY3VHRUkvbnFab3B6R2VSZktWVzQvWXV5?=
+ =?utf-8?B?SHIzSjdqckZMY2pGOUgxdURSd25aYThrSkZNck1MamNVRGJyVVlNWXUwTy9T?=
+ =?utf-8?B?akFnNTNCVTJOS0h4QktzR0pIZTdwY3dMQWhnU0tLM3JUNVN0ZmJqOUd1UnRp?=
+ =?utf-8?B?ZWt6anhid0RDRWVLM0JncGZhbU5nWGxyMEdjNnRlcnR0RlFtNGlPVERvbVlj?=
+ =?utf-8?B?QldyWU1sd25IN0NlMmxzeFFKTXBkMVdKY3NKRjR3aFdCMGwyVEtIVlkreFVj?=
+ =?utf-8?B?K2padz09?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?Y094L0FjYmVLMHZCR0NGSlZtZWsxZVdnMUNodmw0Z0JXa245NnlpdW5rK29U?=
+ =?utf-8?B?akdtZ2RMcWlVWjMwMWs0RktxWHhVbXQwa3pEUjMvUXdNZlVMcVdvWTJiSnpL?=
+ =?utf-8?B?TE41UzlTWFJnRWl6ZS9rZ29JRHdUR00zRDh2SjA4czJxQjYvNTVTWFdBTEFN?=
+ =?utf-8?B?VHNGVXhWcEhjNFhiZ0pXRTJVN0dpTzd6MzBQSVFvd3ErdUZQVjF2YkJPOFBy?=
+ =?utf-8?B?UDMvS2I5OWtDVHBWZTBNamJXckNINkF2ei81Y21QWmR4ZlBZMjBhaTQ2cEU5?=
+ =?utf-8?B?dXZHOHNGbEgwNS9PMGExN2ppWDE4TS90czVkYjFlTUtTMjRmb1RTbGR3ZE9s?=
+ =?utf-8?B?OFZFaTRsOG5scWJWNFk2aFREN0w1SEdSb1hhOE5raEFqaTZ1bWxnZWlOSk9I?=
+ =?utf-8?B?dGNITGpRZDdWVERSdDFOMksvWEVLUlhJbWZIOVVqOW5ZWHVQYk1sU3hqSHhs?=
+ =?utf-8?B?akMwM0dFS3dvYU5Lc2w1eVAwbUNZODlFb3VQbUZkbG5RTDJVTmg3RlZhaGNz?=
+ =?utf-8?B?b3hsc1FNMHBOdTdQaFQ2KzFzUXh1UTNJck01UXNkS0EvRW1RR2dITXB4aGp1?=
+ =?utf-8?B?Q0RobXV3YTFaYklRQmR3NGQxZEhMY3cyN0Q0TjNxbFdzYXZMRDMxYWsyU0ti?=
+ =?utf-8?B?eG9UajZwaG0wQkhKRklYajFsbzVJTTBmeVpTUzNoNFNTeDVBZWErTmZTVFRw?=
+ =?utf-8?B?Vkx3OVl2WDMvT1lmUlhVUUxoMjg0S3lwU2ZXenh4ZmFLTnNzRVJhS0hJVDQ1?=
+ =?utf-8?B?SXk1TnkrMTRxNmlOb3Zua3pxUERWRWdlYkh1bTE4cWNIUkFKNmYzL3NhWUFD?=
+ =?utf-8?B?SEVWdFcvTWhiam5jQlR0UlUzbnVWbFY1QlRKZmFCcGJJdGp2SzAvQ3hDQTY0?=
+ =?utf-8?B?OFIvRUZXdEMybnRjOVd6dVNQZ0Zoa2Y1dUtrdmRqczlhWkh1UDNUMEplZ3Qv?=
+ =?utf-8?B?MWlqa0N1ai92TFhtSlMvOXRJdmFqQXpJcHBqUUladjJIcThzazBOQ1YxUFA2?=
+ =?utf-8?B?WHllalVwd05ESWZXZmNPUWNMVWhHaTZxRUU3dU85L2lxbHh4aVJmU25NTWI3?=
+ =?utf-8?B?SWlaZ3VkMXVqNzNHelpHTU5FdDVqQzVIMkZxdEIvb3lwcXVZdG9YaFpteE03?=
+ =?utf-8?B?OU1Rc1RlQll2RDVjTUxaVXk2bUNxNFN4dzNTTzltdlRNZHMrUWFNMDhrbExn?=
+ =?utf-8?B?TzVCM3FKM3ZHdGJqS2tDb0V1Tlh3SXFlSGRPMzRrL0RyZGRrMFlLbW5FSGM2?=
+ =?utf-8?B?RHB0dG1kVE03OFpUMWlDcDdrdzVEY3VBL01mSERobTRaR3JWUUJ6TkRHdkRN?=
+ =?utf-8?B?L09CcmJ5bytVSVB3a04xUFl4YjdqWUg2ekxnZHpKRytyOWRMUFNFWXBsbGk5?=
+ =?utf-8?B?aitZbEpoVDU3WVFrdllQblYyK0lYRDdMcDBYUnVsQUxRdW1hRjBoZHdxeGJR?=
+ =?utf-8?B?YkVDUGNQUkthUENiV3JlSk9OVTV5NnJqVVEvWEhpWlJrNFFtT3puRnNXVStH?=
+ =?utf-8?B?b01rZzJKMnZuTEhQM3prWTRvUUk1WkNhVlRnZXVyQkFFaW1saW15Z2Y1NGEz?=
+ =?utf-8?B?SURobHlGQlpqNFk0allFZ1Y4N285NFRCdktBMlQ2M2phTndJRCsyM3FTUWFs?=
+ =?utf-8?Q?s5FtgN38cRrf6Dxj4tPmSuWZAsRzIBPPo+sfr9DiELdk=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
-    =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 92bda0fd-bd0d-4c57-31c1-08dda67b22af
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2025 10:56:34.9252
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB8974
 
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-
-- Use `backticks` for keywords and more complex option
-descriptions. The new rendering engine will apply synopsis rules to
-these spans.
-- Explain possible options in description list instead of in a paragraph.
-
-Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
----
- Documentation/config/log.adoc | 45 +++++++++++++++++++----------------
- 1 file changed, 25 insertions(+), 20 deletions(-)
-
-diff --git a/Documentation/config/log.adoc b/Documentation/config/log.adoc
-index 9003a8219143..210439f2b641 100644
---- a/Documentation/config/log.adoc
-+++ b/Documentation/config/log.adoc
-@@ -1,64 +1,69 @@
--log.abbrevCommit::
-+`log.abbrevCommit`::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--abbrev-commit`. You may
- 	override this option with `--no-abbrev-commit`.
- 
--log.date::
--	Set the default date-time mode for the 'log' command.
--	Setting a value for log.date is similar to using 'git log''s
-+`log.date`::
-+	Set the default date-time mode for the `log` command.
-+	Setting a value for log.date is similar to using `git log`'s
- 	`--date` option.  See linkgit:git-log[1] for details.
- +
- If the format is set to "auto:foo" and the pager is in use, format
- "foo" will be used for the date format. Otherwise, "default" will
- be used.
- 
--log.decorate::
-+`log.decorate`::
- 	Print out the ref names of any commits that are shown by the log
--	command. If 'short' is specified, the ref name prefixes 'refs/heads/',
--	'refs/tags/' and 'refs/remotes/' will not be printed. If 'full' is
--	specified, the full ref name (including prefix) will be printed.
--	If 'auto' is specified, then if the output is going to a terminal,
--	the ref names are shown as if 'short' were given, otherwise no ref
--	names are shown. This is the same as the `--decorate` option
--	of the `git log`.
-+	command. Possible values are:
-++
-+----
-+`short`;; the ref name prefixes `refs/heads/`, `refs/tags/` and
-+	`refs/remotes/` are not printed.
-+`full`;; the full ref name (including prefix) are printed.
-+`auto`;; if the output is going to a terminal,
-+	the ref names are shown as if `short` were given, otherwise no ref
-+	names are shown.
-+----
-++
-+This is the same as the `--decorate` option of the `git log`.
- 
--log.initialDecorationSet::
-+`log.initialDecorationSet`::
- 	By default, `git log` only shows decorations for certain known ref
- 	namespaces. If 'all' is specified, then show all refs as
- 	decorations.
- 
--log.excludeDecoration::
-+`log.excludeDecoration`::
- 	Exclude the specified patterns from the log decorations. This is
- 	similar to the `--decorate-refs-exclude` command-line option, but
- 	the config option can be overridden by the `--decorate-refs`
- 	option.
- 
--log.diffMerges::
-+`log.diffMerges`::
- 	Set diff format to be used when `--diff-merges=on` is
- 	specified, see `--diff-merges` in linkgit:git-log[1] for
- 	details. Defaults to `separate`.
- 
--log.follow::
-+`log.follow`::
- 	If `true`, `git log` will act as if the `--follow` option was used when
- 	a single <path> is given.  This has the same limitations as `--follow`,
- 	i.e. it cannot be used to follow multiple files and does not work well
- 	on non-linear history.
- 
--log.graphColors::
-+`log.graphColors`::
- 	A list of colors, separated by commas, that can be used to draw
- 	history lines in `git log --graph`.
- 
--log.showRoot::
-+`log.showRoot`::
- 	If true, the initial commit will be shown as a big creation event.
- 	This is equivalent to a diff against an empty tree.
- 	Tools like linkgit:git-log[1] or linkgit:git-whatchanged[1], which
- 	normally hide the root commit will now show it. True by default.
- 
--log.showSignature::
-+`log.showSignature`::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--show-signature`.
- 
--log.mailmap::
-+`log.mailmap`::
- 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
- 	linkgit:git-whatchanged[1] assume `--use-mailmap`, otherwise
- 	assume `--no-use-mailmap`. True by default.
--- 
-gitgitgadget
+DQoNCj4gT24gNyBKdW4gMjAyNSwgYXQgOTowMuKAr1BNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3Rl
+ckBwb2JveC5jb20+IHdyb3RlOg0KPiANCj4g77u/QWRpdHlhIEdhcmcgPGdhcmdhZGl0eWEwOEBs
+aXZlLmNvbT4gd3JpdGVzOg0KPiANCj4+IFVubGlrZSBQTEFJTiwgWE9BVVRIMiBhbmQgT0FVVEhC
+RUFSRVIsIENSQU0tTUQ1IGF1dGhlbnRpY2F0aW9uIGlzIG5vdA0KPj4gc3VwcG9ydGVkIGJ5IGxp
+YmN1cmwgYW5kIHJlcXVpcmVzIE9wZW5TU0wuIElmIHRoZSB1c2VyIHRyaWVzIHRvIHVzZQ0KPj4g
+Q1JBTS1NRDUgYXV0aGVudGljYXRpb24gd2l0aG91dCBPcGVuU1NMLCB0aGUgcHJldmlvdXMgYmVo
+YXZpb3VyIHdhcyB0bw0KPj4gYXR0ZW1wdCB0byBhdXRoZW50aWNhdGUgYW5kIGZhaWwgd2l0aCBh
+IGRpZShlcnJvcikuIEhhbmRsZSB0aGlzIGluIGENCj4+IGJldHRlciB3YXkgYnkgZmlyc3QgY2hl
+Y2tpbmcgaWYgT3BlblNTTCBpcyBhdmFpbGFibGUgYW5kIHRoZW4gYXR0ZW1wdGluZw0KPj4gdG8g
+YXV0aGVudGljYXRlLiBJZiBPcGVuU1NMIGlzIG5vdCBhdmFpbGFibGUsIHByaW50IGFuIGVycm9y
+IG1lc3NhZ2UgYW5kDQo+PiBleGl0IGdyYWNlZnVsbHkuDQo+PiANCj4+IFNpZ25lZC1vZmYtYnk6
+IEFkaXR5YSBHYXJnIDxnYXJnYWRpdHlhMDhAbGl2ZS5jb20+DQo+PiAtLS0NCj4+IGltYXAtc2Vu
+ZC5jIHwgNjEgKysrKysrKysrKysrKysrKysrLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0NCj4+IDEgZmlsZSBjaGFuZ2VkLCAyMCBpbnNlcnRpb25zKCspLCA0MSBkZWxldGlvbnMo
+LSkNCj4gDQo+IFRoaXMgaXMgYSBnb29kIHRoaW5nIHRvIGRvLCBidXQgSSB3b3VsZCBoYXZlIGV4
+cGVjdGVkIHRoYXQgaXQgd291bGQNCj4gY29tZSBhIGxvdCBlYXJsaWVyIGluIHRoZSBzZXJpZXMs
+IHBlcmhhcHMgaW1tZWRpYXRlbHkgYWZ0ZXIgMDEvMTANCj4gZml4ZXMgdGhlIGNvcHktYW5kLXBh
+c3RlIGJ1Zy4gIElmIHRoaXMgaXMgbW92ZWQgZWFybGllciBpbiB0aGUNCj4gc2VyaWVzLCBpdCB3
+b3VsZCBuZWVkIHRvIGludHJvZHVjZSB0aGUgdHJ5X2F1dGhfbWV0aG9kKCkgaGVscGVyIGF0DQo+
+IHRoZSBzYW1lIHRpbWUuICBTaW5jZSB0aGVyZSBpcyBubyBuZXcgYXV0aGVudGljYXRpb24gbWV0
+aG9kcw0KPiBpbnRyb2R1Y2VkIGF0IHRoYXQgc3RhZ2UgaW4gdGhlIHNlcmllcyB5ZXQsIGl0IHdv
+dWxkIGJlIHF1aXRlDQo+IHN0cmFpZ2h0LWZvcndhcmQgdG8gcmVhZCBhbmQgdW5kZXJzdGFuZCB0
+aGUgcGF0Y2gsIGFuZCBvbiB0b3Agb2YNCj4gc3VjaCBhIHNvbGlkaWZpZWQgZ3JvdW5kLCB0aGUg
+c2VyaWVzIGNhbiBhZGQgT0F1dGgyLjAgYW5kIFBMQUlODQo+IHN1cHBvcnQgb24gdG9wLg0KDQpT
+ZW50IGEgdjE1IHdpdGggdGhlIHBhdGNoZXMgcmVhcnJhbmdlZC4=
