@@ -1,196 +1,114 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B29F15D1
-	for <git@vger.kernel.org>; Sun,  8 Jun 2025 06:35:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CC8A55
+	for <git@vger.kernel.org>; Sun,  8 Jun 2025 06:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749364552; cv=none; b=tu+g7uB2DiJbF+R0u482vWR10lN39ggUf3+kST+Zcw7bL91cUMK9XPJcdbWYlWMezLJzyD6tmVqNRLcVKCd4wYpskbA0SiTUy7vZm6khNEFmBp+BXGQfzqSLMvY57htp5PZC98la/kMc+uJlss70oHyk964DFy0AxeNyliQFh4I=
+	t=1749364758; cv=none; b=ZnKocKesCzuPvAIAtEJDCWuTSUqTtfq9ir31WxIDItQr7BhVt1gmeF75VX8Owm6o624IV7nNM19KcUSSUe8W1Nn8ygeLUDWyDM2sVc3fN2R5UOcK1I3+ysfXAt56kX1zxWqX0ZP6VQ13ZAYmGqdSEKrqWb3QM1EesUIEJQ91KBU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749364552; c=relaxed/simple;
-	bh=0caWek2VITVrKBGGTOde75+Uuj2elLX+bVhlEPHc5fo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CLAPQi5CLnQaZhMZUEiZsWl7MLkMRECq5QvHtfVvc7VhEHiGFc2fqzqFCV1oTFFUye0EGpyW+m7u4/iT/j6fdhCVgP1tLYvrhgzxX9KsaytanJwOLD36MnIIQ98U0lwCQnh4PlGOKKpka0A4liLjwijiH9HosF0uI/MQsCU0Lmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DxTF5tFz; arc=none smtp.client-ip=209.85.214.169
+	s=arc-20240116; t=1749364758; c=relaxed/simple;
+	bh=dESI6RRHhPt3o0LTFuT4amwPtUwo/E0dIduauHm3v+o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=r2RydMcWQ2wSLGvd/FRff+uuSY/y/FwFuwoA+7Za0G61JCul8pej4Si7cj1ICf0R+HBYlxkcq9iZdbfbbrHadptps8dKL0nNuQbvDf4162okaBxCtU91EHGBbNnpJ2FfG2OCxhOWq+hHYaARYlYjaXP3lLrWrZseXyjCZHuAAhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKdJjf6C; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DxTF5tFz"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2345c60507bso23732825ad.0
-        for <git@vger.kernel.org>; Sat, 07 Jun 2025 23:35:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKdJjf6C"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-60700a745e5so3687170a12.3
+        for <git@vger.kernel.org>; Sat, 07 Jun 2025 23:39:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749364550; x=1749969350; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1749364753; x=1749969553; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WVRv2OJGGxNZ7nC3pqtk5+gmDKzpDSPHe9ItjCZcQGQ=;
-        b=DxTF5tFztihqph161jcQSplyRRvo1sbkCCCH48L1d+l82+bCv0jnBteVqikKwbfFna
-         Ndg3Mq1A9FgBQyJWH1IyNDkMIARNUQs5LPAHK/q2QDOqHGRTQ8JykkSGeMgl8Hnf0Msw
-         HISB0RA+et6lK6NQKXM9RR6W4KBuMCnDdhe0UeJuIlbo9j5GJeNTUgpfYOgolFcvJVzI
-         hP1hGGXO5xYkSDthQewJBcA0muOCFVWvLay50AncVxB+Pe98pPhGVsQPlhRDruUH4WTT
-         Vm2uPV8dcFcvdGHjuqa7NX5p4PUfXIGJl3U+N6TJlGZu2Nm3UDW6l+EqsUBAKz9Uupsc
-         /lyw==
+        bh=TfqmgzJDDN1trtycvMA6oB+JvgUyKtPjVIYaDz5qO2c=;
+        b=QKdJjf6CB/fah9yLRaIeZhIgzbXWsvRmXbeHaXAsuQ+S6a0oUGvL6Fezn3unSYyMs6
+         CJsCouvTai7B+IXo5mwLV8dNEwiJlMlNbTPiLAbRQ9zCYGsg9xhiyAd+SN0IXEFmGTbh
+         g7QjzT6xArz6dePgXEj/wDjF7O8ouITeTv9cxEYu+wefYhiyytz+QSV83JrVo4sBpWjk
+         WRGx7f6r9HFf7cxYtOfIDtheWg9spKN3pVj11iWPRAjURn3GDwk3ZuAQJen+1B1691dn
+         uMNXyrS2Un2EjcstNl9k9PiQ9JQV4ajM7E8MjqOvGLHQkptVoLdeQTRDxlZJXyHO5q3N
+         OSmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749364550; x=1749969350;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1749364753; x=1749969553;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WVRv2OJGGxNZ7nC3pqtk5+gmDKzpDSPHe9ItjCZcQGQ=;
-        b=BoBptBJjIiLen0Wj5vb3uXBlr5Ky3v49tmtI2Zij5QQ03SJoeG7mVHrkC4nzE6AXvF
-         UIW1ja8/ZxHpqVSBtKcwqwnXuhgsv9dx4hlxbLSHnaKl37GqcEk9VIvEg7zc/AAPYOVm
-         9NAGCz6p1RBRwFiMWeZokbBpK3QaPlBJY4aE/oHB542Eo+yEJae3L0k/evy5VIVa/PC1
-         svIdIqqYRR3nA0Gh3YP+6C60n9nWu0u47CjoETXpqopwHbzYcEu3exBvoKWlNCnISgVF
-         M/vPtrKsMN7wZvpK6RNUZpBQUpfCG8uElXqGHH6uN3Xdo7ehoUuHNMGCtruK9CLVz4Av
-         FFXw==
-X-Gm-Message-State: AOJu0YwkIMrC5dtYSzDWbsaP6NdzARATa3338BZzbF6Bx8tRS/ohquDJ
-	6klrv7ZcyDwUV8JoMGcN3LVkInf4DeGm3UQFtLmoY/2JlTH9+0rFwKHr
-X-Gm-Gg: ASbGncvJSsjIdhq3XikLrlXskin9qybDVfoTGBvgsfbfppsAz+5WMqzBw5RgttD1QBE
-	uOZA17jJa25bP/rsUnzlm6MDqiRT4n3niv1MhBMJsc2sZv4hOnYvnR4v2/2e9goC6wVZsXkYmsY
-	H+6cLaBFdtxEaDG52jLlNk8rG/bT0fhp8gBsif6EMlY+Y16i6tls1sBaIwSL4+GijB+Op4PitNN
-	PC+5sceoh4Fh+ycoQa3VS+z4MX6TNzHLszF9IPKAUbRebZ8ymsj5ZthdhW2nuQAHTGALQq4E69r
-	tiOJ/f9NlQeNSRbC668EjOI/YICSVzAsvlzdHE7o2/q+YLz9f6sqbFd4Ngzr4gO3gTkb1MLttg4
-	=
-X-Google-Smtp-Source: AGHT+IFuMNS1FTZGpPavzk2hMPSgZBwRVGWZc8M2NQ7Ukc+y8h5qHjqsBsANiSyf5BVEC2FcmkZQjw==
-X-Received: by 2002:a17:902:e74b:b0:235:779:edfa with SMTP id d9443c01a7336-23601d9782bmr127855725ad.32.1749364550534;
-        Sat, 07 Jun 2025 23:35:50 -0700 (PDT)
-Received: from fedora ([2405:201:c005:b018:6a51:b86d:8d8d:758])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23603507281sm35267245ad.240.2025.06.07.23.35.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Jun 2025 23:35:50 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	jayatheerthkulkarni2005@gmail.com,
-	smacdonald@kaimaging.com,
-	sunshine@sunshineco.com
-Subject: [PATCH] stash: fix incorrect branch name in stash message
-Date: Sun,  8 Jun 2025 12:05:37 +0530
-Message-ID: <20250608063537.233243-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.49.GIT
-In-Reply-To: <xmqq7c2jcodj.fsf@gitster.g>
-References: <xmqq7c2jcodj.fsf@gitster.g>
+        bh=TfqmgzJDDN1trtycvMA6oB+JvgUyKtPjVIYaDz5qO2c=;
+        b=Y9z2t9Eo3TT8m36b0I9VVlIsnIuLsPQt2dWqJ2a6mrZIgNsfvbuuFSDMEagoVcYIwh
+         /ic1hXk+qPqcAhyqahTQ2Z0+gxvKrHqLoR/pto+4ClqPOUDh/Awm1A0/hQL6DqDAjIxQ
+         crdKyiQQUrUCzmsVyXrjyU6aQfQR1NfePDzw+nC3hd/kTb86R98FAT7KrvWBhmfOx+EQ
+         9exePtMdLSMEzxUR8WOwr+ukI5jdFQFRUfyTU0gsD2pPF57/FXY77ffyGh4c0RohhY8u
+         srBvMacLzYU2gS2Abn+lgYeQDfg9snN1s+kw5xPD1lPFhq8YnQm9W65YMZTwgNHeB9i1
+         K/Pw==
+X-Gm-Message-State: AOJu0YxF6iH2SJv+oqQPpe8hJGc8PgDm0ehmnjehwr4GS9gjzMg8yn1X
+	7qBfDc94OPiG1IyDt8gNrhuWfKFw+lmsJbEGfWPqofD0tAwUvoJ0gjyCv1dj7q8JemCJLcX7py7
+	3reQo3qUyKYNRSB+aSqYwUCEpjrnyUyg=
+X-Gm-Gg: ASbGnctczsGtsmDsTEXBckI0HR7yq4AjUCf85k0HSDp7vH9afECirj49pV2/zb4uSVC
+	P7gSdEypjOZMCt8xKBBFeR3a0jrHVbtVkpFKDWnaigkMK9nGK8YNVyagMF2llWdX+0cnuEDyiZv
+	D+a5TNJ6NWgr1Cn+fyudAmQWrHrckOA6u9cNY=
+X-Google-Smtp-Source: AGHT+IE2GXpVH7CXCGxY0qP+OAItFkQurNa+iLX3ltiQc5ODJCenf8+wy39SizEFbolVSRs4mvcqjLKFDsaadCLMefY=
+X-Received: by 2002:a17:907:928e:b0:ad8:e477:970c with SMTP id
+ a640c23a62f3a-ade1a9330bdmr744934166b.23.1749364752572; Sat, 07 Jun 2025
+ 23:39:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com> <20250608003134.7488-1-ayu.chandekar@gmail.com>
+In-Reply-To: <20250608003134.7488-1-ayu.chandekar@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Sun, 8 Jun 2025 08:39:00 +0200
+X-Gm-Features: AX0GCFub4dcB4O7vGadsBZtbjBg51eXl8G6n79pkBZDrwLcX2i3FPTf0JvhhQWY
+Message-ID: <CAP8UFD2z4AhtArDn31jY8HkAXrNU-rkQwRE9=M-ntEdsQ3e40w@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2] environment: move access to "core.sparsecheckout"
+ into repo_settings
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: git@vger.kernel.org, shyamthakkar001@gmail.com, ben.knoble@gmail.com, 
+	ps@pks.im
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-When creating a stash, Git uses the current branch name
-of the superproject to construct the stash commit message.
-However, in repositories with submodules,
-the message may mistakenly display the submodule branch name instead.
+On Sun, Jun 8, 2025 at 2:32=E2=80=AFAM Ayush Chandekar <ayu.chandekar@gmail=
+.com> wrote:
+>
+> The setting "core.sparsecheckout" is stored in the global
+> `core_apply_sparse_checkout` and is populated in config.c. Refactor the
+> code to store it in the variable `sparse_checkout` in the struct
+> `repo_settings`. Also, create functions to set and get the value of the
+> setting and update all the occurrences.
+>
+> This also allows us to remove the definition `#define
+> USE_THE_REPOSITORY_VARIABLE` from the file 'builtin/backfill.c'.
+>
+> This change is part of an ongoing effort to eliminate global variables,
+> improve modularity and help libify the codebase.
+>
+> Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+> ---
 
-This is because `refs_resolve_ref_unsafe()` returns a pointer to a static buffer.
-Subsequent calls to the same function overwrite the buffer,
-corrupting the originally fetched `branch_name` used for the stash message.
+When sending a v2 like this one, it's nice if you can describe what
+changed since v1 here, after the line starting with 3 dashes "---".
+Providing a range-diff here, when it makes sense, could be a good idea
+and help reviewers too. Speaking of reviewers, thanking or just
+mentioning them is nice too while at it.
 
-Use `xstrdup()` to duplicate the branch name immediately after resolving it,
-so that later buffer overwrites do not affect the stash message.
-
-Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
----
-This this patch was long due, and submodules patchs had a design choices 
-Refined this patch Added tests and freed the leak as intended.
-
- builtin/stash.c  | 19 +++++++++++++++----
- t/t3903-stash.sh | 39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 54 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/stash.c b/builtin/stash.c
-index cfbd92852a..13606efb12 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1372,6 +1372,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	const char *head_short_sha1 = NULL;
- 	const char *branch_ref = NULL;
- 	const char *branch_name = "(no branch)";
-+	char *branch_name_buf = NULL;
- 	struct commit *head_commit = NULL;
- 	struct commit_list *parents = NULL;
- 	struct strbuf msg = STRBUF_INIT;
-@@ -1401,11 +1402,20 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 		ret = 1;
- 		goto done;
- 	}
--
--	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-+	
-+	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository), 
- 					     "HEAD", 0, NULL, &flags);
--	if (flags & REF_ISSYMREF)
--		skip_prefix(branch_ref, "refs/heads/", &branch_name);
-+
-+	if (flags & REF_ISSYMREF) {
-+		const char *tmp = NULL;
-+		if (skip_prefix(branch_ref, "refs/heads/", &tmp))
-+			branch_name_buf = xstrdup(tmp); 
-+	}
-+	if (branch_name_buf)
-+		branch_name = branch_name_buf;
-+	else
-+		branch_name = "(no branch)";
-+					    
- 	head_short_sha1 = repo_find_unique_abbrev(the_repository,
- 						  &head_commit->object.oid,
- 						  DEFAULT_ABBREV);
-@@ -1495,6 +1505,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
- 	strbuf_release(&msg);
- 	strbuf_release(&untracked_files);
- 	free_commit_list(parents);
-+	free(branch_name_buf);
- 	return ret;
- }
- 
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 74666ff3e4..5d5aac8b15 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1592,4 +1592,43 @@ test_expect_success 'stash apply reports a locked index' '
- 	)
- '
- 
-+test_expect_success 'stash reflog message uses superproject branch, not submodule branch' '
-+	git init main_project &&
-+	(
-+		cd main_project &&
-+		echo "Initial content in main_project" > main_file.txt &&
-+		git add main_file.txt &&
-+		git commit -q -m "Initial commit in main_project"
-+	) &&
-+
-+	git init sub_project &&
-+	(
-+		cd sub_project &&
-+		echo "Initial content in sub_project" > sub_file.txt &&
-+		git add sub_file.txt &&
-+		git commit -q -m "Initial commit in sub_project"
-+	) &&
-+
-+	(
-+		cd main_project &&
-+		git -c protocol.file.allow=always submodule add --quiet ../sub_project sub &&
-+		git commit -q -m "Added submodule sub_project" &&
-+
-+		git checkout -q -b feature_main &&
-+		(
-+			cd sub &&
-+			git checkout -q -b feature_sub
-+		) &&
-+
-+		git checkout -q -b work_branch &&
-+
-+		echo "Important work to be stashed" > work_item.txt &&
-+		git add work_item.txt &&
-+		git stash push -q -m "custom stash for work_branch" &&
-+
-+		git stash list > ../actual_stash_list.txt &&
-+		grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
-+	)
-+'
-+
- test_done
--- 
-2.49.GIT
-
+>  builtin/backfill.c        |  5 +----
+>  builtin/clone.c           |  2 +-
+>  builtin/grep.c            |  2 +-
+>  builtin/mv.c              |  2 +-
+>  builtin/sparse-checkout.c | 20 ++++++++++----------
+>  builtin/worktree.c        |  2 +-
+>  config.c                  |  5 -----
+>  dir.c                     |  2 +-
+>  environment.c             |  1 -
+>  environment.h             |  1 -
+>  repo-settings.c           | 13 +++++++++++++
+>  repo-settings.h           |  5 +++++
+>  sparse-index.c            |  4 ++--
+>  unpack-trees.c            |  2 +-
+>  wt-status.c               |  2 +-
+>  15 files changed, 38 insertions(+), 30 deletions(-)
