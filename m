@@ -1,77 +1,76 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27AB7FD
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 21:10:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A14E221D59F
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 21:13:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749503435; cv=none; b=RioJlr/TmLWGsB7nKOt3Rk3spE5osfEQcZkWJraeDFHWtNgDMDA5xTcL4YG2NPoQUH1I5J7ZdegnMrxPzHzVLtRIKSDfJ6P2hKlwrvQK3H8nNi+YNvUy+hZIJhdXZxVyzssFMSYfFdzlX4uKENCifZJ+6iHDcKI44ovvGKKrJuw=
+	t=1749503587; cv=none; b=KMmyjqcnTVc0bKLNNi6gPsb2ZNM/Y4kQ0uTbR57sBOIEEcxp76y1N5KYPL2C0MYWHL5Ow6S/U5nFwpkq79bkr2lhpyH3cgo/berX/gHB/bHa572TlXxQ2a/sb2tiofW80XGFBw3yWNY+Ssnx+yEfPh5toU/leN7WZsxvq16ykLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749503435; c=relaxed/simple;
-	bh=A79BvTJzEVpfPGnobcq5f52BM3UxZ4FYXF8JphwipR8=;
+	s=arc-20240116; t=1749503587; c=relaxed/simple;
+	bh=qjdFB9SuFS0qi2dHIeULrUrA/LZlQEZyMg0GTSxIqCQ=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=MvCvGEaauoIXs1AkE8I9v7wGbsIeHo5HHc1C0u2NfDpYOaAehSuWSlyFaHj3XJ1xS9FqbqER0mJYnBwKMNRJ3YxLD+ASHOxW2WkLhgvUhAccrS0g7LGe3mpEYu7zpWN5ZsFOcwuJul22JxrwQVdzQyok86HeK/dQwY26xess+vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=LPkraRJ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=muDgTjE1; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	 Subject:Content-Type; b=HQmUA06M9oCx/i9+n/fA3/qdK/6Oqq+7tPE9liRcu1wuEFHWFewUhyNwrkBW7oLE58VYisU8uc5Ycom7LHQGW5MkB0Qsz13J0k8GoVHHFg7FS4sxp7o4j1oFfVeE0M0OkhCn8/LLXG09QpO0tO0dhEwSI1ABZyHfJW7Ew2TZXCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fy/9RE/2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EVcf1Dds; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="LPkraRJ9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="muDgTjE1"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fy/9RE/2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EVcf1Dds"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E295E25402C8;
-	Mon,  9 Jun 2025 17:10:32 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 9112F11402EF;
+	Mon,  9 Jun 2025 17:13:04 -0400 (EDT)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 09 Jun 2025 17:10:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1749503432; x=1749589832; bh=9uD5bv0ZhRzfmpoQSSXIlJ7xT9UP75lO
-	3kDOqxeVVn8=; b=LPkraRJ9pXUkT/RODbBo+Qj2bMVQmqrZzyQcMiuNQJmI6EOq
-	YE2O7dHB2pD9IceNUut5ZTqMYm+xXsOmo238QQ4g5VQ5zuDqC23Hl0lWEyqzzLko
-	UGCP89UvWtX4KQBa/78xQyH9UYbC8FcdzXoD3bZu13UIAo2VOy7Mbf/6WBSk19tK
-	R0d0eZYk3zfakhBttDu+J2yMxIVSs8hAMMjlsSTZtjd911vUfuqEMA8urXrWvbYi
-	d1htprcpRm1jwNVjP86tibfbyk5GuL8iOze6P6XwpNqoY6jLDT72BVxo9sxyv7zx
-	VOCgO7v2ZhlfVNz8N3OOZI64uRynIP3eyV9vFQ==
+  by phl-compute-09.internal (MEProxy); Mon, 09 Jun 2025 17:13:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1749503584;
+	 x=1749589984; bh=JaZqJ+wIsXQfIHIvcC8qsJwVJU+wwIEeVhX6sqOJPzk=; b=
+	fy/9RE/2bqqsc8ABi193HQ4sP5GAMkHDqMl9xGRm6w9LjqxgP+L2wSOKLMvO2FWx
+	k5nePPX67JuhHjw9WcOvCa3l5TkYj1jrFCWsOrP2VnyobnV9X45gyXZUZPo+pqa6
+	BxwRJRUQV5XNvRCtwITkjUiq8aebUvv/itglvDdQEXohCDBBxkK8Q9ISIlhC+8px
+	iAfSvSpyYYT/qQcu9eCK30+Xhb7vApUc4QU9W1q9No6oq3nKJrV9fiwWeH7WwIMH
+	OweYYpK0YlCnvkvdrUBaIamqbp8SRTCdddt4Og0pQ6hJBNrMyKQFw3gxRHgMUgmD
+	Z95rOQ9bV0dNzBBsx7zuTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749503432; x=
-	1749589832; bh=9uD5bv0ZhRzfmpoQSSXIlJ7xT9UP75lO3kDOqxeVVn8=; b=m
-	uDgTjE12EKNNtQgM2EK/cZKObolnURCwceDUOrcYROpxZFp6hmI5nr2tGs/Kh3Ui
-	RpC1FD2t0IWHTItDztYW/n9L3XqjL7KEdCFIHz5BV1XkGjlfihTMwPMxFHXFBzNP
-	HzMcmXVYi7e9UaUrEi3h/dOLQGipjSvsT/jrEay+lSWr9BTJ27oZFWNhMa39zwcC
-	3zyZBh270Z2XLeVCReYU5kI/vlmHKo8BwqNQfUIvSqYJ/sL1iN9lqIZIFg0wfz1m
-	NFD9Swy6ERyiCbjpaMoPo0j8X1Ke+0gQOm38ZEvQHKu6lx3Deu9oyCDqrL/zX7Vb
-	VNThqTxi8V957fHI8aNyA==
-X-ME-Sender: <xms:yE1HaCa1e5Zc9pVOBSKHegbfa39sQ6vTeSxsmIy_NRO_mc2WLfOLHec>
-    <xme:yE1HaFZhanLtPTu-0X9ZwOceOqg_lIKW-sF3ZmZi4Rt6LIh6TIW-1oS4qKaYOxAYB
-    G3-0vmqqV-RgXzW4g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelkeduucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749503584; x=
+	1749589984; bh=JaZqJ+wIsXQfIHIvcC8qsJwVJU+wwIEeVhX6sqOJPzk=; b=E
+	Vcf1DdsP2xo8cEp/TDVJmE7+Vb1t9watdwSrMJJgN2VZbadpIF1rNIOjaxisT/gn
+	w3LAzyCeYsVB0oaiUjlv7jehD56LJ+VEDWytn0WP/1JeKi+8xqJkz0T8KVihZvzE
+	KzQ/fV/vKBePpmU+9BSvZQhZwdnBlIr1o66NyMnWwBk9H5qKMWFEhvdw4L33agal
+	36cjSeh+hk3zUHqnFGsP0TBqAbQ5qYcNl+843RgmQhD9MldBLGuOlO0uB44WRIv+
+	vDosTc0Z4qbIbikzQ+4nVg1CnknPfvIDrioowEGGRYixSaaALDjZHIc4aDSTzvyz
+	x0W67oWkI9i/LRiFg/hvA==
+X-ME-Sender: <xms:YE5HaN5D4VAXm05t3Zl0R__yO3TuJut_Ur3UyxZcxuay4E-7aEoAzuM>
+    <xme:YE5HaK51gS8fi-hcp6JC3rOB4XN5Clx3j-a0g5DJmYQBa0ml1T8d6RjnSsb0R9GCL
+    kDywcrW2BHaz3IAWQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelkedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertdertdej
-    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtohguvg
-    eskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepgffgueetkeej
-    udetffeftdfgteevleeltdehfffhgeeuudeiuefhkeehffeufefhnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpth
-    htohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghr
-    hhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
-    uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:yE1HaM8NZ5EHevQbOtmzVIh9iGeTfCrhoYuOifr46N7Je7JyJn-Ftg>
-    <xmx:yE1HaEpHAAExaJykNNMDAZ335G6s3Nng35R9KfykBArs5FDVuWfkKQ>
-    <xmx:yE1HaNqaps3cj58PNvz0W18X4g_QfFtkZrhPkvi2OnsCErcgWlVMag>
-    <xmx:yE1HaCRn7oxnepDO5FZT8o0yotgCrMz0rbdCzDiMaXYijzpaYsPadQ>
-    <xmx:yE1HaDSewJfrX9ETpAwQiXNOB_5bo3XhQNO70LaIM61biW6eWn-2nw1s>
-Feedback-ID: i2671468f:Fastmail
+    necuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggftrfgr
+    thhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgiefgfe
+    ekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    khhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsg
+    gprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhk
+    nhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhoug
+    duvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghk
+    khdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:YE5HaEfHoeHpZsuqi02drla5hc6FxB23VEaoKQyFjglEzW8hrteu2w>
+    <xmx:YE5HaGIPQ_eDku-youFb3y4WmnK83ZKgS3n3TQsF4lnVpnfNi2We0w>
+    <xmx:YE5HaBJd--0w_q1o4Mncp-Ap1khazcOiMqfNaTLtMitsvOXUo4pX_A>
+    <xmx:YE5HaPxoIxP7PF-SiAIoaj6lyqSg3OUd_1HBJymnhyjqyWj7s_0nPQ>
+    <xmx:YE5HaMVmHarzQWL8dybX4E9Cf1Zp0WJn7PgvKLW1qxT9tiSzXhxhcrxl>
+Feedback-ID: i8b11424c:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 57C4C1EA0060; Mon,  9 Jun 2025 17:10:32 -0400 (EDT)
+	id 1F4551EA0060; Mon,  9 Jun 2025 17:13:04 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,42 +79,50 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-ThreadId: Taf9fec3ba48f0e1f
-Date: Mon, 09 Jun 2025 23:10:11 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Eric Sunshine" <sunshine@sunshineco.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Message-Id: <955b6f38-0a98-419b-abac-899beaab277d@app.fastmail.com>
+Date: Mon, 09 Jun 2025 23:12:42 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>,
+ "Junio C Hamano" <gitster@pobox.com>
+Cc: "Phillip Wood" <phillip.wood123@gmail.com>, git@vger.kernel.org,
+ "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+Message-Id: <5ca4e740-d243-490c-ad85-13b330165365@app.fastmail.com>
 In-Reply-To: 
- <CAPig+cRTeZosWC=b=9MOjKaUwPodp7P=X2pwuXVgiRorx_+jmg@mail.gmail.com>
+ <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
 References: 
  <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
  <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
  <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
- <CAPig+cRTeZosWC=b=9MOjKaUwPodp7P=X2pwuXVgiRorx_+jmg@mail.gmail.com>
 Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jun 3, 2025, at 22:46, Eric Sunshine wrote:
->> I think this suggestion would also help folks who "git commit -v,"
->> which IIRC is also indented in the template.
+On Tue, Jun 3, 2025, at 22:37, D. Ben Knoble wrote:
+>> In this case I am not all that sympathetic to the idea of the patch.
+>> The consistently indented lines makes it more clear from which line
+>> to which line came from a commit log message; running stripspace
+>> would break them into paragraph pieces.  These editors that complain
+>> probaly can be fixed?
 >
-> For what it's worth, there was a previous attempt at something along
-> these lines after which a discussion ensued.
->
-> https://lore.kernel.org/git/20210830072118.91921-4-sunshine@sunshineco=
-.com/T/
+> My editor doesn't complain, but it does highlight trailing whitespace
+> at my behest, and it tends to be an eyesore (on purpose: that way I
+> clean it up). Perhaps Kistoffer is coming from a similar place?
 
-That=E2=80=99s very relevant, thanks.  It=E2=80=99s not something that I=
- would have
-noticed since I am too afraid of editing any file with patch contents in
-them.  In part that=E2=80=99s why I find it so convenient that you can s=
-end
-notes along with patches.
+Yes exactly.  Ain=E2=80=99t nothing more to it than that.  :)
+>
+>>
+>> Alternatively, if it bothers users of certain editing environments
+>> too much, perhaps the indent code in the output phase of "git show"
+>> should lose the indents for empty lines uniformly, shoudln't it?  It
+>> probably should be a fairly isolated change, like the way how the
+>> expand_tabs_in_log bit is handled in pretty.c; give another bit and
+>> teach pp_handle_indent to return when that bit is set and the
+>> payload it was asked to show with indentation is empty, or something
+>> like that.
+>
+> I think this suggestion would also help folks who "git commit -v,"
+> which IIRC is also indented in the template.
+
+In my testing though it doesn=E2=80=99t introduce trailing whitespace.
 
 --=20
-Kristoffer
+Kristoffer Haugsbakk
