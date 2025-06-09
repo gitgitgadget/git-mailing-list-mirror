@@ -1,90 +1,107 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7A511185
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 07:01:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 78A42281341
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 07:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749452507; cv=none; b=O+4q/5nyr1kThPFV7wrekS1l7eA8v1BGlP5W/4/eMtr0z0uImmIcHNGpGF0q/4JnHTi8gOJTbA1VrxS29HIInSdfKJl0ozhlkWXv+hwwo68NryqpDnaUlJXb/ONe6yAsRDZEBZbUrsFBqRYSE5uj4etmnIn2T1vwqmoUgP6rzdc=
+	t=1749452611; cv=none; b=hawrE+c7EdUWUTjjPXBuANOImefMnXOtNbUqvcfUUF/c++Wm+7POa/0bcZ9u1fBPxvWahhspkBhEvf2xNL0wK+CYeF+VzTKWVn7Yd2mJzLIQdTNX+hmCga2nWgfTKZkrDIuioML3Nv2taqp/gN6KXFOJqxI81St65xr3IsND+MY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749452507; c=relaxed/simple;
-	bh=jzm8olxh/4wKhBOP7FWhwTJUJ+PRY7/Ef5jkAKg59YM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=kCz5pDxWCMs99e75H5BuhSf0XP/hwDa4fcO3a/eAFr25wKOpveovskN0AhUe3DwtbwcHuTuiSbnhW+qb56Akk1/T0GGUAMZEI6Pk4NAjxWQTMEBUym2upReacWFiP8/WoLSkN2aM8gqLvhNZVL0D7hzR4YoyTrEoS1EgdlN46fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BeiKR5+e; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749452611; c=relaxed/simple;
+	bh=PcvgI3orO0UfpjHtsr5NleJJD3h4ur8mMTD2fpmVQqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=YxPToRHzvFjJ0/qq0Ooe6btzSATZ86Z+72+nqqA0vs/sh2k54X9bWBFEIMhVay/FaKaUounZOSbcfqaWla+ypOEpD8k9x0sjT3cj30cKgHxjxUfdQp1qjJVknz7L6oaRxJXDc/MHYiYWdhf9AL69qYx7fphBlcEl3NKi+8N2tEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=s6EwV9zj; arc=none smtp.client-ip=212.27.42.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BeiKR5+e"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-607247169c0so758541a12.0
-        for <git@vger.kernel.org>; Mon, 09 Jun 2025 00:01:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749452504; x=1750057304; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=F72De2X9W4412LSoWUosEF4YliySuHbRUbCTf60nTlc=;
-        b=BeiKR5+e7Eh086QFG7J7rKpI/6b5wQqCkbW83zH5fHsRwkREXXJIzfNc96L814ncQW
-         KquoA3NlOO+O9vLcHIsIzf7zpMClDa8/nWWt/3rtb9YJLyvOMsmg/YZ1AS8XrodaW9pH
-         Atku8G0LYbU284nGZVAEP5geRFAda3kAf9by4eHmVLLKbs8Khy++QsHXqqRgT/Ckw6r1
-         Hp8aulmXHMZGlrlzuDeJuCyTEfQYSoVLZPMLm2WLgFHKcJtRGPD2NvZc5xMUMrnUFw2b
-         nxgQ6Q6oqO3EecPplidaSfcRHAgfCV4R7Go179HSXBdZroLvEMH5BvDG7l+ncuzzfCKl
-         RNgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749452504; x=1750057304;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=F72De2X9W4412LSoWUosEF4YliySuHbRUbCTf60nTlc=;
-        b=Atp7wWB0QDH0FDrDcFU0nuJHBEONs7M3kSmpcRvqpSjq11APbBcmtEkVpB0WtA/zyO
-         1F3NZGqpFSpmlp1p3T8wQtos9CjbWjpsa+XYYXOaK6CjAoS0EAbbN5y0HXAjDQmdMM1G
-         z1cJHwF+0Ps9Q9roFNvqFnacI4kX+JqPCzcEaq5VYeM3qYLWf9Hy/XT3U/ujo+fq+MwT
-         AwfBsPKMtsCBlaCjr9YgM72bgbQbe4gsrSTftznsbTiIVWaxfcQMM5+Zauiru7Z1qtyx
-         JYxnIh03uACSpdR9ak1U1yNlRdvX1MnONtKcye6G7QDJm8NXgTGohCOiJvTDF8V0OXVq
-         zMfQ==
-X-Gm-Message-State: AOJu0Yw+6r91ZHT2I1M0pCHXcHlMZ8Duum/rBWJMJNzkr/W7VbYv/G50
-	NYzjLJkaA0TI64a5ypGd8vOAvLdpGh5KAPMg6vKtR8IX2rLi/ZO/IDYhj2iJIoTKLoHQCFVyKjn
-	0QQ3QOw7tye/RAfKd3/0XnD93MlTCvHzcMSIh3n4=
-X-Gm-Gg: ASbGncusRCNdnK5pvuSH8P3IW+4NGzuqrrFTMkvY/Th7rg+tc6VvatlZ6lxb51zi33Y
-	VgTp7avOdEik68g+jdqghydCoFoVeO/KnLDYSG8pQNQAOVj+URM4csundlbxpTO5MNB2AugmPTE
-	BqThTAEkapGHNRQxMiJ5D2wtzVClqJbGAkwwH/6JeXOiScoQl6GfBjQ/PxY7iIDQxe9KCYT1+K
-X-Google-Smtp-Source: AGHT+IE1G6aceXGKZFe4v6qT65ZGLZfvrbwjSawxGlH6zIqyBOg9IIkIv6wEymiO5wtnwelajuy0GHO5NDJ1VAvV/x4=
-X-Received: by 2002:a17:906:7312:b0:ad8:9207:b436 with SMTP id
- a640c23a62f3a-ade1aa6707cmr385363066b.5.1749452503456; Mon, 09 Jun 2025
- 00:01:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="s6EwV9zj"
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 6F17DDF8204
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 09:03:19 +0200 (CEST)
+Received: from [192.168.3.191] (unknown [141.255.129.53])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id A8F837803A2;
+	Mon,  9 Jun 2025 09:03:10 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1749452591;
+	bh=PcvgI3orO0UfpjHtsr5NleJJD3h4ur8mMTD2fpmVQqk=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=s6EwV9zj0CHfu9Ma+E52WBUSKqG3hnOpHin1fACdizr3ZsyyD6yvbGJ4YAqnR5EIg
+	 jMW7a5lBvk7SDvBqy+tjGt2orGEX64HnCtLyTXaffUOF2sinzzQJv0ya9g3br6TwOg
+	 Z3m6TpVszVbcwwwO04WNyEidyrIl7dcBdUb18NmK1hGgmFwkGEBIVHhHYcafH03IxI
+	 1RII14QTlw4mijCtrdsPZ7CpewfANb1n85FQEY96xojBM6sr8h3PpGMQV1zHJxkfhh
+	 XrC8XoAz6nTqOPsI+KO59DaHQNTuEyeseq548liE6g5UwAFBfuc4w50zfpa3lVzZIy
+	 ySBwQKeKTczpg==
+Message-ID: <172c7392-71ee-44f1-9d14-f92b1272766a@free.fr>
+Date: Mon, 9 Jun 2025 09:02:15 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Mon, 9 Jun 2025 08:00:00 +0100
-X-Gm-Features: AX0GCFtHYlK_ltp1rmoUWjEDcdpICWtLdHhf4PEZunoZF9PEL1yq32W7ZqmWRfw
-Message-ID: <CAGJzqsnvTnp3k8Ab2exaBAw5pszQRz00UcucnK=ECtY5vhG+1A@mail.gmail.com>
-Subject: Suggestion: error "tag ... already exists" should distinguish between
- tagging different or same commit:
-To: Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] diff-generate-patch.adoc: drop spurious backticks
+To: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
+ git@vger.kernel.org
+References: <20250606123138.566178-1-martin.agren@gmail.com>
+From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Language: fr
+In-Reply-To: <20250606123138.566178-1-martin.agren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi. Presently, the error "tag ... already exists" doesn't distinguish
-between tagging the same commit or a different commit:
+Le 06/06/2025 à 14:31, Martin Ågren a écrit :
+> Commit 0b080a70ab (doc: git-diff: apply format changes to
+> diff-generate-patch, 2024-11-18) wrapped the ".." in
+> 
+>   mode <mode>,<mode>..<mode>
+> 
+> in backticks. Note how the line before is quite similar,
+> 
+>   index <hash>,<hash>..<hash>
+> 
+> but did not get any backticks. Remove the backticks, since they confuse
+> Asciidoctor.
+> 
+> The exact failure mode changed with c87b2b3a6f (doc: fix asciidoctor
+> synopsis processing of triple-dots, 2025-04-12), and arguably to the
+> better. But Asciidoctor (2.0.18) still ends up confused by these
+> backticks and leaves the manpage rendering as
+> 
+>   index <hash>,<hash>..<hash>
+>   mode <mode>,<mode>`..__<mode>__
+>   {empty}`new file mode <mode>
+> 
+> Drop the backticks. This is a no-op with asciidoc (10.2.0).
+> 
+> Signed-off-by: Martin Ågren <martin.agren@gmail.com>
+> ---
+>  The error mode changes between 2.49.0 and 2.50.0-rc0, causing this to
+>  stand out in "doc-diff". But this is strictly speaking not a regression
+>  fix for 2.50.
+> 
+>  Documentation/diff-generate-patch.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/diff-generate-patch.adoc b/Documentation/diff-generate-patch.adoc
+> index e5c813c96f..7b6cdd1980 100644
+> --- a/Documentation/diff-generate-patch.adoc
+> +++ b/Documentation/diff-generate-patch.adoc
+> @@ -138,7 +138,7 @@ or like this (when the `--cc` option is used):
+>  +
+>  [synopsis]
+>  index <hash>,<hash>..<hash>
+> -mode <mode>,<mode>`..`<mode>
+> +mode <mode>,<mode>..<mode>
+>  new file mode <mode>
+>  deleted file mode <mode>,<mode>
+>  +
 
-     >git tag hello v1.9.5
 
-     >git tag hello v1.9.5
-     fatal: tag 'hello' already exists
+Obviously good. Thanks for catching it!
 
-     >git tag hello v2.0.0
-     fatal: tag 'hello' already exists
 
-To inform the user, it would be nice to distinguish these cases, perhaps:
+More generally, this is typically the type of missed changes in
+documentation, which cannot be caught by just reviewing a patch proposal.
 
-     >git tag hello v1.9.5
-     fatal: tag 'hello' already exists pointing at
-d4e6038a068d0aecd5ec28c83afbfc6d4903092f
-
-     >git tag hello v2.0.0
-     fatal: tag 'hello' already exists but points at
-18a07354e33f86c8349ffdc300d9087876658264
-
-The second error is typically more concerning than the first.
-
-What do you think?
+Thanks.
