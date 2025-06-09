@@ -1,139 +1,167 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B652940D
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 22:11:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE691D89E3
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 23:03:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749507118; cv=none; b=TlhU8Z722/Fljj2CVIX3cj6R8ZMADFn9nSK0McbBq4PuPGp4plWAUFd4Av4LSw0KK8JK1NZkgJyKsMLbqtWBEMM9lYWZ3naGHU5+36mXr0v4GFM1oXJ+33kOedoozgcs1tuOSdKyR24c+HiFa0wqic+oBH0ACuQOJQGoz/vyn44=
+	t=1749510199; cv=none; b=ZH+VGKhqDlQXwyAZiMWWuUiMk+rkngD/nLh5+0bu839xOv7YeWy99JoemnmOuyBnTHCKcDTRDjuaq4gV4fXW2POWMHOAf2yLbu02shZ97ZIi0dlhRsKlccZ6XyJiutk5hhIXpefTGW6BQVzLYB2QUD3HhqU/GVmY4BfA/MUuW4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749507118; c=relaxed/simple;
-	bh=znRJIFqsaQGRq5AoGO5DCZWp5n3JssYOkEUmmHCVaHE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=MgZyy1OO8Yqq0PRzBKWINSByVk/n+SUF8dSgOqDqXUzrCJj+Pt29TCR2saEYrJxBMTN6LX+PpI36Yr02ZDpPyERKT6EjfA8G99Yy1xpX5KS9YzEcSWWGeYKCEfAd4OEeqOpteaxhWoqIZlSSYwe6dEvebbdOv2xw1T9MyfjQP/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYKL79RQ; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749510199; c=relaxed/simple;
+	bh=kyEPzqsLA01bMtY7CZn6T7EVhReZGXPyW+nh0NZzoh0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TWwrHv/iaXi0VncpDK7DvewXmXsLJ+LwyIw5mQCaaS7CNYxv1GY6niw2Vyb0JmO06onp+nVP60DoC31c8O+dHuZbPcPbtaO403VGVgGOONS2kJOlbhtSeJccMUSsv3QgC3D4EeWEuqkrmQCgzqrfKj1/WCiuliq5DMNPzLqp6bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=yubRvPp+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jmvgmhoq; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYKL79RQ"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-32ae75801c1so4229951fa.1
-        for <git@vger.kernel.org>; Mon, 09 Jun 2025 15:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749507115; x=1750111915; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r3K3Qs5wEWZ3iLHv/34GbF1QA5faMnPzDD/CVLP2RDA=;
-        b=VYKL79RQ2kvletF1f61KyJeimDf6/+3GldpG02M5o0nZQUmWrfMxsunH5dPg9V6klH
-         jhlFiXVSxBeEMh2VFDDL1KFRNDnA0pv/gygDlr72NZDIZLf22Eh6+VM6LAtHVtFcQaFE
-         aBMcm2nYjUfauu5IsreUAaFBpMMZMtZG+q58Qt3llS9fBaTsQLtLtUbr27mMNzVx63AJ
-         VZe3GI5a+4Otms/9J+ybkWaHbF7cl2m17uINAJEthGH0ZWNV5cKXKu2lORvaO96LdS1a
-         lHERbhhm/CbEok3oIXO8pvj86jNr/JxNWSEt/vcCc/IBIuHpFRaV8EV0BtsnfdBZ23NW
-         yyYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749507115; x=1750111915;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=r3K3Qs5wEWZ3iLHv/34GbF1QA5faMnPzDD/CVLP2RDA=;
-        b=i9UG0xs90a5ph4/7AiPubEEAkyIUZFEz1o7IQeHpEeImGKQdt66jIBKviY1EkP2z9Z
-         GektxdnVKk7f48meu5Fopg8peyEcCM0suhKfnp+ExatojR5hnQCRB2KcNVW3Ja9eg+uq
-         wJ12n8zhrqQeYrbpkT2PfZL6B+kfFfPJWMyjo87OOSkmSm9pMKtgexHB0cz240JcQJEN
-         A+c6BW79Aoyvlei1EjdsZp7IrjfJmBlBmzONbgv83LtgkZ6vjEFpx9qssyMD6tr1HJu1
-         Ydlf0IkCKO5aJqA3B4iyBanCRaYYBLrZmD1U3zmF9eFsSvDOudbnlFIlJus65CbD32pz
-         Gplw==
-X-Gm-Message-State: AOJu0YwBvshZsnBWfxG6VZyGrEhxatJABDZ4XZBcTK8/WtySj3KNTKqa
-	lZvT5Qn9Ia23gZsV/LWDWdl95NR+TcaucV8yHY/rl7ArhU2gAUAqFOdi3FKxrQ==
-X-Gm-Gg: ASbGncuH8dlzDKejM34M7sKWVHmXKlg/lIoXKjPMzpujeKL5lCYlXdab+5XhWosMiB/
-	27xeK2l7Z1V16+lQ7dxS41YsGAs3ShfsoJTIf91Xf3A96kbslXgM2CsNwlr0a49pDfUlfGps2Fc
-	lNDd2dhgQNo7/wbhxkvwu1nLm3u+O0lBnU2ClWhuWk7jBj5sancuGLnd/r3HD/+eS1aVXArQc4X
-	Xf32yOUz6Vr5Rc/sJqQVVnbmok25LnDeqDwAeInA8y4NYMFwNoGAPJ95lVzmKoHn1KBIHku5xvE
-	iCMnBlTlwr/fhaIo0QlzDxQL+k0ziPDMBpyTbpgaQylah8pa5ro8cg/G1C1Nf1RouQIE
-X-Google-Smtp-Source: AGHT+IEzN4Nw5ySD9x2kr7HItm3ZCwMGQzRYleAKEqQ7vhJWviO1mdjrU7adrhSPgTRtwkM1YvUfbA==
-X-Received: by 2002:a2e:b892:0:b0:308:f479:56a2 with SMTP id 38308e7fff4ca-32adfa30e0dmr14149691fa.0.1749507113819;
-        Mon, 09 Jun 2025 15:11:53 -0700 (PDT)
-Received: from localhost.localdomain ([2001:4641:9d1:0:1b88:a3c1:4d31:4a93])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32ae1cccab7sm12731461fa.86.2025.06.09.15.11.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Jun 2025 15:11:53 -0700 (PDT)
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH] rebase: write script before initializing state
-Date: Tue, 10 Jun 2025 00:10:55 +0200
-Message-ID: <20250609221055.136074-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.43.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="yubRvPp+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jmvgmhoq"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0FD2625402F4;
+	Mon,  9 Jun 2025 19:03:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Mon, 09 Jun 2025 19:03:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749510195;
+	 x=1749596595; bh=hXzipK1MeWlfcJyhCvp8AOzekBCmEpmeTMAaisTZzJk=; b=
+	yubRvPp+TBE4mSXSwLGkvEbZTqsvD/fIqk4C/Hosm2/v6eZtZhuk7vTVlU25d+cN
+	liXI7JICP56XWf7YX3SxDTinJYInqHCTekKbbpFsTsgdzBV1OawGlFbFkTPvBORq
+	Xdvh54xleHAn2NpFTWFur9DjMeqABlVX2VyNcdBkFRFAmvmMSrPvE90g8uYvAhoS
+	8C7k5aDlk+YHA4LrUo7cYJIxmmTt216VuIXa38wr4L2O8t/IpXo9WtdXc9y0DJ4u
+	nmVB5Bbq7K/q5GCzTwxUyYLpzffxEtsO1Xz/dYUTtmOX1+R/hFiLF8n40f9E5iSH
+	3/6X3CyNepaHSSSu06BENA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749510195; x=
+	1749596595; bh=hXzipK1MeWlfcJyhCvp8AOzekBCmEpmeTMAaisTZzJk=; b=J
+	mvgmhoqr/D+yc4YmRTzwCmseJPKP00z+aP58FMsMBnLinGnDJLha42ELovO40bd5
+	mVAE85hI+kJtH6fHf1wGxXkcGcAH+PP4Z85/xT5qkfytsK4rqQDMkMbt46y74hMk
+	D9MfDH8BHaONO5oV7ZO2fzrovhnB/jaQq0ALgVAIsO5R3fVfz+ArPcQWSkUnvyTt
+	sEAC/lFVf3eWmREuYsTSNdkZDjjQKThX7oqilscUTob8p5TyRmTs5U5e2GZ+EoAb
+	x1pFJYtpJlf3blr+E0msBbNtyCEjk7XiKmFFpcOLEqSfXOpOeS7kRWwsJkjwJ7vU
+	So9sQC4pWGni4dXlnBI1A==
+X-ME-Sender: <xms:M2hHaJqCsm_J92K6hlMDmCcDr-THk7hR8w8a0bp3lGyGJSiVCRp3DA>
+    <xme:M2hHaLoTRipgQKEk6OSyYFIWVW1See6FNR6Y_bakd0O6AT6h_tieK334nAKFrHh7t
+    dd_PRKwVIJGX20VHw>
+X-ME-Received: <xmr:M2hHaGPaZ2jNVrKExU8igk_LsvBL7I1q593p7xG6qWvhDRuIkqpcXP_9ks5asRw4uM_2IYqHqczli9qFLJJAaM86PF-m9fEgCJHR>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelledvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevuf
+    gjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptd
+    ffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveeftdehnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepohihshhtfigrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:M2hHaE5alDRSnHq7AGZ3UgUwFRlTQUvC4Fesx2xj0vLlY4Ch40xcTA>
+    <xmx:M2hHaI5LeMwUCpFWhNWiIIm978oO1g3FTpZ4tjC2sof51HzERscJxw>
+    <xmx:M2hHaMhb6G5fHknKZl_KAHhysPdKK5DUv6BoqgULk4KRh194r0BoxQ>
+    <xmx:M2hHaK5VYnqsFmcKIE4_v7uAESagCUNU0H-HAqyNF_yAkh13dQDzRw>
+    <xmx:M2hHaPWrD1mif5-qOB_wT3NvDgVj8w-EKUaToQ9BAAvZnGcQsXLaz6n2>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Jun 2025 19:03:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] rebase: write script before initializing state
+In-Reply-To: <20250609221055.136074-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
+ =?utf-8?Q?=C3=98ystein?= Walle"'s
+	message of "Tue, 10 Jun 2025 00:10:55 +0200")
+References: <20250609221055.136074-1-oystwa@gmail.com>
+Date: Mon, 09 Jun 2025 16:03:13 -0700
+Message-ID: <xmqqa56gplfy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-If rebase.instructionFormat is invalid the repository is left in a
-strange state when the interactive rebase fails. `git status` outputs
-boths the same as it would in the normal case *and* something related to
-interactive rebase:
+Øystein Walle <oystwa@gmail.com> writes:
 
-    $ git -c rebase.instructionFormat=blah rebase -i
-    fatal: invalid --pretty format: blah
-    $ git status
-    On branch master
-    Your branch is ahead of 'upstream/master' by 1 commit.
-      (use "git push" to publish your local commits)
+> ...
+> By attempting to write the rebase script before initializing the state
+> this potential scenario is avoided.
+> ---
 
-    git-rebase-todo is missing.
-    No commands done.
-    No commands remaining.
-    You are currently editing a commit while rebasing branch 'master' on '8db3019401'.
-      (use "git commit --amend" to amend the current commit)
-      (use "git rebase --continue" once you are satisfied with your changes)
+Missing sign-off.
 
-By attempting to write the rebase script before initializing the state
-this potential scenario is avoided.
----
-The diff looks perhaps more messy than required. The only required
-change is the filling in of make_script_args and the call to
-sequencer_make_script() above the call to init_basic_state(). But then
-the `if (ret)` looks out of place, and moving that up means adding `goto
-cleanup` which means the code that was previously the else case can be
-dedented.
+> The diff looks perhaps more messy than required. The only required
+> change is the filling in of make_script_args and the call to
+> sequencer_make_script() above the call to init_basic_state(). But then
+> the `if (ret)` looks out of place, and moving that up means adding `goto
+> cleanup` which means the code that was previously the else case can be
+> dedented.
 
-get_commit_format() calls die() in this case, so cleaning up the
-sequencer state isn't an option. Maybe it shouldn't call die in the
-first place, but that looks to be much larger change.
-
- builtin/rebase.c             | 42 ++++++++++++++++++------------------
- t/t3415-rebase-autosquash.sh | 10 +++++++++
- 2 files changed, 31 insertions(+), 21 deletions(-)
+"git show --histogram" may do a lot better job than the default
+algorithm used by "git show" for this patch.
 
 diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 2e8c4ee678..8139816417 100644
+index d4715ed35d..06da8e4f36 100644
 --- a/builtin/rebase.c
 +++ b/builtin/rebase.c
-@@ -293,15 +293,6 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+@@ -283,53 +283,53 @@ static int init_basic_state(struct replay_opts *opts, const char *head_name,
+ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+ {
+ 	int ret = -1;
+ 	char *revisions = NULL, *shortrevisions = NULL;
+ 	struct strvec make_script_args = STRVEC_INIT;
+ 	struct todo_list todo_list = TODO_LIST_INIT;
+ 	struct replay_opts replay = get_replay_opts(opts);
+ 
+ 	if (get_revision_ranges(opts->upstream, opts->onto, &opts->orig_head->object.oid,
  				&revisions, &shortrevisions))
  		goto cleanup;
  
--	if (init_basic_state(&replay,
--			     opts->head_name ? opts->head_name : "detached HEAD",
--			     opts->onto, &opts->orig_head->object.oid))
--		goto cleanup;
--
--	if (!opts->upstream && opts->squash_onto)
--		write_file(path_squash_onto(), "%s\n",
--			   oid_to_hex(opts->squash_onto));
--
- 	strvec_pushl(&make_script_args, "", revisions, NULL);
- 	if (opts->restrict_revision)
- 		strvec_pushf(&make_script_args, "^%s",
-@@ -310,21 +301,30 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.nr, make_script_args.v,
- 				    flags);
++	strvec_pushl(&make_script_args, "", revisions, NULL);
++	if (opts->restrict_revision)
++		strvec_pushf(&make_script_args, "^%s",
++			     oid_to_hex(&opts->restrict_revision->object.oid));
++
++	ret = sequencer_make_script(the_repository, &todo_list.buf,
++				    make_script_args.nr, make_script_args.v,
++				    flags);
++	if (ret) {
++		error(_("could not generate todo list"));
++		goto cleanup;
++	}
++
+ 	if (init_basic_state(&replay,
+ 			     opts->head_name ? opts->head_name : "detached HEAD",
+ 			     opts->onto, &opts->orig_head->object.oid))
+ 		goto cleanup;
+ 
+ 	if (!opts->upstream && opts->squash_onto)
+ 		write_file(path_squash_onto(), "%s\n",
+ 			   oid_to_hex(opts->squash_onto));
+ 
+-	strvec_pushl(&make_script_args, "", revisions, NULL);
+-	if (opts->restrict_revision)
+-		strvec_pushf(&make_script_args, "^%s",
+-			     oid_to_hex(&opts->restrict_revision->object.oid));
++	discard_index(the_repository->index);
++	if (todo_list_parse_insn_buffer(the_repository, &replay,
++					todo_list.buf.buf, &todo_list))
++		BUG("unusable todo list");
+ 
+-	ret = sequencer_make_script(the_repository, &todo_list.buf,
+-				    make_script_args.nr, make_script_args.v,
+-				    flags);
 -
 -	if (ret)
-+	if (ret) {
- 		error(_("could not generate todo list"));
+-		error(_("could not generate todo list"));
 -	else {
 -		discard_index(the_repository->index);
 -		if (todo_list_parse_insn_buffer(the_repository, &replay,
@@ -144,33 +172,23 @@ index 2e8c4ee678..8139816417 100644
 -			shortrevisions, opts->onto_name, opts->onto,
 -			&opts->orig_head->object.oid, &opts->exec,
 -			opts->autosquash, opts->update_refs, &todo_list);
-+		goto cleanup;
- 	}
- 
-+	if (init_basic_state(&replay,
-+			     opts->head_name ? opts->head_name : "detached HEAD",
-+			     opts->onto, &opts->orig_head->object.oid))
-+		goto cleanup;
-+
-+	if (!opts->upstream && opts->squash_onto)
-+		write_file(path_squash_onto(), "%s\n",
-+			   oid_to_hex(opts->squash_onto));
-+
-+	discard_index(the_repository->index);
-+	if (todo_list_parse_insn_buffer(the_repository, &replay,
-+					todo_list.buf.buf, &todo_list))
-+		BUG("unusable todo list");
-+
+-	}
 +	ret = complete_action(the_repository, &replay, flags,
 +		shortrevisions, opts->onto_name, opts->onto,
 +		&opts->orig_head->object.oid, &opts->exec,
 +		opts->autosquash, opts->update_refs, &todo_list);
-+
+ 
  cleanup:
  	replay_opts_release(&replay);
  	free(revisions);
+ 	free(shortrevisions);
+ 	todo_list_release(&todo_list);
+ 	strvec_clear(&make_script_args);
+ 
+ 	return ret;
+ }
 diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 26b42a526a..5d093e3a7a 100755
+index fcc40d6fe1..d4c624b841 100755
 --- a/t/t3415-rebase-autosquash.sh
 +++ b/t/t3415-rebase-autosquash.sh
 @@ -394,6 +394,16 @@ test_expect_success 'autosquash with empty custom instructionFormat' '
@@ -190,6 +208,3 @@ index 26b42a526a..5d093e3a7a 100755
  set_backup_editor () {
  	write_script backup-editor.sh <<-\EOF
  	cp "$1" .git/backup-"$(basename "$1")"
--- 
-2.43.0
-
