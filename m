@@ -1,53 +1,53 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A54B421D581
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0998221262
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749494541; cv=none; b=VedQY12TV/wVe4ARmkdZQXoeebJv/6CQInsqbfApqMNuUObH4AAhzSXs7OLBSDYEIyXhC2BtBXo7aH2EYUlYBXo+2Q/s71sh6D8bey6Nh4ShGSf1+ooxoxBNGG7wZKsIifWOKd38AFlPLZ9tgvuEIv+NsQYs/Bcul8R69dC2wFc=
+	t=1749494555; cv=none; b=hUD4AU+UnUGXNlDJA6r1T/6bfte3D/z204ZkUfhG7r5oDLGLmPlI/Wq0qgZKfKybbdi47ken1e/aoTVAoa5k/dNnhHDLWEfehikSB+IhxHhD4hGqUnlL+0Ejovr5vQXZkIK1pCeQpwhxsRongGZdcz6HY0mV8FHM8zchEf4Ho1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749494541; c=relaxed/simple;
-	bh=YzTwG7+0TsmfldoOm1PsCADHNx9oir/g8RiCmRKN5Cg=;
+	s=arc-20240116; t=1749494555; c=relaxed/simple;
+	bh=O1aO0RkHBKN0wC3ICcFE7lAo+DSUwYgXOHSUZDJQUAQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AGxVcbUWj6U3P3GWOaCskiZZjuF2hfTLk0P/b/X0VNtvBlfL5DIph29+4p+pT7Kczkwt/RX2M7ONm6UaCzm9fJ50Bt2muWAicOELb5PhlMjLG7ZYsBC0fViAyw/CcBMN3VNJMUEHHVgw53kbTtUGBIH1XrCzxcPtWV35LKZl8+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rn14ztMM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MuHa42d3; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=LsgguVBD55I1u6/z4iPPGfCWvei/c1FTZ2edt8SYdQCuhDQMaTYQo9ra1ZhwJF8h1gKDO8hq7EluWy/y3Bk9oTGmuk2tQn4v3zU4RvWB3gBSlt4QV+oL30qMaYd4GNkuqR8949HrIx4FasFD/tBaIZK6eUIleB09TzciTwJq1P4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xKKqBZH6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V2BSFd+W; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rn14ztMM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MuHa42d3"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id CD9061140366;
-	Mon,  9 Jun 2025 14:42:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Jun 2025 14:42:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xKKqBZH6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V2BSFd+W"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A375C25402E5;
+	Mon,  9 Jun 2025 14:42:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 09 Jun 2025 14:42:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749494538; x=1749580938; bh=v0XfNRjoNF
-	wNFBkKPHzWrSJEslNCAooMH2BwS04rMKg=; b=rn14ztMMzzyUMulRYDabnQ11r9
-	273vFk1qFWteQyzZ8bACS+3wLmETp2JtZj7BCsd+j7aw/63e5Uc0I9y+vtThtE4k
-	8dfCXILJZXeWQQ3TqHIbJL91KyhBSy1QcVnom8dpO/aoiS12kzElHa3Q2IRpUV/E
-	v1YU59i1lH7Y5WumUKpBTiABfpZvSUKj9wxjkHmkZ4y2o+PTzH9LYlBiB6BZzcAv
-	qCTavZmdh/PmLXrYDD2EOd7Efkg3KpRFbEFs+Zw4HGZiLAX3BOQiO1ozgGuOj63p
-	kxRHfMdoJ6aBIclnU26InWb5zXtr5jQJ3Gp/lFlDH6+DZlF+yzUbHi/kc0ug==
+	:subject:to:to; s=fm3; t=1749494552; x=1749580952; bh=iRWMU4XXhA
+	IR1AV8Fpq2I7FqAiJCKKbRK01EHjcupF0=; b=xKKqBZH6DLKkLL/vlTHohjacmM
+	wZ/AjsJ1s3aDTHjfL3bLPUAhPcdDEWvIjJGQYgWEXsuFs06n+XH0MvMPOj8fjSzN
+	HbI6UXwK60rfWz7HvwiQxd+OluwnTof8YxSNrVuNsmkZgxNketzpmewLxrAUX3SD
+	l7XX+dJ7rCqhlosA+LauE2SezvlnjZdjgYpl/bbWlBa9cYgky5bBE214IqS3zlKy
+	dZm2vskFpmEtUsrFiRtOQoJvvyxAUTt2/5QW1W4aQ6PGHoEANgu3U70Gx/EIblfJ
+	nRFbSYmx9iM/Yt1pMXFklzgrWb8LqKb3F0wvQgxCOuNXNebgaGmloIaokiFg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749494538; x=1749580938; bh=v0XfNRjoNFwNFBkKPHzWrSJEslNCAooMH2B
-	wS04rMKg=; b=MuHa42d3dUaH2KFuHAidhi6txCZgczMkekMcG7hDc1+9emQ9fAt
-	t9X5flqvq1g1Luy7xgyRNjC+PU2axaT1phkEdvc+CxxVyD9g1V3br3AsXtUbnnPG
-	qjU9Jv9lUjJX9VpBr8F/z++UJxLy+uarf+NtQ9r2l5co3P/HnqiPCDKR9DziqHyN
-	2FFiMikA4dTHz+8/usPrLBu9VeR3lTbMnXPIuIwpuuhlvy6KXV6WTq9m6UEPQ03q
-	XXTC67hexSQBc+JwE+Gb5I9JTc4tQ4DnkVNHp5n1voN1I4X6jk72OLl+b8wGZQ2Y
-	k5RBN3cBWwByHlAX/4Tr3ByCyd3+mLnlc6Q==
-X-ME-Sender: <xms:CitHaOQ7_AqUlbti1k0fPXV2sK3HVI9-qw8Y9UF9WtPf3uU7Bho5GA>
-    <xme:CitHaDx0WoHa1dW45Kt9XT4gwT-duRyYDmzHHXjjJ1FKyrCDSA_uyZ9doe5lkp3i9
-    cmLdDU9_TCFglL92A>
-X-ME-Received: <xmr:CitHaL29oX5_D-TxAA4Ud7bu92TZMKmPnps1sESrmMG8cOIxLv5A9OBGnluL_TXPOc5w9uCC8EhXzB4ITTV434Ze8bnI1hPBusVQ>
+	1749494552; x=1749580952; bh=iRWMU4XXhAIR1AV8Fpq2I7FqAiJCKKbRK01
+	EHjcupF0=; b=V2BSFd+W7Pd8ZmwGkYxo/9ypTDbgsr1KONl5wZsyGc0cQi02pdz
+	MfahtQGxCRFCYyRy4lti0X2vJ8y6ixLtsHbA/ahp4l/0cPm7NZ1ByajH/PQszDWa
+	crcBFcLPdCXbXYMCg+OpS26e9J738DsdzVKOtoGaDZY1YEfaxcjEg99dT5uSZ9tZ
+	/KUdIN5s2k16jxD9jmLb/IDRPnD3HK+/zVo1lcpy13fGsPoou6h1L8ybmOsfZPfb
+	PWHwAU6JEK20iBaxJ9LMYz2FXXJZR+PIf3Ohvviefmmpaxbhmw6d8doX1iKWECop
+	LvLp+Xhe1xdMlba++anXYg4+LGPIfdBBAeA==
+X-ME-Sender: <xms:GCtHaG5Xs38okGqe3j_fN2JUw1MX0erxmbHCKcDIgkn2VNa9sCAc2w>
+    <xme:GCtHaP4pR8WXuBlO4YwKc4WyaPGpIbMTC5RrObnHlxim-Nh0iDzvqtrD426qDBFQC
+    dEC9Fyq47FCBWH2DA>
+X-ME-Received: <xmr:GCtHaFdtj-Bcz7sI9rnbzSPkFLnNTJQSqWgrmjto5Yp3vD3FFGJTAUI6Z079M-MfbW6ax6cYA5bk3fkCgblbITsapVAQCDLDpghv>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,27 +56,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
     grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:CitHaKADdVCRQIvPMXDR4fK9DbKH8t2tdt-IDbqd9tyFNcoFbY2g-Q>
-    <xmx:CitHaHgP2LZHGQB_7xSE0qKSGXekjrRC-O7cuekB6D1OKyZRrulLtg>
-    <xmx:CitHaGoCa8tIl3ghioasqWxrA1PbNZ1ddWzae9Bg6F8LzWVPcD2MpQ>
-    <xmx:CitHaKjUEFlA8dI7rjet7oUiMcjQT-g-mHibYlxsKJ3FL5kmHVJhEQ>
-    <xmx:CitHaAQR2P1TBxkUGMaSootMhB_90adXLy1ToYpaVJccH6ArDFoFiMcl>
+    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GCtHaDIkZfwRlF4AXKJnWSTGopCozssbR5snYwvai-GpQ8Rijw253Q>
+    <xmx:GCtHaKIZ8UtZgwvt2YQvGaPqmevk4LcFUIilMWIG0A2Qoczi8-f6Dw>
+    <xmx:GCtHaEwS7pCTVrEOLv6p3zEBh7Kt4hQTyAVHK8lOPyZKbf_Gd8DXVA>
+    <xmx:GCtHaOKje9LJlXSZdRM_XEo8U1gkADin0O6vNDwU3MOchaK-fT5rDg>
+    <xmx:GCtHaHVjhsMcOYd8_Iz1QJkeOUHBM_2VK70_U6z9xAmq5vOFPFe0IaN_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 14:42:18 -0400 (EDT)
+ 9 Jun 2025 14:42:31 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org
-Subject: Re: Question: is there a possibility of getting a warning before a
- git push -f
-In-Reply-To: <PN0PR01MB95880EAA98466C9AB049BA44B86BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 09 Jun 2025 22:16:52 +0530")
-References: <PN0PR01MB95880EAA98466C9AB049BA44B86BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 09 Jun 2025 11:42:16 -0700
-Message-ID: <xmqqldq0rc3b.fsf@gitster.g>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
+ <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
+  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v16 07/10] imap-send: add ability to list the available
+ folders
+In-Reply-To: <PN3PR01MB9597440624DB4F9871F069FAB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Mon, 9 Jun 2025 07:20:38 +0000")
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95976572C3B14C983802ECC1B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597440624DB4F9871F069FAB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 09 Jun 2025 11:42:30 -0700
+Message-ID: <xmqqh60orc2x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,26 +98,26 @@ Content-Type: text/plain
 
 Aditya Garg <gargaditya08@live.com> writes:
 
-> One thing I sometimes encounter is that I sometimes git push -f and
-> moments later I realise I did it at the wrong time, result being a
-> disaster. I was wondering if a little [y/N] warning could be possible
-> before the risky command gets executed. I saw the code for push
-> superficially and I don't think it's implemented. I think it would be
-> a nice feature though.
+> diff --git a/imap-send.c b/imap-send.c
+> index a4cccb9110..f03a92a2fb 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -45,15 +45,21 @@
+>  #endif
+>  
+>  static int verbosity;
+> +static int list_folders = 0;
 
-I suspect that an even nicer feature that is more generally
-applicable is a patch to your shell to make any command you give it
-is not run for a few seconds to give you a chance to kill it with
-^C.  You do not want to run around castrating a bunch of commands
-and features like "git push", "rm", ">overwrite-with-redirect", and
-all the other "destructive" things you may regret doing.  There are
-literally too many.
+Let's lose " = 0" here.
 
-Quite honestly, "-f" or "--force" should be a hint enough that the
-user wants the command to do what the command usually does not allow
-them to do to avoid potentially dangerous operations.
+Do not explicitly initialize globals to 0 or NULL; let BSS take care
+of the zero initialization, instead.
 
-I would expect that many people will truly get annoyed when "git
-anycommand --force" starts asking "That's very dangerous---are you
-sure?" for confirmations, and would complain "Yes, otherwise I
-wouldn't be giving you '--force'---just do it as I told you".
+> -static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
+> +static char const * const imap_send_usage[] = {
+> +	N_("git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>"),
+> +	"git imap-send --list",
+> +	NULL
+> +};
+
+Good.
