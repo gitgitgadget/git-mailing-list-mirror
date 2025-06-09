@@ -1,53 +1,53 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AADA18DB1E
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117DF155A25
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:34:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749494014; cv=none; b=jxi/ik/+SMaIQW2IA4U1rxrz8mdCS1cNrHn7RfnDPzI7VWDrEAV8C1D13ipGCD7/JgSRGmK58F434Iu5kwOWWZLDZrh7TiHfrQMJHboz3Ycvrc9+CYvPfBiXIaoz8fTu7JxOi59jxkC480CQZz+nWAJ2MgiEICVJ8wPMrCB782s=
+	t=1749494069; cv=none; b=JtqMBN88e+BV4U97GhjhaYr8DEyF7FAD9OdUCfvvucHsaQTxHVkKrCqDo+Ky/pYZiTukLGcbyE/djztLDfZ8J1RAzWtyL1jCZLcZfp+bV/G7FMRBWhluIkE0TrtT6fyMKDNJuT38N7aQbhb/yMdIfOgcN+nF5qRNIxYAnbdB1m4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749494014; c=relaxed/simple;
-	bh=RBLSjT5SgHPj3KfqA5FNQD2PdaAVrlwStx6P4zGPo94=;
+	s=arc-20240116; t=1749494069; c=relaxed/simple;
+	bh=KRTHLtKZI/7HkXltdb7YDf/DwvPHewK3qOGPtGdTD34=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=b8e5u0H5Tts7oja8D92Nx7dHeyjmgxYRpd6d6jckPGyhRwz0GEshJt3Xc+KEPdeLornL+TuDFDpaobrXqcQt+zyH0JUenh/MettPYpjqwCHmO3L+GTWMKUE/4jL39igfPvAG5Rgw/trw7rezwpVaf4qx9jLUzHbm6wwNeWPlyRI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ze6VnlLy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A97K77UQ; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=fzCw+4TAYIu9cA9fmRQIWEjCmIo1GFa2zMLFyInZCZQGBZJpgKoEERsVHGJBfdepcq9OicB7OcnC5avOpMjrEaWd+FMKmDvjLtaSwa9qRNWdXQAPlA7AFEp4QtB0h1nTyy7uoHkkZKLG43KJ3kj5esNMSwmJ/A/V9hLrP62hsqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zOiLR8Dq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GkkyB6iI; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ze6VnlLy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A97K77UQ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2FBC2114012F;
-	Mon,  9 Jun 2025 14:33:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 09 Jun 2025 14:33:31 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zOiLR8Dq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GkkyB6iI"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2DF8F114035C;
+	Mon,  9 Jun 2025 14:34:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Mon, 09 Jun 2025 14:34:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749494011; x=1749580411; bh=S1FGmjoH4W
-	Xn8WYwe+qlGljshs2aanFP//SHFgkIMAg=; b=Ze6VnlLy7xTqxLve+jdhlW3KKl
-	Br/4xsKwU+rceFwtUbD8+VkFz9iSTp+7I/sFeDaYEYreGH6BlrsGUfSafQD+CkN5
-	cpVAwp69N6LpV4faY8IdOqbBKpXzQQ5F2BZCl/dcy71Y/tKLDAXzvGCz4sraXkBI
-	oDWH4akkiF5AEREJXfb8xhk/83v8EIvMyKB3DtMCbtiMZsp5NgkoClS+Ssgrbr+1
-	mMNFzqc15o2rcA7VAh5HE7C5L33umFWjJnG2U4wJWtcX3h410aNoWBIGSR9Rxace
-	AasROqOosSdeMcCvK6LJw2L3/0zrOqgVV8ltTWXk+iecsmfbjOZnTtpn72+w==
+	:subject:to:to; s=fm3; t=1749494067; x=1749580467; bh=xyQf8Ogct3
+	qwE1sIwAYHws1O7Q17qPIACI7UFsX0+GU=; b=zOiLR8DqBkyUP5CZXlGSPNMZvn
+	ewSbK+upfeQeVUeHzlSQa40VM5RzozmWF8piXDuRuBRb91+Rw7YCvQ5T4ohhIqui
+	bDscCQpVxQpVIlF+/+uSOuzL1m8iqD2bWbgG5Yzwaf65FM2/EZxYq9v9Tb+n1wzH
+	15tf+0pE7UH+cLLz6uxnAIPGKmV8HfNvU7a8mjHsHXtFUjaGMazlqLhBhKaQb12C
+	wC5SICynLL/48uyVVkWmlRIKIOJnCFLCxtX1TwyfFCGd7MTR5pJ4/is+avoHMNe6
+	JY94g4QuSZ/1oFwbxRTF3qDbHKVOygqeeaWpOyolOYnW2nvanavdcCGPkKzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749494011; x=1749580411; bh=S1FGmjoH4WXn8WYwe+qlGljshs2aanFP//S
-	HFgkIMAg=; b=A97K77UQTm/jY0sEpqUWTb109gD+DVK4DmMtI1Ap5jUYumu2dNI
-	fuvepBmiIAib5YmsfGAvYwQV16HrVKcZGxiSW+N5W1wmb7e1uU+MuwHJeOLDH/vg
-	Gt+rgG5T47sdYlc4ifiAsEoZrde4w8pJdt3v4afQwtRGlgJ5ZqlkSHjjn2ammh5v
-	oPYewf8beKxhzfaPRZMx+Sltl3IcKwQgZBkPr2c5HzNECtY9wF5lUeSxC0G6MNKq
-	d4zXPNAcCm3hcHcWnLnp1LjNqdVYbNaGufojb/jnh7uYm73pbRpkjY1F7VIIaWuD
-	9oB4tG+1cmq0e5G7RQYBWitF/aQBo7VuCVQ==
-X-ME-Sender: <xms:-ihHaD3OaZYe65XqWCy8_vnuqWutIhueyEkbGnC0KivpTNkLR7pyGQ>
-    <xme:-ihHaCG6iWh4thDT8X8CV1uFTJJcK9vQ9V177W2fWvMEpRXSklmgTCcZ0NRoXrEVf
-    u-d3dbQsUghiyxeNA>
-X-ME-Received: <xmr:-ihHaD4-qmtD8xQxTwXkv7Em9_vJHOOMASwDTs1WLEiMtlbmGSjwYp91WHDgRNABZEzNSJKW9ePiExuSFVjSuDyryw3gezjDIAtK>
+	1749494067; x=1749580467; bh=xyQf8Ogct3qwE1sIwAYHws1O7Q17qPIACI7
+	UFsX0+GU=; b=GkkyB6iIFI9etaneGFZl6j9KlYh7+XEhHMNyRMR7nNt7BP5bx2/
+	hkkIE88ZiiN82l93knsd1r4fFiXu0jXfGj1ZLmBW3XWNWm2gNZZjHpIx0dsqZnIF
+	lkJxsZCkrnRlbKvaOCGz0rxS3YSjxjLhO7hK0gRtiAcRoqJTNyrlVJ/NzTb6JYli
+	NXJzfNgb/QyPMvXUBx00xH1CLs/tTTL1e+5PCVH2TfCBKGeIGDdT7atxJEaShyg+
+	HvlC1/FG6BwDR9G6rEFgp8hFXY1XO2PptirbwB+9d0FOwhL28k8u+vJz9CWw9C/F
+	GsYxNU3lSb+P4roJJDVcHhRXJCTThF2OoFw==
+X-ME-Sender: <xms:MilHaHS0U94w7ALqWDZohWUFYIr143_cxPj9-WUBzx6kJttsnK5qlA>
+    <xme:MilHaIwpqhj7-e7ISI4FyIhlh6YJp4Hr1UfzGNYayqNJdhrUjRe-Gbf3LGDdV5YSp
+    3vuphoAaVjbzFSXjA>
+X-ME-Received: <xmr:MilHaM3QNw7xLsA8Of2VfN8bZfv8Uj6BY2H53wa5R4PWy9p8nRCOQPdvukPw-zfyU_T1y7HwsugI6VIb2GUy7i9mZpGy7QETX-Qr>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -56,37 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
-    grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
-    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
-    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-ihHaI2gczVy9gEz53q1d44ZieGMVhm1X1Ie3yj9amQ3CPTGIrqG_g>
-    <xmx:-ihHaGHOuSitis0mvQWrbhtbxzO5MheUKIuNzQ5rBse6ut8g7Pch9A>
-    <xmx:-ihHaJ-h2iamir-wFQGoKguGf5Dd3ytUuUrwOGT1nuC1QFn49S_knQ>
-    <xmx:-ihHaDk8fUug8VM0bdFujQCIgcYOZwprWeM3cy5nGzLMsu6DpkEijw>
-    <xmx:-yhHaCDm7ItkogGNHvNnd46hjUGOn5ywr7IRb9ZRknkxa60NSjRtyRrG>
+    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
+    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssg
+    grkhhkrdhnrghmvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:MilHaHCBO7vBztYZ6d8-jCb7SLepbBAw_f__W-hGyc7OcCN7DxHRQg>
+    <xmx:MilHaAiBJN4QCTY5dJLAfmPxOrpDkeTZw-FgeZrP7bL-nREJW2aw-A>
+    <xmx:MilHaLq8vsVd5-FleJ-CMDjs0qiiMQnhgXN2At1CbgntDBg2GhZHVg>
+    <xmx:MilHaLgI20npU945kJXlA6iUBVpEELcDQu5fJhBv4Lkfq1xGwRc2JQ>
+    <xmx:MylHaF5_KGJAavHh7QqiQywi0Jp3--GrCDT30K9tK9zL5Lzw6kJv8KKz>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 14:33:30 -0400 (EDT)
+ 9 Jun 2025 14:34:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
- <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
-  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
- Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v16 06/10] imap-send: enable specifying the folder using
- the command line
-In-Reply-To: <PN3PR01MB9597AA90D615E2DEBF62220DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 9 Jun 2025 07:20:37 +0000")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB95976572C3B14C983802ECC1B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597AA90D615E2DEBF62220DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 09 Jun 2025 11:33:28 -0700
-Message-ID: <xmqqwm9krchz.fsf@gitster.g>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] doc: maintenance: fix linkgit syntax
+In-Reply-To: <567195e5577c6c32b46f784a797fbf366873a0f3.1749484736.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 9 Jun 2025
+	17:59:42 +0200")
+References: <567195e5577c6c32b46f784a797fbf366873a0f3.1749484736.git.code@khaugsbakk.name>
+Date: Mon, 09 Jun 2025 11:34:25 -0700
+Message-ID: <xmqqsek8rcge.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -96,116 +89,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aditya Garg <gargaditya08@live.com> writes:
+kristofferhaugsbakk@fastmail.com writes:
 
-> Some users may very often want to imap-send messages to a folder
-> other than the default set in the config. Add a command line
-> argument for the same.
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > ---
->  Documentation/config/imap.adoc   |  6 ++++--
->  Documentation/git-imap-send.adoc | 15 +++++++++++----
->  imap-send.c                      |  9 ++++++++-
->  3 files changed, 23 insertions(+), 7 deletions(-)
 >
-> diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
-> index 7c8b2dcce4..4682a6bd03 100644
-> --- a/Documentation/config/imap.adoc
-> +++ b/Documentation/config/imap.adoc
-> @@ -1,7 +1,9 @@
->  imap.folder::
->  	The folder to drop the mails into, which is typically the Drafts
-> -	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
-> -	"[Gmail]/Drafts". Required.
-> +	folder. For example: `INBOX.Drafts`, `INBOX/Drafts` or
-> +	`[Gmail]/Drafts`. The IMAP folder to interact with MUST be specified;
-> +	the value of this configuration variable is used as the fallback
-> +	default value when the `--folder` option is not given.
+> Notes (series):
+>     I get no more hits with this search
+>     
+>         cd Documentation
+>         git grep --no-index ':git-.*[123456789]' -- '*.html'
+
+Thanks for being thorough.
+
+The patch looks good.  Will queue.
+
+
+>  Documentation/git-maintenance.adoc | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
+> index 931f3e02e85..540b5cf68b0 100644
+> --- a/Documentation/git-maintenance.adoc
+> +++ b/Documentation/git-maintenance.adoc
+> @@ -172,7 +172,7 @@ rerere-gc::
 >  
->  imap.tunnel::
->  	Command used to set up a tunnel to the IMAP server through which
-> diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
-> index 8adf0e5aac..4a0487b66e 100644
-> --- a/Documentation/git-imap-send.adoc
-> +++ b/Documentation/git-imap-send.adoc
-> @@ -9,21 +9,23 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
->  SYNOPSIS
->  --------
->  [verse]
-> -'git imap-send' [-v] [-q] [--[no-]curl]
-> +'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
-
-This matches the _usage[] string.  Excellent.
-
->  DESCRIPTION
->  -----------
-> -This command uploads a mailbox generated with 'git format-patch'
-> +This command uploads a mailbox generated with `git format-patch`
->  into an IMAP drafts folder.  This allows patches to be sent as
->  other email is when using mail clients that cannot read mailbox
->  files directly. The command also works with any general mailbox
-> -in which emails have the fields "From", "Date", and "Subject" in
-> +in which emails have the fields `From`, `Date`, and `Subject` in
->  that order.
+>  worktree-prune::
+>  	The `worktree-prune` task deletes stale or broken worktrees. See
+> -	linkit:git-worktree[1] for more information.
+> +	linkgit:git-worktree[1] for more information.
 >  
->  Typical usage is something like:
->  
-> -git format-patch --signoff --stdout --attach origin | git imap-send
-> +------
-> +$ git format-patch --signoff --stdout --attach origin | git imap-send
-> +------
-
-The above is small enough that it is OK to make the change
-while-at-it, but it deserves a brief mention in the proposed log
-message (e.g. "While at it, fix minor mark-up inconsistencies in the
-existing documentation text").
-
-> @@ -37,6 +39,11 @@ OPTIONS
->  --quiet::
->  	Be quiet.
->  
-> +-f <folder>::
-> +--folder=<folder>::
-> +	Specify the folder in which the emails have to saved.
-> +	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
-
-Good.
-
-> diff --git a/imap-send.c b/imap-send.c
-> index c6e47ddc42..a4cccb9110 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -46,12 +46,14 @@
->  
->  static int verbosity;
->  static int use_curl = USE_CURL_DEFAULT;
-> +static char *opt_folder = NULL;
-
-Let's lose "= NULL" here.
-
-Do not explicitly initialize globals to 0 or NULL; let BSS take care
-of the zero initialization, instead.
-
-> -static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] < <mbox>", NULL };
-> +static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
->  
->  static struct option imap_send_options[] = {
->  	OPT__VERBOSITY(&verbosity),
->  	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP server"),
-> +	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder"),
->  	OPT_END()
->  };
->  
-> @@ -1729,6 +1731,11 @@ int cmd_main(int argc, const char **argv)
->  
->  	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
->  
-> +	if (opt_folder) {
-> +		free(server.folder);
-> +		server.folder = xstrdup(opt_folder);
-> +	}
-
-Good.  This matches the same care taken on the configuration side
-that avoids leaking the value previously given.
-
+>  OPTIONS
+>  -------
+>
+> base-commit: 8db3019401f8093fb895f581be641fe7e05aa755
