@@ -1,54 +1,54 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B5527718
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:24:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AADA18DB1E
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:33:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749493486; cv=none; b=r3OO82zYQ82hYQNwBtMEpEIvEy6eDURTNq2T7soYGPe2dfCxHrIRWeSTEZwq+2mgf1JCFLP3zPe8T6YY5IBMBPcUf/RxU+N9pTxiIw77fiMA9iDG5bSNNMlP+9n++/+kVawFOc4GENvUBC0btcF6CiJY5JQpg+n5MhVXIO37VwA=
+	t=1749494014; cv=none; b=jxi/ik/+SMaIQW2IA4U1rxrz8mdCS1cNrHn7RfnDPzI7VWDrEAV8C1D13ipGCD7/JgSRGmK58F434Iu5kwOWWZLDZrh7TiHfrQMJHboz3Ycvrc9+CYvPfBiXIaoz8fTu7JxOi59jxkC480CQZz+nWAJ2MgiEICVJ8wPMrCB782s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749493486; c=relaxed/simple;
-	bh=n0ZKhwECHq/D69TjTt1FNPESC0Rlsk33+m00EycRlc8=;
+	s=arc-20240116; t=1749494014; c=relaxed/simple;
+	bh=RBLSjT5SgHPj3KfqA5FNQD2PdaAVrlwStx6P4zGPo94=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jiHWR9LD47CadtSDUeBjX8TGCJngnASMZyslo5jmxDUlFLnoBchUy7OrQyTuFoN+dcCcuUZUwNjMbFY+EZbSbUpF4CHrnpmwNG4XTOe+zMNUOz9sjZuiI7qgKCayAF6BaV85/1TxGsDLk5n1Z5BH99t4XtMB8FgFpznpN0Nv8w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=arPaAHXX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XjUYi+JX; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=b8e5u0H5Tts7oja8D92Nx7dHeyjmgxYRpd6d6jckPGyhRwz0GEshJt3Xc+KEPdeLornL+TuDFDpaobrXqcQt+zyH0JUenh/MettPYpjqwCHmO3L+GTWMKUE/4jL39igfPvAG5Rgw/trw7rezwpVaf4qx9jLUzHbm6wwNeWPlyRI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ze6VnlLy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A97K77UQ; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="arPaAHXX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XjUYi+JX"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id A2A34114037A;
-	Mon,  9 Jun 2025 14:24:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ze6VnlLy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A97K77UQ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2FBC2114012F;
+	Mon,  9 Jun 2025 14:33:31 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 09 Jun 2025 14:24:42 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 09 Jun 2025 14:33:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749493482; x=1749579882; bh=4i4czgztKL
-	6ya8RLOSKvhKRPv5MruROH+yBBchLkceo=; b=arPaAHXXB1x176YWbkAKjgdZuY
-	ddpWkQ5dXvqRzqHUKDfTAMQoiVNg+wj6ZFAxW2oRBbX17mSfpok0kJygUPBBNBAR
-	FRURcJ4ss9ZjNxgIcuXGZRpJRfTptqdnk14oyXATsP4VeKy+iYQyxp5hsyEfkSXW
-	wXsFhxcFErMZ0mWnEdhA3+cn81kNhbaFQWrcmFrg1D7XkJYo4hGhgNllCu6XIYp7
-	AuMIN8poIwgo5Utl0Mxv5jtEn5y9bTuJ3r/bcuwQU8Q+TPTGF4S1YjH5zvodTGI8
-	4r91L9CchEtEMdeKOVNH5CEH/M6FwKNnisV4lKMVNIyDYgusTH5OQZQXzyqQ==
+	:subject:to:to; s=fm3; t=1749494011; x=1749580411; bh=S1FGmjoH4W
+	Xn8WYwe+qlGljshs2aanFP//SHFgkIMAg=; b=Ze6VnlLy7xTqxLve+jdhlW3KKl
+	Br/4xsKwU+rceFwtUbD8+VkFz9iSTp+7I/sFeDaYEYreGH6BlrsGUfSafQD+CkN5
+	cpVAwp69N6LpV4faY8IdOqbBKpXzQQ5F2BZCl/dcy71Y/tKLDAXzvGCz4sraXkBI
+	oDWH4akkiF5AEREJXfb8xhk/83v8EIvMyKB3DtMCbtiMZsp5NgkoClS+Ssgrbr+1
+	mMNFzqc15o2rcA7VAh5HE7C5L33umFWjJnG2U4wJWtcX3h410aNoWBIGSR9Rxace
+	AasROqOosSdeMcCvK6LJw2L3/0zrOqgVV8ltTWXk+iecsmfbjOZnTtpn72+w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749493482; x=1749579882; bh=4i4czgztKL6ya8RLOSKvhKRPv5MruROH+yB
-	BchLkceo=; b=XjUYi+JX1mSO1SOulgqn0dOF5UzBXss8lU4PpceL+FQd51XVMiB
-	/8rJRRqwc3jEbscZY/9W3A4piEn0jhsLEp8BZOF4Zr3kj98Cwj5Z9ZJmza1kV0cG
-	BYuZAowXsR/wEHX5RN8NxANsSfRZqP8uH7pLI/y4nUu66+JD72FjR3zjFGI/063s
-	qgjSEV3Up2B+tPhRrdYxy4K79FgzLbkFHBMi2rwqu4a2Im0dNIXd59JB9F2fVngf
-	947NgMAjr7O/xwQYIChosPF6UAzuBPNTnQpPlFimG6ywsaEBVpULqNaQHB3R6FRS
-	MGCZJgs0kwnZoT9x5bvWk+MkUVOzbxPcSzw==
-X-ME-Sender: <xms:6SZHaFdcyxD2zeqI2Za2-O22Rmh88C0LqHE6dzgQQXs50QtbnJQ6ow>
-    <xme:6SZHaDOXtrUV6yqCgnmi7DvROc2Rw1RYcjnqJE7AI9uopP6K8NMEHC4ZbG87JI4H9
-    bOqm5CF9354rDKAbg>
-X-ME-Received: <xmr:6SZHaOiK-v6kB_-PixMCw2JVYfNJJunmg0a4DO--__ffAUPg6CBb3yr-g50cfGKZIPEF7EOtMl7NVpo8qf8ceDxu7aHlI6m_n7PI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieehucetufdoteggodetrfdotf
+	1749494011; x=1749580411; bh=S1FGmjoH4WXn8WYwe+qlGljshs2aanFP//S
+	HFgkIMAg=; b=A97K77UQTm/jY0sEpqUWTb109gD+DVK4DmMtI1Ap5jUYumu2dNI
+	fuvepBmiIAib5YmsfGAvYwQV16HrVKcZGxiSW+N5W1wmb7e1uU+MuwHJeOLDH/vg
+	Gt+rgG5T47sdYlc4ifiAsEoZrde4w8pJdt3v4afQwtRGlgJ5ZqlkSHjjn2ammh5v
+	oPYewf8beKxhzfaPRZMx+Sltl3IcKwQgZBkPr2c5HzNECtY9wF5lUeSxC0G6MNKq
+	d4zXPNAcCm3hcHcWnLnp1LjNqdVYbNaGufojb/jnh7uYm73pbRpkjY1F7VIIaWuD
+	9oB4tG+1cmq0e5G7RQYBWitF/aQBo7VuCVQ==
+X-ME-Sender: <xms:-ihHaD3OaZYe65XqWCy8_vnuqWutIhueyEkbGnC0KivpTNkLR7pyGQ>
+    <xme:-ihHaCG6iWh4thDT8X8CV1uFTJJcK9vQ9V177W2fWvMEpRXSklmgTCcZ0NRoXrEVf
+    u-d3dbQsUghiyxeNA>
+X-ME-Received: <xmr:-ihHaD4-qmtD8xQxTwXkv7Em9_vJHOOMASwDTs1WLEiMtlbmGSjwYp91WHDgRNABZEzNSJKW9ePiExuSFVjSuDyryw3gezjDIAtK>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -56,27 +56,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieehucetufdoteggod
     drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
     leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
     hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrg
-    hmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6iZHaO8APSz7-j6qdV0M65EGlRLsTDA1CW3AFM24mEmVFRYg_VTZFw>
-    <xmx:6iZHaBvkZ_9jX50_uFyn0lcuakHxxipqy_9eO3fteBrk5CNPwTDc1A>
-    <xmx:6iZHaNH99kl5R9Z2fxINWX_afIsta2mXunA6goXraDYJwjc5F14cag>
-    <xmx:6iZHaINpfRPGinm-3yyJsqmdLkfAn4sIcaXtTyFfn9ivzhhIgsFDvQ>
-    <xmx:6iZHaElFsGkVngEBES9GluquvXNCKmo6EiLsNtESJX7c3_ObIhMGYuwp>
+    thhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthi
+    grtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+    dprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgr
+    nhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepph
+    gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-ihHaI2gczVy9gEz53q1d44ZieGMVhm1X1Ie3yj9amQ3CPTGIrqG_g>
+    <xmx:-ihHaGHOuSitis0mvQWrbhtbxzO5MheUKIuNzQ5rBse6ut8g7Pch9A>
+    <xmx:-ihHaJ-h2iamir-wFQGoKguGf5Dd3ytUuUrwOGT1nuC1QFn49S_knQ>
+    <xmx:-ihHaDk8fUug8VM0bdFujQCIgcYOZwprWeM3cy5nGzLMsu6DpkEijw>
+    <xmx:-yhHaCDm7ItkogGNHvNnd46hjUGOn5ywr7IRb9ZRknkxa60NSjRtyRrG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 14:24:41 -0400 (EDT)
+ 9 Jun 2025 14:33:30 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [RFC PATCH] test-lib: add missing prerequisites for Darwin
-In-Reply-To: <33de9e5d-24c8-47cf-b858-6d55d26803b0@ramsayjones.plus.com>
-	(Ramsay Jones's message of "Mon, 9 Jun 2025 18:13:38 +0100")
-References: <33de9e5d-24c8-47cf-b858-6d55d26803b0@ramsayjones.plus.com>
-Date: Mon, 09 Jun 2025 11:24:40 -0700
-Message-ID: <xmqq8qm0srh3.fsf@gitster.g>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
+ <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
+  Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
+ Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v16 06/10] imap-send: enable specifying the folder using
+ the command line
+In-Reply-To: <PN3PR01MB9597AA90D615E2DEBF62220DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Mon, 9 Jun 2025 07:20:37 +0000")
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95976572C3B14C983802ECC1B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597AA90D615E2DEBF62220DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 09 Jun 2025 11:33:28 -0700
+Message-ID: <xmqqwm9krchz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,61 +96,116 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> commit d3d8c601fd ("t7815: fix unexpectedly passing test on macOS",
-> 2025-06-02) added a MACOS prerequisite by adding a 'Darwin' case
-> label to the 'OS-specific' case statement. However, this commit
-> forgot to set several prerequisites which appear in the 'default'
-> case label, in addition to the new MACOS prerequisite. This causes
-> several tests, which macOS should pass, being skipped.
+> Some users may very often want to imap-send messages to a folder
+> other than the default set in the config. Add a command line
+> argument for the same.
 >
-> In order to run all applicable tests on macOS, add the missing
-> prerequisites to the 'Darwin' case.
->
-> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
 > ---
+>  Documentation/config/imap.adoc   |  6 ++++--
+>  Documentation/git-imap-send.adoc | 15 +++++++++++----
+>  imap-send.c                      |  9 ++++++++-
+>  3 files changed, 23 insertions(+), 7 deletions(-)
 >
-> Hi Junio, Patrick,
->
-> I was looking at something else when I noticed this ... but I can't test
-> this, since I don't have access to a macOS system (indeed I can't confirm
-> that is actually a problem, but lots of tests should be being skipped! ;) ).
->
-> I initially deleted the 'Darwin' case and set the MACOS prerequisite after
-> the case statement - which may be a better solution. dunno.
->
-> I marked this RFC because I can't test this. Hint, Hint ...
->
-> Note, commit d3d8c601fd is only in next. If this is not going to be
-> part of the release, then this (or something similar) could be squashed
-> into it when the next branch is re-wound.
->
-> Thanks.
+> diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
+> index 7c8b2dcce4..4682a6bd03 100644
+> --- a/Documentation/config/imap.adoc
+> +++ b/Documentation/config/imap.adoc
+> @@ -1,7 +1,9 @@
+>  imap.folder::
+>  	The folder to drop the mails into, which is typically the Drafts
+> -	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
+> -	"[Gmail]/Drafts". Required.
+> +	folder. For example: `INBOX.Drafts`, `INBOX/Drafts` or
+> +	`[Gmail]/Drafts`. The IMAP folder to interact with MUST be specified;
+> +	the value of this configuration variable is used as the fallback
+> +	default value when the `--folder` option is not given.
+>  
+>  imap.tunnel::
+>  	Command used to set up a tunnel to the IMAP server through which
+> diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
+> index 8adf0e5aac..4a0487b66e 100644
+> --- a/Documentation/git-imap-send.adoc
+> +++ b/Documentation/git-imap-send.adoc
+> @@ -9,21 +9,23 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
+>  SYNOPSIS
+>  --------
+>  [verse]
+> -'git imap-send' [-v] [-q] [--[no-]curl]
+> +'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
 
-I do not have access to a macOS system either, but the change in
-this patch seems like a very safe and sane thing to do; it will
-bring us back to the state before that problematic commit with
-respect to these three prerequisites.
+This matches the _usage[] string.  Excellent.
 
-Let me queue it on top of ps/meson-tap-parse topic.
+>  DESCRIPTION
+>  -----------
+> -This command uploads a mailbox generated with 'git format-patch'
+> +This command uploads a mailbox generated with `git format-patch`
+>  into an IMAP drafts folder.  This allows patches to be sent as
+>  other email is when using mail clients that cannot read mailbox
+>  files directly. The command also works with any general mailbox
+> -in which emails have the fields "From", "Date", and "Subject" in
+> +in which emails have the fields `From`, `Date`, and `Subject` in
+>  that order.
+>  
+>  Typical usage is something like:
+>  
+> -git format-patch --signoff --stdout --attach origin | git imap-send
+> +------
+> +$ git format-patch --signoff --stdout --attach origin | git imap-send
+> +------
 
-Thanks.
+The above is small enough that it is OK to make the change
+while-at-it, but it deserves a brief mention in the proposed log
+message (e.g. "While at it, fix minor mark-up inconsistencies in the
+existing documentation text").
 
->  t/test-lib.sh | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 9ffcae0472..51370a201c 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1647,6 +1647,9 @@ uname_s=$(uname -s)
->  case $uname_s in
->  Darwin)
->  	test_set_prereq MACOS
-> +	test_set_prereq POSIXPERM
-> +	test_set_prereq BSLASHPSPEC
-> +	test_set_prereq EXECKEEPSPID
->  	;;
->  *MINGW*)
->  	# Windows has its own (incompatible) sort and find
+> @@ -37,6 +39,11 @@ OPTIONS
+>  --quiet::
+>  	Be quiet.
+>  
+> +-f <folder>::
+> +--folder=<folder>::
+> +	Specify the folder in which the emails have to saved.
+> +	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
+
+Good.
+
+> diff --git a/imap-send.c b/imap-send.c
+> index c6e47ddc42..a4cccb9110 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -46,12 +46,14 @@
+>  
+>  static int verbosity;
+>  static int use_curl = USE_CURL_DEFAULT;
+> +static char *opt_folder = NULL;
+
+Let's lose "= NULL" here.
+
+Do not explicitly initialize globals to 0 or NULL; let BSS take care
+of the zero initialization, instead.
+
+> -static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] < <mbox>", NULL };
+> +static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
+>  
+>  static struct option imap_send_options[] = {
+>  	OPT__VERBOSITY(&verbosity),
+>  	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP server"),
+> +	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder"),
+>  	OPT_END()
+>  };
+>  
+> @@ -1729,6 +1731,11 @@ int cmd_main(int argc, const char **argv)
+>  
+>  	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
+>  
+> +	if (opt_folder) {
+> +		free(server.folder);
+> +		server.folder = xstrdup(opt_folder);
+> +	}
+
+Good.  This matches the same care taken on the configuration side
+that avoids leaking the value previously given.
+
