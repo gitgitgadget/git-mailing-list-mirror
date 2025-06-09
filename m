@@ -1,43 +1,43 @@
 Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011029.outbound.protection.outlook.com [52.103.68.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C521CF7AF
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 07:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093F81FDE01
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 07:21:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.29
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749453711; cv=fail; b=OIFL4VNgAc6j4Q8lL6nCG1wdh3fHtOFvVhphDhqmJeWEqXcUiSEwPvYns/m4yKmLjKtJ3qPamXgcU2Ya8jNfAri26FsKkLJaqNF+IxjTzqEPuoLCCYenlvr3F+QGGqnvRjpok6j8RybmKGDbBjwHqzapwl+p3KyM8FgoFXHD4yI=
+	t=1749453714; cv=fail; b=FXF0stkbQutjYiTPdjuSTqQMeBr8Q08sxBLnRSm2qu8Cc2cd/BrvmJuKX9S9cZZvBIuCqDowOZ0nlIkrPMF8/5P30513Q0lV0fMS9ddxxacGY5A8Tj/giGoS99qzzfh2CDCuPSIWbJ+gTMAX7SPy2KZp7ddK+GnSHeJANxp1tNA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749453711; c=relaxed/simple;
-	bh=C2Ea0fZ/1fbZp7wXFXYheErtV4NTDUaAB+ZPCRCqPGk=;
+	s=arc-20240116; t=1749453714; c=relaxed/simple;
+	bh=n/I/8vaE/HggaZTjPRfQO02DaJQRpN0PycRIyKZxq3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hJIoUj/n4lVKlutiYQQjyyUUm9kIenXCL2sS13v2jp+/zP9txL5TzdVS6q0WO+sB3ncbkrwkTINsWynMk8roYeDGbMoE+ft842Dl9OiYzrrRefWSvtpHD637IHvxkvMhjGCfAxdWADN+aQ+Nxujsfua5zoefndBgL6zTaEocB00=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=C6LnjfP1; arc=fail smtp.client-ip=52.103.68.29
+	 Content-Type:MIME-Version; b=rUF4uVd063VoTkQjPOfmbjhHdGlre4e933MDQNfFPzhkhTb6cTu48nCBUXsSiOi+/oOySt4xlRfY7HZi+vX5UzzLzzfju1C+KCETfPWZpDYvDBLbQGP+omsWhxkcDnuqLXoXr2Ow0OAGXj8B7tE9Tw9VFAASDdhYd01ZkN4y30w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=o2i2HiZy; arc=fail smtp.client-ip=52.103.68.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="C6LnjfP1"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="o2i2HiZy"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BXzMTEfHdiKghkxtqaXNSw7oE9rZHuU9zImI4woxUGeQp3kzggD0s3FQxV5sB4xsOzjIBmpmySBkWjdBa0VNKvdIhJqPjUb0TXvSXTzgqwjOfofzVbwwSWgq8ARqOWC8Lw10iCr0YnMLTjrSUJ/BJrYlXFMFLKNaPRm/dMnMmXkGW/oqLOGc3g4MpqlVzHr6CiNBJry78B3D70UpgxZ5UMbBDPrqurlOl47Rrq0VHHB3jXNvKZJS8aBciTuyjl6vhOxi1L4YjPnoHYQbYjM5f+/mAw0sVRwbFtsKpSFhwKSndZTuGDuTvZcI+rc0NKjwGlsUbLSDPrz8aLZonfENpA==
+ b=J0yOdUydKdbK9nFuFirGVdO1FG9p1vw5vABmcagye8SaE5uuWdmkotJVzO9+Henr0lz6Bs98n/mn3E4I3slLjQeqSzw0B9UwJyDKex0s/DFkbQ7xhmhay59trDuCnV7zxAem+eL/L4f+jjxlEqB/XKJQocbJF5werMPKs8XtIUXgGUrtr9vaZnRLTxKBwdoXRf+WL8wmVkYRrvUKbGM1v9mMyy1KM+YXAxxekdxg8WBnj3XypVPzf0jOh4jYo4/JzzLg437kou7pRmOiLtKU7xPTJA8Wu00twUorpHaGj1QzRkhE8Mrp5Vklb2+gGsmE8YbY4xfioobz4iV9dKL44g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Bn9dcpWLeDQognIjZ8sklbeWx+YlUw4c3jgja55dACI=;
- b=d131uYA6/cJplRxcDh/Aim6Hu/Irv7Gazkw2vbS0z+mq9I6oRyDtEpjaB6CoGzESq93ltYDDJ5LjAE67g3e5KVI+eV/ks8apIITCt2mqgod7LCtsDelTd09b050kOZY3Tm+pdDH1LO7xy7ZCVG/q5njpOB1a9vULrwtU1uIW50TLWVK5TCsby/LCm1vQYXkMNiDkKcAXz1m7V4hiqnUnLDJXAfG81iTHHsHm2lsCCpdA0Dx96pGds541vHanjl6iN1eivxuve8V8fx8B8PiZJLxmrtIPHqyHCnw0koxG6I6DUswl/opvrofMCw13UZL8P7MUGnntHMYeTz/5F+mmrQ==
+ bh=Au705HHGRrpSlgtXxZqgZndsdDQmSEJ0oJzWkWDgdyw=;
+ b=Ev1OCGp9tukLBcLKpqNIp5T0it1YCwvAnzRADfVlTacjfmwz55v5jH2fb0+m+jVunerlWV8AI7ayxzc48gCsKw4ZGUd/a0Gh/Wn9Z6ukhBeNmApjHseeFJiHtPbFHNYUyWaFrNevH+hzvqcAinQTM9JcIQzt8HdbBya0LmL31cgzFgucYrZnAyfMm1SG+VwWfsx+0bQevL0AenxZrbGw8zcDyMBV29GYq3NO7xpB/ryCstV63MyAqhgr8b1ugZTpgl5fCs4qDOHtZMipp/HfaSuebGf2d/radRam6N+A3rhqx/2O0VZMYw9UkmRKbjs7pa9fxBUNYO/wsutTnimzyw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bn9dcpWLeDQognIjZ8sklbeWx+YlUw4c3jgja55dACI=;
- b=C6LnjfP1mt7oD/X33rlxtSZeb9/h+3Qdg2k+QivIpdTIqZVLcxLRliMtuhlZi8XzMwhMNfav2Z4c1rP+GZXYHjxvy6WuuXQ2yL481zZx6UV9LnQLIFnviHzmuAXFI6sFsWZ/jmFZfLZftzAAd4mpo9QdoORyySvep96aCwZAaOygtfMA544NntZxZM0EcbtPopPDcynA08PL66GA3MstsKgaeySOXDnrVXUFa6DUx1Vr0KAScundAKH8nKc6IabSbv2r0N2dGy8X9oImzvKYHNEZH0z9Qs21pN42KobDa43frBMjn8A5JngFEEL78TycVFQwkkT/6KghNIulo3smGA==
+ bh=Au705HHGRrpSlgtXxZqgZndsdDQmSEJ0oJzWkWDgdyw=;
+ b=o2i2HiZy3XBvnQAFmOtmn5m1DoL/lInBlW9Gnzug1PNHw4e+gHd3jqVgkwFQZAXSDC5utHafkNWRkmBSZJ1gctusJTdXjFZPhJj4WaVI4j/cr4vlNm1wlQ/umWkFg97D7jPke67pFruXZ7Z06P7TQCYP59GgpH/zELL/BEHj49ro0CnspVyv8Ln9q8qobqAf0sEDp+S1DcehHQ59JAAghfKo2OIxgnOSFSQjutDSmt3z8MluBvBdEeMexBRmGpalhl3c/wdNUZgkwapKh1RUwHqQdCp4aSIORyWMWNKhlV23crGSn8N1GXhLxOg9D5zgdY2OiOtrgGpk/x92b9gktA==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by MAZPR01MB7959.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:a9::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.25; Mon, 9 Jun
- 2025 07:21:40 +0000
+ 2025 07:21:42 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8813.024; Mon, 9 Jun 2025
- 07:21:40 +0000
+ 07:21:41 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v16 01/10] imap-send: fix bug causing cfg->folder being set to NULL
-Date: Mon,  9 Jun 2025 07:20:32 +0000
+Subject: [PATCH v16 02/10] imap-send: fix memory leak in case auth_cram_md5 fails
+Date: Mon,  9 Jun 2025 07:20:33 +0000
 Message-ID:
- <PN3PR01MB9597ACDBA3FF42D348336C42B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB95976D757945B4984A73E406B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.49.0.639.g6561d45bee
 In-Reply-To: <PN3PR01MB95976572C3B14C983802ECC1B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -61,7 +61,7 @@ X-ClientProxiedBy: PN2PEPF000001B5.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c04::7) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250609072041.12114-2-gargaditya08@live.com>
+ <20250609072041.12114-3-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,59 +71,59 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MAZPR01MB7959:EE_
-X-MS-Office365-Filtering-Correlation-Id: 479e7dd9-7a44-4744-1d4f-08dda72646ee
+X-MS-Office365-Filtering-Correlation-Id: 3804b7c1-8a0f-45ed-ec8b-08dda7264733
 X-Microsoft-Antispam:
 	BCL:0;ARA:14566002|461199028|5072599009|19110799006|15080799009|41001999006|7092599006|8060799009|440099028|3412199025|12091999003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?IeQsTceLhLxEOpKQ/5ZxREuSwJKr+UHDO9fzuTK7RIzRjLffLTyK9SoWBu4Z?=
- =?us-ascii?Q?7TrAAqpyJJeyvcZVIw/NrbnDIEMtJ+kstc8uOlrl8YXZJa3YqtwBeBZk3HtJ?=
- =?us-ascii?Q?HdWvCIJfCY/NrcBHs+E6nvbHp3JGYjiWqEZBweQo63o5kPHaTbabSnIMzHPI?=
- =?us-ascii?Q?KWUoqF3aR3QUQl9MAbYCL7IxPAkzr2l+Ox4aWTAWQ2rXukvHIHKjJJjH9z2G?=
- =?us-ascii?Q?s2O1WBxNr9T49R+mkHOGbzQ08/mEK7NdGeVylLeSU6d2/DhbkjjqsalOb/2H?=
- =?us-ascii?Q?WPkr5tdufM5ZZAeKwRyeDN8a1QrfFneBg6CZ75Ssy7ZCGeu5GuZhZh7o6Ifv?=
- =?us-ascii?Q?SgkfsT99y74vtDvoKyJT1f6nZrzqrt5gTlhKyo29bjgM/EPPp5C5U833BNbe?=
- =?us-ascii?Q?NuHopxDY197ABQtbz08KN8YYUN4MhgWrVnG6HjtHZWLkWeOX2DPyg8/fbarl?=
- =?us-ascii?Q?/lzKxhpEbEhvxHdTu5mu9+xcoHqUfkXLXAymLfXf+OKpLyXc0fd/K8hGv9Su?=
- =?us-ascii?Q?GruoCmEQFkXSbmbA9cdhJkINFNaYPWV4absTi6J+XSOBzyiGRrJ3DYtVcuv0?=
- =?us-ascii?Q?Pp0vMsTA0DiTO6cSrqN3DiKZnT5Fg0tj1GXJtHORt3Zz/LK3ZVF1b9GsqLMR?=
- =?us-ascii?Q?T1z5LQWFvlyTBEjzX5UBSHKieZYimk4wLZ2pd1SabXPldFURsOGhxNv9YCkD?=
- =?us-ascii?Q?tSc1KEbYcCMWYXM54SiBVZ71BgnNGUeaTzvSXc25o0g4mTb63PbtD8GdCwNS?=
- =?us-ascii?Q?v7AlQePYFkf3rfTUKxkK2+QtiOKfxDaixkLH4gPenVfSR8dS4G69pHNJgNV+?=
- =?us-ascii?Q?9frSe/X8DqCJ5k6Vm3Jdn08nWN897yBe7Rcwf7QAokK1qMw+ernofChwlsnR?=
- =?us-ascii?Q?0Nw16EazphEvm8p57o6CvCXhDsDgFiN6OtOVO4L9f+tyMrrN9LBEE4/dJ/eM?=
- =?us-ascii?Q?pafHB3Q3U71fgMEEx2U6bO6BKNFaeNH+uIcyFaH4iZWmsKMdLSJfk77TiBT2?=
- =?us-ascii?Q?2MDLDLyNQLty2fyhx488GLO7j7T/aoI96Qr1dUShOl3dC8jKCNnkVvBsHR8f?=
- =?us-ascii?Q?luU4NIqtKFRotmvX6UnYa040n0NjFafTR/5gaB4pOlPUeY9u+0sEovuBuJJZ?=
- =?us-ascii?Q?6esaCv3BevieASap+mBF760pkkv4WmMx30Hf4tacrXdCX55phsCoYEs=3D?=
+	=?us-ascii?Q?34TuttDNH/GVWBEGcNkaUrBGCQkXNAztY/0dxKkXlQV2uT/HJjxlw9SPjlKZ?=
+ =?us-ascii?Q?6SAvbcXGNmFKtL0rpzsrF3MTyXzbTG2g19eKTGuuCq/PpH5UBTLuLTfqNtw8?=
+ =?us-ascii?Q?S1yfbNKWcur/4oWP8uFGNGHes97hhlS0vzHUFQfGI9zGJDTlKEMCab2ERMiB?=
+ =?us-ascii?Q?6yitHB2Xj4gp1woowuEka1HrboUrQJjPRWZTDsEB2tiXxirU+uFaMaG5sDHW?=
+ =?us-ascii?Q?fsnBZwdXI9gB+lOvs/1KQ8cGrl4L4ebcpH5HLjwIQyOzXZzd3oA4nMyzfwR5?=
+ =?us-ascii?Q?L+fKLrOrDrk5gdvEsRotQS8sTRC48A/25+K0TyiH9skUG2MNdKdgA56Qwv/u?=
+ =?us-ascii?Q?TVPph7LTa+ljmGeDSY8tDK9Zx3VU2x00MYFd+QXQkvGYSRi/n9RsFPGLn0de?=
+ =?us-ascii?Q?mFj5Qbzt0uHHbrn+h5ZdkINHoMGN0Wlm+/9j63iCcrl8M8ueZ26p+ZDpgNFn?=
+ =?us-ascii?Q?40+c3iS7MEgJRhSl2W5zkGh4ntZONXFies9EV8bjsfovAIxfPfdPieed8Usg?=
+ =?us-ascii?Q?ylxPVlOvXpUAK4ulsF14SntwoBl7UHgWURW1Tf5d3n6WMXXTzi68eazsOq0+?=
+ =?us-ascii?Q?5GaB5q7zQGPOStKFk0UlVfdE3EMWtss51BUvmPzLu4vCd8P4eI2Pgu3dNJ9W?=
+ =?us-ascii?Q?fUnZ73YCOEtzQxpTindgrGqSw1JDSd+hJtyru9xmiGCWH3BhvDpgpJ1UNEvc?=
+ =?us-ascii?Q?RvZt1uY8UmM8P1Hk7rORHc+rQI2xT5CC4G7bL041AjBvAtSEEkuyhXqzAEN2?=
+ =?us-ascii?Q?5twSIhA5xEchGnkbDY4CzHdH6qfSepLUFYGbnsYpRmSKZEK2xDzhal+xTVP7?=
+ =?us-ascii?Q?lgTbH96tgCnWCPTGV5v6a4ito4rugtyjdJzdGD8gCBhwRc8wjqSGI5SPmdak?=
+ =?us-ascii?Q?e2mIRCcrj/rBYYqO+NTISbJVnmXeOjKmSEm9nx8YqrhUQiAooIaDQKeQY4dV?=
+ =?us-ascii?Q?EsnK6tr16gU5swh3yxJLTEQXOu7S0kbx/H5Qv3djvc5RPXP7NPAZ9+eT5ROE?=
+ =?us-ascii?Q?zx2vM1cq4eXdyBgSR2utPKVrTCGa9fEqunDEl0Cv1Us0ZUumPQu9y8E3yBXv?=
+ =?us-ascii?Q?duIwDIMtlAtbcwm16S3VpZgv/eovlzi7ACg/qQpn2dP1m6nXWG2DR2VOeICC?=
+ =?us-ascii?Q?0ZMrrdbJjUqAGugQgSocyb+pzBO5lHXXn817d1LkfcLAqLAO0slw8dI=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?J1Nn43hBNUuzgsLB95UBiwige+LKGH5tBEUY2i/p56c/Y9juXGXCguUGj8Un?=
- =?us-ascii?Q?fimTgjXKurY8ZhKQ+LOmA7BL1hSKw7bfvN3OygZ5h4mqW7O0lMvbhqZYyb6R?=
- =?us-ascii?Q?X4/xz4QxAO0UtYGqpa+rpd0XNgwwpgLkp87NKSXiTxug71m/vn6DRyH/feqR?=
- =?us-ascii?Q?hykxr9brsDMyPy6aCXQDGg0HG0/pYj2i7Iw999SlY5D0kFNF7cK65aI8Ql9c?=
- =?us-ascii?Q?rQr3qfM8tAHrUUdr5oBtquwzAdd3bdfoGooC5VijEPvEDqK/k6bXMGN8fmrN?=
- =?us-ascii?Q?hnT0+UtvQhSsVTtHBv/OWMUtAn2/p3A98b995lLvY3OAlGzDNvvrtc/p8Gib?=
- =?us-ascii?Q?mBv+kuIIxFCeeHmiFyosH6Jj9LnJhAUmrevkZk2l12MBeap8ZgmkubKz9LYm?=
- =?us-ascii?Q?Y4oSghuF79f+DQ6+NJmT8Vmj1TzphaUWx1w6e4L9y4/FEDeJSGSh0KkfmyNy?=
- =?us-ascii?Q?lKetIMwHG9RHvXCJmQahM0y1+C9wDHxg48X4IEaAsRmbohZD7lkgWsJU5Xx2?=
- =?us-ascii?Q?8nPV6CTdPpXQGGf7yGPdfFQCMZfV7jrfK6UjwS0NIvhVUtB56AqTbF4GLXqP?=
- =?us-ascii?Q?/hCvI1Rgw0r1rHhmJZknfExO5lvAZjx8ZJO2F7NH4WPEG3XxX3gBn8ZhHCj3?=
- =?us-ascii?Q?/wLhUr290EjyRXJlEAxTfSp3Bsh4NxXHA8fesEZ3pkyJVoQerLbDIy6AjWyu?=
- =?us-ascii?Q?RJfF9W9dpeBsXPdwjyTBiRof3WV2TNXk9DzQEjnCYJ92On9xI8f1hGtTPIPT?=
- =?us-ascii?Q?OgrdhqnFECGXI3cwi3mLW4q85Lz3ZgDAhSGj1nVa/Ku9x1xYDkDytjvbbM79?=
- =?us-ascii?Q?sp283Q4dysMu+mkwgXE+3tgdimsobb5BiFSrhWD5c7bwZRiRo4w1+I3ePsNM?=
- =?us-ascii?Q?9IppQCvEcqw9GOljuTQWndx4zTRRs4nBVL8f9SVtXImQCPPSvTcrXUMe0RoR?=
- =?us-ascii?Q?ycFZ9Vy4dLfnHwtUTq7579onafOD4QI5tJ9qgSo9yI9T+sfkHqgLfBHcGMmQ?=
- =?us-ascii?Q?8IvE/QIKVbT2wG1KhhbG/7r7aUM1RK99D1oubC43XL97Vts4LpIKVigSbpGC?=
- =?us-ascii?Q?WcHLFWybwL1WUXpwZYhSdnuQ1otZdzOr1iTxQSA0euNdqDXKNgjtcyCtRA2u?=
- =?us-ascii?Q?TQJkWQ+3/RATqC2zGkQSmrtc6MO9DHGRWOhBWxk8xr7zLh8dDpL0SVp7mglP?=
- =?us-ascii?Q?Ztt1zwVcktnSCraA4oQ3u+8C9uoM9PD4JWEeIL6PY2+sxIinmaVyu52YBPE?=
+	=?us-ascii?Q?NxkTh5GXj03HSFCyMuBm0+qiaTu7CvIadr6FCUvOM3zxTkwFtdfep4Eayz8o?=
+ =?us-ascii?Q?cZLA1SHCNezfY36BCN+QZWqmXDkY8GyGGusSTqZ4JQ7s/cQqLylXTpW+dctO?=
+ =?us-ascii?Q?+c90r8K3n1/eTb5zc6sxoYtnVy7i1Thv5yzFRhIebu93H4kEaH3JLXNd6WJG?=
+ =?us-ascii?Q?pOygT7xm+/8Wok7/tCMEcXZoUKB+bGXm0FxwKCxT0qyJwkvK3Tfzdf4HcmFQ?=
+ =?us-ascii?Q?jyLhQglYMZeitUZQatbfxi7KMtffLOn3LYTjuh7mt/bMGbQY+ai/KoKFmABD?=
+ =?us-ascii?Q?ZHSw+o7m2FiSCxRHX6KHExmGoI3dW0WMxhRNPxOmBE3CZttzL4PnWWvd8LCc?=
+ =?us-ascii?Q?Q5APIjgmvQG/i7mLihmZ5UojsXBokCGm//LECGKa2lwcYJ5L3gwbeC/mqtmE?=
+ =?us-ascii?Q?6llAA+v+yqhp4iECxuDrXI1EKfZSmsaP7nKnevfetNwBEksRuFX0Awfy0zTe?=
+ =?us-ascii?Q?K6xlyjEAwEde4ElenCFnNyR0p+nYoxVTX9Fd68brDHugyQ8WvaX9DpVY5nZa?=
+ =?us-ascii?Q?9tf/JzpmvZr9thxA4BmB3nT5fQSdYJcMB4z7uptu2WMVHXJl+/Hdc/Q28CfK?=
+ =?us-ascii?Q?mopWhUzQkCoagKX6iPnZ4cERVNRAxH95Xy9ISHBBrbsyNNL48eYN+25aDsc5?=
+ =?us-ascii?Q?vgxCSY+MlpWcsL2QO+SZUkGnvMkW1M2xc1RhCcxs5wjTLwkRk5VZBGKFQ4hF?=
+ =?us-ascii?Q?5rcw9oqQ8cdsfh/rTP7a1+LEN1a6a72zsgyejbC7HTgZVO/yxjtzFSSsBfy4?=
+ =?us-ascii?Q?eCX7/ZnSfn1FrP7rUKBsMEMW9/p7wk2NxlzzGYEkAffYDspax0jSYbv7tri2?=
+ =?us-ascii?Q?m2TdpQFhOUH5zTH8cPxYcPaP5fKZa1epaSJbrv4Ty9Amffb9pPO8lq3Rw/oi?=
+ =?us-ascii?Q?IJWaVvnQ2Bs/x/U213+afYyO0FfXVXhhKqjOvTe7CSrUZixgHtokhHQ5NorR?=
+ =?us-ascii?Q?ElxCrobCCwmYxx71ZrUV7N0GEKk5OPlWYrZUTZqF9FFOg4hu/TLETx0k2NC2?=
+ =?us-ascii?Q?X+1LzRDkGiDsD1UWn7a0az8zVcNB3qqdYj/n/5vDeHGX/yGoSW7QfCXlygRG?=
+ =?us-ascii?Q?mo6AUPnR1RVBXng55IzB14dqG6ANkvrmAG3ICPTDEmGrA0cUv/grcFN4jqng?=
+ =?us-ascii?Q?V2c+tAHLPV6CMxQU6yU7DOclXSCrV8Y8qKCGOnvWR5lLxys9ykePAIwJVtzB?=
+ =?us-ascii?Q?Avfcav3aY7Vnt2+vzfhqnPSjuL5aYEuFUt3xqlomHeYbi9b/3pq5focjtwc?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 479e7dd9-7a44-4744-1d4f-08dda72646ee
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3804b7c1-8a0f-45ed-ec8b-08dda7264733
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 07:21:40.0440
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 07:21:40.5370
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -131,43 +131,30 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7959
 
-6d1f198f34 (imap-send: fix leaking memory in `imap_server_conf`, 2024-06-07)
-resulted a change in static int git_imap_config which resulted in cfg->folder
-being incorrectly set to NULL in case imap.user, imap.pass, imap.tunnel and
-imap.authmethod were defined. Because of this, since Git 2.46.0,
-git-imap-send is not usable at all. The bug seems to have been unnoticed for
-a long time, likely due to better options like git-send-email.
+This patch fixes a memory leak by running free(response) in case
+auth_cram_md5 fails.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- imap-send.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ imap-send.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/imap-send.c b/imap-send.c
-index 27dc033c7f..37f94a37e8 100644
+index 37f94a37e8..1a582c8443 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -1316,16 +1316,16 @@ static int git_imap_config(const char *var, const char *val,
- 		FREE_AND_NULL(cfg->folder);
- 		return git_config_string(&cfg->folder, var, val);
- 	} else if (!strcmp("imap.user", var)) {
--		FREE_AND_NULL(cfg->folder);
-+		FREE_AND_NULL(cfg->user);
- 		return git_config_string(&cfg->user, var, val);
- 	} else if (!strcmp("imap.pass", var)) {
--		FREE_AND_NULL(cfg->folder);
-+		FREE_AND_NULL(cfg->pass);
- 		return git_config_string(&cfg->pass, var, val);
- 	} else if (!strcmp("imap.tunnel", var)) {
--		FREE_AND_NULL(cfg->folder);
-+		FREE_AND_NULL(cfg->tunnel);
- 		return git_config_string(&cfg->tunnel, var, val);
- 	} else if (!strcmp("imap.authmethod", var)) {
--		FREE_AND_NULL(cfg->folder);
-+		FREE_AND_NULL(cfg->auth_method);
- 		return git_config_string(&cfg->auth_method, var, val);
- 	} else if (!strcmp("imap.port", var)) {
- 		cfg->port = git_config_int(var, val, ctx->kvi);
+@@ -905,8 +905,10 @@ static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+ 	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
+ 
+ 	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
+-	if (ret != strlen(response))
++	if (ret != strlen(response)) {
++		free(response);
+ 		return error("IMAP error: sending response failed");
++	}
+ 
+ 	free(response);
+ 
 -- 
 2.49.0
 
