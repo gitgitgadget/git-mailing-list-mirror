@@ -1,53 +1,53 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CAB917BD3
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929161C860F
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:57:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749495357; cv=none; b=UYmlXFVZi21UyD28ffoir0+v6AKCddH6AHfs/sQmEoEJqPsp5LNTrLLUv0XjDhGw09gzej9xxQ3hGha5TA4M8umzgYK+xhDjeZs9yThGnqOHTtr1KT+fl0N53fCTQSaL+lSneCd8fZ5Md99mI7wqmgyTmHAy3aFcwOCeA5t2Tic=
+	t=1749495437; cv=none; b=T47Hgks1LD8hF+YR2Vtl/WmYrCyvUMnGwcR8D2vlAbl9QvPBi5laN7vQJgkDDKxxk4feWQVjAnlsCHkai2No1ypY7IpEwmkfA/v6CR88crONZsDYw8rxcTNtDkdvBdw64xrPlla0AMf7nou3R8OVZPs64974rmCP4IUG50t9ESU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749495357; c=relaxed/simple;
-	bh=hJyYrM9b+yD8U9bNnMeLwTP01eKGuy28qZHIzB/YAS4=;
+	s=arc-20240116; t=1749495437; c=relaxed/simple;
+	bh=J3fHGN+17bK7NY8nXzAV2c6EK5xIhzx6PBvayPABZ7U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iUday7GVnCq4QhTeK1NDeO6VNlAw+I83SASCL6SOrYhXAa+TyK47xwj0QxUwv8rxdsG+B42wuJ4YGdAmx74By7IFVOxc6UsaCljvC/r6pWmIAjAHmiVacu9VdXV3bT9dyvImtFQUKSry5cb1YSho5Ws/d0D2J2JVEwIGyvurMOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IjGPPh/A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mTt6QxOT; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=LvvPSyOP0gLJ25ujMtMiodCXTGb9vLU7DsznRIZmwcVc3qziS0EvXlTl0YSvrxCc3VSJ7VvdIaAmmlwxndC985JDzrHeH/sNOjquj66qG5YmclIvF0uyLXJ/oCITwyBqW1WGhsGaam6Cpq+YjZqMOhNjB2u0esq1yMiq5ZKBIj8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UNjSOOQQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FQQ3prcR; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IjGPPh/A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mTt6QxOT"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4224B1140371;
-	Mon,  9 Jun 2025 14:55:54 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UNjSOOQQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FQQ3prcR"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 6411D11401D5;
+	Mon,  9 Jun 2025 14:57:14 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Mon, 09 Jun 2025 14:55:54 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 09 Jun 2025 14:57:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749495354; x=1749581754; bh=DtFj1i2rka
-	KctXdVt4IOzQQg6ZYFkPxZg3E/m6PvEww=; b=IjGPPh/Ai6q0pvqtHwZAbemRlx
-	d96BSJD1NsQdHNNHGBekt64FLH0fFB8OL8ZY+p4NUUlOi9F1yZdt6VqMECTDP4u6
-	qiG8tfs+yhmPMSvu/zLvLCeodGKEIsjR/5NQS5bSM9iCcLVBDWlnJViiDYYhKqcN
-	uZNfnPO4O0YWi7IDn7M8y6G84yZFmWBX+zvzXnW3xQhI/1758OfH7aKxGuh+zvo8
-	b4pYKY0bFLv5jRpdvBt2U41qYXmUR0DtVy/Zj/hEhlciOX3sBvgODB39qDZHjR8+
-	SJ4iRRuamJ6UiDCjG8TTChFg8U84TfqTnNU9R5+kbvcnKM/qjLEGxtuMqbAg==
+	:subject:to:to; s=fm3; t=1749495434; x=1749581834; bh=Erxb0yk1Fc
+	RssoZ+MAVI5SwAKu1awskH9lmuvngOWoY=; b=UNjSOOQQ+rWsXioOTmvEo0OL8E
+	nTip51U/nrJKsfh0yx6vuyA0bsjuBIkXwgn6jmhH3BI9ahhCjDAIIo+8FSCe0Qkg
+	tjog1k1IJY7syX8LqBsV/kTWkgFw/HEF7FkahuSqwis3ATqgOpc7wYLISoPTojCj
+	01eZ+/yOY1Ls9xADpzGhtpC0tZGx673MOBQ8xkFDo7gZuq/O6jkXpLmDgnxCh1ji
+	ONNAWJAbVImIvFKhy5/CaExT8Tz9wTXN0pRuCwXLTN0Y6GiZKa7zde7Q9yv4vniE
+	zI1ErLtHgTmCDZhDFJYNl/zkUZTe3aRsSDRcb9vuRFMNusjwwbijakA7qmyQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749495354; x=1749581754; bh=DtFj1i2rkaKctXdVt4IOzQQg6ZYFkPxZg3E
-	/m6PvEww=; b=mTt6QxOTTvlzmrmkxUwjT698+D59NknyMLCXPfo0Z9Hic8aDqey
-	77/jqDm+LnPHQi6u1edppFumb+/u1bq3r2jZZ3Jw4RAm4G+XgRx9ytVUQRXUga+u
-	TmOeKF6U6MMIN06gdmGbMNfbNMi2LAffiQlnl246x0ga+KQg9zetouiK+pnqj0Im
-	UwRRhl728qon7TZIraqT07wFfo4pOE7jXhFzq8hg0B8jBrGfEiWK4C75GT4uX1i8
-	ju4yoVuLJXapLyHfS+Ks4FndK9EnWh2Eyxr+drHCx/maM4PUunnRq5f14KAU0/zV
-	NkY2LbUDd1syubFgtxNQHZ90eU8JAi8ruIg==
-X-ME-Sender: <xms:OS5HaIFwN5Qs80o9TYKfpD_shdAtoD3ZxOMQLj-nuhXJOQnr95Dh8A>
-    <xme:OS5HaBXpkMfQayfD4GwvlT-wJl2X3WDDIxROkdpOoKugTFoceo7MbAXJ3IAwZ_xjZ
-    BgDOt4ccMwIMrCtVA>
-X-ME-Received: <xmr:OS5HaCJ02DYe_GomSdDffzVHFuYykrQ80IUxKRByfM-ZTz4Nrtl6fqUSdMy7soAC0TAIeOZ3EAbgSnv2d3ZkuhwFd9GdiElAXW2V>
+	1749495434; x=1749581834; bh=Erxb0yk1FcRssoZ+MAVI5SwAKu1awskH9lm
+	uvngOWoY=; b=FQQ3prcR9vaZEUjS3sB68rRT6iRqVWcNX2xNooYjoMa2VuLq2Ud
+	GlSBF3UtBCn0PiqI86jwDdSGviKnKGlS/lI34Mu0oa31jeyA6DvWkyM/AOzJATKw
+	DQJLA/TzXA1AjIsUUcbpmTz/IVCPLGLtK1f3CSXTP7O0Oa4DGDwCUgHn0FNRtY2T
+	9LtsjHuQbEYoBv9UAKzeXmwDk0me/Km9VVk61dwqZrPOaH9TPMQ1rEudvfe0MVVI
+	IbmR6Ybylid1os9OGKHJiYNgJn1zECxuGJyrmmjgThudMUhKRzRsCd4LcjFEzAnL
+	gjARwWjcd8UZSA0fjkM62gJ3/ydeun7v7qA==
+X-ME-Sender: <xms:iS5HaGIvSrWLw6R9IJro0jVV_QNh1v9UB_RNLm-rOgx1GN4VOPrqcA>
+    <xme:iS5HaOJUdsl52Sd9--mrNS4Pw7yjJ_Zw7nMRJuEcg-iEUTBscN0m6vZePMU5RVkze
+    mpPZR2btI1haS3Qvg>
+X-ME-Received: <xmr:iS5HaGuIXUsiE9DCFSsTN1urcIkoxjrW_TgvH2y-tuGa-WSf8GbxGytuUvXZruvdy5lGrnuunKPNg2AVz_sdFJNcN6oFhVFU9PYY>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieekucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
@@ -64,29 +64,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieekucetufdoteggod
     gvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghi
     lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
     gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OS5HaKFqu6K5FKYvsjahf73Rc7C5bXEgMtQySL5QqS3Vv3qgOZsWAw>
-    <xmx:OS5HaOXQSNKiwVhzNSmpJVkuvHiwi78srE_LdyXyBLF8UaWqPORpTw>
-    <xmx:OS5HaNNLsZ6bmqqhNW8sMqfGLpuya5ZJ0I9Wh1IXECU6DX-I1_p-JQ>
-    <xmx:OS5HaF1svi4dFf0u2JoCJlm5TkyhYEBfawIhdbc4G-82RVwSIXEn7Q>
-    <xmx:Oi5HaPTeluGTFR_g2R9rm9Mlblfh1NeNpPsY8ooO0SNufQKTD_W8ZGya>
+X-ME-Proxy: <xmx:iS5HaLaj6vAanuMuEIugRC1YTgDAa6Abkx6toYsTJ4GjVXbJDdjQyw>
+    <xmx:iS5HaNb8CF_rA4iLgbFYKeiczoxmdglL00GreSo0jeV5gDWqkf46ow>
+    <xmx:iS5HaHCHKrQN4baGTVk78eIPDEWWsXxWKBs37mJRGppPTwLICdV_TQ>
+    <xmx:iS5HaDbcp1kNn7R0KpCxUXAgC-0qxWV5YfAzHjOOOSisOe5Sspk7fA>
+    <xmx:ii5HaLl6BsgJ7Pg8GfZSZ3NBJRtkLPb-Ewu99EcCcGdF6PDEmrICbqFJ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 14:55:53 -0400 (EDT)
+ 9 Jun 2025 14:57:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Aditya Garg <gargaditya08@live.com>
 Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
  <ziyao@disroot.org>,  "brian m . carlson" <sandals@crustytoothpaste.net>,
   Jeff King <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip
  Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v16 08/10] imap-send: display port alongwith host when
- git credential is invoked
-In-Reply-To: <PN3PR01MB9597AF90BA3D4B3295ECC278B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 9 Jun 2025 07:20:39 +0000")
+Subject: Re: [PATCH v16 09/10] imap-send: display the destination mailbox
+ when sending a message
+In-Reply-To: <PN3PR01MB9597647A1FE9451BF9EB1C6DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Mon, 9 Jun 2025 07:20:40 +0000")
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 	<PN3PR01MB95976572C3B14C983802ECC1B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597AF90BA3D4B3295ECC278B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 09 Jun 2025 11:55:51 -0700
-Message-ID: <xmqq8qm0rbgo.fsf@gitster.g>
+	<PN3PR01MB9597647A1FE9451BF9EB1C6DB86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 09 Jun 2025 11:57:12 -0700
+Message-ID: <xmqq4iworbef.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,30 +98,44 @@ Content-Type: text/plain
 
 Aditya Garg <gargaditya08@live.com> writes:
 
-> FWIW, if no port is specified by the user, the default port, 993 for
-> IMAPS and 143 for IMAP is used by the code. So, the case of no port
-> defined for the helper is not possible, and therefore is not added.
+> Whenever we sent a message using the `imap-send` command, it would
+> display a log showing the number of messages which are to be sent.
+> For example:
+>
+>     sending 1 message
+>      100% (1/1) done
+>
+> This had been made more informative by adding the name of the destination
+> folder as well:
+>
+>     Sending 1 message to Drafts folder...
+>      100% (1/1) done
+>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+>  imap-send.c | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 
-Shouldn't we do a bit better than being so pessimistic?
+Hmph, I have to wonder how much value this adds.  It is not like we
+extended imap-send to allow it to stuff messages to multiple imap
+folders during the same session (in which case, "sending ... to A"
+followed by "sending ... to B" may give a good feel of progress).
 
-If the user left the port unspecified, or if the more knowledgeable
-user redundantly specified the default port explicitly, showing to
-such a user :993 for imaps at the end adds no useful information.
+But that is minor, not an objection strong enough to shoot down a
+piece of code that has already been written.  Capitalizing "Sending"
+certainly is a vast cosmetic improvement ;-).
 
->  	cred->protocol = xstrdup(srvc->use_ssl ? "imaps" : "imap");
-> -	cred->host = xstrdup(srvc->host);
-
-Perhaps something like
-
-	if ((srvc->use_ssl ? 993 : 143) == srvc->port)
-        	cred->host = xstrdup(srvc->host);
-	else
-
-here?
-
-> +	cred->host = xstrfmt("%s:%d", srvc->host, srvc->port);
-
-
+> diff --git a/imap-send.c b/imap-send.c
+> index 9807012169..3d6bcd7e88 100644
+> --- a/imap-send.c
+> +++ b/imap-send.c
+> @@ -1563,7 +1563,8 @@ static int append_msgs_to_imap(struct imap_server_conf *server,
+>  	}
+>  	ctx->name = server->folder;
 >  
->  	cred->username = xstrdup_or_null(srvc->user);
->  	cred->password = xstrdup_or_null(srvc->pass);
+> -	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
+> +	fprintf(stderr, "Sending %d message%s to %s folder...\n",
+> +		total, (total != 1) ? "s" : "", server->folder);
+
+Totally outside the topic, but as #leftoverbits we may want to i18n/l10n
+the messages from this program after the dust settles from this series.
