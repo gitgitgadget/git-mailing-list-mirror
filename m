@@ -1,65 +1,65 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6881A9B4A
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 09:42:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8532AD14
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 10:04:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749462149; cv=none; b=ohoNfKv7/zmzzV30BZp2y5/5Tw4nhhIkcAxLKJ5oG0V2T4QYF4WnaO/9SAF53jN653u7C5acQBrZ2x/aMxwnU/gF3k3iEBqAfXNPYq2siofaIUQCUMnQtHCYED7Js+OVRZS6vZXFO3eCYHMxJG6G1BM/UjUkovhqN3LCX5lk1IY=
+	t=1749463496; cv=none; b=LelLVn+BEFUpgQaTGaGzKFotOvpfDs9aX68PW4vQAeUKidZ7nw/ymyxoa0GvjXOAv/ZH1cLtgDBfMTIhvZ44QvyZ831NTt97gCSJZ//GPhHfeDm80HnW4jyhHpHSLOw3UMfFo8vknMjMbIjhw7fvI7uG63ARiT8CTf+m7c8n1ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749462149; c=relaxed/simple;
-	bh=C7gDaRGGqQQCrGmxguqfbAgcfr9va6SXIf9WrBEfd6Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=EIqUGee2DLgqc4NOeX4E+kvEbdpiIn4YcrrVkV9A07fAaB8IqJDJUBBPpamPZoiBmEtlP3q1j5l7XsZhVf2gECu+vRdXhU2tw5vqynR9y1GcTkJA03LHFmyZX+DeH5yzGA7ZzE7Zb3piOAWyhuD/2B80ifO2pHFKjeQVY1Ii02M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dimqre4o; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1749463496; c=relaxed/simple;
+	bh=aBHZ24xM22vOlBSqjd8biV/MmXGqc5sl5sPNmVcONLM=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=WmuERqLkc69N25t8JxicwELGREAEWXDHzBnL1vVwoJJQrk7VkZ7HsyQ/NMu53RYd03ZWJX/iJ8Yy/sUuoan1kXOwx6y4v8rtF+QOIZDx1iGOzHsajnC7D4DdO0rAP/jr2OElLShMbvHV4EXRp5VxyUpziykqcMcVK7Q24lajw4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c5te7jwb; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dimqre4o"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-450cea01b9cso13124235e9.0
-        for <git@vger.kernel.org>; Mon, 09 Jun 2025 02:42:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c5te7jwb"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so48697045e9.1
+        for <git@vger.kernel.org>; Mon, 09 Jun 2025 03:04:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749462146; x=1750066946; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nUoqNqR9A7+/Q0SU1gcrgQ8YdK8MBSFGEKB/h3dJLJk=;
-        b=dimqre4o02NaQORuDyzAl0jRhj1VJ+S13QP2S//7O9bPWCTn/y4zGTRa8grjKaXY41
-         M4AzntilmTFeuo1uDhnU8GgtOKfeYrv4EHoqa8gIl2Hjcionor+5LHQRkDHcv8Z8Rm9Z
-         RuxQqU9qdnIQFcPZGXVKtsLQ7nmt7R4sONfRkswff/akwDJ4cOW3kICzM+t7NRZdr748
-         Bg4dsmNtnVDHbylIx08TvuQEWBcpMMT3EttX2a5XePlps1OYNvAGc59c3UCTmMqTo7eJ
-         7PIU6WZwfyqt72TARGgYWcsWkHUWC7YH8raRXy17eaUTxQIjJoUDKnaB4KDLObOBL4pg
-         pOuA==
+        d=gmail.com; s=20230601; t=1749463493; x=1750068293; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :reply-to:to:from:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=rZV8Bl0B5wG+/DaaUsPB3GMNDPETfybMYoaZRJOu31M=;
+        b=c5te7jwbs5G79DfiDxHitKR4tVtex5WJdLJBFVgDIr6SRJRIE5IxtEs2e04YeYVa2P
+         soCHRRGyjbDmtHhqJO0hcNSWTXG8h0YxlF/Fwn+MLdv5Vdb9oqP0ogx+M1m00yjMviDS
+         9dcvYwxQKVNNxIrsIwA/GZ0ejPA4COKES2mL7DCRgL+pHwyS/9ycaQifRVT7/GJLrGZE
+         SwmiPDA5vu3XYdHyj5eA+VuA7ZoI0p7mZb4LAAZ8j3X8INQmXojugXzU2YK7S6UYAOE7
+         g+giRFY3OEg9VsMaPDJ7nk1rFaLv1JAdnNocNdNdaVCbpGW+OC642kodnNYqhhyt9hfu
+         B6VA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749462146; x=1750066946;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nUoqNqR9A7+/Q0SU1gcrgQ8YdK8MBSFGEKB/h3dJLJk=;
-        b=M3KgHjLhrm5CeB2KgBgADLzGyofVGxdxfWwGfxAfthTrQqoq8qH25kFcGst1Q+cKrF
-         ZGh7peyVsdLUFX3MMplMpLjtKU38x/D7vhZoRSw0F2VkwtCw23uAgd2o0zYZ/8zgYmNb
-         jZ9m0zWT+K5YeTKdh2JgtHuT2QoawhtZNJWKXCTgpdJV6BGEfMp2J76Wyop3LGxCIIvt
-         pTDBBGpuvRLJZ/3J9dFyL5WQn1KF+Oj4g8sG53c9/URZucBs1sLcdhhigSFBVo06O9Jw
-         +zO844UBzkBsqSUs4zWKSUf8J4wKhp5mBNvnOTxYW4p7fTmRtrExpCjQpOC5ooNmwe7b
-         APYg==
-X-Gm-Message-State: AOJu0YxuaXmSehiBpMw0frNskKKcg9ZrF1TcwyxpCAPcZBb5Stnfutll
-	nZdS6LSLecKEe8oogG73NoPCWt1zlkOTxbpEZMVzCy24zZAmp6km6y8+
-X-Gm-Gg: ASbGncusfc13u/fL1z0WCEcuCjdw1LS6y5WcG29p9l4Z6XTz9fvNOyF2J4G4YrSiBHE
-	e3fdvBccR+5iyodcZudzGwTzD759Y7aDRUOu3PDNRIalVMbGQR+0zozHNqGB5WzMNkkgDkbn2zE
-	pCmumzm3Wn3rSw8/6XaIaRpI5bil6J7IVhJXpCSFYaYeGFwSKm161xZDzL95nfRnfpkLTE5nZAp
-	lRs5usXOntYn3zuuM0YhWtK95cILLElGcYKwTITyTRX5hV5z07Z0ILe5e+MjlEa5cGBd2fqqR0F
-	1bJyTixP4v3qWmP/4l0UEU1fMatdPvgbJkgUlz6b29EQlHedyn19848s1R6yizmr7ui2pCKWcGC
-	wFpnoCkXwKlehFiyVNlSxxEqr2uiFHiDHJv2yVQ==
-X-Google-Smtp-Source: AGHT+IEedQUHE/Bq4OpN1ERaMmbFSWQf1dQcQ8x+OH9o/3h4mNKhNxAFNarB7cabeENIRw1mMl1LIA==
-X-Received: by 2002:a05:600c:c04b:20b0:43c:f87c:24ce with SMTP id 5b1f17b1804b1-452fce1a254mr53796105e9.21.1749462145898;
-        Mon, 09 Jun 2025 02:42:25 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-452730c73b8sm102939075e9.29.2025.06.09.02.42.25
+        d=1e100.net; s=20230601; t=1749463493; x=1750068293;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :reply-to:to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=rZV8Bl0B5wG+/DaaUsPB3GMNDPETfybMYoaZRJOu31M=;
+        b=j59cj8MdBnRaAgHBv4J1z/5x0VgbFGhZstJU6oOYUxecDjmim1S0G58ZJrr5tao+0x
+         d+akK6F3IwG7u41UOzBtJfP/MbleZavW5ceR3xlgPYSx8/pjIyjL88voXxtZbCGlj1Jb
+         SZCw6v8cjcmo+5Gmcgo1Bb9BV00KLTgLbSvlYN/dnO+nkCm7GiSEk4D3Kn3F6aRbOJ92
+         HHOl5xTjtDJS0c1ACAgzVmQwZkn/hfR+QKKWZWlTjjItydj9mb7zcwOY0v1Zoa8EPYT7
+         A+qUDIkv6B7NPyoqlEiXjcG3EMdnjt3ozx+E+rkWzwy8eupJ6np3Ld3ccGZAG6qDBmcw
+         F3gw==
+X-Forwarded-Encrypted: i=1; AJvYcCWHUIF6Lbp0BMHBY/onElNCnQK/jh98Sg0IcmyG7isEI42kZQ9x5Ip+qHzUEd9a29spRio=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyum0xqEP21m/PijZ25UahjryLI9rb8ePtqiYyUBoOaUbFFns4w
+	6vG4nxFwsBskx74AWoN/KpyEbtMjWkgcEeQeGAdKKQW7P3Rj8NGZcIGafTy7SQ==
+X-Gm-Gg: ASbGncvDuh+zhwRXuca/ORSNvGm6+zRWQ/gweGypEwvm/Q91Lkx1HHXRJhhBVtENErU
+	rpsffAJsNSXIbkzw/RwqIkttqOapIMH+trATCQSaa39QPaRDF8aYek1y+cvlGihoi5A5sw3hs0R
+	I0hTfPCArWpKBFhxrph5toA589ZSf/9iGX4csDVUvPy5XriyKFdcOCSkH1KmexwxhtxkjZkL1Qo
+	ZWNCDx4/YQ2xCKT4RHV+P7hyWwKqIJrTvCusbX4CXWCjoVEgyFPtL+dFw3eQnRq8v5Cx/lwxyLj
+	2JFWYaViePhewCCrs/ShxBSDumDrRQWQiw35EZ3LaRsCkBH7IylGH9LMiVd0tBRbaUghssgbbua
+	lTfqLvhnFj0DYA4W5MAW+UnQeCNWS/aApP/NC
+X-Google-Smtp-Source: AGHT+IHxcIAfXOcWmXREBuOUnuzAIaMXTy3Ty9fGHCDk+t+Fr1hT7Dplp3KezGQnYh44pvESNGBi3w==
+X-Received: by 2002:a05:600c:a00e:b0:43d:ac5:11e8 with SMTP id 5b1f17b1804b1-452013d7e0emr110619075e9.21.1749463492460;
+        Mon, 09 Jun 2025 03:04:52 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:9c3f:142d:8a80:1b04? ([2a0a:ef40:700:a501:9c3f:142d:8a80:1b04])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4526e055ff5sm107121515e9.8.2025.06.09.03.04.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jun 2025 02:42:25 -0700 (PDT)
-Message-ID: <a66483fb-5bc4-42b5-b361-c900a69015ed@gmail.com>
-Date: Mon, 9 Jun 2025 10:42:17 +0100
+        Mon, 09 Jun 2025 03:04:51 -0700 (PDT)
+Message-ID: <bf6b2d49-d2c6-4197-99ae-06401093c8b8@gmail.com>
+Date: Mon, 9 Jun 2025 11:06:03 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,50 +67,39 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/2] stash: fix and improve "git stash -p <pathspec>"
-To: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
- <cover.1749289514.git.phillip.wood@dunelm.org.uk>
- <CAN0heSotWpNmqd905aknVTfk6WEcYifAwbXBKYfAWkhzxua3ZA@mail.gmail.com>
-Content-Language: en-US
+Subject: Re: Question: is there a short way to merge the last commit to the
+ second last one?
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAN0heSotWpNmqd905aknVTfk6WEcYifAwbXBKYfAWkhzxua3ZA@mail.gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Aditya Garg <gargaditya08@live.com>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Reply-To: phillip.wood@dunelm.org.uk
+References: <PN3PR01MB959708ED22FE7FE70C17C852B868A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <aEXdKMjAbry1aTXe@tapette.crustytoothpaste.net>
+ <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
+Content-Language: en-US
+In-Reply-To: <993914f7-5023-459c-b1e8-ebec2646e243@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-Hi Martin
-
-On 07/06/2025 13:56, Martin Ågren wrote:
-> Hi Phillip,
+On 08/06/2025 20:31, Phillip Wood wrote:
+> On 08/06/2025 19:57, brian m. carlson wrote:
+>>
+>> If your goal is to just do the fixups and squash and not anything else
+>> interactive, then you can do this:
+>>
+>>      GIT_SEQUENCE_EDITOR=true git rebase -i --autosquash
 > 
-> On Sat, 7 Jun 2025 at 11:45, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> [...]
-> This range-diff matches what I'd expect. Now this test makes sure we
-> really pick up the `-p`. On that note ... I just realized that all of
-> these would keep the test passing:
+> Just a quick note to say that since git v2.44.0 you can just run
 > 
->   test_write_lines s y n | git stash -p file # what you have
->   test_write_lines s y n | git stash -p file otherfile
->   test_write_lines s y n | git stash -p .
->   test_write_lines s y n | git stash -p
-> 
-> So the implementation under test could bungle the pathspec, query the
-> user for both `file` and `otherfile` (in that order!), get EOF from
-> stdin while handling `otherfile`, leave it out of the stash, and end up
-> passing the test. We could try to protect against this by providing
-> another "y": if git wants to read something after our "s y n" sequence,
-> we'll give it a "y" in the hopes that it will trip things up. We do want
-> to test the handling of pathspecs here, so maybe tighten this?
+>      git rebase --autosquash
 
-Junio has merged this to next now. I was hoping that we would already 
-have coverage for this with other tests but I couldn't see anything so 
-I'll look at improving the coverage for "git stash push -p <pathspec>" 
-in the next release cycle.
+That will also rebase your branch if you don't specify a commit. When 
+you're re-rolling a patch series it is normally preferred to keep the 
+same base commit. You can do that by adding "--keep-base" to avoid 
+rebasing onto the updated upstream branch.
 
-Thanks
+Best Wishes
 
 Phillip
 
