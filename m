@@ -1,127 +1,136 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 117DF155A25
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:34:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84B521D3E1
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 18:41:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749494069; cv=none; b=JtqMBN88e+BV4U97GhjhaYr8DEyF7FAD9OdUCfvvucHsaQTxHVkKrCqDo+Ky/pYZiTukLGcbyE/djztLDfZ8J1RAzWtyL1jCZLcZfp+bV/G7FMRBWhluIkE0TrtT6fyMKDNJuT38N7aQbhb/yMdIfOgcN+nF5qRNIxYAnbdB1m4=
+	t=1749494518; cv=none; b=aucCogWkr5Ygeg2DIC/tl3hsMHw6IHllPvHX7EaggubomKMjPQRomIkcsr1VL4PrYNR7sqh57pFZBmEQDR4IxX3zn1PT7Uv345h3fNIMyCxQ6Cd3AmPTK44ZjD2wb2fiKVXOG8L0AJaYNHlh95i2cIsucgyHTvRjDaNfTVUJveg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749494069; c=relaxed/simple;
-	bh=KRTHLtKZI/7HkXltdb7YDf/DwvPHewK3qOGPtGdTD34=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fzCw+4TAYIu9cA9fmRQIWEjCmIo1GFa2zMLFyInZCZQGBZJpgKoEERsVHGJBfdepcq9OicB7OcnC5avOpMjrEaWd+FMKmDvjLtaSwa9qRNWdXQAPlA7AFEp4QtB0h1nTyy7uoHkkZKLG43KJ3kj5esNMSwmJ/A/V9hLrP62hsqo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zOiLR8Dq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GkkyB6iI; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749494518; c=relaxed/simple;
+	bh=JavXUxSFqib+JZCelyjlNv8bFfiOcrkxO2wCjTBFkcs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jYMU0UDNWP+TIyPJjBOn5rzCctVeiqz/gopea0nsIrXq9+hwig1OUPghdxOPPLf3PoBM22Ke6j1ZvT0OiD6VtvulQ/07xANGMyfywQLAncc51neVEYJjH0VfZgZjNgz907SjNLoOVY+/VAKINkEnNacn+46zCzYE2xQYq7m5bfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=gVbjy+cL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MxevZ7MC; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zOiLR8Dq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GkkyB6iI"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2DF8F114035C;
-	Mon,  9 Jun 2025 14:34:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 09 Jun 2025 14:34:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="gVbjy+cL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MxevZ7MC"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id AFD3D13804DE;
+	Mon,  9 Jun 2025 14:41:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 09 Jun 2025 14:41:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749494067; x=1749580467; bh=xyQf8Ogct3
-	qwE1sIwAYHws1O7Q17qPIACI7UFsX0+GU=; b=zOiLR8DqBkyUP5CZXlGSPNMZvn
-	ewSbK+upfeQeVUeHzlSQa40VM5RzozmWF8piXDuRuBRb91+Rw7YCvQ5T4ohhIqui
-	bDscCQpVxQpVIlF+/+uSOuzL1m8iqD2bWbgG5Yzwaf65FM2/EZxYq9v9Tb+n1wzH
-	15tf+0pE7UH+cLLz6uxnAIPGKmV8HfNvU7a8mjHsHXtFUjaGMazlqLhBhKaQb12C
-	wC5SICynLL/48uyVVkWmlRIKIOJnCFLCxtX1TwyfFCGd7MTR5pJ4/is+avoHMNe6
-	JY94g4QuSZ/1oFwbxRTF3qDbHKVOygqeeaWpOyolOYnW2nvanavdcCGPkKzw==
+	:subject:to:to; s=fm1; t=1749494514; x=1749580914; bh=FuvcmuUEu9
+	KOiJ51ZGsDR/fXUDeNDQZM3WSulc6KFIA=; b=gVbjy+cLO7qRqtdvM8Gw+TjDV3
+	TW1LON7zbr+LQrwQiVwpyHI/BR6Rfqy+D8M1/ABisgGloaIvyojvGKwR/f4f/VpE
+	g0lKlkpZbG9UuqhOHSN7+PAwAnzPrNoCQmx0iSDXbrfCyz97OCVvRfqGJfbpQIYn
+	Y0aqjPfLBwP+w5+mG686vn36q4D3NXGs3hx2lUGdjh3VDMv9x6B8LexY9CDJNsYD
+	RoxDusf1jfYqc3Dd/obTu3GynAI/4viGXOV9S92BFKx+ox7DNoj0lCm6Q9hhI5bp
+	Ags5A9gGAFJV+BPKT5vuH7Io61h56X8PyZPqygV6CoYHVUzs+BS7XtxCs6qw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749494067; x=1749580467; bh=xyQf8Ogct3qwE1sIwAYHws1O7Q17qPIACI7
-	UFsX0+GU=; b=GkkyB6iIFI9etaneGFZl6j9KlYh7+XEhHMNyRMR7nNt7BP5bx2/
-	hkkIE88ZiiN82l93knsd1r4fFiXu0jXfGj1ZLmBW3XWNWm2gNZZjHpIx0dsqZnIF
-	lkJxsZCkrnRlbKvaOCGz0rxS3YSjxjLhO7hK0gRtiAcRoqJTNyrlVJ/NzTb6JYli
-	NXJzfNgb/QyPMvXUBx00xH1CLs/tTTL1e+5PCVH2TfCBKGeIGDdT7atxJEaShyg+
-	HvlC1/FG6BwDR9G6rEFgp8hFXY1XO2PptirbwB+9d0FOwhL28k8u+vJz9CWw9C/F
-	GsYxNU3lSb+P4roJJDVcHhRXJCTThF2OoFw==
-X-ME-Sender: <xms:MilHaHS0U94w7ALqWDZohWUFYIr143_cxPj9-WUBzx6kJttsnK5qlA>
-    <xme:MilHaIwpqhj7-e7ISI4FyIhlh6YJp4Hr1UfzGNYayqNJdhrUjRe-Gbf3LGDdV5YSp
-    3vuphoAaVjbzFSXjA>
-X-ME-Received: <xmr:MilHaM3QNw7xLsA8Of2VfN8bZfv8Uj6BY2H53wa5R4PWy9p8nRCOQPdvukPw-zfyU_T1y7HwsugI6VIb2GUy7i9mZpGy7QETX-Qr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieeiucetufdoteggodetrfdotf
+	1749494514; x=1749580914; bh=FuvcmuUEu9KOiJ51ZGsDR/fXUDeNDQZM3WS
+	ulc6KFIA=; b=MxevZ7MCc04Zkh68rHE2UCTkmOzu6L3Xd/OoMnp4mxsFe0jz7Xl
+	lqyVPC5ou0jW7TO4Z/BuWgG9Lv6hY3E7qAvTLMDEqejbZ3ve/UMWFIslsOCijPX7
+	1uwNmN8eYQohhmLwHTb7AyMKZUToBhwtsmAEdGomsyEeqx1Dp7KFV/OT5RCu4/My
+	mIQCcFmFqJTLvqckFtTTlS9GKL49etmLsmmcSM090esYjplLeAqd/8PzeWIK5LPf
+	UAJCiQpmFGDIiugKGYVL3xIbyKx/zbktCoqxuOwTYM6PnKLVN00YuUspSih62jOU
+	zHr9wG0tkry6kkdc90RyT7sN0qE0nBTS7HA==
+X-ME-Sender: <xms:8ipHaLpBPhCPwKf1CRgPIfTR2kS3kxInvxo4Jr7OMF_RFjIiSsAyWQ>
+    <xme:8ipHaFo0_QSAUjNGDqDcjDRidshi72mUQaGmHtc0CKZxqNfO68_7H6zJjL27LSDr_
+    oP1K7UIqjz-ek01Ew>
+X-ME-Received: <xmr:8ipHaIN-MOMs4YuDR_MQDVZaLoTUmavOBFPNpAeh7NpqUKplSByTJUgz1Nq9_8RYVT7AuEsiQaDgKls7laF3vdk0MNduJlCKBri3TzBmnLg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdelieejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssg
-    grkhhkrdhnrghmvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:MilHaHCBO7vBztYZ6d8-jCb7SLepbBAw_f__W-hGyc7OcCN7DxHRQg>
-    <xmx:MilHaAiBJN4QCTY5dJLAfmPxOrpDkeTZw-FgeZrP7bL-nREJW2aw-A>
-    <xmx:MilHaLq8vsVd5-FleJ-CMDjs0qiiMQnhgXN2At1CbgntDBg2GhZHVg>
-    <xmx:MilHaLgI20npU945kJXlA6iUBVpEELcDQu5fJhBv4Lkfq1xGwRc2JQ>
-    <xmx:MylHaF5_KGJAavHh7QqiQywi0Jp3--GrCDT30K9tK9zL5Lzw6kJv8KKz>
-Feedback-ID: if26b431b:Fastmail
+    htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimh
+    eqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueeg
+    udfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8ipHaO779sxuuu-yMbzt_qm7GONWgMeuQ8w68xfV2BxUXHs5nc61Ow>
+    <xmx:8ipHaK7cLAu4KGL5un6J_amdLwKRuwkJ5XOzmFrJGBvPJD4nNmutYg>
+    <xmx:8ipHaGjmrOXWKStlHECzXn29gjQesuMeDQcMonoaKFlAHrvWWLqvMQ>
+    <xmx:8ipHaM4bHSz5nK-zvHDXjBG3uNaEvaZrrdEzd8i_Rz7U-z1XGUAJyw>
+    <xmx:8ipHaIErfb4x9kcRsikrWhOHyJaYkPFcK94ti5azjgFZHwCpZlv23i9v>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 9 Jun 2025 14:34:26 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: kristofferhaugsbakk@fastmail.com
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH] doc: maintenance: fix linkgit syntax
-In-Reply-To: <567195e5577c6c32b46f784a797fbf366873a0f3.1749484736.git.code@khaugsbakk.name>
-	(kristofferhaugsbakk@fastmail.com's message of "Mon, 9 Jun 2025
-	17:59:42 +0200")
-References: <567195e5577c6c32b46f784a797fbf366873a0f3.1749484736.git.code@khaugsbakk.name>
-Date: Mon, 09 Jun 2025 11:34:25 -0700
-Message-ID: <xmqqsek8rcge.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 9 Jun 2025 14:41:53 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 32b99107 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 9 Jun 2025 18:41:51 +0000 (UTC)
+Date: Mon, 9 Jun 2025 20:41:50 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: [RFC PATCH] test-lib: add missing prerequisites for Darwin
+Message-ID: <aEcq7sbPx57r-qKK@pks.im>
+References: <33de9e5d-24c8-47cf-b858-6d55d26803b0@ramsayjones.plus.com>
+ <xmqq8qm0srh3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq8qm0srh3.fsf@gitster.g>
 
-kristofferhaugsbakk@fastmail.com writes:
+On Mon, Jun 09, 2025 at 11:24:40AM -0700, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> > commit d3d8c601fd ("t7815: fix unexpectedly passing test on macOS",
+> > 2025-06-02) added a MACOS prerequisite by adding a 'Darwin' case
+> > label to the 'OS-specific' case statement. However, this commit
+> > forgot to set several prerequisites which appear in the 'default'
+> > case label, in addition to the new MACOS prerequisite. This causes
+> > several tests, which macOS should pass, being skipped.
+> >
+> > In order to run all applicable tests on macOS, add the missing
+> > prerequisites to the 'Darwin' case.
+> >
+> > Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> > ---
+> >
+> > Hi Junio, Patrick,
+> >
+> > I was looking at something else when I noticed this ... but I can't test
+> > this, since I don't have access to a macOS system (indeed I can't confirm
+> > that is actually a problem, but lots of tests should be being skipped! ;) ).
+> >
+> > I initially deleted the 'Darwin' case and set the MACOS prerequisite after
+> > the case statement - which may be a better solution. dunno.
+> >
+> > I marked this RFC because I can't test this. Hint, Hint ...
+> >
+> > Note, commit d3d8c601fd is only in next. If this is not going to be
+> > part of the release, then this (or something similar) could be squashed
+> > into it when the next branch is re-wound.
+> >
+> > Thanks.
+> 
+> I do not have access to a macOS system either, but the change in
+> this patch seems like a very safe and sane thing to do; it will
+> bring us back to the state before that problematic commit with
+> respect to these three prerequisites.
+> 
+> Let me queue it on top of ps/meson-tap-parse topic.
 
-> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-> ---
->
-> Notes (series):
->     I get no more hits with this search
->     
->         cd Documentation
->         git grep --no-index ':git-.*[123456789]' -- '*.html'
+Yup, that change looks reasonable to me, as well. I cannot test it right
+now though as I'm on vacation until the end of June, so I ain't got
+access to any macOS devices right now.
 
-Thanks for being thorough.
-
-The patch looks good.  Will queue.
-
-
->  Documentation/git-maintenance.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-> index 931f3e02e85..540b5cf68b0 100644
-> --- a/Documentation/git-maintenance.adoc
-> +++ b/Documentation/git-maintenance.adoc
-> @@ -172,7 +172,7 @@ rerere-gc::
->  
->  worktree-prune::
->  	The `worktree-prune` task deletes stale or broken worktrees. See
-> -	linkit:git-worktree[1] for more information.
-> +	linkgit:git-worktree[1] for more information.
->  
->  OPTIONS
->  -------
->
-> base-commit: 8db3019401f8093fb895f581be641fe7e05aa755
+Patrick
