@@ -1,42 +1,77 @@
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A886ABA3D
-	for <git@vger.kernel.org>; Mon,  9 Jun 2025 20:15:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FD321E097
+	for <git@vger.kernel.org>; Mon,  9 Jun 2025 20:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749500138; cv=none; b=lJXFPbK1JW7SzEXflVzAJxkIOiqrwV+7+0Y/k9nZ2isBRMIDiJc659NvyXAOXWMjx/eB+m1r7pFhqi2Qahp37I08isXOfZVek5gCTn81COREHPyPnZzLIyAr14prI4x3kFwfWRqJKM3DJ4tJ22bHHH468r7UE39Jm39ES3i+Pk4=
+	t=1749500386; cv=none; b=p+P8tjkMI0vGRlxFfaE/Qx/m2Sk3oI5jDgob8+TQ/HADMOr8expi6mq7UMY4sLszrWF0RKFx1vNo46D+oNfTd4Uj/0Ioyq4GssPNrMM//9/UXBPFzbkARLLqcF18PpFFmcJCNy8Sp+boKX8Vdfd5kAZR+2gmq7ki/4/n1pFRER0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749500138; c=relaxed/simple;
-	bh=rxY+KFpIDyRMPhXYTcOMuD6l2VmJEqpGZgWzplF2tqM=;
+	s=arc-20240116; t=1749500386; c=relaxed/simple;
+	bh=GfPJhDYfJ/Cu0lf7c5xr5olIL+eiFJRL+mnpLKx55IU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tnhOADTv/LjGdsjWqJz9N7YK6NrFvrEgSCN55FsvNmh/jqLlH1rDMfQmEOfFEI419ovNcrZsUoGPSEqxxx6M2oyubgNxha+zQNkf5f3sk6BYEykE+vr+bmYFkvdQ/SE5AGOaqS7sbH1T6jBJi5prPxU5VXtQWZoN3TfwQ3+9tAs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4bGNT83NkVz1sG88;
-	Mon,  9 Jun 2025 22:15:24 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 4bGNT832ghz1qqlW;
-	Mon,  9 Jun 2025 22:15:24 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id RRk1JrOgU0z1; Mon,  9 Jun 2025 22:15:14 +0200 (CEST)
-X-Auth-Info: 67PxxHYEvKn6a6n4ixeAzzOhamd09j/a0NetKOj7kILY1h7pGb5nhbfNdCwvoIoR
-Received: from igel.home (aftr-82-135-83-169.dynamic.mnet-online.de [82.135.83.169])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Mon,  9 Jun 2025 22:15:14 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 1000)
-	id 493C22C194F; Mon,  9 Jun 2025 22:15:14 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
+	 MIME-Version:Content-Type; b=l6Ksaz+zAtWn7SfyfCXcMNp3kPYVdUHWh5zCxnnypIQTVHO+Wx8xOyYaNC0pOoT/94UbYBXHa+G3cZUJw8DwYjGd22faROq2tHCNqqJOCvZwF4vzY3qNr81wgZ3iBR71AIDT78hECBwviju4c++8ubgJzpf08M3lk8MfVxPxFIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HAo5dxYL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UyQOG6LF; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HAo5dxYL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UyQOG6LF"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4CA851140338;
+	Mon,  9 Jun 2025 16:19:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 09 Jun 2025 16:19:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749500383; x=1749586783; bh=GfPJhDYfJ/
+	Cu0lf7c5xr5olIL+eiFJRL+mnpLKx55IU=; b=HAo5dxYLUJ832Fsb95MBNzD9eg
+	d67uRbaOS0mIs3ErpYrC1rNkQBvdDhvgSXz8JM92RSxA5mnatHPDKhRUihBhf17W
+	UfNuTl0ijnv6Vm08EyzA4P8jWlQvg9DI+//36T2cjxWGr7nrLYBnmBH4DTpDMg0n
+	UeuT5DGZf8gBucUsX82qxoohLiYhOZjxzSi4mOmsnByDgg+YAvyUMXqgpOssOLjj
+	qZImAgRtPBK/aZp4xIHQwAPwL3BxcLuZ6f2FpP6bJWDhmaqIlnzCGEexgBDzBjDL
+	HbpKrqQX/7+lxZT/9OfrP1SDBmtjsl4HHrCT5yYs19VAD79qpW1LR1PspekA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749500383; x=1749586783; bh=GfPJhDYfJ/Cu0lf7c5xr5olIL+eiFJRL+mn
+	pLKx55IU=; b=UyQOG6LFXiAo09W2M7qMr46Tl0r3NsKdFEp8+K1iCk43oObgcZv
+	1u2SbTOThFH7+jt5wqYD08nuTFmHcV9bZ9heb4tStgLFkwJRdp/9u+thmqj4XLsy
+	IB2wFGlIeeypwG+rAQSrjHt5hddCWGKjLZX7JojashSYTSjKx8ov0J+WyFhMUdNN
+	2VKetFs3XKRWn6Guov4w/u+L3XnG02NmTiAWY+I9t+MXBv80fKZlgD8+pZ6pY4DC
+	vhCPnZzfmsHYKbERyLZOO0+UZmI1vHEZWnVvmqFANBCArHqo3CXD8q2t9IiObLP0
+	k90EwJPIPtpouxZRnvfwc/VwUOiFPDinT7w==
+X-ME-Sender: <xms:30FHaCkZv9EkHlQqdvNkqafB5XNdmQUg52ZawqzHJ9Zz2OcbwNFLRQ>
+    <xme:30FHaJ2ougbVM-mQZi1NXVj3GXmYfT8s4W0A3dmUctEUFYhwj5w6Bx9SpE1I0vRGp
+    Ry71_n1kZrLghGKJQ>
+X-ME-Received: <xmr:30FHaAoxEx-KXvhCoxRZOR2nxtb1Cai5IaYXDbkKGLDzhwhkweY5W0aKSsNFfp6ADeNgBvolUYsdNG_uIyQ_0yE-RaGkwD5eHQv9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdeljeeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
+    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
+    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
+    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
+    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
+    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhhilhgtohdrfihijh
+    gsvghnghgrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhho
+    rhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:30FHaGlJVp_NJcJH4qipbSMVbAcOwq8hjmCM5N8nCOoWWTDwZJrljw>
+    <xmx:30FHaA1cwVQHYwaLyRgUNABjNNA16kWN5mBwUIY5iF4y9xVpBQy9NA>
+    <xmx:30FHaNt76nFvjxlEc9X93UiN3fDwKX1C8jKZVG4cgrj_Hl18pw8EMA>
+    <xmx:30FHaMUPn7YMMyeD9MAf7nslCgu_Fw8WcVRqUdK2rNoaUuk3kk187A>
+    <xmx:30FHaEiCKHJBMFOonwKtmDJIqwRYz7165fJLb4U6IgjNUapMm54Y1LUM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 9 Jun 2025 16:19:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Hilco Wijbenga <hilco.wijbenga@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,  M Hickford
- <mirth.hickford@gmail.com>,  Git Mailing List <git@vger.kernel.org>
+Cc: M Hickford <mirth.hickford@gmail.com>,  Git Mailing List
+ <git@vger.kernel.org>
 Subject: Re: Suggestion: error "tag ... already exists" should distinguish
  between tagging different or same commit:
 In-Reply-To: <CAE1pOi34+btHyV8GbjpFPcJ+2ixu59ce4eAE=Q7F4JEcuJyXnw@mail.gmail.com>
@@ -44,8 +79,8 @@ In-Reply-To: <CAE1pOi34+btHyV8GbjpFPcJ+2ixu59ce4eAE=Q7F4JEcuJyXnw@mail.gmail.com
 References: <CAGJzqsnvTnp3k8Ab2exaBAw5pszQRz00UcucnK=ECtY5vhG+1A@mail.gmail.com>
 	<xmqqcybcrc2u.fsf@gitster.g>
 	<CAE1pOi34+btHyV8GbjpFPcJ+2ixu59ce4eAE=Q7F4JEcuJyXnw@mail.gmail.com>
-Date: Mon, 09 Jun 2025 22:15:14 +0200
-Message-ID: <87qzzsisdp.fsf@igel.home>
+Date: Mon, 09 Jun 2025 13:19:41 -0700
+Message-ID: <xmqqqzzspt0i.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -55,15 +90,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-On Jun 09 2025, Hilco Wijbenga wrote:
+Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
 
 > Does it really make sense for that first example to fail, though? "git
 > tag hello v1.9.5" is an idempotent operation, isn't it? The second
 > attempt is a no-op?
+>
+> If "git tag ..." simply does nothing if the tag already exists (as
+> requested) then that would make the OP's issue go away: only the 2nd
+> example would fail.
 
-That's not true if an annotated tag is replaced by a lightweight tag.
+I do not think I personally mind that direction; when I responded, I
+thought that in the example, 'hello' is initially pointing at
+something entirely different (perhaps v2.0.0), though.
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
+But it may be tricky to do, though.
+
+It is easy for lightweight tags, but you'd have to fail an attempt
+to add an annotated and/or signed tag without -f anyway, so you have
+to be prepared to answer "why does this behave differently with and
+without -a/-s?".
