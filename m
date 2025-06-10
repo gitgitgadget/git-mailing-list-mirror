@@ -1,144 +1,116 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9440A283CBF
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 21:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AFFA4A32
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 21:29:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749590759; cv=none; b=P+n5NgIFt5QvqGAyejWSyWWGZPa76b5bZvkPGb746xbAHM4fa/B32iG5mzMWBhwq+VfFPXMJBFSJVFh4fj10IDt+FepRZfLFnAZPZX/U30FvUSzsizTlRBVYh3NzSG21vZPuICdftvnA4VpHwoMBpT72Br1dhNe6tKvpWWJexO4=
+	t=1749590999; cv=none; b=Kn/M3ZAOo0yPuAvub+uFvCUt2/BdKuTekMh9CQQwi+7kEQ/gRAYa9T2s2QepUJ4oVVkGR4a1rsi4bXRmGkRkTmbUWvMtJURWhZ7pF95CfOZWHekRJttLpDzpjB+CI/ui0NWwzj4B+Juw5BjK9qNagNkFgbmWGOHKnvJ898DxNik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749590759; c=relaxed/simple;
-	bh=4Gf/mvbEO6eL5qw6GrrLbd1iNYkYIMaJPwEeEB8bWBo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Uj9PgsVJrdloDQe5Twt9EJ5M6r18Gq5SD7S5+omH6HQU3DGn95h6NmTaFJKd02WAN6TOHAhL9fd4bapbGlk4kXUM9dBBZEFm/dZuLK0UVSgIvZKzs0UOI/4g7NVWV93rhjD4AJb/OAoXeZ7VTwD9cVF+UP5oF2zuTteiBOMXa0s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ewNWpcPI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h1A3ZCJg; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749590999; c=relaxed/simple;
+	bh=O2+EJYJ3fouHBSV8X2wzE1jjHSEzejAO3L1iR5KoQEE=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZBRBz+b1Z43dnTnFCWKmRg06Z+f+xoR+SZn4gqR6axj+ltnhKSyog3v6lcSxviIfzH9J+DV16UXjUkPfsSr21WG+n+Gh4P5HfCdl629pBgjnEwcjKkgNdIZQsk5UVygmKct2cc632d+PBw+erYkSVRndiu3YxeI3ZVCnuvu0F6c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=h9So1rWd; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ewNWpcPI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h1A3ZCJg"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C7DFA1380388;
-	Tue, 10 Jun 2025 17:25:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 10 Jun 2025 17:25:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749590755; x=1749677155; bh=pv9/TDSL6A
-	643cRzwhE51xR+BZx+55SvQxo+MgMTxnA=; b=ewNWpcPIDCJJL5lf9tbI7M9S4u
-	HkWDL3g4NPwEUCfs5dSgOn/09dVSp8bmdKyPq9UivYiVKSJxJnhpCEZrJa87Jz5o
-	lzg5hvQY5wUuWEpbeqOBssSZAFxBcocnX34m8iE9cbF+m8JpCusDsD6RmqAM/ZdO
-	cyXMTttQh9HMUJqg7Z6OKjl8dAXI+Cr9fH9s9jB8lpRPfCvi/tHJkcOVh8yhtv8K
-	sX+gTe5vvkiMQeH6AUFXo9b1+zdOm/AYl55VECe56FdNwkjfac2b6hTW3Sc48Ur7
-	5oXy93b3PY/vUOrWohCjiEJzbruC+oGZoDAeVA3hkgRNKKd8GUGiCR6Z2/QA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749590755; x=1749677155; bh=pv9/TDSL6A643cRzwhE51xR+BZx+55SvQxo
-	+MgMTxnA=; b=h1A3ZCJgIqwUOTIEMuSWMDJF12tNpEPL2b9sLHmWGhGjV/srRuv
-	Fy+vuJ7RMeS4zNzegXB86vMd1qYd4y7JLNQVXIL3Jkxh+IUgimUJOZh19CJjFl2D
-	4D0yZESKQsg31RvWtNaL7Cb04txueLImmluKLYY/hgALQlPaFnoHeIFBxz7sCPta
-	QsWOADlWo+kv3FFNLbr9D3dVdJaGHGXBpqn46s81qKrPx87kd8H2hyXydO/Dqcpp
-	mDK7dwDUeqYwizgbwWsIQZe/9T32w8iTIReI6l5HnDi5C+MHVazIbmbEjorrvf6i
-	Q3Kj+FrfdWqHfH9ejP9AZ+S+JMT57XSuQTw==
-X-ME-Sender: <xms:46JIaH9VDAfBnk56Prw1G5tenaFpLbY9oGzJgd-o05ZJQ-siLmF2dg>
-    <xme:46JIaDudGlDIRfyVpdx_2qtSwFK81Dd9dFRMJ_k37bmnMQQG7E6nNm8wS4-v3r5LF
-    K2w6k-vABGVdXPIrA>
-X-ME-Received: <xmr:46JIaFBMXBh1Gqj7ykedopcO1Si45d7pHiIaSN7lRPF2I50o3tKVR-czh4SzsSlIrnR6dm2kUL0_w6UkUc3nE6Gj_qEPgmVtPfm8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduuddvkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtoheprghnughrvggrshhtrggttghhihhothhtihesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:46JIaDfKf0qTv1zl_h8-yLlxW_X2ztISjrcGCWcpLkz5B9UMK5Frzw>
-    <xmx:46JIaMNHDuHN6Z7wTO1-8zKw4WdsmVuOICFx9j4NWlE2geIPuEcGlw>
-    <xmx:46JIaFlcOGrEmkWR2H4GqjXpwd_FNUeE-uOW_bPFtmeXIc5cV_6vKw>
-    <xmx:46JIaGvZoJ8VpHn8vxlAwg4S-l-zWexJetrAmW-6t8bVMjho6Hmv9A>
-    <xmx:46JIaA4xpITComNL4G8zDprqgHOxqeDEVQY42K5Ed7wlD5061uHVW2Sd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Jun 2025 17:25:55 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Andrea Stacchiotti via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Andrea Stacchiotti <andreastacchiotti@gmail.com>
-Subject: Re: [PATCH] branch: move multiple branches in a single --force
-In-Reply-To: <pull.1992.git.git.1749546464346.gitgitgadget@gmail.com> (Andrea
-	Stacchiotti via GitGitGadget's message of "Tue, 10 Jun 2025 09:07:44
-	+0000")
-References: <pull.1992.git.git.1749546464346.gitgitgadget@gmail.com>
-Date: Tue, 10 Jun 2025 14:25:53 -0700
-Message-ID: <xmqq7c1jmgpq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="h9So1rWd"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-70e78e04e48so46535197b3.1
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 14:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749590996; x=1750195796; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=trv12vqqWYyN3eJtEFwlLCjgvl++nX8bgZxpZPeZ4yw=;
+        b=h9So1rWd7PTUZDtV0wKoRZqj36du0p9F5E6y3G9vejYDUr0D38h/Qjj+MITcpRA6p2
+         KNwtmcAaCC048mp/u7CBiE/OHqFc3Rjw1zHMGjMldlLWvsCDqZvO6A/yQPyvCTO4EhKa
+         2HJ9tlY2cwnCWtVoY6E0DynnrLF6a9Rw0jsPxBasgGQbIzV6Eb460a3wGyA74bFj2DHT
+         H1P7nd8XNPJkm8USa24nsNeKVb9K1oOBqS9RoWDY/1sfA4wcehVtuEkOWdQu+M+8J9+Q
+         12qFsbWqP9axMf1F3UpR7rGgXtOVLC3++auBRmAzIL5KOVJuu7HTlFauhC5ciHsgop8R
+         4Jaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749590996; x=1750195796;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=trv12vqqWYyN3eJtEFwlLCjgvl++nX8bgZxpZPeZ4yw=;
+        b=oqFnVPtx2sDp4bwbStF6oRrf/otMJWsIbfnmpFkkMG+2HNF8QYWuRPHDDEUSrUYMcQ
+         1xPoOyaldjIfW1XxQq5PE+W1HaeuayE6oijMi8HKjk7gS5gYb5EeCFRWnEa21a8sn2tL
+         WRF/Dnm0OLHDucVe4gKAq1JqABl7BgK6mB7vA25GGRLFDfJ4MS0/y5UI2fJhN8auNKS/
+         CygAH74XrkVkFM1lg2uxIhdeXXrE+dZkI/0pW0xZ3xb1wVghXXuGuS6YqtSawUu5ybdO
+         p3jShlfoKsZkoXMFFLBSw4LId0hJdedNECbWWbX1XmVoNHyQBzlT7choFtE6nAIW6oMl
+         3reg==
+X-Gm-Message-State: AOJu0YyKQQ9C6dGRk2yHrmKqGbIuE4MHiYhoXPajU+2Fdr1tvZRTB2mG
+	oNdjotEP2SbPAp9kCLzk20Mqt8o5GND/AvWt3P7q9raj7TtPwiX99Tq72QPIkQ==
+X-Gm-Gg: ASbGncs6ex9XM/6CwhtN4VhZNAMDg+Pt+Ir9z/1yUt0qsmXIUc/OTdB/kh6K3/hFAJh
+	VyrAhtm3Z2dkjnL37yiZwTbFfoz19Y4bCAlYVsdvbtKqu6x6Ougro217fECuUKM5KqVVgZ0MZSZ
+	QmT2haROIqWNfcD0eI4lO9UJFhq9W/j5GUl9mEkGiPiUbDIdbCKSOqgHNi4ztKGIT3JFVtkbnkz
+	kqayD4yxAgEbDA/L4MBfDCmepwMejXndFX4yU0Ji2spdVV3zZRpX7HLfmplJj+v+9eNpSghV3Cn
+	cblqwIa5OwgN7cfNUyNOmhLg9w0Ss5PBAxxmzjCJWEOfhGInqhRhvRZ8GyiAsvlK5OsUYnsEv6r
+	XXHr+zT38NRSWBbiM9+NqH34EenUM4Rj5GC+S
+X-Google-Smtp-Source: AGHT+IFAIl4x3UHKRlGtyDwMjXkEBWsjQG3RlWWYte+a7JtpMPAf1q4sXCcAknpX2qmmqJLKpKgjFA==
+X-Received: by 2002:a05:690c:3584:b0:70c:a57c:94ba with SMTP id 00721157ae682-71140ab7fe8mr17037367b3.17.1749590996047;
+        Tue, 10 Jun 2025 14:29:56 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:90a6:1600:150e:34a1:2af9:3077])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-710f98ed805sm17856317b3.42.2025.06.10.14.29.55
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 14:29:55 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Subject: Canonical way to filter list of commits to those pointed to by branches (preserving order)?
+Date: Tue, 10 Jun 2025 17:29:48 -0400
+Message-ID: <20250610212954.51868-1-ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"Andrea Stacchiotti via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Perusing a Git Rev News article [1], I thought there must be a better way to
+turn the commits between 2 revisions into a list of branch names—better, that
+is, than parsing git-log output.
 
-> From: Andrea Stacchiotti <andreastacchiotti@gmail.com>
->
-> Using either the 1-arg or 2-args form of --force
-> it is possible to only move one branch at a time,
-> to HEAD and <arg2> respectively.
+I wound up with 3 options, but I wonder if any are canonical or if I'm missing
+the "standard" approach? My current best attempt leaves me concerned via the
+documentation.
 
-If you are renaming (or "moving") a branch that is not checked out
-anywhere to a new name that is not in use, you do not even need to
-force.  You can just do:
+1. Use join:
 
-    git branch -m old new
+    join <(git rev-list "$upstream..$base" | sort) \
+         <(git for-each-ref --format="%(objectname) %(refname:strip=2)" refs/heads | sort)
 
-You are not moving branches without "-m".
+    Requires Bash or Zsh due to process substitution, and the |sort pipe loses
+    topological order. But elegant, from a certain point of view, perhaps.
 
-What you are doing is to point a branch A to point at a commit X
-with
+2. Use git-name-rev, but post-process output (because name-rev gives results
+that aren't refs):
 
-    git branch A X
+    git rev-list "$upstream..$base" | xargs git name-rev --refs='refs/heads/*' |
+      while read -r sha ref; do
+        if git check-ref-format --branch "$ref" >/dev/null 2>&1; then
+          printf '%s %s\n' "$sha" "$ref"
+        fi
+      done
 
-Your proposed log message talks about "--force" too much; if you are
-creating a branch, you need "--force" only when the name you want to
-use is already taken.  Pointing the branch tip to a commit is not
-inherently tied to "--force", but your description gives a false
-impression that you are adding a special feature when "--force" is
-used.  The proposed log message needs rewritten.
+    Not my favorite, but seems to work
 
-If there is not yet a branch A, you do not even need "--force" on
-this command line.  Also take a special note that "X" does not have
-to be a branch name.  It only has to resolve to a commit, so this is
-also valid:
+3. Use git-name-rev after filtering with --simplify-by-decoration
 
-    git branch [--force] A X~4
+    git rev-list --simplify-by-decoration "$upstream..$base" | xargs git name-rev
 
-I can understand that it may appear to be handy to be able to set
-multiple branches at the same time with
+    Clearly the most elegant, but only if I can rely on --simplify-by-decoration
+    not outputting commits not pointed directly to by a branch. But the docs say
+    "Note that extra commits can be shown to give a meaningful history." Hm. (Of
+    course, all the git-name-rev solutions are broken in the presence of tags,
+    too, though for my use case I will just ignore that for now…)
 
-    git branch A X~4 B X~3 C X~2		(* does not exist *)
+[1]: Pushing a whole stack of branches with a single Git command <https://andrewlock.net/pushing-a-whole-stack-of-branches-with-a-single-git-command/>
 
-with or without "--force".  If none of A, B, or C exist, they can be
-created from these three comits X~4, X~3, and X~2.
-
-Or you could propose a different syntax to create branches pointing
-at the same commit
-
-    git branch A B C origin/master		(* does not exist *)
-
-But either syntax to create multiple branches feel somewhat
-inadequate.  What should happen to their associated configuration
-data like branch.A.remote and branch.B.merge?  Should they all point
-at the same remote & a branch at the remote?  How would that make
-having multiple of them useful?
-
+--
+D. Ben Knoble
