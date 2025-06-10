@@ -1,149 +1,295 @@
-Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1FA268FE4
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 21:11:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F89728369D
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 21:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749589918; cv=none; b=jZrE3uLfmYc7I7CDAYQ1zVzO7aZJhVcz2lK3E/H5Ni6IBYsUAYG5mL6sUBuc8pddJnGXS17GphYOGdI8OnZ5cl4KwaBYmnJQQrW7V0pBb61OiGy26xRC6X6qW/enQGhMd42U6Ax4XvsZF+CiJGLTSDh7QBDfd9S/2VTMzniCRRo=
+	t=1749590205; cv=none; b=LGul3iF82aFk1bBW9q3NWgu7HYel9DUfx6TyIZ5nYcGfUxmes8HKEnYj2TswpYeeIgyq7ERIvHUnwJkqXEDfq+hXcQYGmvaOuvHKDWW7Mhi330QtkgkO4NbWJLA/o4fO2mI7pdA5tbFoj0NvbJajXHXFzW5D4Te+hTyyG4GcDLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749589918; c=relaxed/simple;
-	bh=2cxkFYUTq2HRcOmzlqzYTnjjVXORHjIu/oyL1+z9pes=;
+	s=arc-20240116; t=1749590205; c=relaxed/simple;
+	bh=1aRRx4TYtgF1CXo6lOuJx9UStAYTZ/xfbK+MZhEE9rY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UARJ8wCGW1xW2Xoe5KzMwGihds6cdgvBaagvrd6wKvXm90eutcN2yVOLZfxoE+PwsZEhigXJwUyK0mFiqJnQvt4tThrTAHkSrCbEJXR0PGy7kWasb/PX70U5QGo1UcWwRNthiV/z/HUZK/PVxZ/siWPE65lKmRtcePuWnGEwqW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKnzoacs; arc=none smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=iZMw6fgl3dLrl0r7jAT/5PH9sMgzmXIGqdLC4LmU7ckInHvyeShwoHxuY+OwehOM7QBVYkDaivbSLj+tAlRMOz81mQjIyFqMmOhE22HZlLYKNE+P1/O6PvfoFPlK4QGgLb8iAd0J1EbRjkrWjt/+ioo5ynGVkzoyQPpMf3vYzBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fldoh+c5; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKnzoacs"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ad88d77314bso1104909766b.1
-        for <git@vger.kernel.org>; Tue, 10 Jun 2025 14:11:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fldoh+c5"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-601dfef6a8dso10398998a12.1
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 14:16:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749589912; x=1750194712; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mqoaw5n4eJsjySmwg24IGS8y7/1krcxObDdGxxKoVo8=;
-        b=jKnzoacsmjf9xzCEB/uXRdv9EN2aE4NFa2/04VvMhVJoG01os4A/h1AbWCi/kmj/xe
-         gLxu1m+RQMGUqIad29AZIBZE5iIyuesMFhSRmIJ2SJL0kB6uGhUGc1SBeO+gi/0ge68j
-         M8H/XJ3SPVqHWqcfR2YenrnMlOLBdLcdq8eENoLYL22akLsptIaF/LJVpoyfPS2oXCdu
-         jhOUQAqu8ZJc/jQNjTt4Z2sAAxqyBvHfqwKIz8h1wGZIB7Pu9DsFA8NeaJX0AZ1kGcl3
-         LnfwhPsw3ssw8ahbuWbsWnLV20uATklgQsLx/pXwBimY6W8pU0AdgvJeeYQTRmykXmqy
-         uIzQ==
+        d=gmail.com; s=20230601; t=1749590200; x=1750195000; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VjtQD0wFfUsGhxTO4OGMvofTFinRy79c/BuQa4XWL9Q=;
+        b=Fldoh+c5sGhXko3JQyD4fpaUhL2qqrUsm32Ye9tHbCOAa8guVEv1DVoBakNLp/lzJB
+         4hXSkAk4TN3fe0A8LjmdJnU/KSM/zyZ4e8gzA0w/+MzrIG8X1FdOFuOveV2xv/0/bBtN
+         j61Zg62MfX3K1olCEKXpC+Km8HTCdDB/pH0rew9+dOkor8zhBLI8DatbsSR+0rpntI/Z
+         wSqjv1NOYI+DbeBldL6uHSDDpfHfKPCHg0wSCWS42ORmNfdJmNLJSAQ3yEZ+K12ME2rD
+         Mnk+MnuJROaAQY0/ZiAZxckRhO6CTHcGTfvbmQ9nw6EvDn8tLI4vu/4Nqv86OLe5va7q
+         sRmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749589912; x=1750194712;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Mqoaw5n4eJsjySmwg24IGS8y7/1krcxObDdGxxKoVo8=;
-        b=aSrc7B38jsfK+ef+f6KflPke8lya57bhkzyb9PdgT+OJ+J9KnHuQ6JEwV0RQuZcQlW
-         mkfYTxW4EPQ+t7qcqxkr+AvTmvNaqFDwMvNo821pv3VU4DgFLkmxoS02PKD/YE3nEEZv
-         7QRw1BmR7wLh05GxnqmG7w5XOmn5CoTgHjkP0+lVRYI+5dYffeyWXzG0tI/AXMsVrxk7
-         ZgEBHvW0FXVZg+Z97FAuE/GQpnZe5TpsAbLeTjvrJZWxvFpVCA7lT/+GgxcazfmrCmTU
-         C2Y0yDKcKdDbzPMFtDw7WJF/i0hFSqtMwuJ1zMA6a4x0NRpvgqg2+FJjZXuPjoWo41hc
-         ijKg==
-X-Forwarded-Encrypted: i=1; AJvYcCXCO2yIsuYVnc7X5tWhNTOXpj1Iw0ata3T2jNakUsJGC+WEK0tesShuRyxhQnHUQ0Ryb6A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwbU2L8DBU2OBuqwVtptJ9TeOran9O2HMLn8m3i4ldA8wV+yKp0
-	1MVjXkl4GpcAUmDoz1mVUuGSiC1GrthkGezrgo5XfU5aqCqtOiGWcok3Q2Z3nxDc5rjqRs6PzOz
-	5e8Qm/3yiMHo8v5ofg3BAM3K0CL+E/Tg=
-X-Gm-Gg: ASbGncvfbpavX0wgAocd42YXjMIn7o/IK6qIXM3MT6MJ+1DBOoi/Xg8lM2U080usPsU
-	AIBAO9o17c0jLPzlXvY4iWEdbpLkJlmNFTWUL3YEMZaXQJI5cKSQp71Qaaub5Pznm94PfktPiez
-	LqQROEKEWcFItTMMLb8RL8pFzJou9seBpl57IosfbRfFRoe4dtlmJXStJZABPKRxFEyzplM/luh
-	w4tkeTuhpggwODg
-X-Google-Smtp-Source: AGHT+IEC/E6KAaO5x7GqNKZYn+mMvRtrTYpZc0QRJgZYoPkWZei7/aPDS2GX0izaP5SQZ1iR6u6HDyZin4gc3y2gbOY=
-X-Received: by 2002:a17:907:3d4e:b0:ad8:9b5d:2c1c with SMTP id
- a640c23a62f3a-ade894b77edmr84154066b.19.1749589912156; Tue, 10 Jun 2025
- 14:11:52 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749590200; x=1750195000;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VjtQD0wFfUsGhxTO4OGMvofTFinRy79c/BuQa4XWL9Q=;
+        b=UuOFuLmYBK4g/7IOh+GkcQjh8D6vXRQ/MiLp7msHHXAa2G/jDaNrC6ki6uYZ0k809T
+         UIR09ETPhg5IloUszMjZ0DsMFqrV5P2k0vmgPII1/oFL80hCN3tDKVtQfUxR+oWrqgzN
+         rYIwx8yWVrluSCcd82UK0khzU0FmLHMNBffw2Oja5UYRSN8blC4wsAq3Rna9GYM/xHnf
+         hmG/N0vzySSYCHuDogJHJ3SjqlZtKSjJv76oEkDwl20zCz6X8iPEw1WIediwmJVp2+ll
+         YQgYAzk4WfY+vBssLxfaXGNxT9EO602TfAwfLFU7Fr1PCSFjCgatIcK0QnydVdy7HAZW
+         UaVg==
+X-Gm-Message-State: AOJu0Yzp/yXUlgRsWkoIS9AjP5Rg3ZkyGI3wpue7IjkUacEsgonswvW+
+	UtGvM+g0d6X0fl0GT7vRUS2vIODUrjEg/n4sfUhpjZb+EhNNqfon1AfDyxu7kUz22xrwO20Sk0R
+	FKpC4Ki33Tdvf/1DcHEh6Wx+D6cZ0G0LGJQ==
+X-Gm-Gg: ASbGncvMLD8Rv9FnvDN9ixbq8hJ3Xbb4kOiHEv10DIOWaF1YgqLTmYUq/2n4zrqzBS2
+	KgRbGscvwg6OWtv5Knj4bL4OMGB59BeSZ4ykcbzgCp+7ZWVVMhzltqjiDrrfD3DKMZ6HWKPEiLx
+	1rXMbavY2fdH1sJPuw6VBqO8HvPmkNAfhVKVcgEU3mwFhUjodGOdq1HVlpgFy8fzoMxp5/F+xFZ
+	j42dg==
+X-Google-Smtp-Source: AGHT+IHzf7XeRnCbSdSUGNDvqCrYjMrkTUZAx2nAzs4LcLpAWqTi8WwtuL5LvXaiCRT+BTlD48EiJ29DryQdNKg0mgE=
+X-Received: by 2002:a17:907:2d8c:b0:add:fc52:898f with SMTP id
+ a640c23a62f3a-ade8976341emr79111266b.42.1749590200340; Tue, 10 Jun 2025
+ 14:16:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
- <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
- <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com> <5ca4e740-d243-490c-ad85-13b330165365@app.fastmail.com>
-In-Reply-To: <5ca4e740-d243-490c-ad85-13b330165365@app.fastmail.com>
+References: <xmqq5xh6xlpm.fsf@gitster.g>
+In-Reply-To: <xmqq5xh6xlpm.fsf@gitster.g>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 10 Jun 2025 17:11:39 -0400
-X-Gm-Features: AX0GCFuI75bM_efUSi7WmHU60hHMrXFb9wxYn3-56KigqC9noVUqO7ELMLmJJD0
-Message-ID: <CALnO6CB+ZBChPg0CLXO+i3AUEwiiF7z5euXa4N3Yh4FoEX4A4w@mail.gmail.com>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: multipart/mixed; boundary="00000000000037bbfc06373e250f"
-
---00000000000037bbfc06373e250f
+Date: Tue, 10 Jun 2025 17:16:29 -0400
+X-Gm-Features: AX0GCFu71oqvEGW3S_hr83DLUZEUc-7AvmryLmT8wpy56h8KNuqdIeKC_ZgWeXU
+Message-ID: <CALnO6CCnjP2XnCw1CwyXztkHHMv-U4zrvf8_m2X4-isvPL3ygg@mail.gmail.com>
+Subject: Re: [PATCH] merge/pull: --compact-summary
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 9, 2025 at 5:13=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
+On Sun, Jun 8, 2025 at 12:06=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> On Tue, Jun 3, 2025, at 22:37, D. Ben Knoble wrote:
-> >> In this case I am not all that sympathetic to the idea of the patch.
-> >> The consistently indented lines makes it more clear from which line
-> >> to which line came from a commit log message; running stripspace
-> >> would break them into paragraph pieces.  These editors that complain
-> >> probaly can be fixed?
-> >
-> > My editor doesn't complain, but it does highlight trailing whitespace
-> > at my behest, and it tends to be an eyesore (on purpose: that way I
-> > clean it up). Perhaps Kistoffer is coming from a similar place?
+> By default, "git merge" and "git pull" shows "git diff --stat @{1}"
+> to show the extent of the changes.  While it gives a good overview,
+> one thing that is missing in this output is which paths are created
+> and/or deleted.
 >
-> Yes exactly.  Ain=E2=80=99t nothing more to it than that.  :)
-> >
-> >>
-> >> Alternatively, if it bothers users of certain editing environments
-> >> too much, perhaps the indent code in the output phase of "git show"
-> >> should lose the indents for empty lines uniformly, shoudln't it?  It
-> >> probably should be a fairly isolated change, like the way how the
-> >> expand_tabs_in_log bit is handled in pretty.c; give another bit and
-> >> teach pp_handle_indent to return when that bit is set and the
-> >> payload it was asked to show with indentation is empty, or something
-> >> like that.
-> >
-> > I think this suggestion would also help folks who "git commit -v,"
-> > which IIRC is also indented in the template.
->
-> In my testing though it doesn=E2=80=99t introduce trailing whitespace.
+> Introduce "--compact-summary" option to these two commands that
+> tells it to instead show "git diff --compact-summary @{1}", which
+> gives the same diffstat but notes the created or deleted paths.
 
-Really? When committing a recent patch (editor template attached) with
--v (for testing this), I saw trailing whitespace on the blank line
-under the added feed.
+Does this suggest that we either want a "diff options" option (or
+config), which would be more general? Or perhaps that the intended
+workflow if you want a compact summary is instead
+
+    git [merge|pull] =E2=80=A6
+    git diff --compact-summary HEAD^
+
+?
+
+(The code seems reasonable, just wondering about the motivation/workflow.)
 
 >
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/git-merge.adoc     |  2 +-
+>  Documentation/merge-options.adoc |  3 +++
+>  builtin/merge.c                  | 39 ++++++++++++++++++++++++++++----
+>  builtin/pull.c                   |  3 +++
+>  t/t7600-merge.sh                 | 28 ++++++++++++++++++++++-
+>  5 files changed, 69 insertions(+), 6 deletions(-)
+>
+> diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
+> index 12aa859d16..d53923c3b7 100644
+> --- a/Documentation/git-merge.adoc
+> +++ b/Documentation/git-merge.adoc
+> @@ -9,7 +9,7 @@ git-merge - Join two or more development histories togeth=
+er
+>  SYNOPSIS
+>  --------
+>  [synopsis]
+> -git merge [-n] [--stat] [--no-commit] [--squash] [--[no-]edit]
+> +git merge [-n] [--stat] [--compact-summary] [--no-commit] [--squash] [--=
+[no-]edit]
+>         [--no-verify] [-s <strategy>] [-X <strategy-option>] [-S[<keyid>]=
+]
+>         [--[no-]allow-unrelated-histories]
+>         [--[no-]rerere-autoupdate] [-m <msg>] [-F <file>]
+> diff --git a/Documentation/merge-options.adoc b/Documentation/merge-optio=
+ns.adoc
+> index 078f4f6157..95ef491be1 100644
+> --- a/Documentation/merge-options.adoc
+> +++ b/Documentation/merge-options.adoc
+> @@ -113,6 +113,9 @@ include::signoff-option.adoc[]
+>  With `-n` or `--no-stat` do not show a diffstat at the end of the
+>  merge.
+>
+> +`--compact-summary`::
+> +       Show a compact-summary at the end of the merge.
+> +
+>  `--squash`::
+>  `--no-squash`::
+>         Produce the working tree and index state as if a real merge
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index ce90e52fe4..736739d3a9 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -69,7 +69,10 @@ static const char * const builtin_merge_usage[] =3D {
+>         NULL
+>  };
+>
+> -static int show_diffstat =3D 1, shortlog_len =3D -1, squash;
+> +#define MERGE_SHOW_DIFFSTAT 1
+> +#define MERGE_SHOW_COMPACTSUMMARY 2
+> +
+> +static int show_diffstat =3D MERGE_SHOW_DIFFSTAT, shortlog_len =3D -1, s=
+quash;
+>  static int option_commit =3D -1;
+>  static int option_edit =3D -1;
+>  static int allow_trivial =3D 1, have_message, verify_signatures;
+> @@ -243,12 +246,28 @@ static int option_parse_strategy(const struct optio=
+n *opt UNUSED,
+>         return 0;
+>  }
+>
+> +static int option_parse_compact_summary(const struct option *opt,
+> +                                       const char *name UNUSED, int unse=
+t)
+> +{
+> +       int *setting =3D opt->value;
+> +
+> +       if (unset)
+> +               *setting =3D 0;
+> +       else
+> +               *setting =3D MERGE_SHOW_COMPACTSUMMARY;
+> +       return 0;
+> +}
+> +
+>  static struct option builtin_merge_options[] =3D {
+>         OPT_SET_INT('n', NULL, &show_diffstat,
+>                 N_("do not show a diffstat at the end of the merge"), 0),
+>         OPT_BOOL(0, "stat", &show_diffstat,
+>                 N_("show a diffstat at the end of the merge")),
+>         OPT_BOOL(0, "summary", &show_diffstat, N_("(synonym to --stat)"))=
+,
+> +       OPT_CALLBACK_F(0, "compact-summary", &show_diffstat, N_("compact-=
+summary"),
+> +                      N_("show a compactstat at the end of the merge"),
+> +                      PARSE_OPT_NOARG,
+> +                      option_parse_compact_summary),
+>         {
+>                 .type =3D OPTION_INTEGER,
+>                 .long_name =3D "log",
+> @@ -494,8 +513,19 @@ static void finish(struct commit *head_commit,
+>                 struct diff_options opts;
+>                 repo_diff_setup(the_repository, &opts);
+>                 init_diffstat_widths(&opts);
+> -               opts.output_format |=3D
+> -                       DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTAT;
+> +
+> +               switch (show_diffstat) {
+> +               case MERGE_SHOW_DIFFSTAT: /* 1 */
+> +                       opts.output_format |=3D
+> +                               DIFF_FORMAT_SUMMARY | DIFF_FORMAT_DIFFSTA=
+T;
+> +                       break;
+> +               case MERGE_SHOW_COMPACTSUMMARY: /* 2 */
+> +                       opts.output_format |=3D DIFF_FORMAT_DIFFSTAT;
+> +                       opts.flags.stat_with_summary =3D 1;
+> +                       break;
+> +               default:
+> +                       break;
+> +               }
+>                 opts.detect_rename =3D DIFF_DETECT_RENAME;
+>                 diff_setup_done(&opts);
+>                 diff_tree_oid(head, new_head, "", &opts);
+> @@ -643,7 +673,8 @@ static int git_merge_config(const char *k, const char=
+ *v,
+>         }
+>
+>         if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat")) {
+> -               show_diffstat =3D git_config_bool(k, v);
+> +               show_diffstat =3D git_config_bool(k, v)
+> +                       ? MERGE_SHOW_DIFFSTAT : 0;
+>         } else if (!strcmp(k, "merge.verifysignatures")) {
+>                 verify_signatures =3D git_config_bool(k, v);
+>         } else if (!strcmp(k, "pull.twohead")) {
+> diff --git a/builtin/pull.c b/builtin/pull.c
+> index a1ebc6ad33..6e72a2e9a4 100644
+> --- a/builtin/pull.c
+> +++ b/builtin/pull.c
+> @@ -143,6 +143,9 @@ static struct option pull_options[] =3D {
+>         OPT_PASSTHRU(0, "summary", &opt_diffstat, NULL,
+>                 N_("(synonym to --stat)"),
+>                 PARSE_OPT_NOARG | PARSE_OPT_HIDDEN),
+> +       OPT_PASSTHRU(0, "compact-summary", &opt_diffstat, NULL,
+> +               N_("show a compact-summary at the end of the merge"),
+> +               PARSE_OPT_NOARG),
+>         OPT_PASSTHRU(0, "log", &opt_log, N_("n"),
+>                 N_("add (at most <n>) entries from shortlog to merge comm=
+it message"),
+>                 PARSE_OPT_OPTARG),
+> diff --git a/t/t7600-merge.sh b/t/t7600-merge.sh
+> index 2a8df29219..ce666efbcc 100755
+> --- a/t/t7600-merge.sh
+> +++ b/t/t7600-merge.sh
+> @@ -185,8 +185,19 @@ test_expect_success 'reject non-strategy with a git-=
+merge-foo name' '
+>  test_expect_success 'merge c0 with c1' '
+>         echo "OBJID HEAD@{0}: merge c1: Fast-forward" >reflog.expected &&
+>
+> +       cat >expect <<-EOF &&
+> +       Updating FROM..TO
+> +       Fast-forward
+> +        file  | 2 +-
+> +        other | 9 +++++++++
+> +        2 files changed, 10 insertions(+), 1 deletion(-)
+> +        create mode 100644 other
+> +       EOF
+> +
+>         git reset --hard c0 &&
+> -       git merge c1 &&
+> +       git merge c1 >out &&
+> +       sed -e "1s/^Updating [0-9a-f.]*/Updating FROM..TO/" out >actual &=
+&
+> +       test_cmp expect actual &&
+>         verify_merge file result.1 &&
+>         verify_head "$c1" &&
+>
+> @@ -205,6 +216,21 @@ test_expect_success 'merge c0 with c1 with --ff-only=
+' '
+>         verify_head "$c1"
+>  '
+>
+> +test_expect_success 'the same merge with compact summary' '
+> +       cat >expect <<-EOF &&
+> +       Updating FROM..TO
+> +       Fast-forward
+> +        file        | 2 +-
+> +        other (new) | 9 +++++++++
+> +        2 files changed, 10 insertions(+), 1 deletion(-)
+> +       EOF
+> +
+> +       git reset --hard c0 &&
+> +       git merge --compact-summary c1 >out &&
+> +       sed -e "1s/^Updating [0-9a-f.]*/Updating FROM..TO/" out >actual &=
+&
+> +       test_cmp expect actual
+> +'
+> +
+>  test_debug 'git log --graph --decorate --oneline --all'
+>
+>  test_expect_success 'merge from unborn branch' '
 > --
-> Kristoffer Haugsbakk
-
+> 2.50.0-rc1-276-gda78c2366e
+>
+>
 
 
 --=20
 D. Ben Knoble
-
---00000000000037bbfc06373e250f
-Content-Type: text/plain; charset="UTF-8"; name="commit-v.txt"
-Content-Disposition: attachment; filename="commit-v.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mbr0n9wx0>
-X-Attachment-Id: f_mbr0n9wx0
-
-bmV3czogYWRkIG5ldyBmZWVkCjsgVmV1aWxsZXogc2Fpc2lyIGxlIG1lc3NhZ2UgZGUgdmFsaWRh
-dGlvbiBwb3VyIHZvcyBtb2RpZmljYXRpb25zLiBMZXMgbGlnbmVzCjsgY29tbWVuw6dhbnQgcGFy
-ICc7JyBzZXJvbnQgaWdub3LDqWVzLCBldCB1biBtZXNzYWdlIHZpZGUgYWJhbmRvbm5lIGxhIHZh
-bGlkYXRpb24uCjsKOyBTdXIgbGEgYnJhbmNoZSBtYXN0ZXIKOyBWb3RyZSBicmFuY2hlIGVzdCDD
-oCBqb3VyIGF2ZWMgJ29yaWdpbi9tYXN0ZXInLgo7CjsgTW9kaWZpY2F0aW9ucyBxdWkgc2Vyb250
-IHZhbGlkw6llcyA6CjsJbW9kaWZpw6nCoDogICAgICAgICBsaW5rcy9uZXdzYm9hdC91cmxzCjsK
-OyBGaWNoaWVycyBub24gc3VpdmlzOgo7CWxpbmtzL2Jpbi9naXQtc3RhY2sKOwo7IC0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLSA+OCAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KOyBOZSB0b3VjaGV6
-IHBhcyDDoCBsYSBsaWduZSBjaS1kZXNzdXMuCjsgVG91dCBjZSBxdWkgc3VpdCBzZXJhIMOpbGlt
-aW7DqS4KZGlmZiAtLWdpdCBjL2xpbmtzL25ld3Nib2F0L3VybHMgaS9saW5rcy9uZXdzYm9hdC91
-cmxzCmluZGV4IDUyMmQ5NTVkLi5kMTkyZGU4YiAxMDA2NDQKLS0tIGMvbGlua3MvbmV3c2JvYXQv
-dXJscworKysgaS9saW5rcy9uZXdzYm9hdC91cmxzCkBAIC0yMSw2ICsyMSw3IEBAIGh0dHBzOi8v
-bG4uaHQvXy9mZWVkL35kZGV2YXVsdCAidGVjaCIKIGh0dHBzOi8vbWFpYS5jcmltZXcuZ2F5L2Zl
-ZWQueG1sICJ0ZWNoIgogaHR0cHM6Ly93d3cuZmVsaWVubmUuY29tL2ZlZWQgInRlY2giCiBodHRw
-czovL3JvbmplZmZyaWVzLmNvbS9mZWVkLnhtbCAidGVjaCIKK2h0dHBzOi8vZWV2LmVlL2ZlZWRz
-L3Jzcy54bWwgInRlY2giCiAKIGh0dHA6Ly9qb3VybmFsLnN0dWZmd2l0aHN0dWZmLmNvbS9yc3Mu
-eG1sICJ+Qm9iIE55c3Ryb20iICJ0ZWNoIgogaHR0cHM6Ly9ibG9nLnNhbmN0dW0uZ2Vlay5uei9m
-ZWVkLyAidGVjaCIK
---00000000000037bbfc06373e250f--
