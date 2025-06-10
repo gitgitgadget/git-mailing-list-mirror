@@ -1,179 +1,110 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6766E1A3148
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 22:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193B778F34
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 22:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749593875; cv=none; b=gR6XRCISC3XN2+7p5uvTuVW0GdNTYnntGit186h1aPXPwc0MAZc8Q1OBUc/XqZmy80pQqZe5dJs4YH1F8yh1G8I2UBidq+RbmQmpSZ7uLe5IwgischmJKb7AW7Gtv7P1woIQRadj5PWZd2YDYQ300S1pq5elEdP2grX+rViuIHs=
+	t=1749596165; cv=none; b=gSN2sfOBETAlryMeHKr64cEKqT1he2MNfq4HoEeiq3vnI9DWQh9h0jOyr7a24T/KHZ3qD0JQovyrSxKa+YBdBLnCwEwr72k34gdSuRHEJY5THoL3LwEFEwVFIjFWAxdkhZHhX05ie3Xhmg+wUR6CgfILHkWpcvIKLe2Vo/Faydk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749593875; c=relaxed/simple;
-	bh=YGXdiOd51xDVELVWJfU+x2rJbe509Rq1KPtv1pGS858=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nfyL5oZZMBCvoSo1rSxpkiux4/7zes9Iwmk0bNP7oqU1cFHQWdX+rhVcyMVm5cyrfe6NnGsa8cPLD2+WhBp6JuBccdUdYR/glG/7TyBIOP0YFpfKoogVs7umScmNV3i3CC7br+KdKIaptb6BmknE8g8r429CPyXeye15cVackEY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lKxTOXCl; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749596165; c=relaxed/simple;
+	bh=si2s1xXjwu45cWSFEA6vdyWrnjGwtIh1S6Mhi++sw30=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=TzB57nLSXxu+bFWeYEmpvvZymGJxK8AgBVc+3VRfkXPjRW+znrCdJf5UYkCLBdKK9WxBDivjFSxXPiznkVvhUZ/RMHM8ewtvD+5yFXDNLjATU/urLRo+8JXWDjq1piE2Xx09iZ52f5YEIv2t4aJiv/b/IYCM59flWyp59PzS1+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c32N/TpA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oHYhHaQm; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lKxTOXCl"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ade48b24c97so536074066b.2
-        for <git@vger.kernel.org>; Tue, 10 Jun 2025 15:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749593872; x=1750198672; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QPxir80KPY8T0G9prAmIg9Fpq830v0yFGhka7+d4VII=;
-        b=lKxTOXClvo2QQHrj+xX/DNfdsjUwx/TRz3zhbAsdzKxqwMLWVQ8DNm5dWVKYO38mF6
-         Eyu9B4GDmngYlPy/9ABibUVyJd7nILZWJgYLwvDjPfk7cJh22W500BwG6A4yP2sg8YbO
-         nKaE9GZ2/PwIxb+DYaNsQKqcvMMUIYlaJGWz4xU9i8HQqEnU+U9ULSAEsmMlFWLY7k5J
-         tUjR6bpjBkwYVF7Q8P4kQhvDEJyORP8+ejgQiDo2HwfYBFMiik4HkfUT/IAd5freHwxD
-         nQlsnFqlxjo14M1BMEGgflx6H29a4pS1R0jXezrKnWUNgmsaCYZDJfxGI/OB5GDyZy2x
-         k8KQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749593872; x=1750198672;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QPxir80KPY8T0G9prAmIg9Fpq830v0yFGhka7+d4VII=;
-        b=VcI9PAnt/5jJfDJ8OWwCfv+wSO4/Njxu8w7K8xNwSaEDrk8Eg6fTcfWVKExiEn2vS5
-         l/hDAXfMNaTuwJHpkwoquAHJUga0ykgCjon7/1Kra0nhEnZFrFgNPBbLTs430iHj9y6d
-         2u7SnX/Fxgu0pPyGh9EI8RHuxy8hS0ARc9RyzLXN4RTrwyqrMylcNeQuhLGoy/+tpT9p
-         VvlMD0B5zJAHmwVQfQuA9Z7w10HLrQEe+QIqXgPoSLImRQ5Bdr9V+MqUAJWzoYXc2Hrr
-         5KoUyuHs1OmknDIqCPVD90uic0hg2UHtUDbqysQCmSGbYUVgVo3CHmvRioCmbTjqC2Xi
-         xLIA==
-X-Forwarded-Encrypted: i=1; AJvYcCVvVkzTAfdqFmjogyE/VRHpd7iXwq79uiTVsqla8NETWeDVkLuQ9HYIW9D/RcB2P0WvwSQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzlbWFdBRSI6CDk0MLHYCAaRMGCbdnnTUBfNgqYITjMU+0DmwfN
-	sYSCNsu1PEBPwJtXrq+C4EJwd558mlr0ZLodKOnZJVGAlIItbvvA/nAm61YKqoQAfJwow/vtaEA
-	o8NQvrWhnLrCcuS6oC8EezRekyFkZyms=
-X-Gm-Gg: ASbGncun0w/EDjEzpdZ3ESvx34JMZCngfxYYGdIOAwCZz5bjeT4UUcwQcJFEILx+7Yl
-	0M0Dw0TXThLt/uJf4pUtsnDdbVKBdTHtm2cvCw118KxEvGCMW2obMWol9WQY8E+gBvEgYCSwO8g
-	uKRSRWtzODtgS6U6tFQR5ZBA2eZIVJgXoupS3dPMPJ5w==
-X-Google-Smtp-Source: AGHT+IFR1YWMMjDhNCRsJma0aAO/Jk1zhVjUF8JFpKCmvKbYmx5e0qJyMYqCguJoy1U0HZtjvksksFOrbqgH0kpfJmU=
-X-Received: by 2002:a17:907:3e23:b0:ad8:8f44:134 with SMTP id
- a640c23a62f3a-ade8972af9bmr107838866b.46.1749593871560; Tue, 10 Jun 2025
- 15:17:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c32N/TpA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oHYhHaQm"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1DEA111400D6;
+	Tue, 10 Jun 2025 18:56:01 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 10 Jun 2025 18:56:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749596161; x=1749682561; bh=ShkI/HT9Ns
+	E1pWFXUOJi3AnKFZ7hz1M9AI8b4WPxL8c=; b=c32N/TpAIfACyMs+h1PZ0zKWRd
+	WYP9ANgXQUFcvIYy9crFiST1t/LcoNP+n6aouTZA+LQ12ZUEGSJ1CjYeHPllcVMO
+	GiMQSyb2JMwN0jaFLqwAj2kwGPFAg5w84TKy6BSaisa2pOoOyocxjxKqODQSrOR+
+	H6laG01mtF7/5SEZ452EedgKSg3+R+nmAxa0cO42Ub6pdi0M9ECBkhO/n+mIzTp7
+	ipji2/Rr7/OVRpeXZ/Xy/mDyceOPfC7OnhtpQzglOh4nJ+kC2L7yT74lyhGyMz0w
+	dFq21oLx7XNNZjnN8SU2EN4lx/EIqx0HKDIASUH0+6ThuNeXlX4gNG9MZdCw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749596161; x=1749682561; bh=ShkI/HT9NsE1pWFXUOJi3AnKFZ7hz1M9AI8
+	b4WPxL8c=; b=oHYhHaQmsmILG4qvOiU4p6RAiFFkdSubZhDPYuUaFM9DgifCpmR
+	0OZhvPdVzLPnv9yuMq9RH3+w1jtRo7gSu5eXAX95AKWRjhI1UEiGwhVNm+qaf398
+	Vt3XlCxMrYHEItUKeqwdwgkvZvUmXymtJH/VQ65Rm2s/SkY7ZcHP/UvSAaYio4SP
+	qeXCoh31Gfzo6nZB/YjWpoGYXMAB9zUWsdAZpRNaqNeRpw1uuzNjK5y9m4+OCcEU
+	9bmzJ2WJopcbzAdHdGeOG1xJg91z/Y1FYnLkV1oAHbdjC0YLVp+Bthw8zziYBb9N
+	fFEDUKYp0JwzFWYX7knqRCADyjmcEc5ZwPg==
+X-ME-Sender: <xms:ALhIaIQ838zahlHaGZEiL36PX0hN77-vele4qgB7swOABOeWVCJLJw>
+    <xme:ALhIaFx4EVUQndcuPZoIPkTzavtp_6x0qMv_K_YUrrOyzGzkq9lIdDgKxll3vzwC8
+    p93nsNXR0WcWVcgIg>
+X-ME-Received: <xmr:ALhIaF0_w57S0lj0DNAGLgESOSeqvPNQwYzmBrA0udS6w5YoQB9mSdcxVeRPIRBejORXZG1wR1fTz3QkLBK6r7SmOcpYsBLuv6mC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudefiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
+    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
+    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
+    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ALhIaMD0rlgWZsy40UjgX7hKHzw_dW3Gg0jShfP-6RMSFVnzsR9RJQ>
+    <xmx:ALhIaBh6pk_A1mGcYrSgitBkA_sgw1zq2NVo3flrV8veiMwQOwipyg>
+    <xmx:ALhIaIoomlr1LSeApZrxRec0QdG6TS4QFUyO3G3jq_0VF80HU89kCw>
+    <xmx:ALhIaEjQ5JG0DqtLq9fPeQYCWYMEmzxqSOno4mIpU0SrqoI-pPx3gg>
+    <xmx:AbhIaNuySRd1cA7UwsCUPlfye2wV9Muibg1sn-W901U3hNans8FlhPTd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Jun 2025 18:56:00 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <code@khaugsbakk.name>
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+In-Reply-To: <CALnO6CB+ZBChPg0CLXO+i3AUEwiiF7z5euXa4N3Yh4FoEX4A4w@mail.gmail.com>
+	(D. Ben Knoble's message of "Tue, 10 Jun 2025 17:11:39 -0400")
+References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+	<66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
+	<xmqq5xhmvuol.fsf@gitster.g>
+	<CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
+	<5ca4e740-d243-490c-ad85-13b330165365@app.fastmail.com>
+	<CALnO6CB+ZBChPg0CLXO+i3AUEwiiF7z5euXa4N3Yh4FoEX4A4w@mail.gmail.com>
+Date: Tue, 10 Jun 2025 15:55:59 -0700
+Message-ID: <xmqqtt4nkxz4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1992.git.git.1749546464346.gitgitgadget@gmail.com> <xmqq7c1jmgpq.fsf@gitster.g>
-In-Reply-To: <xmqq7c1jmgpq.fsf@gitster.g>
-From: Andrea Stacchiotti <andreastacchiotti@gmail.com>
-Date: Wed, 11 Jun 2025 00:17:39 +0200
-X-Gm-Features: AX0GCFsAjIiQXS8JlyGrYQq6Q-GDDPmWNg121lNi_xitccUeeCI9TyJPW5OTpcM
-Message-ID: <CAEgWtF-fNXaC88FWw5K_3ZpbvQSxAfeuCFy8kkrh_z16vD77=g@mail.gmail.com>
-Subject: Re: [PATCH] branch: move multiple branches in a single --force
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Andrea Stacchiotti via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Thank you for your review, the concerns are fair, I'll reply point-to-point.
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-The general issue is that AFAIK the only way git has to say:
-"point non-checked-out branch B to commit-ish X, leave B's config intact,
-if B doesn't exist create it" is `git branch --force B X`.
+> Really? When committing a recent patch (editor template attached) with
+> -v (for testing this), I saw trailing whitespace on the blank line
+> under the added feed.
 
-This is likely an abuse of `branch -f`, it might be better giving it
-another flag
-altogether, like `-p/--point-to`.
+True.  Unless you use a special configuration, which might break
+other people's "patch" implementations (I think "git apply" has
+learned to grok this ages ago).
 
-`branch --force` is massively overloaded and most of its functionality is
-tied to `--move` or `--copy`, so changing branch names, not repointing branches.
+$ git -c diff.suppressBlankEmpty=yes commit -v
 
-This patch aims to make repointing multiple branches to the same commit-ish
-easier, currently it needs a shell loop.
 
-I'd like this functionality for gitops repos, where each branch is an env
-and I want to update dozens of envs to the last config state.
-
-Il giorno mar 10 giu 2025 alle ore 23:25 Junio C Hamano
-<gitster@pobox.com> ha scritto:
->
-> "Andrea Stacchiotti via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
-> > From: Andrea Stacchiotti <andreastacchiotti@gmail.com>
-> >
-> > Using either the 1-arg or 2-args form of --force
-> > it is possible to only move one branch at a time,
-> > to HEAD and <arg2> respectively.
->
-> If you are renaming (or "moving") a branch that is not checked out
-> anywhere to a new name that is not in use, you do not even need to
-> force.  You can just do:
->
->     git branch -m old new
->
-> You are not moving branches without "-m".
->
-> What you are doing is to point a branch A to point at a commit X
-> with
->
->     git branch A X
-
-Indeed, this is about repointing, not changing branch names.
-
-> Your proposed log message talks about "--force" too much; if you are
-> creating a branch, you need "--force" only when the name you want to
-> use is already taken.  Pointing the branch tip to a commit is not
-> inherently tied to "--force", but your description gives a false
-> impression that you are adding a special feature when "--force" is
-> used.  The proposed log message needs rewritten.
-
-Right, it's that I'm using "force create branch A onto X, delete A if
-it existed"
-as "repoint branch A to X, create it if needed", I likely have a skewed
-view on it.
-This usecase might be better served by a new flag.
-
-> If there is not yet a branch A, you do not even need "--force" on
-> this command line.  Also take a special note that "X" does not have
-> to be a branch name.  It only has to resolve to a commit, so this is
-> also valid:
->
->     git branch [--force] A X~4
-
-Yeah, it was not clear from my message, nothing about the
-change is about renaming a branch, my usecase is about
-repointing to a generic commit-ish, like you say.
-
-> I can understand that it may appear to be handy to be able to set
-> multiple branches at the same time with
->
->     git branch A X~4 B X~3 C X~2                (* does not exist *)
->
-> with or without "--force".  If none of A, B, or C exist, they can be
-> created from these three commits X~4, X~3, and X~2.
-
-I'm not opposed to implement this if it's preferred, but I liked
-the cp-like syntax as it's less repeating and the average shell user
-is already exposed to it via cp or mv.
-
-> Or you could propose a different syntax to create branches pointing
-> at the same commit
->
->     git branch A B C origin/master              (* does not exist *)
->
-> But either syntax to create multiple branches feel somewhat
-> inadequate.  What should happen to their associated configuration
-> data like branch.A.remote and branch.B.merge?  Should they all point
-> at the same remote & a branch at the remote?  How would that make
-> having multiple of them useful?
->
-This is closer to the intended syntax and use of the feature, I'm more
-focused on branch repoints but I'd also use this when I create, say,
-the staging and prod env of client newclient via
-`git branch [-f] newclient-prod newclient-stag <commit-ish>`
-
-The branches are useful because they are then supposed to evolve
-independently and track the real world state of the two envs.
-
-If <commit-ish> is a remote branch the implementation sets up
-tracking, but this is really not the intended usecase, once
-the branches are created their remote tracking
-is set at push time to <default remote>/<branch name> as per
-default push config.
-
-Thanks for your review, I hope my intent is clearer.
