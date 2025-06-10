@@ -1,54 +1,54 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9674D243968
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 16:40:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49546BE46
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 17:11:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749573646; cv=none; b=HT9o0nY/QmZdhIVQ76HAWXygJfWOITfN/f8z9jBx5buwCcRtWXF4SG43TqneNI/Zb0AfOh++OkKKzj51UgrgR/QEJZInQOBGHC/GtRUFdEw7/pi6t06A3DQJbpVXe1fydWjT7/FLLBZessioOIv0DakDNIapV0dN5xPggcwDFho=
+	t=1749575520; cv=none; b=eop3Xn+abe8NMUqBdn8HF+ISfbpH4zfW7XbX26LBzNBKdRcmJKyecvuga85uLB2OsBbZTitCyb5TpWYTOBoFFf2y/WkeV20ZpWTvfw05jfbj9xZY3TOB+z33AghfslWXqzhMGWDCmk+iwEJqf+Y+TogNfQVa2mshaSoaPRut3Dk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749573646; c=relaxed/simple;
-	bh=I5TdGFU4+22kbbWVMANNol5rtcpFaX8aRp5hPk8eRnM=;
+	s=arc-20240116; t=1749575520; c=relaxed/simple;
+	bh=vG64O7QVsXF1WR1C9NAaVtpWFkEoLl+BjmO6Xm6M2AE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G8HWYBKM/XSZrVcMfeB005K7wv0SJMoBz/ba4dCFKGZUxA8BGCdjKauHqvQMnIIz0uHcDQyRx+3kS8ZYRqsD38eD+4B0pC5b0hiX7/+fn2ZqLQziOjJCDIY3cAW2BZuFDF6N2xgXI37/Tc0fhhCbKuaoqvZ9J2lRjyQVU3UgBa4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q3jdDH0r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WveX5mPl; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=t2OoMRp8pCCOivxBnT/lYiadTBuRXXwuUDRENMI0VvbE9tT5skyEzNEhnNCgoN3roSGlxalnVeHtro/HgE6qWNiKDFvHr/G5noUnDKUpkx1psLhnQ0Fjr+SsBqxbL1Q5EyhtG93BI9p+MqB0gbjD+wPfTMzRSG0pd26dcvEpQYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WRAA6Hjg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GQWrO16v; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q3jdDH0r";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WveX5mPl"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C4D991140139;
-	Tue, 10 Jun 2025 12:40:43 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 10 Jun 2025 12:40:43 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WRAA6Hjg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GQWrO16v"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4E93F13802AB;
+	Tue, 10 Jun 2025 13:11:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 10 Jun 2025 13:11:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749573643; x=1749660043; bh=xC7IGuIXiw
-	WZX1hB7sAo5lDNFJrc+vXZ3sn5tQI61qg=; b=q3jdDH0rE6eBqMA8refOKrevko
-	W1Lhbx6tpZTZRJgCqXjKdMtZbfP/QA6WxtuK0z9hMVc5JvyVZLo6fDOz7dRdMMdI
-	YCOZ50OkP38Fc2Umz4CXFxm5ZSrmBZTNUQB6zW5KJ+Ql86lcXHXRWeGXJo5brcry
-	0cmPnXuw+Stpw+VJhYBKpTRVyoaQOcSsV0/fWxIQS9W/yipDLtUgzwVZNnlmsTpU
-	kmEFCgtBf4ba8Us06bgp44PLcL6Qf6gmr1D9PtR9NIeBMcEhdjQ/+Wb59PsGMxNw
-	r7dIgn5c+4ubHCVOPZJfincBIQmhhWMRhawT1BEMz0TDAU05nIa1Tc5J1N7g==
+	:subject:to:to; s=fm3; t=1749575517; x=1749661917; bh=K62gkjSFKT
+	xXjjtR+B9y0vltVP5sysga6Wq4eXoAqM4=; b=WRAA6HjgLUH4845R+Jfs6yGMBS
+	MsnpYMHdbygUqpXa+VlxTuFTbxkXaWjFHl3003/wthpPgiqAPL5o/9mrObwg04tc
+	HniwTLNAwStbWxWtIIgTB2Ogguwz/hCmH46M0fmn6sR2hLUjjrTEL86o/Pp9Ptll
+	rKMRcYlFoSpd/+5X3TN+4UAW6pwgkO9mEx/0RUdNTnJ0DK1Ydw8zRAnA2Bn68DBt
+	5H9OPrPjUaSgkpl+ZJv5eqQ8598vaHP62DmJCLpZAso/SkJ8TxT8XtlUfVgMNASq
+	vNtfRMr4LxQXRwSNApICz8ne1UGD0doC7IDxOuggWNRLNUQXSGcB+6bFxSxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749573643; x=1749660043; bh=xC7IGuIXiwWZX1hB7sAo5lDNFJrc+vXZ3sn
-	5tQI61qg=; b=WveX5mPlfCm3yFIZ/ZLQNLnYiJm8QOi6gn4UhqdAjlp5awhWCwF
-	V+dx9d3o4fmvce9jfEJAlSIDzrnaAV1a2NU81aa+NM7+jrwykCanpVyX3nDWzY5B
-	K8WUyTY2Sb7ScJXLRX08G2I/NasfPaijblldSJFALpfHynWwUR3GajOryvZlr+Ps
-	zxz264nfBBJMsh0W/3OzqYk+boZ09LviyUxEIkO5IPMa3UUzMKa5l7p8Rj7XwxBm
-	dvvQdFn6IDDzQdCtTNo67VZxpPKswN1lYhw9koT7fmXFIfMNFkYzgbenuf30BSXZ
-	OQcoOdA5apbz77kMIo7J5bIP4Six+BPv7TQ==
-X-ME-Sender: <xms:C2BIaOVfcXFyUdKL82M0oHZKTVLWmFgOSRmkHfLtQTGGV2NEVgHMbw>
-    <xme:C2BIaKmuf257qwx0OAaVPtzKOtriGC2b7U5jEQ0oWAHQvccKCnFxLhAB8oYkcIqLF
-    J46KtnwNt76irR5Vg>
-X-ME-Received: <xmr:C2BIaCaMdUwVpds1YXiKt3l4PA1gFWyQPzylpbLq9TKABwjTt67lkBiuXsg9aKAIrx0hcjup9hKb1AgmNse-t75tp348rSNTiTkQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddutdellecutefuodetggdotefrod
+	1749575517; x=1749661917; bh=K62gkjSFKTxXjjtR+B9y0vltVP5sysga6Wq
+	4eXoAqM4=; b=GQWrO16vP79vBsIgbdJz0fSkPfIaHIFWnRf4I4g3d1FUJ5OUyq+
+	y4xka1vvh6GTbMlZGYikp5qA15B3jmBgTaD+EvwE2Hxqj8otw4YG8Ev2WM4+TGzZ
+	C2RF/UoLVEQLpiKIUhZBU+hnH524sBl6QBrsyHG+l5Wsf9bPEm6QS8suCXhms7F3
+	Xw0xrHGTzyhkFM6piYEtIQJhlEBwdKC+zJoQFEoliFr61Aga9GLS7YJM/lpERXYA
+	upg442eWXNiJT3WaJXe2MbqEOl6wExCN65C/FHCYaHo5dJIWw+rlp6UqFx59u+j4
+	wm08dE5PI9vSL8kNNSPbbMxpojLGVW9ixNA==
+X-ME-Sender: <xms:XWdIaOL269z1rKhw33HUxaSFgPCDB1i9d7Byi7eM5aLcYl8zqdRMZQ>
+    <xme:XWdIaGJGley5bBvgLubOz5MkKtFF7awIw5muVXgVlkb20ZnTSxSBuVUiqrPBsbvmn
+    3HX9SI9P3KvKkQb1w>
+X-ME-Received: <xmr:XWdIaOtbg65RzrO2ZvRdETVxiHw7AVh0mw4-5NfYpI-nIO7MXR7J4TnqotI-3cAMd5W2NN1Gbmo3mo4tH38wNqDX04QMNa9MXJei>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduuddtvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,29 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddutdellecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgtrghsshgvih
-    hkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:C2BIaFU84pWoKkDQhzEexGojcnynBvnql2joJ1zHsjJETxHWYKYkyA>
-    <xmx:C2BIaInSJ6THjTumJgcavGBrcuqbjLfdmYJ5h5oqn090v7CGBCr5tA>
-    <xmx:C2BIaKdWThFaBqUcR8ZJICJ60eXf0mMCjav1UGyuyGsqxz3lNvKZnw>
-    <xmx:C2BIaKGAxubSMa9nYKILMa7tfapqSEzTXzlzPDfxLxgXCPNkuhvqYA>
-    <xmx:C2BIaF2FCicU-XehDCZLbbwmTpO8dbERG0A8R892DbKPOlIz_0rblnrl>
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrhihurdgthhgrnh
+    guvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XWdIaDaxCh4-aSzSQCkZE6cbRpQwoISiaf1DgzkcuAK2TfbT-eIlPg>
+    <xmx:XWdIaFa8z9M4KmMDobAM1Htwft1w61CrTJJsH_ZDEw5ouxsoDHYQJg>
+    <xmx:XWdIaPAQ14YLfFZISAQAbFEbZQLEjOg2Yi4cRgOPRjFu2Yc0mT7U2A>
+    <xmx:XWdIaLZnp9Jtj-2lYdNz43jIe7wmla9I_6o484q4t0hUbQl36EyVaw>
+    <xmx:XWdIaH59AKeGzNnliae25v_kOnOo7Y74vopBhuzSYhQtdXXUY1Wx3xbp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Jun 2025 12:40:43 -0400 (EDT)
+ 10 Jun 2025 13:11:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com
-Subject: Re: [GSoC RFC PATCH 0/5] repo-info: add new command for retrieving
- repository info
-In-Reply-To: <20250610152117.14826-1-lucasseikioshiro@gmail.com> (Lucas Seiki
-	Oshiro's message of "Tue, 10 Jun 2025 12:21:12 -0300")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-Date: Tue, 10 Jun 2025 09:40:41 -0700
-Message-ID: <xmqqikl3mtx2.fsf@gitster.g>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: git@vger.kernel.org,  christian.couder@gmail.com,
+  shyamthakkar001@gmail.com
+Subject: Re: [GSOC PATCH 0/2] preload-index: remove dependency on global
+ variables and 'the_repository'
+In-Reply-To: <cover.1749557133.git.ayu.chandekar@gmail.com> (Ayush Chandekar's
+	message of "Tue, 10 Jun 2025 18:32:19 +0530")
+References: <cover.1749557133.git.ayu.chandekar@gmail.com>
+Date: Tue, 10 Jun 2025 10:11:55 -0700
+Message-ID: <xmqqecvrmsh0.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,94 +89,20 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 
-> $ git repo-info
-> {
->   "objects": {
->     "format": "sha1"
->   },
->   "references": {
->     "format": "files"
->   },
->   "path": {
->     "git-dir": "/git/dir"
->     "git-commom-dir": "/git/common-dir",
->     "toplevel": "/git/toplevel",
->     "superproject-working-tree": "/super/working/tree",
->   }
->   "layout": {
->     "bare": false,
->     "shallow": false
->   }
-> }
-> ~~~
-
-OK, that's understandable, other than that handling of trailing
-commas looks somewhat inconsistent.
-
-> Or in a plaintext format, like this:
+> The aim of this patch series is to remove the definition '#define
+> USE_THE_REPOSITORY_VARIABLE' from "preload-index.c" by removing
+> global variables and the global 'the_repository'.
 >
-> ~~~
-> $ git repo-info --format=plaintext
-> sha1
-> files
-> /git/dir
-> /git/common-dir
-> /git/toplevel
-> /super/working/tree
-> false
-> false
-> ~~~
-
-This one is a bit questionable.
-
-Is it safe to assume that we will never have to deal with payload
-controllable by the end-user that can have arbitrary byte values?
-It would be uncommon but possible for LF to be in one of these
-pathnames, breaking one-line-per-item assumption you seem to be
-making.  If one-line-per-item can be assumed, you can certainly
-claim that this format is easy for consumers to handle, but the fact
-is that this format is cumbersome to use safely if we have to deal
-with end-user controllable arbitrary byte sequences, and if the set
-of info pieces the repo-info needs to deal with changes over time.
-
-> It will also allow the user to get only the desired fields, like this:
+> This patch series contains two patches:
 >
-> ~~~
-> $ git repo-info --format=plaintext objects.format references.format
-> sha1
-> files
-> ~~~
-
-If the user asked for only one item, this is probably OK, but for
-more than one items, the same comment applies as above (except that
-the number of and order of info pieces are known in this case).
-
-> or:
+> 1 - Remove the global variable 'core_preload_index' and localize
+> it in the function which calls it.
 >
-> ~~~
-> $ git repo-info objects.format references.format
-> {
->   "objects": {
->     "format": "sha1"
->   },
->   "references": {
->     "format": "files"
->   }
-> }
-> ~~~
+> 2 - Remove the dependency of 'the_repository' in
+> "preload-index.c", allowing the removal of the definition.
+>
+> Removing these global variables is part of my GSoC project.
 
-This one is OK.
-
-> - on deciding if the JSON and linewise plaintext formats are the really the best,
->   or if I should consider others (e.g. gitconfig syntax, NUL-terminated, etc)
-
-"git config list" and "git config get" may be weaker in handling
-arbitrary bytes than we would wish them to be.  As much as I loath
-JSON, the format is widely recognised and supported, so as the
-initial cut, it may be sufficient to nail down the schema first and
-then worry about emitting the same information in other formats
-later.
-
-
+Both patches are pretty straight-forward and readable.  Will queue.  Thanks.
