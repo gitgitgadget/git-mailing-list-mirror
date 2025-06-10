@@ -1,70 +1,70 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA972459EE
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 15:21:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8C02459C7
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 15:21:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749568914; cv=none; b=fHlsHeUfQ6KvKBE6t/yXRXYFdd6sfX2e9KZLh4CpntqeYpCK3wGjDTg+KbBLAoR4Bi/8GU2N2kQoe6u5pTuXRFKDYkFdUTHCgch0kpvXyXTesS76FXAZ1yrzKkOd2ttzRuGJhuD/Ov3PBZCuEA9/ltsuVQEmtlrxYtM/fH5GKAs=
+	t=1749568916; cv=none; b=ucl3hIJLmjnBRhHGTiIbTapz6k4WMJW5O00NxJuT2er2YyYdAd3nD+Z/RMeCLEA4YQqkjoyTXoD3VK3TliyumunK1bNKQMeDc4WfRR/4BBBClYzvUcriuhyJompMRJ8o0VVbfLWHZpxnhSj6py7h0Yh0cIdq4ew2PamtNeC/W+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749568914; c=relaxed/simple;
-	bh=iRbi6xx5rJNZXUll4jY3W84lOyBS7LQ9rES82mdqIGI=;
+	s=arc-20240116; t=1749568916; c=relaxed/simple;
+	bh=NHgN15fMpxB+hXkoWXRQhy5YdwJ+I+qfLa3QRjbeG4U=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=nRrDCDAra4v0TOAXnkNZ9ErINSdzAlrbXFhb3YY9pFZRnZE/qXLmpThxLXFTnOTGNf+Ln8f0EHaGi5VbArrKCPomf8TO9v1hA4jkdo5d4QMevtIZ9wxQehvIRuOSjT6w80xIVw7vsvZ3mUGjxr2j/6kVAPk2mrnfH7MHxzLA/Rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WmYf55JQ; arc=none smtp.client-ip=209.85.160.177
+	 MIME-Version; b=tBgtiE+R21ScKm4Rxvz27MhY9zRJlO4tIWOOnoTm1LQI1915RXDnYxfaJ8R45AFnFZneqDQf26Nug9bZ4vkEhbiVPhA7nId0ZDcyBITsQeXR8VpniFrhvfmep962Dft1TYWDTq0OWRG5p9ReFgQSyclqb9WJpLwy/ubC3HiNVos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TA/0XTLT; arc=none smtp.client-ip=209.85.160.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmYf55JQ"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4a43e277198so46515281cf.1
-        for <git@vger.kernel.org>; Tue, 10 Jun 2025 08:21:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TA/0XTLT"
+Received: by mail-qt1-f182.google.com with SMTP id d75a77b69052e-4a589b7dd5fso93254931cf.0
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 08:21:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749568911; x=1750173711; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749568913; x=1750173713; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=/SUoF/gG7McQhqdIE+v9O9KRdq3uNw+UT4gh8LEr0ek=;
-        b=WmYf55JQpI00kvl3yRYXdkCdDV9fwpx+ijY5CjkCML54dUcx8jSnWNpqMSvbW6kpVQ
-         jxf5dZVGNyE13nCkgLatTtAYcBwMKss8IVLH7t+zwgpT3p3YQTetaMxmreLNXeYKTi4j
-         3eAytYMzZAV0w+1JZYuFxH4qufpR3KXX20E24PGBvUSLOkg8ssUszq/CPF+SFD0acqbc
-         RN2EDTzedyPPi4kOwRdQ347zyVyHESCkrk82Jo0aDrS/hJkgTzZc7hxtYGu1yTwXxJW7
-         YKUorzcFCZaVnJv7wSUwVJGCuE6SmhsN+rP6gAYtoZbtVBYG+SaDWQ4KPqlRFYvRpsTp
-         njng==
+        bh=DNa0AAuTH9wUe0OsPGFzizTW8L0HKiL2FkEBu612DZI=;
+        b=TA/0XTLTVj+McsIG2BDAUNQt1G7MNZ3bk3KsAtgXo+r7oqwj3qkgIZl/c8aW6ep5I0
+         qTdtL4/eaV6h3LXaCGBGuz7PqHd/NdDU2VMHpAjvSDgEKrlNZRyHnvbXl0ZjKQpDu1tD
+         ZMGcMDS1kcaywBid7XP+CKcFTsuI2++XX0CjGFlsa8uIaj0Woj/ifBVv3wBt4pWDtrMc
+         Fcm5Tl6lXOp3msbuk+SFxWagosD03JvWBcTb7bj/GwX1W2JlMCFLd0RHDVVrg6lmI+gH
+         A5rmAKGNeNtOmOJB7DXy0jyllAfNvRUZJ8CtgLhpv3pbeZ8ucieI/Ze94JKsGxb77YVh
+         4Fmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749568911; x=1750173711;
+        d=1e100.net; s=20230601; t=1749568913; x=1750173713;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=/SUoF/gG7McQhqdIE+v9O9KRdq3uNw+UT4gh8LEr0ek=;
-        b=gjNcbmI7VZEJAhTgoZ36bMKHqOQjWokRn/XyZLjfhrFxg97wACl1kZeeoWm4Z07iG/
-         HoH4ekLgdLapVjG9f/Y8RnObjt4GH6MmCQbeEPac+U1Gq01m0c/C45tqNvfxiQaahJ5I
-         xaqYHcjTwW5KWhYKsN4mYztQv0QAGz0i5P0/uBY8dcBTvSYzSUc0rui714RHh0eMxEb+
-         d6D7Gvc0iUkJYH+BBczLzKYkN6Ge7k+iie7t2iH6SGJ1vjXO+EByiPWUyOG9Z33V7XKu
-         vFY3oo45IK9sfLSdxUDW9AgJWsuc5Sgx6VogGA0UetwYfbOjrsYneupo1dHvjhy/Px6I
-         VAJA==
-X-Gm-Message-State: AOJu0YwoBbi3s/GtCkZJbBKahfYDmSjDsOV7mbPBJ3TpS0AotfOzXhPs
-	7bkbBqrfcHJYxf+cPYjanlLPYWkipchXfCf+RywuQNxWwxLZZxteosvM9uZyKw==
-X-Gm-Gg: ASbGncvnRVAO3lr7tMYBZM/H2gt1NEzL3tEgI6F72gAhdhxgEYp0EF5qSDNoWPPj0LH
-	7eXQCx6IZmVGHEgZ6x17NmVhQ8J4zLfG+oRdt66fOZv2YOlcEx82h8+dx+5a1/6dl7sjAOMRv3C
-	8bWGIhafThHi7pKVCmdq5jvWtxrCAn+1clhh6ihcTWsshjyWM6HqvBdn/PFxV0yjatXNEu0ziYJ
-	3eIwlRGTh1HoBlWc0tWVXU8WoFjUY96WzfLEtysXJuh4netbAEVKoK4RElENRQ8MlZs8/r7wkZt
-	8yjl6i7709wfZ0ZEk6YPJKzduXWf1RE+6E+bGWDmItPGtHEzxADcXB70mTlPuhmdoPsteBYnVKX
-	/VyspesVDtydNu7CJqKZ0vkvxhA==
-X-Google-Smtp-Source: AGHT+IHAsZKPoo08ibxTiTtocMZC9bB8n7++QVIS10PFbDV/FBbB7OcnqCEEkEYN7OS9UlWoWtGZFA==
-X-Received: by 2002:ac8:7dcd:0:b0:4a6:e7a8:65b2 with SMTP id d75a77b69052e-4a6e7a866a8mr218130531cf.10.1749568910346;
-        Tue, 10 Jun 2025 08:21:50 -0700 (PDT)
+        bh=DNa0AAuTH9wUe0OsPGFzizTW8L0HKiL2FkEBu612DZI=;
+        b=uETjbfQ1RUvJhGCbSylf4Sp3VRtPoRtwx0d4zaWzNJhvA0bbsKWq3gAFWaKIc40H2q
+         1ET8Hyw9SKcyvPA7QUoULN57jlPkKR7VdJXrr9qeM1M6TStjUa8GUVLyfe4HFFcQEhn3
+         fD6kl4Dn3F0XScNopqmw+k/YvyEiNshQxuQQUGKj8sGXNQbNQar1kZcvp3m2ajaxRVkr
+         Cg702oPjnKeWkF2XkCe0cLjdKhi2lG7tklHmiKkXoAjsfYd/fzM6Nn7rCle7kqPIeV2v
+         FfGYWSpZItjUetD/wLtLfSzIvfUp/p0Xl3Eg/sxJxSr6lL3Ria9st/xE+APpGJou7Mmw
+         yppA==
+X-Gm-Message-State: AOJu0Yx4tBt8+7aHQtsxorXUTBMzMgnZjJVqPzZSNShdNJ1nw8S0Q3/L
+	fENZt54w1Ol/FCIR7Zna2kTAzKOlP2K9eVikZTCkXFnECWnGCO7KtlDVGrCS2g==
+X-Gm-Gg: ASbGncv6hQRfCs1cmZXFmyiyfr8UN/0QgycPAnIba60fvqOt4Hti3BI4k38ZwlLvWp0
+	JXCmc+D9mfPXEojunNWQcz8QQLw5ZDJ8txrThC0RltlTxFunqKmSBn819KX+jJlThWUltOBcFab
+	WeEW9/h6cTHjWJ86FcSeT9fnR5NCpOoJeFH75Id8IF4WHxIxgOM4GXvy3icM0NYym1snkcdRtQP
+	DBrsMxpsaZ9vmAtxENIinpJyGWBILbfqXQOJrAIzDh/hLwhK8PKEUSgy4sI2EIubba3Hxh1P+Q+
+	O9VkntuNCYRJhWsEAaeRaLR3hg3Na+nahNO4qUL7GWEJPAqCMyLDDrIMKJgBkLqcCIkLv3BFxTD
+	ds3RPQgTJh1IeEIaLQy4EV2q1Lg==
+X-Google-Smtp-Source: AGHT+IHyMOgzzSvf0sA48hpjZhxpAow0sZ42PtNZFq4W38mj9FoZ/dv2OV+We7AELO819E/MnQODsw==
+X-Received: by 2002:a05:622a:559b:b0:4a5:a5fb:d3fa with SMTP id d75a77b69052e-4a5b9db18e4mr267222431cf.47.1749568912746;
+        Tue, 10 Jun 2025 08:21:52 -0700 (PDT)
 Received: from localhost.localdomain ([2804:14c:32:93bc:ecb0:85aa:3d44:2d04])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87eeae4c86bsm1379180241.3.2025.06.10.08.21.48
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87eeae4c86bsm1379180241.3.2025.06.10.08.21.50
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Tue, 10 Jun 2025 08:21:49 -0700 (PDT)
+        Tue, 10 Jun 2025 08:21:52 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC RFC PATCH 2/5] repo-info: add the --format flag
-Date: Tue, 10 Jun 2025 12:21:14 -0300
-Message-Id: <20250610152117.14826-3-lucasseikioshiro@gmail.com>
+Subject: [GSoC RFC PATCH 3/5] repo-info: add the field references.format
+Date: Tue, 10 Jun 2025 12:21:15 -0300
+Message-Id: <20250610152117.14826-4-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
@@ -76,193 +76,195 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add the --format flag to the repo-info command, allowing the user to
-choose betwen the 'json' and 'plaintext' formats as output.
-
-Also add a flag --allow-empty, which will force the output data to be
-empty when no field is requested.
+Add the field references.format to the repo-info command. The data
+retrieved in this field is the same that currently is obtained by
+running `git rev-parse --show-ref-format`.
 
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Mentored-by Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- builtin/repo-info.c  | 79 ++++++++++++++++++++++++++++++++++++++++++--
- t/meson.build        |  1 +
- t/t1518-repo-info.sh | 49 +++++++++++++++++++++++++++
- 3 files changed, 127 insertions(+), 2 deletions(-)
- create mode 100755 t/t1518-repo-info.sh
+ builtin/repo-info.c  | 97 +++++++++++++++++++++++++++++++++++++++++---
+ t/t1518-repo-info.sh | 20 +++++++++
+ 2 files changed, 112 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/repo-info.c b/builtin/repo-info.c
-index 4615b988d8..4d539a17fb 100644
+index 4d539a17fb..a1c9d3942e 100644
 --- a/builtin/repo-info.c
 +++ b/builtin/repo-info.c
-@@ -1,22 +1,97 @@
- #include "builtin.h"
-+#include "hash.h"
-+#include "json-writer.h"
- #include "parse-options.h"
-+#include "refs.h"
-+
-+enum output_format {
-+	FORMAT_PLAINTEXT,
-+	FORMAT_JSON
+@@ -9,18 +9,40 @@ enum output_format {
+ 	FORMAT_JSON
+ };
+ 
++enum repo_info_category {
++	CATEGORY_REFERENCES = 1
 +};
 +
-+struct repo_info {
-+	struct repository *repo;
-+	enum output_format format;
++enum repo_info_references_field {
++	FIELD_REFERENCES_FORMAT = 1
 +};
 +
-+static void repo_info_init(struct repo_info *repo_info,
-+			   struct repository *repo,
-+			   char *format,
-+			   int allow_empty UNUSED,
-+			   int argc UNUSED,
-+			   const char **argv UNUSED
-+			   ) {
-+	repo_info->repo = repo;
++struct repo_info_field {
++	enum repo_info_category category;
++	union {
++		enum repo_info_references_field references;
++	} field;
++};
 +
-+	if (format == NULL || !strcmp(format, "json"))
-+		repo_info->format = FORMAT_JSON;
-+	else if (!strcmp(format, "plaintext"))
-+		repo_info->format = FORMAT_PLAINTEXT;
-+	else
-+		die("invalid format %s", format);
-+}
+ struct repo_info {
+ 	struct repository *repo;
+ 	enum output_format format;
++	int n_fields;
++	struct repo_info_field *fields;
++};
 +
-+static void repo_info_print_plaintext(struct repo_info *repo_info UNUSED) {
-+}
++const char *default_fields[] = {
++	"references.format",
+ };
+ 
+ static void repo_info_init(struct repo_info *repo_info,
+ 			   struct repository *repo,
+ 			   char *format,
+-			   int allow_empty UNUSED,
+-			   int argc UNUSED,
+-			   const char **argv UNUSED
++			   int allow_empty,
++			   int argc,
++			   const char **argv
+ 			   ) {
++	int i;
+ 	repo_info->repo = repo;
+ 
+ 	if (format == NULL || !strcmp(format, "json"))
+@@ -29,18 +51,82 @@ static void repo_info_init(struct repo_info *repo_info,
+ 		repo_info->format = FORMAT_PLAINTEXT;
+ 	else
+ 		die("invalid format %s", format);
 +
-+static void repo_info_print_json(struct repo_info *repo_info UNUSED)
-+{
-+	struct json_writer jw;
++	if (argc == 0 && !allow_empty) {
++		argc = ARRAY_SIZE(default_fields);
++		argv = default_fields;
++	}
 +
-+	jw_init(&jw);
++	repo_info->n_fields = argc;
++	repo_info->fields = xmalloc(argc * sizeof(struct repo_info_field));
 +
-+	jw_object_begin(&jw, 1);
-+	jw_end(&jw);
++	for (i = 0; i < argc; i++) {
++		const char *arg = argv[i];
++		struct repo_info_field *field = repo_info->fields + i;
 +
-+	puts(jw.json.buf);
-+	jw_release(&jw);
-+}
-+
-+static void repo_info_print(struct repo_info *repo_info)
-+{
-+	enum output_format format = repo_info->format;
-+
-+	switch (format) {
-+	case FORMAT_PLAINTEXT:
-+		repo_info_print_plaintext(repo_info);
-+		break;
-+	case FORMAT_JSON:
-+		repo_info_print_json(repo_info);
-+		break;
++		if (!strcmp(arg, "references.format")) {
++			field->category = CATEGORY_REFERENCES;
++			field->field.references = FIELD_REFERENCES_FORMAT;
++		}
++		else {
++			die("invalid field '%s'", arg);
++		}
 +	}
 +}
++
++static void repo_info_release(struct repo_info *repo_info) {
++	free(repo_info->fields);
+ }
  
- int cmd_repo_info(
- 	int argc,
- 	const char **argv,
- 	const char *prefix,
--	struct repository *repo UNUSED
-+	struct repository *repo
- 	)
+-static void repo_info_print_plaintext(struct repo_info *repo_info UNUSED) {
++static void repo_info_print_plaintext(struct repo_info *repo_info) {
++	struct repository *repo = repo_info->repo;
++	int i;
++	for (i = 0; i < repo_info->n_fields; i++) {
++		struct repo_info_field *field = &repo_info->fields[i];
++		switch (field->category) {
++		case CATEGORY_REFERENCES:
++			switch (field->field.references) {
++			case FIELD_REFERENCES_FORMAT:
++				puts(ref_storage_format_to_name(
++					repo->ref_storage_format));
++				break;
++			}
++			break;
++		}
++	}
+ }
+ 
+-static void repo_info_print_json(struct repo_info *repo_info UNUSED)
++static void repo_info_print_json(struct repo_info *repo_info)
  {
- 	const char *const repo_info_usage[] = {
- 		"git repo-info",
- 		NULL
- 	};
-+	struct repo_info repo_info;
-+	char *format = NULL;
-+	int allow_empty = 0;
- 	struct option options[] = {
-+		OPT_STRING(0,
-+			     "format",
-+			     &format,
-+			     N_("format"),
-+			     N_("output format")),
-+		OPT_BOOL(0,
-+			 "allow-empty",
-+			 &allow_empty,
-+			 "when set, it will use an empty set of fields if no field is requested"),
- 		OPT_END()
- 	};
+ 	struct json_writer jw;
++	int i;
++	unsigned int categories = 0;
++	unsigned int references_fields = 0;
++	struct repository *repo = repo_info->repo;
++
++	for (i = 0; i < repo_info->n_fields; i++) {
++		struct repo_info_field *field = repo_info->fields + i;
++		categories |= field->category;
++		switch (field->category) {
++		case CATEGORY_REFERENCES:
++			references_fields |= field->field.references;
++			break;
++		}
++	}
  
--	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
-+	argc = parse_options(argc, argv, prefix, options, repo_info_usage,
-+			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-+	repo_info_init(&repo_info, repo, format, allow_empty, argc, argv);
-+	repo_info_print(&repo_info);
+ 	jw_init(&jw);
+ 
+ 	jw_object_begin(&jw, 1);
++
++	if (categories & CATEGORY_REFERENCES) {
++		jw_object_inline_begin_object(&jw, "references");
++		if (references_fields & FIELD_REFERENCES_FORMAT) {
++			const char *format_name = ref_storage_format_to_name(
++				repo->ref_storage_format);
++			jw_object_string(&jw, "format", format_name);
++		}
++		jw_end(&jw);
++	}
+ 	jw_end(&jw);
+ 
+ 	puts(jw.json.buf);
+@@ -92,6 +178,7 @@ int cmd_repo_info(
+ 			     PARSE_OPT_KEEP_UNKNOWN_OPT);
+ 	repo_info_init(&repo_info, repo, format, allow_empty, argc, argv);
+ 	repo_info_print(&repo_info);
++	repo_info_release(&repo_info);
  
  	return 0;
  }
-diff --git a/t/meson.build b/t/meson.build
-index 50e89e764a..c24e197c60 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -241,6 +241,7 @@ integration_tests = [
-   't1514-rev-parse-push.sh',
-   't1515-rev-parse-outside-repo.sh',
-   't1517-outside-repo.sh',
-+  't1518-repo-info.sh',
-   't1600-index.sh',
-   't1601-index-bogus.sh',
-   't1700-split-index.sh',
 diff --git a/t/t1518-repo-info.sh b/t/t1518-repo-info.sh
-new file mode 100755
-index 0000000000..2e1a6f0c34
---- /dev/null
+index 2e1a6f0c34..a99198b0f6 100755
+--- a/t/t1518-repo-info.sh
 +++ b/t/t1518-repo-info.sh
-@@ -0,0 +1,49 @@
-+#!/bin/sh
+@@ -6,6 +6,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ . ./test-lib.sh
+ 
++DEFAULT_NUMBER_OF_FIELDS=1
 +
-+test_description='test git repo-info'
-+GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
-+export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ parse_json () {
+ 	tr '\n' ' ' | "$PERL_PATH" "$TEST_DIRECTORY/t0019/parse_json.perl"
+ }
+@@ -46,4 +48,22 @@ test_expect_success 'plaintext: returns empty output with allow-empty' '
+ 	test_line_count = 0 output
+ '
+ 
++test_repo_info 'ref format files is retrieved correctly' \
++	'' \
++	'references.format' 'files'
 +
-+. ./test-lib.sh
++test_repo_info 'ref format reftable is retrieved correctly' \
++	'--ref-format=reftable' \
++	'references.format' 'reftable'
 +
-+parse_json () {
-+	tr '\n' ' ' | "$PERL_PATH" "$TEST_DIRECTORY/t0019/parse_json.perl"
-+}
++test_expect_success 'plaintext: output all default fields' "
++	git repo-info --format=plaintext >actual &&
++	test_line_count = $DEFAULT_NUMBER_OF_FIELDS actual
++"
 +
-+test_repo_info () {
-+	label=$1
-+	init_args=$2
-+	key=$3
-+	expected_value=$4
++test_expect_success 'json: output all default fields' "
++	git repo-info --format=json | parse_json | grep '.*\..*\..*' >actual &&
++	test_line_count = $DEFAULT_NUMBER_OF_FIELDS actual
++"
 +
-+	test_expect_success "json: $label" "
-+		test_when_finished 'rm -rf repo' &&
-+		git init $init_args repo &&
-+		cd repo &&
-+		echo '$expected_value' >expect &&
-+		git repo-info '$key'| parse_json >output &&
-+		grep -F 'row[0].$key' output | cut -d ' ' -f 2 >actual &&
-+		test_cmp expect actual
-+	"
-+
-+	test_expect_success "plaintext: $label" "
-+		test_when_finished 'rm -rf repo' &&
-+		git init $init_args repo &&
-+		cd repo &&
-+		echo '$expected_value' >expect &&
-+		git repo-info --format=plaintext '$key' >actual &&
-+		test_cmp expect actual
-+	"
-+}
-+
-+test_expect_success 'json: returns empty output with allow-empty' '
-+	git repo-info --allow-empty --format=json >output &&
-+	test_line_count = 2 output
-+'
-+
-+test_expect_success 'plaintext: returns empty output with allow-empty' '
-+	git repo-info --allow-empty --format=plaintext >output &&
-+	test_line_count = 0 output
-+'
-+
-+test_done
+ test_done
 -- 
 2.39.5 (Apple Git-154)
 
