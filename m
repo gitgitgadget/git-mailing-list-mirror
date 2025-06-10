@@ -1,105 +1,236 @@
 Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32CB728B7C7
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 09:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4A1625D8F5
+	for <git@vger.kernel.org>; Tue, 10 Jun 2025 10:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749549385; cv=none; b=DqjnFa32SZ3OmtEwzb/kCZjZpZkZg5bhJdDIBrtLY8F7YafQkMsMAxt8EICa8izNOvxGZ18U0omigFstqX6PpQCqxkGfR9/6NK9Vfo5wkruUgZYvee7LhCatrvmCWr6uV2CVtVC40GxIH08T45d8YDY/bjJKvIG97oeQnalnZRo=
+	t=1749550316; cv=none; b=IzWOW1tvd2FoaVP6ndrDFmcnb4R7NDZWuw817X6vidx+sCGSREoIQuJVP5rbhEexQebiT5ySFNt6HdSQ5zNXXjBeaoSe606HZ2S9BRT2U/N86XmSo5Mrtipb2rLU/jfi9xyg3ewCueThzlxnGg+04nlQ0wGYUf7nUpBbknPMJtU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749549385; c=relaxed/simple;
-	bh=oYAmXIw1GL6qmx+8Vw9wx7eDsj2HEPnM2+oDlaTIFjg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=qsJCzRtwP6bAcyie7gT+2MtSH1nhOXxEwSbHWxXoXR5G67kRiMImMrQUbp85OLi+X8si5vbrdFTWgEpR3kVPhwb9NtMemYVoUgrpK0e5E0zn4PY6TqkwD79Y2rM+SkwpinlIPfucvr04dMUIzzZzddj37IstnrwjF3UL2tecIHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lqrsc9SE; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1749550316; c=relaxed/simple;
+	bh=rNzk/Eji1sak7Q2RKTerVYhUwH6zp4g1oC/R73zpI0E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=uq/ulVBxy9QZUxv7yrET4nV4OhThWh2y+rVS+4TMf6sjd8lleMNCmf1gBSHUdlau7eP3HOMYLaVFkZ+NCNAJWwXgZFf+m/AaU1GrjYu28fElD7FLMcmgP+JAw8qyX5atuqLSK7FgBJLWzZ+HRxoydD4zwguKy3toyRQNgIIXO+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpK/rOCX; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lqrsc9SE"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-450dd065828so35376325e9.2
-        for <git@vger.kernel.org>; Tue, 10 Jun 2025 02:56:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpK/rOCX"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-441ab63a415so54625875e9.3
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 03:11:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749549382; x=1750154182; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oYAmXIw1GL6qmx+8Vw9wx7eDsj2HEPnM2+oDlaTIFjg=;
-        b=Lqrsc9SEn/dFSoTGakoDDLjk8nCmaUKPNj8eR10m+7wwlJQ6TPuSFXAfQJpPEeaAeP
-         PINDa9IGTKFqblVlnuIPg65QCGd7tZpJsE7QV+wL3R8iuE0KI4maUAx86kwlBvG7k9Yi
-         21RdJXFKbrC7KZN4KsDyPT4s+NxQSMG+wwGfrNATAkUkKZeP4myVLmScvKk8ZKeLtFYn
-         Py4DAHLstrPBdSrHL0La/Gp/FaKa7FdsJr/IqVFhgJ84VEolucSyo05fxotei0Da4g8B
-         pA0TkNgABX6kN1YcAnJccuqI85K9hnz7GzW/iI2HGStHbKEyY1NMp9rS8ftvOSIKe4cu
-         RQ6g==
+        d=gmail.com; s=20230601; t=1749550313; x=1750155113; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=lVXsZUTLgUZL4s5aLoD+MzVgqe8H1DQxtpskLJwWtcY=;
+        b=CpK/rOCX+pVbHhvElvcM8RkbgviTDF9zGfrddqvYMFxwr7OEhn3DuBleXgmO/YL73N
+         NZwlWx/hqEMXtCby7OLg2RXPocTDZmCXb/LgnMrfzpkFHCoc+sYgEwwlJ0olAed7fu0K
+         +ThvWk+drt0/m5E7ttXw96M6MkRAGF+fIro/tS1vcey8mMKOEDUwMan3KUl7p7/B2hyo
+         e/DcpnaNzCwyhCvXEgO2KrfibhGLfNnU65bBsKj5pagn7g7vOkiPqfy7YY/rRlH/rvsD
+         kiOj2S92xT3bMmdOWz2/RO5w8rFiDjk21+LPA16gn4H9+rbPkxxaTvHUkry0ZzkqPfq4
+         aM/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749549382; x=1750154182;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=oYAmXIw1GL6qmx+8Vw9wx7eDsj2HEPnM2+oDlaTIFjg=;
-        b=GMZIJD2A2W2kvskoWLqTbQGW7ETBLhfLrbte8IYyC72jCClfF0mqM0wBVL7u+WRLbW
-         BMWlLeg40A9MNCZF0HQxQjDN8Zr8Le+opQzRFSJgomjoXQcRvM1XP1YvBTyBYISJWA/e
-         PxKkxQnB37rfVraMS4uJe8r/rvbjrpjy15Nyd/CQZ+3GxZzqcZkU4OuUx8FrIVRodC4d
-         uiycZRu1cTRoUrzOmFfQJAhao0AywYJ5dF3U2lRvqhyfqUdpz2wjVTVcJLP52Weawr2Z
-         hA4IoMVa+OcPrMpmYXar7BLOOPnDFX9iDxGQb6KnHyw7gFo10NSF1Ukrt95WTirAW4IE
-         s3rw==
-X-Gm-Message-State: AOJu0YzihAQOaRKeJFb8kUI6rxJCLwCqMSdf8HMWkFEcwSRiq9MANZUg
-	c0w4ru8OaY40bxeS89fbIyo1BBLrlFU+Zh714s+ALoZ8GeSQNqj/UAJG0Gmble1jqOokhBe0MEt
-	7Vh3rHhmlVDyS+6HDyJdblyqemL+4yAk=
-X-Gm-Gg: ASbGncusnkE7gjChcAH8/bpS2vbCff+eKZHbvaPYcWTNXzpzPBB3ZwwHkGamBHvoWyc
-	hwBX6J2XDKJH9ry01lWnR7DaA5fGKQGTrooHg7AS9IEYG38S8EZU4eErtXpTq4XANYI6FJwI12g
-	gw2093yeWQ1mmvpx6SMBHtyLcA0dbdQoHnQsr9hLvwcy6RxLaDIYBl
-X-Google-Smtp-Source: AGHT+IF/pjhZ5P05gucTahyCHJKJRg8jL0ZSJFoUcEjbNuo9XinLJeCtEtetkhtZb56WSHI8Jyt5mLF6jTK75T+tD/A=
-X-Received: by 2002:a05:6000:2888:b0:3a4:c909:ce16 with SMTP id
- ffacd0b85a97d-3a531ab6c62mr13209505f8f.49.1749549382361; Tue, 10 Jun 2025
- 02:56:22 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749550313; x=1750155113;
+        h=content-transfer-encoding:in-reply-to:cc:content-language:from
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lVXsZUTLgUZL4s5aLoD+MzVgqe8H1DQxtpskLJwWtcY=;
+        b=pmfeM88JqWBm1VUymNEp8xcGjyUAvXQfbY65EAThOErcIZjAEbHaEJIOHgYqy5Orz4
+         C+F7Uvj3/4JLN5xWbJNBJq1i2e7VCTZUL6qsWE7JhnGSJYyXNmA8VvdLLyCRMW1gS3rW
+         F89NrEQ4fNn7ruYo3djwf0PYeWqo5z6QPTV9X0BKrtj8vAuqtroPZ5vHYberbFlD+ukz
+         gfXXzDPx/VvnHGMUFwEEVqq7NAJUE3yB9pgd7ZtkGqALZFRPZoNPUPvG5TP39BcHrOmS
+         uxUEhlB0JSygiiJg1FhQh0QNa5k7+A8qNP69pwYuo0WnOzltsg5RDjSmNHEIKU2UkT71
+         PTWw==
+X-Forwarded-Encrypted: i=1; AJvYcCVS4vGzhUOHzRYvqVSoZKR4X3+KVXyzAHpm5W3LavD+OQ8Gr78iXdEn6xwUyZ5HaXcR4LI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIDI/L7cU/Mt9Y/aGRAxU/+eaxRVTzxDVY5US0W4iRZTHWbwfB
+	uWRt3oa1VK1WrthrZBrj6VgYapMmJa7lzlFtemYQnIvGHSHljBN0JVVI
+X-Gm-Gg: ASbGncsEARXjNvgeH6n2Vbg+p/HwTI6NFDVehRcqOSGueMVCSJKzh437XRixaHigbYD
+	8ff2YGsWaTUkjX5Fgcj2sdSj7rjP5P1uPjqBMGqxthDbLVj9SjnAkQ/9SGP+nly/nfhSv3zRHF0
+	TkyK8K8oE7MnS7OI4SRk2fdlqs89r4F5Oolx9gqAtF1ZwDZGQ5VOIeq018LcArtMG6BGZOCXM5z
+	S0/ZxG8R2im0HGc+hYapfDrvP0x+9ZuibabY78UIRF1fsyGgl8j2oFJSXp04CxcIFuI3fEiSXl9
+	yHr9xtdXRi1NHTyAOAd9aKEFpTyGkRSJLhl3slBwNhQTPt0YE3l6KSuynBKlJX1sDeKR2hXzfpI
+	dh/wVDO1u4lKc97mi1z2P4uJor/DU9bmm6NPVCzYI8vSl
+X-Google-Smtp-Source: AGHT+IGw7S9cnhhB/fGRodgZ78UO34c9phuFPnNQn6cC+bHG0aG2WqTU8jqi4bbgiHpzDpLkn21dsQ==
+X-Received: by 2002:a05:600c:4e16:b0:43d:fa59:af97 with SMTP id 5b1f17b1804b1-4531dead583mr15714515e9.32.1749550312661;
+        Tue, 10 Jun 2025 03:11:52 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a532468360sm11730543f8f.100.2025.06.10.03.11.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jun 2025 03:11:52 -0700 (PDT)
+Message-ID: <7e796844-97e2-4b45-a76e-4c1fcb1da3ae@gmail.com>
+Date: Tue, 10 Jun 2025 11:13:07 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
- <cover.1749289514.git.phillip.wood@dunelm.org.uk> <CAN0heSotWpNmqd905aknVTfk6WEcYifAwbXBKYfAWkhzxua3ZA@mail.gmail.com>
- <a66483fb-5bc4-42b5-b361-c900a69015ed@gmail.com>
-In-Reply-To: <a66483fb-5bc4-42b5-b361-c900a69015ed@gmail.com>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Tue, 10 Jun 2025 11:56:10 +0200
-X-Gm-Features: AX0GCFs-Sy5IiNRGGqvfq7QIsyACX8LR-R8t11MVYMWtd52KsXryBqY-D7aC-No
-Message-ID: <CAN0heSrk4osiXTfxSZB9EN3o4NF+zLCBJscrSTa1Rsz+VjzjVg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/2] stash: fix and improve "git stash -p <pathspec>"
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] rebase: write script before initializing state
+To: =?UTF-8?Q?=C3=98ystein_Walle?= <oystwa@gmail.com>, git@vger.kernel.org
+References: <20250609221055.136074-1-oystwa@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+Cc: Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <20250609221055.136074-1-oystwa@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Phillip,
+Hi Øystein
 
-On Mon, 9 Jun 2025 at 11:42, Phillip Wood <phillip.wood123@gmail.com> wrote=
-:
->
-> On 07/06/2025 13:56, Martin =C3=85gren wrote:
-> >
-> > On Sat, 7 Jun 2025 at 11:45, Phillip Wood <phillip.wood123@gmail.com> w=
-rote:
-> > [...]
-> > So the implementation under test could bungle the pathspec, query the
-> > user for both `file` and `otherfile` (in that order!), get EOF from
-> > stdin while handling `otherfile`, leave it out of the stash, and end up
-> > passing the test. We could try to protect against this by providing
-> > another "y": if git wants to read something after our "s y n" sequence,
-> > we'll give it a "y" in the hopes that it will trip things up. We do wan=
-t
-> > to test the handling of pathspecs here, so maybe tighten this?
->
-> Junio has merged this to next now. I was hoping that we would already
-> have coverage for this with other tests but I couldn't see anything so
-> I'll look at improving the coverage for "git stash push -p <pathspec>"
-> in the next release cycle.
+On 09/06/2025 23:10, Øystein Walle wrote:
+> If rebase.instructionFormat is invalid the repository is left in a
+> strange state when the interactive rebase fails. `git status` outputs
+> boths the same as it would in the normal case *and* something related to
+> interactive rebase:
+> 
+>      $ git -c rebase.instructionFormat=blah rebase -i
+>      fatal: invalid --pretty format: blah
+>      $ git status
+>      On branch master
+>      Your branch is ahead of 'upstream/master' by 1 commit.
+>        (use "git push" to publish your local commits)
+> 
+>      git-rebase-todo is missing.
+>      No commands done.
+>      No commands remaining.
+>      You are currently editing a commit while rebasing branch 'master' on '8db3019401'.
+>        (use "git commit --amend" to amend the current commit)
+>        (use "git rebase --continue" once you are satisfied with your changes)
 
-Ok, makes sense. Those would certainly be good regression tests to have.
-I did some manual testing when I wrote the above and feel confident,
-FWIW, that it works correctly as of now.
+Thanks for working on this.
 
-Thanks for these git-stash improvements.
+> By attempting to write the rebase script before initializing the state
+> this potential scenario is avoided.
+> ---
+> The diff looks perhaps more messy than required. The only required
+> change is the filling in of make_script_args and the call to
+> sequencer_make_script() above the call to init_basic_state(). But then
+> the `if (ret)` looks out of place, and moving that up means adding `goto
+> cleanup` which means the code that was previously the else case can be
+> dedented.
+> 
+> get_commit_format() calls die() in this case, so cleaning up the
+> sequencer state isn't an option. Maybe it shouldn't call die in the
+> first place, but that looks to be much larger change.
 
-Martin
+I don't think that should be too difficult and it is the only way to fix 
+this that ensures we restore the stashed changes when the commit format 
+is invalid. The test added in this patch should be updated to check that 
+the changes stashed with '--autostash' are restored when the commit 
+format is invalid.
+
+Looking at the callers of get_commit_format() there are three in 
+revision.c:handle_revision_opt() only one of which can fail. That can be 
+converted to
+
+	if (get_commit_format(...))
+		die(NULL);
+
+I think we can do the same for the caller in 
+builtin/log.c:cmd_log_init_defaults() and should be straight forward to 
+update the example in Documentation/MyFirstObjectWalk.adoc in a similar 
+way. The caller in sequencer.c:sequencer_make_script() should propagate 
+the error.
+
+Note that to use "die(NULL)" you need to base you patch on the branch 
+'ps/maintenance-ref-lock' which is currently in next.
+
+I'm about to go off the list for a couple of weeks but I'm sure someone 
+else will be happy to answer any questions that you have.
+
+Best Wishes
+
+Phillip
+
+> 
+>   builtin/rebase.c             | 42 ++++++++++++++++++------------------
+>   t/t3415-rebase-autosquash.sh | 10 +++++++++
+>   2 files changed, 31 insertions(+), 21 deletions(-)
+> 
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index 2e8c4ee678..8139816417 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -293,15 +293,6 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>   				&revisions, &shortrevisions))
+>   		goto cleanup;
+>   
+> -	if (init_basic_state(&replay,
+> -			     opts->head_name ? opts->head_name : "detached HEAD",
+> -			     opts->onto, &opts->orig_head->object.oid))
+> -		goto cleanup;
+> -
+> -	if (!opts->upstream && opts->squash_onto)
+> -		write_file(path_squash_onto(), "%s\n",
+> -			   oid_to_hex(opts->squash_onto));
+> -
+>   	strvec_pushl(&make_script_args, "", revisions, NULL);
+>   	if (opts->restrict_revision)
+>   		strvec_pushf(&make_script_args, "^%s",
+> @@ -310,21 +301,30 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
+>   	ret = sequencer_make_script(the_repository, &todo_list.buf,
+>   				    make_script_args.nr, make_script_args.v,
+>   				    flags);
+> -
+> -	if (ret)
+> +	if (ret) {
+>   		error(_("could not generate todo list"));
+> -	else {
+> -		discard_index(the_repository->index);
+> -		if (todo_list_parse_insn_buffer(the_repository, &replay,
+> -						todo_list.buf.buf, &todo_list))
+> -			BUG("unusable todo list");
+> -
+> -		ret = complete_action(the_repository, &replay, flags,
+> -			shortrevisions, opts->onto_name, opts->onto,
+> -			&opts->orig_head->object.oid, &opts->exec,
+> -			opts->autosquash, opts->update_refs, &todo_list);
+> +		goto cleanup;
+>   	}
+>   
+> +	if (init_basic_state(&replay,
+> +			     opts->head_name ? opts->head_name : "detached HEAD",
+> +			     opts->onto, &opts->orig_head->object.oid))
+> +		goto cleanup;
+> +
+> +	if (!opts->upstream && opts->squash_onto)
+> +		write_file(path_squash_onto(), "%s\n",
+> +			   oid_to_hex(opts->squash_onto));
+> +
+> +	discard_index(the_repository->index);
+> +	if (todo_list_parse_insn_buffer(the_repository, &replay,
+> +					todo_list.buf.buf, &todo_list))
+> +		BUG("unusable todo list");
+> +
+> +	ret = complete_action(the_repository, &replay, flags,
+> +		shortrevisions, opts->onto_name, opts->onto,
+> +		&opts->orig_head->object.oid, &opts->exec,
+> +		opts->autosquash, opts->update_refs, &todo_list);
+> +
+>   cleanup:
+>   	replay_opts_release(&replay);
+>   	free(revisions);
+> diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+> index 26b42a526a..5d093e3a7a 100755
+> --- a/t/t3415-rebase-autosquash.sh
+> +++ b/t/t3415-rebase-autosquash.sh
+> @@ -394,6 +394,16 @@ test_expect_success 'autosquash with empty custom instructionFormat' '
+>   	)
+>   '
+>   
+> +test_expect_success 'autosquash with invalid custom instructionFormat' '
+> +	git reset --hard base &&
+> +	test_commit invalid-instructionFormat-test &&
+> +	(
+> +		test_must_fail git -c rebase.instructionFormat=blah \
+> +			rebase --autosquash  --force-rebase -i HEAD^ &&
+> +		test_path_is_missing .git/rebase-merge
+> +	)
+> +'
+> +
+>   set_backup_editor () {
+>   	write_script backup-editor.sh <<-\EOF
+>   	cp "$1" .git/backup-"$(basename "$1")"
+
