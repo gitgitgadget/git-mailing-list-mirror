@@ -1,91 +1,86 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193B778F34
-	for <git@vger.kernel.org>; Tue, 10 Jun 2025 22:56:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F11EBE
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 00:09:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749596165; cv=none; b=gSN2sfOBETAlryMeHKr64cEKqT1he2MNfq4HoEeiq3vnI9DWQh9h0jOyr7a24T/KHZ3qD0JQovyrSxKa+YBdBLnCwEwr72k34gdSuRHEJY5THoL3LwEFEwVFIjFWAxdkhZHhX05ie3Xhmg+wUR6CgfILHkWpcvIKLe2Vo/Faydk=
+	t=1749600565; cv=none; b=DEODsA/ITwJ6dmoeahtbxMMshQoiXvKWjo6xP+uITIwDbxF82ZVBhjl3ObKA6fKDKcere7QD/idLgaCYvW5uzZr48vTVvABvoSgjqARGAI/14xrip3oF/tN1JWo2K34djBqYI+RRseLQz3EECD44OBNSK/GBiGyMgG4Cg0FcMvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749596165; c=relaxed/simple;
-	bh=si2s1xXjwu45cWSFEA6vdyWrnjGwtIh1S6Mhi++sw30=;
+	s=arc-20240116; t=1749600565; c=relaxed/simple;
+	bh=botU8lMZndxtsgEaKHY40QFw/R65ZVl9MKvneiFljAs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TzB57nLSXxu+bFWeYEmpvvZymGJxK8AgBVc+3VRfkXPjRW+znrCdJf5UYkCLBdKK9WxBDivjFSxXPiznkVvhUZ/RMHM8ewtvD+5yFXDNLjATU/urLRo+8JXWDjq1piE2Xx09iZ52f5YEIv2t4aJiv/b/IYCM59flWyp59PzS1+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c32N/TpA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oHYhHaQm; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=DXitaI6p5NaOfYougN6QAWp/j5PYxUvsqyere+FyG3tY201LnXjQhuLwA3cjz+MshSvFjETQrk8pZNH4qVFDqUEeOdV6IufG8dzX0emefcc+uF8NdA/9MYUScFyXxGLo3RjfMn8hSmWJcrWqhqXBZFq6XyZBz98IGOpT5e5K+JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LT+5Z4Xr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AcP5msXC; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c32N/TpA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oHYhHaQm"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1DEA111400D6;
-	Tue, 10 Jun 2025 18:56:01 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 10 Jun 2025 18:56:01 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LT+5Z4Xr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AcP5msXC"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3D03513803B5;
+	Tue, 10 Jun 2025 20:09:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 10 Jun 2025 20:09:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749596161; x=1749682561; bh=ShkI/HT9Ns
-	E1pWFXUOJi3AnKFZ7hz1M9AI8b4WPxL8c=; b=c32N/TpAIfACyMs+h1PZ0zKWRd
-	WYP9ANgXQUFcvIYy9crFiST1t/LcoNP+n6aouTZA+LQ12ZUEGSJ1CjYeHPllcVMO
-	GiMQSyb2JMwN0jaFLqwAj2kwGPFAg5w84TKy6BSaisa2pOoOyocxjxKqODQSrOR+
-	H6laG01mtF7/5SEZ452EedgKSg3+R+nmAxa0cO42Ub6pdi0M9ECBkhO/n+mIzTp7
-	ipji2/Rr7/OVRpeXZ/Xy/mDyceOPfC7OnhtpQzglOh4nJ+kC2L7yT74lyhGyMz0w
-	dFq21oLx7XNNZjnN8SU2EN4lx/EIqx0HKDIASUH0+6ThuNeXlX4gNG9MZdCw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749600562;
+	 x=1749686962; bh=KZt582T2tJIyNuDrBvMNKR69oLVARgszcWvoJy0uqq8=; b=
+	LT+5Z4XrfJoIYoW8JUWKYIJfaY8w1dTp/JUuFOqFGzeQA/pZDymHJTjUWYu2MJbF
+	Gp2Xn7siHiOOQQ58O5iPQkv+2fnb2t70HBWsStuA3HCxNuv61pufAAXDCAML2Kgm
+	QU0Ny7V6KVQ/WBHtkIXIBC1KMkpWCWuljjhtFkTImNE5CtPv4KUsT6fNZeryXvVZ
+	qS3trMwHfmWjU/hEvUDwfBUkgQSyOpGLIAHplCPqU+Hu4FFnNVfDNlz9JGxBE0XR
+	7Tad3qG/imwhsNrjtSMFk4K2c8lCX9jGVz0joOKakaQGdOzn6N3zXDwu1c9Wl708
+	t+S0WzVKyna0aeW6tXMIcA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749596161; x=1749682561; bh=ShkI/HT9NsE1pWFXUOJi3AnKFZ7hz1M9AI8
-	b4WPxL8c=; b=oHYhHaQmsmILG4qvOiU4p6RAiFFkdSubZhDPYuUaFM9DgifCpmR
-	0OZhvPdVzLPnv9yuMq9RH3+w1jtRo7gSu5eXAX95AKWRjhI1UEiGwhVNm+qaf398
-	Vt3XlCxMrYHEItUKeqwdwgkvZvUmXymtJH/VQ65Rm2s/SkY7ZcHP/UvSAaYio4SP
-	qeXCoh31Gfzo6nZB/YjWpoGYXMAB9zUWsdAZpRNaqNeRpw1uuzNjK5y9m4+OCcEU
-	9bmzJ2WJopcbzAdHdGeOG1xJg91z/Y1FYnLkV1oAHbdjC0YLVp+Bthw8zziYBb9N
-	fFEDUKYp0JwzFWYX7knqRCADyjmcEc5ZwPg==
-X-ME-Sender: <xms:ALhIaIQ838zahlHaGZEiL36PX0hN77-vele4qgB7swOABOeWVCJLJw>
-    <xme:ALhIaFx4EVUQndcuPZoIPkTzavtp_6x0qMv_K_YUrrOyzGzkq9lIdDgKxll3vzwC8
-    p93nsNXR0WcWVcgIg>
-X-ME-Received: <xmr:ALhIaF0_w57S0lj0DNAGLgESOSeqvPNQwYzmBrA0udS6w5YoQB9mSdcxVeRPIRBejORXZG1wR1fTz3QkLBK6r7SmOcpYsBLuv6mC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudefiecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749600562; x=
+	1749686962; bh=KZt582T2tJIyNuDrBvMNKR69oLVARgszcWvoJy0uqq8=; b=A
+	cP5msXCxs7Uc8Xrxbxfz91n624PHWYe7TB2oNJGQJ++iIP4GS5I1btEqrO0IPXdB
+	u4esLQCsuqJO3FCcBn82n4AQpl12PWPS54jfi2cfoSpEWRG+eCoCB5auqPgcBmNN
+	0je33lly3AgygRRIcknxhR/l/MsHsLZ14lTFsrDPSa56Zq9pDbaBD+eTia9QU5Hc
+	yRMEm1UQ+CUwJtyGTS3RRtMeYxpO+gEV0NVDvQ18JB/rFlHfzOER9fpNiwTU7Xxa
+	rk1jSm/h/xAlLvevKK/+eth4Cr1Z2XWFRC3D05VNIHK3ykKiaDTQKcLQQ3bjktlo
+	Afx1yvNOpmS9WKbzgtAoA==
+X-ME-Sender: <xms:MclIaB-TgdOA_KyIrKxkWR3OpYFEvzsPBViZ3Dpx5xIXwPXaPDD2LA>
+    <xme:MclIaFua40Kk5VtswIfriBrFWhXtkISHNTTjgjW5QrWeDN1-ZgGjMvAMwnPyf2M_Q
+    _qSDrDgKoBkseFCzQ>
+X-ME-Received: <xmr:MclIaPDS2iSMThGpRT0Igqz-aov9_n8BMtT8F3pZs57K_6gzuf3SQxujO-k4cHqq9IvMrlFlkuwEhXO4KbQSQODiiv4DnjDFCxES>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudeggecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknhhosg
-    hlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
-    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifoh
-    hougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ALhIaMD0rlgWZsy40UjgX7hKHzw_dW3Gg0jShfP-6RMSFVnzsR9RJQ>
-    <xmx:ALhIaBh6pk_A1mGcYrSgitBkA_sgw1zq2NVo3flrV8veiMwQOwipyg>
-    <xmx:ALhIaIoomlr1LSeApZrxRec0QdG6TS4QFUyO3G3jq_0VF80HU89kCw>
-    <xmx:ALhIaEjQ5JG0DqtLq9fPeQYCWYMEmzxqSOno4mIpU0SrqoI-pPx3gg>
-    <xmx:AbhIaNuySRd1cA7UwsCUPlfye2wV9Muibg1sn-W901U3hNans8FlhPTd>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehmvgeslhhinhhugidrsggvrghuthihpdhrtghpthhtohepphhhih
+    hllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:MclIaFfc0iSw42g5Vjd8B0Gpht30BnVWJaEtdOkB6YE9ajDVC7zsLg>
+    <xmx:MclIaGO_Ne7LvpmFFrq0KHWVcce8zAJK0mHcHxh0mqAB4f3REYg9bA>
+    <xmx:MclIaHkLAIEunwYFvwYo-Om8sCKkoxRVgFsHE4LK5fmFn6yb3dJkJw>
+    <xmx:MclIaAsqfes0VcRUHdc4VRX_Ot7wzH8gtymAEINyrWk9CP29Xpjdpw>
+    <xmx:MslIaNVpmyFxmU4RuTZhRlyM7TjCUKUFgVD9Bo6F61rVCs9S4Qsl714z>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 10 Jun 2025 18:56:00 -0400 (EDT)
+ 10 Jun 2025 20:09:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  git@vger.kernel.org,  Kristoffer Haugsbakk
- <code@khaugsbakk.name>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-In-Reply-To: <CALnO6CB+ZBChPg0CLXO+i3AUEwiiF7z5euXa4N3Yh4FoEX4A4w@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 10 Jun 2025 17:11:39 -0400")
-References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-	<66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
-	<xmqq5xhmvuol.fsf@gitster.g>
-	<CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
-	<5ca4e740-d243-490c-ad85-13b330165365@app.fastmail.com>
-	<CALnO6CB+ZBChPg0CLXO+i3AUEwiiF7z5euXa4N3Yh4FoEX4A4w@mail.gmail.com>
-Date: Tue, 10 Jun 2025 15:55:59 -0700
-Message-ID: <xmqqtt4nkxz4.fsf@gitster.g>
+To: Li Chen <me@linux.beauty>
+Cc: "phillipwood" <phillip.wood@dunelm.org.uk>,  "git" <git@vger.kernel.org>
+Subject: Re: [PATCH v2 1/2] trailer: append trailers in-process and drop the
+ fork to `interpret-trailers`
+In-Reply-To: <20250610123459.278582-2-me@linux.beauty> (Li Chen's message of
+	"Tue, 10 Jun 2025 20:34:58 +0800")
+References: <20250610123459.278582-1-me@linux.beauty>
+	<20250610123459.278582-2-me@linux.beauty>
+Date: Tue, 10 Jun 2025 17:09:19 -0700
+Message-ID: <xmqq8qlzkukw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,18 +88,72 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble@gmail.com> writes:
+Li Chen <me@linux.beauty> writes:
 
-> Really? When committing a recent patch (editor template attached) with
-> -v (for testing this), I saw trailing whitespace on the blank line
-> under the added feed.
+> * `amend_strbuf_with_trailers()`
+>   – parses the existing message,
+>   – merges trailers from the command line and config,
+>   – formats the final trailer block, and
+>   – rewrites the supplied `struct strbuf`
+>   without ever leaving the current process.
 
-True.  Unless you use a special configuration, which might break
-other people's "patch" implementations (I think "git apply" has
-learned to grok this ages ago).
+If such a helper function exists, shouldn't "interpret-trailers" be
+able to lose quite a lot of lines, at least nearly as many as the
+new lines introduced to this new function, by making it call this
+function as well?  And that would ensure that the internal call can
+safely replace the external call and produce exactly the same
+output?  If so, that can be a pure refactoring patch that can become
+a commit on its own, I presume?
 
-$ git -c diff.suppressBlankEmpty=yes commit -v
+> * `amend_file_with_trailers()` becomes a thin wrapper that reads a file
+>   into a `strbuf`, calls the new helper, and writes the result back.
+> * `builtin/rebase.c` now calls `amend_file_with_trailers()` instead of
+>   executing `interpret-trailers`.
 
+And then these two changes can become a separate patch on top?
 
+> -int amend_file_with_trailers(const char *path, const struct strvec *trailer_args)
+
+This lone "removed line" can be avoided if the patch did not touch
+this line ...
+
+> +static size_t first_comment_pos(const struct strbuf *buf)
+>  {
+> -	struct child_process run_trailer = CHILD_PROCESS_INIT;
+> -
+> -	run_trailer.git_cmd = 1;
+> -	strvec_pushl(&run_trailer.args, "interpret-trailers",
+> -		     "--in-place", "--no-divider",
+> -		     path, NULL);
+> -	strvec_pushv(&run_trailer.args, trailer_args->v);
+> -	return run_command(&run_trailer);
+> +	const char *p = buf->buf;
+> +	const char *end = buf->buf + buf->len;
+> +
+> +	while (p < end) {
+> +		const char *line = p;
+> +		const char *nl = memchr(p, '\n', end - p);
+> +		size_t len = nl ? (size_t)(nl - p) : (size_t)(end - p);
+> +
+> +		/* skip leading whitespace */
+> +		size_t i = 0;
+> +		while (i < len && isspace((unsigned char)line[i]))
+> +			i++;
+> +
+> +		if (i < len && line[i] == '#')
+> +			return (size_t)(line - buf->buf); /* comment starts here */
+> +
+> +		if (!nl)              /* last line without newline */
+> +			break;
+> +		p = nl + 1;
+> +	}
+> +	return buf->len;          /* no comment line found */
+> +}
+> +
+> +int amend_strbuf_with_trailers(struct strbuf *buf,
+> +							   const struct strvec *trailer_args)
+
+... like this?
