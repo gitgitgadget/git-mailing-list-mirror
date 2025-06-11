@@ -1,51 +1,51 @@
 Received: from Chamillionaire.breakpoint.cc (Chamillionaire.breakpoint.cc [91.216.245.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D795246766
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D680231854
 	for <git@vger.kernel.org>; Wed, 11 Jun 2025 22:15:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.245.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749680103; cv=none; b=Qn5M5A2SDL5zlzKrHsqlpcKn23FoqgbL/dfrJVfR2nlrGsPb0YN2Zu5Xe/couh+Ao4wDyyBpelxVmCx+NRlX+TkY827N+pnPYdC8B91OW61eDCHN77BHr78KqlQDk4sdJ9PL7UhUc5aUvZpKruwqxiHv8OUkeAKmE6PmFkj9+rY=
+	t=1749680104; cv=none; b=DJ1zGXxXFFE9Jiaa8yHrpdmSM1AASn/pKXiWBO0kJ/tnyx77EVAWPHusix09Bq+W+jRhv+gGUwwZ+fj9YeBLaFh9osoUuP68brkmjZHMtaVS9sSiLM28TH6M0bVdgreqoSdM3N6GfRk27Kvg/frgU8m5fDfsycIh98ByBnqgYTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749680103; c=relaxed/simple;
-	bh=DR/yC9MS44YmU/X/bJaJNiZeaobA1bGXnk5kYzs2HJU=;
+	s=arc-20240116; t=1749680104; c=relaxed/simple;
+	bh=kwoXdcQs9wQ7NwEpJ/ms7L8PlIo9ddDDsdS2qng4gyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=miekk1ZQftXmhn5u4COS9iSBOncnpt5HMBf60O9j8BRopcleAUYx3zqZLeIi5dJJKibAGqVK+PgRB8VkcihA13rERHU87i/ao2zltEIO4REGgFTqiPDE3HbCi6M9sVr8oFiSPpNHzol6LU2ACKTmpGw1ZOGhEb0gwKM6d0q4dnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=RTBKfJiZ; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=xGz1kCJy; arc=none smtp.client-ip=91.216.245.30
+	 MIME-Version; b=UBk4BlQiypKF8WsDZC6pOezP8BSdWX7A6qYGwDU9Vb+QsBJ1oldbQ0/nxFwiDdaID+Wm88sNo9prOVOErQ4Pj21YL6z/iTVo9v2RU23zYwQFyN9wq2rcvr929c3LIhFd4ysJ+IHpMXPJejnyA6+td4TXZO4qq3rHdK1hKYniL/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=EEcMFXSl; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=Hgfid0GV; arc=none smtp.client-ip=91.216.245.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="RTBKfJiZ";
-	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="xGz1kCJy"
+	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="EEcMFXSl";
+	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="Hgfid0GV"
 Received: by Chamillionaire.breakpoint.cc (Postfix, from userid 1000)
-	id 72CEC61322; Thu, 12 Jun 2025 00:14:52 +0200 (CEST)
+	id 654C36131E; Thu, 12 Jun 2025 00:14:52 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025; t=1749680093;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=mYcg0b/LsH1R0C3QAKa3SGfmgU6SC49+vdLw8Niquvo=;
-	b=RTBKfJiZYKPit5VTJ0JH2c+Txi0Nj0GqYcOIeMVMuOBTtm27qyq+555sAw7hFa9+h8gPic
-	RxBRkfyAItrVHNsBsP1WcVL0reSDgyr3MvlYS+5SV/YxR9qfm+Lva+8olbjBbBOPFcwFYs
-	JSyURd27erh+m+eRHE21H8pwkkzrCmJv+/stCBKThLD1a8Q8migMShm9q+h730/oNSCO2P
-	BwtwuAK6P59oG5R4CJGdUY4T9npiIoJV6LbnFkbAnGwl7KNxWUmWIWXvf2l/MMgRuZYYPw
-	/Yop77jAj/D0ZPXJQf3PPqdeMAnGOCQnQ7kYkoMl+/Jg0gobbZTqam6rSaeoSA==
+	bh=kwoXdcQs9wQ7NwEpJ/ms7L8PlIo9ddDDsdS2qng4gyc=;
+	b=EEcMFXSlybiSm2oM55gWkVlK6ZrWotwohUWwfslSOJjrA9dG/bsGrKKiuMC4vGINnuqb80
+	DFmPyE/3Ftzi0lMlIEVRTTUWlVPfgdsou2U3N3fK4LliTF3RZMQd+WY8L9RFKpAyYRzFhk
+	beWxf55Yvqwutkr+ZC9Ak1/5Z4SABzkvRMT4aIMnUSF/cuiie5QUs8e8dAkQWgLHyShvfI
+	c7lZk+a3d9DkfwRwE7Xl+O3qb1ZJlooX7A4VAIO1u608QnaK5leSia71zYtAjrRnf+oDD8
+	O005Ky4u5HhOnXuW+QkOmaSCTR2M4XSvJDiOC/jAw7hqpUlirp+4xUVFrmY81g==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025e; t=1749680093;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=mYcg0b/LsH1R0C3QAKa3SGfmgU6SC49+vdLw8Niquvo=;
-	b=xGz1kCJya7L7TWsDDAWKi7wbGuj77B4mDY8fg9Pjka2XG7HRqKjieB2m0TBW04ccaRTeLr
-	lyt8h/I4dDUM0aDg==
+	bh=kwoXdcQs9wQ7NwEpJ/ms7L8PlIo9ddDDsdS2qng4gyc=;
+	b=Hgfid0GVNTJB0WlnPdrmT+f+/bRHgu6r60dOHRiQqo+N9o4lI/4fCX1sOoLaqhDmQFae5P
+	c4N90G0Sja5hWxCw==
 From: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 To: git@vger.kernel.org
 Cc: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-Subject: [PATCH v2 1/6] Revert "bswap.h: add support for built-in bswap functions"
-Date: Thu, 12 Jun 2025 00:14:37 +0200
-Message-ID: <20250611221444.1567638-2-sebastian@breakpoint.cc>
+Subject: [PATCH v2 3/6] bswap.h: Define GIT_LITTLE_ENDIAN on msvc as little endian
+Date: Thu, 12 Jun 2025 00:14:39 +0200
+Message-ID: <20250611221444.1567638-4-sebastian@breakpoint.cc>
 In-Reply-To: <20250611221444.1567638-1-sebastian@breakpoint.cc>
 References: <20250611221444.1567638-1-sebastian@breakpoint.cc>
 Precedence: bulk
@@ -56,48 +56,42 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-Since 6547d1c9 (bswap.h: add support for built-in bswap
-functions, 2025-04-23) tweaked the way the bswap32/64 macros are
-defined, on platforms with __builtin_bswap32/64 supported, the
-bswap32/64 macros are defined even on big endian platforms.
+The Microsoft Visual C++ (MSVC) compiler (as of Visual Studio 2022
+version 17.13.6) does not define __BYTE_ORDER__ and its C-library does
+not define __BYTE_ORDER. The compiler is supported only an arm64 and x86
+which are all little endian.
 
-However this file assumes that bswap31/64 are defined ONLY on
-little endian machines and uses that assumption to redefine
-ntohl/ntohll macros. The said commit broke t4014-format-patch.sh test,
-among many others on s390x.
-
-Revert the commit.
+Define GIT_BYTE_ORDER on msvc as little endian to avoid further checks.
 
 Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 ---
- compat/bswap.h | 14 +-------------
- 1 file changed, 1 insertion(+), 13 deletions(-)
+ compat/bswap.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/compat/bswap.h b/compat/bswap.h
-index 9e0f98e00b93a..b34054f2bd728 100644
+index 0a457542dd76a..fd604d9f7b74b 100644
 --- a/compat/bswap.h
 +++ b/compat/bswap.h
-@@ -35,19 +35,7 @@ static inline uint64_t default_bswap64(uint64_t val)
- #undef bswap32
- #undef bswap64
+@@ -81,6 +81,10 @@ static inline uint64_t git_bswap64(uint64_t x)
+ #define bswap32(x) _byteswap_ulong(x)
+ #define bswap64(x) _byteswap_uint64(x)
 =20
--/**
-- * __has_builtin is available since Clang 10 and GCC 10.
-- * Below is a fallback for older compilers.
-- */
--#ifndef __has_builtin
--	#define __has_builtin(x) 0
--#endif
--
--#if __has_builtin(__builtin_bswap32) && __has_builtin(__builtin_bswap64)
--#define bswap32(x) __builtin_bswap32((x))
--#define bswap64(x) __builtin_bswap64((x))
--
--#elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
-+#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
++#define GIT_LITTLE_ENDIAN 1234
++#define GIT_BIG_ENDIAN 4321
++#define GIT_BYTE_ORDER GIT_LITTLE_ENDIAN
++
+ #endif
 =20
- #define bswap32 git_bswap32
- static inline uint32_t git_bswap32(uint32_t x)
+ #if defined(bswap32)
+@@ -122,7 +126,7 @@ static inline uint64_t git_bswap64(uint64_t x)
+ # define GIT_LITTLE_ENDIAN __ORDER_LITTLE_ENDIAN__
+ # define GIT_BIG_ENDIAN __ORDER_BIG_ENDIAN__
+=20
+-#else
++#elif !defined(GIT_BYTE_ORDER)
+=20
+ # define GIT_BIG_ENDIAN 4321
+ # define GIT_LITTLE_ENDIAN 1234
 --=20
 2.49.0
 
