@@ -1,277 +1,210 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F28E982899
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 00:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7814685
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 01:33:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749603152; cv=none; b=i4GoPdYkL+YJ4FyrQJFYfPzwZakY7LA2ZcJHDuby805f/njDyaFzVZzici0MmKhvJ0mEdol4bL35wHjbJROv2qta4MgmoRi+tfwqB1FCDY3Rc6TDkDk3/9WNfH78dbVKqpHEQbcwV9lhzr1pdNvvD9dWR5hJYz7HINA7f8pKoHc=
+	t=1749605592; cv=none; b=AnhZRYV1EGc71GjBj14+YiSg3yOmPqWpzMHQdbNbtR+3q/b5zJZQCuS/vlRvE/97FB0KVJUH/Q6noNRCcSmPVU/r37zhWot5ieUXoq72aFzn+XvmC7MBU0a4l11zNqwzAlS6vZxKO1E9jdBCtGMLQvScfeTzM7OfEB9FP6Bw0ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749603152; c=relaxed/simple;
-	bh=tvLmFkl2TsbY7cnsQ3BuHI49Sv4MIU7V2TCny8EDE+4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=oaMO3+ZVxwZ3ZKpjzBQzxCXsYpFQuijRVD/4LZy+P/IbHqMvcpjliyZ6HN/a3fZIhW90TGJqf7rMDYgVZdyrW06LktxxWdlEd+CxxnXo8zJjM2QakmTJZEu2X/yFmn2+5dTnsk8e5j17iZnyO/wUlIcGOTRM2vH6Uv9KX2l8VO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dP8iloap; arc=none smtp.client-ip=198.175.65.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1749605592; c=relaxed/simple;
+	bh=KD/1tdUVNgNTzZVtimPMYzhPXqpdK8QK8werjeq7gec=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tvZXMH/NevgsslgbrJjX738jv7XNfW4uBRs+PRY6PB+5DgJCvZ46ETZKnqWgjMEITHuZufOpKcStG05R9lBIOG9brs/QMKTcK+oHvKKyE0Mdw7gY9t+E1nqLYDCVZh8YwKZVt+be7MY7DVfpSu7sekRhXrxTzpg3zmeHlO47w94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cCPiopEJ; arc=none smtp.client-ip=209.85.160.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dP8iloap"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1749603151; x=1781139151;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=tvLmFkl2TsbY7cnsQ3BuHI49Sv4MIU7V2TCny8EDE+4=;
-  b=dP8iloapqft9mIq8nqbQgog7pxCh9rGufY6tV7A+4jz+WBsX71FpB5lo
-   937ggqUGHUoQkEi8kqucKvahcQR0aAcpVIcsK7h0mYPXgbHY0S5pxvjGK
-   CCaaIUtiOQcBzFdJjxldV3ObN4JwRamVP1FhuRZmNUzh+WyY81TGxtn7J
-   sqYQy1sTewLxUOtct7K0vVKjcFfjIhmHlSvqHQazhSqActV34McF33UXk
-   rC0EGfUryMKPRgUU7krMEdzsRIVy/fvjTNpSpEDRLdcWGUWG2TmMDqMei
-   EbnUnHMKHcxnvabc1mcVoTvl31DSdOti1JObJNSwXP/7JzyRTxnBtShfm
-   Q==;
-X-CSE-ConnectionGUID: 77nzOIycSX2XbuZCG3Sfvw==
-X-CSE-MsgGUID: e7zW7+h1QI2beJriHMmKCQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11460"; a="62012596"
-X-IronPort-AV: E=Sophos;i="6.16,226,1744095600"; 
-   d="scan'208";a="62012596"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 17:52:27 -0700
-X-CSE-ConnectionGUID: 76dc3IPyToOu5+q+qGY9Tg==
-X-CSE-MsgGUID: t1Opt91wRsqZKQHvaw8q9Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,226,1744095600"; 
-   d="scan'208";a="170199749"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by fmviesa002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2025 17:52:26 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Tue, 10 Jun 2025 17:52:20 -0700
-Subject: [PATCH 6/6] submodule: look up remotes by URL first
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cCPiopEJ"
+Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4a5ae2fdf4eso4726741cf.0
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 18:33:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749605589; x=1750210389; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=usjjtA14kQkHPjlGWsAlyIJwtvHTOVzcjnUF5ucJVLU=;
+        b=cCPiopEJwq6TdTnaXeVLGChyGqZItRWoNNKAwDeSlGCKAXULKVybfgz63HhmOKlYeQ
+         8az4Ii1x70mynyX++0h0LNvexuim/5IF62C1NjrBIw7SCChp+6OtHf9ZDt+D+rE2XgTR
+         YoIF6q5vL+LsCn936rOJIGqlrRIwXv3lpsbkBAu6lEqbc38/nmvwQbnpuvB2sFYUStQm
+         NLSiIPGgBCIcQ4WgVZ9d6Q6O2Z3KZ52MWO/7YqrJVKlNxgaIBYElasouKXXoO+7Z5xZr
+         Xd4Ejm3mB7FO0K+6d1k9XVEdnnfGHLAKXdna+8pyds8LXLkJt9Fvc+9e/dGXvcaqBkwn
+         fccQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749605589; x=1750210389;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=usjjtA14kQkHPjlGWsAlyIJwtvHTOVzcjnUF5ucJVLU=;
+        b=VGhZ1F1gWGzhQT7c39eAAsRIodDSLpoTyBZfTdGqkP4Uy0q0OfJFdDW0OeYn/zGYw0
+         TDQUkt1Xp6F315bLKMRTDne5wkYUo8YPZ1l0dXLrj1yB2qYhJfiYBcHPk7wVJgv/WFaI
+         zZTMeEUQMF8Z/vZ/AlwuIMralJCA3AI1lET/zKxbi0NVsns1S8zrebB3LxFSIh2tqJJo
+         QlEvSXpxLvt4U5OL29CyXx+lTAypkAmuxV28pU1SmlXaFcXbfb6Dfp3ey8gteEsBnQoL
+         hVecnLd4CrBNtBCPUwDKkNznw38Y6gKto3JXORej7O2MZHK4E5QKQaq17xjfVAPScO5R
+         u2eQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWObtKIXJGpV+6skApVdSdokis5msYHbaEP4mwZ05Ty4jFNeBSwgBwFk8JVyellO5YIFM0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxisMjksj5ERjcA0sqADyCpNTfTT2SbqX3QzuGv7e8s7qrzTwWg
+	Zd7UNPq9JRnBsdZAOripT02vyoibKcscRfLpEatFj7cFiNBSFZI8HO4uqvo+9MlosLVYYwAW2gs
+	vMLMk+m0cYKMjsYtC9gUGwRmMQqim32s=
+X-Gm-Gg: ASbGncuqysHMjMBVKu+qTKbphwpb5yaIJ3iaSQCebbF/LgVUxP6efISLbhtCzkIQ1bF
+	Qe9gp2kFBmxk6y7HO2KnprqkZACHMj3uNymXf8EDeBfZ7H//7quUtvr0Dfl+0iaUXEoJHIPNdm2
+	ApQ6j6qh0T9qx5d2N3kW+oHTw0Flpq/SMRZhct48B1MwGmV4jtWJJsmglABipY/9gHKZg/P5bpI
+	jgG1+tbGiQJ1Q==
+X-Google-Smtp-Source: AGHT+IFGnok17TwVjjfY5TCWeokgCtHVZB2wiw81uWclu/l6421wuxu6M9IbjdbHH1N+IDntLXw4+eLUlWcKGurtC7w=
+X-Received: by 2002:ac8:5e11:0:b0:494:9d34:fca5 with SMTP id
+ d75a77b69052e-4a713c6c8afmr27708701cf.13.1749605589163; Tue, 10 Jun 2025
+ 18:33:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250610-jk-submodule-helper-use-url-v1-6-6d14c1504e91@gmail.com>
-References: <20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com>
-In-Reply-To: <20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com>
-To: git@vger.kernel.org
-Cc: Jacob Keller <jacob.keller@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-X-Mailer: b4 0.14.2
+References: <f46443ac-eb7f-47db-8f4b-a06384e6fde5@web.de> <20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqqo6uyw6h4.fsf@gitster.g>
+In-Reply-To: <xmqqo6uyw6h4.fsf@gitster.g>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Wed, 11 Jun 2025 07:02:57 +0530
+X-Gm-Features: AX0GCFsmiUbqrKYivtQoCIfEMRjqoneMa5xxm90SNfR7FCpQGVSZv24DjUnxgWM
+Message-ID: <CA+rGoLdLOYGt8tsWtqWoBCct0Q5HkE_dY1X+MaSoyyfo6mCqFw@mail.gmail.com>
+Subject: Re: [PATCH v2] stash: fix incorrect branch name in stash message
+To: Junio C Hamano <gitster@pobox.com>
+Cc: l.s.r@web.de, git@vger.kernel.org, smacdonald@kaimaging.com, 
+	sunshine@sunshineco.com
+Content-Type: text/plain; charset="UTF-8"
 
-From: Jacob Keller <jacob.keller@gmail.com>
+> > +
+>
+> Addition of trailing whitespace?
+>
+> You can avoid such mistakes in the future by enabling our sample
+> pre-commit hook, which essentially does
+>
+>         git diff-index --check --cached $against --
+>
 
-The get_default_remote_submodule() function performs a lookup to find
-the appropriate remote to use within a submodule. The function first
-checks to see if it can find the remote for the current branch. If this
-fails, it then checks to see if there is exactly one remote. It will use
-this, before finally falling back to "origin" as the default.
+Thank you, I needed something like this, I think I'm going to steal
+this to other projects too : )
 
-If a user happens to rename their default remote from origin, either
-manually or by setting something like clone.defaultRemoteName, this
-fallback will not work.
+> where $against is HEAD (or an empty tree object while preparing for
+> an initial commit).
+>
+> >       branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> >                                            "HEAD", 0, NULL, &flags);
+> > -     if (flags & REF_ISSYMREF)
+> > -             skip_prefix(branch_ref, "refs/heads/", &branch_name);
+> > +
+> > +     if (flags & REF_ISSYMREF) {
+> > +             if (skip_prefix(branch_ref, "refs/heads/", &branch_name))
+> > +                     branch_name = branch_name_buf = xstrdup(branch_name);
+> > +     } else
+> > +             branch_name = "(no branch)";
+>
+> Do we need the else clause?  The original did not have it and showed
+> the "(no branch)" message without an issue, and I do not see anything
+> is changed by what happens inside the other side of this if statement.
+> Am I missing something?
 
-In such cases, the submodule logic will try to use a non-existent
-remote. This usually manifests as a failure to trigger the submodule
-update.
+No, that's just a random idea, I get the point I will remove that in
+the new patch
 
-The parent project already knows and stores the submodule URL in either
-.gitmodules or its .git/config.
+>
+> > @@ -1495,6 +1501,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+> >       strbuf_release(&msg);
+> >       strbuf_release(&untracked_files);
+> >       free_commit_list(parents);
+> > +     free(branch_name_buf);
+> >       return ret;
+> >  }
+>
+> Makes sense.
+>
+> This is a common pattern we use with a variable whose name contains
+> "to_free" (e.g., "branch_name_to_free"), but "branch_name_buf" is
+> pleanty readable and easy to understand what is going on.
+>
+> > +test_expect_success 'stash reflog message uses superproject branch, not submodule branch' '
+>
+> The title looks a bit on the overly-long side.  Would
+>
+>     stash message records the superproject branch
+>
+> be sufficient?  The fact that the stash is implemented as reflog
+> is invidible and irrelevant at this level, so "reflog message" is
+> wasting bytes without adding any useful information.
+>
+> What we want to make sure is that the message records the current
+> branch name, whether the project has any submodules or not, and from
+> that point of view,
+>
+>     stash message records the correct branch name
+>
+> ought to be good, but not quite, because this test is trying to
+> trigger a bug that was present only when there are submodules, so
+> not mentioning superproject/submodule at all would not work well.
+>
+> Would
+>
+>     submodules does not affect the branch recorded in stash message
+>
+> work?  That is the best one I can come up with offhand.
+>
 
-Add a new repo_remote_from_url() helper which will iterate over all the
-remotes in a repository and return the first remote which has a matching
-URL.
+Works, I will use this as is, I think this sounds good.
 
-Refactor repo_get_default_remote to take an optional url parameter. If
-its set, first attempt to use repo_remote_from_url(), before attempting
-to use the existing logic.
+> > +     git init sub_project &&
+> > +     (
+> > +             cd sub_project &&
+> > +             echo "Initial content in sub_project" >sub_file.txt &&
+> > +             git add sub_file.txt &&
+> > +             git commit -q -m "Initial commit in sub_project"
+> > +     ) &&
+>
+> It is easier to debug the test script if you avoid using --quiet too
+> much.  Regular "sh ./t3903-stash.sh" will squelch these output
+> anyway, and they can be seen when the test script is run with "-v".
+>
 
-Refactor get_default_remote_submodule to find the submodule and get its
-URL. If a valid URL exists, then pass this to repo_get_default_remote,
-ensuring that we prioritize using a remote with the matching URL if it
-exists.
+Ok will remove all the -q tests
 
-The fallback logic is kept in case for some reason the user has manually
-changed the URL within the submodule. Additionally, we still try to use
-a remote rather than directly passing the URL in the
-fetch_in_submodule() logic. This ensures that an update will properly
-update the remote refs within the submodule as expected, rather than
-just fetching into FETCH_HEAD.
+> > +     git init main_project &&
+> > +     (
+> > +             cd main_project &&
+> > +             echo "Initial content in main_project" >main_file.txt &&
+> > +             git add main_file.txt &&
+> > +             git commit -q -m "Initial commit in main_project" &&
+> > +
+> > +             git -c protocol.file.allow=always submodule add --quiet ../sub_project sub &&
+> > +             git commit -q -m "Added submodule sub_project" &&
+> > +
+> > +             git checkout -q -b feature_main &&
+>
+>
+> > +             cd sub &&
+> > +             git checkout -q -b feature_sub &&
+> > +             cd .. &&
+>
+> These three lines can be written more compactly as:
+>
+>                 git -C sub checkout -b feature_sub &&
+>
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- remote.h                    |  1 +
- builtin/submodule--helper.c | 43 ++++++++++++++++++++++++++++++++++++-------
- remote.c                    | 15 +++++++++++++++
- t/t7406-submodule-update.sh | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 84 insertions(+), 7 deletions(-)
+True.
 
-diff --git a/remote.h b/remote.h
-index ef0de4aa64e9ccd32cc2eea076c00386dcba1161..8b8ece50b1cd684969fbb8a9d695fb3002a3f3f5 100644
---- a/remote.h
-+++ b/remote.h
-@@ -339,6 +339,7 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
- char *remote_ref_for_branch(struct branch *branch, int for_push);
- 
- const char *repo_default_remote(struct repository *repo);
-+const char *repo_remote_from_url(struct repository *repo, const char *url);
- 
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 5542b403217b979d6da92c79d89d0991e980f692..432fe5d14f78756b64cf1770c174ce49bc2978f9 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -41,15 +41,25 @@
- typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
- 				  void *cb_data);
- 
--static int repo_get_default_remote(struct repository *repo, char **default_remote)
-+static int repo_get_default_remote(struct repository *repo,
-+				   const char *url,
-+				   char **default_remote)
- {
--	struct ref_store *store = get_main_ref_store(repo);
--	const char *refname = refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
--						      NULL);
-+	struct ref_store *store;
-+	const char *refname;
- 
-+	if (url) {
-+		const char *remote_name = repo_remote_from_url(repo, url);
-+		if (remote_name) {
-+			*default_remote = xstrdup(remote_name);
-+			return 0;
-+		}
-+	}
-+
-+	store = get_main_ref_store(repo);
-+	refname = refs_resolve_ref_unsafe(store, "HEAD", 0, NULL, NULL);
- 	if (!refname)
- 		return die_message(_("No such ref: %s"), "HEAD");
--
- 	if (strcmp(refname, "HEAD") &&
- 	    !skip_prefix(refname, "refs/heads/", &refname))
- 		return die_message(_("Expecting a full ref name, got %s"),
-@@ -63,7 +73,7 @@ static int repo_get_default_remote(struct repository *repo, char **default_remot
- static char *get_default_remote(void)
- {
- 	char *default_remote;
--	int code = repo_get_default_remote(the_repository, &default_remote);
-+	int code = repo_get_default_remote(the_repository, NULL, &default_remote);
- 
- 	if (code)
- 		exit(code);
-@@ -97,16 +107,35 @@ static char *resolve_relative_url(const char *rel_url, const char *up_path, int
- 
- static int get_default_remote_submodule(const char *module_path, char **default_remote)
- {
-+	const struct submodule *sub;
- 	struct repository subrepo;
-+	char *url = NULL;
- 	int ret;
- 
-+	sub = submodule_from_path(the_repository, null_oid(the_hash_algo), module_path);
-+	if (sub && sub->url) {
-+		url = xstrdup(sub->url);
-+
-+		/* Possibly a url relative to parent */
-+		if (starts_with_dot_dot_slash(url) ||
-+		    starts_with_dot_slash(url)) {
-+			char *oldurl = url;
-+
-+			url = resolve_relative_url(oldurl, NULL, 1);
-+			free(oldurl);
-+		}
-+	}
-+
- 	if (repo_submodule_init(&subrepo, the_repository, module_path,
- 				null_oid(the_hash_algo)) < 0)
- 		return die_message(_("could not get a repository handle for submodule '%s'"),
- 				   module_path);
--	ret = repo_get_default_remote(&subrepo, default_remote);
-+	ret = repo_get_default_remote(&subrepo, url, default_remote);
- 	repo_clear(&subrepo);
- 
-+	if (url)
-+		free(url);
-+
- 	return ret;
- }
- 
-diff --git a/remote.c b/remote.c
-index fcda185ecfab5102afbe8918fed65c74971ef8c2..bf2ebfcf06a87ddf1fecadc3e408427d0a83c479 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1788,6 +1788,21 @@ const char *repo_default_remote(struct repository *repo)
- 	return remotes_remote_for_branch(repo->remote_state, branch, NULL);
- }
- 
-+const char *repo_remote_from_url(struct repository *repo, const char *url)
-+{
-+	read_config(repo, 0);
-+
-+	for (int i = 0; i < repo->remote_state->remotes_nr; i++) {
-+		struct remote *remote = repo->remote_state->remotes[i];
-+		if (!remote)
-+			continue;
-+
-+		if (remote_has_url(remote, url))
-+			return remote->name;
-+	}
-+	return NULL;
-+}
-+
- int branch_has_merge_config(struct branch *branch)
- {
- 	return branch && !!branch->merge;
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 748b529745a5121f121768bb4e0cbc11bc833ea4..c09047b5f441a73a02a9fc4197e9a0ea8f39b529 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1134,6 +1134,38 @@ test_expect_success 'setup clean recursive superproject' '
- 	git clone --recurse-submodules top top-clean
- '
- 
-+test_expect_success 'submodule update with multiple remotes' '
-+	test_when_finished "rm -fr top-cloned" &&
-+	cp -r top-clean top-cloned &&
-+
-+	# Create a commit in each repo, starting with bottom
-+	test_commit -C bottom multiple_remote_commit &&
-+	# Create middle commit
-+	git -C middle/bottom fetch &&
-+	git -C middle/bottom checkout -f FETCH_HEAD &&
-+	git -C middle add bottom &&
-+	git -C middle commit -m "multiple_remote_commit" &&
-+	# Create top commit
-+	git -C top/middle fetch &&
-+	git -C top/middle checkout -f FETCH_HEAD &&
-+	git -C top add middle &&
-+	git -C top commit -m "multiple_remote_commit" &&
-+
-+	# rename the submodule remote
-+	git -C top-cloned/middle remote rename origin upstream &&
-+
-+	# Add another remote
-+	git -C top-cloned/middle remote add other bogus &&
-+
-+	# Make the update of "middle" a no-op, otherwise we error out
-+	# because of its unmerged state
-+	test_config -C top-cloned submodule.middle.update !true &&
-+	git -C top-cloned submodule update --recursive 2>actual.err &&
-+	cat >expect.err <<-\EOF &&
-+	EOF
-+	test_cmp expect.err actual.err
-+'
-+
- test_expect_success 'submodule update with renamed remote' '
- 	test_when_finished "rm -fr top-cloned" &&
- 	cp -r top-clean top-cloned &&
+> > +             git checkout -q -b work_branch &&
+> > +             echo "Important work to be stashed" >work_item.txt &&
+> > +             git add work_item.txt &&
+> > +             git stash push -q -m "custom stash for work_branch" &&
+> > +
+> > +             git stash list >../actual_stash_list.txt &&
+> > +             grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
+> > +     )
+> > +'
+> > +
+> >  test_done
+>
+> Thanks.
 
--- 
-2.48.1.397.gec9d649cc640
+Will send a patch soon
+Thank you again
 
+- Jayatheerth
