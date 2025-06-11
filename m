@@ -1,67 +1,67 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4EB2367AF
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 14:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC01B2E6138
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 14:02:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749650559; cv=none; b=K2pWJbjf/0XWGXFYy71riAgkuWZZGDrQaFxJulM4tjbS2t4rmswtCeoj47DVpwS/Y5QVeM8gWCPSycgGW4fcnK+eCSPI21P1ODavPNwpi/j8acVJZuNq+/B3ju4iG+mDNr98EvrtQHwpubT1FqVGBHSzqgzCqYerm1IeWI3QwSo=
+	t=1749650560; cv=none; b=cIQ2uuVu/AhDconaVrWH6DLIQrHz1bAC9FtelCWjzdfRHxO8sAakVokX5zW99+pxHhEqr18+NOAUhm91I0AJZzKlJk4qRr4Id1eGxya3OFAHt6qbIZMm/FSzgDYMARIc/VsoOrmNI/0soAjaFzF3Z/DDmm84a3X3U/wrDlObcaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749650559; c=relaxed/simple;
-	bh=mKlnQ7zBdp+l9mzYlodtlf8FL6mHjbeuYbvDWgK1uBs=;
+	s=arc-20240116; t=1749650560; c=relaxed/simple;
+	bh=El+OzkCI4hBW27VlCl51IGQ/tWn67vb1PPN82ide7uc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bbtgCUGYsGThC+k+60a+SRjdaKI9lWbnqsmdsJ7EfVM2eb9fUiKnvctKGsap9kUkA/MrRHvb+byKmaTFMQhsC6Ja2jesfK6DI79vEd4oWoe3SYPhdHkcpXykCaFinlkmvySYce+MuYZhcymtCEVjjoXLXYZPoOPEDCe6MuK0gEE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiY2gz6S; arc=none smtp.client-ip=209.85.128.50
+	 MIME-Version:To:Cc; b=CxRu+UdJoDOd72F9vvo3mdvg8n6y3p4AQum5gYvKx7nmSBykiLfuZg/jm1+YW6wT7FfSrMC11bZwtB9wqL1nRmfJb8hNWDms1Bqsdl0rCzwcjN1CD7IpHkhxMvQ881tlkRlwHnLnyYUukbynY+s9P4HxyGO+0AitgJSzmGgh90s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D6kIpCJZ; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiY2gz6S"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so83718365e9.1
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 07:02:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D6kIpCJZ"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so81816995e9.1
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 07:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749650556; x=1750255356; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749650557; x=1750255357; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=myf3Bo98XL6+wcHxcRzmyHnzC3x7qFWWRojys6yaKhA=;
-        b=hiY2gz6Sgp435JKiBOjo5FQbtSR2ON3JwfuVSPA4cXAzuTQ59RJyBVy+qQA4pugk1E
-         S5iwrtRbVfglTMSBUfev7eDtR+EUNVxJN0dTBgbNGA2QaAAUogijeMaEBwbZYuwAQEz3
-         6Qi63zViodxZmD9ZrMBYIcDPcnB5V+o3M91TkqnKH/WESXxq3v6MFqN0iXchMLaVmwNW
-         PSRjTm7ZBL5gGfr4ooAiD2+HZSRtWU4r3Jlvi4mxnHLc0h6mQdlq0Itgn12h53NxQ3jZ
-         3ftV87HOuQfMfQUAgkZ5nKomqiDfhpKJ5DDXLiBu8OQXUB8aXMari6PJ64PUh0/iem00
-         FWlg==
+        bh=7yqMxrl893bvHTYqVMus6/HM9UqDLYkLnXamnEhJ2Cc=;
+        b=D6kIpCJZ9w5ZxF0gvzpwdq8atA4FZdDyOhqtj9fjZN1QsWrFOfMEfKTbXQTmUTop6G
+         NSZzPwicvpjhV/jU3qymoJyaiac5cqUWmUoul5MQ0IeUnTkDFB9gINEFST8E4LP7Dckn
+         OgzHTQ5gwBQA4s/ZseeGe88ZNt2KLOZ2dDeb9UD8NTM+zXiNV8YlsVTbeT6iQvT9qlFh
+         wtbZ7wjLeKZPutXEN3jIauXxLhmZaxOOvI9DMgqBReQH5BTBmAumd1fD1iobHLqC+eIa
+         +VUXSXUxUrQQ9YzNEszyGfqUbfeRkQXgI9mTOctPxSM72H890hCPaRfXlVlMnoyMGYHq
+         Znrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749650556; x=1750255356;
+        d=1e100.net; s=20230601; t=1749650557; x=1750255357;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=myf3Bo98XL6+wcHxcRzmyHnzC3x7qFWWRojys6yaKhA=;
-        b=N91aM2lXwi9b6EmVJBzXFPO1eR+lrpo1ernxhmcxW9xTbebLF65OpZ2ixyJaKgTqSK
-         Lpv52Z7nRipyRFhFT+ZSmbJLaMCBljZ61lSMmWCvkWfAP3LR6R9dgcgpRhAxeWFeIJrx
-         FO9KAxctOsCjTOdlZcXwrywIz6qmMTLk5oJDUQegxbRm7NgzDGsxkQl4aBsLI8FAr+g8
-         TcVqeWQb3//v/PToP2E8rG5JtPRKKqBdnuxax+UMy4wfDnDnJmcv5VlSTObhl1+RzcLp
-         niS1JU9+WxLydDNB78TQVB+0CmekPg4q/0ak9fI4o75XlSWD7Oj1dR8XYI7kq8MtTqUk
-         TOiQ==
-X-Gm-Message-State: AOJu0YwZQ1jxHj8kteattFLY/BzdOLmwYSHRZJrmkoQ3rHlP9hx6NJHq
-	vOdt8DsCIn9UMpDGHaPnvikw5OyZ7Pzt8CszB2tpaaPXMyCAsnLSGsiqUiOuQw==
-X-Gm-Gg: ASbGnctMkG6V1dRntNWgbg+Lt+Uj/gWtjScjU60y14LVzEetE7Fc2iBAwuDBQosCv/i
-	eevEMbI+yMLEAfG1O2LIy/Is6vAvruhMcVOsvyWvjJnMABPaoyUjWKL84jshEs63ALyZnKg3zpa
-	t8yu0Lq1u1QmQJBpJYYkiZfYFaNOfmS36YpzWFmaeqNgX4+IkUQmc24LK8AMKs6o3u5FjBsflHZ
-	9F0MS3V0VtM4R7J5hSAPLkBa2QpJBKOU3Da4wPJNZ2abTcXMcbY7xgwaUH7IGOQJbfzafc9s2oD
-	7Xtxvt+kYT1OWL9mbbNg5IurS7ejMj+iEMes1/HNW8x8ExH9XwK55DHEsY8hrqk=
-X-Google-Smtp-Source: AGHT+IF4VW3fpyQ35gn7x1jalERyQv9XgNWlsNLX7Ld1bfM5TthDr1zUfSDUt99IZkg6XVXx0gdN9g==
-X-Received: by 2002:a05:6000:2384:b0:3a5:2a24:fbf5 with SMTP id ffacd0b85a97d-3a5586f279emr2533154f8f.18.1749650555216;
-        Wed, 11 Jun 2025 07:02:35 -0700 (PDT)
+        bh=7yqMxrl893bvHTYqVMus6/HM9UqDLYkLnXamnEhJ2Cc=;
+        b=kma/q+nX3uWB7I/7f1N+BXwn19X2WGWyr4Cnzkew3hzYV6/jtiZVWHCCjCAalcd1Cw
+         5Lt2QM3MyV+86jLaetFA+IXBBWowkL+hJyK09V6QNxQE7mjEHsSuBTX9aXQqTovfA8zx
+         9ykpGsP0RDy4JIoE5bxvmIX6+IKN9gNcMQyKkm0PHP8mOTB7RWe/qAMTRGAdfO+jHxDU
+         wxGtDNFw4Ukk2U/Pr9mm0Ra6QwHeVQaaD9xCrz9mXQHtS6dUW6pAG39417PNtn3S7Q7N
+         1rxQMCCkhD/MsZlhQtU2v6Rzfrts/Pw1RcV8IoOB+L9zW2kK2rG9OmPOfRVtgBmR4oPq
+         TiZg==
+X-Gm-Message-State: AOJu0Ywl+IwVH0eVRSP8M6z3bd7mkojmjtxkR8nMk4wPS8/Hf81rkyoY
+	+s5qGmO9Vmz0RUp/SNOLfsEykHzimksKyiB/uLCsknk8zaE7+B6YRX6BnX1oaA==
+X-Gm-Gg: ASbGncsJyNdLUpbrZXEsKsyIEc9PEwRoAI1haR0cc10qORX6IC0AzFdub8P+Q4+JENf
+	s6BO0sqefLUCJRVSTbB0yV78PzlEY6sDN4VSA4orckFmBuKwzOdgPX0Edv5L8bmk1jhkhOFa0as
+	agQvmL7mQyJKWA1jbi/2AWDrlOMQQdVGHk66VV3be75dy3J6AiQUh15EnS6UMu5qLBpqER/lFtC
+	VjhZWQDbJMlMHpG3RoYSBdQl2zKb6OI2pbUZOntEeaDd7wDwUaug0wmpvNwSY2fBKS7nDRFvgTq
+	Fm8+R+dj5DrABT2Pd+uWAv7yQtlhsGweXMTstk/pgMxte23Puj/omKGWLdapDFQ=
+X-Google-Smtp-Source: AGHT+IHW+CQqWOkoZ5GLywGXiAhcY5D3PsaQpTFM9reH7ChwCLEz7ZfkvIodUH5/4/5TrtIuhJsZag==
+X-Received: by 2002:a05:600c:8b08:b0:43d:9f2:6274 with SMTP id 5b1f17b1804b1-4532489444cmr35462325e9.14.1749650556143;
+        Wed, 11 Jun 2025 07:02:36 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4531ff595b7sm30862675e9.2.2025.06.11.07.02.34
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a53229de01sm15782323f8f.11.2025.06.11.07.02.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 07:02:34 -0700 (PDT)
-Message-Id: <c65120f25704e9725c317a62b9a1231bd19f3e25.1749650552.git.gitgitgadget@gmail.com>
+        Wed, 11 Jun 2025 07:02:35 -0700 (PDT)
+Message-Id: <3a829f11c07ddbb0a57a1ac832db686f29a9b632.1749650552.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
 References: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Jun 2025 14:02:31 +0000
-Subject: [PATCH 1/2] ci(coverity): fix building on Windows
+Date: Wed, 11 Jun 2025 14:02:32 +0000
+Subject: [PATCH 2/2] ci(coverity): output the build log upon error
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,66 +77,30 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-When I added the Coverity workflow in a56b6230d0b1 (ci: add a GitHub
-workflow to submit Coverity scans, 2023-09-25), I merely converted an
-Azure Pipeline definition that had been running successfully for ages.
-
-In the meantime, the current Coverity documentation describes a very
-different way to install the analysis tool, recommending to add the
-`bin/` directory to the _end_ of `PATH` (when originally, IIRC, it was
-recommended to add it to the _beginning_ of the `PATH`).
-
-This is crucial! The reason is that the current incarnation of the
-Windows variant of Coverity's analysis tools come with a _lot_ of DLL
-files in their `bin/` directory, some of them interferring rather badly
-with the `gcc.exe` in Git for Windows' SDK that we use to run the
-Coverity build. The symptom is a cryptic error message:
-
-  make: *** [Makefile:2960: headless-git.o] Error 1
-  make: *** Waiting for unfinished jobs....
-  D:\git-sdk-64-minimal\mingw64\bin\windres.exe: preprocessing failed.
-  make: *** [Makefile:2679: git.res] Error 1
-  make: *** [Makefile:2893: git.o] Error 1
-  make: *** [Makefile:2893: builtin/add.o] Error 1
-  Attempting to detect unconfigured compilers in build
-  |0----------25-----------50----------75---------100|
-  ****************************************************
-  Warning:  Build command make.exe exited with code 2. Please verify that the build completed successfully.
-  Warning:  Emitted 0 C/C++ compilation units (0%) successfully
-
-  0 C/C++ compilation units (0%) are ready for analysis
-   For more details, please look at:
-      D:/a/git/git/cov-int/build-log.txt
-
-The log (which the workflow is currently not configured to reveal) then
-points out that the `windows.h` header cannot be found, which is _still_
-not very helpful. The underlying root cause is that the `gcc.exe` in Git
-for Windows' SDK determines the location of the header files via the
-location of certain DLL files, and finding the "wrong" ones first on the
-`PATH` misleads that logic.
-
-Let's fix this problem by following Coverity's current recommendation
-and append the `bin/` directory in which `cov-int` can be found to the
-_end_ of `PATH`.
+It is quite helpful to know what Coverity said, exactly, in case it
+fails to analyze the code.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- .github/workflows/coverity.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .github/workflows/coverity.yml | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-index 124301dbbe2f..a5d99e59d4eb 100644
+index a5d99e59d4eb..1e8bd85ecd4e 100644
 --- a/.github/workflows/coverity.yml
 +++ b/.github/workflows/coverity.yml
-@@ -147,7 +147,7 @@ jobs:
-           key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
-       - name: build with cov-build
+@@ -149,7 +149,11 @@ jobs:
          run: |
--          export PATH="$RUNNER_TEMP/cov-analysis/bin:$PATH" &&
-+          export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
+           export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
            cov-configure --gcc &&
-           cov-build --dir cov-int make
+-          cov-build --dir cov-int make
++          if ! cov-build --dir cov-int make
++          then
++            cat cov-int/build-log.txt
++            exit 1
++          fi
        - name: package the build
+         run: tar -czvf cov-int.tgz cov-int
+       - name: submit the build to Coverity Scan
 -- 
 gitgitgadget
-
