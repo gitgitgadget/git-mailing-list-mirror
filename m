@@ -1,138 +1,134 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995CE1DE8B5
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 15:54:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4971C84DD
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 16:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749657286; cv=none; b=F+FmPIr+yXLTPOQXXuTTRIzm9f4hd6ogTBQSJMDFBBXNmug7cim7v3mrdItTF7XBmvc87MkEpbXhktnsM5dm0VJ1fIjR9HsKy7MTG+gjWv9+TcJ79JCrcUG63b0v1OkDDVaJbmohlznPPrZV8Mj2Ci+f07TVD0YzDcMMPAxGbpo=
+	t=1749657642; cv=none; b=dZhHoYQSYFqdoHkVuShuPx3Z53w7QFTi1CuO63+JmHpC/jDmpf0SdTz7iC4+znLVgY7fsbwJa57b8Xlw7P4YEZmeG+UiwUhBeZbDOUDptEhw5Sug4xyntk01VYJJfxQh8V6yJbS4EjbaiuvfPRuHTw811jOtVEckCgPHZsL7Wwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749657286; c=relaxed/simple;
-	bh=r+C30kcjUZLWyTGIcU0alDeBuS78zYUGfio7xOXeSxA=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TPLk8Y5CDlguik+ghMercy2C+/eLXZRDCN5tstSXnpKzRiXDwItPxEeizRYNhxuQNiyE5/IRnbC+J9q3lNwNLm+6SNpzFKSjxGUVWAKAK1rtcytID+v1IjTZ2M4CXhcEsZwFbm+KtSJS5yGecdINjRtB98iX0JV5XBWjZvhshxQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPN5ubQa; arc=none smtp.client-ip=209.85.128.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749657642; c=relaxed/simple;
+	bh=KSX9MZt9lUVp4lCLGcJpkHHomLCagsm5PYbotwB4Woc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NcJeM/IuXoTTxBoFaKbwnFYKc+3l13VmdLpQAai+uv9SIPU5z0Q2h8tlTQ5r5lYEBNT07/OSK3KtcjOL/M/+qQLP+08wxP86AMVrBWaI7fni1ZxuDPcJct2ykrh1sKSYF2pvbr5h2MoIW/kXdh2uYfwQ1lTGIwBEBGNOkvekxLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K5lWCcVV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rJ1qECWg; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPN5ubQa"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so83769795e9.1
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 08:54:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749657279; x=1750262079; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4Fd6D2EX5SmA3vjHsbcV3jAl+K0eykm0DZ6cYVix/DE=;
-        b=FPN5ubQaAMoFFpzemB0kwijhPE6bxg1V0tGJJ+onlBYCZgPK/cA/UtoHO5X9H8/TX6
-         jllwBqViNKUfDNTNlLnlL0OMQjKLFbgVN36fqgduXFMn+gXb6mAnEbasptaBfFFuLCZY
-         epwZNOhdV9dJIBnKW1NuhQtMcGAUCJnKJ7sJu8fh/RT32Zsfr/qpuU2UCI5hp0BOfT6O
-         wPTPS1hTyT5W2DLoZsMpdmX7aFt/6uWQqKalCCzCCC9plnNWwDSBYFku8bXuBQeBcEJf
-         1fhXuObabpGnJKZaCgXMcEDFrRBJSq109Hm9TrpCdW2Lzwloka63QGM4w+7JwU6O0WKj
-         ziyw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749657279; x=1750262079;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4Fd6D2EX5SmA3vjHsbcV3jAl+K0eykm0DZ6cYVix/DE=;
-        b=bUsWKZnRZfP/TOmsNnlEByxLjjUkJv5665g0PNelgwrbUdqyMusa99JmCRdIK1L/0Y
-         lRMUsKRFVoUQ4tsDxIJFzN0rNrx+lG2EkLYq/1bmurX77Cz28eae50BQRuZZnNclT6lp
-         1vov76+jVlQjJ5mHnDEochvkvJ2hgxVlVsl50TuVTn/9RxJPWz0qmQRSNt+8G/qVKkAa
-         TgjCVraUBCmVV4hxjwcAmbYn1IUkeCXxWWQE37iyMb2y8NPWBkXVuLYqqUIxsJOlRd/3
-         v4aQq0av8tPkSwCKzlFAf9g4SVxsZh0nKNLfk9Zgz1rXgL1xPbfo/Tnq7rlxXgl7UASy
-         FO8Q==
-X-Gm-Message-State: AOJu0YylsJgnlp9Oc9s3qFQ4+6LEh5uGt5fOCGENmdtIZNhiLbGXqVmp
-	BCUs6G29yL0dCRXsmywHDP25a+hFvJWtNnopQuj6dfidKZ/4uPDYxqgbv5FOAQ==
-X-Gm-Gg: ASbGncsoAsYkdkxjNsQX/xBrO3SnOPmZmfgwOUZh5T7J4wPV0ka1Nki4GrghqXVnzVM
-	ykZXhTwnlhvJK4IUuhs1KDrvEYxPmGceTbKsCucRhc4qMGDvH1DbyARpENHop4zVQwHF5p+nkXI
-	f1ETVi75niKvT+kCHiNO7vHk6T8/VEN2SMs6QOteidKMPEQgW1w9di/AEBA3N0bGdPKMjhKVsu3
-	iup6RW4GNWZRq8Zm17nf7yNEBNz+UJPHTErD7LuRjWO7guaNKd2bG+ea7zGTNGOEUO8yeLJypjc
-	RUU9z3SMq0Yoo/8kUs+qVV1FZsPnpRQFKQqPuz5NwU1U5bhdsA0lScfQHwh98NA=
-X-Google-Smtp-Source: AGHT+IEssTOVWYggEzl/8l50Tg7JDXdU07JpTfibENEbWHnOXbujIQFZ0EevV87+kJPO8v8xl3hGnQ==
-X-Received: by 2002:a05:600c:1d0a:b0:43c:f44c:72a6 with SMTP id 5b1f17b1804b1-45324879e63mr32945125e9.2.1749657279229;
-        Wed, 11 Jun 2025 08:54:39 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5323b5147sm16047516f8f.37.2025.06.11.08.54.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 08:54:38 -0700 (PDT)
-Message-Id: <pull.1934.v2.git.1749657278.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
-References: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Jun 2025 15:54:36 +0000
-Subject: [PATCH v2 0/2] Fix Coverity builds on Windows
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K5lWCcVV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rJ1qECWg"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id D17C413804A0;
+	Wed, 11 Jun 2025 12:00:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 11 Jun 2025 12:00:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749657639; x=1749744039; bh=PSz3kCFWWj
+	LePitGbraKdLd6yLzTeZ8bK5MEBlR1BtI=; b=K5lWCcVV2WEql77boG8HWnowGK
+	ntBh7pqyJ03Ra1hv1cpqd9kLTmt7CBd+btdIOTT4++4Q+/atR3+qfNiDvoj6Y6D3
+	hBvM4mljZF5gZUuqZTMEdgk1dRzm58XLLeVbY4I31GfDX4xuchAb/QSucZX5/YgF
+	vQT99Dyo5FaEscULAPcIEnKIyP+lI5XL+xz01WuBViIQz/Iz1Jitzq9tq60VYPFC
+	msOGMQMe+5k9Rn529hFhichFLSAYKqMITpuAhlBXqS/bRVbWqNFYAvVlHo+TGmVu
+	ZKQNXudt5vxB6j7xzRz6p84OGkMnpn9A+iWH84RHvuAawcX2NzdxnbdI7dZA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749657639; x=1749744039; bh=PSz3kCFWWjLePitGbraKdLd6yLzTeZ8bK5M
+	EBlR1BtI=; b=rJ1qECWgPCSN0zEr2mKM3KXTbHjnnwPKQVQ7AHE25wngDJXLZxG
+	IrwNS6cXy3tJCZJu7jTozVCToyh2tuGAY3qMdN3e8s8MWlfRoAhIf307Ga1/bGzx
+	WlmoMI54ePrkomRQCIBCw648aYNRLaOJYaq5Lk4AmuIJOs9CiVtDNNLTYLZb0/uK
+	OFYOqDHspOyc0InldqBgwj+Bztrh7f2HZL9piUi44qXQg5VAVHNlomMAhA99Z/OM
+	M50MqgVesk0qX0TFfACfRSIzdAESaolhIvFc4rDkxzx2ya/IJJzKgMIbotzsL/n9
+	5WQ+zVi06LaWOxvLWb/0CJZ0ayYyzeda3vQ==
+X-ME-Sender: <xms:J6hJaAO7pqcda_PFTrNlUxjy8Lnpa-YMmAj8zkoHDdrSr5EYyWlsYQ>
+    <xme:J6hJaG9uvHYjA6zWY4oo7nSQCXIgNRTF1yK230tvlYbwjPXO4YUWmEF7vYWwq_ZQl
+    5CJAiRuAQAg7cKGXg>
+X-ME-Received: <xmr:J6hJaHQXJ-F7GrnRYmrTglnmO_3rVlnI4MTsq_uvitGS8UczRWBcS6WIJGqAdYC_LzWYpUyZ5nHwXMr3jImS3G329MDJEFxiLDEn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduvdeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjrgihrghthhgvvg
+    hrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlrdhsrdhrseifvggsrd
+    guvgdprhgtphhtthhopehsmhgrtgguohhnrghlugeskhgrihhmrghgihhnghdrtghomhdp
+    rhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:J6hJaIugingeGJw_Lxg33vvH18asLXWxQ4Mx2xfq_IncTSgQTu9EMg>
+    <xmx:J6hJaIcBq6XcU-NA1o3t5J1ZeIyodDRfNPcGUjgp--U3ToXy2h1rAg>
+    <xmx:J6hJaM2MiShpJvgz_V96-aTgwdsF1FlJt4Gxp5zlYx6x8mb1L11cVw>
+    <xmx:J6hJaM-yqtyWwee6VeJgx8hHiKugia2Z52bB0-ThwuGLSp5Z-kiaIw>
+    <xmx:J6hJaE1_XA9PhQEJ-RZcGw3Ugjs97f2PEx3WS92RBWbl6tvgRFwMiayg>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 11 Jun 2025 12:00:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org,  l.s.r@web.de,  smacdonald@kaimaging.com,
+  sunshine@sunshineco.com
+Subject: Re: [PATCH v3] stash: fix incorrect branch name in stash message
+In-Reply-To: <20250611014204.24994-1-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Wed, 11 Jun 2025 07:12:03 +0530")
+References: <xmqqo6uyw6h4.fsf@gitster.g>
+	<20250611014204.24994-1-jayatheerthkulkarni2005@gmail.com>
+Date: Wed, 11 Jun 2025 09:00:37 -0700
+Message-ID: <xmqqqzzqi7yy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-As of three weeks ago, Git for Windows' Coverity builds fail
-[https://github.com/git-for-windows/git/actions/workflows/coverity.yml?query=branch%3Amain].
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-The reason is most likely the most recent Coverity release, 2025.3. Its
-release notes
-[https://documentation.blackduck.com/bundle/coverity-docs/page/webhelp-files/relnotes_latest.html]
-do not shed any light into the issue (and do not mention that they bundle
-JDK20 and JDK22 in addition to a JRE, because what's better than a single
-Java installation: three, right?).
+> When creating a stash, Git uses the current branch name
+> of the superproject to construct the stash commit message.
+> However, in repositories with submodules,
+> the message may mistakenly display the submodule branch name instead.
+>
+> This is because `refs_resolve_ref_unsafe()` returns a pointer to a static buffer.
+> Subsequent calls to the same function overwrite the buffer,
+> corrupting the originally fetched `branch_name` used for the stash message.
+>
+> Use `xstrdup()` to duplicate the branch name immediately after resolving it,
+> so that later buffer overwrites do not affect the stash message.
+>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+> 1. Used the hook to remove trailing whitespaces
 
-My investigation turned up .dll files that are located in Coverity's bin/
-directory which have the same name as .dll files in Git for Windows' SDK. As
-a consequence, the former override the latter and throw off MSYS2's logic to
-find the MSYS2 root directory given the location of certain .dll files.
+Huh?  The pre-commit hook trick I showed was to detect and prevent
+you from creating such a commit; it does not remove them for you.
+Your trailing whitespaces still remain in the patch just fine ;-)
 
-This patch series fixes this issue, and while at it, enhances the Coverity
-workflow to print out the build log in case of failure. It is a companion of
-https://github.com/git-for-windows/git/pull/5672 and of
-(https://github.com/microsoft/git/pull/764.
+> @@ -1401,11 +1402,15 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+>  		ret = 1;
+>  		goto done;
+>  	}
+> -
+> +	
+>  	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
 
-Changes since v1:
+which causes
 
- * Dropped unnecessary, non-portably cygpath call.
+    .git/rebase-apply/patch:29: trailing whitespace.
 
-Johannes Schindelin (2):
-  ci(coverity): fix building on Windows
-  ci(coverity): output the build log upon error
+    .git/rebase-apply/patch:39: trailing whitespace.
 
- .github/workflows/coverity.yml | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+    warning: 2 lines applied after fixing whitespace errors.
+    Applying: stash: fix incorrect branch name in stash message
 
+Other than that, looing good.
 
-base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1934%2Fdscho%2Ffix-coverity-builds-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1934/dscho/fix-coverity-builds-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1934
-
-Range-diff vs v1:
-
- 1:  c65120f2570 ! 1:  712602c09e4 ci(coverity): fix building on Windows
-     @@ .github/workflows/coverity.yml: jobs:
-             - name: build with cov-build
-               run: |
-      -          export PATH="$RUNNER_TEMP/cov-analysis/bin:$PATH" &&
-     -+          export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
-     ++          export PATH="$PATH:$RUNNER_TEMP/cov-analysis/bin" &&
-                 cov-configure --gcc &&
-                 cov-build --dir cov-int make
-             - name: package the build
- 2:  3a829f11c07 ! 2:  52c34977b48 ci(coverity): output the build log upon error
-     @@ Commit message
-       ## .github/workflows/coverity.yml ##
-      @@ .github/workflows/coverity.yml: jobs:
-               run: |
-     -           export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
-     +           export PATH="$PATH:$RUNNER_TEMP/cov-analysis/bin" &&
-                 cov-configure --gcc &&
-      -          cov-build --dir cov-int make
-      +          if ! cov-build --dir cov-int make
-
--- 
-gitgitgadget
+Thanks, will queue.
