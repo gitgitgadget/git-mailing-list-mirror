@@ -1,210 +1,187 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7814685
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 01:33:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 260E61494A8
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 01:42:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749605592; cv=none; b=AnhZRYV1EGc71GjBj14+YiSg3yOmPqWpzMHQdbNbtR+3q/b5zJZQCuS/vlRvE/97FB0KVJUH/Q6noNRCcSmPVU/r37zhWot5ieUXoq72aFzn+XvmC7MBU0a4l11zNqwzAlS6vZxKO1E9jdBCtGMLQvScfeTzM7OfEB9FP6Bw0ug=
+	t=1749606138; cv=none; b=LhEsSS+BlYdfzIJCLdGavFi+9631kltap1gvTm00e2QawXe82V9taq+kARJZ5MoCOpGoZmcSLWl8kyu2ODxXJ9eDL98xJm8b/ZLoSGDSZ4WPQRiUl40tTqd3DSWs0lxxLq/5Aq0Xjjd0T+4wehMzv++t9QV5NFA5w7j5EEiS0UA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749605592; c=relaxed/simple;
-	bh=KD/1tdUVNgNTzZVtimPMYzhPXqpdK8QK8werjeq7gec=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tvZXMH/NevgsslgbrJjX738jv7XNfW4uBRs+PRY6PB+5DgJCvZ46ETZKnqWgjMEITHuZufOpKcStG05R9lBIOG9brs/QMKTcK+oHvKKyE0Mdw7gY9t+E1nqLYDCVZh8YwKZVt+be7MY7DVfpSu7sekRhXrxTzpg3zmeHlO47w94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cCPiopEJ; arc=none smtp.client-ip=209.85.160.180
+	s=arc-20240116; t=1749606138; c=relaxed/simple;
+	bh=hJ5vPjcAxab9nJm08ktKnEHl2OeGxJ/9RGWZYvBHIp0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=OgomSOg+gF2qgomZDNScNYcOWmgAo9pv2cwHW/ZgLoSg5KlfQqp8lIPCkTIdLKvJoi7i3OlPb0IhkZapaqwiyagZT7yMbfJuxSVdi/DrWh0zrXOJjduVQ4+ztSyO6O2DejVi/GyCSOZUmp14hDgLygpvR/MPJGe7HLxh1M3IJbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y8AlFP6L; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cCPiopEJ"
-Received: by mail-qt1-f180.google.com with SMTP id d75a77b69052e-4a5ae2fdf4eso4726741cf.0
-        for <git@vger.kernel.org>; Tue, 10 Jun 2025 18:33:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y8AlFP6L"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-73bf5aa95e7so4654904b3a.1
+        for <git@vger.kernel.org>; Tue, 10 Jun 2025 18:42:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749605589; x=1750210389; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=usjjtA14kQkHPjlGWsAlyIJwtvHTOVzcjnUF5ucJVLU=;
-        b=cCPiopEJwq6TdTnaXeVLGChyGqZItRWoNNKAwDeSlGCKAXULKVybfgz63HhmOKlYeQ
-         8az4Ii1x70mynyX++0h0LNvexuim/5IF62C1NjrBIw7SCChp+6OtHf9ZDt+D+rE2XgTR
-         YoIF6q5vL+LsCn936rOJIGqlrRIwXv3lpsbkBAu6lEqbc38/nmvwQbnpuvB2sFYUStQm
-         NLSiIPGgBCIcQ4WgVZ9d6Q6O2Z3KZ52MWO/7YqrJVKlNxgaIBYElasouKXXoO+7Z5xZr
-         Xd4Ejm3mB7FO0K+6d1k9XVEdnnfGHLAKXdna+8pyds8LXLkJt9Fvc+9e/dGXvcaqBkwn
-         fccQ==
+        d=gmail.com; s=20230601; t=1749606136; x=1750210936; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jWX6HBFdkl5fW6FmvNVgaknsWgO9e+mPJAb7dGonoU8=;
+        b=Y8AlFP6L8VGTWbJ2pfl6lGVMUKH21VaBn2iMntoz01JltoAhiE63WXAqznWrFzAr0k
+         7OiJxXKKdOAf/XBAst1wA+35x6Ye7KGdKIqInGAyj4b2NYK4sP9DLsMvrqomotKA2Byi
+         eru2TfT8OKFpC3U8EaBlllmlmY95nBNkWNr6admdYogoDW0KENO1r8g81sofqAYNFx/Q
+         XHAi94/KtO6tVJDMZaOz8RM6kw1m0U37Ipl4PNaaR1brKRdU4j5GY1HhdvB0CXeY5dO8
+         sp4DmgafXEN25+EWGxEYsBD08XY11p27YFpWkXMQcFQ6STBkGtuFo4QiU70cgz1lSW8I
+         /knA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749605589; x=1750210389;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=usjjtA14kQkHPjlGWsAlyIJwtvHTOVzcjnUF5ucJVLU=;
-        b=VGhZ1F1gWGzhQT7c39eAAsRIodDSLpoTyBZfTdGqkP4Uy0q0OfJFdDW0OeYn/zGYw0
-         TDQUkt1Xp6F315bLKMRTDne5wkYUo8YPZ1l0dXLrj1yB2qYhJfiYBcHPk7wVJgv/WFaI
-         zZTMeEUQMF8Z/vZ/AlwuIMralJCA3AI1lET/zKxbi0NVsns1S8zrebB3LxFSIh2tqJJo
-         QlEvSXpxLvt4U5OL29CyXx+lTAypkAmuxV28pU1SmlXaFcXbfb6Dfp3ey8gteEsBnQoL
-         hVecnLd4CrBNtBCPUwDKkNznw38Y6gKto3JXORej7O2MZHK4E5QKQaq17xjfVAPScO5R
-         u2eQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWObtKIXJGpV+6skApVdSdokis5msYHbaEP4mwZ05Ty4jFNeBSwgBwFk8JVyellO5YIFM0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxisMjksj5ERjcA0sqADyCpNTfTT2SbqX3QzuGv7e8s7qrzTwWg
-	Zd7UNPq9JRnBsdZAOripT02vyoibKcscRfLpEatFj7cFiNBSFZI8HO4uqvo+9MlosLVYYwAW2gs
-	vMLMk+m0cYKMjsYtC9gUGwRmMQqim32s=
-X-Gm-Gg: ASbGncuqysHMjMBVKu+qTKbphwpb5yaIJ3iaSQCebbF/LgVUxP6efISLbhtCzkIQ1bF
-	Qe9gp2kFBmxk6y7HO2KnprqkZACHMj3uNymXf8EDeBfZ7H//7quUtvr0Dfl+0iaUXEoJHIPNdm2
-	ApQ6j6qh0T9qx5d2N3kW+oHTw0Flpq/SMRZhct48B1MwGmV4jtWJJsmglABipY/9gHKZg/P5bpI
-	jgG1+tbGiQJ1Q==
-X-Google-Smtp-Source: AGHT+IFGnok17TwVjjfY5TCWeokgCtHVZB2wiw81uWclu/l6421wuxu6M9IbjdbHH1N+IDntLXw4+eLUlWcKGurtC7w=
-X-Received: by 2002:ac8:5e11:0:b0:494:9d34:fca5 with SMTP id
- d75a77b69052e-4a713c6c8afmr27708701cf.13.1749605589163; Tue, 10 Jun 2025
- 18:33:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749606136; x=1750210936;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jWX6HBFdkl5fW6FmvNVgaknsWgO9e+mPJAb7dGonoU8=;
+        b=h//jarenMvPDF+bYJQM2qaQt4F2qbnz6V7ihZuvB87F0UuDakU3p0BcuZuWi7cv994
+         fRalitf1lyd444vLhRa6GhWEIWp8d6ogJuvE2oycUqohIDTiiZFkDn1c5z63PwqIhn+t
+         mxf1CJk766P3qqrTyt2gN0jANdWSjPj4RZv5SuENmUN26iTsEuaX0xMmkjYap6zIz7lU
+         nUeoT3Gv90gCMq0lnaUH5xg7L/QprPNFKGZpOU7wJm+E+vnEK4QjZ+iJ4XshqEZQUgAB
+         laMAq3vout7lbKyT/K8dZmldASL1lY0pJ8DjqA1qgBPvcn2exUsGLm5+OpceijdNBX2E
+         jRew==
+X-Gm-Message-State: AOJu0YyR3ijty/pZza/lYMIFfsTzI5F7+GJwzyBsBNhyJqIGvNHpt5+n
+	nO6cOjn3GaDr7RYQdifX8yfdnmYWy1QuqzbHxQm0gGN6uMoiO04CGiaP
+X-Gm-Gg: ASbGnctQIIqCVG3z8cr3QWhVW2RwN2HQn8z3eUQz4RVCQvwy5mny8/gUf1ZZ54mSzC5
+	UlKMCJPZaM0bsTRS7V2rEIYiSffvtuSqCKTEQm/zTSBMjDcOTLRS+uZ8Y2fFaTV7w8l5XBkezUY
+	7FIBGQ6dCKGS5eUJqaPOpXzadwj2NMviBbAegAQhEGXIeg+IWviuehkyganEn80FxlAgG5IucIY
+	mJXLtFud1aGhdc9LT+5GBdQJrNZTU4JY0+bUSDWZFvbgXreyihb9FCbQJ+XhdsyqUBllu5r3prJ
+	OLAmJkWqoega/cIzc7yg8q+Vi9J/LI5Um8w8B0M2Pq5v6EGptLQDKkVxK+zmVCNdQQyoCyhzyns
+	=
+X-Google-Smtp-Source: AGHT+IHpiy9bo7WUFp4fQdQMUj1rgHx+VymppOzP11+YKM34E5Nr7IODX13n8RtK5UG+7G0YI5FmnA==
+X-Received: by 2002:a05:6a00:1992:b0:740:b372:be5 with SMTP id d2e1a72fcca58-7486cb7177bmr1737428b3a.9.1749606136280;
+        Tue, 10 Jun 2025 18:42:16 -0700 (PDT)
+Received: from fedora ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7482b0c1168sm8269707b3a.136.2025.06.10.18.42.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Jun 2025 18:42:15 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jayatheerthkulkarni2005@gmail.com,
+	l.s.r@web.de,
+	smacdonald@kaimaging.com,
+	sunshine@sunshineco.com
+Subject: [PATCH v3] stash: fix incorrect branch name in stash message
+Date: Wed, 11 Jun 2025 07:12:03 +0530
+Message-ID: <20250611014204.24994-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
+In-Reply-To: <xmqqo6uyw6h4.fsf@gitster.g>
+References: <xmqqo6uyw6h4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <f46443ac-eb7f-47db-8f4b-a06384e6fde5@web.de> <20250608144542.275836-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqo6uyw6h4.fsf@gitster.g>
-In-Reply-To: <xmqqo6uyw6h4.fsf@gitster.g>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Wed, 11 Jun 2025 07:02:57 +0530
-X-Gm-Features: AX0GCFsmiUbqrKYivtQoCIfEMRjqoneMa5xxm90SNfR7FCpQGVSZv24DjUnxgWM
-Message-ID: <CA+rGoLdLOYGt8tsWtqWoBCct0Q5HkE_dY1X+MaSoyyfo6mCqFw@mail.gmail.com>
-Subject: Re: [PATCH v2] stash: fix incorrect branch name in stash message
-To: Junio C Hamano <gitster@pobox.com>
-Cc: l.s.r@web.de, git@vger.kernel.org, smacdonald@kaimaging.com, 
-	sunshine@sunshineco.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-> > +
->
-> Addition of trailing whitespace?
->
-> You can avoid such mistakes in the future by enabling our sample
-> pre-commit hook, which essentially does
->
->         git diff-index --check --cached $against --
->
+When creating a stash, Git uses the current branch name
+of the superproject to construct the stash commit message.
+However, in repositories with submodules,
+the message may mistakenly display the submodule branch name instead.
 
-Thank you, I needed something like this, I think I'm going to steal
-this to other projects too : )
+This is because `refs_resolve_ref_unsafe()` returns a pointer to a static buffer.
+Subsequent calls to the same function overwrite the buffer,
+corrupting the originally fetched `branch_name` used for the stash message.
 
-> where $against is HEAD (or an empty tree object while preparing for
-> an initial commit).
->
-> >       branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
-> >                                            "HEAD", 0, NULL, &flags);
-> > -     if (flags & REF_ISSYMREF)
-> > -             skip_prefix(branch_ref, "refs/heads/", &branch_name);
-> > +
-> > +     if (flags & REF_ISSYMREF) {
-> > +             if (skip_prefix(branch_ref, "refs/heads/", &branch_name))
-> > +                     branch_name = branch_name_buf = xstrdup(branch_name);
-> > +     } else
-> > +             branch_name = "(no branch)";
->
-> Do we need the else clause?  The original did not have it and showed
-> the "(no branch)" message without an issue, and I do not see anything
-> is changed by what happens inside the other side of this if statement.
-> Am I missing something?
+Use `xstrdup()` to duplicate the branch name immediately after resolving it,
+so that later buffer overwrites do not affect the stash message.
 
-No, that's just a random idea, I get the point I will remove that in
-the new patch
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+1. Used the hook to remove trailing whitespaces
+2. Removed the else clause 
+3. Changed the test title to the suggested one 
+4. Avoided --quiet Flags in Tests
+5. Used git -C sub ... instead of cd sub && ... && cd ...
 
->
-> > @@ -1495,6 +1501,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
-> >       strbuf_release(&msg);
-> >       strbuf_release(&untracked_files);
-> >       free_commit_list(parents);
-> > +     free(branch_name_buf);
-> >       return ret;
-> >  }
->
-> Makes sense.
->
-> This is a common pattern we use with a variable whose name contains
-> "to_free" (e.g., "branch_name_to_free"), but "branch_name_buf" is
-> pleanty readable and easy to understand what is going on.
->
-> > +test_expect_success 'stash reflog message uses superproject branch, not submodule branch' '
->
-> The title looks a bit on the overly-long side.  Would
->
->     stash message records the superproject branch
->
-> be sufficient?  The fact that the stash is implemented as reflog
-> is invidible and irrelevant at this level, so "reflog message" is
-> wasting bytes without adding any useful information.
->
-> What we want to make sure is that the message records the current
-> branch name, whether the project has any submodules or not, and from
-> that point of view,
->
->     stash message records the correct branch name
->
-> ought to be good, but not quite, because this test is trying to
-> trigger a bug that was present only when there are submodules, so
-> not mentioning superproject/submodule at all would not work well.
->
-> Would
->
->     submodules does not affect the branch recorded in stash message
->
-> work?  That is the best one I can come up with offhand.
->
+ builtin/stash.c  | 12 +++++++++---
+ t/t3903-stash.sh | 32 ++++++++++++++++++++++++++++++++
+ 2 files changed, 41 insertions(+), 3 deletions(-)
 
-Works, I will use this as is, I think this sounds good.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index cfbd92852a..4215ee781c 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -1372,6 +1372,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 	const char *head_short_sha1 = NULL;
+ 	const char *branch_ref = NULL;
+ 	const char *branch_name = "(no branch)";
++	char *branch_name_buf = NULL;
+ 	struct commit *head_commit = NULL;
+ 	struct commit_list *parents = NULL;
+ 	struct strbuf msg = STRBUF_INIT;
+@@ -1401,11 +1402,15 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 		ret = 1;
+ 		goto done;
+ 	}
+-
++	
+ 	branch_ref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+ 					     "HEAD", 0, NULL, &flags);
+-	if (flags & REF_ISSYMREF)
+-		skip_prefix(branch_ref, "refs/heads/", &branch_name);
++
++	if (flags & REF_ISSYMREF) {
++		if (skip_prefix(branch_ref, "refs/heads/", &branch_name))
++			branch_name = branch_name_buf = xstrdup(branch_name);
++	}
++					    
+ 	head_short_sha1 = repo_find_unique_abbrev(the_repository,
+ 						  &head_commit->object.oid,
+ 						  DEFAULT_ABBREV);
+@@ -1495,6 +1500,7 @@ static int do_create_stash(const struct pathspec *ps, struct strbuf *stash_msg_b
+ 	strbuf_release(&msg);
+ 	strbuf_release(&untracked_files);
+ 	free_commit_list(parents);
++	free(branch_name_buf);
+ 	return ret;
+ }
+ 
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 74666ff3e4..5678223cfb 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1592,4 +1592,36 @@ test_expect_success 'stash apply reports a locked index' '
+ 	)
+ '
+ 
++test_expect_success 'submodules does not affect the branch recorded in stash message' '
++	git init sub_project &&
++	(
++		cd sub_project &&
++		echo "Initial content in sub_project" >sub_file.txt &&
++		git add sub_file.txt &&
++		git commit -m "Initial commit in sub_project"
++	) &&
++
++	git init main_project &&
++	(
++		cd main_project &&
++		echo "Initial content in main_project" >main_file.txt &&
++		git add main_file.txt &&
++		git commit -m "Initial commit in main_project" &&
++
++		git -c protocol.file.allow=always submodule add ../sub_project sub &&
++		git commit -m "Added submodule sub_project" &&
++
++		git checkout -b feature_main &&
++		git -C sub checkout -b feature_sub &&
++
++		git checkout -b work_branch &&
++		echo "Important work to be stashed" >work_item.txt &&
++		git add work_item.txt &&
++		git stash push -m "custom stash for work_branch" &&
++
++		git stash list >../actual_stash_list.txt &&
++		grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
++	)
++'
++
+ test_done
+-- 
+2.49.GIT
 
-> > +     git init sub_project &&
-> > +     (
-> > +             cd sub_project &&
-> > +             echo "Initial content in sub_project" >sub_file.txt &&
-> > +             git add sub_file.txt &&
-> > +             git commit -q -m "Initial commit in sub_project"
-> > +     ) &&
->
-> It is easier to debug the test script if you avoid using --quiet too
-> much.  Regular "sh ./t3903-stash.sh" will squelch these output
-> anyway, and they can be seen when the test script is run with "-v".
->
-
-Ok will remove all the -q tests
-
-> > +     git init main_project &&
-> > +     (
-> > +             cd main_project &&
-> > +             echo "Initial content in main_project" >main_file.txt &&
-> > +             git add main_file.txt &&
-> > +             git commit -q -m "Initial commit in main_project" &&
-> > +
-> > +             git -c protocol.file.allow=always submodule add --quiet ../sub_project sub &&
-> > +             git commit -q -m "Added submodule sub_project" &&
-> > +
-> > +             git checkout -q -b feature_main &&
->
->
-> > +             cd sub &&
-> > +             git checkout -q -b feature_sub &&
-> > +             cd .. &&
->
-> These three lines can be written more compactly as:
->
->                 git -C sub checkout -b feature_sub &&
->
-
-True.
-
-> > +             git checkout -q -b work_branch &&
-> > +             echo "Important work to be stashed" >work_item.txt &&
-> > +             git add work_item.txt &&
-> > +             git stash push -q -m "custom stash for work_branch" &&
-> > +
-> > +             git stash list >../actual_stash_list.txt &&
-> > +             grep "On work_branch: custom stash for work_branch" ../actual_stash_list.txt
-> > +     )
-> > +'
-> > +
-> >  test_done
->
-> Thanks.
-
-Will send a patch soon
-Thank you again
-
-- Jayatheerth
