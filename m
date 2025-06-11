@@ -1,68 +1,67 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9BE1DFE20
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 15:54:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995CE1DE8B5
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 15:54:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749657285; cv=none; b=egRqnFYGtS64+O901aMrtj9E3ObzgEikeo2gm9G79n8qjiYHy0KdDZsdwzwMKW6Hccong8fhFdv1CnsAFyCD2jMFSLXnmhTSpj4pFVKU/EDP1rJ1p9DVyn/2crbLpRxqB2fZHqFgGB1UwjGySoox/5qy2xQfm+I2aP6nHJ19mNY=
+	t=1749657286; cv=none; b=F+FmPIr+yXLTPOQXXuTTRIzm9f4hd6ogTBQSJMDFBBXNmug7cim7v3mrdItTF7XBmvc87MkEpbXhktnsM5dm0VJ1fIjR9HsKy7MTG+gjWv9+TcJ79JCrcUG63b0v1OkDDVaJbmohlznPPrZV8Mj2Ci+f07TVD0YzDcMMPAxGbpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749657285; c=relaxed/simple;
-	bh=/sqUlvC6JIRSoBPWk9Y87fQubiM0vD5bpdOZ4KUXYC8=;
+	s=arc-20240116; t=1749657286; c=relaxed/simple;
+	bh=r+C30kcjUZLWyTGIcU0alDeBuS78zYUGfio7xOXeSxA=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=hn2UZ8eDMZ+WDJJmhyRnG4g7E8TMxt6UFv6I6KE/2ThKcJnnBWnwenv6rHvwlh86xBQG67t3AtxmqmHL9o4UuQZQETAEV1VwGQgprP+pwD8JXKsQ3zRB2i9X+sr2FZfQMDqvGN2eueQ2e/KjxXv8QHy6e2pic6sXkOwPXaj8rHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nmSZhH8W; arc=none smtp.client-ip=209.85.128.53
+	 MIME-Version:To:Cc; b=TPLk8Y5CDlguik+ghMercy2C+/eLXZRDCN5tstSXnpKzRiXDwItPxEeizRYNhxuQNiyE5/IRnbC+J9q3lNwNLm+6SNpzFKSjxGUVWAKAK1rtcytID+v1IjTZ2M4CXhcEsZwFbm+KtSJS5yGecdINjRtB98iX0JV5XBWjZvhshxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FPN5ubQa; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nmSZhH8W"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so58302605e9.0
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 08:54:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FPN5ubQa"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so83769795e9.1
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 08:54:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749657282; x=1750262082; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749657279; x=1750262079; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=soxS2ceqQLDAf6FNVxtRWQd3UYsZpGtCncIYoIVPCVg=;
-        b=nmSZhH8W95lOq4+H+q1yZmld8/dHui1ZdrjEiEvdiq2iWBvvk3GYnuY65Z5vtgc49/
-         +DkiwOxfGFrP0qwT2c5f2RKnJkzK8evKY/Z7tqD7ZFzoPrtWKbkKby3chKpq2KrRZ/8Y
-         LrHAD5Q7KnIdHJ3QFuXmb8tADodewaQsWenAJPteLMtiWY5xVxC5GJ1Nq7jfK+6XoHK9
-         HxXSUwx6ORuhwKr/vSfNEchNTnJ/nRlXRSIs90JaTJymqcO/p6M5cr2/mjcm2U7fBs1f
-         png13ardC4I3QQoTQ24/aQpyz+KwfjrXunroAE9ghuX42q+w1wwHd0KFyitLCA1DhXRU
-         wxYw==
+        bh=4Fd6D2EX5SmA3vjHsbcV3jAl+K0eykm0DZ6cYVix/DE=;
+        b=FPN5ubQaAMoFFpzemB0kwijhPE6bxg1V0tGJJ+onlBYCZgPK/cA/UtoHO5X9H8/TX6
+         jllwBqViNKUfDNTNlLnlL0OMQjKLFbgVN36fqgduXFMn+gXb6mAnEbasptaBfFFuLCZY
+         epwZNOhdV9dJIBnKW1NuhQtMcGAUCJnKJ7sJu8fh/RT32Zsfr/qpuU2UCI5hp0BOfT6O
+         wPTPS1hTyT5W2DLoZsMpdmX7aFt/6uWQqKalCCzCCC9plnNWwDSBYFku8bXuBQeBcEJf
+         1fhXuObabpGnJKZaCgXMcEDFrRBJSq109Hm9TrpCdW2Lzwloka63QGM4w+7JwU6O0WKj
+         ziyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749657282; x=1750262082;
+        d=1e100.net; s=20230601; t=1749657279; x=1750262079;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=soxS2ceqQLDAf6FNVxtRWQd3UYsZpGtCncIYoIVPCVg=;
-        b=Lw9VHSaWFV22kgnZHjnWZ+gvbft6xW16+HVVfWIm/w0SpLKAJDx08Bzlo1Bx7cHKLe
-         G0AgZZsjuIDOS+5swUQ9HHUH0Zs1PCZUJyAMCHw38R+CXZFcNdpiys/beeoquI32Ma02
-         mTNw2yRZS96khiyVjT1Me0oesGvJv5gsLwU3eB7EOYLIVvvMLxcwvJpMXwOTLnbxJQaO
-         ZlBV4b5LbjgYwWe7heM6FCdpp5YxRgZu7xJSqEJzyfgxQHQHubTWXia+UwdzU2MZOrme
-         4yClmNROP5AZEQqFWVH22BLsN5YVbhg7maZrDgkXIFBP9hAHO2O5eoiPm2QFtrIdLTXJ
-         XsoA==
-X-Gm-Message-State: AOJu0YyyyrPZ75vHIJ54BqhaOCdM2H5wT4m5T/8sBNj+HUvUAjWFjWpI
-	QwROXzqX8tRQ8/LT184/8djFegolTebCmcMVExgpnr0g0y30f+B+CsAKFJrE5g==
-X-Gm-Gg: ASbGncvNKJ+uQd0leaTKH6rtvJyFVqHsui4UDqee7qmVJieS7J0z30VypcbPzDek7nV
-	YZ39Hja9QIkLxOJQ82QkyVCDZjyRF6X+VkTCMwrtY/+72uKpqES8CxZGht+LA9fMBuVeqwCzE+a
-	ZqQhpCYU+pwirU2VCeQWZTRaTkxJPotW92YmMkbIjdbB5K/4zvC1DyqVuENETarU/cd0h98n29c
-	vN1LWVKKztUIPhLoPDYn272Tr1DOdkODlONuVnR2m5yEtE4rTdSV4xmMS8yo6DEhXtvOK/mYTn6
-	XHQFkElXiErefpmYOClW0eE9Kctabxqa33UQDWPTAQJxzXLx8MDIq90jn6xQPm0=
-X-Google-Smtp-Source: AGHT+IE+/klES0YbRiNf8oiutAZCR1LQ7wpBN3Z5jC+CofokurYYKOZRz9sKIbNNEmDznGtOWAZATg==
-X-Received: by 2002:a05:600c:1ca8:b0:442:ccfa:18c with SMTP id 5b1f17b1804b1-4532b941335mr2690235e9.32.1749657281437;
-        Wed, 11 Jun 2025 08:54:41 -0700 (PDT)
+        bh=4Fd6D2EX5SmA3vjHsbcV3jAl+K0eykm0DZ6cYVix/DE=;
+        b=bUsWKZnRZfP/TOmsNnlEByxLjjUkJv5665g0PNelgwrbUdqyMusa99JmCRdIK1L/0Y
+         lRMUsKRFVoUQ4tsDxIJFzN0rNrx+lG2EkLYq/1bmurX77Cz28eae50BQRuZZnNclT6lp
+         1vov76+jVlQjJ5mHnDEochvkvJ2hgxVlVsl50TuVTn/9RxJPWz0qmQRSNt+8G/qVKkAa
+         TgjCVraUBCmVV4hxjwcAmbYn1IUkeCXxWWQE37iyMb2y8NPWBkXVuLYqqUIxsJOlRd/3
+         v4aQq0av8tPkSwCKzlFAf9g4SVxsZh0nKNLfk9Zgz1rXgL1xPbfo/Tnq7rlxXgl7UASy
+         FO8Q==
+X-Gm-Message-State: AOJu0YylsJgnlp9Oc9s3qFQ4+6LEh5uGt5fOCGENmdtIZNhiLbGXqVmp
+	BCUs6G29yL0dCRXsmywHDP25a+hFvJWtNnopQuj6dfidKZ/4uPDYxqgbv5FOAQ==
+X-Gm-Gg: ASbGncsoAsYkdkxjNsQX/xBrO3SnOPmZmfgwOUZh5T7J4wPV0ka1Nki4GrghqXVnzVM
+	ykZXhTwnlhvJK4IUuhs1KDrvEYxPmGceTbKsCucRhc4qMGDvH1DbyARpENHop4zVQwHF5p+nkXI
+	f1ETVi75niKvT+kCHiNO7vHk6T8/VEN2SMs6QOteidKMPEQgW1w9di/AEBA3N0bGdPKMjhKVsu3
+	iup6RW4GNWZRq8Zm17nf7yNEBNz+UJPHTErD7LuRjWO7guaNKd2bG+ea7zGTNGOEUO8yeLJypjc
+	RUU9z3SMq0Yoo/8kUs+qVV1FZsPnpRQFKQqPuz5NwU1U5bhdsA0lScfQHwh98NA=
+X-Google-Smtp-Source: AGHT+IEssTOVWYggEzl/8l50Tg7JDXdU07JpTfibENEbWHnOXbujIQFZ0EevV87+kJPO8v8xl3hGnQ==
+X-Received: by 2002:a05:600c:1d0a:b0:43c:f44c:72a6 with SMTP id 5b1f17b1804b1-45324879e63mr32945125e9.2.1749657279229;
+        Wed, 11 Jun 2025 08:54:39 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45325228c2esm25417935e9.37.2025.06.11.08.54.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a5323b5147sm16047516f8f.37.2025.06.11.08.54.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 08:54:40 -0700 (PDT)
-Message-Id: <52c34977b48a26f3f6a1a62fb81015f319be6205.1749657278.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1934.v2.git.1749657278.gitgitgadget@gmail.com>
+        Wed, 11 Jun 2025 08:54:38 -0700 (PDT)
+Message-Id: <pull.1934.v2.git.1749657278.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
 References: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
-	<pull.1934.v2.git.1749657278.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 11 Jun 2025 15:54:38 +0000
-Subject: [PATCH v2 2/2] ci(coverity): output the build log upon error
+Date: Wed, 11 Jun 2025 15:54:36 +0000
+Subject: [PATCH v2 0/2] Fix Coverity builds on Windows
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,35 +72,67 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+As of three weeks ago, Git for Windows' Coverity builds fail
+[https://github.com/git-for-windows/git/actions/workflows/coverity.yml?query=branch%3Amain].
 
-It is quite helpful to know what Coverity said, exactly, in case it
-fails to analyze the code.
+The reason is most likely the most recent Coverity release, 2025.3. Its
+release notes
+[https://documentation.blackduck.com/bundle/coverity-docs/page/webhelp-files/relnotes_latest.html]
+do not shed any light into the issue (and do not mention that they bundle
+JDK20 and JDK22 in addition to a JRE, because what's better than a single
+Java installation: three, right?).
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- .github/workflows/coverity.yml | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+My investigation turned up .dll files that are located in Coverity's bin/
+directory which have the same name as .dll files in Git for Windows' SDK. As
+a consequence, the former override the latter and throw off MSYS2's logic to
+find the MSYS2 root directory given the location of certain .dll files.
 
-diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-index d8a0497d596d..01a0437b2f26 100644
---- a/.github/workflows/coverity.yml
-+++ b/.github/workflows/coverity.yml
-@@ -149,7 +149,11 @@ jobs:
-         run: |
-           export PATH="$PATH:$RUNNER_TEMP/cov-analysis/bin" &&
-           cov-configure --gcc &&
--          cov-build --dir cov-int make
-+          if ! cov-build --dir cov-int make
-+          then
-+            cat cov-int/build-log.txt
-+            exit 1
-+          fi
-       - name: package the build
-         run: tar -czvf cov-int.tgz cov-int
-       - name: submit the build to Coverity Scan
+This patch series fixes this issue, and while at it, enhances the Coverity
+workflow to print out the build log in case of failure. It is a companion of
+https://github.com/git-for-windows/git/pull/5672 and of
+(https://github.com/microsoft/git/pull/764.
+
+Changes since v1:
+
+ * Dropped unnecessary, non-portably cygpath call.
+
+Johannes Schindelin (2):
+  ci(coverity): fix building on Windows
+  ci(coverity): output the build log upon error
+
+ .github/workflows/coverity.yml | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1934%2Fdscho%2Ffix-coverity-builds-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1934/dscho/fix-coverity-builds-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1934
+
+Range-diff vs v1:
+
+ 1:  c65120f2570 ! 1:  712602c09e4 ci(coverity): fix building on Windows
+     @@ .github/workflows/coverity.yml: jobs:
+             - name: build with cov-build
+               run: |
+      -          export PATH="$RUNNER_TEMP/cov-analysis/bin:$PATH" &&
+     -+          export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
+     ++          export PATH="$PATH:$RUNNER_TEMP/cov-analysis/bin" &&
+                 cov-configure --gcc &&
+                 cov-build --dir cov-int make
+             - name: package the build
+ 2:  3a829f11c07 ! 2:  52c34977b48 ci(coverity): output the build log upon error
+     @@ Commit message
+       ## .github/workflows/coverity.yml ##
+      @@ .github/workflows/coverity.yml: jobs:
+               run: |
+     -           export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
+     +           export PATH="$PATH:$RUNNER_TEMP/cov-analysis/bin" &&
+                 cov-configure --gcc &&
+      -          cov-build --dir cov-int make
+      +          if ! cov-build --dir cov-int make
+
 -- 
 gitgitgadget
