@@ -1,374 +1,203 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mail4.engw.org (astra5088.startdedicated.net [62.138.8.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6AAD2E610A
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 12:59:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2073347C7
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:06:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=62.138.8.142
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749646776; cv=none; b=Wliy56gpT9G/sDYLgaulgMpC+BQvj6skEB/2x8FRrHpce96WSpCTbpsuxLjvteFPJJqTGadYv5J2a3kzTXFq7NJJ5MT2j0d3VNLMbkuaxBeqKgFutSoIOb6+LZN3kuHGSzY3avaZLSjpHP3uel8kH+EdT3TXf7MTzQF/OygDB48=
+	t=1749647190; cv=none; b=Uu0zAxL62kdIW4qoTfUE+fQ0mlprweTTAbvd6YmH1nVBA6c/7GwzaxObyKRsa9I6D7IApIHfUrcpKVbdiW6hkHJOB03vp1DCS/1FdL6I9tJUmXNAcha8Xwb5sbTWrX9lQuH4gCC4aZppjXyPOFye11pN9cFzOzeOqS9m0NScna8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749646776; c=relaxed/simple;
-	bh=dMu/zFmOST6VLRFB20NE4QOusgFmPjnrPNsNylqdKs0=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sA8ISa8pHlPeawYnKMs5Zr5VyiKi8L2NF2G+FmWYTjGokq1PGq1NCZhSpi+1JBk/boQVAzEmHSjzdoelw8xDeU4VcPgmHTWQjXt+EJWoqJu6AqFyLN5bIgaWpAMZjDnU5DYYV7TQYtM7zT5pqkijUxkjc/4Xf/Mh7ul4RpnhHPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AvP3Lzd1; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AvP3Lzd1"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-52d9a275c27so4560051e0c.0
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 05:59:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749646773; x=1750251573; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=9j++p+toPjBh0E0Z3z+jfZL04gACUQzTV33e4+ErGV0=;
-        b=AvP3Lzd1JSGYk7DznCj3l43gjPyVY9hEpg2/r/S2wc6zwr4Ir+MkWh5goSWEr+cKx9
-         5spGc4p1J6dxaWwgi4HlK1JGSwGo4VNP6C6dZIDeT/vakARdNVQ75FQLz6xfpw+se46o
-         9oTDPVRqNin8Svue/MhSGsaSLZ4rxmfEo/j5CjUIkUx+HOBDIbslbecE+YjyASI+Uopf
-         RLXybiFFo1+b6vAlKwdoMzY443lAdbCoiwFQfXjbFaUMRV06ZkArqWaFn7Y8BD/YxiwK
-         dDrJ+C18K9QrtZ70FR4FJqoHHJev50nMAZZlFa5GLl39D+KWhWOerKr+trKuTzcEJplb
-         dCHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749646773; x=1750251573;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9j++p+toPjBh0E0Z3z+jfZL04gACUQzTV33e4+ErGV0=;
-        b=DjVqPSoBNsLbzCXyZ61owocGn51FD0aSKYMZ2tvFVVuqYZpSB1o4lBue+zx29p4704
-         uAzZALb2xPvG/aD0+YTZ03p/XjkAN+u7ZDxRxy1NYFO/U+J3Oms5DBsOp+9ZfzXdKRwZ
-         UIUaxUu/sjLkJb0IA1tX9KRPyrMUHQbA2Oi3oBQNxxM4OvNV/McA5MZH0lipxdRZsDB2
-         j73WY3vaVQBoiIUCNV2LGB+AP2gomtrHRThT1easo4yd+0A4D76bdhCLleJThSwVqB/o
-         H2WtfumXLS2SrHMEiDP0s5grz6I2pJZ9skhzzEkHizF+cfEeiTuxFIc79cgclvV5i17m
-         dzFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWiaoq0CrqwDBDCSCN9uIEQs2rsB2FiaLqMi56lV/k801WhOf0rBxKphT2I8gG4cKNTc84=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyNnoHvvpnoIn2Y848k1u4QPXGBtSWVQNj3r8gcl0dm6QZVAduR
-	r8daR1eH46DtcuBjwFd1LU6pPvFwiCE345xAGu01gS/azT23fuU9G6YbUE0pmsM8PqLFWnWvS3u
-	cuoOtR4TmS8ADn5bDjpT5smr5NxIug2SyvUd2nuc=
-X-Gm-Gg: ASbGncvuuDgE0puA16zmgElT+zE2p2ttvfgcdJzunz6GqbkBWwcsU3MQmEMrK1CKUjz
-	2mLgj8xo6ImQxWrrIferIOIpHoyqvQ+vymZUIG8LIETQaHbfu85LvdUynmjawnWAhfLByZ91U6k
-	DeTZlU+RYK42iT8N0qFnR5DEQ+cSmmceXdZA+gr6Ut9w==
-X-Google-Smtp-Source: AGHT+IF6WQb5Y2YYdrtol4Dv37X2nsrYKw6XfNfYc7lqggZUB3v/u5YMxZysDVrxXyGYIkwwPOtA0NxUv7Sro1zcX+c=
-X-Received: by 2002:a05:6122:1d9f:b0:531:2afc:4635 with SMTP id
- 71dfb90a1353d-5312afc4f28mr544799e0c.3.1749646773313; Wed, 11 Jun 2025
- 05:59:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Jun 2025 07:59:32 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250610152117.14826-4-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com> <20250610152117.14826-4-lucasseikioshiro@gmail.com>
+	s=arc-20240116; t=1749647190; c=relaxed/simple;
+	bh=3Dl5g73e3k2TZh/uSWDa0G9sc4wHl0HTbkDx+C5UXYo=;
+	h=From:To:Subject:Mime-Version:Content-Type:Date:Message-Id; b=QBVJ3TwF8L50R+t+0ju3qfXcplUiJJZxuwQV5h9a/oDu4jvhsXNnqNnM+zcdymqONLcDgUXhvIJ1pOe710bqZGoXjqKEbDyNyd7GhTwFEbVegn11vPGtEH2LGQPlqlZy1GTxPy7nxl7NdVRxpsyw0i4+o3R0vVVeFKlkYpcHtEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mcsi-conf.org; spf=none smtp.mailfrom=mcsi-conf.org; arc=none smtp.client-ip=62.138.8.142
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=mcsi-conf.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=mcsi-conf.org
+Received: from localhost (localhost [127.0.0.1])
+	by mail4.engw.org (Postfix) with ESMTP id CDE364E6BCB2
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 14:18:32 +0200 (CEST)
+Received: from mail4.engw.org ([127.0.0.1])
+ by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10032) with ESMTP
+ id d1jq_5e7WXmC for <git@vger.kernel.org>;
+ Wed, 11 Jun 2025 14:18:32 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mail4.engw.org (Postfix) with ESMTP id 351E04E6B5CC
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 11:47:27 +0200 (CEST)
+X-Virus-Scanned: amavis at engw.org
+Received: from mail4.engw.org ([127.0.0.1])
+ by localhost (mail4.engw.org [127.0.0.1]) (amavis, port 10026) with ESMTP
+ id rqX6Yv9AAQ8r for <git@vger.kernel.org>;
+ Wed, 11 Jun 2025 11:47:27 +0200 (CEST)
+Received: from 10.0.2.15 (mail4.engw.org [62.138.8.142])
+	by mail4.engw.org (Postfix) with SMTP id D33D54E6BE50
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 11:04:44 +0200 (CEST)
+From: "MCSI 2025" <kostas.chiotopoulos@mcsi-conf.org>
+To: <git@vger.kernel.org>
+Subject: 10th International Conference on Mathematics and Computers in Sciences and Industry (MCSI),  Rhodes Island (Rodos Island), Greece, August 22-24, 2025.
+Sender: "MCSI 2025" <kostas.chiotopoulos@mcsi-conf.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Date: Wed, 11 Jun 2025 07:59:32 -0500
-X-Gm-Features: AX0GCFuIiagfBB2J0-fRtlkL_dgL7xMdaM30y2js68nUf3S9ROwFZW0A_fTYHwM
-Message-ID: <CAOLa=ZTNpSKoFcfQHDOQNhq-jdFJvGEsXm-rYKrHCZG8CfaqaQ@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH 3/5] repo-info: add the field references.format
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000068011a06374b6249"
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Date: Wed, 11 Jun 2025 12:04:45 +0300
+Reply-To: "MCSI 2025" <kostas.chiotopoulos@gmail.com>
+Message-Id: <20250611090445.D33D54E6BE50@mail4.engw.org>
+Content-Transfer-Encoding: quoted-printable
 
---00000000000068011a06374b6249
-Content-Type: text/plain; charset="UTF-8"
+Dear Colleagues
+=20
+We would like to invite you to present an Invited Lecture in the
+    10th International Conference on
+    Mathematics and Computers in Sciences and Industry (MCSI),
+    Rhodes Island (Rodos Island), Greece, August 22-24, 2025.
+    www.mcsi-conf.org
+=09
+Accepted papers of MCSI 2025 will be published in various Scopus indexed
+Journals or Springer Verlag Volumes or IEEECPS / IEEE Xplore as in 2024.
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+The Proceedings of MCSI 2024 have been published by IEEE CPS and can be
+found in IEEEXplore here:
+https://ieeexplore.ieee.org/xpl/conhome/10817652/proceeding
 
-> Add the field references.format to the repo-info command. The data
-> retrieved in this field is the same that currently is obtained by
-> running `git rev-parse --show-ref-format`.
->
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->  builtin/repo-info.c  | 97 +++++++++++++++++++++++++++++++++++++++++---
->  t/t1518-repo-info.sh | 20 +++++++++
->  2 files changed, 112 insertions(+), 5 deletions(-)
->
-> diff --git a/builtin/repo-info.c b/builtin/repo-info.c
-> index 4d539a17fb..a1c9d3942e 100644
-> --- a/builtin/repo-info.c
-> +++ b/builtin/repo-info.c
-> @@ -9,18 +9,40 @@ enum output_format {
->  	FORMAT_JSON
->  };
->
-> +enum repo_info_category {
-> +	CATEGORY_REFERENCES = 1
-> +};
-> +
-> +enum repo_info_references_field {
-> +	FIELD_REFERENCES_FORMAT = 1
-> +};
-> +
-> +struct repo_info_field {
-> +	enum repo_info_category category;
-> +	union {
-> +		enum repo_info_references_field references;
-> +	} field;
-> +};
-> +
->  struct repo_info {
->  	struct repository *repo;
->  	enum output_format format;
-> +	int n_fields;
-> +	struct repo_info_field *fields;
-> +};
-> +
-> +const char *default_fields[] = {
-> +	"references.format",
->  };
->
->  static void repo_info_init(struct repo_info *repo_info,
->  			   struct repository *repo,
->  			   char *format,
-> -			   int allow_empty UNUSED,
-> -			   int argc UNUSED,
-> -			   const char **argv UNUSED
-> +			   int allow_empty,
-> +			   int argc,
-> +			   const char **argv
->  			   ) {
->
-
-Nit: we wrap to 80 chars generally, so you can put multiple arguments on
-the same line.
-
-> +	int i;
->  	repo_info->repo = repo;
->
->  	if (format == NULL || !strcmp(format, "json"))
-> @@ -29,18 +51,82 @@ static void repo_info_init(struct repo_info *repo_info,
->  		repo_info->format = FORMAT_PLAINTEXT;
->  	else
->  		die("invalid format %s", format);
-> +
-> +	if (argc == 0 && !allow_empty) {
-> +		argc = ARRAY_SIZE(default_fields);
-> +		argv = default_fields;
-> +	}
-> +
-> +	repo_info->n_fields = argc;
-> +	repo_info->fields = xmalloc(argc * sizeof(struct repo_info_field));
-> +
-
-Nit: perhaps use ALLOC_ARRAY or family here?
-
-> +	for (i = 0; i < argc; i++) {
-> +		const char *arg = argv[i];
-> +		struct repo_info_field *field = repo_info->fields + i;
-> +
-> +		if (!strcmp(arg, "references.format")) {
-> +			field->category = CATEGORY_REFERENCES;
-> +			field->field.references = FIELD_REFERENCES_FORMAT;
-> +		}
-
-Makes me wonder if the default fields can be defined as an array of
-'repo_info_field' and avoid the strcmp since the information is
-pre-defined. Perhaps something like:
-
-  diff --git a/builtin/repo-info.c b/builtin/repo-info.c
-  index a1c9d3942e..81c7b5f896 100644
-  --- a/builtin/repo-info.c
-  +++ b/builtin/repo-info.c
-  @@ -31,8 +31,13 @@ struct repo_info {
-   	struct repo_info_field *fields;
-   };
-
-  -const char *default_fields[] = {
-  -	"references.format",
-  +const struct repo_info_field default_fields[] = {
-  +	{
-  +		.category = CATEGORY_REFERENCES,
-  +		.field = {
-  +			.references = FIELD_REFERENCES_FORMAT
-  +		},
-  +	},
-   };
-
-   static void repo_info_init(struct repo_info *repo_info,
-  @@ -53,8 +58,8 @@ static void repo_info_init(struct repo_info *repo_info,
-   		die("invalid format %s", format);
-
-   	if (argc == 0 && !allow_empty) {
-  -		argc = ARRAY_SIZE(default_fields);
-  -		argv = default_fields;
-  +		repo_info->fields = (struct repo_info_field *)&default_fields;
-  +		return;
-   	}
-
-   	repo_info->n_fields = argc;
+The Proceedings of MCSI 2023 have been published by IEEE CPS and can be
+found in IEEEXplore here:
+https://ieeexplore.ieee.org/xpl/conhome/10438514/proceeding
+indexed in ISI, Scopus, EI Compendex, DBLP, ACM, Computer Society Digital
+Library (CSDL)
 
 
-> +		else {
-> +			die("invalid field '%s'", arg);
-> +		}
-> +	}
-> +}
-> +
-> +static void repo_info_release(struct repo_info *repo_info) {
-> +	free(repo_info->fields);
->  }
->
-> -static void repo_info_print_plaintext(struct repo_info *repo_info UNUSED) {
-> +static void repo_info_print_plaintext(struct repo_info *repo_info) {
 
-This should definitely go into its own commit or at least be mentioned in
-the commit message.
 
-> +	struct repository *repo = repo_info->repo;
-> +	int i;
 
-Nit: always nice to leave a newline between the variable declarations
-and following code. Also we can move move `int i` declaration directly
-inside the loop.
+Accepted papers can be also published in one of our Volumes in Springer
+Verlag. See for example
+https://link.springer.com/book/10.1007/978-3-031-78416-3
 
-> +	for (i = 0; i < repo_info->n_fields; i++) {
-> +		struct repo_info_field *field = &repo_info->fields[i];
-> +		switch (field->category) {
-> +		case CATEGORY_REFERENCES:
-> +			switch (field->field.references) {
-> +			case FIELD_REFERENCES_FORMAT:
-> +				puts(ref_storage_format_to_name(
-> +					repo->ref_storage_format));
-> +				break;
-> +			}
-> +			break;
-> +		}
-> +	}
->  }
->
-> -static void repo_info_print_json(struct repo_info *repo_info UNUSED)
-> +static void repo_info_print_json(struct repo_info *repo_info)
->  {
->  	struct json_writer jw;
-> +	int i;
-> +	unsigned int categories = 0;
-> +	unsigned int references_fields = 0;
-> +	struct repository *repo = repo_info->repo;
-> +
-> +	for (i = 0; i < repo_info->n_fields; i++) {
-> +		struct repo_info_field *field = repo_info->fields + i;
-> +		categories |= field->category;
-> +		switch (field->category) {
-> +		case CATEGORY_REFERENCES:
-> +			references_fields |= field->field.references;
-> +			break;
-> +		}
-> +	}
->
->  	jw_init(&jw);
->
->  	jw_object_begin(&jw, 1);
-> +
-> +	if (categories & CATEGORY_REFERENCES) {
-> +		jw_object_inline_begin_object(&jw, "references");
-> +		if (references_fields & FIELD_REFERENCES_FORMAT) {
-> +			const char *format_name = ref_storage_format_to_name(
-> +				repo->ref_storage_format);
-> +			jw_object_string(&jw, "format", format_name);
-> +		}
-> +		jw_end(&jw);
-> +	}
->  	jw_end(&jw);
->
 
-Doesn't this mean that each value of CATEGORY_REFERENCES and
-FIELD_REFERENCES_FORMAT should have no common bits? Especially in the
-former across different categories too.
+or in the Journals that you can find on the web
 
-I wonder if we can solve this in a easier way. We care about:
-- Retaining the order of fields input by the user
-- Having a default set of fields if no input received
+Plenary Speakers
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+Prof. Yingxu Wang
+President, International Institute of Cognitive Informatics and Cognitive
+Computing (ICIC)
+Director, Laboratory for Computational Intelligence, Cognitive Systems, a=
+nd
+Software Science
+Dept. of Electrical and Computer Engineering
+Schulich School of Engineering and Hotchkiss Brain Institute
+University of Calgary
+Canada
 
-But, for JSON formatting, order of fields doesn't matter as per the spec
-[1]:
 
-  An object is an unordered set of name/value pairs. An object begins
-  with {left brace and ends with }right brace. Each name is followed by
-  :colon and the name/value pairs are separated by ,comma.
+Prof. Minghua Chen
+TPC Co-Chair, General Chair, and Steering Committee Chair of ACM e-Energy
+City University of Hong Kong,
+Kowloon Tong, Kowloon, Hong Kong=20
 
-So, do we really want to keep the order? Especially since one suggestion
-is to only work with the JSON format for now.
+Prof. Javier F Rosenblueth
+Institute National Autonomous University of Mexico,
+Mexico=20
 
-If we don't care about the order, we can simply have a structure with
-bit fields and work with that.
+Prof. Elias C. Aifantis
+Mercator Fellow, Friedrich-Alexander University, Erlangen-Nuremberg,
+90762 F=FCrth, Germany
 
->  	puts(jw.json.buf);
-> @@ -92,6 +178,7 @@ int cmd_repo_info(
->  			     PARSE_OPT_KEEP_UNKNOWN_OPT);
->  	repo_info_init(&repo_info, repo, format, allow_empty, argc, argv);
->  	repo_info_print(&repo_info);
-> +	repo_info_release(&repo_info);
->
->  	return 0;
->  }
-> diff --git a/t/t1518-repo-info.sh b/t/t1518-repo-info.sh
-> index 2e1a6f0c34..a99198b0f6 100755
-> --- a/t/t1518-repo-info.sh
-> +++ b/t/t1518-repo-info.sh
-> @@ -6,6 +6,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->
->  . ./test-lib.sh
->
-> +DEFAULT_NUMBER_OF_FIELDS=1
-> +
->  parse_json () {
->  	tr '\n' ' ' | "$PERL_PATH" "$TEST_DIRECTORY/t0019/parse_json.perl"
->  }
-> @@ -46,4 +48,22 @@ test_expect_success 'plaintext: returns empty output with allow-empty' '
->  	test_line_count = 0 output
->  '
->
-> +test_repo_info 'ref format files is retrieved correctly' \
-> +	'' \
-> +	'references.format' 'files'
-> +
 
-This expects that the repository is created with the 'files' backend by
-default, but that is defined by the 'GIT_TEST_DEFAULT_REF_FORMAT' env
-variable. So wouldn't this fail when in the CI job for reftables?
+Prof. Dimitrios A. Karras, PhD
+National and Kapodistrian University of Athens (NKUA),
+Dept. General, Greece=20
 
-> +test_repo_info 'ref format reftable is retrieved correctly' \
-> +	'--ref-format=reftable' \
-> +	'references.format' 'reftable'
-> +
-> +test_expect_success 'plaintext: output all default fields' "
-> +	git repo-info --format=plaintext >actual &&
-> +	test_line_count = $DEFAULT_NUMBER_OF_FIELDS actual
-> +"
-> +
-> +test_expect_success 'json: output all default fields' "
-> +	git repo-info --format=json | parse_json | grep '.*\..*\..*' >actual &&
-> +	test_line_count = $DEFAULT_NUMBER_OF_FIELDS actual
-> +"
-> +
+Prof. Imre J. Rudas, IEEE Fellow
+Obuda University,
+Budapest, Hungary=20
 
-While line count is good, we should also check the default values, no?
+Prof. Ivan Ganchev
+University of Limerick, Limerick, Ireland=20
 
->  test_done
-> --
-> 2.39.5 (Apple Git-154)
+Prof. Mohammed Chadli
+Universit=E9 Paris-Saclay, Paris, France=20
 
---00000000000068011a06374b6249
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: e2c6b051613fd99c_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oSmZiSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMk5sQy85Z2xCQU9IMlZZQmpscVQ1eWhFTzB5NFVEcAorKzdmenJIVVkx
-RGs2Q2t5eEdJM3hKcjY4MC8zZjl6V3ZjaUdVcVdQYkZBR244WFp4VExZSG0yUWk4NlczSnVECmwy
-MjhuQnI3dFAxdEM3NTMrZFhsc2pMeXZ5SmRuN2JjNzRrcUtWaHFyVDlhZWY0MVMweHBtdWdodmk3
-SDVLNkgKM2tLMXB2UTNtby83R2RoZW04MjVYQytVTXJOeEpZQlVVa2t6NkhFeFZkTkN2WHF5Rnpu
-SXN0eVgxTGVERVdkNwowSlBHZzhwY3VsOGpSc1pSU3MwTktKbU1EeWlIKzlIUTd3UC9XT2Z5UzhC
-cjVWOGVLRkZNbndTNkRmU1lIMjYwCnU5VmczdkUzQ1IrRzVxN2hqK0lLQVB5eWVXZmE5dGxpQm81
-ZUx5M2s3ZTQ2WWhxUkE2Q0FNeXJRT21iNFQ3UjgKb2dnQkR2ZDBvRlJPWkVNdjZtejJybG5QVzVT
-US9rQzVvWmhuK1BFbmNwQ1NZN0Y3cDFzNDEzODFKQlgvMkJhaApaeDVmWC9RYldXTTBsSTNJcGNR
-MVNQWm9ad0toWjBCcU5UOXZUclE1cE11SzVvUGRrMi92YjJJdlE5SXBQeldZCkRiWk4xbHdjS05a
-WkJlMVFEeW12cUVSWW9ETlNuZHlMaEROOTVJbz0KPVMyM00KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000068011a06374b6249--
+Prof. Leri Nozadze
+Samtskhe-Javakheti State University, Georgia
+
+Prof. Eugenia N. Petropoulou
+University of Patras Patras, Greece
+
+Prof. Marat Akhmet
+Middle East Technial University, Ankara, T=FCrkiye
+
+
+
+Best Regards
+
+=20
+
+International Organizing Committee
+
+Prof. Nikos Bardis
+Hellenic Army Academy,
+Vari, Attica, Greece
+
+
+Prof. Nikolaos Mastorakis
+Technical University of Sofia,
+Bulgaria
+
+Prof. Irina Astashova
+Moscow State University,
+Moscow, Russia
+
+
+Prof. Theodor D. Popescu
+National Institute for Research and Development in Informatics,
+Bucharest, Romania
+
+
+Prof. Tarek Saadawi
+City University of New York, USA
+
+Prof. John Tsiligkaridis=20
+Heritage University,
+Washington, USA Web Address
+
+
+
+Prof. Tadashi Watanabe
+University of Fukui,
+Fukui, Japan Web Address
+
+
+Prof. Nikolaos Karadimas
+Hellenic Military Academy,
+Vari, Attica, Greece =20
+Prof. Kittipong Tripetch
+Rajamangala University of Technology Suvarnabhumi, Nonthaburi, Thailand=20
+
+
+Prof. Radoslav Mavrevski
+South-West University "Neofit Rilski",
+Blagoevgrad, Bulgaria=20
+
+Prof. Ioannis F. Gonos
+School of Electrical and Computer Engineering, National Technical
+University of Athens
+Athens, Greece=20
+
+
+
+
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+Should you want to unsubscribe, send an email to
+kostas.chiotopoulos@gmail.com
+with Subject:  << UNSUBSCRIBE git@vger.kernel.org >>
+
+
+
+=09
