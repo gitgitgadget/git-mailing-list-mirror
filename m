@@ -1,84 +1,86 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CEA29ACDA
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 14:25:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6303C1A9B40
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 15:23:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749651914; cv=none; b=rtV0nSNfaA157svXwl0mGzRff6R70DEb8NvQDhf+OFahrsJVtBUBk/uqOplFrEf22CwsusgOoXkS6ubymiyb1S0bpthlrEz7hXRyoTJ3EmDr8GFWKPuGDyFB++mzji4qScZB5j2tasisxrK/guWZH7ryHl59Oc29mMfFXz+6eXU=
+	t=1749655417; cv=none; b=DxbRy1Gla/+VqPNH7sb5pcKHRzXWpA7qfhsvZR4GtoCbe4VJP83Yz79El1ANSqn0UtAGANiIxGLVUW/7Xde1AL2XJmCTuGBquqST9Sgl96BogTy338tYnyO6OuR3J3N7UUc6/QHjOTBjO5R/acwiRLBfSGdYgDfaP7zlBPJMoCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749651914; c=relaxed/simple;
-	bh=x/MsV6j6Yx3bUQZpAUk3COHTOu/HoabtfLYiIFnb7xE=;
+	s=arc-20240116; t=1749655417; c=relaxed/simple;
+	bh=CGh/XDL5rNQl1DZfKakyd/VLx+NTecJDlKiTGD9nbn0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=U21S4wyHzvkQjSbw+NF6ghJSF5eMzcJN2XbL+gt773cKE+RkZRFTou+VRKnZ/6nc/ebBaVVQP/Q/AhwRzr19SUWLUMjSVLP9amoDeerPWT8D/kXWoNHD+ffFSS1w21RSAiSLXN9USa9kpPw4A2/SsgHdcY9snffXnrNJY2Jy+Iw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O7x+DMUH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z3U979tL; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=Xgemf6/dUBaLcfM5nsXT2W/xT2YLZqSkGE+TAd069hACDR+ycEnTkfa+SxkUIj2ohhEOFOMixY+q00yElghBCTxSZ2eGLNTRndcyYRdu0Umag8cjQC0as2WERt8VQhxObQGzi7HyLItG5p05PCSDGEVK901ca++YtF5xxWoMpko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hzlTgnL7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k5GEFPu8; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O7x+DMUH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z3U979tL"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id CF97D13804F7;
-	Wed, 11 Jun 2025 10:25:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hzlTgnL7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k5GEFPu8"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 851C5114019E;
+	Wed, 11 Jun 2025 11:23:34 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 11 Jun 2025 10:25:11 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 11 Jun 2025 11:23:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749651911; x=1749738311; bh=6Qkg0Zfond
-	6Xp1ELNF+CzrE/T0kLMiFCNk9iLv42dDM=; b=O7x+DMUH+r57DRv8VRtAzLyWoC
-	WwsLjhFK5NVBbosBWBkvEGmowC2qjlwPmUVxrhcL8SYrL+cHO8/LVVnvLRKP6FMy
-	DxrRqOuBvUmjS7IjVkW4H/AAG5I8WjIKMQ1kNJimgsvWjdXSbfhfj/1Q3eF9LMek
-	BFLBhjY0khS6abUHjdzOR2kCnnoHfpxr/rBf82UzdCGdb20GdU0qkFik+l8bUiiz
-	yoPKFEz6tYVl736zMenNRrpIuY7gLhxNqCxN5ubsdAMLBfw24BRzsd7RY1xhjsqV
-	ZccReOQdPxi4phYnbhSveKokuIa/JM1a2uTwM1vqAbMQ0tbKj5qWG61hEsTA==
+	:subject:to:to; s=fm3; t=1749655414; x=1749741814; bh=R3DWBIaDgv
+	UjV0zBhzcD8MUkkd/jRE+vfbn0KEIE5LM=; b=hzlTgnL7n7Jx9rE+biD4IMIuGV
+	QP17WZkX1uUnoPrlAszwUWCiZQ2l08UqxWECLGjRvmKbpyX+OEe9aDqCsMWVXuqe
+	G4H24c5tUzvvGgxEJhgc5dLVU8gcebODaaqEIGKNLejbDhP23FIyeyMwDLYB2Wgx
+	S8KPM+8sZsrUmMGDIXzOd0Fox7+/UcbAfF5nZdbsw3pCHBd+JfNTpgfONONFWOPl
+	Mt/gaJ0nYDKkKHl3xLSMNvn7BoKtQKDT8ZCWce7F2P9+wWyvQ5FdxbT04zme6U5l
+	XXj0XTpk9iKXy7JMTdHB8yLQzQsCUVmpmb+bLuCdppro4o4xdUmF0COzIQqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749651911; x=1749738311; bh=6Qkg0Zfond6Xp1ELNF+CzrE/T0kLMiFCNk9
-	iLv42dDM=; b=Z3U979tL7jUTqpKB3xjipIKc0NnRfbnoj5auWEf3aN/m1zNGtCA
-	tDLK/pGhzAiObHVH598WRmiF7CpsE/VjOx7UzfT93LtwnqwMjUuyl3tdeBLr68Tv
-	R7k1D5Nej7X2jyNqVd4MabGyGxbpE3tZReiyZ1VAAqvgBmAJj34B/yo90H2cCFRI
-	TpTXaOMKuwGfJt7DLEQYrS7pGrgIcvQmHo6FZEYd1t2lIzZ4jSh7OAF4QtCICN8m
-	EE6yC4BBLW+r8brJBf3doyL7dg5dPkqXJiknRKSB4UBM1OttfsZlT/PBMm3h366J
-	dqnVdz1xbuBMOGTBvhl7xIGH5wZqwRg+12g==
-X-ME-Sender: <xms:x5FJaAlbJv5-Qc0V_8CduNVwW3D_3jDNFXWVfVe5Zu7X2pFAGD8Wkw>
-    <xme:x5FJaP30YK5Q9AzGCzeMNgqmGW3iUxl42iudElKBjTQdSXRW9Tj7bIRZyRyuow_tJ
-    M6E-o8wyDA82imGAw>
-X-ME-Received: <xmr:x5FJaOr1_5EDomcDSgXE0ppe40E2luv-FzbG3cyWKcV2yHLKESHnzDAcFcPDV8SSHAJlRYApQomWcrGbXW0O4Wz1E4wJ2K_vYQSO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduvdegvdcutefuodetggdotefrod
+	1749655414; x=1749741814; bh=R3DWBIaDgvUjV0zBhzcD8MUkkd/jRE+vfbn
+	0KEIE5LM=; b=k5GEFPu8vRPFqwgRfgOuekudyj0hVTHaxiQS5cGWEVkTQsgIWuQ
+	NYelR50bm1nLknEcxq/fzaPZ4l/hV2bSTo8hMsj2uOAdAb9+Dzt7COnCu+ZGTuFq
+	4nMxjLkPYxaCUutj2ihRoh6Zm3DIk5smFqLDsO7Uua+mTRDpSIjDlFt00RLbar6n
+	8eDcLpix9Y+judD73wGIyZeNHTijWCHoHDkkOORfTkxIf48H0YnOxM191jqz3oLc
+	MACY1EPRTmVqvxrd6SvWjzaf4R1+0QZLrvwuRx5GKwlRjXb1PrNv42czVHg52pP8
+	MqOPu/XrUeWcqJaq5VdivV0Q41WEn3latoQ==
+X-ME-Sender: <xms:dp9JaLRLzDBTGuJ5dY6AjB2H_-AWCIFk7LkDpZ1dF_ZpTL_pE6UBTw>
+    <xme:dp9JaMwP5ny8kiM2Wp5DIYa4XFtii8w74m1XAVpfa5Bkhq5lGRxI9w0hw7wAqJ4CA
+    a4XyFi4JC-78nrAqQ>
+X-ME-Received: <xmr:dp9JaA1alk8LeiKME4cz_KriouziemJ6XsRl3Cu-zzBOlS69Qv9l2C6A7c3r5i2YeQJNdAr00FYQRgRJBMFxbo1y4rFh2lZAXluo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduvdehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
     necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrg
-    gughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesgh
-    hmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:x5FJaMlchwVYqaFCaiNeiFig9hZqeWF3CM97Bi20tJwTaC_N1ilT6g>
-    <xmx:x5FJaO3bjgtYn3Fr06-bWjnhGZC_57kZbBvOZAXpbGfj13OFlLVWng>
-    <xmx:x5FJaDsuzQr4p2EgTnQ3W-RFVSBDcKS3iVr395RjxRtANkwlepL4Cw>
-    <xmx:x5FJaKVC5yuPZutYWiiqulUESongyUsTI9EMke1NBKVY5S2_aYiibA>
-    <xmx:x5FJaBCeIUhiEhA52l1OfwEwO6F6V3sEgsM6m6Cj7XFuP9qN7-unK89G>
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehmihhrthhhrdhhih
+    gtkhhfohhrugesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:dp9JaLBxy4a57Wnv-NMwhTp-_i4oNHzWLtQD54pvR855035AuCIo6Q>
+    <xmx:dp9JaEhMR9dIXsJ--wyhXmYSf1lgh4AZTiDQE_R_-wbzpgiTHwBF6g>
+    <xmx:dp9JaPrGKvvg9Iwh56gw20KlQwWF34_OxeO8D7TxmGU1WTYUT3wOvA>
+    <xmx:dp9JaPjlEA2Zbe4uc69TwT0aPsAij9wGpU9wC_1ofsELaTWOu60urQ>
+    <xmx:dp9JaIeyqsn9-KGplC0jJl_YJr6h8Xmm6-8-FszKd3f-TX4_N6UnjQDQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Jun 2025 10:25:11 -0400 (EDT)
+ 11 Jun 2025 11:23:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] ci(coverity): output the build log upon error
-In-Reply-To: <3a829f11c07ddbb0a57a1ac832db686f29a9b632.1749650552.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Wed, 11 Jun 2025
-	14:02:32 +0000")
-References: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
-	<3a829f11c07ddbb0a57a1ac832db686f29a9b632.1749650552.git.gitgitgadget@gmail.com>
-Date: Wed, 11 Jun 2025 07:25:10 -0700
-Message-ID: <xmqqplfajqyh.fsf@gitster.g>
+To: M Hickford <mirth.hickford@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: Fetch remote only if remote hasn't been fetched recently
+In-Reply-To: <CAGJzqs=Xur+=0=KUSR6TQA-A3zt-Bpyd5-T52_ntuV+mCUrAQA@mail.gmail.com>
+	(M. Hickford's message of "Wed, 11 Jun 2025 08:00:00 +0100")
+References: <CAGJzqs=kJtPcMrWC8Dayd+VW7BvC1rmzS0zT+EwQXfLOpZ3Tfg@mail.gmail.com>
+	<CAGJzqskDumbMSbC3rdYT8fZ8gNJ5MOjR_o8RAo9QS-nuvbBinQ@mail.gmail.com>
+	<xmqqtt4u86x2.fsf@gitster.g>
+	<CAGJzqsksmQmY4o-_7DoPFK8VP-h59ANUjroVv2+++ZG3gDBdUA@mail.gmail.com>
+	<xmqqtt4puhwq.fsf@gitster.g>
+	<CAGJzqs=Xur+=0=KUSR6TQA-A3zt-Bpyd5-T52_ntuV+mCUrAQA@mail.gmail.com>
+Date: Wed, 11 Jun 2025 08:23:32 -0700
+Message-ID: <xmqqjz5ijo97.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,36 +90,52 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+M Hickford <mirth.hickford@gmail.com> writes:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>>     $ git fetch . 'refs/prefetch/remotes/origin/*:refs/remotes/origin/*'
+>>
 >
-> It is quite helpful to know what Coverity said, exactly, in case it
-> fails to analyze the code.
+> Thanks, that worked.
 >
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  .github/workflows/coverity.yml | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+> To support Git users with sporadic connectivity, might it be useful to
+> add an option to git fetch? Perhaps  `git fetch --offline` or `git
+> fetch --complete-prefetch`?
 
-Wonderful.  Will queue, together with 1/2.  Thanks.
+"offline catch-up" is probably the phrase I would prefer to see in
+the documentation page to explain the concept of the operation than
+"complete prefetch".
 
->
-> diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
-> index a5d99e59d4eb..1e8bd85ecd4e 100644
-> --- a/.github/workflows/coverity.yml
-> +++ b/.github/workflows/coverity.yml
-> @@ -149,7 +149,11 @@ jobs:
->          run: |
->            export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
->            cov-configure --gcc &&
-> -          cov-build --dir cov-int make
-> +          if ! cov-build --dir cov-int make
-> +          then
-> +            cat cov-int/build-log.txt
-> +            exit 1
-> +          fi
->        - name: package the build
->          run: tar -czvf cov-int.tgz cov-int
->        - name: submit the build to Coverity Scan
+"complete prefetch" sounds like an oxymoron, in that the prefetch
+has already been completed long ago, and the operation being
+proposed is more about using the result of that operation completed
+long ago to get yourself closer to the present state of the remote
+without any guarantees that you would end up being close enough.
+
+In any case, to present it as a first-class option to end-users,
+there needs a lot more thinking and a bit of work need to go into
+the way "prefetch" works.  For example, the longhand I gave would
+work as a good solution only when the user _knows_ that the prefetch
+is more recent than their actual remote-tracking branches.  If
+refs/prefetch/remotes/R/* is older, then you wouldn't be bringing
+yourself closer to the present state of the remote at all with such
+a fetch, but as far as I know, a normal "git fetch R" from the
+remote R would not clear refs/prefetch/remotes/R/* when it
+completes.  There is no "last time we fetched from there" record
+kept anywhere in the repository either.  So offhand, you'd at least
+need to do these:
+
+ - teach "git fetch" that updates remote-tracking branches to remove
+   the corresponding ref in the refs/prefetch/ hierarchy;
+
+ - decide on what option name to use for this new operation and
+   document it;
+
+ - implement the option "git fetch --that-option nickname" to
+
+   - figure out the remote-tracking hierarchy for nickname and call
+     it R
+
+   - when refs/prefetch/remotes/R/* exists, do an
+
+     $ git fetch . "+refs/prefetch/remotes/R/*:refs/remotes/R/*"
+
