@@ -1,51 +1,51 @@
 Received: from Chamillionaire.breakpoint.cc (Chamillionaire.breakpoint.cc [91.216.245.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD21624A064
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 22:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48927248F7E
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 22:15:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.245.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749680106; cv=none; b=fURopCaZ/TfrB+nB+DwcL8SSYektTktjPxztm+rfE20Q3eT2zWpHQILDp8BkI/96ZPENL1G6F6115fNkx9s65a1w/ZcAJ3Au4lbI6CUSNWXqzkfjG5z9WXu6Jo30URXpW10mHGgXyLZEkSheC2fzWFw3iLUM02+23gcue+bmDsg=
+	t=1749680106; cv=none; b=URkf49GFvyeYju8X4/fgmMk/QZBtnQt8SLMHIbzzxEr9LqC2uLniOG6d7pRvc/3gdR+9S+BmKT672f1U5N71J4rcNujtRjHtVtbxMie24KuIrqSVybGDOLAopX9z9Qh/GNQawfKaoixrQ7igT052tY6EZhQdjKYC7rsb/beyVt8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749680106; c=relaxed/simple;
-	bh=pFVopkNp/f77ni8gazkeihtIZV+FSNp/nZ0pkucKeSc=;
+	bh=1IRRAdTznqLSjXX/4iPYBNt060k/X2YOtdCNWQreyGo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bl8JikOmjJqTC4nonssMe3gejUfP1/p2WUPJbA23HwLqMpxlPFzLK88Bj1Q9NwCFGWl3sC+EBaV8KqGEv6eU84vt5VvfWTmH6HSijo2U94+tsrkBIAfP/VkScRV8qdjzu63aIu7HfDeMJ37JjeFJCXDfKMDdT1rdH81+tdE79JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=koefYLak; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=VBgfxoFK; arc=none smtp.client-ip=91.216.245.30
+	 MIME-Version; b=hdI82KoX6qStVjwtwgN2m/XvzrOqXH0Je9CVr5qqTJ8DgKhSoowJFUDiWcacSRLBu8um3mi/64TMNqA0WAeaPePOO+S4cwa49JC6D9HCdv7mY4aG0OflNmRyb8Rxm+NPQDxzd3K0BeMEUYtJ0+p8oYhxXCcXIOQ/7AfPS9NLOWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=U6eIkCxh; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=RcESsm57; arc=none smtp.client-ip=91.216.245.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="koefYLak";
-	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="VBgfxoFK"
+	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="U6eIkCxh";
+	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="RcESsm57"
 Received: by Chamillionaire.breakpoint.cc (Postfix, from userid 1000)
-	id A50636136F; Thu, 12 Jun 2025 00:14:53 +0200 (CEST)
+	id BD1C861383; Thu, 12 Jun 2025 00:14:52 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025; t=1749680093;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SsiFEuw75K7084V6Me7t4DgiTNBxSESUw+uXFnMy4lc=;
-	b=koefYLakHmu3cMSrCZFYmNLRznMB4ipDB1BDXd+tM7dDk3YMF7A23BOfNLH875xFKKIcQc
-	9Q0SKLRAtw5y1a094eYJczXbesC1vKDz5csc6f4JnCdyZ1HHMK9Aili3FtH0sWGuftC2NX
-	97MC2+1fWynjPDTLoQWHluCeikv86+tbXndv2j+kbBrKAkZMpUFz+oxRySRsCzW2qixlIK
-	rrwCP553bbvMGW5PLckMmQW1NR2igz6bOtFjuiyMXO91s/3FMg82yq/sdZMScXyL/cUf/Z
-	ijfttnbp8CTjd/yG/Ez859zS0YS7FA2KusMEcMKYc0GnhF1I8RcEtX+B8Ar2Zw==
+	bh=HRxM2AjHiwBhfMICja7Uti46TcK0e+9ILbqHwoH1V1E=;
+	b=U6eIkCxhzwpzjZDB+YuR7SYHKLI5vXeinDEVwaoqwqE6ihMNhaOzvRoLgHnuHSNCVQm88A
+	9U8kkNG86OU5s9lfjpE0iXgbZjTEPu0osUXX9evMj0FOTlEo/dF+XziriNCILHKMsEnbHi
+	EMJZsMh7XFwe0LLJnekuR8cvSb5sUa7ZnU9Dh+wh0XAXX9bSlC8/tFyQrQeYHdPQFK3SRO
+	UX+vbO++lOMNC+21rdzptcDaGU55U405DrjnQy33aCvnN4coatQKWbt9m3x5pCS42z5UhM
+	qCQPyVtJ911j0Yncr0OOVw/WftMsBRhXIrUosbtd1DKTh4DY5v16UdKg4XRvbA==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025e; t=1749680093;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=SsiFEuw75K7084V6Me7t4DgiTNBxSESUw+uXFnMy4lc=;
-	b=VBgfxoFK51wr6sB7QzyXWHqXa13otEJAkxXuY5bn0Mg27sLlemtUF9kHbMTvLWEn5kRQ3h
-	K5R1azeTySG5koDw==
+	bh=HRxM2AjHiwBhfMICja7Uti46TcK0e+9ILbqHwoH1V1E=;
+	b=RcESsm57OjNl/ZwRXaOw/H0s8phOj04g0DjzKxrux+AVQcAtmgZ0ORddijQYm2siBK/6XL
+	c32ovIE2SX5ke6CQ==
 From: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 To: git@vger.kernel.org
 Cc: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-Subject: [PATCH v2 5/6] bswap: Remove optimized x86 version of bswap32/64
-Date: Thu, 12 Jun 2025 00:14:42 +0200
-Message-ID: <20250611221444.1567638-7-sebastian@breakpoint.cc>
+Subject: [PATCH v2 4/6] bswap.h: Always overwrite ntohl/ ntohll macros
+Date: Thu, 12 Jun 2025 00:14:40 +0200
+Message-ID: <20250611221444.1567638-5-sebastian@breakpoint.cc>
 In-Reply-To: <20250611221444.1567638-1-sebastian@breakpoint.cc>
 References: <20250611221444.1567638-1-sebastian@breakpoint.cc>
 Precedence: bulk
@@ -56,92 +56,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-On x86 the bswap32/64 macro is implemenated based on the x86 opcode wich
-performs the required shifting in just one opcode.
-The other CPUs fallback to the generic shifting as implemented by
-default_swab32() and default_bswap64() if needed.
+The ntohl and htonl macros are redefined because the provided macros were
+not always optimal. Sometimes it was a function call, sometimes it was a
+macro which did the shifting. Using the 'bswap' opcode on x86 provides
+probably better performance than performing the shifting.
+These macros are only overwritten on x86 if the "optimized" version is
+available.
 
-I've been looking at how good a compiler is at recognizing the default
-shift and emitting an optimized operation:
-- x86, arm64 msvc v19.20
-  default_swab32() optimized
-  default_bswap64() shifts
-  _byteswap_uint64() otimized
+The ntohll and htonll macros are not available on every platform (at
+least glibc does not provide them) which means they need to be defined
+once the endianness of the system is determined.
 
-- x86, arm64 msvc v19.37
-  default_swab32() optimized
-  default_bswap64() optimized
-  _byteswap_uint64() otimized
-
-- arm64, gcc-4.9.4: optimized
-- x86-64, gcc-4.4.7: shifts
-- x86-64, gcc-4.5.3: optimized
-- x86-64, clang-3.0: optimized
-
-Given that gcc-4.5 and clang-3.0 are fairly old, any recent compiler
-should recognize the shift.
-
-Remove the optimized x86 version and rely on the compiler.
+In order to get a more symmetrical setup, redfine the macros once the
+endianness of the system has been determined.
 
 Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 ---
- compat/bswap.h | 41 +----------------------------------------
- 1 file changed, 1 insertion(+), 40 deletions(-)
+ compat/bswap.h | 54 ++++++++++++++++++++++++--------------------------
+ 1 file changed, 26 insertions(+), 28 deletions(-)
 
 diff --git a/compat/bswap.h b/compat/bswap.h
-index aeef304f671f5..ed00f6d1d53f3 100644
+index fd604d9f7b74b..aeef304f671f5 100644
 --- a/compat/bswap.h
 +++ b/compat/bswap.h
-@@ -35,46 +35,7 @@ static inline uint64_t default_bswap64(uint64_t val)
- #undef bswap32
- #undef bswap64
+@@ -87,27 +87,6 @@ static inline uint64_t git_bswap64(uint64_t x)
 =20
--#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+ #endif
+=20
+-#if defined(bswap32)
 -
--#define bswap32 git_bswap32
--static inline uint32_t git_bswap32(uint32_t x)
--{
--	uint32_t result;
--	if (__builtin_constant_p(x))
--		result =3D default_swab32(x);
--	else
--		__asm__("bswap %0" : "=3Dr" (result) : "0" (x));
--	return result;
--}
+-#undef ntohl
+-#undef htonl
+-#define ntohl(x) bswap32(x)
+-#define htonl(x) bswap32(x)
 -
--#define bswap64 git_bswap64
--#if defined(__x86_64__)
--static inline uint64_t git_bswap64(uint64_t x)
--{
--	uint64_t result;
--	if (__builtin_constant_p(x))
--		result =3D default_bswap64(x);
--	else
--		__asm__("bswap %q0" : "=3Dr" (result) : "0" (x));
--	return result;
--}
--#else
--static inline uint64_t git_bswap64(uint64_t x)
--{
--	union { uint64_t i64; uint32_t i32[2]; } tmp, result;
--	if (__builtin_constant_p(x))
--		result.i64 =3D default_bswap64(x);
--	else {
--		tmp.i64 =3D x;
--		result.i32[0] =3D git_bswap32(tmp.i32[1]);
--		result.i32[1] =3D git_bswap32(tmp.i32[0]);
--	}
--	return result.i64;
--}
 -#endif
 -
--#elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64) || defined=
-(_M_ARM64))
-+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64) || defined(_=
-M_ARM64))
+-#if defined(bswap64)
+-
+-#undef ntohll
+-#undef htonll
+-#define ntohll(x) bswap64(x)
+-#define htonll(x) bswap64(x)
+-
+-#else
+-
+-#undef ntohll
+-#undef htonll
+-
+ #if defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && defined(__BIG_END=
+IAN)
 =20
- #include <stdlib.h>
+ # define GIT_BYTE_ORDER __BYTE_ORDER
+@@ -145,14 +124,33 @@ static inline uint64_t git_bswap64(uint64_t x)
 =20
+ #endif
+=20
+-#if GIT_BYTE_ORDER =3D=3D GIT_BIG_ENDIAN
+-# define ntohll(n) (n)
+-# define htonll(n) (n)
+-#else
+-# define ntohll(n) default_bswap64(n)
+-# define htonll(n) default_bswap64(n)
+-#endif
++#undef ntohl
++#undef htonl
++#undef ntohll
++#undef htonll
+=20
++#if GIT_BYTE_ORDER =3D=3D GIT_BIG_ENDIAN
++# define ntohl(x) (x)
++# define htonl(x) (x)
++# define ntohll(x) (x)
++# define htonll(x) (x)
++#else
++
++# if defined(bswap32)
++#  define ntohl(x) bswap32(x)
++#  define htonl(x) bswap32(x)
++# else
++#  define ntohl(x) default_swab32(x)
++#  define htonl(x) default_swab32(x)
++# endif
++
++# if defined(bswap64)
++#  define ntohll(x) bswap64(x)
++#  define htonll(x) bswap64(x)
++# else
++#  define ntohll(x) default_bswap64(x)
++#  define htonll(x) default_bswap64(x)
++# endif
+ #endif
+=20
+ static inline uint16_t get_be16(const void *ptr)
 --=20
 2.49.0
 
