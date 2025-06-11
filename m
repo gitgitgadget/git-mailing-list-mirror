@@ -1,139 +1,166 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52A7728C855
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:45:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63A2AD299
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:46:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749649533; cv=none; b=mfVx4iLqSzjFtsEdiCGAxgyrBaeQSRt2UPTpl8cikZs8r1vcCuuUr7j3ombwhyfYtYRx8NaqovXUKj3mo5Ef651UgibT2fXOdErgrBYaR1aoE7kdlh3tZcYhlgfwiIljXcNraZYzj/aAnCByEsPBTRDXnal9l2fEvPXxm47sy+8=
+	t=1749649588; cv=none; b=mXi5YRK9CXVVov3sNq0CL0q7xlBVECJAjWJXCsof3iilTlFAjhjFHGqOmU2bwfL/7GGOt/Ivjxsi/YxQe3EojTtUVqdirrN1NBTI3aNITKyJwSXSsvGI+D77RPXPWGUJicBX3vwoUCFYP1/8QN6NxSZKYWmG+N2FFhcaoQfD4eU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749649533; c=relaxed/simple;
-	bh=VesuiuwsSftDInDkdkH+IT6UcSqiECmni9tM7munI8k=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f3LuoHBmxJcdBtoZaeFbpgMWmoz/XeBpXlj5RiISJv13HklW6Qb3WpwWC+GKsGTj5AED7Q6FiW+W+4HOr5nF0A+869YZRVqtoi40pyIQE8CclQ6mh8d6qAzXgQiOE/HYO4lcE2JS/thLnv1mUYfErhBieqRzCvWlEEVvN4f3pIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k+Ww3jJi; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1749649588; c=relaxed/simple;
+	bh=JSFm+xQZuYW1AMeQsEDbdM5F3RMed1ww7JBQx7EVIwI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lSo12Rq4Y0vJvFw1tqypBEIzqF9noEauq4pl3vG7hxuF5sECKjGXF3WlWUyxo1aeTS6kRjxAome6ZCb+disEFGqdVvGZZuWgQZVeyWQEtbw8O3kzegWtKH/n0Y6+kBgaNzGEY9df/d63rtPQ9vZbT+hKmaxHQ13gclcmawj4Hxk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WPbn2duK; arc=none smtp.client-ip=209.85.218.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k+Ww3jJi"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-45305c280a3so15636165e9.3
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 06:45:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WPbn2duK"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ad8a8da2376so1089219166b.3
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 06:46:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749649528; x=1750254328; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1749649585; x=1750254385; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7iBJuiOr2wtrsB50RwQZU0DmxTcJGJKbvo2oHVv7mh4=;
-        b=k+Ww3jJiXCN5xLAV6+OOXMRKEgJeCVQ4EyBQH3gWUhCnDUhVJERVy6ytZrenkDCKhG
-         N6nBTxh3Ja28FrQ+LnvCkJgih19DnhCWykdhoRmSOCOZKbPtQqa/gWQWBqFesmdajI4e
-         JXmKIJp5XcLB8wwr/Fm3N92AVe/+JnrpE2YEhvvNFVs3/mZ40dyM69rtkHaHPzrwXnU7
-         7OIM89bPjXoe/6rInI3EP20NzwwnIE0TR9RoCAC06jlkymVOPTqOu2XAa90D2DD0Ur0A
-         EEROrI0akW//080nnlHOQBZCe115NFOOUZFNTfktEfwNRcVbATDHVqZ7Irpk1BiVadUA
-         CTqQ==
+        bh=jPsVj2JRj/UivkYaruBXsB+Np9nZVgA39uTkTJhMRDI=;
+        b=WPbn2duKqU2UeZzk5XnjeKwxAlRNY0t5MyevEHObyMvv+QN5EENHY4LI0Xr9l5JDaG
+         eRg39hlqO+GxYFGgREeQt8WX+yiGClHMy79alsfqgZFytTieviu4uetXw0aVMc29BNdg
+         kmfJKvfE+I+hQ1xl/yTq2XoGPYWYSjDNko5e9ZYF/AmS/J7aAyidu+ToxSsNSwZbGwhz
+         fcHnIS7O+aycBQdmoosnHy9kgZklgDKn4uQNWvNC4pOQW+322ci3BtWz9aXNYNOfECBv
+         U+Vu/wMv2mZngtBLffH6M+bGQMzP0XZC7630cZnxmErQw8awCOkbUomfBjMSdGm8+1Tm
+         amcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749649528; x=1750254328;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1749649585; x=1750254385;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7iBJuiOr2wtrsB50RwQZU0DmxTcJGJKbvo2oHVv7mh4=;
-        b=Xo7DyamOk7OEQrq6jNbFKDdVDwTcW1seY6tiYIYpzP2bItt0RB3t6x8j4fdjolGriK
-         JCk+YJhQTVNmNywcZA+Iz11CtUqZU4TAKOKKgGA2BIvesl+/TLebmkO5Ck0WGUsCfhJB
-         ZqSgDYL5UnTiyUc6jKi2a9aIqs8Si/wfAvGI6t9C5z2pUXG5QsT5qR2eAb3siV3UDEgC
-         rfR1nY97fu+z0ahv8hpStOFTvEvKdSonFwJ9DpFjXJZHgB/JHIT8G5D5lreS32hK3mQG
-         EnnlNVzpGxa+uQ7bgdg1sK4tNU7Op6Rr+PIIu+ythNAGXjQI0iNO+I2PJgYNcHD+BGlw
-         GSXw==
-X-Gm-Message-State: AOJu0YwRPDLZQ9dJJvy7feGVNvCzsiN/6A3vM+YKD4UU8AnFmzJilUo/
-	TWDvWwoLVB3H9fCYrsbaZT7v4CV34o5vtSApwKWphQQMoLuqNhnAMn5fV7/Mvw==
-X-Gm-Gg: ASbGncuYSWwfeiML0Q76drGWAf22yWUcfYNIrw/H5Z8tzI2jkZhJAGww00G/fHwfEE3
-	AW3yLO4OM4SSq2ft/cA/f9jixSpDJzDgguKHrSOZ4Q3qwqg9TmuubdHjqYw63D7OlOrYx6ATLnZ
-	PLM4016MPeElhJoQpiFQmIeNcRUXCDaitGT0GTui038aLTfxMimpc2CD2mPgBOgmP97TUvxjWiE
-	2AGtzQhuUF0MFxOlMnylP2jpeGjwPW9dVNxP92kuE22dooOc4Hav1qQmF7RYi8a1vaXt+prCWk/
-	/6O5wzRSlefmKlppnBam2T7LHh5q3ypMgmAxsy0mkSslMfE2jbtznoc9qpFnwYWP3bFrl3yuPaK
-	tdPqT7c/lIaTT6AQHiL3q493kB+5vkDB2IvvVfDBdySx+
-X-Google-Smtp-Source: AGHT+IHXNKc9UsNVRpVHD8MaxC3kloNUgZXvdryueMIBQIsWDZGLkWD51juo09P35ibgvCpg2KtF+Q==
-X-Received: by 2002:a05:600c:1f1a:b0:453:8f6:6383 with SMTP id 5b1f17b1804b1-45324893661mr33006645e9.15.1749649528365;
-        Wed, 11 Jun 2025 06:45:28 -0700 (PDT)
-Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453252450d4sm21513205e9.9.2025.06.11.06.45.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 06:45:27 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Taylor Blau <me@ttaylorr.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v4 5/5] promisor-remote: use string constants for 'name' and 'url' too
-Date: Wed, 11 Jun 2025 15:45:06 +0200
-Message-ID: <20250611134506.2975856-6-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.50.0.rc2.5.ge8efe62b7f
-In-Reply-To: <20250611134506.2975856-1-christian.couder@gmail.com>
-References: <20250519141259.3061550-1-christian.couder@gmail.com>
- <20250611134506.2975856-1-christian.couder@gmail.com>
+        bh=jPsVj2JRj/UivkYaruBXsB+Np9nZVgA39uTkTJhMRDI=;
+        b=j1FLHHZnWeEgjzavRZ/RTqP33OUp4YmQC6Rmh9UHL0tn76o0yO3l0FufZSrULXGHqN
+         zzULkj3PMcwi3FiibHSI8ecv/XxzNbLGA1aTFsEepx8miU6GQgoWjQ+QbFBWbvCxz05v
+         ByBTzatU5u/rJT2ZRzpmT6AosJ1oUazg4Q3A6fKZ10V73//Zp68SBY5oOEAJTbfmd5oW
+         2v/P69tzM722+tjchet1HcwwReSTlTKTeP6AM3cTgA+CdxVW53js3Bjn9hI/7b71ysRW
+         Bh1Le+HtQ2JXxIA+yH61Wx0ecZgtqFlr3+qa7HxTNR/2dSiJqHNILzs299qbFPgE2a/v
+         SBzA==
+X-Gm-Message-State: AOJu0Yx+xTxulQFX8pI7k9TmL58I5IlXI6jygs4rMuJQJgctvNkS33Xc
+	3HOHQOTVHeuFR0iNF8RMMqAYv8LgSrxcUeWwl5/6p/Bp5cNNy5E7ZPK82Q9Qxxzk5ina176mMRN
+	mHCGVWq/RKucwDIX+8q9aqKDIyWdFDHk=
+X-Gm-Gg: ASbGncsbj4bLnV6TQzslElurVyS5CmyJltXS+/MNErlJfrIsdVZytCgChJZozHX42yT
+	woO2Q9ZM8R7fP9Lj4w20KRwcL6PPEfO3/p2tJ00fb71vAxnDDJpuuRETG1QVEoYugzw8rhe5jVB
+	OBMc1nixnMdX2PpDYUdF3k+shGFHz5iDD9NEldqoGfPPVS4Q==
+X-Google-Smtp-Source: AGHT+IGsN5og6Sk3clf7qOHlAmc271dhZmwVBrtFnyQK5fsm/2200frSD/X0RQPcSR95FkH71zeguZmyJmnUv9KlGXI=
+X-Received: by 2002:a17:907:3d4c:b0:ade:3b84:8ef6 with SMTP id
+ a640c23a62f3a-ade894c42b3mr333548566b.23.1749649584424; Wed, 11 Jun 2025
+ 06:46:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250429145243.992252-1-christian.couder@gmail.com>
+ <20250519141259.3061550-1-christian.couder@gmail.com> <20250519141259.3061550-3-christian.couder@gmail.com>
+ <aDVu6O9MUicmd8y4@pks.im>
+In-Reply-To: <aDVu6O9MUicmd8y4@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 11 Jun 2025 15:46:11 +0200
+X-Gm-Features: AX0GCFscPQ3O86-mtF35ORiFi5BXAJtttVmFGebi5d30u4vWzLdjbHZF10frEws
+Message-ID: <CAP8UFD1b9GzfTSE0dSef_C8mjMz+PchUoRHBPp5M9yKz44Ndsg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] promisor-remote: allow a server to advertise more fields
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Christian Couder <chriscool@tuxfamily.org>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-A previous commit started to define `promisor_field_filter` and
-`promisor_field_token`, and used them instead of the
-"partialCloneFilter" and "token" string literals.
+On Tue, May 27, 2025 at 9:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+>
+> On Mon, May 19, 2025 at 04:12:56PM +0200, Christian Couder wrote:
+> > diff --git a/Documentation/config/promisor.adoc b/Documentation/config/=
+promisor.adoc
+> > index 2638b01f83..71311b70c8 100644
+> > --- a/Documentation/config/promisor.adoc
+> > +++ b/Documentation/config/promisor.adoc
+> > @@ -9,6 +9,24 @@ promisor.advertise::
+> >       "false", which means the "promisor-remote" capability is not
+> >       advertised.
+> >
+> > +promisor.sendFields::
+> > +     A comma or space separated list of additional remote related
+> > +     fields that a server will send while advertising its promisor
+> > +     remotes using the "promisor-remote" capability, see
+> > +     linkgit:gitprotocol-v2[5]. Currently, only the
+> > +     "partialCloneFilter" and "token" fields are supported. The
+> > +     "partialCloneFilter" field contains the partial clone filter
+> > +     used for the remote, and the "token" field contains an
+> > +     authentication token for the remote.
+> > ++
+> > +When a field is part of this list and a corresponding
+> > +"remote.foo.<field>" config variable is set on the server to a
+> > +non-empty value, then the field and its value will be sent when
+> > +advertising the promisor remote "foo". This list has no effect unless
+> > +the "promisor.advertise" config variable is set to "true", and the
+> > +"name" and "url" fields are always advertised regardless of this
+> > +setting.
+>
+> I think this documentation should be clarified to explicitly talk about
+> "field names". In v2 I misread these paragraphs to mean that the admin
+> is expected to configure name-value pairs because you say "fields" here,
+> and that term is specified elsewhere to be such a pair.
 
-Let's do the same for "name" and "url" to avoid repeating them
-several times and for consistency with the other fields.
+Yeah, right, in the v4, I have clarified the doc here and in other
+places to talk about "field names" when relevant.
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- promisor-remote.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+> > diff --git a/promisor-remote.c b/promisor-remote.c
+> > index 94e87f2f48..cde4079d8c 100644
+> > --- a/promisor-remote.c
+> > +++ b/promisor-remote.c
+> > @@ -314,6 +314,73 @@ static int allow_unsanitized(char ch)
+> >       return ch > 32 && ch < 127;
+> >  }
+> >
+> > +static const char promisor_field_filter[] =3D "partialCloneFilter";
+> > +static const char promisor_field_token[] =3D "token";
+>
+> Curious. Why aren't these declared as mere string constants (static
+> const char *)?
 
-diff --git a/promisor-remote.c b/promisor-remote.c
-index 939cc78a7d..07fa0158ec 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -314,6 +314,12 @@ static int allow_unsanitized(char ch)
- 	return ch > 32 && ch < 127;
- }
- 
-+/*
-+ * All the fields used in "promisor-remote" protocol capability,
-+ * including the mandatory "name" and "url" ones.
-+ */
-+static const char promisor_field_name[] = "name";
-+static const char promisor_field_url[] = "url";
- static const char promisor_field_filter[] = "partialCloneFilter";
- static const char promisor_field_token[] = "token";
- 
-@@ -514,9 +520,9 @@ char *promisor_remote_info(struct repository *repo)
- 		if (item != config_info.items)
- 			strbuf_addch(&sb, ';');
- 
--		strbuf_addstr(&sb, "name=");
-+		strbuf_addf(&sb, "%s=", promisor_field_name);
- 		strbuf_addstr_urlencode(&sb, p->name, allow_unsanitized);
--		strbuf_addstr(&sb, ",url=");
-+		strbuf_addf(&sb, ",%s=", promisor_field_url);
- 		strbuf_addstr_urlencode(&sb, p->url, allow_unsanitized);
- 
- 		if (p->filter) {
-@@ -661,9 +667,9 @@ static struct promisor_info *parse_one_advertised_remote(struct strbuf *remote_i
- 		*p = '\0';
- 		value = url_percent_decode(p + 1);
- 
--		if (!strcmp(elem, "name"))
-+		if (!strcmp(elem, promisor_field_name))
- 			info->name = value;
--		else if (!strcmp(elem, "url"))
-+		else if (!strcmp(elem, promisor_field_url))
- 			info->url = value;
- 		else if (!strcasecmp(elem, promisor_field_filter))
- 			info->filter = value;
--- 
-2.50.0.rc2.5.ge8efe62b7f
+Using "static const char *" is a bit less efficient, as it uses an
+additional pointer to point to the literal string.
 
+> It might be a bit more idiomatic to have these as
+> all-uppercase defines to make it obvious that those aren't a local
+> variable.
+>
+>     #define PROMISOR_FIELD_FILTER "partialCloneFilter"
+>     #define PROMISOR_FIELD_TOKEN  "token"
+
+This has been discussed a few times in the past on the mailing list
+but I can't find any references to such discussions now.
+
+As far as I recall the first discussion I had about this was with
+Dscho who was in favor of using "static const char []" because it's
+more type safe than "#define ..." and more efficient than "static
+const char *".
+
+> > -/* Prepare a 'struct promisor_info' linked list with config informatio=
+n. */
+> > -static struct promisor_info *promisor_config_info_list(struct reposito=
+ry *repo)
+> > +static void set_one_field(struct promisor_info *p,
+> > +                       const char *field, const char *value)
+> > +{
+> > +     if (!strcasecmp(field, promisor_field_filter))
+> > +             p->filter =3D xstrdup(value);
+> > +     else if (!strcasecmp(field, promisor_field_token))
+> > +             p->token =3D xstrdup(value);
+> > +     else
+> > +             BUG("Invalid field '%s'", field);
+>
+> s/Invalid/invalid/
+
+I have made this change in the v4.
+
+Thanks for your review!
