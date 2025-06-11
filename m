@@ -1,150 +1,186 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011B1D299
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:46:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D61D299
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749649596; cv=none; b=rTtukLlyZ7Zb+WY2q/O2FP31n4txQTx1oKAXkmNL5fSL1iu22TXydNMKpIlUaSn/gfYQVmvotC5rANOxBsM9AzxsterwYZgK455dmfeIw402kFwDAdcJWAIU9L84FPcyujbopmlDURygzbe5I3iW+yznsgOJ6Z629XJA/gOxsHw=
+	t=1749649626; cv=none; b=X4KX+CY9BxyeYF+7896Wyol9pmYBYsG+DevZ3WT5TiWGMcO17wtRBAc1s9eDbUSxq7mNBPXErY+rk7oRe5Vdl6r68S1n5TSNquWyrBTQfHWzDW/Rne23y29L5N/2NF3GO8iZ3yKSXhmggptkSyK4afhMfeuh9RSG4P7CvMMDIDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749649596; c=relaxed/simple;
-	bh=yPZyKr+Qv2vRvapSXHd33B4vGWgUp+fpCd10FMQey2I=;
+	s=arc-20240116; t=1749649626; c=relaxed/simple;
+	bh=DnjiqOFHMl9Oxr+q95TUAAl71Ml6T/BdjhPkOBRMFQg=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=DiS0IV+5mgSeDl+a7W3JA+f6rfsoORjDkKTLdtHTcS8g/g9SwA2eK4Bi8iLOQOzbwFIutcovj/g1xIGLLf1jO71D59/9J+xQpF34g8f23OeOmx7fSZj7FpyheEnZFtPPrfErPIDXU+YsfeRks5mhVlgpQboARadhTTGdzjcHh24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TV0N9jBr; arc=none smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=tqi9FfTrfShXkrtZFYd5GZPPOu5gWYa2uMeNTIUHkd66mAJAJSuxRJVBTvX13pv8cusO0xcjm0crD/9jMjQgIMq9zGAnSsArfyt42JuDW8ndp24YF7fCwOhb6lXcoKjDeWspTdZQeLk9Bl2tfaf3lccwdzgM5VYQ/Nk/ImgyxiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nGiN3f9Y; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TV0N9jBr"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-adb47e0644dso185126566b.0
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 06:46:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGiN3f9Y"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ade5a0442dfso588161766b.1
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 06:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749649593; x=1750254393; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749649623; x=1750254423; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IdriCglUQoXkFLi4ZhMZiZhhUAR8uA7bFXNWHiPueC0=;
-        b=TV0N9jBrMY8pkexUNthAyGXmjitnD/KpuA5/Ly+Gri38s9QbCavg0kCR5goecee2CT
-         45pncqQyUqOHpoXIqS7v+2EekEMcnUz1PU1rqwNvKnag1JATEX7FeEJbT+PlnTPYp/I2
-         0uCY+Ta5U9OOhThUiJ+ahKsl09r5zZhsrEUwijKwbfYNZ7KObqkdLmb2Qub5BCT3EPlg
-         KXrMbu3p/sj5LoY9y4EJMullYn/MCne6YnNBzAMzsmBNV+pKpTFmSXbKBBVVltrnWdy6
-         Gck07x2sD1eKyyhH3T03hQUH4NWoVena4RwMH+Xx4TMGwzOY9cxx4vJ2F0TCk8qzUKiP
-         I4cw==
+        bh=MsHrLbPRlyplKg/GmX/8Mktjnspu/p6+hibMvG99eJ8=;
+        b=nGiN3f9YbfCZVuyG711tF0A5T90Ol26PRppztYUIf95vRZQjgKoIZrnwY5Rr853Wz9
+         8qbISpNwPjMHm1YBxi/mnVxDyHkaeKNkbOrJ4TNeLKi1nkdoC/57CW1FFJMGC6jApfnu
+         bwkwzKpXOQorihiFe+mlj3NlMHgkofCeizy/PkUVffdJcYXOqO37NskRWgbqb2DbUY6q
+         gRbN29NJSpzyOfO3LXuMi1hQAtVCjFVNmRG31fFwkymSoxwj08fVPLgjwtMSL6mId2cj
+         tE+5nNvi+StPbHLF5aZLo5Mq0FNZ5NFv+YtIs/fBiQ4VZ3xTW64fPawV3Ezh2nFeFfQF
+         ylqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749649593; x=1750254393;
+        d=1e100.net; s=20230601; t=1749649623; x=1750254423;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IdriCglUQoXkFLi4ZhMZiZhhUAR8uA7bFXNWHiPueC0=;
-        b=rEx4b1XRpMo6V+5mFfzInm15ovhqpO45nm1T0hJ2YD8KRlpb6DUrdxthRb+teF0gSF
-         8CWvaphBEMHdZ37ZlMVrNtBSwyVW7YshqU7CCL7s/DpND4fEb8quZWwVl0Q9pK12rYm0
-         Uf5jm/a4vOf9Z4V4XVTns9roKIAMna695F7AUa6ntC2mM5BmunAooE+14pnfPFll9c8V
-         3bjJc55gSUubNU/jdIR4xuHCfOJWAvZI+mV1QlxQM0tqfZ7b8yW1KiQ6lAMRj4PEyLR2
-         j7nb2ydjX5dUCNX6Qmx/K4JHTde/r21ZidxLetXTXfJoUxjWV4Ld94nP0Cq1eOOtjdXC
-         w4Ig==
-X-Gm-Message-State: AOJu0YzeK3gYObQ5tuCbl0GPvGJkg0y5C5GW2CNgrJNp2CMD9DySZWT6
-	s4qBadaCAQeQwP+OHGe1xR91HmUuhUjfMglpiJVxSHzAPOuT3JYXTUGFSrqK0yDjFqEGy7+RgeO
-	L4NpgdPlaYYwCcFB5dGJQ121in5cr1J0=
-X-Gm-Gg: ASbGncuOjf8yGKcny5A9W/Ea2bXK/wnnJi/L2wbPH7KPDKZJzaZvKD+rjXYPVAjPm1b
-	tXj1cXIjW5s6TOaFRH8iqdSHGYXVnGpw0jKn27PbCyMG4b1VViGa5kcllRRz8vf19YeIv8aFl26
-	X9W/vNiHj3G55l+KkSG1fLhY8pyLQaWdZWim950pji1yXLYQ==
-X-Google-Smtp-Source: AGHT+IHeoDY5r4ucc+bxCJqUdexKKGr/UfCm0PZHaLqNaDsFBW4ksBs3kE9uF4DfBadbbEDDpV8YvK+n/uOhiofJw70=
-X-Received: by 2002:a17:906:eecd:b0:ad8:89c2:423f with SMTP id
- a640c23a62f3a-ade896e60damr327045466b.7.1749649593088; Wed, 11 Jun 2025
- 06:46:33 -0700 (PDT)
+        bh=MsHrLbPRlyplKg/GmX/8Mktjnspu/p6+hibMvG99eJ8=;
+        b=JqpanNeRvrzloigQN4ID3GSOeRgr7FRlqsNU2383cm/WL5FJbDlKhH0XIkER5EkXRd
+         glTkgyc/LvO4pH2CXjgeu2dcUB9exJBvxs+e7APrUSdqoNUx+wI4qgmNRaCxgLKQHL+Q
+         ljmeueaK3SBDdEyRMdtuUM9rUTCymCjcEm+PPWpV2juEFjaZbzQAPvIyettDONYD+hln
+         CLBkqeAqQJObHIZjn+kRvWwNhx/75CUzzY7gSmn6VVz6TpDcc0gmbxgRP5v8msctmCSM
+         HZEMd8Aw38UoLi1tV0LlWqkk8GhK4dGxd9kmzCTVALSBS+7DY5i7bpYJIUwe3KP6uW+b
+         SdLw==
+X-Gm-Message-State: AOJu0YzEqT21TEQm5YYsuJPK9vDGbx8F5nXgZ4DZGmMdSCuP/S/K74uL
+	6SYD1On7DhLc/CgSObLJsBbHG/vLIBeUgEgWphopQYtFSd4ik1UxbyrNKtg6OYA4ZXKElBdKCEW
+	2jfapoL/dNRAdHIfRBqibvnhddV+lA9E=
+X-Gm-Gg: ASbGncv9Y/03hBC/Uv2a/+oVF3qlptofaQLljwoWmiLVGpLcXWaacB1CzlrvD9kFO5I
+	GmE+/KqKTPlWhKdU+B+LFRTRII9bhsrYJNXP245807Ddhbw//W5QgLGbf+eQoMU6BRV5jXzDmdd
+	2K6LUzM9pLX8PJpfBjpxf24w8ihmxWkdt/ANHttldiGZXzug==
+X-Google-Smtp-Source: AGHT+IHpbkmyJ1BL/iMqc+wxcaGwSVQBoGoGLPyk2SKNBZOG5Wh4oAlGsMKIVva3Z0Uv8YwhsZJqHYcROPeH1c1lOj4=
+X-Received: by 2002:a17:907:7253:b0:ad8:9b5d:2c1e with SMTP id
+ a640c23a62f3a-ade8971abe6mr350653166b.29.1749649622952; Wed, 11 Jun 2025
+ 06:47:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250414160343.2216312-1-christian.couder@gmail.com>
- <20250429145243.992252-1-christian.couder@gmail.com> <20250429145243.992252-3-christian.couder@gmail.com>
- <aBsZBytP6TzMYCxl@pks.im> <CAP8UFD1+c11JgSKzs=A39-5EP2Senob-NxSXB7orU0usSLT83A@mail.gmail.com>
- <aDVu4JmTU7Wz32Z7@pks.im>
-In-Reply-To: <aDVu4JmTU7Wz32Z7@pks.im>
+References: <20250429145243.992252-1-christian.couder@gmail.com>
+ <20250519141259.3061550-1-christian.couder@gmail.com> <20250519141259.3061550-3-christian.couder@gmail.com>
+ <agvpcmvdxxpfwr34mw34dvatqr3rlc72zntgbrhlzynvn4h5rh@5mdgt4mdocnx>
+In-Reply-To: <agvpcmvdxxpfwr34mw34dvatqr3rlc72zntgbrhlzynvn4h5rh@5mdgt4mdocnx>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 11 Jun 2025 15:46:20 +0200
-X-Gm-Features: AX0GCFtNl0F56hYRmBWohKclKpfYtYc72bbMF9eL5shBOhKqIOsrN99z9c-S8kM
-Message-ID: <CAP8UFD3necac4PBYYN1ubss3h0T6fgFx=HO8S0F+o4haFFU6vw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] promisor-remote: allow a server to advertise more fields
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
+Date: Wed, 11 Jun 2025 15:46:50 +0200
+X-Gm-Features: AX0GCFtso2mwS9wRNBBvB5Ycfsv-lkI7R7GHRLR-VZBCK51Up0zgnZjsJjJD2O0
+Message-ID: <CAP8UFD0xQzHptsQJ9cOUNSri1kQkyJk5dUQgtDtF6NPDTvB0Mg@mail.gmail.com>
+Subject: Re: [PATCH v3 2/5] promisor-remote: allow a server to advertise more fields
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 27, 2025 at 9:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Wed, May 21, 2025 at 10:36=E2=80=AFPM Justin Tobler <jltobler@gmail.com>=
+ wrote:
 >
-> On Mon, May 19, 2025 at 04:11:18PM +0200, Christian Couder wrote:
+> On 25/05/19 04:12PM, Christian Couder wrote:
 
-> > I am not sure I understand what you mean. This promisor.sendFields
-> > config variable is for the server side which advertises remotes. The
-> > server advertises its remotes (if it wants to) before receiving
-> > information from the client, so it cannot know what the client
-> > accepts.
+> > +static int is_valid_field(struct string_list_item *item, void *cb_data=
+)
+> > +{
+> > +     const char *field =3D item->string;
+> > +     const char *config_key =3D (const char *)cb_data;
+> > +
+> > +     if (!is_known_field(field)) {
+> > +             warning(_("unsupported field '%s' in '%s' config"), field=
+, config_key);
+> > +             return 0;
+> > +     }
+> > +     return 1;
+> > +}
 >
-> In the current form you need to reflow this whole paragraph every time a
-> new field is supported, and it's easy to miss the exact supported
-> fields. So my idea was to maybe move the supported fields into a
-> bulleted list. E.g.:
+> Ok, so if the server has an unknown sendField value configured, the
+> value is ignored by the server and a warning printed.
+
+Yes.
+
+> > +static char *fields_from_config(struct string_list *fields_list, const=
+ char *config_key)
+> > +{
+> > +     char *fields =3D NULL;
+> > +
+> > +     if (!git_config_get_string(config_key, &fields) && *fields) {
 >
->     promisor.sendFields::
->          A comma or space separated list of additional remote related
->          fields that a server will send while advertising its promisor
->          remotes using the "promisor-remote" capability, see
->          linkgit:gitprotocol-v2[5]. The following fields are supported:
->     +
->     * "partialCloneFilter": contains the partial clone filter used for
->       the remote.
->     * "token": contains the authentication token for the remote.
+> We could use `repo_config_get_string()` here instead and wire the nearby
+> `struct repository`, but as the rest of the file is not doing so it's
+> not really a big deal.
 
-Yeah, the doc uses a bulleted list in v4.
+Yeah, removing use of the_repository in this file is left for another
+future patch series.
 
-> > > Furthermore, should we maybe refactor this to match the restrictive
-> > > design where valid fields are explicitly specified? In other words,
-> > > should we have separate config keys for each of the accepted fields n=
-ow?
+> > +             string_list_split_in_place(fields_list, fields, ", ", -1)=
+;
+> > +             filter_string_list(fields_list, 0, is_valid_field, (void =
+*)config_key);
+> > +     }
+> > +
+> > +     return fields;
+> > +}
+> > +
+> > +static struct string_list *fields_sent(void)
+> > +{
+> > +     static struct string_list fields_list =3D STRING_LIST_INIT_NODUP;
+> > +     static int initialized =3D 0;
+> > +
+> > +     if (!initialized) {
+> > +             fields_list.cmp =3D strcasecmp;
+> > +             fields_from_config(&fields_list, "promisor.sendFields");
+> > +             initialized =3D 1;
+> > +     }
+> > +
+> > +     return &fields_list;
+> > +}
+>
+> Are there scenarios where `fields_sent()` is getting invoked more than
+> once? My understanding is that this is invoked only when the capability
+> is being advertised. Regardless, I wonder if we really need the static
+> initialization here.
+
+I am not sure if `fields_sent()` could be invoked more than once (by
+the same process), but I think it's very risky to rely on it being
+called just once, and I think it doesn't cost much to be safe.
+
+> > diff --git a/t/t5710-promisor-remote-capability.sh b/t/t5710-promisor-r=
+emote-capability.sh
+> > index cb061b1f35..27c32b2573 100755
+> > --- a/t/t5710-promisor-remote-capability.sh
+> > +++ b/t/t5710-promisor-remote-capability.sh
+> > @@ -295,6 +295,38 @@ test_expect_success "clone with 'KnownUrl' and emp=
+ty url, so not advertised" '
+> >       check_missing_objects server 1 "$oid"
+> >  '
 > >
-> > Maybe I don't understand what you mean with "accepted fields".
+> > +test_expect_success "clone with promisor.sendFields" '
+> > +     git -C server config promisor.advertise true &&
+> > +     test_when_finished "rm -rf client" &&
+> > +
+> > +     git -C server remote add otherLop "https://invalid.invalid"  &&
+> > +     git -C server config remote.otherLop.token "fooBar" &&
+> > +     git -C server config remote.otherLop.stuff "baz" &&
+> > +     git -C server config remote.otherLop.partialCloneFilter "blob:lim=
+it=3D10k" &&
+> > +     test_when_finished "git -C server remote remove otherLop" &&
+> > +     git -C server config promisor.sendFields "partialCloneFilter, tok=
+en" &&
 >
-> I think I had a misunderstanding on my side. I didn't get that this is
-> only configuring field _names_ that we'll end up sending to the remote
-> side. So I thought that the user is expected to configure name-value
-> pairs here that are then sent to the client, not only the name.
+> This configuration results in the unsupported field warning message
+> being printed. This is because of the SP following the comma resulting
+> in an empty value in the middle after the string split.
+
+Yeah, right, in the v4 I have added a call to
+string_list_remove_empty_items() to avoid spurious empty values and
+related warnings.
+
+> > +     test_when_finished "git -C server config unset promisor.sendField=
+s" &&
 >
-> I guess this is mostly because the config documentation talks about
-> "fields", but that term is used elsewhere to indicate a name-value pair.
+> I think we could use `test_config` which would automatically unset the
+> configuration after the test.
 
-I see. I have tried to use "field names" instead of "fields"
-everywhere it makes sense in the v4.
+Yeah, `test_config` is used in v4 to avoid this test_when_finished.
 
-> > > Does
-> > > it mean that this promisor remote should only be used in case we do h=
-ave
-> > > the exact same filter passed to git-clone(1)?
-> >
-> > It's up to the client to decide, but yeah it will likely work better
-> > if the same filter is used. It should still work if a different filter
-> > is used though. In case the promisor remote doesn't have an object,
-> > there should be a fallback to ask the main server for that object.
-> >
-> > Also the filter mechanism already exists for a long time and this
-> > series doesn't change how it works. It's already possible to have
-> > different repos using the same promisor remote with different filters.
-> > So documentation about what happens when they do that should not be
-> > specific to this patch series.
->
-> That's fair enough, but spelling this out somewhere and drawing the
-> bigger picture helps the reviewer understand the vision that you've got
-> here.
-
-Ok, I have added the following to the cover letter of the v4 about this:
-
-"Note that the filter mechanism already exists for a long time and this
-series doesn't change how it works. For example, it has already been
-possible for a long time to have different repos using the same
-promisor remote with different filters. See the existing partial clone
-documentation (like "Documentation/technical/partial-clone.adoc") for
-more information on partial clone."
+Thanks for your review!
