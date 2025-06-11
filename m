@@ -1,100 +1,142 @@
-Received: from mail-ej1-f52.google.com (mail-ej1-f52.google.com [209.85.218.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63160D299
-	for <git@vger.kernel.org>; Wed, 11 Jun 2025 13:47:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E4EB2367AF
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 14:02:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749649648; cv=none; b=gecl2QCwAo7tVwgh/5cKnLnywlobvlPO0SDPoIPq+/tyacvRyWcUw1NQOoQvN9vZjqzg/lHm8rZz/mRdYFVS/9wV/Mrur3kixKCwBrpVHGn9cD38NNuMDv/1gG32HzkFsrDGAZbUTf7L6FhJSeijhqkRVc89ivwddQkDYX5y9cA=
+	t=1749650559; cv=none; b=K2pWJbjf/0XWGXFYy71riAgkuWZZGDrQaFxJulM4tjbS2t4rmswtCeoj47DVpwS/Y5QVeM8gWCPSycgGW4fcnK+eCSPI21P1ODavPNwpi/j8acVJZuNq+/B3ju4iG+mDNr98EvrtQHwpubT1FqVGBHSzqgzCqYerm1IeWI3QwSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749649648; c=relaxed/simple;
-	bh=c9nvi69SlOqdDrnVltMszg3KZe1aPq/slInmERaGrRw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OsXGnaTyIE5u1otu7AH5gotnLOhoUd7qgYRl+VMBsxW/t0fCmFhTyZEt4eATP5njFHcE3drMkDsC2jD4BLpbcDSKaKmFGwNCV2xaY8cV9aQIz9dkkeuT5KLYRhBqBCAX3Wg+VT6QnXP807YAd65ynntB11Udjr9JrbN5GW14r1w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UDpGURFQ; arc=none smtp.client-ip=209.85.218.52
+	s=arc-20240116; t=1749650559; c=relaxed/simple;
+	bh=mKlnQ7zBdp+l9mzYlodtlf8FL6mHjbeuYbvDWgK1uBs=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=bbtgCUGYsGThC+k+60a+SRjdaKI9lWbnqsmdsJ7EfVM2eb9fUiKnvctKGsap9kUkA/MrRHvb+byKmaTFMQhsC6Ja2jesfK6DI79vEd4oWoe3SYPhdHkcpXykCaFinlkmvySYce+MuYZhcymtCEVjjoXLXYZPoOPEDCe6MuK0gEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiY2gz6S; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UDpGURFQ"
-Received: by mail-ej1-f52.google.com with SMTP id a640c23a62f3a-ade5b8aab41so662152966b.0
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 06:47:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiY2gz6S"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so83718365e9.1
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 07:02:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749649644; x=1750254444; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1749650556; x=1750255356; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=c9nvi69SlOqdDrnVltMszg3KZe1aPq/slInmERaGrRw=;
-        b=UDpGURFQ8VdK1ODUxHt967ihlecHadjnl7UtY6cSQSvWWrUGvzBA56WNhCHBBc6FZ6
-         mTXFsh6XAoREHHUD7WHhSAiGk+Ybsp2k16quQnT1POPMo+2pf7S+auxDfD8/5TzXa9+V
-         FSguBJAUINCqrcoAWTUk13LgGzmeWR80Ob2YRaOBiEL+U9bXmDAG8Gp7PchqHB6VM5NT
-         vl1aJ89EBCqMfhsuUce8oGDiwL3lELscE2mipgwSx0lNrvbFEY84LaaY5uOWnYKNxudr
-         G7nQlOBi84l4MM5koOhTULUCFfP87eoTXngB3Ilf9j+1bt+yGTaTo+YB4Ee4DvE1X8cX
-         DRFQ==
+        bh=myf3Bo98XL6+wcHxcRzmyHnzC3x7qFWWRojys6yaKhA=;
+        b=hiY2gz6Sgp435JKiBOjo5FQbtSR2ON3JwfuVSPA4cXAzuTQ59RJyBVy+qQA4pugk1E
+         S5iwrtRbVfglTMSBUfev7eDtR+EUNVxJN0dTBgbNGA2QaAAUogijeMaEBwbZYuwAQEz3
+         6Qi63zViodxZmD9ZrMBYIcDPcnB5V+o3M91TkqnKH/WESXxq3v6MFqN0iXchMLaVmwNW
+         PSRjTm7ZBL5gGfr4ooAiD2+HZSRtWU4r3Jlvi4mxnHLc0h6mQdlq0Itgn12h53NxQ3jZ
+         3ftV87HOuQfMfQUAgkZ5nKomqiDfhpKJ5DDXLiBu8OQXUB8aXMari6PJ64PUh0/iem00
+         FWlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749649644; x=1750254444;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1749650556; x=1750255356;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c9nvi69SlOqdDrnVltMszg3KZe1aPq/slInmERaGrRw=;
-        b=DhI+BxgbrI0+5Uwla5oe3FboprfPrhZASGVnEbWQLfnRGeOZ5D7gP1ijSMHGw84gfb
-         lfltFYMoZDN5LnHhJEMxD+WF7lAnasujvH/yVdlzykGkhy/Qp9diQNuO8ob7QI2zO1iT
-         UyraVSLP0ccmINh1zBhboSHwzZ/Tm+lPrS66uH0gypuBs9c/fc8NBBSkdl/5LDZre64U
-         +CwLQROkQjGbvA2Au8h0p46UpIpi1Lgz4Z2EbDLOr95IZRd16gm7QesKQiI9Y1/P+RId
-         MGbxq5fKeQW1fpDDIBOonewu7VWGebbHpq7vnQfF/xHheXF3RG97BzHbZALtO9yU6XwO
-         A3Kg==
-X-Forwarded-Encrypted: i=1; AJvYcCV+pmTBCKxjhTbjJmIoiau6ipqLSuOLviWYGxYXv7X8LGOie2qKjh6JsHaHh/S3UTVubq4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz78ZPzqu/J5PrjYJ1Wt8EDme/7nF1LDepTaD8KL/LCeJlajGcj
-	ZhMWy9EDFBpBaThD+h54AHlrX3l+Yl6pYw8LzzFyf7rkDBlt7dC3f3BWbUuePu58qQb+q3xvCBf
-	8CFUveFGR2EGeKLi3TI/qFvdavrH+JhIRMw==
-X-Gm-Gg: ASbGncvAuy8yO9qdiPxxM3Izg2tE/E8PaO1IbsHN6nNZm0EXOIMfauPFpdMp35gHTLf
-	XiMRi8AmSFJ3hLJmoFF6D8yty/C1IE8VwTIPGcnx8EXX7FobL2jhio3KPrjOY5GaUnBiFDV78lg
-	S/hEtUBQ3EK1kRoibBCzilrI2R3Lu1Bf1pXHQB5daMbaIktUB5sselFAa1
-X-Google-Smtp-Source: AGHT+IHCs8SMcT7DZETsn9JbQ7kFKCDTOI08GY/xLnI4gsk4bgO6NRMvZ/FlOhKBrfXV44PrmR0Q17b+vUowW5jHIIE=
-X-Received: by 2002:a17:907:70a:b0:adb:3272:7df5 with SMTP id
- a640c23a62f3a-ade8944a1b6mr316828966b.16.1749649644171; Wed, 11 Jun 2025
- 06:47:24 -0700 (PDT)
+        bh=myf3Bo98XL6+wcHxcRzmyHnzC3x7qFWWRojys6yaKhA=;
+        b=N91aM2lXwi9b6EmVJBzXFPO1eR+lrpo1ernxhmcxW9xTbebLF65OpZ2ixyJaKgTqSK
+         Lpv52Z7nRipyRFhFT+ZSmbJLaMCBljZ61lSMmWCvkWfAP3LR6R9dgcgpRhAxeWFeIJrx
+         FO9KAxctOsCjTOdlZcXwrywIz6qmMTLk5oJDUQegxbRm7NgzDGsxkQl4aBsLI8FAr+g8
+         TcVqeWQb3//v/PToP2E8rG5JtPRKKqBdnuxax+UMy4wfDnDnJmcv5VlSTObhl1+RzcLp
+         niS1JU9+WxLydDNB78TQVB+0CmekPg4q/0ak9fI4o75XlSWD7Oj1dR8XYI7kq8MtTqUk
+         TOiQ==
+X-Gm-Message-State: AOJu0YwZQ1jxHj8kteattFLY/BzdOLmwYSHRZJrmkoQ3rHlP9hx6NJHq
+	vOdt8DsCIn9UMpDGHaPnvikw5OyZ7Pzt8CszB2tpaaPXMyCAsnLSGsiqUiOuQw==
+X-Gm-Gg: ASbGnctMkG6V1dRntNWgbg+Lt+Uj/gWtjScjU60y14LVzEetE7Fc2iBAwuDBQosCv/i
+	eevEMbI+yMLEAfG1O2LIy/Is6vAvruhMcVOsvyWvjJnMABPaoyUjWKL84jshEs63ALyZnKg3zpa
+	t8yu0Lq1u1QmQJBpJYYkiZfYFaNOfmS36YpzWFmaeqNgX4+IkUQmc24LK8AMKs6o3u5FjBsflHZ
+	9F0MS3V0VtM4R7J5hSAPLkBa2QpJBKOU3Da4wPJNZ2abTcXMcbY7xgwaUH7IGOQJbfzafc9s2oD
+	7Xtxvt+kYT1OWL9mbbNg5IurS7ejMj+iEMes1/HNW8x8ExH9XwK55DHEsY8hrqk=
+X-Google-Smtp-Source: AGHT+IF4VW3fpyQ35gn7x1jalERyQv9XgNWlsNLX7Ld1bfM5TthDr1zUfSDUt99IZkg6XVXx0gdN9g==
+X-Received: by 2002:a05:6000:2384:b0:3a5:2a24:fbf5 with SMTP id ffacd0b85a97d-3a5586f279emr2533154f8f.18.1749650555216;
+        Wed, 11 Jun 2025 07:02:35 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4531ff595b7sm30862675e9.2.2025.06.11.07.02.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 07:02:34 -0700 (PDT)
+Message-Id: <c65120f25704e9725c317a62b9a1231bd19f3e25.1749650552.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
+References: <pull.1934.git.1749650552.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 11 Jun 2025 14:02:31 +0000
+Subject: [PATCH 1/2] ci(coverity): fix building on Windows
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250429145243.992252-1-christian.couder@gmail.com>
- <20250519141259.3061550-1-christian.couder@gmail.com> <20250519141259.3061550-2-christian.couder@gmail.com>
- <CAOLa=ZRnL_PLVpQrmHPMXtJd9e965B5iz8widkk5GNSDvh21Pg@mail.gmail.com>
- <CAP8UFD2XtyPD7b=sE+t9d-kyXDt4hYMqVotwz7hJZEO+5TfXGg@mail.gmail.com>
- <xmqqr00ji63l.fsf@gitster.g> <CAP8UFD25fF6OdYmP54JFyY4Znpij=MR1ifdWk+cjca5Hes739A@mail.gmail.com>
- <xmqqldqqc8kq.fsf@gitster.g>
-In-Reply-To: <xmqqldqqc8kq.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 11 Jun 2025 15:47:11 +0200
-X-Gm-Features: AX0GCFv51oN46HX2ITPOI1b_NsX9ntKhCCmuSUb4TymjGQLAHZjCo8NKMBVJatM
-Message-ID: <CAP8UFD1mOitL5Um0cnMYKAVLKamj_Xzhp6ECwQ6_BsqZ0QUy2Q@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] promisor-remote: refactor to get rid of 'struct strvec'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-On Wed, May 21, 2025 at 5:00=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > I don't think it would bring a lot of benefits. Using an strmap or a
-> > sorted string list might make things faster if there are a lot of
-> > promisor remotes configured on the clients, but I don't think we are
-> > at a point where such an optimisation is worth it.
->
-> What I was getting at using common collection types instead of
-> rolling your own linked list was not primarily about performance.
-> They are more battle-tested and much easier to readers who are
-> familiar with these existing types.
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-OK, I have implemented the string_list approach you suggested that
-uses the nickname as the key (item->string) with a pointer to a
-promisor_info structure as the data (item->util) in the v4. The
-string_list is sorted when it can be useful.
+When I added the Coverity workflow in a56b6230d0b1 (ci: add a GitHub
+workflow to submit Coverity scans, 2023-09-25), I merely converted an
+Azure Pipeline definition that had been running successfully for ages.
 
-Also remote_nick_find() has been renamed promisor_info_find().
+In the meantime, the current Coverity documentation describes a very
+different way to install the analysis tool, recommending to add the
+`bin/` directory to the _end_ of `PATH` (when originally, IIRC, it was
+recommended to add it to the _beginning_ of the `PATH`).
+
+This is crucial! The reason is that the current incarnation of the
+Windows variant of Coverity's analysis tools come with a _lot_ of DLL
+files in their `bin/` directory, some of them interferring rather badly
+with the `gcc.exe` in Git for Windows' SDK that we use to run the
+Coverity build. The symptom is a cryptic error message:
+
+  make: *** [Makefile:2960: headless-git.o] Error 1
+  make: *** Waiting for unfinished jobs....
+  D:\git-sdk-64-minimal\mingw64\bin\windres.exe: preprocessing failed.
+  make: *** [Makefile:2679: git.res] Error 1
+  make: *** [Makefile:2893: git.o] Error 1
+  make: *** [Makefile:2893: builtin/add.o] Error 1
+  Attempting to detect unconfigured compilers in build
+  |0----------25-----------50----------75---------100|
+  ****************************************************
+  Warning:  Build command make.exe exited with code 2. Please verify that the build completed successfully.
+  Warning:  Emitted 0 C/C++ compilation units (0%) successfully
+
+  0 C/C++ compilation units (0%) are ready for analysis
+   For more details, please look at:
+      D:/a/git/git/cov-int/build-log.txt
+
+The log (which the workflow is currently not configured to reveal) then
+points out that the `windows.h` header cannot be found, which is _still_
+not very helpful. The underlying root cause is that the `gcc.exe` in Git
+for Windows' SDK determines the location of the header files via the
+location of certain DLL files, and finding the "wrong" ones first on the
+`PATH` misleads that logic.
+
+Let's fix this problem by following Coverity's current recommendation
+and append the `bin/` directory in which `cov-int` can be found to the
+_end_ of `PATH`.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+ .github/workflows/coverity.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.github/workflows/coverity.yml b/.github/workflows/coverity.yml
+index 124301dbbe2f..a5d99e59d4eb 100644
+--- a/.github/workflows/coverity.yml
++++ b/.github/workflows/coverity.yml
+@@ -147,7 +147,7 @@ jobs:
+           key: cov-build-${{ env.COVERITY_LANGUAGE }}-${{ env.COVERITY_PLATFORM }}-${{ steps.lookup.outputs.hash }}
+       - name: build with cov-build
+         run: |
+-          export PATH="$RUNNER_TEMP/cov-analysis/bin:$PATH" &&
++          export PATH="$PATH:$(cygpath -au "$RUNNER_TEMP")/cov-analysis/bin" &&
+           cov-configure --gcc &&
+           cov-build --dir cov-int make
+       - name: package the build
+-- 
+gitgitgadget
+
