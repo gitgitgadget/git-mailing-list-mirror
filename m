@@ -1,139 +1,123 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA05324678F
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 20:25:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA17170A26
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 20:40:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749759929; cv=none; b=l7k4H0hWksLgLu1kKe4wgsJyFJhBwO0VCl/aAEyjl7iv3ZOvAuffQxjCFaiZuZ0bTrz4YF9TJP1Zj0bfEWyAf0xCmoJPxqcpgKfjOZiYStjjhgD1lpD6YbB2D0djjDn8I6qQTgHQFzTgAect/07COrgPXriEX/rlBb9bCD0ab0o=
+	t=1749760851; cv=none; b=MAx6ZwI5DjKOwJx8Ae/N96uiqtbT+lt7E4tRGf5zP4Z1KOW4JXm2b45mlc4yROw8nG00rxMVdsLcJvMcKLxdc9wlWHeYabOquNeMns+PfW1HZughsdEpwiKzySanhXM4uaTTfvaNhbe6VD3tqDjr4hmhIXwnr6n6eOasRttImH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749759929; c=relaxed/simple;
-	bh=G7TVFeLCCVPQ4YSLFuU/rsrGoVoKZ/yfDgAPxjzV1Q4=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=pbt2S07VnQPOGN18AlKEsZGcZFdLpcDPUccKtO8uJhgv+MEu07l+cCECQTfTDRIhcl/MeEAXSWWegiXM5SOegLqeQlEhZ+G8NzxSGLSUjkP/zgYmDs1QfwoFdzE3LXjAbZcEBltoS02SFidM5E9V3G+Muengb7dEvf+NxhsxlqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gi66dZkY; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749760851; c=relaxed/simple;
+	bh=+wb/v0UJj9E30p0K6eaF9DVkaX8uuL2y0ji+ABuQcDs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NzoTsT6hVLD5EsAaRcs8du0ce6Nz0xQqaWrWgBjx8axFR0LMgYdUZlSNXjujeavu3+uqO5XEhs39Vq0ak59K0WYu2YdXaL0lNLulCZs3+uZSKU3N9i3wmo8kABZrrNpRoXxYiu5zvHhb2vGp1B+it92FDFTc3+wUZbRwHFO2B28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xn9/abVP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQrdZVpS; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gi66dZkY"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-234f17910d8so15151875ad.3
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 13:25:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749759927; x=1750364727; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=A0QduJ0Wyw4QF1Nd2XZG2O5cluWpNjppVTVMCAPvO30=;
-        b=gi66dZkYXJDye+MtHJ/DUK6Ahgw/d5KmHArPvRyT3bqVo3dbFk+t+8usubMC5t377T
-         swrfPuwUc33sc/wScaH4dDLZo5QPUKWEmGWFkCxiK88BkZJfqBpnd5hKpzhTXc+X6Nfd
-         I/RNmjr9obe3iWS0obUD0knrHZzJ+kT5+6cZesJVLz5fzn52fFSzafx0T86PE+vYtjCE
-         JcoM4ngMR2bL9XJBqHGEeryw1yt4phqefdfsu0OmtwkuBktAqPozj478rP2WFC88RrD1
-         j6FaGNsFIMgL8ssuFTOjzrthKVEiyAKhhv17yO8mam79oNq4dKaXaMah9jx8KAHPx8CQ
-         lSWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749759927; x=1750364727;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=A0QduJ0Wyw4QF1Nd2XZG2O5cluWpNjppVTVMCAPvO30=;
-        b=m7GNkpXCyjKfmixy0E8DYRp884Tt+Y93cuHehQz0TnLgPRXDUT40HjjI8NfKJe2NGH
-         +i25MyI38GHVDb+4jVdojUwUBwM1SRI+jxRIWx9AVpjlINSqt3GNTTJUqzILaq7j7v+e
-         RNf13N3dY6rl+xbyVKp6nY+tf4TumFM5k61Eyeno5h+aAI1Uzj4bsKK7gZqIwI+NqEyr
-         /efIqZMomw6m6ntzAQAwFhmHDSNvF8uHF2mNy5XoCnfub6vsGBN8EXWjRC45yayoya1r
-         2XARXqz2UVPMgsLtQFqCDd9Ju+aMhGzxj4EStQ4M/Wi8xp06JOLF3lvl09Z+Uxxu8lh7
-         v5RQ==
-X-Gm-Message-State: AOJu0YwhSe6HAYAnvclFwj0n1BN8INnmQ9M1gS+McVVjX5nj7Mz12H/4
-	fufXi7B5WJVfSlEk0WTXvyCncVMgHjuEPPd19qYH2odiZb5jylMoc2Fc
-X-Gm-Gg: ASbGncuO0Vy0h20ECqK8FHc4gqII8SoSMirIQoy2SQ81KtPvIauF1Ikn2S45m2hMApU
-	whebdKDpRyED/C/Ky6OaVzevlWRhV6T+v/L6hXHhMPZo2hWz2mvjPkLAYpXGPEdebliDhuzBxCP
-	JrLmoHz1MLrmSxSBl5hbu6Nx0nO3B4KlqLF+saHodhmTBclhsIrGQuaGUZCejj/v5b9YruflEZK
-	PMG/2oQUJWMznzu7WWIZr9HKuWZQrBabRkHxeMbPIa4upnaZWJB3bMX/sYxZwT8t0nB3gMl/SKX
-	82dhTyhU49CfCg6t3x3GWOa5ZXtymAYXWleXv9mcxYW37I4GQZNqOgvsRiNkeovOK09ef8/13jc
-	50hpqEKIb/Q==
-X-Google-Smtp-Source: AGHT+IFq0dWaS9sdkmdfT8zpFYjzz4UcZRnutc+IlykWzyxCEZVD6H3Sh6Fs9d9M5Ijc06W5zAOldg==
-X-Received: by 2002:a17:903:2a8c:b0:234:d1f2:da31 with SMTP id d9443c01a7336-2365d8884bcmr6215475ad.2.1749759926957;
-        Thu, 12 Jun 2025 13:25:26 -0700 (PDT)
-Received: from smtpclient.apple ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe1680420sm136001a12.38.2025.06.12.13.25.25
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 12 Jun 2025 13:25:26 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xn9/abVP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQrdZVpS"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 61A4E11401E3;
+	Thu, 12 Jun 2025 16:40:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 12 Jun 2025 16:40:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749760848; x=1749847248; bh=eGS1xtjNqo
+	mqWhtA8DLtd0BmpP8wKlY0WmPpjp66ZhY=; b=xn9/abVPhZFf3pJHkFn3MIJDEr
+	pKQFwh8YxDq9NpQ+c6o08Y9dNB0OClNuyGgIYsnJY8vtHmTAWhA7Q3WieQTpT+Rb
+	ZwPFMLxuwkaAIe8sch8N8ONxXdWXm7MMOiE+ctuOO3XU/oTC44REnlIf/dk9OAzi
+	gFNYITzKN2E2CaSSKUResBwjvpDXS/CS8iPp9e48Uu7hey2GI+f3lIeO7qc8ajvh
+	iiaEFfeTNW35z72j+Z0NErr1jrIvZFetgz/h578oFPNf8KPn1e/8EChhb/dz9sHg
+	SaQNJIABRnm7ielh9OJoZm0GQWU+c4V8yjCPNpCd25JsSiS3XoHRlbe3M1Cw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749760848; x=1749847248; bh=eGS1xtjNqomqWhtA8DLtd0BmpP8wKlY0WmP
+	pjp66ZhY=; b=HQrdZVpS4m+oMJSRtmfntL4NgKIz2wQ6Jmq44dkhTKVB+3GLst3
+	gqJS8NRgKxowjLlGchCqMYR1GnwVsD9epphMY6JC9iQXisV62DWyMiV3HyefwyHI
+	2bGIN6MVJckK4CS6vwvYhIRMEn2hUAeP8HCCFJfudUSiXERYjFX9zuLvl99116pE
+	xZ+6URnsJyfscRyALWa/KIrq1omgUuVLnq2Gf+hKLr2hd3aWLBQpFOCOW+vv7JdK
+	HTKcH26h0+xFBqpftB7VKPBftHRq7bWkqKcfvXecPHURVQWT8qiU3HWHRHKNazUl
+	q6ulV0HF/BRHQn9lreBJYd+7czwrorp1yEA==
+X-ME-Sender: <xms:TztLaEQJKld31s4lR5ydMy0DQ4Uf1kIYpBb8hK87wVlRLf82nv1Ytg>
+    <xme:TztLaBwm36sKD33nO3Yw1RUvGBJogllIdWOJyCJMlUidh9jBHVwIQocs9K96Mgdzh
+    VGrzPqAfblSQCNkNw>
+X-ME-Received: <xmr:TztLaB26cAs87UhhjqsGNZ8HD1ACA1wvHaAuGFA54fO5VsCuZtG2U98rcvzsF4n9HaQbMNKWJQ1fJWobXZPm1M3A136sfFS_XqUG>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduiedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhsthhirg
+    hnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddu
+    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhih
+    rdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TztLaIC41CMuz87NCpHQ3jTi6obDinephdx1rZJ5QuVD05dDfmsQ7w>
+    <xmx:TztLaNhSmbGUtv0SzSfNZCznbx1I68SuODcYOv2VwlhabXHYbFw10g>
+    <xmx:TztLaEryvI4HldNGps9axVFMmz4fAp1D3F_gGYhskKS-6uThwH8uUw>
+    <xmx:TztLaAg394L7D5hWbIFdrlSjD1QA0eyA7PNCP_jtPoysk1jEzBeNxg>
+    <xmx:UDtLaPQCp2V7MZYhuV5fNjLwcSGJYGwyQAl-4BHRvWM5Lg4p-PEL0fV_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Jun 2025 16:40:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  jltobler@gmail.com,  ps@pks.im,  sunshine@sunshineco.com,  Christian
+ Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 2/2] receive-pack: handle reference deletions separately
+In-Reply-To: <CAP8UFD0Az9YUd7tHbCWjrZ5bTv1V_0RZ2azasPmOrpf+ARMjug@mail.gmail.com>
+	(Christian Couder's message of "Thu, 12 Jun 2025 19:03:00 +0200")
+References: <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-0-e1c41693bd35@gmail.com>
+	<20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-2-e1c41693bd35@gmail.com>
+	<CAP8UFD0Az9YUd7tHbCWjrZ5bTv1V_0RZ2azasPmOrpf+ARMjug@mail.gmail.com>
+Date: Thu, 12 Jun 2025 13:40:46 -0700
+Message-ID: <xmqq8qlwd775.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH 0/5] repo-info: add new command for retrieving
- repository info
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqikl3mtx2.fsf@gitster.g>
-Date: Thu, 12 Jun 2025 17:25:22 -0300
-Cc: git@vger.kernel.org,
- ps@pks.im,
- karthik.188@gmail.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <2EB72983-BA77-47C3-9331-B08760B092C4@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <xmqqikl3mtx2.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-> OK, that's understandable, other than that handling of trailing
-> commas looks somewhat inconsistent.
+>> when a user pushes multiple branches such as:
+>>
+>>   delete refs/heads/branch/conflict
+>>   create refs/heads/branch
+>>
+>> Before using batched updates, the references would be applied
+>> sequentially and hence no conflicts would arise. With batched updates,
+>> while the first update applies, the second fails due to F/D conflict.
+>
+> Nit: it looks like "D/F conflict" is more often used than "F/D
+> conflict" in the Git code base:
+>
+> $ git grep -i 'd/f conflict' | wc -l
+> 119
+> $ git grep -i 'f/d conflict' | wc -l
+> 7
 
-Ooops, it was typo. I'm using the json_writer functions
-
->> Or in a plaintext format, like this:
->> 
->> ~~~
->> $ git repo-info --format=plaintext
->> sha1
->> files
->> /git/dir
->> /git/common-dir
->> /git/toplevel
->> /super/working/tree
->> false
->> false
->> ~~~
-> 
-> This one is a bit questionable.
-> 
-> Is it safe to assume that we will never have to deal with payload
-> controllable by the end-user that can have arbitrary byte values?
-
-I was trying to follow the behavior of rev-parse, where we can
-do this:
-
-git rev-parse --show-toplevel --is-bare-repository
-
-and it prints both the top level repositority and whether it is
-a bare repository.
-
-> It would be uncommon but possible for LF to be in one of these
-> pathnames
-
-I tested here and this also happened with rev-parse:
-
-$ git init 'my
-  repo'
-
-$ cd my\nrepo/
-$ git rev-parse --show-toplevel
-/tmp/my
-repo
-
-And this also happens passing other flags to rev-parse...
-
-> This one is OK.
-
-So, after reading your review, I though about other solution:
-
-1. The user can provide only one field or no field
-2. If the user provide only one field, repo-info will return
-   only its contents
-3. If the user don't provide any field, the default set of
-   fields will be returned
+I do not mind calling a situation F/D conflict if you have a file
+and your attempt to create a directory at the same path fails (as
+opposed to D/F where directory exists and you cannot overwrite it
+with a file), but the above case does sound like a D/F conflict that
+deletes directory r/h/b (by removing the last subpath in it), which
+is OK, and creates file r/h/b, which the all-or-nothing machinery
+does not allow well, so calling D/F may probably be more in line
+with the existing practice, regardless of which situation we more
+commonly talk about in the code base.
