@@ -1,54 +1,54 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26EBD1D95B3
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 19:53:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E8422D785
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 20:04:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749758003; cv=none; b=NzRSKD5kyZsblcJQbSnnYWY4f2RkLBjwvCAEZTb9w3ALMOPR9PQMigRkYCfyktwtcSOGAcHweBwoetTbOmlmxQlvOgSqtzRdUh1hNoVeob0zI+3gCkBF1fImA+0GodI1z+HuevIghE4G7vEXUJhg/NbNMxuqTMVINRVDTDffI84=
+	t=1749758662; cv=none; b=CWGoJvKKMIpHHa1DMzfoNLcGNKQn4kOG3p/6XTDjenmQqNj3rcepEzMiP2gN0zisaoIwaNfi+/yotrOB+AtjRqu2kNfAEn0zyRUJOga1kWDnL012EAzBrKTirfjvOVGk06Dt4p28kGvPUNAooFMIT/lxnbZWJcZtTYfpw+SEyfw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749758003; c=relaxed/simple;
-	bh=y0s6+WqboQJzADTlZnJRj23ipRUKlUZSq+cqtTjQdnk=;
+	s=arc-20240116; t=1749758662; c=relaxed/simple;
+	bh=iCXmO8MryxQbGyj3cqI2Bfu4cG96gpLR642Se0sTVnk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mf/G+YVLdwXql+oUHqxMBRthNWJfUkNtqdTHWHLxz493RvCK59CGWJplylE23rkkczOLQN+i4L1/MlxLruqdezgdy8X2rmlCMuKNN2ZGxa0Gqaj06cEQuD6o+C7DXmcG8ImPoiT82g9vkw9mrGedYCaJU5kMQa8R36D7lKauEDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nilicvGP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dG1VzUwN; arc=none smtp.client-ip=202.12.124.146
+	 MIME-Version:Content-Type; b=NRO4wwc9lrdYUR4oj3+LrKCo2VZlD5rydmDzADe3TkfL/uwDnPf3JfqcbfgtupGOZR6QdnovIJWeyucJFfHbSnCwoap4Kjvq0ezuFh4aF/oYmaaxoYehNkoVNrB9YWZRMTRh80fZz410ELf40ZgAYmE2NA1QFque+EJSDsFYaME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qWLzSldw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BnQwYqSs; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nilicvGP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dG1VzUwN"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 31FC911402AA;
-	Thu, 12 Jun 2025 15:53:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qWLzSldw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BnQwYqSs"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7599F25402DC;
+	Thu, 12 Jun 2025 16:04:19 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 12 Jun 2025 15:53:20 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 12 Jun 2025 16:04:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749758000; x=1749844400; bh=Dv8O72Acmb
-	xUlceNPKHZf1ZMJZHZqeI8PvlijCS58yg=; b=nilicvGPGox/jOOCMUmYR4AzTi
-	wbCTvxvAjIu0vMObRGW4pei0pnRgScurcBZfgIHNLvMm/weKJQ2+kjI2XlJsPkcS
-	VyKjPc5iuDly/3Ekpy59TWHqPgzyjHV/I32sBCa5V9Rn+iW0LdVZJ0Xyxj5CZlJI
-	VioUnut4Qf+0tr/OPgN1sNl4yps7qiFc2c3/eBLPe9s9rlWUNHop8UY02lkxib+H
-	RcXPzmBFx3BILCZlDC4mVtgCtyTw9Zp4Hd75frBjjWyk0c56Wm+z3ykKol91GVrE
-	XHSJsK7WZKoR3vE1vU8BBZMjlPEfelbpWgrCulWrnaJudnRilOxscF1KnKSw==
+	:subject:to:to; s=fm3; t=1749758659; x=1749845059; bh=3cUcGpXBOh
+	ZZL6b4Pc7Wjiy2th/RxzhH0rj8bfZuLp8=; b=qWLzSldwJbnwwPKHqkA0hq8gYi
+	0YLTyOcd9CVCpXcsVgz/7lafofvg8TWcpYSi4vkwt2eu0f888ur3+mUYQ1gfinr6
+	Wdo7snMJUk3P8Q5GRl8QZFGeSwo1yFWY4O7dmRzhO65qvCkmBSFjqDl8dBhe5bFX
+	rleCqeS1L8ETPuXb5FRt2aCxcBYcaxFmt9CXW5EKtFaj91x60ESfKwerMoQJLIYq
+	BjHJXL3kedKsc1o6YP6xQD9mZ5U1tiFbMNl+yTL3bh1jaLGFGQ4Z0muipHoZFV/w
+	D5Gv/ETealVL18vvxuKtOor+4SBfaj2kKVlK+/thAIlSx6OEnfzvkIMnkXIg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749758000; x=1749844400; bh=Dv8O72AcmbxUlceNPKHZf1ZMJZHZqeI8Pvl
-	ijCS58yg=; b=dG1VzUwNln/juW+T3oB8Cz/QcVxVQWhz0ZlY3FsGyq7ldZTotOH
-	LMw8Hx9bwtwbSRL7y2rbFxbzJ2G9C2dq1DC1Ayq34pJC7owKurCUpZMzIcVjGArw
-	zC2uH0g/KCN5j56w4E4Tp3e1cCiUBdyBezNGKBii19QjXB+XsMVyYa72/xztG0Ba
-	sD+i1+DGZo8/zxkBc0YxqnlTO+3WwGjOVZ75yeEYsC5n9O/NBZRkebmSIqjGXNtO
-	9f+N/ZHpqnCWdn8lGi+c8bhu2mQr8IFRIvRcC1s4FTQB0nI0ERDR2knP7wP/ZcwU
-	3jNEdfxGlNfuPKvy0thGx1RlGFH2RxdU34Q==
-X-ME-Sender: <xms:LzBLaD2UV2LZl2yLqYEYl-mRaSeh6lQ086-gZkVwKA7vtKNzGCqNjQ>
-    <xme:LzBLaCEIq2RXNwEYBE3QkpQazcRmzswlvRm3PF8b6xGR_y-wbdVOJ_A4PUc05vRUO
-    -MkslxKUHnBKG0khg>
-X-ME-Received: <xmr:LzBLaD507JnejB1gYV5W4a7kbJw6Fx_QLm7fl0v-loqbO2NsJU3L-xCLh8BUc5JVUuG80dY2RLWmk3Kqcq4KCXrn4pyXtDz2A6-M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheelhecutefuodetggdotefrod
+	1749758659; x=1749845059; bh=3cUcGpXBOhZZL6b4Pc7Wjiy2th/RxzhH0rj
+	8bfZuLp8=; b=BnQwYqSs4IGgYdedz8OxRFL8k8oMmMWQ7rgJb9jXJDRb77UUGt9
+	A+yby5AK8K/XpKLEjXinqcsI7ban8bu0xOvmRv1KHTF95ukaSva03TJRTqKa2n8x
+	Y40Qb3JksA01qRJXpPid0utcn2gybSDyYsNAxS3bacf6UETTxmTCzYJIDjL4cays
+	+7gWs1DnvWCUbUqClXAH2CFj+u28yuy/JJVW6O7eenq5Up8wrgv3LGotYgmFwPPR
+	kwJyo3yEAZaHUmJBANSy+G3IFSnHo/RlqcrmuQeT6TXryzareBuTDrIxzATsSJvY
+	zFS+fOK3glu29gLciuyPZrUYYCy6EfVFZgA==
+X-ME-Sender: <xms:wzJLaC6kMJ2xU0BAMqwFl6c1EC1ouWsJg2rcsBmn8h3YuPeUNzJ77w>
+    <xme:wzJLaL5XlSdCa-NA_StZsRrgjpqvQ4tOj4l4zClvtT9-1ZqhZQty4CKqDnFYhijfL
+    S3SYSwCgKpUn4N1wg>
+X-ME-Received: <xmr:wzJLaBdo86XJcOEjHHOTOAwsc8vh2eJroXPdgJmKUlry_IG2RFBg3t-BtEppvLtzOcn-VtXck9-kBJaJbT_cYGsh2z0c47jr625e>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheelkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
     hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
@@ -56,31 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheelhecutefuodetgg
     igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
     jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
     grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgtrghsshgvih
-    hkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddu
-    keeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LzBLaI2eKCxUowWK2wYXXu83F7oW5D3fmscJuHY3JE8L5btexYfk8g>
-    <xmx:LzBLaGH0_fcsmIGNfhbv4SjgphDx1p8gGM1VtC6emujjKBtK0xiGeA>
-    <xmx:LzBLaJ_PAql9b-5S26b7wmWozQljJOSiPZqSBsVba_hmY6GXXzRv0A>
-    <xmx:LzBLaDnS7DdU2C68ABboIY0XyhPdfE3xejmbLFsk_JUJMPDafxoJdA>
-    <xmx:MDBLaJXdFLvgiD9zYg_Z9p-sKgYC2YnHlLyip4qDSKM00SMCE-sqnhZP>
+    phhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsvggsrghsthhirg
+    hnsegsrhgvrghkphhoihhnthdrtggtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wzJLaPJnP4SjXAUTAjejPWR2YawHiEhzKvNUoyYiTT0HIC__YIugEw>
+    <xmx:wzJLaGJyvjHj7scvPSsAPIbPUSkazqSimmoTZujU0j8E_XHjjqqcRw>
+    <xmx:wzJLaAxcGThkxNfOtPHcSpzFNncTu6YyNkh4VeX23pJeYcQV559mjQ>
+    <xmx:wzJLaKKKLGF52i8_u6-ezNzOMklR4jjyGLorRK3I9gaCb2cw6XA3oA>
+    <xmx:wzJLaNJ-1sHazOz_NybnSAygkXjzCHCxqoX3w62vQMshqX2FWHW3bc1b>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Jun 2025 15:53:19 -0400 (EDT)
+ 12 Jun 2025 16:04:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im
-Subject: Re: [GSoC RFC PATCH 4/5] repo-info: add field layout.bare
-In-Reply-To: <CF0AD6B1-80D8-417D-9DFD-32338D9EC92A@gmail.com> (Lucas Seiki
-	Oshiro's message of "Thu, 12 Jun 2025 16:39:36 -0300")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250610152117.14826-5-lucasseikioshiro@gmail.com>
-	<CAOLa=ZTvC7Hq5Fz6N1ESzf1s=7kkyZG5iYTA6pzxnKm2p4oMNw@mail.gmail.com>
-	<CF0AD6B1-80D8-417D-9DFD-32338D9EC92A@gmail.com>
-Date: Thu, 12 Jun 2025 12:53:18 -0700
-Message-ID: <xmqq7c1genyp.fsf@gitster.g>
+To: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 1/6] Revert "bswap.h: add support for built-in bswap
+ functions"
+In-Reply-To: <20250611221444.1567638-2-sebastian@breakpoint.cc> (Sebastian
+	Andrzej Siewior's message of "Thu, 12 Jun 2025 00:14:37 +0200")
+References: <20250611221444.1567638-1-sebastian@breakpoint.cc>
+	<20250611221444.1567638-2-sebastian@breakpoint.cc>
+Date: Thu, 12 Jun 2025 13:04:17 -0700
+Message-ID: <xmqq34c4enge.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,40 +87,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+Sebastian Andrzej Siewior <sebastian@breakpoint.cc> writes:
 
->>> +#define USE_THE_REPOSITORY_VARIABLE
->>> 
->> Ah! Seems like `is_bare_repository()` is responsible for this, it would
->> be nice to not introduce global dependency in a new command, but this
->> isn't part of your project, so it's okay here.
+> Since 6547d1c9 (bswap.h: add support for built-in bswap
+> functions, 2025-04-23) tweaked the way the bswap32/64 macros are
+> defined, on platforms with __builtin_bswap32/64 supported, the
+> bswap32/64 macros are defined even on big endian platforms.
 >
-> Yeah, to be honest I was reluctant to use this, and I tried to find if
-> I could easily drop this dependency. But this is `is_bare_repository`:
+> However this file assumes that bswap31/64 are defined ONLY on
+
+31/64 -> 32/64?  Just sanity checking the typofix I plan to make
+locally while applying this patch.
+
+> little endian machines and uses that assumption to redefine
+> ntohl/ntohll macros. The said commit broke t4014-format-patch.sh test,
+> among many others on s390x.
 >
-> int is_bare_repository(void)
-> {
-> 	/* if core.bare is not 'false', let's see if there is a work tree */
-> 	return is_bare_repository_cfg && !repo_get_work_tree(the_repository);
-> }
+> Revert the commit.
 >
-> But I couldn't find out what is the dependency of is_bare_repository_cfg
-> on the_repository yet, but I decided to keep for this RFC.
-
-I suspect that by the time setup_git_env() is called in the startup
-sequence from setup_git_directory(), we know that the repository
-knows if the repository is bare.  So one thing we could do is to add
-is-bare-repository-cfg bit as a new member to the repo-settings
-object of the_repository and record the bit before the
-setup_git_directory() callchain returns.
-
-Then you can teach is_bare_repository() to take a repo object from
-its caller and the above may become something like
-
-	int repository_is_bare(struct repository *r)
-	{
-		return (r->settings.is_bare_repository &&
-			!repo_get_work_tree(r));
-	}
-
-perhaps.
+> Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+> ---
+>  compat/bswap.h | 14 +-------------
+>  1 file changed, 1 insertion(+), 13 deletions(-)
+>
+> diff --git a/compat/bswap.h b/compat/bswap.h
+> index 9e0f98e00b93a..b34054f2bd728 100644
+> --- a/compat/bswap.h
+> +++ b/compat/bswap.h
+> @@ -35,19 +35,7 @@ static inline uint64_t default_bswap64(uint64_t val)
+>  #undef bswap32
+>  #undef bswap64
+>  
+> -/**
+> - * __has_builtin is available since Clang 10 and GCC 10.
+> - * Below is a fallback for older compilers.
+> - */
+> -#ifndef __has_builtin
+> -	#define __has_builtin(x) 0
+> -#endif
+> -
+> -#if __has_builtin(__builtin_bswap32) && __has_builtin(__builtin_bswap64)
+> -#define bswap32(x) __builtin_bswap32((x))
+> -#define bswap64(x) __builtin_bswap64((x))
+> -
+> -#elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+> +#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
+>  
+>  #define bswap32 git_bswap32
+>  static inline uint32_t git_bswap32(uint32_t x)
