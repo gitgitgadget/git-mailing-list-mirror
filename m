@@ -1,141 +1,112 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A9931EDA2F
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 21:01:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E8216F288
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 21:31:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749762092; cv=none; b=ByKTzARdw4xAvDkz85D0Rks0C0Jup7y79PQKXvVRwQc1XRtWEXQqrPKkxFB9Oe0S898WipCcOU8bc/O3cssZBn9X9UnecXA0MUEOmwYPM2Fv+Wovj0yUOFiUerCSuV002w4s/yhGfXHfioJ5BeCJqpUxGQseUga0ynBEqbSW9fs=
+	t=1749763894; cv=none; b=ex9dbYrAW0uNGx4NaM5NZiZ963yi/c9d/rhGwz8OKUMkzaFgL4FDNP8OVr402oyCAqpIpwIVc2r29R3o795KytWRbpJ4xELuGwLIFmhgSX4nJScx32qLnue/tHaWl1Wm8RM/3mcWoVCaAOgOZq6M1JMuRL04a6hEfn/8/4sVRBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749762092; c=relaxed/simple;
-	bh=ZHuEoPImn/PkfNFn2k1AIGCT79B2c7xeYwpOqcugq9A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f+QKHc3uH4jT8eZ/Gwg2fhwBSNR1E3pnJ0ondiinuVXOnjwYoFG6QMgzzZZyk7cF66GU+e6j3+k1P2Sfr/9wuZqK34V66xTgo4F2CFhak/W7eXFr9OPraHBkufNoAbU4SnIHgxO+oTbuYYSC7dGUxmjauaWtVGaKGr3rWLkhO9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QWfL4A7s; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LgRkhgDb; arc=none smtp.client-ip=202.12.124.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1749763894; c=relaxed/simple;
+	bh=XCmJH6dP0Is7+CfM+NZx3E9Qasf//tf/NeC/j7ZsHNE=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=q8iLqXUGYTCJbfVbRAaPjxxQj5zlk4GcwyKX4yZoUC5c6sKQgLNvaqdB4jj9HlbWl3okerp9IRaOezjxbwz27FMSiv1iH1eXig2HIlPFhWC2lkF0rG44ikIvnqLppJvROiqiN4x3czVh1Z6PpSqBmN/tKpxT9rFByPWPHqtHhE8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpI1fWEt; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QWfL4A7s";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LgRkhgDb"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 20594254024D;
-	Thu, 12 Jun 2025 17:01:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Thu, 12 Jun 2025 17:01:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749762088; x=1749848488; bh=X5uxVWIyaF
-	IzM3fKd8ObPCZ2DUUqTFMEUo6N9xjHG1Y=; b=QWfL4A7s0mesPWE2Lkcokukk9E
-	PGzz9KW/rz2RQFPT9H+GCTdbywREX5WTY+wUGr3F6MxqoiuOA149bwpan41GRBJG
-	iUxprhDDV8rCuFYDNAKk2BUEGRX5xOOYtkGrhNcD0Bl/3bAF+o8Xqoru/fH5/Ji9
-	0iG0YxbkIXBY+cqwR3GybmF64XnvAyOdiQXRONM4IkoXA6j+MrFtg676zOiTlZjU
-	WcM0O8iUYdTvKBRGuhoyRQxZz8YAsQabWV8AtHcGVGEP74qzJf3GSFX3DIMRykfT
-	45qBBjYj6R42LPJV7qPeQs+sMSFPyb00RjKpVmlrpnIrVUNZm71lMqE3krQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749762088; x=1749848488; bh=X5uxVWIyaFIzM3fKd8ObPCZ2DUUqTFMEUo6
-	N9xjHG1Y=; b=LgRkhgDb6iO2hDIwY/RsXp7H5vk/OdK1P/QA2Ihm/mb2vXOoekR
-	mPHUBqfBGdHSPMOkopuZyI3JKhBLhkw6uHV9iXZ7AUHeY0qILKMh7mgLA0nMuRoX
-	r3/AW5ek/2dStPmLTa/mJBOGrfI2oMb32oZf/rHKUhlgMLfjUmnl7ozE9oe7eJMc
-	jKUVFYZCkYccKQDWi0ra1siCYU2Lfhy8Zzl+dcnKfwjzBizoFvnyiQI5r8RKNBNY
-	Jx++CsiOzGhXl4uaZWV5qxXT4B8voAslsrQbp6Plbub7EK/HMKDrvbGJh2zdcRiz
-	Wyx9rJClIFKedgHdcQvQzQ3e5flkrczH2fQ==
-X-ME-Sender: <xms:KEBLaFfvls1p3W06g_8TvCHaYRKoYIrdbg0lmRhwtSX9olMF-rYIMw>
-    <xme:KEBLaDMudoLLeIDWHiOTNYPluX7JcDJ0Dl4Y2qrrx5E7Yz7Wqr0XgKztsFOLe1Sqz
-    mhz_D1f8ap6myhI1g>
-X-ME-Received: <xmr:KEBLaOjVN4Ixupd4MsP8-egU0ohzgsbJB2mygWyzQ_vIvUV6MKOfjWL2YZaVxrMaYTRP0OX5wPZ38AqdfUUmdi5PlQkZKQfSM4O5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduiedtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgtrghsshgvih
-    hkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:KEBLaO_vt0JOWX1cuL-sA3cfQagzxDtWedxvhCxPGTgxaF58FWHx8w>
-    <xmx:KEBLaBuneVhic4luGpdmsLe2dWmgCs1dBXGziJxr1PwkGWJweoS_JQ>
-    <xmx:KEBLaNEEue_87qeCITwpCMxc33L122S4OHg_25hHAiuPEC_59Ukv2A>
-    <xmx:KEBLaINkZG3SyCytwI3CWN9VZ9s4UvwMjB2mcsdZSSROHGTvt7g3zw>
-    <xmx:KEBLaHf90CzBs8jMVSIVN1uuMK8jV34iIkYmRFjm4kMXQKw4OBRvS3jJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Jun 2025 17:01:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com
-Subject: Re: [GSoC RFC PATCH 0/5] repo-info: add new command for retrieving
- repository info
-In-Reply-To: <2EB72983-BA77-47C3-9331-B08760B092C4@gmail.com> (Lucas Seiki
-	Oshiro's message of "Thu, 12 Jun 2025 17:25:22 -0300")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<xmqqikl3mtx2.fsf@gitster.g>
-	<2EB72983-BA77-47C3-9331-B08760B092C4@gmail.com>
-Date: Thu, 12 Jun 2025 14:01:26 -0700
-Message-ID: <xmqq4iwkd68p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpI1fWEt"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b26f5f47ba1so1247181a12.1
+        for <git@vger.kernel.org>; Thu, 12 Jun 2025 14:31:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749763892; x=1750368692; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ekyu6iuZkI+5h6bx9gTl4atZQ0zel1mWWOKTHEBKagM=;
+        b=CpI1fWEtEetP4Uc5ezlO+MguT9zd4F7kcekGZEWq20yUZgrKmsMbh1Oo8ntg7dsyYo
+         U8XHzSq7KFk/iChk5M8XfWs5pN2dQnxD0gT1BXBJdcqfjbG7l4GZEIxk9Rdyd2eKt5lI
+         sPyjtA2El7kIjAa98KyahzWdazA0A6Jnm69w+QPULdFa2/xqFMlZ1aLxQ7jMBjaaRtsa
+         MLki3bzO7Nwk/kfnRRgJgb2x+8Ci91l4jPebtk/8usJ1Ft9ufpe7UK2VnFc1s9OKTwuj
+         Ad+k0hpPHkkST3m5Pfmjtrw9pHSxujusSTqs9k+ziozY+YFASuVpNNTpGpPgB6/MPIIg
+         poTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749763892; x=1750368692;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ekyu6iuZkI+5h6bx9gTl4atZQ0zel1mWWOKTHEBKagM=;
+        b=NnrS0bQVsyvCByhKxUsZ4tf2nc9SF9GtknZWO1AA+xUrG7VT4xiNWpzIzbbyMup/My
+         cCLNoJpHxNIcZLHJ/9pudV/nVe5ZunCqQWchD5Mas2sAGi1+CV+2/pky03KG+jGfs9Zh
+         gIEGmRog9p1HqSv7+dLd1ixTKsgDi5QqfJPGN5XTzI3w2/AWyiPAwmkJR+S8BM/iqAaH
+         TM4CYWNnCPlFml3M6Zr9vC9Ps/pOd3v3v2bKmqWhxrV0Mph0NvzGOGnFTCGQgllwVltD
+         t2QdgYsZvDgTP+K9ZH0G7X6KRuxqjwSnUWy7UVpi0hmYsuuzA80J/p4ZY2i4cKJXg2sN
+         mxTg==
+X-Forwarded-Encrypted: i=1; AJvYcCVaDK1xkaT8FqO+4PrCbwqYeG5W7X0QWNxin11mG2yBdke5NagJXy3OcI10kRLNriz6zRw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxkXOk6UDwymd9a5efTlzvijHGqs59FKdnlnOmamprMFZTmSkMw
+	5dghlRsqSq0pzzQ+oKw13v+HiX2kIL73lbewFR7cujDJ6lRVDrXyxAEp
+X-Gm-Gg: ASbGncsm08dcUFdqLgT113GO/ydvQd74O3tnmX+MR4u7e+dor0kADTS9l44f3faYH2F
+	9JHTeixNluJqQ0ppBBwtxC52e+H7aSDzMswP6MTFoLVv8gRACH2GUmkAOcoZvD3fL+UjMhPf26x
+	tYpCgFGxGU/Z5NvMWAkL+iO9GSA22rxWnpwPT7LagYketRyMqRzoPmx5YVtfaoZJrIC1rK7+vBm
+	SPqCjjn0Rc/cWlhQQ0dWasYhz5KmSI6p4csWezRewB0pcdiLjsisv85gna/sGXc5oUlTCOgnFfZ
+	sa/ODU415HOgLXAjBLzg0XJ2bCy7N5jpo0M5gTnfgbrgvKvqNmHxeSGPMZa1mu0ouD7OG5Lmm9S
+	4Zf90K9WCQ5vOFbN8SYU6buNwMJiEUTTZ
+X-Google-Smtp-Source: AGHT+IEbyPYxKt3H+msxiyHg0H9Zx1iIV8YXAxtWepWV0P1cuFWx0xa2l9H+3xOLCS59v2hnPSM/+Q==
+X-Received: by 2002:a17:903:2346:b0:234:a139:120d with SMTP id d9443c01a7336-2365d88bf30mr7620105ad.7.1749763891798;
+        Thu, 12 Jun 2025 14:31:31 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:8dc3:5851:1e44:aea])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365de783b3sm1822025ad.119.2025.06.12.14.31.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jun 2025 14:31:31 -0700 (PDT)
+Date: Thu, 12 Jun 2025 14:31:29 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	Brad Smith <brad@comstyle.com>, git@vger.kernel.org
+Subject: Re: [PATCH v2] config.mak.uname: update settings for FreeBSD
+Message-ID: <p75inuvm6uf4mul7gty4jpwd74namlgfifkqgwuwzf6sqrkit5@zkimsfgxatmc>
+References: <CAPUEspguEY+e-J0dMA2EdDgu=t4fK5ASS13Jfp_Mgwiq3Rtd0Q@mail.gmail.com>
+ <aEsE8S90fJSr9Or5@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aEsE8S90fJSr9Or5@fruit.crustytoothpaste.net>
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+On Thu, Jun 12, 2025 at 04:48:49PM -0800, brian m. carlson wrote:
+> On 2025-06-12 at 13:52:03, Carlo Arenas wrote:
+> > On Thu, Jun 12, 2025 at 12:36:46AM -0800, Brad Smith wrote:
+> > >
+> > > FreeBSD 6.0 has memmem().
+> > 
+> > but AFAIK it was buggy, uncompatible with the "standard" and
+> > didn't perform that well, at least until FreeBSD 12.
+> > 
+> > assuming that the system version is indeed faster than the
+> > one provided with git (which should be true but worth testing)
+> > then it might be better to only enable this for later versions?
+> 
+> FreeBSD 11.4 (the last version of FreeBSD 11) went end of life in
+> September 2021, so nobody should be using it since it hasn't had
+> security support since then.  And it's even been functional (but slow)
+> since FreeBSD 11.0, and 10.4 went EOL in 2018.  So users shouldn't
+> actually be experiencing any actual functionality problems since then.
+> 
+> I don't think it's a big deal for people who want to use an obsolete OS
+> (which, to be clear, I'm not encouraging) to tweak the Makefile knobs a
+> bit.
 
-> I was trying to follow the behavior of rev-parse, where we can
-> do this:
->
-> git rev-parse --show-toplevel --is-bare-repository
+Note that my concern wasn't about having to tweak the Makefile, but with
+the fact that the system provided function would behave differently, and
+there was no attempt to see if by no longer using the git provided compat
+code, there was actually a performance improvement.
 
-As often said, an earlier mistake is not an excuse to pile more of
-them on top.  Isn't the whole point of this new command to remove
-these kitchen-sink options out of rev-parse and give them better
-home?  Let's learn from our earlier mistakes and do it right in the
-new incarnation.
+It is true that in our codebase there are no calls to memmem() where the
+needlelen (the fourth parameter) could be zero, and that would result in
+some of those old versions returning NULL, but it would seem to be safer
+to only use the system provided function when those issues are no longer
+a concern.
 
-> So, after reading your review, I though about other solution:
->
-> 1. The user can provide only one field or no field
-> 2. If the user provide only one field, repo-info will return
->    only its contents
-> 3. If the user don't provide any field, the default set of
->    fields will be returned
-
-Hmm.  Isn't
-
-4. The output always comes out in JSON.  There should be plenty JSON
-   reading libraries available to the GUI command or whatever that
-   forks this command and reads from it, right?
-
-an option?  If we want textual format, and assume that almost all
-values are text, we could do something like
-
- 1. In text mode, the values are shown one-item-per-line, even if
-    the value has embedded LF in it.  At least we assume that the
-    values do not contain a NUL byte.
-
- 2. If a value does not have LF or double-quote in it, it is output
-    literally.
-
- 3. Otherwise, the value is shown with quote_c_style().
-
-The implication of which is that a loosely written program that does
-not grok funny values (namely, a string that contains a double-quote
-or a line-feed) can be written loosely without having to worry about
-quoting and assume one-line-per-item.  They may show a wrong value,
-but at least because one-line-per-item assumption holds, their
-input/request and value they receive from the program will not go
-out of sync.  And a more carefully written program can of course
-check the first byte to see if it is a double-quote, in which case
-they have to unquote the whole line (which may yield a multi-line
-value if the quoted string had embedded "\n"s).
+Carlo
