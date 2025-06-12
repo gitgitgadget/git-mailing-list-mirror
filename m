@@ -1,135 +1,92 @@
 Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659F18BC3D
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:26:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A248310E5
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:36:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749702371; cv=none; b=L2iDnpvSib+lYS0wZcP9MU+m6c1xot4ygpYU+LIyfHp1cAtaeGxvSD7IbcSjAUwjKpEgJe/ADpdC+wUvgx8Nh8wsOFjg0ZqOjAwcv2iYOqFL/kwiCZ+HdeRiihC8htFr4yl8FU49Cs6lgBzuEa/tvvtjnwXVwFJdv6fDc+UWj78=
+	t=1749703010; cv=none; b=tcBb1opNbF97SnHAsCe/1hmc5OA3Ns82jgns1D4QI/Ahw7HnGWYb6dqbG0XNZOMv5beqzmnRZMXODYw6DM38qc+917vIV4/YE+crmr/tDqsgjr6uXD2fB8atT42a+jnqN2fezUbXlmjG1Ep+BHuvdZKR3dRwaYxsWmIY0o11yA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749702371; c=relaxed/simple;
-	bh=if3eoVeOMuodo5hoI+0AaYiI18paNPCMLaQJy0qF2XM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=q+vC3qatSUrQjpw2gIZ6cyTk5k0fLeo08Msp9t/tu0+BJlKH8YNwInzpR6vH9PXI2QDT/ZWe9FlLT00KWWgKLmgn1/MA5X/4sXraEVn/6tB4vsLSOugN7wWQK9lHxTL3zTn0raWA+4IXVLS/xbDhdF5Epf8jHfyxXvJhgWrzrW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=X1w8jY/f; arc=none smtp.client-ip=206.51.28.2
+	s=arc-20240116; t=1749703010; c=relaxed/simple;
+	bh=Rn8OwGH8iDmPsK5NwbTuXtwHkhyEeZU6nX8vlSXPYvU=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=od0o7u3NVKSH5LGXmeTb1qR9tFuRhCVbKnnQOOmV4thcBHc08nplwcylboL30EyMgLc5k4ORj8YZhXhPaihM/ASHwdgXUTSDNY6A6Xlmf8yP5JprPUYGrdxn77JIPPfJScAkbWB0HaxbVWqHD3afwc+mPKKaJm3JxatsGb86V+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=g7A20xPi; arc=none smtp.client-ip=206.51.28.2
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="X1w8jY/f"
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="g7A20xPi"
 Received: from mail.comstyle.com (localhost [127.0.0.1])
-	by mail.comstyle.com (Postfix) with ESMTP id 4bHqGS6RRFz8PbQ;
-	Thu, 12 Jun 2025 00:26:08 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
-	message-id:date:mime-version:subject:to:cc:references:from
-	:in-reply-to:content-type:content-transfer-encoding; s=default;
-	 bh=if3eoVeOMuodo5hoI+0AaYiI18paNPCMLaQJy0qF2XM=; b=X1w8jY/fmjQq
-	SWNelXE8h2ZY9LcS8TGJ0FSFDXJSjhPOIUHGcO27xMA5QFS+Dieb0Ro43YVn0js1
-	psD+LAUg8/ApQ4qtSg5ueOnuMNI37+yimIlhBtSbXY2+ZRXdB2VlMeoaGW4n+zRT
-	3wnQJoD7EmRd1A97TqjExK447hhZZZg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
-	:date:mime-version:subject:to:cc:references:from:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=default; b=EvG
-	ojiCNgP8m6LwPLmY/Gob4lJiQCIQpQTBZNWznZoQxQ8sxw2aZLvF7imMRt/nQVPN
-	/Gk75/H/wSL7rbd2A6kFUaIUNwCuUc2E4chfjQAJk4tI2Mvo3R0B+MToXOhuvzi4
-	IK5Q25Jq0Vjvn/FC2eQ+XrBCOVpXAiErq5YKr/uU=
-Received: from [IPV6:2001:470:b050:6:142d:4b81:8fea:90b2] (unknown [IPv6:2001:470:b050:6:142d:4b81:8fea:90b2])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	by mail.comstyle.com (Postfix) with ESMTP id 4bHqVl4hL0z8PbP
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:36:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+	:from:to:subject:message-id:mime-version:content-type; s=
+	default; bh=Rn8OwGH8iDmPsK5NwbTuXtwHkhyEeZU6nX8vlSXPYvU=; b=g7A2
+	0xPiE48CpM5+VJk7nqpiD61FctcFbRKmV/7wsC/3SqVxP/xOO484nVHpTqS1uI9W
+	/2K39w9sP2I7vzAfrsr9XW7ueuEYMpcVJJZNX1SnfECuB9r0Q1PvN7Fm3HiMv7cg
+	tJX9192RwwShHGuZ/bNU6Q2OBU3WNNIKZ8UMpgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
+	LZD5QO7qWqS8gXRQZKu/1AbHzMceWiqqsOzdmOiqf+kB8MS9YzWrgnC6Ql5ep9+x
+	4B2iwDxKhD//vRvD0+PsZ67/PiFphSKxq4Rf0gphYbNVOVQIy0Cnhd7CT+eToOpJ
+	8Ojl17bOv8ln1nv7BNfT6sDmguMRBj7QmuXjWx23TNU=
+Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:4f0d:db46:2c79:2a5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
 	(No client certificate requested)
 	(Authenticated sender: brad)
-	by mail.comstyle.com (Postfix) with ESMTPSA id 4bHqGS3ccrz8PbN;
-	Thu, 12 Jun 2025 00:26:08 -0400 (EDT)
-Message-ID: <e63d1ef3-6bd9-4720-95ea-16c800f549c1@comstyle.com>
-Date: Thu, 12 Jun 2025 00:26:07 -0400
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bHqVl2ky7z8PbN
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:36:47 -0400 (EDT)
+Date: Thu, 12 Jun 2025 00:36:46 -0400
+From: Brad Smith <brad@comstyle.com>
+To: git@vger.kernel.org
+Subject: [PATCH v2] config.mak.uname: update settings for FreeBSD
+Message-ID: <aEpZXqTOForaZzbf@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Solaris sed
-To: Eli Schwartz <eschwartz@gentoo.org>, Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
- <87bjqteicd.fsf@gmail.com>
- <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
- <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-Content-Language: en-US
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+
+From bdeb596fa6a99c4059df52bbdaed08268100c43e Mon Sep 17 00:00:00 2001
 From: Brad Smith <brad@comstyle.com>
-In-Reply-To: <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Date: Mon, 9 Jun 2025 14:27:39 -0400
+Subject: [PATCH] config.mak.uname: update settings for FreeBSD
 
-On 2025-06-12 12:16 a.m., Eli Schwartz wrote:
-> On 6/11/25 11:49 PM, Brad Smith wrote:
->> On 2025-06-11 11:42 p.m., Collin Funk wrote:
->>> Hi Brad,
->>>
->>> Brad Smith <brad@comstyle.com> writes:
->>>
->>>> Building on Solaris I noticed the following two issues with Solaris =
-sed.
->>>>
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0 GEN version-def.h
->>>> sed: Missing newline at end of file standard input.
->>>>
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0 GEN config-list.h
->>>> sed: illegal option -- E
->>>> Usage:=C2=A0 sed [-n] script [file...]
->>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sed [-n] [-e scrip=
-t]...[-f script_file]...[file...]
->>>>
->>>>
->>>> https://github.com/git/git/commit/
->>>> e1b81f54da80267edee2cb8fd0d0f75f03023019
->>>>
->>>> The second issue being introduced fairly recently. Not sure what
->>>> would be
->>>> appropriate fixes. Just pointing them out if someone has an
->>>> suggestions for
->>>> fixes.
->>> I noticed these as well, but just ignored them since it seems to buil=
-d
->>> fine.
->>>
->>> The first one seems like just a warning? Probably something to do wit=
-h
->>> POSIX defining a "Text File" as "A file that contains characters
->>> organized into zero or more lines" where a line is "A sequence of zer=
-o
->>> or more non- <newline> characters plus a terminating <newline>
->>> character."
->> It looks as if it is just a warning to me. I wasn't worrying about tha=
-t
->> one as much
->> as I was the second issue.
->>> The second is more tricky. The '-E' option to use EREs was not added =
-to
->>> the specification for 'sed' until POSIX.1-2024 [1]. Maybe the script
->>> could check for the 'gsed' command? All of the (few) Solaris machines=
- I
->>> use will have many GNU programs installed like that.
->> I can't comment on that especially as the build bits support pretty ol=
-d
->> releases and
->> I have no idea how long Sun / Oracle have been shipping GNU bits like
->> this. I do not
->> believe this has always been a thing.
->
-> The Solaris box I have a shell on, has gsed installed as a purely
-> optional third-party addon from a third-party package feed. As far as I
-> know, Solaris never did nor plans to ship "GNU bits like this".
->
-> Of course, the Git project *could* declare users must first build GNU
-> sed, then build Git. Or only build on boxes where the admin is a GNU
-> enthusiast. But that option seems unlikely and unattractive...
+FreeBSD 6.0 has memmem().
 
-To clarify what I meant. Solaris 11 from the looks of it includes GNU=20
-sed with
-the base OS. That was not the case with 10 and older.
+With making 6.0 the minimum version drop bits for supporting
+FreeBSD 4.x.
 
-The documentation for 11.4 for example mentions both versions of sed.
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+ config.mak.uname | 6 ------
+ 1 file changed, 6 deletions(-)
 
-https://docs.oracle.com/cd/E88353_01/html/E37839/sed-1.html
-https://docs.oracle.com/cd/E88353_01/html/E37839/sed-1g.html
+diff --git a/config.mak.uname b/config.mak.uname
+index b1c5c4d5e8..da592eeaa0 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -302,16 +302,10 @@ ifeq ($(uname_S),FreeBSD)
+         ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
+ 		OLD_ICONV = YesPlease
+         endif
+-	NO_MEMMEM = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+ 	USE_ST_TIMESPEC = YesPlease
+-        ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
+-		PTHREAD_LIBS = -pthread
+-		NO_UINTMAX_T = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-        endif
+ 	PYTHON_PATH = /usr/local/bin/python
+ 	PERL_PATH = /usr/local/bin/perl
+ 	HAVE_PATHS_H = YesPlease
+-- 
+2.49.0
+
