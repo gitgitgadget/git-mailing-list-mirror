@@ -1,92 +1,110 @@
-Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
+Received: from mail-qk1-f196.google.com (mail-qk1-f196.google.com [209.85.222.196])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A248310E5
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6580B7FD
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.196
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749703010; cv=none; b=tcBb1opNbF97SnHAsCe/1hmc5OA3Ns82jgns1D4QI/Ahw7HnGWYb6dqbG0XNZOMv5beqzmnRZMXODYw6DM38qc+917vIV4/YE+crmr/tDqsgjr6uXD2fB8atT42a+jnqN2fezUbXlmjG1Ep+BHuvdZKR3dRwaYxsWmIY0o11yA0=
+	t=1749704367; cv=none; b=mrqkPd6Z9GvrT+4/L8QZ3sKrNmWm8+QSWYKWpWIu6JNtin2EApJ25sa3akjFBa63o3ctyA9Ehi4k47ZWmvCUsDL1ak0wj0kNpfU2q1njTeQzpsiayc1tNmvHrzUEDBuRh7VXxYybdka4JD8E6ODTC1yhehOagi6MgCd+bvHIwPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749703010; c=relaxed/simple;
-	bh=Rn8OwGH8iDmPsK5NwbTuXtwHkhyEeZU6nX8vlSXPYvU=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=od0o7u3NVKSH5LGXmeTb1qR9tFuRhCVbKnnQOOmV4thcBHc08nplwcylboL30EyMgLc5k4ORj8YZhXhPaihM/ASHwdgXUTSDNY6A6Xlmf8yP5JprPUYGrdxn77JIPPfJScAkbWB0HaxbVWqHD3afwc+mPKKaJm3JxatsGb86V+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=g7A20xPi; arc=none smtp.client-ip=206.51.28.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
+	s=arc-20240116; t=1749704367; c=relaxed/simple;
+	bh=eg9tln3+t/MaY9nkbDCxCOAbTu4WKftvGfCIPB4m7PI=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=Zjr8OuLazY716nUHhHh2+KbAf1gBfyOxHoNMWp6ymiyNiSpjp8EumO8YbLrhxSMUeM8nxmgOsR19hbR8mawAjDQ4bEL2mEEG6KY+vXmR7T+yTLu/gp1NqKa6O+cK+5+hhqgyWecJK/q+A8vNJNgFbe810PaZT8v5Bb+3NsABKVU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jSuiAm5E; arc=none smtp.client-ip=209.85.222.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="g7A20xPi"
-Received: from mail.comstyle.com (localhost [127.0.0.1])
-	by mail.comstyle.com (Postfix) with ESMTP id 4bHqVl4hL0z8PbP
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:36:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
-	:from:to:subject:message-id:mime-version:content-type; s=
-	default; bh=Rn8OwGH8iDmPsK5NwbTuXtwHkhyEeZU6nX8vlSXPYvU=; b=g7A2
-	0xPiE48CpM5+VJk7nqpiD61FctcFbRKmV/7wsC/3SqVxP/xOO484nVHpTqS1uI9W
-	/2K39w9sP2I7vzAfrsr9XW7ueuEYMpcVJJZNX1SnfECuB9r0Q1PvN7Fm3HiMv7cg
-	tJX9192RwwShHGuZ/bNU6Q2OBU3WNNIKZ8UMpgs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
-	LZD5QO7qWqS8gXRQZKu/1AbHzMceWiqqsOzdmOiqf+kB8MS9YzWrgnC6Ql5ep9+x
-	4B2iwDxKhD//vRvD0+PsZ67/PiFphSKxq4Rf0gphYbNVOVQIy0Cnhd7CT+eToOpJ
-	8Ojl17bOv8ln1nv7BNfT6sDmguMRBj7QmuXjWx23TNU=
-Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:4f0d:db46:2c79:2a5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	(Authenticated sender: brad)
-	by mail.comstyle.com (Postfix) with ESMTPSA id 4bHqVl2ky7z8PbN
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:36:47 -0400 (EDT)
-Date: Thu, 12 Jun 2025 00:36:46 -0400
-From: Brad Smith <brad@comstyle.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jSuiAm5E"
+Received: by mail-qk1-f196.google.com with SMTP id af79cd13be357-7d21cecc11fso94550085a.3
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 21:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749704364; x=1750309164; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ydXuekpHJftdbchZlcmZUu6QrgVU8RXHvqINZ9F3SB0=;
+        b=jSuiAm5EWDj/qMFUNQPujEduvfckcAA0FiflJ3CeeoFrB+8cLUxCGTANEsRKPeFUDI
+         QMVV/odCrVjg66Qjxk71CC/3I81775axrXH3W+PTxfSwvlPK5z2kY2xlZg+m++4Em64A
+         f3+KT+j1dITTAj3R6w4lJu++Sb35/QQPCPRno3epgSVDf8IjnK6pqXNBpj9UksPAtxFU
+         u5C/v+VedGLtYNogf2cgy4md2EtaAwm6cHJmAtFnJpCKyXS1lX0t/BUzelPB/cjwlo+u
+         I/vReo1iBFR6NVkXDKOeDs2qDqEH+Fco2g31ILc06V/9Eb5iNCqP60tIkYarbdjN08ja
+         S6vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749704364; x=1750309164;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ydXuekpHJftdbchZlcmZUu6QrgVU8RXHvqINZ9F3SB0=;
+        b=XI4Y70ArevDK4Ew+P3f7iO6sXX3OohXPHYGRxEfXsHCARqMhic/6uDn1muKgCLRQ6T
+         rb7SpEawR3WozGNFIa81W5n4hDqx7PXP7GxCO2/7fKYUd1b7JpmbkjwKWrKyeHNGvLXp
+         37jq8OgMRLxVDGCl6fEkPTrWuVAftu1VOMQQlcPEFfEOi6rMooVQQc5pSiP4WuAU+m1C
+         Sd65zjjLYTSsUcDMMCaUoUTMCHkIa4LzNbBzT9EIRnM2QRizHGy7Ifj08x33BlO6ifad
+         BwIwSUiN4sfJHUseTdf1tUMSQTn1IXth79EphLZZFv/mL3jrYgVnTw04a2qIlc0cJfLQ
+         I+ng==
+X-Gm-Message-State: AOJu0YxPbC2qTna02QOu55Fzf/rb8HN1qwXGniVuObs0iux+5O8EN27c
+	+CSD8xuDwNRpGnEHtg78nkPsjNRQbx3mr6vmbWN4bmE5WV8JtXJ+0nuJU03fhpXu3xswQQ==
+X-Gm-Gg: ASbGncsMsERn2iDU2Ut94rX12NF6b7qxiViOcvuekWa+idoo4Fbb/xDi77hTPjPJMZo
+	GkHGMiGgrs3QaO69OqZby8pEpt5PJ1NLk+SzRTsawso/MjwBb5bDWYSmzIP4wDmwVzndfLGARWH
+	KEO688zC28voUt5GQf4PyVkfmeFtqAxaUtEPgqNFIMW25In4GSRlcZykCpl5Px3fWuI7qQQE4FL
+	u4+lLAXES0QbJf2dpjLTx0yTHZq2aM+dlwmFT7+GArA6Lw1UOQ7iVy2bLK2UPvKDkRbriI6j4kM
+	0F0FiOdPPVf+xnavvjlKvwL7SalstFFYo1xhwTgmT5Cm/MvBhx76zptvngLFFfYodHHA
+X-Google-Smtp-Source: AGHT+IFcWNUBiBTVwLmRESQWBw95rX4GHn5wSs07njYDmqsTE19jHqM5R/NlOhDzZWq49CUSivXfHw==
+X-Received: by 2002:a05:622a:a18f:b0:4a5:8b39:626b with SMTP id d75a77b69052e-4a7229efcbamr32380151cf.27.1749704352583;
+        Wed, 11 Jun 2025 21:59:12 -0700 (PDT)
+Received: from r760 ([188.253.126.213])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-4a7247224ccsm6980531cf.4.2025.06.11.21.59.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 21:59:12 -0700 (PDT)
+From: Lidong Yan <yldhome2d2@gmail.com>
+X-Google-Original-From: Lidong Yan <502024330056@smail.nju.edu.cn>
 To: git@vger.kernel.org
-Subject: [PATCH v2] config.mak.uname: update settings for FreeBSD
-Message-ID: <aEpZXqTOForaZzbf@humpty.home.comstyle.com>
+Cc: christian.couder@gmail.com,
+	shyamthakkar001@gmail.com,
+	ayu.chandekar@gmail.com,
+	Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: [PATCH] git.c: remove the_repository dependence in run_builtin()
+Date: Thu, 12 Jun 2025 12:59:05 +0800
+Message-ID: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
+X-Mailer: git-send-email 2.50.0.rc0.47.g9cc88feafa.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-From bdeb596fa6a99c4059df52bbdaed08268100c43e Mon Sep 17 00:00:00 2001
-From: Brad Smith <brad@comstyle.com>
-Date: Mon, 9 Jun 2025 14:27:39 -0400
-Subject: [PATCH] config.mak.uname: update settings for FreeBSD
+run_builtin() takes a repo parameter, so the use of the_repository
+is no longer necessary. Removed the usage of the_repository.
 
-FreeBSD 6.0 has memmem().
+The comment before trace_repo_setup() advises not to use get_git_dir(),
+but this note is unrelated to trace_repo_setup() itself. Additionally,
+get_git_dir() has now been renamed to repo_get_git_dir(). Remove this
+comment line.
 
-With making 6.0 the minimum version drop bits for supporting
-FreeBSD 4.x.
-
-Signed-off-by: Brad Smith <brad@comstyle.com>
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
- config.mak.uname | 6 ------
- 1 file changed, 6 deletions(-)
+ git.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index b1c5c4d5e8..da592eeaa0 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -302,16 +302,10 @@ ifeq ($(uname_S),FreeBSD)
-         ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
- 		OLD_ICONV = YesPlease
-         endif
--	NO_MEMMEM = YesPlease
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
- 	USE_ST_TIMESPEC = YesPlease
--        ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
--		PTHREAD_LIBS = -pthread
--		NO_UINTMAX_T = YesPlease
--		NO_STRTOUMAX = YesPlease
--        endif
- 	PYTHON_PATH = /usr/local/bin/python
- 	PERL_PATH = /usr/local/bin/perl
- 	HAVE_PATHS_H = YesPlease
+diff --git a/git.c b/git.c
+index 77c4359522..429ad1c2fb 100644
+--- a/git.c
++++ b/git.c
+@@ -462,12 +462,11 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+ 	precompose_argv_prefix(argc, argv, NULL);
+ 	if (use_pager == -1 && run_setup &&
+ 		!(p->option & DELAY_PAGER_CONFIG))
+-		use_pager = check_pager_config(the_repository, p->cmd);
++		use_pager = check_pager_config(repo, p->cmd);
+ 	if (use_pager == -1 && p->option & USE_PAGER)
+ 		use_pager = 1;
+ 	if (run_setup && startup_info->have_repository)
+-		/* get_git_dir() may set up repo, avoid that */
+-		trace_repo_setup(the_repository);
++		trace_repo_setup(repo);
+ 	commit_pager_choice();
+ 
+ 	if (!help && p->option & NEED_WORK_TREE)
 -- 
-2.49.0
+2.43.0
 
