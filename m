@@ -1,100 +1,128 @@
-Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABAC153BD9
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 22:55:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04C02153BD9
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 23:49:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749768922; cv=none; b=dM0wZQBgV+njzsJ2biL4I5hNyjCcQSSkZWcDFOlW4FV9lLoh59Ix1v5cF0TB7BNat/EF0mqtk1fxMsjhwPv6byBsei+DE1IBIdNBMqdCR6kM68loeIs3qy0o3FbfHVdRB8kZDYWW/pussFRPLTxIV+eh7ZQWApY8CFjxWKBOkjs=
+	t=1749772168; cv=none; b=mK1k4JXvmujIwGgxmXKaCy1KaTcOYz82404iMjx47eygRQ6l19GxVMFkPzOlKnm3LzO8lNty1N2TsXnzAAHu0+6kYoU8pHoyad0rUiQFUnt1gwA/j83ZkdtLdw655EFCf3tGlMnh9whQOkoG9V513yFskOovOLxYf0CGzLvAFl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749768922; c=relaxed/simple;
-	bh=clftN6DHPKEHEy7BV8xjQvOJfqCmThObJelLAY7n+os=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=Qjl3soDFbA9I4R1SV34eZ8FUk0CDFxRgXv079EpfZCvsFv68zOQs3h+APdOnQ9CoPikI978CbLuejKxub4L9yPkM7pz5TH7sJIagJgqWVENBlF2VlhSdnW3lOCcF+PbUgZ46t0KKJTR4QOhoJezVCvtyUSy7TQ8snT8GsaGzslY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PHCHf2aj; arc=none smtp.client-ip=209.85.128.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749772168; c=relaxed/simple;
+	bh=HCpu9kNR9GcODP84mKbtzpY0jYd+8PXLmFmRnFjSo9s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sqmrRVKEwE68+bP4/K2wttWr2ixkXARUUd8Cf41oTxMTVTTs6F1MccCTT2JITsrQrAk6Yk7ZBLPZHnueXkmjPjjWacv6kizMZRUg1JDLCRjmyGv4VyZkKmCdB9urFGztGUZAvp99zLtVKG+hZlRhlnh00nZVWPCJNtfHw0+YPio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ImDck0Sd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aSxEm0Wn; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PHCHf2aj"
-Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-70f147b5a52so10608447b3.3
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 15:55:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749768919; x=1750373719; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=clftN6DHPKEHEy7BV8xjQvOJfqCmThObJelLAY7n+os=;
-        b=PHCHf2aj984f/brmYL2QYiDl1Kpj4ZzOZLhug7i7n35DMf9uw4tB3G8TwFZeUIAFTM
-         VvaloN460wOyju+BZZp4KKrMqOEFwYjVfQ6EIPkeCbmGAi0GjGJEUYN3ycN37Mfkje7g
-         /G1KmZaD3IoFSNsGdB06wLX6WXa7py8uqeq0uilBqL7AKlm5RXgsM6eFurNQWaZM2Zo5
-         Nlv4Ffs2QBMgeX43dLcabZfwVK/ZNYWi3+Q5xPe6C/G/fxt4fvCmx+tTb2vdoxQoCp/f
-         XwE2iBmEpBHc1/QQ/EzLuGjAc7qHfX0Rze43bC8/aVBOxh2unj6xb+loaYb8PYHKzFFb
-         gc5A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749768919; x=1750373719;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=clftN6DHPKEHEy7BV8xjQvOJfqCmThObJelLAY7n+os=;
-        b=FYoKeRrVKm39J90ToEAhiBzrkWx59se+cPzNP2yfXkw9Oc5CNAvbTSX9OJDaPmp3kq
-         dB0bMn4OCsvqeUbUUjNm02V+j3OPH+FWjSgS2FcHR0dkrpoiYSCQAeM97YbIKMwf2Z1J
-         xCACb3DoTdK5XYJUR6MA7v8gTxiULBJLlKc3eHituvLUHe29jucTy7LGlbrNs0T+AfzM
-         HAfrv9IuMtTiQSdOurxawGMXYFF+/q2hTx0MqK8JjzGRuXpxShfoDLXARVVNux4dZRoZ
-         ZLey/OVDQ8Mfvndu2OREDBw/IQrta1pIaaOlTkjHCxjKUcQuPMU/SK+Ea8bUZHFaw4of
-         5UAA==
-X-Gm-Message-State: AOJu0YxbIGyeeYvxQTaidJvHxSpVSVifynWKtT4yg4MO+daL7Zs8KzeF
-	h1NFanp9rLXnsxWKFfnfU9zvGYrrpEq+FWyVn3opva/eW+wRKoMRytMX
-X-Gm-Gg: ASbGncuVLoHrccff5k4hR4fAheHwL7j8dIgRJ0QLF/G07irLsCg/fTma/yjiSZLlVLM
-	uSsbfsNHFrTm1qxiyPKvjxTE1mvHnQ8jGdQrmqtbFZ+QlKfM1fha1TMArbdsr8LgVthNKfwV6DM
-	cci8rEQw0MWuUSFMEsbNd4i+UviUkoMSh8zDvPSr+tbq6xUbO2JGkwAdiGs/U1X6m66jb5Q0s+j
-	El1tGKkgRHSEpKOlUF8rcwmF9kwl0fWe3CHirMHFxHFW/2FdBY/B4EIQV7V+8J21EMqHxKSiFnB
-	dm2bIeEGL/NsPgmD84hKx/g85DO6fmHBYsspJhGkbXPPgheSNllw5+ezF9+f2WxuA2dDayuQF6+
-	jooMskPkWMjBMwROz4IMG
-X-Google-Smtp-Source: AGHT+IFiq8BcwyBFxFgXYGmg3sO91NAbuCtPo5io7PTfHzf4VzLVWe8cv6o+cx7+M7kBBAIkANGWAw==
-X-Received: by 2002:a05:690c:7401:b0:70c:a0c9:c648 with SMTP id 00721157ae682-711637ab649mr18567307b3.19.1749768919307;
-        Thu, 12 Jun 2025 15:55:19 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a6:1600:acc9:95be:dcc7:a4d3])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71152795a62sm4410097b3.60.2025.06.12.15.55.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Jun 2025 15:55:18 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ImDck0Sd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aSxEm0Wn"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0506425402A3;
+	Thu, 12 Jun 2025 19:49:24 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Thu, 12 Jun 2025 19:49:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749772164;
+	 x=1749858564; bh=iCTxgj6piyxnM2qK6oH4IbNO71A9EJU9yM6u1T/Ut3E=; b=
+	ImDck0SdyBdN1OchJtThON4RiZ7HwoEza8zXJCMQSJ1zu4EsNIO2yHcZk8zt3ksf
+	dwRkJPT/HOT5BFblZCsMOgmVjYTxCwaNAMWxGDqfJrJOJwDDJRAAaSc53+a9qa39
+	woydZLg05TjSCXDoT1LRvt9uULZWz5vIZII2XubuhymCrtIp7w9ZaPXgYPhwkUXY
+	H9yHJHw22YnrL7j7Sr71wByZV26pT2spNbceQ9AXRzGZCzLlDF/08y4BnJqnAFO6
+	lODUEx/VihtKIi7yszmA32dC7+FgcX4txoS00+bGrHkftSBEiRgioQHjiAZhLzXR
+	xqmfnENN9IHJDN6DgMFqwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749772164; x=
+	1749858564; bh=iCTxgj6piyxnM2qK6oH4IbNO71A9EJU9yM6u1T/Ut3E=; b=a
+	SxEm0Wn3tAiq1JivcjHRu11fH8XWPjhrUUELTdNrupbHWeBOXiMGDbgF69Y4lWoB
+	U0itYEZjoXQ2mKOcpu9SSC+w+ykOPcm9w8rjg7pKE9gfnR1mBbzbR3qrn/WXZ0JZ
+	dvp/WLymSjXzaYhhloawk6J6MR7okwq/UFwoih0/++m+oV659iMgTzqNPWwIgFRn
+	eYMK4CqgfrWk5E5sCYc4Hekp5isSiBRqOD3uFOmUT3pEhdo2/TCbZ6oAnN8unUXt
+	xyyN3XgYTseUGSeTd/0/v4pEVCkVc/0/SpF5KYorc1yPG33vdiujNNrLBl2YkKqu
+	Di/OReoENwQKaOj3NbqSQ==
+X-ME-Sender: <xms:hGdLaJCqI_annQht9mwo4TClpkcoUjVRj4LgUBD3QxvO19tyqqGpnw>
+    <xme:hGdLaHgbIz3yWS6UMb4It3UCl_8GHnXjmfZ7ypoeq2CKAoD-bWRMBRTAq8H2fIOeE
+    oi9hec9j7FEcaXmfw>
+X-ME-Received: <xmr:hGdLaEnaoOz4v6morJooq4ulW0GqNFFJYYiZH6JSQy1pfe_gP99h7dfYEvyWqA2NUD9lAv8q2oVFOnX8NvevqzNCuMEBfxnebUqH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduieegfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekofdttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepkefgtdeuvdejfffgheeufeeugefhtdej
+    hffgkefhhfetieffteehleehtdfghedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhht
+    hhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehvihgrkhhlihhushhhihhnsehgihht
+    lhgrsgdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:hGdLaDzzyRKSO-82uxZ9T5uO4qIaIsAD7cQpoJWjk5YHQa3BSqCLfQ>
+    <xmx:hGdLaOQ8GPDm7V8Q9RHyjOHK10Y4p36oNVpkL7ma4K-liLEUqME1lw>
+    <xmx:hGdLaGZhHVx120wynOnZEQ2dFUuTXH0HIeb2ny4IMX_7COoQN2raCg>
+    <xmx:hGdLaPStqU7cFlxQCkOXlqVaRsgTl0fUYpI8bk09_tptYJUso0YMkQ>
+    <xmx:hGdLaCaNqtuCHSqgttUvoFHEMQ4Whk8Pa7AVuWTxnt6yGjljxm1NgcgQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Jun 2025 19:49:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: siddharthasthana31@gmail.com,  git@vger.kernel.org,
+  viakliushin@gitlab.com,  johncai86@gmail.com
+Subject: Re: [PATCH] cat-file: fix mailmap application for different author
+ and committer
+In-Reply-To: <CAP8UFD1hBo_ZH1nyGBOoQOwx=44CfnkhEOHYu3_XMwSzXQAHdg@mail.gmail.com>
+	(Christian Couder's message of "Wed, 11 Jun 2025 11:38:02 +0200")
+References: <20250611062643.8639-1-siddharthasthana31@gmail.com>
+	<CAP8UFD1hBo_ZH1nyGBOoQOwx=44CfnkhEOHYu3_XMwSzXQAHdg@mail.gmail.com>
+Date: Thu, 12 Jun 2025 16:49:23 -0700
+Message-ID: <xmqqecvobjwc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [GSoC] Blog: Machine-Readable Repository Information Query Tool
-Date: Thu, 12 Jun 2025 18:55:08 -0400
-Message-Id: <CE4644B2-3FCF-47D2-B869-8926BD58A8AE@gmail.com>
-References: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-Cc: git <git@vger.kernel.org>, Karthik Nayak <karthik.188@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-In-Reply-To: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
+Christian Couder <christian.couder@gmail.com> writes:
 
-> Le 12 juin 2025 =C3=A0 16:53, Lucas Seiki Oshiro <lucasseikioshiro@gmail.c=
-om> a =C3=A9crit :
->=20
-> =EF=BB=BFHi!
->=20
-> I'm one of the GSoC contributors on Git, and I'll post my progress
-> weekly in my GSoC blog.
->=20
-> All the updates will be located in the same page, here:
-> https://lucasoshiro.github.io/gsoc-en/
->=20
-> You'll also find there my GSoC proposal and a list containing
-> the patches that I sent to the mailing list and their status.
->=20
-> Feel free to contact me if you have any questions, comments or
-> any other kind of feedback.
->=20
-> Thanks!
+> On Wed, Jun 11, 2025 at 8:27 AM <siddharthasthana31@gmail.com> wrote:
+>
+>> Reported-by: Vasilii Iakliushin <viakliushin@gitlab.com>
+>> Reviewed-by: Christian Couder <christian.couder@gmail.com>
+>
+> Nit: I reviewed it when you suggested it on a GitLab MR (Merge
+> Request), but I am not sure it counts unless I also review it here. I
+> think the "Reviewed-by: ..." trailer is for patches reviewed on the
+> regular Git mailing list (or maybe on the private Git security list).
+> So maybe "Helped-by: ..." would have been better in this case.
 
-Just had a quick read, and one question: in the plaintext format, why do we d=
-rop the keys?
+If somebody (including me) sees your reviewed-by on a patch and do
+not remember they saw your review here, they might ask, but as long
+as you are OK to have your name on the reviewed-by trailer, meaning
+you have carefully inspected exactly the same version of the patch
+and are willing to stand behind the change, it is perfectly fine.
+
+On the other hand, if you see somebody attach your reviewed-by to a
+patch that you didn't review, or is substantially different from the
+one you reviewed, please raise a stink about it.  I do not think
+this case is such a case.
+
+> Anyway I have now reviewed it again and I found it great.
+>
+> Thanks for working on this!
+>
+>> Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+>> ---
+
+Thanks.
