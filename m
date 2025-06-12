@@ -1,116 +1,88 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 924C74690
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 16:48:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786AE1F3BB0
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 16:51:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749746935; cv=none; b=ig0Cm7bRR30Cfsrh+RDz0e8i9JKqt+bk+FSXbVRJpEYghDQxqlNxS5FcrNMJ7QysMN2KlIqUhKoLbUstyWsNhnoLolVmBeJ8TiTr+YwLLlAj0ZBQvJrj95r0BTSUXAtmyYLH435kB6wCDajRVgZS5UVxEFFynjHof2kMpWcrOcE=
+	t=1749747100; cv=none; b=n0nRq4xAoQK2HAFXuTEHKsW8LBtEVVUcRm5isEPf2pjgsHcmA9qcLCfz3D9EGpqafoG3LR4JTGSXa2HFl5uKPL7G25+MTF3dtNFlkiZ3+XT/PHFuIbaffiHXQmWURp+P2+yhOp2Ipd8p8/qLUlDBos7tY+JxrI0KTXxu7qPNd1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749746935; c=relaxed/simple;
-	bh=D8hYubGdUuVOqBZNixXhpQg7tqJTgMe3qgCmqj+fEQA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XfJvQLTvwa0qnk/IWmk8JelbGrpgWHfZbJ8KxJ/h+VvDM8UQG+zkKeLmUy6KRRqfEe/7Y9uHmgpuBmGNUzsvOz/jYN24emAcxSj70Xvly9ZTWUr3BrHrdUNo++hyStehv5/9GBpz+WoHgCZAN6tzOQECWQFUqQH8rD9JeXjeCWE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=G0UAoDy2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1749747100; c=relaxed/simple;
+	bh=KSG2HZHRfaty4YcM+wd5nZHy6aOcOxw7+Cm0msQT4PQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TX5lXCYNg5MrOm0xhhvM4OUf72Ell+a3SDxPMibiitFZT6dSb793F6/A3eW9U0PMBCT/5kH/9OXbaZvN13ZUTQ/ZmSVp27gtaAElEKxyEKjbKfGsSjXYVyN56wQmzuKoSlc4MKQ1dPYPFbT8VmscCs1LMDRSejaOL1uL37wIuoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H6U90nrf; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="G0UAoDy2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1749746931;
-	bh=D8hYubGdUuVOqBZNixXhpQg7tqJTgMe3qgCmqj+fEQA=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=G0UAoDy2KAtQEtJCjBn3wiElxqht/JlqkHr51z1mzmtGoFkLqiChyaUv/lHPjjgMM
-	 Z3MY7V/beOSA3rJ+da/GFdp0z8Y41TP2GvlafU9B0W85l3AILT3Pduc/3w9iZ57I3u
-	 VFdkz7HrdnhBj7w3IC5Wck2vGRE1MlkvG/DTwbixTaMTKVG+B2w9di7QszmADSzjBs
-	 z+RVPiQDJNuPFhlKBwxf81TnmvQTTPo4dEg8oDQIs9gR5qUHDEZkfl9j7xvClNIadJ
-	 QSSmrXQwwDTK3tLv1pjW/f2KdcX/KAYk9gzI7n0OMT7IXpeT3UAAWLBlOmvhMKd3eG
-	 0LtpqRdfuuHHlc6P8dXkEfKx4668wkcxmEt50N3VSZKjjNHig/ALZV2ibNARYB2fFz
-	 5MnOlL67glrmO2l89ygQiYf9mesvZiFitvxnlNFnK3a2oENHm6eUW6QEenlta1F7PR
-	 GXJlOJyACiOM/lC2Y22SJc6GOjNf6nVd+6cfX1P5+bNrzdZA6v9
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2FD9420038;
-	Thu, 12 Jun 2025 16:48:51 +0000 (UTC)
-Date: Thu, 12 Jun 2025 16:48:49 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Carlo Arenas <carenas@gmail.com>
-Cc: Brad Smith <brad@comstyle.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2] config.mak.uname: update settings for FreeBSD
-Message-ID: <aEsE8S90fJSr9Or5@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Carlo Arenas <carenas@gmail.com>, Brad Smith <brad@comstyle.com>,
-	git@vger.kernel.org
-References: <CAPUEspguEY+e-J0dMA2EdDgu=t4fK5ASS13Jfp_Mgwiq3Rtd0Q@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H6U90nrf"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-604f26055c6so4315729a12.1
+        for <git@vger.kernel.org>; Thu, 12 Jun 2025 09:51:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749747097; x=1750351897; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vIdBLoElDsKguyzjCuIxPGjYsEKj9zSpKkyBhB51aFo=;
+        b=H6U90nrf4Bqxpdrb4bPIOs5h4mTt+ztJDreACWt354G117q2gGGEzc9czs8GqsogZK
+         ypqX1gQKlMS/9nkNH7PiotoZh7KczSLqBjYY9u6XVZLtHhC1X7IFFNgFOGRgYwIzUTC0
+         g1vr13AymvGN61NVZD3lr7aDaSlGi3oruB8EEiuS+4/Chs9nbrSRoVqaWylacErIqPlC
+         cmLwNLW2RvMP9nftUnjhiTjuzqY2Jl3OTlwiMEek2btVAAwhqThISKLPYMlxHc75gQhJ
+         ZMk8oB98KUlYWL7BxIxTLEcj3R14Rrr7zJULJL4bhtdzmUkSsw/vOxXOCy08OrFoSd0N
+         kn8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749747097; x=1750351897;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vIdBLoElDsKguyzjCuIxPGjYsEKj9zSpKkyBhB51aFo=;
+        b=SCJcDesygwJ6jGwpOe6i6fW5/hFAe0dLTa5xa/6rSlMc/FkRaLhaKXqSNt5/urrSVU
+         7S+FlN8HcvB4iLbKiXgmjItacjfhfpnCszdQ4PTRI6+hBUrgwtlJpCsPnO39Cnce38+H
+         uVgde6vtAzjpodV6kKSfcBAFShLNsuAJ052NFbHVHVkmmeHxoCws0+DrorVAlhiW1yJO
+         H5PgdlzPSG7a2Zz+SlK8RzTNRPdnemSpkuvu1djnGFtdk7WJDBNA5HchSPlGZmi+NIIm
+         GsMVGGBap9eqssX87INJtga4dQ0jccBVhemgB9N1jUxXvudf81DSFiirx+8eTEG5DYZK
+         r/3g==
+X-Forwarded-Encrypted: i=1; AJvYcCX4At8mTZ6fSLUxWDAA4VOXnkg8XHQ0OFPAiM04F5ZosBGzrTkqRQlXlpB0dqSYcYr0eng=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxjhYJhxj+60DlFkKqCYqOHI4VYaJgPn8T4XejdZE4U3PLHPXHU
+	Z1puXavB2dIwGFvLrhbgzn1y1P0GAQZRO49Cwe9X2EPhv7w5PEwYbQLonD6PGzxOvVafepmu7ee
+	KIWG0chQiopoJRpRvTzexZtsvL0/jkPI=
+X-Gm-Gg: ASbGncueHbHlUyINep4QwDV9g8i0Q4xAj4uzpqsmrLVdKEeUeM6CW1VS9z6Qr4kdGgI
+	y55jomOsJHo7UAUEbYA1uCtewNpNj/TripNYk7F3ATgib4DFT2iA74/VFNz8zL1pC96Fpi/LKJ3
+	kkh/d4kkP273et7Vj0QfnDCKnUAPZZ65eqShB0JyTF7gIHNMjRmlWp
+X-Google-Smtp-Source: AGHT+IGxjvnpRoBqFNXuwx1CnPtBS5xBmrr7gClCkbQgc3r2ymdeiI29Yfb8gfbqvr4RQVgHNwPbeyPTIO7s3lsiWKU=
+X-Received: by 2002:a17:906:4794:b0:ad8:e448:6c64 with SMTP id
+ a640c23a62f3a-adea5ae9d26mr405926566b.24.1749747096339; Thu, 12 Jun 2025
+ 09:51:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="3MA3HHKa4zT7/PQQ"
-Content-Disposition: inline
-In-Reply-To: <CAPUEspguEY+e-J0dMA2EdDgu=t4fK5ASS13Jfp_Mgwiq3Rtd0Q@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+References: <pull.1992.git.git.1749546464346.gitgitgadget@gmail.com>
+ <xmqq7c1jmgpq.fsf@gitster.g> <CAEgWtF-fNXaC88FWw5K_3ZpbvQSxAfeuCFy8kkrh_z16vD77=g@mail.gmail.com>
+ <xmqq4iwnktyv.fsf@gitster.g> <CAEgWtF_0JzZ24L+H-WoKFGaK6Hho-YYbutxSXRud4SK3HwOYXg@mail.gmail.com>
+ <xmqqecvqjo46.fsf@gitster.g> <CAEgWtF9MRbRASg1Jb3n6Ggvh8viZOpyev+OyX5DSpWQ7bMF8dg@mail.gmail.com>
+ <xmqqjz5hffn0.fsf@gitster.g> <xmqqa56dezax.fsf@gitster.g>
+In-Reply-To: <xmqqa56dezax.fsf@gitster.g>
+From: Andrea Stacchiotti <andreastacchiotti@gmail.com>
+Date: Thu, 12 Jun 2025 18:51:25 +0200
+X-Gm-Features: AX0GCFs-ZhvGTHSh5nOdLXVX_GNrgI2C3rLBSYJx1DfcBpZhQlc0smtL7fQqKPI
+Message-ID: <CAEgWtF-uKdeJ_B4WUZFJQ7gziN+GjJ=GVNE1V6OebyoQAiiG3w@mail.gmail.com>
+Subject: Re: [PATCH] branch: move multiple branches in a single --force
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Andrea Stacchiotti via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+Il giorno gio 12 giu 2025 alle ore 17:48 Junio C Hamano
+<gitster@pobox.com> ha scritto:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> > I may change my mind.  But I do not think the feature should not be
+> > tied to "--force" option at all.
+>
+> Sorry for a double-negation failure.  What I think is that the
+> feature should be orthogonal to "--force".
 
---3MA3HHKa4zT7/PQQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-06-12 at 13:52:03, Carlo Arenas wrote:
-> On Thu, Jun 12, 2025 at 12:36:46AM -0800, Brad Smith wrote:
-> >
-> > FreeBSD 6.0 has memmem().
->=20
-> but AFAIK it was buggy, uncompatible with the "standard" and
-> didn't perform that well, at least until FreeBSD 12.
->=20
-> assuming that the system version is indeed faster than the
-> one provided with git (which should be true but worth testing)
-> then it might be better to only enable this for later versions?
-
-FreeBSD 11.4 (the last version of FreeBSD 11) went end of life in
-September 2021, so nobody should be using it since it hasn't had
-security support since then.  And it's even been functional (but slow)
-since FreeBSD 11.0, and 10.4 went EOL in 2018.  So users shouldn't
-actually be experiencing any actual functionality problems since then.
-
-I don't think it's a big deal for people who want to use an obsolete OS
-(which, to be clear, I'm not encouraging) to tweak the Makefile knobs a
-bit.
-
-> > With making 6.0 the minimum version drop bits for supporting
-> > FreeBSD 4.x.
->=20
-> FreeBSD 4.x is no longer supported and wouldn't even build a
-> current git, since it predates C99 and is missing POSIX
-> compatibility with what we require (ex: no statvfs)
-
-I definitely think getting rid of FreeBSD 4 support is fine.  It doesn't
-even support AMD64, so as a practical matter it wouldn't be useful on
-any sort of modern hardware.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---3MA3HHKa4zT7/PQQ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaEsE8QAKCRB8DEliiIei
-gaf2AQDNuFWk83rq7afORPZ3vpPcAmZK189lNtz1E6Reva+n9AD/VBflpDljGgGo
-jVYiDebxKNJS0t6tG5OpHBBuZ4tqFAE=
-=/s17
------END PGP SIGNATURE-----
-
---3MA3HHKa4zT7/PQQ--
+No worries, I got it, it makes sense.
+I can implement the revised request if I see some replies expressing interest.
