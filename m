@@ -1,110 +1,130 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74702522F
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 22:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF572E1726
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 22:37:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749767463; cv=none; b=tplELHKsNJLu0yh20oUy469X/xEitZ1IpKLZZ+e7TjTv+j/Nv3Otm15RqSbXr2Ss8KS8Yc7kNR4qxdzF1aW1s+Q5m4P/AD7pVEVEr+fmlI6/hvWKgxEi7stlicj/SZmWsvfuj7k6sGUl4f9Tu+PEiZ6YPFFvT0rSodLeLTefKCk=
+	t=1749767874; cv=none; b=XHIOd+XSQpKYXXLrsf5P+sJkcURnLj6moVPtC6W7IulxzOF3ez21mtQ1HuP1kuPx846RmgAX30HtdwJ+Wxql0N16k1c3vwzY0JzWPxLDXDFoL9gT/U7tYAQsVDnPXax1Qn006Z4ArkJ4b/ovb268JpJfGneHllefDB8FlUQH1ow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749767463; c=relaxed/simple;
-	bh=ZejrOIs7UmNsVtc8rVHhUcb6ehubrncrQFHa5QJz87w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVerigaHyE5Z/BEcdJSVlOi88tvZ08pTIzFhNLiGotNNELJbm8nTVfx3kvGilzLCSO6iVVkEGd2AsPjWsCWw8m20o9PApsoaBYcMYoGNDgeWi9uplDRYWCQ5cbSOz5/prVrFzI42+CuxAHqLOz1IkYdfpZTCobZ89NzI7varIbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZtganaQE; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749767874; c=relaxed/simple;
+	bh=ycdKCF/I5Ar9Lu3nO0bHgmCE7qZ0nyOhqmMcu8X8B64=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=brsZFx7HF6EBXRHAwiF/VA+vj5b3lL+GYpyzSxZy29YPkrnQQO81IlIW5biykAljzJeA8ctl1Yn/aWCft83eIsv0GHPhe5mo6uZC87cnWLN7oW4PEaHap/tTuKGcqZ5G7LtzNit0//bk4Q/umXygbDjuIdcTpD0hUZ+THSNbVVA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iH8dggyr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PfXEZd8p; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZtganaQE"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-74877ac9d42so1074890b3a.1
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 15:31:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749767462; x=1750372262; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PONB5ClItsPpSp0tSETSgbLuyIvg3iUOuX/FbFWmjF4=;
-        b=ZtganaQEdWCGs7RY8jxFmcAMvs9Lnygf79YvK50vBgp6YknyhKxEA9p4zpmBRq1DsZ
-         d7zhPQBvX3k4PRabtqNiXNUhujgBYXuxxsrg6cAm857guvcugNp7YTSNoth+vNLtpFYc
-         3q9ujb9/OykgfR+i89BbOOuMDBeuKItYd11mwHCxD2cTT1V+qB6hpxbrRBCOzacpXeDW
-         Dr4hQdbSpetsqR5er+MrbAC0gNu74/ePOJ1s2FAo2YvWBqQgM6YHr0Flu/9L/hHF5j6X
-         OxQH/0hS6UnZYYYeeuoGYpM6q+iItHehHKNay/qRgHKOvm8tTYkxzVvIWdjrM3rU6hRE
-         N1EQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749767462; x=1750372262;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PONB5ClItsPpSp0tSETSgbLuyIvg3iUOuX/FbFWmjF4=;
-        b=nlbsCcjdrcgVXHVbbF7UM8zsLhR48GDmsf0VZGaUQn851TqT13GFYOfW0t1fNVnJyY
-         DPNUFJLFDL8w069ZbuGrO1DyHz/1cozsDIBGtixXutjkB5NfMZ2g2y+yeYkivMll97Qc
-         BRpM0hPhc/lq3i61eyWN16Iy9Yd08qkcC23YNYolfbvpohtZU5AMmCAc25C1nDkZGXRD
-         Ba65HKd8MpQbF/+Tu+wPjg8w2DJTTZAC7Ij4U/kW06vKPBWb3LkkDpA2PB8ATXLQ6pd4
-         U8l8DQ/MqooM3Prpg8QVlvAhCkpyk7wziNwE8VZJDCCkYKvWxgOpTHRHRdHF7nxTzd+E
-         VurQ==
-X-Gm-Message-State: AOJu0YzYP2/sE/ydMA+SwHSETTQVe5hOb84n8sRu9uVnMs7HVoyerkS+
-	0i9n0N/KmLEMCQsoyQ6rXVgFanJ5b65E0y/qWC6SpLgk6iBOKe40FhVe
-X-Gm-Gg: ASbGncsWWh03SlIyvP14bqBSXUV6V2H2DLcMedZM/M89IY0NY9pp+esnSrkskb5AOsG
-	aFuL5pg42iDlYeYB43vEN5VWbv1HajvCbCQrXeD9B8vWO3gyRelsK3A2X4IYWd5CXukuzOo/iBk
-	ovGBNFKIYpiAjpIYG1+Mw97otDzvE43e/gJWuSg9PxmKyLYWi48oxlWxktuZmlLB8CmJGumgutX
-	xuwVht7zH3dGtCveqUenNzH9rd1/NqANZtnH1Fhl/ARCvrpHpp5B6Rogg8FdLYcpTYl9I/G8iwH
-	9a7IJooIKBbej65RnuZMbLrHdSqyuzIZCyabUdAzf9afkoZJ5DTCh8Cd0QhcnQ8FQef0OYV5SY1
-	ZBodjyXFl0mRul+w8WBinpg==
-X-Google-Smtp-Source: AGHT+IE54TBkfYu2GijpcdroPO0b73xwW/fftGlfVO+opeF0Y0yorNp1Hj+W5Hp/0uh1tUYczaNQ5w==
-X-Received: by 2002:a05:6a20:12c5:b0:204:432e:5fa4 with SMTP id adf61e73a8af0-21facc87925mr874528637.23.1749767461604;
-        Thu, 12 Jun 2025 15:31:01 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:8dc3:5851:1e44:aea])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74890006059sm276875b3a.55.2025.06.12.15.31.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 15:31:01 -0700 (PDT)
-Date: Thu, 12 Jun 2025 15:30:59 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Brad Smith <brad@comstyle.com>, 
-	"brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iH8dggyr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PfXEZd8p"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 20BB125401B0;
+	Thu, 12 Jun 2025 18:37:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 12 Jun 2025 18:37:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749767871;
+	 x=1749854271; bh=Rql3nXv+WRuiZV/QZTNegGKZo+glvZdYG2BcMbxmzJU=; b=
+	iH8dggyr09pxGRPE4bAzkbGOMilPCWhjubg7EyaMDJ5ecc8dQHK62u9C45FXyDug
+	xZ9rWStc+eCqsbtPWMcmBBNPEkHLHQNXwjuhlel1rm5kVTfNvhigv4eljZRwp8o4
+	aJJ6xB7PVqjWc8XPPYeRu6aIoN7SmjVp1cfmJ2cnpzvpFtVkGGzS4Kpq4iU+au6k
+	d+RYbd0IuVnwnqs55VbWElTKpZgCAPztGkzF8DprhnPsIgjy6xn8cv1Cc5NpYjjJ
+	Ncgy8iDTGm/7ie8/U1hhu9QyOh3ycI49D+9DnFDMHuY3tSPeWni5amNisH4noqbK
+	FdY37S34cKEAiQITJWTBwQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749767871; x=
+	1749854271; bh=Rql3nXv+WRuiZV/QZTNegGKZo+glvZdYG2BcMbxmzJU=; b=P
+	fXEZd8pj5qqZ3YfaLbdX1k5S0xfLDAVw7QnbCJckjhj8/P2SfczC3yNIjdQXWC1i
+	5yVuDiGbhiMluKzjHdj1uNzXSAErNvcTKY9Gw2IxFL0ZbOtxnmTzxRfrmHGVL2dF
+	krCbZ9hf13gO4LZNr0QztYDhFBLUHUYPAJ8dqvVbSpXMo+iZk0SS1ZWp769sTEvp
+	CI6dKBMmDd179qrQ18oyLHmxilzuof559D8udNvzawdyt4itycRE2Yu6KweeFbv/
+	aTMIBk3/+wdzLFMy34jZm3wbHKug9Bzbn8wvncA6ABtDciYzrmCW0lkEcJrS2fYX
+	+DoL0yMPRnuNkObROs10Q==
+X-ME-Sender: <xms:v1ZLaDSbo01TMbAaL0p3uuvhJz8Ap4UCJikBqE21I-nAjK6p00l6ZQ>
+    <xme:v1ZLaEzp_3-oAdmkYmC50kIrnVqWz6WOTZ1TSAC1YFL5Pyn43kNd3XfVj6OI_jq8V
+    u755b7BvnwdZdRkjg>
+X-ME-Received: <xmr:v1ZLaI31AF1FwdmUt674ssYPS1G_eAY6ls4ugIKB2yiUnAMIwwG0IkvosqC0ZnI1YiWxjvIhijfz1P6hwBPhopFh0maoeTczcfZJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduiedvlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
+    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrsh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepsghrrggusegtohhmshhthihlvgdrtghomhdprhgtphhtthhope
+    hsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:v1ZLaDCn5F59-XzKYNfcVRYncFZdfBtXvcIEbQF8t0-oQPD9WQslig>
+    <xmx:v1ZLaMgTFNID7SILMaUfHblpEQbw7xHn-VL1KZep89kgi4REQSMvkA>
+    <xmx:v1ZLaHq4mKn_FFc4bl-kDuLItj6EicvlacMl3xLAV6qpucdSer2ugA>
+    <xmx:v1ZLaHi52bo8YzSygMZ4ZHINaaEw4sXl9GST5p7BJt_lGDB-hZPl6g>
+    <xmx:v1ZLaMT-qMQyqpKW3OU4_z_YQtt6WCuZuZn6Y9wHFWVDToLnBELEkw_x>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Jun 2025 18:37:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: git@vger.kernel.org,  Brad Smith <brad@comstyle.com>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
 Subject: Re: [PATCH v3] config.mak.uname: update settings for FreeBSD
-Message-ID: <4fi5rwhpavu3se3htd2s4ym7oppswrwam545vczwf2jvumeqs3@z7imdc7cdw52>
+In-Reply-To: <4fi5rwhpavu3se3htd2s4ym7oppswrwam545vczwf2jvumeqs3@z7imdc7cdw52>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 12 Jun
+ 2025 15:30:59
+	-0700")
 References: <CAPUEspguEY+e-J0dMA2EdDgu=t4fK5ASS13Jfp_Mgwiq3Rtd0Q@mail.gmail.com>
- <aEsE8S90fJSr9Or5@fruit.crustytoothpaste.net>
- <xmqqv7p0bpdl.fsf_-_@gitster.g>
+	<aEsE8S90fJSr9Or5@fruit.crustytoothpaste.net>
+	<xmqqv7p0bpdl.fsf_-_@gitster.g>
+	<4fi5rwhpavu3se3htd2s4ym7oppswrwam545vczwf2jvumeqs3@z7imdc7cdw52>
+Date: Thu, 12 Jun 2025 15:37:49 -0700
+Message-ID: <xmqqjz5gbn7m.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqv7p0bpdl.fsf_-_@gitster.g>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 12, 2025 at 02:51:02PM -0800, Junio C Hamano wrote:
-> 
->  * So,... earlier I mentioned about officially documenting the EoL
->    timeline for various platform support, but without any official
->    one that documents the decision in one place, how about a commit
->    with a detailed log like this one, which I stole from brian?
-> 
->    No code changes since v2; only the log message talks more about
->    where we draw the line and why.
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-I was hoping something more like with the following (untested) "fixup"
-on toa, obviously the "unconditionally" in the commit message should
-need adding "for the supported versions"
+> I was hoping something more like with the following (untested) "fixup"
+> on toa, obviously the "unconditionally" in the commit message should
+> need adding "for the supported versions"
+>
+> diff --git a/config.mak.uname b/config.mak.uname
+> index 9cac400d94..cbf1f4c0d2 100644
+> --- a/config.mak.uname
+> +++ b/config.mak.uname
+> @@ -280,6 +280,9 @@ ifeq ($(uname_S),FreeBSD)
+>          ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
+>  		OLD_ICONV = YesPlease
+>          endif
+> +	ifeq ($(shell test "`expr "$(uname_R)" : '\([1-9][0-9]*\)\.'`" -lt 12 && echo 1),1)
+> +		NO_MEMMEM = UnfortunatelyYes
+> +	endif
+>  	BASIC_CFLAGS += -I/usr/local/include
+>  	BASIC_LDFLAGS += -L/usr/local/lib
+>  	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+>
+> Note that either way the build won't be broken
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 9cac400d94..cbf1f4c0d2 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -280,6 +280,9 @@ ifeq ($(uname_S),FreeBSD)
-         ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
- 		OLD_ICONV = YesPlease
-         endif
-+	ifeq ($(shell test "`expr "$(uname_R)" : '\([1-9][0-9]*\)\.'`" -lt 12 && echo 1),1)
-+		NO_MEMMEM = UnfortunatelyYes
-+	endif
- 	BASIC_CFLAGS += -I/usr/local/include
- 	BASIC_LDFLAGS += -L/usr/local/lib
- 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+As I do not think we quite care about anything older than 12, I am
+perfectly fine being a bit extra defensive like your version.
 
-Note that either way the build won't be broken
+Care to assemble the final version with both code and log message
+updates?  We are not in a hurry, as we are talking about a rather
+ancient issue and this will not come close to 'master' before the
+final release next week anyway.
 
-Carlo
+Thanks.
