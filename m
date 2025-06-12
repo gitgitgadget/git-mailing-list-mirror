@@ -1,146 +1,124 @@
-Received: from buffalo.tulip.relay.mailchannels.net (buffalo.tulip.relay.mailchannels.net [23.83.218.24])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10037BA34
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:24:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.24
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749687885; cv=pass; b=o6SZjB6ZGFrOFpD58AZ1B/GmtpPz/TcgwWhefhsRk+xOnM1r0r9qcc8lywWhSPi+/bwZf2qDqdvnHKhKvsZlHVchGyAnl4OczdP71lv6pGMVFWQflzljytBiKMOnn8sFwszeuMym4//b3kvpFEHPJcuZdHYqRRKRMoU48N/9U5w=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749687885; c=relaxed/simple;
-	bh=VDTklumHk1DV1epgDyvvyh67bULucyPPTultdPKzCiU=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1196C2F2
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1749687892; cv=none; b=ooZO+TjzIAJnLKNXVT54UCxzyeQBHWL5vgYgU7ZUue8NFilblo3rVdIltR6eEi1bkZpIibiRyr7d9LA1nExRxuL6AugSZkSTr/7dB3mG4gERfBBdnoXIvAwEquJT+u5UkiIi6PaorgaW9YHGeQf1OwpwjilzeLPlRJ5Cf9Equk0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1749687892; c=relaxed/simple;
+	bh=AMgz2RQXB+wj8MIshlWNjafUF9wFeI+w89P6COLl/po=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MnxJ5drN76hYYIVLJq2fb/HTthyfK1G+NM7erjsddodt+9rSIp+SDNGTpYlaeLMwhE4zyQSnsPT1uDEym6nnLlfoo6vl1g/UpPEwbq6Ff7su4vKz1h8h8J4NjaUBejfsibyl7alJvTf5kSEy1K5O+MZWMrbMBp7KiOlH3HUqWE0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=dqJNq14t; arc=pass smtp.client-ip=23.83.218.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ia6W8bA2nnX3Z1NAAaSbc8TyXE+QgfhYiD32KBNiFf4Q60NGaJ8ZV6DcMH9rL/LOSyjZDlciFFaaDIRKG+eGY5EHj2tBRluJDqL0r2dqCT6r5NgiaM8Z17FidTX7CxNIDNckP0Uh+hhfBZSu670/mmFmuwLW0FZ1HNSOFKw4Fh8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=j6U+Og3w; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="dqJNq14t"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 14EDE1C1F64;
-	Thu, 12 Jun 2025 00:06:46 +0000 (UTC)
-Received: from pdx1-sub0-mail-a289.dreamhost.com (100-119-143-134.trex-nlb.outbound.svc.cluster.local [100.119.143.134])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 79AE01C2DD4;
-	Thu, 12 Jun 2025 00:06:45 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1749686805; a=rsa-sha256;
-	cv=none;
-	b=vdf1vynP4lV8oUXhu36VnsdCAAvBI5RxLsc/dh6MrGSbnE4Zn8Vl7k1lnxmdediBlM//EU
-	Q9/WprqrvrGvXZDE26sNNm84rRvV9BmGu8+/MyNUO0sDxpaMs6igxw6H/5s4dNOf0OG5K2
-	wIq4QHXDD+SB4M178ZjKj0udqAeWflG+d7+egr33EVyQd+/E8VLd9aIiEvSrmEnbfxilcJ
-	SHie7CntHTsfgrkHSQ/IICfF1v6hnlWR9EAmviM1Tet7rIvTgqqDSSY3hplqaEjoKYaXsx
-	ttRy6oRGFo+lRs27tXIpyO9+C7aS7CmUrLzhv4GPk8YQNIe8vjdClkILAvlmSQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1749686805;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=7KMiQoUjEbe8iA51Jxld3Dvr8e75R1WI9yno7Uys5v8=;
-	b=I7m+gHZSzvEmTgEC2C08q4xaOi/QUbXzDx7ITRMZk0aI3IkbcZWO4JVHy/qjPdhAtAG4ZX
-	VvCj/DKAamurKYeiTuJDGcbTwF0Dq+ZwPZb7zZe4KofYRDLCSTaU+FX/i4P/9tuikz7JAv
-	Ly7ig4rm6Yf5oM6EE9RztSvXrIhuMqZTcdqH3obB0sLsldzmAxFPCA6B9DmaCSNDq42rzh
-	MPVNhwxG1keQsAXkMLF8BZ3SYogPikHxzb/r+IKcLp6MiMlFf6KL2nT3KXrK3jczRacAAN
-	l5DM1Bl82lNR9Iw67Qziff/asP4MeT0M1rp+MRYk2D/5r/ZlGiuJxi3EFXA7Pg==
-ARC-Authentication-Results: i=1;
-	rspamd-6c978647c4-wnvrs;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Trail-Descriptive: 3a12bc6876f00e0e_1749686805730_1429606846
-X-MC-Loop-Signature: 1749686805729:3944657032
-X-MC-Ingress-Time: 1749686805729
-Received: from pdx1-sub0-mail-a289.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.119.143.134 (trex/7.0.3);
-	Thu, 12 Jun 2025 00:06:45 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="j6U+Og3w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1749687889;
+	bh=AMgz2RQXB+wj8MIshlWNjafUF9wFeI+w89P6COLl/po=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=j6U+Og3wadDc5DiQPFtyTMeJMtT/5jAClHhC63igzVINGmyXmJe0+0Sq2aOsxOaqn
+	 uz2c45etwPuiYQPaPVWr/8GwjLwi+RxBFgnu7oIHZ65XTZ2pWPMAXfIvPMikuIKtSs
+	 2rY7z99DqLszgI0WHdjqM/KUXjN3U7eMsLb1iM79x/Yu7uPc9SjChkF7pCAbPyq02/
+	 gP8AnehcaGcpXNwKhQXWLwJXoGKrj+F4c9Yvs6DuRBWBJkJAuHQa7cl5Oi2oSj3OOf
+	 E9GIpNB94YWmRc855Ba16Iz2ocx1k3TJsZ/GYWxYssZYWLRxg45RTJIeEQDFjln6gF
+	 R+jvt9rBYMBNh+dVzri/fKrXmwOf4lCD3XcsxOfh2LAJBZ3gtAlxGKpvsAZ7p71HXZ
+	 VfSeeO5BZeaF4kddCbj2deYAUkOVk3bpxCWYGt7pPN4ZzusAG4UbwcfukmYA+jqwe5
+	 U3o+HRLsAglk9NgznkkyJMb7krol58iMRKlzQ9e27Cos0Fh2usT
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a289.dreamhost.com (Postfix) with ESMTPSA id 4bHjW86brNz4F;
-	Wed, 11 Jun 2025 17:06:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1749686805;
-	bh=7KMiQoUjEbe8iA51Jxld3Dvr8e75R1WI9yno7Uys5v8=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=dqJNq14tss1aG7Z+z1JPt+CQb5iG6AaNxUsXdQYhxL4vCK9XOzDx+sg4PdwwsmHiw
-	 S1HkrNVn9k6xTDeQ6It3Dj/1sdpx/bSS+i/+bRF9Xx9fhT4OiuQ/P7HUP0HCa3Hz+8
-	 EOH3LP04LKcwAvQlLN7jAdG+jswp4RgBdmG1cauZM9MWb8M9F7BkRey/s4G+WUPBfC
-	 AMm+tBTDe/awseRXnpB4qqgBfBVjtvfE3Fo+BWSfmDNkufE53yZcb3eJ1ggp+DSXjz
-	 CM36f2ooWsDMNP8ORgoUtF7pG/eyakcFOFTgMzHorTZolQmSunvRLAr2hLrh+eRvJR
-	 e4XLPqarL9cKg==
-Date: Wed, 11 Jun 2025 19:06:42 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Edmundo Carmona Antoranz <eantoranz@gmail.com>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: RFC - rebase--
-Message-ID: <aEoaEviYFuQQz04m@ubby>
-References: <CAOc6etZm_+FPSgdwXszjqy5VBiQXNStEoOJ7-UF+h3AJhiQ_Ng@mail.gmail.com>
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 7CF552008A;
+	Thu, 12 Jun 2025 00:24:49 +0000 (UTC)
+Date: Thu, 12 Jun 2025 00:24:48 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 2/6] bswap.h: Add support for __BYTE_ORDER__
+Message-ID: <aEoeUCcXYByjU5HR@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Sebastian Andrzej Siewior <sebastian@breakpoint.cc>,
+	git@vger.kernel.org
+References: <20250611221444.1567638-1-sebastian@breakpoint.cc>
+ <20250611221444.1567638-3-sebastian@breakpoint.cc>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="imjwamQaknGVaCk9"
 Content-Disposition: inline
-In-Reply-To: <CAOc6etZm_+FPSgdwXszjqy5VBiQXNStEoOJ7-UF+h3AJhiQ_Ng@mail.gmail.com>
+In-Reply-To: <20250611221444.1567638-3-sebastian@breakpoint.cc>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Fri, Jun 06, 2025 at 11:00:10PM +0200, Edmundo Carmona Antoranz wrote:
-> So, I sat down and wrote rebase--, a pygit2-based script (yeah, I
-> know, I am a shameless cheater :-)) that _attempts_ to run rebases and
-> take advantage of previous merge commits to try and avoid asking the
-> user to redo conflicts **if they are easy to deal with**. [...]
 
-That's cool, but I hope not to ever benefit from it because I prefer
-rebase-only workflows -- look ma'! no merges! :)
+--imjwamQaknGVaCk9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I use a different approach which is to use something like a bisection to
-find the first upstream commit where a conflict arises -if any- so I can
-resolve the conflict there where the information about what changed
-upstream is most relevant.  This is the script I use:
+On 2025-06-11 at 22:14:38, Sebastian Andrzej Siewior wrote:
+> The __BYTE_ORDER__ define is provided by gcc (since ~v4.6), clang
+> (since ~v3.2) and icc (since ~16.0.3). It is not provided by msvc as of
+> v19.43 / 17.13.6.
+> The __BYTE_ORDER and BYTE_ORDER macros are libc specific and are not
+> available on all supported platforms such as mingw.
+>=20
+> Add support for the __BYTE_ORDER__ macro as a fallback.
+>=20
+> Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+> ---
+>  compat/bswap.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>=20
+> diff --git a/compat/bswap.h b/compat/bswap.h
+> index b34054f2bd728..0a457542dd76a 100644
+> --- a/compat/bswap.h
+> +++ b/compat/bswap.h
+> @@ -116,6 +116,12 @@ static inline uint64_t git_bswap64(uint64_t x)
+>  # define GIT_LITTLE_ENDIAN LITTLE_ENDIAN
+>  # define GIT_BIG_ENDIAN BIG_ENDIAN
+> =20
+> +#elif defined(__BYTE_ORDER__) && defined(__ORDER_LITTLE_ENDIAN__) && def=
+ined(__ORDER_BIG_ENDIAN__)
+> +
+> +# define GIT_BYTE_ORDER __BYTE_ORDER__
+> +# define GIT_LITTLE_ENDIAN __ORDER_LITTLE_ENDIAN__
+> +# define GIT_BIG_ENDIAN __ORDER_BIG_ENDIAN__
+> +
 
-https://gist.github.com/nicowilliams/ea2fa2b445c2db50d2ee6509c3526297
+One additional option you can add if you want (it's completely optional)
+is that if `__STDC_VERSION__` is 202311L or larger, then you can
+`#include <stdbit.h>`, which has `__STDC_ENDIAN_LITTLE__`,
+`__STDC_ENDIAN_BIG__`, and `__STDC_ENDIAN_NATIVE__`.
 
-In the comments you'll find links to several similar tools:
+That will work on a modern GCC or clang with an appropriate compiler
+flag.  I don't know about MSVC, but it might be an option for people who
+want to use more esoteric compilers which support standards but aren't
+very compatible with GCC and clang.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-https://gist.github.com/nicowilliams/ea2fa2b445c2db50d2ee6509c3526297?permalink_comment_id=4659501#gistcomment-4659501
+--imjwamQaknGVaCk9
+Content-Type: application/pgp-signature; name="signature.asc"
 
-git-imerge in particular is real pithy about what it does for you:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
-| Reduce the pain of resolving merge conflicts to its unavoidable
-| minimum, by finding and presenting the smallest possible conflicts:
-| those between the changes introduced by one commit from each branch.
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaEoeUAAKCRB8DEliiIei
+gdZNAP0fVYg+ero+6ccIo76riDlSAN9+xFl2IcBjPv/JxI/BvgEA7/RxUFMYpkv1
+WdRg/t1lqQNEAvyAt0FNFYUCfOvl+ws=
+=ldxA
+-----END PGP SIGNATURE-----
 
-But yeah, if you have a codebase that merged from upstream and now you
-want to rebase it, then using the conflict resolutions from the merges
-makes sense.  It's just I hope dearly to avoid merges, and IMO more
-people should do that too.
-
-I get that this message risks starting a flame war :( but it's not my
-intent to start a flame war.  And I get that there are cases where you
-have to merge features from multiple upstreams and cherry-picking gets
-tricky enough that merging becomes the only viable option.  But if you
-have to track multiple upstreams and you can help it you'll be much
-better off cherry-picking than merging, and in all other cases just
-follow a rebase workflow.
-
-This sort of problem (rebasing or merging across massively many commits
-upstream) is the sort where rebase workflows shine precisely because
-your commits are "always on top", therefore they are always easily
-identified as the commits you want to "move" to be based on a new
-upstream HEAD.  With merge workflows you simply can't get the
-information you need to resolve conflicts, and the best you can do is
-"see how I did it before", but with rebase workflows and conflict
-bisection you get to have the most pristine conflicts -- the ones where
-you have the most local and upstream information available to help you
-resolve the conflict.
-
-Nico
--- 
+--imjwamQaknGVaCk9--
