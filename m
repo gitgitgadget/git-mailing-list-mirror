@@ -1,148 +1,84 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2E14120B
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 01:12:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3AC18D
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 03:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749690747; cv=none; b=kT8zpsiT4hbEu0iSDb3lxXUWGSfq230q5H8+EMpkFXWh5KkVtokNk48eMt1wKS+gdfiYm3Pt23F/fuPjiLVL8ZlpAb2RXwmEBTIgYAj7Mm29I0WnvIk3ruFzYm8iG1+4ferTT4bZA1cXBnxIQfxjU/5pyPT3P4TnsDKAdPR+G+I=
+	t=1749698024; cv=none; b=NEk6wEsiNDeX09AiJLNMuIk6xrF1f4SmXPBya2YGsN0U3waxz5zlJKGk55bFninOf42AKKBhBQHvCgHcocYEAyt7spvlILPjZyAU1sZcVtiPE+D7cly/Ltzy0jNckSpuFFBPqmW70IcG/ED8vCecQxHUg4TJfAB+aeqCiSdxEaI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749690747; c=relaxed/simple;
-	bh=qH3pFY8oLdwRq9YTJO85YHe6mDATHPBQc7jH7Ysm3CA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WwZoGhj4PJyzioergz0jwyWJ0z08ybTQiyuGJFHPbB7/SdPvSKLRbaGo4A7k/epp4sJ1KdAUn/unhJQSuxw92wz6GbF7AyndVb51A4CMaJhu4AvdGR4WAkM256eUtGdm59/mjClKsIOO6m06ecmJW9iF8iiZhBcUUcCpCQ4T+Co=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wtSHgstD; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1749698024; c=relaxed/simple;
+	bh=9GTyFyLsbr740hsziQW34QEeFWE3Ej2nA3GFqPS83Mw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=UWbRka8R++w1QPDGaqupJ5Lm7CVZYyJbwsyAWlT8GzWgie9LYd8vd8WtgrZGR1inaFRCifb1H68ovn45ULOgMCm6Wd+9Z5op1+oWjpVo8ZO30LP6OS5ypmd0Pd5KGVAFm5nngixg3qMqXNMHMJeoDfUyLjYYj3YOOx/kCjdTcy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=DisSfGFK; arc=none smtp.client-ip=206.51.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wtSHgstD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1749690743;
-	bh=qH3pFY8oLdwRq9YTJO85YHe6mDATHPBQc7jH7Ysm3CA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=wtSHgstDbAxiVV+AHB9fMqYOgAwyg73gf7pgUEYOCkuMQ+IKDyqFq+F0iXdH/OzMI
-	 cycSK761CPyXTT5NFGLXXm5QVao4fMF3X4rX+/7+y8Aq31Rieopp/Jnj6ZGGRg6hkP
-	 Ngru0I5/pqwcrODNh8H2FlCxQjbtJMKqeDhOBphw5Ju+1/9/MZArMJyXbYwRgpr0rW
-	 FAnYlXnavqvub4RfGrXbosD3dZBaIJKmk1k6+HyLxwOZEQirtc0NLwTXyOzi3vXY5I
-	 I09rrRV24MYI5feuQ7hdKygSQSE4nos5ra126pWcvT5eXxP52Pw6s761i1JiEHAHur
-	 zXeyS/au+TAw04ntuK4esCRhCpA23Va1zpMiukSEsqocQuX4ykR/CuPEG9Xn+TRGF6
-	 LK2eUGy+JNrmrntkmenvGekEQtKzOzKRDXrhGE3aequ4GhzNDCgGOTc3iUUJivoKoe
-	 0fkX50BbxjooF4lu+Yur6yx16yYlu9oBZAPXk8UjltBoHlyj0Tt
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="DisSfGFK"
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+	by mail.comstyle.com (Postfix) with ESMTP id 4bHnfl2Xqmz8PbP
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 23:13:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+	:from:to:subject:message-id:mime-version:content-type; s=
+	default; bh=9GTyFyLsbr740hsziQW34QEeFWE3Ej2nA3GFqPS83Mw=; b=DisS
+	fGFK7vbdtUxXTJQjujsnQ7hpf3hkP5GpbInCf5o9dfTW8mC+A1MVfD3CfIT0M0py
+	DphsufH+dPxdEdDMUZsK8WOIhkBzthfNyZnPdTD8P6PW83ZFND+qRN6SdaKVx+jF
+	lR/3AezdYojSKm7/hqcHqyT4rZ1ZDy0Ngc/FK/M=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
+	MKNyaLxNWsUTz0paR6KkjF0X57K1zMXdE0yR9HGd1cUCDzafyH0MYUSbfbyH2VAs
+	SKv11HlGvo4YSD5lIx/2KKNZQAAanT7PO/FQLkk0IO71QDfWdyHL3ijePIerXrD6
+	trz0AdIfvBZYQ8w/L29HeH1TFsktLAStcRFTf+27/Uk=
+Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:4f0d:db46:2c79:2a5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CF54F200B0;
-	Thu, 12 Jun 2025 01:12:23 +0000 (UTC)
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v8 0/4] Importing and exporting stashes to refs
-Date: Thu, 12 Jun 2025 01:12:16 +0000
-Message-ID: <20250612011221.4158484-1-sandals@crustytoothpaste.net>
-X-Mailer: git-send-email 2.50.0.rc0.567.gd817f1499f4
-In-Reply-To: <20250601223225.464076-1-sandals@crustytoothpaste.net>
-References: <20250601223225.464076-1-sandals@crustytoothpaste.net>
+	(Authenticated sender: brad)
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bHnfl1ySJz8PbN
+	for <git@vger.kernel.org>; Wed, 11 Jun 2025 23:13:35 -0400 (EDT)
+Date: Wed, 11 Jun 2025 23:13:33 -0400
+From: Brad Smith <brad@comstyle.com>
+To: git@vger.kernel.org
+Subject: [PATCH] config.mak.uname: update settings for FreeBSD
+Message-ID: <aEpF3ZjNwkR8FssX@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Stashes are currently stored using the reflog in a given repository.
-This is an interesting and novel way to handle them, but there is no way
-to easily move a set of stashes across machines.  For example, groups of
-stashes cannot be bundled, pushed, or fetched.
+FreeBSD 6.0 has memmem().
 
-Let's solve this problem by allowing users to import and export stashes
-to a chain of commits.  The commits used in a stash export contain two
-parents: one which is the pointer to the next exported stash (or to an
-empty commit with no parents if there are no more) and the second is the
-stash commit that would normally be stored in the reflog.
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+ config.mak.uname | 6 ------
+ 1 file changed, 6 deletions(-)
 
-Original thread at message-ID: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
-
-Changes from v7:
-* Rephrase the documentation to be slightly more explicit.
-* Don't have `write_commit_with_parents` free its arguments, instead
-  letting the caller (who allocated them) handle them.
-* Handle invalid combinations of arguments to `export` and add tests for
-  this case.
-
-Changes from v6:
-* Add Phillip's sign-off to the last patch.
-* Use `commit_list` for tracking commits.
-* Use reflog entry walker.
-* Fix some commit messages for improved legibility.
-* Rephrase some error messages for precision.
-* Drop the patch that exposes `read_complete_reflog` since it is no longer necessary.
-
-Changes from v5:
-* Rename `parse_revision`.
-* Remove extra call to `free_stash_info`.
-* Fix parsing of existing commit.
-* Add more validation of imported stash commits.
-* Add more tests for improved validation of imported stash commits.
-* Explicitly cast `items.nr` and make the iteration counter an `ssize_t`
-  to avoid casting problems.
-* Don't require a trailing `\n\n` in commit messages.
-* Use `read_complete_reflog` to walk reflogs.
-* Be more defensive when using `lookup_commit_reference`.
-* Apply parts of Phillip's patches for improved robustness.
-* Update commit message to explain additional use cases.
-* Use `OPT_STRING` for `--to-ref`.
-
-Changes from v4:
-* Fix another use of oid_array.
-* Fix various memory leaks.
-* Fix a segfault which appeared after a rebase.
-* Use strstr for commits since we don't need to worry about NUL.
-* Added some additional tests.
-* Verify the ident values we're using to avoid using bad values.
-* Various other code cleanups.
-* Rebase on `master`.
-
-Changes from v3:
-* Fix strbuf handling to avoid leaks and generally be more sensible.
-* Make use of the error return code more often.
-* Use oid_array.
-* Tidy various parts of the code and fix long lines.
-* Simplify tests using git tag.
-* Shorten and tidy tests.
-* Add an additional test covering the base commit OID and importing and
-  exporting empty stashes.
-
-Changes from v2:
-* Fix uninitialized strbuf.
-* Avoid C99-style initializations.
-
-Changes from v1:
-* Change storage format as suggested by Junio.
-* Rename to GIT_OID_GENTLY.
-* Remove unnecessary initializations.
-* Use ALLOC_GROW_BY.
-* Ensure completely reproducible exports.
-* Avoid size_t.
-* Various other code cleanups.
-
-brian m. carlson (4):
-  object-name: make get_oid quietly return an error
-  builtin/stash: factor out revision parsing into a function
-  builtin/stash: provide a way to export stashes to a ref
-  builtin/stash: provide a way to import stashes from a ref
-
- Documentation/git-stash.adoc |  29 ++-
- builtin/stash.c              | 460 ++++++++++++++++++++++++++++++++++-
- hash.h                       |   1 +
- object-name.c                |   6 +-
- t/t3903-stash.sh             | 101 ++++++++
- 5 files changed, 584 insertions(+), 13 deletions(-)
+diff --git a/config.mak.uname b/config.mak.uname
+index b1c5c4d5e8..da592eeaa0 100644
+--- a/config.mak.uname
++++ b/config.mak.uname
+@@ -302,16 +302,10 @@ ifeq ($(uname_S),FreeBSD)
+         ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
+ 		OLD_ICONV = YesPlease
+         endif
+-	NO_MEMMEM = YesPlease
+ 	BASIC_CFLAGS += -I/usr/local/include
+ 	BASIC_LDFLAGS += -L/usr/local/lib
+ 	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+ 	USE_ST_TIMESPEC = YesPlease
+-        ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
+-		PTHREAD_LIBS = -pthread
+-		NO_UINTMAX_T = YesPlease
+-		NO_STRTOUMAX = YesPlease
+-        endif
+ 	PYTHON_PATH = /usr/local/bin/python
+ 	PERL_PATH = /usr/local/bin/perl
+ 	HAVE_PATHS_H = YesPlease
+-- 
+2.49.0
 
