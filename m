@@ -1,40 +1,40 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3C54207A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2A720328
 	for <git@vger.kernel.org>; Thu, 12 Jun 2025 01:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749690746; cv=none; b=C1MEOe2cgHV3VOd/M9g7CDgOUuhhpha4ilZFgBS39vM2TVWz5dezYp94stzjTiDNwoYic7UK+Xj4dawJ9yYMXMLghEq5p99aNcbGQjIR56GNu4bdp1lCipzZw4E3Pas7O2SFHI2lcjXsSXK7M01/2FGH4xCU+w3LmfKVCfZDAbI=
+	t=1749690747; cv=none; b=bUf5gWS2sBsemV+QyKuLEYHdIwDTVHvS5R6tmPAg02Uw70l6hrgu+vEUe28r2NXr+3tGM8+ZLgtJwCPlHpI/g23mkJDQljDEIqqWa6rrYOVBaCGL4ISJB/n+PBjX+gcqqiGBNY8eRVy4gqawBOuRdGnoCrb1TQhKGx6fz/fo9A4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749690746; c=relaxed/simple;
-	bh=bb2qqSdGoQMVuNTGssrVu6OmilXoFzSxVwDdrnLS/4I=;
+	s=arc-20240116; t=1749690747; c=relaxed/simple;
+	bh=zgy4e75+d/tdjYz/ZY0+NitRrPNmCbGDttqG8W7mGik=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nCp/xpBf3WCq5kne8qU9gQPwgCz7b+I29r2VoB1qVIk2T2pSjrNdCANQ8a6YEHoxxtVH89LHPGLZmMHwrAQFdgQzJwPHdPfJ1BT+2Fr2NvWE1ZsZq/kahJU+VATGS7e5c/4qiYdp9xJWXb1VD7YNki9AtsTtTtn/anJxO+RpSeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=CpaPMrJ8; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=UJHO7+aux3G0VWjhp3tizogn48BXNEt/JedAS+bzUFaXGjY+cNozt8J8EhBsmHezlvzowcaNk0YN/cdxiDitHjjAhzSCC2Hj4y0bkeXrPiNXNRP25xaJ8Tpqw5mtKJUGKJ2mb0Qa08/bXpz2aebW8wuCZyFSv5j7BbsrPDdtriU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=oTk2xW0n; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="CpaPMrJ8"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="oTk2xW0n"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1749690744;
-	bh=bb2qqSdGoQMVuNTGssrVu6OmilXoFzSxVwDdrnLS/4I=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
-	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
-	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
-	b=CpaPMrJ8+VbspdP/EbWewfFS8xalQKlcWYwxwb9t7BK+yL1jESG/2uv4BIWiWo5f1
-	 Pi16FdLO0reF1gXcbDN/FOd2uJGy4bpXrqyt54dqii6v9Ooi42ZwLe3FOFee771t39
-	 HmG/jmW/iJkuCK/Tsz041Kuui7HV3cHr44QGSOmXgBw3SSKyJ8TQp5SkIRpUVLT7CN
-	 bESxCsxlXWqzyjUpopS+3zimWM5FPQP4nOQNJC+EVG5BjFP6i7Jt2l2bLJRnb2mS/Q
-	 CT1OuUduRCnEZE6sfMCUsLQIgenc7zqo56neG60xRxCvtpW0Jdnk7cX6w4PH2Brmax
-	 3l/lFPlx0b2u7CwnvHIAYkNK3NQtsxSqlnfeSNBwOTjvpda8vT1ndENc0tj1pHaNa2
-	 i1o/yUPdOfpFywSeaGpuNjKqrDlQFWNk1OxVK3hBvxnP0mFd66hZF/aT+PQWfS+KSO
-	 saNbD/Ke2e8XqcHNf1qk1MGDXEZfzE2/ImZBeJfognRJ+pnO4Vr
+	bh=zgy4e75+d/tdjYz/ZY0+NitRrPNmCbGDttqG8W7mGik=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=oTk2xW0nSypfMMhOIh0soPB5hEa8sohdEdoRAy1A0rIXzowYCa2CggWKFoCKKmgI6
+	 If4r2rehbxLzgAJCH8km7oy3/i8Vb8VvBvvMjXg/UswR/c5AobN5RqBVj0SGKqPnmc
+	 LERp9z31BQsifEBkZ9MW0LqWsGAHw1lhIDIetWlNaxHw8EvBm6f0S0Zg965QFqFicj
+	 Z4H6cyZmcQKB0My6OvwUuZ4S+ialmydVcJbBxgSam3BkPDtJVnSVkd3IlynG9ALPAn
+	 YMZvEyqudYQJ/Bk2JH4IoTCIBjhumpLUXATTIiFYHtJuyQHAnZ3vjaKi5qYkPFbKbD
+	 b6j5Ex3HzNm4nHFlQgQuCi7fR9lWDLzNxNJCsGtA9GCw3Vqyd5bQLf2K3RaTz7pvEK
+	 zzM4YaM5YyhxW+vQuyViUqPuRgopXrJD27bIki2ZNe38m1XKvaiA0zJbbBW5XnzUGT
+	 kTgD67Girf03Gs2wRKlbx35tFnvG4b/kMxQZ9RFGsmVM08k7GJZ
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0845820191;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1660B20192;
 	Thu, 12 Jun 2025 01:12:24 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
@@ -42,9 +42,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	"D. Ben Knoble" <ben.knoble@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v8 3/4] builtin/stash: provide a way to export stashes to a ref
-Date: Thu, 12 Jun 2025 01:12:19 +0000
-Message-ID: <20250612011221.4158484-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v8 4/4] builtin/stash: provide a way to import stashes from a ref
+Date: Thu, 12 Jun 2025 01:12:20 +0000
+Message-ID: <20250612011221.4158484-5-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.50.0.rc0.567.gd817f1499f4
 In-Reply-To: <20250612011221.4158484-1-sandals@crustytoothpaste.net>
 References: <20250601223225.464076-1-sandals@crustytoothpaste.net>
@@ -55,424 +55,394 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-A common user problem is how to sync in-progress work to another
-machine.  Users currently must use some sort of transfer of the working
-tree, which poses security risks and also necessarily causes the index
-to become dirty.  The experience is suboptimal and frustrating for
-users.
+Now that we have a way to export stashes to a ref, let's provide a way
+to import them from such a ref back to the stash.  This works much the
+way the export code does, except that we strip off the first parent
+chain commit and then store each resulting commit back to the stash.
 
-A reasonable idea is to use the stash for this purpose, but the stash is
-stored in the reflog, not in a ref, and as such it cannot be pushed or
-pulled.  This also means that it cannot be saved into a bundle or
-preserved elsewhere, which is a problem when using throwaway development
-environments.
+We don't clear the stash first and instead add the specified stashes to
+the top of the stash.  This is because users may want to export just a
+few stashes, such as to share a small amount of work in progress with a
+colleague, and it would be undesirable for the receiving user to lose
+all of their data.  For users who do want to replace the stash, it's
+easy to do to: simply run "git stash clear" first.
 
-In addition, users often want to replicate stashes across machines, such
-as when they must use multiple machines or when they use throwaway dev
-environments, such as those based on the Devcontainer spec, where they
-might otherwise lose various in-progress work.
-
-Let's solve this problem by allowing the user to export the stash to a
-ref (or, to just write it into the repository and print the hash, à la
-git commit-tree).  Introduce git stash export, which writes a chain of
-commits where the first parent is always a chain to the previous stash,
-or to a single, empty commit (for the final item) and the second is the
-stash commit normally written to the reflog.
-
-Iterate over each stash from top to bottom, looking up the data for each
-one, and then create the chain from the single empty commit back up in
-reverse order.  Generate a predictable empty commit so our behavior is
-reproducible.  Create a useful commit message, preserving the author and
-committer information, to help users identify stash commits when viewing
-them as normal commits.
-
-If the user has specified specific stashes they'd like to export
-instead, use those instead of iterating over all of the stashes.
-
-As part of this, specifically request quiet behavior when looking up the
-OID for a revision because we will eventually hit a revision that
-doesn't exist and we don't want to die when that occurs.
-
-When exporting stashes, be sure to verify that they look like valid
-stashes and don't contain invalid data.  This will help avoid failures
-on import or problems due to attempting to export invalid refs that are
-not stashes.
+We specifically rely on the fact that we'll produce identical stash
+commits on both sides in our tests.  This provides a cheap,
+straightforward check for our tests and also makes it easy for users to
+see if they already have the same data in both repositories.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- Documentation/git-stash.adoc |  22 ++-
- builtin/stash.c              | 260 +++++++++++++++++++++++++++++++++++
- 2 files changed, 281 insertions(+), 1 deletion(-)
+ Documentation/git-stash.adoc |   7 ++
+ builtin/stash.c              | 167 +++++++++++++++++++++++++++++++++++
+ t/t3903-stash.sh             | 101 +++++++++++++++++++++
+ 3 files changed, 275 insertions(+)
 
 diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
-index 1a5177f498..0aef0a5b86 100644
+index 0aef0a5b86..e5e6c9d37f 100644
 --- a/Documentation/git-stash.adoc
 +++ b/Documentation/git-stash.adoc
-@@ -23,6 +23,7 @@ SYNOPSIS
- 'git stash' clear
+@@ -24,6 +24,7 @@ SYNOPSIS
  'git stash' create [<message>]
  'git stash' store [(-m | --message) <message>] [-q | --quiet] <commit>
-+'git stash' export (--print | --to-ref <ref>) [<stash>...]
+ 'git stash' export (--print | --to-ref <ref>) [<stash>...]
++'git stash' import <commit>
  
  DESCRIPTION
  -----------
-@@ -154,6 +155,12 @@ store::
- 	reflog.  This is intended to be useful for scripts.  It is
- 	probably not the command you want to use; see "push" above.
+@@ -161,6 +162,12 @@ export ( --print | --to-ref <ref> ) [<stash>...]::
+ 	a chain of commits which can be transferred using the normal fetch and
+ 	push mechanisms, then imported using the `import` subcommand.
  
-+export ( --print | --to-ref <ref> ) [<stash>...]::
++import <commit>::
 +
-+	Export the specified stashes, or all of them if none are specified, to
-+	a chain of commits which can be transferred using the normal fetch and
-+	push mechanisms, then imported using the `import` subcommand.
++	Import the specified stashes from the specified commit, which must have been
++	created by `export`, and add them to the list of stashes.  To replace the
++	existing stashes, use `clear` first.
 +
  OPTIONS
  -------
  -a::
-@@ -242,6 +249,19 @@ literally (including newlines and quotes).
- +
- Quiet, suppress feedback messages.
- 
-+--print::
-+	This option is only valid for the `export` command.
-++
-+Create the chain of commits representing the exported stashes without
-+storing it anywhere in the ref namespace and print the object ID to
-+standard output.  This is designed for scripts.
-+
-+--to-ref::
-+	This option is only valid for the `export` command.
-++
-+Create the chain of commits representing the exported stashes and store
-+it to the specified ref.
-+
- \--::
- 	This option is only valid for `push` command.
- +
-@@ -259,7 +279,7 @@ For more details, see the 'pathspec' entry in linkgit:gitglossary[7].
- 
- <stash>::
- 	This option is only valid for `apply`, `branch`, `drop`, `pop`,
--	`show` commands.
-+	`show`, and `export` commands.
- +
- A reference of the form `stash@{<revision>}`. When no `<stash>` is
- given, the latest stash is assumed (that is, `stash@{0}`).
 diff --git a/builtin/stash.c b/builtin/stash.c
-index ab491d5ff6..192b0d9969 100644
+index 192b0d9969..0e77fa94ee 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -28,7 +28,10 @@
- #include "log-tree.h"
- #include "diffcore.h"
- #include "reflog.h"
-+#include "reflog-walk.h"
- #include "add-interactive.h"
-+#include "oid-array.h"
-+#include "commit.h"
- 
- #define INCLUDE_ALL_FILES 2
- 
-@@ -56,6 +59,8 @@
- 	   "          [-u | --include-untracked] [-a | --all] [<message>]")
- #define BUILTIN_STASH_CREATE_USAGE \
+@@ -61,6 +61,8 @@
  	N_("git stash create [<message>]")
-+#define BUILTIN_STASH_EXPORT_USAGE \
-+	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
+ #define BUILTIN_STASH_EXPORT_USAGE \
+ 	N_("git stash export (--print | --to-ref <ref>) [<stash>...]")
++#define BUILTIN_STASH_IMPORT_USAGE \
++	N_("git stash import <commit>")
  #define BUILTIN_STASH_CLEAR_USAGE \
  	"git stash clear"
  
-@@ -71,6 +76,7 @@ static const char * const git_stash_usage[] = {
- 	BUILTIN_STASH_CLEAR_USAGE,
+@@ -77,6 +79,7 @@ static const char * const git_stash_usage[] = {
  	BUILTIN_STASH_CREATE_USAGE,
  	BUILTIN_STASH_STORE_USAGE,
-+	BUILTIN_STASH_EXPORT_USAGE,
+ 	BUILTIN_STASH_EXPORT_USAGE,
++	BUILTIN_STASH_IMPORT_USAGE,
  	NULL
  };
  
-@@ -124,6 +130,12 @@ static const char * const git_stash_save_usage[] = {
+@@ -135,6 +138,10 @@ static const char * const git_stash_export_usage[] = {
  	NULL
  };
  
-+static const char * const git_stash_export_usage[] = {
-+	BUILTIN_STASH_EXPORT_USAGE,
++static const char * const git_stash_import_usage[] = {
++	BUILTIN_STASH_IMPORT_USAGE,
 +	NULL
 +};
-+
-+
+ 
  static const char ref_stash[] = "refs/stash";
  static struct strbuf stash_index_path = STRBUF_INIT;
- 
-@@ -160,6 +172,33 @@ static void free_stash_info(struct stash_info *info)
- 	strbuf_release(&info->revision);
- }
- 
-+static int check_stash_topology(struct repository *r, struct commit *stash)
-+{
-+	struct commit *p1, *p2, *p3 = NULL;
-+
-+	/* stash must have two or three parents */
-+	if (!stash->parents || !stash->parents->next ||
-+			(stash->parents->next->next && stash->parents->next->next->next))
-+		return -1;
-+	p1 = stash->parents->item;
-+	p2 = stash->parents->next->item;
-+	if (stash->parents->next->next)
-+		p3 = stash->parents->next->next->item;
-+	if (repo_parse_commit(r, p1) || repo_parse_commit(r, p2) ||
-+			(p3 && repo_parse_commit(r, p3)))
-+		return -1;
-+	/* p2 must have a single parent, p3 must have no parents */
-+	if (!p2->parents || p2->parents->next || (p3 && p3->parents))
-+		return -1;
-+	if (repo_parse_commit(r, p2->parents->item))
-+		return -1;
-+	/* p2^1 must equal p1 */
-+	if (!oideq(&p1->object.oid, &p2->parents->item->object.oid))
-+		return -1;
-+
-+	return 0;
-+}
-+
- static void assert_stash_like(struct stash_info *info, const char *revision)
- {
- 	if (get_oidf(&info->b_commit, "%s^1", revision) ||
-@@ -1895,6 +1934,226 @@ static int save_stash(int argc, const char **argv, const char *prefix,
+@@ -144,6 +151,7 @@ static struct strbuf stash_index_path = STRBUF_INIT;
+  * b_commit is set to the base commit
+  * i_commit is set to the commit containing the index tree
+  * u_commit is set to the commit containing the untracked files tree
++ * c_commit is set to the first parent (chain commit) when importing and is otherwise unset
+  * w_tree is set to the working tree
+  * b_tree is set to the base tree
+  * i_tree is set to the index tree
+@@ -154,6 +162,7 @@ struct stash_info {
+ 	struct object_id b_commit;
+ 	struct object_id i_commit;
+ 	struct object_id u_commit;
++	struct object_id c_commit;
+ 	struct object_id w_tree;
+ 	struct object_id b_tree;
+ 	struct object_id i_tree;
+@@ -1991,6 +2000,163 @@ static int write_commit_with_parents(struct repository *r,
  	return ret;
  }
  
-+static int write_commit_with_parents(struct repository *r,
-+				     struct object_id *out,
-+				     const struct object_id *oid,
-+				     struct commit_list *parents)
++static int do_import_stash(struct repository *r, const char *rev)
 +{
-+	size_t author_len, committer_len;
-+	struct commit *this;
-+	const char *orig_author, *orig_committer;
-+	char *author = NULL, *committer = NULL;
-+	const char *buffer;
-+	unsigned long bufsize;
-+	const char *p;
-+	struct strbuf msg = STRBUF_INIT;
-+	int ret = 0;
-+	struct ident_split id;
-+
-+	this = lookup_commit_reference(r, oid);
-+	buffer = repo_get_commit_buffer(r, this, &bufsize);
-+	orig_author = find_commit_header(buffer, "author", &author_len);
-+	orig_committer = find_commit_header(buffer, "committer", &committer_len);
-+
-+	if (!orig_author || !orig_committer) {
-+		ret = error(_("cannot parse commit %s"), oid_to_hex(oid));
-+		goto out;
-+	}
-+
-+	if (split_ident_line(&id, orig_author, author_len) < 0 ||
-+	    split_ident_line(&id, orig_committer, committer_len) < 0) {
-+		ret = error(_("invalid author or committer for %s"), oid_to_hex(oid));
-+		goto out;
-+	}
-+
-+	p = strstr(buffer, "\n\n");
-+	strbuf_addstr(&msg, "git stash: ");
-+
-+	if (p)
-+		strbuf_add(&msg, p + 2, bufsize - (p + 2 - buffer));
-+	strbuf_complete_line(&msg);
-+
-+	author = xmemdupz(orig_author, author_len);
-+	committer = xmemdupz(orig_committer, committer_len);
-+
-+	if (commit_tree_extended(msg.buf, msg.len,
-+				 r->hash_algo->empty_tree, parents,
-+				 out, author, committer,
-+				 NULL, NULL)) {
-+		ret = error(_("could not write commit"));
-+		goto out;
-+	}
-+out:
-+	strbuf_release(&msg);
-+	repo_unuse_commit_buffer(r, this, buffer);
-+	free(author);
-+	free(committer);
-+	return ret;
-+}
-+
-+struct stash_entry_data {
-+	struct repository *r;
-+	struct commit_list **items;
-+	size_t count;
-+};
-+
-+static int collect_stash_entries(struct object_id *old_oid UNUSED,
-+				 struct object_id *new_oid,
-+				 const char *committer UNUSED,
-+				 timestamp_t timestamp UNUSED,
-+				 int tz UNUSED, const char *msg UNUSED,
-+				 void *cb_data)
-+{
-+	struct stash_entry_data *data = cb_data;
-+	struct commit *stash;
-+
-+	data->count++;
-+	stash = lookup_commit_reference(data->r, new_oid);
-+	if (!stash || check_stash_topology(data->r, stash)) {
-+		return error(_("%s does not look like a stash commit"),
-+			     oid_to_hex(new_oid));
-+	}
-+	data->items = commit_list_append(stash, data->items);
-+	return 0;
-+}
-+
-+static int do_export_stash(struct repository *r,
-+			   const char *ref,
-+			   int argc,
-+			   const char **argv)
-+{
-+	struct object_id base;
-+	struct object_context unused;
-+	struct commit *prev;
-+	struct commit_list *items = NULL, **iter = &items, *cur;
++	struct object_id chain;
 +	int res = 0;
-+	int i;
-+	struct strbuf revision = STRBUF_INIT;
-+	const char *author, *committer;
++	const char *buffer = NULL;
++	unsigned long bufsize;
++	struct commit *this = NULL;
++	struct commit_list *items = NULL, *cur;
++	char *msg = NULL;
++
++	if (repo_get_oid(r, rev, &chain))
++		return error(_("not a valid revision: %s"), rev);
++
++	this = lookup_commit_reference(r, &chain);
++	if (!this)
++		return error(_("not a commit: %s"), rev);
 +
 +	/*
-+	 * This is an arbitrary, fixed date, specifically the one used by git
-+	 * format-patch.  The goal is merely to produce reproducible output.
++	 * Walk the commit history, finding each stash entry, and load data into
++	 * the array.
 +	 */
-+	prepare_fallback_ident("git stash", "git@stash");
-+	author = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT,
-+			   "2001-09-17T00:00:00Z", 0);
-+	committer = fmt_ident("git stash", "git@stash", WANT_BLANK_IDENT,
-+			      "2001-09-17T00:00:00Z", 0);
++	for (;;) {
++		const char *author, *committer;
++		size_t author_len, committer_len;
++		const char *p;
++		const char *expected = "git stash <git@stash> 1000684800 +0000";
++		const char *prefix = "git stash: ";
++		struct commit *stash;
++		struct tree *tree = repo_get_commit_tree(r, this);
 +
-+	/* First, we create a single empty commit. */
-+	if (commit_tree_extended("", 0, r->hash_algo->empty_tree, NULL,
-+				 &base, author, committer, NULL, NULL))
-+		return error(_("unable to write base commit"));
-+
-+	prev = lookup_commit_reference(r, &base);
-+
-+	if (argc) {
-+		/*
-+		 * Find each specified stash, and load data into the array.
-+		 */
-+		for (i = 0; i < argc; i++) {
-+			struct object_id oid;
-+			struct commit *stash;
-+
-+			if (parse_stash_revision(&revision, argv[i], 1) ||
-+			    get_oid_with_context(r, revision.buf,
-+						 GET_OID_QUIETLY | GET_OID_GENTLY,
-+						 &oid, &unused)) {
-+				res = error(_("unable to find stash entry %s"), argv[i]);
-+				goto out;
-+			}
-+
-+			stash = lookup_commit_reference(r, &oid);
-+			if (!stash || check_stash_topology(r, stash)) {
-+				res = error(_("%s does not look like a stash commit"),
-+						revision.buf);
-+				goto out;
-+			}
-+			iter = commit_list_append(stash, iter);
++		if (!tree ||
++		    !oideq(&tree->object.oid, r->hash_algo->empty_tree) ||
++		    (this->parents &&
++		     (!this->parents->next || this->parents->next->next))) {
++			res = error(_("%s is not a valid exported stash commit"),
++					oid_to_hex(&this->object.oid));
++			goto out;
 +		}
-+	} else {
-+		/*
-+		 * Walk the reflog, finding each stash entry, and load data into the
-+		 * array.
-+		 */
-+		struct stash_entry_data cb_data = {
-+			.r = r, .items = iter,
-+		};
-+		if (refs_for_each_reflog_ent_reverse(get_main_ref_store(r),
-+						     "refs/stash",
-+						     collect_stash_entries,
-+						     &cb_data) && cb_data.count)
++
++		buffer = repo_get_commit_buffer(r, this, &bufsize);
++
++		if (!this->parents) {
++			/*
++			 * We don't have any parents.  Make sure this is our
++			 * root commit.
++			 */
++			author = find_commit_header(buffer, "author", &author_len);
++			committer = find_commit_header(buffer, "committer", &committer_len);
++
++			if (!author || !committer) {
++				error(_("cannot parse commit %s"), oid_to_hex(&this->object.oid));
++				goto out;
++			}
++
++			if (author_len != strlen(expected) ||
++			    committer_len != strlen(expected) ||
++			    memcmp(author, expected, author_len) ||
++			    memcmp(committer, expected, committer_len)) {
++				res = error(_("found root commit %s with invalid data"), oid_to_hex(&this->object.oid));
++				goto out;
++			}
++			break;
++		}
++
++		p = strstr(buffer, "\n\n");
++		if (!p) {
++			res = error(_("cannot parse commit %s"), oid_to_hex(&this->object.oid));
 +			goto out;
++		}
++
++		p += 2;
++		if (((size_t)(bufsize - (p - buffer)) < strlen(prefix)) ||
++		    memcmp(prefix, p, strlen(prefix))) {
++			res = error(_("found stash commit %s without expected prefix"), oid_to_hex(&this->object.oid));
++			goto out;
++		}
++
++		stash = this->parents->next->item;
++
++		if (repo_parse_commit(r, this->parents->item) ||
++		    repo_parse_commit(r, stash)) {
++			res = error(_("cannot parse parents of commit: %s"),
++					oid_to_hex(&this->object.oid));
++			goto out;
++		}
++
++		if (check_stash_topology(r, stash)) {
++			res = error(_("%s does not look like a stash commit"),
++					oid_to_hex(&stash->object.oid));
++			goto out;
++		}
++
++		repo_unuse_commit_buffer(r, this, buffer);
++		buffer = NULL;
++		items = commit_list_insert(stash, &items);
++		this = this->parents->item;
 +	}
 +
 +	/*
-+	 * Now, create a set of commits identical to the regular stash commits,
-+	 * but where their first parents form a chain to our original empty
-+	 * base commit.
++	 * Now, walk each entry, adding it to the stash as a normal stash
++	 * commit.
 +	 */
-+	items = reverse_commit_list(items);
 +	for (cur = items; cur; cur = cur->next) {
-+		struct commit_list *parents = NULL;
-+		struct commit_list **next = &parents;
-+		struct object_id out;
-+		struct commit *stash = cur->item;
++		const char *p;
++		struct object_id *oid;
 +
-+		next = commit_list_append(prev, next);
-+		next = commit_list_append(stash, next);
-+		res = write_commit_with_parents(r, &out, &stash->object.oid, parents);
-+		free_commit_list(parents);
-+		if (res)
++		this = cur->item;
++		oid = &this->object.oid;
++		buffer = repo_get_commit_buffer(r, this, &bufsize);
++		if (!buffer) {
++			res = error(_("cannot read commit buffer for %s"), oid_to_hex(oid));
 +			goto out;
-+		prev = lookup_commit_reference(r, &out);
++		}
++
++		p = strstr(buffer, "\n\n");
++		if (!p) {
++			res = error(_("cannot parse commit %s"), oid_to_hex(oid));
++			goto out;
++		}
++
++		p += 2;
++		msg = xmemdupz(p, bufsize - (p - buffer));
++		repo_unuse_commit_buffer(r, this, buffer);
++		buffer = NULL;
++
++		if (do_store_stash(oid, msg, 1)) {
++			res = error(_("cannot save the stash for %s"), oid_to_hex(oid));
++			goto out;
++		}
++		FREE_AND_NULL(msg);
 +	}
-+	if (ref)
-+		refs_update_ref(get_main_ref_store(r), NULL, ref,
-+				&prev->object.oid, NULL, 0, UPDATE_REFS_DIE_ON_ERR);
-+	else
-+		puts(oid_to_hex(&prev->object.oid));
 +out:
-+	strbuf_release(&revision);
++	if (this && buffer)
++		repo_unuse_commit_buffer(r, this, buffer);
 +	free_commit_list(items);
++	free(msg);
 +
 +	return res;
 +}
 +
-+enum export_action {
-+	ACTION_NONE,
-+	ACTION_PRINT,
-+	ACTION_TO_REF,
-+};
-+
-+static int export_stash(int argc,
-+			const char **argv,
-+			const char *prefix,
++static int import_stash(int argc, const char **argv, const char *prefix,
 +			struct repository *repo)
 +{
-+	const char *ref = NULL;
-+	enum export_action action = ACTION_NONE;
 +	struct option options[] = {
-+		OPT_CMDMODE(0, "print", &action,
-+			    N_("print the object ID instead of writing it to a ref"),
-+			    ACTION_PRINT),
-+		OPT_STRING(0, "to-ref", &ref, "ref",
-+			    N_("save the data to the given ref")),
 +		OPT_END()
 +	};
 +
 +	argc = parse_options(argc, argv, prefix, options,
-+			     git_stash_export_usage,
++			     git_stash_import_usage,
 +			     PARSE_OPT_KEEP_DASHDASH);
 +
-+	if (ref && action == ACTION_NONE)
-+		action = ACTION_TO_REF;
++	if (argc != 1)
++		usage_msg_opt("a revision is required", git_stash_import_usage, options);
 +
-+	if (action == ACTION_NONE || (ref && action == ACTION_PRINT))
-+		return error(_("exactly one of --print and --to-ref is required"));
-+
-+	return do_export_stash(repo, ref, argc, argv);
++	return do_import_stash(repo, argv[0]);
 +}
 +
- int cmd_stash(int argc,
- 	      const char **argv,
- 	      const char *prefix,
-@@ -1915,6 +2174,7 @@ int cmd_stash(int argc,
- 		OPT_SUBCOMMAND("store", &fn, store_stash),
+ struct stash_entry_data {
+ 	struct repository *r;
+ 	struct commit_list **items;
+@@ -2175,6 +2341,7 @@ int cmd_stash(int argc,
  		OPT_SUBCOMMAND("create", &fn, create_stash),
  		OPT_SUBCOMMAND("push", &fn, push_stash_unassumed),
-+		OPT_SUBCOMMAND("export", &fn, export_stash),
+ 		OPT_SUBCOMMAND("export", &fn, export_stash),
++		OPT_SUBCOMMAND("import", &fn, import_stash),
  		OPT_SUBCOMMAND_F("save", &fn, save_stash, PARSE_OPT_NOCOMPLETE),
  		OPT_END()
  	};
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 74666ff3e4..12d30a9865 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -11,6 +11,13 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ . ./test-lib.sh
+ . "$TEST_DIRECTORY"/lib-unique-files.sh
+ 
++test_expect_success 'setup' '
++	test_oid_cache <<-EOF
++	export_base sha1:73c9bab443d1f88ac61aa533d2eeaaa15451239c
++	export_base sha256:f210fa6346e3e2ce047bdb570426b17075980c1ac01fec8fc4b75bd3ab4bcfe4
++	EOF
++'
++
+ test_expect_success 'usage on cmd and subcommand invalid option' '
+ 	test_expect_code 129 git stash --invalid-option 2>usage &&
+ 	grep "or: git stash" usage &&
+@@ -1412,6 +1419,100 @@ test_expect_success 'stash --keep-index --include-untracked with empty tree' '
+ 	)
+ '
+ 
++test_expect_success 'stash export and import round-trip stashes' '
++	git reset &&
++	>untracked &&
++	>tracked1 &&
++	>tracked2 &&
++	git add tracked* &&
++	git stash -- &&
++	>subdir/untracked &&
++	>subdir/tracked1 &&
++	>subdir/tracked2 &&
++	git add subdir/tracked* &&
++	git stash --include-untracked -- subdir/ &&
++	git tag t-stash0 stash@{0} &&
++	git tag t-stash1 stash@{1} &&
++	simple=$(git stash export --print) &&
++	git stash clear &&
++	git stash import "$simple" &&
++	test_cmp_rev stash@{0} t-stash0 &&
++	test_cmp_rev stash@{1} t-stash1 &&
++	git stash export --to-ref refs/heads/foo &&
++	test_cmp_rev "$(test_oid empty_tree)" foo: &&
++	test_cmp_rev "$(test_oid empty_tree)" foo^: &&
++	test_cmp_rev t-stash0 foo^2 &&
++	test_cmp_rev t-stash1 foo^^2 &&
++	git log --first-parent --format="%s" refs/heads/foo >log &&
++	grep "^git stash: " log >log2 &&
++	test_line_count = 13 log2 &&
++	git stash clear &&
++	git stash import foo &&
++	test_cmp_rev stash@{0} t-stash0 &&
++	test_cmp_rev stash@{1} t-stash1
++'
++
++test_expect_success 'stash import appends commits' '
++	git log --format=oneline -g refs/stash >out &&
++	cat out out >out2 &&
++	git stash import refs/heads/foo &&
++	git log --format=oneline -g refs/stash >actual &&
++	test_line_count = $(wc -l <out2) actual
++'
++
++test_expect_success 'stash export can accept specified stashes' '
++	git stash clear &&
++	git stash import foo &&
++	git stash export --to-ref refs/heads/bar stash@{1} stash@{0} &&
++	git stash clear &&
++	git stash import refs/heads/bar &&
++	test_cmp_rev stash@{1} t-stash0 &&
++	test_cmp_rev stash@{0} t-stash1 &&
++	git log --format=oneline -g refs/stash >actual &&
++	test_line_count = 2 actual
++'
++
++test_expect_success 'stash export rejects invalid arguments' '
++	test_must_fail git stash export --print --to-ref refs/heads/invalid 2>err &&
++	grep "exactly one of --print and --to-ref is required" err &&
++	test_must_fail git stash export 2>err2 &&
++	grep "exactly one of --print and --to-ref is required" err2
++'
++
++test_expect_success 'stash can import and export zero stashes' '
++	git stash clear &&
++	git stash export --to-ref refs/heads/baz &&
++	test_cmp_rev "$(test_oid empty_tree)" baz: &&
++	test_cmp_rev "$(test_oid export_base)" baz &&
++	test_must_fail git rev-parse baz^1 &&
++	git stash import baz &&
++	test_must_fail git rev-parse refs/stash
++'
++
++test_expect_success 'stash rejects invalid attempts to import commits' '
++	git stash import foo &&
++	test_must_fail git stash import HEAD 2>output &&
++	oid=$(git rev-parse HEAD) &&
++	grep "$oid is not a valid exported stash commit" output &&
++	test_cmp_rev stash@{0} t-stash0 &&
++
++	git checkout --orphan orphan &&
++	git commit-tree $(test_oid empty_tree) -p "$oid" -p "$oid^" -m "" >fake-commit &&
++	git update-ref refs/heads/orphan "$(cat fake-commit)" &&
++	oid=$(git rev-parse HEAD) &&
++	test_must_fail git stash import orphan 2>output &&
++	grep "found stash commit $oid without expected prefix" output &&
++	test_cmp_rev stash@{0} t-stash0 &&
++
++	git checkout --orphan orphan2 &&
++	git commit-tree $(test_oid empty_tree) -m "" >fake-commit &&
++	git update-ref refs/heads/orphan2 "$(cat fake-commit)" &&
++	oid=$(git rev-parse HEAD) &&
++	test_must_fail git stash import orphan2 2>output &&
++	grep "found root commit $oid with invalid data" output &&
++	test_cmp_rev stash@{0} t-stash0
++'
++
+ test_expect_success 'stash apply should succeed with unmodified file' '
+ 	echo base >file &&
+ 	git add file &&
