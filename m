@@ -1,86 +1,171 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6421246BAC
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 13:52:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B9D1F16B
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 14:02:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749736338; cv=none; b=HEe7plpmfgb6v/w0m2BiX0krhHXfPVr+3GqM2ZJEkoMZH8HujkySQffIZxHzmFXJYeyE/PJ5fSejhhZLuVBrn7v16xgIHQKrbhe00ByVbjcuAnVMUvjSyRw9MoZ5NBjnXtFzJpR51gUFYigRcQwV4z0YvvurmZnZskqI/BO+bls=
+	t=1749736927; cv=none; b=rp6woLQoDv0MwOmpzizBV19MeQaeWFsiMWhfgrPKaPq5bQ8hNxpaVCjiKOysu13dCA26MJmvXwWall09VAhUSdy8m7LVrwyoGhw81dEiBTKW3dEPba6vqq3RnQe3Xoq8ZK6vKSGNlpg0OAcgTLP7lLC3MQ81fhRH8/QFqwb2g6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749736338; c=relaxed/simple;
-	bh=3taIazY7+pKovu2rNVFyXim8g2avBAY6GIk/uh4+3dk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=RqNQkhTT+RpVDf0i28ZKFUo6/9541OvJWtwdZB53PNW9vv8QzObcspU8ipYg0iZ/f74OmbRZuXZ0UtdB5WMWvAgcG4vqNgM0x59PiduJf36/zlLrV5OR7HQNPpmy5xMdwKxp8i1pWTBrhzMsrYgIhVzWyuz+fwUmLpeZD69tRGY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SZwgnfvX; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1749736927; c=relaxed/simple;
+	bh=bRVVYLCcmWlWDm/o9mNqegbTM/hxh51zDemdjwx9uqE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HCkaYrL7BL+JfgiHLmwdjBWEEkjhXRVbm4vM5feSfhmUGJUTBNKvb7EErN85uuGuQiSzjyi9AkINWn0zvJxpRkKTJgF3EDnqITB+JlvnlhWf5zLg6UZ8fZcZ6F95gc8NUUvmfsPrQO3LEJBC+s7ebbofq4IGzw7ssRTZKrhSSA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gsB2ScTC; arc=none smtp.client-ip=209.85.128.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SZwgnfvX"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a528243636so655682f8f.3
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 06:52:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gsB2ScTC"
+Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-70f147b5a52so6857187b3.3
+        for <git@vger.kernel.org>; Thu, 12 Jun 2025 07:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749736335; x=1750341135; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=3taIazY7+pKovu2rNVFyXim8g2avBAY6GIk/uh4+3dk=;
-        b=SZwgnfvXINDOHEohh1RVCsNIZJ7+z+B2TjOyGSES8wdB9/VAdcaKP2SQxkUaVazEdV
-         mU4aEvOsOFLvn38xiF6UbZxF/SdvTidrkdhvZZXr8/CxMkMhbTCLNKMN6IdQLXbJhK/+
-         0XBKND2qSBJ8w4LWfc8WcDfu3AjPDxq+dsJ7njvuouSy6l0+YktC3DUIpxFZojY4rvHd
-         /yPwTd3BN002aOm9fzlh/5AlFMreH7IlvYA7a9Bubj3CRxkRoTevzuCc7Sbr+ymGV3tb
-         hEv6Mh0u+x6ulPrMDurFcLhWyBTaJNuYh4SzKSLKUrThtNQT7I0soSQhHwaBatgsu0q8
-         EoQg==
+        d=gmail.com; s=20230601; t=1749736925; x=1750341725; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=N/qO0FE9G2Ckdn6H8fIjH86IVXCVeuVUPk2BR0qa5EY=;
+        b=gsB2ScTC9E3+ijeJklfaWFdM37spx1TqNCnDw5kqiP6pwCMWqsY/gEJR3/IBBK+/Wj
+         rImAPS0AEnxAG7Hir4MaGtP7Lm3NYUBHGNQ0omLSDvs0v4TY1xRHz419kFuH3WBmBUn3
+         K0wFa1HPU4h+Li2VzkF8Aa7BNprsWpUxY9JuvLqWpPvLDWMolcJwVHdAGffxu48/6Hfd
+         1C6EYXuQ9Sq0WYz1sgPaj7fISrIUwglR0HU8Zh65xwutcqi7YP6mTSacU7MikCsc4YUc
+         BlV1cpjscUUmlrGdrrfLR1/ti6qQQ+D6lWW1jAMVlAqiXzyDJTngEOtA56YEpToqvvNm
+         RHJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749736335; x=1750341135;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=3taIazY7+pKovu2rNVFyXim8g2avBAY6GIk/uh4+3dk=;
-        b=h8JyUNnr+AddME0NYNyfrxV4MWpGMvPTZWVe4VOUzAM1EzioIIv+PVpW6pPEHeBfb2
-         vN0845zrhBJcD+Hjy3fYek55y/qxcrQvpB7tP5NTHR4h6f+Oh/CbdaLS3fmPYBlTOpmu
-         1CIwFSaHMfNCRgp5TRRQmMecy1+VhJ+qAOAtgrM/Lf9JjAQtR6MJ6H27SWtvO5INoyCq
-         Cou9HJvbQvr3mYRwGv/ihxNVE70fVlBPjBx44X3vec1US1cOYNB0lSiLZlARMPqLgmO6
-         sV7YyHHeLI77EKdXZvs7LE1r5PpY4B7XRIr6feOD22kwhBJgf79xLAP73vBQqDpgDX+o
-         rrVw==
-X-Gm-Message-State: AOJu0YyxXWGGt9o7zGQ9RgoirF1Xp9cbPPf7RlR3cHYdLLudueX/ozPO
-	RlDngVXw1h7ZL5hnTSk0CvqIISFGxyRK/tf8iw0hE268ty+mQn4fcaJcWt838R7qGb3Pb/a7iRj
-	qdCs+PgykkfIFWenTvBSRKD+w/bzZ1ylRGQ==
-X-Gm-Gg: ASbGncsqTXgTJrZyM0UH87Cr9oji3uKcFaFUBGj4RZDRx56FL6GWBqFAMYb4PasiOZi
-	qS0ZjCZ6GAvU2HN4ISbR16m/pDh+RlwKvf0NCvF9bH2FItjEQu5t9Pqzk719EDfNqlZ4QrqDaV4
-	WEMNEmr/d4tLNZZWs1G2ohYYtlzvr7JQLHaGAqf9IB50Wrg051AXJeESL5rlxOk9wNzOv04NP0C
-	ac=
-X-Google-Smtp-Source: AGHT+IH+htoZsIO7Izvqb1vkjiWXMvkA58DBfNd0uvQoFQWGg6wlEx5MkNjPR+ctetvuB68ZtNtnOa8UYXSm1dnFpcY=
-X-Received: by 2002:a05:6000:401f:b0:3a5:2208:41d9 with SMTP id
- ffacd0b85a97d-3a56076aa33mr2922460f8f.40.1749736335051; Thu, 12 Jun 2025
- 06:52:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749736925; x=1750341725;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N/qO0FE9G2Ckdn6H8fIjH86IVXCVeuVUPk2BR0qa5EY=;
+        b=p7RkZq/D4jfmGWtikV0CIHcuBusHqdrYts1NZvCK/80uIlY+R6UZQeKtXJPXgDle7i
+         2bDb4HOv2+c6UP0b8nqEEtIhERjjNNq210cP7VGhZZX8wRn9X20csw8/hFtVae0bAF65
+         OOFkSdwQYFmcR2MWuS1LrY/O3b6Adf0gsZap/Vth94iFCS+UdFTRuy55xn2wSGhVWnVP
+         5JBmavpzgXYR/7HfAntPZTUnFVr2t0kmlPsQ7+Ng4QTSmjrxP+0mJRLtEhdo7+FOmB9S
+         646kZ+oqSMr/6yibLlpLX/WeDS50VIqQJkxm0QPWs16LKp0k7VPBe+D9Gn8J4Zy7xOED
+         W+3w==
+X-Forwarded-Encrypted: i=1; AJvYcCVkIdht/4jNquAJvekdNvBPxR40v9MyvfOEkgQvGS/fnJGfufD/amKLc2z/YZQUm5orQrY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyIrlMUAJlDjGSBFsJZGQdiL0jqQ1f9nXBullCfq+tLxlXtYDvw
+	PsypGkj69UBzNpihPDGgOrMrVkSILg9clPlobJ1Lpere5LAjeJQRgf+n
+X-Gm-Gg: ASbGncu0pJvpqX68AH45S4AdpY9jvCGKaqLmHt10xqK5kK+J3gis4pAEBA+XMcRvze0
+	z/yr+PyN4CUge13hZSE1Co1ouAXcdRfHXywgRAlDepvVsVaglyhnVwGDZJEtrbOFKDQs7cSofg7
+	utoNN2GZhLctu6HEN9sRFfuYIabUD79NoqajyychJVuyGQYBsrmTysX+uZmyQj8WqNAsnXT+gH3
+	/DvC29x8JwpBJO5grtNXaC7ld7kgzuBJqTxUXtnbvoPyVWTotQd7NFfiZaCyiLQRY7UcxBJaL3C
+	ghv+IjNdKlgpvAtGYmFNAg0+4cR14nIVpQ/Xj5An6xnh+DHIdziI24LcDJu9a7EgKX98Fn0WqMa
+	zo7lWa8VwoGdVm3fj5Qkg6/Vr2z1Tahc7YJLRK+xjNttpow7c
+X-Google-Smtp-Source: AGHT+IFDFga7ohOpVwAgd5Xcdw6XpAywQSftIIZxZDWF6fD8q++IIkVouPz3t21/qK3wSzf7Iv+QbA==
+X-Received: by 2002:a05:690c:620e:b0:710:a3d4:ed39 with SMTP id 00721157ae682-7114edcb68cmr56571937b3.35.1749736924607;
+        Thu, 12 Jun 2025 07:02:04 -0700 (PDT)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-711520919adsm2778687b3.26.2025.06.12.07.02.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Jun 2025 07:02:04 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>,
+	Git List <git@vger.kernel.org>
+Subject: [GIT PULL] l10n updates for 2.50.0 round 1
+Date: Thu, 12 Jun 2025 10:01:57 -0400
+Message-ID: <20250612140159.164902-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.43.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Carlo Arenas <carenas@gmail.com>
-Date: Thu, 12 Jun 2025 06:52:03 -0700
-X-Gm-Features: AX0GCFvCSEAiPBNfEWaY3PfvvExbUwRS1V4Ovc_hd9NefyJp6VnbBhkHjkbMMDY
-Message-ID: <CAPUEspguEY+e-J0dMA2EdDgu=t4fK5ASS13Jfp_Mgwiq3Rtd0Q@mail.gmail.com>
-Subject: Re: [PATCH v2] config.mak.uname: update settings for FreeBSD
-To: Brad Smith <brad@comstyle.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 12, 2025 at 12:36:46AM -0800, Brad Smith wrote:
->
-> FreeBSD 6.0 has memmem().
+Hi Junio,
 
-but AFAIK it was buggy, uncompatible with the "standard" and
-didn't perform that well, at least until FreeBSD 12.
+Please pull the following l10n updates for Git 2.50.0.
 
-assuming that the system version is indeed faster than the
-one provided with git (which should be true but worth testing)
-then it might be better to only enable this for later versions?
+The following changes since commit 4c0e625c091d4c648cec7319bafaed3cc81658e5:
 
-> With making 6.0 the minimum version drop bits for supporting
-> FreeBSD 4.x.
+  Git 2.50-rc2 (2025-06-09 07:18:49 -0700)
 
-FreeBSD 4.x is no longer supported and wouldn't even build a
-current git, since it predates C99 and is missing POSIX
-compatibility with what we require (ex: no statvfs)
+are available in the Git repository at:
 
-Carlo
+  https://github.com/git-l10n/git-po.git tags/l10n-2.50.0-rnd1
+
+for you to fetch changes up to 925035958b366eacad03dd6abc399af7ab5db810:
+
+  l10n: zh_CN: updated translation for 2.50 (2025-06-12 21:47:46 +0800)
+
+----------------------------------------------------------------
+l10n-2.50.0-rnd1
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmhK28EACgkQk24VDd1F
+MtU1GA/8CmvPedvJVqnaikUJTKRxrlyiqKkI8fAKqvqulubD36yI7QjDP4PhDKHA
+hK0uvJ16n4v4xp2aIATnD4E3AH3ocrjU5xzK1pqd26cYWdObKZeDpio/FQrEcJI2
+uPp+BHRnOVwg32gMHOEhry8rGtFlsZyCtoRSLPVPAN6Oy+NI4MfqJcN+FCtyWg5p
+oSTSwwbCXwUiuFXBjFgsCzq8Of/WRYr5cSfq/XCjz+0Gk57aLaVjnsVExxO6VwwB
+F5cdqbwuwbR7eGr3WJSGerNTfs4qKbVqbsxNDMLllI5OW/Kzm07nOdxNe4daoSbj
+9+DsNuOAe5mOdi09wx09B3QAMFiHOD8gJcTT4RbRXV+Fi3OZg782jIEzGKFmqccF
+7g7m74qsjk5GlswSXI8/l1l1mSPhBk4s6fcUkgF4aqO3F2QMIlCorEz5KE1J9H9R
+Xu+sMm46jLdCeVuz5obirE9XKOpdTlH1FQk02guskJgvCrXrmtzIBX6eYIUxewCO
+jyE4MYrVeY0PnIIMHMDJ1L+mg0hs6zyPjXiU7BQWHyYgLOQTp7q71slIYarpkj9o
+Md23cJwBhJV/lUqwuLCu6SwMBZlinYEN6QunRDbzl2oMBJjwz9VmrXbLzfqXujz4
++ycA+efgGCN3JBU7qrvBME+jkT8dxn+4zoPFzwjfaXK2W9xXwbM=
+=O2DU
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Aindriú Mac Giolla Eoin (1):
+      l10n: Add full Irish translation (ga.po)
+
+Alexander Shopov (1):
+      l10n: bg.po: Updated Bulgarian translation (5819t)
+
+Arkadii Yakovets (1):
+      l10n: uk: add 2.50 translation
+
+Bagas Sanjaya (1):
+      l10n: po-id for 2.50
+
+Emir SARI (1):
+      l10n: tr: Update Turkish translations for 2.50
+
+Jean-Noël Avila (1):
+      l10n: fr: v2.50 round 1
+
+Jiang Xin (7):
+      Merge branch 'master' of github.com:aindriu80/git-po
+      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
+      Merge branch 'l10n_fr_v2.50' of github.com:jnavila/git
+      Merge branch 'master' of github.com:alshopov/git-po
+      Merge branch 'po-id' of github.com:bagasme/git-po
+      Merge branch 'l10n-de-2.50' of https://github.com/ralfth/git
+      Merge branch '2.50-uk-update' of https://github.com/arkid15r/git-ukrainian-l10n
+
+Ralf Thielow (1):
+      l10n: Update German translation
+
+Teng Long (1):
+      l10n: zh_CN: updated translation for 2.50
+
+ po/TEAMS    |     4 +
+ po/bg.po    |  1314 ++-
+ po/de.po    |   685 +-
+ po/fr.po    |   916 +-
+ po/ga.po    | 29758 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ po/id.po    |   837 +-
+ po/tr.po    |   724 +-
+ po/uk.po    |   649 +-
+ po/zh_CN.po |   825 +-
+ 9 files changed, 32401 insertions(+), 3311 deletions(-)
+ create mode 100644 po/ga.po
+
+--
+Jiang Xin
