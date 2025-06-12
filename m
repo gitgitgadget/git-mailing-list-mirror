@@ -1,171 +1,140 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B9D1F16B
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 14:02:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C3F288CA4
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 15:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749736927; cv=none; b=rp6woLQoDv0MwOmpzizBV19MeQaeWFsiMWhfgrPKaPq5bQ8hNxpaVCjiKOysu13dCA26MJmvXwWall09VAhUSdy8m7LVrwyoGhw81dEiBTKW3dEPba6vqq3RnQe3Xoq8ZK6vKSGNlpg0OAcgTLP7lLC3MQ81fhRH8/QFqwb2g6M=
+	t=1749740479; cv=none; b=uoIjIVNDKFRmYF3ypuVOTMo2SxE5w1G37kbsuoVU6gRg1AwMUnTM80YpQCyeIh2pdrT6cZtWkWveFKF+wI4vXK7zdI81b3fJ8nTf2qEJx0VYjfUd2vOW/OwTnPFG3dVsYc+rLgv0W2rrTRCChOf5BHX3+l5y3cNN0i9SLYIjLow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749736927; c=relaxed/simple;
-	bh=bRVVYLCcmWlWDm/o9mNqegbTM/hxh51zDemdjwx9uqE=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=HCkaYrL7BL+JfgiHLmwdjBWEEkjhXRVbm4vM5feSfhmUGJUTBNKvb7EErN85uuGuQiSzjyi9AkINWn0zvJxpRkKTJgF3EDnqITB+JlvnlhWf5zLg6UZ8fZcZ6F95gc8NUUvmfsPrQO3LEJBC+s7ebbofq4IGzw7ssRTZKrhSSA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gsB2ScTC; arc=none smtp.client-ip=209.85.128.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749740479; c=relaxed/simple;
+	bh=lbWq7uzdbxdXsGEZNCbTpBgA7UmX/BCCp021kp92KSM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Fzf0Dg01PuydxJ14voOPOrlhNGkBLm79HhOAJqh4JojGRP2FZL9ASreiczfCscdvx7vImiJ9p2H1zbdi8YL+eZnUtDoKbz02LKv7bIhkT5Y4RZqWrVkKsa00w8Sv2jpP9E41QI1m2tLA1nKHw24XAVI+ds9+vHo16Afxp6nrDis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gurGwFge; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L5R/9zfO; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gsB2ScTC"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-70f147b5a52so6857187b3.3
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 07:02:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749736925; x=1750341725; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=N/qO0FE9G2Ckdn6H8fIjH86IVXCVeuVUPk2BR0qa5EY=;
-        b=gsB2ScTC9E3+ijeJklfaWFdM37spx1TqNCnDw5kqiP6pwCMWqsY/gEJR3/IBBK+/Wj
-         rImAPS0AEnxAG7Hir4MaGtP7Lm3NYUBHGNQ0omLSDvs0v4TY1xRHz419kFuH3WBmBUn3
-         K0wFa1HPU4h+Li2VzkF8Aa7BNprsWpUxY9JuvLqWpPvLDWMolcJwVHdAGffxu48/6Hfd
-         1C6EYXuQ9Sq0WYz1sgPaj7fISrIUwglR0HU8Zh65xwutcqi7YP6mTSacU7MikCsc4YUc
-         BlV1cpjscUUmlrGdrrfLR1/ti6qQQ+D6lWW1jAMVlAqiXzyDJTngEOtA56YEpToqvvNm
-         RHJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749736925; x=1750341725;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=N/qO0FE9G2Ckdn6H8fIjH86IVXCVeuVUPk2BR0qa5EY=;
-        b=p7RkZq/D4jfmGWtikV0CIHcuBusHqdrYts1NZvCK/80uIlY+R6UZQeKtXJPXgDle7i
-         2bDb4HOv2+c6UP0b8nqEEtIhERjjNNq210cP7VGhZZX8wRn9X20csw8/hFtVae0bAF65
-         OOFkSdwQYFmcR2MWuS1LrY/O3b6Adf0gsZap/Vth94iFCS+UdFTRuy55xn2wSGhVWnVP
-         5JBmavpzgXYR/7HfAntPZTUnFVr2t0kmlPsQ7+Ng4QTSmjrxP+0mJRLtEhdo7+FOmB9S
-         646kZ+oqSMr/6yibLlpLX/WeDS50VIqQJkxm0QPWs16LKp0k7VPBe+D9Gn8J4Zy7xOED
-         W+3w==
-X-Forwarded-Encrypted: i=1; AJvYcCVkIdht/4jNquAJvekdNvBPxR40v9MyvfOEkgQvGS/fnJGfufD/amKLc2z/YZQUm5orQrY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyIrlMUAJlDjGSBFsJZGQdiL0jqQ1f9nXBullCfq+tLxlXtYDvw
-	PsypGkj69UBzNpihPDGgOrMrVkSILg9clPlobJ1Lpere5LAjeJQRgf+n
-X-Gm-Gg: ASbGncu0pJvpqX68AH45S4AdpY9jvCGKaqLmHt10xqK5kK+J3gis4pAEBA+XMcRvze0
-	z/yr+PyN4CUge13hZSE1Co1ouAXcdRfHXywgRAlDepvVsVaglyhnVwGDZJEtrbOFKDQs7cSofg7
-	utoNN2GZhLctu6HEN9sRFfuYIabUD79NoqajyychJVuyGQYBsrmTysX+uZmyQj8WqNAsnXT+gH3
-	/DvC29x8JwpBJO5grtNXaC7ld7kgzuBJqTxUXtnbvoPyVWTotQd7NFfiZaCyiLQRY7UcxBJaL3C
-	ghv+IjNdKlgpvAtGYmFNAg0+4cR14nIVpQ/Xj5An6xnh+DHIdziI24LcDJu9a7EgKX98Fn0WqMa
-	zo7lWa8VwoGdVm3fj5Qkg6/Vr2z1Tahc7YJLRK+xjNttpow7c
-X-Google-Smtp-Source: AGHT+IFDFga7ohOpVwAgd5Xcdw6XpAywQSftIIZxZDWF6fD8q++IIkVouPz3t21/qK3wSzf7Iv+QbA==
-X-Received: by 2002:a05:690c:620e:b0:710:a3d4:ed39 with SMTP id 00721157ae682-7114edcb68cmr56571937b3.35.1749736924607;
-        Thu, 12 Jun 2025 07:02:04 -0700 (PDT)
-Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-711520919adsm2778687b3.26.2025.06.12.07.02.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jun 2025 07:02:04 -0700 (PDT)
-From: Jiang Xin <worldhello.net@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>,
-	Git l10n discussion group <git-l10n@googlegroups.com>,
-	Alexander Shopov <ash@kambanaria.org>,
-	Mikel Forcada <mikel.forcada@gmail.com>,
-	Ralf Thielow <ralf.thielow@gmail.com>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Bagas Sanjaya <bagasdotme@gmail.com>,
-	Dimitriy Ryazantcev <DJm00n@mail.ru>,
-	Peter Krefting <peter@softwolves.pp.se>,
-	Emir SARI <bitigchi@me.com>,
-	Arkadii Yakovets <ark@cho.red>,
-	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
-	Teng Long <dyroneteng@gmail.com>,
-	Yi-Jyun Pan <pan93412@gmail.com>
-Cc: Jiang Xin <worldhello.net@gmail.com>,
-	Git List <git@vger.kernel.org>
-Subject: [GIT PULL] l10n updates for 2.50.0 round 1
-Date: Thu, 12 Jun 2025 10:01:57 -0400
-Message-ID: <20250612140159.164902-1-worldhello.net@gmail.com>
-X-Mailer: git-send-email 2.43.5
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gurGwFge";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L5R/9zfO"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C1F2211401FF;
+	Thu, 12 Jun 2025 11:01:14 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 12 Jun 2025 11:01:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749740474; x=1749826874; bh=VMTx5FcXd1
+	0bDuJOBqmLze8tVE8+m7qixvOZhA7Hm/w=; b=gurGwFge0CFB7v8HelrnRGT2kT
+	EA3uZStMO2v7HOiPvIEzVU509X+4lffktf7C8xjtQa5URt4PfXyQGB+S5/ICJQt/
+	wE5OhgUKlCEM+klZVtBWRK6FyjLe07mkOwNIAACh6GnA0yFDHKOUWhqS+OvuONuz
+	qJo8k9+yYMxlygprLZlPG6avpukF2vnJplbGejf2t0G4DqlEQLrJyXMgLRZ+FlkF
+	baJCAFtPoUdk25L1VyOkDJhuR9Flvh26+SxwjijVlVOmLOwbU6mBogNCEBTD3Qyn
+	B0UTkKDGVlXMi/EMzxDQGrHqxX4S+7OVNDM77+lfC1LIEP5igb+G+6fXDSvg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749740474; x=1749826874; bh=VMTx5FcXd10bDuJOBqmLze8tVE8+m7qixvO
+	ZhA7Hm/w=; b=L5R/9zfOyP3lWLGblzWXhK0JZ23zHNJbGPFP3lYHZ1gA7ioLntL
+	YU87T4eypz/e0gc8HN+8MwhPYkYwOn/IenZjcwkeMftWNpo9kMwEKt6R+DxD1iJ9
+	dV4/ny5SK4G6NX/QJsv0WB1WARM07yK0ZW0P8vMXUEl2Fi8CbC+aNoB+9n+mZLOj
+	7IEIu4yNr2AwQcl0vr4RZYQNLlyyWeXFkya75Iiur+vKH/LYmk/+WPvwRnHBuAHD
+	mAWRJqRoLjGNHcf37nZAjg9dOei85nRuXGt3cOsH7Dy5jvokfp1tQokBRt1Tv0Pm
+	Z0i+uQBW/ihPeUUEql5T90dqwDOjMXy+UZg==
+X-ME-Sender: <xms:uutKaI9JS7wnKJWMUuButLmPQbEU_WLxePrE1iQ1-rVvjrDBrTl1CQ>
+    <xme:uutKaAvo7uno48N3kvbF8iAAdFk39RMsOh6Pv3w8zSFkeCqbqwN4GaxRWyynM-FWp
+    NmXh6MzMyKjVIM9PA>
+X-ME-Received: <xmr:uutKaOAGt6pwLZ-mS3Zc-QFw5BBKw3oV0-tQpwQl7T3qbw97K9aEq1wcZYTWVFcT-YNAhwn1AhSRX9jUcscjWs1OlZzxMBJ58wYc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheefjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
+    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhi
+    rhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:uutKaIeZfvtQ3yfi2t2fYBGl5iHGbelU7p5mQwtWrqYHymk_7onZ6g>
+    <xmx:uutKaNNsjqkDbfBL_iuIbn9lPef_LZvpyxT3-ZY0eBFuYON1WDZu6Q>
+    <xmx:uutKaCmE1PQjYkQ2niSYYvhdOXATKIWDffvsJH59isdiUAJ4msZXJA>
+    <xmx:uutKaPusogNNnzA0E-PPbL7sCfHFC2zfgnC0VnSr-i1DmYEGw0RNbA>
+    <xmx:uutKaA-VWkh5r4bFxmuI8gESSALpLwbRRRL6mgkjluknTmN4hN9Dd5XH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 12 Jun 2025 11:01:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im
+Subject: Re: [GSoC RFC PATCH 3/5] repo-info: add the field references.format
+In-Reply-To: <CAOLa=ZTNpSKoFcfQHDOQNhq-jdFJvGEsXm-rYKrHCZG8CfaqaQ@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 11 Jun 2025 07:59:32 -0500")
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+	<20250610152117.14826-4-lucasseikioshiro@gmail.com>
+	<CAOLa=ZTNpSKoFcfQHDOQNhq-jdFJvGEsXm-rYKrHCZG8CfaqaQ@mail.gmail.com>
+Date: Thu, 12 Jun 2025 08:01:11 -0700
+Message-ID: <xmqqecvpf1hk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Hi Junio,
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Please pull the following l10n updates for Git 2.50.0.
+>>  static void repo_info_init(struct repo_info *repo_info,
+>>  			   struct repository *repo,
+>>  			   char *format,
+>> -			   int allow_empty UNUSED,
+>> -			   int argc UNUSED,
+>> -			   const char **argv UNUSED
+>> +			   int allow_empty,
+>> +			   int argc,
+>> +			   const char **argv
+>>  			   ) {
+>>
+>
+> Nit: we wrap to 80 chars generally, so you can put multiple arguments on
+> the same line.
 
-The following changes since commit 4c0e625c091d4c648cec7319bafaed3cc81658e5:
+Good point.  It is worth pointing out that we also group related
+arguments together, and make it easier to later add new things at
+the end and still keep related things together, e.g.,
 
-  Git 2.50-rc2 (2025-06-09 07:18:49 -0700)
+static void repo_info_init(struct repo_info *repo_info,
+			   struct repository *repo,
+                           int argc, const char **argv,
+			   const char *format,
+			   int allow_empty)
+{
 
-are available in the Git repository at:
+Obviously argc, argv belong to each other, so it is OK to have on
+the same line, and unlike repo_info (i.e. the out argument), repo
+(i.e. the primary thing that is inspected), format and allow_empty
+are something you would want to later extend when you "enrich" the
+interface and functionality.  You may even gain "int display_width"
+argument to allow line-wrapped output, for example, and you would
+have to insert in the middle if you want to keep related things
+together, if you had (argc, argv) at the end. 
 
-  https://github.com/git-l10n/git-po.git tags/l10n-2.50.0-rnd1
+Also note that {opening and closing braces} around the function body
+sits on their own lines.
 
-for you to fetch changes up to 925035958b366eacad03dd6abc399af7ab5db810:
+Why is "format" a string?  Shouldn't the caller do all the argument
+parsing and pass an enum or something to this function?  After all,
+I presume that allow_empty is set in response to "--allow-empty" or
+something that the user gave to the command, and that parsing is done
+by the caller before it calls this function, no?  Why not do the
+same for the output format?
 
-  l10n: zh_CN: updated translation for 2.50 (2025-06-12 21:47:46 +0800)
-
-----------------------------------------------------------------
-l10n-2.50.0-rnd1
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEE37vMEzKDqYvVxs51k24VDd1FMtUFAmhK28EACgkQk24VDd1F
-MtU1GA/8CmvPedvJVqnaikUJTKRxrlyiqKkI8fAKqvqulubD36yI7QjDP4PhDKHA
-hK0uvJ16n4v4xp2aIATnD4E3AH3ocrjU5xzK1pqd26cYWdObKZeDpio/FQrEcJI2
-uPp+BHRnOVwg32gMHOEhry8rGtFlsZyCtoRSLPVPAN6Oy+NI4MfqJcN+FCtyWg5p
-oSTSwwbCXwUiuFXBjFgsCzq8Of/WRYr5cSfq/XCjz+0Gk57aLaVjnsVExxO6VwwB
-F5cdqbwuwbR7eGr3WJSGerNTfs4qKbVqbsxNDMLllI5OW/Kzm07nOdxNe4daoSbj
-9+DsNuOAe5mOdi09wx09B3QAMFiHOD8gJcTT4RbRXV+Fi3OZg782jIEzGKFmqccF
-7g7m74qsjk5GlswSXI8/l1l1mSPhBk4s6fcUkgF4aqO3F2QMIlCorEz5KE1J9H9R
-Xu+sMm46jLdCeVuz5obirE9XKOpdTlH1FQk02guskJgvCrXrmtzIBX6eYIUxewCO
-jyE4MYrVeY0PnIIMHMDJ1L+mg0hs6zyPjXiU7BQWHyYgLOQTp7q71slIYarpkj9o
-Md23cJwBhJV/lUqwuLCu6SwMBZlinYEN6QunRDbzl2oMBJjwz9VmrXbLzfqXujz4
-+ycA+efgGCN3JBU7qrvBME+jkT8dxn+4zoPFzwjfaXK2W9xXwbM=
-=O2DU
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Aindriú Mac Giolla Eoin (1):
-      l10n: Add full Irish translation (ga.po)
-
-Alexander Shopov (1):
-      l10n: bg.po: Updated Bulgarian translation (5819t)
-
-Arkadii Yakovets (1):
-      l10n: uk: add 2.50 translation
-
-Bagas Sanjaya (1):
-      l10n: po-id for 2.50
-
-Emir SARI (1):
-      l10n: tr: Update Turkish translations for 2.50
-
-Jean-Noël Avila (1):
-      l10n: fr: v2.50 round 1
-
-Jiang Xin (7):
-      Merge branch 'master' of github.com:aindriu80/git-po
-      Merge branch 'tr-l10n' of github.com:bitigchi/git-po
-      Merge branch 'l10n_fr_v2.50' of github.com:jnavila/git
-      Merge branch 'master' of github.com:alshopov/git-po
-      Merge branch 'po-id' of github.com:bagasme/git-po
-      Merge branch 'l10n-de-2.50' of https://github.com/ralfth/git
-      Merge branch '2.50-uk-update' of https://github.com/arkid15r/git-ukrainian-l10n
-
-Ralf Thielow (1):
-      l10n: Update German translation
-
-Teng Long (1):
-      l10n: zh_CN: updated translation for 2.50
-
- po/TEAMS    |     4 +
- po/bg.po    |  1314 ++-
- po/de.po    |   685 +-
- po/fr.po    |   916 +-
- po/ga.po    | 29758 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- po/id.po    |   837 +-
- po/tr.po    |   724 +-
- po/uk.po    |   649 +-
- po/zh_CN.po |   825 +-
- 9 files changed, 32401 insertions(+), 3311 deletions(-)
- create mode 100644 po/ga.po
-
---
-Jiang Xin
+I'll stop here for now.
