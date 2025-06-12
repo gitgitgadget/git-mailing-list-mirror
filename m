@@ -1,93 +1,98 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4923E2AE6D
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 05:51:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC5C212FB7
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 07:40:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749707463; cv=none; b=PAhqEiH3Ze4NiEKeCUvolo5Ylp15Nrqnt9rnLOXQ0x7jE9uMTZAJtfkv/aUwu1L8fkyzCZnM7fo1For3k5/8T2c8HzjKn/CDKabv3lC+jxCb9a6zyXT6sOaG2I5jYu97jk/I37GaE7rSGwSD66qfBLcbKkck2SWYS3RVtwI1VWE=
+	t=1749714026; cv=none; b=SyVnised2wEF8nGMIi2SRanMJ9kfCv3/n1rV1DEXf4tfIUUmg38BBJwEpY2utokaX/yX0m6DpZMjo6+aVBeeF5bMCs0bmNh2H94ZGbJvZqAvAdl5FIQ1hBomJEN2M5DzMl/PAdt2xB7ijzS7odOwmUvJWxdvPgQszoquBzxWQ0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749707463; c=relaxed/simple;
-	bh=VLbc4r9fH35M6rZOcYvwmtzCa3YgJ/TuZbVXwPZWQNI=;
+	s=arc-20240116; t=1749714026; c=relaxed/simple;
+	bh=etBTMBHUfG0KkUjwbnPKlLudF8nniy7uS05eKDF4gas=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jYDbVFUWlgg0f9eoC6LfrGdoioc3i9m1j3E3oTadorv96KmP/4r/2Upl8KUG9Unq0RaqVddmlOXFlo4LQvzXJiqotV5CDl7R3NxlvWrWNbyckOLO4esQFdZB2nwa+WM5YveMKHbEQeL/ozgM8sG9cTQOEEP1QzUV2Sz8MEWIs1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	 To:Cc:Content-Type; b=nm8AjR/5EVY5pu5VGnSMLmPIgei3jU3HDiKXbW8UrhTIOeeGHbaw9avLoLohvKrYdZMGVyM7nk/3lR017T3Qr+gdspu2FGsoMbcU3XpsClBFHyZqkD5VqMcVj6uArTHbNZEBjgsXXJLLXZDsRJOltalw/BknDENxKsCdSV3jIoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ntYueqZk; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7d38dff7056so11911985a.3
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 22:51:00 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ntYueqZk"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ad1b94382b8so130235466b.0
+        for <git@vger.kernel.org>; Thu, 12 Jun 2025 00:40:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749714023; x=1750318823; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WUQjOIWczyYnPHcCKJniK/yEyCLGstlfgHzu6zQpE8E=;
+        b=ntYueqZk/BF4bNmGpA55pX1qPWB6+DeoKAycJKnUGnu3t+Q14i6onTYraKb5F77vKE
+         ZALFn/Gl3+HIPwGopbP15D81qTfY14DT2cNKW71FLOP+S+1lomueamdQN5DxCL1LzuA2
+         B5iXVzi+nqA2DQ0x23L/3tBIJhz8J45H2PJc51mHv0+3WZO8SqHsyAlEBKkquPBbxBDq
+         z4NNmyCXIUTaNdeV1PAz9UzTkdgbx7H8wHrwYlYbB4hLphTtJ5OrrsOx0821jB036CSB
+         ewscEmxIC3MJcvmkOVUeQYQ/CeFFw5ZCfK5KrvenOfth1vBKt20jZLPUxbONfHieRQST
+         g6Kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749707460; x=1750312260;
+        d=1e100.net; s=20230601; t=1749714023; x=1750318823;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=lKCby96E1UXNP7kVd8jy17H1sax4Z3R+vquxjASvuLU=;
-        b=JQ8b7RM8Th3uv1maXa0joBZEBfev3+hD8vOZqZW6Hn392lPpNeUfBEZem5eS3r7LZz
-         lcPDE0HlvNXGWcAqLKBEh42HoLgO3dnLiaKxD3fWIidRcABp4q0JPsbeheM2GdCynqIG
-         EE961AycMpz6IIImdNGTTDpwPoZtdfv8yqEeR7hcuVK5e3g/BEGpYHjjBqrzVxoHQ0hH
-         pOQgUwkNHnN9V/7zqMrzB/JFbfnf7YpUPLNF26JVn4UblNjwPDQQe15iCPdT8T37r69n
-         ETJoFtV3JUz2MCRzIq81M1ASLCAIVZ/0F4RKD/ObslqnWn/VXXkMgHnl7khLghZsF8OX
-         Tg+Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVUH9NWpmeXjgjQLvYagJgAyy/ldMknts/iahOhBDdvu/c2d02o2ackaXjkKTo7+gMzlUg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyRQyVqNY7UN2rpiM4YQK0p2je8g5gu30mEokryUs1KTr63nan3
-	+CXrjLVxuSnv7sSz8L46NdTWPrSBPjdg3V3ivFv7aZkK+cCi8XIjRfnmYhsdtyvFdqxVe4acDXN
-	g9dNA/HI4KuzzHQN4HTf1D5rUa3tDrds=
-X-Gm-Gg: ASbGncs6agLbwBXJBrPW9c9lQB9qVKvbK/eGxa3g7Zus9O4T29bbKexgZiFg1YPDzn5
-	t8wV1ofULOBeXZRQvVWxuDE3Qu/OM8+3kCtJ3Bq+3Sj0cYemyp3IT0YQNtjISasnqZqzGJspBqM
-	c89E22J9buPzR4+xlIx1KRBMWrYsHAmK3HqaIzvFGrRw==
-X-Google-Smtp-Source: AGHT+IFQjWh+U2yOSgirSRSJK+nMCcBV7nnoBrdRQi+/TfLRE1ba4pbdCTXcH6Cjy3A+1Ndh+dxS5YPE8gftJ18M2og=
-X-Received: by 2002:a05:6214:1c45:b0:6f7:d0b9:793b with SMTP id
- 6a1803df08f44-6fb2c37c8aamr34201646d6.8.1749707459932; Wed, 11 Jun 2025
- 22:50:59 -0700 (PDT)
+        bh=WUQjOIWczyYnPHcCKJniK/yEyCLGstlfgHzu6zQpE8E=;
+        b=O6Zvv5Omndy01pKCwqV45uI4GIkNhgTDR4kNGe7/NbZ3dWrmXFxRYyTsVGBZznWfw1
+         gHnZVXn2tX5GRtTAxGf0BJNjGfxGfgqmH/T4GNLvP3wsnzb37jiM3IrAMXk+s1xcHVY/
+         fJBkNHt89MAVHbxCljRizagNWV+PUEtuc3VKYho/TOWOwBjaOhaa+jEjYsMbawNp28Lj
+         zGCaV43KEa5TGvbb8t7Xv2JuYZDvOE7bZCbelO5AMOQpRkjpDD8I0eLmZQymKf1WttdO
+         adNcHgL26BWbTC4zuLVuaNNcUQddNb6YZMKh0+yo+Cgomhc6zW5Q5U1OufbSStRGStPV
+         RhWg==
+X-Gm-Message-State: AOJu0YwaF8w+r/YseM2m41uutYFoSfHxweq/44o8P/3UNIgEPt0AQ62h
+	Le6p39lQVr2cCLwhK3ubUCFXab9CFvOb6SxpRFVJt2mtTxipterZn5ouVGaufCJF1TyxeqeWtQC
+	0zqBHaNiynmyiy/hw9EMLHSm1sRoasbAubQ==
+X-Gm-Gg: ASbGncuF37E/H3aGZJrm5fdsRFzoldHgp4q1Zvdn9NhJFVfJ/0mBaRT5we8hr9edTS8
+	QBjUC2VCbF56ngqiFPDP70dxWbVo9T2GLpBt+zccKkdwwkqnCbWlND5AJPiqubQ8ZrDJMYaxPP5
+	EjtNeVtob5ej71wgZ9OnXRBP52aSvQSa88DcyOBE/7W4PTgQ==
+X-Google-Smtp-Source: AGHT+IHYomXl2mUP36Cm0WshpM5nNxrHi5DL6jAfCOgVkr/FLGm2oiqdWsVCU2vwLbdFJahJ3OmE6pugg56UgG/6wrw=
+X-Received: by 2002:a17:907:3d4f:b0:add:fa4e:8a7a with SMTP id
+ a640c23a62f3a-ade8971d93amr533203866b.34.1749714022531; Thu, 12 Jun 2025
+ 00:40:22 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com> <xmqqo6utfvxu.fsf@gitster.g>
-In-Reply-To: <xmqqo6utfvxu.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 12 Jun 2025 01:50:48 -0400
-X-Gm-Features: AX0GCFu8bV994t4_rrM5WaEkpjfbXjU_OFB7HP3CLfVd7WZr2weJ5qbpSZ_3XM8
-Message-ID: <CAPig+cROcMt1crKjvqcetFNGdE4ywmD1+NO+q+MnDzctx8ewag@mail.gmail.com>
-Subject: Re: Solaris sed
+References: <xmqqh60mger9.fsf@gitster.g>
+In-Reply-To: <xmqqh60mger9.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Thu, 12 Jun 2025 09:40:10 +0200
+X-Gm-Features: AX0GCFvUS0a00dG_s7Nr95G1jYy1pycZSLRteHG7_OrsTe86IQGc8gu57Q9Lvj4
+Message-ID: <CAP8UFD34VpH7qQb2HwVR-YqcBbM6-Mo6ivdhcgN_DbLi0LT3zg@mail.gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: let BSS do its job
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Brad Smith <brad@comstyle.com>, git@vger.kernel.org
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 12, 2025 at 12:05=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
+On Wed, Jun 11, 2025 at 11:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
  wrote:
-> Brad Smith <brad@comstyle.com> writes:
-> > Building on Solaris I noticed the following two issues with Solaris sed=
-.
-> >     GEN version-def.h
-> > sed: Missing newline at end of file standard input.
 >
-> Perhaps it is this input line it is complaining about.  sed works on
-> text files, and a file that ends in incomplete line was not quite
-> text.
+> We have mentioned this in various reviews, but I didn't see it
+> mentioned in the CodingGuildelines document.  Let's add it.
+
+Yeah, thanks for maintaining this document!
+
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/CodingGuidelines | 3 +++
+>  1 file changed, 3 insertions(+)
 >
-> -REPLACED=3D$(printf "%s" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION=
-|" \
-> +REPLACED=3D$(printf "%s\n" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSI=
-ON|" \
->         -e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
->         -e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
->         -e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
+> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuideli=
+nes
+> index a0e7041c54..4d1d52aa37 100644
+> --- a/Documentation/CodingGuidelines
+> +++ b/Documentation/CodingGuidelines
+> @@ -315,6 +315,9 @@ For C programs:
+>     encouraged to have a blank line between the end of the declarations
+>     and the first statement in the block.
+>
+> + - Do not explicitly initialize global variables to 0 or NULL;
+> +   instead, let BSS take care of the zero initialization.
 
-It's curious that this is using:
-
-    printf "%s" "$foo"`
-
-in the first place. Had it used the simpler:
-
-    echo "$foo"
-
-this sort of problem (forgetting the "\n") would never have occurred.
-
-In fact, it seems that f6a2efdc9b (GIT-VERSION-GEN: allow running
-without input and output files, 2025-01-22), which introduced this
-problem, also introduced a few similar cases in which the `printf
-"%s\n"` idiom was employed when a simple `echo` would have sufficed.
+Looks good.
