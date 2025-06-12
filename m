@@ -1,40 +1,40 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD9B442A80
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDCB43AA8
 	for <git@vger.kernel.org>; Thu, 12 Jun 2025 01:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749690746; cv=none; b=K2s0jBXhm0zxq6kzdig7dyVgRpJ7kGqtxe55aCJZ2EM8E+iAa6P0JAe6GUQBcau6/7ua1X/G7LgBh6m6sdOdKtDEx35yW5IX3BEPircfpf2UMyPEyV3zlh57bqluc4UHvi56JyFKbtaacSmc9rXGgEEQOWqhJ4dwhCvBQBpUy8U=
+	t=1749690746; cv=none; b=SP0hUxRNT5SwbmnC624wMc9t5WO6kftLRYLR5v06sO4Gua+iznn7e8xaeSvNpzKmMsLDIw9KqlaLQa5DRttxn9MM9ClXik97vcRBz4gBHGvabIzgcHQR+QH2Wz5bQhcZflOEbI9wYXeZvEzRZ0UxVzY+EBPwAS2fmr0IeGOPn2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1749690746; c=relaxed/simple;
-	bh=RlE+KHR/v4l25IQFQsKG8Bb3rdOyP9uZR6YN1cMs3s0=;
+	bh=Kghlil9lbNsFCXsXfvCqERDFnF8N2V/O58mKM8p/aQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDpZJ6xt7HfYVywaIo4njdgWgvKAe6ah42Kyci5nUB9eAJGpS6oIFjz7hvfn06wHwvk4qNFrBVjHkNu/lgJSTAz/da3Ft3zLBWiJfKzpwFW1JryNSKQeAKTOqonxT64wjTATmG3BkujV8OYQPo4sdVJqTOLU9DpZfpOIKgGXfP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MXG7TC0G; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=D7ePaEEL7xTsZKW0EiYqupMeMa3Q7kjVHWL+RPjCtw7gj1fKA8dwescFEhNkNtJNm9HKgdjmyI+cfhhvvDERzBTUyGuI/bgo06mjppDvgoj5Y2sEBeZy2X7mkMdE5Vj9fokEAVlrvfuwKgBit/z6cTdBadDvx9D3MzTn6lU5Lu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ELOdymtq; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MXG7TC0G"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ELOdymtq"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1749690744;
-	bh=RlE+KHR/v4l25IQFQsKG8Bb3rdOyP9uZR6YN1cMs3s0=;
+	s=default; t=1749690743;
+	bh=Kghlil9lbNsFCXsXfvCqERDFnF8N2V/O58mKM8p/aQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=MXG7TC0Gy5D7KhA78y2nwsTGEsC9W9/jBJBxQg31Pq0S4COB045z5wAfhAed3recE
-	 DVeTj9N/ndpAJAJFEXFUGCIFDSG24J2CFBbJTbthSkninDwRShukIo5DFRMr/6jIMk
-	 O1codMbERx9IWCLkhXJe4PmCJN56je7jVcDTHYji93Zl4oYcqCEJ5L14bkmSP0UWlc
-	 pPa8NuwcTxopqO7KIQcOyl3xjvGNiZA1XZruA57PQI3GqpqeDGH9SqdqoTYsj5uP/N
-	 8SBcR4aM9S3puYKql+kH/K3yOI7mfDfDKxoHts/7BnAg/Rb4qcd8JPUtaTcS17Lbt3
-	 sF93mAZeYVaLFDARwqnKjiToxFFeu3kzYnu9DtK/CawX1igIKHopheuYcT/oGdfnhA
-	 Q6Y8D0AZ49dcrXpjteRTHn92QRN+cyoVuH5oPe3ytJ+xzF78iqGZnNqIxuYawqUf1z
-	 l1BoD+aZ9rYtaudUbEKc9ZYAd5XtCxvWnzY02hIVY1Pd86J2jJm
+	b=ELOdymtqiuCTMMeaODBLjSdi+rxqxRUazRy+rm4bFKGFFd6BCHqjTJchGW4ojRSRg
+	 L+kbBsFU/naUgSw6rnMAg4PcFhh7IFQb10lRKTAqE89s7q0UguAvNIVpsrlxs9H4SP
+	 3uJEQL7a7DEW5KvnAVB8zz1YPFXMPDEkS7TDvQjYtTxrWar994FXOrWu3730FfoUz0
+	 SlP9ctcNvzh7gf2w0pWSFKO3ZX9it4f6/RY52zFytW8lAXwM4XLpv6ElJXm0vEiHRd
+	 iDyAWQLj3mHwZGozPogCzOijZpxwq4JoU+asal/GcLiEdaxRHXavp2fJrq1KvwCWW/
+	 7TSWQjJO7OKh5GGsos29cJFM7mx2NCQ6T9BsLOens72l3CG6VD7ejdK66oJBBWMvnE
+	 hmRQ9RvyyKXGiFGgl+0VRH74ojGq1fTwbCpKix+YKGZorBT5Uk51ot+fwqTzXJOfrd
+	 8jI+M2HVLWoKCi7/k8Tq3TWffzuKZiBZyZGqh3siBWFH2zvjyAQ
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id ED2A22018F;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DE9E72011E;
 	Thu, 12 Jun 2025 01:12:23 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
@@ -42,9 +42,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>,
 	"D. Ben Knoble" <ben.knoble@gmail.com>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v8 2/4] builtin/stash: factor out revision parsing into a function
-Date: Thu, 12 Jun 2025 01:12:18 +0000
-Message-ID: <20250612011221.4158484-3-sandals@crustytoothpaste.net>
+Subject: [PATCH v8 1/4] object-name: make get_oid quietly return an error
+Date: Thu, 12 Jun 2025 01:12:17 +0000
+Message-ID: <20250612011221.4158484-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.50.0.rc0.567.gd817f1499f4
 In-Reply-To: <20250612011221.4158484-1-sandals@crustytoothpaste.net>
 References: <20250601223225.464076-1-sandals@crustytoothpaste.net>
@@ -57,63 +57,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-We allow several special forms of stash names in this code.  In the
-future, we'll want to allow these same forms without parsing a stash
-commit, so let's refactor this code out into a function for reuse.
+A reasonable person looking at the signature and usage of get_oid and
+friends might conclude that in the event of an error, it always returns
+-1.  However, this is not the case.  Instead, get_oid_basic dies if we
+go too far back into the history of a reflog (or, when quiet, simply
+exits).
+
+This is not especially useful, since in many cases, we might want to
+handle this error differently.  Let's add a flag here to make it just
+return -1 like elsewhere in these code paths.
+
+Note that we cannot make this behavior the default, since we have many
+other codepaths that rely on the existing behavior, including in tests.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- builtin/stash.c | 33 ++++++++++++++++++++++-----------
- 1 file changed, 22 insertions(+), 11 deletions(-)
+ hash.h        | 1 +
+ object-name.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index cfbd92852a..ab491d5ff6 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -169,6 +169,25 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
- 		die(_("'%s' is not a stash-like commit"), revision);
- }
+diff --git a/hash.h b/hash.h
+index d6422ddf45..ec594c63a6 100644
+--- a/hash.h
++++ b/hash.h
+@@ -216,6 +216,7 @@ struct object_id {
+ #define GET_OID_REQUIRE_PATH         010000
+ #define GET_OID_HASH_ANY             020000
+ #define GET_OID_SKIP_AMBIGUITY_CHECK 040000
++#define GET_OID_GENTLY              0100000
  
-+static int parse_stash_revision(struct strbuf *revision, const char *commit, int quiet)
-+{
-+	strbuf_reset(revision);
-+	if (!commit) {
-+		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
-+			if (!quiet)
-+				fprintf_ln(stderr, _("No stash entries found."));
-+			return -1;
-+		}
-+
-+		strbuf_addf(revision, "%s@{0}", ref_stash);
-+	} else if (strspn(commit, "0123456789") == strlen(commit)) {
-+		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
-+	} else {
-+		strbuf_addstr(revision, commit);
-+	}
-+	return 0;
-+}
-+
- static int get_stash_info(struct stash_info *info, int argc, const char **argv)
- {
- 	int ret;
-@@ -196,17 +215,9 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
- 	if (argc == 1)
- 		commit = argv[0];
- 
--	if (!commit) {
--		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
--			fprintf_ln(stderr, _("No stash entries found."));
--			return -1;
--		}
--
--		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
--	} else if (strspn(commit, "0123456789") == strlen(commit)) {
--		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
--	} else {
--		strbuf_addstr(&info->revision, commit);
-+	strbuf_init(&info->revision, 0);
-+	if (parse_stash_revision(&info->revision, commit, 0)) {
-+		return -1;
+ #define GET_OID_DISAMBIGUATORS \
+ 	(GET_OID_COMMIT | GET_OID_COMMITTISH | \
+diff --git a/object-name.c b/object-name.c
+index 9288b2dd24..851858975f 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -1081,13 +1081,17 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
+ 				 * still fill in the oid with the "old" value,
+ 				 * which we can use.
+ 				 */
+-			} else {
++			} else if (!(flags & GET_OID_GENTLY)) {
+ 				if (flags & GET_OID_QUIETLY) {
+ 					exit(128);
+ 				}
+ 				die(_("log for '%.*s' only has %d entries"),
+ 				    len, str, co_cnt);
+ 			}
++			if (flags & GET_OID_GENTLY) {
++				free(real_ref);
++				return -1;
++			}
+ 		}
  	}
  
- 	revision = info->revision.buf;
