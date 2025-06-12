@@ -1,109 +1,135 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B1818BC3D
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:25:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1659F18BC3D
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:26:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749702360; cv=none; b=Rnp5Xp/u2l7y0VtKlv/LD18MdgB98A+Ux8/wFq6Tzlkqu2dZzhWd8EMz396PXJxbk29JWRZcK4uU4RQ96BEWwk5f4n6hVe7eoNlzqMpUw4a+fUjrwawP555wvmv40kBnr9QW6sYSvecaX9YaQZ/NUx+sitQ3ainXpLmF4qcb2Bc=
+	t=1749702371; cv=none; b=L2iDnpvSib+lYS0wZcP9MU+m6c1xot4ygpYU+LIyfHp1cAtaeGxvSD7IbcSjAUwjKpEgJe/ADpdC+wUvgx8Nh8wsOFjg0ZqOjAwcv2iYOqFL/kwiCZ+HdeRiihC8htFr4yl8FU49Cs6lgBzuEa/tvvtjnwXVwFJdv6fDc+UWj78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749702360; c=relaxed/simple;
-	bh=PMtcihMS57CixLx994nX9VZT0GT+MtRlAIJNDlnkDuk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=JAgv5oELwLe0tCAR5bplLRCGqdiQ8BMPznNVvZjx0J09d4eOetB3+/mZpUqRoi+t0dqRMIGl193nOVz+yibK/ST3w0F7bwkj0jg2ujtI63e2tuYvvnyMMDSbPhD+QV5JDfJvJmD8aBQU3yJcdaqqrwaTgBLnITSu5fvfJwDw4Tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LbGzBgXh; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749702371; c=relaxed/simple;
+	bh=if3eoVeOMuodo5hoI+0AaYiI18paNPCMLaQJy0qF2XM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q+vC3qatSUrQjpw2gIZ6cyTk5k0fLeo08Msp9t/tu0+BJlKH8YNwInzpR6vH9PXI2QDT/ZWe9FlLT00KWWgKLmgn1/MA5X/4sXraEVn/6tB4vsLSOugN7wWQK9lHxTL3zTn0raWA+4IXVLS/xbDhdF5Epf8jHfyxXvJhgWrzrW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=X1w8jY/f; arc=none smtp.client-ip=206.51.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LbGzBgXh"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-747fba9f962so468168b3a.0
-        for <git@vger.kernel.org>; Wed, 11 Jun 2025 21:25:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749702358; x=1750307158; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PMtcihMS57CixLx994nX9VZT0GT+MtRlAIJNDlnkDuk=;
-        b=LbGzBgXhtMATnH5XHyMgWtLmfUEiowZmz8ZIsTQF/KbTS9qOmg1uCHiG3yhMyqnzPx
-         jSaGbVYGy32nSmAoZ3qjBLoglQ9V7Y+tu+Ss6Qg/BWtDNs3Ez6yJAzAhqjAR/0mE3i7Q
-         YUYOb8ZE1HV8tmH1IjjHFkYLjNz5e/0zHdKcXkMLbGyuC1q2I2cX4cAPOFEr0WzMcz1e
-         +Bh+bLqEMXKpTxP+pqEMtd8v3ehhc4hgV0YCenHQgIlnjC7H65sfGsjU2kfuY8RNXF1y
-         btXCo1AMSuZtv1ghie79msMYRTpsq019/O+T7tEQd2rYVubkQDEclGQ2xPXO3ffoPnpR
-         h8eA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749702358; x=1750307158;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PMtcihMS57CixLx994nX9VZT0GT+MtRlAIJNDlnkDuk=;
-        b=xPPuaRuxsMQbavBuIFbAtqNwSIbuTCl0ttdbVyInKdu2Mbsb/7v/veWM0SAnRuQfJl
-         2YtJoraD07Q4VgRBBiYuKARTJ3qLiDC1wI4wiuQv9+yTKD4Kywj3MLTB/5dbWM4Ohp86
-         1d3wg9gVjp1+vgq6ngraZNOu4UMqrybWE2ssmQSFkajf3BDyeTtfXhZFRX21dx8Gx4tK
-         zhldB/eIzInJS+BkZ62GWJoJy+wMLCzl3Iic8m7fDAFTp8aXtkRe+/jkt4ggzj9JHU3x
-         6nGa5s11JPjFMUACLUfI4l+iUH3K898uIc+39uL0MHb5kyuAbPrZVzxOQgqkZZfYls2C
-         9aVw==
-X-Forwarded-Encrypted: i=1; AJvYcCUAVTGKh32lmVDWHyyYzAryrrEQkU0m+bh30scfCYHMg2HLHddzz25w60ltO46lrOPArtA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwUUhJbLESVA74D+ld8YzqwCyVT5h8XHapscUq10QgXgp6KgCwT
-	TOpZOIOM6SNGY9Iv1yIm0IAB5MfXtJ4tWZuVPsQ07HaexW86ifn8N9v4TNXYiA==
-X-Gm-Gg: ASbGncviyQacfxxBSHJIQFBWQJAha/Z1dx3CMK5Tp0puvKIeUMY7YlibBNIXSXWz1Tp
-	aa2HRlubC7nztg1WZnzmskzdalj35ApAFW0nRA0fZpxH9deRRb/aGNMe1S2E/dpy3MyOpzXnAHh
-	BldbaXoaEe4lJormsmrxe/0F1AgLSJVq+OyoosU0E/Q5azOPG13Jl8mzSJiwqcArGXHpSEtG3yG
-	gmUK8qmPCCELwsjDtlKJQb9ZeRFcuoWtpn0gpm/7Kcg08gHZwx4pmMgrg+FwKhOBw1iFvGEkGqb
-	ZpAeRaIdJQ0LUVVqFCrDAurQpmCAEhv+hRDfyAw/gB4=
-X-Google-Smtp-Source: AGHT+IFyCUcYkbuNIxSY/3/5KQSb4rbloH2EPR5uFSwPRJxYP6Acw6s7ssNsdkiVZen4gKJ1++KKkw==
-X-Received: by 2002:a05:6a00:9497:b0:746:195b:bf1c with SMTP id d2e1a72fcca58-7487cf174ebmr2402822b3a.10.1749702357867;
-        Wed, 11 Jun 2025 21:25:57 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::53de])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748809eb0easm435263b3a.113.2025.06.11.21.25.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jun 2025 21:25:57 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Brad Smith <brad@comstyle.com>,  git@vger.kernel.org
-Subject: Re: Solaris sed
-In-Reply-To: <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
-	<87bjqteicd.fsf@gmail.com>
-	<f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
-	<ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-Date: Wed, 11 Jun 2025 21:25:56 -0700
-Message-ID: <87v7p1d1rf.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="X1w8jY/f"
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+	by mail.comstyle.com (Postfix) with ESMTP id 4bHqGS6RRFz8PbQ;
+	Thu, 12 Jun 2025 00:26:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=
+	message-id:date:mime-version:subject:to:cc:references:from
+	:in-reply-to:content-type:content-transfer-encoding; s=default;
+	 bh=if3eoVeOMuodo5hoI+0AaYiI18paNPCMLaQJy0qF2XM=; b=X1w8jY/fmjQq
+	SWNelXE8h2ZY9LcS8TGJ0FSFDXJSjhPOIUHGcO27xMA5QFS+Dieb0Ro43YVn0js1
+	psD+LAUg8/ApQ4qtSg5ueOnuMNI37+yimIlhBtSbXY2+ZRXdB2VlMeoaGW4n+zRT
+	3wnQJoD7EmRd1A97TqjExK447hhZZZg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=message-id
+	:date:mime-version:subject:to:cc:references:from:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=default; b=EvG
+	ojiCNgP8m6LwPLmY/Gob4lJiQCIQpQTBZNWznZoQxQ8sxw2aZLvF7imMRt/nQVPN
+	/Gk75/H/wSL7rbd2A6kFUaIUNwCuUc2E4chfjQAJk4tI2Mvo3R0B+MToXOhuvzi4
+	IK5Q25Jq0Vjvn/FC2eQ+XrBCOVpXAiErq5YKr/uU=
+Received: from [IPV6:2001:470:b050:6:142d:4b81:8fea:90b2] (unknown [IPv6:2001:470:b050:6:142d:4b81:8fea:90b2])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: brad)
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bHqGS3ccrz8PbN;
+	Thu, 12 Jun 2025 00:26:08 -0400 (EDT)
+Message-ID: <e63d1ef3-6bd9-4720-95ea-16c800f549c1@comstyle.com>
+Date: Thu, 12 Jun 2025 00:26:07 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Solaris sed
+To: Eli Schwartz <eschwartz@gentoo.org>, Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org
+References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
+ <87bjqteicd.fsf@gmail.com>
+ <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
+ <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
+Content-Language: en-US
+From: Brad Smith <brad@comstyle.com>
+In-Reply-To: <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: quoted-printable
 
-Eli Schwartz <eschwartz@gentoo.org> writes:
-
->>> The second is more tricky. The '-E' option to use EREs was not added to
+On 2025-06-12 12:16 a.m., Eli Schwartz wrote:
+> On 6/11/25 11:49 PM, Brad Smith wrote:
+>> On 2025-06-11 11:42 p.m., Collin Funk wrote:
+>>> Hi Brad,
+>>>
+>>> Brad Smith <brad@comstyle.com> writes:
+>>>
+>>>> Building on Solaris I noticed the following two issues with Solaris =
+sed.
+>>>>
+>>>>  =C2=A0=C2=A0=C2=A0=C2=A0 GEN version-def.h
+>>>> sed: Missing newline at end of file standard input.
+>>>>
+>>>>  =C2=A0=C2=A0=C2=A0=C2=A0 GEN config-list.h
+>>>> sed: illegal option -- E
+>>>> Usage:=C2=A0 sed [-n] script [file...]
+>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sed [-n] [-e scrip=
+t]...[-f script_file]...[file...]
+>>>>
+>>>>
+>>>> https://github.com/git/git/commit/
+>>>> e1b81f54da80267edee2cb8fd0d0f75f03023019
+>>>>
+>>>> The second issue being introduced fairly recently. Not sure what
+>>>> would be
+>>>> appropriate fixes. Just pointing them out if someone has an
+>>>> suggestions for
+>>>> fixes.
+>>> I noticed these as well, but just ignored them since it seems to buil=
+d
+>>> fine.
+>>>
+>>> The first one seems like just a warning? Probably something to do wit=
+h
+>>> POSIX defining a "Text File" as "A file that contains characters
+>>> organized into zero or more lines" where a line is "A sequence of zer=
+o
+>>> or more non- <newline> characters plus a terminating <newline>
+>>> character."
+>> It looks as if it is just a warning to me. I wasn't worrying about tha=
+t
+>> one as much
+>> as I was the second issue.
+>>> The second is more tricky. The '-E' option to use EREs was not added =
+to
 >>> the specification for 'sed' until POSIX.1-2024 [1]. Maybe the script
->>> could check for the 'gsed' command? All of the (few) Solaris machines I
+>>> could check for the 'gsed' command? All of the (few) Solaris machines=
+ I
 >>> use will have many GNU programs installed like that.
->> I can't comment on that especially as the build bits support pretty old
+>> I can't comment on that especially as the build bits support pretty ol=
+d
 >> releases and
 >> I have no idea how long Sun / Oracle have been shipping GNU bits like
 >> this. I do not
 >> believe this has always been a thing.
 >
->
 > The Solaris box I have a shell on, has gsed installed as a purely
 > optional third-party addon from a third-party package feed. As far as I
 > know, Solaris never did nor plans to ship "GNU bits like this".
-
-Yes, sorry for not being clear. It is not installed by default. On the
-compile farm machines I have access to it is always installed by the
-maintainer. Or on VMs I use, I always download it. I figured that is
-pretty common.
-
+>
 > Of course, the Git project *could* declare users must first build GNU
 > sed, then build Git. Or only build on boxes where the admin is a GNU
 > enthusiast. But that option seems unlikely and unattractive...
 
-Perhaps I am too mean to Solaris... Their 'date' command made me give a
-similar recommendation before. Anyways, Junio wrote a patch that avoids
-us forcing GNU tools on them.
+To clarify what I meant. Solaris 11 from the looks of it includes GNU=20
+sed with
+the base OS. That was not the case with 10 and older.
 
-Collin
+The documentation for 11.4 for example mentions both versions of sed.
+
+https://docs.oracle.com/cd/E88353_01/html/E37839/sed-1.html
+https://docs.oracle.com/cd/E88353_01/html/E37839/sed-1g.html
