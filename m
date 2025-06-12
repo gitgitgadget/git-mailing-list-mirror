@@ -1,103 +1,81 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A42529ACC3
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 15:48:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6062F4328
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 16:40:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749743307; cv=none; b=Q5ekAz6ilPWl1qKXhpnHlswNqLIuQOHcy7H1gq685Yt6XigAM7DgAfVupmqN9WUrl/k/NxZu+3VJ8OER1hT6abTRgPymeUqyLmNjtROW0FwTxI2qdVx3OwVE+6dU+YvLYvNOXYlTIDWh/CVSoRxunbg+OaCakalUtUs4u6uZOgg=
+	t=1749746444; cv=none; b=M4tbrI/rt6r5YlTqdsigXjancOnzQpVUQum0CuPT2UUAwdHpkyTUVsH1Ab4j8cMJWxxBPQx5xrSQVHKZ5aIScXdQp/zW+5teyhyYAbQOiPdNJQFuvEXq9YrSUBIsek9SN1lXAlCka8n9CMTj9579LuO163GiUKjz2jyjvzZ6hWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749743307; c=relaxed/simple;
-	bh=21FiZm7cEJ+6YNlcVn813xp8PRqtXdXropH1tfSk4c8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hieiK6Hl1H65Nc0urkk9Hhvxts2mckVfYmYa3JXCXDfhr0EEttypnabM6ZJzyju08+1MWFe7SaseL/LYA/w2qv0AnUtDeeEzPjTLAxxRWVyfWDuljHIextA9YWxeDc+Iglyp96fdr/P/soXj+lUue2Y+sBbEjipM/ZMIYCHeHYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fezOgt0a; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fEoqh794; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fezOgt0a";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fEoqh794"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 88F901140227;
-	Thu, 12 Jun 2025 11:48:24 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Thu, 12 Jun 2025 11:48:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749743304; x=1749829704; bh=abBStaf9CJ
-	jlbekhkxHnl0/wbG9Do4PjGhg//yWkPdQ=; b=fezOgt0abdZfOYfvnjnZUfe8kx
-	fvyAzMcdB1Y5CcSHfJ9M969hYteIAZnDLaDs9yeczryL9RTixOuSEvzs5wd2+KZk
-	13sci7o+qn0tzhjnXK3yEklRc8s5C7YanZbs0wmd3pfZjVZFABdc8QUFxwzl9eXh
-	S3BAk4dN2znqfyFRYg1f+uH46PAyhT0TAirUdnVtfDvGZOlnsyJN8q/+0zXDg9Ar
-	/nWvI/LiDaxSAcpNI7J4IXuW/HN0R7AYg2CtfD1aNtx6PnhabBgibOd2MTD1yyWQ
-	OCAz+s7QAHZtEm/Do4vBzM5iMvTNOwjmm2sVkSMM1yYSpH9WyHCWXwn33SXw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749743304; x=1749829704; bh=abBStaf9CJjlbekhkxHnl0/wbG9Do4PjGhg
-	//yWkPdQ=; b=fEoqh794gGrcsHzp7LVrYGN9EZcjobQz7EH2fTBuoqTuH9ETKT+
-	E2Yve9lILCxz1dOklVkQV3Bz5Ejlxkha/ZplK4gwgnTOopFu6PGyH9wuDtf3GEZw
-	fqCrblJrSF4TjGl3E8byY92smXc/eCo1sWarBnZxUYaC/4zyn5DqlHOuyoG6XTxu
-	sdR0lHcuIsrJogGGzjvLU74lFtiREfB1IobsjTNinHlwUWL7utIbNRR1euPO0VHa
-	8DaJr74Cy2LBNWhggKzuzfa+mVjsB3ESVaq8bezAsbKe1vHiPljEaV6U7xrbZoQ6
-	M2MLDY73kDpxRsPaeoK1u+YA7ZctGlrpnow==
-X-ME-Sender: <xms:yPZKaC9YtplQeEBOUWNjqLNJi55y7supEKJAq8WgsgSPj-MvKRhStg>
-    <xme:yPZKaCviJ5ttQthoOEqFza-n693PsSnYW4idJmFYjkQ83Gwj24y5htkDq6t9pSDKG
-    i8w0seUAXMkXS-L6A>
-X-ME-Received: <xmr:yPZKaIBGMqZGlOCEjt_QEKfmu-rzwNKd-rmsHFb9p0HhvB3YLVXDuPPEfQEeHlYZmuOLoPS8MioeWby94kr-9RT3SbjDvoe8z5e3>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduheegjecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueef
-    jeelueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrnhgurhgvrghsth
-    grtggthhhiohhtthhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgr
-    ughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yPZKaKdwojFPzY6zADvsDjZl8Dpv8Nr5_ao_8CH76uwz1bVOlAGOmw>
-    <xmx:yPZKaHPFl_vJEHSzvoDqTAgI8VlgD-R4NpwF21Ao3bqyy1Q8uqEVKg>
-    <xmx:yPZKaEkA77ulGeGGB5t0BvYPX0ain99SEflMXGt7OyvBHdU-P4eETw>
-    <xmx:yPZKaJtG7sKHHp25s2Qf52aogv9caraLVN7SzPkkIbuTTljudKPtXw>
-    <xmx:yPZKaD7HtsMK0q8PphKkFD1WR_2-3eaaVo5rJjUQTV3vdYEZ96f5Z5US>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Jun 2025 11:48:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Andrea Stacchiotti <andreastacchiotti@gmail.com>
-Cc: Andrea Stacchiotti via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] branch: move multiple branches in a single --force
-In-Reply-To: <xmqqjz5hffn0.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	12 Jun 2025 02:55:31 -0700")
-References: <pull.1992.git.git.1749546464346.gitgitgadget@gmail.com>
-	<xmqq7c1jmgpq.fsf@gitster.g>
-	<CAEgWtF-fNXaC88FWw5K_3ZpbvQSxAfeuCFy8kkrh_z16vD77=g@mail.gmail.com>
-	<xmqq4iwnktyv.fsf@gitster.g>
-	<CAEgWtF_0JzZ24L+H-WoKFGaK6Hho-YYbutxSXRud4SK3HwOYXg@mail.gmail.com>
-	<xmqqecvqjo46.fsf@gitster.g>
-	<CAEgWtF9MRbRASg1Jb3n6Ggvh8viZOpyev+OyX5DSpWQ7bMF8dg@mail.gmail.com>
-	<xmqqjz5hffn0.fsf@gitster.g>
-Date: Thu, 12 Jun 2025 08:48:22 -0700
-Message-ID: <xmqqa56dezax.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1749746444; c=relaxed/simple;
+	bh=yu+jEgcq5bq8MzBVi8N0y7NpklsSEB7M8K0M6Ogs6WM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=E5tL8j2tQl/eA9tZpLz5MUGiajKascXXsoSjS3vIpcdFDfiZtJBEdFImU2mGVqRz2jrpjKp7E6/LPxZfWBmGrIX7hzgejMy9Fvhvl/uD8gBxambL7PEu3dj9ip/ObMtU+5Iu5K2STTrS9rjtZypQM39pnaXL+39uwLgMC8UbG5U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-48d4e47eec8so1865461cf.3
+        for <git@vger.kernel.org>; Thu, 12 Jun 2025 09:40:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749746441; x=1750351241;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hxyn+G+r1LxNoBwjrMbOYK0rEWv8YLi1HHa9pdM7Hs4=;
+        b=fuhktK5Oj6sZAGpimxpgPen2ddAIuZ2BAMZhH5UKAxA8srPJLBZxlmFOXiLOMitEkD
+         peW8AAUsqjHEJYsH7M4BOcfj+p7psO6b2lqxielBXuXnQHcAV943j4xLqHuJWdwVmUX3
+         36KkKJwwlcTQMqe6nhJ7zLkzeYjT9PXrRicp0avOkdS2ocC6hD7M5/NDp5PanNFmign2
+         fUq8KwI2atsbd9JxjwQQ71dsBzQatAj0TkLoyTatLpyjNgWRa0radNw35SjMQU7Kur7V
+         hk5BO6WsRZMvNIGUXzc+Ek+IfoOoDl4WUMtxrcaL4Sw1XzerrCufpeuTolb+Q4ZzsKHI
+         R0WQ==
+X-Gm-Message-State: AOJu0YylJFyS1ZHu6xF7Zb1uHEA2xP6MGPAiMr3phAPzJjUAfvnDXjvA
+	usRnnUKS/uILOlnXNH+uKC9CimSR0INnThOUMPnSH6Xszw35d7woKgzNnMt8cxGVFJJouIeUx4c
+	XwS/L8HVpfROHU0AfsT1j0aZ8wVEx36UMcw==
+X-Gm-Gg: ASbGncvmz65wkh+ruEaCYX6eR41rugXM07UjMaMKvkJHFlrr432GgqUg4PSL7rcgOLG
+	PGTp865jSN4bwBA5mDYXbNN5rj2HS9KDmdGRCgFvQktt4V8SzHvAOcUIdpOTeFoICdQqyfBbFCm
+	d7hzleYOsbw5Zc9GlJayiNG75ebSw65tyTNLlCvJ7HWg==
+X-Google-Smtp-Source: AGHT+IFSrfGou5r5/oNhP8dZQ6LMd+p8DUb8olUMEF5LayNfvE1vvXYyJRgYfhveMDbgJMWi2S05p6DByCRMLiaB4U8=
+X-Received: by 2002:a05:6214:1c45:b0:6fa:c6c0:47dd with SMTP id
+ 6a1803df08f44-6fb2c3758d9mr43453166d6.8.1749746441390; Thu, 12 Jun 2025
+ 09:40:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
+ <xmqqo6utfvxu.fsf@gitster.g> <CAPig+cROcMt1crKjvqcetFNGdE4ywmD1+NO+q+MnDzctx8ewag@mail.gmail.com>
+ <b2d23be73902c8433295e2a5f30b051d044e227c.camel@mad-scientist.net>
+In-Reply-To: <b2d23be73902c8433295e2a5f30b051d044e227c.camel@mad-scientist.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Thu, 12 Jun 2025 12:40:29 -0400
+X-Gm-Features: AX0GCFurAqmha0jKsZ1Nr4Wz514YtQIZDmEnjD5Kt5Sf4zbG4b6ualn9B4LxnuQ
+Message-ID: <CAPig+cREA6YdMgbZ59eGnU8SRWmfNR8bGGvLfTQEpS4PqKm9mg@mail.gmail.com>
+Subject: Re: Solaris sed
+To: paul@mad-scientist.net
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jun 12, 2025 at 9:44=E2=80=AFAM Paul Smith <paul@mad-scientist.net>=
+ wrote:
+> On Thu, 2025-06-12 at 01:50 -0400, Eric Sunshine wrote:
+> > Had it used the simpler:
+> >
+> >     echo "$foo"
+> >
+> > this sort of problem (forgetting the "\n") would never have occurred.
+>
+> Just be aware that echo is not well-standardized: many versions of echo
+> accept extra options or treat certain chars specially.  So, printf
+> (which IS well-standardized) is always safer unless you are 100% sure
+> that the text on the echo command line is simple: cannot start with a
+> "-", doesn't contain special chars like backslash, etc.
+>
+> For portability I (personally) always prefer printf unless I know
+> exactly what the text contains (like showing a static string).
 
-> I may change my mind.  But I do not think the feature should not be
-> tied to "--force" option at all.
-
-Sorry for a double-negation failure.  What I think is that the
-feature should be orthogonal to "--force".
+Yup, you're right. I always do the same when I can't trust the
+argument to be `echo`-safe, but apparently I wasn't thinking of that
+case when I wrote the email. Thanks for the dose of sanity.
