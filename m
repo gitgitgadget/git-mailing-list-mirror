@@ -1,156 +1,147 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 447AC79D2
-	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:16:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C29518EFD1
+	for <git@vger.kernel.org>; Thu, 12 Jun 2025 04:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749701790; cv=none; b=oiHlkSEgBRvCxU4XY94LOjuVXvrNTyefkKV9IC5rv0hyIa4TXvLVLkbTFfKvwFWM1CtT95qiAa611SFj7IUrNKE1OK5iXYsWBACrkroCTLPOPQflP1GNwoAW8duzFrcJScpswaI2dwIxIUWl0L8MAeMciSVYXo6czeR7p7/9uNQ=
+	t=1749701979; cv=none; b=MJ6C4jq/+28TVCij5RMQFKjIplUtSoD9OlX8krRlUEqVU3zXQocXGlZVG5lJ7fawWa1/pX4/d3zQT7KzCBhRDnxJ15ZTyFUf3birEl2VvMMIGQHW/tbJIbXVg1Eo19OFhJAC+OiIfERayqKGnPsp+8ywLyYqnmSFcZhm793KX7o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749701790; c=relaxed/simple;
-	bh=bY6fj5utHYXqVVeiQQGgiP/6ENN9ZScX0mHBEqqTOcs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Muw3HLqfLYjrEYt1IIvbnedj1xITavXE2PcIEXtealv457f9mdkvTsrY+4ZqlKyMCcXpq2toHGDreiGx+NrZcLVGWa+p/39ZEWEWxS8KCcgzwIH1PuniInnX79iGrRKgHdiP1WNghaRzX7eeIKUak2z/Qn1kvnsF9YQm1yGHKZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id D7359340AB3;
-	Thu, 12 Jun 2025 04:16:26 +0000 (UTC)
-Message-ID: <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-Date: Thu, 12 Jun 2025 00:16:23 -0400
+	s=arc-20240116; t=1749701979; c=relaxed/simple;
+	bh=UtH4FsilXFD85gILU5JwuO5Qxr8CBGMQr6KN4clxLN4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bHBV/6tD6M29ONTAi8T7o96zv2eqna1slbrvNvItJNbwHu/2MC5UJC6/USdAjTAPixHIOps4Eywc1DSnCV9xUtzGC/lLC8lzBKpF8ZAfuNYUZNnbYSbOxgDIiXfq0L/hapbXnl/7I0QrjyXc5orVwm7fcQYI/fw3uZbj3DyEs4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fc8qxh0b; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fc8qxh0b"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-234bfe37cccso6808665ad.0
+        for <git@vger.kernel.org>; Wed, 11 Jun 2025 21:19:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749701977; x=1750306777; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=OiCfLyX3J5VZdU2o1vRJ9C5EmdNLsosZQ9UBwnFhxZQ=;
+        b=fc8qxh0bnu5dvTkhyKxkAvRCpXQ+a5Nu9Gcf6yXSvnsKNn8Llhx5iRrSr8t9FaIoPh
+         4gB4VMqWt0/P7Rqj/Ymje3A77TqE311/1jxf1GrU8eyCBKcXNilrUadN0mMtWLE2Xg5C
+         Cejld446tVX0pGnkc7eGfWqMoXA4wge3CRfq4ztVO1Waycdh1wlJx+I3Wbcwh+6+ZvNu
+         ICYXF3X/70oATzi/K3dEnBQtBC7x/OHtlSjqq6piY4Z6e5/HYeFvrd8vnaqrD8mS27ZB
+         1dxY1XU79PB6v576qRrInjtV0NrPDhkCykwCLUsO6NXKWXV2vYJqHajWvJsGs1wI3FGh
+         L0Jw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749701977; x=1750306777;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OiCfLyX3J5VZdU2o1vRJ9C5EmdNLsosZQ9UBwnFhxZQ=;
+        b=Wrx0f6TUUa6rKTWUJn38DqmQyg+73u0eU6WHBPQ/8inLeILNxqKeGBQMgEYoerDT3h
+         jPw2hZph2om2hTj5yanj1n7cK4apECJuCYyUYN2deSsiA0LsNbXDChF69GkpLqqr0EJl
+         E61hlJ33Orni8dCru3svY0lL4lcJm3RE44gBwH9FOAI4t5ecKhiqpnw3kNs7b9t6shD1
+         twypf1/FP0zmgaS9PNIyCzzqYq9iDOVrhJ9YiL0jvrZE1ql3XqfYSW+Cvd1V5VixKSVn
+         U+cZ5lNNcuXRoqlCyI6M8F3ScIirSWor4yhhvIvPCa04zQ5Wka1YQuJbI0UzRIH4lR9T
+         KxNg==
+X-Forwarded-Encrypted: i=1; AJvYcCXx1d+mJNs6+hKsWpIk1S0bth4HpHtbPQgdqqI20hIlJUPSmnaJe/Uq8FXbd1UOFM9knqs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdVE14GLdbNd/ZHMOoObvkVeAefcFOKUzCYWOP6YzeIKRvgCjy
+	UFokKBR3fhAEMU87eaOSUDdoz4pUqEE+fYtSVlMwj2HZTltAG8kjIteBVoJ6PQ==
+X-Gm-Gg: ASbGncu2pzbB+vKcWSgkHkCN6C1ZpoMvk1RDWFHs/cF5fKBwdGGXM5SaVBQv3k5hHJ1
+	5AzWeXjGK8a4jpJU5nS2kArZYdM7xQNkTOJbqpE8IBe3zNIgrpvmimy42I+anjrxxDSaNa0msFa
+	fQzX895CML7wsEEcRB7hCQg3QdZlCo26GKdPb6V70xyN8spvA2cpE8w5lC+Z8l2XtGg97/ezxC4
+	sBNtD02MKK6sSh5gXrhhTgKaZCMPgAx6uKiCUNDegMDF6wDY8pHgERJQlAXvBdpVLSQlHpWHdEj
+	i7S88lM1nMniMuAkkd+RvWEoDhddrqHkbzv5dPwIVc8=
+X-Google-Smtp-Source: AGHT+IHYFMq3sDf3NhbW59wXB5BLAQPnF4pAZPy/omHBrci0pVYHhVhZEm97W+rAucJYIShvaHTEMw==
+X-Received: by 2002:a17:903:1b0c:b0:236:15b7:62f6 with SMTP id d9443c01a7336-2364ca864b8mr30926455ad.34.1749701977197;
+        Wed, 11 Jun 2025 21:19:37 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::53de])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-313c1c4e3b9sm499815a91.29.2025.06.11.21.19.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jun 2025 21:19:36 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Brad Smith <brad@comstyle.com>
+Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org
+Subject: Re: Solaris sed
+In-Reply-To: <caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com>
+References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
+	<xmqqo6utfvxu.fsf@gitster.g>
+	<caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com>
+Date: Wed, 11 Jun 2025 21:19:35 -0700
+Message-ID: <874iwlegmg.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Solaris sed
-To: Brad Smith <brad@comstyle.com>, Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
- <87bjqteicd.fsf@gmail.com>
- <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------Gda27M1z4YzwlJgLzF664D9C"
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------Gda27M1z4YzwlJgLzF664D9C
-Content-Type: multipart/mixed; boundary="------------v9aOS1ec0Aj8Q10v7Yv8pEzJ";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Brad Smith <brad@comstyle.com>, Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org
-Message-ID: <ed3d9c32-5de8-4653-be75-d2b5c89340e0@gentoo.org>
-Subject: Re: Solaris sed
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
- <87bjqteicd.fsf@gmail.com>
- <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
-In-Reply-To: <f2082cde-7eb9-4927-a01c-e6fb3b355d13@comstyle.com>
+Brad Smith <brad@comstyle.com> writes:
 
---------------v9aOS1ec0Aj8Q10v7Yv8pEzJ
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 6/11/25 11:49 PM, Brad Smith wrote:
-> On 2025-06-11 11:42 p.m., Collin Funk wrote:
->> Hi Brad,
+>> Totally untested patch follows.
 >>
->> Brad Smith <brad@comstyle.com> writes:
+>>   GIT-VERSION-GEN        | 2 +-
+>>   generate-configlist.sh | 8 ++++----
+>>   2 files changed, 5 insertions(+), 5 deletions(-)
 >>
->>> Building on Solaris I noticed the following two issues with Solaris s=
-ed.
->>>
->>> =C2=A0=C2=A0=C2=A0=C2=A0 GEN version-def.h
->>> sed: Missing newline at end of file standard input.
->>>
->>> =C2=A0=C2=A0=C2=A0=C2=A0 GEN config-list.h
->>> sed: illegal option -- E
->>> Usage:=C2=A0 sed [-n] script [file...]
->>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 sed [-n] [-e script]=
-=2E..[-f script_file]...[file...]
->>>
->>>
->>> https://github.com/git/git/commit/
->>> e1b81f54da80267edee2cb8fd0d0f75f03023019
->>>
->>> The second issue being introduced fairly recently. Not sure what
->>> would be
->>> appropriate fixes. Just pointing them out if someone has an
->>> suggestions for
->>> fixes.
->> I noticed these as well, but just ignored them since it seems to build=
+>> diff --git c/GIT-VERSION-GEN w/GIT-VERSION-GEN
+>> index 208e91a17f..de989657fb 100755
+>> --- c/GIT-VERSION-GEN
+>> +++ w/GIT-VERSION-GEN
+>> @@ -82,7 +82,7 @@ read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trail
+>>   $(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
+>>   EOF
+>>   -REPLACED=$(printf "%s" "$INPUT" | sed -e
+>> "s|@GIT_VERSION@|$GIT_VERSION|" \
+>> +REPLACED=$(printf "%s\n" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
+>>   	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
+>>   	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
+>>   	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
+>> diff --git c/generate-configlist.sh w/generate-configlist.sh
+>> index 9d2ad6165d..75c39ade20 100755
+>> --- c/generate-configlist.sh
+>> +++ w/generate-configlist.sh
+>> @@ -13,16 +13,16 @@ print_config_list () {
+>>   	cat <<EOF
+>>   static const char *config_name_list[] = {
+>>   EOF
+>> -	sed -E '
+>> -/^`?[a-zA-Z].*\..*`?::$/ {
+>> +	sed -e '
+>> +	/^`*[a-zA-Z].*\..*`*::$/ {
+>>   	/deprecated/d;
+>>   	s/::$//;
+>>   	s/`//g;
+>>   	s/^.*$/	"&",/;
+>>   	p;};
+>> -d' \
+>> +	d' \
+>>   	    "$SOURCE_DIR"/Documentation/*config.adoc \
+>> -	    "$SOURCE_DIR"/Documentation/config/*.adoc|
+>> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
+>>   	sort
+>>   	cat <<EOF
+>>   	NULL,
+>
+>
+> No errors or warnings after this is applied.
 
->> fine.
->>
->> The first one seems like just a warning? Probably something to do with=
+Likewise.
 
->> POSIX defining a "Text File" as "A file that contains characters
->> organized into zero or more lines" where a line is "A sequence of zero=
+I checked on my Linux machine and both files are the same before and
+after the patch. Before the patch on Solaris 10, the following is
+generated:
 
->> or more non- <newline> characters plus a terminating <newline>
->> character."
-> It looks as if it is just a warning to me. I wasn't worrying about that=
+    /* Automatically generated by generate-configlist.sh */
+    
+    
+    static const char *config_name_list[] = {
+            NULL,
+    };
 
-> one as much
-> as I was the second issue.
->> The second is more tricky. The '-E' option to use EREs was not added t=
-o
->> the specification for 'sed' until POSIX.1-2024 [1]. Maybe the script
->> could check for the 'gsed' command? All of the (few) Solaris machines =
-I
->> use will have many GNU programs installed like that.
-> I can't comment on that especially as the build bits support pretty old=
+After the patch the output on Solaris is the same as on Linux.
 
-> releases and
-> I have no idea how long Sun / Oracle have been shipping GNU bits like
-> this. I do not
-> believe this has always been a thing.
+So the patch is perfect.
 
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
 
-The Solaris box I have a shell on, has gsed installed as a purely
-optional third-party addon from a third-party package feed. As far as I
-know, Solaris never did nor plans to ship "GNU bits like this".
-
-Of course, the Git project *could* declare users must first build GNU
-sed, then build Git. Or only build on boxes where the admin is a GNU
-enthusiast. But that option seems unlikely and unattractive...
-
-
---=20
-Eli Schwartz
-
---------------v9aOS1ec0Aj8Q10v7Yv8pEzJ--
-
---------------Gda27M1z4YzwlJgLzF664D9C
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaEpUmAUDAAAAAAAKCRCEp9ErcA0vV0nX
-AP9N8BmLg6p05OPWzxVDm0FgPhvsyLNacz7kgoeoakWO5gD/U+CO8N74nHtlvJAe2j+dZkHPws6j
-4a7eOxYOcgVJ2gE=
-=xzDf
------END PGP SIGNATURE-----
-
---------------Gda27M1z4YzwlJgLzF664D9C--
+Collin
