@@ -1,104 +1,109 @@
-Received: from smtpbguseast3.qq.com (smtpbguseast3.qq.com [54.243.244.52])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F29441DF990
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 01:55:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.243.244.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05992F4333
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 04:49:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749779741; cv=none; b=KQRsYE22M371WtKGIt0VlOO1+LwFlLvdi0FPDbrk3HyhCRo/2id6J36HG1A9LsWbDJ7ABQ0FMW4KM5hwcqMIOw86VamsZmsG8vbsV0IxIe5oWFzbh3DdGb7Hn4TqLsxI/hy1av7JnbFuBqJoHuXIVr1+OMg9BmbKEYln7s9zhHk=
+	t=1749790169; cv=none; b=jFwP0Rhd+KQdvrBrPiWwXUgz+X/SsOEYoMxr7xj2kYqRfUS9iacFGEESbZEu0vR8I7thqyLgklJi0XZNCzxeticKp0RuGxSBfRopKh9BNol35k0l09+qfiyfiSr4IgdUGlrFh5e1EYiYG2swFv4sAYXHW7JFftipuXf+0nxErAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749779741; c=relaxed/simple;
-	bh=Qpl4WK8aN/dON+7u0TJWsupO/ZBMIKqhUhnbBiFpLpI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=JrYrZocdLbqotings6v6axZLr6ntw2yTWUo9aFprxApgZRcz2iEbc94k6k3SRpFDFFzLUABaBSZeVV365+Vnsc8ztFRFfVLj1IQgro3MhPPwPRZNNxEFya0GoeEg6pr1CGqIneG9JUNDY7xR1xe0VrT3p2ny6oXaq9yzA3/16Dg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.243.244.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: zesmtpgz1t1749779720t344cbde1
-X-QQ-Originating-IP: L5fAYkBE4kYhlcj0x0kMK6RvS27/U5wsMC+OlV1h+gs=
-Received: from smtpclient.apple ( [36.152.24.180])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 13 Jun 2025 09:55:18 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 16444983638016022725
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1749790169; c=relaxed/simple;
+	bh=rP/v4q843eI9lV9qGDVeBzpc4kSrBQH4bNP0AerQP/A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NpM2O4KQglWMcwphA4/sD5F08/PHNXEt9kukDOBSRqjqXWrnCCtkuep6xs5nrOCILcq1csP20UQufnAIf7NWNCCUINKKd6dKuSTah61HDb3nclgqGrbpHWGWLGzkFpf+yVIfL6VD89axHOgsSJPzRsKHg+hDLgQeePu3HnTKe/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rhDnckQY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iNeOxY6w; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rhDnckQY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iNeOxY6w"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id E04C1138064F;
+	Fri, 13 Jun 2025 00:49:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 13 Jun 2025 00:49:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1749790165; x=1749876565; bh=Wnx33t2vhG
+	x03TK79Jfwku0xDfqhOBwJ2CUqS9ULPSg=; b=rhDnckQYlYQxSc5NHhsPBvykiQ
+	Luh0DMJ54FwvOdgy2UovYdUbYeQFSXybXd5Xx0ZW88szSWZ++UawLbEYv5WDRok4
+	G+Y+G/hPMjCRxdsdE31TjNEs+0aWByoRseuG8SRIolPxLgksMRLl+npaadFEEOgz
+	1Gl6TUyA8XJxBqk6X0Ge/IdefQBbpoiTCFR39ykR6wijWxfKRJpunJeDDuLNBuPQ
+	BMKYxdkGFhtrB6l18b20AXh9N/sbRx7r9ML1oDjoUSmaIQq5ON96CL/h3411h3+S
+	D1ewvOAZFKUWOkpyxgYiPqsH68fo6qei2YRoK5s2ApB1/EJa27C/PaWJ8vXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1749790165; x=1749876565; bh=Wnx33t2vhGx03TK79Jfwku0xDfqhOBwJ2CU
+	qS9ULPSg=; b=iNeOxY6w6n7tlvu414fxtIwR1qySP1iYUn1hpFYQyApU/T5jqzh
+	oTRfsWvc7sXY5kxFYasFTqtf3sCwvRSCTBOq8luKAga5rdEHFccA+Tbs6yd2RLmw
+	ldZ6HNrBlgjiTBekIsQjwrVzy1W4zWbBgEI7MJ5isevGAJVnjjNil6Z/w5fQt2rN
+	P2+fmqVC4g7zxnm6h+cgt6t1uc0gMa2hftqFk+vJ2aJUIBbMsulq8Hkr5lWUyY1t
+	Hqq1cZMzaLfJ5IufA65zKxRHcAu6r0qfAeOBqAoM+YN0NfY4Hm0zUFbWZsLu6bzM
+	PYshYnyrZrWlePs2dcoho5UK5sSml3s2dww==
+X-ME-Sender: <xms:1K1LaF5csydmehImCGQkL2hifPdgaU3Kd3Jh_O0Tv2AaiKy7Chs_0Q>
+    <xme:1K1LaC7k-P6PuwkEOCsBTlMju8ldIEMjV4gK_FGmX246bA7B-P6SD6D1VBo1KFKvm
+    FOp7zxwqJAI1M3pnw>
+X-ME-Received: <xmr:1K1LaMfTwmI4SwgTuizZ0LCDFm8oHsiFDbz7Iafx2Sjz8740uv6SrnytZSI5ntF937rIEu2894OIRGoMG-gJR-eJfcclIMdZbGeE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujedtfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
+    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
+    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurd
+    gtnhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1K1LaOJhkCm4uSZ5pqLlHEwrdh9ow9cH45Y3sIVh7l16cjWUKlgitA>
+    <xmx:1K1LaJJ9Bt_5JPuXQoW3LTcaKW7bNmoPnx5R5ib9lfO_O1IapE9l5w>
+    <xmx:1K1LaHw_E6oQIXPTbL7oN_3mDSgR7Mb1CeRCcJdRwqTVmG6Iw3gJug>
+    <xmx:1K1LaFIBKTY-plOdaSyEjVh04VU61S_Kmq_RFy_117z8_XE1KadpkQ>
+    <xmx:1a1LaFM55Fe6o7Ljs_qSN8LcPadvAPVi06qtXqfHjdLKYW6aUBO6DLpl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Jun 2025 00:49:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: lidongyan <502024330056@smail.nju.edu.cn>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] git.c: remove the_repository dependence in run_builtin()
+In-Reply-To: <11AE19A1-7B19-45CE-AFCE-98D89A4570F7@smail.nju.edu.cn>
+	(lidongyan's message of "Fri, 13 Jun 2025 09:53:40 +0800")
+References: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
+	<xmqqecvoev8g.fsf@gitster.g>
+	<11AE19A1-7B19-45CE-AFCE-98D89A4570F7@smail.nju.edu.cn>
+Date: Thu, 12 Jun 2025 21:49:23 -0700
+Message-ID: <xmqq5xh0b60c.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH] git.c: remove the_repository dependence in run_builtin()
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <xmqqecvoev8g.fsf@gitster.g>
-Date: Fri, 13 Jun 2025 09:53:40 +0800
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <11AE19A1-7B19-45CE-AFCE-98D89A4570F7@smail.nju.edu.cn>
-References: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
- <xmqqecvoev8g.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: N6+UlSQllctNNZ7HnPsAW6oxtqtfGYE2HB95KBsjAlHqszG+AJ4d3+9j
-	mrC+iU+c/7GH8bIkA/we78xN2fHerN9tmUyM2iOHTYYvtPoY2aXI0bQhBZMSWO9VtDvf4H/
-	VBT08+yxkHuETUn3o0G4oE8yXjfBWn4sPTpe+BtQ6WnkzaNM6aTYkn+44JTQV7fs2fRvvH6
-	eMEmsaUcjPcMdhZo0JIBm3P/86MFseEUQbUjqKrRfPllBWlXMT6qNZEEQK3AxnYOyrS0fu2
-	I8FrUc/t7125TDTv07J4eSukjydoio7F2PFx8BwzEmdUwEZGF2KVtsFVO9MYRgKd+8cy3ik
-	oQWbyBowAjk+esqUV6yxOFu4Ek1PLFNToScHaTQGNqlmNE7YWRuLKDBe7NcOz4tLWf78myf
-	W14z9EhyK58fiTHg5KB4JlZTSkCmM1lIjac5lF/6+DsV5ZpCY3s58dWu9SG58aGJ9KkWYgm
-	hlwfgv+jGPrjTUGzt6XgMFMSOSbbLKHUzL79sjuPt1nWbEzKcLTIUKy7JNJvIkPSb8BSpzF
-	2Sbyx2+bw73JSVv/pgbg3qOW5dNMit6e8Lobs1YEqJmR8qfYHnr5NFUX4Sd7jACKQFU14ZZ
-	foKmjGHLPo72q2XiHKIO3Nfcl+tp6jT3zcWbxMIvkShRTIKldc+V5CrlCiPv2BFZbrKpade
-	/R80xwp8d+BC+byfR/eX8GgCu3ZJMypLj4U8GD/kuS2+QMgyJucFzHYHpyFaVfxkyxWLBqK
-	n6X1IM24AlY3gse9p36WfxwvjxpySlaYg8a1VhnMC15haNpa5KfUhZQlX6aenBQmwNKQ12s
-	iMkp1mrjssi5gwOIGFcx+FFs4PlfqRuRS6JNKVZJCHuTjQsXSXV5VmG9G40/i1ten7vFrps
-	sXbwBLIOuSOYo5JzLFjBMDgXLlLHa2lrg2ttK6y1wrQrmkreRTg6xiYoWlq5ygPTZAN8Szq
-	d0SnAiTc5hm+ARld1DbYw6qaatdo58sqIyXs=
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> Lidong Yan <yldhome2d2@gmail.com> writes:
->=20
->> run_builtin() takes a repo parameter, so the use of the_repository
->> is no longer necessary. Removed the usage of the_repository.
->=20
-> Good.  The caller always calls this function with the_repository, so
-> this patch does not change anything in the bigger picture.
->=20
->> The comment before trace_repo_setup() advises not to use =
-get_git_dir(),
->> but this note is unrelated to trace_repo_setup() itself. =
-Additionally,
->> get_git_dir() has now been renamed to repo_get_git_dir(). Remove this
->> comment line.
->=20
-> Isn't it still relevant to explain the reason why this codepath
-> avoids calling the repo_get_git_dir() function?
->=20
-> e5b17bda (git: ensure correct git directory setup with -h,
-> 2021-12-06) tells us that the comment is about use of
-> startup_info->have_repository, which was added by a9ca8a85
-> (builtins: print setup info if repo is found, 2010-11-26).
+lidongyan <502024330056@smail.nju.edu.cn> writes:
 
-In commit a9ca8a85, the intention was to avoid calling get_git_dir() =
-before
-confirming that we are indeed inside a Git repository and determining =
-the prefix
-between the current working directory and the repository root.
+>>> The comment before trace_repo_setup() advises not to use get_git_dir(),
+>>> but this note is unrelated to trace_repo_setup() itself. Additionally,
+>>> get_git_dir() has now been renamed to repo_get_git_dir(). Remove this
+>>> comment line.
+>> ... 
+> However, I believe this concern is no longer relevant:
+> repo_get_git_dir() no longer sets up the Git repository environment as the
+> original comment implied. Instead, all the necessary setup is now handled
+> by setup_git_env(), which is invoked by setup_git_directory_gently() after
+> the prefix has been determined. As a result, I believe it is no longer necessary
+> to retain this comment message.
 
-However, I believe this concern is no longer relevant:
-repo_get_git_dir() no longer sets up the Git repository environment as =
-the
-original comment implied. Instead, all the necessary setup is now =
-handled
-by setup_git_env(), which is invoked by setup_git_directory_gently() =
-after
-the prefix has been determined. As a result, I believe it is no longer =
-necessary
-to retain this comment message.=
+If so, please update the explanation.  It reads as if the only
+reason for removing the comment is because of the rename of the
+function.  If the reason is because the behaviour has changed and it
+is not relevant anymore, the readers should be told about it.
+
+Thanks.
