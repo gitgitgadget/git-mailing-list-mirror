@@ -1,143 +1,110 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7FC291C3F
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 09:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C11E2D4B5D
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 10:59:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749808347; cv=none; b=HbYg4qXO3+VMfTK4WZxVzQQm/qahlNPtQrNm+uDyYLP1gC9jjxynMnZYlJRyaSA8WIFoTVLLn9TGjLb2V05mjt+DRx+G5pHnvJQ0YbPgs1skCq+L2brcb181J+0wrdBH3QZWQjOdFVrP5CjFfMJbZ3r0ToxXkkWK5AMrJ5TZfic=
+	t=1749812383; cv=none; b=M3Pgszi0f/p+Wvs9wiH7dj7IfhGGSFhrAWOZSP4r24BaPFWBai1+COPt36kPszCqj/0M5zmyRKxata+zD80dMKjTy+Vvnhz7sl9P38J7ecq99eVS8zKbU/olESjsmkxad1ZkYcl+DIxwNUKOdJjKAgtOThI3E9o5e5VP07Nz0s8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749808347; c=relaxed/simple;
-	bh=8l40AZIzWIxiAABdR8jxJLjHvN9q9p4yfu7vPZ2QCb8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Hq2op+ehIKrRTFFkoeXkam/HDhNL1nOKAoxQ3ZMzA2Y5GnYEMGSRyKFU/uaNQl5wHr/9oUMZ4uzSOg5cJb7IF1eG4ZFmfcgf0PPqHTCmSvBIPDaU2IKQM9JqT5sKh9QkJ0G50MKRVLB22scrrDN8JhdDy9yBBIjBScKNCV052QM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=dAF1wQxi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cLmKPKeI; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1749812383; c=relaxed/simple;
+	bh=wG/3BeoPp/+2LG4TBTRVxGkb0jEIeurDiA+MY42CkxE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y1jJaA6wSDTTMcYciLjsgYq6PN+kJrN2+l0ombuydrosPfQMr28fA4uwazSVJUNnDQ9FYvlKQ9AON/k/SE2lpaXy11Oy52aiEUe+fJa+nIoPtq1CRSOO11GCavt2d7dQYmVngHK3VC3xkmccX8QnzsSIb4zWKx0c88YT7TXPI+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VhJ/tjTh; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="dAF1wQxi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cLmKPKeI"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 747051140137;
-	Fri, 13 Jun 2025 05:52:24 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 13 Jun 2025 05:52:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1749808344;
-	 x=1749894744; bh=TpMjfz8phBEVay0LhqDNdL+E9h1uz2QFXwlO95UBzqE=; b=
-	dAF1wQxilR8FiIqmaZ7mQ8J1UdL8fejSILgQqvKrZAlZ+CT2H+tQBo1Mv2xOGU3K
-	uYJyBDmYugg0tZbjtSK/6lhzKH6O5vhPg++wU3fR6+DvVDtUWpppPv6RGfRgARnz
-	011NwFZYf/68wnXW4UP1UPzaZNeQvSupFCQLdztfUj4JLwx086mULv8EJtUXUstO
-	y2yBpbkr2b5rzOPKDvUaThST7XisVAS+X1kIpXXK2HPcqvkw+8UVXXOMcpv1kJ1w
-	QXhSbA6A/pkXnG15YxO8ujVOE4RxTcKmr5KYL1P/b4KfVCOwBDpoouHTkCzxTPSb
-	M8F33WzZ9AJ7iWGJKlPZow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749808344; x=
-	1749894744; bh=TpMjfz8phBEVay0LhqDNdL+E9h1uz2QFXwlO95UBzqE=; b=c
-	LmKPKeIodbQdBF8LxEjPExXcxw5SR4ClJu8GYOwD1qWKei9/lEjs33fkThtWDJJS
-	2RpdOeFMM8VW+xN89Jy1vOMQy70aZReOB0h382H90NGs3dUUCNTe4Sl1/CT00Lsy
-	0lXDvRNiXe8gpQ8Fce+xHeJcp9sCEir6Cxon4LRYEEVuvxxEycneGVwDYBv9NJVt
-	Ub/gjLMqQgApgFvErbDsWyldrTPa9mnLltBr4VqgeZmwwbIPyiG71jp4P9dhGeHo
-	YPE03TdsORWBsIHQL8NDRlVr8VZOkl2jS17BYk3B3rxxWDZOINwQlnY/cv3bja6S
-	LVNVUfQsyM+JX7iFija6A==
-X-ME-Sender: <xms:1_RLaOn_3vg9iLpMSWnhXzv9Zl9jDX7JLRA1wqbSpqiMgb87MRwti3Q>
-    <xme:1_RLaF1ooJE0UNFUWdRSO70vPtNJEwZ0Btdpt2MMdbI4GV9z-vFpEDWllAQHOEYiN
-    gCGLesnHCWAaCcpfA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeeigecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffr
-    rghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelgeduudekleejkedtveejgfeigf
-    efkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnh
-    gspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprghvrghr
-    rggssehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepphgvfhhf
-    sehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmh
-    gvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:1_RLaMpVLPJrJ379Y07N7wrDu_Jr4dW8m64ML9MfrqMpU1Tws3FOoA>
-    <xmx:1_RLaClvD3nar2ttULu82gh4a221TDuewXXQcRXgyuUXVO7nw5mVsw>
-    <xmx:1_RLaM3ugK02HpnVnWCdkmKwDznvMohPQql6koi7xHf1nV3v-huieQ>
-    <xmx:1_RLaJt3VCJ2S4EYON0qcmy7jju7lCua5Mq5zDjr3324xqhOn-PW2g>
-    <xmx:2PRLaJ_UN8ieYq_DgTFBM6FyVU1otxfMo8kfPERkU4Wvj_hu7WVoL50W>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id C00C91EA0064; Fri, 13 Jun 2025 05:52:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VhJ/tjTh"
+Received: (qmail 7966 invoked by uid 109); 13 Jun 2025 10:59:33 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=wG/3BeoPp/+2LG4TBTRVxGkb0jEIeurDiA+MY42CkxE=; b=VhJ/tjThYj/88FHzpiZfYghg53Epn3+nMT82wa2cWNHDi9sT7DFHNA5hWf0n9UqDr2Ij78+zWB0EvpVkKdJgEYsGWMhTOyP4ZA71Ut+iHbhyppDCPSoXhS8Q6YRc93L1aV3zKXFCKtroi9j/KTnDtRBZury1raW1HFQ/ackMeAL3wmHtbMqOCPh4pP6TPfjQFxOpnUhxAEdSndYPj+0jgz9R3YCfjwJnr5/CwhAXdDN5xNoc+X0CURMTwx5+XxTFIcYJv1i4aXlyvhNm3Qt0PUGZyl0cBEe9qhE8JHNBU++twf8yNudTX4bEK4h4442MSyAs6r+zDo3kDzGNRw6hww==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Jun 2025 10:59:33 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 787 invoked by uid 111); 13 Jun 2025 10:59:32 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Jun 2025 06:59:32 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 13 Jun 2025 06:59:32 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Brad Smith <brad@comstyle.com>,
+	Collin Funk <collin.funk1@gmail.com>
+Subject: Re: build: sed portability fixes
+Message-ID: <20250613105932.GA1995623@coredump.intra.peff.net>
+References: <xmqqplf8evr9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Tce1dc134773c8027
-Date: Fri, 13 Jun 2025 11:52:01 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Toon Claes" <toon@iotcl.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
- "Taylor Blau" <me@ttaylorr.com>, "Derrick Stolee" <stolee@gmail.com>,
- =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
-Message-Id: <12b49804-946e-4bfe-a1ce-e7f712363076@app.fastmail.com>
-In-Reply-To: <87ldpw0yu3.fsf@iotcl.com>
-References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
- <20250523-toon-new-blame-tree-v2-1-101e4ca4c1c9@iotcl.com>
- <aDWWe6qCQXorPESd@pks.im> <87ldpw0yu3.fsf@iotcl.com>
-Subject: Re: [PATCH RFC v2 1/5] last-modified: new subcommand to show when files were
- last modified
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Disposition: inline
+In-Reply-To: <xmqqplf8evr9.fsf@gitster.g>
 
-On Fri, Jun 13, 2025, at 11:34, Toon Claes wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> On Fri, May 23, 2025 at 11:33:48AM +0200, Toon Claes wrote:
->>> diff --git a/Documentation/git-last-modified.adoc b/Documentation/gi=
-t-last-modified.adoc
->>> new file mode 100644
->>> index 0000000000..1af38f402e
->>> --- /dev/null
->>> +++ b/Documentation/git-last-modified.adoc
->>> @@ -0,0 +1,49 @@
->>> +git-last-modified(1)
->>> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->>> +
->>> +NAME
->>> +----
->>> +git-last-modified - EXPERIMENTAL: Show when files were last modified
->>
->> Nit: we don't have the EXPERIMENTAL label here for git-switch(1) or
->> git-restore(1).
->
-> But we do for `git-replay(1)`. Because I haven't gotten much feedback
-> about the usage of the command, I wanted to be on the safe side and not
-> commit to the behavior. Marking it EXPERIMENTAL would allow us to make
-> changes on it's interface without _breaking_. But I wouldn't mind
-> dropping the experimental status.
+On Thu, Jun 12, 2025 at 10:04:58AM -0700, Junio C Hamano wrote:
 
-As a user I appreciate that experimental commands are prominently called
-out as such, like it is here.  I don=E2=80=99t see much user testing (mo=
-re as in
-DX/developer experience) on the mailing list for new commands.[1]
-=E2=80=9CExperimental=E2=80=9D in my interpretation means that I should =
-be careful about
-using it in scripts and that the developers are open to making changes
-to the command interface.
+>  * This time with a proposed log message.  I may fast-track it down
+>    to 'master' before the release.  I personally am undecided, and I
+>    do know that I hate the style of this particular sed script and
+>    am tempted to fix it before committing, but I'll refrain from
+>    doing so before the release.
 
-=E2=80=A0 1: I mean specifically by a slightly wider user base; those of=
- us who
-    might not be able to hack on or review the relevant code much but mi=
-ght
-    be interested in what the command interface will be like.
+The newline-less input is in v2.49.0 already, but the use of "sed -E" is
+new in the 2.50 cycle. So it probably is worth addressing before the
+release. In which case I tried to give the patch a very careful read to
+avoid any brown paper bags.
 
-Thanks
---=20
-Kristoffer Haugsbakk
+> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+> index 1047b8d11d..ad3aa59045 100755
+> --- a/GIT-VERSION-GEN
+> +++ b/GIT-VERSION-GEN
+> @@ -82,7 +82,7 @@ read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trail
+>  $(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
+>  EOF
+>  
+> -REPLACED=$(printf "%s" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
+> +REPLACED=$(printf "%s\n" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
+>  	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
+>  	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
+>  	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
+
+OK, makes sense since we now stick the content into the INPUT variable.
+That sometimes comes from a file, but we get it via process substitution
+with $(cat), so the shell will strip off the trailing newline there. So
+we can unconditionally add it back here. Goo.d
+
+> diff --git a/generate-configlist.sh b/generate-configlist.sh
+> index 9d2ad6165d..75c39ade20 100755
+> --- a/generate-configlist.sh
+> +++ b/generate-configlist.sh
+> @@ -13,16 +13,16 @@ print_config_list () {
+>  	cat <<EOF
+>  static const char *config_name_list[] = {
+>  EOF
+> -	sed -E '
+> -/^`?[a-zA-Z].*\..*`?::$/ {
+> +	sed -e '
+> +	/^`*[a-zA-Z].*\..*`*::$/ {
+
+OK, this is just replacing the use of "?" with "*". I think it is OK to
+be loose here, as we are parsing our own config docs. And if somebody
+did write
+
+  ```foo.bar```::
+
+it is probably OK to parse that anyway. ;)
+
+> -d' \
+> +	d' \
+>  	    "$SOURCE_DIR"/Documentation/*config.adoc \
+> -	    "$SOURCE_DIR"/Documentation/config/*.adoc|
+> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
+
+And then this (plus the indentation above) is just non-semantic
+whitespace tidying.
+
+So the whole thing looks good to me.
+
+-Peff
