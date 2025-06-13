@@ -1,86 +1,91 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF4C1F9ED2
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 15:46:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB01F78E0
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 15:57:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749829568; cv=none; b=ShfNkOiyWNwg5xCKa2fKV5+vp+cRyB1yOWjMkwuLqOhoA+GeVqT9mayX7dLlpt7J7TmrdJ762t23LNbqwK1hsu+xoXHwothRCYadn7+ImTLJZBY231iu1Wc1eDWSZl88OI+EBuzcqFvQPSgvCUfDwluPNuEy262zcesva6AN4bo=
+	t=1749830224; cv=none; b=uvUNGEkKPOy1kNSvYCHtpiPStKXol6KJN7fAJ6TZp0zVeIqw7YS0Iaf/Hpo+TEzezmkPrU086IFa/AAJJh50AGgjdxSim4v1HXW2ivL+M1ho5wOBZrfolyv2aIoivFeEpIpI3CRhXZ36tCyBgRTwOvacM8z7BgxRP/nqg6ADsj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749829568; c=relaxed/simple;
-	bh=IOD9sGBxr7feZxH6+88wdC3U5tSL7TywY+jiXYUCDos=;
+	s=arc-20240116; t=1749830224; c=relaxed/simple;
+	bh=arCEWQbd7FI7BpaK7WyvLfooBKplcqOzXQyQ93VDVhk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rn/G7/Ify9P8+6NNV6Xrhnr+KH2nxacUcQGl5lgxQzlgd9UXg2pe9yuwidehHkkbQ5Z/Y0h+mEHuvh5ljbvLje84fQvIDtLBNTMxgxn45T7bfUaZta/pAqPIMAZnecsE+HqQPGgxaj7i4NqM1mMG2iYTjdCmI8l7s4rrmNKf79k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=zOQRRd8U; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RNJlDRyU; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=TK7rrLazPiY8CZ/6jlIempywKOU2LLML327vID3O6MSW1wj431QilQtlH3f3XyNd/UW5S+oVS20zWagBJ/BUzjzt7i0Jh5Fzlpd1AmDMQqsVHltSGCaHAY6Xe9pJ+IOF+kd9Igkl6K8FpBODWaozUcbY7vbwkDP6T0T0c9SQqtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yw4XRBMB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U1CvoPIP; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="zOQRRd8U";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RNJlDRyU"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3A1D71380398;
-	Fri, 13 Jun 2025 11:46:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yw4XRBMB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U1CvoPIP"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 789941380384;
+	Fri, 13 Jun 2025 11:57:01 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 13 Jun 2025 11:46:04 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 13 Jun 2025 11:57:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749829564; x=1749915964; bh=P5ekxK23bf
-	mZYDdozwmULt3DVfFzrgm6llpJXg86ISA=; b=zOQRRd8Uh5sW9XdTm5egAqpvRc
-	XUoXUxrwgU12/OSkhpMH+0sX+OITWDfORCZze3Dbi/ouCe9jz7X6hhHmgas3Rsdl
-	+e8c7yYKMF3YdR1qfo0ranFlxGb3wWKZBmkmD2LSNGePCCiFZRqzj2KFnVcSK4DZ
-	duImB6pfnFi/Erw9ilz/kd4rE513XakD9eQN8EYKlE5COXnVS4hUPm1ibFUsrsEI
-	LQ4lXVsRf+xceantA5T9a8Og27B0zNRU1xGNEUqZnw0XHa26tdATOs+5kiLlKYMi
-	/FkHnl/+q5CJVFmevrLIspbtxQRnA54QBytpFdUDdAvXyACsLTCOMKRP63Lg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749830221;
+	 x=1749916621; bh=SwLFZbFPDU00v25vv26cLIMXIIz3jdYpbcyyNYmY7H4=; b=
+	Yw4XRBMBlPtNW1eZlVIBdRTn4NjhVTJenWn29Ji0+42iFyRf1J7RBjmKaJECRTsE
+	quTANKxsCukZ8dc36yIBoblba1aBG07fNlBXjmo19X8VdkYeW6k0OPVvU1rZDmvb
+	Ow9L4mwoawqJ9yRDX4Nn2t52dLQ+c5PG1qCP+ifSQyCJCrTsRVPRj+Uh5WJ1yiuq
+	3tJUFNBYmH7qk5HmmqRJK+O+gnorEPXoYnFUHj4N7uWSAE56vB8pOpiuapnqEOxv
+	NHsv46+OZglnMuKdgtHe45cHxbQWWtT5d1K/NymlJs9oKFsIfcPDbITHjzQOgvDo
+	FeW7FHhx82mVgLX47f5eVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749829564; x=1749915964; bh=P5ekxK23bfmZYDdozwmULt3DVfFzrgm6llp
-	JXg86ISA=; b=RNJlDRyU+hYZ5deDBBXOg+VS/Wf9f0Dse5Ko6Bvmo6OTsMsAZwl
-	IE8hFVyDzv1qXcXL22gsBj62m48od4U5ax/u8az3uIO3814hSAdRX0rHP8kax0ld
-	1eaQVV+qvl/MMUZAFN2/mdJXTlO9v+zbYCoV8fScoWgAlP/xjFl+UcPZf7nWDzoS
-	tCFZpodnG0QNOcZUEQ7CAUcJgsUt95T3+FdlByARvg0ki3uZd/sWiDfyqePVlTMc
-	nXUIHAe++40iY+dhumVRt38TmtrAiiOIggjDaDOqI9BLnULfamuoHz2+0gQG+CGP
-	GcIhkGMU57+r7p6r++fTLM2rI0UvhdLBPmA==
-X-ME-Sender: <xms:u0dMaBaG5ilNpz61iG-0CUBGq7Svk_qfQW3iFtdqzpWQK-LQvu56jw>
-    <xme:u0dMaIb33OuzNYS1ffz2AqHnE5kh7iPXckGCmx1SQNJqt-2wnqu4_YfgkyyjTVjC9
-    lLqFjVz3rhdJgRPvA>
-X-ME-Received: <xmr:u0dMaD8gYE6KJLE6Gsys5eaI2cjD3hAVwjrlnIq6YHq7i4S3l3J3-1xl_1YPbMepZ_NzuhJ8xn3Lhv7Vl2V5F_z7quBq915affl5>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddukeefhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749830221; x=
+	1749916621; bh=SwLFZbFPDU00v25vv26cLIMXIIz3jdYpbcyyNYmY7H4=; b=U
+	1CvoPIPkDszho3jzfMDqLWtluAUhVFPhGkSzkEWCoI5NOmOYLhgZ7JZ1lKmL5WN9
+	5RLciai2nzpryS9eYgNKSMvx1DQKJvynXrFS0EWdRWj7hrK2blenlH837ykGD6Y0
+	55+JwUTkdKc0PPXmXeM0vEx41/OZ7FIGnopUEWrYoYQAgUFTmAkGZynsOr/2QNQ1
+	ZhP+FHEWvGDWMTT3Uayq5eHB8P75INOAJPS1chaG0gbcgbhbNJttqH25dEVRnEI9
+	VU/Yq+OUlE0xoA81uz0MD84Zh68TmOObBZ4Mt9Qes6Fde6uB8+nN/h3TCeHZ7VQ+
+	Izo1NW3CiV1g4hBJDsvdA==
+X-ME-Sender: <xms:TUpMaNDDwIQam-PIFiHAiqDRf1dB7PWE63xU-B-ueIPffPRimM9tBw>
+    <xme:TUpMaLhbtuHMbcIN4vMhg5DMEonjteeo25ju9eJlXbRW1iX_ozQa_UHDJwEkrPUnT
+    -lLgMAAXcF5vR3UKg>
+X-ME-Received: <xmr:TUpMaIm1DAaYGP8uRYSZL1m12XHhzcVHHWnym7ty9s1pgeuUpz9276RTOHjcap_6DP8vHe65Oc-udA6QY1H23pN2pDR-pCNT4eu8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddukeefiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
-    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdfotddtredt
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfef
-    iedvudegfffgffffveevvdeileffudenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgt
-    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhh
-    ihhnvggtohdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
-    ihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:u0dMaPrA3Vyk_McmQ3sdFZxNr-JoAaz1eT8FN5I21DrrlolUiIhkaQ>
-    <xmx:u0dMaMqKh7RCBkk7aODLnn4z3k-ZDAjwiiRM3pp6xbZcb9HOSOtDXQ>
-    <xmx:u0dMaFQwhkPplbvwyTJlz7wWPOTcjpmxigwpPIgezuqFJR3mq60Xjw>
-    <xmx:u0dMaEqdmyfQ4QsBecOeVJ1rpbo5-3A1uMSiMcNznOIwhuw1ivJYeA>
-    <xmx:vEdMaA0BptuOlFJmy2HFII0KyJjhw_4jGYrsZpvGmuGl5m1IU3aQsz-R>
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttder
+    jeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
+    feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhiugguhhgrrhht
+    hhgrshhthhgrnhgrfedusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehvihgrkhhlihhushhhihhnsehgihht
+    lhgrsgdrtghomhdprhgtphhtthhopehjohhhnhgtrghikeeisehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:TUpMaHzNsWt5U8HzI87zAmL1btemSj-ugS0aamnqhOzGpMC8IuDjTA>
+    <xmx:TUpMaCSq5cvUfE7X1Ffy-ogIKciNzXcQEpnC3UnOywA9LkUvQyEbSw>
+    <xmx:TUpMaKZlvLmwv4DRpdfENv40nenQ29GH34UqGCz4NWMzwyZNiVjulg>
+    <xmx:TUpMaDT9L3QBtCkZ2UMjBJfal3Tj4MEGW-UvKSKTgkIZLh17aPv8pg>
+    <xmx:TUpMaP3im-X3ffR815UByx5C75v3kS9hi7ejpROv4e4kZW7I4bMamDL5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Jun 2025 11:46:03 -0400 (EDT)
+ 13 Jun 2025 11:57:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  jltobler@gmail.com,  ps@pks.im,
-  sunshine@sunshineco.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 2/2] receive-pack: handle reference deletions separately
-In-Reply-To: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-2-ebf53edb9795@gmail.com>
-	(Karthik Nayak's message of "Fri, 13 Jun 2025 10:10:18 +0200")
-References: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-0-ebf53edb9795@gmail.com>
-	<20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-2-ebf53edb9795@gmail.com>
-Date: Fri, 13 Jun 2025 08:46:01 -0700
-Message-ID: <xmqqldpvably.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Siddharth Asthana <siddharthasthana31@gmail.com>,  git
+ <git@vger.kernel.org>,  viakliushin@gitlab.com,  John Cai
+ <johncai86@gmail.com>
+Subject: Re: [PATCH v2] cat-file: fix mailmap application for different
+ author and committer
+In-Reply-To: <CAP8UFD37rFvhO_XLhSjZNoOQ_ePwrrALYBcqKHfhMKcpqhkP8Q@mail.gmail.com>
+	(Christian Couder's message of "Fri, 13 Jun 2025 14:59:52 +0200")
+References: <20250611062643.8639-1-siddharthasthana31@gmail.com>
+	<20250613115750.41205-1-siddharthasthana31@gmail.com>
+	<CAP8UFD37rFvhO_XLhSjZNoOQ_ePwrrALYBcqKHfhMKcpqhkP8Q@mail.gmail.com>
+Date: Fri, 13 Jun 2025 08:56:59 -0700
+Message-ID: <xmqqh60jab3o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,60 +93,26 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
-> we updated the 'git-receive-pack(1)' command to use batched reference
-> updates. One edge case which was missed during this implementation was
-> when a user pushes multiple branches such as:
+> On Fri, Jun 13, 2025 at 1:58 PM <siddharthasthana31@gmail.com> wrote:
 >
->   delete refs/heads/branch/conflict
->   create refs/heads/branch
+> [...]
 >
-> Before using batched updates, the references would be applied
-> sequentially and hence no conflicts would arise. With batched updates,
-> while the first update applies, the second fails due to D/F conflict. A
-> similar issue was present in 'git-fetch(1)' and was fixed by separating
-
-Do you have a reference to such an earlier fix to "git fetch"?  If
-so, let's add it here.
-
-> out reference pruning into a separate transaction. Apply a similar
-> mechanism for 'git-receive-pack(1)' and separate out reference deletions
-> into its own batch.
-
-The implication of this is that the earlier "delete" half of the
-operation can succeed and be committed but the "create" half can
-fail, leaving the resulting repository without the reference the
-user wanted to have.
-
-For now, this "two transactions" may suffice as a workaround but do
-you think it is a viable solution for longer term?  As long as we
-claim that the reference updates are transactional, my answer is no.
-We'd need to fix it at a lower layer within a single transaction.
-
-It is outside the topic of this patch series but we can at least
-leave a NEEDSWORK comment that this is merely a workaround and we'll
-have to fix the later?  I see a in-code comment that says "To
-mitigate this" to hint the nature of the two phase solution, but we
-may want an explicit note that says that "we know this is broken
-even though it is less broken than it used to be".
-
-> This means 'git-receive-pack(1)' will now use up to two transactions,
-> whereas before using batched updates it would use _at least_ two
-> transactions. So using batched updates is still the better option.
+>> This bug was introduced in e9c1b0e3 (revision: improve
+>> commit_rewrite_person(), 2022-07-19) when the much simpler version of
+>> commit_rewrite_person() that worked on one "person header" at a time
+>> was rewritten to use the current apply_mailmap_to_header() function.
+>> The original implementation processed author and committer separately,
+>> but the rewrite introduced this loop-based approach that failed to
+>> properly handle the transition between identity lines.
 >
-> Add a test to validate this behavior.
+> Thanks for adding this context and improving the `sed` invocation in
+> the tests! Happy to stand behind this change too :-)
 
-I wonder if we can write a test against a remote that accepts
-deletions but fails the actions in the second phase as a
-test_expect_failure documentation?
+Thanks, all.  Queued.  Let's mark it for 'next', hoping that the fix
+will be in the first batch in the post 2.50 cycle.
 
-Other than that, very well described.  I know it is hard to describe
-a patch that knowingly does a workaround instead of doing the right
-thing for the sake of simplicity, and the proposed log message did a
-very good job at it.
-
-Will queue.  Thanks.
