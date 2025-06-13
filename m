@@ -1,65 +1,64 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCA72DA779
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 08:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F18F345948
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 08:10:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749802227; cv=none; b=Mw5/L10hNcxEFJuPqT7zPhWSEsZeXWpn6r09TPrn3nr48Dp4wbp+2OCUsowo74L+iVeqmpzWQSNQi+qxa9PPKkpfdmGQLnOtzPBfw9tawMJ++Fz0dRZNe4MGiBWRPp8OOL1KWT5sLCEcP8YtJzpn3Synawo1XHQkYznGI8oyEQ0=
+	t=1749802228; cv=none; b=ABRi1do9uwK41WBL2lukKYXznnMXMI6gLMXo1l9Y9Xqlt433aUOURvIxxW61Roj88Kofe+8sLenmxNWIoZnDctTaicSpcLqy581e/LJOJqr76DKslUuYN+GIc5wcPF1wRKjB74SYdm1sWhetjXjuhoHwxNR3oAbXgHyjcWkfjJ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749802227; c=relaxed/simple;
-	bh=WbXjCpPzVlMg/veWMid7cyAOfkl9HaPq/7fAtHB+nrQ=;
+	s=arc-20240116; t=1749802228; c=relaxed/simple;
+	bh=N/ci96ArWVtXakTEHHKRmTGRwM/ZMlOdm2kxKhGuhlM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kK8K19QXBvVfHbWzW4ApiuzXUDDzXQO8s6pWWe4+zvLS4OsR4hpmmjriVHd2Lc7zureYXezHXMI0UY1K8Y9EnXnVidSaOuAak39gCNvF3WE4aPgw4sYj/qNgWBo2YFzyOR4nnhqOfdtl2KyFPbKO1DQMYlUDMTvjzQ2zUxMI5HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HjobAWnD; arc=none smtp.client-ip=209.85.221.52
+	 In-Reply-To:To:Cc; b=h50I0iuO5/O04P8dvVvReMiqM707oQlDKAvPsuZKjet/B77KSB+Wue9zPc9onuOgm4UphzZnI/qoKtTym5r81JTM/BjhjdDC+/xbYR3ptkz3A8MDgzGf6pn62LlK8Zepj3AnjULzAerYqlmxSGdLiw7PcKkH/o1qKJb0VS2YbnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRSO5q2P; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HjobAWnD"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a50fc7ac4dso1153149f8f.0
-        for <git@vger.kernel.org>; Fri, 13 Jun 2025 01:10:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRSO5q2P"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-451d41e1ad1so15486385e9.1
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 01:10:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749802224; x=1750407024; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749802225; x=1750407025; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ABqrWlWo5IkJnKbUky5FOgl3RMkGIX7rQBbYykTVxlU=;
-        b=HjobAWnDkjsYoH4G375JbeC26CHriWScXLG9TkGy1jryWWb8FCOxECADGcYfe3HnLd
-         HL4bg0BgdG8iXwMk4z95JDNdbfeg6Mx85D9ZQ+UFoP6DVWyLoHYwJMJOn/1ZDY5KoRif
-         sKBvOMSbc4e2LuIzSPxbdIKeDW+6zg1v7OlwX15iLtIvo5dcgOOYhAkXQvSadM/eWpXT
-         9lld2INucEFqL/IlnYsLUCmO7K/61GSCdNmB2UVcKuDAtvgUT2bSPSaiA1frTHz61n66
-         ISBoq2w4z2TigrSdPv90LM+wfx14yhyy4DFDzewIOlaApuAA+CdJdgHKJW5UAn2RIcYK
-         0Mcw==
+        bh=1ol5FVVJCSNq53IGeQaJtSULqI042bo4FGpBxT0ndco=;
+        b=VRSO5q2PF8SE+JZLoOnnn70bFL7Q7yamii3xwhQ/5rKJSScaj8UW6RiDA5r6LjP8by
+         7dDBMt9XbM/IgnyIQS8eSGmPIFxzs1GK05Hqygx9qMMUfHKXizv3/28XDggEdMH0b1EZ
+         lQraUBLGkBumvHanSJd7leW7wlROrOzuTYgTICP8nNeE+ghA1z10GJoxK1Ykn0/j98DY
+         72spt74qx+LmqjX+tHcAIdrmGNQXwvJd/0CuOEldyxJNZustrTMb/BokN0ipx2ewDWfv
+         Pa/sJOLuSfQPh4spUF9iUxHzmxWQiQeF7cmF8J0qZNgvLzdMeFz9aiAcLotM5EpKY/qj
+         cDGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749802224; x=1750407024;
+        d=1e100.net; s=20230601; t=1749802225; x=1750407025;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ABqrWlWo5IkJnKbUky5FOgl3RMkGIX7rQBbYykTVxlU=;
-        b=jvi2nVI5sBlmVPnyOG4GBzkB0Pq9gj/PrsH4V5gIq3YWHUquKjfleO/9C0XkQFCZA5
-         D92WgcztqnOzleGpMQProi4cREBv4vsnGvD58oa8D6OY2nBJxzQOo2/fwyNv6r+ZFBCt
-         9jvm6EfDB6TBFugpB0AfwsKCqSNYTUz622g8s7rERGtwFAP7fyln3EYgj+xTwyF3cvPV
-         6Bp1H1JeKHB9oFgr/ynMnhldXE1hzbFrJrub7SsE6h8t67YXUaPoqs5k2+iPxDtkBHpT
-         7nuISIdG6iduomp8HkVYiCMDCHMLx8DSUh8mgueptMQuTVb/XLJqvdLud4NWouB3wJh0
-         OYVQ==
-X-Gm-Message-State: AOJu0YwAk0PYjfreG6EjLwY8EX+5OsU8ZHrC++zuUU0CX4zNGxeqm4ku
-	NuFniGGy4HFA4QfXs0Okq+EIY1WEs3L2Y6ZmO3pAHe+xjFl3wI7hRzwP
-X-Gm-Gg: ASbGncvfSnedudqlvbk8iCJFlCuInXo+mFw7ItEJxcicKoQrkRnc8+/906pOU87Vg+S
-	Setv3VorzmnxRDBhrBMmVjaDWF+9wsXz+puT4NodZZP91WHZJQnaps6NFNkx8TbRYc/f5TynDIS
-	FfPjk6t9nL8gIlrqYR/s0Z+REbT5SESudp1A4+oGrdvIMx4TrpH9M/t3JCZMYJkrzdlPbu8LNR9
-	RCUSgxcB56o9G/CyUZHPwU3mQLDjfS+7Tz4aQpHcMCob9rxSGPSP4poEXp3XCxsfw4yX1fkKaGs
-	IZeU4gxDREKHIRbj7QVHO4yru4KRUyREZT+DEys1+KgBXuecSLL3/s32
-X-Google-Smtp-Source: AGHT+IGFCc3hNvbIbrvG4P0rH6VhjtwB7U7WIf7dyJOzAEL/cbONCLMt9cEqWSOEhRjBJnMC1EnQrA==
-X-Received: by 2002:a05:6000:402a:b0:3a5:2cf3:d6af with SMTP id ffacd0b85a97d-3a56871766dmr1592727f8f.45.1749802224242;
-        Fri, 13 Jun 2025 01:10:24 -0700 (PDT)
+        bh=1ol5FVVJCSNq53IGeQaJtSULqI042bo4FGpBxT0ndco=;
+        b=UbnVM+4Lk7dSoqkzp2qrAfwL6qUacGQu0nq0diF5LsGEqQdwxis1oGTpLZoPxxlzNf
+         x7acGT1Pe8Bn2wsz7/KXE3h+ISEovzWbMrvY+qEaynat157eatBWNhI6GOr/turi5hRI
+         B/fEWs8kiXWHsJK0QKgm9g4y/1sdpGfVRAYHt1TEcddt6PlNaTJ8y/hz6aBtUw2QTmUX
+         1ueMxtjiQklUoiLbNcP8oVKc5EC+3gTtymBEKHiSCiUCQdOgIN6v0SerOeYUgh6edJ64
+         BVJ9E9ToVogLQxZ8XWCC1ujPWyUJpem0bx2xtc//B6vxP29c6WNYmFya4roYl3y1RVFn
+         c7hQ==
+X-Gm-Message-State: AOJu0YzmizX/fwRwXblzUzPNBAQ/W19s8+64BtnvUSyycG9FEW2uPhPm
+	pm/2PkkZcjn906JToZ/6G6ts8ZzTG533xSgCbNALviyNHHOkYTmllgaK
+X-Gm-Gg: ASbGncuG/c1ZdT9su76wgdkl6kRSGCvyIkby65lny8cY1xfTVpLwhNNkim+oGS4mM6P
+	6Pa2f65EB8oeTSPJ5PuZGFSOPtqAnGYb5R5ik6QUVsduzLM7emC77/gtvEBkASsgZ7PF3f4VruP
+	PbhXTCFYC//g0xpKRGxIXalVaZltkTtSIdEItrT89EACdeloWj9gXuprTNeVkfTAkAAqLevhPx9
+	VkTLsSsMo3DqDOa11pPXSxDPfDT6T1dWLLnHW3gYdNa40d+LW5Y+cQA/YLEozOWdNWgEDqjEcOQ
+	/IbMLeCSpTHUUwpYD+a+8ECNFfiMgiNrcE2d5LIBh7U4pg==
+X-Google-Smtp-Source: AGHT+IEwSdhMaT2V989zf2BcRfHc/XpfkOO20pZqtP9btSflAB9rizV90YsWihuF5v5/oNnNHCk0Dg==
+X-Received: by 2002:a05:600c:3f89:b0:453:b44:eb71 with SMTP id 5b1f17b1804b1-45334ad06e9mr18050585e9.19.1749802225124;
+        Fri, 13 Jun 2025 01:10:25 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:9a6e:abf0:b0ed:9106])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568a54a63sm1615191f8f.11.2025.06.13.01.10.23
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a568a54a63sm1615191f8f.11.2025.06.13.01.10.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 01:10:23 -0700 (PDT)
+        Fri, 13 Jun 2025 01:10:24 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 13 Jun 2025 10:10:17 +0200
-Subject: [PATCH v4 1/2] refs/files: skip updates with errors in batched
- updates
+Date: Fri, 13 Jun 2025 10:10:18 +0200
+Subject: [PATCH v4 2/2] receive-pack: handle reference deletions separately
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,7 +67,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-1-ebf53edb9795@gmail.com>
+Message-Id: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-2-ebf53edb9795@gmail.com>
 References: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-0-ebf53edb9795@gmail.com>
 In-Reply-To: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-0-ebf53edb9795@gmail.com>
 To: git@vger.kernel.org
@@ -76,121 +75,216 @@ Cc: jltobler@gmail.com, ps@pks.im, gitster@pobox.com,
  sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>, 
  Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3525; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=WbXjCpPzVlMg/veWMid7cyAOfkl9HaPq/7fAtHB+nrQ=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhL3O6q8kfEdIldw07dZHBpE3hp1L33zblTv
- 9VMThGSZwlbdIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoS9zuAAoJED7VnySO
- Rox/DdUL/RQA0LtFnUWIC519geLz39KAMcCCrA2vFTijAiSIQ5EcJuet3+mYkum9kfo2hIMAHEU
- xiCrFTX9eO/tS2Qm9CIqcHmFW/gHkskYR0kT+QFbMYbedNif5EffjSySwB+pBGlxs1OAkXDqCwC
- /+fDlA29OjcdGXQLcTorEZnQ3QdJJM9+yJRO20HzxviFYXcyff5R5+I4GIlxeXd4C4zJYyOPXrK
- vT1qtIJYHA9eX5CtEtdAEwJ/6n1uEYQZu1TUdn+zqGRSGDOma0Dt0o6auJ70oPn7Pjk4mbVaYX5
- fW5tU/t8NsKB8STx1T6LsC5wZzPx0nWBJo72exM0d2ODoOlA99GbtHPUT0pQlAMCuZH/Q9wx29k
- Mxl1DH9uedZXXaIUp63+E62QqGIq+sNUw2zNUzTzSp1+4Z75foo5uvGd30cJ+iuQuL6t7YOfapo
- FszYEtNfjoAwxj3HlL6FllSFZODzIfRkzjZ0KHPa5M3juK8agrHE0wTFBtG6Bl2NiRaTf6AeHp7
- O4=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6676; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=N/ci96ArWVtXakTEHHKRmTGRwM/ZMlOdm2kxKhGuhlM=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhL3O5NTDpTMhCXXVQrkk2wYS8qna5LWXUFL
+ C+E+n1MpEJUg4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoS9zuAAoJED7VnySO
+ Rox/n6cL/jq/28n2o47wrgonDBHG7bwN4sUbb9/9s26t0fEHYdMVCNjusfvv4F/4GRHr+b9LSRl
+ t4KssEnz6FeVopHM2c0c2ntGsbEPrjt9FUZVKg4SX1gXoBfs/9/Txfr01xozWGXNiXrbRg8RKcZ
+ XQKQh4HmuDfDosOFfiiCpr6m7qJreA8ULQxFWBqLGzqU5kDJuTFOBoyFJ9XhdHGcDSOAM655dI7
+ XOLyasvRTfj3Xt1EOUWaW3dIDjGvbE8Ni0ceH906WfOSE+zegY90EhCvdRF35nvLH1UbfIYa9iW
+ z2SotVyrTnPSMxwD5QR+1DmVYzsj8c2i1uqYOOu7TSXIwOXxLRKG2aa7DbnBC1mweO8JXZJqFmk
+ IZJyBcfsXEuiQSlOlWxBbL2d6OsyR7cFkCi8ZSJhCD0owXKpt/y0qdfMq411gtalGF7c57KM+Lq
+ vMZCFax1d1EoMG6c1MVTytUkQBmig5WxziIrbmkQIS/bU/LnZcnvf1E8g/mWzaW7oVqORpilaB5
+ UU=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The commit 23fc8e4f61 (refs: implement batch reference update support,
-2025-04-08) introduced support for batched reference updates. This
-allows users to batch updates together, while allowing some of the
-updates to fail.
+In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
+we updated the 'git-receive-pack(1)' command to use batched reference
+updates. One edge case which was missed during this implementation was
+when a user pushes multiple branches such as:
 
-Under the hood, batched updates use the reference transaction mechanism.
-Each update which fails is marked as such. Any failed updates must be
-skipped over in the rest of the code, as they wouldn't apply any more.
-In two of the loops within 'files_transaction_finish()' of the files
-backend, the failed updates aren't skipped over. This can cause a
-SEGFAULT otherwise. Add the missing skips and a test to validate the
-same.
+  delete refs/heads/branch/conflict
+  create refs/heads/branch
+
+Before using batched updates, the references would be applied
+sequentially and hence no conflicts would arise. With batched updates,
+while the first update applies, the second fails due to D/F conflict. A
+similar issue was present in 'git-fetch(1)' and was fixed by separating
+out reference pruning into a separate transaction. Apply a similar
+mechanism for 'git-receive-pack(1)' and separate out reference deletions
+into its own batch.
+
+This means 'git-receive-pack(1)' will now use up to two transactions,
+whereas before using batched updates it would use _at least_ two
+transactions. So using batched updates is still the better option.
+
+Add a test to validate this behavior.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs/files-backend.c  |  7 +++++++
- t/t1400-update-ref.sh | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+)
+ builtin/receive-pack.c | 98 ++++++++++++++++++++++++++++++++------------------
+ t/t5516-fetch-push.sh  | 17 ++++++---
+ 2 files changed, 77 insertions(+), 38 deletions(-)
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4d1f65a57a..c4a0f29072 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3208,6 +3208,10 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 	 */
- 	for (i = 0; i < transaction->nr; i++) {
- 		struct ref_update *update = transaction->updates[i];
-+
-+		if (update->rejection_err)
-+			continue;
-+
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY) &&
- 		    !(update->flags & REF_IS_PRUNING)) {
-@@ -3239,6 +3243,9 @@ static int files_transaction_finish(struct ref_store *ref_store,
- 		struct ref_update *update = transaction->updates[i];
- 		struct ref_lock *lock = update->backend_data;
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 9e3cfb85cf..3fb2776e9a 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1867,47 +1867,77 @@ static void execute_commands_non_atomic(struct command *commands,
+ 	const char *reported_error = NULL;
+ 	struct strmap failed_refs = STRMAP_INIT;
  
-+		if (update->rejection_err)
-+			continue;
-+
- 		if (update->flags & REF_DELETING &&
- 		    !(update->flags & REF_LOG_ONLY)) {
- 			update->flags |= REF_DELETED_RMDIR;
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index d29d23cb89..ca7eee7de2 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -2299,6 +2299,51 @@ do
- 			test_grep -q "refname conflict" stdout
- 		)
- 	'
-+
-+	test_expect_success "stdin $type batch-updates delete incorrect symbolic ref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit c1 &&
-+			head=$(git rev-parse HEAD) &&
-+			git symbolic-ref refs/heads/symbolic refs/heads/non-existent &&
-+
-+			format_command $type "delete refs/heads/symbolic" "$head" >stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			test_grep "reference does not exist" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates delete with incorrect old_oid" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit c1 &&
-+			git branch new-branch &&
-+			test_commit c2 &&
-+			head=$(git rev-parse HEAD) &&
-+
-+			format_command $type "delete refs/heads/new-branch" "$head" >stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			test_grep "incorrect old value provided" stdout
-+		)
-+	'
-+
-+	test_expect_success "stdin $type batch-updates delete non-existent ref" '
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			test_commit commit &&
-+			head=$(git rev-parse HEAD) &&
-+
-+			format_command $type "delete refs/heads/non-existent" "$head" >stdin &&
-+			git update-ref $type --stdin --batch-updates <stdin >stdout &&
-+			test_grep "reference does not exist" stdout
-+		)
-+	'
- done
+-	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+-						  REF_TRANSACTION_ALLOW_FAILURE, &err);
+-	if (!transaction) {
+-		rp_error("%s", err.buf);
+-		strbuf_reset(&err);
+-		reported_error = "transaction failed to start";
+-		goto failure;
+-	}
++	/*
++	 * Reference updates, where D/F conflicts shouldn't arise due to
++	 * one reference being deleted, while the other being created
++	 * are treated as conflicts in batched updates. This is because
++	 * we don't do conflict resolution inside a transaction. To
++	 * mitigate this, delete references in a separate batch.
++	 */
++	enum processing_phase {
++		PHASE_DELETIONS,
++		PHASE_OTHERS
++	};
  
- test_expect_success 'update-ref should also create reflog for HEAD' '
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
+-			continue;
++	for (enum processing_phase phase = PHASE_DELETIONS; phase <= PHASE_OTHERS; phase++) {
++		for (cmd = commands; cmd; cmd = cmd->next) {
++			if (!should_process_cmd(cmd) || cmd->run_proc_receive)
++				continue;
+ 
+-		cmd->error_string = update(cmd, si);
+-	}
++			if (phase == PHASE_DELETIONS && !is_null_oid(&cmd->new_oid))
++				continue;
++			else if (phase == PHASE_OTHERS && is_null_oid(&cmd->new_oid))
++				continue;
+ 
+-	if (ref_transaction_commit(transaction, &err)) {
+-		rp_error("%s", err.buf);
+-		reported_error = "failed to update refs";
+-		goto failure;
+-	}
++			/*
++			 * Lazily create a transaction only when we know there are
++			 * updates to be added.
++			 */
++			if (!transaction) {
++				transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
++									  REF_TRANSACTION_ALLOW_FAILURE, &err);
++				if (!transaction) {
++					rp_error("%s", err.buf);
++					strbuf_reset(&err);
++					reported_error = "transaction failed to start";
++					goto failure;
++				}
++			}
+ 
+-	ref_transaction_for_each_rejected_update(transaction,
+-						 ref_transaction_rejection_handler,
+-						 &failed_refs);
++			cmd->error_string = update(cmd, si);
++		}
+ 
+-	if (strmap_empty(&failed_refs))
+-		goto cleanup;
++		/* No transaction, so nothing to commit */
++		if (!transaction)
++			goto cleanup;
+ 
+-failure:
+-	for (cmd = commands; cmd; cmd = cmd->next) {
+-		if (reported_error)
+-			cmd->error_string = reported_error;
+-		else if (strmap_contains(&failed_refs, cmd->ref_name))
+-			cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
+-	}
++		if (ref_transaction_commit(transaction, &err)) {
++			rp_error("%s", err.buf);
++			reported_error = "failed to update refs";
++			goto failure;
++		}
+ 
+-cleanup:
+-	ref_transaction_free(transaction);
+-	strmap_clear(&failed_refs, 0);
+-	strbuf_release(&err);
++		ref_transaction_for_each_rejected_update(transaction,
++							 ref_transaction_rejection_handler,
++							 &failed_refs);
++
++		if (strmap_empty(&failed_refs))
++			goto cleanup;
++
++	failure:
++		for (cmd = commands; cmd; cmd = cmd->next) {
++			if (reported_error)
++				cmd->error_string = reported_error;
++			else if (strmap_contains(&failed_refs, cmd->ref_name))
++				cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
++		}
++
++	cleanup:
++		ref_transaction_free(transaction);
++		transaction = NULL;
++		strmap_clear(&failed_refs, 0);
++		strbuf_release(&err);
++	}
+ }
+ 
+ static void execute_commands_atomic(struct command *commands,
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index dabcc5f811..1649667441 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -744,8 +744,8 @@ test_expect_success 'pushing valid refs triggers post-receive and post-update ho
+ 		EOF
+ 
+ 		cat >update.expect <<-EOF &&
+-		refs/heads/main $orgmain $newmain
+ 		refs/heads/next $orgnext $newnext
++		refs/heads/main $orgmain $newmain
+ 		EOF
+ 
+ 		cat >post-receive.expect <<-EOF &&
+@@ -808,8 +808,8 @@ test_expect_success 'deletion of a non-existent ref is not fed to post-receive a
+ 		EOF
+ 
+ 		cat >update.expect <<-EOF &&
+-		refs/heads/main $orgmain $newmain
+ 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
++		refs/heads/main $orgmain $newmain
+ 		EOF
+ 
+ 		cat >post-receive.expect <<-EOF &&
+@@ -868,10 +868,10 @@ test_expect_success 'mixed ref updates, deletes, invalid deletes trigger hooks w
+ 		EOF
+ 
+ 		cat >update.expect <<-EOF &&
+-		refs/heads/main $orgmain $newmain
+ 		refs/heads/next $orgnext $newnext
+-		refs/heads/seen $orgseen $newseen
+ 		refs/heads/nonexistent $ZERO_OID $ZERO_OID
++		refs/heads/main $orgmain $newmain
++		refs/heads/seen $orgseen $newseen
+ 		EOF
+ 
+ 		cat >post-receive.expect <<-EOF &&
+@@ -1909,4 +1909,13 @@ test_expect_success 'push with config push.useBitmaps' '
+ 		--thin --delta-base-offset -q --no-use-bitmap-index <false
+ '
+ 
++test_expect_success 'push with F/D conflict with deletion and creation' '
++	test_when_finished "git branch -D branch" &&
++	git branch branch/conflict &&
++	mk_test testrepo heads/branch/conflict &&
++	git branch -D branch/conflict &&
++	git branch branch &&
++	git push testrepo :refs/heads/branch/conflict refs/heads/branch
++'
++
+ test_done
 
 -- 
 2.49.0
