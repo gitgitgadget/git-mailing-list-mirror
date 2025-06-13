@@ -1,92 +1,84 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B58F02472B0
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 20:14:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D3B24BD0C
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 20:23:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749845652; cv=none; b=EtMoKjx05z6tJGjNeN9Sz1xRjfwq9mQffafnfU7Phxlh1TSnL4z3Yhn2KqjeI+60osx7D+qwI2CttWoeRQVC4k8Ubko2FK2NuWgYZFNmpdlvitdT5/Rhtk/dNKzJGUDCjC17+hyvJ0m/0EL8SES5sqc4VHh3gHpr7gLxLg0wlSA=
+	t=1749846210; cv=none; b=ojHHO3dDAuYPkCInrD0owB4UaPOzRX11IQ0wYTDgZFDBbSaYGCi6mAbUAWYOIg9vLePYszxUyEyW4xCFYrZ1JRQ3zG9yobD1QOhIjTVah82/UQOlVGXv7iNhPtWfDvKn2b8/QdopgK9nK4hEivG5wY1+SGupgE48kCfLtKHv7sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749845652; c=relaxed/simple;
-	bh=+ilp0AMzNeY1YX+gE8X3jPgS/gMinC2FUbf1+SFyboM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DAjh4gv0ZHmOXVi58U+AygorcYIE/1eyxPIzPURfg03hGjm6nm0yTYcb+Zplqt2bnwhm6aSSfaWM4iD7jlggEsCQ7TcDBU1dUC/wMzIBFcaV2kHiGmkMTxB9jZdRLWrxuH+PGtSMFV+GghEmWOaFl6tUg2HIcrMut7CgHa3dua0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=anOz201w; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="anOz201w"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 5FA85DF8301
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 22:13:59 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:5df4:5536:552c:720])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id E8167B0053E;
-	Fri, 13 Jun 2025 22:13:48 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1749845632;
-	bh=+ilp0AMzNeY1YX+gE8X3jPgS/gMinC2FUbf1+SFyboM=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=anOz201wjwKvxRY5yspGFy2YagCgtkYw2XfU1DstTzfF9q0+VFNT9RRMVflAYsUfO
-	 +yyxKTdpAoOqEUBgnYSakFOJsx6fdYr8FNiG5Sw7jnc9/Tdrmj+awaRb5SpMWaNhCO
-	 lUhAZvNwc+wjlunIQzrxmakNyi9ltd8mUoJkrInIfdAE7hidDCkwTXEo6yiSxedBsY
-	 BdxIeu8wzkdoE9abAccVtaQiCa2xv7NZjDpyWbw+IF1sjxGhamaudmoysuE3vhWFze
-	 saDBySlu70ZbHaq7+/i0cU9ciCDfWZo0cT2UvRRuKGcYrHOkHilTff/+8FomUDlhGm
-	 r2ps60afSZT7w==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Brad Smith <brad@comstyle.com>, Collin Funk <collin.funk1@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: Solaris sed
-Date: Fri, 13 Jun 2025 22:13:48 +0200
-Message-ID: <5895400.DvuYhMxLoT@cayenne>
-In-Reply-To: <874iwlegmg.fsf@gmail.com>
-References:
- <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
- <caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com>
- <874iwlegmg.fsf@gmail.com>
+	s=arc-20240116; t=1749846210; c=relaxed/simple;
+	bh=ryJqUTC15UXWw0bIxDmGnrxJoWPwdBxuyZP9d0ID8Rs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IZy5nQXHf87R7CpQ6verSDod6uiyIhhHLiu5K3Qe3l+HVvIWfgI4ultDADxuOJuuPZ8rYElWZLhwwpZ5wPfMQ8f5pMOpBt5qTq5+I03GhK/6zyhNhGH06+oF7QQvBh0dcsGl36E4lT6arMfz8MJ/wjQ2TxRQmBoYvGK2+UC2/tU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7cee016d9baso29857785a.3
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 13:23:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749846207; x=1750451007;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kMpKO4oXO3V8gRz4Y5wwX4T6aKwRlefjW8oTr3o19WI=;
+        b=Kaps8L8uAPDNu7r3JNa6jlbb1pE5knkLVFSXpb1lnaZ8UpgdeJKnTCiOAfEfQ7a9mK
+         5aZqWSwPIjWycBZ7ku9sOO0YgblGNPxVn1OIXzSdt1rmb4hGT1Rebx6EzPVRX9KHzWlw
+         9LBQgwtsWiDm2CtvAnFS+ClfwbYsRvKos7Hf8VxacMmiViEkt1/kcz7zoebhAed3YhRx
+         /15FPembif0l9vDP/uifGN+Oz4gmcehLysvTvN5Et9fe/tJVicmEjHwXMliBd00h7/XE
+         43A22P9kMfrkuUPrPTvvtFZWejgcxp7kD0G5lN17S3vn1CGTODF0guPrQ9LNui59Mv+s
+         YSOw==
+X-Forwarded-Encrypted: i=1; AJvYcCV628pbC1unVvaeevh7DH2fdNsIsK0zIy52j+v/nklZ/zpPefFgeqQ6qPsqBSaOmMDFUxs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwW0lc6CIli/waJRZJijcnEeTM7XDCwEebmHzlULv+6CubtCaQn
+	AnsIa3tVkGI9CFGxj6xXSfQKwHj80Yp/hZHcSKQnHeZRTUfLdTlZSdIgV/U5hUgEfKVGe+XwZxl
+	x+c819wMtPCTdFJBUAI0WS8tPEy7MCgA=
+X-Gm-Gg: ASbGnctfGavmR7Y2J0MCmYIAPShqTX2FqicCCh2Byzcdwe0T3lVrhD+ufT4NIkVAHNX
+	WI4Oj+3c16xvcDXJmEy+83sxpnHFd0F64rI22/Xx9CxykJ+D44ODf8odXH4OkiSSs0KW+2YHAjC
+	xQJeV9o6l3wsLdu3WwbK/bZuKgqIn2L6nPqIJUAlAimQ==
+X-Google-Smtp-Source: AGHT+IFs+jWEfxvPiUt/sBZVpyargHaFtPAkbLztjTcrlJA63rVY6FHxsb+BEpeTotQrGwwLV7zY/XWBIXBi7l6RWfQ=
+X-Received: by 2002:a05:6214:4001:b0:6fa:ed19:2566 with SMTP id
+ 6a1803df08f44-6fb4775424amr4675466d6.2.1749846207322; Fri, 13 Jun 2025
+ 13:23:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"
+References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
+ <caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com> <874iwlegmg.fsf@gmail.com>
+ <5895400.DvuYhMxLoT@cayenne>
+In-Reply-To: <5895400.DvuYhMxLoT@cayenne>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 13 Jun 2025 16:23:16 -0400
+X-Gm-Features: AX0GCFu3SDRJngDtocN3jrqM8hI8xOnVKgCE0p8OvtRZnaZ2Shvck1s2A3_tjEM
+Message-ID: <CAPig+cSu7+fxveULiB1vDbcy6Cnia_5isVVy+RCO+HGAyr8uvg@mail.gmail.com>
+Subject: Re: Solaris sed
+To: =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
+Cc: Brad Smith <brad@comstyle.com>, Collin Funk <collin.funk1@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thursday, 12 June 2025 06:19:35 CEST Collin Funk wrote:
-> Brad Smith <brad@comstyle.com> writes:
+On Fri, Jun 13, 2025 at 4:15=E2=80=AFPM Jean-No=C3=ABl AVILA <jn.avila@free=
+.fr> wrote:
+> Would it be possible to set up some kind of CI to check for compatibility=
+ with
+> such systems. This is the second time I introduced regressions without ev=
+en
+> knowing it, and it would be really great to catch them before borking a
+> release process.
 
-> > No errors or warnings after this is applied.
-> 
-> Likewise.
-> 
-> I checked on my Linux machine and both files are the same before and
-> after the patch. Before the patch on Solaris 10, the following is
-> generated:
-> 
->     /* Automatically generated by generate-configlist.sh */
-> 
-> 
->     static const char *config_name_list[] = {
->             NULL,
->     };
-> 
-> After the patch the output on Solaris is the same as on Linux.
-> 
-> So the patch is perfect.
-> 
-> Reviewed-by: Collin Funk <collin.funk1@gmail.com>
-> 
-> Collin
+Had this been in a test script, it would have been caught by
+t/check-non-portable-shell.sh. We may want to apply the check to
+build-related scripts, as well. For instance, it would have caught the
+-E problem:
 
-Hello, 
+    % ./t/check-non-portable-shell.pl generate-*.sh
+    generate-configlist.sh:16: error: sed option not portable (use
+only -n, -e, -f): sed -E '
+    %
 
-Would it be possible to set up some kind of CI to check for compatibility with 
-such systems. This is the second time I introduced regressions without even 
-knowing it, and it would be really great to catch them before borking a 
-release process.
-
-Thanks,
-
-JN
-
-
-
+You can, of course, run check-non-portable-shell.pl manually after
+editing a script, but perhaps this check could be enabled by a
+(hopefully) minor tweak to the main Git Makefile?
