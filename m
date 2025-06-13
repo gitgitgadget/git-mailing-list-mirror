@@ -1,84 +1,103 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D3B24BD0C
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 20:23:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F1A24A069
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 20:31:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749846210; cv=none; b=ojHHO3dDAuYPkCInrD0owB4UaPOzRX11IQ0wYTDgZFDBbSaYGCi6mAbUAWYOIg9vLePYszxUyEyW4xCFYrZ1JRQ3zG9yobD1QOhIjTVah82/UQOlVGXv7iNhPtWfDvKn2b8/QdopgK9nK4hEivG5wY1+SGupgE48kCfLtKHv7sg=
+	t=1749846661; cv=none; b=DMNpitYwrHRZzb2MsG8eo7H1J0/9nTJMLXpI3tJbZu+Rpf+W5BQgJRhPYs/O3ZrZ1JXYT5T4klbnPdYX18UvVXzYI3yH79DONRt+FnDeTHCbsUYwWD1dsJ0vyppKzctA6iV9/qt3z12d8KvdaCGowzbVpS4SFj1xhfWZ8d8a/bM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749846210; c=relaxed/simple;
-	bh=ryJqUTC15UXWw0bIxDmGnrxJoWPwdBxuyZP9d0ID8Rs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IZy5nQXHf87R7CpQ6verSDod6uiyIhhHLiu5K3Qe3l+HVvIWfgI4ultDADxuOJuuPZ8rYElWZLhwwpZ5wPfMQ8f5pMOpBt5qTq5+I03GhK/6zyhNhGH06+oF7QQvBh0dcsGl36E4lT6arMfz8MJ/wjQ2TxRQmBoYvGK2+UC2/tU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1749846661; c=relaxed/simple;
+	bh=sHW4UXcZqngATgCfwuEA4IfKcEFsmTs5m1h2NzhFAH0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bUjp0GHYrC83PtIS5m/H/kiSJF/SV/pvz2LyqLc5eaRGefI5cG1XZQAruF4GAqxdFETDErNVCVGASAwaNC5BXq9l66Jyb//WGWyGTqq4Vj9Z+TqUx9UGx679KARaVNxHDyggSkieHOdxYMgJ5AD5aByBJ4lBHZDL4OKZ1eYaOBM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iRrjXW0k; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7cee016d9baso29857785a.3
-        for <git@vger.kernel.org>; Fri, 13 Jun 2025 13:23:28 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iRrjXW0k"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b2f11866376so2106313a12.3
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 13:31:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749846659; x=1750451459; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sHW4UXcZqngATgCfwuEA4IfKcEFsmTs5m1h2NzhFAH0=;
+        b=iRrjXW0kKFCGYbYge0GYRdVTAa8eqBZ6roAnK7SYueWXiK4OY0xI+1jOm6fzSmBbPA
+         1jNTFRMcphcXOtajmhxyld6p8xj1GwCO0KVTpdOpWs6J6T3sVK/zpl8wDQyB90C0wmxg
+         EAdmXh0sBXChUXlGme/tViSBVnXnC8WfPVscyYZQUyYHFWOUG2TkzYzvJ0iQdHB4HWCJ
+         0jCQcVdNapgi14XAcusrR5zp2Sptf+Y73XDg+dMIrrayQ75FFAfaLZRIi0nHWYPkcbTD
+         XlyIm9fQMOj95bZWahWkyV3OZ9pLGMQK1Ie8yuzzLpM40/j1tGhPqhLHDlhcwah8q5ef
+         ix/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749846207; x=1750451007;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=kMpKO4oXO3V8gRz4Y5wwX4T6aKwRlefjW8oTr3o19WI=;
-        b=Kaps8L8uAPDNu7r3JNa6jlbb1pE5knkLVFSXpb1lnaZ8UpgdeJKnTCiOAfEfQ7a9mK
-         5aZqWSwPIjWycBZ7ku9sOO0YgblGNPxVn1OIXzSdt1rmb4hGT1Rebx6EzPVRX9KHzWlw
-         9LBQgwtsWiDm2CtvAnFS+ClfwbYsRvKos7Hf8VxacMmiViEkt1/kcz7zoebhAed3YhRx
-         /15FPembif0l9vDP/uifGN+Oz4gmcehLysvTvN5Et9fe/tJVicmEjHwXMliBd00h7/XE
-         43A22P9kMfrkuUPrPTvvtFZWejgcxp7kD0G5lN17S3vn1CGTODF0guPrQ9LNui59Mv+s
-         YSOw==
-X-Forwarded-Encrypted: i=1; AJvYcCV628pbC1unVvaeevh7DH2fdNsIsK0zIy52j+v/nklZ/zpPefFgeqQ6qPsqBSaOmMDFUxs=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwW0lc6CIli/waJRZJijcnEeTM7XDCwEebmHzlULv+6CubtCaQn
-	AnsIa3tVkGI9CFGxj6xXSfQKwHj80Yp/hZHcSKQnHeZRTUfLdTlZSdIgV/U5hUgEfKVGe+XwZxl
-	x+c819wMtPCTdFJBUAI0WS8tPEy7MCgA=
-X-Gm-Gg: ASbGnctfGavmR7Y2J0MCmYIAPShqTX2FqicCCh2Byzcdwe0T3lVrhD+ufT4NIkVAHNX
-	WI4Oj+3c16xvcDXJmEy+83sxpnHFd0F64rI22/Xx9CxykJ+D44ODf8odXH4OkiSSs0KW+2YHAjC
-	xQJeV9o6l3wsLdu3WwbK/bZuKgqIn2L6nPqIJUAlAimQ==
-X-Google-Smtp-Source: AGHT+IFs+jWEfxvPiUt/sBZVpyargHaFtPAkbLztjTcrlJA63rVY6FHxsb+BEpeTotQrGwwLV7zY/XWBIXBi7l6RWfQ=
-X-Received: by 2002:a05:6214:4001:b0:6fa:ed19:2566 with SMTP id
- 6a1803df08f44-6fb4775424amr4675466d6.2.1749846207322; Fri, 13 Jun 2025
- 13:23:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749846659; x=1750451459;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=sHW4UXcZqngATgCfwuEA4IfKcEFsmTs5m1h2NzhFAH0=;
+        b=IvSawyY2H68jDMzXxxeHtozS/eKMrjFbywK7/sxy8ohk0VJfI5y1YfePQIiylKQU+6
+         j27uIy20Lg4U9iChkesuLznDhkT/Z039HAn+URs7xYIqhZYu7kpgLMVdufzU8KPeZC7O
+         5MdWrbywcbNlvtEI8LRpHUj2ZSq2XIlZ+3wvN9cFhvBaSZB3xBruw0Oy4I0K5cr8rTI7
+         hCjlHlz4sSBTLa0xL1+wH9sAwNzlasQmB2PzFPcCn8OKO/ZvnW9QYftMSom3LVQhiMjK
+         2j1/8fyVCSc8i7B54DNB6uE3i+Trdsa5zEQ4yTdaJa6eSfbI3B9he5IVm9OhV9ungeRZ
+         K6LQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXzQPoFOh6+QiC/pj6bFRmrfomk/Z87XvxmTjfNpWRq9pobgNRNdv6OfZ5DspWNvewp34o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxSLw1dUa3hdZHURC2EQelSPWI+wx1pOd2tWUHZNePtBQa01O8X
+	tHhRgdy01z4fkY8HCQ2wCVIBVOKG50wHEJX6B6Op+VOIjCT5qJNdfaMla4KtcTl/
+X-Gm-Gg: ASbGncu9fnlotR0xNjM8BfsZiH3SqpxtRdkb6YowhOme6JSu8E4glVqyKp6hq/67EOR
+	gvdNKwjaqt3neen6x36w0UNUZYthqa2g0XQw80iGk/2HyT5wbXgLxs5CqWe/he1CTd5NMqTrxbi
+	aMXz/coC8+G+A59wOtWYxxjLT1VVjUlK9Sp9HdLEz0DwIpuWfn7CUdOI8FAhulQufHBtpRamZr/
+	FME/YrhLV6IVKtHu4BqGm4GVLuzoWWvR4bIYZ8je4Bw8l3O/YxQAO5mK2m+HXa9l/nsDtL6Iem7
+	f0EzGJpvGH5z4SCeHGaV7PXUr8GDzJ6+jeVOm8K0SQ==
+X-Google-Smtp-Source: AGHT+IFpGZyF1wHFVAf5+Lj2FEoZmkgEZsZy263MOMtxLpPX/NwN7ZaNFJ/oRk3jXXQZMqDNmJ8YFA==
+X-Received: by 2002:a17:90b:1cc3:b0:311:d05c:936 with SMTP id 98e67ed59e1d1-313f1daa6a7mr1733377a91.17.1749846659399;
+        Fri, 13 Jun 2025 13:30:59 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::f55])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365d8a4d3fsm18989285ad.64.2025.06.13.13.30.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jun 2025 13:30:59 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: Brad Smith <brad@comstyle.com>,  Junio C Hamano <gitster@pobox.com>,
+  git@vger.kernel.org
+Subject: Re: Solaris sed
+In-Reply-To: <5895400.DvuYhMxLoT@cayenne>
+References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
+	<caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com>
+	<874iwlegmg.fsf@gmail.com> <5895400.DvuYhMxLoT@cayenne>
+Date: Fri, 13 Jun 2025 13:30:57 -0700
+Message-ID: <87ikkzs7su.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <09f954b8-d9c3-418f-ad4b-9cb9b063f4ae@comstyle.com>
- <caaa5d54-d32d-40b3-9bf3-0f322e7c4316@comstyle.com> <874iwlegmg.fsf@gmail.com>
- <5895400.DvuYhMxLoT@cayenne>
-In-Reply-To: <5895400.DvuYhMxLoT@cayenne>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 13 Jun 2025 16:23:16 -0400
-X-Gm-Features: AX0GCFu3SDRJngDtocN3jrqM8hI8xOnVKgCE0p8OvtRZnaZ2Shvck1s2A3_tjEM
-Message-ID: <CAPig+cSu7+fxveULiB1vDbcy6Cnia_5isVVy+RCO+HGAyr8uvg@mail.gmail.com>
-Subject: Re: Solaris sed
-To: =?UTF-8?Q?Jean=2DNo=C3=ABl_AVILA?= <jn.avila@free.fr>
-Cc: Brad Smith <brad@comstyle.com>, Collin Funk <collin.funk1@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 13, 2025 at 4:15=E2=80=AFPM Jean-No=C3=ABl AVILA <jn.avila@free=
-.fr> wrote:
+Jean-No=C3=ABl AVILA <jn.avila@free.fr> writes:
+
 > Would it be possible to set up some kind of CI to check for compatibility=
- with
+ with=20
 > such systems. This is the second time I introduced regressions without ev=
-en
-> knowing it, and it would be really great to catch them before borking a
+en=20
+> knowing it, and it would be really great to catch them before borking a=20
 > release process.
 
-Had this been in a test script, it would have been caught by
-t/check-non-portable-shell.sh. We may want to apply the check to
-build-related scripts, as well. For instance, it would have caught the
--E problem:
+I'm sure that Solaris packagers are used to patching stuff like this. I
+wouldn't feel guilty about it. It is difficult to remember all these
+portability quirks.
 
-    % ./t/check-non-portable-shell.pl generate-*.sh
-    generate-configlist.sh:16: error: sed option not portable (use
-only -n, -e, -f): sed -E '
-    %
+With GitHub actions you can add Oracle Solaris and OmniOS (based on
+illumos, which was based on OpenSolaris) using vmactions [1]. That might
+help catch some stuff.
 
-You can, of course, run check-non-portable-shell.pl manually after
-editing a script, but perhaps this check could be enabled by a
-(hopefully) minor tweak to the main Git Makefile?
+In this case, the build still works even with the broken sed commands.
+Not sure if the tests would have caught it though.
+
+Collin
+
+[1] https://github.com/vmactions
