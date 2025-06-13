@@ -1,177 +1,446 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75AF2DA753
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 09:20:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE482C159F
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 09:34:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749806453; cv=none; b=FvmuN8xTTPpDYzYS/HBzMY+xT6O8N/+q6r/D/rK5B6XZQ97hI2Kty/NyffOlHQavu/Vo4oJFiSBq478KNBynI6w2Lc3/4xerJhV6LSVl32JmrOZoMxwKObXeDapH/Tk553sqDHNZUAkl07MqgFIGJvAQUnKp5bWLwfEkAqhFKJU=
+	t=1749807288; cv=none; b=To8o4z9byb9CL/oQ3/78CJnHz6jbhVETsik0DaQwvj7RkFch5WATN5N3Oc4fxcO6spc9z+fQl/3YThYmgYY7GiU8W1Py3NMBT/0uTymFFhjQBLnmvb7zMC6O0GCLnDqACHJ7BUhy35IrTica0upogxztfWaq6G5mcys+yR6SsCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749806453; c=relaxed/simple;
-	bh=jCCzSA8lAPFt3aMDNMf3+eO8CTIHFY7HSAvejXTPnjk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=GlHflWQG/ruh/KvyhrtKD9VN7C5O7gbKJNaLK2Yx3fecUMN2/MVMIJR/Hsdmw2OE4Vax0Up+BTXvMEQCx/szDUU+h8w7AQDEcjdQowQNut+TGd3sVR7rTk1wJ/y5egwx4/J0QAX5hYCUTWCCEBgrFaEp7pYwV19YYLiqVUsTFzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AY5AuNig; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1749807288; c=relaxed/simple;
+	bh=UZi2gsy15e4ZHWNiDmg3inlCCMP9u27gl2t7mF8/V54=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fZzh0IHbodaw7uSo80qckE0Ce14m5LckNia1IeVNibmkXdoFb+B0OMNUBhmfU0nn4EJCrlriK1noqRptd3SbmSph9w+QddTDSwZIfPdK0kIkGRD7rHNTykuqUMmFDjRW04ipC5CqhtmjzHs5r8McIIIGzLbqQF8YLQI3CPNn+9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=lYqI7yVc; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AY5AuNig"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-235ae05d224so26563985ad.1
-        for <git@vger.kernel.org>; Fri, 13 Jun 2025 02:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749806451; x=1750411251; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=JuBgDMu8hKVmxRubAKopvVS3wNUvEuyFL7n2iAOcpfA=;
-        b=AY5AuNigv0L2nSpWC2IeRSCUIGkN0GJ9vEfZHEhLrhtftOn8ZraRHb96Asg9C2P1HT
-         Jeik9ZLW69xGNN0/kf8q4S9hGaiOhdvtnOFvIEW8Dhl2BU0D3+3tQ554ApETxbsY+i33
-         GdZ4U5dkp3Fj43YDdVdLvNSA9MyQ0NtVSLAUPIm6N9RElu9OoRXjRaIiWWOH9DKLSDFf
-         tsbrc/WSs68K+LnWQVbzX9/kWjXcqae+KazTtLrkTUYzg8Fx5Vpz2UADW74VuDRKw3MS
-         /1etNIxw+fwZs+FUbZEzGi5Pe6jH47psuS71ldENqbQEe/AX6e56GgzafOkDmf6QZwK0
-         luLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749806451; x=1750411251;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=JuBgDMu8hKVmxRubAKopvVS3wNUvEuyFL7n2iAOcpfA=;
-        b=VB/VggHslV6rIY4P2XXWDh5weHQdYS/fR6vbHpJyWEsH26OWmvZyrPW6NHYVYfZfFc
-         i1erEq+33c8hCGB0iJOCya2zGBrhsCuJyZzofwOHyA2gST+X43MGuRuCDMgh3I0g6dcs
-         ra1+liZ9kxhJ0JmKfNK43rhm3T3j7ejLcXqH/Zuu/0UOMizHK8ZbdBhCIYXhbI3cocfR
-         pLU2qX0DqBLNNeMx0Aupu8zU5PmxljYv9AMTA8LQC8BdhZMgq+QjSwFkYMdhebdR53PV
-         /G9SQ0eFn2+8auYe9TtkGAvCL5UFCsFzj1zNlbkoC644SuzkZV6332roQO5UuqQ1TxVD
-         xLWw==
-X-Gm-Message-State: AOJu0YzEUm2fa6+PwuzABYBuFygbjFv3ykF4XrYoKvv3V0nwZ6+T0Pna
-	1PGTuSApkZgDse7l85MN2D4B9ix65RJt9ZgyNs1ewocyiIXNje11F8X2
-X-Gm-Gg: ASbGncuc6FFroOQwcWw2pVig1qYv8ulVonGcoKX+pn61buPVcU4NVqL6wP4W2Uwp4bh
-	l+TpNyOcE3XVNhriolQcLPZG6hdhPmyF88Q0FjVIOSwcwCIQp6DM/ldRjXy6NldSdEQfH7tqz3x
-	fToyRgfF5dYuij1Ra+GIsXPdBE1wikmQ9knDZ4ByOCbQly9g/7jEoZA4UvZIAxvSlh8/k1BDxZV
-	dRPYE+kjoOe4e+a0uVJ09z7Ci//txuXVJp+SscggNoewm3Z/C8u0QDF5qoIhNLo/+rJyfcQo4ll
-	8A+UUOLcZ5TeJR8KZ78WKaNQ6vVJTbQ0Q7kZy3rgvxdb88TMjlQQELeaEllzpGS1qaMa15GPcbh
-	SKfP6bTqV+C2hyA+dnzx00W0NOlM6Ps7ODjo7ppeoHincYB4ecPJjtR/jEOX8vI2lsp2nbHOBqg
-	==
-X-Google-Smtp-Source: AGHT+IHfyneShg8hfkGbjB6Pqb/ZZJLCk/f8vb8b5tYnT/wsvVlUhJ+XJlfAxh7Xrpl/K9hIbWI/kg==
-X-Received: by 2002:a17:903:2ace:b0:234:2d80:36 with SMTP id d9443c01a7336-2365fb3dc95mr28393765ad.14.1749806450838;
-        Fri, 13 Jun 2025 02:20:50 -0700 (PDT)
-Received: from ?IPV6:2409:40e3:18f:923d:783d:9594:9008:776e? ([2409:40e3:18f:923d:783d:9594:9008:776e])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365e0d0abdsm10039855ad.254.2025.06.13.02.20.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Jun 2025 02:20:50 -0700 (PDT)
-Message-ID: <c9c39e01-1244-427b-a496-ec35e43f7636@gmail.com>
-Date: Fri, 13 Jun 2025 14:50:45 +0530
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="lYqI7yVc"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1749807280;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=moWX/7p4/xOiEiAMKb/uPhk5BCYrFw9QpAR6ZAW0yxI=;
+	b=lYqI7yVcfo+sWxBKV/jKD1B6aobUTp2lFNYOumXbBlMQ2K1IiKIHVMi3IJJ/lu2M4fPbcz
+	FgrHrNB+7txXIPQEiKn1DB8WmVlUSciCiiVvAvjIU5OLZBjO514AegGIW2ZqB34yXdEFQw
+	yJ+XS57DBjUVD7oXF136hEtnqV60wZ4=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
+ <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
+ =?utf-8?B?QXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH RFC v2 1/5] last-modified: new subcommand to show when
+ files were last modified
+In-Reply-To: <aDWWe6qCQXorPESd@pks.im>
+References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
+ <20250523-toon-new-blame-tree-v2-1-101e4ca4c1c9@iotcl.com>
+ <aDWWe6qCQXorPESd@pks.im>
+Date: Fri, 13 Jun 2025 11:34:28 +0200
+Message-ID: <87ldpw0yu3.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] cat-file: fix mailmap application for different author
- and committer
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, viakliushin@gitlab.com,
- johncai86@gmail.com
-References: <20250611062643.8639-1-siddharthasthana31@gmail.com>
- <xmqqy0tyi8aj.fsf@gitster.g>
-Content-Language: en-US
-From: Siddharth Asthana <siddharthasthana31@gmail.com>
-In-Reply-To: <xmqqy0tyi8aj.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-On 11/06/25 21:23, Junio C Hamano wrote:
-> siddharthasthana31@gmail.com writes:
->
->> From: Siddharth Asthana <siddharthasthana31@gmail.com>
->>
->> The git cat-file command with --mailmap option fails to apply mailmap
->> transformations to the committer field when the author and committer
->> identities are different. This occurs due to a missing newline handling
->> in apply_mailmap_to_header() after processing each identity line.
->> ...
->> This ensures that all identity headers in commit and tag objects are
->> consistently processed regardless of whether the author and committer
->> are the same person.
-
-Thanks for the detailed review and suggestions!
-
-> Nicely described.
->
-> While the above explains what is wrong in the current code, it does
-> not tell if that was buggy from the beginning or we unintentionally
-> broke it.  It seems that this logic came from e9c1b0e3 (revision:
-> improve commit_rewrite_person(), 2022-07-19) when a much simpler
-> version of commit_rewrite_person() that worked on one "person
-> header" at a time (as there are only two, author and committer,
-> anyway) was rewritten to use this function, and it was broken during
-> the rewrite?
-
-You are absolutely right! I should have included this historical context
-in the commit message. The bug was indeed introduced during that rewrite
-in e9c1b0e3. The original implementation processed author and committer
-separately, but the rewrite introduced the loop-based approach that failed
-to properly handle the transition between identity lines.
-
->
->> diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
->> index 4a6242ff99..98dd0ae12f 100755
->> --- a/t/t4203-mailmap.sh
->> +++ b/t/t4203-mailmap.sh
->> @@ -1133,4 +1133,37 @@ test_expect_success 'git cat-file --batch-command returns correct size with --us
->>   	test_cmp expect actual
->>   '
->>   
->> +test_expect_success 'git cat-file --mailmap works with different author and committer' '
->> +	test_when_finished "rm .mailmap" &&
->> +	cat >.mailmap <<-\EOF &&
->> +	Mailmapped User <mailmapped-user@gitlab.com> C O Mitter <committer@example.com>
->> +	EOF
->> +	git commit --allow-empty -m "different author/committer" \
->> +		--author="Different Author <different@example.com>" &&
->> +	cat >expect <<-\EOF &&
->> +	author Different Author <different@example.com>
->> +	committer Mailmapped User <mailmapped-user@gitlab.com>
->> +	EOF
->> +	git cat-file --mailmap commit HEAD >log &&
->> +	sed -n "/^author /s/\([^>]*>\).*/\1/p; /^committer /s/\([^>]*>\).*/\1/p" log >actual &&
-> Perhaps just a  matter of taste, but
->
-> 	sed -n -e "/^author /s/>.*/>/p" -e "/^committer /s/>.*/>/p"
->
-> may be easier to read and more portable (as some implementation of
-> sed is picky about semicolon concatenated multiple commands).
-
-Good point about portability and readability. The `-e` flag approach
-is indeed cleaner and more maintainable. I'll update both test cases
-to use this format.
-
-I will send a v2 with:
-1. Updated commit message explaining the historical context from e9c1b0e3
-2. Improved sed commands using the `-e` flag format
-
-Thanks
-
->
->> +	test_cmp expect actual
->> +'
+> On Fri, May 23, 2025 at 11:33:48AM +0200, Toon Claes wrote:
+>> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
+>> new file mode 100644
+>> index 0000000000..1af38f402e
+>> --- /dev/null
+>> +++ b/Documentation/git-last-modified.adoc
+>> @@ -0,0 +1,49 @@
+>> +git-last-modified(1)
+>> +====================
 >> +
->> +test_expect_success 'git cat-file --mailmap maps both author and committer when both need mapping' '
->> +	test_when_finished "rm .mailmap" &&
->> +	cat >.mailmap <<-\EOF &&
->> +	Mapped Author <mapped-author@example.com> <different@example.com>
->> +	Mapped Committer <mapped-committer@example.com> C O Mitter <committer@example.com>
->> +	EOF
->> +	git commit --allow-empty -m "both author and committer mapped" \
->> +		--author="Different Author <different@example.com>" &&
->> +	cat >expect <<-\EOF &&
->> +	author Mapped Author <mapped-author@example.com>
->> +	committer Mapped Committer <mapped-committer@example.com>
->> +	EOF
->> +	git cat-file --mailmap commit HEAD >log &&
->> +	sed -n "/^author /s/\([^>]*>\).*/\1/p; /^committer /s/\([^>]*>\).*/\1/p" log >actual &&
->> +	test_cmp expect actual
->> +'
+>> +NAME
+>> +----
+>> +git-last-modified - EXPERIMENTAL: Show when files were last modified
+>
+> Nit: we don't have the EXPERIMENTAL label here for git-switch(1) or
+> git-restore(1).
+
+But we do for `git-replay(1)`. Because I haven't gotten much feedback
+about the usage of the command, I wanted to be on the safe side and not
+commit to the behavior. Marking it EXPERIMENTAL would allow us to make
+changes on it's interface without _breaking_. But I wouldn't mind
+dropping the experimental status.
+
 >> +
->>   test_done
+>> +
+>> +SYNOPSIS
+>> +--------
+>> +[synopsis]
+>> +git last-modified [-r] [<revision-range>] [[--] <path>...]
+>> +
+>> +DESCRIPTION
+>> +-----------
+>> +
+>> +Shows which commit last modified each of the relevant files and subdirectories.
+>> +
+>> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+>> +
+>> +OPTIONS
+>> +-------
+>> +
+>> +-r::
+>> +	Recurse into subtrees.
+>> +
+>> +-t::
+>> +	Show tree entry itself as well as subtrees.  Implies `-r`.
+>
+> These flags aren't yet supported in this version, are they?
+
+They are, but I see there are no tests for `-t`. I shall add them.
+
+>
+>> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+>> new file mode 100644
+>> index 0000000000..0d4733f666
+>> --- /dev/null
+>> +++ b/builtin/last-modified.c
+>> @@ -0,0 +1,43 @@
+>> +#include "git-compat-util.h"
+>> +#include "last-modified.h"
+>> +#include "hex.h"
+>> +#include "quote.h"
+>> +#include "config.h"
+>> +#include "object-name.h"
+>> +#include "parse-options.h"
+>> +#include "builtin.h"
+>> +
+>> +static void show_entry(const char *path, const struct commit *commit, void *d)
+>> +{
+>> +	struct last_modified *lm = d;
+>> +
+>> +	if (commit->object.flags & BOUNDARY)
+>> +		putchar('^');
+>> +	printf("%s\t", oid_to_hex(&commit->object.oid));
+>> +
+>> +	if (lm->rev.diffopt.line_termination)
+>> +		write_name_quoted(path, stdout, '\n');
+>> +	else
+>> +		printf("%s%c", path, '\0');
+>> +
+>> +	fflush(stdout);
+>> +}
+>> +
+>> +int cmd_last_modified(int argc,
+>> +		   const char **argv,
+>> +		   const char *prefix,
+>> +		   struct repository *repo)
+>> +{
+>> +	int ret = 0;
+>
+> `ret` is basically unused here, we only use it to return 0.
+
+Good catch. Thanks!
+
+>> diff --git a/last-modified.c b/last-modified.c
+>> new file mode 100644
+>> index 0000000000..9283f8fcae
+>> --- /dev/null
+>> +++ b/last-modified.c
+>> @@ -0,0 +1,213 @@
+>> +#include "git-compat-util.h"
+>> +#include "last-modified.h"
+>> +#include "commit.h"
+>> +#include "diffcore.h"
+>> +#include "diff.h"
+>> +#include "object.h"
+>> +#include "revision.h"
+>> +#include "repository.h"
+>> +#include "log-tree.h"
+>> +
+>> +struct last_modified_entry {
+>> +	struct hashmap_entry hashent;
+>> +	struct object_id oid;
+>> +	struct commit *commit;
+>> +	const char path[FLEX_ARRAY];
+>> +};
+>> +
+>> +static void add_from_diff(struct diff_queue_struct *q,
+>> +			  struct diff_options *opt UNUSED,
+>> +			  void *data)
+>> +{
+>> +	struct last_modified *lm = data;
+>> +
+>> +	for (int i = 0; i < q->nr; i++) {
+>> +		struct diff_filepair *p = q->queue[i];
+>> +		struct last_modified_entry *ent;
+>> +		const char *path = p->two->path;
+>> +
+>> +		FLEX_ALLOC_STR(ent, path, path);
+>> +		oidcpy(&ent->oid, &p->two->oid);
+>> +		hashmap_entry_init(&ent->hashent, strhash(ent->path));
+>> +		hashmap_add(&lm->paths, &ent->hashent);
+>> +	}
+>> +}
+>> 
+>> +static int add_from_revs(struct last_modified *lm)
+>> +{
+>> +	size_t count = 0;
+>> +	struct diff_options diffopt;
+>> +
+>> +	memcpy(&diffopt, &lm->rev.diffopt, sizeof(diffopt));
+>> +	copy_pathspec(&diffopt.pathspec, &lm->rev.diffopt.pathspec);
+>> +	diffopt.output_format = DIFF_FORMAT_CALLBACK;
+>> +	diffopt.format_callback = add_from_diff;
+>> +	diffopt.format_callback_data = lm;
+>
+> As far as I understand we populate `paths` from the diff here, and
+> `paths` later on acts as a filter of paths we're interested in? Might be
+> nice to add a comment explaining the intent of this.
+
+Will do.
+
+
+>> +	for (size_t i = 0; i < lm->rev.pending.nr; i++) {
+>> +		struct object_array_entry *obj = lm->rev.pending.objects + i;
+>> +
+>> +		if (obj->item->flags & UNINTERESTING)
+>> +			continue;
+>> +
+>> +		if (count++)
+>> +			return error(_("can only get last-modified one tree at a time"));
+>
+> It's a bit funny that `count` is pretending to be a counter even though
+> it ultimately is only a boolean flag whether we have already seen an
+> interesting item.
+
+Okay, I'll refactor.
+
+>> +		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+>> +			      &obj->item->oid, "", &diffopt);
+>> +		diff_flush(&diffopt);
+>> +	}
+>> +	clear_pathspec(&diffopt.pathspec);
+>
+> Shouldn't we call `diff_free()` instead of `clear_pathspec` to clear the
+> whole `struct diff_options`?
+
+Yeah, that's better.
+
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static int last_modified_entry_hashcmp(const void *unused UNUSED,
+>> +				    const struct hashmap_entry *hent1,
+>> +				    const struct hashmap_entry *hent2,
+>> +				    const void *path)
+>> +{
+>> +	const struct last_modified_entry *ent1 =
+>> +		container_of(hent1, const struct last_modified_entry, hashent);
+>> +	const struct last_modified_entry *ent2 =
+>> +		container_of(hent2, const struct last_modified_entry, hashent);
+>> +	return strcmp(ent1->path, path ? path : ent2->path);
+>> +}
+>> +
+>> +void last_modified_init(struct last_modified *lm,
+>> +		     struct repository *r,
+>> +		     const char *prefix,
+>> +		     int argc, const char **argv)
+>> +{
+>> +	memset(lm, 0, sizeof(*lm));
+>> +	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
+>> +
+>> +	repo_init_revisions(r, &lm->rev, prefix);
+>> +	lm->rev.def = "HEAD";
+>> +	lm->rev.combine_merges = 1;
+>> +	lm->rev.show_root_diff = 1;
+>> +	lm->rev.boundary = 1;
+>> +	lm->rev.no_commit_id = 1;
+>> +	lm->rev.diff = 1;
+>> +	if (setup_revisions(argc, argv, &lm->rev, NULL) > 1)
+>> +		die(_("unknown last-modified argument: %s"), argv[1]);
+>> +
+>> +	if (add_from_revs(lm) < 0)
+>> +		die(_("unable to setup last-modified"));
+>
+> Given that this is library code, do we rather want to have
+> `last_modified_init()` return an error code and let the caller die?
+
+Yes, agreed.
+
+>> +}
+>> +
+>> +void last_modified_release(struct last_modified *lm)
+>> +{
+>> +	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
+>> +	release_revisions(&lm->rev);
+>> +}
+>> +
+>> +struct last_modified_callback_data {
+>> +	struct commit *commit;
+>> +	struct hashmap *paths;
+>> +
+>> +	last_modified_callback callback;
+>> +	void *callback_data;
+>> +};
+>> +
+>> +static void mark_path(const char *path, const struct object_id *oid,
+>> +		      struct last_modified_callback_data *data)
+>> +{
+>> +	struct last_modified_entry *ent;
+>> +
+>> +	/* Is it even a path that we are interested in? */
+>> +	ent = hashmap_get_entry_from_hash(data->paths, strhash(path), path,
+>> +					  struct last_modified_entry, hashent);
+>> +	if (!ent)
+>> +		return;
+>
+> Yup, so this here is the filter to figure out whether we care for a
+> path, which uses the `paths` map we have populated at the beginning.
+>
+>> +	/* Have we already found a commit? */
+>> +	if (ent->commit)
+>> +		return;
+>
+> Can this case even be hit? We remove the entry from the map once we have
+> seen it, so I'd expect that we never hit the same commit map entry
+> twice. If so, can this be converted to a `BUG()` or am I missing the
+> obvious?
+
+I was wondering about that. But took it over from the original code, and
+left it in. I believe it's from a version where entries weren't removed
+from the hashmap. I agree a `BUG()` would be a better approach, or
+even better simply delete this condition.
+
+>> +	/*
+>> +	 * Is it arriving at a version of interest, or is it from a side branch
+>> +	 * which did not contribute to the final state?
+>> +	 */
+>> +	if (!oideq(oid, &ent->oid))
+>> +		return;
+>> +
+>> +	ent->commit = data->commit;
+>> +	if (data->callback)
+>> +		data->callback(path, data->commit, data->callback_data);
+>> +
+>> +	hashmap_remove(data->paths, &ent->hashent, path);
+>
+> And we end up removing that entry from paths so that we don't revisit it
+> in the future. After all, we're only interested in a single commit per
+> path.
+
+True. So it doesn't even make sense a `struct last_modified_entry` has a
+`commit` attribute. I will delete that in next version.
+
+>> +	free(ent);
+>> +}
+>> +
+>> +static void last_modified_diff(struct diff_queue_struct *q,
+>> +		       struct diff_options *opt UNUSED, void *cbdata)
+>> +{
+>> +	struct last_modified_callback_data *data = cbdata;
+>> +
+>> +	for (int i = 0; i < q->nr; i++) {
+>> +		struct diff_filepair *p = q->queue[i];
+>> +		switch (p->status) {
+>> +		case DIFF_STATUS_DELETED:
+>> +			/*
+>> +			 * There's no point in feeding a deletion, as it could
+>> +			 * not have resulted in our current state, which
+>> +			 * actually has the file.
+>> +			 */
+>> +			break;
+>> +
+>> +		default:
+>> +			/*
+>> +			 * Otherwise, we care only that we somehow arrived at
+>> +			 * a final path/sha1 state. Note that this covers some
+>> +			 * potentially controversial areas, including:
+>> +			 *
+>> +			 *  1. A rename or copy will be found, as it is the
+>> +			 *     first time the content has arrived at the given
+>> +			 *     path.
+>> +			 *
+>> +			 *  2. Even a non-content modification like a mode or
+>> +			 *     type change will trigger it.
+>
+> Curious, but sensible. We're looking for the last time a specific tree
+> entry was changed, and that of course includes modifications. I could
+> totally see that we may eventually want to add a flag that ignores such
+> mode changes and only presents content changes. But for now I agree that
+> this is sensible.
+>
+>> +			 * We take the inclusive approach for now, and find
+>> +			 * anything which impacts the path. Options to tweak
+>> +			 * the behavior (e.g., to "--follow" the content across
+>> +			 * renames) can come later.
+>> +			 */
+>> +			mark_path(p->two->path, &p->two->oid, data);
+>> +			break;
+>> +		}
+>> +	}
+>> +}
+>> +
+>> +int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
+>> +{
+>> +	struct last_modified_callback_data data;
+>> +
+>> +	data.paths = &lm->paths;
+>> +	data.callback = cb;
+>> +	data.callback_data = cbdata;
+>> +
+>> +	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+>> +	lm->rev.diffopt.format_callback = last_modified_diff;
+>> +	lm->rev.diffopt.format_callback_data = &data;
+>> +
+>> +	prepare_revision_walk(&lm->rev);
+>> +
+>> +	while (hashmap_get_size(&lm->paths)) {
+>
+> Okay, and this is the core of our logic: we continue walking the tree
+> until there are no more paths that we care about.
+>
+>> diff --git a/last-modified.h b/last-modified.h
+>> new file mode 100644
+>> index 0000000000..42a819d979
+>> --- /dev/null
+>> +++ b/last-modified.h
+>> @@ -0,0 +1,27 @@
+>> +#ifndef LAST_MODIFIED_H
+>> +#define LAST_MODIFIED_H
+>> +
+>> +#include "commit.h"
+>> +#include "revision.h"
+>> +#include "hashmap.h"
+>> +
+>> +struct last_modified {
+>> +	struct hashmap paths;
+>> +	struct rev_info rev;
+>> +};
+>> +
+>> +void last_modified_init(struct last_modified *lm,
+>> +		     struct repository *r,
+>> +		     const char *prefix,
+>> +		     int argc, const char **argv);
+>> +
+>> +void last_modified_release(struct last_modified *);
+>> +
+>> +typedef void (*last_modified_callback)(const char *path,
+>> +				    const struct commit *commit,
+>> +				    void *data);
+>> +int last_modified_run(struct last_modified *lm,
+>> +		   last_modified_callback cb,
+>> +		   void *cbdata);
+>> +#endif /* LAST_MODIFIED_H */
+>
+> It would be nice to have some documentation for each of these functions
+> as well as a bit of a higher-level conceptual info.
+
+Will do.
+
+-- 
+Cheers,
+Toon
