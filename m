@@ -1,126 +1,323 @@
-Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+Received: from mail-ua1-f52.google.com (mail-ua1-f52.google.com [209.85.222.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E738C1369B4
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 06:57:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 087B213B58C
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 07:23:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749797856; cv=none; b=R8uPen/jiUBSscbCa0D/QKHwTbC3mtgFEEJt0cn19ri5f6OwoR2k8LlHdP5LxmrPbOsWhF+QgVVViPN2helMJmT0RLaTgS++w08O4php3wnOti08+14RDRgaobVXPYJ75WpzwA1JsFwSDS8wwDWGinbhSszF/0J4FuiL7rLBb6c=
+	t=1749799431; cv=none; b=PxDE5qe8FSEjr9xuwdMDGzlr/L3QNNT2eUO/UkpaMv+co4ichkkmijBotgYOoHtnmLKTn7Dr8fbKDJfH5uG4MH1raVtj/OxwbAvYG2PQQNVFQMVPje4ZLTTefUKG+edaxghFRXZN+vIfCBfZ2S6Iola1jYXWT9kt4lZhNXYkpks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749797856; c=relaxed/simple;
-	bh=bIZ6QicN67yXePin4fFWfoYOPfeJlhurru+O3GTgzKo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=oY+xpsR1vOM5W1b2uLUfeUvppYvojY6AhHcIRtgdTfw14nfzyVq/Ig/nJ7y1X5rMIghQNucoWFXulXOmyroDEoiLJiLMmW7LUTpRR4AgfVmZr2yYrDz9qcONfXMDggHZSPAwKgLCPF3zmzO0nCZGAzS8/lB820zCNRdKhAqnJKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K0BW29EA; arc=none smtp.client-ip=209.85.215.177
+	s=arc-20240116; t=1749799431; c=relaxed/simple;
+	bh=057Xf1dU8Sb6OFW9QYF3elCkJjg0QsGB+NA8yqBv5Ek=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RKdFhO66tPf5qgHlTVtnMnEP5LyVuJ3SfVwhycA5GuPXu0JmO5b9R9f7JJv03XwXzYdJF/pYEg/inJSPvuY97dPyfr41S8D3tDM2cpj27z3oOD3RzMJmmpkrpVi+jd2jxFpu4g6IGON3BFvFTdwBwWkaldcu/9mf/QmDS8lXJDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jFeOQu7R; arc=none smtp.client-ip=209.85.222.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K0BW29EA"
-Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b2f62bbb5d6so1340340a12.0
-        for <git@vger.kernel.org>; Thu, 12 Jun 2025 23:57:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jFeOQu7R"
+Received: by mail-ua1-f52.google.com with SMTP id a1e0cc1a2514c-87ecac3e17cso495602241.3
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 00:23:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749797854; x=1750402654; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=crGaZ0yT/JFQmnlBR5e05z4UQZOmI8kyLYWHy0HLZmY=;
-        b=K0BW29EASQSc+X9fKmc+HFy9hLXbxihKdR7mXjTXDOcSdMxtM09LFmaZAzHUEBkE4X
-         SMkWVUlokMOUDSe4rtf4t+aVbmYAwn3Hcz1vKA70j9MJUTY0cWC8bMpCiS6gEkVi475u
-         Gj9PEKjt0nXmr9kwAjIvwGyaapOWo5zTmGhmpImJPBIhZOjrCfdCD8UyJa8Rzuw6mNoD
-         TITaJmy3KbADv6bn+2IrOEuI1zXJmB1l0VGVrIb3WMackRq7GcXCH8uDO5o19jv2QNKb
-         QP5dNaayC4Xao8XLagJaUd/xECLyeQd98ReRBHlPsvBIOQd4sgoQGXQNyNUSp7scPpMe
-         9Pug==
+        d=gmail.com; s=20230601; t=1749799429; x=1750404229; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=YJRCuqnyaR7zDk9cS+gPblqxawYE0umVyYx49HdRW0I=;
+        b=jFeOQu7RN8wTdaoIM2ASBVqsL/hZpJbq3lIcGpa3vgy6rS2xUXdVaJdrZou0Dsy9HE
+         V8uIv+ihJWRdKMLfNp484ffMOdvVlbP7DPEbFbq1pjIUTQ3voPo86BD+z2aXkQKDHLY9
+         1mX5RZOn9Zn++XZeMpTjOjtghFNNMkwsuSW4S9U6erd6u2cyygnnqZMY8eZTdpqZT5qq
+         B2oek+g7ZNEKohDTrIESvGy9MG5fbx5ccLaqvRYfje5jUTEnMxFkA+gYO/N3MKBo1/72
+         GrCa//o1OVS3alERTqy903K/Dc+qhVcMR8sgSIp4OyzvBKg5tAMtt2KcZxWyPvb2TJtd
+         AFjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749797854; x=1750402654;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=crGaZ0yT/JFQmnlBR5e05z4UQZOmI8kyLYWHy0HLZmY=;
-        b=F//4jd9CTiC4MeodN+slrcWC+oz7PnBU7NcaXq4KFh9CwCvw0QjkFL8gfSKfJEL46j
-         09zXDKRanhgk6YBGP4Eejra0ZgISSImWyxTl/nO5/QIxYrWLQLwqbkfRhnm5bb7x/E6X
-         w3MUac6cugtydGAxeGNhB+2bzzI2MY/IlouHq9DQUF6iq0jrhPd3U8T3ARGpYgGpXPXG
-         6CjsZ7FAOroGQPWLOabOYLVv481AWZL3R4wOpHIgZcUaJMbPfSFl9iaoZpjSFD2TmghK
-         3tLzYmD2+RDSA6i7dkzuOO6nuYj/fJ4821IstDNUf+B/Y1XfqHjtOJX8zNBv9QRjdoB1
-         AJzQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrPOK1tgGkl+9DaHaSV2dUKjpWYEd4w1fYVROBeJUR000i0uEiWf9zCkCdQPpF828eLhQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFzsutMxiAzLnkdMgN+YbfJ6+8pvzfoPXGRuOwB1HD5KUGX1iN
-	P2yIBr4i4qRy+JDjypDuBWZnkHjqvq28TkGg5zGVpFEPhty6Q+DCJ+ikz+AEnh5LciTTq4Fx5+e
-	x/frf0Za2TAo5KsuYkIa9HiEWjZWZZjnItLKCryjk9g==
-X-Gm-Gg: ASbGncscduNfb1KWf6C9jguBenFLWs3gPJ4KxUprwhKVfmaoXBE/bacpO8axhNQiBeh
-	du8hX3mQweApYV6PiDFBOv8q6S33q1rtQFfR6lLwTmpSu5XK/5Iyl2ofXp2a+MO+wI+7fnpWYOi
-	5bWwK6qIv+NNPZC19Y1PC/aNvLEntF5EbUzbGJuQ7csmDKcA==
-X-Google-Smtp-Source: AGHT+IFrazCC2Idp/FxaVnFhV5pUTSuVV92s4b7oMJjWpUhCAGQp9lzGurrE4JXuXZgR3wngpWPsTT2QdutXBvWOhFQ=
-X-Received: by 2002:a05:6a20:2591:b0:1f5:9069:e563 with SMTP id
- adf61e73a8af0-21facc94d5emr3004754637.21.1749797854072; Thu, 12 Jun 2025
- 23:57:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749799429; x=1750404229;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YJRCuqnyaR7zDk9cS+gPblqxawYE0umVyYx49HdRW0I=;
+        b=dypzTCcTCfUgdCjuKq76ELDgy90iOpIJnSvi5MhCAoBnaNkiQk3zYP4WcJ53jClJVu
+         VcJzVwqdx6sxTd1ZKpIO8aEd2rM12Bxn8CPIAmFKIc3R27wWN6AnzU2N44l41ANEkzfz
+         dwMbquc2urYp3uKCdRRphDJz4qFkWbHrmUEF8k/ltAxQmJ/qVzWwgfLwvjcgpifA5eov
+         2veAAEhOKSwoM0QAYDLnu/OiaFZGZVC6vZgewujyQ1TSg/+xVLl/Py24JGz9sHwhoNEi
+         Chws6zJmy+uqSGl45gO7OHxXxO8ERAl1hcFlKpvbT/slyyqzEaYVdnpmWVAuPCyhZZ9w
+         S9tg==
+X-Gm-Message-State: AOJu0YxI/HclQdXsyMvb/hnZok99u/6eHgiiCG6VSHh2a2v72mC8xodN
+	Tmty7RmyKIg6RmKuHPmWLN1vAtfC3Io3fDHzpnkAKnWxuz5nMruRCNS3izFoKkXG4R6t9r9HIx1
+	J5OSxGunusIGci4vFyN/aOEKyn+pNCpc=
+X-Gm-Gg: ASbGncss69KAIFGyfwnJ2K45U4gIrjpZ9o+b1IwIZDkNfAn0tEPGNJp+BE8jRJTFpqz
+	Q0dfL+Xu8w7a4HlFE7YyFLG5kLH0jRXec983WJuUt6rdbr0hICSaDAKgGeD6ea36qqmSekXKMYE
+	/1ggVq3anX30OeU6EP/YuA50VOja93A28IFThSQPCc1d3oxQ9oTcAhQIuIU2Y0hGMpoktt6UGYT
+	GGHAA==
+X-Google-Smtp-Source: AGHT+IFXpk5tXkg6j2CUQa7vx0VsZNq/3hjMpSESsj/XyeDPxnmOrbofB+8ImXenwe873OzE5ZVvTXciNBnh8PdtP+s=
+X-Received: by 2002:a05:6102:2d03:b0:4e1:48ee:6f36 with SMTP id
+ ada2fe7eead31-4e7e39a750bmr1317373137.19.1749799428662; Fri, 13 Jun 2025
+ 00:23:48 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 13 Jun 2025 02:23:47 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD0Az9YUd7tHbCWjrZ5bTv1V_0RZ2azasPmOrpf+ARMjug@mail.gmail.com>
+References: <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-0-e1c41693bd35@gmail.com>
+ <20250606-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v3-2-e1c41693bd35@gmail.com>
+ <CAP8UFD0Az9YUd7tHbCWjrZ5bTv1V_0RZ2azasPmOrpf+ARMjug@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
- <20250611173433.74393-1-ayu.chandekar@gmail.com> <xmqqmsaegf91.fsf@gitster.g> <xmqqbjquge0c.fsf@gitster.g>
-In-Reply-To: <xmqqbjquge0c.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Fri, 13 Jun 2025 12:27:22 +0530
-X-Gm-Features: AX0GCFuN1ITfYmHbQifNJRNji-rRfiki4nNe4hMg-hiFkJCdi3WnsM0iBkQLVGM
-Message-ID: <CAE7as+aMtOvniTpNhTN083_7fMY=b-HR9R4HsqWSCBtv+w_+7w@mail.gmail.com>
-Subject: Re: [PATCH v3] environment: move access to "core.sparsecheckout" into repo_settings
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
-	ps@pks.im, ben.knoble@gmail.com
+Date: Fri, 13 Jun 2025 02:23:47 -0500
+X-Gm-Features: AX0GCFv8r5Btqdq5WyU4aT-p2hcvezRNEXQW-vHnM9zz27MH3yuomBwAVQlSRO8
+Message-ID: <CAOLa=ZSU-r44oTiOiaqPrShj6p=4VUQTU-pXk5FJ4fenxB_FaA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] receive-pack: handle reference deletions separately
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, gitster@pobox.com, 
+	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000005fbe3f06376eed81"
+
+--0000000000005fbe3f06376eed81
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 12, 2025 at 3:03=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Christian Couder <christian.couder@gmail.com> writes:
+
+> On Fri, Jun 6, 2025 at 10:41=E2=80=AFAM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>>
+>> In 9d2962a7c4 (receive-pack: use batched reference updates, 2025-05-19)
+>> we updated the 'git-receive-pack(1)' command to use batched reference
+>> updates. One edge case which was missed during this implementation was
+>> when a user pushes multiple branches such as:
+>>
+>>   delete refs/heads/branch/conflict
+>>   create refs/heads/branch
+>>
+>> Before using batched updates, the references would be applied
+>> sequentially and hence no conflicts would arise. With batched updates,
+>> while the first update applies, the second fails due to F/D conflict.
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> Nit: it looks like "D/F conflict" is more often used than "F/D
+> conflict" in the Git code base:
 >
-> > My gut feeling, if I have to choose between "lazy loading" and
-> > "popluate in prepare_repo_settings() and then access the member
-> > directly thereafter" for this variable, I may pick the latter for
-> > this particular variable.
+> $ git grep -i 'd/f conflict' | wc -l
+> 119
+> $ git grep -i 'f/d conflict' | wc -l
+> 7
 >
-> I left the reason behind this choice unsaid, but let's spell it out.
+>> A
+>> similar issue was present in 'git-fetch(1)' and was fixed by using
+>> separating out reference pruning into a separate transaction. Apply a
 >
-> Originally, this was read in git_config(git_default_config) into a
-> global, and that is probably because almost everybody that touches
-> the working tree files needs to know about it.  So populating it in
-> prepare_repo_settings() for everybody, even though the calling code
-> path does not even need it, would be OK---they were paying the cost
-> to read it when they read the default configuration variables.
->
-> It seems Patrick earlier made a confused comment on the two models
-> that may need a bit clarifying.
->
-> Here are the rules to follow.
->
->  - "lazy loading" is not wrong. Initialize the member to an
->    "uninitialized" state, never touch the member in
->    prepare_repo_settings(), and have its getter check for the
->    "uninitialized" state to lazily load it, or have its setter do
->    its thing.  prepare_repo_settings() should not even be aware of
->    the member, if we are going to give the member a getter/setter
->    pair.
->
->  - "Without getter/setter" is not wrong, either.  Load the member in
->    prepare_repo_settings(), which will turn into a no-op once it is
->    called to a repo instance.  Use the member directly afterwards.
->
-> You cannot mix and match.  If the variable is rarely used, you'd
-> want to catch the initial access and lazily load it, hence you are
-> required to have a getter/setter pair and lazily populate the member
-> in your getter.  If your variable is very commonly used, load it
-> once in prepare_repo_settings(), and because you are not going to do
-> anything special upon the first access, there is no need to have a
-> getter/setter pair.
->
+> Maybe: s/using separating out/separating out/
 >
 
-Oh, now I understand it. I will keep this in mind when working on
-these settings.
-I will send a new version of this patch soon.
+That's better, will change.
 
-Thanks a lot, this helped clarify things.
+>> similar mechanism for 'git-receive-pack(1)' and separate out reference
+>> deletions into its own batch.
+>>
+>> This means 'git-receive-pack(1)' will now use upto two transactions,
+>> whereas before using batched updates it would use _at least_ two
+>> transactions. So using batched updates is still the better option.
+>>
+>> Add a test to validate this behavior.
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  builtin/receive-pack.c | 100 ++++++++++++++++++++++++++++++++----------=
+-------
+>>  t/t5516-fetch-push.sh  |  17 +++++++--
+>>  2 files changed, 79 insertions(+), 38 deletions(-)
+>>
+>> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+>> index 9e3cfb85cf..8ee792d2f8 100644
+>> --- a/builtin/receive-pack.c
+>> +++ b/builtin/receive-pack.c
+>> @@ -1867,47 +1867,79 @@ static void execute_commands_non_atomic(struct c=
+ommand *commands,
+>>         const char *reported_error =3D NULL;
+>>         struct strmap failed_refs =3D STRMAP_INIT;
+>>
+>> -       transaction =3D ref_store_transaction_begin(get_main_ref_store(t=
+he_repository),
+>> -                                                 REF_TRANSACTION_ALLOW_=
+FAILURE, &err);
+>> -       if (!transaction) {
+>> -               rp_error("%s", err.buf);
+>> -               strbuf_reset(&err);
+>> -               reported_error =3D "transaction failed to start";
+>> -               goto failure;
+>> -       }
+>> +       /*
+>> +        * Reference updates, where F/D conflicts shouldn't arise due to
+>
+> Nit: here also maybe "D/F conflicts" is more standard.
+>
+
+Will change.
+
+>> +        * one reference being deleted, while the other being created
+>> +        * are treated as conflicts in batched updates. This is because
+>> +        * we don't do conflict resolution inside a transaction. To
+>> +        * mitigate this, delete references in a separate batch.
+>> +        */
+>> +       enum processing_phase {
+>> +               PHASE_DELETIONS,
+>> +               PHASE_OTHERS
+>> +       };
+>>
+>> -       for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+>> -               if (!should_process_cmd(cmd) || cmd->run_proc_receive)
+>> -                       continue;
+>> +       for (enum processing_phase phase =3D PHASE_DELETIONS; phase <=3D=
+ PHASE_OTHERS; phase++) {
+>> +               for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+>> +                       if (!should_process_cmd(cmd) || cmd->run_proc_re=
+ceive)
+>> +                               continue;
+>>
+>> -               cmd->error_string =3D update(cmd, si);
+>> -       }
+>> +                       if (phase =3D=3D PHASE_DELETIONS && !is_null_oid=
+(&cmd->new_oid))
+>> +                               continue;
+>> +                       else if (phase =3D=3D PHASE_OTHERS && is_null_oi=
+d(&cmd->new_oid))
+>> +                               continue;
+>>
+>> -       if (ref_transaction_commit(transaction, &err)) {
+>> -               rp_error("%s", err.buf);
+>> -               reported_error =3D "failed to update refs";
+>> -               goto failure;
+>> -       }
+>> +                       /*
+>> +                        * Lazily create a transaction only when we know=
+ there are
+>> +                        * updates to be added.
+>> +                        */
+>> +                       if (!transaction) {
+>> +                               transaction =3D ref_store_transaction_be=
+gin(get_main_ref_store(the_repository),
+>> +                                                                       =
+  REF_TRANSACTION_ALLOW_FAILURE, &err);
+>> +                               if (!transaction) {
+>> +                                       rp_error("%s", err.buf);
+>> +                                       strbuf_reset(&err);
+>> +                                       reported_error =3D "transaction =
+failed to s1tart";
+>
+> s/s1tart/start/
+>
+
+Oops! Good catch.
+
+>> +                                       goto failure;
+>> +                               }
+>> +                       }
+>>
+>> -       ref_transaction_for_each_rejected_update(transaction,
+>> -                                                ref_transaction_rejecti=
+on_handler,
+>> -                                                &failed_refs);
+>> +                       cmd->error_string =3D update(cmd, si);
+>> +               }
+>>
+>> -       if (strmap_empty(&failed_refs))
+>> -               goto cleanup;
+>> +               /*
+>> +                * If no transaction was created, there is nothing to co=
+mmit.
+>> +                */
+>
+> Nit: the comment needs a single line, so maybe:
+>
+>               /* No transaction, so nothing to commit */
+>
+
+Looks better.
+
+>> +               if (!transaction)
+>> +                       goto cleanup;
+>>
+>> -failure:
+>> -       for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+>> -               if (reported_error)
+>> -                       cmd->error_string =3D reported_error;
+>> -               else if (strmap_contains(&failed_refs, cmd->ref_name))
+>> -                       cmd->error_string =3D strmap_get(&failed_refs, c=
+md->ref_name);
+>> -       }
+>> +               if (ref_transaction_commit(transaction, &err)) {
+>> +                       rp_error("%s", err.buf);
+>> +                       reported_error =3D "failed to update refs";
+>> +                       goto failure;
+>> +               }
+>>
+>> -cleanup:
+>> -       ref_transaction_free(transaction);
+>> -       strmap_clear(&failed_refs, 0);
+>> -       strbuf_release(&err);
+>> +               ref_transaction_for_each_rejected_update(transaction,
+>> +                                                        ref_transaction=
+_rejection_handler,
+>> +                                                        &failed_refs);
+>> +
+>> +               if (strmap_empty(&failed_refs))
+>> +                       goto cleanup;
+>> +
+>> +       failure:
+>
+> This label looks indented while previously it was right at the start
+> of the line. Not sure if we have a standard for that, but a few quick
+> greps seems to show that goto labels are most often at the start of
+> the line.
+>
+
+Yup, but now this label lies within a for loop, so the indentation is
+aligned to the loop. So I think it is correct as is.
+
+>> +               for (cmd =3D commands; cmd; cmd =3D cmd->next) {
+>> +                       if (reported_error)
+>> +                               cmd->error_string =3D reported_error;
+>> +                       else if (strmap_contains(&failed_refs, cmd->ref_=
+name))
+>> +                               cmd->error_string =3D strmap_get(&failed=
+_refs, cmd->ref_name);
+>> +               }
+>> +
+>> +       cleanup:
+>
+> Idem for how this label is indented.
+>
+
+Same here, this too is within a loop.
+
+>> +               ref_transaction_free(transaction);
+>> +               transaction =3D NULL;
+>> +               strmap_clear(&failed_refs, 0);
+>> +               strbuf_release(&err);
+>> +       }
+>>  }
+
+Thanks for the review!
+
+- Karthik
+
+--0000000000005fbe3f06376eed81
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 5464bc2b9688a12a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oTDBnSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mN1lBQy85eFFzMmE4V1dzM0RDNGExZzZmMDdieHcxdworS0RhRVlJd25L
+b3ZGMzJXV0VYNk51QWgxTUNqMlJuajZiSHM1amU2R1VxOVV3L2VlajlFZnFQLzZBa2xqNjNNCnF2
+MVRYS29XdUM4aGZ2djVSRjk4cWt6eGN3eDB2b2c4Q01Tc1gyd1Y1K21JYXp3clF1KzJsdGR2TExz
+UWNpa3EKMEY2WE5ESnBNcmhqSXh3bXdXd0hMcFU4WnZvSlIvdHRtNmVWWHd3L2xtUkVmN1IxOFNv
+Ni9ldktLM3ZvdnBaTQpJQStvNTlxYzhvdEgrTUd6ZG1CZ3BBYjJ4Z1Vpcm1BSmhyS0dLRGtGd2ds
+TC9sUVUrNk8wQnpnOXVVSWxUbmpQCmxyQXcrTWoxNGluZ3Evbi9mVjFQNFJJbGJUa2d4eThEK3Vl
+NW1oc2IwdnIwRjRXT1J5dnZZYzc0OGtUbCthZUsKTmh4b0g4N0tEeWxLSnB6dUZBZWhwd3d5cHJz
+b29IZXpmZVhJV0tENkxVNk5ac282cm9GbTc5QVdZdjMxTW1vawptZlZXYzFrTXVEclVtQ0pKc0sr
+em9aUmJyN3NPTXBMVFVaWWx6aVNIUXBtY081WUFZaUlhNW1xUHZOQ1hmTldTCkdGNGcxSC82WlNa
+NyszOWV0bXY2MS85R2p6QzBEY1lYU0ttZkJIUT0KPVgvZkIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000005fbe3f06376eed81--
