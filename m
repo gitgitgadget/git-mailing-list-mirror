@@ -1,137 +1,91 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1BA5275AE2
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 12:10:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C40779EA
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 12:43:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749816616; cv=none; b=nZ3KdpOPaC6VwYEzTJL/HtSB5wIWNMzrIdKgLeJ4pDyyXH0JF8mFBOFL32EWREDi7ck35ok2+I4at1lHWqs12zXDTcR3m2JmuGZo3lJRIiqzqw9KB5InwXZU8RtH30B1TAjJth+X7efpilfvkJ+7zLnYE+pzq6cHWqnk0bzzWA4=
+	t=1749818609; cv=none; b=a8weUrGKx7n1gEkQfjYT8dd71J0DIoal1U6ylNvkJmz7rev5ziNKJFE9bgkXtC8BIqBPvyld0UAEVEJg//MiYvRwQxtBODsZBH7FlvBCTluE+19V/IB39kduZNeGoO9AIL+ERULcn0XcpmEV7C9/qPpBhgW2bpakst8Nw3mll7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749816616; c=relaxed/simple;
-	bh=9wKhG2A38Y52VdzwCc+uuzr7Lw4jHLDsQs9J1uqoTcg=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=IOBT3Tdf9V4Qto1jLcgaRoufAyK+niBPMLyScvKX3XLBKKXOgWepe+iAIaEQa4U0FwUzH+pPL5O4Zg+EnyOZTT3ibbsg1gC9GwK8XJYjcKZQ73pr6TB6puMP2fXDuKPJdbbfnI460mrO9jkjDpifO6K9XTh7vYB/KjfGKls20Jk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ExuCqlSN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aJtSfj4+; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1749818609; c=relaxed/simple;
+	bh=gnD24nSs7RUS66CyGvxaHm56LotHN8d3k/Q/hcEM0k0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=SVB5iJwXYvXwO0ib5Rnl8HHQH9q95SHzdJKPD97nY8ElbThCxtI4RWZfViQk7962c74NG/hGsR+3ke6TjVQpBi3/DeHcsFRzIV7S+zT96lrMmez9fgQkF7+4UAV9gGfUNUQAOGHIucE+7hxUZd1s3YofXxbdGNa5vBaJSizW09Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BFDK8eZs; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ExuCqlSN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aJtSfj4+"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D24601140178;
-	Fri, 13 Jun 2025 08:10:13 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 13 Jun 2025 08:10:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1749816613;
-	 x=1749903013; bh=CNxplb2HtKmbR06aMKBc7PUYtL6TQNGXjOZCmE8zLTU=; b=
-	ExuCqlSNEyMkmc813TvPOprEsnfl8gfia/DYm0LHhcsXana/mTxt5GgOVYknRiKb
-	a4JWkO7EAJpCpA9F2/OMTqsOLyOql+dH9jwzzppwlCsb091F8yPiszBd0Jgq+hnR
-	GdDQdqIy2FYl0PZKMcweqeRbwTet600o09SRY7awI1s41y61NCiT2HkBptl6JTb/
-	euev/eJ3Y6fcshlBzhyG5fLk25buF5Z1emlSqrp5Hzw0lpFp/1rRHmS0k7E5HeSB
-	sh0cDaGgJU8sXqAguaRwrKq8WgUJcGy82+GHrEjVPAtZZjR0kQzxBxdJmhjp+s5w
-	djIh55ztVfx08oZ5UULdxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1749816613; x=1749903013; bh=C
-	Nxplb2HtKmbR06aMKBc7PUYtL6TQNGXjOZCmE8zLTU=; b=aJtSfj4+9drjlSagi
-	OYfyXHez+zFnGOi315MfhahNDWB/3aINDF4OL3ddTkJY2D3/wNVmlPUK5vLkgHCa
-	2BrPa9s/cDugKSNgQpXXNRuqazRPKLc9xNhtvhxl+vxH7btl05cFcmHNjCr+eaMY
-	8vdMUwNpezGwYk6sF/YXoMXMWUjMRxm30rnQRTTRdR8QnC2sBm0gLdb4WCh1GHLT
-	NAsUy84IVQrcHbyENuTgu53bJy6Qqf0o8bYj83/ujXAzQ0gqlg9CCDRR0l+0bBp6
-	Kzse8LFMuK0efuBYScu1iirya2i3+nksuwVemSsV/semfncUuumUGqCVBqMZoYeF
-	QhFFQ==
-X-ME-Sender: <xms:JRVMaHqHOCV_i-whK_QaSuERL7fZ37MyX36bzzR8qwPT95lYYxtgTb8>
-    <xme:JRVMaBpnN5vo4-E97F9z-90jtbsEs2vfywiGTHNJkXB9pdKYeaPv_K-DZZdrSmXN7
-    wCYqSRjTtBIlqPOtg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeeludcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhepofggff
-    fhvffkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcu
-    jfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtgfffteetudelhfefkeehtefg
-    geefjeevieekfeefieekkefhveeiledtkefgueenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:JRVMaEOakGzIWK7ZqMCwfjp5aGw2_7wORIxf7XRb2fAye93SsrHioA>
-    <xmx:JRVMaK5M0bgeTmHbk4YVq0ywiAfvcAKDVaE7l6vvLTitDpUorqTW0g>
-    <xmx:JRVMaG6-rYwxComY5oozx9V_jQnKmv7oq-mjjdn0aYPFfk3qjQBGQQ>
-    <xmx:JRVMaCiFX3EsX179hFYOPNSvBEgM-kq5zwhZy1_hTGoLCFu2UeM9mQ>
-    <xmx:JRVMaDS6ClmhaNXOBLLsobXXFYvdawEg747mFXaTx4oedhULNEzlYm5w>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 90A651EA0064; Fri, 13 Jun 2025 08:10:13 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BFDK8eZs"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ade750971f2so258235366b.2
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 05:43:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749818606; x=1750423406; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=YODZewk9UlKNZh0dhW9XyizZAw2BU7pV1dfm9Sxu8DE=;
+        b=BFDK8eZsCJ0q17+Il2aUBtsta8sj1Ps9IKx6XnP6Eb/m0rKe4hhaf4hB8zOUbH4cRc
+         GrLpsc1jQBJkIvgZAQa0nzQYMiDExdXuA9Br+kPJwpku56dbmx6t9KxEfLKfkPMcnuRa
+         cH1bQYM6w156QBB3aQsBtynrpDel8MQsCiGx25gRlOQdLI4O4elIiYVi8XjqQkjgLBT0
+         TWljhRJAT2He+LtzgxB0vwBO6zSr+wqtPnA8LWBSdlbU/y/2qYJ0KlpMEjiAPpJaoNgr
+         KTorRYa9upJUKHML3Tz5a/01IRQrna3A+tHFCGEKfov017f97NxBZE+2Ss1NMIYL6iga
+         IREA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749818606; x=1750423406;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=YODZewk9UlKNZh0dhW9XyizZAw2BU7pV1dfm9Sxu8DE=;
+        b=ixW6GmrMwFxl8/2dZwErhFTlloxLaDIK0FLPTZLb8dObfrEW0tIrBW75Minsuzu6Je
+         o/11tjxoKGsTAZZn7xNWUUQxRdt8+z/zDGvCrKpek9Q04QQEwW8mEGBY0+zx1ir60twO
+         pGCyqkSrJmUKEs0PJB3F5rIfkraAejpcCxSpEEVaYb0JRzxSufU8Ln6183RYM9/kPK+D
+         NRHSfH7OXTfLRDLFuBKsimXKBB8htHjzrse5vtSzWgnorNjUAK9SZZNpT0zLlmxUKvBK
+         xHGD3HXChDbA5L6HetEF0sT8R8irbV11GsmQOXelYJ/vYok9/ru3cKwTLXM51orvrObF
+         wlEA==
+X-Gm-Message-State: AOJu0YwOUY0HeG59JW6wl5F6Niv2m77hhXHNXugdaSdqqzvWpCdch35X
+	nB2AQiYLPPwVNasSCG0O2kamR53TnodQPH/uEboW+nPeyCa1jbI80mKQBHDHZBVf6+DahWtbqTZ
+	7bj0e/FMiVN3yLfMI3FHF/bAq5HtvDB4=
+X-Gm-Gg: ASbGncshw7c58WkJ6fHU1GhzqwbNdnqLPUpZoNCzh4N1VcSgBFarnniOC3Q7uAiG2DP
+	qsy4WnwN/GH3/8jcIdRAxDcfzS386VswJb7TsA5it/JqSsaL5oob+MwjeHiLC7G23/BTIswAs3+
+	A10KK6WncuIlY9uRn9M6BjiD+jzUsXAxXUwzUIjBipEzuMyF+5mhv53Lgf
+X-Google-Smtp-Source: AGHT+IGkjxi2yNi+EWiv3d3kaEevMCyTEP41f1lL8G0s2Hr6CJZkFFd8yXLSpMT/iJj25qD3J3fvt2Qdae40syenCY0=
+X-Received: by 2002:a17:906:4fc9:b0:adb:229f:6b71 with SMTP id
+ a640c23a62f3a-adec5583313mr284613866b.5.1749818605444; Fri, 13 Jun 2025
+ 05:43:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T405497cec795f91f
-Date: Fri, 13 Jun 2025 14:09:52 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <deb4951a-5d1b-416d-bcad-5d675d8155cc@app.fastmail.com>
-In-Reply-To: <20250612222537.2426059-3-gitster@pobox.com>
-References: <20250612222537.2426059-1-gitster@pobox.com>
- <20250612222537.2426059-3-gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] merge/pull: extend merge.stat configuration variable to
- cover --compact-summary
-Content-Type: text/plain; charset=utf-8
+References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
+ <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-0-ebf53edb9795@gmail.com>
+In-Reply-To: <20250613-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v4-0-ebf53edb9795@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 13 Jun 2025 14:43:12 +0200
+X-Gm-Features: AX0GCFsJnPCILJUv-QEWY-nf1zeG0RhVuE9LjslVJFYqGIZGgYGX8iVmBKWtgFk
+Message-ID: <CAP8UFD2ZhXSE85EtQbA42UR0ds+nsQba4EcY589raMBAoOrfLA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] refs: fix some bugs with batched-updates
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, jltobler@gmail.com, ps@pks.im, gitster@pobox.com, 
+	sunshine@sunshineco.com, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 13, 2025, at 00:25, Junio C Hamano wrote:
-> Extend it to be "Boolean or text", that takes false, true, or
-> "compact", with the last one triggering the --compact-summary
-> option introduced earlier.
+On Fri, Jun 13, 2025 at 10:10=E2=80=AFAM Karthik Nayak <karthik.188@gmail.c=
+om> wrote:
 
-Would it make sense to make `diffstat` an alias for `true`?  I=E2=80=99m=
- not
-sure since you need to keep `true` anyway so you still have that
-historical artifact (?)[1] of `true` meaning `diffstat`.
+> Changes in v4:
+> - Swapped out F/D for D/F in the second commit, since we are talking
+>   about conflicts between a directory and a file, also D/F is more
+>   consistent.
+> - Fixed some typos in the second commit.
+> - Changed comment to single line.
+> - Link to v3: https://lore.kernel.org/r/20250606-6769-address-test-failur=
+es-in-the-next-branch-caused-by-batched-reference-updates-v3-0-e1c41693bd35=
+@gmail.com
 
-=E2=80=A0 1: In the sense of what was added first
+This v4 looks good to me based on the range-diff and my previous look at th=
+e v3.
 
-Also
-
-> "compact", with the last one triggering the --compact-summary
-> option introduced earlier.
-
-So `merge.stat` can be used instead of `--compact-summary`.  But now the
-option does not mention `merge.stat`?
-
->  `merge.stat`::
-> -	Whether to print the diffstat between `ORIG_HEAD` and the merge resu=
-lt
-> -	at the end of the merge.  True by default.
-> +	What, if anything, to print between `ORIG_HEAD` and the merge result
-> +	at the end of the merge.  Possible values are:
-> ++
-> +--
-> +`false`;; Show nothing.
-> +`true`;; Show `git diff --diffstat ORIG_HEAD`.
-> +`compact`;; Show `git diff --compact-summary ORIG_HEAD`.
-
-I can=E2=80=99t run `git diff --diffstat ORIG_HEAD`.  `--diffstat` is not
-an option.
-
-> +If this variable is left unspecified, it defaults to `true`.
-
-I think this is simpler:
-
-    Defaults to `true`.
-
-There=E2=80=99s also several places in this doc which uses something sim=
-ilar
-judging by a search for =E2=80=9Cdefaults to=E2=80=9D.  Only exception is
-`merge.renameLimit`:
-
-    If not specified, defaults to
+Thanks!
