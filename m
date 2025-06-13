@@ -1,110 +1,203 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C11E2D4B5D
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 10:59:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076922068B
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 11:06:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749812383; cv=none; b=M3Pgszi0f/p+Wvs9wiH7dj7IfhGGSFhrAWOZSP4r24BaPFWBai1+COPt36kPszCqj/0M5zmyRKxata+zD80dMKjTy+Vvnhz7sl9P38J7ecq99eVS8zKbU/olESjsmkxad1ZkYcl+DIxwNUKOdJjKAgtOThI3E9o5e5VP07Nz0s8=
+	t=1749812769; cv=none; b=uvexX/5z+OGJm5HF9CXyE8ps7Zwk321ZKV00t1bN0LFTte1TOyBC8HZulwTxBpbeWySwZOb2PNuOiTVduW0iKV3SPf7YAOgG04LrSV8NSGG4VBPpmt46Cltxtle0dNeBjWG3nrDA4foQs2ragf080+Rd1sW0S9fEpOSg1Ak20bA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749812383; c=relaxed/simple;
-	bh=wG/3BeoPp/+2LG4TBTRVxGkb0jEIeurDiA+MY42CkxE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Y1jJaA6wSDTTMcYciLjsgYq6PN+kJrN2+l0ombuydrosPfQMr28fA4uwazSVJUNnDQ9FYvlKQ9AON/k/SE2lpaXy11Oy52aiEUe+fJa+nIoPtq1CRSOO11GCavt2d7dQYmVngHK3VC3xkmccX8QnzsSIb4zWKx0c88YT7TXPI+Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VhJ/tjTh; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1749812769; c=relaxed/simple;
+	bh=bweJPzEFh1gYnHR+TYiAZGtbBHasm+RQm5+d7YRACbA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KYfGlMhQlu5elyTEFFH2ZNskebkUNktHCd0QSHH7gkK2SwngmJ492Z10/E2CtCEYdn2dW6rx91T7uIWiC7xRUIWaZph7xirHk0GFhkSShSGJM//Rt1bH/HwibeAEAtZ4s5vfM0bk2VJ2ze8A8rwJPOXWMfn/fhOiA9T/+dRTAkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=DKE59m1h; arc=none smtp.client-ip=95.215.58.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VhJ/tjTh"
-Received: (qmail 7966 invoked by uid 109); 13 Jun 2025 10:59:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=wG/3BeoPp/+2LG4TBTRVxGkb0jEIeurDiA+MY42CkxE=; b=VhJ/tjThYj/88FHzpiZfYghg53Epn3+nMT82wa2cWNHDi9sT7DFHNA5hWf0n9UqDr2Ij78+zWB0EvpVkKdJgEYsGWMhTOyP4ZA71Ut+iHbhyppDCPSoXhS8Q6YRc93L1aV3zKXFCKtroi9j/KTnDtRBZury1raW1HFQ/ackMeAL3wmHtbMqOCPh4pP6TPfjQFxOpnUhxAEdSndYPj+0jgz9R3YCfjwJnr5/CwhAXdDN5xNoc+X0CURMTwx5+XxTFIcYJv1i4aXlyvhNm3Qt0PUGZyl0cBEe9qhE8JHNBU++twf8yNudTX4bEK4h4442MSyAs6r+zDo3kDzGNRw6hww==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 13 Jun 2025 10:59:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 787 invoked by uid 111); 13 Jun 2025 10:59:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 13 Jun 2025 06:59:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 13 Jun 2025 06:59:32 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Brad Smith <brad@comstyle.com>,
-	Collin Funk <collin.funk1@gmail.com>
-Subject: Re: build: sed portability fixes
-Message-ID: <20250613105932.GA1995623@coredump.intra.peff.net>
-References: <xmqqplf8evr9.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="DKE59m1h"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1749812759;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=tt8lrA6Jm7XvHNCgImPwr3gIadtA3iZtweLy1jFCTEE=;
+	b=DKE59m1hJnABPiGSuxDJW+QurqHgFpffvLvHYSgn6xI/XTtFJ46EMy3oAMZjdI+Wjjwro9
+	qIshOcZk1Xa0/c4iqVJlUMGP34FetdNHeQNEKdBNgByZaOi8XqIBJRuwflymx0u/5Agw/4
+	BtvRbwvqMBTyk+kZ3d0Jq4tRAI/y/Lk=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
+ <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
+ =?utf-8?B?QXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH RFC v2 3/5] last-modified: use Bloom filters when available
+In-Reply-To: <aDWWgj8gTS9EM7v6@pks.im>
+References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
+ <20250523-toon-new-blame-tree-v2-3-101e4ca4c1c9@iotcl.com>
+ <aDWWgj8gTS9EM7v6@pks.im>
+Date: Fri, 13 Jun 2025 13:05:43 +0200
+Message-ID: <87h60j296g.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqplf8evr9.fsf@gitster.g>
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-On Thu, Jun 12, 2025 at 10:04:58AM -0700, Junio C Hamano wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
->  * This time with a proposed log message.  I may fast-track it down
->    to 'master' before the release.  I personally am undecided, and I
->    do know that I hate the style of this particular sed script and
->    am tempted to fix it before committing, but I'll refrain from
->    doing so before the release.
+> On Fri, May 23, 2025 at 11:33:50AM +0200, Toon Claes wrote:
+>> Our 'git last-modified' performs a revision walk, and computes a diff at
+>> each point in the walk to figure out whether a given revision changed
+>> any of the paths it considers interesting.
+>> 
+>> When changed-path Bloom filters are available, we can avoid computing
+>> many such diffs. Before computing a diff, we first check if any of the
+>> remaining paths of interest were possibly changed at a given commit by
+>> consulting its Bloom filter. If any of them are, we are resigned to
+>> compute the diff.
+>> 
+>> If none of those queries returned "maybe", we know that the given commit
+>> doesn't contain any changed paths which are interesting to us. So, we
+>> can avoid computing it in this case.
+>> 
+>> This results in a substantial performance speed-up in common cases of
+>> 'git last-modified'. In the kernel, here is the before and after (all
+>> times computed with best-of-five):
+>> 
+>> With commit-graphs (but no Bloom filters):
+>> 
+>>     real	0m5.133s
+>>     user	0m4.942s
+>>     sys	0m0.180s
+>> 
+>> ...and with Bloom filters:
+>> 
+>>     real	0m0.936s
+>>     user	0m0.842s
+>>     sys	0m0.092s
+>> 
+>> These times are with my development-version of Git, so it's compiled
+>> without optimizations. Compiling instead with `-O3`, the results look
+>> even better:
+>> 
+>>     real	0m0.754s
+>>     user	0m0.661s
+>>     sys	0m0.092s
+>
+> I'm sure that the old state without bloom filters will also improve a
+> bit?
 
-The newline-less input is in v2.49.0 already, but the use of "sed -E" is
-new in the 2.50 cycle. So it probably is worth addressing before the
-release. In which case I tried to give the patch a very careful read to
-avoid any brown paper bags.
+These are the benchmarks from the original commits I took over. They are
+no longer really relevant, I'll remove them.
 
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index 1047b8d11d..ad3aa59045 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -82,7 +82,7 @@ read GIT_MAJOR_VERSION GIT_MINOR_VERSION GIT_MICRO_VERSION GIT_PATCH_LEVEL trail
->  $(echo "$GIT_VERSION" 0 0 0 0 | tr '.a-zA-Z-' ' ')
->  EOF
->  
-> -REPLACED=$(printf "%s" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
-> +REPLACED=$(printf "%s\n" "$INPUT" | sed -e "s|@GIT_VERSION@|$GIT_VERSION|" \
->  	-e "s|@GIT_MAJOR_VERSION@|$GIT_MAJOR_VERSION|" \
->  	-e "s|@GIT_MINOR_VERSION@|$GIT_MINOR_VERSION|" \
->  	-e "s|@GIT_MICRO_VERSION@|$GIT_MICRO_VERSION|" \
+>> Signed-off-by: Toon Claes <toon@iotcl.com>
+>> ---
+>>  last-modified.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+>>  1 file changed, 44 insertions(+)
+>> 
+>> diff --git a/last-modified.c b/last-modified.c
+>> index 9283f8fcae..f628434929 100644
+>> --- a/last-modified.c
+>> +++ b/last-modified.c
+>> @@ -92,12 +99,21 @@ void last_modified_init(struct last_modified *lm,
+>>  	if (setup_revisions(argc, argv, &lm->rev, NULL) > 1)
+>>  		die(_("unknown last-modified argument: %s"), argv[1]);
+>>  
+>> +	(void)generation_numbers_enabled(lm->rev.repo);
+>
+> Why the `(void)` cast? And why even call this in the first place? This
+> definitely needs a comment and smells like funky design in our commit
+> graph subsystem where we rely on side effects of one function to leak
+> into a different function.
 
-OK, makes sense since we now stick the content into the INPUT variable.
-That sometimes comes from a file, but we get it via process substitution
-with $(cat), so the shell will strip off the trailing newline there. So
-we can unconditionally add it back here. Goo.d
+This function calls `prepare_commit_graph()` which I think is the
+important side-effect. Let me add a comment. Or would you rather to see
+a separate function?
 
-> diff --git a/generate-configlist.sh b/generate-configlist.sh
-> index 9d2ad6165d..75c39ade20 100755
-> --- a/generate-configlist.sh
-> +++ b/generate-configlist.sh
-> @@ -13,16 +13,16 @@ print_config_list () {
->  	cat <<EOF
->  static const char *config_name_list[] = {
->  EOF
-> -	sed -E '
-> -/^`?[a-zA-Z].*\..*`?::$/ {
-> +	sed -e '
-> +	/^`*[a-zA-Z].*\..*`*::$/ {
+>> +	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
+>> +
+>>  	if (add_from_revs(lm) < 0)
+>>  		die(_("unable to setup last-modified"));
+>>  }
+>>  
+>>  void last_modified_release(struct last_modified *lm)
+>>  {
+>> +	struct hashmap_iter iter;
+>> +	struct last_modified_entry *ent;
+>> +
+>> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
+>> +		clear_bloom_key(&ent->key);
+>> +	}
+>
+> The curly braces shouldn't be needed.
 
-OK, this is just replacing the use of "?" with "*". I think it is OK to
-be loose here, as we are parsing our own config docs. And if somebody
-did write
+Okay.
 
-  ```foo.bar```::
+>> @@ -180,6 +197,30 @@ static void last_modified_diff(struct diff_queue_struct *q,
+>>  	}
+>>  }
+>>  
+>> +static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
+>> +{
+>> +	struct bloom_filter *filter;
+>> +	struct last_modified_entry *ent;
+>> +	struct hashmap_iter iter;
+>> +
+>> +	if (!lm->rev.bloom_filter_settings)
+>> +		return 1;
+>> +
+>> +	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
+>> +		return 1;
+>
+> Hm, okay, so here we require generation numbers to exist. Why is that
+> though? Shouldn't we only care about bloom filters? I don't quite get
+> that part yet.
 
-it is probably OK to parse that anyway. ;)
+That's a good question. Because we're above ignoring the return value of
+`generation_numbers_enabled()` we shouldn't rely on generation numbers.
+I verified things and did some testing and it seems to me we can safely
+remove this condition.
 
-> -d' \
-> +	d' \
->  	    "$SOURCE_DIR"/Documentation/*config.adoc \
-> -	    "$SOURCE_DIR"/Documentation/config/*.adoc|
-> +	    "$SOURCE_DIR"/Documentation/config/*.adoc |
+>> +	filter = get_bloom_filter(lm->rev.repo, origin);
+>> +	if (!filter)
+>> +		return 1;
+>> +
+>> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
+>> +		if (bloom_filter_contains(filter, &ent->key,
+>> +					  lm->rev.bloom_filter_settings))
+>> +			return 1;
+>> +	}
+>> +	return 0;
+>> +}
+>> +
+>
+> Okay, and here we check whether any of our desired paths may be
+> contained in the bloom filter.
+>
+>>  int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
+>>  {
+>>  	struct last_modified_callback_data data;
+>> @@ -199,6 +240,9 @@ int last_modified_run(struct last_modified *lm, last_modified_callback cb, void
+>>  		if (!data.commit)
+>>  			break;
+>>  
+>> +		if (!maybe_changed_path(lm, data.commit))
+>> +			continue;
+>
+> If there either are no bloom filters or in case none of them contain our
+> commit we can safely skip over the commit indeed. Otherwise we'll have
+> to check whether the commit really is interesting.
+>
+> Makes sense.
+>
+> Patrick
+>
 
-And then this (plus the indentation above) is just non-semantic
-whitespace tidying.
-
-So the whole thing looks good to me.
-
--Peff
+-- 
+Cheers,
+Toon
