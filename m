@@ -1,203 +1,186 @@
-Received: from out-180.mta1.migadu.com (out-180.mta1.migadu.com [95.215.58.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6076922068B
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 11:06:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151B2275AE6
+	for <git@vger.kernel.org>; Fri, 13 Jun 2025 11:58:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749812769; cv=none; b=uvexX/5z+OGJm5HF9CXyE8ps7Zwk321ZKV00t1bN0LFTte1TOyBC8HZulwTxBpbeWySwZOb2PNuOiTVduW0iKV3SPf7YAOgG04LrSV8NSGG4VBPpmt46Cltxtle0dNeBjWG3nrDA4foQs2ragf080+Rd1sW0S9fEpOSg1Ak20bA=
+	t=1749815892; cv=none; b=gMaH0JGOfLk4jlkGnxwWFfb3Zvo5au5q/hkBToc051myDDbuQNo40eDIxg0KhfUKqnq2fVvRnE7ULOqBoSR/lXbOzfyfPbMB8ob0O2SLV0fqgIHn6KB8kXm/1s84Arxxs1u3QKVLsA8/HQiNnznamGaxeSQA7dz9elUESLKW9lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749812769; c=relaxed/simple;
-	bh=bweJPzEFh1gYnHR+TYiAZGtbBHasm+RQm5+d7YRACbA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KYfGlMhQlu5elyTEFFH2ZNskebkUNktHCd0QSHH7gkK2SwngmJ492Z10/E2CtCEYdn2dW6rx91T7uIWiC7xRUIWaZph7xirHk0GFhkSShSGJM//Rt1bH/HwibeAEAtZ4s5vfM0bk2VJ2ze8A8rwJPOXWMfn/fhOiA9T/+dRTAkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=DKE59m1h; arc=none smtp.client-ip=95.215.58.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1749815892; c=relaxed/simple;
+	bh=reOGn6Eqy/Te5Qytb2tc1MAQMLkA3vwuCIP32SUFKOI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=sw7N+6oqZLZzpbWqHbdredJNghmZ6X0idUoSRC59QjCrrSmnFIlM4PvUHpwK+Mq0cGuH7WKAs2SXmi3p8XRSyyfSTI8mLXHoY3LwVmJGSjcLAcLFLIACFozIqZiqr9yN2OzkCCSjtER3t6AV+vk89YeRxxu0NNLUTOaHOrV89iA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AWRi1fvY; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="DKE59m1h"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1749812759;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=tt8lrA6Jm7XvHNCgImPwr3gIadtA3iZtweLy1jFCTEE=;
-	b=DKE59m1hJnABPiGSuxDJW+QurqHgFpffvLvHYSgn6xI/XTtFJ46EMy3oAMZjdI+Wjjwro9
-	qIshOcZk1Xa0/c4iqVJlUMGP34FetdNHeQNEKdBNgByZaOi8XqIBJRuwflymx0u/5Agw/4
-	BtvRbwvqMBTyk+kZ3d0Jq4tRAI/y/Lk=
-From: Toon Claes <toon@iotcl.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
- <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
- =?utf-8?B?QXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v2 3/5] last-modified: use Bloom filters when available
-In-Reply-To: <aDWWgj8gTS9EM7v6@pks.im>
-References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
- <20250523-toon-new-blame-tree-v2-3-101e4ca4c1c9@iotcl.com>
- <aDWWgj8gTS9EM7v6@pks.im>
-Date: Fri, 13 Jun 2025 13:05:43 +0200
-Message-ID: <87h60j296g.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AWRi1fvY"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-742caef5896so1872310b3a.3
+        for <git@vger.kernel.org>; Fri, 13 Jun 2025 04:58:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1749815890; x=1750420690; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KFr5j0lFT6vocegsk+PaL5LpczIBHc7A9Jxn5AghiNU=;
+        b=AWRi1fvYkumadshBkdJJGeKEiRagZyjpHTNDbUtPWzvBxnhTbmOWGCZoNTUcptG917
+         2TPKkky1Ts9lHkzeh1PxaSqyoqX0UMQ74W9H7d1rqCuJ5niWp5d99kEREDpuG5rFqL2q
+         KOzuFpQ7Q0fdZ5K5pDX86Ut14sO3kXuRWPfCovmXc1ht8dd4jKvTYDOKhZLB0tADSSkC
+         M1oOO4nL9cIWrQepokpjygVEaG6YoeZeXCUdlPn5AJ63wEladx1LDpW1/uRrRxKkZFFT
+         pq9AdHmZBAaLOcF8pufnzns3e6GF6iESCwFiKBta29Auf+KPVUppuasq5vqkscHJ01YJ
+         fZWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749815890; x=1750420690;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KFr5j0lFT6vocegsk+PaL5LpczIBHc7A9Jxn5AghiNU=;
+        b=eMiBhhqd2l801auQCYT4jvSAPHvBGmxJwtBlpcMsMVqYhyu6FBiD2BeDQ+ToIEmEp7
+         IogCpY4N47zBs+6yGoPpVMlrqqWGqWz6c5yT1czP4wnP60L4ZdzhajyTbv6SLxhCynu1
+         nKvnLuBU8RnCu4jB/XJXTWaRqU4sPHTbr1DBiq8oME81m5o0sO1s5+0crs7SrbtjJO1M
+         QAaGv6kLXY9BB5M6DnZ/M2ECVV6xaDQhK9GuZX75RAaKK+RAMcqFvrbJ1qw0jNLI5Bjc
+         GgHHbBoeJXCsfffWXdsymdjTcqs3v+TcWKHIVcnuIiKGfg6/Vl0K8RoVZL1jX8Vhh9xq
+         8bDA==
+X-Gm-Message-State: AOJu0YyS+HqdA18UbD9QDzlGRMP476JwTVcBQ0mT/JZIKQKN78/jBjyG
+	UWgIiM/S0tB9UpMAO2+ojpSrBvy1/TGDYDaGHJrvwrtJnrOAbnhzTRDGUgKCgEZ2
+X-Gm-Gg: ASbGncsj+qkkjqt/MjTbgI3LC1YZzbEG6l+crnRE581klnxZ7U2dRfA5HaY4xWhVj3+
+	5cCKGcuFvBZLxpCKO4tHDtAlw9m8TJHCIaQfca6DZDMpn8H1OIn4ZlnZOideTxlixM0pCcLDTq3
+	DwK2q4es8xvUqQfaEqoP3GodgM1Rcq6bOPgTyv+lwTZpRtGdlr5YY6/ANF+o3w9NVcsWWEgHEXB
+	OUF7z++7mHRQmfcjxMz3yOU7kll30RuzWYYAvEfa8meeJV4WG1ab8SHXYF9tiWXbGq6CwdbniFF
+	BCuMx9MYjrJ47Z5hevbPNR0LDseS1VuamLNCAs7QiuazqG/p8hV7gUN6fq8l5QbxEuJnse10/3j
+	BlGvK1Bmb0KPhPh1U5Q==
+X-Google-Smtp-Source: AGHT+IFcK753a7uHqVND1OvIzWRA4S2OENx/AvxBf3+5ble9wIJzVTLPLFac+/013PmCmiQmct6HEg==
+X-Received: by 2002:a05:6a00:3c95:b0:748:3964:6177 with SMTP id d2e1a72fcca58-7488f71eb8dmr4255097b3a.19.1749815889942;
+        Fri, 13 Jun 2025 04:58:09 -0700 (PDT)
+Received: from Mac.lan ([2409:40e3:18f:923d:783d:9594:9008:776e])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748900d0d90sm1378077b3a.155.2025.06.13.04.58.07
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Fri, 13 Jun 2025 04:58:09 -0700 (PDT)
+From: siddharthasthana31@gmail.com
+To: git@vger.kernel.org
+Cc: christian.couder@gmail.com,
+	viakliushin@gitlab.com,
+	johncai86@gmail.com,
+	gitster@pobox.com,
+	Siddharth Asthana <siddharthasthana31@gmail.com>
+Subject: [PATCH v2] cat-file: fix mailmap application for different author and committer
+Date: Fri, 13 Jun 2025 17:27:17 +0530
+Message-ID: <20250613115750.41205-1-siddharthasthana31@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250611062643.8639-1-siddharthasthana31@gmail.com>
+References: <20250611062643.8639-1-siddharthasthana31@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Siddharth Asthana <siddharthasthana31@gmail.com>
 
-> On Fri, May 23, 2025 at 11:33:50AM +0200, Toon Claes wrote:
->> Our 'git last-modified' performs a revision walk, and computes a diff at
->> each point in the walk to figure out whether a given revision changed
->> any of the paths it considers interesting.
->> 
->> When changed-path Bloom filters are available, we can avoid computing
->> many such diffs. Before computing a diff, we first check if any of the
->> remaining paths of interest were possibly changed at a given commit by
->> consulting its Bloom filter. If any of them are, we are resigned to
->> compute the diff.
->> 
->> If none of those queries returned "maybe", we know that the given commit
->> doesn't contain any changed paths which are interesting to us. So, we
->> can avoid computing it in this case.
->> 
->> This results in a substantial performance speed-up in common cases of
->> 'git last-modified'. In the kernel, here is the before and after (all
->> times computed with best-of-five):
->> 
->> With commit-graphs (but no Bloom filters):
->> 
->>     real	0m5.133s
->>     user	0m4.942s
->>     sys	0m0.180s
->> 
->> ...and with Bloom filters:
->> 
->>     real	0m0.936s
->>     user	0m0.842s
->>     sys	0m0.092s
->> 
->> These times are with my development-version of Git, so it's compiled
->> without optimizations. Compiling instead with `-O3`, the results look
->> even better:
->> 
->>     real	0m0.754s
->>     user	0m0.661s
->>     sys	0m0.092s
->
-> I'm sure that the old state without bloom filters will also improve a
-> bit?
+The git cat-file command with --mailmap option fails to apply mailmap
+transformations to the committer field when the author and committer
+identities are different. This occurs due to a missing newline handling
+in apply_mailmap_to_header() after processing each identity line.
 
-These are the benchmarks from the original commits I took over. They are
-no longer really relevant, I'll remove them.
+When rewrite_ident_line() processes an identity, it stops at the end
+of the identity data (e.g., "Author Name <email> timestamp"), but
+doesn't account for the trailing newline. The current code adds the
+identity length to buf_offset but fails to advance past the newline
+character. This causes the next iteration to start parsing from the
+newline instead of the beginning of the next header line, making it
+impossible to match subsequent headers like "committer".
 
->> Signed-off-by: Toon Claes <toon@iotcl.com>
->> ---
->>  last-modified.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
->>  1 file changed, 44 insertions(+)
->> 
->> diff --git a/last-modified.c b/last-modified.c
->> index 9283f8fcae..f628434929 100644
->> --- a/last-modified.c
->> +++ b/last-modified.c
->> @@ -92,12 +99,21 @@ void last_modified_init(struct last_modified *lm,
->>  	if (setup_revisions(argc, argv, &lm->rev, NULL) > 1)
->>  		die(_("unknown last-modified argument: %s"), argv[1]);
->>  
->> +	(void)generation_numbers_enabled(lm->rev.repo);
->
-> Why the `(void)` cast? And why even call this in the first place? This
-> definitely needs a comment and smells like funky design in our commit
-> graph subsystem where we rely on side effects of one function to leak
-> into a different function.
+Additionally, rewrite_ident_line() may reallocate the buffer during
+its operation. Any code using pointers into the old buffer would be
+using invalid memory after such a reallocation.
 
-This function calls `prepare_commit_graph()` which I think is the
-important side-effect. Let me add a comment. Or would you rather to see
-a separate function?
+This bug was introduced in e9c1b0e3 (revision: improve
+commit_rewrite_person(), 2022-07-19) when the much simpler version of
+commit_rewrite_person() that worked on one "person header" at a time
+was rewritten to use the current apply_mailmap_to_header() function.
+The original implementation processed author and committer separately,
+but the rewrite introduced this loop-based approach that failed to
+properly handle the transition between identity lines.
 
->> +	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
->> +
->>  	if (add_from_revs(lm) < 0)
->>  		die(_("unable to setup last-modified"));
->>  }
->>  
->>  void last_modified_release(struct last_modified *lm)
->>  {
->> +	struct hashmap_iter iter;
->> +	struct last_modified_entry *ent;
->> +
->> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
->> +		clear_bloom_key(&ent->key);
->> +	}
->
-> The curly braces shouldn't be needed.
+Let's fix this by addressing both issues:
+1. After processing an identity line, we now check if we're at a
+   newline and advance past it, ensuring the next header line is
+   parsed correctly.
+2. We recompute the buffer position after rewrite_ident_line() to
+   handle potential buffer reallocation.
 
-Okay.
+This ensures that all identity headers in commit and tag objects are
+consistently processed regardless of whether the author and committer
+are the same person.
 
->> @@ -180,6 +197,30 @@ static void last_modified_diff(struct diff_queue_struct *q,
->>  	}
->>  }
->>  
->> +static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
->> +{
->> +	struct bloom_filter *filter;
->> +	struct last_modified_entry *ent;
->> +	struct hashmap_iter iter;
->> +
->> +	if (!lm->rev.bloom_filter_settings)
->> +		return 1;
->> +
->> +	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
->> +		return 1;
->
-> Hm, okay, so here we require generation numbers to exist. Why is that
-> though? Shouldn't we only care about bloom filters? I don't quite get
-> that part yet.
+Reported-by: Vasilii Iakliushin <viakliushin@gitlab.com>
+Reviewed-by: Christian Couder <christian.couder@gmail.com>
+Signed-off-by: Siddharth Asthana <siddharthasthana31@gmail.com>
+---
+ ident.c            |  4 ++++
+ t/t4203-mailmap.sh | 33 +++++++++++++++++++++++++++++++++
+ 2 files changed, 37 insertions(+)
 
-That's a good question. Because we're above ignoring the return value of
-`generation_numbers_enabled()` we shouldn't rely on generation numbers.
-I verified things and did some testing and it seems to me we can safely
-remove this condition.
-
->> +	filter = get_bloom_filter(lm->rev.repo, origin);
->> +	if (!filter)
->> +		return 1;
->> +
->> +	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
->> +		if (bloom_filter_contains(filter, &ent->key,
->> +					  lm->rev.bloom_filter_settings))
->> +			return 1;
->> +	}
->> +	return 0;
->> +}
->> +
->
-> Okay, and here we check whether any of our desired paths may be
-> contained in the bloom filter.
->
->>  int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
->>  {
->>  	struct last_modified_callback_data data;
->> @@ -199,6 +240,9 @@ int last_modified_run(struct last_modified *lm, last_modified_callback cb, void
->>  		if (!data.commit)
->>  			break;
->>  
->> +		if (!maybe_changed_path(lm, data.commit))
->> +			continue;
->
-> If there either are no bloom filters or in case none of them contain our
-> commit we can safely skip over the commit indeed. Otherwise we'll have
-> to check whether the commit really is interesting.
->
-> Makes sense.
->
-> Patrick
->
-
+diff --git a/ident.c b/ident.c
+index 967895d885..281e830573 100644
+--- a/ident.c
++++ b/ident.c
+@@ -412,6 +412,10 @@ void apply_mailmap_to_header(struct strbuf *buf, const char **header,
+ 				found_header = 1;
+ 				buf_offset += endp - line;
+ 				buf_offset += rewrite_ident_line(person, endp - person, buf, mailmap);
++				/* Recompute endp after potential buffer reallocation */
++				endp = buf->buf + buf_offset;
++				if (*endp == '\n')
++					buf_offset++;
+ 				break;
+ 			}
+ 
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index 4a6242ff99..74b7ddccb2 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -1133,4 +1133,37 @@ test_expect_success 'git cat-file --batch-command returns correct size with --us
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'git cat-file --mailmap works with different author and committer' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	Mailmapped User <mailmapped-user@gitlab.com> C O Mitter <committer@example.com>
++	EOF
++	git commit --allow-empty -m "different author/committer" \
++		--author="Different Author <different@example.com>" &&
++	cat >expect <<-\EOF &&
++	author Different Author <different@example.com>
++	committer Mailmapped User <mailmapped-user@gitlab.com>
++	EOF
++	git cat-file --mailmap commit HEAD >log &&
++	sed -n -e "/^author /s/>.*/>/p" -e "/^committer /s/>.*/>/p" log >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'git cat-file --mailmap maps both author and committer when both need mapping' '
++	test_when_finished "rm .mailmap" &&
++	cat >.mailmap <<-\EOF &&
++	Mapped Author <mapped-author@example.com> <different@example.com>
++	Mapped Committer <mapped-committer@example.com> C O Mitter <committer@example.com>
++	EOF
++	git commit --allow-empty -m "both author and committer mapped" \
++		--author="Different Author <different@example.com>" &&
++	cat >expect <<-\EOF &&
++	author Mapped Author <mapped-author@example.com>
++	committer Mapped Committer <mapped-committer@example.com>
++	EOF
++	git cat-file --mailmap commit HEAD >log &&
++	sed -n -e "/^author /s/>.*/>/p" -e "/^committer /s/>.*/>/p" log >actual &&
++	test_cmp expect actual
++'
++
+ test_done
 -- 
-Cheers,
-Toon
+2.49.0
+
