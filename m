@@ -1,75 +1,66 @@
-Received: from mail-qv1-f67.google.com (mail-qv1-f67.google.com [209.85.219.67])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D28B2AE8B
-	for <git@vger.kernel.org>; Sat, 14 Jun 2025 05:03:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA1534545
+	for <git@vger.kernel.org>; Sat, 14 Jun 2025 07:06:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749877440; cv=none; b=BRebyLl0vle0+9MdxQYijnRf5a/N+d2kBYXAT0nKJTGs6r7+QABryGCZXI/NcA1JF2M1rzfvdY8RnPZKNMCjIHN/SVxYfIkny2ezqhimtS9SHA7n2v+10I8fxGIR3LhecKsiFeoPfS/lfUHlCzd/ofH4zN/tODEd1PZ9jD6iz8I=
+	t=1749884791; cv=none; b=GeJc7DtLZf26JMSwmfePFOVMTzU4jzxR45cv1cemG5G8aGJfFrOAjhE9zKRdnW2tSfSCFmgOKZjGIL6SSaXe2BnZkbS4gwGo5CYEfacLg2gpkcbWBFs+HU2QWEyrLGEbfvAPNXCErsMmEaWMmEFIE933vkkzLSyLsxNYS3exZkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749877440; c=relaxed/simple;
-	bh=5GxNPTECA9sFpYsjC3dO20+67reVQfPGmZ+QYm42WTo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2yRs3mtSPO64U9PUhjDTC1wrO6VO5ygdKwhQVBQmP8ZHcWrAzU8jZnbvD6fXRsVzWp3RbdJW5hcfXZVC+K+U5aJr+GnbqGFA17sJaMEJOmNU9fkuatr2/a+AOZxgKcyWO/xP/1mraS1h5gFRXqa3LzvcZwQzO1nLwJuw7FdmhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bp07MgfZ; arc=none smtp.client-ip=209.85.219.67
+	s=arc-20240116; t=1749884791; c=relaxed/simple;
+	bh=3rZxGbY+4SPV7iXvTXNvx6HMqHP7PLWNMiuo5buv9gg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NJm4CtkNjR2xBrIgkGiZkNbUVNtPYhV2xhuxovE29cWF/W1aAUWxgsKyHpJGFfgmzqZF6CgkW4o3DS+Q1UxtjkLPu7V4IzRSguaWmna11NZjl1MGs9fYkpAqcaxjme7634mWVHC2IsFXjqkj8EYw3X4tnpELNpHT+tsyZ4nrLek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k556G358; arc=none smtp.client-ip=209.85.210.174
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bp07MgfZ"
-Received: by mail-qv1-f67.google.com with SMTP id 6a1803df08f44-6fac1c60e19so40784266d6.1
-        for <git@vger.kernel.org>; Fri, 13 Jun 2025 22:03:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k556G358"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-742caef5896so2540661b3a.3
+        for <git@vger.kernel.org>; Sat, 14 Jun 2025 00:06:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749877437; x=1750482237; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+tNL8cFitV2o/wsP1caXsDhg5Pl3qetuLFNEj/NPedw=;
-        b=bp07MgfZ0XbYlhHar7pC2/lv5AjFQbXsiRkOhA/ihK4vEqVY7ZNEm45Rzzgj2ojPvi
-         505eeacmTr4Fl4b6haKteA6pWYJRqjPNXJEGb9TE6EoFSxN9ZeqKnvRH6gCTTK5HQkbl
-         lSGXz67ilJQf7gSIGpeOGyQBlTWCOi7+eBZT3JTjDhleAzPP8cESF3gOU7+3f6Yz8ZJM
-         6H8HE4nyT+m83rCZmNcrRVClfarb7Evy11ZaD3+yLmtarbBdrv+xvRCU69GIcEVEQcmS
-         haB0dNsdy6uXP9yazz7q/IurTbGnZ1OtVb6QvYBYkAuoNbv8hx8UB/aaYY/6J0F+WWVH
-         xlKg==
+        d=gmail.com; s=20230601; t=1749884789; x=1750489589; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=zOfPvBkhywlSjg+n2s7BNsXaOMwCpa/umMH6MORNMKI=;
+        b=k556G358dRGTfjNT0CqHHFZmESfJimLRNf81N/TJjs3WAE8ltkl3MRyCtzqbSI17xk
+         Vz0I2uYzAYJVio1gk4WkbAjSTKlKlOU1hK6NLt96QgUg/H20o/TzCPXyldJqmsQ3GVAE
+         5VzKUq8SWbEc4ir8U3+J48hY3RIvOCNpiE6IQwU4zgLNBhuFju9/XxThs7jVzpNat2yM
+         1zJpKNGvlLsHFIA4XNsrr0ayar8Im5x8WdAqspYw6zOqiRwjYn/Q/xyFQyZmy4j0Uv6M
+         LghZFRsPzUkL+ZAMJSeFGoC8qIGtRtlgtzEFT2pQfAKnxEjeryEkyOUdpzYElQzgG+wI
+         uDQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749877437; x=1750482237;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+tNL8cFitV2o/wsP1caXsDhg5Pl3qetuLFNEj/NPedw=;
-        b=TZ0moXITjz0YfL/BnUC1HCPardi9W0ndbra45qmbggaChF1RifpR9e/16E/SU2biNO
-         EdttPyZpV8Nr5eDzv8btThig9IS9+1aDCbKRvNtbVOmxEkn1EPb9NozkibEgybmBDNoE
-         Mb8B5ut01Vn/huez1YfF3gOXrRMMJ9u/XJwJ4wAH2+/aSX5IWuX1fmTlMlSLyetznQT6
-         tZzvQQPh0hAA1A4vb3C7rV4907TO4n4/Gnt4ysujxzNJBjJPpB3hXQUpmRbluPg2cQTr
-         ZwPRPdkT/gC5+317UbljpE5clj67KRGxvWVlqmhla0kPeojDLKVeG/NK44THGDhyP2ql
-         PYlA==
-X-Gm-Message-State: AOJu0YxCMToxwO+SL0TahFUlyq63Uw8OHbfEnFM8M6h0h6ghKdo5vBwy
-	+6xKa6y3H9yDKmk0Ob0XfujH0DnvO04H/cy3YRcEfTXbOHMstpEJu4VF8gGZ46fk9979tddh
-X-Gm-Gg: ASbGncsTYSD8XWkUVORc5AFTCrGMDNbQr0rqJMmKD+bb/E4uuD+CfVV4/RSGEEu6Kj4
-	tWRPSOWI0UZQdFtrR/IkF7UXpM+UJVHetRA6n8X4myRnrMdWAPc0PXnKPJ43dyo86jdpgDLRyZw
-	T0iQAQmhGgQXB6tZftMsOgf/2UdFE61PkqNZZDkgpt+q5tb/v9q8x0Jt9b6eYiSf0IrCwoXxwd4
-	NH8/u1Sq1ZN8tle/d03XSNGxkH2mcEJjQN+yN8ugKsYfhq30imCHTIoxoFyUvi/cQMLkgMKKs0K
-	7QlRB9xRUDy4awVLmh1eMKtjhNQzwTBeitS+47Yt/5UulyWdimjZwMAE8SkjibWBAHMM
-X-Google-Smtp-Source: AGHT+IG6jb8D0ALyZOLlApLhRlPPST9vl1ErY+zlAtYa3yK2tkBkG1VuGFzHL+dq5gauJ6+2kDTz8A==
-X-Received: by 2002:a05:6214:767:b0:6fa:ee98:65b6 with SMTP id 6a1803df08f44-6fb46d4cfeamr35460016d6.4.1749877436736;
-        Fri, 13 Jun 2025 22:03:56 -0700 (PDT)
-Received: from r760 ([188.253.126.204])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fb35b3dd9csm29136356d6.50.2025.06.13.22.03.54
+        d=1e100.net; s=20230601; t=1749884789; x=1750489589;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zOfPvBkhywlSjg+n2s7BNsXaOMwCpa/umMH6MORNMKI=;
+        b=M7xi86AJtomCp51P8APD1zLLOjlvKm44RkSzjcI0tRpRc09HENlQlf1bQPYYpwYfS7
+         MQf4Y/rV+d/VOZ3435HqCBr5saUvgPhU7rDzFhP/vZq7Z9w8T9ytSPh0Ss4TrN+ttEzV
+         /o3r10c3XZoIIMi9Att7JQIplutkExM7LoqmLsZnXrDyY1EbEiLqReEX2lvzaLZW7ESv
+         SPIAGhieLDarjL03wmqGYIYcHB+rtTMx3vlTPSw0UMbF0EW+OVNQ1ucjFJxa6AOBdF+g
+         /DN/uy8vAWqrWUVTgAaGpaeO0MGiQAVrx6j2bMsW2ZZZWfiMpD6mL47FEadnnpeoSLqe
+         rABw==
+X-Gm-Message-State: AOJu0YyqV5cGR39Nu4kgU6wtti4Ga7+Fgt45qSg0Cfybw9Fes+9HZmQ5
+	y6gYAO/zpTjCRfrZd1xIOGoc5pyb1aUI32noJVV4qzKFJIBw2I8v0Ol8vqBc0xuw
+X-Gm-Gg: ASbGncucjnXfx1beQWXgvCmSDAqhz5/gniHvo3khkC65kVJZTCWkFdHi5CeYYal3lrW
+	D9erMhIQAn0lJv0APo7hxispQqGmPUWYDWur9myIBniYfeB6D//tLLEya5wVwkSodFVy2A5DpWW
+	MYXAD2r9KbjidaM7mcf4C+Qz8eDNYZik91yHfjJMMInReZTVGViaPYDk+BbJWULr21oc6JOdCmv
+	NDl3OXbzWK6zuQvEkxbY/pfjBtsFGgR0+nOcBB6jdEQ7xht7/LN3/zgxZLFj4VtUm5B5vP6gev5
+	AVSSKX9F4rxRSjwocqHsIGLFVk5Y1QwYW0suJON8e4Lz7qw7kVNrH54nFWk=
+X-Google-Smtp-Source: AGHT+IGzKTw8DIyBre000Woj0A4BeBti2MpR/thO+qVKyCOscsQeZdWvgYxOWeQOfU82nPMRUtx9PA==
+X-Received: by 2002:a05:6a21:3388:b0:215:df3d:d56 with SMTP id adf61e73a8af0-21fbd63176emr2875707637.21.1749884788921;
+        Sat, 14 Jun 2025 00:06:28 -0700 (PDT)
+Received: from meet.. ([43.250.165.229])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168999asm2380814a12.54.2025.06.14.00.06.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 22:03:56 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-X-Google-Original-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+        Sat, 14 Jun 2025 00:06:28 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Cc: 502024330056@smail.nju.edu.cn,
-	ayu.chandekar@gmail.com,
-	christian.couder@gmail.com,
-	gitster@pobox.com,
-	shyamthakkar001@gmail.com
-Subject: [PATCH v2] git.c: remove the_repository dependence in run_builtin()
-Date: Sat, 14 Jun 2025 13:03:31 +0800
-Message-ID: <20250614050331.304405-1-502024330056@smail.nju.edu.cn>
-X-Mailer: git-send-email 2.50.0-rc2
-In-Reply-To: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
-References: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
+Cc: Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+Date: Sat, 14 Jun 2025 12:35:34 +0530
+Message-Id: <20250614070536.17320-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,43 +69,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-run_builtin() takes a repo parameter, so the use of the_repository
-is no longer necessary. Removed the usage of the_repository.
+This patch series introduces the git refs list subcommand, as part of a
+longer-term goal to consolidate and modernize ref listing functionality
+currently split between git-show-ref(1) and git-for-each-ref(1).
 
-The comment preceding trace_repo_setup() was originally introduced
-in commit a9ca8a85. Since get_git_dir() modifies global variables
-such as git_dir and git_objects_dir which only valid when inside a git
-repository. The intention of the comment was to emphasize that
-get_git_dir() should not be called before confirming that the current
-directory is indeed part of a git repository. However, get_git_dir()
-has since been renamed to repo_get_git_dir(), and repo_get_git_dir()
-no longer modifies the global the_repository state. As a result,
-the original comment is no longer relevant and can be safely removed.
+The initial implementation focuses on mirroring the behavior of
+git-show-ref, providing support for filtering by --branches, --tags, and
+--head, and implementing pattern matching similar to the legacy command.
+This ensures backward compatibility.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
- git.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+That said, git-for-each-ref(1) offers more flexible pattern matching and
+we acknowledge that its style may be a better fit in the long run. As
+such, this RFC deliberately starts with the show-ref matching semantics
+to solicit feedback on whether to switch to for-each-ref style matching
+as the default, with a compatibility flag to preserve legacy behavior.
 
-diff --git a/git.c b/git.c
-index 77c4359522..429ad1c2fb 100644
---- a/git.c
-+++ b/git.c
-@@ -462,12 +462,11 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 	precompose_argv_prefix(argc, argv, NULL);
- 	if (use_pager == -1 && run_setup &&
- 		!(p->option & DELAY_PAGER_CONFIG))
--		use_pager = check_pager_config(the_repository, p->cmd);
-+		use_pager = check_pager_config(repo, p->cmd);
- 	if (use_pager == -1 && p->option & USE_PAGER)
- 		use_pager = 1;
- 	if (run_setup && startup_info->have_repository)
--		/* get_git_dir() may set up repo, avoid that */
--		trace_repo_setup(the_repository);
-+		trace_repo_setup(repo);
- 	commit_pager_choice();
- 
- 	if (!help && p->option & NEED_WORK_TREE)
+It's also worth highlighting that several options from git-show-ref are
+intended to be supported in the git refs list subcommand. These include
+flags such as '--abbrev', '--quiet', '--dereference', '--hash', and
+'--exclude-existing'. While this series focuses on core functionality
+and pattern matching, these additional options are within scope for
+future patches.
+
+Additionally, the git-for-each-ref(1) command offers a rich set of
+features that would be valuable to incorporate into git refs list. At
+this point, all of its existing options appear to provide meaningful
+functionality, and my current thinking is to support them incrementally
+as part of expanding this subcommand. I'd appreciate feedback on whether
+there are any options that should be reconsidered or excluded in this
+consolidation effort.
+
+This RFC is meant to start a broader discussion on:
+
+  - The desired default behavior of pattern matching in git refs list
+
+  - Which features from both git-show-ref and git-for-each-ref should be
+    preserved, rethought, or dropped
+
+  - How much backward compatibility we want to offer, and through what
+    interface (e.g., compatibility flags)
+
+Feedback and thoughts on these topics would be very welcome.
+
+Meet Soni (2):
+  builtin/refs: add list subcommand
+  t: add tests for refs list subcommand
+
+ Documentation/git-refs.adoc |  25 ++++++++
+ builtin/refs.c              | 110 ++++++++++++++++++++++++++++++++++++
+ t/meson.build               |   1 +
+ t/t1461-refs-list.sh        |  95 +++++++++++++++++++++++++++++++
+ 4 files changed, 231 insertions(+)
+ create mode 100755 t/t1461-refs-list.sh
+
 -- 
-2.50.0-rc2
+2.34.1
 
