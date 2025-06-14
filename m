@@ -1,98 +1,92 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from smtpbgau1.qq.com (smtpbgau1.qq.com [54.206.16.166])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CF956B81
-	for <git@vger.kernel.org>; Sat, 14 Jun 2025 15:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BB479D0
+	for <git@vger.kernel.org>; Sat, 14 Jun 2025 15:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.206.16.166
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749915805; cv=none; b=qrityrlUclYdI1PCWTA4HWx75GIyTo3vSnpVa2FULSJpnHuRXUcS1Y33O3pHtSNbiYBO7gRQq2cJT1DtuTAYZbs53IjSKkSe+9R5nt6WKx5DAg2LbVs9gzbvGzCAUjyRpsV/5mz0KpCs37T8nhoQC4GXKsSK/kGjHCWVd22wIcU=
+	t=1749916290; cv=none; b=u5htCN5TCgws1MDixbIo04O68+OrPNfFvtEPcTIols2U67ANqp/8VcYs/TlGx3ngANbw9Ubfha2YTbkGNc/0UIf4haBv4urzjRz2AKnmbnvtpyRKMHn5X3/ebmHbrQkGU2YEsJTG+THena3vMhRpT2TD7yK4ce0W4OPj+KtVcAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749915805; c=relaxed/simple;
-	bh=6bNsLfIyoo1OY0jL7KsxwJaWkmWmIeql88Cxyw0pehk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XmpMG+S/Xne26uWVAW3oSLYJJLKBN0l7bnluy0rbXrrtnJBUqO1qSuiJmTo9UxGd/n8Gnwax06r6CghETCA+2lFUsR6q6NEfleAyjgbXxcnU67EMLa64La6KZbxDxT0mXmt6+maYXPztzCjzNar/wdhpwkVPzk06ewmjjkuu2dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L/KU+V7A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zj2Z7I8R; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L/KU+V7A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zj2Z7I8R"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6881E11400BE;
-	Sat, 14 Jun 2025 11:43:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Sat, 14 Jun 2025 11:43:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1749915802; x=1750002202; bh=6bNsLfIyoo
-	1OY0jL7KsxwJaWkmWmIeql88Cxyw0pehk=; b=L/KU+V7AowCp5GRi8C66eMhdvP
-	Zel5v357qpJK7Fvh3R5M8tYEquq4hLNPWdFASEUcLSXVNZDa9XsvdEeqpinH1xCB
-	GUx31NdJZmbbp4pzeSK5jVXiCrkTwO50tEirVKeocpfG8eLP08YRrIRoSHMNkx1U
-	5TARUbt0MY2hkPRsEAOX8kCobMeJe0thhvEwhz6M+GNFAkgDMqULVbpk/IWKhDSd
-	SUDS+siQTAJumCUBBWRmbSWszS+YOc4XXU0iZ3ZIK9V4h3bHuRz1taGB6/aBEtsz
-	JvTvLdK96KcEt05adcR1xtlCqjP5nUm9QFkRLxm/nO8skvfIi65hjg+khCNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1749915802; x=1750002202; bh=6bNsLfIyoo1OY0jL7KsxwJaWkmWmIeql88C
-	xyw0pehk=; b=Zj2Z7I8RaQ+yOqQ9iPImLsqJ7IDinRRV9l37sVirLVTL1yxQWfS
-	jwX9grOB8m3HXxzBs8zff21y2DP27wy/yQkmlxAQf0YJHpoOAmttPFXFAMK73gIp
-	bYOJHz6YDb6YHbJoFxHKPNdsVLAmtLzfldqfrZZtnvuWp5KyiFRmKpbYU3aO8Bfj
-	s5I3pRqqsPkRE5yjbkuSsOidy5E9qwJ/yyp5sqfHVZ+clm10Julp02rKYqF/7uYH
-	wchxT/2vpWbADO5momDwtu7STj8hQbd/KOxOFMBUoYaJ9qKnseq4dZMFHN1o1m58
-	ciKV5ciY4e2riz0g0dTp6vj4/ZkwSpyNUPA==
-X-ME-Sender: <xms:mphNaP6RokjV-VEEJuDtp_IVkoNwGjUairRUxxacs3w5sRqA1qMBKA>
-    <xme:mphNaE55gB6m0yJxwMcZFi6TBQhsVpB8WVB30BjmL6-zzBgOd7V3XbTPs3tCpIMJT
-    L3ZWHncS0mv5WbFPQ>
-X-ME-Received: <xmr:mphNaGcS-NgFcx9ZNAUZdwIyjYMa4ZMeDunHzpCskfeMgYJ7pnSOGpiN2K2yKh3dgXhJjy6kmGawb0J8qoOLx37iZp3MTu5YwtUs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvuddvvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfe
-    evteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:mphNaALM_8_ZcUeJUlBnf-gllR-2zT_SF9g5rDkw3UFR-R-6qs9p_g>
-    <xmx:mphNaDJtT2u2WlVSZ1Zu9BEejGX2oh08VikV6fF9lDHHAatU4Vfcxg>
-    <xmx:mphNaJwG65Pvke6muGsPxWbMrH2CZAuIOKURfZBeQQC9-wqesVpJgQ>
-    <xmx:mphNaPKJb_UFXA-pVeSOs-VBlB-f1VmNmffzmn0w-IcEnJKUn1MMbA>
-    <xmx:mphNaIlSFW4ZrZQ_fGq1pdwMhTSRV2w3BB_fpnY-o5_NPgVUK6yYxUZ9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Jun 2025 11:43:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>
-Subject: Re: Question: regarding understanding code base
-In-Reply-To: <CA+rGoLf8Lf0gbPEUjTU9Zc9KQrzui4pjyvfxhA-LT4YuafqeOQ@mail.gmail.com>
-	(JAYATHEERTH K.'s message of "Sat, 14 Jun 2025 18:13:39 +0530")
-References: <CA+rGoLf8Lf0gbPEUjTU9Zc9KQrzui4pjyvfxhA-LT4YuafqeOQ@mail.gmail.com>
-Date: Sat, 14 Jun 2025 08:43:20 -0700
-Message-ID: <xmqq8qlu72hz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1749916290; c=relaxed/simple;
+	bh=eCymgQjGwMWHXnqnf0dzD2gwtN73PSQ7OZtDs5AM5U8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=CeCw0x4QpZ5E09XnD37B9y5rg9eYSYd+AzQfUQxZisob+fhXMgY86gDti9kIvngUS7iI4MOJEWIBMJWJItLkweHao4CaP6dSZYOoaWNVirg52gKi8RmryyG4gsdGZ9HgILS217Cv91JG2lmMKk/i3V85toH1l0XProCoq2Xk7IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.206.16.166
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz3t1749916247taee552e6
+X-QQ-Originating-IP: pzhA/k04J0X3uQEjqGw8lCvAFfLBk1lpoWTc+Nx/x+o=
+Received: from smtpclient.apple ( [202.119.48.98])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sat, 14 Jun 2025 23:50:45 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 12192474679609041551
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH] Allocate msg only after fatal checks to avoid leaks
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqqcyb672mc.fsf@gitster.g>
+Date: Sat, 14 Jun 2025 23:50:35 +0800
+Cc: Alex via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Alex <alexguo1023@gmail.com>,
+ jinyaoguo <guo846@purdue.edu>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <089E9F89-5B21-4035-B500-8255622DA92A@smail.nju.edu.cn>
+References: <pull.1998.git.git.1749843142000.gitgitgadget@gmail.com>
+ <3993AF96-E03D-46AB-B18E-8E6C1108EC45@smail.nju.edu.cn>
+ <xmqqcyb672mc.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: M5Xz9JaOkZqzR9QSz/eZT1jzLQF8QVT+9Sc18ZV3aobMKxows3sHr7Sy
+	DEoLd9q0QsszLlBXl7zLAhuK0rPAdIjLl/5V7/Fxj1PF3GAj+lwnuiYxk0gTsvWUbcF3ggw
+	wNIxocWyCGtIDdzqCjSU3qRKmGEaksSlKUQBIff8YVigunRJ3cH2Jx3Em4EnLfZ67WH5Q9t
+	cNy5+/SfoLJiQFNkbYGEhRq+SWdptbFVa3YBbvkEOc2C9AG7lGSGGE+UgnXg5b57wtwP7CJ
+	jjouJNWRRe3CYfhrFs3JxGSEA6UXPdgoasvRqqVZNOzUAh9vp5MMCwTUredZR1AUvtAg31+
+	+oNo18cA78Em2pznmA6/WUrDvV33+LP5mOlgUK4T3HEd1c92JSan7Q7H9J3Am5Ke1hPG0fk
+	WPy1LvJ4YynoTeLwdH26Mj8mKJxljHf/w4ALC0+juCMrRfeHZlXdYTs5M/wC29fkeIoTJMs
+	ZuhZaCNMRuWzItODVh91Nc1fGpwgV6s+ZAf1mcnEhUaHIpISNqhR94rxLMCQSn3e/A8qo01
+	8GIl8qrVE8yOZN+eUOCXd3tu8OMDWvE9GTcHsmEbjXNzo31Uu8GwCS64UWT6xRFxP+LKGOD
+	PBbzKFKOCbkOIb9WWPDYT6WQsFk1ZRv8SeAPMyNAUzSPxBoPxSgXmXFRAXrbfs5X4e2nniC
+	be2tV73K387KNJrT24+oAjcvd1h6FVJuTpDSKRqSB6YdkrzA9O/EoLpZF0YLaYIS+TvUF0A
+	ZohZlP0/UV5gEAeTYKg6dHv+KcqYA7bUzqCZ2FEV5L4lh9CB/4fW0ZCGq6bwNqhxX87loIp
+	NZG46kfQ0gP7rLW6g4ILr/1RgYIdIh8qH5B5TvZRihOhrs5RhSNLiHE89fBX738KxVDZeAt
+	D5CmpMmgVBPtVCZf+Sud8g72IPYn+Nuq4xbi1dRDjgPL+ocNcjzya7WeXcLaeFNb8Lvug8O
+	SN1EdopvghHeBWATxQHLk8a6kg9KdcOEnQ6WdDdFmSarAw/Xk+Tm21lJ0bRo6mrsJ0Vf6Kb
+	s0bNKKog==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-RECHKSPAM: 0
 
-JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes=EF=BC=9A
+>=20
+> lidongyan <502024330056@smail.nju.edu.cn> writes:
+>=20
+>> Alex via GitGitGadget <gitgitgadget@gmail.com> writes=EF=BC=9A
+>>>=20
+>>> From: jinyaoguo <guo846@purdue.edu>
+>>>=20
+>>> In parse_reuse_arg, we previously called xmalloc and strbuf_init
+>>> before resolving the ref and reading the object, leading to a
+>>> leaked msg on die() paths. This change moves the allocation of
+>>=20
+>> A memory leak on the die() path shouldn't be considered a real leak,
+>> right? Since the OS will clean up all memory once the process
+>> terminates, explicitly freeing msg isn't necessary in this case.
+>=20
+> It may not matter in practice, but I think the leak checking
+> machinery like sanitizers would still complain, so I view efforts on
+> plugging such leaks in the error code paths more about decluttering
+> the leak checker output to help us spot the real leaks.
 
-> The main question is
-> What are the best and smallest set of git commands to do this as
-> I can set this up as an alias and use this trick for many other projects too.
-
-Sorry, but I have no idea what you are trying to refer to as "this"
-in "commands to do this" and also "this" in "use this trick", so I
-cannot help you here.
-
-
+Makes sense. However, inserting a free-like statement in die() would be
+messier than using goto, since each die() has a unique message and we
+need to free stuff at each die().=
