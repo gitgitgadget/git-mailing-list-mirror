@@ -1,72 +1,71 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF56B34545
-	for <git@vger.kernel.org>; Sat, 14 Jun 2025 07:06:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3914F34545
+	for <git@vger.kernel.org>; Sat, 14 Jun 2025 07:06:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749884802; cv=none; b=Nwl+cGWTDTud2h4aI1hA1NXlWczJ1oamP8aV8HlDDiqAarLm2/IJLPjGx7nTcTKO/AkL6Dce8CSqy6SchzBi0gH96xhcYX11UtP58wv3Jjx9PpAPSMw2o54bB6FV+HSAXBeSTG/4CgcSW0A5TT5BG7AuQV+guLLOAnRJYAdpY9M=
+	t=1749884808; cv=none; b=RyqaZ/8C/73o5LrcEbM4aCE2g1vpPOpgQ9yyYukkvXo/HPx5N4o08pN1mcsPGxT4zqxS6gsiPpIzfpzkd+PLYSQ3m3o2iNwCBz40rNFOZ37AyhyBdBxmbbRSFFQ/aQG4Cb8xDH+4wkQ2c8QBLVkkWqz8nI8gHLMPh7h5YrIhb4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749884802; c=relaxed/simple;
-	bh=7yLhjx2Xq//II9VjsrKVynEMVclQwM6k57Sn0TCJxvg=;
+	s=arc-20240116; t=1749884808; c=relaxed/simple;
+	bh=MHBpow0npD7mLxPppTpAdJIq8zY05DwdqvAy6+SK6qY=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=U4IVkBzln1d3OZAvddjJ0uXp2k1kvK1KCDcBpTTJkYhWgyTYvqdYCDw0I+mYiA8N6UPC7x/MhDiONW53fh4vp2bJVjpkuExMlqZ5I80DufxfXfnYY4thzAtPQ0VpYPbVmQs/TbDtiks7+dgx3HbcapCt2bZkFtpmEhuCxJqrylc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hVROnO0s; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version; b=NRZMalya1OjAFn1UQ2PdeWSHpdY72FQ/xY6+akokQg5thlWp+wyJS2uWu/g6PeKigVH2R6KIH8yiFcOEk/38KnfFjs664ZL9gPzA8vVpFbBMzHTrrSU/SdEUie6b/omA6M2p07UsKdb8EvoS7Y9pGXy54D4fWFrM8Wfqm9jEGjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aQbyPaEc; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hVROnO0s"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2352400344aso26491265ad.2
-        for <git@vger.kernel.org>; Sat, 14 Jun 2025 00:06:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aQbyPaEc"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b2c40a7ca6eso2950309a12.1
+        for <git@vger.kernel.org>; Sat, 14 Jun 2025 00:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749884800; x=1750489600; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1749884806; x=1750489606; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zf8PgS+81D7CB6AuY9aMcfgOruQ6EJJXBJsT7vYrwL8=;
-        b=hVROnO0s0VYWQ4W0FGA1wOUfV3nt8TIOx6uppXqW7EWhcyG8VbGaAv4jvpuTz/w5iE
-         zukealJhIvA7nowVFpn1tp4qeR5onryHIpJfs23vwjsfdHhlL04xn1EDRsnvZcHvJ++e
-         lAlcKY32gSQJ4LTi2MvD46k6Ub4RAJ5dcKNqSH/1LRZUdp/G+ukzKTY3O5UVWa0oOZiK
-         2XR1XlOv4A1/dM8b83Ux2AFaZjQOSgdFMt0/q6ZLCehvKdeQHKQg0S1RET9xfWvBUVJJ
-         zOr+sl/AbQ/eLOd6hjNVTd8zGLeNOH/U6l7dyR0UFNeg+qhWxPdKe1MG98znQjHRPlzf
-         ikSw==
+        bh=zK0LeXzvkMg0+06wk26azMgsByvyALAL0ABZ4OteOuQ=;
+        b=aQbyPaEcajnI9y22I9gbcUGZco9Re9zrbERnLKddiliJcj1Bx4uHzjZENUFkQsrxZ5
+         NHzL1qkpR7buH4/YCd1pOTW7k4qNESA1MWZGlIgKe8E/wYCNzIY9tLCm0dKFK9pycfUu
+         jt0FyK7dzIemUZsSL2JrfMAjFNYwh838sTidalZYmP/0TOUihfNUfgD1wL/oP4Ixq5MH
+         qCx2iR/Kuk48dUY/t6zxSOFOkvl3PdR74SHH+54ridoaFoctEnRzBsAFnQa2Pv7r2dQ/
+         mI74xtd8CopLrAxHEWBBuo37hwxZyUcFg60TgQYCMKaJxEGVvdjfKqdBx8B0evd84aax
+         +/0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749884800; x=1750489600;
+        d=1e100.net; s=20230601; t=1749884806; x=1750489606;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zf8PgS+81D7CB6AuY9aMcfgOruQ6EJJXBJsT7vYrwL8=;
-        b=Qa6cJNJNdjRWYEX0EarRR2KdI9hFuXde7Ae+DThuEiIj84eB/ItI+/RzzIIPaMP4dZ
-         ThXNpR1B8LyWxjJeuaBb/qmoEoaej1SHoA/U9I1qUUBSXvINhm4YD5IhyDxRMqL3ZCDI
-         kz8beHeP6tgUsA7jm+bG3YXVpYImnCdU6m79Xw4J9Bm+pB2sFVmanV9yEvVzkETAhPG9
-         oyts1RDR2/0pp1LCmlJF5VOqBUvaTjdTiOo8QtJ8EA3f+YAL6wz5YD7IDalwuQiktJow
-         0n4ja6KxOsSPUNc6/3SqXjuNhAluKjk/kBrKBjAXNoYkXpOqvyLD/qxWK7yjNeXE34vM
-         sHWg==
-X-Gm-Message-State: AOJu0YzYvwN/ZiUiIl8hNZMmc19/XBNWyc84ctcVCeyMuF4okTYOp9CX
-	2yHYm4vHIREvVNQcza2zn3ZdsiUdoTQV4iZEauIwB/dya+GAV4zic7Zyt6gU8c0z
-X-Gm-Gg: ASbGncu5u5wkr1hfoWJuy7W6GsOaAOUO1Uj5BCFbsU5EO/ftIO9d8ZiGycvI3YFJFsH
-	Hu/h8owqJoSMIFuuKNKctaqR61kNvhlfQG6iu3BfTtp+L5gMej9mNzNLgbfGVeQfXTBYu0/Mnxc
-	mJc2g/qNIZff13wPbdAXU9YlKCr8zUegtJWSp/n1u9gov6TuHuqh1+IrXVXqH9PpCl4SDUALv38
-	5y07YaThKXRjDTsUZ5bVXq4YA/owm5Juj6BDTab/kbsX7hLTA17Vn66LuPl4as8lvt6t4+UhBC2
-	CtsuxAIPieeZbd1/mhm4e0MlEvpKjsaXW+ePZhLqg3dEZj//Wii2AkUMoF0=
-X-Google-Smtp-Source: AGHT+IGQtskuRTRekR6BIWNxh9/B6l4fompCI+MllLvbQCuMNzW5b+kq0TGLZvr+jHNyb25Cqk2XYA==
-X-Received: by 2002:a17:903:32c5:b0:234:f825:b2c3 with SMTP id d9443c01a7336-2366afe7df0mr29871375ad.17.1749884799620;
-        Sat, 14 Jun 2025 00:06:39 -0700 (PDT)
+        bh=zK0LeXzvkMg0+06wk26azMgsByvyALAL0ABZ4OteOuQ=;
+        b=DJrgTq4x+uhUWTt5ANC7ImYIZLB0E1cyonr5H4Sh3WP2v+Yec70IOqE8iMg/b12jeK
+         0XwiZrye5kRYjyiYo5ySBG86uopJpkj/79g8CXwvRnUPNocxUp7IS3LQGTItovqb4HeL
+         Fhprlc/o2bzOCFXyrkcYjmA5rf4yiK2b++hmzdKsaJLAtltaYQauK+VlA7R9iA4tirKh
+         f9xxTtheQrneAIMOKr7ZEIGYe7rf5nGuC0Olr/FGjr9MWWZtHIfX3BslI9lafZrbqiE/
+         7S15W0vuk6TuFV7jBmfnk7R3dDwJoUxCLaxZUDCxgBqO6yeQMjxsxtHZVOlrRwB5sCUe
+         g2Bg==
+X-Gm-Message-State: AOJu0YweNlP+GnYXSirOG3OZelwuRhdk4qdOUiw5Qz/mDZYPguqywdUk
+	uGxCOlYZGWQMLPSVeDKCs9aQb2dPFUyZkH2wAk0GMpgkUpv2Rjb0aX3Gcnmx9XIa
+X-Gm-Gg: ASbGncu+Gv0n/LAf8zsIj8JhV0xzMqAnHlc3BynneX65cFgalOS2lTw4Ra5kX2U29Ee
+	6RIsDc/mpOFPuZugOq7fbJ76TWf3JheOXrn18pbHFKmQtDD8l0L1Mq4Fk4BAnp5WeSTtas1Zzdg
+	BU1YM2hHXQh76xHdu093qKDafkDJqhUFsy8OsnMAaEaYzC+3yjR7eEY2OENMuzUPrR0ZRtWcAEk
+	4EBBD1ieihO3nw18fdzsBElo03wDPBmVC9oh1HT0XpPbzZpnQ2CyOGHXgWdPn2g4Iipr9bTNCEv
+	6TjZh/cJxADk//mmXBHKA15PKQQObsiJ/7lPciPHkZ6oNXlTst8uCPn0MCE=
+X-Google-Smtp-Source: AGHT+IG/NuJqORsUY1YY1gYWzZKgszdrM9KEkiIaPA9UfLCdLVPcje7gNA/uvIbB4G9UjVlfxFo6pQ==
+X-Received: by 2002:a05:6a21:a343:b0:21f:4631:811c with SMTP id adf61e73a8af0-21fbd556858mr2650681637.19.1749884806252;
+        Sat, 14 Jun 2025 00:06:46 -0700 (PDT)
 Received: from meet.. ([43.250.165.229])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168999asm2380814a12.54.2025.06.14.00.06.36
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168999asm2380814a12.54.2025.06.14.00.06.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jun 2025 00:06:39 -0700 (PDT)
+        Sat, 14 Jun 2025 00:06:45 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: Meet Soni <meetsoni3017@gmail.com>,
 	Patrick Steinhardt <ps@pks.im>,
 	shejialuo <shejialuo@gmail.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	John Cai <johncai86@gmail.com>
-Subject: [GSoC][RFC PATCH 1/2] builtin/refs: add list subcommand
-Date: Sat, 14 Jun 2025 12:35:35 +0530
-Message-Id: <20250614070536.17320-2-meetsoni3017@gmail.com>
+	Junio C Hamano <gitster@pobox.com>
+Subject: [GSoC][RFC PATCH 2/2] t: add tests for refs list subcommand
+Date: Sat, 14 Jun 2025 12:35:36 +0530
+Message-Id: <20250614070536.17320-3-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250614070536.17320-1-meetsoni3017@gmail.com>
 References: <20250614070536.17320-1-meetsoni3017@gmail.com>
@@ -78,234 +77,133 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Git's reference management is distributed across multiple
-commands and as part of an ongoing effort to streamline and modernize
-reference handling, we are beginning to consolidate these operations
-into a cohesive `git refs` command.
-
-Add a `list` subcommand to `git refs` as a modern replacement for
-`git show-ref`, consolidating ref listing functionality under the
-unified `git refs` command.
-
-The initial implementation supports the following options from
-`git show-ref`:
-
-- --head
-- --tags
-- --branches
-- patterns argument
-
-For large changes, this patch limits itself to the basic ref listing and
-commonly used flags. Remaining options will be added incrementally in
-follow-up patches, guided by feedback from the mailing list.
+Test the implemented functionality of `git refs list` and verify
+backward compatibility with `git show-ref` for the supported flags
+and patterns.
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- Documentation/git-refs.adoc |  25 ++++++++
- builtin/refs.c              | 110 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 135 insertions(+)
+ t/meson.build        |  1 +
+ t/t1461-refs-list.sh | 95 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 96 insertions(+)
+ create mode 100755 t/t1461-refs-list.sh
 
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index 4d6dc994f9..397c3ceb01 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -11,6 +11,7 @@ SYNOPSIS
- [synopsis]
- git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
- git refs verify [--strict] [--verbose]
-+git refs list [--head] [--branches] [--tag] [--] [<pattern>...]
- 
- DESCRIPTION
- -----------
-@@ -26,6 +27,12 @@ migrate::
- verify::
- 	Verify reference database consistency.
- 
-+list::
-+	Displays references available in a local repository along with the associated
-+	commit IDs. Results can be filtered using a pattern.
+diff --git a/t/meson.build b/t/meson.build
+index d052fc3e23..c9d0863490 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -224,6 +224,7 @@ integration_tests = [
+   't1450-fsck.sh',
+   't1451-fsck-buffer.sh',
+   't1460-refs-migrate.sh',
++  't1461-refs-list.sh',
+   't1500-rev-parse.sh',
+   't1501-work-tree.sh',
+   't1502-rev-parse-parseopt.sh',
+diff --git a/t/t1461-refs-list.sh b/t/t1461-refs-list.sh
+new file mode 100755
+index 0000000000..d628a193fc
+--- /dev/null
++++ b/t/t1461-refs-list.sh
+@@ -0,0 +1,95 @@
++#!/bin/sh
 +
-+	By default, shows the tags, heads, and remote refs.
++test_description='Verify git refs list functionality and compatibility with git show-ref'
++GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
++export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 +
- OPTIONS
- -------
- 
-@@ -57,6 +64,24 @@ The following options are specific to 'git refs verify':
- --verbose::
- 	When verifying the reference database consistency, be chatty.
- 
-+The following options are specific to 'git refs list':
++. ./test-lib.sh
 +
-+--head::
-+	Show the HEAD reference, even if it would normally be filtered out.
++test_expect_success setup '
++	test_commit --annotate A &&
++	git checkout -b side &&
++	test_commit --annotate B &&
++	git checkout main &&
++	test_commit C &&
++	git branch B A^0
++'
 +
-+--branches::
-+--tags::
-+	Limit to local branches and local tags, respectively.  These options
-+	are not mutually exclusive; when given both, references stored in
-+	"refs/heads" and "refs/tags" are displayed.
++test_expect_success 'refs list --branches, --tags, --head, pattern' '
++	for branch in B main side
++	do
++		echo $(git rev-parse refs/heads/$branch) refs/heads/$branch || return 1
++	done >expect.branches &&
++	git refs list --branches >actual &&
++	test_cmp expect.branches actual &&
 +
-+<pattern>...::
-+	Show references matching one or more patterns. Patterns are matched from
-+	the end of the full name, and only complete parts are matched, e.g.
-+	'master' matches 'refs/heads/master', 'refs/remotes/origin/master',
-+	'refs/tags/jedi/master' but not 'refs/heads/mymaster' or
-+	'refs/remotes/master/jedi'.
++	for tag in A B C
++	do
++		echo $(git rev-parse refs/tags/$tag) refs/tags/$tag || return 1
++	done >expect.tags &&
++	git refs list --tags >actual &&
++	test_cmp expect.tags actual &&
 +
- KNOWN LIMITATIONS
- -----------------
- 
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 998d2a2c1c..c098132191 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -2,6 +2,9 @@
- #include "builtin.h"
- #include "config.h"
- #include "fsck.h"
-+#include "hex.h"
-+#include "object-name.h"
-+#include "object-store.h"
- #include "parse-options.h"
- #include "refs.h"
- #include "strbuf.h"
-@@ -13,6 +16,9 @@
- #define REFS_VERIFY_USAGE \
- 	N_("git refs verify [--strict] [--verbose]")
- 
-+#define REFS_LIST_USAGE \
-+	N_("git refs list [--head] [--branches] [--tag] [--] [<pattern>...]")
++	cat expect.branches expect.tags >expect &&
++	git refs list --branches --tags >actual &&
++	test_cmp expect actual &&
 +
- static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
- 			    struct repository *repo UNUSED)
- {
-@@ -101,6 +107,108 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
- 	return ret;
- }
- 
-+struct list_options {
-+	unsigned int show_head;
-+	unsigned int filter_branches;
-+	unsigned int filter_tags;
-+	unsigned int found_match;
-+	const char **patterns;
-+};
++	{
++		echo $(git rev-parse HEAD) HEAD &&
++		cat expect.branches expect.tags
++	} >expect &&
++	git refs list --branches --tags --head >actual &&
++	test_cmp expect actual &&
 +
-+static void print_ref(const char *refname, const struct object_id *oid)
-+{
-+	const char *hex;
++	{
++		echo $(git rev-parse HEAD) HEAD &&
++		echo $(git rev-parse refs/heads/B) refs/heads/B &&
++		echo $(git rev-parse refs/tags/B) refs/tags/B
++	} >expect &&
++	git refs list --head B >actual &&
++	test_cmp expect actual &&
 +
-+	hex = oid_to_hex(oid);
-+	if (!has_object(the_repository, oid,
-+			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		die("git refs list: bad ref %s (%s)", refname,
-+		    hex);
++	{
++		echo $(git rev-parse refs/heads/B) refs/heads/B &&
++		echo $(git rev-parse refs/tags/A) refs/tags/A &&
++		echo $(git rev-parse refs/tags/B) refs/tags/B
++	} >expect &&
++	git refs list A B >actual &&
++	test_cmp expect actual
++'
 +
-+	printf("%s %s\n", hex, refname);
-+}
++test_expect_success 'Backward compatibility with show-ref' '
++	git show-ref >expect&&
++	git refs list >actual&&
++	test_cmp expect actual &&
 +
-+static int list_ref(const char *refname, const char *referent UNUSED,
-+		    const struct object_id *oid, int flag UNUSED, void *cbdata)
-+{
-+	struct list_options *data = cbdata;
++	git show-ref --branches >expect &&
++	git refs list --branches >actual &&
++	test_cmp expect actual &&
 +
-+	if (data->show_head && !strcmp(refname, "HEAD"))
-+		goto match;
++	git show-ref --tags >expect &&
++	git refs list --tags >actual &&
++	test_cmp expect actual &&
 +
-+	if (data->patterns) {
-+		int reflen = strlen(refname);
-+		const char **pattern_ptr = data->patterns, *pattern;
-+		while ((pattern = *pattern_ptr++) != NULL) {
-+			int pattern_len = strlen(pattern);
-+			if (pattern_len > reflen)
-+				continue;
-+			if (memcmp(pattern, refname + reflen - pattern_len, pattern_len))
-+				continue;
-+			if (pattern_len == reflen)
-+				goto match;
-+			if (refname[reflen - pattern_len - 1] == '/')
-+				goto match;
-+		}
-+		return 0;
-+	}
++	git show-ref --head >expect &&
++	git refs list --head >actual &&
++	test_cmp expect actual &&
 +
-+match:
-+	data->found_match++;
++	git show-ref --branches --tags --head >expect &&
++	git refs list --branches --tags --head >actual &&
++	test_cmp expect actual &&
 +
-+	print_ref(refname, oid);
++	git show-ref B >expect &&
++	git refs list B >actual &&
++	test_cmp expect actual &&
 +
-+	return 0;
-+}
++	git show-ref --head B >expect &&
++	git refs list --head B >actual &&
++	test_cmp expect actual &&
 +
-+static int cmd_refs_list(int argc, const char **argv, const char *prefix,
-+			 struct repository *repo UNUSED)
-+{
-+	struct list_options list_opts = {0};
-+	const char * const list_usage[] = {
-+		REFS_LIST_USAGE,
-+		NULL,
-+	};
-+	struct option options[] = {
-+		OPT_BOOL(0, "head", &list_opts.show_head,
-+			 N_("show the HEAD reference, even if it would be filtered out")),
-+		OPT_BOOL(0, "tags", &list_opts.filter_tags,
-+			 N_("only show tags (can be combined with --branches)")),
-+		OPT_BOOL(0, "branches", &list_opts.filter_branches,
-+			 N_("only show branches (can be combined with --tags)")),
-+		OPT_END(),
-+	};
++	git show-ref A B >expect &&
++	git refs list A B >actual &&
++	test_cmp expect actual
++'
 +
-+	argc = parse_options(argc, argv, prefix, options, list_usage, 0);
-+
-+	if (argv && *argv)
-+		list_opts.patterns = argv;
-+
-+	if (list_opts.show_head)
-+		refs_head_ref(get_main_ref_store(the_repository), list_ref,
-+			      &list_opts);
-+
-+	if (list_opts.filter_tags || list_opts.filter_branches) {
-+		if (list_opts.filter_branches)
-+			refs_for_each_fullref_in(get_main_ref_store(the_repository),
-+						 "refs/heads/", NULL,
-+						 list_ref, &list_opts);
-+
-+		if (list_opts.filter_tags)
-+			refs_for_each_fullref_in(get_main_ref_store(the_repository),
-+						 "refs/tags/", NULL,
-+						 list_ref, &list_opts);
-+	} else {
-+		refs_for_each_ref(get_main_ref_store(the_repository),
-+				  list_ref, &list_opts);
-+	}
-+
-+	if (!list_opts.found_match)
-+		return 1;
-+
-+	return 0;
-+}
-+
- int cmd_refs(int argc,
- 	     const char **argv,
- 	     const char *prefix,
-@@ -109,12 +217,14 @@ int cmd_refs(int argc,
- 	const char * const refs_usage[] = {
- 		REFS_MIGRATE_USAGE,
- 		REFS_VERIFY_USAGE,
-+		REFS_LIST_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option opts[] = {
- 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
- 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
-+		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
- 		OPT_END(),
- 	};
- 
++test_done
 -- 
 2.34.1
 
