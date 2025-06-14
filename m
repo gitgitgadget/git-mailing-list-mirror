@@ -1,66 +1,75 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA1534545
-	for <git@vger.kernel.org>; Sat, 14 Jun 2025 07:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF56B34545
+	for <git@vger.kernel.org>; Sat, 14 Jun 2025 07:06:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749884791; cv=none; b=GeJc7DtLZf26JMSwmfePFOVMTzU4jzxR45cv1cemG5G8aGJfFrOAjhE9zKRdnW2tSfSCFmgOKZjGIL6SSaXe2BnZkbS4gwGo5CYEfacLg2gpkcbWBFs+HU2QWEyrLGEbfvAPNXCErsMmEaWMmEFIE933vkkzLSyLsxNYS3exZkU=
+	t=1749884802; cv=none; b=Nwl+cGWTDTud2h4aI1hA1NXlWczJ1oamP8aV8HlDDiqAarLm2/IJLPjGx7nTcTKO/AkL6Dce8CSqy6SchzBi0gH96xhcYX11UtP58wv3Jjx9PpAPSMw2o54bB6FV+HSAXBeSTG/4CgcSW0A5TT5BG7AuQV+guLLOAnRJYAdpY9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749884791; c=relaxed/simple;
-	bh=3rZxGbY+4SPV7iXvTXNvx6HMqHP7PLWNMiuo5buv9gg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=NJm4CtkNjR2xBrIgkGiZkNbUVNtPYhV2xhuxovE29cWF/W1aAUWxgsKyHpJGFfgmzqZF6CgkW4o3DS+Q1UxtjkLPu7V4IzRSguaWmna11NZjl1MGs9fYkpAqcaxjme7634mWVHC2IsFXjqkj8EYw3X4tnpELNpHT+tsyZ4nrLek=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k556G358; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1749884802; c=relaxed/simple;
+	bh=7yLhjx2Xq//II9VjsrKVynEMVclQwM6k57Sn0TCJxvg=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=U4IVkBzln1d3OZAvddjJ0uXp2k1kvK1KCDcBpTTJkYhWgyTYvqdYCDw0I+mYiA8N6UPC7x/MhDiONW53fh4vp2bJVjpkuExMlqZ5I80DufxfXfnYY4thzAtPQ0VpYPbVmQs/TbDtiks7+dgx3HbcapCt2bZkFtpmEhuCxJqrylc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hVROnO0s; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k556G358"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-742caef5896so2540661b3a.3
-        for <git@vger.kernel.org>; Sat, 14 Jun 2025 00:06:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hVROnO0s"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2352400344aso26491265ad.2
+        for <git@vger.kernel.org>; Sat, 14 Jun 2025 00:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749884789; x=1750489589; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=zOfPvBkhywlSjg+n2s7BNsXaOMwCpa/umMH6MORNMKI=;
-        b=k556G358dRGTfjNT0CqHHFZmESfJimLRNf81N/TJjs3WAE8ltkl3MRyCtzqbSI17xk
-         Vz0I2uYzAYJVio1gk4WkbAjSTKlKlOU1hK6NLt96QgUg/H20o/TzCPXyldJqmsQ3GVAE
-         5VzKUq8SWbEc4ir8U3+J48hY3RIvOCNpiE6IQwU4zgLNBhuFju9/XxThs7jVzpNat2yM
-         1zJpKNGvlLsHFIA4XNsrr0ayar8Im5x8WdAqspYw6zOqiRwjYn/Q/xyFQyZmy4j0Uv6M
-         LghZFRsPzUkL+ZAMJSeFGoC8qIGtRtlgtzEFT2pQfAKnxEjeryEkyOUdpzYElQzgG+wI
-         uDQw==
+        d=gmail.com; s=20230601; t=1749884800; x=1750489600; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zf8PgS+81D7CB6AuY9aMcfgOruQ6EJJXBJsT7vYrwL8=;
+        b=hVROnO0s0VYWQ4W0FGA1wOUfV3nt8TIOx6uppXqW7EWhcyG8VbGaAv4jvpuTz/w5iE
+         zukealJhIvA7nowVFpn1tp4qeR5onryHIpJfs23vwjsfdHhlL04xn1EDRsnvZcHvJ++e
+         lAlcKY32gSQJ4LTi2MvD46k6Ub4RAJ5dcKNqSH/1LRZUdp/G+ukzKTY3O5UVWa0oOZiK
+         2XR1XlOv4A1/dM8b83Ux2AFaZjQOSgdFMt0/q6ZLCehvKdeQHKQg0S1RET9xfWvBUVJJ
+         zOr+sl/AbQ/eLOd6hjNVTd8zGLeNOH/U6l7dyR0UFNeg+qhWxPdKe1MG98znQjHRPlzf
+         ikSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749884789; x=1750489589;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zOfPvBkhywlSjg+n2s7BNsXaOMwCpa/umMH6MORNMKI=;
-        b=M7xi86AJtomCp51P8APD1zLLOjlvKm44RkSzjcI0tRpRc09HENlQlf1bQPYYpwYfS7
-         MQf4Y/rV+d/VOZ3435HqCBr5saUvgPhU7rDzFhP/vZq7Z9w8T9ytSPh0Ss4TrN+ttEzV
-         /o3r10c3XZoIIMi9Att7JQIplutkExM7LoqmLsZnXrDyY1EbEiLqReEX2lvzaLZW7ESv
-         SPIAGhieLDarjL03wmqGYIYcHB+rtTMx3vlTPSw0UMbF0EW+OVNQ1ucjFJxa6AOBdF+g
-         /DN/uy8vAWqrWUVTgAaGpaeO0MGiQAVrx6j2bMsW2ZZZWfiMpD6mL47FEadnnpeoSLqe
-         rABw==
-X-Gm-Message-State: AOJu0YyqV5cGR39Nu4kgU6wtti4Ga7+Fgt45qSg0Cfybw9Fes+9HZmQ5
-	y6gYAO/zpTjCRfrZd1xIOGoc5pyb1aUI32noJVV4qzKFJIBw2I8v0Ol8vqBc0xuw
-X-Gm-Gg: ASbGncucjnXfx1beQWXgvCmSDAqhz5/gniHvo3khkC65kVJZTCWkFdHi5CeYYal3lrW
-	D9erMhIQAn0lJv0APo7hxispQqGmPUWYDWur9myIBniYfeB6D//tLLEya5wVwkSodFVy2A5DpWW
-	MYXAD2r9KbjidaM7mcf4C+Qz8eDNYZik91yHfjJMMInReZTVGViaPYDk+BbJWULr21oc6JOdCmv
-	NDl3OXbzWK6zuQvEkxbY/pfjBtsFGgR0+nOcBB6jdEQ7xht7/LN3/zgxZLFj4VtUm5B5vP6gev5
-	AVSSKX9F4rxRSjwocqHsIGLFVk5Y1QwYW0suJON8e4Lz7qw7kVNrH54nFWk=
-X-Google-Smtp-Source: AGHT+IGzKTw8DIyBre000Woj0A4BeBti2MpR/thO+qVKyCOscsQeZdWvgYxOWeQOfU82nPMRUtx9PA==
-X-Received: by 2002:a05:6a21:3388:b0:215:df3d:d56 with SMTP id adf61e73a8af0-21fbd63176emr2875707637.21.1749884788921;
-        Sat, 14 Jun 2025 00:06:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1749884800; x=1750489600;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zf8PgS+81D7CB6AuY9aMcfgOruQ6EJJXBJsT7vYrwL8=;
+        b=Qa6cJNJNdjRWYEX0EarRR2KdI9hFuXde7Ae+DThuEiIj84eB/ItI+/RzzIIPaMP4dZ
+         ThXNpR1B8LyWxjJeuaBb/qmoEoaej1SHoA/U9I1qUUBSXvINhm4YD5IhyDxRMqL3ZCDI
+         kz8beHeP6tgUsA7jm+bG3YXVpYImnCdU6m79Xw4J9Bm+pB2sFVmanV9yEvVzkETAhPG9
+         oyts1RDR2/0pp1LCmlJF5VOqBUvaTjdTiOo8QtJ8EA3f+YAL6wz5YD7IDalwuQiktJow
+         0n4ja6KxOsSPUNc6/3SqXjuNhAluKjk/kBrKBjAXNoYkXpOqvyLD/qxWK7yjNeXE34vM
+         sHWg==
+X-Gm-Message-State: AOJu0YzYvwN/ZiUiIl8hNZMmc19/XBNWyc84ctcVCeyMuF4okTYOp9CX
+	2yHYm4vHIREvVNQcza2zn3ZdsiUdoTQV4iZEauIwB/dya+GAV4zic7Zyt6gU8c0z
+X-Gm-Gg: ASbGncu5u5wkr1hfoWJuy7W6GsOaAOUO1Uj5BCFbsU5EO/ftIO9d8ZiGycvI3YFJFsH
+	Hu/h8owqJoSMIFuuKNKctaqR61kNvhlfQG6iu3BfTtp+L5gMej9mNzNLgbfGVeQfXTBYu0/Mnxc
+	mJc2g/qNIZff13wPbdAXU9YlKCr8zUegtJWSp/n1u9gov6TuHuqh1+IrXVXqH9PpCl4SDUALv38
+	5y07YaThKXRjDTsUZ5bVXq4YA/owm5Juj6BDTab/kbsX7hLTA17Vn66LuPl4as8lvt6t4+UhBC2
+	CtsuxAIPieeZbd1/mhm4e0MlEvpKjsaXW+ePZhLqg3dEZj//Wii2AkUMoF0=
+X-Google-Smtp-Source: AGHT+IGQtskuRTRekR6BIWNxh9/B6l4fompCI+MllLvbQCuMNzW5b+kq0TGLZvr+jHNyb25Cqk2XYA==
+X-Received: by 2002:a17:903:32c5:b0:234:f825:b2c3 with SMTP id d9443c01a7336-2366afe7df0mr29871375ad.17.1749884799620;
+        Sat, 14 Jun 2025 00:06:39 -0700 (PDT)
 Received: from meet.. ([43.250.165.229])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168999asm2380814a12.54.2025.06.14.00.06.27
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168999asm2380814a12.54.2025.06.14.00.06.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 14 Jun 2025 00:06:28 -0700 (PDT)
+        Sat, 14 Jun 2025 00:06:39 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Cc: Meet Soni <meetsoni3017@gmail.com>
-Subject: [GSoC][RFC PATCH 0/2] Add refs list subcommand
-Date: Sat, 14 Jun 2025 12:35:34 +0530
-Message-Id: <20250614070536.17320-1-meetsoni3017@gmail.com>
+Cc: Meet Soni <meetsoni3017@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	shejialuo <shejialuo@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	John Cai <johncai86@gmail.com>
+Subject: [GSoC][RFC PATCH 1/2] builtin/refs: add list subcommand
+Date: Sat, 14 Jun 2025 12:35:35 +0530
+Message-Id: <20250614070536.17320-2-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250614070536.17320-1-meetsoni3017@gmail.com>
+References: <20250614070536.17320-1-meetsoni3017@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,59 +78,234 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This patch series introduces the git refs list subcommand, as part of a
-longer-term goal to consolidate and modernize ref listing functionality
-currently split between git-show-ref(1) and git-for-each-ref(1).
+Git's reference management is distributed across multiple
+commands and as part of an ongoing effort to streamline and modernize
+reference handling, we are beginning to consolidate these operations
+into a cohesive `git refs` command.
 
-The initial implementation focuses on mirroring the behavior of
-git-show-ref, providing support for filtering by --branches, --tags, and
---head, and implementing pattern matching similar to the legacy command.
-This ensures backward compatibility.
+Add a `list` subcommand to `git refs` as a modern replacement for
+`git show-ref`, consolidating ref listing functionality under the
+unified `git refs` command.
 
-That said, git-for-each-ref(1) offers more flexible pattern matching and
-we acknowledge that its style may be a better fit in the long run. As
-such, this RFC deliberately starts with the show-ref matching semantics
-to solicit feedback on whether to switch to for-each-ref style matching
-as the default, with a compatibility flag to preserve legacy behavior.
+The initial implementation supports the following options from
+`git show-ref`:
 
-It's also worth highlighting that several options from git-show-ref are
-intended to be supported in the git refs list subcommand. These include
-flags such as '--abbrev', '--quiet', '--dereference', '--hash', and
-'--exclude-existing'. While this series focuses on core functionality
-and pattern matching, these additional options are within scope for
-future patches.
+- --head
+- --tags
+- --branches
+- patterns argument
 
-Additionally, the git-for-each-ref(1) command offers a rich set of
-features that would be valuable to incorporate into git refs list. At
-this point, all of its existing options appear to provide meaningful
-functionality, and my current thinking is to support them incrementally
-as part of expanding this subcommand. I'd appreciate feedback on whether
-there are any options that should be reconsidered or excluded in this
-consolidation effort.
+For large changes, this patch limits itself to the basic ref listing and
+commonly used flags. Remaining options will be added incrementally in
+follow-up patches, guided by feedback from the mailing list.
 
-This RFC is meant to start a broader discussion on:
-
-  - The desired default behavior of pattern matching in git refs list
-
-  - Which features from both git-show-ref and git-for-each-ref should be
-    preserved, rethought, or dropped
-
-  - How much backward compatibility we want to offer, and through what
-    interface (e.g., compatibility flags)
-
-Feedback and thoughts on these topics would be very welcome.
-
-Meet Soni (2):
-  builtin/refs: add list subcommand
-  t: add tests for refs list subcommand
-
+Mentored-by: Patrick Steinhardt <ps@pks.im>
+Mentored-by: shejialuo <shejialuo@gmail.com>
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
+---
  Documentation/git-refs.adoc |  25 ++++++++
  builtin/refs.c              | 110 ++++++++++++++++++++++++++++++++++++
- t/meson.build               |   1 +
- t/t1461-refs-list.sh        |  95 +++++++++++++++++++++++++++++++
- 4 files changed, 231 insertions(+)
- create mode 100755 t/t1461-refs-list.sh
+ 2 files changed, 135 insertions(+)
 
+diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+index 4d6dc994f9..397c3ceb01 100644
+--- a/Documentation/git-refs.adoc
++++ b/Documentation/git-refs.adoc
+@@ -11,6 +11,7 @@ SYNOPSIS
+ [synopsis]
+ git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+ git refs verify [--strict] [--verbose]
++git refs list [--head] [--branches] [--tag] [--] [<pattern>...]
+ 
+ DESCRIPTION
+ -----------
+@@ -26,6 +27,12 @@ migrate::
+ verify::
+ 	Verify reference database consistency.
+ 
++list::
++	Displays references available in a local repository along with the associated
++	commit IDs. Results can be filtered using a pattern.
++
++	By default, shows the tags, heads, and remote refs.
++
+ OPTIONS
+ -------
+ 
+@@ -57,6 +64,24 @@ The following options are specific to 'git refs verify':
+ --verbose::
+ 	When verifying the reference database consistency, be chatty.
+ 
++The following options are specific to 'git refs list':
++
++--head::
++	Show the HEAD reference, even if it would normally be filtered out.
++
++--branches::
++--tags::
++	Limit to local branches and local tags, respectively.  These options
++	are not mutually exclusive; when given both, references stored in
++	"refs/heads" and "refs/tags" are displayed.
++
++<pattern>...::
++	Show references matching one or more patterns. Patterns are matched from
++	the end of the full name, and only complete parts are matched, e.g.
++	'master' matches 'refs/heads/master', 'refs/remotes/origin/master',
++	'refs/tags/jedi/master' but not 'refs/heads/mymaster' or
++	'refs/remotes/master/jedi'.
++
+ KNOWN LIMITATIONS
+ -----------------
+ 
+diff --git a/builtin/refs.c b/builtin/refs.c
+index 998d2a2c1c..c098132191 100644
+--- a/builtin/refs.c
++++ b/builtin/refs.c
+@@ -2,6 +2,9 @@
+ #include "builtin.h"
+ #include "config.h"
+ #include "fsck.h"
++#include "hex.h"
++#include "object-name.h"
++#include "object-store.h"
+ #include "parse-options.h"
+ #include "refs.h"
+ #include "strbuf.h"
+@@ -13,6 +16,9 @@
+ #define REFS_VERIFY_USAGE \
+ 	N_("git refs verify [--strict] [--verbose]")
+ 
++#define REFS_LIST_USAGE \
++	N_("git refs list [--head] [--branches] [--tag] [--] [<pattern>...]")
++
+ static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
+ 			    struct repository *repo UNUSED)
+ {
+@@ -101,6 +107,108 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
+ 	return ret;
+ }
+ 
++struct list_options {
++	unsigned int show_head;
++	unsigned int filter_branches;
++	unsigned int filter_tags;
++	unsigned int found_match;
++	const char **patterns;
++};
++
++static void print_ref(const char *refname, const struct object_id *oid)
++{
++	const char *hex;
++
++	hex = oid_to_hex(oid);
++	if (!has_object(the_repository, oid,
++			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		die("git refs list: bad ref %s (%s)", refname,
++		    hex);
++
++	printf("%s %s\n", hex, refname);
++}
++
++static int list_ref(const char *refname, const char *referent UNUSED,
++		    const struct object_id *oid, int flag UNUSED, void *cbdata)
++{
++	struct list_options *data = cbdata;
++
++	if (data->show_head && !strcmp(refname, "HEAD"))
++		goto match;
++
++	if (data->patterns) {
++		int reflen = strlen(refname);
++		const char **pattern_ptr = data->patterns, *pattern;
++		while ((pattern = *pattern_ptr++) != NULL) {
++			int pattern_len = strlen(pattern);
++			if (pattern_len > reflen)
++				continue;
++			if (memcmp(pattern, refname + reflen - pattern_len, pattern_len))
++				continue;
++			if (pattern_len == reflen)
++				goto match;
++			if (refname[reflen - pattern_len - 1] == '/')
++				goto match;
++		}
++		return 0;
++	}
++
++match:
++	data->found_match++;
++
++	print_ref(refname, oid);
++
++	return 0;
++}
++
++static int cmd_refs_list(int argc, const char **argv, const char *prefix,
++			 struct repository *repo UNUSED)
++{
++	struct list_options list_opts = {0};
++	const char * const list_usage[] = {
++		REFS_LIST_USAGE,
++		NULL,
++	};
++	struct option options[] = {
++		OPT_BOOL(0, "head", &list_opts.show_head,
++			 N_("show the HEAD reference, even if it would be filtered out")),
++		OPT_BOOL(0, "tags", &list_opts.filter_tags,
++			 N_("only show tags (can be combined with --branches)")),
++		OPT_BOOL(0, "branches", &list_opts.filter_branches,
++			 N_("only show branches (can be combined with --tags)")),
++		OPT_END(),
++	};
++
++	argc = parse_options(argc, argv, prefix, options, list_usage, 0);
++
++	if (argv && *argv)
++		list_opts.patterns = argv;
++
++	if (list_opts.show_head)
++		refs_head_ref(get_main_ref_store(the_repository), list_ref,
++			      &list_opts);
++
++	if (list_opts.filter_tags || list_opts.filter_branches) {
++		if (list_opts.filter_branches)
++			refs_for_each_fullref_in(get_main_ref_store(the_repository),
++						 "refs/heads/", NULL,
++						 list_ref, &list_opts);
++
++		if (list_opts.filter_tags)
++			refs_for_each_fullref_in(get_main_ref_store(the_repository),
++						 "refs/tags/", NULL,
++						 list_ref, &list_opts);
++	} else {
++		refs_for_each_ref(get_main_ref_store(the_repository),
++				  list_ref, &list_opts);
++	}
++
++	if (!list_opts.found_match)
++		return 1;
++
++	return 0;
++}
++
+ int cmd_refs(int argc,
+ 	     const char **argv,
+ 	     const char *prefix,
+@@ -109,12 +217,14 @@ int cmd_refs(int argc,
+ 	const char * const refs_usage[] = {
+ 		REFS_MIGRATE_USAGE,
+ 		REFS_VERIFY_USAGE,
++		REFS_LIST_USAGE,
+ 		NULL,
+ 	};
+ 	parse_opt_subcommand_fn *fn = NULL;
+ 	struct option opts[] = {
+ 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
+ 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
++		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
+ 		OPT_END(),
+ 	};
+ 
 -- 
 2.34.1
 
