@@ -1,68 +1,86 @@
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com [209.85.219.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB23B1E231D
-	for <git@vger.kernel.org>; Fri, 13 Jun 2025 22:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A0B2AE6A
+	for <git@vger.kernel.org>; Sat, 14 Jun 2025 04:05:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749852723; cv=none; b=cJfLnRLiA+Gj075iWin2YMBCU7GiTFkrwIPx/dluNUBS+vOUBVaut37YgGKp5O/Bg0OPy1ZEVnFu4ShSbLBNASFLdL+77GbNtqPf6Ci5jPwlndTVYlzhs3H472MtHHcqnCCkdMLgXRu1Cxi6gbnumg5zVc4Qj5IhPp0tobyKKUY=
+	t=1749873937; cv=none; b=LVTvIZMkVGOhrdTnD9oCkQYASaLAy4UZalv55gsgxMpvmE1kS3Toxg4V4NF/fKne3Gw6D8/O8COFp419FwkKKNdUMoo3eff9s3nKNErs5J1eV9RCJBlA48J6egVB36g/efcjSTUk++upxdrMGN0FSXl4I+hjDwZc2tWysyM6iqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749852723; c=relaxed/simple;
-	bh=eJaOWejswyLsNWlE9m72Z0mnZibVRZgOrhpOHa229Jg=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=bIGusAzUjqqOpjNVu7N0ROLUhl54A3/NJk9OsG3WOvzDJq3gSCH0449gFWyZN5nZB8o4b+Xf8fioiQHwLc1koJlCFe7NzyuKV3ElxZR5A6tnc+QDeGB6Zm0pg9mvMFff2MJkUoi2D5ObM00JzgRDs31wx/x9LwHHWVRQxVUFf/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gaOgn8lA; arc=none smtp.client-ip=209.85.219.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1749873937; c=relaxed/simple;
+	bh=SNr0qgVT58YrmUe7Ygo5Eao7ehVAAJZcrjznvVC9NPk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OLA7MJ6bUuivBWFOQTXEznVKTZox3w7dFj1hwnenoPLuo3tbmgLQaxn7LM91k8WfCfsn9heeS081gm5HwjQmuI09LJjUzcq0WUfVPIouM5GHje2lOXenznW8MHDjObOUw46zs8Ze8G3NK2gKPIrK/XvYOj2yG5AGiXZuzGTajUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=u1D7esPZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ea1lu2NB; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gaOgn8lA"
-Received: by mail-qv1-f49.google.com with SMTP id 6a1803df08f44-6facf4d8e9eso28270686d6.1
-        for <git@vger.kernel.org>; Fri, 13 Jun 2025 15:12:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1749852720; x=1750457520; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=q7JlrOsFurXXrLJ6S+GbEISBNWKLFmuZ/GSsV16PdVw=;
-        b=gaOgn8lA8xhZmu8m3PK3tU8BiajNvQ9Okeq393EZwaLoUwDyAV3jn2lMsaaQU+Yh86
-         d3Qnu+UOLDF1k7qfsj9ZYwP/O92oBJI4t6MAw/LW8fR0Gwa3/EqqwaGZLw/dgSqKE2uY
-         l3ahlgklkkkwprbTjq/ltTp49QjSm1jfxXLys7IWfRddODYqnOhQHRRSaewKzDjPaHLs
-         aAnU0sUn3KiaJCnB/L6ErAbhji99m+wRwjrf6yPQejqGbDZCiSONOvGqTRxkdmU0329t
-         M4WuKD3fOL0zxjhOF1NsIokBlR2DujzkpfbstkpazNKz6/4uuFh0xvCcfeVol21ZyM9V
-         jCaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749852720; x=1750457520;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7JlrOsFurXXrLJ6S+GbEISBNWKLFmuZ/GSsV16PdVw=;
-        b=LnPqm6mra6eJtJGi5L3DRCO3/Aliokxsp0SVekxbHULRh7ssnYUT4+Sb6ht6SP9R5f
-         BD254cEwYjh74T+CMJwPeni256RUw7dx4lgb2WpIiJiYeQ7Dz4ze4nJzx5NFvbzJyXKG
-         zAe8YQu44azl6TAN6Ndw1pfJwFnq6hNXpMXgOy3qCwIVsaunIxS1VKxzlSSexx7zIwRo
-         nHx/yCyDIY74UxB7HTDd9YFavUePPFY6VoCUokGVlkxXo0QxtowyeivKqIadMYoooC7l
-         /cRxNUn+ycdsucyPRShm1MGkebIfzkA2nVZxL+QBAcetyG8pER1onFWyqiVkzSzY+JBl
-         1AdA==
-X-Gm-Message-State: AOJu0Yxh5Wu2xFgGJ6I0774SWQI1cvZj+tKAyoDVq00lsfksJ0S6DPL/
-	al+dRjk0qBceo/EktGvsT+ibkyigH2Gp+gP8AwIV27c74rzP0PORiYPz5k+23UAeSjoDOEnEaH6
-	fP0bI
-X-Gm-Gg: ASbGncvZyY9336Q21ymtPhtLYTTYpD4TociYTxBMnPHdWUe8JNst3odW45zEmMCdSEa
-	xSXmhogkTSv4gP1kOjt8l4wO/b9NOHJQttF2ILz9SLOnHqgtzjH8QlGy4vBo8JcoPe8ZSuPHk17
-	Jq6o0amYgGYhpbsXe/vCHJZpPdM3/KTi3SCWQT6zrz/XhoMTqEv3t7J8p6KTpYCVOTNrqsXFRV9
-	zQ8/HChjtCiLfJ++U+5YPqRYe7VytpOdMOO3iRI9U0rN2E8K3v2aC89HUWQdzOi3UE1NWqWbj8J
-	H3dz7Zb0wSNzAbjAomoG0KQ1NLsbovMxXUkY9ZoVAjH1oheFSp/3VnHviTilRgGalks0+SVfydV
-	Iled8k+T4qVmQlThw2niIfSvGFEcGM5clJJwREqMhaVNb
-X-Google-Smtp-Source: AGHT+IFHGSicbpNiHJDT4kpgjfjOxqhRzyMdFuANS9viQz2j70MKURgP1d72oB3v/ZDrNH9yhA2YZw==
-X-Received: by 2002:a05:6214:3186:b0:6e8:f4d3:e8a5 with SMTP id 6a1803df08f44-6fb477431e7mr15676656d6.15.1749852720362;
-        Fri, 13 Jun 2025 15:12:00 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6fb35c31688sm26467096d6.80.2025.06.13.15.12.00
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jun 2025 15:12:00 -0700 (PDT)
-Date: Fri, 13 Jun 2025 18:11:58 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Subject: [ANNOUNCE] Git Merge 2025 Schedule and Contributor's Summit
- Registration
-Message-ID: <aEyiLhDjSzQhpJnK@nand.local>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="u1D7esPZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ea1lu2NB"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id D190911400E5;
+	Sat, 14 Jun 2025 00:05:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Sat, 14 Jun 2025 00:05:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1749873933;
+	 x=1749960333; bh=AVt2NNTtONxmFjlDA9hroOc6w0CczLh/J7fnHrhR8Bs=; b=
+	u1D7esPZVOP5qpLtFCu1L5qCV40Acjqqioh/j9EzRWHqznSjOXfLEqaap0HJ09oT
+	xHQEIoSQAYEKm5JE9f/stZe/9Xs+y3vafBgK4+7xZWmOG46TjhLwcfXCdiKW5bXz
+	7kTSp6vbLkvr+qkg6tMVe8Lzxm2z0lMi4L6EphKyGErdfMTaG6eVUoZomjC5BWAi
+	YZkGNAp6o0hdHzHZY3ogLMj2kZpE7V7Ihi40GRz03kFMtZ88Br/OtvkivUPg0ZAq
+	0kzDN6zoIZR0HKNY6srIiCzr/oiYl43ofPSKHblFoK/uQ//hfoDRK7TBAa+Twksu
+	S/PtJ4R17QU6BckJ65zYHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1749873933; x=
+	1749960333; bh=AVt2NNTtONxmFjlDA9hroOc6w0CczLh/J7fnHrhR8Bs=; b=E
+	a1lu2NBwPlzM/bFnW+6JivdQ+dfUMINrajcWIG0/tXTzDqMtlPChpEZfFKUR24z5
+	mZj2QrZFAypsRMMp+Apm6DoEiPUwKy1VJULtl/gotSYM4hTgROmnKps9wQOGtMr5
+	3ugvXPe1oAY5tcFQAo/Zb7pL4MI6z+R18LWGDfO/0ZoDI7DCVr17vGEN5nv2kuDQ
+	Rl4Qfs/Ku4uQZ4a75935EXU6x/VIhNtcZ+0qj/zFevVudVGQ+l7GqlQvuyD6PWpb
+	o5/VNmEGaBoZK/bzDk9go5dt03BVv/6YK6IJYHZZEZqOyuvDMFUaY4qu61GS071g
+	kcuZlTiYlRblt4iBybQeQ==
+X-ME-Sender: <xms:DfVMaLwgieJ5Y0b_uenkn_8KHJjEUlbzWnk_8N3bN6Rficn2IeSyTw>
+    <xme:DfVMaDT0ESWUEWIIbJEeEoxpuft7pVKv13j70DpY_psC5-p61uX-_J59_CdlOcsvt
+    elHLaX6mtg5iqasDQ>
+X-ME-Received: <xmr:DfVMaFUKXBk4q_YzoLJ-l80Y4XUe_LZY5nsfCk6FgtdWl42-H5qS1JOv0eyVucKH5Ij7kFKApUd6KuZffVGpUgIyd-YoF_oCzKLO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduleekvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecunecujfgurhephffvve
+    fujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DfVMaFgwuP4mnE4xD3qnODuq75SiGusrqvXOlHHPxk-RH3D57mcDgg>
+    <xmx:DfVMaNBpPw2JIq1cyGW23OG-9STbHe8ZJ6E8sX9xb5I-Gs2gPZEZdA>
+    <xmx:DfVMaOKJtwkBWq0lbzfh3Re_lg05YdcDkiEtt5_9PkkOoXr97Sv--w>
+    <xmx:DfVMaMBS_JPXqOCkmHwGKHxFh6_F04ilsRjzyDj31ES_O9gd4je-xQ>
+    <xmx:DfVMaPy6x-K6aq9A6gxuESZyIBOCrh2O8YK6RDR8yGJDd9Iih-A2cR_u>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 14 Jun 2025 00:05:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH] doc: provide clone commands for the pre-built docs
+In-Reply-To: <45581cb36fbcc33992cae5b740bb801e2724aa90.1749833159.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Fri, 13 Jun 2025
+	18:47:04 +0200")
+References: <45581cb36fbcc33992cae5b740bb801e2724aa90.1749833159.git.code@khaugsbakk.name>
+Date: Fri, 13 Jun 2025 21:05:31 -0700
+Message-ID: <xmqqv7oz6k8k.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,33 +88,16 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 
-Hi everybody,
+kristofferhaugsbakk@fastmail.com writes:
 
-I'm excited to share that the set of accepted talks for Git Merge 2025
-are now available at:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> These repositories need to have these specific names.  You could end
+> up cloning the “git” organization htmldocs repository[1] which is named
+> “htmldocs”.  So you would need to provide `git-htmldocs` as the second
+> argument.  But it’s easier to clone the GitHub “gitster” user
+> repositories since they have the expected names.
 
-  https://git-merge.com
-
-Thanks to everybody who submitted a proposal. We received a lot of great
-submissions, and would have accepted many more if we had the time to fit
-them in.
-
-In addition to the speakers, and schedule of talks, registration for the
-Contributor's Summit is also live. As before, the main details from the
-original announcement[1] are:
-
-   When: September 29th and 30th
-  Where: GitHub HQ, 88 Colin P Kelly Jr. St., San Francisco, CA 94107
-   What: Main conference on the 29th, breakouts and Contributor's Summit
-         on the 30th.
-
-If you have any questions, please feel free to respond here, or
-off-list. I'm looking forward to seeing folks either in person in San
-Francisco, or virtually soon ;-).
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/Z+L3Mt58n18KUNzs@nand.local/
+I'd rather not see people do that.
