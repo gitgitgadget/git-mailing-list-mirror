@@ -1,112 +1,109 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8645729A2
-	for <git@vger.kernel.org>; Sun, 15 Jun 2025 00:26:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B32227738
+	for <git@vger.kernel.org>; Sun, 15 Jun 2025 00:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749947189; cv=none; b=RPUejKMiFwQGA8TjVSBPkBntoXMcJu20huU5/AJsjpQcccplkD18olE638QkoVSCuUeEqH8e/aYGWPL+SwNuPFlTbJlhzwYrsMR+32VYwmwDSG4e8zPUSGED44OiC8mm/PddjRZZXwuveYuyj/lzTFlDS92n6VS3XR+4tAlQY9I=
+	t=1749947853; cv=none; b=isWarvYydlfNLsCoR4Y26bLt4W4Z6bhQNSTYm/iw/NfVGw/dePbBpy9lI4Ml14OhTlxGh6QFaU0HABdUblLrn/jmzBXE5iX+u560UvHtU/SuBxlT9i9dvhf4K0eqr3YrXbh0wps1bUi625RT91V/0xLZfoKqQfM9GsMlNenqyeM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749947189; c=relaxed/simple;
-	bh=SzQC1m9iMbd350E5OODOImDCWD9UXUsd8NA+c8hYY80=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=GvGcLcjI2TVXcgCM+mflQApZUkJSgDLvOGZQs4KCHmF7r8L3nAosLUa3a1B4bPf8pxMLGe6B/VoRppGhRWhsrDjbhZQK33mBXUZjuq1IDGnj8pgvqzWJU6f/s1xaRbcEcWhcp5jM7VeIzOfm34KADxq9x/1Rkdxtis1YX0KlfFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=czPXBwc6; arc=none smtp.client-ip=209.85.222.182
+	s=arc-20240116; t=1749947853; c=relaxed/simple;
+	bh=9SSbduz2ekQIJ6ZhI13T1UsDRkeAhHonQV11fRowAso=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=A2qcB5S4ZB3uJCENhj7AEqb7dZpHlEJ3vs2dwEzIZngQ1+ijOwUdS7r/Z67naIOT+ve9T43+obPvSeTPFh2Eqry53KaeqiVlL3VTg6sytezuOpZbc5jXZtUQ/TMrT1rsiOGEsAwXhx2m6a1X9nhwhQrOy0Otl5Rt9b1HEO9A3Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lhfdpN2K; arc=none smtp.client-ip=209.85.219.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="czPXBwc6"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7cadd46eb07so362373085a.3
-        for <git@vger.kernel.org>; Sat, 14 Jun 2025 17:26:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lhfdpN2K"
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6fac7147cb8so62812966d6.1
+        for <git@vger.kernel.org>; Sat, 14 Jun 2025 17:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1749947186; x=1750551986; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ckWgj7vpEEoNqUQF4yJZlZ6lvcDRspJXya8HWnf00RY=;
-        b=czPXBwc6XKEhEHl+h3OQZS8Mi/wBrlHzXed39jnsniLEade+CleaPcE95sFsOIYt7p
-         ASOSdllyhoXt6bPre3UyM79BhfZLUFTQrCmhrqFVWbKo/xAxmO3mDyxQsV7OBFEnVC2K
-         Lh20f0L4dhOWb/CZn67u/udzbTeVoajPKALVlQ+amxDi34ghxwFZUxnPNSLPI1HBNR7l
-         btZ0tN4GhwAVA6fTjGWnInHDLbGenCRL5y1BdIqEevLKIExJhU6iwhqEgmxPCwbu84aq
-         X0fMOSagq08I7skQaz/tzLGYpOkor09B/JYjRGnnEdZ9EmAb0JR35oBXOFUTsF+yfgvr
-         0Dcg==
+        d=gmail.com; s=20230601; t=1749947851; x=1750552651; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tvnW3XM1tMktALBjX8lh/TPORkySULLCgJWAR6UAQLU=;
+        b=lhfdpN2Kj2WgCrbh1CTxNavKSDDJD5suFHd0ZojFAsKsW3s7Ii3UfGqgEwAUQ5T+ds
+         7rPtwvuDH+f59WMqicu79JFLerUuBsYOyYDsZoXsxf+1ih8pJZroT5GgDIlWkaGn1/kL
+         knJiseWjcOOS/EwXf68W7szwWB9YvKPY1vShTui34YEj3NXd09o6YMBm5RMIV1CQYAbR
+         BM8nqiEaHLkB/gfPM3aIdjeeKBx6gYPNLI/O9WgYhdF+ZNT5DWT+cZCCubQECZY8Iv5x
+         M0YIHdQhujzaB2y4t0Gx0im0qbvijPDgmxiaQQDbKtTFdzY90CDGsLc6pIJeKStVw2HL
+         XG9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1749947186; x=1750551986;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1749947851; x=1750552651;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ckWgj7vpEEoNqUQF4yJZlZ6lvcDRspJXya8HWnf00RY=;
-        b=fHgkr5QEt1FrNsYE3C1aKjRntTFJ7VmN5rDywCNzc5+O2Cv44Rq3X9Y42S7Ky28g4b
-         WeDurj+70q25+8CzsaxGr0PL6FXFRY2qdjzH9wN6wp06NXrU6xHplDFHXmtQ2LOETGOY
-         jK8mxJzWUrCFZNRyhVwOXDmBaIpIE1Ajbp2x8EemX2mjtYR0bih9M9vMsHHZHGY6DcFD
-         Keg3oCA3epYVa5pt7V7ZSy744JnygaviL/Yi6h75FOTT/rON8XBeFQx2F8O3Ruvdm+ea
-         asZ3nNgGax1CYgkf8SQIPm/PvFpsjO3cHVuYJOMg42m5jDEGGCXeK2GfAeWXpQkKglPv
-         D0hQ==
-X-Gm-Message-State: AOJu0Ywxtn1faZx7+JRFWMGsolVLhPBkTxn7bDZ2xaecjZEcm+EckZfQ
-	IRK25JNMrBFRrH8q03s1Ila9HJGThJ3ufOuDznmo0wKrvLqOhCnb/8sP
-X-Gm-Gg: ASbGncur7c/CT3mA5NHdpN4iq1r3zQleXCH3gLJEq1FLFrYkxXBAaNHtyUjC3MPTg9x
-	JLUmc9aqMWptbcP5EOlMp6/aIFUYhCL1GMFu9X7edYvZ71lIzQDX/HfMvN4o9MybOoSZxFUsLgG
-	niZ+Wu72i6slvEXiv+XfLUbrEKnov0E6DKTJXbGgGlWa6uNt3rbtcUQ2HD0wSD79S9ZYsax2RhY
-	I+0BhPGgTxVx3cK13k95Q1HErp72ifkz/POHQInjtZqRLX9peX3t5Lf9HmD5hl62GDOxVfqdQRp
-	LwMH1kID9AIpjo7cIRCeQEfIxR8hJ1DF1jvxJCdqEQqXUYW4Z4+MsETUjZvII5Q+LAuyTJ2SjSN
-	RdUvjAMvaavEJEE0=
-X-Google-Smtp-Source: AGHT+IEHZ1d5VIP+t0K0tEd2zo/gEWWEYWxRGlW5QcNfLEgwkRq45sisKBUnewfzAv7lc9RnlCxo0Q==
-X-Received: by 2002:a05:620a:430f:b0:7d0:9505:1797 with SMTP id af79cd13be357-7d3c6c08d0fmr732623485a.4.1749947186429;
-        Sat, 14 Jun 2025 17:26:26 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1004:b263:760a:25b1:6481:a909:e9db])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d3b8eac18bsm358464685a.75.2025.06.14.17.26.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 14 Jun 2025 17:26:26 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=tvnW3XM1tMktALBjX8lh/TPORkySULLCgJWAR6UAQLU=;
+        b=pEs83oUwiQhdnhA5xKVpRMnGoFhywzLHrZDNpa4sf+IV2Ht0uwxLwXyUMevhFRHf3B
+         oL0Y7EWLJgTgrpWq3b9tFW+v80tdYvxxyZcr9B2ygDjtsZ+ZBmE4yTKve/1z5JCrDohH
+         f10K2kDqwizE48FGAd6UjPgGP0mI/o1V/bFFVOzyBGtD0Uultfg8Wpz5k5SghCplcMtK
+         8SD2nhtLkkTY/qip9MZ+oZ9/KfZhrh+vH4KvVRGsjKMdEM1rd7EXazbymRF+/NTVI2w3
+         /0Q4VC/dFkKFI7TweFwfRgiDPoau9bOYttib2QTibNZDqiKX7YUabP+onrEDLRzjyxuI
+         eTJQ==
+X-Gm-Message-State: AOJu0YxtprH9/qUooyDGt/kh1FrIm4KkkwwihG2eBYeQwOPrGIr2/OQv
+	hbuwDtDLXlf9htM6z+WG5Ze3BGr4jKjbvNXYJmfsWgJ/WiWosklnfjg0TRVsPdsCDKuIqVCSf6y
+	g9Q9U1W/9wafim/Xph/qb3vn2sa+kAqGGrg==
+X-Gm-Gg: ASbGncuNWM311KFIE0FTx1l2ztC9ezpeV7KIY3w3rSj+Re+1z1nuC+TT49XqoQoNB1D
+	ZSa3J7aIy0WwQsuNzZ7vipbmxa0H4hwoD+lXSrwXmdXHbuViB/61Cdgzir2U4UX3Wn/P2FjiBk6
+	IXcHuK3/eTxpvGCO2BnFPbiUwXDAbyaNj8hOQbwLwLmng5gbrwBfUhSFBCW4LFPHglEz05RGB49
+	H4=
+X-Google-Smtp-Source: AGHT+IEgnC/15IRvwH1yIc8Psa82l906uCItFm4tVOUzlQF7brWUx5DZjYeuuO28bU0JAuuWcmIIuEfYrGCGzh877f0=
+X-Received: by 2002:ac8:57c4:0:b0:4a4:3b41:916c with SMTP id
+ d75a77b69052e-4a73c4e31e3mr67974281cf.17.1749947850844; Sat, 14 Jun 2025
+ 17:37:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: Question: regarding understanding code base
-Date: Sat, 14 Jun 2025 20:26:15 -0400
-Message-Id: <AF617F39-7B22-44A3-BF08-D21CCFBEBD20@gmail.com>
+MIME-Version: 1.0
 References: <CA+rGoLf8Lf0gbPEUjTU9Zc9KQrzui4pjyvfxhA-LT4YuafqeOQ@mail.gmail.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
- Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <CA+rGoLf8Lf0gbPEUjTU9Zc9KQrzui4pjyvfxhA-LT4YuafqeOQ@mail.gmail.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+ <AF617F39-7B22-44A3-BF08-D21CCFBEBD20@gmail.com>
+In-Reply-To: <AF617F39-7B22-44A3-BF08-D21CCFBEBD20@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Sun, 15 Jun 2025 06:07:19 +0530
+X-Gm-Features: AX0GCFubbzDyqkiKx9x3QbZIm1zhzUo1lukVoHpTbgfrWPMB8NOLAMtAkrTNRRk
+Message-ID: <CA+rGoLcKfWYYSc-ORC9pCsUzsqketFdfVruwTC0Q06+BN5Gb7w@mail.gmail.com>
+Subject: Re: Question: regarding understanding code base
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+On Sun, Jun 15, 2025 at 5:56=E2=80=AFAM Ben Knoble <ben.knoble@gmail.com> w=
+rote:
+>
+>
+> > Le 14 juin 2025 =C3=A0 08:44, JAYATHEERTH K <jayatheerthkulkarni2005@gm=
+ail.com> a =C3=A9crit :
+> >
+> > =EF=BB=BFOk so a couple of weeks ago, in this thread[1]
+> > Junio advised that one of the best ways to understand git is to go back=
+ to the
+> > _inital commit_ and travel back to the latest ones.
+> >
+> > And I happened to quite like this idea, cause I still have to dig up a
+> > lot of things in git.
+> > The main question is
+> > What are the best and smallest set of git commands to do this as
+> > I can set this up as an alias and use this trick for many other project=
+s too.
+>
+> If you want a checkout of the root commit, assuming there=E2=80=99s only =
+one, something like
+>
+>     git rev-list | sed -n \$p | xargs git switch --detach
+>
+> ought to work. You could feed something similar to git-worktree. But it=
+=E2=80=99s a little harder to =E2=80=9Cgo forward=E2=80=9D with Git=E2=80=
+=99s data model, and I didn=E2=80=99t totally understand =E2=80=9Ctravel ba=
+ck to the latest ones.=E2=80=9D
+>
 
-> Le 14 juin 2025 =C3=A0 08:44, JAYATHEERTH K <jayatheerthkulkarni2005@gmail=
-.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOk so a couple of weeks ago, in this thread[1]
-> Junio advised that one of the best ways to understand git is to go back to=
- the
-> _inital commit_ and travel back to the latest ones.
->=20
-> And I happened to quite like this idea, cause I still have to dig up a
-> lot of things in git.
-> The main question is
-> What are the best and smallest set of git commands to do this as
-> I can set this up as an alias and use this trick for many other projects t=
-oo.
+By _travel back to the latest ones_ I think I should have said travel
+_forward to the latest ones_
 
-If you want a checkout of the root commit, assuming there=E2=80=99s only one=
-, something like
-
-    git rev-list | sed -n \$p | xargs git switch --detach
-
-ought to work. You could feed something similar to git-worktree. But it=E2=80=
-=99s a little harder to =E2=80=9Cgo forward=E2=80=9D with Git=E2=80=99s data=
- model, and I didn=E2=80=99t totally understand =E2=80=9Ctravel back to the l=
-atest ones.=E2=80=9D
-
->=20
-> 1 - https://lore.kernel.org/git/xmqqfrh3qe2w.fsf@gitster.g/
->=20
->=20
-> Thank you,
->=20
-> - Jayatheerth
->=20
+But I meant to incrementally get to the _latest commit_ from the
+_initial commit_
