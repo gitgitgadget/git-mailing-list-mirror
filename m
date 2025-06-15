@@ -1,113 +1,106 @@
-Received: from smtpbgsg2.qq.com (smtpbgsg2.qq.com [54.254.200.128])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f50.google.com (mail-ej1-f50.google.com [209.85.218.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 017A82E11CC
-	for <git@vger.kernel.org>; Sun, 15 Jun 2025 01:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.254.200.128
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C866314F9D6
+	for <git@vger.kernel.org>; Sun, 15 Jun 2025 12:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1749952278; cv=none; b=Wrz/0H101XG9bVib339zAiCjAH5Y1Rq28CM8Y4DvXNUsGgOukH0aGx5rZWDpsfry4Mf4igyhD8otJ2qMpLiV1SLCMfv25CXBNKa7xPWUp+mgI9y2RhwbrtoU58ClQr8ACqeUinSQEzOEk+Trhhsl9Q5x0upucW77sUtpp1I2dU0=
+	t=1749990409; cv=none; b=EMnN2FJBCbmC1QvgIdVDD1YM6olgmP1RJtFNaj7684GGS7WIpFCk9SeUJ7nvujXzzkabE2VqeMYuioIziIyVLUblon45tw91N3YP5hQOjwTPdppBVUFUIsGAWQ+Kk8rg0FbFMqXpVqebwVMV65Li/ha7mca70RlNbUVoF3PPsC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1749952278; c=relaxed/simple;
-	bh=RcChKr6TM/xQQnYe7k7TYgI2uqgm49Jp3vWLBOmP0Ew=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=UAhERGSgYcPTysA0MGokO/KcHoR3ND3BIclqujWAZrI6++gsqgfnT8OzbbYJiCEkA0DCKvtRCNcObH/bgfXeCwOqVOs3l2cgX2cDkqZloBDNAt6iBNyy7vbgJe92cs/tqKH8AMaTpOUm4Jox0c0dqEAkU2dfSjOUCP1Wo7Wv1+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.254.200.128
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: esmtpsz11t1749952208t2dcc6332
-X-QQ-Originating-IP: FOHDXsihDJFyD5K5GrzCGvscp1MzW2EUB/DGD/kV6E8=
-Received: from smtpclient.apple ( [202.119.44.141])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sun, 15 Jun 2025 09:50:06 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 2942277361292971138
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1749990409; c=relaxed/simple;
+	bh=JOaOgmNkOeVXbawylF8KVXG3/768qg95yyQckTuaJx4=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=bEGuSfdzOh5kp3LD+LZV4TJ5XZlSY9qh2YobMbEOv+qjfRpNNsk/U2KnT5HHYQft51Ng++55yqQNOrjgqnWgeor3YRng056RWBUtl7EQE1Onk+uWqsdFclepFNcvImJgJLsq4n8OS5UyhrkPAVeH3ve44Tq76pRM0x9T63otmA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=A9WTidQh; arc=none smtp.client-ip=209.85.218.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="A9WTidQh"
+Received: by mail-ej1-f50.google.com with SMTP id a640c23a62f3a-ade76b8356cso709641366b.2
+        for <git@vger.kernel.org>; Sun, 15 Jun 2025 05:26:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1749990405; x=1750595205; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qc//YdXMKys2R4/bSmUYZHy+vKhr7McFcUJUx4w7OWc=;
+        b=A9WTidQhCFvnIF7OCTmjM1JJGqDQ37Hy6XEcgLWnK+ouE3od2n4dZ8sesPJx3g6i4i
+         GfAtp2P99D7WqshXjfSuPZqNbd1/Uy/y1SlOcUT2MOScWHhMGKsLyq37BAGRo+lKr7oH
+         df47x5cqwvwakFPXo4U1v5zLDSDxaCysH+hr1sT6WEFjqRpxOFr+ydKXIn/9FxxN83LV
+         jsd88ZG8jy2s2C0tfPNsfZUq/CCthboddiVzlziK8VLw1CvaKNVJnTNdsLUL2iAaor9r
+         ALzA2PgkwxuwUjDNmC3Y1P1Qpzpgpsgl47iFEKHZRCYWvoPUv8GwMcxpqj/JCbA3ytRz
+         VKmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1749990405; x=1750595205;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Qc//YdXMKys2R4/bSmUYZHy+vKhr7McFcUJUx4w7OWc=;
+        b=k52IVvMzwQa0fHe89hy0kZM/5fFViaWRVkaj5ZB5xGyFMbb8QyYRnitnzqZ3E/LjXF
+         Wc5lN7Qwu5NgXO+ruWxvpRqShPRn6XAE51+6NzElU6Xy+We9yMcEgQAE00Fxc1jPoXf4
+         ZOy41nlOJeQgdwKjW/2x/L5tcIIg/9SLMdRuEy+5AiEGu3CYPfFa0sNZPgnTLztT/ckb
+         Nu+dXLHEDFndGUPLe0kdLrv0SYj1OBLGECej0eIsrSPBB8SdrW/Hyu0mec+Xw88A1ZRE
+         QSWriqUBacOqRqJEofoxFj3w0FCqXopsLutd3CrqBPhhfzU3Eb0XA79WUJvkpzbnofiL
+         rslg==
+X-Gm-Message-State: AOJu0Yy2gh5/39EwOJ0fNWN6O4NzFPq7w+eVR4NU3xa1YarwOrzcVVnk
+	P8XdVgoZVNJjnZ8k26Sp0I67Lgj/Ww/bzBuvIZqKrTS6rCGymoZdPLkR1cuspsmdMKmAZxlafLp
+	4ToToljk=
+X-Gm-Gg: ASbGncsQf9KAe1r7etyOAn0GdcOd4W1CT1KnwDS15sBpphd2ZIM1gynFw0+d1h9WqPy
+	/34x3T+esdsFBNaoMOlxv7G42YznlQLGonEMiwPlBLEb/Uze4zQ5isxEgYQMuOR/UEk5lNHZjkj
+	NXSHw3CxJQ9jD+HsiTi4cPbt9KvIAWbUy66IeaP2ziROH1IP5fQn313o74sKO4c9Pxfg9APw9oX
+	WAyAbGqaZwTAXEC6lqFNRyM4EP7029gKuR9iuRLS79eG36ASitbMIWWkKyixJeOL3UVtg5efoHj
+	KuBDPComxEeRvwblp+RwZiHCJsNS+3254TeULmL4Pd8uOVSSQPSS+7l6ONpsXAOMRkKbx0KSVwU
+	whhVPd3m9DQ==
+X-Google-Smtp-Source: AGHT+IG7t6WDVR+5vytXW4zcvrFi296xjclPDexqGsQr8ksbF8qiCN83pE1Mf2x6U+2S0Mea7CeZrw==
+X-Received: by 2002:a17:907:3f8b:b0:ade:409c:2cb6 with SMTP id a640c23a62f3a-adfad6fa84dmr546434766b.59.1749990404943;
+        Sun, 15 Jun 2025 05:26:44 -0700 (PDT)
+Received: from localhost.localdomain ([165.225.240.154])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-adec897c1fasm466469066b.168.2025.06.15.05.26.44
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 15 Jun 2025 05:26:44 -0700 (PDT)
+From: Alexander Shopov <ash@kambanaria.org>
+To: git@vger.kernel.org,
+	j6t@kdbg.org
+Cc: worldhello.net@gmail.com,
+	gitster@pobox.com,
+	Alexander Shopov <ash@kambanaria.org>
+Subject: [PATCH 0/1] Resubmittimg Bulgarian translation of git-gui
+Date: Sun, 15 Jun 2025 14:26:32 +0200
+Message-ID: <20250615122631.41988-3-ash@kambanaria.org>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v2] git.c: remove the_repository dependence in
- run_builtin()
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <xmqqwm9d6gn0.fsf@gitster.g>
-Date: Sun, 15 Jun 2025 09:49:55 +0800
-Cc: git@vger.kernel.org,
- ayu.chandekar@gmail.com,
- christian.couder@gmail.com,
- shyamthakkar001@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <BE43915C-E780-4166-9C23-81F9A8CBDEDC@smail.nju.edu.cn>
-References: <20250612045905.3023227-1-502024330056@smail.nju.edu.cn>
- <20250614050331.304405-1-502024330056@smail.nju.edu.cn>
- <xmqqwm9d6gn0.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: NPR7uEA6bBhoRm3Vc2WogyNIYg31Cq1wJtQPjMXUUPHz2Wq1cBS25JSa
-	gDsbeRZ2I4YAUJImQzsnQOqtL5NmN5s/KyIAA56efKEiOq5BB4vbm9Bephq2QPG/KHmRsUn
-	Fr6GBHrumop5XerKaEvvmZQxv9IEv04+XGUjC7dkJF16X2Ah8Xuu/Mh05tzo7u/hfdxWSOM
-	KLm+MthwEi5DKlnKPNy6GXmRgPLEx+uvM8wmTMElZbESA5iKhojaSHr9ehW/pao+OVRPmK2
-	5Os5+rke8NZ6317ZIfcriVLJXPENGlXU1CpkzEXk8Hr4/6NL3bEI2t+JFQLzZjvlcTmhlV7
-	J0lXKrxv7KHeoCVYmUd5UbZfsDEtWHxM8DVnTYWq9/Bl2i06J2KylAOCPE+qOADgzhTY749
-	1ARv3yttdm71AmBQP+AhbIQkJi6Y8lRHnFba6QxN00/YQnnadoqEsZTHmY/d1r6OQ8STvTB
-	guzJ3LFc3IDPRfQvqheZ/Mw7zujcyCQ4Y55V+5kuejC1J+YsRr7A/vMjCSdedmTcWY2ckPs
-	b/nHIzt8iy9OeHDJc1htTnkW7nEYkBSTIzmFQCz5A3+HUP1O7qXwO8n7CRcvDSE1MUliyq5
-	pA/UR10MrR1qRYgKCftr1Sq1FeIxm+ual69id2Y92/ZWp41JsssMGIWVb8fEvh2jGnsB49m
-	+EPemqHJ1Qfo8fAc9+2WKRS4Kn8eDcWGKk/OAurqhubStgAj79yvmHAigW9PgFgsu7gSqGm
-	ZsUyZ+efJC1QJYK6hVW+5h8cc1QbSLYrQP/PB4rPM9R+j4SXDfmkcPocYGFlidfAYUtJeWQ
-	UOt9BxowbjleIx8HEzosoAFlx1Sxq4dTCfFdJB84pn3nCQ9QDwi8+t9wneNyjcoErC4ygrI
-	wNE74Pm7H8Jgt/wfX4WBcieSduG7V5cgz3VSLcG35t6XgATEldsB7aS7/0JELmGS7VgFpL0
-	2Brkr3xHk8TY8TLloX6qeB7sKUmILTVQyDGkhYTio2PjxkQ==
-X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes=EF=BC=9A
-> Sorry, but the above makes it sound as if 246deeac (environment:
-> make `get_git_dir()` accept a repository, 2024-09-12) that retired
-> get_git_dir() and introduced repo_get_git_dir() was the culprit that
-> made their semantics change, but is that really true?  It appears
-> that in the version immediately before that commit, get_git_dir()
-> was also a reference to a variable, without any lazy initialization
-> the above message says that the code tries to avoid, so I am even
-> more confused after reading the above.
+Hi Johannes Sixt,
 
-I was reading the code in master and noticed that repo_get_git_dir()
-no longer sets up the environment. I=E2=80=99ve learned that I should =
-use git blame
-to identify which commit changed the code, so I can make my message =
-clearer.
+Sorry for the cover letter for a small patch. I am resubmitting the updated
+Bulgarian translation for Git Gui in the hope it will manage to catch the
+2.50 train.
 
-> Perhaps you have 73f192c9 (setup: don't perform lazy initialization
-> of repository state, 2017-06-20) in mind?  That one did stop calling
-> setup_git_env() and instead force a hard BUG("") when git_dir is not
-> set up yet.  And that BUG("") still survives in repo_get_git_dir()
-> we have today.
+I last submitted it more than a month ago:
+https://lore.kernel.org/git/20250529215350.60054-2-ash@kambanaria.org/
 
-Exactly
+Is it possible to move to the same format of po-files for git-gui and gitk
+that git is using - without comments pointing to the source of the string?
+This is achievable by doing msgcat --no-location on the po-files.
 
-> So the call to repo_get_git_dir() may still not be made from this
-> code path.  It may not attempt to set up, but instead it would die
-> if we haven't successfully set up the repository before.  The
-> relevance of the comment was not changed by 246deeac that moved this
-> code from get_git_dir() to repo_get_git_dir(), and more importantly,
-> it was not changed by this patch we are reviewing here.
->=20
-> But stepping back a bit, is it what a9ca8a85 originally wanted to
-> achieve with this comment to "avoid calling get_git_dir()" in the
-> first place?  Once the guarding condition is satisfied, it calls
-> trace_repo_setup(), which in turn calls get_git_dir() anyway.
-> Perhaps it wanted to explain why startup_info->have_repository is
-> checked here?
+The smaller improvement this will give is the smaller size of files of
+the distribution. The larger plus is it will make the diffs we send much
+saner as they will no longer be burdened by the changes of line numbers.
 
-Yes, I think so. Maybe updating the comment to say=20
-=E2=80=9Ccall repo_get_git_dir() after setting up the_repository=E2=80=9D
-would be more appropriate.
+Kind regards:
+al_shopov
 
-Thank you for your review,
-Lidong
+
+Alexander Shopov (1):
+  git-gui i18n: Updated Bulgarian translation (578t)
+
+ po/bg.po | 3608 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 1787 insertions(+), 1821 deletions(-)
+
+-- 
+2.49.0
 
