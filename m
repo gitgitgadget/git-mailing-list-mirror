@@ -1,55 +1,55 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3D0B7262B
-	for <git@vger.kernel.org>; Mon, 16 Jun 2025 04:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B80133C01
+	for <git@vger.kernel.org>; Mon, 16 Jun 2025 04:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750047325; cv=none; b=aVjZaulpNj+uHZPpJKh+WacyKNOqUzoGPbtSZHJrgtrF0tBvk3gC9erZn0CFJfOcMHuCCtaeblcCOxByqmPLkGou4j6HdfwuosP/SWKS5d/7yrVIegMwRWFsa98dkTxq/Y21YmZQo4ig7zgjonoyhHQ9sL4/6+3Ry0lcP+VAaPw=
+	t=1750047389; cv=none; b=eqHkgg4w+yDUxTFF3pL91olv1ZlQdM+Mf1gdS6LAdtIvpRsPxzSE0DInLQD6k48vhp9omtaJalT27+R1WsjdQnEYdDKEwhbLb82qg5TNwJgNLIn0URoxG8cJa+9hWLQo7T4dY1xRYQ2ryOo/5Z/p88D2Gls+VMDF7IC3U0bD2qs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750047325; c=relaxed/simple;
-	bh=Fh80Bcsj8ijT7ospZesxUlh+V9EFjlr0F1bwdfXp5Tk=;
+	s=arc-20240116; t=1750047389; c=relaxed/simple;
+	bh=otdYETHe5KtDq2LYT+YEKuwb+hLdQQ35QA6xBChXA8I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kBNEBR18qwKYENwH47qTjHHYArakfds7M1AXLQ0ysfpvs6pzat75VGOx2m7G8ZxnhLnbaBZPxgp50YAnMzFnmyecsUikz4zhIHzPkc9MYFHZz53gamH/UTUNKV8+q123u0a+RmHbIDi9mCdyH8gr2JuRkY+fMzBcabssFZLzbBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a7PkWEpf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y4J2jWXs; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=Gs6XEQakyicL/BU+EPOsMOZ4CXvK/2H6sPCmo7s0+qidoFymM1TPtSfSoE3rMAXGr3FyJy3UjVJ6GXNE3R5SUT9mxy4AJAULwvxUaO4rzFj2FuEZXj2RsWL3/6RbN3lxXgMfM45q9Uy/7rGWpl1DaFNc9Kb+Jjnx/n7GzG+ESh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YXXMpp8y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aQB6On/h; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a7PkWEpf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y4J2jWXs"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D6FAF11401C5;
-	Mon, 16 Jun 2025 00:15:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YXXMpp8y";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aQB6On/h"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B92991140206;
+	Mon, 16 Jun 2025 00:16:26 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 16 Jun 2025 00:15:21 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 16 Jun 2025 00:16:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750047321;
-	 x=1750133721; bh=cT7KmOrRCfrDc5AyYhcTf+z4HvgzcworcZqKdMMLfU4=; b=
-	a7PkWEpf4CijsVh2n8ogush2SOTW1VGEooJvEnfrIdk5jr9/J4LjgvxgeKjowvUg
-	stmK5zBE3ryVv7p98uLPsTFeoj0qmczh3eeLi939wy3VuShtUe7Xvt4xNTi2a/4J
-	wyRb7Av3PcBrP7IBke8N9/L3nymgbqpHfe/u6S/9XBs3JGx23CJrD+E0oucgB6iZ
-	OzQORWQGriplnjFNLVp/hk5LmOgo7Bxl0PoMgoWKklKMurt5fRcDMirSn22EqxKB
-	jKJ/gMDofWq5b7Qr/YxOwd2idC0l6uJXSEh24wVK5GztZMOU+KBxW6DMGpfnmxiM
-	Ur45/pW/CrU0gRl4OKP9bQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750047386;
+	 x=1750133786; bh=XLkqgCBxuUD/6MUv1+7EAECLDX5x4XkNJSyuRSadkKI=; b=
+	YXXMpp8yl8FXjFsiqWgR1ZNhZRzShx3FwC0InSkuPi/NgvPVin6CnzyQ8+jsYRhc
+	UVrHaIJ1DANtHxGjSZ/EAvyi4uNrgPrkLQggL42ZXmE53lzZOIrZvDtl2CVvbevW
+	Jh3WZAdIUhghP2/l4vW7dHX0RuKlFYJm5QNUQeV1ZHFqAu6l3xZpFdVkwsHIVcHB
+	Z5jX+u2CjHT0a59GP323tPxQt4lrf/ZbLe8o55TGk/E8SZN8zvWsjoZjP8Ku4mVR
+	cb75M0BbabO1PVsNjohEtmQbHrJ8RbQXV8qGnElwOljB5LeDcI6GB1NTFKIEg2hi
+	4L/84f8iOOlBvu3xj/41Ow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750047321; x=
-	1750133721; bh=cT7KmOrRCfrDc5AyYhcTf+z4HvgzcworcZqKdMMLfU4=; b=Y
-	4J2jWXsYSrOpjy42urNdJrRRC81JEt1wC3MzLq5+hfnog61ZK9lPY5bNNVgdfwaU
-	OwwsSBg2FBScn+sRvIZXaINShc/SVx/lxc2L6C6AQskeNpqgTv3I0akh8o/J6Bwh
-	azd8HBPMbMWpmjB9B4A1mYrbimUIyaaeWePfrjMapnkZOC8lW/tJENeozNOt+lpZ
-	zBypRXNcqqrvA4KNfEwb6oZuYZXA7OOLxuLUUEfew34Zt3ThQJzB914sKIJPpWz5
-	N7GzRjcGPiQBGeKSCN3rtWQS1jV8iBWRHg1Lzp9ygk1EkfPTrgM2chexnJbmRIHq
-	GGHiNVuxdju7QOGPqwZfw==
-X-ME-Sender: <xms:WZpPaL5GeR9mdfVFS1L3TEqCTbnFToY6cuipc45dHZEgI8HJ9h0Q4g>
-    <xme:WZpPaA7vT5_RCGfc0DkHU5HbfSfZV-7I6PQSVy2JWs6gJdxZpRCAjLIv6xpaT8DmP
-    2r18CPYWBu_1BnHNA>
-X-ME-Received: <xmr:WZpPaCe1FyLLwgzkWX3gs5Bn4gtQXlEAKkT2DuCGstLAN-bRvdcyrBwqBh93MT_rQ6ahTInKFK9jMbVVrAAkDUs7IqVLY9FA-KF2>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750047386; x=
+	1750133786; bh=XLkqgCBxuUD/6MUv1+7EAECLDX5x4XkNJSyuRSadkKI=; b=a
+	QB6On/hic71p1FQuCr8I1gW+EHhVi/RzLV/5vTjx8aKa5IvsM6v3ihznDsbOS7z9
+	Qrj2WApzx1AieWijuKrGfpIupdeC17gb2m8c3nJ+BRQOnkKFFSqKnG9YX8QfUQ9n
+	XhaGzKstISVddJ7mT4uro5VTVJ1WUMjX/TgAaUo19qTknyp/i0MGV0252pLtZWFE
+	0GFcCLqdMsLviT7cCgkrVQXbRIMVi1Lm6ItrmEmUhg95IB0d3FtpwpA5sNIvE8x9
+	mSLOb+Us6TwooCYsuALTV7KAdUglJMZlt9nxUvyyaM4tcoarcvohznC5nZ9zs0Ft
+	Zi8c5zpI9kf/YIUda3LdA==
+X-ME-Sender: <xms:mppPaJk5xEIsQAVmxcWDXZ2pQ7Ft-LkAjYnUZ8YnbVgThxCTTXCjFw>
+    <xme:mppPaE0YTsgrRa8z5VQIRlRl7zIGpqOG7s7-95juG8Nq1wY28VjlDGTciWFCC3npa
+    gfqOhT7zAvoFr12Qw>
+X-ME-Received: <xmr:mppPaPrecZeMRjsQkx_y5pYPH7fQr4mHAxVbeYoT0LnGW8_ef8tPo4Am4s6_CGE_R117Pqn6UykgFGbSsNGQl_z8T_j9_Xumcdve>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvheehlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
     uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
@@ -58,31 +58,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvheehlecutefuodetgg
     hogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfek
     feehiefgheevhedvkeehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinh
-    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehrohgumhhitghhvghlrghs
-    shhisehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehitggrshgvlhhlihesuhhsphdrsghrpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WZpPaMKXsOd7hfWcf5RynzqIsrpurJ3iGs3Wxr24IIb_ladambl7mw>
-    <xmx:WZpPaPKtpK0K6FsDjS7GE5O1PJ8hWZUpXvf5fHZePqj_nQPoBPWxDA>
-    <xmx:WZpPaFwYZJuOOv0zwYMRYOKXrnI4w8SjFjJ6HVJD31G2Nzx9Z0x1JA>
-    <xmx:WZpPaLKY7sYWO1piz6Q_j0KsmXzX5-oK2nOFGYtlVF1KEvw4a5AkGw>
-    <xmx:WZpPaPrjK-4-KpJy0FZEo5CcAYK3LwEJygaYP4j0EgCyLDCyw7ncmvGw>
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrsh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehrohgumhhitghhvghlrghsshhisehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehitggrshgvlhhlihesuhhsphdrsghrpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:mppPaJn4K2nOlWj23x1MrNj1eA2y8VeRTOPnby2kS5WlKnOBpkprGQ>
+    <xmx:mppPaH0TYmD-r1ArAh4g7nG6oe4lynOpZwD1DIgmfLkbipDphhVGYw>
+    <xmx:mppPaIs2ZwV3xGUjVyIZk4_sP5gkaUiCc6Fu_xlKRv9r1BD_GVTmpA>
+    <xmx:mppPaLWstEwNxngTA-Ht_ZGQwls7ByAUjeuOcxyqUj3r3sKCYAVUIg>
+    <xmx:mppPaP4LxGflSg6QmMqOWKfsk-riEuqHSl-goOMjsEzuin5SZYF7WF9S>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Jun 2025 00:15:21 -0400 (EDT)
+ 16 Jun 2025 00:16:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
 Cc: Rodrigo Michelassi <rodmichelassi@gmail.com>,  git@vger.kernel.org,
   icaselli@usp.br
 Subject: Re: [PATCH] replace 'test -[efd]' with
  'test_path_is_[file,dir,executable]'
-In-Reply-To: <CAPig+cT1VfY8QiUvrrV3-obTBP1439b6iwaebJtGwML5MScnQA@mail.gmail.com>
-	(Eric Sunshine's message of "Sun, 15 Jun 2025 23:39:56 -0400")
+In-Reply-To: <cioavyfxwgdhfzuodb7dnwzmvsui4xcxi6mljnlszjwebogajg@taejma43hgtx>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Sun, 15 Jun
+ 2025 20:53:42
+	-0700")
 References: <20250616020827.10820-1-rodmichelassi@gmail.com>
-	<CAPig+cT1VfY8QiUvrrV3-obTBP1439b6iwaebJtGwML5MScnQA@mail.gmail.com>
-Date: Sun, 15 Jun 2025 21:15:19 -0700
-Message-ID: <xmqq1prk490o.fsf@gitster.g>
+	<cioavyfxwgdhfzuodb7dnwzmvsui4xcxi6mljnlszjwebogajg@taejma43hgtx>
+Date: Sun, 15 Jun 2025 21:16:24 -0700
+Message-ID: <xmqqwm9c2uef.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,56 +95,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-> Thanks for the patch. See below for some comments...
->
-> On Sun, Jun 15, 2025 at 10:08 PM Rodrigo Michelassi
-> <rodmichelassi@gmail.com> wrote:
+> On Sun, Jun 15, 2025 at 11:08:27PM -0800, Rodrigo Michelassi wrote:
 >> From: rodrigocmichelassi <rodmichelassi@gmail.com>
->
-> The From: header name/address should match your Signed-off-by:
-> trailer, so you'll probably need to adjust your mailer settings.
-
-This is an in-body header most likely added by git-send-email, so
-the name string is what the commit object recorded as its author.
-What needs to be adjusted is not the mailer settings, but user.name,
-if that is indeed the case.
-
->> replace 'test -[efd]' with 'test_path_is_[file,dir,executable]'
->
-> Let's prefix the subject with the area you're touching. In this case,
-> the test number would be appropriate, so:
->
->     t2400: replace 'test -[efd]' with test_path_* calls
-
-Excellent.
-
+>> 
 >> 'test_path_is_file', 'test_path_is_dir' and 'test_file_is_executable' are modern path checking methods in Git's development. Replace the basic shell commands 'test -f', 'test -d' and 'test -e', respectively, with this approach
 >
-> A better way to convince reviewers that this is a good idea is to
-> explain why these functions are superior. In this case, it's because
-> they emit useful diagnostic information when they detect a failing
-> condition, whereas `test` itself does not.
+> Splitting this long line, into multiple lines of about 70ish columns is
+> better, see the relevant documents in Documentation/ for useful suggestions.
 >
-> Please wrap the commit message at about the 72-column mark.
-
-Good.
-
 >> Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
->>
->> Co-authored-by: Isabella Caselli <icaselli@usp.br>
->> Signed-off-by: Isabella Caselli <icaselli@usp.br>
 >
-> You'll probably want to order these trailers like this:
+> This certifies that you are the author of the code, an therefore should go
+> after Isabella's, who might be the original author which you improved upon.
 >
->     Co-authored-by: Isabella Caselli <icaselli@usp.br>
->     Signed-off-by: Isabella Caselli <icaselli@usp.br>
->     Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
+>> @@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked checkout' '
+>>  
+>>  test_expect_success '"add" worktree with --no-checkout' '
+>>  	git worktree add --no-checkout -b swamp swamp &&
+>> -	! test -e swamp/init.t &&
+>> +	! test_path_is_executable swamp/init.t &&
+>
+> this is not acurate translation, `test -e` is true if there is any "file"
+> with that name, the equivalent for that helper function would be `test -x`
 
-Very true.  And without a blank line in between.
-
-I too spotted the misuse of negation in the test script you spotted.
-Thanks for explaining why they are bad and what should be used
-instead.
-
+Yes, "test_path_is_missing" is what you want here, without any "!",
+to make sure that the path does not exist.
