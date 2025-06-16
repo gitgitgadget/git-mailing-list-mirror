@@ -1,108 +1,177 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78A2119F424
-	for <git@vger.kernel.org>; Mon, 16 Jun 2025 11:42:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A6735972
+	for <git@vger.kernel.org>; Mon, 16 Jun 2025 14:07:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750074180; cv=none; b=hMnREBHuElYixa2g7l4zqU1JfTK/1LHeU1/QCkJ+zoAQoH1eMh2fbMbbd92lXf0HPNRArhoofchitLM6xKDz+f8hICwVpaGxTX/6ssg41DTn3Lnbp5QY4jr2H6gaFcFvuo8hB1xHW5uSs0xHOU4scMSTGzFftyhdXvRJ9/qCpV0=
+	t=1750082881; cv=none; b=UZKXA+hlbUti7W1op9XxYXdaXlaxbLfhLljahwyNMzSh8Crebi7Dnm4AJUGXIGOmMVq18uVg1Stk9gzWD4K1M+4MU5pwX0Ti2SXNVoKzeDy2tjCp9lWqEy+sXh6XD0rWE6a4SK7qUhTHz6IyDsIWJw8XceROJlE8GErfKV52UF0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750074180; c=relaxed/simple;
-	bh=2avkfPSKcfVn53hD7EAVMNbQE9Yfh3eSAIZA9BPOzho=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=FMEwmh+Iydo83No/2z0FFKGErvHkA5ZTVQqxBlaGv88yXPc3dTOoc/hpW51gd/9XetXFD0Oev2QGLKOK1TH4JpxNFtds5oBst4wlU33Sjd98KkzQQeP8CE0v4GhwqSxMpcu6znHIQ3ZdXCOrzMZVpiXkxA1aF450buJUOz2TLGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k1NvpSJs; arc=none smtp.client-ip=209.85.128.175
+	s=arc-20240116; t=1750082881; c=relaxed/simple;
+	bh=pirDlZSBNRGRTVbSWf3/5J53LD433hfJeZSqs++RW5M=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=T/qIQiwNqQFFt/QaL0/MN+XzuW/zhamxVbOl16oQ2409FJ1MBkVyXHnYTImm3mwtGv/eZY1Sj9e0tizlLqKpwRq0akAtCAJXxXMw1mglyWdtZF7JXRBsQQFPfR7XO6maFAwCXuwNRagnZOBkFXuP6htBAFh8KMto6kJK2tZ9t/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i8vJ5/XO; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k1NvpSJs"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-711756ae8c9so17746047b3.3
-        for <git@vger.kernel.org>; Mon, 16 Jun 2025 04:42:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i8vJ5/XO"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e82596e88c4so629991276.1
+        for <git@vger.kernel.org>; Mon, 16 Jun 2025 07:07:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750074177; x=1750678977; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=FUshDofu7mta+ko6J3ruWxpQB3OoiZm8b3V6OkmFrbM=;
-        b=k1NvpSJsIu+zsjJ7qzEWWrxqeasEKB3SRXYq8Iio9/EGBvGUTXGR/YokTa97/HS+wp
-         WrVtypf4AMbTeotexnSWg9RmxGJklhjrTOdkksLjdrkguTBBeah8ASYUj0IPYXTVO4Ii
-         WMKQlb1vGsPMQLnZRAnX12H7pgoGLHJUX2+j/WVMcSqRp1u3oec7LtsO3nqCepbZTw5m
-         7LNzzKdYT46qe7Hl+YrcC75RzueQwQh7YXLkhccCogZb4RyGIWHGliILIlyk45A2K+rJ
-         nLomsfM4+oJISgShhV/mtbzxRSLUsKJOPe5geUimaaNXcnjAkbdVoWnWmBbW75jckCDf
-         sRYA==
+        d=gmail.com; s=20230601; t=1750082878; x=1750687678; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=V+A7Jar4zoKrJxSHfKJc9dWwvTsSuDJ1Z3FyYJ2m4To=;
+        b=i8vJ5/XOeiJCUFzaDfsgq+h9wMlXvkNWAzBNdA5mBrQ8D9L/Yznpf4crsLWzzqwKTg
+         1h8d0q7GNfRLI7KxMk3fdPZqYf5QwzZyH7hbq+dT15XNio98Ypy6rTiqlGGv4MI009lk
+         8QOKGo4O2ZHhAzKa+PACjjXD+9vDQSYFzNNV1TX6dKrrC4FmS8WDAEXmBrfPai0z83OC
+         AZz3fSW0JSVzZSSh9WbQSSeReI4+MAGu/dZkFzrPiBqoH68mOVThxGrZW7pzdcC1Jzjj
+         JHRZfZIKauqQ/mmiczDRjJV5k09VJ/2nBxwd8ES+okN0KP0zCI7XVlWXWwklObcGWldS
+         AtkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750074177; x=1750678977;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=FUshDofu7mta+ko6J3ruWxpQB3OoiZm8b3V6OkmFrbM=;
-        b=GKVvfb26xc0lYqw4/HIrQlkVhyAGO82H2VUVtTThOtVzpkw0jo6Lph5LX/nIrTlBA5
-         VcnxUIZ2gMpbvefrVoJpbrUIKaK+xS8BGR1wPcWansjGUyZh0R7wJuUlzWVP8/jePzCb
-         Pw8tlhSEyP1lhuWVu5n+IBCPnI/CoY0TxGxuHmV7PZdaoI1EuohOuQ4Tm2rAijTfOLrc
-         nhHabpWbPz8p2+QHwnB4qxj+C+GFeZ/auplsorKO39d3iDktS0gTAWnKkzFG7TfGCqmt
-         q/JshsiE5Q4Jt6cuRtQbFpNzTEgG/cJ9oBmS2yEX8pplvLAntucB0AXUIBdEqxNiaDeA
-         vwCw==
-X-Forwarded-Encrypted: i=1; AJvYcCUjJkKeujfwFzz1qbMyeKHVwp6aYhTCDi+6ZMYkghsgPs3/SoLn936cQvchNXmJlTqA2bE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz9qhkRDilHQuVI6yQtf47EajIqkSW1yn3xejfMrjVXH3N41KUI
-	mYqbNL2mBwFR+AjW6tLzGNww+BhJial/r2T/qitBITviMSaQy7NLivcXRgK51xWdW9p7dyCOGLx
-	zz0YXikkggOIZ3wfuWrv8qsYTHwrNztWDfrQSXsA=
-X-Gm-Gg: ASbGncvke3ObOwFSBUJMc4UORAx5vZ5Kjqf5TNwmOXihTlJosDaAvhrEVL89VuIHVXL
-	7BxutsJUyS4UJe4sb3T7knwZU36h29RnKK7FGw2mHPyVxr6PoRTLWffs26PbVetqJRKKLyCZRvr
-	73DTkBUZnLa9Jk2e/7FRpGVicT5uvK5g5wBI7mFWGOmAI=
-X-Google-Smtp-Source: AGHT+IG/MIV5cUJZWw5rphNtXWsQsCMYJXkLP67tXF0NFG5EJ+QO/p3HoemJmjli/RM99X9NcLwZf6cr59XQ2CDlksQ=
-X-Received: by 2002:a05:690c:7242:b0:6fb:b1dd:a00d with SMTP id
- 00721157ae682-71175457744mr127507007b3.30.1750074177382; Mon, 16 Jun 2025
- 04:42:57 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750082878; x=1750687678;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=V+A7Jar4zoKrJxSHfKJc9dWwvTsSuDJ1Z3FyYJ2m4To=;
+        b=iIrd/zMzvcGg5REUgd0cLfCXstQzXs6+1YKlfC3AHmFwgrSP1YhXALjmuU7bQBAzSg
+         it/6gBmHWzkYdmMt48u3aH81YO72UAbDEe7pC6+MlpoiLaNHn+x+9vxjOaASLY+Ajt87
+         lYQX8GoCG6G5IS3/8dzbSQWpwRDVdtjnqic2bUPpOmwy19190G4LoucP4vwtmxIuxUxC
+         RCIcbWVZSYQ7WiBphgOr/0pldcRuteJ3EPL6bxvTuQQztf3laTSppQBKzUe7QScCD0sB
+         AwbkcYb3ibTEkjRpTE6CRS0WBXC6Dj5BO7smWS7pOcxkXGSV6yAGBcKiZWD1x3HvaeTX
+         jl9g==
+X-Gm-Message-State: AOJu0YyyYXOJU29FLl07YX9s/I6UJx/pNv6gg5J3WnDnm3PtIVX+hh6X
+	MElZuE+st9VMsRm8JY/TPcTFnHuwgdByr9QtYJWLSARZVGY6AvuS3XQ0DzLkTQ0U
+X-Gm-Gg: ASbGncvUiXAkNF6soRRIWCU33YrUxu8vD5BlgJF0yWR9NnT/0Ecc3togF8dlo8c3WBS
+	1KOssgafwl8P1jQQyQyITHVne1GsYzYCr6rLukSK0NBAPzUHy7IDg4OoMSl5PxK5f7u7PUkmC4U
+	kq/BXS25V/0qrV3rhJFU7FY/v+a914QdS0msKKRaKcUcuVRjpHGpDtGIuAxo0d9vhzAMSqCUdIO
+	asSy8lp06a/bD1IXmVpj74mxBGMl7Uw2vTm2pCyedIu5vhMSDAVd9tJX+iMps0GtUupzj69YRU9
+	iteWPyiWUjKRdgz8qJEVIkY5ZPtV2W7uJPnKdlUKZfq028zrQVq0XO+6czqU5E5JSyNc1bX7oKG
+	653SPnaR2FA==
+X-Google-Smtp-Source: AGHT+IGidy/46ve3uJpn7SZu2ahRH6LurLbeATvCkUM+/1VF7V4oOtyTqxljdbFyzNUki8HuayeHxg==
+X-Received: by 2002:a05:6902:140d:b0:e79:fa4:1439 with SMTP id 3f1490d57ef6-e822acab548mr11642140276.9.1750082878211;
+        Mon, 16 Jun 2025 07:07:58 -0700 (PDT)
+Received: from APOLO.semfio.usp.br ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e820e099598sm2957214276.21.2025.06.16.07.07.57
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Mon, 16 Jun 2025 07:07:57 -0700 (PDT)
+From: Rodrigo Michelassi <rodmichelassi@gmail.com>
+To: git@vger.kernel.org
+Cc: icaselli@usp.br,
+	rodrigocmichelassi <rodmichelassi@gmail.com>
+Subject: [PATCH v2] replace 't2400: test -[efd]' with 'test_path_is_*'
+Date: Mon, 16 Jun 2025 11:07:54 -0300
+Message-ID: <20250616140754.17815-1-rodmichelassi@gmail.com>
+X-Mailer: git-send-email 2.50.0.rc2.48.gf1ca98f609.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKn8H7qa_b==1LqPkJ-dmH0UNNp4Z4xbewN+LgcL6-bBPM1boQ@mail.gmail.com>
- <aE9ag8TY7i4Qi1Pr@fruit.crustytoothpaste.net>
-In-Reply-To: <aE9ag8TY7i4Qi1Pr@fruit.crustytoothpaste.net>
-From: Juri <juraj.sojak@gmail.com>
-Date: Mon, 16 Jun 2025 13:42:46 +0200
-X-Gm-Features: AX0GCFtxY1A1ngYEvwkBbAteIeQhdQqT9YrrDcMILACQEir3OvnGDwOCYP9Mhyg
-Message-ID: <CAKn8H7rLmdNUrukS8P-c4UMKuk==rGQtHXFCm++Zn9o+T941=w@mail.gmail.com>
-Subject: Re: Git gui webclient info
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, Juri <juraj.sojak@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi,
+From: rodrigocmichelassi <rodmichelassi@gmail.com>
 
-Yeah, I would like to know about a version of Git GUI that runs in the
-browser and is able to modify a repository stored on the server where
-the web version is hosted.
-I found Gitlab and Gogs on the internet, but I'm not sure if it's what I ne=
-ed.
+'test_path_is_file', 'test_path_is_dir' and 'test_file_is_missing'
+are modern path checking methods in Git's development, that emit
+useful diagnostic information when detect a failing condition, while
+test -[efd] does not.
+Replace the basic shell commands 'test -f', 'test -d' and 'test -e',
+with this modern path checking approach.
 
-Thank You
-Juraj
+Co-authored-by: Isabella Caselli <icaselli@usp.br>
+Signed-off-by: Isabella Caselli <icaselli@usp.br>
+Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
+---
+ t/t2400-worktree-add.sh | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-po 16. 6. 2025 o 1:43 brian m. carlson <sandals@crustytoothpaste.net>
-nap=C3=ADsal(a):
->
-> On 2025-06-15 at 21:41:50, Juri wrote:
-> > Hello,
->
-> Hi,
->
-> > Will you have a webclient version?
->
-> I'm not sure exactly sure what you're asking.  Is it that you want a
-> version of Git GUI that runs in the browser and allows you to access a
-> repository?  If so, were you expecting that it would modify a repository
-> on the server where the web version is hosted, or a repository stored
-> only temporarily in the browser?
->
-> If it's something else, please do explain a bit more about what you're
-> looking for because there might in fact be a tool to do what you want.
-> It's just hard to make a recommendation right now without more
-> information.
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+index 90638fa886..023e1301c8 100755
+--- a/t/t2400-worktree-add.sh
++++ b/t/t2400-worktree-add.sh
+@@ -42,8 +42,8 @@ test_expect_success '"add" using - shorthand' '
+ 
+ test_expect_success '"add" refuses to checkout locked branch' '
+ 	test_must_fail git worktree add zere main &&
+-	! test -d zere &&
+-	! test -d .git/worktrees/zere
++	test_path_is_missing zere &&
++	test_path_is_missing .git/worktrees/zere
+ '
+ 
+ test_expect_success 'checking out paths not complaining about linked checkouts' '
+@@ -70,14 +70,14 @@ test_expect_success '"add" worktree' '
+ test_expect_success '"add" worktree with lock' '
+ 	git worktree add --detach --lock here-with-lock main &&
+ 	test_when_finished "git worktree unlock here-with-lock || :" &&
+-	test -f .git/worktrees/here-with-lock/locked
++	test_path_is_file .git/worktrees/here-with-lock/locked
+ '
+ 
+ test_expect_success '"add" worktree with lock and reason' '
+ 	lock_reason="why not" &&
+ 	git worktree add --detach --lock --reason "$lock_reason" here-with-lock-reason main &&
+ 	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
+-	test -f .git/worktrees/here-with-lock-reason/locked &&
++	test_path_is_file .git/worktrees/here-with-lock-reason/locked &&
+ 	echo "$lock_reason" >expect &&
+ 	test_cmp expect .git/worktrees/here-with-lock-reason/locked
+ '
+@@ -412,14 +412,14 @@ test_expect_success '"add --orphan" with empty repository' '
+ test_expect_success '"add" worktree with orphan branch and lock' '
+ 	git worktree add --lock --orphan -b orphanbr orphan-with-lock &&
+ 	test_when_finished "git worktree unlock orphan-with-lock || :" &&
+-	test -f .git/worktrees/orphan-with-lock/locked
++	test_path_is_file .git/worktrees/orphan-with-lock/locked
+ '
+ 
+ test_expect_success '"add" worktree with orphan branch, lock, and reason' '
+ 	lock_reason="why not" &&
+ 	git worktree add --detach --lock --reason "$lock_reason" orphan-with-lock-reason main &&
+ 	test_when_finished "git worktree unlock orphan-with-lock-reason || :" &&
+-	test -f .git/worktrees/orphan-with-lock-reason/locked &&
++	test_path_is_file .git/worktrees/orphan-with-lock-reason/locked &&
+ 	echo "$lock_reason" >expect &&
+ 	test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
+ '
+@@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked checkout' '
+ 
+ test_expect_success '"add" worktree with --no-checkout' '
+ 	git worktree add --no-checkout -b swamp swamp &&
+-	! test -e swamp/init.t &&
++	test_path_is_missing swamp/init.t &&
+ 	git -C swamp reset --hard &&
+ 	test_cmp init.t swamp/init.t
+ '
+@@ -497,7 +497,7 @@ test_expect_success 'put a worktree under rebase' '
+ 
+ test_expect_success 'add a worktree, checking out a rebased branch' '
+ 	test_must_fail git worktree add new-rebase under-rebase &&
+-	! test -d new-rebase
++	test_path_is_missing new-rebase
+ '
+ 
+ test_expect_success 'checking out a rebased branch from another worktree' '
+@@ -535,7 +535,7 @@ test_expect_success 'checkout a branch under bisect' '
+ 		git worktree list >actual &&
+ 		grep "under-bisect.*detached HEAD" actual &&
+ 		test_must_fail git worktree add new-bisect under-bisect &&
+-		! test -d new-bisect
++		test_path_is_missing new-bisect
+ 	)
+ '
+ 
+@@ -1165,7 +1165,7 @@ test_expect_success '"add" not tripped up by magic worktree matching"' '
+ 
+ test_expect_success FUNNYNAMES 'sanitize generated worktree name' '
+ 	git worktree add --detach ".  weird*..?.lock.lock" &&
+-	test -d .git/worktrees/---weird-.-
++	test_path_is_dir .git/worktrees/---weird-.-
+ '
+ 
+ test_expect_success '"add" should not fail because of another bad worktree' '
+-- 
+2.50.0.rc2.48.gf1ca98f609.dirty
+
