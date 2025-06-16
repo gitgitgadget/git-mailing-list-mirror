@@ -1,143 +1,100 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E992829A1
-	for <git@vger.kernel.org>; Mon, 16 Jun 2025 03:40:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CAB2B2D7
+	for <git@vger.kernel.org>; Mon, 16 Jun 2025 03:53:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750045215; cv=none; b=U3g5Zmq0fjqy63EqzbzL7jE5eL5ptsGXLove3YOqg/LWDu3voHsoioXG4b2n63dMPTHAL9CW4DEjd0O67XRxnX2QPuFcqxPVciOT/JXriWWarp5cQfN4wAiVLWmYrqQxZLW4cCL8q2s+0N2I4qdkXYF/x99jh+fpsfqdbT03RZI=
+	t=1750046026; cv=none; b=jAqU1vTtkXafULjGw46OCreQEiPyvep7Cu+5vDSpWsI5y5qBZScZG55Vgv4UJ+tWWnL2JuY8SUmhTWvmWSoHWwmg0YMflNcPdaKVkN7oz33ylyvATyOq4QlE3vqeO2c4PmLEg2tE+ujSSQJC93lUOBlwG/OrajtthILeOq+Npho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750045215; c=relaxed/simple;
-	bh=hBB+U1Ggzk6jwg/+ofvg54BM9ZZizj108ApaWYyUjRc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hmuC6BRN017zl9rdBteBpYuDf36cCuTKMeMmJ65oNPU0To8dB+xCZLlWeK0vYhaEKx18MvAUhfQOYzCYe4XIzJtC9TykGOfcXZIgDOfTej7BDVmLfZT6Yy/SLyEZMV2Wfssf/smvNL7bJh3zSJkSEaxEr21/3TqTMhmHyDD8JHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1750046026; c=relaxed/simple;
+	bh=TL8bTeA/rbc90jJUCPv89ay4R0Qk+Jnk0u6rZgoDXes=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DKvn6vkPnMlzsnEbTkMeY2LV8l7DkATsBUD/ZVOnnIFeQreSZT/aNUQ+xP1bQzS84lrEe5SaTlMkd0twA/IrHMYYtlfxbURMOumyPPbQHC/iag3ioUR5ZRq2a3k+vd4aUYTY3hM4XuZnHzrpFsKEehnIzvKwDHYGnVsLrVfyUt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WWL4gmYi; arc=none smtp.client-ip=209.85.214.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6fb0f72c515so1518086d6.1
-        for <git@vger.kernel.org>; Sun, 15 Jun 2025 20:40:08 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WWL4gmYi"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-235f9e87f78so41611835ad.2
+        for <git@vger.kernel.org>; Sun, 15 Jun 2025 20:53:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750046024; x=1750650824; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=okRXQlEfgbYBH93EsJRoTvAdi83VsrNt2YjWYxoyu/s=;
+        b=WWL4gmYimwGBc7dx74K5otRxqTHvq/lkp2t/iX2oFDRRlxS0apZPMhtRsSZxxJ4L+n
+         tsrQV1G5JJ2QSYHCFYb8egqIvOl68upXVJqv31567mPN7aq6wunsqsj7mcMVlFNZ4itX
+         Up2YcMBcTRXQaICruTP5/94B40nysgIYcjbfWRd8RQuSYf2qI1ZH5ZW195fz2dsdD0hp
+         Rg5a3QOJNhdwVLGcgPVl6SV/Gvx2AHrFBlPdIDJX3yGxZo5NVGNSau9DqLMOXEv9URKB
+         1Hb76MV5k5N3kHUkY8XR3quSwqB9KFhR0nbJ5usal9i8jKlxZteeNTHxbii/d1zZoIh+
+         jxmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750045208; x=1750650008;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F4H3mxrOySMDRrEkq7hIJsdK7dqe5N05YjOBP1Z5XrQ=;
-        b=rYscR7gOyi8hX401dIuqgHK9mMuexbZoFcnmcI5F9J1j7FcUopXsivs+dcdIdCMdAe
-         1Wuz/ar6plCxShKtIWx5i9Tw9TOLLB5dNobxhPD0yjBusr4M3pHgLTK4/iAU2jEPXIgJ
-         bdkgGeYqRgJgGpajnnm9LhSuXIUAyzbZZEqEJ/v5/sADtuO2WZpGCVYy08ryqwdDM2do
-         7ZtOZv8cEBOGr9PfMG2UVxcDn0H4OO7r1MWHq9lGb+QL6Q5NDFY+nxk2pj3G3ggsGaMo
-         BIEXQx0SpNqONYzDNsLnFG6XkG49UmA0K2/IZVVdLu8/Gf5T06CSZ3JhHbJSzTCMAYU4
-         xZnQ==
-X-Gm-Message-State: AOJu0YztM0xfJ2BAUUg1DiZX0kNCv6MVUmHcfq/eUbmQ/LbseOf/DrXV
-	7XBq+eNpi7ltn+wX3v9nJJxmzMcTOZiSe3/VGmR8orjD/+vwlr3FOxQe6G9Sr6ItYEn8qoSvuRe
-	uYMrhhIPlMxOF22yrYTiCeqd26r7FGiU=
-X-Gm-Gg: ASbGnctAD+a9YrS4fqNIjpf38zM4yCDkBDWwMI7qm0aIOsMq5nFKMOPBq/QZbIpbrSK
-	YuEioUXXrJy7jJHt8LVttjCSEh3LgdhEeth2gV12rtNWY2JCZvf/MDx+JjNA2xZ/7e7aQ7SlxHS
-	lavp7bJzuwkq789e71tpszAUdWcijF4VWgUzTY6kBd2Q==
-X-Google-Smtp-Source: AGHT+IErzy5Sd8SLOlvwFKF4as9gRintqZPDbq1d/i2RHPck6l9fx7aMR76zyCVWN1XpBUA6VPd8sK8E+pntYEL2h/8=
-X-Received: by 2002:a05:6214:3d87:b0:6fa:be81:e18f with SMTP id
- 6a1803df08f44-6fb4725df27mr53334866d6.0.1750045207609; Sun, 15 Jun 2025
- 20:40:07 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750046024; x=1750650824;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=okRXQlEfgbYBH93EsJRoTvAdi83VsrNt2YjWYxoyu/s=;
+        b=kFapGgCsbAEwtBXhCAADcDJEfa1g8EW08SlcJYHHGJk9UuZeo7Wc1E7yVkKQthCKg2
+         H6hgcs+I+BGeZ9s3ZTKybFjlFTucTX+nIL1J0/wkSEmUCRiDTAtk4kSQVdsUpExP251I
+         qEPb1K/cGgz6HBNmxTZWCVNykH8mtgFLq3iqfJNsnizDJzUkuRjqAv1MpjDrophLw5c/
+         +0LXKYKiVivjX12ewO3v4be4q901Z3jZa7Bj7+Tbi0iroSQbYfk2Jv6vEG0z9/KXUzRn
+         gspa+ZqgC1Wjicf5mh1exvsVHtfLFTSQOAuU6ex8d/Yh/7ZH1lZSU3YtafCSZLpIJhzH
+         ZwHg==
+X-Gm-Message-State: AOJu0Yz9lCoRDjMEO29xLletcLjkZDAVk7vmsJZXtp2NIm3IhDXibvxH
+	qb2NnGohYFIFg8cmmWkvZUnvhPaHifGd0wqcSky5Q6qfpb1wr7ez/9NgQhClzQ==
+X-Gm-Gg: ASbGncsc5BHJnL0IQyy5UrQ8T0FZ1zGKIMVSPGIzsOmtimJXc28F6l8aXbj0SrZYzWe
+	FlD/deZuuIATIwHS5wgQUu1nSosUCNzRrfu2m1QbGIK9UU3e06PoxOUEm8WGc2qakiETCmU2LkO
+	BIQJF3ctYSk0PrXFXx2RjUxQkE1OlMPL8X/aPKoIUZX/czhNAIBwXe45J1lAsy3ya96USd39kCP
+	OxJA+8ZaAXVt2pC2vr2ontTE4hIGV6MOObKa/hLOnWRgwth3NJ7Gfvjif0VBFurFS320CDMzy2T
+	2SRwu2yvQDA446fnoOu46wFuvpXDfJuLBwCAIh/dmzQ8I+Er3DVf3rV3jVU8Jlsv36eoCnVlKem
+	Vf0CzBzf3956rekOl+/zt010=
+X-Google-Smtp-Source: AGHT+IGZfrtMBjnRZE0TD9SAh2WkATQ/Nv4Mme9rxhiMl3ZjWA0HpAVOyy8030v9hwxkXY91AIUbyw==
+X-Received: by 2002:a17:902:ccc2:b0:235:f70:fd39 with SMTP id d9443c01a7336-2366afd37d4mr137722065ad.10.1750046024228;
+        Sun, 15 Jun 2025 20:53:44 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:61cf:f4c3:aee8:3fd0])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365d88bf61sm51319675ad.22.2025.06.15.20.53.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 15 Jun 2025 20:53:43 -0700 (PDT)
+Date: Sun, 15 Jun 2025 20:53:42 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Rodrigo Michelassi <rodmichelassi@gmail.com>
+Cc: git@vger.kernel.org, icaselli@usp.br
+Subject: Re: [PATCH] replace 'test -[efd]' with
+ 'test_path_is_[file,dir,executable]'
+Message-ID: <cioavyfxwgdhfzuodb7dnwzmvsui4xcxi6mljnlszjwebogajg@taejma43hgtx>
+References: <20250616020827.10820-1-rodmichelassi@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250616020827.10820-1-rodmichelassi@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 In-Reply-To: <20250616020827.10820-1-rodmichelassi@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 15 Jun 2025 23:39:56 -0400
-X-Gm-Features: AX0GCFtVXXzZapEdtK_rXcDaBypgiD-BE2NpCRWgfZ3SPivJINVXHq1jQ_INb1U
-Message-ID: <CAPig+cT1VfY8QiUvrrV3-obTBP1439b6iwaebJtGwML5MScnQA@mail.gmail.com>
-Subject: Re: [PATCH] replace 'test -[efd]' with 'test_path_is_[file,dir,executable]'
-To: Rodrigo Michelassi <rodmichelassi@gmail.com>
-Cc: git@vger.kernel.org, icaselli@usp.br
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Thanks for the patch. See below for some comments...
-
-On Sun, Jun 15, 2025 at 10:08=E2=80=AFPM Rodrigo Michelassi
-<rodmichelassi@gmail.com> wrote:
+On Sun, Jun 15, 2025 at 11:08:27PM -0800, Rodrigo Michelassi wrote:
 > From: rodrigocmichelassi <rodmichelassi@gmail.com>
+> 
+> 'test_path_is_file', 'test_path_is_dir' and 'test_file_is_executable' are modern path checking methods in Git's development. Replace the basic shell commands 'test -f', 'test -d' and 'test -e', respectively, with this approach
 
-The From: header name/address should match your Signed-off-by:
-trailer, so you'll probably need to adjust your mailer settings.
-
-> replace 'test -[efd]' with 'test_path_is_[file,dir,executable]'
-
-Let's prefix the subject with the area you're touching. In this case,
-the test number would be appropriate, so:
-
-    t2400: replace 'test -[efd]' with test_path_* calls
-
-> 'test_path_is_file', 'test_path_is_dir' and 'test_file_is_executable' are=
- modern path checking methods in Git's development. Replace the basic shell=
- commands 'test -f', 'test -d' and 'test -e', respectively, with this appro=
-ach
-
-A better way to convince reviewers that this is a good idea is to
-explain why these functions are superior. In this case, it's because
-they emit useful diagnostic information when they detect a failing
-condition, whereas `test` itself does not.
-
-Please wrap the commit message at about the 72-column mark.
+Splitting this long line, into multiple lines of about 70ish columns is
+better, see the relevant documents in Documentation/ for useful suggestions.
 
 > Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
->
-> Co-authored-by: Isabella Caselli <icaselli@usp.br>
-> Signed-off-by: Isabella Caselli <icaselli@usp.br>
 
-You'll probably want to order these trailers like this:
+This certifies that you are the author of the code, an therefore should go
+after Isabella's, who might be the original author which you improved upon.
 
-    Co-authored-by: Isabella Caselli <icaselli@usp.br>
-    Signed-off-by: Isabella Caselli <icaselli@usp.br>
-    Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
-
-> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-> @@ -42,8 +42,8 @@ test_expect_success '"add" using - shorthand' '
->  test_expect_success '"add" refuses to checkout locked branch' '
->         test_must_fail git worktree add zere main &&
-> -       ! test -d zere &&
-> -       ! test -d .git/worktrees/zere
-> +       ! test_path_is_dir zere &&
-> +       ! test_path_is_dir .git/worktrees/zere
-
-Take a look at the definition of `test_path_is_dir` from
-t/test-lib-functions.sh to see why this change is undesirable:
-
-    test_path_is_dir () {
-        test "$#" -ne 1 && BUG "1 param"
-        if ! test -d "$1"
-        then
-            echo "Directory $1 doesn't exist"
-            false
-        fi
-    }
-
-The test wants to assert that those directories do *not* exist, which
-means that if `git worktree add` is working correctly, then the
-directories indeed will not exist. However, `test_path_is_dir` is
-going to complain that they don't exist, which is the opposite of what
-we want. So, even though the test will continue to pass following this
-change (due to the negation `!`), it's going to be spewing unwanted
-and confusing error messages.
-
-What you want instead is a test_path_* function which asserts that a
-path does not exist. Probably the closest we have is
-`test_path_is_missing` which seems a good semantic match for what this
-test intends with regards to those directories.
-
-> @@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked=
- checkout' '
+> @@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked checkout' '
+>  
 >  test_expect_success '"add" worktree with --no-checkout' '
->         git worktree add --no-checkout -b swamp swamp &&
-> -       ! test -e swamp/init.t &&
-> +       ! test_path_is_executable swamp/init.t &&
+>  	git worktree add --no-checkout -b swamp swamp &&
+> -	! test -e swamp/init.t &&
+> +	! test_path_is_executable swamp/init.t &&
 
-If you look at the definition of `test_path_is_executable` in
-t/test-lib-functions.sh, you'll see that this change is similarly
-undesirable.
+this is not acurate translation, `test -e` is true if there is any "file"
+with that name, the equivalent for that helper function would be `test -x`
 
-The same comments apply to several other changes in this patch.
+Carlo
