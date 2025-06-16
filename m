@@ -1,82 +1,84 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A0672607
-	for <git@vger.kernel.org>; Mon, 16 Jun 2025 17:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FF92BEFE1
+	for <git@vger.kernel.org>; Mon, 16 Jun 2025 18:00:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750094911; cv=none; b=oPOoCq13Xi9EgDpeHX41oxVJrrxuZdhRTkXxCbR6sh+6G7AP7BrGg/rg7xBxD3sgWcGrqto4nzjlD8Xlq4uD7fwbs0mmIHh3PofF5s3+vMfVuKg6hsh9YFG2Hsv2ZHEpzkfZ1s/V/8IdKsaY78NYRFgF7gx/s/rO85mdhqRgtLs=
+	t=1750096858; cv=none; b=XfT8o5UZaoqdTMRSwYONIfa4WUmnnKjNmxD2kcT8ZGRDtwi5GUueSEvtuhu/ARyHiZi+cn+FtHvU4bx2EcUpJ5ykqiLwV2uD1lB0L5QWiE9KcwxEcrbWfOPaVb5iw0fgv+Go8Atww1mvm8jncb0kKxzjk7mZZaZgbwTCAXGJ5Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750094911; c=relaxed/simple;
-	bh=VKn6a5KW5LkuqKv2X7vFLUekJqfYL+oTrdensfrTmAk=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=N7KgyuxjAvQcOvnSxkaM+9OJXvqzucBdTBqBfNPU+6nlx7+qSMy4Pk3EBeJUSp86siiOKKc2UqtaLdROjgTkMIcoSoYRZyiNH8pA/t4On3JROs/kcUwZyladE1OpUCdWQwNCxcR1EX2IJ/tH3VRN5DwFAIaoA1xdH0yrg0wiYLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PeEOTYHp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJAxs/4N; arc=none smtp.client-ip=202.12.124.147
+	s=arc-20240116; t=1750096858; c=relaxed/simple;
+	bh=qfjQ5U77ADfTv0GsEihkJ71qJ8bQKQPyjWtz3yXPTDM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=vBZ6fbMRkLjOAyewDJ0l/XvvKr4jk6V+ZPu+PYMaEAynOq6BVPjbWIgKmcFXuqxi38c4On1dLxDG6IjVyAJuNKzejfVu20lG0KiF5OBJpNivvDp7fdMBP8LuDozMDessgPaEy/FuqeclgfFOg56lvAyyRLIRlrzl1ExruPHY5Lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Hs8Z874u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jqKmSbXD; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PeEOTYHp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJAxs/4N"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5F3F11140141;
-	Mon, 16 Jun 2025 13:28:27 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Hs8Z874u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jqKmSbXD"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id A2EF41140134;
+	Mon, 16 Jun 2025 14:00:54 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Mon, 16 Jun 2025 13:28:27 -0400
+  by phl-compute-03.internal (MEProxy); Mon, 16 Jun 2025 14:00:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1750094907; x=1750181307; bh=sKpHxrOg5kQvcwsmKwUcqS27+haLiHzd
-	NOx2J8v3k3Y=; b=PeEOTYHpWLHyCZ6x8CtNh/tbOOfZ+WMAvbLgKarLazoQJZ+v
-	/5kkGAV617gYcQNETAFwJVgM45ChR7cOpK3sJhE8t1Mb7+7a8Y1TMptCN1h1yHgF
-	tatjcyIpccZp3RF6niWd4uLBeptbGhnXfyjFE7hDqfgtUY2iuNr0IiMyTxCAgCOF
-	/pRbyCDucPyscTycYMif3+H6xZLFZmQrRMaGP9C1O6Px5n4WFQSjOTcOmmvbyDen
-	KcIYLOf6mT9m0BnHw+jfTMLUc+d5/wsrDPGdggHetoWGqD7+qAUSBJPB3lQChmm9
-	Vt3EXaq3ArZiClk2hZWJK32NnQDfUhE3Vs+ZpQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750096854; x=1750183254; bh=V0ORgwkIHt
+	p/jxaRkT827tn594KvMeDtQk/8+Bu4l6E=; b=Hs8Z874uXt1Va3ORC9fwF5bamK
+	1/yArxTo/mMkve40W6YtKwI8ci+u7XAmz+msOVawLq/k0NXzcD48gE5H6/oDa/in
+	7omOgWvwA4f1f34AIf+5StjephDweEFkPQwvt+69TgrRUEmHGJO/dZDqfFIs449E
+	DEmQlGg8OUZuN84QqkG7/2jZw7n5HE4W8PJx/TMVroYje3bvJNaxHt4IteAKYlsG
+	+zae5+k6Pp74sYJfBTzC36UYXVIQd+3Ao5elZqP/N9mBqih7n3T6rIlPJh7ct1cN
+	vu1eW/E5wWbdIpovSRdHyy6PrKIhMs/uyNeYCUjM9BqF6YJbGu2oQUgQ537Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750094907; x=
-	1750181307; bh=sKpHxrOg5kQvcwsmKwUcqS27+haLiHzdNOx2J8v3k3Y=; b=n
-	JAxs/4NSXSxVbS6dDdaiQJ1JbLKLpaDhNgZWi7faHbow0SMwlePxeAbcrlhU05d1
-	Tc5IPihpqw3uJuW4unMIis+7T5fMpKJ4W1lcPR4QMcIqOi3VCCwaYEV1ClPR84Cl
-	vIrOb8Z8CdBrk7DAwzko5To3sWxJH0zxbX9G3NGeOCtny+KXZteL02yA1jk0G3im
-	sJovhLyTjVYkvEm+1Rhq8GKYT8X29eM7TtjyA80DrY5Bes+ZWNM0HZNg4aIQNImZ
-	roAKYGKapLRVUwqLuIK9RxXv83PhFfSTCO7XzeTYmvyaVN+3SCHHuIBxWL9nKTq5
-	Rix3smH1CrWAqsf0jB47w==
-X-ME-Sender: <xms:OlRQaDcBbJJHatJ1SpFt0b0wzB5h7GYrZfeykR-4r1rVSlUhOUKohQ>
-    <xme:OlRQaJMKvnkeKlzIBYJzKRySUTWLlIsMNDyWu4Gn7Q1lYNoMcv_AbIjqZLT7OEuvU
-    tqtrmOF0Qg9FRBqdg>
-X-ME-Received: <xmr:OlRQaMjqTsT4hZA6_1wfdJzgrJ793TT0xAXgn_rECExIjzkSormnnjAORAFUlBHmbxd3GiGQB8i6LMSwcx0tq9jyms8Fa5em62Aw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvjedukecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750096854; x=1750183254; bh=V0ORgwkIHtp/jxaRkT827tn594KvMeDtQk/
+	8+Bu4l6E=; b=jqKmSbXDixRq5kxqbAgcAPP88TX9rYC8aIgHkgeLJHDzsfDnEks
+	f/sx55UePpKhhf2u0M1dO3xJhgH1y897Kb66b6Hn5XFXg7E+9MixTUC39KNYAZMD
+	MA/y5dOPY7WZMVut1tA3mAatDJAdoKc2Qdf+Ev3VvZcWFS1Hs7ibruFzXcFwanx3
+	tjloS0MP6+fc+R+ZaFCccPU0wOagDkCh5jyXllCM6wPMQ03MJkM1hk+ZYhwpS3NP
+	MGoTDfsG3qJxwSYkPWeVZlyb0DJmdNXqFd2xMxIQkNzxP0fU9MxswiT6LjdY2crf
+	hprvCp/g6dP7GmKMQuTWcdeoBIVJIqrNf7Q==
+X-ME-Sender: <xms:1ltQaPlDr8y-BdtqUeKGCZ8aI6aCmXiLvoOYZJb_TA2hItIzz6Q-hg>
+    <xme:1ltQaC3DM31QnSeaUJJDUOk0Y7GB_s235oR3N2Ag0hVy2sAAbDVeX6qp16zVAvXOe
+    BOjF3vyDtgQnqrqoQ>
+X-ME-Received: <xmr:1ltQaFrgQLuaUaUEnbuuv5mi3bSOabXocZWjb3AF97rGTXjuHrLm0vBNmPr5SZgPJ6CAwHLDhaar_vEG6foJ6XoJ7N6ybaFctZnH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvjedvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
-    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecuogfuuhhsphgvtghtff
-    homhgrihhnucdlgeelmdenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfh
-    rhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepuefhiefgtdefveekteeukeelgefhfefhgfekleeu
-    teevvdekffekvdfgfffftdetnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpmhgrrh
-    gtrdhinhhfohdpshhpihhnihgtshdrnhgvthdpphhusghlihgtqdhinhgsohigrdhorhhg
-    pdgtohhlrggsthhirdhorhhgpdhgihhthhhusgdrihhopdhsfhgtohhnshgvrhhvrghntg
-    ihrdhorhhgpdhgihhthhhusgdrtghomhdptghouggvpghofhgptghonhguuhgtthdrmhgu
-    pdhgrhgvvghnvghnugdrohhrghdruhhkpdhgohhoghhlvghsohhurhgtvgdrtghomhdpoh
-    hrrdgtiidpghhithhlrggsrdgtohhmpdhgihhtqdhstghmrdgtohhmpdhgihhtfhhorhif
-    ihhnughofihsrdhorhhgpdgtohhnthhrihgsuhhtihhnghdrmhgunecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:O1RQaE8TzaHUJqpm5vW8HdKv8hv8HGTQcWFB5wnC-GzvMuW6JqDshg>
-    <xmx:O1RQaPv2wa4Jq-0f9-o9RW0ccwsE04QEaKHOHYwQcDsv0hY0LUQCUA>
-    <xmx:O1RQaDFHxoYhpB5noYHGKV8gQQL1C8HAByNmW7Cx8VM-7HsXWJDCdQ>
-    <xmx:O1RQaGPnKxhcKMga1VM52qoroFaEQS5PNshspWy67I-KR07r8jQARw>
-    <xmx:O1RQaPcCZUrytNUEFYsXVWlI8tCpnMCk44MD5V2aGDnzoIqP2i0HiMWD>
+    uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
+    hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredt
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeev
+    teevveeutdelhfdtudfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtoheprhhoughmihgthhgvlhgrshhsihesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepih
+    hsrggtrghsvghllhhisehushhprdgsrhdprhgtphhtthhopehitggrshgvlhhlihesuhhs
+    phdrsghrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:1ltQaHnOCyigaN5U8iCwcNaIyHVSpQtGOJ8XgZExTulrH3iTY_GW5A>
+    <xmx:1ltQaN1jVyr3HgMqGnoJSB7zQjMqBmrOjy6YPYZL3Bf-rRFm7a54Yw>
+    <xmx:1ltQaGuvkMHcrH50xF6WWzIWyp_GLNus0PPy6GNoFxJD5Nqzz6-TDQ>
+    <xmx:1ltQaBVkdluN-Yl2Ar1tllr06Nh1VTZy3nCHC_l715cGmruhd2SUbA>
+    <xmx:1ltQaB_2hn4V7A05PNffrFQVuvwMPcoc0tKSRXGGSitLj93yCfeOQ1Mr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 16 Jun 2025 13:28:26 -0400 (EDT)
+ 16 Jun 2025 14:00:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: A note from the maintainer
-Date: Mon, 16 Jun 2025 10:28:25 -0700
-Message-ID: <xmqqsejzzjd2.fsf@gitster.g>
+To: Rodrigo Michelassi <rodmichelassi@gmail.com>
+Cc: git@vger.kernel.org,  isacaselli@usp.br,  Isabella Caselli
+ <icaselli@usp.br>
+Subject: Re: [PATCH v3] t2400: replace 'test -[efd]' with 'test_path_is_*'
+In-Reply-To: <20250616144540.21075-1-rodmichelassi@gmail.com> (Rodrigo
+	Michelassi's message of "Mon, 16 Jun 2025 11:45:40 -0300")
+References: <20250616144540.21075-1-rodmichelassi@gmail.com>
+Date: Mon, 16 Jun 2025 11:00:52 -0700
+Message-ID: <xmqqo6unzhuz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,334 +88,152 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Welcome to the Git development community.
-
-This message is written by the maintainer and talks about how Git
-project is managed, and how you can work with it.
-
-The current maintainer is Junio C Hamano <gitster@pobox.com>.  Spam
-filters learned that legitimate messages come only from a very few
-sender addresses that are known to be good to this address, and all
-other messages are likely to be spam unless they are also sent to the
-mailing list at the same time (i.e. "Reply-all" to the list message
-would reach the mailbox, but "Reply" will likely be thrown into the
-spam folder), so please do not send a message to this address unless
-it is also sent to the mailing list as well.
-
-
-* Mailing list and the community
-
-The development is primarily done on the Git mailing list. Help
-requests, feature proposals, bug reports and patches should be sent to
-the list address <git@vger.kernel.org>.  You don't have to be
-subscribed to send messages.  The convention on the list is to keep
-everybody involved on Cc:, so it is unnecessary to say "Please Cc: me,
-I am not subscribed".
-
-As an anti-spam measure, the mailing list software rejects messages
-that are not text/plain and drops them on the floor.  If you are a
-GMail user, you'd want to make sure "Plain text mode" is checked.
-
-The mailing list, while welcoming non code contributions like bug
-reports, mostly discusses updating contents of the source tree to the
-(core) Git software, including documentation "git help" gives.
-Non-code contributions may have places other than the mailing list
-that are more preferrable.  See the "other places" section near the
-end.
-
-Before sending patches, please read Documentation/SubmittingPatches
-and Documentation/CodingGuidelines to familiarize yourself with the
-project convention.
-
-If you sent a patch and you did not hear any response from anybody for
-several days, it does not necessarily mean that your patch was totally
-uninteresting; it may merely mean that it was lost in the noise.  Please
-do not hesitate to send a reminder message in such a case.  Messages
-getting lost in the noise may be a sign that those who can evaluate
-your patch don't have enough mental/time bandwidth to process them
-right at the moment, and it often helps to wait until the list traffic
-becomes calmer before sending such a reminder.
-
-The list archive is available at a few public sites:
-
-        https://lore.kernel.org/git/
-        https://marc.info/?l=git
-        https://www.spinics.net/lists/git/
-
-For those who prefer to read it over NNTP:
-
-	nntp://nntp.lore.kernel.org/org.kernel.vger.git
-        nntp://news.public-inbox.org/inbox.comp.version-control.git
-
-are available.
-
-When you point at a message in a mailing list archive, using its
-message ID is often the most robust (if not very friendly) way to do
-so, like this:
-
-	https://lore.kernel.org/git/Pine.LNX.4.58.0504150753440.7211@ppc970.osdl.org
-
-Often these web interfaces accept the message ID with enclosing <>
-stripped (like the above example to point at one of the most important
-message in the Git list).
-
-Some members of the development community can sometimes be found on
-the #git and #git-devel IRC channels on Libera Chat.  Their logs are
-available at:
-
-        https://colabti.org/ircloggy/git/last
-        https://colabti.org/ircloggy/git-devel/last
-
-There is a volunteer-run newsletter to serve our community ("Git Rev
-News" https://git.github.io/rev_news/).
-
-Git is a member project of software freedom conservancy, a non-profit
-organization (https://sfconservancy.org/).  To reach a committee of
-liaisons to the conservancy, contact them at <git@sfconservancy.org>.
-
-For our expectations on the behaviour of the community participants
-towards each other, see CODE_OF_CONDUCT.md at the top level of the source
-tree, or:
-
-    https://github.com/git/git/blob/master/CODE_OF_CONDUCT.md
-
-
-* Reporting bugs
-
-When you think git does not behave as you expect, please do not stop
-your bug report with just "git does not work".  "I used git in this
-way, but it did not work" is not much better, neither is "I used git
-in this way, and X happend, which is broken".  It often is that git is
-correct to cause X happen in such a case, and it is your expectation
-that is broken.  People would not know what other result Y you
-expected to see instead of X, if you left it unsaid.
-
-Please remember to always state
-
- - what you wanted to achieve;
-
- - what you did (the version of git and the command sequence to reproduce
-   the behavior);
-
- - what you saw happen (X above);
-
- - what you expected to see (Y above); and
-
- - how the last two are different.
-
-See https://www.chiark.greenend.org.uk/~sgtatham/bugs.html for further
-hints.  Our `git bugreport` tool gives you a handy way you can use to
-make sure you do not forget these points when filing a bug report.
-
-If you think you found a security-sensitive issue and want to disclose
-it to us without announcing it to wider public, please contact us at
-our security mailing list <git-security@googlegroups.com>.  This is
-a closed list that is limited to people who need to know early about
-vulnerabilities, including:
-
-  - people triaging and fixing reported vulnerabilities
-  - people operating major git hosting sites with many users
-  - people packaging and distributing git to large numbers of people
-
-where these issues are discussed without risk of the information
-leaking out before we're ready to make public announcements.
-
-
-* Repositories and documentation.
-
-My public git.git repositories are (mirrored) at:
-
-  https://git.kernel.org/pub/scm/git/git.git/
-  https://kernel.googlesource.com/pub/scm/git/git
-  https://repo.or.cz/alt-git.git/
-  https://github.com/git/git/
-  https://gitlab.com/git-scm/git/
-
-This one shows not just the main integration branches, but also
-individual topics broken out:
-
-  https://github.com/gitster/git/
-
-A few web interfaces are found at:
-
-  https://git.kernel.org/pub/scm/git/git.git
-  https://kernel.googlesource.com/pub/scm/git/git
-  https://repo.or.cz/w/alt-git.git
-
-Preformatted documentation from the tip of the "master" branch can be
-found in:
-
-  https://git.kernel.org/pub/scm/git/git-{htmldocs,manpages}.git/
-  https://repo.or.cz/git-{htmldocs,manpages}.git/
-  https://github.com/gitster/git-{htmldocs,manpages}.git/
-
-The manual pages formatted in HTML for the tip of 'master' can be
-viewed online at:
-
-  https://git.github.io/htmldocs/git.html
-
-
-* How various branches are used.
-
-There are four "integration" branches in git.git repository that track
-the source tree of git: "master", "maint", "next", and "seen".  They
-however almost never get new commits made directly on them.  Instead,
-a branch is forked from either "master" or "maint" for each "topic",
-whether it is a new feature or a fix for a bug, and holds a set of
-commits that belong to the same theme.  Such a "topic branch" is then
-merged to these integration branches.
-
-The "master" branch is meant to contain what are very well tested and
-ready to be used in a production setting.  Every now and then, a
-"feature release" is cut from the tip of this branch.  They used to be
-named with three dotted decimal digits (e.g., "1.8.5"), but we have
-switched the versioning scheme and "feature releases" are named with
-three-dotted decimal digits that ends with ".0" (e.g., "1.9.0").
-
-The last such release was 2.50 done on Jun 16th, 2025.  We aim to keep
-that the tip of the "master" branch is always more stable than any of
-the released versions.
-
-Whenever a feature release is made, "maint" branch is forked off from
-"master" at that point.  Obvious and safe fixes after a feature
-release are merged to this branch and maintenance releases are cut
-from it.  Usually the topic branches that contain these fixes are
-merged to the "master" branch first, before getting merged to the
-"maint" branch, to reduce the chance of last-minute issues, but
-things like embargoed security fixes may first appear in the "maint"
-and merged up to "master" at the same time.  The maintenance releases
-used to be named with four dotted decimal, named after the feature
-release they are updates to (e.g., "1.8.5.1" was the first maintenance
-release for "1.8.5" feature release).  These days, maintenance releases
-are named by incrementing the last digit of three-dotted decimal name
-(e.g., "2.47.1" was the second maintenance release for the "2.47" series).
-
-New features almost never go to the "maint" branch.  It is merged into
-"master" primarily to propagate the description in the release notes
-forward.
-
-When you send a series of patches, after review discussions on the
-mailing list, a separate topic branch is forked from the tip of
-"master" (or somewhere older, especially when the topic is about
-fixing an earlier bug) and your patches are applied on that topic
-branch, and kept out of "master" while people test it out.  The
-quality of topic branches are judged primarily by the mailing list
-discussions.
-
-Topic branches that are in good shape are merged to the "next" branch.
-The "next" branch is where new and exciting things take place.  In
-general, the "next" branch always contains the tip of "master".  It
-might not be quite rock-solid, but is expected to work more or less
-without major breakage.  A topic that is in "next" is expected to be
-polished to perfection before it is merged to "master".  Please help
-this process by building & using the "next" branch for your daily
-work, and reporting any new bugs you find to the mailing list, before
-the breakage is merged down to the "master".
-
-The "seen" (formerly "pu", proposed updates) branch bundles the
-remaining topic branches the maintainer happens to have seen to remind
-the maintainer that the topics in them might become interesting when
-they are polished.
-
-The contributors can use it to anticipate what topics from others
-may cause conflict with their own work, and find people who are
-working on these topics to talk to before the potential conflicts
-get out of control.  It would be a good idea to fork from maint or
-master to grow a topic and to test (1) it by itself, (2) a temporary
-merge of it to 'next' and (3) a temporary merge to it to 'seen',
-before publishing it.
-
-Consider that a topic only in "seen" is not part of "git" yet.  When a
-topic that was in "seen" proves to be in a testable shape, it is
-merged to "next".
-
-You can run "git log --first-parent master..seen" to see what topics
-are currently in flight.  Sometimes, a topic that looked promising
-proves to be a bad idea and the topic gets dropped from "seen" in such
-a case.  The output of the above "git log" talks about a "jch" branch,
-which is an early part of the "seen" branch; that branch contains all
-topics that are in "next" and a bit more (but not all of "seen") and
-is used by the maintainer for his daily work.
-
-The two branches "master" and "maint" are never rewound, and "next"
-usually will not be either.  After a feature release is made from
-"master", however, "next" will be rebuilt from the tip of "master"
-using the topics that didn't make the cut in the feature release.
-Some topics that used to be in "next" during the previous cycle may
-get ejected from "next" when this happens.
-
-A natural consequence of how "next" and "seen" bundles topics together
-is that until a topic is merged to "next", updates to it is expected
-by replacing the patch(es) in the topic with an improved version, and
-once a topic is merged to "next", updates to it needs to come as
-incremental patches, pointing out what was wrong in the previous
-patches and how the problem was corrected.  The idea is that if many
-reviewers thought it has seen enough eyeballs and is good enough for
-"next", yet we later find that there was something we all missed, that
-is worth a separate explanation, e.g., "The primary motivation behind
-the series is still good, but for such and such reasons we missed this
-case we are fixing.", hence we prefer follow-up incremental patches.
-
-Note that being in "next" is not a guarantee to appear in the next
-release, nor even in any future release.  There were cases that topics
-needed reverting a few commits in them before graduating to "master",
-or a topic that already was in "next" was reverted from "next" because
-fatal flaws were found in it after it was merged to "next".
-
-
-* Other people's trees.
-
-Documentation/SubmittingPatches outlines to whom your proposed changes
-should be sent.  As described in contrib/README, I would delegate fixes
-and enhancements in contrib/ area to the primary contributors of them.
-
-Although the following are included in git.git repository, they have their
-own authoritative repository and maintainers:
-
- - git-gui/ comes from git-gui project, maintained by Johannes Sixt:
-
-        https://github.com/j6t/git-gui
-
- - gitk-git/ comes from gitk project, maintained by Johannes Sixt:
-
-        https://github.com/j6t/gitk
-
- - po/ comes from the localization coordinator, Jiang Xin:
-
-	https://github.com/git-l10n/git-po/
-
-When sending proposed updates and fixes to these parts of the system,
-please base your patches on these trees, not git.git (the former two
-even have different directory structures).
-
-
-* Other places.
-
-As the Git ecosystem has grown larger over the years, there are
-documentation sites and third-party tools that have been created and
-maintained by friendly third-parties.  Reporting issues with them to
-the main mailing list is still welcomed by the list participants, but
-most likely you will be asked to contact these third-parties directly.
-
- - git-scm website (https://www.git-scm.com/) is maintained directly
-   on its GitHub repository and its issues are managed there.
-
-   https://github.com/git/git-scm.com/issues
-   https://github.com/git/git-scm.com/?tab=readme-ov-file#contributing
-
- - Git for Windows (https://gitforwindows.org/) is a project that
-   packages (core) Git software with some other goodies for the
-   Windows platform.  They manage their own issues list and their
-   changes are managed directly on GitHub via pull requests, focused
-   primarily on Windows specific issues and their additions (like
-   Windows installer).
-
-   https://github.com/git-for-windows/git/wiki/How-to-participate
-   https://github.com/git-for-windows/git/issues
-
- - The online edition of ProGit Book hosted at git-scm.com/book/ is
-   managed by the Pro Git book folks, and they maintain their work and
-   issues at their GitHub repository.
-
-   https://github.com/progit/progit2/issues
-   https://github.com/progit/progit2/blob/main/CONTRIBUTING.md
+Rodrigo Michelassi <rodmichelassi@gmail.com> writes:
+
+> From: rodrigocmichelassi <rodmichelassi@gmail.com>
+
+As pointed out earlier, we want to see this line look like
+
+    From: Rodrigo Michelassi <rodmichelassi@gmail.com>
+
+This often comes from your commit object; you'd have to fix it there
+to match "Rodrigo Michelassi <rodmichelassi@gmail.com>" used to sign
+off this patch, something like:
+
+ $ git commit --no-edit --amend \
+   --author="Rodrigo Michelassi <rodmichelassi@gmail.com>"
+
+while you have that commit checked out, and then
+
+ $ git format-patch >patch.txt --stdout -v4 -1 HEAD
+
+to prepare the patch, proofread it and then optionally after fixing
+anything you found problematic in your proofreading, run git-send-email
+on it.
+
+Because your MUA already gives the name you use on your
+signed-off-by line on the From: line, optionally you can just edit
+the line out before sending, i.e. after the format-patch produces
+the text file, before send-email sends the file out.
+
+> Sorry for the wrong commit message on V2.
+
+Anything you write in the body of the message, before the three-dash
+line, goes to the resulting commit log message.  You do not want to
+etch the above message into stone.  You can write such an ephemeral
+message after the three-dash lines.  See these for examples.
+
+    https://lore.kernel.org/git/20250512185233.GC1276214@coredump.intra.peff.net/
+    https://lore.kernel.org/git/20250225063421.GJ1293961@coredump.intra.peff.net/
+
+> 'test_path_is_file', 'test_path_is_dir' and 'test_file_is_missing'
+> are modern path checking methods in Git's development, that emit
+> useful diagnostic information when detect a failing condition, while
+
+"modern path checking methods" -> "test helpers used"
+
+Also, "when detect" -> "when they detect", probably.
+
+> test -[efd] does not.
+> Replace the basic shell commands 'test -f', 'test -d' and 'test -e',
+> with this modern path checking approach.
+
+Ditto.
+
+> Co-authored-by: Isabella Caselli <icaselli@usp.br>
+> Signed-off-by: Isabella Caselli <icaselli@usp.br>
+> Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
+> ---
+>  t/t2400-worktree-add.sh | 20 ++++++++++----------
+>  1 file changed, 10 insertions(+), 10 deletions(-)
+
+The changes to the test look good to me.
+
+Thanks.
+
+
+> diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
+> index 90638fa886..023e1301c8 100755
+> --- a/t/t2400-worktree-add.sh
+> +++ b/t/t2400-worktree-add.sh
+> @@ -42,8 +42,8 @@ test_expect_success '"add" using - shorthand' '
+>  
+>  test_expect_success '"add" refuses to checkout locked branch' '
+>  	test_must_fail git worktree add zere main &&
+> -	! test -d zere &&
+> -	! test -d .git/worktrees/zere
+> +	test_path_is_missing zere &&
+> +	test_path_is_missing .git/worktrees/zere
+>  '
+>  
+>  test_expect_success 'checking out paths not complaining about linked checkouts' '
+> @@ -70,14 +70,14 @@ test_expect_success '"add" worktree' '
+>  test_expect_success '"add" worktree with lock' '
+>  	git worktree add --detach --lock here-with-lock main &&
+>  	test_when_finished "git worktree unlock here-with-lock || :" &&
+> -	test -f .git/worktrees/here-with-lock/locked
+> +	test_path_is_file .git/worktrees/here-with-lock/locked
+>  '
+>  
+>  test_expect_success '"add" worktree with lock and reason' '
+>  	lock_reason="why not" &&
+>  	git worktree add --detach --lock --reason "$lock_reason" here-with-lock-reason main &&
+>  	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
+> -	test -f .git/worktrees/here-with-lock-reason/locked &&
+> +	test_path_is_file .git/worktrees/here-with-lock-reason/locked &&
+>  	echo "$lock_reason" >expect &&
+>  	test_cmp expect .git/worktrees/here-with-lock-reason/locked
+>  '
+> @@ -412,14 +412,14 @@ test_expect_success '"add --orphan" with empty repository' '
+>  test_expect_success '"add" worktree with orphan branch and lock' '
+>  	git worktree add --lock --orphan -b orphanbr orphan-with-lock &&
+>  	test_when_finished "git worktree unlock orphan-with-lock || :" &&
+> -	test -f .git/worktrees/orphan-with-lock/locked
+> +	test_path_is_file .git/worktrees/orphan-with-lock/locked
+>  '
+>  
+>  test_expect_success '"add" worktree with orphan branch, lock, and reason' '
+>  	lock_reason="why not" &&
+>  	git worktree add --detach --lock --reason "$lock_reason" orphan-with-lock-reason main &&
+>  	test_when_finished "git worktree unlock orphan-with-lock-reason || :" &&
+> -	test -f .git/worktrees/orphan-with-lock-reason/locked &&
+> +	test_path_is_file .git/worktrees/orphan-with-lock-reason/locked &&
+>  	echo "$lock_reason" >expect &&
+>  	test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
+>  '
+> @@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked checkout' '
+>  
+>  test_expect_success '"add" worktree with --no-checkout' '
+>  	git worktree add --no-checkout -b swamp swamp &&
+> -	! test -e swamp/init.t &&
+> +	test_path_is_missing swamp/init.t &&
+>  	git -C swamp reset --hard &&
+>  	test_cmp init.t swamp/init.t
+>  '
+> @@ -497,7 +497,7 @@ test_expect_success 'put a worktree under rebase' '
+>  
+>  test_expect_success 'add a worktree, checking out a rebased branch' '
+>  	test_must_fail git worktree add new-rebase under-rebase &&
+> -	! test -d new-rebase
+> +	test_path_is_missing new-rebase
+>  '
+>  
+>  test_expect_success 'checking out a rebased branch from another worktree' '
+> @@ -535,7 +535,7 @@ test_expect_success 'checkout a branch under bisect' '
+>  		git worktree list >actual &&
+>  		grep "under-bisect.*detached HEAD" actual &&
+>  		test_must_fail git worktree add new-bisect under-bisect &&
+> -		! test -d new-bisect
+> +		test_path_is_missing new-bisect
+>  	)
+>  '
+>  
+> @@ -1165,7 +1165,7 @@ test_expect_success '"add" not tripped up by magic worktree matching"' '
+>  
+>  test_expect_success FUNNYNAMES 'sanitize generated worktree name' '
+>  	git worktree add --detach ".  weird*..?.lock.lock" &&
+> -	test -d .git/worktrees/---weird-.-
+> +	test_path_is_dir .git/worktrees/---weird-.-
+>  '
+>  
+>  test_expect_success '"add" should not fail because of another bad worktree' '
