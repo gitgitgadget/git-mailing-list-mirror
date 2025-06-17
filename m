@@ -1,67 +1,67 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A551D2E54C9
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 23:20:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6919A295528
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 23:22:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750202407; cv=fail; b=DD9ld+I6M6ZqPHjEaXWkZf2rKDrR/Yuynt8OX4i1RnGsrlOVywqfIwfp09rt1hdBLMArhlkaYAwL5kRS16qi0e7E9fkZo4XD7ZwBP3UVCv0mXS1ey7uWTcY6vjRFvzVyhfnD1TzYyVdeQR75Mp1I+dsYCCjtLPnlIMJ4iZJ43jM=
+	t=1750202527; cv=fail; b=pqnphj4HPwrn/EZqRzXqx7/FDevnwt1m0Psft0UpLuwuwqjq9lWW8hPLflLz8PCndnLil7MpudHDWTk74u6wkg4WOnC5z0imiYH/Df0WT4IGO0Qetn8qr3UItdzzbsme88zLpSKwrFppHirB7DG+xbqSbHsOlU5vkwOO0Q5t7YI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750202407; c=relaxed/simple;
-	bh=DG3Nh1KY+gbV5dk2R+dqM64b0Nz+aLBpyPmKaHbrj+o=;
+	s=arc-20240116; t=1750202527; c=relaxed/simple;
+	bh=9P7Ja+uD/s0a7/d+1c1155cNQXCaok32aXwU5Hg2d4E=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=kca0qCPwfFkcM52vfLogFdibl6n54LqcQUuEmKn8RVO0dyVnRzc3Ka5VnVWGOXwLWzvn+KqJ4WIhMtXIR362ty7XGxelDC4uDzwUe/Tx9Y+St4P0Wm+GyTb443O7EsTOwr75O259AghE6ro+bbFn/o0tQPf+Xipv7fuAJcaxcVo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UX7Av7Ot; arc=fail smtp.client-ip=198.175.65.20
+	 Content-Type:MIME-Version; b=Zv7KY6XLrOzDBBTHs1GL93eHGluAx9UZZNcDq4+tIlRILJWi2nOWgzzC83GG/gdrxvdY/mg2uexgW+ryfTBf/C/TT7rmOboTAmDfsZOt/cMXUicuvxd+qLOipjJexldRjCHhAOW1uL5ktE+XEV/1qCxDRsHx6Z8T7x1TzPziKDc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=We+Ui0+P; arc=fail smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UX7Av7Ot"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="We+Ui0+P"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750202406; x=1781738406;
+  t=1750202526; x=1781738526;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=DG3Nh1KY+gbV5dk2R+dqM64b0Nz+aLBpyPmKaHbrj+o=;
-  b=UX7Av7OtvFmDkX3bus8B6hhiJYU5WAZIHPKfYPdhefNBk4IB2sicey3w
-   bxEWfQJxnDDr4lMi0aBYDAIgC6v4IsgfmftKI4CxzF2rX5sTMNhB+gY2X
-   mEopfmy2Ln1g1QaiUyI523ntcgabmyGIzJlv8ILjYsxKSzQuFckx34Yho
-   QxxQM8m0e/RsTzbDOKYY6NTCSDIguQK7Npa4ENBwqpBbX1eR0Rsi9uZsh
-   qo4s9XmeNAKKtSAeCTJXEQhQvknknZt/O9SeF4wbKloHKLs4eQcx7FZNO
-   dsFXnvswJZ+6eQVFCH8PiHDRQYk+8F1T2y08cX2qLqobQ0TjRcvMFHuTi
-   w==;
-X-CSE-ConnectionGUID: WW1T8oPvQcCyqxxzgjmZpQ==
-X-CSE-MsgGUID: t5hezbVITZOommvNgJxxXA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="52106712"
+  bh=9P7Ja+uD/s0a7/d+1c1155cNQXCaok32aXwU5Hg2d4E=;
+  b=We+Ui0+PUqe+90S320LKRjCoB2OjNfoLVtEz7LJ3rGqF93o+1zB/Ck5I
+   Bvz4nLPG4RM2FNbhBv2QAID8Nbmqw+8NbrHgm8C+mdiy4TfPziOGS7IWI
+   GIqsbUe/mx4RItiRaVDRosQvDOHSZXOmH8x2duYvGynwepZq/MDkG7MSF
+   CtYqYs97kQKC0vl7Fa4JmNVqnBcbgiJIHZJ7nJwkq/fl927eTBaASC36A
+   9aRhR/8pgy6wbCK9ORC33FLKplzv/vG43Z5kC05ymyi/vImpkLw08dmEP
+   At/VJzrMLQlMHNFnp3N14vxSTaOHsRmYwExBA0xqWgI/yxy3D2Y/TFJAI
+   A==;
+X-CSE-ConnectionGUID: WmMRx+PMRnaiddVSiDqwWQ==
+X-CSE-MsgGUID: MZ+Q6X0QQmiSwlSNDJQe3g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="52381059"
 X-IronPort-AV: E=Sophos;i="6.16,244,1744095600"; 
-   d="scan'208";a="52106712"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 16:20:05 -0700
-X-CSE-ConnectionGUID: TprNnVXRTLyfLFEdzpIU9Q==
-X-CSE-MsgGUID: h/xc/xUrTqaJ8I3i/nSmhQ==
+   d="scan'208";a="52381059"
+Received: from orviesa004.jf.intel.com ([10.64.159.144])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 16:22:05 -0700
+X-CSE-ConnectionGUID: ydl8g1abQzyoy+6Bn01vIQ==
+X-CSE-MsgGUID: BzyC/WGQTVi5edTER75SYw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,244,1744095600"; 
-   d="scan'208";a="148859063"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 16:20:04 -0700
-Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 17 Jun 2025 16:20:03 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+   d="scan'208";a="153897272"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 16:22:05 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
  ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 17 Jun 2025 16:20:03 -0700
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (40.107.212.42)
- by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.1544.25; Tue, 17 Jun 2025 16:22:04 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 17 Jun 2025 16:20:02 -0700
+ 15.2.1544.25 via Frontend Transport; Tue, 17 Jun 2025 16:22:04 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.48) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Tue, 17 Jun 2025 16:22:03 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eNpBMB67/SjFPOCplhzIl1Be73VRCKCZ9fnXdrgRi+Veu4AN0xd3HLIXOcGa04rG1p2YmiDaDm+37muHn1UgFsOuw5QakULqAyZH9hmT7eBQgzGHuzQDSnTG9K1GirZsIH/GSy4q8bm8y9tKwiakcJ+KpGXzHlWsuLkHWVsVA60uw/jQKut+BDurbUC2hlRdd1XghZ02grb+HowAn8CWrixLQ+p/H8d5rU2f6vhQtfEDxDQIl7D/pUsU6vnZ2l4hAB9Gu3zZsILCC4JsYxFnwA+DWvY/wE0OPDSWGwJUkxG0SdjC0cWv7kXiW8p+lLS6ayfdYMxx8bz9XVGt5x79Ag==
+ b=dKgbS+l+Dnofk592vb0ui4J7njydMyfVRL1rgJiqMD9qET8J0q4JFq0c6WMytwppZAJ0SZ9dtcx8nM/bExR+E0XenSQ+sAy8KWFLoqrVyt5FMyFJV7TamKQstzv1vMzx+zFt0A2aaM489z0HjJ0g2oCu9yJJcUV5ov8s645M1yB+F02oBPSDTprqXkDvjR6zyUJEyBi31VAiziQOzIEBxQn2pr0TA4fYZ0x3+U5MP2ZhTVhPvsxsmlx4KJr5KYTrDBYxJEEq4e+bB59UTYK7k7SqLc3ywVWYZwQD82CehgficrwSzuZYhLJDEeWiwr8BZAX18X8QU0k4J7HuF2MLOw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JlHvqSSgDEDfwYVbZuFYhdqLRkvOJLFgIBCUC4odwJc=;
- b=DthXbhkzy5g09irRqcFWgWCWFB1b746OBbbMm8Hi+nS23pRErNWsjmyqCp+gI9yAinSz7s2wtIPyfQ7FikYGxoh449z2/Enfch8I9Tg5Jkz9pb1252/o1BZ28O7YUs3uHAKg2zZzD39cLkWvRWKImfLlLFCHskSllCSVrFQHaY/Ki58c7MciD9SrFks2lHxfCNPXR2EbdczAdJzHwrFHLZ6lCnl3fsq20XUqmkCK2n0QC4V+qjV3fRVD9TN3nT+K371tCxLUWm37wi8TihkqISK2J/V4GcW/1ilZ9h8miXmjeU6R3eThLTf0bkAojurHs7HhLCdbYOLN1m2b+YYB0w==
+ bh=1Cz8aNqyITE2QAbu6XgxJT9Dnn9Wzk3IgpYHse7/VTQ=;
+ b=BaPA6P29xqBLDz3GnafR2scOdRi608A3itnhWb3lSRVJ8EQMFyPHjSack2As1O7mwqWcEtl47/ew7g//aUcODZN222BtwvUuUY7NeGxiLZj7LLqIWhes06KfjXkO2teKJtuMQvFle12G0MhT5UZrkgvJ0IL/lsarCwEyfjNtl8k+HmUDM73KFlMmsBg6v0eMqf0bWB5PpXatT2Je5JScM+Hlq8TLDEN5DQufE89eguzU8a8DeentUVXrHG2DmCY9zmeFlTE26sqJp0IDOB2ybci7X+XjXqh7OnEWyXz0UFmxje4y7d1cH9wePGpf+rEte+iv7Y6yWTvmAYcF30Ga1w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -71,28 +71,29 @@ Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
  by CO1PR11MB5155.namprd11.prod.outlook.com (2603:10b6:303:91::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.18; Tue, 17 Jun
- 2025 23:19:55 +0000
+ 2025 23:21:57 +0000
 Received: from CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8%5]) with mapi id 15.20.8835.027; Tue, 17 Jun 2025
- 23:19:55 +0000
-Message-ID: <a0fdbc99-f5c5-4399-a82e-0bf37292868d@intel.com>
-Date: Tue, 17 Jun 2025 16:19:54 -0700
+ 23:21:57 +0000
+Message-ID: <5bdecb99-8ac6-4dc4-8070-ddc747ab40b3@intel.com>
+Date: Tue, 17 Jun 2025 16:21:55 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/6] remote: remove the_repository from some functions
+Subject: Re: [PATCH v2 4/6] submodule--helper: improve logic for fallback
+ remote name
 To: Junio C Hamano <gitster@pobox.com>
 CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>, Lidong Yan
 	<yldhome2d2@gmail.com>, Patrick Steinhardt <ps@pks.im>
 References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
- <20250617-jk-submodule-helper-use-url-v2-3-04cbb003177d@gmail.com>
- <xmqq7c1auguv.fsf@gitster.g>
+ <20250617-jk-submodule-helper-use-url-v2-4-04cbb003177d@gmail.com>
+ <xmqqv7out11r.fsf@gitster.g>
 Content-Language: en-US
 From: Jacob Keller <jacob.e.keller@intel.com>
-In-Reply-To: <xmqq7c1auguv.fsf@gitster.g>
+In-Reply-To: <xmqqv7out11r.fsf@gitster.g>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0233.namprd03.prod.outlook.com
- (2603:10b6:303:b9::28) To CO1PR11MB5089.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW3PR06CA0012.namprd06.prod.outlook.com
+ (2603:10b6:303:2a::17) To CO1PR11MB5089.namprd11.prod.outlook.com
  (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -102,134 +103,234 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|CO1PR11MB5155:EE_
-X-MS-Office365-Filtering-Correlation-Id: b0124d83-6840-4e73-7fd7-08ddadf5783a
+X-MS-Office365-Filtering-Correlation-Id: f801dab7-c1bd-4165-3b53-08ddadf5c0eb
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?dTR2cG9mNGx5VUFNTjJ5MGUvSnhidUhyOVJMbW5xSjIyQVJPZVNkNlVQRFhp?=
- =?utf-8?B?b0FaeTh0OXhoaFNzUnk1Ymt0anJhMXRYY1EzcWlKSmcrQitSZGUyamVMVWtj?=
- =?utf-8?B?MUtuOHRDNzZpbzBJQlFYakh0Wm9yK1R2YktnYU5rdlFTWjJpT1ppc0lmOGsr?=
- =?utf-8?B?UU80SEV3Y2UwUmlLNEk5QkRvZGFYNXJnSVlMdlFrZ0h1WkR6bVdQOGhTdW9t?=
- =?utf-8?B?ck5DeUp4Rk5hWEg5UEs2MlpURzZCU0JvOUh4RFF1RmgrbVE3YU1ic01vUmhK?=
- =?utf-8?B?cno3TkR3a3FmNmIwWUUxNzY5QUVqTU45bkwyTFhGMlZKWVkzcW9seWt0ajZC?=
- =?utf-8?B?Yk5rbEhtdlE1TThxY0pneU5hbzdDNFY3U1BHb0NWSXo4c1R3QU9Lc2FWVits?=
- =?utf-8?B?Y1Q4UHR1aDdxMlpYQk9wa2hBMjVZQ2pnSHdaQ3FudzZCQ0VhUloxeFdaVVFr?=
- =?utf-8?B?aWJvR2tOTGxnYjlHa2FITXVFUzBCcDNyeFA5bDF1NzRqbFVNeU1XNnpXZXh3?=
- =?utf-8?B?N2k0T1NTa0FRd3lUbmd3THdkNHNzY21uOGZnSWNucloydFdlMEFaaGl2WXJ3?=
- =?utf-8?B?K3hLYU9zOUk3SmFOSmMzTGtkLytiVEtOWXdUNTNMbmxCRDBvbVpGaVExVkRI?=
- =?utf-8?B?eUNTb2JPbmNlNzVRQVFpLys1UlRzYkZ4N1JoMmQzczh1czY2ajZSTSt0QmFZ?=
- =?utf-8?B?OER4bE1pT0liQkdwTjNtUEl4Y3NGWUU1TmVuUjlvR2F4L2pRaTFQUWtrQ0FZ?=
- =?utf-8?B?YmNBdkFub3Y5cGUzb0poT2tmcDJWZ2V3MHpVVDhaVG5PeGRQbElicUdzNCtS?=
- =?utf-8?B?ZG9obDJmc2E4azNpZGFPN2dyZmNseWNuWVlJLzN3andNbm5tQndJT3BWcER3?=
- =?utf-8?B?ME02eDByd0l1eW40MzRBQWw4d012bkFKcGRhWmVhOTI0bVNzaEZjZEhYdnl0?=
- =?utf-8?B?dFZySHFjVnJxNjB5YnF5KzJmSVp6djlGWnM0ekdPb0RzUU9RaWlaKzVjYmxL?=
- =?utf-8?B?NTd3SGY3WnJ3ZnBneXdCRkt6b1dzQWh2L2hoQVZ2SzBOK0dCdXlqcFdwYzZJ?=
- =?utf-8?B?YU5vc1NQcG9OWnF3YmJxN0hWVUZtZFRHZVJqOTljUmx3NTVZaWtJd0F6TTFL?=
- =?utf-8?B?amg4T1JSUDZ0WDVSZE5RNmlqbm52UGFvbThnRHEzWmRmd2JIQ0lnU2NvRzBu?=
- =?utf-8?B?dEFaQ0ZRaElBL3FLRlVRSWRRa04yRGVNUTJTZUxlQStYTXo2VUpVQloyN1NR?=
- =?utf-8?B?OW5EQXRjK1ZqS3BpUVlKNzQrZGRkUmxpdW85bUR3ekt4T0o4R2hIWE0wbnZ6?=
- =?utf-8?B?VHQzbU5OY1RwbnJvcEppSnllMGswYmM3MEwybDNrTGtBUFVGRFR1UTBKWlpJ?=
- =?utf-8?B?Qm5YVWJVclBZZWR1VTZBcCtWMHlEdkpGL2pER1RkT0h2U1k0OHV3NWxFUXJK?=
- =?utf-8?B?Qm9GRWwyTzhqVlFlVGFYSTcxMjRKK3NuYkphZmpld3dSTXREd2NFcXk3TlF4?=
- =?utf-8?B?bCtsQkw3aHZBZjhpOGFDR0hoYjNmMzZQK0pOWkFzZUEvamZRRSt4dkl4aW1w?=
- =?utf-8?B?c0ZaQWJjdFFpWHhoQkJvMzRRTlZMVzBlaHAyNElvaFRsWldaMUt3THhSa290?=
- =?utf-8?B?L2ptZWFTZjd0Sm15TzNHcytFLytFQUI3dkNDL2V3OE05TDBuamJUaHlKd1FV?=
- =?utf-8?B?bmtiZ2JsczlGTWF1eE0zYW9uMGhoVTZiZHlLQS9obWw2aE5tRzFNNmk1WEZO?=
- =?utf-8?B?bG4zcDZhTDMxRHlkUndRWDBWdnpTMGZTYzZsYnFKcnJiVEUvMmhtR0hOK2Rm?=
- =?utf-8?B?eGtlaGtBL0FrTUh4dnVwZFpnaWJFVkxWUk9PQU03UmVrc3gvQVZiZ2c2NFFt?=
- =?utf-8?B?S3U0MWxJR2d4b0xSRmFuYXVxeGd3eld2U2U1RC9Td280dnc9PQ==?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?UWlqQm5nVUVnQVo0dzkrRlB5WDBhNkk1Um1CWitoQXp0UDB0RzFaVGZuL0Yz?=
+ =?utf-8?B?QWxwMDVTWmtJQURRSVJsNG1SOWtCdDkzTndYV0tiVy9GK1JRTUNSZVJWbTZO?=
+ =?utf-8?B?UFp0c0tjVUxiakY0eWJnL1JoL2RkSDE3OS94RkNtclR2Vy8zM3Bwc0FVNU5F?=
+ =?utf-8?B?YW1FK3V0NGp5STIvK01qUkowV3R0UVFaY2tTM3lMcThrejlqbHZ1eHg0WEYz?=
+ =?utf-8?B?M2Fhbi9BdlZLZ244TWpFUW40NjNyU0ZoQS8rY2ZKbkI1cnNiUmtOQmZaN0xX?=
+ =?utf-8?B?cStxTHpTRHlDMVdSaGxxem5EZm9qU3JnaDhhYkxTMFNMeXBaZmtSMDlvSisz?=
+ =?utf-8?B?bFh0OEplQklFWm5Jb1VZNUduc2c2U1d2ZktsTnJDd25hQ2duRjJLNnJINVFJ?=
+ =?utf-8?B?Zk9VNlZRTmFRcUltYmZ6S3pmQXlxWnJhWXYzV3JxNDBEQ1I1cGNZeElhWFhi?=
+ =?utf-8?B?REFiQkQzMWR3Y2JZMUdPZXdpQzRPTWlFeXM1ajJxUFBVYWt3SmlVMzFBZnBn?=
+ =?utf-8?B?d2EvRExSb3FqZ3hubUlUNlFPRmNVL2hiWkxrck5VTkVKakhYUGN5cnV6a3ZE?=
+ =?utf-8?B?eWVNd1pyUnU2QzRDWCtpM05ETC9QdVpOb1E1aGlkeWhSWGpOL3Roc1JoMmFj?=
+ =?utf-8?B?VkpuYzJXTTFqTVlQcXdaSUg4UG9TQ2FhdFVlclhMeHpaeDhBajJSM3ZuTFRV?=
+ =?utf-8?B?SnVxLzd6OUZFYWtoeUtsWVNtdVZRRGp0Nk1ORWlrMG5YOG03M2NRbzdtcjNv?=
+ =?utf-8?B?YW94SUNkUnBGR0NlLzU3ZlFJUk00YVZBaGg0S3l5VHVMMWp0Q1VldUhHcmRW?=
+ =?utf-8?B?UDhsK1IxeW1nQ1ZCcW8vdXVGN29RV0ZBUVRhaVBLcW1GcFZZT2Y0dUtKeS9t?=
+ =?utf-8?B?TFJZSHlPM1BEdTRldTlyWmdyWCtpVytsQlNzYzFRZFFycnlTY3pmb2RQODlT?=
+ =?utf-8?B?eUVuNDJiZU9pdlFOYjRpcXNFMHRXanMvUmgyS2JDQkkzVGQyMkZldjJRbmla?=
+ =?utf-8?B?dXp3YjVXaDRYSFpjZ2JYRWNSVjQxOXpaRVJkV0FZd2M2MGEzczFaMUE1QUdF?=
+ =?utf-8?B?eTdFYmV1Z3Mwa2sycUpJbWZBdTc3Wm5UZ0lhK3hDOVpqODA4RGs0eWltdHdq?=
+ =?utf-8?B?L2dWWkhsUHR3Sk5pYzFZeTc3OWtkdmJyOXorSnN4WG53OXpxTVlqQ3M0MEpl?=
+ =?utf-8?B?ZzVFaDdiMTZNRElyamdCTDNKTE1yVW1ML0VIeGVZNGdNLzNPQmVNaXpRMlJU?=
+ =?utf-8?B?SUtmU0VZOVVJMlJuZWVJT1dBWldEc1NQcHF4RGVsRVg5Rkt6YXVKR0RzcDJv?=
+ =?utf-8?B?MUhSalhESjNNVFplbmZNeFhYcXFYRFpuMllmWTY2dmxZYStqUnI3NE1Qc21y?=
+ =?utf-8?B?VFpBTGZsMG54b2tRNGREM091VlRaSk1qbUxDSy9lYUFWYjczTnJFeXdQeGRu?=
+ =?utf-8?B?UWNvRjdENVF3eVowaDdXbHBDblVWQ2xMb0oxeWhtQjFEb1BxWEFLc25YVXJZ?=
+ =?utf-8?B?cEVGWVRvMDRCVU9rZmx0ditzSXhVRjFQK2Q3Z3FOQVE3UnBYc24vZHpDN3RE?=
+ =?utf-8?B?TjR0RWxsS1YzU3B3MTJ3UzgxaFluSjlScG0zTDR4TUdrSnc2MStyM2xaMUdY?=
+ =?utf-8?B?L1NTdUlDN0tzK1UwZG4wZUZxZ3VweFdjeVVSaFFLcWFCcWJaT0FCK3JtQWx1?=
+ =?utf-8?B?aEh0NnM1RkZDbzNIaTFCM3FXQmhpT1lnN1F5S2o2eEtSUitmMlZzQ0RXSk04?=
+ =?utf-8?B?VS9VcThVRGE5YytHT3dpZjhSL1NuTDZSQVlTTnBMbmhkL1R4VHlvNWEvU29I?=
+ =?utf-8?B?Nnp5enc3Vkd2OWRubHJxMkxMQnNqNytuSEswSGxodVMra3JEc1FydFo3SUtw?=
+ =?utf-8?B?Zk1oWTlzcHNtaHJUNGhiNmVpUlVCb1FVbEh5NnY5MWJIL3p5cHdwY2ptOHFx?=
+ =?utf-8?Q?6BKHsZPsoCY=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(1800799024)(366016);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZUlITms2Vk5oYTk5QS9mTnVSQ3ZPMkdoTWFYZndSU29uU2c4YzdXNnV6dExv?=
- =?utf-8?B?blJsQWhMTTdLNXVlbTN0bXNhcVE4YXFML0NKbExWRVZobXhWV3pmOTdPMk9l?=
- =?utf-8?B?OEZVSWJUcGlITHNQYi9TNFJtYWVLR3R6QzZDbjlDV2haMlpZS0VUVVdpSkt5?=
- =?utf-8?B?eUJaa1l6b3VlWUQyenIwaWNld1lGWGZTZEpRMTFSZnVLNjlPaG5zRzR6UldC?=
- =?utf-8?B?NDFPT0Q3NDZtNHFDMTJwTm9BWGJSYmJ4UGtHeENjR3FtVXU5UkIxYXEvN3h3?=
- =?utf-8?B?RCtFSHJoSmpReFc3MWgxU3ZjZm9iRXVEOVZIYS9XdUtCWU9WMVpLbVF5cG5Z?=
- =?utf-8?B?QlJ3RldVb0ZIZzEzR3VSSDNuTXE2TWpUQnhSZ3JVMXBjK2VNcVZDaG9ndFY0?=
- =?utf-8?B?S0pRNitRbkc1cUZDcnBVeWZtaTFKUit3OUl0TGZXY3BaaTRXZVp5bzNkYnp1?=
- =?utf-8?B?b1NzVzJubkNjYjZnQzhLR1l3Z0dhTTBPc0VSc2Vodkd1MzF5RFlYalJBeHo4?=
- =?utf-8?B?NjJoM0dJbzRFL0FWWFdBN1lpN2YweTVMTyt6MkRxa0dodHVoc1BGZDBEOXBU?=
- =?utf-8?B?eXZnSGtkM2RwRFA2VW9zdTdjS2xZTTlKcHd0RFdYUU15RDdRNHByWG5tRjZN?=
- =?utf-8?B?aXF0RHBHRjNYcjMwbUdMQzVhU1IrbjBidjAwRlAwSkpMNmFWMk1VSG96c2JO?=
- =?utf-8?B?VTR1RDdVTUdZZnpjb2Q5TXI0YTh0clU3bGoya0ZCRStZaE1FWVhDSXZHTDE4?=
- =?utf-8?B?eHFJUjJsNkRUd2pXTVdwbFI4WVVTUm9nWnRma2p3V2ZXZHp6RWxtdmhsTG10?=
- =?utf-8?B?UHNKeG42dk16RzVMRHI5T25TSjhidFFPZk1TZFBBaW9TNWMyYjVHUzJDa09G?=
- =?utf-8?B?OCs1OFJlTFFjb2Y5b0dYU09zbHBIWVpvK0ZmcUZ4SFRrb2UxY3VodlFkS1c5?=
- =?utf-8?B?MndyWHNwOGVhL05tVk1rQXpORkJCZExQWG5VTElMUlNRRFpJaXVYOTMwWmVT?=
- =?utf-8?B?ZUp6ckZJSGs5Y2lXcGRFOUxrcmlvNGtnUnpKWkNmU0ttekU5eHp2SUNyU00r?=
- =?utf-8?B?YzNGeC9GOTh3MmJGUm9GMHZvZVhIZWhxQ09aVHczK1YzSUNuWDF3RjJjUGly?=
- =?utf-8?B?b3YzWElNc2dhUWNzWWhLdjBJK04vQ3Q1UXZtRTRxa2FYcWZqQzlpUGljM1Zt?=
- =?utf-8?B?Qm1NWnN5emNLRkRkYjJzT0ttU2NMSi9jVjhKQ0pIMEZHT0JrNUlCSFlPMjYw?=
- =?utf-8?B?d1hJdGttTUcxVTFtSmNZN2JnTW1FSlVaa0crUnAxU3JNMU1PMUtuVS9sTktr?=
- =?utf-8?B?ckVPdTFZdHhyT0J5ZFlFbFprTi9iMEJrdWNkYlMzTHpuNHZYQk1RWlY3TlFv?=
- =?utf-8?B?RzV2eDIxY2hwcW1ER25MU2pYdW9SV2ZEYzhMQllhZDEwOVNqYUJkOVpITEkz?=
- =?utf-8?B?SURWT0ZTcmovNW82OExMMERRcjMvMFZOUnJ4YjR0dCtwOUNRS0VVQ1d4ek9p?=
- =?utf-8?B?ZHF0aVAxZ0p3NW01dGsyTCtNbFdsYUUrWHpvQUpUcXJnTTZzOWo0cnV6dmpP?=
- =?utf-8?B?ZVBrcXZQQVNRbTlVMSsvZHpadGw3Qkd0LzhQTWtDd2hmZGpPQkVkVDJVTVFv?=
- =?utf-8?B?eXBiNTVQeExNVk02TlppVi9OSEF3dkh5M011bER0WDQwSmptcHZLQVVDLzZ1?=
- =?utf-8?B?cHZuRFhyellzdlRYU0RucmRNdW92aFA4MDB6WDdxVndkSndXZmU4TkJRRDh2?=
- =?utf-8?B?eTBnM21yT2JZa1M4Q0x0RjJWSWVWNDQvRzZSbnV2UEluTlhGRVYya0dXS1RJ?=
- =?utf-8?B?cE5ZT0VqZW9tU29DLy95aGlXUzdnWDlSdGt5UGV1TVhwck5jcDF2SHA1VHo5?=
- =?utf-8?B?MERoSTdJRFNMNjVjK2xjMVV4TVJQN2J6QVRQdjZDMElad2tOK05kN2RwTjlv?=
- =?utf-8?B?SVRpVmROdUFFMHcvc0l0QUtDL3VFTmdQc1k4V0pjR0ZhWXBoNVhBUldrVzkv?=
- =?utf-8?B?YUVBYXF0TlUrRitLTzUvT250cTBTcXRPdzZpQUFWNGQvNjlZNmpWQ0t3RXpl?=
- =?utf-8?B?bzVKdjhUbkJtN2JlQzlBRk5WUnFqYisrM3BaUW1jUXR0bFFibGk3eFBzdExs?=
- =?utf-8?B?NzBnR0MvMytWaGlkT2VEZ1ZjamlRbmdGVU1mTkRORmtwNXRYY0RWUDRSQ2dU?=
- =?utf-8?B?L2c9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: b0124d83-6840-4e73-7fd7-08ddadf5783a
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VDF2S3dIak41Ky9Ddk82Si9ieHp3VVJWajZSSEFRV1BjU01IOFY5RVZnWTJQ?=
+ =?utf-8?B?akNkVmVEL0tjR09OQzB5RUR1NE9SRG5tZEFzWVk0Y2FiVjFLcHZpOEdzaG5C?=
+ =?utf-8?B?b016dUFhRExjV2NkK0dBOUh0dU5SamVra2F6b0ljZVpNeHZ6TDFFMkJ2NER3?=
+ =?utf-8?B?NnhHQlhXR2VGRGQ2ZlBzOW1ZMm4yZ1UxdlZDYXlLWmRBNkkzWk9nVW5GdDVj?=
+ =?utf-8?B?WjhVM0lRaisyU3U0RlVvczJINVlaZE1uV1liK1JzbnZ0OS9QakozaGNZNnlp?=
+ =?utf-8?B?Qm9LR3RsRFpoei9OdXhWNmVsa1UwMkFWQ2dzV01paWJTd1I2RzU2L0lNaFg4?=
+ =?utf-8?B?N1Fia0NVcW9oSk5VMENNbTI3ZDlRZTBDUklQd3NBMVJkVHYwZS94Wi9ReTV5?=
+ =?utf-8?B?L2ZsZkQybE9udVZNaVNKcVlPeG04WTNydUc2aERWNWhFbnQ0NHZsNitpa3hq?=
+ =?utf-8?B?ekRKZUVCd0psNHk5Wm50enNUTjlRbTExcHZkZ1RoUDIrKzdhT2RsbTlUN2J6?=
+ =?utf-8?B?L1c1WFFFOUZabXFOS3I3VzRHK3ZaYWFSRGJDVmIrRytTeEp2ZnR4WElWZEJE?=
+ =?utf-8?B?Zk12T0NMakRBTUNBaUNWYmw0YjBaMTUrNDMyU2FUR3RKNEgvdWtIM2Y5dFo4?=
+ =?utf-8?B?OFc3QnlUYjZnKzNmTlFsQlh5SmdhM2d5eUNmbG11dDd3enRoZUZwZTYxT29X?=
+ =?utf-8?B?MCtTNXJPd29YbUZxNVdqNk4vdmJ3bzY3L2RrcHBGWWNSQlo0RTdrY0pUQVRu?=
+ =?utf-8?B?cVQ3aEswaTZSWlZuNExJcWgwOWJLby9ndEUySlZqTEZxT0FBdDJ2eGkyUlE0?=
+ =?utf-8?B?S0RUYTkvc2N2Q1RZRHlOaCsyT2V5VVNmeXZPRmFZcXZSZzg4QzdoVmkvOVRp?=
+ =?utf-8?B?RFFuY1Z1TndROUVzOXdFenZleXFmb3ZpSWRMbTFreExZTytsSS94OUZrSmhG?=
+ =?utf-8?B?UWFRaW5udzlWeitTM2Nqd3VObVYrQ0ZHbEttN09DcFhHemdKUTdsZEtzOFMr?=
+ =?utf-8?B?aDVRNVVQUXBQWWpuZnFvWEc1SkhIUldCYXF5cUtYZ1RURXMvSkIwMkx5RFM0?=
+ =?utf-8?B?ZEw2azZ0dXNVOWg1dXQzWVhhRVhqRSs1aXc2ZVRsYk4zWXptVjlFUXY5TGlF?=
+ =?utf-8?B?TURGR2paZTZ2STgyRFNhYm41RHV0Rm5zaTNVZkF2QnA4TDZIK1hodXkxb3ly?=
+ =?utf-8?B?TWNsL3hMS1VSemFTalB2V2dqRktib2RBcFdyVXBlbVcvaGVZMG40YzBsZmJJ?=
+ =?utf-8?B?VUhhVU90TkpXK1REaDNnOHJUelJudVNob1dRMk10a3hhMUhDZmJrS3lkaTZZ?=
+ =?utf-8?B?REJLVjlYSHJDM253QWtjSlVyWnp5WFRhN0lXY21ubjZUR3BqL0dOckpZVDVl?=
+ =?utf-8?B?K2JtYVFFUkpTWFJuaUdsYm5oTmpxK0xiVjBCbytzSjNqRmZhbU5wR1Q2ZUtD?=
+ =?utf-8?B?cGs2NXM5NkVHUEtkK1VLOSs2T2FKbXJJMTArVjN6aVJPemYwN0NBaGpNNVB5?=
+ =?utf-8?B?Mjl5VURGa21TaVAwdUtPWXdDSUd5bHZ6LzFxZHljNGYyd0d3YnVTeUFIZXNR?=
+ =?utf-8?B?akxQaWxURk9QNGRQeVIrTFJaNUpFMk1ibHhtNkFrTXI0WlAvQmdTZGVuS0lz?=
+ =?utf-8?B?emdmMlczUDZvOXo5NjY2SWxnZmh4V2RiajYzOWt5Tzg1UWs1eFlwa05TZlRz?=
+ =?utf-8?B?TTFzanZUQ0xwQjFQUTlHTk82QmtlUnBYb2RCT2pzK2d3RExmdWNtaGNFYlNt?=
+ =?utf-8?B?TjlXeHFCWGFmUkFpcDFwWWJka053SGNSRmgzaHB6bWdRZ29ZYnhxTUlqa1lh?=
+ =?utf-8?B?ZERYeHRBS1Rsb3I5YWlLRE1JUGJxdzI0SkJaNXVGRlZucWtaVXVvV25JZm9R?=
+ =?utf-8?B?OVRlWFFJbG0vYmhYMnNzV05JT25ldTNqWVdFUkgrRXpRK21IczRUTVdpcW82?=
+ =?utf-8?B?UnloYzVOQUFvbldDb2ZJVGpUbTNZOWdaY2FDQkRzRlZwMGZGaTI1Q1RvbmQ3?=
+ =?utf-8?B?Yi81UUUzYUU5d1Q5dEcvRjdYd0ZQcVg2TTZ1UENUYW9YZGgzeGtlL2d6c0JV?=
+ =?utf-8?B?dDh4QjhmcmRGZUxrSHlOeWpKVm8wSDd4dnN2ZnpGTDE0Qkt0b2RzV1dKL0VU?=
+ =?utf-8?B?d3d4aTh0Sld6WElSbmNYM3ptRS8zOFQ1VWxXTkdsMndoWlJvd0ttU3Vra05l?=
+ =?utf-8?B?SFE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: f801dab7-c1bd-4165-3b53-08ddadf5c0eb
 X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 23:19:55.4105
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 23:21:57.3194
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: d8UjWLHtbTpXtkO9jVEbSf+pfHDjNdAOfyDdY4j1HNCFU/rwSnHgqC/dZ8GgXRCMBKj+U7xRqKTiaV/7N980kW59Sw8nrlAxWdFnf8uqpXs=
+X-MS-Exchange-CrossTenant-UserPrincipalName: Vd4icYhkI2tl4zCB6D9Sr3O2/f56TxOSuUf6TgDPXOpofVfBbn1LevHUKFum+lQqZKmwXmN6JcmTvatgClKMeTjOzAbPCZwCdLVEJpAuuGw=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5155
 X-OriginatorOrg: intel.com
 
 
 
-On 6/17/2025 3:46 PM, Junio C Hamano wrote:
+On 6/17/2025 4:12 PM, Junio C Hamano wrote:
 > Jacob Keller <jacob.e.keller@intel.com> writes:
 > 
 >> From: Jacob Keller <jacob.keller@gmail.com>
 >>
->> The remotes_remote_get_1 (and its caller, remotes_remote_get, have an
->> implicit dependency on the_repository due to calling
->> read_branches_file() and read_remotes_file(), both of which use
->> the_repository. The branch_get() function calls set_merge() which has an
->> implicit dependency on the_repository as well.
+>> The repo_get_default_remote() function in submodule--helper currently
+>> tries to figure out the proper remote name to use for a submodule based
+>> on a few factors.
 >>
->> Because of this use of the_repository, the helper functions cannot be
->> used in code paths which operate on other repositories. A future
->> refactor of the submodule--helper will want to make use of some of these
->> functions.
+>> First, it tries to find the remote for the currently checked out branch.
+>> This works if the submodule is configured to checkout to a branch
+>> instead of a detached HEAD state.
 >>
->> Refactor to break the dependency by passing struct repository *repo
->> instead of struct remote_state *remote_state in a few places.
->>
->> The public callers and many other helper functions still depend on
->> the_repository. A repo-aware function will be exposed in a following
->> change for git submodule--helper.
->>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
->>  remote.c | 58 ++++++++++++++++++++++++++++------------------------------
->>  1 file changed, 28 insertions(+), 30 deletions(-)
+>> In the detached HEAD state, the code calls back to using "origin", on
 > 
-> As exactly one remote_state instance belongs to each repository ever
-> since fd3cb050 (remote: move static variables into per-repository
-> struct, 2021-11-17) defined the former, and remote_state is not
-> shared across repository, passing the repository instance that owns
-> a remote_state instance and pick up the .remote_state member out of
-> it as needed would give us the right remote_state, and gives us
-> access to the repository instance it owns it.
+> "calls back" -> "falls back".
 > 
-> Makes perfect sense, 
 
-Yep. It looks like most of the use of the repository structure actually
-comes from the to-be-removed logic for handling the remotes_from_file
-stuff.. but I don't really want to delay these fixes and improvements to
-3.0. :(
+Yep.
+
+>> the assumption that this is the default remote name. Some users may
+>> change this, such as by setting clone.defaultRemoteName, or by changing
+>> the remote name manually within the submodule repository.
+>>
+>> As a first step to improving this situation, refactor to reuse the logic
+>> from remotes_remote_for_branch(). This function uses the remote from the
+>> branch if it has one. If it doesn't then it checks to see if there is
+>> exactly one remote. It uses this remote first before attempting to fall
+>> back to "origin".
+> 
+> Designed wtih good taste.
+> 
+>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+>> index 9e8cdfe1b2a8c2985d9c1b8ad6f1b0d1f9401714..4aa237033a526fca29cce2926419462179d40ee3 100644
+>> --- a/builtin/submodule--helper.c
+>> +++ b/builtin/submodule--helper.c
+>> @@ -41,61 +41,25 @@
+>>  typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+>>  				  void *cb_data);
+>>  
+>> -static int repo_get_default_remote(struct repository *repo, char **default_remote)
+>> -{
+>> -	char *dest = NULL;
+>> -	struct strbuf sb = STRBUF_INIT;
+>> -	struct ref_store *store = get_main_ref_store(repo);
+>> -	const char *refname = refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
+>> -						      NULL);
+>> -
+>> -	if (!refname)
+>> -		return die_message(_("No such ref: %s"), "HEAD");
+>> -
+>> -	/* detached HEAD */
+>> -	if (!strcmp(refname, "HEAD")) {
+>> -		*default_remote = xstrdup("origin");
+>> -		return 0;
+>> -	}
+>> -
+>> -	if (!skip_prefix(refname, "refs/heads/", &refname))
+>> -		return die_message(_("Expecting a full ref name, got %s"),
+>> -				   refname);
+>> -
+>> -	strbuf_addf(&sb, "branch.%s.remote", refname);
+>> -	if (repo_config_get_string(repo, sb.buf, &dest))
+>> -		*default_remote = xstrdup("origin");
+>> -	else
+>> -		*default_remote = dest;
+>> -
+>> -	strbuf_release(&sb);
+>> -	return 0;
+>> -}
+> 
+> We will lose two callers of this function, so we can safely remove
+> it.
+> 
+
+Yep, we're removing both callers.
+
+>>  static int get_default_remote_submodule(const char *module_path, char **default_remote)
+>>  static char *get_default_remote(void)
+> 
+> These callers that used to call the removed helper now call
+> repo_default_remote() instread.  Good.
+> 
+> 
+>> diff --git a/remote.c b/remote.c
+>> index b3a9881a6eacf90bee71d6760858b37d68263502..94b31f4c23057a247a968fc0ebe2e5170e99614d 100644
+>> --- a/remote.c
+>> +++ b/remote.c
+>> @@ -1767,20 +1767,35 @@ static void set_merge(struct repository *repo, struct branch *ret)
+>>  	}
+>>  }
+>>  
+>> -struct branch *branch_get(const char *name)
+>> +static struct branch *repo_branch_get(struct repository *repo, const char *name)
+>>  {
+>>  	struct branch *ret;
+>>  
+>> -	read_config(the_repository, 0);
+>> +	read_config(repo, 0);
+>>  	if (!name || !*name || !strcmp(name, "HEAD"))
+>> -		ret = the_repository->remote_state->current_branch;
+>> +		ret = repo->remote_state->current_branch;
+>>  	else
+>> -		ret = make_branch(the_repository->remote_state, name,
+>> +		ret = make_branch(repo->remote_state, name,
+>>  				  strlen(name));
+>> -	set_merge(the_repository, ret);
+>> +	set_merge(repo, ret);
+>>  	return ret;
+>>  }
+>>  
+>> +struct branch *branch_get(const char *name)
+>> +{
+>> +	return repo_branch_get(the_repository, name);
+>> +}
+> 
+> Nice to see how the dependency to the_repository is lifted for new
+> callers while retaining the same interface for existing ones.
+> 
+
+Yea, I figured there's little reason to go poke all the existing callers
+right away. Those can be updated if/when they have a repository
+parameter passed in.
+
+>> +const char *repo_default_remote(struct repository *repo)
+>> +{
+>> +	struct branch *branch;
+>> +
+>> +	read_config(repo, 0);
+>> +	branch = repo_branch_get(repo, "HEAD");
+>> +
+>> +	return remotes_remote_for_branch(repo->remote_state, branch, NULL);
+>> +}
+> 
+> OK.  read_config() is a safe no-op if repo has already been
+> initialized, so this would give us what we want.  Nicely done.
+> 
+> 
+
+Yep, this matches how most of the other remote logic works.
+
