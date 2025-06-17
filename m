@@ -1,83 +1,74 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BC1D202C48
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 06:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7D5C2D1
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 06:04:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750140020; cv=none; b=gjGrlvz0LfMtwl4y0JwM8WioEYp09DBPpGTNqXULjD8YAPb2tJY67wiC6G2oLMn4jbCce3pvjMLht9RHR6h//wABzO2jUhROQQXqfQidtpBmnH0nJEzjYK61fBKvHghHUCSWBxgwwemxzVw5D9It2b7S7exMESSUOOVILM5vEgI=
+	t=1750140252; cv=none; b=X8KrWeSDh+5a6fX3smC4KPoBUbV4vHIpLMP8Rit5GQt2QN+/5nL8vpr2YY8eQXRSpOv4LG+Y6UsvEWIRGqk5DrzKJTzyY/j29ekxdEKHz3ci/c5LxHjTtnrRjL2ik9ImeWsjsAfmEqRcn326sFncNPG1ScFdvXahyMJGgZ6o6cM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750140020; c=relaxed/simple;
-	bh=2AcqjPVGYYaC7U/J0TN2YkSRUKrNQIT4DMdbKiDtqvw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=jOsjlVfdiwCe/RyZDztTu/zNfIRCEUbLyELeRH8zCgYkHsvSSsi9l1D9by9FoXk7vC1SpRiSaDmWZWPhosErjqy3EsJpdGPcwsO2AnjLSODtxDfdPlB3SWN3nlsQk9BE5s8aSXIJo6uT51wBVJdfcMOwXkIgI62QuPtJoSdLEWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=xfxByuEp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=fPM2QM2b; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=xfxByuEp; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=fPM2QM2b; arc=none smtp.client-ip=195.135.223.131
+	s=arc-20240116; t=1750140252; c=relaxed/simple;
+	bh=X5i5ac43TlnnK2y31HnTPOXN55+F+k/jyptjEOgAu2I=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ARUd+6yBFczcToo7nZxVedfvuhBCY9m36/AcR/e6kR3mvRidOzlqsy98CbtliFISKVOxtCVsxyS0YxdNLJoqVO6YskjypGZFqC6P7gy0hZIzs+W8Ru89yH/MxraH44B/x4SqLJWOjneKOCwqvcA5N/ePRtXCKvr7p4jHakZfzMg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E9IVdf8Z; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hRFixBnP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E9IVdf8Z; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hRFixBnP; arc=none smtp.client-ip=195.135.223.131
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="xfxByuEp";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="fPM2QM2b";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="xfxByuEp";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="fPM2QM2b"
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org [IPv6:2a07:de40:b281:104:10:150:64:97])
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E9IVdf8Z";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hRFixBnP";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E9IVdf8Z";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hRFixBnP"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 96D871F388;
-	Tue, 17 Jun 2025 06:00:12 +0000 (UTC)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id D51241F388;
+	Tue, 17 Jun 2025 06:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750140012; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1750140247; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
 	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HFPGpmT4n2MMvq7CYpntdClIdktdtfGnS+Wx4+ALG3U=;
-	b=xfxByuEpjx3k88hQ+s40uhruKlgIFaZS1FsZjeveb8eMeD4hA6kay5vIqnistuuJWncdem
-	EEzpuuf9OHnsD/y0ab+ahLBjs0a71Mj60CHPQVvGg3Ju12Vp/+NpoXLDEersaQJutIrx4k
-	O1Mj5QbN5kXGtq4Lfvi5c9BdrqymDeA=
+	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
+	b=E9IVdf8Z1l+oQY+5xK2IORPQEvqfp0vmSPN2XQ0JQw5BkD8F1NQ3pv3RyR0l2N6JkwBaP8
+	62lTFRzu8DQc06kxsjDCXsioRNC0ade5NjZEOK/2+Ho906cJjjMpHJhM+tXyJeh665bclx
+	29ixw+tAMtZWL/JrUCyDyjNCwzN/XQ0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750140012;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	s=susede2_ed25519; t=1750140247;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
 	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HFPGpmT4n2MMvq7CYpntdClIdktdtfGnS+Wx4+ALG3U=;
-	b=fPM2QM2bUaqrBcZX3rQFeKnT6g6b83L549+FzqqdLSqhU6QuSjFtzkQ5LfFxCvF8IWbEyf
-	8IbWwC2vbxUSscBQ==
+	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
+	b=hRFixBnPT5izTTUn5sBBmLewHCnu9t0ynTscN95q4g6UKvKKgJ2N1TcldPUKLl0MNlkSHl
+	sJSv345cc0wpdKDg==
 Authentication-Results: smtp-out2.suse.de;
-	dkim=pass header.d=suse.de header.s=susede2_rsa header.b=xfxByuEp;
-	dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=fPM2QM2b
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750140012; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1750140247; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
 	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HFPGpmT4n2MMvq7CYpntdClIdktdtfGnS+Wx4+ALG3U=;
-	b=xfxByuEpjx3k88hQ+s40uhruKlgIFaZS1FsZjeveb8eMeD4hA6kay5vIqnistuuJWncdem
-	EEzpuuf9OHnsD/y0ab+ahLBjs0a71Mj60CHPQVvGg3Ju12Vp/+NpoXLDEersaQJutIrx4k
-	O1Mj5QbN5kXGtq4Lfvi5c9BdrqymDeA=
+	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
+	b=E9IVdf8Z1l+oQY+5xK2IORPQEvqfp0vmSPN2XQ0JQw5BkD8F1NQ3pv3RyR0l2N6JkwBaP8
+	62lTFRzu8DQc06kxsjDCXsioRNC0ade5NjZEOK/2+Ho906cJjjMpHJhM+tXyJeh665bclx
+	29ixw+tAMtZWL/JrUCyDyjNCwzN/XQ0=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750140012;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	s=susede2_ed25519; t=1750140247;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
 	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=HFPGpmT4n2MMvq7CYpntdClIdktdtfGnS+Wx4+ALG3U=;
-	b=fPM2QM2bUaqrBcZX3rQFeKnT6g6b83L549+FzqqdLSqhU6QuSjFtzkQ5LfFxCvF8IWbEyf
-	8IbWwC2vbxUSscBQ==
+	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
+	b=hRFixBnPT5izTTUn5sBBmLewHCnu9t0ynTscN95q4g6UKvKKgJ2N1TcldPUKLl0MNlkSHl
+	sJSv345cc0wpdKDg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4713213A69;
-	Tue, 17 Jun 2025 06:00:12 +0000 (UTC)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B670C13A69;
+	Tue, 17 Jun 2025 06:04:07 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
 	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id KxSYD2wEUWieSQAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 17 Jun 2025 06:00:12 +0000
+	id XAALK1cFUWimSgAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Tue, 17 Jun 2025 06:04:07 +0000
 From: Takashi Iwai <tiwai@suse.de>
 To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Denton Liu <liu.denton@gmail.com>,
-	Eric Huber <echuber2@illinois.edu>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avi Halachmi <avihpit@yahoo.com>,
-	Christoph Sommer <sommer@cms-labs.org>,
-	Paul Mackerras <paulus@ozlabs.org>,
-	Rostislav Krasny <rosti.bsd@gmail.com>
-Subject: [PATCH v2] gitk: Add support of SHA256 repo
-Date: Tue, 17 Jun 2025 07:59:54 +0200
-Message-ID: <20250617055957.9794-1-tiwai@suse.de>
+Subject: [PATCH] git-gui: Add support of SHA256 repo
+Date: Tue, 17 Jun 2025 08:03:59 +0200
+Message-ID: <20250617060406.10159-1-tiwai@suse.de>
 X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,435 +77,200 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 96D871F388
-X-Rspamd-Action: no action
-X-Spam-Flag: NO
-X-Spamd-Result: default: False [-1.51 / 50.00];
+X-Spamd-Result: default: False [-2.80 / 50.00];
 	BAYES_HAM(-3.00)[100.00%];
-	SUSPICIOUS_RECIPS(1.50)[];
 	NEURAL_HAM_LONG(-1.00)[-1.000];
 	MID_CONTAINS_FROM(1.00)[];
 	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	NEURAL_HAM_SHORT(-0.20)[-0.999];
 	MIME_GOOD(-0.10)[text/plain];
-	MX_GOOD(-0.01)[];
-	MIME_TRACE(0.00)[0:+];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	ARC_NA(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
 	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FREEMAIL_CC(0.00)[kdbg.org,gmail.com,illinois.edu,gmx.de,yahoo.com,cms-labs.org,ozlabs.org];
-	RCVD_TLS_ALL(0.00)[];
-	DKIM_TRACE(0.00)[suse.de:+];
-	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCPT_COUNT_ONE(0.00)[1];
+	ARC_NA(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
 	FROM_EQ_ENVFROM(0.00)[];
 	FROM_HAS_DN(0.00)[];
-	TO_DN_SOME(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email];
-	RCPT_COUNT_SEVEN(0.00)[9];
-	DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	TAGGED_RCPT(0.00)[];
-	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de,yahoo.com]
-X-Spam-Score: -1.51
+	MIME_TRACE(0.00)[0:+];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCVD_TLS_ALL(0.00)[]
 X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spam-Score: -2.80
 
-This patch adds a basic support of SHA256 Git repository to Gitk, so
-that Gitk can show and operate on both SHA1 and SHA256 repos
-gracefully.  Since SHA256 has a longer ID length (64 char) than SHA1
-(40 char), many field widths are adjusted to fit with it.
-
-A caveat is that the configuration of auto selection length is shared
-between SHA1 and SHA256 repos.  That is, once when this value is saved
-and read, it's applied to both repo types, which may result in shorter
-selection than the full SHA256 ID.  We may introduce another
-individual config for sha256 (actually I did write in the first
-version), but for simplicity, the common config is used as of writing
-this.
-
-Many lines still refer "sha1" although they may point to both SHA1 and
-SHA256.  They are left untouched for making the changes simpler.
-
-This patch is based on the early work by Rostislav Krasny:
-  https://patchwork.kernel.org/project/git/patch/pull.979.git.1623687519832.gitgitgadget@gmail.com
-I refreshed, revised and extended to the latest state.
+This patch adds the basic support of SHA256 Git repositories.
+The needed changes were mostly about adjusting the fixed ID length of
+SHA1 (40) to be variable depending on the repo type.
 
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 ---
+ git-gui/git-gui.sh                   | 13 ++++++++++++-
+ git-gui/lib/blame.tcl                | 12 ++++++++----
+ git-gui/lib/choose_repository.tcl    |  8 ++++++--
+ git-gui/lib/remote_branch_delete.tcl |  4 +++-
+ 4 files changed, 29 insertions(+), 8 deletions(-)
 
-v1: https://lore.kernel.org/20250320154136.23262-1-tiwai@suse.de
-v1->v2:
-- Fix other procs using fixed 40 length
-- Don't use tabs
-- Drop autosellensha256 config
-- Some code simplification
-- Fix patch description
-
- gitk-git/gitk | 83 +++++++++++++++++++++++++++++++++++----------------
- 1 file changed, 58 insertions(+), 25 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 19689765cde5..04f5f5face68 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -394,6 +394,7 @@ proc parseviewargs {n arglist} {
- 
- proc parseviewrevs {view revs} {
-     global vposids vnegids
-+    global hashlength
- 
-     if {$revs eq {}} {
-         set revs HEAD
-@@ -407,7 +408,7 @@ proc parseviewrevs {view revs} {
-         set badrev {}
-         for {set l 0} {$l < [llength $errlines]} {incr l} {
-             set line [lindex $errlines $l]
--            if {!([string length $line] == 40 && [string is xdigit $line])} {
-+            if {!([string length $line] == $hashlength && [string is xdigit $line])} {
-                 if {[string match "fatal:*" $line]} {
-                     if {[string match "fatal: ambiguous argument*" $line]
-                         && $badrev ne {}} {
-@@ -624,6 +625,7 @@ proc updatecommits {} {
-     global hasworktree
-     global varcid vposids vnegids vflags vrevs
-     global show_notes
-+    global hashlength
- 
-     set hasworktree [hasworktree]
-     rereadrefs
-@@ -657,7 +659,7 @@ proc updatecommits {} {
-             # take out positive refs that we asked for before or
-             # that we have already seen
-             foreach rev $revs {
--                if {[string length $rev] == 40} {
-+                if {[string length $rev] == $hashlength} {
-                     if {[lsearch -exact $oldpos $rev] < 0
-                         && ![info exists varcid($view,$rev)]} {
-                         lappend newrevs $rev
-@@ -1542,6 +1544,7 @@ proc getcommitlines {fd inst view updating}  {
-     global parents children curview hlview
-     global idpending ordertok
-     global varccommits varcid varctok vtokmod vfilelimit vshortids
-+    global hashlength
- 
-     set stuff [read $fd 500000]
-     # git log doesn't terminate the last commit with a null...
-@@ -1624,7 +1627,7 @@ proc getcommitlines {fd inst view updating}  {
-             }
-             set ok 1
-             foreach id $ids {
--                if {[string length $id] != 40} {
-+                if {[string length $id] != $hashlength} {
-                     set ok 0
-                     break
-                 }
-@@ -1870,8 +1873,8 @@ proc getcommit {id} {
-     return 1
- }
- 
--# Expand an abbreviated commit ID to a list of full 40-char IDs that match
--# and are present in the current view.
-+# Expand an abbreviated commit ID to a list of full 40-char (or 64-char
-+# for SHA256 repo) IDs that match and are present in the current view.
- # This is fairly slow...
- proc longid {prefix} {
-     global varcid curview vshortids
-@@ -1904,6 +1907,7 @@ proc readrefs {} {
-     global selecthead selectheadid
-     global hideremotes
-     global tclencoding
-+    global hashlength
- 
-     foreach v {tagids idtags headids idheads otherrefids idotherrefs} {
-         unset -nocomplain $v
-@@ -1913,9 +1917,9 @@ proc readrefs {} {
-         fconfigure $refd -encoding $tclencoding
-     }
-     while {[gets $refd line] >= 0} {
--        if {[string index $line 40] ne " "} continue
--        set id [string range $line 0 39]
--        set ref [string range $line 41 end]
-+        if {[string index $line $hashlength] ne " "} continue
-+        set id [string range $line 0 [expr {$hashlength - 1}]]
-+        set ref [string range $line [expr {$hashlength + 1}] end]
-         if {![string match "refs/*" $ref]} continue
-         set name [string range $ref 5 end]
-         if {[string match "remotes/*" $name]} {
-@@ -2210,6 +2214,7 @@ proc makewindow {} {
-     global have_tk85 have_tk86 use_ttk NS
-     global git_version
-     global worddiff
-+    global hashlength
- 
-     # The "mc" arguments here are purely so that xgettext
-     # sees the following string as needing to be translated
-@@ -2335,7 +2340,7 @@ proc makewindow {} {
-         -command gotocommit -width 8
-     $sha1but conf -disabledforeground [$sha1but cget -foreground]
-     pack .tf.bar.sha1label -side left
--    ${NS}::entry $sha1entry -width 40 -font textfont -textvariable sha1string
-+    ${NS}::entry $sha1entry -width $hashlength -font textfont -textvariable sha1string
-     trace add variable sha1string write sha1change
-     pack $sha1entry -side left -pady 2
- 
-@@ -4062,6 +4067,7 @@ proc stopblaming {} {
- 
- proc read_line_source {fd inst} {
-     global blamestuff curview commfd blameinst nullid nullid2
-+    global hashlength
- 
-     while {[gets $fd line] >= 0} {
-         lappend blamestuff($inst) $line
-@@ -4082,7 +4088,7 @@ proc read_line_source {fd inst} {
-     set line [split [lindex $blamestuff($inst) 0] " "]
-     set id [lindex $line 0]
-     set lnum [lindex $line 1]
--    if {[string length $id] == 40 && [string is xdigit $id] &&
-+    if {[string length $id] == $hashlength && [string is xdigit $id] &&
-         [string is digit -strict $lnum]} {
-         # look for "filename" line
-         foreach l $blamestuff($inst) {
-@@ -5226,11 +5232,13 @@ proc askrelhighlight {row id} {
- # Graph layout functions
- 
- proc shortids {ids} {
-+    global hashlength
-+
-     set res {}
-     foreach id $ids {
-         if {[llength $id] > 1} {
-             lappend res [shortids $id]
--        } elseif {[regexp {^[0-9a-f]{40}$} $id]} {
-+        } elseif {[regexp [string map "@@ $hashlength" {^[0-9a-f]{@@}$}] $id]} {
-             lappend res [string range $id 0 7]
-         } else {
-             lappend res $id
-@@ -5405,13 +5413,14 @@ proc get_viewmainhead {view} {
- # git rev-list should give us just 1 line to use as viewmainheadid($view)
- proc getviewhead {fd inst view} {
-     global viewmainheadid commfd curview viewinstances showlocalchanges
-+    global hashlength
- 
-     set id {}
-     if {[gets $fd line] < 0} {
-         if {![eof $fd]} {
-             return 1
-         }
--    } elseif {[string length $line] == 40 && [string is xdigit $line]} {
-+    } elseif {[string length $line] == $hashlength && [string is xdigit $line]} {
-         set id $line
-     }
-     set viewmainheadid($view) $id
-@@ -7175,10 +7184,11 @@ proc commit_descriptor {p} {
- # Also look for URLs of the form "http[s]://..." and make them web links.
- proc appendwithlinks {text tags} {
-     global ctext linknum curview
-+    global hashlength
- 
-     set start [$ctext index "end - 1c"]
-     $ctext insert end $text $tags
--    set links [regexp -indices -all -inline {(?:\m|-g)[0-9a-f]{6,40}\M} $text]
-+    set links [regexp -indices -all -inline [string map "@@ $hashlength" {(?:\m|-g)[0-9a-f]{6,@@}\M}] $text]
-     foreach l $links {
-         set s [lindex $l 0]
-         set e [lindex $l 1]
-@@ -7206,13 +7216,14 @@ proc appendwithlinks {text tags} {
- proc setlink {id lk} {
-     global curview ctext pendinglinks
-     global linkfgcolor
-+    global hashlength
- 
-     if {[string range $id 0 1] eq "-g"} {
-       set id [string range $id 2 end]
-     }
- 
-     set known 0
--    if {[string length $id] < 40} {
-+    if {[string length $id] < $hashlength} {
-         set matches [longid $id]
-         if {[llength $matches] > 0} {
-             if {[llength $matches] > 1} return
-@@ -8857,13 +8868,16 @@ proc incrfont {inc} {
- 
- proc clearsha1 {} {
-     global sha1entry sha1string
--    if {[string length $sha1string] == 40} {
-+    global hashlength
-+
-+    if {[string length $sha1string] == $hashlength} {
-         $sha1entry delete 0 end
-     }
- }
- 
- proc sha1change {n1 n2 op} {
-     global sha1string currentid sha1but
-+
-     if {$sha1string == {}
-         || ([info exists currentid] && $sha1string == $currentid)} {
-         set state disabled
-@@ -8880,6 +8894,7 @@ proc sha1change {n1 n2 op} {
- 
- proc gotocommit {} {
-     global sha1string tagids headids curview varcid
-+    global hashlength
- 
-     if {$sha1string == {}
-         || ([info exists currentid] && $sha1string == $currentid)} return
-@@ -8889,7 +8904,7 @@ proc gotocommit {} {
-         set id $headids($sha1string)
-     } else {
-         set id [string tolower $sha1string]
--        if {[regexp {^[0-9a-f]{4,39}$} $id]} {
-+        if {[regexp {^[0-9a-f]{4,63}$} $id]} {
-             set matches [longid $id]
-             if {$matches ne {}} {
-                 if {[llength $matches] > 1} {
-@@ -9378,6 +9393,7 @@ proc doseldiff {oldid newid} {
- 
- proc mkpatch {} {
-     global rowmenuid currentid commitinfo patchtop patchnum NS
-+    global hashlength
- 
-     if {![info exists currentid]} return
-     set oldid $currentid
-@@ -9392,7 +9408,7 @@ proc mkpatch {} {
-     ${NS}::label $top.title -text [mc "Generate patch"]
-     grid $top.title - -pady 10
-     ${NS}::label $top.from -text [mc "From:"]
--    ${NS}::entry $top.fromsha1 -width 40
-+    ${NS}::entry $top.fromsha1 -width $hashlength
-     $top.fromsha1 insert 0 $oldid
-     $top.fromsha1 conf -state readonly
-     grid $top.from $top.fromsha1 -sticky w
-@@ -9401,7 +9417,7 @@ proc mkpatch {} {
-     $top.fromhead conf -state readonly
-     grid x $top.fromhead -sticky w
-     ${NS}::label $top.to -text [mc "To:"]
--    ${NS}::entry $top.tosha1 -width 40
-+    ${NS}::entry $top.tosha1 -width $hashlength
-     $top.tosha1 insert 0 $newid
-     $top.tosha1 conf -state readonly
-     grid $top.to $top.tosha1 -sticky w
-@@ -9470,6 +9486,7 @@ proc mkpatchcan {} {
- 
- proc mktag {} {
-     global rowmenuid mktagtop commitinfo NS
-+    global hashlength
- 
-     set top .maketag
-     set mktagtop $top
-@@ -9479,7 +9496,7 @@ proc mktag {} {
-     ${NS}::label $top.title -text [mc "Create tag"]
-     grid $top.title - -pady 10
-     ${NS}::label $top.id -text [mc "ID:"]
--    ${NS}::entry $top.sha1 -width 40
-+    ${NS}::entry $top.sha1 -width $hashlength
-     $top.sha1 insert 0 $rowmenuid
-     $top.sha1 conf -state readonly
-     grid $top.id $top.sha1 -sticky w
-@@ -9587,10 +9604,11 @@ proc mktaggo {} {
- 
- proc copyreference {} {
-     global rowmenuid autosellen
-+    global hashlength
- 
-     set format "%h (\"%s\", %ad)"
-     set cmd [list git show -s --pretty=format:$format --date=short]
--    if {$autosellen < 40} {
-+    if {$autosellen < $hashlength} {
-         lappend cmd --abbrev=$autosellen
-     }
-     set reference [eval exec $cmd $rowmenuid]
-@@ -9601,6 +9619,7 @@ proc copyreference {} {
- 
- proc writecommit {} {
-     global rowmenuid wrcomtop commitinfo wrcomcmd NS
-+    global hashlength
- 
-     set top .writecommit
-     set wrcomtop $top
-@@ -9610,7 +9629,7 @@ proc writecommit {} {
-     ${NS}::label $top.title -text [mc "Write commit to file"]
-     grid $top.title - -pady 10
-     ${NS}::label $top.id -text [mc "ID:"]
--    ${NS}::entry $top.sha1 -width 40
-+    ${NS}::entry $top.sha1 -width $hashlength
-     $top.sha1 insert 0 $rowmenuid
-     $top.sha1 conf -state readonly
-     grid $top.id $top.sha1 -sticky w
-@@ -9690,6 +9709,7 @@ proc mvbranch {} {
- 
- proc branchdia {top valvar uivar} {
-     global NS commitinfo
-+    global hashlength
-     upvar $valvar val $uivar ui
- 
-     catch {destroy $top}
-@@ -9698,7 +9718,7 @@ proc branchdia {top valvar uivar} {
-     ${NS}::label $top.title -text $ui(title)
-     grid $top.title - -pady 10
-     ${NS}::label $top.id -text [mc "ID:"]
--    ${NS}::entry $top.sha1 -width 40
-+    ${NS}::entry $top.sha1 -width $hashlength
-     $top.sha1 insert 0 $val(id)
-     $top.sha1 conf -state readonly
-     grid $top.id $top.sha1 -sticky w
-@@ -9708,7 +9728,7 @@ proc branchdia {top valvar uivar} {
-     grid x $top.head -sticky ew
-     grid columnconfigure $top 1 -weight 1
-     ${NS}::label $top.nlab -text [mc "Name:"]
--    ${NS}::entry $top.name -width 40
-+    ${NS}::entry $top.name -width $hashlength
-     $top.name insert 0 $val(name)
-     grid $top.nlab $top.name -sticky w
-     ${NS}::frame $top.buts
-@@ -11697,6 +11717,7 @@ proc prefspage_general {notebook} {
-     global tabstop wrapcomment wrapdefault limitdiffs
-     global autocopy autoselect autosellen extdifftool perfile_attrs
-     global hideremotes want_ttk have_ttk maxrefs web_browser
-+    global hashlength
- 
-     set page [create_prefs_page $notebook.general]
- 
-@@ -11725,7 +11746,8 @@ proc prefspage_general {notebook} {
-             -variable autoselect
-         grid x $page.autoselect -sticky w
-     }
--    spinbox $page.autosellen -from 1 -to 40 -width 4 -textvariable autosellen
-+
-+    spinbox $page.autosellen -from 1 -to $hashlength -width 4 -textvariable autosellen
-     ${NS}::label $page.autosellenl -text [mc "Length of commit ID to copy"]
-     grid x $page.autosellenl $page.autosellen -sticky w
- 
-@@ -12491,6 +12513,17 @@ if {$tclencoding == {}} {
-     puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 28572c889c0e..206981190535 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1275,6 +1275,17 @@ if {[catch {
+ 	set picked 1
  }
  
 +# Use object format as hash algorightm (either "sha1" or "sha256")
 +set hashalgorithm [exec git rev-parse --show-object-format]
 +if {$hashalgorithm eq "sha1"} {
-+    set hashlength 40
++	set hashlength 40
 +} elseif {$hashalgorithm eq "sha256"} {
-+    set hashlength 64
++	set hashlength 64
 +} else {
-+    puts stderr "Unknown hash algorithm: $hashalgorithm"
-+    exit 1
++	puts stderr "Unknown hash algorithm: $hashalgorithm"
++	exit 1
 +}
 +
- set gui_encoding [encoding system]
- catch {
-     set enc [exec git config --get gui.encoding]
-@@ -12545,7 +12578,7 @@ set limitdiffs 1
- set datetimeformat "%Y-%m-%d %H:%M:%S"
- set autocopy 0
- set autoselect 1
--set autosellen 40
-+set autosellen $hashlength
- set perfile_attrs 0
- set want_ttk 1
+ # we expand the _gitdir when it's just a single dot (i.e. when we're being
+ # run from the .git dir itself) lest the routines to find the worktree
+ # get confused
+@@ -1822,7 +1833,7 @@ proc short_path {path} {
+ }
  
+ set next_icon_id 0
+-set null_sha1 [string repeat 0 40]
++set null_sha1 [string repeat 0 $hashlength]
+ 
+ proc merge_state {path new_state {head_info {}} {index_info {}}} {
+ 	global file_states next_icon_id null_sha1
+diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
+index 8441e109be32..1f0b8ea28504 100644
+--- a/git-gui/lib/blame.tcl
++++ b/git-gui/lib/blame.tcl
+@@ -426,6 +426,7 @@ method _kill {} {
+ 
+ method _load {jump} {
+ 	variable group_colors
++	global hashlength
+ 
+ 	_hide_tooltip $this
+ 
+@@ -436,7 +437,7 @@ method _load {jump} {
+ 			$i conf -state normal
+ 			$i delete 0.0 end
+ 			foreach g [$i tag names] {
+-				if {[regexp {^g[0-9a-f]{40}$} $g]} {
++				if {[regexp [string map "@@ $hashlength" {^g[0-9a-f]{@@}$}] $g]} {
+ 					$i tag delete $g
+ 				}
+ 			}
+@@ -500,6 +501,8 @@ method _load {jump} {
+ }
+ 
+ method _history_menu {} {
++	global hashlength
++
+ 	set m $w.backmenu
+ 	if {[winfo exists $m]} {
+ 		$m delete 0 end
+@@ -513,7 +516,7 @@ method _history_menu {} {
+ 		set c [lindex $e 0]
+ 		set f [lindex $e 1]
+ 
+-		if {[regexp {^[0-9a-f]{40}$} $c]} {
++		if {[regexp [string map "@@ $hashlength" {^[0-9a-f]{@@}$}] $c]} {
+ 			set t [string range $c 0 8]...
+ 		} elseif {$c eq {}} {
+ 			set t {Working Directory}
+@@ -627,6 +630,7 @@ method _exec_blame {cur_w cur_d options cur_s} {
+ method _read_blame {fd cur_w cur_d} {
+ 	upvar #0 $cur_d line_data
+ 	variable group_colors
++	global hashlength
+ 
+ 	if {$fd ne $current_fd} {
+ 		catch {close $fd}
+@@ -635,7 +639,7 @@ method _read_blame {fd cur_w cur_d} {
+ 
+ 	$cur_w conf -state normal
+ 	while {[gets $fd line] >= 0} {
+-		if {[regexp {^([a-z0-9]{40}) (\d+) (\d+) (\d+)$} $line line \
++		if {[regexp [string map "@@ $hashlength" {^([a-z0-9]{@@}) (\d+) (\d+) (\d+)$}] $line line \
+ 			cmit original_line final_line line_count]} {
+ 			set r_commit     $cmit
+ 			set r_orig_line  $original_line
+@@ -648,7 +652,7 @@ method _read_blame {fd cur_w cur_d} {
+ 			set oln  $r_orig_line
+ 			set cmit $r_commit
+ 
+-			if {[regexp {^0{40}$} $cmit]} {
++			if {[regexp [string map "@@ $hashlength" {^0{@@}$}] $cmit]} {
+ 				set commit_abbr work
+ 				set commit_type curr_commit
+ 			} elseif {$cmit eq $commit} {
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index d23abedcb36f..6078b1c7e2c4 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -870,6 +870,8 @@ method _do_clone_HEAD {ok} {
+ }
+ 
+ method _do_clone_full_end {ok} {
++	global hashlength
++
+ 	$o_cons done $ok
+ 
+ 	if {$ok} {
+@@ -879,7 +881,7 @@ method _do_clone_full_end {ok} {
+ 		if {[file exists [gitdir FETCH_HEAD]]} {
+ 			set fd [open [gitdir FETCH_HEAD] r]
+ 			while {[gets $fd line] >= 0} {
+-				if {[regexp "^(.{40})\t\t" $line line HEAD]} {
++				if {[regexp [string map "@@ $hashlength" "^(.{@@})\t\t"] $line line HEAD]} {
+ 					break
+ 				}
+ 			}
+@@ -965,6 +967,8 @@ method _do_clone_checkout {HEAD} {
+ }
+ 
+ method _readtree_wait {fd} {
++	global hashlength
++
+ 	set buf [read $fd]
+ 	$o_status_op update_meter $buf
+ 	append readtree_err $buf
+@@ -986,7 +990,7 @@ method _readtree_wait {fd} {
+ 
+ 	# -- Run the post-checkout hook.
+ 	#
+-	set fd_ph [githook_read post-checkout [string repeat 0 40] \
++	set fd_ph [githook_read post-checkout [string repeat 0 $hashlength] \
+ 		[git rev-parse HEAD] 1]
+ 	if {$fd_ph ne {}} {
+ 		global pch_error
+diff --git a/git-gui/lib/remote_branch_delete.tcl b/git-gui/lib/remote_branch_delete.tcl
+index 5ba9fcadd17f..8ea672479306 100644
+--- a/git-gui/lib/remote_branch_delete.tcl
++++ b/git-gui/lib/remote_branch_delete.tcl
+@@ -323,6 +323,8 @@ method _load {cache uri} {
+ }
+ 
+ method _read {cache fd} {
++	global hashlength
++
+ 	if {$fd ne $active_ls} {
+ 		catch {close $fd}
+ 		return
+@@ -330,7 +332,7 @@ method _read {cache fd} {
+ 
+ 	while {[gets $fd line] >= 0} {
+ 		if {[string match {*^{}} $line]} continue
+-		if {[regexp {^([0-9a-f]{40})	(.*)$} $line _junk obj ref]} {
++		if {[regexp [string map "@@ $hashlength" {^([0-9a-f]{@@})	(.*)$}] $line _junk obj ref]} {
+ 			if {[regsub ^refs/heads/ $ref {} abr]} {
+ 				lappend head_list $abr
+ 				lappend head_cache($cache) $abr
 -- 
 2.49.0
 
