@@ -1,51 +1,52 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 764BD2EFD83
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 21:30:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17622264B0
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 21:30:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750195855; cv=none; b=dUikZY8E3EJn2ObRVyiTa2X+iWTM0DhOCoLyJXMPC3Ywhjo/xUwtGez2fb1G9N1bcigUzjf+evnr/gZZO8/fDZLNxcaiDHfuCoYHya07occd/yU456GvOv3iWoJhm9cP6ci5rvdAK1UYaOvA+V10hfxfvoCRKXLQgL/YJgAs5o8=
+	t=1750195857; cv=none; b=oGk9Wg0ptzh7zLBYqToHqzCk6hfY6E6hOutCUh6ZTSTprSjaDuGwKIqq/XXMT3Uxqpr9uZMvC2G8Ej1BZJcfH5UteFF6fDzLSOpqqGkMPUAlnzv7aLwaNxaqZvPnNtWsH32o4E5Ooprfk6R7PZvaDfBlzC7fcTTz4NbpGMpxrIA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750195855; c=relaxed/simple;
-	bh=+WbwS/CZfC2OmmlZmliwPp9LKMzimzjkwcTEd23kczQ=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=LXhXUqakebn2yb2TVRMjQ38nLKitKWvuxS2Ihc+oVgwaq4vCLDF65mFJyP5DDpMJ6tGPkIkUmJJuemEHzpimlMbDwvsu22iolPMjKRVflpuNhpmMwvb43xHvh5b/OMuMfYdOa/7NumVz6TV0saTIIR3PD39buw98Tg4Zk1BqZQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=bMGRmK5R; arc=none smtp.client-ip=198.175.65.14
+	s=arc-20240116; t=1750195857; c=relaxed/simple;
+	bh=mynLxKqTTgDGP3kLeqEFoSUvsERqeOfP2+rqMd8Ugfo=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=eoekdzAMLCwN73gNOVX/INJc1BelyHzAnp+BhS2t9doi/LVmbB7g3HohfosNtB4PlxOgK6dSaq2FvPV1DZi0sLc2W/1RNtxuYeTLtQU2mSrCD6b6IBJ3Vq6p6dcaZHMiDt+tUcipGhmDAEtKEennpmBsnNvGkAUhg2xmks5xuo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FMtA9Qyx; arc=none smtp.client-ip=198.175.65.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="bMGRmK5R"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FMtA9Qyx"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750195853; x=1781731853;
-  h=from:subject:date:message-id:mime-version:
-   content-transfer-encoding:to:cc;
-  bh=+WbwS/CZfC2OmmlZmliwPp9LKMzimzjkwcTEd23kczQ=;
-  b=bMGRmK5R+FQzVoiyfQpJ8RSV+FCdC+d+Sx7Q0x6OqrmCnJDStVDmodyu
-   pXjpJ/PfKAdg5klmOPKGjucsh4C4HkjUVnnNyhxLpuc+jsvLzWXU5fdJ7
-   WHz6Gt3Sq7PxEu6srPUZFbBUR23g932dgyj1aBb0pBHWmQuf7YXi0jjg6
-   CAfcXgV+Xq1bSc3whoIUBWEKOj97eUGP7L58gNIctJYgWOZ84oge+CLxs
-   nF1l1MN+yhojHZWejyYkqoeaZM/jRIfmm7r26iJ5p7pHa9DVaoooudrkE
-   cbfjBAHwPWLJvKWB3qahyI/5joQ7LatM9evgzwgFT8+fLW9beLt95+hEn
-   w==;
-X-CSE-ConnectionGUID: Bk2fJw14Sb6F9VUvPaE0qA==
-X-CSE-MsgGUID: PrtTNotbS7K6A4vmynOYNA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="56195371"
+  t=1750195855; x=1781731855;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:references:in-reply-to:to:cc;
+  bh=mynLxKqTTgDGP3kLeqEFoSUvsERqeOfP2+rqMd8Ugfo=;
+  b=FMtA9QyxHz81vLjDzWDbGzbutXsJgERSEVPNtFFnO3eeqzIDQys2XQTN
+   nO5HeB6x0sXJZ4aK/lR5P+kTH6qQ2H59gxu4L2UgBUr5Ya4JTM99Mf0To
+   gUSs/mlNyohifxGiFWol8EvSoqzisZk9OMX1Fi+CTuW6a+gNCkFZqH8xt
+   VRUz7vEalyTzs16xXkIn0vqCWtiZTxQQss2koHooMSp5jUDRMj37PZIEG
+   p6XR+MN6O1O0tkqdDSiVA6hCArizqyNdwu/V3kV0k0wgQvzTsYafCNkMb
+   hIEL346Zph6JK8oa+KZnRnxNAX8KBQGSM7JiEoPFUe7+S/OJcFuz2GDWZ
+   Q==;
+X-CSE-ConnectionGUID: gPSFRZjjTnmAOeABvpNnsw==
+X-CSE-MsgGUID: vvEW21W5TIqWMBGVCqTs/A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="56195375"
 X-IronPort-AV: E=Sophos;i="6.16,244,1744095600"; 
-   d="scan'208";a="56195371"
+   d="scan'208";a="56195375"
 Received: from orviesa004.jf.intel.com ([10.64.159.144])
   by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 14:30:52 -0700
-X-CSE-ConnectionGUID: U/sjXnhpSGm+246IwopnyA==
-X-CSE-MsgGUID: 8Qik4n3pQ1mJ7BzgbzgWrg==
+X-CSE-ConnectionGUID: SkLwS3KZS9+1XDE/pMmMDQ==
+X-CSE-MsgGUID: QnAgmhlWTP6Rxi7J2n95Vg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,244,1744095600"; 
-   d="scan'208";a="153856671"
+   d="scan'208";a="153856672"
 Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
   by orviesa004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Jun 2025 14:30:53 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v2 0/6] submodule: improve remote lookup logic
-Date: Tue, 17 Jun 2025 14:30:40 -0700
-Message-Id: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
+Date: Tue, 17 Jun 2025 14:30:41 -0700
+Subject: [PATCH v2 1/6] remote: fix tear down of struct branch and struct
+ remote
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,95 +55,135 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIDeUWgC/43NQQ6CMBCF4auQWTumBYrBFfcwLLAdYLRQ0lqiI
- dzdyglcfm/xvw0CeaYA12wDTysHdnNCfspAj908ELJJhlzkSlRS4OOJId4nZ6IlHMku5DEGwug
- tklKm0MWl7rseUmHx1PP7qN/a5JHDy/nPcbbK3/pfd5UosDKy1FKJkmrZDFPH9qzdBO2+71/G7
- qBMxgAAAA==
-X-Change-ID: 20250610-jk-submodule-helper-use-url-e55d3c379faf
+Message-Id: <20250617-jk-submodule-helper-use-url-v2-1-04cbb003177d@gmail.com>
+References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
+In-Reply-To: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
 To: git@vger.kernel.org
 Cc: Jacob Keller <jacob.keller@gmail.com>, 
  Lidong Yan <yldhome2d2@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-This series improves the git submodule remote lookup logic implemented in
-submodule--helper.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-A few cleanups are done first:
+The branch_release() and remote_clear() functions fail to completely
+release all of the memory they point to. This results in leaked memory
+if you read the configuration for an arbitrary repository and then
+release that repository.
 
-* Both the branch_release() function and remote_clear() functions do not
-  completely free all memory pointed to by their associated structures. In
-  addition, branch_release() potentially dereferences branch->merge even
-  when its NULL. Fix these inconsistencies to ensure that the remote logic
-  works for a submodule repository pointer.
+This should be caught by the leak sanitizer. However, for callers which
+use ``the_repository``, the values never go out of scope and the
+sanitizer won't complain.
 
-* The starts_with_dot(_dot)_slash helper functions are moved to dir.h for
-  re-use, as these are used both within submodule--helper.c and
-  submodule-config.c
+A future change is going to add a caller of read_config() for a
+submodule repository structure. Doing so reveals one immediate issue due
+to a bad NULL pointer access, as well as the mentioned leaks.
 
-* Several remote.c helper functions are refactored to take repository
-  pointers, enabling use with a submodule repository pointer.
+ * The branch->merge array is accessed without checking if its NULL.
+   Since this array is only setup by calling set_merge, it may in fact
+   not be initialized even though merge_nr is non-zero.
 
-Next, the submodule--helper.c logic replaces the repo_get_default_remote()
-function with a repo_default_remote() function in remote.c, which is based
-on the more robust configuration reading logic. This helper uses similar
-logic but also allows returning the only valid remote in the case where a
-repository has exactly one remote. This way we do not fall back to "origin"
-if a user has renamed the remote without adding another.
+ * The remote->push and remote->fetch refspecs are never cleared.
 
-This improved logic is a good first step, but won't handle cases where
-there are multiple remotes, with none of them being named "origin".
+ * The branch->merge_name array is never cleared.
 
-For the final improvement, notice that the parent project already stores
-the URL for the submodule in its .git/config or .gitmodules file. This URL
-is what we use to set the remote in the first place when cloning.
+ * The individual elements of branch->merge are not released.
 
-Add a repo_remote_from_url() helper which will iterate through the remotes
-and find the first remote with that URL. Use this in
-get_default_remote_submodule() to first try and find a remote by its URL.
-If unsuccessful, we still keep the original fallback logic, in the off
-chance that the user has changed the URL from within the submodule.
+Add a check against branch->merge before accessing it and calling
+refspec_item_clear. Update remote_clear() with calls to refspec_clear()
+for both the push and fetch refspecs. Add a release of the merge_name
+items as well as a final release of the merge_name array.
 
-This method is more robust as it is less likely that the user has manually
-changed the submodule URL within the submodule but not also within the
-.git/config.
+Freeing merge_name elements results in a warning because we discard the
+const qualifier on the parameter name. These values come from a call to
+add_merge() in handle_config(), which always copies the names with
+xstrdup. This makes ownership of the memory difficult to track in the
+code.
 
-With this change, all commands which need the submodule remote will first
-look up by URL before trying to use the fallback logic, and should now be
-able to find a suitable remote regardless of now they are renamed.
+Move the call to xstrdup inside add_merge() so that its clear that the
+memory is duplicated here and must be released when the merge_name array
+is released. Drop the const qualifier on the branch structure to allow
+calling free without an explicit cast.
+
+These changes make it safe to call read_config() on a submodule
+repository without crashing or leaking any of the memory when the
+submodule repository is released.
+
+There is still some confusion with the difference between branch->merge
+and branch->merge_name, and the confusion of using branch->merge_nr for
+both. That could probably use some future cleanup.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
-Changes in v2:
-- Remove repo_get_default_remote() entirely. The extra checks it does are
-  really only necessary if you're doing manual configuration lookup. This
-  avoids the confusion of similarly named functions and is less code.
-- Fix leaks in branch_release() and remote_clear().
-- Add a forward declaration of struct repository.
-- Verified tests pass with leak sanitizer now.
-- Link to v1: https://lore.kernel.org/r/20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com
+ remote.h |  2 +-
+ remote.c | 18 ++++++++++++++----
+ 2 files changed, 15 insertions(+), 5 deletions(-)
 
----
-Jacob Keller (6):
-      remote: fix tear down of struct branch and struct remote
-      dir: move starts_with_dot(_dot)_slash to dir.h
-      remote: remove the_repository from some functions
-      submodule--helper: improve logic for fallback remote name
-      submodule: move get_default_remote_submodule()
-      submodule: look up remotes by URL first
+diff --git a/remote.h b/remote.h
+index 7e4943ae3a70ecefa3332d211084762ca30b59b6..0fca14348fd3d0734c599b13278afef2e00107b9 100644
+--- a/remote.h
++++ b/remote.h
+@@ -316,7 +316,7 @@ struct branch {
+ 	char *pushremote_name;
+ 
+ 	/* An array of the "merge" lines in the configuration. */
+-	const char **merge_name;
++	char **merge_name;
+ 
+ 	/**
+ 	 * An array of the struct refspecs used for the merge lines. That is,
+diff --git a/remote.c b/remote.c
+index 4099183cacdc8a607a8b5eaec86e456b2ef46b48..538d0d24c832ffeb1cc14684eb166c62c42d719d 100644
+--- a/remote.c
++++ b/remote.c
+@@ -165,6 +165,9 @@ static void remote_clear(struct remote *remote)
+ 	strvec_clear(&remote->url);
+ 	strvec_clear(&remote->pushurl);
+ 
++	refspec_clear(&remote->push);
++	refspec_clear(&remote->fetch);
++
+ 	free((char *)remote->receivepack);
+ 	free((char *)remote->uploadpack);
+ 	FREE_AND_NULL(remote->http_proxy);
+@@ -176,7 +179,7 @@ static void add_merge(struct branch *branch, const char *name)
+ {
+ 	ALLOC_GROW(branch->merge_name, branch->merge_nr + 1,
+ 		   branch->merge_alloc);
+-	branch->merge_name[branch->merge_nr++] = name;
++	branch->merge_name[branch->merge_nr++] = xstrdup(name);
+ }
+ 
+ struct branches_hash_key {
+@@ -253,9 +256,16 @@ static void branch_release(struct branch *branch)
+ 	free((char *)branch->refname);
+ 	free(branch->remote_name);
+ 	free(branch->pushremote_name);
+-	for (int i = 0; i < branch->merge_nr; i++)
+-		refspec_item_clear(branch->merge[i]);
++	for (int i = 0; i < branch->merge_nr; i++) {
++		if (branch->merge) {
++			refspec_item_clear(branch->merge[i]);
++			free(branch->merge[i]);
++		}
++		if (branch->merge_name)
++			free(branch->merge_name[i]);
++	}
+ 	free(branch->merge);
++	free(branch->merge_name);
+ }
+ 
+ static struct rewrite *make_rewrite(struct rewrites *r,
+@@ -429,7 +439,7 @@ static int handle_config(const char *key, const char *value,
+ 		} else if (!strcmp(subkey, "merge")) {
+ 			if (!value)
+ 				return config_error_nonbool(key);
+-			add_merge(branch, xstrdup(value));
++			add_merge(branch, value);
+ 		}
+ 		return 0;
+ 	}
 
- dir.h                       |  23 +++++++++
- remote.h                    |   6 ++-
- builtin/submodule--helper.c | 106 ++++++++++++++++------------------------
- remote.c                    | 114 +++++++++++++++++++++++++++++---------------
- submodule-config.c          |  12 -----
- t/t7406-submodule-update.sh |  61 ++++++++++++++++++++++++
- 6 files changed, 206 insertions(+), 116 deletions(-)
----
-base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
-change-id: 20250610-jk-submodule-helper-use-url-e55d3c379faf
-
-Best regards,
 -- 
-Jacob Keller <jacob.keller@gmail.com>
+2.48.1.397.gec9d649cc640
 
