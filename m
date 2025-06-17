@@ -1,54 +1,54 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9543A2F5310
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 22:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9BBB1898E8
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 23:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750200368; cv=none; b=i7Ke+VtQvYP94Wa1coTCK/o0zo6NoKBD12o4gbL/zUL4Cm41Edi2hZAFeLMEjfjFje469sSDlmJ4tAvrw17mZvRSES7tvFmYRPp5EFdH7HbpbUrYKD0mm4eWHX9RRS+9A9w+3xoGUlNKyuyJh3vJCk45OT8/xD6bXsiGyR30Cno=
+	t=1750201974; cv=none; b=tNkNWBG604meWp+cC7JIluQYaN3TaqhHdfxhrW1Ex4InVL6/92oVGpqkAfunHltzgKESW9vFlv/5ZsNP6A3sbK3VvDJOqsVHGI87nThXwFApMIX6vXnHTPhIHphoMPZFfcw35EUNvs7AQ9qdwKLHeu1YfS9jfC9byXpUspIfr1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750200368; c=relaxed/simple;
-	bh=K/X6AUIlkgP6nMuQTg84r6pzD1kRpDN2x0mAE9S5mGI=;
+	s=arc-20240116; t=1750201974; c=relaxed/simple;
+	bh=Csc64YAkvgbklMzHEsAQyCAeRVKgCFD6KMelygqOmZM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O8uEkmeXcqNSbolYaKhVRZqgIsP0+2rGhL+9VRX4Xi4b7rd7DtVf3gZlkzHfaBhUa37zRwcsrlWZ3uOGyOzjKI3iBhTekAALuX5ihmYnrx5wZTIhpFjWSuXNZ6d9q4LUdEz0e3YtfPerC6O3Dzb5DTPEwoEpqd1HIS0spK1ixmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qCEOEGpQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LOpZDmnn; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=QUdGPE9Q6ReV2BF+x/XayjMEY1oVlAuR9fzaa9X+C1VSxZhpD3jnK2KRKg2tJncOt224Zpz14HeS9XfZ8FItAWC7v35viRg7bt6w0qy/fqiIutput/bs+2eVNuROUVeY/3byLE3+mA1vbatqu+/niLywHb5Duj8QU/NPASREb3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DCrhCmuN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bF50/kUg; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qCEOEGpQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LOpZDmnn"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7B9F6138049E;
-	Tue, 17 Jun 2025 18:46:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DCrhCmuN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bF50/kUg"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id CE7D213804C1;
+	Tue, 17 Jun 2025 19:12:50 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 17 Jun 2025 18:46:02 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 17 Jun 2025 19:12:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750200362; x=1750286762; bh=J/8HHGI2zw
-	WqgJyuUWw4ZQ6pxPklavnb+T9gkTEwyHg=; b=qCEOEGpQ/66XW1OzpxsZnai724
-	lKFK3z5Hn4HIxwNr5T7rZtbzoSEl2FrIqnokGVlpAHH/JIn6An/Vb7EkSX198Lma
-	u4SRENAM6I4lrXteQWbojfcN/9U5mfbHac+cB0Wji0IqEbXnCo/X3MazI0jGsuNa
-	zvZL+J7fbCKwUKwdFOnQY+AKSEFySu98qkwCoZ7SXPaBFP338DCkA/PPeOFi/zmc
-	MjgNYuyDgLwmJgo1eJa3PvII9eUlEGq/f7xXRg3XJ48E7zPTQ0UENFu7ir3Bjdw5
-	Jfrqu8U4wRngJS2JSNNevBU4WDBMRVTnqrY2/szBTxJxczbRdYk4w2i8IvRw==
+	:subject:to:to; s=fm3; t=1750201970; x=1750288370; bh=65V03lUJ5T
+	rJxT+GYfGu18cGfwysBKd6Tch6l9PAcX4=; b=DCrhCmuNidW0WsU4fT162euw5U
+	hAyWyOm3FML1tsnesX4vnFiKeFZJf7Whb2g0rebUmOUZHOUj+OaWsrGihDICoN3Q
+	rHcdO+xt6Q6E6+uzDn7s06jFZiFZGVQr8wjuBH+ZPkvBxLDSLPwmx3RVGAt3noMQ
+	yWHYTV7YzsWfkKir395BPavRvROpqmVtO6NCYGp7iYXuCaD4ZHt63x+AM6/8moRe
+	lnV4DRr5MOhMTQRoig+dZVnnmOECCn/y4KEWXhRRS8ZlcaDjl1P/MfkT+xX5czCG
+	SdhkC1YFyD+KN+sv67fYHwGYAlgabX03sso517NoTfRZJ3GYP5WsS7Yiw2Dg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750200362; x=1750286762; bh=J/8HHGI2zwWqgJyuUWw4ZQ6pxPklavnb+T9
-	gkTEwyHg=; b=LOpZDmnnbk2+q6oH568mthZigTLWd138FZ7Z7P7F1Vd8sppXzQ6
-	59799vNmeXd0NdiTlDtXQZioAmqFmqWnEfdds8wqxSiJE82LDPPBTnS9h4MElPv+
-	k6TQUEno0HEshIm9cwgVVsoVKLf3F829OSdilatzNFxwyWEKIOkxBW6PRWUoWVbT
-	PrE4fyPw/ifpjVzfYPOzWymW7SofvwAcKXH1e5Y/vLzXPf90BdjN+uiahwaO8vfg
-	rA8LgCrMZsF4JhUhJX8JrVyCI2b99zZRmEXWDeBCbiXDG++y7205BYCnudMhw/Fx
-	gDVXSYkfjvsVuuZ7ruNi0dgOYLfLhQadXFg==
-X-ME-Sender: <xms:KvBRaOn9ZxTht-uZyuRtyGyjTbc_ZSIimWZ76ZJkH6qpOhx3mrImhA>
-    <xme:KvBRaF2OKId0Ehf4FXjXJrp0uGOGbNY93X7gIQ_QF6LGo0fa6foiTrK8ae4XyjL3R
-    Pt_HdheUySYZzCkkw>
-X-ME-Received: <xmr:KvBRaMqDSNcvb-cK1NfSwRw0Uo_NtjlPDiT6zJhbp0fVfeGBpLm1N8jmh9C4ViMtnSw3MVqb6cN56-lyj62t9oCjRKRZ-zUYauTU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddugeduucetufdoteggodetrfdotf
+	1750201970; x=1750288370; bh=65V03lUJ5TrJxT+GYfGu18cGfwysBKd6Tch
+	6l9PAcX4=; b=bF50/kUgccPcpeKRYdJ+zeruIGnj6Lj7x8igHh5yvjEsUP/wP28
+	K30if7A1yrtiTHkC4AB6f7Z/PX79v22LIjh7sHfzbCC6C5Nu7NA8jlfJH9ZE09ne
+	iXDFqjGYYz4lZsjPpUDHTTw4ugBf+97uQh5plNgj8wggdUbmny6z+Y+JNl78cKcD
+	kcCEZiTQaRk76w/0sz6MeMgB6LDwZWrLz8QlCT81ZyBnkILCPHfMRmfuQcOy9VFB
+	lVmAGPKZQpVGcPmbZ9IGDEotf8+DTc752gdchoUdPw1R5vaXpj1uG9/q4/oN1E4x
+	AppyE4VWHbEjusB9GGxsoaXwJIgbTrYsqSw==
+X-ME-Sender: <xms:cvZRaAc_ogaeXUxdv6x0S0kCZQid2tV3BWo7NmRwRFpivNmO6eI41Q>
+    <xme:cvZRaCM8HwwBOaWkG4FeOUwMaTSfSt_51V-3tE3EfM-9b5MPIasad4T6qcdDyiSyK
+    7-bRPz-Bml5Es-fdQ>
+X-ME-Received: <xmr:cvZRaBhl-PrWLfwio1lO4dUBlHIemIZiv4E_gE10l3Q5ZGBJyXgmVtCN4Ot_F9Ck3lQ1icE0BCr01ozEQNKqWl5c7iezNzjQodpa>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddugeejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
     htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
@@ -62,25 +62,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddugeduucetufdoteggod
     homhdprhgtphhtthhopeihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphht
     thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
     homh
-X-ME-Proxy: <xmx:KvBRaCkFY7-JEAYt4tnWZg36n0cc0KB-c-NyCjGVTSmP0AUcaYlugA>
-    <xmx:KvBRaM3M2_8IXNjX9O3xNjOc8zx6oAgnY8Mkwh0X4Y15p9K5W-UmRQ>
-    <xmx:KvBRaJv9eH4am5mEjWgKSWJn3-3y4A8VpfHzAA4_pmLBn4Tf4pIcvw>
-    <xmx:KvBRaIXO3jRsjmuYXXaVddTXHFr8C-u-zMcJ6JWlGXtih8QD7GIGBA>
-    <xmx:KvBRaFYUwtyaIdbmoy9uckLX1hY8NSw65FU7ADmVNvq-xCE3GdNuvp83>
+X-ME-Proxy: <xmx:cvZRaF8Hmk0ZR1ycxTTdvnLqTrxYafiZpT160yEvIYvAgg7pP2jvrw>
+    <xmx:cvZRaMtBDNcCqH_powBkdiWAH6s0gUCay1c_a39GOp9EAqCuB-RKsw>
+    <xmx:cvZRaMEBX8Vuev3CpLhmjbKZUu8mIWnShjf4ojWVukZrtbc3O-y5bA>
+    <xmx:cvZRaLO2kNMvxNtn9CF7C_O9KAwJ93RjfzW4JuOBKQyyuwY5fpPlxg>
+    <xmx:cvZRaJSES_7PRtnK4RQe93unqTDYUiOThSec52e9IB-2Y2h9FZJSSbb_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Jun 2025 18:46:01 -0400 (EDT)
+ 17 Jun 2025 19:12:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jacob Keller <jacob.e.keller@intel.com>
 Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>,  Lidong Yan
  <yldhome2d2@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 3/6] remote: remove the_repository from some functions
-In-Reply-To: <20250617-jk-submodule-helper-use-url-v2-3-04cbb003177d@gmail.com>
-	(Jacob Keller's message of "Tue, 17 Jun 2025 14:30:43 -0700")
+Subject: Re: [PATCH v2 4/6] submodule--helper: improve logic for fallback
+ remote name
+In-Reply-To: <20250617-jk-submodule-helper-use-url-v2-4-04cbb003177d@gmail.com>
+	(Jacob Keller's message of "Tue, 17 Jun 2025 14:30:44 -0700")
 References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
-	<20250617-jk-submodule-helper-use-url-v2-3-04cbb003177d@gmail.com>
-Date: Tue, 17 Jun 2025 15:46:00 -0700
-Message-ID: <xmqq7c1auguv.fsf@gitster.g>
+	<20250617-jk-submodule-helper-use-url-v2-4-04cbb003177d@gmail.com>
+Date: Tue, 17 Jun 2025 16:12:48 -0700
+Message-ID: <xmqqv7out11r.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,35 +95,124 @@ Jacob Keller <jacob.e.keller@intel.com> writes:
 
 > From: Jacob Keller <jacob.keller@gmail.com>
 >
-> The remotes_remote_get_1 (and its caller, remotes_remote_get, have an
-> implicit dependency on the_repository due to calling
-> read_branches_file() and read_remotes_file(), both of which use
-> the_repository. The branch_get() function calls set_merge() which has an
-> implicit dependency on the_repository as well.
+> The repo_get_default_remote() function in submodule--helper currently
+> tries to figure out the proper remote name to use for a submodule based
+> on a few factors.
 >
-> Because of this use of the_repository, the helper functions cannot be
-> used in code paths which operate on other repositories. A future
-> refactor of the submodule--helper will want to make use of some of these
-> functions.
+> First, it tries to find the remote for the currently checked out branch.
+> This works if the submodule is configured to checkout to a branch
+> instead of a detached HEAD state.
 >
-> Refactor to break the dependency by passing struct repository *repo
-> instead of struct remote_state *remote_state in a few places.
->
-> The public callers and many other helper functions still depend on
-> the_repository. A repo-aware function will be exposed in a following
-> change for git submodule--helper.
->
-> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
-> ---
->  remote.c | 58 ++++++++++++++++++++++++++++------------------------------
->  1 file changed, 28 insertions(+), 30 deletions(-)
+> In the detached HEAD state, the code calls back to using "origin", on
 
-As exactly one remote_state instance belongs to each repository ever
-since fd3cb050 (remote: move static variables into per-repository
-struct, 2021-11-17) defined the former, and remote_state is not
-shared across repository, passing the repository instance that owns
-a remote_state instance and pick up the .remote_state member out of
-it as needed would give us the right remote_state, and gives us
-access to the repository instance it owns it.
+"calls back" -> "falls back".
 
-Makes perfect sense, 
+> the assumption that this is the default remote name. Some users may
+> change this, such as by setting clone.defaultRemoteName, or by changing
+> the remote name manually within the submodule repository.
+>
+> As a first step to improving this situation, refactor to reuse the logic
+> from remotes_remote_for_branch(). This function uses the remote from the
+> branch if it has one. If it doesn't then it checks to see if there is
+> exactly one remote. It uses this remote first before attempting to fall
+> back to "origin".
+
+Designed wtih good taste.
+
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index 9e8cdfe1b2a8c2985d9c1b8ad6f1b0d1f9401714..4aa237033a526fca29cce2926419462179d40ee3 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -41,61 +41,25 @@
+>  typedef void (*each_submodule_fn)(const struct cache_entry *list_item,
+>  				  void *cb_data);
+>  
+> -static int repo_get_default_remote(struct repository *repo, char **default_remote)
+> -{
+> -	char *dest = NULL;
+> -	struct strbuf sb = STRBUF_INIT;
+> -	struct ref_store *store = get_main_ref_store(repo);
+> -	const char *refname = refs_resolve_ref_unsafe(store, "HEAD", 0, NULL,
+> -						      NULL);
+> -
+> -	if (!refname)
+> -		return die_message(_("No such ref: %s"), "HEAD");
+> -
+> -	/* detached HEAD */
+> -	if (!strcmp(refname, "HEAD")) {
+> -		*default_remote = xstrdup("origin");
+> -		return 0;
+> -	}
+> -
+> -	if (!skip_prefix(refname, "refs/heads/", &refname))
+> -		return die_message(_("Expecting a full ref name, got %s"),
+> -				   refname);
+> -
+> -	strbuf_addf(&sb, "branch.%s.remote", refname);
+> -	if (repo_config_get_string(repo, sb.buf, &dest))
+> -		*default_remote = xstrdup("origin");
+> -	else
+> -		*default_remote = dest;
+> -
+> -	strbuf_release(&sb);
+> -	return 0;
+> -}
+
+We will lose two callers of this function, so we can safely remove
+it.
+
+>  static int get_default_remote_submodule(const char *module_path, char **default_remote)
+>  static char *get_default_remote(void)
+
+These callers that used to call the removed helper now call
+repo_default_remote() instread.  Good.
+
+
+> diff --git a/remote.c b/remote.c
+> index b3a9881a6eacf90bee71d6760858b37d68263502..94b31f4c23057a247a968fc0ebe2e5170e99614d 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1767,20 +1767,35 @@ static void set_merge(struct repository *repo, struct branch *ret)
+>  	}
+>  }
+>  
+> -struct branch *branch_get(const char *name)
+> +static struct branch *repo_branch_get(struct repository *repo, const char *name)
+>  {
+>  	struct branch *ret;
+>  
+> -	read_config(the_repository, 0);
+> +	read_config(repo, 0);
+>  	if (!name || !*name || !strcmp(name, "HEAD"))
+> -		ret = the_repository->remote_state->current_branch;
+> +		ret = repo->remote_state->current_branch;
+>  	else
+> -		ret = make_branch(the_repository->remote_state, name,
+> +		ret = make_branch(repo->remote_state, name,
+>  				  strlen(name));
+> -	set_merge(the_repository, ret);
+> +	set_merge(repo, ret);
+>  	return ret;
+>  }
+>  
+> +struct branch *branch_get(const char *name)
+> +{
+> +	return repo_branch_get(the_repository, name);
+> +}
+
+Nice to see how the dependency to the_repository is lifted for new
+callers while retaining the same interface for existing ones.
+
+> +const char *repo_default_remote(struct repository *repo)
+> +{
+> +	struct branch *branch;
+> +
+> +	read_config(repo, 0);
+> +	branch = repo_branch_get(repo, "HEAD");
+> +
+> +	return remotes_remote_for_branch(repo->remote_state, branch, NULL);
+> +}
+
+OK.  read_config() is a safe no-op if repo has already been
+initialized, so this would give us what we want.  Nicely done.
+
