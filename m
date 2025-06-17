@@ -1,53 +1,53 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A582EBDF9
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 16:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC272ED153
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 16:30:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177792; cv=none; b=R0FcIGo586vhuiF2OKUNML7jauTzYVmlIe2LH3utUCP/2EIEKmqyebBwVwKIWQbRsFSUA8APvwPeib0TGclvdhNwT0rE4jIz6YFuefr980ihP/H3oVavgZ7h7dUzNeq60rMzD6xN/zVUwNU4owgeqXHwp//CU+luCcYOFmz6cVM=
+	t=1750177844; cv=none; b=VcTSmIKTH4hBxIEx2lNJLjpL0iybNoozB5i8FqMkp8EvxuN548MibqIlPG4cLNFxYzuYLzs2VofpkTC/0oSNtmRltowBRtD7iVZ893+JM7O7gfXrDG52waN5/5QC/3XysUjsQHzstUheENeUVI+UTy5olujZCKnHSBswV66qmPc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177792; c=relaxed/simple;
-	bh=NilFtc6tSnFFeVCM0u6upSbp4tF6R69/F3nnqekgcSU=;
+	s=arc-20240116; t=1750177844; c=relaxed/simple;
+	bh=OT1yHDrk+r3esRJInsX5ugRdTC4JhRzXvOIRpIe8gPo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=E9Ck6tFNrFBcyIVK8fFFwhRT8C+ro9RTx+gM9N/2khSQZStMQNUGQuDbTA5Bmsv0j2DpbkiCu5dt2IWIFavHPdCey7Z1eLS4STOD3AhycQX5sQY8zw/CjarKGZyzu5IeUjTLso+11j7N8qP2T58erse+K8HsUu7+nurF/zIX8BQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sfhA62Pr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WnmwMoEg; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=jZ3KK56blIixAAVQwn2srugK7d8H4u36fmx1/peqztDx/oJmquxC5yP41QG4eD2ntOaHhKWGH1eUZ+pAARP9Yu98cNG3c1vtuNQLQSfLIIVBIbvzR2cmbBnPbld+6Ev8QtZt/4RiZYnleWKeonTb6HvyD0bcMKGQCvW04zTrmIc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=16+qSMPP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=faHhmIiK; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sfhA62Pr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WnmwMoEg"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 563FA25400F6;
-	Tue, 17 Jun 2025 12:29:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 17 Jun 2025 12:29:49 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="16+qSMPP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="faHhmIiK"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 913BC25400F5;
+	Tue, 17 Jun 2025 12:30:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Tue, 17 Jun 2025 12:30:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750177789; x=1750264189; bh=jCDCIkbsxN
-	aODvL4h1Sh9HsPO70DWKVMnLCiMQDHyi8=; b=sfhA62PrhXlgJRb47gulMy1rFT
-	dLfR3BbVRt3cBX+Wqn5/hEiqgzN6yntbi9MXtUKuzMvc19yCDjn1W8YBBINnAjPF
-	iiSij/wBG4WwbY9iRS+9Jli00BSkjgdxepxDjHDOWDC0Aak5MR6IIKkBQbYgoXze
-	/Q9daGn+BuOA5ccR8SkbHxTzVfT25GvhiN+kfoJxY4oYl3fCUDfFnebzz7q5K73m
-	TJZbil4gJWnkvxc8CyDUxASYYEoHRhCnYVL7RfIJSD0Fv+dKPoAlQDafAaQ3CvkW
-	zEm7gPGzigizxWsFQCkby6MyqQRyHZjEuEcGIGMQeuz8eH6YHg/6wOM6F8oQ==
+	:subject:to:to; s=fm3; t=1750177841; x=1750264241; bh=dgrL+y3nWw
+	hU16wFG7jCYawKf3d/jyfifW4cnCmI7gk=; b=16+qSMPPgOc/Yr7SJk7KYUYViO
+	GWe/BDrHEnj7rgdY/EMVRiA5HaTxscZGXEaFK60yyspsE1ee8fshLmivnHiM9NMh
+	YiTqPsWqkvjrrDcdmEKCUpkg+eOoYZk+RWSqKJweCOxgLeaVT4BfmKKRdJTnuKFZ
+	ZXUneJ+Pu7W7UXG/vq4uYo2bHBJPTmJVdPmcMEmRhkW0M4+EA9QDwtH9oe1tXhHH
+	MP+FCvleT5+IimIwxtnFoApG6my/cO+B40g9GrhLuxD5TrrvylvxEn0vRnbm2npD
+	0P9mm+UAg1lPemFCUPWHKkreXycj0xEPfDWxtxzKmPN0OFj+owTO8QX1FyBA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750177789; x=1750264189; bh=jCDCIkbsxNaODvL4h1Sh9HsPO70DWKVMnLC
-	iMQDHyi8=; b=WnmwMoEgZRXWMe2UPilmYdv88ejkHbl1RNgTlSzXCCBXeowRCwy
-	sS9Wz9O4mAYNB31/wfiu+pjEKR1FRUDkjZ0NIaQ8YV2/UzSE2HiaBrlPACMz78Iz
-	nRsQk7NxVzpj+eVYk/jDe6Y7uZaKhvcBdfxu/RRaNumwdrqJWUeb/s7O3o+SxfXG
-	+Rem+MYJKxP6Ef3zyuVLAzyyIvHjA4aNIx5F0iEm+EnGYLHlRO+T9+/UKuNpG3Aj
-	zZrMZ0FOzVrdz7vxonfuimLeqwXZB0me19nwZPBdQD3FOExZfOJVtJKprM0VXnrb
-	b41khqzvkKFCxEoN0li/Fqy0AQmWbxC32wQ==
-X-ME-Sender: <xms:_ZdRaCSPq0QVgQmC8RL5ISe5K0ogAuLx1Dc5RyTft-P0-5YPHhTigw>
-    <xme:_ZdRaHxmzNQiT4LPKks1tzu7ySu7f65DuHgcK9SvxszrLqEw-0miM04xQTg4RV6UA
-    15oMltWZ-rdf-71Xw>
-X-ME-Received: <xmr:_ZdRaP1iyzgtzUt137Tk4MVJET8HziS9EbkFfp3Lb__PmF4zNuwZQApwn1pQ1uQ82hYZZ9ae_hFwT3P8LWNy-KiTBNXeaK0O1shP>
+	1750177841; x=1750264241; bh=dgrL+y3nWwhU16wFG7jCYawKf3d/jyfifW4
+	cnCmI7gk=; b=faHhmIiKIYLusnGSmGgMkyGc3Y+7Gzp90japqOBMsUGBJ2eS9xs
+	KWqUMqv6KhHLqlAzp2DC1S7O4r8TbQo6P2XVQf2W0b+ZI4HIHhwwqCg3TEMCFn7V
+	JnR2B4/W0EbYnDlA4GNS7l78ZeysjvugYK3+p2pp+ftF12SGBRc017gOJOJ2vG1J
+	ChuRV2dySsX2VNN29APEUfS+EfLMJD2W8zgT7tt6QMIiRfcyB5SU8Oh0YVewnMzU
+	tHU75DbwG+p6CKbGdZvxYMCXnlTuTTgPjUxvi+/Kf4r7Jm2mOSeejuqfHwF9AZzW
+	vplHWq9E960OwSoVMiBEWGBsf6xabPP71kA==
+X-ME-Sender: <xms:MZhRaBWNKPds2-uy52aPMsNdLvNoB5CreXNJC1H0urh7SlTkK65OXg>
+    <xme:MZhRaBkMVzgibddTAG4lfenYYP5TcqCNTqvzZp_gvZcWNQKp4soULMBbBEXTZiiD_
+    Y3pj8DHGn0vkKVR2Q>
+X-ME-Received: <xmr:MZhRaNb0Wv4h9ClSOphU5Wp3yPLduGrVUpWxcv9iLrP8xxkagfbHfrlnY2BSyZxsfN-JprCUZzICOScJveKT7IYYrlPtE73jq7pE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeiiecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
     tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
@@ -61,26 +61,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeiiecutefuodetggdote
     vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
     drohhrghdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgt
     ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:_ZdRaODfp9WUrmaAsARu7ptja36HN4X9gMgiJkWK8ZkF_hKjKwzYsA>
-    <xmx:_ZdRaLhWYaq9CMRJcERscmFfdjhPKJaL4HYsTcFy1y0ZaozIKhhrCw>
-    <xmx:_ZdRaKrY4QGcAxJ1cHWp9PI6VC6sPyr0dw0okIJeNrr3s2nJNVgH1A>
-    <xmx:_ZdRaOiNJ1HSgTiwqvV1dMFGMWPGgNPYtPMZcSvBS1rMhreoPDa-Bw>
-    <xmx:_ZdRaKjkgKhsUZxSz0_nAeoUK-TzJXLw0SPJTKr4J7w6-U2IDe-PhQmX>
+X-ME-Proxy: <xmx:MZhRaEXv3ZKPx2SwCDBEVvP1B_qPEVXW7K0TElU-_LwJQD6XwPs26A>
+    <xmx:MZhRaLmiVpODl0AkpgvGcjVOuZFhFsWruP74sUVDS2hpl21BXviUxQ>
+    <xmx:MZhRaBcbiIMfp2T5SYyJ6aSZrAHaHTWfxbIlpLXBdqtXzORC-ZpLBA>
+    <xmx:MZhRaFHEG6cSRb4mceLX00ASE7EYDc2VvgzSXCtOxMtY1WMJoVVUOA>
+    <xmx:MZhRaE1EmWc1g6p3iRZBNQrcKBqi_RLcWS2wLemkcCEQMVsnkHAqdV6s>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Jun 2025 12:29:48 -0400 (EDT)
+ 17 Jun 2025 12:30:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Ayush Chandekar <ayu.chandekar@gmail.com>
 Cc: christian.couder@gmail.com,  git@vger.kernel.org,
   shyamthakkar001@gmail.com
-Subject: Re: [GSOC PATCH v4 2/3] environment: move access to
- "core.sparsecheckoutcone" into repo_settings
-In-Reply-To: <9a638843411d0542e240ea0dd9537f388523fb3c.1750157825.git.ayu.chandekar@gmail.com>
-	(Ayush Chandekar's message of "Tue, 17 Jun 2025 17:36:35 +0530")
+Subject: Re: [GSOC PATCH v4 3/3] environment: remove the global variable
+ 'sparse_expect_files_outside_of_patterns'
+In-Reply-To: <a9e1e23685c476b106b3bdb0d37b4ac5dd98ee3a.1750157825.git.ayu.chandekar@gmail.com>
+	(Ayush Chandekar's message of "Tue, 17 Jun 2025 17:36:36 +0530")
 References: <cover.1750157825.git.ayu.chandekar@gmail.com>
-	<9a638843411d0542e240ea0dd9537f388523fb3c.1750157825.git.ayu.chandekar@gmail.com>
-Date: Tue, 17 Jun 2025 09:29:47 -0700
-Message-ID: <xmqqplf2uy9w.fsf@gitster.g>
+	<a9e1e23685c476b106b3bdb0d37b4ac5dd98ee3a.1750157825.git.ayu.chandekar@gmail.com>
+Date: Tue, 17 Jun 2025 09:30:39 -0700
+Message-ID: <xmqqldpquy8g.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,49 +92,23 @@ Content-Type: text/plain
 
 Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 
-> The setting "core.sparsecheckoutcone" is stored in the global
-> `core_sparse_checkout_cone` and is populated in config.c. Refactor the
-> code to store it in the variable `sparse_checkout_cone` in the struct
-> `repo_settings`.
-> It's fine not to lazily load it from the config, as the variable
-> is used quite commonly.
->
-> This change is part of an ongoing effort to eliminate global variables,
-> improve modularity and help libify the codebase.
->
-> Mentored-by: Christian Couder <christian.couder@gmail.com>
-> Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-> Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
-> ---
+> diff --git a/sparse-index.c b/sparse-index.c
+> index 444da8a753..5d87fc65c0 100644
+> --- a/sparse-index.c
+> +++ b/sparse-index.c
+> @@ -1,4 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+>  #define DISABLE_SIGN_COMPARE_WARNINGS
+>  
+>  #include "git-compat-util.h"
+> @@ -668,6 +667,9 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
+>  
+>  void clear_skip_worktree_from_present_files(struct index_state *istate)
+>  {
+> +	int sparse_expect_files_outside_of_patterns = 0;
+> +	repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpatterns", 
 
-I think "the correctness guarantee comes from a different place now.
-How are we making sure that these accesses are correct?" comment
-applies equally here.
+There is a trailing whitespace here.
 
->  builtin/grep.c            |  2 +-
->  builtin/mv.c              |  2 +-
-
-Looking at the output from
-
-    $ git grep -n -e prepare_repo_settings \*.c
-
-there are many builtin/*.c that makes a call to the function on
-the_repository fairly early in its start-up sequence.  Unlike many
-others these two do not seem to have any.
-
->  builtin/sparse-checkout.c | 28 ++++++++++++++--------------
-
-This one does, immediately after calling git_config(), so it should
-be fairly safe.
-
->  dir.c                     |  2 +-
->  sparse-index.c            |  2 +-
-
-These two also need correctness guarantee.
-
-You'd need to make sure any potential caller of the helper functions
-have called prepare_repo_settings().  Those who wrote an access to
-the global variable in the original would already have made sure
-that the callers would have already read the configuration file, but
-with the new code, that is no longer a guarantee for correctness.
+> +		&sparse_expect_files_outside_of_patterns);
 
