@@ -1,174 +1,301 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from mail-pg1-f194.google.com (mail-pg1-f194.google.com [209.85.215.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D7C8635D
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 00:29:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0339484A3E
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 02:59:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750120188; cv=none; b=kS+YpZ+m+8fx9yve0Dd5kp0g2fSUC26foT7qKGp0mdWREe9nvGhlfhLcb+G0IIHXIumisIodk4BjL5ey5hsefapFEtpP9ke7ex3NdQfJDvV+wTZaij16kaWW8/NJOHwhSmMfbs+lVaRO9Fa1G4SRmxRAetA3acLEbTBvPta1jVI=
+	t=1750129161; cv=none; b=fKK8FL/33g98qrhUxKMmzhzzSW75P/YllFGCxCrjhlOQAovgwGCutbBPgZDOQIpHrdVn0/UIzYgTf9FZPfVFWTi8fGqaRxHKP53ujS00DUg1BHfkihVeMrBokvD2rwQr8V2UKiPaKWux9PGyoM65WUzgPt/yxp0UTqQMg+txhpI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750120188; c=relaxed/simple;
-	bh=VSGqGCTixSArBr3CyQgrmEwUMgaBs4sx8L1//qs/ikg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=W5lvw64bnDhD0oPsgBHq0qHtRVeWu0Fi7eom321SL0gOFsk3IP/aTTazIIPz9EHxe1aoO3mD3xKx3RdYotGKZBbwsmTjRBxS+jPZX/+Y+9a1LVuO6u2A9n/z746EeagLWaQfU7hNkaOTqGKUGFWAlS26Zzzv/2VlK9yuT+gfdl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OJ+Rj7EI; arc=none smtp.client-ip=209.85.216.51
+	s=arc-20240116; t=1750129161; c=relaxed/simple;
+	bh=wbvNUMqaEItXXFU5fV5JiPlkabP4XJyF/54F6y+IaWw=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=cxGF5Q5hPAbDERUsabQUndYYnsInzwbwGr2BV24vYjWdQu4ci8jYOxQKsmI9suGtXrVMMuP8RBqTyv0nClMJQO8f2Ykxwzh3YrU1fUHxVxjJdUSeIOTy3ZQbAktbKLScVfRzmSuj9gRqJrYzxijWBkto4QRQju4KBbeWByBpjM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7rfYqRu; arc=none smtp.client-ip=209.85.215.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OJ+Rj7EI"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-3134c67a173so5997890a91.1
-        for <git@vger.kernel.org>; Mon, 16 Jun 2025 17:29:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7rfYqRu"
+Received: by mail-pg1-f194.google.com with SMTP id 41be03b00d2f7-b26f5f47ba1so4268173a12.1
+        for <git@vger.kernel.org>; Mon, 16 Jun 2025 19:59:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750120186; x=1750724986; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8CFLa8P6C9/6v1XxNlJoj+jaAV7YFTlFhyT1I3FVaqI=;
-        b=OJ+Rj7EIYJSDJIq3UOyLlTdxx6nl3OqLpjlZHCetb16yTou7STA/U/Lx/wl+vt+WXX
-         ky420+F1gvBTD5uCMYJrjdoYS41fRKncqADX1btuFQFNKwntoNDcOheGF4XE9/9g3kOX
-         w9qbFkz0adnr+u3304wGj5kODj02kv9hMoJlu3CqymP7njKY+1XJGUMX6pyjLWWzPJZd
-         HX0/fXIw+REhAyIKSMP/E43nf56cM7BWOdygfkZTxC4wrt21kYx7luE8A5p3PG1ko4bn
-         XFBMDNeMoPV7vTQZg4RrEKBZHnNmBn2BWhuSp0J0QmQEg8GTOZrzPPCXYFQHr6uH9lnQ
-         Qc0g==
+        d=gmail.com; s=20230601; t=1750129159; x=1750733959; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5b5jqbFWjESqxkL/fUyC7q9gNJG+3ju0XQS7C/wunx4=;
+        b=Q7rfYqRuy2Vzm8dXaPjWmGuy1jqDzmCh9kCRAtgQaY+KOZpkr1ZJLvPSZbzNBfTCfC
+         tcC/q3iUpRt2PBCKDL/OO2ik4F/CuFMfE4eRB/1FHBCzrVBbqt276lYP743rXLSuTcN+
+         izwYQE1V+xl8iDWkx9FY1P15883OYt1dWaDfk0uYWRegXAj7LU9hm55/Vuw64hGSgvYX
+         l3rsN+ToMWHMowZ0788TEOCUDhDGkDqadDNuLrLcb7VTXcd3oPMzcaPjua1n0NuYWD/o
+         MKNSUCE8GJJgXHQsmvXkqtPU/UEwvtOC9n9UBQv1FWUBEalugJjktkvyRqSSMZ9sWiap
+         6yHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750120186; x=1750724986;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8CFLa8P6C9/6v1XxNlJoj+jaAV7YFTlFhyT1I3FVaqI=;
-        b=YumJOjEYB2FXFoAQbYSD6e8HyRjyjBHarvK/Sa+ELxsIbKTr1Vw8SkS1/G4W4ddPTX
-         S/ieBoKV9sEGkQwejP1rM9LxMinlEGvKBZ7n8gEjAwdgSH0D9yr3h1uD63WtV/AlTf1c
-         3cCMA/VCYzZ2qsuV7JYPYVfo8V6hPLi09s5MztELf/iSMHWnSZ9wE3PW34RTwQ2VQImf
-         5tcnxTZYqPptOF9iandP1liNRpekVCsF/K74d+Jo1G42b+PiHOuIwL7QMBEYalqvZL2C
-         iXdKIpnbj4s43mSP+6TKgY9WydQqDZJq/N8uxREtpg6Tb7puMxfJYa4wPjcGPTxyzexI
-         f/bw==
-X-Gm-Message-State: AOJu0YyEd6red8VAPJc5Xv9iXQBvgM5rjneGTVWZjIdcC6Z5NdrJbfZe
-	GCUCW/Kw/1yfMuJWb2tiljhc0DMKSuY62zTDsqIiP+gws79hEmc6mQz5/jTCui7h
-X-Gm-Gg: ASbGncuQUeBJqnP2gBGKaAPShChrLhI5+jtyZTSy1tHIY0TmrX/qzcX8IeFY05cHhF+
-	6c52la4RF0HmOYQcC9TfWSczUY7LZhhgbfD7Qq6l8FP83f2A//X104Ozff8JbHgRUF4LTHD/sTI
-	lVmi4HwYpO8zz0BhwHToIG1JhDHXQuw57NW1H/f2PoZ+D+38S5u6X244z//QYNR6+wNP9Z0MpDd
-	8fssu+YCjK7/lJZqsIQXgQ64Xxa3COnYY2DFc+Za68RBotqSug3HpDuJXeuXf4tAbWK1r5QhduT
-	smaH5NVbqR0/UAZb10aNw+QCIRDWbCLkZCnh2Nq88y522Jkcw0KUGBflnvRErFeKm8q295f/9LU
-	J2t3B2BFRFCNrDA==
-X-Google-Smtp-Source: AGHT+IHPNNhOrW7sgWpLNHKhT5fa+vEgavrs2BpOrRQI3KF82rfHK1Dfjxo96/wkcNzANZQDfO345g==
-X-Received: by 2002:a17:90b:17ce:b0:312:1d2d:18df with SMTP id 98e67ed59e1d1-313f1d020f8mr14321985a91.23.1750120185987;
-        Mon, 16 Jun 2025 17:29:45 -0700 (PDT)
-Received: from APOLO ([2804:868:d051:698d:edd9:8f23:476c:6db1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-313c1b49a8asm9308267a91.32.2025.06.16.17.29.43
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 16 Jun 2025 17:29:45 -0700 (PDT)
-From: Rodrigo Michelassi <rodmichelassi@gmail.com>
-To: git@vger.kernel.org
-Cc: icaselli@usp.br
-Subject: [PATCH v4] t2400: replace 'test -[efd]' with 'test_path_is_*'
-Date: Mon, 16 Jun 2025 21:29:39 -0300
-Message-ID: <20250617002939.24478-1-rodmichelassi@gmail.com>
-X-Mailer: git-send-email 2.50.0.rc2.48.gf1ca98f609.dirty
+        d=1e100.net; s=20230601; t=1750129159; x=1750733959;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5b5jqbFWjESqxkL/fUyC7q9gNJG+3ju0XQS7C/wunx4=;
+        b=wMxxuktdjRVHFphI3ciPw+em/6/LUHuOeTUGqeqKQeD3KTTbicH8aWEuwMUy0mkEmN
+         cyp0cPbK2vAhFDB2j3ONiquyYOA91nJIQVA5sTJMGgLp9w0EKhkBKFi1HNvOz4WvebRi
+         626XasU+mzDxhLjWPLmvfdf+5Fs6vVwKyCkFxWHbUPuqCPPtgokLjPpqJvHgmz4WdkWw
+         zjzupDknE0QpOgP6MFEgzxh8KRaribu2MGhs0AOxRFUHQJx5EYRK8q/tA8V/p+mH5Au8
+         8+LcFjDKIRGJk9dtwfmmSxWJJA0y6pAmhcssEQeflZ4QT3tStuo5z+UD1+PaORamwTqJ
+         OcsQ==
+X-Gm-Message-State: AOJu0YyHnIi3VRyeeDFFC40Xpo7QFzFivzDpIX6CKrF84BPSEI6yeVhf
+	Jax/HZ+Zy69reUnGIKTs0Hm1HBbwhyaWJaL/k06bkKqrpclVFzTW8BHkMODLGnoOrhLXw0RG
+X-Gm-Gg: ASbGnctO6ADmKrLq8KHbQbyfW9C7tT9jXNE0MBMUoZuPl7Kfl1oo5jZBJFB1/sIGJhV
+	V1eqdXUgl+yimkUSvZiW4liWMW0AzODBAX6hX9v0o9D30bPR178bQG7y+UHZlg8L3raGZIxBoC0
+	ZqG6/4oCCFb4O9l9YxqD1v1VhCFa8i0yz+tvLY7BXpsKyQ2og4hvA7XTF+DEDpFWrG0benrNcEJ
+	+Vj8AKliiH/XxWCcyB+AFuNM5tcyflzmPv1vJ358NJKfADp1sMd/D5Ts4xVSdMfGkruQRSyY8mo
+	WJAGnAMjvHUaE2zG4d4FNWB6CnHDLHc5ss+BTpHamTQNDEXk7n0FOuFnRlsPc2zwnzpD9r+LmPx
+	RODrWWR3dm339vOvZWvtBKtqq0Xn9OoI176ZJfJ7ly9ehyaXV+qt2UQxpCwiN/FrZ
+X-Google-Smtp-Source: AGHT+IFHySrzzjQ8+cFFDCmg3s0RzTuQ/WdkHbOSI2JcDOm1GzJIuiEDAT7oMRD2oY5bZjfG/KnDFg==
+X-Received: by 2002:a17:90b:3148:b0:313:31ca:a69 with SMTP id 98e67ed59e1d1-313f1daa79emr21365758a91.18.1750129159015;
+        Mon, 16 Jun 2025 19:59:19 -0700 (PDT)
+Received: from smtpclient.apple (n058152022104.netvigator.com. [58.152.22.104])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31427e7d69fsm347737a91.26.2025.06.16.19.59.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 16 Jun 2025 19:59:18 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH 4/6] submodule--helper: improve logic for fallback remote
+ name
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <20250610-jk-submodule-helper-use-url-v1-4-6d14c1504e91@gmail.com>
+Date: Tue, 17 Jun 2025 10:58:46 +0800
+Cc: git@vger.kernel.org,
+ Jacob Keller <jacob.keller@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>,
+ Patrick Steinhardt <ps@pks.im>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <90B8957C-9469-4D46-9026-46407AD2EC1B@gmail.com>
+References: <20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com>
+ <20250610-jk-submodule-helper-use-url-v1-4-6d14c1504e91@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-'test_path_is_file', 'test_path_is_dir' and 'test_file_is_missing'
-are test helpers used in Git's development, that emit useful
-diagnostic information when they detect a failing condition, while
-test -[efd] does not.
-Replace the basic shell commands 'test -f', 'test -d' and 'test -e',
-with this modern path checking approach.
+Jacob Keller <jacob.e.keller@intel.com> writes=EF=BC=9A
+>=20
+> From: Jacob Keller <jacob.keller@gmail.com>
+>=20
+> The repo_get_default_remote() function in submodule--helper currently
+> tries to figure out the proper remote name to use for a submodule =
+based
+> on a few factors.
+>=20
+> First, it tries to find the remote for the currently checked out =
+branch.
+> This works if the submodule is configured to checkout to a branch
+> instead of a detached HEAD state.
+>=20
+> In the detached HEAD state, the code calls back to using "origin", on
+> the assumption that this is the default remote name. Some users may
+> change this, such as by setting clone.defaultRemoteName, or by =
+changing
+> the remote name manually within the submodule repository.
+>=20
+> As a first step to improving this situation, refactor to reuse the =
+logic
+> from remotes_remote_for_branch(). This function uses the remote from =
+the
+> branch if it has one. If it doesn't then it checks to see if there is
+> exactly one remote. It uses this remote first before attempting to =
+fall
+> back to "origin".
+>=20
+> To allow using this helper function, introduce a repo_default_remote()
+> helper to remote.c which takes a repository structure. This helper =
+will
+> load the remote configuration and get the "HEAD" branch. Then it will
+> call remotes_remote_for_branch to find the default remote.
 
-Co-authored-by: Isabella Caselli <icaselli@usp.br>
-Signed-off-by: Isabella Caselli <icaselli@usp.br>
-Signed-off-by: Rodrigo Michelassi <rodmichelassi@gmail.com>
----
- t/t2400-worktree-add.sh | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+Just a thought: since repo_default_remote() is only used within
+repo_get_default_remote(), and the two have very similar names,
+do you think it might be clearer to inline the former into the latter?
 
-diff --git a/t/t2400-worktree-add.sh b/t/t2400-worktree-add.sh
-index 90638fa886..023e1301c8 100755
---- a/t/t2400-worktree-add.sh
-+++ b/t/t2400-worktree-add.sh
-@@ -42,8 +42,8 @@ test_expect_success '"add" using - shorthand' '
- 
- test_expect_success '"add" refuses to checkout locked branch' '
- 	test_must_fail git worktree add zere main &&
--	! test -d zere &&
--	! test -d .git/worktrees/zere
-+	test_path_is_missing zere &&
-+	test_path_is_missing .git/worktrees/zere
- '
- 
- test_expect_success 'checking out paths not complaining about linked checkouts' '
-@@ -70,14 +70,14 @@ test_expect_success '"add" worktree' '
- test_expect_success '"add" worktree with lock' '
- 	git worktree add --detach --lock here-with-lock main &&
- 	test_when_finished "git worktree unlock here-with-lock || :" &&
--	test -f .git/worktrees/here-with-lock/locked
-+	test_path_is_file .git/worktrees/here-with-lock/locked
- '
- 
- test_expect_success '"add" worktree with lock and reason' '
- 	lock_reason="why not" &&
- 	git worktree add --detach --lock --reason "$lock_reason" here-with-lock-reason main &&
- 	test_when_finished "git worktree unlock here-with-lock-reason || :" &&
--	test -f .git/worktrees/here-with-lock-reason/locked &&
-+	test_path_is_file .git/worktrees/here-with-lock-reason/locked &&
- 	echo "$lock_reason" >expect &&
- 	test_cmp expect .git/worktrees/here-with-lock-reason/locked
- '
-@@ -412,14 +412,14 @@ test_expect_success '"add --orphan" with empty repository' '
- test_expect_success '"add" worktree with orphan branch and lock' '
- 	git worktree add --lock --orphan -b orphanbr orphan-with-lock &&
- 	test_when_finished "git worktree unlock orphan-with-lock || :" &&
--	test -f .git/worktrees/orphan-with-lock/locked
-+	test_path_is_file .git/worktrees/orphan-with-lock/locked
- '
- 
- test_expect_success '"add" worktree with orphan branch, lock, and reason' '
- 	lock_reason="why not" &&
- 	git worktree add --detach --lock --reason "$lock_reason" orphan-with-lock-reason main &&
- 	test_when_finished "git worktree unlock orphan-with-lock-reason || :" &&
--	test -f .git/worktrees/orphan-with-lock-reason/locked &&
-+	test_path_is_file .git/worktrees/orphan-with-lock-reason/locked &&
- 	echo "$lock_reason" >expect &&
- 	test_cmp expect .git/worktrees/orphan-with-lock-reason/locked
- '
-@@ -474,7 +474,7 @@ test_expect_success 'local clone --shared from linked checkout' '
- 
- test_expect_success '"add" worktree with --no-checkout' '
- 	git worktree add --no-checkout -b swamp swamp &&
--	! test -e swamp/init.t &&
-+	test_path_is_missing swamp/init.t &&
- 	git -C swamp reset --hard &&
- 	test_cmp init.t swamp/init.t
- '
-@@ -497,7 +497,7 @@ test_expect_success 'put a worktree under rebase' '
- 
- test_expect_success 'add a worktree, checking out a rebased branch' '
- 	test_must_fail git worktree add new-rebase under-rebase &&
--	! test -d new-rebase
-+	test_path_is_missing new-rebase
- '
- 
- test_expect_success 'checking out a rebased branch from another worktree' '
-@@ -535,7 +535,7 @@ test_expect_success 'checkout a branch under bisect' '
- 		git worktree list >actual &&
- 		grep "under-bisect.*detached HEAD" actual &&
- 		test_must_fail git worktree add new-bisect under-bisect &&
--		! test -d new-bisect
-+		test_path_is_missing new-bisect
- 	)
- '
- 
-@@ -1165,7 +1165,7 @@ test_expect_success '"add" not tripped up by magic worktree matching"' '
- 
- test_expect_success FUNNYNAMES 'sanitize generated worktree name' '
- 	git worktree add --detach ".  weird*..?.lock.lock" &&
--	test -d .git/worktrees/---weird-.-
-+	test_path_is_dir .git/worktrees/---weird-.-
- '
- 
- test_expect_success '"add" should not fail because of another bad worktree' '
--- 
-2.50.0.rc2.48.gf1ca98f609.dirty
+> This method allows re-using the same existing logic as other flows,
+> rather than duplicating it in submodule--helper.c.
+>=20
+> This isn't a perfect solution for users who change remote names, but =
+it
+> should help in cases where the remote name is changed but users =
+haven't
+> added any additional remotes.
+>=20
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> remote.h                    |  2 ++
+> builtin/submodule--helper.c | 18 +++---------------
+> remote.c                    | 25 ++++++++++++++++++++-----
+> t/t7406-submodule-update.sh | 29 +++++++++++++++++++++++++++++
+> 4 files changed, 54 insertions(+), 20 deletions(-)
+>=20
+> diff --git a/remote.h b/remote.h
+> index =
+7e4943ae3a70ecefa3332d211084762ca30b59b6..ef0de4aa64e9ccd32cc2eea076c00386=
+dcba1161 100644
+> --- a/remote.h
+> +++ b/remote.h
+> @@ -338,6 +338,8 @@ const char *remote_for_branch(struct branch =
+*branch, int *explicit);
+> const char *pushremote_for_branch(struct branch *branch, int =
+*explicit);
+> char *remote_ref_for_branch(struct branch *branch, int for_push);
+>=20
+> +const char *repo_default_remote(struct repository *repo);
+> +
+> /* returns true if the given branch has merge configuration given. */
+> int branch_has_merge_config(struct branch *branch);
+>=20
+> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+> index =
+9e8cdfe1b2a8c2985d9c1b8ad6f1b0d1f9401714..ef3ff65a80f398c5ac35660288290ad9=
+2c7132c7 100644
+> --- a/builtin/submodule--helper.c
+> +++ b/builtin/submodule--helper.c
+> @@ -43,8 +43,6 @@ typedef void (*each_submodule_fn)(const struct =
+cache_entry *list_item,
+>=20
+> static int repo_get_default_remote(struct repository *repo, char =
+**default_remote)
+> {
+> - char *dest =3D NULL;
+> - struct strbuf sb =3D STRBUF_INIT;
+> struct ref_store *store =3D get_main_ref_store(repo);
+> const char *refname =3D refs_resolve_ref_unsafe(store, "HEAD", 0, =
+NULL,
+>      NULL);
+> @@ -52,23 +50,13 @@ static int repo_get_default_remote(struct =
+repository *repo, char **default_remot
+> if (!refname)
+> return die_message(_("No such ref: %s"), "HEAD");
+>=20
+> - /* detached HEAD */
+> - if (!strcmp(refname, "HEAD")) {
+> - *default_remote =3D xstrdup("origin");
+> - return 0;
+> - }
+> -
+> - if (!skip_prefix(refname, "refs/heads/", &refname))
+> + if (strcmp(refname, "HEAD") &&
+> +    !skip_prefix(refname, "refs/heads/", &refname))
+> return die_message(_("Expecting a full ref name, got %s"),
+>   refname);
+>=20
+> - strbuf_addf(&sb, "branch.%s.remote", refname);
+> - if (repo_config_get_string(repo, sb.buf, &dest))
+> - *default_remote =3D xstrdup("origin");
+> - else
+> - *default_remote =3D dest;
+> + *default_remote =3D xstrdup(repo_default_remote(repo));
+>=20
+> - strbuf_release(&sb);
+> return 0;
+> }
+>=20
+> diff --git a/remote.c b/remote.c
+> index =
+1035f0cd32d034cce05bd2a3d829ec90795ff4e2..fcda185ecfab5102afbe8918fed65c74=
+971ef8c2 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -1759,20 +1759,35 @@ static void set_merge(struct repository *repo, =
+struct branch *ret)
+> }
+> }
+>=20
+> -struct branch *branch_get(const char *name)
+> +static struct branch *repo_branch_get(struct repository *repo, const =
+char *name)
+> {
+> struct branch *ret;
+>=20
+> - read_config(the_repository, 0);
+> + read_config(repo, 0);
+> if (!name || !*name || !strcmp(name, "HEAD"))
+> - ret =3D the_repository->remote_state->current_branch;
+> + ret =3D repo->remote_state->current_branch;
+> else
+> - ret =3D make_branch(the_repository->remote_state, name,
+> + ret =3D make_branch(repo->remote_state, name,
+>  strlen(name));
+> - set_merge(the_repository, ret);
+> + set_merge(repo, ret);
+> return ret;
+> }
+>=20
+> +struct branch *branch_get(const char *name)
+> +{
+> + return repo_branch_get(the_repository, name);
+> +}
+> +
+> +const char *repo_default_remote(struct repository *repo)
+> +{
+> + struct branch *branch;
+> +
+> + read_config(repo, 0);
+> + branch =3D repo_branch_get(repo, "HEAD");
+> +
+> + return remotes_remote_for_branch(repo->remote_state, branch, NULL);
+> +}
+> +
+> int branch_has_merge_config(struct branch *branch)
+> {
+> return branch && !!branch->merge;
+> diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
+> index =
+c562bad042ab2d4d0f82cb8b57a1eadbe24044d1..748b529745a5121f121768bb4e0cbc11=
+bc833ea4 100755
+> --- a/t/t7406-submodule-update.sh
+> +++ b/t/t7406-submodule-update.sh
+> @@ -1134,6 +1134,35 @@ test_expect_success 'setup clean recursive =
+superproject' '
+> git clone --recurse-submodules top top-clean
+> '
+>=20
+> +test_expect_success 'submodule update with renamed remote' '
+> + test_when_finished "rm -fr top-cloned" &&
+> + cp -r top-clean top-cloned &&
+> +
+> + # Create a commit in each repo, starting with bottom
+> + test_commit -C bottom rename_commit &&
+> + # Create middle commit
+> + git -C middle/bottom fetch &&
+> + git -C middle/bottom checkout -f FETCH_HEAD &&
+> + git -C middle add bottom &&
+> + git -C middle commit -m "rename_commit" &&
+> + # Create top commit
+> + git -C top/middle fetch &&
+> + git -C top/middle checkout -f FETCH_HEAD &&
+> + git -C top add middle &&
+> + git -C top commit -m "rename_commit" &&
+> +
+> + # rename the submodule remote
+> + git -C top-cloned/middle remote rename origin upstream &&
+> +
+> + # Make the update of "middle" a no-op, otherwise we error out
+> + # because of its unmerged state
+> + test_config -C top-cloned submodule.middle.update !true &&
+> + git -C top-cloned submodule update --recursive 2>actual.err &&
+> + cat >expect.err <<-\EOF &&
+> + EOF
+> + test_cmp expect.err actual.err
+> +'
+> +
+> test_expect_success 'submodule update should skip unmerged submodules' =
+'
+> test_when_finished "rm -fr top-cloned" &&
+> cp -r top-clean top-cloned &&
+>=20
+> --=20
+> 2.48.1.397.gec9d649cc640
+>=20
+>=20
 
