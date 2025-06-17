@@ -1,114 +1,184 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC272ED153
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 16:30:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A916E2BF01A
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 17:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750177844; cv=none; b=VcTSmIKTH4hBxIEx2lNJLjpL0iybNoozB5i8FqMkp8EvxuN548MibqIlPG4cLNFxYzuYLzs2VofpkTC/0oSNtmRltowBRtD7iVZ893+JM7O7gfXrDG52waN5/5QC/3XysUjsQHzstUheENeUVI+UTy5olujZCKnHSBswV66qmPc=
+	t=1750182280; cv=none; b=poDURroFrqmvK0xjm9OOmiYpgbVyYr/T7jLTF9YsR09aE2/JnSnqnBqu1tdcgESVtk2ljhysKDtnyWK+hxwXI/QCVvxCi7YfDUlzwSUWVjJeBQpKlRVRkAptehFzfdhrY1rL63MEz3CESGdTomucT0SfinxYl3JnDc1cTO35ya0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750177844; c=relaxed/simple;
-	bh=OT1yHDrk+r3esRJInsX5ugRdTC4JhRzXvOIRpIe8gPo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jZ3KK56blIixAAVQwn2srugK7d8H4u36fmx1/peqztDx/oJmquxC5yP41QG4eD2ntOaHhKWGH1eUZ+pAARP9Yu98cNG3c1vtuNQLQSfLIIVBIbvzR2cmbBnPbld+6Ev8QtZt/4RiZYnleWKeonTb6HvyD0bcMKGQCvW04zTrmIc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=16+qSMPP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=faHhmIiK; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750182280; c=relaxed/simple;
+	bh=T2+CnPlkOwj1wdAccjNQHYqTNWCLrXDgah3bbIi7lns=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oR46prNNqL6y3b/xpNiEoJWefodzZfB5Z3JcxP9WBWU2h2cSAxwSSqeQbmMN+0Ox1uIDmdZUJ5pT7+ocSKKR7+svA5T965071wOKOGXnYeHmzBAMk7PoRpWriWWxZfDpyrkE3ifc6bbuOeQObffhNo5sECd9lnA5KigenAFeUyA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y+U/gniS; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="16+qSMPP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="faHhmIiK"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 913BC25400F5;
-	Tue, 17 Jun 2025 12:30:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 17 Jun 2025 12:30:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750177841; x=1750264241; bh=dgrL+y3nWw
-	hU16wFG7jCYawKf3d/jyfifW4cnCmI7gk=; b=16+qSMPPgOc/Yr7SJk7KYUYViO
-	GWe/BDrHEnj7rgdY/EMVRiA5HaTxscZGXEaFK60yyspsE1ee8fshLmivnHiM9NMh
-	YiTqPsWqkvjrrDcdmEKCUpkg+eOoYZk+RWSqKJweCOxgLeaVT4BfmKKRdJTnuKFZ
-	ZXUneJ+Pu7W7UXG/vq4uYo2bHBJPTmJVdPmcMEmRhkW0M4+EA9QDwtH9oe1tXhHH
-	MP+FCvleT5+IimIwxtnFoApG6my/cO+B40g9GrhLuxD5TrrvylvxEn0vRnbm2npD
-	0P9mm+UAg1lPemFCUPWHKkreXycj0xEPfDWxtxzKmPN0OFj+owTO8QX1FyBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750177841; x=1750264241; bh=dgrL+y3nWwhU16wFG7jCYawKf3d/jyfifW4
-	cnCmI7gk=; b=faHhmIiKIYLusnGSmGgMkyGc3Y+7Gzp90japqOBMsUGBJ2eS9xs
-	KWqUMqv6KhHLqlAzp2DC1S7O4r8TbQo6P2XVQf2W0b+ZI4HIHhwwqCg3TEMCFn7V
-	JnR2B4/W0EbYnDlA4GNS7l78ZeysjvugYK3+p2pp+ftF12SGBRc017gOJOJ2vG1J
-	ChuRV2dySsX2VNN29APEUfS+EfLMJD2W8zgT7tt6QMIiRfcyB5SU8Oh0YVewnMzU
-	tHU75DbwG+p6CKbGdZvxYMCXnlTuTTgPjUxvi+/Kf4r7Jm2mOSeejuqfHwF9AZzW
-	vplHWq9E960OwSoVMiBEWGBsf6xabPP71kA==
-X-ME-Sender: <xms:MZhRaBWNKPds2-uy52aPMsNdLvNoB5CreXNJC1H0urh7SlTkK65OXg>
-    <xme:MZhRaBkMVzgibddTAG4lfenYYP5TcqCNTqvzZp_gvZcWNQKp4soULMBbBEXTZiiD_
-    Y3pj8DHGn0vkKVR2Q>
-X-ME-Received: <xmr:MZhRaNb0Wv4h9ClSOphU5Wp3yPLduGrVUpWxcv9iLrP8xxkagfbHfrlnY2BSyZxsfN-JprCUZzICOScJveKT7IYYrlPtE73jq7pE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeiiecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
-    tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
-    hsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecu
-    hfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrd
-    gtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeugeffledvteeiveffueefjeel
-    ueffteeigffgfedthfefieegieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphht
-    thhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrhihurdgthhgrnhguvg
-    hkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhgu
-    vghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:MZhRaEXv3ZKPx2SwCDBEVvP1B_qPEVXW7K0TElU-_LwJQD6XwPs26A>
-    <xmx:MZhRaLmiVpODl0AkpgvGcjVOuZFhFsWruP74sUVDS2hpl21BXviUxQ>
-    <xmx:MZhRaBcbiIMfp2T5SYyJ6aSZrAHaHTWfxbIlpLXBdqtXzORC-ZpLBA>
-    <xmx:MZhRaFHEG6cSRb4mceLX00ASE7EYDc2VvgzSXCtOxMtY1WMJoVVUOA>
-    <xmx:MZhRaE1EmWc1g6p3iRZBNQrcKBqi_RLcWS2wLemkcCEQMVsnkHAqdV6s>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Jun 2025 12:30:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,
-  shyamthakkar001@gmail.com
-Subject: Re: [GSOC PATCH v4 3/3] environment: remove the global variable
- 'sparse_expect_files_outside_of_patterns'
-In-Reply-To: <a9e1e23685c476b106b3bdb0d37b4ac5dd98ee3a.1750157825.git.ayu.chandekar@gmail.com>
-	(Ayush Chandekar's message of "Tue, 17 Jun 2025 17:36:36 +0530")
-References: <cover.1750157825.git.ayu.chandekar@gmail.com>
-	<a9e1e23685c476b106b3bdb0d37b4ac5dd98ee3a.1750157825.git.ayu.chandekar@gmail.com>
-Date: Tue, 17 Jun 2025 09:30:39 -0700
-Message-ID: <xmqqldpquy8g.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y+U/gniS"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3ddc9872e69so24724805ab.1
+        for <git@vger.kernel.org>; Tue, 17 Jun 2025 10:44:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750182276; x=1750787076; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=q09vFTLqlQvPwBK7ZFeVaaJw94MBjDKV3BxvxeHLQp0=;
+        b=Y+U/gniSmf1wHNuO5zGvMYfx1IZ5Ft7H0oX5qTXtnGPK2rKjpzTu7e1F163112RMhN
+         EYQniFDedWCHW2qvTsd5W71d0AY8Z/9s8woxzBD1JVFqFQXnVpfhQ0ttRYG6Nq1FxYX/
+         fkqpTGYc56ObNCp4Na86T5hBZx8hB1gCfTpsuw48uD/TaNysSbAXvJmXGOghFLbZsZtW
+         M++FZzQyeICD4enWkr141O1lIpCwE+JVWS86oNOdZybCtbKwjaeWpV7jVErlcwN27asO
+         O83XyPhwRDYza1tMyO6AtG5u0OYaJYHCrtBe0X8VEqznv+p4YArj7Hxd/PNCgPC4JM0z
+         SHEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750182276; x=1750787076;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=q09vFTLqlQvPwBK7ZFeVaaJw94MBjDKV3BxvxeHLQp0=;
+        b=wWxOKd1dbLa2oxqcg9lfPLXy9cegyjejK4wdrbvleH7X1ssBnvpoeLNsiwmwA9zfz1
+         G3et5X1hZdClEi31qPn1GfTG6pdyCpwfU7yHWK9A3AEHQ9eL9rvPWMYs6btynFWZ8Ipf
+         F0/EecJOeu8rIpkd1DIJrjEamVZ9zsIJf8kGlzyzLopcuN2QaiqBZURKus7Jxxpo4TK3
+         eumP5vbK5WA315tZ2QZwxxuEjIblyk56luS+Ebpoe5FfAdVNzdeZvIZzzz3d4AXlb9cs
+         exLNAj8CDX5pwZa5kEv4AfANmoe3SmlAVPXGXwJmwwf4wZ85Kbnnm3nRAgu/beNwQumX
+         wlsg==
+X-Gm-Message-State: AOJu0YwXvjXgaABlctAo2FrCjua/Pqp0qhgrljreDmJjG/WEgEbAVeSt
+	oRXeZc3D3cig/nops5QN/v7Hwh1zyCjBO0JvwnlhsVLA3kNdMER+cLaHHwrr42V2ti1iL5iUBom
+	UoqVwWefbRHRqIJmi9vrnAvqORDzFy6Mc4ZRN
+X-Gm-Gg: ASbGnctri6Xh4ev7rO8iskcBPNrrmJl29YcLjLEs8tkvo05o/gEXGy/S8YvmhInydYq
+	4UgSvULPKZl2KC6OJkKeyiIvh+l0ecLl5oO+J05a4f+qcFkC8XiL80NxUDPObexMUR7PPvK+afn
+	jCSjeMUdkRcMrVWgxQ1PBw8qqjLgMqNxHrgTqIAjnNTMwKV0n6R5yVFo4pMMYoBn87gZhHqo8QX
+	loy
+X-Google-Smtp-Source: AGHT+IG5KukymSQ680iL8lW1xU+ZUUt/4VPfTrcdEUiQkTKSDeAOysgQGGYKRJMnhzQfEWpoAaVEgUUK1ASiVQPXutI=
+X-Received: by 2002:a05:6e02:1a81:b0:3dc:7f3b:acb1 with SMTP id
+ e9e14a558f8ab-3de07cc207bmr139904495ab.13.1750182275513; Tue, 17 Jun 2025
+ 10:44:35 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <aFFN9UHCspTjliMv@kitsune.suse.cz>
+In-Reply-To: <aFFN9UHCspTjliMv@kitsune.suse.cz>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 17 Jun 2025 10:44:23 -0700
+X-Gm-Features: AX0GCFvDK5byBB0HbrXxZ3XdTErtWgC-v9rLxQO7tKwgpcBQpQJzGL7oaWc_t3k
+Message-ID: <CABPp-BFdEn8rYu+FW+CdgrKNDUGBY9h6ePSH-vjYy-f_Pji0-Q@mail.gmail.com>
+Subject: Re: Rename detection fails on symlinked files
+To: =?UTF-8?Q?Michal_Such=C3=A1nek?= <msuchanek@suse.de>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Ayush Chandekar <ayu.chandekar@gmail.com> writes:
+Hi,
 
-> diff --git a/sparse-index.c b/sparse-index.c
-> index 444da8a753..5d87fc65c0 100644
-> --- a/sparse-index.c
-> +++ b/sparse-index.c
-> @@ -1,4 +1,3 @@
-> -#define USE_THE_REPOSITORY_VARIABLE
->  #define DISABLE_SIGN_COMPARE_WARNINGS
->  
->  #include "git-compat-util.h"
-> @@ -668,6 +667,9 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
->  
->  void clear_skip_worktree_from_present_files(struct index_state *istate)
->  {
-> +	int sparse_expect_files_outside_of_patterns = 0;
-> +	repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpatterns", 
+On Tue, Jun 17, 2025 at 4:16=E2=80=AFAM Michal Such=C3=A1nek <msuchanek@sus=
+e.de> wrote:
 
-There is a trailing whitespace here.
+I think your subject might be slightly misleading, and that a more
+accurate subject might be: Rename detection is not performed for files
+still present in the target version.  Let me explain why and you can
+check if I'm understanding your problem setup correctly.
 
-> +		&sparse_expect_files_outside_of_patterns);
+> commit 5d51b10d8b5206ef5eeb9d214237b2ec2e0b789e (HEAD -> master)
+> Author: Michal Suchanek <msuchanek@suse.de>
+> Date:   Tue Jun 17 13:08:51 2025 +0200
+>
+>     rename file
+>
+> diff --git a/somefile b/somefile-renamed
+> similarity index 100%
+> rename from somefile
+> rename to somefile-renamed
 
+So you've renamed a file, detected at the time you run git log -p.
+
+> ln -s somefile-renamed somefile
+> git add somefile
+> git commit --amend
+
+Here, you reintroduce the original file, as a symlink, and amend the commit=
+.
+
+> commit 377d9bd045aed61c7be55482f3c98f8f9d04a33d (HEAD -> master)
+> Author: Michal Suchanek <msuchanek@suse.de>
+> Date:   Tue Jun 17 13:08:51 2025 +0200
+>
+>     rename file
+>
+> diff --git a/somefile b/somefile
+> deleted file mode 100644
+> index a53032b..0000000
+> Binary files a/somefile and /dev/null differ
+> diff --git a/somefile b/somefile
+> new file mode 120000
+> index 0000000..fc49048
+> --- /dev/null
+> +++ b/somefile
+> @@ -0,0 +1 @@
+> +somefile-renamed
+> \ No newline at end of file
+> diff --git a/somefile-renamed b/somefile-renamed
+> new file mode 100644
+> index 0000000..a53032b
+> Binary files /dev/null and b/somefile-renamed differ
+
+If I'm understanding the behavior that bothers you, it doesn't seem to
+be related to symlinks.  You could create any regular text file
+unrelated to the original somefile (or even introduce a submodule) and
+place it in somefile and amend the commit, and you'd see that the
+rename wasn't detected.  For example, replace your `ln -s/git add/git
+commit --amend` sequence with
+
+$ echo content >somefile
+$ git add somefile
+$ git commit --amend
+
+and you'd see that there was no rename detected from the original
+somefile to the new somefile-renamed.  By default, if the file is
+present in both the source and the destination, it is not involved in
+rename detection.
+
+> Can the rename detection be fixed to detect symlinked files as well?
+
+Symlink renames can be and are detected, by default.  For example:
+
+$ ln -s somefile old-symlink
+$ git add old-symlink
+$ git commit -m old
+$ git mv old-symlink new-symlink
+$ git commit -m new
+$ git diff HEAD~1
+diff --git a/old-symlink b/new-symlink
+similarity index 100%
+rename from old-symlink
+rename to new-symlink
+
+But from your example, you're not renaming a symlink, so instead of
+"Can rename detection handle symlinked files?", your question really
+is more of "Can a renamed file be detected even when some other
+file/link/submodule is immediately placed where the renamed file used
+to be?"
+
+git assumes, by default, that a file which exists in both the source
+and destination are "related" and will only look for renames in
+deleted or added files.  Allowing git to mark a file as both a delete
+and an add even when it's present in both the source and the target is
+the job of break detection, which is not turned on by default.
+Further, break detection and rename detection have a bug or two when
+used together (brought up on the mailing list by Junio some years
+ago), which might need to be fixed for your example to work as you
+expect if you try to turn on break detection.
+
+Also, not sure how deep your interest in break detection goes, but
+merge-ort was written with some implicit assumptions that break
+detection is _not_ active.  Trying to retrofit it to support break
+detection might take a significant chunk of work; and even if someone
+is motivated to make it work, it'd defeat the safety of every
+optimization added to it (making it orders of magnitude slower), and
+also tack on a significant performance penalty on top of all that
+(break detection is not cheap when at least one side of the merge has
+a significant number of files modified).
+
+Anyway...does that help explain what's going on?
