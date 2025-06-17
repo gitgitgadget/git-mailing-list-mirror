@@ -1,180 +1,78 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 071112E06EF
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 12:08:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 544732DE1EC
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 12:19:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750162086; cv=none; b=EElTrLD0CUIoSELBh73nGlp2suI0YQtK/Su+I96pKtXAmdVxXMOPawRnIO5in6HQKY8xrWTxW0qPkaB+6xJ6Pp7XyO3Nk/t0LgZLW2rbY4zK3cw564uBI+1gri/Y1mzZwGT7L4bioRbZA4uobgW7PJfk0N238dC61YlgpMLuGwo=
+	t=1750162762; cv=none; b=ASOYaQ8WA55wLho+++/lB0oZULToarG5dopLVNokn7/U6W6GnR4jH3iwG5Kw62ULMfSe5ltZXMghLrrd216svwwz1gAHffyTgGku2pRyefpQj9RKl4qYNvewD6dTdBMq5iyYCFb8/F22wl6IiOls6X+RF3y78ig0zo32d8LlCkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750162086; c=relaxed/simple;
-	bh=tWHndeBhO4PHCPKYBuB2cskdd+C1spKndFh1YfanB0o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MImgB/TyPH26p2fRll2npFZZGWw0CshPJWv+7v0x4p84bS0yUOJydsSBSgWmkXXUzdY00Lajm+korcz7l4WVwNgLXwQ9xQZAggsXBCd2bSXwTpFwguJ7qrcRrfZhCDhvuiXAliqM+V/srNURBRCHJH2l3Ct5FM8PuVWSnpZThmM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ACUAqIKZ; arc=none smtp.client-ip=209.85.210.169
+	s=arc-20240116; t=1750162762; c=relaxed/simple;
+	bh=jZLf5QzjvEwi2Ck1IqsrX2BKttlj9QRl8p8hjlJtOTA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pZGmJ4n5A+RigiWWM9+S5Vvtr9W63VOpG5PHgFiUBPfU9rtZZll9dv2j8Rz5hYnK0g6lCmi+/B2TpNwqdPJXiV6OPCn3d1IGac1aY2mbcEF8d6xFYQqWWpWjcoGLBi6n2/KOT6G5aBtnLAnM6I0cEjKCGNG4Qpn2t8+sGStqxPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtzjS3uj; arc=none smtp.client-ip=209.85.214.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ACUAqIKZ"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-7426c44e014so4647599b3a.3
-        for <git@vger.kernel.org>; Tue, 17 Jun 2025 05:08:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtzjS3uj"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-23649faf69fso54844355ad.0
+        for <git@vger.kernel.org>; Tue, 17 Jun 2025 05:19:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750162084; x=1750766884; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vdH3kPMbgFPyxB4glTNR3nzvi4wkIkgJpsdoFqi8r98=;
-        b=ACUAqIKZFYcFDBIFCV21Tlq/RcsOxGFRyGATHJR6LIzWmmffphLZ7+nfzQXhc05NzX
-         v+01j3eCapR+m+549t56PqweRl6n3IiyP9yhVILuLt7gRLcRhkX0rxc6aQhNwUzjg+PF
-         fg7Xpn/c/wO8PhbY0YX9nAQqPGEl0UOMYZR5suw7UgiiuBnPztU9hPUVqbQ42sZhjSr/
-         k+DYQXkPAPy0uWVaLNBbLTN0/5BxwZTFwvJz4IL2MUvlm08bZ7W/oXF+va0l26K1RoxH
-         jGXjGm+A+oNSakWPi7QM3L0WExD8oOqDu4luWYBHTM5cx2atJaUldejS4U8NUR0yLArE
-         yuQg==
+        d=gmail.com; s=20230601; t=1750162760; x=1750767560; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jZLf5QzjvEwi2Ck1IqsrX2BKttlj9QRl8p8hjlJtOTA=;
+        b=EtzjS3ujLEV3AQsj/O8gQJiCNJFq1yjSF0qRmBXYrey2/JDZDwV0rO+t2mf49pnVmm
+         fEXp4xDa4l0mONNpBDmkW6Zswj9qTQbF45AgbzvzoBIr9tDsLKhB4UnEBMUZOv0eivdA
+         72XT0Q6dI/EtOj0O/A/x0/TdnZUXaprxULLJTRNzeXasq7oEW3WA1L0H2Mbqq48BXlxW
+         XMZmZUubZ9gehvNFKQsOtRVbWj5vZLqDgDTwPv6ae3OPyxrH0LUOl5xFeykee+sbhD8G
+         o60lv3euLoXs888cfA4IMB0wwT2M79AXEd5sxv5bzMB9wzA7f+PaKKC//uBZA/0zUHzo
+         HdHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750162084; x=1750766884;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vdH3kPMbgFPyxB4glTNR3nzvi4wkIkgJpsdoFqi8r98=;
-        b=ZUWAwYhWpScUWx8KCVGdYAsm4kqJYQBLqGz+HJ3JAVs8GqxgopZ9frru2ImZORRWDB
-         OfwcSDAUmaY/pElMhk5MmCsjg4gvzgC2M1IDhTOiOXClJuiDi/xlBsGg3vYT0FZlpbCc
-         sXfHmGWAV5VZpcPm4qeSho095SLcNTpJPD+fuAeO1VwWkIbNsafNB0QZOXhEfRaWsRhT
-         R5YagL/w83rbXEbwi+wUn50cqrxfNO8iYDA6h4vT19FY3nXoXE0XQbeK4NE4OZX9LwEA
-         M9+OyO++KiA1DKXOWJyeZsBY2QTmoPzWEMQAZhz5TuxxCd3lBWIf7q0pF1a0CcRk9FQ6
-         8cyw==
-X-Forwarded-Encrypted: i=1; AJvYcCVsuyJ0DUKizv4LUkLo7vxA3YZC1yieQzxl4trLygJsBvAOQ43A8tNMMOsX89sWBpykOrU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxV7IZfnHkRyQQ13nkKna2+SgvfuCsLVHs9bVsSxhTXtR12FG28
-	1ayXM/W8qkelP6CqRxvQYj65FpWsA5XZjmxa0BhOy04zSEuYXP8+QW7h
-X-Gm-Gg: ASbGncvYI1d/iIFNNa7HrxGB2gNuWD9fkwXTLiYzMUeOFaCZb09YzLoStK4z8ZnLa/I
-	oBVWUREKuVH+b8KnSBv77YkfZVLJfCWIPayWBL8dwV79z8TQRlIPnJ77bX2+eKmlt6rG/kEUed3
-	SPqafkMQq4QVgLmyNxsC27bJguBy1ozPvDw7NuB8/94jJKk0ZWB1cny54EtroH/Bskbeo2Bj2fa
-	tdmvpa2pPvC68kkVCHXAbrigMRinF47vnofziekLlgFR0N0kiqJC+0z7DmHhoppkWl41c656x08
-	G0UN2dWL4kut9+lvKWEpHPQEC3vWlPqeT7J3whSylR3jcUxRm+0YCUXUVb8suru2HZ5r7D9ZZdQ
-	2kyOT
-X-Google-Smtp-Source: AGHT+IEyGs649yQyElvbFaOXOwaWaU/BYmozHlJWsw0uJ1JWl8lrRc+Wj66OpMCemgrvr63UTxi8Zg==
-X-Received: by 2002:a05:6a00:3c8f:b0:746:2c7f:b271 with SMTP id d2e1a72fcca58-7489ce0d374mr15567831b3a.9.1750162083805;
-        Tue, 17 Jun 2025 05:08:03 -0700 (PDT)
-Received: from thinku.localdomain ([2401:4900:1c96:a38d:5480:e4eb:2835:b445])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7488ffed0c2sm8623333b3a.22.2025.06.17.05.08.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jun 2025 05:08:03 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: ayu.chandekar@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	shyamthakkar001@gmail.com,
-	gitster@pobox.com
-Subject: [GSOC PATCH v4 3/3] environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
-Date: Tue, 17 Jun 2025 17:36:36 +0530
-Message-ID: <a9e1e23685c476b106b3bdb0d37b4ac5dd98ee3a.1750157825.git.ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1750157825.git.ayu.chandekar@gmail.com>
-References: <cover.1750157825.git.ayu.chandekar@gmail.com>
+        d=1e100.net; s=20230601; t=1750162760; x=1750767560;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jZLf5QzjvEwi2Ck1IqsrX2BKttlj9QRl8p8hjlJtOTA=;
+        b=fY5ntQRv7jSiINkXnJtbs4tiAWhjoMQHULJbS6XFbJSkWDgvdahrxhHfTm7ISxzeb1
+         rdnQPnfMZfywQgXxRtNb2bVZzXAzCItdauJSeJgxYxoTpSl7AeOJhB1p8tS0q/4bNJoQ
+         TPrALbJhnAvbcdgaTKQQ+HqNQZDnH6KM/4aKXGGO8v7aXa8ZAPBNOjA28zwpC23oYBhu
+         9LnpdTIAfkh8G4pLNiDGV/30jSMlFSlKYl81TWWEZ7mLW4KMZRkO5y83np2qepFic8IU
+         Tz2VThyjKlCbIaLTC9gU5eULCpYOfATPlxcUx5YkeWp/vjyISZypPFLAO9r+TCdLIHXF
+         RkIg==
+X-Gm-Message-State: AOJu0YxhWia5eDJuqM/PAD5r5jXVOlyFb6q0qbwzbP4nZU65rFoLZjFb
+	2P5wx3EAoEjJz8jRSYp4ETTgjxp5AhDMb4Ln5YrzYTQb1jHT/RC18vWMIOZC8VxydlyUSLziP/p
+	OZ2ewGYvHtu7hbICMaBVT/ux+3QllZ1NY2U1CEWI=
+X-Gm-Gg: ASbGncsBt6dlpocBrIMCNrV7tb+gWNbcw5W8DdwK0SXZpwFW+ti1AeCcDUaSAPCgXzW
+	SiNseitsBK0ceM1bjYArEQgkyFXqLJfPXgBXKf/ph4gMQL/wW3KYyzbpkglNS/pM4roBa4zeGv4
+	0m9IOzmnuu1Tbqj6l0fGgUVtgFgGAZ0pcXqWG+9pbNd3Y2MGduEFm2ZWs=
+X-Google-Smtp-Source: AGHT+IEtTVWS+J2qnn1gxANx3K1l03dnbSYHr9lGbAELOoC7TuEhe4V7Qwr3y/M+x/i3ij8czbQMgHwq488MlDvde1w=
+X-Received: by 2002:a17:902:e54e:b0:234:a139:11e7 with SMTP id
+ d9443c01a7336-2366b14e55amr210069625ad.35.1750162760236; Tue, 17 Jun 2025
+ 05:19:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CAPhwyn36MjrW6SsSaDo3S9rrrNGOqURcQrsKFukU-sUwyZwx6g@mail.gmail.com>
+In-Reply-To: <CAPhwyn36MjrW6SsSaDo3S9rrrNGOqURcQrsKFukU-sUwyZwx6g@mail.gmail.com>
+From: Meet Soni <meetsoni3017@gmail.com>
+Date: Tue, 17 Jun 2025 17:49:08 +0530
+X-Gm-Features: AX0GCFuapr8WxtpeYptEjvghxEY0sJl1WS4eZK1ZhxXu4kGDSWmkNuFToWAemhs
+Message-ID: <CAPhwyn3-SLhOF9XAOR7h1FCHaEpp2fphmiv5=u7JpdpVb4si3A@mail.gmail.com>
+Subject: Re: [GSoC] Blog: Consolidate ref-related functionality into git-refs
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, shejialuo <shejialuo@gmail.com>, 
+	karthik nayak <karthik.188@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-The global variable 'sparse_expect_files_outside_of_patterns' is used in
-a single function named 'clear_skip_worktree_from_present_files()' in
-sparse-index.c. Move its declaration inside that function, removing
-unnecessary global state.
+Hi everyone,
 
-This also allows us to remove the definition '#define
-USE_THE_REPOSITORY_VARIABLE' from the file 'sparse-index.c'.
+I've published my blog post for GSoC 2025 week 2:
+https://inosmeet.github.io/posts/gsoc25/gsoc25_week2/
 
-This change is part of an ongoing effort to eliminate global variables,
-improve modularity and help libify the codebase.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
- config.c       | 14 --------------
- environment.c  |  1 -
- environment.h  |  2 --
- sparse-index.c |  4 +++-
- 4 files changed, 3 insertions(+), 18 deletions(-)
-
-diff --git a/config.c b/config.c
-index 707fe0707a..d212329799 100644
---- a/config.c
-+++ b/config.c
-@@ -1636,17 +1636,6 @@ static int git_default_core_config(const char *var, const char *value,
- 	return platform_core_config(var, value, ctx, cb);
- }
- 
--static int git_default_sparse_config(const char *var, const char *value)
--{
--	if (!strcmp(var, "sparse.expectfilesoutsideofpatterns")) {
--		sparse_expect_files_outside_of_patterns = git_config_bool(var, value);
--		return 0;
--	}
--
--	/* Add other config variables here and to Documentation/config/sparse.adoc. */
--	return 0;
--}
--
- static int git_default_i18n_config(const char *var, const char *value)
- {
- 	if (!strcmp(var, "i18n.commitencoding")) {
-@@ -1808,9 +1797,6 @@ int git_default_config(const char *var, const char *value,
- 		return 0;
- 	}
- 
--	if (starts_with(var, "sparse."))
--		return git_default_sparse_config(var, value);
--
- 	/* Add other config variables here and to Documentation/config.adoc. */
- 	return 0;
- }
-diff --git a/environment.c b/environment.c
-index 7d46b80711..d51e0a14aa 100644
---- a/environment.c
-+++ b/environment.c
-@@ -64,7 +64,6 @@ enum push_default_type push_default = PUSH_DEFAULT_UNSPECIFIED;
- #endif
- enum object_creation_mode object_creation_mode = OBJECT_CREATION_MODE;
- int grafts_keep_true_parents;
--int sparse_expect_files_outside_of_patterns;
- int merge_log_config = -1;
- int precomposed_unicode = -1; /* see probe_utf8_pathname_composition() */
- unsigned long pack_size_limit_cfg;
-diff --git a/environment.h b/environment.h
-index 00a5b332a0..5121a28d3f 100644
---- a/environment.h
-+++ b/environment.h
-@@ -160,8 +160,6 @@ extern int precomposed_unicode;
- extern int protect_hfs;
- extern int protect_ntfs;
- 
--extern int sparse_expect_files_outside_of_patterns;
--
- enum rebase_setup_type {
- 	AUTOREBASE_NEVER = 0,
- 	AUTOREBASE_LOCAL,
-diff --git a/sparse-index.c b/sparse-index.c
-index 444da8a753..5d87fc65c0 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -1,4 +1,3 @@
--#define USE_THE_REPOSITORY_VARIABLE
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "git-compat-util.h"
-@@ -668,6 +667,9 @@ static void clear_skip_worktree_from_present_files_full(struct index_state *ista
- 
- void clear_skip_worktree_from_present_files(struct index_state *istate)
- {
-+	int sparse_expect_files_outside_of_patterns = 0;
-+	repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpatterns", 
-+		&sparse_expect_files_outside_of_patterns);
- 	if (!istate->repo->settings.sparse_checkout ||
- 	    sparse_expect_files_outside_of_patterns)
- 		return;
--- 
-2.49.0
-
+Thanks,
+Meet
