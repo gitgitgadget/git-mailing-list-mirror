@@ -1,276 +1,296 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E7D5C2D1
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 06:04:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323CD7262B
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 10:27:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750140252; cv=none; b=X8KrWeSDh+5a6fX3smC4KPoBUbV4vHIpLMP8Rit5GQt2QN+/5nL8vpr2YY8eQXRSpOv4LG+Y6UsvEWIRGqk5DrzKJTzyY/j29ekxdEKHz3ci/c5LxHjTtnrRjL2ik9ImeWsjsAfmEqRcn326sFncNPG1ScFdvXahyMJGgZ6o6cM=
+	t=1750156035; cv=none; b=s+Gri9viFWMWNcWALqP2Lsznf6D6Pd4SGaJ9jqrHPjqf7CLmRtcRmon+ZjokZqk+XQgdOpvjJK7PtmoW0vK01gfXbnr3wlo0O+6L80kapsJxbqUrDtNof+lUljO06ld+75kxBpnWnetZxYLQjCYxUBFzCabLIUn1Hh99lAEGPYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750140252; c=relaxed/simple;
-	bh=X5i5ac43TlnnK2y31HnTPOXN55+F+k/jyptjEOgAu2I=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version; b=ARUd+6yBFczcToo7nZxVedfvuhBCY9m36/AcR/e6kR3mvRidOzlqsy98CbtliFISKVOxtCVsxyS0YxdNLJoqVO6YskjypGZFqC6P7gy0hZIzs+W8Ru89yH/MxraH44B/x4SqLJWOjneKOCwqvcA5N/ePRtXCKvr7p4jHakZfzMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E9IVdf8Z; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hRFixBnP; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=E9IVdf8Z; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=hRFixBnP; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1750156035; c=relaxed/simple;
+	bh=bu8Q7HFLQRqcM8/lPtIUuC6WNeL5YWdh+cs2GjN+5CU=;
+	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
+	 MIME-Version:Content-Type; b=IzGSGSH4yoM6wMblEHhhoS+t9jhLrlcXY2AJNXftZ1BobrHWBtjZkSEpbUfh7uyPHgcANe6L2QEJEYEWSgMz1RlHQLwifoiDJscMkGAqgVcRTeVclnmV88zE/l1kgke0zVXUdj7FGVcP73XYg94T8QUGtcM7eV/utBlReRC9L6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IBFn0Epw; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E9IVdf8Z";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hRFixBnP";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="E9IVdf8Z";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="hRFixBnP"
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id D51241F388;
-	Tue, 17 Jun 2025 06:04:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750140247; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
-	b=E9IVdf8Z1l+oQY+5xK2IORPQEvqfp0vmSPN2XQ0JQw5BkD8F1NQ3pv3RyR0l2N6JkwBaP8
-	62lTFRzu8DQc06kxsjDCXsioRNC0ade5NjZEOK/2+Ho906cJjjMpHJhM+tXyJeh665bclx
-	29ixw+tAMtZWL/JrUCyDyjNCwzN/XQ0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750140247;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
-	b=hRFixBnPT5izTTUn5sBBmLewHCnu9t0ynTscN95q4g6UKvKKgJ2N1TcldPUKLl0MNlkSHl
-	sJSv345cc0wpdKDg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750140247; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
-	b=E9IVdf8Z1l+oQY+5xK2IORPQEvqfp0vmSPN2XQ0JQw5BkD8F1NQ3pv3RyR0l2N6JkwBaP8
-	62lTFRzu8DQc06kxsjDCXsioRNC0ade5NjZEOK/2+Ho906cJjjMpHJhM+tXyJeh665bclx
-	29ixw+tAMtZWL/JrUCyDyjNCwzN/XQ0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750140247;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=0IdYg0fSsd7WjF54y3NChB1MNY2krf+Vz6g6fOD+yGM=;
-	b=hRFixBnPT5izTTUn5sBBmLewHCnu9t0ynTscN95q4g6UKvKKgJ2N1TcldPUKLl0MNlkSHl
-	sJSv345cc0wpdKDg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id B670C13A69;
-	Tue, 17 Jun 2025 06:04:07 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
-	by imap1.dmz-prg2.suse.org with ESMTPSA
-	id XAALK1cFUWimSgAAD6G6ig
-	(envelope-from <tiwai@suse.de>); Tue, 17 Jun 2025 06:04:07 +0000
-From: Takashi Iwai <tiwai@suse.de>
-To: git@vger.kernel.org
-Subject: [PATCH] git-gui: Add support of SHA256 repo
-Date: Tue, 17 Jun 2025 08:03:59 +0200
-Message-ID: <20250617060406.10159-1-tiwai@suse.de>
-X-Mailer: git-send-email 2.49.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IBFn0Epw"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4532ff4331cso15264585e9.1
+        for <git@vger.kernel.org>; Tue, 17 Jun 2025 03:27:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750156031; x=1750760831; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=t/XDxZV3Xe5sDRNAwbUmTbNBEKX2H37htR+G36wjDZw=;
+        b=IBFn0Epwlb8PoRKxsyS7N0CcUL0SpRfc2giSHpcLNWc/7QULzN1c6/c8hq6+iK3u+F
+         9VLXKtQhkMI1aJl739ysd4bF17V0+iZtPR2jHU9Q5nTH1v/oI1dp3h+IKQvfeSnpnnib
+         zUGuLqlOa0waJUvq+pcDVS7FkFIkBHl7jd6TsUuUhYWxx+p/FTSGElF7ZuFaZtwBW03P
+         fHDf8hG87BnXNsl4J7U6ECn/lFSDQNS/OOj3cuFbhYSJMhr1vu8xQqzRI9dA9GCeypcZ
+         GjUyhdMnbnKRPOFK6swiwjyJ15tt7aZz5Wj2dEloBKA0ikLfXR6/oZU5VDrdULTMR0un
+         B5xg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750156031; x=1750760831;
+        h=content-transfer-encoding:mime-version:message-id:references
+         :in-reply-to:user-agent:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=t/XDxZV3Xe5sDRNAwbUmTbNBEKX2H37htR+G36wjDZw=;
+        b=cNXzkLHW/UOS36LhSwPtb+ces2KvJI9HddDRZbK6ZmoDGih6MvgBhOesVIaZVeCM/C
+         Zcaz7kCWcbMxMW4/U2Pfmv01OBZyUomZj9+eoUoxPdlUQf/4s0Tkwtql4fuzvzDvw/Au
+         +XJeucOTMNiVQqii3qpCxicOJAv3rF0KXHuOEGcU2a7GIRlsQgz1X3qfnDn+eBwttLkB
+         95sCHigJOMuhtni10OmL9riTeWVfcl4aHtlFRW+EFGstBKhMk8qx4Dra2mWydHXaLxtq
+         jULeLumXumcWf700u34lL68D6nbm6Nan6wacAzmMCZJk1a78UsS1coZRIDpzpvsG4aN8
+         5f2Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUHphp3X1hMA00jEJsDmUa3/NYU6pHVefu6nH0HRZAA93W1CeX2COdhcWnejjdFf7pky/0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzHldKOhutZ0mxShh4DOzCcjiM1nWpyaEV126DGWDBweQolWFoC
+	d+EZTP1Xgv/OHs4lizu4gWEj7JtAzsdaK/fRmBWRligBJdBGV306omLU
+X-Gm-Gg: ASbGncvd94G3R3cuvjQXQOOPsvXTs3vqND1iSs/34mQxMVdU3oPveptQ/+WE2Gge21u
+	gwAvkLWTi1SwPHXNPbLwJ0ITV5Yic/DlGBW+sZxi7KEb+xMZwHNR/6Lz8R/e2YIbpkhXksJOCk5
+	wjIjH8Ht6kqEBHBSVQxo4+q7HrgGDNM628IToA+CxlgXbtPQ4im6TsVW1c0uxSs65zRYen/PWU7
+	KhtvaQSvfqwnOpN07ilNpF71r8flFrvzenihZvHZ02VO8D+kQU7hT/4Jt8WYKl/AYN/s6tBXbil
+	sl/b6m5pgU06L1PxPT75J8FT607Z65B2z86AvJ9KPAoRY9oJwhwfxG6lk+ss3cP+3y1tohBgVsY
+	10WscyQ==
+X-Google-Smtp-Source: AGHT+IHQejhdZkq1cQyc11HH5FRT967dnkwPgJMkumCDLBbZ4cdjD63YrxzdQQfSRAbIAhPgiHpFqg==
+X-Received: by 2002:a05:600c:6095:b0:43c:fffc:7886 with SMTP id 5b1f17b1804b1-4535627dbe5mr2760405e9.8.1750156031209;
+        Tue, 17 Jun 2025 03:27:11 -0700 (PDT)
+Received: from ?IPv6:::1? ([2a02:c7e:62c0:f800:bbf9:48de:266d:f95f])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4532e22460bsm180471065e9.6.2025.06.17.03.27.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jun 2025 03:27:10 -0700 (PDT)
+Date: Tue, 17 Jun 2025 11:27:09 +0100
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+CC: Eric Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>,
+ "brian m . carlson" <sandals@crustytoothpaste.net>,
+ Jeff King <peff@peff.net>, Ben Knoble <ben.knoble@gmail.com>,
+ Phillip Wood <phillip.wood123@gmail.com>
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v18_04/10=5D_imap-send=3A_add?=
+ =?US-ASCII?Q?_support_for_OAuth2=2E0_authentication?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <PN3PR01MB9597607108917195B9690F67B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <PN3PR01MB9597929CF956CBB1B8B7D909B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <PN3PR01MB9597607108917195B9690F67B86BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Message-ID: <F0A06034-99B8-4BD1-9CDE-515A3EA430DA@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	MID_CONTAINS_FROM(1.00)[];
-	R_MISSING_CHARSET(0.50)[];
-	NEURAL_HAM_SHORT(-0.20)[-0.999];
-	MIME_GOOD(-0.10)[text/plain];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	RCVD_VIA_SMTP_AUTH(0.00)[];
-	RCPT_COUNT_ONE(0.00)[1];
-	ARC_NA(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid];
-	FROM_EQ_ENVFROM(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_TWO(0.00)[2];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	TO_DN_NONE(0.00)[];
-	RCVD_TLS_ALL(0.00)[]
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -2.80
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-This patch adds the basic support of SHA256 Git repositories.
-The needed changes were mostly about adjusting the fixed ID length of
-SHA1 (40) to be variable depending on the repo type.
+I'm not really on the list at the moment but I saw this was slated for next=
+ in what's cooking=2E Apologies if the formatting is off, I'm in my phone=
+=2E=20
 
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
----
- git-gui/git-gui.sh                   | 13 ++++++++++++-
- git-gui/lib/blame.tcl                | 12 ++++++++----
- git-gui/lib/choose_repository.tcl    |  8 ++++++--
- git-gui/lib/remote_branch_delete.tcl |  4 +++-
- 4 files changed, 29 insertions(+), 8 deletions(-)
+On 9 June 2025 21:22:49 BST, Aditya Garg <gargaditya08@live=2Ecom> wrote:
+>=20
+>+static char *oauthbearer_base64(const char *user, const char *access_tok=
+en)
+>+{
+>+	int raw_len, b64_len;
+>+	char *raw, *b64;
+>+
+>+	/*
+>+	 * Compose the OAUTHBEARER string
+>+	 *
+>+	 * "n,a=3D" {User} ",^Ahost=3D" {Host} "^Aport=3D" {Port} "^Aauth=3DBea=
+rer " {Access Token} "^A^A
+>+	 *
+>+	 * The first part `n,a=3D" {User} ",` is the gs2 header described in RF=
+C5801=2E
+>+	 * * gs2-cb-flag `n` -> client does not support CB
+>+	 * * gs2-authzid `a=3D" {User} "`
+>+	 *
+>+	 * The second part are key value pairs containing host, port and auth a=
+s
+>+	 * described in RFC7628=2E
+>+	 *
+>+	 * https://datatracker=2Eietf=2Eorg/doc/html/rfc5801
+>+	 * https://datatracker=2Eietf=2Eorg/doc/html/rfc7628
+>+	 */
+>+	raw_len =3D strlen(user) + strlen(access_token) + 20;
+>+	raw =3D xmallocz(raw_len + 1);
+>+	snprintf(raw, raw_len + 1, "n,a=3D%s,\001auth=3DBearer %s\001\001", use=
+r, access_token);
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index 28572c889c0e..206981190535 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -1275,6 +1275,17 @@ if {[catch {
- 	set picked 1
- }
- 
-+# Use object format as hash algorightm (either "sha1" or "sha256")
-+set hashalgorithm [exec git rev-parse --show-object-format]
-+if {$hashalgorithm eq "sha1"} {
-+	set hashlength 40
-+} elseif {$hashalgorithm eq "sha256"} {
-+	set hashlength 64
-+} else {
-+	puts stderr "Unknown hash algorithm: $hashalgorithm"
-+	exit 1
-+}
-+
- # we expand the _gitdir when it's just a single dot (i.e. when we're being
- # run from the .git dir itself) lest the routines to find the worktree
- # get confused
-@@ -1822,7 +1833,7 @@ proc short_path {path} {
- }
- 
- set next_icon_id 0
--set null_sha1 [string repeat 0 40]
-+set null_sha1 [string repeat 0 $hashlength]
- 
- proc merge_state {path new_state {head_info {}} {index_info {}}} {
- 	global file_states next_icon_id null_sha1
-diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
-index 8441e109be32..1f0b8ea28504 100644
---- a/git-gui/lib/blame.tcl
-+++ b/git-gui/lib/blame.tcl
-@@ -426,6 +426,7 @@ method _kill {} {
- 
- method _load {jump} {
- 	variable group_colors
-+	global hashlength
- 
- 	_hide_tooltip $this
- 
-@@ -436,7 +437,7 @@ method _load {jump} {
- 			$i conf -state normal
- 			$i delete 0.0 end
- 			foreach g [$i tag names] {
--				if {[regexp {^g[0-9a-f]{40}$} $g]} {
-+				if {[regexp [string map "@@ $hashlength" {^g[0-9a-f]{@@}$}] $g]} {
- 					$i tag delete $g
- 				}
- 			}
-@@ -500,6 +501,8 @@ method _load {jump} {
- }
- 
- method _history_menu {} {
-+	global hashlength
-+
- 	set m $w.backmenu
- 	if {[winfo exists $m]} {
- 		$m delete 0 end
-@@ -513,7 +516,7 @@ method _history_menu {} {
- 		set c [lindex $e 0]
- 		set f [lindex $e 1]
- 
--		if {[regexp {^[0-9a-f]{40}$} $c]} {
-+		if {[regexp [string map "@@ $hashlength" {^[0-9a-f]{@@}$}] $c]} {
- 			set t [string range $c 0 8]...
- 		} elseif {$c eq {}} {
- 			set t {Working Directory}
-@@ -627,6 +630,7 @@ method _exec_blame {cur_w cur_d options cur_s} {
- method _read_blame {fd cur_w cur_d} {
- 	upvar #0 $cur_d line_data
- 	variable group_colors
-+	global hashlength
- 
- 	if {$fd ne $current_fd} {
- 		catch {close $fd}
-@@ -635,7 +639,7 @@ method _read_blame {fd cur_w cur_d} {
- 
- 	$cur_w conf -state normal
- 	while {[gets $fd line] >= 0} {
--		if {[regexp {^([a-z0-9]{40}) (\d+) (\d+) (\d+)$} $line line \
-+		if {[regexp [string map "@@ $hashlength" {^([a-z0-9]{@@}) (\d+) (\d+) (\d+)$}] $line line \
- 			cmit original_line final_line line_count]} {
- 			set r_commit     $cmit
- 			set r_orig_line  $original_line
-@@ -648,7 +652,7 @@ method _read_blame {fd cur_w cur_d} {
- 			set oln  $r_orig_line
- 			set cmit $r_commit
- 
--			if {[regexp {^0{40}$} $cmit]} {
-+			if {[regexp [string map "@@ $hashlength" {^0{@@}$}] $cmit]} {
- 				set commit_abbr work
- 				set commit_type curr_commit
- 			} elseif {$cmit eq $commit} {
-diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
-index d23abedcb36f..6078b1c7e2c4 100644
---- a/git-gui/lib/choose_repository.tcl
-+++ b/git-gui/lib/choose_repository.tcl
-@@ -870,6 +870,8 @@ method _do_clone_HEAD {ok} {
- }
- 
- method _do_clone_full_end {ok} {
-+	global hashlength
-+
- 	$o_cons done $ok
- 
- 	if {$ok} {
-@@ -879,7 +881,7 @@ method _do_clone_full_end {ok} {
- 		if {[file exists [gitdir FETCH_HEAD]]} {
- 			set fd [open [gitdir FETCH_HEAD] r]
- 			while {[gets $fd line] >= 0} {
--				if {[regexp "^(.{40})\t\t" $line line HEAD]} {
-+				if {[regexp [string map "@@ $hashlength" "^(.{@@})\t\t"] $line line HEAD]} {
- 					break
- 				}
- 			}
-@@ -965,6 +967,8 @@ method _do_clone_checkout {HEAD} {
- }
- 
- method _readtree_wait {fd} {
-+	global hashlength
-+
- 	set buf [read $fd]
- 	$o_status_op update_meter $buf
- 	append readtree_err $buf
-@@ -986,7 +990,7 @@ method _readtree_wait {fd} {
- 
- 	# -- Run the post-checkout hook.
- 	#
--	set fd_ph [githook_read post-checkout [string repeat 0 40] \
-+	set fd_ph [githook_read post-checkout [string repeat 0 $hashlength] \
- 		[git rev-parse HEAD] 1]
- 	if {$fd_ph ne {}} {
- 		global pch_error
-diff --git a/git-gui/lib/remote_branch_delete.tcl b/git-gui/lib/remote_branch_delete.tcl
-index 5ba9fcadd17f..8ea672479306 100644
---- a/git-gui/lib/remote_branch_delete.tcl
-+++ b/git-gui/lib/remote_branch_delete.tcl
-@@ -323,6 +323,8 @@ method _load {cache uri} {
- }
- 
- method _read {cache fd} {
-+	global hashlength
-+
- 	if {$fd ne $active_ls} {
- 		catch {close $fd}
- 		return
-@@ -330,7 +332,7 @@ method _read {cache fd} {
- 
- 	while {[gets $fd line] >= 0} {
- 		if {[string match {*^{}} $line]} continue
--		if {[regexp {^([0-9a-f]{40})	(.*)$} $line _junk obj ref]} {
-+		if {[regexp [string map "@@ $hashlength" {^([0-9a-f]{@@})	(.*)$}] $line _junk obj ref]} {
- 			if {[regsub ^refs/heads/ $ref {} abr]} {
- 				lappend head_list $abr
- 				lappend head_cache($cache) $abr
--- 
-2.49.0
+This looks very fragile=2E It would be safer to use an strbuf or if there =
+are no embedded nul bytes xstrfmt() and strlen()=2E This applies to the nex=
+t patch as well and any others that are building strings with snprintf() or=
+ memcpy()=2E=20
 
+Also the comment above mentions the host and port but I don't see them her=
+e=2E
+
+Thanks
+
+Phillip
+
+>+
+>+	/* Base64 encode */
+>+	b64 =3D xmallocz(ENCODED_SIZE(strlen(raw)));
+>+	b64_len =3D EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw,=
+ strlen(raw));
+>+	free(raw);
+>+
+>+	if (b64_len < 0) {
+>+		free(b64);
+>+		return NULL;
+>+	}
+>+	return b64;
+>+}
+>+
+>+static char *xoauth2_base64(const char *user, const char *access_token)
+>+{
+>+	int raw_len, b64_len;
+>+	char *raw, *b64;
+>+
+>+	/*
+>+	 * Compose the XOAUTH2 string
+>+	 * "user=3D" {User} "^Aauth=3DBearer " {Access Token} "^A^A"
+>+	 * https://developers=2Egoogle=2Ecom/workspace/gmail/imap/xoauth2-proto=
+col#initial_client_response
+>+	 */
+>+	raw_len =3D strlen(user) + strlen(access_token) + 20;
+>+	raw =3D xmallocz(raw_len + 1);
+>+	snprintf(raw, raw_len + 1, "user=3D%s\001auth=3DBearer %s\001\001", use=
+r, access_token);
+>+
+>+	/* Base64 encode */
+>+	b64 =3D xmallocz(ENCODED_SIZE(strlen(raw)));
+>+	b64_len =3D EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw,=
+ strlen(raw));
+>+	free(raw);
+>+
+>+	if (b64_len < 0) {
+>+		free(b64);
+>+		return NULL;
+>+	}
+>+	return b64;
+>+}
+>+
+> static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+> {
+> 	int ret;
+>@@ -903,9 +969,51 @@ static int auth_cram_md5(struct imap_store *ctx, con=
+st char *prompt)
+> 	return 0;
+> }
+>=20
+>+static int auth_oauthbearer(struct imap_store *ctx, const char *prompt U=
+NUSED)
+>+{
+>+	int ret;
+>+	char *b64;
+>+
+>+	b64 =3D oauthbearer_base64(ctx->cfg->user, ctx->cfg->pass);
+>+	if (!b64)
+>+		return error("OAUTHBEARER: base64 encoding failed");
+>+
+>+	/* Send the base64-encoded response */
+>+	ret =3D socket_write(&ctx->imap->buf=2Esock, b64, strlen(b64));
+>+	if (ret !=3D (int)strlen(b64)) {
+>+		free(b64);
+>+		return error("IMAP error: sending OAUTHBEARER response failed");
+>+	}
+>+
+>+	free(b64);
+>+	return 0;
+>+}
+>+
+>+static int auth_xoauth2(struct imap_store *ctx, const char *prompt UNUSE=
+D)
+>+{
+>+	int ret;
+>+	char *b64;
+>+
+>+	b64 =3D xoauth2_base64(ctx->cfg->user, ctx->cfg->pass);
+>+	if (!b64)
+>+		return error("XOAUTH2: base64 encoding failed");
+>+
+>+	/* Send the base64-encoded response */
+>+	ret =3D socket_write(&ctx->imap->buf=2Esock, b64, strlen(b64));
+>+	if (ret !=3D (int)strlen(b64)) {
+>+		free(b64);
+>+		return error("IMAP error: sending XOAUTH2 response failed");
+>+	}
+>+
+>+	free(b64);
+>+	return 0;
+>+}
+>+
+> #else
+>=20
+> #define auth_cram_md5 NULL
+>+#define auth_oauthbearer NULL
+>+#define auth_xoauth2 NULL
+>=20
+> #endif
+>=20
+>@@ -1118,6 +1226,12 @@ static struct imap_store *imap_open_store(struct i=
+map_server_conf *srvc, const c
+> 			if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
+> 				if (try_auth_method(srvc, ctx, imap, "CRAM-MD5", AUTH_CRAM_MD5, auth=
+_cram_md5))
+> 					goto bail;
+>+			} else if (!strcmp(srvc->auth_method, "OAUTHBEARER")) {
+>+				if (try_auth_method(srvc, ctx, imap, "OAUTHBEARER", AUTH_OAUTHBEARER=
+, auth_oauthbearer))
+>+					goto bail;
+>+			} else if (!strcmp(srvc->auth_method, "XOAUTH2")) {
+>+				if (try_auth_method(srvc, ctx, imap, "XOAUTH2", AUTH_XOAUTH2, auth_x=
+oauth2))
+>+					goto bail;
+> 			} else {
+> 				fprintf(stderr, "Unknown authentication method:%s\n", srvc->host);
+> 				goto bail;
+>@@ -1419,7 +1533,16 @@ static CURL *setup_curl(struct imap_server_conf *s=
+rvc, struct credential *cred)
+>=20
+> 	server_fill_credential(srvc, cred);
+> 	curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
+>-	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+>+
+>+	/*
+>+	 * Use CURLOPT_PASSWORD irrespective of whether there is
+>+	 * an auth method specified or not, unless it's OAuth2=2E0,
+>+	 * where we use CURLOPT_XOAUTH2_BEARER=2E
+>+	 */
+>+	if (!srvc->auth_method ||
+>+	    (strcmp(srvc->auth_method, "XOAUTH2") &&
+>+	    strcmp(srvc->auth_method, "OAUTHBEARER")))
+>+		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
+>=20
+> 	strbuf_addstr(&path, srvc->use_ssl ? "imaps://" : "imap://");
+> 	strbuf_addstr(&path, srvc->host);
+>@@ -1437,11 +1560,22 @@ static CURL *setup_curl(struct imap_server_conf *=
+srvc, struct credential *cred)
+> 	curl_easy_setopt(curl, CURLOPT_PORT, (long)srvc->port);
+>=20
+> 	if (srvc->auth_method) {
+>-		struct strbuf auth =3D STRBUF_INIT;
+>-		strbuf_addstr(&auth, "AUTH=3D");
+>-		strbuf_addstr(&auth, srvc->auth_method);
+>-		curl_easy_setopt(curl, CURLOPT_LOGIN_OPTIONS, auth=2Ebuf);
+>-		strbuf_release(&auth);
+>+		if (!strcmp(srvc->auth_method, "XOAUTH2") ||
+>+		    !strcmp(srvc->auth_method, "OAUTHBEARER")) {
+>+
+>+			/*
+>+			 * While CURLOPT_XOAUTH2_BEARER looks as if it only supports XOAUTH2,
+>+			 * upon debugging, it has been found that it is capable of detecting
+>+			 * the best option out of OAUTHBEARER and XOAUTH2=2E
+>+			 */
+>+			curl_easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, srvc->pass);
+>+		} else {
+>+			struct strbuf auth =3D STRBUF_INIT;
+>+			strbuf_addstr(&auth, "AUTH=3D");
+>+			strbuf_addstr(&auth, srvc->auth_method);
+>+			curl_easy_setopt(curl, CURLOPT_LOGIN_OPTIONS, auth=2Ebuf);
+>+			strbuf_release(&auth);
+>+		}
+> 	}
+>=20
+> 	if (!srvc->use_ssl)
