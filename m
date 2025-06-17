@@ -1,135 +1,119 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3C82DBF7C
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 11:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB692E06C4
+	for <git@vger.kernel.org>; Tue, 17 Jun 2025 11:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750158842; cv=none; b=cTpm/X28zVhe8W4uhczIFVg0RScjooOjFkemfsqZIQ5MNH7MbUyC+aPAmvcYCcGffw4FFh9CfYTtiQnMPdvsDYlJk0826vf1bZyYsrPWCl8Fzn3qrNyqR/CxjhjgauGQQDgOiIwm6PHROjfgI3koa+hx7tZb+wwu6mRCgqNA3Fw=
+	t=1750161107; cv=none; b=Vj6U2+LrQIvA0Umzox3JqW8jYWwew9L7Ibg7vZzVHARwvDP8zMLSv0ZtsDK7Mjj7ArviROBjuoAAupfbGFeY6zCPpngHscj/xB7hwEnYzcBsWhhegEJ4AppjNRHSFs1Ttijr/Ufo3zLV/ACKi9oMqxDNAyKPhvqfGwqnL4zhXwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750158842; c=relaxed/simple;
-	bh=JWzhd9dGMkwkPkg3parCJOvvDEUawJrobmuhXAU7Q60=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=upGdg4TegPs5QUOU2CGeaAW8a/ZmhK6n78ToFa0gbXbTJBM9rZxFdWREyB9LMvjqa6vG2JeQs43Tsi6A1tO6PHQFztY5riBIpsXABKPwH77VW1jtjyQpMDVukJXfwvRe5YKxgZ6bWmuV6SFt+9AyP8O1LC4ELUpTLPSvTYKSUfk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=VRLD5DsD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=dJ/n9BJF; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=VRLD5DsD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=dJ/n9BJF; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1750161107; c=relaxed/simple;
+	bh=AZBvVZEn+aiiRny6GzVeoiELSFDiRNSjj6HQfDVQ0Bg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eu9ksN6rEdnZ0opLPKJUQfRYh/DLKMRvwBo4dkvD+9yP40WAaV3Xy1RBDSlCGEIixZzu1jUq5KaWH5zM4ejossJtRXJ+ogOq/U/73bMAmK/35XFmqW/ar5t+SuZyfR+9IKKQBi8/SErPZm7J4T/REMj7n7UB5b9dDCSdeby+7UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=czFD4bHQ; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="VRLD5DsD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="dJ/n9BJF";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="VRLD5DsD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="dJ/n9BJF"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 584401F391
-	for <git@vger.kernel.org>; Tue, 17 Jun 2025 11:13:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750158838; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=3NAWGMTJg2ugW9eI9D7FcAjnfQgbCBFnwlC9F0I1BVg=;
-	b=VRLD5DsDCQ8lvTdoHrHwZ/q09dQwGoeWhhYaPpMGM7gMwGL/O9+BCuD3D/WvRXLfdXXH5A
-	6jIgVc5YetCUW/oIHK/WyUAylbajOGkEoVWsekAuvKeliANtnqVPUBJ3K09I/sGt6Z22bi
-	dLvL6o7uzFphUozUk0H6yFcW6BnZ910=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750158838;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=3NAWGMTJg2ugW9eI9D7FcAjnfQgbCBFnwlC9F0I1BVg=;
-	b=dJ/n9BJF9bcI1bVpRvwGqeauGclSMeUncAWr1BmcjngH7ShznZi5fmF66jDSAE5dX+vaVf
-	BBc6g3OTHDUY34Bg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1750158838; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=3NAWGMTJg2ugW9eI9D7FcAjnfQgbCBFnwlC9F0I1BVg=;
-	b=VRLD5DsDCQ8lvTdoHrHwZ/q09dQwGoeWhhYaPpMGM7gMwGL/O9+BCuD3D/WvRXLfdXXH5A
-	6jIgVc5YetCUW/oIHK/WyUAylbajOGkEoVWsekAuvKeliANtnqVPUBJ3K09I/sGt6Z22bi
-	dLvL6o7uzFphUozUk0H6yFcW6BnZ910=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1750158838;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type;
-	bh=3NAWGMTJg2ugW9eI9D7FcAjnfQgbCBFnwlC9F0I1BVg=;
-	b=dJ/n9BJF9bcI1bVpRvwGqeauGclSMeUncAWr1BmcjngH7ShznZi5fmF66jDSAE5dX+vaVf
-	BBc6g3OTHDUY34Bg==
-Date: Tue, 17 Jun 2025 13:13:57 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: git@vger.kernel.org
-Subject: Rename detection fails on symlinked files
-Message-ID: <aFFN9UHCspTjliMv@kitsune.suse.cz>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="czFD4bHQ"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-23636167afeso54434755ad.3
+        for <git@vger.kernel.org>; Tue, 17 Jun 2025 04:51:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750161105; x=1750765905; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ie65hZBd2HkX9MpJx47w75xxNvjEihGPzkkyaE8VBhg=;
+        b=czFD4bHQjpbVkIh3c+Dn2NQdYTBdEOHzYBwOrKxKdp+JDBealMaR9/ov4Pj6Ywz4OS
+         IG60F7IygaUalDniGtuDQ3BvypoubXMhsdpt6CMD06firwNrMRn5H12y5rvpAM3i9Cli
+         wZsU7RvN2edFu+IgPWupVmJmRyO+SJG5WBWrLEn6uaCLgUOJ4/CI5tupYJonb+L/USxo
+         9fMnp4PxetoCZVEloYklum6GnnZtCK8WRREXVpV0kTDX+ACUvW7YuUhB82fNG/ksN/yF
+         y73yAulmLBQdvQqlOnvYePbtszaBQAakwkQKKPwCTymRzurrR2a0P7xtarNtBYOvF9i7
+         wFHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750161105; x=1750765905;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ie65hZBd2HkX9MpJx47w75xxNvjEihGPzkkyaE8VBhg=;
+        b=ETkigm5A09ySvAP7lqahUIFJOuZaO7OswDXtUqnrOht7h/0ESvdi9ew3zvfgOqPeKt
+         EzyNBH/uT8H0iljukzqpAgT/q1+mFLJEaIJJO0nix6aoEyprZq3VCXtbH3/WUIfVvFZB
+         N5S19/OP4j719IyGIbe8doHdOoXEpnGBHJnJaF7cw2AxHwupzGIW/7pPDbaEDmbjoD1L
+         Rfj5YyfrIOLWjQFipzn6j7M2lFfjTeGbN4KrgTu1UdedJeseaxgQu/ySEBv+f+Z2zAQi
+         KO/HAyLZo5Izyt1FKO+n76GyciHPTBx8gPsCN40OWvkPut3IbZKA9blHtkNSdIohrzJ9
+         Jd6g==
+X-Gm-Message-State: AOJu0Yx9MzIt2YplrGuwAutgv+mKyYC5FVsMunBXI/oTFlbieh16Jqwq
+	UbuBCRI9wL10cIiOCF5Ne6WYraenL0R1oWovYNvrw8BntnH7hLP0G7UItCbzytgVYuFV52Kmup0
+	QXrdsnWDVnAY/WCPNl2NYYHjuZ2SK5aqT8tvLNXA=
+X-Gm-Gg: ASbGncvFA2f06iRnF3Ir1EFK5Rv9s/eNXUWgcFVtLap5Ua0CQc/8ywZskTZiXuC86EG
+	4AOADqaEdu8pRvOOqwTOXO7/VejEzMSFehJgGznkETkoaoRV52g8SPCqGQ6z7wcZvnAQZqn84h9
+	m9sG86Ox5Wm4c4P/YYzyZ9AxCm+cBpwMYJjHfLRydRXtXk6VpfbK7wZCs=
+X-Google-Smtp-Source: AGHT+IEYI7qjNM19/kFzmnAmXaQ8TXui1oTShCMQb3Tw3c+HomuxgLXjtvSy8sCnkb9gegvDUCbvL6/ECrp+A6IDRUk=
+X-Received: by 2002:a17:90b:3909:b0:311:c1ec:7d0a with SMTP id
+ 98e67ed59e1d1-313f1d96edamr20327618a91.25.1750161104907; Tue, 17 Jun 2025
+ 04:51:44 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-X-Spamd-Result: default: False [-3.74 / 50.00];
-	BAYES_HAM(-3.00)[99.99%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	R_MIXED_CHARSET(0.56)[subject];
-	NEURAL_HAM_SHORT(-0.20)[-0.997];
-	MIME_GOOD(-0.10)[text/plain];
-	RCPT_COUNT_ONE(0.00)[1];
-	MIME_TRACE(0.00)[0:+];
-	RCVD_COUNT_ZERO(0.00)[0];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	FROM_HAS_DN(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	FROM_EQ_ENVFROM(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	TO_DN_NONE(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email]
-X-Spam-Level: 
-X-Spam-Flag: NO
-X-Spam-Score: -3.74
+References: <20250614070536.17320-1-meetsoni3017@gmail.com> <xmqqsek16g6c.fsf@gitster.g>
+In-Reply-To: <xmqqsek16g6c.fsf@gitster.g>
+From: Meet Soni <meetsoni3017@gmail.com>
+Date: Tue, 17 Jun 2025 17:21:33 +0530
+X-Gm-Features: AX0GCFsc1CBkJvi4U4R6FIOK4yAyNOewZ-gRx-6DlveHrglLUDZXRRtvkpg6K54
+Message-ID: <CAPhwyn3N2O4OgPvEgec8C7Kvb1793s_KLq1u2y1tx6-msG+gFg@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-commit 5d51b10d8b5206ef5eeb9d214237b2ec2e0b789e (HEAD -> master)
-Author: Michal Suchanek <msuchanek@suse.de>
-Date:   Tue Jun 17 13:08:51 2025 +0200
+On Sun, 15 Jun 2025 at 05:15, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Meet Soni <meetsoni3017@gmail.com> writes:
+>
+> > This RFC is meant to start a broader discussion on:
+> >
+> >   - The desired default behavior of pattern matching in git refs list
+> >
+> >   - Which features from both git-show-ref and git-for-each-ref should be
+> >     preserved, rethought, or dropped
+> >
+> >   - How much backward compatibility we want to offer, and through what
+> >     interface (e.g., compatibility flags)
+> >
+> > Feedback and thoughts on these topics would be very welcome.
+>
+> In addition to these three points, 0th point perhaps is "Is it
+> desirable to unify these two commands in the first place?"
+>
+> I only use "show-ref" when I care about a single ref in a script,
+> expecting to be able to switch on its exit status.  Everything else
+> I'd use for-each-ref.
+>
+> But then that particular unique advantage of show-ref over for-each-ref
+> can be done with "rev-parse --verify".
+>
+> So, I'd rather not to see yet another command to do the same thing.
+> Rather, is it insufficient to just use for-each-ref or rev-parse,
+> let the sleeping show-ref alone, and be happy?
 
-    rename file
+The broader motivation behind this effort (and the overarching GSoC project)
+has been to reduce fragmentation in ref-related functionality by gradually
+consolidating it under the git refs umbrella, aiming for consistency and
+discoverability.
 
-diff --git a/somefile b/somefile-renamed
-similarity index 100%
-rename from somefile
-rename to somefile-renamed
+Your point about rev-parse --verify covering show-ref's main utility is well
+taken. If that truly makes show-ref redundant, then perhaps it makes more sense
+to focus consolidation efforts around for-each-ref instead.
 
-ln -s somefile-renamed somefile
-git add somefile
-git commit --amend
+One concern I have is that if we simply replicate for-each-ref under a new
+name, we may still face the same question: what does this new command add that
+the old one doesn't already handle?
 
-commit 377d9bd045aed61c7be55482f3c98f8f9d04a33d (HEAD -> master)
-Author: Michal Suchanek <msuchanek@suse.de>
-Date:   Tue Jun 17 13:08:51 2025 +0200
+I'd love to hear thoughts on what a modernized or simplified ref-listing
+interface could look like. Are there features or changes worth exploring that
+could justify the consolidation?
 
-    rename file
-
-diff --git a/somefile b/somefile
-deleted file mode 100644
-index a53032b..0000000
-Binary files a/somefile and /dev/null differ
-diff --git a/somefile b/somefile
-new file mode 120000
-index 0000000..fc49048
---- /dev/null
-+++ b/somefile
-@@ -0,0 +1 @@
-+somefile-renamed
-\ No newline at end of file
-diff --git a/somefile-renamed b/somefile-renamed
-new file mode 100644
-index 0000000..a53032b
-Binary files /dev/null and b/somefile-renamed differ
-
-Can the rename detection be fixed to detect symlinked files as well?
-
-Thanks
-
-Michal
+Thanks,
+Meet
