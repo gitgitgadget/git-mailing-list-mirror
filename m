@@ -1,239 +1,213 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.10])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F8F28506D
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 23:08:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.10
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750288119; cv=none; b=U7Fkvkwg2VHsqKRiSuhy+WtYdhUhQzdBiMzhizxEkFWCZuIis4wkPO0Db8ZlWbvPMbU7FjW57aaWnuOe0C5tbqRQM9ywu7igM4THd5ae35CFnS3Ml3SX7wIiL16Y2NTqq6gE1txMaEscOg1r1vNKUWclsb94S88NOhjwjtNaHc8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750288119; c=relaxed/simple;
-	bh=e7UBZCzcNAhJyC/IyCjnaF044IMv4+xNjOuI3+YU8kM=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=nxEQnNbdeheTNlaSHdWi6qILRCpGfVxzYA+lzvlB90NFgb9W5qu6qTcAVbcsvgd5eqUWInb3ZN62x0FF/u+n0JUVFoP5aG8aT1GgECinuSlNgN4vPF7An/sPtjt9BUX4K4em1MVy5fIHf+wN7R5eU2t4AuI6I6YzTZJTVwN3mgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=U7T1KeRl; arc=none smtp.client-ip=198.175.65.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B8E27E064
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 23:15:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.17
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750288513; cv=fail; b=VLgVOC/bAfVJ9hcrMr5l3lKHXaqz8U1dUDoHNWP8d34QgxM0yWJjCPW59XR6oIxB66G078CEJ2rHIJFCOn7ZHP8FlNJNqF+bjrhS8RLm3McV3KeltvmGqWQuT6pehfEFtyvPiEjvh6kZnuirRdpyiykCqXaZ6AoamuImxUEErLg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750288513; c=relaxed/simple;
+	bh=iQJs365aot0/gxWqEWmdFeURNCErE5k//feZR25ew9o=;
+	h=Message-ID:Date:Subject:To:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=MJOyVIsb7dAEFCTLSpIq0HV8+yEkki2FkbwNxRghLYIbmeZxpzUrCNYzXoPhvz9EUSOCqVOZNRzrtKNIYFI0l6d0ElO1bxcMsqw7+rV71KR/l8ud40ogGiUJhHbnXzjT38pPaHlsMz73RzpLz/99PsTORekcFErMpJ9lmSWp0YQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HmNhJCR6; arc=fail smtp.client-ip=192.198.163.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="U7T1KeRl"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HmNhJCR6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750288118; x=1781824118;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:references:in-reply-to:to:cc;
-  bh=e7UBZCzcNAhJyC/IyCjnaF044IMv4+xNjOuI3+YU8kM=;
-  b=U7T1KeRlXJiUoW4I/cVsT0Y0fy7txgVUAfLBDdh44RajsISijb5aQ2xy
-   DckwppGWjLChm+XT/RBgtFBfpWLfo8I3x7vlBvsB3ZEYGdsNNPYJXWxZj
-   c/aDVhUdLff4a6HEfgdw0jbYAtRcd6nxxlrUzmEiJGzlo2uX0gPIYNo2c
-   yCimHJ3zVy+gFfOsH+t3qK1JEFPPUastKzqqRO04VV8TRjpe3xN+1WLyJ
-   pvdKXrbGYZrmKe1Q7k/GYu6S3+8/hW7oN4tFezU94iSMvss5wd0jP0Cax
-   5RnLbohPppBkMwCR+DQ64mUlKIwusISEwSTc4jmckcXh4dT9m4ZAc1ik2
-   g==;
-X-CSE-ConnectionGUID: e42kOKevTyyAup6+q/samg==
-X-CSE-MsgGUID: j3KHjvcYTcCnPXzuevLlhg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11468"; a="69966828"
+  t=1750288512; x=1781824512;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   content-transfer-encoding:mime-version;
+  bh=iQJs365aot0/gxWqEWmdFeURNCErE5k//feZR25ew9o=;
+  b=HmNhJCR6z1WNW3NfFMdaiSIyqFPIh/WHy3qwp/bqKmROGuaOjcY02VFt
+   /+nUSqxD1RPBz7bMk13GwN+GbFoF/4ba1723epmu65swyX/fAcvVlXyFJ
+   pNKw8+kKz+yZE0Bg8WynApXNrBchfiBr62QbIfiE69q7ZF7770pwor26E
+   UqGGUyfATyYyC65jMPPteVMoO3szSk3Y4TMAeQyc934PqsZz+7t5WP7/p
+   T60rxVl7U1qPUDr/y7TTwvPMQ6E38iE1bnvZoSrC27/I0EJcZiYtxzKbU
+   um9uEN1io/MH7oZJCFdQNGa5aQvlsDUBFigDIaRwGHZL4fR9s13Hz2gJW
+   Q==;
+X-CSE-ConnectionGUID: FeVF82/MSFmnaxytNXc0cg==
+X-CSE-MsgGUID: Xk1YdAt1RIaBbkXKAZU6FQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11468"; a="52451030"
 X-IronPort-AV: E=Sophos;i="6.16,247,1744095600"; 
-   d="scan'208";a="69966828"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
-  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 16:08:32 -0700
-X-CSE-ConnectionGUID: 4Q42xg+mTH+i9lm+SvyU3w==
-X-CSE-MsgGUID: r0/gMvmCRCShw4nl3Fj+yQ==
+   d="scan'208";a="52451030"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+  by fmvoesa111.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 16:15:11 -0700
+X-CSE-ConnectionGUID: LR5kUtouRruzDMhl+aXKuA==
+X-CSE-MsgGUID: pfRkL2wzTDWI5j3Xi5Q8xA==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,247,1744095600"; 
-   d="scan'208";a="156048568"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 16:08:33 -0700
+   d="scan'208";a="181258232"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa001.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 16:15:11 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 18 Jun 2025 16:15:10 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Wed, 18 Jun 2025 16:15:10 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.57)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 18 Jun 2025 16:15:08 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ovmXmR/8C11jz4pghBPG56UUutt+YgbVl51bhCxsPHp+zC50E+XplBTUhqtVp5pdM7WzB1NPdKZ1joTIgnjmmInS9IMnVwqEQLg98GwOM2BUkWlxl8IebiLmdJydl5d1GMGEvPIk1JTcChOEgexcNJQzN7myaSW/qALKvMp+LJT15GQIQsW0dPtXo7P7ehCzHT6Tkuo0Iml0vbsOHHSysq6OqOLBx7kw0E8ReL2o5qsX20bWYFCAduqQUDxlC35qvAxk3ed1fRe2FWs/q3rx/G3NhC+yobQOtTJrOAh8ofRqKl5vjED9S1fn0pAZb81guMwMRW1IBg6RdhTps1Gyww==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=wXV9gHI/3bv/w8b7lfWBZ22mm4B6PpHGlqWB5jv6nn0=;
+ b=rtfIQF/38hXjr5jmEpRITcz9p/+64kU/D4H6058iEs/Rn+lvri2czZygC2WeGsA/sHwWtU2SW+6SghFNHjPXmWm0eFd1c3EOY03EMSqD8FnETHv1uqpkuOrwBM5cbEX3iiWPiLEZNsy3+puOaQLSvpzFTlni2jqtFGNZh8pukVguz7sKAyLBQPTtUAyvCsgvxkXa5lQPvfdxCxP8O6AhwZ7LyyJny/vVJq+Dk5FLH1t6ljR9DfDFR14x6dXzO9Fr4e9oAm0szOp9PL/hZiypRJIQr9g/J/RANpseD676vKgEnBm22ALBS/9ISVa138Fec/TB/I19Sh72Vd8HlsKNTg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
+ by MN2PR11MB4709.namprd11.prod.outlook.com (2603:10b6:208:267::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.20; Wed, 18 Jun
+ 2025 23:15:06 +0000
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8%5]) with mapi id 15.20.8835.027; Wed, 18 Jun 2025
+ 23:15:05 +0000
+Message-ID: <9cc42f04-856b-4967-8668-a47271af061c@intel.com>
+Date: Wed, 18 Jun 2025 16:15:03 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 0/2] fetch --prune performance problem
+To: Phil Hord <phil.hord@gmail.com>, <git@vger.kernel.org>
+References: <20250618211024.2332525-1-phil.hord@gmail.com>
+Content-Language: en-US
 From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Wed, 18 Jun 2025 16:08:21 -0700
-Subject: [PATCH v3 7/7] submodule: look up remotes by URL first
+In-Reply-To: <20250618211024.2332525-1-phil.hord@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0007.namprd03.prod.outlook.com
+ (2603:10b6:303:8f::12) To CO1PR11MB5089.namprd11.prod.outlook.com
+ (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250618-jk-submodule-helper-use-url-v3-7-7c60f2679271@gmail.com>
-References: <20250618-jk-submodule-helper-use-url-v3-0-7c60f2679271@gmail.com>
-In-Reply-To: <20250618-jk-submodule-helper-use-url-v3-0-7c60f2679271@gmail.com>
-To: git@vger.kernel.org
-Cc: Jacob Keller <jacob.keller@gmail.com>, 
- Lidong Yan <yldhome2d2@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
- Patrick Steinhardt <ps@pks.im>
-X-Mailer: b4 0.14.2
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|MN2PR11MB4709:EE_
+X-MS-Office365-Filtering-Correlation-Id: 46031b1a-81d8-4fca-9538-08ddaebdf5f7
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?REZVc2V5RThqT2J6dHJaM0VHWk9uaVgwVkxaOWpBNy9VK2lWMGdMelpiNStz?=
+ =?utf-8?B?QXJyQ1VibjJoODBSaUx0MFhqZlh0YUlSbzRpaWlwMCt2aVh2aEFIWWhTMXA1?=
+ =?utf-8?B?MmErMFIxK0tTaVV1K0RmM0lBTnR1dzVPa05KOW9maUd4S0JuZjRHc2p6aEd3?=
+ =?utf-8?B?UnVDbW9PSWp3UW9nYmVqeHBzVWhwVnl4ckc3eE1KTTFIblp0amVWTnFuMWFU?=
+ =?utf-8?B?M3VieUx3ZmpLTFZWTXJ3VmY4YUhJaS95ZDd4UmczdndnQW9LTXJPYU1mZFpL?=
+ =?utf-8?B?WGR2VmdUNmZYUUNoWS9ibXprWldkWnlCUnBrdFZNTVdyVnp1NFR1UXc5UGZO?=
+ =?utf-8?B?aWcrNk1kSlIwNG9UZnlsQkdrVzhNNTF2NzhidWpiU0EwcGV3Qi81U3VCNVpk?=
+ =?utf-8?B?clRpbGlHRm5yWW1kVlhnM1NIdmJFUkllVGlpLzNZd0prZmZ0aTAwK0gvVGM2?=
+ =?utf-8?B?UTk5REdPMGZiM1hiTW1wOGE5Vll3Y2w1SmcyajRKZ1g2Tm9nQy9XbFF1T0dF?=
+ =?utf-8?B?MmE3dEpoRHcrdEhFQnlOOXo1bktHU2lBdStMYjN3eFZrblJKVUNIalVOa1V3?=
+ =?utf-8?B?ektjNHREdEtGL0d4OW9PTndYQnBHdXdQdkJRcC9jL1A4OEoxR2NqWUxnNFNH?=
+ =?utf-8?B?aVVoVkxTbEZWZFR2OTNZeVAzVFR3YklJVnBBY3ZPVWR5cEZhSVN4VjZmSWxt?=
+ =?utf-8?B?WWpFVGFtWUFkMThERW42OFhEbnYyK2dKVXIrWENKWjk5anVjWHp6UXhpTUtt?=
+ =?utf-8?B?amMxSlRmeUxCbWcxUFUxY203YjhOM0FyMDRScDl2bDgrSWxxYThyMG93NVlJ?=
+ =?utf-8?B?ODRuS1Bwem8zZlR6RGxobEwrNHNKUVd0OVdiTXpITmppTmVFMlZ6Y1N2WlRt?=
+ =?utf-8?B?eHZCY3hDQXRzREFoa1d6YjlzZGFFRWRVbjNLdDB6WGhWQW9tVG9IQzN1cm9z?=
+ =?utf-8?B?UlVrV2dqMVVTa0pERkhPZzJHS1FJMjBDTXZsVkVTQjVTeGVnRlEyZ2VycXZh?=
+ =?utf-8?B?WDg3dkZ5bDlKRGlkbFJMV3U0bnZDYkcwYWhTeWdpSFkzOURycElNVUJWazBR?=
+ =?utf-8?B?WVpGWUtCQndpRy80S1BBdG1SREVVZXRYUE8vOUJCMW9ER2piSFRpYXZMTkJo?=
+ =?utf-8?B?M291dm5taFFMYVRhUkNMeUVDbkZmL3JBcmlFTVYvWTJtbWhjK21GODBJVWlv?=
+ =?utf-8?B?SGxqVlozODhvRjRGQ1lmVncvQnB1eHhOQjVBWVpvZzBCWGpwcGU1dnhNTUpT?=
+ =?utf-8?B?dEY0NG5kL0dERXRYb1RrM3I2NllrWVRnR1pWL0JjVFl3d0o4MjRsSTFEWFlw?=
+ =?utf-8?B?ZjVZQmJhSVlsak9Qdy9jZGI3VnRlbExOMGtlUGJ6bURFQ0d1VThxSlV3eEdK?=
+ =?utf-8?B?QndqeXVpNnMzT0prVFF5QnZSLzV1R21RVDZta0pYRlR4MFpoSDlHdVZrdVVa?=
+ =?utf-8?B?OENlYzFZK1BWRFRjeCt4V0R4L3ZEdTJSMDVBUEtmQ1J3NmJPRytJa01kdGFI?=
+ =?utf-8?B?NWk0R2p0TlNvOUQ5cFR6Z3pmamZvZTJWaE1QMzZ2NGJpN2NiZ1plYzU1VGJR?=
+ =?utf-8?B?ZllwMGtzbXM0MW16T3NvSXo0V1lKakV0d09HYTU2RDlSU203UUpNelpyME00?=
+ =?utf-8?B?dUtCWlo2MkYxUmhGTkkyYm1pUGl4NmE1M3F2RDl2aXE5R295dUJoaWtPVkpU?=
+ =?utf-8?B?dTdwOGFBdUhXWVJzcjI5TjdZWFVpS2ltbW1lWjVpL2JWaFQ1UUl1eHFKMFZt?=
+ =?utf-8?B?L2gwRi9EMjkySmFrZ3ZMQWdCSFRQWEV0TXdVWnVoWERPRmIyMUVocmVuVDFU?=
+ =?utf-8?B?b2lkcHJrUUc2blZHVWJJQ1E3VkVMdjFMTkc4SjgzSWRDUzdCUitJVHB0NFp2?=
+ =?utf-8?B?ODhTclpBZ3pwQzJvTFdUMk9KSWJxNGV5eWF3VGNPTEpqODdUYmZIR2V3Z1cy?=
+ =?utf-8?Q?QTak+79Nqpk=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RmJlUWJaYWkrUkt5b0V1WTNvTnZjYVNGaGxEc3FsWG4rczd6a2FOaTlGQmFW?=
+ =?utf-8?B?akVaVjBZOHNXcCtNcVdzVXdCSmVkVVA0R2lqdjBYdEJnK3dXL25Gc08zQkNJ?=
+ =?utf-8?B?a1ZibU90b3QyVlYxYmdvbkRrdUdsdGlvWWZBUVlHdE9ia0NIVXkwQVBuY3do?=
+ =?utf-8?B?U011TGtrbi9RL042YlNOcFdSdjIyUnBQZ25MaGVMb1U3VmJING1RV3VrMEM1?=
+ =?utf-8?B?b2tuL2ZFaHVmU0pkV3R0cHVCb0NDWStWWVJ3RGhOazk5VjcrZ1ZxaVJGZTcr?=
+ =?utf-8?B?UmhkN2RIeGlta3ZyL1UrVnZRQ2JFTCtYWVFyUVc2dVZPL3E1cDBScldCNXNX?=
+ =?utf-8?B?RWRjakgwWURYT1dld3graC9rM0JicG5EVXhoVU52VjVsSnYvNGZlQ3NLZnNY?=
+ =?utf-8?B?VXBvMXhoR2k5ckRKOEZidDZybVZlVmRPb3Q2WlkxRU91QWViN292WGxTeEpq?=
+ =?utf-8?B?RmszSlMrSjFNUzNRNjR1UCsvT2dWMmVGK0kwdnNOWnJNRzBVSVBpM0h6aWdG?=
+ =?utf-8?B?WVdVRzFaV2hEM1REQncxQ3ZHa2tpOGZXRVdkNHFPbk84Tkd5K25OZ2FtcmQr?=
+ =?utf-8?B?SHNpR3BhZnlDRDZoMGZVemk4bi92YjU0U0dvbm9UZHZGWDJ5ZVdXVmkwanZP?=
+ =?utf-8?B?VE9NK1ZzMFFMYktMOGxzdng1cFBsREZ0Q0d2a05HUDQvdEpxdFVRN0k5b2Va?=
+ =?utf-8?B?d1hCeWxrTXgrSDlxWmhxVTRkKzVoUHdjaHpmWTJFVHlWNzhsTFZMY0dpUVoz?=
+ =?utf-8?B?WmNBcmpDTklueXRYbkR0YXBYVmFnaXRlKzlBVGxzbkVrMm5sOENsR2hjZUNi?=
+ =?utf-8?B?b2xaR2IrS3Ixd2lvNzd5K09BTFJVTktRSXFZVXNlc3RDam96b0VQY2ZKYmZq?=
+ =?utf-8?B?azd3SkUyK09lT09uTDRFNFRJSmJJSUtLSkUyRWlqNS85SGlRQU1yakU0a0hl?=
+ =?utf-8?B?dVhLenFVbi8yNFFIa2hnRXhKRGN3S3g0eW5mOVlhMkMySXo4U2Z2YVloNXVo?=
+ =?utf-8?B?Qi95Y0NlSnFyNk51cUY2eUlFMytxUmdWL1JELzB5V09pSHlaQ1FJcGpyZk5P?=
+ =?utf-8?B?YlA3M014RDdSZTIrY3kwdHlsU3BDNVBpSUJCajlHcWhKak5ITzZEaEduNFh3?=
+ =?utf-8?B?MmtWenM3Q3BqY2ZkQVY3MXJuWXdFQ0NidzMrR3dFTUxqVzEyMzNWVC80N0hQ?=
+ =?utf-8?B?eHFhZFd4YTZja1h4R3lBdWhFWkJ1M2ErVnhORmdqdnRTNGJoL1Q1SVVvRkJa?=
+ =?utf-8?B?ZmR3dTFSNlh0TDdvcmJQMXdRTmc1UmRZZ0dJbzFOeDlKekpXZHljSU9JbkF3?=
+ =?utf-8?B?NUZLbXQ1YUl3MGJzVEhxWmpJcGpkZmMwN3VBLzY0Tk40d0NwMU9IWXF2UUpE?=
+ =?utf-8?B?TW5BQlRPS0dWR0lTTmp5VG9iY1JWc2l5TzVFelNuQU5ObHNjT1I5UkEvZEhv?=
+ =?utf-8?B?NnFtS2FxS1ZOL2o5SHJFV2JxczJ5MktJUUo3U1pYcVZERFdPZ3VSVlQ1aDZq?=
+ =?utf-8?B?NWNHbnAyTXFVejBoRkdocFM3c1VnMExmMjdudXhydnc2a0E2WkpVZzFWRDAv?=
+ =?utf-8?B?eVdTam9xdXlqclNuYjE1NTgyVkVnU3dnb0ZFVjlRa0I2SG9lYkhvR0JLL3Ez?=
+ =?utf-8?B?WWpFdlNQbUFsWUZ0blIxYXIwVzNJYyt2VDNqVlFmMWtkTVBnTFQwZHNsTGlD?=
+ =?utf-8?B?OU1oU2ZvTGd4Qk9ybkJyVWd4WklhVDY0TERBb2dYRjJnTFlwQnA3cUsvSmw2?=
+ =?utf-8?B?S2tadlNsZEVXV2pLYWJhUCtIRUVINEp3UHlUa2kzRzRaVXhROHRqU2Y3eFFa?=
+ =?utf-8?B?RHp1RzJ1MWl3SmRBQ0E0L2duMW5PZk5VUU9vSms0b1JNVFVDV3VmS1dBVUJZ?=
+ =?utf-8?B?eGp2c1ZBb2hWOHlGU3N5U0NpWXhzK3lTSVN6Vi9pbzhLMWR0T2Z5UG1YYUpq?=
+ =?utf-8?B?TW5jMHgvQlFJbDdFNXpiTXNzcmN6eHJtRGk4RVplaGFhYWtocTNBbkoybndG?=
+ =?utf-8?B?Q2dtYk1zdHFldHdBSjdjSlBHNEQ0ZUJveXpHU1RDWC9Jb0I0UTlsVHJUZHRm?=
+ =?utf-8?B?L2V6aWYvL1pKSStOWTFXeVdtS3h6QjlqZndiK2JSa2hveUNqRVB1YkNNbkpH?=
+ =?utf-8?B?RVdZcWxPSkVRYU9tT1M4VzNtbk1yMDlEcVh4Rk5xZ3NTNi9pdU83MVVxRmtm?=
+ =?utf-8?B?S2c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46031b1a-81d8-4fca-9538-08ddaebdf5f7
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2025 23:15:05.8623
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: lRKRz8dNg1ESEBeB33j9Re2+4CkdiofM6+ZSdOuzeHWWUp0DbaTVccz52WSBKc/1zzebWZHAtq3JzmGa5g4hpebD4GR/eYYEnEvGXzcphd4=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4709
+X-OriginatorOrg: intel.com
 
-From: Jacob Keller <jacob.keller@gmail.com>
 
-The get_default_remote_submodule() function performs a lookup to find
-the appropriate remote to use within a submodule. The function first
-checks to see if it can find the remote for the current branch. If this
-fails, it then checks to see if there is exactly one remote. It will use
-this, before finally falling back to "origin" as the default.
 
-If a user happens to rename their default remote from origin, either
-manually or by setting something like clone.defaultRemoteName, this
-fallback will not work.
+On 6/18/2025 2:08 PM, Phil Hord wrote:
+> My patch fixes this for fetch, but it affects the command's output order.
+> Currently the results look like this:
+> 
+>      - [deleted]     (none) -> origin/bar
+>        (origin/bar has become dangling)
+>      - [deleted]     (none) -> origin/baz
+>      - [deleted]     (none) -> origin/foo
+>        (origin/foo has become dangling)
+>      - [deleted]     (none) -> origin/frotz
+> 
+> After my change, the order will change so the danglers are reported at the end.
+> 
+>      - [deleted]     (none) -> origin/bar
+>      - [deleted]     (none) -> origin/baz
+>      - [deleted]     (none) -> origin/foo
+>      - [deleted]     (none) -> origin/frotz
+>        (origin/bar has become dangling)
+>        (origin/foo has become dangling)
 
-In such cases, the submodule logic will try to use a non-existent
-remote. This usually manifests as a failure to trigger the submodule
-update.
-
-The parent project already knows and stores the submodule URL in either
-.gitmodules or its .git/config.
-
-Add a new repo_remote_from_url() helper which will iterate over all the
-remotes in a repository and return the first remote which has a matching
-URL.
-
-Refactor get_default_remote_submodule to find the submodule and get its
-URL. If a valid URL exists, first try to obtain a remote using the new
-repo_remote_from_url(). Fall back to the repo_default_remote()
-otherwise.
-
-The fallback logic is kept in case for some reason the user has manually
-changed the URL within the submodule. Additionally, we still try to use
-a remote rather than directly passing the URL in the
-fetch_in_submodule() logic. This ensures that an update will properly
-update the remote refs within the submodule as expected, rather than
-just fetching into FETCH_HEAD.
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
- remote.h                    |  1 +
- builtin/submodule--helper.c | 26 +++++++++++++++++++++++++-
- remote.c                    | 15 +++++++++++++++
- t/t7406-submodule-update.sh | 32 ++++++++++++++++++++++++++++++++
- 4 files changed, 73 insertions(+), 1 deletion(-)
-
-diff --git a/remote.h b/remote.h
-index 8dc5cfa49ef78808348a84c9b3f416b31cd3bbd7..0ca399e1835bf1829054d8937d95e5625c38d881 100644
---- a/remote.h
-+++ b/remote.h
-@@ -340,6 +340,7 @@ const char *pushremote_for_branch(struct branch *branch, int *explicit);
- char *remote_ref_for_branch(struct branch *branch, int for_push);
- 
- const char *repo_default_remote(struct repository *repo);
-+const char *repo_remote_from_url(struct repository *repo, const char *url);
- 
- /* returns true if the given branch has merge configuration given. */
- int branch_has_merge_config(struct branch *branch);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 1aa87435c2000e94f43da94c5ef88a307f6f3f4a..84a96d300d9489706fb16280f03aea02f87f1657 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -72,16 +72,40 @@ static char *resolve_relative_url(const char *rel_url, const char *up_path, int
- 
- static int get_default_remote_submodule(const char *module_path, char **default_remote)
- {
-+	const struct submodule *sub;
- 	struct repository subrepo;
-+	const char *remote_name = NULL;
-+	char *url = NULL;
-+
-+	sub = submodule_from_path(the_repository, null_oid(the_hash_algo), module_path);
-+	if (sub && sub->url) {
-+		url = xstrdup(sub->url);
-+
-+		/* Possibly a url relative to parent */
-+		if (starts_with_dot_dot_slash(url) ||
-+		    starts_with_dot_slash(url)) {
-+			char *oldurl = url;
-+
-+			url = resolve_relative_url(oldurl, NULL, 1);
-+			free(oldurl);
-+		}
-+	}
- 
- 	if (repo_submodule_init(&subrepo, the_repository, module_path,
- 				null_oid(the_hash_algo)) < 0)
- 		return die_message(_("could not get a repository handle for submodule '%s'"),
- 				   module_path);
- 
--	*default_remote = xstrdup(repo_default_remote(&subrepo));
-+	/* Look up by URL first */
-+	if (url)
-+		remote_name = repo_remote_from_url(&subrepo, url);
-+	if (!remote_name)
-+		remote_name = repo_default_remote(&subrepo);
-+
-+	*default_remote = xstrdup(remote_name);
- 
- 	repo_clear(&subrepo);
-+	free(url);
- 
- 	return 0;
- }
-diff --git a/remote.c b/remote.c
-index 6db3db3cbfc2bb56cc477feaa34952e3f370e0f5..1850e8fa4e427f3902ce0dbbc643a653da061716 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1801,6 +1801,21 @@ const char *repo_default_remote(struct repository *repo)
- 	return remotes_remote_for_branch(repo->remote_state, branch, NULL);
- }
- 
-+const char *repo_remote_from_url(struct repository *repo, const char *url)
-+{
-+	read_config(repo, 0);
-+
-+	for (int i = 0; i < repo->remote_state->remotes_nr; i++) {
-+		struct remote *remote = repo->remote_state->remotes[i];
-+		if (!remote)
-+			continue;
-+
-+		if (remote_has_url(remote, url))
-+			return remote->name;
-+	}
-+	return NULL;
-+}
-+
- int branch_has_merge_config(struct branch *branch)
- {
- 	return branch && !!branch->merge;
-diff --git a/t/t7406-submodule-update.sh b/t/t7406-submodule-update.sh
-index 748b529745a5121f121768bb4e0cbc11bc833ea4..c09047b5f441a73a02a9fc4197e9a0ea8f39b529 100755
---- a/t/t7406-submodule-update.sh
-+++ b/t/t7406-submodule-update.sh
-@@ -1134,6 +1134,38 @@ test_expect_success 'setup clean recursive superproject' '
- 	git clone --recurse-submodules top top-clean
- '
- 
-+test_expect_success 'submodule update with multiple remotes' '
-+	test_when_finished "rm -fr top-cloned" &&
-+	cp -r top-clean top-cloned &&
-+
-+	# Create a commit in each repo, starting with bottom
-+	test_commit -C bottom multiple_remote_commit &&
-+	# Create middle commit
-+	git -C middle/bottom fetch &&
-+	git -C middle/bottom checkout -f FETCH_HEAD &&
-+	git -C middle add bottom &&
-+	git -C middle commit -m "multiple_remote_commit" &&
-+	# Create top commit
-+	git -C top/middle fetch &&
-+	git -C top/middle checkout -f FETCH_HEAD &&
-+	git -C top add middle &&
-+	git -C top commit -m "multiple_remote_commit" &&
-+
-+	# rename the submodule remote
-+	git -C top-cloned/middle remote rename origin upstream &&
-+
-+	# Add another remote
-+	git -C top-cloned/middle remote add other bogus &&
-+
-+	# Make the update of "middle" a no-op, otherwise we error out
-+	# because of its unmerged state
-+	test_config -C top-cloned submodule.middle.update !true &&
-+	git -C top-cloned submodule update --recursive 2>actual.err &&
-+	cat >expect.err <<-\EOF &&
-+	EOF
-+	test_cmp expect.err actual.err
-+'
-+
- test_expect_success 'submodule update with renamed remote' '
- 	test_when_finished "rm -fr top-cloned" &&
- 	cp -r top-clean top-cloned &&
-
--- 
-2.48.1.397.gec9d649cc640
-
+Personally, I like the later output. I have no idea why anyone would be
+specifically scripting something that depends on the ordering being such
+that dangling messages are printed immediately.
