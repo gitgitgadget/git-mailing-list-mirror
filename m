@@ -1,86 +1,71 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D863F2F3C33
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8125D3085B5
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:31:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750270855; cv=none; b=seImMaMCIE4QI5TxFGzyv8BQM8sIQmpeagDqe5z+BmEjGisPAyLl2lC8/v5pUTyCMoO86zs4fvD5M3AnuOhzKmJP8RN6T+7YW6eTstkTH2eh3cD4VAis+Mb+Fj2KUxXkRi5bZFk+WuI0aMSg4sqTIbTXG7274jjL9l4ZNXdM250=
+	t=1750271510; cv=none; b=q9U1BruX7S+j++tk42h+MmXlvjF5rhf0oRUWoUapnN2Ie76lPfnEFyk0lIiNYh2m6lNCAD9ygxXdSCGN2jOBhKF3EIU8FkIX49twzGrCwon6Ar/zH9zLiPOvsx+0EdagbDyRo0Fp8HHj4gCJ7nYaFLKz/qfQlH7jKiPTHMUjlM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750270855; c=relaxed/simple;
-	bh=+HbJCIJIucdqk5mmu0Os3Is5aXxLQUBDi7UfF2Hgh7I=;
+	s=arc-20240116; t=1750271510; c=relaxed/simple;
+	bh=JW4G/lNnzS394rqf6TIYnyCrt1aAJgIymmxRGGCxdxo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nz+rEmV2m1cuKWmJKnVjI+UO1FYtVmxNEN0M/5wW6M6WJYAJO0GFDEbA9WmQqUBsb+U+nifHIvpy1eLT9MnfCvFYY3CRVTeSrWKX3X2ztascBQF/c16RY522YOfhQzkMquRF1LEC6uRulpnLQiWCUsYDr5VW+wXijf7F8b2GJX0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dx+cthLk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E75CXmWS; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=EtG5Cdew3ElwOJoUTTM1EF6FNQ7fE7jaLqflo67928V/qmzrLqOkG89GKt5skLEIIL+vIjcGEbrCPgiEsog/Z8LLugBgiH8e89Wg2ewkAIdvn8LC2q2kMYDfRf9vJ4CAN4CNPJWdT5MARf8Mk81bFZc3F8lXCAae8LCyBpP6NN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G6+C04Nv; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dx+cthLk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E75CXmWS"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id DB1B2138044C;
-	Wed, 18 Jun 2025 14:20:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 18 Jun 2025 14:20:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750270851;
-	 x=1750357251; bh=oOG+LC+S4AWSZJLew0jhkv4ggTRgkxJiMUasHz68sPk=; b=
-	dx+cthLk4DU8aE8aY7IyBTOO5Xzxm207/JzehHm6Xu0W1LlI3NyUDfhShbkia570
-	ThEM7hghGhdKRr0L+u6eQcNlfjvT5fkcYdf+aJTmRbBjEPxmAd2AlorIk0UtiLFx
-	vyJWCOCV9EEWn8J/wU75whXhzot5AuI/P70Lsn8oHBVUDWBS52mHequQpbSdTQk/
-	eNbm40JVQKq9+p4B3PHwZUZ8CFZnVv2tWbQz6n1QH183ilUv+z9feFD2VAf46NaK
-	HiXFl4uDwFoSFf2zLZUk/0vNhedJUYdDen/8fd3lKXrDofO+uBKgsKmnxqBM/sZI
-	tH+6SRKoaYJHWsitOFyEfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750270851; x=
-	1750357251; bh=oOG+LC+S4AWSZJLew0jhkv4ggTRgkxJiMUasHz68sPk=; b=E
-	75CXmWSU5Hgk6GDla6/4EvbRjGBUpQOlf1MUKp1dlLTNS0/immF0XQkCuYDc6dT6
-	dND1S7ZKNEThIad90EzsT2QJxtA/ZZlbMWO3EFuvQ/ThWe1MsBZ/ak0NYt2MbhHD
-	0uxziYp8snYJVc2UkKjZxdg1/OtIkMTBZ7fHNjU5LvWpg4QMBG/Q4K1aaw8n7sxl
-	K+Ehr2Qgg2NBsVPmKMSdRA2itDZ+CIUzfu/WSvil+pc0eZaGS2s3gkVlBH+wJIyu
-	ceE7TMmBMHxiAgFRepULw8KnYSDscqSGLX9CyBGFzATlDTNhv3AllWlAl/RoGbff
-	hP3EucMmA86+T9uqTCAwQ==
-X-ME-Sender: <xms:gwNTaHDp_z9ZGBVKY1L_wWV90WOcK_ss2gGUusjtsFlUs1ydzSTg5g>
-    <xme:gwNTaNgg58ZLgtGe9gxEfronfT4gmJV2VuCE-Xe6Q1fBg-2bxD4m2u_rXa67U4nFc
-    edc8H4sJWdoFSm7_w>
-X-ME-Received: <xmr:gwNTaClka-Zpk25wkFm-kWQy6bxfuCtKaHhzMp1vrRThzQuwycMSo3SQH-ntwsMLoaB6jBLhyuq3rrGQfl6bxNKRwJHYwDc1Z1fV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeffeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
-    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmqeenucggtffrrghtthgvrhhnpeehgfetvdejueetvdettefhhefhiefhhfdv
-    tefgtedtgfdvjeeltdffjeegkedvveenucffohhmrghinhepughifhhfqdhnohdqihhnug
-    gvgidrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
-    grtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gwNTaJznZcD3xYU0E_30b_7oL1Y8LhN42a2WFfEfe27p8-cVSFtUvw>
-    <xmx:gwNTaMSJjYEid8GcbrUfwKZu1_Z2JS0t9bVn50eJr3Q9xGpvysfEBA>
-    <xmx:gwNTaMZcoMzRZ9Nboke2fwvAsCbdgtdG2Y4uA7egJSXwS7qIqrxEaQ>
-    <xmx:gwNTaNT1xuBJE0qofuhxXRr79AjqX-ElOHThU6n9kCEou7iWBpu7sw>
-    <xmx:gwNTaCcyFcKCDd_hc_87Y2xGCAU5ZqZiMRJTD4qn23buAoAqiCA_kPtf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Jun 2025 14:20:51 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] portability: allow building in systems without d_type
-In-Reply-To: <20250618062331.78059-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 17 Jun 2025 23:23:31 -0700")
-References: <20250618062331.78059-1-carenas@gmail.com>
-Date: Wed, 18 Jun 2025 11:20:50 -0700
-Message-ID: <xmqqwm98ewsd.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6+C04Nv"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so6899710a91.1
+        for <git@vger.kernel.org>; Wed, 18 Jun 2025 11:31:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750271509; x=1750876309; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=hJJk+JkGEEzdubz6O83rcbNUmhZH/wYQjpVPxC26qQs=;
+        b=G6+C04NvxUijYpZs5zZQvYRnNP2HkUXzZ8SZazVbiQMnBi7CkqutJg74XLdB94//UH
+         AbKzJ2Y0BBzrucuEOOoSniM3ccEfJnfh8gwYSuCIOV7jwA+UYqgz/LXrO5WOGYx+aUE0
+         KoMaGuTHEvRneyZC6cGYc2pq8aq44m8c0x69Otyw6XYDqE9aof3rRHnONvO7mx4Mq2e7
+         IwYoN5l7Zt5PJrqw5LMMmD5/By7+1ej+JJL49Q+eUFvVtBHsYgNNGZuKsK5W0Wn1NL35
+         rbUPDs532OKrCVbXyVHT3pfZKZWpp6RG92ClVRpV6ib9CQdAD8ulJTxvoxLkOMrzZ0ME
+         8HCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750271509; x=1750876309;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hJJk+JkGEEzdubz6O83rcbNUmhZH/wYQjpVPxC26qQs=;
+        b=SIr840rvG/QXBAegF5Z0KEMBd5/XTtyMhCNfeEqVfbgWyaXqGJowtspgn+XMQKlgpc
+         QlVwZXhq5m07pMZW/pwMegmF2xMMEKFop1JwEKhlfGcfwmU8Z339ZZMasyMbMvbOzEd0
+         2bCvdVP9l1SvAgWkk1tJqQPzL3cgHD7QOavb5uGHvhPO39qUl9kP8NQr5zFEsXF1prZl
+         nCpEsmhiWuxI7mVa7jvox8g7p6zmAstZ3OXK2Qq/8mDbODs8OWGg0F/P9sKGEebD1PWJ
+         DfAE+1u6dmK3Ct3CtJ27m1IDyOopibkHAoiYl5s4OzNatRVlh31O/JirB6fL0AUME5AB
+         Q4Kg==
+X-Gm-Message-State: AOJu0Yz2X5QO5Fs3BZH2gAJbyIRiQA3Y6PPdOKt//gavMYA4hZc8dYbp
+	Pmb12rdqZ8oOQ4FmlwYEqqWDCoHU7GK2ADU/oIVaPRwK9pzFueX7bFee
+X-Gm-Gg: ASbGncsM1bGxa4oYx8FZ7Z9IfM518UdwPJM7tbnxX2oP2Sf8nrjpBdBPNuKYKySB1y3
+	Nk0InW5uUV3b0/0k5BU50CMtDbz8LaGUjX4S+RUjldt0wImf5p6gQU+CJ1gb6pluo1PNO0T95gx
+	jmMJSNp/A9b5IUUwjFVFcSoxmRg/TLGQGXXDHv4uvp2WSh5ffYjr3dc2iwyRs0kgdP0b/6fHWM5
+	pUROzxtpHIdNUGWqYHVGgEnNSU9CQBC+qVTJSYcfjyYssagYmyjjDQ3+qemeC8ImlQzXG5N2s6r
+	UplIhcAangBl/BbZqzP7jxnPkVSptG3UIKY5BmLhdthvZPUd7P0atA==
+X-Google-Smtp-Source: AGHT+IEyK+b7TlxZmpXoYjXVN0eeIjLNc8qHYXfcXuftpAZP/nArmIexzSPh7Pu+Nts7ST3eUcxuOg==
+X-Received: by 2002:a17:90b:2d48:b0:311:abba:53c9 with SMTP id 98e67ed59e1d1-313f1ca126fmr30130170a91.7.1750271508737;
+        Wed, 18 Jun 2025 11:31:48 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::de7b])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365dea8ccbsm103725515ad.167.2025.06.18.11.31.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jun 2025 11:31:48 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
+ <carenas@gmail.com>,
+  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] cocci: do not directly access the .d_type member in
+ struct dirent
+In-Reply-To: <xmqq4iwcgbzb.fsf@gitster.g>
+References: <xmqqbjqlexzd.fsf@gitster.g> <xmqq4iwcgbzb.fsf@gitster.g>
+Date: Wed, 18 Jun 2025 11:31:47 -0700
+Message-ID: <87ldposxyk.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,70 +73,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> Since 09fb155f11 (diff --no-index: support limiting by pathspec,
-> 2025-05-21) will fail to build in platforms that don't have a
-> d_type member on their struct dirent (ex: AIX, NonStop).
+> In "struct dirent", the presence of the .d_type member should not be
+> assumed and the code should instead use DTYPE() macro, with possibly
+> a fallback check to determine the type of the file.
 >
-> Use the DTYPE() macro instead of a nake reference to d_type.
+> Add a rule to catch direct access to the .d_type member and use
+> DTYPE() macro instead, except in the emulation code paths that work
+> on platforms that do have the member.  This is probably not sufficient
+> to notice the lack of necessary fallback code.
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-This may allow you to compile and build, but does the resulting
-binary do what you want it to?
+This change looks good to me. Atleast it will catch code that fails to
+build on niche platforms, even if it cannot validate existing backup
+code.
 
->  			if (!match_leading_pathspec(NULL, pathspec,
->  						    match.buf, match.len,
-> -						    0, NULL, e->d_type == DT_DIR ? 1 : 0))
-> +						    0, NULL, DTYPE(e) == DT_DIR ? 1 : 0))
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
 
-On a platform without d_type member, DTYPE() macro gives DT_UNKNOWN
-that is not DT_DIR, so essentially you are always passing 0 even
-when you are looking at a directory (in which case you must pass 1)
-to match_leading_pathspec().
+Your fix for the 'git diff --no-index' looks correct [1]. I'll build libcurl
+on an AIX machine I have access to in order to test (not an
+administrator on it).
 
-So I somehow doubt this is a correct fix.
+Collin
 
-I do not know if get_dtype() helper function is easily applicable to
-this codepath, so I wrote this in a longhand...
-
-
- diff-no-index.c | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git c/diff-no-index.c w/diff-no-index.c
-index 7c95222ba6..677df91fc5 100644
---- c/diff-no-index.c
-+++ w/diff-no-index.c
-@@ -41,12 +41,28 @@ static int read_directory_contents(const char *path, struct string_list *list,
- 
- 	while ((e = readdir_skip_dot_and_dotdot(dir))) {
- 		if (pathspec) {
-+			int is_dir = 0;
-+
- 			strbuf_setlen(&match, len);
- 			strbuf_addstr(&match, e->d_name);
-+			if (dtype != DT_UNKNOWN) {
-+				is_dir = dtype == DT_DIR;
-+			} else {
-+				struct stat st;
-+				struct strbuf pathbuf = STRBUF_INIT;
-+				strbuf_addstr(&pathbuf, path);
-+				strbuf_complete(&pathbuf, '/');
-+				strbuf_addstr(&pathbuf, e->d_name);
-+				if (!lstat(&st, pathbuf.buf))
-+					is_dir = S_ISDIR(st.st_mode);
-+				else
-+					; /* punt */
-+				strbuf_release(&pathbuf);
-+			}
- 
- 			if (!match_leading_pathspec(NULL, pathspec,
- 						    match.buf, match.len,
--						    0, NULL, DTYPE(e) == DT_DIR ? 1 : 0))
-+						    0, NULL, is_dir))
- 				continue;
- 		}
- 
+[1] https://lore.kernel.org/git/xmqqwm98ewsd.fsf@gitster.g/T/#m4fc1f0ddf1730ffb025e37d523035bd9f6cddfae
