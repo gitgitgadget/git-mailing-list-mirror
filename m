@@ -1,82 +1,70 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C95521ABC2
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 20:04:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2099212FBE
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 20:37:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750277058; cv=none; b=Ye8z7l7pY/gMFgx7oLbc6WhGCMm8r4DEIvI62pj/0ytxfUhIH8HqUmxIMbVMjk5jDRj2sJeioUfuA0BAcJdZEgsUl0QfzLqmtrX5/PvfBaZjq9NRmZ8xtu+lqrTqCzyYR8N8LLDespi0VFEc0wdMZpWz7irmCkSMpj7QGUP52rA=
+	t=1750279066; cv=none; b=Pour1TO32d4NuJC8WdtThLctUXOoROAXBB/45faJmEpfz8OEFqWxWPUD+q5nD+WxHYCFkhqLELWeAJKeYEwtKzwpAq6XeY4rf5S0S9DFoEjUuPfP5Fvt68rjt9+nI1W4iOHUe7ksgkhgFi056SkGNwV+Shu81nrT1lNcM5NJngQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750277058; c=relaxed/simple;
-	bh=UR0nD+6aHMRzS2hkoCmXOVkoxtiy93rwr4zPb45SjBk=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Ug0BeH5Uzx1lP31MFpAELXghstPj+BM8rSuxmg2E6waAsxPZ4JDWNfFd+zAGUV7SBM1zhV1hsF0QboCgbAWcyCpE42erHqG6oOfo9VKWDxU+FOA+Mpycom6PduG0BD5KJNWsRN3oUX7INAKTUf58OP/82oSIAOxrHnNMo7+ZiZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U12pDEDk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mruxLVzK; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750279066; c=relaxed/simple;
+	bh=oGMCRrlQy83AQTAeSzEnbTwP3llnQS99ArAP6OeNpLI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=j4QDCVpghnEWEJMOZ/Qf+VWG8SJnepVHyQ8wA2qLF/TKE+IdYDbU6Gvg74IgPQxKDzpc7CQ2ol7ariVPQIeQ93QtnyG7lqVjTQgu1TXvbe4GYzCJSHkr8sHykh6jh4mR24xws8dqHQgF97LzY0gKF0EpMXGyGZCMjvBsmscpolc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T9cy5sIC; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U12pDEDk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mruxLVzK"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id BD87111401DC;
-	Wed, 18 Jun 2025 16:04:14 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Wed, 18 Jun 2025 16:04:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm3;
-	 t=1750277054; x=1750363454; bh=6nE5GQXgvYKrXPXvY2E1OnEKUaNY08wG
-	I92BbXhihTU=; b=U12pDEDkSXNRYwIWsxkZ3YCEr3IVkwBw5ETZ+u41gJdp7MPl
-	v07i22NsASkcJV15kuYNuGsRUfxcHjHbTeO92GVITcrarBdllDvECninHta0W4dt
-	TgQOa0JlPdczDPwGFctgcywFB6nzt+HXLxgr3I6aFg203c/E6mzUkGPof+KgFf5M
-	8eJHRQowGLAPyXM/NtNTVG2d7Uw9AeA1u8sW5/htqnfJyKYNKFQ3/N5erhGY9Qir
-	oOvv9Ssvr455S1SM1UU8SyA8bxSp7jcTzCZzCDW3RD6qfT7bGGvMCrURqUh8Yr1G
-	uPHMDiudaIdH+/MVo9KNJDm3fjFYcuKCvSo/Ow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750277054; x=
-	1750363454; bh=6nE5GQXgvYKrXPXvY2E1OnEKUaNY08wGI92BbXhihTU=; b=m
-	ruxLVzKKyXwfw7EvSuJgRjnSqF+IxFfiwprXgCq35NU3bQsmB+gQ9n8FvlfkG9PK
-	ShP9V05EKAsVvouEVCF0PqvctjoelJj7vUFSE3zFEw5OVllIBrmIaCqmj4AXeI79
-	xX5BSuWFK4fQT+7DpJJzrnUk2yyoeJcrgSrqrmmb455bhs0CgjVGEzEcl+8HKc+t
-	ttS1xQyaf3tyWn7/2VIhD1N8tlbNU1BedHi8NF4/qDYR5X6O4H8pWvcGn5O5gSqW
-	MtgsBgsPb0/dyMXPjlb+UjuFFZ/4MLj2Ovc2n9ENdOScQAZr1RpjeUP/whf/Wi50
-	wKMH4vSZYLhjYkE/tDXLA==
-X-ME-Sender: <xms:vhtTaEQrv3TgxHqrFZk5JCVUv5ftmuLj852y3Tkrd2zpJMyVY5LBfQ>
-    <xme:vhtTaByg6pig-9gdgSsFjVcjqIBsG5LFjTqf2tq8cdnkUUH86WJEC6GNO_ulbi_ZM
-    m_wMlE0HGKxiaADeQ>
-X-ME-Received: <xmr:vhtTaB2s78Bg-Dq_SpCesw8W1qgaYNDIk-miRAS8F1J3KyzM5zdsj3KwNjAJjLUftcYfci0tZ6-mUKLt0TH4E1yaQhsBSrbfAFZh>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdefheehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefufffkfgggtgesthdtredttdertdenucfh
-    rhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtg
-    homheqnecuggftrfgrthhtvghrnhepjefhgfefvdekfedthfejgeffieevieeifeegueei
-    hfejleeufeffjeetkeffffejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthht
-    ohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdr
-    tghomhdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtghomhdprh
-    gtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:vhtTaIDCTZA3JxId07kaDooHKCzd2nGOkbLG4ueCaqG4Gxb0AAsR5A>
-    <xmx:vhtTaNiUHtjBtatGm5Ynq3qNBdYtFZ3NeJj9VpZRPc4ohbVmFnGf1w>
-    <xmx:vhtTaEoMxoZDfFfz9dJ0LpJlytm2xUb0eyY7QoAEle9evu-HJi34uw>
-    <xmx:vhtTaAhJM0Skj_YxA-_wpnX_Xw_8sHiJjI44eXKrpZXNwu_N2ViF9A>
-    <xmx:vhtTaEhPwDH-ZiKcRMSf21ZVP2aBj-BBEnNf4S-2Bba5jmb4LveQT-qt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Jun 2025 16:04:14 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Collin Funk <collin.funk1@gmail.com>,
-    Jacob Keller <jacob.keller@gmail.com>,
-    Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH] diff-no-index: do not reference .d_type member of struct
- dirent
-Date: Wed, 18 Jun 2025 13:04:12 -0700
-Message-ID: <xmqqh60ces03.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T9cy5sIC"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b2f0faeb994so165289a12.0
+        for <git@vger.kernel.org>; Wed, 18 Jun 2025 13:37:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750279064; x=1750883864; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2p0Kuf+2jXdJj1Lrq53JC8GpffvRwpUvZ/woQ5KkN3M=;
+        b=T9cy5sICkmCXMgTlRzrE/33BB0AkufXTWveBIBoflId06JiwyRztCQfBxEKHLKBn5P
+         LuviUkFHR29If5wKdhCL4dWZUozbVYAb+TRF7/K9fqMG8M9IYBUaOA9E4VhRxp9JthqM
+         aadfBfkUZM2P9vs9D9gsDIP5EVo0Uc6dX4M7a0qYWMpr1PPE3S9Oa64Rw07L58JTWPiT
+         5KGvCwfGUmdHlce9hH2ZuHPWboctQfHaIfpTCiGTAFA7wJ+kqYIEfyytTdfwK7y809LC
+         OwMPAldX8IKxvNSMWKBqYoSx82l9EcG8CC8iCdlKOnME91DIVvfQ75P7c9nikujtJ9m+
+         8cCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750279064; x=1750883864;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=2p0Kuf+2jXdJj1Lrq53JC8GpffvRwpUvZ/woQ5KkN3M=;
+        b=vytqEqejhKlYsyLK3Y/xrc1fhIEPAKsZcEQJhvPAU8xFeCHM76pFVvE7TY48KcGBdk
+         wun0bVVGYIrabgJZBf9j0qhuOfryteyPNSWESle50b9GY39YG7rEAHg8adfTFf9uJK58
+         Dgg+jxmSExXMIc/8bmINriACnRtSOPE15Ienwb9BZMCMJJNFtRU8aFYgP6u9pj3Jnj6B
+         6+XjG/SkZ0xDQn1CpqgSx8LOh6hVtf5/kKYHVs0vZqjlXFgGICrYHTVWQd+crZH52PrC
+         JxEjjlFAoI3RZ+4IsrgsuhxYl1PBzPhf81Jp5xDKIo8/RfVzP9Eb4B1UZZpUfdolQahY
+         mV2A==
+X-Gm-Message-State: AOJu0Yyz/+lB7OdU+5qVwH1RVN4RwBN0cSXErCMA5U35Rnp0JLAgexqW
+	FXxrZWvdOODWksVv3amHZBp41JLLfKXBK9k/LEPboBO/sanJ6ImVtYjG
+X-Gm-Gg: ASbGncvFi4DSkb/LIcq3ux1rK/wlg1/zrrMEIy/Db/nyCZzDeGI1txh0bVpCn/lliwN
+	lEVqNRnSj0c0YktBOz58Sr2FV6VKrxJaQNGsEi1geWpup1mrKk/+g6m3OZAkwe4lVzcoeW0fzI2
+	NPtOykWdvseFA4AzDuXXt6Us9PnnK+gT73Cxz28o5nthL5Mzl+/1v6jQkjXSyi0SQ5T+GP4gPtH
+	6EIrCg4NoVQdRyP/dcxGl77AAsrJIgseqWep8WEn4nyHWsSwBjAN4ruRGbYyDUDfT9KoP8KLkxh
+	6rtkVffa7h/4P6i+zIeIBgxkPebVT2wLyxYUzWzUOVQ=
+X-Google-Smtp-Source: AGHT+IEPb0pkeBph4tzR2vTe81swkcdjHSfbEXxBE2B/7k+KdWkPcaWmAm8060MA+F6muaqmI9z4cw==
+X-Received: by 2002:a05:6a20:158b:b0:215:da29:149f with SMTP id adf61e73a8af0-21fbd65e1f6mr29471699637.25.1750279063921;
+        Wed, 18 Jun 2025 13:37:43 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::de7b])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168ccafsm9663539a12.55.2025.06.18.13.37.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Jun 2025 13:37:43 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>,  Carlo
+ Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Subject: Re: [PATCH] diff-no-index: do not reference .d_type member of
+ struct dirent
+In-Reply-To: <xmqqh60ces03.fsf@gitster.g>
+References: <xmqqh60ces03.fsf@gitster.g>
+Date: Wed, 18 Jun 2025 13:37:42 -0700
+Message-ID: <874iwcss4p.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,60 +74,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Some platforms like AIX lack .d_type member in "struct dirent"; use
-the DTYPE(e) macro instead of a direct reference to e->d_type and
-when it yields DT_UNKNOWN, find the real type with get_dtype().
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- * get_dtype() was designed for a typical
+> Some platforms like AIX lack .d_type member in "struct dirent"; use
+> the DTYPE(e) macro instead of a direct reference to e->d_type and
+> when it yields DT_UNKNOWN, find the real type with get_dtype().
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  * get_dtype() was designed for a typical
+>
+>     - prepare the path in a strbuf B
+>     - opendir(B)
+>     - loop over readdir(B)
+>       - do things to path (B + e->d_name)
+>
+>    code structure, but because this code path does not use a strbuf
+>    (instead the path given to opendir is a "const char *"), the
+>    entire thing becomes messier than necessary.  get_dtype() has a
+>    short-cut to avoid having to concatenate path+e->d_name and run
+>    (l)stat() when e->d_type exists and known, but we need to open
+>    code it here.
+>
+>  diff-no-index.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 
-    - prepare the path in a strbuf B
-    - opendir(B)
-    - loop over readdir(B)
-      - do things to path (B + e->d_name)
+Tested on AIX 7.3 like the previous patch just to be safe and it works
+as expected.
 
-   code structure, but because this code path does not use a strbuf
-   (instead the path given to opendir is a "const char *"), the
-   entire thing becomes messier than necessary.  get_dtype() has a
-   short-cut to avoid having to concatenate path+e->d_name and run
-   (l)stat() when e->d_type exists and known, but we need to open
-   code it here.
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
+Tested-by: Collin Funk <collin.funk1@gmail.com>
 
- diff-no-index.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 4aeeb98cfa..88ae4cee56 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -41,12 +41,24 @@ static int read_directory_contents(const char *path, struct string_list *list,
- 
- 	while ((e = readdir_skip_dot_and_dotdot(dir))) {
- 		if (pathspec) {
-+			int is_dir = 0;
-+
- 			strbuf_setlen(&match, len);
- 			strbuf_addstr(&match, e->d_name);
-+			if (NOT_CONSTANT(DTYPE(e)) != DT_UNKNOWN) {
-+				is_dir = (DTYPE(e) == DT_DIR);
-+			} else {
-+				struct strbuf pathbuf = STRBUF_INIT;
-+
-+				strbuf_addstr(&pathbuf, path);
-+				strbuf_complete(&pathbuf, '/');
-+				is_dir = get_dtype(e, &pathbuf, 0) == DT_DIR;
-+				strbuf_release(&pathbuf);
-+			}
- 
- 			if (!match_leading_pathspec(NULL, pathspec,
- 						    match.buf, match.len,
--						    0, NULL, e->d_type == DT_DIR ? 1 : 0))
-+						    0, NULL, is_dir))
- 				continue;
- 		}
- 
--- 
-2.50.0-228-g6e205fdad9
-
-
+Thanks,
+Collin
