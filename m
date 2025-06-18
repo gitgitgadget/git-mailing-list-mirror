@@ -1,103 +1,116 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8125D3085B5
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:31:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A9C70830
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750271510; cv=none; b=q9U1BruX7S+j++tk42h+MmXlvjF5rhf0oRUWoUapnN2Ie76lPfnEFyk0lIiNYh2m6lNCAD9ygxXdSCGN2jOBhKF3EIU8FkIX49twzGrCwon6Ar/zH9zLiPOvsx+0EdagbDyRo0Fp8HHj4gCJ7nYaFLKz/qfQlH7jKiPTHMUjlM0=
+	t=1750271921; cv=none; b=tZcPJiYhG+PWxGpuk6i6GPuB/4U08usF5C09oz6lf3usA4CuQJBMPv3KlvYuWKxnboxme/BYKEcLuMDE01v5R5w2SX6/wrIa3yeyiQU6Vb1fjB3t/fT++ViFuWbo3ey8y/lOcfeuDaBnLpGNRBFnPuxmeDzwyaFRuLdfalYur1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750271510; c=relaxed/simple;
-	bh=JW4G/lNnzS394rqf6TIYnyCrt1aAJgIymmxRGGCxdxo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EtG5Cdew3ElwOJoUTTM1EF6FNQ7fE7jaLqflo67928V/qmzrLqOkG89GKt5skLEIIL+vIjcGEbrCPgiEsog/Z8LLugBgiH8e89Wg2ewkAIdvn8LC2q2kMYDfRf9vJ4CAN4CNPJWdT5MARf8Mk81bFZc3F8lXCAae8LCyBpP6NN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G6+C04Nv; arc=none smtp.client-ip=209.85.216.50
+	s=arc-20240116; t=1750271921; c=relaxed/simple;
+	bh=ipN5HkMO/lX5E48apSyLpofDxr2IqWg9Fa+jRs7oTO0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GnLdY/P/OZ1dX0VdZTwByTrxXKA/ePI3tWfCWcPTweUbL44wCtUrf/a82bx3RWRMJE409fHWNIQMG5EC1B4e0CdpHvZD0TdAn8EU+9aZTPgGh1vmIk+7Mc4F4yAFgzrODcI6mdEQjJmi2MauDhoynOezVaP4HkU74gbFElLJmYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BIbMW3fc; arc=none smtp.client-ip=209.85.215.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G6+C04Nv"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so6899710a91.1
-        for <git@vger.kernel.org>; Wed, 18 Jun 2025 11:31:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BIbMW3fc"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b31d592bbe8so5711a12.2
+        for <git@vger.kernel.org>; Wed, 18 Jun 2025 11:38:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750271509; x=1750876309; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hJJk+JkGEEzdubz6O83rcbNUmhZH/wYQjpVPxC26qQs=;
-        b=G6+C04NvxUijYpZs5zZQvYRnNP2HkUXzZ8SZazVbiQMnBi7CkqutJg74XLdB94//UH
-         AbKzJ2Y0BBzrucuEOOoSniM3ccEfJnfh8gwYSuCIOV7jwA+UYqgz/LXrO5WOGYx+aUE0
-         KoMaGuTHEvRneyZC6cGYc2pq8aq44m8c0x69Otyw6XYDqE9aof3rRHnONvO7mx4Mq2e7
-         IwYoN5l7Zt5PJrqw5LMMmD5/By7+1ej+JJL49Q+eUFvVtBHsYgNNGZuKsK5W0Wn1NL35
-         rbUPDs532OKrCVbXyVHT3pfZKZWpp6RG92ClVRpV6ib9CQdAD8ulJTxvoxLkOMrzZ0ME
-         8HCQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750271509; x=1750876309;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1750271920; x=1750876720; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hJJk+JkGEEzdubz6O83rcbNUmhZH/wYQjpVPxC26qQs=;
-        b=SIr840rvG/QXBAegF5Z0KEMBd5/XTtyMhCNfeEqVfbgWyaXqGJowtspgn+XMQKlgpc
-         QlVwZXhq5m07pMZW/pwMegmF2xMMEKFop1JwEKhlfGcfwmU8Z339ZZMasyMbMvbOzEd0
-         2bCvdVP9l1SvAgWkk1tJqQPzL3cgHD7QOavb5uGHvhPO39qUl9kP8NQr5zFEsXF1prZl
-         nCpEsmhiWuxI7mVa7jvox8g7p6zmAstZ3OXK2Qq/8mDbODs8OWGg0F/P9sKGEebD1PWJ
-         DfAE+1u6dmK3Ct3CtJ27m1IDyOopibkHAoiYl5s4OzNatRVlh31O/JirB6fL0AUME5AB
-         Q4Kg==
-X-Gm-Message-State: AOJu0Yz2X5QO5Fs3BZH2gAJbyIRiQA3Y6PPdOKt//gavMYA4hZc8dYbp
-	Pmb12rdqZ8oOQ4FmlwYEqqWDCoHU7GK2ADU/oIVaPRwK9pzFueX7bFee
-X-Gm-Gg: ASbGncsM1bGxa4oYx8FZ7Z9IfM518UdwPJM7tbnxX2oP2Sf8nrjpBdBPNuKYKySB1y3
-	Nk0InW5uUV3b0/0k5BU50CMtDbz8LaGUjX4S+RUjldt0wImf5p6gQU+CJ1gb6pluo1PNO0T95gx
-	jmMJSNp/A9b5IUUwjFVFcSoxmRg/TLGQGXXDHv4uvp2WSh5ffYjr3dc2iwyRs0kgdP0b/6fHWM5
-	pUROzxtpHIdNUGWqYHVGgEnNSU9CQBC+qVTJSYcfjyYssagYmyjjDQ3+qemeC8ImlQzXG5N2s6r
-	UplIhcAangBl/BbZqzP7jxnPkVSptG3UIKY5BmLhdthvZPUd7P0atA==
-X-Google-Smtp-Source: AGHT+IEyK+b7TlxZmpXoYjXVN0eeIjLNc8qHYXfcXuftpAZP/nArmIexzSPh7Pu+Nts7ST3eUcxuOg==
-X-Received: by 2002:a17:90b:2d48:b0:311:abba:53c9 with SMTP id 98e67ed59e1d1-313f1ca126fmr30130170a91.7.1750271508737;
-        Wed, 18 Jun 2025 11:31:48 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::de7b])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365dea8ccbsm103725515ad.167.2025.06.18.11.31.48
+        bh=VRvH74CItRRaccRZ0PEZeZk1bmgHJxUuCD1+humwFbw=;
+        b=BIbMW3fcmMCYfewn1G1db0a5X/nDbOwndkyKFE9bGvpDrGA2mJPcu56dJxqm/PGoFs
+         bwvaIVj5nI5dV2izeOPsnAPYKaNGumyA4ja05IGLqzjZVf67fHgnHXG6LGXea4T/oqur
+         /85B4FS3yRdsQh7mBFAXCLpEeOdbTaCp68vXt5qGAvylm6nV/3hUA2xix8NJHOcMz3XN
+         FlG80ZXUt7/1M5LMY0ai+qgSeFvKDTF9rVuetQF4ISeIq7vYUzpmRlIavlVWPUqOmekl
+         McaxoPhzTVDJb7OJRpSf//mOfR9yWLh2Z4BYH3So/NuBIDmYTq1mNXCyZFDrddXpIrQT
+         dUjw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750271920; x=1750876720;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=VRvH74CItRRaccRZ0PEZeZk1bmgHJxUuCD1+humwFbw=;
+        b=NouHwutTnVojTbKbpolVzN7CpEuT4M1sNXO0cl8NF4lLHmOrTNh5c0AHjfObUSOK0w
+         bkgIAl25/uuGdKwcMwQPD/srbZmvEIEQvEG+f1fr87vYVhdRbXuLTmcIGZe3+2orqVNW
+         IoGVIeDhf50uEna7OQi8/dv96WH6f38E8yaEibvVZVgjxZQYvYKECSCIYGtoUvwlb7cQ
+         s2Xj/TUNOBRRHjzDVLykpvvxLAYG+hwgim26Fr8KObPwrSzLevDEZ/u+GKxvG64Dk8Ma
+         XKaeWsxQcePYOF8NGJwx2OubQnkghlguMbjAuC7DMUGV8XudlpG+REC/AHwo4Z9J9QRJ
+         /plA==
+X-Forwarded-Encrypted: i=1; AJvYcCWQfipw0drfzD9roSD8DKgTQ8X4CDvUcd3Jsp2sodhwc+MBevIApP2zI/deu7HirLBF1g8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4QuQWetBn4wJ2bb9We9qUnVExN52t8jleVgeDPtDaPAFqGvl+
+	qQoCEEZvpvJSZOOKYdtSgMceEMtfVE/ZSQ+BdwRYZLnl5WrvBQAPFVyi
+X-Gm-Gg: ASbGncvmi5FuGiwTrmYbpv89mp9359qL2+FgtEb4RVMGyA2BHjntVqlS7/c1dS9Fm2I
+	7qoEiTNe3rqg5ovTrvo+4mPxcdCFClDl8XLCyN6HjRIU5QluRnpXOKG2AcTrAhLph0vnl82L1TE
+	bXfGKRI1O9XYCNQeLH8bh4lN5xjAQnRqGroHDOd6V+fq+fDsMt8D/NIn1wFdZYkhslAbeoVGEvA
+	z+PPAnkIY9YG5xsI1sT/RcXBEMa1Ch29+iMwItulO7wlHn7M8/SHLgB8+coz70bynzb86+kEov0
+	w/bww8oIYqoNKE4R3NT4I3vyrJBGel1jV0oeIMKO/g6Cqwl+fuOUkvfp8l4hRZ93KaJHHtDwUuf
+	AtsFSAHXP/ewsPnX4EIrucw==
+X-Google-Smtp-Source: AGHT+IFJ0TNS8C7l+ABwxOe/Be2swFBSOUMuSguaM4w/kLTSPhJvprKtKZyxgd8V37tNZSfFCKFaXg==
+X-Received: by 2002:a17:90a:d60b:b0:313:283e:e87c with SMTP id 98e67ed59e1d1-313f1c77731mr25564017a91.3.1750271919635;
+        Wed, 18 Jun 2025 11:38:39 -0700 (PDT)
+Received: from dwmfdoom.tail99f6b6.ts.net ([177.33.100.243])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3158a2f3736sm297808a91.27.2025.06.18.11.38.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 11:31:48 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
- <carenas@gmail.com>,
-  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] cocci: do not directly access the .d_type member in
- struct dirent
-In-Reply-To: <xmqq4iwcgbzb.fsf@gitster.g>
-References: <xmqqbjqlexzd.fsf@gitster.g> <xmqq4iwcgbzb.fsf@gitster.g>
-Date: Wed, 18 Jun 2025 11:31:47 -0700
-Message-ID: <87ldposxyk.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        Wed, 18 Jun 2025 11:38:39 -0700 (PDT)
+From: "Derick W. de M. Frias" <derick.william.moraes@gmail.com>
+To: ps@pks.im
+Cc: derick.william.moraes@gmail.com,
+	git@vger.kernel.org
+Subject: [PATCH v2] t0200: replace 'test -d' with 'test_path_is_dir' and 'test -f' with 'test_path_is_file'
+Date: Wed, 18 Jun 2025 15:31:10 -0300
+Message-ID: <20250618183754.108821-1-derick.william.moraes@gmail.com>
+X-Mailer: git-send-email 2.50.0.rc0.62.g658f0ae201.dirty
+In-Reply-To: <aD6TJLuuaZmiFUvZ@pks.im>
+References: <aD6TJLuuaZmiFUvZ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Thanks for your feedback Patrick. I'm resending the patch with your
+suggestions.
 
-> In "struct dirent", the presence of the .d_type member should not be
-> assumed and the code should instead use DTYPE() macro, with possibly
-> a fallback check to determine the type of the file.
->
-> Add a rule to catch direct access to the .d_type member and use
-> DTYPE() macro instead, except in the emulation code paths that work
-> on platforms that do have the member.  This is probably not sufficient
-> to notice the lack of necessary fallback code.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+'test_path_is_file' and 'test_path_is_dir' are modern debbuging-friendly
+path checking methods in Git's development that output useful messages
+when the test fails, unlike 'test -f' and 'test -d' that don't provide 
+feedback.
 
-This change looks good to me. Atleast it will catch code that fails to
-build on niche platforms, even if it cannot validate existing backup
-code.
+Replace 'test -d' and 'test -f' methods with 'test_path_is_dir' and
+'test_path_is_file'.
 
-Reviewed-by: Collin Funk <collin.funk1@gmail.com>
+Signed-off-by: Derick W. de M. Frias <derick.william.moraes@gmail.com>
+---
+ t/t0200-gettext-basic.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Your fix for the 'git diff --no-index' looks correct [1]. I'll build libcurl
-on an AIX machine I have access to in order to test (not an
-administrator on it).
+diff --git a/t/t0200-gettext-basic.sh b/t/t0200-gettext-basic.sh
+index 8853d8afb9..89d0899a5b 100755
+--- a/t/t0200-gettext-basic.sh
++++ b/t/t0200-gettext-basic.sh
+@@ -31,12 +31,12 @@ test_expect_success 'xgettext sanity: Comment extraction with --add-comments sto
+ '
+ 
+ test_expect_success GETTEXT 'sanity: $TEXTDOMAINDIR exists without NO_GETTEXT=YesPlease' '
+-    test -d "$TEXTDOMAINDIR" &&
++    test_path_is_dir "$TEXTDOMAINDIR" &&
+     test "$TEXTDOMAINDIR" = "$GIT_TEXTDOMAINDIR"
+ '
+ 
+ test_expect_success GETTEXT 'sanity: Icelandic locale was compiled' '
+-    test -f "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
++    test_path_is_file "$TEXTDOMAINDIR/is/LC_MESSAGES/git.mo"
+ '
+ 
+ # TODO: When we have more locales, generalize this to test them
+-- 
+2.50.0.rc0.62.g658f0ae201.dirty
 
-Collin
-
-[1] https://lore.kernel.org/git/xmqqwm98ewsd.fsf@gitster.g/T/#m4fc1f0ddf1730ffb025e37d523035bd9f6cddfae
