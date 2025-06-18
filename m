@@ -1,109 +1,134 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A204A21
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 01:30:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926071A2396
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 02:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750210232; cv=none; b=UcLp8RMW6Ll5Rrh+bcc+FQFQcIwkRMb8YpNx/ClkeUKkBWmL2dVdoXtTGvluFyjWVssMF39B7YRZc2DVs1AyMKSIw3+IHocMQ8imolAJh/m0+nqiiQhGmnsVR4z7s8tcUjDjVaO0I/yEEcNWypoGuv7jDLwrw7UR6+HrJe5TqSE=
+	t=1750214712; cv=none; b=sGKWzL4kEBF78Z7/UdhuyjiUYRZXk5YmiQcCjE7NLKqyYAsyggRo3f1BVdrlJjWwdJtn0uPpgVZMObbHp8xh/UO5CDFW/+fJLNKk+V8lQrJZowIj++faBGeQ48IHkN+P/53jHvMgDE3xm83N5vAT1reHiFwxMAQ/3wnrifhIVDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750210232; c=relaxed/simple;
-	bh=owS6+o48Ecm+ZPTatk4onQBUpUVv0LILWGOmVeEeTSk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Rlefg4zq58Zp8XpvSOO9wmZhK5gBvQ/iKooxmHLE4NdMGpSLOeoqWgGMlN9lOmkESEMDIgbm2ZElijSGqZwQ7dqgMYjJOoe8tJqCslcz5t3oAmYfMpiLqMWH1zoY5KYBbZeGY+wlqReJCpqngDnw+HGkWOFvPSHrFrcqGIL7Y9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qL1Aeind; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DQ7WL79h; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750214712; c=relaxed/simple;
+	bh=4ofQKZkbF+Ip9huSgI3uUhuoX3T8Czukyjl9XyhlnVE=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=i5RNeEzT0Bg4x4EfBJziq2kY7ww2SeliVHnQ0U7RWMpX99lX1G7fl45eevoT73oTsu6bm2k5gJ/pr9Q/YX2B0Z1sS1pcOB/5Mv4WlELAIWRO+Rg7H3FcmIcIB0FSQSR7MnmdttnqIA8sSzB6LQdhgfRCTzwzsaL5UYTjF+3J4+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RP4S9VQw; arc=none smtp.client-ip=209.85.216.66
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qL1Aeind";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DQ7WL79h"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3FC881140155;
-	Tue, 17 Jun 2025 21:30:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 17 Jun 2025 21:30:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750210229; x=1750296629; bh=G/JjoVq8SD
-	Qmc/aIeofMjkAKtKdoYG8E5JC6Hrz1y4o=; b=qL1AeindZGiQkQDdoqmv0IDGpH
-	L+LzKPG3TQgklEm6eHWAz34cbiXYVLpvzVfT6s9Cxp6b9EoGdENufUTC++b8DKsw
-	jUDhIecIIO7B+WfStKn2gXyVwIN0EJNQamnoAR4pxRpAkqaEnfw2UjJFpl3yCoZm
-	zG+H6VKn7Jpv39ehLK8EHcounmnN07yqHNbDFTA51d0ZqeVhwgKhXIBmvUG6FRe6
-	xlXES65gg2GH6XDcNEcthJA4P9eV9d10XoUtlgFgRJepXhsYxsoknQPf8Ff4gBz+
-	aFDN1U7Xwy3SO0J8nktJaR3HBMr8tL7grUfj9OQsk7cOqwGUehZwoIvfnMVA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750210229; x=1750296629; bh=G/JjoVq8SDQmc/aIeofMjkAKtKdoYG8E5JC
-	6Hrz1y4o=; b=DQ7WL79h5dLxTLURzWDpSQJqx81zwqj4AmBhlcTTszd+vG+cwIx
-	LZoxrSejDo/VfRyTDLQfQOLGS9i+ZEGy33lkIDmpnxjVHLo/M5tbFUPZyOIS6il/
-	gd+jrBIMAAxVOu1TbVUopmLkm3Wb11prG6oFPqWV5ZGfxmAWEpdn2JdBcQCKDRl4
-	z1WjYWIox5cWMiEVEqP972Gfhonkyv2H5d+e9UUCymDQeD/an90jcZOydh43FWux
-	b+KvD2o+LG++ncRp9+T3+nCRmXwRvS1re8Ltzu9z1iy1tqC5ZKcDtqg/syJX1EhV
-	o3/DtqtQYKuAkvtQU20UMZj60KEf+FA07KA==
-X-ME-Sender: <xms:tBZSaJQ8rBfWJkK26EPbvLh0krB-K7yKC0Z2kPpL7_VEKysYFyQw4g>
-    <xme:tBZSaCzfKEtjMVWh7vi2hadxw8fQtxUmR3LfGpXvK-6mFB1FXseH9ExqKySmzhbzE
-    6MI6HEQBffJPxNzSw>
-X-ME-Received: <xmr:tBZSaO3l2JRiHJxl2IODZkS9eLr0srY-raWj2s6DHk_ROvQVvFJcrKtD9gGGNkfjGM6MdEWMMWy7nJO9TFwvoWElmnOiHuJgR3o8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
-    rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrtghosgdrvgdrkh
-    gvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopeihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphht
-    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:tBZSaBBATAAxuG7h6AjvNYc776oCj1uYrIfpWkVDXL2IPJuuU_qK_Q>
-    <xmx:tBZSaChrCc26jvqKSfppM0_FvOeHvPuZfOZqiUdPvJGHtnou8oruuw>
-    <xmx:tBZSaFosD72CaR5T6CPHmzV5gSXqNzEGLSlRvECcSt3jva_SFqfCag>
-    <xmx:tBZSaNhP5II4jbmPnIEYlTwXFf8ZlsHZNp-5TTY986eP7rnNOr9ZIA>
-    <xmx:tRZSaNGaAZPArrJ4_6iMCSL6kV-g5NgzS-pIAfFSFh1TMxVkdcwNUNJ0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Jun 2025 21:30:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>,  Lidong
- Yan <yldhome2d2@gmail.com>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 1/6] remote: fix tear down of struct branch and
- struct remote
-In-Reply-To: <d72fb411-2e05-441e-aee4-d8a26d652fea@intel.com> (Jacob Keller's
-	message of "Tue, 17 Jun 2025 16:25:16 -0700")
-References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
-	<20250617-jk-submodule-helper-use-url-v2-1-04cbb003177d@gmail.com>
-	<xmqqcyb2uhth.fsf@gitster.g>
-	<d72fb411-2e05-441e-aee4-d8a26d652fea@intel.com>
-Date: Tue, 17 Jun 2025 18:30:27 -0700
-Message-ID: <xmqqldppu98s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RP4S9VQw"
+Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-313a001d781so5696831a91.3
+        for <git@vger.kernel.org>; Tue, 17 Jun 2025 19:45:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750214710; x=1750819510; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=baoCv0fXJmcT88YdwhraAPKLE13aMOI5PffAXHnFFyU=;
+        b=RP4S9VQweftMB414oyHAN1hjpu4r5SNzuisSKZwtarUBA2Ynvz2ryRiEaRAFMK5aJC
+         IWutrG8sEIvXpfemECTVzfpLj8L+YJTImXEvXxyLR7wL2LlyR92J75SdrILAWExtikAn
+         EgVfd6b/63MVvAtSsKbx6jD0DRpwETTGPUhJD03quvGrGfWWvCThngAKGf1v0rEaWbnq
+         dD8HbarHzQ2XBjGuNyplcrS6nmPgY9VjUA9vzE550QvMd6HvQqKoqNlGhfiDsNj5aj+m
+         a9VLfnA693lw2tsTv9JoAFI8EUS6rmhARigCU7LWQ0SGWHJwQQiMJspvEwBladIZEH0G
+         PlpA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750214710; x=1750819510;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=baoCv0fXJmcT88YdwhraAPKLE13aMOI5PffAXHnFFyU=;
+        b=Yn41ByMoeYPhqMvE7Ai7Rf6LDs3BTv836+r3abcfx86kTyB9n119nWv+RSiddmCAon
+         30KzxqOWyUoSErpsav4WSAsEkG1u1zCBWkzperW40SSuY6fAwGPWLq8ouMycMOFs2ial
+         Jr1h6dT62SPUdMyLD+SDHYJmm1KXZuUWkMcSGXHIXSFBcim42n1FKD0LeCoZKN1V2zwA
+         Ai0tpWqCW2FVhHdVBRp71tzZ1sCZe6J5jb5zUTixrryIXZcaK1j/nNTn6AW4EGr7N7bW
+         DFYl93GnM/V7vk2y9su1a9QCwn5F38nEhog4NpinYz28UnWXac9FzfIiUwVYCp3eH4Qw
+         u2Cg==
+X-Forwarded-Encrypted: i=1; AJvYcCWJ43afJaTjKPCxKpMzrse6nmVyJqKvDxROj+z30rD+jl6N5PLOlYyITrO5LZrNmU9UwXw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxCLywU7bhnf12kz44ht960c6rzNQk3JyWO9875MDR/GQN/D2L1
+	cv8xZ7HShFOJKBl02aNbAW1guihggOASYx7yWLvPTmWiIV+Tjwj2vQRwRpzeaPKZ0AYjeQ==
+X-Gm-Gg: ASbGncseF14G/UMnIhhz8lU35SUzXFqdiRrag1WFZHTl4b3QKC6HiPrW2CYE8YRlQSm
+	bO5B95HXMAnmqcAuWjez0YYCEETbORvZ+cVq8R1A44qDOAHk4jw46Oy7vHkKch4wfozliFtlGB6
+	qS7apy7bJlrmtgBHA2YvtT5/V7xvnbiVSCrWLItGTJ4ZoD5IDSyWMFHmyCx32N+U7CO8dmnWMkY
+	3PIah/6zRwfb2vjrUqWv07DNKm6xhgGJs3tQ7vplTgxhboXndLqH5Nv4RGXbEYBx533XNPbzf2c
+	cR+8ohspM/vwKiEui4eL9EFGyrkk5JoTCMiJ3G7mEAhUo92f3URgsKoiYUxyUWO7x0bMf2+CS39
+	dKNM14DO5XcDiXUGlPZjHm15tLt3IOV0WN/D7qNk1Yxx7szsB1ErWo/EaTnnD8Wc4LJI4wZ2OmV
+	g=
+X-Google-Smtp-Source: AGHT+IEe7flcP87EjuT9o7p4IbYhoyWBK7+ljF+znKTPfamrvhnSIM7CNf6dH2LcOm+hRFNPSZliwA==
+X-Received: by 2002:a17:90b:3a4b:b0:313:5d2f:54f8 with SMTP id 98e67ed59e1d1-313f1e22fc8mr27151239a91.33.1750214709616;
+        Tue, 17 Jun 2025 19:45:09 -0700 (PDT)
+Received: from smtpclient.apple (n058152022104.netvigator.com. [58.152.22.104])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365deb4f85sm88649435ad.183.2025.06.17.19.45.07
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 17 Jun 2025 19:45:09 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v2 1/6] remote: fix tear down of struct branch and struct
+ remote
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <d72fb411-2e05-441e-aee4-d8a26d652fea@intel.com>
+Date: Wed, 18 Jun 2025 10:44:51 +0800
+Cc: Junio C Hamano <gitster@pobox.com>,
+ git@vger.kernel.org,
+ Jacob Keller <jacob.keller@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <16C5347A-3EB4-4629-9C7A-575F60B86CA3@gmail.com>
+References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
+ <20250617-jk-submodule-helper-use-url-v2-1-04cbb003177d@gmail.com>
+ <xmqqcyb2uhth.fsf@gitster.g> <d72fb411-2e05-441e-aee4-d8a26d652fea@intel.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
-
+Jacob Keller <jacob.e.keller@intel.com> writes=EF=BC=9A
+>=20
 > We initialize branch->merge with set_merge() which is called by
-> branch_get() and which is the only way for callers external to remote.c
+> branch_get() and which is the only way for callers external to =
+remote.c
 > of getting a branch structure.
->
-> The issue is that merge_nr can be non-zero because if no caller has done
+>=20
+> The issue is that merge_nr can be non-zero because if no caller has =
+done
 > a branch_get() on the given branch, we still have merge_nr is non-zero
-> and merge is NULL.
+> and merge is NULL. I suspect you're right that merge_name will never =
+be
+> NULL while merge_nr is non-zero.
 
-Meaning merge_nr and merge are both uninitialized and unlikely to be
-0 and NULL?  What values do they have, and if they are left
-uninitialized, shouldn't we be initializing them to predictable
-values?
+Maybe we can initialize each branch->merge in read_config(). Then =
+branch->merge
+will always as large as branch->merge_nr. Do you think this would be a =
+good idea?
+
+---
+diff --git a/remote.c b/remote.c
+index 4099183cac..835939c59e 100644
+--- a/remote.c
++++ b/remote.c
+@@ -596,6 +596,8 @@ static void alias_all_urls(struct remote_state =
+*remote_state)
+=20
+ static void read_config(struct repository *repo, int early)
+ {
++       struct hashmap_iter iter;
++       struct branch *b;
+        int flag;
+=20
+        if (repo->remote_state->initialized)
+@@ -614,6 +616,9 @@ static void read_config(struct repository *repo, int =
+early)
+        }
+        repo_config(repo, handle_config, repo->remote_state);
+        alias_all_urls(repo->remote_state);
++       hashmap_for_each_entry(&repo->remote_state->branches_hash, =
+&item, b, ent) {
++               set_merge(repo->remote_state, b);
++       }
+ }
+=20
+ #ifndef WITH_BREAKING_CHANGES
+---
+
