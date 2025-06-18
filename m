@@ -1,84 +1,86 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FF23085A0
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:07:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D863F2F3C33
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:20:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750270044; cv=none; b=AK1WbsPsbEUnO6WaDkbodgI7qqtSSLQ0kOgo5jxlU9GrCylBXMj/bUV8XgTectdqaYJjog+JjoGxiasWDc7LJwrxSO5wmD9hJd8RPy09vlcTiY2++5/n5tAH5C8Km3qSZSsbXJeTK3CKtGU1ug9vLwtdkroRhfoViiVlTDx6Hvo=
+	t=1750270855; cv=none; b=seImMaMCIE4QI5TxFGzyv8BQM8sIQmpeagDqe5z+BmEjGisPAyLl2lC8/v5pUTyCMoO86zs4fvD5M3AnuOhzKmJP8RN6T+7YW6eTstkTH2eh3cD4VAis+Mb+Fj2KUxXkRi5bZFk+WuI0aMSg4sqTIbTXG7274jjL9l4ZNXdM250=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750270044; c=relaxed/simple;
-	bh=s3CoS2LqmfpYSZilJmal7LWIEWQSj+0snIE9weeE97Q=;
+	s=arc-20240116; t=1750270855; c=relaxed/simple;
+	bh=+HbJCIJIucdqk5mmu0Os3Is5aXxLQUBDi7UfF2Hgh7I=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PW8PdMxt3PAmyVeZCU1crhqtFtFJX7Ov2bqUGrEuT36SP+bOvukSVtj/8osTwxNGjH0BFF6eCCiM159RxUv6M1ulSG4xUHEyXG3Psj/TwSLg6ikYWp+zU8SGhrVEQHZR/PXPlR4y1mW2fG8hjdf4phbR9Xzlx0HtMmbrObw7kjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZAm9l8XF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ehVF1Wre; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=Nz+rEmV2m1cuKWmJKnVjI+UO1FYtVmxNEN0M/5wW6M6WJYAJO0GFDEbA9WmQqUBsb+U+nifHIvpy1eLT9MnfCvFYY3CRVTeSrWKX3X2ztascBQF/c16RY522YOfhQzkMquRF1LEC6uRulpnLQiWCUsYDr5VW+wXijf7F8b2GJX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dx+cthLk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E75CXmWS; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZAm9l8XF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ehVF1Wre"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 008A711401FA;
-	Wed, 18 Jun 2025 14:07:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 18 Jun 2025 14:07:22 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dx+cthLk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E75CXmWS"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id DB1B2138044C;
+	Wed, 18 Jun 2025 14:20:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 18 Jun 2025 14:20:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750270041; x=1750356441; bh=7pNS2QaiRz
-	pRGO4Wy4wpax3TU8XbNgyiYNC1CbmdmHo=; b=ZAm9l8XF4i+Cg+VUncLU+ReTjb
-	9CffHEHusfivxI2A1cGyj7ctbsO62db1Cssec1BGLvKjUkokaVsoIa8tvzEr9Ru3
-	xdn6N5rZsuIi+TPcv4q+3PaWp7dZmilJkArzlfpKIMMXC8D1snF3TZblfCAnW6Dq
-	wkdsVzC0A5hiw1uunPTMkwGde390Tt+LEBE77FJ22vFSOQiKECRfVq+dAyoDYv6Q
-	v6Yzr0kYHNIJrYDh+5mbmdMY+WcNaEgZH84XOiS0tsH517DhSGlNGkQjxApsPr0T
-	TJYj6gX8vJdAd1DfWr0Y+/lY5kqnV8H25qkjedAE7EddwR0G+fjYKIJ+rmFw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750270851;
+	 x=1750357251; bh=oOG+LC+S4AWSZJLew0jhkv4ggTRgkxJiMUasHz68sPk=; b=
+	dx+cthLk4DU8aE8aY7IyBTOO5Xzxm207/JzehHm6Xu0W1LlI3NyUDfhShbkia570
+	ThEM7hghGhdKRr0L+u6eQcNlfjvT5fkcYdf+aJTmRbBjEPxmAd2AlorIk0UtiLFx
+	vyJWCOCV9EEWn8J/wU75whXhzot5AuI/P70Lsn8oHBVUDWBS52mHequQpbSdTQk/
+	eNbm40JVQKq9+p4B3PHwZUZ8CFZnVv2tWbQz6n1QH183ilUv+z9feFD2VAf46NaK
+	HiXFl4uDwFoSFf2zLZUk/0vNhedJUYdDen/8fd3lKXrDofO+uBKgsKmnxqBM/sZI
+	tH+6SRKoaYJHWsitOFyEfw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750270041; x=1750356441; bh=7pNS2QaiRzpRGO4Wy4wpax3TU8XbNgyiYNC
-	1CbmdmHo=; b=ehVF1WreVSTQDyq5agTyGf5VWhY3CpghD488mNkXt6bcPV2Bgc4
-	60DjbJCxOvAUcegLqLs6AL+PfG8shJB+70oD74sFp3n03P3KICCdfTzBv9MyPqj2
-	kerOtssqLuu4I0EUPTIYqzM2bcHfXV69KdpJMOcYd/fbWUt8xf+3LJ9VYgbiHdw4
-	PbpQ+aLaDQqZdTVzrMSsATp3su7cQmWW/kggyGpEvanShtXVpYenX6x55H15dys7
-	4sQql55Bm6GIdWumdey6Kpffplfvvk+kDl66pDMCTueHZ8UX0WmwhblQp3vTadTg
-	vPP15KEbuY0COs5I6/WSvqyr+A2P8OvK/qQ==
-X-ME-Sender: <xms:WQBTaIbPWztcC7RDChuFodfBAiRJ_xC6NaDTaoAg3eiSTJS74g-qAg>
-    <xme:WQBTaDbcB466w6QwoFNNiOWFg4oOzzDykn22jXw6uv2X-D4B7EQm66awhB1GIPlq_
-    UUbolaWFG5rdUwHjw>
-X-ME-Received: <xmr:WQBTaC-fWVZOyY9R056Tif3c2yVwstA9hBn6iKWQBro8w5gpZJ5iJHxx-dqNYjgi6AKJRmLPhePSOA1j_9fN4p21IspMoqXZ7y4i>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeffeduucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750270851; x=
+	1750357251; bh=oOG+LC+S4AWSZJLew0jhkv4ggTRgkxJiMUasHz68sPk=; b=E
+	75CXmWSU5Hgk6GDla6/4EvbRjGBUpQOlf1MUKp1dlLTNS0/immF0XQkCuYDc6dT6
+	dND1S7ZKNEThIad90EzsT2QJxtA/ZZlbMWO3EFuvQ/ThWe1MsBZ/ak0NYt2MbhHD
+	0uxziYp8snYJVc2UkKjZxdg1/OtIkMTBZ7fHNjU5LvWpg4QMBG/Q4K1aaw8n7sxl
+	K+Ehr2Qgg2NBsVPmKMSdRA2itDZ+CIUzfu/WSvil+pc0eZaGS2s3gkVlBH+wJIyu
+	ceE7TMmBMHxiAgFRepULw8KnYSDscqSGLX9CyBGFzATlDTNhv3AllWlAl/RoGbff
+	hP3EucMmA86+T9uqTCAwQ==
+X-ME-Sender: <xms:gwNTaHDp_z9ZGBVKY1L_wWV90WOcK_ss2gGUusjtsFlUs1ydzSTg5g>
+    <xme:gwNTaNgg58ZLgtGe9gxEfronfT4gmJV2VuCE-Xe6Q1fBg-2bxD4m2u_rXa67U4nFc
+    edc8H4sJWdoFSm7_w>
+X-ME-Received: <xmr:gwNTaClka-Zpk25wkFm-kWQy6bxfuCtKaHhzMp1vrRThzQuwycMSo3SQH-ntwsMLoaB6jBLhyuq3rrGQfl6bxNKRwJHYwDc1Z1fV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeffeegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
     rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
-    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertden
-    ucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogi
-    drtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeej
-    leeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrg
-    hmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghp
-    thhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepjhgrtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:WQBTaCptZA8IcNegyrMugGo2PLK_F79or-AqjteIqVBxr_4J_NEWlQ>
-    <xmx:WQBTaDr70RL9806SS4IMzJ6elIFyjhCoPGwcJKZxxGUkI6pmeO67sw>
-    <xmx:WQBTaASwfBGDTK1nq2b38tIIU44a1glT7YwMvaIqRsIDkk6Fc7N9SA>
-    <xmx:WQBTaDobiKYzlHmLoxb2SPrcmSvR_pIAm5fd3GZE837KJkXp5WXkAw>
-    <xmx:WQBTaK0wM6m8_TFMwNu2_X0UeKiRixYGDyH_Igl1t3KXcijKb4srPfS8>
+    htshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreej
+    necuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsoh
+    igrdgtohhmqeenucggtffrrghtthgvrhhnpeehgfetvdejueetvdettefhhefhiefhhfdv
+    tefgtedtgfdvjeeltdffjeegkedvveenucffohhmrghinhepughifhhfqdhnohdqihhnug
+    gvgidrtgifnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjh
+    grtghosgdrkhgvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gwNTaJznZcD3xYU0E_30b_7oL1Y8LhN42a2WFfEfe27p8-cVSFtUvw>
+    <xmx:gwNTaMSJjYEid8GcbrUfwKZu1_Z2JS0t9bVn50eJr3Q9xGpvysfEBA>
+    <xmx:gwNTaMZcoMzRZ9Nboke2fwvAsCbdgtdG2Y4uA7egJSXwS7qIqrxEaQ>
+    <xmx:gwNTaNT1xuBJE0qofuhxXRr79AjqX-ElOHThU6n9kCEou7iWBpu7sw>
+    <xmx:gwNTaCcyFcKCDd_hc_87Y2xGCAU5ZqZiMRJTD4qn23buAoAqiCA_kPtf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Jun 2025 14:07:21 -0400 (EDT)
+ 18 Jun 2025 14:20:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-    Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH] cocci: do not directly access the .d_type member in struct
- dirent
-In-Reply-To: <xmqqbjqlexzd.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	18 Jun 2025 10:55:02 -0700")
-References: <xmqqbjqlexzd.fsf@gitster.g>
-Date: Wed, 18 Jun 2025 11:07:20 -0700
-Message-ID: <xmqq4iwcgbzb.fsf@gitster.g>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: git@vger.kernel.org,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH] portability: allow building in systems without d_type
+In-Reply-To: <20250618062331.78059-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 17 Jun 2025 23:23:31 -0700")
+References: <20250618062331.78059-1-carenas@gmail.com>
+Date: Wed, 18 Jun 2025 11:20:50 -0700
+Message-ID: <xmqqwm98ewsd.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,37 +88,70 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-In "struct dirent", the presence of the .d_type member should not be
-assumed and the code should instead use DTYPE() macro, with possibly
-a fallback check to determine the type of the file.
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-Add a rule to catch direct access to the .d_type member and use
-DTYPE() macro instead, except in the emulation code paths that work
-on platforms that do have the member.  This is probably not sufficient
-to notice the lack of necessary fallback code.
+> Since 09fb155f11 (diff --no-index: support limiting by pathspec,
+> 2025-05-21) will fail to build in platforms that don't have a
+> d_type member on their struct dirent (ex: AIX, NonStop).
+>
+> Use the DTYPE() macro instead of a nake reference to d_type.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- contrib/coccinelle/dtype.cocci | 8 ++++++++
- 1 file changed, 8 insertions(+)
- create mode 100644 contrib/coccinelle/dtype.cocci
+This may allow you to compile and build, but does the resulting
+binary do what you want it to?
 
-diff --git a/contrib/coccinelle/dtype.cocci b/contrib/coccinelle/dtype.cocci
-new file mode 100644
-index 0000000000..8fe66fce95
---- /dev/null
-+++ b/contrib/coccinelle/dtype.cocci
-@@ -0,0 +1,8 @@
-+@@
-+identifier f != { finddata2dirent, precompose_utf8_readdir };
-+struct dirent *E;
-+@@
-+  f(...) {<...
-+- E->d_type
-++ DTYPE(E)
-+  ...>}
--- 
-2.50.0-228-g6e205fdad9
+>  			if (!match_leading_pathspec(NULL, pathspec,
+>  						    match.buf, match.len,
+> -						    0, NULL, e->d_type == DT_DIR ? 1 : 0))
+> +						    0, NULL, DTYPE(e) == DT_DIR ? 1 : 0))
 
+On a platform without d_type member, DTYPE() macro gives DT_UNKNOWN
+that is not DT_DIR, so essentially you are always passing 0 even
+when you are looking at a directory (in which case you must pass 1)
+to match_leading_pathspec().
+
+So I somehow doubt this is a correct fix.
+
+I do not know if get_dtype() helper function is easily applicable to
+this codepath, so I wrote this in a longhand...
+
+
+ diff-no-index.c | 18 +++++++++++++++++-
+ 1 file changed, 17 insertions(+), 1 deletion(-)
+
+diff --git c/diff-no-index.c w/diff-no-index.c
+index 7c95222ba6..677df91fc5 100644
+--- c/diff-no-index.c
++++ w/diff-no-index.c
+@@ -41,12 +41,28 @@ static int read_directory_contents(const char *path, struct string_list *list,
+ 
+ 	while ((e = readdir_skip_dot_and_dotdot(dir))) {
+ 		if (pathspec) {
++			int is_dir = 0;
++
+ 			strbuf_setlen(&match, len);
+ 			strbuf_addstr(&match, e->d_name);
++			if (dtype != DT_UNKNOWN) {
++				is_dir = dtype == DT_DIR;
++			} else {
++				struct stat st;
++				struct strbuf pathbuf = STRBUF_INIT;
++				strbuf_addstr(&pathbuf, path);
++				strbuf_complete(&pathbuf, '/');
++				strbuf_addstr(&pathbuf, e->d_name);
++				if (!lstat(&st, pathbuf.buf))
++					is_dir = S_ISDIR(st.st_mode);
++				else
++					; /* punt */
++				strbuf_release(&pathbuf);
++			}
+ 
+ 			if (!match_leading_pathspec(NULL, pathspec,
+ 						    match.buf, match.len,
+-						    0, NULL, DTYPE(e) == DT_DIR ? 1 : 0))
++						    0, NULL, is_dir))
+ 				continue;
+ 		}
+ 
