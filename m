@@ -1,652 +1,228 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C75CF510
-	for <git@vger.kernel.org>; Wed, 18 Jun 2025 15:18:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750259927; cv=none; b=Q9T0BytQIf7eTrChvWPFI8DVi7+p51MQIQ7GtqLWBVWcUJRrNIvYiqM7o3cD7zeshDgJhfPna/pTp/IoTKgTgMJ2vPJkOZim1OkjCK3DZit3DEIbReokKtjit2wc11C92B8FgpgKGyAY1kWZFItdDaPf0rwkj9GGxkSpYeE9ZE8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750259927; c=relaxed/simple;
-	bh=T/NjvvAJiRQNGUyJMvbVps6xEG4fxax5Qk5MNnk8OhY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rwDRrFTIo0f4MIhf6oYCfSO0bYOWIt5JwzZhVgrp9+mlKhVyJus9JZS2Cl2O6boFi6DgrD9tPiTvMSC3nGWiWtZ4MLhGDjJKxsLCBxGuY8EkcVQA8lFdysokjsYR3flZ/9xlE1boMOmsbCvJB1hwJbDeliSrX9nCUgPOU0MpJo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MtLvMxbO; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885002F49F2
+	for <git@vger.kernel.org>; Wed, 18 Jun 2025 17:41:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.9
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750268521; cv=fail; b=CdMwzdr8KDg+GriPhwVZYAaUI9+ydfWBL/fK4xc2BUaEfSX5suQ16frf+6yriZaL+DvUeUz7iydLiFiGP8kGuODxM3URVn4tlr4THPLxZHKc6JxBgtSmkGcc9ey5TaAkf1iczZzDsnVRmaeUAwe8rsj12V4IdIFrCDrzgR5H1qM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750268521; c=relaxed/simple;
+	bh=RIioLJSI97c7PpVGdj4zhyVYADhZ5rPrcBYYJKUi/sA=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=qMI9msum2nh2TswqqAWMgkwLkbKKGttJcB6goMXw30ZSKJP1/7VMrSJsnAAl/7ZSnZwQo5K4flEYE/j0A6fQEComyJVt1mKxuL5W5mb50+rJmNEJqvDYmUVVxnz/cGwU1swrHzPLWiOeDhpIwM6tA33uSbd+4+ABZxZUPx19lUw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ifFv6wLC; arc=fail smtp.client-ip=192.198.163.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MtLvMxbO"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-451d6ade159so60123155e9.1
-        for <git@vger.kernel.org>; Wed, 18 Jun 2025 08:18:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750259921; x=1750864721; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SGCExhOPcMwPDuE6c/zvU/SiYNTpt5rxQ0pHGoE/XLc=;
-        b=MtLvMxbOC023c4P+6bP1WocOZr7zIPHGqIIU/3rubagbFm8GFO8Q+zwXrnk240i8N0
-         vPXm5D5wNlCWzAJeBt/c0DpIpa+Auw6po7otsG2q4MRF7njOBjYr1RGCMVJZRNN3XeSo
-         DzULOQvJA6pkf000JYNSZRPzRC1AxrJzj2a5x/37Qth+hdp4G6bzyPDzPLITWEMqpMjo
-         hblB5BQ1xd//9lWbS3e8m6k/l1mzevTAq2/FC0nVlXBmIxb17UCnpZ5/UP0OYPUe8cV9
-         T3NGiPNUzyMlhId5Sn/ZwWHqnWURj/Nl2ONoi+eG4gPsE6QBg3qjGiHgFaIFgxMmo3rG
-         pzjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750259921; x=1750864721;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SGCExhOPcMwPDuE6c/zvU/SiYNTpt5rxQ0pHGoE/XLc=;
-        b=Oq5mrNnQsgmIYq6/7+Qja0MfXhKjv086MEI5ZxmzOOCJEpHgSATSGKvzadxSFoKTzG
-         FNS884lMpjmNT3zUhJarsrGU+xzxKGQ4BJBW1ntGQt7YXYJ0hNlVi3CUYiQ6tvG/avR5
-         mMA1S1Ejt4/u4Vn/KflLCh7pJNyrhjY7AKU2Q/1X2LOJ95Ih564HzafNofbAILh0OePD
-         O3x3SqN4Ss4IBycg0RPq4kRZaigQiEZxaXjRtOFzesQaDi2JQz8VFZqknM+sdX3xmgVV
-         aXYannCtHhZhdvLPcRlkV4rnDWnpz1SmuYBkW0Db/RoKtZp0nzqv0N1eSnJb+KYUmigp
-         qN9Q==
-X-Gm-Message-State: AOJu0YwiN2NldpYtVoZRpV7fSJbIs4iRHgri0dKENATaHGPqvBXRx+mQ
-	NVzhtKU/vvm+rAPq8uPwZMpKfFJunrbG0+H2slcXS5LTL6UPSfm+eSD88BWcSg==
-X-Gm-Gg: ASbGncuFONRH4PqacIo5597v6nyNy6OJfnx21ddo3AtLJeZ/UQj5QuuALem8+BwDu8X
-	uHtXrkoU70bvXAxXcUHsloNib7Rpoz02JhaphmDUhGMPFMgYvP7hQJxqXVXSoVErwRnsIjljmC3
-	qWg5/K3cJl4GidZAO2cLzj1RFAeUXhwjmD2MW9xtVzqW2rCwdQLZq83PeUw++Q9M2BPMxk5+n2N
-	5B71uq4yKjqpVrfLZwOCfrkNdFro+8JACct20ioyPGbO2TZ7Su/YVAQ+8kGOAQlmPw5J3S+rhKR
-	80XvVSnkLwsuY1zevybIuikTvPYqc3baNyDazUiY27Q6qSBmmjrtzzzq0PfhkYEyFLxmtXhiko3
-	hfpKqBrLGqd9lCOdlAJUlzqQuZ8oQzGdihBC23yGqXapGi7M4WnQ5p7k=
-X-Google-Smtp-Source: AGHT+IHJiRy7QKrAwPbs2RGN91bIKFx0AXhXhf0pwlph+hZkIs6jp6+8ZTCHCslBZ8QcYKU9RSk7fw==
-X-Received: by 2002:a05:600c:1c0b:b0:453:1058:f8aa with SMTP id 5b1f17b1804b1-453418d1130mr174178485e9.15.1750259920783;
-        Wed, 18 Jun 2025 08:18:40 -0700 (PDT)
-Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4535e983b59sm483075e9.15.2025.06.18.08.18.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jun 2025 08:18:39 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	"brian m . carlson" <sandals@crustytoothpaste.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v3] fast-(import|export): improve on commit signature output format
-Date: Wed, 18 Jun 2025 17:18:21 +0200
-Message-ID: <20250618151821.528627-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.50.0.2.g875523421d
-In-Reply-To: <20250526103314.1542316-1-christian.couder@gmail.com>
-References: <20250526103314.1542316-1-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ifFv6wLC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750268519; x=1781804519;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=RIioLJSI97c7PpVGdj4zhyVYADhZ5rPrcBYYJKUi/sA=;
+  b=ifFv6wLCQnYNQYkMJjRCA0Xwxmm+JdOaJQOMnRccCZ8rB387+daAbsk4
+   gYeQYpej637fS5sg80hLmUNlLpBcdhNTfAjD1OxwfztWV7E2Bsq3Xzkk0
+   f8RxB4M/sEs6q9OA8kIc2FopxV/jFxNV+WwBCeMqV7tWqwj1AW3BvxoPT
+   YxbUIDurNdTstxh/EI/ysp2KSWG6QBVil06KKJYE5TuB2IShaA97YyoQ2
+   UDHALOd38fLLIkNtcGbuU52Gy+f2xxjk9/iKV9Bn3B7ERRRqAhel1lxsr
+   OGBEiJqfJwkxRiaFTGtolvcPJ3Ck3r4R63uYVV2OdHW3V9cOepUFf10eK
+   g==;
+X-CSE-ConnectionGUID: bG9F1mk1TS+JkhRu1pptog==
+X-CSE-MsgGUID: MJ/6TRQiSf6BbKgD+MVtGA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11468"; a="63180881"
+X-IronPort-AV: E=Sophos;i="6.16,246,1744095600"; 
+   d="scan'208";a="63180881"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 10:41:58 -0700
+X-CSE-ConnectionGUID: WdrYRsf1Rsua7FT0G2W5zw==
+X-CSE-MsgGUID: k1cEwWGXROu2J6YZstpPiQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,246,1744095600"; 
+   d="scan'208";a="150048291"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2025 10:41:58 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 18 Jun 2025 10:41:57 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Wed, 18 Jun 2025 10:41:57 -0700
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (40.107.101.72)
+ by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Wed, 18 Jun 2025 10:41:56 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=QoiinuWLaXYZAdcFfzKpZTcqZ1QfOXN8RbqIxq6wFDys8UBuwXnowesskTGCNw819evlV0c22dfYIcjbsHqF7o3w4mgvK48pF5JJOmrHlKlCunP1uZjchS+OeKlQnM8WLZHSYQxlLjBcUu/TKlZBzxgQntCZp2um8Ds0zM5uJ2SYYmHtByAIsfXxJQoZuvobIWOYIasBsSpEPzuXdiTGDuEMwZcJO9fWLbePtDgZpikz1U1BEKAPiSR8v+Qlu1ggyU42U/K7jP1/RN1MNNKYzEOPuFJ6wls1Bjoc7BrC+MLoydH+RGikhcxPZMaREWQcT1dP694jk8bXG0E7cNiXHA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=yOzqeQMs66UZM1bCaoIp6UOco37eVrsKiO3Zwae02BI=;
+ b=x7x/a59OHH1gPPCXF2Myd9wx2DvFu/EBYSzj0LtEvhBLRuvKCG34p8hbhujx+Q41MaVcajkuSTPD7jj/Xnn0ntsIOmG3li6klV0bmEfrf2a5PL8/cxgI5wnG6eUHJsi1xBdJoAyhtlIg46e6iEYOwt6vEbMtmALEAXF2zWMLuOsM6kjl+C0zmQENo8UQoLTLT47afknlnJ+sSaNLBuwwG155D5OdEd45RrPegrkfzgyFaeJ4AMQ2IoqtnWRhMwYTfTXy3nxKKjVGluYydTw/IGDMfQ1TUiwPbgdUu3yLFoI3Q48Gt35fCLanlTYYz8piET4M6uU/yqY3Ss3YyO7gRg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
+ by PH3PPF6D09CA9CB.namprd11.prod.outlook.com (2603:10b6:518:1::d2c) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.27; Wed, 18 Jun
+ 2025 17:41:55 +0000
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8%5]) with mapi id 15.20.8835.027; Wed, 18 Jun 2025
+ 17:41:54 +0000
+Message-ID: <119590ce-c994-4875-addc-6f395990d708@intel.com>
+Date: Wed, 18 Jun 2025 10:41:52 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/6] remote: fix tear down of struct branch and struct
+ remote
+To: Junio C Hamano <gitster@pobox.com>
+CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>, Lidong Yan
+	<yldhome2d2@gmail.com>, Patrick Steinhardt <ps@pks.im>
+References: <20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com>
+ <20250617-jk-submodule-helper-use-url-v2-1-04cbb003177d@gmail.com>
+ <xmqqcyb2uhth.fsf@gitster.g> <d72fb411-2e05-441e-aee4-d8a26d652fea@intel.com>
+ <xmqqldppu98s.fsf@gitster.g> <xmqq1prhguu3.fsf@gitster.g>
+Content-Language: en-US
+From: Jacob Keller <jacob.e.keller@intel.com>
+In-Reply-To: <xmqq1prhguu3.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW4PR03CA0224.namprd03.prod.outlook.com
+ (2603:10b6:303:b9::19) To CO1PR11MB5089.namprd11.prod.outlook.com
+ (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|PH3PPF6D09CA9CB:EE_
+X-MS-Office365-Filtering-Correlation-Id: b01c2edb-a550-4c55-69f8-08ddae8f69ed
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024|7053199007;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?eGRBUmpaYWxWNFo0a2h6OFU2eG8zSzRZekplV2VWcitoa0pWSWFwb3ZNaVgy?=
+ =?utf-8?B?WGJnN2xCbXNWR3BMSTFzZmYwbE01TElDK3FyT0hySmJBVVlEWkw0b012aTVi?=
+ =?utf-8?B?Ym1TaTAzRllNMitUVkZnaUN6SUlQcG15S3c1RFkrbWVmeGhJajYxM0MxMmdt?=
+ =?utf-8?B?TjhSYWxKSkRyV3JNQTZaaGFWV1pUak0xZmRQaTBKdm84QjNnUDJ1cEJsNFB6?=
+ =?utf-8?B?YzNZdEJSQ0g0bnBYU0ZhOUg1OHdOcE5xRTFWMlJabnl2ZFpZRzZTNTZtU2dW?=
+ =?utf-8?B?VjliaXA1eWpaK090dW0wSk1vd044a3JWQkhRcjZnbVhVSWIvTncvTS94ZDdy?=
+ =?utf-8?B?Z3B2endSMXJJNnlSOXhIcklJYng3NklCU1RWbUxtZUEyNGxrM1daNWZrd1pj?=
+ =?utf-8?B?S1o2YjNzTVU5RGNwaHYzeDNjSlllV2NCZWdheFpnczFadXMxYnIxczk1aU9v?=
+ =?utf-8?B?dVMvc0dsYk55d1QxLzNNa1BvM05Odm5TYkFTbHhZRmFOdEJFUVZidmlkVTMv?=
+ =?utf-8?B?dTY4UURUcVhFZ3FQaWgxZ2sybFdkVTJGcDRiR29vWkVHNFNLUkFoSzBMaEFw?=
+ =?utf-8?B?WkVFN1hyZnFLdVNCVUVwdDJPeGgxNlg3cXorZzdaaVJnWVdQU3QxTFc0Z09y?=
+ =?utf-8?B?SDNJUXAwZTVzbGF2dFN1RGpFRmhCeG8vQk9tcUw2L2lhZURFYmpsSVAvQXBt?=
+ =?utf-8?B?bU5yMW1LQTdZN2xOVEJ5Y083TXRkWkZMYTliaFFzY05oZzc5cWVReVA2ZVJQ?=
+ =?utf-8?B?ZmY3NUFidmcrTVZRdHBybm53QjI2MmhYYXdJR0NweHJtclk3TjR0N2U4SEN4?=
+ =?utf-8?B?RHd5S0JWeW95bjBrVmVXcWh2THBIMGJFdzRqcW1jLzNQR1F5cDVqdURZUlpR?=
+ =?utf-8?B?aVpzbEJrVmNRbzB3NXZGR01FTzlqeVdPUm1qTWdTbmNJSUlEM2RyaHJjcGNG?=
+ =?utf-8?B?M3B2Q3hLbWZkeEdyUUpqa0ZDb090anl4ek8xTWI4L3dWdVNMZ1MyaWd0d0NH?=
+ =?utf-8?B?SGV4dlBRem1lcGgwUFJTNHptbWI1bzhxYWlFV2duWXZnWlU2eTFtb09QVndo?=
+ =?utf-8?B?UkREU1JZQnI3V0E1YVhkbHA5Z1R0Z0VuRFFMTFpxM082T2JpcEI1MnlYUGZo?=
+ =?utf-8?B?MnhZRnU3SWZrNmhJZXJ0RUlXTWdDNjlXRGptL3ZKVXRpT1JpY2RheEZ3aElp?=
+ =?utf-8?B?ZFljalhlY25GQWladXlOOWhqaVZMOXY4MDFHcGhEQ0w4cm8zUHgyV2tiUmtm?=
+ =?utf-8?B?c1BDTUtDUmZFZXg2ZGlQUk5PaE0rK3hEd3lBY082Sy9rN0o2cVoxaEhOeWg2?=
+ =?utf-8?B?NUlBdnM0ZFMwalUwNVlOdno4SXZMdlRMd1o3ZVJ4SzV4RmtKdldKTEJERktP?=
+ =?utf-8?B?RUNpQW93bFh3a05OZU9mNjh0cTAvTWNqcHRRU2crZnVEV1hVSzk5ajQ3azhX?=
+ =?utf-8?B?V1NkaCtwWkpJWmVFVkpreE4rSWNkYzdRcjl4ZFI5NytVQnR0TDdPOGtpSEhv?=
+ =?utf-8?B?OWJqK29rSkdpVStmbUk0Zkd6VE9VWWxId0ZBK3pKdmhPbUJkYitYcXJ0Rm4z?=
+ =?utf-8?B?TDVoRG96RU9ySEZ5WSs3T29GaWUyeG96ZjJrbHZjVlRpdWIwQlJBelhMZDFt?=
+ =?utf-8?B?a2dDR3pJTjl5RzIyZ3BKZjRLZXNtVkZJNHRGTVNYTjYxaURsSkdkRjMvUDI2?=
+ =?utf-8?B?YjYwVGd3ZStDWnVKWlFBZnBhUDloVmQ2N3FKUEYzc3J5aGJseE9pcWh5Wnha?=
+ =?utf-8?B?dnpISnZROEtuNFRMY3I1UjBhTE5rTHJ0WTB0RGRIQTJTUkQxM1ZaTHB5WnlQ?=
+ =?utf-8?B?WURYN2hDOGRrRHQ3UnFSYkowQWdjaTExTGUraTNnOGIvajUvYXpqT0VocGpQ?=
+ =?utf-8?B?SzJSM2c0bzVPdmswSmxadXY4MXlKQzVBM1gveS9sT0hoeXc9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Nmd6UlYxNWwzMmdjQ2xMUldnVTlmbmg3djE5WmpZaUo5YUtncThnZ2I2UEd4?=
+ =?utf-8?B?RW55d3IxYlV2aEhmT1VaeVUwSFJST2tuMXo5OUxvMXMyNTJnOG0xekY4Uzhv?=
+ =?utf-8?B?ZG42L2VZaEkwS2tLT2R0NTlVTEJ6bGpEeW1Qa0VhZ3pIejBuYW93QURoU3Zn?=
+ =?utf-8?B?MzlmNUQ3NVZqUURVZmtLRUlFQzZEK1VPQ0I0eDBKeFpmaGdoQmdaMDJNNUNB?=
+ =?utf-8?B?RmNwejdHYjI0eEFSTHBmOTlzdWNmWG9aTGF6TlB0ZDFJSFlCanNhWkw3R09O?=
+ =?utf-8?B?djVNT2ViUnFMT0N1MlMzZmF3Ui8vOWQ3Mk8venFTeW5Fa1ZWRVJCblhEMHh6?=
+ =?utf-8?B?TitqYUpkTG04Ri94amlORnBYV0RDN1NXQ2xZYnhjUjFHWWVqazl0MkpxSlVw?=
+ =?utf-8?B?TlZ4NitVV08yL2JFMjkzNlBOZy9xNEtMWG5EZ2o3b0lDNE4yNW9TV2pQQmw2?=
+ =?utf-8?B?ZUJmTnh4M1RrSVNyRllKVnhEYm9nZ2tMU1k4ZVV6RWhyYWt3dXlRZGpXd0ZH?=
+ =?utf-8?B?Q0FEOEpWT3E5TWxnREhFRHRjK2pqM2tyUWI0Y2YyRHh6bmhlbXpHWjBMUi9I?=
+ =?utf-8?B?MEhGS2RPMWgvNU0wQjNaRTZvWTR6N1NuZ2NncVVaQ29Icys0Zk56TWUyQ1NV?=
+ =?utf-8?B?anh0ZmtrRW5NbzI5S2RGSmh4WmJEQkQyNTFobnJGdjRBeHBKdG40Q29pTWVB?=
+ =?utf-8?B?eTNiTFFRNU9oK3B3ZUJCbFVGSlJoamx0Z3d6NzRtaW0rTGR3S3pRdTZoUUJN?=
+ =?utf-8?B?UXVkT2FWY2lNWVVISWh2U0tnTW52V0VvdXM1cmQ5MjAwV2xpdjdBNEU5Tkh6?=
+ =?utf-8?B?QWZ5V3dZK3N1dlV6RlpmemFTSkFWckpUUUxERWdVWHc5YU5HQTVPSEhYTjFs?=
+ =?utf-8?B?dVkrMnhEOEJFcTg2ZHg3QlJYT2lPalFjOTVLOGxzKzNNdEZRRXlyVnIzZG9G?=
+ =?utf-8?B?R2JoSzRrRWRUL3Nid0VDZDJZa3NqTWsyZzVXSjk1bkVGczh6bTB6SUYyUWFk?=
+ =?utf-8?B?WENWUFlIVzFMakpJUWYycVRrQVZWSTA3MWx6dWZTdlB4bDducHJ2bTczc0tx?=
+ =?utf-8?B?VDAxeXFkM001NWVVWXIvemFoVkZWUWs3K0NSMTU3ZUMwV3NsTDVXYzhRaG1B?=
+ =?utf-8?B?aEZoeVJoT0pWVk1OeHd1QmRLaE5na0pvR2taYVFCNlF1KzlXVVRXYmhZR1Bs?=
+ =?utf-8?B?Ukh4bklWYlJGdExJNThUZ1dTY1hodlZhc091VDNNNUl1alZJSFA4VXJDdlFh?=
+ =?utf-8?B?d3p0cExMcXp5R04wTWhFM3EvSFM1NWsvSmRKOVUwbkNCNFpFZklaZmJrUjg1?=
+ =?utf-8?B?ZG5xRXczWlVCRVMyTkIvQ0tOTUtQUndVK3FOdUFPbVRJK3BNWXR1QWhjUmtv?=
+ =?utf-8?B?M3U5OVRoNUM1VVRVVi9EdFpVVmFPdElLZEVNZmFqZXFkeXJHMkZwRm9ZM3NC?=
+ =?utf-8?B?QmYxN3krSU00WkZxclVVNEljbjcxSUp6Q2ZNMVpjQWdnVXlVMzZqU3JRZlVW?=
+ =?utf-8?B?Uzdybkk4L3J3YzZGZEhYOVN0d2kvbkQ3TW9MeEZkc1JDUzd0eDVaTnYrWjBB?=
+ =?utf-8?B?RTd1bTFhZ2tnMFBzL29NY3haSGJWSXFPUHpPcDFUK2l3MDRjdEhscm9WVU5u?=
+ =?utf-8?B?QUd3Wk9wWlJ4VGVDMmU0TktITXUzK2dwVGVsb0h3WUFaaUd4THNFM0JSbVVj?=
+ =?utf-8?B?bGk1Z3JCS21xNVZUYXNYZVcrQURTdUdySVpKVkM4R2VJaW5ZZGg2UzBpaCs1?=
+ =?utf-8?B?MklsZjdvcFNWRFBiaHJXUFFSa2l4a0lmTDgwdFBVS1ZPMTY5L2xuaVliTVI3?=
+ =?utf-8?B?YlBLajhKalVXOEo0cTBBamV6cDd2cElMWnRYanNXSlJjbkRWNGhjWWhnbkZt?=
+ =?utf-8?B?bCtFZFZpNzF2Q0tmc2NETEZXTkVrczRoQUlPUHdRcjNsdnlpSkV6T0V2elda?=
+ =?utf-8?B?dzkvcUswTEJ0NDNFdy8xVHJhWWxZTkR3REZZL3pYZ1ZoVmlHb0xMV2FyT2Q2?=
+ =?utf-8?B?MUtJaVZFVmtuSXgxOTFnQnBEaks2SmpKV1pkdVpxWXNONEtzMGwzNEtzSjRy?=
+ =?utf-8?B?MURMTGZ1cEQvZHYvUytuYkZ0cUYrbVRxWE9IYWE4K0xoSGlKdHRsRDlwaWVD?=
+ =?utf-8?B?WUgwMzkyckZVN1hyTDZCcE5iZDQvYzB5VTloVGtjWE1SZ2JuQXJmSlpzcnIv?=
+ =?utf-8?B?OWc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: b01c2edb-a550-4c55-69f8-08ddae8f69ed
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Jun 2025 17:41:54.7311
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: WxP5dMBscekfs+ux1CzQsdivwqozV92heKzTiFn4b4v8EXUMwqOc5shs5yUNT3aqYbypTkMLhSuVhMD3w8ovvieEaCrnbTUPmN7IkB+BeBo=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH3PPF6D09CA9CB
+X-OriginatorOrg: intel.com
 
-A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
-signed-commits, 2025-03-10), added support for signed commits to
-fast-export and fast-import.
 
-When a signed commit is processed, fast-export can output either
-"gpgsig sha1" or "gpgsig sha256" depending on whether the signed
-commit uses the SHA-1 or SHA-256 Git object format.
 
-However, this implementation has a number of limitations:
+On 6/18/2025 4:20 AM, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+>> Jacob Keller <jacob.e.keller@intel.com> writes:
+>>
+>>> We initialize branch->merge with set_merge() which is called by
+>>> branch_get() and which is the only way for callers external to remote.c
+>>> of getting a branch structure.
+>>>
+>>> The issue is that merge_nr can be non-zero because if no caller has done
+>>> a branch_get() on the given branch, we still have merge_nr is non-zero
+>>> and merge is NULL.
+>>
+>> Meaning merge_nr and merge are both uninitialized and unlikely to be
+>> 0 and NULL?  What values do they have, and if they are left
+>> uninitialized, shouldn't we be initializing them to predictable
+>> values?
+> 
+> Ah, no, I was just being stupid.
+> 
+> We read configuration files and accumulate things in .merge_name[]
+> while incrementing .merge_nr but until set_merge() is called, .merge
+> is NULL.  We need to clear .merge[] only when it is not NULL, of
+> course.  And for that, it may be more readable if we had two loops.
+> 
+> Thanks.
+> 
+> 
+> 
 
-  - the output format was not properly described in the documentation,
-  - the output format is not very informative as it doesn't even say
-    if the signature is an OpenPGP, an SSH, or an X509 signature,
-  - the implementation doesn't support having both one signature on
-    the SHA-1 object and one on the SHA-256 object.
-
-Let's improve on these limitations by improving fast-export and
-fast-import so that:
-
-  - both one signature on the SHA-1 object and one on the SHA-256
-    object can be exported and imported,
-  - if there is more than one signature on the SHA-1 object or on
-    the SHA-256 object, a warning is emitted,
-  - the output format is "gpgsig <git-hash-algo> <signature-format>",
-    where <git-hash-algo> is the Git object format as before, and
-    <signature-format> is the signature type ("openpgp", "x509",
-    "ssh" or "unknown",
-  - the output is properly documented.
-
-Note that it could be even better to be able to export and import
-more than one signature on the SHA-1 object and on the SHA-256
-object, but other parts of Git don't handle that well for now, so
-this is left for future improvements.
-
-Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-Helped-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-
-The v1 of this patch series simply replaced the generic "sha1" or
-"sha256" in the 'gpgsig' command that `git fast-export` produces and
-`git fast-import` consumes with the signature format (e.g., openpgp,
-ssh).
-
-In the v2, a different approach was tried in the direction of possibly
-making `git fast-export` check signatures to be able to get more
-information from them.
-
-In this v3, the approach is more similar to v1, but takes into account
-what was learned from the previous approaches. The signature format
-(e.g., openpgp, ssh) is added to the 'gpgsig' command, while both a
-SHA-1 and a SHA-256 signature from the same commit can be processed
-and a warning are emitted for each additional signature with the same
-hash type.
-
-There are no tests in this v3 with both a SHA-1 and a SHA-256
-signature on the same commit though, as I am not sure yet how to best
-generate a commit with such signatures. Suggestions welcome!
-
-As the patch is very different from both v1 and v2 no range-diff is
-provided.
-
-I have tried to launch CI tests but they seem blocked for 24 minutes at
-the "config" stage.
-
-Thanks to brian, Elijah and Junio who commented on the v1 and v2.
-
- Documentation/git-fast-export.adoc |  17 +++++
- Documentation/git-fast-import.adoc |  31 ++++++--
- builtin/fast-export.c              |  67 ++++++++++++++---
- builtin/fast-import.c              | 117 +++++++++++++++++++++++------
- gpg-interface.c                    |  12 +++
- gpg-interface.h                    |  12 +++
- t/t9350-fast-export.sh             |  60 ++++++++++++++-
- 7 files changed, 274 insertions(+), 42 deletions(-)
-
-diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-export.adoc
-index 43bbb4f63c..64198f2186 100644
---- a/Documentation/git-fast-export.adoc
-+++ b/Documentation/git-fast-export.adoc
-@@ -50,6 +50,23 @@ resulting tag will have an invalid signature.
- 	is the same as how earlier versions of this command without
- 	this option behaved.
- +
-+When exported, a signature starts with:
-++
-+gpgsig <git-hash-algo> <signature-format>
-++
-+where <git-hash-algo> is the Git object hash so either "sha1" or
-+"sha256", and <signature-format> is the signature type, so "openpgp",
-+"x509", "ssh" or "unknown".
-++
-+For example, an OpenPGP signature on a SHA-1 commit starts with
-+`gpgsig sha1 openpgp`, while an SSH signature on a SHA-256 commit
-+starts with `gpgsig sha256 ssh`.
-++
-+Currently for a given commit, at most one signature for the SHA-1
-+object and one signature for the SHA-256 object are exported, each
-+with their respective <git-hash-algo> identifier. A warning is
-+emitted for each additional signature found.
-++
- NOTE: This is highly experimental and the format of the data stream may
- change in the future without compatibility guarantees.
- 
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 250d866652..db5e5c8da5 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -445,7 +445,7 @@ one).
- 	original-oid?
- 	('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
- 	'committer' (SP <name>)? SP LT <email> GT SP <when> LF
--	('gpgsig' SP <alg> LF data)?
-+	('gpgsig' SP <algo> SP <format> LF data)?
- 	('encoding' SP <encoding> LF)?
- 	data
- 	('from' SP <commit-ish> LF)?
-@@ -518,13 +518,32 @@ their syntax.
- ^^^^^^^^
- 
- The optional `gpgsig` command is used to include a PGP/GPG signature
--that signs the commit data.
-+or other cryptographic signature that signs the commit data.
- 
--Here <alg> specifies which hashing algorithm is used for this
--signature, either `sha1` or `sha256`.
-+....
-+	'gpgsig' SP <git-hash-algo> SP <signature-format> LF
-+	data
-+....
-+
-+The `gpgsig` command takes two arguments:
-+
-+* `<git-hash-algo>` specifies which Git object format this signature
-+  applies to, either `sha1` or `sha256`.
-+
-+* `<signature-format>` specifies the type of signature, such as
-+  `openpgp`, `x509`, `ssh`, or `unknown`.
-+
-+A commit may have at most one signature for the SHA-1 object format
-+(stored in the "gpgsig" header) and one for the SHA-256 object format
-+(stored in the "gpgsig-sha256" header).
-+
-+See below for a detailed description of the `data` command which
-+contains the raw signature data.
-+
-+Signatures are not yet checked in the current implementation though.
- 
--NOTE: This is highly experimental and the format of the data stream may
--change in the future without compatibility guarantees.
-+NOTE: This is highly experimental and the format of the `gpgsig`
-+command may change in the future without compatibility guarantees.
- 
- `encoding`
- ^^^^^^^^^^
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index fcf6b00d5f..332c036ee4 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -29,6 +29,7 @@
- #include "quote.h"
- #include "remote.h"
- #include "blob.h"
-+#include "gpg-interface.h"
- 
- static const char *const fast_export_usage[] = {
- 	N_("git fast-export [<rev-list-opts>]"),
-@@ -652,6 +653,30 @@ static const char *find_commit_multiline_header(const char *msg,
- 	return strbuf_detach(&val, NULL);
- }
- 
-+static void print_signature(const char *signature, const char *object_hash)
-+{
-+	if (!signature)
-+		return;
-+
-+	printf("gpgsig %s %s\ndata %u\n%s",
-+	       object_hash,
-+	       get_signature_format(signature),
-+	       (unsigned)strlen(signature),
-+	       signature);
-+}
-+
-+static void warn_on_extra_sig(const char **pos, struct commit *commit, int is_sha1)
-+{
-+	const char *header = is_sha1 ? "gpgsig" : "gpgsig-sha256";
-+	const char *extra_sig = find_commit_multiline_header(*pos + 1, header, pos);
-+	if (extra_sig) {
-+		const char *hash = is_sha1 ? "SHA-1" : "SHA-256";
-+		warning("more than one %s signature found on commit %s, using only the first one",
-+			hash, oid_to_hex(&commit->object.oid));
-+		free((char *)extra_sig);
-+	}
-+}
-+
- static void handle_commit(struct commit *commit, struct rev_info *rev,
- 			  struct string_list *paths_of_changed_objects)
- {
-@@ -660,7 +685,8 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	const char *author, *author_end, *committer, *committer_end;
- 	const char *encoding = NULL;
- 	size_t encoding_len;
--	const char *signature_alg = NULL, *signature = NULL;
-+	const char *sig_sha1 = NULL;
-+	const char *sig_sha256 = NULL;
- 	const char *message;
- 	char *reencoded = NULL;
- 	struct commit_list *p;
-@@ -700,10 +726,28 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	}
- 
- 	if (*commit_buffer_cursor == '\n') {
--		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
--			signature_alg = "sha1";
--		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
--			signature_alg = "sha256";
-+		const char *sig_cursor = commit_buffer_cursor;
-+		const char *after_sha1 = commit_buffer_cursor;
-+		const char *after_sha256 = commit_buffer_cursor;
-+
-+		/*
-+		 * Find the first signature for each hash algorithm.
-+		 * The searches must start from the same position.
-+		 */
-+		sig_sha1 = find_commit_multiline_header(sig_cursor + 1,
-+							"gpgsig",
-+							&after_sha1);
-+		sig_sha256 = find_commit_multiline_header(sig_cursor + 1,
-+							  "gpgsig-sha256",
-+							  &after_sha256);
-+
-+		/* Warn on any additional signatures, as they will be ignored. */
-+		if (sig_sha1)
-+			warn_on_extra_sig(&after_sha1, commit, 1);
-+		if (sig_sha256)
-+			warn_on_extra_sig(&after_sha256, commit, 0);
-+
-+		commit_buffer_cursor = (after_sha1 > after_sha256) ? after_sha1 : after_sha256;
- 	}
- 
- 	message = strstr(commit_buffer_cursor, "\n\n");
-@@ -769,7 +813,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	printf("%.*s\n%.*s\n",
- 	       (int)(author_end - author), author,
- 	       (int)(committer_end - committer), committer);
--	if (signature) {
-+	if (sig_sha1 || sig_sha256) {
- 		switch (signed_commit_mode) {
- 		case SIGN_ABORT:
- 			die("encountered signed commit %s; use "
-@@ -780,19 +824,18 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 				oid_to_hex(&commit->object.oid));
- 			/* fallthru */
- 		case SIGN_VERBATIM:
--			printf("gpgsig %s\ndata %u\n%s",
--			       signature_alg,
--			       (unsigned)strlen(signature),
--			       signature);
-+			print_signature(sig_sha1, "sha1");
-+			print_signature(sig_sha256, "sha256");
- 			break;
- 		case SIGN_WARN_STRIP:
--			warning("stripping signature from commit %s",
-+			warning("stripping signature(s) from commit %s",
- 				oid_to_hex(&commit->object.oid));
- 			/* fallthru */
- 		case SIGN_STRIP:
- 			break;
- 		}
--		free((char *)signature);
-+		free((char *)sig_sha1);
-+		free((char *)sig_sha256);
- 	}
- 	if (!reencoded && encoding)
- 		printf("encoding %.*s\n", (int)encoding_len, encoding);
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index b2839c5f43..48ce8ebb77 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -29,6 +29,7 @@
- #include "commit-reach.h"
- #include "khash.h"
- #include "date.h"
-+#include "gpg-interface.h"
- 
- #define PACK_ID_BITS 16
- #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
-@@ -2718,15 +2719,86 @@ static struct hash_list *parse_merge(unsigned int *count)
- 	return list;
- }
- 
-+struct signature_data {
-+	char *hash_algo;      /* "sha1" or "sha256" */
-+	char *sig_format;     /* "openpgp", "x509", "ssh", "unknown" */
-+	struct strbuf data;   /* The actual signature data */
-+};
-+
-+static void parse_one_signature(struct signature_data *sig, const char *v)
-+{
-+	char *args = xstrdup(v); /* Will be freed when sig->hash_algo is freed */
-+	char *space = strchr(args, ' ');
-+
-+	if (!space)
-+		die("Expected gpgsig format: 'gpgsig <hash-algo> <signature-format>', "
-+		    "got 'gpgsig %s'", args);
-+	*space++ = '\0';
-+
-+	sig->hash_algo = args;
-+	sig->sig_format = space;
-+
-+	/* Remove any trailing newline from format */
-+	space = strchr(sig->sig_format, '\n');
-+	if (space)
-+		*space = '\0';
-+
-+	/* Validate hash algorithm */
-+	if (strcmp(sig->hash_algo, "sha1") &&
-+	    strcmp(sig->hash_algo, "sha256"))
-+		die("Unknown git hash algorithm in gpgsig: '%s'", sig->hash_algo);
-+
-+	/* Validate signature format */
-+	if (!valid_signature_format(sig->sig_format))
-+		die("Invalid signature format in gpgsig: '%s'", sig->sig_format);
-+	if (!strcmp(sig->sig_format, "unknown"))
-+		warning("'unknown' signature format in gpgsig");
-+
-+	/* Read signature data */
-+	read_next_command();
-+	parse_data(&sig->data, 0, NULL);
-+}
-+
-+static void add_gpgsig_to_commit(struct strbuf *commit_data,
-+				 const char *header,
-+				 struct signature_data *sig)
-+{
-+	struct string_list siglines = STRING_LIST_INIT_NODUP;
-+
-+	if (!sig->hash_algo)
-+		return;
-+
-+	strbuf_addstr(commit_data, header);
-+	string_list_split_in_place(&siglines, sig->data.buf, "\n", -1);
-+	strbuf_add_separated_string_list(commit_data, "\n ", &siglines);
-+	strbuf_addch(commit_data, '\n');
-+	string_list_clear(&siglines, 1);
-+	strbuf_release(&sig->data);
-+	free(sig->hash_algo);
-+}
-+
-+static void store_signature(struct signature_data *stored_sig,
-+			    struct signature_data *new_sig,
-+			    const char *hash_type)
-+{
-+	if (stored_sig->hash_algo) {
-+		warning("Multiple %s signatures found, ignoring additional signature",
-+			hash_type);
-+		strbuf_release(&new_sig->data);
-+		free(new_sig->hash_algo);
-+	} else {
-+		*stored_sig = *new_sig;
-+	}
-+}
-+
- static void parse_new_commit(const char *arg)
- {
--	static struct strbuf sig = STRBUF_INIT;
- 	static struct strbuf msg = STRBUF_INIT;
--	struct string_list siglines = STRING_LIST_INIT_NODUP;
-+	struct signature_data sig_sha1 = { NULL, NULL, STRBUF_INIT };
-+	struct signature_data sig_sha256 = { NULL, NULL, STRBUF_INIT };
- 	struct branch *b;
- 	char *author = NULL;
- 	char *committer = NULL;
--	char *sig_alg = NULL;
- 	char *encoding = NULL;
- 	struct hash_list *merge_list = NULL;
- 	unsigned int merge_count;
-@@ -2750,13 +2822,23 @@ static void parse_new_commit(const char *arg)
- 	}
- 	if (!committer)
- 		die("Expected committer but didn't get one");
--	if (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
--		sig_alg = xstrdup(v);
--		read_next_command();
--		parse_data(&sig, 0, NULL);
-+
-+	/* Process signatures (up to 2: one "sha1" and one "sha256") */
-+	while (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
-+		struct signature_data sig = { NULL, NULL, STRBUF_INIT };
-+
-+		parse_one_signature(&sig, v);
-+
-+		if (!strcmp(sig.hash_algo, "sha1"))
-+			store_signature(&sig_sha1, &sig, "SHA-1");
-+		else if (!strcmp(sig.hash_algo, "sha256"))
-+			store_signature(&sig_sha256, &sig, "SHA-256");
-+		else
-+			BUG("parse_one_signature() returned unknown hash algo");
-+
- 		read_next_command();
--	} else
--		strbuf_setlen(&sig, 0);
-+	}
-+
- 	if (skip_prefix(command_buf.buf, "encoding ", &v)) {
- 		encoding = xstrdup(v);
- 		read_next_command();
-@@ -2830,23 +2912,14 @@ static void parse_new_commit(const char *arg)
- 		strbuf_addf(&new_data,
- 			"encoding %s\n",
- 			encoding);
--	if (sig_alg) {
--		if (!strcmp(sig_alg, "sha1"))
--			strbuf_addstr(&new_data, "gpgsig ");
--		else if (!strcmp(sig_alg, "sha256"))
--			strbuf_addstr(&new_data, "gpgsig-sha256 ");
--		else
--			die("Expected gpgsig algorithm sha1 or sha256, got %s", sig_alg);
--		string_list_split_in_place(&siglines, sig.buf, "\n", -1);
--		strbuf_add_separated_string_list(&new_data, "\n ", &siglines);
--		strbuf_addch(&new_data, '\n');
--	}
-+
-+	add_gpgsig_to_commit(&new_data, "gpgsig ", &sig_sha1);
-+	add_gpgsig_to_commit(&new_data, "gpgsig-sha256 ", &sig_sha256);
-+
- 	strbuf_addch(&new_data, '\n');
- 	strbuf_addbuf(&new_data, &msg);
--	string_list_clear(&siglines, 1);
- 	free(author);
- 	free(committer);
--	free(sig_alg);
- 	free(encoding);
- 
- 	if (!store_object(OBJ_COMMIT, &new_data, NULL, &b->oid, next_mark))
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 0896458de5..6f2d87475f 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -144,6 +144,18 @@ static struct gpg_format *get_format_by_sig(const char *sig)
- 	return NULL;
- }
- 
-+const char *get_signature_format(const char *buf)
-+{
-+	struct gpg_format *format = get_format_by_sig(buf);
-+	return format ? format->name : "unknown";
-+}
-+
-+int valid_signature_format(const char *format)
-+{
-+       return (!!get_format_by_name(format) ||
-+	       !strcmp(format, "unknown"));
-+}
-+
- void signature_check_clear(struct signature_check *sigc)
- {
- 	FREE_AND_NULL(sigc->payload);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index e09f12e8d0..60ddf8bbfa 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -47,6 +47,18 @@ struct signature_check {
- 
- void signature_check_clear(struct signature_check *sigc);
- 
-+/*
-+ * Return the format of the signature (like "openpgp", "x509", "ssh"
-+ * or "unknown").
-+ */
-+const char *get_signature_format(const char *buf);
-+
-+/*
-+ * Is the signature format valid (like "openpgp", "x509", "ssh" or
-+ * "unknown")
-+ */
-+int valid_signature_format(const char *format);
-+
- /*
-  * Look at a GPG signed tag object.  If such a signature exists, store it in
-  * signature and the signed content in payload.  Return 1 if a signature was
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index 76619765fc..74dd23cb77 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -314,7 +314,7 @@ test_expect_success GPG 'signed-commits=abort' '
- test_expect_success GPG 'signed-commits=verbatim' '
- 
- 	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
--	grep "^gpgsig sha" output &&
-+	test_grep -E "^gpgsig sha(1|256) openpgp" output &&
- 	grep "encoding ISO-8859-1" output &&
- 	(
- 		cd new &&
-@@ -328,7 +328,7 @@ test_expect_success GPG 'signed-commits=verbatim' '
- test_expect_success GPG 'signed-commits=warn-verbatim' '
- 
- 	git fast-export --signed-commits=warn-verbatim --reencode=no commit-signing >output 2>err &&
--	grep "^gpgsig sha" output &&
-+	test_grep -E "^gpgsig sha(1|256) openpgp" output &&
- 	grep "encoding ISO-8859-1" output &&
- 	test -s err &&
- 	(
-@@ -369,6 +369,62 @@ test_expect_success GPG 'signed-commits=warn-strip' '
- 
- '
- 
-+test_expect_success GPGSM 'setup X.509 signed commit' '
-+
-+	git checkout -b x509-signing main &&
-+	test_config gpg.format x509 &&
-+	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	echo "X.509 content" >file &&
-+	git add file &&
-+	git commit -S -m "X.509 signed commit" &&
-+	X509_COMMIT=$(git rev-parse HEAD) &&
-+	git checkout main
-+
-+'
-+
-+test_expect_success GPGSM 'round-trip X.509 signed commit' '
-+
-+	git fast-export --signed-commits=verbatim x509-signing >output &&
-+	grep "^gpgsig sha1 x509" output &&
-+	(
-+		cd new &&
-+		git fast-import &&
-+		git cat-file commit refs/heads/x509-signing >actual &&
-+		grep "^gpgsig " actual &&
-+		IMPORTED=$(git rev-parse refs/heads/x509-signing) &&
-+		test $X509_COMMIT = $IMPORTED
-+	) <output
-+
-+'
-+
-+test_expect_success GPGSSH 'setup SSH signed commit' '
-+
-+	git checkout -b ssh-signing main &&
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
-+	echo "SSH content" >file &&
-+	git add file &&
-+	git commit -S -m "SSH signed commit" &&
-+	SSH_COMMIT=$(git rev-parse HEAD) &&
-+	git checkout main
-+
-+'
-+
-+test_expect_success GPGSSH 'round-trip SSH signed commit' '
-+
-+	git fast-export --signed-commits=verbatim ssh-signing >output &&
-+	grep "^gpgsig sha1 ssh" output &&
-+	(
-+		cd new &&
-+		git fast-import &&
-+		git cat-file commit refs/heads/ssh-signing >actual &&
-+		grep "^gpgsig " actual &&
-+		IMPORTED=$(git rev-parse refs/heads/ssh-signing) &&
-+		test $SSH_COMMIT = $IMPORTED
-+	) <output
-+
-+'
-+
- test_expect_success 'setup submodule' '
- 
- 	test_config_global protocol.file.allow always &&
--- 
-2.50.0.2.g875523421d
-
+Right. I think I like my solution of just eliminating merge_names
+entirely. Unfortunately it looks like my mailer marked that content as
+quoted when I pasted it in as an inline diff.
