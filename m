@@ -1,105 +1,177 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4689030E847
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 21:08:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F5D30E852
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 21:17:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750367340; cv=none; b=N1sT3V4zlup09aBInOtEp+dCmjSJCQpHVec/s0bIW2SJE1riQYclGkcfZUW7sxgqqcTa55D3t+472cbEbms0uSmYx950BKeK/7Nz3TGWvdVWLjJKZns8AQC4+Xq2TtCB9bw3LBDxvRwjAx5Z/yyWuhRoRygvw0ite0Xv8ead/Xs=
+	t=1750367847; cv=none; b=Ua4uCiR6NmYnaRZ4nPxnGOgMB2le9Vzig/Y0xBJf7sSfHnUtzgimlI22cFAUUDaxJmkLRCGdE+D9kv/ikxgpbYtQ5eIPTduFbL7qSZaGGJzYeODQQ6Gn8QCz1da6xB8EgNNIvvO51PCniRfVGrlCdLFc8t1D3osbFE1ti7oa7T8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750367340; c=relaxed/simple;
-	bh=/02Cr+ZT+WWUzTmU3Ng11U4jlUvBsPORVA6Y1mwWNTc=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=B4bKBN1zWnA7tbwdDyTWj0PcChyxbJ5fyHWvPPK2DLkkF8fK8m2SiSPaP4TDo90G1qpzAvrdlJPBT64CdhYVu20PuOEcBw62rRVVNBOjl96gzqbzN24B8Ly3S26GhU68iC7b6SUuPnvBS0DAS01jVzlJXUsPMQDxMIcnpXJx9zg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MaDCJhkd; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750367847; c=relaxed/simple;
+	bh=8EoKV6iFtQuCBeieV0q8Ob1ee0vk/hJPMdt46lyaq/M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h7Fc/hxgoUb8quRRsLYe1/ZldRn4EGZVpDUu5ANKQ/Qh3C4GIz7qDLQVMkBmse/MCcfvOBiCsGeZrH914GJwj27tYefLLG7NDICIT9G98UuRpQD8XzKqejz3smfeKdozrDe8FrxTJKGmQTPZBeaRhJr18diQaa3SDl4GxdM20Aw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IHdm1HSq; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MaDCJhkd"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-2350b1b9129so8828495ad.0
-        for <git@vger.kernel.org>; Thu, 19 Jun 2025 14:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750367338; x=1750972138; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/02Cr+ZT+WWUzTmU3Ng11U4jlUvBsPORVA6Y1mwWNTc=;
-        b=MaDCJhkd8HxxWNUEJrxUreg7KBjUtm3zTo7D2E1863hXNpGl/4EDlKKt1aefgyt4RE
-         F7d5DSjafcnny0EnSzEPq6m9WIfq+VmI3nRGjk6S2DYDE5g+Z6efCVAOE/XNrH80dK5J
-         Rg9jz7uwL8WrOpgrq9ynKaDuJ9Xd6W3nZm3B5b2vcaEoktEaXim4Vi0crIblXCXjVfl3
-         jVnwJhx+wA+wDn8a4a3g601D7spjx1ePsPR9R/STeMC7NK4MhwpGHnjBg6zAjt2bWwqy
-         LZq6xCt6+SYSKXo8mw6ZbTFBZdTzml7XmsFLlaWrZRYZMA9Ovadep0aztver41NbEs3n
-         nxIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750367338; x=1750972138;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/02Cr+ZT+WWUzTmU3Ng11U4jlUvBsPORVA6Y1mwWNTc=;
-        b=ZYB/4o7yl1XWUItFTeJb628VVXHefxjqAD75QNl+wxEjmuVoTlLo3l5w9d9r4GEH+b
-         Szx3nwX/e/nK8aBPlftcQp/Oryo45HUC8j/LSjrSCq78q8APfOiSrHZIFFRK5PkwqPRB
-         pJTUNrgwrqILD8MPwSKFNFvZN4TgfLOROKLlKlTCjlIY9Q4xm6BUo58TLg1F4aev2G3z
-         PJQpUFeL/M0LABrfVPKQk7J6RlS7zIKcnE6hiFPka7rdgFzxZsOctnQtSadxEKPhmVaG
-         21POE4DobaniVNjvlCY9OsoRB5mxPZAWXf4JFxCGcjpjCTin6lb8xOrHMZoel7f1DSFm
-         WeXw==
-X-Gm-Message-State: AOJu0Yxj8N43Eu7bxqUt07BaeDPH2tMU09z7WXmIVzA++nqE+GIqVhyL
-	y7zuNmWVMoiys9/uk/Oc5bE6wLAZAR751HCPmwLhtNgGaeBErrjqL9yyApjnLQ==
-X-Gm-Gg: ASbGncun+Uam7PU4SCpilw+We56SYE9yYLlT3XvPASDWZ/vCuTjO/IsoR83VT3My8S2
-	mOuwEgJInb3IC8j/ytEkJyll5YSYDW5pddK1DMAgos8jvSicy+MyVrnUnKEMznjin46rlrsQhBk
-	KnWy+u+vmADz3EkbmmxKfQczsM/f3wH83YA5XOpgld96DQj2HUY8IlTAYz4FCZWszWKIKPx8rUZ
-	1CXxd62d/HteTg/4yLz1nHxgawibROIW1eEmA0yWnHrQNChSfmVJb8NaLcL7T/yzykelo5c7Ev+
-	zzbMElS4HOz6D5epE9rTrbkwyIG+Pxn6LtFSlugP9M8qLgUAwZvY45cF41TU+84lGSouctk1oBl
-	DmDG81jVKMQrTOgnV4mCgVg==
-X-Google-Smtp-Source: AGHT+IE67/XRtsYEkUcN2QWR9k2z8YEbbbL0GlHrn2PvZ1a5XgsQe/MPHejRvpMcC7ZfYeRQA+b0YA==
-X-Received: by 2002:a17:902:da47:b0:237:d25b:8f07 with SMTP id d9443c01a7336-237d9a00d6amr4266925ad.44.1750367338535;
-        Thu, 19 Jun 2025 14:08:58 -0700 (PDT)
-Received: from smtpclient.apple ([179.100.18.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d860b761sm2282535ad.139.2025.06.19.14.08.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Thu, 19 Jun 2025 14:08:56 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IHdm1HSq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1750367843;
+	bh=8EoKV6iFtQuCBeieV0q8Ob1ee0vk/hJPMdt46lyaq/M=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=IHdm1HSq00KZdQEzvkODU31oVHZI6uQtdPk4txUOgdER+gJwoDutEXDnFbsev37cZ
+	 JHQ7ao/uUvK0/sNGbHRDWjDh4IRpNp49KJAxSup1Q7JMtGY+Ig5kDofu86+3eQZF8n
+	 6SBCSJSYh4mqJXsf2Noph7dz0hckBRn2WB8IMJyqyJZ/rJPiZD/a1asW6MetgyxstD
+	 VxAe+tCpT/OWKHVbebBFXsygL5vaM3pgSNZMfAmMfyKrrs7zA4P5pixoFzOtqxGNZ+
+	 C3Hu0w6+8n5V7XFn7cEG8DEk+UsAL2X/4WnpbvXsaS6bGjrJOyurzURSmX+8WvXEbJ
+	 k4LQeEE5Zjj2KSmRmSrYXdQ6hL6CoLmSTfmdlYuuvW+LbWqEWp3twMKSBV52qtQnkT
+	 vcbJ47FuuVVpDzIPMdV5oIhWRKEBxJ3uOC833Ee1NJm88ht49yHpCZk/GIh2jeZ0B9
+	 bmVlpnBIFGTWB4X4UbsbvrQlncPTM3QVG+Lww/Nl8GiAqp9KFz6
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1D8C720069;
+	Thu, 19 Jun 2025 21:17:23 +0000 (UTC)
+Date: Thu, 19 Jun 2025 21:17:21 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Subject: Re: .clang-format: how useful, how often used, and how well
+ maintained?
+Message-ID: <aFR-Yf0PMj30ex2O@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+References: <xmqqmsa3adpw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: =?utf-8?Q?Re=3A_=5BGSoC=5D_Blog=3A_Refactoring_in_order_to_reduce?=
- =?utf-8?Q?_Git=E2=80=99s_global_state?=
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAE7as+agjJm=taLgeracuApiGR1YgP5ZQhoHroTk6=Z0E9ww9g@mail.gmail.com>
-Date: Thu, 19 Jun 2025 18:08:43 -0300
-Cc: git@vger.kernel.org,
- Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
- Christian Couder <christian.couder@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5PPvPzgFJrQ/S0pt"
+Content-Disposition: inline
+In-Reply-To: <xmqqmsa3adpw.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--5PPvPzgFJrQ/S0pt
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <3079AF5C-CB54-4674-AF5C-24CDEF3854B9@gmail.com>
-References: <CAE7as+agjJm=taLgeracuApiGR1YgP5ZQhoHroTk6=Z0E9ww9g@mail.gmail.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
+On 2025-06-19 at 16:38:35, Junio C Hamano wrote:
+> Cc-list chosen from "git shortlog --since=3D12.months --no-merges .clang-=
+format".
+>=20
+> I am wondering how often our developers use "make style" aka
+>=20
+>     git clang-format --style file --diff --extensions c,h
+>=20
+> and also wondering if the suggested style fixes are really
+> "improvements".  For example, taking randomly the latest patch I
+> just injested into my tree, i.e.
+>=20
+>     $ git am a-single-patch-file.txt
+>     $ git reset --soft HEAD^
+>     $ make style
 
-> Hi everyone!
+I don't at the moment.  In my view, the main utility of tidy tools is
+that the project has picked a style, whatever everyone may think of
+it[0], and we apply the tool consistently on every change and enforce
+it. Then, the application of the tidy tool becomes a rote keystroke in
+one's editor and one does not need to think about it.  This is how
+things work in most Rust and Go projects, for instance, since they have
+well-defined tidy tools.
 
-Hi, Ayush!
+That is not how things work here, however.
 
-> I=E2=80=99m a GSoC contributor working with Git this summer
+> I got the output attached at the end of the message.  The result is
+> a mixed bag (I commented on the "patch" as if it were a patch
+> submission).
+>=20
+> I have this suspicion that nobody complained these sub-par
+> suggestions the tool makes based on what we have in .clang-format
+> because not many folks run "make style", and "make style" is not
+> very easy to use after you record your changes into a commit.  IOW,
+> there is nothing packaged to help "I have four commits on top of the
+> upstream, I want to run style checks before running format-patch",
+> i.e.
+>=20
+>     git clang-format --diff HEAD~4
 
-Me too :-)
+I agree most people probably do not use it, probably for the reasons I
+don't.  I don't know if clang-format produces stable output: that is,
+using a newer version of clang-format with the same config does not
+result in diff changes.  If it does, then we can simply pick a set of
+style configs and a minimum version and tell people to apply it.
 
-> Feel free to reach out if you have any questions, suggestions, or want =
-to chat.
+We can then check it in CI and if CI fails, we can output a
+base64-encoded diff (since it's going to have lots of whitespace, base64
+encoding will be practically useful) that the author can apply.  Then
+people using esoteric systems without clang-format can simply apply the
+diff from CI.
 
-I see that you want to get rid of some usages of 'the_repository'. I =
-don't know
-if it is in the scope of your project, but something that would help me =
-in my
-GSoC project is making the function is_bare_repository (environment.c) =
-not
-dependent of 'the_repository'.
+If clang-format does not produce stable output, we're going to have a
+bunch of practical problems.  I use Debian unstable at home and I know
+Peff does as well, but I also use Ubuntu 24.04 at work.  Some
+contributors use Fedora or Cygwin, and we're all going to have a giant
+problem picking a consistent version of clang-format to use such that
+people don't have to compile their own or use external packages. Perhaps
+we can create a small script that does the tidying in a Linux
+Docker/Podman container in that case.
 
-More info here: https://lore.kernel.org/git/xmqq7c1genyp.fsf@gitster.g/
+> Even the output from the tool is of mixed quality, there are good
+> pieces that can be used to improve your patches.  So we may prefer
+> to see the tool used more often, but not in a way to suggest its
+> output is always better than what the human developer has written.
 
-Thanks!
+I really would prefer us to pick a set of standards that is good enough
+and just apply them.  I agree clang-format may not produce ideal output,
+but I really do not want to think about formatting and style and whether
+my lines exceed 80 characters.  Fixing those style issues is annoying
+and I can say that it often delays me getting to re-rolls.
 
+> For that, there are a few things we'd probably need to do:
+>=20
+>  - Improve our tooling so that the develper can check a range of
+>    commits they made before running format-patch, and other
+>    situations.
+
+I agree better tooling would be valuable.
+
+>  - Improve .clang-format rules to reduce false positives.
+
+I think we should iterate on the rules a bit to get them to good enough
+and then commit to the style.
+
+[0] Go's tool, gofmt, even acknowledges that the style it uses is
+nobody's favourite, but having it is better than bikeshedding arguments
+over style.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--5PPvPzgFJrQ/S0pt
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFR+YQAKCRB8DEliiIei
+gR8LAP4tr4r7BEDxQvgAbivHKHmVXtEOvGxNW2Pmb5+bo4UvWgD8CLP7I0ksWulm
+XvjDhvAosjcQ0EAJhwPkLZOLVzsRiAM=
+=X+g7
+-----END PGP SIGNATURE-----
+
+--5PPvPzgFJrQ/S0pt--
