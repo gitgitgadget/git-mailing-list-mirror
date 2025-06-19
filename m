@@ -1,117 +1,125 @@
-Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2848D219A8E
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 02:30:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9865A634
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 03:37:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750300220; cv=none; b=TctwQ2qZJworadZ+2cgDLafD0Nfz/GRa7L0pzX7bjvBtPGYne+fEwRBGX8gXLdC45TbdrxwNQdLaLpGN1BZan6NTPEXqB8/hsnS+tT9z5Tx3ETZDTwLekEKl7SgbVzG8Vj7fhC2mn12SDZJFWxLhIQ5hXz/H2UNu92yOWF9NoF8=
+	t=1750304279; cv=none; b=VUekjcXddvJcMGTito+eTTlkS4XeZU6QqsQfwqXqnbweGZY+dbZ4HRk2eOvMvnP1ww51lQ5hDh8jlEZglAUe4OU5nQZ9vENwlCm8H+rpRaNlRIsrzjXMSVjfVWLmQCGT0WtwMeKxvs/6mNTCBNNUnp2JnjEE0rrVsPPZRin+MYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750300220; c=relaxed/simple;
-	bh=hvgaCju69S6sfvrT/GZob0gyMqgYGwGUWRjfFI2Avxs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=uddDVARl8RPZtZbkx6keQZMRWUCEc7c7gdIxa+1PQhWksFuU/SqnQmS/mXAbc9n/gW6DzAWeiFAa4Es0R6YLC5y8xzqWxSM9ksZLGLZeROYI9KmVORkYLQBBzaLNN0E2RWh9RSa14Mv3PR1OuZrc1BlZfKjotclMkumg6rkaGUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=connamara.com; spf=none smtp.mailfrom=connamara.com; dkim=pass (2048-bit key) header.d=connamara-com.20230601.gappssmtp.com header.i=@connamara-com.20230601.gappssmtp.com header.b=npUesZ3H; arc=none smtp.client-ip=209.85.208.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=connamara.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=connamara.com
+	s=arc-20240116; t=1750304279; c=relaxed/simple;
+	bh=KftJ4z3GPEvAHi2zb6LzpV6jKhfeQ2F/DZG21XLboYE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7+i+RXS1NWPJLp7oVpfzjyqqX1bdyBEC4W8G7Io3xo9mszML7vPAYQdGda1cNs85uWDQKQdJQGYb5tSEQC1blYRlc7UqDIymk+G0gZcaCkn2D3WTqgmltQX/HKcn7AXFHrdxdyEiPT4oWCwvqB1kTvUUlCkL8rUVB3kU+WexAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=hQ1/4/Vy; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=connamara-com.20230601.gappssmtp.com header.i=@connamara-com.20230601.gappssmtp.com header.b="npUesZ3H"
-Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30f30200b51so3476781fa.3
-        for <git@vger.kernel.org>; Wed, 18 Jun 2025 19:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=connamara-com.20230601.gappssmtp.com; s=20230601; t=1750300216; x=1750905016; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jIOAI5Y5T3owdKU51FfoJ7l+A5/Bjbz3D5YXgjBM1M8=;
-        b=npUesZ3HAjwMEA0BwbjohyL3j+PsAdEpMBmMx2YZDihe26Nipa4PTlbQImAzPzVOLB
-         /G4ur5GXARIQn5Viu2JQjjew1hPx8Yq9IO7IN9PaFTPq99M8LjbneA15j+weonQlXHIx
-         sO+wPA/6F8vHMHa+FN5ukbMemgjqg0hqaxGnS6qUVv5sWEr7OnavYhBpIfYJxt1KAn+5
-         L9v+68Y0NhQATxrelRfwJVEoE8CYhfyhGgpblhxBG5Danqvo7wVDbmdN4q3Y0KC8h+eB
-         ABWB0GYRSsBj6CsQ97TwSlLsxstEav1teWTOYAyKoqSe5rYiLy5evWB9V5u8i6ZHdKXd
-         sKgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750300216; x=1750905016;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=jIOAI5Y5T3owdKU51FfoJ7l+A5/Bjbz3D5YXgjBM1M8=;
-        b=cfLkQx0f4KSa0G+vet42wHgfsU01oPbzKhOpcW2RJmCXYkwkSQwAdCexenBssRrqiV
-         w/Igc3pIUegZtHj2It3hQZS9ab3/HaGJ3P+/ZsVVNep8WJyWMkU4uCDtCrqXIaWULO/T
-         382IqD6DUKkB1O7zegQf4/Kekc4pt+BOcNPxZMZfunX+DGHoZQi9qjJ4aZI1DO5Assw/
-         PR49Td5mGYw9cVfJEOlU6kqXfgTJychXM7AKVEYi4Q9znFkoak0zMMlrAphJjwcxC1w1
-         t4HhsWDpcB/vvA/UZTJf1yq+j9/VQjrMvCmJTPs8SMG16iXyWEMzhgn44rBnI5EIX8A6
-         UA7Q==
-X-Gm-Message-State: AOJu0Yx7vDDQY3gMcgxYoo6MSmbFQ7w4dUJPLl0dKjP1iykm6NxMGHOe
-	RSy1PiD0sH6gE/Q/CvHHTID05p6vZWYsb8ayqctaSNrzWgcQHFAWUkRTbzU0tSLXzckM+2CG730
-	g4zwTyPK20U8HE6NHHu9WO+pGb4c/pEkEYiju8abEW9GruWkZu40y/7c/Cwq67Pz2VtY+PDEhnV
-	ehymGdLuLs5Sfa+W6LIpEmARoIvjWGfCI=
-X-Gm-Gg: ASbGncvAa4N9TrUPq3OkY06oS6rlZeuqm/LP13U1MSEH1dUJWBPGOi6+FnHxl55X7WU
-	uFZVb6L7ITVYacSS9izLqTU+tMKkAogpzdV1GmVK72J4sxDdMC5qQokNklFRfUkLTFLJnO1XRAm
-	DwzTl+Z+/rhLskm00/l9L0pijiSDrcAFGbuGPoIhmiiCg=
-X-Google-Smtp-Source: AGHT+IGKMYit40R77myI3RmHiZn0FE1IzS3DkbHTIsgtb2m1Iyf0zsPB3FgtF4jXzajbJNsxa7+o3HB6SavJYS9+6XY=
-X-Received: by 2002:a05:651c:2203:b0:32b:47be:e1bd with SMTP id
- 38308e7fff4ca-32b4a2d7388mr62098321fa.6.1750300215891; Wed, 18 Jun 2025
- 19:30:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="hQ1/4/Vy"
+Received: (qmail 18936 invoked by uid 109); 19 Jun 2025 03:37:49 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=KftJ4z3GPEvAHi2zb6LzpV6jKhfeQ2F/DZG21XLboYE=; b=hQ1/4/VyS0JO229UpVLW0ZBV3Ppdy/v6+NA1SgWxcptQmhdViDLEyYxx+bCVhS38iJGrGJIzGkiDWwXxhcJNLR8VwQtwEd+MDKQuOtwu6OiS3EQEAqHZZIHPRrvvgiPrYw5tmklX1IksmtjWkoXFioGqRx92RsuZI76RHU4Xj3Aj98aTF3HkoEnm5xIhNMI4ByCjQdtv1dyMq3hAohVezBUtRWvUUdd/u7torgFafJGPpD3LfjyaOZT9/fxMeTIuWITeNYZBb0XCPi7cmwiWYAAA59jJmv7BgxPeI8faDyt+kXKPGIjsdsnBZlq2fHysEcLnY6yGP1kn2Gig7OXx0Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 19 Jun 2025 03:37:49 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9966 invoked by uid 111); 19 Jun 2025 03:37:50 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 18 Jun 2025 23:37:50 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 18 Jun 2025 23:37:46 -0400
+From: Jeff King <peff@peff.net>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: Phil Hord <phil.hord@gmail.com>, git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] fetch --prune performance problem
+Message-ID: <20250619033746.GA1801319@coredump.intra.peff.net>
+References: <20250618211024.2332525-1-phil.hord@gmail.com>
+ <9cc42f04-856b-4967-8668-a47271af061c@intel.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAMq4opPBGT0Rv25DnEMHPjA=W_Ut2BDsN0KmxD2_xGTJa9erJQ@mail.gmail.com>
- <CABURp0orQ-UCzDgJc=STPQZaaEEGwR0GM-GZq_Ty3BXBKYS2iQ@mail.gmail.com>
-In-Reply-To: <CABURp0orQ-UCzDgJc=STPQZaaEEGwR0GM-GZq_Ty3BXBKYS2iQ@mail.gmail.com>
-From: Grant Birchmeier <gbirchmeier@connamara.com>
-Date: Wed, 18 Jun 2025 21:30:04 -0500
-X-Gm-Features: AX0GCFuIGdP2asm6UjD1j8ulC0LbpR3SeKtIOZ_IOc6JGw79GPUHtKeLLT7NAiQ
-Message-ID: <CAMq4opMBpg4315Q8awm5SQAQa1vms=3KB+SiQkGtCF7thBPjHw@mail.gmail.com>
-Subject: Re: bug report: I was allowed to "git checkout -b" while mid-rebase
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <9cc42f04-856b-4967-8668-a47271af061c@intel.com>
 
-(replying to both Jacob Keller and Phil Hord in here)
+On Wed, Jun 18, 2025 at 04:15:03PM -0700, Jacob Keller wrote:
 
-Jacob Keller wrote:
-> One thing you could try is "git rebase --abort" to see if it can abort
-> the rebase and undo things. If that resets the index properly, then use
-> git reflog to make sure the ilogger branch is restored to the pre-rebase
-> state, or possibly use it on HEAD to find any intermediate commits/edits
-> you may have made while rebasing.
+> On 6/18/2025 2:08 PM, Phil Hord wrote:
+> > My patch fixes this for fetch, but it affects the command's output order.
+> > Currently the results look like this:
+> > 
+> >      - [deleted]     (none) -> origin/bar
+> >        (origin/bar has become dangling)
+> >      - [deleted]     (none) -> origin/baz
+> >      - [deleted]     (none) -> origin/foo
+> >        (origin/foo has become dangling)
+> >      - [deleted]     (none) -> origin/frotz
+> > 
+> > After my change, the order will change so the danglers are reported at the end.
+> > 
+> >      - [deleted]     (none) -> origin/bar
+> >      - [deleted]     (none) -> origin/baz
+> >      - [deleted]     (none) -> origin/foo
+> >      - [deleted]     (none) -> origin/frotz
+> >        (origin/bar has become dangling)
+> >        (origin/foo has become dangling)
+> 
+> Personally, I like the later output. I have no idea why anyone would be
+> specifically scripting something that depends on the ordering being such
+> that dangling messages are printed immediately.
 
-Yeah... except I am partway through the rebase.  I was through like 6
-of 8 files that needed manual intervention.  Was hoping I wouldn't
-lose that.
+I think the original ordering tells you which deletion caused the ref to
+become dangling. Phil's example is a little confusing here:
 
-Though now that I think about it, I suppose I can copy the
-already-rebased files into a temp dir, then abort, then copy them
-back.  That would be an effective workaround.
+    - [deleted]     (none) -> origin/bar
+      (origin/bar has become dangling)
 
-Phil Hord wrote:
-> You did pick up an extra branch "net5" which will follow your rebase.  Bu=
-t you should find when the rebase completes that both "net5" and "ilogger" =
-point to the tip of your rebased branch.
+because the name is the same in both cases. A more likely output is that
+origin/HEAD becomes dangling (since it's the only symref Git ever
+automatically points at a tracking ref). E.g., in this:
 
-Oh, really, that's interesting.  I'll see what happens.  (Tomorrow.)
+  git init repo
+  cd repo
+  
+  git commit --allow-empty -m foo
+  git branch some
+  git branch other
+  git branch branches
+  
+  git clone . child
+  cur=$(git symbolic-ref --short HEAD)
+  git checkout some
+  git branch -d other branches $cur
+  
+  cd child
+  git fetch --prune
 
-Thank for explaining the technical reason why "git checkout" w/wo "-b"
-behaves differently in this regard.  But this can't be an intentional
-design choice, or a behavior that even a moderately-experienced user
-would expect.
+The final fetch output looks like:
 
--Grant
+   - [deleted]         (none)     -> origin/branches
+   - [deleted]         (none)     -> origin/main
+     (refs/remotes/origin/HEAD has become dangling)
+   - [deleted]         (none)     -> origin/other
 
+and we can see that the deletion of "main" is what caused the dangling.
 
---=20
-Grant Birchmeier
-Director of Engineering, Connamara
-gbirchmeier@connamara.com
+That said, I'm not sure I care that much. I didn't even know we had this
+dangling message, and it's been around for over 15 years!
 
---=20
-This email, along with any attachments, is confidential. If you believe you=
-=20
-received this message in error, please contact the sender immediately and=
-=20
-delete all copies of the message.=C2=A0Thank you from Connamara Systems, LL=
-C.
+If we did want to preserve the ordering, it could be done by taking two
+passes (the first to create a reverse map of deletions to danglers, and
+then the second to print each ref).
+
+Alternatively, the dangling message could just mention where it the
+now-dangling symref points at, something like:
+
+   - [deleted]         (none)     -> origin/branches
+   - [deleted]         (none)     -> origin/main
+   - [deleted]         (none)     -> origin/other
+     (refs/remotes/origin/HEAD points to the now-deleted origin/main)
+
+I dunno. I guess anybody who really cares can run "git symbolic-ref
+origin/HEAD" themselves to get that information.
+
+-Peff
