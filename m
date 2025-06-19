@@ -1,111 +1,117 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+Received: from mail-lj1-f176.google.com (mail-lj1-f176.google.com [209.85.208.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9997C19D07B
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 01:44:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2848D219A8E
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 02:30:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750297494; cv=none; b=Is1bXtaovttnjWFJYKuhtz5dXNr69+zqqRWoIQa7KddotkXna83Yps7h9p1tw6JV6x75KYV1jsvBE8KioAJxND4OOJghXNdcVzsSb/2TlHR8QLJB6z5o8BQgyz/5zPSQd64qN2HjxJtzZBDSIEOHuiZIW78wvpbuu9Thl6Xa868=
+	t=1750300220; cv=none; b=TctwQ2qZJworadZ+2cgDLafD0Nfz/GRa7L0pzX7bjvBtPGYne+fEwRBGX8gXLdC45TbdrxwNQdLaLpGN1BZan6NTPEXqB8/hsnS+tT9z5Tx3ETZDTwLekEKl7SgbVzG8Vj7fhC2mn12SDZJFWxLhIQ5hXz/H2UNu92yOWF9NoF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750297494; c=relaxed/simple;
-	bh=hzJSVZXDfQrM3N0GpOmIh8vRfTaGzO80exKcT2vM9FQ=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=qEZRihiSsiHLvCRG7uau1CcqnH85jiFmhVg8DkcAWT+dnGbBZOnmFt2l6Dr2NNPQ/MY1xuzwu4L4DMSiM/OyWbH25B2Ji6p0T9BInxzb6swBufwW5c3GB8QNkH8o6XY+sTq1bGcGHYS9Wq/NIDVd3Qw2LOMSTohZ2JmvXsAXaa0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HytD/mv+; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750300220; c=relaxed/simple;
+	bh=hvgaCju69S6sfvrT/GZob0gyMqgYGwGUWRjfFI2Avxs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=uddDVARl8RPZtZbkx6keQZMRWUCEc7c7gdIxa+1PQhWksFuU/SqnQmS/mXAbc9n/gW6DzAWeiFAa4Es0R6YLC5y8xzqWxSM9ksZLGLZeROYI9KmVORkYLQBBzaLNN0E2RWh9RSa14Mv3PR1OuZrc1BlZfKjotclMkumg6rkaGUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=connamara.com; spf=none smtp.mailfrom=connamara.com; dkim=pass (2048-bit key) header.d=connamara-com.20230601.gappssmtp.com header.i=@connamara-com.20230601.gappssmtp.com header.b=npUesZ3H; arc=none smtp.client-ip=209.85.208.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=connamara.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=connamara.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HytD/mv+"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-748e63d4b05so124084b3a.2
-        for <git@vger.kernel.org>; Wed, 18 Jun 2025 18:44:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=connamara-com.20230601.gappssmtp.com header.i=@connamara-com.20230601.gappssmtp.com header.b="npUesZ3H"
+Received: by mail-lj1-f176.google.com with SMTP id 38308e7fff4ca-30f30200b51so3476781fa.3
+        for <git@vger.kernel.org>; Wed, 18 Jun 2025 19:30:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750297492; x=1750902292; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=connamara-com.20230601.gappssmtp.com; s=20230601; t=1750300216; x=1750905016; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=l4Q5soJ+BXDrjG0YTOdji1h/de2yP5SM4TQKzjOypPA=;
-        b=HytD/mv+X01SJ1fC57rgbACHB5ZJXijzhyiS1bIoQYXFPD7V758ai5DNgo1nFzTCo3
-         QgfT35anwwm0GkffCf6HTp774UJRlmE07G2IexWa+Cvj8Pde+qJDdQY/JM/i6bSSLsQm
-         dsglKjMZ1XKZjE5lN4FNntHjRgfWcjknx322YYO2YNLP8ME9AYaPloG3JN7m+m6KLoAh
-         YhXaXbWsO37Grns2uXFVzNt4IgC2USjjM28fFNOhyPzHTK/d90JBdFO+eYZvsF2nay9/
-         45E9bIfUE7i563v2/9qnMBHavXZEQjR+i8oyUfYWht1avO26vn4jVL7t5M7Wr5p0JHQ1
-         wpWg==
+        bh=jIOAI5Y5T3owdKU51FfoJ7l+A5/Bjbz3D5YXgjBM1M8=;
+        b=npUesZ3HAjwMEA0BwbjohyL3j+PsAdEpMBmMx2YZDihe26Nipa4PTlbQImAzPzVOLB
+         /G4ur5GXARIQn5Viu2JQjjew1hPx8Yq9IO7IN9PaFTPq99M8LjbneA15j+weonQlXHIx
+         sO+wPA/6F8vHMHa+FN5ukbMemgjqg0hqaxGnS6qUVv5sWEr7OnavYhBpIfYJxt1KAn+5
+         L9v+68Y0NhQATxrelRfwJVEoE8CYhfyhGgpblhxBG5Danqvo7wVDbmdN4q3Y0KC8h+eB
+         ABWB0GYRSsBj6CsQ97TwSlLsxstEav1teWTOYAyKoqSe5rYiLy5evWB9V5u8i6ZHdKXd
+         sKgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750297492; x=1750902292;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1750300216; x=1750905016;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=l4Q5soJ+BXDrjG0YTOdji1h/de2yP5SM4TQKzjOypPA=;
-        b=fixkYVX095OdHmzQPQfWB7bn0j/dPcOuXxwi4qvhlqnkPGz8Auq5dB0sOifrvp2DBQ
-         tDcHrLuI62k2vErNUQvAIwepg5j2rgxmiZEYm3aG9bpb1/4bCYYW7887G35cI/b9AXZW
-         O+y+eKAS99EdVbv6V3Quhx3uzr7UhhzYiwiIO7xyiRTmsIwIl7TxK1CrHSldQjHYfNRL
-         04CYau57vvm3phnfyqA3vI7PZdJmnw89zmgtIagq++CdSQspHp9iNUN1Hss/jFaQIGEL
-         AKIczh71ZxUN/LXh1f7eQa1+sXeffs2Pm2TsWuFgr7fzakbl4RzkW+gaxqpeaGhv5/O3
-         9a/A==
-X-Gm-Message-State: AOJu0Yz6gaFoL83YpHDjYclCEjnfg/7WYThMJta4T9jovTVgyUGQPJpV
-	UuemW7xDFJW8YGdBi+3lLe5DKPQ3CFvDWryJz05gpqmE+68k+whPmMSA
-X-Gm-Gg: ASbGncuC9WbdScCceApdte6otLyZnnWV7m0GpyTLz3L+v4SVBma/Cu+E1y37k9oNjs/
-	72ly0aBh7vIAOE0n6wJhITemSHmchWCzSwHOEsjARCY92PwypcseiqpLrl14elwqsIQS26lJnuS
-	dcE2bIOBJUfg4WTc5Qux9bERrzg1gj1G5qHCkxbK9EYoz9bJJPZYcsIT826GABYCV/C6BvgFM3Y
-	4xw9ZzmfxiKz77vS588qOUkHQ8rMSWtH+rGhwFdWXP7RViIR6IvnestVxUo+ZgK3lqenExcxpw8
-	eqE6RDl1N5SO5OJdt4RUqICtTn50bxgQ9ftaO9u9b8+oKPyZC58guge4nYPo1eFPgx8WX45RoYn
-	9WhF9TPbqL9c=
-X-Google-Smtp-Source: AGHT+IEU/GTzsdkRw3tRwokRa3HsP5Zd5xCEkijJVe6pjeinGEU6i1ljFjx260kMBUfWuvO1nYyCtQ==
-X-Received: by 2002:a05:6a00:b95:b0:740:9abe:4d94 with SMTP id d2e1a72fcca58-7489d00473bmr28533839b3a.21.1750297491781;
-        Wed, 18 Jun 2025 18:44:51 -0700 (PDT)
-Received: from smtpclient.apple ([179.100.18.48])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74890006367sm12301109b3a.52.2025.06.18.18.44.46
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 18 Jun 2025 18:44:48 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=jIOAI5Y5T3owdKU51FfoJ7l+A5/Bjbz3D5YXgjBM1M8=;
+        b=cfLkQx0f4KSa0G+vet42wHgfsU01oPbzKhOpcW2RJmCXYkwkSQwAdCexenBssRrqiV
+         w/Igc3pIUegZtHj2It3hQZS9ab3/HaGJ3P+/ZsVVNep8WJyWMkU4uCDtCrqXIaWULO/T
+         382IqD6DUKkB1O7zegQf4/Kekc4pt+BOcNPxZMZfunX+DGHoZQi9qjJ4aZI1DO5Assw/
+         PR49Td5mGYw9cVfJEOlU6kqXfgTJychXM7AKVEYi4Q9znFkoak0zMMlrAphJjwcxC1w1
+         t4HhsWDpcB/vvA/UZTJf1yq+j9/VQjrMvCmJTPs8SMG16iXyWEMzhgn44rBnI5EIX8A6
+         UA7Q==
+X-Gm-Message-State: AOJu0Yx7vDDQY3gMcgxYoo6MSmbFQ7w4dUJPLl0dKjP1iykm6NxMGHOe
+	RSy1PiD0sH6gE/Q/CvHHTID05p6vZWYsb8ayqctaSNrzWgcQHFAWUkRTbzU0tSLXzckM+2CG730
+	g4zwTyPK20U8HE6NHHu9WO+pGb4c/pEkEYiju8abEW9GruWkZu40y/7c/Cwq67Pz2VtY+PDEhnV
+	ehymGdLuLs5Sfa+W6LIpEmARoIvjWGfCI=
+X-Gm-Gg: ASbGncvAa4N9TrUPq3OkY06oS6rlZeuqm/LP13U1MSEH1dUJWBPGOi6+FnHxl55X7WU
+	uFZVb6L7ITVYacSS9izLqTU+tMKkAogpzdV1GmVK72J4sxDdMC5qQokNklFRfUkLTFLJnO1XRAm
+	DwzTl+Z+/rhLskm00/l9L0pijiSDrcAFGbuGPoIhmiiCg=
+X-Google-Smtp-Source: AGHT+IGKMYit40R77myI3RmHiZn0FE1IzS3DkbHTIsgtb2m1Iyf0zsPB3FgtF4jXzajbJNsxa7+o3HB6SavJYS9+6XY=
+X-Received: by 2002:a05:651c:2203:b0:32b:47be:e1bd with SMTP id
+ 38308e7fff4ca-32b4a2d7388mr62098321fa.6.1750300215891; Wed, 18 Jun 2025
+ 19:30:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH 0/5] repo-info: add new command for retrieving
- repository info
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqfrfzz4xq.fsf@gitster.g>
-Date: Wed, 18 Jun 2025 22:44:34 -0300
-Cc: git@vger.kernel.org,
- ps@pks.im,
- karthik.188@gmail.com
+MIME-Version: 1.0
+References: <CAMq4opPBGT0Rv25DnEMHPjA=W_Ut2BDsN0KmxD2_xGTJa9erJQ@mail.gmail.com>
+ <CABURp0orQ-UCzDgJc=STPQZaaEEGwR0GM-GZq_Ty3BXBKYS2iQ@mail.gmail.com>
+In-Reply-To: <CABURp0orQ-UCzDgJc=STPQZaaEEGwR0GM-GZq_Ty3BXBKYS2iQ@mail.gmail.com>
+From: Grant Birchmeier <gbirchmeier@connamara.com>
+Date: Wed, 18 Jun 2025 21:30:04 -0500
+X-Gm-Features: AX0GCFuIGdP2asm6UjD1j8ulC0LbpR3SeKtIOZ_IOc6JGw79GPUHtKeLLT7NAiQ
+Message-ID: <CAMq4opMBpg4315Q8awm5SQAQa1vms=3KB+SiQkGtCF7thBPjHw@mail.gmail.com>
+Subject: Re: bug report: I was allowed to "git checkout -b" while mid-rebase
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <110154E5-666B-4093-ABB0-ABAF2E3E107D@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <xmqqikl3mtx2.fsf@gitster.g> <2EB72983-BA77-47C3-9331-B08760B092C4@gmail.com>
- <xmqq4iwkd68p.fsf@gitster.g> <C339DA52-F88A-4BC6-98DD-1586A1B4A175@gmail.com>
- <xmqqfrfzz4xq.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+
+(replying to both Jacob Keller and Phil Hord in here)
+
+Jacob Keller wrote:
+> One thing you could try is "git rebase --abort" to see if it can abort
+> the rebase and undo things. If that resets the index properly, then use
+> git reflog to make sure the ilogger branch is restored to the pre-rebase
+> state, or possibly use it on HEAD to find any intermediate commits/edits
+> you may have made while rebasing.
+
+Yeah... except I am partway through the rebase.  I was through like 6
+of 8 files that needed manual intervention.  Was hoping I wouldn't
+lose that.
+
+Though now that I think about it, I suppose I can copy the
+already-rebased files into a temp dir, then abort, then copy them
+back.  That would be an effective workaround.
+
+Phil Hord wrote:
+> You did pick up an extra branch "net5" which will follow your rebase.  Bu=
+t you should find when the rebase completes that both "net5" and "ilogger" =
+point to the tip of your rebased branch.
+
+Oh, really, that's interesting.  I'll see what happens.  (Tomorrow.)
+
+Thank for explaining the technical reason why "git checkout" w/wo "-b"
+behaves differently in this regard.  But this can't be an intentional
+design choice, or a behavior that even a moderately-experienced user
+would expect.
+
+-Grant
 
 
-> But I dunno.  When asking a single item from the command line, it is
-> perfectly fine to respond with a single value, but when you are
-> showing multiple items (especially without any "give me this and
-> that item and nothing else" specified on the command line, in which
-> case nobody knows in what order the value is given), I think the
-> calling script almost always wants to get key-value pairs.
+--=20
+Grant Birchmeier
+Director of Engineering, Connamara
+gbirchmeier@connamara.com
 
-Ok! I'm polishing my v2 and I expect to sent it soon. I already changed =
-the
-output to that format.
-
-> Also are you planning on later adding a long-running server mode
-> like "cat-file --batch-command"?
-
-To be honest, I didn't know about that feature of cat-file until your =
-comment.
-It seems to be a nice feature to add, entering the keys and printing the
-corresponding values.
-
-I'm adding a --batch-command feature and the removal of the dependency =
-on
-the_repository to a todo list to be considered in a future iteration on =
-this
-command, after delivering its basic functionality.
-
-Thanks!=
+--=20
+This email, along with any attachments, is confidential. If you believe you=
+=20
+received this message in error, please contact the sender immediately and=
+=20
+delete all copies of the message.=C2=A0Thank you from Connamara Systems, LL=
+C.
