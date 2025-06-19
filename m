@@ -1,150 +1,96 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3668E265607
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 13:38:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D878A1AA782
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 14:41:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750340307; cv=none; b=LomXLIc25mAM9qR0a4CSZ5qU1Wz6dfY84Eq+BHSFWL0E9o8YdBL0x+qjMloYG1736vCoj1XNtw+YyxL+R5kM6QtmXWVmgHnqL2ocSMjPyyY+xe0IhGinoFX9d0qFH+bc/F0Jh0X9enTRL30w64/d0zpp4gByPLBOkRrjMyWMScw=
+	t=1750344104; cv=none; b=U7XXHF+9qM1pYNIZgJDSxnPKxp+l5uLYqhzJyjgjHHz8H1v/ybifbXq2ePLsMAJlhZMJlsDCaWjPjDnxd6WGQysUDD2KrHnIqsks8LuUgS0mHaCYB7l72w+azZ32IJueZ3xEnObICaIArP1Pr0vCgxzDzC5Xnqn/k293Ti76T70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750340307; c=relaxed/simple;
-	bh=tMGbiJjLw6zE4df9oif5N49UsZPL6pQd2YbnyMSGp3s=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WcrUBBJe269YabGb5jCckiZd1DCCd8TuPuAlpRQCqL/ql/QywcgF8ooAmMhIgtTnZhqNQyG+gcMwukb1/dTfo5aFzyuY/6MQ+bR42x+rb60SSfULo1oqpzPtOd46m5iLZ+ctc3vMNFQay5Q/xt3i+qpoeSmM37B18K4z4e5917U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UsIiAS/8; arc=none smtp.client-ip=209.85.218.41
+	s=arc-20240116; t=1750344104; c=relaxed/simple;
+	bh=LwdB96THQ2wXOEXnZx4kDV3eXPX5LmLj/WnsFBPwPtg=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Qwkf5YOcD6OkODYScYs7EyFQW0EN1HCBu3eVcofTHIFTrsAl6xDkNT2tVcZ+83+Im2DdUhb62hEX+maNEnEUYwqc8oH73FEzsNilacI8XxLVp9QjMlp7/hvEsdWm0tngDARyaRi27GJ4hDiUuk93LM7iiYhjWv9kDy5KtNyIj1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UR4EYrEA; arc=none smtp.client-ip=209.85.210.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UsIiAS/8"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ad8a8da2376so123069866b.3
-        for <git@vger.kernel.org>; Thu, 19 Jun 2025 06:38:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UR4EYrEA"
+Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-7424ccbef4eso610456b3a.2
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 07:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750340304; x=1750945104; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1750344102; x=1750948902; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xKudSSnT5MJgefPFcwhg53ZhopRx6/to26xDQTmmkdQ=;
-        b=UsIiAS/8RH+QE/T8MVM8iWxTdRwJVKK1wdT/6d2bzQAONTGgi7NY2uL3O8n7uW+h3U
-         1CGO3SIu2SDTDXFlInALI3pCNYIsoVO5aQf6GgkiQ5kcIUuu8Sknam1N2xdD+hy4eGEL
-         UIC0TpBtbfDDdqrRRku4u06KzwYplLPPZPcDcaZ5YVZDr1Jb8/gXW/ppoRwxbFcv7KJz
-         hqnP1t66uHlb2xlxiB3x5jA9Pr5Kv4eHGWBistwpGwYZ2iVPcDcfx64av7Fc52KG6NHy
-         6klCDQU5kOOyyQ4QJjpqV9/E104WR28sC+Oay/LhFDWrNagKm6WxsA8pvIfLOaLXVXFf
-         o+hQ==
+        bh=LwdB96THQ2wXOEXnZx4kDV3eXPX5LmLj/WnsFBPwPtg=;
+        b=UR4EYrEAgUlR/pqC8H4HXFm26MKqus6PJ+DN8bVIU7+VDsL4WeRO/+cb7Y8RlPEYKf
+         P2pmlyJEg6w1UZjW315XgoGcIjsKQ0S9m2EhHDHxQ8QyGLZIcvBmdSlYcPCN1al1FHW1
+         XrI1W6WkaKvVfBbjxOgXhIwK53TT0VgaUwZx1vdmFrn6doWY6hGCt8L7hIsOhEl2RAvD
+         3mepZIeWSVKxeJmhkvB7agSw1Pj8bNpymn0wFuRry7ZTVegZXrTbOR+/sQZQeVEZW3T6
+         EK0SsBSjQ7xFZ4SoX53Sud4CRU8N7XRS1I/CaL+o1KgmqOZUORWXp/s1/emkNYAdRuh8
+         ztdA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750340304; x=1750945104;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1750344102; x=1750948902;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xKudSSnT5MJgefPFcwhg53ZhopRx6/to26xDQTmmkdQ=;
-        b=TgPpc2+QCJO9HGc5yYMaG50bGAUCzOYZU3q5MhIq3EsX5jKsvAvjKQKwxj7la+IAZc
-         XSoddzbJUgsUEw9isPTk4NcVDLrJQeQELp04bjbHgQgXC90qQO24T9CXn7Yaq5TLjMsm
-         5zFX2/oOt3uMG2YXtuyN4Vc0Z8s6riE4Uy20s7dp+VxNk2iqGnCdkOdkfHpJgxM/JpUz
-         9XFc6qMUb6M6qVuShviDFJMNZ9S7j9VW4LVTBg8qzDzHesTy54rXAX4dZ5ivtq/ZIO5Y
-         ydVIcDRYoS1iuOUT1rniEOUdf0IqRkRFlMOCXMU4y+ulxr1Yp+Tp//+xEhR0/l0kFcro
-         +MqQ==
-X-Gm-Message-State: AOJu0YyPL38XlkFruqYot1RCwYDDcEcAJK6WnnE/kHk/PsTULY9m7h7k
-	51hFY3fXgGn3Jk7VuOwkIqsxMJta9lAzSRYrBs5hcs53S4dA/oIfWtfB0EF9rbA9OZXGQfVPh4L
-	4HGFRWAjuTqzxNkGlnd30D9xkrOk0WdE=
-X-Gm-Gg: ASbGncvDGEZzaDs7PyHIsaCgsh/SSEnIZTBczftgR7lFVNnl05Xo68twJF/ABFSxBCV
-	uixmOF2OBKSicwfFBbZkMLdbw5poK0jiCoGMblhQ1q1NPhzq+eOGJnVZxKOmzbRNXyRtnmOPvTu
-	XrMiGh77GAqfFir9DmBhQbR3iARCz1by1wqf86VWL98a27pQ==
-X-Google-Smtp-Source: AGHT+IEW+qdeE/XKCo2LXX//KIRFO88n+ZYkmdr71q642ppwF6A5stO1pIibMJ8I6K6ETJ15IVo5JuU3wKR8Q3hWA30=
-X-Received: by 2002:a17:906:4fca:b0:ade:3b84:8ef6 with SMTP id
- a640c23a62f3a-adfad3748b2mr2069327566b.23.1750340304120; Thu, 19 Jun 2025
- 06:38:24 -0700 (PDT)
+        bh=LwdB96THQ2wXOEXnZx4kDV3eXPX5LmLj/WnsFBPwPtg=;
+        b=pGM7zYqLZR4DYguiMmePP/rLRSVXaQ93VQUILNrnDtXLzO2MWGWQMHFVUCOZDFa7OD
+         Xx13Ax25ENQu/UkT48/GHnXymDkV/dVmSwoFShH6NOfS9EkpwWyNjkCv1oBXOE2TVN/g
+         D61s/+AbUNbugkIxHT4S0qq/b+74l9zyIBjc3JKCNg2sYzim2vA8wTm9ub3dcmEakVde
+         Dk2N9kwhsQy+3Ze/2Gn9zaayO2axHAG65rplzTCWZTkvghY+6y6bxmTAb02740D3+kuh
+         nCITdA6y+liVUSUGZOtHB0omO647qIgaEarlp+4515NzV8kuMwxxvw8HJqrm0STEZH2B
+         6vFg==
+X-Forwarded-Encrypted: i=1; AJvYcCVBOtF0dLUvsZYfp8Qr5snZqI81xF4hltVC+aNVJZxVWLMuVOHkgDxQmeGTb7GGpU1Uumw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxANTBxjlmOX3PKu1TrU925RmKukeQo5fzHl8Oo+QCdIXfpsczr
+	G8qlGz9WOW+pWzzFYagGSZVT5V01xYdsgt13CVIQ7G5LIss4YFUMeT6L
+X-Gm-Gg: ASbGnct5wqeyWYzYG+HWrlU1JV1Boir4FqjcTrbcz+na77cIW3mOOohGRlKXzzEz7lZ
+	dmc1IzM5m9glZa+WPwi4YWFLUZ9lLPp9jncRb54J8uKri0KoCa2KKFBHbufAIJTaqTdOCsdxegr
+	4EV/DxP00GXJQF2IF3EE4fitUYytVRlgLvBuHuYJ/4EJ4vPq/zRtBfZbtWQ1i5VUO2+R8s4K8DN
+	1r21H6CuTRLatU9JXLAO7hA6ebRI134r8vlQZYJmCR0Afa7bCsMhTccp+V6mN+nMH+bdCF0bPh3
+	oTsMWTnM8LHjFn2JA10jNEFpMBY/sbjj2ZU3yulfWFxGwMZmOe9NnOPMT0loAe3EvRorHuCrBTn
+	lu+Xhms1Z7A08s5r6Mwm3UKObZOwLhp0pxZSoH25+r8mhNxFq1+B+E0Vh8RgaGn8=
+X-Google-Smtp-Source: AGHT+IHfagnIk0unYaYIXVq8Jyys3lnS6i8h93W2K9HXqjRMPjsZwqmQPI4Ll49xBaSVORo7SLjXTg==
+X-Received: by 2002:a05:6a20:a115:b0:215:f6ab:cf77 with SMTP id adf61e73a8af0-21fbd683f68mr33755418637.23.1750344102006;
+        Thu, 19 Jun 2025 07:41:42 -0700 (PDT)
+Received: from smtpclient.apple (awork062155.netvigator.com. [203.198.28.155])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2fe168ccafsm11059485a12.55.2025.06.19.07.41.40
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 19 Jun 2025 07:41:41 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <20250424203904.909777-1-christian.couder@gmail.com>
- <20250526103314.1542316-1-christian.couder@gmail.com> <CABPp-BFbF=rp6FZjyL+Fm5TqNZZdhfjS1sK-CBQ_=wtvFmfdLw@mail.gmail.com>
-In-Reply-To: <CABPp-BFbF=rp6FZjyL+Fm5TqNZZdhfjS1sK-CBQ_=wtvFmfdLw@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Thu, 19 Jun 2025 15:38:12 +0200
-X-Gm-Features: Ac12FXyB3qsjwAOkbhUAfvc0br4BLws-fmzyNIRYcois74wtdKQpwEoAz_JkJag
-Message-ID: <CAP8UFD2zO0Apy5jOrbFdBjq2F73mo3dbESaBqYCG2hsKBamFPg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/6] extract algo information from signatures
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [RFC PATCH 1/2] fetch-prune: optimize dangling-ref reporting
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <B83B89F8-8129-445C-B4F5-43C86512C114@gmail.com>
+Date: Thu, 19 Jun 2025 22:41:28 +0800
+Cc: Phil Hord <phil.hord@gmail.com>,
+ git@vger.kernel.org
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <A68FFEEC-0406-4280-BC7A-67C932141F41@gmail.com>
+References: <20250618211024.2332525-1-phil.hord@gmail.com>
+ <20250618211024.2332525-2-phil.hord@gmail.com>
+ <20250619040033.GB1801319@coredump.intra.peff.net>
+ <B83B89F8-8129-445C-B4F5-43C86512C114@gmail.com>
+To: Jeff King <peff@peff.net>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-On Mon, May 26, 2025 at 6:03=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> On Mon, May 26, 2025 at 3:33=E2=80=AFAM Christian Couder
-> <christian.couder@gmail.com> wrote:
+Lidong Yan <yldhome2d2@gmail.com> writes=EF=BC=9A
+>=20
+> This patch only adds sorting code to prune_refs(), and as far as I can =
+tell,
+> prune_refs() is only called once during git fetch. So I was just =
+wondering,
+> would it be problematic if we moved the string_list_sort() into
+> refs_warn_dangling_symref() instead? And if it turns out to be safe, =
+could
+> we perhaps even use strset in refs_warn_dangling_symref()?
 
-> I'd like to propose that the following are the possible uses that
-> users might have regarding commit signatures with
-> fast-export/fast-import (if anyone has additional usecases, let me
-> know):
->
-> (A) Make fast-export include signatures, and make fast-import include
-> them unconditionally (even if invalid)
-> (B) Similar to (A), but make *fast-import* check them and either error
-> out or drop them if they become invalid
-> (C) Simliar to (B), but make *fast-import* re-sign the commit if they
-> become invalid
-> (D) Similar to (A), but make *fast-import* re-sign the commit even if
-> the signature would have been valid
->
-> Note that in the above, there might be additional processing between
-> when fast-export runs and when fast-import does (e.g. by filter-repo
-> or a similar tool, or even the user editing by hand).
-
-I agree that they are likely to be the most important use cases, and I
-am fine with working on these use cases.
-
-> > To address this, I decided to focus first on extracting the hash
-> > algorithm from OpenPGP/X.509 signatures and the key type from SSH
-> > signature when checking signatures.
-> >
-> > To test that, I thought that it could be interesting to add a
-> > `--summary` option to `verify-commit` that shows a concise, one-line
-> > summary of the signature verification to standard output in the
-> > `STATUS FORMAT ALGORITHM` format, where:
-> >
-> > * STATUS is the result character (e.g., G, B, E, U, N, ...), similar
-> >   as what the "%G?" pretty format specifier shows,
-> >
-> > * FORMAT is the signature format (`openpgp`, `x509`, or `ssh`),
-> >
-> > * ALGORITHM is the hash algorithm used for GPG/GPGSM signatures
-> >   (e.g. `sha1`, `sha256`, ...), or the key type for SSH signatures
-> >   (`RSA`, `ECDSA`, `ED25519`, ...).
->
-> This sounds like it might be a nice feature extension to the
-> verify-commit builtin.  I don't see how it helps implement signature
-> handling in fast-export/fast-import, though.
-
-Fair enough. In the v3 and v4, I changed the approach and dropped all of th=
-is.
-
-> > If we can agree on a concise format output for signature checks, then
-> > maybe this format will be a good format to be used in the `git
-> > fast-export` output for users who are fine with signatures being
-> > checked.
-> >
-> > What do you think?
->
-> Maybe I'm missing something, but it seems to me that checking
-> signatures *in fast-export* would be a complete waste of time.  For
-> usecases (A) & (D), checking signatures at all is a waste of time.
-> For usecases (B) & (C), checking signatures in fast-export is
-> throwaway work because whether or not the signatures are valid at the
-> time fast-export runs, and even in the rare usecase where there is no
-> additional processing between fast-export and fast-import (such as by
-> filter-repo), the signatures would still need to be re-checked by
-> fast-import anyway.  (Note that a simple `git fast-export ... | git
-> fast-import` is *not* guaranteed to get the same commit hashes even
-> when there are no commit signatures; that only happens when the
-> history is sufficiently canonical).
-
-Yeah, right. In v3 and v4, I dropped this in favor of something
-simpler similar to what was in the v1 patch, and after that I plan to
-work on checking signatures in fast-import soon. Thanks.
+Ah, sorry I make a mistake. We can=E2=80=99t sort string_list in =
+refs_warn_dangling_symref().=
