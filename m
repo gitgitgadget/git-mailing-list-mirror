@@ -1,121 +1,85 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B2BE8633F
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 17:32:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2077246BA1
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 19:54:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750354323; cv=none; b=LHzNxj80uor0rtsorqE6duqPVwPcx3T2tUJ8Z+FFyVmjO/Danu6S6u0S5GLYl3pS+23ufcZPrlgQU4HF5+WFRuR14JvHp7SynZiVvpgZlthcCovdpLdgHzkABIWwNGB18ZHfUEjmpNH/hW2qcXlkQYYNi3qitRZfenG9Qs46CHc=
+	t=1750362892; cv=none; b=Dhpy7g1stJ6DQ+E2d6/OnTqabszfbiWbYgy90Ttymg2CCxZZ7mod3XqpJ01fqTyR5OHKtkxonAYnAgwg3YAkDj8ZEtC4bSXqMmWmYeS9bxf1PySlGKpoLcaYF2uM2Q44RgvZ9t4ZDynk4A6y2hDVUjh98jZFbPH6QvFjiuHEF7U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750354323; c=relaxed/simple;
-	bh=Cqn5Wee5sqrZTzbFPzb1exCtC1c5fSRaUSP4NZTlmgo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aUZd/1iC+vZofw9B+OmLKG0bycuRl3E2yP0kggDJE49vAI+leS4IP0NtB4XRIrxyney+g9Vnz+UhdFfy0kpVTzaWqoMGZ6JAhfHBiENAqxzyPdWIgEYmZV00O7Jb9hzyAtYeJgLXZhf0xzQSl67kPCRB9oEmm5NSsy5g+KEcdY0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pcWfZr9A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PVFxNW9f; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750362892; c=relaxed/simple;
+	bh=IXj02XiJr/Wvqr9Oyp+LepP+jEODFJHzEX/aVi5UUr8=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=tznucfjtgn7HDlTb7lmf7v7M1VsLosRYqagAUsJOXsYKMG4N5Gt7RI7TlyK44Jtdoy0bFPDXyQJAF1+76PyRm8vq7EJ2qs/RsY6uKkeTGkF84qxidk/RbC3Y9AlT1YztdM6fHg9DPETy3N/71P5XZeCdLlbbM/5QKSRMMn6iC5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCJHhFwY; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pcWfZr9A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PVFxNW9f"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6507711400E1;
-	Thu, 19 Jun 2025 13:32:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-10.internal (MEProxy); Thu, 19 Jun 2025 13:32:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750354320; x=1750440720; bh=k3fjCjU7fF
-	dr8xK7IWcetgTxJGDyUnw6atm+O1taNQM=; b=pcWfZr9As+S7+/YByimDUQGG08
-	yA8NOuq9ZkzejOjXipCWdj47Ow6tHc7hHYvzt8OXaDCXOBSv7jxhwzpAiUDpeGYd
-	LpN52wEpHHRl5P07KvFqAys2W7Q9U+H/+X0zxh+ruAFsSqyGbXDvG/Z8++dCIZlF
-	mksPNd1OFFfC6KQ6H4EY4LqVO93UmgVwa6Bik1kbPg0Osykv+zTRD+O3CjHhkGeK
-	s3lSPVBQkbKIrozfedArpNUP0wsoLDUhkfaWllcc3q68QHZhPHPkm2EVeHOopin5
-	49+fNwjHJgtcisqsDp2lu9vWiLOAUyy4kxdTeC4kJGRmFZjIrnn1HhYiL0Lw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750354320; x=1750440720; bh=k3fjCjU7fFdr8xK7IWcetgTxJGDyUnw6atm
-	+O1taNQM=; b=PVFxNW9fchtyJ9pJSqYV0W0aCqucOk3IFI2BqGlRGswF88C9xUg
-	ldjkWD8DnCc449wh9VtT7JndCQjETVQu+/k5UmnxUCKmSjQVHfX6wyjmiX0bQs/u
-	qgBnwVaWF7dPfYwgMMkci1fmXJoEZCdaAcShRi+ZenfEl6OYPXgmqqRptajPKqZX
-	kTVuHkgucuUpu/g1H6/GOuwuu5NIED6rUrViRqsURN7KN73mIj6Kw6EwAi64bhzp
-	UvcpK+DU+r6GTURlUQ+i073d+FtPDZRRdiJ0rstusagaRopOxb1c7XDEpM/Ru6ss
-	wQfJ48D6MnyqOXssnJm/U0Ue2SdSujOS5IA==
-X-ME-Sender: <xms:j0lUaLTRq11XfzdXHTRw-rQPMBhqCz7rHdKhN4TPiNLkNFkLBQnVqQ>
-    <xme:j0lUaMwddvL7saE08S0m6UP7wNsY8ERCTk9c1C7CbHbu50m6eU60Z5AsLREXzD2Xt
-    vplyX2fU-BiWluG6g>
-X-ME-Received: <xmr:j0lUaA1QgLJUGM_L51iH5Qnf7CirnaXuYMDFr66yLuK7GsrSYIEegHeej-cB_v7uOPsJGqYxGF5mCCnkJd2C9PPT90QO60mS4ldl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeiudefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghgsihhrtghhmhgvihgvrhestghonhhnrghmrghrrgdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:j0lUaLAvbZ8TRkZqjBZboiHCgrkJt0miB3E3SNvjrYruWqzcn-Ry5w>
-    <xmx:kElUaEgy2cy5lHYkvsLM2HMMi4HpNkiqNcU1hE8drK5ivABBN_lJvg>
-    <xmx:kElUaPq07aazfw4jbXYNYPhZ3nkr2jOsoMjIFFSI0myxRfDl-_ju9w>
-    <xmx:kElUaPg75Ljgi_vZ6cnVIfCndUkOKFVy1sy4a-78HxdR5MaLbhfTkg>
-    <xmx:kElUaF0i_Qm6SwGqY1EgmIDwQLAGf_d_j-PHyub0bIVYs0jPNN11Ntzq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Jun 2025 13:31:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Grant Birchmeier <gbirchmeier@connamara.com>
-Cc: git@vger.kernel.org
-Subject: Re: bug report: I was allowed to "git checkout -b" while mid-rebase
-In-Reply-To: <CAMq4opPBGT0Rv25DnEMHPjA=W_Ut2BDsN0KmxD2_xGTJa9erJQ@mail.gmail.com>
-	(Grant Birchmeier's message of "Wed, 18 Jun 2025 19:12:01 -0500")
-References: <CAMq4opPBGT0Rv25DnEMHPjA=W_Ut2BDsN0KmxD2_xGTJa9erJQ@mail.gmail.com>
-Date: Thu, 19 Jun 2025 10:31:58 -0700
-Message-ID: <xmqq34bvab8x.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCJHhFwY"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-313b6625cf1so765809a91.0
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 12:54:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750362890; x=1750967690; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=IXj02XiJr/Wvqr9Oyp+LepP+jEODFJHzEX/aVi5UUr8=;
+        b=kCJHhFwYU1jCYmR6zSgg3HVU31zrMjeDgH1UUSusJNpf3WpV1VMxAd0G3ggo29fGYO
+         lD5CEOeLK1ear1kIRMdSmMuxEEk12WiBUpquDsESo5R+MbsTSrF9hMOQsld8RoVE6eJD
+         +d0MH5Zw1GPW106ekk67liprzo0oVzqEH9XaaJ2rpYxIpdN/coZ97ZhRlIq7AAX7PopR
+         pReiBtVPW6iK+vcTbwV8hyX5G5grpgvHMWyPsMKCMtpBa0gP1A4nmQQNw45GZECfgnL+
+         zLNmNrub9/dyl5jCsoJGefNcTNvw334y+HMI93YjcjOXpXAZkCW7ceViaCWaHsvv7NPt
+         9VAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750362890; x=1750967690;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=IXj02XiJr/Wvqr9Oyp+LepP+jEODFJHzEX/aVi5UUr8=;
+        b=cQncfsJLwyIle+UepfnEVOx/1k9hhJtSSpt9mXURaLHy0DKa48oCz02cZM4ajPurht
+         9F3yZJqsRYfMq2DApxmTc5CT7nlkUzKOTgzE0ZcDtsA6GHWTC8sti0Hyk6qXOS9ir544
+         ixfa4HSck8Wzi/neZn5FM0DwPdkJNwkMrBn6BUrPtpGyHCh6gm73zZ1YZlwAjFpGDtRf
+         9G7ZOEIJib9+d1+YRN+4QnliWhDoswm3a1fAQhLLfugh6IrXGX/LGkwB1IAAT+VO97Uc
+         7IbIcVR9/XL9IYufyBfIVdqYitAFCXCnWg5+g2qUdxBOTjdrJdzenDeMH1sB/SBUU3xB
+         Yh3w==
+X-Gm-Message-State: AOJu0YwCytg7dmAxOgyrtvxheP1McXjBAKM6LWqOnsD97k1DAMgEkn6J
+	ZZ0LqXFFS5KW/10i/9ubXVPX9qC8//pqEF0zT4wOh5UD++xKhzAuPYMTFgt0o3HB1m6CV9/MyjZ
+	ijdMtCc5hBOk6qCSHX3qt+z2+xzHsl0IcUaAAJZU=
+X-Gm-Gg: ASbGncukVAa6v66Op1vzXXZAXbClhulYZMKFrKlBGD1znQMNOjYa8kovbXorLY2ldbN
+	Sd7PsLEgQv4FSTfI2F/4j+YQ2SwwBPf9bx+ATxhOSoW6b/PWZ11rZRo3qXRLfGH96NEsos64Js/
+	ifVAG4eL1zW1Xdbr4Zx3+xBWj2z76IfBFbgoj2YfmIV9W09AEXKWj4subk
+X-Google-Smtp-Source: AGHT+IFWQ4gZeDQNVdo/FHl8TGfLOCWJGYjXpmGhcg3mGDV6SZn6qbxR4G0HsvN8ACFIN30NLFg1eYzsyNa+khj2BAs=
+X-Received: by 2002:a17:90b:51c6:b0:312:e73e:cded with SMTP id
+ 98e67ed59e1d1-3158acdc1a8mr6715447a91.16.1750362889756; Thu, 19 Jun 2025
+ 12:54:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Fri, 20 Jun 2025 01:24:38 +0530
+X-Gm-Features: AX0GCFt_a7HL0CVLnnOozk8pgXA2T3XRKXwBTq9Fzb_fqDusotsMoCLxb1q2uKQ
+Message-ID: <CAE7as+agjJm=taLgeracuApiGR1YgP5ZQhoHroTk6=Z0E9ww9g@mail.gmail.com>
+Subject: =?UTF-8?Q?=5BGSoC=5D_Blog=3A_Refactoring_in_order_to_reduce_Git=E2=80=99s_?=
+	=?UTF-8?Q?global_state?=
+To: git@vger.kernel.org
+Cc: Ghanshyam Thakkar <shyamthakkar001@gmail.com>, 
+	Christian Couder <christian.couder@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Grant Birchmeier <gbirchmeier@connamara.com> writes:
+Hi everyone!
 
-> *What did you expect to happen? (Expected behavior)*
->
-> I would expect an error message and a refusal to execute the `git checkout
-> -b` command.
+I=E2=80=99m a GSoC contributor working with Git this summer. I=E2=80=99ve b=
+een sharing
+weekly progress updates on my blog:
+https://ayu-ch.github.io/
 
-I am not sure if it is such a good idea, though.
+So far, I=E2=80=99ve posted blogs for Week 1 and 2, and I=E2=80=99ll contin=
+ue to
+update it regularly throughout the program.
 
-I just did a short experiment:
+Feel free to reach out if you have any questions, suggestions, or want to c=
+hat.
 
- * randomly work and end up with many commits on 'master'; they are
-   about two independent topics A and B, so I want to separate them out.
-
- * "git rebase -i master" and edit the todo list to group the
-   commits into two sets, the commits about the topic A comes first
-   and then the commits about the topic B on top.
-
- * Arrange that before processing the first commit for topic B, the
-   control is given back to the end user.  If the last commit of the
-   topic A stops due to conflict, that is fine.  Or an explicit
-   "break" inserted into the todo list would work well.
-
- * When topic A's commits are replayed on top of 'master', do "git
-   branch A" and then "git checkout -b B master".  The history
-   recorded on branch A is now about the development of topic A on
-   top of master, without a trace of any topic B.
-
- * "git rebase --continue" and I ended up on branch B, which
-   recorded the development of topic B on top of master, without a
-   trace of any topic A.
-
-and it seems to work as expected as a handy way to clean up a mixed
-bag into separate topic branches.
+Thanks!
