@@ -1,62 +1,62 @@
 Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9076928DB4A
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 22:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED0228DF50
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 22:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750373884; cv=none; b=XXBb42SYtEzBnlbPv2uWrKGer/qQPzivAuJ7gX9oyLID8nEN4tCb1Y0AIVoQOQku7YQZSqG9hVpeXLjgKZcCKqhV/SojUxAbLZQrgstB8TSKhpTN60Rjm0kT7B4PBM9vmDgqetaLnpBnp0ET2TflxalSf/oYJ9gK3ibJNT7eg+k=
+	t=1750373886; cv=none; b=mddbCokImYMETtyDX/Xio7O84fpBut/KwK3mveamzZ/H2iVK3C2DTZJaJHpQY7WJlq3EWUa8TuoU7k9ICr3kIYMsYqpkyuFHeyZzMa0MCjBGMd7nnSursEe80giMt9B90wNSl3pECaLSDWcrTHe4MlG1lUnAZD7S9R/SZEg8H5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750373884; c=relaxed/simple;
-	bh=Sq1xtWbbQkHXEk/o/+EhzFU2YFA8LK9TQoL8RxtHcHc=;
+	s=arc-20240116; t=1750373886; c=relaxed/simple;
+	bh=cQg2Io/jICmU1eeCSyjvU7b+G3GqmYKIQ+d5oC3dDo8=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=OoD/pUlzCvRB0HUB7+fVCFzEyYqwRyFtN1aH23JHPruZ4junHLVmXmKkiTpSqsvsjmQDH4tGEZqmwNuXWSH7ctjvtciojDtt5e6cg75nHq4p5PjJES3ds0pZwdqcv2vdZTJzXHe0lSGxfySFh7qCkVUBdxvbJfcI7eas5lHhmJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wk/ahjAP; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version; b=j8ehsU8TWVo3Otw6ElCQ/JPVh1xljgXYDLP+LdW2ZRfsF8vB2NodIexj7YJH5EtTBTRbUu7rIHSs0sBDYobeJIITKL+66cIOkEnuq7Admrp4QQTWMhTFVuiPtku85lQ3jCscTlvrtCCYbzX8Leb6I74lmMqzxzLGZp538WaecC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NjRpiKTp; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wk/ahjAP"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-235ea292956so13008235ad.1
-        for <git@vger.kernel.org>; Thu, 19 Jun 2025 15:58:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NjRpiKTp"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-234f17910d8so11068175ad.3
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 15:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750373881; x=1750978681; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750373884; x=1750978684; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+7xHTKwtR/yCOqzJmyMDLSCEwdfQS54mFMKU170eZe8=;
-        b=Wk/ahjAPhWiPPbx+HOsxRCrlt6tEU3IW604NAEha28TUKP6wwPZpHWwNgrGfs276l+
-         17dcbVEOaUshMIeDKim7nnqB1uozaVbRLsA86SCkWcRmsndEH9V9XpUyWKta5KJsNmdL
-         RrtVLCH1HBlaDQ16byaREvO6p1KieciLGksLkytHglKyFjMAfeSmv7SDB5kU+yGYf/6O
-         hEpI2gXbyxsoFg/OjgOdhfgrgq+Ds4iCpfM2ZQjhT2MBUjzj8lVXtkF9AfDLM9NBMI/D
-         nkbEL3H4fsEeA3VqWVdu9zCjKIa4+xSAgwJ/H/BzJscZDHNjOrKQcwszBWTTEL+PQEWG
-         chHw==
+        bh=WoJSHP5VWQEwFRjcG5aKrsKS78EjIhASySUotcu5ci4=;
+        b=NjRpiKTpMw78U96E4DH7yrtDgQ7w5Dq8UlLMQzKL7LmQM5raJ6oXUHblr79R4f/Dn8
+         Qdm/uOYT0ZS9eH5Re51pSMH8T19CEVtyeFqeFPVXEPPfrpwzirQlcUzE+mvYvOB84AcC
+         IdTF02vkURk3AJna1f2AOIKNvcSUTalxhDupZaQDl7we3b/zG4NS00eDngmBMaz7zKEg
+         9uPi2GgfI1XuRBczhjP9+9zUlQ2NSVZB/BzG0zGtbBj8SdiAr/ZcNpRJ7Rgmhzh77q+W
+         YdTiH6MuF1mIYfXlnLigvLv+32nwtWxgikX2K42A7d85icNrLBaHa3LOjg7197TJirpn
+         fgeA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750373881; x=1750978681;
+        d=1e100.net; s=20230601; t=1750373884; x=1750978684;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+7xHTKwtR/yCOqzJmyMDLSCEwdfQS54mFMKU170eZe8=;
-        b=RKef7pnOO7KY1QVMWdFmrbQ3YQkSsidYj5ad2j5LPBh6YWYz8RS0HHJjC7alJVWp97
-         KvgnJvSt5/vNjQNbF4w7pgcWVd3DVQ5WhdM/6dO0dua7bl2lC9nX69AJAE+EP78pqk1N
-         Pyh7NyD92xdYbPbCEU0GsGohMDyYHo+1aUQ6hsv1hLfHS8RkDxMANgWAI0AfpjAqiMZ3
-         ogJ1ytd+bpVnsqcPpiuEAC3LkbtrLETEEYXF4q9S2pBhOO0LkKX/GuQHH9xNaTsI7a07
-         EIz6YeXicqDGDeUMLFHMp/Gkn+GZ/C5vdbwu2s7pfomeMxs5MZQ31yqsBR6Y5zl5Mnqw
-         gJIQ==
-X-Gm-Message-State: AOJu0YxKBx1oxlB/sV+lZh4mfFBNubzgssxmRN47C66nAiRRnhb6Fbjl
-	80NYy1bcy3vEcjvr/xnbQMeHT5JOcQi8xlxP/SkOEeUim1XwpHMzjnQfrWvajg==
-X-Gm-Gg: ASbGncsmSvufAzO3uVWOTO2EprNiDaPxDVS19MJcBhIUMOIEMHM7g/HFE07hBv3AUrl
-	EFhZoPC1YPrdLXoBYGi3qJ2slyiZG91/45Q57Kzp1MX+W54NCFlqPcLoLSMn+XKvz+Oe/e6pwhO
-	UX1Eed+36kHuPfxkhYSxaw/9zSSHi02LEtWzLwsZIi8qH8E5C5WMFsLE8bUT0OXkcKIJAFSIw9+
-	dwDHfmgP/gImQFH4I4mvP2mzZfu2NMbUfkAmHAmV1MjkfPj2YzkmQESuxrxBENVYZ+DZqDOIfZs
-	B19fsQXfRQ38TQ+N+GtOCG4VwQPZU8uq71LqPqqNVQg6nk+vWmQpU2bk8LXLl2+PqmXJaoyu1zD
-	mbSq9KZZtad0MFlE5PQ==
-X-Google-Smtp-Source: AGHT+IGCUPEAbsHO+wi/81zAKGk0r4rhNoEIKE7iTvtjFrKEKO2iCiX8hkXFu5oUHPHbh3/6P78g5w==
-X-Received: by 2002:a17:903:2306:b0:234:d7b2:2ac4 with SMTP id d9443c01a7336-237d980da56mr8989205ad.17.1750373881185;
-        Thu, 19 Jun 2025 15:58:01 -0700 (PDT)
+        bh=WoJSHP5VWQEwFRjcG5aKrsKS78EjIhASySUotcu5ci4=;
+        b=buyeoC/bRFrj1MYY7J1gu4YBBEFpLHMC+SAbGyn24tku+W9hcrI3bnaIlaao0sOFCN
+         m9hJCss0Vo4mVRDScYC8O4BqQ/cuKJv4nJCOwStc1nDnkj/B1ZdcFxHcJHZtIYCZZ0X3
+         qn6mrS4W+Cb8kYjPvhgzVZXVTNFRObY5DluHqEQs8bKvcKXdTwGwRJBbV860qhPxseu4
+         f4WKxd1ibh/c1nVcFnBCgf7pcZrvE9iWQ0hWZZ55x8XB08K4pmSw0lU4c42GvUwAnxOM
+         7gjaUEMJ2R8t08WraYfucNlBf0OTSeuth/MM22iiZWLzKUEtuGpzGVcbs0jnw2jrWET6
+         JjiQ==
+X-Gm-Message-State: AOJu0Yy2ngSk33zeHzh13mRL+n5oQeto12TS7UegNprORmoXyeDQHN2Z
+	K6N5+xHlhOwg8cVkL8Re82/D0hyOqW6VarHo1AExjrlLwvAFIy46M+001Pe3ZA==
+X-Gm-Gg: ASbGnctwStwPyxOh6BrIGTe6Hs5d4BW3w35qcJUChRBHW8kggP91VBwAWhf0HXD4PC+
+	c8Ttry0YSossWztvHY2Cddx9btUL/ZuMs54UIcMH3etKc+LbLM29Xhn1rcjp0tZnYYAU70BTdtW
+	TJ2O27OmXz1XwGFZmn7usqOQJpf8PeZlR+h/rEbN86dLcAdu2o9/HCLIglBhJaaaNNSMLpxpLps
+	GAWeGXmzvfiaoNJZ4RY4/6/1zwqqHiCKEb++ZisMiHm84FoUSj2ZxYsDuprb0/a77dK+dcchU85
+	iG01fz48aGfC7POYlCfmFI9f7vLoGcJvvZvifbD6tnfThFH8TGmtYPOuW+Sz/QI34TNaV0MH8o2
+	Uen6XbTTeZeS/TRHWQA==
+X-Google-Smtp-Source: AGHT+IGpSesRCj3CEK4AJAlewmQdDiSeYBWRUAucMBp32XEw/qXr29xaYaWQ43OllQSZFcuqpKNkvg==
+X-Received: by 2002:a17:903:1a83:b0:234:c549:d9dd with SMTP id d9443c01a7336-237d9ac3da1mr7182215ad.48.1750373884157;
+        Thu, 19 Jun 2025 15:58:04 -0700 (PDT)
 Received: from localhost.localdomain ([179.100.18.48])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8695440sm3470515ad.185.2025.06.19.15.57.58
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8695440sm3470515ad.185.2025.06.19.15.58.01
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 19 Jun 2025 15:58:00 -0700 (PDT)
+        Thu, 19 Jun 2025 15:58:03 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,12 +64,13 @@ Cc: ps@pks.im,
 	ben.knoble@gmail.com,
 	gitster@pobox.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving repository info
-Date: Thu, 19 Jun 2025 19:57:44 -0300
-Message-Id: <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+Subject: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
+Date: Thu, 19 Jun 2025 19:57:45 -0300
+Message-Id: <20250619225751.99699-2-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250619225751.99699-1-lucasseikioshiro@gmail.com>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,250 +79,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Hi!
+Create a new Git subcommand called repo-info. `git repo-info` will query
+metadata from the current repository and outputs it as JSON or plaintext.
 
-This is the second version of the repo-info RFC, and these are the main changes
-introduced since v1:
+Also add entries for this new command in:
 
-- The plaintext format now returns its fields in a key=value format
+- the build files (Makefile and meson.build)
+- builtin.h
+- git.c
+- .gitignore
 
-- The tests were renumbered to t1900, since it's a new command (the previous was
-  t1518, following the numbering of rev-parse)
+In option parsing, use PARSE_OPT_KEEP_UNKNOWN_OPT to allow the users
+specify after the flags the information that they want to retrieve.
 
-- The test function 'test_repo_info' now has a docstring, and it is more flexible
-  for using more complex repository initializations
-
-- The flag --allow-empty is now introduced in its own commit
-
-- The plaintext and the JSON formats are now introduced in their own commits
-
-- The JSON format tests, which depends on the Perl's JSON module, are now marked
-  with the PERLJSON lazy prereq, being skipped in environments that don't have
-  that module installed
-
-Some things pointed in the last review weren't implemented as I prefer to do
-them in another iteration of repo-info after having its basic functionality
-working:
-
-- Remove the dependency on 'the_repository' when calling 'is_bare_repository'
-
-- Add a --batch-command mode, based on the --bath-command flag of cat-file,
-  introduced in 440c705ea6 (cat-file: add --batch-command mode, 2022-02-18)
-
-- Use the category as key instead of only accepting category.key. In the current
-  patchset, `git repo-info layout` would equivalent to
-  `git repo-info layout.bare layout.shallow`
-
-I'm cc'ing my mentors and everyone that answered me in v1 and my GSoC blog. I'm
-still open to any suggestions, requests and questions that you may have!
-
-Here's the range-diff of this v2:
-
-1:  20a3d131c3 ! 1:  102b5ce90a repo-info: declare the repo-info command
-    @@ Commit message
-         - git.c
-         - .gitignore
-
-    +    In option parsing, use PARSE_OPT_KEEP_UNKNOWN_OPT to allow the users
-    +    specify after the flags the information that they want to retrieve.
-    +
-         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-         Mentored-by Patrick Steinhardt <ps@pks.im>
-         Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-    @@ builtin/repo-info.c (new)
-     +#include "builtin.h"
-     +#include "parse-options.h"
-     +
-    -+int cmd_repo_info(
-    -+	int argc,
-    -+	const char **argv,
-    -+	const char *prefix,
-    -+	struct repository *repo UNUSED
-    -+	)
-    ++int cmd_repo_info(int argc,
-    ++		  const char **argv,
-    ++		  const char *prefix,
-    ++		  struct repository *repo UNUSED)
-     +{
-     +	const char *const repo_info_usage[] = {
-     +		"git repo-info",
-    @@ builtin/repo-info.c (new)
-     +		OPT_END()
-     +	};
-     +
-    -+	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
-    ++	argc = parse_options(argc, argv, prefix, options, repo_info_usage,
-    ++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
-     +
-     +	return 0;
-     +}
-2:  f78058c25a < -:  ---------- repo-info: add the --format flag
-3:  3b2f534a69 < -:  ---------- repo-info: add the field references.format
--:  ---------- > 2:  1cc1184663 repo-info: add the --format flag
--:  ---------- > 3:  a329825387 repo-info: add plaintext as an output format
--:  ---------- > 4:  3b6c27b68d repo-info: add the --allow-empty flag
--:  ---------- > 5:  441b010175 repo-info: add the field references.format
-4:  5ad7e79f83 ! 6:  f39086ea86 repo-info: add field layout.bare
-    @@ builtin/repo-info.c
-     +
-      #include "builtin.h"
-     +#include "environment.h"
-    - #include "hash.h"
-    ++#include "hash.h"
-      #include "json-writer.h"
-      #include "parse-options.h"
-    +-#include "refs.h"
-    + #include "quote.h"
-    ++#include "refs.h"
-    +
-    + enum output_format {
-    + 	FORMAT_JSON,
-     @@ builtin/repo-info.c: enum output_format {
-      };
-
-      enum repo_info_category {
-    --	CATEGORY_REFERENCES = 1
-    -+	CATEGORY_REFERENCES = 1,
-    +-	CATEGORY_REFERENCES = 1 << 0
-    ++	CATEGORY_REFERENCES = 1 << 0,
-     +	CATEGORY_LAYOUT = 1 << 1
-      };
-
-      enum repo_info_references_field {
-    - 	FIELD_REFERENCES_FORMAT = 1
-    + 	FIELD_REFERENCES_FORMAT = 1 << 0
-      };
-
-    -+enum repo_info_layout_field { FIELD_LAYOUT_BARE = 1
-    ++enum repo_info_layout_field {
-    ++	FIELD_LAYOUT_BARE = 1 << 0
-     +};
-     +
-      struct repo_info_field {
-    @@ builtin/repo-info.c: enum output_format {
-      	} field;
-      };
-
-    -@@ builtin/repo-info.c: struct repo_info {
-    -
-    - const char *default_fields[] = {
-    - 	"references.format",
-    -+	"layout.bare"
-    +@@ builtin/repo-info.c: static struct repo_info_field default_fields[] = {
-    + 	{
-    + 		.category = CATEGORY_REFERENCES,
-    + 		.field.references = FIELD_REFERENCES_FORMAT
-    ++	},
-    ++	{
-    ++		.category = CATEGORY_LAYOUT,
-    ++		.field.layout = FIELD_LAYOUT_BARE
-    + 	}
-      };
-
-    - static void repo_info_init(struct repo_info *repo_info,
-     @@ builtin/repo-info.c: static void repo_info_init(struct repo_info *repo_info,
-    - 			field->category = CATEGORY_REFERENCES;
-    - 			field->field.references = FIELD_REFERENCES_FORMAT;
-    - 		}
-    -+		else if (!strcmp(arg, "layout.bare")) {
-    -+			field->category = CATEGORY_LAYOUT;
-    -+			field->field.layout = FIELD_LAYOUT_BARE;
-    -+		}
-    - 		else {
-    - 			die("invalid field '%s'", arg);
-    - 		}
-    + 			if (!strcmp(arg, "references.format")) {
-    + 				field->category = CATEGORY_REFERENCES;
-    + 				field->field.references = FIELD_REFERENCES_FORMAT;
-    ++			} else if (!strcmp(arg, "layout.bare")) {
-    ++				field->category = CATEGORY_LAYOUT;
-    ++				field->field.layout = FIELD_LAYOUT_BARE;
-    + 			} else {
-    + 				die("invalid field '%s'", arg);
-    + 			}
-     @@ builtin/repo-info.c: static void repo_info_print_plaintext(struct repo_info *repo_info) {
-      				break;
-      			}
-    @@ builtin/repo-info.c: static void repo_info_print_plaintext(struct repo_info *rep
-     +		case CATEGORY_LAYOUT:
-     +			switch (field->field.layout) {
-     +			case FIELD_LAYOUT_BARE:
-    -+				puts(is_bare_repository() ? "true" : "false");
-    ++				print_key_value("layout.bare",
-    ++						is_bare_repository() ?
-    ++							"true" : "false");
-     +				break;
-     +			}
-     +			break;
-    @@ builtin/repo-info.c: static void repo_info_print_json(struct repo_info *repo_inf
-
-      	puts(jw.json.buf);
-
-    - ## t/t1518-repo-info.sh ##
-    -@@ t/t1518-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-    + ## t/t1900-repo-info.sh ##
-    +@@ t/t1900-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-
-      . ./test-lib.sh
-
-    @@ t/t1518-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
-
-      parse_json () {
-      	tr '\n' ' ' | "$PERL_PATH" "$TEST_DIRECTORY/t0019/parse_json.perl"
-    -@@ t/t1518-repo-info.sh: test_repo_info () {
-    - 		test_when_finished 'rm -rf repo' &&
-    - 		git init $init_args repo &&
-    - 		cd repo &&
-    --		echo '$expected_value' >expect &&
-    -+		echo '$expected_value' | sed 's/^false$/0/' | sed 's/^true$/1/' >expect &&
-    - 		git repo-info '$key'| parse_json >output &&
-    - 		grep -F 'row[0].$key' output | cut -d ' ' -f 2 >actual &&
-    - 		test_cmp expect actual
-    -@@ t/t1518-repo-info.sh: test_repo_info 'ref format reftable is retrieved correctly' \
-    - 	'--ref-format=reftable' \
-    - 	'references.format' 'reftable'
-    +@@ t/t1900-repo-info.sh: test_repo_info 'ref format files is retrieved correctly' '
-    + test_repo_info 'ref format reftable is retrieved correctly' '
-    + 	git init --ref-format=reftable repo' 'references.format' 'reftable'
-
-    -+test_repo_info 'bare repository = false is retrieved correctly' \
-    -+	'' \
-    -+	'layout.bare' 'false'
-    ++test_repo_info 'bare repository = false is retrieved correctly' '
-    ++	git init repo' 'layout.bare' 'false'
-     +
-    -+test_repo_info 'bare repository = true is retrieved correctly' \
-    -+	'--bare' \
-    -+	'layout.bare' 'true'
-    ++test_repo_info 'bare repository = true is retrieved correctly' '
-    ++	git init --bare repo' 'layout.bare' 'true'
-     +
-      test_expect_success 'plaintext: output all default fields' "
-      	git repo-info --format=plaintext >actual &&
-5:  0295c19951 < -:  ---------- repo-info: add field layout.shallow
--:  ---------- > 7:  219b84f032 repo-info: add field layout.shallow
-
-Lucas Seiki Oshiro (7):
-  repo-info: declare the repo-info command
-  repo-info: add the --format flag
-  repo-info: add plaintext as an output format
-  repo-info: add the --allow-empty flag
-  repo-info: add the field references.format
-  repo-info: add field layout.bare
-  repo-info: add field layout.shallow
-
- .gitignore           |   1 +
- Makefile             |   1 +
- builtin.h            |   1 +
- builtin/repo-info.c  | 244 +++++++++++++++++++++++++++++++++++++++++++
- git.c                |   1 +
- meson.build          |   1 +
- t/meson.build        |   1 +
- t/t1900-repo-info.sh | 105 +++++++++++++++++++
- 8 files changed, 355 insertions(+)
+Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+Mentored-by Patrick Steinhardt <ps@pks.im>
+Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+---
+ .gitignore          |  1 +
+ Makefile            |  1 +
+ builtin.h           |  1 +
+ builtin/repo-info.c | 21 +++++++++++++++++++++
+ git.c               |  1 +
+ meson.build         |  1 +
+ 6 files changed, 26 insertions(+)
  create mode 100644 builtin/repo-info.c
- create mode 100755 t/t1900-repo-info.sh
 
+diff --git a/.gitignore b/.gitignore
+index 04c444404e..b2f3fb0047 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -139,6 +139,7 @@
+ /git-repack
+ /git-replace
+ /git-replay
++/git-repo-info
+ /git-request-pull
+ /git-rerere
+ /git-reset
+diff --git a/Makefile b/Makefile
+index 70d1543b6b..50e3a3cbcc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1308,6 +1308,7 @@ BUILTIN_OBJS += builtin/remote.o
+ BUILTIN_OBJS += builtin/repack.o
+ BUILTIN_OBJS += builtin/replace.o
+ BUILTIN_OBJS += builtin/replay.o
++BUILTIN_OBJS += builtin/repo-info.o
+ BUILTIN_OBJS += builtin/rerere.o
+ BUILTIN_OBJS += builtin/reset.o
+ BUILTIN_OBJS += builtin/rev-list.o
+diff --git a/builtin.h b/builtin.h
+index bff13e3069..cc6bc95962 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -216,6 +216,7 @@ int cmd_remote_ext(int argc, const char **argv, const char *prefix, struct repos
+ int cmd_remote_fd(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_repack(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_replay(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_repo_info(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_rerere(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_reset(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_restore(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git a/builtin/repo-info.c b/builtin/repo-info.c
+new file mode 100644
+index 0000000000..a5c43e253f
+--- /dev/null
++++ b/builtin/repo-info.c
+@@ -0,0 +1,21 @@
++#include "builtin.h"
++#include "parse-options.h"
++
++int cmd_repo_info(int argc,
++		  const char **argv,
++		  const char *prefix,
++		  struct repository *repo UNUSED)
++{
++	const char *const repo_info_usage[] = {
++		"git repo-info",
++		NULL
++	};
++	struct option options[] = {
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options, repo_info_usage,
++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
++
++	return 0;
++}
+diff --git a/git.c b/git.c
+index 07a5fe39fb..27a2b3569b 100644
+--- a/git.c
++++ b/git.c
+@@ -611,6 +611,7 @@ static struct cmd_struct commands[] = {
+ 	{ "repack", cmd_repack, RUN_SETUP },
+ 	{ "replace", cmd_replace, RUN_SETUP },
+ 	{ "replay", cmd_replay, RUN_SETUP },
++	{ "repo-info", cmd_repo_info, RUN_SETUP },
+ 	{ "rerere", cmd_rerere, RUN_SETUP },
+ 	{ "reset", cmd_reset, RUN_SETUP },
+ 	{ "restore", cmd_restore, RUN_SETUP | NEED_WORK_TREE },
+diff --git a/meson.build b/meson.build
+index 7fea4a34d6..06f2f647ba 100644
+--- a/meson.build
++++ b/meson.build
+@@ -645,6 +645,7 @@ builtin_sources = [
+   'builtin/repack.c',
+   'builtin/replace.c',
+   'builtin/replay.c',
++  'builtin/repo-info.c',
+   'builtin/rerere.c',
+   'builtin/reset.c',
+   'builtin/rev-list.c',
 -- 
 2.39.5 (Apple Git-154)
 
