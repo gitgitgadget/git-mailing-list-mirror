@@ -1,156 +1,109 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B340321B8F5
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 12:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA485229B29
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 13:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750335493; cv=none; b=Xjac0fykOe2jFG5MWBvGdFgMSEnNP3MOCmXRWu6gb7fqVvGMSiXd2pxMItkr65bj0oP7JshKAmY4vd4GxWTuwPaIpPBkuPlxW4+EyQ2KILrMHv0qVjhYpRJyzCyDn0Y4RN2PAaoHLDf26VMRcgZtdf4+XifCGJj61uSIOmFwUj0=
+	t=1750338500; cv=none; b=E9xUurNWJtwGjj3brwkoxr7FF9/QaPppaH5E9NiFQEbmntnl4FvD4gimSHkVypiEWdlwQenwfiWnrSAea39OIP3TjO6Mt0AQygzIu1JCODW/Tc831BP5qxmk6SEcw082QcVafVSf0QQaV64kdn82WrVsNbAc4OG460Vtw+CdFxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750335493; c=relaxed/simple;
-	bh=+QH6+SgykicBjzV7LdWetyqr+cFer5hVqXeyNho/gOM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cCJQK59cRYg9Qi0PN0sWtgU5BZP0ec+oiKXMT0bEA1KFjTZqgDjf1aABg5I1m/pI8hXx+y1BYDLaeJ4MmRXKFY285+xo8IA6yC88fjiLhN00sFyG98aek92oTeT7Ci3xnESvu0IVFmb2BMMl7eyFeXU9ULB7WtPd75q6z5IZxNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vth5PKjU; arc=none smtp.client-ip=209.85.221.175
+	s=arc-20240116; t=1750338500; c=relaxed/simple;
+	bh=9rHMd9JbGn6Mz/lB5igsdsjKvYlLV5fUeZ4K7XMXuxI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=n+qIJclqvgJH11xpPtPSSV/MewZiSr27eJrfUo3bwN0f6MiHOegwOkSsnWsVqYwNZM1Czhqf0vm9dlxxBa5/CPPjkOz1WpJr5FoLnhuPHEAmwfs08IsVBoLHVAeIIViNYtFBjAxRQzZM/uSHLEGLIZOTZrJf3So0iRYV87Wynkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hi2k9qHK; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vth5PKjU"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-525da75d902so206353e0c.3
-        for <git@vger.kernel.org>; Thu, 19 Jun 2025 05:18:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hi2k9qHK"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-747fba9f962so562821b3a.0
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 06:08:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750335489; x=1750940289; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NW1JdyozEhLFPYhgHFcPPkF+V6NuwfhHB/R6Ix0HKTI=;
-        b=Vth5PKjUrDQXi9dONhwx+0buEYkCpT/a6JCQi8bqISWjqc+enICdrZAAljNS/LBPw6
-         NYLdUnA3m+QoltQ2xi8VETlVTBwjLpyaPq8B0bGljwVpWodLD6j+b2/iKmA5IAJ39a0c
-         aDGs5XSaDxd1uGkwiIRS59mA/1zvr/dD/tVRiPs8mU2MeNZmWXCHaRIHdDkSbr1LfWxj
-         e3i8ZSe6S65lR3ORR8U9v+7YqhkbakcA40DhmlvARqTMFAqMibhVByGCg7l6CoxE9QfG
-         r4Tl1m1vUUG3MULbNw86sTxz4fg6T5TPcS6HbkLPJzEkUSMEns23PKoQtrIMjQQii3fd
-         0ApQ==
+        d=gmail.com; s=20230601; t=1750338497; x=1750943297; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vE7REZDISsxbk7tZGCZHRfAr1O+qkf07QEunpb3TcLw=;
+        b=hi2k9qHKBtCIezKPR3M/z1rnQBoAzAwT2jNZ2IjVeHjOzcUmQQ/58xd54q98/yQO/4
+         3D2F9k3jq/ljeFlIlNDqDccjaFNYPb1LjPb2bPD4h1Mt2WUbdXhvDdXzKt96PME5lrl6
+         Euwv3x9mLjXPEwlKd9K37psgoDzqxhZjXO1bZO4Ae9h/bOabZ1N/tQEO28mXEn6CPOzA
+         zP2YSROvwbIe1HrB1UCoTVKTHrV93okCrEtt5zrK1eeeg4w0Y4odcQRY0tkHLZU/BAsV
+         +JV2RBigqvGCbp9uszcksG96M3/S3lqyBtJ0ho8+w53W2ee8LbEPOmP+P8qwnTBm4Nzl
+         kC5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750335489; x=1750940289;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NW1JdyozEhLFPYhgHFcPPkF+V6NuwfhHB/R6Ix0HKTI=;
-        b=QjnZfkcYNX3WqHTf2Gj+FrBCmxJHk2kDwi2tOtKaMUlM9ZJlcSMh/zRviwSwpQb5QZ
-         frVtXeiJzR1UeVSosZxOPAcEoYObvW6Phi28g+CWraBJn2DzZwwYOzk/Q1/pupkp84Se
-         7b2QqltCWq/GXHUIoffW3NdSmkhjOIJQNyBkYQfmHpbMm+jUbfh2BSHGQZTpo7HX9udl
-         SM/lpoiu3Z8TkkQ8jU1S/wmXkR9FZp+rFazm7qiaK4JH8vRoGQ9mh+8uSkWe3lUFL5cu
-         lHEyBozOiJH7srp3/SA9wS6UcCNKFMfzSn9Bbi16DCoYNev8Ll1daEaKLMPNP/Utenua
-         ZULw==
-X-Forwarded-Encrypted: i=1; AJvYcCWNHLu1y/JWMP48+iAswrJAhmUsWtczxi/vuqWtseiQ0FN8RCuZVTbMq/esKH87xN9uK1k=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yye5yHhUiMHB1xACxIowlZcOStyeRDkwdxfzrVX74928/CNWB0+
-	Ne6sUr1K+cuci0qW6PV5NSZx6UasIFkfvQQrDFM2zHF1gdBFj/acBILri0rXZue0rhe32kgWjEm
-	Ta/R7loICli55KsrNenHgcMsCl5oIngLwmp4IeBphmA==
-X-Gm-Gg: ASbGncvUKmfHKMy0/6PfqWn2lvVdhVs7wjxj3eyDoQEZ3dmzVxk46tZ4j1VJ4ydI7Sq
-	JM2z9PllQxSUy6vny1F+Z4mW0UFoJ7yI+LXcQeNuO6pWb/nNJoUqMO2mWZNkpw8ZFk1KUufA4d9
-	Jg4qh7tZxFqVf86rwUpGPgmqcVYuW76WRPdcZbwYHa
-X-Google-Smtp-Source: AGHT+IG8ElhLy4Br22JKxaLwF5Iaff5JzK1tP/Q/i053JG4prwu0fT7BQe/RvI5N6qISZyPL52BJ1zBxKX97i0UZVms=
-X-Received: by 2002:a05:6122:251d:b0:530:6538:cb12 with SMTP id
- 71dfb90a1353d-53149c59675mr15208553e0c.11.1750335488404; Thu, 19 Jun 2025
- 05:18:08 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 19 Jun 2025 07:18:07 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250611134506.2975856-1-christian.couder@gmail.com>
-References: <20250519141259.3061550-1-christian.couder@gmail.com> <20250611134506.2975856-1-christian.couder@gmail.com>
+        d=1e100.net; s=20230601; t=1750338497; x=1750943297;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vE7REZDISsxbk7tZGCZHRfAr1O+qkf07QEunpb3TcLw=;
+        b=HdbykSZpBC4QHQV8T9SOWKsV+PCLVcTy6sMsByzY1uJRHlTWszzZRlMTXFmDoFo2sF
+         lAcW8PnkTJ4ejwnohiW3Nf3zxpY3YlDeh61EYEYdWpoU6gBgxhVhgT2g6k3phXeCwlME
+         6ekbQf/7BUuUVYqlHRJ8rqvDlWWl9Sx0sV6zv+Ix+9zEP1tlom14fzZ2iX1lq+bVVk89
+         0DgLfRNDJvfFhGFDLfsRjPLi6RDNt2FfU13mXfqMkZ+yaNBpaJHIBLrtSRhrbPeFZmPn
+         FuGjnwVE2p493X8laqywXGbBWB3nfggc6KuzMahySQvbFVYl7vg08o0iiETjtisfLeOO
+         btSA==
+X-Gm-Message-State: AOJu0Yy8tI40KrLgPv2EdvgFW1HR3Xg+NhR6OjqItREKkNEviPqDKDux
+	FdAptp/sLCwlpOVLDnpgqW1NtabvtV9DeslkY/oPhdU91pqyBTeE622sfGnJsg==
+X-Gm-Gg: ASbGncuHfo6jQJkRMm7F6x88hl0eqUOZPR81AGE2/OQP03vycIOnLkmIU+v1zxCCB2f
+	HkvbeDS/CSGTsFnqVbiPaFznROAyTWEdbis2mUC6nwxjdCdTahYBu+5W46XGzf3Zw40fC9bV5Jg
+	tm9MSGppylK3H1uHmFv5bE8PrM+ImqIU2y5FIBe1m0TEZqXqGCvwC5Gp8tMUwBkOqZlOH0FtjwS
+	6hiJAIfa1unSA6haqpJq+PCISQhElNYAEM0LZVy0ynAZDwJDT74WL6Fc0JBzmiRP6fLBLGmw8cC
+	E9QiHpgVj6qH6vfSbAedSPXtByDLiIWqKLg+V7cc5RR2LKQDFHtg80AbjfAqIhBKH/rIjmiQk2N
+	7PWbsDVrtWoLuMw4=
+X-Google-Smtp-Source: AGHT+IH/XI23ETfevjpMysXjCnHxgRpoZBOVCcQtiuYGXLBuqVpmSQcgnru/mNDZRhtQEtetrq5NYw==
+X-Received: by 2002:a05:6a00:3e28:b0:736:b400:b58f with SMTP id d2e1a72fcca58-748f746bf12mr5059487b3a.0.1750338497558;
+        Thu, 19 Jun 2025 06:08:17 -0700 (PDT)
+Received: from localhost.localdomain ([2601:640:8e80:3680:6060:cc4e:bcf:f4d2])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7488ffec9c6sm13138364b3a.9.2025.06.19.06.08.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Jun 2025 06:08:16 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>,
+	gitster@pobox.com,
+	newren@gmail.com,
+	peff@peff.net,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH] fixup! repack: exclude cruft pack(s) from the MIDX where possible
+Date: Thu, 19 Jun 2025 06:08:07 -0700
+Message-ID: <20250619130807.48057-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.50.0.53.g63c9ac04f7
+In-Reply-To: <52a069ef48f5a573c58a369b69827a40c7712247.1748473890.git.me@ttaylorr.com>
+References: <52a069ef48f5a573c58a369b69827a40c7712247.1748473890.git.me@ttaylorr.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 19 Jun 2025 07:18:07 -0500
-X-Gm-Features: Ac12FXwpVLpicJlqoToo3QedeKF3-qIJkWirXgBqimnWnviOPzRTe47Z3W8aOTo
-Message-ID: <CAOLa=ZT9c-4Wb3H8D_7TcUteyuyDLgZZAWFkg-CWHLOLoYOBvQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/5] Make the "promisor-remote" capability support more fields
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000066b200637ebbddf"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
---000000000000066b200637ebbddf
-Content-Type: text/plain; charset="UTF-8"
+In a previous commit, `grep -o` was introduced as part of t7704.
 
-Christian Couder <christian.couder@gmail.com> writes:
+POSIX doesn't have that flag as defined and while it is a popular
+one is not available at least in the latest release of AIX.
 
-> The "promisor-remote" capability can only be used to pass the names
-> and URLs of the promisor remotes from the server to the client. After
-> that the client can use this information to decide if it accepts the
-> remotes or not.
->
-> It would be nice if the server could pass more fields about its
-> remotes and if the client could use that additional information to
-> decide about the remotes by comparing it with its local information
-> about the remotes.
->
-> This patch series implements this by adding the "promisor.sendFields"
-> on the server side and the "promisor.checkFields" on the client side.
->
-> For example, if "promisor.sendFields" is set to "partialCloneFilter",
-> and the server has the remote "foo" configured like this:
->
-> [remote "foo"]
->         url = file:///tmp/foo.git
-> 	partialCloneFilter = blob:none
->
-> then "name=foo,url=file:///tmp/foo.git,partialCloneFilter=blob:none"
-> will be sent by the server for this remote.
->
-> All the information passed through the "promisor-remote" capability is
-> still only used to decide if the remotes are accepted or not. The
-> client doesn't store it and doesn't use it for any other purpose.
->
-> Note that the filter mechanism already exists for a long time and this
-> series doesn't change how it works. For example, it has already been
-> possible for a long time to have different repos using the same
-> promisor remote with different filters. See the existing partial clone
-> documentation (like "Documentation/technical/partial-clone.adoc") for
-> more information on partial clone.
->
-> The fields that can be passed are limited to "partialCloneFilter" and
-> "token".
->
-> On the technical side, we get rid of 'struct strvec' and we use
-> 'struct promisor_info' to store the data and 'struct string_list' to
-> store the 'struct promisor_info' instances instead. This matches the
-> latest suggestion from Junio.
->
-> This work is part of the "LOP" effort documented in:
->
->   Documentation/technical/large-object-promisors.adoc
->
-> See that doc for more information on the broader context.
->
+Use a sed equivalent that ought to be more portable.
 
-I've left some small nits, but mostly this version looks good to me.
-I don't specifically see a need for re-roll, but will leave it up to
-you!
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ t/t7704-repack-cruft.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[snip]
+diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+index 2b0a55f8fd..3df6b53cd3 100755
+--- a/t/t7704-repack-cruft.sh
++++ b/t/t7704-repack-cruft.sh
+@@ -795,7 +795,7 @@ test_expect_success 'repack --write-midx includes cruft when necessary' '
+ 
+ 		test_path_is_file $(ls $packdir/pack-*.mtimes) &&
+ 		ls $packdir/pack-*.idx | sort >packs.all &&
+-		grep -o "pack-.*\.idx$" packs.all >in &&
++		sed -n "s/.*\(pack-.*\.idx\)$/\1/p" packs.all >in &&
+ 
+ 		git multi-pack-index write --stdin-packs --bitmap <in &&
+ 
+-- 
+2.50.0.53.g63c9ac04f7
 
-Thanks,
-- Karthik
-
---000000000000066b200637ebbddf
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 397ef57e20a05374_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oVC8vNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNVE1Qy85M0ZKaVJoY3FyK3NmWTgzOHdvcE9YMUp6OQpIeTdxbURGbXBY
-MythSWh5S0lOMS9tU0RydCtTTXQ0TnlESHcxTlBmMStLS0pyYlZMZWRNdHBUcWdnTHRxejhTCm5V
-ZG9ndjY1S3Q1WU5zNkh4OThMaGlMZThZc240Qkg3UnRSenJEWFprd1dsNFNtdnNLM3Z0NzJwT0l2
-SHNWT2IKTG9lMlVKODVLWkFZZ2swNytGbDluSWNzRFk2dUJoaHdYMHhIcG1KekNBWEdWcjhRaE9N
-c0g0bWlWZkVpR0E1cQpBMExnRkoxUU9tcnZwUzBvdnJlZGtiUGNML2JCUCt6VGRqN25KQlpNV3ZZ
-THhaQ2RuUFFEalphZXVuVWl6NUxGClptS0VxVkpTNGQybmtZa1lScVJGdGl5dytocjNlUTI2KzVT
-aVpOL1FvTjdONVdLV3BDa3JiVnhiY3E0RzJTcTAKeWFIb2ZKb0k2Ni8ram1iQm1ZTjZxM2JFWkJm
-ZFhTMXhDVXNTQ3ZQdnVOK0dXbUp1MFQxVm9zcUkzNXhBVzRSMQpVM1FrOGhMUUthSm5lNFZtNm5R
-WVNEL1dKTmhJelFUNmxjYW1RbzdOUjVmbGJUQlBxQ04yaWJXT21vZ3BEQnA0Cmh1UThVZEVtK2NH
-b0VadHAzK3pORUNwQi9iNFFMdC9ZUkNaREUvYz0KPXZFWTYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000066b200637ebbddf--
