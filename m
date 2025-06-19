@@ -1,130 +1,308 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-io1-f46.google.com (mail-io1-f46.google.com [209.85.166.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2A430E843
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 21:31:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA0C630E852
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 21:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750368667; cv=none; b=B1915yZl4mKrhVeI+sgQX21p9NifCTo9HUkAz4Lehrja+s3D+facnZHLFUSRdbxlTgAWEd4nvIVcWbjJyHcqY1WNDQMBclDIb8jTrXLh8/DVpHGa/A8MnVlt5JeuUVUUQsQnyf6o7XbJShBUiK0NCqJTMHB6zgDUcyIW7VCEVew=
+	t=1750369486; cv=none; b=N3fEK2e6JOWtorYlv8uHrYQAt90PF6sCZWNcnChZnEKkoA1aNK5RYeISSRNLNZ5A+qOuZz4VtzxkdaZ357eS4/8+f1ej37pLk+L8qu8v1LHPOhQchUtBmQAq1r455AY3oQs8YGKCKP7WXuutC+fNzNcRWlrn39od7aomIwF7O2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750368667; c=relaxed/simple;
-	bh=+9W6Tc9CjXmbwgcOd4+E5uTWfj/z5wJV1YCZVrHkndU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iWSg/szZX55yr0trHYD6iGflba1QiTlrWRo0WzeLi5FHJAfyaZ4nl9Lb9lXMjcqs/EnKMtoNyNrkig+AjjVH14vIUT4HJ57GkkpAGu2lQT9XsOBaA755i1FuKDNnUuVHORLCt4Tgw4BlX+PfyBt6wD9kG36VRrjuwpFFNt20c+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BAMDFvXn; arc=none smtp.client-ip=209.85.214.182
+	s=arc-20240116; t=1750369486; c=relaxed/simple;
+	bh=SyB+bwksYnZo3R0BAZj1ASigb6jTP+H/N110B5iy0tk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UgCxj/05VVagV9Xi0H8Vvd0LMYUzBhrfxhO8jSpc2NpEFNhkATGA+cvYYa9fm5kRAHllUZVZ4jurbBdvR4qgf8i0BPxNb0/r061XVbGcLmI1eWYRADpQwZy0X4DV+shMjf81M/zSDwtMqjv+cXhBue4eTxOpTcgalpO5xyB1RVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zp/K35Vt; arc=none smtp.client-ip=209.85.166.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BAMDFvXn"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-235e1d710d8so16804835ad.1
-        for <git@vger.kernel.org>; Thu, 19 Jun 2025 14:31:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zp/K35Vt"
+Received: by mail-io1-f46.google.com with SMTP id ca18e2360f4ac-872886ed65aso100633139f.1
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 14:44:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750368665; x=1750973465; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=f1Zl4juqclnernHXCrRu61+t9TZsprbOmTS/TutqO38=;
-        b=BAMDFvXnIZygBS4J6YugW2yf1zU5MICayT5cKsBp38XfsCf7RdKa4V0uJZtZ+abukj
-         v9DBSSawXUrEGEDBQ03pEEza+dcItwXr5h31igKqj9mgGRt3xbVZbM0WsVxgMukEp48R
-         hwvqjujiucdOTrn8nVZsMtTLxvnFPNegDu9TFBnh0D8AVc149SHajgtDbEjYXtTIEPd4
-         Gn+wBK9SFF5DqiMSog3MvLXiOt20TeQ/wJWa5fXtB/0wfwZf6ULSpPrIkbmtenez4KrV
-         cOjVOZPE4ptpqCjvPXQxIdrTzK4kHE74Zj/YU0DPvkbnHeV+2qNgEoAL45mMmXmEe7w4
-         Sw0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750368665; x=1750973465;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1750369483; x=1750974283; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=f1Zl4juqclnernHXCrRu61+t9TZsprbOmTS/TutqO38=;
-        b=KXZYOHJqb1NmbksKetAvRmnP0MrHg/qp6N94PdVNNRuPoTnbWhXPYuD86NP4Vdv4Kj
-         9V4stQTHY9km/F0lWPPz4GLu3I5thLYY2NcDHSb9upx+i60B2cwCMAd/IExzsYINZAbu
-         H7M6gGjqN+rZQDUbh7kSJ+IcaPXztiTU1XRm5WlFdgdFnvdUOGngvX4Wx0OfZ8rj3c1d
-         1XJckL0QM614yA5xXwjNZeilPb3tyvIPS0Sxw6exSy0lHfK96xBFOOsfQ66pT8ZyNl5E
-         T3ApXW3gFqyhYdzHMG4MEJmcx8I9v88F6Ec32SiIqqUE22esvR7+iCRTkMuW0PFg9UCb
-         BRZA==
-X-Forwarded-Encrypted: i=1; AJvYcCXsxzoyChK8yFp0hiTwJ5W+jL8z7wv1UkiFhB01/aF2C4gXPafDfgx8rUb8Ez/7TvWC8NQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxH1mHaLgqa8MhgpHTxJtAbsjv6YEYvy68T5PNRZF1gYlfDOxce
-	c8bP7ZB2/RWNPQbZZGSCMPskwIJ8zIqULhW9lmaOwDepopFbHqQxzwqR
-X-Gm-Gg: ASbGncuv3NRfpdx5CBenyVB9kYe39EXnCsidV4f+/l5XcrBC7Bl5vGWMzATnYop6bIs
-	Vs8m4RLD2UDb63DOzPZMosI+Rfr3+S3adRwBiCeJ/vnuqfQ7Z1eCZ/OCVZ3jmed+m/0YVurZ3Tq
-	FwjcHzMAopzGNCd0xaE+WRVrF3ErkPdDqwuXBC6k1Vbghy52V90+3o2D27WxU8E+KnMzah6XvVN
-	eFCXO79JKii6/JkiLxwcj88UDN79D5hoo1/RoT3nsX7B9qiHjRFMQC9sWUgzNt4kgJI3cH/vX5o
-	CgFxQlSgTe5ylP3pwumEiygzwVBz6DS1voGI6bAFZ3A=
-X-Google-Smtp-Source: AGHT+IHLZD1A980GFLczgTEYwAeYYBaiaJTRP9kessCgc+3v7SK9xqL11/yGuXNhNJ4KymnUG4zEHg==
-X-Received: by 2002:a17:902:f68c:b0:236:7079:fafd with SMTP id d9443c01a7336-237d98fc308mr4885395ad.36.1750368664885;
-        Thu, 19 Jun 2025 14:31:04 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::53de])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8640dc6sm2520595ad.146.2025.06.19.14.31.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Jun 2025 14:31:04 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org,  Karthik Nayak
- <karthik.188@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>
-Subject: Re: .clang-format: how useful, how often used, and how well
- maintained?
-In-Reply-To: <aFR-Yf0PMj30ex2O@fruit.crustytoothpaste.net>
-References: <xmqqmsa3adpw.fsf@gitster.g>
-	<aFR-Yf0PMj30ex2O@fruit.crustytoothpaste.net>
-Date: Thu, 19 Jun 2025 14:31:03 -0700
-Message-ID: <87msa3quzs.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        bh=arGnD7qRL98Gt7kRiAu/6d/AvihLmFhr167lJeUFn0g=;
+        b=Zp/K35Vt3ym9F7kF51isbUasbEVIGGd5Vv6rHiJwD49y4TVtlA1H0FKKeU9mfcecB8
+         hbJVu3EOBubdsoSRLt0rYYt/i2dv0hgD9awUATskCp9s6EckgtBLLdhlKjGuj5cNBx4C
+         WogD/u/X57/HBE36Gsfs9QxxzIA+7q1HRCLUZfSnbCdScECx1ecr74fed/ymZ6E6Glze
+         F8Y7gBMEebpngkFll0wMzpf1Ey6ydXnF34pE7LBelEn6MLxK8DrI5n/4IjB4pOuY75Cv
+         lDFss8eICrXb8Sel0qxknylpinkNcJGTnmTWTJ+0vMc1PHheqhsuS1PTy5JzL+oMjw6w
+         u0vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750369483; x=1750974283;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=arGnD7qRL98Gt7kRiAu/6d/AvihLmFhr167lJeUFn0g=;
+        b=tWl17FiRbqMHc07Mx9BKdx4XHjg2YSFdTGJChFqBhIsQDNQ+KW3CF2M4O6aACDxioY
+         uyP2oz9SwTSeTblyhGUkbsaHzFLbni5ot5Bhie51by8udVTlz0Uuw8U8RVRepNTXRfB/
+         aFk1MzWwNC5vLznFB1ktxWdGglk8hNBVTOrkKDaXxWw7e3J79fnux3xAdcoi2y+P8RRe
+         cVdtD2rbyJ86yIMQBeL2CyXIiW8sP8CYExyffRbpW7/nQh7/8Ev7CsZsZwIK4Tn69pwx
+         2mfTdPk3qmGS8A3uTFoA8PL5hsJbqKchLO5Iya/5/8kg3I3qSi2R10CxvAEgcNB0OSAo
+         iioA==
+X-Gm-Message-State: AOJu0YxqAjWG44N7jCVgCZz98Awt/zvnFRdNcMLrRr7FhIbjlfvqVw3N
+	qO388L4BG82M7RJHwEZeGkyxz7BoA/FIwBWTLujy6U6tFmWtxw0nBflr6mWxkKl8iQXDNGmuZo7
+	Ar3Y5tZNYPNTX6RmQ06CwsmOLjALTF4s=
+X-Gm-Gg: ASbGncv5y+uWHwHKt5HslWG8tNiYd2eExASdNDYS/SbC+1XmvDUO5j04AyBSbHxyIDv
+	OmQCVGwQJydMUu2B/+wK1f62t1LlnfcTaq+kH+MlL2mU+4Uao5hZ9MOUSJ3nNswXH66+YX9iWCP
+	NHkP998lM0/8/D9Qx+evSorrQhg98obRppCAdWV22OhungXY5U5kKVEG7rkPfJufERlHEUeVSoQ
+	QNt
+X-Google-Smtp-Source: AGHT+IEjkOhkviqQNWT/1jl1bX8bcvTdR9np35h2QtNGj4vJZU5iiVjEYVshUAvYDLXQhlgwHX63S+8MaFJG1VgAMns=
+X-Received: by 2002:a05:6e02:370f:b0:3dd:bb64:d850 with SMTP id
+ e9e14a558f8ab-3de38ca4f1cmr4719745ab.11.1750369482657; Thu, 19 Jun 2025
+ 14:44:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250618151821.528627-1-christian.couder@gmail.com> <20250619133630.727274-1-christian.couder@gmail.com>
+In-Reply-To: <20250619133630.727274-1-christian.couder@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 19 Jun 2025 14:44:30 -0700
+X-Gm-Features: AX0GCFveoZEO9F4wQoCHG64R7KQ-gVdnfKPE3yrI4S9F3pVk8RP_aY-gd8FtA7w
+Message-ID: <CABPp-BF6ZjfJ2MSHkhXQwv00=63qG3wLU8ie=_WVxnWTffFpRA@mail.gmail.com>
+Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
+ output format
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> I agree most people probably do not use it, probably for the reasons I
-> don't.  I don't know if clang-format produces stable output: that is,
-> using a newer version of clang-format with the same config does not
-> result in diff changes.  If it does, then we can simply pick a set of
-> style configs and a minimum version and tell people to apply it.
+On Thu, Jun 19, 2025 at 6:36=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
 >
-> We can then check it in CI and if CI fails, we can output a
-> base64-encoded diff (since it's going to have lots of whitespace, base64
-> encoding will be practically useful) that the author can apply.  Then
-> people using esoteric systems without clang-format can simply apply the
-> diff from CI.
+> A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
+> signed-commits, 2025-03-10), added support for signed commits to
+> fast-export and fast-import.
 >
-> If clang-format does not produce stable output, we're going to have a
-> bunch of practical problems.  I use Debian unstable at home and I know
-> Peff does as well, but I also use Ubuntu 24.04 at work.  Some
-> contributors use Fedora or Cygwin, and we're all going to have a giant
-> problem picking a consistent version of clang-format to use such that
-> people don't have to compile their own or use external packages. Perhaps
-> we can create a small script that does the tidying in a Linux
-> Docker/Podman container in that case.
+> When a signed commit is processed, fast-export can output either
+> "gpgsig sha1" or "gpgsig sha256" depending on whether the signed
+> commit uses the SHA-1 or SHA-256 Git object format.
+>
+> However, this implementation has a number of limitations:
+>
+>   - the output format was not properly described in the documentation,
 
-From what I remember, clang-format is not at all stable between
-releases. Newer versions will produce different output than old 
-ones (usually better, but that does not matter).
+Thanks for working on fixing this.
 
-For the reasons that you already mention, it ends up being a chore, in
-my opinion. I don't think we should expect everyone to build/install a
-clang-format version that is newer or older than what their distro ships
-with, just to align the output with the project.
+>   - the output format is not very informative as it doesn't even say
+>     if the signature is an OpenPGP, an SSH, or an X509 signature,
 
-If you wanted to be help avoid badly formatted patches adding a .vimrc
-and .dir-locals.el file would cover most people, I think. For Emacs, the
-.dir-locals.el would be something simple like:
+Why would it need to say what type of signature it is?  Don't the
+ascii armor lines have e.g. "----BEGIN PGP SIGNATURE----" and "----END
+PGP SIGNATURE----" around it, which fast-import can read as well as
+fast-export?  Is the idea that we strip those lines and now need to
+replace the information we lost?
 
-    (c-mode . ((c-file-style . "linux")
-               (fill-column . 80)
-               ((indent-tabs-mode . t))))
+>   - the implementation doesn't support having both one signature on
+>     the SHA-1 object and one on the SHA-256 object.
 
-At least with Emacs it is easy to type things that break these rules. So
-one can avoid diffs like this, which clang-format would produce:
+Not sure I understand this; more questions around this later.
 
-> -		/* Warn on any additional signatures, as they will be ignored. */
-> +		/* Warn on any additional signatures, as they will be ignored.
-> +		 */
+> Let's improve on these limitations by improving fast-export and
+> fast-import so that:
+>
+>   - both one signature on the SHA-1 object and one on the SHA-256
+>     object can be exported and imported,
+>   - if there is more than one signature on the SHA-1 object or on
+>     the SHA-256 object, a warning is emitted,
+>   - the output format is "gpgsig <git-hash-algo> <signature-format>",
+>     where <git-hash-algo> is the Git object format as before, and
+>     <signature-format> is the signature type ("openpgp", "x509",
+>     "ssh" or "unknown",
+>   - the output is properly documented.
 
-I assume this is similar for vim, but I do not use it enough.
+Perhaps this was discussed in an earlier round, but if so I either
+forgot or missed it.  What value does <git-hash-algo> and
+<signature-format> provide?  How are they intended to be used?
 
-Collin
+Is the <signature-format> merely self-inflicted pain from stripping
+the ascii armor lines?  If so, would it make more sense to just
+include those armor lines as-is in the fast-export stream and let
+fast-import process it?  Then we wouldn't have to introduce all the
+outputting and parsing of this new <signature-format> field and worry
+about the new special "unknown" status.
+
+Is the <git-hash-algo> due to the fact that we have separate `gpgsig`
+and `gpgsig-sha256` commit headers and we want to use that information
+to avoid writing these headers to the wrong-sized objects (and/or to
+avoid checking whether the signature is valid on the wrong-sized
+objects)?  If so, could that be spelled out in the docs as well,
+especially since it appears that the intent of these headers is left
+unimplemented due to not changing fast-import to do anything with
+them?
+
+And if <git-hash-algo>'s purpose is to ensure they are only used when
+writing same-sized object as what was exported, then...isn't that a
+bug?  This series was started because people wanted to be able to do
+things like keeping signature even when they are no longer valid or
+resigning commits that have a no longer commit signature (among other
+uses), but that would mean that if someone exports a sha1 repository
+and imports it as sha256, we don't want to ignore the fact that the
+sha1 commit was signed for those usecases.
+
+If, however, the <git-hash-algo>'s purpose is merely as a performance
+optimization that fast-import can employ in the cases where it checks
+for signatures being valid, so it can avoid checking when it know the
+hash size isn't even the same, then it could make sense.
+
+But, short of that performance optimization, it's unclear to me
+whether we'd lose anything by simply exporting "gpgsig <contents of
+signature header from original object, including the armor lines>",
+and dropping the <git-hash-algo> and <signature-format> lines
+entirely.  Am I missing something?  (I may well be; I don't know much
+about signing stuff beyond the very basics, and don't mess with signed
+commits or tags much myself.)
+
+[...]
+> There are no tests in this v4 and in v3 with both a SHA-1 and a
+> SHA-256 signature on the same commit though, as I am not sure yet how
+> to best generate a commit with such signatures. Suggestions welcome!
+
+If no suggestions are forthcoming, it feels odd to implement this with
+no tests.  Would it make sense to leave it out until we know how to
+test it?  (More questions on this below...)
+
+[...]
+> diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-=
+export.adoc
+> index 43bbb4f63c..64198f2186 100644
+> --- a/Documentation/git-fast-export.adoc
+> +++ b/Documentation/git-fast-export.adoc
+> @@ -50,6 +50,23 @@ resulting tag will have an invalid signature.
+>         is the same as how earlier versions of this command without
+>         this option behaved.
+>  +
+> +When exported, a signature starts with:
+> ++
+> +gpgsig <git-hash-algo> <signature-format>
+> ++
+> +where <git-hash-algo> is the Git object hash so either "sha1" or
+> +"sha256", and <signature-format> is the signature type, so "openpgp",
+> +"x509", "ssh" or "unknown".
+> ++
+> +For example, an OpenPGP signature on a SHA-1 commit starts with
+> +`gpgsig sha1 openpgp`, while an SSH signature on a SHA-256 commit
+> +starts with `gpgsig sha256 ssh`.
+
+I had a number of comments/questions on this above already.
+
+> ++
+> +Currently for a given commit, at most one signature for the SHA-1
+> +object and one signature for the SHA-256 object are exported, each
+> +with their respective <git-hash-algo> identifier.
+
+Wait..does this mean fast-export is obligated to walk over both all
+sha1 commits and all "equivalent" sha256 commits when exporting a
+repo?  I thought most operations on the repo would walk over only one
+or the other; walking over both seems to be against the spirit of the
+"fast" in "fast-export".  Am I missing something?  (Possibly related
+question: Does "git log" bother walking over both, or does it only
+walk over one?)  Even if this really is wanted by some users,
+shouldn't they manually request it rather than making exports slow for
+everyone else by default?
+
+> +A warning is
+> +emitted for each additional signature found.
+
+Why?  This seems odd to me.  Why not merely export them all, and let
+fast-import throw warnings or errors if it sees more than one and is
+not yet prepared to handle multiple signatures?
+
+> ++
+>  NOTE: This is highly experimental and the format of the data stream may
+>  change in the future without compatibility guarantees.
+>
+> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-=
+import.adoc
+> index 250d866652..db5e5c8da5 100644
+> --- a/Documentation/git-fast-import.adoc
+> +++ b/Documentation/git-fast-import.adoc
+> @@ -445,7 +445,7 @@ one).
+>         original-oid?
+>         ('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
+>         'committer' (SP <name>)? SP LT <email> GT SP <when> LF
+> -       ('gpgsig' SP <alg> LF data)?
+> +       ('gpgsig' SP <algo> SP <format> LF data)?
+>         ('encoding' SP <encoding> LF)?
+>         data
+>         ('from' SP <commit-ish> LF)?
+> @@ -518,13 +518,32 @@ their syntax.
+>  ^^^^^^^^
+>
+>  The optional `gpgsig` command is used to include a PGP/GPG signature
+> -that signs the commit data.
+> +or other cryptographic signature that signs the commit data.
+
+Good catch.
+
+>
+> -Here <alg> specifies which hashing algorithm is used for this
+> -signature, either `sha1` or `sha256`.
+> +....
+> +       'gpgsig' SP <git-hash-algo> SP <signature-format> LF
+> +       data
+> +....
+> +
+> +The `gpgsig` command takes two arguments:
+> +
+> +* `<git-hash-algo>` specifies which Git object format this signature
+> +  applies to, either `sha1` or `sha256`.
+> +
+> +* `<signature-format>` specifies the type of signature, such as
+> +  `openpgp`, `x509`, `ssh`, or `unknown`.
+> +
+> +A commit may have at most one signature for the SHA-1 object format
+> +(stored in the "gpgsig" header) and one for the SHA-256 object format
+> +(stored in the "gpgsig-sha256" header).
+
+Why?  Does this mean hg-fast-export or hg-fast-import (or a
+jj-fast-export or jj-fast-import) wouldn't be allowed to specify
+multiple signatures?  The fast-export and fast-import streams are
+often used for interoperation with other VCSes, but as far as I can
+tell, you're encoding a restriction on what's allowed that isn't an
+actual problem for git but just a not-yet-implemented state.  If I've
+understood correctly that the restriction is merely due to the current
+implementation, perhaps the wording could be changed to not list it as
+an encoding restriction, but as a current fast-import limitation?
+
+Also, I'm slightly uncomfortable with "the SHA-1 object format" and
+"the SHA-256 object format" because of the fact that these tools are
+used for interoperability with similarly-named tools from other VCSes.
+I think it'd be better to just treat them equally as "here was/were
+some signature(s) on the object in the original repo; importers can
+choose what to do with them".
+
+> +
+> +See below for a detailed description of the `data` command which
+> +contains the raw signature data.
+> +
+> +Signatures are not yet checked in the current implementation though.
+
+...but what does happen with those signatures?  Dropped?  Kept as-is?
+Can we just spell this out a bit more clearly?  e.g.
+
+"Signatures are not checked in the current implementation; they are
+used as-is, which may mean the signatures are invalid in the imported
+repository."
+
+> -NOTE: This is highly experimental and the format of the data stream may
+> -change in the future without compatibility guarantees.
+> +NOTE: This is highly experimental and the format of the `gpgsig`
+> +command may change in the future without compatibility guarantees.
+
+Good clarification.
+
+
+I briefly skimmed the implementation and test files, and didn't see
+any problems...but I think it probably makes more sense to get aligned
+on the goals of the format and how these fields are meant to be used
+before diving into those details closer.
+
+Thanks for working on this topic.
