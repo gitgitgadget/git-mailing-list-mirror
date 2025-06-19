@@ -1,89 +1,85 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5067621D3E7
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 17:07:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B72F63B9
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 17:18:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750352840; cv=none; b=CPPgs8xnckRQnvSYzsGQlo7E7ORv/USniuKojdzGgrKz8c33HojkzYOm82i2IkJoBj/4NtsNdicW7YBOGbL3Dy0kgmk2p2qJZmsn5d/y59QoUms7h8ESF8fYMOJSqiOUL4kmr/GabXf4FCvM0x4CjAxtrO4zmuBkmmWeVMF2L/Q=
+	t=1750353489; cv=none; b=WcXWeKIc8Ojf1K4HRHlxhPv+VCBjPYyfGevlQXARJ7ctaMtOrzcFWiWGR3f9QPwCP+DHpYV1kaGLideGwljh0czMuoqlZahhp08mUNWkAQixVvtzMdqdAietYTu9aWDH94awcsMOBNRGCXwVpYXuul32riystbXaWCFzy5EBWrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750352840; c=relaxed/simple;
-	bh=CQp8P9u2z74acqqd/HKXV9cZ5/lx90xg6KCnklPK/cs=;
+	s=arc-20240116; t=1750353489; c=relaxed/simple;
+	bh=MOk+HgZD6TOUeNXNrMB9bOEL9VpuLALAQAxEX04TI6o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=HAfJSZCU/9nHLL84FdbSp74+5Bj+gPHMKT0tYI5k8gdD0iTJVhimkPqL3trO7/16gSWiyGOkOABY51vb5jd141Ql+8srFl1HJjMSUWxHYLzszN6es3fdR5LvYlBeQM6h137QMe+lebnb5+P4segGteYsRqU1mqhMd+WpIQKC+k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qHaGE1Wz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fdXXBZ3G; arc=none smtp.client-ip=202.12.124.157
+	 MIME-Version:Content-Type; b=WLvlFN/K5f/uPo1sg7vtw9S9U5tSCv/JVfnKYhXjFfPsAiH07cEOmE3KYDe7QxlMZj79UzTKGG7K+cWms/u0poGJwD0omVva1miDzgYWCcGDfZd7cZql877WPlVcIX+RfA70Y6qoVFE2uExi0ol48qA6uFVjpo6GrXiv7CeHyCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bXHUtmAK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DKJVGEag; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qHaGE1Wz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fdXXBZ3G"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3B3822540139;
-	Thu, 19 Jun 2025 13:07:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bXHUtmAK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DKJVGEag"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 04AD511400CC;
+	Thu, 19 Jun 2025 13:18:05 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 19 Jun 2025 13:07:17 -0400
+  by phl-compute-03.internal (MEProxy); Thu, 19 Jun 2025 13:18:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750352837;
-	 x=1750439237; bh=HV/dPcHCWK7RUAxOmvYVjs4LYl2AbSrbuP3GTDWoghs=; b=
-	qHaGE1Wzj8qqQJRZYGx/wKidKXk4LtmITfFmmdq7pgK+vMDB8lwJmuTfLz1qbMmw
-	lzmgrBfWe4VWgf68/HocIBVf0euZZve2gimkMnn5TQrBP4zMFF5UJktANoBHas/u
-	YtnDcJWXxyZq+/u2bxiGa+018VnNfkUzKe9EBr+YA9iRwjeG9ojmxraA7lkl24O4
-	JEEHEAy0HV1lzpYQ5FSwjd46hYS8o/tyBao1GBMwQpmB4ldY6aFZHnkCqm9vPGmW
-	R0ZCDw2gS/sU2pfSoz8TEQmqw0Oye5kfkGfJvOXsxl9OzkdnqR3KEgwFsdWvha6T
-	SCHVRxLTQOtpOfQ7qgQCxw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750353485; x=1750439885; bh=k/wxzoneeg
+	cF3ivu/VAIDc5oufPMEEYD15rpdfhb+Ho=; b=bXHUtmAKQlbeWXV4reppGhuMUF
+	A9zAguJBtlSvFaD3GXU1gtcHfQGz/hwxYHBGyy9ovY9ig4JZ9EVS6WE3ShlEYmM9
+	d36ERT43vF5QLeTzguQriCivRIwC7Wf1um2mrI7vU8dEzAZc4WZ+8ZCtoUjL5YoG
+	DPWPIeHs9ot5ORGzFleSAYrJ3XUQ1smUYtC1FoOdqUlZgUXBqRwSphH1ofrbnVZf
+	fmLZ6TCkESqEsYlOGhWz4SvtK7f7hrk1kmZs0eherpQpG2Nvmi/hWDW5+4jCQsVn
+	eqjFU94ThIm87QmpnkZ4pTHbc9zBnc2AyoomU0xdLvXWDBc1p+D924+ZV3rQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750352837; x=
-	1750439237; bh=HV/dPcHCWK7RUAxOmvYVjs4LYl2AbSrbuP3GTDWoghs=; b=f
-	dXXBZ3G8MFKZDSUAZuFdMfZmYDtrT1IaiTS6sYE1BELuCDFs2qIrS4EAnwcQtTX3
-	fcEWU9j0hzFRUG7P7cD1VhllA8wapExMzllXINGNqJ3FjEZUYYuQPi8+qX3Q7MXW
-	x4sHeoXJvldPGbZBXKkkOGV6FH6Fe0PlJcUtLFRXhky0SaDIAMv3Hbayt87pPPNe
-	354GInt+t5WTXiI2nMt/NAqW4Qhsn1tB15xIg8mUA8rD3LyGwQQDg1RVtwgQGUXh
-	Fv5xpTqlgTAdOAsbv0vV0XEdWxaf/u/rhekZdJ3Ie7KrciIcpMjKnRKYJEd1uI+X
-	DHg75TEyfr7vg4i93Na6w==
-X-ME-Sender: <xms:xENUaMxNIXmnK2JlqiqmZjYL8sfVu8ZMtaX5SYIZQxn0lvOOqqzdvg>
-    <xme:xENUaASEGWfgYdPinX5W0kG34V0kypVkWbuHg8knoR9tIbfZiRB97ebs5CE0lIewY
-    Y0YQ9bKzpDGAyOQBA>
-X-ME-Received: <xmr:xENUaOUlifU3F_rrA2s9hvVQOL3kR8uMUNdzgslKqbv8P7Hdf5QMsBoSRPxVSkQHZ3UfZHTBxIODIII7Rq86Fkf3HbFJ1d7iSL2L>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeitdekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750353485; x=1750439885; bh=k/wxzoneegcF3ivu/VAIDc5oufPMEEYD15r
+	pdfhb+Ho=; b=DKJVGEagNJfytwR+k3MriEAQ9UugbBqZ/L5i0dxTd4IGFN/K4Tx
+	YQy3XTfRmSD9nUOJ9ARykCT4NW1IFdM5/abgxeSdweFHoV42NAR0VwPXj73QYYJ2
+	fPTtGUbRyYzGLJErBLiL3S65jS1wrHh+jQiBTLtKDnYgpKEL9ZLmD5LUuFgF/DBm
+	gwLIzl6htQGNAWRVMeOBfjHWlaEM1q1Jpr/XM9UQcpFtl3cHKLioeuYyuAA4YFYJ
+	zVEUitncDs6qZ887qBaU/m/j6a8JfcrBe5uj9cKdLRQdQYGpuDSNViUo6lwyUEVZ
+	P3HY0UlxdKh9DO3rFMwBJIWajEWIN7S4PaA==
+X-ME-Sender: <xms:TUZUaPVLwrCE3jRNqPhVOoKLlC4SFTvHYGNIimzyPE8-QyLRqjuIVQ>
+    <xme:TUZUaHmRypY5WrjIoHFYYQFu5Bb1DoCgLeFR4UfEAh-j-qlpp7sN3_M9v_1WaerQj
+    6tjaY1LuXVGRcLxAw>
+X-ME-Received: <xmr:TUZUaLb-3jMvVrVUpIJTNk9jDli8q4VaBNG5ni4vmhPc10q663-xXpvX5z0_z-2siMSs0OJNStTFqMOx515Lan_trxnOxROnTtyJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdeiuddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedt
-    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthht
-    rgihlhhorhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:xENUaKhMcI1c_Ms_WAHfA4NnxJtPSzsWGNMKA3GqJHcesK3v6-9YTQ>
-    <xmx:xENUaOBX07SL8_97I1qhh1LEQWxCEAs_2m8W2-4svPZiIxrK1203dw>
-    <xmx:xENUaLJGVqKhvEeYPfY8WKClMJrYtsQLr7CPz-6p7ppYUAOJPRLVCA>
-    <xmx:xENUaFCX9ZwgWCjdnDaAlXYedxfM41oe8nZRGKhbpLT2MaNRPqiLVQ>
-    <xmx:xUNUaCJgVPvZ-BmhVyqczqc7-hMtSE_D4XEMS8ZCiYDu_64WPTJv_Wev>
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjrg
+    gtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopehphhhilhdr
+    hhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:TUZUaKVjdVdn2ii7yRTuc9F96aWgDxe01gGkkNGmr2hEQIKXhlwJCw>
+    <xmx:TUZUaJlv4eIrHnelvL3cCzEM3QOGVM15v_nkOcpj8Vt_eWZHFjHoGw>
+    <xmx:TUZUaHeWMjRW-kob5lhkcekY09PMupLxmNu16y5L4ypelVFV2HJr7A>
+    <xmx:TUZUaDGMCgfloyt8v-DvTiyhTN44ad92TsJjLc3RGPIWeQk4I0RTgg>
+    <xmx:TUZUaN79AgM9-EA5OIvPnfEme0GVNwhz9A1r4J8NnIymzRJWCU8jHL9u>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 19 Jun 2025 13:07:16 -0400 (EDT)
+ 19 Jun 2025 13:18:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  newren@gmail.com,
-  peff@peff.net
-Subject: Re: [PATCH] fixup! repack: exclude cruft pack(s) from the MIDX
- where possible
-In-Reply-To: <20250619130807.48057-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Thu, 19 Jun 2025 06:08:07 -0700")
-References: <52a069ef48f5a573c58a369b69827a40c7712247.1748473890.git.me@ttaylorr.com>
-	<20250619130807.48057-1-carenas@gmail.com>
-Date: Thu, 19 Jun 2025 10:07:14 -0700
-Message-ID: <xmqqbjqjace5.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,  Phil Hord
+ <phil.hord@gmail.com>,  git@vger.kernel.org
+Subject: Re: [RFC PATCH 0/2] fetch --prune performance problem
+In-Reply-To: <20250619033746.GA1801319@coredump.intra.peff.net> (Jeff King's
+	message of "Wed, 18 Jun 2025 23:37:46 -0400")
+References: <20250618211024.2332525-1-phil.hord@gmail.com>
+	<9cc42f04-856b-4967-8668-a47271af061c@intel.com>
+	<20250619033746.GA1801319@coredump.intra.peff.net>
+Date: Thu, 19 Jun 2025 10:18:03 -0700
+Message-ID: <xmqq7c17abw4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,42 +87,22 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> In a previous commit, `grep -o` was introduced as part of t7704.
+> The final fetch output looks like:
 >
-> POSIX doesn't have that flag as defined and while it is a popular
-> one is not available at least in the latest release of AIX.
+>    - [deleted]         (none)     -> origin/branches
+>    - [deleted]         (none)     -> origin/main
+>      (refs/remotes/origin/HEAD has become dangling)
+>    - [deleted]         (none)     -> origin/other
 >
-> Use a sed equivalent that ought to be more portable.
+> and we can see that the deletion of "main" is what caused the dangling.
+>
+> That said, I'm not sure I care that much. I didn't even know we had this
+> dangling message, and it's been around for over 15 years!
 
-OK.  The patterns are not exactly the same but as long as we know
-$packdir does *not* contain a substring "pack-", it should be OK.
-
-As the topic is not even in 'next', perhaps a refresh can squash
-this change in?
-
->  		ls $packdir/pack-*.idx | sort >packs.all &&
-> -		grep -o "pack-.*\.idx$" packs.all >in &&
-> +		sed -n "s/.*\(pack-.*\.idx\)$/\1/p" packs.all >in &&
->  		git multi-pack-index write --stdin-packs --bitmap <in &&
-
-I do not quite see the need for temporary files or "grep/sed" here,
-though.
-
-		(cd "$packdir" && ls pack-*.idx) |
-		sort |
-		git multi-pack-index write --stdin-packs --bitmap &&
-
-
-Tangent to this discussion, but I just noticed that
-
-    $ git multi-pack-index -h
-
-lacks quite a lot of information.  Perhaps it needs updating?
-
-
-Thanks.
+Same here.  I agree that the new output, while it may look prettier,
+loses information.  I agree with your conclusion that the user who
+really cares can check with symbolic-ref themselves.
