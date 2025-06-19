@@ -1,138 +1,327 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8864A25E478
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 22:56:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9076928DB4A
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 22:58:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750373777; cv=none; b=Q9y/fq1cx4A52tGnsI2Q1valZ+FVjLkdx0ter03xwX2o9wzRjRP26Xq2Eck9y1LAxUhCc/vRjtPgI7G5CEOIN27XE1fuC1R5iJLuv6fU034HWYIx1Si43GxlFlwI0N6FpeJoNyKbITM5vpf+A5c2ouVGihghpD+155SrjxKJlXM=
+	t=1750373884; cv=none; b=XXBb42SYtEzBnlbPv2uWrKGer/qQPzivAuJ7gX9oyLID8nEN4tCb1Y0AIVoQOQku7YQZSqG9hVpeXLjgKZcCKqhV/SojUxAbLZQrgstB8TSKhpTN60Rjm0kT7B4PBM9vmDgqetaLnpBnp0ET2TflxalSf/oYJ9gK3ibJNT7eg+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750373777; c=relaxed/simple;
-	bh=fB3SSL2vKwtyke+OwFRRBGWW8zcmxE+4HLyokEIt8MU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=a3cjCjtoGdgGBUsTmCQC+wk3Q3G545AZM3gF3zcP2yydJIZLcqB/9yjRuwYjkMJADtDrBuLFwFsvBByOHuCrtwfCOE7E5mTrrJk7NWUhEwslByLi45KqzE3CeqrIBgWiwpyYBoSWT0HtmCAa8PsThq9nxhBnV/BJWPxQvKOHYrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=xIA7WJ8t; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1750373884; c=relaxed/simple;
+	bh=Sq1xtWbbQkHXEk/o/+EhzFU2YFA8LK9TQoL8RxtHcHc=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=OoD/pUlzCvRB0HUB7+fVCFzEyYqwRyFtN1aH23JHPruZ4junHLVmXmKkiTpSqsvsjmQDH4tGEZqmwNuXWSH7ctjvtciojDtt5e6cg75nHq4p5PjJES3ds0pZwdqcv2vdZTJzXHe0lSGxfySFh7qCkVUBdxvbJfcI7eas5lHhmJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wk/ahjAP; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="xIA7WJ8t"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1750373767;
-	bh=fB3SSL2vKwtyke+OwFRRBGWW8zcmxE+4HLyokEIt8MU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=xIA7WJ8tV3ubOCS8jVX6O0VIlwdo7KKnJD8dwBdOYKqe/NIvUxlKXPHj2n4F/ErUK
-	 nUF0OYJWsWy6gPMCn39CQMwI9Q0z3tRM/2TY4+BKy2rzE5tiIypzZjA7bbvly/mIRq
-	 U2K2xbHpOntyY7Hie2o/CAQ5UkwrlQaqx01NdcMVMg0bVvXbb9Ex6DW8oVDIiTX8X4
-	 UxxJQnEjQ9CNw+7TxXdO/USRgWNVV3ZWkTppYnQjfbsMVcl5xLAsmFppML+oSZ3jfW
-	 HibfWx5H9gMwkZ7e5RtDJNcc7hmm1MMgJHQg/Yz7XOiQoJ0DkHtJ+ZkriWEr4dORtU
-	 lRqHBC6gpZpKRvgoiG/2nSlDYACZaain3yedoFOvEw9b7DUgE/mvIoph8xPJy7BD7+
-	 CH/xJ9rmbxbSX/a5U9J4k3jF4vsUI7UqIIlRK7oydru6SgPYVQt9tZ2rNqCP7MxNud
-	 xbPww/TBjCw28tsD/0kafrtQGXVaThl7qo4tL1Zy8IM2snwe5Dg
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id DF8D620069;
-	Thu, 19 Jun 2025 22:56:07 +0000 (UTC)
-Date: Thu, 19 Jun 2025 22:56:06 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Subject: Re: .clang-format: how useful, how often used, and how well
- maintained?
-Message-ID: <aFSVhpnNnj6p3r7n@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Collin Funk <collin.funk1@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-References: <xmqqmsa3adpw.fsf@gitster.g>
- <aFR-Yf0PMj30ex2O@fruit.crustytoothpaste.net>
- <87msa3quzs.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wk/ahjAP"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-235ea292956so13008235ad.1
+        for <git@vger.kernel.org>; Thu, 19 Jun 2025 15:58:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750373881; x=1750978681; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+7xHTKwtR/yCOqzJmyMDLSCEwdfQS54mFMKU170eZe8=;
+        b=Wk/ahjAPhWiPPbx+HOsxRCrlt6tEU3IW604NAEha28TUKP6wwPZpHWwNgrGfs276l+
+         17dcbVEOaUshMIeDKim7nnqB1uozaVbRLsA86SCkWcRmsndEH9V9XpUyWKta5KJsNmdL
+         RrtVLCH1HBlaDQ16byaREvO6p1KieciLGksLkytHglKyFjMAfeSmv7SDB5kU+yGYf/6O
+         hEpI2gXbyxsoFg/OjgOdhfgrgq+Ds4iCpfM2ZQjhT2MBUjzj8lVXtkF9AfDLM9NBMI/D
+         nkbEL3H4fsEeA3VqWVdu9zCjKIa4+xSAgwJ/H/BzJscZDHNjOrKQcwszBWTTEL+PQEWG
+         chHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750373881; x=1750978681;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+7xHTKwtR/yCOqzJmyMDLSCEwdfQS54mFMKU170eZe8=;
+        b=RKef7pnOO7KY1QVMWdFmrbQ3YQkSsidYj5ad2j5LPBh6YWYz8RS0HHJjC7alJVWp97
+         KvgnJvSt5/vNjQNbF4w7pgcWVd3DVQ5WhdM/6dO0dua7bl2lC9nX69AJAE+EP78pqk1N
+         Pyh7NyD92xdYbPbCEU0GsGohMDyYHo+1aUQ6hsv1hLfHS8RkDxMANgWAI0AfpjAqiMZ3
+         ogJ1ytd+bpVnsqcPpiuEAC3LkbtrLETEEYXF4q9S2pBhOO0LkKX/GuQHH9xNaTsI7a07
+         EIz6YeXicqDGDeUMLFHMp/Gkn+GZ/C5vdbwu2s7pfomeMxs5MZQ31yqsBR6Y5zl5Mnqw
+         gJIQ==
+X-Gm-Message-State: AOJu0YxKBx1oxlB/sV+lZh4mfFBNubzgssxmRN47C66nAiRRnhb6Fbjl
+	80NYy1bcy3vEcjvr/xnbQMeHT5JOcQi8xlxP/SkOEeUim1XwpHMzjnQfrWvajg==
+X-Gm-Gg: ASbGncsmSvufAzO3uVWOTO2EprNiDaPxDVS19MJcBhIUMOIEMHM7g/HFE07hBv3AUrl
+	EFhZoPC1YPrdLXoBYGi3qJ2slyiZG91/45Q57Kzp1MX+W54NCFlqPcLoLSMn+XKvz+Oe/e6pwhO
+	UX1Eed+36kHuPfxkhYSxaw/9zSSHi02LEtWzLwsZIi8qH8E5C5WMFsLE8bUT0OXkcKIJAFSIw9+
+	dwDHfmgP/gImQFH4I4mvP2mzZfu2NMbUfkAmHAmV1MjkfPj2YzkmQESuxrxBENVYZ+DZqDOIfZs
+	B19fsQXfRQ38TQ+N+GtOCG4VwQPZU8uq71LqPqqNVQg6nk+vWmQpU2bk8LXLl2+PqmXJaoyu1zD
+	mbSq9KZZtad0MFlE5PQ==
+X-Google-Smtp-Source: AGHT+IGCUPEAbsHO+wi/81zAKGk0r4rhNoEIKE7iTvtjFrKEKO2iCiX8hkXFu5oUHPHbh3/6P78g5w==
+X-Received: by 2002:a17:903:2306:b0:234:d7b2:2ac4 with SMTP id d9443c01a7336-237d980da56mr8989205ad.17.1750373881185;
+        Thu, 19 Jun 2025 15:58:01 -0700 (PDT)
+Received: from localhost.localdomain ([179.100.18.48])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8695440sm3470515ad.185.2025.06.19.15.57.58
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Thu, 19 Jun 2025 15:58:00 -0700 (PDT)
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	karthik.188@gmail.com,
+	ben.knoble@gmail.com,
+	gitster@pobox.com,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Subject: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving repository info
+Date: Thu, 19 Jun 2025 19:57:44 -0300
+Message-Id: <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pPRADS+4MutTNH41"
-Content-Disposition: inline
-In-Reply-To: <87msa3quzs.fsf@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+Hi!
 
---pPRADS+4MutTNH41
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is the second version of the repo-info RFC, and these are the main changes
+introduced since v1:
 
-On 2025-06-19 at 21:31:03, Collin Funk wrote:
-> From what I remember, clang-format is not at all stable between
-> releases. Newer versions will produce different output than old
-> ones (usually better, but that does not matter).
->=20
-> For the reasons that you already mention, it ends up being a chore, in
-> my opinion. I don't think we should expect everyone to build/install a
-> clang-format version that is newer or older than what their distro ships
-> with, just to align the output with the project.
+- The plaintext format now returns its fields in a key=value format
 
-Yeah, then in that case, we probably want to ship some sort of container
-and script that can do that.  Our default Rust target is Debian stable,
-so that seems like a decent target if we need to pick a distro.  It's
-also a very common distro used in containers, so it's widely available
-to contributors using container-based development environments.
+- The tests were renumbered to t1900, since it's a new command (the previous was
+  t1518, following the numbering of rev-parse)
 
-I still think that if we're going to have this functionality and expect
-it to be used, we need to make it the default, build appropriate
-tooling, and check it in CI.  If it's not fire-and-forget, people won't
-use it.
+- The test function 'test_repo_info' now has a docstring, and it is more flexible
+  for using more complex repository initializations
 
-> If you wanted to be help avoid badly formatted patches adding a .vimrc
-> and .dir-locals.el file would cover most people, I think. For Emacs, the
-> .dir-locals.el would be something simple like:
->=20
->     (c-mode . ((c-file-style . "linux")
->                (fill-column . 80)
->                ((indent-tabs-mode . t))))
->=20
-> At least with Emacs it is easy to type things that break these rules. So
-> one can avoid diffs like this, which clang-format would produce:
->=20
-> > -		/* Warn on any additional signatures, as they will be ignored. */
-> > +		/* Warn on any additional signatures, as they will be ignored.
-> > +		 */
->=20
-> I assume this is similar for vim, but I do not use it enough.
+- The flag --allow-empty is now introduced in its own commit
 
-Certainly there are a lot of Vim and Emacs users in this project, but
-there are also many people who are not.  I use Neovim myself and still
-have to deal with wrapping lines at 80 characters.
+- The plaintext and the JSON formats are now introduced in their own commits
 
-I also don't think Vim actually honours per-directory configuration like
-`.dir-locals.el` by default without turning on the `exrc` option, which
-is rightly documented as a security risk.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+- The JSON format tests, which depends on the Perl's JSON module, are now marked
+  with the PERLJSON lazy prereq, being skipped in environments that don't have
+  that module installed
 
---pPRADS+4MutTNH41
-Content-Type: application/pgp-signature; name="signature.asc"
+Some things pointed in the last review weren't implemented as I prefer to do
+them in another iteration of repo-info after having its basic functionality
+working:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
+- Remove the dependency on 'the_repository' when calling 'is_bare_repository'
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFSVhQAKCRB8DEliiIei
-gTYHAP9h0QmZe/9koIG757bHrc1C2PlF1ti6qm4FiX3EDAvF1wEA+JuQYeMktxRp
-iJQsiUWGF3XfRaCXTRKcsr6cmoDmhgU=
-=Obog
------END PGP SIGNATURE-----
+- Add a --batch-command mode, based on the --bath-command flag of cat-file,
+  introduced in 440c705ea6 (cat-file: add --batch-command mode, 2022-02-18)
 
---pPRADS+4MutTNH41--
+- Use the category as key instead of only accepting category.key. In the current
+  patchset, `git repo-info layout` would equivalent to
+  `git repo-info layout.bare layout.shallow`
+
+I'm cc'ing my mentors and everyone that answered me in v1 and my GSoC blog. I'm
+still open to any suggestions, requests and questions that you may have!
+
+Here's the range-diff of this v2:
+
+1:  20a3d131c3 ! 1:  102b5ce90a repo-info: declare the repo-info command
+    @@ Commit message
+         - git.c
+         - .gitignore
+
+    +    In option parsing, use PARSE_OPT_KEEP_UNKNOWN_OPT to allow the users
+    +    specify after the flags the information that they want to retrieve.
+    +
+         Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+         Mentored-by Patrick Steinhardt <ps@pks.im>
+         Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+    @@ builtin/repo-info.c (new)
+     +#include "builtin.h"
+     +#include "parse-options.h"
+     +
+    -+int cmd_repo_info(
+    -+	int argc,
+    -+	const char **argv,
+    -+	const char *prefix,
+    -+	struct repository *repo UNUSED
+    -+	)
+    ++int cmd_repo_info(int argc,
+    ++		  const char **argv,
+    ++		  const char *prefix,
+    ++		  struct repository *repo UNUSED)
+     +{
+     +	const char *const repo_info_usage[] = {
+     +		"git repo-info",
+    @@ builtin/repo-info.c (new)
+     +		OPT_END()
+     +	};
+     +
+    -+	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
+    ++	argc = parse_options(argc, argv, prefix, options, repo_info_usage,
+    ++			     PARSE_OPT_KEEP_UNKNOWN_OPT);
+     +
+     +	return 0;
+     +}
+2:  f78058c25a < -:  ---------- repo-info: add the --format flag
+3:  3b2f534a69 < -:  ---------- repo-info: add the field references.format
+-:  ---------- > 2:  1cc1184663 repo-info: add the --format flag
+-:  ---------- > 3:  a329825387 repo-info: add plaintext as an output format
+-:  ---------- > 4:  3b6c27b68d repo-info: add the --allow-empty flag
+-:  ---------- > 5:  441b010175 repo-info: add the field references.format
+4:  5ad7e79f83 ! 6:  f39086ea86 repo-info: add field layout.bare
+    @@ builtin/repo-info.c
+     +
+      #include "builtin.h"
+     +#include "environment.h"
+    - #include "hash.h"
+    ++#include "hash.h"
+      #include "json-writer.h"
+      #include "parse-options.h"
+    +-#include "refs.h"
+    + #include "quote.h"
+    ++#include "refs.h"
+    +
+    + enum output_format {
+    + 	FORMAT_JSON,
+     @@ builtin/repo-info.c: enum output_format {
+      };
+
+      enum repo_info_category {
+    --	CATEGORY_REFERENCES = 1
+    -+	CATEGORY_REFERENCES = 1,
+    +-	CATEGORY_REFERENCES = 1 << 0
+    ++	CATEGORY_REFERENCES = 1 << 0,
+     +	CATEGORY_LAYOUT = 1 << 1
+      };
+
+      enum repo_info_references_field {
+    - 	FIELD_REFERENCES_FORMAT = 1
+    + 	FIELD_REFERENCES_FORMAT = 1 << 0
+      };
+
+    -+enum repo_info_layout_field { FIELD_LAYOUT_BARE = 1
+    ++enum repo_info_layout_field {
+    ++	FIELD_LAYOUT_BARE = 1 << 0
+     +};
+     +
+      struct repo_info_field {
+    @@ builtin/repo-info.c: enum output_format {
+      	} field;
+      };
+
+    -@@ builtin/repo-info.c: struct repo_info {
+    -
+    - const char *default_fields[] = {
+    - 	"references.format",
+    -+	"layout.bare"
+    +@@ builtin/repo-info.c: static struct repo_info_field default_fields[] = {
+    + 	{
+    + 		.category = CATEGORY_REFERENCES,
+    + 		.field.references = FIELD_REFERENCES_FORMAT
+    ++	},
+    ++	{
+    ++		.category = CATEGORY_LAYOUT,
+    ++		.field.layout = FIELD_LAYOUT_BARE
+    + 	}
+      };
+
+    - static void repo_info_init(struct repo_info *repo_info,
+     @@ builtin/repo-info.c: static void repo_info_init(struct repo_info *repo_info,
+    - 			field->category = CATEGORY_REFERENCES;
+    - 			field->field.references = FIELD_REFERENCES_FORMAT;
+    - 		}
+    -+		else if (!strcmp(arg, "layout.bare")) {
+    -+			field->category = CATEGORY_LAYOUT;
+    -+			field->field.layout = FIELD_LAYOUT_BARE;
+    -+		}
+    - 		else {
+    - 			die("invalid field '%s'", arg);
+    - 		}
+    + 			if (!strcmp(arg, "references.format")) {
+    + 				field->category = CATEGORY_REFERENCES;
+    + 				field->field.references = FIELD_REFERENCES_FORMAT;
+    ++			} else if (!strcmp(arg, "layout.bare")) {
+    ++				field->category = CATEGORY_LAYOUT;
+    ++				field->field.layout = FIELD_LAYOUT_BARE;
+    + 			} else {
+    + 				die("invalid field '%s'", arg);
+    + 			}
+     @@ builtin/repo-info.c: static void repo_info_print_plaintext(struct repo_info *repo_info) {
+      				break;
+      			}
+    @@ builtin/repo-info.c: static void repo_info_print_plaintext(struct repo_info *rep
+     +		case CATEGORY_LAYOUT:
+     +			switch (field->field.layout) {
+     +			case FIELD_LAYOUT_BARE:
+    -+				puts(is_bare_repository() ? "true" : "false");
+    ++				print_key_value("layout.bare",
+    ++						is_bare_repository() ?
+    ++							"true" : "false");
+     +				break;
+     +			}
+     +			break;
+    @@ builtin/repo-info.c: static void repo_info_print_json(struct repo_info *repo_inf
+
+      	puts(jw.json.buf);
+
+    - ## t/t1518-repo-info.sh ##
+    -@@ t/t1518-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+    + ## t/t1900-repo-info.sh ##
+    +@@ t/t1900-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+
+      . ./test-lib.sh
+
+    @@ t/t1518-repo-info.sh: export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+
+      parse_json () {
+      	tr '\n' ' ' | "$PERL_PATH" "$TEST_DIRECTORY/t0019/parse_json.perl"
+    -@@ t/t1518-repo-info.sh: test_repo_info () {
+    - 		test_when_finished 'rm -rf repo' &&
+    - 		git init $init_args repo &&
+    - 		cd repo &&
+    --		echo '$expected_value' >expect &&
+    -+		echo '$expected_value' | sed 's/^false$/0/' | sed 's/^true$/1/' >expect &&
+    - 		git repo-info '$key'| parse_json >output &&
+    - 		grep -F 'row[0].$key' output | cut -d ' ' -f 2 >actual &&
+    - 		test_cmp expect actual
+    -@@ t/t1518-repo-info.sh: test_repo_info 'ref format reftable is retrieved correctly' \
+    - 	'--ref-format=reftable' \
+    - 	'references.format' 'reftable'
+    +@@ t/t1900-repo-info.sh: test_repo_info 'ref format files is retrieved correctly' '
+    + test_repo_info 'ref format reftable is retrieved correctly' '
+    + 	git init --ref-format=reftable repo' 'references.format' 'reftable'
+
+    -+test_repo_info 'bare repository = false is retrieved correctly' \
+    -+	'' \
+    -+	'layout.bare' 'false'
+    ++test_repo_info 'bare repository = false is retrieved correctly' '
+    ++	git init repo' 'layout.bare' 'false'
+     +
+    -+test_repo_info 'bare repository = true is retrieved correctly' \
+    -+	'--bare' \
+    -+	'layout.bare' 'true'
+    ++test_repo_info 'bare repository = true is retrieved correctly' '
+    ++	git init --bare repo' 'layout.bare' 'true'
+     +
+      test_expect_success 'plaintext: output all default fields' "
+      	git repo-info --format=plaintext >actual &&
+5:  0295c19951 < -:  ---------- repo-info: add field layout.shallow
+-:  ---------- > 7:  219b84f032 repo-info: add field layout.shallow
+
+Lucas Seiki Oshiro (7):
+  repo-info: declare the repo-info command
+  repo-info: add the --format flag
+  repo-info: add plaintext as an output format
+  repo-info: add the --allow-empty flag
+  repo-info: add the field references.format
+  repo-info: add field layout.bare
+  repo-info: add field layout.shallow
+
+ .gitignore           |   1 +
+ Makefile             |   1 +
+ builtin.h            |   1 +
+ builtin/repo-info.c  | 244 +++++++++++++++++++++++++++++++++++++++++++
+ git.c                |   1 +
+ meson.build          |   1 +
+ t/meson.build        |   1 +
+ t/t1900-repo-info.sh | 105 +++++++++++++++++++
+ 8 files changed, 355 insertions(+)
+ create mode 100644 builtin/repo-info.c
+ create mode 100755 t/t1900-repo-info.sh
+
+-- 
+2.39.5 (Apple Git-154)
+
