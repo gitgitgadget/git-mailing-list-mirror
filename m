@@ -1,49 +1,49 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 92C3576034
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 20:51:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9FF21A443
+	for <git@vger.kernel.org>; Thu, 19 Jun 2025 20:55:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.6
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750366295; cv=none; b=QeuxCKQ/3fBVUCiTreuy0ju/1MsQ6d7pMoVpNojMQloFfWJecPMdJjmVPCunyZOr/Oll+ek8Mt2eB9bJauBjdEwRTwpCnjxQ/wjCO2MVHSl4OB6nteyOlOqV+4JPVweHAF1fNHayk5g5Rs0ZbP7Eqr+vCg8Rfgvro4Y1wtoWDL4=
+	t=1750366529; cv=none; b=ISYFUaHZVpFL+4x1s0Xb6XrgE8fCEpPjUovJqaGCIOo+ugLE+GXexS3EZNDvjlXqt08oMPFjz4L+6F0MfiktzwUaLUkVF9VNfXx95CxlZOSxSSgGd+ok1eNvOQd0Hg8gsYv1svEytly9i7GT5Fex5JDDhFnl8cKuN35MJq/ZMIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750366295; c=relaxed/simple;
-	bh=bXflWunJBmpGoNV3viHMt3JxzyZWHRhw3FNITQ+2QNU=;
+	s=arc-20240116; t=1750366529; c=relaxed/simple;
+	bh=RywnX5QsLSKNn9jRPtdpo3bf7e1ln0YwAGlJyc4Ww2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A/csgcDhAYJaF1UXNwow8mQPBF5Wk2qXdzuysMTETXjINVpWfVECx+D2HBwzR2TRwnHpdWTc9eSm5GcdIe5Vy9vShxRGmFfOY9ArXkvE13MPYzlPkE/aRz5lT3FznMI8bl+QRpm2gAy3xCX2zVW4D+s1K9t3kC6WdrEBe2F1jvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=MzacJkA1; arc=none smtp.client-ip=212.27.42.9
+	 MIME-Version:Content-Type; b=If+3l3LJ93szAvao/J6mGnH2MO2ozSO0KeJBmjfzaB+Iv2ZB4ETutcbg2ITv2cjqr9z/1rPuqK/Ti4WS8LvzkuCPEXOmht00wDoO6mH2Pf0E/OizWyrT1e20RTg8yFanAQxPvj4rPB6bq4JuvB6ECgFTwUJIjAzj+WSiqjWKC8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=XhNNA4HH; arc=none smtp.client-ip=212.27.42.6
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="MzacJkA1"
-Received: from smtp6-g21.free.fr (smtp6-g21.free.fr [212.27.42.6])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 6245B83456E
-	for <git@vger.kernel.org>; Thu, 19 Jun 2025 22:51:22 +0200 (CEST)
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="XhNNA4HH"
 Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:7da4:fda3:31ce:17c])
 	(Authenticated sender: jn.avila@free.fr)
-	by smtp6-g21.free.fr (Postfix) with ESMTPSA id 71808780331;
-	Thu, 19 Jun 2025 22:51:13 +0200 (CEST)
+	by smtp6-g21.free.fr (Postfix) with ESMTPSA id D7317780507;
+	Thu, 19 Jun 2025 22:55:22 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1750366275;
-	bh=bXflWunJBmpGoNV3viHMt3JxzyZWHRhw3FNITQ+2QNU=;
+	s=smtp-20201208; t=1750366525;
+	bh=RywnX5QsLSKNn9jRPtdpo3bf7e1ln0YwAGlJyc4Ww2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzacJkA1oynbnnC064InzVowdOjzZdk0hEIj2dEXOQuOIR8gKFBBIUvCL2fDmUEBF
-	 051f7OttElYY1hIbrKgmxvvPtAqyDK03bjqK3yxQjW2tVNmunlA0UbrOQItRnnuN/H
-	 yFSEGRY2rHeUxWggomnzlAj3B0pmBFsqh1ImJ/OP76yrX5BP1gSr5kg0u3FLAf4wZU
-	 bP3P8a9M2T80CqrcYpurxwlQwuedfeTRe02UIoeqGMw5FO1OixxHyLrKIXm64tCcIe
-	 mbvLBLajFTxAcZyRfMhgYtXsEQ2+C5RxHU1QQmStdVDkWGdrTfW9f7De2g3UXUC42X
-	 mfBiINSmIxFHw==
+	b=XhNNA4HH4i4aIcLPu22aYhXJBAZpT5P6tBfLipANlPeMH4WHunvoE1Xo8qvoieapE
+	 x3nnduIPTokp/0Kn4lRACyy3Xiu9h8drn2YISMKXpF6oEp3lXkRM1s7gFqvVg2toJt
+	 yeiTtw63tmAidx5CDzFcBQ5E/FEujOB94uOIlTUVSsr6sRJjXi8zAA/SjxsgEJGoa7
+	 rnl72u4800xay67tvt5nWyVVCmSX1c5y6iRiOzaE5ijPLu3PTI2kmRZFmWLjgkbcee
+	 +iLxd9ozgObeIaAEx6FRoqddat6JB/y9cx/fSjWRI7LxIRtHealorelxDre48T1zbh
+	 2gm6J3H/r4xrw==
 From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
 To:
  =?UTF-8?B?SmVhbi1Ob8OrbA==?= Avila via GitGitGadget <gitgitgadget@gmail.com>,
  Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/9] doc: convert git-log to new documentation format
-Date: Thu, 19 Jun 2025 22:51:13 +0200
-Message-ID: <5897216.DvuYhMxLoT@cayenne>
-In-Reply-To: <xmqq5xgvz3ws.fsf@gitster.g>
+Subject:
+ Re: [PATCH 2/9] doc: git-log convert rev-list-description  to new doc format
+Date: Thu, 19 Jun 2025 22:55:22 +0200
+Message-ID: <4658957.LvFx2qVVIh@cayenne>
+In-Reply-To: <xmqqh60ccymk.fsf@gitster.g>
 References:
  <pull.1933.git.1749373787.gitgitgadget@gmail.com>
- <1ce06a184817d0493f4e56725aeb8ed5ccae1ba4.1749373787.git.gitgitgadget@gmail.com>
- <xmqq5xgvz3ws.fsf@gitster.g>
+ <ff22d0f1adf823ea3baf3ad3ddbf25add1187ce6.1749373787.git.gitgitgadget@gmail.com>
+ <xmqqh60ccymk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,88 +53,35 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset="utf-8"
 
-On Tuesday, 17 June 2025 01:02:11 CEST Junio C Hamano wrote:
+On Thursday, 19 June 2025 03:24:03 CEST Junio C Hamano wrote:
 > "Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
-> >=20
-> > - Switch the synopsis to a synopsis block which will automatically
-> >=20
-> >   format placeholders in italics and keywords in monospace
-> >=20
-> > - Use _<placeholder>_ instead of <placeholder> in the description
-> > - Use `backticks` for keywords and more complex option
-> > descriptions. The new rendering engine will apply synopsis rules to
-> > these spans.
-> >=20
-> > Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> > ---
-> >=20
-> >  Documentation/git-log.adoc | 83 ++++++++++++++++++++------------------
-> >  1 file changed, 44 insertions(+), 39 deletions(-)
+> > -A special notation "'<commit1>'..'<commit2>'" can be used as a
+> > -short-hand for "^'<commit1>' '<commit2>'". For example, either of
+> > +A special notation "`<commit1>..<commit2>`" can be used as a
+> > +short-hand for "`^<commit1> <commit2>`". For example, either of
 >=20
-> This hunk (lightly edited to shift contexts) ...
+> It didn't look like there are huge differences in the rendered
+> output with this change (and the below hunk) ...
 >=20
-> > ---no-decorate::
-> > ---decorate[=3Dshort|full|auto|no]::
-> > -	Print out the ref names of any commits that are shown. If 'short'=20
-is
-> > -	specified, the ref name prefixes 'refs/heads/', 'refs/tags/' and
-> > -	'refs/remotes/' will not be printed. If 'full' is specified, the
-> > -	full ref name (including prefix) will be printed. If 'auto' is
-> > -	specified, then if the output is going to a terminal, the ref names
-> > -	are shown as if 'short' were given, otherwise no ref names are
-> > -	shown. The option `--decorate` is short-hand for `--
-decorate=3Dshort`.
-> > -	Default to configuration value of `log.decorate` if configured,
-> > -	otherwise, `auto`.
-> > +`--no-decorate`::
-> > +`--decorate[=3D(short|full|auto|no)]`::
-> > +	Print out the ref names of any commits that are shown. Possible=20
-values
-> > +	are:
-> > ++
-> > +----
-> > +`short`;; the ref name prefixes `refs/heads/`, `refs/tags/` and
-> > +	`refs/remotes/` are not printed.
-> > +`full`;; the full ref name (including prefix) is printed.
-> > +`auto`:: if the output is going to a terminal, the ref names
-> > +	are shown as if `short` were given, otherwise no ref names are
-> > +	shown.
-> > +----
-> > ++
-> > +The option `--decorate` is short-hand for `--decorate=3Dshort`. Defaul=
-t to
-> > +configuration value of `log.decorate` if configured, otherwise, `auto`.
+> >  the following may be used interchangeably:
+> > =20
+> >  ifdef::git-rev-list[]
+> >=20
+> > @@ -43,7 +43,7 @@ $ git log HEAD ^origin
+> >=20
+> >  -----------------------------------------------------------------------
+> >  endif::git-log[]
+> >=20
+> > -Another special notation is "'<commit1>'...'<commit2>'" which is useful
+> > +Another special notation is "`<commit1>...<commit2>`" which is useful
 >=20
-> ... does more than what the three-bullet list in the proposed log
-> message describes.  The result is certainly easier to follow and
-> more extensible to have these possible values in an enumerated list
-> than in a prose.
+> ... or without, but semantically the updated one of course is more
+> correct ;-)
 
-True. That may become a new rule too.
-
->=20
-> > +`--decorate-refs=3D<pattern>`::
-> >=20
-> > +`--decorate-refs-exclude=3D<pattern>`::
-> >  	For each candidate reference, do not use it for decoration if it
-> >=20
-> > -	matches any patterns given to `--decorate-refs-exclude` or if it
-> > -	doesn't match any of the patterns given to `--decorate-refs`. The
-> > +	matches any of _<pattern>_ given to `--decorate-refs-exclude` or=20
-if it
-> > +	doesn't match any of _<pattern>_ given to `--decorate-refs`. The
->=20
-> "any patterns" in the original may not be grammatical, but the
-> rewritten "any of _<pattern>_" does not sound grammatical, either.
-> "any of the _<pattern>_s"?  I dunno what the convention should be
-> when more than one <placeholder> instances have to be referenced.
-
-Good question for which I was more inclined to consider placeholders as=20
-invariant, even if the result may sound "ungrammatical". This also simplifi=
-es=20
-the translation process where the plural forms can be complicated in some=20
-languages.
+I have a special setup where bold and italic are rendered as colors in the=
+=20
+manpages, red for bold, green for italic. The dots turn red with this chang=
+e.
 
 
 
