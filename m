@@ -1,154 +1,152 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAD52BF3EC
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 15:29:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D322D3A86
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 15:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750433389; cv=none; b=A6H4Q8HkBsOCT4e3LrSQJh2DK8DySVHTp4I8Fx24BqMR6pcaZSXe5beV0jBCmu+W/IU8MW6fQgsVT9zrdYexEsRiAD09lo6n3OR45RXcdiZG91UsmcMHgRyHtJOqM3PI0GYwg8Ihocpv9I5S30ep9ZJSHYh66jrs/LBnKss1Fmk=
+	t=1750434266; cv=none; b=fyzR2u9mW28Ej8dT7ZjH6bSPlz1A/wO2IlbVc0cni8ojFKJfIQk4GeN42sACCAorT2JpvzxrKw29b6n5p3gv9GiqNrpKdjLsudzf4qItZfu530T8IH6GHEVmWC25gMFc/hTYAfVAulJX1uqZykM8wAIKhP9jWZn0jGpwCAG5wzc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750433389; c=relaxed/simple;
-	bh=FzlCCQUDVg8O4XsSbfWp6C0EuZXHuARHa0DDVTqrbuk=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=DSreDOV+RiapXaNJ7tyRHt+SPwoAPtKoEztqpjyuoXyVBlI2IszXZ4oWL42H+TQ+PkLeLC8Y1gWqHowdd0msrL8Ng+svyI1pHeGsRK5t8bErW9EwJbFd6NfaakEnJKK4SqQWcprkFZXAO5mYXHUenbeBLL6rs9QZI+eWh16kIOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=abGf8bZ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T48t9P2a; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1750434266; c=relaxed/simple;
+	bh=vmWsThfKYKILH1O8dUVu08KsRGgdlZnRL0ELJ+SYWfg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ca7bJGliUBC6VE/5tJLQELDoOCKM8vKyYpZzayZq/49hecH5m8BEXkBrFKAKtizRCDqEAwcj7AILZ/xZK0pG0UxLXNLSiRoMBSdo3LF4pJX9pJQ7OdY8ExBI4zj07BajBUGEAQxy2Zv8oepr96PvIhsZgcb/pwDRWv4J9tw+S1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=wUPYpb1A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftLTItfj; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="abGf8bZ1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T48t9P2a"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 661F211401EB;
-	Fri, 20 Jun 2025 11:29:46 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 20 Jun 2025 11:29:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="wUPYpb1A";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftLTItfj"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5C5311140216;
+	Fri, 20 Jun 2025 11:44:23 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Fri, 20 Jun 2025 11:44:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1750433386;
-	 x=1750519786; bh=MMch4pRBfkc7zyz1ENr6iMXun2yZuLXVhmMtVAcxGfM=; b=
-	abGf8bZ15zTe6ctH6+UGgcDFS3jTaYbuA+0t5CrWg47dCkHTkUqZQOH/G8PU6icj
-	yX4zGY60vlmUlkQ0YXvVnt+79CiLuVLIxMI5Y2d0h4Fl7cHqHfyKxHG7HNrIwwa5
-	OmXkCGDne/QGHd3c2dw0RHTO49NFD1VKgMwiH+ccHTNxBvPLuJ07jqqG1xCoUIFW
-	rBW64CqrCnfQoW+UWOE0tDakmZUGlA4AySUcyko0wGQY0bBLmbvNCb/Lt6i+kIgy
-	6XJ8H866wwcADmFoacudzWukZk+Ivn1rejasbmoib/qBnjS4Cdzk1nUrfhwomX67
-	N0zIWOOPTTzRZgweyMe9dg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750434263;
+	 x=1750520663; bh=6YJJyQq8uA7M20pnEoHlDYEpT6O5QLDJ34Wt2TAIpWg=; b=
+	wUPYpb1Aq7+YG+RmUfftWGn2JZ6IV3UC1Dw3uQkncYdc0HBA63s0lFg+stvvxBCv
+	caJ7aILhmfyR2D3R7JmzJQv7z+KuZTn7RtyR2EQaMBiO1Y6J93jPUIMzbHfalfYi
+	eNDAaWQJ9Zkl4cp69d5DUbemijxUVQzrCN7nBb2LjxVqAJSzI/CO7PrKyMj9CleB
+	s0+5UYlu9kNCOW0Kv4ZXn9EfVGvx2Jqq3o+IO2JdTzDGSWu9nYJ8romD/9YYfIx7
+	nC/HRFoBBDiXK3pxkuHsDsJ6tA5kz6dFTFWhkFnx/ulsWdXtpmxlFzLwb738ZNby
+	vkM5nVrtfL9tN6aX/CaPfQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750433386; x=
-	1750519786; bh=MMch4pRBfkc7zyz1ENr6iMXun2yZuLXVhmMtVAcxGfM=; b=T
-	48t9P2axYJpFHQ+uWNaOZdcXeCNbyjOQl50BOV1shB0DJ9/TSY8pX5bpQN0KEob/
-	UY50/URF44MDQ7DYTp5WPRAWJOBWDqeW0MAhq/BW2PVQzkCRri9bbjgHFwydFGBa
-	keJ11YhWf9oVWRH8i16PZM41LOcBHCSfm1zgCIeB8kZ3ynxqqlbsL/rGVIKifkqU
-	M9xSPc2xfm9V5Vue+9VaukPlO750CkqjJvQVLUt+WTVhpIFzNE1r3ZAioI4CO+3k
-	+uMsF0yaQmcYhn4Q7OC0iTlaI+VR0FITpzGNCiNTUeVlpc9dM2uGuP7LI7E1/G2N
-	8CpIPKsU15qeaQtG+Vf2w==
-X-ME-Sender: <xms:an5VaJ8fl6zH2-Nz3CDK9gNRAIuMaHEihzsyixvEK1chujuv8H6NoE4>
-    <xme:an5VaNtsS5MayZHlgA1kYyekbirJjuitFbNyIOSPCkbINGfZBAdNp95JKlOHbW9hU
-    KzJmLpkV_VkOk8crg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekjeeiucetufdoteggodetrfdotf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750434263; x=
+	1750520663; bh=6YJJyQq8uA7M20pnEoHlDYEpT6O5QLDJ34Wt2TAIpWg=; b=f
+	tLTItfjFkBrd50cxWMuUzXdUkzO3nw/e9lSUtflpcQK2qmpAO86hZrNO5mTi5PT/
+	+SHFJvUqTPY308arnhDcist+CceN9zLLfd7bDnZGCqNxxQs6q/fJ94vPMKMRZ1gj
+	bKaJJN0rT0XXFVOR+PAasDrCgtEH8TPcaYtrx2QtW+pUFCPHQcWc5OG9FUtTSCUe
+	EXq+RgNeVhJtnhnUTqHNS5PnRSN+7lcAq6I7F4v+tW0jhYQ88pQLqKY6uWadRTYD
+	6HWjoWU5p0kYQr9/TYHAFnhJrxhoaSVpgXorFzz2aRH/m6bPYmWFDrRBbLuBrCXs
+	FzD6Yb/8YkJtumkd4BUqg==
+X-ME-Sender: <xms:1oFVaDg2dTMwvy5Bwe32aibQuW1mwNDPuAt_apCzAtPJYj4XI_Fwkw>
+    <xme:1oFVaACCNAui0HSYx8H_9HEvK13zwCMLUjWNBjDFD0avmEWrKf3V9_AJP1qdwoj5A
+    ouNmJ4tUQkzdg3mHQ>
+X-ME-Received: <xmr:1oFVaDGyh8HAnJpcjnMv3TivESzLh-W8-FOctOWIr0KrNESEWBLQe5h45py6nPlMISBPe8nk8_Uc-Vo83b02Syu5ln3uSSov6iGk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekjeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    epofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
-    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefh
-    heeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:an5VaHBzLrYHZrm995bYIQf69QXd_rwpQrrOWsOAw_hm9EZfPGV5rg>
-    <xmx:an5VaNcyoR1kgvwQy2CKhg8TKC-LY1vIkLD2n6RB5TFNKmohkQMNoQ>
-    <xmx:an5VaOOTx_24_qzQGQkSHgr-bIOlbA4r1L_g1nxVhdGbzPgtCPkZzA>
-    <xmx:an5VaPmFAg24VhaKwPdpRRDT61m-pMlnQIPx67PuNHIzsOesSpfRwA>
-    <xmx:an5VaE1A9kAJma3obPu8juOBfBf-69VRfztJBLR_dyegyj-5sfgKvOwP>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 2843E1EA0068; Fri, 20 Jun 2025 11:29:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeffledvveegleffveelheekheefhefffeejiedtffduvdffjeffffdtgfffvedv
+    udenucffohhmrghinhepvgigrghmphhlvgdrtghomhenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjoh
+    gvrhhgsehthhgrlhhhvghimhdrihhopdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghgrrh
+    hgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehp
+    ohgsohigrdgtohhm
+X-ME-Proxy: <xmx:14FVaARR7lgcByodGdg2bUGzonzKRmZz64yQjw1zAKvmhybf6FPf6w>
+    <xmx:14FVaAzbNV6t-csjX1-3A7hvYjVuzbOWAkHgGNnyhwOvb_xjwR3wXg>
+    <xmx:14FVaG6osVdDuMvgByZ36K36c1klK2oDOkJqow-8cyrrgENsotj4dg>
+    <xmx:14FVaFwc_Q8BbBfi1DPFsqksZq8cwJXOMieLovoYLrdfCktsqeGGOA>
+    <xmx:14FVaGQXt53QKjpxF8k9DuU8g9SbvLmXIoCJ_WB9yviekmPRvAn802qI>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Jun 2025 11:44:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Joerg Thalheim <joerg@thalheim.io>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Aditya Garg
+ <gargaditya08@live.com>
+Subject: Re: [PATCH v2 2/2] imap-send: improve error messages with
+ configuration hints
+In-Reply-To: <20250620063836.252881-3-joerg@thalheim.io> (Joerg Thalheim's
+	message of "Fri, 20 Jun 2025 08:38:36 +0200")
+References: <8af387d5007b15cce49c924104d0e88522812e42@thalheim.io>
+	<20250620063836.252881-1-joerg@thalheim.io>
+	<20250620063836.252881-3-joerg@thalheim.io>
+Date: Fri, 20 Jun 2025 08:44:21 -0700
+Message-ID: <xmqqldpm4duy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T45b3e437b124cd3b
-Date: Fri, 20 Jun 2025 17:29:24 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>
-Message-Id: <74ee41f3-a9dd-4a9a-9350-33ffef7dea23@app.fastmail.com>
-In-Reply-To: <4e3c2840-37f3-43f8-9d8a-b4a106d8d18a@app.fastmail.com>
-References: <174f3704-6319-48f9-955e-b36a25836e3d@app.fastmail.com>
- <Zwzvgby2_oCjQpii@pks.im>
- <7347e29a-f33e-472b-b993-06c4767a9456@app.fastmail.com>
- <4e3c2840-37f3-43f8-9d8a-b4a106d8d18a@app.fastmail.com>
-Subject: =?UTF-8?Q?Re:_What=E2=80=99s_the_intended/reasonable_usage_patterns_for_?=
- =?UTF-8?Q?symrefs=3F?=
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Mon, Nov 4, 2024, at 11:45, Kristoffer Haugsbakk wrote:
-> On Wed, Oct 16, 2024, at 19:23, Kristoffer Haugsbakk wrote:
->> On Mon, Oct 14, 2024, at 12:16, Patrick Steinhardt wrote:
->> > [=E2=80=A6]
->>
->> Thanks.  This makes sense. :)
->>
->> =E2=9D=A6
->>
->> I discovered/re-discovered a pitfall with the following approach:
->>
->>> Create a `refs/heads/<symref>` which points to a remote-tracking
->>> branch
->>
->> Again, so tempting to do for me because you get a shorthand via
->> `refs/heads`.  And this is indeed fine for read-only operations
->> (effectively).
->>
->> But don=E2=80=99t be careless and do something like commit while chec=
-ked out
->> here.  Because you are checked out on an ostensibly =E2=80=9Cproper b=
-ranch=E2=80=9D (not
->> detached HEAD) and the remote-tracking branch will move forward with a
->> commit.
->>
->> So I=E2=80=99ve gone back to using one-level (root-level) symrefs with
->> all-capital names.  Because git-symbolic-ref(1) allows that and I
->> haven=E2=80=99t gotten any weird warnings from it.  (I would presumab=
-ly get
->> warnings if I then defined a ref named e.g. `refs/heads/M` if `M` was=
- my
->> top-level symref.)
+Joerg Thalheim <joerg@thalheim.io> writes:
+
+> From: Jörg Thalheim <joerg@thalheim.io>
 >
-> Another newbie mistake.
+> Replace basic error messages with more helpful ones that guide users
+> on how to resolve configuration issues. When imap.host or imap.folder
+> are missing, provide the exact git config commands needed to fix the
+> problem, along with examples of typical values.
 >
-> I used e.g. `H` (root level).  But then I was in a worktree and
-> discovered that these root-level refs are per worktree.
->
-> But this works across worktress:
->
-> ```
-> git symbolic-ref refs/H HEAD
-> ```
->
-> (Or `refs/h`)
+> This uses the advise() API to display hints that can be disabled
+> by users who don't want them,
 
-I=E2=80=99ve been using some shorthands for over half a year now:
+Not quite.  We do not encourage or condone wholesale disabling of
+all advise messages by end users.  The advice_if_enabled() helper
+allows selective disabling of individual messages that the user has
+seen often enough and find no more need for help, but I do not think
+it is advisable (no pun intended) to use it in these particular code
+paths, simply because once the relevant configuration variables are
+set, the users will not see the errors anymore.
 
-```
-git symbolic-ref refs/C refs/heads/<longer branch name>
-git symbolic-ref refs/O refs/remotes/origin/<longer branch name>
-```
+The reason advise() was suggested was primarily because of its
+better handling of multi-line messages.  It can be fed a multi-line
+message (i.e., with embedded LF in it), and give "hint:" prefix to
+each line, which is lacking from the error(), warning(), die() family
+of messaging functions.
 
-E.g. I find the latter convenient for referring to some long-living
-branch that is also long-named.  I use the remote-tracking branch
-directly to use as the upstream-tracking ref and to rebase on top of.
+> +			error(_("no IMAP host specified"));
+> +			advise(_("set the IMAP host with 'git config imap.host <host>'"));
+> +			advise(_("(e.g., 'git config imap.host imaps://imap.example.com')"));
 
-I haven=E2=80=99t had any problems yet.
+Give a single multi-line message to a single advise() call, i.e.,
 
---=20
-Kristoffer Haugsbakk
+	advice(_("set the IMAP host with ... <host>'.\n"
+        	 "(e.g., 'git config ....com')"));
+
+instead of two back-to-back calls to advise.  It allows the
+translators to find points to break lines better than the programmer
+who wrote these advise() call(s).
+
+> @@ -1831,7 +1834,9 @@ int cmd_main(int argc, const char **argv)
+>  	}
+>  
+>  	if (!server.folder) {
+> -		fprintf(stderr, "no IMAP folder specified\n");
+> +		error(_("no IMAP folder specified"));
+> +		advise(_("set the target folder with 'git config imap.folder <folder>'"));
+> +		advise(_("(e.g., 'git config imap.folder Drafts')"));
+
+Ditto.
+
+As a #leftoverbit we might want to inspect many fprintf(stderr)
+still remain in this program after this patch and turn them into
+calls to appropriate error() or warning() or whatever, but that
+certainly would be outside the scope of this patch.
+
+Thanks.
