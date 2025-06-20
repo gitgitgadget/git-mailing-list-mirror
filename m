@@ -1,43 +1,43 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011025.outbound.protection.outlook.com [52.103.68.25])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011026.outbound.protection.outlook.com [52.103.68.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51FD6221576
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 06:41:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7759A2222BE
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 06:41:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.26
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750401666; cv=fail; b=N0beeuUyFWuAElTFMIj5u1xXT37/B9NwG53GGfPT5BHtt54f5M+q2xgX4J1csxd4rbn1n3sNoOJjqtNZBNL++roPr0jA8Ivjf8D5ZDT/rKRIlh3NNIqON9SltH6xrrXqRKY4vI2WEGNpdQRJ/WvsyrqvOtr6hGrzXtObdqLA6kc=
+	t=1750401667; cv=fail; b=hV0fU8i92qg4/gX6TbZxqiJeM//YZD0bQpS60o5pTBlZDAjNi1m3r41AAzZ2+etvHdCErPqVQZi+8YRob+BTGY8N9leEbePYd+Y58A+PMfYD9vTmlyvXFTmZ8UWmT6DD1YX1nRN+8dmJgRbqbBKIHwF5QMsd87vKmEx2jvRDaYQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750401666; c=relaxed/simple;
-	bh=4ADwOZ+PYH68YCBaHaOjX1gI3fJ/w7PRiy8Lz9lXLt0=;
+	s=arc-20240116; t=1750401667; c=relaxed/simple;
+	bh=AEGbxBSubck0npRYSOJuX7O+0A8jMYoLeVr+hVhupmc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hk/hy2+gk03VHuyR2HzkYDJJV6fZ3KJCvSNtrg3Q+rvFSrpFzBGntffLtRxQ/66tOkCHyreU8pm/XZSgy3O9HVYHL4isNsMz17MeVQcW6vGgTs2aVfZLH/sc7T6oUlE9fnH8J+UGmmsoSFBmArWvhs4psS6k22T2ModBqoI5O78=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=UcLPWbnG; arc=fail smtp.client-ip=52.103.68.25
+	 Content-Type:MIME-Version; b=JhJZz7hNuj6uCw6XzXHpmzvj3qKMrXPi0lm7aSO4dBnaaa7p2ggm/jn6G7ySutRZFzkBxBVZrRwJcyHffxpxCKy1tw553UuNtUk8apIsN2vg49auG1a7n/zo0zvTppMOCXjtNa4oAVvEFwGu0lDlFnbEY8/bOFVM2MYVbkElq+Q=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=IbQrrKH6; arc=fail smtp.client-ip=52.103.68.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="UcLPWbnG"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="IbQrrKH6"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Bt9VaPNO6Qn7XXz4gIhR/ON7Y4lr2aQJiHsBTWR+qWVtj9yO+4grnveHZyxZVY4OGEmpadpRA35zuHs0xw/xWCnbTvLQsC10kVUg6egJHFqXUUyPxxujV9VnJbCYTXId17yVzerzlaBDiHboohBuZREnbwNC5SUlD6QjAbgusqydcoPTyEHkC6awZfv2HXuufpyICv6Ux8INc3MVbRSVfaw88QjxendiOVUoQDgVFPOt/Ngp059JantSpUyaLTX7zlYAouyo2vybH/DE/MKnHAzKeHXlwEGcPCpOzV0tonI3IhmeTDL8LMY5MdgrmZcVPxxnQLTGxjaZRwhZk0FL5g==
+ b=pMQhTu1Hpt0BOEVbiPFryPdgjtTaRXvngUESApmZIjHDdDqTLS5/QbvN83NUuwfa8VqcNoO+OX0oGkSxDiCkanv192XAH9pRYDoRAJXb36TXF1QcR6MjSBdEMTZdhVAvlVfEOfLotCpD12yCBUXOhpUCpaocjGoJWLj8qGwrfmcNgZbvr6Gze3c++eO1GNbWF5wZl/WGmAa7aqHneNxkU6w/NQ8xQQlilCKZJzdUIoQxYtx9ErgrWOItYvm+ftLasMW326jwDAYdRuTVvsIiSepHAFs/vvxcRPI+BSGJ5O4IP7tHMXSfvYq+hsP7GttiJguTKz9Jqm8uh22Dx3UCWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qXgSAKo4bMF18keb+NeeagKW3kkB1dNLvTA21u+VjkA=;
- b=a/WVxRVNwGYiNRBLEvn9dBWF86yPxi0zmoiM6TVy/cWSSoKX1mlZtUEs6aH+8BX5AJJitauNxnfvkKz3Q4QAH6E+phrkE/BdHanHXT2lGJuZgjePq0Wysg84KFSGxF9e/j5GFdoEb7sPW8ZMDs5nwX9H3S+VRcU21MeVcGMsOyDWiaiQDE7FHkVDaYLFKxLMjIMzDThdsUURLWJOqsALApPZ22dwkXasy3TM0BbzO36ti6y/uYdSaK2ydHN1F2G6j4JFGJY9EITqyS488KjUhbSKlZkP6PW8A7ruSdNFMB3wmBf7hyPejfeyPl0JzypIFhJl8/yOpFQgUY2/v6ksgA==
+ bh=FZU72RDnLnHMFKbatfL9uIRdjemyuRY+YXVCyrlJHAA=;
+ b=WEOLQg9yHXFo96yQ8WPBbh28/GlsddUsM0IPc2H7LKRLwzLMowvqz0hyAq301dwGb37aOHp9Ebl0wa/e1lXX/04NtypQK6RXvUQzZZAU6mRUrKWCz6XulIbzjer5HbldtDLybemZyes1P7qItUGDRhBHDKNHWEsoafMHGOzj2fTNup5GwDrw2U9pNEnZ7o2PGyHfi97pOUnBZhm4r2kQeO/jCEfS1vPMONUyVqqAY78ISuF7CeZDh9Euk7O+iu+jbszh7b2kCWv7g+uqG+e9UtzFRr5+lTiXbcUY3tn/17Vi4CNVq2C3Z5T+NT0paXms2SsLTU/Of4gprOfCXefTGg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qXgSAKo4bMF18keb+NeeagKW3kkB1dNLvTA21u+VjkA=;
- b=UcLPWbnGg0xJmCNtzLZ7MRaovPR1Vbb3JOmmEv0u9B9lxDMrpD59EnC6aRmFq4r4JpNYuPq9+Tr/uANCABru3dZE6gpXn+zarXv8r4L/MLAMmw0fmFRaYcuePps23HMsOCWObXNHXMiwRZNrauEhv5aES4pDMo3HQ+eIQC8dXtYj7JXg4BoU2uLUXuy5aEYf+9Oxr/I8d1JWE7NTUwZxwDU6jK9mB2BQI63UPVTf4sbIo+oYqY1HjwVSkyUyBl9khO9a0AvXbgm77lb9KKZb/y+ZxLgs4lAGGOfL/ocJ5aiCz2cGBqwS5j6eq928obSeC2zTaNl9ehn1/x+5rRJYRA==
+ bh=FZU72RDnLnHMFKbatfL9uIRdjemyuRY+YXVCyrlJHAA=;
+ b=IbQrrKH6DeoIjWNN4I4/00y/lc8GU+rGweJ3WqcJFkofMEV5aQQBcZi/Eb02EhAaYn5nSSitZ89EjrqKFs6a5/95WA0G4egzVNea54g6Ch3JYi9kjd2I62RRF5z5wexL4fV2oC0LHRHEu6FhRwMr8OiqwWTTIrV/Ps6gth3hk1cVTU6SV/KYG4lhipzqTai/YzE1JsmYxFZj/JXakMM3VHd5R5zH+CrQCZBtm5TjxYCu9gEDe5VurX6au2PPJchl3B/n9Y9KW4enwMaiHK1Q1IT6M7mgUF27XffBGthRSZ2RgahnAiaOIpLFFV13ScWlmJau7nIQwsvg80yVbfgsbA==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MA0PR01MB6749.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:79::14) with
+ by MA0PR01MB8150.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:9e::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.25; Fri, 20 Jun
- 2025 06:40:52 +0000
+ 2025 06:40:54 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8857.021; Fri, 20 Jun 2025
- 06:40:52 +0000
+ 06:40:54 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v19 05/10] imap-send: add PLAIN authentication method to OpenSSL
-Date: Fri, 20 Jun 2025 12:10:28 +0530
+Subject: [PATCH v19 07/10] imap-send: add ability to list the available folders
+Date: Fri, 20 Jun 2025 12:10:30 +0530
 Message-ID:
- <PN3PR01MB9597CB16EB1C59A217615376B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB95979DF96F8B65497A9CAF81B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <PN3PR01MB9597F9CAD0DA83152E651194B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -61,7 +61,7 @@ X-ClientProxiedBy: PN3PR01CA0095.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:9b::8) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250620064033.15814-6-gargaditya08@live.com>
+ <20250620064033.15814-8-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,204 +70,312 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB6749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 67ff2233-4ed8-4a4f-7e06-08ddafc56644
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB8150:EE_
+X-MS-Office365-Filtering-Correlation-Id: e4ac8ffa-9a2d-42cf-f034-08ddafc56743
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|19110799006|7092599006|5072599009|15080799009|8060799009|461199028|41001999006|1602099012|3412199025|440099028|4302099013|40105399003|10035399007|19111999003|12091999003;
+	BCL:0;ARA:14566002|19110799006|5072599009|8060799009|7092599006|12121999007|15080799009|461199028|41001999006|4302099013|40105399003|440099028|3412199025|12091999003|10035399007|1602099012;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?u5wvblxWH+pgGG5+U5MLaGJ9GTGjum+I5nrYU91OzFIdqyzmO5E0TfCkRISa?=
- =?us-ascii?Q?TlM5fH3Uyblv3HjIckTeu5H4P7gfJ62n4qzHnqpZkUQrZjR1Fzr5djdSaZBv?=
- =?us-ascii?Q?ALQxiD78IDSTFL9hsuJAF9Rpdu9HHLGXwtRyFBYqW4sHgBOQK3HHKQYh5/u0?=
- =?us-ascii?Q?feXMRWUlxq3e8Qxa6SntLO2hJu0HgG4ASeXEC4fKQ86847AJ21zG7Zi1p0hF?=
- =?us-ascii?Q?peitFV73JL7KgCLOwBdXh6D8xdN5sXoMkQjjhahmizxetp3tsyvgoRn7cKNO?=
- =?us-ascii?Q?SnGdUsJzqBcCNfKtjoBeIg9msZLzWzRzPm2qDVxHpkEepK8zuyXD9JtcqvYh?=
- =?us-ascii?Q?L+31Oht6nzuaXCcYChousKXSqRIxklnlbaKcCdQslJeBDxWww7JLhaXDgpDa?=
- =?us-ascii?Q?QsrYUrBUIDUYytocTy8A1y6P0RJvC9MVSzzEvspgGjavapEO5DXNOcq+gJhZ?=
- =?us-ascii?Q?WTpsi9+Gw22N1nIYOrCkis98twqjXzy7PbJ3g7FyL70UUvDC42AH1gfegsl6?=
- =?us-ascii?Q?vtkEZACUlCbFWSpJ/mr9ZGdafRzkrMGZ2Cxn2UzklU3lEd6MdyOsNvQPJgr3?=
- =?us-ascii?Q?CNy1zaHsqRD0x2Yj7aPnXKPQ8gchkDhgXTfu/zZjCLzqazWyBTVIYoxCku6H?=
- =?us-ascii?Q?mfwChTfhBz0m2tzbgBZinQY6zSerIPKYbtIxve2UX1GzaVKPuTUe30Usrfe/?=
- =?us-ascii?Q?KTW1idm2rRrD6rXJJVbZJChAk2jHfxN21PkTexvgSyumywwT5qw8/oJ+Ndym?=
- =?us-ascii?Q?MTxPtl6WqWhIHlayRKOFPGR4L/vRdSnMnJ5VwxLziDCLoqVGX28m2VL8fz6I?=
- =?us-ascii?Q?gqQWuTKxYvb08vcslMWK2gelqMYxTUK+p29Wijf7/ZRM5pT87IQ6+9ELZp3O?=
- =?us-ascii?Q?JZOmZKUU1twztzhJH7hKytPgqteKiWo3Tw6Yw4WPI9LzLziKk+9Itx2tn0Nz?=
- =?us-ascii?Q?oK5ZLEoPUMoukSW7ZNI/EsBJqqElsjYXVVEsorlPFt3MsAha0yv9+pNB3pSp?=
- =?us-ascii?Q?TIvEt91Exc5fhQXFjqN+JbAmPjI/TOXtlmBcqAGnnMcQxsFs96kcbxZd6N0W?=
- =?us-ascii?Q?3kKeOw15LK/8ED9FEFutR7QNrpcS9s0iD+V9ubFSLGQ3ghQi6RCSMHFvAOf/?=
- =?us-ascii?Q?fUn8hlSGVBKSq3NCDfbqOYupbIV0PdcqmYGCTSu9V07dFOgYzPXpQ/wqwiE/?=
- =?us-ascii?Q?QxCrckKT3h0U+HmktncSxHTr7DOWJo8BZZNSCdKnt3s/pC7T7CwuFfenqv5o?=
- =?us-ascii?Q?oI7ub0E9nIFjVeXJ9iUKdKUq7uG7gD2E5+QUx3PbmWpS+YA/eQKMQuE9N2VL?=
- =?us-ascii?Q?q/m94LHV+B1HCdeatxt5K6Aqj3PktQEqefTVoE3GZeENjJzInFfYXdPjrtbi?=
- =?us-ascii?Q?Ms17yLVej/2GpIQ+lzcI9+6IdDSR+oJ45+8MNUw/MgBCwUE4SA=3D=3D?=
+	=?us-ascii?Q?HPU8v+WSKLPjV7kwhrwtPs6VUncQys1utt8FaU9T2o6KGv3rhKN5U9O1+5XQ?=
+ =?us-ascii?Q?MpN5dIII3a4aQUgLSNfw76Wylk39bb96pOe9P5MMntfak/GsjY/MPFV9qLGt?=
+ =?us-ascii?Q?3Y4pXfmM8QMKwB73HlhOd1SVa2MNa371qq+f1Qsdy/lmtt5jl96Dkpz8nXpx?=
+ =?us-ascii?Q?VtxmLEh8b/sIpjyyZs+xEsTafLlXPFAVgMMwtPvis8jgFn//2OqrYOYeeV7F?=
+ =?us-ascii?Q?v0wTIza8c/V95UMD460f3yrg3HLpHBKkIdc/8ErZXzYniHi+JewuFYFxg9fF?=
+ =?us-ascii?Q?ZlRp/2CyEmVAogVzODz0WX8l4MYPBZhKja/jNgY0yN7sk7gCei7i+9hv8gYc?=
+ =?us-ascii?Q?orXQEo7qMKi4+X7VTDRSoCDeCZWmNpgDh088/1H3NBxeJYX138+9oOYRTtgh?=
+ =?us-ascii?Q?olGPWqJrKhzVrCMXyvxG5jop0PKypnfTTL8SWZuLj3oU3G5h8U4OB+TS3wQo?=
+ =?us-ascii?Q?EBnEqNYXpGl7g4Jpj7Qajt/8zdnkzz2UmrFf383CmljkOYL9HGt2y72TJrg8?=
+ =?us-ascii?Q?LjbP2nSP8yghKMDkOCET8zfemaXGpqOHmt5PcmubLxCnY8zhp6iO9ycYkWOO?=
+ =?us-ascii?Q?X+UWwW2T2gPFfbs7YHHcvh40tJo7vCrM1yvtQVZam+6v5Ah1f/PpI9zXrkhq?=
+ =?us-ascii?Q?z00UDDi4G3rlvF2hcLvKQicjIzpQ95HlBuQzfdhyIw+7zWzP0v5HNFDJPMQ3?=
+ =?us-ascii?Q?3v+VcjjvhWC03ramwK47PD2PA2b7nXPsZELWVTlAksI6zmd2RbeTZauCMs7x?=
+ =?us-ascii?Q?SNpUibq55R7yMsevkxLFrxDFJsSHIsgSER+ZJ6lEvVzGPizXcec7UpLjiFLa?=
+ =?us-ascii?Q?AJuAzudkpHoXE5oxo1YdgZxIzPfrA+8rmPt25koUX9pfIm/W0V/Fgf4dOog7?=
+ =?us-ascii?Q?SAADKucAkGWOecual2MYRquyl6jIj4UUXcaj3jRtxJ7eaEWoMPvC/kJUKnVl?=
+ =?us-ascii?Q?mvuWr9HDFMofY2/POvGGKcUGa1XGH8CQ9xbnITv9BbeokSBFdcAG34xzCQL1?=
+ =?us-ascii?Q?LUZXy6KsgmXX1Kc2u31Ej3TuehVwBkB8cmsXGptJZLBNy2rE7CQIMZJ6wRuv?=
+ =?us-ascii?Q?8hnTaTQKFWFFd7cmwGCgooLc6EELJNPTKI4ihb5fC4//8fN+S0RdeCxrLeTb?=
+ =?us-ascii?Q?89//d2x73A/CRQqeCSs4MtPF+E3YM8tQCFOPuSyzDuSixYocCcI09n3FFN7R?=
+ =?us-ascii?Q?FDZcUjWtRL+PVFo0Nlc5yiGBZvHPDheeOVy63mBYX0NcgfI0/FJ0XLJWfSo6?=
+ =?us-ascii?Q?JQgPQzeOdPVSZSOUv3O5g/I1ELBcblxiVPhFd0DFN5CWW1S7zdNAbiA5vh4q?=
+ =?us-ascii?Q?A9AUxzyZJFoJEnebjQzSJkyyQ0L+STq0sq+kk0eeobXw3bHYo8+wjUEQDBPx?=
+ =?us-ascii?Q?srtxKF0=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?FwPbxkc4iRK7NcB9Cnu69s5vZAcMjPFv50RiM1X1dTExidzG2IyD98F6JHKZ?=
- =?us-ascii?Q?idB0GeBLuiKpbkjBWA6nhTdE2KBtLj4isKCbpz2Yz94MDOqp9ij+ZsAnHBb2?=
- =?us-ascii?Q?5Gd0jkvq1zbnazkqgEtRDg8wqetcVQtpVm96BwKXb0DmmlB61+y8LQe5dgbm?=
- =?us-ascii?Q?SsHIc3NOTtmb5rMCfvzIfygTJIUBMqyGIz+RGzUtoxDLb4Ape6MGVDSrv3tJ?=
- =?us-ascii?Q?94aB0pWewbaF9kICL+8w7ddNUjkQ3A4s8Fv07zoEHiipsAuEze7Of6sgb2xv?=
- =?us-ascii?Q?7zQPtYzd0LSbEM+MVerJa3cIESY4XvWTHMfDYNtTjeqUFv+9ysrGHMQ8ZjAd?=
- =?us-ascii?Q?jVLzIlsIzaXWlX7zicoCNqwqYGDIdVvnoDAQeOAbSYZtuq76QdLykmxrI72Q?=
- =?us-ascii?Q?FFUl7A1/86bhWpfIV29lGQXIKiZu6hkGKnKvmqSkLzWL+PktyWyMtzhbu1Q/?=
- =?us-ascii?Q?4pvdvKBeqzsqnGgRIT5wByh4O1MOr0E5aVk22/Jg03yAqdPJLLLHSNfaHXVQ?=
- =?us-ascii?Q?/cGvJsFgD3vNip/n/iCdqOk2B/9IIy/HZ2bvrbAOLQ6SXsKHyxZGtGu+R988?=
- =?us-ascii?Q?FJ29pwJammO65/oQ1gVYR6eZmITFLMeHN+fZv2WochOeflRvok73W1LxnCLL?=
- =?us-ascii?Q?W8MDs/0O0km6qE/IgH4+TjW0UWfG1SFT3o5NOHHsWvI5jShfREl+gMCDB+5f?=
- =?us-ascii?Q?FWconL26WPwerDZgb1K//Xw45rm+VrGGRRnJRb+GXoJ0ZadI+1xI+Tt5g5aD?=
- =?us-ascii?Q?B9oECaG4fPUQ9+CZgHvZJCMK3/o3xWg5tpHNJYmi2SC1x8GrMeCA+YEGvTAk?=
- =?us-ascii?Q?NbPBvD8PEKe/LCPiSiSPObm5toBjTNiTeuwP8yLs2yPswZSPMhZBKCknyORk?=
- =?us-ascii?Q?BsaZlYSPAfNAW+kKUCGb22Tf9Auqa02kw+61d75yGtpxoRn96FFAcr6Mx6wa?=
- =?us-ascii?Q?QQwUZyB0zyqJ1xCYBMC9KFL1ccdc5+w/mcssnfTpqoYDeTaQuSGaHpgsKeUM?=
- =?us-ascii?Q?ORZOqnmG5wzPn2nsO8Df9zELEYTFO7ZzlQvhIO6h1DcSi5MqyPJxtw6773gi?=
- =?us-ascii?Q?hehYGc1Mh2xTP42o8yYA+votttpRjBj2e1fnZpdksGEC/hhOg6c+neAMouqp?=
- =?us-ascii?Q?blp99AnMcEg92hU3z80t6R+Od9z8lir9gCtFX2vgL1SW+hDt1OP3m6OK5A6m?=
- =?us-ascii?Q?9EXe1pcc80DUCz62oXjTUvsAL+ovs/Kf2BBlTp3kSsvETs1vZX7zDCwPF56v?=
- =?us-ascii?Q?GojpluFDo2D3l67ZJfVouhEfNECyOUGgs+Ka/jOVZgxAvFaRZa5r+4qQLEVn?=
- =?us-ascii?Q?hPo=3D?=
+	=?us-ascii?Q?yEbzCTpGVv0YVBdJiIp/mQWa+hmWpafXkx+ciMBRJt43T5Z60E7MxcrSUBSK?=
+ =?us-ascii?Q?kkfjS97OMWoA8JPNdHgLLUkhAddVWkxUPaOL7G/0+B3dxFi/PXGhW2bE7XHA?=
+ =?us-ascii?Q?UistIpE4qxIeU0eLS18IDJefVwxjyh/z7lQVA+bnnB6s3/ND2B+RrRJ4pUpB?=
+ =?us-ascii?Q?Z/D/ercL9BicYJ1v1VpR5G5vX/eV1/TAT36EsSeoX3k07s8DC/lIs64hkZ6V?=
+ =?us-ascii?Q?ID7NcCN9ZtZawVq45CKyz1YKjoa/CMpT2xY0JF8X/y3Ig70Fw949VCkN149q?=
+ =?us-ascii?Q?igL3WISxff8d33DCujw0tE0seOs5i7Pnevfo9Zx5YObMEgu1bbCDSmoaOd1T?=
+ =?us-ascii?Q?Ke7wsN5EjMxxaORfTIfPyKf8QRFi2o0q9Hrl0q/wJM7uqz9JzTMac1sdrYqd?=
+ =?us-ascii?Q?1G+B3TLsmB0CEUcA0bOrcvkJTAmF/HRJ+mAUCqUmAUV0C3yEdq3Zkz2cwLtn?=
+ =?us-ascii?Q?x3J+voxLPInFMgQHff/6kZrJf1P9y+d8YJcZAnQWsqDeMtOqAkSiPoLqvl/S?=
+ =?us-ascii?Q?RR622nDoAGKZuKQBl3M0MV1cr37TY1kTdpJP6AquG/Hk8vuZQMg/lYFbMuv5?=
+ =?us-ascii?Q?kTdC3GnMDFe/YefW8BscMViUxA9N7PYbhbx5r7omovkt5fmUSysEwz6S5tSM?=
+ =?us-ascii?Q?AFaKLzRDJWKIwuDZmrzMz11ugZ5VGRSZuyP3BT9s9zvTxZIPWQWEcXg1d31c?=
+ =?us-ascii?Q?kXC8HOTaYxGKHEMlnvOFonjb9SLbe8W7lMOEgK8rSdfoKUd/Lw9hyyJmg61B?=
+ =?us-ascii?Q?WoA9SYAOApi7lz3DI6Ho5N9xHsBj+R0u8CPzBAwXNgafphtUce6qhnrZ2PRs?=
+ =?us-ascii?Q?639nldsTsZTAf3oRUehCLc6n4Wp7oZbFWTSjqAwLk2KhhCgn229KzifjzqfR?=
+ =?us-ascii?Q?ZCV/cPeapWrN55LieXLX27DIfho9Q5oWiAKtWta7oV1hB7XZwNyyrPsry3GI?=
+ =?us-ascii?Q?M04OLFg88Bj6+vItCm8FcJV1Gh3U2xToJrtPp1gW3aI5LFNDahg9MR/aLyRh?=
+ =?us-ascii?Q?w77X2Wgxs3uC12X71ufqqMOTzFTc/eH1kTeHCzXHRXlyZOYPTOUWpvPc4ZMc?=
+ =?us-ascii?Q?1SsVkbH6rE22deDgEawCy/NtCtgQ8Vxu3wxcqvMqsEK0QFkSz3CLhSnVrUJu?=
+ =?us-ascii?Q?TSZP3s52wDWUeo0m93Zmip13DYIDcsI7rbYSRgXMVQ+5K3dXZGpwbqDmEsFD?=
+ =?us-ascii?Q?Yudc4RBrMigDwEptm+wnYcGXVhaHaYkURUXdWrsPzKOUoY7U4oMBffIwBEDo?=
+ =?us-ascii?Q?pfvavySj9kuFy/GD3L/ByBuH75I64rlBC/l4fi0Zj3ghn0ZBr1aCKuI9w74q?=
+ =?us-ascii?Q?1CI=3D?=
 X-OriginatorOrg: sct-15-20-8813-0-msonline-outlook-f2c18.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 67ff2233-4ed8-4a4f-7e06-08ddafc56644
+X-MS-Exchange-CrossTenant-Network-Message-Id: e4ac8ffa-9a2d-42cf-f034-08ddafc56743
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 06:40:51.9700
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 06:40:53.6208
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB6749
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB8150
 
-The current implementation for PLAIN in imap-send works just fine
-if using curl, but if attempted to use for OpenSSL, it is treated
-as an invalid mechanism. The default implementation for OpenSSL is
-IMAP LOGIN command rather than AUTH PLAIN. Since AUTH PLAIN is
-still used today by many email providers in form of app passwords,
-lets add an implementation that can use AUTH PLAIN if specified.
+Various IMAP servers have different ways to name common folders.
+For example, the folder where all deleted messages are stored is often
+named "[Gmail]/Trash" on Gmail servers, and "Deleted" on Outlook.
+Similarly, the Drafts folder is simply named "Drafts" on Outlook, but
+on Gmail it is named "[Gmail]/Drafts".
+
+This commit adds a `--list` command to the `imap-send` tool that lists
+the available folders on the IMAP server, allowing users to see
+which folders are available and how they are named. A sample output
+looks like this when run against a Gmail server:
+
+    Fetching the list of available folders...
+    * LIST (\HasNoChildren) "/" "INBOX"
+    * LIST (\HasChildren \Noselect) "/" "[Gmail]"
+    * LIST (\All \HasNoChildren) "/" "[Gmail]/All Mail"
+    * LIST (\Drafts \HasNoChildren) "/" "[Gmail]/Drafts"
+    * LIST (\HasNoChildren \Important) "/" "[Gmail]/Important"
+    * LIST (\HasNoChildren \Sent) "/" "[Gmail]/Sent Mail"
+    * LIST (\HasNoChildren \Junk) "/" "[Gmail]/Spam"
+    * LIST (\Flagged \HasNoChildren) "/" "[Gmail]/Starred"
+    * LIST (\HasNoChildren \Trash) "/" "[Gmail]/Trash"
+
+For OpenSSL, this is achived by running the 'IMAP LIST' command and
+parsing the response. This command is specified in RFC6154:
+https://datatracker.ietf.org/doc/html/rfc6154#section-5.1
+
+For libcurl, the example code published in the libcurl documentation
+is used to implement this functionality:
+https://curl.se/libcurl/c/imap-list.html
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- Documentation/config/imap.adoc |  4 +--
- imap-send.c                    | 60 +++++++++++++++++++++++++++++++++-
- 2 files changed, 61 insertions(+), 3 deletions(-)
+ Documentation/git-imap-send.adoc |  6 +-
+ imap-send.c                      | 98 ++++++++++++++++++++++++++------
+ 2 files changed, 87 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
-index 29b998d5ff..7c8b2dcce4 100644
---- a/Documentation/config/imap.adoc
-+++ b/Documentation/config/imap.adoc
-@@ -40,6 +40,6 @@ imap.authMethod::
- 	Specify the authentication method for authenticating with the IMAP server.
- 	If Git was built with the NO_CURL option, or if your curl version is older
- 	than 7.34.0, or if you're running git-imap-send with the `--no-curl`
--	option, the only supported methods are `CRAM-MD5`, `OAUTHBEARER` and
--	`XOAUTH2`. If this is not set then `git imap-send` uses the basic IMAP
-+	option, the only supported methods are `PLAIN`, `CRAM-MD5`, `OAUTHBEARER`
-+	and `XOAUTH2`. If this is not set then `git imap-send` uses the basic IMAP
- 	plaintext `LOGIN` command.
+diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
+index 4a0487b66e..17147f93c3 100644
+--- a/Documentation/git-imap-send.adoc
++++ b/Documentation/git-imap-send.adoc
+@@ -10,6 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
++'git imap-send' --list
+ 
+ 
+ DESCRIPTION
+@@ -54,6 +55,8 @@ OPTIONS
+ 	using libcurl.  Ignored if Git was built with the NO_OPENSSL option
+ 	set.
+ 
++--list::
++	Run the IMAP LIST command to output a list of all the folders present.
+ 
+ CONFIGURATION
+ -------------
+@@ -123,7 +126,8 @@ it. Alternatively, use OAuth2.0 authentication as described below.
+ 
+ [NOTE]
+ You might need to instead use: `folder = "[Google Mail]/Drafts"` if you get an error
+-that the "Folder doesn't exist".
++that the "Folder doesn't exist". You can also run `git imap-send --list` to get a
++list of available folders.
+ 
+ [NOTE]
+ If your Gmail account is set to another language than English, the name of the "Drafts"
 diff --git a/imap-send.c b/imap-send.c
-index 5a83ea80e1..f3ba5eeb5b 100644
+index 7e021c8392..b1dddaff3e 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -139,6 +139,7 @@ enum CAPABILITY {
- 	LITERALPLUS,
- 	NAMESPACE,
- 	STARTTLS,
-+	AUTH_PLAIN,
- 	AUTH_CRAM_MD5,
- 	AUTH_OAUTHBEARER,
- 	AUTH_XOAUTH2,
-@@ -150,6 +151,7 @@ static const char *cap_list[] = {
- 	"LITERAL+",
- 	"NAMESPACE",
- 	"STARTTLS",
-+	"AUTH=PLAIN",
- 	"AUTH=CRAM-MD5",
- 	"AUTH=OAUTHBEARER",
- 	"AUTH=XOAUTH2",
-@@ -851,6 +853,38 @@ static char hexchar(unsigned int b)
+@@ -45,15 +45,21 @@
+ #endif
+ 
+ static int verbosity;
++static int list_folders;
+ static int use_curl = USE_CURL_DEFAULT;
+ static char *opt_folder;
+ 
+-static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
++static char const * const imap_send_usage[] = {
++	N_("git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>"),
++	"git imap-send --list",
++	NULL
++};
+ 
+ static struct option imap_send_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP server"),
+ 	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder"),
++	OPT_BOOL(0, "list", &list_folders, "list all folders on the IMAP server"),
+ 	OPT_END()
+ };
+ 
+@@ -429,7 +435,7 @@ static int buffer_gets(struct imap_buffer *b, char **s)
+ 			if (b->buf[b->offset + 1] == '\n') {
+ 				b->buf[b->offset] = 0;  /* terminate the string */
+ 				b->offset += 2; /* next line */
+-				if (0 < verbosity)
++				if ((0 < verbosity) || (list_folders && strstr(*s, "* LIST")))
+ 					puts(*s);
+ 				return 0;
+ 			}
+@@ -1572,6 +1578,26 @@ static int append_msgs_to_imap(struct imap_server_conf *server,
+ 	return 0;
  }
  
- #define ENCODED_SIZE(n) (4 * DIV_ROUND_UP((n), 3))
-+static char *plain_base64(const char *user, const char *pass)
++static int list_imap_folders(struct imap_server_conf *server)
 +{
-+	struct strbuf raw = STRBUF_INIT;
-+	int b64_len;
-+	char *b64;
-+
-+	/*
-+	 * Compose the PLAIN string
-+	 *
-+	 * The username and password are combined to one string and base64 encoded.
-+	 * "\0user\0pass"
-+	 *
-+	 * The method has been described in RFC4616.
-+	 *
-+	 * https://datatracker.ietf.org/doc/html/rfc4616
-+	 */
-+	strbuf_addch(&raw, '\0');
-+	strbuf_addstr(&raw, user);
-+	strbuf_addch(&raw, '\0');
-+	strbuf_addstr(&raw, pass);
-+
-+	b64 = xmallocz(ENCODED_SIZE(raw.len));
-+	b64_len = EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw.buf, raw.len);
-+	strbuf_release(&raw);
-+
-+	if (b64_len < 0) {
-+		free(b64);
-+		return NULL;
-+	}
-+	return b64;
-+}
-+
- static char *cram(const char *challenge_64, const char *user, const char *pass)
- {
- 	int i, resp_len, encoded_len, decoded_len;
-@@ -947,6 +981,26 @@ static char *xoauth2_base64(const char *user, const char *access_token)
- 	return b64;
- }
- 
-+static int auth_plain(struct imap_store *ctx, const char *prompt UNUSED)
-+{
-+	int ret;
-+	char *b64;
-+
-+	b64 = plain_base64(ctx->cfg->user, ctx->cfg->pass);
-+	if (!b64)
-+		return error("PLAIN: base64 encoding failed");
-+
-+	/* Send the base64-encoded response */
-+	ret = socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
-+	if (ret != (int)strlen(b64)) {
-+		free(b64);
-+		return error("IMAP error: sending PLAIN response failed");
++	struct imap_store *ctx = imap_open_store(server, "INBOX");
++	if (!ctx) {
++		fprintf(stderr, "failed to connect to IMAP server\n");
++		return 1;
 +	}
 +
-+	free(b64);
++	fprintf(stderr, "Fetching the list of available folders...\n");
++	/* Issue the LIST command and print the results */
++	if (imap_exec(ctx, NULL, "LIST \"\" \"*\"") != RESP_OK) {
++		fprintf(stderr, "failed to list folders\n");
++		imap_close_store(ctx);
++		return 1;
++	}
++
++	imap_close_store(ctx);
 +	return 0;
 +}
 +
- static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+ #ifdef USE_CURL_FOR_IMAP_SEND
+ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
  {
- 	int ret;
-@@ -1007,6 +1061,7 @@ static int auth_xoauth2(struct imap_store *ctx, const char *prompt UNUSED)
+@@ -1605,11 +1631,13 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+ 	if (!path.len || path.buf[path.len - 1] != '/')
+ 		strbuf_addch(&path, '/');
  
- #else
+-	uri_encoded_folder = curl_easy_escape(curl, srvc->folder, 0);
+-	if (!uri_encoded_folder)
+-		die("failed to encode server folder");
+-	strbuf_addstr(&path, uri_encoded_folder);
+-	curl_free(uri_encoded_folder);
++	if (!list_folders) {
++		uri_encoded_folder = curl_easy_escape(curl, srvc->folder, 0);
++		if (!uri_encoded_folder)
++			die("failed to encode server folder");
++		strbuf_addstr(&path, uri_encoded_folder);
++		curl_free(uri_encoded_folder);
++	}
  
-+#define auth_plain NULL
- #define auth_cram_md5 NULL
- #define auth_oauthbearer NULL
- #define auth_xoauth2 NULL
-@@ -1219,7 +1274,10 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
- 		server_fill_credential(srvc, &cred);
+ 	curl_easy_setopt(curl, CURLOPT_URL, path.buf);
+ 	strbuf_release(&path);
+@@ -1640,10 +1668,6 @@ static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+ 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, (long)srvc->ssl_verify);
+ 	curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, (long)srvc->ssl_verify);
  
- 		if (srvc->auth_method) {
--			if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
-+			if (!strcmp(srvc->auth_method, "PLAIN")) {
-+				if (try_auth_method(srvc, ctx, imap, "PLAIN", AUTH_PLAIN, auth_plain))
-+					goto bail;
-+			} else if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
- 				if (try_auth_method(srvc, ctx, imap, "CRAM-MD5", AUTH_CRAM_MD5, auth_cram_md5))
- 					goto bail;
- 			} else if (!strcmp(srvc->auth_method, "OAUTHBEARER")) {
+-	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
+-
+-	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+-
+ 	if (0 < verbosity || getenv("GIT_CURL_VERBOSE"))
+ 		http_trace_curl_no_data();
+ 	setup_curl_trace(curl);
+@@ -1662,6 +1686,10 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
+ 	struct credential cred = CREDENTIAL_INIT;
+ 
+ 	curl = setup_curl(server, &cred);
++
++	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
++	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
++
+ 	curl_easy_setopt(curl, CURLOPT_READDATA, &msgbuf);
+ 
+ 	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
+@@ -1707,6 +1735,31 @@ static int curl_append_msgs_to_imap(struct imap_server_conf *server,
+ 
+ 	return res != CURLE_OK;
+ }
++
++static int curl_list_imap_folders(struct imap_server_conf *server)
++{
++	CURL *curl;
++	CURLcode res = CURLE_OK;
++	struct credential cred = CREDENTIAL_INIT;
++
++	fprintf(stderr, "Fetching the list of available folders...\n");
++	curl = setup_curl(server, &cred);
++	res = curl_easy_perform(curl);
++
++	curl_easy_cleanup(curl);
++	curl_global_cleanup();
++
++	if (cred.username) {
++		if (res == CURLE_OK)
++			credential_approve(the_repository, &cred);
++		else if (res == CURLE_LOGIN_DENIED)
++			credential_reject(the_repository, &cred);
++	}
++
++	credential_clear(&cred);
++
++	return res != CURLE_OK;
++}
+ #endif
+ 
+ int cmd_main(int argc, const char **argv)
+@@ -1747,11 +1800,6 @@ int cmd_main(int argc, const char **argv)
+ 	if (!server.port)
+ 		server.port = server.use_ssl ? 993 : 143;
+ 
+-	if (!server.folder) {
+-		fprintf(stderr, "no imap store specified\n");
+-		ret = 1;
+-		goto out;
+-	}
+ 	if (!server.host) {
+ 		if (!server.tunnel) {
+ 			fprintf(stderr, "no imap host specified\n");
+@@ -1761,6 +1809,24 @@ int cmd_main(int argc, const char **argv)
+ 		server.host = xstrdup("tunnel");
+ 	}
+ 
++	if (list_folders) {
++		if (server.tunnel)
++			ret = list_imap_folders(&server);
++#ifdef USE_CURL_FOR_IMAP_SEND
++		else if (use_curl)
++			ret = curl_list_imap_folders(&server);
++#endif
++		else
++			ret = list_imap_folders(&server);
++		goto out;
++	}
++
++	if (!server.folder) {
++		fprintf(stderr, "no imap store specified\n");
++		ret = 1;
++		goto out;
++	}
++
+ 	/* read the messages */
+ 	if (strbuf_read(&all_msgs, 0, 0) < 0) {
+ 		error_errno(_("could not read from stdin"));
 -- 
 2.49.0.824.gcc76007b2f
 
