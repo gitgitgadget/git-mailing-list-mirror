@@ -1,115 +1,154 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192A22D4B4F
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 15:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAD52BF3EC
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 15:29:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750433280; cv=none; b=KHetYQjvO7l6VznHAP+CzNVvWj1ZzMYe5CzFJlw+gDsu9WkJNSueVCY9qGYtq4KRc/v4pwvjf7uqtoX+6XlQjG/kFdO+sJ8m0sQCfgwSXsY0C6Z7eCJyOCesg5YLUNcmtMeexCefESZQchaPmB/IKLE3/apkHOm69U09xRplw0Q=
+	t=1750433389; cv=none; b=A6H4Q8HkBsOCT4e3LrSQJh2DK8DySVHTp4I8Fx24BqMR6pcaZSXe5beV0jBCmu+W/IU8MW6fQgsVT9zrdYexEsRiAD09lo6n3OR45RXcdiZG91UsmcMHgRyHtJOqM3PI0GYwg8Ihocpv9I5S30ep9ZJSHYh66jrs/LBnKss1Fmk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750433280; c=relaxed/simple;
-	bh=C93WEiOuh7zOM21im4YbaHRGhH+0lXA21sKZ6U6CATM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gjXZwkLAOB0HUYOb9DT6MC0vb3PfI07xqh2garvGa7pa6jGgPgYHvVa/efDAurAxP0C4On8maTANv4rNb2FFrgz7L7unSLBG0/uyGDG12HMHR8pcVCcV3BWASAWWCNwUBQQKHDCjljDPiebXEwXOifAYOX2B1QiAev43TwxsZus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iGp7U5oy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RIko20sF; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750433389; c=relaxed/simple;
+	bh=FzlCCQUDVg8O4XsSbfWp6C0EuZXHuARHa0DDVTqrbuk=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=DSreDOV+RiapXaNJ7tyRHt+SPwoAPtKoEztqpjyuoXyVBlI2IszXZ4oWL42H+TQ+PkLeLC8Y1gWqHowdd0msrL8Ng+svyI1pHeGsRK5t8bErW9EwJbFd6NfaakEnJKK4SqQWcprkFZXAO5mYXHUenbeBLL6rs9QZI+eWh16kIOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=abGf8bZ1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T48t9P2a; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iGp7U5oy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RIko20sF"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="abGf8bZ1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T48t9P2a"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2CF4411401D9;
-	Fri, 20 Jun 2025 11:27:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 20 Jun 2025 11:27:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750433277; x=1750519677; bh=AlHnCs/Jo+
-	JgrTmf7olBOSm/dc7v3CQabYf/Zw74aO8=; b=iGp7U5oyLqJQ6spHU9LywWfg4L
-	WpNFVSCUMmk7TK5qqGF1fvSff1W2bg8PIz2kAX9bFZvfgmwjGhJhZSOMzCEE+WSA
-	kAGTlAvbAh6CnpZWpvV04Y6hC/uuBaKj0IbnMiZlfvAOEjIdAKz5PjVA2FohGXq2
-	lvnJWeCO/SFs+fu/W7sHLpyClCRwFrfllHsrgC68mTT5cWyTwXuggqm7Bkf8SiSw
-	7bGemPHPjMyV2R5tqYk0Zh1/dVxgbo7Cm/aCogt9mMwpYWw8A5OCxhAzqAstkC4c
-	hUE43Jvy9JiQBSHt/H/2uzjLPvjzg6ymyTdwkkyNkazjiEGY4uh+x0L6a9tw==
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 661F211401EB;
+	Fri, 20 Jun 2025 11:29:46 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 20 Jun 2025 11:29:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1750433386;
+	 x=1750519786; bh=MMch4pRBfkc7zyz1ENr6iMXun2yZuLXVhmMtVAcxGfM=; b=
+	abGf8bZ15zTe6ctH6+UGgcDFS3jTaYbuA+0t5CrWg47dCkHTkUqZQOH/G8PU6icj
+	yX4zGY60vlmUlkQ0YXvVnt+79CiLuVLIxMI5Y2d0h4Fl7cHqHfyKxHG7HNrIwwa5
+	OmXkCGDne/QGHd3c2dw0RHTO49NFD1VKgMwiH+ccHTNxBvPLuJ07jqqG1xCoUIFW
+	rBW64CqrCnfQoW+UWOE0tDakmZUGlA4AySUcyko0wGQY0bBLmbvNCb/Lt6i+kIgy
+	6XJ8H866wwcADmFoacudzWukZk+Ivn1rejasbmoib/qBnjS4Cdzk1nUrfhwomX67
+	N0zIWOOPTTzRZgweyMe9dg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750433277; x=1750519677; bh=AlHnCs/Jo+JgrTmf7olBOSm/dc7v3CQabYf
-	/Zw74aO8=; b=RIko20sFcbm2YlmIZhmoIS6Au6hIiVDIHx3OhxQYa4YM56bA0dW
-	WZp1CqZLhsOQwwVeNDSh6oSpCRv2x9oxhNWx31pSA6F2epIuhENZ/IBqTasFSZ5k
-	/fdSpCqEkO999dFXXVNluAj9CamaShmgvkcGtUHCvhAWY/KTfdWOgZ38VveWWbko
-	Jk68toteGM/tvZD+NvwbLXX7jfnDfnTVzbBxbIpR1jTk8THPRioZQp47+jdHDnR9
-	AM1peHHr+kRLZtOgGUKeWtgDElcY7tk6oHGhWsEm32ySM5Vu35FGOzGOCBXrAqSC
-	RcGj3JyzmrYAHiBAZegw4fO+07XUPibXg6Q==
-X-ME-Sender: <xms:_H1VaOraRz3tSa5wYE89KADNAdzR4x20aR6d-2PMnjc7wJVXkc3NJQ>
-    <xme:_H1VaMqN9KkViqpET1Nbv6OclN3lRqACBxYRIpZdzU2__trg6C6m6hLVG9POxZThM
-    XpeWZGHwWI3DwiO1A>
-X-ME-Received: <xmr:_H1VaDMzHO6jx-KB2pWYeNQI-7NhAyIVJQicM0yQ0tAG0nhquL5v2W_GIKL--mfjxi5FSppAqEN884zHtWC2Y1q34KSIX5Ypb1xM>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750433386; x=
+	1750519786; bh=MMch4pRBfkc7zyz1ENr6iMXun2yZuLXVhmMtVAcxGfM=; b=T
+	48t9P2axYJpFHQ+uWNaOZdcXeCNbyjOQl50BOV1shB0DJ9/TSY8pX5bpQN0KEob/
+	UY50/URF44MDQ7DYTp5WPRAWJOBWDqeW0MAhq/BW2PVQzkCRri9bbjgHFwydFGBa
+	keJ11YhWf9oVWRH8i16PZM41LOcBHCSfm1zgCIeB8kZ3ynxqqlbsL/rGVIKifkqU
+	M9xSPc2xfm9V5Vue+9VaukPlO750CkqjJvQVLUt+WTVhpIFzNE1r3ZAioI4CO+3k
+	+uMsF0yaQmcYhn4Q7OC0iTlaI+VR0FITpzGNCiNTUeVlpc9dM2uGuP7LI7E1/G2N
+	8CpIPKsU15qeaQtG+Vf2w==
+X-ME-Sender: <xms:an5VaJ8fl6zH2-Nz3CDK9gNRAIuMaHEihzsyixvEK1chujuv8H6NoE4>
+    <xme:an5VaNtsS5MayZHlgA1kYyekbirJjuitFbNyIOSPCkbINGfZBAdNp95JKlOHbW9hU
+    KzJmLpkV_VkOk8crg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekjeeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_H1VaN4K6Wkn5h26ohh3rCb7E03SvXiXAPji4R-fSOJEp-lGz9AScw>
-    <xmx:_H1VaN7Y6Dy-1n4m_tcEQad3cle6l66ymvJbsLSF8tpX2DOAEPsdbg>
-    <xmx:_H1VaNhmihO9N3ZXQR__C1zR4Q6wwKATTYmQKb3Ozy7sIx4yLJaW-A>
-    <xmx:_H1VaH5rETyF1_sGkXXNuJW5T5uYpoo9yVFPRFIwST4zniXjySzBNg>
-    <xmx:_X1VaEO4_o6jLrtM5y_Ymck0Uof2W7ZLcgJEZIfpSAZWNmx-ZoTMn2wu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Jun 2025 11:27:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v5 8/9] pack-objects: introduce '--stdin-packs=follow'
-In-Reply-To: <b81b6213e8f98968a98bd147c068090cfadb5f92.1750375803.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Thu, 19 Jun 2025 19:30:30 -0400")
-References: <cover.1744413969.git.me@ttaylorr.com>
-	<cover.1750375803.git.me@ttaylorr.com>
-	<b81b6213e8f98968a98bd147c068090cfadb5f92.1750375803.git.me@ttaylorr.com>
-Date: Fri, 20 Jun 2025 08:27:55 -0700
-Message-ID: <xmqq5xgq5t6s.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    epofggfffhvfevkfgjfhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthho
+    fhhfvghrucfjrghughhssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefh
+    heeuvdegjeekleeguddukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:an5VaHBzLrYHZrm995bYIQf69QXd_rwpQrrOWsOAw_hm9EZfPGV5rg>
+    <xmx:an5VaNcyoR1kgvwQy2CKhg8TKC-LY1vIkLD2n6RB5TFNKmohkQMNoQ>
+    <xmx:an5VaOOTx_24_qzQGQkSHgr-bIOlbA4r1L_g1nxVhdGbzPgtCPkZzA>
+    <xmx:an5VaPmFAg24VhaKwPdpRRDT61m-pMlnQIPx67PuNHIzsOesSpfRwA>
+    <xmx:an5VaE1A9kAJma3obPu8juOBfBf-69VRfztJBLR_dyegyj-5sfgKvOwP>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2843E1EA0068; Fri, 20 Jun 2025 11:29:46 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: T45b3e437b124cd3b
+Date: Fri, 20 Jun 2025 17:29:24 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: git@vger.kernel.org
+Cc: "Patrick Steinhardt" <ps@pks.im>
+Message-Id: <74ee41f3-a9dd-4a9a-9350-33ffef7dea23@app.fastmail.com>
+In-Reply-To: <4e3c2840-37f3-43f8-9d8a-b4a106d8d18a@app.fastmail.com>
+References: <174f3704-6319-48f9-955e-b36a25836e3d@app.fastmail.com>
+ <Zwzvgby2_oCjQpii@pks.im>
+ <7347e29a-f33e-472b-b993-06c4767a9456@app.fastmail.com>
+ <4e3c2840-37f3-43f8-9d8a-b4a106d8d18a@app.fastmail.com>
+Subject: =?UTF-8?Q?Re:_What=E2=80=99s_the_intended/reasonable_usage_patterns_for_?=
+ =?UTF-8?Q?symrefs=3F?=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Mon, Nov 4, 2024, at 11:45, Kristoffer Haugsbakk wrote:
+> On Wed, Oct 16, 2024, at 19:23, Kristoffer Haugsbakk wrote:
+>> On Mon, Oct 14, 2024, at 12:16, Patrick Steinhardt wrote:
+>> > [=E2=80=A6]
+>>
+>> Thanks.  This makes sense. :)
+>>
+>> =E2=9D=A6
+>>
+>> I discovered/re-discovered a pitfall with the following approach:
+>>
+>>> Create a `refs/heads/<symref>` which points to a remote-tracking
+>>> branch
+>>
+>> Again, so tempting to do for me because you get a shorthand via
+>> `refs/heads`.  And this is indeed fine for read-only operations
+>> (effectively).
+>>
+>> But don=E2=80=99t be careless and do something like commit while chec=
+ked out
+>> here.  Because you are checked out on an ostensibly =E2=80=9Cproper b=
+ranch=E2=80=9D (not
+>> detached HEAD) and the remote-tracking branch will move forward with a
+>> commit.
+>>
+>> So I=E2=80=99ve gone back to using one-level (root-level) symrefs with
+>> all-capital names.  Because git-symbolic-ref(1) allows that and I
+>> haven=E2=80=99t gotten any weird warnings from it.  (I would presumab=
+ly get
+>> warnings if I then defined a ref named e.g. `refs/heads/M` if `M` was=
+ my
+>> top-level symref.)
+>
+> Another newbie mistake.
+>
+> I used e.g. `H` (root level).  But then I was in a worktree and
+> discovered that these root-level refs are per worktree.
+>
+> But this works across worktress:
+>
+> ```
+> git symbolic-ref refs/H HEAD
+> ```
+>
+> (Or `refs/h`)
 
-> +	enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
-> +	if (mode == STDIN_PACKS_MODE_FOLLOW) {
-> +		if (object->type == OBJ_BLOB && !has_object(the_repository,
-> +							    &object->oid, 0))
-> +			return;
+I=E2=80=99ve been using some shorthands for over half a year now:
 
-Sorry for making a comment that is not about the contents of the
-patch, but since we were discussing clang-format elsewhere, and this
-happens to be a case the tool gets it right, the above should read
-more like:
+```
+git symbolic-ref refs/C refs/heads/<longer branch name>
+git symbolic-ref refs/O refs/remotes/origin/<longer branch name>
+```
 
-		if (object->type == OBJ_BLOB &&
-		    !has_object(the_repository, &object->oid, 0))
-			return;
+E.g. I find the latter convenient for referring to some long-living
+branch that is also long-named.  I use the remote-tracking branch
+directly to use as the upstream-tracking ref and to rebase on top of.
 
-cf. Documentation/CodingGuidelines
+I haven=E2=80=99t had any problems yet.
 
- - When splitting a long logical line, with everything else being
-   equal, it is preferable to split after the operator at higher
-   level in the parse tree.
-
-
+--=20
+Kristoffer Haugsbakk
