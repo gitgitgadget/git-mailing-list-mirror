@@ -1,134 +1,149 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27DD1FFC7E
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 20:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DDB11FFC7E
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 20:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750452179; cv=none; b=kABEtnIGJ5V0uGTV7ACq1VMwnPdUXypVOVNK5hjczvjDGCWLsSqJy2mX7rmtZlzbnnw1+4Ct7xP/AmnMPr1kvFeq3FwcnqYNcbcp9WzjYXj74EHHazDLJIz2/ABgQigBaWKIA+NVRVE5/ZLTIFa5PmQ5RMoXAwaGebTUQUYtddg=
+	t=1750452192; cv=none; b=LsHiTutqUK7X+bprh3jDUf8OG3drCxMv/3QWW4TWyRDX+ivixQYBRZ/pnEPssCe/dQ1X7vjVeZE2E7PrFAttQZZhDNdo6C8mMk3kX6HWDqt/fPBDYCoidvR6mF9Qhp7gkOFY4zpjR+LZBEPVGpnTEncB6O+qsCWDo0H7OXQEgVY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750452179; c=relaxed/simple;
-	bh=aUwxr/N6hF0WFxRRLbHYX31YnI/3FIi6mGxP6Aw2r6s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EAj31W2Njl5OZZqwyzH4kmZU+KGBjm5LO2j6/whH9I2HerIbKEwaW9oeYXpax63YG5B0X6e4hwIZgH5mmSRJFNaDhzRSLuZnY4rmythR7//v6RJmo5njfJC2K+CAZQRxkmOINvOs6ge0x6KazAp2nXakmwQozfL6itN8Wxt0KOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=03iRmEbH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DhrqzYwZ; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750452192; c=relaxed/simple;
+	bh=jc3jaEwb3cyvciWS6D6EGxcJAwOBRzWOv7Pfv9Qf68Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=SgX9Wrf9qNcxre72Y6yZ0KQAWeWD+vO1e2BzuWUSGSL3vTmPIU7iL2FGksiT+dv21Ai8Uo7P1V5M1jWUEWfdvuVfR35EJnfWRV04NIFbn+9a6dRRkB/yd/g7HoSucW43yqV/q28xwweyO7Ob/+EsHeDXEXWzM2aXxfQ5TX54lYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=vzkxUFUB; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="03iRmEbH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DhrqzYwZ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B6F8E25400E8;
-	Fri, 20 Jun 2025 16:42:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 20 Jun 2025 16:42:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750452174; x=1750538574; bh=8RarGg6/nS
-	j0VAnMfVQqnwRAORZCYkuQNeDlFro6+p0=; b=03iRmEbHlrg3YVfRFGKHFCNbG7
-	M08XO+SOTfxr3jf2Qlu8Fco5pFcWKOzsUeuNnkJAi7ShC5P1TUTHCLROdn/zihS8
-	1JdIHNhBi9W75bOc/e5HU/w32rv/9IbCS1bbVd1epe3GPbgsM5k6fNXM1OPm0sfv
-	7VPeja9eCql/cDKFRoP/+K9NjIXu1vnM/dJTuKdL+04lSgZOhqh/aC4cUjCZx+lb
-	u/je2NmC9X0+AYSBnyskCgiNl9ePvwKDGu4g96bR7Pu1Qm/gJu3UXUazeKp6Vp9X
-	oxZC1Kd+hVDkmMjLco6W6rzJhJYCpjIC9ZQTSKrOOMqzTPiiemUq6XM7s4ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750452174; x=1750538574; bh=8RarGg6/nSj0VAnMfVQqnwRAORZCYkuQNeD
-	lFro6+p0=; b=DhrqzYwZ79SzdI9Gyo1WGvC8cXXFYtA0xch8b/+csWwBJH7/YF4
-	OkwbyKeYWffGzp4wrI41UMHv0CzPON8GbNhOR8HD9kcpAS+hMIqneiAIR3qnR1s/
-	+qEbfmpKmGHFU3QZgfC7LUV9wV8KM9QLrfCxXeoLC/hPCeDUP9jw4YjA0oEmlXW3
-	vty/74YYnLYhjkoHnU66Xsk3KLSKyb7w5JQ8TKuDxDBBfBJdJvbkZAPQeye6JlOV
-	li5j8423HDBWzapg/jnbMSWnkpuvg5Av1kih+QnCJaXaYIw3mysmXkJEUSPzXwSH
-	W1Uoqy1sq4ocCxeNdK3cVBIEdfAS+c5VqKw==
-X-ME-Sender: <xms:zsdVaLE-ZZ2wAdQCPdQxhu3uPlqi9ZWLkJLBep0oCmOWCfl4ty0uYQ>
-    <xme:zsdVaIXTkIsXsy_3Zj7Buc-5OkuCfF8MM9tQml6XgVnpkVpHNaV_gEPuiQPckEb2h
-    UAMJMMMagc6CwyjuA>
-X-ME-Received: <xmr:zsdVaNLlr9bf2ZUXu_uR1STUsrWua4QZ0HWuGriERGyZIPCIa1w98fp0dACX17wOJKX2023QnyV1sWFqx_GCYHesWSssKroqFLaa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdelfeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
-    gvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:zsdVaJHy2q_AAH-Gso0aR6iM2vEcuBMvZUARr0EDDqAglvraZVXrLw>
-    <xmx:zsdVaBVSFy6L7qYjlYQB4o4NHNMsvgOBGuwsSmqeW7ADh7RvUPhRHQ>
-    <xmx:zsdVaENt7_VFu5emVsbHa9A2va8-m2eWNVbV0eyoK9AtHTQhC0rZsA>
-    <xmx:zsdVaA1JfRleASXMw7-UdXXZUQHDjv0Vh0rAcxn0mTSok0ziWotG1w>
-    <xmx:zsdVaIwG4gqOI_wnvwDuNrLs3pX47IxgmaQBFEjwFn5tODzUugekV5PH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Jun 2025 16:42:54 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 10/10] Enable SHA-256 by default in breaking changes mode
-In-Reply-To: <aFWzTv5-AjUvXWsg@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Fri, 20 Jun 2025 19:15:26 +0000")
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="vzkxUFUB"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1750452188;
+	bh=jc3jaEwb3cyvciWS6D6EGxcJAwOBRzWOv7Pfv9Qf68Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=vzkxUFUBOVsxI/LCmSlgus9akSJGonKrqct0ISA9zJFRg8GNH7ZXHNQtWGb9C/9MC
+	 viP8rHxWXt6aBzHyrJ9m1TogriFfDZXACxOscoeavI6F3O8x1Dlyst6kpM28dzn0EH
+	 F6mezQJ37EGrRlXV1WcuqafV7thhbIuKj4F86kF17OaCEek2CnDe9VkoH2dOX/3ua7
+	 KJu6F5727MDtcHF1GYlFEQAAxjvQwKYf7kGpFyeaHUFLoRgGDIOiU5m16zH63kXG6R
+	 E8oC7iLWjZjcajtB5iGkOWfSVnBv+aTh+2/w5Qqo1/CpaEOC7ypkFHz0j3amwFkrfb
+	 SAfNoWFRCpm505er2V6rL65d8ctFQpoXdgcMu/WEW6pwA8B3KAv1+hUAUvaMZPrXQ1
+	 glVL7F3D05Q3eQWVD6j7e5ucdasaiiLFBbt4m8jUKRDNbaVdAO+6BhB/YZjTe/FlXx
+	 gIKauNZ6feDPhOnHpaxSGKBxvwVBXV4n4QvIjI5pDK1g7MwhnHj
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D949320069;
+	Fri, 20 Jun 2025 20:43:08 +0000 (UTC)
+Date: Fri, 20 Jun 2025 20:43:07 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 02/10] hash: add a constant for the original hash
+ algorithm
+Message-ID: <aFXH2_PpZrJxJRCs@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
 References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
-	<20250620011943.586596-11-sandals@crustytoothpaste.net>
-	<xmqqfrfu5ubo.fsf@gitster.g>
-	<aFWzTv5-AjUvXWsg@fruit.crustytoothpaste.net>
-Date: Fri, 20 Jun 2025 13:42:52 -0700
-Message-ID: <xmqqa5622lgz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250620011943.586596-3-sandals@crustytoothpaste.net>
+ <xmqq1prf89cd.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rMDFfusEp2C9oyPB"
+Content-Disposition: inline
+In-Reply-To: <xmqq1prf89cd.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On 2025-06-20 at 15:03:23, Junio C Hamano wrote:
->> Another thing that I suspect nobody wrote tests for, but we must be
->> absolutely certain, is that the post-3.0 Git can still interoperate
->> well with historical SHA-1 repositories (I am not talking about
->> "fetch from SHA-1 into SHA-256", but "the binary does not lose
->> ability to work in SHA-1 repositories or fetch/push between SHA-1
->> repositories, only because the default is set to SHA-256"), even in
->> old repositories people have been using for ages without the
->> core.repositoryformatversion defined.
->
-> Yes, I have definitely tested that here before sending it out.
+--rMDFfusEp2C9oyPB
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Is there a single t/tXXXX-*.sh test that is dedicated to that
-interoperability, or is it spread across commands (like,
-t????-clone-*.sh has a test that explicitly prepares an SHA-1 and an
-SHA-256 repositories and then tries to clone them with the current
-binary to make sure the result look reasonable, and t????-push-*.sh
-has a test to push between a pair of SHA-1 repositories, and a pair
-of SHA-256 repositories, with the current binary)?
+On 2025-06-20 at 01:56:02, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > We have a a variety of uses of GIT_HASH_SHA1 littered throughout our
+> > code.  Some of these really mean to represent specifically SHA-1, but
+> > some actually represent the original hash algorithm used in Git which is
+> > implied by older formats and protocols which do not contain hash
+> > information.  For instance, the bundle v1 and v2 formats do not contain
+> > hash algorithm information, and thus SHA-1 is implied by the use of
+> > these formats.
+>=20
+> Does that mean use of _ORIGINAL is a sign that these places should
+> keep using SHA-1 and should not change?
 
-> When Git
-> 3.0 comes out, we can switch our GIT_TEST_DEFAULT_HASH test from sha256
-> to sha1 to continue to verify that those work.  As I learned when
-> writing the SHA-256 functionality and as I'm experiencing today writing
-> the interop code, if clones, fetches, and pushes do not work properly,
-> the testsuite is completely broken with at the very least fifty-some-odd
-> tests failing, so I feel confident that functionality will continue to
-> work for SHA-1 as long as we do run an appropriate test job.
+Yes.
 
-OK.
+> I am having a hard time guessing/assessing the value of having _ORIGINAL
+> that is a synonym for _SHA1; with redirection, it pretends as if the
+> underlying value can be updated from SHA-1 to SHA-256 (and that is
+> the very intention behind GIT_HASH_DEFAULT symbol that gives us a
+> level of indirection), but it is hard to imagine we would ever want
+> to change what _ORIGINAL means, as that word talks about a historical
+> fact that will never change over time.
 
-> Also, when we initialize a SHA-1 repository with the files ref backend,
-> we still use repository format version 0 without any extensions, so the
-> cases that cover older-style configs will still be adequately tested. We
-> also have some tests that even test that things work properly without a
-> config file, which caught a bug in this series (that I fixed before
-> sending it out).
+I agree.  _ORIGINAL indicates that this is a use of SHA-1 which is a
+historical fact and is a legacy decision as opposed to one specified
+explicitly.
 
-Very nice.
+For instance, if we're setting the algorithm for bundle v1 and v2, then
+we'd use _ORIGINAL because those formats did not specify a hash value
+when they were designed and, for legacy reasons, we cannot change that
+fact.  However, if with bundle v3, a user specified @object-format=3Dsha1,
+then we'd use _SHA1, since that was an explicit decision documented.
+Similarly, _SHA1 represents extensions.objectFormat=3Dsha1, which is an
+intentional decision to use the older algorithm.
 
-Thanks.
+> > Add a constant for documentary purposes which indicates this value.  It
+> > will always be the same as SHA-1, since this is an essential part of
+> > these formats, but its use indicates this particular reason and not any
+> > other reason why SHA-1 might be used.
+>=20
+> I am not sure what this means.  If we use GIT_HASH_SHA1 in such
+> places explicitly (as opposed to GIT_HASH_DEFAULT), isn't it a sign
+> enough that with different versions of Git, that particular code
+> path should keep using SHA-1 no matter what the default is?
+
+If we have a test helper that computes hashes and someone specified
+"sha1" on the command line, that's GIT_HASH_SHA1.  Someone said, "I'd
+like to use SHA-1."  Similarly, in the reftable code, we can read the
+byte value indicating that the reftable is in SHA-1 and that's an
+explicit decision.
+
+If we default to SHA-1 because nobody specified extensions.objectformat,
+then that's GIT_HASH_ORIGINAL.  Nobody made a decision or opted into an
+algorithm; we just didn't think hard enough about cryptographic agility
+in the original Git and we assumed SHA-1.
+
+They're both the same numeric constant here and always will be (even if,
+in a future version of Git, we get rid of SHA-1 altogether and we
+otherwise die on that code).  But there's a difference in intention: one
+explicitly stated SHA-1 as opposed to a different algorithm and one just
+got a default because that's the compatible legacy behaviour.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--rMDFfusEp2C9oyPB
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFXH2wAKCRB8DEliiIei
+gbHRAQC24hGlhuHUHvaeNMzVehfNs1TCHBXBaZWfA+EU/pjzDgD+KnQKoJZDFBYr
+9lXd9fylAqABEAJFKo/ZhhROkBwH+AI=
+=gCfL
+-----END PGP SIGNATURE-----
+
+--rMDFfusEp2C9oyPB--
