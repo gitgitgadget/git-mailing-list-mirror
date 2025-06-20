@@ -1,83 +1,83 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8A728B509
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 14:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A8728DEFA
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 14:26:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750429188; cv=none; b=oK5GR8IaRPpwHG9nH3J4cKHxG42UtHeRVypu2wASK22jAYQpr3uK8D9279T0jepgTURm24ieyag6eP/ZA2F04ci1xoXq1qqEZFbWGKqTZsEFlT/M+TV+c2vCSa3zgWNDhNOUrLkhm8NWk7FPn7sXwl892frLyO7GZie0QWkubkY=
+	t=1750429602; cv=none; b=LU7XrzZ3hjEH5vap+7GeP/WcwQKSE+Sj18RjGgzDZORKH+svOcUpTH9RlYsLzkMPAG1JhhaWE862KkAXfDnyqVstEnCweTlwTpXw5DLUthOJ7bwXeUkQapN5S3XPLnyQyIT5H9M9uiJBkr7VvAhBYrScM8afRoPg9MAqWd/xnok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750429188; c=relaxed/simple;
-	bh=mqMzXULNopwJSWtvZvgfUZN7p2fD4q4OiqSq2/CyfsM=;
+	s=arc-20240116; t=1750429602; c=relaxed/simple;
+	bh=PR1u0yOvY3ACq9xLXpMSeFDMms2W+dbJ8fN+WphITVE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IkoUvMPmvG2ulyMJdZF/8n7L9xtsheSOk26ur4o13s5Qxc/yiGWd9pHF8+Ubvuq0N0Kdxos8pG1v0vvcoaTLZBvbu/2gWDF1PvoAkCqKVLNmi8zb9nB1EhL14F9YA+HhOdHf9bWlTJSR1agv6CIVQ160LHdePVP+gL1XD2Q8MvA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XEUnXW2e; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SAYH0vgt; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=ToCTjGjW8myuS7gwrFjI4anPhvpBHuPJgAZZsuMw/ith7Nv2E0UweLjdMAw5XJSTqRRWq1x/AcLdp0UKpY75W0QCYnsRD1eHIb+GrDM3kHTGq7l/HHPvZ6Crl1TxvsAIc/smu7mY6zGVnr3eta4s6t1lDjnxKrbsGgLcs4A6bAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C6vug2EY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWFOBmz6; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XEUnXW2e";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SAYH0vgt"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9CA1313803EE;
-	Fri, 20 Jun 2025 10:19:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C6vug2EY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWFOBmz6"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D1E411401D0;
+	Fri, 20 Jun 2025 10:26:39 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 20 Jun 2025 10:19:43 -0400
+  by phl-compute-08.internal (MEProxy); Fri, 20 Jun 2025 10:26:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750429183; x=1750515583; bh=JRlG6A2kK6
-	lllGYCSqj1wcV/vBtmtHKmvH84Tx17wR8=; b=XEUnXW2eOG6ROclGTG1cOHOXAA
-	9bH6Eb07rOl/s7x0CZ74dCwPLrmQs2k1f+rYlo2V/SCFIem0qoN5JRYc7Ps3R4F4
-	GC0/jV2u/4ZU4tkc2CLPVghzEkTlAVI/6I8o3mjFMmoZyilCUmnNO0EgNrmEMTB9
-	c80oN3oibWxdHyT0b1B9/W1Akpo+N3bKjLseEmmcc+R2682NPaEpbC+Xc5MNnagK
-	JvkhItkhzQudVpzBtzFOO3JHRHxGgnXTcjZB8wEcq08Hv57QgoRbQIe6j2slLE7B
-	uCU57kgD+tRh/OyqEdp5Kls2wylOj8EHPBH0JgyzBv+eAKhkE5oU6LJRdE3Q==
+	:subject:to:to; s=fm3; t=1750429599; x=1750515999; bh=pNVhSpGiBm
+	aLneNxnG1NbUC0Ka5VGV1PXH+yT4rISbg=; b=C6vug2EYBQHqHusrtY9RRTBLO8
+	hm4ye3tVLEUJrS1Bh8efFX7LQJaAlJC8hGCjnc02/MIr0J++Y2l1alqVZpwnE2iY
+	hH6S3e7c8xx9Lx4psz7eHIMJf2mQWd0/gdlhu9WGhIo4A6HPc7COaoBTVrWWLs3C
+	hfZsDK6guekL/duUMEarGebUJeMjMS+14+vQrDVhFB7tbNBcMg2LLqcBiemvTlis
+	kc5QKyV32tI5Zn5zhjdGmlAhzFNmqpSIh8+WMh43so6lErO6ugHM7JC38Xfi3aO9
+	xclILWK36vaLSOoja67tF0P1NPqG+ghtMtcv8GM1UzurtsIeAO1/cgRHkCkQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750429183; x=1750515583; bh=JRlG6A2kK6lllGYCSqj1wcV/vBtmtHKmvH8
-	4Tx17wR8=; b=SAYH0vgtzhultJskVcyEFwhjFatNW8oX5TxykFxsulQNjNUwsAL
-	wjKTAF6HpC+hPf0UQVFsQkLaM90QRcAUADqJWJOzVBm5/iFwqDfd1l8UkV9zEFcf
-	ey1xrT1P9/dVs7PKzFzcSz7GrWdSYQxXB0or/s7vgijRDFDkOoyV2U/Q3KQP+NPA
-	cD0c9HQd4TwyE9pow25hCbvG23ey8ofoZaZp7dvX5JYFynWpgQlWpZRdk/CVU95L
-	W0/rHlBfhqBIUAFU8Pd2Wy4f2Y1bUXnXXFhus4j5V6J+4YQLd7y5tuGh6p9W/Ra1
-	yRzR7JAZ6F4JAbtPMLGHM/EJ4Zgph1E9rgw==
-X-ME-Sender: <xms:_21VaIB419z_g6-cBkg59gV0Am9355htvdBgwai7vT9ABVkfCNRnuQ>
-    <xme:_21VaKhq9_sTrWZKCyjyNetqTBmKkEb2J-P4LVvvsbAEFmMc3QstJPbRnRd2O2pKc
-    6TbFUjFKoSTRKiZ1g>
-X-ME-Received: <xmr:_21VaLmxa4ySoTw4Lt19BC6wLuAl2-ydbuvx6q3dGoCHp7Lma0XjOcuosNnVbHAnvnRtdQA4xYkz8iDlKBV1YY87fATJlHlQgs00>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekiedvucetufdoteggodetrfdotf
+	1750429599; x=1750515999; bh=pNVhSpGiBmaLneNxnG1NbUC0Ka5VGV1PXH+
+	yT4rISbg=; b=IWFOBmz6/WNlUaQtYA+kQTdcZON3zrIVo7A/0YE3dpZWDgPORP2
+	BXiFC1j2mwRwEXTDNtorbbpSsyYjQKJ2NY0rtGRKM0S5lnEoKm9sNb1sQgOrG2co
+	qNfXg7tnGzJZxS6x2zaKgqRzFw8N+eA4es9qdNcbHfJ/JyAtdH073QaTpy1LmuCK
+	llcNfg/uIm450Q+xe7rovppYliwOJ+vjYaZbE6/gGZB5pixfheFpkH+uVNznu2VR
+	AgODM4zoO8QMezeNIFPetOtIgXu9b7Y/0sbmRWg77brDpi/ojWinBrWpi/76mD+O
+	wP2JyiFtAMu5WH/lgVYwmeTI01mxQwBnq2A==
+X-ME-Sender: <xms:n29VaGKP_VsLpkXIRsnFl5bjkjmba95063prrTLVR2s3jLX0bbEEvg>
+    <xme:n29VaOI0FmyJeVn0N3rQmIhkGxam3O4imujWFHSHViJ94IV6DG27-2JP5XBf4plHR
+    oYoi810ZMswgI_ZZA>
+X-ME-Received: <xmr:n29VaGvor6wVWSs-wEnP70BjI1ELbBodMJy19whkg-JMnE-Y_AVEG1haSowkG_5-XDJZ-_7OloShJHIJ8ybk0z6Hi5lCSxjmK-SZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekieegucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
     lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
     ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
     jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsrghnug
-    grlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_21VaOxN9hQOddhI_MuX1C5q1vuPgk3yjSB-dAWR5dA-a0dzMjZ8RA>
-    <xmx:_21VaNT5tPAsSx7fQnjQJ6S5fYXv24YInM33nZjbpDuVeR-MidQNWw>
-    <xmx:_21VaJZz2b0qdb_8QMMSyx3-sJab7KqP4VicPNp3LXMA7dek7zmLmQ>
-    <xmx:_21VaGSMVEiAGmd26-xuYjUwY5xPlVxBZ1TvvxKfb7g3M1OCczkuEw>
-    <xmx:_21VaOdlhD8ml3aBzjH408u1f4nWTpwWCqg57etQD4eH_zHd10ViSJtE>
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
+    gvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:n29VaLaDPeNlv2YO7GBbmptWejULWAGZYDp4TCE884U0v6UUiQWuIw>
+    <xmx:n29VaNZckoGo_DeX7aiqJg40x_z0ycWVJncWbMyM-rkig__XeZ-58A>
+    <xmx:n29VaHBn6FTxM3y-cfGftb-fmwvEoV_T0kh4OZLSN1uovP6kwCtoIw>
+    <xmx:n29VaDY8wOGfe-_N5DiSK9vqAGR2jU2HcQDmYUaQdpzmThmIXThTHg>
+    <xmx:n29VaAnwxgcHMPayWu44LfjMi6I-lUSSYID4Y6z1qcMn1Ifh0CNO2Y5s>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Jun 2025 10:19:42 -0400 (EDT)
+ 20 Jun 2025 10:26:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
 Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 03/10] builtin: use default hash when outside a repository
-In-Reply-To: <20250620011943.586596-4-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 20 Jun 2025 01:19:35 +0000")
+Subject: Re: [PATCH 04/10] Use original hash for legacy formats
+In-Reply-To: <20250620011943.586596-5-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Fri, 20 Jun 2025 01:19:36 +0000")
 References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
-	<20250620011943.586596-4-sandals@crustytoothpaste.net>
-Date: Fri, 20 Jun 2025 07:19:41 -0700
-Message-ID: <xmqqikkq7awy.fsf@gitster.g>
+	<20250620011943.586596-5-sandals@crustytoothpaste.net>
+Date: Fri, 20 Jun 2025 07:26:37 -0700
+Message-ID: <xmqqcyay7ale.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,130 +89,38 @@ Content-Type: text/plain
 
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> We have some commands that can operate inside or outside a repository.
-> If we're operating outside a repository, we clearly cannot use the
-> repository's hash algorithm as a default since it doesn't exist, so
-> instead, let's pick the default instead of specifically SHA-1.  Right
-> now this results in no functional change since the default is SHA-1, but
-> that may change in the future.
-
-Nicely explained and this step shows why having GIT_HASH_DEFAULT
-makes sense very well.
-
+> We have a large variety of data formats and protocols where no hash
+> algorithm was defined and the default was assumed to always be SHA-1.
+> Instead of explicitly stating SHA-1, let's use the constant to represent
+> the original hash algorithm (which is still SHA-1) so that it's clear
+> for documentary purposes that it's a legacy fallback option and not an
+> intentional choice to use SHA-1.
 >
 > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 > ---
->  builtin/apply.c       | 2 +-
->  builtin/diff.c        | 2 +-
->  builtin/hash-object.c | 2 +-
->  builtin/index-pack.c  | 2 +-
->  builtin/ls-remote.c   | 2 +-
->  builtin/patch-id.c    | 2 +-
->  builtin/shortlog.c    | 2 +-
->  builtin/show-index.c  | 2 +-
->  8 files changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/builtin/apply.c b/builtin/apply.c
-> index a1e20c593d..d642a40251 100644
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-> @@ -29,7 +29,7 @@ int cmd_apply(int argc,
->  	 * cf. https://lore.kernel.org/git/xmqqcypfcmn4.fsf@gitster.g/
->  	 */
->  	if (!the_hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	argc = apply_parse_options(argc, argv,
->  				   &state, &force_apply, &options,
-> diff --git a/builtin/diff.c b/builtin/diff.c
-> index c6231edce4..eebffe36cc 100644
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -483,7 +483,7 @@ int cmd_diff(int argc,
->  	 * configurable via a command line option.
->  	 */
->  	if (nongit)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	init_diff_ui_defaults();
->  	git_config(git_diff_ui_config, NULL);
-> diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-> index 6a99ec250d..213a302e05 100644
-> --- a/builtin/hash-object.c
-> +++ b/builtin/hash-object.c
-> @@ -104,7 +104,7 @@ int cmd_hash_object(int argc,
->  		prefix = setup_git_directory_gently(&nongit);
->  
->  	if (nongit && !the_hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	if (vpath && prefix) {
->  		vpath_free = prefix_filename(prefix, vpath);
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index bb7925bd29..352ce7f88a 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -2034,7 +2034,7 @@ int cmd_index_pack(int argc,
->  	 * choice but to guess the object hash.
->  	 */
->  	if (!the_repository->hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	opts.flags &= ~(WRITE_REV | WRITE_REV_VERIFY);
->  	if (rev_index) {
-> diff --git a/builtin/ls-remote.c b/builtin/ls-remote.c
-> index 01a4d4daa1..df09000b30 100644
-> --- a/builtin/ls-remote.c
-> +++ b/builtin/ls-remote.c
-> @@ -112,7 +112,7 @@ int cmd_ls_remote(int argc,
->  	 * depending on what object hash the remote uses.
->  	 */
->  	if (!the_repository->hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	packet_trace_identity("ls-remote");
->  
-> diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-> index cdef2ec10a..26f04b0335 100644
-> --- a/builtin/patch-id.c
-> +++ b/builtin/patch-id.c
-> @@ -254,7 +254,7 @@ int cmd_patch_id(int argc,
->  	 * the code that computes patch IDs to always use SHA1.
->  	 */
->  	if (!the_hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	generate_id_list(opts ? opts > 1 : config.stable,
->  			 opts ? opts == 3 : config.verbatim);
-> diff --git a/builtin/shortlog.c b/builtin/shortlog.c
-> index fe15e11497..60adc5e7a5 100644
-> --- a/builtin/shortlog.c
-> +++ b/builtin/shortlog.c
-> @@ -419,7 +419,7 @@ int cmd_shortlog(int argc,
->  	 * git/nongit so that we do not have to do this.
->  	 */
->  	if (nongit && !the_hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	git_config(git_default_config, NULL);
->  	shortlog_init(&log);
-> diff --git a/builtin/show-index.c b/builtin/show-index.c
-> index 9d4ecf5e7b..2c3e2940ce 100644
-> --- a/builtin/show-index.c
-> +++ b/builtin/show-index.c
-> @@ -47,7 +47,7 @@ int cmd_show_index(int argc,
->  	 *       the index file passed in and use that instead.
->  	 */
->  	if (!the_hash_algo)
-> -		repo_set_hash_algo(the_repository, GIT_HASH_SHA1);
-> +		repo_set_hash_algo(the_repository, GIT_HASH_DEFAULT);
->  
->  	hashsz = the_hash_algo->rawsz;
->  
+>  builtin/receive-pack.c | 2 +-
+>  bundle.c               | 4 ++--
+>  connect.c              | 6 +++---
+>  fetch-pack.c           | 2 +-
+>  pkt-line.c             | 2 +-
+>  remote-curl.c          | 2 +-
+>  serve.c                | 2 +-
+>  setup.c                | 4 ++--
+>  transport.c            | 2 +-
+>  9 files changed, 13 insertions(+), 13 deletions(-)
+
+I earlier expressed my puzzlement, but this step shows how
+GIT_HASH_ORIGINAL may make sense as a transitional measure, letting
+us tell between "This place in the code uses GIT_HASH_SHA1 simply
+because we haven't examined and inspected it for the purpose of
+allowing us to eventually switch the default" and "This place in the
+code we determined need to keep using SHA1 even when the default is
+different".
+
+If that is what is going on, after the whole-code transition
+finishes, we would want to rename _ORIGINAL back to _SHA1 for
+readability, as in such a future, developers should not have to
+remember that we originally used SHA-1.
+
+If we call use a name with SHA-1 in it (e.g., GIT_HASH_MUST_BE_SHA1)
+from the beginning, perhaps we do not have to rename _ORIGINAL later?
