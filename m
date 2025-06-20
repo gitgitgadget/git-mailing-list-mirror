@@ -1,98 +1,151 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E280623185D
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 20:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4FA2AD16
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 21:05:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750452670; cv=none; b=AsRgsgBquVowIoYxV7pgN8SF5wSSPWlZA2HAhri+XrYM9DfXCl/Uf8lmK+qipACUs6Hi+LErcK+R/2uWgHeok36GHodyf+8iwlzTGZiZcauCf6mYyFZSLJL5T3BivmdOff/WObpF/QM0t79LJ4wetOLYzbjd0Exb3KZeu4Jp508=
+	t=1750453548; cv=none; b=CdMwcb9juC8IxSzf2K/mPJj2EcI5bJD2xVEcq6CsUzdAQUuB0OEuG3K/Y4xvcq4fsTvFlkV5n6u0Md7l2j+0a5dZloFYtwV2RnoAd5TSiCXAujabagjqflmN8ppQfeDuyTxzixRo6XJYCnmYq506ZGw/gDLLnvk+huF18UCt7bY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750452670; c=relaxed/simple;
-	bh=4v75Li/8ej5se7LR6u4Wb36Ulcr/obNRMoK4ZQrxM60=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sf0xamvPDEAjxQFGsvU/2+0K0NgnNxWZp0MQjd8iduCzk6iYMhxTcWF5QuZKYPFdFKFoPJziC+ZL8gGnZIvftLtvvQKZfs8IxRWOC6t3DtPawSGxFgauLTw7RfX5grDEPweNzncoJwDo2vUtrf3ZWXr6b/o1nbTg8SJbfQz/g3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=XSI0MBBA; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1750453548; c=relaxed/simple;
+	bh=kv1ltTSQaIJ4MTDDbm9PZvfLOzbvy+NdRoHtVqS4Bqk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GH0jBGbQzbwOrlzGECRkVsJp7i975lbG2pGBQPOaD8mN5V4fS28iefv6A4FMtXUnzf6cvRIHi/b7A5U5oXtQVq1vV2WDJRmuKlTHWaMIdbQhAmYk9IE7sfXaBjFoYttWnXMUh3vS8yNp9NrUsFO2nB57aypoTRdyHskl5Ug1Jg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BlXFKxI1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JhJRl1AG; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="XSI0MBBA"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1750452667;
-	bh=4v75Li/8ej5se7LR6u4Wb36Ulcr/obNRMoK4ZQrxM60=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=XSI0MBBAhySbWWwr5RaNhq1CnB32awIXEta102BRRSZG88d/qKVHUUBXsUw2u6xF3
-	 9/v4FpyFxn9TiiRE9h+UYwmXmbreu7Jq0PGylWW7Z9QB0RepL1/u6KbdH7ioXinL/i
-	 oAoTvNu14nYhMm0nbsVAPbNJhfRo3Z1kI+8oUFUE0HZWnOwmynTVXZzS327nlXVocF
-	 gBSQAy3dJp0LXSDEj3fus3Ws3Oq8bstDGsJiJXuv6Kl/0avx0OKX01++UjLR0yteZd
-	 vafft9mDJmHLBD/cEjBAIVLjMe479YiOvDxXgMMlnFO6Dowcsme8fq74PXNbhIe6KK
-	 SSVrq5wRKvQT1uE+ZEnHXP3w83OvqIAN7Hwz/L9fm5J2QQDS/URtNGVmyE5aqGrvjf
-	 M9MCTwS+2WDc1e7JDyM/XHEphmYsPLt/A4PzdFDOlv+HsDJE2H063aqWMCBwMSN6fG
-	 wh9ZqKogq98WSbZNwH5zScZxM/DJh/WrfGJwY0+aTSxccxZb4Gx
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B812820069;
-	Fri, 20 Jun 2025 20:51:07 +0000 (UTC)
-Date: Fri, 20 Jun 2025 20:51:06 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 04/10] Use original hash for legacy formats
-Message-ID: <aFXJunWKq28BeX-a@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BlXFKxI1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JhJRl1AG"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 98F8E2540289;
+	Fri, 20 Jun 2025 17:05:45 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 20 Jun 2025 17:05:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750453545; x=1750539945; bh=1w0X8DN1ad
+	L5Stp9QKcJ56aisoC3xdSlLkke1ccmhRo=; b=BlXFKxI1XO08eYKAAAHjZxhkoi
+	6Jnf6+nn2KD0clAfTqXu5KHN/FpHDHXfP+IaUVn2Wytwl90uzi73VRDxrgPQ/MtJ
+	I5K8JDEiRaBMYsAynb5TiCShTg/iyv4RWi27/xwb9N7Q/wfIuAtqW4fEIjYRH5cE
+	Uv7DSi8rO+7eJSd2HtJbI1XQDD9F5KmmtGNea10XZm/oHouwGtVjwZASH3DSJJUK
+	W5VsCDIY8OwJ3Gcst+7w7UiEIgnhs1mt1ww+987PgmDBL9vOWVuNX+jQYAthF+uQ
+	OZUfOwCxicpFGRcIVn0ZYxGVS/0+XGGUj3rlNFE4E+Fx4hRvDRmWPN1KMbNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750453545; x=1750539945; bh=1w0X8DN1adL5Stp9QKcJ56aisoC3xdSlLkk
+	e1ccmhRo=; b=JhJRl1AGMvUgDf/i6KyUibQe1zZGZhrrYvH4I+nRh8chXW3evVS
+	wbNzbLXgjoEoZ6FHQ8cyFmzyxI+c4xxGwPEG4syGQClbtjcbYQdrqMwMhb9f4drw
+	mUxMEf61v48RlCcP/a6J3ro4c0z+UNR3fPhoqc4TxhiLezoUU/1Vm56lS7kSaFRu
+	NB/He03YWcCCw5dQLT1yRl11gslRVw3J80gELLhuDFUBD3TRiA+qNDvNKto8KdTL
+	lV8hilYtGrAVQOksmLXInj/vaWZeXrRTSMvp8hxWXyYuxs87YbHtVmgw2N/3+7pr
+	MC00wL2CGkYxrclN7LmTbHLnKZOkSsax9ig==
+X-ME-Sender: <xms:Kc1VaNNqS4Nk0dqZnVuPvjrUmH3Pp2bbxYkhgHDGYoey3AjEuNLLlw>
+    <xme:Kc1VaP8pkGXizoyyr5iYZAPtHjkQwIiFSO_R83HX6YSaFZEorBsgqJCmK8nZaEgk7
+    DmTWkIwIE1_ndXv5Q>
+X-ME-Received: <xmr:Kc1VaMRTkZQiL0Bob9Vgq5_JunK-HJ-z0k4qtveN-IoKEwMEAa50e30lBLAO8V-bJUmXKSy8Lq4ZncLCJjUNwufsJFpCB5rSlm5q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdelgeefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
+    gvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:Kc1VaJsutkhFptEE8E4hmlI03vgLejVdAHDv690YMn6n8iC5LbOCfg>
+    <xmx:Kc1VaFfemEA9N2SogpAF8Un_3YcWjU7keVF7E155K17GXbBIns5-lg>
+    <xmx:Kc1VaF1x88P8AOBi5Cro6Qn9W7zBn5QB38Sc5vuTvEdi7ndC6MZAVw>
+    <xmx:Kc1VaB9k2sAzc3B1TMH3JF6tk8r_TqNU6d6kWHcObfjZFmbcmg5I9w>
+    <xmx:Kc1VaBoF1fRHV9Z8xohsbnPQ9PHE713a6ZUkocqDEHnixzp7r5M_hdEA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Jun 2025 17:05:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 05/10] setup: use the default algorithm to initialize
+ repo format
+In-Reply-To: <aFXEgLRLRdbaPOb2@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Fri, 20 Jun 2025 20:28:48 +0000")
 References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
- <20250620011943.586596-5-sandals@crustytoothpaste.net>
- <xmqqcyay7ale.fsf@gitster.g>
+	<20250620011943.586596-6-sandals@crustytoothpaste.net>
+	<xmqqtt4a5upb.fsf@gitster.g>
+	<aFXEgLRLRdbaPOb2@fruit.crustytoothpaste.net>
+Date: Fri, 20 Jun 2025 14:05:43 -0700
+Message-ID: <xmqqqzze15ug.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lMkiFH+9gTdjVeIE"
-Content-Disposition: inline
-In-Reply-To: <xmqqcyay7ale.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
---lMkiFH+9gTdjVeIE
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+>> > -	if (format->version == -1)
+>> > +	if (format->version == -1) {
+>> 
+>> And if there is no core.repositoryformatversion set, we will come
+>> here.  According to the comment before handle_extension_v0(), some
+>> extensions.* should still be honored even in such a repository, and
+>> the above call to git_config_from_file() should have handled them
+>> just fine.
+>> 
+>> However, I do not understand why we clear all of what we read with
+>> another call to clear_repository_format() here.
+>
+> Because this is the case where there's no config file.  
 
-On 2025-06-20 at 14:26:37, Junio C Hamano wrote:
-> If we call use a name with SHA-1 in it (e.g., GIT_HASH_MUST_BE_SHA1)
-> from the beginning, perhaps we do not have to rename _ORIGINAL later?
+But my worries come from that .version == -1 does not necessarily
+mean a missing config.  Missing config will give .version == -1 but
+the opposite may not be true, no?
 
-We could call it GIT_HASH_LEGACY_SHA1 if you prefer that.  I originally
-considered something like GIT_HASH_GOOD_OLD_REV (GOOD_OLD_REV comes from
-ext2's much more rigid and less extendable v0 rather than its newer v1
-format), but I felt like that would be too esoteric and not document
-things well enough.
+> If nobody
+> bothered to write a configuration file, then we want to reset everything
+> to the default.
 
-I'm also open to other ideas for naming if someone has them.  After all,
-naming things is one of the hard problems in computer science.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+True.  If config file is missing, yes, .version will be -1 and
+clearing may make sense.  But if the file is missing, we wouldn't
+have anything to "reset to the default" because we wouldn't have
+read anything, so what clear_repository_format() call initialized to
+the default before we read config from file would still be there,
+no?
 
---lMkiFH+9gTdjVeIE
-Content-Type: application/pgp-signature; name="signature.asc"
+> I don't know what we do if we have a repository with a config file and
+> no version, but literally every repository since Git 0.99.3 (I believe)
+> has core.repositoryformatversion written into the repo.  I'm certain
+> that the behaviour we'd want if nobody specified one was to do the most
+> compatible thing, so the defaults seem prudent.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
+If our assumption is that no config file in repositories we care
+about should lack core.repositoryformatversion, then what you wrote
+above makes perfect sense, but then we should probably update the
+comment before the handle_extension_v0() because it is stale.  The
+new semantics is that any extension.* found in a config file that
+lacks core.repositoryformatversion will be ignored with the new
+code, right?  If that is our intention, it should be documented.
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFXJugAKCRB8DEliiIei
-gWx6AP9IfU6AMcKschSMHaTspBeMS+T2+YQ1C4FB8Ed51TqIDwD/S+A+GVyujnlL
-G1GvsYszKTHPTtdsiizB/zjfp21THQA=
-=5vOc
------END PGP SIGNATURE-----
+The current code will not clear, so there is a change in behaviour.
+I do not know if we particularly care about this behaviour change,
+though.
 
---lMkiFH+9gTdjVeIE--
+> The reason we need to read all the extensions is that different config
+> options aren't ordered ...
+
+Yes, that is where my "somewhat questionable" comes from.  We'd have
+to read everything in and then refrain from touching a repository
+with extensions that should not exist (i.e., the ones we do not
+understand, or the ones that should not be used with the stated
+format version) in verify_repository_format() as you said.
+
+Thanks.
