@@ -1,83 +1,48 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A8728DEFA
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 14:26:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9905E28FD
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 14:31:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750429602; cv=none; b=LU7XrzZ3hjEH5vap+7GeP/WcwQKSE+Sj18RjGgzDZORKH+svOcUpTH9RlYsLzkMPAG1JhhaWE862KkAXfDnyqVstEnCweTlwTpXw5DLUthOJ7bwXeUkQapN5S3XPLnyQyIT5H9M9uiJBkr7VvAhBYrScM8afRoPg9MAqWd/xnok=
+	t=1750429893; cv=none; b=Sk0JsVhjVaCgEX8D954/qdZR7plpvcmqWaU9LT74SBclIxZYmMSqMyerAuDXXl3B96W+ib3sugwcosNlbKAyw3bwUJMe7pyLPPGeVdUmzgJ9cU+5FZDb8p5CTvm9PKEGKWMWEMop//WP8G+5sx0qj6ncDUOyrh6zV4Fm/kmeisI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750429602; c=relaxed/simple;
-	bh=PR1u0yOvY3ACq9xLXpMSeFDMms2W+dbJ8fN+WphITVE=;
+	s=arc-20240116; t=1750429893; c=relaxed/simple;
+	bh=X34VkTdqUSdQvGIQsbL28pWEU/PUPbKLOxgUVGlc+qA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ToCTjGjW8myuS7gwrFjI4anPhvpBHuPJgAZZsuMw/ith7Nv2E0UweLjdMAw5XJSTqRRWq1x/AcLdp0UKpY75W0QCYnsRD1eHIb+GrDM3kHTGq7l/HHPvZ6Crl1TxvsAIc/smu7mY6zGVnr3eta4s6t1lDjnxKrbsGgLcs4A6bAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C6vug2EY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IWFOBmz6; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C6vug2EY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IWFOBmz6"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6D1E411401D0;
-	Fri, 20 Jun 2025 10:26:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Fri, 20 Jun 2025 10:26:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750429599; x=1750515999; bh=pNVhSpGiBm
-	aLneNxnG1NbUC0Ka5VGV1PXH+yT4rISbg=; b=C6vug2EYBQHqHusrtY9RRTBLO8
-	hm4ye3tVLEUJrS1Bh8efFX7LQJaAlJC8hGCjnc02/MIr0J++Y2l1alqVZpwnE2iY
-	hH6S3e7c8xx9Lx4psz7eHIMJf2mQWd0/gdlhu9WGhIo4A6HPc7COaoBTVrWWLs3C
-	hfZsDK6guekL/duUMEarGebUJeMjMS+14+vQrDVhFB7tbNBcMg2LLqcBiemvTlis
-	kc5QKyV32tI5Zn5zhjdGmlAhzFNmqpSIh8+WMh43so6lErO6ugHM7JC38Xfi3aO9
-	xclILWK36vaLSOoja67tF0P1NPqG+ghtMtcv8GM1UzurtsIeAO1/cgRHkCkQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750429599; x=1750515999; bh=pNVhSpGiBmaLneNxnG1NbUC0Ka5VGV1PXH+
-	yT4rISbg=; b=IWFOBmz6/WNlUaQtYA+kQTdcZON3zrIVo7A/0YE3dpZWDgPORP2
-	BXiFC1j2mwRwEXTDNtorbbpSsyYjQKJ2NY0rtGRKM0S5lnEoKm9sNb1sQgOrG2co
-	qNfXg7tnGzJZxS6x2zaKgqRzFw8N+eA4es9qdNcbHfJ/JyAtdH073QaTpy1LmuCK
-	llcNfg/uIm450Q+xe7rovppYliwOJ+vjYaZbE6/gGZB5pixfheFpkH+uVNznu2VR
-	AgODM4zoO8QMezeNIFPetOtIgXu9b7Y/0sbmRWg77brDpi/ojWinBrWpi/76mD+O
-	wP2JyiFtAMu5WH/lgVYwmeTI01mxQwBnq2A==
-X-ME-Sender: <xms:n29VaGKP_VsLpkXIRsnFl5bjkjmba95063prrTLVR2s3jLX0bbEEvg>
-    <xme:n29VaOI0FmyJeVn0N3rQmIhkGxam3O4imujWFHSHViJ94IV6DG27-2JP5XBf4plHR
-    oYoi810ZMswgI_ZZA>
-X-ME-Received: <xmr:n29VaGvor6wVWSs-wEnP70BjI1ELbBodMJy19whkg-JMnE-Y_AVEG1haSowkG_5-XDJZ-_7OloShJHIJ8ybk0z6Hi5lCSxjmK-SZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekieegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsth
-    gvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:n29VaLaDPeNlv2YO7GBbmptWejULWAGZYDp4TCE884U0v6UUiQWuIw>
-    <xmx:n29VaNZckoGo_DeX7aiqJg40x_z0ycWVJncWbMyM-rkig__XeZ-58A>
-    <xmx:n29VaHBn6FTxM3y-cfGftb-fmwvEoV_T0kh4OZLSN1uovP6kwCtoIw>
-    <xmx:n29VaDY8wOGfe-_N5DiSK9vqAGR2jU2HcQDmYUaQdpzmThmIXThTHg>
-    <xmx:n29VaAnwxgcHMPayWu44LfjMi6I-lUSSYID4Y6z1qcMn1Ifh0CNO2Y5s>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Jun 2025 10:26:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 04/10] Use original hash for legacy formats
-In-Reply-To: <20250620011943.586596-5-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Fri, 20 Jun 2025 01:19:36 +0000")
-References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
-	<20250620011943.586596-5-sandals@crustytoothpaste.net>
-Date: Fri, 20 Jun 2025 07:26:37 -0700
-Message-ID: <xmqqcyay7ale.fsf@gitster.g>
+	 MIME-Version:Content-Type; b=gd+6PN8kosXxavCOrDFOt2R15CIaemkR1geLBSAZDAhrcz+tRtIk+y+Xc6dwnq94yPnozaiI0BrMyWeLrNmdKYZrJaYyhtnAqURuLM04tnM+/o+2gd1LHV9B7FYOlHCssDWXUsLJDCsPcb2AAU5qENvr/noM5e2pJGLoX2cxbDc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4bP07J51R2z1r4qC;
+	Fri, 20 Jun 2025 16:22:52 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 4bP07J4NY3z1qqlW;
+	Fri, 20 Jun 2025 16:22:52 +0200 (CEST)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id owbazokDTTi0; Fri, 20 Jun 2025 16:22:43 +0200 (CEST)
+X-Auth-Info: cj71oy0BXa/nUax6TwnaNIlxm+/HRpzr3rlOwDSjckti7s/IKDhpbPWGspu/Am6O
+Received: from igel.home (aftr-82-135-83-91.dynamic.mnet-online.de [82.135.83.91])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Fri, 20 Jun 2025 16:22:43 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 104242C21FA; Fri, 20 Jun 2025 16:22:43 +0200 (CEST)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Maxim Cournoyer <maxim@guixotic.coop>,  git@vger.kernel.org
+Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
+In-Reply-To: <xmqqmsa27cdn.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Jun 2025 06:48:04 -0700")
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+	<xmqqmsa27cdn.fsf@gitster.g>
+Date: Fri, 20 Jun 2025 16:22:43 +0200
+Message-ID: <87pleyijbg.fsf@igel.home>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,40 +52,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Jun 20 2025, Junio C Hamano wrote:
 
-> We have a large variety of data formats and protocols where no hash
-> algorithm was defined and the default was assumed to always be SHA-1.
-> Instead of explicitly stating SHA-1, let's use the constant to represent
-> the original hash algorithm (which is still SHA-1) so that it's clear
-> for documentary purposes that it's a legacy fallback option and not an
-> intentional choice to use SHA-1.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/receive-pack.c | 2 +-
->  bundle.c               | 4 ++--
->  connect.c              | 6 +++---
->  fetch-pack.c           | 2 +-
->  pkt-line.c             | 2 +-
->  remote-curl.c          | 2 +-
->  serve.c                | 2 +-
->  setup.c                | 4 ++--
->  transport.c            | 2 +-
->  9 files changed, 13 insertions(+), 13 deletions(-)
+> Do we know symbolic port names are always limited to alnums?  Or on
+> some systems some byte values in the fringe, like "_" or "-", are
+> also allowed?
 
-I earlier expressed my puzzlement, but this step shows how
-GIT_HASH_ORIGINAL may make sense as a transitional measure, letting
-us tell between "This place in the code uses GIT_HASH_SHA1 simply
-because we haven't examined and inspected it for the purpose of
-allowing us to eventually switch the default" and "This place in the
-code we determined need to keep using SHA1 even when the default is
-different".
+Valid service names are documented in RFC6335.  Specifically it allows
+hyphens, but not underscores.
 
-If that is what is going on, after the whole-code transition
-finishes, we would want to rename _ORIGINAL back to _SHA1 for
-readability, as in such a future, developers should not have to
-remember that we originally used SHA-1.
-
-If we call use a name with SHA-1 in it (e.g., GIT_HASH_MUST_BE_SHA1)
-from the beginning, perhaps we do not have to rename _ORIGINAL later?
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
