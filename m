@@ -1,43 +1,43 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011025.outbound.protection.outlook.com [52.103.68.25])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011026.outbound.protection.outlook.com [52.103.68.26])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C372221DA2
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 06:41:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.25
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A394223DED
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 06:41:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.26
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750401669; cv=fail; b=OYdHeFHeBYwo3juv99JbIt1VtXFcVDst8FpIGB7yfwB5Q+jNrbBdXRzaBXvBY3ykpCUUkhs7x15wQtfMK53fHr5u8V5Xbb21l/75UouSpeeys1XqTi2sAhDgXYUCc/FsFc2ktrwdGEZ6WxYBKib+2q4bVPcMDMmFpIbXQEdRUqU=
+	t=1750401669; cv=fail; b=uvKD6VYtfK7QJSRpdcxeKGgAIJ6i9sQ5cp1lTngxcp72lWee+A4pRy3ZpzS4dK/yEKuOojrBhpwNDXST/KR0qzAo96Sle3KciFNDI4gkdWHDuhl0Dlkimb8qx3lO861oTIC7b2jwvn4kTFwKjFPqJ4wNi+f2uVLw8H07YdbS1lQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750401669; c=relaxed/simple;
-	bh=AIYm6p4EJ9jarTQjLa0vwoyvXgqj0jl07Vuuv0kX0Og=;
+	bh=OifduXe9nvjcxYPv1DOlE9wufd1CPF+dsEjbG9YwP8c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=K53ysXpcMIuJo8xsTMSKy5cOfosjL4znkuw8VaI8I+8QCRwtgs9TDIFMR3fFKK2OVJ7dT0tDVEhiTpOr9NiGXHZnlvc8YhDBjw7lFSCCcW+fsRyv1xOWmczbxOIdK5PWy6SrjRh6hevr9XQu36bwtmEs6hODQBQtpyuNs1yW0EY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=CGDSyelK; arc=fail smtp.client-ip=52.103.68.25
+	 Content-Type:MIME-Version; b=PV/y50/kS9e8O4uT8AkhlInYmqlsYiCaQ7Pu1tlTYNggDaCXPtFvFkXjLzyewd6UdclllYm233IMOMFfXoTtwwtM7tqHcFW9mTN7l7kBw4djZQ4WxXI6tp8Dyqz/xVP+YEkuqBnEmhempE81RSENz2rrnZbBy3U/FPwAGC7ezqQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=OKCtTAVa; arc=fail smtp.client-ip=52.103.68.26
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="CGDSyelK"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="OKCtTAVa"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ssqYQLHT/2rO9Csd5S1yLZDmmyE6pvnDJzPRHHdqwsxn3yT0W70Hlx2vGiu9GrdnwtGI79DV68/LO9WIpmD2ErUD4i6L/0Z8LcTfjAkBVX3p5LWycMo+1JIfu8GhEtE9If6GHwW5BR2++k6vWdy7NXnK+lVIauAwJWtDExcllYmTJ8Hsy7XQ0mmp4CWl9c1wvXLm9pLllV0MiBfu9IRIcKqheSdtixjNmzraCwo19ptFkJ9qjupXMjawHDMJ34+/D02A9mvnb2/jNff9t3ZEcwFWGFS86qtK0TKrlfF54Aum67/t2w5DH53BIz8QB1LMv4azMpm5HqNNrMR5HGuh2A==
+ b=tfICrN/85j3xfuD5n73YaQTPUbGzYjNnEMtrAlMYknGdJ62eRl/7TmOsJ0Td1Qe8nSU6+84tlOKdEPEKxNAuXM302cSaumL7kKpB7tAgbf6OprHPen8hWfDgwLCuSn/xTvmkJ5mzRmz1ZK6ihR36nFH6xucNVdzr5WTGxAi7BTtM3wYWPLfHcepWivAADOcUcazOtRRzuwL99P4C82XIXrjo3EFXOyDkRo/lpMeTvAURRml3ydmMc8izhHoUBtQvlZ/SArngxycCmmnkaT/cl7kWxdraQyKoqrfXuLQeWtJV3fw2DvQaRxaq+uDHelRaIW1jeXNvpg6rWobCThQ2tw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=v8p6fitltEneC0lmPEeIQEcGSJZx7d/sIknhv518Ebc=;
- b=N9bzo+HR2jkfr7oia29nzRDAdMAxggkBIImg5hcWSI+SJYZLxmUG+rAeSnP3mRze52kTlyi9SANzS8UU62YjcTOSQgmDKNxRzH8DXl7FaQpfv1H/+blCs6vEIMILhjGku2SqL0mz6JVUctR+qXXBRNHWEhrzLmNhoOPdB8iN/GyNQv8kxMaDqK6h/yG0wChPW/xjXEQtgnu2MZRbmKreU3gm5WrA/TESzbUHrp9qS8H8lyyznFfz7jua51bK1f+QBkuG8svQFfHSrG+RdKqK/pEtSZ3dlKLO754h4WDP1oPVRo2aWi51eirUsjLBTpwqRUocZy6ztL85RfuITv3R6g==
+ bh=SXTDUxgz3ofwRL9A6LjZOnl9bp/q8cquZ+ry3v1xgnM=;
+ b=Ot8dW4zlb6mpqhIkoej1/60iPRWVGX543aPxA0O6/t7Z4I6h+2dTFA+iE52+MejMrsH7tfslMA9Iga+qDs9ZIP79lA1nfCVvJigOOHgXGS055lcg3FdSPao3eKVzeArtBQmGZVMAwJDsAiWwaHOK/ejAf3MgMtpcQGFdl+QuvbwqyakmPjrIt7jmYugdNf9JTDEvqXH4WOnkYbytui2gC+FPnWmhx4X+aJVqAC429QsVFw9KDa/wa8FW4HVMaz3B18IyT907TcQpOEOreMHTIx1Bd591MOXamITDYp0lG/jRf15kWnJ+KwCjsi3VfioQ34tY/xToWh+Kgzq+G3ft5Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=v8p6fitltEneC0lmPEeIQEcGSJZx7d/sIknhv518Ebc=;
- b=CGDSyelKQaRbqTUEqCSeJm5c0GRvkP8vBXGwLibOnTUm+OInS9zO0qbw6sv9i7ADWSc4YNu3AkAMqvNPQTu3Q3XgiEKhhoxbFGKlnvmCixV29g+pPXJrE6KfVjVQ2U82EQs2nKuGsCg6hfzBnkeYIhQTGpj9VgXgp8yultuZ08NxbDEv5iMKoEFaoI5YxmBlV2XTZge9kNXZKPUtgtII37JwW4+gFELZg8D1YGB4EXYzUFGobEsf4R76ZIGd/zAuH07GX6v4KpGQkWMfvmaR6L8YRWCkHigH66jdSfSiqWlVYmChm2ir7ZC/XXeLzt6R6DqE+2BNLm/qGSA4c6kt4w==
+ bh=SXTDUxgz3ofwRL9A6LjZOnl9bp/q8cquZ+ry3v1xgnM=;
+ b=OKCtTAVaqedmBHITqN7D0U1BVInsM85GUf1aiKoU7WrJxMcBe9D8rkxdtuLVSHuWyTB4l82GMHusLIRT7l0ohJXn5R2JAbRrEukCnSTWZooYKVEj6B4GNF/00Et+M7+S2WFiHdhU4792TR/0Zawv1ml7P/xSfKbyJ6ZeYrwqnU9L5HdZs6QMHMUauznOzAZrfry6afuT7R5b83/iWR6e3PoYM8QKouP+b1GT7gq+OXXcjq6SFEYTqm7h4DaSj1tr9Kz4U33Nw0pLEKB5l0vNHQnlGtBFCMW3zHb8rfhWVl4JAGwYx3yVBy+lKivGpCAMkGaMCtj8cSyTJEsrxsYDZw==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MA0PR01MB6749.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:79::14) with
+ by MA0PR01MB8150.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:9e::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.25; Fri, 20 Jun
- 2025 06:40:53 +0000
+ 2025 06:40:57 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8857.021; Fri, 20 Jun 2025
- 06:40:53 +0000
+ 06:40:57 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v19 06/10] imap-send: enable specifying the folder using the command line
-Date: Fri, 20 Jun 2025 12:10:29 +0530
+Subject: [PATCH v19 08/10] imap-send: display port alongwith host when git credential is invoked
+Date: Fri, 20 Jun 2025 12:10:31 +0530
 Message-ID:
- <PN3PR01MB95973C003222DB86833C599CB87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB959780281881514C0A6FCB55B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <PN3PR01MB9597F9CAD0DA83152E651194B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -61,7 +61,7 @@ X-ClientProxiedBy: PN3PR01CA0095.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:9b::8) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250620064033.15814-7-gargaditya08@live.com>
+ <20250620064033.15814-9-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,174 +70,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB6749:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1927519c-9721-46e9-b698-08ddafc566ce
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB8150:EE_
+X-MS-Office365-Filtering-Correlation-Id: ce69a8df-552c-43db-6c9c-08ddafc567cb
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|19110799006|7092599006|5072599009|15080799009|8060799009|461199028|3412199025|440099028|40105399003|12091999003;
+	BCL:0;ARA:14566002|19110799006|5072599009|8060799009|7092599006|15080799009|461199028|41001999006|40105399003|440099028|3412199025;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?Y5rnu7qLThpi/iO1zb+Cul04SYtPBWkJq0oEXKJ60nmQ0bbaZemarZtRZnNI?=
- =?us-ascii?Q?BsB0EsQFZepagjaHSFKNR8zFHfjSrRZ1kMRWh/9kNcmikXMeqUH3Z8jldjoH?=
- =?us-ascii?Q?rXKyAXZbAAbBpZiwnp/4WC/c2iah+5CFm8f0LbsdYl/BaMz8c2VelNzcps+g?=
- =?us-ascii?Q?ogTl7sUB2IDYOICWZ8bx9KxmcsGYf6dY7Z7EvY9nky53Ww73qPf0fcPGmQG/?=
- =?us-ascii?Q?BOu4vEWucD6q1ho86UcQrqCfIpDrIwTCkvXC1MSNDoZJom2U8k5iPeRdULf8?=
- =?us-ascii?Q?CBXNZQvtW/jZ4OHIM7HQFhwD9xUUPRl5CQucfm9leH9bFCrq5RbvGddarg0s?=
- =?us-ascii?Q?D2e/M26fnFUIHyJUNBLf14tkNZc54f5//QtqXe+wVmvgcYbc5cye3jE/afv4?=
- =?us-ascii?Q?6QpckXkTh8Q9rxwOP8uNH+KckC06lFQ1Gvg5ereZ9lYIHpD1m0I3itg8QeCV?=
- =?us-ascii?Q?rviYSgyLD4rls+QAbs8Ipdhq3lEkr6fyeBlu0Hx3ijM7LRwtK5UtW+kNLRQz?=
- =?us-ascii?Q?fPxC0QssE/jaapirRm8KkvwrO2cNhjHZyn4RRpKjFGUONY+UFRE2YZEzN5fF?=
- =?us-ascii?Q?u8ON2npKdcWor5QbXCCRiAtuWZaimT9/sP44goqPyyvF8Crsq8n2EcoPPq5D?=
- =?us-ascii?Q?k3Qr5QYfxe3C74L7byIviLhR7dnsYGJNZxeCNrcoxdZjxx/7BWNSQ7AQqHot?=
- =?us-ascii?Q?rczU9C+jXUbHOqZkZLKhzxRSDLaVg5B95g9Y6vXp/OFVGecdHQOps3h5hmXF?=
- =?us-ascii?Q?fLeMl0/FnLyYZ+3+c/Q5hQSfqEK1Wd8M392julTJeWFF4LGOoS28Y9eAyrEq?=
- =?us-ascii?Q?1d1MaPgVyrXjgWi6N222foAh+ieU0RYp7SWV2JrXi5JRIKLVMYXyFzdeuvoT?=
- =?us-ascii?Q?yWP+KlwLPKx2OusnWihAH1dCjLvJirmWFjzrVFkKpU2Tqp2Skpkuuk4csbra?=
- =?us-ascii?Q?fzIXiwPWVLhgWokDpAFoQJtQHdKHizYEf+89L/DTkv0TZh2wlN5cFGJfqkXK?=
- =?us-ascii?Q?1CPvlgnx3qvES12p3gVPktlAZMgP3SXOVVpPnxBlyAU/4biSmwWYYmppahPk?=
- =?us-ascii?Q?aBIuYcMIJC5+bRUMzB9INf1Df3mrwza2KanxsbA++upNHjbtkTEbxMpSdN1p?=
- =?us-ascii?Q?JB0QY9S/1Nkzj2uZSdMPfw4UAz9upSV2NywDamLvE+VVVqMauC6/uo4=3D?=
+	=?us-ascii?Q?67MY7n4wiV8boQ2rr1SBkuln7RvgjNj0A3MJALZwzTXtvc3TYwatgUbNueOt?=
+ =?us-ascii?Q?+vh16x9IEGNy1iHzliVP+YujsBZUG1z7h6V2E47zJUCKBz7xr8xf7dFj4ED+?=
+ =?us-ascii?Q?tNrJIlDKWYOC/V+OLiB+/BShvEVwdDzrnKfHzCLswyPN3vw3M2xdmnhCbodw?=
+ =?us-ascii?Q?iZwD3/F6ljmpHmBBaWdETdWUK+04ZIC5uSEMtR4aL1+x3J2d7I2V6BoQfGRI?=
+ =?us-ascii?Q?fcqgUVtuuQ6Q3KNTa9bA8W+lsDHoBFCWSHPVJ0GIx5xNsfsJd81gWTBBZs7Q?=
+ =?us-ascii?Q?HdhfOj/vjWXdQyPKMcusv+GFwCeInbGakkYVHk+kBAPPiMnISwbllfSdZqMh?=
+ =?us-ascii?Q?wFFzN2pkuSmDDXSRzrGUnMWYVPIv+v59coEdbiQjafyhbZ8Eg52E9JVfL/S9?=
+ =?us-ascii?Q?6DhOhEqKFkTl1wx1+gMHKDhcsaJFmEVsswCk2liyRzAXtCurIQDiakonRNHZ?=
+ =?us-ascii?Q?BeO/xxIZx5N/7l2OFIS1GOVRW/WuHT4grBm65tcspgQYQHye3Cgeq2vaeOaK?=
+ =?us-ascii?Q?9hX8WZOss/D8PgKRYMzSHGxLqHu5jDSFGd7flpuMNIDmiOADHhrXNDC7TzOL?=
+ =?us-ascii?Q?eRGzbT+G3SXy94yZGcqrmAq4A8YZkspiZoFjaNSus4IR5ZR7lISSu/lxXkLK?=
+ =?us-ascii?Q?JWeFNW3pOIL/yWZLfSoq0coZXa2G0EQG1ehRrvACR1B12/moNmWz/C5fHRel?=
+ =?us-ascii?Q?z3/+TLQNeuCkayMFBOKd2v84N+i//6qwvt4Vuz7sz5HkwkUHWmWutKz+vXD8?=
+ =?us-ascii?Q?jQlAOSnUDOYD9W4KCiG5kNe8C1OGqpM1VVv5UXs/kYZc/uI7LyawbuEqy+QA?=
+ =?us-ascii?Q?GvTfNDGlYfqzxfBDXgBIlZESK9DpV7YJDleNyLeyPomXrEID+3+R9GdxwMJn?=
+ =?us-ascii?Q?ctXjbZmcOret59nPIoYcAoyjWYXyK7T+Bsq7Uvex5iRgBzrjXVuUACtyixWW?=
+ =?us-ascii?Q?gnY8aUjU9ar4uOkHMPneLxxJta7foGTi4z7fEy05VigLgY4luIbDNX6j5LJF?=
+ =?us-ascii?Q?6mMydOh7tNpKibhgpjm4R0wT9quou02Em9Vn6QvVe4HYgAQ9hNZPP8fhdJAl?=
+ =?us-ascii?Q?qpWHKyTKWRdySWMAky/Rt3ekvpA97Juxh6Y5MFiHeLPtgpaPfas6jizvf/sP?=
+ =?us-ascii?Q?WHLMQeYWWDI7MQNKxALXcAnNvbOMVIA3HCTj+vV3chjrKmGpqgTNLCY=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?q7mA3qhub0QhnGy6BfLACd+fQnXVw5GJTIJjS2Y88sAp24oHV3S+E9jIhpiM?=
- =?us-ascii?Q?/KvKebyUJC+qZJ94sRzbHdNiktBV2VL+u3+usRfBCnjcceIm3ZUl9Kp83XXZ?=
- =?us-ascii?Q?mvfvVeBSEmOCNgqZkj4Mz+oWxS4OyEQ7fly1hrYqPlVBvsd9BN6CX2alYHu/?=
- =?us-ascii?Q?vCmXDpQI98KUaCWEC3c2fchHbaPH4DwQUzqjOsOPYZuOWhAvab7dFev4Eea8?=
- =?us-ascii?Q?rc5SBhk8UcETaicwWciaO4+3xTeqj9F5VGnzSjfrwJhdHhk3nOaCT6l1bAds?=
- =?us-ascii?Q?Cg/ySNfmsjCf42boVbj4QS/o+cda+q0Ws81N7Ub9qD39U4Or+M9WA7EJ9Nh8?=
- =?us-ascii?Q?HuzT7M9ee2vOHaUCB3sDPOU4yHzAD3le8BKXfZjD4tQapqfur0N5wBg7vLhA?=
- =?us-ascii?Q?YcI0yI4kRXnhTv/RNqidjxm1UDoRxwos/UOYl8orCIk3v9PCyX65cTbEeHw9?=
- =?us-ascii?Q?+xdJLm8grYPn6eMmQsjRG+2kNbULNv9f5gP8y/mvQc6bmTPvRh9fzAia9anQ?=
- =?us-ascii?Q?M+X4y4tv9Sdb6rHDn/3PTg8AQstTlYsiUh/6NqRyGD+gxVDvg0ZgD3XvQyYM?=
- =?us-ascii?Q?BXJThlRg6TESRuHUmMqOPP7yvagIANBRIl1fCNDS2ttOxxOoH+y1YWLJ7l33?=
- =?us-ascii?Q?mRVLeDrFuSinbVBHI7ya44/vkA+9nbPKjt7bVzB0juNHsToVXIFTb1HnCOS2?=
- =?us-ascii?Q?HG8yeFuTGe+YFIstCl9ulgQyhZIkUgpk4LZDt6/oXNn25QtyjuLbYs7liqhz?=
- =?us-ascii?Q?neBHgN04LIqVsYQK91MQfYqHt9TbVcmmx9GzCRux6RSF2Mp3xNO5cy56D9N7?=
- =?us-ascii?Q?JY7QpfZUnuVG6NaTLtfGOv/oTqI5IhR+/jX+tE3DLcqYzlU8ZHY1j+6wYK/Z?=
- =?us-ascii?Q?AQx0mtBB5tAp/CoMOVT39wYVlNBp2j4n+6X5A9agNSHIM4HXI7kzgmAAPG7L?=
- =?us-ascii?Q?s1gu2Fdb3bERCZonp1y/36N2tyX5Kb9QUg+XuoOk+SJtVznFXf77DdaAup1a?=
- =?us-ascii?Q?K1tUB/CZxNtvQKtJYfVMsDP1/zkZgkKj8aEwRdnu80plUhFP4fL3Zs2J5zht?=
- =?us-ascii?Q?8TQlFr6Mk5KKGePaT1/CA8o54Cj9/sJzevAX3uPuQ5iKKTqH5DXMZE9VfBEy?=
- =?us-ascii?Q?AV2KUz+v865MN+u4v/8wti5/lVVyO43i8UG7xQMHY97UV7XIn28kMgOrpjb8?=
- =?us-ascii?Q?h/ERepbcoGOZ7v/sgF7tSvLtldLSW+diqKlzoZmDO+HZ+wrr5/srbMUShj/q?=
- =?us-ascii?Q?JIJXuHPP5k+3ZtEeQ7LpY0RwOMaiQHzLPnKF9MqSzqAfPl+soEJ0slgSo3PT?=
- =?us-ascii?Q?s3E=3D?=
+	=?us-ascii?Q?KvZOfLK3XqW7+3z730atcsy+4npdzqj2N7SCH5haGVw9SYCB1ZChd40puGao?=
+ =?us-ascii?Q?tZMGVdUnJK3P8gT0JIRg6nwHgwkPz6Z0bsvAieOHdXxkGBhTpcmwYLAHf/tG?=
+ =?us-ascii?Q?7wttRA0e/4uUa3nqGyiVhw+AiQOO7A5kk+FHlvzWItTbLj9L7TNHiY1O87px?=
+ =?us-ascii?Q?InBCZclznUXb1olv/6lqVX1GHtV9DD9TNXr2kG7xQLLBnjrXvfMA2Aw1vJ47?=
+ =?us-ascii?Q?yv40LKagjR9AZbiVqjCgVmYLnao6++Mr6d4+IHYQolJ4dlvTMOMRYhd9hFrr?=
+ =?us-ascii?Q?sDsjTYS0/0+K9l+F50INcaht27vvpnqUFCSqcEd56zdaCbgJTOSGNpAK0wON?=
+ =?us-ascii?Q?5i69JEmb2gcePc4JvSebxQqp54C3cnXGzffwmOvTBXcVXZW8kXa78Tr7apwZ?=
+ =?us-ascii?Q?1AoLP4ceoDJcwUpV7ZkDRSrUUNPAcrkmUQQ46dwqLS1qGmokvM7St9VA5RoN?=
+ =?us-ascii?Q?r204D0lvcPQj9TWW+drxnpbgaCEnt734bdtmWuqXwcaE8oep5VigZv7vuq6M?=
+ =?us-ascii?Q?gKerfIGnLj0es+TosLgp1iccX236fs+lgSVJdkTzxNXPxfX48cwxoBBhQ9tR?=
+ =?us-ascii?Q?Ivod5CyP3++8lB7KX+QEqV5dmoZUya0N1QjlbF9ZF4/8l9tfYT9Anqa9d4AY?=
+ =?us-ascii?Q?PuNGLcG4WEC7xiKmHPZK+Rr539z3KwDV/LMa+GvK9g4VRUWEIVtS/FRHDabl?=
+ =?us-ascii?Q?pxOxAI+M2inS3QpxrJn5e7/e9w4DbRHRx+efUb2sOmWyJzbhgr3yvB/RUpHX?=
+ =?us-ascii?Q?LZJcjJ8BMn1ea+DvG5m7dTqq/DOOy5n9Xq446PJeJ++JherBIUVwVCadlhlZ?=
+ =?us-ascii?Q?HW+hmDx8lwern0CytklXp2V+RMZa3d5rNRAOq3xzxqulcQVFY6TPWIaAkTv+?=
+ =?us-ascii?Q?BbdPE+Kk5EvCBngNHh3CG01UVjN+9lwvg/KLOn794/wV+BCb77acekZtDbIF?=
+ =?us-ascii?Q?kk4V859mtlIaAymrraWhd/1FG5iCefX5Y6WB0Q6Z5L4txhHGuOcoedG5QqyZ?=
+ =?us-ascii?Q?q8QEXIwYFQF7UUDk1CHxBHzjscMVHRfF5+YCN5C5wWOKDmdug2SC8IqLZW4I?=
+ =?us-ascii?Q?rG+T2mAPHQHwb3regWSbECft+wOHJ+hR+C87DXV9miuxoeS1NFwTWEkWiUss?=
+ =?us-ascii?Q?Id5i0ER7WS0yqcZ07N2bJcuHbpcITvXoT+8ZXIyTMEoSmJfTbqMHa/6L/3mR?=
+ =?us-ascii?Q?218XQFy57kNTK5r1ZfybF9V3+GUx7aGt2YPVSHsgYCduK5aeOUSI1pbLDmcJ?=
+ =?us-ascii?Q?R0WdpfINih6OnAp9XoDnDG2UI1HhmbXPE42C51gac1SU/l7k+KFh9gacB748?=
+ =?us-ascii?Q?vOM=3D?=
 X-OriginatorOrg: sct-15-20-8813-0-msonline-outlook-f2c18.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1927519c-9721-46e9-b698-08ddafc566ce
+X-MS-Exchange-CrossTenant-Network-Message-Id: ce69a8df-552c-43db-6c9c-08ddafc567cb
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 06:40:52.7517
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 06:40:54.4900
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB6749
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB8150
 
-Some users may very often want to imap-send messages to a folder
-other than the default set in the config. Add a command line
-argument for the same.
+When requesting for passsword, git credential helper used to display
+only the host name. For example:
 
-While at it, fix minor mark-up inconsistencies in the existing
-documentation text.
+    Password for 'imaps://gargaditya08%40live.com@outlook.office365.com':
+
+Now, it will display the port along with the host name:
+
+    Password for 'imaps://gargaditya08%40live.com@outlook.office365.com:993':
+
+This has been done to make credential helpers more specific for ports.
+Also, this behaviour will also mimic git send-email, which displays
+the port along with the host name when requesting for a password.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- Documentation/config/imap.adoc   |  6 ++++--
- Documentation/git-imap-send.adoc | 15 +++++++++++----
- imap-send.c                      |  9 ++++++++-
- 3 files changed, 23 insertions(+), 7 deletions(-)
+ imap-send.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
-index 7c8b2dcce4..4682a6bd03 100644
---- a/Documentation/config/imap.adoc
-+++ b/Documentation/config/imap.adoc
-@@ -1,7 +1,9 @@
- imap.folder::
- 	The folder to drop the mails into, which is typically the Drafts
--	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
--	"[Gmail]/Drafts". Required.
-+	folder. For example: `INBOX.Drafts`, `INBOX/Drafts` or
-+	`[Gmail]/Drafts`. The IMAP folder to interact with MUST be specified;
-+	the value of this configuration variable is used as the fallback
-+	default value when the `--folder` option is not given.
- 
- imap.tunnel::
- 	Command used to set up a tunnel to the IMAP server through which
-diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
-index 8adf0e5aac..4a0487b66e 100644
---- a/Documentation/git-imap-send.adoc
-+++ b/Documentation/git-imap-send.adoc
-@@ -9,21 +9,23 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
- SYNOPSIS
- --------
- [verse]
--'git imap-send' [-v] [-q] [--[no-]curl]
-+'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
- 
- 
- DESCRIPTION
- -----------
--This command uploads a mailbox generated with 'git format-patch'
-+This command uploads a mailbox generated with `git format-patch`
- into an IMAP drafts folder.  This allows patches to be sent as
- other email is when using mail clients that cannot read mailbox
- files directly. The command also works with any general mailbox
--in which emails have the fields "From", "Date", and "Subject" in
-+in which emails have the fields `From`, `Date`, and `Subject` in
- that order.
- 
- Typical usage is something like:
- 
--git format-patch --signoff --stdout --attach origin | git imap-send
-+------
-+$ git format-patch --signoff --stdout --attach origin | git imap-send
-+------
- 
- 
- OPTIONS
-@@ -37,6 +39,11 @@ OPTIONS
- --quiet::
- 	Be quiet.
- 
-+-f <folder>::
-+--folder=<folder>::
-+	Specify the folder in which the emails have to saved.
-+	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
-+
- --curl::
- 	Use libcurl to communicate with the IMAP server, unless tunneling
- 	into it.  Ignored if Git was built without the USE_CURL_FOR_IMAP_SEND
 diff --git a/imap-send.c b/imap-send.c
-index f3ba5eeb5b..7e021c8392 100644
+index b1dddaff3e..ef5cf0a395 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -46,12 +46,14 @@
+@@ -1082,7 +1082,7 @@ static void server_fill_credential(struct imap_server_conf *srvc, struct credent
+ 		return;
  
- static int verbosity;
- static int use_curl = USE_CURL_DEFAULT;
-+static char *opt_folder;
+ 	cred->protocol = xstrdup(srvc->use_ssl ? "imaps" : "imap");
+-	cred->host = xstrdup(srvc->host);
++	cred->host = xstrfmt("%s:%d", srvc->host, srvc->port);
  
--static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] < <mbox>", NULL };
-+static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
- 
- static struct option imap_send_options[] = {
- 	OPT__VERBOSITY(&verbosity),
- 	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP server"),
-+	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder"),
- 	OPT_END()
- };
- 
-@@ -1722,6 +1724,11 @@ int cmd_main(int argc, const char **argv)
- 
- 	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
- 
-+	if (opt_folder) {
-+		free(server.folder);
-+		server.folder = xstrdup(opt_folder);
-+	}
-+
- 	if (argc)
- 		usage_with_options(imap_send_usage, imap_send_options);
- 
+ 	cred->username = xstrdup_or_null(srvc->user);
+ 	cred->password = xstrdup_or_null(srvc->pass);
 -- 
 2.49.0.824.gcc76007b2f
 
