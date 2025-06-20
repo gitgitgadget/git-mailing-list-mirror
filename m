@@ -1,158 +1,209 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF1292222C1
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 19:20:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440A017A2FC
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 20:28:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750447246; cv=none; b=eBNPVpBqbqx3zLYwSjuSiV1tmMsRLSEcvN2Z5IVAVSQ5H8qjBendKCqa0gzQK98CEocA9dXPayHq9QlOZ/XusEKnobrlhInIkfSF4NH6T3PE8MSgJYsnpR8Jc5cX3zMUmGNbGX1GFuKnE5zSwVDo9HK9LKBpKYcjcwJoF4WviFI=
+	t=1750451333; cv=none; b=SF6WIrA0SA6xAK7Zy/irVEZM5347GqWEnN6TFy6iWE1YkPuxj5IQozAP/qBnBrPVkoATu8yuhtlcrrjteLLG/Aj3wR0A/wYM0o7KnL1w2C/vTKxgEws505KnL1LSKQoiJ6NDjz65RUFERMaQfMmWhH835DapmP6JTHsTqmEDUO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750447246; c=relaxed/simple;
-	bh=s2VZ8sVMjpuXGYBVbVuDEZlOW5zuII2b23T1981HnpI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oGdBj6pIgGzkkp5Wxtf4FzXmNuPSmThWi0jy88IZRv/Yp3OiJQrihDPQvldoSXXUltMkZHymLiGytBSQ74Y2Vx1nc88UdEPfBLHP+jheq7J1xZu4PtzYW41+p96kwN/o1cP4i72cAjaS7qPPpilB/ijlB2fw4SOKoiuORo6Pa2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g/kI283A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ByWvajFu; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750451333; c=relaxed/simple;
+	bh=QoC8FIZR7r7sI9G+V2Zyz0zIjhyJ53ziURoCB/k0ofA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ukM/yDY1BKjMkOAqRRnKj3U8IeE/87YG2yJTN80z7OT/7ONHwym+jabhv+HbMxb7KQUBy5/PeeB0MwQvRw0UaZYcNK3sg+ofdKYPHXw7xClVU4bR/2v4lke16blI7E7jlTYnZ1a4TxbkyCfnfz4osL9Od16dsbAEOwsKik07jdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=wSBsCBez; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g/kI283A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ByWvajFu"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 77B54254026E;
-	Fri, 20 Jun 2025 15:20:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 20 Jun 2025 15:20:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750447242; x=1750533642; bh=QwXiptX7I+
-	lvmOzElnI5RNfH9+V5FkReogX5Jr7Yea0=; b=g/kI283AgT4CsrReCpGjI1/YFb
-	QmeKp91NjLNvbQOQhCW7WHt9ng8WCqTFwEVkNn+EPWZIvbQZi7WHxuOApnFGu0lS
-	CM7/8xrP/RKMP4PLlSKyU18sHyF/c4TdoqNXSLF2bZMrsXENoIcPZmfZBf8H+SY/
-	qN5AzlFiDsQBCog7CJY5OVnqAuFknKyI/39RdMbQcAGD8qCXzgQ/S4TvxRerzOku
-	VoLrCuSxC5oH4qNHj5jUMt6VjTlOV8DybjtS2LjS2OupWPAaMyv1hl8lZNsXtGVa
-	mCvk2csp0ETc3G0ZdvmKHBXWpAPoOreZYc9xxZS/at+yBPsIZthxgXb1Iu/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750447242; x=1750533642; bh=QwXiptX7I+lvmOzElnI5RNfH9+V5FkReogX
-	5Jr7Yea0=; b=ByWvajFuxVPuE0uyTtItMf/ScxAI2JvL7QohR4OU/O7fxd3130Y
-	VxiJkqIQyFkDNdKW3S8Kx658qN/2TQQAV7YX4N/Upcp4QP4mz1JrFa1iMt2PJMBu
-	mpbL1QRS2B5qBKi9tWQanV9FWyQIs1Mn6VVSoaY+zXbGpCDaJRoVh5FYiKO9jFFV
-	7YHGNs/27pXBaWwvaAuhU9DzPUuHOsyVu9MDBGZWpKhQh58lffuHO+P8JxRsU5GT
-	IIP35AhpAxruk/gbjvyc9qieqfTJzOJcIhFK7NhFrQCxx0rMQSqzVj1ZB7IO/Ove
-	Tmyp+AA2UOZdXZaF9wIKKWYu6Xzo8mLic+Q==
-X-ME-Sender: <xms:ibRVaErEQWEpGaEtyc07uT9N1ZnCzcnCaATZSlI9m4_y9gIiY3EuOg>
-    <xme:ibRVaKoriecsmNfcSkZ_jFy7emFvmEqPgkffgomaCvfq7cbe-fGZyWgZc2D0xJjXq
-    H5cW0PgQ0ScxnFsjg>
-X-ME-Received: <xmr:ibRVaJOrunZlYWepOhTPl618ca3-rYZn__eObyBQMwFCyt5EphHAbBgacri3rh8AygflehUvnSlIWJ2v64G6RqYmsRSN_H1_Y-D_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdelvdefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
-    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
-    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
-    hrnheptedttdevffeuieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledu
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrih
-    hsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgv
-    nhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprg
-    hsthgvrdhnvghtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
-    ghhmgidruggvpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ibRVaL6LCC6M6CBzEeNgHBco-dofHBusxApdaX1jIxsFdSpE9jjn3Q>
-    <xmx:ibRVaD74mxqKTjWCi8wg1dBGGGCTeRDdGbCCAAqDQe2UYKl0OQyeLw>
-    <xmx:ibRVaLgCf5MIaAf1HBdZneSpbmzwkmOTOaB5onH-1vEkeySMQsKoiQ>
-    <xmx:ibRVaN4Jw20EYxHwl8JrXWeDWOI6Y6SMCqKPChQlj7TvG37klq5azA>
-    <xmx:irRVaJqZpb6G_9GyCCSNiAtz0IFtuJOxGIOdu54OfMKUINd7dAgsMgbH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 Jun 2025 15:20:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org,  Patrick
- Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
- output format
-In-Reply-To: <CAP8UFD24LayEi-=PREqbiyC7PeJbYEP1ghOZ+T-ma=DZVaPtSg@mail.gmail.com>
-	(Christian Couder's message of "Fri, 20 Jun 2025 18:12:36 +0200")
-References: <20250618151821.528627-1-christian.couder@gmail.com>
-	<20250619133630.727274-1-christian.couder@gmail.com>
-	<CABPp-BF6ZjfJ2MSHkhXQwv00=63qG3wLU8ie=_WVxnWTffFpRA@mail.gmail.com>
-	<CAP8UFD24LayEi-=PREqbiyC7PeJbYEP1ghOZ+T-ma=DZVaPtSg@mail.gmail.com>
-Date: Fri, 20 Jun 2025 12:20:38 -0700
-Message-ID: <xmqqfrfu2pa1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="wSBsCBez"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1750451329;
+	bh=QoC8FIZR7r7sI9G+V2Zyz0zIjhyJ53ziURoCB/k0ofA=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=wSBsCBezf5WS8ORfMfLQTh0J6G4vOowkHzx36Cd4vWyWvaYRa4SwK2JaLdAeMbyq7
+	 vyu9O/xyPQm26EnC0cxD6c6YTIvRBz5HrLk5zDhlUXrEGxgN4HU7sUH+vorlFiKOTF
+	 /6ywW3QqB0eap7/EQYdKFUCp4bLIAwARAzij9/UgwAAwD1+mUQjqsdkADqz30tLJpi
+	 uTKDuTL4cm5U4piW36bvVIKVVeUouxCP75Y5VksxNaSSe84iej0pOnImO26nB40m8X
+	 UC+V1ftlq0atriuUX2U23Q7hV0U8TyyRJmUV37XOB0Gp6QjNdWzyQc9e4XR+zn9DO9
+	 htSSNv3I7YgLPZJ4kiJdfE4TzbX+8NrSpQLqQyEO3XLcktF8b/EGbJD4sw9Hb/p8UH
+	 bNifC7NhxvvrrgN24p0wsNNYg5GGdUmJXA2PeuddlFpY96V5Ity1sOU96cCHMOPix6
+	 lqizRuxS92vxzEdZYdT+pdtT376nK/ziXZz5QdZ/wRgUWH6ZTDK
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E40C820069;
+	Fri, 20 Jun 2025 20:28:49 +0000 (UTC)
+Date: Fri, 20 Jun 2025 20:28:48 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 05/10] setup: use the default algorithm to initialize
+ repo format
+Message-ID: <aFXEgLRLRdbaPOb2@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
+ <20250620011943.586596-6-sandals@crustytoothpaste.net>
+ <xmqqtt4a5upb.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DoVuB7RaU371MAXz"
+Content-Disposition: inline
+In-Reply-To: <xmqqtt4a5upb.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-tldr; 2 brief requests.  Please
+--DoVuB7RaU371MAXz
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- - Be gentle to people and expect that it is normal for them to be
-   off of the list for a few weeks (or even more), not able to give
-   a timely comments;
+On 2025-06-20 at 14:55:12, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+>=20
+> > When we define a new repository format with REPOSITORY_FORMAT_INIT, we
+> > always use GIT_HASH_SHA1, and this value ends up getting used as the
+> > default value to initialize a repository if none of the command line,
+> > environment, or config tell us to do otherwise.
+> >
+> > Because we might not always want to use SHA-1 as the default, let's
+> > instead specify the default hash algorithm constant so that we will use
+> > whatever the specified default is. =20
+>=20
+> All of the above hints the use of _DEFAULT instead of _SHA1 but ...
+>=20
+> > However, to make sure we continue to
+> > read repositories without a specified hash algorithm as SHA-1, default
+> > the repository format to the original hash algorithm (SHA-1) when
+> > reading the repository format.
+>=20
+> ... this explains why we may want to
+>=20
+>  - expect that we would be able to read the hash from repository
+>  - read from repository
+>  - if the repository specifies the hash, happily use it
+>  - otherwise it is a lagacy repository so use the SHA-1
+>=20
+> Is that what is going on here?  Because I find some things that
+> happens in the code somewhat questionable.
 
- - Fully stand behind your own patch (unless it is an RFC), even if
-   some of the idea came from elsewhere.
+Yes, that's roughly it.  I'll explain this better in v2.
 
->> Why would it need to say what type of signature it is?  Don't the
->> ascii armor lines have e.g. "----BEGIN PGP SIGNATURE----" and "----END
->> PGP SIGNATURE----" around it, which fast-import can read as well as
->> fast-export?  Is the idea that we strip those lines and now need to
->> replace the information we lost?
->
-> In https://lore.kernel.org/git/aAq1nvcPRlIPal5l@tapette.crustytoothpaste.net/
-> brian said:
->
-> "These should be separate fields: one for the hash algorithm and one for
-> the protocol.  Alternatively, we can just keep the hash algorithm field
-> and parse the protocol by reading the first line, which will differ for
-> different protocols."
->
-> It would have been nice if you had then said that you prefer not to
-> have the protocol.
+> > Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> > ---
+> >  setup.c | 5 ++++-
+> >  setup.h | 2 +-
+> >  2 files changed, 5 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/setup.c b/setup.c
+> > index 641c857ed5..fb38824a2b 100644
+> > --- a/setup.c
+> > +++ b/setup.c
+> > @@ -835,9 +835,12 @@ static void init_repository_format(struct reposito=
+ry_format *format)
+> >  int read_repository_format(struct repository_format *format, const cha=
+r *path)
+> >  {
+> >  	clear_repository_format(format);
+> > +	format->hash_algo =3D GIT_HASH_ORIGINAL;
+>=20
+> If we expect we can read from the config, and otherwise we fall back
+> to the hardcoded legacy SHA-1, do we need this assignment?  We
+> cleared and version is set to -1, and then we read from the config ...
+>=20
+> >  	git_config_from_file(check_repo_format, path, format);
+>=20
+> ... so if the file said anything about "extensions.objectformat", we
+> would know it by now.  If not, wouldn't version be left to -1 as our
+> previous clal to clear_repository_format() set it via its call to
+> init_repository_format()?
 
-Let's remember to be gentle for those who give varluable feedbacks
-but may not be always on this list.  A late comment on a topic that
-has not hit 'next' is much better than a late comment after the
-topic hits 'next', or no comment at all.
+The subtle behaviour here is that -1 means that either there is no
+version specified or that there's no config file.  I was surprised to
+learn that we do not require a configuration file, but we have tests for
+that case with `git branch`.
 
-Also, even if the idea came from somebody else, if you agreed to the
-idea and made it part of your submission, then it would be better to
-explain it in your own words, in the most appropriate way to answer
-the question asked (e.g. the original from Brian and the question by
-Elijah may have stress on different aspect of the problem).
+> Ahh, this code is prepared to handle a repository that claims to use
+> version 1 but does not set extensions.objectformat at all.  And in
+> such a case, we do want to use SHA-1.  OK, the above code makes
+> sense for that case.
 
-> My opinion was that it was better for tools processing fast-export
-> output to have the protocol as they have to parse the "gppsig ..."
-> line anyway. So it should be easier for them than to parse the ascii
-> armor lines.
+Correct.  We can set v1 because we want reftable, for instance, and we
+never set extensions.objectFormat to "sha1".  We always rely on the
+default behaviour since that's more compatible.
 
-And if you do not agree with Brian's, perhaps discuss a bit more to
-(1) either convince yourself that Brian's idea is better and rewrite
-your code to adopt the idea, or (2) explain the reason why your "the
-importer reads and parses anyway" is better design and stick to it.
+> > -	if (format->version =3D=3D -1)
+> > +	if (format->version =3D=3D -1) {
+>=20
+> And if there is no core.repositoryformatversion set, we will come
+> here.  According to the comment before handle_extension_v0(), some
+> extensions.* should still be honored even in such a repository, and
+> the above call to git_config_from_file() should have handled them
+> just fine.
+>=20
+> However, I do not understand why we clear all of what we read with
+> another call to clear_repository_format() here.
 
-> ...
-> Yeah, I would have been happy if we could have been aligned with the
-> goals of the format and the fields earlier, but better late than
-> never.
->
->> Thanks for working on this topic.
->
-> Thanks for reviewing.
+Because this is the case where there's no config file.  If nobody
+bothered to write a configuration file, then we want to reset everything
+to the default.
 
-Thanks.
+I don't know what we do if we have a repository with a config file and
+no version, but literally every repository since Git 0.99.3 (I believe)
+has core.repositoryformatversion written into the repo.  I'm certain
+that the behaviour we'd want if nobody specified one was to do the most
+compatible thing, so the defaults seem prudent.
+
+> Admittedly, I find that the way how check_repo_format() does its
+> thing somewhat questionable.  Even though it reads into the .version
+> member the value of core.repositoryformatversion, it slurps in all
+> the extensions.* regardless of what .version the repository claims
+> to be in.  So even though there are two separate functions to handle
+> "historical compatibility" handle_extension_v0() and other extensions,
+> we still end up honoring extensions.objectformat in a repository that
+> does not say what format version it uses.  And clearing them with a
+> call to clear_repository_format() may make sense, but do we want to
+> clear things we read with handle_extension_v0() as well?
+
+No, it looks like that at first, but I don't think that's correct.
+`verify_repository_format` complains if we have any v1-only extensions
+(such as extensions.objectFormat) and we have version 0.  That's also
+where we check whether there are unknown extensions in v1, since we must
+refuse to read the repository in that case.  There are tests for this
+case: I added some that v0 with extensions.objectFormat is rejected when
+I did the SHA-256 work, and I think Peff and Patrick may have done some
+additional cleanup here (and maybe others; my apologies if I've
+forgotten anyone).
+
+The reason we need to read all the extensions is that different config
+options aren't ordered and the config callback processes items we see in
+the order they're in in the config file.  We might first have an
+extensions block and only then a core block, so when reading the
+extensions we don't know yet what the repository version is.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--DoVuB7RaU371MAXz
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFXEgAAKCRB8DEliiIei
+ga7WAPwLxtkd2NSwAvAiAAydVSQD12pQy9w2z4KU6hZoWg/H+gD+IXw2YOYl6rmD
+L3vukg+UZKd/LDcoXHrbrsgJafe1EQw=
+=qrYo
+-----END PGP SIGNATURE-----
+
+--DoVuB7RaU371MAXz--
