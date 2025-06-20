@@ -1,137 +1,159 @@
-Received: from mail-vk1-f178.google.com (mail-vk1-f178.google.com [209.85.221.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8D023AB9C
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 09:54:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0033C28A1F8
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 13:48:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750413265; cv=none; b=c/JjiZAY4j0GcpQHVoGwJdMT3Ac/IHMxKB8woLi36QQgh4/CH+BHx/5N8f5Qzac9jClX6N2sYZ+sdKse+njFFpVh8Rc5GLDv14I+IRPa61+PlaWxzTeVNrOpkNj+yameVwErHdq2aJkG2vLMOEu6pferHX1jPDPGNLjhwuaxk/g=
+	t=1750427289; cv=none; b=LGvhtIfUghSSe+oMxh51/Y/+pZ31y3JlbDmJNSyRT/kFzVlBZlCUvFq2HS3LC9vQRnjVRPNK5bmodm0zdbmIetJs9y+I9mWUX3F/hCAAM9GurVI9YfOPZ2UFtnl7K+KC0j22OGVHklWsDpW7FLxmAw3NF1ZGU514ZO1NI5D/MkQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750413265; c=relaxed/simple;
-	bh=jPlftsksZLm3HDTsYNl6jAoQldgzL+HhOs3Po9+KyJ8=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lEscduiPedRUzsyAEr844eVBqCmF6s+dX6+t2c/zR1tw7F8FBMLfsGlhXomBEAh8h159s4M5Gb+I1Y4NoypJ5kEvkiOmgfPD/U+Wka+UTwFWlcyfSKCyM7iFZsVFgIUFIs78u6R9VAvUHOgWWIDlhhZldh2Q0q4vUdIOVkeMILU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XJ66i5GD; arc=none smtp.client-ip=209.85.221.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750427289; c=relaxed/simple;
+	bh=tpxOfGWZMNVj0Mqspm03TIBYvpdKsCUOrmZbGDF0TLo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GNozOwZxlVdsLMR1UDNLwg8yphZEX21BUPo0aNt2cGaXeylO9y0qhAagqBXZpqRSsRduy/DhIy4LJhV+9en3xT1s0LmWVS0gu1Nqfj4ztlDI9udRoJhNwZWTUpow1cWQJsXj79V9yRfx+o/3ITcLbn4F5knwrRtjF4TLo9fh0oI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GrllaxSc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T6HY2By3; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XJ66i5GD"
-Received: by mail-vk1-f178.google.com with SMTP id 71dfb90a1353d-53185535ed9so1151243e0c.0
-        for <git@vger.kernel.org>; Fri, 20 Jun 2025 02:54:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750413262; x=1751018062; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrYddkb6Up+K5NJVgh4YRCHJlB2OMjkuGpXC0RJ8kts=;
-        b=XJ66i5GDim0E3qjYbekPBppeotMxdkt9RhxLbVw7eQCMKXLAga3405CZ6UK3HhDvlf
-         X8xUkhwCsS/s1Ee1V8E8Zz7wzr8XB5H5NCjGIHXidHkfvhckYgnfGSqL/S56OirPfaSE
-         l57UqtwLMaKLz9XOt7k9u0s60fQx34RRPFNXPNi8zGbIuR6Rq3Z7rvONxEYlAMzq0ZpV
-         0Li6MiZyix3Ly+JGC4SVPqSAO7vtH009Hv3OUnQa2+coX6xp4JxUj7lqVq7zOstxyBhN
-         omI+qQ0rlNen3wp38dWeJOCxijpoAMtWvmDfvXvg313mVCMBGcKlNwXl3AqGuAB41I3V
-         PsyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750413262; x=1751018062;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PrYddkb6Up+K5NJVgh4YRCHJlB2OMjkuGpXC0RJ8kts=;
-        b=f5BSp2kMh1tx1sbrxrWl+yncWZKMpnQXRtBsgoaNqgazXc9zkqUoPwQcg7TPfNiTzS
-         essOIJK3inuw74wet/bHlx+mdCEgBwyHaRXYyC3x/zunWxNGSCtM6ORlGt4FduxIAloR
-         G0Uu8XN7LtLXZz57muDn7VaPDY2r+MQXjkU0ePIIoZR8cR/l6cCsvspIgE79MdY0HgsL
-         sUGt+WhlHy9cZOoQd1nRmaH5sKW+csh3z2hSrdS7rrFSi9AO5gOqznDIE5DHXcImIypP
-         mSWN9bIbHm1AQTz7kIyWepguSUbGZIf+jHEKlhBVLhAx3yH2XLvjoDbMKGtjou5Wq5+X
-         WI4A==
-X-Forwarded-Encrypted: i=1; AJvYcCWxVm7S/HmJg3yhvkVnzRrYknurJV6Ezyl4H+8V9Nu9dPnm0wkJpU6pTMbYH+Zg3T+pkA0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7sPotXBBR8y7M4V9iZJ3AWBLD1iIVctk3ZY9zTLIwNyw+lJT6
-	1ac3BOvuLUiCmOAj6/JeCJNASk4Rj9C/iPP/9G/LbxCHFSBLCgkbWnGA5Qlld3AwWahsuEREy8C
-	JcmiFpZmVLcUkO2Ml7h8knfpjuqvSy4I=
-X-Gm-Gg: ASbGncv7CNNcKdCjAuJWeeLiqYgZQC0s5MTNuBTgr8V/lkoaK/fj88NxQEE+20pni6X
-	K+OIQJuTLBR8oGNXyP9mjpA6DWlxXmWw4xwg3nMhkDiF3RU1iX+12eBAKIQqz6OCS7rX5dzDkBX
-	lHrkpaFkjSAbpk5CbjPbf6PUkhe9g6sAYGtdG4BQe7
-X-Google-Smtp-Source: AGHT+IF1vm39MXIupNgrbBlhZWJoN9QokEltyqihluogCxWdxHc1TbsRk3rDd4BkQ5hWbMroxSjmo++beGBdZqExqHo=
-X-Received: by 2002:a05:6122:620b:20b0:531:8ac0:30f0 with SMTP id
- 71dfb90a1353d-531aebbe213mr350771e0c.7.1750413262461; Fri, 20 Jun 2025
- 02:54:22 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 20 Jun 2025 04:54:21 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250619225751.99699-5-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com> <20250619225751.99699-5-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GrllaxSc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T6HY2By3"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 209BC11402B2;
+	Fri, 20 Jun 2025 09:48:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Fri, 20 Jun 2025 09:48:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750427286; x=1750513686; bh=zE2lvu/OBs
+	7Qj3H8uo+6KJ4PnCYWcI1atrqL7TWbcmA=; b=GrllaxScI1I8exWOWNMf0F7Sqd
+	x6zrw07cX4EjswEHCLVcHcNybGtWuyL4Q1SQdy47tbdclIQGghgS9BxzTm1RAzMI
+	oTMAvIrgvbt6yTuB2k1wsGwCfQz2sqf3Ax/bys14HlRpv2v47jS0fWLUoW8T1xp/
+	vH4RyhfSvzznAu5+OLUMosV7GA2c556YbykRAS48mfr36RkyRstnOAVXrXAxb27x
+	wzP959+x+83SKaKpO3QDLr2jIqweIgXRHbTULysggQHvLKWMfBzD0E/x6Fv7Uhhy
+	Rn7Bn5i4kkWMDuuC9Os9XLmK+6shgRiuvrIRUfq13YN1VWttWkDN8XOgLSLQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750427286; x=1750513686; bh=zE2lvu/OBs7Qj3H8uo+6KJ4PnCYWcI1atrq
+	L7TWbcmA=; b=T6HY2By3pavDHRgsobKm8xnI0WpnfTPIQRn2w6ChTBYeaPBEFVl
+	5ghOKTN7ZGefNpMaEK/IV29fxK9LHPTLYWn0NhMycVX0VkfZoZbSi9/4bPdaU0pM
+	+fulLH50EPWSWLAwPx6iF0ua8N9ngH6ocguItDtHx16308hHFJjIWOfWz/wZBFYI
+	YxBZ3YvVAC4gL4yx7WK69IXro5CL6kB8Vre+sewFcnylWoJUTkrvgaI3x9GaXtFs
+	64HPTR7Gb/2UybppDUgQk6lB2k3rXxYML3uhZW2MfyaSoHBS1ykOgCkIgs6QJopj
+	WJ1pUsZR4adbzclFjykzFA1aU3+DfBzQcsg==
+X-ME-Sender: <xms:lWZVaCZkMPX079u4Xp3tRzClVpIZlyxknDLg7dNByBSLvQrcoaUhmg>
+    <xme:lWZVaFbkkm6OsXwjzTc87DzE1BSljKl-XN0wmU5rrzmr5XEyzG6_K4XpgJxjk0gfs
+    jfNIIEnB7gihyLC6g>
+X-ME-Received: <xmr:lWZVaM_UWBgEgKdrrYD2Ual-vgusSeC5Q-z2svjXjsyMdKE54uHW0gnppKi3U_fD06f8oVDv78pT4V2Ouhip6QqNbJEhFcM795xn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdekheeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurh
+    ephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecu
+    jfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvg
+    hrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeei
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepmhgrgihimhesghhuihigohhtihgtrdgtohhophdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
+    thgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lWZVaEoCvCJzNWAh21s0OW2sC9wc-j0lQSc50Vur6k1IJwFFwfmwGA>
+    <xmx:lWZVaNo5lzg6XWv-eT-0LaI7yaY5yXLacC9n9BAcGNbTxvUryznw8w>
+    <xmx:lWZVaCQaPNj3Nmib-_MEJfnkR0ZtSAgy5Pl2wu-zy32Jzp172BZk6w>
+    <xmx:lWZVaNoK4dRsAzSp8QolBBOWblI3xYtUjtVMO4A7zjL5E00x4i9LZQ>
+    <xmx:lmZVaNAP47xs8mFsC7Cp-Ur7Wgr8Ifqy4ZugkdxowogiERFLop3pjC8e>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 20 Jun 2025 09:48:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Maxim Cournoyer <maxim@guixotic.coop>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
+In-Reply-To: <20250620041239.27839-1-maxim@guixotic.coop> (Maxim Cournoyer's
+	message of "Fri, 20 Jun 2025 13:12:39 +0900")
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+Date: Fri, 20 Jun 2025 06:48:04 -0700
+Message-ID: <xmqqmsa27cdn.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 20 Jun 2025 04:54:21 -0500
-X-Gm-Features: Ac12FXzAq88gJCT3OcHtOgQqZaa1MK4UHlRk2LMTgd81GwjCofoIQEOKDQy6H5o
-Message-ID: <CAOLa=ZQXeQX-v2JmKTpaJDLwWWKQSXoMUGbpmD6xx8KpbY91yw@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH v2 4/7] repo-info: add the --allow-empty flag
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, ben.knoble@gmail.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="000000000000b83c930637fdd83e"
+Content-Type: text/plain
 
---000000000000b83c930637fdd83e
-Content-Type: text/plain; charset="UTF-8"
+Maxim Cournoyer <maxim@guixotic.coop> writes:
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+> Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
 
-> Add a flag --allow-empty, which will force the output data to be empty
-> when no field is requested.
+Please downcase "Honor" and drop the final full stop, per convention
+(see "git shortlog --no-merges --since=2.months" for examples).
+
+> Symbolic ports were previously silently dropped, which made it
+> impossible to use them with git-credential-netrc.
+
+Wouldn't it make sense to issue a warning message when a defined
+$nentry->{port} is not unrecognized?  Wouldn't it make sense to
+do so even before we add this new feature?
+
+> This is a supported
+> use case according to 'man git-send-email', for --smtp-server-port:
 >
+>    [...] symbolic port names (e.g. "submission" instead of 587) are
+>    also accepted.
+> ---
 
-While you did reply to my previous question about this flag. This patch
-doesn't sell the need for it in anyway.
+Missing sign-off?  See Documentation/SubmittingPatches
 
-So we need:
-1. More description in the commit messages about why we need this flag
-and how it is useful.
-2. Documentation around the same.
-
-I still think this is early for this, and we should add this flag later
-if the need arises.
-
-[snip]
-
-> diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-> index 998c835795..db4a6aad17 100755
-> --- a/t/t1900-repo-info.sh
-> +++ b/t/t1900-repo-info.sh
-> @@ -15,11 +15,12 @@ test_lazy_prereq PERLJSON '
->  '
+>  contrib/credential/netrc/git-credential-netrc.perl | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
 >
->  test_expect_success PERLJSON 'json: returns empty output with allow-empty' '
-> -	git repo-info --format=json >output &&
-> +	git repo-info --allow-empty --format=json >output &&
->  	test_line_count = 2 output
->  '
-> +
->  test_expect_success 'plaintext: returns empty output with allow-empty' '
-> -	git repo-info --format=plaintext >output &&
-> +	git repo-info --allow-empty --format=plaintext >output &&
->  	test_line_count = 0 output
->  '
+> diff --git a/contrib/credential/netrc/git-credential-netrc.perl b/contrib/credential/netrc/git-credential-netrc.perl
+> index 9fb998ae09..ad06000b9f 100755
+> --- a/contrib/credential/netrc/git-credential-netrc.perl
+> +++ b/contrib/credential/netrc/git-credential-netrc.perl
+> @@ -1,4 +1,4 @@
+> -#!/usr/bin/perl
+> +#!/usr/bin/env perl
 
-The earlier patches reference allow-empty without really talking about
-it. Which feels odd and misplaced.
+An unrelated change to introduce the use of /usr/bin/env in this
+patch is unwelcome.  Besides, this is a source that is processed
+by the nearby Makefile, which uses the toplevel genererate-perl.sh
+to turn the "#!.../perl" line to name the correct $PERL_PATH before
+the build product gets installed, so I suspect that this change is
+totally unnecessary.
 
---000000000000b83c930637fdd83e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f2a069f149b9903f_0.1
+> @@ -267,7 +267,9 @@ sub load_netrc {
+>  		if (!defined $nentry->{machine}) {
+>  			next;
+>  		}
+> -		if (defined $nentry->{port} && $nentry->{port} =~ m/^\d+$/) {
+> +		if (defined $nentry->{port} && $nentry->{port} =~ m/^[[:alnum:]]+$/) {
+> +			# Port may be either an integer or a symbolic
+> +			# name, e.g. "smtps".
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oVkw4c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM2Y3Qy80OUp4MlQ1djRMRERmeWtFaXUwYjFTSzFoTwovVUg4aStOdThy
-cExBQ0F2TDNFWXROK2lYUjJXMTZHdUgzTWFuRjF1VGZOY0tzajR3Z1ZSQU84Wmp5dHJGZ1F5CnBz
-eGlaZU1uV1NwY0dLZGZCanlOUGtsZ3p5UzZWNTdSdWhybmwyRWVLSFRwOU9rSXhhUHJQWkY0bGht
-M29NQmYKTWtOYVNlQnRpd0NSRVpIY3BRcDhVZXVLTWhkMDZxSnJyRXM0alBiMmFMQmNFeTR2d2J2
-UmI0QUs1QXY3NXR5Swo2WExwdDl1MlVSeDF6NVlFNjJkdFdjUFl6Y0ZqWHUzQWNVdFZ2VC8yN003
-a08wdnRWZ3Z4dExoRkZJTmVsZDVsCmVTSkFVdWREOUl1SXVQWXlUbE5ucFQ5SjY1T3I4K1ZYdXBY
-SFgwaGJRTXdMdWd0MnFNckFWdXJKbFFKc1R1WDUKZ3RhQk9XVlhNV1FPaUlqblZmZFhCZ0o4eTRM
-eHgwOGxwMS9hSWJDcW1HeFdTY200anJKb3BNMFNnMnFmSDN0QgphaDJBL3BJVGVPeXppVVh1Qm5Y
-RlVPRk5zZ25sL3pmUGlHa3VwWUdnSjE0NjJvZWpnVTkzQzZDMVllZVQwaGhWCk1kSlRzd3paNWdD
-QkozQ1RiY2pPYTJ0M1hKUlFGNGw1cnRQS3pkcz0KPVdZY3EKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000b83c930637fdd83e--
+Do we know symbolic port names are always limited to alnums?  Or on
+some systems some byte values in the fringe, like "_" or "-", are
+also allowed?
+
+Overall, I think it is a worthwhile to address this issue.  I just
+do not want a patch that says "alnum seems to be good enough to
+cover the ports I happen to care about" (or a patch does not even
+say how it came to the conclusion to use :alnum:)---we should do
+better and explain this change with something like "from THIS
+SOURCE, the names users may want to use come from this set of names,
+where THESE are defined as valid characters, hence we allow not just
+digits (for numeric ports), but allowing also :alnum: is sufficient
+to cover these symbolic names".
+
+Thanks.
+
+
+>  			$num_port = $nentry->{port};
+>  			delete $nentry->{port};
+>  		}
+>
+> base-commit: 9520f7d9985d8879bddd157309928fc0679c8e92
