@@ -1,48 +1,48 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825FC64A8F
-	for <git@vger.kernel.org>; Fri, 20 Jun 2025 01:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5908D86334
+	for <git@vger.kernel.org>; Fri, 20 Jun 2025 01:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750382400; cv=none; b=jcp1AIlntEl/tgnb3ER2n+3ntGXnHkxQkW9HR237ASp2wVzBFvvM6OuztgWcBrm7akS9e38ZCg4n+bfbrhWFLtboqpLDnvLiFC+Rl1WrYA/qvubRa7M0JzV9uGMrtubcxsGIiVdgHsLQ7gK/y8G23fU6tH1vZdGMZWjmGO0SKB4=
+	t=1750382400; cv=none; b=aKyEfR1Q1wq3fA9q9zECMiLQ3fMLgr2PIycnSbnF/gPVQJn83OUAkRtHyffYsRJXeoOGwOaLmCL7SS217ePreSAd5LDAfX5zUmU/fxSHduROfd1IwMMXmVFKaxpje5eJBTPOyd9eFEr2NOjaFvINEzHcswogtvMPyefIJ2I677M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750382400; c=relaxed/simple;
-	bh=Ckv+cQIJhpHdUOCyanZo0Xn4vPJBY78tqJFOmFOZP98=;
+	bh=JScSqnOEibXSLIM0/Vbqfu/8ITUbj+HzYUwSu11fFUY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p6gKfR1dJVLicU9wZQrgSvXoaUOtybclT3EdHS/r9q66XiWuomUYOQYqSCdPuRqDvii/oOo1PiAMeA+36UQQH4qhbAoJzuqW81M17UcCsB5ehBRLuFDcW0jWKzD3Fyz5vcUJY5vqDF/ulmi8adGapC0Ul2OQmPg6Oud0t79WP0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=SlYzE/la; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version; b=hwi2OxLc2y7Df+muAZr5I4JIKBA/xQn30sv3EAAWpWXV7/vUKTNNJApSUIEx+2Gr1nGxmD5byQCdNvK9HZDyV2rTF1LDcE1uZMQccg9uqT43GkyJIOSvOjUtaQdCZFf6c5Qdlf/CMB6ZR5L0Gg/JPOmD3K2EHqLBYS8zX0FsR6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=gMuccr5H; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="SlYzE/la"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="gMuccr5H"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1750382394;
-	bh=Ckv+cQIJhpHdUOCyanZo0Xn4vPJBY78tqJFOmFOZP98=;
+	s=default; t=1750382395;
+	bh=JScSqnOEibXSLIM0/Vbqfu/8ITUbj+HzYUwSu11fFUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
 	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
 	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=SlYzE/laQ96UN0shyp/jl/8uauaFfSzY9gzMtss/AY02qkBIz5vs6ySOVhG6s7H+e
-	 eikrANj0amTxhzL36nDWI2YXxuPOC1veT/6xHght74VjSAl+ifgX5BxT870F2Ja+GC
-	 4xzhvBVAZQNMt/wTupbhUPHAmli9NKOCfY7fsM3oL/4RKl1nAfQ/w0QH9UvKEYG6a/
-	 1E4/sUkss0vyfAyieab+zSOpO1m7asnTWGxSk0u8+6GVdwubBa0hLYcA1VyoNKWJQ0
-	 pMMLjfBon9TOGd0cYaVVrXt437q1m6zxi1g9ruDC1Zp12apqfcaN+Nc0IhiViiAdVZ
-	 /HCKoD/gHLrsy3nSyGht97wQWXzf8Qw/qBEGhUI79BitZFlT+mJQTJ8dg31Lkj3cO9
-	 YUkvd95IDTeN/Sete9DLwoDzndBETpPfYRU59rMePN1LVtKN9898DKKz2ANHJSwtYe
-	 aWcO+v9NNMZmJrRmfhUGdnvAJs4PFrfSJ1Chdn5RxAYOrJtuKAn
+	b=gMuccr5HhKvas4LXeR29vhrkPioK7DULrSQStlp2K/TrvKxlqjCVd3rugoYrAn0fw
+	 +jB9NDSmGldXXlc36S2BHkGHDljSHEdIYb7yILitkpxHXGNBX3UgWR9lqOtoGDwI9W
+	 x+qnVN8q2bkaTlvxh1ceTDYOjhPRZlaZ2Iaoh12hefM9K4vQo7PBqufjKvmTU6J/Y4
+	 aAO1NQ3XWr3DL3QYsALYZjKxcu+2Nu455MQAlPv4O4vNvz+6S5y2/hKYr2S+s1kxcS
+	 LqeTF02Rs0e+GHDu5gpY0EFCn5QnA9XYItwA0g5kL5A8tco90aeONahEht5TAxhmQ7
+	 d/GP5J+hMoXbUKQIVEJnhTK29LodPnSYyQgnRlrbSEF22c+D1QCaqqdfEU+m8T0W8o
+	 ekVfct1QSePcaepEvUKYVRoxNW0A3NADr7yVnUiPhZaXTdyUCEBWZpLAnadLdyNeJz
+	 OI/UQb7u2ndaOk3uMuO2yZpoOvRQZG+3ybv1xxV1UvEBiCfOsZB
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f445:674a:9eb4:f272])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E874320197;
-	Fri, 20 Jun 2025 01:19:54 +0000 (UTC)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 1189D2019A;
+	Fri, 20 Jun 2025 01:19:55 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 06/10] t: default to compile-time default hash if not set
-Date: Fri, 20 Jun 2025 01:19:38 +0000
-Message-ID: <20250620011943.586596-7-sandals@crustytoothpaste.net>
+Subject: [PATCH 09/10] t5300: choose the built-in hash outside of a repo
+Date: Fri, 20 Jun 2025 01:19:41 +0000
+Message-ID: <20250620011943.586596-10-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.50.0.714.g196bf9f422f
 In-Reply-To: <20250620011943.586596-1-sandals@crustytoothpaste.net>
 References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
@@ -54,73 +54,48 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Right now, the default compile-time hash is SHA-1.  However, in the
-future, this might change and it would be helpful to gracefully handle
-this case in our testsuite.
+Right now, the built-in default hash is always SHA-1, but that will
+change in a future commit.  Instead of assuming that operating outside
+of a repository will always use SHA-1, look up the default hash
+algorithm for operating outside of a repository using an appropriate
+environment variable, which will always be correct.
 
-To avoid making these assumptions, let's introduce a variable that
-contains the built-in default hash and use it in our setup code as the
-fallback value if no hash was explicitly set.  For now, this is always
-SHA-1, but in a future commit, we'll allow adjusting this and the
-variable will be more useful.
-
-To allow us to make our tests more robust, allow test_oid to take the
---hash=builtin option to specify this hash, whatever it is.
-
-Additionally, add a DEFAULT_HASH_ALGORITHM prerequisite to check for the
-compile-time hash.
+Additionally, for operations outside of a repository, use the
+DEFAULT_HASH_ALGORITHM prerequisite rather than SHA1.
 
 Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
 ---
- t/test-lib-functions.sh | 5 ++++-
- t/test-lib.sh           | 7 ++++++-
- 2 files changed, 10 insertions(+), 2 deletions(-)
+ t/t5300-pack-object.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-index bee4a2ca34..6ec95ea51f 100644
---- a/t/test-lib-functions.sh
-+++ b/t/test-lib-functions.sh
-@@ -1695,7 +1695,7 @@ test_set_hash () {
- 
- # Detect the hash algorithm in use.
- test_detect_hash () {
--	case "$GIT_TEST_DEFAULT_HASH" in
-+	case "${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}" in
- 	"sha256")
- 	    test_hash_algo=sha256
- 	    test_compat_hash_algo=sha1
-@@ -1767,6 +1767,9 @@ test_oid () {
- 	--hash=compat)
- 		algo="$test_compat_hash_algo" &&
- 		shift;;
-+	--hash=builtin)
-+		algo="$GIT_TEST_BUILTIN_HASH" &&
-+		shift;;
- 	--hash=*)
- 		algo="${1#--hash=}" &&
- 		shift;;
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 51370a201c..ef3759ec80 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -536,7 +536,8 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
- export EDITOR
- 
--GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-sha1}"
-+GIT_TEST_BUILTIN_HASH=sha1
-+GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}"
- export GIT_DEFAULT_HASH
- GIT_DEFAULT_REF_FORMAT="${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
- export GIT_DEFAULT_REF_FORMAT
-@@ -1908,6 +1909,10 @@ test_lazy_prereq SHA1 '
- 	esac
+diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
+index ae72158b94..73445782e7 100755
+--- a/t/t5300-pack-object.sh
++++ b/t/t5300-pack-object.sh
+@@ -525,7 +525,7 @@ test_expect_success 'index-pack --strict <pack> works in non-repo' '
+ 	test_path_is_file foo.idx
  '
  
-+test_lazy_prereq DEFAULT_HASH_ALGORITHM '
-+	test "$GIT_TEST_BUILTIN_HASH" = "$GIT_DEFAULT_HASH"
-+'
-+
- test_lazy_prereq DEFAULT_REPO_FORMAT '
- 	test_have_prereq SHA1,REFFILES
+-test_expect_success SHA1 'show-index works OK outside a repository' '
++test_expect_success DEFAULT_HASH_ALGORITHM 'show-index works OK outside a repository' '
+ 	nongit git show-index <foo.idx
  '
+ 
+@@ -658,7 +658,7 @@ do
+ 		test_commit -C repo initial &&
+ 		git -C repo repack -ad &&
+ 		git -C repo verify-pack "$(pwd)"/repo/.git/objects/pack/*.idx &&
+-		if test $hash = sha1
++		if test $hash = $GIT_TEST_BUILTIN_HASH
+ 		then
+ 			nongit git verify-pack "$(pwd)"/repo/.git/objects/pack/*.idx
+ 		else
+@@ -676,7 +676,7 @@ do
+ 		test_commit -C repo initial &&
+ 		git -C repo repack -ad &&
+ 		git -C repo index-pack --verify "$(pwd)"/repo/.git/objects/pack/*.pack &&
+-		if test $hash = sha1
++		if test $hash = $GIT_TEST_BUILTIN_HASH
+ 		then
+ 			nongit git index-pack --verify "$(pwd)"/repo/.git/objects/pack/*.pack
+ 		else
