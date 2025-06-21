@@ -1,53 +1,54 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D250F218596
-	for <git@vger.kernel.org>; Sat, 21 Jun 2025 13:29:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D658321D3D2
+	for <git@vger.kernel.org>; Sat, 21 Jun 2025 13:57:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750512590; cv=none; b=rmxHE82f1oQMK1kKoYgPdPjzD5ShkjC4Hwabt7kC0koSEXulE5iJPm/rDGVN+XRT8M788RjqCOHyYSi2zbnj4EMBLmr3byHxrgySFv6niibjdXLp+bWwj+4G9h1OVmbqbNqycEI30wjPVUml+vB5KJ3o1zwnOoKcMH7De01hhBQ=
+	t=1750514274; cv=none; b=ddGazXnjAhF6n8LOQRWS20X2pUITXgS5n2WedgCRgbuNuyZ1uXZRjhg98HF7uLui3FRpIYFIXcQZwoYDd2sVdODrLi2HykZvfk24ZFU8+xreHKw9KrqAVhNFhOppWoXJs5So6C+w4SCkJQ6nZ9u7X1Qvt5xPAS5Rid0HTLNCADk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750512590; c=relaxed/simple;
-	bh=42Utm/SNDiAWpJqzBkfZHzgimuRZAHm+oQ7rTZAjYYw=;
+	s=arc-20240116; t=1750514274; c=relaxed/simple;
+	bh=jCx2G2W/mNIMnLlSbSlvSVjlOzVn58YeiUi2NfGA6Po=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LuUKQijDL4ITp0gES5/pZngASZoyWeAeKRhBU4RulCMO0dlB4vDJ38vy8XIJetzso6JTcFW7Jl6pEt61TdXVGOyGUiSB3saNuucbijQwlowtnrudaYUit97dE/h8ArtzJ9NXvA0sB8rcUFfTvA/iGAEyQnCb1Xz7VSdwPgFj+mY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=Ve1k9aLo; arc=none smtp.client-ip=185.226.149.38
+	 MIME-Version:Content-Type; b=SdpTThJdgOfy7C5FWrC8H3PEj1wTmZv+9atA8izT+8TOV4GyBQyCvSmFxp++PSh4tnwBioG07WLlVbbnfgUsTJvrB+h1aF4dgjNqMOlY9HhkJhjqQq+RugU27OmbjAlt2OLPwfEfDqQV+Qy862duai7/JSXJ4kgpSfSygSjMH8A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=NxtStVoT; arc=none smtp.client-ip=185.226.149.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="Ve1k9aLo"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="NxtStVoT"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
+	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 	(Exim 4.93)
 	(envelope-from <maxim@guixotic.coop>)
-	id 1uSyHq-0032BC-BB; Sat, 21 Jun 2025 15:29:38 +0200
+	id 1uSyiz-002kQ4-KR
+	for git@vger.kernel.org; Sat, 21 Jun 2025 15:57:41 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
 	References:In-Reply-To:Subject:Cc:To:From;
-	bh=/jUue+LI2Bf7gBQ7l2LQwyqlNIedhi7uRTZU84yG5Nw=; b=Ve1k9aLoHq6CFkUf4OKVYpU7zR
-	O5XQoWT1rS/vLgaqxWmjhm+aJZ8kXDLwBf+S14rKXSELQrt8/cImRF1rUnPbJiM7BqZAGNpxWPUT3
-	DNuK1qVHb7B0sIX2Q32JZUx+Mgex8gCkz6fx8SdIT9r5xdFnu9wq7KfWMM/wf8NBOGueQoMW95rat
-	EGn0gIIEA0FolJYv194OrXbk6bbO/GSQmeiKqnXmA2J3fpxEAixxVydpyME2mSd7+dw88/iiBFAZb
-	IZ2GTLTuMy0Wz/46XgVq46UNazqOt+z1yTVeJ8Pv2Oo/KdQjIJS+y58eXnVl8nUjSh5ap50ErstC+
-	sekstHZA==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	bh=qjJtBJlTaNZNX712mGabcKmJUjU/tGpRtdhqrKWI7r0=; b=NxtStVoTmuc2hdCRtQWtBujm0G
+	dU9kpWcQa4Fhz9Y+0pEnjb84+WaNnUjza/ikwgEjQ2L7M2CtH0+GUv2QzqTNEaLPywm3lLMhmQvI7
+	QvU0esu6f2CPN/0XedxqTv6HawwicJ0ikRHpXRwl/E9QPdRydDWVjHqeHkhDnqEk1kNvDTUSxLBq1
+	yArB7xOq1DH2vyoPjrfQJkAVhx6mjAFo6KuDwhGv6ojKdDSu8+dPZmPS8kdBeGAIq1tyHAFC9pEav
+	WazCsLUhWPIIPP3Vd3OhGV04HYRq3n1RJUOxBAaTyhvu/xvkEu/DvCm5ZrUuj1IFW0nvKjldbmLWT
+	SsoNJ/tg==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
 	(envelope-from <maxim@guixotic.coop>)
-	id 1uSyHp-0005OP-Vb; Sat, 21 Jun 2025 15:29:38 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
+	id 1uSyiz-0003yy-3A; Sat, 21 Jun 2025 15:57:41 +0200
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
 	(Exim 4.93)
-	id 1uSyHl-00GkOj-62; Sat, 21 Jun 2025 15:29:33 +0200
+	id 1uSyih-00Dl5v-FO; Sat, 21 Jun 2025 15:57:24 +0200
 From: Maxim Cournoyer <maxim@guixotic.coop>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Maxim Cournoyer <maxim@guixotic.coop>,  git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
-In-Reply-To: <aFWwez5OEgLt0vRU@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Fri, 20 Jun 2025 19:03:23 +0000")
+In-Reply-To: <87pleyijbg.fsf@igel.home> (Andreas Schwab's message of "Fri, 20
+	Jun 2025 16:22:43 +0200")
 Organization: Guixotic
 References: <20250620041239.27839-1-maxim@guixotic.coop>
-	<aFWwez5OEgLt0vRU@fruit.crustytoothpaste.net>
-Date: Sat, 21 Jun 2025 22:29:28 +0900
-Message-ID: <87bjqhgr47.fsf@terra.mail-host-address-is-not-set>
+	<xmqqmsa27cdn.fsf@gitster.g> <87pleyijbg.fsf@igel.home>
+Date: Sat, 21 Jun 2025 22:57:18 +0900
+Message-ID: <875xgpgptt.fsf@terra.mail-host-address-is-not-set>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -59,51 +60,44 @@ Content-Type: text/plain
 
 Hi,
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-> On 2025-06-20 at 04:12:39, Maxim Cournoyer wrote:
->> Symbolic ports were previously silently dropped, which made it
->> impossible to use them with git-credential-netrc. This is a supported
->> use case according to 'man git-send-email', for --smtp-server-port:
->> 
->>    [...] symbolic port names (e.g. "submission" instead of 587) are
->>    also accepted.
+> On Jun 20 2025, Junio C Hamano wrote:
 >
-> Does this work with credential managers in general (that is, in
-> non-email contexts, such as HTTP)?  Also, do credential managers in
-> general properly find credentials when they're stored in one form and
-> looked up in another?  If so, is that still true when the lookup is in
-> the URL form (e.g., `smtp://mail.example.com:587/`)?  Is this documented
-> to work in the credential manual page?
-
-I'm quite new to the credential-manager of git, so I do not have an
-answer to these excellent questions.  But, as some perhaps useful
-datapoint, at least using Emacs's auth-source library with a
-~/.authinfo.gpg file (which is in the netrc format), if you use a
-symbolic port name, you have to use it everywhere if you want
-auth-source to match it correctly (it doesn't translate smtps to 465 for
-example). If you put 'port smtps' in the .authinfo.gpg but specify the
-SMTP port in the your Emacs MTA to a integer like 465, it won't match.
-
-This could be considered a bug in auth-source.el, and git
-credential-manager can do better by converting all port input values to
-their integer form, as you suggested.  Then mismatched configurations
-(e.g.: smtps in netrc and sendemail.smtpServerPort = 465 or vice-versa)
-would be handled correctly.
-
-> (To be clear, I would be very
-> surprised if the answer to any of these were "yes" because I've
-> literally never seen this usage before with Git, but I am open to
-> updating my knowledge if that's the case.)
+>> Do we know symbolic port names are always limited to alnums?  Or on
+>> some systems some byte values in the fringe, like "_" or "-", are
+>> also allowed?
 >
-> If not, then I think the proper thing to do is to have `git send-email`
-> rewrite the name into a port instead of having the netrc credential
-> helper learn to handle non-numeric ports.
+> Valid service names are documented in RFC6335.  Specifically it allows
+> hyphens, but not underscores.
 
-Did I understand correctly with my suggestion/rewording of yours above?
-git-credential-netrc reads its input from the netrc file, which may well
-have a symbolic port, so it should itself convert from symbolic to
-actual port numbers, IIUC.
+Thanks for the reference. I'm thinking at the moment to improve the
+check for a valid port using something like this Scheme code:
+
+--8<---------------cut here---------------start------------->8---
+(define (port? port)
+ "Return the numeric value for PORT, else #f."
+ (if (and (exact-integer? port)
+          (positive? port)
+          (<= port (1- (expt 2 16))))
+     port
+     (catch 'system-error
+      (lambda () (servent:port (getservbyname port "")))
+      (const #f))))
+scheme@(guile-user)> (port? "465")
+$14 = #f
+scheme@(guile-user)> (port? 465)
+$15 = 465
+scheme@(guile-user)> (port? "smtps")
+$16 = 465
+scheme@(guile-user)> (port? "unknown")
+$17 = #f
+scheme@(guile-user)> (port? 120000)
+$18 = #f
+--8<---------------cut here---------------end--------------->8---
+
+So basically, try to call getservname(2) on a non-numeric port. If this
+fails, the port is invalid, else return the port number.
 
 -- 
 Thanks,
