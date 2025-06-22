@@ -1,91 +1,106 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lj1-f173.google.com (mail-lj1-f173.google.com [209.85.208.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4711F2361
-	for <git@vger.kernel.org>; Sun, 22 Jun 2025 15:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21ED0219E0
+	for <git@vger.kernel.org>; Sun, 22 Jun 2025 17:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750605968; cv=none; b=TqLxpbNYYdYi/gmTgNAsJm2OnYJu6wg05SthR23DHGZOsmo/LONoINmzPGcRz/Z8ZesATbfLa6wGD/KMiuONh2BjRs+CdO6yviDObbui7j/8Nv7I9feyqs1/n0HyjxFvpk0l+COeElGGNeCMCzOvkBJUSUUqHSL2gbSfOA5Gv/I=
+	t=1750612333; cv=none; b=qbNLjk26asjgDMMUsawR66T8tmObM1ONDh0LFfVHWANEY/oVNDOt1RK4DF3Z6ChOOQGSDvaT62xcrwYNtA6Nc5kBe9ZgQEoyDLw10yJgaj/dccriffbe5b7b30GUJItLccWLjIQXv8OfyddI5uFxRDYcMXw8nMwvaTgAuz3OljY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750605968; c=relaxed/simple;
-	bh=6nw145vOf+dcRtLfv7sEgTBlFiQ0CZaBbxc1gyk/bkk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+XtdEN3i02Rj2dgzh9EjQ9Lhkw8nsNWYAGilkAtdqLOW+9bjoAVIzqSkCx4JMud+U/TntFFTF0QOiU/VHKJsJJg5A3SoACUHPrS/oVycnog21CzO4AmIqEZHD1bycPfl0ZDBIPtYErZ3zUMeL3RuopfM7iyU9p6dthR8CXqYP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=IiR+fwJm; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
+	s=arc-20240116; t=1750612333; c=relaxed/simple;
+	bh=ds95/5K9MKEwUKUi235NydLOSym0rd/Xj6cehBMTk8k=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Pm5GnZWqC4Dx5jBQGeL0K5J2xRknjb9r5ZOKMnjbuezHNDYzmSyhgt7pUVGGxtGjUXpw0RWlkDjB5LyEGRXPP0yb9N5vHk9c4csV982TV9swORfOu1Xx1uFea2fQayuLKRaDEXPACYMJ5oK37DUTymdma7qRYBsgZJNLFI+U+r4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org; spf=none smtp.mailfrom=kambanaria.org; dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b=QZ8g6K8Q; arc=none smtp.client-ip=209.85.208.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kambanaria.org
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=kambanaria.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="IiR+fwJm"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uTMZv-005c1o-S8
-	for git@vger.kernel.org; Sun, 22 Jun 2025 17:25:55 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=guixotic.coop; s=selector1; h=Content-Transfer-Encoding:MIME-Version:
-	References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From;
-	bh=oUnidrQe82TYPOFJYKz85lbwdhn6PwbqjGtM9RWKnIY=; b=IiR+fwJmBd74AY2WS41IS6dG3N
-	Zh05qCgW6ceh3KP6Y8jRdDr91ptJzn/DHsvbLf/+Bwc5Vm78ocmEmJOMpnjKvVjyjCmlFkH2UBfNS
-	XKJBCd+J9JsB8k0msjm3VuQHJd0/IO7ur2U/Ni89iRnwKtNmbGhZ9L3oEgOxvJnWXMg6VwQA6cHnR
-	yPmiA4ZPcrUffV50J8dq4rBHDnSiSBbI6x8lKKiiJxNGeRXnCftm+waNZHLWHwh66v2Lx811Sv87H
-	P+7XifJFVopNWQOAxzXCygolTgpYwy7InS9QRRxHm4B/3DrXL660WbpFuXBXQtXzQDO31V8aOeyP4
-	eR3CfRvg==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uTMZv-0000TY-Jx
-	for git@vger.kernel.org; Sun, 22 Jun 2025 17:25:55 +0200
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uTMZm-002aWd-E8; Sun, 22 Jun 2025 17:25:47 +0200
-From: Maxim Cournoyer <maxim@guixotic.coop>
-To: git@vger.kernel.org
-Cc: Maxim Cournoyer <maxim@guixotic.coop>
-Subject: [PATCH v2 2/3] contrib: warn for invalid netrc file ports in git-credential-netrc
-Date: Mon, 23 Jun 2025 00:25:34 +0900
-Message-ID: <20250622152535.11837-3-maxim@guixotic.coop>
-X-Mailer: git-send-email 2.50.0.84.g5dea3a8a86
-In-Reply-To: <20250620041239.27839-1-maxim@guixotic.coop>
-References: <20250620041239.27839-1-maxim@guixotic.coop>
+	dkim=pass (2048-bit key) header.d=kambanaria-org.20230601.gappssmtp.com header.i=@kambanaria-org.20230601.gappssmtp.com header.b="QZ8g6K8Q"
+Received: by mail-lj1-f173.google.com with SMTP id 38308e7fff4ca-32addf54a00so26997981fa.1
+        for <git@vger.kernel.org>; Sun, 22 Jun 2025 10:12:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kambanaria-org.20230601.gappssmtp.com; s=20230601; t=1750612329; x=1751217129; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ds95/5K9MKEwUKUi235NydLOSym0rd/Xj6cehBMTk8k=;
+        b=QZ8g6K8Qr7mMIf1cqx6jDn+2GQ9NncVwQipbcnym/nZQxrinOEswSttpVXRXdDWvpz
+         BmZGzr3OcCYu2GBQ33umSniEFJeLfNNh42Bl9uJhHfjpSxrordMQAtW40C8NjfWKGVC8
+         1kwP9KDLbnA+MWTKzi+x08JeX+02Q3mNl+2s1/GuvaznW1d+Ly2K2mq8uDeACbPHnTLZ
+         FbnXgDme8ZWJgrDi4hJ1RRwcVDV8Xov+e+b/XuDLYS8u9B4L24ykVsaliAC/nE0fBGZr
+         PlRGRAQ/FPgKuKdQZclUtFXyRijhj/xb8yAWjnCXZNH4cobATzUW7VABesDWlzoLNZG6
+         oNog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750612329; x=1751217129;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ds95/5K9MKEwUKUi235NydLOSym0rd/Xj6cehBMTk8k=;
+        b=kswVBFC/WhaAiamIzANx8lX8lUgUHuCW7ZAUgTjb0xuaJlBnbDoGc6Kotens3Z0dWm
+         FGT/e8aC4cVDL/ffFZuk1ONtC4M7E1lew3G+UL7oY+PIECLMHTCv+A7EmH7GRYLr7BpD
+         as1GDvO6jcMyxrzs8vwSOSvXNKgOVGnNSrpAcTq0DXDLKMcxjCGEvJt+wOQWf3QKojOO
+         1hPecphxtifmupVSIRHiRde6rGI3RuMG+E2orCknVisPsBAxQs2PLTPRH8LLO7dWLkwA
+         4SGJD/AxHgYTlroJeAjc79cME5bNdJo/er1Qk807WC2nfVj3caOOrx7eVIiOz9tAJCm1
+         fSbg==
+X-Gm-Message-State: AOJu0Yza296cCyHN7ru+/7WrN6z/JlBv1cElpDv+XVAPHRNsTtpFHD7Y
+	W6CqD8lJErdpQ8KaDKZzzucK2Iwn7blQ+DLtSvGVxwJWiL3biPa6ptFS11kSYs6z88qKztkfvic
+	bGgWE/1p9BSa2yKnwm2rzK8UxTiqca1l3uBriTjDv6iAcn13V/JjppUc=
+X-Gm-Gg: ASbGncveFdMgZdgALAo2jULUWSoT3en8UNLNiaZEPWNVQfyvv/U6MexCpSogwoKIF23
+	kIXFsl/hTRZjOYRdQorOD8ugBuwcf58sEq81BYyun5iJY6zmCXjENNXcRnXIQMt6MICaw6cZ7GH
+	il59UJOH2L+206vG87+OXfJL3+32yOFYubVor6ik2fAQzvCw==
+X-Google-Smtp-Source: AGHT+IHafIM0OlbWze/J0qsSMK4P4cg6qr7vYTzeJMerJO0U/tty73G6IorNLsW1lJUlnmDx898aZ10r70YVW1xtOYg=
+X-Received: by 2002:a05:651c:515:b0:32a:81a2:ebb with SMTP id
+ 38308e7fff4ca-32b99163225mr29558961fa.1.1750612328978; Sun, 22 Jun 2025
+ 10:12:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250615122631.41988-3-ash@kambanaria.org> <92e92b77-f8b1-4e7c-b426-be09e3f2030e@kdbg.org>
+In-Reply-To: <92e92b77-f8b1-4e7c-b426-be09e3f2030e@kdbg.org>
+From: Alexander Shopov <ash@kambanaria.org>
+Date: Sun, 22 Jun 2025 19:11:58 +0200
+X-Gm-Features: AX0GCFsWDsShlv8n38ttTbPn98-K4Rh3dupVecyqnQroPg2f_9qoFlxLQrY24MM
+Message-ID: <CAP6f5M=cYn_XBN=-zw0ezqFskOSjZiVQwQ60f8k4mb2dYqM-vQ@mail.gmail.com>
+Subject: Re: [PATCH 0/1] Resubmittimg Bulgarian translation of git-gui
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Invalid ports were previously silently dropped; now a warning message
-is produced.
+(narrowing receivers)
+> not .. obvious, even with `git show --ignore-matching-lines='#:'
+> --color-moved`. Is there a way to enforce a stable order in the .pot
+> file and/or the merged .po files?
 
-Signed-off-by: Maxim Cournoyer <maxim@guixotic.coop>
----
- contrib/credential/netrc/git-credential-netrc.perl | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+Sadly no. The -s/--sort-output is deprecated (plus it is counter productive).
+https://www.gnu.org/software/gettext/manual/gettext.html#index-_002ds_002c-msgmerge-option
 
-diff --git a/contrib/credential/netrc/git-credential-netrc.perl b/contrib/credential/netrc/git-credential-netrc.perl
-index 514f68d00b..09d77b4f69 100755
---- a/contrib/credential/netrc/git-credential-netrc.perl
-+++ b/contrib/credential/netrc/git-credential-netrc.perl
-@@ -267,9 +267,14 @@ sub load_netrc {
- 		if (!defined $nentry->{machine}) {
- 			next;
- 		}
--		if (defined $nentry->{port} && $nentry->{port} =~ m/^\d+$/) {
--			$num_port = $nentry->{port};
--			delete $nentry->{port};
-+		if (defined $nentry->{port}) {
-+			if ($nentry->{port} =~ m/^\d+$/) {
-+				$num_port = $nentry->{port};
-+				delete $nentry->{port};
-+			} else {
-+				printf(STDERR "ignoring invalid port `%s' " .
-+				       "from netrc file\n", $nentry->{port});
-+			}
- 		}
- 
- 		# create the new entry for the credential helper protocol
--- 
-2.49.0
+The default is -F/--sort-by-file which is kind of saner.
+https://www.gnu.org/software/gettext/manual/gettext.html#index-_002dF_002c-msgmerge-option
 
+It may cause jumping around in case a translatable string that was
+available in one file,
+becomes available in a file sorted earlier than the format but nothing
+is 100% proof.
+
+Sorting is not enough for sane diffs. As the location data also
+contains line numbers -
+adding a line before a message pushes its location down.
+
+The way I read your message:
+- you are OK with a translator choosing to submit po-files without
+location info. This
+will make commits and diffs shorter and more understandable and
+reduces the growth of the repo
+The info is not used during runtime and is easily recoverable -
+generate the pot and merge the translation.
+- you are at least interested in moving the infrastructure to this workflow.
+
+In such a case next time I submit a gitk/git-gui translation I will
+voluntarily remove the locations.
+
+I hope you are fine with this.
+
+Kind regards:
+al_shopov
