@@ -1,91 +1,87 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617C83FE5
-	for <git@vger.kernel.org>; Sun, 22 Jun 2025 04:11:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6892E2745E
+	for <git@vger.kernel.org>; Sun, 22 Jun 2025 04:18:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750565484; cv=none; b=sMBLF4X4VWsBG3hgRI2FEsef53EEojLMEfs4D5FZA/hJnQyj7SEuFpoXP+PSVzv4DhYUwDOoJeCQJnV9Iw9g4jdiHRCqVUGqwtrmxlcbcBf4TN/4C/BB0SITnqsOFjKrFzOQyX2xg67BGaS0WxeZrUHkmmQ43g/UJ65BugcwH6c=
+	t=1750565926; cv=none; b=Fdd0zWUMeYmFLX7HSXzSTOHduQOSwfMcONXLv43HivrTmavkccTp9JQJrF5ppaZrj70pQRjEgCGe2rEem6iYrOcame8PI5R3ufdpyF5mobk+MvVt2Cy1QnLT6CKP5eU0fSaW5oXolpsUZvzuhCv6dArv0ZpQKe/9pVPYIF41gzk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750565484; c=relaxed/simple;
-	bh=FCna+h68BFatP+hX/7ugbgddA/8UY8Jyhly2Z2UgOLU=;
+	s=arc-20240116; t=1750565926; c=relaxed/simple;
+	bh=13aFcUT527o2MTsAu0I4ruIljbK79Hw8ifyD8jy4JeM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KqV8b4dz/MQSdE/ZztSWNlRCeUIEug6qmoSB3jFGE/w4VyS7tKm85TwJaB6TnTKusAxyCJGU4S2sWNCWwgPKdWHxHtM0zchlWDX8dUVe50QK+4zj/3zVhjfgBf5uYiDSbj2RtdeHItlPlrr5Uy0I5TNPspp7FA8Mzw7SESG6NWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Td1tsRxQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qvckvvz2; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=EPyl7sK7KL2gul9/DCacJXShCzKunG4nRFH81KrEJtRdqSLLEed+IwPa0l7x0P4UFDCm+E8T65FmjAGOYSQhnuWSzQ27sbNhHupUomLvMmiLYh82w8kTDRAM5M3Bg1tBenRpcMLUroH9mCI/KxIy8orT6JwBw5lIzTX7I/cW/aA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G94N8Jib; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cBa6sR+N; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Td1tsRxQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qvckvvz2"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G94N8Jib";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cBa6sR+N"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3EB8325400FA;
-	Sun, 22 Jun 2025 00:11:20 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 4CB0511400C8;
+	Sun, 22 Jun 2025 00:18:43 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Sun, 22 Jun 2025 00:11:20 -0400
+  by phl-compute-01.internal (MEProxy); Sun, 22 Jun 2025 00:18:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750565480; x=1750651880; bh=7Xaw4Xm7ge
-	jzq87tVhFkZS8pcPQ3FBxKDl0KXLjbIkY=; b=Td1tsRxQayYT/ThQpiYEd8zyoP
-	kGTuJu6gj03t/vFdetvIOgmfPE/Gx3ehYyYAzQk26MLWBqsUKBvmFJNPALXv9udU
-	owMeo4ZlbFs/sk0y0bIkqxQalPtqncTnm2E7v2GlST9rHAek370Nxf91OkaHDl6j
-	eHNio8doe8eNP7KQBggE4/NwWsgMEbeFvyKPGzlx7hJnukQReNKOPPac/HzSyHsf
-	RZ+obQ12ib8WxG0DN0gr05cWiPV9dTsv2k8laaQxJvKvqlc1xe3YnUSoeroWAtbu
-	6XKaQ0WEZy8l0B6bw/gkE0rgWv2/9Nj/q/gw4TN9X2k82XSVIaRGXOMCYv5Q==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750565922;
+	 x=1750652322; bh=8WoUMBuDqlW/x/vWlMaLafF0aGjWH8iFTXLjvhc0AuE=; b=
+	G94N8JibnI0daZlPUjXIU7VmAQdDali8E/vtnMWaePSleAq1fLWozUmY0R1OkTU/
+	bc4JjdSmUnCITBc88FFPfYtaUuUjXDL+PR/KPeu2D/tjxNIhh7+VeGT/lfh0KWT+
+	aLzRuzyZFbF3gQMH3UuxT3OYS9Klvk2D92Yosaixm0FLn79Vg4dCP3juvtZ6EfM1
+	ZJ5o8KyVj0rPxvZcT5CKInzPxSPPj+Nan0wESacrjFqn7Qie923zroZ0vTx6E51Y
+	wYQzWzc34J8rkJr1nUErA05yUaA0uUJL2RaasbPZL6xqKPAHwgZMxhSeUAEZjokY
+	ZDpWjwBHYrLVHCZTER3Eyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750565480; x=1750651880; bh=7Xaw4Xm7gejzq87tVhFkZS8pcPQ3FBxKDl0
-	KXLjbIkY=; b=qvckvvz20Npw0wDOyhqw9W2CyQv0l7J8k6R03NZ5gw3W2GXJrml
-	szlm5MBfZTWPUIJeYwOJxejH9K0O36hrREY9NiEjtq9DWv12Blmtyj13jVjhMRR8
-	fPtwODn2ewxyIJVh5hi1D+KwmGK37Dk/1uOq7pfpPVxS0lA4bxMi6ZN2v/hD3C9D
-	IC+m/OFTQJVlLTy3ZD/YIAWj6OqGh3Fs2iAtacFngNaWtVi6xXWH6UAA0M2FuoYp
-	PmDvpzDETBXy3o0Hqu/nHeB+oBvXj5lago2eUTRBfkFojOtjCuI5TSqO69GgQeYM
-	9cILWMEaPDRuA/HVHGCh916kpG2gbGGzRWg==
-X-ME-Sender: <xms:Z4JXaBe8KPxvXAh97Ow_fGOsZzGT-la-uyzXaOXZoObd5POST7e7fw>
-    <xme:Z4JXaPPbfpUxN9RFgi5VhIAmm1RrQGE6dus1R5frv35ya8_1CVtOFmqJA43MxQm8P
-    u35RmKMjBi08mSicg>
-X-ME-Received: <xmr:Z4JXaKhQBBY-iZDn61jOj1wHRyrVbHLnuOdra0tlca7KvOGEies4ivvEtck7yX4TsgvpJkbHZl-EEGJ9YxMUgjm1JVqbp8FeQl03W0M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddufedujecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750565922; x=
+	1750652322; bh=8WoUMBuDqlW/x/vWlMaLafF0aGjWH8iFTXLjvhc0AuE=; b=c
+	Ba6sR+N+C+Ent1HMaS3Q373mzHd5aNIVH4L3RCH4dTq6FZb/Z4bfTOsCJWJvYskd
+	VXWHlDJhnQngQH6cx5G/o9Xu07tdVgJjWEPodr7oEncN0837xaQ8X7at1+mjcOjl
+	clE6xRlAKl94n4xhO/TgndmazcyIpXKJB4ICJs3grfPY73mi9BtX2yA5brQHF0Jh
+	a3ECWcfWVUxj/uc+Z67B2JfezvYfg8QtwJ5qX5Z1Ce1q5IrOCJej6PQues3lnJz2
+	0cHfKh0rVnhRn9dEgFghKFDKDgGow96h892eSknwfRq3yNQZmASXL+aeioMHfjBJ
+	YZA30Z/sP8FF8W0Xdi6pw==
+X-ME-Sender: <xms:IoRXaFqJfNVTqWwDdi6L72R6eZAC-55V3h-hScrxEXm62GQwKx4x-g>
+    <xme:IoRXaHpzW7xbi7XgAO5A-2Z8wcko73aVXUKy75E4gxHQoCnmEhS8lDeA-q-Axm3Ee
+    VRmUKZkgq1tr-WLhw>
+X-ME-Received: <xmr:IoRXaCMfiJRBGuVcFWsEAe4uyhfytk1zQ2hyK0j3XKsA1Qf7uqHzgN1hb0upYtlkWgrlTaoVWEzHLDnVftli9SSbbK47Y7ThsU5JwIc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddufedukecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheptg
-    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrdduke
-    eksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
-    pehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
-    gtohhm
-X-ME-Proxy: <xmx:Z4JXaK-zEJA-hOpMKJ4TguSlAeo9COjp09bTZCCpfPQv7MRuYxJs1Q>
-    <xmx:Z4JXaNt_I_ydpPVioGeBMZXGUitQTyUyL5JxT9kMouNOShrkgdtqsw>
-    <xmx:Z4JXaJHOxojQSKb5ujm3Zi-khixyTyocYkDVVJjRX7svhICljzK12Q>
-    <xmx:Z4JXaEPLhXjApalWMJzspBIe3S2f2JDKq36VycF2ytqvxbIB8KUQnQ>
-    <xmx:aIJXaNM3ttgMfwwdIFaC3PadG1ttg1c_xmzzr4E4RqrFkEonL2WdMiAf>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhephfetvdejheduheegleehfeeivedtgeelfedvffdtvedtudffieekieeijedv
+    lefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
+    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuh
+    hnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptggrrhgvnhgr
+    shesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IoRXaA4gFt15r67Dw802unu3jdDFTLoxVwVg77I-F06a3Jfii-iLnA>
+    <xmx:IoRXaE7-Y_CfHlZ0DX4W278AFP6cwk3bD-qzMxvDFRKr1utGEqIB5A>
+    <xmx:IoRXaIj328VkY1lSwhjZaCf9rx_ITfzzbf_Yte0zSuYy1h87L3eGWA>
+    <xmx:IoRXaG4mCnPZXqSNT9PAMpF-P2zuO4SapNSawkI4gr6o1nTmQ6qE4A>
+    <xmx:IoRXaD9kU5Y_YGtRVplilNW8xd8mKe1e4NVJfVPM2m_2kP0RHMhP3HDQ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 22 Jun 2025 00:11:19 -0400 (EDT)
+ 22 Jun 2025 00:18:42 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Karthik Nayak <karthik.188@gmail.com>,  Patrick Steinhardt <ps@pks.im>,
-  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Subject: Re: .clang-format: how useful, how often used, and how well
- maintained?
-In-Reply-To: <20250621050743.GA3007684@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 21 Jun 2025 01:07:43 -0400")
-References: <xmqqmsa3adpw.fsf@gitster.g>
-	<CAP8UFD0YEgh4Oy8MDpT0DfZJgo++NHf3mF6VsYxAG1CjhrKGLQ@mail.gmail.com>
-	<xmqqfrfv8dr3.fsf@gitster.g>
-	<CAP8UFD27tQ3uhQW5zkPfFZSF=3FGEmi-rBYu3A_zZ8oNbUiNag@mail.gmail.com>
-	<20250621050743.GA3007684@coredump.intra.peff.net>
-Date: Sat, 21 Jun 2025 21:11:17 -0700
-Message-ID: <xmqqfrfs8lga.fsf@gitster.g>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [RFC PATCH] coccicheck: fail "make" when it fails
+In-Reply-To: <CAPig+cRtSzjA=P_-WhRw9rRmTmFMGibKuHYn_ZuN935fcffveg@mail.gmail.com>
+	(Eric Sunshine's message of "Sat, 21 Jun 2025 04:09:40 -0400")
+References: <xmqqwm97bv7c.fsf@gitster.g>
+	<jyof56xql2c23gyckxzmry4smkt2uk64lyofqxk34olzn7evgf@ltq5tiqo4qyg>
+	<CAPig+cRtSzjA=P_-WhRw9rRmTmFMGibKuHYn_ZuN935fcffveg@mail.gmail.com>
+Date: Sat, 21 Jun 2025 21:18:41 -0700
+Message-ID: <xmqqa5608l3y.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,33 +89,36 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-> My ideal workflow would probably be taking a pass with:
+> On Sat, Jun 21, 2025 at 2:29 AM Carlo Marcelo Arenas Belón
+> <carenas@gmail.com> wrote:
+>> On Thu, Jun 19, 2025 at 08:35:35AM -0800, Junio C Hamano wrote:
+>> >  coccicheck: $(COCCICHECK_PATCHES_INTREE)
+>> > +     test $$(cat $(COCCICHECK_PATCHES_INTREE) | wc -c) = 0
+>>
+>> Definitely a nitpick, but I think using `-eq` instead of `=`
+>> and might even come handy from a portability point of view.
 >
->   git rebase -x 'git clang-format --style=file -p HEAD^ || git commit --no-edit --amend -a'
+> Junio has previously expressed[*] a preference for `=` over `-eq` in
+> this sort of situation.
 >
-> is a better match.  That command is a bit of a mouthful, but we
-> could perhaps roll it into a script or a Makefile target.
+> [*]: https://lore.kernel.org/git/7v8v3m50ds.fsf@alter.siamese.dyndns.org/
 
-The "-p" option does sound like a good thing.  Taking the tool's
-suggestion wholesale without human judgement would be better than
-taking what a human developer typed as-is only for somebody totally
-new to the language and to the project.  For more experienced
-developers, I would trust human judgement a lot more than I trust
-the tool's suggestion, and "-p" may be a good escape hatch.
+Heh, you have an infinite more memory than I have ;-) 
 
-> The current "make
-> style" only looks at uncommitted changes in the working tree (and of
-> course isn't interactive).
+That one is 12 years ago or so, isn't it?  Not that I changed my
+stance.
 
-Yes, that makes it much less useful than it could be.
+Having said that, I suspect
 
-> The big pain I see in this (or any other workflow) is getting bugged
-> about suggestions you've rejected. In an ideal world we'd tune
-> .clang-format so that all of its suggestions are good, but I don't think
-> we're there yet. ;)
+    ! grep -q ^ $(COCCICHECK_PATCHES_INTREE)
 
-Me neither.
+might have been easier to understand.  We do not want any file with
+even a single line in it, and "grep -q" knows to short-circuit
+(i.e. if the first file in the COCCICHECK_PATCHES_INTREE list is not
+empty, it does not even bother to open the rest of the files).
+
