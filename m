@@ -1,51 +1,52 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8284A22A4F1
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A941F8733
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750720624; cv=none; b=cXBjg5fS5KYXdXI1UjZKCqkPNbWbpggbNFkiifVm2ffYUqllgeMk2vXft5P7qjxCxOiOpnGJ84B7/uVMfT0TGVZjdsxKoI6jSzjuSTV476rpwtiuJViHH2PaBpcHMhtT/7ilRdfrCeFhIH+dB9hzyTrNd5RLTo90Mng/5sK/MzE=
+	t=1750720625; cv=none; b=hsKbtnR3kXHJc+bFXMDo6SEv0H/4QRPZFDdffRk/Rs+jOXDsn9aL3iNQ/h11Z+7Og8nHCQ9rfVgUL4xObunQ3JOAqfHpZcAnhDoLPF0k3Uh7N8YQBHmM2bRNtlzgRJ0+Cu7pYsDn/94ZTpduw1QhkqpiDZOm7sqSbRv8YJY1sRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750720624; c=relaxed/simple;
-	bh=LfvLd6THqQVQHJ5W0jXIzAzGfARWYIc2WBs7D88SyvA=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oRL5VTTaptmrWU+M2ZislIuaUnUjUoMOqrNxjFbuuhl2VU3TzvzGD2IxYPBKUvisZGNVwfoEpfVWGBKmXOJMD+zSmHZJvEIVoULww0ccLn5iBsPVzneDA47tjBAmkOsJGJRglu+lV/lQ/9fxFN49VlbHi43z6vHRYShRqd0dlDw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m0K5qFcX; arc=none smtp.client-ip=192.198.163.15
+	s=arc-20240116; t=1750720625; c=relaxed/simple;
+	bh=vl8F7XGWqc9oMcSfDTwG2BKkARt+ASrOyz3JOKcXTHs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=I4wZaCHCXV6MIulnFsQXBXqopFrYlt/y97RisBSzJ1uNkH6dFBIrwfcwLQACjrz/Ak0Z0fRc3haxhR2Dd6rgkodGwu4JJCzmSaZmvBmRCfDJjkVgZ+Qr94ZwzA0WgJWJ69AKGZx9n6b72iwPru7jQnFirifyUt4slKSE+UlGC9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=e9mjtgLU; arc=none smtp.client-ip=192.198.163.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m0K5qFcX"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="e9mjtgLU"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1750720623; x=1782256623;
-  h=from:subject:date:message-id:mime-version:
-   content-transfer-encoding:to:cc;
-  bh=LfvLd6THqQVQHJ5W0jXIzAzGfARWYIc2WBs7D88SyvA=;
-  b=m0K5qFcX8ki+fUCr/jNhW9JSWOwQsEK3Br7dCiuxKWXHSBa3nP7qjHJg
-   I9T3LyVusS+tantKXX+4A1s5HgJcsdDRQQmxP+Tf40y0SbnQTlKrWnxbc
-   22oYhQ0Yh5rFBmLP7fhQU9v1Ix1gfgnvk1ABqqUNGwSXRCUY8Bg+uJXAM
-   6rkMAMNo02BwPkYX8Th58Yiv7COW+lGNXHz0a4Z5a6FaiLlTKRLpl1Ytn
-   w7IWspt6BzsXxXegLfVLwxzl6ZPqqaiiF5Q2jgm0VU9svaZXSimD2vUCa
-   mgR+2upgDIbpv1iO4SvYPm+eQYHakGSDCSgR0TNmRgiWuUq7AKCsmDllr
+  t=1750720624; x=1782256624;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:references:in-reply-to:to:cc;
+  bh=vl8F7XGWqc9oMcSfDTwG2BKkARt+ASrOyz3JOKcXTHs=;
+  b=e9mjtgLUsTNcrh/REAgMdjGu0+xPp8y1chGubkmZBy0TzMBU8kawefRL
+   19J+slgx8gmAQWgssbHeefeyJ3XTj0lZcZFH4jAT5Rcjj8TDTunbsAKaK
+   VGxA3C+wbqusKbo/o7NYoN3MfuMHTyMAQ1nZdwYpVQu/fvONioDCALq3G
+   sw44jay9x3v+DgvuKR6fmrIDPHfhZZWPDaxWfTJgfXikM0ItdD0U1yGzH
+   bQumUHgXjq5mTZ0HtTwjgeo7u/Qj7pwomkgZceKkEh7LME7bEuosC60tv
+   Teo8HW9Rs4wXqDVprOP3duyHwsEeHi3gjaSkQ1V4JlNoJnkNCkMTHgxej
    g==;
-X-CSE-ConnectionGUID: 4ywCUUt3S6uv9KPLyv9R3w==
-X-CSE-MsgGUID: e9hEHWP6QbChEJNQdXM7/w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53084549"
+X-CSE-ConnectionGUID: L9Y4XtChQVua8Vfr72eHZw==
+X-CSE-MsgGUID: LSnQkZVzQ3ay9FIFe0EQnw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53084553"
 X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
-   d="scan'208";a="53084549"
+   d="scan'208";a="53084553"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
-  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:41 -0700
-X-CSE-ConnectionGUID: PHiBeuV0ShOEELgMsQyTtg==
-X-CSE-MsgGUID: jHHvYmugRnSmDN4o/X08Gw==
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:42 -0700
+X-CSE-ConnectionGUID: c/kaFntZSFa61BclpO6m6Q==
+X-CSE-MsgGUID: CmibJIjYQ0mSWbT2+s+p/g==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
-   d="scan'208";a="151888457"
+   d="scan'208";a="151888463"
 Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
   by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:41 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Subject: [PATCH v4 0/7] submodule: improve remote lookup logic
-Date: Mon, 23 Jun 2025 16:11:28 -0700
-Message-Id: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
+Date: Mon, 23 Jun 2025 16:11:29 -0700
+Subject: [PATCH v4 1/7] remote: remove branch->merge_name and fix
+ branch_release()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,110 +55,254 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIACDfWWgC/43OTQ6CMBCG4auQrh0zbYGKK+9hXEA7QJW/tEI0h
- LtbWKkL4/KdxfPNzDw5S54do5k5mqy3fRci3kVM13lXEVgTmgkUCaYc4XoDPxZtb8aGoKZmIAe
- jJxhdA5QkRmqpsjIvWRAGR6V9bPr5Erq2/t675zY28fX6nztxQEgNjzVPMKaMn6o2t81e9y1b3
- Um8W+q3JYKFsS4KRMmVMt+WfLcOvy0ZLKVTLEWqMqE+/lqW5QWx/BOhXgEAAA==
-X-Change-ID: 20250610-jk-submodule-helper-use-url-e55d3c379faf
+Message-Id: <20250623-jk-submodule-helper-use-url-v4-1-133ef3d89569@gmail.com>
+References: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
+In-Reply-To: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
 To: git@vger.kernel.org
 Cc: Jacob Keller <jacob.keller@gmail.com>, 
  Lidong Yan <yldhome2d2@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-This series improves the git submodule remote lookup logic implemented in
-submodule--helper.
+From: Jacob Keller <jacob.keller@gmail.com>
 
-A few cleanups are done first:
+The branch structure has both branch->merge_name and branch->merge for
+tracking the merge information. The former is allocated by add_merge()
+and stores the names read from the configuration file. The latter is
+allocated by set_merge() which is called by branch_get() when an
+external caller requests a branch.
 
-* Remove the branch->merge_name array and replace it by directly using
-  branch->merge[i]->src immediately. This is simpler and easier to reason
-  about. While cleaning this up, also fix the issues with branch_release()
-  not tearing down everything properly.
+This leads to the confusing situation where branch->merge_nr tracks both
+the size of branch->merge (once its allocated) and branch->merge_name.
+The branch_release() function incorrectly assumes that branch->merge is
+always set when branch->merge_nr is non-zero, and can potentially crash
+if read_config() is called without branch_get() being called on every
+branch.
 
-* remote_clear() failed to release the remote->push and remote->fetch
-  refspec data. Fix this.
+In addition, branch_release() fails to free some of the memory
+associated with the structure including:
 
-* The starts_with_dot(_dot)_slash helper functions are moved to dir.h for
-  re-use, as these are used both within submodule--helper.c and
-  submodule-config.c
+ * Failure to free the refspec_item containers in branch->merge[i]
+ * Failure to free the strings in branch->merge_name[i]
+ * Failure to free the branch->merge_name parent array.
 
-* Several remote.c helper functions are refactored to take repository
-  pointers, enabling use with a submodule repository pointer.
+The set_merge() function sets branch->merge_nr to 0 when there is no
+valid remote_name, to avoid external callers seeing a non-zero merge_nr
+but a NULL merge array. This results in failure to release most of the
+merge data as well.
 
-Next, the submodule--helper.c logic replaces the repo_get_default_remote()
-function with a repo_default_remote() function in remote.c, which is based
-on the more robust configuration reading logic. This helper uses similar
-logic but also allows returning the only valid remote in the case where a
-repository has exactly one remote. This way we do not fall back to "origin"
-if a user has renamed the remote without adding another.
+These issues could be fixed directly, and indeed I initially proposed
+such a change at [1] in the past. While this works, there was some
+confusion during review because of the inconsistencies.
 
-This improved logic is a good first step, but won't handle cases where
-there are multiple remotes, with none of them being named "origin".
+Instead, its time to clean up the situation properly. Remove
+branch->merge_name entirely. Instead, allocate branch->merge earlier
+within add_merge() instead of within set_merge(). Instead of having
+set_merge() copy from merge_name[i] to merge[i]->src, just have
+add_merge() directly initialize merge[i]->src.
 
-For the final improvement, notice that the parent project already stores
-the URL for the submodule in its .git/config or .gitmodules file. This URL
-is what we use to set the remote in the first place when cloning.
+Modify the add_merge() to call xstrdup() itself, instead of having
+the caller of add_merge() do so. This makes it more obvious which code
+owns the memory.
 
-Add a repo_remote_from_url() helper which will iterate through the remotes
-and find the first remote with that URL. Use this in
-get_default_remote_submodule() to first try and find a remote by its URL.
-If unsuccessful, we still keep the original fallback logic, in the off
-chance that the user has changed the URL from within the submodule.
+Update all callers which use branch->merge_name[i] to use
+branch->merge[i]->src instead.
 
-This method is more robust as it is less likely that the user has manually
-changed the submodule URL within the submodule but not also within the
-.git/config.
+Add a merge_clear() function which properly releases all of the
+merge-related memory, and which sets branch->merge_nr to zero. Use this
+both in branch_release() and in set_merge(), fixing the leak when
+set_merge() finds no valid remote_name.
 
-With this change, all commands which need the submodule remote will first
-look up by URL before trying to use the fallback logic, and should now be
-able to find a suitable remote regardless of now they are renamed.
+Add a set_merge variable to the branch structure, which indicates
+whether set_merge() has been called. This replaces the previous use of a
+NULL check against the branch->merge array.
+
+With these changes, the merge array is always allocated when merge_nr is
+non-zero.
+
+This use of refspec_item to store the names should be safe. External
+callers should be using branch_get() to obtain a pointer to the branch,
+which will call set_merge(), and the callers internal to remote.c
+already handle the partially initialized refpsec_item structure safely.
+
+This end result is cleaner, and avoids duplicating the merge names
+twice.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+Link: [1] https://lore.kernel.org/git/20250617-jk-submodule-helper-use-url-v2-1-04cbb003177d@gmail.com/
 ---
-Changes in v4:
-- Fix branch_has_merge_config to use branch->set_merge
-- FREE_AND_NULL branch->merge in merge_clear()
-- Link to v3: https://lore.kernel.org/r/20250618-jk-submodule-helper-use-url-v3-0-7c60f2679271@gmail.com
+ remote.h       |  4 ++--
+ branch.c       |  4 ++--
+ builtin/pull.c |  2 +-
+ remote.c       | 44 ++++++++++++++++++++++++++++----------------
+ 4 files changed, 33 insertions(+), 21 deletions(-)
 
-Changes in v3:
-- Completely remove branch->merge_name, making the resulting logic much
-  easier to understand.
-- Link to v2: https://lore.kernel.org/r/20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com
+diff --git a/remote.h b/remote.h
+index 7e4943ae3a70ecefa3332d211084762ca30b59b6..76d93bf88d1fb8c0e2cbc2bc99558f23a256155c 100644
+--- a/remote.h
++++ b/remote.h
+@@ -315,8 +315,8 @@ struct branch {
+ 
+ 	char *pushremote_name;
+ 
+-	/* An array of the "merge" lines in the configuration. */
+-	const char **merge_name;
++	/* True if set_merge() has been called to finalize the merge array */
++	int set_merge;
+ 
+ 	/**
+ 	 * An array of the struct refspecs used for the merge lines. That is,
+diff --git a/branch.c b/branch.c
+index 6d01d7d6bdb2e4d969429433b1b6bc88446a96c5..93f5b4e8dd9fe53ae4412827c458bade7c341278 100644
+--- a/branch.c
++++ b/branch.c
+@@ -230,7 +230,7 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
+ 		return -1;
+ 	}
+ 
+-	if (branch->merge_nr < 1 || !branch->merge_name || !branch->merge_name[0]) {
++	if (branch->merge_nr < 1 || !branch->merge || !branch->merge[0] || !branch->merge[0]->src) {
+ 		warning(_("asked to inherit tracking from '%s', but no merge configuration is set"),
+ 			bare_ref);
+ 		return -1;
+@@ -238,7 +238,7 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
+ 
+ 	tracking->remote = branch->remote_name;
+ 	for (i = 0; i < branch->merge_nr; i++)
+-		string_list_append(tracking->srcs, branch->merge_name[i]);
++		string_list_append(tracking->srcs, branch->merge[i]->src);
+ 	return 0;
+ }
+ 
+diff --git a/builtin/pull.c b/builtin/pull.c
+index a1ebc6ad3328e074b105246f6bf5c41b063c17c9..f4556ae155ce22ea91f9878d772eb9228fe4e604 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -487,7 +487,7 @@ static void NORETURN die_no_merge_candidates(const char *repo, const char **refs
+ 	} else
+ 		fprintf_ln(stderr, _("Your configuration specifies to merge with the ref '%s'\n"
+ 			"from the remote, but no such ref was fetched."),
+-			*curr_branch->merge_name);
++			curr_branch->merge[0]->src);
+ 	exit(1);
+ }
+ 
+diff --git a/remote.c b/remote.c
+index 4099183cacdc8a607a8b5eaec86e456b2ef46b48..ee95126f3f20080a932b82314e8017e277569cc1 100644
+--- a/remote.c
++++ b/remote.c
+@@ -174,9 +174,15 @@ static void remote_clear(struct remote *remote)
+ 
+ static void add_merge(struct branch *branch, const char *name)
+ {
+-	ALLOC_GROW(branch->merge_name, branch->merge_nr + 1,
++	struct refspec_item *merge;
++
++	ALLOC_GROW(branch->merge, branch->merge_nr + 1,
+ 		   branch->merge_alloc);
+-	branch->merge_name[branch->merge_nr++] = name;
++
++	merge = xcalloc(1, sizeof(*merge));
++	merge->src = xstrdup(name);
++
++	branch->merge[branch->merge_nr++] = merge;
+ }
+ 
+ struct branches_hash_key {
+@@ -247,15 +253,23 @@ static struct branch *make_branch(struct remote_state *remote_state,
+ 	return ret;
+ }
+ 
++static void merge_clear(struct branch *branch)
++{
++	for (int i = 0; i < branch->merge_nr; i++) {
++		refspec_item_clear(branch->merge[i]);
++		free(branch->merge[i]);
++	}
++	FREE_AND_NULL(branch->merge);
++	branch->merge_nr = 0;
++}
++
+ static void branch_release(struct branch *branch)
+ {
+ 	free((char *)branch->name);
+ 	free((char *)branch->refname);
+ 	free(branch->remote_name);
+ 	free(branch->pushremote_name);
+-	for (int i = 0; i < branch->merge_nr; i++)
+-		refspec_item_clear(branch->merge[i]);
+-	free(branch->merge);
++	merge_clear(branch);
+ }
+ 
+ static struct rewrite *make_rewrite(struct rewrites *r,
+@@ -429,7 +443,7 @@ static int handle_config(const char *key, const char *value,
+ 		} else if (!strcmp(subkey, "merge")) {
+ 			if (!value)
+ 				return config_error_nonbool(key);
+-			add_merge(branch, xstrdup(value));
++			add_merge(branch, value);
+ 		}
+ 		return 0;
+ 	}
+@@ -692,7 +706,7 @@ char *remote_ref_for_branch(struct branch *branch, int for_push)
+ 	if (branch) {
+ 		if (!for_push) {
+ 			if (branch->merge_nr) {
+-				return xstrdup(branch->merge_name[0]);
++				return xstrdup(branch->merge[0]->src);
+ 			}
+ 		} else {
+ 			char *dst;
+@@ -1731,32 +1745,30 @@ static void set_merge(struct remote_state *remote_state, struct branch *ret)
+ 
+ 	if (!ret)
+ 		return; /* no branch */
+-	if (ret->merge)
++	if (ret->set_merge)
+ 		return; /* already run */
+ 	if (!ret->remote_name || !ret->merge_nr) {
+ 		/*
+ 		 * no merge config; let's make sure we don't confuse callers
+ 		 * with a non-zero merge_nr but a NULL merge
+ 		 */
+-		ret->merge_nr = 0;
++		merge_clear(ret);
+ 		return;
+ 	}
++	ret->set_merge = 1;
+ 
+ 	remote = remotes_remote_get(remote_state, ret->remote_name);
+ 
+-	CALLOC_ARRAY(ret->merge, ret->merge_nr);
+ 	for (i = 0; i < ret->merge_nr; i++) {
+-		ret->merge[i] = xcalloc(1, sizeof(**ret->merge));
+-		ret->merge[i]->src = xstrdup(ret->merge_name[i]);
+ 		if (!remote_find_tracking(remote, ret->merge[i]) ||
+ 		    strcmp(ret->remote_name, "."))
+ 			continue;
+-		if (repo_dwim_ref(the_repository, ret->merge_name[i],
+-				  strlen(ret->merge_name[i]), &oid, &ref,
++		if (repo_dwim_ref(the_repository, ret->merge[i]->src,
++				  strlen(ret->merge[i]->src), &oid, &ref,
+ 				  0) == 1)
+ 			ret->merge[i]->dst = ref;
+ 		else
+-			ret->merge[i]->dst = xstrdup(ret->merge_name[i]);
++			ret->merge[i]->dst = xstrdup(ret->merge[i]->src);
+ 	}
+ }
+ 
+@@ -1776,7 +1788,7 @@ struct branch *branch_get(const char *name)
+ 
+ int branch_has_merge_config(struct branch *branch)
+ {
+-	return branch && !!branch->merge;
++	return branch && branch->set_merge;
+ }
+ 
+ int branch_merge_matches(struct branch *branch,
 
-Changes in v2:
-- Remove repo_get_default_remote() entirely. The extra checks it does are
-  really only necessary if you're doing manual configuration lookup. This
-  avoids the confusion of similarly named functions and is less code.
-- Fix leaks in branch_release() and remote_clear().
-- Add a forward declaration of struct repository.
-- Verified tests pass with leak sanitizer now.
-- Link to v1: https://lore.kernel.org/r/20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com
-
----
-Jacob Keller (7):
-      remote: remove branch->merge_name and fix branch_release()
-      remote: fix tear down of struct remote
-      dir: move starts_with_dot(_dot)_slash to dir.h
-      remote: remove the_repository from some functions
-      submodule--helper: improve logic for fallback remote name
-      submodule: move get_default_remote_submodule()
-      submodule: look up remotes by URL first
-
- dir.h                       |  23 +++++++
- remote.h                    |   8 ++-
- branch.c                    |   4 +-
- builtin/pull.c              |   2 +-
- builtin/submodule--helper.c | 106 ++++++++++++-------------------
- remote.c                    | 149 ++++++++++++++++++++++++++++----------------
- submodule-config.c          |  12 ----
- t/t7406-submodule-update.sh |  61 ++++++++++++++++++
- 8 files changed, 230 insertions(+), 135 deletions(-)
----
-base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
-change-id: 20250610-jk-submodule-helper-use-url-e55d3c379faf
-
-Best regards,
 -- 
-Jacob Keller <jacob.keller@gmail.com>
+2.48.1.397.gec9d649cc640
 
