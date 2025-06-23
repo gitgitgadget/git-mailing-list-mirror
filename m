@@ -1,122 +1,123 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4F822DFB5
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:09:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF54C23536C
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:19:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750669771; cv=none; b=C8H7TdypIQKMobjrTfuLWeiXCcM0nf+MFuAZQM58ainLnltT8fIrBjr8EOf9eTnpkgB+TpOkYBH8cjHsA4vLiSCxmraalLrvdr7QqiRASYMjPOimGreFcY1+XNmtY86pO4ZJjk7hIJgVdfTnKicTO5nUyMxUOy+BS0xpLtICI68=
+	t=1750670347; cv=none; b=ZjImvcW6GnJqTQynkFc+IFRZ2GWP5jQjY1ACbDyZ29cSwhFuIUymUW3vHaEENiLrU9MfHuGHSyILsj7li/cZGSX0DAI5r98lc4QsDBp9EyPOC9l3scpIpbK2FZASMMySovClztyJpPjVcd1c1T/WdQyg7anlsxWOVYsS/GVvRVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750669771; c=relaxed/simple;
-	bh=9DlznDkOPM9w5WEze2M87jpF8UYexYdcNrWeJ4DbqJo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=TbGktZSIyUtqPXa6p1WZD1aXQfhK30YuYnMfDaGeWvibTdrLVEsFJhgAnUr+u345A81O7sqHEPQ15K2Ctv0jIdZFJKzXnO8HsygmjjrUAET/25XpBDUhbYX7ffJMoNfMnCe/6zE+URQG/+fzvhwhG7UImn9EExAxDObmFq12d6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AZlTc6EQ; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1750670347; c=relaxed/simple;
+	bh=G7n7ps+XdGO4jMbAVE/rp5C+ccSuMdu5ATm8rMkTgYE=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pRfrY01FpuYSj5eKSd2tyB01O/n+FU6thLSK+43YzS77JCku3ANzvBcRzYpYFWhE76SG8wPnQ/NNhFECKkclAnx+HlqqUyWSprM9xuUmiOnipbYuq12yLjda4V4CoIIoa6KjcDwCAp2pPCK7A8It4mPgC9rbFEDxb0kEWdaXRYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GvWTtXRZ; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AZlTc6EQ"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a6cdc27438so3358745f8f.2
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:09:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GvWTtXRZ"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4e7ade16082so1067452137.1
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:19:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750669768; x=1751274568; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EoCe0trbfWoxSpT69VxqXRYXJkxFUJvkCH29NChZnwI=;
-        b=AZlTc6EQBMHniZmGAu2qNwsAGu3VaUL6+OW7juS2PfFUEbi8jAnu9AEwhj6mKFeL5a
-         Q6tIGibiuaw0dycKkJHLXXxmmFVix0EmfaO/Lh7u/mCS5Jczhn/kFBLQ9BjHQ8lBWRH1
-         AogwEl9VZr7xg/5/oMCw3OuofPmyLgm6ZAfYZnPtgqodU5Hj1uokyq5WMyXnyjnh8yBY
-         t+n7/tZm8O7JBDiUAx+Yy02rtFVeNt/3eCWkMfO6QyJv9bas8nHqmFk+u+vwI0jKHkJO
-         yz3T/AnR+u86ZXDx5UbdGrASEC20W1xJK98YeNzLh7TpMi5jDfFMFfapcd9UYxFutSP8
-         7b7w==
+        d=gmail.com; s=20230601; t=1750670344; x=1751275144; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWlDjmdbKqse2BsEQ9v8zL84ldfZcFzi5P90jbLt9wE=;
+        b=GvWTtXRZOSISSW4jcUQGDlXWM72cbUBiPca5HN5b4GjPYsmT69V62bFde0YQ9wj/eT
+         KD31Go0t68Sh5KRiNrR98gcpjB9N2ZayO0A22yWXWvzojZ8VLatmGEf3eXF9i1GtiL8T
+         RTAild9koIKdWkQeLH6t1dCrpdvtTU6JqAllKcN7vn/wIBVYxv0/pro9UsyooP9yqDKb
+         1lDB2xqurjJCyRu0Na3WneFmhttoo12f5f4Cn/Kd5/fAEzlv+oCdQHovamBjUUzojJDC
+         Ca5oxks8BWBYrnWyUvKazxwnNGn65Yg5LbB+JSQTKIyD/hqtvQNGgz1rpQlZ4TROiNsK
+         Bz9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750669768; x=1751274568;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EoCe0trbfWoxSpT69VxqXRYXJkxFUJvkCH29NChZnwI=;
-        b=ejqYaieW81aHrCD/xuV5GF4M1c8gHZkkmn2X8eoYpmrJlOtttd49Jp/3ykmM8aThMZ
-         DzPp95rV3cx/fSg36lEr1gpWLaUJ4exv0Osljn5R0z9ODFDLwdP7Bj2Eay+qyz4AbC1I
-         SnoVk4L6jgKZBU16sR7D6N3YpBL7Ha8qGCahXC2rQSIgb59Tb/iN5lre1+AX9Eu5R1Dx
-         KjyqQg/MQ/1R+GCA1cVo7l7Yzwmvj/QyMg/whP6EMqCYuSuwW2Vq7yV6T0f4yILVyKCV
-         cprFtbufr2bx37BLBN2ck9ZT/fptvpDg5PwPTbBMwhehQosdJ4jsjPmZip1nSp+NjuEY
-         jrZw==
-X-Gm-Message-State: AOJu0Ywfp1iiIAq/Zz6yCpZO6IibvqLQsYruCttZNRd87uNNGz76m/3G
-	pXa7xdPRrQbXuCvdCDmIDKaNcRhosZAJ8npgj4+Muu2KkQBv6ZSH76tc
-X-Gm-Gg: ASbGncuLgeki+vlAO+sIr/gqJcRYGWIlWOCgD8Oba3TFbGKorzVGuM8C3afliW9UXyw
-	02HDYRgUB4OOEZLetAgv0XSkDCxywQmJoLwLXLNc9jIOg2RcZQbBwgf/t6sqELyupM4vE7nqIWi
-	5Gy8WhLuDeiRnR3zaRlbhPJPWpVNKIJhGu2wyPf7aw1TdyFYHYi+bCLcZSLvfj/sBld1Z8XLOI9
-	7GTuGvxMPNwH8AF16fhRZxFi4g6aXf++lRfbPKMHDsgBv2w8yYQU1AWws2TlV3YzF9vwAWyNYEc
-	/sJRVH20lS9rNMNueAAWwJEWvuxQVa9N1kf5ieZiZrg+Zm5wYMJc1Cqghu3ygFubWKOAaHhbBG3
-	Jn1AbAv7JVZXPyD5q8z4ArwNVBX9gBJMatCVRAA==
-X-Google-Smtp-Source: AGHT+IHOm5E5n5/eosJq9rms83dcFdFn/P3DLwwoHZM0y28NgDn2gfVi53nnJUGbx+tJVt3J/h+Qfw==
-X-Received: by 2002:a05:6000:4282:b0:3a5:783f:5296 with SMTP id ffacd0b85a97d-3a6d13339f6mr9849472f8f.56.1750669767760;
-        Mon, 23 Jun 2025 02:09:27 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6d0f1057esm9046286f8f.10.2025.06.23.02.09.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jun 2025 02:09:27 -0700 (PDT)
-Message-ID: <c787a41c-97c6-437f-aae0-52132c79db7c@gmail.com>
-Date: Mon, 23 Jun 2025 10:09:25 +0100
+        d=1e100.net; s=20230601; t=1750670344; x=1751275144;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nWlDjmdbKqse2BsEQ9v8zL84ldfZcFzi5P90jbLt9wE=;
+        b=dbBcxK3au4rNT/5nisoE9HIbhk8tZRg3mDLhmZd3EzKgmfOEF1vhhCKolZypMINAWO
+         DaMwMxDk8F9CpQnpKrYLz6c4nTigawC/4/8Q0iSWIi/tB8OkvsvS4tB2AkO/1VoGzagA
+         HtaNCh35T8ctHuHOlmAeSniSXZxV2VvaPx+5rW3elz3VbrrntPAJWLODa6mYzBc/EXxk
+         SSQWYaX2Xy1zM3qjMi1VvG9gwahutVe1oyx0zshxEF1ALSHHfHerUKW8lV24WDjrNIqx
+         gKA7TJ8e2p/9A8wmN4nP3OJgnLCQoIM2NQHOa1vCSVCTrHaLZvVeejz/pMr4W08F3210
+         MGHA==
+X-Forwarded-Encrypted: i=1; AJvYcCXf58kPV7qbMepkSYZBMiba0g3V0q2WE/Uk3yYn1hAueq9qPnDjyZtwTtbAiQQ63dyWD/g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzV8UpIgMc2X6vyf7wBTySQ2SRBf8yHs+h+1M3S2XSkgJ1eO4rC
+	M6q5+MS8fow9UbGlY6HSmZLkDLNoMswWkvFFDXUgCgg+kl7oyVCBqr+NMtCX7RVwhBHnpEL71It
+	ehoxk5B2XUJMSrRidbAZgAw2yAv4jMvI=
+X-Gm-Gg: ASbGncvZbwzb6pMJAtVouzzVKvHckVYaCIYLVaEkFwESVrIEmImEolrskc1tTu0QOYD
+	Bt+09EK3TWXkRqGnuZ7gKYiUSyQFY7f+RnZxB9Y1b6cbLLwJfaY+syZDEFtCbExQzWsiHoLwZW0
+	AZjPEyKynXyCYOL//vaxy7ZZIooFcrx7rMaPeM4S1UDHNwUAhq/Ug=
+X-Google-Smtp-Source: AGHT+IHYFhQuMFUuhpv3AGBJYPKJmsKSiZvd7Sevf3GLYiONVlcQ++JErEUPnpkPqJTd4U0z5+v2Mi4VKv77BAcgFtc=
+X-Received: by 2002:a05:6102:4b02:b0:4e7:e4fe:ac74 with SMTP id
+ ada2fe7eead31-4e9c2812f49mr6879475137.0.1750670344605; Mon, 23 Jun 2025
+ 02:19:04 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 23 Jun 2025 02:19:01 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq4iwa0xzz.fsf@gitster.g>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com> <20250619225751.99699-2-lucasseikioshiro@gmail.com>
+ <CAOLa=ZSgFYXEwdTyAfC2TSgVqpCSq6D1NDBwPU9cY-unX0Jx6Q@mail.gmail.com> <xmqq4iwa0xzz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v19 00/10] imap-send: make it usable again and add
- OAuth2.0 support
-To: Junio C Hamano <gitster@pobox.com>, Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- Zi Yao <ziyao@disroot.org>, "brian m . carlson"
- <sandals@crustytoothpaste.net>, Jeff King <peff@peff.net>,
- Ben Knoble <ben.knoble@gmail.com>
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597F9CAD0DA83152E651194B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqh60a4dk6.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqh60a4dk6.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Date: Mon, 23 Jun 2025 02:19:01 -0700
+X-Gm-Features: Ac12FXzBIu_Nw9PbrfMfk_GfHXEqSrypwCSsShb_iBJ3kCnhnQk9JG_iaM7CP6E
+Message-ID: <CAOLa=ZSewCtgRnuLV1GPfLccFqcnNac1AT6vG8ghOquNqXsoZQ@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, ps@pks.im, 
+	ben.knoble@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000026967063839b4e8"
 
-On 20/06/2025 16:50, Junio C Hamano wrote:
-> Aditya Garg <gargaditya08@live.com> writes:
-> 
->> v19: - Use xstrfmt() for OAuth2 strings and strbuf for PLAIN.
+--000000000000026967063839b4e8
+Content-Type: text/plain; charset="UTF-8"
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>>>  .gitignore          |  1 +
+>>>  Makefile            |  1 +
+>>>  builtin.h           |  1 +
+>>>  builtin/repo-info.c | 21 +++++++++++++++++++++
+>>>  git.c               |  1 +
+>>>  meson.build         |  1 +
+>>>  6 files changed, 26 insertions(+)
+>>>  create mode 100644 builtin/repo-info.c
+>>>
 >>
->> Aditya Garg (10):
->>    imap-send: fix bug causing cfg->folder being set to NULL
->>    imap-send: fix memory leak in case auth_cram_md5 fails
->>    imap-send: gracefully fail if CRAM-MD5 authentication is requested
->>      without OpenSSL
->>    imap-send: add support for OAuth2.0 authentication
->>    imap-send: add PLAIN authentication method to OpenSSL
->>    imap-send: enable specifying the folder using the command line
->>    imap-send: add ability to list the available folders
->>    imap-send: display port alongwith host when git credential is invoked
->>    imap-send: display the destination mailbox when sending a message
->>    imap-send: fix minor mistakes in the logs
->>
->>   Documentation/config/imap.adoc   |  11 +-
->>   Documentation/git-imap-send.adoc |  68 +++++-
->>   imap-send.c                      | 405 ++++++++++++++++++++++++++-----
->>   3 files changed, 407 insertions(+), 77 deletions(-)
-> 
-> Looking good.  Will replace.
-> 
-> Should we declare victory and mark the topic for 'next' now?
+>> Something I mentioned in the previous review, but hasn't been addressed
+>> is the addition of documentation for the new command. With each patch
+>> modifying the command, it would be also nice to add the respective
+>> documentation.
+>
+> Bsdies, the lack of Documentation/repo-info.adoc causes "make check-docs"
+> fail.
 
-I think so, the range diff looks good. I've not reviewed each patch but 
-I just had a quick scan of
+More so the reason, I didn't know the target also checks for missing
+documentation. That is great!
 
-     git diff origin/master origin/seen imap-send.c
+--000000000000026967063839b4e8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 3f129cc361bccd0a_0.1
 
-and it looked reasonable.
-
-Best Wishes
-
-Phillip
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oWkhBUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMDZnQy85T3h6T05FWGh2R3NCYnorOTcybWJRbCszcgpROXFhK3RqQlJI
+ZDhVWmlCb0N3VGJEY1RqbFZabWdQMm51dEtmdUV6NE9kOGdWM0VxWFdIeFhwUTMyelJQRUZBCjVo
+MmhUVDE4eXJSdkNERnJKTGw2L2RWVXhZam1TV1FWODVhNFpKbkRoOFJNV0hRRXJhUzA5Y0N2WVFy
+R3RMVGUKNHhNd1FLZUZHbmdFMTFkN1FGZjBpR09XakJwL1dEV24xRHZjSVNvWjdSSktmL0xJamU4
+ZnB6a25CemF2UXU5WQpiUmRBbmxocVk2WXBIS25JejNPeUszMENWYU5Rb0hQTnRydkZaYWpnQWM0
+b2tZeHNPemFxZnFNeDhIL0d2Z0gzCjJ0NHFFL1lac1lLUHJHQnA2eENzZVd3MHFlZGNxVE0xTWpG
+Z1haMTA2My9PTHBjT2gzUnd3ci9qN3RWWmVBTnAKdnkzQ0FsczhISHRhaFplMkY4ejZueThBZ3NJ
+RnpuZlM3bURORUQ0R25rVUdRSWwydGlRbXZOaXQzT0VXb3VINwpmcjA3bThUeHRNY0xkQXNJRjJX
+alkvL2dMSGh2WmtsaDVzdmlLNnAzY3RkNXJmNU5KTGI0Z1p3OVlCZHAwdHUyClJHT25tS251M3F1
+czdYWnJxZ2ppcGZoSmNpM0xSVFhUbGhaWXdGVT0KPVRTdTAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000026967063839b4e8--
