@@ -1,72 +1,72 @@
-Received: from mail-ot1-f54.google.com (mail-ot1-f54.google.com [209.85.210.54])
+Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600E6248F7E
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 19:43:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E312D12F4
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 20:04:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750707815; cv=none; b=UMqeh/YQhBecpN6P+/i6aCPjFuKcoDzpHVnq3c3zcDVRlfB9cl+AmRxhakf7Y1BejIcU/3E95FBxro02nyRjbujPSTOCJhoMlbwMZFvbD5OAGXZw4v+WyS//58SFNjsPwvX6qzfOulELi7yReIu+ZMDZQtFDWhsuwSg8iazCD1Q=
+	t=1750709075; cv=none; b=sCf4Zgn1yGWY4ByELspVqmmjzP4q09ecDTeMtPGA9OhXf4BOTbP9jx/SWLMK1nS3SERq95NWX3Br6P7YNNCBVulyfAPgDCOkk4oGAaQ7gp6DvYggOPZ76yKI5i0wL/VD45p2r5pa4nh8j6nqtOyzSrOsPCZLv4NNXubU1cXRMQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750707815; c=relaxed/simple;
-	bh=c9gqOpxcSDm3CD3QZ4H7SDwCAzXjxAjpf+Wnv/bsjaM=;
+	s=arc-20240116; t=1750709075; c=relaxed/simple;
+	bh=5vcCjQjUBuzaz6CEZAlvWVDYfkp82yJEKlmzrOlO76k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=daT6DKvNSM66ozgPSNlSwiLYr+QANVEzHYr4E+M/GZZlLWNrYlgpxSvixY8t3MmhqxFF6txPEIUuPsCyXdqwhfRiWQ6t0swUuJkYNVYb1r1edlInii+d+zu4An+2QBdt/sQX1x2NeTmK4n1H6TfE3BPZcGtKYMlm90IDHc8A4VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TaS0N7tj; arc=none smtp.client-ip=209.85.210.54
+	 Content-Type:Content-Disposition:In-Reply-To; b=fmJFQwt/93A6jJjHwAs77mvHjfZYydiO+kAuE4/P8Nx96hdB7eUvBreStVDoZ4Z2J+et8FDffDiuQTULCcvuyVfWb92iuYNkke3yVDad1pBg5On28ddcLPFB2kRRuRtNk0AvppM68aEwFkmv7Zad01rIHXG3wpZxVmtQ3Bj2QdE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jH9I74hH; arc=none smtp.client-ip=209.85.160.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TaS0N7tj"
-Received: by mail-ot1-f54.google.com with SMTP id 46e09a7af769-735a6faec9eso3132018a34.3
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 12:43:32 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jH9I74hH"
+Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2e9071e3706so2733899fac.0
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 13:04:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750707811; x=1751312611; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750709073; x=1751313873; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8+6Mnr6mHrKrA+bfkpsJ8HrxvN/21x82SMFJf5FOhqM=;
-        b=TaS0N7tjxI1E5cObEcx5Zj74k81/dwMJIjz0QtQU8jHp+ltuFbuVXcpHiUFORA8HNL
-         2VlBzM1WtHErtp9uJ+KtvadKwbu4Ile5HsbrmGHcA3ToE3JMkjpCR5FV9igy7WrNI0sp
-         QWbXKbm6SglubD8mXg91SgSOH/fkKbAvOGTzoAvH4loJpcPlQa5Gq1s7D7wmkpvieBfA
-         qV7gJxxrEnzea5mQUiXWi/Ob3A7yM6lNDAd5gnezJX11czjEVw1d0QyT901Lbz7hgX2K
-         QZRhhh2yAVADxbXrDEKFBOjI3XqPqjza/+UtW+o7RZryLN6Mw4O7XBryYK80Jb6CFSko
-         WCbA==
+        bh=PVzgBVflIzOrHq0xjZP/itHSuLcUkamS6znm8Xvbbxk=;
+        b=jH9I74hHVStEyRt1w83nGigjs8KozVhCnwj5ii9GzybIpfbveCpXJ2UE1i2LSkqANv
+         vMwk1etA6w4y0NPZtahtAwW0zT5g0kf6GUaH2qhv3FK+hnSVqU+uWPYNcbezUTgDKbus
+         UvTb8Xc+ioum9XrSKulr+H57mbI/0/SDyWumWRvn4yMN7zW4oyIyo79g2Pnk5ET5Utik
+         lvcgbJ+9HeYPW3BvSrbwVrTudCqNUzg5vBnEq4JeFww2KOF6wiucfo3DEHTt1+ZfzNTy
+         cKdvhZQfHUVtIxeIhxdhNoqA8ETpOwIjTiPKpOsVaUPDD+Dv0X+5UtKwckK7cjVbogmQ
+         GJXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750707811; x=1751312611;
+        d=1e100.net; s=20230601; t=1750709073; x=1751313873;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8+6Mnr6mHrKrA+bfkpsJ8HrxvN/21x82SMFJf5FOhqM=;
-        b=fUBbYceTStwvM1lvqrEY+Q85ZLP+7ebm2m0posfLsGE+7/+/8Qy3D/lbk73c45j5XZ
-         F2Otviyzn9GpBbM+htEcGK/FxqCGauO8s9tN9aUccBaDJpKefY7AzVyRAzBqBDZI7Zbr
-         iPvYEmvmZ2yc9+leRw82a6V4eUBhqckza2b/Tdq2JMRI1SKPfz98/SAc3h9cEjgT4Iq9
-         stkzmAcbRd9H0P12LFXY4N86koXv9QU6KLvU+AsQO0Y3bG1cwYmdoLCETqMFKDeptewi
-         xfmwvIYkIRFbYK1RH6dW9EbW5oSmjIAe3GSFjPbO7BX+ybCKPjxe6kHtRY+VoF+9hcJs
-         hMKw==
-X-Gm-Message-State: AOJu0Yx6yTDnx6Sm73pnAsBAH9ntRVEyA0DgEvn4mRpSmJPiGNG0NxKY
-	OJ/8tfAmDHeacmocZ/FiRt87ZBsEexzrDWi67FHh+ifKaEaGEeVag/6EyLych10F
-X-Gm-Gg: ASbGncvCEVFJnJ6EFw1at8MGaxVKV9Z3q8qlrzR+pkNgS9ogdlJE+Yc13t5lrBb97tq
-	5TpRwZt2u40ZvUBQGNpWmS7g3XbsshgEpdvkVv333nyyTJbC/FDrKWiNmkbrJE/CDc/jQ3jkDYA
-	arTPllvGb8GKwZzwxiCyja/QJhDy073tEA6ZAVuafwK/B508r2V9EFQaryhLwqvt9Lw+ubGs8PI
-	lBHJLypdqA6iq1H5w67yQhxoeKipOdWclLNazfulpHIhKQykOjNidl9MWLWAsd8djZLKGG49fKq
-	bboGqosZLEMZKIc6SkqBxO7Ci8s3tuLoFJs/M+d0nCGkEmAh9WXZ1oc=
-X-Google-Smtp-Source: AGHT+IHgn7kH16kdXMWMP89ZMhJQq8rwMJlnKItasPGok5OXBosnN0YZc9AkhO45PxHgImCGyeT77g==
-X-Received: by 2002:a05:6830:43a8:b0:72b:823c:8f66 with SMTP id 46e09a7af769-73a91c75512mr10076842a34.9.1750707811075;
-        Mon, 23 Jun 2025 12:43:31 -0700 (PDT)
+        bh=PVzgBVflIzOrHq0xjZP/itHSuLcUkamS6znm8Xvbbxk=;
+        b=JiU9XMwVZF4hj9zYr6qYKShbQCGHVouPAs709HD+jLKmkjHC260E7F0FC3N0KFwOi1
+         qIBVng8uqNEAvbIrFY8JQ+U7xXeeWfWPcxxSVZmVgg4w2MwxZe7G35tGmXbPgtc9Q9As
+         f9GKbCvcMKzilFfJpMYhVhxFn+kcNgTRP5lQijZ317stmr3W59uPhboz39tzVRA3dRjr
+         gtHY/BiKYC06SYfRxnDySUQtWLwxBiUr1leMqkHylFxoUzbFLEAWmJzxFs5DkSbV8bvx
+         2wER2+sXNCyM5os7VZimcShgr6Rr5j4jjyCvxRsBBAPEeKQadL8PFew2g6xEw70XVRa6
+         U1Lw==
+X-Gm-Message-State: AOJu0YwkZQsZUzARDGLSPU7vBwlzZ2hrY4LgaTlb+TvhleO6/SJ0wpuu
+	a+Z8SuvtDQu5mkHfdCnm4QDXW2poEXma7uqf2GXbyNRtKEzwwXHKIM0E
+X-Gm-Gg: ASbGncv0vm09ZbZ6jc74WEmOF0XZalpS45d7jRBc+VeBiyHkvNLywaxDZ+ryC8Kexdg
+	Nli4gZGRCm7HRSRQL5pdCP/4mjQc/o0FuyTd2nyoFQGEcU5lf7zfrmLjBwxDS+oxhz8v0ntZVWl
+	l/m0glPZh4kB1915Znoc2UC7fl2cHUpwES4EkkprNN3UpFkSfccT7BmHy7dTd3jo57LjDJsTal/
+	+nzeZm/P5zXNo2togXeoduaklj0Z2XZD9j/c09ygUKIk9n4lAQXHxf6QL1WP/k3w0g9ZqKotoEP
+	Gh8SKfMxGtaZp93yDOPUonxEKfMw+/Z16igKT7u7EZf+AEHjEi0zbw4=
+X-Google-Smtp-Source: AGHT+IHI/eZGEQp6Ma2DtHQdyThmh3bUeiUqufm8x10OGfj7aETaPEta4gIWE7P/X89OK/W9XJDbPg==
+X-Received: by 2002:a05:6870:1615:b0:2eb:b6a2:8d77 with SMTP id 586e51a60fabf-2eeee586c38mr10305682fac.29.1750709073142;
+        Mon, 23 Jun 2025 13:04:33 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73a9cb5d071sm1238110a34.31.2025.06.23.12.43.30
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2eead8dc454sm1739559fac.42.2025.06.23.13.04.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 12:43:30 -0700 (PDT)
-Date: Mon, 23 Jun 2025 14:38:15 -0500
+        Mon, 23 Jun 2025 13:04:32 -0700 (PDT)
+Date: Mon, 23 Jun 2025 14:59:17 -0500
 From: Justin Tobler <jltobler@gmail.com>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
 	Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
 	Karthik Nayak <karthik.188@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 1/5] promisor-remote: refactor to get rid of 'struct
- strvec'
-Message-ID: <2z3uanklsfnrgxmiqjt2innv2diownbpwtgcj67bi7udwjdqpg@ackusinuz7c6>
+Subject: Re: [PATCH v4 2/5] promisor-remote: allow a server to advertise more
+ fields
+Message-ID: <ojee3heqvvlk3v4ftuzaulm5vu7tvmc5idvqbda2ioiuurbmdw@sevh7jtsbbad>
 References: <20250519141259.3061550-1-christian.couder@gmail.com>
  <20250611134506.2975856-1-christian.couder@gmail.com>
- <20250611134506.2975856-2-christian.couder@gmail.com>
+ <20250611134506.2975856-3-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,278 +75,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250611134506.2975856-2-christian.couder@gmail.com>
+In-Reply-To: <20250611134506.2975856-3-christian.couder@gmail.com>
 
 On 25/06/11 03:45PM, Christian Couder wrote:
-> In a following commit, we will use the new 'promisor-remote' protocol
-> capability introduced by d460267613 (Add 'promisor-remote' capability
-> to protocol v2, 2025-02-18) to pass and process more information
-> about promisor remotes than just their name and url.
+> For now the "promisor-remote" protocol capability can only pass "name"
+> and "url" information from a server to a client in the form
+> "name=<remote_name>,url=<remote_url>".
 > 
-> For that purpose, we will need to store information about other
-> fields, especially information that might or might not be available
-> for different promisor remotes. Unfortunately using 'struct strvec',
-> as we currently do, to store information about the promisor remotes
-> with one 'struct strvec' for each field like "name" or "url" does not
-> scale easily in that case.
+> Let's make it possible to pass more information by introducing a new
+> "promisor.sendFields" configuration variable. This variable should
+> contain a comma or space separated list of field names that will be
+> looked up in the configuration of the remote on the server to find the
+> values that will be passed to the client.
 > 
-> Let's refactor this and introduce a new 'struct promisor_info'.
+> Only a set of predefined fields are allowed. The only fields in this
+> set are "partialCloneFilter" and "token". The "partialCloneFilter"
+> field specifies the filter definition used by the promisor remote,
+> and the "token" field can provide an authentication credential for
+> accessing it.
 > 
-> It will only store promisor remote information in its members. For now
-> it has only a 'name' member for the promisor remote name and an 'url'
-> member for its URL. We will use use a 'struct string_list' to store
-
-s/use use/use/
-
-> the instances of 'struct promisor_info'. For each 'item' in the
-> string_list, 'item->string' will point to the promisor remote name and
-> 'item->util' will point to the corresponding 'struct promisor_info'
-> instance.
+> For example, if "promisor.sendFields" is set to "partialCloneFilter",
+> and the server has the "remote.<name>.partialCloneFilter" config
+> variable set to a value for a remote, then that value will be passed
+> in the form "partialCloneFilter=<value>" after the "name" and "url"
+> fields.
 > 
-> Explicit members are used within 'struct promisor_info' for type
-> safety and clarity regarding the specific information being handled,
-> rather than a generic key-value store. We want to specify and document
-> each field and its content, so adding new members to the struct as
-> more fields are supported is fine.
+> A following commit will allow the client to use the information to
+> decide if it accepts the remote or not. For now the client doesn't do
+> anything with the additional information it receives.
 > 
 > Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 > ---
->  promisor-remote.c | 111 +++++++++++++++++++++++++++++-----------------
->  1 file changed, 70 insertions(+), 41 deletions(-)
-> 
-> diff --git a/promisor-remote.c b/promisor-remote.c
-> index 9d058586df..90a063ea53 100644
-> --- a/promisor-remote.c
-> +++ b/promisor-remote.c
-> @@ -314,9 +314,35 @@ static int allow_unsanitized(char ch)
->  	return ch > 32 && ch < 127;
->  }
->  
-> -static void promisor_info_vecs(struct repository *repo,
-> -			       struct strvec *names,
-> -			       struct strvec *urls)
-> +/*
-> + * Struct for promisor remotes involved in the "promisor-remote"
-> + * protocol capability.
-> + *
-> + * Except for "name", each <member> in this struct and its <value>
-> + * should correspond (either on the client side or on the server side)
-> + * to a "remote.<name>.<member>" config variable set to <value> where
-> + * "<name>" is a promisor remote name.
-> + */
-> +struct promisor_info {
-> +	const char *name;
-> +	const char *url;
-> +};
-
-Ok so now all promisor info for a given remote is stored in its own
-struct. This will enable easier extension in the future to add
-additional fields.
-
-> +
-> +static void promisor_info_list_clear(struct string_list *list)
+[snip]
+> +static char *fields_from_config(struct string_list *fields_list, const char *config_key)
 > +{
-> +	for (size_t i = 0; i < list->nr; i++) {
-> +		struct promisor_info *p = list->items[i].util;
-> +		free((char *)p->name);
-> +		free((char *)p->url);
+> +	char *fields = NULL;
+> +
+> +	if (!git_config_get_string(config_key, &fields) && *fields) {
+> +		string_list_split_in_place(fields_list, fields, ", ", -1);
+> +		string_list_remove_empty_items(fields_list, 0);
+
+Ok, in this version we now filter out empty entries from the
+string_list. Previously if fields were specified with both a comma and
+SP character (i.e. "partialCloneFilter, token"), an empty entry would be
+parsed in the middle and lead to a warning message.
+
+This change is good because it would be pretty natural for a user to
+specify the config with both. It might be nice to leave a comment
+explaining why we do this though as it may be confusing without context.
+
+-Justin
+
+> +		filter_string_list(fields_list, 0, is_valid_field, (void *)config_key);
 > +	}
-> +	string_list_clear(list, 1);
+> +
+> +	return fields;
 > +}
 > +
-> +/*
-> + * Populate 'list' with promisor remote information from the config.
-> + * The 'util' pointer of each list item will hold a 'struct promisor_info'.
-> + */
-> +static void promisor_config_info_list(struct repository *repo, struct string_list *list)
->  {
->  	struct promisor_remote *r;
->  
-> @@ -328,8 +354,14 @@ static void promisor_info_vecs(struct repository *repo,
->  
->  		/* Only add remotes with a non empty URL */
->  		if (!git_config_get_string_tmp(url_key, &url) && *url) {
-> -			strvec_push(names, r->name);
-> -			strvec_push(urls, url);
-> +			struct promisor_info *new_info = xcalloc(1, sizeof(*new_info));
-> +			struct string_list_item *item;
-> +
-> +			new_info->name = xstrdup(r->name);
-> +			new_info->url = xstrdup(url);
-> +
-> +			item = string_list_append(list, new_info->name);
-> +			item->util = new_info;
->  		}
-
-In this version, each remote is now stored as a member of a `struct
-string_list` instead of a custom collection type specific to promisor
-remote info. Nice
-
->  		free(url_key);
-> @@ -340,47 +372,36 @@ char *promisor_remote_info(struct repository *repo)
->  {
->  	struct strbuf sb = STRBUF_INIT;
->  	int advertise_promisors = 0;
-> -	struct strvec names = STRVEC_INIT;
-> -	struct strvec urls = STRVEC_INIT;
-> +	struct string_list config_info = STRING_LIST_INIT_NODUP;
-
-nit: Ok in this context, "config_info" is specific to the list of
-promisor_info not just generic git configuration. Something like
-"promisor_info_list" would be a bit more explicit, but I don't feel
-super strongly.
-
-> +	struct string_list_item *item;
->  
->  	git_config_get_bool("promisor.advertise", &advertise_promisors);
->  
->  	if (!advertise_promisors)
->  		return NULL;
->  
-> -	promisor_info_vecs(repo, &names, &urls);
-> +	promisor_config_info_list(repo, &config_info);
->  
-> -	if (!names.nr)
-> +	if (!config_info.nr)
->  		return NULL;
->  
-> -	for (size_t i = 0; i < names.nr; i++) {
-> -		if (i)
-> +	for_each_string_list_item(item, &config_info) {
-> +		struct promisor_info *p = item->util;
-> +
-> +		if (item != config_info.items)
->  			strbuf_addch(&sb, ';');
-
-Out of curiousity, is it invalid for the trailing promisor remote entry
-to end with a ';'? It would be simpler if each entry could just end with
-a semi-colon.
-
-> +
->  		strbuf_addstr(&sb, "name=");
-> -		strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitized);
-> +		strbuf_addstr_urlencode(&sb, p->name, allow_unsanitized);
->  		strbuf_addstr(&sb, ",url=");
-> -		strbuf_addstr_urlencode(&sb, urls.v[i], allow_unsanitized);
-> +		strbuf_addstr_urlencode(&sb, p->url, allow_unsanitized);
->  	}
->  
-> -	strvec_clear(&names);
-> -	strvec_clear(&urls);
-> +	promisor_info_list_clear(&config_info);
->  
->  	return strbuf_detach(&sb, NULL);
->  }
->  
-> -/*
-> - * Find first index of 'nicks' where there is 'nick'. 'nick' is
-> - * compared case sensitively to the strings in 'nicks'. If not found
-> - * 'nicks->nr' is returned.
-> - */
-> -static size_t remote_nick_find(struct strvec *nicks, const char *nick)
-> -{
-> -	for (size_t i = 0; i < nicks->nr; i++)
-> -		if (!strcmp(nicks->v[i], nick))
-> -			return i;
-> -	return nicks->nr;
-> -}
-> -
->  enum accept_promisor {
->  	ACCEPT_NONE = 0,
->  	ACCEPT_KNOWN_URL,
-> @@ -390,19 +411,23 @@ enum accept_promisor {
->  
->  static int should_accept_remote(enum accept_promisor accept,
->  				const char *remote_name, const char *remote_url,
-> -				struct strvec *names, struct strvec *urls)
-> +				struct string_list *config_info)
->  {
-> -	size_t i;
-> +	struct promisor_info *p;
-> +	struct string_list_item *item;
->  
->  	if (accept == ACCEPT_ALL)
->  		return 1;
->  
-> -	i = remote_nick_find(names, remote_name);
-> +	/* Get config info for that promisor remote */
-> +	item = string_list_lookup(config_info, remote_name);
->  
-> -	if (i >= names->nr)
-> +	if (!item)
->  		/* We don't know about that remote */
->  		return 0;
->  
-> +	p = item->util;
-> +
->  	if (accept == ACCEPT_KNOWN_NAME)
->  		return 1;
->  
-> @@ -414,11 +439,15 @@ static int should_accept_remote(enum accept_promisor accept,
->  		return 0;
->  	}
->  
-> -	if (!strcmp(urls->v[i], remote_url))
-> +	if (!p->url)
-> +		BUG("bad config_info (invalid URL) for remote '%s'",
-> +		    remote_name);
-
-Ok just to clarify, it is invalid for a promisor remote to not have a
-URL specified. If so, it might be better to say "empty URL" or something
-along those lines.
-
-> +
-> +	if (!strcmp(p->url, remote_url))
->  		return 1;
->  
->  	warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
-> -		remote_name, urls->v[i], remote_url);
-> +		remote_name, p->url, remote_url);
->  
->  	return 0;
->  }
-> @@ -430,8 +459,7 @@ static void filter_promisor_remote(struct repository *repo,
->  	struct strbuf **remotes;
->  	const char *accept_str;
->  	enum accept_promisor accept = ACCEPT_NONE;
-> -	struct strvec names = STRVEC_INIT;
-> -	struct strvec urls = STRVEC_INIT;
-> +	struct string_list config_info = STRING_LIST_INIT_NODUP;
->  
->  	if (!git_config_get_string_tmp("promisor.acceptfromserver", &accept_str)) {
->  		if (!*accept_str || !strcasecmp("None", accept_str))
-> @@ -450,8 +478,10 @@ static void filter_promisor_remote(struct repository *repo,
->  	if (accept == ACCEPT_NONE)
->  		return;
->  
-> -	if (accept != ACCEPT_ALL)
-> -		promisor_info_vecs(repo, &names, &urls);
-> +	if (accept != ACCEPT_ALL) {
-> +		promisor_config_info_list(repo, &config_info);
-> +		string_list_sort(&config_info);
-> +	}
->  
->  	/* Parse remote info received */
->  
-> @@ -482,7 +512,7 @@ static void filter_promisor_remote(struct repository *repo,
->  		if (remote_url)
->  			decoded_url = url_percent_decode(remote_url);
->  
-> -		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, &names, &urls))
-> +		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, &config_info))
->  			strvec_push(accepted, decoded_name);
->  
->  		strbuf_list_free(elems);
-> @@ -490,8 +520,7 @@ static void filter_promisor_remote(struct repository *repo,
->  		free(decoded_url);
->  	}
->  
-> -	strvec_clear(&names);
-> -	strvec_clear(&urls);
-> +	promisor_info_list_clear(&config_info);
->  	strbuf_list_free(remotes);
->  }
->  
-> -- 
-> 2.50.0.rc2.5.ge8efe62b7f
-> 
