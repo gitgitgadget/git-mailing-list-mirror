@@ -1,116 +1,163 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3326D4C74
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:08:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8284A22A4F1
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:17:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750720113; cv=none; b=Lhg36G/RaJWuDfYLVVz4Kv9ASIcn0SNGUEhAW/4q9JX1I7iKksEpwFow6AB2rPJWCs+Lqo8QF7xybPm71qRgKEOooiCNB20hnnS0e7CpgrwhYtI8Cr7kMWrJJcwdvttUYvhJub5beXvX+LTb02R3nudfhMU/k0LomkubJ1qGbq4=
+	t=1750720624; cv=none; b=cXBjg5fS5KYXdXI1UjZKCqkPNbWbpggbNFkiifVm2ffYUqllgeMk2vXft5P7qjxCxOiOpnGJ84B7/uVMfT0TGVZjdsxKoI6jSzjuSTV476rpwtiuJViHH2PaBpcHMhtT/7ilRdfrCeFhIH+dB9hzyTrNd5RLTo90Mng/5sK/MzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750720113; c=relaxed/simple;
-	bh=4Wr4NsuMojV+NB59L1f2aEaAqv92CKlAb3xqQl0K0Kg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gBakFYXkJonU+cOnaiWURQVGe/awuY7Z34ZXo4EOAyopvucp6kKUfQSm8w7ky+8EjyFqxdhfb4ltrW1c2EJcWg+C5l97xhMsTW4khZjryee0lKXZELLvZKgtVbSvcxqXL7IqQ85NLoxB8O4W16Trecv4m2lPYKIRUDuXnqmpmE4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YdNMyxEh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ior4ov4F; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750720624; c=relaxed/simple;
+	bh=LfvLd6THqQVQHJ5W0jXIzAzGfARWYIc2WBs7D88SyvA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=oRL5VTTaptmrWU+M2ZislIuaUnUjUoMOqrNxjFbuuhl2VU3TzvzGD2IxYPBKUvisZGNVwfoEpfVWGBKmXOJMD+zSmHZJvEIVoULww0ccLn5iBsPVzneDA47tjBAmkOsJGJRglu+lV/lQ/9fxFN49VlbHi43z6vHRYShRqd0dlDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=m0K5qFcX; arc=none smtp.client-ip=192.198.163.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YdNMyxEh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ior4ov4F"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 15B6E11401B4;
-	Mon, 23 Jun 2025 19:08:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 23 Jun 2025 19:08:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750720111; x=1750806511; bh=L1gsV8triD
-	jPHKxj4kgwpdzfOEmCyppzXpDbj6cGR9U=; b=YdNMyxEhriVPtRWSSoRBOZJiK9
-	jE3jt2J5till86JmNa6fVnfbg0sa2Nfvh4tUQyuryj8bd6MFwwiqsJrOeLDSnm9p
-	0TduDcv96+leM9/SUqqkLntlEHWYukV7k1LPZOJqW01qlLXOxmaligCQG5ZIl3Mx
-	zhz8mzbRSx+APdrqLv0ugteliY3DnT4kI7aUG3RGhHqG5d1DcvbGbwXVXCwc5S9B
-	5meBXPhHrVB2dswoFUf76f4qKwXJ6RXLOO84ZZkDLfgCKkMoHOEV+AdHUXbPDOIy
-	bsc4l1pez5b27aJPZnDRtzv+CYp/luhErM3QJijSQAQG/Q+utwnIYZzj/LCg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750720111; x=1750806511; bh=L1gsV8triDjPHKxj4kgwpdzfOEmCyppzXpD
-	bj6cGR9U=; b=ior4ov4FV8N/pCdcPOR1467KSeBGEsjRYssbv2yRaOVIAvfA7mo
-	b4eKEWRF/TKWhm8fXAEPYeGEZ/KB6wDTmpeOKyjTgPBba2ezJ0TVmQ/YXHNcCS29
-	xKHD0UXSK3zqznXmdw5p27aDoTJa9uK340rOehSivPGDDchR0h882Ve9F35CPlz8
-	/XOR8EHZvo0VO1E/gCXr9Kr1B4v85n+2Vi36C9VBGxu3/1NA0jeo1AxW4EW4h5+F
-	fwfcf0umBpExdMQU99lnbgGPxCALL56TdAfioTr9jkFRo8yeW69pALDOUX1jv7E3
-	rUlxi92g/AYkG3uexlXdvQ8kKP6MvIQSLzA==
-X-ME-Sender: <xms:bt5ZaK2UkAM1UbpPObFXF87aFFq9D32o0xQChbgmXua-Uja_sX4eMA>
-    <xme:bt5ZaNHXlMdDU30rOp20D4rw6wjQpixhnABARzANuDocNkuAWVLuu6PWSoxvo2KEG
-    0u65E_q1ugnNMPNAA>
-X-ME-Received: <xmr:bt5ZaC4CUt6p0BuBoPs7vl0hm3kEtwU1V4gnQzF2WOLl8uDfa8Tr5-eHBj3DZccBckuu5QvCJTmh-860GdVq1vrUi_lTltmi78oglTw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddukeeftdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:bt5ZaL2tK4I8s9J1ibulw_iGuuQjMcvplyQT7mBv77TJ-XA75wEi5g>
-    <xmx:bt5ZaNGLMPe99WyqVw38PFOuid89QzSo_dv20nD0yzVjFgNaaYcOEQ>
-    <xmx:bt5ZaE_q24Cigb51lNuUycwMToJjzi9jidxrShriQrt6dEGYnXx_ag>
-    <xmx:bt5ZaClPl2frHA9Qr100R-WjPXHbFYh1DAnz5DOq_INJHIBKgidJZw>
-    <xmx:b95ZaCJJL_a5GH85kusK4Wi2djx_5PNUTnOcEGigLNbV85Yd2LnF4oGc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Jun 2025 19:08:30 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v6 5/9] pack-objects: perform name-hash traversal for
- unpacked objects
-In-Reply-To: <6b0149a32d300268d4ad870c7cb6597a95e0410b.1750717921.git.me@ttaylorr.com>
-	(Taylor Blau's message of "Mon, 23 Jun 2025 18:32:21 -0400")
-References: <cover.1744413969.git.me@ttaylorr.com>
-	<cover.1750717921.git.me@ttaylorr.com>
-	<6b0149a32d300268d4ad870c7cb6597a95e0410b.1750717921.git.me@ttaylorr.com>
-Date: Mon, 23 Jun 2025 16:08:29 -0700
-Message-ID: <xmqqikkm3vki.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="m0K5qFcX"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1750720623; x=1782256623;
+  h=from:subject:date:message-id:mime-version:
+   content-transfer-encoding:to:cc;
+  bh=LfvLd6THqQVQHJ5W0jXIzAzGfARWYIc2WBs7D88SyvA=;
+  b=m0K5qFcX8ki+fUCr/jNhW9JSWOwQsEK3Br7dCiuxKWXHSBa3nP7qjHJg
+   I9T3LyVusS+tantKXX+4A1s5HgJcsdDRQQmxP+Tf40y0SbnQTlKrWnxbc
+   22oYhQ0Yh5rFBmLP7fhQU9v1Ix1gfgnvk1ABqqUNGwSXRCUY8Bg+uJXAM
+   6rkMAMNo02BwPkYX8Th58Yiv7COW+lGNXHz0a4Z5a6FaiLlTKRLpl1Ytn
+   w7IWspt6BzsXxXegLfVLwxzl6ZPqqaiiF5Q2jgm0VU9svaZXSimD2vUCa
+   mgR+2upgDIbpv1iO4SvYPm+eQYHakGSDCSgR0TNmRgiWuUq7AKCsmDllr
+   g==;
+X-CSE-ConnectionGUID: 4ywCUUt3S6uv9KPLyv9R3w==
+X-CSE-MsgGUID: e9hEHWP6QbChEJNQdXM7/w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53084549"
+X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
+   d="scan'208";a="53084549"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:41 -0700
+X-CSE-ConnectionGUID: PHiBeuV0ShOEELgMsQyTtg==
+X-CSE-MsgGUID: jHHvYmugRnSmDN4o/X08Gw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
+   d="scan'208";a="151888457"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:41 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Subject: [PATCH v4 0/7] submodule: improve remote lookup logic
+Date: Mon, 23 Jun 2025 16:11:28 -0700
+Message-Id: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIACDfWWgC/43OTQ6CMBCG4auQrh0zbYGKK+9hXEA7QJW/tEI0h
+ LtbWKkL4/KdxfPNzDw5S54do5k5mqy3fRci3kVM13lXEVgTmgkUCaYc4XoDPxZtb8aGoKZmIAe
+ jJxhdA5QkRmqpsjIvWRAGR6V9bPr5Erq2/t675zY28fX6nztxQEgNjzVPMKaMn6o2t81e9y1b3
+ Um8W+q3JYKFsS4KRMmVMt+WfLcOvy0ZLKVTLEWqMqE+/lqW5QWx/BOhXgEAAA==
+X-Change-ID: 20250610-jk-submodule-helper-use-url-e55d3c379faf
+To: git@vger.kernel.org
+Cc: Jacob Keller <jacob.keller@gmail.com>, 
+ Lidong Yan <yldhome2d2@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-Taylor Blau <me@ttaylorr.com> writes:
+This series improves the git submodule remote lookup logic implemented in
+submodule--helper.
 
-> Now that the 'rev_info' struct is declared outside of
-> `read_packs_list_from_stdin()`, we can pass it to
-> `add_objects_in_unpacked_packs()` and add any loose objects as tips to
-> the above-mentioned traversal, in theory producing slightly tighter
-> packs as a result.
+A few cleanups are done first:
 
-So the idea is to pretend any and all loose commits as if they are
-at the tip of branches?  By doing so, we ensure each of the tree and
-blob objects contained in them has a reasonable path-from-the-root?
+* Remove the branch->merge_name array and replace it by directly using
+  branch->merge[i]->src immediately. This is simpler and easier to reason
+  about. While cleaning this up, also fix the issues with branch_release()
+  not tearing down everything properly.
 
-> @@ -4325,6 +4326,10 @@ static int add_loose_object(const struct object_id *oid, const char *path,
->  	} else {
->  		add_object_entry(oid, type, "", 0);
->  	}
-> +
-> +	if (revs && type == OBJ_COMMIT)
-> +		add_pending_oid(revs, NULL, oid, 0);
-> +
->  	return 0;
->  }
+* remote_clear() failed to release the remote->push and remote->fetch
+  refspec data. Fix this.
 
-OK.
+* The starts_with_dot(_dot)_slash helper functions are moved to dir.h for
+  re-use, as these are used both within submodule--helper.c and
+  submodule-config.c
+
+* Several remote.c helper functions are refactored to take repository
+  pointers, enabling use with a submodule repository pointer.
+
+Next, the submodule--helper.c logic replaces the repo_get_default_remote()
+function with a repo_default_remote() function in remote.c, which is based
+on the more robust configuration reading logic. This helper uses similar
+logic but also allows returning the only valid remote in the case where a
+repository has exactly one remote. This way we do not fall back to "origin"
+if a user has renamed the remote without adding another.
+
+This improved logic is a good first step, but won't handle cases where
+there are multiple remotes, with none of them being named "origin".
+
+For the final improvement, notice that the parent project already stores
+the URL for the submodule in its .git/config or .gitmodules file. This URL
+is what we use to set the remote in the first place when cloning.
+
+Add a repo_remote_from_url() helper which will iterate through the remotes
+and find the first remote with that URL. Use this in
+get_default_remote_submodule() to first try and find a remote by its URL.
+If unsuccessful, we still keep the original fallback logic, in the off
+chance that the user has changed the URL from within the submodule.
+
+This method is more robust as it is less likely that the user has manually
+changed the submodule URL within the submodule but not also within the
+.git/config.
+
+With this change, all commands which need the submodule remote will first
+look up by URL before trying to use the fallback logic, and should now be
+able to find a suitable remote regardless of now they are renamed.
+
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+Changes in v4:
+- Fix branch_has_merge_config to use branch->set_merge
+- FREE_AND_NULL branch->merge in merge_clear()
+- Link to v3: https://lore.kernel.org/r/20250618-jk-submodule-helper-use-url-v3-0-7c60f2679271@gmail.com
+
+Changes in v3:
+- Completely remove branch->merge_name, making the resulting logic much
+  easier to understand.
+- Link to v2: https://lore.kernel.org/r/20250617-jk-submodule-helper-use-url-v2-0-04cbb003177d@gmail.com
+
+Changes in v2:
+- Remove repo_get_default_remote() entirely. The extra checks it does are
+  really only necessary if you're doing manual configuration lookup. This
+  avoids the confusion of similarly named functions and is less code.
+- Fix leaks in branch_release() and remote_clear().
+- Add a forward declaration of struct repository.
+- Verified tests pass with leak sanitizer now.
+- Link to v1: https://lore.kernel.org/r/20250610-jk-submodule-helper-use-url-v1-0-6d14c1504e91@gmail.com
+
+---
+Jacob Keller (7):
+      remote: remove branch->merge_name and fix branch_release()
+      remote: fix tear down of struct remote
+      dir: move starts_with_dot(_dot)_slash to dir.h
+      remote: remove the_repository from some functions
+      submodule--helper: improve logic for fallback remote name
+      submodule: move get_default_remote_submodule()
+      submodule: look up remotes by URL first
+
+ dir.h                       |  23 +++++++
+ remote.h                    |   8 ++-
+ branch.c                    |   4 +-
+ builtin/pull.c              |   2 +-
+ builtin/submodule--helper.c | 106 ++++++++++++-------------------
+ remote.c                    | 149 ++++++++++++++++++++++++++++----------------
+ submodule-config.c          |  12 ----
+ t/t7406-submodule-update.sh |  61 ++++++++++++++++++
+ 8 files changed, 230 insertions(+), 135 deletions(-)
+---
+base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
+change-id: 20250610-jk-submodule-helper-use-url-e55d3c379faf
+
+Best regards,
+-- 
+Jacob Keller <jacob.keller@gmail.com>
+
