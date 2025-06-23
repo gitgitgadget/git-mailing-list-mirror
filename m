@@ -1,43 +1,43 @@
 Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C35A33E1
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 03:28:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 038094C83
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 03:34:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750649319; cv=none; b=mjY25Clx8CHrUUYpclSk4PgIEoIe59LM1lbthXVl5peBnilQxCiP7XRmzlV6nAqwX7G9EikYVAaaXE/T4SEomZ1yOI5hYD6zf1FZCkmxiJRBSTqR8MeBktlBf6XRPWUMecAq/2YRVWosZDdC+HIvB8WC2SQGOTtx2wknyya1mo8=
+	t=1750649682; cv=none; b=KPYS/P0XWVS3hFO07i4RFM9BRVG8WMsOCsHfj4bQQk85tgoMGoGF1hMhgMqoOiM/6w4ZaocAH/iZ4BwnZbQikH+galdr7lmzTHRCt4QkeZwKe2nieTCd8r+rozcGAMabxfeME/OdpmDyA2aFmJ+S95Arlu4jCP+AQ2zgiiUULWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750649319; c=relaxed/simple;
-	bh=5PqZ89eZEMP4U9PcjXi0kzmfQyqkUB4GMcv/v7KPRoI=;
+	s=arc-20240116; t=1750649682; c=relaxed/simple;
+	bh=Dl2UlC9V2LZSQ1XIbJIXRtjEPBp3THf/YlWHVTz1SX0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p0uzPWrowr7MpT0TIVV4ONTjwEllCIvQB5YemYIZGk51K5F132Y/cbYnqGXsIxykAeUGCxwsNwOSRso37NAO025PpaB5fjguVb0/OHAH5F8H/68rh0tv8ZQbBS0iysann5HCoDFYzMEf2iqq3u+9eugjUiHQ/HfpFH/+erd+yhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=Jcb3dUfs; arc=none smtp.client-ip=185.226.149.38
+	 MIME-Version:Content-Type; b=CaZq01UNeE0E2D4QVWI9+SrJKKBvHKXw40TGnCKLshWGMRd5mt2cJDYpGVL+MS9M9hf/TM4RxkA68ycyTOXi9MA3+AmjfnA7DRfUZ+gryyETqRRHd7E4az8JPqykxqBL5l4wqfmJf6WCTEI3OqfrbrUn0tHHO5fnNAJk/r9PmLg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=EdXOKlKL; arc=none smtp.client-ip=185.226.149.38
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="Jcb3dUfs"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="EdXOKlKL"
+Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
 	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 	(Exim 4.93)
 	(envelope-from <maxim@guixotic.coop>)
-	id 1uTXrC-007Jv7-L4
-	for git@vger.kernel.org; Mon, 23 Jun 2025 05:28:30 +0200
+	id 1uTXx3-007KRN-Om
+	for git@vger.kernel.org; Mon, 23 Jun 2025 05:34:33 +0200
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
 	References:In-Reply-To:Subject:Cc:To:From;
-	bh=V1lZDUj17p8fdGcWjvkX+PZy7EN11k0ScGmaEx/MaAA=; b=Jcb3dUfsKmQWuPzpxxZXX6fGBy
-	mFunP1uCsgTzslcanyr6sJqOc/SSrFb8U2sMWUIjSoScgZ+dvnXjM5bys8Y0LQaz+Y25EAXmxwzZX
-	JZLXEpbZCYsXyJUkA7wcxPRPEnMSNTe1d+ooOBh6TIlWNFESkt0i3FCZE+ZP7e9oBIwljkkXLppdQ
-	SHWu+W24J5rpvepLB3iOe3meK7pwLiTC5duulKz3R4Ojpgryb++QjIYwRtYClKwJG6u+fp7nR8mZZ
-	8OIe4OsX/5d+ULKOeBMYKY6e4jgjXrFGbbdmzboeesH3XYetfDiErUPuyFMAnukUiWxnghZZ6des6
-	F4jzNrDg==;
-Received: from [10.9.9.72] (helo=submission01.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	bh=b1ZoSPzaRGoOdAX0tDQWPaFJoCcCZE+3KOTYfw+QEfk=; b=EdXOKlKL0uQcACJLuQME1A7gh1
+	DuknGZJydImzokyCIiji3Qhc2Tz9bcJCz+KFmHvY5u+j6wN0S+ZLLZaWG9bVi77NjhFR2HTKSAqNS
+	a6LPtdq8spCn2ZIYqMMD6nHIlEgZTZGCg06ti9c40VwlOmCfjPWrp0tBtaArWmcTURgTDQWGza0RZ
+	Z+/x132NZ/rxsP8YPkQa+eOFTuEz96VN/wDAANy6ngQoWKodjfdjI8Zm8Dx889eEEmlCpqlAWvBXT
+	DlaklZKInzR1HAePSSTnTuq3yqwCXZZ6E8hvZ66gp/q/pCVt25HG80OCUPUBdIhzczuLl0w2K0J4+
+	UUpuj0WA==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
 	(envelope-from <maxim@guixotic.coop>)
-	id 1uTXrC-0003UL-6g; Mon, 23 Jun 2025 05:28:30 +0200
-Received: by submission01.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
+	id 1uTXx3-0000SI-Cv; Mon, 23 Jun 2025 05:34:33 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
 	(Exim 4.93)
-	id 1uTXr1-005V0a-V0; Mon, 23 Jun 2025 05:28:20 +0200
+	id 1uTXwr-007xw7-8E; Mon, 23 Jun 2025 05:34:21 +0200
 From: Maxim Cournoyer <maxim@guixotic.coop>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
@@ -47,9 +47,9 @@ In-Reply-To: <xmqqmsa27cdn.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
 Organization: Guixotic
 References: <20250620041239.27839-1-maxim@guixotic.coop>
 	<xmqqmsa27cdn.fsf@gitster.g>
-Date: Mon, 23 Jun 2025 12:28:16 +0900
-Message-ID: <874iw7f86n.fsf@terra.mail-host-address-is-not-set>
 User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Mon, 23 Jun 2025 12:34:17 +0900
+Message-ID: <871prbf7wm.fsf@terra.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -140,11 +140,11 @@ general, and the generate-perl.sh substitution will work still.
 
 Looking at /etc/services on my system, I see hyphens, indeed, e.g.:
 're-mail-ck'.  That's now handled by the `is_port' predicate, which uses
-the libc `getservbyname' call to determine if a non-numeric port is a
+the getservbyname(3) call to determine if a non-numeric port is a
 valid service/symbolic port name.
 
-I've sent a v2 revision which hopefully includes all of the above
-suggestion/changes.
+I've sent a v2 revision which hopefully addresses all of the above
+suggestions/changes.
 
 -- 
 Maxim
