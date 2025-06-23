@@ -1,132 +1,104 @@
-Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f51.google.com (mail-lf1-f51.google.com [209.85.167.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1B4424BBFD
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 14:09:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=96.47.72.81
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750687782; cv=pass; b=QumRVMSN4Vq7GGxuONWZXVkZrDEKZaGPgpKOSSZvxj2O+XkMKV3GyBLdN6cg9Qdl3/mchqLpg92xf0EHvRkCcc66PB9HSGsIg4/HCDNal7chIpue0doBlGC4f4i0URPkypz5wSkEfivXvnvKB012Ov53tBEeGKYbQ4+RqHno6y0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750687782; c=relaxed/simple;
-	bh=VtZW/PbBjbnUECXgd1+NHw4Bnm4mKZm9ik6gatjKXQA=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=rt0dRWOVe6cM8VwJ01GE7nD4sYLvkLJEK7Q8y+6DdRy1AmMBC9WOecyjp25rNNYG4HYs9ws9bUBLJA8WHYGe0ANzS0d/swHHqsvi02a6174hziqg2zsWdfgRg8q6UJkbPfgOj3TxIOVWQo8lzClkemamqbyIXJvt+oncju79Fjg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org; spf=pass smtp.mailfrom=FreeBSD.org; dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b=BQOkyvd9; arc=pass smtp.client-ip=96.47.72.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=FreeBSD.org
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D4028AAE1
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 15:23:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1750692211; cv=none; b=bimybQAOYLZogY5/4R9QBhqvoIg1V+HsVUVFhsr38J+EvB3unf4bMx9rnGcUAVPJOItyOskincGCUAcJwVliwAijlK0flXcI5g+uttzWDsE33Q4QGpLD38UgeT6++QNX83aKd75ytY/kna8GEO0LEypQtkoWzFg+QRrbBe6+XIU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1750692211; c=relaxed/simple;
+	bh=rCBX5oG5qoY8lvdiQZxd7dPM7ROIoZF8nJ2+Yna7Vj0=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=b99AvxZZDAdsPgi6Fkx8J51whvnrBVXePB+ZkWRn3KHj1jtQ+ypz4nLMAxs/N8Mz7aRwwgjZh4MBdhkKstt6c+cZjEvqK7wXn4dTQyaRvnzLOmZHNMeY0R99y399AJuxyv7WgHZ29olkz4WN4E6OINY02db8yu1fdZ2n05FEMG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l82K4hdo; arc=none smtp.client-ip=209.85.167.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b="BQOkyvd9"
-Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits)
-	 client-signature RSA-PSS (4096 bits))
-	(Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
-	by mx2.freebsd.org (Postfix) with ESMTPS id 4bQqhf4X96z3t8J
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 14:09:38 +0000 (UTC)
-	(envelope-from garga@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [IPv6:2610:1c1:1:606c::24b:4])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
-	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
-	(Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
-	by mx1.freebsd.org (Postfix) with ESMTPS id 4bQqhf2sPjz3NdM
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 14:09:38 +0000 (UTC)
-	(envelope-from garga@FreeBSD.org)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
-	t=1750687778;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
-	bh=Yy3BWW9qviq23iYkqfpGsQWY4+YNBYYT0gqeyRGcxQc=;
-	b=BQOkyvd9oKd5BnXim/c2wO7X24O2JFlNiLC1oR1ygh31Aq4OohLDcpKhhP3xRq375972pB
-	YZH2Kref8e/4uJcDPOQXRfcqYe9dYCh8DUq+SqJkv91C8rI/3PvBW+p2uQ2X5mCE5F0ObG
-	tFOhslYvcmypnK/h4tT0EvKSoi6wer5woKE3Lu7aNR1RE/HCdIQ4g3ytgutLSzOksl+o//
-	enzcQROGBsyHGFh3FhacDMMwdG1JXtGeayvMv8fsd7McSTCV5ysvvxnYQm0BkZsL9YX6hk
-	FzOvHk5dARqnApl41Z4UpxwoRnCvHUeYy+MFRv9fgcGoVkZh4sCdkxc9cVZ93g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
-	s=dkim; t=1750687778;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:autocrypt:autocrypt;
-	bh=Yy3BWW9qviq23iYkqfpGsQWY4+YNBYYT0gqeyRGcxQc=;
-	b=gsBMBHG8DwBc0FsyRuVQWQ+phyr3PS0F2+ql2lD81lc1lNRLSDHI1Jx6Ej+C/NvsOGMQDp
-	u1j7dDTUjLD2cRS4mlpiqlOc+coIGwrIDBs5hGUGtOUPwWnPRnPg3hVrfQCcYEYGr49fMd
-	vnGmoFKf9AVbt2RsNQgBPa5aPpHPoUTdphQWz/+NMDbGbZ3WoY5UxxQ9mlMGXY8CiZ93Bv
-	gH3gErOdYh6a7dov/fHe133eWbx35hSiZgmKNJbg7vKeEC/3ydNRvT0LO8R3YZWpauD/R3
-	W/1bzLvs5lJLMSpUQ+QiWQQattXUuIrj6OQvEMFYVjqC0tPJuFwXLACUy3ZyGQ==
-ARC-Authentication-Results: i=1;
-	mx1.freebsd.org;
-	none
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1750687778; a=rsa-sha256; cv=none;
-	b=MqlIoTfi7X5Z4KJZ2fnFt9xrpgxSdjmztm3BNNBFCcEJf5FVeJRRDuQ/SXRtTGzS54MKT+
-	kVhUKm/LUXO+aBLqAAYIk9kMQsGCi03a1ZFER1SRkizr6GhAlgVr/lDX+VPxTdaOHYtpry
-	0u+lDFaSu76N6R+qkjsXFm6iW1n6LlcDHJBC0XJx2eQvHXkRTGxx7bzcEb7G5xdVRqqT68
-	zmr0O3v+icxg4Z0qrfZR9vFOeFnMCjsJQiZDXSm5VCeHBl7tPjSRoBFGgaqLe3ybBo21XV
-	greQUKZw02ll4qS9nDSGqyMiHeSyTWIw89sRa+GMix+BAuhpGoCX6cjdfQzDLQ==
-Received: from [IPV6:2804:f1c:851:ac01:244c:3dc8:fa2:a066] (unknown [IPv6:2804:f1c:851:ac01:244c:3dc8:fa2:a066])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: garga)
-	by smtp.freebsd.org (Postfix) with ESMTPSA id 4bQqhf0Flzz1CQx
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 14:09:37 +0000 (UTC)
-	(envelope-from garga@FreeBSD.org)
-Message-ID: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
-Date: Mon, 23 Jun 2025 11:09:35 -0300
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l82K4hdo"
+Received: by mail-lf1-f51.google.com with SMTP id 2adb3069b0e04-551efd86048so4295416e87.3
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 08:23:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750692208; x=1751297008; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=VdeB7g4ZeMzJ68O55zq0iGjkJhqvnwwFNTdz169kr0I=;
+        b=l82K4hdokCBD/ykINmyeECJpaxzQw+43xaNqERcnK1pvmH3XCkMci91X9GfP+gqAdt
+         cmwk1PYBbGYoCgqCvdWJmOKhsnM1PqrcHgEWYiiq4fU1Qp2dodebv80DYyTtwl58aHID
+         bhlNmfb3Y/WKxF31jgf9PyjQwFtxDCwDwM1puhOvz4O9wCaTiMOhKIX1/O2NfksuKHaP
+         aeuyqsNvKF8s44+HarkUfMlrSQBaOdPXb8S5087FPvJMAnCjjrskOkrL5hGSUy7hp/pi
+         mBFwNYHYlcjS+VuL2pf9rzqtsx9agazsGdBaLiR59oQpJxdueYfRqoxmDhtrVH8kw+9E
+         LGtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750692208; x=1751297008;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=VdeB7g4ZeMzJ68O55zq0iGjkJhqvnwwFNTdz169kr0I=;
+        b=iA1RHqOvsnva0Mu1ZlFvwkc6zUUKKNMpTeba+RKV6NGpHe7hxDBgLWn0XV6+tGAVaO
+         MnJ00zm9eEUEHEBcgdOMQ26vvaJGUUzCtYKIXqh3K7qKoTdM3Ze3ZNWnqLvxpzWmWKer
+         8Jj2c9g8Xy87dnG8LCTtAvaygxq/QnkZH2NyLxCBc85VLHUNz9lrHopyJ+m/QNVCriMR
+         JQ4Cgi4g5HyOSyDhq5bwC4oqgsYoUZK0huuE3+3v4T5D/5eFweT/F3O9TmXsI/cHqdap
+         BpfFgsg0htd6rMj8Nq9Tog8qDhjsO88HOYlAMPJSw9MQL2wHYmad8DHGm4VJvF4JO7Fk
+         Yd9g==
+X-Gm-Message-State: AOJu0YzwcVCgFr12img1/rovmlbdRcPTDkPVZjgEJeQqkecY4hdP83vf
+	WOqp6sZwe2S5iXc0+pApfHi6v5c9UIq8pI93c2mTTAoeFH0fEkPE6KW/3PrkvVN+7XE=
+X-Gm-Gg: ASbGncu5ijAKlIWN+Vs61lJ7meqtokRBqbCvEJ5uXyXVUizLWB+ntOXamPH4Tzv0iTj
+	sg7KJXGwKJBRDBYA+ars+0L8fiP8QJAV1NJLjaHJfcte2Qg+o3yWq4tV9J7cg+lOSwxDCy8N9/x
+	IFbg/o2MQPlDtyxbQHs9Fn1dvUDl5eloBuk+YjxOsGtmw4NA0LDpMplg4RQbn41HsI9W4NTQuDU
+	vdMhRONQqHq+FG8EuiyLvPQvnn239oCYy53G+spRcb6jSYuP+xUt6AlYzOTTGFyxDe9rWf8PI7g
+	cKrulFQjBKCZH6E0jGdcZFsHk7h7mpAVXFzLrLHfcPdVtU5g+n2Kp0ZpS7abaU3+mRoVFVpOG1E
+	tm1KIvMqQpNi9gCNRc8CHJzE6slOS
+X-Google-Smtp-Source: AGHT+IFvjdulHJiWZ7iQLYkP+XqHpq9LyLGp1+GdOZQJ3ozw+FdonjHCVWeaQVfNGDzA21FD+olncA==
+X-Received: by 2002:a05:6512:108d:b0:553:37da:2bad with SMTP id 2adb3069b0e04-553e3d0b69cmr3306570e87.38.1750692207826;
+        Mon, 23 Jun 2025 08:23:27 -0700 (PDT)
+Received: from ?IPV6:2a02:2168:869f:a400:d234:c3a:b39d:e0d? ([2a02:2168:869f:a400:d234:c3a:b39d:e0d])
+        by smtp.gmail.com with ESMTPSA id 2adb3069b0e04-553e41473desm1438836e87.36.2025.06.23.08.23.27
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jun 2025 08:23:27 -0700 (PDT)
+Message-ID: <ce1ad61e-f0cd-44d9-9b0c-4b7a5f941fd9@gmail.com>
+Date: Mon, 23 Jun 2025 18:23:19 +0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+User-Agent: Mozilla Thunderbird Beta
 To: git@vger.kernel.org
 Content-Language: en-US
-From: Renato Botelho <garga@FreeBSD.org>
-Subject: Bug: build is broken on FreeBSD if libsysinfo is installed
-Autocrypt: addr=garga@FreeBSD.org; keydata=
- xsBNBGStavwBCACjNlp/9+Y+VFe9ieR2h/WWbdvjz4Mb2z/f22bGoaskzCfvVNbo/v3i34I9
- H6OdgZkGqheQEAD2jNfRbmPr4z40xDMUpYGLds+1Mvg7G3Hms3j5Ef8KaLSWUNWIfwKdfSVR
- Qs35ccSJxAdRW5YdI6J3xZgika+3Bc4eJ05YE/nWW+PNTYevt5rqD50N3zybVYIcLoqVPpBi
- AZE/sf5SLiLACIJb1t/s4x+pi8vgWevxVVT9u8V1f8zYErmHSLSqjxii0B3eRZphX9NCJOv9
- +tfFZhnENInhn9gT7H4e2YumUltEy3jacONHJF3CC1pvvWEa6lEyypclMOkHQwNON7DLABEB
- AAHNLFJlbmF0byBCb3RlbGhvIChGcmVlQlNEKSA8Z2FyZ2FARnJlZUJTRC5vcmc+wsCXBBMB
- CgBBAhsDBQkFo5qABQsJCAcDBRUKCQgLBRYDAgEAAh4FAheAFiEERL7Dxegbnh7xTiQ5Ob6P
- xxJcZXoFAmSta78CGQEACgkQOb6PxxJcZXrYlggAgaZmr6c1yIWzN8VksHrHpwt/uxONEP+h
- ljy3yfrMsgfS5wx5Uzgfih1xYZUFC6jiI63CetqBqJpp3g1klRS1UWYKx2NeXphDMYZEdPm/
- a6sXh4bKZbk6IE8Yn0/YiRT57d9DtbvswC7Gn7Igj/MSbhl49TvTGyvuB6juaffVoYZViomx
- 5zMoee8Ml2o2qj3MrCJ+/K8GU54RlpOGqGRsqdwVdr9XEWub6fF2YFwR46cjmbiU3P5urFHH
- nkJlBGPIwKxHimTW0lZsdx9aCKRDd/D80/WOEzXmk3k8B9lv/GsvOluHmveLhJG1R1tIJ31I
- f2q8dfTvqsQXnu8CcWRcgc7ATQRkrWr8AQgA1DufoxScA+CWQbUR6zExIu8wXQKrhuRt4DG2
- BgynT7EMUvEBadcbQRZXsBpemNfncc9Axyut/+rWiyKJf9BLQuo/9QYmSRvW1U6+0LJUYmdg
- kMyBeYaPk+vnssv/u9jLuvV7FVgyE0yk1iaWIKOVDD+XrQCOvGw9uSceBrQyCyo3A/eRM/+p
- vnDCaywR63PKE+3axk6lfNdGK3TnaWmS30/ZDCZlNsXuqprqR4JdT5wXids5o36dsuJ5EZ20
- s5hNMD34s4Yr1Y1R9elH6qBsFCpozs0+jwrArxq+UJJCR6hH5W8ZEwJtRC8tzR8mRE1WywzX
- BXYj0YhfGztQIxZckQARAQABwsB8BBgBCgAmFiEERL7Dxegbnh7xTiQ5Ob6PxxJcZXoFAmSt
- avwCGwwFCQWjmoAACgkQOb6PxxJcZXr1vgf/SKXhoZcUU5I7TqcbHg0lJz9tICTupCGHWr/s
- SQgjh9oEM5j1wqW7FlCGP90Tl9K0g3ow9YdbhU7VK470o6pymX9V9eLHzGgkZO/KMEtGBeK1
- u+5ePjCJ/MK5B21KODLSU7WrIL1VN5ceXfQPLYt02LMLtPri+oduHD6RNBeA7US1DUzleq5F
- 9NHGbvV2U7BdDUezpiO8NaFjFZVB11I5d99FxUM5XGVstI3VhsRKZxjY0KnqJzaQgTFsPGmv
- AUfZVIN1pXgXiedhPXpr8+Y64jP+pHVwpVmh1zYWL6+q3kqFOUVP6c5iiMeoEXZvgJz7x/AC
- ek3X5gvu8Hpcv+MZIg==
+From: Andrey Butirsky <butirsky@gmail.com>
+Subject: bug: Can't clone from "grafted" bundle: fatal: remote did not send
+ all necessary objects
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-FreeBSD has a libsysinfo package which contains GNU libc's sysinfo port. 
-  Some users reported git 2.50.0 was failing to build when this port is 
-installed and it happened because configure script detected libsysinfo 
-but -lsysinfo was not added to LDFLAGS, ending up with following error:
+Hi,
 
-scalar.o common-main.o libgit.a xdiff/lib.a reftable/libreftable.a 
-libgit.a -lz -pthread
-ld: error: undefined symbol: sysinfo
+while I can clone from the "grafted" repo directly, I can't do the same 
+if I make a bundle first and try to clone from it.
 
-This patch [1] was added to git port adding a user option to 
-enable/disable libsysinfo dependency and fix LDFLAGS when it's enabled.
+To reproduce:
 
-I'm not sure about what is best approach for git project in this case.
+- prepare some shallow source repo, e.g.:
+$ git clone --depth=1 <repo_URL> <repo>
 
-[1] 
-https://github.com/freebsd/freebsd-ports/blob/main/devel/git/files/patch-configure.ac
--- 
-Renato Botelho
+- make sure it can be cloned fine directly:
+$ git clone <repo> test_clone
+
+- now create a bundle from the shallow source repo:
+cd <repo>
+$ git bundle create test_bundle --all
+
+- try to clone the bundle - the error is produced:
+$ git clone test_bundle bundle_clone_test
+Receiving objects: 100% (183/183), 61.94 KiB | 6.19 MiB/s, done.
+Resolving deltas: 100% (91/91), done.
+error: Could not read 3541f044006078ac02f6a587ae87f682359efec0
+fatal: Failed to traverse parents of commit 
+47f57af427b311c96e964b7ffc0500dc0aa64c4f
+fatal: remote did not send all necessary objects
+
+The commit 47f57af427b311c96e964b7ffc0500dc0aa64c4f is grafted.
 
