@@ -1,94 +1,207 @@
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D112D3A72
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE9FF1684A4
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:03:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750701603; cv=none; b=NPe85rcixi9/FaGmAWrV2cVBAuXUngsYM53iJSeIwXUAlWhqnXH6kdaab3HCSaSn9PFztgrtCmt1LgogxgAA5xwIed5dcESw85rh3JpH6NbfzlwzDQUiTe9HFfUVc4jhXVSvOA9PDkxyo2uaeooxXAZB+ds3N29QXqctuTJSoUA=
+	t=1750701809; cv=none; b=hlhrds4/oRqorZd55/EbhNYPHc8IEKRXK9tZuqRD+GJBWfWmXcb05wkS81kvbwiiNoHzGqASWvOmKEWTT/0gKcNNt9Nw7wDg5bZOl1RzTFnXlYsJwCyi9SNscwln+hsL6yB9/nW2srdOmUwCKgc4X31/e4knmB/65BtxPXx/soE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750701603; c=relaxed/simple;
-	bh=KQwe0/QLQ5ZueE8S6zk7ebk1CkxAlLTUAJrAj4qnNio=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Q/Ly7vman0NRM/XQQJrrFNYkpn415YC/VRQQVlKDPUNdgxB9unSw6BdxvxEIEsqVSN+k3K2emTcp15ZSQ03odaHMxLsGAnDSOZdPCbiQgwACn905PsDxQKRDCl3AOfeB5N2UkWiaVz9NsD7aKaWovdzqgsPKCr1yAQD4uzXfpN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7caeeef9629so47787285a.3
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 11:00:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750701600; x=1751306400;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LgEjGZoJZrqa2rHMKv7rQMrpVJEHtN2HB9iBeiXW3Lc=;
-        b=UVMA7h4S2phhhdC/aAdbA9LfmVAa9nS8JqX8oc0KMKvTwB1peYsTr5EkfXyTybtqtl
-         meBu2ZxVd/izKQ8w4e+R0fJd/cI7x9I/510f+Qd959iW55YZ+hBU559peDDOmq1nv7M5
-         QVwyog2j+G1HOwopFjvlba8NvzdCxXodXV/wLvdFsf38WRbwn1yCbYwA4Z6lLNddAFp5
-         rUTyezjOtnI3HLs/x8XgMM9W73Ijue46sD6CtpBVeO7fA3h2PugGXRXlgQUPY6yb6e0e
-         0yVF9JFFdmVGcZiirB7t1jFcJQMQ1CekfuRRKED6pM3NOSw2TkvHEOKlQZ08RB1I8zzY
-         bdRQ==
-X-Gm-Message-State: AOJu0Yy7S8ARjK13OHycP6+uwWe3iUKrr5EpZ17cK/zVSrGBSX4ond11
-	wwHJ5C9LgIzAXt8xJRud0wkBHFEFFnZaQKXrRAXvm9VXQCtjw/a6lUZBuhXcx9Dk3ytRPHeAYJL
-	7+wlLdmRIrGXGDq6snvB+ajADCEFQ8YUulA==
-X-Gm-Gg: ASbGncsWugK251+QOIvQFzRAKNIyahj3f2CCUc+GgviJY/aI3FjDSzyoHsjAJ6seoMT
-	+rAf+nZRn+ZGXguwnyUaAD8N1nPrBl1QbATO0V/oDYfcS130uxQWa7GzkZ1jAExKKh8uD8JxPJl
-	TNlUKpMPDItj2QvL3H2o2S+Y8cSjzc58O/sRImvJeqql0Q5F0OtA2z94kAUJ3eGDY3kcXYHjosC
-	3Qf
-X-Google-Smtp-Source: AGHT+IFjyZd2zg0K4rr05GcOjJ8XP+FTI2flyZLLlAsjOB5WDA82V/50F5/krNo5HbbBm7/DzrAuL5QOa785kqsWLYo=
-X-Received: by 2002:a05:620a:7089:b0:7d3:c69e:267 with SMTP id
- af79cd13be357-7d3f9923fbfmr720083085a.12.1750701599654; Mon, 23 Jun 2025
- 10:59:59 -0700 (PDT)
+	s=arc-20240116; t=1750701809; c=relaxed/simple;
+	bh=NO2aagszONwWoaqQzIGdqExdV9O18uUXaRpF+VmFXXY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Gi24xVKAW9tef8FT2w26v/O5/pHfC8jiScZTv8L6SGKJCRtXNZ3ozkLmG1FaQZi4IopgmILDWE0XJDzZ8I8+lJtB4lxyxN2zpAtGVI+22MZi6MJcGwBg2iccmSFbFK46KUVi6Toxe67P5HptcOHhnEJ2BhUZpwXxdcWXbLEUz9Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=xB+FYC2F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lyhHLZR7; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="xB+FYC2F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lyhHLZR7"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id D25A813807CA;
+	Mon, 23 Jun 2025 14:03:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-10.internal (MEProxy); Mon, 23 Jun 2025 14:03:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750701805; x=1750788205; bh=jwL0c67c9m
+	UAa3vtQ2M+hYiAeFDAAlPrGGIb5FFBWX4=; b=xB+FYC2Fp2TvHmzbEWae+ITayk
+	+7YORsr9friS4WhIWDyEj1YSRwVb0J+0ZBjHtu+gbzqpUOf/tKF6b00auQ0t+E5N
+	B6IjnLPiz4nz7cWg2Ltl2diyPDsCjO08QifpMkFy2xrdYLq1lJ2gcog9MHy+/ybC
+	+FKqMl1w7I10IPa68IecoUvt597a1de+7a5CdsadvhPQee2i1tivlK9xqLwmkWEz
+	tvC3CqTfi4lM5VaBHlDncYVHZFnt0NJkMseOnYHZWYL2KDO6V493sD8QpZZqvLgs
+	qxhmPNvUlgUb7HfCAb/1H3accgBtik1o4kQLpxDEXZVSIh/2sttEbFVz1VVg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750701805; x=1750788205; bh=jwL0c67c9mUAa3vtQ2M+hYiAeFDAAlPrGGI
+	b5FFBWX4=; b=lyhHLZR7CcvwAEFIZEESDCeBDxJCDKXCmOdrIcLBVjnNMHsCE/6
+	m8l+RMQrsvCHsInYGM8fwnm9BDz3YWkixbG1C1zfBy/3p4t+uq0pj0miiLEZWDxl
+	hsdmHRirKhV3Xwv+N0B2tXPazjL0X371Mj0T4P3u41fT7SK7ziSGhpqDyAzlIn+O
+	SF5vqwRa0UZ3FlHDbzqSWa2N+n5TsB02ZN6Rkm48O6pMbOO538GJkCjOo6u7EDKN
+	H2kZyWUbWRpQRTNRfgQW7RgN3pU427DxYILRl+YSRnUg/DovvqZzZxzpBDIgPl44
+	s2laYYU35XaemiiNlsZuMRQimVhLjOT389Q==
+X-ME-Sender: <xms:7ZZZaJYi1iM65aL_p_BlsUIRpKMoNSJJF2PCJ2pGXhhiVq0Q_F7K-Q>
+    <xme:7ZZZaAaafeMZDcOOQ6QnKURVfb5d4cCAaP2Oe1JS6zYc0AcK6RFvAZBEPfDVtbLpq
+    _aKJHwVC91avsFwjQ>
+X-ME-Received: <xmr:7ZZZaL9QxN0RNbILYHrg0LIPL1DK70J6dNzOSJM5hLcOSyksRqmLRrqLtgZxYpwRq2TzU_LKp3QGUxXLtqIxlTxe46vXOjfKNitd9n0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeeilecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmrgigihhmsehguhhigihothhitgdrtghoohhppdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7ZZZaHpnGSRavEKHDxz_XA4KLxxoUtp5pP73uJbc-CzDCnuZczxliA>
+    <xmx:7ZZZaEpvhJ6LAKVNOzJYcyoytkxgz-8YJBwPjphEVZvJnZYck3-anA>
+    <xmx:7ZZZaNR6fr-wBQZE3RT_jyiIjYS9nlItMnM5IxhnmvwxUmssDuILiQ>
+    <xmx:7ZZZaMpVQrGocqnVa-KI_CkS2KhlWPv8Ar2pOCEqdIpRHptojXvHiw>
+    <xmx:7ZZZaABwOzC0IzlY20233KBAigBbpX6q7btiZecDh_MrKngtIpSYSZqu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Jun 2025 14:03:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Maxim Cournoyer <maxim@guixotic.coop>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 3/3] contrib: better support symbolic port names in
+ git-credential-netrc
+In-Reply-To: <20250622152535.11837-4-maxim@guixotic.coop> (Maxim Cournoyer's
+	message of "Mon, 23 Jun 2025 00:25:35 +0900")
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+	<20250622152535.11837-4-maxim@guixotic.coop>
+Date: Mon, 23 Jun 2025 11:03:24 -0700
+Message-ID: <xmqqh6065o9f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250623105516.GA654296@coredump.intra.peff.net> <20250623105542.GA654412@coredump.intra.peff.net>
-In-Reply-To: <20250623105542.GA654412@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Mon, 23 Jun 2025 13:59:48 -0400
-X-Gm-Features: Ac12FXw8CIpErE6LQISiOAucn3bZILQDAoWYFELB8L1cHVZBFqXmkIfPZ-xkQX4
-Message-ID: <CAPig+cSLJ57+ZU1TreHajAqbQwBD7TRUt3bxRDTcHCjS88xmLg@mail.gmail.com>
-Subject: Re: [PATCH 1/2] t7422: replace confusing printf with echo
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, Jun 23, 2025 at 6:57=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> While looping over a counter "i", we do:
->
->   printf "[submodule \"sm-$i\"]\npath =3D recursive-submodule-path-$i\n" =
-"$i"
->
-> So we are passing "$i" as an argument to be filled in, but there is no
-> "%" placeholder in the format string, which is a bit confusing to read.
->
-> We could switch both instances of "$i" to "%d" (and pass $i twice). But
-> that makes the line even longer. Let's just keep interpolating the value
-> in the string, and drop the confusing extra "$i" argument.
->
-> And since we are not using any printf specifiers at all, it becomes
-> clear that we can swap it out for echo. We do use a "\n" in the middle
-> of the string, but breaking this into two separate echo statements
-> actually makes it easier to read.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
-> @@ -180,7 +180,8 @@ test_expect_success !MINGW 'git submodule status --re=
-cursive propagates SIGPIPE'
-> -                       printf "[submodule \"sm-$i\"]\npath =3D recursive=
--submodule-path-$i\n" "$i" ||
-> +                       echo "[submodule \"sm-$i\"]" &&
-> +                       echo "path =3D recursive-submodule-path-$i" ||
+Maxim Cournoyer <maxim@guixotic.coop> writes:
 
-This looks obviously correct and, as the commit message says, is
-almost certainly easier to read, but I was more than a little
-surprised to see the patch since I thought this code had been fixed
-previously[*] and had some discussion around it.
+> diff --git a/contrib/credential/netrc/git-credential-netrc.perl b/contrib/credential/netrc/git-credential-netrc.perl
+> index 09d77b4f69..72d6b6a974 100755
+> --- a/contrib/credential/netrc/git-credential-netrc.perl
+> +++ b/contrib/credential/netrc/git-credential-netrc.perl
+> @@ -268,13 +268,16 @@ sub load_netrc {
+>  			next;
+>  		}
+>  		if (defined $nentry->{port}) {
+> -			if ($nentry->{port} =~ m/^\d+$/) {
+> -				$num_port = $nentry->{port};
+> -				delete $nentry->{port};
+> -			} else {
+> +			$num_port = Git::is_port($nentry->{port});
+> +			unless ($num_port) {
+>  				printf(STDERR "ignoring invalid port `%s' " .
+>  				       "from netrc file\n", $nentry->{port});
+>  			}
+> +			# Since we've already validated and converted
+> +			# the port to its numerical value, do not
+> +			# capture it as the `protocol' value, as used
+> +			# to be the case for symbolic port names.
+> +			delete $nentry->{port};
+>  		}
 
-[*] https://lore.kernel.org/git/20250403144852.19153-1-sn03.general@gmail.c=
-om/
+OK, so we rewrite textual service names into port number, and
+normalize the "host" member of the entry read from the file into
+"host:port" form.  Earlier we did that only for numeric port
+numbers.  Nice.
+
+> diff --git a/contrib/credential/netrc/test.pl b/contrib/credential/netrc/test.pl
+> index 67a0ede564..8a7fc2588a 100755
+> --- a/contrib/credential/netrc/test.pl
+> +++ b/contrib/credential/netrc/test.pl
+> @@ -45,7 +45,7 @@ BEGIN
+>  diag "Testing with invalid data\n";
+>  $cred = run_credential(['-f', $netrc, 'get'],
+>  		       "bad data");
+> -ok(scalar keys %$cred == 4, "Got first found keys with bad data");
+> +ok(scalar keys %$cred == 3, "Got first found keys with bad data");
+>  
+>  diag "Testing netrc file for a missing corovamilkbar entry\n";
+>  $cred = run_credential(['-f', $netrc, 'get'],
+> @@ -64,12 +64,12 @@ BEGIN
+>  
+>  diag "Testing netrc file for a username-specific entry\n";
+>  $cred = run_credential(['-f', $netrc, 'get'],
+> -		       { host => 'imap', username => 'bob' });
+> +		       { host => 'imap:993', username => 'bob' });
+
+Is this rewriting an existing test, instead of adding a new test to
+trigger a feature that didn't have a test coverage, while keeping
+the old test?  I am wondering if we want to ensure that both
+":port"-less case and "host:port" case keep working even after the
+change to -netrc credential helper in this patch.
+
+> diff --git a/perl/Git.pm b/perl/Git.pm
+> index 6f47d653ab..1fa535e1ad 100644
+> --- a/perl/Git.pm
+> +++ b/perl/Git.pm
+> @@ -1061,6 +1061,21 @@ sub _close_cat_blob {
+>  	delete @$self{@vars};
+>  }
+>  
+> +# Predicate to check whether PORT is a valid port number or service
+> +# name. The numerical value of PORT is returned, else undef if
+> +# invalid.
+
+Hmph.  It _can_ be used to validate a random end-user supplied
+string names a port, either by being a port number in the valid
+range or by being a valid service name.  But another use case in the
+code after this patch applied that is equally if not more important
+is to ensure that a valid port specified by the end-user is turned
+into a port number.  We should not name such a sub as if its primary
+functionality is to serve as a Boolean "is_foo".  Perhaps call it
+port_num or something?
+
+> +sub is_port {
+> +    my ($port) = @_;
+> +
+> +    # Port can be either a positive integer within the 16-bit range...
+> +    if ($port =~ /^\d+$/ && $port > 0 && $port <= (2**16 - 1)) {
+> +        return $port;
+> +    }
+> +
+> +    # ... or a symbolic port (service name).
+> +    my $num = getservbyname($port, '');
+> +    return defined $num ? $num : undef;
+
+Wouldn't "return $num" work here?  getservbyname() would return
+"undef" when the given $port is not a valid service name anyway, no?
+
+Or even "return scalar getservbyname($port, 'tcp')" without an
+intermediate variable $num?
+
+> +}
+>  
+>  =item credential_read( FILEHANDLE )
+>  
+> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+> index 0c1af43f6f..3e749175ab 100755
+> --- a/t/t9001-send-email.sh
+> +++ b/t/t9001-send-email.sh
+> @@ -201,6 +201,13 @@ test_expect_success $PREREQ 'cc trailer with get_maintainer.pl output' '
+>  	test_cmp expected-cc commandline1
+>  '
+>  
+> +test_expect_failure $PREREQ 'invalid smtp server port value' '
+> +	clean_fake_sendmail &&
+> +	git send-email -1 --to=recipient@example.com \
+> +                --smtp-server-port=bogus-symbolic-name \
+> +		--smtp-server="$(pwd)/fake.sendmail"
+> +'
+> +
+>  test_expect_success $PREREQ 'setup expect' "
+>  cat >expected-show-all-headers <<\EOF
+>  0001-Second.patch
