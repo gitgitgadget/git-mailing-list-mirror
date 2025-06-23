@@ -1,123 +1,107 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4621A2D540A
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 20:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FA5219E0
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 21:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750710519; cv=none; b=F+JFBsOuDturzXPL1gBrRrQsA2DeoSb8ecLi+AeE8DOM3XwRajokqA34ulqPkb1c5usJzUMTrCutoN8yRUhvt3mxCAoOpsYKhen+I4nWVgy3Kqc1TX7uJoKL/KIx6jTUOsZXaViMn4a7A9V/Di4fOIhbFy8+CFttqvbVnfAgcVU=
+	t=1750712435; cv=none; b=a+VuJm7AZ1P/liIN8DkQtH5yZ3f6ejhnjaZttcdAFSLnQFoPkrMI3i6ouOYw/EJDA7dHqk82+oVjAjDggP3Ihun4YcdEOGBo9M9djIFTiJetb3+4Z2L/RJDXujhts85Tci6g8dfCua1lGP5MD2MAfTI1unRzTzj4/XoS2GdPiss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750710519; c=relaxed/simple;
-	bh=RgBvvG8H9xCVMkhfkKYGMbar0UHDZNyyh0pXSizZvS8=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=orDRKK/f5KeCaUDS11FHB0hyCOKyN+v9JCzdx0Lqjm0siaHpi4V/dMmuDmOC/ceADWuuZQX/cjjCFsyWHYkU3eLOlAJBEmf8NJ1N/7zFTWukGOhFjOQ5+9/8wexebGrrkWxvBfEH59HdajkSycghI9/LdpMY5I9FxW8VDhoY3QY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NHv2Fc/O; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750712435; c=relaxed/simple;
+	bh=F7gl1JFMBR/fPRoOhR+YhmvvIEG9Jk90pX462n/BEBk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NNJyRI7IrmojlDk+fblqjtiS2ZOI8xyKvmUQhaerFsK9zhYksRgC4lSS6YEcQdmF0/l0qNt7oRl0Z8AgANVE7vdjr17AyB9ZI8ktAidzWu4TbdyrV1ecljiaoJxf5X0TtVjhHPa8aRt6DoXc2gwhfPTywNS7F+TUSC7RCh3JX48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PEE6vJMQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o3HjCFOz; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NHv2Fc/O"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-315cd33fa79so171646a91.3
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 13:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750710516; x=1751315316; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CfrvmbuUBEJCaC1q7hWznWcG920CcJy8QGVsRjKAvXI=;
-        b=NHv2Fc/Oq2c6uyST+d4nvb9WAFDPY/SbN17jKOakLnmDok5L++QdX+YVgYfgvcZubq
-         bZmHHQshv5ZtOK2XYdjFhexUrpHIJmHwsD1FRJtmunbSS5rpPhDiu7GvXcOsshqpscql
-         Fvf7Bs2RcmIigpEAqF0ld+uT1zhrjIE25tnRzcWhu1GN8w8nV3nA/imlP19xzrfLeg9r
-         BZWfYGbBNt7Z0IzRz+gKMo5SEVeStWOZGQULQz5bRvB7tF2xrvKApYckmLTJWkIydXqX
-         DG5egImjQcn9wHVAQHlT2Urs3MR83qdt9g7ZqcdZqGf06sq05XbjFQXjtm7b9Ah1E6fF
-         HWFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750710516; x=1751315316;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CfrvmbuUBEJCaC1q7hWznWcG920CcJy8QGVsRjKAvXI=;
-        b=pADFGWH6KrfCColKxScNo2r9VK6/G5JSrdrF/7sZ0EGwmr2RwGLKe/2zdf9jetxbqj
-         Fvoiu5atTf8ptQKQMfCRYMqfT1ThAnCZ79pR1ES3QKfnh4zQW2aVKOpYJwPuxUtwHOGq
-         FOZFyTnNc4nfqsol98DcsZYPgwMTQr3TS6KTcy7ZVsxo/hn8cIfuf3LWHtpkys/Pd6wM
-         mtIdVcgxlxe3B5FwEEG8AWURZgEchfOx4AcUOgS91ncmzDL8qs74Z/mi1k5ldaJs0Eov
-         3GNt0HbDOG64aqtyC1oBl6gUcYX5amqs6UU7boq7TyMLUpea4JBfrbRRHrqPNAW3aYnh
-         xZrA==
-X-Forwarded-Encrypted: i=1; AJvYcCUGf+8PAQbkBFUMRip7f+Jc373YKcKmQuwL3EchdmJp8XLZF+/n9x7eqouryhorQMLEQ5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwzKex4IjGu7bscdKgPMqFBcsLWTgZ9kXgRxYZcdwnWdPIXdWd4
-	yjBOk9ZvJuItnqQZxQnZawKQsuteEnEAcxrclrUcNwHPOr8u8KYGYLaS
-X-Gm-Gg: ASbGncvWpTSj/UJeYmTJyjoA46Tu5AJKn6SJfPc34FvWaBFJeYQ3p6d99nZ09gCajTz
-	Mz92BJ+YcPDeO8rYgsGH7Y86oL9ISQ2n7l8fzbd1aaFLu1TnLQvonWg486yaPyxYJyzdjM9ZxHN
-	2k3NK13oMWdBLnOKilJVn4SLTVZPor3j4ncA78Kx3mfJv1FTmZO59A3FQ1fpoNUIghwELS904u5
-	OZGvwo/5S5RwYqiO9b39hOZVculujSZe2nzxruEs/GFZWF6hlvPiB4T+y0yM8jurkKDuc//7aKO
-	3KehdKwf2twibPuYyNTaT17nQmOMRgLiuReON4THYXvD8AN1VjB864B2dbwycL9EDkjJbvPB204
-	KUh2HDvmgo5GIp/TAr0IC
-X-Google-Smtp-Source: AGHT+IFI9sVbMaZ4SecoyGZwtaH9Sf9u9YlxXHvLz4OfZT8cD7HnLJ8Ur/0LN3Hla/SEJky/OYE9Cw==
-X-Received: by 2002:a17:90b:1c12:b0:315:af43:12ee with SMTP id 98e67ed59e1d1-315af4331ecmr16967559a91.16.1750710516372;
-        Mon, 23 Jun 2025 13:28:36 -0700 (PDT)
-Received: from smtpclient.apple ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3159e07d45fsm8888690a91.47.2025.06.23.13.28.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 23 Jun 2025 13:28:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PEE6vJMQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o3HjCFOz"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2ABCF1380DB4;
+	Mon, 23 Jun 2025 17:00:32 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Jun 2025 17:00:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750712432; x=1750798832; bh=50NGseunFV
+	Drjb/5iupCAVmrOxt5E8KKuxl+0d3Xz7M=; b=PEE6vJMQ3Jt4lm+3I8Nq0ztqWP
+	E84+x2HzCyUDPO8DQNwL7s68tnIDLyN12usFJEsTxKv7gFFiDkirfSkx49iTp23N
+	yFEkfX7pW5gaKlDD7aognP3wU9ae8LNXCeO6nsaY3FVEPb3MHtIBuIcmnWtCTxFk
+	+6eUZL7mY6uDvhoC3DaRTMtC6yQg7o9RU2QmujESAtGbeB5d4NpqHsA3TVK0TCG9
+	Woeh+3kID6uldnscjrVg6Y+27/br7fP6hDAcrRqmp0LA66o5bjG04qsvpXgw9zMS
+	yupALonf047xtkEw1Wy+COuNHQFauo74klRL044SmLJ1fTYY9Sl8ogL0Ii1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750712432; x=1750798832; bh=50NGseunFVDrjb/5iupCAVmrOxt5E8KKuxl
+	+0d3Xz7M=; b=o3HjCFOzSJJ/311au6lSgn9v/+ZV4dqin4tWVM+hGLNqFlbCWto
+	bzQ4bp3SgUHCzmUg11ZCTMgYwsaHkB+xH00Cxg8GmD/muQz+ElY7GLy15mNLyFba
+	+b04v7JaGILqrPSYcZjcbQoenUqxcPLMBsGkWynfysiLDZy9LlbW82Rhrdz+tep9
+	30/QnVL2Enr+I9KLwl57Tifi75+6//SWJsMrr1pRBnPZYKiU/XBpM1fXLaBIx6wv
+	wb3Z9mUwDKfWSkq1q57BpuXhsyDLUTf0s82+ovBn3QZU8/Apb+gB8QC9QHNt81xA
+	9Shb/IrXKw3eavIEcF3MR7lMqyztZ1kcJag==
+X-ME-Sender: <xms:cMBZaFN7ULNr5oQikdgmBGvlUA7VKkwBX4V7vdldWDdafNLUC0QvLg>
+    <xme:cMBZaH8wi5rppiv1DEWh5odPkFEqol-jZlHhxo44zpP7jn-K91owe9jWRBJ4ssdrW
+    BWFkf0E1dF5jf1wKQ>
+X-ME-Received: <xmr:cMBZaEQYSqlu7MxyGBe1OkrDKSKFTMjaroPtS8PhAN5qwFtAcNj0hADhWOwFlh62sXiqPrq43nYjfDV8zZQbR47rbnbKwD9LNC3e0as>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddukedtgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghikhhophhonhgvnhesghhoohhglhgvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:cMBZaBvZ7EET9p6-IitLVjvE0bUcMzuaak-2Xa9mnP_vnWGHlq3VZQ>
+    <xmx:cMBZaNd2DqiQgbWqP4VX2p7Ynmau3ZZBNeASY9f1Ajvqn4XHmHLl3w>
+    <xmx:cMBZaN1fCA4pUWqvuK5zj5Zc8KTRbVygfJqIujZkbAYhV35BaQ2VUw>
+    <xmx:cMBZaJ_wCvjq5OQ47Ajtl-3fYntmiym672hHfq65cXIVWAO-ExHPWQ>
+    <xmx:cMBZaDHndNv90hxcBh7zIYwvgEuXoK3uhaagMKq1A0xSSVtDDop72EL1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Jun 2025 17:00:31 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Kai Koponen <kaikoponen@google.com>
+Cc: git@vger.kernel.org
+Subject: Re: Perf bug: rev-list w/ 2+ paths relatively slow with commit-graph
+In-Reply-To: <CADYQcGrR0mKLEWSYZCrL6b7NYLGfdsZsuKCCFQ_ptpMJ8mofmQ@mail.gmail.com>
+	(Kai Koponen's message of "Mon, 23 Jun 2025 16:19:13 -0400")
+References: <CADYQcGqaMC=4jgbmnF9Q11oC11jfrqyvH8EuiRRHytpMXd4wYA@mail.gmail.com>
+	<xmqq8qli5jyi.fsf@gitster.g>
+	<CADYQcGrR0mKLEWSYZCrL6b7NYLGfdsZsuKCCFQ_ptpMJ8mofmQ@mail.gmail.com>
+Date: Mon, 23 Jun 2025 14:00:30 -0700
+Message-ID: <xmqq34bq5g29.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH v2 4/7] repo-info: add the --allow-empty flag
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAOLa=ZTCoc9vfeMrWxqU5psmbxGzW=B-QULeSR+uvF9kQi9WzQ@mail.gmail.com>
-Date: Mon, 23 Jun 2025 17:28:21 -0300
-Cc: Junio C Hamano <gitster@pobox.com>,
- git@vger.kernel.org,
- ps@pks.im,
- ben.knoble@gmail.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9E8D7078-25B8-4036-8961-A1758C17FBDC@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-5-lucasseikioshiro@gmail.com>
- <xmqq1pre14ae.fsf@gitster.g>
- <CAOLa=ZTCoc9vfeMrWxqU5psmbxGzW=B-QULeSR+uvF9kQi9WzQ@mail.gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Kai Koponen <kaikoponen@google.com> writes:
 
-> I thought the idea was that we would show a subset of the fields by
-> default when no user input is provided. Which would mean we have the
-> following:
->=20
->  * `git repo-info` which would show a subset of all fields, giving
->    important repository information.
->  * `git repo-info --all` which would show all available fields.
->  * `git repo-info <fields>` which would only show the requested =
-fields.
->=20
->=20
-> This is also a good time to think about if we should make the default =
-to
-> not show anything as Junio mentioned.
+> I see, more of a perf FR than a bug then.
+> I don't have much expertise here, but on the surface of it, it doesn't
+> seem to me like there would be any reason the algorithm couldn't check
+> each path's bloom filter in turn while searching, other than that this
+> would be a large and annoying change.
 
-After this review, I'm starting to think that leaving it empty by =
-default
-would be better. Specially after the review by Phillip Wood [1], who
-has a good argument for it:
+It looks like that the necessary changes are probably fairly well
+isolated to two functions, i.e., prepare_to_use_bloom_filter() and
+forbid_bloom_filters().  Right now, for a pathspec that has one
+element "dir/file", the code uses two bloom keys for "dir" and
+"dir/file", but if we have "dir1/file1" as well, then it does look
+like a matter of using two more (and the bloom_keys[] array is
+designed to be variable length).
 
-"""
-  As this is a plumbing command I think it would be clearer if the =
-caller=20
-  was required to specify the output format and the information that =
-they=20
-  require with an "--all" option for "show me everything" as Junio=20
-  suggested. If we were to set defaults for the format and keys now we=20=
-
-  would be stuck with them forever.
-"""
-
-
-[1] =
-https://lore.kernel.org/git/af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com=
-/
-
+But those who have more intimate knowledge in the area than I do may
+point out what is missing in my "it looks like" gut feeling.
