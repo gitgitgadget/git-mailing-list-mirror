@@ -1,70 +1,70 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95F123FB1B
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 22:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C6A227B8E
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 22:32:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750717934; cv=none; b=ATkKsZ4CHe9tlf+qFCf+IulCW7N9djiZoq786nrl3UUKel9cFO+QI+ccRi8iQPC2/Ta0an5u7mn1UJ/8PmwYnvX6eez8L2Vods6OFqlt+j08OI5R3qhGq77e0UnqE0/q7Kp2iK8aIsLp9jyBL6MvkyyG6abDo16zJrbzpJBNiaQ=
+	t=1750717937; cv=none; b=LbsmRYuO2KvQgZKmu6h18AprFBtAt45T17A+txt2cQU99V+aT0YrqJdYhqGRFLNk1s9y4piW6dpsfEvSa6oFGGoetOEkXBV8Yi8iZ2GJL2Twq5iTx9s4Zm+bJqWKYEMZUqIhMgGUECP8Y4a8dKOvVNS7GeHJ8laXBP/tlSAmDFQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750717934; c=relaxed/simple;
-	bh=LnlUPh/KBzZSOrLA99IduY51q0hm6e0wguukv5+VExI=;
+	s=arc-20240116; t=1750717937; c=relaxed/simple;
+	bh=MbCoPkb3VVrXgB945pEjTT2QVb495ura8cLJFlmCDkE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cg6uxjwpZzyFxPX+UXkUW7TaXJgSZlAg++2/ntZx3LWyCm/M9ITve8OPE/Gzgh4Y5s79PML47XnnaDmq6Fz1biEadE+Mz1sPpM2Xw+G+mYIyeOmdLEFLjdl8DGWMEurjdpl5oqaKYISXPYZ5dA3IbsbYW4mGc0v8yPs8gjTSbPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=OsXoQmjt; arc=none smtp.client-ip=209.85.128.171
+	 Content-Type:Content-Disposition:In-Reply-To; b=r1ohv7xl/mvA9vGASNf2CfnWtM3Fo/GnIwYGRvrPNUd3X9VuRk0zlJ4gPLN3bY08txnOCbB8UVETa1WttZQtIJTKYHzTuGo9UVkMW/m4y7WOKuinnzBdOTYq2uuaD2ddPZFwLhU4ph+1dLmOhvxq3ylTnXX6dHCSDKw5WSQnoEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=oJdgVdl/; arc=none smtp.client-ip=209.85.128.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="OsXoQmjt"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-70e4043c5b7so46699147b3.1
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 15:32:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="oJdgVdl/"
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-708d90aa8f9so46532077b3.3
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 15:32:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1750717931; x=1751322731; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1750717934; x=1751322734; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ke9V8CxVUTBoCKxY8xuflzmQKkx8XDzEF3CVOZhrEmY=;
-        b=OsXoQmjtG54676gTvU3gMZNxp2ccCvus0VS6sX4+jNcvQVTYunWoY+DkZLewQg8pE0
-         CuFFI3HU0dcSoe1aSP60/EGt7jp3CzFms1Gvr36Hl9WculJLTh87YmvG+UfzV706oPOW
-         p02vE734WTWns3KYVPwqvdNNgXM4ZxHfHIagfrFZ6ChouuDREWTSFBiVts7BL+aLBl8C
-         1GOefAehjxiTxPgJwLpTXStQu/GXAW0XEWZhllJMO/cvMQyD1qyXoICfgt+mHjHc8nrX
-         kVpfIFCfFVB5iFxrX69I/PMNQ7uxhX3CL1M4yvDk6uSpYk/Eyn9ZWQrCiXVMj4LEQptw
-         SPZw==
+        bh=j2P7CkkuV/NrpTzVvwHtCEfPIvFxoeltEMfuP+K+qf8=;
+        b=oJdgVdl/bSdRSFIStuMDdcETChSuGf24a+iuMJ3DNxkRQU+7X2WY9/E2tW4OoUuqT7
+         9nr1o08EEKNqK/9Uc8klBs5k2uqEq7B5Z73InkPhNAw1iBqm5NplRsZDvqMo2gb6gGQU
+         5FOhpKe2ANV6Z6xxEW1W5Lnx2Z2FnrtfltRry4+fGf53CWYnpLapLcElSGq90wUTupBk
+         L9BQiFGMXho3mRW/zT5gsfsQgwb03hmwvbgIQf1FOVbfXvt7HXpxpTldepsszutjMJwB
+         5Dq67aWdsaui7kCbYJk62a1UUNsf6er/XM9RuRE17op9XEA9p10v3ZjQ8dv1vMprTevu
+         yraA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750717931; x=1751322731;
+        d=1e100.net; s=20230601; t=1750717934; x=1751322734;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ke9V8CxVUTBoCKxY8xuflzmQKkx8XDzEF3CVOZhrEmY=;
-        b=gUiDtoXQGCOPSI4tMYQ5mADr7Xqqd56taCAI+2TdgjHeWoXYB6VBHnyKkNnCAnpjdP
-         KwPbyukRHkj99F8EdWnq6EXj+fOZJgEPA1kJ4puHxCy5kFqMKN+ZfAPWOhTd5DbQ8TKj
-         hLJMqJkrZV/PE2eln/wuPFZkIfiijx1pMVbYmvEAhO6e9hzIzDP8jjnoli1KjcfpneVl
-         Gv/CF9N5RtFg9IKNsO6leNUwEK+1ixmDv5tz8o6OewrrcKP9gtSWpJvzGrTthr5yxqS/
-         U3y2HDOeH9ns64WMpkk/y9kz5lRLKWnexJyVUjJGPtMI2mTMnzKN+3ryZsKgrjRwp+h/
-         lN2w==
-X-Gm-Message-State: AOJu0YyaAVOqDZcJXjMTaxG9PbF4Ok0dT7Qr/AvdPGSrPiXM5Hyac2yJ
-	UEdMM6V1bvn03g9MZCVnsbVh3pHHiDnNnDZztX01sPsZ1ZNmYmTpaXfDo4La0aLE/mXkOsk5CwA
-	QdfVF
-X-Gm-Gg: ASbGncu7CzdWAJKtFntwoKVTk13RoSGgPcEKRoWdlJMgjPdnyKFxyZoNyCWWois/ceE
-	94Sfs6EfGTs8HbpAedIKcvBdTb4CbVWwtPXQa55RJJwDS97I1hT2mPAW4Y7qJCJMkapcjoMTFkj
-	RXuraB1krHpYKoP1SYIaMBH1pYqVtCfII852VCnS9HezuDL8TF1t6DqeeD9XOUpg39yN+aVrVY+
-	aq7YRtkpbEmH5lgQez9GZeIqBm4Ahp2UjZhPqyFqYu5S1rjsxZiU0PTcIWNPaF8yUyDZAK89XI4
-	4aAQ4Zjh0MneGOsQEmUWUHB7OSm44JMFUi7yXmxq91hYLHoeIrOKeG/Qf+oa4KdCeJNVOq9DBxg
-	hDSE/qQB08MXA/ghKyXQT7Xw0u9K9b4wS8g==
-X-Google-Smtp-Source: AGHT+IF2ekdx02HQVLrlJTDwzpEqnLnKwL8pOGgaFfSkfzWkufANUh207zRWyjOWkBW0JJV+ooY5Cg==
-X-Received: by 2002:a05:690c:690b:b0:70c:b882:2e9 with SMTP id 00721157ae682-712c6397952mr204622677b3.3.1750717931299;
-        Mon, 23 Jun 2025 15:32:11 -0700 (PDT)
+        bh=j2P7CkkuV/NrpTzVvwHtCEfPIvFxoeltEMfuP+K+qf8=;
+        b=T0jkeQ/frzF6wkBFS0dQXJXz2T2ONZVS2aEuhu+LOL72EEx7bpqduRTp0FJ73aUwyO
+         GmMUHd/JWwJsXFEJ26PK3cO794p3Y5cIQ7mSeZHb9Fgdq2R0v5luQkkmWZ2m1jAwDa9M
+         Ffh8MiOH2KnIyNahnTkFetqlLrG0H57J9v1sMI/0MLgTRu+L+DVDX3Ayl+qQzTj6qtQg
+         9Y5CH8WqPrheiZltKDUZjarVksNugaUl7bg+zjyMxmddZ4S48Jl9kj1eUOsdHZMrUMDv
+         9+KIxS7wJ+l4Ogy0oSsT0/6URhHNQMlLJxo7TTabvMVI3yCV1fGi3b25suFtvuwdMRxZ
+         E6oQ==
+X-Gm-Message-State: AOJu0YzW13gB/jG/yYt3SR+b+DIBGpD73bOsAowdiUSp/wXHdD3LHOUI
+	SjsAu0A2/TDDCf7wxkclng8mv17igZN/TZuUzxFBKD1QtiK9rCKr/KDS7D5mAZjnzIlcCIC6bFN
+	6TE6b
+X-Gm-Gg: ASbGncukTFQ2kGt9pJNvsKkN6TCmaF/UXtI0GyiXD4Yxsc+/jH9c4/KiS+L6CRx035U
+	E4Xhzymivy5i/MLATUcxqw+gXppUcUQjmq5YWzRMUy6mJQTrOcEk/y/ISXe0jgCmi2oCmPaGLLg
+	wwzECaocNbhYZTeoRya11RCsAJBBfd12snMtXjTvLhGi0sH9k+hjE+8gbTQv3O5+Qkx10oXVV+q
+	KQ0Xr7DPE64dbwv22j8iwYxGVENNFTrzg+8B2C+p70rVlAuKgJyNnb4RX7ElYEOVX9KUp4vhdaO
+	lBelQhIHp6P8GED5ATIhkoTiAlOtKqSbuSV7ZtmisT+wGc8jJqj9zgL5EIv6L67n79W04o3uVLl
+	xsGQRdYq4NSQBNAO0m9dzVhudLACOs4+35Q==
+X-Google-Smtp-Source: AGHT+IE7yk1/ZhZth0FNAPL/muVv6gCFvQcBzcTx0ygIYf4Cey1Usc3WrMa/Q0xWPgtjlEuwD1H0Yg==
+X-Received: by 2002:a05:690c:6b0e:b0:6ef:652b:91cf with SMTP id 00721157ae682-712c675e2ecmr203474497b3.27.1750717934244;
+        Mon, 23 Jun 2025 15:32:14 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-712c49b9aefsm17694637b3.18.2025.06.23.15.32.10
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e842ac5c538sm2694784276.33.2025.06.23.15.32.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 15:32:11 -0700 (PDT)
-Date: Mon, 23 Jun 2025 18:32:10 -0400
+        Mon, 23 Jun 2025 15:32:13 -0700 (PDT)
+Date: Mon, 23 Jun 2025 18:32:13 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v6 1/9] pack-objects: use standard option incompatibility
- functions
-Message-ID: <8e7b2dacc77623ada5ee938de7a610ae15f49d8e.1750717921.git.me@ttaylorr.com>
+Subject: [PATCH v6 2/9] pack-objects: limit scope in
+ 'add_object_entry_from_pack()'
+Message-ID: <86fb36d3176198fa350dfaed261e8ae64b49b355.1750717921.git.me@ttaylorr.com>
 References: <cover.1744413969.git.me@ttaylorr.com>
  <cover.1750717921.git.me@ttaylorr.com>
 Precedence: bulk
@@ -77,87 +77,36 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1750717921.git.me@ttaylorr.com>
 
-pack-objects has a handful of explicit checks for pairs of command-line
-options which are mutually incompatible. Many of these pre-date
-a699367bb8 (i18n: factorize more 'incompatible options' messages,
-2022-01-31).
-
-Convert the explicit checks into die_for_incompatible_opt2() calls,
-which simplifies the implementation and standardizes pack-objects'
-output when given incompatible options (e.g., --stdin-packs with
---filter gives different output than --keep-unreachable with
---unpack-unreachable).
-
-There is one minor piece of test fallout in t5331 that expects the old
-format, which has been corrected.
+In add_object_entry_from_pack() we declare 'revs' (given to us through
+the miscellaneous context argument) earlier in the "if (p)" conditional
+than is necessary.  Move it down as far as it can go to reduce its
+scope.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- builtin/pack-objects.c        | 20 +++++++++++---------
- t/t5331-pack-objects-stdin.sh |  2 +-
- 2 files changed, 12 insertions(+), 10 deletions(-)
+ builtin/pack-objects.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 67941c8a60..e7274e0e00 100644
+index e7274e0e00..d04a36a6bf 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -5010,9 +5010,10 @@ int cmd_pack_objects(int argc,
- 		strvec_push(&rp, "--unpacked");
- 	}
+@@ -3725,7 +3725,6 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+ 		return 0;
  
--	if (exclude_promisor_objects && exclude_promisor_objects_best_effort)
--		die(_("options '%s' and '%s' cannot be used together"),
--		    "--exclude-promisor-objects", "--exclude-promisor-objects-best-effort");
-+	die_for_incompatible_opt2(exclude_promisor_objects,
-+				  "--exclude-promisor-objects",
-+				  exclude_promisor_objects_best_effort,
-+				  "--exclude-promisor-objects-best-effort");
- 	if (exclude_promisor_objects) {
- 		use_internal_rev_list = 1;
- 		fetch_if_missing = 0;
-@@ -5050,13 +5051,14 @@ int cmd_pack_objects(int argc,
- 	if (!pack_to_stdout && thin)
- 		die(_("--thin cannot be used to build an indexable pack"));
+ 	if (p) {
+-		struct rev_info *revs = _data;
+ 		struct object_info oi = OBJECT_INFO_INIT;
  
--	if (keep_unreachable && unpack_unreachable)
--		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "--unpack-unreachable");
-+	die_for_incompatible_opt2(keep_unreachable, "--keep-unreachable",
-+				  unpack_unreachable, "--unpack-unreachable");
- 	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
- 		unpack_unreachable_expiration = 0;
- 
--	if (stdin_packs && filter_options.choice)
--		die(_("cannot use --filter with --stdin-packs"));
-+	die_for_incompatible_opt2(stdin_packs, "--stdin-packs",
-+				  filter_options.choice, "--filter");
-+
- 
- 	if (stdin_packs && use_internal_rev_list)
- 		die(_("cannot use internal rev list with --stdin-packs"));
-@@ -5064,8 +5066,8 @@ int cmd_pack_objects(int argc,
- 	if (cruft) {
- 		if (use_internal_rev_list)
- 			die(_("cannot use internal rev list with --cruft"));
--		if (stdin_packs)
--			die(_("cannot use --stdin-packs with --cruft"));
-+		die_for_incompatible_opt2(stdin_packs, "--stdin-packs",
-+					  cruft, "--cruft");
- 	}
- 
- 	/*
-diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index b48c0cbe8f..8fd07deb8d 100755
---- a/t/t5331-pack-objects-stdin.sh
-+++ b/t/t5331-pack-objects-stdin.sh
-@@ -64,7 +64,7 @@ test_expect_success '--stdin-packs is incompatible with --filter' '
- 		cd stdin-packs &&
- 		test_must_fail git pack-objects --stdin-packs --stdout \
- 			--filter=blob:none </dev/null 2>err &&
--		test_grep "cannot use --filter with --stdin-packs" err
-+		test_grep "options .--stdin-packs. and .--filter. cannot be used together" err
- 	)
- '
- 
+ 		oi.typep = &type;
+@@ -3733,6 +3732,7 @@ static int add_object_entry_from_pack(const struct object_id *oid,
+ 			die(_("could not get type of object %s in pack %s"),
+ 			    oid_to_hex(oid), p->pack_name);
+ 		} else if (type == OBJ_COMMIT) {
++			struct rev_info *revs = _data;
+ 			/*
+ 			 * commits in included packs are used as starting points for the
+ 			 * subsequent revision walk
 -- 
 2.50.0.61.g1981e40f2d
 
