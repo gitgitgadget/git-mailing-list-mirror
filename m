@@ -1,123 +1,124 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF54C23536C
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:19:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992F8AD51
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:26:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750670347; cv=none; b=ZjImvcW6GnJqTQynkFc+IFRZ2GWP5jQjY1ACbDyZ29cSwhFuIUymUW3vHaEENiLrU9MfHuGHSyILsj7li/cZGSX0DAI5r98lc4QsDBp9EyPOC9l3scpIpbK2FZASMMySovClztyJpPjVcd1c1T/WdQyg7anlsxWOVYsS/GVvRVU=
+	t=1750670806; cv=none; b=Ri9TPW47B3Facb2dHmtsLY+Bm6TjPjrLQWfr0UbQWSwJxfllyE8ib8CHu1Wkc1+bKyBvMDVnJ/TYcT5k6MCabX/LfEUy5oGRQQmYA4B9f0LrX1NhBxeX2UyKsAfyVNhwPj8SwA98fWqcbQ16FDfIyKqZ/x+rCwSi08S7c3yb2M0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750670347; c=relaxed/simple;
-	bh=G7n7ps+XdGO4jMbAVE/rp5C+ccSuMdu5ATm8rMkTgYE=;
+	s=arc-20240116; t=1750670806; c=relaxed/simple;
+	bh=WnPjYD6sY7faFUQCqD6KRfZYd1BDv9Whh7oWyltcVtM=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pRfrY01FpuYSj5eKSd2tyB01O/n+FU6thLSK+43YzS77JCku3ANzvBcRzYpYFWhE76SG8wPnQ/NNhFECKkclAnx+HlqqUyWSprM9xuUmiOnipbYuq12yLjda4V4CoIIoa6KjcDwCAp2pPCK7A8It4mPgC9rbFEDxb0kEWdaXRYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GvWTtXRZ; arc=none smtp.client-ip=209.85.217.54
+	 To:Cc:Content-Type; b=EH1jGbA1EGJkBRDjoYHwflDwlDUBV2pgClGggJ2ClIDtXjvauK04DJZm1LOQq+3zMODwhvO+qfH0CH6LsHoM/eV60AgS81IwjE+Xp9b262bGZgWHAerfLrUH5LgHiFZU5D4Eg7eKQJKX6VbqTQiycoC4T0pWogW7urQmtaFZRG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPCAbqR4; arc=none smtp.client-ip=209.85.217.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GvWTtXRZ"
-Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4e7ade16082so1067452137.1
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:19:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPCAbqR4"
+Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4e8110ac0f5so908493137.0
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:26:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750670344; x=1751275144; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750670803; x=1751275603; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nWlDjmdbKqse2BsEQ9v8zL84ldfZcFzi5P90jbLt9wE=;
-        b=GvWTtXRZOSISSW4jcUQGDlXWM72cbUBiPca5HN5b4GjPYsmT69V62bFde0YQ9wj/eT
-         KD31Go0t68Sh5KRiNrR98gcpjB9N2ZayO0A22yWXWvzojZ8VLatmGEf3eXF9i1GtiL8T
-         RTAild9koIKdWkQeLH6t1dCrpdvtTU6JqAllKcN7vn/wIBVYxv0/pro9UsyooP9yqDKb
-         1lDB2xqurjJCyRu0Na3WneFmhttoo12f5f4Cn/Kd5/fAEzlv+oCdQHovamBjUUzojJDC
-         Ca5oxks8BWBYrnWyUvKazxwnNGn65Yg5LbB+JSQTKIyD/hqtvQNGgz1rpQlZ4TROiNsK
-         Bz9g==
+        bh=bXWWfhHT6ya0OUSueWDSFRq6Q43bWmmRl3C18aOJWE4=;
+        b=SPCAbqR45TlRyTUGe1GmAUDDAeMcfRRYyX904/Rzyhl4c03VJrvOUGhDUrk4dENVG8
+         h6nd7zObbm0rZgVNbmNPKXiCEu3A0uz5syC8Bws5/S4J1viLHdhl+tYccofbRlJRIoIi
+         YkGkTolh8+HXEiKF0dQxDMErSkUmkEpHD1mXtlZgU5PyARB4Ej9OCmd52M2tAhaiAxbn
+         ues0WoIuI8BJ96S251cginFevBUCK1lmBEweAj2OB8S4hNa5+e0qU1rY7ttDZKQNLbUB
+         ZnumbivbzQxOT/vXIBRfR7QKvYMh7v3l5Jc5+Yrj6J8rm7789wZ8uRGb4j4W9kEt/V/i
+         x/qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750670344; x=1751275144;
+        d=1e100.net; s=20230601; t=1750670803; x=1751275603;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nWlDjmdbKqse2BsEQ9v8zL84ldfZcFzi5P90jbLt9wE=;
-        b=dbBcxK3au4rNT/5nisoE9HIbhk8tZRg3mDLhmZd3EzKgmfOEF1vhhCKolZypMINAWO
-         DaMwMxDk8F9CpQnpKrYLz6c4nTigawC/4/8Q0iSWIi/tB8OkvsvS4tB2AkO/1VoGzagA
-         HtaNCh35T8ctHuHOlmAeSniSXZxV2VvaPx+5rW3elz3VbrrntPAJWLODa6mYzBc/EXxk
-         SSQWYaX2Xy1zM3qjMi1VvG9gwahutVe1oyx0zshxEF1ALSHHfHerUKW8lV24WDjrNIqx
-         gKA7TJ8e2p/9A8wmN4nP3OJgnLCQoIM2NQHOa1vCSVCTrHaLZvVeejz/pMr4W08F3210
-         MGHA==
-X-Forwarded-Encrypted: i=1; AJvYcCXf58kPV7qbMepkSYZBMiba0g3V0q2WE/Uk3yYn1hAueq9qPnDjyZtwTtbAiQQ63dyWD/g=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzV8UpIgMc2X6vyf7wBTySQ2SRBf8yHs+h+1M3S2XSkgJ1eO4rC
-	M6q5+MS8fow9UbGlY6HSmZLkDLNoMswWkvFFDXUgCgg+kl7oyVCBqr+NMtCX7RVwhBHnpEL71It
-	ehoxk5B2XUJMSrRidbAZgAw2yAv4jMvI=
-X-Gm-Gg: ASbGncvZbwzb6pMJAtVouzzVKvHckVYaCIYLVaEkFwESVrIEmImEolrskc1tTu0QOYD
-	Bt+09EK3TWXkRqGnuZ7gKYiUSyQFY7f+RnZxB9Y1b6cbLLwJfaY+syZDEFtCbExQzWsiHoLwZW0
-	AZjPEyKynXyCYOL//vaxy7ZZIooFcrx7rMaPeM4S1UDHNwUAhq/Ug=
-X-Google-Smtp-Source: AGHT+IHYFhQuMFUuhpv3AGBJYPKJmsKSiZvd7Sevf3GLYiONVlcQ++JErEUPnpkPqJTd4U0z5+v2Mi4VKv77BAcgFtc=
-X-Received: by 2002:a05:6102:4b02:b0:4e7:e4fe:ac74 with SMTP id
- ada2fe7eead31-4e9c2812f49mr6879475137.0.1750670344605; Mon, 23 Jun 2025
- 02:19:04 -0700 (PDT)
+        bh=bXWWfhHT6ya0OUSueWDSFRq6Q43bWmmRl3C18aOJWE4=;
+        b=ajm4hqgg6KjYfMI8RKFskHGXxafJwwDEO86U5yJl+DmKuQhJJ7v4OKJJEKCfWW0ZO9
+         xQewmi1SpN9THULp4GTu2pAd+wK6ehHi9phMBMAbv5f3p2CzlMWVBmpeeSbmCEF4B0Br
+         5QLX3MqbXXKuT7NIZbmO/mhwjcXLCaqSKPj2dmGtZu4doFQ7fV+vRpndhXf0rIdOSK9B
+         vaNS9R6BClEjoN9aD9yH8MmPKytkoqxn5LGhHUv/nrFyF0vvrRpu2jBwXzxDdzivcMYb
+         /Cm5ve/GNmW/+e+UQz0TWWLzwT5pHGf/NZ4Qhi7nUBOZgiRwPMD/gBggKQ6/kE4NYr15
+         J+FA==
+X-Gm-Message-State: AOJu0YyZSUK47fZ3sxSw8X/I6Azki8l+FFIe/49VNy//zeFIqjTJf/5X
+	OzSW8HRS3udIEb7FEgjg65OqPShDJnM+qiDKU5tRtQeiSaN1rojvCU5EObDXqw5DiUVkbv7HwXT
+	xXzSupqc3d0kszHmjnWsOiz4+QT2XWhC+xVRrTWMysg==
+X-Gm-Gg: ASbGncsBr2nWiGM6et/tS+6McIej4Fiop4Ypi2jlZEkEA0h1YhwFM2Se5gcxcPng0NQ
+	PYQN04W/LV6SfB1SVEk9eR+0V3KCk0mksXfDqrn8apF3Z7TSXqzT8LR8WnyXZ13geUI9DckhdCX
+	mepkXnXZpFwXCjWLW4EV5pcwEFMFqH8a+A1evOWHBV
+X-Google-Smtp-Source: AGHT+IFbtn8xzyTST29N+1vpp47ac1hr3/4JJAhszzUHyJ4PrqFE2WhsM/tbFZNniFOVA6JJPu0BfxsGjw8wxwRxD7I=
+X-Received: by 2002:a67:e708:0:b0:4e7:dbd2:4604 with SMTP id
+ ada2fe7eead31-4e9c2a0487emr7117840137.17.1750670803514; Mon, 23 Jun 2025
+ 02:26:43 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Jun 2025 02:19:01 -0700
+ HTTPREST; Mon, 23 Jun 2025 02:26:42 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq4iwa0xzz.fsf@gitster.g>
+In-Reply-To: <xmqq1pre14ae.fsf@gitster.g>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com> <20250619225751.99699-2-lucasseikioshiro@gmail.com>
- <CAOLa=ZSgFYXEwdTyAfC2TSgVqpCSq6D1NDBwPU9cY-unX0Jx6Q@mail.gmail.com> <xmqq4iwa0xzz.fsf@gitster.g>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com> <20250619225751.99699-5-lucasseikioshiro@gmail.com>
+ <xmqq1pre14ae.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 23 Jun 2025 02:19:01 -0700
-X-Gm-Features: Ac12FXzBIu_Nw9PbrfMfk_GfHXEqSrypwCSsShb_iBJ3kCnhnQk9JG_iaM7CP6E
-Message-ID: <CAOLa=ZSewCtgRnuLV1GPfLccFqcnNac1AT6vG8ghOquNqXsoZQ@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	ben.knoble@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000026967063839b4e8"
+Date: Mon, 23 Jun 2025 02:26:42 -0700
+X-Gm-Features: Ac12FXw14lAwigsTpXQoeOiMtlUz8INYDgW0239ElRVEvYsw2SbyYFFy9aqvKIM
+Message-ID: <CAOLa=ZTCoc9vfeMrWxqU5psmbxGzW=B-QULeSR+uvF9kQi9WzQ@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 4/7] repo-info: add the --allow-empty flag
+To: Junio C Hamano <gitster@pobox.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, ben.knoble@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000005cd363063839cf54"
 
---000000000000026967063839b4e8
+--0000000000005cd363063839cf54
 Content-Type: text/plain; charset="UTF-8"
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 >
->>>  .gitignore          |  1 +
->>>  Makefile            |  1 +
->>>  builtin.h           |  1 +
->>>  builtin/repo-info.c | 21 +++++++++++++++++++++
->>>  git.c               |  1 +
->>>  meson.build         |  1 +
->>>  6 files changed, 26 insertions(+)
->>>  create mode 100644 builtin/repo-info.c
->>>
->>
->> Something I mentioned in the previous review, but hasn't been addressed
->> is the addition of documentation for the new command. With each patch
->> modifying the command, it would be also nice to add the respective
->> documentation.
+>> Add a flag --allow-empty, which will force the output data to be empty
+>> when no field is requested.
 >
-> Bsdies, the lack of Documentation/repo-info.adoc causes "make check-docs"
-> fail.
+> I still think we should flip the polarity of the option and give "--all"
+> to iterate over all variables, and by default show nothing.
+>
 
-More so the reason, I didn't know the target also checks for missing
-documentation. That is great!
+I thought the idea was that we would show a subset of the fields by
+default when no user input is provided. Which would mean we have the
+following:
 
---000000000000026967063839b4e8
+  * `git repo-info` which would show a subset of all fields, giving
+    important repository information.
+  * `git repo-info --all` which would show all available fields.
+  * `git repo-info <fields>` which would only show the requested fields.
+
+With this context, I'm not entirely sure where '--allow-empty' fits in.
+
+If this is/not the case, it would be nice to talk about this in more
+detail in the cover message and also in the individual patches.
+
+This is also a good time to think about if we should make the default to
+not show anything as Junio mentioned.
+
+--0000000000005cd363063839cf54
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 3f129cc361bccd0a_0.1
+X-Attachment-Id: 63478f84876c3e90_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oWkhBUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMDZnQy85T3h6T05FWGh2R3NCYnorOTcybWJRbCszcgpROXFhK3RqQlJI
-ZDhVWmlCb0N3VGJEY1RqbFZabWdQMm51dEtmdUV6NE9kOGdWM0VxWFdIeFhwUTMyelJQRUZBCjVo
-MmhUVDE4eXJSdkNERnJKTGw2L2RWVXhZam1TV1FWODVhNFpKbkRoOFJNV0hRRXJhUzA5Y0N2WVFy
-R3RMVGUKNHhNd1FLZUZHbmdFMTFkN1FGZjBpR09XakJwL1dEV24xRHZjSVNvWjdSSktmL0xJamU4
-ZnB6a25CemF2UXU5WQpiUmRBbmxocVk2WXBIS25JejNPeUszMENWYU5Rb0hQTnRydkZaYWpnQWM0
-b2tZeHNPemFxZnFNeDhIL0d2Z0gzCjJ0NHFFL1lac1lLUHJHQnA2eENzZVd3MHFlZGNxVE0xTWpG
-Z1haMTA2My9PTHBjT2gzUnd3ci9qN3RWWmVBTnAKdnkzQ0FsczhISHRhaFplMkY4ejZueThBZ3NJ
-RnpuZlM3bURORUQ0R25rVUdRSWwydGlRbXZOaXQzT0VXb3VINwpmcjA3bThUeHRNY0xkQXNJRjJX
-alkvL2dMSGh2WmtsaDVzdmlLNnAzY3RkNXJmNU5KTGI0Z1p3OVlCZHAwdHUyClJHT25tS251M3F1
-czdYWnJxZ2ppcGZoSmNpM0xSVFhUbGhaWXdGVT0KPVRTdTAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oWkhkRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNm9tQy80c3pIRGo1QTAzZUh0ckdUU3dCb2FuL0xZTgpHRDRLUDRpK2ZG
+OVFLWm5NYUUycmZ6SEtGbVNBMll6NWZLTnVkTzNxRXVad21ON0FqR1Q4N2ZXU3UzZldDSVVXCnN3
+MzFOa3Q4cjc1R1BKWXpwNlF6T1NFZlFDejFkUkVmLzJHMnNqTUhiUkxwNld6Y2lGaTc4NnlPcXlU
+cjJlR1oKZ1RzUzhpelRzcFNJNWdEQU9pQnE0V2pKQmFEdUZwQm5MbzFEZ2VablNFWHBJUWtTeUIy
+KzJFU0p3azd5NzkvVQpQRExRRFZod0FmQzFvYmZsVHlaNGM4bmpGdnZ1T3hncm1KbTRYbjFQODRw
+enNTK014TnIrMVJKd09CcDRhaUxuCkw5ckFDSk1ZYndKWnY2V09Wbm5MZ3ZlRG5GbExFeXlpS2sv
+Z2x1bE5wY3dZZjJIVDJyREh2ZU40V0lHay9BZXEKemZ2VnNjV3VudTIxbnFTZjExOXkwUEVZQ3Jl
+b1RqMFNqR3pFeTVaOEY4KzMweFhSdzVBbml4WEZFamNnOU9EeAphYmk1ck5rcEt5amdMdzg0NHBI
+K0VLdTU2cGVGb2FXb3BnTE4rTGVFYXdHVUQzcUdaTmp5ajRaYlUrUVhZMlBKCkRRbWhkNUZzL3BG
+cmNmMmoyN1FuaEg0eDZzMzRIZFp0RmNLVEY4Zz0KPTRUVDgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000026967063839b4e8--
+--0000000000005cd363063839cf54--
