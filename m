@@ -1,66 +1,79 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5140188735
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 16:30:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCCA1C84D2
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 17:27:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750696241; cv=none; b=jLdQtMp/UvqdUn0wYz60/kB2YrAR1aY/YQJiosvYZewAUwnbyI6Jk7u+NNRMbAe45pI1Cb4373ttg9vz0k+3WFQq8lgWXj1lYH29AMAFfOQwNCtOvJFklZV4BYUhX0mjeO3zDXVzvjPw4U3Gec1+KpUO4yB89wfP+WaVyk0KOd8=
+	t=1750699632; cv=none; b=dUTHjfeBwHRiGIviSAjHrvHy2mWtR/Zix93yVQ8GdqrclGt8/Zui08f0YXx5R75/eyDLdNzO8FzyBk+RGy0c3RST1ZJgvF8vZMtfz0qj5Z4KX7SMx5AlSQt3DRrZ+28Cr1DWq2DvlIGDGDdWDSLlg3BmFtVikgP73uKLTto6V2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750696241; c=relaxed/simple;
-	bh=KsiTmQXH2TcWqDsOlfBnagXaMgeysG8VOjg63O2frto=;
+	s=arc-20240116; t=1750699632; c=relaxed/simple;
+	bh=BqhJ7QtF2sklU8hu14wV5wRc8e51j31A4Vb7Qe+4rT8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ahRbDy3a8dGAZ3RD83u5glEI8O9pYS59Ij8nnAK2EOuZh/R73TPkCWLf9E3jRua1naPfOPiIqSzW2rdPhZKXSGhz5s6tYYswXzdi1I7GG/uOciPb0kWEKXfxNU9Yq5oR1K/iS28OeIUmcwg4gWaYgJPyvkmaqXnIGAitpVLaI3g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FWH25oDT; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=R1W4Ty1jyx1tDmQgN3lOdN8PplS4atTYVeTz+rtYWzZbAAvLAzLsql//FJwxqnR06xftFs+2mTvQPH32B3YDlby+OIH0E1j3AKZhideyNlHmzHP9D/A9/+66zmVuFalQ1FvyG/ZTFawJZikvMk4P8WWmXY+U8p5CZ3mmeOB49Ro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zv6w1PWO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T+JtdYAv; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FWH25oDT"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-40a4bf1eb0dso2819072b6e.3
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:30:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750696237; x=1751301037; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=cyRm0UHpleJePg50CkPuwsu+BIQgX9b0hiVQDl89i4M=;
-        b=FWH25oDTfjCQq+RmkDhmVmui8TK//XP8HN1ZwOI+vtPG4zfk0oTd5X+NaaTmbPAMmP
-         Vel186tslNvHYysVxA0P6lI/JFAvSHbTF9ezRY2aemsNuqqbcr6YyoLUqq3L2/uSmgAf
-         XG7yt+SUgM1yA3Max4b1DXGGZ8Qef9A4orhBeWAcKZCnP5eJeXkZvBbjuPl4S3C6i91T
-         ++FHbeK3b1hH6HOXj89waNNspCvPrTYecAQP+zI72WIz12kiBbN1dGVD/N3QX/GZMmIQ
-         mTsMKIqgzuSxP28cOl2YUfxcKYe3swHgjJWKaibudfLvHCxsGKI/ZYb5cP0tD22Hlkhl
-         7ZJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750696237; x=1751301037;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cyRm0UHpleJePg50CkPuwsu+BIQgX9b0hiVQDl89i4M=;
-        b=teAMhbB/hLevlFqtbjB1PQM90qItnnl1Z+C9fniyVmztU30mLQ+m0lS9m9i0Q+D1pj
-         g42Mlkem3Y9vPRDA9+mp/pfSjedHbTsySpwawf6WRjV3MGLCNCWN+/H4gFEYw6Ty8jXu
-         YFMRqMmOFInBEI6oUsUaY3usLR/C9zm0Xx4WpzOlkmczUSoF/wnyaoqjOmTsoSSsnxZE
-         zTIcoz8h1Jzi5jr1BLlIedRsCTJZ/Mg5tsPr2zZxdiGV1TtaBPsbJuDAyE4c777Y053c
-         FLcT8WKY5ity6yopw+ri+EcVMypYmVpX99qwe0GQXuCet6wuWj9d7wx6rOca1R0n50+o
-         ZopA==
-X-Gm-Message-State: AOJu0Yz4zzjlci07pUecQvnC40WAehDy9NZgeutA/CDarY8Gsayizsnw
-	isZdqtx2WbUDx8VKLafZbOHnTYbjkawkLMYHMddRYXFWppeOaCAy9DjpLNiDVA==
-X-Gm-Gg: ASbGnctUexz7i7gXuSMdneXw7T4ASFponleO8e7T37KaiyOJtm+igRK3il+kA2yb1/K
-	InEwjDHnXqz/IyBDLWexAW9W1Cun1BqohXFUZIQ+oglRy7b5Ho6GuneCscbXrj/p838Fz/UNrSe
-	wPdT/mfJyjcVpF+oD3U4HFjQjjPk1kyMUkgHOLy04bMiLLiLFKS4nExN0UBvdppwGPt5IF+2qL/
-	evw/rE35hMIqb6a4L6ytG656jz2v+7jz8mCKUujoVqK5nVkXus5tUIIJm7tl4EaTiBOT9gr4KPt
-	53gjuhIdKeDzyXNXOFcQd2oIm21ZicVRe/lAq3V/k9hOaaa59/Yeiw0=
-X-Google-Smtp-Source: AGHT+IFL8njnZsRd0bqMD06YFZqxJVg4wVRNlM1MzTNZ3Z8sduC5v1BU82WXqmq5+q8hbJPXc6N0aw==
-X-Received: by 2002:a05:6808:3a19:b0:409:f8e:7296 with SMTP id 5614622812f47-40ac6e18ee1mr9738757b6e.0.1750696236683;
-        Mon, 23 Jun 2025 09:30:36 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73a90b1383fsm1483066a34.16.2025.06.23.09.30.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 09:30:36 -0700 (PDT)
-Date: Mon, 23 Jun 2025 11:25:20 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zv6w1PWO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T+JtdYAv"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 70ABF25401F6;
+	Mon, 23 Jun 2025 13:27:09 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 23 Jun 2025 13:27:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750699629; x=1750786029; bh=i9uCUXVHMf
+	Zh0MliSyn4Ceg9wloMIZUPV69rVEfLnFA=; b=Zv6w1PWOnFtfjd93arFN2LzWuX
+	8+ZMmGCE2EKm3QlAqPMnAx9kpY2Hn6JJGb3Hpf71zCznOpWESbfxUM8LrLUdqYZ7
+	wfZcY9/nL/kiTpAWFr+wfY4D0gw3IzJGHBT6vmqfjqpSjQpJY19mr1xthh6AEBLE
+	UdajQseXiL0YSrrfXPZ60wZRojJj2h2B+J1/i44lm83xZY+2XNmDsYDJiE3WKNMw
+	0C2cvgBXtd9+mwVhVaR/F7ke7SfT1mpPaiGgFnjGW1UfKD9H5GhZk2666x9xP8gW
+	6Ae7mLXE4qqPgRKAXBpmc0Hov8Uzi0WjdkQ97/SQvuzUTdP2TTRzJ8jOATQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750699629; x=1750786029; bh=i9uCUXVHMfZh0MliSyn4Ceg9wloMIZUPV69
+	rVEfLnFA=; b=T+JtdYAvuti65QSYkFh6z3l8+EcHEyVctbZnqn69blUQ1+CxLpP
+	Y1hYIHUBPBmSDRr6sLCuqhX55RJZNVTNMIm+PRJw5NbHsduI+cQ7MUvPIBcyhUQd
+	16+Z5Rm17juraOhlWVXJ34w25Ech78VILERQosPoW21ZI4B/sDNaOgLvJyZjBczf
+	5z0T6Q8CzXBhERwzJBJ6WxClwCLtdWtHTanq5S1zDgfSlxreEZz+LqMEcmuSVK/j
+	3V27FhA/LacyVW8sYkdZbHYmbspq6I7BOzNjJhqTThtfrL+rpbQWy3sz5Hxx6MSl
+	GQHhNW5vyEz+LYJsGIBTYEyHTRZEGvhxElw==
+X-ME-Sender: <xms:bY5ZaMlDiz7aJ2_IkTrT5rO2T5hLqS85ey0y3QraHocWWd9Vjl6ybA>
+    <xme:bY5ZaL2OdNP5oUAE-uiRb9hSNayZsxLRDtG8yH0Z6reNJHj0E5wM8Mf2fzBnYMccW
+    Jdofj5ia3mEfnHydw>
+X-ME-Received: <xmr:bY5ZaKrsejQlTua2MpXtylmxZ0X0y0Kt4J00wQIi94VOrhrzRHLmH8IR3QkOCTUvPSSYFPP22RS6K-sjmT5Cf1iVfV-lXDT1CW_PuVnYqEzfVT675Z3h>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeeivdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghu
+    lhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    fgveefveeihfehhefhgeethfdvffehfeehueelheeiffeuvddvuefhveffiefgueenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpoh
+    gsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:bY5ZaInskqbSLKttLrhChxXjbP1c90YM8r8LB7RDQlaoKEFVM-sbsQ>
+    <xmx:bY5ZaK2QoQV-mE1TkpI-1rOfuvw7BnvlNL0OrocyVWak1eN50wrkVA>
+    <xmx:bY5ZaPujKHR4gO26tHkTZ9rplZ6sBmdJdB5-1w_l5XjWvbtE6qcHqg>
+    <xmx:bY5ZaGXlokAq9ncECWC1lgHbT9QfdtMRCKaOHjhyqfvXxiJPFi-KQA>
+    <xmx:bY5ZaHPC2U0uQRiC76EG3AeeA799shek7oa9-eppV_1Q3ZE_XvHEim2O>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Jun 2025 13:27:08 -0400 (EDT)
+Date: Mon, 23 Jun 2025 13:27:07 -0400
+From: Todd Zullinger <tmz@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>,
+	git@vger.kernel.org
 Subject: Re: [PATCH 2/2] test-lib: teach test_seq the -f option
-Message-ID: <oai7p5xmq3q7c3ovdpmbyimoidvgw4lhxfd727qdid5ulcdn3n@7n6vqa6wn3pe>
+Message-ID: <aFmOazVXXGpt8bLB@teonanacatl.net>
 References: <20250623105516.GA654296@coredump.intra.peff.net>
  <20250623105625.GB654412@coredump.intra.peff.net>
 Precedence: bulk
@@ -73,84 +86,15 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20250623105625.GB654412@coredump.intra.peff.net>
 
-On 25/06/23 06:56AM, Jeff King wrote:
+Jeff King wrote:
 > The "seq" tool has a "-f" option to produce printf-style formatted
 > lines. Let's teach our test_seq helper the same trick. This lets us get
 > rid of some shell loops in test snippets (which are particularly verbose
 > in our test suite because we have to "|| return 1" to keep the &&-chain
 > going).
-> 
-> This converts a few call-sites I found by grepping around the test
-> suite. A few notes on these:
-> 
->   - In "seq", the format specifier is a "%g" float. Since test_seq only
->     supports integers, I've kept the more natural "%d" (which is what
->     these call sites were using already).
 
-Sticking with "%d" definately feels more natural.
+This is a nice improvement.
 
->   - Like "seq", test_seq automatically adds a newline to the specified
->     format. This is what all callers are doing already except for t0021,
->     but there we do not care about the exact format. We are just trying
->     to printf a large number of bytes to a file. It's not worth
->     complicating other callers or adding an option to avoid the newline
->     in that caller.
-> 
->   - Most conversions are just replacing a shell loop (which does get rid
->     of an extra fork, since $() requires a subshell). In t0612 we can
->     replace an awk invocation, which I think makes the end result more
->     readable, as there's less quoting.
-> 
->   - In t7422 we can replace one loop, but sadly we have to leave the
->     loop directly above it. This is because that earlier loop wants to
->     include the seq value twice in the output, which test_seq does not
->     support (nor does regular seq). If you run:
-> 
->       test_seq -f "foo-%d %d" 10
-> 
->     the second "%d" will always be the empty string. You might naively
->     think that test_seq could add some extra arguments, like:
-> 
->       # 3 ought to be enough for anyone...
->       printf "$fmt\n" "$i "$i" $i"
-> 
->     but that just triggers printf to format multiple lines, one per
->     extra set of arguments.
-> 
->     So we'd have to actually parse the format string, figure out how
->     many "%" placeholders are there, and then feed it that many
->     instances of the sequence number. The complexity isn't worth it.
-> 
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t0021-conversion.sh                  |  4 ++--
->  t/t0610-reftable-basics.sh             |  6 +-----
->  t/t0612-reftable-jgit-compatibility.sh | 13 +++++--------
->  t/t0613-reftable-write-options.sh      | 24 ++++--------------------
->  t/t1400-update-ref.sh                  | 10 ++--------
->  t/t5004-archive-corner-cases.sh        |  5 +----
->  t/t6422-merge-rename-corner-cases.sh   | 10 ++--------
->  t/t7422-submodule-output.sh            |  6 +-----
->  t/test-lib-functions.sh                |  9 ++++++++-
->  9 files changed, 26 insertions(+), 61 deletions(-)
-> 
-> diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-> index bf10d253ec..f0d50d769e 100755
-> --- a/t/t0021-conversion.sh
-> +++ b/t/t0021-conversion.sh
-> @@ -281,7 +281,7 @@ test_expect_success 'required filter with absent smudge field' '
->  test_expect_success 'filtering large input to small output should use little memory' '
->  	test_config filter.devnull.clean "cat >/dev/null" &&
->  	test_config filter.devnull.required true &&
-> -	for i in $(test_seq 1 30); do printf "%1048576d" 1 || return 1; done >30MB &&
-> +	test_seq -f "%1048576d" 1 30 >30MB &&
-
-Very nice quality of life improvement indeed. :)
-
->  	echo "30MB filter=devnull" >.gitattributes &&
->  	GIT_MMAP_LIMIT=1m GIT_ALLOC_LIMIT=1m git add 30MB
->  '
-[snip]
 > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
 > index bee4a2ca34..8c176f4efc 100644
 > --- a/t/test-lib-functions.sh
@@ -163,13 +107,6 @@ Very nice quality of life improvement indeed. :)
 > +	case "$1" in
 > +	-f)
 > +		fmt="$2"
-
-With the `-f` option, the default format string gets overwritten to what
-is provided by the user. Makes sense.
-
-If we want, we could update the comment above this function to mention
-this new option.
-
 > +		shift 2
 > +		;;
 > +	esac
@@ -182,14 +119,44 @@ this new option.
 >  	do
 > -		echo "$test_seq_counter__"
 > +		printf "$fmt\n" "$test_seq_counter__"
-
-Nice and simple! Each of the updated callsites also look good to me.
-
--Justin
-
 >  		test_seq_counter__=$(( $test_seq_counter__ + 1 ))
 >  	done
 >  }
-> -- 
-> 2.50.0.385.g2a828bf5b7
-> 
+
+Is it a sharp edge worth caring about that someone might
+write `test_seq -f 1 5` where we'd pass 1 as the format
+string?
+
+If so, perhaps a check like this might be sufficient to
+catch it early?
+
+	diff --git i/t/test-lib-functions.sh w/t/test-lib-functions.sh
+	index 8c176f4efc..87b59d5895 100644
+	--- i/t/test-lib-functions.sh
+	+++ w/t/test-lib-functions.sh
+	@@ -1458,6 +1458,10 @@ test_seq () {
+		case "$1" in
+		-f)
+			fmt="$2"
+	+		case "$fmt" in
+	+			*%*)	: ;;
+	+			*)	BUG "no % in -f argument" ;;
+	+		esac
+			shift 2
+			;;
+		esac
+
+I don't know whether it's worth the extra code or not.  I
+just wondered about how it would fail in the face of a minor
+typo.  It certainly should cause any test to fail if it were
+to output 1 instead of the intended format string, so it's
+arguably fine as-is.
+
+Adding -f to the usage note above, as Justin suggested might
+help folks avoid making the mistake of cuddling the format
+string against -f, e.g.: -f%d.  That is caught by the
+parameter count check (though perhaps not everyone would
+notice why, thinking they did pass an argument to -f).
+
+-- 
+Todd
