@@ -1,89 +1,150 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C6311A5B92
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:39:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C35A33E1
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 03:28:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750646394; cv=none; b=E7Pg0f02C0iUWcbWynIb4mjM0CJJ8E7G4lywAn3lTst68rFXiFQK6VXgmDn+buxnKbfzWVQGJwhrt4vT42EcRpUfAiGdHIBX8S5AXWtH3RlwQDmHs2QgSgxO3C/TBdF6HJBicpWjlr6Z/JLHA2kr7+NjDO/xywTzT69iSPGixtQ=
+	t=1750649319; cv=none; b=mjY25Clx8CHrUUYpclSk4PgIEoIe59LM1lbthXVl5peBnilQxCiP7XRmzlV6nAqwX7G9EikYVAaaXE/T4SEomZ1yOI5hYD6zf1FZCkmxiJRBSTqR8MeBktlBf6XRPWUMecAq/2YRVWosZDdC+HIvB8WC2SQGOTtx2wknyya1mo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750646394; c=relaxed/simple;
-	bh=84/NtklIApqkS6s1fnUr0y8M2pW12aOSSWfF9GOx5uk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=XZ+N6ddPml8nZ4cFUSH+O/eyBorT2wCimGPtSDr+7813sFYkDyj+5sBJOcUjOt9Da7FcTrCaBnJmqn0xYhYl5NzLhXMgYZ10rwXhZvR2bvTZp0fk1BjBcUMkhlMTAP7aMkLyC8uTzN5DhS0CdknWAZ/cOKGpMI88HjvVAwrTqyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X0H94u3A; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750649319; c=relaxed/simple;
+	bh=5PqZ89eZEMP4U9PcjXi0kzmfQyqkUB4GMcv/v7KPRoI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p0uzPWrowr7MpT0TIVV4ONTjwEllCIvQB5YemYIZGk51K5F132Y/cbYnqGXsIxykAeUGCxwsNwOSRso37NAO025PpaB5fjguVb0/OHAH5F8H/68rh0tv8ZQbBS0iysann5HCoDFYzMEf2iqq3u+9eugjUiHQ/HfpFH/+erd+yhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=Jcb3dUfs; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X0H94u3A"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-234bfe37cccso46636615ad.0
-        for <git@vger.kernel.org>; Sun, 22 Jun 2025 19:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750646392; x=1751251192; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=84/NtklIApqkS6s1fnUr0y8M2pW12aOSSWfF9GOx5uk=;
-        b=X0H94u3Ay+hI3U2jcnt9SFbtc9ZA72Y/vZC68Cpp7DLr6jWELn8EAwbPrsyN7n+bBc
-         e5FEiR9c9uXJ5PYib2SrtPSk+Ym7EEjIwsepUswdguYZ/ocklgH6vAtMKkWj0JXrnr5L
-         1LaToI7+6UfRBSvp3YpGzi3/D6zdIf0I8V+hXT2uvawfuASFFm1BeLZPehidsdog2x3U
-         G8bcYce6eDE5UI4kvuzCbo+k+GvihsMVpyTrVZMTeBmMmp9tIVq8hUs3rwm7AuH6rx1p
-         iv/ZMSEOnFc2hKPH8qBU7P+sPUTIv8SkUkflIqHCZF5QCcM7o+k1QY3BR719idOWGLCH
-         xPsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750646392; x=1751251192;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=84/NtklIApqkS6s1fnUr0y8M2pW12aOSSWfF9GOx5uk=;
-        b=jGT61d4Kesi3Vu+l1PJRZ8TSGEPS13j6qBJKhaUqutDmejj+9HqX95e7H5vUw9KKy5
-         BMXCubQso/LuXMiWv5ALYxNs2v7hjDT8dB0fD71fx2j5qM4PsljTgVR3lCkR9GPfP97q
-         PMcahjbi3dIrdUnOj7CcyPXgipipOTsc4iRAV4bQaGBMvRnKa8716fAt/dOWXdni9AUe
-         SlD/mu5MRUx53zS2Ki17mgcOvOn4IyG1PcDGWSI5qWItAOPA6FcbfQzaxyp8+6zd0HPB
-         cferaKgSZi/4sAhQOhx1gZHqkSzeVdNpclyNEQWS2TWE4bOv2mdSsWBofgIpukBi48ty
-         hzEA==
-X-Gm-Message-State: AOJu0YwrCNbpCAoZNFk5kJaoFEhTOc8RwXDaErrOknyi9ulgWGJkgiUA
-	Li5MIf/RVH4T6pkOcMmR1VoMnoxEqe+lk6QH6OIRP2pyg6iEv6bce7Gf
-X-Gm-Gg: ASbGncs4Dvbrsnx+yCFCuWYSWqSg7WFnCJOUc9mfXP3N7exAcoUHMYB0K21zv5+YWkB
-	weOsXl6j3sJ5328Dj10CRLunF/FWtCSntKJK9EN91wjoH+IWDndDzecD8RXBlleR9e1Npy43Mdn
-	1pvH8fkWbKFSGcJI5oC3KR6siEYLjnq+WB80Tmm9Zt5FLM3cix+Ta/HTmZp/8zRqG2f/p2Nz++y
-	33D3/DiifSne+vBO+ook81WzgCf6u29jedD7rTHNlj67ltN2rJMFwp6m9L0nTN1AN+zexVaxd7Z
-	PoClbKVcSUGGaAYN0fgx/NBjn+SrWHTfnlmVp6alGe+pm8XWb69Z9jCywZXO6tsk70e42Zw6jyC
-	luRpVWx000Mcc/bHWOGaNUEY=
-X-Google-Smtp-Source: AGHT+IFeyHQGReuZSThRm4yAWWrvzl0ANeRdRxUgWMoqfxrmaTOE8YSNoV1suEWmsCzcD1ygQ3W6yA==
-X-Received: by 2002:a17:902:ce85:b0:234:bc4e:4eb8 with SMTP id d9443c01a7336-237d9aaaacbmr161255955ad.46.1750646392164;
-        Sun, 22 Jun 2025 19:39:52 -0700 (PDT)
-Received: from smtpclient.apple ([191.181.56.196])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d86e2898sm69855565ad.215.2025.06.22.19.39.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Sun, 22 Jun 2025 19:39:51 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="Jcb3dUfs"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <maxim@guixotic.coop>)
+	id 1uTXrC-007Jv7-L4
+	for git@vger.kernel.org; Mon, 23 Jun 2025 05:28:30 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From;
+	bh=V1lZDUj17p8fdGcWjvkX+PZy7EN11k0ScGmaEx/MaAA=; b=Jcb3dUfsKmQWuPzpxxZXX6fGBy
+	mFunP1uCsgTzslcanyr6sJqOc/SSrFb8U2sMWUIjSoScgZ+dvnXjM5bys8Y0LQaz+Y25EAXmxwzZX
+	JZLXEpbZCYsXyJUkA7wcxPRPEnMSNTe1d+ooOBh6TIlWNFESkt0i3FCZE+ZP7e9oBIwljkkXLppdQ
+	SHWu+W24J5rpvepLB3iOe3meK7pwLiTC5duulKz3R4Ojpgryb++QjIYwRtYClKwJG6u+fp7nR8mZZ
+	8OIe4OsX/5d+ULKOeBMYKY6e4jgjXrFGbbdmzboeesH3XYetfDiErUPuyFMAnukUiWxnghZZ6des6
+	F4jzNrDg==;
+Received: from [10.9.9.72] (helo=submission01.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <maxim@guixotic.coop>)
+	id 1uTXrC-0003UL-6g; Mon, 23 Jun 2025 05:28:30 +0200
+Received: by submission01.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1uTXr1-005V0a-V0; Mon, 23 Jun 2025 05:28:20 +0200
+From: Maxim Cournoyer <maxim@guixotic.coop>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
+In-Reply-To: <xmqqmsa27cdn.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
+	20 Jun 2025 06:48:04 -0700")
+Organization: Guixotic
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+	<xmqqmsa27cdn.fsf@gitster.g>
+Date: Mon, 23 Jun 2025 12:28:16 +0900
+Message-ID: <874iw7f86n.fsf@terra.mail-host-address-is-not-set>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH v2 4/7] repo-info: add the --allow-empty flag
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAOLa=ZQXeQX-v2JmKTpaJDLwWWKQSXoMUGbpmD6xx8KpbY91yw@mail.gmail.com>
-Date: Sun, 22 Jun 2025 23:39:36 -0300
-Cc: git@vger.kernel.org,
- ps@pks.im,
- ben.knoble@gmail.com,
- gitster@pobox.com
-Content-Transfer-Encoding: 7bit
-Message-Id: <BA2F0A3E-231B-4F0D-9485-912B90DC917F@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-5-lucasseikioshiro@gmail.com>
- <CAOLa=ZQXeQX-v2JmKTpaJDLwWWKQSXoMUGbpmD6xx8KpbY91yw@mail.gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Hi Junio,
 
-> I still think this is early for this, and we should add this flag later
-> if the need arises.
+tldr; all changes discussed implemented in posted v2.
 
-Ok! I'll remove it in the next version.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Maxim Cournoyer <maxim@guixotic.coop> writes:
+>
+>> Subject: Re: [PATCH] contrib: Honor symbolic port in git-credential-netrc.
+>
+> Please downcase "Honor" and drop the final full stop, per convention
+> (see "git shortlog --no-merges --since=2.months" for examples).
+
+Done.
+
+>> Symbolic ports were previously silently dropped, which made it
+>> impossible to use them with git-credential-netrc.
+>
+> Wouldn't it make sense to issue a warning message when a defined
+> $nentry->{port} is not unrecognized?  Wouldn't it make sense to
+> do so even before we add this new feature?
+
+I agree it's subpar that the current code silently drops the port when
+it doesn't match the expected form. Since port values aren't validated
+in 'git-send-email' at the moment, a proper fix would be to have routine
+to validate ports in a common library and applied everywhere a port is
+read from the user or a config file, ideally, in git-send-email or
+elsewhere.  Maybe it could live in Git.pm ?
+
+Edit: Done.
+
+>> This is a supported
+>> use case according to 'man git-send-email', for --smtp-server-port:
+>>
+>>    [...] symbolic port names (e.g. "submission" instead of 587) are
+>>    also accepted.
+>> ---
+>
+> Missing sign-off?  See Documentation/SubmittingPatches
+
+Done.
+
+>>  contrib/credential/netrc/git-credential-netrc.perl | 6 ++++--
+>>  1 file changed, 4 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/contrib/credential/netrc/git-credential-netrc.perl
+>> b/contrib/credential/netrc/git-credential-netrc.perl
+>> index 9fb998ae09..ad06000b9f 100755
+>> --- a/contrib/credential/netrc/git-credential-netrc.perl
+>> +++ b/contrib/credential/netrc/git-credential-netrc.perl
+>> @@ -1,4 +1,4 @@
+>> -#!/usr/bin/perl
+>> +#!/usr/bin/env perl
+>
+> An unrelated change to introduce the use of /usr/bin/env in this
+> patch is unwelcome.  Besides, this is a source that is processed
+> by the nearby Makefile, which uses the toplevel genererate-perl.sh
+> to turn the "#!.../perl" line to name the correct $PERL_PATH before
+> the build product gets installed, so I suspect that this change is
+> totally unnecessary.
+
+It was necessary on my system to test the uninstalled version, which I
+simply symlinked to ~/.local/bin/git-credential-netrc for ease of
+testing. I've split this small change in its own commit. Using env
+in shebangs instead of hard-coded locations is good for portability in
+general, and the generate-perl.sh substitution will work still.
+
+>> @@ -267,7 +267,9 @@ sub load_netrc {
+>>  		if (!defined $nentry->{machine}) {
+>>  			next;
+>>  		}
+>> -		if (defined $nentry->{port} && $nentry->{port} =~ m/^\d+$/) {
+>> +		if (defined $nentry->{port} && $nentry->{port} =~ m/^[[:alnum:]]+$/) {
+>> +			# Port may be either an integer or a symbolic
+>> +			# name, e.g. "smtps".
+>
+> Do we know symbolic port names are always limited to alnums?  Or on
+> some systems some byte values in the fringe, like "_" or "-", are
+> also allowed?
+
+Looking at /etc/services on my system, I see hyphens, indeed, e.g.:
+'re-mail-ck'.  That's now handled by the `is_port' predicate, which uses
+the libc `getservbyname' call to determine if a non-numeric port is a
+valid service/symbolic port name.
+
+I've sent a v2 revision which hopefully includes all of the above
+suggestion/changes.
+
+-- 
+Maxim
