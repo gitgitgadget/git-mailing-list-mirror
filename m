@@ -1,60 +1,62 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE927227EB9
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9935F22B8D5
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:44:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750722239; cv=none; b=Tgtl6YrwohXt7qRPy3bndAt7Le/oVb4fLry/22OleEHiBU3NBhrX0SvyieuE1rWhwKQ/B0C/Vu8mdkLOQL2SXFLH4S13DjQx8qzowFB2sUa2QkN4gkxCfCFyYSw8XFbtCjTmOF71tcFTIeci7pfjelAvg0uG1/M84KhXNhBfsQk=
+	t=1750722252; cv=none; b=l7Qg6vlZL5q3SI79uzYgiPPpVexn0IugNb9fssD2gjO/qaD8T0Ztr9bz0NvszIweOjj+WCKmIwyM3DNxTdLqYgKXSFLfAjFLWF2Rvb7lRxtSDJGvQJHnbomaiY/pNSUvItOTVC9az+qIh6fWZChfcatcD5fq+vkTRBqg6y0D3eE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750722239; c=relaxed/simple;
-	bh=vBX0yrvL97QAz4NyKpVOcHHI+kogsOY/sOkFjbczXgA=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=cmCUaosVLBvB8kzaxlubnrkFzrz/ZzbLwBMDUpKLZchC1OM8izLg24sWUXUuIIE9ZfGMghoGH+07v9zuLQUMjYlzJ8tXOb2zFWsgCg5d9CnuvvXAvKUURKUx35I257R6nmXzeWkfAETV3e14F3dwZ6rCKkk2OmvOy0kK0Dg+fLs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMQABEtK; arc=none smtp.client-ip=209.85.210.180
+	s=arc-20240116; t=1750722252; c=relaxed/simple;
+	bh=7Dx0PzD4a6scp9ctQxdDKeGS3LIk+cvBZe1G8Q8iR+Y=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=cytlNWBRtWfN+rU7cpu/nxFisg91+loi/Q7A+6LyCDfIu4W7mCXnORHLO44Pkbwjeeywq+g7o+qFYMYiGnpvJIjAibF+L7VxieHwX3qqqHYpgdwZ0mWobM2JaX/VbLLRsiT2OcIKEC8J/yIVh5vFizW/vKhef2S2MK9RMgU5UwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IwSNzWKX; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMQABEtK"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7481600130eso5960291b3a.3
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 16:43:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IwSNzWKX"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-747c2cc3419so3417468b3a.2
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 16:44:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750722237; x=1751327037; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TtwpS7G+ANQyYJE1Ra3qwX6yO9HfPRnIivuxAH9m578=;
-        b=KMQABEtKYMeLukYO/RYI6DnswDuJteI3hxF6ETIuN3/ZWafk1nC+Zj3YyicVsTNmpJ
-         l4RuGYT2U/JXCT3mrtYW0z+Q8mvkzJCqnHmtS3M5j8JHKeaT6J4GSqoTIbuvYrmY0RMq
-         r3ghv1KIsMVwoMAwrby+vGSlUy48jBb2k51pN01HgeE6FyNPJs1qbFFWOJzgEdY7MRWZ
-         BxDHQpK3+KqTAiUsrHTu8JP3cdMJK10FzUPXTewC8TjciecmTvz/a07viL+3lhtRk796
-         gpPpeLbgpcebqqH/0rR8BtcyHn9kZHKRzrkp/waPMVj03LHsAov7/WJEXL3d9zXdm/o+
-         3Qzw==
+        d=gmail.com; s=20230601; t=1750722249; x=1751327049; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iB8mTQ0Fae0LK5ctig8j9gKp1lIETAJvt+fpukDqMys=;
+        b=IwSNzWKXwp9HiAHgqo/jMGf0rPd7o3dAy7VTSig2Vm+gxPXzXz1p6ulsl4KH88XIN1
+         FON9c8hxbtp/FxGXbJXfxEYEb3XrPzm31kXiZ9z/NcmChUpy4Xqx89pMdYSGIHiF7gJY
+         fFYZtYOvHtosSK/oytenUTOcDVsmHXtVewAc61hDLsPZGHAZovB+pCShPz4KcvD69tCM
+         xlWynk+UnogE41TdJucJqaGfRaDQ037TY+6RbuLAIKEBK2rm2IzkiiDJXSve4CmEJPrV
+         bPor0RhKRVeBg3WJswNrYnY70xr35pLzAhHreFiFJX/Z/aK4/xdYfHFXZNGpzJRURlRG
+         TNCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750722237; x=1751327037;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TtwpS7G+ANQyYJE1Ra3qwX6yO9HfPRnIivuxAH9m578=;
-        b=ogstLyPquSFC6l6LoSJmRYPQxSvn5Q9xA3uFk+uGx7CwRT3eoGgr1J6z/D5ABT3ViZ
-         JYHP2uKdscmxPqNQrToB9D4HHBmPeLS1vmFJplIGt4KHMNsuWo5n0El6ZwnBnfjiDgdv
-         l+Sf6g+MoEd37LnLXkIszH71bDz7PHXvkZAVZHk2RfKLgSJ+CzPNJsRRI7CfrmCWwx/7
-         BzaWobdrurWLf3dKWWhc43U3s+J30oOuFi2wlUppiTwMW7SkMV/ZNchEUNU5OsZrUhob
-         D2NOZWKVhgnsNp9M71ycFqHWtwy1yCa8yCid4D77BuSHExvrLDbwXTCqBSDuEsfsymCh
-         lF+g==
-X-Forwarded-Encrypted: i=1; AJvYcCV+58Yr0/KtS+5bxTdnkzo4l6ptzyqzKEBkBYNRA53XoTBRQkkfD3VDhcq74hGjAnoGlZ4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywle4v1qx7Xs8ZS4qEEEmwP0orua0OAjuD5I9bFJ/rYFBMEmbWn
-	R72C2wp9pD8dpAPWrSDrmt4t29E5D/a0flNnQIK1xeMg6n2C+ztCHN/U
-X-Gm-Gg: ASbGncsKDYqXXfE0eGlvnDGiINFT3RGWDvlvSpxlXHw2yRya34wC6yYiyWPJ7yMbGeC
-	HoJpKsV5I16xFrzx69ziMCuyMUINsrxB1J0jmQ+cGvCPoXd9aUxBZhIQHP4wbqbyfyEbKMQAnaw
-	eW4Lfkp5dIaqmM/i7hoe4TLHxRsxgjiSehwCGYzq/vPpb16QkMJoUZFIbJ5uXSzMEQeNHM6nmb4
-	49xFKkZXsjhUy2/5xkd40h8Nd1NO8oLCYXs7Uq/IkCfeyGSm+bztusqtnym18lJ1gEKkZN/mVsS
-	rU9cYE4c+qOUN224SjLQX/Fs0/AR13Ha2eGZoTDlvDsMWhFD+8gx3IZZw6s=
-X-Google-Smtp-Source: AGHT+IGR/yzqV1mmGiYfO6lmak5g6F9cglWWN9BexbqPcFSAcTiBefX1zAypXTtnQDNjOt9U/jMwfg==
-X-Received: by 2002:a05:6a00:2441:b0:749:bb6:3a8e with SMTP id d2e1a72fcca58-7490d66362cmr17473204b3a.1.1750722236851;
-        Mon, 23 Jun 2025 16:43:56 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750722249; x=1751327049;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iB8mTQ0Fae0LK5ctig8j9gKp1lIETAJvt+fpukDqMys=;
+        b=lUsYkTZIlP6MbiYquZKnIUPbTpM9O2JjNrgMt2cIpgtgWSFxtzv++7I8ut0qJHIVek
+         jKIahqqTYbyCrtmUq6b5AMCzG4AT7VVDI4JsV0n6Ktx/uNVnjkQ976bJlAeeEq7qbj/K
+         Jbllchfx+iXCHNCSbG5IQY8/Ila1r1B6IIwWu4EM2dRiZWey88O8AqL03zynPCLG+Dlj
+         11V9XdfGFzxhNNVPDEZT2a4ldt5pTlDyfGkGcEY/Cm+zgu2ThsckDAyoxUCZfAut1xN5
+         eKxF2iaHTP6T+y/hqPK/vluR8F43+kxVQifISwLp415UzyoOzxze3b9WNSVYFwBfCZno
+         fcag==
+X-Forwarded-Encrypted: i=1; AJvYcCWZL2Lz0ja+kHYqQt0bXIfj7DfQYkEkQIUUs8Vtc+jxsbPDmwWv8Dq6NEwFnZ8wAOQIYCY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzLkOJ1LKyyUgcIXx1w9iJDXfBPdTyr2c9PV9eAkdEiceA86+58
+	um9y/WnOFBIiIxLrgnj/KSJ1J+Bj9o/kGqBEPKyDAFAovKJ3OJsJGUwK
+X-Gm-Gg: ASbGncuPUv3gPLGpyec5G7RVdmpiVnB0/HubgB7yE+nzUtB2heUXrDFJR+tRr1y8nuy
+	KwCcZHG/wXyUJ1rYkZEoU6aJBeTG45LCsKO81XcMs+agzEhTS/9FbdQFtfPra0mbOHUbbCccPxW
+	CD63gBA/Y3fh656HkZgSbFJ3TAMxYaTphqJCvHR1dY5NQ2lHudluGvb9VhKCfHho1azv3HCGgkB
+	Bkk8yQJZw4usUxjQih03/qJbYzmoNuy4Uyutu5sOtSn6bRHcaYmlHEs/VIS08fuX6eVACyn31NS
+	yxJWHyk0Mexm08sFaBtWKfQqiJzgQB0gSMUGboyeYfIiXH3xteR/bsNbKyc=
+X-Google-Smtp-Source: AGHT+IF9azBKI2XTrGqsBvQPivBqvPrUmgRu44bSc9zdXB6cfjEY/Gs3bbh/MNXF+QfzuKlm/pVO/A==
+X-Received: by 2002:a05:6a00:22c4:b0:746:27fc:fea9 with SMTP id d2e1a72fcca58-7490da49eccmr18889785b3a.11.1750722248741;
+        Mon, 23 Jun 2025 16:44:08 -0700 (PDT)
 Received: from dev-phord.dev.purestorage.com ([208.88.159.128])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882cc92sm252856b3a.82.2025.06.23.16.43.55
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882cc92sm252856b3a.82.2025.06.23.16.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jun 2025 16:43:56 -0700 (PDT)
+        Mon, 23 Jun 2025 16:44:08 -0700 (PDT)
 From: Phil Hord <phil.hord@gmail.com>
 X-Google-Original-From: Phil Hord
 To: gitster@pobox.com
@@ -62,10 +64,12 @@ Cc: peff@peff.net,
 	git@vger.kernel.org,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH v2 0/2] fetch --prune performance problem
-Date: Mon, 23 Jun 2025 16:43:25 -0700
-Message-ID: <20250623234327.335490-1-phil.hord@gmail.com>
+Subject: [PATCH v2 1/2] fetch-prune: optimize dangling-ref reporting
+Date: Mon, 23 Jun 2025 16:43:26 -0700
+Message-ID: <20250623234327.335490-2-phil.hord@gmail.com>
 X-Mailer: git-send-email 2.50.0.84.g5d85fe910b.dirty
+In-Reply-To: <20250623234327.335490-1-phil.hord@gmail.com>
+References: <20250623234327.335490-1-phil.hord@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,43 +80,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Phil Hord <phil.hord@gmail.com>
 
-`git fetch --prune` runs in O(N^2) time normally. This happens because the code
-iterates over each ref to be pruned to display its status. In a repo with
-174,000 refs, where I was pruning 15,000 refs, the current code made 2.6 billion
-calls to strcmp and consumed 470 seconds of CPU. After this change, the same
-operation completes in under 1 second.
+When pruning during `git fetch` we check each pruned ref against the
+ref_store one at a time to decide whether to report it as dangling.
+This causes every local ref to be scanned for each ref being pruned.
 
-The loop looks like this:
+If there are N refs in the repo and M refs being pruned, this code is
+O(M*N). However, `git remote prune` uses a very similar function that
+is only O(N*log(M)).
 
-    for p in prune_refs { for ref in all_refs { if p == ref { ... }}}
+Remove the wasteful ref scanning for each pruned ref and use the faster
+version already available in refs_warn_dangling_symrefs.
 
-That loop runs only to check for and report newly dangling refs. A workaround to
-avoid this slowness is to run with `-q` to bypass this check.
+In a repo with 126,000 refs, where I was pruning 28,000 refs, this
+code made about 3.6 billion calls to strcmp and consumed 410 seconds
+of CPU. (Invariably in that time, my remote would timeout and the
+fetch would fail anyway.)
 
-There is similar check/report functionality in `git remote prune`, but it uses a
-more efficient method to check for dangling refs. prune_refs is first sorted, so
-it can be searched in O(logN), so this loop is O(N*logN).
+After this change, the same operation completes in under a second.
 
-    for ref in all_refs { if ref in prune_refs { ... }}
-
-We can use that function instead, with some minor cleanup to the output to deal
-with the ordering being changed.
-
-This patch version only adds the deleted branch name to the output of the dangling
-sym refs since the ordering has changed. This is only a minor cleanup and was
-not actually needed since, for example, `git origin prune` already did not
-mind losing track of this information in its output. But now it is improved
-to be more explicit.
-
-Phil Hord (2):
-  fetch-prune: optimize dangling-ref reporting
-  refs: remove old refs_warn_dangling_symref
-
+Signed-off-by: Phil Hord <phil.hord@gmail.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+---
  builtin/fetch.c  | 20 ++++++++++----------
  builtin/remote.c |  4 ++--
- refs.c           | 21 ++++-----------------
- 3 files changed, 16 insertions(+), 29 deletions(-)
+ refs.c           |  4 +++-
+ 3 files changed, 15 insertions(+), 13 deletions(-)
 
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 40a0e8d24434..65d606c6de08 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -1383,9 +1383,13 @@ static int prune_refs(struct display_state *display_state,
+ 	int result = 0;
+ 	struct ref *ref, *stale_refs = get_stale_heads(rs, ref_map);
+ 	struct strbuf err = STRBUF_INIT;
++	struct string_list refnames = STRING_LIST_INIT_NODUP;
+ 	const char *dangling_msg = dry_run
+-		? _("   (%s will become dangling)")
+-		: _("   (%s has become dangling)");
++		? _("   %s will become dangling after %s is deleted")
++		: _("   %s has become dangling after %s was deleted");
++
++	for (ref = stale_refs; ref; ref = ref->next)
++		string_list_append(&refnames, ref->name);
+ 
+ 	if (!dry_run) {
+ 		if (transaction) {
+@@ -1396,15 +1400,9 @@ static int prune_refs(struct display_state *display_state,
+ 					goto cleanup;
+ 			}
+ 		} else {
+-			struct string_list refnames = STRING_LIST_INIT_NODUP;
+-
+-			for (ref = stale_refs; ref; ref = ref->next)
+-				string_list_append(&refnames, ref->name);
+-
+ 			result = refs_delete_refs(get_main_ref_store(the_repository),
+ 						  "fetch: prune", &refnames,
+ 						  0);
+-			string_list_clear(&refnames, 0);
+ 		}
+ 	}
+ 
+@@ -1416,12 +1414,14 @@ static int prune_refs(struct display_state *display_state,
+ 					   _("(none)"), ref->name,
+ 					   &ref->new_oid, &ref->old_oid,
+ 					   summary_width);
+-			refs_warn_dangling_symref(get_main_ref_store(the_repository),
+-						  stderr, dangling_msg, ref->name);
+ 		}
++		string_list_sort(&refnames);
++		refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
++					   stderr, dangling_msg, &refnames);
+ 	}
+ 
+ cleanup:
++	string_list_clear(&refnames, 0);
+ 	strbuf_release(&err);
+ 	free_refs(stale_refs);
+ 	return result;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 0d6755bcb71e..4de7dd373ae5 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1522,8 +1522,8 @@ static int prune_remote(const char *remote, int dry_run)
+ 	struct string_list refs_to_prune = STRING_LIST_INIT_NODUP;
+ 	struct string_list_item *item;
+ 	const char *dangling_msg = dry_run
+-		? _(" %s will become dangling!")
+-		: _(" %s has become dangling!");
++		? _(" %s will become dangling after %s is deleted!")
++		: _(" %s has become dangling after %s was deleted!");
+ 
+ 	get_remote_ref_states(remote, &states, GET_REF_STATES);
+ 
+diff --git a/refs.c b/refs.c
+index dce5c49ca2ba..e2075a98c844 100644
+--- a/refs.c
++++ b/refs.c
+@@ -461,7 +461,9 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
+ 		return 0;
+ 	}
+ 
+-	fprintf(d->fp, d->msg_fmt, refname);
++	skip_prefix(refname, "refs/remotes/", &refname);
++	skip_prefix(resolves_to, "refs/remotes/", &resolves_to);
++	fprintf(d->fp, d->msg_fmt, refname, resolves_to);
+ 	fputc('\n', d->fp);
+ 	return 0;
+ }
 -- 
 2.50.0.84.g5d85fe910b.dirty
 
