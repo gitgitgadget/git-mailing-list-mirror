@@ -1,119 +1,103 @@
-Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16AB188907
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:04:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009862D4B6D
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750701867; cv=none; b=C0zVkBOQ05FUTQE1tdbgGRynyvQEWujlBB5PotdO6+rgO3/LY3jnRFeI8cmLntbaHSmsYRxiVnzw6cK+l3pJcYTuiml4K2KJDtDFCL9rtSgIaNIfvHjbZfz60LBtToUZ/5X4/qJh0cf/beuaox6uREvCKLYES1ssF8RblwAb3Uw=
+	t=1750702180; cv=none; b=heLhoYjBSDJ9e8xoVfF1hsJz4aZLLtnYvma09341yKNakKmTJimcGcxv3ggifeRsctMLIsUzN3MsIFXG6pGPyhAV+h90yMipyvUBifZzvd/BMU6VFUdyEYMAO3j/h6UOwcl0FoCT5eutWteKE1sGCg0JAUZOv57slBZ4dgx6hM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750701867; c=relaxed/simple;
-	bh=V78r09Zw5p0V+kBs27gv8AYvGLlXU82ZepA/RfIN+6U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=aMxgGXRxqY11Gngmwkm4dy+s6ET8eq2r41cXKNRe7iuAkakBOsD+5Y72CpGiqx3qP96Ki8tHGu4aULXXAttb+kOG8gecEBTFXyIuKuo/YzuD4GBOLWBdqmYhUz+hFY40AXm2b4PaOnFvhD5xqA5Ir2U97vzWGgo1RVPwhAtdhCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Kx4jjeE2; arc=none smtp.client-ip=209.85.160.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1750702180; c=relaxed/simple;
+	bh=n47dER7LrZlMIKabAVUlWrmEUMaBi6Mln/bfaPyWwpk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CfGac0ysRlo+uVQARqmd4YY//6BaS1QtX6kyCkVcQgnOJalPca4Axa1qQ6lws7G2ft9DfmItPxbqRShQ2LV//F7EEQqE5Xs+KIzEWPc/1R2DBMLtP1xF0eKNdYOvuJZItLyF/Deo1uRSzS2Eq5VY0JnqpL72E1P2ycPUM9V9tig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sWthlKU5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eCn6bEB4; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Kx4jjeE2"
-Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47e9fea29easo50881cf.1
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 11:04:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750701864; x=1751306664; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bBASxig7kkKaaEJMDP8Oroico2G3pXurehV/Im0gNtE=;
-        b=Kx4jjeE2kRfRfgmAoQYt/ukeytsN6J1YOo5Um9hrwBh8doL7dnyDqq5aMAs05rP4Wl
-         ANCI7yObmVoduxxxmYtR9EP5DkuBmrYYjX2m/KBbSxeA9o9+Xn2WUHdeus1PuaZg5Pxj
-         T7xyD/JcZuEdG8FEpbKpy+/wZLQpc1sCYWPJiIKYsikkoX3YVFuiciPpKH6tPT5Vy485
-         fw5EiieBcVL3/6eSrcjx3mLtkUe9M/dOxavvPVwBeLX0wYzCf3i3WCt1oXFDg06v1qik
-         fZpmRVPh3QyQSavQfHI3kmbtBoiEyhWRWFI/p+Q9G/AmbBboo7GYF/ZNpm5JKxVbjUcy
-         bEWQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750701864; x=1751306664;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=bBASxig7kkKaaEJMDP8Oroico2G3pXurehV/Im0gNtE=;
-        b=L0brqqO7jeLp0jK29ryOQix0PH4E5avhOIgjIx49ZspnuuP+Gbc7LpI8oWZZjKH5CI
-         rqRTVRYsV2DPXwf8CBNljQ0p8LIOdW5d9/1p6lSjxEe/og2mRN2IMj8uqx7Aeq0BI+bL
-         2Bcz0dofd7bHDREIoJWjjxGaFpcshTU0EV3fJtkmzQPGryKd1I1/h10pgqidweaQ3UKh
-         eNSvhrFIOULcO42ZahNlQViRAjE5bVBBioKzqLZzOIKXUSKKK7JGRcPto8OBKgKDqITh
-         bHkL2V5G+ak0yH7dKTIZpCwW9BwljpfW9v/i/GBUtQ8sw6qmOYBryzCoIoG/z10iziLh
-         yeag==
-X-Gm-Message-State: AOJu0YwbIHqUUjE3GxbnJ2cTbUlTuxXFYz9LFE2tltvLchcm6mB69v2k
-	xGZzKkIYTHm33Arp/2UcDjyzrxT/7zoIX3ta3INfe5oadeyi8f14jIWoJGVpwdjCBCkgiND93IX
-	ZfqEtjcCGmv4jj8kGKcO/B81clSKcsUKGyGgISm0XUSLx5NrWr6lf2z20wOM=
-X-Gm-Gg: ASbGncuid0q5Gm8tUJFVyZ86AmhYzrbbyA0RaCAIuS8yUXxw4EtzxjRx5JqobCKy55R
-	xiQscw6J8+W9E67gnYXI7a1HsB+XpG2NZ9G6m3gnhqRC06WaI0cYuMc6rDeXifhFc0lQr3oT8/z
-	T126PvopFp/qU2APOqYEEom0KGEPEyVPSiPLOaDhUYlAXOCsx+EB6smNabVl2VRzyyUkAe+EiTB
-	g==
-X-Google-Smtp-Source: AGHT+IHXdJwiDMmCCd4WmzPopAnXDKA7Zl0RdrAxaj2i8Uah0wWAtH/+TdzXIe2FK/x2FALoj5sgqXtwOR0MRCrrzBA=
-X-Received: by 2002:a05:622a:894d:b0:4a7:1743:106b with SMTP id
- d75a77b69052e-4a7af7d5edfmr119561cf.6.1750701864057; Mon, 23 Jun 2025
- 11:04:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sWthlKU5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eCn6bEB4"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 14CC81140182;
+	Mon, 23 Jun 2025 14:09:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 23 Jun 2025 14:09:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750702177; x=1750788577; bh=LLy9W6rUbs
+	2A2YaoD35EtBS0Ns4VHma6wcCnM3WcZaE=; b=sWthlKU5rvBQgyWKgjqFemCZAz
+	1t3yaKqdNrAFbDDkvDULByXrmZCnMCZQFUVAh62CSsY8qRVQcxDBu5NR2fOluLfM
+	NYYYok97QA2sBMN23NrbEL/k5yMQ4m0OZskcIosWLkgQJPYoDjAEL2PabZ9sEeum
+	GBQXQArtstXgrPbVhEREuLKx3Qj12Q4bhBBn6mea5RM4ysV738Zdc6qYgb+Sib47
+	msN0/IXj9nM9e6TA1F2UqD9ReTwcv3SV37wU9RFom3R4ykMtzL9Tgz3zAqWgtNWS
+	rslptCwzIAIh0sq/1Cped86U6YIiwnyB03P6fXk+d7dc9Rd9pbHwa39RIZ+w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750702177; x=1750788577; bh=LLy9W6rUbs2A2YaoD35EtBS0Ns4VHma6wcC
+	nM3WcZaE=; b=eCn6bEB4xq0Miczo1Uj6SmAPWBwR8vt+N80/Y/vOxKO8qvpqxpa
+	VdN8I7cI0kK/yzQjct2h/afbln+WzBgZLT/IUN9YtaMuFQLXu7PC3/aBfIXyQP3n
+	zaQq5mhz2OhR/bkpHCFJIIcG228y+eLspA7Loszjc0UdBnNH/D4SVCR7gvXw/WUq
+	G0KxIRJSe3vyiuhm5vhhDtQXuSZHPRcGUkXLp/NVOChbeA2wdSsaFu7ldFzFFhoW
+	XEtnurAuwt5vSLxguCO48ZCCHNwUgKR8M+cZGfl8X/uUlesz6SuiE3AghBUzcKCI
+	Gl11CKqnrG3TcuApzHeuiP1zDM06rFq/LBQ==
+X-ME-Sender: <xms:YJhZaJM99H8C4xwvE5tJWfogAXw48tiAnJqUfrOwFKWHYLO9sZND7A>
+    <xme:YJhZaL9lym-2gTyw7F9opQnAdu0DjeUNgkgz99LoNqdNPy1KsE5yM63kJFAbGObBs
+    m5dKrJkxuzBSd_3jQ>
+X-ME-Received: <xmr:YJhZaIREC9Za6IUNyTqrro_y4TXJsl4LG5qivqyEkFsMqgaCsruVkb_zMxdEvRk8973ItMBeWQIXWiEnJ-tWGl96UhltINj-r1xgCps>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggvrhhitghk
+    rdifihhllhhirghmrdhmohhrrggvshesghhmrghilhdrtghomhdprhgtphhtthhopehjie
+    htsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:YJhZaFsw7igeK8uzerQAp7CWLo4mwc2mUGPmasHMaMBqmmQm5RGPqg>
+    <xmx:YJhZaBcdBCdpIg4xhlSzaqFfY85E5WtPRg4qFeTnKxn4w1d4ofMZig>
+    <xmx:YJhZaB2p_ZKuSL-7v2wjpArgLIErQ_sXPMiUxpW2eYhGHh93GUkkSA>
+    <xmx:YJhZaN-gSvtCyA0XUchFIucsoasC7_KPV1JfOsZzeQRLaOKuGa-JIA>
+    <xmx:YZhZaLzlZl8m8TJOaYMzYpEjLi41tZBwmx7S-rDM90mC68GvSlEiv47B>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 23 Jun 2025 14:09:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derick W. de M. Frias" <derick.william.moraes@gmail.com>
+Cc: j6t@kdbg.org,  git@vger.kernel.org
+Subject: Re: [PATCH v2 1/4] userdiff: add javascript diff driver
+In-Reply-To: <20250623090538.154858-2-derick.william.moraes@gmail.com> (Derick
+	W. de M. Frias's message of "Mon, 23 Jun 2025 03:35:46 -0300")
+References: <4deb24c2-98f2-40f8-b50c-c74485ebc10d@kdbg.org>
+	<20250623090538.154858-1-derick.william.moraes@gmail.com>
+	<20250623090538.154858-2-derick.william.moraes@gmail.com>
+Date: Mon, 23 Jun 2025 11:09:35 -0700
+Message-ID: <xmqqcyau5nz4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADYQcGqaMC=4jgbmnF9Q11oC11jfrqyvH8EuiRRHytpMXd4wYA@mail.gmail.com>
-In-Reply-To: <CADYQcGqaMC=4jgbmnF9Q11oC11jfrqyvH8EuiRRHytpMXd4wYA@mail.gmail.com>
-From: Kai Koponen <kaikoponen@google.com>
-Date: Mon, 23 Jun 2025 14:04:12 -0400
-X-Gm-Features: Ac12FXyF7ggD7GLw5I45lLiQc-7A1Oy-NUTgW5FK_g0Pq6ziEyZZIg8_P4Ecrqw
-Message-ID: <CADYQcGoH3jHMZ5K1Hrc5YVyqH5-Tm+LxN81iUchOqsHb00nD4g@mail.gmail.com>
-Subject: Re: Perf bug: rev-list w/ 2+ paths relatively slow with commit-graph
-To: git@vger.kernel.org, Kai Koponen <kaikoponen@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Re: rev-list perf bug, some `git bugreport` version information:
+"Derick W. de M. Frias" <derick.william.moraes@gmail.com> writes:
 
-[System Info]
-git version:
-git version 2.50.0.714.g196bf9f422-goog
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.13.0
-OpenSSL: OpenSSL 3.4.1 11 Feb 2025
-zlib: 1.3.1
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-compiler info: gnuc: 14.2
-libc info: glibc: 2.41
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -238,33 +238,43 @@ PATTERNS("java",
+>  	 "|[-+*/<>%&^|=!]="
+>  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
+>  PATTERNS("javascript",
+> -     /* conventional named functions */
+> -     "^[ \t]*(async[ \t]+)?function[ \t]*\\*?[ \t]*([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*\\(.*$|"
 
-On Mon, Jun 23, 2025 at 1:58=E2=80=AFPM Kai Koponen <kaikoponen@google.com>=
- wrote:
->
-> Reproduce steps:
-> ```
-> git clone https://github.com/golang/go.git
-> cd go
-> git config core.commitGraph true
-> git commit-graph write --split --reachable --changed-paths  # Without
-> this, all calls equally slow (~1s)
-> time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-> src/clean.bash > /dev/null  # ~90ms
-> time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-> src/Make.dist > /dev/null  # ~100ms
-> time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-> src/clean.bash src/Make.dist > /dev/null  # ~650ms
-> ```
->
-> The rev-list call with multiple paths takes over 3x longer than the
-> sum of individual calls to it for the same files.
->
-> Expectation: rev-list with multiple paths should take <=3D the sum of
-> the time it takes to call it with each path individually (ideally <,
-> since with the count limit it should be able to early-exit and search
-> less commits for either path).
->
-> Also reproduces without the -10 arg, or with a lower count (double
-> instead of triple w/ -1), but these results are perhaps most
-> surprising with a count present.
+Curious to see that anything needs to be removed from "javascript"
+section, when we do not have any patterns for the language in the
+file.  Which version of Git is this patch meant to apply to?
