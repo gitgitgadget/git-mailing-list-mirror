@@ -1,124 +1,167 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992F8AD51
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:26:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56E23CEF8
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 09:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750670806; cv=none; b=Ri9TPW47B3Facb2dHmtsLY+Bm6TjPjrLQWfr0UbQWSwJxfllyE8ib8CHu1Wkc1+bKyBvMDVnJ/TYcT5k6MCabX/LfEUy5oGRQQmYA4B9f0LrX1NhBxeX2UyKsAfyVNhwPj8SwA98fWqcbQ16FDfIyKqZ/x+rCwSi08S7c3yb2M0=
+	t=1750671316; cv=none; b=uUsquDWs1aJFJ+ETGVU7ilSU8WO72qyZU/Hb5/doyDm1V/EbB+i5YGDAHOo86d4WxfwZ13jQ0bvxLMEeJ654cNkaUY9xt15fNAsFY4P7u5ONhyrgXE/l+coaehSXSq+q55BMtGJvMfBV0xLP3qBM5tUYHN6jUSyG+LJswdo2U8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750670806; c=relaxed/simple;
-	bh=WnPjYD6sY7faFUQCqD6KRfZYd1BDv9Whh7oWyltcVtM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=EH1jGbA1EGJkBRDjoYHwflDwlDUBV2pgClGggJ2ClIDtXjvauK04DJZm1LOQq+3zMODwhvO+qfH0CH6LsHoM/eV60AgS81IwjE+Xp9b262bGZgWHAerfLrUH5LgHiFZU5D4Eg7eKQJKX6VbqTQiycoC4T0pWogW7urQmtaFZRG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SPCAbqR4; arc=none smtp.client-ip=209.85.217.51
+	s=arc-20240116; t=1750671316; c=relaxed/simple;
+	bh=UIq4XnEI7M+31TkNWTirWcX8+ZtOyhYE9TjrgXWJR0A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VDe6o7gCgRP7+NwGVFgBaSqfP4tT/WrlTz1m177Y/0AtL1gDnPfYkfLR9ufquEIt6QZS4akw6FI2zuWmOyXQ5XrYVsfQJ34x2dn7R0WrEoZfyKse6x3AtoEe3BqgZUnONi3YdNt4wicPtAqf39gxInZ+R3lmaEX/FmiR7W6/WAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J9nz4I5O; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SPCAbqR4"
-Received: by mail-vs1-f51.google.com with SMTP id ada2fe7eead31-4e8110ac0f5so908493137.0
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:26:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J9nz4I5O"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-441ab63a415so41477265e9.3
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 02:35:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750670803; x=1751275603; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=bXWWfhHT6ya0OUSueWDSFRq6Q43bWmmRl3C18aOJWE4=;
-        b=SPCAbqR45TlRyTUGe1GmAUDDAeMcfRRYyX904/Rzyhl4c03VJrvOUGhDUrk4dENVG8
-         h6nd7zObbm0rZgVNbmNPKXiCEu3A0uz5syC8Bws5/S4J1viLHdhl+tYccofbRlJRIoIi
-         YkGkTolh8+HXEiKF0dQxDMErSkUmkEpHD1mXtlZgU5PyARB4Ej9OCmd52M2tAhaiAxbn
-         ues0WoIuI8BJ96S251cginFevBUCK1lmBEweAj2OB8S4hNa5+e0qU1rY7ttDZKQNLbUB
-         ZnumbivbzQxOT/vXIBRfR7QKvYMh7v3l5Jc5+Yrj6J8rm7789wZ8uRGb4j4W9kEt/V/i
-         x/qw==
+        d=gmail.com; s=20230601; t=1750671313; x=1751276113; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=m5vQLGXfXQvNNBb/O3cWCpTLTkjcrEffI3x+41wPbh0=;
+        b=J9nz4I5OhfitiT+F2jPuhA+2KLg/jP5APtI8tpXzO92KVY1EyKVH7sLFKEILMgaCVm
+         0En1J44bg0KbU5NboRJkJ4I9wYRxTEZAcyRDuViYizpaVMZCWUgTfodJf7DxE3cp4mlu
+         3MbVqorBjqikdDSbc34/m5IOa1eSjPMTVESroRrFUMA7f2/MX4FdY2PBcmLyxt2yvTcb
+         qw9C94q4MHuV1VWORYy/biZ61vWnjw5hFgmVn9ZKtFHybk9d5fyk2VJIKx99EUZ67QbF
+         okPOpp4VMEBRdnZLCT2DUguOVTR/ZMFO6tdlNqzTIChGTwuo3vxiCrdSfWkuSlhJeGDn
+         4H6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750670803; x=1751275603;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=bXWWfhHT6ya0OUSueWDSFRq6Q43bWmmRl3C18aOJWE4=;
-        b=ajm4hqgg6KjYfMI8RKFskHGXxafJwwDEO86U5yJl+DmKuQhJJ7v4OKJJEKCfWW0ZO9
-         xQewmi1SpN9THULp4GTu2pAd+wK6ehHi9phMBMAbv5f3p2CzlMWVBmpeeSbmCEF4B0Br
-         5QLX3MqbXXKuT7NIZbmO/mhwjcXLCaqSKPj2dmGtZu4doFQ7fV+vRpndhXf0rIdOSK9B
-         vaNS9R6BClEjoN9aD9yH8MmPKytkoqxn5LGhHUv/nrFyF0vvrRpu2jBwXzxDdzivcMYb
-         /Cm5ve/GNmW/+e+UQz0TWWLzwT5pHGf/NZ4Qhi7nUBOZgiRwPMD/gBggKQ6/kE4NYr15
-         J+FA==
-X-Gm-Message-State: AOJu0YyZSUK47fZ3sxSw8X/I6Azki8l+FFIe/49VNy//zeFIqjTJf/5X
-	OzSW8HRS3udIEb7FEgjg65OqPShDJnM+qiDKU5tRtQeiSaN1rojvCU5EObDXqw5DiUVkbv7HwXT
-	xXzSupqc3d0kszHmjnWsOiz4+QT2XWhC+xVRrTWMysg==
-X-Gm-Gg: ASbGncsBr2nWiGM6et/tS+6McIej4Fiop4Ypi2jlZEkEA0h1YhwFM2Se5gcxcPng0NQ
-	PYQN04W/LV6SfB1SVEk9eR+0V3KCk0mksXfDqrn8apF3Z7TSXqzT8LR8WnyXZ13geUI9DckhdCX
-	mepkXnXZpFwXCjWLW4EV5pcwEFMFqH8a+A1evOWHBV
-X-Google-Smtp-Source: AGHT+IFbtn8xzyTST29N+1vpp47ac1hr3/4JJAhszzUHyJ4PrqFE2WhsM/tbFZNniFOVA6JJPu0BfxsGjw8wxwRxD7I=
-X-Received: by 2002:a67:e708:0:b0:4e7:dbd2:4604 with SMTP id
- ada2fe7eead31-4e9c2a0487emr7117840137.17.1750670803514; Mon, 23 Jun 2025
- 02:26:43 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 23 Jun 2025 02:26:42 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq1pre14ae.fsf@gitster.g>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com> <20250619225751.99699-5-lucasseikioshiro@gmail.com>
- <xmqq1pre14ae.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1750671313; x=1751276113;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=m5vQLGXfXQvNNBb/O3cWCpTLTkjcrEffI3x+41wPbh0=;
+        b=ZhkjXB6ZLy76jZmUu/PssvmdQ/yIe42B6KnWtcyAV1wzCAP5qawzqq3MCF+dg49oF7
+         dXJF1wqkPE3WevYM00zOpXJJwJrLSTAIy3L1pGVvOAlcMTu0qy5fPVrNUw0ITsg68qS7
+         NRJlhNxgW0Wrran8yJbVYck8ZDMcRlUX4x6homDVLJKIbL7iX9AQh2i03fCakQWoLea5
+         6N//VeRzot7tuTyvKSGZgKc0zx45VOXlLR1JxPybMcpvbOD2mzD0iG+Ng2+I3S+00QDh
+         Qa/B+GT9qjVrvQ6rt3ZW3MYkHn1GHhHRx7TmVEGh6MveIilaYjoMVF4I5hlOqP1bSbFc
+         XXtw==
+X-Forwarded-Encrypted: i=1; AJvYcCXpIKDolTpWXt8a6Q2ATqQWi6lD/CX3WuW2a5WlF900sYCabxMX1b5ONdHO9vywoBnpw3o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwRwV/hyRNaD15Ib4dp9fdVJ8c31YJTydhg6A+cMGJixP0ZXJLa
+	eR7cST5mW9QG7+hbMJ4ujHczu/oJcEys+03aLR32wqt2Qa6POoIZ1Zda
+X-Gm-Gg: ASbGncvV5l5XMjJm2lw1cqkz7bMkDLhJQXBKyBRTRfENSZRWf8m+TXNv1zH2q7s46dW
+	z1HwOu6wii/sOlgu/Slmc5ZYUyLHzE3AGpzicux9tsbmn4oYWi0D12rarZcJurQaG8YqFW00YVN
+	/PyN/viUTuEIymGgkg8SNNrJ1DBAicnQ4Fh4+GhxJmWvQYkiUEutYEQbINLJnYRV1uqMoKp/y1g
+	Pes2gtMeGt2bnulYpYv6LrtqK5cdbT5Mcg1iwv3Q8gONrlIisWrg/ihPLvTRT838OwlA1/BMiJa
+	flAEelaIzlmvzoCaUSoxQB2pfUVaj5dwW3QjKjYCNPKufHcQSyEHDNIF4Q/tqDUu7E7Zxib7xn2
+	3jThHCvh1StlMjvoVyCKIHL6tRJsDdz33nIXyubxELq935NDC
+X-Google-Smtp-Source: AGHT+IGodfg1Rq1XAlPwEbWumVrRGfqCuuNcLdMX2Omwdk1YjONt3Oez/AAetJf3EhSzf3LlcQr+6A==
+X-Received: by 2002:a05:600c:8b07:b0:43c:ec0a:ddfd with SMTP id 5b1f17b1804b1-453653cc952mr98912555e9.6.1750671313119;
+        Mon, 23 Jun 2025 02:35:13 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6d128cf7asm8862624f8f.100.2025.06.23.02.35.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Jun 2025 02:35:12 -0700 (PDT)
+Message-ID: <14cc73ba-3e6a-4994-b966-a5a09dd042f9@gmail.com>
+Date: Mon, 23 Jun 2025 10:35:10 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 23 Jun 2025 02:26:42 -0700
-X-Gm-Features: Ac12FXw14lAwigsTpXQoeOiMtlUz8INYDgW0239ElRVEvYsw2SbyYFFy9aqvKIM
-Message-ID: <CAOLa=ZTCoc9vfeMrWxqU5psmbxGzW=B-QULeSR+uvF9kQi9WzQ@mail.gmail.com>
-Subject: Re: [GSoC RFC PATCH v2 4/7] repo-info: add the --allow-empty flag
-To: Junio C Hamano <gitster@pobox.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, ben.knoble@gmail.com
-Content-Type: multipart/mixed; boundary="0000000000005cd363063839cf54"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] Ensure restore_term works correctly with DUPLEX
+To: James Duley via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: James Duley <jagduley@gmail.com>,
+ =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+References: <pull.2000.git.git.1750186571037.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.2000.git.git.1750186571037.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---0000000000005cd363063839cf54
-Content-Type: text/plain; charset="UTF-8"
+Hi James
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 17/06/2025 19:56, James Duley via GitGitGadget wrote:
+> From: James Duley <jagduley@gmail.com>
+> 
+> Previously, if save_term/restore_term was called with the DUPLEX flag
+> and then without the flag, an assertion was hit.
+>> Assertion failed: hconout != INVALID_HANDLE_VALUE,
+>> file compat/terminal.c, line 283
+> 
+> This is because save_term doesn't set cmode_out when not DUPLEX,
+> so an old version of cmode_out was being used.
+> Therefore, hconout is the correct thing for restore to check
+> to decide whether to restore stdout console mode.
 
-> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
->
->> Add a flag --allow-empty, which will force the output data to be empty
->> when no field is requested.
->
-> I still think we should flip the polarity of the option and give "--all"
-> to iterate over all variables, and by default show nothing.
->
+I found this paragraph (especially the first sentence) rather hard to 
+understand - it was only after I'd figured out what the problem was by 
+reading the code that I could understand what it was saying.
 
-I thought the idea was that we would show a subset of the fields by
-default when no user input is provided. Which would mean we have the
-following:
+As I understand it the problem is caused by calling
 
-  * `git repo-info` which would show a subset of all fields, giving
-    important repository information.
-  * `git repo-info --all` which would show all available fields.
-  * `git repo-info <fields>` which would only show the requested fields.
+     save_term(SAVE_TERM_DUPLEX);
+     restore_term();
+     save_term(0);
+     restore_term();
 
-With this context, I'm not entirely sure where '--allow-empty' fits in.
+The first call to save_term() sets hconout to a valid handle and 
+cmode_out to a non-zero value. The first call to restore_term() then 
+sets hconout to INVALID_HANDLE_VALUE but leaves cmode_out unchanged. The 
+second call to save_term does not touch hconout or cmode_out. The second 
+call to restore_term() then hits the assertion because cmode_out is 
+non-zero but hconout is an invalid handle.
 
-If this is/not the case, it would be nice to talk about this in more
-detail in the cover message and also in the individual patches.
+I think it would be helpful to include an explanation like that in the 
+commit message.
 
-This is also a good time to think about if we should make the default to
-not show anything as Junio mentioned.
+I agree with you diagnosis and the proposed fix - using the filehandle 
+to tell whether we should restore the output settings is much cleaner 
+that looking at the mode. I would suggest that we should also set 
+hconout to INVALID_HANDLE_VALUE when save_term() is called without 
+SAVE_TERM_DUPLEX to avoid any problems with call sequences like
 
---0000000000005cd363063839cf54
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 63478f84876c3e90_0.1
+     save_term(SAVE_TERM_DUPLEX);
+     save_term(0);
+     restore_term();
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oWkhkRVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mNm9tQy80c3pIRGo1QTAzZUh0ckdUU3dCb2FuL0xZTgpHRDRLUDRpK2ZG
-OVFLWm5NYUUycmZ6SEtGbVNBMll6NWZLTnVkTzNxRXVad21ON0FqR1Q4N2ZXU3UzZldDSVVXCnN3
-MzFOa3Q4cjc1R1BKWXpwNlF6T1NFZlFDejFkUkVmLzJHMnNqTUhiUkxwNld6Y2lGaTc4NnlPcXlU
-cjJlR1oKZ1RzUzhpelRzcFNJNWdEQU9pQnE0V2pKQmFEdUZwQm5MbzFEZ2VablNFWHBJUWtTeUIy
-KzJFU0p3azd5NzkvVQpQRExRRFZod0FmQzFvYmZsVHlaNGM4bmpGdnZ1T3hncm1KbTRYbjFQODRw
-enNTK014TnIrMVJKd09CcDRhaUxuCkw5ckFDSk1ZYndKWnY2V09Wbm5MZ3ZlRG5GbExFeXlpS2sv
-Z2x1bE5wY3dZZjJIVDJyREh2ZU40V0lHay9BZXEKemZ2VnNjV3VudTIxbnFTZjExOXkwUEVZQ3Jl
-b1RqMFNqR3pFeTVaOEY4KzMweFhSdzVBbml4WEZFamNnOU9EeAphYmk1ck5rcEt5amdMdzg0NHBI
-K0VLdTU2cGVGb2FXb3BnTE4rTGVFYXdHVUQzcUdaTmp5ajRaYlUrUVhZMlBKCkRRbWhkNUZzL3BG
-cmNmMmoyN1FuaEg0eDZzMzRIZFp0RmNLVEY4Zz0KPTRUVDgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000005cd363063839cf54--
+Thanks for reporting and working on this
+
+Phillip
+
+> I saw this on Windows with interactive.singleKey when doing `git add -p`.
+> Specifically, after hitting `e` to edit in vim, once on to the prompt
+> for the next hunk, pressing any key results in the assertion.
+> 
+> Signed-off-by: James Duley <jagduley@gmail.com>
+> ---
+>      Ensure restore_term works correctly with DUPLEX
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2000%2Fparched%2Frestore-term-windows-fix-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2000/parched/restore-term-windows-fix-v1
+> Pull-Request: https://github.com/git/git/pull/2000
+> 
+>   compat/terminal.c | 3 +--
+>   1 file changed, 1 insertion(+), 2 deletions(-)
+> 
+> diff --git a/compat/terminal.c b/compat/terminal.c
+> index 584f27bf7e1..72b184555ff 100644
+> --- a/compat/terminal.c
+> +++ b/compat/terminal.c
+> @@ -279,8 +279,7 @@ void restore_term(void)
+>   
+>   	SetConsoleMode(hconin, cmode_in);
+>   	CloseHandle(hconin);
+> -	if (cmode_out) {
+> -		assert(hconout != INVALID_HANDLE_VALUE);
+> +	if (hconout != INVALID_HANDLE_VALUE) {
+>   		SetConsoleMode(hconout, cmode_out);
+>   		CloseHandle(hconout);
+>   	}
+> 
+> base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
+
+
+
