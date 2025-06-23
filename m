@@ -1,51 +1,51 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 798F322A807
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F382222B5B8
 	for <git@vger.kernel.org>; Mon, 23 Jun 2025 23:17:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750720626; cv=none; b=EhehBPhz9P7PsTPbM/zD27TqKPI/DPGUrgefJKr7XHg0SBLSwOx7G4/HBR2TpLPFHEQaaxN1jQ8djSv9yEhvqhnkq8BDxnqNdwmC6vruZd+raBdH5cM1mybGyOTJevJbXdsZx9xx7VArnk8gQNDB90BYcK6X1yGNqpxb0fmBeUI=
+	t=1750720626; cv=none; b=OjvZOJXcsQyih3o5eHb3GmzfDFT9Bv64pWVQXVgxOD8xPf22MdzislCU6BujHoki6cIS5qRbtXWjBsgkr21kDbTo1PO5uAlRPH8lfw3Tb/jhrHh88QxZs/6419CbwbG60ZWwYZ8e+mR6Ab3gJdvSla7301zJxdar+mvzPE59d6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1750720626; c=relaxed/simple;
-	bh=aBXMBigi8uNmM74Gsd7x+ZZ9p6PVRtgYI72H3Yf5ai4=;
+	bh=g/2+r3bbncJGKOFiKtw7DorsJdO54rspYHdw9OpOy1Q=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=r/SD4T6k95z3/Azm+7ID1r1HKMfGJLhDcszq1iPFfZx06zf49dWmOxL7XIoUHjqQ7h8xrcoruECQM8s0Z+T5U0809gA4lEATanJ3jol/JVUMz9xB9w/9U5ppg7gBKY8V13aeYT1EIFVuP8+ERQRlYPv3x0z9K5Biyj+Z8eiUbpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CvnzueO6; arc=none smtp.client-ip=192.198.163.15
+	 In-Reply-To:To:Cc; b=Wtxg16bwG22ILfOb88ILPzMhhGYYVMj/TghKtdycxTZMQ4vBht70OvB2Lfs1DOTaYEALV3tUDJy/1+7dgU+mKZVv/h3NBxEIJDUCG8ZtWo9CNQ7ecizxWjmpMBV1KMPOXd9jIgk7O/Y0To/H0JpExBulrJAauWZvZ08gqlmrGRM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Af+4/Goa; arc=none smtp.client-ip=192.198.163.15
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CvnzueO6"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Af+4/Goa"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1750720625; x=1782256625;
   h=from:date:subject:mime-version:content-transfer-encoding:
    message-id:references:in-reply-to:to:cc;
-  bh=aBXMBigi8uNmM74Gsd7x+ZZ9p6PVRtgYI72H3Yf5ai4=;
-  b=CvnzueO6jr5m0Qfxwluq0slWuYHFMUjpY/dUX1tsMa2rdOWuyTrs8+Vo
-   y4O7uR+a0trhvtsTdN9bt6BlSVzb3D8nt7vOF4YD0mMulQPQxhy8kNxGP
-   WjHpmdMjKXzL+iwPImyO8cc37HhK1/GMSj3czhl6YpHT7o4/kksRvP3Kc
-   l2hanXm7bFqkFdsGGFZCdLxg0I/Ffq9KPIdcuPmMmWNA5Bkr4IGHxdq5I
-   IOuYwrIy84G9wfNhXRknLaD3+VCysNxJlxNrUvqLyiDASBevy1mN9rVR+
-   xbONK0TTIc9YtoFbyHZSGkHaltf0opxUXUcO1sTaPDj+hN+Z1+BOkc6E4
+  bh=g/2+r3bbncJGKOFiKtw7DorsJdO54rspYHdw9OpOy1Q=;
+  b=Af+4/GoaUbaFZksNQBreVxqMqUGdl/s6G+PS9M8l0GorwXczj5MIquJ9
+   DJdFuEr1Eeze5yWRpjWscv1/d0bpl624GfB6uejORth8jn6wm6JCLal6J
+   YyY2Y6ck/p3oVPvsUSoQCpxT7B1s0yn0FPA3PXHbx4TwQVcLJHszjDvOb
+   pOv4H6g2a+eSp+INtT3t2wT0uv2JYwjSK2zzSbjddZQ88rbZayq5FFgNm
+   pYDgMbmClvMPrW46Lz3B8WZwLYjXmpBYf8yum7sO12h8UtL3rN8erLGcD
+   cq4DjRN9gwji2efzt6JzK3xLLT7MX3dMjC8GmjhILoEWPRCDsGX0X8E19
    A==;
-X-CSE-ConnectionGUID: 6VhLpWo8SFW2tQnuhoA3Dw==
-X-CSE-MsgGUID: 8sAfml4URqqnTYOtasVJiQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53084562"
+X-CSE-ConnectionGUID: mmRtKNg5S/69h9QRL5hNIg==
+X-CSE-MsgGUID: iv/EiWJ+TY65Pj9lr6icrA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11473"; a="53084558"
 X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
-   d="scan'208";a="53084562"
+   d="scan'208";a="53084558"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
   by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:42 -0700
-X-CSE-ConnectionGUID: 13QmswE4S7+ggkgzBJmwpg==
-X-CSE-MsgGUID: IAUwDaiVSyGZrF2zdAfrfw==
+X-CSE-ConnectionGUID: hWqmXs59TDacri0oU2ezhw==
+X-CSE-MsgGUID: b0qdE1WoQVuoMQd8c2z7QQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.16,260,1744095600"; 
-   d="scan'208";a="151888468"
+   d="scan'208";a="151888465"
 Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
   by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Jun 2025 16:16:41 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Mon, 23 Jun 2025 16:11:31 -0700
-Subject: [PATCH v4 3/7] dir: move starts_with_dot(_dot)_slash to dir.h
+Date: Mon, 23 Jun 2025 16:11:30 -0700
+Subject: [PATCH v4 2/7] remote: fix tear down of struct remote
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -54,7 +54,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250623-jk-submodule-helper-use-url-v4-3-133ef3d89569@gmail.com>
+Message-Id: <20250623-jk-submodule-helper-use-url-v4-2-133ef3d89569@gmail.com>
 References: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
 In-Reply-To: <20250623-jk-submodule-helper-use-url-v4-0-133ef3d89569@gmail.com>
 To: git@vger.kernel.org
@@ -65,102 +65,39 @@ X-Mailer: b4 0.14.2
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-Both submodule--helper.c and submodule-config.c have an implementation
-of starts_with_dot_slash and starts_with_dot_dot_slash. The dir.h header
-has starts_with_dot(_dot)_slash_native, which sets PATH_MATCH_NATIVE.
+The remote_clear() function failed to free the remote->push and
+remote->fetch refspec fields.
 
-Move the helpers to dir.h as static inlines. I thought about renaming
-them to postfix with _platform but that felt too long and ugly. On the
-other hand it might be slightly confusing with _native.
+This should be caught by the leak sanitizer. However, for callers which
+use ``the_repository``, the values never go out of scope and the
+sanitizer doesn't complain.
 
-This simplifies a submodule refactor which wants to use the helpers
-earlier in the submodule--helper.c file.
+A future change is going to add a caller of read_config() for a
+submodule repository structure, which would result in the leak sanitizer
+complaining.
+
+Fix remote_clear(), updating it to properly call refspec_clear() for
+both the push and fetch members.
 
 Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
 ---
- dir.h                       | 23 +++++++++++++++++++++++
- builtin/submodule--helper.c | 12 ------------
- submodule-config.c          | 12 ------------
- 3 files changed, 23 insertions(+), 24 deletions(-)
+ remote.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/dir.h b/dir.h
-index d7e71aa8daa7d833e4c05e6875b997bc321c6070..fc9be7b427a134e46bcd66c8df42375db47727fc 100644
---- a/dir.h
-+++ b/dir.h
-@@ -676,4 +676,27 @@ static inline int starts_with_dot_dot_slash_native(const char *const path)
- 	return path_match_flags(path, what | PATH_MATCH_NATIVE);
- }
+diff --git a/remote.c b/remote.c
+index ee95126f3f20080a932b82314e8017e277569cc1..194bb447784ac1f71fb85a9fed3312e7458a9d5d 100644
+--- a/remote.c
++++ b/remote.c
+@@ -165,6 +165,9 @@ static void remote_clear(struct remote *remote)
+ 	strvec_clear(&remote->url);
+ 	strvec_clear(&remote->pushurl);
  
-+/**
-+ * starts_with_dot_slash: convenience wrapper for
-+ * patch_match_flags() with PATH_MATCH_STARTS_WITH_DOT_SLASH and
-+ * PATH_MATCH_XPLATFORM.
-+ */
-+static inline int starts_with_dot_slash(const char *const path)
-+{
-+	const enum path_match_flags what = PATH_MATCH_STARTS_WITH_DOT_SLASH;
++	refspec_clear(&remote->push);
++	refspec_clear(&remote->fetch);
 +
-+	return path_match_flags(path, what | PATH_MATCH_XPLATFORM);
-+}
-+
-+/**
-+ * starts_with_dot_dot_slash: convenience wrapper for
-+ * patch_match_flags() with PATH_MATCH_STARTS_WITH_DOT_DOT_SLASH and
-+ * PATH_MATCH_XPLATFORM.
-+ */
-+static inline int starts_with_dot_dot_slash(const char *const path)
-+{
-+	const enum path_match_flags what = PATH_MATCH_STARTS_WITH_DOT_DOT_SLASH;
-+
-+	return path_match_flags(path, what | PATH_MATCH_XPLATFORM);
-+}
- #endif
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 53da2116ddf576bc565b29f043e8b703b8b1563b..9e8cdfe1b2a8c2985d9c1b8ad6f1b0d1f9401714 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -438,18 +438,6 @@ static int module_foreach(int argc, const char **argv, const char *prefix,
- 	return ret;
- }
- 
--static int starts_with_dot_slash(const char *const path)
--{
--	return path_match_flags(path, PATH_MATCH_STARTS_WITH_DOT_SLASH |
--				PATH_MATCH_XPLATFORM);
--}
--
--static int starts_with_dot_dot_slash(const char *const path)
--{
--	return path_match_flags(path, PATH_MATCH_STARTS_WITH_DOT_DOT_SLASH |
--				PATH_MATCH_XPLATFORM);
--}
--
- struct init_cb {
- 	const char *prefix;
- 	const char *super_prefix;
-diff --git a/submodule-config.c b/submodule-config.c
-index 8630e27947d3943e1980eb7a53bd41a546842503..d64438b2a18ed2123cc5e18f739539209032d3e9 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -235,18 +235,6 @@ int check_submodule_name(const char *name)
- 	return 0;
- }
- 
--static int starts_with_dot_slash(const char *const path)
--{
--	return path_match_flags(path, PATH_MATCH_STARTS_WITH_DOT_SLASH |
--				PATH_MATCH_XPLATFORM);
--}
--
--static int starts_with_dot_dot_slash(const char *const path)
--{
--	return path_match_flags(path, PATH_MATCH_STARTS_WITH_DOT_DOT_SLASH |
--				PATH_MATCH_XPLATFORM);
--}
--
- static int submodule_url_is_relative(const char *url)
- {
- 	return starts_with_dot_slash(url) || starts_with_dot_dot_slash(url);
+ 	free((char *)remote->receivepack);
+ 	free((char *)remote->uploadpack);
+ 	FREE_AND_NULL(remote->http_proxy);
 
 -- 
 2.48.1.397.gec9d649cc640
