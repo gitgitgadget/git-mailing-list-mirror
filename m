@@ -1,92 +1,94 @@
-Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB54A29CB47
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 17:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D112D3A72
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:00:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750701498; cv=none; b=D6QqhR0mUE1cQUBto3SrkTVYvTs95VgrmPDKXs51ljRgU7joFtx7uyJ6CauPpxYnytwLmeg7d0A2yeyncLo3yPHRIkzrYZhzXLlZULyKo+qDmjiKS1AlqMFF7wG4z2wzvvR9jWJNC9fXmj2VHIdPRh5qVYQaqHCPMQgY1zD16mo=
+	t=1750701603; cv=none; b=NPe85rcixi9/FaGmAWrV2cVBAuXUngsYM53iJSeIwXUAlWhqnXH6kdaab3HCSaSn9PFztgrtCmt1LgogxgAA5xwIed5dcESw85rh3JpH6NbfzlwzDQUiTe9HFfUVc4jhXVSvOA9PDkxyo2uaeooxXAZB+ds3N29QXqctuTJSoUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750701498; c=relaxed/simple;
-	bh=5fuVKiCaaFHX9gqwSeheF/ghfvZGWTfBbX2B+KMfphE=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=DqJp+e344NTIt+7f4FtFpCKQCWcKvlIdX7xim/0//W21S6FEQt7U8By4mKdLR/y5ZQ4PS31llAH/Trso+pye3F/EfhqP34V4mapZRmTm+P8cTxrCUq2zkBuyTG6RDmfbgQ6GDHWR5ciXczqiWjz6hDGvz3nQdDzpQblgLp2aSC4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Vwg/OkZv; arc=none smtp.client-ip=209.85.160.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Vwg/OkZv"
-Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-47e9fea29easo47301cf.1
-        for <git@vger.kernel.org>; Mon, 23 Jun 2025 10:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1750701495; x=1751306295; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=OXzw3NALro7pcOgwZMZ2YhT3VgbigzrdIaS6aaLmqHE=;
-        b=Vwg/OkZvDmwHs1aOLUQzGT1Aq5XCagk3V/jzynKSXY/md5tO2rUH/2CBbbdraOSNSC
-         Xm6aZoovWp8+3+HRVRUpM64/iivxHdFbsXnjS48wObMXVAHu1vw+IWQ+BtTAqRx5XFMt
-         AWLA5yIVqBNylsDDqFxvZYXn46DOagUcYMKtjX6SCMYvcQyouUerXhqsPzn/t3IXCo2A
-         tz4kLUI4ZI1Bz/mC12CXl9uGNP6H3sjdJywwOPUFdEUvL1kDMQHTvQ0N+cyXISVsgJT9
-         RI7xEAca+lIQF+aEn7Lu6UwWQUbKsgG8kjB6bgVtkE+AfL6aug/BBJZEkiSrHL2F7DSg
-         CreA==
+	s=arc-20240116; t=1750701603; c=relaxed/simple;
+	bh=KQwe0/QLQ5ZueE8S6zk7ebk1CkxAlLTUAJrAj4qnNio=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Q/Ly7vman0NRM/XQQJrrFNYkpn415YC/VRQQVlKDPUNdgxB9unSw6BdxvxEIEsqVSN+k3K2emTcp15ZSQ03odaHMxLsGAnDSOZdPCbiQgwACn905PsDxQKRDCl3AOfeB5N2UkWiaVz9NsD7aKaWovdzqgsPKCr1yAQD4uzXfpN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-7caeeef9629so47787285a.3
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 11:00:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750701495; x=1751306295;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OXzw3NALro7pcOgwZMZ2YhT3VgbigzrdIaS6aaLmqHE=;
-        b=IKbilK7sFsULGKQ/4dRL/8EJxHQeheKJw3zyLO7Qp0jTugbadiKg6CYeuHQcp4jtYb
-         vBWuvb1tnk+uylz8UnUglSm6BxbWVuEISwPzVIrl6ocrYQW8zLpnnZ/RTdkQVJ6YFsvg
-         BZtOCI9SlAMMIzAG4dhrnLB88JD0XORUCIowzzR5JVHHNOGLZ0PdNb91f+1jQkEMW/ux
-         sQA059zYdJjAC/nEUG16koFSV5MH8AzSPWNyEZa2snN8D2KbgMzPamJU1z/JYrWI2ywf
-         Y4TVM2GQsmDGC7dnjoOqG9Dj/VBYNaAkE/Db1+hnH0tfLjuNhLuuMPtLQ+7G3joUxjcq
-         7YXg==
-X-Gm-Message-State: AOJu0Yykt+vDpNpJdbS3Ee8QxBunhdvPvlTcvIoBL9ap8o5Dx04U7xxX
-	Q+1dB6+GC/g8sFqWxEozo9b9MkiaXwg5IhV/1yV3BPtWyNfAkWFy6+j2oOW3RvIRCjDEZpAHHhH
-	73Pn1dQwpiMOpznO9R0dDc+r/BirJvYSEUK1WUtkDzZj3tuULIdqGY/04orU=
-X-Gm-Gg: ASbGncsUBy84Hz1+w/2mCs0aklMUEukRh56vyM4sO4mHDDCj6+Lb9YuG/Kh8mObBtvO
-	T6KrVoRGJwlgpbEJcOM06zGIvvByI8ViWb1NGTMTR6d78th66ORmdZsjdtJ9Arl2SEofzDKx8KM
-	CnDSbdDw/rQdHjD/9LKhIunfRFOHojhJM/PQ8OCq3SF0xBZFLSEGHJ/RX7xxBZ3KqCbjAuaTZhV
-	w==
-X-Google-Smtp-Source: AGHT+IG7iCRlCBHrm4ARyl4k+cSAMzw+9/zc9C7ujZoVtUzmYAY/sdoN8gMz1H3UW1xMmbBUv15Cwua/W5YtEHmnqBw=
-X-Received: by 2002:a05:622a:285:b0:4a7:26ba:bc2a with SMTP id
- d75a77b69052e-4a786d5c17cmr8087441cf.15.1750701495070; Mon, 23 Jun 2025
- 10:58:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750701600; x=1751306400;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LgEjGZoJZrqa2rHMKv7rQMrpVJEHtN2HB9iBeiXW3Lc=;
+        b=UVMA7h4S2phhhdC/aAdbA9LfmVAa9nS8JqX8oc0KMKvTwB1peYsTr5EkfXyTybtqtl
+         meBu2ZxVd/izKQ8w4e+R0fJd/cI7x9I/510f+Qd959iW55YZ+hBU559peDDOmq1nv7M5
+         QVwyog2j+G1HOwopFjvlba8NvzdCxXodXV/wLvdFsf38WRbwn1yCbYwA4Z6lLNddAFp5
+         rUTyezjOtnI3HLs/x8XgMM9W73Ijue46sD6CtpBVeO7fA3h2PugGXRXlgQUPY6yb6e0e
+         0yVF9JFFdmVGcZiirB7t1jFcJQMQ1CekfuRRKED6pM3NOSw2TkvHEOKlQZ08RB1I8zzY
+         bdRQ==
+X-Gm-Message-State: AOJu0Yy7S8ARjK13OHycP6+uwWe3iUKrr5EpZ17cK/zVSrGBSX4ond11
+	wwHJ5C9LgIzAXt8xJRud0wkBHFEFFnZaQKXrRAXvm9VXQCtjw/a6lUZBuhXcx9Dk3ytRPHeAYJL
+	7+wlLdmRIrGXGDq6snvB+ajADCEFQ8YUulA==
+X-Gm-Gg: ASbGncsWugK251+QOIvQFzRAKNIyahj3f2CCUc+GgviJY/aI3FjDSzyoHsjAJ6seoMT
+	+rAf+nZRn+ZGXguwnyUaAD8N1nPrBl1QbATO0V/oDYfcS130uxQWa7GzkZ1jAExKKh8uD8JxPJl
+	TNlUKpMPDItj2QvL3H2o2S+Y8cSjzc58O/sRImvJeqql0Q5F0OtA2z94kAUJ3eGDY3kcXYHjosC
+	3Qf
+X-Google-Smtp-Source: AGHT+IFjyZd2zg0K4rr05GcOjJ8XP+FTI2flyZLLlAsjOB5WDA82V/50F5/krNo5HbbBm7/DzrAuL5QOa785kqsWLYo=
+X-Received: by 2002:a05:620a:7089:b0:7d3:c69e:267 with SMTP id
+ af79cd13be357-7d3f9923fbfmr720083085a.12.1750701599654; Mon, 23 Jun 2025
+ 10:59:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Kai Koponen <kaikoponen@google.com>
-Date: Mon, 23 Jun 2025 13:58:03 -0400
-X-Gm-Features: Ac12FXyyVWwLKVdM-c-Cl09sgFtwyy3F1RCjBPSdDxborili31NdKR1Keq5eDko
-Message-ID: <CADYQcGqaMC=4jgbmnF9Q11oC11jfrqyvH8EuiRRHytpMXd4wYA@mail.gmail.com>
-Subject: Perf bug: rev-list w/ 2+ paths relatively slow with commit-graph
-To: git@vger.kernel.org, Kai Koponen <kaikoponen@google.com>
+References: <20250623105516.GA654296@coredump.intra.peff.net> <20250623105542.GA654412@coredump.intra.peff.net>
+In-Reply-To: <20250623105542.GA654412@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 23 Jun 2025 13:59:48 -0400
+X-Gm-Features: Ac12FXw8CIpErE6LQISiOAucn3bZILQDAoWYFELB8L1cHVZBFqXmkIfPZ-xkQX4
+Message-ID: <CAPig+cSLJ57+ZU1TreHajAqbQwBD7TRUt3bxRDTcHCjS88xmLg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] t7422: replace confusing printf with echo
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reproduce steps:
-```
-git clone https://github.com/golang/go.git
-cd go
-git config core.commitGraph true
-git commit-graph write --split --reachable --changed-paths  # Without
-this, all calls equally slow (~1s)
-time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-src/clean.bash > /dev/null  # ~90ms
-time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-src/Make.dist > /dev/null  # ~100ms
-time git rev-list -10 3730814f2f2bf24550920c39a16841583de2dac1 --
-src/clean.bash src/Make.dist > /dev/null  # ~650ms
-```
+On Mon, Jun 23, 2025 at 6:57=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> While looping over a counter "i", we do:
+>
+>   printf "[submodule \"sm-$i\"]\npath =3D recursive-submodule-path-$i\n" =
+"$i"
+>
+> So we are passing "$i" as an argument to be filled in, but there is no
+> "%" placeholder in the format string, which is a bit confusing to read.
+>
+> We could switch both instances of "$i" to "%d" (and pass $i twice). But
+> that makes the line even longer. Let's just keep interpolating the value
+> in the string, and drop the confusing extra "$i" argument.
+>
+> And since we are not using any printf specifiers at all, it becomes
+> clear that we can swap it out for echo. We do use a "\n" in the middle
+> of the string, but breaking this into two separate echo statements
+> actually makes it easier to read.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
+> @@ -180,7 +180,8 @@ test_expect_success !MINGW 'git submodule status --re=
+cursive propagates SIGPIPE'
+> -                       printf "[submodule \"sm-$i\"]\npath =3D recursive=
+-submodule-path-$i\n" "$i" ||
+> +                       echo "[submodule \"sm-$i\"]" &&
+> +                       echo "path =3D recursive-submodule-path-$i" ||
 
-The rev-list call with multiple paths takes over 3x longer than the
-sum of individual calls to it for the same files.
+This looks obviously correct and, as the commit message says, is
+almost certainly easier to read, but I was more than a little
+surprised to see the patch since I thought this code had been fixed
+previously[*] and had some discussion around it.
 
-Expectation: rev-list with multiple paths should take <= the sum of
-the time it takes to call it with each path individually (ideally <,
-since with the count limit it should be able to early-exit and search
-less commits for either path).
-
-Also reproduces without the -10 arg, or with a lower count (double
-instead of triple w/ -1), but these results are perhaps most
-surprising with a count present.
+[*] https://lore.kernel.org/git/20250403144852.19153-1-sn03.general@gmail.c=
+om/
