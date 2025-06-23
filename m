@@ -1,103 +1,168 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009862D4B6D
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:09:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1637846BF
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 18:47:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750702180; cv=none; b=heLhoYjBSDJ9e8xoVfF1hsJz4aZLLtnYvma09341yKNakKmTJimcGcxv3ggifeRsctMLIsUzN3MsIFXG6pGPyhAV+h90yMipyvUBifZzvd/BMU6VFUdyEYMAO3j/h6UOwcl0FoCT5eutWteKE1sGCg0JAUZOv57slBZ4dgx6hM8=
+	t=1750704453; cv=none; b=CXsbIrhJv9exbyBFKV6CXXGslwg2CWan1qynWYCewUcPkthPcuTt8pJJF24TUCA/tKrX9G3rIamr0eBBBuKRE4bvjfcaxSeHcapW5y+4l6gBgk0i29VO2H3pF1jq9WUC8d4A6X8LfpHqos/Me41/uWbwyjdigTwSLyJxb77NgL8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750702180; c=relaxed/simple;
-	bh=n47dER7LrZlMIKabAVUlWrmEUMaBi6Mln/bfaPyWwpk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CfGac0ysRlo+uVQARqmd4YY//6BaS1QtX6kyCkVcQgnOJalPca4Axa1qQ6lws7G2ft9DfmItPxbqRShQ2LV//F7EEQqE5Xs+KIzEWPc/1R2DBMLtP1xF0eKNdYOvuJZItLyF/Deo1uRSzS2Eq5VY0JnqpL72E1P2ycPUM9V9tig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sWthlKU5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eCn6bEB4; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750704453; c=relaxed/simple;
+	bh=6lwz+Ixf91OlyY0ke4XHOCdESoSWEGiHINj6u/Xaj3k=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jBPUFuDw5/SzSICdz0T9DBbhnhHKnnmOQbIMNyoFkv8aQTWB6bUoKO3/0ySk4fKfMFSDhTGtNPb5i8dvoDPeiMVYbRdFmgdhJjIcRbPjEYHtQGn2y2vtdElvc2Wr513mgQ9I8xj8evnPQjo0eEV0TvvdPvJOLhtOdyF7l79xlEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=C12ihlGN; arc=none smtp.client-ip=209.85.219.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sWthlKU5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eCn6bEB4"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 14CC81140182;
-	Mon, 23 Jun 2025 14:09:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 23 Jun 2025 14:09:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750702177; x=1750788577; bh=LLy9W6rUbs
-	2A2YaoD35EtBS0Ns4VHma6wcCnM3WcZaE=; b=sWthlKU5rvBQgyWKgjqFemCZAz
-	1t3yaKqdNrAFbDDkvDULByXrmZCnMCZQFUVAh62CSsY8qRVQcxDBu5NR2fOluLfM
-	NYYYok97QA2sBMN23NrbEL/k5yMQ4m0OZskcIosWLkgQJPYoDjAEL2PabZ9sEeum
-	GBQXQArtstXgrPbVhEREuLKx3Qj12Q4bhBBn6mea5RM4ysV738Zdc6qYgb+Sib47
-	msN0/IXj9nM9e6TA1F2UqD9ReTwcv3SV37wU9RFom3R4ykMtzL9Tgz3zAqWgtNWS
-	rslptCwzIAIh0sq/1Cped86U6YIiwnyB03P6fXk+d7dc9Rd9pbHwa39RIZ+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750702177; x=1750788577; bh=LLy9W6rUbs2A2YaoD35EtBS0Ns4VHma6wcC
-	nM3WcZaE=; b=eCn6bEB4xq0Miczo1Uj6SmAPWBwR8vt+N80/Y/vOxKO8qvpqxpa
-	VdN8I7cI0kK/yzQjct2h/afbln+WzBgZLT/IUN9YtaMuFQLXu7PC3/aBfIXyQP3n
-	zaQq5mhz2OhR/bkpHCFJIIcG228y+eLspA7Loszjc0UdBnNH/D4SVCR7gvXw/WUq
-	G0KxIRJSe3vyiuhm5vhhDtQXuSZHPRcGUkXLp/NVOChbeA2wdSsaFu7ldFzFFhoW
-	XEtnurAuwt5vSLxguCO48ZCCHNwUgKR8M+cZGfl8X/uUlesz6SuiE3AghBUzcKCI
-	Gl11CKqnrG3TcuApzHeuiP1zDM06rFq/LBQ==
-X-ME-Sender: <xms:YJhZaJM99H8C4xwvE5tJWfogAXw48tiAnJqUfrOwFKWHYLO9sZND7A>
-    <xme:YJhZaL9lym-2gTyw7F9opQnAdu0DjeUNgkgz99LoNqdNPy1KsE5yM63kJFAbGObBs
-    m5dKrJkxuzBSd_3jQ>
-X-ME-Received: <xmr:YJhZaIREC9Za6IUNyTqrro_y4TXJsl4LG5qivqyEkFsMqgaCsruVkb_zMxdEvRk8973ItMBeWQIXWiEnJ-tWGl96UhltINj-r1xgCps>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggvrhhitghk
-    rdifihhllhhirghmrdhmohhrrggvshesghhmrghilhdrtghomhdprhgtphhtthhopehjie
-    htsehkuggsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:YJhZaFsw7igeK8uzerQAp7CWLo4mwc2mUGPmasHMaMBqmmQm5RGPqg>
-    <xmx:YJhZaBcdBCdpIg4xhlSzaqFfY85E5WtPRg4qFeTnKxn4w1d4ofMZig>
-    <xmx:YJhZaB2p_ZKuSL-7v2wjpArgLIErQ_sXPMiUxpW2eYhGHh93GUkkSA>
-    <xmx:YJhZaN-gSvtCyA0XUchFIucsoasC7_KPV1JfOsZzeQRLaOKuGa-JIA>
-    <xmx:YZhZaLzlZl8m8TJOaYMzYpEjLi41tZBwmx7S-rDM90mC68GvSlEiv47B>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Jun 2025 14:09:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derick W. de M. Frias" <derick.william.moraes@gmail.com>
-Cc: j6t@kdbg.org,  git@vger.kernel.org
-Subject: Re: [PATCH v2 1/4] userdiff: add javascript diff driver
-In-Reply-To: <20250623090538.154858-2-derick.william.moraes@gmail.com> (Derick
-	W. de M. Frias's message of "Mon, 23 Jun 2025 03:35:46 -0300")
-References: <4deb24c2-98f2-40f8-b50c-c74485ebc10d@kdbg.org>
-	<20250623090538.154858-1-derick.william.moraes@gmail.com>
-	<20250623090538.154858-2-derick.william.moraes@gmail.com>
-Date: Mon, 23 Jun 2025 11:09:35 -0700
-Message-ID: <xmqqcyau5nz4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="C12ihlGN"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e733cd55f9eso3830845276.1
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 11:47:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1750704451; x=1751309251; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=huFx7UNK/Id32HAAY0jEy4dDHMTwSE3d98EG5g70uC4=;
+        b=C12ihlGNDO6Z2QekNev2WFp2EJab/0TzHdtSWrdOpKq+62aD9E6jUS1ymdevA+a6ic
+         4A2ka4u8oz09iPris2f/25bRiJvrprfSI+jF9mAfUIlL7gyO4oAPlxkx0IJWzvkezdtE
+         RYLqUDUKeIwD+IDz3x+3m/d9zTIOSVKndwxzTB/N2n60SSZ+L4ZvoGjgGfU+KQWBTsM5
+         CKjiSQWrWWcEutBzt+3dZH05fj7jEQhsryuSWa8+Q58WM0kBdMf9PAeigZvEZcw/1hBB
+         ooNPv8fWgxIrVLBrEpGEykJsR1LJXwLy1yoGrBc9NZzjM7KYUlpg3LMdryAZPTFib2hg
+         hrdw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750704451; x=1751309251;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=huFx7UNK/Id32HAAY0jEy4dDHMTwSE3d98EG5g70uC4=;
+        b=rK07BQXQJH7aiFppD9D9o5il9CUGeOnx/NrvQGifZCIMDH7OrryWUwxq3cA1gYF0pQ
+         hBkBjBaWnLap1e1E/4xMXt1Wvk4acf1KNHao/TnIwI4nV1i0tQq5Mva9UEBzD1xBoJvP
+         QDIwvoAmSyayXrVtsXfPHZoh2pdY/1SqEk2DEi3heNWU2xx8SoKy2B+jM75HQH/XFiV4
+         aTwVosoXhRFn85TT7g8SoZx0aAy+CWphO+sgyD+rRh0qu4ZeBU+WScAiKp/bVorzyb2Z
+         bExAq6REA6mQBLJ3Mtq7jOKzXnrf5LJvHSrUAeussxKfvj92fQ75pclcSHznFdWkWQtb
+         43ew==
+X-Gm-Message-State: AOJu0YwdYuIUDrmgXtQEJSN9qkYo3x8Y0Hg9g1qFB6budFOkNoIuH+1J
+	z3tZZ4zRa4mTcvNcHWyhXzSt2GFjT4aSf8t3H3hDuio4BWlvHBfUnb4gQvZ+Lxqv+zI=
+X-Gm-Gg: ASbGncsMNXFSMCaLE5TWvS7fQero81PK4UQWuAHtSS6mBHMMHh9qLW4taNmcvD0xPus
+	ig0T9fcotuiaUma7MyIklC9IyAkDIX4Uk2b84QPhowDb6xzk4bComMAydqLCTL2fNZA0aB58AgE
+	97HKypxPTw19JGg+niPxGevMk8ru98dWBi/h+bIgK8Tx6zETlKnI/7+mrwrgCuZNgu7IWil6eGO
+	KXYbDHWb4jSXjlH92XPfbJXapl1AEtWltUeC+AVcrPIMJkzdiLglz7yu8yEEV7vF1sybsLqlkdR
+	t8UyCxFz9VzHr5L6kJ8UHyV6SvfZZbN6ok+w0GU/JG13zRBHoHvHFBQnw601VSGGAuZGCu2CycJ
+	L9kh89Nmvl5AHTbMaUNIAlsMR8mCAThrORA==
+X-Google-Smtp-Source: AGHT+IEOBmoPuVEXBtIwlwxWPiepSLlpIXyWbPwvaSbSpznfe3sXcWk1whJIFIxRLbYqfiSieOmHAw==
+X-Received: by 2002:a05:6902:2504:b0:e85:eb80:2cf3 with SMTP id 3f1490d57ef6-e85eb802d92mr3796833276.29.1750704450725;
+        Mon, 23 Jun 2025 11:47:30 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e842ac5bd22sm2528293276.31.2025.06.23.11.47.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jun 2025 11:47:30 -0700 (PDT)
+Date: Mon, 23 Jun 2025 14:47:29 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v5 9/9] repack: exclude cruft pack(s) from the MIDX where
+ possible
+Message-ID: <aFmhQZZnYyvxDelO@nand.local>
+References: <cover.1744413969.git.me@ttaylorr.com>
+ <cover.1750375803.git.me@ttaylorr.com>
+ <6487001f64653d1434890df39b4c4937ea4d0b2c.1750375803.git.me@ttaylorr.com>
+ <20250621043551.GA3002138@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250621043551.GA3002138@coredump.intra.peff.net>
 
-"Derick W. de M. Frias" <derick.william.moraes@gmail.com> writes:
+On Sat, Jun 21, 2025 at 12:35:51AM -0400, Jeff King wrote:
+> On Thu, Jun 19, 2025 at 07:30:33PM -0400, Taylor Blau wrote:
+>
+> > +test_expect_success 'repack --write-midx excludes cruft where possible' '
+> > +	setup_cruft_exclude_tests exclude-cruft-when-possible &&
+> > +	(
+> > +		cd exclude-cruft-when-possible &&
+> > +
+> > +		GIT_TEST_MULTI_PACK_INDEX=0 \
+> > +		git repack -d --geometric=2 --write-midx --write-bitmap-index &&
+> > +
+> > +		test-tool read-midx --show-objects $objdir >midx &&
+> > +		cruft="$(ls $packdir/*.mtimes)" &&
+> > +		test_grep ! "$(basename "$cruft" .mtimes).idx" midx &&
+> > +
+> > +		git rev-list --all --objects --no-object-names >reachable.raw &&
+> > +		sort reachable.raw >reachable.objects &&
+> > +		awk "/\.pack$/ { print \$1 }" <midx | sort >midx.objects &&
+> > +
+> > +		test_cmp reachable.objects midx.objects
+> > +	)
+> > +'
+>
+> This test (but none of the others) fails when run with:
+>
+>   GIT_TEST_MULTI_PACK_INDEX=1 \
+>   GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1 \
+>   ./t7704-repack-cruft.sh
+>
+> The culprit is the incremental flag, but you need the first one for the
+> second to do anything. The issue is that the cruft pack unexpectedly
+> appears in the midx:
+>
+> [...]
+>
+> I'm not sure if it's just a funky interaction with the hacky GIT_TEST_*
+> variables, or if it's a real bug.
 
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -238,33 +238,43 @@ PATTERNS("java",
->  	 "|[-+*/<>%&^|=!]="
->  	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
->  PATTERNS("javascript",
-> -     /* conventional named functions */
-> -     "^[ \t]*(async[ \t]+)?function[ \t]*\\*?[ \t]*([$_a-zA-Z][$_a-zA-Z0-9]*)[ \t]*\\(.*$|"
+Thanks for spotting. This is definitely a real bug. The root cause here
+is that our loop to gather the set of packs we know are in the MIDX does
+not account for multi-layered / incremental MIDXs.
 
-Curious to see that anything needs to be removed from "javascript"
-section, when we do not have any patterns for the language in the
-file.  Which version of Git is this patch meant to apply to?
+In our example, if there's a cruft pack in any other layer of a MIDX
+besides the tip, the proposed implementation here won't realize it, and
+thus (incorrectly) conclude that the cruft pack is not in the MIDX
+already, so can thusly be omitted.
+
+If we do this on top:
+
+--- 8< ---
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 346d44fbcd..8d1540a0fd 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1614,13 +1614,16 @@ int cmd_repack(int argc,
+ 	string_list_sort(&names);
+
+ 	if (get_local_multi_pack_index(the_repository)) {
+-		uint32_t i;
+ 		struct multi_pack_index *m =
+ 			get_local_multi_pack_index(the_repository);
+
+-		ALLOC_ARRAY(midx_pack_names, m->num_packs);
+-		for (i = 0; i < m->num_packs; i++)
+-			midx_pack_names[midx_pack_names_nr++] = xstrdup(m->pack_names[i]);
++		ALLOC_ARRAY(midx_pack_names,
++			    m->num_packs + m->num_packs_in_base);
++
++		for (; m; m = m->base_midx)
++			for (uint32_t i = 0; i < m->num_packs; i++)
++				midx_pack_names[midx_pack_names_nr++] =
++					xstrdup(m->pack_names[i]);
+ 	}
+
+ 	close_object_store(the_repository->objects);
+--- >8 ---
+
+(Note that this assumes that 'tb/prepare-midx-pack-cleanup' has not
+landed, this could be a little bit simplified with the
+nth_midx_pack_names() function. I kept these two separate so they could
+proceed independently.)
+
+Things work as expected. I'll send out a new round with this fix
+Incorporated as well as a style issue that Junio noted earlier in this
+thread.
+
+Thanks,
+Taylor
