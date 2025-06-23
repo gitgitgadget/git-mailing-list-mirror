@@ -1,53 +1,53 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809B725E82E
-	for <git@vger.kernel.org>; Mon, 23 Jun 2025 16:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E698329B8F8
+	for <git@vger.kernel.org>; Mon, 23 Jun 2025 16:27:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750696000; cv=none; b=Z3PuCzI+h9fZFpPeqRK0IfEryLFA8QyYLV/lN1TWXzUqtrl5k1njRuRifStlP3zU6pMQRvFVNdFVYkMraQ7XFdpAO5LoLY60owh3mJu6l6bw1AWSV9ndw2km4diDBnixWGwlQWmqqKjpWmnAXUG3fSzc1gvwPYik4nT59v0bSxM=
+	t=1750696025; cv=none; b=E60Q03gk0E3ZyLWcNQ3UhLSW/RNMAy+xs0QnayulQPSwmBDyszDBM66j1cUXPRr75q2FOrMPzl7HcKMBRnstB3L1tqnsoU+kGkfwtNdFocqHWhj2kgHsgSGvOP3a7GrjDN1o6s7nR8dcoVX1Jr8eaE+Pu8IvqDVLRg98U9Tn9/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750696000; c=relaxed/simple;
-	bh=DAkbTbAiPjBYDSIUW8+lAYGjoZpBuKGeTbMW53QQQ4M=;
+	s=arc-20240116; t=1750696025; c=relaxed/simple;
+	bh=CTHAhiRm9zl4+ZwFKt9iFmbMX7dsJQ+TDjcJISWLWmY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gC8m4Sn9gNIt294cv7aromULTanxqt/Jg+8AQUnlw+4rElTYl3KFnU0aykl/nWJGtd4TwCdHZ0JK1E2FZKC+PcUVp0lEivFBj1CKfj0AOwUg09FOKCIrWR3hXwNByswu0Bgo/e2VwrZPi9aZk0QwjECJiEr00IX4loA852XXijk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eQraDMJR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QHke8A2f; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=Qcrnd9Lti4Ml4rjOmoDMtDTgocDrB2n1/dfdRyxSSam+wp7c9eIrCSzrMdda+WYmf27I1pSrqhD/sgrBi0PJZX03NvKAkAc9eEmeHb0XTUSSTac3pIzAxu6f+8qmxoJ/msGVnoA1DDmop11HQvhrVnZ1UaX/nDEaRswXzF53Iyc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vF2TmZKU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aXqsBBNM; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eQraDMJR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QHke8A2f"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8B1FD1380440;
-	Mon, 23 Jun 2025 12:26:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Mon, 23 Jun 2025 12:26:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vF2TmZKU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aXqsBBNM"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 12DBD114013F;
+	Mon, 23 Jun 2025 12:27:03 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Mon, 23 Jun 2025 12:27:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750695997; x=1750782397; bh=4OtRFH197a
-	V/hZsX9DZDEA1AvNzuIjK3KF9GFMkc+so=; b=eQraDMJRJbSw6OTYL2l30E3i0E
-	WgutoC9cycDUOqq94A04Keu+sSlh93L6bwiG3ja8hjxD8JntgvQttsAWd9592o/e
-	DML7c6y3m5gpu6UOzmqkXdG8xfGAJ7K6efAEa32ncI2UC4UCLSuXXLjLC6eNt9Nj
-	BL0/tKh0WrAJMcH+1XSry3DToF6Oo7f9CwHWElD61cvcHvZF03SZyOCpCbTuZNvJ
-	8psf7p+1pduuGjmfd3dqaJQU+rzdx7FFOaUvemaDl5rp66RWMh2IvCP7zFoyNxq0
-	qVMII6XOedFwAHAhhfst1UYdepS3HMDYNJTdVH4SAppcTiJnSgjXdGLkYiiQ==
+	:subject:to:to; s=fm3; t=1750696023; x=1750782423; bh=hXnQSiME4Y
+	iuH1j/YuNp5zlk2WCZCaOXvnA2YuMNeNM=; b=vF2TmZKUfAyrwmnqY89Fr4e7S5
+	Z5mrh2A371vWKMlaJ2xtYqUEpTuhb39y3H2r4zsR3DKI2aDbzNHLzvTNoOd006cD
+	qCC62lfqKcB4vz4cdOLe2NoCZaYBReDwsIPgdepMfGgKtcQnt6G5VjhSqQjiVr8Z
+	uUQULxjoX0bpctykXo+1rVC3DTKL1ziBk3FEUKcKCmYv6nTykBaeioqG3A6ZpiFh
+	DTv5ZGgNv4XXyCziLiU6E5QgWnaSQjQEJNRqFnrUMNq1wQPYzqN0SK2Sqc01I/DK
+	A8P6j6v4XkhLz859On0Errjw+k18CL6rtL6owhqXvHWvKewZGaWw9G0KZ9BQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750695997; x=1750782397; bh=4OtRFH197aV/hZsX9DZDEA1AvNzuIjK3KF9
-	GFMkc+so=; b=QHke8A2f40Nxf5fPc3dtJoVEzHwLsQPfESfq+HxRu7WRvIlnkSZ
-	TtWtm68sp6bRXSAsUk48g63wm2X/r6G/hRiNChI/uFhNPvahg4w8iU9U2rzqJgee
-	lmK6fcmZ/3+MvnRLS66iuMujpOgiFh3X6A6kEe1zfzZuryC4iWlGzqYqXQn9wwc3
-	5XL+HDZY3NqgAmnAd261ThvSJBmidUkULjTd2PGV6ehiwWVkUUGhdW946gfzI3WO
-	ox6IeJlQyvNgOc6W/PmdqAIly9iFWa0KrEjA8yCpTQfk6eiiy9UO69QFsyBsiAIU
-	joZP11VawsIjEBpILNgEZm9AWdtc+vNFivw==
-X-ME-Sender: <xms:PYBZaASz1XmiNeZFuoRXPRCV6kyKxnnk6WUwcULpxXnPLwr-AL1rfQ>
-    <xme:PYBZaNzseKbgVJazdIeo8qP7s-DFXRSczcni-K2nFXxub_9VBmOQwQ1kL_aAq8ywy
-    S0oWcmKlC6hiKhVNQ>
-X-ME-Received: <xmr:PYBZaN3ZeqDAqw1RjMxtmbWJAow4CR0nvjwoAdp28VnjLrVhK0W3ayvi489B2OCPdO3KZdyMltb_3B1VTC70z7U0qAho8ij6j6ReNjA>
+	1750696023; x=1750782423; bh=hXnQSiME4YiuH1j/YuNp5zlk2WCZCaOXvnA
+	2YuMNeNM=; b=aXqsBBNMYtmNDlqlsOiUb1aWJC9EJFlLEKyJYsQeMtzo+UjgsTA
+	2HVI3g4duJKanSI2oNknedr2HuBlf5pQe/myKqw7lv0D2PLJLSl6VrIXIIgc0KmI
+	vSwd1BS52iTe0b149piB6jjcY3dqdDvZRpp9fyHLD5/EBz/ReLhZNBvEbzJc6hUN
+	kirJJRO7wsKU7YgeHAcmY8/JlFRooOhkD3O3ciqCdy2EotLOWgUWjnCC9TqMxcJA
+	2Tt5rbyoGCY0y1SbP0cgQ+FY8GV7jhrGWonq18sBfCPRaVdL24kjCS1xCs9S9A1r
+	B6YKZwxxbdZKYo6GUkpTVVh4R95DEgGWE6g==
+X-ME-Sender: <xms:VoBZaIDHiqPqwT90Z6EK5JOrpgzhCNYO3GNY1CD6Bl-fLZX3_NGElg>
+    <xme:VoBZaKgNSoOqLM-QSOBEwPdToPiKHgAroa4WEZoV9D1Qf1mNZfR_CVucEmbrvIZ0q
+    EocUVimO31YEjCCZA>
+X-ME-Received: <xmr:VoBZaLkYDa27KrvISIKoA0Lck029AmGcoxIPMhGmgD2rrDpaN1M7V9yzHvuyqBus5dX3Kkd9PzlFp2-0ACuzxY8KQ2wakZSr3qBtbiE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,32 +55,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddujeehtdcutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PYBZaEC9qnaHp7Ri0YO3AhfAjpgD-86TiEqtsBj8poCHzqD_iEoflw>
-    <xmx:PYBZaJjY_R9apCp7ISbKq4QUMCZdiyWyEzGmx6ztFQLpmuAeaxggcQ>
-    <xmx:PYBZaApltKzOw0cS_3W4HvsJjXsDMHxKEZEwO8UTc0_Ztm9H-GZ8Ug>
-    <xmx:PYBZaMiSa9-6gOYAg-itx6u7dgBEd7SaKfaTZgVRi-NHFyCKPEAv7g>
-    <xmx:PYBZaMrJxJDLkSvH6KdsXPc_Ms993QujKpF_tc_oOlw9iUmaMC_NLN2c>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunh
+    hshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopeiiihihrghosegu
+    ihhsrhhoohhtrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhooh
+    hthhhprghsthgvrdhnvghtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgt
+    phhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:VoBZaOwoOfAojXXZiTHgR3yZCpUq_h5Ipvy59WPrGFWMEVfvzBdDIA>
+    <xmx:VoBZaNQ47kDKtVPM8IkQp11QcPmKV5KsBmzWHEbXQRvgfQlL5CrMkQ>
+    <xmx:VoBZaJZG02j5vuJN33ZcyCs0gqKYFeJ84Y9VCjerIH3feNGRtf11fQ>
+    <xmx:VoBZaGRjRQzQtGAvVFNYdzUsromgPzrakJ6QgJvHvK-WDBm6DRXXzQ>
+    <xmx:V4BZaI9ELhORncm0fXFHbgU_lAV7M_R5NJg9aQ7f3vauG3bW-Tr6wd3B>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 Jun 2025 12:26:36 -0400 (EDT)
+ 23 Jun 2025 12:27:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Ren?=
- =?utf-8?Q?=C3=A9?= Scharfe
- <l.s.r@web.de>
-Subject: Re: .clang-format: how useful, how often used, and how well
- maintained?
-In-Reply-To: <CAOLa=ZSuEAwj==9+B-nYikyQtOxREf8ZEfJ9L_YxU8yU0ro-zA@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 23 Jun 2025 03:46:18 -0500")
-References: <xmqqmsa3adpw.fsf@gitster.g>
-	<CAOLa=ZSuEAwj==9+B-nYikyQtOxREf8ZEfJ9L_YxU8yU0ro-zA@mail.gmail.com>
-Date: Mon, 23 Jun 2025 09:26:35 -0700
-Message-ID: <xmqq34bq77b8.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Aditya Garg <gargaditya08@live.com>,  git@vger.kernel.org,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,  "brian m
+ . carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,
+  Ben Knoble <ben.knoble@gmail.com>
+Subject: Re: [PATCH v19 00/10] imap-send: make it usable again and add
+ OAuth2.0 support
+In-Reply-To: <c787a41c-97c6-437f-aae0-52132c79db7c@gmail.com> (Phillip Wood's
+	message of "Mon, 23 Jun 2025 10:09:25 +0100")
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597F9CAD0DA83152E651194B87CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<xmqqh60a4dk6.fsf@gitster.g>
+	<c787a41c-97c6-437f-aae0-52132c79db7c@gmail.com>
+Date: Mon, 23 Jun 2025 09:27:01 -0700
+Message-ID: <xmqqy0ti5sq2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,25 +97,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->> For that, there are a few things we'd probably need to do:
->>
->>  - Improve our tooling so that the develper can check a range of
->>    commits they made before running format-patch, and other
->>    situations.
->>
->>  - Improve .clang-format rules to reduce false positives.
->>
+> On 20/06/2025 16:50, Junio C Hamano wrote:
+>> Aditya Garg <gargaditya08@live.com> writes:
+>> 
+>>> v19: - Use xstrfmt() for OAuth2 strings and strbuf for PLAIN.
+>>>
+>>> Aditya Garg (10):
+>>>    imap-send: fix bug causing cfg->folder being set to NULL
+>>>    imap-send: fix memory leak in case auth_cram_md5 fails
+>>>    imap-send: gracefully fail if CRAM-MD5 authentication is requested
+>>>      without OpenSSL
+>>>    imap-send: add support for OAuth2.0 authentication
+>>>    imap-send: add PLAIN authentication method to OpenSSL
+>>>    imap-send: enable specifying the folder using the command line
+>>>    imap-send: add ability to list the available folders
+>>>    imap-send: display port alongwith host when git credential is invoked
+>>>    imap-send: display the destination mailbox when sending a message
+>>>    imap-send: fix minor mistakes in the logs
+>>>
+>>>   Documentation/config/imap.adoc   |  11 +-
+>>>   Documentation/git-imap-send.adoc |  68 +++++-
+>>>   imap-send.c                      | 405 ++++++++++++++++++++++++++-----
+>>>   3 files changed, 407 insertions(+), 77 deletions(-)
+>> Looking good.  Will replace.
+>> Should we declare victory and mark the topic for 'next' now?
 >
-> I think the biggest issue for this is around line wrapping, I'm
-> considering just removing it from the '.clang-format'. Perhaps we could
-> add it to our '.editorconfig'?
+> I think so, the range diff looks good. I've not reviewed each patch
+> but I just had a quick scan of
+>
+>     git diff origin/master origin/seen imap-send.c
+>
+> and it looked reasonable.
+>
+> Best Wishes
+>
+> Phillip
 
-I would not stop others from trying to improve the rules in such a
-way that only an overly long lines (like >120 columns) are folded to
-reasonable length (line ~72 columns) without doing anything else
-(like not concatenating adjacent lines only because the result would
-be shorter than 80 columns), but if it is more involved than we can
-manage, removing it from .clang-format so that "make style" would
-not use would be the best (or "the least bad") approach.
+Thanks.
+
