@@ -1,109 +1,130 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1AF246781
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 19:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADEF24C669
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 21:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750791711; cv=none; b=Hvi6wjUmkbnE2r+t9OEQaPminNf4bkzFsqO/65IfwmzznJY9wvoJjeWlbpYMMsw4al8WgP+U+6a1R/FMi5k0nGRh2lUwEWGa9en02RmNVOiY/TVXXdOAN4J7/LKwmeYReY93s3svRRv+SuARbRbvCe21LbNAfC8ZkywxYe0/Pjc=
+	t=1750800521; cv=none; b=BAt1XOz1N+fNcPA/fgow2PFOSOPxc56nt5vBR6uheWqLV5P4vpFxo6cz/p+rxaJq7RCHSY/UVLeJNJwz20NvmLnnRqlyCoschJtoc+h/EAwOMCInFd+0ESQZyhcoRYv7cBRHFnJmbEl/olgeFh8IRmcF4v+fbzako0lbGBdJVZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750791711; c=relaxed/simple;
-	bh=P3KQ3pOLLUWX+9OYQnl7L6M0qX+b6VYrdVGtsYMLfuo=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YGJCIFDHHGI3ZyfQIuSZYkqP+6TyBZgJyG9z5ZrlPF5o8RP26PIzDCwf//XjBpquMMwwNduNp7YzeYyRfeTmUvTXYyS69F7DnQMn1nXIfXxVXUXwtfGsLsuIevyEMzgPqSK734g1vc5yc9xMUVZ3xB6WZ0uxw3Bv93vAcfNyscU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NP3dtAIe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hgmUsAWx; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750800521; c=relaxed/simple;
+	bh=O9hr6wgvjiHCOX7o/wWEH0EJwGTHNxcdI1iQXjSkB+M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QhZgKQkDQYybxTyRYB8aRQDjvD2iZ4dFiVbjPOVuHCjcw4kTm4jWK9O4hIRb4tW7ckB3zoYbu+nfv6f06WFVX2F3NxHwdr1aUGhsf1hX3PoeofKTbO3AtWGZkSN0wod4liT1nB01BtoX8TrWEQSKMysyXxDz0q1dviXhzIK1aR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OFwFfbGy; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NP3dtAIe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hgmUsAWx"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 592771400143;
-	Tue, 24 Jun 2025 15:01:48 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Jun 2025 15:01:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1750791708; x=1750878108; bh=P3KQ3pOLLU
-	WX+9OYQnl7L6M0qX+b6VYrdVGtsYMLfuo=; b=NP3dtAIeiO4I6/PTGB5HlB367z
-	tMANSUVxVgIziqcpMNPfAs53RLFLMeUoiLcpmAkSFXhx1Zbo+jTVsq3bF7hkEOlL
-	WtmYHrSSMdj5YKA8G0vL0CP33ku6RrGOduXxXD+nCo0B6rv06GeL3377nN553COe
-	T/sEh8oSVg8mP6LobknQxRfxqbrCXR816iZ4JWGEqVHNI/m7XV1Gv/dbkY/pIMnk
-	qmumvwLsd7s9jjlMudN6dC6huZzEAb5O0tFa7jexCZX7ZBjP5+VqHFAGpuLCFdHW
-	I/cEZLn7OvjvM2CFrvm8cEnDtvdQGBUKQGwSHT8yeJ9U62tJrrBgjq7aagQQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1750791708; x=1750878108; bh=P3KQ3pOLLUWX+9OYQnl7L6M0qX+b6VYrdVG
-	tsYMLfuo=; b=hgmUsAWxwTFRMJs0xn/eHfETbmn+ziqx6/W8Ziw6YaFWMo4PWVL
-	gyy5aQ+VZmMpvJeqQrCD7rOvVzTIrr7PGXu1sbLbF5WzPRudF0W1RbFWsYev3UGL
-	1v2uCpA9+Q7rH3k28KGENC4Nk/D9mUkyx8AtJ/sXlsKH4TmgKxTxHxpgPryG4pa8
-	uS8xcEJ69y980v1oxiSsIbGd6yBrI/q7kObs7CgerA92hwEcmkNPctvmVJvfVCSg
-	KfTi7B8EnnRMwQN3ple4VeV+LQdVfp5Z9iOilKRxjEmP6ns7WoyHkKFnB4e4bY69
-	OMJc+ji3QkygyUnAr7eVJPKYRdJm3w8cn9A==
-X-ME-Sender: <xms:HPZaaDo8gxvmzwE5gYD98Op7XT1Txe0IxLCnD5hPVnyHIcUFY42BUA>
-    <xme:HPZaaNrcariG5JDsaw9xwCjfEDXj3tRgRRKLyhEbX5GKm-s3Ex7azq29A4lmmeSb1
-    7xZArvdI836mKJFjA>
-X-ME-Received: <xmr:HPZaaAM9RCTZC9Z0XXi9zTZsMFFHdiA2H4FaL9VIpgf5-m2y1sO6dmVQJgUasjOOvQWZFB5-aylWWbccFYgO3bkaEuv1p5LQ4BHIdSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdeijecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvufgjfhffkfgfgggtsehttdertddtre
-    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgeefteelleegfeduvefguefhgefgge
-    egveffvefgiefhkeejtdevtddtiefhheenucffohhmrghinheplhgrthgvlhihrdgrtgen
-    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhp
-    ohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:HPZaaG4Yht0O2mDiO3_8i9l2HPO-s9JHOJjm0jtqn2EkTV-1EsrEPA>
-    <xmx:HPZaaC7_tvFB5MWR3RtabQV99vzziZNNqFJmaSTC92NQxhCjit6iDg>
-    <xmx:HPZaaOiWfPd2PLKhOxRAg4aS1SruZSyRuoMqSdluC1KfMmJbLW9tgQ>
-    <xmx:HPZaaE5CHhDshsX4-q2xj8ijNurmrmvDgz080gQEzUO8UKO5GTNVtA>
-    <xmx:HPZaaHr7fC-Dd5Yol81oc663BFL199W2qGf71rfm2xjnBFox7Fqw-lwp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 15:01:47 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2025, #08; Mon, 23)
-In-Reply-To: <xmqqtt462bye.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	23 Jun 2025 17:57:29 -0700")
-References: <xmqqtt462bye.fsf@gitster.g>
-Date: Tue, 24 Jun 2025 12:01:46 -0700
-Message-ID: <xmqqqzz9yndx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OFwFfbGy"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7490cb9a892so378181b3a.0
+        for <git@vger.kernel.org>; Tue, 24 Jun 2025 14:28:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750800519; x=1751405319; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=3/4hQ/55iGWjjtZ2AoUI5QDEGAC5p5F9xOG0OeErFUk=;
+        b=OFwFfbGyEymOrwRlLJCzXIyYnToIXRSkPoHEZtCB8RCuDbxO8mtioaUHQmdkpltxxA
+         vlSflN9p2+qGL3tdyGZOr1tWbX7+EijqMCAC8JtAcuvhbhQa6o+1zVSckoZ1zLOSWumC
+         gc9ZAdekCxGxlCpMvsho3t91WvA7ieOWGYZ1bBP2kv7z5+R/GnU063sMXJhty1G7UX7N
+         J7D+Iow0U1PD/CHj2HbXFMBSTdOGuOK67RyeEs7xONBc5GKyh1YBMZ8hY97HgG+fQ9tF
+         BPSOkYiyV/VZkybXtW9aBJDUQDf1xgCAhPLI2KJYun3pKdOQqr5XCc33VDrD5wD6uvK1
+         Gbow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750800519; x=1751405319;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3/4hQ/55iGWjjtZ2AoUI5QDEGAC5p5F9xOG0OeErFUk=;
+        b=i1De3gJKJOSYh4LyyVtzcBc8qZ9vZejpTGLFVQPzkBfxE2Jgj09NNmPPjN5NVUKG3f
+         CasVUf/aS2n66FRD3y1/zf2iQU/Xgym35EG+gFpEVBzSF5jg9uOwxSMlZfgIhJLVlKts
+         /1QepTSl1RSx+I/OOy7IJZH3FmkpyV/b2I2bb24wQLh7QWEoYbtcbBhvRYTMOqpqQ38R
+         xFU0hDS1RNfksGSzFLZQuwXp0M1gWGqYucimghqkiRx1GXLxLQR1xQQsVLqzGLtai8gx
+         m9No31FVp2ENHGZS51CmdyRW5NHqM9uoxWokUMUfm0rs7CMzQYDKSFfEBQuLCUNiBSUx
+         ZdSQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVBxghAVDbQR29v1qFLWUV6/HebC+Fx3sO12yBwyL6Nc+92LTgHROa0IszjO4CI9/aTc74=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5/T6kfcmzVjtLRgCv+JWXxt49aW4kXAa4HdZ1kST/Up4NjYFV
+	UMKtybRnK7F3CzsXwapUSevQvc1zgXsRdspuipQqlL6dqj5FjLnaG3Ij
+X-Gm-Gg: ASbGncsFE7pNCGKX07n926pADc4wSU8JliWUY8vTnjVNTn5XVyoHQ3tIXaBQC/R/4hD
+	qeDtfheDz7raZ2KSHQ42J/ZaM+3cXp6wylOqhk5ryTiKg+qWGwWnEtfoFEpvrL/7KGSSWTxLNOl
+	a0cxUk5gtoKOizVQFWgrQ6RMVMtAxLbp2S2V/i0ssixTKXXfA3b/nAgmu6d7YBbHyixX6C3jYYb
+	fFmg+kKNsVyRVKp4uoiilkcVKIUgTky3mZgmU1yeQOk6/Tb1hMyplh+l7ATHV4E9WR6BXI62cnG
+	81LCtqcI8eFaiu+qLaekcrFOTm4Hu0tBNmU6qvn1agD92g0gRiLPhQSbCdwiTuwIl1dyxT+ZZNj
+	2lbOdR4eqTydTeYCl54JR9vc=
+X-Google-Smtp-Source: AGHT+IEAbo5dWFJc4ajsliOsLKR9andxyd9PM8hTyjtOedKotz6WNAGKH2RvseasUPgRAaCQ/nnLYg==
+X-Received: by 2002:a05:6a00:84c:b0:740:9a4b:fb2a with SMTP id d2e1a72fcca58-74ad45b4901mr854394b3a.20.1750800519382;
+        Tue, 24 Jun 2025 14:28:39 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:a1d3:1456:244b:d366])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749b5e08e2fsm2731966b3a.19.2025.06.24.14.28.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Jun 2025 14:28:38 -0700 (PDT)
+Date: Tue, 24 Jun 2025 14:28:37 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org
+Subject: Re: [PATCH 2/3] daemon: use sigaction() to install child_handler()
+Message-ID: <7f3ac4djbbhskbryzr754kdjdiyauiiy5dduv7h2uaa7mvafsr@chntkatmbbcb>
+References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
+ <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+ <xmqq5xgl1589.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5xgl1589.fsf@gitster.g>
 
-Here are the topics that gradulated to the 'master' branch lately.
+On Tue, Jun 24, 2025 at 09:20:22AM -0800, Junio C Hamano wrote:
+> "Carlo Marcelo Arenas Belón via GitGitGadget"
+> <gitgitgadget@gmail.com> writes:
+> 
+> > From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+> >
+> > In a future change, the flags used for processing SIGCHLD will need to
+> > be updated, which is only possible by using sigaction().
+> >
+> > Replace the call, which hs the added benefit of using BSD semantics
+> > reliably and therefore not needing the rearming call.
+> >
+> > Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> > ---
+> >  daemon.c | 8 +++++---
+> >  1 file changed, 5 insertions(+), 3 deletions(-)
+> 
+> Hmph.  Wouldn't it a much smaller change and fix to discard 2/3 and
+> most of the 3/3 and instead make a siginterrupt() call to tell the
+> system to interrupt us when SIGCHLD is received only on platforms
+> where siginterrupt() is available?  Use of sigaction() does not seem
+> to be buying us anything for the purpose of this series.
 
- * ac/preload-index-wo-the-repository (2025-06-10) 2 commits
- * ag/send-email-edit-threading-fix (2025-06-04) 2 commits
- * jc/cg-let-bss-do-its-job (2025-06-11) 1 commit
- * kj/stash-onbranch-submodule-fix (2025-06-10) 1 commit
- * ly/prepare-show-merge-leakfix (2025-06-09) 1 commit
- * ly/run-builtin-use-passed-in-repo (2025-06-15) 1 commit
- * pw/stash-p-pathspec-fixes (2025-06-07) 2 commits
- * pw/subtree-gpg-sign (2025-06-04) 2 commits
- * rm/t2400-modernize (2025-06-16) 1 commit
- * sa/multi-mailmap-fix (2025-06-13) 1 commit
+Using siginterrupt() would work (at least it did when I tested it in
+OpenBSD), but its use is discouraged as it has been obsoleted by the
+last two versions of POSIX (since 2018).
 
-Some topics are now newly in 'next'.
+Indeed that code fails to build[1] in recent Linux with :
 
- * jk/test-seq-format (2025-06-23) 2 commits
- * jt/imap-send-message-fix (2025-06-20) 3 commits
- * jk/submodule-remote-lookup-cleanup (2025-06-23) 7 commits
- * jc/merge-compact-summary (2025-06-12) 2 commits
- * bc/stash-export-import (2025-06-11) 4 commits
- * ps/contrib-sweep (2025-05-12) 11 commits
+  daemon.c: In function ‘service_loop’:
+  daemon.c:1138:17: error: ‘siginterrupt’ is deprecated: Use sigaction with SA_RESTART instead [-Werror=deprecated-declarations]
+   1138 |                 siginterrupt(SIGCHLD, 1);
+        |                 ^~~~~~~~~~~~
+  In file included from compat/posix.h:112,
+                   from git-compat-util.h:26,
+                   from daemon.c:3:
+  /usr/include/signal.h:324:12: note: declared here
+    324 | extern int siginterrupt (int __sig, int __interrupt) __THROW
+        |            ^~~~~~~~~~~~
 
-For details of each topic, please refer to its entry in the last
-edition of the "What's cooking" report.
+Most systems seem to be implementing `signal()` with `sigaction()`
+nowadays, but in the ones that are not (ex: Solaris) calling the later
+to get a `struct sigaction` with the flags being used, doesn't work
+and therefore it would seem, that the only way to do this reliably is
+by using sigaction everywhere for this signal, as implemented in 2/3.
+
+Carlo
+
+[1] https://github.com/git/git/actions/runs/15849572148
