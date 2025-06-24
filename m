@@ -1,68 +1,67 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41BA291C1A
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 14:08:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACB092C3265
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 14:08:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750774128; cv=none; b=m7ED1NGG9MDowfa7yOYkhOBDwggx0DcvbKXD9uKT9VYQNheRcRJG/BbzLHHagtS+U3lAXOq30YWY7k87dh4KISLZC1KY3HhfPggkVOtOdLgTAdNDQSBx5JJuJqAiCnxT05qxr8bmc5q+jk8aERlcyI0o3Jxx/CuOGA7N3k2IVRI=
+	t=1750774129; cv=none; b=s9HpOx8kqKNxg0zR2f9HqFS6owKqfnFdFwccMNhZmc3wIqqeQtPXtNcV4guGB7cANeO6VYWlrNiH7Yk+SnkoukubSq74KS3oarka6BRU6+Z2+77S9XuShbp0mKOe/1TY2PIj1cLKcOd0BK9sTr9juCQzQA7R/F6DqTTdq2uGIsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750774128; c=relaxed/simple;
-	bh=JdfDwyyk48v7HaHr/OwwJQHiHCGYmgAtiGMJ12cf3Dk=;
+	s=arc-20240116; t=1750774129; c=relaxed/simple;
+	bh=qLck1AfSdM/vz+8aGAPUXinXpPIjOyZMePopQ6/qitw=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=D+cgWg6l3RMsHvvkapwGqvRb2CkoUI6OA/mwKq2iMa9FKLtEBrIg+3EuTQqYOrgY6YC9BrxepDE4G2bRxiVr6S7V3GhgTe32PSsU4acF2FBJrIbyOq+rQG5tpPV5YihqnB+6EN/PSOfMmWXNtzFOZHzS3FljXm0EjehBb6UK7Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P6aXjhqe; arc=none smtp.client-ip=209.85.221.44
+	 Content-Type:To:Cc; b=fYcEUPEW5UdsMVq9zzZL8frmMYz1HZLG16Hkku3T7f6wLdCt4HQwM2xNOT+T2FoDe9xJA659BKGWJmRBb8GtgT2bD1CD9ZqmL39ZwKAMcuIFQF+B6cuPkaASFK8ZOCzZhthKruWxi0pTbgCgQkjyQ/RD0IX4t8fVktrdCrziopY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=G+mnambm; arc=none smtp.client-ip=209.85.221.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6aXjhqe"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a6d77b43c9so2889440f8f.3
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 07:08:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="G+mnambm"
+Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a4f72cba73so4215294f8f.1
+        for <git@vger.kernel.org>; Tue, 24 Jun 2025 07:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750774125; x=1751378925; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750774126; x=1751378926; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=+bDm9G1cPljgd1U1w045KZL9WenKjaYBnjjxkJPXOjs=;
-        b=P6aXjhqeJIEEqf4gx3N7FdM2cWpapKUy9/X9fv1IoSGa7UW79IEXsY9oF+BstMmmPW
-         ZVaZKY6E3bW5rXRGS8JaW9YgwQKLJ71s8br49j7HwQiiURUtSKJat/VUChmSopDoThKE
-         alQiJPubSo9rQwJ6wJQzz8RYmng6w+hbPDurj8rmGBYaiL5VLO24g/Ok9cOKErePPQqQ
-         GAOx52maH1g82h+cRv8DnBH153sP7sJKfR6CZaeYxkvmeJr6v0Zd14rjKmguDQ+t51af
-         kB6sEZ3gz0TP82U6Ri9hxzWVxpoCAlQXikW64PiZwTZdR3PuZmCi8Snwy0UvJMxid4fo
-         sQTw==
+        bh=ClZIZ43LI/oQFaOOgwkhcNw8y38PDc8c/fiB2gEff7A=;
+        b=G+mnambmAzLm9YIe47pXK1cXwib/51V8xBJMaBjP/r0cvYRhE2xG3QF1eO0CkptD8C
+         uOuUQLUxCqylrhKYWhPPqHcCo7CO/6EuvD5xQofoI5Q3sBQ6sXBY6wedMpPElZKupurd
+         UDoZ/L7BcWUAf74/AjYM6WzUHhtfUL/IZmr4zIFhRO3vH5LKA1lQ4VWNl8xeG0mGIRXC
+         BGiFpiFeOBdwJYyH89eFESyZRzortoC1PbsT1IjdlL6kDQF54DaBzuvg//wKm30Kj2w5
+         yvu6sGIH7OukQIytLmQ8iXl1IJ2RBFd90VT0O8ddkg7jS3jmPAWw69CZklsmAS0/dzXO
+         mjiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750774125; x=1751378925;
+        d=1e100.net; s=20230601; t=1750774126; x=1751378926;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=+bDm9G1cPljgd1U1w045KZL9WenKjaYBnjjxkJPXOjs=;
-        b=NJYaTGXmQDLJBSPZXo0kBbjInboU7K4mx5Z2ZkTW+mmYEwBHFrhrUjIqLdVMXYtE6E
-         dPb2xVGl7hsaU8eBRh2PzDhj8Lfgey1VbxA+s/+rXFdUtcoh9Ba9Q3Axdqe4FxD/ZRAW
-         kFP3QLF+BefxosFGCYcelOphs5XpOcKC/kIunizVrBcbBmujZUGQirP8Op3FjJ3Rl18h
-         IBbydTqIaXQwMcqavAXqjPM93LdO+iXOiOVzqEvnh/rMlPXjk/8xVOtWj478HyFwpge3
-         jvvR905BbJ5J+bNUS5NXxaPufHjMWcuVS9ALGs95z4Xbkf+G9ckfcCKtFUbyBpKv7AHP
-         Rygw==
-X-Gm-Message-State: AOJu0YzeifPOE2rtdaSLeg8YKE6dkhkOnKY1jA6u5OMSOc/1vBIyLula
-	x8rhVoV1BSwttqwudB6nbQT5LcWzvPJiriITN10abldjJgzNJjuP7O7GJDTdgg==
-X-Gm-Gg: ASbGncuuWkVczbNFqP+CXwkKY+1gB5xafAxCD5Q1e7IueBeL94nPzKvNDvfRFxara/D
-	NS5XG1TYSn+/w8Vuwz1u1siU8zYRUDSZlNXUxVn1BORtya09b9v+eskVD1HXLMnqXJHGfAX3Ysu
-	KrpLJoZevmEQ2bcZgPjCbtuGDcY+fwKLJAV0Rr2PUSddxBq+VcdRF3QZJZt3ufkvBNOjTLWocuY
-	XVLJ8q+0id1fno8FB4Y1RHNNlYAmFRF4Hpo4Z/EnMyAwJwGq55y+IIHJDBInpKgYaXSx9yOgJVg
-	aAB/DVuYtLn3rxBTm+EAiodhDGpIuEyt1LJz67vuVx6Ag5oGUHI0A9xxj8cIuGsb82H6Hj2cFQ=
-	=
-X-Google-Smtp-Source: AGHT+IFOjuVv22a8GJY5gmEaDe9kVceFo5aHX4AuBmqqu4ont6ejkaBWcOGsgjZulmSoE5VQVGdAXA==
-X-Received: by 2002:a05:6000:2f82:b0:3a4:f644:95f0 with SMTP id ffacd0b85a97d-3a6d13260bbmr14469326f8f.54.1750774124208;
-        Tue, 24 Jun 2025 07:08:44 -0700 (PDT)
+        bh=ClZIZ43LI/oQFaOOgwkhcNw8y38PDc8c/fiB2gEff7A=;
+        b=YMdbX/KIqmLbrepCkkcq1zRj9gVl7yHOBo2jNkWyLvoBIRI53fQngO8u/PNrAUm4zj
+         bwKnxHw+1DYk8nsnLF6ZpyH2igDuRDN1P8kIWuT2kRAoGb5+XX5VVTHr7juY1ZITQv6A
+         LgVCdsmwItYKhUbUBM5ughIGfWzevilJ0rDcup3kPcuK6YXtrqezy9ssmSdzAbDwQz8N
+         aj1C6PTH5IOejTTp1WRhNpPZgugFtWCg0eUyfivzgr7dBMAyyuUa6VsoVnvIbRPQ142j
+         e36FInLmKp3A9kV+B1eJJt8+4ro+cG1cOfDaxgtPLeSFXlcUjXoy4g/jWMpQIGiwtP9E
+         i7Nw==
+X-Gm-Message-State: AOJu0YyWD1oCH/6/CvZp+KeE27hyvPjyqB54Kp+N5Sfs43V28DAR+vmA
+	G1Mtl8cDwel9VDeJ6dRKBgNVBdHECrstem5nc3eBmAhWe1ZsK1gaYWrIDtk7Lg==
+X-Gm-Gg: ASbGncvSYyyij74UPdI7y8SUGvDZ5+5KDJy5ZOdrB4s2MlmHrkgDBdrKo7JSPgTvWoG
+	ZFhoULXACxOjAVg7v6xITvF1b0ufTW8YkWwC16/1aN5swcplEb9YZegXXZMSGjDRLmyu3wSVkI7
+	MwoMyNsnp3noZhsAQ7xf3KU6py+16bxJSDBImjJYoVv2ZaLyhbPf2XqMGAHW/8+K4svlGXAwrfW
+	t3yeVZg2isXqzTXnEVOH7YeKCTWHW3As9wHbw5YIOb4C+4qtNdSBY7FRKUHKDOJZXh2o9cMnVrV
+	FQxzBlb3ZGQsuAIWn9RTwUwETdp106nHgKTtuYUS6k98MfSKUhzuJY74Gudpx+E=
+X-Google-Smtp-Source: AGHT+IE+fcrXJTMRToSrFX3aSEc8aTqh/C9spLiI1YOgwEqsBd94WQpAYsMA+9dYhRfyCllIjY4pLQ==
+X-Received: by 2002:a05:6000:1acc:b0:3a5:271e:c684 with SMTP id ffacd0b85a97d-3a6e720de4emr3056990f8f.24.1750774125255;
+        Tue, 24 Jun 2025 07:08:45 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e80f24casm2067447f8f.61.2025.06.24.07.08.43
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45369eae840sm116729185e9.38.2025.06.24.07.08.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 07:08:43 -0700 (PDT)
-Message-Id: <2b5a58e53ac68e39a72e23bb40b386366ff03485.1750774122.git.gitgitgadget@gmail.com>
+        Tue, 24 Jun 2025 07:08:44 -0700 (PDT)
+Message-Id: <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 24 Jun 2025 14:08:40 +0000
-Subject: [PATCH 1/3] compat/posix.h: track SA_RESTART fallback
+Date: Tue, 24 Jun 2025 14:08:41 +0000
+Subject: [PATCH 2/3] daemon: use sigaction() to install child_handler()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,56 +77,51 @@ Cc: Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
 
 From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 
-Systems without SA_RESTART where using custom CFLAGS instead of
-the standard header file.
+In a future change, the flags used for processing SIGCHLD will need to
+be updated, which is only possible by using sigaction().
 
-Consolidate that, so it will be easier to use in a future commit.
+Replace the call, which hs the added benefit of using BSD semantics
+reliably and therefore not needing the rearming call.
 
 Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
- compat/posix.h   | 7 +++++++
- config.mak.uname | 3 ---
- 2 files changed, 7 insertions(+), 3 deletions(-)
+ daemon.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/compat/posix.h b/compat/posix.h
-index 067a00f33b83..2612a8515897 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -250,6 +250,13 @@ char *gitdirname(char *);
- #define NAME_MAX 255
- #endif
+diff --git a/daemon.c b/daemon.c
+index d1be61fd5789..d870ad2f63c1 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -917,9 +917,7 @@ static void child_handler(int signo UNUSED)
+ 	/*
+ 	 * Otherwise empty handler because systemcalls will get interrupted
+ 	 * upon signal receipt
+-	 * SysV needs the handler to be rearmed
+ 	 */
+-	signal(SIGCHLD, child_handler);
+ }
  
-+/* On most systems <signal.h> would have given us this, but
-+ * not on some systems (e.g. NonStop, QNX).
-+ */
-+#ifndef SA_RESTART
-+#define SA_RESTART 0	/* disabled for sigaction() */
-+#endif
-+
- typedef uintmax_t timestamp_t;
- #define PRItime PRIuMAX
- #define parse_timestamp strtoumax
-diff --git a/config.mak.uname b/config.mak.uname
-index b1c5c4d5e8ed..52160ef5cb07 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -654,8 +654,6 @@ ifeq ($(uname_S),NONSTOP_KERNEL)
- 	FREAD_READS_DIRECTORIES = UnfortunatelyYes
+ static int set_reuse_addr(int sockfd)
+@@ -1121,6 +1119,7 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+ static int service_loop(struct socketlist *socklist)
+ {
+ 	struct pollfd *pfd;
++	struct sigaction sa;
  
- 	# Not detected (nor checked for) by './configure'.
--	# We don't have SA_RESTART on NonStop, unfortunalety.
--	COMPAT_CFLAGS += -DSA_RESTART=0
- 	# Apparently needed in compat/fnmatch/fnmatch.c.
- 	COMPAT_CFLAGS += -DHAVE_STRING_H=1
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
-@@ -782,7 +780,6 @@ ifeq ($(uname_S),MINGW)
-         endif
- endif
- ifeq ($(uname_S),QNX)
--	COMPAT_CFLAGS += -DSA_RESTART=0
- 	EXPAT_NEEDS_XMLPARSE_H = YesPlease
- 	HAVE_STRINGS_H = YesPlease
- 	NEEDS_SOCKET = YesPlease
+ 	CALLOC_ARRAY(pfd, socklist->nr);
+ 
+@@ -1129,7 +1128,10 @@ static int service_loop(struct socketlist *socklist)
+ 		pfd[i].events = POLLIN;
+ 	}
+ 
+-	signal(SIGCHLD, child_handler);
++	sigemptyset(&sa.sa_mask);
++	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
++	sa.sa_handler = child_handler;
++	sigaction(SIGCHLD, &sa, NULL);
+ 
+ 	for (;;) {
+ 		check_dead_children();
 -- 
 gitgitgadget
 
