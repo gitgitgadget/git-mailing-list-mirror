@@ -1,56 +1,56 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98B5C26CE03
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:37:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA7D139E
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:43:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750779455; cv=none; b=FH+lScBxi4cTPYt+zq5DoCqlTKb+tCt6V4v6MpADmmjY6zBpQ9pHOmFo1JLmd9Izqe9go0UtiAPko0HeoWeBxr5PSAMaIqmwK+9nQpOcWghdpp3gvlQZ/73XXd6tpXffosSwaX8d1oTkc6/NlVtdgvQPybxbWHXui2DtFeNMW4k=
+	t=1750779810; cv=none; b=qAq+KRhR3UAoAuf1PijooHHRVZxNnRPrssz8+wQmDVixJBLy2IMnuYTFr1z3Y3tlvA8KwbHU2ICVfUjVVc+0OMImmOyxldrCNT23fW88xdb+NxcuHLGShvkL1cfrFwdVoMcU+0qE4UypHG/DC6Qfj31xPLuh6ItUzqtwdROTfjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750779455; c=relaxed/simple;
-	bh=qVMT34LjtN3z7hjklKCDGWiHlsFU/JISykCGeOxiFG0=;
+	s=arc-20240116; t=1750779810; c=relaxed/simple;
+	bh=5cz6JIb4WRME6Zb7ivHGTfty53NOhuAj6gpDUs4nAos=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dCphDlZwJpxtj9rlaT6ifrnyhmdOC8jpl+AcFM/yqqRJ8Lg5tDT7duHzCUbukCW1PGwLABTxW45xgQCG8B4RgJJJSZ39hIHIrZju1epw853UuUUQOl2DE7sSfRCpW+agqe+lspn6eqW/I+sHf6+XlZ3TYWLANBUBkpwZvZNlhhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FokKs+mx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qfPDA894; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=BxGxLEGvH64g5DSS4C4A9nP6Rfp8hBOLhnQ6t+JK07estUzgMjXLsDdS10tuOGaX4OExPxPJrtFHAJjaCN7uTorBF2a/s/RHCP4L1hk9arGbJuq5zgqXzglMjd7+pR3j/wJgqbKB9UpHdnA6Qgcb7SENAr7SiI/Ic3INSTJ1I2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VRdTWz8R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qOtPsTpe; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FokKs+mx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qfPDA894"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VRdTWz8R";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qOtPsTpe"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A6ECA7A0023;
-	Tue, 24 Jun 2025 11:37:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 11:37:32 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2967F7A0161;
+	Tue, 24 Jun 2025 11:43:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 11:43:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750779452;
-	 x=1750865852; bh=FyZ8xtYkm+8XDY4iu0Rm06WExvTMPhI/vpVr3PIuGNs=; b=
-	FokKs+mx7LWoB7R7KjnKbcIAuJvyPLxmrnN758KIsAY6t9z51F4joTp3HUBtaR4i
-	Hgi3OUGudERmTjji7yg4KJ8N4ibV1fzexTjQyX578hV42U6QKQBPPCZopiU8FDEI
-	WlwhyAyUCORpChIxHp7t8dVPIaksZ7lUxCVOAEGHz7IxPHzAd00rPNGRYWKANmq/
-	ThVlxEd7gXdRMOt0VIAiZVhnVnEBujDJ4+P0D2L1f4RFLUU9PXBeZFXHnUaHV+A1
-	2nlDXf+XRsogvzw1/f0+MuotfalWRXbppmkYIbamBSf2zquv9VCDUgFLMfLVZXME
-	jx2qYSt4JwxApQqpr/SJnQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750779807;
+	 x=1750866207; bh=5JSOnHmyzC0ge3JRbgpduUYuI9916K2Da+c7hIkk0eU=; b=
+	VRdTWz8RaaLD/f+06gWI+bW9lc7l1rB8nrlFY/uw9ML/wiJMxoRJXH7bOXmFtp4A
+	A9G3cJ/7zlNgdLrCP5H7ocMJCAaxP7VtcbO0KTaWzISES2HWRQYmKty4TKKcMKs8
+	QQ0tGL9gJEoUBDMcaRkNxQ24knDaHzbONTW1muvYfQB7NEFXytQvPhHz/F7KqJGT
+	jzdE45p+uLHhJOxs+/viqklWO+1Rwc7ZjryAIp2iUsF8DMgqjyi3mYLghSNpKFEo
+	4bs2l4qQZBjD+UVCiwDlDkcl9WaHdMtXCYHU1dO7y3SexkdsnP8/oaUDSgR0LJVI
+	p8AhWZhYNftaOO5WpucPog==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750779452; x=
-	1750865852; bh=FyZ8xtYkm+8XDY4iu0Rm06WExvTMPhI/vpVr3PIuGNs=; b=q
-	fPDA8944Jp0DUii2WW5xmqlSZLgH2xpp0nANPMK2ED2FUXJ6HSjbxCRUquxcimN/
-	D0s/1EKwObwGfW6B2525GuMmXt+FD1owZKfOizNVtOZ0lgeh4DAHcnT8F7dslhw2
-	X8ke1NHOSIrYcBEB/Bco+VkkJTDI+DvMh7LKvlY9YPdG+h/c/SlFsHoTre2iqQex
-	uVd5GlPIGcRU/6punsrcWhZRjv3HOviOJMwIucHhyIpHrOVUD5lVO2+vGAOjHMMV
-	DVwXpFSbFEjbecamhtwphZQ2KBnbJnKoxQ5jxhSgug+fkV0VaduFA2QpaQKqr6Dz
-	i5xnnf++AWujbyVvdKePg==
-X-ME-Sender: <xms:PMZaaKGFwsyEUdA-LKf0iyBt-Ql2wkBJTdt2KSEEF_IUWb6Vm2D1AA>
-    <xme:PMZaaLWnQwkKzjv8FQKIdm04b42V69WFbaLuKHT8Sq21pg5xxTJ3c9t5EAH8t7Uor
-    Z5DQENeA4i7yphdUg>
-X-ME-Received: <xmr:PMZaaEJet0ICT_OEK6PJFa-RMQEpfQOaZxvEEwg6y0LXLq57lh0wSmDPglHTlTrDUjLwobLdxmOoNmb7QNdJmQoSP9KcfqMYxhSxMVU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddviecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750779807; x=
+	1750866207; bh=5JSOnHmyzC0ge3JRbgpduUYuI9916K2Da+c7hIkk0eU=; b=q
+	OtPsTpe1b5rg++MTxOTlorqOhbCRHEaxGEIUh5B60SHN4O9qj0HtpfMKxQWej2GZ
+	zK/NeKu4z9cz/UkJ//TkDD6lwwO8vxd708FGKYObT8LrAsZhe0bUnW0Sjw0VeyLc
+	gwEqQq4LsW974/7EfuN2U2Ekfn45QbCki8/ZSfJUEcxRfidZjluGm3LR+GHZpYrR
+	NGWDw0ONaHXQxkR8mCXKuZLKkKyZbvXcHs3hSLc5MDe+0/3c+C/JgUkzBbR3MvbM
+	BmgYzpbXnjY1aN4Vgd3Wams/e5PblecczoaKbtm4riArG+IWSuYYYdj2z0UPzQGn
+	9fsSOzZAqH4odfGyDlc/w==
+X-ME-Sender: <xms:nsdaaOu6viQFNFp21BI21BxaDHZTTBHAzJSh3bwE64zX7ECczAupMQ>
+    <xme:nsdaaDfUvmNxG1yxTqOhGex8r9dPVlypTWQMVd855-16geOL5j3Mw8YbIxjA0oucG
+    CMFco8vT3Lxwdjjxw>
+X-ME-Received: <xmr:nsdaaJwd_jY3q8T5oqVopRU3dvA0fQg6yMDY_XwyLaXS9t29RObycl_AoE7h41fXUZW7-DlP1zKTodxQIprzHVlCbZdJzGGAmhxrxJU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddvkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
@@ -62,28 +62,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddviecutefuodetgg
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
     hosghogidrtghomh
-X-ME-Proxy: <xmx:PMZaaEHafYwhGPNCi2vHFMTFY7xK_AYoqGGth24Yj3caOfGimvDPew>
-    <xmx:PMZaaAUY3LEjbPIS0i1dykXj4LIgg-HCtZkQaQpZXlPF4H1o-28-Jw>
-    <xmx:PMZaaHNUzXPpRNvg_KQLQraX_tFcNwOsd8AaJQfnSqrGFn_QzDlXxA>
-    <xmx:PMZaaH3Y7c7SNU2kXYZOQ_wE4cqPJqKQKxQGrXHsk533KH7sISDruw>
-    <xmx:PMZaaIBlnBtxXZ6T7FLG0YY0CIjvwZ9TvcOgqGm6M-GqNNAGnwzLZcNE>
+X-ME-Proxy: <xmx:nsdaaJMvgJE_ZClUGXDpUjghDUTV9djPMcB1k3qUg6wBN8Ur-Rf7dg>
+    <xmx:nsdaaO8XGrAzp_URTB1axqeqi_ISZ0CclRqH9ZqCcVlUzVSFIL8bGw>
+    <xmx:nsdaaBWH1z_7qA0uCWvhAarD7QE7J-Wi0ePrDCxANHG0fm4YglYuSQ>
+    <xmx:nsdaaHfzGgLgLYzWV-sOEDZTxvdj6cfLDxjjHWKkdle8oZILn9b9zg>
+    <xmx:n8daaFoZcNiUcVRTEkWLlrLi__tPj533OhNJ2td3vU9Jljk45HDh7dPo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 11:37:32 -0400 (EDT)
+ 24 Jun 2025 11:43:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
  <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
  <carenas@gmail.com>
-Subject: Re: [PATCH 2/3] daemon: use sigaction() to install child_handler()
-In-Reply-To: <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 3/3] daemon: explicitly allow EINTR during poll()
+In-Reply-To: <a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
 	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
  of "Tue, 24
-	Jun 2025 14:08:41 +0000")
+	Jun 2025 14:08:42 +0000")
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
-	<2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Jun 2025 08:37:30 -0700
-Message-ID: <xmqqv7ol177p.fsf@gitster.g>
+	<a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
+Date: Tue, 24 Jun 2025 08:43:25 -0700
+Message-ID: <xmqqqzz916xu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,56 +97,66 @@ Content-Transfer-Encoding: 8bit
 "Carlo Marcelo Arenas Belón via GitGitGadget"
 <gitgitgadget@gmail.com> writes:
 
-> From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
->
-> In a future change, the flags used for processing SIGCHLD will need to
-> be updated, which is only possible by using sigaction().
->
-> Replace the call, which hs the added benefit of using BSD semantics
-> reliably and therefore not needing the rearming call.
-
-"hs" -> "has"
-
-Hmph, if we do not have to rearm, do we even need to have the
-handler at all, now it is a completely empty function?  Presumably
-we'll see the answer to this question in the next step?
-
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  daemon.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index d1be61fd5789..d870ad2f63c1 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -917,9 +917,7 @@ static void child_handler(int signo UNUSED)
+> -static void child_handler(int signo UNUSED)
+> +static void child_handler(int signo)
+>  {
 >  	/*
->  	 * Otherwise empty handler because systemcalls will get interrupted
->  	 * upon signal receipt
-> -	 * SysV needs the handler to be rearmed
+> -	 * Otherwise empty handler because systemcalls will get interrupted
+> -	 * upon signal receipt
+> +	 * Empty handler because systemcalls should get interrupted
+> +	 * upon signal receipt.
 >  	 */
-> -	signal(SIGCHLD, child_handler);
+> +#ifdef NO_SIGINTERRUPT
+> +	/* SysV needs the handler to be rearmed */
+> +	signal(signo, child_handler);
+> +#endif
 >  }
->  
+
+On NO_SIGINTERRUPT systems, signo is UNUSED, isn't it?
+
+Can we abstract this a bit better?  #if/#else/#endif sprinkled
+everywhere is simply an eyesore.
+
 >  static int set_reuse_addr(int sockfd)
-> @@ -1121,6 +1119,7 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+> @@ -1118,8 +1122,10 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+>  
 >  static int service_loop(struct socketlist *socklist)
 >  {
->  	struct pollfd *pfd;
-> +	struct sigaction sa;
->  
+> -	struct pollfd *pfd;
+> +#ifndef NO_SIGINTERRUPT
+>  	struct sigaction sa;
+> +#endif
+> +	struct pollfd *pfd;
 >  	CALLOC_ARRAY(pfd, socklist->nr);
 >  
-> @@ -1129,7 +1128,10 @@ static int service_loop(struct socketlist *socklist)
+> @@ -1128,14 +1134,22 @@ static int service_loop(struct socketlist *socklist)
 >  		pfd[i].events = POLLIN;
 >  	}
 >  
-> -	signal(SIGCHLD, child_handler);
-> +	sigemptyset(&sa.sa_mask);
-> +	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
-> +	sa.sa_handler = child_handler;
-> +	sigaction(SIGCHLD, &sa, NULL);
+> +#ifdef NO_SIGINTERRUPT
+> +	signal(SIGCHLD, child_handler);
+> +#else
+>  	sigemptyset(&sa.sa_mask);
+>  	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
+>  	sa.sa_handler = child_handler;
+>  	sigaction(SIGCHLD, &sa, NULL);
+> +#endif
 >  
 >  	for (;;) {
 >  		check_dead_children();
+>  
+> +#ifndef NO_SIGINTERRUPT
+> +		sa.sa_flags &= ~SA_RESTART;
+> +		sigaction(SIGCHLD, &sa, NULL);
+> +#endif
+>  		if (poll(pfd, socklist->nr, -1) < 0) {
+>  			if (errno != EINTR) {
+>  				logerror("Poll failed, resuming: %s",
+> @@ -1144,6 +1158,10 @@ static int service_loop(struct socketlist *socklist)
+>  			}
+>  			continue;
+>  		}
+> +#ifndef NO_SIGINTERRUPT
+> +		sa.sa_flags |= SA_RESTART;
+> +		sigaction(SIGCHLD, &sa, NULL);
+> +#endif
