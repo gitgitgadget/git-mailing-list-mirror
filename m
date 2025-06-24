@@ -1,140 +1,118 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2330023741
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 01:51:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6415E6136
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 03:16:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750729904; cv=none; b=TJJAWUh+/IMbM5cR0Lq70UkSksG2blrTI/dichecbPx0xEQn5lBvUbtVUgXk2hLTkMEmHHfww6Kl8l3fcWw3StkrO4+juY5fmtQ5nGvW8+2rQITg3iE79Uuf0lPQF+nPAbLRCgmPNb5Ivxg1BjeZOltBIRCkyZPT3oMEsNQq0mA=
+	t=1750734986; cv=none; b=gHyOhPcDbOcVd8D1Y6G4HWeLFReWWYK9TXS33HP6DHVtJAKuRtRi4txZvQgM7D147zi7hCVDLktZvfcpesyuviXDkA3cYH6nOp9SbHksgBq06zOcfMmpZWn3VsSLOAuj94PYgkbVMi9HEu1tp6D3r7omIrv0x3IhJcrHCICyvGE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750729904; c=relaxed/simple;
-	bh=PZNC9L9yGPWhDZ/bq9YsnkwmPK/5ZCOnkvC/mnthzWc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FjCgbWmxQkBf6ikkQCVJh9X9i6HhhpgqLKNnZBdRd16uSxQuFp1wYo4yMiicEpWIbExVei4eVyn5Fladv+XQhX5n01+P0+0XNOxFHtmDPVtdrS+OtQ16l723wmrMRnNj9CdwMfbbtPzpY5rvqyz+sU8UjDA3fZUZFxeX5Oa45JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=gOT4Bdjg; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
+	s=arc-20240116; t=1750734986; c=relaxed/simple;
+	bh=cfLvSBum0Jat514l6cR0ZonpL6Gc6TivTOCtlySESu0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=kviPM/Kc/bTJjGtj6x1qnIWhcJvcB1Li5FNl2RF8XzCa+xVmpBn+yvmv89POPoDb0RB7nVh7hrYIPt4RgWFCZ/kwqbNzD/HEWEAmLVfMY1fpHif//1Yi54uI2kLpnTkUtft0iygMHuMq7W6FB5VbfgfwnuKSYbPHk1Bm1E9aQxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BabJmkik; arc=none smtp.client-ip=209.85.214.195
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="gOT4Bdjg"
-Received: from mailtransmit02.runbox ([10.9.9.162] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uTsp1-00A1BQ-4Q
-	for git@vger.kernel.org; Tue, 24 Jun 2025 03:51:39 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
-	References:In-Reply-To:Subject:Cc:To:From;
-	bh=vMJnP3YFm9Z8r3VD6olDBm0Pa1uAU6UdbPdq2sVxqKs=; b=gOT4BdjgSMHVf5MKhrtunGtC6A
-	txidMo/Ig90EVfI4Dv6g2sbFQm+kEJGRjGyGlZTnMsJR5jsy/RsiAdllDml206d/oQNrBlFDYoalc
-	yraulQ7E8UgAEeTUb7W0yPMJVGDaZbLlfcQTx0a1lh811AfQ0CXf4v+dp623Y0JPS3Cg6VAc44+5s
-	M6voXN8alpHJKVeYjlRpCLjG5wjeVQoReUPvwSKX5in1tBC1gnSTZnmzBjbcb7P4AkOHI5mI0rhTu
-	mQQ6WCCNWFvrRqQtuWTVHUtlfyymFhoyxgHqV95MHxqDjhBU+qEW1vRQIeOtsBdCAWBro7jeK+ACh
-	KYXSh5hA==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-	by mailtransmit02.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uTsp0-0007pU-M6; Tue, 24 Jun 2025 03:51:38 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uTsox-00Dept-03; Tue, 24 Jun 2025 03:51:35 +0200
-From: Maxim Cournoyer <maxim@guixotic.coop>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] contrib: better support symbolic port names in
- git-credential-netrc
-In-Reply-To: <xmqqh6065o9f.fsf@gitster.g> (Junio C. Hamano's message of "Mon,
-	23 Jun 2025 11:03:24 -0700")
-Organization: Guixotic
-References: <20250620041239.27839-1-maxim@guixotic.coop>
-	<20250622152535.11837-4-maxim@guixotic.coop>
-	<xmqqh6065o9f.fsf@gitster.g>
-Date: Tue, 24 Jun 2025 10:51:31 +0900
-Message-ID: <87o6ud52l8.fsf@terra.mail-host-address-is-not-set>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BabJmkik"
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2350fc2591dso41897425ad.1
+        for <git@vger.kernel.org>; Mon, 23 Jun 2025 20:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750734985; x=1751339785; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NLoyp+7FgQhVsYtUUJY9jrU0JXGOybp6QHv5oQ5Myb4=;
+        b=BabJmkikmNX9TXsPwjXkEKeqzMpqR4TOWkPobAm4Yvll+vfgyqE06869dJ0pOq5Ecn
+         iehOfB3sleqg6tYmxUfAQHQuc8OHwKuxIT1m4JLbLB9aji7PllwyrwXPjHfygiozQMaa
+         RIrO9Y6dGoHyGBLyzvccPNhGOJmIr58B9YbPUHxYPG0TBWQlmM5ZxEF/3pfzbXrU3ze2
+         YnLZcbayHdyEt8BOIftMxKFzLikSkKOHLGohrVxOILp3okgz4BvPX8rzZzS0uU+Eptmv
+         8SoraP1ySgsRcHXmvzecdKT3EThznpP2lNxCstDAry2qJczM9wZIhMeBkJAur8mn+F5H
+         fLMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750734985; x=1751339785;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=NLoyp+7FgQhVsYtUUJY9jrU0JXGOybp6QHv5oQ5Myb4=;
+        b=wPowq3lSdNPTtKKjY6GajvRTzhoLGCQqWXHyeUKoEOzEYxVfoNeAZXVfG9P/QeDKVi
+         YZcevwYXUj/Pc+ZKJmKqdxOnDpDSnkr8WgbUoY+jZKtqkXGyE/ON8YtGHGiyqP/aTiEi
+         gx1/B3xYtamyZTykNopB0mPi9/iC0msRCk+zXHDAkr99PIkkxaGVlhT+y7E5obtBEQVB
+         8jk9NRMyi2ACFSfPcgByw2nccOAaAGuJBUQXM/+Mo0tkG8BRyWMar2KAiSpP3lixV8xv
+         GSOCyc3xGvO1y8fTLgz0s8skmw3E28Yj5sZ1FbFY/9fyQ1Ic2YseX/q1MGVgR9o6KzIr
+         BCKw==
+X-Forwarded-Encrypted: i=1; AJvYcCWOzAstgMbI8Zu5JcmC/aSJtmhJkpk8G+pHI14fVNe5jCDg9gzxT5vOpCb5ZfhpUpvnoXE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyYHbBs92sYFwPO8gCEyIxusPDsx6AsA+pawaMuM68JHYAVOvv/
+	xyuvAnx+g+sHSZ0Fex0bvXPgS/W6Aid4wkVIJqEQ07Kniu2Fd3LUHhvt
+X-Gm-Gg: ASbGncu1tFT6CUJFjERFoWtqqR3SakYn20i1KMSoJrnvg4KpigNxpKv2zPLGR70kwM9
+	usUAzZgejeEgMRQAhC80CoAEju4JMqOIeoPK4XIdyVlP9iciq0xVKk/rmHJmO1C/Zz6M0oXZcLu
+	Z1hax3loOM/z+8axEwl/E3R2okMLy/1jq6Ey7hLhH5Vk1vQ6ihjX7VEfyEqvJbWGI41GNEIcbC5
+	xTRLGhB+r+sp1Lv7sUU+4AlWmsPFbHxAY8yw8mK62jGrj10lm8FA57edHNU0RK9OwMdcTtSojTt
+	lJzjr2ECjct95OJRWflthlT+rIAqkM37rumHPgQCHHRKUMmGb9Z2NuL3kqTtG/n8diMgJixwJ4L
+	yjcK317eF1aVxuhZMsUvDrxbHLAbqcByHhFfuCbEbGWeEzh6RdyACamLlRjc1Cyc=
+X-Google-Smtp-Source: AGHT+IHZKnrUScaa8mNzalwfBwUBSld2WVNIGpCGi3aInBjYUtypuzvyYMDsmjOWV3zTNtoI3My6Bg==
+X-Received: by 2002:a17:902:d50d:b0:215:58be:3349 with SMTP id d9443c01a7336-23802481315mr27878975ad.14.1750734984468;
+        Mon, 23 Jun 2025 20:16:24 -0700 (PDT)
+Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d86895afsm94748385ad.183.2025.06.23.20.16.23
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Mon, 23 Jun 2025 20:16:24 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: Perf bug: rev-list w/ 2+ paths relatively slow with commit-graph
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqq34bq5g29.fsf@gitster.g>
+Date: Tue, 24 Jun 2025 11:16:09 +0800
+Cc: Kai Koponen <kaikoponen@google.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <E6A4C972-9675-47AE-B5CE-75103DB1D153@gmail.com>
+References: <CADYQcGqaMC=4jgbmnF9Q11oC11jfrqyvH8EuiRRHytpMXd4wYA@mail.gmail.com>
+ <xmqq8qli5jyi.fsf@gitster.g>
+ <CADYQcGrR0mKLEWSYZCrL6b7NYLGfdsZsuKCCFQ_ptpMJ8mofmQ@mail.gmail.com>
+ <xmqq34bq5g29.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Hi!
+Junio C Hamano <gitster@pobox.com> writes=EF=BC=9A
+>=20
+> Kai Koponen <kaikoponen@google.com> writes:
+>=20
+>> I see, more of a perf FR than a bug then.
+>> I don't have much expertise here, but on the surface of it, it =
+doesn't
+>> seem to me like there would be any reason the algorithm couldn't =
+check
+>> each path's bloom filter in turn while searching, other than that =
+this
+>> would be a large and annoying change.
+>=20
+> It looks like that the necessary changes are probably fairly well
+> isolated to two functions, i.e., prepare_to_use_bloom_filter() and
+> forbid_bloom_filters().  Right now, for a pathspec that has one
+> element "dir/file", the code uses two bloom keys for "dir" and
+> "dir/file", but if we have "dir1/file1" as well, then it does look
+> like a matter of using two more (and the bloom_keys[] array is
+> designed to be variable length).
 
-tl;dr: I've submitted a v3 with most of your suggestions implemented.
+I believe the issue here is that revs->bloom_keys[] represents an
+AND condition, whereas what we actually want is an OR. In Kai=E2=80=99s =
+example,
+we=E2=80=99re trying to identify commits that modified either =
+src/Make.dist or
+src/clean.bash. However, by adding src, Make.dist, and clean.bash to the
+bloom_keys, we end up filtering for commits that modified all of these, =
+rather
+than any of them.
 
-Junio C Hamano <gitster@pobox.com> writes:
+> But those who have more intimate knowledge in the area than I do may
+> point out what is missing in my "it looks like" gut feeling.
+>=20
 
-[...]
-
->> diff --git a/contrib/credential/netrc/test.pl b/contrib/credential/netrc/test.pl
->> index 67a0ede564..8a7fc2588a 100755
->> --- a/contrib/credential/netrc/test.pl
->> +++ b/contrib/credential/netrc/test.pl
->> @@ -45,7 +45,7 @@ BEGIN
->>  diag "Testing with invalid data\n";
->>  $cred = run_credential(['-f', $netrc, 'get'],
->>  		       "bad data");
->> -ok(scalar keys %$cred == 4, "Got first found keys with bad data");
->> +ok(scalar keys %$cred == 3, "Got first found keys with bad data");
->>  
->>  diag "Testing netrc file for a missing corovamilkbar entry\n";
->>  $cred = run_credential(['-f', $netrc, 'get'],
->> @@ -64,12 +64,12 @@ BEGIN
->>  
->>  diag "Testing netrc file for a username-specific entry\n";
->>  $cred = run_credential(['-f', $netrc, 'get'],
->> -		       { host => 'imap', username => 'bob' });
->> +		       { host => 'imap:993', username => 'bob' });
->
-> Is this rewriting an existing test, instead of adding a new test to
-> trigger a feature that didn't have a test coverage, while keeping
-> the old test?  I am wondering if we want to ensure that both
-> ":port"-less case and "host:port" case keep working even after the
-> change to -netrc credential helper in this patch.
-
-That specific test *is* using a port, but a symbolic one (imaps), which
-used to be captured as the 'protocol' in the Git credential hash/array.
-Now it's captured properly as a port, which is represented in Git
-credential by joining it with the host name. The test needed adjusting
-for that.
-
-[...]
-
-> Hmph.  It _can_ be used to validate a random end-user supplied
-> string names a port, either by being a port number in the valid
-> range or by being a valid service name.  But another use case in the
-> code after this patch applied that is equally if not more important
-> is to ensure that a valid port specified by the end-user is turned
-> into a port number.  We should not name such a sub as if its primary
-> functionality is to serve as a Boolean "is_foo".  Perhaps call it
-> port_num or something?
-
-Naming is hard :-). I like your suggestion. Done.
-
->> +sub is_port {
->> +    my ($port) = @_;
->> +
->> +    # Port can be either a positive integer within the 16-bit range...
->> +    if ($port =~ /^\d+$/ && $port > 0 && $port <= (2**16 - 1)) {
->> +        return $port;
->> +    }
->> +
->> +    # ... or a symbolic port (service name).
->> +    my $num = getservbyname($port, '');
->> +    return defined $num ? $num : undef;
->
-> Wouldn't "return $num" work here?  getservbyname() would return
-> "undef" when the given $port is not a valid service name anyway, no?
->
-> Or even "return scalar getservbyname($port, 'tcp')" without an
-> intermediate variable $num?
-
-I've re-read the doc (perldoc -f getservbyname) and you are right, in a
-scalar context it would return an undef value when the service name was
-not found in the local database. Done!
-
--- 
-Thanks,
-Maxim
