@@ -1,89 +1,86 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA7D139E
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:43:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0854530748C
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750779810; cv=none; b=qAq+KRhR3UAoAuf1PijooHHRVZxNnRPrssz8+wQmDVixJBLy2IMnuYTFr1z3Y3tlvA8KwbHU2ICVfUjVVc+0OMImmOyxldrCNT23fW88xdb+NxcuHLGShvkL1cfrFwdVoMcU+0qE4UypHG/DC6Qfj31xPLuh6ItUzqtwdROTfjM=
+	t=1750780386; cv=none; b=qDLQxJzMIAyQGf+XaVLbk4uIC4hFFgsBK4ewE5piSzwSu9WrdVtl8pSTN+rsrEULqp7L7XmNw/xd0VsDjQqoaR6fzOG1JEId+xCqw8QAoNseWgtwPK/r98rwE3YtrW5JZEPPXXBizre5Cb7VKEFwOXpKsuDs5pVxKzfIfsGs8cE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750779810; c=relaxed/simple;
-	bh=5cz6JIb4WRME6Zb7ivHGTfty53NOhuAj6gpDUs4nAos=;
+	s=arc-20240116; t=1750780386; c=relaxed/simple;
+	bh=drxN1aQLF+yjo3Gq4KWz+XKj3h5zrCj/r1Odwta5D4U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BxGxLEGvH64g5DSS4C4A9nP6Rfp8hBOLhnQ6t+JK07estUzgMjXLsDdS10tuOGaX4OExPxPJrtFHAJjaCN7uTorBF2a/s/RHCP4L1hk9arGbJuq5zgqXzglMjd7+pR3j/wJgqbKB9UpHdnA6Qgcb7SENAr7SiI/Ic3INSTJ1I2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VRdTWz8R; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qOtPsTpe; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=N8lbAUYt0PxBTMaslhYYAjkCZZAQeRNgHJmKkYVZT73YCe02ShX1Qg4H5LG6qnDnVg5DTlpBxvZSkVxKZBRHOWMyyf9HKPIT2uP9PZ8pi7IGyQrz7mwY8CQdPncQsesJQ3LLoddCMMoUKO5eg1YnDM0IJ5VMzjesXihQYyDAk+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q/QjR/zR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X9w4o1Zh; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VRdTWz8R";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qOtPsTpe"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2967F7A0161;
-	Tue, 24 Jun 2025 11:43:27 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 11:43:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q/QjR/zR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X9w4o1Zh"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5DB377A00B2;
+	Tue, 24 Jun 2025 11:53:01 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 24 Jun 2025 11:53:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750779807;
-	 x=1750866207; bh=5JSOnHmyzC0ge3JRbgpduUYuI9916K2Da+c7hIkk0eU=; b=
-	VRdTWz8RaaLD/f+06gWI+bW9lc7l1rB8nrlFY/uw9ML/wiJMxoRJXH7bOXmFtp4A
-	A9G3cJ/7zlNgdLrCP5H7ocMJCAaxP7VtcbO0KTaWzISES2HWRQYmKty4TKKcMKs8
-	QQ0tGL9gJEoUBDMcaRkNxQ24knDaHzbONTW1muvYfQB7NEFXytQvPhHz/F7KqJGT
-	jzdE45p+uLHhJOxs+/viqklWO+1Rwc7ZjryAIp2iUsF8DMgqjyi3mYLghSNpKFEo
-	4bs2l4qQZBjD+UVCiwDlDkcl9WaHdMtXCYHU1dO7y3SexkdsnP8/oaUDSgR0LJVI
-	p8AhWZhYNftaOO5WpucPog==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750780381; x=1750866781; bh=akigDqYUnc
+	JvfFq9S+Q+mFePVgzZ0IeSFoi8rg5Ui5A=; b=Q/QjR/zRhOiVLpr4t3kc8FI/GP
+	cpPjhGt3CNlDZC7t8IsxA1oEVejQA6w0JUk8alIpY993jZJCX87P1T3gap1kbxGf
+	JA+Bd5bl0RH1IQHs7lz7NgSV2l1rcXHuk+VYSWmcQnbBPEgqWsGcPgKMaj8mLqiC
+	qnqipV+7B5gpy2Xdnm+53ynA4HWgmxWKt7sBG2Vd43avclUWwKTxmHDaFAR+dk8n
+	8Np8RTh/kFp0V/HuyP0Ruga+0g+fLPTBRTFih8v9D4yMQMuloqtX2PrAiPBScB+l
+	yEkBDoUYUp0+ZCS/2HWbZRCQ2+8at4N7c/ZQJPbShiO/bxRZYojTxY8ScnTQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750779807; x=
-	1750866207; bh=5JSOnHmyzC0ge3JRbgpduUYuI9916K2Da+c7hIkk0eU=; b=q
-	OtPsTpe1b5rg++MTxOTlorqOhbCRHEaxGEIUh5B60SHN4O9qj0HtpfMKxQWej2GZ
-	zK/NeKu4z9cz/UkJ//TkDD6lwwO8vxd708FGKYObT8LrAsZhe0bUnW0Sjw0VeyLc
-	gwEqQq4LsW974/7EfuN2U2Ekfn45QbCki8/ZSfJUEcxRfidZjluGm3LR+GHZpYrR
-	NGWDw0ONaHXQxkR8mCXKuZLKkKyZbvXcHs3hSLc5MDe+0/3c+C/JgUkzBbR3MvbM
-	BmgYzpbXnjY1aN4Vgd3Wams/e5PblecczoaKbtm4riArG+IWSuYYYdj2z0UPzQGn
-	9fsSOzZAqH4odfGyDlc/w==
-X-ME-Sender: <xms:nsdaaOu6viQFNFp21BI21BxaDHZTTBHAzJSh3bwE64zX7ECczAupMQ>
-    <xme:nsdaaDfUvmNxG1yxTqOhGex8r9dPVlypTWQMVd855-16geOL5j3Mw8YbIxjA0oucG
-    CMFco8vT3Lxwdjjxw>
-X-ME-Received: <xmr:nsdaaJwd_jY3q8T5oqVopRU3dvA0fQg6yMDY_XwyLaXS9t29RObycl_AoE7h41fXUZW7-DlP1zKTodxQIprzHVlCbZdJzGGAmhxrxJU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddvkecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750780381; x=1750866781; bh=akigDqYUncJvfFq9S+Q+mFePVgzZ0IeSFoi
+	8rg5Ui5A=; b=X9w4o1ZhMgxT1i+wxxmdMuckI+PEJNy0l4LJpTBmFcOp6oYl9qQ
+	My2OfmDLMP/4V+8g6EzuQZDZYK/NEMj6wQ0Wl7bXIuN5zCV5rqR2VgZcLR/D5jwD
+	P/Whp/2IPORKiPDmM6wpiap9qBWgM9d/1sBTK7xiZY4jsg3z2y8tYNvphevZ/gQZ
+	xajJXuENNT7AMD8njDSCVAvpmLSnMa4hRRfJMmXVelQl7J0mfupO2JhPhYsl3H/N
+	5q6EYnp/SxdrkQQehFaItQzK/8k7bqTZMtF0H0pAL+0vDTiCCBDVnVLY48aGdxt4
+	E5qEKdrzGKkSexl3pR/SfV3aVjtkQ5OUu5g==
+X-ME-Sender: <xms:3claaJXhUebBiGmqY3YML-ivpU5yj3lviReA1R-20bGrP-3AjDQwhg>
+    <xme:3claaJkG2xRVaOgNW6F_JS-rJn4k0N3xArIjG2GDdPLElAk02WIydtqCAQFeLKWCZ
+    pKUPkz0RDpuMyDwaw>
+X-ME-Received: <xmr:3claaFadm2NILq-Ckv1VwYUDEnmXdZXB0MabMSavcnaXDkE3-VSIZ7Y26l0-exUw8AtzC4lXOB2BfLuMD8PNZOESxR_Q7c_ZWSyJ8x4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddvlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:nsdaaJMvgJE_ZClUGXDpUjghDUTV9djPMcB1k3qUg6wBN8Ur-Rf7dg>
-    <xmx:nsdaaO8XGrAzp_URTB1axqeqi_ISZ0CclRqH9ZqCcVlUzVSFIL8bGw>
-    <xmx:nsdaaBWH1z_7qA0uCWvhAarD7QE7J-Wi0ePrDCxANHG0fm4YglYuSQ>
-    <xmx:nsdaaHfzGgLgLYzWV-sOEDZTxvdj6cfLDxjjHWKkdle8oZILn9b9zg>
-    <xmx:n8daaFoZcNiUcVRTEkWLlrLi__tPj533OhNJ2td3vU9Jljk45HDh7dPo>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhes
+    ghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3claaMWtyBzpl1p41fvQqNmd4KzCUAIfC7zODBDzA16nXMTZDmNinw>
+    <xmx:3claaDm_cNFZlzvw4cnQhh-Mm8_W2a0TZKt3sAohpYFBqOsFDwo6PQ>
+    <xmx:3claaJc9QbD6EphJGDEZmwU5-r0auZpq7hgMAUPkEHwudLLAgjjaRw>
+    <xmx:3claaNF07tTX94QmqZfXv_xw2uYVDXDSK04-I6_jicVtIAUiihEsJg>
+    <xmx:3claaCrZOlukGz_FX03knYYqBQL_JTeIc9SQrfNPQHuv7Pb90dty9gQU>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 11:43:26 -0400 (EDT)
+ 24 Jun 2025 11:53:00 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
- <carenas@gmail.com>
-Subject: Re: [PATCH 3/3] daemon: explicitly allow EINTR during poll()
-In-Reply-To: <a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
- of "Tue, 24
-	Jun 2025 14:08:42 +0000")
-References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
-	<a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Jun 2025 08:43:25 -0700
-Message-ID: <xmqqqzz916xu.fsf@gitster.g>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v6 1/9] pack-objects: use standard option
+ incompatibility functions
+In-Reply-To: <8e7b2dacc77623ada5ee938de7a610ae15f49d8e.1750717921.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Mon, 23 Jun 2025 18:32:10 -0400")
+References: <cover.1744413969.git.me@ttaylorr.com>
+	<cover.1750717921.git.me@ttaylorr.com>
+	<8e7b2dacc77623ada5ee938de7a610ae15f49d8e.1750717921.git.me@ttaylorr.com>
+Date: Tue, 24 Jun 2025 08:52:59 -0700
+Message-ID: <xmqqldph16hw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,72 +88,50 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Carlo Marcelo Arenas Belón via GitGitGadget"
-<gitgitgadget@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> -static void child_handler(int signo UNUSED)
-> +static void child_handler(int signo)
->  {
->  	/*
-> -	 * Otherwise empty handler because systemcalls will get interrupted
-> -	 * upon signal receipt
-> +	 * Empty handler because systemcalls should get interrupted
-> +	 * upon signal receipt.
->  	 */
-> +#ifdef NO_SIGINTERRUPT
-> +	/* SysV needs the handler to be rearmed */
-> +	signal(signo, child_handler);
-> +#endif
->  }
-
-On NO_SIGINTERRUPT systems, signo is UNUSED, isn't it?
-
-Can we abstract this a bit better?  #if/#else/#endif sprinkled
-everywhere is simply an eyesore.
-
->  static int set_reuse_addr(int sockfd)
-> @@ -1118,8 +1122,10 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+> @@ -5050,13 +5051,14 @@ int cmd_pack_objects(int argc,
+>  	if (!pack_to_stdout && thin)
+>  		die(_("--thin cannot be used to build an indexable pack"));
 >  
->  static int service_loop(struct socketlist *socklist)
->  {
-> -	struct pollfd *pfd;
-> +#ifndef NO_SIGINTERRUPT
->  	struct sigaction sa;
-> +#endif
-> +	struct pollfd *pfd;
->  	CALLOC_ARRAY(pfd, socklist->nr);
+> -	if (keep_unreachable && unpack_unreachable)
+> -		die(_("options '%s' and '%s' cannot be used together"), "--keep-unreachable", "--unpack-unreachable");
+> +	die_for_incompatible_opt2(keep_unreachable, "--keep-unreachable",
+> +				  unpack_unreachable, "--unpack-unreachable");
+>  	if (!rev_list_all || !rev_list_reflog || !rev_list_index)
+>  		unpack_unreachable_expiration = 0;
 >  
-> @@ -1128,14 +1134,22 @@ static int service_loop(struct socketlist *socklist)
->  		pfd[i].events = POLLIN;
+> -	if (stdin_packs && filter_options.choice)
+> -		die(_("cannot use --filter with --stdin-packs"));
+> +	die_for_incompatible_opt2(stdin_packs, "--stdin-packs",
+> +				  filter_options.choice, "--filter");
+> +
+>  
+
+We do not need two blank lines here, do we?
+
+> @@ -5064,8 +5066,8 @@ int cmd_pack_objects(int argc,
+>  	if (cruft) {
+>  		if (use_internal_rev_list)
+>  			die(_("cannot use internal rev list with --cruft"));
+> -		if (stdin_packs)
+> -			die(_("cannot use --stdin-packs with --cruft"));
+> +		die_for_incompatible_opt2(stdin_packs, "--stdin-packs",
+> +					  cruft, "--cruft");
 >  	}
 >  
-> +#ifdef NO_SIGINTERRUPT
-> +	signal(SIGCHLD, child_handler);
-> +#else
->  	sigemptyset(&sa.sa_mask);
->  	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
->  	sa.sa_handler = child_handler;
->  	sigaction(SIGCHLD, &sa, NULL);
-> +#endif
->  
->  	for (;;) {
->  		check_dead_children();
->  
-> +#ifndef NO_SIGINTERRUPT
-> +		sa.sa_flags &= ~SA_RESTART;
-> +		sigaction(SIGCHLD, &sa, NULL);
-> +#endif
->  		if (poll(pfd, socklist->nr, -1) < 0) {
->  			if (errno != EINTR) {
->  				logerror("Poll failed, resuming: %s",
-> @@ -1144,6 +1158,10 @@ static int service_loop(struct socketlist *socklist)
->  			}
->  			continue;
->  		}
-> +#ifndef NO_SIGINTERRUPT
-> +		sa.sa_flags |= SA_RESTART;
-> +		sigaction(SIGCHLD, &sa, NULL);
-> +#endif
+>  	/*
+> diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
+> index b48c0cbe8f..8fd07deb8d 100755
+> --- a/t/t5331-pack-objects-stdin.sh
+> +++ b/t/t5331-pack-objects-stdin.sh
+> @@ -64,7 +64,7 @@ test_expect_success '--stdin-packs is incompatible with --filter' '
+>  		cd stdin-packs &&
+>  		test_must_fail git pack-objects --stdin-packs --stdout \
+>  			--filter=blob:none </dev/null 2>err &&
+> -		test_grep "cannot use --filter with --stdin-packs" err
+> +		test_grep "options .--stdin-packs. and .--filter. cannot be used together" err
+
+OK.
