@@ -1,56 +1,56 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6F28462
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:20:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90210182BC
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:28:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750782026; cv=none; b=q3od9jCBaFDIRdc8k2xQ2gPvJoKiv/ANre2uX4Mo22tKz3+HC5ct+aAb7GfFkpV2WzqlDjtbhX/03/ROsEzyaUE7UfEk6zYWoFa3m4/J4BPJex/w/4m3qYn2f/G/Awzm6z0tADnwzWafNTGnGE+//1lavM90NQUC6eQhLMV5tIo=
+	t=1750782513; cv=none; b=A3E2XhkETzkirdzeVtmM6XME6j3IlVHdOCVnuiyblW/iUV8lEockoTSuBvwnR/LTGpHxIYOub07QakvJwF7YZhzdgidP9IWF7PWJjr5XHT+/et/sZvCkxHaXc9mYekG3G3fYyJlafmJqsVzzE61ajQg0FsNzK3/8FdnE66I0Fl0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750782026; c=relaxed/simple;
-	bh=JdKSpex7fkaW4O5EoQk0Z1hccVx8/kDlhDgxhapUjaQ=;
+	s=arc-20240116; t=1750782513; c=relaxed/simple;
+	bh=jgSp1JIry8A6T38EPzufHYVYn9ue2bLfR6lftflstNo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PcNnx6pMSuw8rcx2osc0x9Zg/kVvVAeG4Sth5JuVR65Xlu+RjQyEP8mdMe72AP58GY9p6JUYX2DLPNVXeGpz0sWl0VOGH7A6H2YWLl0Ln4iH5XYSG3nIS5gNCyyNSToUNYBL3Jk4BSVBYJXhKbH+4yiHuLakQx7yGE2MAtc38YQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JwftwI4H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HSeD+2wd; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=qZNfZlmmq1N9n7di4dmmA23g2F2MS4DdiGCcE9F6rbSLsC1S/friOP25b0ulHZ9vCweOsvi3ZiFnIBj1MmABsNaj/+3etCOWKClqsWjYwsMYbIXiN4y/ET+ZdHYrUs5apFTz82JUM0IL48INjabBH+GG6IWkGnTfr1yE73jm1BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UZOmsG33; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cibfGpr2; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JwftwI4H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HSeD+2wd"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CB6957A01AD;
-	Tue, 24 Jun 2025 12:20:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 12:20:23 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UZOmsG33";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cibfGpr2"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6FB447A017D;
+	Tue, 24 Jun 2025 12:28:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 24 Jun 2025 12:28:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750782023;
-	 x=1750868423; bh=0+dJ2OlAobOvsBken1yt0lJUrFx9i7Y6A2c58s94AHQ=; b=
-	JwftwI4H0VBZAga2WIWHFwKsu2dV9dCfpVgeKEJx1gE1xVRCOHht807WnZLit455
-	nl/VkPBenU94zCjgq6XbSJgmaUs61dFIoSsjZpymusGLiZtFn05753JPjuZKvi+i
-	cEw4xSxUnt++v1XZnR5YCEYmKzNzb2q43OCqrpm/NNEU84xD5NnT7M8QWKZWIJTG
-	g2li8clBoYqTWhodH9AKQ0DK/KWPF9AgoHlxnvkiLSzjO4N9fjTDl/it1bs1u1Nn
-	YMyH0JMvxPTODJqXBU4X4mqOgMLqrsd/yuyK9bFD0w5I4NS7w38R3io30ertUiw/
-	1owhXEM5EZTNqi67gSiPdA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750782510;
+	 x=1750868910; bh=l74NHqvcAgy2VL+ipYYGBALInLcN5KK2OyQ81GtD7y4=; b=
+	UZOmsG33nOPgk4mgwhVIdWVwofh+juwhue/T6CCAYe+24oepfq/96o/BVSWbON50
+	r0RPgE3U3kk729+Rdv0MVu1obgYpOX/akxfXHtbO+lyD6KY22ICRuY7VsebIHgK4
+	ix7F6Eb2ae6u61KSTMp18HTLf+kQhLqIuEWL7eykacfyz1SR3Ai6Hk7pCUxwtA7Y
+	yF40996itn+G3oICQEYhdlGPmLb4ACVd1k9x5AI6hIsr9o4Sw+/QH6kV4EGvg1tQ
+	YyVbK5rZ3PqgZc3UrdnFSosCq1+/C7sb3y2iKzbteUvP//t/SMbYMN3G+cqn4rYS
+	3DsoWwE51ixQi1UtWvMiqQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750782023; x=
-	1750868423; bh=0+dJ2OlAobOvsBken1yt0lJUrFx9i7Y6A2c58s94AHQ=; b=H
-	SeD+2wdJO9+/It1iWGKYJKOIb+2pMoSRYBt2g7MWJxXnQGRzo0+XPVkYO2Nmozw8
-	dq/DGX1HM9IKmwJvmaOYrNIW0nINIedhqTsJY3TulEWDpq0is92K6KwDeIzM/vvn
-	R7x1tQ/J61tRN7mNg8Brt0Tlt0ZO+7+fjRSlvyXIVCFhHyG/VUDtCeNUe6lEwSJJ
-	VEkba0DeAmdxmOizqOH7LW0odV1wC2A9tNobLaaKBIRJPuHWL19+wFITk/SU21F/
-	li2tP9e4sQ3WwpwX+viVy2wTD1imvxZSIBv1t8tzaL0Ydr7ScNchTX4Qx1m/bYYu
-	UjdYfHBQQgTVFTwrzj18g==
-X-ME-Sender: <xms:R9BaaKl49I7T5599YsQk9jr1lr6bCVXRa3uQ7IbAA-GofuOwZ--GQQ>
-    <xme:R9BaaB1SQZT5vCV8ix7Xod8SV_cB8PrkfptOjTF7f9b8FrTpktVianPcziMdU4zCu
-    pxcKq_JsrUq7CMdCQ>
-X-ME-Received: <xmr:R9BaaIpcsp9eg7Kelj5_eXZKki5Orp_KF9SJgvFf2aMgyL3jvHB1vluGOzQ1ph_bZMUFbDt2AlcrIDYFWkVqHn3MhsyzS-xRiy_Awqc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdefhecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750782510; x=
+	1750868910; bh=l74NHqvcAgy2VL+ipYYGBALInLcN5KK2OyQ81GtD7y4=; b=c
+	ibfGpr23DZKoujPWxHL9Hi5veajnUZhWlceZN34VP7ReSwgdjVenkD2MzogR9A2x
+	8AaJIHskIegRHCpTuEbvljGZQZ17RaP6warNJAvxiUMTGW9qiYaxkMfvSYmC1GRO
+	3X0qpiCTU2Iq8xvAzOJ0BqT/+sIPNe8HX82A/KzgE46/rF7s8g3oKt31qPayV7Rl
+	P4LLVEoB939qDBbIeL4mMsH0/cF9e1CfHlfi8ApBt43popNc/qX5mztmaTUgmni8
+	9Jy/ZnXHXYAQPh+8RqFMUV7WshBzFHFlPzCL2Zwb4QylX7OqdJRU1aeojuKJW0M+
+	XfSSvm7NHR9hNaI7S/w/Q==
+X-ME-Sender: <xms:LtJaaL7aS8xOBDmNYy4pM0h6Mh_y80729x-9kHVhc6scWAQnpxdkSQ>
+    <xme:LtJaaA7z8NXSGngyhRTIXlTd64gn-TmzzmkdYmx-UyL5AayAKoE0IM1ptUmPaqf0T
+    bUJYU1cWJMh7UbQfQ>
+X-ME-Received: <xmr:LtJaaCdpPr55SmC5BS61WF4hFkG3Dyd86qGa_uqrob1BCi9P9ZV3B767ZxmkLQNGGEe-7sHueZ5svFtZkWaXHItn-0U5ewdpr0XDIoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdefjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
@@ -62,28 +62,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdefhecutefuodetgg
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
     hosghogidrtghomh
-X-ME-Proxy: <xmx:R9BaaOnOMH6oPE7K9ZSPqqfP6MyEym-PA2UJN1XQbv7S7Mlsu8T77g>
-    <xmx:R9BaaI0zvZ2Kl3sFKdKZd8sbhjg3xhrOq6Ezxq9Fla_VdBplLlvsoA>
-    <xmx:R9BaaFs9wnKDzDAWIesJvucrKnYqz1XPdw6qxkfsoX0CYX9J_-IrwQ>
-    <xmx:R9BaaEVzVUy7Qm4uEQCNd2O8iMNG1kEFt7SAr62jzW2najGlq42h2Q>
-    <xmx:R9BaaMgNoeWCuvsVNJQwtWnaooA3Qc3yqM-df-9LJTmmXNYkBurFVtEj>
+X-ME-Proxy: <xmx:LtJaaMI74xkEVq6ld9YWNjWZm0geQ_NmL4divUOCXnNtVtOl37LV-Q>
+    <xmx:LtJaaPKBjLzy3JRmy8-dEqtzzQrc29AzjMQj40yrZmzpwe0_2gjUtg>
+    <xmx:LtJaaFxckawPfmRpIiAtcRrce5G-jDIv0Xb3evlplSD7Egm5iwkS1Q>
+    <xmx:LtJaaLKMTHJIs1CpmARJ5m45fWpfLVlIOXxvB6EodzDI4GjW6SKf9A>
+    <xmx:LtJaaKUgQx5NZUaxSsxNvMX45i5D3Ur_3st2mNXcqzHsWv-xXlPNWdOI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 12:20:23 -0400 (EDT)
+ 24 Jun 2025 12:28:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
  <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
  <carenas@gmail.com>
-Subject: Re: [PATCH 2/3] daemon: use sigaction() to install child_handler()
-In-Reply-To: <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH 1/3] compat/posix.h: track SA_RESTART fallback
+In-Reply-To: <2b5a58e53ac68e39a72e23bb40b386366ff03485.1750774122.git.gitgitgadget@gmail.com>
 	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
  of "Tue, 24
-	Jun 2025 14:08:41 +0000")
+	Jun 2025 14:08:40 +0000")
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
-	<2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
-Date: Tue, 24 Jun 2025 09:20:22 -0700
-Message-ID: <xmqq5xgl1589.fsf@gitster.g>
+	<2b5a58e53ac68e39a72e23bb40b386366ff03485.1750774122.git.gitgitgadget@gmail.com>
+Date: Tue, 24 Jun 2025 09:28:28 -0700
+Message-ID: <xmqqy0thyuhf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -97,56 +97,19 @@ Content-Transfer-Encoding: 8bit
 "Carlo Marcelo Arenas Belón via GitGitGadget"
 <gitgitgadget@gmail.com> writes:
 
-> From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
->
-> In a future change, the flags used for processing SIGCHLD will need to
-> be updated, which is only possible by using sigaction().
->
-> Replace the call, which hs the added benefit of using BSD semantics
-> reliably and therefore not needing the rearming call.
->
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->  daemon.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+Two references to Documentation/CodingGuidelines
 
-Hmph.  Wouldn't it a much smaller change and fix to discard 2/3 and
-most of the 3/3 and instead make a siginterrupt() call to tell the
-system to interrupt us when SIGCHLD is received only on platforms
-where siginterrupt() is available?  Use of sigaction() does not seem
-to be buying us anything for the purpose of this series.
+> +/* On most systems <signal.h> would have given us this, but
+> + * not on some systems (e.g. NonStop, QNX).
+> + */
 
-> diff --git a/daemon.c b/daemon.c
-> index d1be61fd5789..d870ad2f63c1 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -917,9 +917,7 @@ static void child_handler(int signo UNUSED)
->  	/*
->  	 * Otherwise empty handler because systemcalls will get interrupted
->  	 * upon signal receipt
-> -	 * SysV needs the handler to be rearmed
->  	 */
-> -	signal(SIGCHLD, child_handler);
->  }
->  
->  static int set_reuse_addr(int sockfd)
-> @@ -1121,6 +1119,7 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
->  static int service_loop(struct socketlist *socklist)
->  {
->  	struct pollfd *pfd;
-> +	struct sigaction sa;
->  
->  	CALLOC_ARRAY(pfd, socklist->nr);
->  
-> @@ -1129,7 +1128,10 @@ static int service_loop(struct socketlist *socklist)
->  		pfd[i].events = POLLIN;
->  	}
->  
-> -	signal(SIGCHLD, child_handler);
-> +	sigemptyset(&sa.sa_mask);
-> +	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
-> +	sa.sa_handler = child_handler;
-> +	sigaction(SIGCHLD, &sa, NULL);
->  
->  	for (;;) {
->  		check_dead_children();
+ - Multi-line comments include their delimiters on separate lines from
+   the text.
+
+> +#ifndef SA_RESTART
+> +#define SA_RESTART 0	/* disabled for sigaction() */
+> +#endif
+
+ - Nested C preprocessor directives are indented after the hash by one
+   space per nesting level.
+
