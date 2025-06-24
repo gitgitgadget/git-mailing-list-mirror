@@ -1,125 +1,126 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F40728DF1F
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 10:54:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A048299AB4
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 13:00:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750762490; cv=none; b=slx/67C+z5I6NlOuPs8gzu/57JkcRjbsm7BbDpsyDBc03SFWsXWj6HRa5cHXAI+iyJKwzmoKv6sps/E+YSVB/wPoaOEB1c8tSUJBKnlmg5/a9oFtAArGqpn1peB9/76RpvxnllRl4+HvXCkcgI83/8MM6FrYdDpyPtVnR/5Dc8k=
+	t=1750770015; cv=none; b=Y8cgT7L+ysFTCXGbS+IwzMk1l4iPneGAdH8jDta/7CS3oKpcbNE3w+CpADUW+NLq2wrTuOtsW5Wl5dCd5akFtDglk3hd8/J73pwAx55nmmqnMdXH1s3ma5cJnWxed/zY+vO2eb5ClNjls09T46nkDQyqwsu/fsQCEDTpg6W2qPE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750762490; c=relaxed/simple;
-	bh=HgwkbHsybO+hpeHiNYc3YCqciPKwWG6BxnleYht1b7w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d2AJhNR8wO5oqiFDEeSMOpNT35gJ66z3RbqI72XEGV6StF+hC62UPWApbix/yE/EjFX880n7mwMTg3PjbVSSqs7OKDvOWROodMxGhQj4gdQNxWGTFEibzcuAtoWc+tQlpJM2WLXhTFNaoyYq14WQIo1q8/R614qhokFcpFyUm8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=G9x8LXVV; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1750770015; c=relaxed/simple;
+	bh=OZuSol3TZsA7sjaXA4l469FN6Lorq7yQW60gDOqjmhA=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=aPpKo+qN07hUsEbUXdXfHfCrMzZMNNsRamZTSKlX1q6aQxYAhrnniYcA9ojCQ2vgBzuIWco5Ll0NwO+kozhoyutVjgXFLdz+TbGZ8FYAdKFgIvz9/EbnOlZyIM/5aC9WQZlAcDi6TCGk+bl23WdrdeqKDhzw/xYBAuBp7VIZhZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EWORJEw8; arc=none smtp.client-ip=170.10.129.124
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="G9x8LXVV"
-Received: (qmail 17883 invoked by uid 109); 24 Jun 2025 10:54:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HgwkbHsybO+hpeHiNYc3YCqciPKwWG6BxnleYht1b7w=; b=G9x8LXVVGxxAupUEjYXT8LHJWRM+L6epzhC0sO3qPBTbPDT/K1wLEgEH2fIlHXLjeQfc5OBLsJ/htiXmYzg1DZTVyOcECwLebCLHykxI9Qb+y9iBISl3rku5rE7Ol/hH2kejDUEOocTBJ5T3/RNUKidqqpP+6O6oHH2dYS2EidZdc6xQDIDYBqAeY08pjQldFXKF68m1E5loL9M9xn48EoVNaU1hC81ANmxuJySrr5gh5JwFhxMSZ6AsflxNDwnHDngihvXxY+0HgP4ctEXXx6qdjfOTfyTDE/EELrBoh5fs8WTXSCNx+YRDACqSvsQXCIv+lJxkQh361yGHg7Y1CA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Jun 2025 10:54:47 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29827 invoked by uid 111); 24 Jun 2025 10:54:47 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Jun 2025 06:54:47 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Jun 2025 06:54:47 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 9/9] repack: exclude cruft pack(s) from the MIDX where
- possible
-Message-ID: <20250624105447.GA716990@coredump.intra.peff.net>
-References: <cover.1744413969.git.me@ttaylorr.com>
- <cover.1750375803.git.me@ttaylorr.com>
- <6487001f64653d1434890df39b4c4937ea4d0b2c.1750375803.git.me@ttaylorr.com>
- <20250621043551.GA3002138@coredump.intra.peff.net>
- <aFmhQZZnYyvxDelO@nand.local>
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EWORJEw8"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1750770013;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=o7gFjeTLYSD68xnO9ojGiTrINp5tMybXxigddDvyePo=;
+	b=EWORJEw89NDlOuZzqI/vY2pdVea9IrVIcNrWGK6BNjpTHIrmuqgk6tylFYanVg7isgNLeA
+	nQ5h8xVyBRKKQKa/5CZCwFsAOpcBrAcesNf/bzneAt5xw2HRKVTkHDm8ek2qeYwsMtu77B
+	INIG0WrbJcseetrYLO/F1qH65otEZIE=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-363-CE1mxiFvPLKPYATXXkCRDA-1; Tue, 24 Jun 2025 09:00:11 -0400
+X-MC-Unique: CE1mxiFvPLKPYATXXkCRDA-1
+X-Mimecast-MFC-AGG-ID: CE1mxiFvPLKPYATXXkCRDA_1750770010
+Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-acb66d17be4so36105666b.2
+        for <git@vger.kernel.org>; Tue, 24 Jun 2025 06:00:11 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750770010; x=1751374810;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=o7gFjeTLYSD68xnO9ojGiTrINp5tMybXxigddDvyePo=;
+        b=p7KzcUDxRa8BaXCiH/DaXqMdfUwNAW9TdVEw2rFGQSUylNVerm7nBUwGE0Km6/hYWT
+         DnvkQB/GPPoremKnadB7mEWIE0gn6ubORj8hKqGJo2BOHD9XrLFoxoOPEqpRd2ybO/nr
+         JdBD7UycXiHAXqqtTcllMArC32tyh37hYFKRyjDDaV9k1WsrjBcWbG7kbf2D3R9ZxTur
+         ScRAZvJKd3EhQLPQXhcwexBpw7dW/5HS++aKLE3xDRklD2vFV9ShhsqV/oooN3i5PTuY
+         sK8ZOpkuBBm2D/ZRH3cCBE6FET3T/BPEf1KaZsvYZMTZvhHA8eU1JJ4QrFwDDVrQO0yT
+         8MgA==
+X-Gm-Message-State: AOJu0Ywj+0EJtMyznItpkTTvNeytkZD6g0tOGr3rOfkUt/3t4XryGqp8
+	ysiJWZqaaVgyaFYG3d4b+GdWbO//sqPB3Fq+42wp/XtFbXHuCsp0lkTHfKn5ZipLErySxDCIJzC
+	iBWUFtD6y60MGNkY2SMt3Gz69OjTKDslHPEVGC1sjYNQIkoAlIiBlKbJm5dqSBj+XSKSzuPYOb+
+	tI9g9g7xmMfZe7FkNndGBB1MA815rtfDhryqU0EZ5YpQ==
+X-Gm-Gg: ASbGnct3mTpdPlOyKqjacgfDZXXq9Abhmc6IWS1vsH7QheZY9q63a2XqeNtYhufQfvz
+	DW/aL3H7Kif3fld7OG4J4x65UTlhIXqsTy+t4KEmKlKFfbxqPJpFd4dFv4ERZbcUMlkrs93amJi
+	3+Ikc=
+X-Received: by 2002:a17:907:86a2:b0:ad8:9a3b:b26e with SMTP id a640c23a62f3a-ae057c8d395mr1578790166b.56.1750770009647;
+        Tue, 24 Jun 2025 06:00:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFeOR1PnQ6HhTxq5OeCKZXB00yyJBnSqUJ6YGJEH6e5f065jLRh8IAAWSoeQeAzOgZbMbegFtJEZlAv6/dD6Kg=
+X-Received: by 2002:a17:907:86a2:b0:ad8:9a3b:b26e with SMTP id
+ a640c23a62f3a-ae057c8d395mr1578786866b.56.1750770009113; Tue, 24 Jun 2025
+ 06:00:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aFmhQZZnYyvxDelO@nand.local>
+From: Ondrej Pohorelsky <opohorel@redhat.com>
+Date: Tue, 24 Jun 2025 14:59:58 +0200
+X-Gm-Features: AX0GCFu-uqc45x8Cd689Uhm4SMZ7i6WWhhzRckhdBcTPDIbe6oETeswwhZ04Les
+Message-ID: <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
+Subject: bash: unescaped `>` character when switching branches
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 23, 2025 at 02:47:29PM -0400, Taylor Blau wrote:
+Hi,
 
-> > This test (but none of the others) fails when run with:
-> >
-> >   GIT_TEST_MULTI_PACK_INDEX=1 \
-> >   GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1 \
-> >   ./t7704-repack-cruft.sh
-> >
-> > The culprit is the incremental flag, but you need the first one for the
-> > second to do anything. The issue is that the cruft pack unexpectedly
-> > appears in the midx:
-> >
-> > [...]
-> >
-> > I'm not sure if it's just a funky interaction with the hacky GIT_TEST_*
-> > variables, or if it's a real bug.
-> 
-> Thanks for spotting. This is definitely a real bug. The root cause here
-> is that our loop to gather the set of packs we know are in the MIDX does
-> not account for multi-layered / incremental MIDXs.
-> 
-> In our example, if there's a cruft pack in any other layer of a MIDX
-> besides the tip, the proposed implementation here won't realize it, and
-> thus (incorrectly) conclude that the cruft pack is not in the MIDX
-> already, so can thusly be omitted.
+Our customer has found a possible issue when switching branches.
+Output redirection character `>` is not escaped properly when
+switching/checking out to different branch.
 
-Ah, right, that makes perfect sense.
+Steps to reproduce:
+1. Create a new branch and switch back to master
+```
+$ git switch -C 'issue#1234>/tmp/dangerfile'
+Switched to a new branch 'issue#1234>/tmp/dangerfile'
+$ git switch master
+```
 
-> If we do this on top:
-> 
-> --- 8< ---
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 346d44fbcd..8d1540a0fd 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -1614,13 +1614,16 @@ int cmd_repack(int argc,
->  	string_list_sort(&names);
-> 
->  	if (get_local_multi_pack_index(the_repository)) {
-> -		uint32_t i;
->  		struct multi_pack_index *m =
->  			get_local_multi_pack_index(the_repository);
-> 
-> -		ALLOC_ARRAY(midx_pack_names, m->num_packs);
-> -		for (i = 0; i < m->num_packs; i++)
-> -			midx_pack_names[midx_pack_names_nr++] = xstrdup(m->pack_names[i]);
-> +		ALLOC_ARRAY(midx_pack_names,
-> +			    m->num_packs + m->num_packs_in_base);
-> +
-> +		for (; m; m = m->base_midx)
-> +			for (uint32_t i = 0; i < m->num_packs; i++)
-> +				midx_pack_names[midx_pack_names_nr++] =
-> +					xstrdup(m->pack_names[i]);
->  	}
-> 
->  	close_object_store(the_repository->objects);
-> --- >8 ---
+2. Try to switch to the created branch with using auto-completion
+```
+git switch i<TAB>
+$ git switch issue#1234>/tmp/dangerfile
+fatal: invalid reference: issue#1234
+```
+3. Verify that the /tmp/dangerfile has been created
+```
+$ ls /tmp/dangerfile
+/tmp/dangerfile
+```
 
-And this fix looks reasonable to me. It is a bit unfortunate that the
-incremental midx concept bleeds all the way out to callers like this,
-because it means we might have the same problem in other spots. But that
-is nothing new, and I'm not sure of a good solution. If the
-public-facing API pretended as if "struct multi_pack_midx" contained the
-packs for all of the sub-midx entries of the chain, that would solve it.
-But then all of the internal parts of the code that look at the
-incremental entries would need a separate representation. And I suspect
-there's a lot more code in that latter group than the former (most
-callers won't be this intimate with the midx, and just want to convert
-an oid to a pack/offset pair).
+Internal interpretation of the created branch:
+=E2=94=94=E2=94=80=E2=94=80 refs
+    =E2=94=9C=E2=94=80=E2=94=80 heads
+    =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 issue#1234>
+    =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 tmp
+    =E2=94=82   =E2=94=82       =E2=94=94=E2=94=80=E2=94=80 dangerfile
 
-Would we want a test to cover this case? We do catch it in the
-linux-TEST-vars build, but it might be nice to have coverage in normal
-test runs. I'm not sure how much of a pain that would be.
+Tested on Fedora 42 with git-2.49.
 
--Peff
+
+I've found out that this behavior happens only when using Bash. Zsh
+properly escapes the characters when creating and switching to the
+branch. Git shouldn't be tricked into creating a file when the user is
+switching branches. I'm not entirely sure where the issue lies in the
+code, so I'm not attaching any patch fixing this.
+
+
+--=20
+Ond=C5=99ej Poho=C5=99elsk=C3=BD
+
+Software Engineer
+
+Red Hat
+
+opohorel@redhat.com
+
