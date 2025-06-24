@@ -1,92 +1,139 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3261E2C1590
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 14:33:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2ED26CE08
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:25:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750775606; cv=none; b=g45RFoi2P6zjWBD6ZXiIpr6WH0+ZRqD2C/d39rJf4MKZV9Nq7wgb3C5IQIUd5Z50OMrWlY7i4zhB9ygMd1igU5Cl7Pzwvi6BMchutZV3gt7CKJYA9AZGM4rTZM9PARhY3Uqaw/jRQbvGeIbqOsNOUXtwJlCxDVVmxbtAQYx18eo=
+	t=1750778741; cv=none; b=t0sWWHRA8LNZ9uRchAACmQ+tnieaBHrD+OcwFegrrnTh6krBYBpYvF/jk6YDNcPm6qTgfWVpFpvBDuPx8aEAPt0FJ5QFmuAdRJeR7LXyv45ANOvQNYJKJEA6+rHOgC0YHQtN33slNnYjS/ywhi+kYcxSPlTURl/APOTu+R8SRX8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750775606; c=relaxed/simple;
-	bh=gbCUogLnvjNLI/BY/w8D1vynaF/2+S3cVZ0CYiuKDLI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=P4s+bXs87p5Ze36fcMCgm/FMhkT0oMBRmqIwbnYH0iiietUCU2TsroOwgBioEEw/IU54Jf/nvkKvPqJlvx278ZUep2ZwBdMoD9SlTlipmPYxNFA6bPGIctzyepYcculi0ab2SsEJg9tWADSqwgjiu+aeWkKvyb33V0MsmJeU0dQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cpOW5/MM; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750778741; c=relaxed/simple;
+	bh=W3tFKMhRlRVWLs2c4INz2yJJmNlYhGBVSeT0cOJfQGo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JMdHiLnNcVQhy0lr2xIwNcyYIpF63D3HRBkNCSaJTf61ceVTwqrEgVaiNLRN5hyGSTQIg74u0uW0dNwvIy762l2P9xyBl7DC4BW92L9BfFhLFI7ZOQtGxksi2Pw2lFjWrASq3AMsS7vpdf1QsUxAzV6WuoN5+wVUsah4DK9RDeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Os+/Y5zv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UIDsjjsK; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cpOW5/MM"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-23508d30142so75478835ad.0
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 07:33:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750775604; x=1751380404; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=jYewRu27HyCezElAPAt2qKOGDsxrQPqdny+AqxkvT8E=;
-        b=cpOW5/MMaWC/dOQJGEXhYRyUHxjBCUEMNqSzqoxaWwOZF6mWumtU1wCN3CgRtJspPA
-         IXvbruvZKLvahToetMPyF9PIyXD4JEszHCF94o7wT5eOQB8Y4a6LOOn23/QJQei8z7Xa
-         NHwZUPM2muWxtK4I2fFiZbr4BHPbRxdUOR1y97aQlWmpaE2RroXylPaKgklKJoBzFIlE
-         Dw1l9YPu661vH0WJiLjZrxGH1bEITCZuIhH3UQHKSytoadnIKuLh8yY8SJCaEHWoP7Yc
-         DwyeDafFxiKejqOKF1G54Yw7gd0voR3CTdTb5lK58Run6gVCe911qX0Nn0aDaeFeWAFR
-         t9FA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750775604; x=1751380404;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jYewRu27HyCezElAPAt2qKOGDsxrQPqdny+AqxkvT8E=;
-        b=O29c9GtcDwBjiZEvWTs/nfWQhXXyxMJ+yzEJM7EbFnbjmh0bsnpM7dKMXebU1XaySq
-         il9QMXOta3Kk2ssChMYA5RGNTYMxyuBVoTg5GrY5vvPThjzHqwOoKGiz53qrgjLYuLs8
-         u1g5ln+IY0C7opHRqJKlXjiZ97aPY4MRok2n6IZFe67aTADZPPABA6zruTGkOr9RMAxd
-         q/Hg5YKUUMY9BUqn4ZzKqzS/OARQOuO/8h3UESV0krgkZDiLY1S0ZZpen9tu7U7tJPhL
-         er604kRznKSf6BFRL8plFyNu/xKN7Yv+IDtMaY1gPOox4LHg9+moAAIajKczzFc/EVDe
-         o7Ig==
-X-Gm-Message-State: AOJu0YyKV/s9dMruSQlA7WS2trFNYX0tn4xdHjbObwXYeZxVeH7+q753
-	5AKuFxvieRmnligN5l57hy8c4T9IxBwfU45+7uS5MusrE3K5q05cdJlGFzD54w==
-X-Gm-Gg: ASbGncuGMFFxUsqVzUrOXVS/M4PbEBKHwN6/jwpdGeBV8OLCX4sHiDGAKcLfrSt9v8U
-	794J9Su055UO10Kf4f5j4wjSSr0mM0j2itp5ervBg/z0iCVBnIHFHDyqnTwxdSj5wJp8WMzsooQ
-	6DhiSH85W31zcaMWiGTPmG59EiNHU2FFQvuOXDmT/n220xzA784F3ErOGW2NEltaOqkrvFPFiin
-	1Jz2DLcN1UnuxqlMkssjcOMtSd7UnOer9ZbaX8zp55yZPqVuUb/PnRi1npUG21QQNjuV3zUxiui
-	XfKCfXfAbertuX4ZilfB9qW//N1qcMFT7ejiWLxhjoalBJ8iJkAHP0EE8YmmI2frLh08QKf7MeD
-	5j6LVVcUJdW5CPOASdkmC+PIW7clfAvBSyw==
-X-Google-Smtp-Source: AGHT+IHdU79sIY+kfxhs7LcBR61FOCqvAc85LJuqaQ0U6YNcE2Dbpba1f0w14kjKpdNE3XBZFAPr8w==
-X-Received: by 2002:a17:902:d508:b0:234:bfcb:5c1d with SMTP id d9443c01a7336-237d9afa4f4mr301447285ad.40.1750775604194;
-        Tue, 24 Jun 2025 07:33:24 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:a1f2:fbbd:17b8:f31c])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d8650f51sm110261075ad.148.2025.06.24.07.33.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 07:33:23 -0700 (PDT)
-Date: Tue, 24 Jun 2025 07:33:22 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/3] daemon: explicitly allow EINTR during poll()
-Message-ID: <ixvokc6osmpxbhsla2s22yldtf6kuyxptnx2f6jh3cchteett4@ubvbyxpb527c>
-References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
- <a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Os+/Y5zv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UIDsjjsK"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3B5EF1D001AF;
+	Tue, 24 Jun 2025 11:25:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 24 Jun 2025 11:25:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750778738; x=1750865138; bh=tmXJ8uo5MB
+	yhE04rAB/WFOEyhU7+XQhkGjZt3majUBM=; b=Os+/Y5zv51UiAwMdKvSpk9/YYj
+	uG0E27Clu5Sn1dJy6NfbOt4UtI9mQWYaFm/i3KyWG6MFdFvP7pQgXVrTO6M0eDxy
+	oQ2SYVNCokjHcFGBSfWYbF3oUeBZNOkMVXNpu/shLUkfoOyl4zBoXNjP7h+rxZLB
+	fGFDlksaGamBg2fUl5R39NQdCgJAOEhUG3ePpRCwCfHkwrH4f/6d4swMoaAl35+o
+	3GMUPTZyCSGXe0P+UFMwnpOt2NTv/bKo9S5IZsKwHpU68AyA6jmecqDAsRwwNs74
+	0wCGLnToz0F+N1wWeZtA/U/3csnVoJSAuOFTCHaQaJ4X1hD7oe49dJJnVerQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750778738; x=1750865138; bh=tmXJ8uo5MByhE04rAB/WFOEyhU7+XQhkGjZ
+	t3majUBM=; b=UIDsjjsK007lOnMhfpQ6bYRcVD1uHPfMQ+ArimmedEILV+MNDnV
+	g2sOE1YEi55DAq8Oind278VjX7JqmWDt8rEsQcQjVJkRLUhkPxil/IthpagjO0Xb
+	IK11Tbzfxj1bYK1isVaKM+cbPsKbR28v29NCn5wzwGvz78tDk/vwqFfhYwp8tGgW
+	pexcPdOBJFBISsq532aJX+5Pb9NvHj3IbkF4mllBX0YYBffXHU9FBQWEI+NUOKCR
+	YUaIZcb7s+kbjkPq+LsatNBmQ617utvAc9MtG5avswfXJvZsqybWWKGP+aVCyRYA
+	+hvDwayjPUsSvsLq1WpPGhJtqAKjAnx5yVg==
+X-ME-Sender: <xms:ccNaaPtivn7Zs8m8e6mms1fUArjQZKv6CBywIWv-ZqA5aNCj7s_Alw>
+    <xme:ccNaaAfDVzWFv5A9RxvwIO15T1YZwS6hzi_Ssg5q8lkQIxkU64k58ercdl9vpKcjY
+    lCrrG6VBypg3ygzdg>
+X-ME-Received: <xmr:ccNaaCysamOdenGvuWXoM-CDLTJTww0Pzk0wa15uiW5YwUBfxKmIW_6nU7vHGWetx08qEC2zSdb0_j1NnNSb9rDt-W4vZ54iL6uf0nM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtddvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ccNaaONCjlAbr_K7_YG9pR4AQz1hAajaVncQkDHkV0Dyn4Qj9EPK6g>
+    <xmx:ccNaaP8wMtz6QCRdCVlYC1O1bpNFQ5X4o77EyI9Na4aKOL9WsYDerQ>
+    <xmx:ccNaaOWSXqfSX34WTArfnR3v7kg81wia7EpqXD1cE1pdZlwzoqZ-mA>
+    <xmx:ccNaaAfb9668ST3xxsq8xU1OUbF1N9heIgH6B9uDm2W-ONMyEJDCQg>
+    <xmx:csNaaFqWN_QTxQWuuUz3J2a8Q9zDaYJDHr0GxoijWcgB5OlB9VLbd6BB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Jun 2025 11:25:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im,  karthik.188@gmail.com,  ben.knoble@gmail.com
+Subject: Re: [GSoC RFC PATCH v2 5/7] repo-info: add the field references.format
+In-Reply-To: <254e4819-a693-4fb7-aa92-260038cbfbe2@gmail.com> (Phillip Wood's
+	message of "Tue, 24 Jun 2025 15:03:01 +0100")
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+	<20250619225751.99699-1-lucasseikioshiro@gmail.com>
+	<20250619225751.99699-6-lucasseikioshiro@gmail.com>
+	<254e4819-a693-4fb7-aa92-260038cbfbe2@gmail.com>
+Date: Tue, 24 Jun 2025 08:25:35 -0700
+Message-ID: <xmqq8qlh2mc0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a450bdb0066912d135dd242090b012de0bc18180.1750774122.git.gitgitgadget@gmail.com>
+Content-Type: text/plain
 
-This will need the following fixup on top:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
----- >8 ----
-diff --git a/daemon.c b/daemon.c
-index 542e638223..f5f0c426c3 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -912,7 +912,7 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
- 		add_child(&cld, addr, addrlen);
- }
- 
--static void child_handler(int signo)
-+static void child_handler(int signo UNUSED)
- {
- 	/*
- 	 * Empty handler because systemcalls should get interrupted
+> I've concentrated my comments on the tests as others have commented on
+> the code itself. In general test bodies should be wrapped in single
+> quotes rather than double quotes and one should prefer test_cmp() over
+> test_line_count().
+
+>> +                echo '$expected_value' >expect &&
+>> +                git repo-info '$key' >output &&
+>> +                cat output | parse_json >parsed &&
+
+Running "cat" on a single file and piping it to anything is an
+anti-pattern.  The fact that you can pipe output into the downstream
+command means that the downstream command is prepared to read from
+its standard input, so
+
+	parse_json <output >parsed &&
+
+should be sufficient, right?
+
+>> +                grep -F 'row[0].$key' parsed | cut -d ' ' -f 2 >value &&
+>> +                cat value | sed 's/^0$/false/' | sed 's/^1$/true/' >actual &&
+>
+> sed accepts filenames so there is no need to use "cat" here. It also
+> accepts multiple expressions so you only need a single command
+>
+>     sed "s/^0\$/false/; s/^1\$/true/" value >actual &&
+
+And you probably do not even need grep piped into cut either, as sed
+is a powerful enough language.  We can also cheat a bit by taking
+advantage of the fact that the characters used in keys are fairly
+tightly controlled, so perhaps something along this line?
+
+	sed -n -e "/row[0].$key/{
+		s/^[^ ]* //
+                s/^1\$/true/
+		s/^0\$/false/
+                p;
+	}" parsed >actual &&
+
+> Best Wishes
+>
+> Phillip
+
+Thanks.
