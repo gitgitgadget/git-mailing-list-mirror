@@ -1,163 +1,97 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A3726CE13
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:05:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C401726CE13
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:06:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750781150; cv=none; b=uXepdWZhWcNvIn1wpfAgSV2l+xJBBYP2XRFZauD4CcdHtT5hP9ubr+JcIYgu1MLbPGxiT600VaWURzKEqWJzX0bx4o8Q66k8fhdDpBJpUZcNDik3J0L79NANsEFPBCIITqUyIlvM/q8h1tSBuWMk8XU65NRmQwx2Hn8YFLAP1oo=
+	t=1750781180; cv=none; b=OvyiaYV037Ck1WQ8zI/Vrufyapf7ybRlUpUNVcOCKfBtIEKvAdMjxp0oY8dfIOsgmr/1nLUX77HShVBI1DKDs6MIcq+kkI8ghQW5twOYl+K0Oxx0l3tul0at5GIUK0niEscqsVwyP9UBOgZcU0hBRtJlTy8x5ZSLSFe51LyZUZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750781150; c=relaxed/simple;
-	bh=mS+9+Y+g2P10B1PLviIv4nBkwNQX3eO0f/zS47QFHW0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DmSrkyoFpkSGPnWgtWyCDLB4EdR3Z5HZ7gGyd5zaJsSyW4rxRNQLun2vHNBNG8zGFGXxUNI6CNButDIYp3FFeU+5nEuGbqtAGJfzqZd/NGzmr264lrvLUYsuEztnMN0LJ9qyiUh+TXvcsC6BRbVIvgwp8xOTPSLXGG5zykqpiKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=BmZbB/mN; arc=none smtp.client-ip=209.85.219.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1750781180; c=relaxed/simple;
+	bh=REfZqDK/VS2LIrHq/Y2wUJmkIa2nCI54I7Ep/URp01o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rAt0vs3fRO+UJ7F9xG2E96vw/on+keGdteZE3vUsz0ICU1us4cwlaU0YJtuoMrQzA2ro7zr9ey567kaeS0Q5v7fqlGiyXKISK+VGz8RLQNacltyAV6oqYVQof6PtCcIjhWb40eAgX8hPCI+WPPv4kvVsuxMCfuBh+DBYYPmIF48=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FyB/u8s4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iu8+1Vdk; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="BmZbB/mN"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e812c817de0so3732911276.0
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 09:05:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1750781147; x=1751385947; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=oy2dgBAW852oarlBoMWHjyPlrACJ18mjh+yauahy+C4=;
-        b=BmZbB/mNst1xLXEPIXJ9/IcyalfsNJsRc0ajFGnV6grx39wAUeDv9wdE1DsCNWitqN
-         Msd3V65GXQ/HkLQ3LcWG1TPz9ukSv62WUaHD2HheW1JFEoiY9+DWHM1x+9ghcJ7aSWT3
-         djqVJy9PdhkLifuB5ZJBdl8dZ7SZC5aOvyu5ODH0deEbicGKjONuaMUdol9h1zb7GzOi
-         W/W8Ab7gGsDDznRQjEBXGpX5jrEWOiqjjrCM2AnRwEZdVu4WmiWXPxMAOvcL3rrv/KZO
-         iMT7c/IRYi2FRE5aryTK1J9yBLuMceOxmv0sACKgefBDAkMTfRQbLSLbFu0ku3DraG1v
-         2RPw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750781147; x=1751385947;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=oy2dgBAW852oarlBoMWHjyPlrACJ18mjh+yauahy+C4=;
-        b=ce4W26LF7iW+SGQVMVoPuHIBiNQjMN84gmKCbEo4GA0ihaeuQlwSEHItDSsCeBGo/3
-         8N7vJslQBwOcFriyQ1VSq/pKVl6nQqhhuxgATthKTLGAm8yVRx5YvvVnQQ/W9ox5Q9rN
-         VDPY35zOH6seQZO8s6bqcAU5emUX4DWTNRoWxInWzAmaD6oQXAeyWZYmJnO3XSVq1CPX
-         H3qafrOGKqiimoaP4MK4Bn0lo3Z/tQ8dZyhLuPCBC3WqJWG2c5I7JN8AFwq8ppQwZzGz
-         9xIruvqzDHQMMScFGWsV8FkQBMqm8P4dnpakLO3g9rU+83o9FrR0gROPWW+wRAQZhdV5
-         s2zA==
-X-Gm-Message-State: AOJu0Yymz5MpSIsGpYIO0y7vzZWV8RSSpOZWKum0J3O0Fuw2p2+/Ov+o
-	E7Y2Z5aufKRxKL5mp7OW1+8JgiasPLlltEkkySBlIZzqZ4jGSNi8XJ8uXkYY9Nz5R44HgMeBESl
-	WLhHC
-X-Gm-Gg: ASbGnct6+hOkCqW2nkW/sCQ/rRzeRUIxIOyfrSWOLJ2DHucwVXTThIus9bJ4f23aXM+
-	AKVOFupqObqIxJZduuc+IrileWrFzP7CUyW22jt5+by9kKk60eMUcWySz+n4SDyN+VGPDm5XNQj
-	6g4JnX/iIUn6XHupnVK1uGSAtGb2KkPO5DfKBiUx8LXZv5hOzBt7+xPavwrKRoPPRPZdzt4LkCI
-	FzjUBya257hB7wjGG4RmViVsPvMXkQ5xqYK9Y+aeFW7rKeKwLevylgxuffVNkeFKmuaZYjFweCx
-	DbPgT3KUhQ4dqkPKhF49SySZjXTK/UNkjiZHCGStQotRN2zHQAseH1Djzg0tm1JCHLTtSHopcxs
-	Iv+wl07bomXf9J/KKJTq1SxgTnrGtVhgSqw==
-X-Google-Smtp-Source: AGHT+IG7K6NPDjj4GZLi04YV93WSUrXu4tiT0TG7bRtW0U1Be2S9vTpYUPe7sRNWbh1wOyg6F7nUVw==
-X-Received: by 2002:a05:6902:2486:b0:e83:23ed:6a12 with SMTP id 3f1490d57ef6-e842bc72116mr23969453276.10.1750781147041;
-        Tue, 24 Jun 2025 09:05:47 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e842ab0a8d7sm3104977276.25.2025.06.24.09.05.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 09:05:44 -0700 (PDT)
-Date: Tue, 24 Jun 2025 12:05:42 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 9/9] repack: exclude cruft pack(s) from the MIDX where
- possible
-Message-ID: <aFrM1ngJfL0Ssc9F@nand.local>
-References: <cover.1744413969.git.me@ttaylorr.com>
- <cover.1750375803.git.me@ttaylorr.com>
- <6487001f64653d1434890df39b4c4937ea4d0b2c.1750375803.git.me@ttaylorr.com>
- <20250621043551.GA3002138@coredump.intra.peff.net>
- <aFmhQZZnYyvxDelO@nand.local>
- <20250624105447.GA716990@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FyB/u8s4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iu8+1Vdk"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id DBF281D0016B;
+	Tue, 24 Jun 2025 12:06:17 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 24 Jun 2025 12:06:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750781177; x=1750867577; bh=5My+LERUpd
+	90CWz42MZRapPi2s6kvFLxBU0qIVJW3+Y=; b=FyB/u8s4SSqag2F6yWK/PsR2cG
+	riRWwYoLiOkr4fZq1zElyISkVpbhvl+XaLKGToJKQ8d/BIgUt6jpQbnGSU8lAuM8
+	5gpkWOYQnWOAzHcKIZCJa6sFtCRCffW7yEBvn7Rc/1bc1AdlSV6h+Fqm47x85pAf
+	CDmesJUPFzEfZIhmGBLhroAdSVdNaAY+hwIEmfATMwydAWG5kz46xFbKhtwQACxE
+	LLqH3vII7GHmvv5QuEYPiIJnVP3prybNXRPyC6qliePN+11JhL7ty//7AYQKxUK0
+	Wp4ukn4q4poNf6btMXB03OrmU9acX7n7TYvyDrL3ycxZvSP/MmVb+374Wo6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750781177; x=1750867577; bh=5My+LERUpd90CWz42MZRapPi2s6kvFLxBU0
+	qIVJW3+Y=; b=iu8+1VdkZx9ArxdUDyEWvd+AjhgmDCuo8i7BRpGsmxrZQshzDdQ
+	UX3jK7bLek90oRZdtOWg1gq4v7OwK1FxVS56MdE7aj7grvNSgiOcL/Qxly39Ts32
+	iYQjDHOfIcvFjEyaMBFCATTmF1FP15O2tWDMewBrlwPQxAlhXwjpn1ttNnRbcTMy
+	x/Hg87QqG4bFLhkxlB1htUXlu+vXQzFXyWnF4Jp5wduOCpXDHQh/qiK1KfNFk3Ou
+	Tv/kd+sPpxAjjzKd4Iiy8JjbDSJMj7y3D2Utw9Jl5n7BirLu6iI4LUejsmjxU7uv
+	+pOlXynUM2Qq9ytIVsnF2Wd0ZdQC5WUAHpg==
+X-ME-Sender: <xms:-cxaaIxzW9BOa9Y-2JyJ1vbrUBC426oaqlC5_nXKmI3BgUgPBNtsvA>
+    <xme:-cxaaMQWxhWiShOT0Ai1w7y859m5VXHkmwQ7Bn1N6Np7LYFqfGwBKFv_awBac0kUo
+    GqHjm3YivYwfoomNQ>
+X-ME-Received: <xmr:-cxaaKUh3Cn41J_3lwqwXSJKq4EC5KhAwIS1uOdMP0cMYHBVgNHKRwMvihBedXbYcuVjIAHlmDPTKyZBIJAB2y32JBFo5HLNGQSa-og>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmrgigihhmsehguhhigihothhitgdrtghoohhppdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-cxaaGj98_fIS7qAG9HK8ctQVhOQijdBgoGchwqvzhquajt8xfZdcg>
+    <xmx:-cxaaKAZstCkMOUx-olaZs-jOfrHTtuPMF1mwxpaDg8h6KWKgRdW8w>
+    <xmx:-cxaaHJFQb-cSB8G6yxyrZbH9Baqt6ywUxDiEvRlBeB5y3SwgxWEkg>
+    <xmx:-cxaaBCP5GZbH31Jf8Jbal0TFycYojNEtlnFJAz7B5XqHZPD-sAduQ>
+    <xmx:-cxaaM41LBjsG-zv_1FJPLNlPkUZNKN106R-o5WOJQ_hFTy1h3k9LdLq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Jun 2025 12:06:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Maxim Cournoyer <maxim@guixotic.coop>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 3/3] contrib: better support symbolic port names in
+ git-credential-netrc
+In-Reply-To: <20250624014857.3748-4-maxim@guixotic.coop> (Maxim Cournoyer's
+	message of "Tue, 24 Jun 2025 10:48:57 +0900")
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+	<20250624014857.3748-4-maxim@guixotic.coop>
+Date: Tue, 24 Jun 2025 09:06:16 -0700
+Message-ID: <xmqqa55x15vr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250624105447.GA716990@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Tue, Jun 24, 2025 at 06:54:47AM -0400, Jeff King wrote:
-> > If we do this on top:
-> >
-> > --- 8< ---
-> > diff --git a/builtin/repack.c b/builtin/repack.c
-> > index 346d44fbcd..8d1540a0fd 100644
-> > --- a/builtin/repack.c
-> > +++ b/builtin/repack.c
-> > @@ -1614,13 +1614,16 @@ int cmd_repack(int argc,
-> >  	string_list_sort(&names);
-> >
-> >  	if (get_local_multi_pack_index(the_repository)) {
-> > -		uint32_t i;
-> >  		struct multi_pack_index *m =
-> >  			get_local_multi_pack_index(the_repository);
-> >
-> > -		ALLOC_ARRAY(midx_pack_names, m->num_packs);
-> > -		for (i = 0; i < m->num_packs; i++)
-> > -			midx_pack_names[midx_pack_names_nr++] = xstrdup(m->pack_names[i]);
-> > +		ALLOC_ARRAY(midx_pack_names,
-> > +			    m->num_packs + m->num_packs_in_base);
-> > +
-> > +		for (; m; m = m->base_midx)
-> > +			for (uint32_t i = 0; i < m->num_packs; i++)
-> > +				midx_pack_names[midx_pack_names_nr++] =
-> > +					xstrdup(m->pack_names[i]);
-> >  	}
-> >
-> >  	close_object_store(the_repository->objects);
-> > --- >8 ---
->
-> And this fix looks reasonable to me. It is a bit unfortunate that the
-> incremental midx concept bleeds all the way out to callers like this,
-> because it means we might have the same problem in other spots. But that
-> is nothing new, and I'm not sure of a good solution. If the
-> public-facing API pretended as if "struct multi_pack_midx" contained the
-> packs for all of the sub-midx entries of the chain, that would solve it.
-> But then all of the internal parts of the code that look at the
-> incremental entries would need a separate representation. And I suspect
-> there's a lot more code in that latter group than the former (most
-> callers won't be this intimate with the midx, and just want to convert
-> an oid to a pack/offset pair).
->
-> Would we want a test to cover this case? We do catch it in the
-> linux-TEST-vars build, but it might be nice to have coverage in normal
-> test runs. I'm not sure how much of a pain that would be.
+Maxim Cournoyer <maxim@guixotic.coop> writes:
 
-I thought quite a bit about this and decided against it. The extra test
-would really just be this on top:
+> +	git send-email -1 --to=recipient@example.com \
+> +                --smtp-server-port=bogus-symbolic-name \
+> +		--smtp-server="$(pwd)/fake.sendmail"
+> +'
 
---- 8< ---
-diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
-index aa2e2e6ad8..9b71387325 100755
---- a/t/t7704-repack-cruft.sh
-+++ b/t/t7704-repack-cruft.sh
-@@ -842,7 +842,9 @@ test_expect_success 'repack --write-midx includes cruft when already geometric'
- 		# actually write a new object and subsequently a new
- 		# pack to contain it.
- 		git merge --no-ff $C &&
--		git repack -d &&
-+		GIT_TEST_MULTI_PACK_INDEX=1 \
-+		GIT_TEST_MULTI_PACK_INDEX_WRITE_INCREMENTAL=1 \
-+			git repack -d &&
-
- 		ls $packdir/pack-*.idx | sort >packs.all &&
- 		cruft="$(ls $packdir/pack-*.mtimes)" &&
---- >8 ---
-
-, to force us to put the cruft pack in an earlier MIDX layer. But that
-felt like making this test too-specific to incremental MIDXs when the
-original test has very little to do with incremental- vs non-incremental
-MIDXs.
-
-I tried to write a smaller test case that demonstrates the problem but
-couldn't find a straightforward way to minimize the reproduction. As an
-alternative, we could duplicate and/or parameterize the test entirely,
-but that felt like overkill.
-
-Thanks,
-Taylor
+There is a funny indent-with-spaces here.
