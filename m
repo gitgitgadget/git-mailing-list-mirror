@@ -1,72 +1,90 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED22770E2
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:10:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6F28462
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 16:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750781444; cv=none; b=f3zJOc8DCpAD14OtK6VXEsAfy/VLAk4nYwJ7ZMVwxTK4iwzHJ96q1I7d5BYnT5Zigpx3ZtqbCEX9NUfXA7OMtoPJkfBjQS3IdRSmJC6UcZExM+2tl+YC9qfzxv9jD4ffe84JTXQD5qbxhwzGrUx8XRcB8mFj9rzmXBPMtIMH6iM=
+	t=1750782026; cv=none; b=q3od9jCBaFDIRdc8k2xQ2gPvJoKiv/ANre2uX4Mo22tKz3+HC5ct+aAb7GfFkpV2WzqlDjtbhX/03/ROsEzyaUE7UfEk6zYWoFa3m4/J4BPJex/w/4m3qYn2f/G/Awzm6z0tADnwzWafNTGnGE+//1lavM90NQUC6eQhLMV5tIo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750781444; c=relaxed/simple;
-	bh=a2XjuCdWfvNV/woO0Rh8gd+Ygzs7H2AjXyaDTSb5HFw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FKnyhjISDb/cJlqsDxXVTK1USELdZc1Y+SW1h29aPxo9wMBWXXEOUbtNKIn8t+bwbkA9tYu2G5Sb2dNPRjV0xzpdDSicbz1zX+c6gEyAbMT7bzUgki7YsMpZB0uTtoJ6POCDmgcVkr3OpF1OFbA/oqkAPx8u9hftG7vqXER1ivs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=jRJouxIa; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1750782026; c=relaxed/simple;
+	bh=JdKSpex7fkaW4O5EoQk0Z1hccVx8/kDlhDgxhapUjaQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=PcNnx6pMSuw8rcx2osc0x9Zg/kVvVAeG4Sth5JuVR65Xlu+RjQyEP8mdMe72AP58GY9p6JUYX2DLPNVXeGpz0sWl0VOGH7A6H2YWLl0Ln4iH5XYSG3nIS5gNCyyNSToUNYBL3Jk4BSVBYJXhKbH+4yiHuLakQx7yGE2MAtc38YQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JwftwI4H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HSeD+2wd; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="jRJouxIa"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4a58d95ea53so266471cf.0
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 09:10:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1750781442; x=1751386242; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=bPuwk+oR70uxO2XehYgcGNGldWT8C2cmjgGG8tlvm/g=;
-        b=jRJouxIacwce3QFfsUSNpjFdAXEkeeDDLVzunhKTnVQnQGVtwkD6ZbShllQMP/N7ch
-         fSlmfwoTU8FNBxtyIvzzLSqLG+c2iPF4p2QXnUhCaQM4h3xLC+x8wTQ/IIU0czC9OdPS
-         t/FebGfIQ5eBlD4Lv1K8w+1DUcZXjgrTbyouSjSH/SB0Hfs7XY712IewOW1q+AMfI3at
-         cN1tbx02CgQo4UHKcVd7nPLi4jOX0gcwYFXKGMTQ2hf4+6rv0mLJyTiELAfbq123Tel/
-         gBO482LPL3txPOSKi2Ej0wfQspA65ukB/MujCecUMbVrDhgJnwUA2sF7WdBkJJIzuJcO
-         OqSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750781442; x=1751386242;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=bPuwk+oR70uxO2XehYgcGNGldWT8C2cmjgGG8tlvm/g=;
-        b=n/xxF4qor6nxwhxcwHQv5QmB2qJJrunqJk6rdaGoy3lNrqoyOOiEdGdOcR9wnc9JvE
-         peEaNW23pf5T7U+b4M0HU6dIWdbSbQjIpHQV0+QlgrTLX8Sg9GDd60XouZVHkkoaP2aF
-         NWyu/79jbgastrrk+cIjRYJxxAwYKJYVBq/d3E3X42+gY5cArPKAQlqaCY3tmaJqPCZO
-         4e+/+Um30Vl6H4Kc3uw+jlDkr2LkrQmm1pZLNcqXIY1ZoFuUyFjYtSHKS7Daqy6pNaLC
-         4yXo+D8pxHW40rgbZqreBbBoRKFlATxinHdg1R3OGmgOPKYlkzp8QcoDzg7lM+iio8Se
-         l0kQ==
-X-Gm-Message-State: AOJu0YxFmWTcF0Ry14tYL0MKrwqWnkpvxjHUJm0J0lk1Ep303oF6rOFR
-	tPd1DBFQlmbvaq/jHA/lBlqGNfajWoIW3bHxB2Ie341zNvBmlWl7sAHmyZKehCvRfCA=
-X-Gm-Gg: ASbGnctQ1RgnZ2sviNwwYbF0Q5JZ6jAn05VcwpPfl0e7Jdw4QUHpHBs8QUw01Lnndlq
-	rOhP7oJhFSXM3X2kbRV3qmMcC8ijowJEl/qlRoxkyDujq7MJOcmLT2FyCidlb35s+2jz+W7a+S9
-	ZhkSeAt9B1ADCCr5HYDNSQUB2TaDwKNjubu+o1pCW49GTMNbz/uSyIVic4JalY2R9z7j6ZkFaqF
-	kybiiECvbu3e8Q2EuPBTmzBXvu3EnOCGRr8EJ+v/xeUBQBrB2hxrRfsz1qZduFeE8Y6Sz3I6+ne
-	fUklQzDEAGkmP4X5hkbtLYuuLux6d9yldQzjeuSzGHiobdnMPa1gB1E0RcmQLo1vzo6Hs5pjLGp
-	ty7Ja/rML/oR09+T6fhe0O6/ADcS0RXf7xg==
-X-Google-Smtp-Source: AGHT+IEbEcGpwWq8RqIxYECV0BU5XGUnuFc5NQsYXhg43ItzxNsxG9kk6trvX9TO7RKdl0Kp9+w2EQ==
-X-Received: by 2002:a05:622a:7:b0:4a7:6408:b449 with SMTP id d75a77b69052e-4a7ae8b2de7mr63029081cf.2.1750781435755;
-        Tue, 24 Jun 2025 09:10:35 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-4a779e79bbcsm50770311cf.55.2025.06.24.09.10.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 09:10:35 -0700 (PDT)
-Date: Tue, 24 Jun 2025 12:10:34 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v6 8/9] pack-objects: introduce '--stdin-packs=follow'
-Message-ID: <aFrN+r2CdjAcO3DH@nand.local>
-References: <cover.1744413969.git.me@ttaylorr.com>
- <cover.1750717921.git.me@ttaylorr.com>
- <3699c25337e1c91388bad4c56441b39a9984798b.1750717921.git.me@ttaylorr.com>
- <xmqq8qli3ub3.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JwftwI4H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HSeD+2wd"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id CB6957A01AD;
+	Tue, 24 Jun 2025 12:20:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 12:20:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1750782023;
+	 x=1750868423; bh=0+dJ2OlAobOvsBken1yt0lJUrFx9i7Y6A2c58s94AHQ=; b=
+	JwftwI4H0VBZAga2WIWHFwKsu2dV9dCfpVgeKEJx1gE1xVRCOHht807WnZLit455
+	nl/VkPBenU94zCjgq6XbSJgmaUs61dFIoSsjZpymusGLiZtFn05753JPjuZKvi+i
+	cEw4xSxUnt++v1XZnR5YCEYmKzNzb2q43OCqrpm/NNEU84xD5NnT7M8QWKZWIJTG
+	g2li8clBoYqTWhodH9AKQ0DK/KWPF9AgoHlxnvkiLSzjO4N9fjTDl/it1bs1u1Nn
+	YMyH0JMvxPTODJqXBU4X4mqOgMLqrsd/yuyK9bFD0w5I4NS7w38R3io30ertUiw/
+	1owhXEM5EZTNqi67gSiPdA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750782023; x=
+	1750868423; bh=0+dJ2OlAobOvsBken1yt0lJUrFx9i7Y6A2c58s94AHQ=; b=H
+	SeD+2wdJO9+/It1iWGKYJKOIb+2pMoSRYBt2g7MWJxXnQGRzo0+XPVkYO2Nmozw8
+	dq/DGX1HM9IKmwJvmaOYrNIW0nINIedhqTsJY3TulEWDpq0is92K6KwDeIzM/vvn
+	R7x1tQ/J61tRN7mNg8Brt0Tlt0ZO+7+fjRSlvyXIVCFhHyG/VUDtCeNUe6lEwSJJ
+	VEkba0DeAmdxmOizqOH7LW0odV1wC2A9tNobLaaKBIRJPuHWL19+wFITk/SU21F/
+	li2tP9e4sQ3WwpwX+viVy2wTD1imvxZSIBv1t8tzaL0Ydr7ScNchTX4Qx1m/bYYu
+	UjdYfHBQQgTVFTwrzj18g==
+X-ME-Sender: <xms:R9BaaKl49I7T5599YsQk9jr1lr6bCVXRa3uQ7IbAA-GofuOwZ--GQQ>
+    <xme:R9BaaB1SQZT5vCV8ix7Xod8SV_cB8PrkfptOjTF7f9b8FrTpktVianPcziMdU4zCu
+    pxcKq_JsrUq7CMdCQ>
+X-ME-Received: <xmr:R9BaaIpcsp9eg7Kelj5_eXZKki5Orp_KF9SJgvFf2aMgyL3jvHB1vluGOzQ1ph_bZMUFbDt2AlcrIDYFWkVqHn3MhsyzS-xRiy_Awqc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdefhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:R9BaaOnOMH6oPE7K9ZSPqqfP6MyEym-PA2UJN1XQbv7S7Mlsu8T77g>
+    <xmx:R9BaaI0zvZ2Kl3sFKdKZd8sbhjg3xhrOq6Ezxq9Fla_VdBplLlvsoA>
+    <xmx:R9BaaFs9wnKDzDAWIesJvucrKnYqz1XPdw6qxkfsoX0CYX9J_-IrwQ>
+    <xmx:R9BaaEVzVUy7Qm4uEQCNd2O8iMNG1kEFt7SAr62jzW2najGlq42h2Q>
+    <xmx:R9BaaMgNoeWCuvsVNJQwtWnaooA3Qc3yqM-df-9LJTmmXNYkBurFVtEj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Jun 2025 12:20:23 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
+ <carenas@gmail.com>
+Subject: Re: [PATCH 2/3] daemon: use sigaction() to install child_handler()
+In-Reply-To: <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
+ of "Tue, 24
+	Jun 2025 14:08:41 +0000")
+References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
+	<2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+Date: Tue, 24 Jun 2025 09:20:22 -0700
+Message-ID: <xmqq5xgl1589.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,63 +92,61 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8qli3ub3.fsf@gitster.g>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jun 23, 2025 at 04:35:44PM -0700, Junio C Hamano wrote:
-> Taylor Blau <me@ttaylorr.com> writes:
+"Carlo Marcelo Arenas Belón via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
+
+> From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 >
-> >  static void show_object_pack_hint(struct object *object, const char *name,
-> > -				  void *data UNUSED)
-> > +				  void *data)
-> >  {
-> > -	struct object_entry *oe = packlist_find(&to_pack, &object->oid);
-> > -	if (!oe)
-> > -		return;
-> > +	enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
-> > +	if (mode == STDIN_PACKS_MODE_FOLLOW) {
-> > +		if (object->type == OBJ_BLOB &&
-> > +		    !has_object(the_repository, &object->oid, 0))
-> > +			return;
+> In a future change, the flags used for processing SIGCHLD will need to
+> be updated, which is only possible by using sigaction().
 >
-> So, --stdin-packs opened a pack and is feeding the objects contained
-> in it to this machinery.  show_commit_pack_hint() calls this
-> function in the `follow` mode.  How would such an object be missing?
-> Ah, lazy clones.  OK.
-
-That is one such place, but another would be that the object is part of
-some unreachable portion of the repository and points at another
-unreachable object that is missing. We take care to accommodate those
-holes in the unreachable object graph when generating cruft packs, and
-AFAIK in general tolerate broken links and/or missing objects provided
-they are unreachable.
-
-> > +		add_object_entry(&object->oid, object->type, name, 0);
-> > +	} else {
+> Replace the call, which hs the added benefit of using BSD semantics
+> reliably and therefore not needing the rearming call.
 >
-> And only up to this point is the new code.  The "else" clause is
-> just the original indented one-level deeper.
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>  daemon.c | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
 
-Right.
+Hmph.  Wouldn't it a much smaller change and fix to discard 2/3 and
+most of the 3/3 and instead make a siginterrupt() call to tell the
+system to interrupt us when SIGCHLD is received only on platforms
+where siginterrupt() is available?  Use of sigaction() does not seem
+to be buying us anything for the purpose of this series.
 
-> > +static void show_commit_pack_hint(struct commit *commit, void *data)
-> >  {
-> > +	enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
-> > +
-> > +	if (mode == STDIN_PACKS_MODE_FOLLOW) {
-> > +		show_object_pack_hint((struct object *)commit, "", data);
-> > +		return;
-> > +	}
-> > +
-> >  	/* nothing to do; commits don't have a namehash */
-> > +
-> >  }
->
-> What is this new blank line doing here?
-
-Weird, this one evaded my proof-reading as well. Sorry about that -- I
-can send a new round with this and the other spot fixed up if you want
-one.
-
-Thanks,
-Taylor
+> diff --git a/daemon.c b/daemon.c
+> index d1be61fd5789..d870ad2f63c1 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -917,9 +917,7 @@ static void child_handler(int signo UNUSED)
+>  	/*
+>  	 * Otherwise empty handler because systemcalls will get interrupted
+>  	 * upon signal receipt
+> -	 * SysV needs the handler to be rearmed
+>  	 */
+> -	signal(SIGCHLD, child_handler);
+>  }
+>  
+>  static int set_reuse_addr(int sockfd)
+> @@ -1121,6 +1119,7 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+>  static int service_loop(struct socketlist *socklist)
+>  {
+>  	struct pollfd *pfd;
+> +	struct sigaction sa;
+>  
+>  	CALLOC_ARRAY(pfd, socklist->nr);
+>  
+> @@ -1129,7 +1128,10 @@ static int service_loop(struct socketlist *socklist)
+>  		pfd[i].events = POLLIN;
+>  	}
+>  
+> -	signal(SIGCHLD, child_handler);
+> +	sigemptyset(&sa.sa_mask);
+> +	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
+> +	sa.sa_handler = child_handler;
+> +	sigaction(SIGCHLD, &sa, NULL);
+>  
+>  	for (;;) {
+>  		check_dead_children();
