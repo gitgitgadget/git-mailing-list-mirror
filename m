@@ -1,39 +1,39 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B73927A445
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 10:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA5827F4F5
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 10:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750759524; cv=none; b=UEtSCozMIru++DubLltPfx/oFkSjZX/3O7+CU0Yhr2+rTLgloUEfXz6WfzD97h0yY8lqc7XZGUEDFzgm19QjI7YxffBy8+ZszZ7CjykUBufErrZ2zWiW1EM7H0GXl3HNSoKFUVfCokj7Wq9u698Zix1vpp3tCp+fif9E/EDRAAo=
+	t=1750759888; cv=none; b=h/Hnl5rh55HrEDk4p2hwANj/3Zi7q3KQ1jI07hraTTZsOBUKStgepani++ZXZmSb12sNdGMtegv5Sv6lK3fWN1JWp+0FPbIaew9/V0OXhCza6QQYxsJ4V+K1MEhWgSpxf/wyYiNswkYfPs62YZfNLEO6LyVYTZvJnRRJ8wrCbWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750759524; c=relaxed/simple;
-	bh=xwX48H92gPZ8ZxjY3YgVDzaOjbXYX86l/Ozx0OuKcBs=;
+	s=arc-20240116; t=1750759888; c=relaxed/simple;
+	bh=+olpsT2n56LRlTOSmQZrCQVasD002NZpOiazroadw4c=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dYjgTNcLjO0sYa74Nen3aD7CdgmBlk0Xk9E5gWYWc6qyV1v6IRcl/XvAYf26sMuKln3eIBBYrQnb3BTi3cUwFBIkf9jdC4JnOxrKEFvuzU/7fT4zKNm/eKx6uCXAE/Mw/n7s4YI72wx8iRhdnpBI97Ngt9uKPn0XNCDmEyukUKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ZrG6MsRB; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wha1M7KRHI1P4k5IU3827F26Ddn7ER9bZV454NUDsLBej2gZ5r7IuNg38i8AD26TXIVsOCAm0drM/tUNS29UGv8ZU0AmYHXMJOSzuf2uIZIMCube/deia1QEhTUzpiXhJHxQLMLO3FV0ouaJ3hM08Z1RfmuGY7+6tQ/rJzmOZwU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aJ+wWtEO; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ZrG6MsRB"
-Received: (qmail 17702 invoked by uid 109); 24 Jun 2025 10:05:21 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=xwX48H92gPZ8ZxjY3YgVDzaOjbXYX86l/Ozx0OuKcBs=; b=ZrG6MsRBwV7bfO/+FsVbs3JnEIyLbMABInuOlK/aaVH99Cqq1qOJ8l6DP9B72UTyOPijvuflXaB3l+/dNGLOj8bWASkMYk+SPn1s9uCiIN9CzzXXVKz+Tg4tr/53KH/lbGUt7yW2omoO1DwO//DesBCRq9YoBl+HM3Noa3pZKQpeE7p60UVqm8fNM5aOQreVONA7cNkQeTZyaBynCV9VackdazY+srwcPwS81R04IprQTjOLDs5mfqVrikRxv62R2h58oSCqJRkyZVmqjliWGA2vvTm5ZYbWWF9ldx+irgFMsca5OWpBBIDU6ON3dkyH841+PZ9zQzFakEBaTPYaWA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aJ+wWtEO"
+Received: (qmail 17737 invoked by uid 109); 24 Jun 2025 10:11:25 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=+olpsT2n56LRlTOSmQZrCQVasD002NZpOiazroadw4c=; b=aJ+wWtEO4IfEyAFcSiezTfDT4OyHGgz81LDEfjbrGQIQLscokA3DPGY+zBzemr3i5zUIfrVdHYthFiAOtREAT8lvZ6c17qp4tpMD97pm3a6SX1sIUH70b7zSRWP6UkeUj88prlxM4v3t32s4MXOFgB+syO5nxH5Kqpnwfd8wjhljUKu0tp+QbSo8AlxdzuvyxtChjOhQmouXrKAIZw75Awe9o/IM99IUwwozBTDktieThhjUlOJ+DlnRom953glclBRchcKvvuHw2WMVfy+GBNLH7SnIgAwlAh6IVEoCQlUDztH+e1GqSePxxoitiGOzbXWoX0HmxAMcuzgfA9yWLg==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Jun 2025 10:05:21 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 24 Jun 2025 10:11:25 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 29192 invoked by uid 111); 24 Jun 2025 10:05:26 -0000
+Received: (qmail 29255 invoked by uid 111); 24 Jun 2025 10:11:30 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Jun 2025 06:05:26 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 24 Jun 2025 06:11:30 -0400
 Authentication-Results: peff.net; auth=none
-Date: Tue, 24 Jun 2025 06:05:20 -0400
+Date: Tue, 24 Jun 2025 06:11:24 -0400
 From: Jeff King <peff@peff.net>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/2] t7422: replace confusing printf with echo
-Message-ID: <20250624100520.GA636332@coredump.intra.peff.net>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 3/2] test-lib: document test_seq's "-f" option
+Message-ID: <20250624101124.GB636332@coredump.intra.peff.net>
 References: <20250623105516.GA654296@coredump.intra.peff.net>
- <20250623105542.GA654412@coredump.intra.peff.net>
- <CAPig+cSLJ57+ZU1TreHajAqbQwBD7TRUt3bxRDTcHCjS88xmLg@mail.gmail.com>
+ <20250623105625.GB654412@coredump.intra.peff.net>
+ <oai7p5xmq3q7c3ovdpmbyimoidvgw4lhxfd727qdid5ulcdn3n@7n6vqa6wn3pe>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,24 +42,64 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAPig+cSLJ57+ZU1TreHajAqbQwBD7TRUt3bxRDTcHCjS88xmLg@mail.gmail.com>
+In-Reply-To: <oai7p5xmq3q7c3ovdpmbyimoidvgw4lhxfd727qdid5ulcdn3n@7n6vqa6wn3pe>
 
-On Mon, Jun 23, 2025 at 01:59:48PM -0400, Eric Sunshine wrote:
+On Mon, Jun 23, 2025 at 11:25:20AM -0500, Justin Tobler wrote:
 
-> > diff --git a/t/t7422-submodule-output.sh b/t/t7422-submodule-output.sh
-> > @@ -180,7 +180,8 @@ test_expect_success !MINGW 'git submodule status --recursive propagates SIGPIPE'
-> > -                       printf "[submodule \"sm-$i\"]\npath = recursive-submodule-path-$i\n" "$i" ||
-> > +                       echo "[submodule \"sm-$i\"]" &&
-> > +                       echo "path = recursive-submodule-path-$i" ||
+> > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+> > index bee4a2ca34..8c176f4efc 100644
+> > --- a/t/test-lib-functions.sh
+> > +++ b/t/test-lib-functions.sh
+> > @@ -1454,6 +1454,13 @@ test_cmp_fspath () {
+> >  # from 1.
+> >  
+> >  test_seq () {
+> > +	local fmt="%d"
+> > +	case "$1" in
+> > +	-f)
+> > +		fmt="$2"
 > 
-> This looks obviously correct and, as the commit message says, is
-> almost certainly easier to read, but I was more than a little
-> surprised to see the patch since I thought this code had been fixed
-> previously[*] and had some discussion around it.
+> With the `-f` option, the default format string gets overwritten to what
+> is provided by the user. Makes sense.
 > 
-> [*] https://lore.kernel.org/git/20250403144852.19153-1-sn03.general@gmail.com/
+> If we want, we could update the comment above this function to mention
+> this new option.
 
-Ah, interesting, I hadn't seen that one. I am happy with either
-solution, but IMHO what I posted with "echo" is a bit more readable.
+Good point. I didn't even notice that comment!
 
--Peff
+Perhaps we should squash this in? I don't think there's any need to keep
+it as a separate commit.
+
+-- >8 --
+Subject: [PATCH] test-lib: document test_seq's "-f" option
+
+The previous commit added the "-f" option, but didn't mention it in the
+function's documentation.
+
+Suggested-by: Justin Tobler <jltobler@gmail.com>
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ t/test-lib-functions.sh | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
+index 8c176f4efc..6230746cc4 100644
+--- a/t/test-lib-functions.sh
++++ b/t/test-lib-functions.sh
+@@ -1451,7 +1451,12 @@ test_cmp_fspath () {
+ #     test_seq 1 5 -- outputs 1 2 3 4 5 one line at a time
+ #
+ # or with one argument (end), in which case it starts counting
+-# from 1.
++# from 1. In addition to the start/end arguments, you can pass an optional
++# printf format. For example:
++#
++#     test_seq -f "line %d" 1 5
++#
++# would print 5 lines, "line 1" through "line 5".
+ 
+ test_seq () {
+ 	local fmt="%d"
+-- 
+2.50.0.399.g566d3d7b27
+
