@@ -1,92 +1,73 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBE88487BF
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 21:32:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B296256C8D
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 22:29:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750800759; cv=none; b=CpNjH7RsVpQYO5zwuNvsl7BuKW5Ma6uH/vAjwTdQbQIkDf2MvZkBG0x+O4oczW3oe8Qo888EgetE5wY8dDWSeQMHPZ84WhpFnF01loOmC0L8jL7fiMTV0hFzPCeNj3p67gWJqOPAhV9ekbqaGd3T5LdNT6WnaJK2tskBgrIS394=
+	t=1750804169; cv=none; b=ODjXkae5hVmZhpgtCJXbcY3b/r/ZsDz0hhlJgeeXj9YNR+iK6PFo7t3zCY1blZyL7jA+pJ5rIE4CbJ7uq5yoolYPE8vdg26iSBf590KOfqIWuIjOBL46QJsaxljUlAJjDIUjTjct/ipgeUa8jTu9EVtZkUo1C8fov3DvQRwJl9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750800759; c=relaxed/simple;
-	bh=FZ0bebqemaBvsIpJ6LryHRaI3QKUE3Xz/2d090oYjoQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KIwahrSW5wJT8mdSLPbUmofRnoSlQv+RmwdG/pS1WjULp5EFf6PbIM0ibGcebfRjofj0RoICGsL6AlkoezcIpthnjiNcfhJQzDolD78ro1pqnF6T0KO19oxGYSAhmWRyQ4z7eSJ0frjQsxRrdvKx9zPmnhsi55DBau3jGGV7ueE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PVbioWPr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g7PcnMOz; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750804169; c=relaxed/simple;
+	bh=xZYWR7fiDoEnRZjmSFxizQ2X3E0ZFRafMhi2vZc+8Sc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ajgBl/W/jSRmXMf8UkrIuYwGcD79QFPFgqP5nhUwCc3BhkZk2kH5wso7vTfnGex3K3Icy3+SE0yOGjVoT0absJhiMkvlvSr6NrO6TqMPmwORUNnm1Hd3qAEa4nv9y32xO3DSB0wcjd9d0e40t9GxcwvMsMiJLwv51zWNzrfs8Q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LV7Yz+BA; arc=none smtp.client-ip=209.85.210.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PVbioWPr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g7PcnMOz"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F397F140010B;
-	Tue, 24 Jun 2025 17:32:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 24 Jun 2025 17:32:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1750800755;
-	 x=1750887155; bh=ApgCsCNoyqDJnscW689gv4AcmdLr86DKn9kErPwO/Ps=; b=
-	PVbioWPrj2tiTY/YXXgWQ9qbzgig1mks+yOFI7uP1bdKlWet8Rw1fKQW3YrOSDUf
-	WzfExdXQXl/pw7U1U6p8ffRf49bmAgKrE0R/BwC8dRmWmHB/JzMns+JT5VZNz9P+
-	qjMeVe8hRlMbGgpMpHjW/BIH4RZsiddy+slyWlX/jSzRVFk4HUnUWGrK7icXVPQt
-	+wBng3jg89KMpNWUzRacPofIwDua7tuLCc/czcOtBhDnG1uDqKR2R18P1un3ipFL
-	5DgFTL3cri2IM1lNZipY7h/Llco5zsu0wv8xzDgroraDVCrqPBoXQf4pWjVDbQ2A
-	Dr/N/lJXNAJ3qfXFRhfQzA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1750800755; x=
-	1750887155; bh=ApgCsCNoyqDJnscW689gv4AcmdLr86DKn9kErPwO/Ps=; b=g
-	7PcnMOzGg9LJQdacXcxaxWwGOGi8WIQpUdmdvoqrzMD4y2pQx6i4QmKJh5RMLhqf
-	QrKJOCV9cFU++BAvt2IleIp4GlAfo4/aGdlh3jOKKl49JA4klwz998nK+jp7YikH
-	m0EiZZ1XhtFuCpQGKUKUpkMIsStVeaM0yyuCfYSGl3EniKUX9oiFiTZkYmzFcpSr
-	MK0poDJv5/r8HF4ijxOe6qxWNG+nEUCAr7PR/38DPdQqSQKTd7/Ga5DemrNvqNeV
-	VKLfdUuPWIsQQ207WWaRim9efIMaDMH5A3pRxRmufOmJre/Hn9mCl3saUXrint5F
-	xEmkEG+Kf781pRFM5t7jQ==
-X-ME-Sender: <xms:cxlbaD9DBEoepxYMRPUuy__stT6kbfaLV1QsJLECuSsfNAq5EdLliA>
-    <xme:cxlbaPtXRUAvfQaxtTs1BKUhZ78gyKXz_2tC-xD1O5hBGMF9inYBFffC79YdoJ_CJ
-    ANPaE2z5fs_4vKiPQ>
-X-ME-Received: <xmr:cxlbaBBQVmepXY4UjpCmsXoTKkfTlmhOSUpK5Pj73Kh63bJYeiTbmsJpzOEf52o9eI8WQc_Iauh0QTC22sDJ-g4Byd27sb7dOOkkRiQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvtdeljecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:cxlbaPfiUX-gP9IaEl_xaqckX2ifcIj9O4Ova19RLuph7RwUKyIobA>
-    <xmx:cxlbaINRv3GYAMrtfSzyZGc3HvlS2wy6vZOndXGmluL6EElgXTx7Vw>
-    <xmx:cxlbaBkDXJFQoYxpkeFfBkO845F6a0plqfRsRruYRNYHhLgzWIzo5g>
-    <xmx:cxlbaCtZn4oqejEtOTc78BRxgPdKLz_g7vv_gJ6tmnVf361TT_G1gg>
-    <xmx:cxlbaM5kILMly4IlVszBqG2LBAYTW40OAADf_7dB99djWdx4A2jKLiUY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Jun 2025 17:32:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget
- <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LV7Yz+BA"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-742c7a52e97so634237b3a.3
+        for <git@vger.kernel.org>; Tue, 24 Jun 2025 15:29:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750804167; x=1751408967; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=xyO1U2AAVHuN/obNOc1CpxjCePLLJLQKlCP9UPS56lE=;
+        b=LV7Yz+BAQzCnlx+kY4L5GQ6hJjzfdaHNa0qpIzMGn2KQCo3i7PXJ4xq6OQCmjQ8Yxl
+         YQf7S8GbDXp79aP7ZPlCQv5Gd8sb+OjeAA8Jk7yCUKVNbW6UdxMX28sQbY7lECyvt/va
+         CnHVWCUySV8Du80kzCfwUbECrU6xeAbS1U6k+cJcj66PMAGXAecHZhjhV3bTdeYBqRUq
+         3cERyXbxIJDsJLgiL2e3R1V5pAa42pO4VWSYay4+miVOBRAh8K0JpW1hw+I/ehxZPDYh
+         gumSJTj7xtsaw67Cl4mejlkE3XlIhYzPpWM3B8TLzDB9k7ERUsll8oOA6HHi3Y5nJAA2
+         Bpgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750804167; x=1751408967;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xyO1U2AAVHuN/obNOc1CpxjCePLLJLQKlCP9UPS56lE=;
+        b=p9sWuVnG3ekOOX3sAdWlSMEKpylGLpfPUQxfeFUTS8rbFFiIpLM2MzKQSt1hJn5WQB
+         R63TKtR64byopu6Ww6+BOcj3Wm0o3STkxJfEa8W0lyYCaRgNTBZC6plAwq0vNSavozQQ
+         j4cfygI6wGQRTjZHbW1Sl3OMrKKIXed2pQJYGO8IZDJQYF072LzlrHHKCsYgSLWNil5Z
+         m+O/TsVSn+X9SjnK1BoewC0s4D63ac3B8LqmhyPa/fXiiiEBuQk7kBvn1py9GqSdewVY
+         kagu2jAAxc59Nyd5D0K26qKpByvRfBpDVYiKf95a3s0P02POzpCYoeGBOTerizAZ76x7
+         9D9A==
+X-Forwarded-Encrypted: i=1; AJvYcCUJnobdwq8/8OjygcKjIgt24dCEvDKLQha8aZGj+UMmKXI/GGj72nr34CqGY/60qAo0bno=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzik9eYyzSIVf69dPJgtbFE9TyQQK8n7TrGvGJQXhXp3woySWAq
+	1l9HHKCyeXotEmUiFAjLlwlRD099F9AfCTvLezkahddtcDKgZutIB2jg
+X-Gm-Gg: ASbGncvjZKUVXbeNHhQIpY5pf11lJ6pPaenFQoC4jnqRXFwFnxl/qFLGkhAlqhxOA57
+	2LlPSHcDXCl83KAXB72NAuBIhLItYIztnfuNGCJlJJ05HuA2G589Aa664uo9+SoySwuDcfFWFuQ
+	MA8MXyypZo6NGH+jttnaOBA1G7BN+2kSyZ4k7cxJ/iW4D+05aYmB4Y1LRjW+2IROQAKJeEoBgqU
+	JC+jkHxjgBruJHSwR4VLggLMRLFPKScZEzW2hBjKmtHn9hSI5EEuds21zwsuFRvhoPGJUXcFGN+
+	5q433GGpUduHx0j85YIwad+Xt24ZL0j54QPXnGoM4U/3iCJb/hklW617440qW9U4/w1upVWerJO
+	m4jE1z8kugA5To6f6Fzq6Jr4=
+X-Google-Smtp-Source: AGHT+IFyUWeA2gnFQrCS2vHc5V02p3DtPPP5niO19o4ooaFhkUQ4UDVHKz0eaL9LiVVB4nn4kcYMyQ==
+X-Received: by 2002:a05:6a00:1826:b0:748:fcfa:8bd5 with SMTP id d2e1a72fcca58-74ad4462622mr1422337b3a.3.1750804167293;
+        Tue, 24 Jun 2025 15:29:27 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:a1d3:1456:244b:d366])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749b5e08d28sm2800597b3a.28.2025.06.24.15.29.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Jun 2025 15:29:26 -0700 (PDT)
+Date: Tue, 24 Jun 2025 15:29:25 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org
 Subject: Re: [PATCH 2/3] daemon: use sigaction() to install child_handler()
-In-Reply-To: <7f3ac4djbbhskbryzr754kdjdiyauiiy5dduv7h2uaa7mvafsr@chntkatmbbcb>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 24 Jun
- 2025 14:28:37
-	-0700")
+Message-ID: <neeiqdzggdukyfd5metm56nq6tnperhcnzvgvt4e6idw52rxeg@qrwzjoexs35e>
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
-	<2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
-	<xmqq5xgl1589.fsf@gitster.g>
-	<7f3ac4djbbhskbryzr754kdjdiyauiiy5dduv7h2uaa7mvafsr@chntkatmbbcb>
-Date: Tue, 24 Jun 2025 14:32:33 -0700
-Message-ID: <xmqqms9wzuz2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <2e8c4643a60e354d24bda9bf364e1b34ce1c45ae.1750774122.git.gitgitgadget@gmail.com>
+ <xmqqv7ol177p.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,31 +75,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqv7ol177p.fsf@gitster.g>
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+On Tue, Jun 24, 2025 at 08:37:30AM -0800, Junio C Hamano wrote:
+> "Carlo Marcelo Arenas Belón via GitGitGadget"
+> <gitgitgadget@gmail.com> writes:
+> 
+> > From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+> >
+> > In a future change, the flags used for processing SIGCHLD will need to
+> > be updated, which is only possible by using sigaction().
+> >
+> > Replace the call, which hs the added benefit of using BSD semantics
+> > reliably and therefore not needing the rearming call.
+> 
+> "hs" -> "has"
+> 
+> Hmph, if we do not have to rearm, do we even need to have the
+> handler at all, now it is a completely empty function?  Presumably
+> we'll see the answer to this question in the next step?
 
->> Hmph.  Wouldn't it a much smaller change and fix to discard 2/3 and
->> most of the 3/3 and instead make a siginterrupt() call to tell the
->> system to interrupt us when SIGCHLD is received only on platforms
->> where siginterrupt() is available?  Use of sigaction() does not seem
->> to be buying us anything for the purpose of this series.
->
-> Using siginterrupt() would work (at least it did when I tested it in
-> OpenBSD), but its use is discouraged as it has been obsoleted by the
-> last two versions of POSIX (since 2018).
+I didn'r address it because I didn't knew where to put it, but removing
+the signal handler isn't possible, because as soon as we do, EINTR is no
+longer "returned" by `poll()` on the systems that allowed that as an 
+exception to SA_RESTART rules, and even trying to force it with
+`siginterrupt()` no longer works, not even returning an error.
 
-OK, but it feels a bit funny to base the conditional compilation to
-use sigaction() (as opposed to signal()) on a symbol whose name was
-derived from that deprecated interface, doesn't it, then?
-
-> Most systems seem to be implementing `signal()` with `sigaction()`
-> nowadays, but in the ones that are not (ex: Solaris) calling the later
-> to get a `struct sigaction` with the flags being used, doesn't work
-> and therefore it would seem, that the only way to do this reliably is
-> by using sigaction everywhere for this signal, as implemented in 2/3.
-
-Still the many #ifdef's sprinkled all over looked really ugly.  Can
-we abstract this out a bit better?
-
-Thanks.
+Carlo
