@@ -1,126 +1,173 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A048299AB4
-	for <git@vger.kernel.org>; Tue, 24 Jun 2025 13:00:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.129.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933672BEC21
+	for <git@vger.kernel.org>; Tue, 24 Jun 2025 13:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750770015; cv=none; b=Y8cgT7L+ysFTCXGbS+IwzMk1l4iPneGAdH8jDta/7CS3oKpcbNE3w+CpADUW+NLq2wrTuOtsW5Wl5dCd5akFtDglk3hd8/J73pwAx55nmmqnMdXH1s3ma5cJnWxed/zY+vO2eb5ClNjls09T46nkDQyqwsu/fsQCEDTpg6W2qPE=
+	t=1750770244; cv=none; b=tYLwcXoAL4MlJzubfRIxlK1smdmuRBgRvBO7ZQbqmgOSgvWrATh6fE/m1NVa3yBJkGjj7h/0oSw3yJ49lB4AIqylw1DSpWVpLULWFovj3pS9JgrD8RGqzmQxYulw0nPjYGPIcAN3MNhXP9h+vAeiI27ySUFdPYOv84nkGBNSqQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750770015; c=relaxed/simple;
-	bh=OZuSol3TZsA7sjaXA4l469FN6Lorq7yQW60gDOqjmhA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=aPpKo+qN07hUsEbUXdXfHfCrMzZMNNsRamZTSKlX1q6aQxYAhrnniYcA9ojCQ2vgBzuIWco5Ll0NwO+kozhoyutVjgXFLdz+TbGZ8FYAdKFgIvz9/EbnOlZyIM/5aC9WQZlAcDi6TCGk+bl23WdrdeqKDhzw/xYBAuBp7VIZhZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=EWORJEw8; arc=none smtp.client-ip=170.10.129.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1750770244; c=relaxed/simple;
+	bh=PGPlq108A5u/NLNcfT04A9S/VwxTDydD6ykVmHl9MJc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Zou8foUBsN8bP6psJrHP5LY4MzcgbdfMmhrA5dC8JYx+MC9gYfVz7zhS3gUlB9La0tl4sRohp0bKrzgd9xstOrrpPKXQ7u4CJtdlOTF5l0mL0bhgsf6RxsbMsvA5mzQ5O6mNTGl+HxOblQ+303bWFSDyl4VacXfodEOv2bj3jNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ImBxXDQP; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="EWORJEw8"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1750770013;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=o7gFjeTLYSD68xnO9ojGiTrINp5tMybXxigddDvyePo=;
-	b=EWORJEw89NDlOuZzqI/vY2pdVea9IrVIcNrWGK6BNjpTHIrmuqgk6tylFYanVg7isgNLeA
-	nQ5h8xVyBRKKQKa/5CZCwFsAOpcBrAcesNf/bzneAt5xw2HRKVTkHDm8ek2qeYwsMtu77B
-	INIG0WrbJcseetrYLO/F1qH65otEZIE=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-363-CE1mxiFvPLKPYATXXkCRDA-1; Tue, 24 Jun 2025 09:00:11 -0400
-X-MC-Unique: CE1mxiFvPLKPYATXXkCRDA-1
-X-Mimecast-MFC-AGG-ID: CE1mxiFvPLKPYATXXkCRDA_1750770010
-Received: by mail-ej1-f71.google.com with SMTP id a640c23a62f3a-acb66d17be4so36105666b.2
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 06:00:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ImBxXDQP"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a548a73ff2so403365f8f.0
+        for <git@vger.kernel.org>; Tue, 24 Jun 2025 06:04:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750770241; x=1751375041; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=T6qkSBhrdsuGsN9DKALSFQQoG/INk+SCtvx/yfF9tVU=;
+        b=ImBxXDQP7E7zKuq2oUS/KDWOB1aPZIrWMd3mq086VF8pcn8SJ/zVyz+t870/Xczflp
+         Q7pD/efPs/0EkiJvf0WzZpsMyoIagwB+EkReYMxERHX1+0BrFTlX18KJP5FUU4E39IV8
+         qGAfFBaWuUGRe/+WZPQYxMSLwwCh+sOLA0YeMnwL0Xp1bbPCkiPt0TDHanMcSO/BWyrh
+         hewuzTctp2LA3LyJQ0OSSPmtLuYEAjhl/WDx+phUZz2Oe2+tpLJIK5tYKOFijmRe5Kc5
+         H6/gJ7nGCWsifq4fEhfiBAJctTPUOs8NHSlwaJxQJuYV/KZVeFpdLIC+v3edmi50cmcC
+         mg+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750770010; x=1751374810;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o7gFjeTLYSD68xnO9ojGiTrINp5tMybXxigddDvyePo=;
-        b=p7KzcUDxRa8BaXCiH/DaXqMdfUwNAW9TdVEw2rFGQSUylNVerm7nBUwGE0Km6/hYWT
-         DnvkQB/GPPoremKnadB7mEWIE0gn6ubORj8hKqGJo2BOHD9XrLFoxoOPEqpRd2ybO/nr
-         JdBD7UycXiHAXqqtTcllMArC32tyh37hYFKRyjDDaV9k1WsrjBcWbG7kbf2D3R9ZxTur
-         ScRAZvJKd3EhQLPQXhcwexBpw7dW/5HS++aKLE3xDRklD2vFV9ShhsqV/oooN3i5PTuY
-         sK8ZOpkuBBm2D/ZRH3cCBE6FET3T/BPEf1KaZsvYZMTZvhHA8eU1JJ4QrFwDDVrQO0yT
-         8MgA==
-X-Gm-Message-State: AOJu0Ywj+0EJtMyznItpkTTvNeytkZD6g0tOGr3rOfkUt/3t4XryGqp8
-	ysiJWZqaaVgyaFYG3d4b+GdWbO//sqPB3Fq+42wp/XtFbXHuCsp0lkTHfKn5ZipLErySxDCIJzC
-	iBWUFtD6y60MGNkY2SMt3Gz69OjTKDslHPEVGC1sjYNQIkoAlIiBlKbJm5dqSBj+XSKSzuPYOb+
-	tI9g9g7xmMfZe7FkNndGBB1MA815rtfDhryqU0EZ5YpQ==
-X-Gm-Gg: ASbGnct3mTpdPlOyKqjacgfDZXXq9Abhmc6IWS1vsH7QheZY9q63a2XqeNtYhufQfvz
-	DW/aL3H7Kif3fld7OG4J4x65UTlhIXqsTy+t4KEmKlKFfbxqPJpFd4dFv4ERZbcUMlkrs93amJi
-	3+Ikc=
-X-Received: by 2002:a17:907:86a2:b0:ad8:9a3b:b26e with SMTP id a640c23a62f3a-ae057c8d395mr1578790166b.56.1750770009647;
-        Tue, 24 Jun 2025 06:00:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFeOR1PnQ6HhTxq5OeCKZXB00yyJBnSqUJ6YGJEH6e5f065jLRh8IAAWSoeQeAzOgZbMbegFtJEZlAv6/dD6Kg=
-X-Received: by 2002:a17:907:86a2:b0:ad8:9a3b:b26e with SMTP id
- a640c23a62f3a-ae057c8d395mr1578786866b.56.1750770009113; Tue, 24 Jun 2025
- 06:00:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750770241; x=1751375041;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:reply-to:subject:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T6qkSBhrdsuGsN9DKALSFQQoG/INk+SCtvx/yfF9tVU=;
+        b=jHtlQc2mW4g6F3E0hzgoA/iznWLJcCiKf2pXEcKxstLbiEx5VsxnraA416U+XmajOg
+         eZPnvwpTBC3iuPILbNTlrtFI34RNj7IkekSgm5rCuK7vg6fRSzXP1Evw4z6FF6YKgtOC
+         37UC8wqdOy3Fgiqt42hACdEu4gBZyM7S6VZ2EI1C5iMMvHeoUouX1xRcc1paE1feLa8g
+         GCtPn8sKwa88ffZMQlZidFLbdzlR4cEBfXI+wQucXDRxB/txcaxYeiIz+WNpxtHM6qph
+         g5ugTPOl6y7qM4dkZX2M2zBFHc1pb1zLz0WgRSIiR3glheQoSkGrNhMe9CLxNeU+rreN
+         cJBA==
+X-Gm-Message-State: AOJu0YxJDn+uXa8WmUV7tDtUvpIKaB0o0vZoF3oL4/NX7ZfiB0aN/Ujs
+	uINu3lEKdeIdRsFZlZUr3xe2jfmPzppfsgCrp11WjvXv7uBcO8N9Z3Wp
+X-Gm-Gg: ASbGnctUp8LQ65yYU/cJejAm9xjUwdgCCJXfEHDK2zUcGx3tLma+b/q0JTp8iVL5hnK
+	KgRAml9ECnMzd7YSQ6IlsY1aNfy9BtW6scdBG0+PGRuMyxXRy0aQ5cCyMm5edNIPiO3Sh+unD4m
+	dimUWlk/83Nao6VDeJe6czNhNhxjjlsYfNP7h6Xab759SPLwUVYVGiQHTyzt9M6tXFymi7+XWGo
+	TZjr6x06eA5LGHNb5zdEkojzQUS4miaYeDljDx86kApzzE9ofvkcDX/Jun4s443ByFHtlbEf+Hy
+	lXR8hliJ2EmqAZbS8g45DFFa6sTToxKcDKHjOv5N0w/vaL1EvKZ0nkrtkVntEfr+fSVX5q191BV
+	EtKnfdPFe3Qwhm5KSoLkL23CDcU1moOmpRIFfdaLionr8QUHF9yW/FveVbw==
+X-Google-Smtp-Source: AGHT+IEKnrirJbviGJWo9/a9f37khWCKmxvsX0Q2uuPLaZZHx+CZKYodIKu76KfBmJORdKk6YhIvKw==
+X-Received: by 2002:a05:6000:40c9:b0:3a4:f439:e715 with SMTP id ffacd0b85a97d-3a6d12bb71bmr12205904f8f.9.1750770238818;
+        Tue, 24 Jun 2025 06:03:58 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:64ec:8871:d108:963a? ([2a0a:ef40:700:a501:64ec:8871:d108:963a])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e80ff8b8sm1865680f8f.71.2025.06.24.06.03.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Jun 2025 06:03:58 -0700 (PDT)
+Message-ID: <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
+Date: Tue, 24 Jun 2025 14:03:57 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ondrej Pohorelsky <opohorel@redhat.com>
-Date: Tue, 24 Jun 2025 14:59:58 +0200
-X-Gm-Features: AX0GCFu-uqc45x8Cd689Uhm4SMZ7i6WWhhzRckhdBcTPDIbe6oETeswwhZ04Les
-Message-ID: <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
-Subject: bash: unescaped `>` character when switching branches
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving
+ repository info
+Reply-To: phillip.wood@dunelm.org.uk
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+ phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com,
+ ben.knoble@gmail.com, gitster@pobox.com
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com>
+ <652FDA35-C20D-4F27-A22A-025CA08EB013@gmail.com>
+Content-Language: en-US
+In-Reply-To: <652FDA35-C20D-4F27-A22A-025CA08EB013@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hi,
+Hi Lucas
 
-Our customer has found a possible issue when switching branches.
-Output redirection character `>` is not escaped properly when
-switching/checking out to different branch.
+On 23/06/2025 19:49, Lucas Seiki Oshiro wrote:
+> 
+>> I think using an output format generated by 'printf("%s\n%s\0", key,
+>> value)' would be easier to parse. This format matches that used by 'git
+>> config --list -z'.
+> 
+> Thanks for your suggestion! However, this still breaks in the corner case
+> mentioned by Junio in
+> https://lore.kernel.org/git/xmqqikl3mtx2.fsf@gitster.g/:
+> when a value contains a LF, which would be possible to have in the (yet to be
+> implemented) path values.
 
-Steps to reproduce:
-1. Create a new branch and switch back to master
-```
-$ git switch -C 'issue#1234>/tmp/dangerfile'
-Switched to a new branch 'issue#1234>/tmp/dangerfile'
-$ git switch master
-```
+The reason git uses NUL termination for other commands is to prevent 
+breaking the output when values contain newlines. The output format I'm 
+suggesting is
 
-2. Try to switch to the created branch with using auto-completion
-```
-git switch i<TAB>
-$ git switch issue#1234>/tmp/dangerfile
-fatal: invalid reference: issue#1234
-```
-3. Verify that the /tmp/dangerfile has been created
-```
-$ ls /tmp/dangerfile
-/tmp/dangerfile
-```
+     <key><LF><value><NUL>
 
-Internal interpretation of the created branch:
-=E2=94=94=E2=94=80=E2=94=80 refs
-    =E2=94=9C=E2=94=80=E2=94=80 heads
-    =E2=94=82   =E2=94=9C=E2=94=80=E2=94=80 issue#1234>
-    =E2=94=82   =E2=94=82   =E2=94=94=E2=94=80=E2=94=80 tmp
-    =E2=94=82   =E2=94=82       =E2=94=94=E2=94=80=E2=94=80 dangerfile
+so the output for "path.git-dir" written as a C string would be
 
-Tested on Fedora 42 with git-2.49.
+     "path.git-dir\n/home/phil/src/git/.git\0"
 
+The value can safely contain newlines because it is terminated by '\0'. 
+The reason that "git config --list -z" exists is to provide an 
+unambiguous output format as config values can contain newlines.
 
-I've found out that this behavior happens only when using Bash. Zsh
-properly escapes the characters when creating and switching to the
-branch. Git shouldn't be tricked into creating a file when the user is
-switching branches. I'm not entirely sure where the issue lies in the
-code, so I'm not attaching any patch fixing this.
+>> I've not seen any discussion of how paths are going to be encoded in the
+>> JSON output. As I understand it some JSON decoders only accept utf8 input
+>> but the paths reported by git are arbitrary NUL terminated byte sequences.
+>> How is one expected to parse the output for a non utf8 encoded path using
+>> rust's JSON decoding for example?
+> 
+> [...]>
+> The first solution that I can think of is to check if the sequence is a valid
+> UTF-8 bytestring, aborting the entire command if it's not, which would be
+> better than just guess the charset and re-encode it as UTF-8. However,
+> I don't know how hard it would be to do.
 
+I'm far from an expert but I think the normal solution is to base64 
+encode bytestrings so the caller can get the original bytes back. We'd 
+need to do this for all paths. Even if we could reliably guess the 
+encoding (which I'm not sure we can) and re-encode it as utf-8 the 
+caller wouldn't know if the path was really utf-8 or if it had been 
+re-encoded and they needed to convert it back to the original encoding 
+to use it.
 
---=20
-Ond=C5=99ej Poho=C5=99elsk=C3=BD
+>> On the subject of paths do you plan to support the equivalent of "git
+>> rev-parse --git-path"?
+> 
+> Hmmmm... In the way that it works under rev-parse, no, as it may bloat this
+> command with other things that aren't exactly metadata.
 
-Software Engineer
+That's a shame as I think it we should be encouraging users to use "git 
+rev-parse --git-path" rather than building their own paths using "git 
+rev-parse --git-dir". The latter is easy to get wrong for example 
+assuming the index resides at "$GIT_DIR/index" when "$GIT_INDEX_FILE" is 
+set or running a command from a worktree and assuming the path is under 
+"$GIT_DIR" when it actually resides under "$GIT_COMMON_DIR". If this 
+command is going to return "$GIT_DIR" and "$GIT_WORK_TREE" then I don't 
+see why it should not be able to provide other paths.
 
-Red Hat
+>> I'm not sure what the future plans for this command are but when I'm
+>> scripting around git it would be nice to be able to a single process that I
+>> could query for the things currently returned by "git rev-parse", "git var"
+>> and "git config"
+> 
+> My concern here is that this main motivation for this new command is that
+> rev-parse has too many responsibilities. Giving too many responsibilities to
+> this new command may turn it into a new rev-parse and create a XKCD 927 [1]
+> situation
 
-opohorel@redhat.com
+I should have been clearer that I was talking about the path and 
+repository information options of "git rev-parse". Those combined with 
+"git var" and "git config" are all repository settings. Having a unified 
+interface to them would be an improvement on the status quo where users 
+have to know which command to call to query different settings. There 
+would be a clear focus on returning repository settings, which I think 
+is very different from "git rev-parse" that combines revision parsing, 
+command line parsing, shell quoting and repository information. I don't 
+think you necessarily need to implement them as part of this project but 
+we should design the input and output formats so that the command can be 
+extended in the future.
 
+Best Wishes
+
+Phillip
