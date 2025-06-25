@@ -1,110 +1,163 @@
-Received: from mailtransmit04.runbox.com (mailtransmit04.runbox.com [185.226.149.37])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CF731B7F4
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 01:04:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.37
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61F315A86B
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 06:23:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750813447; cv=none; b=NlPvFOA81wmV4g1I7A8lCDX8Fci7rFtQYYwOwA2CQLvSjZAr5bk84f8kzw/B3yfz+6+sGqKs0L75nQS4hGWCB6qS4T303t4JTCf2HqUhx0lgLDy14oFoQqWmnoisAeebTieltShvDzcyLLsXh8aanE/XAgfFxt6+Hyq6vAyqSEk=
+	t=1750832622; cv=none; b=rE3T9Led7poi/0CFopFaJfeQMBYGCpc40nJtnQeXEjIamHDw/yvcnX6kiH6+ur4mFsQmDydNM2YlwUPy+q4Qxo2yXkZrY2p+5aohfXlVCTbuMJCrGDOM4d6eEVUXH4DRsFZisVGs4uRZ71OoNIkE6fx18QWw5J6hhN02mZ6mhLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750813447; c=relaxed/simple;
-	bh=BQlzIwkarYnts1m24tXFhJzLG3veKqo1+jP1N090QJ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=n/F6XtxbEI4guqwumrgEdpAPUtKIgIby+Hek5KxiJnXd/VaomMh1hrsLs4gkvl9tOFDTABAG9bOIQIKnlcl8IfJFtXCwlBlm2wAmX8LgUohGNf9gEPArSKYoW4WXx1e4QdPngP/MAxK/lafnwJKfW4djbJaFOnpmvYI6e7FnHjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=OIsAMlfq; arc=none smtp.client-ip=185.226.149.37
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="OIsAMlfq"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit04.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uUEYQ-00CRWL-BQ; Wed, 25 Jun 2025 03:03:58 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
-	References:In-Reply-To:Subject:Cc:To:From;
-	bh=FfuORQhCJaa1CETTao5hYCFds6BY+5LHXNrMmcrX1tg=; b=OIsAMlfqpGh7sF3LdHagGItuq8
-	VM1PH30TVdDkZ4pH9lwOc6c6dWT2s+ofPbTdojUcaSe+FQmT/hh1Tak5TYsg2gNeO8JuIPsCx9j39
-	7lGWPRMLWeq/skO39NM0FwqL2eVnYEV2OUbZeN6BdR4nuWBVO/81p/xIRcFMf/Jp0JZa4cslcto0P
-	2fUcX6TPUNUL8YilpKhhSOqUWRg1AB7wUI3JEA+QfvoEb7wrBLbKdKno37DUrPTbhZp1+LZGvTjXo
-	D1ZnOlv1AsheALFevjrghi1uvckevIw9lEpLuM+u++8AryGKx1LcCpREtUcsxYwjkQiS5uYRWdVTg
-	8B2/3FdA==;
-Received: from [10.9.9.73] (helo=submission02.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uUEYP-0006Gz-PQ; Wed, 25 Jun 2025 03:03:57 +0200
-Received: by submission02.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uUEYF-001kOR-Ht; Wed, 25 Jun 2025 03:03:48 +0200
-From: Maxim Cournoyer <maxim@guixotic.coop>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,   Andreas Schwab <schwab@linux-m68k.org>,   "brian
- m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v3 0/3] git-credential-netrc: better symbolic port names
- support
-In-Reply-To: <xmqqikkkzmzr.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	24 Jun 2025 17:24:56 -0700")
-Organization: Guixotic
-References: <20250620041239.27839-1-maxim@guixotic.coop>
-	<20250624014857.3748-1-maxim@guixotic.coop>
-	<xmqqecv915y7.fsf@gitster.g>
-	<87ikkkk84f.fsf@terra.mail-host-address-is-not-set>
-	<xmqqikkkzmzr.fsf@gitster.g>
-Date: Wed, 25 Jun 2025 10:03:42 +0900
-Message-ID: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1750832622; c=relaxed/simple;
+	bh=WJJ1MY2chFYnW+Jau4ZYM1QZkCIJwGZLTer2kCK82+I=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=c1VgCSKGQBh+iAMw5GuDYrut9qyMNfroG5PgTJ/sKpQWZRe8/lAJxrGWHpHULd6fkl/Umo3OUb4UX7VssO9yOP4LXCqt3MW+HZnDZna8GwhUTp2oYCmBEvNJewwtZPOyEUW/4l3KHLis42PzseQKwnnainzN3wiuROOraMhgLDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp.bon.at (unknown [192.168.181.102])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4bRsFv5btXz7RMh9
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 08:23:31 +0200 (CEST)
+Received: from [192.168.0.106] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4bRsFl4J1XzRmwt;
+	Wed, 25 Jun 2025 08:23:23 +0200 (CEST)
+Message-ID: <be10d14f-d6f6-487a-b520-0bd56e5550e8@kdbg.org>
+Date: Wed, 25 Jun 2025 08:23:23 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6] gitk: add external diff file rename detection
+To: tobias.boesch@miele.com
+Cc: git@vger.kernel.org, ToBoMi via GitGitGadget <gitgitgadget@gmail.com>
+References: <pull.1774.v5.git.1749544174590.gitgitgadget@gmail.com>
+ <pull.1774.v6.git.1750755954011.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.1774.v6.git.1750755954011.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Am 24.06.25 um 11:05 schrieb ToBoMi via GitGitGadget:
+> From: Tobias Boesch <tobias.boesch@miele.com>
+> 
+> If a file is renamed between commits and an external diff is started
+> through gitk on the original or the renamed file name,
+> gitk is unable to open the renamed file in the external diff editor.
+> It fails to fetch the renamed file from git, because it fetches it
+> using its original path in contrast to using the renamed path of the
+> file.
+> Detect the rename and open the external diff with the original and
+> the renamed file instead of no file (fetch the renamed file path and
+> name from git) no matter if the original or the renamed file is
+> selected in gitk.
+> Since moved or renamed file are handled the same way do this also
+> for moved files.
 
-[...]
+In Git parlance, when we talk about "renamed" files, we always mean
+files that have any part of the path name changed (and not just the last
+path component). Therefore, this last sentence is redundant.
 
->>> v2 and this iteration both have all messages set as replies to a
->>> single message in the old thread.
->>>
->>> Please make sure in your future submissions:
->>>
->>>  - [0/n] is a reply to [0/m] of the previous iteration.
->>>
->>>  - [1/n], [2/n], ... and [n/n] are all replies to [0/n] of the same
->>>    iteration.
->>
->> OK. This means I need to submit with 'git send-email' in two steps,
->> right?
->
-> I do not think so.  Find description of the "--in-reply-to" option
-> in the documentation, and read about interactions with "--thread"
-> and "--no-chain-reply-to" there?
->
->     So for example when `--thread` and `--no-chain-reply-to` are specified, the
->     second and subsequent patches will be replies to the first one like in the
->     illustration below where `[PATCH v2 0/3]` is in reply to `[PATCH 0/2]`:
->
->       [PATCH 0/2] Here is what I did...
->         [PATCH 1/2] Clean up and tests
->         [PATCH 2/2] Implementation
->         [PATCH v2 0/3] Here is a reroll
->           [PATCH v2 1/3] Clean up
->           [PATCH v2 2/3] New tests
->           [PATCH v2 3/3] Implementation
+>     Changes sine v4:
+>     
+>      * Use a git command to gather the changed file paths rather than
+>        parsing the text from the diff window panel for efficiency and to
+>        avoid regex containing the filename as a variable.
 
-OK, so as a self-note; this is the default behavior (--thread and
---no-chain-reply-to) and the thing I got wrong was that --in-reply-to
-should be set to the Message-ID of the previous revision's cover letter
-(in my recent submissions I had kept the message ID of the original cover
-letter instead). That's also explained in
-documentation/myfirstcontribution.adoc.
+An earlier round parsed the rename information from the patch text
+panel. I argued that it should not be necessary, because the file list
+already knows how to scroll the diff text panel to the correct section
+and should already what was renamed. It turns out it's not that simple.
 
-I'll now send a v4 fixing the white space issue, making sure to
---in-reply-to=$message-id-of-v3-cover-letter.
+But I still think that this information can be leveraged for this new
+purpose and that it is not necessary to invoke an external process. At a
+minimum, it should be possible to parse off the rename information from
+a smaller section of the patch text, because we know where the section
+pertaining to the file of interest starts. Look for uses of the variable
+'difffilestart'.
 
--- 
-Thanks,
-Maxim
+I think that the goal of this patch can be achieved easier by parsing
+the patch text panel rather than parsing the output of another `git`
+command. I'll still comment on the presented solution just in case it
+turns out we must invoke `git` anyway.
+
+> +    set renames [list {}]
+
+This constructs a list with one element that is the empty string. I
+assume you meant one of these:
+
+    set renames [list]
+    set renames {}
+
+> +    if {[catch {eval exec git diff $rev --find-renames --stat --raw --diff-filter=R} cmd_result]} {
+
+A few things I have to note here:
+
+- Don't use porcelain commands, use plumbing commands, i.e., `git
+diff-tree`, `git diff-index`, and `git diff-files` instead of `git diff`.
+- Place non-option arguments after all options.
+- Why use --stat?
+- --numstat may be easier to parse than --raw, but see below.
+
+> +        error_popup "[mc "Error getting file rename info for file \"%s\" from commit %s to %s." \
+> +                            $filepath $diffidfrom $diffidto] $cmd_result.\n\n"
+> +    }
+> +    set filename [file tail $filepath]
+> +    set esc_chars {\\ | ? ^ * . $ \[ \] + \( \) \{ \}}
+> +    foreach char $esc_chars {
+> +        set filename [string map [list $char \\$char] $filename]
+> +    }
+> +    set regex_base {\d+\s\d+\s\S+\s\S+\s\S+\s+}
+> +    set regex_ren_from $regex_base[subst -nobackslashes -nocommands {(\S+$filename)\s+(\S+)}]
+
+This regular expression wants to parse the first of the two file names
+that are on the output line. But it assumes that the second of the two
+names cannot contain spaces: '(\S+)'. This is not a valid assumption.
+
+Note that the output format of --raw is very restricted. In particular,
+the file names are separated from the rest not by space of any kind, but
+by TAB. A much stricter regular expression can be used. But still, TAB
+is a character that is permitted in file names, and the regular
+expression could match still match incorrectly. You can use -z to
+separate the parts with a zero byte in an unambiguous way and split the
+parts without a regular expression.
+
+> +    set regex_ren_to $regex_base[subst -nobackslashes -nocommands {(\S+)\s+(\S+$filename)}]
+
+I don't understand the purpose of 'subst' here. Is this not just
+
+    set regex_ren_to $regex_base{(\S+)\s+(\S+}$filename{)}
+
+> @@ -3805,8 +3847,16 @@ proc external_diff {} {
+>      if {$diffdir eq {}} return
+>  
+>      # gather files to diff
+> -    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+> -    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+> +    set renamed_filenames [check_for_renames_in_diff $diffidfrom $diffidto $flist_menu_file]
+> +    set rename_from_filename [lindex $renamed_filenames 1]
+> +    set rename_to_filename [lindex $renamed_filenames 2]
+> +    if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
+
+This expression doesn't follow the pattern that we see elsewhere, e.g.,
+in the context below.
+
+Please lose the redundant "_filename" in the variable names. In this
+context, it's clear that these are names, not indices or somehthing
+else. Also, when you look around, you notice that we normally don't use
+the underscore in variable names.
+
+> +        set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
+> +        set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
+> +    } else {
+> +        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+> +        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+> +    }
+>  
+>      if {$difffromfile ne {} && $difftofile ne {}} {
+>          set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
+
+-- Hannes
+
