@@ -1,92 +1,92 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 611B12676DF
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C630527FD71
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:07:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750867635; cv=none; b=ayrivJROU4aHTRBR9QPDo4at9T3fmmQEaPteF7I5PRFpVTjXlv9puZDT7Fx1ilGfUrttSf5AtFpc5fTGLDmjO3aIibeyTarswvS0O+RIySQM4ctZFlKkfJnBlPLpbmSaCA4s2NDtAmqmLBmaaCQzwt/lscIZJP3DJORcvNFez/E=
+	t=1750867639; cv=none; b=cDcLy1z7mTzqK/K7I+4aeqrf6M3h7X+ukE8rgg2GThbpsj7c+BX9tsvcSYnqnd66mDEIpU5FLOi1cVEkSwi6atv6wphQkIKdpEg85aIR5VYgTL9zZ+dfzaeWOJV10UoOAiOlTuzD7K5/exeWuQCGZ5Uv2zBBAKSfMmdhCBVDxiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750867635; c=relaxed/simple;
-	bh=nQPasC5WtVLaKKzaO4fllm/xo/xm10lQwt64uYEuj90=;
+	s=arc-20240116; t=1750867639; c=relaxed/simple;
+	bh=2AwkRe1d2wztDth8DUY9GynnPoyRqcNvd+vvw9bKjsE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jumKirBN7EBO6Np7/6uGC+6qKqKNmoOne+fWUjs6LpN8966msPyztk9HQ56gJFqVjo6XBxiCpnuWZ8miebOcHvpR82yLahm7qU+Q50xDCvucwIh9NX5KyeBX12hkM6QAKddnIJMpOTKCrEYdBK2MUim7/KtLc5Vab/EFedm/8zs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aIvG7pcK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DFu+KSv0; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=ffmRmciR8lnAihwG9cOPL+/6tRCYGHdjL9Vw27VmGkjSoXPyK333bRIe5dQzr/ymvQjOz3tQOoR9yj7pj3kCYso+sxhttGqWXOx0KHMvcQpdg7yvOHCMcG7JP66kvUOUT5mI9L5J7xUmBRxM2gZL8UbAJVF4dVSLh3vbEXnK7zU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=O/K+27vJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kICJCAww; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aIvG7pcK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DFu+KSv0"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9248FEC00CF;
-	Wed, 25 Jun 2025 12:07:12 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 12:07:12 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="O/K+27vJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kICJCAww"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id CE1A6EC00DB;
+	Wed, 25 Jun 2025 12:07:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 25 Jun 2025 12:07:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1750867632;
-	 x=1750954032; bh=S6KkrEvfxAH9hKBnllPUkagjpbZwukF8tJbjZ7nJqbo=; b=
-	aIvG7pcK+vzHftJTMxDa1v4yQKXfk+3+YZSEfGQyYW605WsZeW0/+rJ4onuip2Kj
-	JlV7tyIK63ttH1Ygcj2/Ek3JKenbKpwV9ck6CVYfu7VX2cG6ydzojy3jS2Ji6V/m
-	sLK9PtvHlpLxaw9tWPZwbU4eIxaWKUMfRQX+ViQThwz10LoMmwqH8hQZ4ZjMLhsk
-	7P/VpeerU4RnwDx4ksV9xwfCsOim8r+o8XNdZ0FFUcSOP/JqCcjwA+SA9EwMHzX/
-	6hbdNlMfrNjXEx6X61rO7HDwQkJolBDMsUd4chDfceO6fntNgtmapY/KH5M+qsQW
-	wSti36aFv3RolYRVpfofmg==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1750867636;
+	 x=1750954036; bh=C8MXH9jjRlkfIJGlFETfweLgFXI+KEbbiyEcbEF+oWQ=; b=
+	O/K+27vJ92nRjDaQys4zHB0K8Sq0KB/KuYVdd9Afk84FuK6+z6bvKsqv6XqAaWjf
+	vZhfpnpZej6NtNKjlIrO8Xx32Tz7/VOXT1X27iMKKUTe9aN4N8KyT0h7DuLqiLn7
+	gY5LieNNMTfYBNRjfoFJ0NRPQQSWUCkISoK9c1/xkKPvKD8qYqPqvauSWmWZzG3W
+	1pAAg0GcyONTL4XOb3VSpgoEcWyNbplH/5Da+4ubdr8xtxiiMoaeNBafKAsesjNO
+	KymENgiEpRCM0WCnCUSFiMQoNlEktkdMosES0ZGktYNS7XdQHabXnlBG7CBT7Zeh
+	SfSLKkLdhKAYQuhUFhtKTw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750867632; x=
-	1750954032; bh=S6KkrEvfxAH9hKBnllPUkagjpbZwukF8tJbjZ7nJqbo=; b=D
-	Fu+KSv0/SVdZ2B+78lNRU3CZRVkEulu37jJuf6aKPjW0o/u0BXDqB3xvOEtZ8Ynr
-	vjvBIoQMLV8GzvI7978ROjddf56COX7msLcHSef7ecHKmTYQSX0pAoIESe0v1a4t
-	IItO7Rd7XLX4crzQX3INvHbkWxm1cZIahnbC7/ktVcfTvr0Dt1JlFfNvbT9KFvLT
-	nswAIwB0GpcGOC048yy1UXYG4oRNOqLWEf1cosImhXQW4zg8KLdE5cbAZ6GvHu5S
-	kY0RqNgs22574qrwEr+0RNtdjV/JrHERXliitdH4lLzMTX6YL0yrIAvPoMSrooJv
-	m2F7lzaS/2J7/D36+Tkcg==
-X-ME-Sender: <xms:sB5caHEfhJ8Fl1qjrKS63AdC_A1Ytz31KCGYBg0E6fs0EabrKIltdQ>
-    <xme:sB5caEUFo-EFQT8NUw4AOHnYtDzwL8Hjy2m7l-mkiiu-FCPyTVUif_JwM8UTgSJSO
-    29fibACMUo8qJTPVw>
-X-ME-Received: <xmr:sB5caJKUITIoOvGKwk5e-m4cxRMxzBuB7zKCeKf1A0k7LZONW78IWxjZE0cv-fwYE9lsxoujYDYmUGT-dHVXBqWAVKzKH-Au4yuzyls>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvtdcutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750867636; x=
+	1750954036; bh=C8MXH9jjRlkfIJGlFETfweLgFXI+KEbbiyEcbEF+oWQ=; b=k
+	ICJCAwwLlqLbOPi8LV05Y/SRj5O9GMn52paqvq94TGbYYQ+EgG6ZXKNm8baJoZxM
+	b12p9MMBm9N8VHS91ElbAySIGe8GN+YfdMNHSTkDAr+J38fmDGwtMwwDvEzxk0Yw
+	vK5s+FLUaPsGfDw+/EZvcV4QFLQHGulNfz8eUtesuRd6oGzqpglAN6uCx7paF4Lk
+	0byJsTo3URBAiJ/Bv6wbOImheXe5SxuXY1ZcomWDjJBc4OWlK6rkdCfsN9WEnSbe
+	J9GX6ywqwUgu5wT9wi8IQ1jVkJaVtHCIKdj3f11I3KPPp1YXgUMG/nVFhat9X7sB
+	sDJu5nPyGmJO78P0ajF3w==
+X-ME-Sender: <xms:tB5caNMRXX63M26ZRTmmtldJUGnNAEL5DMXb57l6yXvc10RXxJALTA>
+    <xme:tB5caP9EHhxvCeLpkmBuxNSgjl_I3ZEkF5BGXO3lEaGvv62MMeiixU9Nazd4FOsa1
+    Qn7CbsjQh9VUH1LlA>
+X-ME-Received: <xmr:tB5caMTSVN9c80RiuvVm1VkGQTTsiI5eQDMbjOaKoMN8aSrTzUR3RPnyVdvKDb3urEFyBcavMm6UBMrclZYRI7DP6-TXN4mgb1VxqCU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
     vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
     htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
     hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
     mhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtoh
     hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
     pegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishdrthhorh
     gvkhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
     ohhm
-X-ME-Proxy: <xmx:sB5caFHaQluVuy4ztk8qUtHZWOX54r6S8dyETcywOEBLGygAgbT9BQ>
-    <xmx:sB5caNV-i6i8XhBMNNSWWDC0d4a1AfY6ScKk3ETd3cArZprg8qmd0A>
-    <xmx:sB5caAP7mjozXfaqhzPbPCf5kPrGy-f7Yuhxwbe6uUm3-xg5PS2MAw>
-    <xmx:sB5caM0j46QiOjXdOTrcv-NgBbElyCull1KEpooSN83JyYYCYXj1gA>
-    <xmx:sB5caFn2oVzEr621-ueMCIDxpzeTz73CjvI-i7R7tPUCmnPhNTzBVoks>
+X-ME-Proxy: <xmx:tB5caJtBDdYHC4YQA9r2sZVcgbfA7kvrgdVvCihjnQEhxDoFIPTvfg>
+    <xmx:tB5caFf1vS2jkl1ytug_8jktPD1nH1oY3o-IUQVTA8W6sYbfcd-TUg>
+    <xmx:tB5caF08aEOZRdmdSXoy4QUDyDH8TygFmYynTjowmMjI6XojH2-EPg>
+    <xmx:tB5caB_T9hf-4nHyDV8dqJCzHOlfNJ6rcthHyn3MMMvfrimYyea7aw>
+    <xmx:tB5caCOeMAx2NGFvJKe2l96HzMavDvTch9fZRmr7a3P5rFazslPL2aLp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 12:07:12 -0400 (EDT)
+ 25 Jun 2025 12:07:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
  <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
  <carenas@gmail.com>,
   Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/3] daemon: explicitly allow EINTR during poll()
-In-Reply-To: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- ("Carlo
-	Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message of "Wed,
- 25 Jun 2025
-	07:35:25 +0000")
+Subject: Re: [PATCH v2 1/3] compat/posix.h: track SA_RESTART fallback
+In-Reply-To: <e82b7425bbc2540fa5ef3fd4584e6f902485d064.1750836928.git.gitgitgadget@gmail.com>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message
+ of "Wed, 25
+	Jun 2025 07:35:26 +0000")
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
 	<pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
-Date: Wed, 25 Jun 2025 09:07:11 -0700
-Message-ID: <xmqqa55vyfdc.fsf@gitster.g>
+	<e82b7425bbc2540fa5ef3fd4584e6f902485d064.1750836928.git.gitgitgadget@gmail.com>
+Date: Wed, 25 Jun 2025 09:07:15 -0700
+Message-ID: <xmqq4iw3yfd8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,44 +100,23 @@ Content-Transfer-Encoding: 8bit
 "Carlo Marcelo Arenas Belón via GitGitGadget"
 <gitgitgadget@gmail.com> writes:
 
->      +@@ Makefile: include shared.mak
->      + # when attempting to read from an fopen'ed directory (or even to fopen
->      + # it at all).
->      + #
->      ++# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
->      ++# prefer to use ANSI C signal() over POSIX sigaction()
->      ++#
-> ...
->      ++ifdef USE_NON_POSIX_SIGNAL
->      ++	COMPAT_CFLAGS += -DUSE_NON_POSIX_SIGNAL
->      ++endif
+> +# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
+> +# prefer using ANSI C signal() over POSIX sigaction()
+> +
+> +AC_CACHE_CHECK([whether SA_RESTART is supported], [ac_cv_siginterrupt], [
+> +	AC_COMPILE_IFELSE(
+> +		[AC_LANG_PROGRAM([#include <signal.h>], [[
+> +		#ifdef SA_RESTART
+> +		#endif
+> +		siginterrupt(SIGCHLD, 1)
 
-The new symbol sounds like "POSIX does not have signal(2) but on
-this platform we have a usable signal(2), so we use it here", but I
-do not think that it is what we want to say (as POSIX inherits this
-from ANSI C anyway).  More importantly, this "USE_X" sounds as if we
-allow builders to set it and magically we stop using sigaction(2),
-which is not what is going on.  We have tons of calls to both
-signal(2) and sigaction(2), and we turn calls to signal(2) we have
-in daemon.c to sigaction(2) but on some platforms their sigaction(2)
-cannot do what we ask it to do, so we are stuck with signal(2) on
-these platforms only for these calls in daemon.c.  It may be obvious
-to those who develop and review this series, but not for anybody else.
+This is curious.  What is this #ifdef/#endif doing that does not
+have anything in it?
 
-Isn't the situation more like:
-
-    We use sigaction(2) everywhere and have been happy with it in
-    our code, but this topic discovered that on some platforms,
-    their sigaction(2) does not do XYZ that everybody else's
-    sigaction(2) does, so on them we need to fall back on the plain
-    old signal(2) on selected code paths that we need XYZ out of the
-    signal handling interface.
-
-What is this XYZ that describes the characteristics of
-signal/sigaction implementation on these platforms?  A name
-constructed more like SIGACTION_LACKS_XYZ (hence we have to resort
-to signal), possibly with a more appropriate verb than "lack", would
-be less confusing.
-
-I think the topic is moving in the right direction with cleaner code
-than the previous round.  Thanks for investing time in it.
+> +		]])],[ac_cv_siginterrupt=yes],[
+> +			ac_cv_siginterrupt=no
+> +			USE_NON_POSIX_SIGNAL=UnfortunatelyYes
+> +		]
+> +	)
+> +])
+> +GIT_CONF_SUBST([USE_NON_POSIX_SIGNAL])
