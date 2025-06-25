@@ -1,148 +1,131 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D0C7F9
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 00:07:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3581A800
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 00:24:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750810078; cv=none; b=b7VgWSG3A/+SndSCQ9ht+EVCk/UwubGGwFRBTAVfrKfGQ7Fm0LSAItaKzbglF+qErlp7k1eOvzNCIyhgqZLZ179bQmQdCNA3+qDAOjHoqUz/y0RyRptKgpq0Yy1aNUIcbvKLQf1IuvyRUKx53R5xF3bZJbwcj763Rcsda5Dp9ms=
+	t=1750811103; cv=none; b=GcmO0FzrhjlTPGXs6x8btgFhCu7y0ElRYoSyBRUrE+KXhXvfwM/Toxug+91YiYSqEuofl7wcuuKzmiW2oYIVfBgWL1yT+pete6LuUtuU7xZ0xuzizkFn91vlPk7VT8ksp7NvD3/brEKExd2i9NeT6n+BCcvIRFUJ0vQFqbUPKhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750810078; c=relaxed/simple;
-	bh=gnwTG/+eo9SxWVJKhvkxDGvN90nunfqN7wWEdMpfDLY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qHBrm5UBvFkkJqPQ0gUteDBaZMs1K0Fdv8pReimFUfPOiSnikgr8nYYuaj6eWsJ7LzShnW8pWyPbD/XA0XnQa9ZV/Con0j/Sc+gBcPi26fd8zKTZOzabpANk22roPlne/eOOGf0kyGuSo4j7dd04lLprX4Sg7SxGhH9Z75vu/qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MuzTeF7K; arc=none smtp.client-ip=209.85.210.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750811103; c=relaxed/simple;
+	bh=7DpLD0IO2ZFSYg/hS1Es0yDlYb8cWaD8SgdPceBHvDQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=atOLVJGG8k0tIJz7Z9+N6DBYev5Pio11sHFme2eIN6ilaFlDj19ajb13HKL+UcloYxoobuMMJJBr9VKZEVhej6ZFNZz18sy8ggimBl+yXcVEcStMtfT0kGTXDxVgOvKRARkPVJD8vNqefE8Y2OTbLuy2oO81sKjRhBAW1/zjYzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ne5q1n8S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dAfNyKxF; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MuzTeF7K"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-73ac5680bb0so299053a34.3
-        for <git@vger.kernel.org>; Tue, 24 Jun 2025 17:07:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750810075; x=1751414875; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=MalwcVJO/7jgzmK7OS3zOXG8HyPGTcM1nbJZufXVS0M=;
-        b=MuzTeF7KghDT7K39xR4qU6Llqd3EhQj6bBLpi2d8RBsLRh4hthr80GEJnULtiOVqK3
-         6+NDDLSAAXxVH+zbN96aRE/iPPFyNvEsUTqcI/hJr2juyMHKov7kHtqHxXTRNwXrgpPY
-         HT2PTyHVbqVX3Mou0n3w0VtE/uDzMOjbpWcjqu5xfFD9AMTqCI+hMZyHsmn/JEjt/vwY
-         8PMqLBWiz6QGTSrYvZuOOxQzx3Q4anKUox3K7rQyUUC9KuUbGAKaT7pDlPa9noAXqvpW
-         pLGvUHAe12paLSm/YBndBFTXYtHpw3L8MRCnihrAHqOuJEICWfClHz3eFErmZ3/Hl6U7
-         IHqg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750810075; x=1751414875;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=MalwcVJO/7jgzmK7OS3zOXG8HyPGTcM1nbJZufXVS0M=;
-        b=GIpm5bR9IJB1UAlxLs846+XyTutfU0ArG1Lp/g9ayrX+PmNu7EQibeZG2Wg3VR7RMN
-         pV0Eb9+mkVx62bbOr5qv+zOvOI8QxTH5Eci+eBTzre0dIGma1tsOG8zX9T7YLZYxasX3
-         +PUpQQt+tptTZs75Au+cMzLt85FeF+ZKc4jPDHJpM+fCoqEKpRrvEkSVQMnTX9ok1Fvl
-         RsqPQ5HV9yHHfY0fhotB52jBK7qi3J/8tsdkf3cuWvG1QGE6AIA5BYPkXArBSd6K8xsK
-         dSFC7LQ/WzCO0z98+o6ciiIb89hFIWbgNq4OW6K1phPXdzDEvvdFRfyCQi3aU3sjLHf9
-         gwAg==
-X-Gm-Message-State: AOJu0Yw0PxbEg+NrlP+o6CggXF10gb+t7fDnVj4Gm7W1FSsa1+oA9W8G
-	VmWVlZQArEN/DIAJM7l7qurridKkYySaHNzM1KqoBD7vtWZiGS6diDAR
-X-Gm-Gg: ASbGncsMcglRmTB0JapbV7bYo2MoGwN+jMpsAw/6+2CKq0yconHLVm83c1SRjjuO+yt
-	NFixM47wVDptTdeezfdlaOqUr3tu9NKzF+Ido62ctmpPpaCjaaUCml2S5dXUf4Rb5Cx/AoCMMuP
-	OsITVuEEAa7SaElnHrtLz2w9CleGGVL7viiCdHjFf+udaG+xJv9nPQhpzThvsQUuniB//cSzD9k
-	oMSkJoP7Qkft8WHqXv7GvZTKSa+oHR0Q7dptS1jPB1TBGlgo/JGqk6GgdCtOnz5TJUbaqFduwOX
-	QGhsHqadrXLDqzLELIrtfp5uE9hyEdpy8tXH5jIUMjX1pdk1baWhUWQ=
-X-Google-Smtp-Source: AGHT+IHC91WqFuw8JmdaePbJxP+XF+AxqvAahb8kLfKrRaZHzSzNbDOiSD13KbiQ2da5j93lpw3mqA==
-X-Received: by 2002:a05:6871:4409:b0:2d4:e96a:580d with SMTP id 586e51a60fabf-2efb21a6c66mr912711fac.16.1750810075451;
-        Tue, 24 Jun 2025 17:07:55 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2ee66559d90sm2304992fac.12.2025.06.24.17.07.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Jun 2025 17:07:54 -0700 (PDT)
-Date: Tue, 24 Jun 2025 19:02:39 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/2] test-lib: document test_seq's "-f" option
-Message-ID: <k7znp2shqtfpuwpuzmku7o6txi6lph5kjwo6tsrszh5fzv7i2x@2fmrwxxpsify>
-References: <20250623105516.GA654296@coredump.intra.peff.net>
- <20250623105625.GB654412@coredump.intra.peff.net>
- <oai7p5xmq3q7c3ovdpmbyimoidvgw4lhxfd727qdid5ulcdn3n@7n6vqa6wn3pe>
- <20250624101124.GB636332@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ne5q1n8S";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dAfNyKxF"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 462DA7A01DA;
+	Tue, 24 Jun 2025 20:24:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 24 Jun 2025 20:24:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1750811099; x=1750897499; bh=WPqeKRw0RD
+	dGdAqnFeGEG1lSJUUjD2impOzorS5ISBg=; b=ne5q1n8SXaFelBVaiMNfPDlyG1
+	ey+Oq0hT2gJyThv3ExeQQG1YSgnKm4i0PJLikeWDBkkbLKtZ1zq8WBWCTg0uhsAa
+	ycTNakxc7prKXFnzDvgoihvNTJ/1Rlz8Wzgc44hL+2YNz7kH6GWaxYykIjhUEwH8
+	YgjcYfIhOWKYwGrpIZe6Ms6xik9t5D81FkhtUcredJ+brnSCVR9jwJCTbEHkNNyn
+	xZTJmYzpOkAXsO2j/LEaPpITsA53xzrQ+vjhmzBC6Qw8aJ0OkkEHAZtX4aF7C5sa
+	oyGRAb4CWohK2kiKnZlVtPswwq5qkBFwiMmzdSni8phGEyQnoXATOlK0ZKRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1750811099; x=1750897499; bh=WPqeKRw0RDdGdAqnFeGEG1lSJUUjD2impOz
+	orS5ISBg=; b=dAfNyKxFefdHZ0jnRXdg6miizs73H73crlis+7tbDgRrzP7dlAY
+	2gKO6rKQ07YRGVGXDA/s7vYzpNbFYqUXDoiQhLKTXnQQrQOyHTY6BH9PLeJzSt1r
+	uYzIktqBB+vPuR+BUGCak2fXT7CO5oAk0Dv6uHuMJwAMRcqNoGdSdi85Gd6hy2Fu
+	i/+JCWbQPNeUkUaHvFyNuRG1m0hKISZHt4UXsmrLhW6GG615fwaGBxj3qEA0LSq5
+	2O+j28RnaMFKIKe1a28OUhrMmAesrS1g/hk68mjAL2FlpYGNKcL7N2TRwmd1Sjh4
+	hafrjlDhm0kMXJaxkP1tBugVujGso28HkuQ==
+X-ME-Sender: <xms:2kFbaCIuhGmBmvYZ91cYNNqMsX3YrDj-gfLNdPUOsLXNEsXgk1Lf1w>
+    <xme:2kFbaKJMCPoPn-b8OUCzf0ptCI-wfTLYjHxcCCol737xZSjgHYIbfxAiP_pRHy0IE
+    BAjoW9hVgojyz2UXA>
+X-ME-Received: <xmr:2kFbaCuFGgMByoLYPXxiDSMC03brDlJFFTU5LVEq0N2mDnrmIEBiGxYqPatGwK7NK2fsqlEe2Dm9Heq39iLb6jtC6KKYOraPMkz0i9A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvudefvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmrgigihhmsehguhhigihothhitgdrtghoohhppdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehstghh
+    figrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestg
+    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:2kFbaHbBdnhB5EnyrCxcQgvDH9k09w-2RIVv9nNn6zvY9bSs7Iiq4w>
+    <xmx:2kFbaJYnbOWk9iDhzdpxK2qksHaIOWbS37rtjaZsMIj2Fb-sqq04iw>
+    <xmx:2kFbaDA7zO1XoBGi0Qvryd0gR-Pld-SP_pVYcgUk9KF37-CM2d-02Q>
+    <xmx:2kFbaPbk_19h_m_hc-efdIrXDUR-aZhphcv7zWqyOVOGK0oNECyxzg>
+    <xmx:20FbaBlEii9G7Snd6F3be6vGsOgu24kwj3G4GFeIgBpYVjkOvqNNWOW6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 24 Jun 2025 20:24:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Maxim Cournoyer <maxim@guixotic.coop>
+Cc: git@vger.kernel.org,  Andreas Schwab <schwab@linux-m68k.org>,  "brian m.
+ carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v3 0/3] git-credential-netrc: better symbolic port names
+ support
+In-Reply-To: <87ikkkk84f.fsf@terra.mail-host-address-is-not-set> (Maxim
+	Cournoyer's message of "Wed, 25 Jun 2025 08:55:12 +0900")
+References: <20250620041239.27839-1-maxim@guixotic.coop>
+	<20250624014857.3748-1-maxim@guixotic.coop>
+	<xmqqecv915y7.fsf@gitster.g>
+	<87ikkkk84f.fsf@terra.mail-host-address-is-not-set>
+Date: Tue, 24 Jun 2025 17:24:56 -0700
+Message-ID: <xmqqikkkzmzr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250624101124.GB636332@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On 25/06/24 06:11AM, Jeff King wrote:
-> On Mon, Jun 23, 2025 at 11:25:20AM -0500, Justin Tobler wrote:
-> 
-> > > diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> > > index bee4a2ca34..8c176f4efc 100644
-> > > --- a/t/test-lib-functions.sh
-> > > +++ b/t/test-lib-functions.sh
-> > > @@ -1454,6 +1454,13 @@ test_cmp_fspath () {
-> > >  # from 1.
-> > >  
-> > >  test_seq () {
-> > > +	local fmt="%d"
-> > > +	case "$1" in
-> > > +	-f)
-> > > +		fmt="$2"
-> > 
-> > With the `-f` option, the default format string gets overwritten to what
-> > is provided by the user. Makes sense.
-> > 
-> > If we want, we could update the comment above this function to mention
-> > this new option.
-> 
-> Good point. I didn't even notice that comment!
-> 
-> Perhaps we should squash this in? I don't think there's any need to keep
-> it as a separate commit.
+Maxim Cournoyer <maxim@guixotic.coop> writes:
 
-Ya, that seems reasonable to me.
+> Hi,
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> [...]
+>
+>> v2 and this iteration both have all messages set as replies to a
+>> single message in the old thread.
+>>
+>> Please make sure in your future submissions:
+>>
+>>  - [0/n] is a reply to [0/m] of the previous iteration.
+>>
+>>  - [1/n], [2/n], ... and [n/n] are all replies to [0/n] of the same
+>>    iteration.
+>
+> OK. This means I need to submit with 'git send-email' in two steps,
+> right?
 
-> -- >8 --
-> Subject: [PATCH] test-lib: document test_seq's "-f" option
-> 
-> The previous commit added the "-f" option, but didn't mention it in the
-> function's documentation.
-> 
-> Suggested-by: Justin Tobler <jltobler@gmail.com>
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/test-lib-functions.sh | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/t/test-lib-functions.sh b/t/test-lib-functions.sh
-> index 8c176f4efc..6230746cc4 100644
-> --- a/t/test-lib-functions.sh
-> +++ b/t/test-lib-functions.sh
-> @@ -1451,7 +1451,12 @@ test_cmp_fspath () {
->  #     test_seq 1 5 -- outputs 1 2 3 4 5 one line at a time
->  #
->  # or with one argument (end), in which case it starts counting
-> -# from 1.
-> +# from 1. In addition to the start/end arguments, you can pass an optional
-> +# printf format. For example:
-> +#
-> +#     test_seq -f "line %d" 1 5
-> +#
-> +# would print 5 lines, "line 1" through "line 5".
+I do not think so.  Find description of the "--in-reply-to" option
+in the documentation, and read about interactions with "--thread"
+and "--no-chain-reply-to" there?
 
-At first I thought it might be nice to mention that only format strings with
-a single specifier are supported, but I think this can also be implied
-since the comment mentions the format string follows the printf format.
+    So for example when `--thread` and `--no-chain-reply-to` are specified, the
+    second and subsequent patches will be replies to the first one like in the
+    illustration below where `[PATCH v2 0/3]` is in reply to `[PATCH 0/2]`:
 
-This looks good to me :)
+      [PATCH 0/2] Here is what I did...
+        [PATCH 1/2] Clean up and tests
+        [PATCH 2/2] Implementation
+        [PATCH v2 0/3] Here is a reroll
+          [PATCH v2 1/3] Clean up
+          [PATCH v2 2/3] New tests
+          [PATCH v2 3/3] Implementation
 
--Justin
-
->  
->  test_seq () {
->  	local fmt="%d"
-> -- 
-> 2.50.0.399.g566d3d7b27
-> 
