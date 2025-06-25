@@ -1,86 +1,90 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B58F27F747
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C00B28C868
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 17:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750870173; cv=none; b=BVFxiXHBAm8AWLUS6QnEtIPkqfdIugnK8/p1kp4kpugIaaIXCqHQuEog9333FsXIrPEoZ1E2mTebQF5JqMPyAxv3Iu+QIW7eD3ehTtERv4693IuzOUIedH/j61gacWNo8KHXbMLjh/9Rmpu1t5gldqWJc1bLbfsb25THgBOjUvE=
+	t=1750871116; cv=none; b=hqD0oTyKkC/TKxuMZ5LyC58TRNd+lugKc2eeQ2yHEzfdk5ksgGRGj+ReqAxA4WLL3xPbl//5dEeqZWbdsrmOh5R1Xw9qFmVYrE6Ek09Y0C+46YZAq1V5PsyfksInSnIA2Sbv9JuLHICrqgWWrXzuZmuZ8Ehe5jr1nF6dY+Mr66k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750870173; c=relaxed/simple;
-	bh=SWAYsHSqhCpYRtzuGhjEJ3G0qukrvG/UJkEFR+EbMPo=;
+	s=arc-20240116; t=1750871116; c=relaxed/simple;
+	bh=ZGw/7aD4IF28ck9xhQzb3lqNujsANifopyRq7HtryDA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ddJyxQqoOVPLo8VQK3kbsEha3bjpdrcGZlbhNXLu6W71oIv42qZrb1iKHeJuAUSUyo6ZvK5Nv9oZGh6MBJLfJLr56dssQj4zdSIcM/BagZaJfbEtQX/94pLqPGvdz3JHecnyAJkwunu+IiHpWoLOgsiGXp3VmMMEDWzITMSAZ3c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k9KeJQa4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iYaQU0BP; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=Jhk8WYP/c7j7RqJQG8zpqJpTqYkB8eMpQA/exv1Tu2fcpRi6xI99nCsKW1YF7O2Q/gDXSQgJeOO31LCBuygp/eKc95UPUwhH8u2pAeZ4h+QChgCqsvoIbRv9fHU6pUElfrvAMlSRkV7w4y9pDxsdrJT+99qhAHy9e16zv1CyuhY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=qaTYHDpE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RQRsp3Os; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k9KeJQa4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iYaQU0BP"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 809EF14000FC;
-	Wed, 25 Jun 2025 12:49:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 25 Jun 2025 12:49:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="qaTYHDpE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RQRsp3Os"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 72C21EC016E;
+	Wed, 25 Jun 2025 13:05:13 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-09.internal (MEProxy); Wed, 25 Jun 2025 13:05:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1750870170; x=1750956570; bh=DInq70hh/G
-	opTLpUQW4v7k01uyrVQJEqThvi2EETGAQ=; b=k9KeJQa4XUxL5rHi/7ZBJCbQP5
-	DP8VXv44Ss/V4VWinexQtG9npojUiq8Eo/kHXoaKfvTbNTz7bEk4maCJCL2Ag4OX
-	HDsuVgh/GFidbMGqd0d7IL8/4yWH/yt88Gg9L6lL1vYtCQGyphq7HQMayycgRmOH
-	ij3BVT3xW18CebaohIra/tjm7fpGPsU/LFmwg5Z6gkFBbNSUpbVa5Y2tUNCvYQai
-	thEr2f6pt0xiTseSBxbQwW/A9bJArlehIHRqjWaOMykVEm4ebfggO9Rt71jjKfkD
-	EyVwsBkKVxOXI8qVipRFRn+gB/XEg3zVHHSzki4pR1PAQNzEt7AmHe2jMVHg==
+	:subject:to:to; s=fm1; t=1750871113; x=1750957513; bh=qpf8r8QejN
+	2IXovqgjcP0fI3M087K9wsL4de11l3GvQ=; b=qaTYHDpEC6F9sri65p1u45VzCk
+	zwtP8vE/gWWDOst722CsxykDRM0bfeJnT1g98lFc5xnTsmTXjvxidw6o6Eod8Ouo
+	jVwErcIaTQmrNr93pljWTtX8E3NGMfGzsEtrVh93EuOjeWD6uPxwXbtl5xlQqlhS
+	Ueb3Zg+B+RNCqKRZ51nwaGFRlWCuuIyBgy9c7isvbdGNVqEzpTPNmjQkCvaSEhNZ
+	m7EAG1w7sB8Sq/fVNcI1jXXyfVeg4od5LmuPoFaoXqEBegGoSWo58mZDUDbOdrdB
+	VTDB87c0hjHwDeI6ZQs2dwuaYzkrUqGOBP7bGFYfqI+M+eAqh+r8L+bsRgnw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1750870170; x=1750956570; bh=DInq70hh/GopTLpUQW4v7k01uyrVQJEqThv
-	i2EETGAQ=; b=iYaQU0BPF50bDvWWCyhvSkYAu7pBq4IqRAUVDHSyB2uCCNzb1RU
-	S95xGq/RJPKfoq4fJ9RRK+7NPqdRIGIuxwm4k25aDF1p4q0DTiWg7H5AMRsaXV+P
-	VtjXutxMudCsHK77ebtDHSwjCkIjRlgfmHW16SpAEx3Nw7bM/B33coO1tlc52E/b
-	XDFFuIEl1+rUmaENYRIXdUWl2Qiw74rUP+R+IK6w4NePjrqv7ylt2GUAcVo14tId
-	TP27IniM8CHW5o+/8LPRevyO98+XrcT28vIwzEGGA98U5uyO3YAnKCNEEbqmBgTi
-	n1O7kcdLv/59BeL8hrC5paUQfjPANap6eRg==
-X-ME-Sender: <xms:mihcaDYH-SSe7WNl-bEha5gEs_SRftKtoHsb2w8onZtWQjM3Tpt3lw>
-    <xme:mihcaCayQDwX0AW76OnEl0MpIyrs4x-3uvKyE-CAROcWDb293_8NjHZ7Yh0FvexXu
-    b4YHZnEAwfNXnFcig>
-X-ME-Received: <xmr:mihcaF9WAu6t8oFOBJpwnl0kYBdpm_lN4SQyh7BFFNuV8TpdZdTC7prjhpKvd7SMgJMI5JterEi--_8uIaNOPEqN0vKdLPF8wzAmQjY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvlecutefuodetggdotefrod
+	1750871113; x=1750957513; bh=qpf8r8QejN2IXovqgjcP0fI3M087K9wsL4d
+	e11l3GvQ=; b=RQRsp3OsFKRhEQ7MViIJgqi2wAdEMq2c5eYTzrRt0eSYyFg37BN
+	PDnlp3qDxrzqK67NDlMJAHdJouD9y+TyIInFacE/tCHhoiYaNAD6nRLfRIll6NR8
+	2wBkufo2kpK+HvGHhLMLurW95ZmfZSkSPiMSplj6tmG3W8mK7vZp8LU0OrslNaYT
+	oAQLibk7Av54UNAec+WvtcGFDLK6z0mPlhPvHfrIIk/FhYR4+ga/l7HZyFlb7rjd
+	AhGrPHKjY/Shyzp/F7M229f97l4NyBtNI6mXyXgT8UP9wvvaNiWg3Dfyaz0Mxr23
+	d+E8iPGaSnrGPMq4CcjOgAK5+vnLqU7tZlw==
+X-ME-Sender: <xms:SCxcaHyM8KETZKMzWaqVxpMKq91g-jYVAZfI02w1yH_tpa6ilqkLlw>
+    <xme:SCxcaPRU6WOICb0xzI4FfhqlEV8HUpsEBvljZr8Ws0pfxCdI63JdWu-9f-eW0iZol
+    TyaJ4oT8gbgQzZURw>
+X-ME-Received: <xmr:SCxcaBW8_Az9MKoG8kScsAx4cM_kXPrUx6fvkxubCGRmooOLCbsOPVVH4hMHTjUGwcK_2UvOxr4UasXeFLlpoUJGkH9aWvPByM00coo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfeefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmrgigihhmsehguhhigihothhitgdrtghoohhppdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehstghh
-    figrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepshgrnhgurghlshestg
-    hruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:mihcaJqMD7cASax6hgkKHcTaqEnhTOwgvmZaD1V8Ojx7JrVoClpgrQ>
-    <xmx:mihcaOr9LFC7LyMuQ-PAPjvCxg_rwHWgRGBw3ldvlPlVsrH_I0EQDA>
-    <xmx:mihcaPT05g9X8QKd9rEKOKNCh-GHoAEGp7YZ5VOBhoE4nopBim75MA>
-    <xmx:mihcaGoV9yA5xZKpQ_RRNLobOrtlpS3xtKri94zF2BCns-761cs0nQ>
-    <xmx:mihcaP3oUV-Ahq2xF605k8cnqGTpxxylZsDGSCsOJrubhS3kDrZYMH_G>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstg
+    hoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:SCxcaBhf1naXGaF5TAUv-24ZtZKb2hbYwHIPgU46GLKeN23HmIWr3w>
+    <xmx:SCxcaJDRGelISmutmAIpUdqJSHnEhpu1PBOnZuA1zBHfWBWlq3h8rA>
+    <xmx:SCxcaKI27APT_alPkI7O9Hm_ivGTwH7gZUeChHqG7iQ8Qeb2UElMsA>
+    <xmx:SCxcaIBgnjDI_fyVRzOkGonPEKPGVW1wU1DBySw75Gcox7I1Jge0Lg>
+    <xmx:SSxcaO8svHFKm2RBIjhtq_U4MrwTbYiuyWl43ah30k0z-8w_HMp4xdSO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 12:49:29 -0400 (EDT)
+ 25 Jun 2025 13:05:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Maxim Cournoyer <maxim@guixotic.coop>
-Cc: git@vger.kernel.org,  Andreas Schwab <schwab@linux-m68k.org>,  "brian m.
- carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 0/3] git-credential-netrc: better symbolic port names
- support
-In-Reply-To: <20250625142511.28857-1-maxim@guixotic.coop> (Maxim Cournoyer's
-	message of "Wed, 25 Jun 2025 23:25:08 +0900")
-References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
-	<20250625142511.28857-1-maxim@guixotic.coop>
-Date: Wed, 25 Jun 2025 09:49:28 -0700
-Message-ID: <xmqq1pr7wyuf.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 1/5] promisor-remote: refactor to get rid of 'struct
+ strvec'
+In-Reply-To: <20250625125055.1375596-2-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 25 Jun 2025 14:50:51 +0200")
+References: <20250611134506.2975856-1-christian.couder@gmail.com>
+	<20250625125055.1375596-1-christian.couder@gmail.com>
+	<20250625125055.1375596-2-christian.couder@gmail.com>
+Date: Wed, 25 Jun 2025 10:05:11 -0700
+Message-ID: <xmqqv7ojvjjs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,36 +94,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Maxim Cournoyer <maxim@guixotic.coop> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> This revision fixes a single white space in a new test added in 3/3.
+> @@ -414,11 +439,15 @@ static int should_accept_remote(enum accept_promisor accept,
+>  		return 0;
+>  	}
+>  
+> -	if (!strcmp(urls->v[i], remote_url))
+> +	if (!p->url)
+> +		BUG("bad config_info (URL is NULL) for remote '%s'",
+> +		    remote_name);
+> +
+> +	if (!strcmp(p->url, remote_url))
+>  		return 1;
 
-The contents exactly match what I locally have (as I fixed up the
-previous round locally before you sent in this iteration).
+The code seems to trust string_list enough that once an earlier call
+to string_list_lookup() in this code path finds the entry for the
+remote_name, item->util is assumed to be non-NULL and points at a
+valid promisor_info instance.  But it does not seem to be defensive
+against p being NULL, but it does so for p->url being NULL, which
+smells fishy.  Once promisor_config_info_list() reads the data from
+the configuration, do we ever update the contents and the risk of us
+corrupting p->url while we are running is great enough to warrant
+being defensive?
 
-[v4 0/3] does not look like a reply to [v3 0/3], though.  It has
-these header lines
-
-    Message-ID: <20250625142511.28857-1-maxim@guixotic.coop>
-    In-Reply-To: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
-    References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
-
-and refers to the message in the discussion thread of [v3 0/3] in
-which you said "I'll now send a v4 fixing the white space issue,
-making sure to --in-reply-to=$message-id-of-v3-cover-letter."
-
-No need to resend this round just to fix the threading, of course.
+My inclination is to suggest removing the check and BUG() here, but
+I may be missing something obvious (like "p->url gets NULL'ed out in
+this function, but then such a remote is never checked with this
+function because such and such logic in that function").
 
 Thanks.
-
-> Maxim Cournoyer (3):
->   contrib: use a more portable shebang for git-credential-netrc
->   contrib: warn for invalid netrc file ports in git-credential-netrc
->   contrib: better support symbolic port names in git-credential-netrc
->
->  contrib/credential/netrc/git-credential-netrc.perl | 14 +++++++++++---
->  contrib/credential/netrc/test.pl                   |  8 ++++----
->  git-send-email.perl                                | 11 +++++++++++
->  perl/Git.pm                                        | 13 +++++++++++++
->  t/t9001-send-email.sh                              |  7 +++++++
->  5 files changed, 46 insertions(+), 7 deletions(-)
