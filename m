@@ -1,137 +1,89 @@
-Received: from mx0a-001ed902.pphosted.com (mx0a-001ed902.pphosted.com [205.220.162.87])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2544D25BF0D
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 11:56:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.162.87
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820A51E492
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 12:32:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750852593; cv=none; b=D/lYGxbaSWzyDqtimx7r6yxrND0UtREGC42yiWScnqu3r8oXkboIRPIlMNVIB2SGZKevyMPw77CbB8PzXtjASpFFgq7z2NOokggv4dqDKSVo40CUq/VuM8eyLaVW8Uan1GTCP09+z1iBXx00FY2zFqRGyFjCEVZEAQoZHr4Rlfk=
+	t=1750854741; cv=none; b=ERYXEefe0VRU1/XwPq0mxeOAHETY3PTPT5Defr24NHkZ0o/4vd9sHfZgLTze105fOBC7A4KiAfHM4NFuBaNdCsZxLJHFXerUXNRpOsmMQ9eR4LrunPuRLnzUfHvkMMXnaRqHfgsQfX4TiOBjxXZcEe7M6DU8PX+NLbZbJjZ6QZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750852593; c=relaxed/simple;
-	bh=Rhz46HmXdTmyUhVF81k3gpWqy2kQT1T7gQpckOS6LaM=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=hrZvLxUddYyiCcM6tuFL+D4YahRMUTlb5/RRnUjyv1brAjlWmFK6nE8p9gmbwEMyDgFBK84juZfKG6ulag0ab8yo0i1IyQFeiD/8cpKw4uYOUJ7pMNnlmNhaFcpXs8ZGsDrugD5e+sJmJZxAuwQ0INIUNlJrcSMuiEDGi/G0BRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dropbox.com; spf=pass smtp.mailfrom=dropbox.com; dkim=pass (1024-bit key) header.d=dropbox.com header.i=@dropbox.com header.b=jVdORjPf; arc=none smtp.client-ip=205.220.162.87
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=dropbox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dropbox.com
+	s=arc-20240116; t=1750854741; c=relaxed/simple;
+	bh=SL7L/CanbOu357R4hVdBSpFwuClHIKSU9JPljOX1RBY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=X5jSt8YrbGOiQHNMRFGioQ/IYUltaondw2eGti/2ZwTbHMKgi+kZ5i6yv601uSr3fpA61jkX09PVQ51xG1RsmGSe3riVCcZN2xVl92RqvWVD5nDEDYrvyG8Ej69JoTYCjg1vh+4qkqrYjgdYBlY+/0fmqKBDl/pLibqW/Evxnsw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nrPPFTGl; arc=none smtp.client-ip=209.85.160.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=dropbox.com header.i=@dropbox.com header.b="jVdORjPf"
-Received: from pps.filterd (m0324671.ppops.net [127.0.0.1])
-	by mx0a-001ed902.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55PBJJXT019195
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 11:28:22 GMT
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com [209.85.215.199])
-	by mx0a-001ed902.pphosted.com (PPS) with ESMTPS id 47e9pxujx9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=OK)
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 11:28:22 +0000 (GMT)
-Received: by mail-pg1-f199.google.com with SMTP id 41be03b00d2f7-b2fcbd76b61so7990967a12.3
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 04:28:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nrPPFTGl"
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-2ea7815d3e5so467501fac.0
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 05:32:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=dropbox.com; s=corp; t=1750850901; x=1751455701; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750854739; x=1751459539; darn=vger.kernel.org;
         h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=O5sFLN3IrRXfuxZJCzE/4a1eQMrz26ZDKMstIoIBZoA=;
-        b=jVdORjPfjusQJidfjqdMH7MjGnqITXI6o+QMTxWYuEaXyHcKiZWFhlwYc4QXRdI9OX
-         m3QX3dxCZoWsj/YI7NMKg676KPE3AiYfKJLCMoITrWNAst33zMD/EUWU+XPWV0qAiQzE
-         FQbl6WBD5e4BSC8M6Z3dbn3CgSFB6gzGg/m6s=
+        bh=KkusYRq7J4x7y6CP7xVFltyfbBga5pbC0s66bk//Vfw=;
+        b=nrPPFTGlX0cq/UcHHgdp4enIctnhOciOoE+VxFcu4g1x/aSGGmgoCwomqiORTE62cO
+         VHtGEYu4mcfkm2IgATmNdKopgjPNsBo50vOV9ONolcOe5gK0yL8JgneVl10AN1/EjqUH
+         c2J7+KYfSObcvE2ibndIxqMrAmuebz0J0BF64YnNdOyMV3ezhbkKboGW+kf9p8qT1aSs
+         W2zE8kpU09uRjhpjgSsoMpr0x8CsfUXXgxTD3N9rts3KPNo5nOQ0qy+buAEbzaRNKluQ
+         EvS22KpRKIIshE09ekewn8/v2SLXHjIazf3PIrfZcsJGTbYDqNvi0gOc1cbXltSLEfg5
+         +cjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750850901; x=1751455701;
+        d=1e100.net; s=20230601; t=1750854739; x=1751459539;
         h=to:subject:message-id:date:from:mime-version:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=O5sFLN3IrRXfuxZJCzE/4a1eQMrz26ZDKMstIoIBZoA=;
-        b=cDswcPA8dJuL2Y/Y+vbYmCk3QZsIL2kwbfsgomVyrh0hwpgLGUO8c4wyBHhaoc+Z2E
-         e9kprXThzjK+OFNlQUBIkSjZ0Lzu4D31H/tDAT5fSqvXqwlKptrOVZu3iM/i93Myh/nS
-         OlvoAY9Fw3clWD3QQnyIuQdNfiEgodOL+WP54cMmNvuDv3dc5FyRZEqblTw3Aamf+El/
-         VUrTofoHvpR/wHi4vxCY/m81QUgfOhRPSjqTafWPt0uI992azOt91ir32EjF6YqJY6sx
-         xBpiAo1rSzrVGkbRgdxAWUF3Sp7CNO6TOWEBSbUCQLY48bo0Xk14x3wdQDGGpCBE5KPQ
-         W5JA==
-X-Gm-Message-State: AOJu0Yw7FfdqqUMlYrLL4cAWQRLVYbFPt8APMGoIznzBQcRtsVU8Udiy
-	LbMbA/l8k8BFmkdKdG9RIDJjlqGj7jfbIKhjs+eCR+2BOsVbrbuCEvX/cI8KTEbfEyTvVWLaism
-	9hBXIZnh7oHdkUFon9s+KcLmt9OXa6S7B74l8qwI8cVJWfCOm6H8S99U30YOG7haAe5n+qHDqDz
-	1vsqf/kt7PstjBa6RCbQG5QgCK1Jtk2VNebSbC3aR0
-X-Gm-Gg: ASbGncsJTsVb26XnS1C43uaESrGxyYpvZ9gjRN1Q6VdxNi7eXWXu6qqejE/PERlnXDn
-	21toyEzoSo4phAUnuCP+8UVI1Vjc0T6ZqYUqMloqMjtEZEl1duYKAr8iqfXdGGllR3gHxxiQtC6
-	vtnXJs1Q==
-X-Received: by 2002:a17:90b:2f04:b0:311:eb85:96ea with SMTP id 98e67ed59e1d1-315f26227e9mr4534263a91.9.1750850901005;
-        Wed, 25 Jun 2025 04:28:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3nFQty8NMpXLw6egvilN9MBlqyFK1yBAItA/mqDgiDaaR221+47yHtn4PogUxnPz0LWWuony6WZIK65Ndic4=
-X-Received: by 2002:a17:90b:2f04:b0:311:eb85:96ea with SMTP id
- 98e67ed59e1d1-315f26227e9mr4534240a91.9.1750850900625; Wed, 25 Jun 2025
- 04:28:20 -0700 (PDT)
+        bh=KkusYRq7J4x7y6CP7xVFltyfbBga5pbC0s66bk//Vfw=;
+        b=fCDs7w324Rkv+UHRv46jKoWwFu4f2JOsbVOKH/GPbdPoEnXheJArb0Ue4d9tQ+J6Ho
+         UiT8b78HvUXL2s2e4vhnxMXzGRFkmheMYcyYN70DUxDn723H6tp44ufmfLLf7hadIpoa
+         nVQGgY98HLnNePe8aumKuMxxWFQ4p+7OqRbTPIBxpprAg2UYkOAquAD0f6VSs6v7JFGH
+         c3NNFZcXFJhzvkXmkvGVi1+RCg0bzcKY7f05qIXGI5WcbFzhamYXllpmmP2bxKocz6DK
+         Jzkd6+99OcGGYZLTOpZpH+nY2+ZYFoZZENS0skaTonfiQvTeobZkYDBL4zEMAXeeqP4M
+         1EwA==
+X-Gm-Message-State: AOJu0YzSkDYnA1OUaWfTGi5yAUHeaqivQTv4g7RvIXrQNz+C7EzICEg0
+	8mIUSNhhJh/HK2e5YMMgJ3/RBIP1Q48YudeIH4NrlZaddCNCb/hwLsR5q503SW558Qv+rjSGm7G
+	tIB+8ZUz/7FYMO+zjgMz3av7imSA6cEjsozWa
+X-Gm-Gg: ASbGncsxcacACE0cb3WgxDcDjbFueHHo1dU3y/FMjPQg2gcitDEekqo1V3BBXa9Ho4g
+	nCanbmqAKswmIR8wOEh58/t5dCXFmhC6RoHQuBM1qPPN5ZK1cEqHyMAFEsgIOLbW5cuvqOGEcWe
+	hRa5IWd0CG9mM+osP2K1ihMRjn1y3sUmzjtNo6nrqjOGo=
+X-Google-Smtp-Source: AGHT+IEonphV7+mD+WENfqA4gQKltDg5CKqrl4AyKAj+lCXUmwBR10r6T0IrIyx5QkzYjGLeGH/guOH3RxAs7aR5o20=
+X-Received: by 2002:a05:6871:a6a3:b0:29e:5f79:21b4 with SMTP id
+ 586e51a60fabf-2efb23f394emr703610fac.13.1750854739376; Wed, 25 Jun 2025
+ 05:32:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Andrzej_D=C4=99bski?= <adebski@dropbox.com>
-Date: Wed, 25 Jun 2025 13:28:09 +0200
-X-Gm-Features: Ac12FXxPs7MIocIdzEuqa1Z1CDpJ8_-7BfsPvoedl3kIJ4ZvwVQhQzGUVSKK9C0
-Message-ID: <CAHKcSH2_Xse3o5Cq88Fu2s26AAJGNJMGeSvgHAyp-RLruVPnJQ@mail.gmail.com>
-Subject: Possible performance regression in for-each-ref in git 2.40.0
-To: git@vger.kernel.org
+From: ryenus <ryenus@gmail.com>
+Date: Wed, 25 Jun 2025 20:32:07 +0800
+X-Gm-Features: Ac12FXwhJbMc5LIEXZ4y5QVPcbfJeG9Cxr1aiwV850xx6gJkFzQ74LcK6qeDmzc
+Message-ID: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
+Subject: [bug] pull --prune could not delete references due to lock file
+ already exists error
+To: Git mailing list <git@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjI1MDA4NiBTYWx0ZWRfX82FfP/F+yHbq
- LqF1mGzK1UUihmwWj/H2lftTJWwcTD8E29gWo/YVE169qBd/bonpP3uA524knYgm5Jd7RdPhlyX
- rzfZMrxAw8y6zJRtoxdOaVuHrlo86NeeLemTijMXiRKL4WEhSSOxpd6nOxIIWhD4Ndvgzz8plwL
- USM3biiysBGQ6XNRkqNF+1e8DIplw4T0svWHR3nc9vWGYV20dEydWo3eOiaWxk2VSDrdegSUZrE
- s7F1i8nuYoo87UN4Jf6JGr30hoRdQK9XFppcGkGV7FWVwa0mS3ygfQ964jwW9+wsMiYcODXu+Aa
- w7JyFiaEdqJxKL6brHV52sokdv3B5GZRDFqVIkAGTpw16HYW2xwfs5ZHvulBpy/qJBB5Sbv28mq
- E+/2FMMmVpDRjtMqS0ClTfYhT9dSDswdHtn17JkIaqLnnDkSqo9k8Iomv4X5wk6FnkOY0R1L
-X-Authority-Analysis: v=2.4 cv=T9+MT+KQ c=1 sm=1 tr=0 ts=685bdd56 cx=c_pps
- a=Oh5Dbbf/trHjhBongsHeRQ==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=M51BFTxLslgA:10 a=kC_G02pF9r0A:10 a=NEAV23lmAAAA:8 a=__rO-Hmz00oE5fPVqDAA:9
- a=QEXdDO2ut3YA:10 a=_Vgx9l1VpLgwpw_dHYaR:22
-X-Proofpoint-GUID: 9rXTp6ZICR6Xp--w26teqzYhfIIbchp4
-X-Proofpoint-ORIG-GUID: 9rXTp6ZICR6Xp--w26teqzYhfIIbchp4
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.7,FMLib:17.12.80.40
- definitions=2025-06-25_03,2025-06-23_07,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=525 mlxscore=0 malwarescore=0 adultscore=0 phishscore=0
- clxscore=1011 spamscore=0 impostorscore=0 bulkscore=0 priorityscore=1501
- lowpriorityscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506250086
 
-One of Dropbox SWEs observed that a specific git command in Go
-language tooling
-https://github.com/golang/go/blob/e515ef8bc271f632bb2ebb94e8e700ab67274268/src/cmd/go/internal/modfetch/codehost/git.go#L758
-took over 20 seconds. Internally we distribute git 2.46.0 right now
-but the SWE had an older version of git around (2.39.5) and observed a
-performance regression between those 2 versions.
+today I tried to prune the remote refs in a local repo, but `git pull --prune`
+failed with an error saying it could not delete references. I retried several
+times and it failed consistently, without a single ref pruned.
 
-We've did some performance measurements and the command like "git
-for-each-ref --format="%(refname)" refs/tags --merged HEAD >
-/dev/null"
-spent majority of time in function "tips_reachable_from_bases"
-introduced in git 2.40.0:
-https://github.com/git/git/commit/cbfe360b140fe92d9c4a763bf630c3b8ba431522
+I found this interesting comment while looking into the code here:
+https://github.com/git/git/blob/bd99d6e8db5e2c56dd24395e9711ee7ee564bf4f/refs.c#L2863-L2895
 
-Similar performance degradation can be observed in git 2.50
+> /*
+>  * Since we don't check the references' old_oids, the
+>  * individual updates can't fail, so we can pack all of the
+>  * updates into a single transaction.
+>  */
 
-Given that the command references tags I've experimented and observed
-that the command execution time decreased with the amount of tags I've
-removed from the local copy of the repo.
+The problem is the assume is wrong, coz things could fail, one such case
+is to have two refs like below:
 
-Context: in Dropbox we operate a large monorepo with around 65K tags
-right now and growing every day.
+1. origin/TOM/b1
+2. origin/TOM/b2
+3. origin/tom/b2
 
-The question is, given the same command used to be much faster in
-older versions of git is this considered a regression and can be fixed
-in future releases of git?
-
-
-[System Info]
-git version: 2.46.0
-cpu: bazel
-built from commit: bazel
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 7.82.0
-OpenSSL: OpenSSL 1.1.1w  11 Sep 2023
-zlib: 1.2.13
-uname: Linux 6.8.0-1029-aws #31~22.04.1-Ubuntu SMP Thu Apr 24 21:16:18
-UTC 2025 x86_64
-compiler info: gnuc: 11.2
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
+Notice there's `TOM` vs `tom` in the path. Another factor is that my local file
+system is case insensitive. As a result the 3rd ref would fail and cause the
+transaction to be always rolled back.
