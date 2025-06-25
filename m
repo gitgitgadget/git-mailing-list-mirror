@@ -1,88 +1,86 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939B52C1A2
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63FB264FB3
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750869043; cv=none; b=eOVlIv0WnF2RjMuM/l/bUZMJbZ96hVTzoXPaS5Crh/WRGmZdj/prhcGcGGfct2S+Ti2cGuL24MUL/YdgCpQowNbGh7vvJr8/yZKYS8kLq9D3ISeqXFZYoiBFa+vqddrQ7fDEgMAK9+mJ96u+ej6JvijwuMQa9sEG+VOKOXcrS8o=
+	t=1750869542; cv=none; b=f2JzQOvNEE/wlkeA8YkPeSrc+uGD3e71c+hp2/P5uHBQTBCRP8JmHwa1gt3oo3A/ssx5ZY5v6I5KwA2JJfTWcsXJS4gdR9ItrafefKWgO5NMiJdI3InCDcVqRQA5vQRkOiNoiLeF5dhFpVWCsZfzpFbGxaWLe9qaj5PhRGjEiZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750869043; c=relaxed/simple;
-	bh=3O1t7SmqqPqaN5PhuwxfPvJ3oMXcnEZ83xzVC8I0mPg=;
+	s=arc-20240116; t=1750869542; c=relaxed/simple;
+	bh=y9WvMPbCCeiYeGMPQgtsXZK9FDP19x7UKUzZSb9i1Qc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YoYNembf7Un3kAPdZyROivvIfGQWLdp3ZK/iYP/BoyZVNKIX9wl3MQDio5i4+Yfi67JBednjB2/r+kDCLbATXHc1Cj3keQKT1PdfEdG6FfJr2XFDby02o+X8SNN1xvBtOj45aFuTHCs7D01hwI1G3GihCrjBnU2zDHqYKmm8Phc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JnfQrFwi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kl66Q0CA; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=AqPq4D62GBH0l0fTiF0Z1rzqi/lPGQpXL6gwIOFoZDOkMFuscAQlBjbNqCTZO/ZZPEtMblJm61FoHH+wOqucEXVi4P/S4T+18dzb0Ko0bpZsu6Swk5I6y/iczAGbi/qExgqsftQCtcNZYSlNpzruCv5wG8sHYizYGrIdoeLaWW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KKe7JcaT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ktA/DOvS; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JnfQrFwi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kl66Q0CA"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AC75614001BF;
-	Wed, 25 Jun 2025 12:30:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Wed, 25 Jun 2025 12:30:40 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKe7JcaT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ktA/DOvS"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E5916140008D;
+	Wed, 25 Jun 2025 12:38:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 12:38:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1750869040; x=1750955440; bh=xSxVGr4jYu
-	gEza218WAq5uejB0UupeSKks9SqvzoGls=; b=JnfQrFwiQqUBEq/05ECosv39Zd
-	YALbciDThMNfR/gRbGU8Msdb7k2jgw5s1ESFPPboVzo64ajMCtqsDrTh5NnvYMjR
-	DY4J6VVNgc4tH9GwsZTiIvWHHzQK/cjA7HChcZsRfvlSIRBJcZUXMJECL7OUsMQ/
-	n+VtfibmrtQPTtYLwG3R/cfiUr74DL31g1t/SL+ILQpDjC94YM1CNfSz+DVQh6Pk
-	GCwgOmT6a7R//Ilesy/i3kDCNsFiLxPaVct4J4/s7gRYmKkpGuUwTp/6S9vhXCb8
-	dPRxu7pPKzHw4z2XlTxrgAO/qA3ceEf3sr9ov9nVXO3wZFc2eqtwp43PxvDQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1750869539;
+	 x=1750955939; bh=bl/niHL1FoJai5XpFvXnoEZtvqwLWLErkWPOMzmwYRE=; b=
+	KKe7JcaTijQ8wpRo1OwV8yryH6t+RcxsK9Ge5EcpQqsSDUgxlYyIsy6Rco3o0rdw
+	BiebTw4TrZsaFWKtkQng7laB3qKtvwQ7+zXWHXDmE6SgghAbg0aWo0AslfoRVWEk
+	SRTiJZDraQn5fSpcwd9YafN4Eg+CcWnuqVzyAMeJxfVgAkMBq5QhPZS5YYjtZDNL
+	5sW0uRoYbQVOZhBDdRBmQQWFvK7mNHJimlGl03NqD8IDUzDdL0/nuspKwR/bxgSl
+	ZeRyZMGGp16xrjVS3GLedNxG2sH/C1/oR3g+U4Uq1DC6MuxSNL5tFx3xYMLAdnxn
+	9v2I1E26YKVWtLaNiUxrwA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1750869040; x=1750955440; bh=xSxVGr4jYugEza218WAq5uejB0UupeSKks9
-	SqvzoGls=; b=kl66Q0CAd1qeN3iCt1LmOtCYxsmglGL72dl23ibZfFrehPwf/Cy
-	yeSJUqPvT5vFe6+NeK5wZ3mbiiCDG5jdSL6oAsXpRR5XadgSSmSxrlqB34tRp0dS
-	AVh4W1ZUi4+UwoXURDdUtB3bB+G3IlMAmNDKjijwJp3yb6by0PaFQbay3/1EGtqD
-	fZxjWIt0KoELhWeu63CKvrran75O/WJ64LH5HHJaYZm6y8fiVXP8i/0dWVIr9Ej0
-	RMevEAjPdiuyZ9tO0pKIk4CNkIIGlaZ+HU/OjCW7JTzTc1Zv03ywoURlYld0DU9S
-	A259O/slCPbNZ1LjVwmN+8ySiwnP0SHYfFw==
-X-ME-Sender: <xms:MCRcaLEZE1eEdvRG1gP_efy9G_s3S7Otd1M28c_BAj_ZZ--b3HI8bg>
-    <xme:MCRcaIUSWbHHn8Oc5jWl_pJ3JouZDADo6uiIh75IBXG9WdAkqcFcJ5flxn7a4iTBj
-    EGXS3JTaLtqhvvRPA>
-X-ME-Received: <xmr:MCRcaNK4jOkorDFa7KC2ROohM1lHoicnPjyEYa1Msbo2DJTrctY3JV5NToZfEJ1qC_cs8uP6rG7pTmwCaacIsTLt33UU9iCRHHJhFkk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750869539; x=
+	1750955939; bh=bl/niHL1FoJai5XpFvXnoEZtvqwLWLErkWPOMzmwYRE=; b=k
+	tA/DOvS6n9EWwCaHxwdwoViQj+o9y0kZyyvRBLCOfRc2ueNUXCdqP1cXPcSfg5aT
+	Hu87asTbDk/aLQlaxC73fxsraJ5Kpg1Ib+wAWM/9Hg2KjP7HQk6j67RUrF7Cou+L
+	bVYT/tO32d40XwAieHmoLAOzpfg6C7LX+22t7JrzVx/6bRDioWYpI96Tz2HkVOk0
+	EiUk01L3U8dJZNbAj1Dc0N+MsIKJTLPuo34TOUwb5p//TbNCmUMBD4YiI36nk3fF
+	a7ELcGSGWqhxP7jTiZrjmw3Y51y+7fV8dFXHiNZD/RD3Bl2jn6jPWNF9ZPt3nYII
+	dUMkFh60Lmy1r7FQVTGaQ==
+X-ME-Sender: <xms:IyZcaD3hR-FtbQCcHTSZ1mM2R304Pj2jaPoYFQLr4RNEycy3k7atVg>
+    <xme:IyZcaCHRKVKu9BNxudkQmBnPBs2KF6h8zTyfF6R26nEtL7W6BqlYZ9e98wY9Q_52L
+    HUp5BreJ7Pwg23t9w>
+X-ME-Received: <xmr:IyZcaD4Jfu3ei-IWLgPd0hA46yyIFnNY9l_aCEwtYkX_fzu11YOercLt8l0xeEknZ24Ywo-wuKez-9xo4fb1nH6C2FLee7WrvdoGwGw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedviecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhi
-    shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtth
-    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MCRcaJHJcqGkAtXcPnRrVVFeN2EwlQv7MrTgUn8L464XEdWm5eXVnw>
-    <xmx:MCRcaBXd56ql8escz3DjMaLcWo8dA8vnDxYAQvp9ifwVbRlyRrWpfw>
-    <xmx:MCRcaEOcnJvqNA_64d6-6srpZzFoiXbVMBZgcplJThBnO-keNBh9ZQ>
-    <xmx:MCRcaA1MdJDvD8sOExKesrPFL2aHd6K0qO5U4IZ4SIWKoRR12UxWCA>
-    <xmx:MCRcaJvt8STvbU9jykBOYx_5hHzVB1rvMiCkDntB2QY0h9BYQeKS_Bww>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
+    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepohhpohhhohhrvghlsehrvgguhhgrthdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:IyZcaI0PA-k7tde2vYPi2Szq3LhZCHGiOCUUEdP1zgTG7fPEN96VYA>
+    <xmx:IyZcaGERhs5U9JLQ76gyWHo4ZSNjmt8jAB7TuPJuoghwc0kpuQw-TQ>
+    <xmx:IyZcaJ8oBQcdgOgR5LgGDX-u3J8L27q5sCRiycgkjrKp_pHbw_f2ow>
+    <xmx:IyZcaDm34mZcqDz1-3UIt0wr8vVPQKeC56Kah2uxbmIvcOzznmAHfQ>
+    <xmx:IyZcaNHDykakG4II7RgGvhBCtsgo8LiHeMIcyhnvGQgCt03glmM54GR6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 12:30:39 -0400 (EDT)
+ 25 Jun 2025 12:38:59 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  "D. Ben Knoble" <ben.knoble@gmail.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v8 0/4] Importing and exporting stashes to refs
-In-Reply-To: <88915a18-de18-437b-bd74-91fb82ab760e@gmail.com> (Phillip Wood's
-	message of "Wed, 25 Jun 2025 09:40:46 +0100")
-References: <20250601223225.464076-1-sandals@crustytoothpaste.net>
-	<20250612011221.4158484-1-sandals@crustytoothpaste.net>
-	<88915a18-de18-437b-bd74-91fb82ab760e@gmail.com>
-Date: Wed, 25 Jun 2025 09:30:38 -0700
-Message-ID: <xmqqcyarwzpt.fsf@gitster.g>
+To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: =?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= <opohorel@redhat.com>,
+  git@vger.kernel.org
+Subject: Re: bash: unescaped `>` character when switching branches
+In-Reply-To: <8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 25 Jun 2025 10:53:56 +0200")
+References: <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
+	<8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
+Date: Wed, 25 Jun 2025 09:38:58 -0700
+Message-ID: <xmqq5xgjwzbx.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,19 +88,27 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
 
->> Changes from v7:
->> * Rephrase the documentation to be slightly more explicit.
->> * Don't have `write_commit_with_parents` free its arguments, instead
->>    letting the caller (who allocated them) handle them.
->> * Handle invalid combinations of arguments to `export` and add tests for
->>    this case.
+> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
+>> Hi,
+>>
+>> Our customer has found a possible issue when switching branches.
+>> Output redirection character `>` is not escaped properly when
+>> switching/checking out to different branch.
+>>
+>> Steps to reproduce:
+>> 1. Create a new branch and switch back to master
+>> ```
+>> $ git switch -C 'issue#1234>/tmp/dangerfile'
+>> Switched to a new branch 'issue#1234>/tmp/dangerfile'
+>> $ git switch master
+>> ```
 >
-> The range-diff between v7 and v8 looks good to me. Sorry for the slow
-> reply, I was off the list last week.
+> It’s too bad that git-check-ref-format(1) does not disallow `>`.
 
-Thanks.  The topic is in 'next' now.
-
+Is it?  It looks like an outright bug in the completion code,
+nothing more, to me.
