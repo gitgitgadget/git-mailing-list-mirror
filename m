@@ -1,147 +1,76 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133651F3B8A
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 20:19:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31FC2E0B67
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 20:31:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750882785; cv=none; b=dBg/f87pirHjje/9rNLm4vZwhVE3ZznuaUYu7zrJxq+NCc2AG+bA7Lab4VDu79vl+gk4y2dPnT8Wjg8HIEjRzlZlMpSd/96l78OUFqOJNnUz/1nJLViXbeSLbK/P7mp+GqNCU4TWasBL11P0jZ/p+foTkkj1wiZlmeebLF970ho=
+	t=1750883489; cv=none; b=CSz2P+N1q/kbjBkWDQEaASXFxdBhqCYoAaToR3izdyZJg59tWfTxByKfASFf6UvvrkdWIyj+7+U/tMrSrxsY/3uGxzb6HbLFQhiTxkov/d1kckMRgC8Hl2xzr3gEgcRJmR1KPDcmTAOp5eA+KhSDipTNlZIxl3JnPVbrgbXBZcI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750882785; c=relaxed/simple;
-	bh=vLQspK/zsAg/NBI6eyI3BP20aUNhIXZ+B+kwRgnD9FY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dLB2Qu3jWVRqziBKCNZxwlIlzPY+cKGvgKIR93XM/yJYjUufywlzsr91limDYeFo2EqcTKkcj3cAfBRF7BfAdZshBbnVi64tmy7Q3PODiqthb0sJ2sIHecMLeCBXdFGhmRssad7BTrQWaHJ0uZPvlrCILhy1Tm29dbFvACYacNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ERCKD3I/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y2n96ji7; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1750883489; c=relaxed/simple;
+	bh=rgcl0VvIPNqyKtNCTg4RRM938CvghoBMSkPNvusvnV4=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=f0w8g25x+s/G03VDYIdWCYAMb5UCLDxQAdms+J3xa9wqrhzaFmYpELJ7LdChMEstm3tZ70/FdgDw1fk3r8WjLkh6aqoA3Xe3uwiXvK4R7BDUqQ7BbkTJrPuKQktks+QXTdJ7e/Hmve0nHUjQrKEGWELaUW/9ox5vRpVcr9MOWYU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9FjyDEf; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ERCKD3I/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y2n96ji7"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id EF9441D00036;
-	Wed, 25 Jun 2025 16:19:41 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Wed, 25 Jun 2025 16:19:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1750882781;
-	 x=1750969181; bh=fsvXs1Vcu6Nw0cEwrwqK9dRdxeYChfisuD/6FMtQ5Vk=; b=
-	ERCKD3I/14gjMtRQWFaGa+kUbCoU52JwQtMDk9GTL+Ocp11GSC8rd+0agkoiOJrv
-	YeeXePlyVl3S/Gbgx1Bzj4oI0ZM5BwYbvorJbtkhtR9yW9xfpI3RwtABS4erqJOk
-	dGR3eNUTXc1g/LEdJuYtpSqvC/NlzUjS8p6KOzChhWtyCd9LFZXNEgk2oVhLOxlw
-	pg+tHDYlRf7Hw409NqfsKaQrU8UPdAmvohCSWmhfyU/EKitT5FU0xTMAkqbvQqK+
-	w5MmK1Wd2Ms7z1KavLqZzodLlxh6DmiQ66ko9YW8xtjKIAuBp/S3nB0NEXiVHfPR
-	+JVROB/oWqw6HX7zylVJyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750882781; x=
-	1750969181; bh=fsvXs1Vcu6Nw0cEwrwqK9dRdxeYChfisuD/6FMtQ5Vk=; b=Y
-	2n96ji7PYlxSq7vymCWVytODdy0ObzuxAWn46bv2NFDqUFFjrqRhVmIQ19hsNvjy
-	y/qm+jy8T14/bxWj0cfzd4TJQg6cFa6JWdDpvI4eFpVacvzLA9vHG5E/CHA5bAFz
-	ds+FDIUW9DnJ+oVqoypgFM9n7kMoARMCp1ABChkabA+2cGqGWIl4oR8zGXy25MiX
-	PbuxKuD5BxwTWsFHRgFH8sjmr5/B6yWcnBofwYjTdTWKkxAJyAGMfdPsJPQsTYo+
-	WwgUI7ahHfzEUzvKGfcQqPdWdIv57IFmiP/tuZR2eT/RKBk76frbobPjJEIyp5CB
-	CsTT4uvnAszSnZ81vWZEQ==
-X-ME-Sender: <xms:3VlcaBRWrjQ4Ga47YxdEjifBK0lYUB16mdiLBJG1tsC9Kt35k_q4Jh0>
-    <xme:3VlcaKy69gkNMm77J6_T8ZnpHPaN85F1uawr8qlNDazg3eNThgeOWPSCEYL54-0tq
-    IzexxIykvWb-TRLng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfeejudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
-    mhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:3VlcaG1btB8ZuXVd4npE_Hm99tt9XXS1aaMhYAL_qxszmoAnrvUBQQ>
-    <xmx:3VlcaJBHTp004dyxL3WDu8-CIhpecoM9Cru5Lvx0tFoAnp9urW1mww>
-    <xmx:3VlcaKico2PdLTJVUYuROidypZ2uRTzQ0V8k8L9vl4HqbrYuSSV4PQ>
-    <xmx:3VlcaNo_Lwfa0uBcQ8TMY-hwEkdD088PCrm_q2rg_Wu4hMNFUShSWA>
-    <xmx:3VlcaC7R7Ahzst3e8zu_nG1op_URAhVG5CCSGW67aHrcbk_0GzPlDyAm>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1975C1EA0066; Wed, 25 Jun 2025 16:19:40 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9FjyDEf"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6095f07cd53so37655a12.3
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 13:31:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750883485; x=1751488285; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=v4WH57YHSf8rEpcJ8A/pJiIPsQOOBuTSgNt7IYzsWAw=;
+        b=c9FjyDEfVpuOcz7qm2GfqMC+mNF6XatDH1qgg/fq17wuPXzH4WxZOf526Niwh2r7Vt
+         ubVkjIBwa78PMN7fDlwTCD4lHCczDMozsbeUAqU4pgz2wu0w3wxgbZT142SpnVirEvOF
+         3hvHtly4YfHSghiApDhZQzR4Y1vjB7BIN7JLBWAdsbCU5KD006qtfXfU1vHwfI7uKMdp
+         agshAD9sGXpA37WOL5qPCTK6ndZS19mT6YHXAPi05eICEPUAmBtzqgwCTjFpM7TpZ45a
+         wcb4sa6jTtQc+JaAD6zsTEKwO1v4SgbKggt2QadmqrUH4EmvNrYglVLzxuVb4xYAvlei
+         +/TQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750883485; x=1751488285;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=v4WH57YHSf8rEpcJ8A/pJiIPsQOOBuTSgNt7IYzsWAw=;
+        b=CeHVYFjQUyHugRTO8ueefG+RZtD338wgI/yLDE8CeXSBwftZHlixaGSz7m1M44Yqh0
+         tZP2mi9B5nFsgsapCym4akJKRc6eXn2U6hZBMA3sjavb6Ct5rYeIq0iow9DMfzLKX7jf
+         nXsWqHN8afTtnnRjJKjUJf8H6R0jQuN1HAsBmrZENHGH5PaSYfSw/nEfU9o5J5ji3B2W
+         1vRsboRMpXYrH6rQqnjHahKKFS1eEARa8eYGdbDK4dYpLxE7SJvmZ43pKCk0JDL1uAEm
+         qm8MrgSUktCyXmAsaql+WX0ruXWcA2LWOhWJ1QB01O91PEvQ0hi73v8gCpVfk7WH4XO4
+         wIEg==
+X-Gm-Message-State: AOJu0YwFUsUID31NmuveJn83iLsR/Y5ODtoQQclXPXlwECKCbYDKD9Ek
+	9HgeaU0KM2xkfodlpWZawKRyc/H+fhU93DTaHFI9o3smow4zRnErSf4mmR+nnagUiNH8YibsSPo
+	lS4FRxSooHcWWd6US+NJkjINNCB7nmTLPaKaU
+X-Gm-Gg: ASbGnctNkMLtJFqUagwgYID7IxT9B/YhI9AQimHYrhNsYbiSj26ZCvmGXTIgx0KlU5w
+	kvbMtUTuLUGZ6oeNLXTCDlmDntVnfg+zWGqkwaRGQcxeo3c2PCmLO5Sj3NxeyzifTAyGG/4LFJo
+	Bt9WjME3eAwxPU1Q2OffiiAM3g2PdQ+9A7T4dOOawrFx8gRMTkAM9XiTDlMh1Rphv0MJMiBH4L
+X-Google-Smtp-Source: AGHT+IH6QeSi2PDvHQyGRNYCPOmLesY4p9znVtBErrB6BsYFHz4Uf/hdBU7uElPZqpC/TVXMT389VL+HhsjVmDIxa60=
+X-Received: by 2002:a17:907:2da1:b0:ae0:ba0e:ae59 with SMTP id
+ a640c23a62f3a-ae0be91968amr160141566b.7.1750883485309; Wed, 25 Jun 2025
+ 13:31:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T38185b1eafdd6744
-Date: Wed, 25 Jun 2025 22:19:20 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- =?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>,
- git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <71204f81-3281-4089-9e9e-1a81a73c8d41@app.fastmail.com>
-In-Reply-To: <84eccfa1-88fe-43b8-a839-61ea4fa4e4e9@gmail.com>
-References: 
- <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
- <8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
- <84eccfa1-88fe-43b8-a839-61ea4fa4e4e9@gmail.com>
-Subject: Re: bash: unescaped `>` character when switching branches
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From: M Hickford <mirth.hickford@gmail.com>
+Date: Wed, 25 Jun 2025 21:30:00 +0100
+X-Gm-Features: Ac12FXyDyej0V4Ej815GSIEOuQskxnoB8tYUqrq_mDP6VXAICk0KV02xpsvtwHE
+Message-ID: <CAGJzqskFuQqLHgFk97S9uaBB=iW2Ni=NWokHJzMV5rYGsCOG4g@mail.gmail.com>
+Subject: How to exclude tagged commits from git log <revision-range>?
+To: Git Mailing List <git@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jun 25, 2025, at 15:57, Phillip Wood wrote:
-> On 25/06/2025 09:53, Kristoffer Haugsbakk wrote:
->> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
->>> Hi,
->>>
->>> Our customer has found a possible issue when switching branches.
->>> Output redirection character `>` is not escaped properly when
->>> switching/checking out to different branch.
->>>
->>> Steps to reproduce:
->>> 1. Create a new branch and switch back to master
->>> ```
->>> $ git switch -C 'issue#1234>/tmp/dangerfile'
->>> Switched to a new branch 'issue#1234>/tmp/dangerfile'
->>> $ git switch master
->>> ```
->>=20
->> It=E2=80=99s too bad that git-check-ref-format(1) does not disallow `=
->`.
->
-> It also allows `<`, `$`, `&`, `;`, `(`, `)`, `#`, `"`, `'`, '`' and `|=
-`.=20
-> Our ref format is not designed for them to be used unquoted in the=20
-> shell. I think the problem here is with our completion script not=20
-> quoting the refname, not the format.
+Hi. Is it possible to exclude tagged commits from a revision range?
 
-On Wed, Jun 25, 2025, at 18:38, Junio C Hamano wrote:
-> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
->
->> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
->>> Hi,
->>>
->>> Our customer has found a possible issue when switching branches.
->>> Output redirection character `>` is not escaped properly when
->>> switching/checking out to different branch.
->>>
->>> Steps to reproduce:
->>> 1. Create a new branch and switch back to master
->>> ```
->>> $ git switch -C 'issue#1234>/tmp/dangerfile'
->>> Switched to a new branch 'issue#1234>/tmp/dangerfile'
->>> $ git switch master
->>> ```
->>
->> It=E2=80=99s too bad that git-check-ref-format(1) does not disallow `=
->`.
->
-> Is it?  It looks like an outright bug in the completion code,
-> nothing more, to me.
+I tried
 
-That was an aside.
+     git log --exclude=ref/tags/v* v2.3.0..v2.4.0
+
+but this didn't exclude any commits.
+
+An inelegant workaround is:
+
+     git log --oneline --decorate v2.3.0..v2.4.0 | grep --invert-match "tag: v"
