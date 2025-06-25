@@ -1,114 +1,130 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63FB264FB3
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:39:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD042F0C71
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:43:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750869542; cv=none; b=f2JzQOvNEE/wlkeA8YkPeSrc+uGD3e71c+hp2/P5uHBQTBCRP8JmHwa1gt3oo3A/ssx5ZY5v6I5KwA2JJfTWcsXJS4gdR9ItrafefKWgO5NMiJdI3InCDcVqRQA5vQRkOiNoiLeF5dhFpVWCsZfzpFbGxaWLe9qaj5PhRGjEiZE=
+	t=1750869829; cv=none; b=rafxVBJqLV61XO8DwikcjI5b5uKZYQf07sDzJ4dbSNvGajQsL9+9l3dS6vx29VhrQRDTl8OEDCZJbRV2zZ8tV0v0tkBD+wK7ljvP9dVHGeFgFcxaQSmwB2J3Rrbq+slHKWX6DFgL7CxUuNqm/2/VG+lbyFiXTEVY86xWXPH6ZQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750869542; c=relaxed/simple;
-	bh=y9WvMPbCCeiYeGMPQgtsXZK9FDP19x7UKUzZSb9i1Qc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AqPq4D62GBH0l0fTiF0Z1rzqi/lPGQpXL6gwIOFoZDOkMFuscAQlBjbNqCTZO/ZZPEtMblJm61FoHH+wOqucEXVi4P/S4T+18dzb0Ko0bpZsu6Swk5I6y/iczAGbi/qExgqsftQCtcNZYSlNpzruCv5wG8sHYizYGrIdoeLaWW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KKe7JcaT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ktA/DOvS; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750869829; c=relaxed/simple;
+	bh=7HCbL16RcywuwmWkey5Bd/URz58cvE7a/+2zbPtM50I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=in2zRjPqth2TQjz7eOEsVBunTnUnsZoSxsnqr5Tf57JEWggR6ot/h+PrgSY8RbMEEo2DzbnWnhQwvug3ss6DJWRHZM4GebjFQl3YL5y1Yao5Ize/BbvTMPxSKenysE3smVbV8eiwctTpyiJ7U41ER+z7DOECLl/LHtn/yl/6EsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W+ggnwsi; arc=none smtp.client-ip=209.85.208.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KKe7JcaT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ktA/DOvS"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E5916140008D;
-	Wed, 25 Jun 2025 12:38:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 12:38:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1750869539;
-	 x=1750955939; bh=bl/niHL1FoJai5XpFvXnoEZtvqwLWLErkWPOMzmwYRE=; b=
-	KKe7JcaTijQ8wpRo1OwV8yryH6t+RcxsK9Ge5EcpQqsSDUgxlYyIsy6Rco3o0rdw
-	BiebTw4TrZsaFWKtkQng7laB3qKtvwQ7+zXWHXDmE6SgghAbg0aWo0AslfoRVWEk
-	SRTiJZDraQn5fSpcwd9YafN4Eg+CcWnuqVzyAMeJxfVgAkMBq5QhPZS5YYjtZDNL
-	5sW0uRoYbQVOZhBDdRBmQQWFvK7mNHJimlGl03NqD8IDUzDdL0/nuspKwR/bxgSl
-	ZeRyZMGGp16xrjVS3GLedNxG2sH/C1/oR3g+U4Uq1DC6MuxSNL5tFx3xYMLAdnxn
-	9v2I1E26YKVWtLaNiUxrwA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750869539; x=
-	1750955939; bh=bl/niHL1FoJai5XpFvXnoEZtvqwLWLErkWPOMzmwYRE=; b=k
-	tA/DOvS6n9EWwCaHxwdwoViQj+o9y0kZyyvRBLCOfRc2ueNUXCdqP1cXPcSfg5aT
-	Hu87asTbDk/aLQlaxC73fxsraJ5Kpg1Ib+wAWM/9Hg2KjP7HQk6j67RUrF7Cou+L
-	bVYT/tO32d40XwAieHmoLAOzpfg6C7LX+22t7JrzVx/6bRDioWYpI96Tz2HkVOk0
-	EiUk01L3U8dJZNbAj1Dc0N+MsIKJTLPuo34TOUwb5p//TbNCmUMBD4YiI36nk3fF
-	a7ELcGSGWqhxP7jTiZrjmw3Y51y+7fV8dFXHiNZD/RD3Bl2jn6jPWNF9ZPt3nYII
-	dUMkFh60Lmy1r7FQVTGaQ==
-X-ME-Sender: <xms:IyZcaD3hR-FtbQCcHTSZ1mM2R304Pj2jaPoYFQLr4RNEycy3k7atVg>
-    <xme:IyZcaCHRKVKu9BNxudkQmBnPBs2KF6h8zTyfF6R26nEtL7W6BqlYZ9e98wY9Q_52L
-    HUp5BreJ7Pwg23t9w>
-X-ME-Received: <xmr:IyZcaD4Jfu3ei-IWLgPd0hA46yyIFnNY9l_aCEwtYkX_fzu11YOercLt8l0xeEknZ24Ywo-wuKez-9xo4fb1nH6C2FLee7WrvdoGwGw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedviecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepohhpohhhohhrvghlsehrvgguhhgrthdr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:IyZcaI0PA-k7tde2vYPi2Szq3LhZCHGiOCUUEdP1zgTG7fPEN96VYA>
-    <xmx:IyZcaGERhs5U9JLQ76gyWHo4ZSNjmt8jAB7TuPJuoghwc0kpuQw-TQ>
-    <xmx:IyZcaJ8oBQcdgOgR5LgGDX-u3J8L27q5sCRiycgkjrKp_pHbw_f2ow>
-    <xmx:IyZcaDm34mZcqDz1-3UIt0wr8vVPQKeC56Kah2uxbmIvcOzznmAHfQ>
-    <xmx:IyZcaNHDykakG4II7RgGvhBCtsgo8LiHeMIcyhnvGQgCt03glmM54GR6>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 12:38:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: =?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= <opohorel@redhat.com>,
-  git@vger.kernel.org
-Subject: Re: bash: unescaped `>` character when switching branches
-In-Reply-To: <8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 25 Jun 2025 10:53:56 +0200")
-References: <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
-	<8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
-Date: Wed, 25 Jun 2025 09:38:58 -0700
-Message-ID: <xmqq5xgjwzbx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W+ggnwsi"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6088d856c6eso85265a12.0
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 09:43:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750869826; x=1751474626; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KLdabKtgBwzfYYUeosl1IkKDL6Imn/otrXTqwuBQ/PI=;
+        b=W+ggnwsi4ltYHuKc7ILJc13/z+Zz0EWsGPgt5g6tGKpvo0WAydvbg609QfDFOSvTQT
+         L922Ts3+LDmr4DVDeMltj2grTCaLtagPRhptPiI/Bwf0AxFA2QYCqUWU/n1BPZPsS9CW
+         +Ycmvn8gbplGpftS/fxG3l3Qvyz5SHXK1447giV2vGFoaislHjvn/yHK048LgM4ThNxq
+         bXIuIvU6r9KTt6gbiEJ+aAKdfU5R8I4/iyp3NKpnKhIe9AALmp4FAtOzytZB0znjIFzP
+         4OL1OVY3lKthh892VWdUr0PRbSV+kxHbTe0+RJr3fu95K5n+xz0qJG+c+w2CDewpY4wI
+         wsBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750869826; x=1751474626;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=KLdabKtgBwzfYYUeosl1IkKDL6Imn/otrXTqwuBQ/PI=;
+        b=J75uojjHW7r17xn6cws3AAHv+JPmdPqMkOL7vFTaYO2ZNJq6GDGyW3slecvZ6bwJtz
+         oiaUfPV9pFrKkElcdKBVmM9F9TIsYdBskyAOF/yWgFxyQKeKUPArGWlMM+HansAJKX7/
+         lWgFI2isz48XJzu7CFZA+dHFJPtsRLSz+01/iNFt2CHMV4lELzFXFAc6czmKJGkmhZxw
+         vqayF/OkGVbxpeKyBRFy0ZwfIu6i0FZRTWlqNNb7UatMRrgYn/aVovupafJuOntC+wFb
+         FhX5+EtAHK9ShLMYB9Ik3y0tPNu02fThmNaUBhFPzrDvL8nZddoTMAM+YETpganDEZV1
+         eJPQ==
+X-Gm-Message-State: AOJu0YwJPae6xtW87PEA2rvzGtxV64BgQi1tI1dUomvbzoVVEBw0mTxa
+	Wj8yyishPLRzWGZ3io7Uo4cBgh35xtP+lIUtDfqogR4NJgxN4xrA4UzU7l8Tttwga+E=
+X-Gm-Gg: ASbGncv5RWcNlr/wwfidjuihwYnRgWkIWqFqiodTHyIKyplvUCTPl20eSoPEWfHMetm
+	F3lKHMmwy7GmVJ4utGlI+HF5bAvClHkMLzq3Jqs9jwl8TPZYH/Gevtc6H6om42CMGTT5EMGoC5D
+	+6coHzo/Qgw7CAUShJFwBxkLDi/gCexQzSbPW6H0XXGUQ8TWjZ5BrA0+ptbD5G2clXdBFk7rExt
+	65GrlJHl9oACVmMc0j2Px+Rq3PxvGEV1UMzwCFcOF3SirK0Z/6neABXrPf++8uvVaL3WJuf+q8s
+	s2wUF+25I9zxX/FXF/1jAAGvJV1+iGioSS/UaPONYuAmFA==
+X-Google-Smtp-Source: AGHT+IHomluGctWizgZtSH5trDBzaFgDj+ueftSVYArwFryZmxdGjyK63OTKsCg8GE1J1QbtKEC5cg==
+X-Received: by 2002:a05:6402:51cd:b0:606:bea1:1740 with SMTP id 4fb4d7f45d1cf-60c66cd9c3cmr289224a12.30.1750869826213;
+        Wed, 25 Jun 2025 09:43:46 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:b5f1:56b2:13d2:a5cf])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-60c2f1b8e14sm2661774a12.35.2025.06.25.09.43.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 09:43:45 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Date: Wed, 25 Jun 2025 18:43:26 +0200
+Subject: [PATCH 1/4] editorconfig: set maximum line length to 120
+ characters
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com>
+References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
+In-Reply-To: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
+To: git@vger.kernel.org
+Cc: Christian Couder <chriscool@tuxfamily.org>, 
+ Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1288; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=7HCbL16RcywuwmWkey5Bd/URz58cvE7a/+2zbPtM50I=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhcJz/6l77oIWnN1Mv4/DRR11mEMK/zBaNDC
+ f1E1RvHFP0G8IkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoXCc/AAoJED7VnySO
+ Rox/ZvkL/jW6Et/Td4Kgnz1H5C9S6NqbtYCjxhwtRYTSNZBR9auybXKTJtwQDEb79UUvGct6Sh+
+ 55HryytkW6/vDwb7b26nrteyBAI0FdUfqOi1ct6ST7tO40rwU3iOy8u/IMxvF9VtZNJuRAlSlh1
+ CJhYpL+HR6hcHSw8xjmTv3sqpaM7fJdFCe+t0LOoL28D90gffnQMDBRp8hJZncSAg/NhlFpi+SV
+ Uo4onQ9M2RWriub3XT+GwSJRmwL/3z+GV9aXNoVARgxXAc1gIt2coXGEvrobM2GWbtXRlGpGCif
+ vy+DsYgPGsDnC0j+9Qg+yhL1uOMZwKXJxwbfM5M8oPrHp1nHHppCpDOKDivX2SovPMz5M9pKmQR
+ pXW43ZSjkDJPg1Zrpxp+qxFkinWJXAvUi6CgjJGDeX+A1wVtlzjrQ9o/blCdWrj6IPr5YYKkueP
+ lSbheEZkFlqLUe9pHY9CLXHv1UPGnzVdO+bUx6f5fE7eVzeuSxM5EG53yrhTl5JZu2HeSCkgt97
+ tI=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+As per 'Documentation/CodingGuidelines', we try to keep to at most 80
+characters per line. However, there are often certain cases where we
+extend this for the sake of readability.
 
-> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
->> Hi,
->>
->> Our customer has found a possible issue when switching branches.
->> Output redirection character `>` is not escaped properly when
->> switching/checking out to different branch.
->>
->> Steps to reproduce:
->> 1. Create a new branch and switch back to master
->> ```
->> $ git switch -C 'issue#1234>/tmp/dangerfile'
->> Switched to a new branch 'issue#1234>/tmp/dangerfile'
->> $ git switch master
->> ```
->
-> It’s too bad that git-check-ref-format(1) does not disallow `>`.
+Add a maximum limit of 120 characters to the '.editorconfig'. This means
+that if an individual line exceeds 120 characters, the editor will wrap
+that line. This provides a lot wiggle room over the recommended 80
+character limit.
 
-Is it?  It looks like an outright bug in the completion code,
-nothing more, to me.
+Contrary to settings within '.clang-format' which are used for
+statically formatting source code, the '.editorconfig' rules are hints
+to the editor. These are not enforced by CI and are guidelines for
+editors to follow. As such, the 'max_line_length' used here is only
+supported in a set of editors [1].
+
+[1]: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#max_line_length
+
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ .editorconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/.editorconfig b/.editorconfig
+index 2d3929b591..d0f940fd23 100644
+--- a/.editorconfig
++++ b/.editorconfig
+@@ -7,6 +7,7 @@ insert_final_newline = true
+ [{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
+ indent_style = tab
+ tab_width = 8
++max_line_length = 120
+ 
+ [*.py]
+ indent_style = space
+
+-- 
+2.49.0
+
