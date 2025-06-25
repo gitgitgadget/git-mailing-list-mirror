@@ -1,57 +1,57 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32F4B261585
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 12:51:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC22261390
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 12:52:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750855914; cv=none; b=dUdLY9IyJ7kTbIi4r70MWqeICzXKHbvriz1OGlfd1NiIw1cnrX3mTQkdGXUhJtB34nmBTzmUJgfwwVAraugphBq6PZZams0v7Ql1HcmVye4Ts2R8BKHGgRC3q69OH2G/69qwQdMQV4RbTC3VXnlG9I/rDqjI2/u2uWpILnodrYk=
+	t=1750855976; cv=none; b=X/uCkymAEuIertcr3FEZUDCtklSo8HtvXPQKBzbuPoqETf0R3s6PgN5FgQJZjQezFShOS1lFbc8hdLYngKSrUgdRfc+yGw3+syJurNaBfhsCQz8reEhGDTYM9f6zxWGVIY6kDCUtE8qat3hxMq5KKqWKA53wmDQ+Wgg6suR9CD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750855914; c=relaxed/simple;
-	bh=w1zTkdPiF8QCqtelW1FKqfn9JYDFBLMNPNyqOeU7piE=;
+	s=arc-20240116; t=1750855976; c=relaxed/simple;
+	bh=W0ZFrpzj+xp5uQjjvQeDr6dQru9qaVzbcnmwjQQNWmo=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n7KXWxvxTduTH8Ly6pU6FoyZlXtvUfG6SXBJZuf4MTWlWzBoupChButWTKHYPn6ThtZdYX6MkNhtb88GWtbByddfvUtCARUmbhE6E+DmucJGEvJh5dZrR+Gspc+Drk9pIUnKSlg1e+wT7T+CgDBEs7bAE50SOcx6G2grFH29LNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gov02KRn; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=gAMO2+QFBYxC6jwPBt87ejhgMCcN3o6iuxEeJ4Mk+jaWOxrMbR1gPea8w5YLsknbqbuZvb81I4YL9ixii6iq5tZQKsyG2O4LEHjHbZFCH/XwRQ0/zcy2YlH1Jt7KolO6BRAHmITaykN83Y8Qrnvp8a8S4PsvNVq5mMTwJA6osNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jKV26cn3; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gov02KRn"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ae0c571f137so118111266b.0
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 05:51:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jKV26cn3"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-adb2e9fd208so274240066b.3
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 05:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750855911; x=1751460711; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750855973; x=1751460773; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rBvpxLkoso/jjVvZYpw0WV0I7hyT787Q/kk/xe8qh0s=;
-        b=gov02KRn+agg9H+I7SUgnpIMzPq9hnk6L5yFFPOmRjf+R86yIUaJPIYckbLZ/qCNZE
-         gglmAR8SymoeMeTk70mfn0xEEKw6FIr1twjIkxR+OLtRroVqjHLbotK09c6SDh6qdqCj
-         G+nkPDkwe8TjbcKXwvrTfZGYk9/Ao5u2FOa2ltOU9giBWo1zACV641IkI7yh1OKxkBw1
-         TOf+sRNrRtpATj8Lwk4gkHZMxOUya4kPrLaI/7vX/LQrcg0ei9JLbSmI6xfccW8n43uS
-         LI3V0A0WtIricDvfy4LNFQP0yOmBPJS5IhOTBcFb8dP4yHU9sWKd/MlXa96yR7o52alc
-         nG+g==
+        bh=102DHRfy7zcBs/OvhHKOw8dODjbWQfpOlGqS3z2dYDA=;
+        b=jKV26cn3rNn/nkNvyH5fZfOZOoS273Nu+ZI3GQOQ5UmxzddK7lb+ZKfxntBVYh+/GR
+         Qjqk3X/5K1jwbH1zuASxecvhIZGYnd91F3TX+pX/TJR1/WJ4u5PWU/r7AFTXemhn9Bbu
+         VbG5FEjVu27n22Fi30KGgjZhz1TTLz4Y4nhUinbs5zETMQUc8R5auVu3ySABsU1uy4MR
+         WyWTVdNSFIS1y/D0/5lkdk1AY4kNaWF25WZ0yuDB73GFaJUpXYOfMMie43SGWT68M9d+
+         +Clx9e4yvCO8WBlfDeq+NZcejbPMNBPrLgKKspjX8tcE8o1+XnlWmgTYdZFeWkxWWhO1
+         mpIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750855911; x=1751460711;
+        d=1e100.net; s=20230601; t=1750855973; x=1751460773;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rBvpxLkoso/jjVvZYpw0WV0I7hyT787Q/kk/xe8qh0s=;
-        b=H4bCMNBssUxC/KGzHPhJwAYa4M10B+hYRK4xNHuo7qUh99Sxi+AK1jTKi3rFENV1Pw
-         403R4ZuJ0XGAzR+1HniTIwvJuJXMuh6lNuc2lhQJ60B9wCbsxx7ziYeEryEPR+OIpSZn
-         6VNPnFS6PALPMVadgY3s81Sxi+cLXtp+NldpmzO5rzpim4cww3A9YBe/TIBTyqT2jlSO
-         LxrFwOH64ienHk+VGGvOgFwIPj/Tl58g/76gFUSL+ZeNGAUqOmgpqqw5xmMuV4xh42SR
-         69NUL1ZXb4gKX7vWVw489UgTnlhY2/ddx3lnF/dy4ROtkzMJ3cqq9v5FrfAvN4pDufDR
-         0nPw==
-X-Gm-Message-State: AOJu0YxuFzY/ZDDLIuReLjgC4D/3ewtyMbij5hTm9jZOS8RdRRvyLVCl
-	o3AFu8G2Ozbp6tujN6xqUE3d25g4vhQ3eI+JgEZTQarbrK1sgZt+uGtpOA56L+3ZcVP60LT2zQe
-	YWaDqUKJ9hxUu00TnlUJn4uzdIvg+Lqk=
-X-Gm-Gg: ASbGncsFA9aHKZI8G5gzArNMg4V8dzg3OYtgJ7od50ErMo33z4sqxaXHn8ZNMBn970o
-	bRjBQbS60QQ6zSehGceno7mj0LjdymUlYtnxVcH/1plFVjw6dJXzWaUYkiJd0UYK2B+ztuS/JlR
-	5DU3t1Iz2smEYBfvHUO8UIRQyYPmneAKz8WCirMAi19HF6XA==
-X-Google-Smtp-Source: AGHT+IFBcC+vj56/iQfg1p2Qai9bxb0wJcyKMkgMoIrvQZjIUQQbRE5UIdWSpCY4nElDDwVQSVvRpt3Mc0GZn0xdewg=
-X-Received: by 2002:a17:907:3f0d:b0:ad2:46b2:78b2 with SMTP id
- a640c23a62f3a-ae0bf0190a0mr279226766b.18.1750855911204; Wed, 25 Jun 2025
- 05:51:51 -0700 (PDT)
+        bh=102DHRfy7zcBs/OvhHKOw8dODjbWQfpOlGqS3z2dYDA=;
+        b=EGdXwWgD0nfe8j7HyUx/z1S03BaCg0RlVuPn395Z1XtsbcCJhP4kWgqbsrq+E1+7zM
+         TainnLyG220oUebXvHFqVv6Y16MF0NXHqvaLdn694a1sw/tsJLlB/sjSEUceIdvo2OX0
+         FYdpiCPmQff4zP9L6WEVl8FsrUa8n6vrHP2bsls1XRjNnaf/gfvZtSPqC3CFrWf9//57
+         ID/MzodcDfPC8Su5O1hU+6mNN64HxCd52BvxoLHDur3fHJWCLmA+n2aORW5f27hBXOYB
+         thcT4NTFVTihsv+1IGngjVOWLO24M3Vl0UbK4ym3wUf1RX6GRq4eHZEuV6bplEsNDjUX
+         8nyA==
+X-Gm-Message-State: AOJu0YwUPhMeUAkgotnYs6SO5IX4PIY0tqjT4R+V9EBjY/fUpkDhfiyK
+	i+2MEztwkOWlxzO620pEQq3qEE6aMDamlTLB+kCwed+ULSJK+iQi/ig+pLu0JEaXdRL6WQTlbhb
+	fhvRz4ZYndS9A/sGUXTio/LLhr/DvZsM=
+X-Gm-Gg: ASbGncv0KbA0Y8B828M5mB5yd/YtWQ5QN4asbSg57z323KfbGRUPadJduXOUDpDC3/h
+	D0BNBI+I+9tQTMhrE5TnY9xs4PZF9iXY9cFr0+x7FOmSGCeBZECa2NIbvILAbxmjRkuropRmisE
+	NMEWXUqWAdamD3K9iYOPY1vGjc/dkLTJKwWRJNYCbSKlydkg==
+X-Google-Smtp-Source: AGHT+IF/wzXyVIUDXKud5VFbY0We5wIWLXpImidiqCUDtN49g/biwcJ8wz5dtIAkNePMm8EaTVqtGuaWH409mWK7BNA=
+X-Received: by 2002:a17:907:9622:b0:add:ede0:b9d4 with SMTP id
+ a640c23a62f3a-ae0beca03f0mr300891866b.0.1750855973007; Wed, 25 Jun 2025
+ 05:52:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,14 +59,14 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250519141259.3061550-1-christian.couder@gmail.com>
- <20250611134506.2975856-1-christian.couder@gmail.com> <20250611134506.2975856-3-christian.couder@gmail.com>
- <ojee3heqvvlk3v4ftuzaulm5vu7tvmc5idvqbda2ioiuurbmdw@sevh7jtsbbad>
-In-Reply-To: <ojee3heqvvlk3v4ftuzaulm5vu7tvmc5idvqbda2ioiuurbmdw@sevh7jtsbbad>
+ <20250611134506.2975856-1-christian.couder@gmail.com> <20250611134506.2975856-2-christian.couder@gmail.com>
+ <2z3uanklsfnrgxmiqjt2innv2diownbpwtgcj67bi7udwjdqpg@ackusinuz7c6>
+In-Reply-To: <2z3uanklsfnrgxmiqjt2innv2diownbpwtgcj67bi7udwjdqpg@ackusinuz7c6>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Wed, 25 Jun 2025 14:51:38 +0200
-X-Gm-Features: Ac12FXzUqefFfcinbwVSkOz16QRbYxBWx47-VrkUgUSzCGdcr-a_v1GP0_M9XC4
-Message-ID: <CAP8UFD2TYwXPm7djcpkuCjmh4h2FBPF5eD7NAQHt1GGOn63OgA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/5] promisor-remote: allow a server to advertise more fields
+Date: Wed, 25 Jun 2025 14:52:40 +0200
+X-Gm-Features: Ac12FXxHgSAEJpEywrcNvNyvTFg-7fNVV_DFJmg8ZwIKBu52EA9pjK6n1SXoq5s
+Message-ID: <CAP8UFD1LxX966Cd__AUg=trOWPc6-2K55-diarEU4Z69zLNtgg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/5] promisor-remote: refactor to get rid of 'struct strvec'
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
 	Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>, 
@@ -74,39 +74,89 @@ Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt 
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 23, 2025 at 10:04=E2=80=AFPM Justin Tobler <jltobler@gmail.com>=
- wrote:
+On Mon, Jun 23, 2025 at 9:43=E2=80=AFPM Justin Tobler <jltobler@gmail.com> =
+wrote:
 >
 > On 25/06/11 03:45PM, Christian Couder wrote:
 
-> > +static char *fields_from_config(struct string_list *fields_list, const=
- char *config_key)
-> > +{
-> > +     char *fields =3D NULL;
+> > It will only store promisor remote information in its members. For now
+> > it has only a 'name' member for the promisor remote name and an 'url'
+> > member for its URL. We will use use a 'struct string_list' to store
+>
+> s/use use/use/
+
+Fixed in v5.
+
+[...]
+
+> > @@ -340,47 +372,36 @@ char *promisor_remote_info(struct repository *rep=
+o)
+> >  {
+> >       struct strbuf sb =3D STRBUF_INIT;
+> >       int advertise_promisors =3D 0;
+> > -     struct strvec names =3D STRVEC_INIT;
+> > -     struct strvec urls =3D STRVEC_INIT;
+> > +     struct string_list config_info =3D STRING_LIST_INIT_NODUP;
+>
+> nit: Ok in this context, "config_info" is specific to the list of
+> promisor_info not just generic git configuration. Something like
+> "promisor_info_list" would be a bit more explicit, but I don't feel
+> super strongly.
+
+Yeah, it's not generic config, but it's still config, and I think
+that's important to help understand what the code does when it uses
+it, so we should keep "config" somehow in this variable name. For now
+I haven't changed it.
+
+> > +     struct string_list_item *item;
+> >
+> >       git_config_get_bool("promisor.advertise", &advertise_promisors);
+> >
+> >       if (!advertise_promisors)
+> >               return NULL;
+> >
+> > -     promisor_info_vecs(repo, &names, &urls);
+> > +     promisor_config_info_list(repo, &config_info);
+> >
+> > -     if (!names.nr)
+> > +     if (!config_info.nr)
+> >               return NULL;
+> >
+> > -     for (size_t i =3D 0; i < names.nr; i++) {
+> > -             if (i)
+> > +     for_each_string_list_item(item, &config_info) {
+> > +             struct promisor_info *p =3D item->util;
 > > +
-> > +     if (!git_config_get_string(config_key, &fields) && *fields) {
-> > +             string_list_split_in_place(fields_list, fields, ", ", -1)=
-;
-> > +             string_list_remove_empty_items(fields_list, 0);
+> > +             if (item !=3D config_info.items)
+> >                       strbuf_addch(&sb, ';');
 >
-> Ok, in this version we now filter out empty entries from the
-> string_list. Previously if fields were specified with both a comma and
-> SP character (i.e. "partialCloneFilter, token"), an empty entry would be
-> parsed in the middle and lead to a warning message.
+> Out of curiousity, is it invalid for the trailing promisor remote entry
+> to end with a ';'? It would be simpler if each entry could just end with
+> a semi-colon.
+
+It would work but it's not really valid.
+
+In "Documentation/gitprotocol-v2.adoc" which specifies the protocol,
+most of the time when different items are transmitted together they
+are separated by SP like:
+
+item1 SP item2 SP item3 LF
+
+and there is no SP before the LF.
+
+For the "promisor-remote", we need something more complex but for
+consistency I think it makes sense to not repeat separators at the
+end, in the same way as SP are not repeated before LF.
+
+> > -     if (!strcmp(urls->v[i], remote_url))
+> > +     if (!p->url)
+> > +             BUG("bad config_info (invalid URL) for remote '%s'",
+> > +                 remote_name);
 >
-> This change is good because it would be pretty natural for a user to
-> specify the config with both. It might be nice to leave a comment
-> explaining why we do this though as it may be confusing without context.
+> Ok just to clarify, it is invalid for a promisor remote to not have a
+> URL specified. If so, it might be better to say "empty URL" or something
+> along those lines.
 
-Yeah, I have added some comments, so it looks like this in v5:
-
-        /* Split on any comma or space character */
-        string_list_split_in_place(fields_list, fields, ", ", -1);
-        /*
-         * Remove empty items that might result from trailing
-         * commas, or from items being separated by both
-         * commas and spaces.
-         */
-        string_list_remove_empty_items(fields_list, 0);
+Yeah, in v5 it's now "URL is NULL" instead of "invalid URL".
 
 Thanks.
