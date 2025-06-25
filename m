@@ -1,100 +1,125 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1400265CC5
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 14:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C78F2262FF1
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 15:03:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750862518; cv=none; b=WmFTNq22hk9jslCycwg0pSFciNE32r3Xs+rsBxxEmzDPZukPTpzHuTgoO37upDqLPN4kdf4vRWxkFSEhjgwOs45HLaGdWXzgeS5KS01johfcrRWcGbC57P9QYYH9SiU4vVkCUKsb+1g6uGKthWBQVTX+BsbB58Vp1EKrTbXAbsA=
+	t=1750863840; cv=none; b=bAp6AFV08E24jHfF30jg4tWEwoF41juUTPsdAqXxzeEvqJ9k3LK8/dwt6rXfOwG5uTZgxJ8lwj+FNChdUAvLLKFtHmFa00HZQYG+cDSslYDElTIjOgwNF11KtO5dQoPvxbAeW1LQsl2o3xfamo9QZOSXW31nNaCZVniDK0D8PUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750862518; c=relaxed/simple;
-	bh=wYLgtjT5Yz6vZJzPjzvb0zlXm0p/dzdeoT8SvkxcqcQ=;
-	h=Message-ID:Subject:From:To:Cc:Date:Content-Type:MIME-Version; b=fOdSVQaWVYgL8tZkSK0ESNt23Qq0OyuMwsWkC2CR2vUlIcA/6qHT0cLVy3YDc7EEdg+c+5ZWEjcgqUQTx3sOBTmUa+z8FnHJRRiYpWwQ6TTA6/cEUEwlpNUKtEtnOolhG0vQo/Tp4HQfS2rPyd3+wKWvc/R+LmK83qQ4hF9xzDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OygAe5h5; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750863840; c=relaxed/simple;
+	bh=VzS3WHGAVUYwQfOD0gx61k3cKkUlYoIuhIh05mIExjQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=t7w1g9dCA2IA6Pt+EtUfPg3o9qo1DESIdI7Si+t6MWmGOpqjI6AATkkJ2uMlhyhQLIfV+WG8Sd3RHaEVwDIpapKvc1krNcfZzlhwA2TJz8LYi7gycI+k1Io2/ibbpJyEFjq1ERfjcYEPsBcKoSac9Jpkl/FytuTvsrLgYtTz/No=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X12ifZwU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TiCB6k4y; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OygAe5h5"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so59542225e9.3
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 07:41:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750862515; x=1751467315; darn=vger.kernel.org;
-        h=mime-version:user-agent:content-transfer-encoding:date:cc:to:from
-         :subject:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5zQyTX+XKZGgvZTngbyg7xBwPBR3NqXPEpucucIu0ZM=;
-        b=OygAe5h5QeXhX/ZOuK993UHmBwSCeD8PJLZnY/uJpTf5XFxZTeh5VBqeR8wOETx12P
-         1rmQdazeKfnmnFzp4/egXYnIPmssxVTjby7Q5DElsPE8yo6Zx618svfZre3OBZeQn6u4
-         XE+rFshIrYGPj/Uq04hxv06Umc5RWj5WZ0xkVHvIaBqYx4I8uIiN0DpPl1SBrLjHAf2t
-         5L56AZDGlOLnXP20OnAmmQngTYgG5iVUae0sQwE+5H1dAg1hy2g0ZW5rUjHN905K85Q2
-         PTlHpuh+lcmHjL2jSvZvbR7MfQc+uiYlOW9v3zb+LHNdiencFpUM+1zt2cUHwQrMIFbA
-         WpkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750862515; x=1751467315;
-        h=mime-version:user-agent:content-transfer-encoding:date:cc:to:from
-         :subject:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=5zQyTX+XKZGgvZTngbyg7xBwPBR3NqXPEpucucIu0ZM=;
-        b=RW9WDPc+SEBj81TQuUOLZZ8QOPzuBzyimv+lWIwMJLwxSf+On6UGSuacm6jLLNyrTc
-         KFaO6czXMm8OP/SaMtmzP8d7ZltS0raH9+DUcR5mdS6KDV0Ol5CNSaB9z59UgLwvycG+
-         3ghpunU3J7mPReSGeJyXWg2R3lhswFeo9N2ewUJpnrJ5miLavLh/zfEtnF84d1fTTfR1
-         iL4UALWqGDB4cSb0m6oNf6jbf1CFQ4wh7MICQZyRmn+Ils4RVHbm/fde73t2lZssgS0k
-         Ax0j0gtaFgSlVD0D/RP/FXXi1N7HlHtJou01G6Hb9nvM81YIcdh5vvBO4zpM8BDghqk3
-         +q7Q==
-X-Gm-Message-State: AOJu0YwL0U1ggfsKvHp4A2y07GPwxkcnMzXYnxq/Qy6W6AnIpjGcWmN0
-	G/d9sUYxuJBTey4MCpiEHyqQk4A7EnGqIC0TCkv86WSMiFL37Ge8KgEkiMzYJsF1
-X-Gm-Gg: ASbGnctqLLYZE5uUep80maggMfh9x8ZRJJAPEJhTuTZIZ9uSouSoDmg/pNreHk7aX6J
-	PUDR7vbJ+yDqsyVi0M2Rci9Puj7wOfZCwY+qD57oqPxDQW4adfCEYDKRedpdf1D72BjL/ykHSXP
-	kHlcFWTid9xztXIxBiF4Idb0768qtGvTY67JxUH77MCGJc/WMOHIHHGheaHyim3Hn8Hu7UtFj9w
-	5aaIQ00mm/+einDwENoKfk8b/GwyiJhogOFMiQS5URojzeV0Jyqkf3EGmKRr1j/Hm/uDwRE5GPM
-	JR6WtQuU7TmsQZVDMu0h/reUGOHgtmCl4Q/0ORpLbTqyid0Bpp+Zg77IJMFg7pYAMBvWnbD9xRs
-	NX1QGdlJy4PiJmmp7hrhf4M4Rdm2zYdfEH19eBs996uRKXjDgOxo=
-X-Google-Smtp-Source: AGHT+IFL0GjCjwXD8JYYM1tsTzp1gCBix9WiH1HkfUusBX6Gp/BqoCCRuuU/pr3rmTng9nchgp1zzA==
-X-Received: by 2002:a05:600c:6383:b0:43d:ac5:11e8 with SMTP id 5b1f17b1804b1-45381ae45dfmr28794825e9.21.1750862514667;
-        Wed, 25 Jun 2025 07:41:54 -0700 (PDT)
-Received: from ?IPv6:2001:8f8:1f3d:bf4:1c8c:3398:6498:e1d9? ([2001:8f8:1f3d:bf4:1c8c:3398:6498:e1d9])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538233a537sm23329565e9.4.2025.06.25.07.41.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 07:41:54 -0700 (PDT)
-Message-ID: <1678ec18cbd52b8714034cd86a44d17c84eeee0e.camel@gmail.com>
-Subject: gpg signature missing from commit f0135a9047
-From: hassankhalloof20@gmail.com
-To: git@vger.kernel.org
-Cc: gitster@pobox.com
-Date: Wed, 25 Jun 2025 18:41:52 +0400
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.2 
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X12ifZwU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TiCB6k4y"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id D1DF7EC01C9;
+	Wed, 25 Jun 2025 11:03:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 11:03:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1750863836; x=1750950236; bh=xizTeJ/+Uy
+	u2j4uKN0Rids6xH4bCX76r/7L/26WgO7s=; b=X12ifZwUwQwkmkBAHhrVQ659dg
+	s52qKtvAzgu52E8uLkJatpZaJOH7fTO/DbN2jdgKAFp915G3sYxl/qvZcXuvhbyi
+	6I/jJwxoMv5vVQHpnAH70mTiZ2Qk+1HfZCs2cmCJgKhutouhxxym51eC4RBOVTnW
+	oc9ycaius7pb0RW+UxPAOIHlACTbRPit6tK5lb7xBEqjkMr8fkIIzkVZiphBm50P
+	a+tJ4XsahPTTJn4N0fKIieF3Qdzffr94Kc78SbLnIJL/gIXAiRzx9WKN92EwWEjq
+	wVjCKbM/hyNDEX87Rs07NR5mLRXQWc/2kNIx0sDT0vLwMz5x2V4h7LvfaWlQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1750863836; x=1750950236; bh=xizTeJ/+Uyu2j4uKN0Rids6xH4bCX76r/7L
+	/26WgO7s=; b=TiCB6k4yXzzN//aXGR1Ya2EfFvAHggbWeGSTxfMtnkoKg0sXsoG
+	ZyYIuUZnAo0ipa9TxA6pj36vvOPeVVQxSmiPoyYFNfgQ2NoyCBRkwUD0UFhPm1Ut
+	mED5LU/AtFyq73HWO0a33GllXU5LFToWryJiYuiZHQ4niwxf5WhhxEVWr+wyHLXG
+	fa0ihUkgvWEe2eTpata/zf0nadExDxAPZFTWAm6+k0qxk5y1MhhdThwyEOKOeK7C
+	LNkoMMW/eYqT8pea2Jj1+A+msX+nS1xE22hsQGZ3ESk6sbhXxHXRAPHkEGwlVgZd
+	sAKHSi5NQzIteY0wCOcpfG29JxnMHIZztqQ==
+X-ME-Sender: <xms:3A9caCqHkQo07g-cKzBOsz49v4eGrOQOhSRo-8QGWIS0xvDu4OCWDw>
+    <xme:3A9caAplFI7ylhy_CsjQ9vGN4RVkx5oKFTY8p3anHgF8wSQ6yLCCWgqtgFD5lL_YO
+    ZN5s6AZst7I_p1HXg>
+X-ME-Received: <xmr:3A9caHNZDpoSJvjFWtAAuxfoDZcCY6rnj0QwvlrQzHkw9Gtxvy_gaCBDWgtoeoufgkt-iJUqyCVyHTSSrv2Wx5KJ81z-z3H13MDgDwE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:3A9caB7UYPF6Vf5G0uW4-aZaW32BgvZQ3MSIt_bzYp-Qlgmx-y8xBg>
+    <xmx:3A9caB4JuZAREzctdIvyT6LgJ7lT3o2eKF6tTEj2Craw6D4g3VDtqg>
+    <xmx:3A9caBhyiMmZmy7Ulo_dCucbrxpFCB8yxYUJava9AuH-s5mQzOskaQ>
+    <xmx:3A9caL61V9aPyW_xS2LeLVRtiFlARr18U_ZJqRz6B_u37nulywKJBQ>
+    <xmx:3A9caEXBImzcwUAVEB0FeWO3XIVEZiccG2-ntnl0IgakxfD9I1wjkAe5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Jun 2025 11:03:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jun 2025, #08; Mon, 23)
+In-Reply-To: <CAOLa=ZTXQewoVKLk6DfO79Q9R5keDOeEOWOt9Ejp4O_RQ0Jq8Q@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 24 Jun 2025 18:29:25 -0500")
+References: <xmqqtt462bye.fsf@gitster.g>
+	<CAOLa=ZTXQewoVKLk6DfO79Q9R5keDOeEOWOt9Ejp4O_RQ0Jq8Q@mail.gmail.com>
+Date: Wed, 25 Jun 2025 08:03:54 -0700
+Message-ID: <xmqqecv7zwv9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain
 
-I have added all the bad objects discovered through
-`transfer.fsckObjects` to `fsck.skipList`. No other configuration
-options were changed. I ran `git status` thinking that there would be
-some way of contributing that upstream so that others cloning the repo
-in the future would not have the same issue, but for some reason I
-couldn't do that. However, I did see that a couple dozen of commits
-were added to the remote.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-$ git status
-On branch master
-Your branch is behind 'origin/master' by 25 commits, and can be fast-
-forwarded.
-  (use "git pull" to update your local branch)
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * kn/fetch-push-bulk-ref-update (2025-05-19) 4 commits
+>>  - receive-pack: use batched reference updates
+>>  - send-pack: fix memory leak around duplicate refs
+>>  - fetch: use batched reference updates
+>>  - refs: add function to translate errors to strings
+>>  (this branch is used by kn/fetch-push-bulk-ref-update-fixup.)
+>>
+>>  "git push" and "git fetch" are taught to update refs in batches to
+>>  gain performance.
+>>
+>>  Tentatively kicked out of 'next' to give its fix-up topic a chance to reboot.
+>>  source: <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
+>>
+>>
+>> * kn/fetch-push-bulk-ref-update-fixup (2025-06-20) 3 commits
+>>  - receive-pack: handle reference deletions separately
+>>  - refs/files: skip updates with errors in batched updates
+>>  - Merge branch 'kn/fetch-push-bulk-ref-update' into kn/fetch-push-bulk-ref-update-fixup
+>>  (this branch uses kn/fetch-push-bulk-ref-update.)
+>>
+>>  Additional fixes to the base topic.
+>>
+>>  Comments?
+>>  source: <20250620-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v5-0-f35ee6b59a82@gmail.com>
+>>
+>
+> This was reviewed by Christian and you. The latest version addresses all
+> the comments, do we need some more eyes here?
 
-nothing to commit, working tree clean
-$ git pull =20
-fatal: Commit f0135a9047 does not have a GPG signature.
-$ git log f0135a9047
-commit f0135a9047ca37d4d117dcf21f7e3e89fad85d00 (origin/master,
-origin/HEAD)
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Tue Jun 24 09:47:25 2025 -0700
+OK, then.  Let's move the commits from the latter on top of the former
+and mark the former for 'next'.
 
-    The third batch
-
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-...
+Thanks!
