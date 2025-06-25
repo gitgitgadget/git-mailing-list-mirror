@@ -1,119 +1,147 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD59A1FC8
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 19:35:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133651F3B8A
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 20:19:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750880134; cv=none; b=IKcWH+FoxSRSoWhnRwrOf9viGfvyBHHlJwLe0nJsF5mT8Hq2APJzSwJ6IJ9UmDnWC0FCcr4C8hNeyqlenfxe2zPG4Y6WsjwX8EYp8J/Oq9T+Nog8mULZ1sULygaPqaq1YMQRxhrwV27mBONtoqPaGbp8NHsLhAgF1AXik0+lmcw=
+	t=1750882785; cv=none; b=dBg/f87pirHjje/9rNLm4vZwhVE3ZznuaUYu7zrJxq+NCc2AG+bA7Lab4VDu79vl+gk4y2dPnT8Wjg8HIEjRzlZlMpSd/96l78OUFqOJNnUz/1nJLViXbeSLbK/P7mp+GqNCU4TWasBL11P0jZ/p+foTkkj1wiZlmeebLF970ho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750880134; c=relaxed/simple;
-	bh=399NIasFpbS4PqXZh2hakAqhTcre5uyf2XEJh2T7G4Q=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=EROZ89bGrudGhJsanRx42ifhmMFzJzJaHx6byNkxtke2TFnaZb3SYhJIUuaSfLlR0hkpOu4ZlismE6ciZUxe3LaQo1YwisKmWwtSsUnO50K6NX8fH5fSIse4FNH28xkYzy+Mub/YJT0cW5b1e30c/alae361Gj+aqtYpHbNr4sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkRRH0pM; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750882785; c=relaxed/simple;
+	bh=vLQspK/zsAg/NBI6eyI3BP20aUNhIXZ+B+kwRgnD9FY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=dLB2Qu3jWVRqziBKCNZxwlIlzPY+cKGvgKIR93XM/yJYjUufywlzsr91limDYeFo2EqcTKkcj3cAfBRF7BfAdZshBbnVi64tmy7Q3PODiqthb0sJ2sIHecMLeCBXdFGhmRssad7BTrQWaHJ0uZPvlrCILhy1Tm29dbFvACYacNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ERCKD3I/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Y2n96ji7; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkRRH0pM"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so1374515e9.3
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 12:35:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750880130; x=1751484930; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=nDPDC/C7wr8Ff8ZYwcaBJv83nzGfZ163beTj6T7PP4o=;
-        b=VkRRH0pMPCony+HNcc4PfiI2N+4gFg9dHlec9O5QhYdepbYe9xnaLqjqq3iRoRVRa7
-         jBJnw46JHQZ+cMju5HbB5KURO6IDIZbOOmtYUHwqkpPPQxBCirW8wQXldX10x9yov5gR
-         hd8+yXIM6SgywVQ+x/8VutSuD6nqgXgm98uA2IwMiRgBRnDYOhWLgGIb8MTDicJLYR8V
-         8UQUVFpMoTQRTXFCg2PCtU1kiI+bYqJqfI4QiVsT5SrWlLK+EGqWAwzbmum1ZfTG5W8S
-         bM75ehwWP1AlMM+Arsp4ixryeoiF6cUEjfNlKTOEZDnqPTRbbDSTeBAdX/LbSLOCiRmS
-         Jm2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750880130; x=1751484930;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=nDPDC/C7wr8Ff8ZYwcaBJv83nzGfZ163beTj6T7PP4o=;
-        b=Go9KUa/iVRS/+bW+jiVePX/wwFQ+jzVxf+vrtd3IOCDx7jVtAU28eJ6grGbNlNMNtF
-         /gE9UwJ36bG++7rNneDdNkiAwW4tFiKYu1AN2YGNn2oM6TNP3HdGdPL3cU2b0/egCTqr
-         8nBWJGpyTg7vWFFdk+2SaOozle86KQVpSh2nu2e6bowlnHq8csUF/QS5g6Z3F791nM8c
-         mu7vhzxVj60SdicHGhpiSQBAmProtRgRtCrz8kQQoLLgdJPu2ESISSQM3mWSt07kL7tO
-         tWOgxDqxuBlIGm0d5xbQznIi1h5RX9ksFFdCi9Oz+JgnSRaX+eVkTKvlh6qfCXTIAqTs
-         1qTA==
-X-Forwarded-Encrypted: i=1; AJvYcCXsL3kR557L7D1su2EuYIQ9uRfH7CzRucS1d6xAGOET3vD+tHuXfJiVj0D7fC/3q1f7FYU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxVE9L5MfsW8MUpbIhWjb+eFjwyGX8nE+dzKL7UHLMXpo64bFXc
-	AvE9n4zRleLrNtMbPrRpbkdgWzqshaFO5PTyqAiIW/Ldowuv3nZS5Kuz
-X-Gm-Gg: ASbGncuO6NGlSgAWe07wBF3ks4z25kkLcAvvBLNmn99g4p1xThBK42egMW3TA6kkq8k
-	peRD3imBm/9Lb37/Y589ODIJHxcFtQqEDA1cc5TpjRNUZNX6unB5dK+1/4xWB9rECEmG7gkjcXb
-	kPw3aKktVglO06urtGUZ+gimfC5BoveCcraF8B85rLhR8FGAYC5bn9PmzcwSmMR+r6ewGRbnRvU
-	H+MxPFZopDuUKav9Ww3JIGCbqp8qGmEN6J7BtBDc7C9+mIvIFroiSTxBoz/7pPq8rpW949JjeBL
-	kro9U90P9saqFLbX1y6jd1AzJPT8iMijBgm5buQ3PakCqCXdL1s12ou2IThgvOqAc6fdaXKZlM3
-	iW/t/NYBe/SF5SDrmNvL/5UB017Igjq8sL7pWNQ==
-X-Google-Smtp-Source: AGHT+IGePgNM7j58nrvt5addXAV2ZQOuUFSElzW1uQsBHhw4HgPr/s4w19GKNZG9y1MVbd0BYijKsQ==
-X-Received: by 2002:a05:600c:4454:b0:442:e9ec:4654 with SMTP id 5b1f17b1804b1-45381ab0477mr44038255e9.8.1750880130063;
-        Wed, 25 Jun 2025 12:35:30 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e80f259dsm5443306f8f.50.2025.06.25.12.35.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Jun 2025 12:35:29 -0700 (PDT)
-Message-ID: <c314cd2d-8fdd-4386-bda0-881ff87d9204@gmail.com>
-Date: Wed, 25 Jun 2025 20:35:27 +0100
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ERCKD3I/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Y2n96ji7"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id EF9441D00036;
+	Wed, 25 Jun 2025 16:19:41 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 25 Jun 2025 16:19:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1750882781;
+	 x=1750969181; bh=fsvXs1Vcu6Nw0cEwrwqK9dRdxeYChfisuD/6FMtQ5Vk=; b=
+	ERCKD3I/14gjMtRQWFaGa+kUbCoU52JwQtMDk9GTL+Ocp11GSC8rd+0agkoiOJrv
+	YeeXePlyVl3S/Gbgx1Bzj4oI0ZM5BwYbvorJbtkhtR9yW9xfpI3RwtABS4erqJOk
+	dGR3eNUTXc1g/LEdJuYtpSqvC/NlzUjS8p6KOzChhWtyCd9LFZXNEgk2oVhLOxlw
+	pg+tHDYlRf7Hw409NqfsKaQrU8UPdAmvohCSWmhfyU/EKitT5FU0xTMAkqbvQqK+
+	w5MmK1Wd2Ms7z1KavLqZzodLlxh6DmiQ66ko9YW8xtjKIAuBp/S3nB0NEXiVHfPR
+	+JVROB/oWqw6HX7zylVJyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750882781; x=
+	1750969181; bh=fsvXs1Vcu6Nw0cEwrwqK9dRdxeYChfisuD/6FMtQ5Vk=; b=Y
+	2n96ji7PYlxSq7vymCWVytODdy0ObzuxAWn46bv2NFDqUFFjrqRhVmIQ19hsNvjy
+	y/qm+jy8T14/bxWj0cfzd4TJQg6cFa6JWdDpvI4eFpVacvzLA9vHG5E/CHA5bAFz
+	ds+FDIUW9DnJ+oVqoypgFM9n7kMoARMCp1ABChkabA+2cGqGWIl4oR8zGXy25MiX
+	PbuxKuD5BxwTWsFHRgFH8sjmr5/B6yWcnBofwYjTdTWKkxAJyAGMfdPsJPQsTYo+
+	WwgUI7ahHfzEUzvKGfcQqPdWdIv57IFmiP/tuZR2eT/RKBk76frbobPjJEIyp5CB
+	CsTT4uvnAszSnZ81vWZEQ==
+X-ME-Sender: <xms:3VlcaBRWrjQ4Ga47YxdEjifBK0lYUB16mdiLBJG1tsC9Kt35k_q4Jh0>
+    <xme:3VlcaKy69gkNMm77J6_T8ZnpHPaN85F1uawr8qlNDazg3eNThgeOWPSCEYL54-0tq
+    IzexxIykvWb-TRLng>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfeejudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghl
+    mhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:3VlcaG1btB8ZuXVd4npE_Hm99tt9XXS1aaMhYAL_qxszmoAnrvUBQQ>
+    <xmx:3VlcaJBHTp004dyxL3WDu8-CIhpecoM9Cru5Lvx0tFoAnp9urW1mww>
+    <xmx:3VlcaKico2PdLTJVUYuROidypZ2uRTzQ0V8k8L9vl4HqbrYuSSV4PQ>
+    <xmx:3VlcaNo_Lwfa0uBcQ8TMY-hwEkdD088PCrm_q2rg_Wu4hMNFUShSWA>
+    <xmx:3VlcaC7R7Ahzst3e8zu_nG1op_URAhVG5CCSGW67aHrcbk_0GzPlDyAm>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1975C1EA0066; Wed, 25 Jun 2025 16:19:40 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/3] daemon: explicitly allow EINTR during poll()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, git@vger.kernel.org,
- =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
- Chris Torek <chris.torek@gmail.com>
-References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
- <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <907a79d1-da2e-4c8e-963f-05c6e313643f@gmail.com> <xmqqo6ubx00s.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqo6ubx00s.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+X-ThreadId: T38185b1eafdd6744
+Date: Wed, 25 Jun 2025 22:19:20 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
+ =?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>,
+ git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <71204f81-3281-4089-9e9e-1a81a73c8d41@app.fastmail.com>
+In-Reply-To: <84eccfa1-88fe-43b8-a839-61ea4fa4e4e9@gmail.com>
+References: 
+ <CA+B51BHEB24JNzOroTxFodxiuPJ1=Vj7KRFevrm2YatnTVuoYA@mail.gmail.com>
+ <8515698b-4ab7-4901-bacb-1c47180c2530@app.fastmail.com>
+ <84eccfa1-88fe-43b8-a839-61ea4fa4e4e9@gmail.com>
+Subject: Re: bash: unescaped `>` character when switching branches
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 25/06/2025 17:24, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> On 25/06/2025 08:35, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
->>> This series addresses and ambiguity that is at least visible in OpenBSD,
->>> where zombie proceses would only be cleared after a new connection is
->>> received.
+On Wed, Jun 25, 2025, at 15:57, Phillip Wood wrote:
+> On 25/06/2025 09:53, Kristoffer Haugsbakk wrote:
+>> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
+>>> Hi,
+>>>
+>>> Our customer has found a possible issue when switching branches.
+>>> Output redirection character `>` is not escaped properly when
+>>> switching/checking out to different branch.
+>>>
+>>> Steps to reproduce:
+>>> 1. Create a new branch and switch back to master
+>>> ```
+>>> $ git switch -C 'issue#1234>/tmp/dangerfile'
+>>> Switched to a new branch 'issue#1234>/tmp/dangerfile'
+>>> $ git switch master
+>>> ```
+>>=20
+>> It=E2=80=99s too bad that git-check-ref-format(1) does not disallow `=
+>`.
+>
+> It also allows `<`, `$`, `&`, `;`, `(`, `)`, `#`, `"`, `'`, '`' and `|=
+`.=20
+> Our ref format is not designed for them to be used unquoted in the=20
+> shell. I think the problem here is with our completion script not=20
+> quoting the refname, not the format.
+
+On Wed, Jun 25, 2025, at 18:38, Junio C Hamano wrote:
+> "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+>
+>> On Tue, Jun 24, 2025, at 14:59, Ondrej Pohorelsky wrote:
+>>> Hi,
+>>>
+>>> Our customer has found a possible issue when switching branches.
+>>> Output redirection character `>` is not escaped properly when
+>>> switching/checking out to different branch.
+>>>
+>>> Steps to reproduce:
+>>> 1. Create a new branch and switch back to master
+>>> ```
+>>> $ git switch -C 'issue#1234>/tmp/dangerfile'
+>>> Switched to a new branch 'issue#1234>/tmp/dangerfile'
+>>> $ git switch master
+>>> ```
 >>
->> There is still a race where a child that exits after it has been
->> checked in check_dead_children() but before we call poll() will not be
->> collected until a new connection is received or a child exits while
->> we're polling. If we used the self-pipe trick described on the
->> select(2) man page [1] we would avoid that race and would not need to
->> mess with SA_RESTART and so would not need to introduce
->> USE_NON_POSIX_SIGNAL.
->>
->> Best Wishes
->>
->> Phillip
->>
->> [1] https://www.man7.org/linux/man-pages/man2/select.2.html
-> 
-> The principle should apply equally to poll-based service loop, I
-> presume.
+>> It=E2=80=99s too bad that git-check-ref-format(1) does not disallow `=
+>`.
+>
+> Is it?  It looks like an outright bug in the completion code,
+> nothing more, to me.
 
-Yes, you create a pipe, add the read end to the set of file descriptors 
-monitored by poll() and write to the other end of the pipe when a signal 
-is received.
-
-Thanks
-
-Phillip
-> Thanks.
-
+That was an aside.
