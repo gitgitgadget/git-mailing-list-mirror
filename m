@@ -1,89 +1,92 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A021E5B6D
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:23:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931352C3242
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 16:24:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750868582; cv=none; b=qI4cX2FwTZT1LQe6oReP+DNg8HztK5j6KyvjPnQjyvOi8ni+GeXhx8MJOHgwK8zI6gJ2XaN9Ayxeg2XiXm+aVu76lj95BzeGc4aGK5LShkuWCiUwJw1/BkeKa2T2a0n9zadzVZJdjeUCQbzg84DkiQkD/nm1Vz9rL0jOYZafz98=
+	t=1750868647; cv=none; b=EbXA/ghHNoaCLpu7sFWHVsCwKNvhedb9T7NaSIqS+uDxLF7+HDm2TM5nO88G6UTHq3VYQpn3+Mo6vipvfB/d/LYQxfN9Vtrglg+j8gr+UVsion41eCnEMXD8Wc7SXpwyyo+mvTzdm3pQM+MbPEJKJRS95YfNerS6F4jPFuF8Z6Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750868582; c=relaxed/simple;
-	bh=DEhV2R124cTRlbmEVYhuKtMvALVMOsQj/So/RwshiyU=;
+	s=arc-20240116; t=1750868647; c=relaxed/simple;
+	bh=Fh+zHAgKXPaAv3Xo0adS5VprNH3PBUhzTfT2nlCsDPw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NKx3J1Mzp0ZncU7O9LaKE8Z7x+UYrwbP+xd8L0rIyM66bU/W9ZB6kKbrcqZT4ohAVpgje1Uh7X2aMwr/Nyl+pPAIiEMEI7lpWbz6ohXykSgDN6GqwRrA35zNshFhXxHNB+/lG1tglJaRrUghuvM57Z75J4CHOuRIcYwTuYY3uBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CpNR8fSz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JgdJS7BY; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=IbGy6OHeEIVSAS8v7M+rYoBXjyWGWmYbr7X4KLvs1HRhqhkjs8qOBXVUcQ7eCtKYoGB+6BMQ9GNGssC3+TiJ+CRm+pTzqfWeB2j1/hx3H8S5XzXe/sjNbbHxALlcnsu7DJ00lH5y9sUdn9b3a9vM5xeb5MuDrWbvYwp30K5tHX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oBsvYuuP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Axf7gM5W; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CpNR8fSz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JgdJS7BY"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EC053140018E;
-	Wed, 25 Jun 2025 12:22:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 12:22:59 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oBsvYuuP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Axf7gM5W"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B3BD11400105;
+	Wed, 25 Jun 2025 12:24:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 25 Jun 2025 12:24:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1750868579; x=1750954979; bh=67m8SwSKrI
-	dq9LDRVj8zUF38qZfPq/Q447xphkSk820=; b=CpNR8fSzxDqClSFRiBIgypYDC+
-	QK2opCADRqLV7RVaJu4GYNaoNOYkGhaqbt580I5la0S+mjvjBeEyvXiaGEBot6Nr
-	gHoCsF0tMakdpPXWXrEcULvy1cwckTOq617bspCG8+4ttja0h+nQXURDw7BIjm5x
-	w6jdr1yiTLvkKK6bxu2PMkESzk3ng4uDO3bbppG/6xNo88fQARuB4Auc9XQ5jE+X
-	X7sABlNZxMYYsoNlceV154A56+MPDRlTgfrHtmxVN+486c33Zx/dqO8zjPeNRZ1C
-	tJUMyMt4AbFCl5tqcR9X982yVUlnYGz3t+ELYbufWcmae7K6rEVE/jA+EPSw==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1750868644;
+	 x=1750955044; bh=Fh+zHAgKXPaAv3Xo0adS5VprNH3PBUhzTfT2nlCsDPw=; b=
+	oBsvYuuPNTZohOtPi26vepMdmZ/E8w6yqJR4Jyfohw9KkmQN6/X71bGkFLM1j/HU
+	mF642L3bGUsMPrY+uOTn7dogOLWUgBOHAgvPST0tsOGzYH1Anh/HTlkLwP8jrp1B
+	YDZCR6NWp0Uckj5T+Pr0MlXGd2vTiEr0WxmMiCAClfwDcuREXlknuRlD8sbVaSz9
+	SZXrJja5m2RLDnjjczXOyD3LrLUyDCyqkEjCQj5yzQRGatVP2aNzLZc5v/4ZDsvq
+	gQ5+XE+ChM1hpoF6zkC5QQw+vw4FaAPqfoQVizuhB/CdM62pBKJKjsmpTyfKaCus
+	fswoGyCBAah1hFrzAvSgBw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1750868579; x=1750954979; bh=67m8SwSKrIdq9LDRVj8zUF38qZfPq/Q447x
-	phkSk820=; b=JgdJS7BYWHNypzgpZkeftHRj2Tn3SqtFplm1KCWNU6CFDAqWbj6
-	j79RNgk+QpmzAtVesbcW9grCyCgyq1C7Qf9mK2AGUQFY5cO9W0kfRXZaAUaSabjJ
-	2q7EaBXPVkd7Mbh25w3sZDLFzAVqo2pfSSXLnlQBMbvJgJF6ekqFZId9BQFtlTbB
-	InB4Kzz3d1rj6dR/s/8zxWwvOQnuHSTGlwj7G4zEtqTDQfvwRciItGWPIjuIXEnh
-	3hVZYkl06T8bwzsKu7QVtbHqysfGsLFjFDLdglEkK8mqmhEqsLOnFoYjNBJ8YkYU
-	zxnEqeDQcF71AkIWhd7Cc4j2Isk8OArHZ+g==
-X-ME-Sender: <xms:YyJcaKkkFtEmUcOBE64spGumrVESDQnqLkLr-GessDEOUQOdPGzutg>
-    <xme:YyJcaB2OH41c-mmqWa33H8ezuIvSe89zSWz2NkMB3vpqgEPIlBu9orbi4mhV92UMn
-    OyTdgGRhnjxKS4jtQ>
-X-ME-Received: <xmr:YyJcaIroOZDoTiYRTOzlsM8H9LCPMo9lf_W3mnsQZJSu5mLE7uFHuFlzqiZP5pKTSOpmhoWASD-TEw3BL7ykpD6lCAeYSQWqwONPpgc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1750868644; x=
+	1750955044; bh=Fh+zHAgKXPaAv3Xo0adS5VprNH3PBUhzTfT2nlCsDPw=; b=A
+	xf7gM5WrH1Fc/9zT234MHmA+q0ux21b/OXVJtjS7/gL4w/oMAlP+6gIux4w3nwsb
+	+0ZAfLh5TYYCNkXiVNXRkKJ2C2g4uMztD8tZ9laBZ4P1lMfjzeLrvd7qjeZdbcj4
+	dPq6WIYhzOwylsTGxXbnajKkCxQ756LHjJlF/We6Ey/21ncOWQM0TsSvvjnWEmE0
+	pBed2m3VcOUtvkwy4nEF7VrnIRv9CrxgX/ShMiGk3Z0jFu/y5P9vnmUzl4lPhMqc
+	pGjJUolusuz/SJKm7hIpa4KgDdGPyINCasyrYCp8Calld0oDgRVnaS783dQX9e5W
+	2CFEKi1NmrDZvYHhd+f4w==
+X-ME-Sender: <xms:pCJcaLPBHiHF9_F1jK9l5VCV3_WZvG_ufLdSbedgMhhJhG_gFlgsQA>
+    <xme:pCJcaF9nGc8jKnJrNZd5C2wfDtbp84zizE3apvpmXUD0O-MenHOl_qZXy1I2Zfxjw
+    xxUlhcZpvra8V0h7g>
+X-ME-Received: <xmr:pCJcaKS1pKU-l4pqD-5-oB8l4FAXYec6hXWInYVC7obLNn8-Xq28kSqiM-NdpcqfSRBgIYrGRvMU5gdHRbhiJRE8urq9qF5elNBgc3Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfedvgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefueetleeikedujeethfevudeggfetkeetleefffegtdekffduieffuefghfdv
-    heenucffohhmrghinhepuggrvghmohhnrdgtfienucevlhhushhtvghrufhiiigvpedtne
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepieeguefgveejhfdvgedvffetvedtleekvdegleejgeejtedugfejteejtdff
+    udefnecuffhomhgrihhnpehmrghnjedrohhrghenucevlhhushhtvghrufhiiigvpedtne
     curfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhn
-    sggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtgh
-    hithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomh
-    dprhgtphhtthhopegthhhrihhsrdhtohhrvghksehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:YyJcaOlqr7-QjdnqdsoPSkR_Vudbxmb7UoXtba-Oz3lk6is1wPQ71w>
-    <xmx:YyJcaI2fzRBMu7kWWeFlvmhzMQeiq9-PnSsTDSQ0beiT05vGDxU-KQ>
-    <xmx:YyJcaFs5yMFKvtQcvaTbiwAf5IqGspV81dh0b6BzXxZfvWn5coyYUw>
-    <xmx:YyJcaEW_SaKxXcgg77NWYDb0GY8PUBxxWKAqk-scPs2feJMboyhScw>
-    <xmx:YyJcaPE0mLBU9nEEKp5HTD4JuFPx6xZBxzwD3QyIjfzwtEPvDlFupq5g>
+    sggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhilh
+    hlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihht
+    ghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopegtrghrvghnrghssehgmhgrihhlrdgtohhmpdhr
+    tghpthhtoheptghhrhhishdrthhorhgvkhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pCJcaPsaZnKdHCGdZtmw8tL4D0NH9DcLHXABuBbBr-wTEE9KBmUpXA>
+    <xmx:pCJcaDfDXjdaudVN4Vx8_mOyHq_23GEibiScJQM8NPrxT7i_LMskag>
+    <xmx:pCJcaL0kV-DnzFnBEnwVWiql1Vxf7HPlnLLelo4KKdpm4xRqUc41eQ>
+    <xmx:pCJcaP8D9gaF-6OHq-pW55R1vQFcSZExWMwN4FbxlhMG4eXjUtYejw>
+    <xmx:pCJcaLr4TeJ_RLbUN4pJzH_9b_0YIMV9MV5tPjIZotn1hHUddZETK9Cr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 12:22:59 -0400 (EDT)
+ 25 Jun 2025 12:24:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget
+ <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
  <carenas@gmail.com>,
   Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 2/3] daemon: use sigaction() to install child_handler()
-In-Reply-To: <xmqqfrfnyff1.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	25 Jun 2025 09:06:10 -0700")
+Subject: Re: [PATCH v2 0/3] daemon: explicitly allow EINTR during poll()
+In-Reply-To: <907a79d1-da2e-4c8e-963f-05c6e313643f@gmail.com> (Phillip Wood's
+	message of "Wed, 25 Jun 2025 09:39:25 +0100")
 References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
 	<pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
-	<05d945aa1e546bcc028e215c8e4d174b5e0c32ad.1750836928.git.gitgitgadget@gmail.com>
-	<xmqqfrfnyff1.fsf@gitster.g>
-Date: Wed, 25 Jun 2025 09:22:58 -0700
-Message-ID: <xmqqsejnx02l.fsf@gitster.g>
+	<907a79d1-da2e-4c8e-963f-05c6e313643f@gmail.com>
+Date: Wed, 25 Jun 2025 09:24:03 -0700
+Message-ID: <xmqqo6ubx00s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,144 +94,31 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Does this #ifndef block with #else lack its #endif probably before
-> the service_loop() is defined ...
-> ...
-> ... around here?
+> On 25/06/2025 08:35, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
+>> This series addresses and ambiguity that is at least visible in OpenBSD,
+>> where zombie proceses would only be cleared after a new connection is
+>> received.
 >
-> I am wondering if it would make it even cleaner to also define
-> rearm_signal_handler() in this "if sigaction() can be used, do this,
-> otherwise do that" block, and move the whole thing a bit earlier in
-> this file.  That way, the primary code paths do not have to see much
-> of the #ifdef conditionals.  With IPV6 related #ifdef noise already
-> contaminating the file, it may not be a huge deal, but these crufts
-> tend to build up unless we tightly control them with discipline.
+> There is still a race where a child that exits after it has been
+> checked in check_dead_children() but before we call poll() will not be
+> collected until a new connection is received or a child exits while
+> we're polling. If we used the self-pipe trick described on the
+> select(2) man page [1] we would avoid that race and would not need to
+> mess with SA_RESTART and so would not need to introduce
+> USE_NON_POSIX_SIGNAL.
+>
+> Best Wishes
+>
+> Phillip
+>
+> [1] https://www.man7.org/linux/man-pages/man2/select.2.html
 
-Applying this on top of your series would illustrate what I meant.
-
-I didn't spend enough braincycles on the naming issues for the
-conditional compilation so I left it as USE_NON_POSIX_SIGNAL even
-though I know it has to be fixed before we move forward.
+The principle should apply equally to poll-based service loop, I
+presume.
 
 Thanks.
-
- daemon.c | 81 +++++++++++++++++++++++++++++++++-------------------------------
- 1 file changed, 42 insertions(+), 39 deletions(-)
-
-diff --git c/daemon.c w/daemon.c
-index 01337fcfed..8a371518b8 100644
---- c/daemon.c
-+++ w/daemon.c
-@@ -912,19 +912,54 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
- 		add_child(&cld, addr, addrlen);
- }
- 
--static void child_handler(int signo MAYBE_UNUSED)
-+#ifndef USE_NON_POSIX_SIGNAL
-+
-+static void set_signal_handler(struct sigaction *psa, void (*child_handler)(int))
-+{
-+	sigemptyset(&psa->sa_mask);
-+	psa->sa_flags = SA_NOCLDSTOP | SA_RESTART;
-+	psa->sa_handler = child_handler;
-+	sigaction(SIGCHLD, psa, NULL);
-+}
-+
-+static void rearm_signal_handler(int signo UNUSED, void (*child_handler)(int) UNUSED)
-+{
-+}
-+
-+static void set_sa_restart(struct sigaction *psa, int enable)
-+{
-+	if (enable)
-+		psa->sa_flags |= SA_RESTART;
-+	else
-+		psa->sa_flags &= ~SA_RESTART;
-+	sigaction(SIGCHLD, psa, NULL);
-+}
-+
-+#else
-+
-+static void set_signal_handler(struct sigaction *psa UNUSED, void (*child_handler)(int))
-+{
-+	signal(SIGCHLD, child_handler);
-+}
-+
-+static void rearm_signal_handler(int signo, void (*child_handler)(int))
- {
--	/*
--	 * Otherwise empty handler because systemcalls should get interrupted
--	 * upon signal receipt.
--	 */
--#ifdef USE_NON_POSIX_SIGNAL
- 	/*
- 	 * SysV needs the handler to be rearmed, but this is known
- 	 * to trigger infinite recursion crashes at least in AIX.
- 	 */
- 	signal(signo, child_handler);
-+}
-+
-+static void set_sa_restart(struct sigaction *psa UNUSED, int enable UNUSED)
-+{
-+}
-+
- #endif
-+
-+static void child_handler(int signo)
-+{
-+	rearm_signal_handler(signo, child_handler);
- }
- 
- static int set_reuse_addr(int sockfd)
-@@ -1123,38 +1158,6 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
- 	}
- }
- 
--#ifndef USE_NON_POSIX_SIGNAL
--
--static void set_signal_handler(struct sigaction *psa)
--{
--	sigemptyset(&psa->sa_mask);
--	psa->sa_flags = SA_NOCLDSTOP | SA_RESTART;
--	psa->sa_handler = child_handler;
--	sigaction(SIGCHLD, psa, NULL);
--}
--
--static void set_sa_restart(struct sigaction *psa, int enable)
--{
--	if (enable)
--		psa->sa_flags |= SA_RESTART;
--	else
--		psa->sa_flags &= ~SA_RESTART;
--	sigaction(SIGCHLD, psa, NULL);
--}
--
--#else
--
--static void set_signal_handler(struct sigaction *psa UNUSED)
--{
--	signal(SIGCHLD, child_handler);
--}
--
--static void set_sa_restart(struct sigaction *psa UNUSED, int enable UNUSED)
--{
--}
--
--#endif
--
- static int service_loop(struct socketlist *socklist)
- {
- 	struct sigaction sa;
-@@ -1167,7 +1170,7 @@ static int service_loop(struct socketlist *socklist)
- 		pfd[i].events = POLLIN;
- 	}
- 
--	set_signal_handler(&sa);
-+	set_signal_handler(&sa, child_handler);
- 
- 	for (;;) {
- 		check_dead_children();
