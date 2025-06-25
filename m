@@ -1,107 +1,103 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36BB2877E2
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 22:12:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F4A72F3651
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 22:24:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750889574; cv=none; b=Zrk/frd3NKDRjyjI2H9z0mwK0G0FU2pKA0aVbjdCUAsneObOeFuwNMVOw2zx9rFkCeOiRbfRLpEPTVuRk/JPqexYpp8CTDRp0GaAd+ogkTJMRDGoB9QJ4JD6oRIXKzRsIQUtc5PE/YcCpqdx2jvbjljY6SwjePJRsuMTd92aDDc=
+	t=1750890299; cv=none; b=iwiv6cDBh2BwicVYz3keCaNaZJ+dwB1Oup8PuCPRShdAD1fe1xi1JgDBJ3487p+ogvvujsHa324gXc35XlDzDnFcyDKmil50cCFC4IF7uaE341A4l5YFDJ9CUW0GxV1193tHERHqSON5Ya4Im16SjP7jVtxkjofNRbpSsQianpo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750889574; c=relaxed/simple;
-	bh=cq3KwfKwI4sjpDd9MTLo+iB+54y8CXxyvXy3ctofeYg=;
+	s=arc-20240116; t=1750890299; c=relaxed/simple;
+	bh=vSGxLt9goB+EGSnt55k5/t82Q5H5UGHQzd0rVZcIdOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=h3CScs5XhmCo1xZkBZCfk1PRavZNrNK/v/fRq0vngxiE2Xfl/Yk5piJC9jI1NU81yfMtEkItrKesnTTv6MD2+tFB8IRoPbXFwD0CyCpA27YvXeknMRZ1WhWUQLwsua8QSzOAQmo7ZSDjz30EGhLkyL7wQ5P9PJavsqxKC9bGN8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=dFBxCuZd; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=D1CeUgfBEBxKCuOVD5xrqAWa0xikpJSh4/7jHhu3C/q/xxoxd7zuwq5yiolyLUySPkdJaYvH0JY4YQ3xwxKUyUUNeB4/Ay3C9boza7psP4sknQ8KyW+db2loJIiOzZEbMO0kQqAkM6+7gm4pONzfD92bTnSOlSOSLU1J33QJsVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VZroiAn1; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="dFBxCuZd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1750889564;
-	bh=cq3KwfKwI4sjpDd9MTLo+iB+54y8CXxyvXy3ctofeYg=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=dFBxCuZdY6OwOb2EMk1sqWx5REg/thC3GUOOmRAoJVChe5h4OzXnKHNCh+btHplkf
-	 l0JD6cGmSc4FRdVnrUYY2IKojWVXdOM7AEn+lCagas4QVxpndiF5A/I/lvg9Ar1Hht
-	 THGTyszBhjmM9aJ7np21FnuvEigliMmFwy+90GGLP7QF4wQTxujlhU36ZTqwrj/zby
-	 dd5zkmFVOlVYhgmIm2YFbCg4Th5iE/Lm+Oysbmx83BjTJAnxb8063bYcIwR060oHAX
-	 agEaA6agShMZLgmOcNtkSK6YCNh1K++aV8LhDPkUZFjZCwnNOQ+SKL0gbMqATmwlM8
-	 /i+4Nq31T0YyEhzqIAcO6TG0R/Qr+ITBWLssQ1WnICGkT6bmI0dlyL20+ELDf9TVPs
-	 aazD/XaP4LeM5xTyka0hkIa2MxfC8briH/V3vujkRDsZs41Zbpy4CYQiVBD+qTuRRY
-	 Ux5nrJ4hrFMThXbNcOpR/etSZm+sARTLR3ZTkLVhxH/3EOHpSVQ
-Received: from fruit.crustytoothpaste.net (pool-99-237-158-163.cpe.net.cable.rogers.com [99.237.158.163])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8D6C72003B;
-	Wed, 25 Jun 2025 22:12:44 +0000 (UTC)
-Date: Wed, 25 Jun 2025 22:12:42 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VZroiAn1"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2363e973db1so13602445ad.0
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 15:24:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750890298; x=1751495098; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=gV2o++rm3yrq9MnkHIrivDGGSggGYIzTb0tet0faCj0=;
+        b=VZroiAn1v4tH/KyamA4dHncOfpMXN77g6uVheLBQgRSm3a+NMX5hCS8clbpfmYwgQt
+         HThXQz9xATYHp3ubSl9/5WHftNBbIPeHx8ZUODFBGIOYPo+pnOvraziayo0BtoAI/054
+         HG+ejG7xOQ9vhRxjTQr3mXNmgZFPz4ENoBrsxRQLayL7YOTRjdgQvHW7Dab/DlJBHB7x
+         7ptK4/7JWmSxfkTDc6VftMG3sG/7DcFQt4hfE7LSO7+J68k8dnoIWh+e3zvrs2W+CpRt
+         axakGPZV7YQqIzuj2xuU9nQb1iFFWgqQO6R8h1bhTS6RY79lmPgaTCurleIS+DBLz+1Y
+         IWJQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750890298; x=1751495098;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gV2o++rm3yrq9MnkHIrivDGGSggGYIzTb0tet0faCj0=;
+        b=h3C7pp0bvvjK53rBr8MpF+r6RMnOgGW2sejajL92O+0wAjNonrd/nl94n45cRVLMFP
+         FKxvhU/K5cegn9M4JI6egXA+A3ItWJ4PufAZphhSxCD5eO93G+ANLoDQHz4w7ac+OTmG
+         H86TC+rinuzWDXjVJOFDWzOchxAqqB6HxQVi6+xKGLuoKBP71btlyq7z282gVCHiUoPj
+         anXbJdICayJCPn93xxVNAz21PZxIBuqAn0UVPdMRwmBbKj/w1ngy6cuKJmvenYKD6YTZ
+         jTHiJiR+fEQhcjrml16T+pDmdpgLsrCVP4Vjd2TzqQvRe+GL+RNjIyx6gse2aSTm0f6B
+         BU6Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXrTYncgNkd6qPSB13KMWr/J1kKc29FLn5DN2phVb6cNe/AZyYYVZFDHsrcCic78nOBfBc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwrZe3ZJkC9PuJPtX//TRs7FveakHy/n0PXkI/WIpD0i0SvJPYS
+	3ARbYYgxJ6DdBaAQ94nhXu5vNXzph5lDRAzQt+t9iYSk0JYsA15f6EzB
+X-Gm-Gg: ASbGnctZQ4hRDlIIzOM9J3d0jdD3RpfehTAN15yZAzhOZ/WRm5/hoPll7QodcX71xrG
+	ObxjG35Zp+6N1VkZRTGsZNP/qu1jRsSLwjU/1m+59FG9iLVsNOf489qsb91qCeERttoWShFWJwq
+	Ovz/n7ux0/JPcH1FdZ/4TzxCA20KbXtl3k/887q2CFxRNqErAnrGlSnTPmuemwizqgkr+GwSbWb
+	LfaolDHXyNIPhhEQ5R2qoTp6rvOE6EcTjzsWJ3IMEDuw/H1vVa4QdSTH9iJtfho6UtQdfeeSujk
+	+yjguRoYBAeEHr/VroKlYM9wY9VrHjd6Qz5bJGrMCeH6H1cRCHOInLsQUOXVkC0FErJjijhjEuI
+	do2bKrxGu30kFPBf34+DOv9k=
+X-Google-Smtp-Source: AGHT+IFGjverihbI6JW50dWiaeekQAj20d0ZqllNF8wp83STE3zgBjFwu9s36H70J7mjtbZmV2ejbw==
+X-Received: by 2002:a17:902:f54a:b0:235:e1e4:edb0 with SMTP id d9443c01a7336-2390a54b7dfmr17989805ad.22.1750890297795;
+        Wed, 25 Jun 2025 15:24:57 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:a1d3:1456:244b:d366])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-237d864a9d2sm140243775ad.149.2025.06.25.15.24.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 15:24:57 -0700 (PDT)
+Date: Wed, 25 Jun 2025 15:24:55 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Jun 2025, #08; Mon, 23)
-Message-ID: <aFx0WlgwJpRiHC2Q@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-References: <xmqqtt462bye.fsf@gitster.g>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 1/3] compat/posix.h: track SA_RESTART fallback
+Message-ID: <4oh4eatsp4wo4ur6rluy6ickfy5jfpuarg435vplrqzvk3eaiz@jbtnnwqnz2yi>
+References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
+ <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+ <e82b7425bbc2540fa5ef3fd4584e6f902485d064.1750836928.git.gitgitgadget@gmail.com>
+ <xmqq4iw3yfd8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ensHBOCXZWp5/k1Z"
-Content-Disposition: inline
-In-Reply-To: <xmqqtt462bye.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ensHBOCXZWp5/k1Z
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq4iw3yfd8.fsf@gitster.g>
 
-On 2025-06-24 at 00:57:29, Junio C Hamano wrote:
-> * bc/use-sha256-by-default-in-3.0 (2025-06-19) 10 commits
->  - Enable SHA-256 by default in breaking changes mode
->  - t5300: choose the built-in hash outside of a repo
->  - t4042: choose the built-in hash outside of a repo
->  - t1007: choose the built-in hash outside of a repo
->  - t: default to compile-time default hash if not set
->  - setup: use the default algorithm to initialize repo format
->  - Use original hash for legacy formats
->  - builtin: use default hash when outside a repository
->  - hash: add a constant for the original hash algorithm
->  - hash: add a constant for the default hash algorithm
->=20
->  Prepare to flip the default hash function to SHA-256.
->=20
->  Needs review.
->  source: <20250620011943.586596-1-sandals@crustytoothpaste.net>
+On Wed, Jun 25, 2025 at 09:07:15AM -0800, Junio C Hamano wrote:
+> "Carlo Marcelo Arenas Belón via GitGitGadget"
+> <gitgitgadget@gmail.com> writes:
+> 
+> > +# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
+> > +# prefer using ANSI C signal() over POSIX sigaction()
+> > +
+> > +AC_CACHE_CHECK([whether SA_RESTART is supported], [ac_cv_siginterrupt], [
+> > +	AC_COMPILE_IFELSE(
+> > +		[AC_LANG_PROGRAM([#include <signal.h>], [[
+> > +		#ifdef SA_RESTART
+> > +		#endif
+> > +		siginterrupt(SIGCHLD, 1)
+> 
+> This is curious.  What is this #ifdef/#endif doing that does not
+> have anything in it?
 
-You'll be getting a v2 here based on your comments.  Of course, if
-anyone else has comments or feedback, I'll include those in v2 as well.
+It checks that `SA_RESTART` is defined in `signal.h`, which should
+fail at least in QNX, NonStop and Windows.
 
-That v2 will probably come this weekend, since I'm in the middle of
-doing crimes to index-pack for SHA-256 interop and don't want to change
-branches right now (although I suppose I could use a worktree).
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ensHBOCXZWp5/k1Z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaFx0WQAKCRB8DEliiIei
-gXk+AP9LzoiTOrn5qsjI8QNXTMBj6MXSlNLUSiya01KMahNfYwEA94M4ddu3vyFO
-vDcu0uYfOaUe2xTrHak3ym4Nvv60HAA=
-=n69Z
------END PGP SIGNATURE-----
-
---ensHBOCXZWp5/k1Z--
+Carlo
