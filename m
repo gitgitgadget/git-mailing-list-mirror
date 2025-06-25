@@ -1,140 +1,119 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BDF2DAFA8
-	for <git@vger.kernel.org>; Wed, 25 Jun 2025 18:41:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD59A1FC8
+	for <git@vger.kernel.org>; Wed, 25 Jun 2025 19:35:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750876913; cv=none; b=SRnqHWtKm7EnoLZXh+58acUuVQzOnOh2nH7eE1lh9KwHanW3nWJb9lVVvycJbxQeXhyIXNZB9iHpsXmrNaA6MfclwsvBavGCBj75w/orhuNRpjUFDmLTSCPPIj7rEUCko+NyHgBKNDMkNwEe8a2Kn47O4Oub8UuP9iik+mZW3b0=
+	t=1750880134; cv=none; b=IKcWH+FoxSRSoWhnRwrOf9viGfvyBHHlJwLe0nJsF5mT8Hq2APJzSwJ6IJ9UmDnWC0FCcr4C8hNeyqlenfxe2zPG4Y6WsjwX8EYp8J/Oq9T+Nog8mULZ1sULygaPqaq1YMQRxhrwV27mBONtoqPaGbp8NHsLhAgF1AXik0+lmcw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750876913; c=relaxed/simple;
-	bh=OuNC1oGTFHKLDFwoIaFrq4crWMQeKnBOR2treeeRVjE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=roHjSBg+cPx9+DwG6iyo/7kAXuZa3q2wR1hqUCw/4COcUUNLBXuHQy6BXvMWK9pEqBSrpIzFsNOOz54+RpYkupBJPrFYDmlgFus1/N9mtK2/Us296Xt5Ql2uck37ZPjCAkV1GWFfU38cnLiFGCKrVz7QiS0/BYHFQiexKro8pzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eTXSQWTZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AmSLeg90; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1750880134; c=relaxed/simple;
+	bh=399NIasFpbS4PqXZh2hakAqhTcre5uyf2XEJh2T7G4Q=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=EROZ89bGrudGhJsanRx42ifhmMFzJzJaHx6byNkxtke2TFnaZb3SYhJIUuaSfLlR0hkpOu4ZlismE6ciZUxe3LaQo1YwisKmWwtSsUnO50K6NX8fH5fSIse4FNH28xkYzy+Mub/YJT0cW5b1e30c/alae361Gj+aqtYpHbNr4sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkRRH0pM; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eTXSQWTZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AmSLeg90"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 030C8EC00B8;
-	Wed, 25 Jun 2025 14:41:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 25 Jun 2025 14:41:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1750876909; x=1750963309; bh=HdUOcl2Q/f
-	eD0tP9ksSm4hNnnkbsFBYQlwN0tVpjgF8=; b=eTXSQWTZopM2V3Qow4HDC175en
-	upyAFebNNbL0SaoMGx/aSpfpQdRadcaX2z93j0RTBDTA/7xQ7IZmt4aUFUWHk2Qx
-	fyjQRLGV8WQads6OxNiL/gAKC1poDanGkEOC+JwlegEADOAzUDxga2d51TJPPV9u
-	iXQMtK1Lje+a/vOZh5TrMp1ADiTsec2syiAILhugshBtMlkim4mpmjMMQDC/sU6P
-	WWZqX1P6ibfpmYxGeFg1UZzSZUT9V9bH4wmykOWqfi58Rk4h4jOXORj2xKupYhPy
-	9sm93RwB7dD0lwPE2Mx8dXbCOAYfRZNi64vBReAYk8yj3iuQ4B/wn11LVvWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1750876909; x=1750963309; bh=HdUOcl2Q/feD0tP9ksSm4hNnnkbsFBYQlwN
-	0tVpjgF8=; b=AmSLeg90PHibKpH39VEYGo2NwNZHUMnB33ryk/SZVziK6ibCTW5
-	sLBYcQFJdPmaaSkqJ9dV0LI4YX0ppRBDJxMduu4ekPhcwPuDNQjHlXPWVQLOZdHq
-	EIEZHGpfjCqoX3cH5DmDfw9/nVH00qR4ldMlSf4qO41f4bcIm8+5klncmuc4NsB6
-	RufnFttZicJV3sycsbLRZrE9+GUiuUuKJ6ONFbSCzwMWZETojd51UWAonaedAcea
-	FdimWvq8CqL51yBF/bupAw/tTLirGLBDVyaINa8zkv/VXTSpBk2HdC8Ojj+Xi79q
-	PKbNZHWawnTh5zKMoAVSAaDiMK89x0LS46g==
-X-ME-Sender: <xms:7UJcaPUDZqXfG6BQfbNje_zimvQYEXcncVwztTvguPnZL6rE9KSz4A>
-    <xme:7UJcaHnpz3dLN0kNgwwASyjkBHJmFWvXShObHaHPar8VOjui3qGZ3YztC95P_zY9q
-    9RwJINJlhmN_Bql6g>
-X-ME-Received: <xmr:7UJcaLZ2NfDShiwDWg0gr5rAzFqm3RgWa4-EZ-PYI3FVSq7fppCIY_9yp_P-UpwX-NSutO90cP15qNV_Hw49sHRHLSGSRaqe4nDoS94>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgddvfeehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieej
-    tdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmih
-    hlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7UJcaKV7FtjfXe12xZKJp0qjLiyN5KvMmfd2NJt_Gd7qt8BjteRGGw>
-    <xmx:7UJcaJmnCIOFhj5PgPIaKHg4lsQfeUsUA8Q3V5opbcRMbjqqs6gYIw>
-    <xmx:7UJcaHduNUGAX2ulyy9gfLsE0albS8Wgvp0HNlh6IYaH3LPxyVbETw>
-    <xmx:7UJcaDGEUD_q7d7c0q7madstL_CiooYHj5bGY4dujnGkmWeIcV6pbg>
-    <xmx:7UJcaCLBHwhAjAkCORuxrjS3q6NyxcKG2xBEnXQ0yqktk8RG9X1ANorQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 Jun 2025 14:41:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 1/4] editorconfig: set maximum line length to 120
- characters
-In-Reply-To: <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com>
-	(Karthik Nayak's message of "Wed, 25 Jun 2025 18:43:26 +0200")
-References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
-	<20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com>
-Date: Wed, 25 Jun 2025 11:41:47 -0700
-Message-ID: <xmqqo6ubu0ic.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkRRH0pM"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so1374515e9.3
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 12:35:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750880130; x=1751484930; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=nDPDC/C7wr8Ff8ZYwcaBJv83nzGfZ163beTj6T7PP4o=;
+        b=VkRRH0pMPCony+HNcc4PfiI2N+4gFg9dHlec9O5QhYdepbYe9xnaLqjqq3iRoRVRa7
+         jBJnw46JHQZ+cMju5HbB5KURO6IDIZbOOmtYUHwqkpPPQxBCirW8wQXldX10x9yov5gR
+         hd8+yXIM6SgywVQ+x/8VutSuD6nqgXgm98uA2IwMiRgBRnDYOhWLgGIb8MTDicJLYR8V
+         8UQUVFpMoTQRTXFCg2PCtU1kiI+bYqJqfI4QiVsT5SrWlLK+EGqWAwzbmum1ZfTG5W8S
+         bM75ehwWP1AlMM+Arsp4ixryeoiF6cUEjfNlKTOEZDnqPTRbbDSTeBAdX/LbSLOCiRmS
+         Jm2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750880130; x=1751484930;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=nDPDC/C7wr8Ff8ZYwcaBJv83nzGfZ163beTj6T7PP4o=;
+        b=Go9KUa/iVRS/+bW+jiVePX/wwFQ+jzVxf+vrtd3IOCDx7jVtAU28eJ6grGbNlNMNtF
+         /gE9UwJ36bG++7rNneDdNkiAwW4tFiKYu1AN2YGNn2oM6TNP3HdGdPL3cU2b0/egCTqr
+         8nBWJGpyTg7vWFFdk+2SaOozle86KQVpSh2nu2e6bowlnHq8csUF/QS5g6Z3F791nM8c
+         mu7vhzxVj60SdicHGhpiSQBAmProtRgRtCrz8kQQoLLgdJPu2ESISSQM3mWSt07kL7tO
+         tWOgxDqxuBlIGm0d5xbQznIi1h5RX9ksFFdCi9Oz+JgnSRaX+eVkTKvlh6qfCXTIAqTs
+         1qTA==
+X-Forwarded-Encrypted: i=1; AJvYcCXsL3kR557L7D1su2EuYIQ9uRfH7CzRucS1d6xAGOET3vD+tHuXfJiVj0D7fC/3q1f7FYU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVE9L5MfsW8MUpbIhWjb+eFjwyGX8nE+dzKL7UHLMXpo64bFXc
+	AvE9n4zRleLrNtMbPrRpbkdgWzqshaFO5PTyqAiIW/Ldowuv3nZS5Kuz
+X-Gm-Gg: ASbGncuO6NGlSgAWe07wBF3ks4z25kkLcAvvBLNmn99g4p1xThBK42egMW3TA6kkq8k
+	peRD3imBm/9Lb37/Y589ODIJHxcFtQqEDA1cc5TpjRNUZNX6unB5dK+1/4xWB9rECEmG7gkjcXb
+	kPw3aKktVglO06urtGUZ+gimfC5BoveCcraF8B85rLhR8FGAYC5bn9PmzcwSmMR+r6ewGRbnRvU
+	H+MxPFZopDuUKav9Ww3JIGCbqp8qGmEN6J7BtBDc7C9+mIvIFroiSTxBoz/7pPq8rpW949JjeBL
+	kro9U90P9saqFLbX1y6jd1AzJPT8iMijBgm5buQ3PakCqCXdL1s12ou2IThgvOqAc6fdaXKZlM3
+	iW/t/NYBe/SF5SDrmNvL/5UB017Igjq8sL7pWNQ==
+X-Google-Smtp-Source: AGHT+IGePgNM7j58nrvt5addXAV2ZQOuUFSElzW1uQsBHhw4HgPr/s4w19GKNZG9y1MVbd0BYijKsQ==
+X-Received: by 2002:a05:600c:4454:b0:442:e9ec:4654 with SMTP id 5b1f17b1804b1-45381ab0477mr44038255e9.8.1750880130063;
+        Wed, 25 Jun 2025 12:35:30 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e80f259dsm5443306f8f.50.2025.06.25.12.35.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Jun 2025 12:35:29 -0700 (PDT)
+Message-ID: <c314cd2d-8fdd-4386-bda0-881ff87d9204@gmail.com>
+Date: Wed, 25 Jun 2025 20:35:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2 0/3] daemon: explicitly allow EINTR during poll()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org,
+ =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+ Chris Torek <chris.torek@gmail.com>
+References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
+ <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+ <907a79d1-da2e-4c8e-963f-05c6e313643f@gmail.com> <xmqqo6ubx00s.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqo6ubx00s.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 25/06/2025 17:24, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> On 25/06/2025 08:35, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
+>>> This series addresses and ambiguity that is at least visible in OpenBSD,
+>>> where zombie proceses would only be cleared after a new connection is
+>>> received.
+>>
+>> There is still a race where a child that exits after it has been
+>> checked in check_dead_children() but before we call poll() will not be
+>> collected until a new connection is received or a child exits while
+>> we're polling. If we used the self-pipe trick described on the
+>> select(2) man page [1] we would avoid that race and would not need to
+>> mess with SA_RESTART and so would not need to introduce
+>> USE_NON_POSIX_SIGNAL.
+>>
+>> Best Wishes
+>>
+>> Phillip
+>>
+>> [1] https://www.man7.org/linux/man-pages/man2/select.2.html
+> 
+> The principle should apply equally to poll-based service loop, I
+> presume.
 
-> As per 'Documentation/CodingGuidelines', we try to keep to at most 80
-> characters per line. However, there are often certain cases where we
-> extend this for the sake of readability.
->
-> Add a maximum limit of 120 characters to the '.editorconfig'. This means
-> that if an individual line exceeds 120 characters, the editor will wrap
-> that line. This provides a lot wiggle room over the recommended 80
-> character limit.
+Yes, you create a pipe, add the read end to the set of file descriptors 
+monitored by poll() and write to the other end of the pipe when a signal 
+is received.
 
-Ideally "when the line is overly long to be more than 120 columns,
-please wrap it to 80 columns or less" is what we want.  If the
-result of formatting a single 125 column line leaves us with two
-lines, one with 100 columns and another with 25 columns, this would
-not be very useful.  As this is meant to give suggestions without
-enforcing hard rule, wouldn't it make more sense to set it to 80?
+Thanks
 
-I dunno.
+Phillip
+> Thanks.
 
-> Contrary to settings within '.clang-format' which are used for
-> statically formatting source code, the '.editorconfig' rules are hints
-> to the editor. These are not enforced by CI and are guidelines for
-> editors to follow. As such, the 'max_line_length' used here is only
-> supported in a set of editors [1].
->
-> [1]: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#max_line_length
-
-Thanks.
-
-The discussion around "rulers" https://github.com/editorconfig/editorconfig/issues/89
-was also interesting.
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  .editorconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/.editorconfig b/.editorconfig
-> index 2d3929b591..d0f940fd23 100644
-> --- a/.editorconfig
-> +++ b/.editorconfig
-> @@ -7,6 +7,7 @@ insert_final_newline = true
->  [{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
->  indent_style = tab
->  tab_width = 8
-> +max_line_length = 120
->  
->  [*.py]
->  indent_style = space
