@@ -1,156 +1,134 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86924264626
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 10:49:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F682E11CB
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 12:52:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750934978; cv=none; b=eNQzRX82GoQQ30mqHwVX93PGzsVfaVsZiR1j/SsvwmgtKVIn7xaiOwtmNlbsxS0U3vIVGjjNhOk7URtnGk0tHRLPDm2vaqw1OZJ8cIuVnV5xnQ/c8twJUVjd9DCy5Smhcr+EWRrhl0BsxF8OihsZD9uOxRpcec1sk4eTVq08eyw=
+	t=1750942372; cv=none; b=Ble1XO4kUbo82CPvfT7Mn4t+9fFp0pEtIdRERkDF57E2Ae29PcyHUIIbYFWOKV/KsTQiKSIMgzK/39Db9M4U179HqTTf82hNNQ64VkbcaWdNPINRur+7sILtuFxSY7RArJ+6WkWpZNdJWjHzO6vaUAmfX65ZfuwUBmwvKsAGhdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750934978; c=relaxed/simple;
-	bh=sOp41vGPCgb+7DiqeeBHClQFVZXBFLn28L6pZcaUQ1E=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=VgRFRrtD/VqLKVtS4Dy6/KGS9usNLWe0Hp1e45/BqV6s1/il+Ft5mC3LR3lgDo1slYfOK1slJj7Sxn2AkS8mtWX2CaaSqjZNrvO9bTBLrHIzhNRG4FZsJv6LuVd9jX6iNJ60lkq20Li3Cq84ucqVYCIz2J/1Tad215V7ZmbzZ1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OyAE/3Kc; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1750942372; c=relaxed/simple;
+	bh=IDq/kX/KTS8J6Wmlh5jd8WX/uzdokFjy+18MK9K4N5g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=VcnTdnT42xrf8Vqytt6dzj9k04ZumUsyXjFOb9PB4+4HLqX05RZ3kNRfrXK6JDmS9wDg+JgI1up7rCqaAAg4L6N02Yb4vDfFzrDFbTw5E6zGXQTdiw5BrzdHhJCkTuHKZPGEUzIItFgaOAcSpxLBz42Oz/3UfclTW1WF10xveCE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ruw3mO4T; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OyAE/3Kc"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ae0d758c3a2so102344966b.2
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 03:49:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ruw3mO4T"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a53359dea5so606740f8f.0
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 05:52:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750934974; x=1751539774; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xDBAnCIO+6JrqLnLpCzh0oJk4nlBfaM0tP/YtIKMuwk=;
-        b=OyAE/3KcMlZaXnlBUfZ1DYFApfyMpwUIUhnTGzG97HLsQPGLP1c6y7jzt+PLIR25c9
-         csuc0ZVPIlSv8NI+qLO3VFwuDHN8Rs2yCJGj1uJOGvwx3HzPCVgMPoCQ0NA/4GBLI9S8
-         GIg5hK0y+ZDMuM/uO2Pv0lqhvzJoFbEI5A50PfbsTInxP0+NQ2NjBAgPr/4jUZIFq0bo
-         w64HHpFwP2HUj42ErpHjnSkE7P6yuk7IQxJDvbOOPT0Q6Ti60Ay8sMuKSt9bcIAls0dO
-         quEREKfUg1zH7qfbUkLv7AH23tHH9XCQUHN1LIJqYkjumplci10PMX4CwGu0iZhzuQ/m
-         rZfQ==
+        d=gmail.com; s=20230601; t=1750942369; x=1751547169; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=hHhINhGrkGQ2hHjM1kcsgWIOcLc7VE5ZzbwVFPas/Wk=;
+        b=Ruw3mO4T7aAM5sfs1woB5mPy4z2IZcugkUJejbwoRpvbuchyl06laglLv8ZXl9phxJ
+         R+v8w3LSyJKczHr8KfJiUrXv1IpPVKq6rMrUO96RhUc0WVKTPN7rrAKmY+O2x5ILIuc/
+         wRKhkZHwbV/rAahfXFTWHPDN+GESkcs97gs9UA+Pnhjj1hNGomMe3sI66rJ3cnLvi37i
+         AjBigMVdRkpD8WNntBlPxgGxis9eoVdOCqsVYvpP8QWu2I3ZjZm4gbuo92ad7FWGnIj7
+         ybw4s9Uh4/kC6JBgzWBZHcfvwHME59zj6dGD/OZEeHiZ1rdUPjFb59Gy49dBkEsc6C+2
+         pPUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750934974; x=1751539774;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xDBAnCIO+6JrqLnLpCzh0oJk4nlBfaM0tP/YtIKMuwk=;
-        b=hl/wAv7wXrNhgbEw4z/Ela3Hqq0enjLcClQpUIeYuiCuqqtgFkJp0rCsGgI2nNkPtx
-         mkezK4/7VnqbjmTDo7ByFx6ucQ1TvjdFNSUN1o4BSPyZbW35GB3ZXzdXivAixG+coVTy
-         6kaBpX0W0wm/Z8HsKsS/L9LKnlAvmPubwH8eJ4XcHu8cMrD4QGgH40vQKSVPRQ9qJ7xA
-         2HUOyHc0ABrui5tfa3oxJMjYAIrV5XPv4aHW46QK+61VGLf+jF7akK0YiRN8qh1GYSHr
-         01YfdBrGyx8v6Au+iar50cXuwGBLnFKpsUpVfKWpKCASJyvzV0DhbuN+tt/tapCQGVx+
-         qOow==
-X-Gm-Message-State: AOJu0YwI7rXKCC3bUrPi4TNMxC5V1Ck0c87ZeMox70a7LLLTYNj+uD4o
-	c7yTMLB+FXea7dfia+d9IhjkGmCzv/vkjpZxQIdx9KZeOv3RGN695jIQ0v5liLYfb2/tYkjGitG
-	VQvnBIk9NkyjHQENbpJ4urjSCNFtRnNk3jeOZfjoxpw==
-X-Gm-Gg: ASbGncso3GscUF7b2pKqc/58rGLk4+C9O+vgw/qDT5dOqLfyNzmwEQezYgL5DoW/wBw
-	EpHdOLlbOLHjY2diJLvygYydelDLWiXg1tQIuMVd9OqW1d1wdGI2GvgWg7Q2R1UZsv7Ly304WW6
-	O57s/8framm0j/HwU30xhZP1hxShKbE2CbgEWbOWnFIgfT
-X-Google-Smtp-Source: AGHT+IH8+Tzd/JiYLeuZcX2i9xsStaz6hV/HssSLN8WwE5IcMQqtxxp0QnZ+3YymvVRGM1jkhpow8oV+b538keDbJJ8=
-X-Received: by 2002:a17:907:d87:b0:ad8:9b5d:2c1e with SMTP id
- a640c23a62f3a-ae0d0cd69damr355567766b.29.1750934974428; Thu, 26 Jun 2025
- 03:49:34 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1750942369; x=1751547169;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=hHhINhGrkGQ2hHjM1kcsgWIOcLc7VE5ZzbwVFPas/Wk=;
+        b=wV4MVO9woUXdjSULmR8H9LuB34Dp+z0Ce2lkN+iGlu2/dIRB2Hq0wyMTcWaQUpvIuD
+         4r6FOkW94yyUTNDww/s9fghC/+f5usJ7tCHYCU97arVVD0mGldbfcrcMxWZv/6ZQLtDZ
+         hhOiXF0OnjWZVxqghPrpViJMZZrP5i63KSHadmZ8HF2Y/qDC2QkkbuQC3d1wP2FltxHE
+         z30PDJAPz9qETOn0UojXFgf94CjYGv5dI8uYcbKHcam/Xiaa+WGXUNcDO5pCLj9q3E2K
+         hj8ozBe5dGHaKLrcMJzMmht3VcCMyfj46S3Lxx/Hi1B7T2kxWFpabAEsRMnATlNoZHfA
+         eolg==
+X-Forwarded-Encrypted: i=1; AJvYcCUjxruz5xZvQAAql7QX9LfZlr5KfH/C/07+rodSYLae2ABWdBTDlGK+n2Q2v2jONpTaowY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzmdb/XmUeeglneMeoSLBXRuZENSuZCCtfXg80uCebDl+g9vJ/u
+	/3+VBXTHa4fnUSy3DgHwwLiVqMOwChR31p5Di8U4sxsBxxLDamKWa0hu
+X-Gm-Gg: ASbGnctlCCfzxca9stv2E9OCAOQZyKkOZYgds6pm2fwNxspQi6Ei0gsiia+0AWJeH+Q
+	/KYrMbvx3qHoUiPXkOrhdmYOvhZufXgWgtYQRKLODTmzalXgP8OsIDZBO5uwS3y5JEkW2quZ/Z0
+	LqBOU/DppOMpbVl43Ok9pvIPOosFdK07T6YqAq97XwRbMko2kyrv1tkatHu9W+OoJ8lfaVVdfjH
+	NdCDEgMRhoXD5X9xFt3NL7Bd16cgAWs3Unv8lbDMyYxCJ0OUGk0ilCJtmSEs/gM9SA0WWB1/abj
+	N9Q3vlt3yns/zQo6Oz927+WdFlX2j2hfcb3Ze/qIwC3zznTT1/N+SJe2YAfnujotjJDUMrKSdPa
+	jFgKMmv2zEoJKx+e4HknFgWTpBdyitLeFlWhKfsAdxcEPtdWFglcPjD0=
+X-Google-Smtp-Source: AGHT+IG44sdxbzDVK8GPzF1rDN8WAXm4pmAdNUmo54ynL/D388cU2EQZTUAPcBGa5pkjcUCYMi3oTQ==
+X-Received: by 2002:a05:6000:23c2:b0:3a4:c8c1:aed8 with SMTP id ffacd0b85a97d-3a6ed66f7c7mr4506281f8f.39.1750942368911;
+        Thu, 26 Jun 2025 05:52:48 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5? ([2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538233c4acsm48270865e9.1.2025.06.26.05.52.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jun 2025 05:52:48 -0700 (PDT)
+Message-ID: <49cf7749-fc86-4829-8e94-c1f1e87803aa@gmail.com>
+Date: Thu, 26 Jun 2025 13:52:47 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: =?UTF-8?Q?Denilson_S=C3=A1_Maia?= <denilsonsa@gmail.com>
-Date: Thu, 26 Jun 2025 12:49:22 +0200
-X-Gm-Features: Ac12FXyYR1Yr20LOZLi59wkURU242lgDDNXmVkBrHwxMEociicrS5ofwErZzLZ0
-Message-ID: <CACGt9y=WktE5Tqkxf6_tb_YnaeDyJTGYZoU7vErnSGnZMpuC-Q@mail.gmail.com>
-Subject: git rebase interactive breaks when working on a secondary worktree
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/4] compat/mingw: allow sigaction(SIGCHLD)
+To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+ Chris Torek <chris.torek@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
+References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+ <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
+ <3f63479119ffe6fdcf694dac3cb47cd7838564b7.1750927989.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <3f63479119ffe6fdcf694dac3cb47cd7838564b7.1750927989.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-git rebase interactive breaks when working on a secondary worktree
+On 26/06/2025 09:53, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
+> From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+> 
+> A future change will start using sigaction to setup a SIGCHLD signal
+> handler.
+> 
+> The current code uses signal() which returns SIG_ERR (but doesn't
+> seem to set errno) so instruct sigaction() to do the same.
 
-## What did you do before the bug happened?
+Why are we returning -1 below instead of SIG_ERR if we want the behavior 
+to match?
 
-1. `git clone` a repository.
-2. `git worktree add` to have a second branch checked out in another direct=
-ory.
-3. Continue working as normal. The main branch has a bunch of extra
-commits (at the main worktree).
-4. At the second worktree, after a while, try `git rebase -i
-hash_of_a_few_commits_ago`, or `git rebase -i main` (where main is the
-main branch at the main worktree).
-5. Approve the plan, even without any changes.
+Thanks
 
-## What did you expect to happen?
+Phillip
 
-It should work.
+> 
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>   compat/mingw-posix.h | 1 +
+>   compat/mingw.c       | 4 +++-
+>   2 files changed, 4 insertions(+), 1 deletion(-)
+> 
+> diff --git a/compat/mingw-posix.h b/compat/mingw-posix.h
+> index a0dca756d104..847d558c9b2d 100644
+> --- a/compat/mingw-posix.h
+> +++ b/compat/mingw-posix.h
+> @@ -95,6 +95,7 @@ struct sigaction {
+>   	sig_handler_t sa_handler;
+>   	unsigned sa_flags;
+>   };
+> +#define SA_NOCLDSTOP 1
+>   
+>   struct itimerval {
+>   	struct timeval it_value, it_interval;
+> diff --git a/compat/mingw.c b/compat/mingw.c
+> index 8a9972a1ca19..5d69ae32f4b9 100644
+> --- a/compat/mingw.c
+> +++ b/compat/mingw.c
+> @@ -2561,7 +2561,9 @@ int setitimer(int type UNUSED, struct itimerval *in, struct itimerval *out)
+>   
+>   int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+>   {
+> -	if (sig != SIGALRM)
+> +	if (sig == SIGCHLD)
+> +		return -1;
+> +	else if (sig != SIGALRM)
+>   		return errno = EINVAL,
+>   			error("sigaction only implemented for SIGALRM");
+>   	if (out)
 
-## What happened instead?
-
-I get this error:
-
-    error: Your local changes to the following files would be
-overwritten by checkout:
-
-Followed by a list of several files that were NOT changed in my
-secondary branch at my secondary worktree.
-
-What's more, if I redo the `git rebase` but without `-i`, it works
-fine without any errors.
-
-## What's different between what you expected and what actually happened?
-
-If I try following the exact same steps (the exact same git rebase -i)
-on the exact same branch, but this time having it checked out at the
-main worktree, then everything works.
-
-## Anything else you want to add:
-
-I've been hitting this error for several months.
-
-It doesn't happen every time, it depends on the commits from both
-branches. Thus, it's hard for me to give you a minimal reproducible
-example git repository.
-
-Given the circumstances, I believe some part of the `git rebase
---interactive` codepath is not working correctly with worktrees, and
-thus it's misbehaving.
-
-
-
-[System Info]
-git version:
-git version 2.49.0
-cpu: arm64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-feature: fsmonitor--daemon
-libcurl: 8.7.1
-zlib: 1.2.12
-uname: Darwin 24.5.0 Darwin Kernel Version 24.5.0: Tue Apr 22 19:54:29
-PDT 2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T6030 arm64
-compiler info: clang: 17.0.0 (clang-1700.0.13.3)
-libc info: no libc information available
-$SHELL (typically, interactive shell): /bin/zsh
-
-
-[Enabled Hooks]
-applypatch-msg
-commit-msg
-post-applypatch
-post-checkout
-post-commit
-post-merge
-post-rewrite
-pre-applypatch
-pre-auto-gc
-pre-commit
-pre-merge-commit
-pre-push
-pre-rebase
-prepare-commit-msg
-
-
---=20
-Denilson Figueiredo de S=C3=A1 Maia
-https://denilson.sa.nom.br/
