@@ -1,116 +1,108 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62CA7202990
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 21:28:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C57024503B
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 21:30:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750973314; cv=none; b=SiS+pnZT/je0SGee8KBRDIKhen0k2E7ZkCo4DU8fKBV+HlQlJlIQcUHA1Vs9ZP5B1O83I2fMaK+d1UeFQpx1fB9wZzzJQcTmotJPfZ7I4fk37RuuHz3E3KhlXv3BwQBrAdtBhS3kaeiWrLdyf6iGUoefuD7+zhqsH0+0q5/7wMc=
+	t=1750973439; cv=none; b=AdG8OzrJm3uawn3eFXhcKW2KeRMoH8jiAkO/jOPlEOI2ZP20r9F2octa4++U4ZrKMjFs2d9+o6CxmvJEJt1OwSl1byn9KsRdQ3kVn4z4siaTbESoF0ofvS0ex/09mapqVtRs5yBKOIHkw2KpX7lQzeBqwcCUhftk9hMIYCA99vE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750973314; c=relaxed/simple;
-	bh=zaz5T2P2sGNmSY0ft+cE1lozP7TQgAAU5TYWb+sy9hg=;
+	s=arc-20240116; t=1750973439; c=relaxed/simple;
+	bh=/oLNj9q2jHRgx+jQM+oqgMNTxHIztw2+Z90FpeuGNBI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NdvTgDisT2c05plIVvJAf52GEUksKk+bnyuF/lLV81+IM4deHqQ2SoJgez18DuFAXs0Q5Up60Vqi68w2CZeVCDnVryLmwzuc9YKlcn7CnhP79pfjn+pqO+2ntPo315i6LZz8BA6QD/swXZ18RZopCH03X/GKcEWc0KkkmsLekD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DR2HmnHv; arc=none smtp.client-ip=209.85.216.45
+	 To:Cc:Content-Type; b=m/IPJ2jjHOQgavrOOog9vs+5lI/TC3LmlbBgCHgl6IfTTm9HcRau3J1WUzeHFlm5lsNWWt63K5GyoLIjg5k+yAFHNOoSSYI6ZORjB7SScMRWyxg79olBsnd3Qo6nj2+qRBK3OmE3VhbuOcKY+L+ZjZ6lYiE1qNjz4lxuMAfeWNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JZUozb7Q; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DR2HmnHv"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-313a188174fso2457624a91.1
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 14:28:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JZUozb7Q"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-235a3dd4f0dso11516285ad.0
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 14:30:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750973313; x=1751578113; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1750973438; x=1751578238; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4FZKL3QFeycG1+gPnc7dHP4ZM8PJDSOWCA5CindeMPk=;
-        b=DR2HmnHviAXLzMOuGnWQfYsLqVC6kuqbYH14gJ7mmsYJWfBeuiqX432m0D0jPLmCOo
-         67+P8jMMmZLKS1NPJAW0CTjdtF4xu2jC5Kt5LZDFbcbXPkkZdypbiSZ/TV7Tc0c2pwDM
-         8vmVni3ppNpBwTH8bIc4WXTR0pZZ6xPEBeC+Ar6RV04e/g/FkNGNLW9A/QgyP/3FXJfM
-         N11o1X5e2gnrcC1Q7o+6F2gv88xXvVi9JEcMhDt5juy0lLKaWirxn8INcTr784Cmp3ey
-         F6/Hjf7FKXZ0TDl086+Mx6naKUxQIAUAh2DOaJEsa2u8wj87q/hv/mpNS94LbnJ/vj5+
-         tGjQ==
+        bh=/oLNj9q2jHRgx+jQM+oqgMNTxHIztw2+Z90FpeuGNBI=;
+        b=JZUozb7QkWMm+y7xJKyn9aLVLQuTv1gsnopn4nwQ/2Bv77jYobYHioJEpawB9GZlHl
+         brFWsFm6AsFYkrIFQBlqZPNSWRzdWxFTOPEpuCIWUl3GwvEB45aZLA2SHe4RcwWakBWc
+         OLGzmN1fXRsPToTs++uxtU4R/s9lQZg88Akdj6l1oVKIF0PSGc7X2opIZ+HG6UiQ6N94
+         oGQLIojSSAMy9Bq0eq2DahpQsiztLGhyX4HN9lZbva7tIOgB8AGLr305NtsUAMl2bKPR
+         JVsl5wkpXbjUAghCP5SWdUSFQFG8oFQ8uV4kOcq2wn25Wf8TfHPtdVFoWQmiNh2W3DNV
+         httQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750973313; x=1751578113;
+        d=1e100.net; s=20230601; t=1750973438; x=1751578238;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4FZKL3QFeycG1+gPnc7dHP4ZM8PJDSOWCA5CindeMPk=;
-        b=NSwztN+wlwmaxKbMPRQDjX2CGrIbvfxwQHBy7TJWsAnzqN709t6MnatJCYv1jHIwkh
-         AOkQ8eP7qG6OE577PYdrosVRmM6dtKqJykhh2UqWDlpZyUYrHLy7I4HVWoRPC+B3mtR2
-         wfhTbeXNQMEIEk1RqK3y0cRekTkOuhA5/kM3wlRVzTEA6ViOVAHtjBiLISiAW/oPrnmo
-         Xg3LskazNAdnCqL5B3himjzqZ9rgg85rlKkvf1L28r0ZB9/YRqmSZPtD6sLfXDfS4wE+
-         yQp6lFLCWFL/VnSJ5Lf3cramPuZhRDBYuQb79dG78v/mb0RssBXIwsVyZApy227vVZxr
-         VAew==
-X-Gm-Message-State: AOJu0YwjmaPF6a9O78+7p69Y1szSCfJrduFih0OlBbvWf3bfGMZ6zcpH
-	1q6udNZKc/1JOEb5nvq1aF4Mqdvcum6HrVx04grj2yLLDgFM9kKHzZWLx7lG0xAMd7N4fSfKZWU
-	zoCQDEw0Qk2LeQyITkYZHq6ajH7bJWz8=
-X-Gm-Gg: ASbGncs/f08t/Ljd+7WswBbw3klCkXaXsnsAoZnYKevmV5MmxJFDwyr9l+hWCri1mPs
-	7Ml2bKi3y+R2PCSwoHYC00YV8P9GF6vL6U3y+A9oYXH5DBW/l+Uihmozrkkebp+cR70RzKtxDsG
-	BDewPTNruj1QEfDKzLuB31Yw5av0elLZtgXIwnEHU8GFHz9/nOCLN1+vJSMGIELh4Ty6IwrEqRl
-	a8Oclr2Lbzs6Nfw
-X-Google-Smtp-Source: AGHT+IHBnXMT88eQPWaacUSwzzjHhFIQof/W3iHQpt/I5HUw/wnl+i4ZPWYdU3xsPy1KDDgPMXBKS8b4Gu8EyB0IJVc=
-X-Received: by 2002:a17:90b:33d0:b0:313:d361:73d7 with SMTP id
- 98e67ed59e1d1-318c92bcd2fmr716671a91.13.1750973312589; Thu, 26 Jun 2025
- 14:28:32 -0700 (PDT)
+        bh=/oLNj9q2jHRgx+jQM+oqgMNTxHIztw2+Z90FpeuGNBI=;
+        b=UUTYhQ1BWWrpgcPUs0siwUO9MtY6x05/TxeNXBVdozAzdbKWDyG9VzsZlVBWQQsc29
+         bPILG3Ix4TRSXvErtkV/Z5oQr3xJ7hmqiNr0FbtGKWYeA+rZegjJrGmhe73Fq7YxRSnC
+         7L0YVfSP9Gle2HLQ0BSyv6eXa6xAS4JSeadxefktQUCD/r55bfH6ya0XiMfcmeZpPRQv
+         Dn+/y0PQ/Y18sI6EACayama0mLnv/otl2rRIgkd09eehj4ZTB0UaSz6LaDEfIxL5wlqj
+         MpCPKoCFgB5aCu+pw6A8EoRtar1owsqU603N8l9x33GOSx0j05jlt4NP5+MpB0EmlCOq
+         FaJA==
+X-Gm-Message-State: AOJu0YwHsrT2WxrBhm6Nd3uabCC+xMCy280KjcWQUdbTB9p92c1hpBfM
+	OEY8dAUXNMDp74NLaGRK2Tf57FLkyFhYdiCGqsjzNfhHul+I6p1bGGLiVRjAJMuWODMeTSlXnBr
+	yLHILiDbMclW6BUjX77sNp5GwfiU7S6JQXXLG
+X-Gm-Gg: ASbGncvdOiAgszs4Jjsnl5TQTzqB+nwTCQU68cb6XDuZVuiW2p2UDejZTmSFD6WwN0s
+	plM1INVyOit88R0xQl2A0v+T+jxQPpkruDiKe13Q12dGSvaANZfeYxgqpwWKIpUNulUxrnNeJws
+	p1wjna55Y/JHKNEOe11ZXvWgL1sRrpUaKjl/nYQPJDMmUO2ElJQ9eUC6PuTlzcuv9Ynil+VOHJK
+	D0Zrw==
+X-Google-Smtp-Source: AGHT+IGLJ1CkPrnmy2uR3vlpvv6jf83oeZ/lOCdv6GJOYR8Gryu1x3NXipklYZ04B6/HpOt87ZSn92Oz107OgwyAMbQ=
+X-Received: by 2002:a17:90b:2f8f:b0:311:a54d:8492 with SMTP id
+ 98e67ed59e1d1-318c910de41mr740412a91.6.1750973437555; Thu, 26 Jun 2025
+ 14:30:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250626132233.414789-1-ayu.chandekar@gmail.com> <ca8e7670-cf4f-4915-a37f-09d2e4b7c62a@app.fastmail.com>
-In-Reply-To: <ca8e7670-cf4f-4915-a37f-09d2e4b7c62a@app.fastmail.com>
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com> <xmqq5xgir2ry.fsf@gitster.g>
+In-Reply-To: <xmqq5xgir2ry.fsf@gitster.g>
 From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Fri, 27 Jun 2025 02:58:21 +0530
-X-Gm-Features: Ac12FXylq31lnuhF63Vs3CFNVEtEsS4P1UNmBw2h4sbGQgNEkoa7tEXzSyGw71U
-Message-ID: <CAE7as+aSG0BKeGDFs_GnHjo7juTv1jhKzRgTKGeoH+2X_-O=CA@mail.gmail.com>
+Date: Fri, 27 Jun 2025 03:00:26 +0530
+X-Gm-Features: Ac12FXx4WAF-Oe8KpjUKnCCJnNSkl3n36mS6V0N7beplF1XtpHUsB5Ps6B9ygxQ
+Message-ID: <CAE7as+b=9sKLU1pG4xDJ+D4C=UNYUH2cpP13VaqwLfsQmLUVQQ@mail.gmail.com>
 Subject: Re: [GSOC PATCH] commit: avoid scanning trailing comments when
  'core.commentChar' is "auto"
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>, 
-	shyamthakkar001@gmail.com, Phillip Wood <phillip.wood123@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, shyamthakkar001@gmail.com, 
+	phillip.wood123@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jun 26, 2025 at 9:10=E2=80=AFPM Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
-
+On Thu, Jun 26, 2025 at 8:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Ayush Chandekar <ayu.chandekar@gmail.com> writes:
+>
+> > When core.commentChar is set to "auto", Git selects a comment character
+> > by scanning the commit message contents and avoiding any character
+> > already present in the message.
 > >
-> > +test_expect_success 'no change in comment character due to conflicts
-> > markers with core.commentChar=3Dauto' '
-> > +     test_commit base file &&
-> > +     git checkout -b branch-a &&
-> > +     test_commit A file &&
-> > +     git checkout -b branch-b base &&
-> > +     test_commit B file &&
-> > +     test_must_fail git rebase branch-a &&
-> > +     printf "B\nA\n" >file &&
-> > +     git add file &&
-> > +     write_script fake-editor <<-\EOF &&
-> > +     exit 0
-> > +     EOF
-> > +     FAKE_EDITOR=3D"$(pwd)/fake-editor" &&
-> > +     GIT_EDITOR=3D"\"\$FAKE_EDITOR\"" git -c core.commentChar=3Dauto r=
-ebase --continue &&
+> > If the message still contains old conflict comments (starting with a
+> > comment character), Git assumes that character is in use and chooses a
+> > different one. As a result, those existing comment lines are no longer
+> > recognized as comments and end up being included in the final commit
+> > message.
+> >
+> > To avoid this, skip scanning the trailing comment block when selecting
+> > the comment character. This allows Git to safely reuse the original
+> > character when appropriate, keeping the commit message clean and free o=
+f
+> > leftover conflict information.
+> >
+> > Background:
+> >
+> > The "auto" value for core.commentchar was introduced in the commit
+> > `84c9dc2` (commit: allow core.commentChar=3Dauto for character auto
+> > selection) but did not exhibt this issue at that time.
 >
-> How about
+> Use "git log -1 --format=3Dreference", i.e.
 >
->     GIT_EDITOR=3D"cat >actual"
+> 84c9dc2c (commit: allow core.commentChar=3Dauto for character auto
+> selection, 2014-05-17)
 >
-> Then you can `test_grep` on that.  Like in
->
-> https://lore.kernel.org/git/5ed77fab-678d-4a06-bbd0-ea25462a7562@gmail.co=
-m/
->
-> > +     # Check that "#" is still the comment character.
-> > +     test_grep "# Changes to be committed:" .git/COMMIT_EDITMSG
->
-
-Thanks, that's much cleaner and faster!
-
-> Nit:
->
->     test_grep "^# Changes to be committed:$"
->
-Thanks for the catch. I'll fix it.
+Got it, Thanks! I'll update it.
