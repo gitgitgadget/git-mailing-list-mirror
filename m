@@ -1,110 +1,74 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3F01C4A24
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 18:33:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CB051DF739
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 18:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750962798; cv=none; b=gzkvqJ3SDTFvCvsIzWctshxyfDhKQbQo4E6aySnlZ3f9yzX9pGNLzpTmbMFia6Kj9lwsvCXqMJ0zku6EkEDjWxvubyVJY9voOxv+rkJPSVPpRYOXRAcmQrOv51/NPH2ycKedcJwctwfoFzocd1mDMgI/nkeErKTNsO9y7Zk6iwY=
+	t=1750963123; cv=none; b=QtA4RJAYhaYvpXrl4uEsdPaBJViUVeVDv0+j7jNw+UcpAWV0WmQDcTVvwjxiZ1C9o3MseVI97pFrcBEscuK9DK9i+i8/hracePnovtX4aRh18WiT7ebUQw7cwIxS3JnZOFK81BrWRDaaX/bkWJvFqbXNha4oN8EN8pGGSjP89NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750962798; c=relaxed/simple;
-	bh=tXbzWeqaiq6XoH6PPsM59zSYMsAB+V4vnuVLW9JmjZA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j0GvnRZeYh6EFRYlzXcgK69tCHRWyd3D3NQq7k1HTK2A9s33O4R1u/1NP7b0cx27OvnUyVrsCMQmH9DFyUcHQqo49ddVF3Jwe6HUZQCgWjHWPvmedt+fy7l3e/C6RS5jGvmTJ4PgKnFzgNHeMiXK55AEYu1phn0+KW9I5HVMBlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Diw213nJ; arc=none smtp.client-ip=209.85.218.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750963123; c=relaxed/simple;
+	bh=idSD+totlZM6nzplOwB8qIPbutTtGslrw1mXsBoGIdg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=n3jdCwiOi3uKdQlPkF0dUuszgFsrCNEfnWqtShYKillHLt/gWGaA4pfo6luBLT8vxjhx6xF3szIQV6nQ62JXiOLngdGjxoko/hYD4wB52vfoMMqsvKeJAYO2A3ffmiNDSCF469H8PZrgvVQpBsshIoQR9t8fj3GXiyaL4ArQqNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=d61sETMF; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Diw213nJ"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae0d4451a3fso207500566b.1
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 11:33:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750962794; x=1751567594; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tXbzWeqaiq6XoH6PPsM59zSYMsAB+V4vnuVLW9JmjZA=;
-        b=Diw213nJwnFG26n732QxtvhLfBdm2YYQCjt7u8+LwmUHZKMEh4vTmClcCC9/pGGNmU
-         SIHy8/+1fMw1yhhcBsC3hV/PE14KhLCWcV9SnAAiLZVNyDxr9A/VzdOJLNEm1ych7/1+
-         CdphKSP1H13EFGo4UlubtVTJc6IYdmj1tQRxp8uO6OAsDAgTH8PzkW4wMwgrBFg5Eo2T
-         gQ7VVsLuzdUTL2Rw1CIRM79mj+u8vfHtgjcSAatwgu2UESNgbKtt/WRsi1gm5STS4BPn
-         w1SgXu/khvdN6ju8gumY/BOSK22uU8N2ru0lONKQWW7d1bXim8Wes1ryAls2LMgf413I
-         31cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750962794; x=1751567594;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tXbzWeqaiq6XoH6PPsM59zSYMsAB+V4vnuVLW9JmjZA=;
-        b=sxsZmi6LwOFwlx29rekZknqKSg1iva1mtPldJJ9YNhg3BbPWBHQCdmeL2RNtSGkdFO
-         PRxa1rHpCCNiT050nrmtaVeyC2UhZ2qOGo8VKB0eSWKcAvRuViZZqaVA9EPFqjszLTKE
-         zcaNxMQsJkcgJKg0yf/nIMd6t6Uf+oGo7Omp4XoEm9yax1TqgGe7QlKdpVKpFFPBf11W
-         XUXjhZC0y0oxRAbU06Ve8vE9PuAi2/2uyCB6bVlfIp/NFU9XWkicPdcx3ntYHg775Fsn
-         4fE7tPO9IBMrIQGRF5/nZWcXbnJ+44h8bMlBu+Z9N/brM5MaDVmMFJNnI2dJ1Tj1+PdH
-         TzaA==
-X-Gm-Message-State: AOJu0YxcffEyKod4UxHuK61ciBsuRJ/y9okCwGfDTXBTBKPxCBb6webT
-	0qJCIHu7i5G5E/uVHGNyWM8hqAWt8FP1Jssg9PbxXcaai0UKv7naYi0/Li3GS/MUJZEQpavvYIi
-	W+muEAyLpwHlzwKAEoxTW7M6AC+Q2+hZsqLVT
-X-Gm-Gg: ASbGncsL7v05llPm9LJCL8L2oVHy03OTWsuVqRGeP7RxoKbY99G+1T3bEcm3Qk4rqgl
-	lQmrAxvvxUUvY7Zri1lVUMvC4DbuCjoMaNUtKPRxEZFym/gwLFwzdgv25aZh7BK6fGaIFOYKRzw
-	gAjcvAmuDTmjd2nCq9omC5BQh5itUUZqWcVMi/JOeXYPPjKQbRYIh+z4w=
-X-Google-Smtp-Source: AGHT+IGrVwwrd+d4hm1hnD67+0H8G+NP5RN+UpFICw230gqBF52B5cgKhfvcp/aTk8m9W1buBhh6Rqpk6vAtOYiSYps=
-X-Received: by 2002:a17:907:3ccb:b0:ad8:8efe:31fd with SMTP id
- a640c23a62f3a-ae350179103mr11183466b.52.1750962793760; Thu, 26 Jun 2025
- 11:33:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="d61sETMF"
+Received: (qmail 10593 invoked by uid 109); 26 Jun 2025 18:38:34 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=idSD+totlZM6nzplOwB8qIPbutTtGslrw1mXsBoGIdg=; b=d61sETMFvFsNeIAxkK76HRKRGJWDMk0JBS+nKqSJx9m3ye7BriWeNUzFUkH4fNcNS7tLBQUJwEbjZEBsmLYCgIR7gd3HVNkxCG+mYQt0OqNIrL03Iiw7aF3m6e7kSR7wxYBQOu2ljeToKvCjBEBjulzqu5a21Xscpb+mOc8zodsenk7UqEJQLLrFOCWT4PoIUcfCaZSloV8vCqxlZzETwPhgE72mD5S77Wi/JMJIorrktybY3z9y2hr6YI/e6XkDS6oknHIYCvbn62X0QR7Y+rfbr/bCju5Rvn9yUWmGdQxrykEKTJ0s/e5OlLy/wHA75WPbKUAZlWXikYYCVcSZJg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 26 Jun 2025 18:38:34 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 9072 invoked by uid 111); 26 Jun 2025 18:38:35 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 26 Jun 2025 14:38:35 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 26 Jun 2025 14:38:33 -0400
+From: Jeff King <peff@peff.net>
+To: Brendan McDonnell <bmcdonnell.emb@gmail.com>
+Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: How to show "bisect" refs in "git log"?
+Message-ID: <20250626183833.GA17172@coredump.intra.peff.net>
+References: <CA+MGQRBjx2XfhFo6Bs+X_WzRq9kB-ucZtTuw_kAfuZCVKGVvsw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CACGt9y=WktE5Tqkxf6_tb_YnaeDyJTGYZoU7vErnSGnZMpuC-Q@mail.gmail.com>
- <bec18631-c0c5-4e8d-99ca-7f2bbdd5e88f@app.fastmail.com>
-In-Reply-To: <bec18631-c0c5-4e8d-99ca-7f2bbdd5e88f@app.fastmail.com>
-From: =?UTF-8?Q?Denilson_S=C3=A1_Maia?= <denilsonsa@gmail.com>
-Date: Thu, 26 Jun 2025 20:33:02 +0200
-X-Gm-Features: Ac12FXw1ZsP2pRGvur_SiJ8s48IAdXwZWVQROt7ignYZc0VbUMpXQVGBl2fHG5g
-Message-ID: <CACGt9ymuLOaA7dK-Y-g0WR99EKgknsuXzOpEd8xqpNOpcK_38A@mail.gmail.com>
-Subject: Re: git rebase interactive breaks when working on a secondary worktree
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CA+MGQRBjx2XfhFo6Bs+X_WzRq9kB-ucZtTuw_kAfuZCVKGVvsw@mail.gmail.com>
 
-On Thu, 26 Jun 2025 at 17:58, Kristoffer Haugsbakk
-<kristofferhaugsbakk@fastmail.com> wrote:
->
-> On Thu, Jun 26, 2025, at 12:49, Denilson S=C3=A1 Maia wrote:
-> >
-> > [Enabled Hooks]
-> > applypatch-msg
-> > commit-msg
-> > post-applypatch
-> > post-checkout
-> > post-commit
-> > post-merge
-> > post-rewrite
-> > pre-applypatch
-> > pre-auto-gc
-> > pre-commit
-> > pre-merge-commit
-> > pre-push
-> > pre-rebase
-> > prepare-commit-msg
->
-> A lot of hooks. Do you use git-branchless?
+On Thu, Jun 26, 2025 at 01:58:11PM -0400, Brendan McDonnell wrote:
 
-We are using Husky in our corporate/enterprise/business application.
-And I think husky hooks itself into all git hooks, and that's why I
-have so many of them.
-https://github.com/typicode/husky
+> I use this command
+>   git log --all --graph --decorate --pretty=oneline --abbrev-commit
+> frequently to visualize a repo's commit history.
+> 
+> It used to include "bisect" references in the output, until ~a couple
+> years ago IIRC. Is there a way I can modify this command so that it
+> includes them again, without excluding any references that it already
+> includes? (Appending "--decorate-refs=refs/*" includes the bisect
+> refs, but excludes some others that are there without it.)
+> 
+> Is this behavior change a bug, or intentional?
+>  - If intentional, why? And is it documented anywhere?
+>  - If it's a bug, should I report it somewhere (else)?
 
-But inside our `.husky/` directory inside our git repository we only
-have `commit-msg` and `pre-push` hooks configured. Everything else is
-unused. (Which probably means Husky gets called, but does absolutely
-nothing.)
+This is due to 92156291ca (log: add default decoration filter,
+2022-08-05). That commit doesn't mention bisect refs, but there's some
+discussion in this sub-thread:
 
+  https://lore.kernel.org/git/kl6lr10l8t7y.fsf@chooglen-macbookpro.roam.corp.google.com/
 
---=20
-Denilson Figueiredo de S=C3=A1 Maia
-https://denilson.sa.nom.br/
+There are some possible directions there for adding them to the default
+set in a cleaner way. In the meantime, doing:
+
+  git config log.initialDecorationSet all
+
+will restore the old behavior.
+
+-Peff
