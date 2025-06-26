@@ -1,126 +1,125 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B6C14C5B0
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:35:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A47B1CAA65
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 03:35:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750901704; cv=none; b=DSaQ8hYKgxshJnEzuH7mPHo6YC9YpZ7ysspqNhekG8e2anttp63MxStgJ7qiIHUlpzTI2ihfn3rh+K3D6d+UDjX8aeexvOqmsqX5jo1Io615QNuA1yNv1jj88rhuNs3z8urd0ogc8WaVLdywbpn9dkGnUCsZsOg96c+oz6Y1LuE=
+	t=1750908914; cv=none; b=tUG4PdC7i0mckokeuFLXql1aW55UQabhF4DYMz0wD2uG62UZD2IJfcCFATyWHnQBvVk5tJhSfHcoJ0/XmyS0kybWdk6osily2jBMSEgxk6JfwC0ZxjX7NFejVemhjI7KS2qb5dStjiUFXySW03fE32hiSGi5Th4Vg6ojGPGzTTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750901704; c=relaxed/simple;
-	bh=21+sb/NRrXip+8KuZ3a8mUDLWYr3T6sdHyCdiNsXCAw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jwtzUYXtBmwPaxdqDsKzySjcgfas1NOhnEWO2g8vMGN7AfKLqo89kFPj4X+0QErE9U7C7EPkZbq9+TwiodMWRUv2ptnk15+qz9V2dPF9EPkg53MccSdJ9G8a7p/4aE9h+a8mMf4VXtLNIT8XxHCnrs8wicHrC3xmGy4JSVwpRVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emV9l4aF; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emV9l4aF"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7424ccbef4eso587828b3a.2
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 18:35:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750901702; x=1751506502; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=T498cxyjH5q+J5NkNbxFx3CyPRL6jUGu9MZokx/KqD4=;
-        b=emV9l4aFAwdwXdiA4M8vplflZFQ3uT7wbfwhekWXz/wzE26F2xdZ6lgAd1Zp95zTGQ
-         08PiOxTqRH0VtwNFNt1XOPpI0pDjyHgBbrjewxqSYpybqnwUCiYpFKQAbuj6elp/oBuC
-         AoY1vhK2sBv7d1kn5pgep37Qb/n3Al5HiX9Q/ip1DRe/iqRoOjZwSdzg2PtZkghZMqfG
-         vK0dDC07PMKl+vPN1MDoEf9BNbwsA5fUkWvtV8Qt+jjPiePTx/PBxHX93xGStdpQExeb
-         BN5AktBNFry8Fi4w0YL1wZuzJ8feaWTz2OHJxvOW31cRq27GQJLKAb5ynzJ1YJCZlh3s
-         Bfmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750901702; x=1751506502;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=T498cxyjH5q+J5NkNbxFx3CyPRL6jUGu9MZokx/KqD4=;
-        b=SB36FT82T4LkvEI7psZvjXEq2dWv9gjUahGm4JJ6+K5vpY4Z2vRGCS18QFFXQg7VZB
-         l/6w9JCRWrOAKrVcraOnKmUStr3spKobIO9jxuCAd2CfAECPUR4d57Rbc440BJcH5GF0
-         dMUeKDViMOyb40kooOKPylYFGFp+xTqbbaovC+Q5+eNhTFyOL7gHs7ER4QbI4/NaDmUW
-         jNR7s8lO3/y7fP5HcoZnTfdPnLta6iubkD/RVHb145SFVqsCbPPoMOicWi4fhHph7ra4
-         nHm7U2x7fX0QpFnKT/uSQwAChXChLEbWhQPTqa8HKbTrrdfFCmoDnmJVqPEPlDBkRZoN
-         8k+g==
-X-Forwarded-Encrypted: i=1; AJvYcCWem9EMlHgnrx5WznMcVPvsepTKsY+RmXeANSvGdo9FU7rWd1iTPufBX4dZ8/keKhDlELM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywm/cuGHjeMpjXsxhvqrW6X4kwp6S8k5O4L6EG9ki2IBXbAxPwS
-	lWV3kCjxRY6v78Zdk7EwPiKcGEkSVt7FujpkVu8BMdqYhUbJdzovjP9t
-X-Gm-Gg: ASbGncs8wVgPx/cZ48DF+5xR5IMCvXdZwrCF2fHj+wJ1BZw7uuRuR+F3H5rME0SifjN
-	NoBhVyTH8hc9sXRY0uu6DfF5x0CfKzI1r1VwAls/b+KjBFooudwncYepzecjTR3dbT5r8c3yv14
-	1GsP2gp/fk6ukYPGEQaoTaOVj6nZQvToUs+I9cUg9UTnnh+UVVJrlsRxVnegrZgY1yQCz0m6XlH
-	3kGsX7jGRF6YvBiM0YF596767zGP32KfddbDyuBvIUxaf7HxoIPEXbSrOigk1FtG6OOMJRm39Mq
-	1KqTJqAi5enVebAiBf21zMtOOsLDbl9Pl9QpBJv2XAhch242a6tAyWvcSfZ3S5ooQP8Mqc0stzE
-	xf3uNl48mUB1MhNdog/PCqXiYYn6Rt8eOSA==
-X-Google-Smtp-Source: AGHT+IHk+UKDioJDEu5yk0W8+1ynBUiCYmCJrhciGw8F7ktwN7RZZMdc6Te77YL2jA/O40+egRCP7A==
-X-Received: by 2002:a05:6a00:1952:b0:736:3979:369e with SMTP id d2e1a72fcca58-74ad44902dfmr7348931b3a.9.1750901702429;
-        Wed, 25 Jun 2025 18:35:02 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:3061:f32d:ab3f:87dd])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882ce03sm6001547b3a.97.2025.06.25.18.35.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Jun 2025 18:35:01 -0700 (PDT)
-Date: Wed, 25 Jun 2025 18:35:00 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 1/3] compat/posix.h: track SA_RESTART fallback
-Message-ID: <ilvhfzdfqcwkjt5h336ldrimnzpz7kwkkdst6egyohwxppo2gn@fpkulngdty23>
-References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
- <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <e82b7425bbc2540fa5ef3fd4584e6f902485d064.1750836928.git.gitgitgadget@gmail.com>
- <xmqq4iw3yfd8.fsf@gitster.g>
- <4oh4eatsp4wo4ur6rluy6ickfy5jfpuarg435vplrqzvk3eaiz@jbtnnwqnz2yi>
- <xmqqzfdvqr3a.fsf@gitster.g>
+	s=arc-20240116; t=1750908914; c=relaxed/simple;
+	bh=jL8STDO5lQS9hxWV1fonUmdNOmSWoa6nko4lD8PuWQM=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=FdoPlfDtn0FhYS0fmLwAcAqooyFJEz9wbSbmvPF4aoboZ8pdpbcb4iBIf4fE1ha4RH6zaQxWnOsFVjIgGoPuX7hFGLRMZjczyq2ooDfjOJBDGvAh2w9qQBI7mO+E4/xoB24i323uW6Hq1iTG4VIy7dg53tL+EGKOUluFRfgE/i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz6t1750908890tf01cd5b4
+X-QQ-Originating-IP: CyN6tfDSCFTbDEnGdr53bWyX928muACNw1+Fd+LcOqM=
+Received: from smtpclient.apple ( [36.152.24.138])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 26 Jun 2025 11:34:48 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5616732996666146335
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqzfdvqr3a.fsf@gitster.g>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH 0/2] bloom: use bloom filter given multiple pathspec
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqq7c0zviat.fsf@gitster.g>
+Date: Thu, 26 Jun 2025 11:34:38 +0800
+Cc: git@vger.kernel.org,
+ Kai Koponen <kaikoponen@google.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <691CA448-881F-45BF-9D38-190F189DBB4E@smail.nju.edu.cn>
+References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
+ <xmqq7c0zviat.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: NXFhtRYX6L9xoon8Hwixe/eEMZ2mxSZP1DFn7Nfiytof1IesX6Q7he+m
+	WMZ3dx4p7cbnAc4r7nehFdIcFFNUpl2mKfl/z1rAJk8KvDwuowbDtkl9B1e4MjIk+yX0zo3
+	p/uOzgsFoQuuDqSe0kNKoznTFuCXPE/sh2BhjPeKpG+k3bONb8ASBurUHkbAkU/tB81kA5K
+	jJ/UeDNCf2cWPQrI1tKDIEsUrO6OaLUET/w3uf6C4d4I8i8scyqQqMxkEMdi6mKCq3sE8FR
+	IWsCwM5DHeh63ibI5bRHtWb8hApHBloVoGJaKfcu6ZtbntI2rUsWUw4o6D3aReHBEWYWsh+
+	TtA4nU4SGWrq8ptKPi8G0IjPIzVP24m+Yb5mnGtyAEQjMqjojDcEqMH/lKbaC29NLHl3Zj8
+	sjrMITnGzBhm2pMhJW7//6thjuEFoSPfnnKMIws0wuZMSEoFP/f8dBU62Rz5xyenfE09DF7
+	M5wcMVwSqqo+1ILT6p0mwHS+C1IUnBjJV0KIv5aYwSx87mynjRJ5S76BjMPlCAEgFfIiSzL
+	AAcOIja4PO66c41V8PbkFhdY9Z+giJYMGe87dKfUKrtHDDNZYIUu/hPdsBz3CGCz5iY1Yq1
+	S64zX1oScE+pp58xF4dCS5svYfYfhsiyEyrUogKgsmKkihCH6KhKSgdUH1adrZIodzONxtK
+	eBZ4ZFjs4YJwtsU0mT4GXRztnaf3Em/n9wKvdqbzux3SRxbuqJfD6FqByi48wEoJuNlGmua
+	W25ary/8RbXg1ZbJM8SQ4rMASrUaBJifJy83k9GwVOByCUXSbLaY7Vu7DINXqzGgeBm44jy
+	qK+luD5CQDp4Pk916ZY0wnar6cYJw0FxNAkpV56SxXbCoy2peIG/HrJSAzQvnIft31YlJQi
+	zn4R06KYQJgMXqBrZmgzVoRQrbhYATL8fjxKKaevbMnZUtddi0JMySgKppYz8jEbc5/jFZ9
+	NZIroQuuSjyT7LqZcDMQUWZD1MIa905u09bSc8WDQnX6d9g==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-On Wed, Jun 25, 2025 at 05:33:29PM -0800, Junio C Hamano wrote:
-> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
-> 
-> > On Wed, Jun 25, 2025 at 09:07:15AM -0800, Junio C Hamano wrote:
-> >> "Carlo Marcelo Arenas Belón via GitGitGadget"
-> >> <gitgitgadget@gmail.com> writes:
-> >> 
-> >> > +# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
-> >> > +# prefer using ANSI C signal() over POSIX sigaction()
-> >> > +
-> >> > +AC_CACHE_CHECK([whether SA_RESTART is supported], [ac_cv_siginterrupt], [
-> >> > +	AC_COMPILE_IFELSE(
-> >> > +		[AC_LANG_PROGRAM([#include <signal.h>], [[
-> >> > +		#ifdef SA_RESTART
-> >> > +		#endif
-> >> > +		siginterrupt(SIGCHLD, 1)
-> >> 
-> >> This is curious.  What is this #ifdef/#endif doing that does not
-> >> have anything in it?
-> >
-> > It checks that `SA_RESTART` is defined in `signal.h`, which should
-> > fail at least in QNX, NonStop and Windows.
-> 
-> The above roughly expands to
-> 
->         #include <signal.h>
->         int main(void)
->         {
->                 #ifdef SA_RESTART
->                 #endif
->                 siginterrupt(SIGCHLD, 1);
->                 return 0;
->         }
-> 
-> Are you saying that a preprocessor macro SA_RESTART, which may or
-> may not be defined, when asked by "#ifdef", causes what is left in
-> the preprocessed source change in any meaningful way to cause the
-> compilation to fail?
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Lidong Yan <yldhome2d2@gmail.com> writes:
+>=20
+>> git won't use bloom filter for multiple pathspec, which makes the =
+command
+>=20
+> Let's get the terminology straight.  A pathspec consists of one or
+> more pathspec elements (or pathspec items).
 
-Lack of judgement on my part; I apologize and will correct it.
+Thanks for the clarification. I will be more precise with the =
+terminology in v2.
 
-Carlo
+> Also, "git won't" is overly general.  The series title shares the
+> same issue ("given multiple pathspec" does not even hint that this
+> is about revision traversal---you are not making filter used with
+> pathspec with more than one element in other code paths).
+>=20
+> Perhaps like:
+>=20
+>    The revision traversal limited by pathspec has optimization when
+>    the pathspec has only one element, it does not use any pathspec
+>    magic (other than literal), and there is no wildcard.
+>=20
+>    While it is much harder to lift the latter two limitations,
+>    supporting a pathspec with multiple elements is relatively easy.
+>    Just make sure we hash each of them separately and ask the bloom
+>    filter about them, and if we see none of them can possibly be
+>    affected by the commit, we can skip without tree comparison.
+>=20
+> or something along that line?
+>=20
+
+What you wrote makes perfect sense to me, I=E2=80=99ll just copy and =
+paste
+those paragraphs into my cover letter. And the title would be
+  "bloom: enable bloom filter optimization for multiple pathspec =
+elements in revision traversal"
+
+> Can we have a set of real tests to make sure that the updated filter
+> code still identifies commits that touch the files without false
+> negatives?  False positives are OK as we will follow them with real
+> tree comparison to determine what exactly got changed, but false
+> negatives are absolute no-no.
+>=20
+> Testing to see that the filter code path is activated is much less
+> interesting than the filter code path still functions correctly with
+> these changes presented here.  I have a feeling that with the
+> changes to the test in this series, you wouldn't even find a bug
+> where you simply added subpaths for all pathspec elements into a
+> single array and use the original "bloom has to say 'possibly yes'
+> to all array elements" logic (which would incorrectly require that
+> both file1 and file2 must be modified).
+
+I assume that t4216/test_bloom_filters_used has already verified that
+using bloom filters with multiple pathspec elements produces the same
+results as when bloom filters are not used. But I would love to add more
+test cases to check no false negative happened.
+
+Thanks,
+Lidong=
