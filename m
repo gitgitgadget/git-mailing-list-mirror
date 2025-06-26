@@ -1,94 +1,126 @@
-Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE86335C7
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:15:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B6C14C5B0
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:35:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750900561; cv=none; b=OeTGH78x+ICwn1zXQBfxHnG3Sc5yN84RTa3HMFmzxR/EW/DC5JTsla5fV5t/9BvL+HzTEWiZsYokTLQ5iknPbrz5rcyqorCL+uXeiO1uupsEIYoC+2VgeGeGPuVl7cTlGEH4lRgF4ihi35o/xHn0lUU09LWgflRie0Jzzmc/KPM=
+	t=1750901704; cv=none; b=DSaQ8hYKgxshJnEzuH7mPHo6YC9YpZ7ysspqNhekG8e2anttp63MxStgJ7qiIHUlpzTI2ihfn3rh+K3D6d+UDjX8aeexvOqmsqX5jo1Io615QNuA1yNv1jj88rhuNs3z8urd0ogc8WaVLdywbpn9dkGnUCsZsOg96c+oz6Y1LuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750900561; c=relaxed/simple;
-	bh=SJt8a/C9CM45cgUNsu9m3tAsZBFqF1cfiCztvBiEOYc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RvBYzwLRPKISc3k61z/TVobeebphwdmeAPWF2Qudb0Wc7KAMMtZ1+PdKLF98S8ptcz+l530HAX+802+0xd3xUTcJm6ICxQykkyyku3vinGAbPvjRJvj4H9zhakxhUhI0Z+vau51A2uUHvqxJXxleLNIi1PQHrmRnfNma4V4mf7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=eTle3p43; arc=none smtp.client-ip=185.226.149.38
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
+	s=arc-20240116; t=1750901704; c=relaxed/simple;
+	bh=21+sb/NRrXip+8KuZ3a8mUDLWYr3T6sdHyCdiNsXCAw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jwtzUYXtBmwPaxdqDsKzySjcgfas1NOhnEWO2g8vMGN7AfKLqo89kFPj4X+0QErE9U7C7EPkZbq9+TwiodMWRUv2ptnk15+qz9V2dPF9EPkg53MccSdJ9G8a7p/4aE9h+a8mMf4VXtLNIT8XxHCnrs8wicHrC3xmGy4JSVwpRVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=emV9l4aF; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="eTle3p43"
-Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
-	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.93)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uUbDU-00FlEj-IL; Thu, 26 Jun 2025 03:15:52 +0200
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
-	References:In-Reply-To:Subject:Cc:To:From;
-	bh=XasjZHM0hnWOxrnp8RCRZs1PcFXJJxAJqIwm1QORsWo=; b=eTle3p43b3rvhgKcOsDTApzdSj
-	4aY1coPNY7rO3H0npdYVUPov51tGB2tmz/KVqk6sAYnmr5ywcZH2DI/qSzgO3Pv7LWh43zX1sDr91
-	1YJUP27ydk7wvTCdhA3tu5zqyVjvkWZy6gdnU8/e/y/m/q6qCV8jemtJKkNCPCr1qeIPI148oVTF0
-	u2leHJVTirkML2XI6CtJvF9RBNvJDHQjjJfGLnc3MeK9lZlJEDKjHwiq9oH9cDNvAEF3BqqYKepOF
-	2WGc4i5P/eGcMb+TTdy5IaZQtz0CfCenr4XDxNK4lfag8lidji9/5dscewlM1nzkNBsXcLeT09oBQ
-	Wy8DCs3Q==;
-Received: from [10.9.9.74] (helo=submission03.runbox)
-	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
-	(envelope-from <maxim@guixotic.coop>)
-	id 1uUbDT-0005iB-VP; Thu, 26 Jun 2025 03:15:52 +0200
-Received: by submission03.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
-	(Exim 4.93)
-	id 1uUbDP-006scA-Cu; Thu, 26 Jun 2025 03:15:47 +0200
-From: Maxim Cournoyer <maxim@guixotic.coop>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="emV9l4aF"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7424ccbef4eso587828b3a.2
+        for <git@vger.kernel.org>; Wed, 25 Jun 2025 18:35:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750901702; x=1751506502; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=T498cxyjH5q+J5NkNbxFx3CyPRL6jUGu9MZokx/KqD4=;
+        b=emV9l4aFAwdwXdiA4M8vplflZFQ3uT7wbfwhekWXz/wzE26F2xdZ6lgAd1Zp95zTGQ
+         08PiOxTqRH0VtwNFNt1XOPpI0pDjyHgBbrjewxqSYpybqnwUCiYpFKQAbuj6elp/oBuC
+         AoY1vhK2sBv7d1kn5pgep37Qb/n3Al5HiX9Q/ip1DRe/iqRoOjZwSdzg2PtZkghZMqfG
+         vK0dDC07PMKl+vPN1MDoEf9BNbwsA5fUkWvtV8Qt+jjPiePTx/PBxHX93xGStdpQExeb
+         BN5AktBNFry8Fi4w0YL1wZuzJ8feaWTz2OHJxvOW31cRq27GQJLKAb5ynzJ1YJCZlh3s
+         Bfmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750901702; x=1751506502;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=T498cxyjH5q+J5NkNbxFx3CyPRL6jUGu9MZokx/KqD4=;
+        b=SB36FT82T4LkvEI7psZvjXEq2dWv9gjUahGm4JJ6+K5vpY4Z2vRGCS18QFFXQg7VZB
+         l/6w9JCRWrOAKrVcraOnKmUStr3spKobIO9jxuCAd2CfAECPUR4d57Rbc440BJcH5GF0
+         dMUeKDViMOyb40kooOKPylYFGFp+xTqbbaovC+Q5+eNhTFyOL7gHs7ER4QbI4/NaDmUW
+         jNR7s8lO3/y7fP5HcoZnTfdPnLta6iubkD/RVHb145SFVqsCbPPoMOicWi4fhHph7ra4
+         nHm7U2x7fX0QpFnKT/uSQwAChXChLEbWhQPTqa8HKbTrrdfFCmoDnmJVqPEPlDBkRZoN
+         8k+g==
+X-Forwarded-Encrypted: i=1; AJvYcCWem9EMlHgnrx5WznMcVPvsepTKsY+RmXeANSvGdo9FU7rWd1iTPufBX4dZ8/keKhDlELM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywm/cuGHjeMpjXsxhvqrW6X4kwp6S8k5O4L6EG9ki2IBXbAxPwS
+	lWV3kCjxRY6v78Zdk7EwPiKcGEkSVt7FujpkVu8BMdqYhUbJdzovjP9t
+X-Gm-Gg: ASbGncs8wVgPx/cZ48DF+5xR5IMCvXdZwrCF2fHj+wJ1BZw7uuRuR+F3H5rME0SifjN
+	NoBhVyTH8hc9sXRY0uu6DfF5x0CfKzI1r1VwAls/b+KjBFooudwncYepzecjTR3dbT5r8c3yv14
+	1GsP2gp/fk6ukYPGEQaoTaOVj6nZQvToUs+I9cUg9UTnnh+UVVJrlsRxVnegrZgY1yQCz0m6XlH
+	3kGsX7jGRF6YvBiM0YF596767zGP32KfddbDyuBvIUxaf7HxoIPEXbSrOigk1FtG6OOMJRm39Mq
+	1KqTJqAi5enVebAiBf21zMtOOsLDbl9Pl9QpBJv2XAhch242a6tAyWvcSfZ3S5ooQP8Mqc0stzE
+	xf3uNl48mUB1MhNdog/PCqXiYYn6Rt8eOSA==
+X-Google-Smtp-Source: AGHT+IHk+UKDioJDEu5yk0W8+1ynBUiCYmCJrhciGw8F7ktwN7RZZMdc6Te77YL2jA/O40+egRCP7A==
+X-Received: by 2002:a05:6a00:1952:b0:736:3979:369e with SMTP id d2e1a72fcca58-74ad44902dfmr7348931b3a.9.1750901702429;
+        Wed, 25 Jun 2025 18:35:02 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:3061:f32d:ab3f:87dd])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c882ce03sm6001547b3a.97.2025.06.25.18.35.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Jun 2025 18:35:01 -0700 (PDT)
+Date: Wed, 25 Jun 2025 18:35:00 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,   Andreas Schwab <schwab@linux-m68k.org>,   "brian
- m. carlson" <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH v4 0/3] git-credential-netrc: better symbolic port names
- support
-In-Reply-To: <xmqq1pr7wyuf.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	25 Jun 2025 09:49:28 -0700")
-Organization: Guixotic
-References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
-	<20250625142511.28857-1-maxim@guixotic.coop>
-	<xmqq1pr7wyuf.fsf@gitster.g>
-Date: Thu, 26 Jun 2025 10:15:42 +0900
-Message-ID: <87sejn2thd.fsf@guixotic.coop>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v2 1/3] compat/posix.h: track SA_RESTART fallback
+Message-ID: <ilvhfzdfqcwkjt5h336ldrimnzpz7kwkkdst6egyohwxppo2gn@fpkulngdty23>
+References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
+ <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+ <e82b7425bbc2540fa5ef3fd4584e6f902485d064.1750836928.git.gitgitgadget@gmail.com>
+ <xmqq4iw3yfd8.fsf@gitster.g>
+ <4oh4eatsp4wo4ur6rluy6ickfy5jfpuarg435vplrqzvk3eaiz@jbtnnwqnz2yi>
+ <xmqqzfdvqr3a.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqzfdvqr3a.fsf@gitster.g>
 
-Hi,
+On Wed, Jun 25, 2025 at 05:33:29PM -0800, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > On Wed, Jun 25, 2025 at 09:07:15AM -0800, Junio C Hamano wrote:
+> >> "Carlo Marcelo Arenas Belón via GitGitGadget"
+> >> <gitgitgadget@gmail.com> writes:
+> >> 
+> >> > +# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
+> >> > +# prefer using ANSI C signal() over POSIX sigaction()
+> >> > +
+> >> > +AC_CACHE_CHECK([whether SA_RESTART is supported], [ac_cv_siginterrupt], [
+> >> > +	AC_COMPILE_IFELSE(
+> >> > +		[AC_LANG_PROGRAM([#include <signal.h>], [[
+> >> > +		#ifdef SA_RESTART
+> >> > +		#endif
+> >> > +		siginterrupt(SIGCHLD, 1)
+> >> 
+> >> This is curious.  What is this #ifdef/#endif doing that does not
+> >> have anything in it?
+> >
+> > It checks that `SA_RESTART` is defined in `signal.h`, which should
+> > fail at least in QNX, NonStop and Windows.
+> 
+> The above roughly expands to
+> 
+>         #include <signal.h>
+>         int main(void)
+>         {
+>                 #ifdef SA_RESTART
+>                 #endif
+>                 siginterrupt(SIGCHLD, 1);
+>                 return 0;
+>         }
+> 
+> Are you saying that a preprocessor macro SA_RESTART, which may or
+> may not be defined, when asked by "#ifdef", causes what is left in
+> the preprocessed source change in any meaningful way to cause the
+> compilation to fail?
 
-Junio C Hamano <gitster@pobox.com> writes:
+Lack of judgement on my part; I apologize and will correct it.
 
-> Maxim Cournoyer <maxim@guixotic.coop> writes:
->
->> This revision fixes a single white space in a new test added in 3/3.
->
-> The contents exactly match what I locally have (as I fixed up the
-> previous round locally before you sent in this iteration).
->
-> [v4 0/3] does not look like a reply to [v3 0/3], though.  It has
-> these header lines
->
->     Message-ID: <20250625142511.28857-1-maxim@guixotic.coop>
->     In-Reply-To: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
->     References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
->
-> and refers to the message in the discussion thread of [v3 0/3] in
-> which you said "I'll now send a v4 fixing the white space issue,
-> making sure to --in-reply-to=$message-id-of-v3-cover-letter."
-
-Hm, correct.  I picked the first message I saw as [PATCH v3 0/3] at
-https://lore.kernel.org/git/ but it was a reply, no the original.  Maybe
-I'll get it right in a future submission ^^'.
-
-Thanks again for the previous comments/review.
-
-Cheers,
-
--- 
-Maxim
+Carlo
