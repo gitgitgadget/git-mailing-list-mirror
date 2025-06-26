@@ -1,140 +1,344 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6BA218AB0
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 08:50:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9CBD2957A9
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 08:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750927852; cv=none; b=lGlI0NmULM/VrfflB0UHTgdOgo6Zv0C2Kc3G+lWK/84qsY++7eFQ19tt9ZzFouN8CYjZbewqYYkSlGwgCEwIIEly7JGN3H/G/FWMGkGKvtAFZ7MGsEr22fPgvTlpepA+zI3OgfIc0IFF3t0l+if0e9oZUpwqyEcpHxAxrMMBljc=
+	t=1750927994; cv=none; b=I1sCM5XMcKFHS9qVi8h7QxwaD73/uvKX0ht04Rert34o3jfVwftdAvb7BDNsO+DnUUTSnGE+aPxHu0DMyP0mDuK0yBzMaV8Zu/ka3678Ci0dXNOZwhpfFTojxw9n9CAP1cSGpKXCtPwFDCFR8yijYj/0iaTCsHRiKCw9viGOh2c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750927852; c=relaxed/simple;
-	bh=3dL9+YI/TVs7ypsv9/jahYTx5bvvvvkLTfx7DkX00OI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AplxMZ4/QWcnD7FPCJ17pUzOHAp8bLxRGPpFSXG4yqYaoGEFc4Uf3ZFxy6c2qaac1k38+XlYKuZw0V1KOKzZ2DeWrm0zvXpSIERYJfBnAhhFvcaElWTWgY2NIeBQRMSsdFGVWE91he00wz7AS+t5RGB/NI/DMxibzdcigMfRISQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=njc3sr+E; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1750927994; c=relaxed/simple;
+	bh=4+kzV610WHle1hIZJ/I4WgM5Wly/hERsZhTt1JFpYug=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=pMV/VGHZTHt7dq59TyPTHHHykSPEfmOByLVH8PTvdOILpNo+xW7Bpntnsvql1G5HMuw9xxfimbtae8og+aMCRRM/xzEobf4YJp+EM6N4LTYIld+Gj3hb7BsfaePkzfgX9S53TKr4ev/+sNR3Zx6AHslnpjgExiHyWhzXOwufuus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hJDi2YYN; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="njc3sr+E"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b26f5f47ba1so663271a12.1
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:50:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hJDi2YYN"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-453749af004so3651075e9.1
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:53:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750927851; x=1751532651; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DnT8o6ci7P6M5KoMeB68KXdlPiG1C82wn16yLi8mrKA=;
-        b=njc3sr+Ew++gxGP6K1CFeSQOiRRz8OqbUFLr0idI5NSBtEQVpLgWwQuRGBEbXfUyY6
-         hu1T037HFat0m8CKhjOfYuEISh41HKh9mjSPP+lu8tP6WTXgFZJPXhYuFWyFhW+cIssU
-         HHp7sIM1z9wIGxrlBRuDUj/0Qmli/YKrGNXL5t5pXgZBBtT6awNF5mMXQsfnWDIrOZAw
-         pP7gBI4evFqpk8Vpzx/B01bAATJ5VbpFCL6G61x6Ia5QHX/v3/12xZFt5P4hjxqBv7uR
-         y9KPanHjvaTT9AAPDwJkDS5klfIbFhbQi/r3YmYoh3vEPIkR242P4oXaVFC3OIXOESmQ
-         usCg==
+        d=gmail.com; s=20230601; t=1750927991; x=1751532791; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=XhsJQ/tHqmNQLr0TJ3e9p34SG8c3RmLmqCl1i1UpDxk=;
+        b=hJDi2YYNuHLuaoKuHXUNxXBYGJ1yTCODErJHSAxBPMlOAonwr3B8Y/QPEIU4SNfssd
+         xVsJZH7gFNowZMpFJq3jqjXTJNOGNDeD1AtJxlvHDy0N8J8cbTH/5gT0F0oAk+FCuILr
+         vSJgLK+tB495EcQ32jEJqb5zpQkREHnPqd/hEix5YxeszqdCgG/Hg4JY8F0jP4C1958w
+         UcPRbNH3V//Kq5DHGpp4eVOB35vgOBsgtD3Jl8y7K0S1YRMhqhiiXZ0jKnLf/fLQ518z
+         MKebuRcAyTaEKjFZVV37z2Y4zf+0BZxJ1tYs8tLj2flZasDUh5vpvZsDx9KnJYdrteWR
+         E4Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750927851; x=1751532651;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DnT8o6ci7P6M5KoMeB68KXdlPiG1C82wn16yLi8mrKA=;
-        b=wW/Osizfo0K9bmESCjhcy3ER2QHxp6Z6zGkM68VdxU/wPOiwZOyDUk5Hycd/i1QQ/y
-         5EpX3mDuRHumtbevvhcgME6yT5s7je3nWuBJm7Y6T9vsYFJR7K5GZ8E2P480Ec/I72QF
-         ETTFhqTPp6ampaUH/bzrcSZnw5S+73L/mhjFWgN/9bi090CbEzbscKhDF8dIqzpTbq2n
-         OmmfwG1XCyXoapju+J0RimDKwP58XHJEo12kdXcQNMEGuB5zRkWuLu5eO2lRUoWURtdl
-         yW+E/ggDEZ4r5WJ40uWTTaVOfkB+0Hkhp737x7dH86G4TnllFdsNPm3cf3oel3X0UREf
-         yklQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXd6phe6ys0phXkwfnBoIsb1QDcK58yke7XHNjxYI7xZ6QomyyNXIpLWHShAUZ69ZV6E2I=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzoANwVmJQ0ia8Mw1PUqZki3gCjIrzZf7LEFQKN7WGLdTggulzg
-	QCY7KZw5TXTtYD2NJMUls/+ibTmMGdbEVhgR5jQEF0yjHjTzC8jpQHvD
-X-Gm-Gg: ASbGncusGSHLfVlwcZueFr47/t2HorTuWDol/e6RHqZoWzyjDkliuVskzesweGfXKtF
-	ML2+Sz+DK4vYtzH0LJLlm+awR8lBMpExBLZtl28VCzABL7tEZrDo9YwM1As9cr1NusnrXOCxglu
-	xnqfWYPuc7lVl6SMjSladQt5nE6mpskibj+fRHxR8RAtUPu7NxkCdCNIFrXjrVkvuwUUjfEGD+7
-	9N8f2gFdzLouQlWYkL1CmSLjqu7yoF+D6iVuXwLbLOaX1+SVX5Yrs4tGIY9hkdVFxnDdeCez2Xd
-	IC5ZgTiErBfk6dEZEQYrFK6hBrSYlkvKp/Y9AB8ADijabDQB1PZzBtmbHz5prSh5+FpWyjrWfN1
-	axKlvSj2/BLU9F4STTABQi4U=
-X-Google-Smtp-Source: AGHT+IF9C2agS8+zL0IpIbLKYUMbJ9wYKyE1ozVIU8WR1LaIaDb18c9B0zjkJGBe5SEmIuRe2K1wXw==
-X-Received: by 2002:a17:90a:c10e:b0:312:f2ee:a895 with SMTP id 98e67ed59e1d1-315f26b3f3bmr7856621a91.31.1750927850546;
-        Thu, 26 Jun 2025 01:50:50 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:a1d3:1456:244b:d366])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f53d83f0sm3686118a91.32.2025.06.26.01.50.49
+        d=1e100.net; s=20230601; t=1750927991; x=1751532791;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XhsJQ/tHqmNQLr0TJ3e9p34SG8c3RmLmqCl1i1UpDxk=;
+        b=iJH3OEh8NqWznQUEB/fpoLUQl3Wu8JDV4JFYm/5ZX8DO3Pp8ssy5C99ezlJc+a/eCk
+         KAA0038+JaZ7g4vrEN+Gn+5bIDwJ64Yebhxg/R0gNEPIc4svvk/FuCdeOXp2qNbe7kMI
+         6vTjRPTEAohIUd3We6pP0BFjC02LElYPzESV8HbwJLSdaHXEtYf22RHMPyu4v+ve0OBN
+         h/4KlsPekX5swZFIt/WszsIEB3N2OTBZTnKZmDer7o3jKo4nB8xkp+ndEFEXXvs8y+6A
+         NWQVzFJDlO2PVI2T++iBx1G9rveOkMX/vZLOO7jM/lnlGhTKfxktB8DnHq9PMhkD9moZ
+         NdUw==
+X-Gm-Message-State: AOJu0YwX+A6kNuPkDOg11/8ArBrWoHjAA2F2tso9lvOT0B9RmPeBAJ8F
+	X4u9DcKdya2V0EUCvSycpnlE8J3zYwKkr958iDXdAKR+vwNPa6WGGUR60TU9Xg==
+X-Gm-Gg: ASbGncs4SPMazNcmF5Lnl+FBYM/YUN7Rsj43tfVs7Aumhmz5yfc1bWFnYmaUhER9vog
+	OV8UxpgTGMXuoeo/kvszuZEeudSPB6NRFbXe+dc6IYAqdLtZaHa2e2uj8T4LOZJRNaMTE3y/u+k
+	DJG5ZqtZc8BcPGm5PI4dJ1vdG2wx0CPxf1IjM3t1V2zd8l/GeemFxJWvs0D8oPTJE71DiFDGojR
+	WSK2GOxSAqK6VSEg1kvLXPt1+0RolZiyDM66zSiG8hBj9YOB4xoY8p4mPa9djoByTr8lpAc20FT
+	RDX++/niCCn/mN+NyXkbocxZWPnOGnjbpa2ShMhtN+IeosUyY3MNfnpkDomt+VA=
+X-Google-Smtp-Source: AGHT+IHi2VcdDlKivV5BZwrU2HVKysup1aiL/OfQ4hMF2c8eKeEaI8LNGVyMpJ8ac2b9MgmJ+PxCrg==
+X-Received: by 2002:a5d:584a:0:b0:3a3:65b5:51d7 with SMTP id ffacd0b85a97d-3a6ed601d8emr5267461f8f.26.1750927990400;
+        Thu, 26 Jun 2025 01:53:10 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e805112asm6768007f8f.9.2025.06.26.01.53.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 01:50:50 -0700 (PDT)
-Date: Thu, 26 Jun 2025 01:50:48 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v2 0/3] daemon: explicitly allow EINTR during poll()
-Message-ID: <ypopyf663bxcj3lakoa3vmxinyj7ipcjtuwrbu3i4uhga7ono3@ubxgvqpntk7u>
-References: <pull.2002.git.git.1750774122.gitgitgadget@gmail.com>
- <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <xmqqa55vyfdc.fsf@gitster.g>
+        Thu, 26 Jun 2025 01:53:09 -0700 (PDT)
+Message-Id: <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
+In-Reply-To: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+From: "Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 26 Jun 2025 08:53:04 +0000
+Subject: [PATCH v3 0/4] daemon: explicitly allow EINTR during poll()
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqa55vyfdc.fsf@gitster.g>
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+    Chris Torek <chris.torek@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Carlo Marcelo Arenas =?UTF-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
 
-On Wed, Jun 25, 2025 at 09:07:11AM -0800, Junio C Hamano wrote:
-> "Carlo Marcelo Arenas Belón via GitGitGadget"
-> <gitgitgadget@gmail.com> writes:
-> 
-> >      +@@ Makefile: include shared.mak
-> >      + # when attempting to read from an fopen'ed directory (or even to fopen
-> >      + # it at all).
-> >      + #
-> >      ++# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
-> >      ++# prefer to use ANSI C signal() over POSIX sigaction()
-> >      ++#
-> > ...
-> >      ++ifdef USE_NON_POSIX_SIGNAL
-> >      ++	COMPAT_CFLAGS += -DUSE_NON_POSIX_SIGNAL
-> >      ++endif
-> 
-> The new symbol sounds like "POSIX does not have signal(2) but on
-> this platform we have a usable signal(2), so we use it here", but I
-> do not think that it is what we want to say (as POSIX inherits this
-> from ANSI C anyway).  More importantly, this "USE_X" sounds as if we
-> allow builders to set it and magically we stop using sigaction(2),
-> which is not what is going on.  We have tons of calls to both
-> signal(2) and sigaction(2), and we turn calls to signal(2) we have
-> in daemon.c to sigaction(2) but on some platforms their sigaction(2)
-> cannot do what we ask it to do, so we are stuck with signal(2) on
-> these platforms only for these calls in daemon.c.  It may be obvious
-> to those who develop and review this series, but not for anybody else.
-> 
-> Isn't the situation more like:
-> 
->     We use sigaction(2) everywhere and have been happy with it in
->     our code, but this topic discovered that on some platforms,
->     their sigaction(2) does not do XYZ that everybody else's
->     sigaction(2) does, so on them we need to fall back on the plain
->     old signal(2) on selected code paths that we need XYZ out of the
->     signal handling interface.
-> 
-> What is this XYZ that describes the characteristics of
-> signal/sigaction implementation on these platforms?  A name
-> constructed more like SIGACTION_LACKS_XYZ (hence we have to resort
-> to signal), possibly with a more appropriate verb than "lack", would
-> be less confusing.
+This series addresses and ambiguity that is at least visible in OpenBSD,
+where zombie proceses would only be cleared after a new connection is
+received.
 
-sigaction(2) doesn't have any issues and it is indeed a better option
-every time as it behaves the same in all platforms that have it.
+The underlying problem is that when this code was originally introduced,
+SA_RESTART was not widely implemented, and the signal() call usually
+implemented SysV like semantics, at least until it started being
+reimplemented by calling sigaction() internally.
 
-the problems we have come from our codebase:
+Changes since v2
 
-1) we have a hack to workaround the lack of support for SA_RESTART in
-   some platforms, which sets it to 0 and allow us to compile as if it
-   works.
-2) Windows doesn't have sigaction() and their compability version needs
-   updating if we would use it for this new code.
+ * Add a new patch 2 that modifies windows' sigaction so there is no more
+   need for a fallback
+ * Hopefully no more silly mistakes and a variable that finally makes sense
 
-Keeping the fallback to use signal() isn't really needed, and is indeed
-problematic, as it crashes in AIX and probably other SysIII derived
-systems because of the hack Chris described for non BSD signal().
+Changes since v1
 
-Carlo
+ * Almost all references to siginterrupt has been removed and a better named
+   variable used instead
+ * Changes had been abstracted to minimize ifdefs and their introduction
+   staged more naturally
+
+Carlo Marcelo Arenas Belón (4):
+  compat/posix.h: track SA_RESTART fallback
+  compat/mingw: allow sigaction(SIGCHLD)
+  daemon: use sigaction() to install child_handler()
+  daemon: explicitly allow EINTR during poll()
+
+ Makefile             |  5 +++++
+ compat/mingw-posix.h |  2 +-
+ compat/mingw.c       |  4 +++-
+ compat/posix.h       |  8 ++++++++
+ config.mak.uname     |  7 ++++---
+ configure.ac         | 16 ++++++++++++++++
+ daemon.c             | 33 ++++++++++++++++++++++++++++-----
+ meson.build          |  4 ++++
+ 8 files changed, 69 insertions(+), 10 deletions(-)
+
+
+base-commit: cb3b40381e1d5ee32dde96521ad7cfd68eb308a6
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2002%2Fcarenas%2Fsiginterrupt-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2002/carenas/siginterrupt-v3
+Pull-Request: https://github.com/git/git/pull/2002
+
+Range-diff vs v2:
+
+ 1:  e82b7425bbc ! 1:  ae1ca6bb2b2 compat/posix.h: track SA_RESTART fallback
+     @@ Makefile: include shared.mak
+       # when attempting to read from an fopen'ed directory (or even to fopen
+       # it at all).
+       #
+     -+# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
+     -+# prefer to use ANSI C signal() over POSIX sigaction()
+     ++# Define NO_RESTARTABLE_SIGNALS if don't have support for SA_RESTART
+      +#
+       # Define OPEN_RETURNS_EINTR if your open() system call may return EINTR
+       # when a signal is received (as opposed to restarting).
+     @@ Makefile: ifdef FREAD_READS_DIRECTORIES
+       	COMPAT_CFLAGS += -DFREAD_READS_DIRECTORIES
+       	COMPAT_OBJS += compat/fopen.o
+       endif
+     -+ifdef USE_NON_POSIX_SIGNAL
+     -+	COMPAT_CFLAGS += -DUSE_NON_POSIX_SIGNAL
+     ++ifdef NO_RESTARTABLE_SIGNALS
+     ++	COMPAT_CFLAGS += -DNO_RESTARTABLE_SIGNALS
+      +endif
+       ifdef OPEN_RETURNS_EINTR
+       	COMPAT_CFLAGS += -DOPEN_RETURNS_EINTR
+     @@ compat/posix.h: char *gitdirname(char *);
+      + * not on some systems (e.g. NonStop, QNX).
+      + */
+      +#ifndef SA_RESTART
+     -+# define SA_RESTART 0	/* disabled for sigaction() */
+     ++# define SA_RESTART 0 /* disabled for sigaction() */
+      +#endif
+      +
+       typedef uintmax_t timestamp_t;
+     @@ config.mak.uname: ifeq ($(uname_S),Windows)
+       	NO_STRTOUMAX = YesPlease
+       	NO_MKDTEMP = YesPlease
+       	NO_INTTYPES_H = YesPlease
+     -+	USE_NON_POSIX_SIGNAL = YesPlease
+     ++	NO_RESTARTABLE_SIGNALS = YesPlease
+       	CSPRNG_METHOD = rtlgenrandom
+       	# VS2015 with UCRT claims that snprintf and friends are C99 compliant,
+       	# so we don't need this:
+     @@ config.mak.uname: ifeq ($(uname_S),NONSTOP_KERNEL)
+       	NO_MMAP = YesPlease
+       	NO_POLL = YesPlease
+       	NO_INTPTR_T = UnfortunatelyYes
+     -+	USE_NON_POSIX_SIGNAL = UnfortunatelyYes
+     ++	NO_RESTARTABLE_SIGNALS = UnfortunatelyYes
+       	CSPRNG_METHOD = openssl
+       	SANE_TOOL_PATH = /usr/coreutils/bin:/usr/local/bin
+       	SHELL_PATH = /usr/coreutils/bin/bash
+     @@ config.mak.uname: ifeq ($(uname_S),MINGW)
+       	NEEDS_LIBICONV = YesPlease
+       	NO_STRTOUMAX = YesPlease
+       	NO_MKDTEMP = YesPlease
+     -+	USE_NON_POSIX_SIGNAL = YesPlease
+     ++	NO_RESTARTABLE_SIGNALS = YesPlease
+       	NO_SVN_TESTS = YesPlease
+       
+       	# The builtin FSMonitor requires Named Pipes and Threads on Windows.
+     @@ config.mak.uname: ifeq ($(uname_S),QNX)
+       	NO_PTHREADS = YesPlease
+       	NO_STRCASESTR = YesPlease
+       	NO_STRLCPY = YesPlease
+     -+	USE_NON_POSIX_SIGNAL = UnfortunatelyYes
+     ++	NO_RESTARTABLE_SIGNALS = UnfortunatelyYes
+       endif
+      
+       ## configure.ac ##
+     @@ configure.ac: fi
+       GIT_CONF_SUBST([ICONV_OMITS_BOM])
+       fi
+       
+     -+# Define USE_NON_POSIX_SIGNAL if don't have support for SA_RESTART or
+     -+# prefer using ANSI C signal() over POSIX sigaction()
+     ++# Define NO_RESTARTABLE_SIGNALS if don't have support for SA_RESTART
+      +
+      +AC_CACHE_CHECK([whether SA_RESTART is supported], [ac_cv_siginterrupt], [
+      +	AC_COMPILE_IFELSE(
+      +		[AC_LANG_PROGRAM([#include <signal.h>], [[
+     -+		#ifdef SA_RESTART
+     -+		#endif
+     -+		siginterrupt(SIGCHLD, 1)
+     -+		]])],[ac_cv_siginterrupt=yes],[
+     ++			#ifdef SA_RESTART
+     ++			restartable signals supported
+     ++			#endif
+     ++		]])],[
+      +			ac_cv_siginterrupt=no
+     -+			USE_NON_POSIX_SIGNAL=UnfortunatelyYes
+     -+		]
+     ++			NO_RESTARTABLE_SIGNALS=UnfortunatelyYes
+     ++		], [ac_cv_siginterrupt=yes]
+      +	)
+      +])
+     -+GIT_CONF_SUBST([USE_NON_POSIX_SIGNAL])
+     ++GIT_CONF_SUBST([NO_RESTARTABLE_SIGNALS])
+      +
+       ## Checks for typedefs, structures, and compiler characteristics.
+       AC_MSG_NOTICE([CHECKS for typedefs, structures, and compiler characteristics])
+     @@ meson.build: else
+       endif
+       
+      +if compiler.get_define('SA_RESTART', prefix: '#include <signal.h>') == ''
+     -+  libgit_c_args += '-DUSE_NON_POSIX_SIGNAL'
+     ++  libgit_c_args += '-DNO_RESTARTABLE_SIGNALS'
+      +endif
+      +
+       if not compiler.has_header('sys/select.h')
+ -:  ----------- > 2:  3f63479119f compat/mingw: allow sigaction(SIGCHLD)
+ 2:  05d945aa1e5 ! 3:  c66bda461f4 daemon: use sigaction() to install child_handler()
+     @@ Commit message
+          In a future change, the flags used for processing SIGCHLD will need to
+          be updated, which is only possible by using sigaction().
+      
+     -    Factor out the call to set the signal handler and use sigaction instead
+     -    of signal for the systems that allow that, which has the added benefit
+     -    of using BSD semantics reliably and therefore not needing the rearming
+     -    call.
+     +    Replace signal() with an equivalent invocation of sigaction(), which
+     +    has the added benefit of using BSD semantics reliably and therefore
+     +    not needing the rearming call in the signal handler.
+      
+          Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+      
+       ## daemon.c ##
+      @@ daemon.c: static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+     - 		add_child(&cld, addr, addrlen);
+     - }
+     - 
+     --static void child_handler(int signo UNUSED)
+     -+static void child_handler(int signo MAYBE_UNUSED)
+     + static void child_handler(int signo UNUSED)
+       {
+       	/*
+      -	 * Otherwise empty handler because systemcalls will get interrupted
+     @@ daemon.c: static void handle(int incoming, struct sockaddr *addr, socklen_t addr
+      +	 * upon signal receipt.
+       	 */
+      -	signal(SIGCHLD, child_handler);
+     -+#ifdef USE_NON_POSIX_SIGNAL
+     -+	/*
+     -+	 * SysV needs the handler to be rearmed, but this is known
+     -+	 * to trigger infinite recursion crashes at least in AIX.
+     -+	 */
+     -+	signal(signo, child_handler);
+     -+#endif
+       }
+       
+       static int set_reuse_addr(int sockfd)
+      @@ daemon.c: static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+     - 	}
+     - }
+       
+     -+#ifndef USE_NON_POSIX_SIGNAL
+     -+
+     -+static void set_signal_handler(struct sigaction *psa)
+     -+{
+     -+	sigemptyset(&psa->sa_mask);
+     -+	psa->sa_flags = SA_NOCLDSTOP | SA_RESTART;
+     -+	psa->sa_handler = child_handler;
+     -+	sigaction(SIGCHLD, psa, NULL);
+     -+}
+     -+
+     -+#else
+     -+
+     -+static void set_signal_handler(struct sigaction *psa UNUSED)
+     -+{
+     -+	signal(SIGCHLD, child_handler);
+     -+}
+     -+
+       static int service_loop(struct socketlist *socklist)
+       {
+      +	struct sigaction sa;
+     @@ daemon.c: static int service_loop(struct socketlist *socklist)
+       	}
+       
+      -	signal(SIGCHLD, child_handler);
+     -+	set_signal_handler(&sa);
+     ++	sigemptyset(&sa.sa_mask);
+     ++	sa.sa_flags = SA_NOCLDSTOP | SA_RESTART;
+     ++	sa.sa_handler = child_handler;
+     ++	sigaction(SIGCHLD, &sa, NULL);
+       
+       	for (;;) {
+       		check_dead_children();
+ 3:  b737e0389df ! 4:  851d663be0b daemon: explicitly allow EINTR during poll()
+     @@ Commit message
+          Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+      
+       ## daemon.c ##
+     -@@ daemon.c: static void set_signal_handler(struct sigaction *psa)
+     - 	sigaction(SIGCHLD, psa, NULL);
+     +@@ daemon.c: static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+     + 	}
+       }
+       
+     ++#ifndef NO_RESTARTABLE_SIGNALS
+     ++
+      +static void set_sa_restart(struct sigaction *psa, int enable)
+      +{
+      +	if (enable)
+     @@ daemon.c: static void set_signal_handler(struct sigaction *psa)
+      +	sigaction(SIGCHLD, psa, NULL);
+      +}
+      +
+     - #else
+     - 
+     - static void set_signal_handler(struct sigaction *psa UNUSED)
+     -@@ daemon.c: static void set_signal_handler(struct sigaction *psa UNUSED)
+     - 	signal(SIGCHLD, child_handler);
+     - }
+     - 
+     ++#else
+     ++
+      +static void set_sa_restart(struct sigaction *psa UNUSED, int enable UNUSED)
+      +{
+      +}
+
+-- 
+gitgitgadget
