@@ -1,68 +1,94 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mailtransmit05.runbox.com (mailtransmit05.runbox.com [185.226.149.38])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608B42F1FCD
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE86335C7
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:15:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.226.149.38
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750899654; cv=none; b=sa7LMv1fne+kevlycLo/ZhDfAVVbA6R2prl1Hmkwpb473WseNiPeG4tcnozjWwPB1P3U2AkDUDQ5Gj3rMFBJujVcYcT3zNEN4/eCYgM+dW2d4Ho6AOnRaHJY6ascvOJbEMwFJxkvSuA01FoBUE82laV0p1+tuhqtMYYHueWi8bg=
+	t=1750900561; cv=none; b=OeTGH78x+ICwn1zXQBfxHnG3Sc5yN84RTa3HMFmzxR/EW/DC5JTsla5fV5t/9BvL+HzTEWiZsYokTLQ5iknPbrz5rcyqorCL+uXeiO1uupsEIYoC+2VgeGeGPuVl7cTlGEH4lRgF4ihi35o/xHn0lUU09LWgflRie0Jzzmc/KPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750899654; c=relaxed/simple;
-	bh=RB8Brf3+Fo3h2/w5Zzma8CHPKrQzDjNXqHtNf4qhXkg=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=l26AlZyg94MBUKMauCBfXsVxtuSlQMy8oe94w3OgbvGciRElfXt3PLJBcNhDRrALLOHmD67hg5jeHgXBdBxjp3wjSsI3kWbebBs7XYeoHjc2u9X6ZuKy3HBf1wMro9Bq0c4kf8Z7Nv0qGy91Ev/P0JU4CUI4TlrInv9NgTwz7rk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NBAgrcA7; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1750900561; c=relaxed/simple;
+	bh=SJt8a/C9CM45cgUNsu9m3tAsZBFqF1cfiCztvBiEOYc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RvBYzwLRPKISc3k61z/TVobeebphwdmeAPWF2Qudb0Wc7KAMMtZ1+PdKLF98S8ptcz+l530HAX+802+0xd3xUTcJm6ICxQykkyyku3vinGAbPvjRJvj4H9zhakxhUhI0Z+vau51A2uUHvqxJXxleLNIi1PQHrmRnfNma4V4mf7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop; spf=pass smtp.mailfrom=guixotic.coop; dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b=eTle3p43; arc=none smtp.client-ip=185.226.149.38
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=guixotic.coop
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=guixotic.coop
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NBAgrcA7"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-2e8f8cb8466so67399fac.2
-        for <git@vger.kernel.org>; Wed, 25 Jun 2025 18:00:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750899652; x=1751504452; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=RB8Brf3+Fo3h2/w5Zzma8CHPKrQzDjNXqHtNf4qhXkg=;
-        b=NBAgrcA7nCHB6oD248+tRQx9+TKvbs1LK2+7HIjX5HgtYquMpvmLcN+NYkBEZ2oeCm
-         coZv/ymiWvpTFSOCIQ9dyZvYVHeVoB6b5SLTmkir0Ol62pCdZ2IW98Nh9tNlBNMKXDLM
-         EiZ5BP8C4VcnnpBED70/zXkoZabbkleiQDZVTb+MjGFo8O/I/yXd4WUKFBoUaJzBtEXD
-         JhtXzpFHGrIb0+QUU2WMc1Q/0HV1grg7n4Ilp+b8xBIO1u1thghJVPsuj108hjN+KS5u
-         s55f43XFGn2WFoeTPgu39H+m+yHlmeipDcDbig6oVVqH/Q7nIHBP1NzV9vmPCMDVpV5Y
-         4IeQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750899652; x=1751504452;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=RB8Brf3+Fo3h2/w5Zzma8CHPKrQzDjNXqHtNf4qhXkg=;
-        b=PB0sRdTsGq0thFd42bF1nU7BYBK90qdsWAcgxwtuNafqBAxVTSxtXM6zSm3gmpkiFy
-         JjmKNsOsjHX2AIBxnWveN1AL+ee5g4Kr2JfiIYSgaAejwSZm8plsUCbW9lAW0JoldvTU
-         sxzb1reMAfKNrgBJ+jtDYXEtnXGIrE2VNAKril1H/gZgZaLE2s3ymxXvIjKJzCs/XkYt
-         kXhMeJl75/5E1Ol/cPv6cmWTjCEDY8WWMoT+3FS62T+iNd8HcUscXuG6pjN7P5hlaiIl
-         zy/F+Jl6u8/5KK7pJyDgFXj6hx+0vhD2IY/yLZU8ebbpORYx+pDi5WqBLwr7t/QFH3gf
-         p3LQ==
-X-Gm-Message-State: AOJu0YyR+e8n+LLFGL6KK/A0TK0IpXRS2lqUBQoylhJ5RkCcv+jc9q8n
-	IvVTJQkAwH16tUlkYZdsGK1nQQbI3ILhjHDpnkcU0DeCm0PL6FyvLH20E2DljCbmTkrjdjUXope
-	Zpy9f40tDm5pCacQ4TGnRuGG5d4u/zqN6mg==
-X-Gm-Gg: ASbGncs26FLyqp6JU0J0K5PVNv+0yFiLn8eGjhieuU0QIyI7X6gBY0bDesc6mVS3CyP
-	ZdHPCTziexSjMne4tQ/pRe9ZtdfEaHcSEKLdjG3uOjHGKl92xqj7rPFJTea12VyjHl9FOEjzo3D
-	RdOsXARRlSdR0qLNM0tREzltYXh1+85mD7ang5UKZSkm8=
-X-Google-Smtp-Source: AGHT+IEHff0Z9H/F2bakY/VU/tF3C5rbYC7rkzA3P2aysqLrYCeU5vz9yvJFJanOuGGc+IrZD03/ZMDsZ4oy4RIWwPE=
-X-Received: by 2002:a05:6808:d4e:b0:403:519f:95df with SMTP id
- 5614622812f47-40b05730af9mr1491893b6e.1.1750899652419; Wed, 25 Jun 2025
- 18:00:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=guixotic.coop header.i=@guixotic.coop header.b="eTle3p43"
+Received: from mailtransmit03.runbox ([10.9.9.163] helo=aibo.runbox.com)
+	by mailtransmit05.runbox.com with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.93)
+	(envelope-from <maxim@guixotic.coop>)
+	id 1uUbDU-00FlEj-IL; Thu, 26 Jun 2025 03:15:52 +0200
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=guixotic.coop; s=selector1; h=Content-Type:MIME-Version:Message-ID:Date:
+	References:In-Reply-To:Subject:Cc:To:From;
+	bh=XasjZHM0hnWOxrnp8RCRZs1PcFXJJxAJqIwm1QORsWo=; b=eTle3p43b3rvhgKcOsDTApzdSj
+	4aY1coPNY7rO3H0npdYVUPov51tGB2tmz/KVqk6sAYnmr5ywcZH2DI/qSzgO3Pv7LWh43zX1sDr91
+	1YJUP27ydk7wvTCdhA3tu5zqyVjvkWZy6gdnU8/e/y/m/q6qCV8jemtJKkNCPCr1qeIPI148oVTF0
+	u2leHJVTirkML2XI6CtJvF9RBNvJDHQjjJfGLnc3MeK9lZlJEDKjHwiq9oH9cDNvAEF3BqqYKepOF
+	2WGc4i5P/eGcMb+TTdy5IaZQtz0CfCenr4XDxNK4lfag8lidji9/5dscewlM1nzkNBsXcLeT09oBQ
+	Wy8DCs3Q==;
+Received: from [10.9.9.74] (helo=submission03.runbox)
+	by mailtransmit03.runbox with esmtp (Exim 4.86_2)
+	(envelope-from <maxim@guixotic.coop>)
+	id 1uUbDT-0005iB-VP; Thu, 26 Jun 2025 03:15:52 +0200
+Received: by submission03.runbox with esmtpsa  [Authenticated ID (1476852)]  (TLS1.2:ECDHE_SECP256R1__RSA_SHA256__AES_256_GCM:256)
+	(Exim 4.93)
+	id 1uUbDP-006scA-Cu; Thu, 26 Jun 2025 03:15:47 +0200
+From: Maxim Cournoyer <maxim@guixotic.coop>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,   Andreas Schwab <schwab@linux-m68k.org>,   "brian
+ m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v4 0/3] git-credential-netrc: better symbolic port names
+ support
+In-Reply-To: <xmqq1pr7wyuf.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	25 Jun 2025 09:49:28 -0700")
+Organization: Guixotic
+References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
+	<20250625142511.28857-1-maxim@guixotic.coop>
+	<xmqq1pr7wyuf.fsf@gitster.g>
+Date: Thu, 26 Jun 2025 10:15:42 +0900
+Message-ID: <87sejn2thd.fsf@guixotic.coop>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: ryenus <ryenus@gmail.com>
-Date: Thu, 26 Jun 2025 09:00:41 +0800
-X-Gm-Features: Ac12FXyeTrBNRSMUOmB6xvzXmB77P2pY2APH0KVbRBKtXJwn1bUsvGYFFC3kaUM
-Message-ID: <CAKkAvax27W-0qSff2rcmU6SR5sXsqSRms_37gGkfnfwU13ZCrQ@mail.gmail.com>
-Subject: Re: [bug] pull --prune could not delete references due to lock file
- already exists error
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: Git mailing list <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-maybe just prefix each lock file with something like a unique sequence number?
+Hi,
+
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Maxim Cournoyer <maxim@guixotic.coop> writes:
+>
+>> This revision fixes a single white space in a new test added in 3/3.
+>
+> The contents exactly match what I locally have (as I fixed up the
+> previous round locally before you sent in this iteration).
+>
+> [v4 0/3] does not look like a reply to [v3 0/3], though.  It has
+> these header lines
+>
+>     Message-ID: <20250625142511.28857-1-maxim@guixotic.coop>
+>     In-Reply-To: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
+>     References: <87ecv8k4y9.fsf@terra.mail-host-address-is-not-set>
+>
+> and refers to the message in the discussion thread of [v3 0/3] in
+> which you said "I'll now send a v4 fixing the white space issue,
+> making sure to --in-reply-to=$message-id-of-v3-cover-letter."
+
+Hm, correct.  I picked the first message I saw as [PATCH v3 0/3] at
+https://lore.kernel.org/git/ but it was a reply, no the original.  Maybe
+I'll get it right in a future submission ^^'.
+
+Thanks again for the previous comments/review.
+
+Cheers,
+
+-- 
+Maxim
