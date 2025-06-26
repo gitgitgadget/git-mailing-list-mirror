@@ -1,126 +1,214 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2116C20D4F2
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 18:04:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9065A339A8
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 18:24:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750961073; cv=none; b=kV5qrtu7/ZmQbGk1Qkm9jIT1OB54ozGHBalMYTuQPwGLiOye/s/WDEzOv70g3v8MX0LMKBk4/tIzU1g9Tt183XvhJhTxAFcAI71RlAfoLohv3b5rkdhSrVjHK+Tl3HB7VmXFd34w787wdkHFTiiSr1wk4qPRjVVCbeMIc/KsQkM=
+	t=1750962285; cv=none; b=eclXYGhbB10EN+Djh9ejj5EHMlWbzbXFsEHzjo7m3I8ZA7hSnSQW6OG0HtlqzSxU484QsKDuBgMUcKokoRy+e4nQqbS4GcvaBqD111f3yvNEu7HJ4QuU4tFlu4HK6ahobwySlhmf/Zf6q7b7SdN5KsNR+d6lHekTeJWb57OPBbQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750961073; c=relaxed/simple;
-	bh=lI1zzQ3DcQY0FH+mYIwuJVHxigvFVe6CsyTUqMKrsFM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DqZN8t9CVT4ePm0K5e5Wm9LXx2mmFAGOlt+fnNTFMbEFbYCOVylPfqX1TjkYdUMHpfEFWyCgqaa7RpotvT6J3zpVUlMO+3pH4RlUQTFhnxSnVjIvTJ75j78iI5ex/8Gu9nO0HOaBHFDT2kaSEeQg5YN8EEBZOotmfUHwyXj0oio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lq3QzgCu; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1750962285; c=relaxed/simple;
+	bh=KvRJQG7zopCrWZToVrL3V/h17eLScO3NH/Xhhn9P5Y0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=ncc3rilwTqiQZsZa4vjy/gOhxdtPUrZx5i5FCq73xaLVo7inhW7p1QOgb5hZ6MT0W5+xoNHKd9DfDUh0afCm1lQpz8qyZdaiPLcz9DxclhiNDuWbiYoZxY33Oo2+COHyhaF2mmh5mR80A6tqb3mkEvaQEXZsb+2dnwsd8qxg2QY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k6f8klEG; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lq3QzgCu"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a6d1369d4eso730226f8f.2
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 11:04:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k6f8klEG"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2360ff7ac1bso11689885ad.3
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 11:24:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750961070; x=1751565870; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DUo9rMWEAayHhqR8a5Sg4uQuhAgz2zTccMz8hfkEAAc=;
-        b=lq3QzgCuq5Sgj5Y1JmGGynskh1dGHrOjz0hiiRqlBE8yoVlnGrIrrGmNzwzkn8lS9v
-         JcEh5tfMMJSWE8OYz2+nHcEadGglQAFJ3+OoPN7uIRooc7DJQGiZbPuWJ6TCokdWqmff
-         LclCEfU2VovekxSIoe1t7pSGromf3vC/dCagDjLGS8lulOiQFkQzRCcHjNWTCd5b3HcM
-         rV+MnxVUxHbcLElYlJoLUV1C1eHQemqYoXiD+HIHXgLLClZ1Pk7A9xZ82UIJwSoVW5sd
-         uWwnqZW5uN01Ne8cww1PhCumMEjcHNpqI/vZRDUkB2efB5/WrnuE+Tuw9W7AOHNIAWaL
-         F7eQ==
+        d=gmail.com; s=20230601; t=1750962282; x=1751567082; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4fVjLUw2LmVkuCmoGLzfjDflgLjdyIsNOAYHjaxvR40=;
+        b=k6f8klEGpTI3esAauVkZ3bH2b+WMtj3/iarsx39vToawaTVK0yCorU/LRoSq7PG1Vd
+         SXJd1hqjrIacWVu1jRysqqSzEKYzfb7c/1+o3opzPF/yJ3qZ81kkqOFSsNfQ81k1pire
+         EFzMXROEGBty4n8CG3LSWumPXJFxmdHfW/BYW3jV2ZvSgOiDu6cEhWuakWg/tZKItwEd
+         94SOrZV47/coaKWNWKx4i2a3zP9PJjAX+Mws9ctchC+e21JL9NgzuRAhmpECDpK7SHBm
+         kxwcKMC92aorkBdhLh2nOSKANkiF93/OitegHs3gPSQ+HOP91+YaozZ0wTzw84+8i6pT
+         q/Vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750961070; x=1751565870;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DUo9rMWEAayHhqR8a5Sg4uQuhAgz2zTccMz8hfkEAAc=;
-        b=c0iijjyi+R3qDtLjxvCEXiR3ENEQKD3xnmpUsH6SxL5RHTh6fCE7EBS1dsWQ3MYUA0
-         Ws4VPpI+GO0W+Hay7pyaES44c9zLg5eiNx8YGVb5kYVHapKX6ewWHnzNZgcm6lLKd2Ga
-         QJ2vOAa1IfjmP1JB2McpDqXJfmWoMvGoJUrGxFH4+d49Tck6TLhIAVkjE5o0/QMqJKyX
-         ANnVgW/RihK4WS5sZurZzEYNPrBpKMOCm4aECaY+otf/TfnBa7WvOVgBK82vqJPzxsdI
-         VHANLd90HSR7Bt4DkpG47KvRZ3o8xB5AAKK6U2U4DXSdBiU+DtyL02bXLG6+7cPppSe1
-         joyQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWQ90NZ50fwcb23Q9Otbu3G4xJzJ3IlMd1zAm0eOfiZ9qIHf5Y/7f8D+Ue71HJfDhh6Dbw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzDNIxRXKECGk34ij7Lp3L+h8UNaBRWkSLF5yztBKTS2i7r59oQ
-	S4Dt1E//CzK3njayzXyiIbbsBYBPmF7fTqN/7evJW6qhoW6ZZpfVLNI58S5itA==
-X-Gm-Gg: ASbGncucR9iJGFHLNzGRq2+qiTIBgmBVTetdT003xnKVMI7+QhDwIwUHn1/ZqHjYzJ0
-	TG4j+e+kBrN1ae8XzMN0Dq0KcvrBUx8R84Fnrcq5mvXZmDD0+0L+Wcm22ThTFD1T1j6qy+JjXeF
-	GlQkx6dWlLFUG18KaRta+JgAVKhXwZdWyW6hYx8nDo0scfRj2AUHQjoz8pZ3vML+DF7P955e9+P
-	l3xxjvBVANIXR1ER7XXoGdABnsIb0vkjbin7pwYAtXKM2aBkTmmUmRjcBTcpXcco98+u8CCrqI+
-	kMvDu4aa136Pto6ITWW40uGr0SkIyrzKGyD1UMINtvxB1qSUMJmyRtv/wEQ5vEwM0SIzTpe/i6/
-	jSjRNnKhm3VGzcfM8kKgoeM/Mg3N3qNObftFS0NR6+8qO
-X-Google-Smtp-Source: AGHT+IHxAzHPzFrQZj9GQ9lFbP8ozsx1hpogV+zxgs+TGN2iltDL/PsIgh7jGgpvrSl6He+j9KtkMQ==
-X-Received: by 2002:a05:6000:2013:b0:3a4:f70e:abda with SMTP id ffacd0b85a97d-3a8fda35a5bmr535329f8f.10.1750961070291;
-        Thu, 26 Jun 2025 11:04:30 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5? ([2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7e7814sm527609f8f.8.2025.06.26.11.04.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Jun 2025 11:04:29 -0700 (PDT)
-Message-ID: <087d437f-3163-4c63-b6f5-e5d726016359@gmail.com>
-Date: Thu, 26 Jun 2025 19:04:30 +0100
+        d=1e100.net; s=20230601; t=1750962282; x=1751567082;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4fVjLUw2LmVkuCmoGLzfjDflgLjdyIsNOAYHjaxvR40=;
+        b=b+iKCCwDbx35CEn1UcZnNufiZR+5LgjkZpS2+5AAxr2tCej1LA0OCNpnD+b3ID9L61
+         HWZNE90xrit/eVcGJ3bsDhxHzAbpXkeqfJkN5+lJYGQskTvfQRV6tXY9v24aeGo1CRq9
+         vIz+D4OBHHgR+2lJumBU3jdNwjnGaA6GGKd5BCGPaS9Y2i2rScNx+PL5aTQNRZoVR5lv
+         iybxO3TiQ4y5fFoaMXO9Vb5ZUFpUPucvPP/i2m3uTCe8PKGRyrtlrKd2m6IK5fJk5pdm
+         Y440/3ITWpseBMZbRcdwIr/6W4tkw6dmvxrsyfyihWIr3mrjTj9JtJCmccKC3qaucFm+
+         lC3Q==
+X-Gm-Message-State: AOJu0YzyBZD2Cdnn6IHr/+zbSU5d+CVVNAddXrIGV6sFTQpObDV5BbAT
+	TrhX81SitBhzYc6Q35tTnm2z3f5Db8ziykvON8ikirt8uJpTB5mZ3dsTyAUCKw==
+X-Gm-Gg: ASbGncs9wNZCQWsAY88obp44Arrr++XO5hLB3DprJHa5vhXS7psw/u8wpQSVWiUEXKQ
+	ixEkyLE870BsmQKGvfA8tYfpf9m+LGvZrFdbxhaGVwqNnXOmxOpo1py6vSDu/MSUp04EniQrHjE
+	SR7a5c0AvueTjJkSgJNI/NCL4TG2TckSGh8nn3c3S8cSh0pnucd15jFwz/6WSRBJ/IloarUbtIp
+	Tn51X15QW0TPVjbZX9M63zCRDNshSoWlU5e3Z8SZ5Wuoe32xvuFE+a2I4foJ4S/6GcS2kkjxcdC
+	LIfU6l6wtq4HhSiP0Sw5EZV/4M8i+r+ZNspCbG39ETjRX5LDAddCUVYoefDBCi0zhCJ/2shiXDs
+	ho8wuTDMm8pvx9DtO
+X-Google-Smtp-Source: AGHT+IGo1rBzA694E36kAOq/eqnVQsTrkhsmHUUnRkeDvSMRIug2So29Ntn6xsNR/WYSXYQDs5aSSA==
+X-Received: by 2002:a17:903:190d:b0:231:e331:b7df with SMTP id d9443c01a7336-23ac45e3799mr4268515ad.29.1750962282305;
+        Thu, 26 Jun 2025 11:24:42 -0700 (PDT)
+Received: from localhost.localdomain ([2601:640:8e80:3680:3061:f32d:ab3f:87dd])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23abe314043sm3672155ad.7.2025.06.26.11.24.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 26 Jun 2025 11:24:41 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: chris.torek@gmail.com,
+	gitster@pobox.com,
+	phillip.wood123@gmail.com,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [RFC PATCH] daemon: add a self pipe to trigger reaping of children
+Date: Thu, 26 Jun 2025 11:24:32 -0700
+Message-ID: <20250626182432.87523-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.50.0.131.gcf6f63ea6b.dirty
+In-Reply-To: <c314cd2d-8fdd-4386-bda0-881ff87d9204@gmail.com>
+References: <c314cd2d-8fdd-4386-bda0-881ff87d9204@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] daemon: use sigaction() to install child_handler()
-To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
- <gitgitgadget@gmail.com>, git@vger.kernel.org,
- Chris Torek <chris.torek@gmail.com>
-References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
- <c66bda461f45791d278779fb0021f1e0369fe889.1750927989.git.gitgitgadget@gmail.com>
- <d7c86948-e0b0-4864-88f8-fd1222e0dffe@gmail.com> <xmqqy0teplfa.fsf@gitster.g>
- <wanrtwacxrjmmpfnjwxhgdfhlo4uvnktijnc2rxdzlnkpe5r4a@3b2e2onpqakp>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <wanrtwacxrjmmpfnjwxhgdfhlo4uvnktijnc2rxdzlnkpe5r4a@3b2e2onpqakp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Hi Carlo
+There has always been a small race condition between the time a
+children status is checked, and the arrival of a SIGCHLD that
+would alert us of their demise, hopefully interrupt poll().
 
-On 26/06/2025 17:36, Carlo Marcelo Arenas Belón wrote:
-> On Thu, Jun 26, 2025 at 08:33:29AM -0800, Junio C Hamano wrote:
->> Phillip Wood <phillip.wood123@gmail.com> writes:
->>
->> Thanks for a suggestion.  I really like the "everybody in these code
->> paths are prepared to receive and handle EINTR just fine, so we do
->> not have to do the SA_RESTART" observation very much.
-> 
-> Except that is unlikely to be true, as the code has changed a lot on
-> those 20 years (including that it now uses run_command) and that we
-> had been effectively using SA_RESTART under the covers for most of
-> that time because signal() behaviour changed. An obvious bug:
-> (ex: 20250626161038.85966-1-carenas@gmail.com)
+To close the gap, add the reading side of a pipe to the poll and
+use the signal handler to write to it for each child.
 
-I don't think the syscall handling has changed much since 695605b508 
-(git-daemon: Simplify dead-children reaping logic, 2008-08-14) when we 
-started relying on poll() returning EINTR to collect children that exit 
-while we are waiting for a new connection. In any case my comment was 
-based on reading the code. You're right that we started using 
-run_command() after 695605b508 but when I read the code in run-command.c 
-it looked to me like it is pretty careful in the way it handles signals 
-and EINTR - what part of the code are you concerned about? As git 
-supports operating systems that do not provide SA_RESTART we should to 
-make sure we handle EINTR correctly in this code anyway. As far as the 
-patch you link to goes, it may not have been handling EINTR as 
-efficiently as you'd like but it would still accept the client on the 
-next iteration of the loop which would happen immediately because the 
-connection would be pending when we call poll().
+Suggested=by: Phillip Wood <phillip.wood123@gmail.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+Implements the "self pipe" trick Hillip suggested.
 
-> I think using SA_RESTART by default might be safer,
+I tried to make self healing and optional, as I also presume the race
+condition it is meant to address is very unlikely.
 
-The counter argument to this is that it is masking bugs that happen on 
-platforms without SA_RESTART.
+An obvious disadvantage (at least of this implementation), is that it
+actually doubles the number of events that need to be handled for each
+children process on most cases (ex: when `poll()` gets interrupted)
 
-Best Wishes
+I suspect that if fixing that last race condition is so important with
+the current foundation, it might be better to reintroduce some sort of
+timeout to poll(), so that they will be cleared periodically.
 
-Phillip
+I had a prototype (only the bare minimum) that I thought was more
+efficient and that would instead remove completely the need for a
+signal handler which I would post (only for RFC) later.
+
+ daemon.c | 55 ++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 46 insertions(+), 9 deletions(-)
+
+diff --git a/daemon.c b/daemon.c
+index d1be61fd57..d3b9421575 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -912,14 +912,17 @@ static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
+ 		add_child(&cld, addr, addrlen);
+ }
+ 
+-static void child_handler(int signo UNUSED)
++int poll_pipe[2] = { -1, -1 };
++
++static void child_handler(int signo)
+ {
+ 	/*
+-	 * Otherwise empty handler because systemcalls will get interrupted
+-	 * upon signal receipt
+ 	 * SysV needs the handler to be rearmed
+ 	 */
+ 	signal(SIGCHLD, child_handler);
++
++	if (poll_pipe[1] >= 0)
++		write(poll_pipe[1], &signo, 1);
+ }
+ 
+ static int set_reuse_addr(int sockfd)
+@@ -1121,20 +1124,43 @@ static void socksetup(struct string_list *listen_addr, int listen_port, struct s
+ static int service_loop(struct socketlist *socklist)
+ {
+ 	struct pollfd *pfd;
++	unsigned long nfds = 1 + socklist->nr;
++
++	ALLOC_ARRAY(pfd, nfds);
++	if (!pipe(poll_pipe)) {
++		for (int i = 0; i < 2; i++) {
++			int flags;
++
++			flags = fcntl(poll_pipe[i], F_GETFD, 0);
++			if (flags >= 0)
++				fcntl(poll_pipe[i], F_SETFD, flags | FD_CLOEXEC);
++
++			flags = fcntl(poll_pipe[i], F_GETFL, 0);
++			if (flags < 0 || fcntl(poll_pipe[i], F_SETFL,
++					       flags | O_NONBLOCK) == -1) {
++				close(poll_pipe[0]);
++				close(poll_pipe[1]);
++				poll_pipe[0] = poll_pipe[1] = -1;
++				break;
++			}
++		}
++	}
++	pfd[0].fd = poll_pipe[0];
++	pfd[0].events = POLLIN;
+ 
+-	CALLOC_ARRAY(pfd, socklist->nr);
+-
+-	for (size_t i = 0; i < socklist->nr; i++) {
+-		pfd[i].fd = socklist->list[i];
++	for (size_t i = 1; i < nfds; i++) {
++		pfd[i].fd = socklist->list[i - 1];
+ 		pfd[i].events = POLLIN;
+ 	}
+ 
+ 	signal(SIGCHLD, child_handler);
+ 
+ 	for (;;) {
++		int nevents, scratch;
++
+ 		check_dead_children();
+ 
+-		if (poll(pfd, socklist->nr, -1) < 0) {
++		if ((nevents = poll(pfd, nfds, -1)) <= 0) {
+ 			if (errno != EINTR) {
+ 				logerror("Poll failed, resuming: %s",
+ 				      strerror(errno));
+@@ -1143,7 +1169,17 @@ static int service_loop(struct socketlist *socklist)
+ 			continue;
+ 		}
+ 
+-		for (size_t i = 0; i < socklist->nr; i++) {
++		if ((pfd[0].revents & POLLIN) && pfd[0].fd != -1) {
++			if (nevents == 1 && read(pfd[0].fd, &scratch, 1) > 0)
++				continue;
++			else if (!read(pfd[0].fd, &scratch, 1)) {
++				close(pfd[0].fd);
++				pfd[0].fd = -1;
++			}
++			nevents--;
++		}
++
++		for (size_t i = 1; nevents && i < nfds; i++) {
+ 			if (pfd[i].revents & POLLIN) {
+ 				union {
+ 					struct sockaddr sa;
+@@ -1165,6 +1201,7 @@ static int service_loop(struct socketlist *socklist)
+ 					}
+ 				}
+ 				handle(incoming, &ss.sa, sslen);
++				nevents--;
+ 			}
+ 		}
+ 	}
+-- 
+2.50.0.131.gcf6f63ea6b.dirty
 
