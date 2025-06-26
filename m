@@ -1,106 +1,120 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659F82F1FF1
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 13:15:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B042F22
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 13:17:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750943759; cv=none; b=K2ihJJatV8v+Or+gE9/tVmChc+eXIk66KLXtVd90bR+tuBa+QS5cS2/+kY2eZdoT/m7nIi8mCAA8JeLu2Di44BVT7K2b+XpMYH6GtGsYlf8NHHbv5Kc8RzmNIpsSY18T+0UZHqYo0DBF8iUXcG6vBL4pXeiM/P5Q/5dV2IFxT6A=
+	t=1750943827; cv=none; b=j60YjT4cNXW/TPLLG90NYKc/2dTXnj4LsDI4ccwWDmDW1SgwwygIFKTiiDqbhm8WJJU1yJv2P5exJQH/XR+3SsA+r4KYDCenHceGFuRsoPkM/EmbTswNN+INDc8UcqQkK8zxc8sFRpSdrvoxd5NjwB4550V016Ds3dnN9bxE9e4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750943759; c=relaxed/simple;
-	bh=rKvJE7wXvrDEnhiYI8Lzcn1bLwY6TJ+bN8phMK+MnwY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LNlmst+zSE83gOgFDBIs8B0K6fc7cOyD4g37DgdoktEaJLtYKe83L+JSSzir4aQ9I+OU4QPVgI+jDOpgfIFtPSKgGvz+rVPBAlJs4uQINnr/LusT1jvPM4icUMK1vu8TEpIyBwgodMPax03fmTw2pc33nmsHXD+LvwNz79mInZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SiMXE6fa; arc=none smtp.client-ip=209.85.210.172
+	s=arc-20240116; t=1750943827; c=relaxed/simple;
+	bh=L5wvvcoLXgc2V+OUgLjtGM5e8lAyo+8EKXz+TtSu8qA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=oLI2EOm/C1zrsRjhsNje5koczFRJ8cyUEnhkSOMBhL6pC0FDbzqABmUDJRUHdJZUCOzo1qPabsFSj3q3QeQW8Za3YWlviuP56uilRUVcexVVov0ply6Oe/zRE5LcErDqnMxo2Qjr10ComIb1UcLGwMbjg88wgNkUgQcBfUUzbiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCaage3Z; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SiMXE6fa"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7490702fc7cso732924b3a.1
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 06:15:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCaage3Z"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a50956e5d3so769239f8f.1
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 06:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1750943758; x=1751548558; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Vm/FjLY0kqLABgsql6elA0TFZ8NN0rCbAFUcAio45c4=;
-        b=SiMXE6faJFg4cmpj+Ck3m2xWeschKVkXtOLSRC68N/UxivpWu3X5Bw6e3ku7hogyxW
-         Ahav3trsXFcFl+zbKmhYs5mhQNYeY/Hg3cdbnyiZkIGqQfQO/q4hPW/Hh/c1Moplz9Jp
-         pYKcOrUfnafd1Ru5dG2xefDWJZ8YBOPCcB5PVVJd7Pug+UDw9qqgp5zA44/+8sH4Goe7
-         rsmM2y3VV5mx/35i+a4HfKcmA4BVimBtnDouJ82Q8iDEDNJtS7IcdkB0H8VQ4JO5EeXo
-         XZv2UdCw5Yth4pBm+CQVakAf1HkcolwwhS4AnSMqpxjLRSMCgainHbhsH3F3o8bk8af2
-         okHw==
+        d=gmail.com; s=20230601; t=1750943824; x=1751548624; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=qiN82wz3hxjmskpHCjyE0LlYK2S5II2P0ILRx0M2J+8=;
+        b=kCaage3ZY9glVh6xOK2dt32S4YXIKPDlcA4EqeKULl1ycRqBNpS2J69xTE2xVZ+o89
+         xJpjh/cnxCRNBR+nY97wvcz3vhhTsJQ2Qklg0Iqnu2aXpbUeFkwzkFz6ybnZOcwU1Z7V
+         hwlkyLqeTjH5q6HYdbVO+E6doI2PWrzBp2bz7ldUPgr20YnSywD5eoGV9XHtStUg0bOP
+         4qUeEZH7hKNtYVTkIRTzU6PWtilSIW0skZrQtfy1DuJYXZlgq0nV1W2xiEaScxFM0Iy4
+         lSxU7hkiFkCliFbnU6psrsj8RT+xbTtw4xP6WZwhHsSOdBQp14gFTHAAXo/lD0QPvYjx
+         J4IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750943758; x=1751548558;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1750943824; x=1751548624;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Vm/FjLY0kqLABgsql6elA0TFZ8NN0rCbAFUcAio45c4=;
-        b=Dgea3F6FvPIhg3z93K6/jVDZGhFOTDi8+o4xMH5ovcLJvVnGoZLsa/tzgAgnnxw43Q
-         eICd4bsKtiHgOccFhCg/fZlq+GIdp7gb6hUhORJ4FVtvWs0EebRyaPylXYwh1XUJx4mR
-         aBox88drEVe5Q0IoipC7P9AgAyq2K5NUObBdoC+vBIprJWXkUbBdZ6VPczvqp+qTuNoY
-         QMXO95mCsj2Ae/0cevqi3+Sx4V8GIJIP9NT/KegPAjQd0J6Wj2aOs2Wa23B1aPCnDG9A
-         K6Pe3djvihUBcYB0LTqc1WfZ98nS40Kog+d8sYKpxY4FTmFAGvIKqWwydMULB4PN2U24
-         3Rng==
-X-Forwarded-Encrypted: i=1; AJvYcCXgz4uvC1un0e2IbkgNtkMh3Pq9dHi3pUbA0rS7X923yGKZpTNprDP/3zlKSe0nEXk61EQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyItKQkH3hUMAkajE92JrN+sD/rZxHazEx+vmCKlRAPN6x+0Xlx
-	lChfi9U7R5qQ61uV8vt98yEhUAxt55Qam6BY7svhAyw9NLfAVRUW5XNb
-X-Gm-Gg: ASbGncs+pD7e/EiyRUOP5JUe2AnQYmJ5Dznn0hLmP/s+wy5UlQzfQmDPrGKmvseTxOf
-	DqL3/3LzNhJKZeXyMEOFq0NsSrd3aBcnuDHTran7owZafxSqEg0Rt0o1mDPFgKkOoqLJmlN7MYc
-	vuO/+zlV9uwPu2k8sgVjBj/gLD54YwIG09cZmmSs1yrJT1EIldZRd+HYOspmTe8z3MtuXjkqJKL
-	70qzXzg4u7v2C+dkP/AT/gzHPBjKrs8u5S9fbu1Vu9xGmdrDZbewERrclBrK6/CxZHqSBu3YYFB
-	Cx1ZMKQ5gtgdAqmYKmZEa7UDRI84hpZkQChCGiyexeV75XUaOym/2UdiwpobH9uuBS1JZ69PKA5
-	XZbdnDPR6qRTNHjRxr8hIrnc=
-X-Google-Smtp-Source: AGHT+IExsSLw8aq61V1CLz8lt6tpzuM90EKdPaBonCJ8v+tBXAV+EuwFREzRbHk+uEHpPVCEXxjZOw==
-X-Received: by 2002:a05:6a00:2354:b0:748:f41d:69d2 with SMTP id d2e1a72fcca58-74ae2f801cdmr4931649b3a.4.1750943757494;
-        Thu, 26 Jun 2025 06:15:57 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:3061:f32d:ab3f:87dd])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-749c887261esm6961856b3a.156.2025.06.26.06.15.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 06:15:56 -0700 (PDT)
-Date: Thu, 26 Jun 2025 06:15:55 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
-Subject: Re: [PATCH v3 2/4] compat/mingw: allow sigaction(SIGCHLD)
-Message-ID: <qizh636elher65bsdzkiqohzyo23tmon7hxcl4jcuftculbtm6@nupmqjy3igja>
-References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
- <3f63479119ffe6fdcf694dac3cb47cd7838564b7.1750927989.git.gitgitgadget@gmail.com>
- <49cf7749-fc86-4829-8e94-c1f1e87803aa@gmail.com>
+        bh=qiN82wz3hxjmskpHCjyE0LlYK2S5II2P0ILRx0M2J+8=;
+        b=DEs/VZKePCzZ/8SM6PI5vbzgobqto7a2Oo+Cuy2oWw3CpECI/nKs4c95gTOpYIF3JF
+         yP3GPhMWxGKa3a/dvEneWBt8T5puNAdj3dz2NprOKs9n2kh+lz2NMsiM+EUj39W3Gw5E
+         lKeLskkNoxrL4F+gwj3L8LbtVSepnf2sWkiQAiZPSllRbKWBTdCsX3KiQYyscCFNrmwR
+         VHNb3WRjiy1QxmIIEQZCK377G4UFMw50jRnog8UkpqPO1VqUnrkdirWVPpC0Z4LUwZhS
+         m4xUoOsarUXCuc4kNbB+9qZyf1P8nTV3YKguYwE3QGLOM/I+Oky4EVUSHpvnDWjrH8Mq
+         6teQ==
+X-Forwarded-Encrypted: i=1; AJvYcCX5Ppq/X/Go8pz5Uot9jTtqJ/z7WNkW1hYl3B1rWcnjwSOkt65IGVgwH39dk8RSSNb74wA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwuefYgaYWIrrI0sL/1ntBzsqXN79DrbJ8uXsPO6AEd5ZhgzXdL
+	Y3keJJEiX6h2U+vG2RFncqnJ5mzgCc1/xw6p5qDUqyfvaG68+ARiDT11
+X-Gm-Gg: ASbGncvBO4XgRsW8ZHzLH21Wd3lW3spGmLsZ/SQSrHoc7pqJqPamMe4g84Y9/zlYkCw
+	Wfw9p+riZQvrbDi6u8uBqjmq8ixA7SOsJpdgFeCbM18in/o4w9lQ6iWzL6IaHmOJpEAH53Vi28J
+	cQzN1VJsU/SltbO4Ei1OKRPs0kpTPeFeO15sl1758yEHJuwEHL2ojHUC9bDbt+aXYnRhgGM+TOK
+	rVgbBWyFtn3pHsnMjafcPVcG+k3gPYufcW6Q2LHUaOJRRs0pTczIDThlxV6inVYiPjh9yi117Ze
+	azBqzAQzQfuZwRVlUC/cbYfPHtdV3EN31VgAfGdnCrVl+j/8zIrX/vFNYl572UtgYoIP7TLxh8a
+	UaqmhNL3Y6BV6eB2/17+HWGwPMdh1dmk0ARoBiLNvTyRl
+X-Google-Smtp-Source: AGHT+IF6d08gnTv4v0rNB0/wUsdSwggsoLro6bAGKYHo4NgEods6JrvCVLBjeGEzZ9lgV4rjczBoYA==
+X-Received: by 2002:a05:6000:2dc7:b0:39f:175b:a68d with SMTP id ffacd0b85a97d-3a6ed5b8c1fmr5925834f8f.11.1750943823573;
+        Thu, 26 Jun 2025 06:17:03 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5? ([2a0a:ef40:700:a501:f8e3:1d9:71a8:62f5])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a6e8051153sm7160369f8f.7.2025.06.26.06.17.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jun 2025 06:17:03 -0700 (PDT)
+Message-ID: <3e03fe38-5bb5-43da-b80e-fb8ffc1b4837@gmail.com>
+Date: Thu, 26 Jun 2025 14:17:02 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] daemon: remove unnecesary restriction for listener fd
+To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
+ git@vger.kernel.org
+Cc: "H . Peter Anvin" <hpa@zytor.com>,
+ YOSHIFUJI Hideaki <yoshfuji@linux-ipv6.org>
+References: <20250626095139.70751-1-carenas@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <20250626095139.70751-1-carenas@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <49cf7749-fc86-4829-8e94-c1f1e87803aa@gmail.com>
 
-On Thu, Jun 26, 2025 at 01:52:47PM -0800, Phillip Wood wrote:
-> On 26/06/2025 09:53, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
-> > From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-> > 
-> > A future change will start using sigaction to setup a SIGCHLD signal
-> > handler.
-> > 
-> > The current code uses signal() which returns SIG_ERR (but doesn't
-> > seem to set errno) so instruct sigaction() to do the same.
+Hi Carlo
+
+On 26/06/2025 10:51, Carlo Marcelo Arenas Belón wrote:
+> Since df076bdbcc ([PATCH] GIT: Listen on IPv6 as well, if available.,
+> 2005-07-23), any file descriptor assigned to a listening socket was
+> validated to be within the range to be used in an FDSET later.
 > 
-> Why are we returning -1 below instead of SIG_ERR if we want the behavior to
-> match?
+> 6573faff34 (NO_IPV6 support for git daemon, 2005-09-28), moves to
+> use poll() instead of select(), that doesn't have that restriction,
+> so remove the original check.
 
-By "match", I mean that in both cases we will get an error return value
-and errno won't be set to EINVAL (which is what POSIX requires)
+Nice find, this patch looks good to me.
 
-In our codebase since we ignore the return code anyway, it wouldn't make
-a difference, either way.
+Thanks
 
-signal() returns a pointer, and sigaction() returns and int, so you can
-have the later be literally SIG_ERR, eventhough it will be ironically
-equivalent it casted into an int.
+Phillip
 
-Csrlo
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>   daemon.c | 5 -----
+>   1 file changed, 5 deletions(-)
+> 
+> diff --git a/daemon.c b/daemon.c
+> index d1be61fd57..99741f0b45 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -990,11 +990,6 @@ static int setup_named_sock(char *listen_addr, int listen_port, struct socketlis
+>   		sockfd = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+>   		if (sockfd < 0)
+>   			continue;
+> -		if (sockfd >= FD_SETSIZE) {
+> -			logerror("Socket descriptor too large");
+> -			close(sockfd);
+> -			continue;
+> -		}
+>   
+>   #ifdef IPV6_V6ONLY
+>   		if (ai->ai_family == AF_INET6) {
+
