@@ -1,106 +1,167 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB8084D08
-	for <git@vger.kernel.org>; Thu, 26 Jun 2025 06:21:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF5C1FF7DC
+	for <git@vger.kernel.org>; Thu, 26 Jun 2025 08:28:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750918919; cv=none; b=knxNjBwmgA0u9yam7OyfRLyzDtQY1OMOk/p1ge8ow1St8D573XEUl0RICx7AAzlcEFZu5BAREQ1ej/PjHyGKR5EbwVX9KZ6IlI1BM1l4FiVcACgopZjCvaeMGgA04StAS8LKDyCJ9vdfu4WHYzRk9yYk5i/aCO99Rdr2qAVxEes=
+	t=1750926482; cv=none; b=PrPj6LwHsSkS0MSpI1tkgEFQM/DmuDHja6B/K8mlvF6Y7KdNhCjkKjP0JsPYlABXc7rZuN4yEGkOX/HAd4ZCGuUevbygPkEkfjMtLT9mBYOzSxaWZIdCPDCC95qrVsuAFWTbMuYWGZNfjRJvY8q3Ij0Plnml2xTfYVoFJCKIPG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750918919; c=relaxed/simple;
-	bh=huFzN37RAAQehRFRm4Ii4xJs7QcpS7awEK1jmBVFpMs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cO5kEnpTrnEjQ2EB51M1D1GBoYoABonM3T7RJVs9hMqtiukf82LbKikO82oEJp+EK50cgIsfWen/jsEaItq00ehj3Tdv9Qtufq26qwHjLPbYUtKGvpismUyy6mC3YEF530tKyy86W9XUrZKahhf53E0blVKTHsVeZKtPuz8chdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.106] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4bST9T1gP0zRpKm;
-	Thu, 26 Jun 2025 08:21:49 +0200 (CEST)
-Message-ID: <df3f9190-79cd-49d6-934c-a67a2c0c9f0d@kdbg.org>
-Date: Thu, 26 Jun 2025 08:21:48 +0200
+	s=arc-20240116; t=1750926482; c=relaxed/simple;
+	bh=/s4Oe3SzgkKIWHbIYYspRNKFzH3cGg+U4uNMFvnZ9x8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=M0n877RyQgFi+vghlHvOF/ssLX3+zrs/xIg+WVtKBvbQRQcvDZc+oVqzQY1WRqPFv+QvO1Xm6UfsU4L4A5PLtgPNP9OwRkTRCsa+rOIvM6rXqpSzl+V2XH31dVl3krDFu/AEClr01HTm2nZD3C9uLEdt2JLCWEiRPGUxTmmNba4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LYindY4f; arc=none smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LYindY4f"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4e9c6b44477so462125137.3
+        for <git@vger.kernel.org>; Thu, 26 Jun 2025 01:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1750926480; x=1751531280; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=8JgZp4Vw6dv7IV+qhYdhFqIc/OTbmNoWRNl2RYjMg/o=;
+        b=LYindY4fvIK/9x1gBYQxtZIiU3152feZgMLyaAfs8+l7RNQkwg/Qlrw8yiBKNMedXU
+         5fgQa9MMiS06D/AazH5/IiaH43QeGKGU1MbUtXxkPZvmWSOYHxmHYuLO8Kg/gDsleOsF
+         yDEaEXN/UMDGKMXMCIyUViNvyjOH6VU0NR/zWQ+zyYYusUTIOUhzCpEQzYoEiEXT64v3
+         HqftYvl7HNzZHP3W6BxP+/Ns1SrSwFQHdgn1BUcp1ni+22hflP5IebLnH5w5Bb1f9K/E
+         PqYTAHwQ/3PeUdAfgloqDoA6LT+mAJi7RjWwMaJuU1o+LpwGGahh381FidSgupVnX/a4
+         iH0g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1750926480; x=1751531280;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=8JgZp4Vw6dv7IV+qhYdhFqIc/OTbmNoWRNl2RYjMg/o=;
+        b=EvVeaUh33PIaTo52Z7Fki0qb7Zu329jcfyp+D5RrEubIpBwS+cndYZ3z7X2cF6VfNZ
+         xVOOwSEvwyLzCePaaWPkWZNABB/VX44XleaCFxnnb9rrTPJPV4VtghgRg87e4bM1Ynaw
+         kJ9gT4y3J8Gx/pMSYozvuFHuOs5cpklc+1qR160wQx7Eunj9oV1prB+Mf6kdaoBLFDi1
+         lAI/Qk5/w2CldXgL5o8KdbDAriKVJw0qt/biRl0fVK21mUDCwbNGmmxihY5v+Rx29GDy
+         Lv7x0/bPAIaZRSbIvutlgqwTzdcuJxppkl/UbqFNL3evDebaeGfZq096USxS1RISuaNU
+         TFlg==
+X-Gm-Message-State: AOJu0YzqoyAiu5iMUhpZQm2a4vCTmQiiuRpu7E3ZxJmNgxJIGTUffijU
+	SBjcgR92M8lzLOacuj0ykDhyJak3Z8WZbalwjKAWRYRn/vv2VvL+tlbWjpwFLCGr1shwmkLGe6C
+	YQNpWBlmCzJm7Tc3O7CnrgooB+C7UMXI=
+X-Gm-Gg: ASbGncs8rA9NqzLn6YatEJIIpK2oPHCV2V76xFS7gpAHA+MlTIgxOjca5SoxHi+Bodx
+	YOSEgmBG+Rx5eY91kIivVmzAJ8MKCnu4IASSBc5IfwWH8TkhIdtWqyHNOspgI26Z0iGXKyiDX8v
+	4KBbNfTlA+z017wM202TXHFp5G2weX5SPFA9+D6BGUOQ5UxN2Lpf3cfTtv7zUyqExpMVTgxQGvt
+	+HF9Q==
+X-Google-Smtp-Source: AGHT+IH7QhWI6gOfbyXcf3ZZCr7nrziY0oIZtGgicWGxDtYCwM22ajgoM8BtGMHURfnpkGy6AXU9/3DOFYRQisWpnPM=
+X-Received: by 2002:a05:6102:d93:b0:4e9:b612:9013 with SMTP id
+ ada2fe7eead31-4ecc765d389mr4700749137.13.1750926480302; Thu, 26 Jun 2025
+ 01:28:00 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 26 Jun 2025 08:27:59 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqo6ubu0ic.fsf@gitster.g>
+References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
+ <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com> <xmqqo6ubu0ic.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] t4018: add tests for javascript export type
- function declarations
-Content-Language: en-US
-To: "Derick W. de M. Frias" <derick.william.moraes@gmail.com>
-Cc: git@vger.kernel.org
-References: <4deb24c2-98f2-40f8-b50c-c74485ebc10d@kdbg.org>
- <20250623090538.154858-1-derick.william.moraes@gmail.com>
- <20250623090538.154858-5-derick.william.moraes@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250623090538.154858-5-derick.william.moraes@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Thu, 26 Jun 2025 08:27:59 +0000
+X-Gm-Features: Ac12FXxCF5O0Sicj7MWQan4XNYV6OyvyeVYiBhhuFseDCbIWnvbfY0UPompTTBQ
+Message-ID: <CAOLa=ZRu-fBsNpoSzb8z2xUfM7WUUcdR1XRd8zr1U+P61QRccA@mail.gmail.com>
+Subject: Re: [PATCH 1/4] editorconfig: set maximum line length to 120 characters
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="000000000000e30891063875567c"
 
-Many of the cases are not valid tests. In particular the word "ChangeMe"
-must occur *only once* and *after* the line with "RIGHT" and there must
-be at least one unchanged line before it. (I wonder how these tests
-could have passed. Do we have a flaw in the test driver?)
+--000000000000e30891063875567c
+Content-Type: text/plain; charset="UTF-8"
 
-> diff --git a/t/t4018/javascript-dotexpors-async-anonymous-function b/t/t4018/javascript-dotexpors-async-anonymous-function
-> new file mode 100644
-> index 0000000000..9f970a2343
-> --- /dev/null
-> +++ b/t/t4018/javascript-dotexpors-async-anonymous-function
-> @@ -0,0 +1,3 @@
-> +exports.RIGHT = async function(a, b) {
-> +    return a + b; // ChangeMe
-> +};
+Junio C Hamano <gitster@pobox.com> writes:
 
-Here.
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> As per 'Documentation/CodingGuidelines', we try to keep to at most 80
+>> characters per line. However, there are often certain cases where we
+>> extend this for the sake of readability.
+>>
+>> Add a maximum limit of 120 characters to the '.editorconfig'. This means
+>> that if an individual line exceeds 120 characters, the editor will wrap
+>> that line. This provides a lot wiggle room over the recommended 80
+>> character limit.
+>
+> Ideally "when the line is overly long to be more than 120 columns,
+> please wrap it to 80 columns or less" is what we want.
+>
 
-> diff --git a/t/t4018/javascript-dotexports-anonymous-function b/t/t4018/javascript-dotexports-anonymous-function
-> new file mode 100644
-> index 0000000000..2fa9775c95
-> --- /dev/null
-> +++ b/t/t4018/javascript-dotexports-anonymous-function
-> @@ -0,0 +1,3 @@
-> +exports.RIGHT = function(a, b) {
-> +    return a + b; //ChangeMe
-> +};
+Yup, this would be nice, but neither '.editorconfig' or '.clang-format'
+support a rule like this.
 
-Here.
+> If the
+> result of formatting a single 125 column line leaves us with two
+> lines, one with 100 columns and another with 25 columns, this would
+> not be very useful.  As this is meant to give suggestions without
+> enforcing hard rule, wouldn't it make more sense to set it to 80?
+>
+> I dunno.
+>
 
-> diff --git a/t/t4018/javascript-dotexports-arrow-function-3 b/t/t4018/javascript-dotexports-arrow-function-3
-> new file mode 100644
-> index 0000000000..cc3f1ec017
-> --- /dev/null
-> +++ b/t/t4018/javascript-dotexports-arrow-function-3
-> @@ -0,0 +1 @@
-> +exports.RIGHT = a => a+1; //ChangeMe
+So my intent was to instead was to allow the user to be in charge of
+line-wrapping, but for no reason should that go beyond 120 columns.
 
-Here.
+I'm happy to change that to 80 columns, this does mean that supported
+editors will start wrapping at 80 columns. Users will have to override
+as necessary.
 
-And many more. You see the pattern.
+>> Contrary to settings within '.clang-format' which are used for
+>> statically formatting source code, the '.editorconfig' rules are hints
+>> to the editor. These are not enforced by CI and are guidelines for
+>> editors to follow. As such, the 'max_line_length' used here is only
+>> supported in a set of editors [1].
+>>
+>> [1]: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#max_line_length
+>
+> Thanks.
+>
+> The discussion around "rulers" https://github.com/editorconfig/editorconfig/issues/89
+> was also interesting.
+>
 
-> +++ b/t/t4018/javascript-module-dotexports-generator-function
-> @@ -0,0 +1,5 @@
-> +module.exports.RIGHT = function* ChangeMe() {
-> +
-> +    yield 1;
-> +    yield 2;
-> +}
-> \ No newline at end of file
+Indeed. That would be a really nice feature and in line with what we
+would want.
 
-An incomplete last line, again. Please look at the patch text that you
-are going to submit. Don't depend on reviewers' to notice such obvious
-glitches.
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  .editorconfig | 1 +
+>>  1 file changed, 1 insertion(+)
+>>
+>> diff --git a/.editorconfig b/.editorconfig
+>> index 2d3929b591..d0f940fd23 100644
+>> --- a/.editorconfig
+>> +++ b/.editorconfig
+>> @@ -7,6 +7,7 @@ insert_final_newline = true
+>>  [{*.{c,h,sh,bash,perl,pl,pm,txt,adoc},config.mak.*,Makefile}]
+>>  indent_style = tab
+>>  tab_width = 8
+>> +max_line_length = 120
+>>
+>>  [*.py]
+>>  indent_style = space
 
-I haven't found enough time for a complete review, yet. Please submit a
-patch series that does not depend on an earlier round.
+--000000000000e30891063875567c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e484f08fe5b183d4_0.1
 
-Splitting the test cases in separate patches is a good idea. I think you
-have chosen a split that excercises different hunk header patterns. But
-in this case, it would also be feasible and helpful to exclude the
-pattern from the earlier patch and add the pattern and the corresponding
-test cases in the same commit.
-
--- Hannes
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oZEJJc1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mLzNZQy85bXpqY29naE9KWFZtMDAzNytyQ3pyd294ZgpzRUJ4cDl4OUtP
+dWxNaUU1ZHNIbmd5UlN2M3FmWU9Ra3JJQk8vRXQwNC9CWVh6RUhHY05CUEFjYlYrQnNwODlCCnlo
+L1VhZTFMdUNPRFVac25vQUd4NVJNeW9aMFhIUWVoaFF0dVJSZ2VuOWtJeEN1WkJPYjBzb2cvdjFz
+ME5sckIKZThneE01Vzl1V2g1aGdBcEVmOE4wbUl4VjFKdHc3ZjZWaENZeVBEbVNRNFcyZXV6dWhP
+VTBweGpzeU1tNkdLSgo1UmZUR3p3NVNydXVvWHUvb3Jtb29OU0orMGp4aVVicU52elh2VGpaWXM3
+ZXRHK3l4bTZNdGtsSHlNeHBYSmkxCkh3Z1VNYnBPT2ZlWk9ibVVmTk45ZlRsZzBwdmZRdHI5VEdK
+aXZvOWxnQlZsUXZ4Rm9ycDM3TDlPMmlIemMxL1cKem5meFpsUDBpOVNJbHB5RTl4WWd2VStkS3BG
+cUdrUklkS1hsNG8xVFNJT01sWEZZU1pPZjZ1YTVNcVFNQ2kvLwpIMWdvcWtPeW9rNGlkWm1ob3VM
+Zk1QYVlXSWZPZjNrQlRaZG9KYTdYYksrYzRTRktKNGc1OCtObWJyNURQOGJZCjBBVFpjRHlWS00z
+VWM3MGswOFpDYzRlRDgzWXRpdkxqR0FSc1Axbz0KPVhkTTUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000e30891063875567c--
