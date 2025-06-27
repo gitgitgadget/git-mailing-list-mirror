@@ -1,136 +1,133 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1728F22B8C2
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 20:39:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BB628D8FF
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 22:09:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751056748; cv=none; b=jSIOnxwS2muReqb43NWOV21vCgdHWvILrmSzGZo3eSFjWFzzfPlo8ABMVRR4S9p3sB57H6SEcuULPnq79gMGauC/Qq+1LBO7aa322amIlF0whyLt4A1AU84H3IaLY2CQQGWL7y6xPxQEEnwC1HRb6/FSArtI7c7UFtxzaqjZNMQ=
+	t=1751062189; cv=none; b=nV4eP+7Vspav2sdx1xJECJ2J9eg/wnL3q2LNBeWXBR8Bmiwod+TjxiVesTHu/Zif26EFwIMlR54xrVStS2F6JDDS2wieQNTrlXKu4rEeeJpRXz9+rI0s1123UHf/YopZk4eCJAOJ7vYj354qwDzBIMe0OpyOEO+3LUHGy4RHHiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751056748; c=relaxed/simple;
-	bh=SGyCzGEEutHqMqPbTHxXMJErT2zzl0j89iGgakKgwfE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=r2yggG7GN3pF7daWdeulXJpNEGUM+neXIQP3H3vKrT8Oq569DPvOJiI4Qvw4/jrDbRicKTW8LTW92JPYEzPOVBHvCXj7WsTdz2a7SM/G0r1l1yCNwN7GZjfetRsfrCObV9woNYeJNK6AWT2arIFOmwX0X5EF2JjRW6VFBRiZu9s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GxZNE1pV; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751062189; c=relaxed/simple;
+	bh=fcMBWJasJvBtOwVqtjd8pK6FI6UzxR4uC3D2v2Lcuh8=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ClR/gCk5h2O9uMaqOQNf73Wbc8K8cT4oW8TDPKOR64l4lhUtiQaWhplBI4JRtGMicrwjA/gkC2c01WjV9UQEX9a3EmvBtwvhM2HX2cBWZhsfTV4vXYPkmmFQ+Fvf7SuvbZaSkqCcjFw/1EFtyixvhunlTZ9HAnRFw6VUaIZSK4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oCeFnjms; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GxZNE1pV"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-313bb9b2f5bso2479725a91.3
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 13:39:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751056745; x=1751661545; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6lxmWZFGNOtf/rJC5GVe91m4y/UDL0bMZWvIjJpHzl8=;
-        b=GxZNE1pViANk8UROeVVFZQ81S9ZQWoWXH00HkdmJDUcr0Ov7wxkGp/ZdT42Nii0e39
-         vtqRdBB0ddmaEt/jVplAFUHz+a7G7q+uVEmJWdPVGfoXLNdtcm5MD6DGZe91ZAiDgjL7
-         m7BqqXBYymt3G9HSPPJG+wcg6Y4riX4qIOsouIXWHcNFrzxsJvd0BXeZ9a5I0Vzw55be
-         m97PHw943RgEooaD38amXhUzABixJc5hnIFCtubrn3G1GwMuCW2hEY/EJL8xdvv1ReJr
-         AiIZRhEeM5ArTMCaklPntAxLPphEZOfFCvUMUo8bQoXNQS7Yxufcy+a/XqX3Y1PtLey+
-         pggg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751056745; x=1751661545;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6lxmWZFGNOtf/rJC5GVe91m4y/UDL0bMZWvIjJpHzl8=;
-        b=mKrDaP0HxVlFa5WLAAElmiN2dCuf5439Vcyg4i+FXeFpfMcRVGH9mwBlEMa0KvdNIu
-         eY6dYNLC+8pSvFz42G61iQf3Yi7PGkevcVAsJJnrkIbRGsXuYmHbBKrwkUWp8I3CjsBv
-         xdACc1EvdcM+EU3eyF1LO9wWrwjRA8QdGVhl5ombgffHI/b/kSho40rcRvteudAhVwN5
-         9y2jxKhfw9jKp0g/D9HdRLhImDjSoGe5l/JJKJVcR7lrzB32ZmdCqKASMwUapJ7ahUsf
-         d2JJoRyhoL+tKtY/YqL20avi3us/ZiDnd3+IBXM39XAE6VS5jhmNSJT/dM+kZCzvYjj7
-         1gPg==
-X-Gm-Message-State: AOJu0Yw/ud4aqHao3NDlFPKpzwiqyfwsiSP1DAq4AlKqAcHoP/6OmR5i
-	eHLNJQScQRz/qkCNIhor5zCkbZqHZsaw6BVp7qLO03EtqejP9n0LCHvua54hJQ==
-X-Gm-Gg: ASbGncuLNT6sbcj5Jcag2QRmRNeW2+SQ91I1jHpQfF+Q8gcKKsme0UqO0SqP0OKE3Fx
-	drUzbzXk7oswwf7HmhZFpJ9fhwZPMbiJm+rPRaRfajjdZb4tXMfwj8tBq8rSmHAV6NK0V1kau5z
-	AAY0PJ8RILhfrEbMqEUWvCbbwhoLqPblQ/zdo+0APjzTMzGDgqz0OxgsJ7xF9CibKr1VAlQrDbx
-	J52yZhI7PPphtm9bpkGnlk6Fqf6sFPiedaLuxzBZea4HHabPj+2yec84yhLPCFS9Don86OdhIgN
-	djOmTwGiIQchziepDyRFgkm5AgEgAAKHpzaP8FA2O4L1slMNi8ZWw890ysAmT0l1JzGYKq877WR
-	a1P2VrHl5U9duL3VEwyJcD9ZWnDTgQrVkTgNtKA==
-X-Google-Smtp-Source: AGHT+IEaKe/SA7zVj477A0CEmj5dQEWwG7L5TqbcUv6KFhJRRkLwWeUV3kTY2K1LHycGU4YVmhITxQ==
-X-Received: by 2002:a17:90b:3890:b0:313:1a8c:c2c6 with SMTP id 98e67ed59e1d1-318c92ec03emr7439562a91.16.1751056745236;
-        Fri, 27 Jun 2025 13:39:05 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-318c15232c9sm3159888a91.45.2025.06.27.13.39.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 13:39:04 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-In-Reply-To: <20250625125541.3048632-3-502024330056@smail.nju.edu.cn> (Lidong
-	Yan's message of "Wed, 25 Jun 2025 20:55:41 +0800")
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
-	<20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
-Date: Fri, 27 Jun 2025 13:39:04 -0700
-Message-ID: <xmqqqzz47wd3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oCeFnjms"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1751062188; x=1782598188;
+  h=from:date:subject:mime-version:content-transfer-encoding:
+   message-id:to:cc;
+  bh=fcMBWJasJvBtOwVqtjd8pK6FI6UzxR4uC3D2v2Lcuh8=;
+  b=oCeFnjms5icctn3BbLO9Y+BqaD2nCfrTm0wOCEoVdiTEcEYwCZhQ8lOP
+   HPIdCeN1764dVfSxZohvu5Fnw1H+wiXNeL3P1uTb5q7sIZYmZtLysjSOU
+   b6pxDv59daPDS+eBg6pExtmbBlZQqwTOyge371s8tTpm0gB6vMXMcrOnu
+   2PVEHcpXLfKT51AkxvQXqSHZnJZI3sNTfjxzcLeAb8D8wW0Lymb28GMnE
+   nmbjBvSJsfp1zSDVDxWlUvQ7mmmKE073fvV0ciFGKU/GdbpEBDDp/gU4G
+   bHa34KOX0xs9QNk7x5gsh/u+L4R42KZfXqUraV77FW66SQaJS2FkW/xxQ
+   Q==;
+X-CSE-ConnectionGUID: Jx0s0+2bSe2EfV51G0+x4A==
+X-CSE-MsgGUID: /KvCJ48lRTKtlBy5IIbopw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11477"; a="78822289"
+X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
+   d="scan'208";a="78822289"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:09:46 -0700
+X-CSE-ConnectionGUID: aY0ag1SxR2+fJFK1Nv5Ang==
+X-CSE-MsgGUID: B11pA5GkQqOuScFCkKxmKQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
+   d="scan'208";a="158418859"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:09:45 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+Date: Fri, 27 Jun 2025 15:09:04 -0700
+Subject: [PATCH] send-pack: clean up extra_have oid array
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
+X-B4-Tracking: v=1; b=H4sIAIAWX2gC/x2MQQqAIBAAvxJ7bmGT0ugr0UFsq82wUIgg/HvSc
+ WBmXkgchRMM1QuRb0lyhgJNXYHbbFgZZS4MilRHWhncPS7y4MHWY+Iw42WdR25NbzSRWzRBaa/
+ Ixfq/45TzB15p6m9nAAAA
+X-Change-ID: 20250627-jk-fix-leak-send-pack-e4787600cf60
+To: git@vger.kernel.org
+Cc: Jacob Keller <jacob.keller@gmail.com>
+X-Mailer: b4 0.15-dev-2503c
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2558;
+ i=jacob.keller@gmail.com; h=from:subject:message-id;
+ bh=7HrwyvfpRdNpt/1IdizJI/o0nLIW8McqBiCca3tF9z0=;
+ b=owGbwMvMwCWWNS3WLp9f4wXjabUkhox4sZWcTE9cRE9n3PUrULV+q1/pKcjqeVxyjYbHrxm7Y
+ 3Rv7I3pKGVhEONikBVTZFFwCFl53XhCmNYbZzmYOaxMIEMYuDgFYCJf3jP8z44PDl/4m6m/yGff
+ hiWMN1Z5z/ocdfhOJevi18uvVRQuXMjwz0RCnmf1h4uehfc38OctPMmqmnkqQcJms0xroMfxlt2
+ 6zAA=
+X-Developer-Key: i=jacob.keller@gmail.com; a=openpgp;
+ fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-This is a tangent, but I have to say that whoever wrote the original
-test does not understand shells very well.  When you have files A
-and B in your working tree, to your $command, the following two does
-not make any difference:
+Commit c8009635785e ("fetch-pack, send-pack: clean up shallow oid
+array", 2024-09-25) cleaned up the shallow oid array in cmd_send_pack,
+but didn't clean up extra_have, which is still leaked at program exit.
+I suspect the particular tests in t5539 don't trigger any additions to
+the extra_have array, which explains why the tests can pass leak free
+despite this gap.
 
-	$command ?
-	$command A B
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+I didn't check to see why the t5539 tests don't leak. This leak occured for
+me in a day-to-day run with my local git build that happened to still have
+sanitizers enabled:
 
-In fact it cannot even tell which form was used when composing the
-command line.  So this original test ...
+=================================================================
+==2930359==ERROR: LeakSanitizer: detected memory leaks
 
-> -test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
-> -	test_bloom_filters_not_used "-- *" &&
-> -	test_bloom_filters_not_used "-- file*"
+Direct leak of 2160 byte(s) in 1 object(s) allocated from:
+    #0 0x7f51af6e5e2b in realloc.part.0 (/lib64/libasan.so.8+0xe5e2b) (BuildId: 7f1aa7e2e600e8c9d54ce6e3d36f3d31bfe7949a)
+    #1 0x0000010dfc26 in xrealloc ../wrapper.c:140
+    #2 0x000000c5d231 in oid_array_append ../oid-array.c:9
+    #3 0x00000096036a in process_ref ../connect.c:296
+    #4 0x00000096036a in get_remote_heads ../connect.c:374
+    #5 0x00000072f8fc in cmd_send_pack ../builtin/send-pack.c:290
+    #6 0x0000007d74d4 in run_builtin ../git.c:480
+    #7 0x0000007d74d4 in handle_builtin ../git.c:746
+    #8 0x0000007dbeb5 in run_argv ../git.c:813
+    #9 0x0000007dbeb5 in cmd_main ../git.c:953
+    #10 0x000000441dbf in main ../common-main.c:9
+    #11 0x7f51aec115f4 in __libc_start_call_main (/lib64/libc.so.6+0x35f4) (BuildId: 2b3c02fe7e4d3811767175b6f323692a10a4e116)
+    #12 0x7f51aec116a7 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x36a7) (BuildId: 2b3c02fe7e4d3811767175b6f323692a10a4e116)
+    #13 0x0000004440b4 in _start (/home/jekeller/libexec/git-core/git+0x4440b4) (BuildId: 6cd37a01505f2d67a4e7d39fd9f813b683be0300)
 
-... is misleading to say the least.
+SUMMARY: AddressSanitizer: 2160 byte(s) leaked in 1 allocation(s)
+---
+ builtin/send-pack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-> +test_expect_success 'git log with wildcard that resolves to a multiple paths uses Bloom filters' '
-> +	test_bloom_filters_used "-- *" &&
-> +	test_bloom_filters_used "-- file*"
->  '
+diff --git a/builtin/send-pack.c b/builtin/send-pack.c
+index c6e0e9d05186..61486e378cab 100644
+--- a/builtin/send-pack.c
++++ b/builtin/send-pack.c
+@@ -343,6 +343,7 @@ int cmd_send_pack(int argc,
+ 	free_refs(remote_refs);
+ 	free_refs(local_refs);
+ 	refspec_clear(&rs);
++	oid_array_clear(&extra_have);
+ 	oid_array_clear(&shallow);
+ 	clear_cas_option(&cas);
+ 	return ret;
 
-I think you should just retitle this to say
+---
+base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
+change-id: 20250627-jk-fix-leak-send-pack-e4787600cf60
 
-	git log with multiple literal paths use Bloom filter
+Best regards,
+--  
+Jacob Keller <jacob.keller@gmail.com>
 
-or something.
-
-Also the setup helper test_bloom_filters_{not_,}used helpers call is
-written in a way to make it impossible to pass a real wildcard and
-see how "$git log" would behave, because it does this:
-
-	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
-
-It probably should use 'eval' so that the caller can pass a quoted
-wildcard, perhaps like
-
-    eval git -c core.commitgraph=false \
-	     log --pretty=format:%s "$1" >log_wo_bloom &&
-
-Then a test we can add to see how wildcards prevent Bloom from
-kicking in would look like
-
-	test_bloom_filters_used "-- file*" &&
-	test_bloom_filters_not_used "-- file4 file\*" &&
-
-The former lets the shell expand file* when the above "eval"
-evaluates its (concatenated) strings, while the latter leaves the
-backslash before the asterisk in the strings fed to "eval", so the
-"log" will see a pathspec with wildcard.
-
-If we were to fix that setup() thing, we of course need to be
-a bit careful about existing tests.
-
-Thanks.
