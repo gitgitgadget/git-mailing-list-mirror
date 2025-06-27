@@ -1,159 +1,139 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C448136672
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 08:38:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257C427F005
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 08:51:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751013532; cv=none; b=ll3KzJ717m+od8QNSs1P4EPkVVBw2thP+85J41Xh2sVaoIgZxW4rnMLTo3ZK/Bb0IiKSZ9iTxRhZSwooQf9H1fXqKL1rYOhO/OxLCA+Yg/SszBqm+t+6GXRTUJtu/z36SNYnk1T6gssNmMQRt4HwJNbDxrdJz+dVgzNKZYognwg=
+	t=1751014279; cv=none; b=ZxuyKGYgmZn5JZCk/sQ7ahzz2zV12qxZjEKivnJtd0S6RbA6dTdMtOak7sXQ3Ca7jorNn0W+T3mdWQm/a22Gr0deq+eIjrJ67iw+VJO/t50EEu3OctUCO69/0wDa99XYL5UqObzyMw9oK8cBbEZwV1iQTEJRqXiOYlEs8/1V4c0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751013532; c=relaxed/simple;
-	bh=prkSy4Y9hDy1ppev5kXArvcLRht+FdNkNvtkOdtoOiA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Jb2USA68GDxX+jUo3btLCCXnwgtSvTrRZ51xZNm63Ieeg04ZGe/Tiz3Rz58PlT7bJVnoJxLQmaWgErbGYSYEsZXjJ+8XNkvp5XD9g16xbi/643R+D2Ldo+qwDPvnXByKcB/cRQOl/+OWzfboRWkd0qNqBOLkbb8l/QwOPr9NXUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gu7j45nH; arc=none smtp.client-ip=209.85.221.52
+	s=arc-20240116; t=1751014279; c=relaxed/simple;
+	bh=TR4v0a3bwzSVaxRyufSNwLHvlYGazWt1+QlKl4AgkUs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RG1O4ZwumVSE3QXzWf21deqVnU3L86Nfc3TLaZm2nYWwal2Rj12TKlEm86efZ11TVEHaGigUakldOWHqgWX3/OYKVnz9r5unM6f2FQ7CtETT31unMx4ouF1ikTzuV1mbtUwxuX6i/KgHLoS7TLZwzRcrk8P3nnYpcsopaINImUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AaKfHKw2; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gu7j45nH"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a6f2c6715fso1999719f8f.1
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 01:38:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AaKfHKw2"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4e7ade16082so482809137.1
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 01:51:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751013529; x=1751618329; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=PX5sEgI3yHFHk0OG9aul2BTytzqD7xE2BhpPuLsqopI=;
-        b=Gu7j45nHLXqcgaRRY8C27SXNKfe6yIERsGlm6GnRtF0E8ZG7kHc76ZYURGQL0K7rlX
-         xIaXgj8zjce09JQFY1b5Mmx3+AepwjWbO1N9tKo9LmVfcTQ8DksJ2XVjQpeU24WP4inQ
-         LsCuGKUHucaVO+nUPL/DrsKK4jXMBXat0umKIvQQpV6BfTwXwpViJqj3wfg/bvGI8a5N
-         Rg9Q2OVa0Yz/GII26uBHJS8Xc3HqxiMvd+lq7P97BB7KCMK7XkgwiwLkLXH3ZKtbmllQ
-         0dgfTxc/Ggqwm+D9kNrNrIi60nVkqTVTQjf9YSr492gy4Mw3X0ArfhyCxrq73PxZZLAx
-         it4w==
+        d=gmail.com; s=20230601; t=1751014277; x=1751619077; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=TR4v0a3bwzSVaxRyufSNwLHvlYGazWt1+QlKl4AgkUs=;
+        b=AaKfHKw2UAa17yD5RFyRqmo5aAeKV1OUUp6vEWs4HfSpjbPP3Z71in4PW9EXuTLdIN
+         QQjrfSC2agEXPC0DEur3gqzlXZd0louH1bRRccG8GIqF4UkcemoVN6/YiFO9wFUY15WK
+         3SLtxbCBNLc1dr760GsZc7Z028ELTPP49ktk27jf/rPDVv+1jU0UzRco0q1fDmzkWGC0
+         WE6e0IX9aWnmULONxJS16Um1Is4sQoiF0xP+WoMTCCgBGS/Sfx0byAtXv79W2hKpilFr
+         3GpgQbeNLYFWdaYEcUMjfacbC2goUEyjAg558b6959MuJC/FgYDcAOamz2AHq17xQyRo
+         1bsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751013529; x=1751618329;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=PX5sEgI3yHFHk0OG9aul2BTytzqD7xE2BhpPuLsqopI=;
-        b=WbEzssrxLWz452e1bYtoV6P5QbSCHBwGmZ/Q2+jxliIhyC0RjAW1Ft/h04PiOAdtv6
-         L8cpLr2+O9PhE1UvLsJ8d17stVP3CzmHzqmODBkKPbHFtLqJTt8Bi0IKO6qPylkoE0XH
-         t+pAPCTw5OgtcDY3Wji6HmG6xXCBO9UKjUIhPwkL2lQZKfT6wnK2idXMcTpTLO1e4vyR
-         K4w2E3vgNWOVThFJc8uePKx4/Bzc9oOtzis/aMSRrEWtFh+7dTnk5v0uQnj72ZmCF5oC
-         RJI2TE6/Sffw7/7y3I0sybCgUy1rRwTlkkkhfU/NMHa99tUwA1kYikSB91RiHogizowP
-         mKvA==
-X-Forwarded-Encrypted: i=1; AJvYcCW9pFnL3MsM1fCzDAhl4zvqq2+I9s1iDTpjMcOpDYJl1Rh43V3g25R9xOpTr9ClUTxf9QM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxDEyCepWrgeYta63w1ZHfqrvIwcB4e6gkz5dWQmb13hPIKDwf
-	8Uq0Qrvo0d0lEuSVIDj9AwpAKbwDX+nEqFG6TjYFgFAPS5oXjdC5AXG+9Xbs4g==
-X-Gm-Gg: ASbGnctVpIfafDOCKYuWbrk1FxfT+Xi+aojTlae3+TXasenX1kOGuKJRFNMXSW5d+yS
-	ahDleRA/eTbNxCasyuyoT/4vw0/gFWgxn0Z96ZTKvN9gufuumKOOc0tEnxJipqEJz/GK8jK8eM/
-	iTL5oPghHPmE6povBpxjg4MNADGVRxT3kNlAFgWAq5rQDwwqa0rVS69v7dQfjaqr+LpvBnJUFgq
-	UyUO61hNcCjWSb5UcXE2DvZBO8UVvUhlgrNb6lAcXiIMVCSWPbY1QJceuGkEvnZTZNxklkYnDsV
-	9IBoytjWFXdHL8/UOyfT1izT3Ra1YAq+b5Iet4myfbkON6acxblaUPQW8Q4baZAdorKwGk21uQT
-	LOyzT3/AuOFw+0AAvsJxTIhHleQ1fNTpK6xt+jw==
-X-Google-Smtp-Source: AGHT+IFI/tWXf/BWvW2hu/aP6xgv2wlUQdPgQq2Eg291VFT1InV64IPC3NH3pSN4CKY8OJVcLjtz9g==
-X-Received: by 2002:a05:6000:2a81:b0:3a6:ec1d:1cba with SMTP id ffacd0b85a97d-3a8f482be0amr1627445f8f.20.1751013528607;
-        Fri, 27 Jun 2025 01:38:48 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a390e20sm44070405e9.5.2025.06.27.01.38.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Jun 2025 01:38:48 -0700 (PDT)
-Message-ID: <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
-Date: Fri, 27 Jun 2025 09:38:47 +0100
+        d=1e100.net; s=20230601; t=1751014277; x=1751619077;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TR4v0a3bwzSVaxRyufSNwLHvlYGazWt1+QlKl4AgkUs=;
+        b=vjnJbIQwfIhPcI7h9RZuMiqseSu0RGHRikPgbMHVipAI6Zm74duwbEvkJvVLmGtgwS
+         Vyvf9M2vH7yygGU95F9+rX6ei6fvGkI8ZjnSULICBxz32kO8pjdNvieS/df+40v1yLd1
+         smwIdGmVqf76AEWuAC8TpxOh5RMKRlBVxXh59CiRcKkkCD8QBLmDvWmHMVATiThVvqXG
+         8G5vRRg6e6Qqky9WZ9JQpkD4Wjy1T/RrmwqGr71J9vZTAKtvcb4gtiThsjDk/vL8/9Gd
+         TULbGIQaCg3ATuE74E9GH6DsJqpKYQQHZIJcKJJhFO7KoJxgbU3HcLzy/nkOaQ4dNcYa
+         Z/bQ==
+X-Gm-Message-State: AOJu0Yy6XVVgWXylJGYxE5OQGK2l84zxx8VVoiHBkCZeorTwVpma1K5m
+	3i/Z6arEuEzEtLTTkJlcg0QE4HrOe5mRUw7prkVEF6Boy9TEBlw00J0jJPmLeo21s7CPet8Tt1I
+	RN6FOSZE2HHMc/2w6IBeo2J2kkjaOoq4=
+X-Gm-Gg: ASbGncvNxR13i1NpL2gp7DN7aVmN28s1VhlrBjHQAAoTAIKeFzjiaRi6a48fV4Ym92b
+	9oQZd5sH+CQp8TjkNg+BNKN8aw/Woc4PKq/zmeUmBx3HgS0OpH/QkPwcaciV6hKrCTc3av6T1xP
+	xLIOMvm0OxYS0PIeK+b79DB7GZhQifleDxTyqaPXhMEtCq
+X-Google-Smtp-Source: AGHT+IGoLkmtgV2hxtu/W4XOmVT8FrrrR8fyiFV4rbkuHmn3ioDw3H2/Um4AKBc4cU8H+zSXyRzJ2oqeJTqYXupRKpk=
+X-Received: by 2002:a05:6102:dd1:b0:4e7:db33:5725 with SMTP id
+ ada2fe7eead31-4ee4f4f849fmr2039993137.3.1751014276882; Fri, 27 Jun 2025
+ 01:51:16 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 27 Jun 2025 01:51:16 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <qxewasf6rxt6mnbwvfhxarcbvfsn6cnc2jskpddsb5fhxfhpwq@5d727iud7wfp>
+References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
+ <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com> <qxewasf6rxt6mnbwvfhxarcbvfsn6cnc2jskpddsb5fhxfhpwq@5d727iud7wfp>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
- service_loop
-To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>,
- git@vger.kernel.org
-Cc: yoshfuji@linux-ipv6.org, kristofferhaugsbakk@fastmail.com
-References: <20250626161038.85966-1-carenas@gmail.com>
- <20250626172159.87204-1-carenas@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250626172159.87204-1-carenas@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Date: Fri, 27 Jun 2025 01:51:16 -0700
+X-Gm-Features: Ac12FXyiymtRjTXNXgfyxSTOMcgdU9BIfLSKXIWydkbh1n-mzRjC9pznGQNdfLA
+Message-ID: <CAOLa=ZR_ZhjxYgN4pZsjOuC52PZjGMCzLJVZbwGQb=Q9W-0HSQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] editorconfig: set maximum line length to 120 characters
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="000000000000f8838a063889c7a7"
 
-Hi Carlo
+--000000000000f8838a063889c7a7
+Content-Type: text/plain; charset="UTF-8"
 
-On 26/06/2025 18:21, Carlo Marcelo Arenas Belón wrote:
-> Since df076bdbcc ([PATCH] GIT: Listen on IPv6 as well, if available.,
-> 2005-07-23), the original error checking was included in an inner loop
-> unchanged, where its effect was different.
-> 
-> Instead of retrying, after a EINTR during accept() in the listening
-> socket, it will advance to the next one and try with that instead,
-> leaving the client waiting for another round.
-> 
-> Make sure that the loop doesn't advance
+Justin Tobler <jltobler@gmail.com> writes:
 
-That makes sense
+> On 25/06/25 06:43PM, Karthik Nayak wrote:
+>> As per 'Documentation/CodingGuidelines', we try to keep to at most 80
+>> characters per line. However, there are often certain cases where we
+>> extend this for the sake of readability.
+>>
+>> Add a maximum limit of 120 characters to the '.editorconfig'. This means
+>> that if an individual line exceeds 120 characters, the editor will wrap
+>> that line. This provides a lot wiggle room over the recommended 80
+>> character limit.
+>
 
-> and while at it, make sure
-> that any possible completed children get reaped earlier.
+Hello Justin,
 
-What's the rationale for that? It means we end up calling 
-reap_dead_children() twice which sounds inefficient. If it is important 
-then I'm also struggling to see how it fits in with the proposal to use 
-SA_RESTART
+> I frequently use the format operator in vim to reformat entire blocks of
+> text and it is commonly configured to use `max_line_length` from an
+> `.editorconfig` file to know when to wrap lines. Changing the value to
+> 120 would cause my editor to prefer 120 character lines when
+> reformatting, which I would personally not like.
+>
 
-> To avoid an
-> unlikely busy loop, fallback to the old behaviour after a couple
-> of attempts.
-> 
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
->   daemon.c | 13 +++++++++++--
->   1 file changed, 11 insertions(+), 2 deletions(-)
-> 
-> diff --git a/daemon.c b/daemon.c
-> index d1be61fd57..f113839781 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -1145,6 +1145,7 @@ static int service_loop(struct socketlist *socklist)
->   
->   		for (size_t i = 0; i < socklist->nr; i++) {
->   			if (pfd[i].revents & POLLIN) {
-> +				int incoming;
->   				union {
->   					struct sockaddr sa;
->   					struct sockaddr_in sai;
-> @@ -1153,11 +1154,19 @@ static int service_loop(struct socketlist *socklist)
->   #endif
->   				} ss;
->   				socklen_t sslen = sizeof(ss);
-> -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
+It would only wrap lines longer than 120 columns. Currently editorconfig
+doesn't wrap any line length. So we're essentially saying, any line
+above 120 is not something we want to accept and hence wrap. This
+doesn't mean that shorter lines will be combined together. Wouldn't this
+be better than the current situation?
 
-Why is the declaration of incoming moved but retry is declared here?
+> Being that `max_line_length` is only a suggestion for the editor, I
+> think we may be better off setting it to 80 characters or leaving it
+> unset entirely.
+>
+> -Justin
+>
+>> Contrary to settings within '.clang-format' which are used for
+>> statically formatting source code, the '.editorconfig' rules are hints
+>> to the editor. These are not enforced by CI and are guidelines for
+>> editors to follow. As such, the 'max_line_length' used here is only
+>> supported in a set of editors [1].
+>>
+>> [1]: https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties#max_line_length
+>>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 
-Thanks
+--000000000000f8838a063889c7a7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: dcf8c054925219_0.1
 
-Phillip
-
-> +				int retry = 3;
-> +
-> +			redo:
-> +				incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->   				if (incoming < 0) {
->   					switch (errno) {
-> -					case EAGAIN:
->   					case EINTR:
-> +						if (--retry) {
-> +							check_dead_children();
-> +							goto redo;
-> +						}
-> +						/* fallthrough */
-> +					case EAGAIN:
->   					case ECONNABORTED:
->   						continue;
->   					default:
-
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oZVc0SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNmRQQy80b0phbCs1R0hlaWdFdG5iRWJDOHdhWVpDOApud01DNlB6N0RU
+VjBYQ0NibVhPU0JCaHorclZBNVd5YnhreGRkNGt4UXJ0NXRDT1ptQTBlQ2ZGd2xjQjJWTnFDCmhy
+Y24rYkc3RTkyYUNoYWZVcUpJbUU4cHZwWC8xaUZEYmVNZ29pSjZSSXRMNDRCbG9aaXBGUW1mTGs2
+U3V2RGkKTFRDeERCci9CRXM4Q2htMGxoU21jaWxpcGlHSWFralVvYUQ0S1RiQWFlNlBCRkxrMjNC
+eW9TZkIyVEV1em1aTgpYdWY3Qkt3VG5ON2tkTmNoclF0MndRVE80NFRYWGlFVkZQSmdtdUx6Q1Fq
+ajQ4OFlYczNLN3AyM1JaVUswNTdZCmlsejZsZzNpMENkWVlZT0ljR0dIUzJRWjdXTlZUcGtsNzZV
+OW0vVWc3d2QvdkVtZzVLdVV0cGh2VmxIK1VJQzkKaWJ5ZVVIWTdTTHd3R0EwRmp5TEdGQW9CcE1G
+WUZmMnRXMUw0QytyYm9NSHFNMGhaRXkxc2h5alRndmNvcytGSgo5V0JMMGo0aUdsTTFJdEtkb291
+NTMzdDFZNC9ORU5ObjNHbzNKcUF5WjNGVGpGWCtKZnpteVo2aXlUaDF6TEJXCngrYWRsRTA3N0lW
+b2JyRHQyNXZvSW5ZaGNRQmh2QjVJRnBhNW1vaz0KPUZaUUMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f8838a063889c7a7--
