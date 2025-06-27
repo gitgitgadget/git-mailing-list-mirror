@@ -1,106 +1,167 @@
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15EC20D4E3
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:16:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70720B80B
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751051774; cv=none; b=Ksk7hy8z8BOCwpWIeS30ASCObiWDJv5ozql1OggyLS73eebP4JhNlhqAObv/Fw+/Nm/lDqi/Qe2AXrb4ajNx0Q4yhd6Dm/kWMyRXjfN3xUgoeIga31yxRoHvRZ1aowcmrMTlA08JObgeYmOn8jFPGiAd+TS8vYP5xNbDWx9fWRM=
+	t=1751053685; cv=none; b=ep/Dxeh8VNb5DxbsqqNp4+3zz3XyRPalvgtF051KPpDjNHXL5I0gNtvPY7JBqpcNvQRXOORjaiSuidz5mMG8XnmC/xcU3v0Qy4Cyqr6GY7dlmpJT28BtdVkOF3o1L4mvohUGWGRx+ujqXkADbyuHv9E2Eyzi/9O4fwFQqbYRk38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751051774; c=relaxed/simple;
-	bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=orGhJX+voNyNSUrTVUmwwDtJo6l/2saB2x5IlxBEJ6E3zRkdTX2f1dHROQ/x1iVY5B16jCYPnn9sVYi4QFUYWncKJamcOe82u2Fzt1FSUcjk//owPYrv3ZIZK2EH/DtCvjLBsG1GZyp/lwA4PhCQx6SxH6eoY3n+P9UIzdDEtp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U0lkHROL; arc=none smtp.client-ip=209.85.218.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751053685; c=relaxed/simple;
+	bh=FXZZdPtj2OnaV5915prS+7P1253D7kYUvJGT1vSmFyY=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=EpW0PcUPv4opQpFH7G3DiHrOSgg9k0WVVuBQP0qQkTqjzP3Ta2O9fRJ6satHB1OHdbPiR5cGbGMUQxEZQJK2yn62FsBsIGSL75fXiTgpSk5Y5WLpEeJtsaT2dhtTkxxuUOfQqb0vYJGl1kAYuMUJxMRBmPvBtKRmFkFV7fR/jJ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=JXwap+vr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JIZG8ef+; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U0lkHROL"
-Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae35c447234so186978066b.1
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 12:16:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751051771; x=1751656571; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
-        b=U0lkHROL5x7up1Wn9G7E1KXrSrNPyR2o/U09z2cV2WAtck6KUyC/zd718amw8qTG+4
-         xIo0JUlCAZXUtX1Ad5HDVyVLuJDIhCEihyDF7U/flQ93+FJDOpo2jYrJAWxLdqdZkpx6
-         6vGJg7N+mrac9uMfmFhvf0IA+/TtrxMN6BToazXRKeWDE908Yqqk+Y2Fl8EFpsrssW5M
-         sXZvIKwOCfz080nXE9PheGBn+59+24mu0b0YyaYBobAs7nzHP5Sb0lCrLrtGbP8yLFqg
-         rapEchv7MDY7bdXm7qRIvTPapgIwM6jPOUJLrO5nf8b7eG8FalLqUeUNZYORMfPI7KS+
-         +mnA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751051771; x=1751656571;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
-        b=AxcjFw8mNziaNt2yoxCbCCzF7AuSpKHeizIXTWgJCskzvEVxcljrTA//2pI6DhFtLF
-         xr6cd2x8t0e5AfxITlpTzsZTnxbZozKPJwTBN4F7ZX8YjE3fVxxyVFxNIExZuEgxc/hU
-         neE+pUoq6k4iwZ5gqlL85ozT+e6pfUPtdcAl9ePn5CW43I9neaNbamKirBgX1GlvzOtg
-         gTBwbJmaX5Ul1BCm75p1NoiaDKJwRh81nk7IFlNJy/6EGNPzgTYD/H+jiuQR58aSkMm8
-         tZtgyk3Zj0y/IXMfSUaC5juT9h5ekOBdG918TT8r0iNlNDaq3Ucxy+9whQGHPkauthm0
-         HDxw==
-X-Gm-Message-State: AOJu0Yw/v1akWhZqRLZgksouRrbYzGHJWZQu/LSrdV41gZU/3N0wZv8W
-	mL5FZjB8/xzmnq7gJugKHh/K3QvYauM3JWryPaYvae9xA4Q+IfVJZSZoafYt5v0yMoN677rnNTe
-	8SwaGIHJhft6fAwRJ9BF0PmOoQjMZhePLSU5G
-X-Gm-Gg: ASbGncvUBB3oQa+6bIx8a/MJAaAZkxLD6IDnCQwVdAhf31VMHC2AqESGzPmp/xklv8Z
-	0GcX0Yj4zED7IokbanN38VghF2CbsnZS/mMUFyfyEL0KqppYiif7CKDjlCPN1BcM39YSRNKiGhp
-	GLZU523tWbwe+kNylgjuZCdybgf6fWbQpUEsSHk94eoUw=
-X-Google-Smtp-Source: AGHT+IEcEkaboy1HXqjAYlDwsvaMhHYwSfT4cNomNQz8tWXUckk+YVCzp9zIJgj6kahBQCVKwe0lGF6kDEYS4GMEunI=
-X-Received: by 2002:a17:907:608c:b0:ae3:6dc7:1ac3 with SMTP id
- a640c23a62f3a-ae36dc71cccmr1822766b.15.1751051770888; Fri, 27 Jun 2025
- 12:16:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="JXwap+vr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JIZG8ef+"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6D1E7EC04AB;
+	Fri, 27 Jun 2025 15:48:02 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 27 Jun 2025 15:48:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751053682;
+	 x=1751140082; bh=6YFVyoNHEr9BSZDd2zgXPWwhvq/WLP3N34Vf20vTPNk=; b=
+	JXwap+vriuDbzaKHZ3prmlOBfF5G9tYKT+RSjGFHSUa5WxM/oMg6BAKYVmfYfZ78
+	YcMjPrBvlL0c36vIRU15x+DW3oKyEYQBXnE1swC1OFw/HQZbDj/F4XNHZCt3GijN
+	UPKtvz2I02Bvagr6IE/oQMD7036itB8uSQN98BVfn1lZ62pdtobq7A2VtpTdozg5
+	4wTUH7vN0j3vnjFdWS7LgV016yjBPmlBBCX3OeEbQphoua2smOOX/G2jej1iZNBC
+	qCr7dt9qoRf+4KmB5i21hASCB1xznyyR4Alf3FBems7j5qKeyBzEK1cOk7CuJ/QR
+	FFuuA6KY6BLISjxnFUS+vg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751053682; x=
+	1751140082; bh=6YFVyoNHEr9BSZDd2zgXPWwhvq/WLP3N34Vf20vTPNk=; b=J
+	IZG8ef+E+8QFmADUixpQ068BbCR9Xagd7LbFQnr930TqTlTZJMEkKLpgB1Do5uRn
+	bZG7ffx8si8HMhHojq3v9G6HHNUwGh4xQa4uy4FC0Jxqr5qmiHXdFLrFc33kQIJh
+	GhVZILBljN6tXsGoa3c4Qd39SVGbacY9NDt39uM4i5lA4ZIcm21gPe3xAg4pqLsc
+	JDVx3zz24fKWD8AmtQfuuUAhT3nKh0mjVCaRDqO3fTKubL7UN9yBA69BHGwPI0hM
+	A2Pju/oI9Jy4wUE8S1eZqTWDcWDKXpyrXIN2sBO5cMkuRdoZy7CPA3HuzF/swJgW
+	CBkuA1Kyg7aT0Iq94e3fA==
+X-ME-Sender: <xms:cvVeaAT41UuTLooawRQCZ8Be2smZ5eD2IU8pqLai7g8I1Dn0F_34_Hk>
+    <xme:cvVeaNxNlOq70qElQBBHIzHlm3S-vGkpFSHdyHwzkWl5sajY0K39eFLSgtBcv6olW
+    bSF_KSpW4wx4P2LXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
+    lhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtre
+    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeevjedu
+    geevfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
+    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehnsggvnhhithgviihlsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgih
+    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:cvVeaN0mSaX7FcrnzeMG0I7G38HreRLAwjMjoRDl4vM77nHVFriTCQ>
+    <xmx:cvVeaECGr9ci53W1BiSA7RBHIEFtaaNSwZAukEJkTtVbB9dnm3sYTQ>
+    <xmx:cvVeaJhtnQf9UVMw-MX0uM1c5Y5glihLCs7qwfbijy8RVCrk-LZHdg>
+    <xmx:cvVeaArWhAemvXRX8Y3QHglasDkEYBzJFbQG1Mr8WbwJ_8pakTHFYA>
+    <xmx:cvVeaFBlTMLdGauHVO_-_Y5ZXi5Gq2Xoazu455z88pqpGxeicDXcIWqz>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 283971EA0068; Fri, 27 Jun 2025 15:48:02 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
-In-Reply-To: <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 27 Jun 2025 15:15:58 -0400
-X-Gm-Features: Ac12FXyWNiX28ftu1bcf1XvZY_ggP8pHyuAsrL7z_fCsFI0ZTOI6Si7zuCjZPxs
-Message-ID: <CALnO6CB4voTTQZrg5OjgHOhuVP4_B71f7LuNFeHNYby4kXOu4A@mail.gmail.com>
+X-ThreadId: T53ebb176af89f275
+Date: Fri, 27 Jun 2025 21:47:40 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: =?UTF-8?Q?Nelson_Ben=C3=ADtez_Le=C3=B3n?= <nbenitezl@gmail.com>,
+ git@vger.kernel.org
+Cc: "Junio C Hamano" <gitster@pobox.com>
+Message-Id: <a3cd775d-99fa-49de-881b-1e8f178f9102@app.fastmail.com>
+In-Reply-To: 
+ <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
+References: 
+ <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
 Subject: Re: [PATCH] completion: new config var to use --sort in for-each-ref
-To: =?UTF-8?B?TmVsc29uIEJlbsOtdGV6IExlw7Nu?= <nbenitezl@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 8, 2025 at 12:22=E2=80=AFPM Nelson Ben=C3=ADtez Le=C3=B3n <nben=
-itezl@gmail.com> wrote:
->
-> Hi, I'm attaching a patch for the Bash completion script, to be able
-> to change the default implicit alphabetical ordering used when
-> returning refs e.g. when doing "git checkout <TAB>"
+> Previously when completing refs eg. "git checkout <TAB>"
+> all refs were alphabetically ordered, this was an
+> implicit ordering and could not be changed.
 
-I keep meaning to come back and review this, and then I see that the
-patch is an attached file and not sent over plaintext (which was
-necessary because the GMail web client breaks patches). Perhaps you
-could submit your patch via GitGitGadget
-(https://gitgitgadget.github.io/) so that submission is in the
-expected shape for this project?
+Style-wise, the commit message is supposed to discuss the current
+behavior (without the patch) in the present tense and what this patch
+does in the imperative mood.  Like you are commanding the code to
+change.[1]  Something like:
 
->
-> I wanted the completed refs to be ordered descending by committer date
-> i.e. --sort=3D"-committerdate" because that shows on top the branches
-> I've been recently working on. The completion script didn't allow to
-> set a custom ordering from the default alphabetical one, so I'm
-> sending a patch which adds a new config var where the user can set
-> their desired custom ordering.
->
-> I've not added tests because I'm not familiar with the test machinery,
-> hopefully this is still useful.
->
-> Regards,
->
-> PD. I send from Gmail web interface because git send-email for Gmail
-> requires 2-factor authentication and I chose not to enable it.
+    When completing refs, e.g. "git checkout <TAB>", all refs are
+    alphabetically ordered; this is an implicit ordering and cannot be
+    changed.
 
+This also gels with the general pattern of:
 
+1. Introduce the current behavior
+2. The problem it causes (maybe merged with (1))
+3. What to do to fix it
+
+> Previously when completing refs eg. "git checkout <TAB>"
+
+s/eg./e.g./
+
+Maybe also some commas like
+
+    ..., e.g. "git checkout <TAB>", ...
+
+Or maybe it should be =E2=80=9Ci.e.=E2=80=9D?
+
+> This commit adds a new config var to allow setting
+> a custom ordering, the conf value will be used
+> for the --sort=3D<val> of for-each-ref.
+>
+> When a custom ordering is not set then alphabetical
+> default is kept, but this time is explicit as we
+> pass --sort=3D'refname'
+>
+> This commit also adds '-o nosort' to 'complete'
+> to disable its default alphabetical ordering so
+> our custom ordering prevails.
+
+Super nitpick: the paragraphs could be wrapped closer to 72 characters/
+columns.[2][3]  This alternative (slightly modified) is closer
+to that yet not very uneven, still.
+
+    Previously when completing refs eg. "git checkout <TAB>" all refs
+    were alphabetically ordered, this was an implicit ordering and could
+    not be changed.
+
+    This commit adds a new config var to allow setting a custom ordering,
+    the conf value will be used for the --sort=3D<val> of for-each-ref.
+
+    When a custom ordering is not set then alphabetical default is kept,
+    but this time is explicit as we pass --sort=3D'refname'
+
+    This commit also adds '-o nosort' to 'complete' to disable its defau=
+lt
+    alphabetical ordering so our custom ordering prevails.
+
+> This commit also adds '-o nosort' to 'complete'
+
+=E2=80=9CThis commit=E2=80=9D should be replaced with just the imperativ=
+e style
+=E2=80=9CAlso add=E2=80=9D.[1]
+
+=E2=80=A0 1: See Documentation/SubmittingPatches, =E2=80=9Cimperative-mo=
+od=E2=80=9D
+=F0=9F=94=97 2: https://lore.kernel.org/git/CAPig+cT1VfY8QiUvrrV3-obTBP1=
+439b6iwaebJtGwML5MScnQA@mail.gmail.com/
 
 --=20
-D. Ben Knoble
+cheers=20
+
+Kristoffer Haugsbakk
