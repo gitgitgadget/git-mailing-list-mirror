@@ -1,167 +1,143 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C70720B80B
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C4F1F8747
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751053685; cv=none; b=ep/Dxeh8VNb5DxbsqqNp4+3zz3XyRPalvgtF051KPpDjNHXL5I0gNtvPY7JBqpcNvQRXOORjaiSuidz5mMG8XnmC/xcU3v0Qy4Cyqr6GY7dlmpJT28BtdVkOF3o1L4mvohUGWGRx+ujqXkADbyuHv9E2Eyzi/9O4fwFQqbYRk38=
+	t=1751053818; cv=none; b=SYlcATs+yWzzARPJloqu7GA7bdTXzQjxFBUPknJR0CND2FM74uBvoVaRUtdmVzSvMoWcp7WCdgvslce9U3Gq3PnEjLL40NDorT/OIMaaXR0ODdxwIY4AnKEKtzvm7UzQBbgfxnVJ0UZoluhusZzmBq6buG3nGn2Kb3SNMnWxS80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751053685; c=relaxed/simple;
-	bh=FXZZdPtj2OnaV5915prS+7P1253D7kYUvJGT1vSmFyY=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=EpW0PcUPv4opQpFH7G3DiHrOSgg9k0WVVuBQP0qQkTqjzP3Ta2O9fRJ6satHB1OHdbPiR5cGbGMUQxEZQJK2yn62FsBsIGSL75fXiTgpSk5Y5WLpEeJtsaT2dhtTkxxuUOfQqb0vYJGl1kAYuMUJxMRBmPvBtKRmFkFV7fR/jJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=JXwap+vr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JIZG8ef+; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1751053818; c=relaxed/simple;
+	bh=12W5Zc8zuPQ3j4QjZ7IL38xPPy0LDgJXuUp0+l0Jxjc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EUI6H6+yAEoNX539Sy4r79sHtmOM8wR3T9OwaeMKfBP9HW2RTsdkMup6t4vGeVtc0TdxmS2grbZ80ysWnnMdXwX92ZK4FChAyrL6ysY322TXVQawgGS/a2TXVT7rJjSmhAcPCsLrLq4wexkSynN/9f9XTGTyVybVPkcIO1vvtxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AK1pw7eR; arc=none smtp.client-ip=209.85.218.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="JXwap+vr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JIZG8ef+"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6D1E7EC04AB;
-	Fri, 27 Jun 2025 15:48:02 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 27 Jun 2025 15:48:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751053682;
-	 x=1751140082; bh=6YFVyoNHEr9BSZDd2zgXPWwhvq/WLP3N34Vf20vTPNk=; b=
-	JXwap+vriuDbzaKHZ3prmlOBfF5G9tYKT+RSjGFHSUa5WxM/oMg6BAKYVmfYfZ78
-	YcMjPrBvlL0c36vIRU15x+DW3oKyEYQBXnE1swC1OFw/HQZbDj/F4XNHZCt3GijN
-	UPKtvz2I02Bvagr6IE/oQMD7036itB8uSQN98BVfn1lZ62pdtobq7A2VtpTdozg5
-	4wTUH7vN0j3vnjFdWS7LgV016yjBPmlBBCX3OeEbQphoua2smOOX/G2jej1iZNBC
-	qCr7dt9qoRf+4KmB5i21hASCB1xznyyR4Alf3FBems7j5qKeyBzEK1cOk7CuJ/QR
-	FFuuA6KY6BLISjxnFUS+vg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751053682; x=
-	1751140082; bh=6YFVyoNHEr9BSZDd2zgXPWwhvq/WLP3N34Vf20vTPNk=; b=J
-	IZG8ef+E+8QFmADUixpQ068BbCR9Xagd7LbFQnr930TqTlTZJMEkKLpgB1Do5uRn
-	bZG7ffx8si8HMhHojq3v9G6HHNUwGh4xQa4uy4FC0Jxqr5qmiHXdFLrFc33kQIJh
-	GhVZILBljN6tXsGoa3c4Qd39SVGbacY9NDt39uM4i5lA4ZIcm21gPe3xAg4pqLsc
-	JDVx3zz24fKWD8AmtQfuuUAhT3nKh0mjVCaRDqO3fTKubL7UN9yBA69BHGwPI0hM
-	A2Pju/oI9Jy4wUE8S1eZqTWDcWDKXpyrXIN2sBO5cMkuRdoZy7CPA3HuzF/swJgW
-	CBkuA1Kyg7aT0Iq94e3fA==
-X-ME-Sender: <xms:cvVeaAT41UuTLooawRQCZ8Be2smZ5eD2IU8pqLai7g8I1Dn0F_34_Hk>
-    <xme:cvVeaNxNlOq70qElQBBHIzHlm3S-vGkpFSHdyHwzkWl5sajY0K39eFLSgtBcv6olW
-    bSF_KSpW4wx4P2LXQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefleegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceurghi
-    lhhouhhtmecufedttdenucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeehudfgvefgfefgffdvhfffvdevveegheehudetvdfgueffjeevjedu
-    geevfedvfeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehnsggvnhhithgviihlsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:cvVeaN0mSaX7FcrnzeMG0I7G38HreRLAwjMjoRDl4vM77nHVFriTCQ>
-    <xmx:cvVeaECGr9ci53W1BiSA7RBHIEFtaaNSwZAukEJkTtVbB9dnm3sYTQ>
-    <xmx:cvVeaJhtnQf9UVMw-MX0uM1c5Y5glihLCs7qwfbijy8RVCrk-LZHdg>
-    <xmx:cvVeaArWhAemvXRX8Y3QHglasDkEYBzJFbQG1Mr8WbwJ_8pakTHFYA>
-    <xmx:cvVeaFBlTMLdGauHVO_-_Y5ZXi5Gq2Xoazu455z88pqpGxeicDXcIWqz>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 283971EA0068; Fri, 27 Jun 2025 15:48:02 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AK1pw7eR"
+Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ade5a0442dfso474156166b.1
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 12:50:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751053814; x=1751658614; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=12W5Zc8zuPQ3j4QjZ7IL38xPPy0LDgJXuUp0+l0Jxjc=;
+        b=AK1pw7eRMpFnh/2TYpHwz1c+LO4apxvlkCzkbN+j0T9pA4gwM+9f10rfV8oVg8VkvM
+         ULMTwWlMaMDxi6ZC+mvnUwXaq/AzKkytyyL48JzTGswf9HovOQQo04EpIEED9E/M0daD
+         Ipque+RxWKNdfcTQhszov5E26p4CSFx+6oBYNRZ/Zd4XsSRPhmpHMqin/CU8mhLuwulp
+         Gq2VqJF4+VxhRBnD6bNmQBbS8VEqRFLF/BtB85/UlSkHH86GfZ7aN50ieFUDS3hOqZuj
+         fDxQpVxHc0o0zCW0ozf59yk6cLSuQZbCYTPdfTxSM+s0NmsjVI9pufFENIWYVldC1+fa
+         nSwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751053814; x=1751658614;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=12W5Zc8zuPQ3j4QjZ7IL38xPPy0LDgJXuUp0+l0Jxjc=;
+        b=grAQRZrJEmDcsu0hc+jfZmoNz0Lu4gkfq7AIDhmL0PKLkWz9xbPLglmkZw8J3vBg1P
+         GupRSs2BzuZfX1muv68Uy+5LvDItKJOyf5xJLwhX8ud7z15dM/hzclvTrzeD2SeFjnuc
+         g7CrootdYiyo9fnFfCjc//4xaY/UVsDm6A0DtGlI5GlBXSGdm0rOUL/FuApDIipLBFre
+         ZoS58nJTty+1VgAcCSQf+q79aCA8AfBGyqlKJrSIeSFsmWScXh/VFBz7o5ay8o4r3UlY
+         4jqXJMCl9GeWGUqQMN7Kw4g2TEwUMbB3zp7OWNHB/uIvmuNpUVfJFaT5ohee1DSlZEkH
+         sbAQ==
+X-Gm-Message-State: AOJu0YyKpp+nUEj+uxIxMqitjCdXQtJprOi0nJp0MTvjxQHveCzFHJui
+	Hh3U9cafuw8e4HCwpMy2AVrH/5IhA2ozuUZAc9INUAghkyXistwng4bZna94LGYWfwkvlXjtkbc
+	DYbTsPdZutTURn2bZbh5+mshBp8BOMw6gjf53
+X-Gm-Gg: ASbGncvKRtgz1SA7GKJWN+5FSgOhHFuCI11EjLwJXQ12KXodUs2LUTrENaQzPKh50lu
+	clgFzLmBHTyFu1cheZbUpw/wpg3+aXwZ2UsaqPAMBo2zgeMMKMJGQ5ZBbJu4lKnLYNQjolYnZT7
+	3EODY0R9Li0+M1DO+sP8RM9dS9Lrlw0vBV9C14c8epZQw=
+X-Google-Smtp-Source: AGHT+IEwnzi9oomQfkz7+gQzS2df4NyYZGMe5A1wMQSOIx9v8n1Lo/2kg32KY5QIIBAGSDfxh0WkkD8IRyd4G4rlEY0=
+X-Received: by 2002:a17:907:6c14:b0:ae3:5c44:6f4e with SMTP id
+ a640c23a62f3a-ae35c447337mr289753866b.24.1751053813766; Fri, 27 Jun 2025
+ 12:50:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T53ebb176af89f275
-Date: Fri, 27 Jun 2025 21:47:40 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: =?UTF-8?Q?Nelson_Ben=C3=ADtez_Le=C3=B3n?= <nbenitezl@gmail.com>,
- git@vger.kernel.org
-Cc: "Junio C Hamano" <gitster@pobox.com>
-Message-Id: <a3cd775d-99fa-49de-881b-1e8f178f9102@app.fastmail.com>
-In-Reply-To: 
- <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
-References: 
- <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
-Subject: Re: [PATCH] completion: new config var to use --sort in for-each-ref
-Content-Type: text/plain; charset=utf-8
+References: <CADT1yYmQGG5mQnWk=+19UOEvcDyiUQmWsib9jUJsPDc=A27vMw@mail.gmail.com>
+In-Reply-To: <CADT1yYmQGG5mQnWk=+19UOEvcDyiUQmWsib9jUJsPDc=A27vMw@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 27 Jun 2025 15:50:02 -0400
+X-Gm-Features: Ac12FXyCWgKdtASzN6sek1rHhlnVimD1DmHWoQOUfalyuIpaVYihXHobZep7SNs
+Message-ID: <CALnO6CAdftdE7uCrrRPRvqS5J8G_iFxoTY8GffxGEOZkJ98aWA@mail.gmail.com>
+Subject: Re: Git "Permission Denied" errors on DFS path only with newer versions
+To: Erwan Leroy <erwan@erwanleroy.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-> Previously when completing refs eg. "git checkout <TAB>"
-> all refs were alphabetically ordered, this was an
-> implicit ordering and could not be changed.
-
-Style-wise, the commit message is supposed to discuss the current
-behavior (without the patch) in the present tense and what this patch
-does in the imperative mood.  Like you are commanding the code to
-change.[1]  Something like:
-
-    When completing refs, e.g. "git checkout <TAB>", all refs are
-    alphabetically ordered; this is an implicit ordering and cannot be
-    changed.
-
-This also gels with the general pattern of:
-
-1. Introduce the current behavior
-2. The problem it causes (maybe merged with (1))
-3. What to do to fix it
-
-> Previously when completing refs eg. "git checkout <TAB>"
-
-s/eg./e.g./
-
-Maybe also some commas like
-
-    ..., e.g. "git checkout <TAB>", ...
-
-Or maybe it should be =E2=80=9Ci.e.=E2=80=9D?
-
-> This commit adds a new config var to allow setting
-> a custom ordering, the conf value will be used
-> for the --sort=3D<val> of for-each-ref.
+On Thu, Jun 26, 2025 at 8:14=E2=80=AFPM Erwan Leroy <erwan@erwanleroy.com> =
+wrote:
 >
-> When a custom ordering is not set then alphabetical
-> default is kept, but this time is explicit as we
-> pass --sort=3D'refname'
+> Hello.
 >
-> This commit also adds '-o nosort' to 'complete'
-> to disable its default alphabetical ordering so
-> our custom ordering prevails.
+> I'm writing to see if maybe this is a known issue, or if there is a
+> possible known workaround. I've not been part of this mailing list
+> before so I hope the format I'm using for reporting is going to be
+> correct/helpful (this is attempt #2, I did not set plain text the
+> first time).
+>
+> A bit of context:
+> At work, we are fully Windows-based, and mount our network drives
+> through DFS. We are fully cut-off from the internet so everything we
+> run is local to the internal network, which makes certain tests a bit
+> more time-consuming than they should be.
+> We have been working for years with Git and a self-hosted gitlab
+> server, and have had no issues.
+> Recently, some of the new hires started reporting lots of Git errors,
+> mostly apparent permission denied errors.
+>
+> One of the errors:
+> PS Y:\Users\xx\Public\dev\test_for_it> git remote add origin
+> git@gitlab.xx.local:xx/test.git
+> Rename from '//atl-xx/Basecamp_Atl/Users/xx/Public/dev/test_for_it/.git/c=
+onfig.lock'
+> to '//atl-xx/Basecamp_Atl/Users/xx/Public/dev/test_for_it/.git/config'
+> failed. Should I try again? (y/n) n
+> error: could not write config file .git/config: Permission denied
+> fatal: could not set 'remote.origin.url' to 'git@gitlab.xx.local:xx/test.=
+git'
+>
+>
+> What we found out:
+> - The first thing we found out was that only network drives were affected=
+.
+> - The second thing we noticed was that not only new employees after a
+> certain date were getting issues, but also longer employees getting
+> new workstations. This started to make an actual permission issue less
+> likely, as there was no change to their user permissions.
+> - Then we noticed that the delimiting factor was the Git version:
+> Users on Git 2.21 and older had no problems. Users on Git 2.36 and
+> newer (we also had some users on 2.47, and today downloaded and tested
+> the latest 2.50). I would have tested every version in the range 2.21
+> to 2.36 to help narrow exactly where it breaks, but I can't find
+> pre-compiled versions for old versions and I'm not currently set up
+> for compiling from source.
+> - We also recently found out it only breaks when accessing through
+> DFS, if we directly access the corresponding UNC path (what DFS
+> resolves to), we do not get the same error.
+>
+>
+> It's not excluded that there is something wrong with our network, but
+> the fact that it works with older git versions and not with newer ones
+> makes me think git has a role to play in our issues.
+> I wasn't able to find a changelog, if nobody is able to look into our
+> issue closer I'd love to at least be pointed in the right direction to
+> see the changes that happened between 2.21 and 2.36.
 
-Super nitpick: the paragraphs could be wrapped closer to 72 characters/
-columns.[2][3]  This alternative (slightly modified) is closer
-to that yet not very uneven, still.
+Changelogs are available with the source, for example on GitHub:
 
-    Previously when completing refs eg. "git checkout <TAB>" all refs
-    were alphabetically ordered, this was an implicit ordering and could
-    not be changed.
+https://github.com/git/git/tree/master/Documentation/RelNotes
 
-    This commit adds a new config var to allow setting a custom ordering,
-    the conf value will be used for the --sort=3D<val> of for-each-ref.
+>
+> Thank you in advance,
+> Erwan
+>
 
-    When a custom ordering is not set then alphabetical default is kept,
-    but this time is explicit as we pass --sort=3D'refname'
-
-    This commit also adds '-o nosort' to 'complete' to disable its defau=
-lt
-    alphabetical ordering so our custom ordering prevails.
-
-> This commit also adds '-o nosort' to 'complete'
-
-=E2=80=9CThis commit=E2=80=9D should be replaced with just the imperativ=
-e style
-=E2=80=9CAlso add=E2=80=9D.[1]
-
-=E2=80=A0 1: See Documentation/SubmittingPatches, =E2=80=9Cimperative-mo=
-od=E2=80=9D
-=F0=9F=94=97 2: https://lore.kernel.org/git/CAPig+cT1VfY8QiUvrrV3-obTBP1=
-439b6iwaebJtGwML5MScnQA@mail.gmail.com/
 
 --=20
-cheers=20
-
-Kristoffer Haugsbakk
+D. Ben Knoble
