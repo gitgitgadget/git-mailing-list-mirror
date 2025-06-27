@@ -1,113 +1,106 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FA32BAF9
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:05:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15EC20D4E3
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:16:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751051123; cv=none; b=HCZ6XMpHL4dtTSM51y0u8XyHC+noc70dWhEhhDovjp/8jKWx9dA83d4D05Vr0DTQoW5DCxV+PWAOQYGInE+ppr5cu41Ldd4+M1KpzDOyV43Z8uN4bhGsFYCao786oxAJ2v+NIYgnKHYqNrIO/MaHsI+8/iLMpTYvmqk15z1xeBQ=
+	t=1751051774; cv=none; b=Ksk7hy8z8BOCwpWIeS30ASCObiWDJv5ozql1OggyLS73eebP4JhNlhqAObv/Fw+/Nm/lDqi/Qe2AXrb4ajNx0Q4yhd6Dm/kWMyRXjfN3xUgoeIga31yxRoHvRZ1aowcmrMTlA08JObgeYmOn8jFPGiAd+TS8vYP5xNbDWx9fWRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751051123; c=relaxed/simple;
-	bh=9EC/E6cNIakpo/rWn9mnWeiJqv4qBElfO0bvbqNyIuI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GLvvRavSOj+HH99UvOkM1uoEteKO5Ril4tWLg76eiRIoKXrSMrHz6vRmYwodEXk6SSH1dwSWOmpKFvSnGqETk3n/+WOj9+HMNhFgaxH8yKgpgoqRzHk+OlthVJe3iHcnho5M2svzhvyjXdVZKub67YbaZk5tS77GfpWUgwWMouU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yd60shdD; arc=none smtp.client-ip=209.85.210.176
+	s=arc-20240116; t=1751051774; c=relaxed/simple;
+	bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=orGhJX+voNyNSUrTVUmwwDtJo6l/2saB2x5IlxBEJ6E3zRkdTX2f1dHROQ/x1iVY5B16jCYPnn9sVYi4QFUYWncKJamcOe82u2Fzt1FSUcjk//owPYrv3ZIZK2EH/DtCvjLBsG1GZyp/lwA4PhCQx6SxH6eoY3n+P9UIzdDEtp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U0lkHROL; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yd60shdD"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-742c7a52e97so3042024b3a.3
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 12:05:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U0lkHROL"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae35c447234so186978066b.1
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 12:16:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751051118; x=1751655918; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=BkxWKKQcQoMebINeq96rDAn+5dh2Wpo8Ri0RXQai8MM=;
-        b=Yd60shdDDB0v5avk1GOOfLQQnTkVW29jvGzLyyawIpug/GdS+4igVsdC39inJXurMV
-         3CykAoOH9Oyhup0GwF5vnIjpw1kbNVZ0qXoShUpZq4oJGdhlMNfMlKDYijtAmBGZS2gS
-         tpS4MjMAqAapDuFsvSv/FF+arRLZ2GnV1hiZ1CL5ENc3PF9sidks3RAg5mQuDiIVpnDz
-         QPxXO5NP5IKSw6FfwGN5GMBWDhSab2l+Zk0sy1YtXxr9dcDgdzROVIL9pucaDTOCUCR7
-         s8Aw42ZdUrNVb/KvrbfPt2ykFk94iukXkaQuy5CqzFIEJEqzrk1eKdKcDlq8pe/fA7oO
-         D3LA==
+        d=gmail.com; s=20230601; t=1751051771; x=1751656571; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
+        b=U0lkHROL5x7up1Wn9G7E1KXrSrNPyR2o/U09z2cV2WAtck6KUyC/zd718amw8qTG+4
+         xIo0JUlCAZXUtX1Ad5HDVyVLuJDIhCEihyDF7U/flQ93+FJDOpo2jYrJAWxLdqdZkpx6
+         6vGJg7N+mrac9uMfmFhvf0IA+/TtrxMN6BToazXRKeWDE908Yqqk+Y2Fl8EFpsrssW5M
+         sXZvIKwOCfz080nXE9PheGBn+59+24mu0b0YyaYBobAs7nzHP5Sb0lCrLrtGbP8yLFqg
+         rapEchv7MDY7bdXm7qRIvTPapgIwM6jPOUJLrO5nf8b7eG8FalLqUeUNZYORMfPI7KS+
+         +mnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751051118; x=1751655918;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BkxWKKQcQoMebINeq96rDAn+5dh2Wpo8Ri0RXQai8MM=;
-        b=GKTBadrQ/rs3whYjxEFGxFS13M/kle6oqKvPev2CjuU77rdqUP8jFpJbPaclei47bo
-         DwXNH1vVo5M+jGPiPJATqr2FQ5WBrBR037UNXM4B7+/Hil3SZ//NuvLK8UsABVqeizuQ
-         64LFWkRRGcgVavWPRl7Ea+9Uh+nbE4tiKZJjIYxOVBa78rM7ZnAL3UoXnrfsHDoTbnal
-         VdbSFLeTDbAZAVId8hlpM23NvLfJmuPxK/n4XGM4xvgV6CoQsbeZq3N0SIoBk+Qv6qt9
-         EoiABY3rQr95Ms6oBClFmTOCPMog0nty+xSmmYDSQuREvnca+WEigzIWMmJb8b+wefld
-         /w2w==
-X-Gm-Message-State: AOJu0YyeS0b9NE+XHQZFB7P+v2y9lScodiZZsKmCcyDPWsUxIR7L/JhJ
-	IULi5j8u2O3L5kBxvejxZQF+aaQV7+DVgfftkqU/MjOzccFbgXETJ82jbrBvFA==
-X-Gm-Gg: ASbGncu0y9wdmLs5LipT4fTNWoztuVe8cI4UPoXUrPuH1Oy4Z9mEMsEFwG2JJtDug6k
-	Be/Jd7Q1DhoTW3ajLS94Jo0sZZUO0dbtMt05TYuT8QrQjaIBLcLOnfMLBgGEgIihRJ+lyvB9iLg
-	SGJL26TZy9rB7db9v8NmzF4VOzlqQSJie7bzisaw1j+xzWqf8DcOPE6QQz57Ymc3+Q4GFJKOYaS
-	csD18aNhDNL6MIr3LAJ+AsYm4ULp5bYv8xGeRMZ3Qz7R8qjGgXaLCXeY3bIF6RTcLsV/vX2+wik
-	o4l1+ELK+jhN/acq0du0H9EdwgeeN/TIm/rD5snIauEulIPZYBNoZeJZg8yl/k9HJxFhiZZ07nq
-	K7umEAEM+Kid4lBhn+awbFyDINZSlSBSYtQ==
-X-Google-Smtp-Source: AGHT+IEJ3a7WMM0nYqhvyRm0Js28nai6JI+o/kbzfGazpgPTsLiqIIpIM4T1J1n9WCtHAbRYYlzHuQ==
-X-Received: by 2002:a05:6a00:1992:b0:748:fb2c:6b95 with SMTP id d2e1a72fcca58-74af6f2e8c1mr6310863b3a.18.1751051117841;
-        Fri, 27 Jun 2025 12:05:17 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:fdae:9b06:496e:5a9c])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af56ce594sm2927523b3a.129.2025.06.27.12.05.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 12:05:17 -0700 (PDT)
-Date: Fri, 27 Jun 2025 12:05:15 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org, 
-	kristofferhaugsbakk@fastmail.com
-Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
- service_loop
-Message-ID: <u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
-References: <20250626161038.85966-1-carenas@gmail.com>
- <20250626172159.87204-1-carenas@gmail.com>
- <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
+        d=1e100.net; s=20230601; t=1751051771; x=1751656571;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4Z3Vcqkg7jR2YXuNSo9eIpETM81t7MYUWxqvPsVxTlM=;
+        b=AxcjFw8mNziaNt2yoxCbCCzF7AuSpKHeizIXTWgJCskzvEVxcljrTA//2pI6DhFtLF
+         xr6cd2x8t0e5AfxITlpTzsZTnxbZozKPJwTBN4F7ZX8YjE3fVxxyVFxNIExZuEgxc/hU
+         neE+pUoq6k4iwZ5gqlL85ozT+e6pfUPtdcAl9ePn5CW43I9neaNbamKirBgX1GlvzOtg
+         gTBwbJmaX5Ul1BCm75p1NoiaDKJwRh81nk7IFlNJy/6EGNPzgTYD/H+jiuQR58aSkMm8
+         tZtgyk3Zj0y/IXMfSUaC5juT9h5ekOBdG918TT8r0iNlNDaq3Ucxy+9whQGHPkauthm0
+         HDxw==
+X-Gm-Message-State: AOJu0Yw/v1akWhZqRLZgksouRrbYzGHJWZQu/LSrdV41gZU/3N0wZv8W
+	mL5FZjB8/xzmnq7gJugKHh/K3QvYauM3JWryPaYvae9xA4Q+IfVJZSZoafYt5v0yMoN677rnNTe
+	8SwaGIHJhft6fAwRJ9BF0PmOoQjMZhePLSU5G
+X-Gm-Gg: ASbGncvUBB3oQa+6bIx8a/MJAaAZkxLD6IDnCQwVdAhf31VMHC2AqESGzPmp/xklv8Z
+	0GcX0Yj4zED7IokbanN38VghF2CbsnZS/mMUFyfyEL0KqppYiif7CKDjlCPN1BcM39YSRNKiGhp
+	GLZU523tWbwe+kNylgjuZCdybgf6fWbQpUEsSHk94eoUw=
+X-Google-Smtp-Source: AGHT+IEcEkaboy1HXqjAYlDwsvaMhHYwSfT4cNomNQz8tWXUckk+YVCzp9zIJgj6kahBQCVKwe0lGF6kDEYS4GMEunI=
+X-Received: by 2002:a17:907:608c:b0:ae3:6dc7:1ac3 with SMTP id
+ a640c23a62f3a-ae36dc71cccmr1822766b.15.1751051770888; Fri, 27 Jun 2025
+ 12:16:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
+References: <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
+In-Reply-To: <CAAUd64333fEMHAaNW=-CkfUMN4HDFF2v==HdO0OFnOgm+W+Jog@mail.gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 27 Jun 2025 15:15:58 -0400
+X-Gm-Features: Ac12FXyWNiX28ftu1bcf1XvZY_ggP8pHyuAsrL7z_fCsFI0ZTOI6Si7zuCjZPxs
+Message-ID: <CALnO6CB4voTTQZrg5OjgHOhuVP4_B71f7LuNFeHNYby4kXOu4A@mail.gmail.com>
+Subject: Re: [PATCH] completion: new config var to use --sort in for-each-ref
+To: =?UTF-8?B?TmVsc29uIEJlbsOtdGV6IExlw7Nu?= <nbenitezl@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jun 27, 2025 at 09:38:47AM -0800, Phillip Wood wrote:
-> 
-> On 26/06/2025 18:21, Carlo Marcelo Arenas Belón wrote:
-> > 
-> > diff --git a/daemon.c b/daemon.c
-> > index d1be61fd57..f113839781 100644
-> > --- a/daemon.c
-> > +++ b/daemon.c
-> > @@ -1145,6 +1145,7 @@ static int service_loop(struct socketlist *socklist)
-> >   		for (size_t i = 0; i < socklist->nr; i++) {
-> >   			if (pfd[i].revents & POLLIN) {
-> > +				int incoming;
-> >   				union {
-> >   					struct sockaddr sa;
-> >   					struct sockaddr_in sai;
-> > @@ -1153,11 +1154,19 @@ static int service_loop(struct socketlist *socklist)
-> >   #endif
-> >   				} ss;
-> >   				socklen_t sslen = sizeof(ss);
-> > -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
-> 
-> Why is the declaration of incoming moved but retry is declared here?
+On Sun, Jun 8, 2025 at 12:22=E2=80=AFPM Nelson Ben=C3=ADtez Le=C3=B3n <nben=
+itezl@gmail.com> wrote:
+>
+> Hi, I'm attaching a patch for the Bash completion script, to be able
+> to change the default implicit alphabetical ordering used when
+> returning refs e.g. when doing "git checkout <TAB>"
 
-Separating the declaration and assignment for incoming is needed so we can
-insert a label for goto; moving it up just removes distractions so the rest
-of the logic is clearly in view.
+I keep meaning to come back and review this, and then I see that the
+patch is an attached file and not sent over plaintext (which was
+necessary because the GMail web client breaks patches). Perhaps you
+could submit your patch via GitGitGadget
+(https://gitgitgadget.github.io/) so that submission is in the
+expected shape for this project?
 
-Obviously that includes the definition and assignment for retry.
+>
+> I wanted the completed refs to be ordered descending by committer date
+> i.e. --sort=3D"-committerdate" because that shows on top the branches
+> I've been recently working on. The completion script didn't allow to
+> set a custom ordering from the default alphabetical one, so I'm
+> sending a patch which adds a new config var where the user can set
+> their desired custom ordering.
+>
+> I've not added tests because I'm not familiar with the test machinery,
+> hopefully this is still useful.
+>
+> Regards,
+>
+> PD. I send from Gmail web interface because git send-email for Gmail
+> requires 2-factor authentication and I chose not to enable it.
 
-How would you suggest to arrange this better?
 
-Carlo
+
+--=20
+D. Ben Knoble
