@@ -1,80 +1,73 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6881FE455
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 20:19:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1728F22B8C2
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 20:39:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751055562; cv=none; b=LssaDxVnRxh6swtglTqXu0888r0lVkNDXH11gIrH7Qd68hPD0VApdw5IrFZ0y8dJ3JJp0NrXYJYd0eVZG58TdAiZl+I6mWyqNp8kuu1omlg/FQQQZLtXEoNjSeBl+YeWFJEsOCkkvpUm0+HnVNT8tfMl1QR9rT+2w1tNZwhfUhY=
+	t=1751056748; cv=none; b=jSIOnxwS2muReqb43NWOV21vCgdHWvILrmSzGZo3eSFjWFzzfPlo8ABMVRR4S9p3sB57H6SEcuULPnq79gMGauC/Qq+1LBO7aa322amIlF0whyLt4A1AU84H3IaLY2CQQGWL7y6xPxQEEnwC1HRb6/FSArtI7c7UFtxzaqjZNMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751055562; c=relaxed/simple;
-	bh=JAzdvjzD+gK8ku82B/RPTXTxzmeHz0gOnL62GrfTPc0=;
+	s=arc-20240116; t=1751056748; c=relaxed/simple;
+	bh=SGyCzGEEutHqMqPbTHxXMJErT2zzl0j89iGgakKgwfE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nqvovbwnqWkEgxjRFY86Lfvitn19P+5mStJqe7AZ0wlFIxkb+f4I0JxgpmmdX8B2Fcrs8xoyhszyHDTCcILZY7mExei5SdO6T+lTNnxUigciOz3Wa9E/SHIU6YMz6VLM5q0mnxHuRBUq4gY8l5ATwuyLlUaZy5piD5lOn077QAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AyiyF9Ax; arc=none smtp.client-ip=209.85.210.180
+	 MIME-Version:Content-Type; b=r2yggG7GN3pF7daWdeulXJpNEGUM+neXIQP3H3vKrT8Oq569DPvOJiI4Qvw4/jrDbRicKTW8LTW92JPYEzPOVBHvCXj7WsTdz2a7SM/G0r1l1yCNwN7GZjfetRsfrCObV9woNYeJNK6AWT2arIFOmwX0X5EF2JjRW6VFBRiZu9s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GxZNE1pV; arc=none smtp.client-ip=209.85.216.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AyiyF9Ax"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-748fe69a7baso3031950b3a.3
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 13:19:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GxZNE1pV"
+Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-313bb9b2f5bso2479725a91.3
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 13:39:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751055560; x=1751660360; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=A4qDQ5hA2v4N2kIYTIU33V75IdRd9g5bNAHi04cbDfA=;
-        b=AyiyF9AxUNJC8xKAFAEz5TqiqffAEoIaQQoedsIq8dYNDRsGDx2MAp3WlOb/HKBRtR
-         R+25nRJbNi+71c4WHApY4VUlwHmnqAtdoXiyXONTWgw7z09Y1JPQ96huF/OSwJkavl6j
-         k/x7q17KmZ34Cwk4XrXuRBODpglIhnwuwLFmR9rI9LcIJSYG5Kjslc6QQXfrz4aKnrj1
-         7DFPrWqRYblSRg5LAOcorrGUsuKQqJ+ulqDZ80rqpSJ90KrNAWjhhN9FVQq+c/VgG0kw
-         v2QF9mDgU8NhG8J6z6g3onhbAv+g3HdUan3qhqljQAy9qD1pWfaPPCi/4C7kvY/AX0i6
-         X1Qw==
+        d=gmail.com; s=20230601; t=1751056745; x=1751661545; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6lxmWZFGNOtf/rJC5GVe91m4y/UDL0bMZWvIjJpHzl8=;
+        b=GxZNE1pViANk8UROeVVFZQ81S9ZQWoWXH00HkdmJDUcr0Ov7wxkGp/ZdT42Nii0e39
+         vtqRdBB0ddmaEt/jVplAFUHz+a7G7q+uVEmJWdPVGfoXLNdtcm5MD6DGZe91ZAiDgjL7
+         m7BqqXBYymt3G9HSPPJG+wcg6Y4riX4qIOsouIXWHcNFrzxsJvd0BXeZ9a5I0Vzw55be
+         m97PHw943RgEooaD38amXhUzABixJc5hnIFCtubrn3G1GwMuCW2hEY/EJL8xdvv1ReJr
+         AiIZRhEeM5ArTMCaklPntAxLPphEZOfFCvUMUo8bQoXNQS7Yxufcy+a/XqX3Y1PtLey+
+         pggg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751055560; x=1751660360;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=A4qDQ5hA2v4N2kIYTIU33V75IdRd9g5bNAHi04cbDfA=;
-        b=wee89jM9gR7LxwY2bKsU/aBNTFCxrupBZsITBXrOcuU54wemOHgTUcluDlk79Co3Oc
-         2EUDNME4H/oTb1ryXs0IrZT2hLo34SqZfLPCofsOGHSw1PZ1NI7G7vU/4pFThIkxQaO/
-         nbQ32s20cEDzEmdg6riAiARn5ojmAmjLOC0KC8ghVFNBV1nocWp3ultRsmFxP4Tl8C+N
-         BcHBM9enMq2UhYPlTyTrgzCjmRDg5QxWciEq/fLAAqQGRYzxw0TAe2RdwJzbtiLI3XDl
-         VqQrIRuhAhiy75QrZNyaJ1g//b5h6DKHUYZ8IyGqLBo9Qn0UWhQcCEg2KUWvgh+I4Xgr
-         9unw==
-X-Forwarded-Encrypted: i=1; AJvYcCXg5vGPcO4YO6X4toCS8tAhOvZXrOdmrBPEfPBk3O4bPUHbr28WCzDWC4udhptxB00SMp8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzFLTF8hubNzFcYgYtUmyBAtTebZGPshrTmXgG0NADW3v0TX1OB
-	CUmdsR5iIfv3lleY4WXskuUJBFIJbUvg9MLDEsqZyN6v229b5di0gRYe
-X-Gm-Gg: ASbGncvwR464txjeAaRT7Jdt8K/BaDf/bgAX+ruWDoAaVYT2EvZTNig/33jUt53rYh9
-	r/1SvQ5n1b73U+uMAlRkJnbG+nTO1Fi1AxYWLGvzoKPBTn7wKkHnWx16t7IzLO+Yy4WR2oCK/m1
-	zrfntkrkAeMoOGiiLPXxaGJdnwZEIvRbbRzNTnXqay3PbAUBtXG3ZI1tUcv6byZ8TwkRzq8VHO2
-	eqiA0p/wE62LJeTAwwRRpeMw/2ok2BKKP5L2tpcJw0M1yTWP/mxGwwp1lieIEF/B3i9yImg1RtQ
-	+UnaPc17budbRSZ5XRwTd3ww6lPHEC/8SPz9GwG63Ue0xWafXocEuqCuJ/3csMHv4TkxZcsTv0e
-	+u3uxwodVebdvVnMRZHXeDWZlDMA=
-X-Google-Smtp-Source: AGHT+IGkoCYtPXUsLORSbrgRFqFJ+9vayMsOO7so+XLDt43gyNt4rsfl/QEVwGIWDKg0PpAt46b3rw==
-X-Received: by 2002:a17:903:120b:b0:234:ba37:87b2 with SMTP id d9443c01a7336-23ac3bffb49mr73536305ad.10.1751055559956;
-        Fri, 27 Jun 2025 13:19:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751056745; x=1751661545;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=6lxmWZFGNOtf/rJC5GVe91m4y/UDL0bMZWvIjJpHzl8=;
+        b=mKrDaP0HxVlFa5WLAAElmiN2dCuf5439Vcyg4i+FXeFpfMcRVGH9mwBlEMa0KvdNIu
+         eY6dYNLC+8pSvFz42G61iQf3Yi7PGkevcVAsJJnrkIbRGsXuYmHbBKrwkUWp8I3CjsBv
+         xdACc1EvdcM+EU3eyF1LO9wWrwjRA8QdGVhl5ombgffHI/b/kSho40rcRvteudAhVwN5
+         9y2jxKhfw9jKp0g/D9HdRLhImDjSoGe5l/JJKJVcR7lrzB32ZmdCqKASMwUapJ7ahUsf
+         d2JJoRyhoL+tKtY/YqL20avi3us/ZiDnd3+IBXM39XAE6VS5jhmNSJT/dM+kZCzvYjj7
+         1gPg==
+X-Gm-Message-State: AOJu0Yw/ud4aqHao3NDlFPKpzwiqyfwsiSP1DAq4AlKqAcHoP/6OmR5i
+	eHLNJQScQRz/qkCNIhor5zCkbZqHZsaw6BVp7qLO03EtqejP9n0LCHvua54hJQ==
+X-Gm-Gg: ASbGncuLNT6sbcj5Jcag2QRmRNeW2+SQ91I1jHpQfF+Q8gcKKsme0UqO0SqP0OKE3Fx
+	drUzbzXk7oswwf7HmhZFpJ9fhwZPMbiJm+rPRaRfajjdZb4tXMfwj8tBq8rSmHAV6NK0V1kau5z
+	AAY0PJ8RILhfrEbMqEUWvCbbwhoLqPblQ/zdo+0APjzTMzGDgqz0OxgsJ7xF9CibKr1VAlQrDbx
+	J52yZhI7PPphtm9bpkGnlk6Fqf6sFPiedaLuxzBZea4HHabPj+2yec84yhLPCFS9Don86OdhIgN
+	djOmTwGiIQchziepDyRFgkm5AgEgAAKHpzaP8FA2O4L1slMNi8ZWw890ysAmT0l1JzGYKq877WR
+	a1P2VrHl5U9duL3VEwyJcD9ZWnDTgQrVkTgNtKA==
+X-Google-Smtp-Source: AGHT+IEaKe/SA7zVj477A0CEmj5dQEWwG7L5TqbcUv6KFhJRRkLwWeUV3kTY2K1LHycGU4YVmhITxQ==
+X-Received: by 2002:a17:90b:3890:b0:313:1a8c:c2c6 with SMTP id 98e67ed59e1d1-318c92ec03emr7439562a91.16.1751056745236;
+        Fri, 27 Jun 2025 13:39:05 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3b7986sm23927585ad.164.2025.06.27.13.19.19
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-318c15232c9sm3159888a91.45.2025.06.27.13.39.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 13:19:19 -0700 (PDT)
+        Fri, 27 Jun 2025 13:39:04 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,
-  yoshfuji@linux-ipv6.org,  kristofferhaugsbakk@fastmail.com
-Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
- service_loop
-In-Reply-To: <u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 27 Jun
- 2025 12:05:15
-	-0700")
-References: <20250626161038.85966-1-carenas@gmail.com>
-	<20250626172159.87204-1-carenas@gmail.com>
-	<08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
-	<u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
-Date: Fri, 27 Jun 2025 13:19:18 -0700
-Message-ID: <xmqq34bl7xa1.fsf@gitster.g>
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
+In-Reply-To: <20250625125541.3048632-3-502024330056@smail.nju.edu.cn> (Lidong
+	Yan's message of "Wed, 25 Jun 2025 20:55:41 +0800")
+References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
+	<20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
+Date: Fri, 27 Jun 2025 13:39:04 -0700
+Message-ID: <xmqqqzz47wd3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -82,49 +75,62 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Lidong Yan <yldhome2d2@gmail.com> writes:
 
-> On Fri, Jun 27, 2025 at 09:38:47AM -0800, Phillip Wood wrote:
->> 
->> On 26/06/2025 18:21, Carlo Marcelo Arenas Belón wrote:
->> > 
->> > diff --git a/daemon.c b/daemon.c
->> > index d1be61fd57..f113839781 100644
->> > --- a/daemon.c
->> > +++ b/daemon.c
->> > @@ -1145,6 +1145,7 @@ static int service_loop(struct socketlist *socklist)
->> >   		for (size_t i = 0; i < socklist->nr; i++) {
->> >   			if (pfd[i].revents & POLLIN) {
->> > +				int incoming;
->> >   				union {
->> >   					struct sockaddr sa;
->> >   					struct sockaddr_in sai;
->> > @@ -1153,11 +1154,19 @@ static int service_loop(struct socketlist *socklist)
->> >   #endif
->> >   				} ss;
->> >   				socklen_t sslen = sizeof(ss);
->> > -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->> 
->> Why is the declaration of incoming moved but retry is declared here?
->
-> Separating the declaration and assignment for incoming is needed so we can
-> insert a label for goto; moving it up just removes distractions so the rest
-> of the logic is clearly in view.
->
-> Obviously that includes the definition and assignment for retry.
->
-> How would you suggest to arrange this better?
+This is a tangent, but I have to say that whoever wrote the original
+test does not understand shells very well.  When you have files A
+and B in your working tree, to your $command, the following two does
+not make any difference:
 
-I think what Phillip meant was more like this, perhaps.
+	$command ?
+	$command A B
 
-		socklen_t sslen = sizeof(ss);
--		int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
-+		int incoming;
-+		int retry = 3;
-+
-+		incoming = accept(pfd[i].fd, &ss.sa, &sslen);
-		if (incoming < 0) {
-			...
+In fact it cannot even tell which form was used when composing the
+command line.  So this original test ...
+
+> -test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
+> -	test_bloom_filters_not_used "-- *" &&
+> -	test_bloom_filters_not_used "-- file*"
+
+... is misleading to say the least.
+
+> +test_expect_success 'git log with wildcard that resolves to a multiple paths uses Bloom filters' '
+> +	test_bloom_filters_used "-- *" &&
+> +	test_bloom_filters_used "-- file*"
+>  '
+
+I think you should just retitle this to say
+
+	git log with multiple literal paths use Bloom filter
+
+or something.
+
+Also the setup helper test_bloom_filters_{not_,}used helpers call is
+written in a way to make it impossible to pass a real wildcard and
+see how "$git log" would behave, because it does this:
+
+	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
+
+It probably should use 'eval' so that the caller can pass a quoted
+wildcard, perhaps like
+
+    eval git -c core.commitgraph=false \
+	     log --pretty=format:%s "$1" >log_wo_bloom &&
+
+Then a test we can add to see how wildcards prevent Bloom from
+kicking in would look like
+
+	test_bloom_filters_used "-- file*" &&
+	test_bloom_filters_not_used "-- file4 file\*" &&
+
+The former lets the shell expand file* when the above "eval"
+evaluates its (concatenated) strings, while the latter leaves the
+backslash before the asterisk in the strings fed to "eval", so the
+"log" will see a pathspec with wildcard.
+
+If we were to fix that setup() thing, we of course need to be
+a bit careful about existing tests.
+
+Thanks.
