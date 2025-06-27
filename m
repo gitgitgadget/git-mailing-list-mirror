@@ -1,134 +1,114 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B7C2DCC1A
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 14:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD34E81720
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 15:18:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751035929; cv=none; b=UM1cXutKa1zFy/5SvtfqjUmex6PC9XzOleXQGMgNgT51qN8QWCVbQ6uaoq64y+Pdc+Ker7nZXvC9i/8Av7O4kUldQT19WPqg1ayo77xrFdlC0akSzOr+flcq2ObHlPdAGVoVMmYTbKGp+K1248Nhp/s5eh/ceAWAptC2oS7Ukuw=
+	t=1751037493; cv=none; b=PYux7p/YrcHN2LH7zcxHmkZN8/PlPnE+zoipWxYz3PbwXd3p1Kq0fkq3Lo5L5bj7jF+50Pu4xh/7imVbGI2gh3IB/VikbsBkMTVJHvDmzPF2Lr7xC5APx/0EhDhbKeNEaegUZ44WbH8EyroO47A+cdjC7FFoFpTUFz3SfyvLIv8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751035929; c=relaxed/simple;
-	bh=ssH1c9PazQNjOK41gQReItkQ95b/YDYBXdsSCfABxeI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=owxuz2QT2c/I3TdyZKE8q1AKUumqNkv6C4jddLz6LGsJ1QSbkAFV9GfkbrFpMHCW2DLMJAlkMCoPCyS/ObivFnNF2OanqI3dqWMplu/F5oCGzGCf7I55Sg1ie7G5AJKTLj6U9b4dXTyhcn6bTnTqaQKrJRiWHSpl8OYw+1e8Tic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LdGA7ZGE; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751037493; c=relaxed/simple;
+	bh=PrqYIF3kC45X1TJnIUcRv6o2lWM9VWFvFR18lGVgfvc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=jXibWMdS7tjBpVWNvWyHaEs04qoaGNNBW0xKIM4J+s+r9J5pNzGZLp4MYduh3ZbjcUILg6E6ji+ZD95TUoBZtJCWV8zTDHJinl2mRgwDmxIUc0VYkHoL7HKKzXjm+SQID0hnUcOi1eAuMzZZlnzgTmHQ/e+tAdnHAeSxrfzDwqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PI16WaIU; arc=none smtp.client-ip=209.85.167.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LdGA7ZGE"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-748e378ba4fso3016763b3a.1
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 07:52:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PI16WaIU"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-40aa391ce1aso731549b6e.2
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 08:18:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751035927; x=1751640727; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=M1d8e/wX8BRrxjo+kBeB4jFJ6k4YbdnWDXBuj1y4wGM=;
-        b=LdGA7ZGE8Y741a8wEXKOf2zSPY+Smy0cAuZF5W5556E5Hm52D1gjsDzmcnUDnyBJZr
-         6/Y6td2BGwoOOZeyPr4o4VG5LV6zRB5CFBgWkJIvJP3QYkp9M4l89Fb9f+ClCkbKlbyR
-         Hge6J9O1Q57yMHLWQQiqCnocFLpD4fKOUGpvK45zbxvPpq8e4YJUl1LC7LTmegldBU1V
-         PoXLMWIW2tLlF7HbzwX+VIWxonjsOragSVbVJU/R6c1U1CGoM1pgOQXQgcIgT/VSbO/f
-         THp4j9f3m0mO6RnWVEJ/h88T9k5Q8C65ARMHJFbXxDZ7wncHkReIQfwEZ4p3bZlGeRu2
-         0itA==
+        d=gmail.com; s=20230601; t=1751037490; x=1751642290; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=qK2A0uWHT4yWb5HJmgb7hx7bpTHsxp3Zb2Bp5jnqoSc=;
+        b=PI16WaIUfPR12aQrMrFUYpX8WMGUanRCKdP4PFpTT7m8HcnXQEs0X9akcdDDNxgLZk
+         kwgzOXVyROGrOzZ6H81LY//plOSEJO/BgUhTzmcqYKanTTm+PgBUrmB+UPyDDQq5wZAf
+         /heJeYmdSpXaIAL/B42VFQNK1IcucFzQPLKm3xNFYVldDbIkx0Yc1K4m10Pdcvt4+ADG
+         uT3Bc5llZVjSAjpfWeSWxKFbMi3KkqSiUwqzYhkrHHGtB8F8Zk1uri7CkjJ/F37cyQNO
+         b4FF43v4YyuFsep1QASuvVAHZetVtDoa1U+ocBfLvw1zh6aTUcKFoOMpN++6IbOPKRet
+         Hhbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751035927; x=1751640727;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=M1d8e/wX8BRrxjo+kBeB4jFJ6k4YbdnWDXBuj1y4wGM=;
-        b=IMmse9jeF/gvXZov9lAUWYPzaJiyj6E29KnTrGO0tKhSxNeFY+lW909Co8e8+JNQe/
-         cKSIZB2iolBucZvw2OTDCL3ZEXPJZ6S8vcH6zbZ/C4ifwDZYu2s1TsXGR7+mhEiRR53V
-         XxThRbVbaj48vs6HrWSSe6FyLBME99tG7LN4kQINK8rqRX7DVM7sZ96CW51Bep3mwL2w
-         9x1R0/lRoo14GK6BAXayazkUCfPdvXauerqvk7iw1R8NFBlOWw8qyXie5bqC8+d5/pm4
-         XRUfU1dg4c5N9kpZp0SeYJpc4W1zKpaG60wy0YCMLigR2D0553IDEJAEfCdXnmVDwWcy
-         hoVA==
-X-Forwarded-Encrypted: i=1; AJvYcCWMwlDtq0RFq/2h4GgW3yz8WHhg5kUCB8h+oJiaRT3FwXC+jBTq+7GhsroknCcTv08EWk4=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6xy4PdNoCxRpwiN3gxeeBk1ZVn0HBpyMm4SLh2KQrLc7d58AR
-	TRY+/5lwn39gFXUfukQZwf1x//HT+6dYD/gBcrOR+/EsZrQcma2v14BY5SLOiw==
-X-Gm-Gg: ASbGncv/XPRGZiL2cjovzQ+LV+8dbzke8zSxWKnyHBsra/vwAWdzSYEnZ7O89hps0xa
-	O+DFFBi9DpyQH4r5lcXp4mPBsyn+21kygYy0yllUX0aw8sKcBsfM+bh7iGbVhduir4Mvv+xc6+k
-	E30eThvV0KwrSp4MkrUKU3qA07oB0ZWehThnMtgp/Vwm74vXRIB3nlSIBoko+uUpNMOIDsvSWSj
-	fXCD3e3X4AFeGDpSyhRhVyfwv1sadEZsWwfOG4VzreHhd+4znKPqeXqObDMVWQH+ccmMDZGBrTf
-	Fg6Hx3ZO2kc5H2ONNUFkSiAFk/d1+pvmnrDn81n57YYioG3gy4cTvLZ5qPAO90BWYsIRhMNf+kr
-	tRPv8bw1usqV4ZGznGwCoWLJJnkg=
-X-Google-Smtp-Source: AGHT+IHxMZqiocdnmUTmrt+7l2PiJ0w0uDjhNtStRbK2UNIRHbQ4rjZWRaLpva7zlmu+VPR6c8+CvA==
-X-Received: by 2002:a05:6a00:b56:b0:73c:a55c:6cdf with SMTP id d2e1a72fcca58-74af6e61c65mr4584403b3a.1.1751035927374;
-        Fri, 27 Jun 2025 07:52:07 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af541bd1fsm2373548b3a.47.2025.06.27.07.52.06
+        d=1e100.net; s=20230601; t=1751037490; x=1751642290;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qK2A0uWHT4yWb5HJmgb7hx7bpTHsxp3Zb2Bp5jnqoSc=;
+        b=l57DN+rhRAjqzOtZcHBDlm/Culto7KwbmltlNdr4B4lyFNHJXsS9UXVCFBEOE9Kwnd
+         SsKu0EshWJ/rt2Pq1kfaXF5/BZO0JWjh0DRTuaqd7GMVAL2EzgHeJ0iqHn29HsG3mo4R
+         vdsb+nmTBntUjsa3848h+y1T59osgsSKYxLocFdP6sareDkPxT1gdFE9jEBeItZJKnnd
+         08HXeT18jDLfmE3WR5DxMn5MUcaHFZheb3MjMxkOjDefJEe0V4qTsknXQYDIN8vuEtVV
+         3ir4uxvZcuc+YET7wtlTtNNGuy2+WuHv5hBiTykw6loWEOzLOcQGr9C6KqQyirHcyvDa
+         Sg0w==
+X-Gm-Message-State: AOJu0YyuY0BNsgbzda/OYsWo3n8Z3p7kZBCU3YavDs4WrDUTuitZuQ6h
+	VAMXrwFpwXuh75fsioC9OrfRuuzo3LmFisWDzbnursHMyM1PCahJl7etadXFRw==
+X-Gm-Gg: ASbGncv7VbozWC580oi6IgF+j7vv5n3NEMYWsmXTI5b2Y5Saa9o2FxDcxcmdL6lz4S6
+	PO2G/d1huSmYv5KM+j8RfxXFpxF4g4XkuF3dhSfQKk1TYTrP2cx5UNLPaqk3/tiMBrxO3GMFSyB
+	OzKUZfi3lqLbsrvyInS+wh9s04YrZZeZM4V8JqogxXGbQUcWOJSL8KQ3KsFjFnFXujbUbWhIdyn
+	I2qqC89DwyQa9C6vtI+Hn9Y1zj0oXRbn1xYxlVIksLMMjQLSGzPQrCuWFkZYQht/brCTxtPdErB
+	AEr98wgbMOyU27kI9oP2kmycTvLmmv1FjI6M6QlqA2qc1fIBKRwxRAg=
+X-Google-Smtp-Source: AGHT+IFD+wnLn3X0eLIa2aapmlOC0NTTa1cAJSPfPrHWV5xD3nXs1qnWeSUphsJ0ixKMvzBa/WVzuQ==
+X-Received: by 2002:a05:6808:4f54:b0:404:764:f7b6 with SMTP id 5614622812f47-40b33c469c7mr3255634b6e.9.1751037489673;
+        Fri, 27 Jun 2025 08:18:09 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-40b441e2ef4sm59894b6e.26.2025.06.27.08.18.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 07:52:07 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
-  git@vger.kernel.org,  shyamthakkar001@gmail.com,
-  kristofferhaugsbakk@fastmail.com
-Subject: Re: [GSOC PATCH v2] commit: avoid scanning trailing comments when
- 'core.commentChar' is "auto"
-In-Reply-To: <91982162-b138-4bb1-81fd-6f9185801c99@gmail.com> (Phillip Wood's
-	message of "Fri, 27 Jun 2025 09:34:30 +0100")
-References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
-	<20250626221631.457725-1-ayu.chandekar@gmail.com>
-	<91982162-b138-4bb1-81fd-6f9185801c99@gmail.com>
-Date: Fri, 27 Jun 2025 07:52:06 -0700
-Message-ID: <xmqqms9t8cfd.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        Fri, 27 Jun 2025 08:18:09 -0700 (PDT)
+Date: Fri, 27 Jun 2025 10:12:43 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 1/4] editorconfig: set maximum line length to 120
+ characters
+Message-ID: <4xcovwt5f2garsngqtzzcrn7755in4xkq6zxxk5smeo4d2vfp4@l7cqb2lizf65>
+References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
+ <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com>
+ <qxewasf6rxt6mnbwvfhxarcbvfsn6cnc2jskpddsb5fhxfhpwq@5d727iud7wfp>
+ <CAOLa=ZR_ZhjxYgN4pZsjOuC52PZjGMCzLJVZbwGQb=Q9W-0HSQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZR_ZhjxYgN4pZsjOuC52PZjGMCzLJVZbwGQb=Q9W-0HSQ@mail.gmail.com>
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 25/06/27 01:51AM, Karthik Nayak wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > On 25/06/25 06:43PM, Karthik Nayak wrote:
+> >> As per 'Documentation/CodingGuidelines', we try to keep to at most 80
+> >> characters per line. However, there are often certain cases where we
+> >> extend this for the sake of readability.
+> >>
+> >> Add a maximum limit of 120 characters to the '.editorconfig'. This means
+> >> that if an individual line exceeds 120 characters, the editor will wrap
+> >> that line. This provides a lot wiggle room over the recommended 80
+> >> character limit.
+> >
+> 
+> Hello Justin,
+> 
+> > I frequently use the format operator in vim to reformat entire blocks of
+> > text and it is commonly configured to use `max_line_length` from an
+> > `.editorconfig` file to know when to wrap lines. Changing the value to
+> > 120 would cause my editor to prefer 120 character lines when
+> > reformatting, which I would personally not like.
+> >
+> 
+> It would only wrap lines longer than 120 columns. Currently editorconfig
+> doesn't wrap any line length. So we're essentially saying, any line
+> above 120 is not something we want to accept and hence wrap. This
+> doesn't mean that shorter lines will be combined together. Wouldn't this
+> be better than the current situation?
 
->> +	size_t cutoff;
->> +
->> +	/* Ignore comment chars in trailing comments (e.g., Conflicts:) */
->> +	cutoff = sb->len - ignored_log_message_bytes(sb->buf, sb->len);
->
-> This finds the "Conflicts:" line. I was surprised to see that the
-> string it looks for is hard coded and not translated, however the
-> sequencer (also surprisingly) does not translate that message either
-> so it should work.
+When `max_line_length` is set in a ".editorconfig" file, in my vim
+editor it overrides the `textwidth` configuration which was already set
+to 80 by default. So changing to 120 would change line wrapping behavior
+for me at least. I could disable using the ".editorconfig", but I would
+prefer to avoid doing that :)
 
-There is a funny chicken-and-egg problem, though.  It limits the
-search for "Conflicts" by using wt_status_locate_end() based on the
-current value of comment_line_str.  When core.commentstring is set
-to "auto", the code that reads the configuration does not touch the
-comment_line_str variable, which is initialized to '#'.  So
-
-	[core]
-	    commentstring = '%'
-	    commentstring = auto
-
-would have '%' in comment_line_str upon entering this codepath, let
-wt_status_locate_end() use '%' as the comment string to find the end
-of the log message, and then looks for "Conflicts:" in the result.
-
-Which may or may not be what you want.
-
-> If you used an existing file (F1 or F2) like most of the rest of the
-> tests in this file we could avoid creating this commit and save
-> ourselves a couple of processes.
-
-Excellent suggestion.
-
->> +	test_grep "^# Changes to be committed:$" actual
->
-> I agree that it is a good idea to anchor the start of the message, but
-> I'm not sure it is helpful to anchor the end of the message as we
-> don't want the test to fail just because an unrelated change adds some
-> whitespace to the end of this line. I'd be tempted to drop the ':' for
-> the same reason.
-
-Again, excellent.
-
-
-> Thanks for fixing this
->
-> Phillip
-
-Thanks.
+-Justin
