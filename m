@@ -1,256 +1,101 @@
-Received: from smtpfb2-g21.free.fr (smtpfb2-g21.free.fr [212.27.42.10])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 6F27B1DE2D7
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 18:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.10
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0418C4502A
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 18:59:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751050440; cv=none; b=Ybg87vNZVMCCdTbaXwrr5jniZ5Uk2SptWsoA6mBeZDXUWk8nVaXZNzbK+uTTyOOPiMr9pL/ZpJlXAng/DfM3IN6JMfMrCnCwK3ankwxpcurPulo6F5zoAI0zWVmB8r0xj4+iSUO+3yKzX841GK+aJZfUcsGwYgpgZ81wc2oMsnU=
+	t=1751050777; cv=none; b=YSINngzcA28NZnIKlTAzMbx9lbKygph05/gn+tG4ckoeSurIOXEuYbgYrqmBxCfRnmdL1kmlUg14HiR3VCf0JYLmY8UYL84JnOFcltswgMIQ26XJKFN+K1FepVIDkfXq9AqKoVdTLwzUeOGPqfoThqUHhr0JY1E4XsglnZLUVPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751050440; c=relaxed/simple;
-	bh=a9tcikyR+0mvK89ZYqs/cfRt9HeBrz+Yv5ioRSaxgoI=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=WEVVQ8LDkOm7wCBZDdc4ZAfPSgjkaECnE/3okjf4MMHia6/0ojV7lO4KUFU8t3mRRMFIulO1F34fRBnZtS0ZqC5gEZIMSilRedhhD0G9DEEjSWH48BfkqrZT9PsnlGUx0hm5XzayBP0hg97oUS7ry5yXhs9Uh/9KLggISEZzq/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dFa6QoKF; arc=none smtp.client-ip=212.27.42.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1751050777; c=relaxed/simple;
+	bh=y5W5tKv4rsLDcMaOPcxcltpK5z0B+RO7R+nIgbeg9bk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FyXx/3TouGTsTaH7TFBU3tH9+/xM2zNhdgm7VF443kHBDpE6gzeeXSCeA/+A/LNfjUbnUNFcnZFpHCNOI4EkV6IzU7iNVF3lwcKTISSOW+FWxQ4j3II+VQc1x6jTCwrBE+jMY8cIDz1qVnZr48Dwi53dPUekpiYz6gRruYp0Yro=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=aVPbbQ6s; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dFa6QoKF"
-Received: from smtp2-g21.free.fr (smtp2-g21.free.fr [212.27.42.2])
-	by smtpfb2-g21.free.fr (Postfix) with ESMTP id 667F44292CC
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 20:48:09 +0200 (CEST)
-Received: from [IPV6:2a01:e0a:d1:f360:8a25:727a:25ef:a4a3] (unknown [IPv6:2a01:e0a:d1:f360:8a25:727a:25ef:a4a3])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp2-g21.free.fr (Postfix) with ESMTPSA id 868612003DD;
-	Fri, 27 Jun 2025 20:47:53 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1751050081;
-	bh=a9tcikyR+0mvK89ZYqs/cfRt9HeBrz+Yv5ioRSaxgoI=;
-	h=Date:From:Subject:To:Cc:References:In-Reply-To:From;
-	b=dFa6QoKFOERnGi4ZSjHh2MlNUWLOiCBGWgy/eY8QNi38f+Xw2AJ2JtvK9i24QtdYY
-	 G2NNymFbNSqFtntEuj24xw1SIQGyXkVyUpZ4BoGBK/bAI3xsZOTp2ta6xXnzt00aVn
-	 LL2JONeq35F7sq6GEItysKX9cDUMm47vHJ9pB5mQ6MQ13yjd+oQZzvGmmh6JFo/oFG
-	 HMkQuN24JYUh+3XEcGbiVAI8V9FuKdQ0jy2BAnThLnQx4w3VAjpP0cx70Jja/zH3Fd
-	 8wPlCG1h35jHI7uBVhMtKKF5Zf9dkwDr70S0dKBSzgWLfkdr2L4LWAcZvsdtcCZFYW
-	 CiffAuVI2ULCw==
-Message-ID: <c49d73de-568a-4584-aa8f-9a9ffd68e4ce@free.fr>
-Date: Fri, 27 Jun 2025 20:47:53 +0200
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aVPbbQ6s"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751050773;
+	bh=y5W5tKv4rsLDcMaOPcxcltpK5z0B+RO7R+nIgbeg9bk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=aVPbbQ6sw2h/0GJJCjqDnmBq9qvwGsWDlFqhyc48KEgDPSSygBmG7UofjZpavOHqK
+	 WiaEkwRUxUaUHHn3HVpq1ThTu7+iY+J+KRYgLH6a5GeLgTPMPqBnxFT+xa2aVPri+S
+	 wpHcx6FdeRc5a9jvW57I7tKkvJFiGRDhbMfC6WjlVwLz9S9P5ekZ8tSd4IDIPJpKa6
+	 oNJEOnVxN39ohPqdPw/z4kYo1qFu+xaxrn2BwQl+5Gr7PZmblvivEl2yVlK7MPJgye
+	 58QZgvbHrLAZHwJBxdDWTRPDKI/TIc8I7pw9rx1Ft38uDdDifsXaenX1TXwu7bd3xw
+	 msnqlyCZvNlWBLArttARsrSTvZWkD+fRJmV39lAVfnxdj2aVlOXfTN8Qbg2mdIjgtr
+	 lTrez72Ebw87OcehMwwEDOOtbO59l70HFKFeEEkzdIhLAamLuRkAB11psGgnexd5lO
+	 xW/TSDYuTgBpFwna14LvrmOb09oATBhJESbSaPe1wKgRNZlqJUv
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:93fe:8e7:9f14:b8a7])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E79712003B;
+	Fri, 27 Jun 2025 18:59:33 +0000 (UTC)
+Date: Fri, 27 Jun 2025 18:59:32 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: ryenus@gmail.com, git@vger.kernel.org
+Subject: Re: Re [bug] pull --prune could not delete references due to lock
+ file already exists error
+Message-ID: <aF7qFEfPi25_e3bq@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
+	git@vger.kernel.org
+References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
+ <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: =?UTF-8?Q?Jean-No=C3=ABl_Avila?= <jn.avila@free.fr>
-Subject: Re: [PATCH v5 2/5] promisor-remote: allow a server to advertise more
- fields
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Taylor Blau <me@ttaylorr.com>, Karthik Nayak <karthik.188@gmail.com>,
- Justin Tobler <jltobler@gmail.com>,
- Christian Couder <chriscool@tuxfamily.org>
-References: <20250611134506.2975856-1-christian.couder@gmail.com>
- <20250625125055.1375596-1-christian.couder@gmail.com>
- <20250625125055.1375596-3-christian.couder@gmail.com>
-Content-Language: fr
-In-Reply-To: <20250625125055.1375596-3-christian.couder@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vlKx4nAendcjFL9z"
+Content-Disposition: inline
+In-Reply-To: <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Le 25/06/2025 à 14:50, Christian Couder a écrit :
-> For now the "promisor-remote" protocol capability can only pass "name"
-> and "url" information from a server to a client in the form
-> "name=<remote_name>,url=<remote_url>".
-> 
-> Let's make it possible to pass more information by introducing a new
-> "promisor.sendFields" configuration variable. This variable should
-> contain a comma or space separated list of field names that will be
-> looked up in the configuration of the remote on the server to find the
-> values that will be passed to the client.
-> 
-> Only a set of predefined fields are allowed. The only fields in this
-> set are "partialCloneFilter" and "token". The "partialCloneFilter"
-> field specifies the filter definition used by the promisor remote,
-> and the "token" field can provide an authentication credential for
-> accessing it.
-> 
-> For example, if "promisor.sendFields" is set to "partialCloneFilter",
-> and the server has the "remote.<name>.partialCloneFilter" config
-> variable set to a value for a remote, then that value will be passed
-> in the form "partialCloneFilter=<value>" after the "name" and "url"
-> fields.
-> 
-> A following commit will allow the client to use the information to
-> decide if it accepts the remote or not. For now the client doesn't do
-> anything with the additional information it receives.
-> 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  Documentation/config/promisor.adoc    |  22 +++++
->  Documentation/gitprotocol-v2.adoc     |  59 +++++++++---
->  promisor-remote.c                     | 134 ++++++++++++++++++++++++--
->  t/t5710-promisor-remote-capability.sh |  31 ++++++
->  4 files changed, 221 insertions(+), 25 deletions(-)
-> 
-> diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-> index 2638b01f83..beb8f65518 100644
-> --- a/Documentation/config/promisor.adoc
-> +++ b/Documentation/config/promisor.adoc
-> @@ -9,6 +9,28 @@ promisor.advertise::
->  	"false", which means the "promisor-remote" capability is not
->  	advertised.
->  
-> +promisor.sendFields::
-> +	A comma or space separated list of additional remote related
-> +	field names. A server will send these field names and the
-> +	associated field values from its configuration when
-> +	advertising its promisor remotes using the "promisor-remote"
-> +	capability, see linkgit:gitprotocol-v2[5]. Currently, only the
-> +	"partialCloneFilter" and "token" field names are supported.
-> ++
-> +* "partialCloneFilter": contains the partial clone filter
-> +  used for the remote.
-> ++
-> +* "token": contains an authentication token for the remote.
-> ++
 
-This kind of text structure calls a description list instead and you can
-already use backquotes:
+--vlKx4nAendcjFL9z
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-`partialCloneFilter`:: contains the partial clone filter
-> +  used for the remote.
-> ++
-> +`token`:: contains an authentication token for the remote.
+On 2025-06-25 at 14:18:49, K Jayatheerth wrote:
+> First off thanks for reporting the bug :)
+> So I cannot test this bug as my files system is case sensitive
+> but to just read the code and give a thought in a direction (Assuming tha=
+t the bug is recreatable)
 
-> +When a field name is part of this list and a corresponding
-> +"remote.foo.<field name>" config variable is set on the server to a
+Just so you know, on Linux, you can create a case-insensitive JFS
+partition on a loopback device and on macOS, you can create a
+case-insensitive APFS or HFS partition in a disk image file that can
+then be mounted (I think using `hdiutil` or the directions at [0]).
 
-Please no space in placeholders: <field-name>
+I have used the former in the rare occasion that I need to test a
+case-insensitive file system.
 
-> +non-empty value, then the field name and value will be sent when
-> +advertising the promisor remote "foo".
-> ++
-> +This list has no effect unless the "promisor.advertise" config
-> +variable is set to "true", and the "name" and "url" fields are always
-> +advertised regardless of this setting.
-> +
+[0] https://support.apple.com/en-ca/guide/disk-utility/dskutl11888/mac
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-More generally, I am a bit annoyed by the usage of the "will" auxiliary
-when not expressing a true future. For an international audience, this
-can be misleading. The plain language[1] philosophy mandates to not use
-auxiliaries other than where they are required (no convoluted sentences).
+--vlKx4nAendcjFL9z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Would it make sense to start a style guide to help writing consistent
-documentation that targets people whose first language is not English?
-Being an non native speaker, I often find our docs too literate, with
-lengthy sentences.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
-[1] https://en.wikipedia.org/wiki/Plain_language
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaF7qFAAKCRB8DEliiIei
+gXt3APsHjBD95wvU4QugTwUusOGq2AXr/os6wjx+GMYubevL8QEAvDc7WQZS5J9O
+XlwS8+Z0OmXd0RDJAPX6AqfFp19DGwg=
+=wg6x
+-----END PGP SIGNATURE-----
 
->  promisor.acceptFromServer::
->  	If set to "all", a client will accept all the promisor remotes
->  	a server might advertise using the "promisor-remote"
-> diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-> index 9a57005d77..0583fafa09 100644
-> --- a/Documentation/gitprotocol-v2.adoc
-> +++ b/Documentation/gitprotocol-v2.adoc
-> @@ -785,33 +785,59 @@ retrieving the header from a bundle at the indicated URI, and thus
->  save themselves and the server(s) the request(s) needed to inspect the
->  headers of that bundle or bundles.
->  
-> -promisor-remote=<pr-infos>
-> +promisor-remote=<pr-info>
->  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Be careful to adjust the length of the underline to the one of the title
-
->  
->  The server may advertise some promisor remotes it is using or knows
- >  about to a client which may want to use them as its promisor
-remotes,> -instead of this repository. In this case <pr-infos> should be
-of the
-> +instead of this repository. In this case <pr-info> should be of the
->  form:
->  
-> -	pr-infos = pr-info | pr-infos ";" pr-info
-> +	pr-info = pr-fields | pr-info ";" pr-info
->  
-> -	pr-info = "name=" pr-name | "name=" pr-name "," "url=" pr-url
-> +	pr-fields = field-name "=" field-value | pr-fields "," pr-fields
->  
-> -where `pr-name` is the urlencoded name of a promisor remote, and
-> -`pr-url` the urlencoded URL of that promisor remote.
-> +where all the `field-name` and `field-value` in a given `pr-fields`
-> +are field names and values related to a single promisor remote.
->  
-> -In this case, if the client decides to use one or more promisor
-> -remotes the server advertised, it can reply with
-> -"promisor-remote=<pr-names>" where <pr-names> should be of the form:
-> +The server MUST advertise at least the "name" and "url" field names
-> +along with the associated field values, which are the name of a valid
-> +remote and its URL, in each `pr-fields`. The "name" and "url" fields
-> +MUST appear first in each pr-fields, in that order.
->  
-> -	pr-names = pr-name | pr-names ";" pr-name
-> +After these mandatory fields, the server MAY advertise the following
-> +optional fields in any order:
-> +
-> +- "partialCloneFilter": The filter specification used by the remote.
-> +Clients can use this to determine if the remote's filtering strategy
-> +is compatible with their needs (e.g., checking if both use "blob:none").
-> +It corresponds to the "remote.<name>.partialCloneFilter" config setting.
-> +
-> +- "token": An authentication token that clients can use when
-> +connecting to the remote. It corresponds to the "remote.<name>.token"
-> +config setting.
-> +
-
-This list can be turned into a description list.
-
-> +No other fields are defined by the protocol at this time. Clients MUST
-> +ignore fields they don't recognize to allow for future protocol
-> +extensions.
-> +
-> +For now, the client can only use information transmitted through these
-> +fields to decide if it accepts the advertised promisor remote. In the
-> +future that information might be used for other purposes though.
-> +
-> +Field values MUST be urlencoded.
-> +
-> +If the client decides to use one or more promisor remotes the server
-> +advertised, it can reply with "promisor-remote=<pr-names>" where
-> +<pr-names> should be of the form:
-> +
-> +	pr-names = pr-name | pr-names ";" pr-names
-
-Here the syntax used is not compatible with synopsis. Would it make
-sense to uniformize it, or is BNF ok?
-
->  
->  where `pr-name` is the urlencoded name of a promisor remote the server
->  advertised and the client accepts.
->  
-> -Note that, everywhere in this document, `pr-name` MUST be a valid
-> -remote name, and the ';' and ',' characters MUST be encoded if they
-> -appear in `pr-name` or `pr-url`.
-> +Note that, everywhere in this document, the ';' and ',' characters
-> +MUST be encoded if they appear in `pr-name` or `field-value`.
->  
->  If the server doesn't know any promisor remote that could be good for
->  a client to use, or prefers a client not to use any promisor remote it
-> @@ -822,9 +848,10 @@ In this case, or if the client doesn't want to use any promisor remote
->  the server advertised, the client shouldn't advertise the
->  "promisor-remote" capability at all in its reply.
->  
-> -The "promisor.advertise" and "promisor.acceptFromServer" configuration
-> -options can be used on the server and client side to control what they
-> -advertise or accept respectively. See the documentation of these
-> +On the server side, the "promisor.advertise" and "promisor.sendFields"
-> +configuration options can be used to control what it advertises. On
-> +the client side, the "promisor.acceptFromServer" configuration option
-> +can be used to control what it accepts. See the documentation of these
->  configuration options for more information.
->  
-Thanks
-
-Jean-Noël
-
+--vlKx4nAendcjFL9z--
