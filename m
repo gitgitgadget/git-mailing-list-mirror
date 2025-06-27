@@ -1,101 +1,113 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0418C4502A
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 18:59:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9FA32BAF9
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 19:05:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751050777; cv=none; b=YSINngzcA28NZnIKlTAzMbx9lbKygph05/gn+tG4ckoeSurIOXEuYbgYrqmBxCfRnmdL1kmlUg14HiR3VCf0JYLmY8UYL84JnOFcltswgMIQ26XJKFN+K1FepVIDkfXq9AqKoVdTLwzUeOGPqfoThqUHhr0JY1E4XsglnZLUVPo=
+	t=1751051123; cv=none; b=HCZ6XMpHL4dtTSM51y0u8XyHC+noc70dWhEhhDovjp/8jKWx9dA83d4D05Vr0DTQoW5DCxV+PWAOQYGInE+ppr5cu41Ldd4+M1KpzDOyV43Z8uN4bhGsFYCao786oxAJ2v+NIYgnKHYqNrIO/MaHsI+8/iLMpTYvmqk15z1xeBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751050777; c=relaxed/simple;
-	bh=y5W5tKv4rsLDcMaOPcxcltpK5z0B+RO7R+nIgbeg9bk=;
+	s=arc-20240116; t=1751051123; c=relaxed/simple;
+	bh=9EC/E6cNIakpo/rWn9mnWeiJqv4qBElfO0bvbqNyIuI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FyXx/3TouGTsTaH7TFBU3tH9+/xM2zNhdgm7VF443kHBDpE6gzeeXSCeA/+A/LNfjUbnUNFcnZFpHCNOI4EkV6IzU7iNVF3lwcKTISSOW+FWxQ4j3II+VQc1x6jTCwrBE+jMY8cIDz1qVnZr48Dwi53dPUekpiYz6gRruYp0Yro=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=aVPbbQ6s; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=GLvvRavSOj+HH99UvOkM1uoEteKO5Ril4tWLg76eiRIoKXrSMrHz6vRmYwodEXk6SSH1dwSWOmpKFvSnGqETk3n/+WOj9+HMNhFgaxH8yKgpgoqRzHk+OlthVJe3iHcnho5M2svzhvyjXdVZKub67YbaZk5tS77GfpWUgwWMouU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yd60shdD; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="aVPbbQ6s"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1751050773;
-	bh=y5W5tKv4rsLDcMaOPcxcltpK5z0B+RO7R+nIgbeg9bk=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=aVPbbQ6sw2h/0GJJCjqDnmBq9qvwGsWDlFqhyc48KEgDPSSygBmG7UofjZpavOHqK
-	 WiaEkwRUxUaUHHn3HVpq1ThTu7+iY+J+KRYgLH6a5GeLgTPMPqBnxFT+xa2aVPri+S
-	 wpHcx6FdeRc5a9jvW57I7tKkvJFiGRDhbMfC6WjlVwLz9S9P5ekZ8tSd4IDIPJpKa6
-	 oNJEOnVxN39ohPqdPw/z4kYo1qFu+xaxrn2BwQl+5Gr7PZmblvivEl2yVlK7MPJgye
-	 58QZgvbHrLAZHwJBxdDWTRPDKI/TIc8I7pw9rx1Ft38uDdDifsXaenX1TXwu7bd3xw
-	 msnqlyCZvNlWBLArttARsrSTvZWkD+fRJmV39lAVfnxdj2aVlOXfTN8Qbg2mdIjgtr
-	 lTrez72Ebw87OcehMwwEDOOtbO59l70HFKFeEEkzdIhLAamLuRkAB11psGgnexd5lO
-	 xW/TSDYuTgBpFwna14LvrmOb09oATBhJESbSaPe1wKgRNZlqJUv
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:93fe:8e7:9f14:b8a7])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E79712003B;
-	Fri, 27 Jun 2025 18:59:33 +0000 (UTC)
-Date: Fri, 27 Jun 2025 18:59:32 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: ryenus@gmail.com, git@vger.kernel.org
-Subject: Re: Re [bug] pull --prune could not delete references due to lock
- file already exists error
-Message-ID: <aF7qFEfPi25_e3bq@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
-	git@vger.kernel.org
-References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
- <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yd60shdD"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-742c7a52e97so3042024b3a.3
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 12:05:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751051118; x=1751655918; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=BkxWKKQcQoMebINeq96rDAn+5dh2Wpo8Ri0RXQai8MM=;
+        b=Yd60shdDDB0v5avk1GOOfLQQnTkVW29jvGzLyyawIpug/GdS+4igVsdC39inJXurMV
+         3CykAoOH9Oyhup0GwF5vnIjpw1kbNVZ0qXoShUpZq4oJGdhlMNfMlKDYijtAmBGZS2gS
+         tpS4MjMAqAapDuFsvSv/FF+arRLZ2GnV1hiZ1CL5ENc3PF9sidks3RAg5mQuDiIVpnDz
+         QPxXO5NP5IKSw6FfwGN5GMBWDhSab2l+Zk0sy1YtXxr9dcDgdzROVIL9pucaDTOCUCR7
+         s8Aw42ZdUrNVb/KvrbfPt2ykFk94iukXkaQuy5CqzFIEJEqzrk1eKdKcDlq8pe/fA7oO
+         D3LA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751051118; x=1751655918;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BkxWKKQcQoMebINeq96rDAn+5dh2Wpo8Ri0RXQai8MM=;
+        b=GKTBadrQ/rs3whYjxEFGxFS13M/kle6oqKvPev2CjuU77rdqUP8jFpJbPaclei47bo
+         DwXNH1vVo5M+jGPiPJATqr2FQ5WBrBR037UNXM4B7+/Hil3SZ//NuvLK8UsABVqeizuQ
+         64LFWkRRGcgVavWPRl7Ea+9Uh+nbE4tiKZJjIYxOVBa78rM7ZnAL3UoXnrfsHDoTbnal
+         VdbSFLeTDbAZAVId8hlpM23NvLfJmuPxK/n4XGM4xvgV6CoQsbeZq3N0SIoBk+Qv6qt9
+         EoiABY3rQr95Ms6oBClFmTOCPMog0nty+xSmmYDSQuREvnca+WEigzIWMmJb8b+wefld
+         /w2w==
+X-Gm-Message-State: AOJu0YyeS0b9NE+XHQZFB7P+v2y9lScodiZZsKmCcyDPWsUxIR7L/JhJ
+	IULi5j8u2O3L5kBxvejxZQF+aaQV7+DVgfftkqU/MjOzccFbgXETJ82jbrBvFA==
+X-Gm-Gg: ASbGncu0y9wdmLs5LipT4fTNWoztuVe8cI4UPoXUrPuH1Oy4Z9mEMsEFwG2JJtDug6k
+	Be/Jd7Q1DhoTW3ajLS94Jo0sZZUO0dbtMt05TYuT8QrQjaIBLcLOnfMLBgGEgIihRJ+lyvB9iLg
+	SGJL26TZy9rB7db9v8NmzF4VOzlqQSJie7bzisaw1j+xzWqf8DcOPE6QQz57Ymc3+Q4GFJKOYaS
+	csD18aNhDNL6MIr3LAJ+AsYm4ULp5bYv8xGeRMZ3Qz7R8qjGgXaLCXeY3bIF6RTcLsV/vX2+wik
+	o4l1+ELK+jhN/acq0du0H9EdwgeeN/TIm/rD5snIauEulIPZYBNoZeJZg8yl/k9HJxFhiZZ07nq
+	K7umEAEM+Kid4lBhn+awbFyDINZSlSBSYtQ==
+X-Google-Smtp-Source: AGHT+IEJ3a7WMM0nYqhvyRm0Js28nai6JI+o/kbzfGazpgPTsLiqIIpIM4T1J1n9WCtHAbRYYlzHuQ==
+X-Received: by 2002:a05:6a00:1992:b0:748:fb2c:6b95 with SMTP id d2e1a72fcca58-74af6f2e8c1mr6310863b3a.18.1751051117841;
+        Fri, 27 Jun 2025 12:05:17 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:fdae:9b06:496e:5a9c])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af56ce594sm2927523b3a.129.2025.06.27.12.05.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 12:05:17 -0700 (PDT)
+Date: Fri, 27 Jun 2025 12:05:15 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, yoshfuji@linux-ipv6.org, 
+	kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
+ service_loop
+Message-ID: <u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
+References: <20250626161038.85966-1-carenas@gmail.com>
+ <20250626172159.87204-1-carenas@gmail.com>
+ <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="vlKx4nAendcjFL9z"
-Content-Disposition: inline
-In-Reply-To: <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---vlKx4nAendcjFL9z
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
 
-On 2025-06-25 at 14:18:49, K Jayatheerth wrote:
-> First off thanks for reporting the bug :)
-> So I cannot test this bug as my files system is case sensitive
-> but to just read the code and give a thought in a direction (Assuming tha=
-t the bug is recreatable)
+On Fri, Jun 27, 2025 at 09:38:47AM -0800, Phillip Wood wrote:
+> 
+> On 26/06/2025 18:21, Carlo Marcelo Arenas Belón wrote:
+> > 
+> > diff --git a/daemon.c b/daemon.c
+> > index d1be61fd57..f113839781 100644
+> > --- a/daemon.c
+> > +++ b/daemon.c
+> > @@ -1145,6 +1145,7 @@ static int service_loop(struct socketlist *socklist)
+> >   		for (size_t i = 0; i < socklist->nr; i++) {
+> >   			if (pfd[i].revents & POLLIN) {
+> > +				int incoming;
+> >   				union {
+> >   					struct sockaddr sa;
+> >   					struct sockaddr_in sai;
+> > @@ -1153,11 +1154,19 @@ static int service_loop(struct socketlist *socklist)
+> >   #endif
+> >   				} ss;
+> >   				socklen_t sslen = sizeof(ss);
+> > -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
+> 
+> Why is the declaration of incoming moved but retry is declared here?
 
-Just so you know, on Linux, you can create a case-insensitive JFS
-partition on a loopback device and on macOS, you can create a
-case-insensitive APFS or HFS partition in a disk image file that can
-then be mounted (I think using `hdiutil` or the directions at [0]).
+Separating the declaration and assignment for incoming is needed so we can
+insert a label for goto; moving it up just removes distractions so the rest
+of the logic is clearly in view.
 
-I have used the former in the rare occasion that I need to test a
-case-insensitive file system.
+Obviously that includes the definition and assignment for retry.
 
-[0] https://support.apple.com/en-ca/guide/disk-utility/dskutl11888/mac
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+How would you suggest to arrange this better?
 
---vlKx4nAendcjFL9z
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaF7qFAAKCRB8DEliiIei
-gXt3APsHjBD95wvU4QugTwUusOGq2AXr/os6wjx+GMYubevL8QEAvDc7WQZS5J9O
-XlwS8+Z0OmXd0RDJAPX6AqfFp19DGwg=
-=wg6x
------END PGP SIGNATURE-----
-
---vlKx4nAendcjFL9z--
+Carlo
