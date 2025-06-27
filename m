@@ -1,75 +1,78 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459FA2EA162
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 18:09:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF77D2D5417
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 18:13:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751047762; cv=none; b=gFG1Ruq+jMdcLcjtVINCKD4uH8flgir0mlwcEswjUyREXd+CDG+8qXq/4uq2LaQFo1k8RFitjRq9bd+l58SWmeArgTJKtIoWwKh5oaNBvv31eDV12w2W8O3yqZ7o0vrJY4LmcUUiHZMclDiWeHhcK8IcvM78VYDC94rPVsfmsgM=
+	t=1751048023; cv=none; b=jPPxdrXUNX8uC8LY9H7IEhoE6GScZ2dTXRk+Llhtw433h3z5+MG9FD+TOXpMk9mjnE5Cu4kJtpq079rV93zo+wUPAqxB/CTs8hLNjyiyNWtHWVe2JZue3T6zc8vzvy3pOkkhiLntHajW0dMZHBZ95hKKLthfFkFsk6Y9ctARLgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751047762; c=relaxed/simple;
-	bh=RVWQmsf86NkhWAbyziUf7If5LGfr1gmKPV7apNaQdm4=;
+	s=arc-20240116; t=1751048023; c=relaxed/simple;
+	bh=SB4eQqNBPrbFv9Hkrr+ZSIAGS0flJgX3zaUly8u7ups=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IHSG08FkgAhgiF32ze+s1H8ZEdvO6ERyD6mAkne5rBwXiJETIiq0GbiVXY3aDgaW046Ms7BGBKM6c4aXwfhJD+2d2hBJQKxdHZ1zk7q5spByRIh3BxUdgAfsISC8gTrYeVGYyFNcFI6xA9NWZ23Ltm/xFVpRqbbpnDMwyjt24fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OpBVqszV; arc=none smtp.client-ip=209.85.210.170
+	 MIME-Version:Content-Type; b=b9sSOCoioWb9/keDDLyPhkPp1gLWP+YYfUMJMrTuBYFDU/Q3nh/PmPs4VyOeeuo0TPaCfxKLPqzlYun1I4mB0vSS8Lo+3Assce48DgvJTHLW+bleez7LE7ACwvZcXq9PZiUjrQWZpJefnatkwBj316Oq8ug94Ki9t9FVjio8ot8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mpCqrVtR; arc=none smtp.client-ip=209.85.210.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OpBVqszV"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-742c3d06de3so251206b3a.0
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 11:09:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpCqrVtR"
+Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-74924255af4so194269b3a.1
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 11:13:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751047758; x=1751652558; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751048021; x=1751652821; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=szo6VxxZVtV+OKQOxb+/0ZBnXQM4vgL/BbNX4NhsyQI=;
-        b=OpBVqszViDIXGHKfvKzSzmdRBUbDWkWd7KNCIwuQmhWrBjsfnKrujgBT2LgJ1PHrNV
-         O9sPv7ghL7N02n2dQKBjAMm3VrIEHp8xqGvI+RYb7kvAzakwZWf0fs/a9kBLZEKB7GQv
-         kUGyWsIagbTZz81rRYqIkVtSbocXhpKUoOjyeMgqw/1TSzbQ0Iean9g0Zc0hiOKc6NVb
-         h1zdLJtbRePPZoiiJhg8KTSqsge8AaZKmjUEvGrmoTCOV9FC/nuAHEHAngXOkIJ/LKvf
-         HCtgNDXOOwgQFJHiSE3cqYbUZ+9AOdXeU3WfVPzThwolcj8fAH+2MJyW54yoPZoBEHno
-         pbUw==
+        bh=O65w5mnuWiN/BAsW1n+gFPKhWbd/Rmf8z1XDgsLgQ3I=;
+        b=mpCqrVtR+waCbpZbTpba736okeBgztaUGFTbzee+MPwh1Atj78qjkUoFRzCq9uFkPL
+         UGk1xnUs00PjE27TYBWlHVplBSNNQx0wnfCNrLnDaa7uKSEUiEfEc1XDUyOH4qPBZchW
+         hGxEbjPae+RGHGXZYBNbh1YHOkhNrNDY5hN0t/p9fDqzwZIYZEdFjIRbqHRVdfol+TUU
+         Y/557hASqXrjuA7Ik31sMnsneJvdF0VVeAl7Wxv4b5PHZkZ9PF+O39P9xWwW4ii7lAlL
+         LbOHcAeHt5nT2+V0Ufd409joiZp1G3x1hM/b0grLe2+2so6jvk75WTMBLWk8YxmBIQJr
+         iaug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751047758; x=1751652558;
+        d=1e100.net; s=20230601; t=1751048021; x=1751652821;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=szo6VxxZVtV+OKQOxb+/0ZBnXQM4vgL/BbNX4NhsyQI=;
-        b=hxKZE6VlHq1Uky9vEC3hPr8VZzQi4W6oIa/gDjRh1D85H88HFHb+pkCJ72Xvs0E75U
-         ZTdsRA+Mspe3AcJq9qCklL+03Uy4Bnvr+xD8CskyioYcNaDR4sMT/3iwMvmUHIxmCTvM
-         BguBChiwgjBgnl++/JWEfDGYwifP4mpwvwVtuD+/auor+Qrt+KxTllQVm3asFMUgZeXU
-         D8bMxfWS2hQCduo9IBZPfSABUbcH7tbOGFn/td3FdkC59unqlH6S0PX7zkatXi7sjKTZ
-         7Wz0kdGReZHtXDILBB180lhNgqL6lVEBKFiHHTDNUQg2x3sW2+QCnF2fUv+RXFVuy/Oc
-         07IQ==
-X-Gm-Message-State: AOJu0YyrnvuIhE4PI+aSegsBptRncniLCjT86pU4tU58OEnG3oNmcYiL
-	74pd28gEAjSXz4EHubpA1+CrBRVUPJ45FsorT4o/nE2xZfYox+F4OewQmD5qGA==
-X-Gm-Gg: ASbGncsSgWcKrMyBN+piPCrGvpS/CA5kTrlVfx6IEE0ug92kQS1PElI88l3d98Lgb0s
-	ZpVfzsoV2EJtootCzPL1gU6BpfAWr6ImosAQ1znQ0Of8lnc0MipHfTkzOO2DinhvXRFPf2ojGFC
-	ymma4M+Q+Otr8yQNzCq+a9Vqshrr0ODcHcuTRxn0oG7c4grc137SP6KyZP8mHyr2RctIjf4+hQs
-	7uRjxcvCGZEemhw+5ouKSoWkHfdoDVtSlOuYT7ZBewDdMJT0mVe/fyV0q/Wm8gNzpQUMAstLXrQ
-	jYvWX025Xm/vMBkLXct71pn2Np2SD9xv0wIv4PE68cwA5w+dh7qXccyFXDUgj/VH+UuzU5Em4ZI
-	AxKE9Q6P8Y7Dt4jKWihzwyrLjsNA=
-X-Google-Smtp-Source: AGHT+IG4plpFcR2nen9m3f2irA3ikwBYRqwixE5HkRwGsNvrgMBe0rTm+HyZkPsWeozeg5VUr7F2mQ==
-X-Received: by 2002:a17:903:2451:b0:235:5a9:9769 with SMTP id d9443c01a7336-23ac4605d87mr60830405ad.25.1751047758453;
-        Fri, 27 Jun 2025 11:09:18 -0700 (PDT)
+        bh=O65w5mnuWiN/BAsW1n+gFPKhWbd/Rmf8z1XDgsLgQ3I=;
+        b=QqZla43Fas1b09rQ5f+NeGpR6e9tvyqjfh2LUK7QikZDOusnAhR2gGcBXJvRk2VpUJ
+         Qo23Xl9wAY0VlwXaiBgk2V0gkAytHErR0ykWFgkSO2G3n/zlosf9QFNoHBFDIvx7ljVf
+         IQM1/LQF5VWe+D53nUOdCT2bMCAewUDllF6bnI9Uqr773Z3J0i2GVkU0S7KkENZ4Y6vi
+         EuqatIi7lsCW64Qhii+xQCHK3Rw4Hjy+OKdSLdiRJTHc53WO3AVviQBI+eGESmX8QVWo
+         IUfZ0wEP+NPzVYWIZ1Vd+F8A1tTWwOEVnvYnCoy70/9+syKeqb2I+IsUFwC39SI2hO8X
+         Cstw==
+X-Forwarded-Encrypted: i=1; AJvYcCUuhAlUFmy6qCe5yuRR+TIbUHmoQ7KH8dQBbNhcamkjhGtoSrWQgHdK6Z56iYNNvUddHC0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzlFdUL3JKxfNE+HcUDAJ+Uhj77SbVN8JQN+6/ULvKckaWnKNn7
+	PqPv034C/ZeHDDF5jbheWuqx5cbqCd0sgXLnn13Fr5pmfGsQbOa3zVmEh2FBfQ==
+X-Gm-Gg: ASbGncs/WG8uS/jmSRNrCuPEFZYbfN98i4SbDU1+ngj71U2no6reCfxgk1uWthWRUHD
+	DLIslsZoW3Zq8jBGWgyQyN4w4KTgFDJ4qtAjqFeT6df0Q3N4p/+iKnna1LDpEuP97qVkmGrK4/N
+	2fSt6G8WxELjtY4Ei/p+0yKHSOXmLtot/F9kRtuIl716UngqbrDQ3O4uDk3vy07sF4gzngvRsxG
+	SKWAzBBiBUGnd53udbuoMgrydJzZX4i+e46/5ZaxF0t6GIwrik+5gQsmHV7T/dJo/EFZE4kcAyi
+	wdqIMcV73z6Ol/1gnxGLr8Zr7PET0fpds0aV1xenbdDWWWWZ/zNjiiFD71cYyA64oj1dM9f0oxc
+	B7SxbLwPyT3Ksc0maNxbDTZbNeAM=
+X-Google-Smtp-Source: AGHT+IEzEDY1+XJc320gFC9YeCX3eMtFZ75Cd+d8t3yFvks6NCUcY9G9JClPikTSQRbcyqS/wA8fmg==
+X-Received: by 2002:a17:903:f8c:b0:234:b123:b4ff with SMTP id d9443c01a7336-23ac45c1c84mr57443795ad.21.1751048021103;
+        Fri, 27 Jun 2025 11:13:41 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3c1d3csm22051535ad.207.2025.06.27.11.09.17
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3ba060sm21917655ad.197.2025.06.27.11.13.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 11:09:18 -0700 (PDT)
+        Fri, 27 Jun 2025 11:13:40 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <502024330056@smail.nju.edu.cn>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-In-Reply-To: <4A56A595-55B1-4EEB-9B9E-3E9F7A9A74D4@smail.nju.edu.cn> (Lidong
-	Yan's message of "Fri, 27 Jun 2025 22:24:10 +0800")
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
-	<20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
-	<xmqqy0td8fa9.fsf@gitster.g>
-	<4A56A595-55B1-4EEB-9B9E-3E9F7A9A74D4@smail.nju.edu.cn>
-Date: Fri, 27 Jun 2025 11:09:17 -0700
-Message-ID: <xmqqbjq983aq.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: Meet Soni <meetsoni3017@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  shejialuo@gmail.com,  karthik.188@gmail.com,  John Cai
+ <johncai86@gmail.com>
+Subject: Re: [GSoC][RFC PATCH 1/2] builtin/refs: add list subcommand
+In-Reply-To: <0d3fe70e-2064-4206-9673-c0589a4445f1@free.fr> (=?utf-8?Q?=22?=
+ =?utf-8?Q?Jean-No=C3=ABl?=
+	Avila"'s message of "Fri, 27 Jun 2025 18:27:04 +0200")
+References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
+	<20250627074934.1761897-2-meetsoni3017@gmail.com>
+	<0d3fe70e-2064-4206-9673-c0589a4445f1@free.fr>
+Date: Fri, 27 Jun 2025 11:13:40 -0700
+Message-ID: <xmqq7c0x833f.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,29 +83,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Lidong Yan <502024330056@smail.nju.edu.cn> writes:
+Jean-Noël Avila <jn.avila@free.fr> writes:
 
->> You'd need to check in forbid_bloom_filters() that none of the
->> pathspec items have magic (other than literal), not just the first
->> one, no?
+> Hello,
 >
-> Yeah, I never notice that. I would add checks in forbid_bloom_filters().
-> And add test to ensure we don’t use bloom filter if any pathspec item is
-> not literal.
-
-Sounds great.  I was wondering why your tests did not catch it.
-
->> Totally outside the topic, but I wonder if we can further optimize
->> by adding an early rejection using .nowildcard_len?  Instead of
->> allowing a wildcarded "dir/*" pathspec element from disabling the
->> Bloom filter altogether, we could say "dir/ is not possibly altered,
->> so there may be dir/A, dir/B, etc., in the directory, nothing that
->> would match dir/* wildcard would have been modified", couldn't we?
+> I'm only focusing on the documentation part.
 >
-> I think it's feasible. In that case, we would need to add a condition
-> .nowildcard_len > 0 to forbid_bloom_filter. I'm happy to write a new
-> patch to address this issue.
+> Le 27/06/2025 à 09:49, Meet Soni a écrit :
+>>
+>> ---
+>>  Documentation/git-refs.adoc |  95 +++++++++++++++++++++++++++++++
+>>  builtin/refs.c              | 110 ++++++++++++++++++++++++++++++++++++
+>>  2 files changed, 205 insertions(+)
+>> 
+>> diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
+>> index 4d6dc994f9..d8f81eaabd 100644
+>> --- a/Documentation/git-refs.adoc
+>> +++ b/Documentation/git-refs.adoc
+>> @@ -11,6 +11,13 @@ SYNOPSIS
+>>  [synopsis]
+>>  git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
+>>  git refs verify [--strict] [--verbose]
+>> +git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
+>
+> please use spaces around '|' in alternative options:
+> [--shell | --perl | --python | --tcl]
 
-Let's leave it outside the topic and concentrate on the problem at
-hand first.
-
+As this seems to be copied and pasted with minimum modification,
+perhaps we are better off if you sent a "here is how you should do
+it" patch against Documentation/git-for-each-ref.adoc file where
+this was copied from.
