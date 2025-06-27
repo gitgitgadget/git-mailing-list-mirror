@@ -1,71 +1,69 @@
-Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D9320296C
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 06:22:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DAE4221FA4
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 07:49:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751005335; cv=none; b=XW59CljcLFVZm7hFG6Kp3DWaO32I8VhQ2YBefGGz1tURd4guGqwDQGa7skswMrJ1MCH0xg5CF+lORdzCAzXFbdxJI51ZcuVWPoSlPzJwgfHC62Ky/8Hvla8nFCJCQ3h+ZDYcE+T3CzUuQXdGVbvxlVKHYIa4jvu17rug2N1j0Yo=
+	t=1751010597; cv=none; b=UhoLnXr0/+ZvV+TAHWW03hvgjKVPKuWt/SbQMP8mqDZTAZlV9gbveAM5TP7W8MR975hoeWHKL7TlJHq94gbbNKBj5I7tKLQ/y0jUEW4dsxj2UTXRPBToIp6B+/mYNAGM2LkduB1Eb3y8+G46Yxa/pQnYackHcu5/uyYlPyQ5pLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751005335; c=relaxed/simple;
-	bh=QF1j+NBTwlraN2BSyCEp/g/j8agz7PVZr/9jxKlXztM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QAaX/TJyAwR5N+bRYoCEuzRvIw1cQsvbpVlkaevqAeBoESlBZ+5XeJl3PFP1vwfOg+0vhtJOtsRDWLgyNFBPsrb6T37iI+9uzeQGeFsISWMqzw5aawBwDUFIlDNj5pX9rlS2t21COY2O6R+klGReABhqdVCPAt5xkCNs6DjwkQM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TikS9JsR; arc=none smtp.client-ip=209.85.210.193
+	s=arc-20240116; t=1751010597; c=relaxed/simple;
+	bh=WH2MIuL5hLKWuxjRN0vHXZE1dVQ2afY8Zb3aAOuNNvo=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=W7DKMOn7U3fsWl0cKR6ym260mkYNj81jSOT1DVHVwwyt3TBkYVjwH5/J+vc6AnJN0Drn9dzMaR+BVQdHmsUvYDmQHygg0zTqLsd1NMFvzsfU8JMVlW/s9vMbkTOLIjeKSESaqtNx6NAlawyhWf5eYnsPJZ9gHiIITyDhYbKMo/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M5ON5HHA; arc=none smtp.client-ip=209.85.215.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TikS9JsR"
-Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-748da522e79so1097666b3a.1
-        for <git@vger.kernel.org>; Thu, 26 Jun 2025 23:22:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M5ON5HHA"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-af51596da56so1434698a12.0
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 00:49:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751005333; x=1751610133; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tKTTpUH9MHolnerdnNV8qL6sw0EApA6KLLVbyPGwTZE=;
-        b=TikS9JsRyWZmJ6lhGvpn+T5JT7ODKuDvAqYpxqPH+aOv3ogq7QB3m4/OgQeGKKzFiN
-         RuO1HGbfPE2uquRu4WdrD7H31NeTmHWnTEyK8wfe9qnz/uw6EOQ409i1HwM3jEVkEQOu
-         1f0Ru6aL896scfNmQxPsjeAlHnRm4+0e0NJ+n/Kbr94x/eQQhQairCTQ2nvyY5MASKHI
-         5aSy4zM4TzbFg51diUSp9BGG/XjyC4dVouyQQT4KXNDwXdO/N1mZDDUlQoqJ+fSZrzf2
-         5WCCzv3tPW3oeAJynMTCef24zOI6Aj7R2coI7Sr8KJ20yoblDu90nQ9ocqaXequhUzuG
-         CmrQ==
+        d=gmail.com; s=20230601; t=1751010595; x=1751615395; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=g7ZXhKLnZRDLVHkV7sU0xNyX793fkl62gZD4HoLJi4c=;
+        b=M5ON5HHAmk69Zw00UwVVsQqY6TDbkBhQgNDiaqqmDvx6jtkd3GkWG+r4y8DtPk+khp
+         dVz8pffMtI20S1kUXbw8MWRX8CdO12wNqNYup//GEKR+/8qGdbT4aNuULDCWEGJ9LV57
+         uhqNbkE9aQj/11G6Csi4QSqjzBkq3nK/TbQyY4I3kRPrJbD2uW7r9GBnz7Qn62luPw8k
+         2tBAXC8WQ7NVgiMevi4KZO5OgPWCF8hk75naTE80rtpkE0ZcVnBTmI5xW0EORTOpKhLU
+         3PiXDGPCHgH5bstNBnPhWZTQFfJsuO08rUHmkZZzBseo/dNA6gCYSPp7UWkelKnMjMcy
+         qmZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751005333; x=1751610133;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tKTTpUH9MHolnerdnNV8qL6sw0EApA6KLLVbyPGwTZE=;
-        b=tFsKaqh/6gi5mQxQkYQr3V3rvD/8lC8/Ty7LDp46RKNClpE0a8aiNwYnNaSHcXVcuY
-         0lDZ6BNNpV9yGkkSn2vroIgUpm10qPGQbAr3nNwNY4phuvvZGlxPcGBMqUMIvEYZejZY
-         RSB0o4qHI6AI2v4K9s9aIT6DXc2NmD0chvhC+gqx72VOz2t264d5CPLEFQDOOBjWphpd
-         XoaTcBGZ0hjf743VwNtNIl4FLsyXVNYvwjtJAwFCX/wUh5kxHm1E6aq+34vtA/cqMb01
-         xxUBVi9wHaktMaVhuoELpSdw9a/raavzwGmoTuCWnzs1Ln6MU8JYS/8lJ/xQiEOkhCDh
-         nStQ==
-X-Gm-Message-State: AOJu0YwrqedDoTkQj3oO/s4WhdU7ngkhrxRK1FYUjx+I1ApH67BxzNOF
-	r2jN2hj/VqF2DWIMBHW6jMcGDVzepOa2MDTwTzS0NuVSHYKzJ1YO+az12wJe0oWd5WAOZ1aA
-X-Gm-Gg: ASbGnctKO4szUkdU9n9LPSPf3EUak1ByqnCWPgW9SratR0su1dkbJ3UpWTqH0in6nds
-	9eaeC3kxzG+7gMt6fc3244cj/JW/CpnGUKt/mDZ3wQzVxc2H6GcKdlxkfuLNSCtjO+YVOn/gOgm
-	qdW/FGI+IJOMf7EfPJKvHr3Vw3Og0SZXDkYQBWjlCxn/azNSspJhi8tkx297bDqSxM29Ib0pTPp
-	ve0FKxW+PdTnVRj0Mfj8MRWHpkzjGeGxHRZR+eMBU5ps1AEBuQQggMopV5LoYuf8n9DPxfMa5Sz
-	mGbHibOo235Agqnw51lb78I5P/7wy6EHM/wQvg4AqItT+D2I168a7mRljmya6XSd0Vo+
-X-Google-Smtp-Source: AGHT+IFV6vrvHskc5J19xodr3aaJvzOsHqt99NVXEPbCPj4HduWKWpeRWSfN/ZTT9Wl/aSkxMCF3cA==
-X-Received: by 2002:a05:6a00:10c5:b0:748:fe3a:49f2 with SMTP id d2e1a72fcca58-74af70276b1mr2477254b3a.21.1751005333019;
-        Thu, 26 Jun 2025 23:22:13 -0700 (PDT)
-Received: from r760 ([188.253.126.212])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af57ef4ccsm1414936b3a.156.2025.06.26.23.22.11
+        d=1e100.net; s=20230601; t=1751010595; x=1751615395;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=g7ZXhKLnZRDLVHkV7sU0xNyX793fkl62gZD4HoLJi4c=;
+        b=bWU7GRLAUeMKeaw7QLR6f1+BqKQ2ocTcyhWrzrDkJtxJ8BvSHn0Qp29IQxH7OB/af/
+         XonbHr3IIYXVxIVC4/Ho+kM2Ntm4uYFS25ya6UsH1onxW32TuLacbG/x196pzYBDp1QU
+         4AcfWaeJsc4jQ8pRnt3yYNr9zE4QX43AmxY2V5pa5DNTx7Ng9EqCRlwnPnNQO/dtuSwr
+         sd7IWqcbgbgD1t1W0GfEKmekZW2+GawLNTiwkGhOklbU6BgMTPkRidwhbc/J8dPqkrFK
+         +Aei5E/Pt0X7UPacJDmOjfD5LQFoBd9zkNR6QxQoiZLOld5/9khuXpIbGboEBj0iGjn3
+         nmZQ==
+X-Gm-Message-State: AOJu0Yw6+Sb6f27nvZAFQZsso/tVP1LJcd+/ID2uHhwal22nFwsdVHn4
+	U5yj0Ft+l0CRqtmAKSezLMvq8pTFdW8ZjcxFjknNzie4aQTf0mrudR16nK5Z6zIg
+X-Gm-Gg: ASbGncvND2XV/1DT+a5JHBa/2J0gVLGAH4cCLpyOKNtWAlPkUu9x8ldhAggwataCyTs
+	0KvcY/4e/bl84OkqDP+pK0ChW6cod/45dVd6jPjChX+qxsCoTXXRDFcj8vsWoNOLHO7SQ2mul5w
+	WRGrBn/c1MiqSWjKifA98lBEgifdHwwaHy7zcgIWVEwSY97rDVinWhvx935hQbwBOUt4ACSzU1e
+	aPpkMr4TjDMwHE6Qx0Vg2iNAywk9/xCLFQZqHqnbaPcRh4KkFwFRjlPNP0J3NN2NNubtso+UlUO
+	e9drzJRWaM0TXj9XpwkmS/dPARhqJMCVOjRakOEO+NMjIGdOlfqnVAZ0XEjRaVnDkmhD
+X-Google-Smtp-Source: AGHT+IGfCrSSl7R/KXziYtaZiURe4Q2LoD2JzA/Q35vX8li1kES5cZHcaCUMCmD7DvJe2GC3O1z9/Q==
+X-Received: by 2002:a17:90b:5347:b0:311:e8cc:4255 with SMTP id 98e67ed59e1d1-318c930f93amr2620570a91.31.1751010594929;
+        Fri, 27 Jun 2025 00:49:54 -0700 (PDT)
+Received: from meet.. ([43.250.165.67])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-318c14e23aesm1673437a91.31.2025.06.27.00.49.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Jun 2025 23:22:12 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-X-Google-Original-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+        Fri, 27 Jun 2025 00:49:54 -0700 (PDT)
+From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
-Cc: Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: [PATCH v2 2/2] bloom: optimize multiple pathspec items in revision traversal
-Date: Fri, 27 Jun 2025 14:21:54 +0800
-Message-ID: <20250627062154.1121530-3-502024330056@smail.nju.edu.cn>
-X-Mailer: git-send-email 2.50.0.108.g6ae0c543ae
-In-Reply-To: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
+Cc: ps@pks.im,
+	shejialuo@gmail.com,
+	karthik.188@gmail.com,
+	Meet Soni <meetsoni3017@gmail.com>
+Subject: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+Date: Fri, 27 Jun 2025 13:19:32 +0530
+Message-Id: <20250627074934.1761897-1-meetsoni3017@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,243 +72,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Remove `if (spec->nr > 1)` to enable bloom filter given multiple
-pathspec items. Add for loop in prepare_to_use_bloom_filter()
-to initialize each pathspec item's struct bloom_keyvec. Add for
-loop in check_maybe_different_in_bloom_filter() to find if at least one
-bloom_keyvec is contained in bloom filter.
+This patch series introduces `git refs list` as a modern replacement for
+`git for-each-ref`, as part of an effort to consolidate ref-related
+functionality under a unified `git refs` command.
 
-Add new function release_revisions_bloom_keyvecs() to free all bloom
-keyvec owned by rev_info.
+Git's ref-related operations are currently handled by several distinct
+commands, such as `git show-ref`, `git for-each-ref`, `git update-ref`,
+`git pack-refs`, etc. This distribution has a few practical drawbacks:
 
-Modify t/t4216 to ensure consistent results between the optimization
-for multiple pathspec items using bloom filters and the case without
-bloom filter optimization.
+- Users need to rely on multiple commands for related tasks involving
+  refs.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
- revision.c           | 121 ++++++++++++++++++++++++-------------------
- t/t4216-log-bloom.sh |  10 ++--
- 2 files changed, 73 insertions(+), 58 deletions(-)
+- The commands may differ slightly in behavior and option syntax,
+  leading to inconsistency.
 
-diff --git a/revision.c b/revision.c
-index 3aa544c137..5606f6c7f6 100644
---- a/revision.c
-+++ b/revision.c
-@@ -675,8 +675,6 @@ static int forbid_bloom_filters(struct pathspec *spec)
- {
- 	if (spec->has_wildcard)
- 		return 1;
--	if (spec->nr > 1)
--		return 1;
- 	if (spec->magic & ~PATHSPEC_LITERAL)
- 		return 1;
- 	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
-@@ -685,6 +683,8 @@ static int forbid_bloom_filters(struct pathspec *spec)
- 	return 0;
- }
- 
-+static void release_revisions_bloom_keyvecs(struct rev_info *revs);
-+
- static void prepare_to_use_bloom_filter(struct rev_info *revs)
- {
- 	struct pathspec_item *pi;
-@@ -692,7 +692,7 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	char *path_alloc = NULL;
- 	const char *path, *p;
- 	size_t len;
--	int path_component_nr = 1;
-+	int path_component_nr;
- 
- 	if (!revs->commits)
- 		return;
-@@ -709,50 +709,53 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	if (!revs->pruning.pathspec.nr)
- 		return;
- 
--	pi = &revs->pruning.pathspec.items[0];
--
--	/* remove single trailing slash from path, if needed */
--	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
--		path_alloc = xmemdupz(pi->match, pi->len - 1);
--		path = path_alloc;
--	} else
--		path = pi->match;
--
--	len = strlen(path);
--	if (!len) {
--		revs->bloom_filter_settings = NULL;
--		free(path_alloc);
--		return;
--	}
--
--	p = path;
--	while (*p) {
--		/*
--		 * At this point, the path is normalized to use Unix-style
--		 * path separators. This is required due to how the
--		 * changed-path Bloom filters store the paths.
--		 */
--		if (*p == '/')
--			path_component_nr++;
--		p++;
--	}
--
--	revs->bloom_keyvecs_nr = 1;
--	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
--	bloom_keyvec = create_bloom_keyvec(path_component_nr);
--	revs->bloom_keyvecs[0] = bloom_keyvec;
-+	revs->bloom_keyvecs_nr = revs->pruning.pathspec.nr;
-+	CALLOC_ARRAY(revs->bloom_keyvecs, revs->bloom_keyvecs_nr);
-+	for (int i = 0; i < revs->pruning.pathspec.nr; i++) {
-+		pi = &revs->pruning.pathspec.items[i];
-+		path_component_nr = 1;
-+
-+		/* remove single trailing slash from path, if needed */
-+		if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
-+			path_alloc = xmemdupz(pi->match, pi->len - 1);
-+			path = path_alloc;
-+		} else
-+			path = pi->match;
-+
-+		len = strlen(path);
-+		if (!len)
-+			goto fail;
-+
-+		p = path;
-+		while (*p) {
-+			/*
-+			 * At this point, the path is normalized to use
-+			 * Unix-style path separators. This is required due to
-+			 * how the changed-path Bloom filters store the paths.
-+			 */
-+			if (*p == '/')
-+				path_component_nr++;
-+			p++;
-+		}
- 
--	fill_bloom_keyvec_key(path, len, bloom_keyvec, 0,
--			      revs->bloom_filter_settings);
--	path_component_nr = 1;
-+		bloom_keyvec = create_bloom_keyvec(path_component_nr);
-+		revs->bloom_keyvecs[i] = bloom_keyvec;
-+
-+		fill_bloom_keyvec_key(path, len, bloom_keyvec, 0,
-+			       revs->bloom_filter_settings);
-+		path_component_nr = 1;
-+
-+		p = path + len - 1;
-+		while (p > path) {
-+			if (*p == '/')
-+				fill_bloom_keyvec_key(path, p - path,
-+					       bloom_keyvec,
-+						   path_component_nr++,
-+					       revs->bloom_filter_settings);
-+			p--;
-+		}
- 
--	p = path + len - 1;
--	while (p > path) {
--		if (*p == '/')
--			fill_bloom_keyvec_key(path, p - path, bloom_keyvec,
--					      path_component_nr++,
--					      revs->bloom_filter_settings);
--		p--;
-+		FREE_AND_NULL(path_alloc);
- 	}
- 
- 	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
-@@ -760,14 +763,19 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 		bloom_filter_atexit_registered = 1;
- 	}
- 
-+	return;
-+
-+fail:
-+	revs->bloom_filter_settings = NULL;
- 	free(path_alloc);
-+	release_revisions_bloom_keyvecs(revs);
- }
- 
- static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 						 struct commit *commit)
- {
- 	struct bloom_filter *filter;
--	int result = 1, j;
-+	int result = 0;
- 
- 	if (!revs->repo->objects->commit_graph)
- 		return -1;
-@@ -782,8 +790,11 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 		return -1;
- 	}
- 
--	result = bloom_filter_contains_vec(filter, revs->bloom_keyvecs[0],
--					   revs->bloom_filter_settings);
-+	for (size_t nr = 0; !result && nr < revs->bloom_keyvecs_nr; nr++) {
-+		result = bloom_filter_contains_vec(filter,
-+						   revs->bloom_keyvecs[nr],
-+						   revs->bloom_filter_settings);
-+	}
- 
- 	if (result)
- 		count_bloom_filter_maybe++;
-@@ -3201,6 +3212,14 @@ static void release_revisions_mailmap(struct string_list *mailmap)
- 
- static void release_revisions_topo_walk_info(struct topo_walk_info *info);
- 
-+static void release_revisions_bloom_keyvecs(struct rev_info *revs)
-+{
-+	for (size_t nr = 0; nr < revs->bloom_keyvecs_nr; nr++)
-+		destroy_bloom_keyvec(revs->bloom_keyvecs[nr]);
-+	FREE_AND_NULL(revs->bloom_keyvecs);
-+	revs->bloom_keyvecs_nr = 0;
-+}
-+
- static void free_void_commit_list(void *list)
- {
- 	free_commit_list(list);
-@@ -3229,11 +3248,7 @@ void release_revisions(struct rev_info *revs)
- 	clear_decoration(&revs->treesame, free);
- 	line_log_free(revs);
- 	oidset_clear(&revs->missing_commits);
--
--	for (int i = 0; i < revs->bloom_keyvecs_nr; i++)
--		destroy_bloom_keyvec(revs->bloom_keyvecs[i]);
--	FREE_AND_NULL(revs->bloom_keyvecs);
--	revs->bloom_keyvecs_nr = 0;
-+	release_revisions_bloom_keyvecs(revs);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 8910d53cac..46d1900a21 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -138,8 +138,8 @@ test_expect_success 'git log with --walk-reflogs does not use Bloom filters' '
- 	test_bloom_filters_not_used "--walk-reflogs -- A"
- '
- 
--test_expect_success 'git log -- multiple path specs does not use Bloom filters' '
--	test_bloom_filters_not_used "-- file4 A/file1"
-+test_expect_success 'git log -- multiple path specs use Bloom filters' '
-+	test_bloom_filters_used "-- file4 A/file1"
- '
- 
- test_expect_success 'git log -- "." pathspec at root does not use Bloom filters' '
-@@ -151,9 +151,9 @@ test_expect_success 'git log with wildcard that resolves to a single path uses B
- 	test_bloom_filters_used "-- *renamed"
- '
- 
--test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
--	test_bloom_filters_not_used "-- *" &&
--	test_bloom_filters_not_used "-- file*"
-+test_expect_success 'git log with wildcard that resolves to a multiple paths uses Bloom filters' '
-+	test_bloom_filters_used "-- *" &&
-+	test_bloom_filters_used "-- file*"
- '
- 
- test_expect_success 'setup - add commit-graph to the chain without Bloom filters' '
+We propose a long-term consolidation effort to bring ref-related
+subcommands under the umbrella of a single command: `git refs`.
+
+The implementation of `git refs list` is functionally identical to `git
+for-each-ref`. It reuses the same internal logic (cmd_for_each_ref) to
+ensure complete backward compatibility. The purpose of this patch is not
+to introduce new behavior but to provide an alternate entry point under
+the consolidated `git refs` namespace.
+
+The motivation behind this change is twofold:
+
+- Consolidation: Centralizing ref-related operations makes them easier
+  to discover, use, and maintain.
+
+- Evolution: While the initial goal is parity with existing commands,
+  this consolidation allows for careful reconsideration of which
+  features are essential. Over time, we can:
+
+  - Remove legacy or obscure options that are no longer needed.
+  - Add improvements that wouldn't make sense to bolt onto legacy
+    commands.
+  - Offering a more consistent and user-friendly surface.
+
+To verify backward compatibility, this patch also includes a test
+`t/t1461-refs-list.sh`, which runs the full `t6300-for-each-ref.sh` test
+using `git refs list`. The test uses ${GIT_REFS_LIST_CMD:-for-each-ref}
+to allow substitution without duplicating tests.
+
+This patch is deliberately conservative: it introduces no behavioral
+changes and leaves `for-each-ref` untouched. The goal is to lay
+groundwork and demonstrate viability of ref consolidation within `git
+refs`.
+
+Going forward, I'd like to initiate a discussion on what the ideal
+surface of `git refs list` should look like. Which options and features
+from `for-each-ref` should be carried over? Are there any that are
+obsolete or overly niche? What improvements might be worth considering
+now that we have a new, consolidated interface?
+
+Feedback on this, especially from those who rely on `for-each-ref` in
+scripts or tooling would be very helpful.
+
+
+Meet Soni (2):
+  builtin/refs: add list subcommand
+  t: add test for git refs list subcommand
+
+ Documentation/git-refs.adoc |  95 ++++++++++
+ builtin/refs.c              | 110 ++++++++++++
+ t/meson.build               |   1 +
+ t/t1461-refs-list.sh        |   8 +
+ t/t6300-for-each-ref.sh     | 333 ++++++++++++++++++------------------
+ 5 files changed, 384 insertions(+), 163 deletions(-)
+ create mode 100755 t/t1461-refs-list.sh
+
+
+base-commit: cb3b40381e1d5ee32dde96521ad7cfd68eb308a6
 -- 
-2.50.0.108.g6ae0c543ae
+2.34.1
 
