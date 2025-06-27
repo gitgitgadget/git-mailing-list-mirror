@@ -1,133 +1,138 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95BB628D8FF
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 22:09:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32DE5218E8B
+	for <git@vger.kernel.org>; Fri, 27 Jun 2025 23:05:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751062189; cv=none; b=nV4eP+7Vspav2sdx1xJECJ2J9eg/wnL3q2LNBeWXBR8Bmiwod+TjxiVesTHu/Zif26EFwIMlR54xrVStS2F6JDDS2wieQNTrlXKu4rEeeJpRXz9+rI0s1123UHf/YopZk4eCJAOJ7vYj354qwDzBIMe0OpyOEO+3LUHGy4RHHiA=
+	t=1751065556; cv=none; b=dctqy+wPTN3jCpTd+fnMqr3NSS8DyTZ4iUMjdJOrUq1qnVy/fWAiY4+ECqjLo7CxYf6I7OZAtKWYm6yly/pfgO2Zcq5Zw5fo7M7VJVZoi3Qx4C1L2pKIp9R57snG4unfumyxyw1Pq35gwHJeK3bAayi/AdhmBYKpnZYx+iT1Kfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751062189; c=relaxed/simple;
-	bh=fcMBWJasJvBtOwVqtjd8pK6FI6UzxR4uC3D2v2Lcuh8=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=ClR/gCk5h2O9uMaqOQNf73Wbc8K8cT4oW8TDPKOR64l4lhUtiQaWhplBI4JRtGMicrwjA/gkC2c01WjV9UQEX9a3EmvBtwvhM2HX2cBWZhsfTV4vXYPkmmFQ+Fvf7SuvbZaSkqCcjFw/1EFtyixvhunlTZ9HAnRFw6VUaIZSK4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=oCeFnjms; arc=none smtp.client-ip=192.198.163.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1751065556; c=relaxed/simple;
+	bh=sloeRK+GSwkX8k+ea0uq4ueM02ubw/ZTdfq696W7U04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s2pOIG04rfYLAx+QSA5pkvPCtqgo9mUrMOPgt5juaQgPcRT7R9zN27mt4TjptpGPkvjTbxRj+qWgl2LBSXJpGamebN1vuivpKvr8j/F0Bl3RR7Lb0Dxu4srk9lHqw16bXNCSvPKiLMxTmp1ebktZQhFO4gZEgTlq6s3uyaGqLQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DQio+Awo; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="oCeFnjms"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751062188; x=1782598188;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=fcMBWJasJvBtOwVqtjd8pK6FI6UzxR4uC3D2v2Lcuh8=;
-  b=oCeFnjms5icctn3BbLO9Y+BqaD2nCfrTm0wOCEoVdiTEcEYwCZhQ8lOP
-   HPIdCeN1764dVfSxZohvu5Fnw1H+wiXNeL3P1uTb5q7sIZYmZtLysjSOU
-   b6pxDv59daPDS+eBg6pExtmbBlZQqwTOyge371s8tTpm0gB6vMXMcrOnu
-   2PVEHcpXLfKT51AkxvQXqSHZnJZI3sNTfjxzcLeAb8D8wW0Lymb28GMnE
-   nmbjBvSJsfp1zSDVDxWlUvQ7mmmKE073fvV0ciFGKU/GdbpEBDDp/gU4G
-   bHa34KOX0xs9QNk7x5gsh/u+L4R42KZfXqUraV77FW66SQaJS2FkW/xxQ
-   Q==;
-X-CSE-ConnectionGUID: Jx0s0+2bSe2EfV51G0+x4A==
-X-CSE-MsgGUID: /KvCJ48lRTKtlBy5IIbopw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11477"; a="78822289"
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="78822289"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:09:46 -0700
-X-CSE-ConnectionGUID: aY0ag1SxR2+fJFK1Nv5Ang==
-X-CSE-MsgGUID: B11pA5GkQqOuScFCkKxmKQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,271,1744095600"; 
-   d="scan'208";a="158418859"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by fmviesa004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Jun 2025 15:09:45 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Fri, 27 Jun 2025 15:09:04 -0700
-Subject: [PATCH] send-pack: clean up extra_have oid array
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DQio+Awo"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-313bb9b2f5bso2568053a91.3
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 16:05:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751065554; x=1751670354; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=F9Wiz5bCJGgRfmxawvMKFzwSuuWCBOlz3eB52GU0Z0c=;
+        b=DQio+Awo2ZVikrg+Cshlx2hoZvIEtJVfbZtCz5cclQVIMr+2DrhWkIBH2fxZ+JSuIp
+         qDFt6N/xrolWtdye7uzj8FVGl8y/wWycIOKwOWf3FBxJa95DpG73nYqOuh4+SMt+6A+R
+         6IkAI7X9FfdG4EJYQs8vtQJIZjc1PdKTKSLhOqgrMjw7ZmIblyShlYan6Jt+93pxH40H
+         xi1dGVgo4CGGoiT9pI//8Tk85FBHOcdgLwMxr5Vha6ui34uwu+2BdEFMV7op+YSjkbiG
+         txInEUEScgj1+yMHLXf+whHhZ8qULA5WhpxO/t0QcJVc+JajbYfvREecQWpFY1UnwUif
+         3Zow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751065554; x=1751670354;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=F9Wiz5bCJGgRfmxawvMKFzwSuuWCBOlz3eB52GU0Z0c=;
+        b=Nk6CYPJnBAaKDhFVq00YX8+AASdDfmwvpYlrBX/mvr0pYqZQAfp5B4vL/yuJwQH195
+         Rs00NmylOADMi1L/CuXMJ9W8uE3B/fR5gM2Xu4NlcIT6z5alD212IjQyCrXCWnzuiOrl
+         vDKcDj/ydGe61pXpRhbP9UFO9k1td/BkhHE9HhEFoikHGMbVoO4/00PDZbfRBlhDfb61
+         9HLVyGG8u8cQH+QTna/HlJM/As3ZIe0osQZfqII/xFJmi3R1g1DfjO/KFKD9XbRAgPBF
+         tTOam6/ES+4LmrO5KZZgHqqdWEXu2Z2mRXiQr8K1UJV1nTOWs7ilarOAUdl7BbX6xAZR
+         srng==
+X-Forwarded-Encrypted: i=1; AJvYcCWFHwxVpVY1MNDP+N4EZRAIzk0BE5oyKts3z12HPZv+MevxPFY+XDt3qWZ6v4cD7yoMxas=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZTq8N5D5LpoqbFPM0SekS9zgm08JvxzaAnMqTvfSB4/cRhh/J
+	ikiKRI1kAVnN2xGYi6hujC4oKsMvHpcwCyv50mtMFJg/CtGgzopjvYQN
+X-Gm-Gg: ASbGncsuoz+dBHxSbvoqWIikUXA7O83b4O0DVchk7s5HC8MqRAU5Bv7OJj1RAVno+pP
+	G1VK8KpZgJAQx4VMq4Ps8g2l4Lp1aOjp2IMHqpwmmqPf2M4EBhZlyD3Aziq7kFln2bT9Cqqu39/
+	CgVH8v72KbipOkOcaNFgfeBvYIWQH8B4Ek5tR9dnw55mLeDdVlpKXi8XKRRERQPqUsGjLjgwur0
+	hl8MTGE92p8Ig2NOU+CIFgsyXmAzs2nlQYEHJEZUvrcwbtNhSm+IXL8f/g40z0cxjswkKJXJBSH
+	MjOLkiE3r2toDd5uOOGi+64jXZyVB31FKw59pngsuY7sAIsCz19td439tqATBI4jujj52WQZun+
+	3pnjVgFbkB/AqhHiHiB/A9e0=
+X-Google-Smtp-Source: AGHT+IEpQycRLWuiSSG19MV1zPHd1200NSFqDqYEvuBcx3119Z4NXkvaP5MdBS17KPhFP+p3ko/0lw==
+X-Received: by 2002:a17:90b:3e8a:b0:311:ff18:b83e with SMTP id 98e67ed59e1d1-318c8feefcemr7748938a91.9.1751065554374;
+        Fri, 27 Jun 2025 16:05:54 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:fdae:9b06:496e:5a9c])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f542708esm7770951a91.30.2025.06.27.16.05.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 16:05:53 -0700 (PDT)
+Date: Fri, 27 Jun 2025 16:05:52 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
+	yoshfuji@linux-ipv6.org, kristofferhaugsbakk@fastmail.com
+Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
+ service_loop
+Message-ID: <vgailqqh3bcip3gxtdffoo4ey7xjso4xerewxncy22shrzn4k2@25hst4sfgxq4>
+References: <20250626161038.85966-1-carenas@gmail.com>
+ <20250626172159.87204-1-carenas@gmail.com>
+ <08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
+ <u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
+ <xmqq34bl7xa1.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAIAWX2gC/x2MQQqAIBAAvxJ7bmGT0ugr0UFsq82wUIgg/HvSc
- WBmXkgchRMM1QuRb0lyhgJNXYHbbFgZZS4MilRHWhncPS7y4MHWY+Iw42WdR25NbzSRWzRBaa/
- Ixfq/45TzB15p6m9nAAAA
-X-Change-ID: 20250627-jk-fix-leak-send-pack-e4787600cf60
-To: git@vger.kernel.org
-Cc: Jacob Keller <jacob.keller@gmail.com>
-X-Mailer: b4 0.15-dev-2503c
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2558;
- i=jacob.keller@gmail.com; h=from:subject:message-id;
- bh=7HrwyvfpRdNpt/1IdizJI/o0nLIW8McqBiCca3tF9z0=;
- b=owGbwMvMwCWWNS3WLp9f4wXjabUkhox4sZWcTE9cRE9n3PUrULV+q1/pKcjqeVxyjYbHrxm7Y
- 3Rv7I3pKGVhEONikBVTZFFwCFl53XhCmNYbZzmYOaxMIEMYuDgFYCJf3jP8z44PDl/4m6m/yGff
- hiWMN1Z5z/ocdfhOJevi18uvVRQuXMjwz0RCnmf1h4uehfc38OctPMmqmnkqQcJms0xroMfxlt2
- 6zAA=
-X-Developer-Key: i=jacob.keller@gmail.com; a=openpgp;
- fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq34bl7xa1.fsf@gitster.g>
 
-From: Jacob Keller <jacob.keller@gmail.com>
+On Fri, Jun 27, 2025 at 01:19:18PM -0800, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > On Fri, Jun 27, 2025 at 09:38:47AM -0800, Phillip Wood wrote:
+> >> 
+> >> On 26/06/2025 18:21, Carlo Marcelo Arenas Belón wrote:
+> >> > 
+> >> > diff --git a/daemon.c b/daemon.c
+> >> > index d1be61fd57..f113839781 100644
+> >> > --- a/daemon.c
+> >> > +++ b/daemon.c
+> >> > @@ -1145,6 +1145,7 @@ static int service_loop(struct socketlist *socklist)
+> >> >   		for (size_t i = 0; i < socklist->nr; i++) {
+> >> >   			if (pfd[i].revents & POLLIN) {
+> >> > +				int incoming;
+> >> >   				union {
+> >> >   					struct sockaddr sa;
+> >> >   					struct sockaddr_in sai;
+> >> > @@ -1153,11 +1154,19 @@ static int service_loop(struct socketlist *socklist)
+> >> >   #endif
+> >> >   				} ss;
+> >> >   				socklen_t sslen = sizeof(ss);
+> >> > -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
+> >> 
+> >> Why is the declaration of incoming moved but retry is declared here?
+> >
+> > Separating the declaration and assignment for incoming is needed so we can
+> > insert a label for goto; moving it up just removes distractions so the rest
+> > of the logic is clearly in view.
+> >
+> > Obviously that includes the definition and assignment for retry.
+> >
+> > How would you suggest to arrange this better?
+> 
+> I think what Phillip meant was more like this, perhaps.
+> 
+> 		socklen_t sslen = sizeof(ss);
+> -		int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
+> +		int incoming;
+> +		int retry = 3;
+> +
+> +		incoming = accept(pfd[i].fd, &ss.sa, &sslen);
+> 		if (incoming < 0) {
+> 			...
 
-Commit c8009635785e ("fetch-pack, send-pack: clean up shallow oid
-array", 2024-09-25) cleaned up the shallow oid array in cmd_send_pack,
-but didn't clean up extra_have, which is still leaked at program exit.
-I suspect the particular tests in t5539 don't trigger any additions to
-the extra_have array, which explains why the tests can pass leak free
-despite this gap.
+That seems unnecessarily restrictive just to minimize churn and leaves the
+deflaration of incoming strangely sitting in between two assignments, which
+while it doesn't trigger -Wdeclaration-after-statement seems to go against
+its spirit.
 
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-I didn't check to see why the t5539 tests don't leak. This leak occured for
-me in a day-to-day run with my local git build that happened to still have
-sanitizers enabled:
+Will include in a v3 with all other suggestions, but frankly think that the
+original was overall cleaner.
 
-=================================================================
-==2930359==ERROR: LeakSanitizer: detected memory leaks
-
-Direct leak of 2160 byte(s) in 1 object(s) allocated from:
-    #0 0x7f51af6e5e2b in realloc.part.0 (/lib64/libasan.so.8+0xe5e2b) (BuildId: 7f1aa7e2e600e8c9d54ce6e3d36f3d31bfe7949a)
-    #1 0x0000010dfc26 in xrealloc ../wrapper.c:140
-    #2 0x000000c5d231 in oid_array_append ../oid-array.c:9
-    #3 0x00000096036a in process_ref ../connect.c:296
-    #4 0x00000096036a in get_remote_heads ../connect.c:374
-    #5 0x00000072f8fc in cmd_send_pack ../builtin/send-pack.c:290
-    #6 0x0000007d74d4 in run_builtin ../git.c:480
-    #7 0x0000007d74d4 in handle_builtin ../git.c:746
-    #8 0x0000007dbeb5 in run_argv ../git.c:813
-    #9 0x0000007dbeb5 in cmd_main ../git.c:953
-    #10 0x000000441dbf in main ../common-main.c:9
-    #11 0x7f51aec115f4 in __libc_start_call_main (/lib64/libc.so.6+0x35f4) (BuildId: 2b3c02fe7e4d3811767175b6f323692a10a4e116)
-    #12 0x7f51aec116a7 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x36a7) (BuildId: 2b3c02fe7e4d3811767175b6f323692a10a4e116)
-    #13 0x0000004440b4 in _start (/home/jekeller/libexec/git-core/git+0x4440b4) (BuildId: 6cd37a01505f2d67a4e7d39fd9f813b683be0300)
-
-SUMMARY: AddressSanitizer: 2160 byte(s) leaked in 1 allocation(s)
----
- builtin/send-pack.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index c6e0e9d05186..61486e378cab 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -343,6 +343,7 @@ int cmd_send_pack(int argc,
- 	free_refs(remote_refs);
- 	free_refs(local_refs);
- 	refspec_clear(&rs);
-+	oid_array_clear(&extra_have);
- 	oid_array_clear(&shallow);
- 	clear_cas_option(&cas);
- 	return ret;
-
----
-base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
-change-id: 20250627-jk-fix-leak-send-pack-e4787600cf60
-
-Best regards,
---  
-Jacob Keller <jacob.keller@gmail.com>
-
+Carlo
