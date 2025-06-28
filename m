@@ -1,41 +1,41 @@
-Received: from out-183.mta0.migadu.com (out-183.mta0.migadu.com [91.218.175.183])
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF18413DDAE
-	for <git@vger.kernel.org>; Sat, 28 Jun 2025 22:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E55513DDAE
+	for <git@vger.kernel.org>; Sat, 28 Jun 2025 22:59:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751151588; cv=none; b=kcK1c+4CWVq66efWWvgR4SVkkpV2phQ2qiXTprRAczm3owelOzeUmK56XkD99bJwPH6zNp6ZTHjdI21miYBcPI0oiVmzIQ1CD2nWIfqNGMB0dbOrN/w2MnRplQ1ZTPdoFt1SXzwsuTqsD9wzEmwgeoJ9LUqpKc1+QhfqMaYg0J0=
+	t=1751151600; cv=none; b=qBUrSLKORI0uhwSGRJre4O6G/7v5A+k+mbBuDc/XWZMH8G9NcK2COL7keQ7jOabhItKlH2hWwFkUGfJf0wvn2yFS7wUPeaid3/smk1KXYPxnEYmnghRBaM0YOlbydVqhnUUSv+kMzXxItKO3frQd1ItqTQK3q/rOeSRaonuPSQ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751151588; c=relaxed/simple;
-	bh=Qh1VWE6YGR9qfxXLplfOwB2bb2Q99cPWqBv79uXGP9I=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=pAdC7AwRUiN1pAomMO0Z1O+hoIifSVfXWC2gC20nT0stZX/ZWX3j+DqgnRNczCBZMIIUUzFs2f1LVR77HPRDefgO0dtmq4yZRI+MAQCBrQhIL+WCx316llYNz7fHaLzyeMwMGH54TvuGyxsncYUIDwLrleXWjzj/4YoXirQ71uc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=KBHL3umM; arc=none smtp.client-ip=91.218.175.183
+	s=arc-20240116; t=1751151600; c=relaxed/simple;
+	bh=lbRnG6TxVDmZYb75rmnWVTzSKglsDBRsvr4dqPBbNhY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=rmuA0f8ql/kuRDvqNa3ItsXwAGjlTSlGAf3uByHxGxnqZGnwTrNjP4OmjJkju/4E6XHLMA69/BSrieBQ7ruVRXc3zMwj9sY+xsnyjXZpl4Cxdn4pqEkTs4mwsZI/yf5n15hUEPBtSHvmfd0ik2yC8pwRhkUsO+BaOA7iUOLztIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=Jhw/deko; arc=none smtp.client-ip=91.218.175.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="KBHL3umM"
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="Jhw/deko"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-	s=default; t=1751151582;
+	s=default; t=1751151596;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=z10Vt0bqw7ie+HWtPihQCALrIa959pmCAoCL4Svq8Zs=;
-	b=KBHL3umMbWU+9c6aMFCT+n3xsay97m6pOCwy7LSckOrKcxclCQoql1WPcMZ+GM6Zp9ZueQ
-	NF1atWQDrWFolO4HM6oNKBsDW/o9ZgWyJ8A9qhczyoeqx5W2jbn5MkNopba+0lUuiOK5pU
-	GrbXqljjSjNyEzby+sN0T8Ju/1BycCY=
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=DHK2z/xOVepYECf9nhjsMA0b0fu0NTKlA2Wxg22FOCE=;
+	b=Jhw/dekobvR2P7mQJhjg8lXM2JABilFMzRwhgc3oEquj5RBNPyQSivpQBhnKvUclnPHm/j
+	fXbvkpmxZVpPLXgfnIPpdJEGX7lZlQA+DXMkJwMMtz5jXGozS1yGUDirtfXC6+K083EpuO
+	JMZA8tFgvVDK5lqWSVAKOVyrwD2BPJU=
 From: "Raymond E. Pasco" <ray@ameretat.dev>
 To: git@vger.kernel.org
 Cc: "Raymond E. Pasco" <ray@ameretat.dev>,
-	aclopte@gmail.com,
-	gitster@pobox.com,
-	jason11choca@proton.me,
-	kristofferhaugsbakk@fastmail.com,
-	rhodges@cisco.com
-Subject: [PATCH 0/5] fix apply --intent-to-add
-Date: Sat, 28 Jun 2025 18:52:02 -0400
-Message-ID: <20250628225819.1294068-2-ray@ameretat.dev>
+	Johannes Altmanninger <aclopte@gmail.com>
+Subject: [PATCH 1/5] apply: error on --intent-to-add outside gitdir
+Date: Sat, 28 Jun 2025 18:52:03 -0400
+Message-ID: <20250628225819.1294068-3-ray@ameretat.dev>
+In-Reply-To: <20250628225819.1294068-2-ray@ameretat.dev>
+References: <20250628225819.1294068-2-ray@ameretat.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,30 +45,34 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-The --intent-to-add (-N) flag to apply has not worked properly since its
-introduction in Git 2.19; in particular, it creates an empty index
-except for any new files in the patch, making it largely useless except
-on blank repositories.
+It makes no sense to register an intent to add outside a repository. We
+should error out here.
 
-This patch series fixes it to work as expected and updates the tests
-and documentation for this flag.
+Based-on-patch-by: Johannes Altmanninger <aclopte@gmail.com>
+Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
+---
+ apply.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Earlier discussion of this issue can be found in the threads associated
-with message ids <20211106114202.3486969-1-aclopte@gmail.com> and
-<20250511003955.242889-1-ray@ameretat.dev>.
-
-Raymond E. Pasco (5):
-  apply: error on --intent-to-add outside gitdir
-  apply: read in the index in --intent-to-add mode
-  apply: only write intents to add for new files
-  t4140: test apply --intent-to-add interactions
-  apply docs: clarify wording for --intent-to-add
-
- Documentation/git-apply.adoc |  8 ++++----
- apply.c                      | 12 ++++++++----
- t/t4140-apply-ita.sh         | 31 ++++++++++++++++++++++++++++++-
- 3 files changed, 42 insertions(+), 9 deletions(-)
-
+diff --git a/apply.c b/apply.c
+index 8bbe6ed224..e7856ae6b3 100644
+--- a/apply.c
++++ b/apply.c
+@@ -174,8 +174,12 @@ int check_apply_state(struct apply_state *state, int force_apply)
+ 			return error(_("'%s' outside a repository"), "--cached");
+ 		state->check_index = 1;
+ 	}
+-	if (state->ita_only && (state->check_index || is_not_gitdir))
+-		state->ita_only = 0;
++	if (state->ita_only) {
++		if (is_not_gitdir)
++			return error(_("'%s' outside a repository"), "--intent-to-add");
++		if (state->check_index)
++			state->ita_only = 0;
++	}
+ 	if (state->check_index)
+ 		state->unsafe_paths = 0;
+ 
 -- 
 2.50.0.195.g74e6fc65d0
 
