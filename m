@@ -1,112 +1,95 @@
-Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075171C8611
-	for <git@vger.kernel.org>; Sat, 28 Jun 2025 02:54:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA411DA5F
+	for <git@vger.kernel.org>; Sat, 28 Jun 2025 04:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751079293; cv=none; b=qfeoKkcydbpEwZUefb3cSWMXMcglvH04PFjQjLgddraFlu4N+fwRw+MaPnWP1RhtjAs8Zmo+aVu1qt9AsjRgLbFIFbyBbQXXeCXvCT8WjdxHyLEeHBf5tao6kX+oGtExO3NIMiMRHRfaUMwnikVw6jp703NG0WxmJh08KTfJ/IQ=
+	t=1751084508; cv=none; b=meUta5IhGSSNGe0Icubc/Xia3wYIcQ295Yh6kb+N/EbgcMoRbDrvVx1iFBjDps/O8f+5jbhHqsdjxExczPZ9LEh7HPnXKYbFMADg9bh/ZEdVXGL9R3k2ZDjn5K/TPyfa0Yq84hCCctQ7IbFozvFh2RwtBfpTRksScPkz5wBHltU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751079293; c=relaxed/simple;
-	bh=pPtS8gI2gWX5Ulq12V0lQbHHnKGtQscy8QlZ2lAQk5w=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=R3p4HQMmzo5S95D2qmv0YksJhQ7Rk8wZ96NkOW3BkWXWuTM9yr56DRKSTlvNdAkHfttaKXLsvZM7UJaxhrroG0e4UgqoClwkFBzPkB843WX9MxX4MFH7Ir4Jm84D34NahFQs0DVv+MHrTABSpbifjoSKFYo7u7ORmk5+T1QiJPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=18.132.163.193
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: zesmtpgz7t1751079260tc142d3ae
-X-QQ-Originating-IP: iaTguokGeksd2eoitSbJvAuwys5jbtilD63CzptfxX4=
-Received: from smtpclient.apple ( [36.152.24.152])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Sat, 28 Jun 2025 10:54:19 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 0
-X-BIZMAIL-ID: 5024960126293289898
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1751084508; c=relaxed/simple;
+	bh=9oqBNgVInUC8RNq+65sIkl2sNPVjUgLHp+FYADz4gaU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=SqqK5IK2C2lxKNqNyGn5y6vdMOTZfTuLTtIlQsZNZGE/ZW2m4w1FQ24uqxOndFSwdJajW0qQgwlv06B1ayXhxGViLAMSRPYUMgXelJH/VroJbJWoFIri0W9BJQw9MFeELz7x1qGvT7Y2zcX+Y0knuxQc++39rf0KpY15Gb+7iCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ml4tdXPT; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ml4tdXPT"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-74264d1832eso912806b3a.0
+        for <git@vger.kernel.org>; Fri, 27 Jun 2025 21:21:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751084506; x=1751689306; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b6N24RC6XfQj+uuclUm7XK6OUH5jQU2roVkwLOkO6rI=;
+        b=Ml4tdXPTXeuv4kBffMfu3WoTanQ/3onMTQ7JBpyXKumLEOCty8F2rU5iPDOKDZZ8jX
+         tHNsh3bQLj5QU5D6B/FrzZcRAWw6HaPgFJzRUwmiWQGcF3sL13pbhH9H3CApeWaD70WM
+         6juvO7jEKIV0oq0nMnXy5AVE9HdBmhXZkKTNaodpdOTyA6s/0uyg5y0X3lIxbH7quMbq
+         etJbJqY9ueMN4KhGfx7XoSQCfjoUGeXAzdr6DbYBQ+bkFKxl8VS+HZ6T97aWrsDYrwDM
+         PPHeVsuJPO8d0CFcBrTTGMrZayW1zXJfhBzbWxfOmIilcSwDwyMXZEi023UZDviU7AH/
+         PVDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751084506; x=1751689306;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=b6N24RC6XfQj+uuclUm7XK6OUH5jQU2roVkwLOkO6rI=;
+        b=fnL39k5Rtd+aqB8NID895QdRZWUs5y56H348s995g2CVYkPTeEFWoO2KdmshoXTUTP
+         pE75+iD1bfGZi4/nvBQmK6J9UKHUXp/PaOQtj18uzzk5volDoPbQaR2muwq3ME6QONwh
+         M9qORWLjczC+MBjTCrXFf8F0sIsJF7J+u5Sbgl/uAVmoNN44PkpSG/mMzars1M2kn1po
+         OG7vPNnv5jmot1CvfeoPG1HM1v69/AMPXg8WPVE4NUb0lypwyMadYpJiKGN6A4Qp5MQb
+         J6OInPjvZ/Wre59O6fcSdaC2tj57qFasobx+P7bcIQvA7QZKFequzy8invB4gZQ6uJaB
+         /YNg==
+X-Gm-Message-State: AOJu0Yznbtg3aL9Rl1u/GUkyDeoZWPQNJn3fYJTmXcsQWHhc2cFHzqsC
+	EZLnqCQfW1D6O1UwCATS+ui+S5nP05L2Ku8H6kYjNMf4jRou7cm0JdfDr5GmfUEM1Mx0kw==
+X-Gm-Gg: ASbGncshbVPix3jNoRPd5bsbj6dKkbje/Fqm+N945I3slOoUNBvU5sWKL2eAvyf8Bci
+	WF68jwde8v2L9g7qDPDrrVCNiEhPV/x3wXHtk4wrdZaX/c6LHcso9/aFWIpH+Iy6osjXnULfhm8
+	TqmXqTIAeBqmmCfikd8QjWP2KJSG+iFG/bfq2xX/3ToRne/Jx7IF83y/VIgmsc2lIEWISRXwV0W
+	YdWDp6KSRskQBIlDJMf1ytebB+6MxEJRb3i3AOw8A4H5bcFPc91quQUBCQHtZNvddhcvTCrW4CK
+	nykOMCaVo4d/IP2tK/HW2pYoV8HsTt7YE0BOihC5nTfbp2M1Pq5ehYmFjYNsx7fiDzzu
+X-Google-Smtp-Source: AGHT+IFaUjvqQ0d+1U0iQbrM0WgvA1ARphcGA7RBWYqeEUZoNtpGrMp45hBR4MinfpTbakO41jvkrg==
+X-Received: by 2002:a05:6a00:2d07:b0:746:3200:5f8 with SMTP id d2e1a72fcca58-74af6f80718mr7343602b3a.22.1751084506507;
+        Fri, 27 Jun 2025 21:21:46 -0700 (PDT)
+Received: from r760 ([188.253.126.210])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af5580faasm3402914b3a.76.2025.06.27.21.21.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 Jun 2025 21:21:46 -0700 (PDT)
+From: Lidong Yan <yldhome2d2@gmail.com>
+X-Google-Original-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3 0/2] bloom: enable bloom filter optimization for multiple pathspec elements in revision traversal
+Date: Sat, 28 Jun 2025 12:21:38 +0800
+Message-ID: <20250628042140.1097910-1-502024330056@smail.nju.edu.cn>
+X-Mailer: git-send-email 2.50.0.108.g6ae0c543ae
+In-Reply-To: <20250627062154.1121530-1-502024330056@smail.nju.edu.cn>
+References: <20250627062154.1121530-1-502024330056@smail.nju.edu.cn>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <xmqqqzz47wd3.fsf@gitster.g>
-Date: Sat, 28 Jun 2025 10:54:09 +0800
-Cc: git@vger.kernel.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <1D8CE39A-D6F5-4AB7-8613-6C8DF1302907@smail.nju.edu.cn>
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
- <20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
- <xmqqqzz47wd3.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: MXqQCeYgv6iWfrVQkUKmC/fkGpPE3AppIRFY3AmvCIU2hI6N7F2tSQxC
-	QUTw3550AbvdRqWW+WsC7pyQ2WUdYiudY5/qIp/LMBsMlHjrCKWMLUAL5ZEY4ca8OXqg4mM
-	1vbN7ft8PIwxZd+4el6qeFkWXnEhUoOLNopNN0wrKgAdOKZhWBbOY1TFS1oiwyWs/tvLW6p
-	5GPgxH+fgHbDWKYbMog4kZ7ESvRnq7Iz7/6xpjTm/ELy0lvZl6Lq6zw8xyHNyasrXG6vxuj
-	AYom7PzyHrjHjYxgvpcX3TaEL85YIzo8UPzCMfnVgzK7u0eKxMMrpYU27xzBp07wVT2S3Me
-	yrzEclfsOLjgYX4/3rHtN6KqK26EYIK44L2Ky611xv7xGF8bPnjYG+khS/3gr0UDJzffgpg
-	lYdZaGgVUSXbobV3t42yF18tmsoBo9+TZ5IVmB1SBUBk/wW7+RYrpI4r/bqFd+MLOHPaq2q
-	dxXG1JWkp5JuqOP7qJI+yfJt3VwFqSbg/uwgEY4iVPFvw3LxBPdH63NksWvimR4y5XGQz+e
-	dAfjNlUYBKzD1IYpvE7ik0iz7qrJTVe8h7L9Pyh1NNa3j4ottVZuAcuH5pqfWHUXJDBMTX+
-	+Pkm8Vs5aUrGKO/EZNgjPmKVXytz2X3teSXufjB2XO1KvAQHxMGOnuVkKq8ROnJSgvaWYvO
-	zyveZZ4lOalqMikdq0yamDHHHVvlr/5SbgYqbxKuEnukZXU6T9odwG2LYvoxzCFYGqKlyK9
-	YTqPhQPwC57Glur1HAzVfJVdUDi+rD41bt0yYsvPbcoSc9YRB8GT0hLkH5Chotg7xOF85x0
-	/zEIe8H7kAsUhIOPfEOHqXKXoQ7G9fCfKrbVvfho5HIEuUvss6CCNPLowEOrN8D4gtNmRnJ
-	UtnOMzUq3ZqS9z6mOG/KIbWK42rfN6mgitwZ4W9SMpp9obR5UlFs0fuSjWPRDw6vj5fyhFA
-	OPuU5egugCe8vUsmcgekN/g65r3GestKNO+dJwOtPyDL+GQ==
-X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
-> Also the setup helper test_bloom_filters_{not_,}used helpers call is
-> written in a way to make it impossible to pass a real wildcard and
-> see how "$git log" would behave, because it does this:
->=20
-> git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" $1 =
->log_wo_bloom &&
+This series enables bloom filter optimization for multiple pathspec
+elements. Compared to v2, v3 fixed bugs in forbid_bloom_filter() and
+add one more test case in t/t4216-log-bloom.sh.
 
-Yeah, if $1 contains * and because $1 is not quotes, * would trigger =
-file name
-expansion.
+Lidong Yan (2):
+  bloom: replace struct bloom_key * with struct bloom_keyvec
+  bloom: optimize multiple pathspec items in revision traversal
 
-> It probably should use 'eval' so that the caller can pass a quoted
-> wildcard, perhaps like
->=20
->    eval git -c core.commitgraph=3Dfalse \
->     log --pretty=3Dformat:%s "$1" >log_wo_bloom &&
->=20
-> Then a test we can add to see how wildcards prevent Bloom from
-> kicking in would look like
->=20
-> test_bloom_filters_used "-- file*" &&
-> test_bloom_filters_not_used "-- file4 file\*" &&
->=20
-> The former lets the shell expand file* when the above "eval"
-> evaluates its (concatenated) strings, while the latter leaves the
-> backslash before the asterisk in the strings fed to "eval", so the
-> "log" will see a pathspec with wildcard.
+ bloom.c              |  31 +++++++++++
+ bloom.h              |  20 +++++++
+ revision.c           | 126 ++++++++++++++++++++++++-------------------
+ revision.h           |   6 +--
+ t/t4216-log-bloom.sh |  23 ++++----
+ 5 files changed, 139 insertions(+), 67 deletions(-)
 
-Wow, this solution is very clever.
-
-> If we were to fix that setup() thing, we of course need to be
-> a bit careful about existing tests.
-
-Though the uses of test_bloom_filters_(not_)used are not too much,
-I think replace
-  git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" $1 =
->log_wo_bloom &&
-with
-  git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s=E2=80=9D =
-=E2=80=9C$*" >log_wo_bloom &&
-
-is not better than add the =E2=80=9Ceval =E2=80=A6=E2=80=9D solution, I =
-will just use eval
-
-Thanks,
-Lidong
+-- 
+2.50.0.108.g6ae0c543ae
 
