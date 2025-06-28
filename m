@@ -1,111 +1,112 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A036039855
-	for <git@vger.kernel.org>; Fri, 27 Jun 2025 23:53:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075171C8611
+	for <git@vger.kernel.org>; Sat, 28 Jun 2025 02:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751068431; cv=none; b=J/id1bB/NxarrUR2uSzM6yJB8z3/7g98PoW0pXKtKt0KT44rcH0P3y0baJloSkzzEs37pu4Vwk8OoXsKo/SrytRsfIjDWfIlEUx3wfUfidbsMmRxG68nDQz/cL7McOsdlOYhS4OnpLbumy6CeNTkw4XAF4cgsiqpeHfeb8bAygk=
+	t=1751079293; cv=none; b=qfeoKkcydbpEwZUefb3cSWMXMcglvH04PFjQjLgddraFlu4N+fwRw+MaPnWP1RhtjAs8Zmo+aVu1qt9AsjRgLbFIFbyBbQXXeCXvCT8WjdxHyLEeHBf5tao6kX+oGtExO3NIMiMRHRfaUMwnikVw6jp703NG0WxmJh08KTfJ/IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751068431; c=relaxed/simple;
-	bh=b8gkArLOCd+z9LJ8Y/5MN1dHu7rtEgWOuWa7vkyR9p4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VXBem01RUXnIyWUVp54hjw1JCmpUY6xE8qTLut0K8Xl/ts8qONC0bJnTIbqRnKTIbZWPZaBxIEzvWgz/Yq326l7xnNio8qEVe1d3SP6ogJLPSoKIUsdG9o4PwkKZimkCDfOdPfu3QnzvXt+6sLWSbaVGmye4KQChpFHBm/pHvEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lohldqQ9; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lohldqQ9"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-747fc77bb2aso601975b3a.3
-        for <git@vger.kernel.org>; Fri, 27 Jun 2025 16:53:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751068429; x=1751673229; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=GmgYMipvHU0KLMReS2OPc4plGUNd3W31uQ11JHeAvWQ=;
-        b=lohldqQ9LjiMixnZ5FGunE6NCCBbwaSoDZ8S5Y3dlgULDrR5vnjumXgAu5Nc4AqpTb
-         C24YCsc9ql+TOGFYMv++dnwMo40uz39sZyTFC4b0DJilMNmaZYRnfNwc+A0kUoqKsTi1
-         PXKqmRATHuINHLlUw0YZrghH5avPwkP+0NV3xeoMZsbEgmcYgo/P+y3z81dFhoOZBukD
-         B6cDMU8FT1G+EqnJ/xjN4FaekMi2ywWoFmlC4gvrLaY7+umEnTc/fre4tqiypteQ9UW7
-         D7TKMXLRBt3ou2gh8k6F2tztIu8VALwkX4ZfX3mejD6ghCX9T/Zy55NZG4TXHqV+nxN+
-         4q3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751068429; x=1751673229;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=GmgYMipvHU0KLMReS2OPc4plGUNd3W31uQ11JHeAvWQ=;
-        b=vtvlLpcIH99QowekRSG/72/A7to0hNYFRcc4dNd0L5k2I/NxR+rogkb2QGGDPZU1Bs
-         C+nCf3r4MA/D9PdSVjexlg/0L6yoGJzon9T+0bkVlbobpW2Y2sUxeX3UUbKiE/bR/rTR
-         /W3VYLk9CoWVifzsZWKh9Ydk9JgkAH95+gXnf6QA4sKPGyMSXnIh/cuUx6NNe4KJx3qN
-         GZ0qRuDhfqYD+y9aE+EMPFgvobc9pMKOpL1C9TSDYo8XvqzePc1fwTCd6/wMXG5iyJEv
-         5daM2/4AZ6egJKeWyFjLCJX6RaAiIVFmKvzGQU9GP6f7RfRQUnEWqs/87nf2JxV+ztsK
-         6i8Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUFFjVLMIzJdXN1jKkQhzD9/9hwdkT9gFuootEobnrn38oOnPHUwrmVTSZmfynZuWLyHCQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzswQybnsKleQIhEoJ1Yg3Ms82mvJDQrga9OQ7mS4YFf7S/7PHA
-	Ne4NsTzmSPzCS6Cxm3TBhx+MQ2o9KMmd4dVTVZnPbzbn9INR/jW4J+H5
-X-Gm-Gg: ASbGncsHLcttKqP3ndr239qjdQVvNmPNobpjDvdTxo4uus/sebs6quok7lU9yps8sN8
-	vEid8drXwBTklHgdZDt94TVxo6FA1JTkwhHSaFcC3+iy8jXQUMdmrr/4gyG0Hwhdh8pVTqhQmZn
-	4WcEcf71uNp3wFxV7oXhA223qEhNd7yJc0Ee/bUX7xOUdUaL1pTt7xazXBIJLxBVN2lE3pzdMCF
-	eFbX8/MUPI8L/JfF97TNWsmfWvJKodhxxn+xeQp3y2+XH3+eqgjuuzhJSpb0tVaDWqgSP5cFFMW
-	fAE7TagzOcqXmMHE2NUS4pWyhdw1/LD+XJYYP5/y6Q6Jt1g9KQYJ3538+i0V9CFTX/wcrwdjjet
-	HWyza28HVUjQufvkXx5WtmNa7xuQ=
-X-Google-Smtp-Source: AGHT+IHIH0nXMzxEUzJhaBhvVz859orw1yL5rdQOSFrwySQClkEc9ws+ygSsRrbAXKdSX3kwipO2oA==
-X-Received: by 2002:a05:6300:628c:b0:220:783d:99a8 with SMTP id adf61e73a8af0-220a16ebb4fmr5163283637.23.1751068428461;
-        Fri, 27 Jun 2025 16:53:48 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af57e6a77sm3034964b3a.125.2025.06.27.16.53.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Jun 2025 16:53:48 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,
-  yoshfuji@linux-ipv6.org,  kristofferhaugsbakk@fastmail.com
-Subject: Re: [PATCH v2] daemon: correctly handle soft accept() errors in
- service_loop
-In-Reply-To: <vgailqqh3bcip3gxtdffoo4ey7xjso4xerewxncy22shrzn4k2@25hst4sfgxq4>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Fri, 27 Jun
- 2025 16:05:52
-	-0700")
-References: <20250626161038.85966-1-carenas@gmail.com>
-	<20250626172159.87204-1-carenas@gmail.com>
-	<08804dbe-56dd-4c0e-b36b-a82768b0aa29@gmail.com>
-	<u4scxaxivz62fsljo7okkfdvcle3zdby6h2sdzd6ed5n6wi5xb@5ekxdycixwxe>
-	<xmqq34bl7xa1.fsf@gitster.g>
-	<vgailqqh3bcip3gxtdffoo4ey7xjso4xerewxncy22shrzn4k2@25hst4sfgxq4>
-Date: Fri, 27 Jun 2025 16:53:47 -0700
-Message-ID: <xmqqy0tc68s4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1751079293; c=relaxed/simple;
+	bh=pPtS8gI2gWX5Ulq12V0lQbHHnKGtQscy8QlZ2lAQk5w=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=R3p4HQMmzo5S95D2qmv0YksJhQ7Rk8wZ96NkOW3BkWXWuTM9yr56DRKSTlvNdAkHfttaKXLsvZM7UJaxhrroG0e4UgqoClwkFBzPkB843WX9MxX4MFH7Ir4Jm84D34NahFQs0DVv+MHrTABSpbifjoSKFYo7u7ORmk5+T1QiJPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz7t1751079260tc142d3ae
+X-QQ-Originating-IP: iaTguokGeksd2eoitSbJvAuwys5jbtilD63CzptfxX4=
+Received: from smtpclient.apple ( [36.152.24.152])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Sat, 28 Jun 2025 10:54:19 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 0
+X-BIZMAIL-ID: 5024960126293289898
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqqqzz47wd3.fsf@gitster.g>
+Date: Sat, 28 Jun 2025 10:54:09 +0800
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1D8CE39A-D6F5-4AB7-8613-6C8DF1302907@smail.nju.edu.cn>
+References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
+ <20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
+ <xmqqqzz47wd3.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: MXqQCeYgv6iWfrVQkUKmC/fkGpPE3AppIRFY3AmvCIU2hI6N7F2tSQxC
+	QUTw3550AbvdRqWW+WsC7pyQ2WUdYiudY5/qIp/LMBsMlHjrCKWMLUAL5ZEY4ca8OXqg4mM
+	1vbN7ft8PIwxZd+4el6qeFkWXnEhUoOLNopNN0wrKgAdOKZhWBbOY1TFS1oiwyWs/tvLW6p
+	5GPgxH+fgHbDWKYbMog4kZ7ESvRnq7Iz7/6xpjTm/ELy0lvZl6Lq6zw8xyHNyasrXG6vxuj
+	AYom7PzyHrjHjYxgvpcX3TaEL85YIzo8UPzCMfnVgzK7u0eKxMMrpYU27xzBp07wVT2S3Me
+	yrzEclfsOLjgYX4/3rHtN6KqK26EYIK44L2Ky611xv7xGF8bPnjYG+khS/3gr0UDJzffgpg
+	lYdZaGgVUSXbobV3t42yF18tmsoBo9+TZ5IVmB1SBUBk/wW7+RYrpI4r/bqFd+MLOHPaq2q
+	dxXG1JWkp5JuqOP7qJI+yfJt3VwFqSbg/uwgEY4iVPFvw3LxBPdH63NksWvimR4y5XGQz+e
+	dAfjNlUYBKzD1IYpvE7ik0iz7qrJTVe8h7L9Pyh1NNa3j4ottVZuAcuH5pqfWHUXJDBMTX+
+	+Pkm8Vs5aUrGKO/EZNgjPmKVXytz2X3teSXufjB2XO1KvAQHxMGOnuVkKq8ROnJSgvaWYvO
+	zyveZZ4lOalqMikdq0yamDHHHVvlr/5SbgYqbxKuEnukZXU6T9odwG2LYvoxzCFYGqKlyK9
+	YTqPhQPwC57Glur1HAzVfJVdUDi+rD41bt0yYsvPbcoSc9YRB8GT0hLkH5Chotg7xOF85x0
+	/zEIe8H7kAsUhIOPfEOHqXKXoQ7G9fCfKrbVvfho5HIEuUvss6CCNPLowEOrN8D4gtNmRnJ
+	UtnOMzUq3ZqS9z6mOG/KIbWK42rfN6mgitwZ4W9SMpp9obR5UlFs0fuSjWPRDw6vj5fyhFA
+	OPuU5egugCe8vUsmcgekN/g65r3GestKNO+dJwOtPyDL+GQ==
+X-QQ-XMRINFO: NyFYKkN4Ny6FSmKK/uo/jdU=
+X-QQ-RECHKSPAM: 0
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
+> Also the setup helper test_bloom_filters_{not_,}used helpers call is
+> written in a way to make it impossible to pass a real wildcard and
+> see how "$git log" would behave, because it does this:
+>=20
+> git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" $1 =
+>log_wo_bloom &&
 
->> 		socklen_t sslen = sizeof(ss);
->> -		int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->> +		int incoming;
->> +		int retry = 3;
->> +
->> +		incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->> 		if (incoming < 0) {
->> 			...
->
-> That seems unnecessarily restrictive just to minimize churn and leaves the
-> deflaration of incoming strangely sitting in between two assignments, which
-> while it doesn't trigger -Wdeclaration-after-statement seems to go against
-> its spirit.
+Yeah, if $1 contains * and because $1 is not quotes, * would trigger =
+file name
+expansion.
 
-Hmph, I am not Phillip, but my take on it is that incoming and retry
-are fairly closely related variables in this loop, and better
-grouped together?
+> It probably should use 'eval' so that the caller can pass a quoted
+> wildcard, perhaps like
+>=20
+>    eval git -c core.commitgraph=3Dfalse \
+>     log --pretty=3Dformat:%s "$1" >log_wo_bloom &&
+>=20
+> Then a test we can add to see how wildcards prevent Bloom from
+> kicking in would look like
+>=20
+> test_bloom_filters_used "-- file*" &&
+> test_bloom_filters_not_used "-- file4 file\*" &&
+>=20
+> The former lets the shell expand file* when the above "eval"
+> evaluates its (concatenated) strings, while the latter leaves the
+> backslash before the asterisk in the strings fed to "eval", so the
+> "log" will see a pathspec with wildcard.
 
-I also find it a bit ugly to hardcode "3" here like this, but
-perhaps I am overthinking about it.
+Wow, this solution is very clever.
+
+> If we were to fix that setup() thing, we of course need to be
+> a bit careful about existing tests.
+
+Though the uses of test_bloom_filters_(not_)used are not too much,
+I think replace
+  git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" $1 =
+>log_wo_bloom &&
+with
+  git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s=E2=80=9D =
+=E2=80=9C$*" >log_wo_bloom &&
+
+is not better than add the =E2=80=9Ceval =E2=80=A6=E2=80=9D solution, I =
+will just use eval
+
+Thanks,
+Lidong
+
