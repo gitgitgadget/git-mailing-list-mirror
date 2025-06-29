@@ -1,68 +1,68 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 298CF35959
-	for <git@vger.kernel.org>; Sun, 29 Jun 2025 04:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF2535959
+	for <git@vger.kernel.org>; Sun, 29 Jun 2025 04:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751171252; cv=none; b=SRdEJSChSAWGJfWJfykrgK9j/gUCrI+vUgg52AOzrkavdWJ65NGrnmOhdzdBTIcIWi9O30ERFzT32od24lBgGfrE3qerye5k59lY2hut5ekolxeakwv2TCf+e2Pl0s66jC0Z+ofTmCX4SOvFz4xOyvnc508+DZNsqHmErkdPaWI=
+	t=1751171261; cv=none; b=EQ+8GA9/qlw4T+mln95LlCbvSb1GNCQuu4TCD8wPxfvjhG+nxGi7458FEO0BaI601bbzuS6FJx80m8kj+fUQ23ar4ka0rZiFsgbcRUWm5Kke3/lu1ESbEEwWYNzzueOyG2U9PIKLMYVHWSAeBXXcNNiWOAOcn3kOd1zi9B4Wo9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751171252; c=relaxed/simple;
-	bh=yRijPUOU8tEnntcHLyEtZWQTQh4aG5pnxYoTAAjRf8s=;
+	s=arc-20240116; t=1751171261; c=relaxed/simple;
+	bh=w2LTWHVPB1RiNgnrtmD3m+U7v603alREs0VJISX+TPQ=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CNYwKhn7G5MG48qgdeQeLMoKYMBWAZ193OH+/3FVOLJ0ZLCcaHYoTNslFWKUoOiMzVhRHfLznZJUvIjrRRd4KMQHT9NlvogL/qoLW77jFIp467G9rBD06SNG8XtVVmnB/3Jmrtbtf7L6bHfFspKw5s1sir46ZBzDs/Ly0Ac/tDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a/+y6pHb; arc=none smtp.client-ip=209.85.214.180
+	 Content-Type:Content-Disposition:In-Reply-To; b=P+F+OuWEawYJ74/cpzqXyg6v7TxgyGijNr+MhsqCF2x0uBLrZblh4cM0eGcr/qttuHyIJToN+WXSYECxH5GSakM6APiTOl8hQwBBIjQHv450qi/oMQwefx1Xl7Ny0Ie4z2aJxcehqotobi0NdTrtRkcm5m+Wn1+n5syaUhCow+s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M09JBGz4; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a/+y6pHb"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-23602481460so33110325ad.0
-        for <git@vger.kernel.org>; Sat, 28 Jun 2025 21:27:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M09JBGz4"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-313a188174fso3604881a91.1
+        for <git@vger.kernel.org>; Sat, 28 Jun 2025 21:27:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751171250; x=1751776050; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751171258; x=1751776058; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UezNe3ng/Mx+BddptX/XcDXR8f5xaILpUtsIhWT4PMg=;
-        b=a/+y6pHbOJvyOWp8a5UuQAtq/rwrldxebsQvK0JjhLPaDmx3KeJ1xKrvdx1KjKTWzK
-         4CcfI613UCHvt5ctgSPtsTNKfznSPGkfQ2J56ofOuJZ9kxHTJ7DyYbG+yiCFZ3Q4pEiy
-         PiSzMDo1jpjtZXsM+iCyeE0zVO/XCpZgJTj23dID2funoKEYL8UWTYhFaw6k5QOBIYN5
-         a9p3z/gRuoSAKVLal3GWheMGyoWqVMwDnSmrOMIEd3AaIba67DyKxcsi1WRO2T8MCEEG
-         XTIdnG1yxH6v06ig+N0wdTy+FYsgjMsYOvPLDYZeUpntrS4nQS2HhZNuJz8fMkjAjAaW
-         gRRA==
+        bh=KTx73d6QIx7SMdZx4m81X/qTdilvsbdSXGU6FvrDOw4=;
+        b=M09JBGz4fIv5MLHtqXu2zHg9sFZ2YWuQ2ATQjx/LiByWPE2+sWnDA+MW6wBgz3E+pF
+         27XOOotUmMW214z8bwR7OoEIj6DbcXoqLOk9qy4Q73/zZHJVOiRdLUfqxCxvn1noTjlZ
+         gvhcLA4RhSeKR895SU9RpI2VhvVfGTAB0fQx6Tbr3x2ThW8/FM2Q6syMf+fTQl0N+vu+
+         Ulcg0LvzymJ3c+N3Odeh/xK1CfEc4r+BVPG3TDt+r44PK8S0OMnt2ofdUB++sVXwkqqG
+         kYz88qUb+4FdzUmfyFpSzYckG+7N9B5gZUtV6jZZ8piwhtlKg6Yi1k3J4gfVyxac2KZo
+         K8FA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751171250; x=1751776050;
+        d=1e100.net; s=20230601; t=1751171258; x=1751776058;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=UezNe3ng/Mx+BddptX/XcDXR8f5xaILpUtsIhWT4PMg=;
-        b=UOL6BQZLnVNgzJRRFgeScYqYgvQTG/fSUvFgm9KdIvkULjRIovIpXEMjQ/yf38d/o8
-         Id+IXpYCjjEHGrXb46SOB8QdjGq/lPKW7KggqRSqkat7UjCe36PylVruME+i9xmEStGX
-         SaNaih26fo206KvXhY74RsRlKyuV12GiJgpGMANMU1Wuw2ZhmBb2HJQ7JocGfnHmERhr
-         xSoUvSoP7BiqxHAUtk009YwXfpxfK7gUPoEVhyeHKL3mFeiouffoT3/O8dfptjCU153U
-         fvYOGduJ9JP4JtFZKSrcLUhl6P8dXtsLcz1xVhvz2TLf9WnVEFuKYhCQbBMercXnlBJh
-         Wb7w==
-X-Gm-Message-State: AOJu0YyRgtPBuLnpE6v2eN4l2hT7jNWF5JWQAGXcSMONlQDEKl5WtJ24
-	z7SyoIGBIxv+j5CTQO39kBuFZiwfIXL9e+EfATVewHz2iLJ1/vex+WQjWDKuPA==
-X-Gm-Gg: ASbGncsdSz9T2JohA3VqDjKHS6nuJafvgs/glfG+MN1/b3FRPwjhbg9sTJT9AaLqRHU
-	8PwNjb50gsL6IEtSOVMfjj5hW15xMpxiRKVT1X+JI2tmfhugZcqc4/qAPD+8T2vx7YMelp1HL2G
-	A2qghj3LmtiVQW6aGMnxaKq0f/pqpviOYFY5KcYEr8oM7gbrRSvlbHsUtp9KvoYQgJ4GSeehxBM
-	44Dof0s4yKL9G0XTaX02pqYExADTxOysUAwW4sK/yPsCGogOJx9x39NeQJucarw2BPFn9X9peDj
-	mqZiToBaTNJRcQZqO9PebRZuzlJ6h8MXLPKpQpdHwp3tsQ9wnnQU4v/d9Q==
-X-Google-Smtp-Source: AGHT+IGXTVTxL4wZ3r+pcGnQsAqdPwXjGCh3mqDAqCUWx2Wh4oTJSwWr8RfN9LDrjuirE84ybYYZOA==
-X-Received: by 2002:a17:902:c94c:b0:225:abd2:5e4b with SMTP id d9443c01a7336-23ac3afd0d2mr148938705ad.16.1751171249818;
-        Sat, 28 Jun 2025 21:27:29 -0700 (PDT)
+        bh=KTx73d6QIx7SMdZx4m81X/qTdilvsbdSXGU6FvrDOw4=;
+        b=lkyMz9mfIQ9LVXUvUlqbwVeKojEKtTKZLWD1U79Jr9DWfzIbtARO2PsSjln5mbNxUM
+         boKuV1DkKzkQOFY1rczL/yuoerAlbW8mvdQXkJCZh5FJE3GbBFwWrQixatKSWWc/vlpc
+         wrJlVNpjWSsimgbXMTGougHWck8hrLbVtccK4L+1c9z55IHBHjBHteVsnRn3Nyg/s8no
+         hre4wSaHNZQ2NxC+4kHQ2Pm0CHw1pckhW7x/XH2cc3Gi0v76FoX+s3F+7IszQQX2qQIC
+         CCgbyjVbziPWlKkcoPPeHlidy8RbDJ5cIzXuw9O7ej3Tw9lnlRM/vph7ds5JtjcQea8V
+         LPAQ==
+X-Gm-Message-State: AOJu0YzhpFIuTvpOAYXusz923P5lf2xce2l7AAze62kagOvYqVSRQuFg
+	BHSAt6WFLjIG3gGKCiPdGOJ6+7SY1DZ0zoiElZEkQprgd7zYtxtPvFVVnIYZLw==
+X-Gm-Gg: ASbGnctTBNp0mhPoJobwue+iqiNWdQ5CgWXRsF+GHewWDfpr07/ym/g29Gah8eXMtZU
+	rovR+MgN/H87kGPp7OGa8rl29b70W3mZ8HQOsZbL0CGQomY4RzkCIOWU5WVOUnUcGgRk4vsej3P
+	jAEKusxf4Y6LQAdVANKlem2BElfWpn/4Ow0Df6BfIKq8I6feJSrim+uE3wjTllv2DFqj2rHOCt2
+	GUBYlGUXV8mMcVlZx4lQy8XO39pS/0feByu8reIvpiNNlY+1mExUtxt2SoqsBYq+omrJQmT68f7
+	gSDXBbu4JJDtDwiqK09rwAxOifm7GtD+r9AJGVH+51VlmE1QsOJraTSCnA==
+X-Google-Smtp-Source: AGHT+IHW2NfGSiMLaLK5+XFz4O2QPmOiVzqTnAZLK6GK44dVaowCmjPECukrWHt5jngO3HNpX44iDw==
+X-Received: by 2002:a17:90b:3d0d:b0:30e:e9f1:8447 with SMTP id 98e67ed59e1d1-316d69a9ea8mr16259798a91.4.1751171257931;
+        Sat, 28 Jun 2025 21:27:37 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2f346dsm49978825ad.86.2025.06.28.21.27.28
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3b82c6sm50913655ad.174.2025.06.28.21.27.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Jun 2025 21:27:28 -0700 (PDT)
-Date: Sun, 29 Jun 2025 12:27:41 +0800
+        Sat, 28 Jun 2025 21:27:37 -0700 (PDT)
+Date: Sun, 29 Jun 2025 12:27:49 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
 	Jeff King <peff@peff.net>
-Subject: [PATCH v3 1/8] string-list: fix sign compare warnings for loop
- iterator
-Message-ID: <aGDAvebseECTvGEP@ArchLinux>
+Subject: [PATCH v3 2/8] string-list: remove unused "insert_at" parameter from
+ add_entry
+Message-ID: <aGDAxQKvqecRqG7U@ArchLinux>
 References: <aGDAZ6a0-PyXXGmK@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,87 +74,56 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aGDAZ6a0-PyXXGmK@ArchLinux>
 
-There are a couple of "-Wsign-compare" warnings in "string-list.c". Fix
-trivial ones that result from a mismatched loop iterator type.
+In "add_entry", we accept "insert_at" parameter which must be either -1
+(auto) or between 0 and `list->nr` inclusive. Any other value is
+invalid. When caller specify any invalid "insert_at" value, we won't
+check the range and move the element, which would definitely cause the
+trouble.
 
-There is a single warning left after these fixes. This warning needs
-a bit more care and is thus handled in subsequent commits.
+However, we only use "add_entry" in "string_list_insert" function and we
+always pass the "-1" for "insert_at" parameter. So, we never use this
+parameter to insert element in a user specified position.
+
+And we should know why there is such code path in the first place. We
+used to have another function "string_list_insert_at_index()", which
+uses the extra "insert_at" parameter. And in f8c4ab611a (string_list:
+remove string_list_insert_at_index() from its API, 2014-11-24), we
+remove this function but we don't clean all the code path.
+
+Let's simply delete this parameter as we'd better use "strmap" for such
+functionality.
 
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- string-list.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ string-list.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/string-list.c b/string-list.c
-index bf061fec56..801ece0cba 100644
+index 801ece0cba..8540c29bc9 100644
 --- a/string-list.c
 +++ b/string-list.c
-@@ -116,9 +116,9 @@ struct string_list_item *string_list_lookup(struct string_list *list, const char
- void string_list_remove_duplicates(struct string_list *list, int free_util)
+@@ -41,10 +41,10 @@ static int get_entry_index(const struct string_list *list, const char *string,
+ }
+ 
+ /* returns -1-index if already exists */
+-static int add_entry(int insert_at, struct string_list *list, const char *string)
++static int add_entry(struct string_list *list, const char *string)
  {
- 	if (list->nr > 1) {
--		int src, dst;
-+		size_t dst = 1;
- 		compare_strings_fn cmp = list->cmp ? list->cmp : strcmp;
--		for (src = dst = 1; src < list->nr; src++) {
-+		for (size_t src = 1; src < list->nr; src++) {
- 			if (!cmp(list->items[dst - 1].string, list->items[src].string)) {
- 				if (list->strdup_strings)
- 					free(list->items[src].string);
-@@ -134,8 +134,8 @@ void string_list_remove_duplicates(struct string_list *list, int free_util)
- int for_each_string_list(struct string_list *list,
- 			 string_list_each_func_t fn, void *cb_data)
+ 	int exact_match = 0;
+-	int index = insert_at != -1 ? insert_at : get_entry_index(list, string, &exact_match);
++	int index = get_entry_index(list, string, &exact_match);
+ 
+ 	if (exact_match)
+ 		return -1 - index;
+@@ -63,7 +63,7 @@ static int add_entry(int insert_at, struct string_list *list, const char *string
+ 
+ struct string_list_item *string_list_insert(struct string_list *list, const char *string)
  {
--	int i, ret = 0;
--	for (i = 0; i < list->nr; i++)
-+	int ret = 0;
-+	for (size_t i = 0; i < list->nr; i++)
- 		if ((ret = fn(&list->items[i], cb_data)))
- 			break;
- 	return ret;
-@@ -144,8 +144,8 @@ int for_each_string_list(struct string_list *list,
- void filter_string_list(struct string_list *list, int free_util,
- 			string_list_each_func_t want, void *cb_data)
- {
--	int src, dst = 0;
--	for (src = 0; src < list->nr; src++) {
-+	size_t dst = 0;
-+	for (size_t src = 0; src < list->nr; src++) {
- 		if (want(&list->items[src], cb_data)) {
- 			list->items[dst++] = list->items[src];
- 		} else {
-@@ -171,13 +171,12 @@ void string_list_remove_empty_items(struct string_list *list, int free_util)
- void string_list_clear(struct string_list *list, int free_util)
- {
- 	if (list->items) {
--		int i;
- 		if (list->strdup_strings) {
--			for (i = 0; i < list->nr; i++)
-+			for (size_t i = 0; i < list->nr; i++)
- 				free(list->items[i].string);
- 		}
- 		if (free_util) {
--			for (i = 0; i < list->nr; i++)
-+			for (size_t i = 0; i < list->nr; i++)
- 				free(list->items[i].util);
- 		}
- 		free(list->items);
-@@ -189,13 +188,12 @@ void string_list_clear(struct string_list *list, int free_util)
- void string_list_clear_func(struct string_list *list, string_list_clear_func_t clearfunc)
- {
- 	if (list->items) {
--		int i;
- 		if (clearfunc) {
--			for (i = 0; i < list->nr; i++)
-+			for (size_t i = 0; i < list->nr; i++)
- 				clearfunc(list->items[i].util, list->items[i].string);
- 		}
- 		if (list->strdup_strings) {
--			for (i = 0; i < list->nr; i++)
-+			for (size_t i = 0; i < list->nr; i++)
- 				free(list->items[i].string);
- 		}
- 		free(list->items);
+-	int index = add_entry(-1, list, string);
++	int index = add_entry(list, string);
+ 
+ 	if (index < 0)
+ 		index = -1 - index;
 -- 
 2.50.0
 
