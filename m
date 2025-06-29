@@ -1,40 +1,40 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from mout.web.de (mout.web.de [212.227.17.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B84C20B7ED
-	for <git@vger.kernel.org>; Sun, 29 Jun 2025 11:51:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A5FC204C0C
+	for <git@vger.kernel.org>; Sun, 29 Jun 2025 11:51:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751197870; cv=none; b=e0T9RriRQ8Jz7RbIjWJvtU7oBVJRPOggmxjMvsTRR+rZdR8lUs9LfoltzaIMO1nQv8VmyEudxA0yAddhfRr7+Sq8vzjwyc30nyLzigWX5tu+DY42KEDeqkQQLJAzdHFKNpTqXFyM9hSbUSeAAlkcFVtZdlsiiLCjhNjiQ7qmUhM=
+	t=1751197886; cv=none; b=TxJjPGRqXpO/DqwTOrYtMEouDl+9j0ripBRDrHLVa+abk0CvPBe56DOa44IuFQhsZkq196+YrN3pMLswl31fsDE1hDYVySwqpmNfDmQwtnxCbXWbEVpzUqTrYNbkcbsLduzd+Y6RYR2g09PJkQ0PtjBi2MFcd++kGgwwCnFGZs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751197870; c=relaxed/simple;
-	bh=HJhChh/ObGXKH30Z183pIVnI/NdC5I239lt/Ip8yg8U=;
+	s=arc-20240116; t=1751197886; c=relaxed/simple;
+	bh=PLwa+cmE4psITwhuVBtjQ1/+G4r+cfNVJ/M4J2zzPik=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=kHy32DcIEurSOK67sNllryQFZGy7tNWlzw6U3FKWaJZsvuLfnwZ9JecXkYie+arMIOq5N+Cgue8dfZQs8c0iDxqvnXF43SAFlS0Fv1aG1teo+u7zpIAGTLbuMdE95lj7aTLUgxpcDIlUey+g0LN9QYJaEOfALaxIuBlXGAjphaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=BbCXgjXo; arc=none smtp.client-ip=217.72.192.78
+	 In-Reply-To:Content-Type; b=GdP+NcYBY8Jq4AS93I55MyFbASd24sDl5Vjzg5P6UHNEox91592tTIxVk2YCrngsM4YbTcw9XwH76DNZB9PLm/frH74hgm6Z0keoAtRwr+feilwJhZmAeqxNQXty9u3tc1Sv9R+z8raD0LqZfkN4rdGOb/gVkC5SJ4x4Sf5gEKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=Nbc1qokG; arc=none smtp.client-ip=212.227.17.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="BbCXgjXo"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="Nbc1qokG"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1751197866; x=1751802666; i=l.s.r@web.de;
-	bh=Hj8DTULybergtSkrHlaVQV52r4zupQEaZAsH8TCRM+g=;
+	s=s29768273; t=1751197880; x=1751802680; i=l.s.r@web.de;
+	bh=OfAjA3pkWNtJ6peE4ajgV4TKlKbIXKDxC6ZNFtQafp8=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=BbCXgjXo0zyxI9CaQ6vt8ShGUawNh0Ook/bOq1vr+FKTJNtSvZToFTuY6T+zC+A9
-	 lCcPCLT0E+kKMVzcSKZq5P1ihPaFffQdcPaHNHMfC4gKC4fQExIPjmcGgGdMSCY2a
-	 0mrcL44W7rtPCXckYrFLT7PM42iopvV5EpEFrxEt303OuBadaAwfW3UT2h+c0vwWS
-	 uQVbFs+UZIdnNpc8G7FazJMoe808T8lcwta0w+bF5Ob15kuPc24QAuirexEyTedj/
-	 HjpHzJ2pbRNsllJguAyZquKwpyufhPdOnbZdmFmCSAUiCPO7Ax7IVxCX+isaqH32y
-	 OpSrP2/kKp3bD1rJWA==
+	b=Nbc1qokGW5FXTqU33yiXI8mFQ88RyEf67x/SV1ROQe+NfduR7HVmPaVdVVoiqW3x
+	 UdKv3KmH18hh5PUlV9Ux/2knUazwjxPgKyL7pXWmlpuuaqR6h6Dsm6Q62xMHPcne1
+	 omCfT+HwAo7NZzHH23sxgsEaQxI66Z5WVTZr92j2w9ym/Hpfo65PU/R3zN191Q2dV
+	 CYxl4ROZ0YYsCiPVg2bjIlweKeqXfMI+ZY3ENwYCouGrD5b56YK4nIAMujpjQz9ly
+	 wLyJClFbRw9q3erExNVb6TO067pYq1yLHOtfUlHKoP1SkE3Fwbh3ucj9x5Tyo5Gln
+	 S1U3NcQaK+H9i9d0Qw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQPdr-1uISa31fyj-00Wy3a; Sun, 29
- Jun 2025 13:51:06 +0200
-Message-ID: <b0f69c3d-d0a0-4137-ad09-4f46dedc0dab@web.de>
-Date: Sun, 29 Jun 2025 13:51:06 +0200
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MtyA2-1uqwmp2xrQ-011FF2; Sun, 29
+ Jun 2025 13:51:19 +0200
+Message-ID: <7b970f48-05a8-40c6-8e5b-95ce830705c0@web.de>
+Date: Sun, 29 Jun 2025 13:51:19 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,7 +42,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH 4/6] parse-options: add precision handling for OPTION_NEGBIT
+Subject: [PATCH 5/6] parse-options: add precision handling for OPTION_BITOP
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Patrick Steinhardt <ps@pks.im>
@@ -51,136 +51,126 @@ Content-Language: en-US
 In-Reply-To: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:vkl0PwwpG38UPaVzfk9bWArGKvEwCDS+VyFFCsXUqNlpqqxIljs
- yuEe++/NDvoJ8WMSa0/k3DT5gFUe+a0+91igq6osADAivjGaBAC/tIbdKJ7JsQXfrDxI1om
- QilEnyTFt3+xpn+BtSlFY/0+yaamb2MrqCyrQ7SZyxxptN5m+uD/C5+jANFIbNmwrXjc1ft
- 4sIJ8vS5C6FiqcG6D5PVw==
+X-Provags-ID: V03:K1:34e4upV+QSLIimZxwIPMb1AZUPYurhn/TC8Hb2Tapit9PJb6h9h
+ TJ0jhWUJ0swprLPp7qcim8Ddn8WsDUere6FrO+0yKFouabJeyVc3/o7Gt74EbevwfqeYy6t
+ Z57pnbqfKYv8g6FExCexzo7A4pZ5U/B4I3mPlWbEmCCKxEVx6sMRzWKWYRBJFovEP4zkN9T
+ VQ26sQHCo9QqkiUFOJ+/w==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:MzC95iAOiao=;Ts8fFWolPAyW72MY6BL86rPxYkN
- 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
- cQ==
+UI-OutboundReport: notjunk:1;M01:P0:3AeBW6NtVQc=;CEUToczJe9uSCscf+lMcrwIGPg4
+ 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
+ uhQY1kgvbC9cmoCTrH/vHRLnzOwYPjoQ=
 
 Similar to 09705696f7 (parse-options: introduce precision handling for
 `OPTION_INTEGER`, 2025-04-17) support value variables of different sizes
-for OPTION_NEGBIT.  Do that by requiring their "precision" to be set,
+for OPTION_BITOP.  Do that by requiring their "precision" to be set,
 casting their "value" pointer accordingly and checking whether the value
 fits.
 
+Checking "defval" has the side-effect of also requiring PARSE_OPT_NOARG.
+This is sensible, as OPTION_BITOP doesn't handle any arguments, so we
+take this unintended benefit.
+
+Don't check "extra", though, as its value is only used to clear bits, so
+cannot lead to an overflow.  Not checking continues to allow e.g., using
+-1 to clear all bits even if the value variable has a narrower type than
+intptr_t.
+
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/rebase.c |  1 +
- parse-options.c  | 11 +++++++----
- parse-options.h  |  1 +
- 3 files changed, 9 insertions(+), 4 deletions(-)
+ parse-options.c | 10 +++++++---
+ parse-options.h |  1 +
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 2e8c4ee678..e90562a3b8 100644
-=2D-- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -1128,6 +1128,7 @@ int cmd_rebase(int argc,
- 			.short_name =3D 'n',
- 			.long_name =3D "no-stat",
- 			.value =3D &options.flags,
-+			.precision =3D sizeof(options.flags),
- 			.help =3D N_("do not show diffstat of what changed upstream"),
- 			.flags =3D PARSE_OPT_NOARG,
- 			.defval =3D REBASE_DIFFSTAT,
 diff --git a/parse-options.c b/parse-options.c
-index 47a77d2cea..6bd7158806 100644
+index 6bd7158806..0dc9b0324a 100644
 =2D-- a/parse-options.c
 +++ b/parse-options.c
-@@ -146,11 +146,14 @@ static enum parse_opt_result do_get_value(struct par=
+@@ -156,11 +156,14 @@ static enum parse_opt_result do_get_value(struct par=
 se_opt_ctx_t *p,
  	}
 =20
- 	case OPTION_NEGBIT:
+ 	case OPTION_BITOP:
 +	{
 +		intmax_t value =3D get_int_value(opt);
  		if (unset)
--			*(int *)opt->value |=3D opt->defval;
-+			value |=3D opt->defval;
- 		else
--			*(int *)opt->value &=3D ~opt->defval;
+ 			BUG("BITOP can't have unset form");
+-		*(int *)opt->value &=3D ~opt->extra;
+-		*(int *)opt->value |=3D opt->defval;
 -		return 0;
-+			value &=3D ~opt->defval;
++		value &=3D ~opt->extra;
++		value |=3D opt->defval;
 +		return set_int_value(opt, flags, value);
 +	}
 =20
- 	case OPTION_BITOP:
- 		if (unset)
-@@ -622,11 +625,11 @@ static void parse_options_check(const struct option =
-*opts)
- 		switch (opts->type) {
+ 	case OPTION_COUNTUP:
+ 		if (*(int *)opt->value < 0)
+@@ -626,6 +629,7 @@ static void parse_options_check(const struct option *o=
+pts)
  		case OPTION_SET_INT:
  		case OPTION_BIT:
-+		case OPTION_NEGBIT:
+ 		case OPTION_NEGBIT:
++		case OPTION_BITOP:
  			if (!signed_int_fits(opts->defval, opts->precision))
  				optbug(opts, "has invalid defval");
  			/* fallthru */
- 		case OPTION_COUNTUP:
--		case OPTION_NEGBIT:
- 		case OPTION_NUMBER:
- 			if ((opts->flags & PARSE_OPT_OPTARG) ||
- 			    !(opts->flags & PARSE_OPT_NOARG))
 diff --git a/parse-options.h b/parse-options.h
-index 6501ca3c27..076f88b384 100644
+index 076f88b384..8bdf469ae9 100644
 =2D-- a/parse-options.h
 +++ b/parse-options.h
-@@ -250,6 +250,7 @@ struct option {
+@@ -240,6 +240,7 @@ struct option {
  	.short_name =3D (s), \
  	.long_name =3D (l), \
  	.value =3D (v), \
 +	.precision =3D sizeof(*v), \
  	.help =3D (h), \
- 	.flags =3D PARSE_OPT_NOARG, \
- 	.defval =3D (b), \
+ 	.flags =3D PARSE_OPT_NOARG|PARSE_OPT_NONEG, \
+ 	.defval =3D (set), \
 =2D-=20
 2.50.0
