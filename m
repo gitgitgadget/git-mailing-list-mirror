@@ -1,210 +1,189 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2963F2192FA
-	for <git@vger.kernel.org>; Sun, 29 Jun 2025 11:51:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CBB535950
+	for <git@vger.kernel.org>; Sun, 29 Jun 2025 13:20:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751197901; cv=none; b=N/bXQF0XbEtPDLc0eE2ov4cbqsiUF/t6XRVQUzIrpm3Tck/LXXm6L/gxponcAQM5nW5w4DS2qqKSkrUcAmtK2/uUQagMHHnWIrl6C+nichXL3cMHTuhoWJx96z22ffry+fgAS2rD5wm0PqP6LWPlqCkBx1csomwgysjp43//MNE=
+	t=1751203246; cv=none; b=ncZIN+JThKVTlN24krL57rJILy7PyeDzcHp89gZnu7BHqjPDanWPTf5xm0SG5MTrEojSyFe8x9oVocHC9BaLjVvFitnhyiPKK+FqvscvGt5/JyFwIFwpqjYdL+9zHXqcl7DYUQJjuVq33XR/z5LTC0IBqJjEMlHyDpJDzABoUUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751197901; c=relaxed/simple;
-	bh=agSgxNTScR65E7wEwD+k/n5vdPoNiSw+2Rygj5H/xG4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=o3JdDf3t1AFbBE+/SHi+fPlTaEV6l7lMhHAkxlj+5vAp+ZWnBZtzlfsDktu+Cih8E5Z/ruJS3XLljWIBpYejliqqbtBEP+kRIfJ4PwevsVSWeqdNjgmMj/HdlI+n9ZnwX+BPM3SyiGFk/4aKt4RvUEhPTkrJI53RouOnb5UiEJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=NVypC8J5; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1751203246; c=relaxed/simple;
+	bh=pV2M4T//iIJe0IDx1ZBfq9hGyYeKa0f0pWqMfcX4+Fc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=NICjIX89xRN7sakUijaxk3gcdpICPD5oslEYukuOBpXNJhiULYlzyclLdyAkgAmS2zGxjBRmDC9UkWWnLK+/2dwIP5Vg/1UFz96/SHRaO+6qB3nYc4WKjnQHqHw1kEnKc5XZD1YfMDOhxxZlDrNHFvTHhbOD5OLtl9uXZDHifGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JNYiN4bY; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="NVypC8J5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1751197897; x=1751802697; i=l.s.r@web.de;
-	bh=NUt+V1G4LJxexqERo6olF3O0tTraKf7Vx7bcame8bIM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
-	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=NVypC8J5Oc5baMMDVFcm73VZtM2r9QoEM2SZieeoxylBLNibmTGWjKar4DdmCsTV
-	 /87M6uiLcqJsCoJLqQWUoq5CkYzlR0r3CQXsobL6XeVGM6CTX9NVC+5cy3Nwe/Jz1
-	 yrHYeXm7ezMYIlmvmEuVcNgCLWl0qd5c6iUF+mMme0zCQpS1mLHLzUkqKKnoxz/Hc
-	 YFC6nUbJaak1+k9+CEQRSBfQrIOMvrAUsqUwCWR5Uqk9Ou//bVIna9nYdlZSxBx/h
-	 b5kBohZjDwRbnEah8/uOzySuevyyOjm8x1K+EZtFhKy4g/Q8Kury46Y7RJBgwDhJM
-	 CUojisKs153jWOC7rw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1M5QqN-1uWg3A0t8v-009oVJ; Sun, 29
- Jun 2025 13:51:37 +0200
-Message-ID: <7322758a-9310-4892-b476-50dc57d559b4@web.de>
-Date: Sun, 29 Jun 2025 13:51:36 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JNYiN4bY"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a6cd1a6fecso3790959f8f.3
+        for <git@vger.kernel.org>; Sun, 29 Jun 2025 06:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751203243; x=1751808043; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j/Sp4yr6j/vdnWEGwAkBc5sQf12LA8cUI4Th+HT/LuQ=;
+        b=JNYiN4bYfAUOAbzm48sMyMRYiJ+3yNAZgM3rKeKc9zjTmTN5ZUOZ6SNwMEUFjp4oJO
+         +8J1cwlj/1RLCs+uxDVQM/J+MCvy+VAiKD4KmnNcBjgW6RHDV5ZAnr+supPWkVijkIR1
+         qOhRi1EehEXgdensCMxP6qVJBfNZkAsu6FRGc9ayvHuuZZCWsHUuZgqGPHZkZnlJBX4y
+         DdLSx1hcYLkI7ATaVng4favT5mXSW/qvOIkH3uDNosmqc8lIEku/b1vxZc9WHNPt59D+
+         vgoaBO3MOIxQTEEw1qloFWo7XUy1pCEH5/sEHwHpXTNdIGHnxzOzdE6sL3q+sdQ3SRr0
+         vTOw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751203243; x=1751808043;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j/Sp4yr6j/vdnWEGwAkBc5sQf12LA8cUI4Th+HT/LuQ=;
+        b=Okn8vwbi7s8nmQLtphRJziXvoMmc3RqEaSNlDV+qvDvGp6eUIkHlL8VNeHj2EVBcPP
+         v4kix59IkKgBy7z0nyKc4mDJnOwAQA2roFas+YJzYzBP2PE5sGrv/0D8uX99+X0wLiq/
+         i3Pf560ObiftMWyxrUIwBdZAuItZAs+5biZv3wb1tWIq/iauYMoAzCqRh2HyMzhLn650
+         CdJ8U8DmVwHtT7iERdCiW3JZMAaRDgukDLM7N71Zh42o9XhDEFMsRpZzWHOVDIGc6ES3
+         GO+S1HNLx3a9jDJfAiXOgN79DmO034cyvk+miVS35UAzHQgI79eFn9lYti0RZnI+qzQN
+         azYg==
+X-Gm-Message-State: AOJu0YybxfEY+tAUxXKccM68rJB/p6A6QBAX8qqL6IlBLL1jiPITB7sx
+	nRpnMaK8oBHusbW+T8B7ER7EKz9hotRNK8TAQEq1k/+TWtJ6ILxfU6RfBETAkQ==
+X-Gm-Gg: ASbGncs3GxhmzPCSu7jlDor58zLhBrMMg8/kpQZanfzFXoxv+tJbOqNXHsBqnzti/Zm
+	fe885FtR9WX+4Z1adkd9n6OttsGYBA0nPt2ZVO5Qh0kejBbc2AfI9J4klPDKeo2VEbkRYTDzo6X
+	5e/YqKqLdaB3D8hDFK2NgsWj2vPigNW39UfAn38bSkvHcyvxmUgfQHisSyGyBG9wIcEVZP+j9KT
+	bi9kk/K2oaCSgziK/mLK2IrK64Wr8GA4Bo3veqwQXe61nDLkizOmQADdYEPqcoHchb1rwCcqQZ+
+	cM4N5M++rNqd5niFNlrcUa1+ozvCRhkqn2tvmvc1zGAjz2HJyT8rOz7OTtMq9ao=
+X-Google-Smtp-Source: AGHT+IGaa4Va5n2XoUgI7uOU1cs5rm5wiIrc2JiEqcVlAzFi4g/bozQ2woOcvXCY92oIhmgkFjItnQ==
+X-Received: by 2002:a05:6000:4b1a:b0:3a4:f6d6:2d68 with SMTP id ffacd0b85a97d-3a9186574femr9173208f8f.56.1751203243026;
+        Sun, 29 Jun 2025 06:20:43 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a88c7fa750sm7631626f8f.25.2025.06.29.06.20.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 29 Jun 2025 06:20:42 -0700 (PDT)
+Message-Id: <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
+References: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 29 Jun 2025 13:20:32 +0000
+Subject: [PATCH v2 0/9] doc: convert git log man page to new synopsis format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: [PATCH 6/6] parse-options: add precision handling for OPTION_COUNTUP
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-To: Git List <git@vger.kernel.org>
-Cc: Patrick Steinhardt <ps@pks.im>
-References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
-Content-Language: en-US
-In-Reply-To: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:0DPuvMDzgDWJ3vm8SbdwKUIm2JYG5+/vy0soT0kNqFRlOR/d4EC
- spprLVwYftOA/y1hZmJfAEUAH/k+xWsdpJ7jZ4TJbHh1EiuAvsU4vY+4qHLka0MrybLNfPp
- eGWt66uYDWF/0SZGruS7ClbefUH5OPLex9TVs4MHBXil6YBvG+0MenshKOctbozN9J2bFdB
- ykE9IP8JqQgm1GbPW0VzQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:WhbbHED46/Y=;a+MuVN88myBXGuCUS7tcUUjrIIl
- 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
- bnhAJG9BygyOmgUxfIgy+es=
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
-Similar to 09705696f7 (parse-options: introduce precision handling for
-`OPTION_INTEGER`, 2025-04-17) support value variables of different sizes
-for OPTION_COUNTUP.  Do that by requiring their "precision" to be set,
-casting their "value" pointer accordingly and checking whether the value
-fits.
+This series converts the man page of git log to the synopsis format style.
+Git log is the second largest manpage after git config, which makes the
+changes quite large.
 
-Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
-=2D--
- parse-options.c               | 22 +++++++++++++++++-----
- parse-options.h               |  1 +
- t/helper/test-parse-options.c |  3 +++
- 3 files changed, 21 insertions(+), 5 deletions(-)
+A special note about the log format description which required escaping the
+synopsis processing of parentheses.
 
-diff --git a/parse-options.c b/parse-options.c
-index 0dc9b0324a..0dd08a3a77 100644
-=2D-- a/parse-options.c
-+++ b/parse-options.c
-@@ -166,10 +166,22 @@ static enum parse_opt_result do_get_value(struct par=
-se_opt_ctx_t *p,
- 	}
-=20
- 	case OPTION_COUNTUP:
--		if (*(int *)opt->value < 0)
--			*(int *)opt->value =3D 0;
--		*(int *)opt->value =3D unset ? 0 : *(int *)opt->value + 1;
--		return 0;
-+	{
-+		size_t bits =3D CHAR_BIT * opt->precision;
-+		intmax_t upper_bound =3D INTMAX_MAX >> (bitsizeof(intmax_t) - bits);
-+		intmax_t value =3D get_int_value(opt);
-+
-+		if (value < 0)
-+			value =3D 0;
-+		if (unset)
-+			value =3D 0;
-+		else if (value < upper_bound)
-+			value++;
-+		else
-+			return error(_("value for %s exceeds %"PRIdMAX),
-+				     optname(opt, flags), upper_bound);
-+		return set_int_value(opt, flags, value);
-+	}
-=20
- 	case OPTION_SET_INT:
- 		return set_int_value(opt, flags, unset ? 0 : opt->defval);
-@@ -630,10 +642,10 @@ static void parse_options_check(const struct option =
-*opts)
- 		case OPTION_BIT:
- 		case OPTION_NEGBIT:
- 		case OPTION_BITOP:
-+		case OPTION_COUNTUP:
- 			if (!signed_int_fits(opts->defval, opts->precision))
- 				optbug(opts, "has invalid defval");
- 			/* fallthru */
--		case OPTION_COUNTUP:
- 		case OPTION_NUMBER:
- 			if ((opts->flags & PARSE_OPT_OPTARG) ||
- 			    !(opts->flags & PARSE_OPT_NOARG))
-diff --git a/parse-options.h b/parse-options.h
-index 8bdf469ae9..312045604d 100644
-=2D-- a/parse-options.h
-+++ b/parse-options.h
-@@ -183,6 +183,7 @@ struct option {
- 	.short_name =3D (s), \
- 	.long_name =3D (l), \
- 	.value =3D (v), \
-+	.precision =3D sizeof(*v), \
- 	.help =3D (h), \
- 	.flags =3D PARSE_OPT_NOARG|(f), \
- }
-diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index 2ba2546d70..68579d83f3 100644
-=2D-- a/t/helper/test-parse-options.c
-+++ b/t/helper/test-parse-options.c
-@@ -178,6 +178,7 @@ int cmd__parse_options(int argc, const char **argv)
- 			.type =3D OPTION_COUNTUP,
- 			.short_name =3D '+',
- 			.value =3D &boolean,
-+			.precision =3D sizeof(boolean),
- 			.help =3D "same as -b",
- 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_NODASH,
- 		},
-@@ -185,6 +186,7 @@ int cmd__parse_options(int argc, const char **argv)
- 			.type =3D OPTION_COUNTUP,
- 			.long_name =3D "ambiguous",
- 			.value =3D &ambiguous,
-+			.precision =3D sizeof(ambiguous),
- 			.help =3D "positive ambiguity",
- 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
- 		},
-@@ -192,6 +194,7 @@ int cmd__parse_options(int argc, const char **argv)
- 			.type =3D OPTION_COUNTUP,
- 			.long_name =3D "no-ambiguous",
- 			.value =3D &ambiguous,
-+			.precision =3D sizeof(ambiguous),
- 			.help =3D "negative ambiguity",
- 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
- 		},
-=2D-=20
-2.50.0
+Changes since V1:
+
+ * rework the grammar style when refering to plural placeholders . The text
+   is more descriptive and does not rely on puns. Puns may be difficult to
+   understand and to translate.
+ * change commit message to reflect the conversion of inline description of
+   several option to a list.
+
+Jean-Noël Avila (9):
+  doc: convert git-log to new documentation format
+  doc: git-log convert rev-list-description  to new doc format
+  doc: git-log: convert line range options to new doc format
+  doc: git-log: convert line range format to new doc format
+  doc: git-log: convert rev list options to new doc format
+  doc: git-log: convert pretty options to new doc format
+  doc: git-log: convert pretty formats to new doc format
+  doc: git-log: convert diff options to new doc format
+  doc: git-log: convert log config to new doc format
+
+ Documentation/asciidoc.conf.in             |   2 +-
+ Documentation/asciidoctor-extensions.rb.in |   4 +-
+ Documentation/config/log.adoc              |  47 +--
+ Documentation/diff-options.adoc            |  40 ++-
+ Documentation/git-log.adoc                 |  86 ++---
+ Documentation/line-range-format.adoc       |  26 +-
+ Documentation/line-range-options.adoc      |  10 +-
+ Documentation/pretty-formats.adoc          | 283 +++++++--------
+ Documentation/pretty-options.adoc          |  71 ++--
+ Documentation/rev-list-description.adoc    |   6 +-
+ Documentation/rev-list-options.adoc        | 390 ++++++++++-----------
+ 11 files changed, 493 insertions(+), 472 deletions(-)
+
+
+base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1933%2Fjnavila%2Fdoc_git_log-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1933/jnavila/doc_git_log-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1933
+
+Range-diff vs v1:
+
+  1:  1ce06a18481 !  1:  f2b69588195 doc: convert git-log to new documentation format
+     @@ Commit message
+          descriptions. The new rendering engine will apply synopsis rules to
+          these spans.
+      
+     +    We also transform inline descriptions of possible values of option
+     +    --decorate into a list, which is more readable and extensible.
+     +
+          Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+      
+       ## Documentation/git-log.adoc ##
+     @@ Documentation/git-log.adoc: each commit introduces are shown.
+       	For each candidate reference, do not use it for decoration if it
+      -	matches any patterns given to `--decorate-refs-exclude` or if it
+      -	doesn't match any of the patterns given to `--decorate-refs`. The
+     -+	matches any of _<pattern>_ given to `--decorate-refs-exclude` or if it
+     -+	doesn't match any of _<pattern>_ given to `--decorate-refs`. The
+     - 	`log.excludeDecoration` config option allows excluding refs from
+     +-	`log.excludeDecoration` config option allows excluding refs from
+     ++	matches any of the _<pattern>_ parameters given to
+     ++	`--decorate-refs-exclude` or if it doesn't match any of the
+     ++	_<pattern>_ parameters given to `--decorate-refs`.
+     ++	The `log.excludeDecoration` config option allows excluding refs from
+       	the decorations, but an explicit `--decorate-refs` pattern will
+       	override a match in `log.excludeDecoration`.
+     + +
+      @@ Documentation/git-log.adoc: If none of these options or config settings are given, then references are
+       used as decoration if they match `HEAD`, `refs/heads/`, `refs/remotes/`,
+       `refs/stash/`, or `refs/tags/`.
+  2:  ff22d0f1adf =  2:  1f6c951726b doc: git-log convert rev-list-description  to new doc format
+  3:  3992c1786ef =  3:  7bab515e136 doc: git-log: convert line range options to new doc format
+  4:  d451d7f6c0a =  4:  384a7d23563 doc: git-log: convert line range format to new doc format
+  5:  71d9a374102 =  5:  c2e857105d4 doc: git-log: convert rev list options to new doc format
+  6:  5004a622c3f !  6:  01835272c2e doc: git-log: convert pretty options to new doc format
+     @@ Documentation/pretty-options.adoc: people using 80-column terminals.
+      +`--notes[=<ref>]`::
+       	Show the notes (see linkgit:git-notes[1]) that annotate the
+       	commit, when showing the commit log message.  This is the default
+     - 	for `git log`, `git show` and `git whatchanged` commands when
+     + ifndef::with-breaking-changes[]
+      @@ Documentation/pretty-options.adoc: to display.  The ref can specify the full refname when it begins
+       with `refs/notes/`; when it begins with `notes/`, `refs/` and otherwise
+       `refs/notes/` is prefixed to form the full name of the ref.
+  7:  d54e297567a =  7:  d5490f7d868 doc: git-log: convert pretty formats to new doc format
+  8:  9f9ce432bd6 =  8:  c2346eb580c doc: git-log: convert diff options to new doc format
+  9:  fa91d919fa0 !  9:  b12b8294b86 doc: git-log: convert log config to new doc format
+     @@ Commit message
+       ## Documentation/config/log.adoc ##
+      @@
+      -log.abbrevCommit::
+     +-	If true, makes
+      +`log.abbrevCommit`::
+     - 	If true, makes linkgit:git-log[1], linkgit:git-show[1], and
+     - 	linkgit:git-whatchanged[1] assume `--abbrev-commit`. You may
+     ++	If `true`, make
+     + ifndef::with-breaking-changes[]
+     + 	linkgit:git-log[1], linkgit:git-show[1], and
+     + 	linkgit:git-whatchanged[1]
+     +@@ Documentation/config/log.adoc: endif::with-breaking-changes[]
+     + 	assume `--abbrev-commit`. You may
+       	override this option with `--no-abbrev-commit`.
+       
+      -log.date::
+
+-- 
+gitgitgadget
