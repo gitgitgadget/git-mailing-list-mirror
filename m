@@ -1,76 +1,79 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB7621B9F5
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 21:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DED6235346
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 21:10:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317729; cv=none; b=Fva7yuNNwx9P41030NAXlHg2zMmaA4Y8p5NcPNfbHUNwVG4aXFZhhnJa8z/MSYmp+LbrZw+cl7z1qZ+bAgZ9hwmU6dp3SF9hrTo8puklHVNlZszQK6TUp16Q+YuszJt9UdsLQuPQ2rK/MDXoN4xRwx65R19onQGA1s9DdGZzDQo=
+	t=1751317840; cv=none; b=QQgapJVlcRvhaPylS4fEIb1K8BZpxGLmpnpTyfRMwtoJ5HbkYl5x7bGvdCFNX+NGRyzBQ57qKho1+aOACVNcVCiTG+MY9cCPAZlVyLuycVU0OlFjiz0m3kGJ/MD47ToqJjmG1/jYbohhheDZ51Gq0Unx8IHRn0mnXKD9HXxdGWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317729; c=relaxed/simple;
-	bh=AoUqRcH92+c63yEFefbShQGknxIaS56+dWQJOgnqXkI=;
+	s=arc-20240116; t=1751317840; c=relaxed/simple;
+	bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qtuNPjpTiKupOUYzmENul87LqNozD45pZHp6RiVwzPBnDHSGwE4qBer/cvopgLQIBwtqGmLMc0ZfWGV8PM6J5LYfnNz7dpEFby1Yss1rSd1S+vLCAcM4VblqvQxZAcF839KMXyvXvJdtNV7tFHndvRhBHEHbFfAThrqnz4L0KPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PFcIzmvl; arc=none smtp.client-ip=209.85.214.169
+	 MIME-Version:Content-Type; b=T4zxhlbkfgH/wXHdfQb9yyhhcVLl/PIh8Mj5Llh8RZX5LpTq8zk0/nEQ9bMI3mUx/OHPzgsMwGw+en3HjsRut1NrXY2I7uw6DizYd/pceOQwPEfP25ag30oJaZ2+mjyiSN3uQXAIB86TnbDHDdV9H5QPLP0od1Fb1nyqhsgcwZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fh5x3Amv; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PFcIzmvl"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-236470b2dceso20673575ad.0
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:08:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fh5x3Amv"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2500827b3a.0
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:10:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751317723; x=1751922523; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751317837; x=1751922637; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=kXNSYBK9vW+sieEavatWVcdCjeQQsMWX8+8blMkgqiQ=;
-        b=PFcIzmvlX3ODmHbByfEO/Pv0WVQ0jsPKUYrBhWVDHG+YQZgWqfxD7jl+mGzQYabb0J
-         8WRy3OvBIa+shf8Auh8Q/o4ygFHsMw8E4eBuDGXuZUhcYiii2D+r7iUDKRUUkda9LiM9
-         KARipf3Ul+LmJY1mfeikth+qNHSb3irDEYVD2z24wJ8dU2M+Q+F4FUdHpMW9Zr5VZTBY
-         LhOVd97XTG/vLWOvekVQNPeWyKn1hYfWTCV9iShV8+RmaY6XXbrwRS7t/ebA/GqvtT63
-         Ijtqmp/3pwRAf+hVvrevBfPlh3FNeZG9LMar23iX3qat6P8hpGJ1bwDzpkgC/5SfqvI0
-         Gfbw==
+        bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
+        b=Fh5x3AmvTMGNePVrFxLA8aaPWXdQHZyAkRdSscbEBjdRZ7ZLbEitwKZRyFFYHq5Sji
+         Po38v1lesukY7/1krwr5haz/V0D3PyJWAPo6lL11NgM9npM41KufzaLfUWCV7FWdIuGf
+         b8/20LQUqdw3axiIJGDWmhf2dcksgQqLikzK6sPCPGaHZlmZvc0KinCKj05LSf7s5pBi
+         jjz4Tvn8LcrgpX4EoYcfc/Sfhy/5rFDPwG3fhDjpXpBAMcIDuhQ3WCBjd0YGRWxBkLki
+         95dxQRI9rUZHlWKr+rrnQPuUaqq8fjlWwG/Q48ilrUGtT8xuDb7uv1iUNQEVZ0Nui+KP
+         Ulmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751317723; x=1751922523;
+        d=1e100.net; s=20230601; t=1751317837; x=1751922637;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=kXNSYBK9vW+sieEavatWVcdCjeQQsMWX8+8blMkgqiQ=;
-        b=nfBODNYQ4Vw8IxAhiJXojJdXzoi2Vz1XnQhhOFKETL8gdP0E2lmfOfH2fc6zPlZ9Ex
-         qR7jR+wdCapk8awHjM0dCQ+K1hzbJzvEAoflZTrgu0B/tYlpfT+zYT5IB75swYwUwa8C
-         TV/TGLx1mSalv3v9VswEzJ4g0vDxp0aTBEtj8t6wS2l2OEhGyqhy6DaPFgJPy8Kmuoo/
-         kdWJrGiOkBGcqfVnbxqq8HJkbR8BENnIDJi8gWs3H60E7A1TcvSDGFaH6kf8e+Eo8jju
-         b6pAllx+LEyW//74MnaPc78cjgyHXHznYd5wvOVZS01vVX1ZmaMAcsuVtNUmzibPU6Sf
-         T2vA==
-X-Forwarded-Encrypted: i=1; AJvYcCVZWq/V+54EsbXMvWhAS++kY3VUhSEoaV2GLxejf448j12mlEy9Pfia3qABHFKBe6MUQkw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUhZd8d+0YceC6yc32RvGJZzztO5GNsmt9J2t2xCQrKdIMzVoq
-	7E721rlm5Q1d892Ms5RMnhWh8/BumRS14s1fUOcHUApRUf10TKJOaVaQ
-X-Gm-Gg: ASbGncuHeNb9Pe6kDs7C0EecgXlayeVNIlh1LAiot6WvSeQcY4UJmpR4jcRuzclWhnH
-	+H58zB33dT2mugR9QuQ6yKq2ip4MDDJANCbhO7d7FrBzt1gqkv6x+a3Bi8krah+xiHKWlamW7nG
-	svA76gflKD45HMugCEBOYhtFFrFyWxEiuDVLiulz9eQIjfAB0/Iyf9c29Q4Wl791vKHIDn0N7A7
-	scsukJFEULMqaWmc79llOvARSlA2sG4er4qfj5OMxVhyslK8hZvTSCIPbhh7h9qPF13V8UXcn8E
-	IGteLbF98RswgRoGdPCfbnsO/qoNHu9WB+B7fOJ3PeI7d2pdImK9+w6Q9enaPG33ULGAsvQmjD/
-	XRJX2IyY+NI3D9Bn9Chxc5DIhWMU6qigyR/RL2Q==
-X-Google-Smtp-Source: AGHT+IEu3ytaN+EIkKn0QLwsQp9IuECMEXTnpChI3D6FeFi+Ef5CubRj+R8VYxYDgLsXFCZI8mM/ww==
-X-Received: by 2002:a17:903:1aec:b0:234:c86d:4572 with SMTP id d9443c01a7336-23ac45e248cmr192251085ad.30.1751317722892;
-        Mon, 30 Jun 2025 14:08:42 -0700 (PDT)
+        bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
+        b=l0tJ8MQ+enz+YqZFgF9pFdlX/Gf9fkLc6HfJ0vZdJn6VUxPMDG2ZYZsglFdEp4QAnl
+         RTA7F0x5XE4y0lAOe5fLlkC8MuhJP/PsAHWdfOhoVvIhoume8Ja4dvOSSRIC/aLrGsaP
+         BX9N5q4lyE0VGx3OrLxtoqhwGNXJPBAMGD7suHdcrE4Tt1svpwTy4kikWfz/ZooBDRgV
+         blTiU4Ia/oVNGkmgVDzyVrKCvIi8guXTICmOFFB9N06X5BSTrICS5gfz6qFZEE5njgG6
+         vssOyy6dbzYZQRy9kGVY9HT5oz7u7Gv/fT8fUaUAklbH6d7472JGgoa4Nnr53Lp2+fIm
+         az5A==
+X-Forwarded-Encrypted: i=1; AJvYcCWjZJ2FbthHK2jMMaogqsd4Nhz4bvzsyKmoZTzf+IY5mw0QoLHhOU9qbEiklr0IWy39au0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfeLiQ7n6YiL7BLMtvOkJo9epJYfKa+uErLE0VcPoVJY7uTxlD
+	uiYn4b6Jx4QbJV7m6UIggiZJsHV/J/IdVu5ZMij2ALh3DchaY+zg8PeN
+X-Gm-Gg: ASbGncuS8P5DLkP1OH9gEuVXUBRt60CLzPHLqBmiQUe4qCE+8stwkQHhcV+tVT2Lxn2
+	fo1XqjvTiWhpjmK5yLXFMn5H9YWf0WD4l/ULyuluLhUyVRd5KmgLzkhcxuCEQ16dRCsjNmNhQxz
+	+NvYDp7oYsE2Pdof2p8bOMITU997t86sg3bSfzmSyGoaq93xLHbK99GBvICDwTA303MNYb0Jo6f
+	DMZ0nqF1fth1CeZsJUG5rLj+IkrIU/h9wu8RoIX+ftv/McmECF8PbWyvu4nND3dfiFLBVwZ8GWt
+	CUuxrkoGIGJEU2B/RVoDmRpEJ2TPWhyxVVMmmd5Mo80Qht4I/4WD0UhO3lb8sG2wue+1cu5cl6d
+	7QX5XAWC0qfqMqbJWEm5ATs3vYmg=
+X-Google-Smtp-Source: AGHT+IE8p1QmvTDIggnVLCBCVxoet2y4weVn19ZVZjxFqE1tFZLf+z9UY2qi6qERs2BIWeNCbMgbVw==
+X-Received: by 2002:a05:6a20:6a0d:b0:220:2da8:325c with SMTP id adf61e73a8af0-220a09125a6mr22190570637.0.1751317837450;
+        Mon, 30 Jun 2025 14:10:37 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb39bd0esm88250935ad.117.2025.06.30.14.08.42
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b34e31beab2sm8969451a12.47.2025.06.30.14.10.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 14:08:42 -0700 (PDT)
+        Mon, 30 Jun 2025 14:10:36 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: christian.couder@gmail.com,  git@vger.kernel.org,
-  shyamthakkar001@gmail.com,  ps@pks.im,  ben.knoble@gmail.com
-Subject: Re: [GSOC PATCH v5 0/3] environment: remove sparse-checkout related
- global variables
-In-Reply-To: <cover.1751309770.git.ayu.chandekar@gmail.com> (Ayush Chandekar's
-	message of "Tue, 1 Jul 2025 00:57:45 +0530")
-References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
-	<cover.1751309770.git.ayu.chandekar@gmail.com>
-Date: Mon, 30 Jun 2025 14:08:41 -0700
-Message-ID: <xmqq5xgdlyxy.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  K Jayatheerth
+ <jayatheerthkulkarni2005@gmail.com>,  ryenus@gmail.com,
+  git@vger.kernel.org
+Subject: Re: Re [bug] pull --prune could not delete references due to lock
+ file already exists error
+In-Reply-To: <aGKdICvmKlumU0ru@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Mon, 30 Jun 2025 14:20:16 +0000")
+References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
+	<20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
+	<CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com>
+	<aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
+Date: Mon, 30 Jun 2025 14:10:36 -0700
+Message-ID: <xmqq1pr1lyur.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -80,35 +83,12 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ayush Chandekar <ayu.chandekar@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> This patch series aims to remove global variables related to
-> sparse-checkout from the global scope and to remove the definition
-> '#define USE_THE_REPOSITORY_VARIABLE' from a few files.
->
-> It contains three patches:
->
-> 1 - Remove the global variable 'core_apply_sparse_checkout' and
-> move its setting to the 'struct repo_settings'. Also remove the
-> definition '#define USE_THE_REPOSITORY_VARIABLE' from
-> "builtin/backfill.c".
->
-> 2 - Remove the global variable 'core_sparse_checkout_cone' and
-> move its setting to the 'struct repo_settings'.
->
-> 3 - Remove the global variable
-> 'sparse_expect_files_outside_of_patterns` and localize it in the
-> function which calls it. Also remove the definition '#define
-> USE_THE_REPOSITORY_VARIABLE' from "sparse-index.c"
+> Another option is for users on case-insensitive systems to use reftable,
+> which won't have the same problems as the file-based backend and will
+> preserve case properly.
 
-A call to prepare_repo_settings() function is not free even though
-the .settings.initialized member makes second and subsequent calls
-to it as cheap as possible.  It makes me a bit worried to see
-patches that add new calls to it to places that are fairly deep in
-the callchain (as opposed to in cmd_foo() for various built-in
-commands).  As long as the control passes these places only once
-before we do the heavy lifting and then after the heavy lifting,
-the only thing left for us is to exit, we would be fine, but I do
-not know if all new calls added in these patches are that kind.
+The more guinea-pigs^Wadopters we have, the merrier we are ;-).
 
-Thanks.
+
