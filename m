@@ -1,186 +1,102 @@
-Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCDCC1C8631
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:49:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7216F79D2
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:53:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751309399; cv=none; b=KCC7DsYo8l46DdNRENNvVlMtNBIYDAv4klL3DTY2UFBCCVK98VlZPlZUKssWyIzCX46x+ewnCEWb67X9+W9rDRWEFYZ+y1Yg5B5jkQVYbeXtA0PXNHYbjfExq/zlAie36+PyhZID2OSPkQApVNO93cJDXN3GqFD1khoFjh5ZOds=
+	t=1751309600; cv=none; b=R/JqVfPVkEakt/5+IuhTeNlElk9Tr/jsl3PzPDLv6QMpjh5VY1eoi8EfG92Nyod/1IWHBLQBCV3Ovke36d2LJZ5O8oJsmed32VVUJ/lczKxVMlAJLFZ2F2LBXqerBOv6+lt0tuwb3LE7kuFfvHfAdN16ft+CNrP2gzrGmea7MHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751309399; c=relaxed/simple;
-	bh=WLE6ON2+H/nlDUKk8yvkFsg7q4oFl8K5Y+kTVYiCELs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=mSmklTjQDLvq8QItdI4tU4CC4F8uFH7QCQiruGKkugmpxw6arvYxMCC8cOj1JNtKN9SEWkopiZrtCf8oLx+St89OqZNM9JF7Nfb1gdpm1rk/L+tG8thE6W2ildrzRWGhnwzhidW28OdZdJ+fZCbTXYrw2PTvlV9VR3ClpmxFIqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=mPA6p+24; arc=none smtp.client-ip=95.215.58.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1751309600; c=relaxed/simple;
+	bh=gZhewVTy9+3F0B8m4Uwgmt48JvFR3PoupR+tiWPED1o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BFSYBjHU2BKxQtD0B/K06im/MyMiTWKBGKNFqJE5nJL9s/6UuZ5RPrcV1Z1oC065vLGsaGuYckdl1dDfPCx6wnqqjWbicpchKVPQ3kLj8qfTl7aQxNxe0T6iR+zWTlH95g0o3kiEwjvgbqN8NeWAE9t0UCyHj4HvRPCzH9zufUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hbiRiMyb; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="mPA6p+24"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1751309395;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=Cy8eLlW/Ve3RpuLqucdD2uYEmvJEfX5f4gYUCRxOTeI=;
-	b=mPA6p+24d954NWUARTVnVf7IhrcXmXEvSvZ1mXw1nEMToP3z6I9gA7h/RrD4XSgP5K9sq7
-	MLRqZy0eEYYuFh8h0ATSw3hLOJJQaSmRmAG6DLpfie4EzqM2ZeyKr6+Gi/jra7uZ+9Tger
-	x5s0j1U7jjidn+CC9BYlB7O/LR8wtlQ=
-From: Toon Claes <toon@iotcl.com>
-Date: Mon, 30 Jun 2025 20:49:25 +0200
-Subject: [PATCH RFC v3 3/3] last-modified: use Bloom filters when available
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hbiRiMyb"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-748f54dfa5fso4245002b3a.2
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 11:53:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751309598; x=1751914398; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=OA0OjAhaBBNhrgW6s7wSxFSnXQ5hdjQMtXsUEDhjPSs=;
+        b=hbiRiMyb2zOezMomkrYTqfzE2EivAs9hWz/bN1PLeAaJTPfukgYwDT/fuXuWYZXjAh
+         jbWaiIDVPcspleACkgkPNxYBHBFlAzjM2Dnn6xD86US4H3rd+ExO+kYQxS7r61BeJ4Y6
+         gxAxE1jVrRtXhqoP5crnx3aq3dZA8x46kWAfL8UP6EryweNMK+8LzdefhPIXIkeSX0+w
+         Zq+tVZffe7O2NNGW6Dy6EN9paVCmJagNRt80+1PiOV+XB0m10DWxQYWvTPgakMEr61Lz
+         3m1pPKWNhJ+ExaR4K9ZAnqxdKiLxr/txLvNd+zTZEzSFzOQIn23hY/eFXVFmj3N92FQs
+         qm9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751309598; x=1751914398;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=OA0OjAhaBBNhrgW6s7wSxFSnXQ5hdjQMtXsUEDhjPSs=;
+        b=lRX9Y/Z4Aj1ka3UBGNrWaC43aHhV83rSXpGIpYR4WLf8z+SeYWlNHyL3pisq4en8zM
+         rulbAxiTiX1vuDvYmZr+XDYsJoVWqyJuMVxrcVwpHPbPxL+d6vp+okXfJbwhix0Lpnyl
+         jGzH3uYr8RLckngtxpaouiHT4kBmR9oWZB2sJzELOIl6VNtxkXEAI0QeBgu6mO5cIjz6
+         KIIlg25AmcMkQRuPAmtmQDEObFezC+/AY20Nuy1bXU22sRHlrJy2pxXJPgVvXAxTSDKu
+         6aAZbvT7Kd881b6LXKiTGuIEwz9/pRkJX/3xHR4h9DyG87bZPaA1f3J7/m/am4oEeoJY
+         BEJA==
+X-Gm-Message-State: AOJu0Yyzf0B4/+qFnQT9xAe5SDCdmhHCnJQpPSG0y/P7JHLyN+lWmjWr
+	W5vcxdIMk2Jn+eKmMm3VndNqilwaYFMWSJGMu0vi67NgbghxS8ndGaRM
+X-Gm-Gg: ASbGncs2k4MCGhC3D7k/Z9KT3NMpDsYjD9cQaNb+plUYOoqdXklQGtStNh8E+JaOrOx
+	gI9EHAy64pJK7M8PBuBQWFjN/Z1/vHN/LI7i38m4Z/Skc9qgxbELy5OYAVFFXHDoNls5aPp1gnd
+	kdNGCYHM7gZpIQFAdmn0cnwOqEkOP/Oy8tAzHLTFYAaZ0iHJnKuZQRsthzYVJzu5w5IQhkWzIPa
+	HMDztmVAb1utD6VlbWrZekowkkJl+qlAV0iuAcwxpiVQGrJ/2/HnrMhwu6k5IDlLjQ4C48dKJyH
+	grakOScZeLe3cOWukllfnWb2d/cmNb4dlaq6jgqyoZ66BeXtlB0svo6c+qMzG06uYILSLe5qAOp
+	7E/ySrK45qoRLiC+HgzfYXE/onvk=
+X-Google-Smtp-Source: AGHT+IHMAGQ4wv5eZ0/ma980EEJpc62qt2mBTf/hk7jFqHHwunabcBVqBSoVwJBElGfE3boU2IeC6g==
+X-Received: by 2002:a05:6a00:91e2:b0:740:a85b:7554 with SMTP id d2e1a72fcca58-74af6e66243mr17651983b3a.2.1751309597679;
+        Mon, 30 Jun 2025 11:53:17 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af541e664sm9304789b3a.68.2025.06.30.11.53.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jun 2025 11:53:17 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: "Raymond E. Pasco" <ray@ameretat.dev>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/5] apply: only write intents to add for new files
+In-Reply-To: <20250628225819.1294068-5-ray@ameretat.dev> (Raymond E. Pasco's
+	message of "Sat, 28 Jun 2025 18:52:05 -0400")
+References: <20250628225819.1294068-2-ray@ameretat.dev>
+	<20250628225819.1294068-5-ray@ameretat.dev>
+Date: Mon, 30 Jun 2025 11:53:16 -0700
+Message-ID: <xmqq7c0t12oz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250630-toon-new-blame-tree-v3-3-3516025dc3bc@iotcl.com>
-References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-In-Reply-To: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>, 
- Derrick Stolee <stolee@gmail.com>, Toon Claes <toon@iotcl.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Type: text/plain
 
-Our 'git last-modified' performs a revision walk, and computes a diff at
-each point in the walk to figure out whether a given revision changed
-any of the paths it considers interesting.
+"Raymond E. Pasco" <ray@ameretat.dev> writes:
 
-When changed-path Bloom filters are available, we can avoid computing
-many such diffs. Before computing a diff, we first check if any of the
-remaining paths of interest were possibly changed at a given commit by
-consulting its Bloom filter. If any of them are, we are resigned to
-compute the diff.
+> In the "update only the worktree" mode, the index should not be touched
+> except to record intents to add when --intent-to-add is on. Because
+> having --intent-to-add on sets update_index, to indicate that we are
+> touching the index, we can't rely only on that flag to decide whether to
+> write an index entry.
 
-If none of those queries returned "maybe", we know that the given commit
-doesn't contain any changed paths which are interesting to us. So, we
-can avoid computing it in this case.
+Does that let us inspect state->ita_only alone and conclude that
+state->update_index is set, though?  IOW ...
 
-Comparing the perf test results on git.git:
+>  	if (patch->conflicted_threeway)
+>  		return add_conflicted_stages_file(state, patch);
+> -	else if (state->update_index)
+> +	else if (state->check_index || (state->ita_only && patch->is_new > 0))
 
-Test                                        HEAD~             HEAD
-------------------------------------------------------------------------------------
-8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
-8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
-8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
+... I would have expected the new code to check not just ita_only but
+check ita_only only when update_index is in effect.
 
-Based-on-patch-by: Taylor Blau <me@ttaylorr.com>
-Signed-off-by: Toon Claes <toon@iotcl.com>
----
- last-modified.c | 45 +++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
 
-diff --git a/last-modified.c b/last-modified.c
-index 4904d00d2a..2097894c6e 100644
---- a/last-modified.c
-+++ b/last-modified.c
-@@ -1,7 +1,10 @@
- #include "git-compat-util.h"
-+#include "bloom.h"
-+#include "commit-graph.h"
- #include "commit.h"
- #include "diff.h"
- #include "diffcore.h"
-+#include "dir.h"
- #include "last-modified.h"
- #include "log-tree.h"
- #include "object.h"
-@@ -11,6 +14,7 @@
- struct last_modified_entry {
- 	struct hashmap_entry hashent;
- 	struct object_id oid;
-+	struct bloom_key key;
- 	const char path[FLEX_ARRAY];
- };
- 
-@@ -27,6 +31,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
- 
- 		FLEX_ALLOC_STR(ent, path, path);
- 		oidcpy(&ent->oid, &p->two->oid);
-+		if (lm->rev.bloom_filter_settings)
-+			fill_bloom_key(path, strlen(path), &ent->key,
-+				       lm->rev.bloom_filter_settings);
- 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
- 		hashmap_add(&lm->paths, &ent->hashent);
- 	}
-@@ -94,6 +101,13 @@ int last_modified_init(struct last_modified *lm,
- 	if (setup_revisions(argc, argv, &lm->rev, NULL) > 1)
- 		return error(_("unknown last-modified argument: %s"), argv[1]);
- 
-+	/*
-+	 * We're not interested in generation numbers here,
-+	 * but calling this function to prepare the commit-graph.
-+	 */
-+	(void)generation_numbers_enabled(lm->rev.repo);
-+	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-+
- 	if (populate_paths_from_revs(lm) < 0)
- 		return error(_("unable to setup last-modified"));
- 
-@@ -102,6 +116,12 @@ int last_modified_init(struct last_modified *lm,
- 
- void last_modified_release(struct last_modified *lm)
- {
-+	struct hashmap_iter iter;
-+	struct last_modified_entry *ent;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent)
-+		clear_bloom_key(&ent->key);
-+
- 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
- 	release_revisions(&lm->rev);
- }
-@@ -136,6 +156,7 @@ static void mark_path(const char *path, const struct object_id *oid,
- 		data->callback(path, data->commit, data->callback_data);
- 
- 	hashmap_remove(data->paths, &ent->hashent, path);
-+	clear_bloom_key(&ent->key);
- 	free(ent);
- }
- 
-@@ -179,6 +200,27 @@ static void last_modified_diff(struct diff_queue_struct *q,
- 	}
- }
- 
-+static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
-+{
-+	struct bloom_filter *filter;
-+	struct last_modified_entry *ent;
-+	struct hashmap_iter iter;
-+
-+	if (!lm->rev.bloom_filter_settings)
-+		return 1;
-+
-+	filter = get_bloom_filter(lm->rev.repo, origin);
-+	if (!filter)
-+		return 1;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		if (bloom_filter_contains(filter, &ent->key,
-+					  lm->rev.bloom_filter_settings))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
- {
- 	struct last_modified_callback_data data;
-@@ -198,6 +240,9 @@ int last_modified_run(struct last_modified *lm, last_modified_callback cb, void
- 		if (!data.commit)
- 			break;
- 
-+		if (!maybe_changed_path(lm, data.commit))
-+			continue;
-+
- 		if (data.commit->object.flags & BOUNDARY) {
- 			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
- 				       &data.commit->object.oid,
-
--- 
-2.50.0.rc0.18.gfcfe60668e
-
+>  		return add_index_file(state, path, mode, buf, size);
+>  	return 0;
+>  }
