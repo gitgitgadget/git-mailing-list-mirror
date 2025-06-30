@@ -1,143 +1,140 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 320F01BD9CE
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 08:29:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0300823BCEC
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 08:34:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751272199; cv=none; b=OSb1RQ9FwfBudRAYvpckLHCgiV2Rfwv4/Fhvx1nMGK1xhJ6F4lmdaeB9zGhhH1Fbmd1Vy9Jwx9vD3c/Vvh0yDdbBOiw4pojwVZoak9nVhpeL8ZiOEl2jO6HdgTLIv6J6ZQjkChaW+1j+/k2ER48S9Sn8q6CfzERabumbqx5XRSo=
+	t=1751272492; cv=none; b=YqMHpB1FK/aUqyi4P2ciE0N662rZBZ/cEZnD2cdd3sgbtrk3xU4dp5+trFGh0pqN92xvjodE9XnafedylAP5S0/uN7PHEK0u6LEdoFbSpVnJElyWuGmgZjxgsRiy/mr7ZZrreLUggH0tN5Alv6S3ZKKvxXzHyBhpwWzUa0K62Go=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751272199; c=relaxed/simple;
-	bh=ttp+y1kFG7ec/VCAx36s6I11buCjinLU4D2JLicszXE=;
+	s=arc-20240116; t=1751272492; c=relaxed/simple;
+	bh=ZSQ7AA8ICD/Zu9f30wRfMiyM9WeMJ2bzbmE5jdssrmk=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ri+GChM33CqKolVh+pyXGDOQzE852DCG18nLgaoHg4BvrNV4PH96fDs4CPOipFxT9BNnv+++pa5dhBhnED24svPhkTfZRQRcQ1XTchyDtF13RPfkXirJh+xKV6PTOWldmihgb+nUm0WMFCnO3bvvcw3ShrLJdstUYBuTyXmScI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jxON5jxF; arc=none smtp.client-ip=209.85.221.169
+	 To:Cc:Content-Type; b=CkLQYTnaVQoPABHL6udI0xJLVyD0pwp1XAM0XOFPJnb+JIaxgvvatcSJtDFFEfsCDzBAblrq7KGPNt33eJ+G/+ValH0mQ42cHBMbpN8jZUd2A+H54o134wDo2xBvZMhe0Tw+BJmT4a1YKHwWLKxzPTghLSMUqrfky/ISfpVBNBE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HuXLbHSD; arc=none smtp.client-ip=209.85.222.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jxON5jxF"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-531acaddd5eso1073751e0c.2
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 01:29:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HuXLbHSD"
+Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-87ec9aee6dbso834533241.0
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 01:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751272197; x=1751876997; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751272490; x=1751877290; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=ttp+y1kFG7ec/VCAx36s6I11buCjinLU4D2JLicszXE=;
-        b=jxON5jxF3STIb0k8T3ev+USUbhvaJ8b1JQVeTry5fXEM7/pW12yK1x1iW/PW/vR2Hw
-         p/1U+vBUZgHVoezGc4x3zWTT6VbV1ZqzD4qETYT8YfY7Fow8ZjRiK9FtDHHynj42Ads3
-         R08SqYFiQx/3zdohx/uGAIAkq17WppvWCEfkcBqPc06fn9LQG2NUmRYNzl4cojydch8H
-         gRUlq8kfPXkvKFTaxHMUcbvTd0XvKuwGsdgJKkaK6SblwhaJjEWhHpLXkrTOU2s2sOfT
-         mFEqXOJYbndhGM++wl+6Qc5JtUyJKbdkdoAWgJPL8cgaDaTfTAyMjvcWTeDBx/JOeo9z
-         omwg==
+        bh=8dTsCJP5t130VRtxUhId39omk2UsDQIYzR6ZVKFk4uQ=;
+        b=HuXLbHSDzFCU1yvpJdkuPXI6U2M+Pnh1Y6Wa4kWOkrYCTdtH/Tep+6q7hgjDhJRjQE
+         i+2DLV8PuE/deM7jc/j6BOxiK8ytEmccIfcoxXYsHEZWu1tWnkzghISRy706h/mS9+S4
+         DblQU6A9wgU55T4lNEhWslhn7Um9NbpcOYHkI+TPciBYft/x06ZK6AR/r6F4SESB6GmI
+         JgirKXoyzvd8no2sI9SHMGRMCiJa8+6itytmwt8pzlWOPsWYAPeXiauvOxWQu6Oj1Bgg
+         gqU1RS9MegnV49F4iKd2ulYIv6hXj0A/zl3x9/gJXsAf6IujRRQToaNY2YdCdvBef7m4
+         AFgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751272197; x=1751876997;
+        d=1e100.net; s=20230601; t=1751272490; x=1751877290;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ttp+y1kFG7ec/VCAx36s6I11buCjinLU4D2JLicszXE=;
-        b=Dh6IIAqCLLAIbsurott/Vr2a6sk+4GK/Gqd0skpkQ3LkUn5FXVeGIhyhbZrypi5nPo
-         b1PuaDoBQ2Ccj01DM8X0YLXhMlwgDl4VLMDycTkVvBDqkWDFa3ODskIiiCJ3TusBkhM0
-         EKMx+Tse50WNojOqyiymDZYeMwLl1KgxAZhd41hQqf0s9x23Q3g01B1gaOJQMvy2g/pB
-         Gz1iujMczr8dM26VlLGG5RuYtDJjeY75StdLg0RG5r/9YjRxxJwsXCfVGUDt7uyl422S
-         Qj6nYSM3XAfJTeA5Agw3eAcYI1UpOuz2pe01lhGqQxJp2YOLNajKRqPtRZfh7D/Unowl
-         5RLg==
-X-Gm-Message-State: AOJu0Yz1xjeZfLxfO85sZKvAukdqTmTHRZHYewybmPhKjU2OTE5s2ZIA
-	gCMXOqlWMjwA2/59cOrQ3DVeN2MwiW2Z5KKgFPmRTHdDMqDvAKnnjw1bT3fB63gKAUQ4tG0xMyA
-	gjI6q+IIc4J2SWtMhQI4cC1wuz8VMwvM=
-X-Gm-Gg: ASbGncsilzAM/LQ7pseBNjejvb9FN2QZXWwT5Ew0+9zJHfd1bgNp4mpvavTcl096tSo
-	jku9nCk92Q80fNDrED7A+3ROlkv4r/s8KIHhfPJDcoJKkKaHv45vbr2PnYcrHdYTgNGiFQoHOJi
-	p/3ObGvXgaOgPKmOW44ZLDxM4wrmFAKQHasseV9pr2UL/uBt3VYVSeSYDWZbXxHT+ZTJjvrA1w4
-	sPsng==
-X-Google-Smtp-Source: AGHT+IGxLwzJnRcxdw6Z0fC0/LoHv7hDFYVes7Nv3H2CZ78LRQsS69C9cGMvXx+px8NQpc1m/ZCoQY7ybgF4yhSBOyw=
-X-Received: by 2002:a05:6122:4894:b0:530:6dc2:ba97 with SMTP id
- 71dfb90a1353d-5330be000c1mr8109428e0c.2.1751272196888; Mon, 30 Jun 2025
- 01:29:56 -0700 (PDT)
+        bh=8dTsCJP5t130VRtxUhId39omk2UsDQIYzR6ZVKFk4uQ=;
+        b=e14OaYK5JQ4ehFJo2vq/cl6F6RVxrwaubbmP5t2OgsdzKiaK0t7t9EuERKLImSBJiL
+         qslbI/Dv6fEqHXOL3W7eMHkzzT6yfXR33NWwqIzN5WSJ5NkqclDNd8Oh9GCtpOXcVLhX
+         I0VrxE0e67CxBejypLGyppJcST5nndJBaVvyI8cI079AaO9D+u7lvT0R33RTkHciuOxL
+         4kqLy3BB9O+657uTZyuVkehDLPllgmtk48aLgYYoTq+iWeiJsRsl3gFmNs0SkDR6SXE0
+         GoXn1+A/UOsp6+8biIl72IAqCU72UmtXDrrrm/R+LI0hpnlOA6Sf1UKs1QkNe38rdz1+
+         n7Jw==
+X-Forwarded-Encrypted: i=1; AJvYcCW7SHHVYrh0gQSqkOboEWLlN7V1ff/ip3WnV65U7RXIZmeR1iH8y85HoUE8/uLqFcjuRoo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCqcdQikoGxaPHqf8cEee4eyscplHT9sYAqJ8ZXKfGeZBNvYgA
+	WqfwvcSBDHOUcXZGUUT7KxKltMthjt063cmQo7pNjzPM19C04/5eRyoO+1iv3MB/1c3sbCAt5Vr
+	LN3MEMNPpK0Wjjf2tW8e69eI6IuxeoEg=
+X-Gm-Gg: ASbGncsbgbEbh663ri8ZAoaX6+MRDmW97q69GBABteX3DCA/1cr0xb4jbPnGJG2nwYH
+	yL3aHe06khVppg7m1cYHqMx7n+3AlZkdI5Bfd1PIpIdR5HaO4nuiTu/vlatGfc9qNCoamyEaJ8I
+	MnEZicRuLvpS9E8ns6xLqXtzid2iH2ccreM1+D7A000BdHsD53j/4oa84rfvy5jgRd6RZ2g4ER9
+	bHmlw==
+X-Google-Smtp-Source: AGHT+IHOS9FpRPAlhLlm0ZSHuIPXR2UFNFKhJGIPFdnfwAoaUVz7C+Ekf+miQ8VcuHDmy4EH+KUB4zk/LhL1HYSn7Gc=
+X-Received: by 2002:a05:6102:26d3:b0:4e9:ad6a:cd06 with SMTP id
+ ada2fe7eead31-4ee4f76a936mr6582977137.13.1751272489734; Mon, 30 Jun 2025
+ 01:34:49 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 30 Jun 2025 04:29:56 -0400
+ HTTPREST; Mon, 30 Jun 2025 01:34:48 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <4xcovwt5f2garsngqtzzcrn7755in4xkq6zxxk5smeo4d2vfp4@l7cqb2lizf65>
+In-Reply-To: <xmqqtt418dnw.fsf@gitster.g>
 References: <20250625-525-make-clang-format-more-robust-v1-0-67a49ecc2fd5@gmail.com>
- <20250625-525-make-clang-format-more-robust-v1-1-67a49ecc2fd5@gmail.com>
- <qxewasf6rxt6mnbwvfhxarcbvfsn6cnc2jskpddsb5fhxfhpwq@5d727iud7wfp>
- <CAOLa=ZR_ZhjxYgN4pZsjOuC52PZjGMCzLJVZbwGQb=Q9W-0HSQ@mail.gmail.com> <4xcovwt5f2garsngqtzzcrn7755in4xkq6zxxk5smeo4d2vfp4@l7cqb2lizf65>
+ <20250625-525-make-clang-format-more-robust-v1-4-67a49ecc2fd5@gmail.com>
+ <iutm4xxkhchcpfygtqo2s4nit42sclzen63465ljtovzgdsebr@okpj5jtw62r6>
+ <CAOLa=ZSJH-Wji+-oU+ku5aojYzEuC96tUu+24UTuTxCxt9LYNQ@mail.gmail.com> <xmqqtt418dnw.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 30 Jun 2025 04:29:56 -0400
-X-Gm-Features: Ac12FXwP6EFNNgP9cAdOVMHLKQNEDxLGPgVvPapltmg6V81PSo5jUclUUXbdapM
-Message-ID: <CAOLa=ZTVgEFSES0iv2kLftsDJ27cULo1F1XuJLHURWimuOm5-g@mail.gmail.com>
-Subject: Re: [PATCH 1/4] editorconfig: set maximum line length to 120 characters
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="00000000000033a9bd0638c5d573"
+Date: Mon, 30 Jun 2025 01:34:48 -0700
+X-Gm-Features: Ac12FXyNP3dCjVASLXVkBIP0adL6Rrhcsn1Rkw--35vQmGxWftqYEPJ8xqRQXp4
+Message-ID: <CAOLa=ZQD71Z4GSRNCuV=YL1zwGOXa-sGzpU9=8yfVcg6vJA6SQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] meson: add rule to run 'git clang-format'
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="000000000000a7fae70638c5e6e7"
 
---00000000000033a9bd0638c5d573
+--000000000000a7fae70638c5e6e7
 Content-Type: text/plain; charset="UTF-8"
 
-Justin Tobler <jltobler@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On 25/06/27 01:51AM, Karthik Nayak wrote:
->> Justin Tobler <jltobler@gmail.com> writes:
->>
->> > On 25/06/25 06:43PM, Karthik Nayak wrote:
->> >> As per 'Documentation/CodingGuidelines', we try to keep to at most 80
->> >> characters per line. However, there are often certain cases where we
->> >> extend this for the sake of readability.
->> >>
->> >> Add a maximum limit of 120 characters to the '.editorconfig'. This means
->> >> that if an individual line exceeds 120 characters, the editor will wrap
->> >> that line. This provides a lot wiggle room over the recommended 80
->> >> character limit.
->> >
->>
->> Hello Justin,
->>
->> > I frequently use the format operator in vim to reformat entire blocks of
->> > text and it is commonly configured to use `max_line_length` from an
->> > `.editorconfig` file to know when to wrap lines. Changing the value to
->> > 120 would cause my editor to prefer 120 character lines when
->> > reformatting, which I would personally not like.
->> >
->>
->> It would only wrap lines longer than 120 columns. Currently editorconfig
->> doesn't wrap any line length. So we're essentially saying, any line
->> above 120 is not something we want to accept and hence wrap. This
->> doesn't mean that shorter lines will be combined together. Wouldn't this
->> be better than the current situation?
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> When `max_line_length` is set in a ".editorconfig" file, in my vim
-> editor it overrides the `textwidth` configuration which was already set
-> to 80 by default. So changing to 120 would change line wrapping behavior
-> for me at least. I could disable using the ".editorconfig", but I would
-> prefer to avoid doing that :)
+>>>> diff --git a/meson.build b/meson.build
+>>>> index 7fea4a34d6..578db26df2 100644
+>>>> --- a/meson.build
+>>>> +++ b/meson.build
+>>>> @@ -2144,6 +2144,18 @@ if headers_to_check.length() != 0 and compiler.get_argument_syntax() == 'gcc'
+>>>>    alias_target('check-headers', hdr_check)
+>>>>  endif
+>>>>
+>>>> +clang_format = find_program('clang-format', required: false)
+>>>
+>>> Should we be checking for `git-clang-format` instead?
+>>>
+>>
+>> Yeah. While `git-clang-format` is packaged with `clang-format`, it does
+>> make more sense to check for the former.
 >
-> -Justin
+> Just for my education, what does find_program() look for?  Installed
+> packages, or a program on your $PATH?  I am guessing that the answer
+> is the latter, in which case it is not like "it makes more sense to
+> check for git-clang-format"---rather it is "it would not work at all
+> if we looked for clang-format", no?
+>
+> Thanks.
 
-Thanks for explaining. So it seems like vim in this case _does_ combine
-shorter lines to fit to 120 columns when formatting a block, this is not
-something we desire. So let me drop this patch.
+Good question. To quote from the documentation [1]:
 
-- Karthik
+  find_program()
 
---00000000000033a9bd0638c5d573
+  program_name here is a string that can be an executable or script to
+  be searched for in PATH or other places inside the project.
+
+So, 'git-clang-format' would work. I've also verified the same on my
+end.
+
+[1]: https://mesonbuild.com/Reference-manual_functions.html#find_program
+
+--000000000000a7fae70638c5e6e7
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 54c3ffb087b5929_0.1
+X-Attachment-Id: 3f2a364450e03726_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oaVN3SVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMk80Qy80eEZZN3E3a2VDTXFGdG1FZHlIaGlFeXZRQwpXWmdCMWRxRmZE
-bEJ6SDFLMStUK1hYamNoeklLc2pQSUk1K2pPZ3lKbEJvUlJPSDNIZ2dzeTk5TmZYWXBKa1ZxCkFs
-ZGIyREZmUFFkakF4N2FuZi9UanBpcXlzOWRPSi9kQ1cydWg1azNreFFxdmFQS2VnWEVyZ01yckRw
-elFlb1IKNnFoaW5lYmNyQmRSbU8rMW91UjVBd3E4WC9VbjdaMVZraEN1Y0tkZkpUcXowdXV3bFZE
-MDJVTTRjdDVlU3ZxRwpoMTZhV3RiUnhia1Q1MmZJWklOWDgyVVd6ZHY1OS8xK1JZbFFQUHVNYmdu
-M1YrK1NKVXFLeHJldGovT0FkdlF5ClQrRVRjVUZOU3VMaXFaRnViOUh1bVhvajNpVVJmMXhnN2cr
-c2hjN1BMY3crTnNTdTM2VjhFKzJYY0J1dkE3SGkKcDNUMURuU2dyeVhYS2N4L2ZQMlBnVytGajE1
-YWJmaEQrV2t2dXVROHQ0alh1MjdpWlMrZk80RnFNa0ZGa0FGSQpDTmFhMDhOS2J0TnB3UE1hWjF2
-d1NzNFhqWHNWYkdWZmh6Q3VyS3pZZGIrMDJSelY5VnNLem8yNnlCdVhDMEVJClJIcGMxZ2VEV0p1
-NkF3ZFBNNmhER3ZPZVFnRmNqd1BSSTFLOEpkTT0KPVJ2R2oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oaVRDWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMFJjQy9zSHA0VEdSUElLYVBIUlJBL25Mc1JjYUwragpIa3R2a1lYK3dm
+Yk15b251VWM5NG9qRkJncVVDK3B6Mm4wRU9YWjFNbGdCMnFmanVwaHFsdjNxdDBFTFBVeFVqCnox
+c2xKUmZaN3pLbzJPclQ5azJ3TCsxOU80R3l2NTlNeERRbjlDZTI4SzFhYlkwcENSTTBhbURmeDQx
+OGF6K2UKa1d3NUVvNndpSUN6VHRGOTh4MjlUZWpJaENpam40VEcxdUZTZUVESmptQk1HOG1qbFBm
+UDJ1ZGV4aUhEUGhzZgpDcWZaMldqWXM1VmdZQTBRaThBUUJKMDNtNDdwdTk5RlRhc0FQWVRKa0Jv
+TmJvVk55VlFSV0ljYXprL0ZZNFBpCkVFdE54MWVNdUZveHhsUmpYVitpMmgyalFjTXpvc2tEeDJY
+TDZONGFPS3dnMjZmWWh1OHFVSG14eDU3eDZHcngKK3VWK21HZHRvQllxVDIrU2ZodFZWbDRrL0g1
+TVhTV0NHVUVGRzZBVEc3cEF0Tmw3VjN0elE3dTE4SjNBekRTZgpxODVMNHNOd1IvTVFDeSszcVA5
+bXFEcHR4K1VmUkU1Z3VYNkN4VENHc3g3ZWdCTTl2Y3V4dnhUa1lock52QWdmCmN6a2Q0ZHNpSXlH
+S3BpZW0ySGdDVUsweXJKcWVGK1J5cllvSWdpbz0KPVVFUTgKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---00000000000033a9bd0638c5d573--
+--000000000000a7fae70638c5e6e7--
