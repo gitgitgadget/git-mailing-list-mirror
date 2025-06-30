@@ -1,145 +1,104 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 782C928D843
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 15:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E6CB43AA1
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 15:16:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751296153; cv=none; b=E1CCQramSQDK0w0hWSnwx6AR/TpyLFDLopNeRlM8LYgusTIKV+7hEAnrMay31nAeyWiyn5L2eS1BoPQ4co1oXE106mU3vx8BrGUZGV9R2TWbowTBimLN2m3Mgs/GbZHn5MDZYFpamf/sNiHMgqsZKPTglvHF8ptGIHSCYjV2Bs4=
+	t=1751296615; cv=none; b=CpvdF5beO1uBjR2GHMYAKV4DPa2wKDwX7sofQQdii/eFDMklFBl2iQb0Za6vWQ53Ufw4gow61LdV5jS+ggZtlf3ZtciWld1mSpvVlcmtfIt/yP++OegIBFzMlme/GEMiCNA0dLfLLZwf2PRjZIrVDBCujp2ojAZGM14eXQLTp2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751296153; c=relaxed/simple;
-	bh=+CTXeUq+qnmUq+PEJ2O6iiDa0p47qB4MMWIVhWHa954=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g3rkoEcuCtOC3ogCYDDqFcwf/YYJRQ4HViO90ZwjOLYSCDFfrb1AdZ+lEt7qm8Y/Bb07/xv+L5eorifmE3sRbZYosQG72uu0F3Rpm6a/sj2QMe34IH8Hn1lzv4xC17uefFLwvLWSfPrCePtmfYGdHoDGw8vKCUyqyY/+9AiKCuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=BE2DRERD; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=erxVL/DO; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=diBIblDS; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=p+T2jFcg; arc=none smtp.client-ip=195.135.223.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+	s=arc-20240116; t=1751296615; c=relaxed/simple;
+	bh=qrUeWW5EGcAcGRPkoGLoYZ3SL9na0na0eKxLEHOo4BI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UxI1L0UzYVOKb5i6xvvIWk5N7BAOq6w8gfku2scY4XXsjEv0uJExVkOL3VT9EUODSQ17vkmK0/uHNZhWjJsLMn8SMetLODFgTcAs92H6eiFoZqF/8Z7qH2kUDZePE1NWBhvIwdcUYAi+WbKLKaXNV6u+7t5SqQz620EpjnV/F7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gbap7kRq; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="BE2DRERD";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="erxVL/DO";
-	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="diBIblDS";
-	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="p+T2jFcg"
-Received: from kitsune.suse.cz (unknown [10.100.12.127])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 7CD2C1F393;
-	Mon, 30 Jun 2025 15:09:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1751296149; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h0jULY8PtC0clJykHoIujjU3/BkAHdhMr9+yZVxQcpI=;
-	b=BE2DRERD5QRZkbtMxdE8KaoGVZwSGdB8dR0lIV5ul13gDFCbDEdZJ07/BZSr0JAKO8b8Fx
-	rBEO5MEDII4rm1ouU8MNb/MKrD/ZDxMZnR98EzvudDuac+DvJLGsvmjH0pOjjL5OYnaSpS
-	Tw+OPr+qr7xxPTC1FD2gWFh3nLRhRso=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1751296149;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h0jULY8PtC0clJykHoIujjU3/BkAHdhMr9+yZVxQcpI=;
-	b=erxVL/DO9eoHgqwrAI35eJxTJrAsu5OWuCNusnLHxBpOVVLgZdPsrBQrptCgpD4oyF1LPQ
-	woxqd20amwpeYCAw==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1751296147; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h0jULY8PtC0clJykHoIujjU3/BkAHdhMr9+yZVxQcpI=;
-	b=diBIblDShG50OXei3kGKshoWp/FMv26VAQxf37dDWDbS+nEmmfqVGYxyesqDF+LvqbBBbB
-	FcNQZyYXa3ua1jAziP6H+JpBKNG9AyMa6YsB6jrOaCsg4Hde6WAtGOMPIJbpf7r8edCwTW
-	sLYmKSpt+RE6HO7jo09vLiox4KnNprs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1751296147;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=h0jULY8PtC0clJykHoIujjU3/BkAHdhMr9+yZVxQcpI=;
-	b=p+T2jFcg9doUFqTqN1NXL3OGbrTsXHiq4fTlMk94zNql42NggWt8CiMlXv8kochT1be+54
-	y9B3CUBl+L6dKeAg==
-Date: Mon, 30 Jun 2025 17:09:06 +0200
-From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Subject: Re: Failing to push to a repository erases authentication helper
- credentials
-Message-ID: <aGKokqPJPh5fQ3fc@kitsune.suse.cz>
-References: <aGKU-o9eXB1VHuN9@kitsune.suse.cz>
- <aGKfs5VRdmnw6Pqc@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gbap7kRq"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-748d982e97cso2308909b3a.1
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 08:16:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751296613; x=1751901413; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qrUeWW5EGcAcGRPkoGLoYZ3SL9na0na0eKxLEHOo4BI=;
+        b=Gbap7kRqWQ5njvLMsjb7iR9XDS7hcpi54goDpK4iEellkj/oZtk7nrGVStv8hEuP+h
+         V8IWj80qwvmew+HwMmOAJLe/QVKLKYOteolom2DBY+geGH2YM1PZzeV0UqpwtjHDZTzA
+         n0vW/ZrI3VmolKNYBZ2QiuxUrip34vjR4VdPXL3EvlXh0oiwsXFIdsf0XNWXspPM98ra
+         /1SEtY0BjIdZSPU3yc3KkTW/doeXXqWKjQnWKHHG+uGqXMsf1GoS5UXS6vdc8+JTniRl
+         VEoc/F+ha69YLvkjv68sagPhhtr2CmqlwZkKazw44B8kDhpr1yiFmc2+BO9/rwYDzhHf
+         jGGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751296613; x=1751901413;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=qrUeWW5EGcAcGRPkoGLoYZ3SL9na0na0eKxLEHOo4BI=;
+        b=eKusnlF77ucy8E8TvBmkNm3FXTmczSBjyJ9jy1POMVRzWHrmtg67saL8ZZ1izFRBg7
+         k1aYkGhA+AvrAOrdp5nzq5KgyXmX/9ky7Tr8R+0OvlshBU11vjjHi5Fi5rr8EKmRAhZA
+         oFR5eFf86Uq5phXW5cjU2dfdUabjqWA6OM8v5mFK+tNwvdhWqdxDKrMghPmiinu7k7pW
+         q86pRBOo/LIQjHQIOoYfZPcup2ag+GnLCtEC9nqa8xZqqF/fS+g535iTj/hXgsZ6fTfP
+         m8pvhTZ5TQsafjSq4taMnPSBcQeQ4NXCr6VKb91fRdezU137ZkcKnH5qk9tHFiLwsrl9
+         9KQw==
+X-Forwarded-Encrypted: i=1; AJvYcCXXzIJ/k6VqYJihRypVHgW0+QBEhT/0MVu4YTHB4etbT9wS+xyquDResd3n+UNZsdPM/9o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlXd4Nxm8ChhLsfnMisVHAjzNupKs5ugCfuUE/IHg0OLQhAw8K
+	IInnIhK9uhWb4lSCgHteIOCeRRM6m/uXiDORXN1TAVNtPuMUDf615Ph4
+X-Gm-Gg: ASbGnctQMJ/Sk8UqRN58Tyz1aOLXpX/l+HF0Ix3N5ZTCA2PKORTsPPvblQa3CCgjckG
+	KuWCmbvzAF9ysaK8P3KJYeb3YE+GWO0K3SwsMAPwPY/+ZxqBiyuOhKkJvfkAXqNKeRTcAqBQUqq
+	B/uX/0QSDd8JC/tG9KpCpBJFi8oGydt5yCzS6uSEquk5rk9Ld9GSrbm7szEOD9kuMBMNQ3mAMFY
+	BZ3GyPnHGKzYP8BYXL8NbOlOLncGew4RgNdLRtk8xTeqYICqPL/dT2VYow8Z0SbkT1ic16WLjFK
+	sOom59U+osDx15DT84p48CvFrrBmTDsoRhLu/dTguD+hu9nU4rJizi34mlmZaBhBZej6Pkb/lC3
+	wd6fNo3TRB7flVnq3RIPJf+H8His=
+X-Google-Smtp-Source: AGHT+IGyvV0y9ZiKk5xFgela/n0j+phjD25b7mF0AZhYzUf/xV5DgkErXjU4WVCm6RnUr71VVoXoBg==
+X-Received: by 2002:a05:6a21:999c:b0:21c:fbf0:21bb with SMTP id adf61e73a8af0-220a15841d6mr24100471637.24.1751296612644;
+        Mon, 30 Jun 2025 08:16:52 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af541bec8sm9064811b3a.39.2025.06.30.08.16.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jun 2025 08:16:52 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
+  git@vger.kernel.org,
+  chris.torek@gmail.com
+Subject: Re: [RFC PATCH] daemon: add a self pipe to trigger reaping of children
+In-Reply-To: <59087d2d-6034-44d4-9fa0-c51d4bd60683@gmail.com> (Phillip Wood's
+	message of "Fri, 27 Jun 2025 09:38:36 +0100")
+References: <c314cd2d-8fdd-4386-bda0-881ff87d9204@gmail.com>
+	<20250626182432.87523-1-carenas@gmail.com>
+	<59087d2d-6034-44d4-9fa0-c51d4bd60683@gmail.com>
+Date: Mon, 30 Jun 2025 08:16:51 -0700
+Message-ID: <xmqqbjq55kf0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aGKfs5VRdmnw6Pqc@fruit.crustytoothpaste.net>
-X-Spam-Flag: NO
-X-Spam-Score: -4.30
-X-Spamd-Result: default: False [-4.30 / 50.00];
-	BAYES_HAM(-3.00)[100.00%];
-	NEURAL_HAM_LONG(-1.00)[-1.000];
-	NEURAL_HAM_SHORT(-0.20)[-1.000];
-	MIME_GOOD(-0.10)[text/plain];
-	RCVD_COUNT_ZERO(0.00)[0];
-	MIME_TRACE(0.00)[0:+];
-	ARC_NA(0.00)[];
-	MISSING_XM_UA(0.00)[];
-	RCPT_COUNT_TWO(0.00)[2];
-	FROM_HAS_DN(0.00)[];
-	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
-	FROM_EQ_ENVFROM(0.00)[];
-	TO_DN_SOME(0.00)[];
-	TO_MATCH_ENVRCPT_ALL(0.00)[];
-	FUZZY_BLOCKED(0.00)[rspamd.com];
-	DBL_BLOCKED_OPENRESOLVER(0.00)[gitea.com:url]
-X-Spam-Level: 
+Content-Type: text/plain
 
-On Mon, Jun 30, 2025 at 02:31:15PM +0000, brian m. carlson wrote:
-> On 2025-06-30 at 13:45:30, Michal Suchánek wrote:
-> > I was trying out AGit https://docs.gitea.com/usage/agit with oauth
-> > helper https://github.com/hickford/git-credential-oauth encountering
-> > this bug https://github.com/go-gitea/gitea/issues/34583
-> > 
-> > When doing so the oauth helper asked for new authentication, then for
-> > some reason I was asked for authentication by some other helper.
-> > 
-> > After that pushing to repository to which I have permissions asked for
-> > authentication again.
-> > 
-> > This hints that any failed git operation erases helper credentials.
-> 
-> This is true and it's by design.
-> 
-> > That does not sound like a desirable behavior.
-> 
-> It is in fact desirable because otherwise the user continues to attempt
-> to use the bad credentials and then can never again authenticate
-> successfully, since they are never again prompted for credentials.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-My proglem is that the credentials are actually valid, only the
-operation is not. The current behavior erases valid credentials.
+>> An obvious disadvantage (at least of this implementation), is that it
+>> actually doubles the number of events that need to be handled for each
+>> children process on most cases (ex: when `poll()` gets interrupted)
+>> I suspect that if fixing that last race condition is so important
+>> with
+>> the current foundation, it might be better to reintroduce some sort of
+>> timeout to poll(), so that they will be cleared periodically.
+>> I had a prototype (only the bare minimum) that I thought was more
+>> efficient and that would instead remove completely the need for a
+>> signal handler which I would post (only for RFC) later.
+>
+> I'm not sure injecting an fd into each child process is a good direction.
 
-> > Could the previous credentials be preserved?
-> 
-> Git doesn't have a behaviour to do so, but you could of course craft a
-> custom credential helper that just rejects the erase command and passes
-> everything else through to another helper.  That would achieve your
-
-I do not want to use another helper. I want to preserve the last valid
-credentials.
-
-Of course, using credentials that are not maintained by git at all (such
-as ssh authentication) does not have this problem. Only git-managed
-credentials get erased on invalid operation.
-
-Thanks
-
-Michal
+Yeah, I thought that the "self pipe trick" (in the title) refers to
+the technique to have a single pipe for the daemon to talk to
+itself, so that it can write(2) into the pipe in non-blocking way
+upon signal and expect its select/poll to be able to notice, where
+it can reap the completed children, so having a pipe per child was a
+surprise to me.
