@@ -1,113 +1,121 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B454292B36
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 17:03:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C982EAE3
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 17:06:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751303007; cv=none; b=ldUF2yh3AOk5ojm2mVFiDtBTSFeOCpmNCqrLKi14oJj+wH69stGEoNLbAtY5r//LB6rSxJ6LTnfRZLGjnucWm32acj+CXwiR+WLcUx2SKVtKaayHEOw2nF+lH9YsyNxhTXY9RPBIH/0HnPwNl6pk5JK6LLXRF/ZqqvR+gqy3Vfc=
+	t=1751303190; cv=none; b=Bwk1S+JUH/fUla0usu7ECX3mJrmn9I9GPTitKnsFz3TpsD7SPjhZU2IF2q334dcEXalsGV48IvdY2O6TOPxVyQzurD7i2fsxhDNwncCkWXXRgLlGV4kOBdaFJ2mz2ZQ+059W/v2aFI8iAfTQXQRafUjK3SQ3JlXRqOCV+rTXkxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751303007; c=relaxed/simple;
-	bh=1L3Gwf5gLTJ6l7wqGGQmxaxH4tihr5n58MPLVp8LOmE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZPN27lzUiBLTorMp/Rc7vXXxqr6WidOL63Z2t2Weamt+GjdMhTevCAFx6Lj48mEkNvYoM2dpExbU5IkxUzNMQgW7zqOrUWI8Xx/J31f2+yIjr7+bnQkuyOw4B42BiFBatpebIvLol6XL++5iRuzelTo6HGS4mn0WJY82omKGyhI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XlSZMD/r; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751303190; c=relaxed/simple;
+	bh=PUS1//6kUhGQd1X4Sr5tzPydDnnygfWDyPoL32kLf+A=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=LqZzr/Ala8xDaPTBhScIyT4AKm5GVVGANmTSq8uuOAs0pMj4WMIcFDRKzTrdrF5tlyJaY8bVx5vjNvQpfEoSLdWHAgo9cxEQjz0E/IDn09kQEWfc8BPYMLdyHivgWrYnzz+uZeyKQS+9yGiBw3WW7v+DTixcNDFoJAfzxe7CnYM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyi75p3T; arc=none smtp.client-ip=209.85.221.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XlSZMD/r"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-22c33677183so38998545ad.2
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 10:03:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyi75p3T"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a522224582so2454138f8f.3
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 10:06:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751303005; x=1751907805; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8s8f8Hg+2nLAPTZ/LT4b1X67+ALnE2e+w1Z1BowGIU0=;
-        b=XlSZMD/rOQJMUpI5xtI972cwHENL4tVAQBDUVlHTyfFTxAi+h+rrJqeXMFtOvsCOkI
-         5U2RRc9cRKG6NpThUyT47HS9kKEA/2PNGS1H0oE4sIrYYrhJUeHN5aAQVuav6HNGUdnp
-         5FK6ChASVQg2Ft/N1EvfHKoQHmUoXaDhfNumFkXOQZcH+r6lBYQMOa0C38HrvgevgYEG
-         8uO/0mMpMZ36cLbBYnSFPUIu89TVqp3YbDOvfoJzqCBJ54KIbWA5R+gIAHbW7zUobcy+
-         du1XiG7bDkDg8YNTcQinNcOqZkRd5Z9RdB9/sPD8DXmfeF0c8LiaepdK4NmYm4k7uDT3
-         BIUw==
+        d=gmail.com; s=20230601; t=1751303187; x=1751907987; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=wa0l2ebJbP/o61H1kCPonqVSxz2WZVRHR37YIDQfy2s=;
+        b=fyi75p3TTFPGkUN6VQdlzbshlzrkGsKlDxy4xpIyogdmHefBtH/rnfl5tmqnJKBahK
+         pNlvGYpdlpmr/ZyM26FO5Ikdo3CfTxR+C1m2fBLAdgqYMFMzbcM3AZJxKXSRGDvl9Bmo
+         iWOnDywlAzTf4AZmZgk5XBt7YgFPX+57AauT1hpLOqrH3NEbGwC4n6RmIOMFL0oBLV2q
+         KgGTBAtsEMddQCXXaOH8CnlOfKMzqWh54hY+TIyWu6dSbRRrYG/eWMAcTzA+I74PmcId
+         EYAyu2UoAda9wf/Yx5WKz6JW/WL/HKup1ViTb146WGaOmDmG0uwn2r/KIRfbsYxH7bY8
+         bX8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751303005; x=1751907805;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8s8f8Hg+2nLAPTZ/LT4b1X67+ALnE2e+w1Z1BowGIU0=;
-        b=a6l9/4rU9KPCIK7Dnd9IG/cspnhFlVvkW3JdvwhSS/+7XKYvPs2eaWfcdjVTr3lwxr
-         OUgfserf4jaBigLlNIwu6vAUcdHwz0FDuKTYEeFXX3/Jp+QlqdlHh+kRXEPPwUnR+c5y
-         wzvwPg0tacMjpYvaf540sXhbzGvkfhBrebKDN0DDiPXjr45YsxrDhz7fJSciemtCeBnr
-         QbRorrAolrylDKF2Lfyta6dDfuyGkEg2kjBbv7ff4OihtDARXKOETFHe+0q9pjgUOZFK
-         xHmtmU4gWeH67QJEtPmIvfmomCj0jLOEsRj5rEZ/ZUfq815JcLKVjBVUpWH6ytx2qoSu
-         4oRQ==
-X-Gm-Message-State: AOJu0Yy4eSGKAdtdtBn16IO+5iE++flW4Mgry5tNl7+OSBie7m0Q+25g
-	1AOenq34uYp5f1QZgxPIE/4wfB/d769AKe935+csR8DX2IYZ0MmWIj6d
-X-Gm-Gg: ASbGncvDDM0Mc9TERCXsrs93DDyiGssnkyPYYcU4KeTjqQxHCszA5U8Fa1n5OVv8aKX
-	Ok5hfnv4bKiQ9bnhn4LBvdXPE7hzqon5zClsiOF6c1iuZ0tIfVp02DLOOlLS1AnCDSjzq7TjUhH
-	F/nplHKVsNVBio9tHCEyMTfyE1TmXKggFFN6KbJx/IIaEcVwbwNynTKbL4iccMPejYwxyYkhmYp
-	OGt8xZ9t1BaF02wrzN54zW1GxXMPq8w2DbsA5hou3mr10Nz+Qu3g9q/XGcKjVjIKrHLgRAowc2J
-	+eWjhvKao+mBfxlULNkGE8kjtioWLbYTDU+Y0x8UCKk8GcJWqE99GGL9Ri7Ld5ECLKx1nNMuSIi
-	5EqsladqKFJzo47S0rY5SeeAjt1E=
-X-Google-Smtp-Source: AGHT+IG3GAV5y+PDO2exrDrd3D8gTgsa0WRzraq8YCe2LjVLy70dpAMkzPLlQqKNunE4xWS+nCMCzg==
-X-Received: by 2002:a17:903:19c6:b0:235:129e:f640 with SMTP id d9443c01a7336-23ac4880298mr221062145ad.38.1751303005376;
-        Mon, 30 Jun 2025 10:03:25 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3adc64sm83299825ad.153.2025.06.30.10.03.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 10:03:24 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Leon Michalak
- <leonmichalak6@gmail.com>
-Subject: Re: [PATCH v3 4/4] add-patch: add diff.context command line overrides
-In-Reply-To: <b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
-	(Leon Michalak via GitGitGadget's message of "Sat, 28 Jun 2025
-	16:34:46 +0000")
-References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
-	<pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
-	<b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
-Date: Mon, 30 Jun 2025 10:03:24 -0700
-Message-ID: <xmqqplel17s3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20230601; t=1751303187; x=1751907987;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wa0l2ebJbP/o61H1kCPonqVSxz2WZVRHR37YIDQfy2s=;
+        b=IsaS7N/Mkl3UXyKF1xaXEQcFblWbkgLgC4hiQv9zBWNnY8rU9z7U6DHpXYJGr2Vcua
+         qrBaHKac4Wcz0crw+ZV2UmatT1FM5sKWDgvv1r4MzpJkGQHE5w2JheE6cAMEXnAmgq3l
+         WDRaEMS58q7V1sbKtnsFH6zOnD7GPcqK/J8XwGZ1YyTV+pGzkhtkUv5N3VK5YryXgagN
+         XHpDnunJl9bya6rUP7ZayaCmtXBWfFPYY5r5Yf9FXQVgyzz7/wL6h4Okfgu6txE/Y6FC
+         lw+H07QZPhsGeC6Itrv07yH4sI1FTzdGzFCx8svq3DEVGe+ILMOfow3hVA4A151dpkjA
+         bxWA==
+X-Forwarded-Encrypted: i=1; AJvYcCU7FBjochHr1voXbq3UhwqfG3qchDypwl0Sn8H3Cvto/cBS2H2/z2Fw41bX8y2uw21YxMM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzeZA8il0XU26wbADV6ec9sTMSoGul6ZLzmOJ1lXJvyzY9Wz7F0
+	cdCZSjsKRjGG1nAGrsP9eMGDMusNlMzTX/UrFb2Pf3TkeTn+jl1peGGUT6CFQw==
+X-Gm-Gg: ASbGncvuAYrEbVxKOhHXTAkBOfJ2nHyWihG+WJYGOttnsQe7MtCetaBv+oZvKkQkNus
+	rJ7rIOWlItZ2i8SoCPzN867+ZM7VrEKpVSqERhbY2jVDIXUeClmo/MGJ9TYnuW/5zS/6T39Z9RS
+	WkpqWnPfBLDchVZyby9I6C2mx2G2HaR76NVSUJ5snZ0MYSMY5kB256jGgtbTou9/wNzAmsu5Gsh
+	rgksTH194bd4x7w04G8PjnVY35HTSVlG1+4xhLXaJleGP7/OGvMgMML8BQoXIOaT51nZOZnDq+M
+	QaHKqgJ85WPxKfupOfWpues7+ro5Pwa6V8tYJlqtqwdmpT9nrvCR2+SANeQbbGaSH0D5pefT4C3
+	0WZV21HhRMOlexWAE6jmiNpv8zR4DZbgYG74rz6jnM7dNlbU=
+X-Google-Smtp-Source: AGHT+IHvjH5S5sZopuv3VK8PxlnEWjpOl6kAnzMWOMQNFBDmLgV23tNNhIeUGE7+DrStR5uBUs1SYg==
+X-Received: by 2002:a05:6000:2b05:b0:3a5:1410:71c0 with SMTP id ffacd0b85a97d-3a8ffdbefaamr9577455f8f.38.1751303186484;
+        Mon, 30 Jun 2025 10:06:26 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:8515:f93a:c957:e0a3? ([2a0a:ef40:700:a501:8515:f93a:c957:e0a3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a4235cbsm143308905e9.38.2025.06.30.10.06.25
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 30 Jun 2025 10:06:25 -0700 (PDT)
+Message-ID: <9b3623a9-b596-44bc-b267-499e568a7f60@gmail.com>
+Date: Mon, 30 Jun 2025 18:06:25 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: `cat-file --filter` is broken in 2.50?
+To: Dan Pristupov <dan@fork.dev>, git@vger.kernel.org
+References: <6eb10e33-4001-95a7-d2ad-3dd2a5c830ab@fork.dev>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <6eb10e33-4001-95a7-d2ad-3dd2a5c830ab@fork.dev>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-"Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Hi Dan
 
-> From: Leon Michalak <leonmichalak6@gmail.com>
->
-> This patch compliments the previous commit, where builtins that use
-> add-patch infrastructure now respect diff.context and
-> diff.interHunkContext file configurations.
->
-> In particular, this patch helps users who don't want to set persistent
-> context configurations or just want a way to override them on a one-time
-> basis, by allowing the relevant builtins to accept corresponding command
-> line options that override the file configurations.
->
-> This mimics commands such as diff and log, which allow for both context
-> file configuration and command line overrides.
+On 30/06/2025 17:07, Dan Pristupov wrote:
+> Hi,
+> 
+> `cat-file --filter` stopped working in git 2.50.
 
-I skimmed the patch briefly.  I am not sure if it is a good idea to
+cat-file did not have a "--filter" option before 2.50. The option you 
+are looking for is "--filters". As git accepts unambiguous abbreviations 
+for long options "--filter" used to match "--filters" but now it is a 
+separate option. Being able to use abbreviated option names is useful at 
+the command line but they are best avoided in scripts.
 
- * add OPT_DIFF_*() macros to parse-options API, as its utility is
-   very narrow, and forces those who are learning parse-options API
-   to learn one more thing.
+Best Wishes
 
- * validation of the value range to be duplicated for each and every
-   users of the new OPT_DIFF_*() macros.
+Phillip
 
-but other than that, looked reasonable to me.
+> 
+> ```
+> $ git version
+> git version 2.47.1.windows.2
+> 
+> $ git cat-file --filter "HEAD:changelog.md"
+> <content>
+> ```
+> 
+> ```
+> $ git version
+> git version 2.50.0.windows.1
+> 
+> $ git cat-file --filter "HEAD:changelog.md"
+> fatal: invalid filter-spec 'HEAD:changelog.md'
+> ```
+> 
+> The problem was introduced at eb83e4c64b5a3458569593c2ab0c29365f10a82f.
+> 
+> Then it was merged into the main branch by 
+> a271b05066a1fd2c3a62508d9908d6c5df14a1cb.
+> 
+> This seems like a bug.
+> 
+> 
 
-Thanks.
