@@ -1,39 +1,43 @@
-Received: from mail-0301.mail-europe.com (mail-0301.mail-europe.com [188.165.51.139])
+Received: from mail-4325.protonmail.ch (mail-4325.protonmail.ch [185.70.43.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EC992571BA
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:06:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=188.165.51.139
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF7A2571BA
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:06:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.70.43.25
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751306791; cv=none; b=LFMtmIULk4IJ1IRsM5xItddxCrKDLkmqnds41ZmoONX6INmckhqQ3bS6CUPvlV3TXWnDtJAccq0UzsdXvdMKeSL8GgXrd2HwUVRB4vb3RtWT8ELNxq4nvitFPD38Ty8tMgiuLQjUlZUwW+xvarWLqeoSHo8gKZeLi0HXntSsoVw=
+	t=1751306796; cv=none; b=Hb8sYwJAlyagMl3rz40FSH8EPWWHEe3VeoGjRTCedRRaQoqI+g1wM+BWJfZqNTR1mTveZ8WryjbDVGRoUDAaTYRD5RdYqtwUTkkLC8Gb4yQVgnEQ9GTpXuoqvXaj7K8WVxLcexT5poe7vx8UlNm2Du9+9zun4qlMWH86PiwhyzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751306791; c=relaxed/simple;
-	bh=Df2i6syLKBTDbHzohIPchXKjrGKxxOtJ4k/X0u5AHeo=;
-	h=Date:To:From:Cc:Subject:Message-ID:MIME-Version:Content-Type; b=LLlGKNg5ronVCD4Y1oSRyatsXn4oo4nTLjIfaY8fDRv8YJvyDlLMlWLjMDzyBvRe4mw8gmzF1DV4BqogETZ2lyhV8wASq7DV2e4SSFDBSHQKjeTAmxYPsJ9FyD88gvokTKUreBn2MW9ZNtb1pJOKQUDf4qJFXXP4628sCYtQu8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=bHVQ4/3W; arc=none smtp.client-ip=188.165.51.139
+	s=arc-20240116; t=1751306796; c=relaxed/simple;
+	bh=JO8TXncT41txCxp97kKOQICjspuooQEH1y7V4DrpJ6A=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=sr6mFS4JbhqRXl14A7u/7g49FqRNFVHJnPSVVZpeI4e9yqGaxcR6bhK1f1ir1FcTtcIEhJdnGohYGRrP0kKjC216fqmmvBUC4xSSZTBcrdJL7W5ZTIiAMSKqlhn/mhMms8fWL5bxAqj+ME/daq10/ZogXnUKm6b1EmOoKj8zguw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me; spf=pass smtp.mailfrom=proton.me; dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b=nsScCVp6; arc=none smtp.client-ip=185.70.43.25
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proton.me
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=proton.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="bHVQ4/3W"
+	dkim=pass (2048-bit key) header.d=proton.me header.i=@proton.me header.b="nsScCVp6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proton.me;
-	s=l5zce4276vcezfs6gu7kdfahme.protonmail; t=1751306774; x=1751565974;
-	bh=sK7sDS0PIcVlru2ZJaVD1JA76LAvAH8hB+bXHO0nj6U=;
-	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date:
-	 Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector;
-	b=bHVQ4/3WknRmloK7T5I/j+RcmF+oUXWXw0/GM9mBFgNYmaiS3mWe5fBCWvXLhc7QR
-	 +6GOgRvW5SV3qy9AsDj45DMVwyRr2rD0YQBhFH2WcjI1IHCE3tOdzpgLnZTDAtvkME
-	 tWKVYEPJ4yUAEOWLGAHBG4XueN+YVCsNH3WKtVavg30lkwHQxJXqA4h03NyCkhR8U7
-	 3rRUySb+11QQm+JhOUIreuMoOmsc43N7I877NDfcPndWXyxz+86Mn+yh/a26ia+7Ti
-	 HN3dZeIvN0RGqXw5r40k+47N+lNdGzDyzoSn9hMLr2V9D0G2hJMU9R/w2/zQMO7w6+
-	 BmHjmEMn/12eg==
-Date: Mon, 30 Jun 2025 18:05:59 +0000
+	s=protonmail; t=1751306792; x=1751565992;
+	bh=JO8TXncT41txCxp97kKOQICjspuooQEH1y7V4DrpJ6A=;
+	h=Date:To:From:Cc:Subject:Message-ID:In-Reply-To:References:
+	 Feedback-ID:From:To:Cc:Date:Subject:Reply-To:Feedback-ID:
+	 Message-ID:BIMI-Selector;
+	b=nsScCVp6vcVHDuUsYu3xwRNIcp4qXFj2Mf1WKsS5CFkKthCrdzHv3Gx9rX27oIlAo
+	 vm7J6pKogfghbe7uVxHMKFT7E3prRzfXe5BX4P0Y2hxs5Vyl/bDpiJhEPo+XacUp11
+	 xgsw7Z9X+1bQgIwIH87OjL6dRVLFBkKORQNqF3z6g0Aq2GnNc6+tNpfGD8R/11+j0m
+	 Fy48wIQpNA58Z4boiaiY11BNSpzO6vKKBAYi8m8R0q9qhMizNu+x0loo9M+KeV0H5J
+	 lPM6vb8JgwPW5sdE4GN/RT6uA4v8r9CvNZgLdJ9/GR3P29t0q9dD9qfjDcbHe2Mqj1
+	 i3p6wjbTvI1ew==
+Date: Mon, 30 Jun 2025 18:06:28 +0000
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org" <git@vger.kernel.org>
 From: Aditya Garg <gargaditya08@proton.me>
 Cc: Eric Sunshine <sunshine@sunshineco.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH 0/5] docs: more improvements to sendemail documentation
-Message-ID: <20250630180511.499-1-gargaditya08@proton.me>
+Subject: [PATCH 1/5] docs: link OpenSSL's verify(1) manual page to know about -CAfile and -CApath options
+Message-ID: <20250630180511.499-2-gargaditya08@proton.me>
+In-Reply-To: <20250630180511.499-1-gargaditya08@proton.me>
+References: <20250630180511.499-1-gargaditya08@proton.me>
 Feedback-ID: 145777226:user:proton
-X-Pm-Message-ID: fa3cfb8634ca3169c7af536a0763a2e0ca9b6873
+X-Pm-Message-ID: 98d66d9fc51f7504959dd3f758170c93d5678c8b
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,44 +49,48 @@ Content-Transfer-Encoding: quoted-printable
 
 From: Aditya Garg <gargaditya08@live.com>
 
-Hi all
+The description of `--smtp-ssl-cert-path` in the git-send-email documentati=
+on
+mentions consulting OpenSSL's verify(1) manual page for details about the
+`-CAfile` and `-CApath` options. However, the way it was written was quite
+confusing, and it didn't mention that OpenSSL's verify(1) is the manual pag=
+e
+to refer to.
 
-This patch series adds more improvements to the sendemail documentation.
+Fix this by slightly rewording the description and also add a link to the
+OpenSSL verify(1) manual page.
 
-The first patch links the OpenSSL's `verify(1)` manual page to the
-documentation of `-CAfile` and `-CApath` options, mentioned in a very
-confusing way in the documentation. The changes are similar to what
-Junio suggested in https://lore.kernel.org/all/xmqqbjraf29c.fsf@gitster.g/
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ Documentation/git-send-email.adoc | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-The second patch adds the `sendemail.outlookidfix` config option to the
-documentation, which corresponds to the `--outlook-id-fix` command line
-option. The documentation of the same was left by mistake before.
-
-The third patch adds an OAuth2.0 credential helper link for AOL accounts
-to the documentation.
-
-The fourth patch adds a paragraph explaining the `sendmailCmd` option of
-git send-email, and giving users an idea of how it can be used to support
-proprietary APIs like Proton Mail API.
-
-The last patch adds a paragraph explaining the options available for
-Proton Mail, which has been increasing in popularity recently.
-
-P.S. all the patches are being sent using `git-protonmail`, linked in
-the fourth and fifth patch!
-
-Aditya Garg (5):
-  docs: link OpenSSL's verify(1) manual page to know about -CAfile and
-    -CApath options
-  docs: add outlookidfix config option to sendemail documentation
-  docs: add an OAuth2.0 credential helper for AOL accounts
-  docs: add a paragraph explaining the `sendmailCmd` option of sendemail
-  docs: mention possible options for Proton Mail users
-
- Documentation/config/sendemail.adoc |  9 +++--
- Documentation/git-send-email.adoc   | 54 +++++++++++++++++++++++++----
- 2 files changed, 55 insertions(+), 8 deletions(-)
-
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-ema=
+il.adoc
+index 7bd09c254b..4208bac44c 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -280,12 +280,14 @@ must be used for each option.
+ =09Path to a store of trusted CA certificates for SMTP SSL/TLS
+ =09certificate validation (either a directory that has been processed
+ =09by `c_rehash`, or a single file containing one or more PEM format
+-=09certificates concatenated together: see verify(1) -CAfile and
+-=09-CApath for more information on these). Set it to an empty string
+-=09to disable certificate verification. Defaults to the value of the
+-=09`sendemail.smtpSSLCertPath` configuration variable, if set, or the
+-=09backing SSL library's compiled-in default otherwise (which should
+-=09be the best choice on most platforms).
++=09certificates concatenated together: see the description of the
++=09`-CAfile` _<file>_ and the `-CApath` _<dir>_ options of
++=09https://docs.openssl.org/master/man1/openssl-verify/
++=09[OpenSSL's verify(1) manual page] for more information on these).
++=09Set it to an empty string to disable certificate verification.
++=09Defaults to the value of the `sendemail.smtpSSLCertPath` configuration
++=09variable, if set, or the backing SSL library's compiled-in default
++=09otherwise (which should be the best choice on most platforms).
+=20
+ --smtp-user=3D<user>::
+ =09Username for SMTP-AUTH. Default is the value of `sendemail.smtpUser`;
 --=20
 2.50.0.windows.1
 
