@@ -1,82 +1,86 @@
 Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6125879D2
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:10:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A00221DB5
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:10:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751310651; cv=none; b=h2mDW8BoTCTgihitsoy7iOtKBF26MkDR2mlnssFv7gPSA9q+2IWq5n2LwTsS7D2/79ou2jc1SkE7OwBPgz6AXq77E1V+eKSK2xbgoYDWGcb5mYLnqlghr/UP2kGNUERAu42sVWhWQegyhTNo/n4dmO8BhhzWFuy9SttKFoY4994=
+	t=1751310654; cv=none; b=cuD7iz2w1SgIRUwvbe6fqDCCGwkZH6txXemNVzSHolcQmPez++h91DT4D10nKZP1idoR0hC2JgRC/dTVukBi8m0d+u9UDybSuXHAuRdX+g7fkOlZukX1t4t4Du4XGk0EcqGm0gZuLxKTnGthYzQVH7Yw1fObs+hBbEY/57DQEiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751310651; c=relaxed/simple;
-	bh=InnWjGmDxGl413PkQ2FQnI3HtZbPDEAiZXADtaCS1Dg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=poSr+qPzDYbkRRQbAHxIIScjZujgDKxw/bKtlCuxxwI7SlQxR3aaDggfPcHw2VbSK80x1Ip34lX9d6oslItKRcAUbmTOZ6HF7wK0t9bhp0UqnXlIJ5FvGwKExJLPhCe1OjFzptSYRYT4f8sJtmu1ryhDVVfLjeoHW8zEA51Qubo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=s7pX66SS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eF5gvgKD; arc=none smtp.client-ip=103.168.172.155
+	s=arc-20240116; t=1751310654; c=relaxed/simple;
+	bh=QKIajmlT7p+Hj7kKvO0ZNr+kdlAejp7pNYqhxG/zchg=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=bFqN2hwpDlhdsgd7iD0ZjUh+PJ8AzyehqfPIIo+egka7qEmjxLCJwu0P6d0+GsfaXwbPB0Dr7JhoQ03+7JSKKqfk2m3ZPHuKkadIAx05pAgyASMM9U8fL/rPJGNQ2DR+dz8q4t5bvlcSEgFwShua7qdYXGDKRQ2xUs2CIdJwng4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ir1DAjLl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E5rD3I+R; arc=none smtp.client-ip=103.168.172.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="s7pX66SS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eF5gvgKD"
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ir1DAjLl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E5rD3I+R"
 Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6A7D114002F0;
-	Mon, 30 Jun 2025 15:10:48 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2FE6414002F5;
+	Mon, 30 Jun 2025 15:10:51 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 30 Jun 2025 15:10:48 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 30 Jun 2025 15:10:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm2; t=1751310648; x=1751397048; bh=+z
-	5ugzHzsekzEa95125wknTRa1wiG46QjiCTp/ppqFE=; b=s7pX66SS+j9MZa9d06
-	Z7TChLAF8n1DH8Dih32FvMHlDRfKHhDGNHfIw0wfdfbfFZLdphQsbCv2tfjTcbjb
-	1t5+KDE5AWAAqCeRrpQYe/3+AKMWmz5Yx0orP/NxX5My2WuMcCpfLpV89rgWmqgy
-	JKmji8VMRyD/0u6TM/8AJTkZiMo+VDW0dHxbs28/sUW9kpdlOCOkRQSHoqSIHSrp
-	upG5y3z9K0gxjWygaNHXGrX24le0PxrKRp7XKj+BqLdoS5LT5Zgl0VpM2vTn4y5k
-	j/QU5c4AYvL5ZINiUMd0Oer3I4D4NCisWs7DaUxS5ojR+0L9HbHtiYKdK4sn5BbE
-	Br1w==
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751310651;
+	 x=1751397051; bh=Mjq3KlGfItRlqheJVHM29ZHScgsON+0a5Uf+Bs0RdUI=; b=
+	ir1DAjLlNbYZfH+SpFaRnRxn8wTYJSIGoUwckDtd7qXOoKEm7OiUUaOPaqoQCUwM
+	HM9TS65X6gjXGsHUzCFmFF7xoDwDh3xIXeJZvG/hYkYGCKFEAUwKi+nLHmH3tlPy
+	aBoMCmDF1ht+ltJVCSVcO3mhNG0E/SpJ4KKs6plzR7EIXrjV9IyS9DKp+AhZwi1i
+	wJmFu8hPNhEL8ULKBFPVIbn0HuIamqNUpsuRw1isk2uqrbdD8cbU4Ug1Y6eIZ9mo
+	c2XRPMZWcdfEedfWmilipnutp6pRof5CEoB6F2Gu4Oqh620fI+JhQw8bQ5jICYVI
+	K2lsOVwIqsW1lZdsK+Wd8w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1751310648; x=1751397048; bh=+z5ugzHzsekzEa95125wknTRa1wi
-	G46QjiCTp/ppqFE=; b=eF5gvgKDKx+NkgpcckOyNlc0cUBMv9cIMtixnnH5VcsJ
-	NkHzM+rwX6Zg7WANjPTX5kx1qQ9/TpB0YzpwWpR7keb38iwnYU78QmIP75KtM26w
-	ya+oqzsMfHeQCBvhwlTegbAJbGkE/RizDlJ2xNihpwXjhBlaLQG7vcD/3zgx68hP
-	x5EykIN4VESUZuVQOiGvgd1AhEHw+64EG0hEPNz2aM2dvIz3E/T75lGAmk3bXdUJ
-	0h4+wHG5zMT5KttnZ3q9NqfDL6tUxgp6FBIib83WgXv4gug7mNkg5Y82BGVjkT8w
-	k5m/pN/VW9KfXY1ws4IkZBY8aCf09ZTalyraZDTkGg==
-X-ME-Sender: <xms:N-FiaJWvcKa3S6qdwgvYoC6KG86QlOYWEsmCy2lhHHra51x47pVrBKI>
-    <xme:N-FiaJm8DHevkyHjWCk_rngyjNH6Oy9Q_Q79_l7l6_YdxNeoLtiwaTsMC3v7iovBW
-    xYld3QWjsSXaazuPg>
-X-ME-Received: <xmr:N-FiaFYbSqS49YmBjk7e7uCEbBqFdogybjP2cRMRYlN-ANk9zJKLWeS44D85Y5lR1v97wD7Ztz0NJk1LK0t1OoV74PHQ0d78AqTQo2I>
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751310651; x=
+	1751397051; bh=Mjq3KlGfItRlqheJVHM29ZHScgsON+0a5Uf+Bs0RdUI=; b=E
+	5rD3I+RS3E9SA9nP753lXgN2CxDgH15k0Cf6GvCvMT+0klF7PyfljnVkfCzejhtj
+	19qvxQZ100MZUw8ZL2LGqTsCGXvfDKpysYk/VrA3j/spEE2s67F2LLtdAmoDQ5DV
+	gUwjwZUCPyWtzoLaFGHg++jyLPVmHrDYxZucRM/FSo8OnUTAqRWSI9XVF5ROmbDK
+	+GYsKsJus+Pu4O66OQDQmwSJTNI4ArjjCOA/HFvrKvo+lyKPO8jzBIVd1J76PjqZ
+	wVrzyOQYEVmHaOWE4pkYwWEMkLSBh1h6P1KnijT7AfcN0HJPBlZg4SypEHGCEdLK
+	Wr1Mac+ATitLs4Qs/OfkA==
+X-ME-Sender: <xms:O-FiaOCvReS57ai_osPrMfLjTZryrpZNlTMjuwNAPxgTnSp_YFTLqNU>
+    <xme:O-FiaIg-JXi-OjWopJ55yEVJiYpweaC-95JsiDX5_BRozCZzBpRRZwXpOleOZzWuI
+    xiBIllbsVQEYNF4TQ>
+X-ME-Received: <xmr:O-FiaBkoyipJVWdj6VaR2QJQ3kbG4IxpbEnplb74kEmcf3zyS3iQTVLUxpPJmRyKahkLSUR91JseEkXXERIX7r_dE6R6CJ8uIyimheA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhf
-    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnh
-    eptefgkeejffdufeefffegkeevgfevvdegffeujeejleegudfhtdffieekleefhffgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphht
-    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgr
-    mhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvihhlrg
-    esfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:N-FiaMVTSJTzr2MRAVKwouqfvgImrIxTRiqtCZAfEB_77GMwmGC2cA>
-    <xmx:N-FiaDlt7mmPCqpjmiFQ8pX2mCjZHqjVRGLDAlfXZ9xqfOF9PZS3JA>
-    <xmx:N-FiaJdTGPD9puX4fHhdDbDNOV0YW52CE5H2qeZfOQwM4iR_TJiUYg>
-    <xmx:N-FiaNHSRolV2BV_OZMNmtC6uitqYlctzMyJKtO4HxJVTpzk3fnDfg>
-    <xmx:OOFiaGnmRD8g0996RgpSrflPKLOmZnwFilusQaopHYGS167zFP4Mf2jo>
+    hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
+    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
+    hrnhepudelgfeuieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffg
+    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
+X-ME-Proxy: <xmx:O-FiaMz0CMLuFkymXn_3p3gRUTNLC6UO6hySFECoS2lgciuHX0x3RA>
+    <xmx:O-FiaDRHE3o8pJPN0krB9MnN2TKedrMe_ap-226jd1X4I7BAR1bdzg>
+    <xmx:O-FiaHalBIk8l-xHeF4GH2epQp5BrmpOs2EIP33IyiHws9GQH2KseQ>
+    <xmx:O-FiaMQICNOgOASCIUoz2lbSHx5nCHJbFBa9OiF11vvX4F9GsVydVw>
+    <xmx:O-FiaDztrwheglRbMsRxGYBtQCWwb4gWGj1x_I2ncEdeLHWbAljhuT46>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Jun 2025 15:10:46 -0400 (EDT)
+ 30 Jun 2025 15:10:49 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Patrick Steinhardt <ps@pks.im>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH 0/5] doc: config: update for the ps/config-subcommands series
-Date: Mon, 30 Jun 2025 21:10:22 +0200
-Message-ID: <cover.1751310455.git.code@khaugsbakk.name>
+Subject: [PATCH 1/5] doc: config: document --[no-]show-names
+Date: Mon, 30 Jun 2025 21:10:23 +0200
+Message-ID: <7d66a5403b31248995e605ed9330c0dfb2b80321.1751310455.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.50.0-KH
+In-Reply-To: <cover.1751310455.git.code@khaugsbakk.name>
+References: <cover.1751310455.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,27 +92,49 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Update git-config(1) according to the ps/config-subcommands series
-(fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15)):
+These options were introduced in 4e513890008 (builtin/config:
+introduce "get" subcommand, 2024-05-06) but not documented here.
+Use the description from the source code.
 
-1. Document `--show-names`
-2. Document `--value`
-3. Mention `--value` throughout instead of the deprecated
-   `value-pattern`
-4. Mention `--url` in the synopsis
+Document this option and the negated form according to the current
+convention.[1]
 
-Kristoffer Haugsbakk (5):
-  doc: config: document --[no-]show-names
-  doc: config: use --value=<pattern> consistently
-  doc: config: document --[no-]value
-  doc: config: use --value instead of value-pattern
-  doc: config: mention --url in the synopsis
+`--show-names` is also the default when `--get-regexp` is given.  But
+don’t mention it here since all the deprecated modes are quarantined in
+the “Deprecated Modes” section.
 
- Documentation/git-config.adoc | 28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+[1]: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
 
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
 
-base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+Notes (series):
+    >The default is `--no-show-names` unless `--url` is given and there are
+    > no subsections in _<name>_.
+    
+    See: d4770964d50 (config: "git config --get-urlmatch" parses
+    section.<url>.key, 2013-07-31)
+
+ Documentation/git-config.adoc | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
+index 936e0c5130f..e05bf813d46 100644
+--- a/Documentation/git-config.adoc
++++ b/Documentation/git-config.adoc
+@@ -259,6 +259,12 @@ Valid `<type>`'s include:
+ 	Output only the names of config variables for `list` or
+ 	`get`.
+ 
++`--show-names`::
++`--no-show-names`::
++	With `get`, show config keys in addition to their values. The
++	default is `--no-show-names` unless `--url` is given and there
++	are no subsections in _<name>_.
++
+ --show-origin::
+ 	Augment the output of all queried config options with the
+ 	origin type (file, standard input, blob, command line) and
 -- 
 2.50.0.138.gf67de2ec4e7
 
