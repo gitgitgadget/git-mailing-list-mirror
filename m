@@ -1,98 +1,129 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.220])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8B8244688
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:11:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751292672; cv=none; b=cYXGl/lDinXSGXgHHJcz8fdS+XjHa1KUmTEHA5Mw5hXIRrSgaBbP6Xq4Nb24jZq2uoAKWL4SZSJzukdnWRP6cf1014bk12cHgqYJrGyp0gV8Wjan3HQTJdhxnKjYKTSf74ZZq0YQUVYL4xzL84pF/KkrLpK3+T5St/nOJw8EAJw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751292672; c=relaxed/simple;
-	bh=4J312Bd6QeI+5DSZUCvLXKTN1yb5H0cMhM90WVDSEtc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gqJhKmmFMZe0byHc3fcWmSz78ciOoteCe5G1EDN+mcO9ufUVZsLbeDG6/ZnzGzuM9YDKnxK5V5FyhRIcNI/6QWqSLjI9rrrt95X3CpheZfAM3fKhv267FR+gOUKk5OO62JT2Uo226mqR7O85h5z4UGrqYGXwKPIpj9flx1ABVt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JjT8Ai9t; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6040428C2C7
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.220
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751293207; cv=pass; b=rmCi+vIruqMNaAIuNiU6rIJz1Pr1F4HPwZWV5/5TKXjYj+zV8GUSPP8nWgxB50R//2RQt4zKbZ6m759gQRQAPSKXjIqtE/aSDH95vgXvUYJeoiocWF21s7l7/tDbtZ0Ak1gxW0ELCFF+AWXHeUtDjtCKU8g9V6FCH4tSqrX3xow=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751293207; c=relaxed/simple;
+	bh=mMDYoX0dVZaz5UKJhCcKzBWEPPcmk/4m/ByLDeyYpGM=;
+	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=upqc9d4mu6SZ1AcPtY5mSQZOsUNhTEPZpk7Oe11jL83iT/hhyKI7WPw1jC1TUhZgy1ceX/l3knt/wDrshuMxlO85ew8fi4Slm2+M9MI82CwGS2mrfw2Omov1znoVHlW5+OJMFXNLu/7LdxudJrB2zioL4FFvmngZNzvHnkAFcKw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=aepfle.de; spf=pass smtp.mailfrom=aepfle.de; dkim=pass (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b=ds0xlOgy; dkim=permerror (0-bit key) header.d=aepfle.de header.i=@aepfle.de header.b=kE56o0ME; arc=pass smtp.client-ip=81.169.146.220
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=aepfle.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aepfle.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JjT8Ai9t"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-235ef62066eso53012945ad.3
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 07:11:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751292670; x=1751897470; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=g9g2BSbwhYic+Ynujhf1cb4pvJdWH90tjgcwAqHqvzw=;
-        b=JjT8Ai9tnlFxCDf5IAv2l5Y2cUB/L0Q0WTA5aaU0iT+D5nIVPYRtXL+AhqMAEbM9JT
-         TT36VdWgWY34v3Iykzd6Sn3ZrEp0svK8uB6JHb5jXJPuTlFUl8V+LXmlAEFlh/iQuzgI
-         H4kNu/j9ro2HPo/YkjzbQrHgHZixxVkQrHsfP9wXyB40GKmCWeau3Al3Cjfv0ihRXJLl
-         Eb6t6Wvr8n5TlF8ZjI7Z4C4FZeJ6TapekRmbLy5DDmnsqx0+pyJbT0L0WldcaF7DMpoV
-         NrW2tBh9WZIKFJP7v2Zu3GrZIe9qlmB8DkVX1oLnEF0f5T8vOIlYTxTJfx9yM7sxHnOx
-         fgFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751292670; x=1751897470;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=g9g2BSbwhYic+Ynujhf1cb4pvJdWH90tjgcwAqHqvzw=;
-        b=uP2ZeaT7SFMBzBBYCjxTcuv0hvZG/kUXlfG3ko8z9oecYofwomuRDUUBjNfMaHeL0K
-         anLqN0KJd721Qvf4/KAcygdLptLvKo/8+h0j/1kurua8SE/Pa/MFsZQCl7Ygp/CmtGo2
-         wU5T0yYiFBC6suVz7+9BNB4E2IWYgQDUpZTzL0oYTyMwHFcAgqjMiFJSh6HlkRrl3o7S
-         otVBdgo5QsasOCrwOz47P9SY/VoyDoQhApVNfMqk51tYA2OOTJogngyxQPSCr3bYVfvn
-         hA0mhf9Z7RHuG3vBhz389ngVXj8AnztqTI4f5ci2KoFXnTgKUdUKc/erF1aJzwlagJ7F
-         GlXg==
-X-Forwarded-Encrypted: i=1; AJvYcCWzu5m6+G8RZyvo20Od3NsyoaNnpZqZyzUDIrTgrPiaMKQJc1/WeJjsGCkC5SE4p1sJxso=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI0+jgDsgwuxuWXyXWH3W1egO/Wlh7UdA43VLCsKbmRW2DS5qr
-	HgAV7RG0MhpdE34K7PpHyk8pViQ8PodaaeXF9iD+O8V+AUVFcczE9E7J
-X-Gm-Gg: ASbGnctLOddRF2/OrEhZSDGY+WKke8NPdkmREsDSQaGvOBJNNAY3jp9Bpa8TcFr1HFi
-	4o9Xglnkc+VywXIcGedoRP5lrGh6iznfWfMKVKFj2lNYlP3SfmBIfGKvlP4QNhtH7DCUDbi1WCe
-	8rNWW/Sw88ET4WeiJrLJNBrFEQVfaeL4x4CrgV1+pub+vmIKLHQ8XKPL5JlRUQnPZ4epag1PlY5
-	NkVh+mn4FikGo+282hxlvtrtv+0ix1bL6lcYMZ2iLP2t7WOq48K4bQmcs+zrZDKbZA2NYK64yDq
-	Q0NtYKxGfKKZCalKkM2kI6jdAHh6SWD7IzCDlp36zDKY+izirm4sZZTtooaqGo3nIvATbhqebjG
-	ViKpzmLvT5vnl9fMx9ssublKxf/w=
-X-Google-Smtp-Source: AGHT+IFO2bZ2CtMjEW4lntB1mRHROwotovSL4qHSpHhAgfzbhYCf0IJ2gk6GlzHJAAACMfWIMuMk6A==
-X-Received: by 2002:a17:902:f611:b0:234:ed31:fc99 with SMTP id d9443c01a7336-23ac45c1d73mr203530805ad.21.1751292669674;
-        Mon, 30 Jun 2025 07:11:09 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3d35e2sm82430155ad.258.2025.06.30.07.11.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 07:11:09 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
-  git@vger.kernel.org,  shyamthakkar001@gmail.com,
-  kristofferhaugsbakk@fastmail.com
-Subject: Re: [GSOC PATCH v2] commit: avoid scanning trailing comments when
- 'core.commentChar' is "auto"
-In-Reply-To: <f39a3285-574a-45c6-9646-04eb175f4770@gmail.com> (Phillip Wood's
-	message of "Sat, 28 Jun 2025 14:38:01 +0100")
-References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
-	<20250626221631.457725-1-ayu.chandekar@gmail.com>
-	<91982162-b138-4bb1-81fd-6f9185801c99@gmail.com>
-	<xmqqms9t8cfd.fsf@gitster.g>
-	<f39a3285-574a-45c6-9646-04eb175f4770@gmail.com>
-Date: Mon, 30 Jun 2025 07:11:08 -0700
-Message-ID: <xmqqjz4t5ngj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="ds0xlOgy";
+	dkim=permerror (0-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="kE56o0ME"
+ARC-Seal: i=1; a=rsa-sha256; t=1751293202; cv=none;
+    d=strato.com; s=strato-dkim-0002;
+    b=M3q9JZA3SeIsrOJ0QHP4nDU869PCQl2jOtwRsuK4BYEXJN6yKLEntIN10f8snYd494
+    ckD2RsHcv1HuxYn2fkJwGW+2hXFyOy6fmjVOKR0LzEY5wv3xInp3/S136twYQQ4VsqX5
+    a33AHw/FiZOIVni5/qHioMqU2ohG4RJ0z+nbCGe5JjbSHC63ZaGJ44nktn2W290pEiea
+    IxFLKsdMaUgorZSGiprQq5GFwQIqn6uV146LwoFH3L2NocCZEfB7QdTAIWqJJXnsHtGV
+    HsCq7bjYh9Em+U1CC8I9gTo3qRsK3Rq11OuJgFEid3C+KKnisyOsjpiRLokNSYS20+sE
+    yWfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1751293202;
+    s=strato-dkim-0002; d=strato.com;
+    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
+    b=fTdi5m4nen/kQtSAcKgOC8BPjUVbTMVlm4muwG/BGoEycZi7Zx5p3+6EWvFIqOWydx
+    InGlnLEPF76qJradXu8o2omR17yi+StltUYOP23OIliw63G2C7BsM6Paszwwgrx+3Ik+
+    nD+jF2vS/vbTFKPQLbDqUy3Rzos/8QokHwsNG5WvfH4GaDvW+/M/DlG8cLU0wjAnt8+M
+    qy1rWluFXlAG253erU1mMqcJbON03+HuIoY0udg5Yq6KDYiWPXmfU3Ag5/1snzCBg9FM
+    zcQs0AUI5QBo23peUoeFaI6rpzBSboTXzIU4lGs8y/yMdJHD9sNfKZK1cDCMaHzYEoJw
+    J21A==
+ARC-Authentication-Results: i=1; strato.com;
+    arc=none;
+    dkim=none
+X-RZG-CLASS-ID: mo00
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1751293202;
+    s=strato-dkim-0002; d=aepfle.de;
+    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
+    b=ds0xlOgyAOELscJCKQ1nm2cNbFPHgUuuWCxsqHQ7myU/eQ5UZf8a1INz83oFj39Dmm
+    njEA/BHdMxmxowazwrNldoETdOyLR8E2LUNAuRlXbBc7xUiwm0qjGMLJyuGiR7AW96eb
+    y1Gz/DbPl+44uerKhIWTVPupAoX8W2GIjDK5kIVw254hFUgt6ekuxf8ODysgRe1TxVki
+    lGSnntjI5oLtt8buWdk9eKHUPKLTlSeLSt/pWN20n/6dnespoJHtzYlWnePcu/RpFfO+
+    yNXfYKTuzhTu2jLp3yqxt9r5FjUVkEMspiKPJNAOn/EOKFKknRM3IcXZIsCTGGh0RAPO
+    t/gg==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1751293202;
+    s=strato-dkim-0003; d=aepfle.de;
+    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
+    b=kE56o0ME4Lsrjx0VHWA2I9OFEsqmSdzS+QeIrvTgBrUdcrWRUEqXhg58MdkY+udE46
+    SbbDgJje47ksF3L4XOBw==
+X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QLpd5ylWvMDX3y/OmD4uXd0fmzGoJ8rBK6cWAVfDMmnI2IZ8kj8s0jE6n+P5L1"
+Received: from sender
+    by smtp.strato.de (RZmta 51.3.0 AUTH)
+    with ESMTPSA id D2e95d15UEK1Eou
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+	(Client did not present a certificate);
+    Mon, 30 Jun 2025 16:20:01 +0200 (CEST)
+Date: Mon, 30 Jun 2025 16:19:53 +0200
+From: Olaf Hering <olaf@aepfle.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: changed output in git branch -a
+Message-ID: <20250630161953.3824c610.olaf@aepfle.de>
+In-Reply-To: <xmqqsejh5pam.fsf@gitster.g>
+References: <20250630121839.6252d9d9.olaf@aepfle.de>
+	<xmqqsejh5pam.fsf@gitster.g>
+X-Mailer: Claws Mail (olh) 20250514T101025.84a10d9e hat ein Softwareproblem, kann man nichts machen.
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; boundary="Sig_/bJuo8MltFRR+4OkJCuRnDIc";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
+Content-Transfer-Encoding: 7bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+--Sig_/bJuo8MltFRR+4OkJCuRnDIc
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-> Should we be resetting comment_line_str to '#' when core.commentString
-> is set to "auto"? That wont help if the commit message contains a '#'
-> but at least it would be consistently broken.
+Mon, 30 Jun 2025 06:31:29 -0700 Junio C Hamano <gitster@pobox.com>:
 
-Yeah, while I was re-reading the code to parse the configuration file,
-that was exactly what came to my mind.  I offhand did not think of any
-downside of doing so, but I cannot claim that I have spent enough brain
-cycles to make sure it is free of bad unintended consequences.
+> You can try in the repository where you use Git 2.43
+>     $ git remote set-head origin -a
+>     $ git branch -a
+> to see if the difference indeed is coming from different versions.
 
-Thanks.
+Thanks, it does not depend on the version. For some reason the repository
+on the system with the older git had no default branch set. The repository
+was cloned a long time ago, maybe default branches were never set initially.
+
+I changed my script to use for-each-ref.
+
+
+Olaf
+
+--Sig_/bJuo8MltFRR+4OkJCuRnDIc
+Content-Type: application/pgp-signature
+Content-Description: Digitale Signatur von OpenPGP
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAmhinQkACgkQ86SN7mm1
+DoD6cA//XPOJmsBQkMeik22lp1YMEZDliwzttG7zBqtnpspg8hBWCpJG3nJW7jf+
+bUfGllzBgKePBd6S6eRUQK9uHz7MPdykPSIIEvdoA3SCfRul72SooKoENmmW1knP
+qcUsnKCWwxsSn/KBmdBcY9ULDjKlPYtp3OeApcUYKyHt6CH36/CBFKwRhDVVUBvG
+Z89VIDmGvzYxqDOBepKaYIggsy/Hk/wGXE2ZiGfGgKeMUnmNMgAvgRtkt7pP2nuK
+d5IRo20fjlAz/U2YDGuZoXgBTXCsL4JQgeNrrs52/b+D+Pkkjm0AI3pK4QMfKYMY
+h2QeKs9GD1+nO0T6VHmJXGK3QCOeEfCwgfF1U9y0uEt9towaaDYYxwBaQDP7ygf9
+ZBUaX0UcW8KGo+NMOnjChiUWP/7JhtSZeBswx+r4IDqjkKySHDqhAwHPdP8Yqoxn
+vv+BhMUorAzUt8xUsrRHZzq/MKh90yGWROdrnKwubTV8G/NyJxpSrTl01IfOKc64
+/gsL/+Mcj/K/+5Aujq4gVviRV9h9U9yrj5lMctntGwL3+Mo/ubNCg6DCCQpnfATP
+Te7/GnTbrUjVxWA0CdDmDkMdbVhyTzgGGOss1wOI/tvKDgR/La/8DUcuUqByF7b2
+/yVR79MYCCEBc5fAy9JsQ7NLyOSrQFzduAoaE/jPGMy1MGJQ3nQ=
+=lZsQ
+-----END PGP SIGNATURE-----
+
+--Sig_/bJuo8MltFRR+4OkJCuRnDIc--
