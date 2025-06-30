@@ -1,118 +1,78 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 629002E9EAD
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:11:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BF6828C2A8
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:27:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751310668; cv=none; b=tz471xQF3LIQ7N8V+yQfzPreDHuEixpEG6DZGROXhAx5nkdiF+ENN77zqMkeLL93xmbuGJJv0AWyJrvfRuyqpycgFk0djG5ZXVfvES9YJ73kJpmQfgHsnCoEP3S0cdXdKIHdTTrCixD+4dQ796hEsDWH/9XKUrHQihQ7IfT6Ync=
+	t=1751311627; cv=none; b=Jqo0ef4MFfYbs2/4OIba8gBq7YZj1lnL3mfuteRkuj1j++qOnB23Lw7k58SWlv8V59Bpj0cdZhVo7YrZOXRn+xu3b8GTAMxHQNxnIu/kTofPIvSX/m1Pnsz8ZiiTu75WuwByKEVF2nwSzqLyFQBMMP+nM/fWyGz2rrmSoKaV2bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751310668; c=relaxed/simple;
-	bh=1wjliyBvYjHmIn7qoH1BdLkQHvPOlpoOOhO5f1qB/oo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=EsimsOj8n5ARf+AL5Zu/wZPQcQKDZT//iQ+1T8Fu2cl6oYeVbAsWZjlMlwWMEe7mrOsHjfJLWXjXuvolz1AWbDf3ZRZ7ynn77EpgqSJxcyufQpo+C3aOLAPyV1m1AOGTHliS8zzggvlgJvO/rLWjtcd/+j9umZSvfSLC1HV0Azc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=yTbItN8l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f2ug/tsz; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="yTbItN8l";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f2ug/tsz"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ABF90140003D;
-	Mon, 30 Jun 2025 15:11:05 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 30 Jun 2025 15:11:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751310665;
-	 x=1751397065; bh=yJgCVQefO7/DHmGkGfXy8N5ygMYemKPcL+zOdFAKoII=; b=
-	yTbItN8lJGgChVpZq1d8wzS5cpUTA21blPNKv3gwssLkllgMuPciz71YubNbrwbZ
-	Epk4cFjVMyNQTW9ZjoNSrNTxLiFmc7/v9jmHejYq9X+1rO9BbREQGq3Smqf7jJv8
-	XHlDtHqDjNYawKeI/HLwY4iR1qgHwCNs1L228bk1nv4kKj2JUKhUNdWJuiswfSOE
-	udEOaF1hl5q62mBrIS+NYE9J3YNDmvRTaBgV5lgPAzskBc1pf4cDcERF6rJYgZZm
-	noMjnA1DyXCU2OMr9y4uJxZQumf+fE6AbvPX/MannbeLeidb0fXdRFPppUeeCXG8
-	OjTkLArdHS4DFghguo+iPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751310665; x=
-	1751397065; bh=yJgCVQefO7/DHmGkGfXy8N5ygMYemKPcL+zOdFAKoII=; b=f
-	2ug/tszaMZnFAdhEKwoPPOE4hji5pW9qZGgdhu84GwO4DAn6wWJaaO4YO4H4uQvv
-	IoESZ+18IZxDurBkvpVcifbLV23e/J9tu3xNCmqFuyzdiGL/Uk/TmtZ2PISFlCaZ
-	SR3k/tyySoPNLcYByHHxrcx57w1SQjHFxDFCd1flzyim8ItzmPHks2RA0ZVHZVBj
-	Fj7y7skwrdHpQm57Ws8yKTZUrk/EDhQTHmmIRI74trNpgo+HOgedbEJ1FJ9BwEMK
-	rLSa4r1xxpQVFxwGKJpYdBoZNhBeP+D3/hfSpFmPfCC9eEZhSNxeGrIAR8YfFoph
-	prX0IVVOOh7JmGDJeAM7w==
-X-ME-Sender: <xms:SeFiaHk0zOjngyVf90UrFKCa7Bs13ov5fBHhg9D9AccjnyLGbXyhh5o>
-    <xme:SeFiaK0pmSs6OCHJ4P_MNdYRvfGKbrYFGjPotUokQFHIdujiOmNpN2YRmWL_LFCmX
-    JElUnYLT-I1cN8eGA>
-X-ME-Received: <xmr:SeFiaNqEhJRuwaMhEZPVX-UNu2RO-Nz8OIHaG7lmMcx_OiEcBXtYDtCY-VhRYH82oR7EaCbf_wHtuatFEMVqoMzWp5n081VcLtBeu9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdehtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
-    fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhephffggeelhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfek
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
-    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
-    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
-    nhgrmhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrh
-X-ME-Proxy: <xmx:SeFiaPnYoxWNY1nLNStP5gajYjPPlgC3-5fR6iMnFcHJ2qtQlIUPrg>
-    <xmx:SeFiaF3cgptVVKzvYor9CzGbFSHJU_KGwGK6erPazg3fuNKpRB4N4g>
-    <xmx:SeFiaOv9VRXAmmC2_sUsJgG2ddPd0sbT7szbeDisqT4NulZdkzB6EQ>
-    <xmx:SeFiaJXQ_6jrk0svs_rBmYc1s3yAnrczINJhAwpzsrTJMLosv2M0Qw>
-    <xmx:SeFiaK3KqLdwfmPCwjfanfrhiHnth7oMotWVwfhsnNUcMLyDXMl6uOc9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Jun 2025 15:11:04 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH 5/5] doc: config: mention --url in the synopsis
-Date: Mon, 30 Jun 2025 21:10:27 +0200
-Message-ID: <ac3257a934d4c59de03757c2471c7067a8186108.1751310455.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.50.0-KH
-In-Reply-To: <cover.1751310455.git.code@khaugsbakk.name>
-References: <cover.1751310455.git.code@khaugsbakk.name>
+	s=arc-20240116; t=1751311627; c=relaxed/simple;
+	bh=3KDCoEiX/mjq9nhjdDi9fyZQaUbP7ewlZu8I6NptIbg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=c78huk3s+0MlmijGjlgJE9iURL2s0riSA9YyOX9lpZ7p+hENWfupIK+ePY27WmS1nJd8dz7c5Nmkd6OZ8/IWeUgpcOtv5Sn4fvwMnhVbeZmobFd7ce/+Ra33nqo0/wgM1wtGAumgOi88qJwzSDq1T3BH/6QIuDjGzu9/OIxbra0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6fb1ded3afeso10910636d6.3
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 12:27:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751311624; x=1751916424;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=t3Vk5cuZV6IhFOIMSSbGewVqnn41zby22Xboj9redgg=;
+        b=TT5kV0BXhjomcp37pxcqYtjHEaRCXz36ej7BQUwSSmA51dTd5xBZKeyxqTEBpnoJ6z
+         +4+UQucF0NPeaLCbJ7ZD/78LcX38M4JE11y92x0qdcKnfrUROALSdD04KWQHs2VHGph4
+         k3sDhUqzNcuSitKG/lFp4yTsthxI+fQbq9G0uW1o/L5qf7Laghrbi9zds5OMgfeme25P
+         gvfdbOiLihkUHY3CWVUXf7bkMIgIQtoZLT0EXDWG5Q81sIN6mt8R49EhbiXDs8lSUIBd
+         FXraHOPVMoAAJegrCsFyMKkaPHKk3y1NiwDZOYBtpXH6zCrSo/3BkqVoe92s4a8f8HIb
+         cT3w==
+X-Gm-Message-State: AOJu0Yw2OOM87F02GUz2jcPYIwdAYGQ8w5mmwtRYnbn76KlRCgxdbksg
+	2HYfk6tmaRXQRrJNOJjouM9twTncny02vjlRduSjU7TJId/v8DSkNIuxLT3CS0Zwd3pbXTX5lFx
+	7TKI3f351szYd1ZCy/qsiGMGras3CqnnxkKGo
+X-Gm-Gg: ASbGncuV9gM/0cm6/MMQizG4fLZeE8I+z+IeeiJZXfW19AX09L8scOGukVBPvcLcQ0r
+	meDS95XJF8pZYWwMvyjVFKx8fTrDEh8/HoBWxzh1N5CYusl1VoOMWyqBu0ELmdMQA0lesvdIOPx
+	d5kywc/rIw2pGspZd8vlCCeaaoizItBeIbdVcTDiiJcp31beUyTfqGtYpy9zOJymfj2IjevEwOp
+	1T9
+X-Google-Smtp-Source: AGHT+IEANhfoA9YUJq5xRLCEIAsIwjOIERbIZ/AmUOzIot434WUEkUwyn+/pRHsKnu+2bxa15L/ih878uL1ICdGsK2g=
+X-Received: by 2002:ad4:5c8b:0:b0:6fa:be81:e18f with SMTP id
+ 6a1803df08f44-7010b8acc88mr2020186d6.0.1751311624208; Mon, 30 Jun 2025
+ 12:27:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <cover.1751310455.git.code@khaugsbakk.name> <f8407f331e0e4bf66a7e26b87f9b021ab950a4ad.1751310455.git.code@khaugsbakk.name>
+In-Reply-To: <f8407f331e0e4bf66a7e26b87f9b021ab950a4ad.1751310455.git.code@khaugsbakk.name>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 30 Jun 2025 15:26:51 -0400
+X-Gm-Features: Ac12FXzxeq3YV57VNWDSnLYWVgC8AMwq__T2vsCRvMeIexXPrU0ESNjkVwbdHLg
+Message-ID: <CAPig+cT+2vY5niZCWN_27w3gvSNTAQsBA4=+AyUHKO6iofUD9g@mail.gmail.com>
+Subject: Re: [PATCH 3/5] doc: config: document --[no-]value
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Patrick Steinhardt <ps@pks.im>, =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Mon, Jun 30, 2025 at 3:13=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> =
+wrote:
+> These options were introduced in a series of commits from
+> fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15).[1]
+> But they were not documented here.
+>
+> Document this option and the negated form according to the current
+> convention.[2]
+>
+> =E2=80=A0 1: `--value` is a replacement for the `value-pattern`
+>     positional argument
+> [2]: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
 
-4e513890008 (builtin/config: introduce "get" subcommand, 2024-05-06)
-introduced `get` and `--url` but didn’t add `--url` to the synopsis.
+s/=E2=80=A0 1/[1]/
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-config.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+(Not itself worth a reroll.)
 
-diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-index 9d8f9bb04e5..511b2e26bfb 100644
---- a/Documentation/git-config.adoc
-+++ b/Documentation/git-config.adoc
-@@ -10,7 +10,7 @@ SYNOPSIS
- --------
- [verse]
- 'git config list' [<file-option>] [<display-option>] [--includes]
--'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] <name>
-+'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] [--url=<url>] <name>
- 'git config set' [<file-option>] [--type=<type>] [--all] [--value=<pattern>] [--fixed-value] <name> <value>
- 'git config unset' [<file-option>] [--all] [--value=<pattern>] [--fixed-value] <name>
- 'git config rename-section' [<file-option>] <old-name> <new-name>
--- 
-2.50.0.138.gf67de2ec4e7
-
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
