@@ -1,75 +1,80 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58A2E28BABC
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:05:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8B8244688
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:11:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751292348; cv=none; b=MpjsRASzr+HkCQBcHplm3y1JNiIYGXOJAmVBpOqM5mQTRBE71Sp11SqYve0HQxK7Fj91RXq/J1oJeN9P43LkFivNs8vhLr9m0m/NdXT0m8P7+geHxaLzoJieJVT5ifv54qZLBcri02HQ674MT8xtDJgHKr/vzpz00BfN8dDzOh8=
+	t=1751292672; cv=none; b=cYXGl/lDinXSGXgHHJcz8fdS+XjHa1KUmTEHA5Mw5hXIRrSgaBbP6Xq4Nb24jZq2uoAKWL4SZSJzukdnWRP6cf1014bk12cHgqYJrGyp0gV8Wjan3HQTJdhxnKjYKTSf74ZZq0YQUVYL4xzL84pF/KkrLpK3+T5St/nOJw8EAJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751292348; c=relaxed/simple;
-	bh=NeXMw5JXbJ5ycITGx+wEywe4bw4n+SV4/VKPTkH9wZU=;
+	s=arc-20240116; t=1751292672; c=relaxed/simple;
+	bh=4J312Bd6QeI+5DSZUCvLXKTN1yb5H0cMhM90WVDSEtc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GcUa+F4Bqp84Nix8GD16gjkg1dOTTJkNaDEfXaWCeHxUmUUf0734t5x0prvC5ZNEkFMtAPDP54vvR0Qb71wRiZ9n6VO0HUc7JoFDa7OuU0xDaIG/UOkYhDlCpJmhhhKcRV6Wz6d6Qnh1VX4m6tQQbr8DH397msJVNDyXkptPK2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbTt7jhg; arc=none smtp.client-ip=209.85.210.175
+	 MIME-Version:Content-Type; b=gqJhKmmFMZe0byHc3fcWmSz78ciOoteCe5G1EDN+mcO9ufUVZsLbeDG6/ZnzGzuM9YDKnxK5V5FyhRIcNI/6QWqSLjI9rrrt95X3CpheZfAM3fKhv267FR+gOUKk5OO62JT2Uo226mqR7O85h5z4UGrqYGXwKPIpj9flx1ABVt0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JjT8Ai9t; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbTt7jhg"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-74af4af04fdso3164935b3a.1
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 07:05:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JjT8Ai9t"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-235ef62066eso53012945ad.3
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 07:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751292346; x=1751897146; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751292670; x=1751897470; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=jUh122kYl0W9UJDfzpmQdn1SWN4At1g3wkIBoigFrS0=;
-        b=ZbTt7jhgO2qwTVhQRoBTV0K0nogLR4NwO79zDIZcSBgboD1cKcwPqphh8PeEyWyyqM
-         A8gHHFGvug2g01hdyoSMDp76EKZsC8Pb5XrqfQG0zm4X8A5SQ67jsX+B8k6+fEZtnnN4
-         cUtU+tNs7Njbqclbsl/k+OPe0PrLlJdIWeWR6mGttvDo3YQxIqLgiyHjow+ictOAE3ng
-         s+0HVRz949le+ilr3q71ylCj/jiYZiZ2hxE72Semxp6/xRl4RKqFDb4c/YJBr7ACCcEc
-         ToQPPd8C+tjGjpU8zqR2q2CnbwJpf9p9AJxnt/HPCC6KVbsHCTRw7JbXEdIdB4OLkoJw
-         GGcQ==
+        bh=g9g2BSbwhYic+Ynujhf1cb4pvJdWH90tjgcwAqHqvzw=;
+        b=JjT8Ai9tnlFxCDf5IAv2l5Y2cUB/L0Q0WTA5aaU0iT+D5nIVPYRtXL+AhqMAEbM9JT
+         TT36VdWgWY34v3Iykzd6Sn3ZrEp0svK8uB6JHb5jXJPuTlFUl8V+LXmlAEFlh/iQuzgI
+         H4kNu/j9ro2HPo/YkjzbQrHgHZixxVkQrHsfP9wXyB40GKmCWeau3Al3Cjfv0ihRXJLl
+         Eb6t6Wvr8n5TlF8ZjI7Z4C4FZeJ6TapekRmbLy5DDmnsqx0+pyJbT0L0WldcaF7DMpoV
+         NrW2tBh9WZIKFJP7v2Zu3GrZIe9qlmB8DkVX1oLnEF0f5T8vOIlYTxTJfx9yM7sxHnOx
+         fgFA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751292346; x=1751897146;
+        d=1e100.net; s=20230601; t=1751292670; x=1751897470;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=jUh122kYl0W9UJDfzpmQdn1SWN4At1g3wkIBoigFrS0=;
-        b=NGEY9bXfiCYyhHjZCUMk7o7jHIxVogfJcyk+S9C2HcGPE4xlQFTfmWDtwE8x/ljYZ2
-         pb+O83HKUPdnJT48D0rClgCKvJFEMahoLWszyoYKIXSVmGr6ri53eIMBJ5MC1i8umff9
-         2Eeqo18w9YkAAAd/UF0WpDf9eWnMMW1ZeXgzAVUfJrXH6EhSCABBOeazkNA4UEjGzKAV
-         7kiauVfgw9zMOsOltWxnjK7NKCf9Vg2bsXYLlqSyNLtBZaOmV8d7vQEWjLuScNaOBMoY
-         esJBZO6CQxOG4SeChBqQzUjb97WEzb9Ohom41EnzwCKG89OMHFh2QffiLnkDwg3tV/rl
-         3hag==
-X-Forwarded-Encrypted: i=1; AJvYcCXhKsL7IIF/JKJ2cxRSp3A8DC0+4JmTFaPATfB+4HKIrCCXLH/8ER1+sgZRxpc7JE+/d/E=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDsaLIKYuo7XNJRYtMerEla/gpDTSekL6famD1Zfc46DJTnwgr
-	MIEJBaj9UEMZyjKc8PMKFUnUVlzO0k6deu2cAut9J2dEUcx1Rb2mDnXL
-X-Gm-Gg: ASbGncvAiiUnzLJX3eyYGAF6X18QXgysW/G44w2BZZ6SFjWNbIUGpp9JhT/lf+KlSD6
-	xH8i/4Ehu+vQdWNxoK6cy3oEC1d4o8/GPClMtFkL8A0OZtp1BxqTiKmP7h85PU+EyU5KuDrIT4s
-	yYF9OHPoJvLLvqVblzZtHqDCuTA5QPKqPaG+HgC+bdbfp9Ps6a1r5TgZGzSH4uCnq2KGzKI3ikq
-	31O6JpC1oGzVR/2rEJay+/ypCCi4hoLqrOk8CvPQLBy9Y+w3ZVQT40l+CdnXyy3k43sBArGDLSC
-	czDEvyqNEJD9IUzTICX5qdvDXddTbGAaQs7UaoLe1E7kLJ35nNeoT0uSaOxRuJPxUvMs7ipxKyT
-	KcDneUc3Z+EjWGRnQj2es7GPurXo=
-X-Google-Smtp-Source: AGHT+IFV2q1k5Nhk863ptmd8K2BYS5A/27tgHpr+rT1vdF6bHYx+f/YkuxC5dE7/Hcqq7Xub1cLzsw==
-X-Received: by 2002:a05:6a00:17a8:b0:736:4e14:8ec5 with SMTP id d2e1a72fcca58-74af7aef3d8mr17267001b3a.11.1751292345586;
-        Mon, 30 Jun 2025 07:05:45 -0700 (PDT)
+        bh=g9g2BSbwhYic+Ynujhf1cb4pvJdWH90tjgcwAqHqvzw=;
+        b=uP2ZeaT7SFMBzBBYCjxTcuv0hvZG/kUXlfG3ko8z9oecYofwomuRDUUBjNfMaHeL0K
+         anLqN0KJd721Qvf4/KAcygdLptLvKo/8+h0j/1kurua8SE/Pa/MFsZQCl7Ygp/CmtGo2
+         wU5T0yYiFBC6suVz7+9BNB4E2IWYgQDUpZTzL0oYTyMwHFcAgqjMiFJSh6HlkRrl3o7S
+         otVBdgo5QsasOCrwOz47P9SY/VoyDoQhApVNfMqk51tYA2OOTJogngyxQPSCr3bYVfvn
+         hA0mhf9Z7RHuG3vBhz389ngVXj8AnztqTI4f5ci2KoFXnTgKUdUKc/erF1aJzwlagJ7F
+         GlXg==
+X-Forwarded-Encrypted: i=1; AJvYcCWzu5m6+G8RZyvo20Od3NsyoaNnpZqZyzUDIrTgrPiaMKQJc1/WeJjsGCkC5SE4p1sJxso=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyI0+jgDsgwuxuWXyXWH3W1egO/Wlh7UdA43VLCsKbmRW2DS5qr
+	HgAV7RG0MhpdE34K7PpHyk8pViQ8PodaaeXF9iD+O8V+AUVFcczE9E7J
+X-Gm-Gg: ASbGnctLOddRF2/OrEhZSDGY+WKke8NPdkmREsDSQaGvOBJNNAY3jp9Bpa8TcFr1HFi
+	4o9Xglnkc+VywXIcGedoRP5lrGh6iznfWfMKVKFj2lNYlP3SfmBIfGKvlP4QNhtH7DCUDbi1WCe
+	8rNWW/Sw88ET4WeiJrLJNBrFEQVfaeL4x4CrgV1+pub+vmIKLHQ8XKPL5JlRUQnPZ4epag1PlY5
+	NkVh+mn4FikGo+282hxlvtrtv+0ix1bL6lcYMZ2iLP2t7WOq48K4bQmcs+zrZDKbZA2NYK64yDq
+	Q0NtYKxGfKKZCalKkM2kI6jdAHh6SWD7IzCDlp36zDKY+izirm4sZZTtooaqGo3nIvATbhqebjG
+	ViKpzmLvT5vnl9fMx9ssublKxf/w=
+X-Google-Smtp-Source: AGHT+IFO2bZ2CtMjEW4lntB1mRHROwotovSL4qHSpHhAgfzbhYCf0IJ2gk6GlzHJAAACMfWIMuMk6A==
+X-Received: by 2002:a17:902:f611:b0:234:ed31:fc99 with SMTP id d9443c01a7336-23ac45c1d73mr203530805ad.21.1751292669674;
+        Mon, 30 Jun 2025 07:11:09 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af57e7279sm8936317b3a.150.2025.06.30.07.05.44
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3d35e2sm82430155ad.258.2025.06.30.07.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 07:05:44 -0700 (PDT)
+        Mon, 30 Jun 2025 07:11:09 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Meet Soni <meetsoni3017@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  karthik.188@gmail.com
-Subject: Re: [GSoC][RFC PATCH 0/2] Add refs list subcommand
-In-Reply-To: <aF-iSSOmcplFjKQt@ArchLinux> (shejialuo@gmail.com's message of
-	"Sat, 28 Jun 2025 16:05:29 +0800")
-References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
-	<xmqqh60183ku.fsf@gitster.g> <aF-iSSOmcplFjKQt@ArchLinux>
-Date: Mon, 30 Jun 2025 07:05:43 -0700
-Message-ID: <xmqqo6u55npk.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
+  git@vger.kernel.org,  shyamthakkar001@gmail.com,
+  kristofferhaugsbakk@fastmail.com
+Subject: Re: [GSOC PATCH v2] commit: avoid scanning trailing comments when
+ 'core.commentChar' is "auto"
+In-Reply-To: <f39a3285-574a-45c6-9646-04eb175f4770@gmail.com> (Phillip Wood's
+	message of "Sat, 28 Jun 2025 14:38:01 +0100")
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+	<20250626221631.457725-1-ayu.chandekar@gmail.com>
+	<91982162-b138-4bb1-81fd-6f9185801c99@gmail.com>
+	<xmqqms9t8cfd.fsf@gitster.g>
+	<f39a3285-574a-45c6-9646-04eb175f4770@gmail.com>
+Date: Mon, 30 Jun 2025 07:11:08 -0700
+Message-ID: <xmqqjz4t5ngj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,22 +84,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-shejialuo <shejialuo@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> If so, we would make "git refs list" to place "git for-each-ref" at
-> all. However, in the current implementation, we indeed introduce
-> duplicate code path if we decide to do above.
+> Should we be resetting comment_line_str to '#' when core.commentString
+> is set to "auto"? That wont help if the commit message contains a '#'
+> but at least it would be consistently broken.
 
-I do not know what you meant by your first sentence.
+Yeah, while I was re-reading the code to parse the configuration file,
+that was exactly what came to my mind.  I offhand did not think of any
+downside of doing so, but I cannot claim that I have spent enough brain
+cycles to make sure it is free of bad unintended consequences.
 
-If you make "git refs list <anything>" a thin wrapper for "git
-for-each-ref <anthing>", you can satisfy "I want to teach any and
-all features related to references to the 'git refs' command" while
-not penalizing existing users.  After all, that is essentially what
-"git branch" and "git tag" do as their listing mode and supports the
-featurs from for-each-ref, isn't it?
-
-
-
-
-
+Thanks.
