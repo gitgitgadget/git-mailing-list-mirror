@@ -1,121 +1,133 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C982EAE3
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 17:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335962701CA
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 17:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751303190; cv=none; b=Bwk1S+JUH/fUla0usu7ECX3mJrmn9I9GPTitKnsFz3TpsD7SPjhZU2IF2q334dcEXalsGV48IvdY2O6TOPxVyQzurD7i2fsxhDNwncCkWXXRgLlGV4kOBdaFJ2mz2ZQ+059W/v2aFI8iAfTQXQRafUjK3SQ3JlXRqOCV+rTXkxo=
+	t=1751304903; cv=none; b=bAZRUzJWz/gVSshOb0HwLVcD6VTDDMS1/mQGlnz5ZF3EIOhhMT9VMPA2WmURPUPpGkCKyjj30o99DuJotMO7RMnGp4HqK+R2kJBAbI/8b+DCNiAafJsBNIHvWN6taQEoFzlq4YL/0UKKaqRk3+Q0vvYc7SIS/6f5e/yLmJWKLH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751303190; c=relaxed/simple;
-	bh=PUS1//6kUhGQd1X4Sr5tzPydDnnygfWDyPoL32kLf+A=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=LqZzr/Ala8xDaPTBhScIyT4AKm5GVVGANmTSq8uuOAs0pMj4WMIcFDRKzTrdrF5tlyJaY8bVx5vjNvQpfEoSLdWHAgo9cxEQjz0E/IDn09kQEWfc8BPYMLdyHivgWrYnzz+uZeyKQS+9yGiBw3WW7v+DTixcNDFoJAfzxe7CnYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fyi75p3T; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1751304903; c=relaxed/simple;
+	bh=8OKkmXuruKrqvArR9mpvphyEcaNytQWsSnoGa88Eyjo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=esM85259N5ll4/uXYrY/3q0CxO/91TtO7zCgtDCGsz2ikC1iCzNuL8Ly/nC36W029/Pkne2YiLacAaxo04PO7Asnnsdmy0kkE7xM3vJEA5yQ46rfyICJqwXymLsbDR0skyqYwVZ7PVy6IDVuSzEPJTtX4WNx/iLAmOG1cfTH0tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGGwSngx; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fyi75p3T"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a522224582so2454138f8f.3
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 10:06:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGGwSngx"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b170c99aa49so3869761a12.1
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 10:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751303187; x=1751907987; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=wa0l2ebJbP/o61H1kCPonqVSxz2WZVRHR37YIDQfy2s=;
-        b=fyi75p3TTFPGkUN6VQdlzbshlzrkGsKlDxy4xpIyogdmHefBtH/rnfl5tmqnJKBahK
-         pNlvGYpdlpmr/ZyM26FO5Ikdo3CfTxR+C1m2fBLAdgqYMFMzbcM3AZJxKXSRGDvl9Bmo
-         iWOnDywlAzTf4AZmZgk5XBt7YgFPX+57AauT1hpLOqrH3NEbGwC4n6RmIOMFL0oBLV2q
-         KgGTBAtsEMddQCXXaOH8CnlOfKMzqWh54hY+TIyWu6dSbRRrYG/eWMAcTzA+I74PmcId
-         EYAyu2UoAda9wf/Yx5WKz6JW/WL/HKup1ViTb146WGaOmDmG0uwn2r/KIRfbsYxH7bY8
-         bX8Q==
+        d=gmail.com; s=20230601; t=1751304901; x=1751909701; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8OKkmXuruKrqvArR9mpvphyEcaNytQWsSnoGa88Eyjo=;
+        b=HGGwSngxX+eqVY619OYtAGA04u/R2jPnEnL6X5i5v5GXOrk/UtbciKhItsHV3QZv+U
+         T3adWM+Gmgtb3o/m8cQz6Nf5uqCxzYPpaB09Vu6JG/hsislskdry+K4ooFEAbb6zAsnX
+         jEEQHW6ZLBR88vInnzrv/KFBZfPHIxlVDtIz5iYJ66OKsUr039RasYQKe1oZybyxJKr4
+         NLPzbTHbABUaU6i78wM+Qf6j0N5I7yL/3GEoQ0x3QXOlAN0sQkq8uv8C1eyWoV1nwgRM
+         mHselhRhlQI+L4ZNAceRfMvbR8AoGKNcNFBm6UOjyWeZEdc/DXrt1QoV8bmJTYdXZ8T2
+         nzHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751303187; x=1751907987;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wa0l2ebJbP/o61H1kCPonqVSxz2WZVRHR37YIDQfy2s=;
-        b=IsaS7N/Mkl3UXyKF1xaXEQcFblWbkgLgC4hiQv9zBWNnY8rU9z7U6DHpXYJGr2Vcua
-         qrBaHKac4Wcz0crw+ZV2UmatT1FM5sKWDgvv1r4MzpJkGQHE5w2JheE6cAMEXnAmgq3l
-         WDRaEMS58q7V1sbKtnsFH6zOnD7GPcqK/J8XwGZ1YyTV+pGzkhtkUv5N3VK5YryXgagN
-         XHpDnunJl9bya6rUP7ZayaCmtXBWfFPYY5r5Yf9FXQVgyzz7/wL6h4Okfgu6txE/Y6FC
-         lw+H07QZPhsGeC6Itrv07yH4sI1FTzdGzFCx8svq3DEVGe+ILMOfow3hVA4A151dpkjA
-         bxWA==
-X-Forwarded-Encrypted: i=1; AJvYcCU7FBjochHr1voXbq3UhwqfG3qchDypwl0Sn8H3Cvto/cBS2H2/z2Fw41bX8y2uw21YxMM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzeZA8il0XU26wbADV6ec9sTMSoGul6ZLzmOJ1lXJvyzY9Wz7F0
-	cdCZSjsKRjGG1nAGrsP9eMGDMusNlMzTX/UrFb2Pf3TkeTn+jl1peGGUT6CFQw==
-X-Gm-Gg: ASbGncvuAYrEbVxKOhHXTAkBOfJ2nHyWihG+WJYGOttnsQe7MtCetaBv+oZvKkQkNus
-	rJ7rIOWlItZ2i8SoCPzN867+ZM7VrEKpVSqERhbY2jVDIXUeClmo/MGJ9TYnuW/5zS/6T39Z9RS
-	WkpqWnPfBLDchVZyby9I6C2mx2G2HaR76NVSUJ5snZ0MYSMY5kB256jGgtbTou9/wNzAmsu5Gsh
-	rgksTH194bd4x7w04G8PjnVY35HTSVlG1+4xhLXaJleGP7/OGvMgMML8BQoXIOaT51nZOZnDq+M
-	QaHKqgJ85WPxKfupOfWpues7+ro5Pwa6V8tYJlqtqwdmpT9nrvCR2+SANeQbbGaSH0D5pefT4C3
-	0WZV21HhRMOlexWAE6jmiNpv8zR4DZbgYG74rz6jnM7dNlbU=
-X-Google-Smtp-Source: AGHT+IHvjH5S5sZopuv3VK8PxlnEWjpOl6kAnzMWOMQNFBDmLgV23tNNhIeUGE7+DrStR5uBUs1SYg==
-X-Received: by 2002:a05:6000:2b05:b0:3a5:1410:71c0 with SMTP id ffacd0b85a97d-3a8ffdbefaamr9577455f8f.38.1751303186484;
-        Mon, 30 Jun 2025 10:06:26 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:8515:f93a:c957:e0a3? ([2a0a:ef40:700:a501:8515:f93a:c957:e0a3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a4235cbsm143308905e9.38.2025.06.30.10.06.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jun 2025 10:06:25 -0700 (PDT)
-Message-ID: <9b3623a9-b596-44bc-b267-499e568a7f60@gmail.com>
-Date: Mon, 30 Jun 2025 18:06:25 +0100
+        d=1e100.net; s=20230601; t=1751304901; x=1751909701;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8OKkmXuruKrqvArR9mpvphyEcaNytQWsSnoGa88Eyjo=;
+        b=cyFb9Y2Tl5V8A/kM+pLl4ssqXfu/Y7vBr9824jVyHr0u67POBvMErzfAMT+H+LxSdt
+         kbqfVKNMs+chwIsrRmX5biCI1MgSKu85QT8Nk+apGI9z5PCLqwtam04GJ1aCAkjag8iu
+         qDH1b7r/FVyQlmkBWfSIkIohCbxhAQKEuAy9DPtIXwuBbry6G3/2SV6lqhemv5NZ9nA5
+         g8GHNhGLbZuLCvnlVcgYCPLmLsovRkXHs/PoV7Ol53JdWGW7I1tnvRCJCtq1qa2umHuq
+         UguKOEiXCh6YZ3e2XIDwrsHPZZ0tes5Sd42aitBz8GKUq4TKT/Ckh0VbNXN35P4H+eAJ
+         MfUg==
+X-Forwarded-Encrypted: i=1; AJvYcCUVOo7n/93RDdrS27E3fgS3BZXwOQM1Yxd7kDbVrq8o8bHwsfvZxWU8r/2Gd7lUbLMEoSE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzBmYGrLvKhuVk4CpmwI34a3j1sIMfIV4U3zy1pZznjx35OYspo
+	6mlVjSgGhJsKRJgq8pr/5wNn1r6pIKgqgIlxzVCtz9/pQ4KdoSXfzRcp3PR7e/NaoaKJlMMQY1O
+	FZxexorPKog/Pxd81NE49RIuuL4GOkAM=
+X-Gm-Gg: ASbGncvEDA36Pqr9KM/Ox1r2uLAP1r+Daw95VBaDwTu4MAYgJZflZ+G6SjP1hfsb+GB
+	mn0/yi+6G2FJpJUfDrhHIzGzDTK5VCFZ+XoLUjRgMu3R7Jg8K3cZkJqmiDBGoyKy58HFD5TVTGF
+	Mun8g9e2gp4KzxLls5HGORCvxjgJe3R0tybZ/wshE4bXIq7e9h6o6KYONb8CEJC+amEDlAozEdA
+	ckHZA==
+X-Google-Smtp-Source: AGHT+IG+2g68XJVJtW/NJeaXXq3YhBDmyBGZ2rLx7swY/FHJ5S7yPdXuDaK8eUCsXfPz0IQC++7Q2OB6L8CzNY/CTYk=
+X-Received: by 2002:a17:90b:1dcf:b0:313:f6fa:5bca with SMTP id
+ 98e67ed59e1d1-318c92e0844mr18465060a91.22.1751304901323; Mon, 30 Jun 2025
+ 10:35:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: `cat-file --filter` is broken in 2.50?
-To: Dan Pristupov <dan@fork.dev>, git@vger.kernel.org
-References: <6eb10e33-4001-95a7-d2ad-3dd2a5c830ab@fork.dev>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <6eb10e33-4001-95a7-d2ad-3dd2a5c830ab@fork.dev>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+ <20250626221631.457725-1-ayu.chandekar@gmail.com> <91982162-b138-4bb1-81fd-6f9185801c99@gmail.com>
+ <xmqqms9t8cfd.fsf@gitster.g> <f39a3285-574a-45c6-9646-04eb175f4770@gmail.com>
+ <CAE7as+aUcd65vPwwRh_C89vQbMjKQh0Y6LF7WDq1Whyj6iYfLg@mail.gmail.com> <d25bf6c5-e56c-48d4-95b6-c714ee14ab78@gmail.com>
+In-Reply-To: <d25bf6c5-e56c-48d4-95b6-c714ee14ab78@gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Mon, 30 Jun 2025 23:04:50 +0530
+X-Gm-Features: Ac12FXziyNvnBsiS5wuZcZItlC94Ois-RC1_kcEp412kJaJ86EqqGZzeacedhZU
+Message-ID: <CAE7as+Zaixy460a07G935JXt03XQftf7y8YixrPoOw8akNW=1A@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2] commit: avoid scanning trailing comments when
+ 'core.commentChar' is "auto"
+To: phillip.wood@dunelm.org.uk
+Cc: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com, git@vger.kernel.org, 
+	shyamthakkar001@gmail.com, kristofferhaugsbakk@fastmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Dan
+On Mon, Jun 30, 2025 at 2:29=E2=80=AFPM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+>
+> Hi Ayush
+>
+> On 28/06/2025 15:33, Ayush Chandekar wrote:
+> >
+> > So, my GSoC project is refactoring in order to reduce the global state
+> > in Git. I was trying to remove the global variables related to comment
+> > characters. What I tried is to create one single function which
+> > returns the comment string, and we could then pass a strbuf in case of
+> > core.commentString=3Dauto. You can check my attempts on my fork here [2=
+]
+> > (check repo_get_comment_line_str() in config.c), and also mentioned
+> > this in my blog [3]. I thought I had it figured out, but turns out I
+> > failed one test where core.commentString=3Dauto. It was that moment I
+> > realised that I would need to remember the comment character or the
+> > strbuf in functions. Just wanted to share this in case anything
+> > strikes you when looking at the approach.
+>
+> Thanks for that context. I'm not sure about having a single function
+> that handles both cases. There is only one caller that cares about
+> "auto" and the support for that has so many corner cases that don't work
+> I'm putting a patch together to deprecate it and remove it when Git 3.0
+> is released.
+>
+> Looking at your code it seems to break the "last one wins" between
+> core.commentChar and core.commentString. Also deferring the parsing
+> until the comment character is used changes the behavior of things like
+> "git -c core.commentchar=3D$'\n' commit -p". Instead of erroring out
+> straight away it will let the user carefully select what they want to
+> commit and then die which is not very user friendly.
+>
 
-On 30/06/2025 17:07, Dan Pristupov wrote:
-> Hi,
-> 
-> `cat-file --filter` stopped working in git 2.50.
+Thanks for taking a look! I was experimenting with this to see if I
+could simplify the logic, but I didn't realize upfront how many corner
+cases it would run into.
 
-cat-file did not have a "--filter" option before 2.50. The option you 
-are looking for is "--filters". As git accepts unambiguous abbreviations 
-for long options "--filter" used to match "--filters" but now it is a 
-separate option. Being able to use abbreviated option names is useful at 
-the command line but they are best avoided in scripts.
+> Keeping the current parsing logic and storing the result in struct
+> repository might be a better approach though we should think about how
+> commands that run without a repository will be able to access the system
+> and user config settings.
+>
 
-Best Wishes
+Yeah, I will follow that approach as I did with other patch series.
 
-Phillip
+> Thanks
+>
+> Phillip
+>
 
-> 
-> ```
-> $ git version
-> git version 2.47.1.windows.2
-> 
-> $ git cat-file --filter "HEAD:changelog.md"
-> <content>
-> ```
-> 
-> ```
-> $ git version
-> git version 2.50.0.windows.1
-> 
-> $ git cat-file --filter "HEAD:changelog.md"
-> fatal: invalid filter-spec 'HEAD:changelog.md'
-> ```
-> 
-> The problem was introduced at eb83e4c64b5a3458569593c2ab0c29365f10a82f.
-> 
-> Then it was merged into the main branch by 
-> a271b05066a1fd2c3a62508d9908d6c5df14a1cb.
-> 
-> This seems like a bug.
-> 
-> 
+Thanks a lot!
 
+Ayush:)
