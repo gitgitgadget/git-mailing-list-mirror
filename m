@@ -1,79 +1,72 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DED6235346
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 21:10:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F00614C6C
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 21:23:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751317840; cv=none; b=QQgapJVlcRvhaPylS4fEIb1K8BZpxGLmpnpTyfRMwtoJ5HbkYl5x7bGvdCFNX+NGRyzBQ57qKho1+aOACVNcVCiTG+MY9cCPAZlVyLuycVU0OlFjiz0m3kGJ/MD47ToqJjmG1/jYbohhheDZ51Gq0Unx8IHRn0mnXKD9HXxdGWs=
+	t=1751318618; cv=none; b=EaR/tv182SMYC26Vpp7I60wWZ2IANQ/LXg5udHaaNYTKgjFODzJykl17IzvpwnjvlJ9pJV3gUP215X8lZS8OhGHDWpjdQSjEWTfTGHDkzZJcclg6cVLrc+aGt1pPRK0TDTt438aRx7M8QDgn/TSBqJmMDhjFmi8vfXl4yFlpa6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751317840; c=relaxed/simple;
-	bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
+	s=arc-20240116; t=1751318618; c=relaxed/simple;
+	bh=+bjZseXqB+0YHw7mX863KjWUYKmwEaX7M2VgHSQgm4Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=T4zxhlbkfgH/wXHdfQb9yyhhcVLl/PIh8Mj5Llh8RZX5LpTq8zk0/nEQ9bMI3mUx/OHPzgsMwGw+en3HjsRut1NrXY2I7uw6DizYd/pceOQwPEfP25ag30oJaZ2+mjyiSN3uQXAIB86TnbDHDdV9H5QPLP0od1Fb1nyqhsgcwZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fh5x3Amv; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	 MIME-Version:Content-Type; b=OgIJiJIBfzOzJUoM5SdkDXt9r/cgJFkbWqxWsUUC5Vwqu3FOATVUR6yzlXas49nTAGKlQMScvRBsbG+d8f1vzh9Idgs7ZMuZ4AYeLiDVn58mHyq60KdLwTbGVxNDLsC/ze+jTEAYJb1TtkVuXQMfLIbqECBLI3YlNBf4rlphn3w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EXF3tMB1; arc=none smtp.client-ip=209.85.214.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fh5x3Amv"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2500827b3a.0
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:10:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EXF3tMB1"
+Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-2350fc2591dso45721725ad.1
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:23:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751317837; x=1751922637; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751318616; x=1751923416; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
-        b=Fh5x3AmvTMGNePVrFxLA8aaPWXdQHZyAkRdSscbEBjdRZ7ZLbEitwKZRyFFYHq5Sji
-         Po38v1lesukY7/1krwr5haz/V0D3PyJWAPo6lL11NgM9npM41KufzaLfUWCV7FWdIuGf
-         b8/20LQUqdw3axiIJGDWmhf2dcksgQqLikzK6sPCPGaHZlmZvc0KinCKj05LSf7s5pBi
-         jjz4Tvn8LcrgpX4EoYcfc/Sfhy/5rFDPwG3fhDjpXpBAMcIDuhQ3WCBjd0YGRWxBkLki
-         95dxQRI9rUZHlWKr+rrnQPuUaqq8fjlWwG/Q48ilrUGtT8xuDb7uv1iUNQEVZ0Nui+KP
-         Ulmw==
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=E3WZZ/PRut5pYB6HdpP4W8TAv5VIFmhWyjRfwKuynLM=;
+        b=EXF3tMB1+8A4cNWr9Ly/jAalFFJSKLm6bMnrqQ0aYjLuC5XlBlAU6tSdDGpYvFIxuY
+         nHRB/WmrevG0ifGdYvZpUcXwKsp0xS1G95/0/GvzH3ZKXKsQnFHSqbVs+1DLMspN3EK8
+         UtCayyf5WhoiE5Ui8/QO5rxNpXa4uPoH9af1PpRpascPR76yuLHPsV1BKkJYL8OLXF49
+         wrgVV8vcBLKOGT2NrwBSiq+w/ToA0O4lzYADZK2e//8Mlyrdt+jx/hUoRl14Vxwf1C1E
+         dkHVw1IlqJ0jyWRAidHgC9cwJGqaBYv/tEhY3z/ssWGZicuzAZJJivpGObfHuGZ1XYfT
+         SP5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751317837; x=1751922637;
+        d=1e100.net; s=20230601; t=1751318616; x=1751923416;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=lVmHYIpLfVtetDdr+pOnYFGvY+Qfo18hDZ1+Dw5aTxI=;
-        b=l0tJ8MQ+enz+YqZFgF9pFdlX/Gf9fkLc6HfJ0vZdJn6VUxPMDG2ZYZsglFdEp4QAnl
-         RTA7F0x5XE4y0lAOe5fLlkC8MuhJP/PsAHWdfOhoVvIhoume8Ja4dvOSSRIC/aLrGsaP
-         BX9N5q4lyE0VGx3OrLxtoqhwGNXJPBAMGD7suHdcrE4Tt1svpwTy4kikWfz/ZooBDRgV
-         blTiU4Ia/oVNGkmgVDzyVrKCvIi8guXTICmOFFB9N06X5BSTrICS5gfz6qFZEE5njgG6
-         vssOyy6dbzYZQRy9kGVY9HT5oz7u7Gv/fT8fUaUAklbH6d7472JGgoa4Nnr53Lp2+fIm
-         az5A==
-X-Forwarded-Encrypted: i=1; AJvYcCWjZJ2FbthHK2jMMaogqsd4Nhz4bvzsyKmoZTzf+IY5mw0QoLHhOU9qbEiklr0IWy39au0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfeLiQ7n6YiL7BLMtvOkJo9epJYfKa+uErLE0VcPoVJY7uTxlD
-	uiYn4b6Jx4QbJV7m6UIggiZJsHV/J/IdVu5ZMij2ALh3DchaY+zg8PeN
-X-Gm-Gg: ASbGncuS8P5DLkP1OH9gEuVXUBRt60CLzPHLqBmiQUe4qCE+8stwkQHhcV+tVT2Lxn2
-	fo1XqjvTiWhpjmK5yLXFMn5H9YWf0WD4l/ULyuluLhUyVRd5KmgLzkhcxuCEQ16dRCsjNmNhQxz
-	+NvYDp7oYsE2Pdof2p8bOMITU997t86sg3bSfzmSyGoaq93xLHbK99GBvICDwTA303MNYb0Jo6f
-	DMZ0nqF1fth1CeZsJUG5rLj+IkrIU/h9wu8RoIX+ftv/McmECF8PbWyvu4nND3dfiFLBVwZ8GWt
-	CUuxrkoGIGJEU2B/RVoDmRpEJ2TPWhyxVVMmmd5Mo80Qht4I/4WD0UhO3lb8sG2wue+1cu5cl6d
-	7QX5XAWC0qfqMqbJWEm5ATs3vYmg=
-X-Google-Smtp-Source: AGHT+IE8p1QmvTDIggnVLCBCVxoet2y4weVn19ZVZjxFqE1tFZLf+z9UY2qi6qERs2BIWeNCbMgbVw==
-X-Received: by 2002:a05:6a20:6a0d:b0:220:2da8:325c with SMTP id adf61e73a8af0-220a09125a6mr22190570637.0.1751317837450;
-        Mon, 30 Jun 2025 14:10:37 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b34e31beab2sm8969451a12.47.2025.06.30.14.10.36
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E3WZZ/PRut5pYB6HdpP4W8TAv5VIFmhWyjRfwKuynLM=;
+        b=uQsazSQttr+QNtOyvL76C8QpXOtnVKylZ8RuWcKykmvfUjKWN2ViH1FJgxSxy3kWOM
+         1SggIftsVSn559xw+ERhKwO4vJUyJ8nxsOsDSj7mzGv+aE9PkjeMT+/4zKIsuq8xBYBo
+         zw1HG2dIhOwO/qFV/NndWJBH9unG/zp2srGc+lPzIe+rp5I44WdyQtOrcDSH9l/u1yiu
+         71lndx7m/k6QmfhLexIGKWBdFPouHZIqBAwVtlE+gT+vJ27f0ttmCpSepzUIwbgIKJJ5
+         SatdICesjP8FaEP7Q5pWFhqwgnH8oXwPVlr2auKjCfslZBXqom+N0hAciJBC0TyUuPE+
+         NY8Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXl9UqAXTCqZwpHeMTXpuAEzLjIrtGmF6jSiZzEvcenZr924676uVIwi4HFh0FHnu8PQVI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxExcHmrRjjwv6rIPrZa6likExq8d3O5chov7cVVxGjVF0c8Jjq
+	tuTmlKGSvbeLri7ursrLZpcfucAOkggWi6jJr/otMn6lmpX6sCrX1Kwk
+X-Gm-Gg: ASbGnctOw2z/8dMZ9UEFKUqu3LndFwWn25BlhiFC5ooHQAsaUm7yqgI/TBWMLcBKX9b
+	ehvSC57i9GQd3mbxsR/qNw95EjYZURI31ITu4KKbe7BcjcDU9bWoUuVbf10t0BLxJma1c2KezGP
+	9MLNVgUOX6FjIkiy15ioZAQOzTWKznoN6i3m6I8hd/N/FADy69bWmsmJrGHfRnaEakRWEdwubr6
+	sIAFQXTGgM/n49gIg/0M+OZDryfSgm1GEmeUOQlw59iMUHvgdSV9MJN5cq2XuG9Xkeb/5+jBbn/
+	PrmnbCgrnBSDJ7h9rxtO6YXRpGbBL7P2T0tTGmilIRI=
+X-Google-Smtp-Source: AGHT+IFJ2q/WflTQn73A8nIrpmnIapzkluVvFOTj8ZZPSgLEKCYgC+q7L8aWF05mW8QAfi29VAV53w==
+X-Received: by 2002:a17:902:f706:b0:235:278c:7d06 with SMTP id d9443c01a7336-23b354b9932mr15061905ad.8.1751318616202;
+        Mon, 30 Jun 2025 14:23:36 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::18c7])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb39bcd2sm93679085ad.131.2025.06.30.14.23.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 14:10:36 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
+        Mon, 30 Jun 2025 14:23:35 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
 To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  K Jayatheerth
- <jayatheerthkulkarni2005@gmail.com>,  ryenus@gmail.com,
-  git@vger.kernel.org
-Subject: Re: Re [bug] pull --prune could not delete references due to lock
- file already exists error
-In-Reply-To: <aGKdICvmKlumU0ru@fruit.crustytoothpaste.net> (brian m. carlson's
-	message of "Mon, 30 Jun 2025 14:20:16 +0000")
-References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
-	<20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
-	<CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com>
-	<aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
-Date: Mon, 30 Jun 2025 14:10:36 -0700
-Message-ID: <xmqq1pr1lyur.fsf@gitster.g>
+Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org,  Git PLC
+ <git@sfconservancy.org>
+Subject: Re: [RFC/PATCH] SubmittingPatches: forbid use of genAI to generate
+ changes
+In-Reply-To: <aGL8hubqY35UAaGh@fruit.crustytoothpaste.net>
+References: <xmqqcyalm0mh.fsf@gitster.g>
+	<aGL8hubqY35UAaGh@fruit.crustytoothpaste.net>
+Date: Mon, 30 Jun 2025 14:23:34 -0700
+Message-ID: <87ms9oore1.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,12 +76,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
+Hi all,
+
 "brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Another option is for users on case-insensitive systems to use reftable,
-> which won't have the same problems as the file-based backend and will
-> preserve case properly.
+> I think this seems prudent given the fact that there are 181 signatories
+> to the Berne Convention and even if the courts rule that the use of
+> generative AI is acceptable in one country (say, the United States), it
+> isn't clear that that will mean anything in other countries (such as
+> Canada).  Considering that there's ongoing litigation and quite a bit of
+> legal uncertainty, as well as substantial pushback on generative AI from
+> the open source community, this approach seems like it's in the best
+> interests of the project at the moment[0].  We can always reconsider in
+> the future if need be.
 
-The more guinea-pigs^Wadopters we have, the merrier we are ;-).
+I agree. It feels unsafe given the lack of legislation and lack of case
+law.
 
+One thing, though:
 
+>> +Hence, the project asks that contributors refrain from using AI content
+>> +generators on changes that are submitted to the project.
+>> +Contributions in which use of AI is either known or suspected may not
+>> +be accepted.
+
+This feels more like a suggestion than a requirement. Shouldn't we
+explicitly prohibit it? If we truly are worried about the
+copyright-ability of its output.
+
+Collin
