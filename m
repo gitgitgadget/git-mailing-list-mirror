@@ -1,78 +1,76 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 624F728F51C
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 15:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD4828C2AA
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 15:48:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751297615; cv=none; b=EGtAQNVrqVbk8g2uvYC2eNS3lGiUGK0zIlnJLHAlrusB/f5jbxU9Zox+6dhkJ6mjNaJnaHEg3rbwjfhOPeqz3Lgr15wt2TcmdWh5n4crKvDMbxjeCZOvQZq92Ewjb55L2p/e4CTiGoGGHPAxTmfG0FZ/FM8OV1E2rh/L81+Z4qw=
+	t=1751298489; cv=none; b=uBOZ/XBLKhkZt/AZluz7e+CV47Bb1shKIh6VYBbRshiZoxws2zS3Se+iGmiKyHcottrbc1qlp3mGXCUXLvgWJ4sRNDmgCDaeoM4WjaH0HXK+vhUumkOVb9uvOIv2mGlHzR5YR6inHxm1Ky5++5eeUvRqiVO10a3twLPYNzYlDyQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751297615; c=relaxed/simple;
-	bh=3zyRkloxg8oNBl3QGoD1SSaauwSnu0Kcezf9CN6DzUE=;
+	s=arc-20240116; t=1751298489; c=relaxed/simple;
+	bh=yWpdq7fTo4ofmxeUDeNpW8f9I3i+PY8qk9JIF2k2c50=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KGTxfNlFnfLVkpt7f/VGygW/As+Ee5SmnC5Oxdm851cpHn0wWEjV+nC7o6fOAmdIebYVKtAq80EXa9bkMSOG6f0Jlmod5O+8iFaQXTSaQJEw65ONk8DLSzVfGybfVJqZILfbQc0gnxSZEaEaQGklq8QsRbaUlw0yIp/TZiGxcuM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I5/eQfhE; arc=none smtp.client-ip=209.85.215.170
+	 MIME-Version:Content-Type; b=r+UUBZowPfLy0y5JyGRYCMkD6nP73vO7fDsAmSHY7mXOQ2HIf2oiq2Da5nTZ59hAFNQMgbS9VuRrHug9V0WNLgn9hX9g0QQH1SYahPaV0sy6DiwFdZyYqLsrefiOO8qSi9BCVFl898x80e4GUXj78yuPAIWyWt8EYlxBI10DyGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LyYrGgKf; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I5/eQfhE"
-Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b31c978688dso2863661a12.1
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 08:33:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LyYrGgKf"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-236470b2dceso17428455ad.0
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 08:48:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751297613; x=1751902413; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751298487; x=1751903287; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ZsVi57wJyP95lShxOFkW3l0S1fRtm+sqLaD7OLF8Dp0=;
-        b=I5/eQfhE6CU+w7y5d07uoJ3QMpfxFMj6y5BI0RRGEgMnB0ZMlWDLWmirmVq+QCXBmF
-         Iv3WC9b0CRrHxhLFpny/lTYYaZGSz7cuBQiuVIwHWKE+mbbWrEUI2kFR+gkgLq51RhH6
-         I9AHTCKwykQuCD2X7eA0SVqXfPWD0uddpxnF/bes730kN5IoU4oguFgK1Fn3MfCdrwOS
-         uKu1qry+9AMKAb7nnzRCGEftme5yI3m+d208LAGW3lyDIjNrzsYItRd3h5e+d1e+h0y0
-         IaW0UyYJVjQwIeNDJgcyX1Eh315+fJgV1PzLZnxaLecViYILSe7Eti4C/P9Rtyb0bSoB
-         GU6g==
+        bh=HZQ1k1TIGYjHBySyiCuVN9uZ/Jt/MNdUcCPrzMdsu0U=;
+        b=LyYrGgKf0Z1+0pcoENLyd0J3MpQTDoxFKSDIVLx7I4HpmzxPjPswjli3y/Fwc8UWrV
+         tplqNjtHWal87n90o2inFX6njrWYil149CG21QkRZe+phA9jrVEY1Dh0bdWTMYjRGDTX
+         bHP9MNcM5v3uBrK/1OVqQOmgxNy7vUxEanz2KKksMAO6pK3Qx0Okg2DEDyE8jGbL9e4K
+         6tljIx8gz2+DL9hL824kcXJHDOd/xcFAJ4z/JNKcXsYbSvT3+WHMEyirSdSa+1X572bL
+         INiIbXXtYCXkWqFRbtERyO98z9AVHqKw7yuB4dwsDHhgEP+cVqnfgv52Fs+u77aLs+KU
+         aY0Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751297613; x=1751902413;
+        d=1e100.net; s=20230601; t=1751298487; x=1751903287;
         h=content-transfer-encoding:mime-version:user-agent:message-id:date
          :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ZsVi57wJyP95lShxOFkW3l0S1fRtm+sqLaD7OLF8Dp0=;
-        b=Q/cbWc1QFplx4jDn0cwE8jYDHQ+WOm/iJbfraNLBD2i9cK4LmQs+6JKT4iiwlX7sXF
-         J0RuT6LC6B2Ajw7KGTpUXpcu268mZ/SvynXakc1hxiwB8z9RuS0nmONemnZmseh9D9pe
-         hLuhVzjncm5QFzQquHCHnMcM5Fsldtzq4y0xTqI5GJIndPuQYIRlO85nO9TgKxNZNffT
-         acVmNl1IOqKclH7XyaCFXcmugE3prdvQJ6QDyqwMwSXJmKyArahBkZfzQlOzrh6cuVk5
-         EHKSeaEU+SXdq3fFRZexGbF4yAYJIRJFtpmDiIUbGHpJ9x67j67AE1pIXdWhPXbQ2LX9
-         VkPg==
-X-Forwarded-Encrypted: i=1; AJvYcCXA7TB0pZzBjJY1uRyuu6+7g3WmeNU43B3kE22y6ucnKMKhCafitiNMFbMTfrQJoRvCdmQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz7pi7w/A0VcMmVdp+Y/pGi3MFSGJLC1LwOzqt/o3tE9E9t/q0i
-	bHc89iZy1/goooZ38yVPKryhKK+a6CKP3Yt3hfEhUz718eURxOYNVRL5
-X-Gm-Gg: ASbGncsfN15+PuOvUQ69/5/qEUc7WvGxdaMsHM8Y6rvHHayzLx4qUZGUWjxMgzGXqjx
-	vOIr3iTqcwo7xTX66hOqQrKo++8tEpSqBjUPBZ/tZV7RiIZjUTuhjxm5yheKWmBDVFTZqySNU4G
-	kXm3Ij2rF9QmShA5GEHX13gB98r4KClkEVWuUxx3GuOGHAQXDSA1LDyYNNY1Q+ZcrRTj4xdc39s
-	sH4F93TlGbtFZ2FI5hsOHH9u+qFn6mh0pJGmVpxa8H7d0gs2ZDOnyvK/3Tt0gUK/9OjUGHrqtq6
-	wgluLlc0QC0mh+iHhZohs4uL5E2dWLQNsv869AjEIqNEyuUi1jYNwysJBdHnGF89qimdEQRMG0A
-	Q0DDF8cKc/+9QuOFnO0WsLwOrGt8=
-X-Google-Smtp-Source: AGHT+IFB+Ry6TxBm4/67CnW3Nw/nSa9bpEh3TG3XGybgRCO3HFwOQd+slw/exwqPaxBU4D0xkmF14w==
-X-Received: by 2002:a17:90b:2e0f:b0:313:bdbf:36c0 with SMTP id 98e67ed59e1d1-318c8cd2734mr23596637a91.0.1751297612583;
-        Mon, 30 Jun 2025 08:33:32 -0700 (PDT)
+        bh=HZQ1k1TIGYjHBySyiCuVN9uZ/Jt/MNdUcCPrzMdsu0U=;
+        b=lYJBJ3LnkUKphcEbp2FV5nrKqcRWXIz3ZDBmNQoVP0K9unGZa1miU2wmOUEm+A3KFw
+         c8W1VFiRVKuzZfRmfKiHnIEchlUTvj+64vXorddq1aWXZB/K93AN3gWI85W0Ck/BvZZv
+         6iKRskDdZk8YBY81TmnykVUC6fwJGLUwz1mBcbPsgYggMiLTSaVOPmi4wiMQ9a3xWYRm
+         RtnzEWmH09JHVnCPpGce5YjKNKbiN+2iHpG3OwudgJEy1d8M7x+oyeX9AgbZPYFq+M/4
+         9eY1N/XsGY/EF/DRrdFP2xxUSX1OsgL1uZF4ZMGliBRy+NBzwS4Mrl854r/QOu9dUhNh
+         ZDSw==
+X-Forwarded-Encrypted: i=1; AJvYcCVB3HaJxt16tcuQ4qGw9BI3YuRWLdmV5YhcU/kisPNVA7fvYEuhU2omBuyq8Hjh1ZDvO/8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw3KQsh59Fl5bcFBhESudbNPT37aNrUcEkJYYlEgKfKxcO7Yx8B
+	9+/soJVNfU+zvyKMZopq556VbzQ454qDXoqMkJfm9g+qtYqJr8YCPJYx
+X-Gm-Gg: ASbGncui30Hur3Iyl31xVgONYXtbmIE5ZBLTrYVJQ3i79xn/IWt0GzlN0/bhj7kcMcw
+	wTD9FQZ/Yd8O6eGplw/sE4RTPb01Dc20AMVYB47j0aBOWfmpyqh1iQdNwTAHRONwnmbUAYvmsfE
+	BN10fI8wpmGmtsRmioXQ5IV9igmrV/zvQc5LyD1PY7hjOnON2mcFI8O0BA5sIhAECl0x/loPLHN
+	cJEyW2XG0yriOd3g4pqgvYO+oV5wc2nOagILWsikcyA7slCoPVWlNMuFKojKYXhrKJn2FarMxY4
+	6T2XR4Ck+dEQOXgjwPunxPJVEyNW3+hqsHQ2rHivtOp/yWzLsZob8VHNLICtPCxJfMThbCg224X
+	Tq+7JGiXQTNiXx7loioYIHvk1itc=
+X-Google-Smtp-Source: AGHT+IGTGDBOwwPRI++vXT+uO2cBnTmvSY9CVUIcK1hQ+14prLqPkCcPHEcPJfozmwhL1TIR+oefKA==
+X-Received: by 2002:a17:903:2ece:b0:236:9dd9:b75d with SMTP id d9443c01a7336-23ac4606753mr242404735ad.40.1751298486701;
+        Mon, 30 Jun 2025 08:48:06 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3afc70sm85554805ad.146.2025.06.30.08.33.32
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2e32d3sm82090285ad.8.2025.06.30.08.48.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 08:33:32 -0700 (PDT)
+        Mon, 30 Jun 2025 08:48:06 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>,
-  git@vger.kernel.org,
-  yoshfuji@linux-ipv6.org,  kristofferhaugsbakk@fastmail.com
-Subject: Re: [PATCH v3] daemon: correctly handle soft accept() errors in
- service_loop
-In-Reply-To: <0d507273-8b8c-42d9-a14f-27a5da0dac27@gmail.com> (Phillip Wood's
-	message of "Mon, 30 Jun 2025 10:00:17 +0100")
-References: <20250626172159.87204-1-carenas@gmail.com>
-	<20250627231404.27100-1-carenas@gmail.com>
-	<0d507273-8b8c-42d9-a14f-27a5da0dac27@gmail.com>
-Date: Mon, 30 Jun 2025 08:33:31 -0700
-Message-ID: <xmqqv7od452s.fsf@gitster.g>
+To: =?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Cc: Meet Soni <meetsoni3017@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  shejialuo@gmail.com
+Subject: Re: [PATCH] doc:git-for-each-ref: fix styling and typos
+In-Reply-To: <20250629110652.123890-1-jn.avila@free.fr> (=?utf-8?Q?=22Jean?=
+ =?utf-8?Q?-No=C3=ABl?= Avila"'s
+	message of "Sun, 29 Jun 2025 13:05:31 +0200")
+References: <20250627074934.1761897-2-meetsoni3017@gmail.com>
+	<20250629110652.123890-1-jn.avila@free.fr>
+Date: Mon, 30 Jun 2025 08:48:05 -0700
+Message-ID: <xmqqjz4t44ei.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -83,58 +81,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Jean-Noël Avila <jn.avila@free.fr> writes:
 
-> Hi Carlo
+> This commit fixes the synopsis syntax writing and changes the wording of a few
+> descriptions to be more consistent with the rest of the documentation.
 >
-> This looks good
->
-> Thanks
->
-> Phillip
-
-Thanks, both of you.  Shall we mark the topic for 'next', then?
+> Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
+> ---
+>  Documentation/git-for-each-ref.adoc | 30 ++++++++++++++---------------
+>  1 file changed, 14 insertions(+), 16 deletions(-)
 
 
-> On 28/06/2025 00:14, Carlo Marcelo Arenas Belón wrote:
->> Since df076bdbcc ([PATCH] GIT: Listen on IPv6 as well, if available.,
->> 2005-07-23), the original error checking was included in an inner loop
->> unchanged, where its effect was different.
->> Instead of retrying, after a EINTR during accept() in the listening
->> socket, it will advance to the next one and try with that instead,
->> leaving the client waiting for another round.
->> Make sure to retry with the same listener socket that failed
->> originally.
->> To avoid an unlikely busy loop, fallback to the old behaviour after
->> a
->> couple of attempts.
->> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
->> ---
->>   daemon.c | 12 ++++++++++--
->>   1 file changed, 10 insertions(+), 2 deletions(-)
->> diff --git a/daemon.c b/daemon.c
->> index d1be61fd57..9ac9efa17c 100644
->> --- a/daemon.c
->> +++ b/daemon.c
->> @@ -1153,11 +1153,19 @@ static int service_loop(struct socketlist *socklist)
->>   #endif
->>   				} ss;
->>   				socklen_t sslen = sizeof(ss);
->> -				int incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->> +				int incoming;
->> +				int retry = 3;
->> +
->> +			redo:
->> +				incoming = accept(pfd[i].fd, &ss.sa, &sslen);
->>   				if (incoming < 0) {
->>   					switch (errno) {
->> -					case EAGAIN:
->>   					case EINTR:
->> +						if (--retry)
->> +							goto redo;
->> +
->> +						/* fallthrough */
->> +					case EAGAIN:
->>   					case ECONNABORTED:
->>   						continue;
->>   					default:
+It is not making anything worse and all the changes I see here
+(except for a stray SP slipped in) are for the better, but it is
+curious that this stops halfway.  Things I noticed:
+
+> diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
+> index 5ef89fc0fe..c2b2660771 100644
+> --- a/Documentation/git-for-each-ref.adoc
+> +++ b/Documentation/git-for-each-ref.adoc
+> @@ -8,13 +8,13 @@ git-for-each-ref - Output information on each ref
+>  SYNOPSIS
+>  --------
+>  [verse]
+
+Eventually we would switch to [synopsis] I presume?
+
+> -'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
+> -		   [(--sort=<key>)...] [--format=<format>]
+> -		   [--include-root-refs] [ --stdin | <pattern>... ]
+> +'git for-each-ref' [--count=<count>] [--shell | --perl | --python | --tcl]
+> +		   [(--sort=<key>)...] [--format[=<format>]]
+> +		   [--include-root-refs] [--stdin | <pattern>...]
+>  		   [--points-at=<object>]
+>  		   [--merged[=<object>]] [--no-merged[=<object>]]
+>  		   [--contains[=<object>]] [--no-contains[=<object>]]
+> -		   [--exclude=<pattern> ...]
+> +		   [(--exclude=<excluded-pattern>)...]
+>  
+>  DESCRIPTION
+>  -----------
+> @@ -35,13 +35,11 @@ OPTIONS
+>  	beginning up to a slash.
+>  
+>  --stdin::
+> -	If `--stdin` is supplied, then the list of patterns is read from
+> -	standard input instead of from the argument list.
+> +	The list of patterns is read from standard input instead of from
+> +	the argument list.
+>  
+>  --count=<count>::
+> -	By default the command shows all refs that match
+> -	`<pattern>`.  This option makes it stop after showing
+> -	that many refs.
+> +	Stop after showing <count> refs.
+
+This patch would have changed this to _<count>_, judging from what
+it did elsewhere.
+
+> @@ -50,7 +48,7 @@ OPTIONS
+>  	multiple times, in which case the last key becomes the primary
+>  	key.
+>  
+> ---format=<format>::
+> + --format[=<format>]::
+
+Stray SP in the front?
+
+> @@ -100,10 +98,10 @@ TAB %(refname)`.
+>  	Do not print a newline after formatted refs where the format expands
+>  	to the empty string.
+>  
+> ---exclude=<pattern>::
+> -	If one or more patterns are given, only refs which do not match
+> -	any excluded pattern(s) are shown. Matching is done using the
+> -	same rules as `<pattern>` above.
+> +--exclude=<excluded-pattern>::
+> +	If one or more --exclude options are given, only refs which do not
+> +	match any _<excluded-pattern>_ parameters are shown. Matching is done
+> +	using the same rules as _<pattern>_ above.
+
+OK.  Doing the literal `--exclude` for options in the description is
+left for future patches would not make it any worse, and adopting
+_<placeholder>_ convention makes it better.
+
+>  --include-root-refs::
+>  	List root refs (HEAD and pseudorefs) apart from regular refs.
+> @@ -131,8 +129,8 @@ refname::
+>  	`refs/tags/foo` into `tags/foo` and `%(refname:rstrip=-1)`
+>  	turns `refs/tags/foo` into `refs`). When the ref does not have
+>  	enough components, the result becomes an empty string if
+> -	stripping with positive <N>, or it becomes the full refname if
+> -	stripping with negative <N>.  Neither is an error.
+> +	stripping with positive _<N>_, or it becomes the full refname if
+> +	stripping with negative _<N>_.  Neither is an error.
+>  +
+>  `strip` can be used as a synonym to `lstrip`.
