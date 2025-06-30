@@ -1,73 +1,74 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D24919994F
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:34:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5806D19F130
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:47:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751308478; cv=none; b=ZgwL60wC3duSNc1QNCEx5Ne2fZy/gedvPbbL6/Jrd92dja57m1yXfraLfiwBB/zGAH+C32WT4j70f4n/eUuT59m/7IHAnGk9i6XIRTCIBO5xUnTQEkGyNUt4tQ4g1yZX/NonYKUxqAnEO+dXn+agleyDSCcZIkrV6RKKJuWi7Vo=
+	t=1751309269; cv=none; b=DT8IvdGNpNgCKtC2sZgZ0y/MTsLLgwXX2l/yDUs9ljDwxE3cAzOuVQdp6fpjSMhKyPEp6SmQTVbFPWVQLICkcH1Zi9DU2zZwqOOUEjSRDxHkLlm/9rZa+Tls2NPPPhj4bTfJUYfo9ba4p0L/vHxYofblOvCMsCQ9YoajQsaZdlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751308478; c=relaxed/simple;
-	bh=iUvUZaFZom4XexO6aXjdLvW5KwYmIVEQ9kf9+jpdZN4=;
+	s=arc-20240116; t=1751309269; c=relaxed/simple;
+	bh=IMgBdvmZI40Abg3ff7DqFtKa74ReuW0RD+vJC90NrQs=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AHaUj5g5WCMRFs737SPCnqkEaLiJI+Cqr3CVJtwGJbwsFbejPIztmrsyhGn5N9p7MVWFNuB0eOkoa9c4DigVFls45O2U7/1m7aMVpgQADveC+dWUN9ln/V3dHQCYlRmO6rparb7tzg0mag941ZMgBXUcC0/G5HUCKhw4ipxB1HQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C1xVBBZi; arc=none smtp.client-ip=209.85.216.47
+	 MIME-Version:Content-Type; b=kON4r1vJs1UkZ1NG94FDijhNmtYgP0aWcSyOMXpkk6mLT5sKyxNrYdTIOTwSxlNJPnd+UQ5sKWMG+lmXZ533fInGY07iALclIRkGZ+Nmaw7IE+Y6Q6GmfR5XfR857kogedN3riDepewJsUOy4riqj+wEVCsZ6jqyvxnh/hZudOk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TnmYQW2K; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C1xVBBZi"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-31332cff2d5so3943085a91.1
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 11:34:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TnmYQW2K"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-235ef62066eso57889495ad.3
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 11:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751308476; x=1751913276; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751309268; x=1751914068; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=PLn06do0uvlX1H2dHPiCwUaMfux7lpPmXAzwBPnyDvk=;
-        b=C1xVBBZidJ+9RKm+okynNMk4JTg1MpxEu28ttqW/4sx4dFv4fm2bYTyoqTz59ZZ10o
-         mzZTxa3lTUobV/2/LIzd8sMhbWuy8vTIxTbl1cvEG7Tv7WpDS9eP1TH+Rl3FXeyxvWZo
-         9W5taG20+9MZ5lPvxNQA+tJ5Tn+q3U16hZQGz25nEufnGyCSrGH0LNSh9RLMXUsgneTU
-         9guRiqldEM9c66P+9usfR/UaRjg0DqnCVFvKnYyphpDYI6ZEJdoE1ORfiOyOmXcor4tO
-         zGmd6Vx6oaz9OKwqMqH+wGN8lPPDswk6b1hyVjwRortNkuNqY2196966hHHcO27CVbEQ
-         dHww==
+        bh=NWDochB/wdko9TC+nNi4l/p0lqmfqr+n3i7RIOxrIaA=;
+        b=TnmYQW2K+eOmN0J7DGop2OK8Drhgxc4J8QL3KJkRfE0/yZY9HlurOm6TH+lbwOYu7y
+         Yd6c1sANOTnvQKKy0kcgTpOh0AAKOKs/DYKnDJP3YgxAwZmf8toxLBiN3vzgvR8wQi6a
+         c+2wdS2Gz9Dbi1x225mmQDNlkTx70U3T9akiDkwdu/8SLDTC0MxLjNjUB4qS0RL8tDcE
+         VMCmfiegLc1K5ntB81SjCyuiR8xXJjzV589cRX5gf2jRbdJrNR11yEnXslEVBVgIpxpH
+         TmwexmjosZrsvYaVWTOxL4acZxpYHSISmi4bIE860GJginorcSm41cTx36aNK0oooWbz
+         TaEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751308476; x=1751913276;
+        d=1e100.net; s=20230601; t=1751309268; x=1751914068;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=PLn06do0uvlX1H2dHPiCwUaMfux7lpPmXAzwBPnyDvk=;
-        b=M5VGEFvfybOAms8MKkJzrRKozO56EdaNA5gqRh9JLPPxQadA55JbtwRRlxFkTB3tvk
-         XQJpDjZvWGKCqnN5Nf5YArh3MmoB+EVyuE4nCPTvn4nVcamQb1yoY2b/EJkkRWkMQxKe
-         ExWQL4fT25Kft1mfHGH8sDozJUxkD+58bESXGWDO8v0yZNrLDb6OuEpX8GWDkZafl2FB
-         4CS8i6Vtir2D51glBzncrzVj62L+gnoSXbDxVkKr+5CH7hQXECq/ifggSmE5sqWoZRYI
-         mf708uk4Vpj9ruHVJe9j3/FgYOTA0Ls8dhM9BQM0mP+L1Xzk6tqIdD93vHinB0yB10nM
-         hEVQ==
-X-Gm-Message-State: AOJu0Yw7mM3cHG3TGL2u2sfRD9JFGXNYzywAk70i4SlGN2rF/PUHcEe3
-	0FBG9U0Tslna9gAK0ItrWUds/Ir+q50QZEfRQWxHLvazuZRbHF2J8wTh
-X-Gm-Gg: ASbGncs5Zu/dvOGvLLxwaSxdTbp4f8OSGeh11tVYvc9aQww3fcSh79GoKT+47IyJfIE
-	TZyzSFbpyCz1CJsbhbRHjvayMqnJoB/Zv56EUPivtXBSLS2s/KxHKci0QYmsPr1yMQI5VoHNav3
-	rUqpEXNafRj3s59Xl0JR4X9OUDfMQZw5gzLYoBmU3ZEceFmwTtRG3bp7oy/DZ0jqbu9v7eloAUV
-	lDYLkHh5i+lG4ZX/ZMjc9dqwdQcP2zmu1LRwHlNhF0S3O3FkfK+SbATBmMbJgwUcOmg3gOn+31p
-	/U+qpAPaEXvHiDbg9OIMkZibIyKJnoyryGtL4pmXmndAAi+4yoOUOgYveCkVzI5SoDsbiDf+hjk
-	lHsFk8WtWP0Fw5GQh4bdql04PzA0=
-X-Google-Smtp-Source: AGHT+IGN6LTNH09CM4VPjRQq0QuLRn3nep6NyBIFs+L5/8mErlshX77hObDtcU6oGmlfRkoKruUalw==
-X-Received: by 2002:a17:90b:2f8f:b0:311:a54d:8492 with SMTP id 98e67ed59e1d1-318c910de41mr20798819a91.6.1751308475582;
-        Mon, 30 Jun 2025 11:34:35 -0700 (PDT)
+        bh=NWDochB/wdko9TC+nNi4l/p0lqmfqr+n3i7RIOxrIaA=;
+        b=omGlviNE1RzSjnEP/yPdMSKmrub3BnYM358VPSJnrLlko1HdAndtJKWpfsxFH+JMjh
+         455o9A5l/kcu/UCJ9pq5lW87lDus0Hwe1eHCn8DCdUYQUH4lZxuFx+cLCy+DPeZO1tDF
+         tWLkplqBVG96MnnzHtJEoel8I/gRrfqZ0qMmwnKLDquD+qCB2gSz6cUFjyMj+oJOAWy+
+         Dn2PajckPD3/+A6tKe5vXpwCi55ZVDifGWePO1lMBP29VA3V4SkkJV2C4ksgpCa/qY4C
+         qtGOf6pDnsp3wNj7EDXuXNCoOepFrJj+UaaoE9E0DsqYXeau7Tj5pMJOeEczYc1KIX/3
+         cbKw==
+X-Gm-Message-State: AOJu0YxL3j/iywTuyR3V7gwDaulaKaGH4r3Xuz8Tbdh90bfvxroY0Kdq
+	rMD/4BeaKRDlAnZpFJ1IOIbj9l6ruzLxoHGCPx0ero2gSm479L8oJjvP
+X-Gm-Gg: ASbGnctBdLlTJHXyhe/vAdaXDTamPvAaDjbWVckTZ3BqnIpe350V4C5Hb/y7pTOR8fa
+	ghNHSI+rDOwQLJxW4znbATOZbMt6BrJVV3oSt3QYXzSi6OD76+Jyv2MrUZ5BhZfgJDHUdpVXNKL
+	46NdX69acx/l96O6FXf4W9qJVXdBuYrp02WQ4V91rewrTb0hfsYezDlO9ecRcxgmmbHgVe+Chgu
+	vWy5Cg29dLCoEvYBMuRIVLZ8ffe/NLS9foIifeT0ot0M0Vr8WeTL7ImZLXhYt0kCMipzEXhvHb8
+	CKNLAp/liyLIVpuWEM3INZsjCBOrQmcoyO0Q1zXS4e+adtRbG68BJvLECV6/7Wc1XIyVqUgZmBn
+	Nh1NN46hm0LSuBM2NSlMsW0tuKJA=
+X-Google-Smtp-Source: AGHT+IGRUqSotnzEYcE9QHx7PtIWubRbpgx/fcjMc4ljQ5bpN4lzsalSs3/RKFCC0PPIgdG7wsNYPw==
+X-Received: by 2002:a17:902:db02:b0:236:937e:633a with SMTP id d9443c01a7336-23ac19c79c7mr230609215ad.0.1751309267522;
+        Mon, 30 Jun 2025 11:47:47 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-3193a3a2474sm169316a91.0.2025.06.30.11.34.35
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2e77f1sm86863385ad.17.2025.06.30.11.47.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 11:34:35 -0700 (PDT)
+        Mon, 30 Jun 2025 11:47:47 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
 To: "Raymond E. Pasco" <ray@ameretat.dev>
-Cc: git@vger.kernel.org,  Johannes Altmanninger <aclopte@gmail.com>
-Subject: Re: [PATCH 1/5] apply: error on --intent-to-add outside gitdir
-In-Reply-To: <20250628225819.1294068-3-ray@ameretat.dev> (Raymond E. Pasco's
-	message of "Sat, 28 Jun 2025 18:52:03 -0400")
+Cc: git@vger.kernel.org,  Ryan Hodges <rhodges@cisco.com>,  Johannes
+ Altmanninger <aclopte@gmail.com>
+Subject: Re: [PATCH 2/5] apply: read in the index in --intent-to-add mode
+In-Reply-To: <20250628225819.1294068-4-ray@ameretat.dev> (Raymond E. Pasco's
+	message of "Sat, 28 Jun 2025 18:52:04 -0400")
 References: <20250628225819.1294068-2-ray@ameretat.dev>
-	<20250628225819.1294068-3-ray@ameretat.dev>
-Date: Mon, 30 Jun 2025 11:34:34 -0700
-Message-ID: <xmqqfrfh13k5.fsf@gitster.g>
+	<20250628225819.1294068-4-ray@ameretat.dev>
+Date: Mon, 30 Jun 2025 11:47:46 -0700
+Message-ID: <xmqqbjq512y5.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -79,43 +80,47 @@ Content-Type: text/plain
 
 "Raymond E. Pasco" <ray@ameretat.dev> writes:
 
-> It makes no sense to register an intent to add outside a repository. We
-> should error out here.
+> There are three main modes of operation for apply: applying only to the
+> worktree, applying to the worktree and index (--index), and applying
+> only to the index (--cached).
+>
+> The --intent-to-add flag modifies the first of these modes, applying
+> only to the worktree, in a way which touches the index, because
+> intents to add are special index entries. However, it has not ever
+> worked correctly in any but the most trivial (empty repository)
+> cases, because the index was never read in (in apply, this is done
+> in read_apply_cache()) before writing to it.
 
-I am not so sure, especially if you still keep the original "if we
-are using 'git apply' as a better GNU patch, ignore -N" logic.
+As the inventor of "add -N", I think what "apply -N" does may be
+wrong (only judging from the above description; it's been a while
+since I really read the code in apply.c).  It does not make any
+sense to write a new index that has only the ITA entries.
 
-Not that I am suggesting to also error out when -N is given without
---index or --cached, that is.
+> If we merely gate read_apply_cache() behind update_index, then it will
+> not be read when state->apply is false, even if it must be checked.
+> Therefore, we instead read the index if it will be either checked or
+> updated, because reading the index is a prerequisite to either.
 
-I think the most problematic is the claim "it makes no sense" is not
-linked to the conclusion "we should error out".  The behaviour of
-the original code, and the behaviour of the code with this patch in
-"a better GNU patch" mode is based on "it makes no sense in such a
-context, hence we just ignore (instead of erroring out)", which
-makes perfect sense as well.
+Makes sense.
 
-> Based-on-patch-by: Johannes Altmanninger <aclopte@gmail.com>
+> Reported-by: Ryan Hodges <rhodges@cisco.com>
+> Original-patch-by: Johannes Altmanninger <aclopte@gmail.com>
 > Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
 > ---
->  apply.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
+>  apply.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
 > diff --git a/apply.c b/apply.c
-> index 8bbe6ed224..e7856ae6b3 100644
+> index e7856ae6b3..1757d34618 100644
 > --- a/apply.c
 > +++ b/apply.c
-> @@ -174,8 +174,12 @@ int check_apply_state(struct apply_state *state, int force_apply)
->  			return error(_("'%s' outside a repository"), "--cached");
->  		state->check_index = 1;
+> @@ -4837,7 +4837,7 @@ static int apply_patch(struct apply_state *state,
+>  					       LOCK_DIE_ON_ERROR);
 >  	}
-> -	if (state->ita_only && (state->check_index || is_not_gitdir))
-> -		state->ita_only = 0;
-> +	if (state->ita_only) {
-> +		if (is_not_gitdir)
-> +			return error(_("'%s' outside a repository"), "--intent-to-add");
-> +		if (state->check_index)
-> +			state->ita_only = 0;
-> +	}
->  	if (state->check_index)
->  		state->unsafe_paths = 0;
+>  
+> -	if (state->check_index && read_apply_cache(state) < 0) {
+> +	if ((state->check_index || state->update_index) && read_apply_cache(state) < 0) {
+>  		error(_("unable to read index file"));
+>  		res = -128;
+>  		goto end;
+
