@@ -1,129 +1,132 @@
-Received: from mo4-p00-ob.smtp.rzone.de (mo4-p00-ob.smtp.rzone.de [81.169.146.220])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6040428C2C7
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:20:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=81.169.146.220
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751293207; cv=pass; b=rmCi+vIruqMNaAIuNiU6rIJz1Pr1F4HPwZWV5/5TKXjYj+zV8GUSPP8nWgxB50R//2RQt4zKbZ6m759gQRQAPSKXjIqtE/aSDH95vgXvUYJeoiocWF21s7l7/tDbtZ0Ak1gxW0ELCFF+AWXHeUtDjtCKU8g9V6FCH4tSqrX3xow=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751293207; c=relaxed/simple;
-	bh=mMDYoX0dVZaz5UKJhCcKzBWEPPcmk/4m/ByLDeyYpGM=;
-	h=Date:From:To:Cc:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=upqc9d4mu6SZ1AcPtY5mSQZOsUNhTEPZpk7Oe11jL83iT/hhyKI7WPw1jC1TUhZgy1ceX/l3knt/wDrshuMxlO85ew8fi4Slm2+M9MI82CwGS2mrfw2Omov1znoVHlW5+OJMFXNLu/7LdxudJrB2zioL4FFvmngZNzvHnkAFcKw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=aepfle.de; spf=pass smtp.mailfrom=aepfle.de; dkim=pass (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b=ds0xlOgy; dkim=permerror (0-bit key) header.d=aepfle.de header.i=@aepfle.de header.b=kE56o0ME; arc=pass smtp.client-ip=81.169.146.220
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=aepfle.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aepfle.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07A0E25B30D
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 14:20:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751293227; cv=none; b=DQi85pQcTlA+Esx48C3mVmIQB1acL5YWEg2alyb5AZ0pd27CFpX5RJhtTlyHmWZqS0nwrhd1Jul2BWq06vDCX2H3LQ0skQ2OZ/9To4q0wfNGj0UjxBkcFZPCGqViUAHy9NaY/gYgCsFIkerUakzWMFUJpVGvcMxWehvbetOa6FY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751293227; c=relaxed/simple;
+	bh=zCJSZZEa5NkJvVNUMJX14BdootngG9zGbxKJIq6dYwQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GrtoEUtt8KZ4x3EaPWsDejLz/tWbeISsxRMFpojUMT3D04GxWrfPCzPq+R7eTpctfdncjK5Dv9qhAmboipCbeiXGgE29VDxPlua8HpgzPSfysfZcj2Qfu8h31237h1sdU5unoRJrvw+3RkrsGorUT/6Anbl/Ydb0FDT/SbLatwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=WQj6FSRu; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="ds0xlOgy";
-	dkim=permerror (0-bit key) header.d=aepfle.de header.i=@aepfle.de header.b="kE56o0ME"
-ARC-Seal: i=1; a=rsa-sha256; t=1751293202; cv=none;
-    d=strato.com; s=strato-dkim-0002;
-    b=M3q9JZA3SeIsrOJ0QHP4nDU869PCQl2jOtwRsuK4BYEXJN6yKLEntIN10f8snYd494
-    ckD2RsHcv1HuxYn2fkJwGW+2hXFyOy6fmjVOKR0LzEY5wv3xInp3/S136twYQQ4VsqX5
-    a33AHw/FiZOIVni5/qHioMqU2ohG4RJ0z+nbCGe5JjbSHC63ZaGJ44nktn2W290pEiea
-    IxFLKsdMaUgorZSGiprQq5GFwQIqn6uV146LwoFH3L2NocCZEfB7QdTAIWqJJXnsHtGV
-    HsCq7bjYh9Em+U1CC8I9gTo3qRsK3Rq11OuJgFEid3C+KKnisyOsjpiRLokNSYS20+sE
-    yWfw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; t=1751293202;
-    s=strato-dkim-0002; d=strato.com;
-    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
-    b=fTdi5m4nen/kQtSAcKgOC8BPjUVbTMVlm4muwG/BGoEycZi7Zx5p3+6EWvFIqOWydx
-    InGlnLEPF76qJradXu8o2omR17yi+StltUYOP23OIliw63G2C7BsM6Paszwwgrx+3Ik+
-    nD+jF2vS/vbTFKPQLbDqUy3Rzos/8QokHwsNG5WvfH4GaDvW+/M/DlG8cLU0wjAnt8+M
-    qy1rWluFXlAG253erU1mMqcJbON03+HuIoY0udg5Yq6KDYiWPXmfU3Ag5/1snzCBg9FM
-    zcQs0AUI5QBo23peUoeFaI6rpzBSboTXzIU4lGs8y/yMdJHD9sNfKZK1cDCMaHzYEoJw
-    J21A==
-ARC-Authentication-Results: i=1; strato.com;
-    arc=none;
-    dkim=none
-X-RZG-CLASS-ID: mo00
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1751293202;
-    s=strato-dkim-0002; d=aepfle.de;
-    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
-    b=ds0xlOgyAOELscJCKQ1nm2cNbFPHgUuuWCxsqHQ7myU/eQ5UZf8a1INz83oFj39Dmm
-    njEA/BHdMxmxowazwrNldoETdOyLR8E2LUNAuRlXbBc7xUiwm0qjGMLJyuGiR7AW96eb
-    y1Gz/DbPl+44uerKhIWTVPupAoX8W2GIjDK5kIVw254hFUgt6ekuxf8ODysgRe1TxVki
-    lGSnntjI5oLtt8buWdk9eKHUPKLTlSeLSt/pWN20n/6dnespoJHtzYlWnePcu/RpFfO+
-    yNXfYKTuzhTu2jLp3yqxt9r5FjUVkEMspiKPJNAOn/EOKFKknRM3IcXZIsCTGGh0RAPO
-    t/gg==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; t=1751293202;
-    s=strato-dkim-0003; d=aepfle.de;
-    h=References:In-Reply-To:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=GmiuvPrA9SlTzBOfb4MGue9flV1jwpn+9YTOotrNrK4=;
-    b=kE56o0ME4Lsrjx0VHWA2I9OFEsqmSdzS+QeIrvTgBrUdcrWRUEqXhg58MdkY+udE46
-    SbbDgJje47ksF3L4XOBw==
-X-RZG-AUTH: ":P2EQZWCpfu+qG7CngxMFH1J+3q8wa/QLpd5ylWvMDX3y/OmD4uXd0fmzGoJ8rBK6cWAVfDMmnI2IZ8kj8s0jE6n+P5L1"
-Received: from sender
-    by smtp.strato.de (RZmta 51.3.0 AUTH)
-    with ESMTPSA id D2e95d15UEK1Eou
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-	(Client did not present a certificate);
-    Mon, 30 Jun 2025 16:20:01 +0200 (CEST)
-Date: Mon, 30 Jun 2025 16:19:53 +0200
-From: Olaf Hering <olaf@aepfle.de>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: changed output in git branch -a
-Message-ID: <20250630161953.3824c610.olaf@aepfle.de>
-In-Reply-To: <xmqqsejh5pam.fsf@gitster.g>
-References: <20250630121839.6252d9d9.olaf@aepfle.de>
-	<xmqqsejh5pam.fsf@gitster.g>
-X-Mailer: Claws Mail (olh) 20250514T101025.84a10d9e hat ein Softwareproblem, kann man nichts machen.
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="WQj6FSRu"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751293218;
+	bh=zCJSZZEa5NkJvVNUMJX14BdootngG9zGbxKJIq6dYwQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=WQj6FSRuAzqihNKCBM9FwZ8VLjpGqp/JZ5S+UNWXDe8tsgTVpYhPLsIVMZRcWSl3D
+	 uD5irGwlnCNWznKBlmi9bdyzathkdZ3qwcaZrZrOZDGWwXAf+qcborty6IN2XY0GFn
+	 SjaTx1GnKbG87yiL6xH3x++HIG41Uu90R+xr4FYKwx+T6b8IfgfmloTo1jpRQxB/R2
+	 Fe632U+Oh3QcqdkEGE7krOUEqLL/nGZpq0ZJUzvw0kjH/MKhqzXg1mwUQ9smbx7t+X
+	 1fHjZQYb1s+W3gBh3S/XhdvumGRf7PXrDzFch1kEoqH3/1x5HYBBuQl28uW4C+aXGq
+	 utBwEE8HPypKBBIYGvIpuNM7MrbPfuEKSo/0YKNTHR8PztaqQ4ArBsmbz38IUjm5gF
+	 QiOplm5+aPZI+OtX9Y5CFm5RlxkPt+NPK5GrFt+CL0lnE8Q3Sy9d07Uw6jVf1QJvXJ
+	 WeBQNxLxQugFneRjbBYxZZZU9PwnPg6/v+CJFe+NXpFmyd2mq1I
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:8741:7f1a:929:ce34])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0070420067;
+	Mon, 30 Jun 2025 14:20:17 +0000 (UTC)
+Date: Mon, 30 Jun 2025 14:20:16 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
+	git@vger.kernel.org
+Subject: Re: Re [bug] pull --prune could not delete references due to lock
+ file already exists error
+Message-ID: <aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
+	git@vger.kernel.org
+References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
+ <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
+ <CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="Sig_/bJuo8MltFRR+4OkJCuRnDIc";
- protocol="application/pgp-signature"; micalg=pgp-sha256
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="yhpJm85x4vs0V9GP"
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
---Sig_/bJuo8MltFRR+4OkJCuRnDIc
-Content-Type: text/plain; charset=US-ASCII
+
+--yhpJm85x4vs0V9GP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Mon, 30 Jun 2025 06:31:29 -0700 Junio C Hamano <gitster@pobox.com>:
+On 2025-06-30 at 13:46:35, Karthik Nayak wrote:
+> I can see few solutions overall (including the one you suggested).
+>=20
+> One solution is to drop duplicates in case insensitive systems, this is
+> the shortest and easiest fix for now.
+>=20
+> Perhaps something like (untested back of the hand code):
+>=20
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index cc0a3deb61..bc79d74b82 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1352,10 +1352,16 @@ static int prune_refs(struct display_state
+> *display_state,
+>  					goto cleanup;
+>  			}
+>  		} else {
+> +			const char *prev;
+>  			struct string_list refnames =3D STRING_LIST_INIT_NODUP;
+>=20
+> -			for (ref =3D stale_refs; ref; ref =3D ref->next)
+> +			for (ref =3D stale_refs; ref; ref =3D ref->next) {
+> +				if (ignore_case && prev && !strcasecmp(ref->next, prev))
+> +					continue;
+> +
+>  				string_list_append(&refnames, ref->name);
+> +				prev =3D ref->name;
+> +			}
 
-> You can try in the repository where you use Git 2.43
->     $ git remote set-head origin -a
->     $ git branch -a
-> to see if the difference indeed is coming from different versions.
+This won't work in the general case, since the two refs that match case
+insensitively aren't guaranteed to be adjacent.  For instance:
 
-Thanks, it does not depend on the version. For some reason the repository
-on the system with the older git had no default branch set. The repository
-was cloned a long time ago, maybe default branches were never set initially.
+    refs/heads/AAAA
+    refs/heads/AAAB
+    refs/heads/aaaa
+    refs/heads/aaab
 
-I changed my script to use for-each-ref.
+They'll be in the above order for a bytewise comparison, but the
+matching entries won't be adjacent in the list.
 
+Another option is for users on case-insensitive systems to use reftable,
+which won't have the same problems as the file-based backend and will
+preserve case properly.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Olaf
-
---Sig_/bJuo8MltFRR+4OkJCuRnDIc
-Content-Type: application/pgp-signature
-Content-Description: Digitale Signatur von OpenPGP
+--yhpJm85x4vs0V9GP
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
-iQIzBAEBCAAdFiEE97o7Um30LT3B+5b/86SN7mm1DoAFAmhinQkACgkQ86SN7mm1
-DoD6cA//XPOJmsBQkMeik22lp1YMEZDliwzttG7zBqtnpspg8hBWCpJG3nJW7jf+
-bUfGllzBgKePBd6S6eRUQK9uHz7MPdykPSIIEvdoA3SCfRul72SooKoENmmW1knP
-qcUsnKCWwxsSn/KBmdBcY9ULDjKlPYtp3OeApcUYKyHt6CH36/CBFKwRhDVVUBvG
-Z89VIDmGvzYxqDOBepKaYIggsy/Hk/wGXE2ZiGfGgKeMUnmNMgAvgRtkt7pP2nuK
-d5IRo20fjlAz/U2YDGuZoXgBTXCsL4JQgeNrrs52/b+D+Pkkjm0AI3pK4QMfKYMY
-h2QeKs9GD1+nO0T6VHmJXGK3QCOeEfCwgfF1U9y0uEt9towaaDYYxwBaQDP7ygf9
-ZBUaX0UcW8KGo+NMOnjChiUWP/7JhtSZeBswx+r4IDqjkKySHDqhAwHPdP8Yqoxn
-vv+BhMUorAzUt8xUsrRHZzq/MKh90yGWROdrnKwubTV8G/NyJxpSrTl01IfOKc64
-/gsL/+Mcj/K/+5Aujq4gVviRV9h9U9yrj5lMctntGwL3+Mo/ubNCg6DCCQpnfATP
-Te7/GnTbrUjVxWA0CdDmDkMdbVhyTzgGGOss1wOI/tvKDgR/La/8DUcuUqByF7b2
-/yVR79MYCCEBc5fAy9JsQ7NLyOSrQFzduAoaE/jPGMy1MGJQ3nQ=
-=lZsQ
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGKdIAAKCRB8DEliiIei
+gS/zAQD8cpHvcK9G4/gyXtWhHY8kWCR6sdF48chxnet+5Rk55gD/ZO/uGDD8Y21v
+go+5FYNJbmOfllNMETEvw63ao1wqZw0=
+=snVo
 -----END PGP SIGNATURE-----
 
---Sig_/bJuo8MltFRR+4OkJCuRnDIc--
+--yhpJm85x4vs0V9GP--
