@@ -1,112 +1,83 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D034C6C
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 04:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80CDF137932
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 04:29:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751256815; cv=none; b=EONQq5gBGDfJhzBxZz5e90urEVYnF/YyiGp/9+Fe9x5+KEvLWMbIeDyt0p0XGGyHmVd/+A+siHCdMCArVCvZfMYAOT0OivNjpSf5NH9ff6glpo+8p/MqSTk6BHCbNJYeId1w8I2s2MOY+OZdOR4/fyy8bQVAvU1Mioo/z6UTVgM=
+	t=1751257747; cv=none; b=drLsu++3H6sptCVfMhYx7/V3MOtzXbaJsvVGOCocz6qqntMgmMTCv1e/tj9BvpdiIBSb7OeXPYGXBz2t3b4Z/PI9s75ooa46DgJ353UHOOnr1tBYnxN1614Uu2ZgEXEvu6Da/FwP90cB8IFoJIQ8gLr9vP/y0PbuF02twEiJzgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751256815; c=relaxed/simple;
-	bh=t82ww5hDUjEDhSOmz/87n45GKt4afbY7jDUlsFa2suw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=Ej8Ccv4mP6IrQTKZB6SAg7UWJy7YFiRrXwwqJieBXBdR91qEum3Q8n+dkc6XZrn7OYnZk8HSRRtYMlf/CTxFdPoPNsvSB8Iska92SbZkvTWgo4/CiDXYOAK/UtQftr9k23Pts4rg+8k2ms+Palev/vUbuTWN0DvkRDBd8g8dcmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=F3SsKy43; arc=none smtp.client-ip=209.85.210.173
+	s=arc-20240116; t=1751257747; c=relaxed/simple;
+	bh=80sU3SFNPwwjD+NIaVjV9ZGQaC5rMPwD+NolAiXPUdE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iVMcumb5rLxuKocCVlO0feEabXIgmMjDgBNJGz93HSurcZVjCKmuZ2Y1kwHJu/uZ3RJlmDXQpA0OgrNQgqs9d046XgqOeSoAJO80zDs307iUC7Vf7Xqt5/2JsqRO8PS+HpsNDQAhfipoAXR0E02r4BBZ0mT46IEZPrWG1BjDzpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NnO1LNrc; arc=none smtp.client-ip=209.85.216.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="F3SsKy43"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-747ef5996edso1454211b3a.0
-        for <git@vger.kernel.org>; Sun, 29 Jun 2025 21:13:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NnO1LNrc"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-313cde344d4so1649333a91.0
+        for <git@vger.kernel.org>; Sun, 29 Jun 2025 21:29:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751256813; x=1751861613; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=yJeUpC/EewOXJr/+DNMDuvf67dqpZvINHb9WmIk+vz4=;
-        b=F3SsKy435408dlA4eL9Ci3MaL23uj8J6q1dDMM46ytsW9yr5x7JEs3av8ogTJ3f07M
-         8SJXf4tCrPR6uZ5t14u9kYZRrJWNvTaGrhQ6ep7RnyySYUpla0v6tq7/Xwf/Wc5NbWmw
-         cdjucdZKstQeQ/Xh9Ypi2u8SHkzGYvfrXrozvfVBIpPBYbTdnvEy9vwlY62ALJqVHk58
-         ROSaadD45x8AqXDLpy4uZUJGVGlmPDf3RWZOf0uY6VoCns3vVz2sgtSia0uIjTiJJD+5
-         HSKj8kZYXRwhw7q1Ga7NflGa4cix6hIUpTCFuLx6jJZKfTbU8qeNI39+fzBnIWrswrLn
-         0qnA==
+        d=gmail.com; s=20230601; t=1751257746; x=1751862546; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=80sU3SFNPwwjD+NIaVjV9ZGQaC5rMPwD+NolAiXPUdE=;
+        b=NnO1LNrc3ow/0i6qtbbTKeklRMefmDL5cDj0DOEklu9MV7Y9AMoKMSpwqNSq6cJaRQ
+         CgyQVualrirrrOyqC6cL5+OmiDKXDJapgWqA2OmQ/mdOiXfOOUrd6//L6bHS6FeTyVy7
+         NcaIaKUMHElEMkK70ueeQQWrZQUgsFUgu4w8DOVBHyWv4N+i4gnFWqHj9qoxhMwS2gZ7
+         uHUqE0R5xO52EJXHqbKwsn71/4rgdXdoORd5QbtokKaJJj5MhPPFNBZGkCsS7PxzRQ6w
+         UE/WTSMY82FM/hTF4QXL2boINfpFQ+LWCPaj5Q8EEpZ7c0bSxjPowx/kqpHQAjEn+OHM
+         vbVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751256813; x=1751861613;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1751257746; x=1751862546;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=yJeUpC/EewOXJr/+DNMDuvf67dqpZvINHb9WmIk+vz4=;
-        b=td7+fJSRkezxHyg64Bl6NdkkG6ocE3X3SjKtU05FfOvfgouGm05ER6XhXS+30x6Vk/
-         Cvq9/53hJM0DJ6mWwcDrcI9suVsyI8a9d8qOpT3C0yJvkzdVUt/JDCgEtGk+Yjqx+dEJ
-         VCx8//d1mbPhaqp+NyYx3Y3t/FAXcNiXqONQQEtpTgJ2FvaEfmDyF/6wxvLz5BUAscH8
-         8wx3B832N9pLN4L1OnGKGXLICKi+9jU6y1XnMuFf288l9zap1yaJNEISPFlSfrVCp+lA
-         UofGjwJSPVrRSwIk/SJ6I4YRi39ORPOwnH9h6c/PLXujadf+XVB67L9IDQCARdi+7yFi
-         dkTQ==
-X-Gm-Message-State: AOJu0YzcKoioxVWkY7RKnKEl0PrDN72wyOdn8NylQ/ceMcL68N9RtyOP
-	3C/B5viUPy6CMyIF0k0Ce50XqpT0qnbgLGTcls1aTCl/f+O6biMrJ3KDiqTvQw==
-X-Gm-Gg: ASbGncsSn0+jE+ei2dGHSkFO0oGKgmNUs58bYdZW/wA4FjevbLrKGUyhudFWoP+H3v9
-	9RYb0SN+mw6ITRlWBEaZ995lchdUSdamUhVLbYt2vZRScWxB0tjzqUy/Dmu1VBN0kUCIChHn3si
-	bPboejkwLYy/3G7ftJNJjciKVMVXqQS8+I3p1fOVC2Z2ouFBvdmFbIwD4UZ5LJHt6IwbDxsCwQ/
-	iUU2boLHj4TVBevczn6zSNnOto8T0bbDfGd2dX0TnUWrhjcgKfY+DA01vZExbUlpanXYMoC+SY5
-	5YO0L+zcXEsyphrgQejJ+fgnOk+mbHBNmuB2UXjtkeu/JwLp58z2057/OxQfr9+PsPaK0Q1Qqnn
-	5TQuyFlPaVTF39ARQXHiiBXo42G0=
-X-Google-Smtp-Source: AGHT+IFDCcqUtaZJeUQ+Jx19BNLTaSFeWLh0obqzLSLgnMLbD730xpXyyAAfc6zlt+X2q9F7VSOM8w==
-X-Received: by 2002:a05:6a21:498c:b0:220:b340:92f6 with SMTP id adf61e73a8af0-220b34093e9mr6392239637.21.1751256813266;
-        Sun, 29 Jun 2025 21:13:33 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:edb3:4a4e:9234:fe40])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af5574604sm8128672b3a.86.2025.06.29.21.13.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jun 2025 21:13:32 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: "Stephen R . van den Berg" <srb@cuci.nl>,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH] daemon: handle EINTR failures from waitpid()
-Date: Sun, 29 Jun 2025 21:13:03 -0700
-Message-ID: <20250630041303.93370-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.50.0.132.g32f443f09a.dirty
+        bh=80sU3SFNPwwjD+NIaVjV9ZGQaC5rMPwD+NolAiXPUdE=;
+        b=KJ8lBzKIiWq9n3A6CPjSBzj7+nTJORCEafzypoAQQvbONhSrE9yMgj/FpL+PwycvCK
+         3lGyfXW5tIpbx8/1SNOxWozxW8/hbtCy4Ej4cIFYDD+HuqjslQyvCUplWgVa5sTKjVJs
+         8VWTmA4NzDOQ681rYlC9SGxS7mKPJCt3DHzjDF917jHPSKT+lZ70w8nWUcV4dApZgXTA
+         rZBbWC75O3+ar55hXSUVxOjKysAkvSVaiDvRHjYKoKfilXxj/11O8gT8sGSSttXhJD9V
+         Km8BWlyYs4MT9E8LAh8p6eAo1UGYfqQRX9dERsODvk/hKl0qgEAI9BYrZkqk6uaJgv8L
+         2Z+w==
+X-Gm-Message-State: AOJu0YzUtZRMre24PuIg7pfPuFc0g8xww4IhEGwv5qTcsX+zTl/DQyIc
+	5wvYTY5gzEQADnfxh25DSsguoN43/HA0TS9V2J6Ik7xu+dXB8fxbcIlLHQwD7ihMb2Zrm10wJo5
+	jn4ZNkWjp65PZQ8RkNVvrWMQlL7RCkRp/fZ4H6jc=
+X-Gm-Gg: ASbGncv34bUoobkhWqk68Xae6+S0OpQ1dciewLLnQYDFo+HZWCHzHI342kE7DdZ+f1M
+	lqG+Kga1Drzr/aiK0ZGzjn+P+Vw2U/Bkr+Cj170NDDfWUE5cb/edQKrvWkKu6SFAOfdeVfHrXTP
+	kHUNijWuXOeQ/DOQTDp0jGsvEDSIuZcEkmxGA0vvgCsf6NEVOy7jyF6pIk
+X-Google-Smtp-Source: AGHT+IHkgLKI4rGjqQG/RZ6lg3cHxz1xuU3B4CX5d27LVQZT+a5Tg2B4drA2Sek9PyNakvh7K7F/5Nf10Ao+N4R6eYY=
+X-Received: by 2002:a17:90a:c106:b0:311:c939:c859 with SMTP id
+ 98e67ed59e1d1-318c92fd097mr15324063a91.30.1751257745750; Sun, 29 Jun 2025
+ 21:29:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
+ <20250627074934.1761897-2-meetsoni3017@gmail.com> <0d3fe70e-2064-4206-9673-c0589a4445f1@free.fr>
+In-Reply-To: <0d3fe70e-2064-4206-9673-c0589a4445f1@free.fr>
+From: Meet Soni <meetsoni3017@gmail.com>
+Date: Mon, 30 Jun 2025 09:58:53 +0530
+X-Gm-Features: Ac12FXzn7b7yJUHb1wYSfhOUoUQVyK4Ert4LdaAZbBZwKk11Cnwkg7tbluJr1cE
+Message-ID: <CAPhwyn20tVSZfe2RgmYwoWJkKuMBj9S=Ji_zkYO0a0JMwnOSAQ@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH 1/2] builtin/refs: add list subcommand
+To: =?UTF-8?Q?Jean=2DNo=C3=ABl_Avila?= <jn.avila@free.fr>
+Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, karthik.188@gmail.com, 
+	Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-Since 695605b508 (git-daemon: Simplify dead-children reaping logic,
-2008-08-14), the logic to check for zombie children was moved out of
-the SIGCHLD signal handler, but adding checks for a failed waitpid()
-were missed, with the possibility that a badly timed signal could
-prevent the promptly reaping of those defunct processes.
+Thanks for the review, and apologies. I should've clarified earlier that the
+current documentation was meant as a placeholder until the feature direction is
+finalized. The intention was to help reviewers get a sense of the intended
+usage, and I plan to revise it more thoroughly once there's consensus on the
+interface.
 
-After the refactoring of 30e1560230 (daemon: use run-command api for
-async serving, 2010-11-04), that reproduced that bug, a single
-process could be skipped from reaping, so prevent that by adding the
-missing error handling, and while at it make sure that ECHILD (or
-other errors) are correctly reported as a BUG().
+Also, noted the follow-up patch to improve the git-for-each-ref documentation.
+Thanks for taking that initiative!
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- daemon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/daemon.c b/daemon.c
-index d1be61fd57..16ae66a2da 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -864,8 +864,11 @@ static void check_dead_children(void)
- 			live_children--;
- 			child_process_clear(&blanket->cld);
- 			free(blanket);
--		} else
-+		} else if (!pid)
- 			cradle = &blanket->next;
-+		else if (errno != EINTR)
-+			BUG("invalid child '%" PRIuMAX "'",
-+			    (uintmax_t)blanket->cld.pid);
- }
- 
- static struct strvec cld_argv = STRVEC_INIT;
--- 
-2.50.0.132.g32f443f09a.dirty
-
+Thanks,
+Meet
