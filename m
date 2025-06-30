@@ -1,95 +1,105 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF36B20322
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 03:21:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8EBA59
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 03:53:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751253685; cv=none; b=PVght04B0K4sMhRvcV6GroRlPGYXeXEjvWdj+95+LxYl2TApwmL1I2x8/+Az+k6q2QBVlMCnKUDaYSQi8PPj0GkkxzwM+elLLggoGoi81jyLsUHzEM/ofF96ujDz5oxSaHyyi/CNFiAtmqnTOm9+FYUbfYai4nP/axeWuPa641g=
+	t=1751255637; cv=none; b=NoiPZX/Xn0k5NkrofCZmNQRZK+2BoHqaDQN+jg5ctLBwSKMgJjmztAazkXQnlymiKUcv4ivpxy7sUh7kdE2htbl608rbaLhSn+QtWkpXidxhBQ7kFHkcdyXYr4tvYgzXjaoXnCsG6TwTGfVh/nIV2u3V5+A9Xz26hfDQxG3eOjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751253685; c=relaxed/simple;
-	bh=NubKIvgvUmUR3189uexhNgw/sh17SPaarjwJCKbtnd8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CFR8ERdfK1O7KX/V/mrwz2jnhDrHk8Hm50udI/1paqxBidW3DAQDErA1Xzs8/7MSnVo0tsK58mI0TNzgcJ3gkpMIYx56wR9khuFWOcBIAoHiDci1M2rhl2bHL14y8KLgOKt+pN5G8YvnmoM978utfYLk0Vib3Pa3JcZ8XW4r9GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AN+x30FD; arc=none smtp.client-ip=209.85.161.42
+	s=arc-20240116; t=1751255637; c=relaxed/simple;
+	bh=3L6NhA6gUl3YwecuqY2DrF9lqdtFg7m+IDyx9apwvYY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=IKpuZxltUAUbT5nN0HVV0q/QZN+T69gyrldNSnNzc0x7V32kAGZUH39Ko95SZvWGv+Ot5/pd7HVVvThf9rQ56XIwqOoAL5utgUKpiM5SK+Dm5pJitSbE2HKHlyTDMdwHyJde38ZyRHxUub9dHcKTANBEuVS57zj2H1TSk8JZHaw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGC73Zja; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AN+x30FD"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-606440d92eeso855752eaf.2
-        for <git@vger.kernel.org>; Sun, 29 Jun 2025 20:21:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGC73Zja"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so1126299a91.1
+        for <git@vger.kernel.org>; Sun, 29 Jun 2025 20:53:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751253683; x=1751858483; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Pp6hWTinvzK2UKlHDTSuX4E/9CG1xul8tlX0TFdiJw=;
-        b=AN+x30FD7bcSp6lgWf6NmlAb1kICakeAz3z9p0+RrkHD0A14gNYNkqcwLJt3NQ4rD6
-         bs2hMLcbNRttq+7BkX0aWMGFL3eB4p38Q6ndpscI4L1TAAUm+Q5VjV4aO8L16T1kgBKQ
-         V/8I2k01MVHg0aT21YKvWmHkVCxUEUOM6vzKFOQW9TTDlOkYp7sd+9qYqh1MPmjZs4Uj
-         Rlph+pET3On4LOkljqupGfdOIr74JpQPNGF8p6FLEKOalTNr6+7Qab8EGTuGKTuLm1Kd
-         jo1sbcQ7PlQeyDJjXFy2G4+R3DsZiV0khbD82tfQNy5Z08F9Lh4dpxumzQI4PZMRDwwR
-         GxNQ==
+        d=gmail.com; s=20230601; t=1751255635; x=1751860435; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vd8U0oLs1B2njz64SFyWgts14TNuLVWH/8WCLg0gvp4=;
+        b=cGC73ZjaOkxf/GjJ+bTqfB9FZbv9gcxN34KttNSqwRf+6d3eumkjrpi2ZiZWi51nui
+         RNUO5WETv/g5fHINE1b6Wo7NWC6pGqx+aqOXmZxMoyFTigOWn3Q4jpi7AU8TTuRQamhg
+         WgbqYQKUcEpjR3zy3vLyGEFSFPnl2kaSygud217B9jbCf09MO5RXJPsM3HfISHwIvCHD
+         3afkZK2FJ+sUvnTpnnR7J98A3PK8v9FoaRaX9fE7wZ+RbkhzJlk/7nOv2w67Lp5kBRg8
+         4Bvczsl/nh033XmKNTapn70dbkIgb/OKuoPx8tA8Nng0XnnZBdCqIf7pWEKJff5O4Z8+
+         n3hg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751253683; x=1751858483;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3Pp6hWTinvzK2UKlHDTSuX4E/9CG1xul8tlX0TFdiJw=;
-        b=oTTjLbQZAIVRU3HL2/dz3EkK7OfiAHgT/7kblAIYi1sT7Ih+rEN1t766LlbNaHZDnm
-         710ogD5IcNh/A6ziqdJ2hEVsQOJmiRzQ3TZi6rvTRtu7957YCpAEydDjv3L/N0ZyBZoH
-         IIkgdcnTxUtQCHWiqtgNFO1oH1vP2WmAPOsKczuK1PijXjXBvt76AIFkGbCT/DdXYuon
-         3x8pSJJTk2RHtYo/CA4H5eyauTwwEmGzueWK9hKAaq8648mu4JJJPozWjc8atTw00WQG
-         n8nIfKZg+MKNff2Jll5EQkY8xXamd/Hf6FNKKizYGpJ5kTotBkVp+AmY4A7Kx292u6lB
-         MR8g==
-X-Gm-Message-State: AOJu0Yz/tUa8q4rVwkalDCNDl69hTKBqhZQYz/P6u13+YFGsZ89bBRmt
-	Si9kdnFGm1SWJo3tnasPRu4xODhEZC+z5EwFOWQZs/Wa/ksoceHHeYhT
-X-Gm-Gg: ASbGncv6M16iP92L5fhB+bu6WBvjK2zgnU99mgs81cvhrOB5oAk+CIt5lp1cCi9MO6T
-	wvHZgIOr+hUI9f3Qtp0JJiVkPPZAxlllocGr8FRBWA8P83vznCLusmgraQMql77MRZ7adjocf4Q
-	thup/1fe+LDJpobvm45LlwH2DCxByt//nw+Cvp8a3jFbfj/qLfyRN07h5BljxgozFQC9XXfOQro
-	Y/6fnWbBLWDFLJFxAXVhwTQnjar49GYmxX16rBMo0AL/EOTbIO/DGnfU6Y7J6ei46MSvH8d4/J+
-	KA7EPdRR8QYbo4EcZ658+lKUq2UJA+tuwNKRMLYgB/0TaS2YN0hQjd8=
-X-Google-Smtp-Source: AGHT+IG+XsUWyuZt8np7IUEe+D6LBo0uaQL72OZR9kJ6vE+qm96rgqgtSahq5r/kgq5DUDrCkM2REw==
-X-Received: by 2002:a05:6870:8910:b0:2c1:ac88:4a8d with SMTP id 586e51a60fabf-2efed7378f3mr8096728fac.30.1751253682923;
-        Sun, 29 Jun 2025 20:21:22 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2efd4eab4e3sm2521777fac.4.2025.06.29.20.21.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 29 Jun 2025 20:21:19 -0700 (PDT)
-Date: Sun, 29 Jun 2025 22:15:51 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v5 17/17] odb: rename `read_object_with_reference()`
-Message-ID: <nwxweqp6yd7zdstvlps3dq3jnewzxsfnisgd5ripxtmwbklrmg@zre2usdx5uvg>
-References: <20250605-pks-object-store-wo-the-repository-v5-0-779d1c28774b@pks.im>
- <20250605-pks-object-store-wo-the-repository-v5-17-779d1c28774b@pks.im>
+        d=1e100.net; s=20230601; t=1751255635; x=1751860435;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vd8U0oLs1B2njz64SFyWgts14TNuLVWH/8WCLg0gvp4=;
+        b=Si6is3wB9GQdxGYBDmf+Dve9XzQPzn/DuZMbYywiYLxZxwZ4mp51A/IlyTGsOmeLby
+         vKmvjnmAe+oT84/CWoPP47J1DBZXcsF+dTcj/jC1lOCaEQgzEY8CgEz5zKicp2lGjZx6
+         85Q54XL4e67UhpK7OvAjemxLi9x27i+271cv9CMOK4micUMDP4WLRCuphQtYdnLOVQf1
+         ThFYVQ51yYmCSwu95Zw6QIX96yi1OK81xeEqm3azqwZFdD6endkxvwdnwTs5X4e1jTnW
+         wSvQLIiu1HIGClzuZyosIRwLMbzw6k4YBDu03kjfDQ8HqyBxFxwhM9o92STe2nfxXuVM
+         se3A==
+X-Gm-Message-State: AOJu0Ywmhpi/izkty2JKD7J1As5zejSFFTws/rhgOjtmaC9843DFPFWC
+	8XEZ86Ip6PaN5ne+HEZx0WXRTG8vz2s2Pt6KMmA483cLsBUPIHPu+alXfaXTWJGVfwR3i8jLUOD
+	DXrpV1ZgicO2HIZWc9vykrHK7BiRPXDw=
+X-Gm-Gg: ASbGncuffd898lDnzJIRaCwZS1stq7JLgdgSFchWKyj1mtxw+/d5R5poy2luMd4saMR
+	3oP29rxzKVCY6DabcDna5fw03W1iw+Xu4BhGUbNt51ADC4jdPzn86FFIuObQHzINMZlrCl5FRdP
+	kJI1dLf1Frn8jW/d+uTgZ5tsUFqA97QJbaq5jhlV6+rCfMmg==
+X-Google-Smtp-Source: AGHT+IH/j3tf83NdwPplyg7LPUenq5B7jgatp6F114mAj0v7d21flrvGwcDytT6DvS1gHrc0UkUJFru9HN96bRWKlVw=
+X-Received: by 2002:a17:90b:3ece:b0:312:ec:412f with SMTP id
+ 98e67ed59e1d1-318c9243f41mr19204716a91.14.1751255635434; Sun, 29 Jun 2025
+ 20:53:55 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250605-pks-object-store-wo-the-repository-v5-17-779d1c28774b@pks.im>
+References: <20250627074934.1761897-1-meetsoni3017@gmail.com> <xmqqh60183ku.fsf@gitster.g>
+In-Reply-To: <xmqqh60183ku.fsf@gitster.g>
+From: Meet Soni <meetsoni3017@gmail.com>
+Date: Mon, 30 Jun 2025 09:23:44 +0530
+X-Gm-Features: Ac12FXw8QUCz2bTDw3aWUXV7wXxC9ilMrSM9ZfUbgxTZeohNPYsjHnpdjyTmkcY
+Message-ID: <CAPhwyn01spdT-hFxVPcr4cnwBJ=YL3Ty-johXvGKXKRdCTpHXg@mail.gmail.com>
+Subject: Re: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, karthik.188@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On 25/06/05 08:47AM, Patrick Steinhardt wrote:
-> Rename `read_object_with_reference()` to `odb_read_object_peeled()` to
-> match other functions related to the object database and our modern
-> coding guidelines. Furthermore though, the old name didn't really
-> describe very well what this function actually does, which is to walk
-> down any commit and tag objects until an object of the required type has
-> been found. This is generally referred to as "peeling", so the new name
-> should be way more descriptive.
-> 
-> No compatibility wrapper is introduces as the function is not used a lot
-> throughout our codebase.
+On Fri, 27 Jun 2025 at 23:33, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Meet Soni <meetsoni3017@gmail.com> writes:
+>
+> >   - Remove legacy or obscure options that are no longer needed.
+>
+> Such as?
+>
+> >   - Add improvements that wouldn't make sense to bolt onto legacy
+> >     commands.
+>
+> Such as?
+>
+> While I agree that there may be cases that the above goals in
+> general would bring us improvements, I think neither of these two
+> applies to for-each-ref.  People are using for-each-ref to iterate
+> over and enumerate refs already, and if you are to add some new
+> features to "git refs list", they certainly will demand these new
+> goodies to be added to for-each-ref as well.
+>
+> So, I dunno.
 
-Same small typo:
+To clarify, I don't have specific options or improvements in mind right now.
+The idea behind mentioning them was to acknowledge that having a consolidated
+interface like git refs might open the door to such discussions.
 
-s/introduces/introduced/
+The primary motivation here is to make ref-related commands discoverable at a
+single entry point - git refs, rather than scattered across several top-level
+commands. The aim is to improve disoverability and set the stage for
+potential future
+cleanup or enhancements, should the community find value in doing so.
 
-The change itself looks good though :)
-
--Justin
+Per mentor suggestion, this RFC was meant to invite broader input on whether
+the community sees value in such a consolidation, and if so, what shape future
+refinements (if any) might take.
