@@ -1,86 +1,114 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 5B4E779D2
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:55:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6125879D2
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751309733; cv=none; b=qq2DW/U6el/sb+Brws/dhv5HT7hFZm35kcoTJx8at+P/SaVH5tbaIhSClNI/CaGhJfzQRZ8QrCHzzeHR5HYVRPJAWSEpK798/t4yWUHqCy3JAp9Wval/QCVf31LJ11stUjts8/zt8eS4dwC7OLvg9a7hQ7+54auNqjJH2/2POeM=
+	t=1751310651; cv=none; b=h2mDW8BoTCTgihitsoy7iOtKBF26MkDR2mlnssFv7gPSA9q+2IWq5n2LwTsS7D2/79ou2jc1SkE7OwBPgz6AXq77E1V+eKSK2xbgoYDWGcb5mYLnqlghr/UP2kGNUERAu42sVWhWQegyhTNo/n4dmO8BhhzWFuy9SttKFoY4994=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751309733; c=relaxed/simple;
-	bh=caJdKiNUe/LqU9FS8Br6dxqFJSDaR8iIDMXIsEHbtYE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Rhg3bffLicAgpyphMmpDXdsMIXUHlYkRiy/qhJOPBeLCc0au58mMABV9vPU7TTOQ1avaKs1Mp6ZC8ztMZ9USTkGo8G2nJUDGb5PZqtHjBXFhk/7RLfBmBlLXRxvTRSEEkfXCNdTJtqm5MQiNnjXw/2+SZVX6xTMIQ4dSE14MQU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=dzAUN6if; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1751310651; c=relaxed/simple;
+	bh=InnWjGmDxGl413PkQ2FQnI3HtZbPDEAiZXADtaCS1Dg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=poSr+qPzDYbkRRQbAHxIIScjZujgDKxw/bKtlCuxxwI7SlQxR3aaDggfPcHw2VbSK80x1Ip34lX9d6oslItKRcAUbmTOZ6HF7wK0t9bhp0UqnXlIJ5FvGwKExJLPhCe1OjFzptSYRYT4f8sJtmu1ryhDVVfLjeoHW8zEA51Qubo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=s7pX66SS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eF5gvgKD; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="dzAUN6if"
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 4B586DF8BEB
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 20:55:21 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:1ba8:ed93:91fe:b5f0])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id 5B8A9B00563;
-	Mon, 30 Jun 2025 20:55:09 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1751309713;
-	bh=caJdKiNUe/LqU9FS8Br6dxqFJSDaR8iIDMXIsEHbtYE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzAUN6ifRn/2z1p8msspgqvTcCo8Q4nZvdTHfryNlxMSYRkG+Ir3CtNwRmmySvdva
-	 wUtWGMQ/mysrLLYSSZgX15BYMotfvF+ImujBctuiq7yEnDFQFWrBApP83Xl0aDX2+k
-	 L1+TFUTb50S9QakCzb3irPz28WM/rVRZBnysl5Q73E1SqhiSZcX4qvMzRSkt7TxmLH
-	 BWe6xZBjDwPOwAke5VEEyW8bjs+v3p39/Sol75w0nxpiYRC4gAGlI5C+hr/jcg5E5U
-	 yymzjZodCCN92AXocOtLO0WicsL77oRY2zchH/gNFxlRGdvt75TDDLxZ4rYSZPl/Rf
-	 yGEiDRneSPDqQ==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org, ps@pks.im,
- shejialuo@gmail.com
-Subject: Re: [PATCH] doc:git-for-each-ref: fix styling and typos
-Date: Mon, 30 Jun 2025 20:55:08 +0200
-Message-ID: <5900272.DvuYhMxLoT@cayenne>
-In-Reply-To: <xmqqjz4t44ei.fsf@gitster.g>
-References:
- <20250627074934.1761897-2-meetsoni3017@gmail.com>
- <20250629110652.123890-1-jn.avila@free.fr> <xmqqjz4t44ei.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="s7pX66SS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eF5gvgKD"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6A7D114002F0;
+	Mon, 30 Jun 2025 15:10:48 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 30 Jun 2025 15:10:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm2; t=1751310648; x=1751397048; bh=+z
+	5ugzHzsekzEa95125wknTRa1wiG46QjiCTp/ppqFE=; b=s7pX66SS+j9MZa9d06
+	Z7TChLAF8n1DH8Dih32FvMHlDRfKHhDGNHfIw0wfdfbfFZLdphQsbCv2tfjTcbjb
+	1t5+KDE5AWAAqCeRrpQYe/3+AKMWmz5Yx0orP/NxX5My2WuMcCpfLpV89rgWmqgy
+	JKmji8VMRyD/0u6TM/8AJTkZiMo+VDW0dHxbs28/sUW9kpdlOCOkRQSHoqSIHSrp
+	upG5y3z9K0gxjWygaNHXGrX24le0PxrKRp7XKj+BqLdoS5LT5Zgl0VpM2vTn4y5k
+	j/QU5c4AYvL5ZINiUMd0Oer3I4D4NCisWs7DaUxS5ojR+0L9HbHtiYKdK4sn5BbE
+	Br1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1751310648; x=1751397048; bh=+z5ugzHzsekzEa95125wknTRa1wi
+	G46QjiCTp/ppqFE=; b=eF5gvgKDKx+NkgpcckOyNlc0cUBMv9cIMtixnnH5VcsJ
+	NkHzM+rwX6Zg7WANjPTX5kx1qQ9/TpB0YzpwWpR7keb38iwnYU78QmIP75KtM26w
+	ya+oqzsMfHeQCBvhwlTegbAJbGkE/RizDlJ2xNihpwXjhBlaLQG7vcD/3zgx68hP
+	x5EykIN4VESUZuVQOiGvgd1AhEHw+64EG0hEPNz2aM2dvIz3E/T75lGAmk3bXdUJ
+	0h4+wHG5zMT5KttnZ3q9NqfDL6tUxgp6FBIib83WgXv4gug7mNkg5Y82BGVjkT8w
+	k5m/pN/VW9KfXY1ws4IkZBY8aCf09ZTalyraZDTkGg==
+X-ME-Sender: <xms:N-FiaJWvcKa3S6qdwgvYoC6KG86QlOYWEsmCy2lhHHra51x47pVrBKI>
+    <xme:N-FiaJm8DHevkyHjWCk_rngyjNH6Oy9Q_Q79_l7l6_YdxNeoLtiwaTsMC3v7iovBW
+    xYld3QWjsSXaazuPg>
+X-ME-Received: <xmr:N-FiaFYbSqS49YmBjk7e7uCEbBqFdogybjP2cRMRYlN-ANk9zJKLWeS44D85Y5lR1v97wD7Ztz0NJk1LK0t1OoV74PHQ0d78AqTQo2I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufffkffogggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnh
+    eptefgkeejffdufeefffegkeevgfevvdegffeujeejleegudfhtdffieekleefhffgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphht
+    thhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgr
+    mhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvihhlrg
+    esfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:N-FiaMVTSJTzr2MRAVKwouqfvgImrIxTRiqtCZAfEB_77GMwmGC2cA>
+    <xmx:N-FiaDlt7mmPCqpjmiFQ8pX2mCjZHqjVRGLDAlfXZ9xqfOF9PZS3JA>
+    <xmx:N-FiaJdTGPD9puX4fHhdDbDNOV0YW52CE5H2qeZfOQwM4iR_TJiUYg>
+    <xmx:N-FiaNHSRolV2BV_OZMNmtC6uitqYlctzMyJKtO4HxJVTpzk3fnDfg>
+    <xmx:OOFiaGnmRD8g0996RgpSrflPKLOmZnwFilusQaopHYGS167zFP4Mf2jo>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 30 Jun 2025 15:10:46 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Patrick Steinhardt <ps@pks.im>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
+Subject: [PATCH 0/5] doc: config: update for the ps/config-subcommands series
+Date: Mon, 30 Jun 2025 21:10:22 +0200
+Message-ID: <cover.1751310455.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.50.0-KH
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Monday, 30 June 2025 17:48:05 CEST Junio C Hamano wrote:
-> Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
-> > This commit fixes the synopsis syntax writing and changes the wording o=
-f a
-> > few descriptions to be more consistent with the rest of the documentati=
-on.
-> >=20
-> > Signed-off-by: Jean-No=C3=ABl Avila <jn.avila@free.fr>
-> > ---
-> >=20
-> >  Documentation/git-for-each-ref.adoc | 30 ++++++++++++++---------------
-> >  1 file changed, 14 insertions(+), 16 deletions(-)
->=20
-> It is not making anything worse and all the changes I see here
-> (except for a stray SP slipped in) are for the better, but it is
->=20
-> curious that this stops halfway.  Things I noticed:
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
+Update git-config(1) according to the ps/config-subcommands series
+(fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15)):
 
-I was just focusing on general style and synopsis syntax as an example for =
-the=20
-original patch in this thread, not really trying to convert this page. I ag=
-ree=20
-that I should do the full monty while at it.
+1. Document `--show-names`
+2. Document `--value`
+3. Mention `--value` throughout instead of the deprecated
+   `value-pattern`
+4. Mention `--url` in the synopsis
 
-Will roll a V2 then.
+Kristoffer Haugsbakk (5):
+  doc: config: document --[no-]show-names
+  doc: config: use --value=<pattern> consistently
+  doc: config: document --[no-]value
+  doc: config: use --value instead of value-pattern
+  doc: config: mention --url in the synopsis
 
-Thanks
-
-Jean-No=C3=ABl
+ Documentation/git-config.adoc | 28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
 
+base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+-- 
+2.50.0.138.gf67de2ec4e7
 
