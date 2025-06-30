@@ -1,206 +1,144 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D91372613
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:25:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E5021487E9
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 18:29:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751307958; cv=none; b=fWMOqAvD54tZsEJfpGocmn09jrmJSX6UW7+AE0YP0jnGnw08fNH2nvtOsggaRA36pNBUxVZwgt4wN0aGsWRmLbVKWURpCTTGQJazuRBOlOlSBM72LaQLTkxWJaYJ7lNtERRFfn5tt3tGb+CKSttLUp7LZYOeI+79BzHK6xsnXR8=
+	t=1751308191; cv=none; b=gCR2GSFaGLqzewcEpL+k6gLwlaN6NI8LfxItOwc//OSSXX4R+0rUTKcPlRYFCrBduJW9GtVL265wCkUAbOHoSXyGdfB68bLk7XyneOqUVz8G7DOczcLIXljmFX+ctH91k9MbpnHT3cL9rBHe8w3waT9oaBfVrlkDXgf1ZlRsF58=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751307958; c=relaxed/simple;
-	bh=RA86GvJADDRxmp+wO/t0AFE6tShZdF5O6EhDnN3TCDk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KNLOCu4/6hwj3vx+hVeXLoPgi1oDPiy6VarJFHKxw/gWbOQqpt6NgftAVND1vWatObmv30nOtEoO0emDU8dB5w+Y8tgFkX/t+0L5jlCN9poZgU/8BX+C6VRY1kYjh3nS382/cGyYGfRnj9TI3/cI1MnPUjVCq41nziee+qO+4KI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ki+OAgG8; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751308191; c=relaxed/simple;
+	bh=BlqGrXk+uNbjP0xBfzM8nMNpcWRIxk46gg3s2Dbrg04=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FyhzrR7UwAjwsLnW2iJX0joXiayaJQI2pB2MvLZQBYnN3ZfNEL5Q/XJJFX+XzthNLRmDpjuXlrmUGezfdqw4E4hw0rltogDyoTB+qyuPu1mZ7QRZYD/DcU0znUUJf82oRpCOUtxpxDPxcWcAEhNT5dDlIuI5UVPMnZrtqDMUpII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=H0gn+9h5; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ki+OAgG8"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-236470b2dceso19386075ad.0
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 11:25:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751307956; x=1751912756; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZBIq9Kmu0yuwBLXLzbyEKbgUxVBXlCcznhTT1K8RfAw=;
-        b=Ki+OAgG8q3EnpnLRH2WzJ8o5jZ64ggfdkKwIsyOU0wY2LbewTheycaAi9uRA786mV4
-         aDhJ0dsds6RVlvcq3A3aQwr3ILs7TPAK9NZSEYtQru6+M+wpLALWzRiIFqGtfv7Yw7as
-         4n0eTix8Juf+ur+BQFK9YzVz2bxte4sDqK2OY6D5NuO3D25cMh+o5UKl9sCFb2z6jkLm
-         sjDXylr9qpXwpx/FjzSUIdr8AZblwTdr65hlB/ergnkXdhMDfpY/A44eidDQBjkPmimE
-         WosQcS6rhjfQmtHSz/G1GRsybHUzLiZm8VcOo3xTKcVIsVRp2VakLJrhxi3wZ/tv9irI
-         3Tmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751307956; x=1751912756;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ZBIq9Kmu0yuwBLXLzbyEKbgUxVBXlCcznhTT1K8RfAw=;
-        b=KDSLB1scbYwwzUcmSSW2BfPQxz1cJHkJMLSu3jB4KesBKlA8ft12mMuri13cQRcE2T
-         JpTrt6t72fU/uq2jePST4dnY2rqbrkm/LeHlVrC3SFqt/UGQT6rd2gTf0LR4STMhPwxI
-         aBCBdM4hAy14FsjGozTHQx5XRY9lmL7Xr2q4gqNVY+vAYKgWS/Ry3ZYGy+vES1SFwv9D
-         EShL/SK2wawJ3gwb/pzaNfE+h5Jgtq+G8ftEDz5ud2lolIvvgX04jdy3Ti75fNxCnd8T
-         Xjoh4la2PT0S12CVg2CosYgaLY0xfwsq/Hj3ngIlzLt5iLa69/fUpCE7gqFWUAusGCVl
-         lnyw==
-X-Forwarded-Encrypted: i=1; AJvYcCWy/g6cAkzDcEYAH2G9sTeM8oKNa6RiIckDS0IbiQZJrvuavCvtLdmXG1nY4qQt+qddlMk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxn9OjNzTVFKYYXYzKUoRugDhboIbcEZ7YYQrTJr1hqY4FjFobC
-	F1sRkQjPBCl44Qjy0PuoG5hpqjbLIQCngYWWZS/N1ojLNnpF8FbYJPWo
-X-Gm-Gg: ASbGncuyoW7/NRkbOskS2I0vHn5RfkcFZuArzkOJbiOfNvLkAETeDYOM2nOzucS0dTG
-	R6yewFAEnfKTvFOVxMszh2LswhpJit6vApXE1fh+Zm8KKSq6uQk7ys2rXK6HlpilIsz7usSq2IT
-	bMOSH7srnP3Jg+00onWs0ff95mvaFWR+vJwtoVXc2hlibRpBm6O72deVy8G0j+a/YfidaYNFpWh
-	7GAMs9qaEQoQhbIjPCLNUr4RyyPVos1So2SN6wb8WFFOv1WLjQB3TEZniFxlMIm+ZMFMGIx6J0B
-	nQIYR4Rr9SXlhuk5ecZvRIMcnPfuoACCws1WCshYYOAjnyBtlfQqR0nOhkFII1qqAPh8T6SqzFV
-	eBFOV
-X-Google-Smtp-Source: AGHT+IFHgd2VPf+0495Ww8vI+T68d0gKWd8pym3HbvWqlRAesYBooTe/EggzaVwd0xzHJIS2VahAPA==
-X-Received: by 2002:a17:903:1983:b0:235:1962:1bf4 with SMTP id d9443c01a7336-23ac3afd47dmr207882945ad.14.1751307955436;
-        Mon, 30 Jun 2025 11:25:55 -0700 (PDT)
-Received: from thinku.localdomain ([2401:4900:1c20:3d25:645c:9adb:1b15:c2cc])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-315f542708esm14367030a91.30.2025.06.30.11.25.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 30 Jun 2025 11:25:55 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: ayu.chandekar@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	phillip.wood123@gmail.com,
-	shyamthakkar001@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	gitster@pobox.com
-Subject: [GSOC PATCH v3] commit: avoid scanning trailing comments when 'core.commentChar' is "auto"
-Date: Mon, 30 Jun 2025 23:55:27 +0530
-Message-ID: <20250630182527.69167-1-ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250626132233.414789-1-ayu.chandekar@gmail.com>
-References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="H0gn+9h5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751308187;
+	bh=BlqGrXk+uNbjP0xBfzM8nMNpcWRIxk46gg3s2Dbrg04=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=H0gn+9h5xl9pF/4l7RCuHtnodDHlsofgCGYDvfm06ib2qkYaLWKNMPo3eEUSuiHLD
+	 qYczQW2WDmrxVxolScp+ViZyIbKQX7Q+GykA4nXGPqADVFPDgxzNDecopyYaWSrbWd
+	 5qKBf8JrxqDd7cUFfzH8IDawGXqR+rY+ewkU/eo485OyiGVyYWBQ9dYp5aOTSnQsyZ
+	 YiJZSMfspRJxPDTvOSbbyqQW5IeQAF3FFxh7CG5YsaUYFIDglAxBq7PmHMYWZswY4E
+	 kQ+akrU8qcBLdHtt5pkSSb3H5/ErecqHF97PtN58xXdxqhlccc1ZgCJflOYNTlMAVM
+	 k5Tx4RtClFlpCI78lygDrxEDLjaVRJhYeOvIT4wMOOeclrPRdCJhNbsxBxxAt/Z4xi
+	 cqzBIauM99/62zRMid3U41CIUy/6puhLMm2P8lWhW8/Co48DsKPua+npYvbTyu2D5u
+	 aum9wBvVKglxfJGE5kgiZrB+G/rNOTnteW1bhJegHbd0KhIvxd/
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:a75c:9d59:319d:c156])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E99D22003B;
+	Mon, 30 Jun 2025 18:29:47 +0000 (UTC)
+Date: Mon, 30 Jun 2025 18:29:46 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>
+Cc: git@vger.kernel.org
+Subject: Re: Failing to push to a repository erases authentication helper
+ credentials
+Message-ID: <aGLXmiYuM2C_xfWJ@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Michal =?utf-8?B?U3VjaMOhbmVr?= <msuchanek@suse.de>,
+	git@vger.kernel.org
+References: <aGKU-o9eXB1VHuN9@kitsune.suse.cz>
+ <aGKfs5VRdmnw6Pqc@fruit.crustytoothpaste.net>
+ <aGKokqPJPh5fQ3fc@kitsune.suse.cz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-
-When core.commentChar is set to "auto", Git selects a comment character
-by scanning the commit message contents and avoiding any character
-already present in the message.
-
-If the message still contains old conflict comments (starting with a
-comment character), Git assumes that character is in use and chooses a
-different one. As a result, those existing comment lines are no longer
-recognized as comments and end up being included in the final commit
-message.
-
-To avoid this, skip scanning the trailing comment block when selecting
-the comment character. This allows Git to safely reuse the original
-character when appropriate, keeping the commit message clean and free of
-leftover conflict information.
-
-Background:
-
-The "auto" value for core.commentchar was introduced in the commit
-84c9dc2c5a (commit: allow core.commentChar=auto for character auto
-selection, 2014-05-17) but did not exhibit this issue at that time.
-
-The bug was introduced in commit a6c2654f83 (rebase -m: fix --signoff
-with conflicts, 2024-04-18) where Git started writing conflict comments
-to the file at 'rebase_path_message()'.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
-
-Thanks to Christian, Kristoffer, Junio and Phillip for their reviews!
-
-Range-diff with v2:
-1:  4e74e7a9a6 ! 1:  693f890a36 commit: avoid scanning trailing comments when 'core.commentChar' is "auto"
-    @@ Commit message
-     
-         The "auto" value for core.commentchar was introduced in the commit
-         84c9dc2c5a (commit: allow core.commentChar=auto for character auto
-    -    selection, 2014-05-17) but did not exhibt this issue at that time.
-    +    selection, 2014-05-17) but did not exhibit this issue at that time.
-     
-         The bug was introduced in commit a6c2654f83 (rebase -m: fix --signoff
-         with conflicts, 2024-04-18) where Git started writing conflict comments
-    @@ t/t3418-rebase-continue.sh: test_expect_success 'there is no --no-reschedule-fai
-      '
-      
-     +test_expect_success 'no change in comment character due to conflicts markers with core.commentChar=auto' '
-    -+	test_commit base file &&
-     +	git checkout -b branch-a &&
-    -+	test_commit A file &&
-    -+	git checkout -b branch-b base &&
-    -+	test_commit B file &&
-    ++	test_commit A F1 &&
-    ++	git checkout -b branch-b HEAD^ &&
-    ++	test_commit B F1 &&
-     +	test_must_fail git rebase branch-a &&
-    -+	printf "B\nA\n" >file &&
-    -+	git add file &&
-    ++	printf "B\nA\n" >F1 &&
-    ++	git add F1 &&
-     +	GIT_EDITOR="cat >actual" git -c core.commentChar=auto rebase --continue &&
-     +	# Check that "#" is still the comment character.
-    -+	test_grep "^# Changes to be committed:$" actual
-    ++	test_grep "^# Changes to be committed" actual
-     +'
-     +
-      test_orig_head_helper () {
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="zIbdIxR1IXN0Vkk6"
+Content-Disposition: inline
+In-Reply-To: <aGKokqPJPh5fQ3fc@kitsune.suse.cz>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
- builtin/commit.c           |  6 +++++-
- t/t3418-rebase-continue.sh | 13 +++++++++++++
- 2 files changed, 18 insertions(+), 1 deletion(-)
+--zIbdIxR1IXN0Vkk6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index fba0dded64..63e7158e98 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -688,6 +688,10 @@ static void adjust_comment_line_char(const struct strbuf *sb)
- 	char candidates[] = "#;@!$%^&|:";
- 	char *candidate;
- 	const char *p;
-+	size_t cutoff;
-+
-+	/* Ignore comment chars in trailing comments (e.g., Conflicts:) */
-+	cutoff = sb->len - ignored_log_message_bytes(sb->buf, sb->len);
- 
- 	if (!memchr(sb->buf, candidates[0], sb->len)) {
- 		free(comment_line_str_to_free);
-@@ -700,7 +704,7 @@ static void adjust_comment_line_char(const struct strbuf *sb)
- 	candidate = strchr(candidates, *p);
- 	if (candidate)
- 		*candidate = ' ';
--	for (p = sb->buf; *p; p++) {
-+	for (p = sb->buf; p + 1 < sb->buf + cutoff; p++) {
- 		if ((p[0] == '\n' || p[0] == '\r') && p[1]) {
- 			candidate = strchr(candidates, p[1]);
- 			if (candidate)
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 127216f722..b8a8dd77e7 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -328,6 +328,19 @@ test_expect_success 'there is no --no-reschedule-failed-exec in an ongoing rebas
- 	test_expect_code 129 git rebase --edit-todo --no-reschedule-failed-exec
- '
- 
-+test_expect_success 'no change in comment character due to conflicts markers with core.commentChar=auto' '
-+	git checkout -b branch-a &&
-+	test_commit A F1 &&
-+	git checkout -b branch-b HEAD^ &&
-+	test_commit B F1 &&
-+	test_must_fail git rebase branch-a &&
-+	printf "B\nA\n" >F1 &&
-+	git add F1 &&
-+	GIT_EDITOR="cat >actual" git -c core.commentChar=auto rebase --continue &&
-+	# Check that "#" is still the comment character.
-+	test_grep "^# Changes to be committed" actual
-+'
-+
- test_orig_head_helper () {
- 	test_when_finished 'git rebase --abort &&
- 		git checkout topic &&
--- 
-2.49.0
+On 2025-06-30 at 15:09:06, Michal Such=C3=A1nek wrote:
+> On Mon, Jun 30, 2025 at 02:31:15PM +0000, brian m. carlson wrote:
+> > It is in fact desirable because otherwise the user continues to attempt
+> > to use the bad credentials and then can never again authenticate
+> > successfully, since they are never again prompted for credentials.
+>=20
+> My proglem is that the credentials are actually valid, only the
+> operation is not. The current behavior erases valid credentials.
 
+Then the server needs to return a 403 or 404 and not a 401.  A 401
+prompts Git to expire credentials and a 403 or 404 does not.  Only the
+server knows whether the credentials are actually valid for some access
+or not at all.
+
+RFC 9110 =C2=A7 15.5.2 says this:
+
+    The 401 (Unauthorized) status code indicates that the request has
+    not been applied because it lacks valid authentication credentials
+    for the target resource.
+
+and =C2=A7 15.5.4 says this:
+
+    The 403 (Forbidden) status code indicates that the server understood
+    the request but refuses to fulfill it.
+    [=E2=80=A6]
+    If authentication credentials were provided in the request, the
+    server considers them insufficient to grant access. The client
+    SHOULD NOT automatically repeat the request with the same
+    credentials. The client MAY repeat the request with new or different
+    credentials.
+    [=E2=80=A6]
+    An origin server that wishes to "hide" the current existence of a
+    forbidden target resource MAY instead respond with a status code of
+    404 (Not Found).
+
+So the server is incorrect in returning a 401 in this case if the
+credentials are actually valid for a different operation on the same
+resource.
+
+> > Git doesn't have a behaviour to do so, but you could of course craft a
+> > custom credential helper that just rejects the erase command and passes
+> > everything else through to another helper.  That would achieve your
+>=20
+> I do not want to use another helper. I want to preserve the last valid
+> credentials.
+>=20
+> Of course, using credentials that are not maintained by git at all (such
+> as ssh authentication) does not have this problem. Only git-managed
+> credentials get erased on invalid operation.
+
+In general, Git does not presently offer this functionality.  We could
+in theory accept a patch for a config option that makes this work, but I
+expect it will lead to hard-to-troubleshoot problems for the exact
+reason I mentioned.  It will also require an update to the Git FAQ to
+disable that option in the example, since we use the exact same
+mechanism to delete credentials for users who _do_ want to expire
+credentials.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--zIbdIxR1IXN0Vkk6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGLXmgAKCRB8DEliiIei
+gQBpAP4q+j5k5glT8JSxwYzFsMseQz8KpV2oUMxoSsGX/F8D8wD+Pjtt2kyO1xV4
+O+2SW458VAwyUbX+MAAUSI2RQowucw0=
+=7sSy
+-----END PGP SIGNATURE-----
+
+--zIbdIxR1IXN0Vkk6--
