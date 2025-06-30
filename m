@@ -1,102 +1,159 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C20FB1A073F
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 22:18:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81B6202976
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 23:10:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751321909; cv=none; b=tGeflJ43Mx7opnPuB95OaHQgpsWBJbBep5zn7qge+jfR+x1vND5wRdckrOnJ6n5i3oavV9SuFn6JA+nc/HDXHtRYb5GUlC8PIkmFa0cr8wNlIp6W66hS77QCWP3DociA3iVK2NdGjOwjI7vL8rfgHJh7P1zJao9buMWt3n9F6nQ=
+	t=1751325019; cv=none; b=NL6DMVQ4WulCeRZUxz9TyUSuxI4+oNGForKKaWmJY4MErccPAn58ilNGMwdfEIY5BvDtdpqqv16bUwrnZu3Oqngarq3r/n0fWYFbqjjc80RQFBXj9nGVPzByRVBXn7Y6JnL/u+RT21rwvga8EX/6PWTE6ykru5JkWqjC64Uq7u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751321909; c=relaxed/simple;
-	bh=t0txpIOQUrIH2Bg92vB6B63u7yZHvyCdR/zFziWY5z4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=fLN3ZkztHqNidVYaMImgKN1neGpdCRd2EsAmFAhG4Bx3EwCt4NY3Mt0AyiIQkHq6rWhZSV189VSs380vvEnRXdGhQ1WWMBDUvrmGE4S4MlxinTFhui9jGffC87nE4GlXj78EjzoJ6ne7jDk1jDHfxvjijujYlseMJg8tnpMMk8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DzndHtTn; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751325019; c=relaxed/simple;
+	bh=vL94RX9XFsHr8fkDbuLWX3xMOM+C8Yn9vFzXo48gEtM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LVm7rXofEf22icnFqZepDRW4GT699yL9fGDx8sAHQxQg0Srjh2HJOJn4jiHp5raZURxHYforoekE+wl5PZP69RLvLp+xlDdO/4mJjcv5iii+MRdmwnAN+9vOf8u3x62G+MFMazr86EsrD3ZnIXZfQQ8veZAVZpBCqTSamynieGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SyPuIQ9F; arc=none smtp.client-ip=209.85.214.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DzndHtTn"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60c01f70092so8466236a12.3
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 15:18:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SyPuIQ9F"
+Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-234f17910d8so47574755ad.3
+        for <git@vger.kernel.org>; Mon, 30 Jun 2025 16:10:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751321905; x=1751926705; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=rXD3H0UUPsY98Yow018WcHlC17U68bNZFStlXaXL+3g=;
-        b=DzndHtTnReqbCq0UDgFds8dquJkDGJonGbIDIMiZktwYfIbN/FhUKyNSo4TEKIVSQz
-         yv6zORHbTRlLx5IwQqqirVokjo2wS6577VMk1Jb8angHhvEsBBQagvqbgwiDNJFu4RHp
-         CU9RQHjJpXxCZdn57RgM2bWkCr5+A3Fjenowi3j6EtNIkWbU0GfUobLMaG2HaqnBzZEC
-         uLioouIKHBPWTXFaPsIqg+/sTZcrZ5B0w+KIuuWq0g/SAS97wFwXUESH5Ch4NWbWcosb
-         VudvTH8AxByu6Afm7pFa0kNw9zda66Is9bfTwJXSZwA7KcP1OxzDvwhLq3IRaLcLA+ND
-         ZVTg==
+        d=gmail.com; s=20230601; t=1751325017; x=1751929817; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wJFPmKGFEN9FbrQNimSxF+l9kwUcyS5R+ELHmZAh6gM=;
+        b=SyPuIQ9FKNdWZ8uzD96mGfL+5sxdbQUzJvVXyHYWX3/O9z1PWK16t2XOn0oZegzhEd
+         YieP9zx9BJomXeJ7sl2i0zSHXbPNjeCQzVjQ3SEo7Tgc+3UOvAKhRi0KRC/EuOeXs+sA
+         wTjyR0QRCiH9IN8uhZYWaFXd/vtJ9QMEzkGG+QDCqwWc94Lvae3Es3BDcBuk+AXIWYg1
+         3TuKHSf5P6KxZ40sPm0RvfDGbLbKZy4QAA46KzMHpXujvMYFCy8JzGtuc6emFInalCDF
+         7RsDX9ZgUuJtGNaTHpz/2q0xQiRFdlKAaZAmM5lqXNKrrefsy9fSlPPmQ8ahr9zhcWV8
+         PSJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751321905; x=1751926705;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rXD3H0UUPsY98Yow018WcHlC17U68bNZFStlXaXL+3g=;
-        b=UNUBbE3vEzpIfOvOxPRb47ThuyC3g4FZC5GkwXOZ6cPTWsJzMOoZCc4D6ymnelKck5
-         O3ogO4uB7w55yle/ClVBcWwju0hXW2bu9RW2yGRN3FuxpLvDE2Z6huigVdMwFkkUd4s2
-         pwtandDWJo9MLWSdZwTBiKwcInvmiaLzPvK8J/P5I3LUTBRbtEao4sBdlb+3nI3ls62H
-         83JwDeUlEk9OkirHegR3m/zfzx99n3MX9843r9Q5eXq26GEqcnPKkHsEZuC34rZk//BK
-         NtHUDxwXrnjlc9wyyU+AdikR8YxUQny7oM1Ijwvp2nXC6P32eOaetDSubz6igE7WDKtc
-         iyOw==
-X-Gm-Message-State: AOJu0YwZRMMFIZwJIURmDsCib5O3Ax55U0JbTlVh7VbnS5eLQTWH0mke
-	elC4dZa5WGlnzgp4ucsTGsj5/N+K5XssDUnbLHBEfmNVfDA0rcnURmQilYmJhhxmn6g8WqPEMyh
-	eVs2RfCvL0cw+3fEnUuBm18X57skmXEonsDNw
-X-Gm-Gg: ASbGncv9e44kijmIjvWp3CAps9asawS1NqMNxyezSY2mzZrTKf0kmjS21OCeFFr2hyC
-	d+2+hB3hBLtvLs2xFHs0NWmSmDXxFT9eWCDSZL3c0uQEANokYFWe8En5fXqIdeFRoY0WtRlobOD
-	KruaZhRHBmvuUqHzKad4uqhN+7lz9R13h2Bp46KPIZwDJj1Q==
-X-Google-Smtp-Source: AGHT+IF0mn0sr7QCSGyY/uzIurtBCLPRWBCrrF0y//YrATmCKDG1vnLNXJtWeKzsYNiCP8UJTDxHZkuFfLVo53ljGEM=
-X-Received: by 2002:a17:907:8691:b0:ad8:9b5d:2c1c with SMTP id
- a640c23a62f3a-ae34fd8cb6cmr1497128166b.19.1751321904925; Mon, 30 Jun 2025
- 15:18:24 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751325017; x=1751929817;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=wJFPmKGFEN9FbrQNimSxF+l9kwUcyS5R+ELHmZAh6gM=;
+        b=g8ESmVh4GGw4WqJJBMFU8qRHyPMyXNl7Hl1SeJAE2Os33ylYeWyDfmeprIaY4HAgGC
+         QTJFqyoc0uPvVxmCEEdIUYgsqRpFinNMhvsdVTAGiKiUspGyi0fAK/72hiNMBmvEA+Sp
+         zXPkR3QNVXd183oLcQE7kYI5K2vZ8vFets7NAuL/ejEWaHELzq6P46qCFe+749vhK67H
+         E9nSHJ5xVFq2JHY7ZCRIV0WZ6cBdpIK2YQPvYYe/0IJmaEGVSYUhXFe0IwkCAdxmMMkf
+         E4wxH2ZYsFLfo1GxENZXuI9JhTje3lUJi1KrDx4PmU1Z+7X3Flnw0QzS/WQjKUaHG958
+         fGHw==
+X-Gm-Message-State: AOJu0Ywu0wi5mu0kl4lGirNBoxhF7x+phMkwzEOI0qNTPrR8tJ0I5tLo
+	qN5E1ADgZ2QL/hh2rw8Fp5ULlERPFqj3Lg0iOqJ3uu0Gp1AhWibg2bWd
+X-Gm-Gg: ASbGncvmsx0GzGtya/ldYu6AS/IwwqR8blSr75eOf7yD4j7nkOUz2a8WmrJqIBgFjXg
+	n+SY5PGZhOODzV1d5Um7gtl/T2dbhe2ClX6/PY9OI0qwA3+9HEphveyUxz6IabsOhYHuONzcwZk
+	vl89u7CCv0gH4UG7FiB300xeqysq+sqvUr9lpLHPUv4ojIQ20zyFuY6XQ9m4dmdoiBxt6OFNT+X
+	w1caJIROR+GXhIJCbPiEBMI8RKi/aTJ599PPdwHcxhIFZR0glTslVkN9MgmzAxV24R14uJFgBq/
+	5dTG+srEvKUBCzCCOxbK0fNSLsWrq4PTDX9LDLoYn+llw7vuhJT+UpwDQJJAAeIeJLS3/tLXtwg
+	GSQHMFcqny/p6pLXEpbIPjCW8zsM=
+X-Google-Smtp-Source: AGHT+IH+oGGcTat+l09pkfxnuWe3bYTmwM4vMwfl8lz8/u1UjUwbdvT+x3uJgjat+HiB2B1UpQq+wA==
+X-Received: by 2002:a17:903:2445:b0:234:8f5d:e3c0 with SMTP id d9443c01a7336-23ac45c1cb3mr193221495ad.6.1751325017066;
+        Mon, 30 Jun 2025 16:10:17 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3b7b0asm94071305ad.173.2025.06.30.16.10.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jun 2025 16:10:16 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Jean-No=C3=ABl?= Avila
+ <jn.avila@free.fr>
+Subject: Re: [PATCH 0/5] doc: config: update for the ps/config-subcommands
+ series
+In-Reply-To: <cover.1751310455.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Mon, 30 Jun 2025
+	21:10:22 +0200")
+References: <cover.1751310455.git.code@khaugsbakk.name>
+Date: Mon, 30 Jun 2025 16:10:15 -0700
+Message-ID: <xmqqwm8sltbc.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 1 Jul 2025 00:18:13 +0200
-X-Gm-Features: Ac12FXymVdZrTFigyOwVErwTNFAL1ssRuFJZwQFeKHUSTZze5eA0vVLNKokgtPU
-Message-ID: <CAP8UFD2hTgJu-byOE-R-nt6OYqVoBTH1JiLbHoqB_pq=H_K9yA@mail.gmail.com>
-Subject: Draft of Git Rev News edition 124
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>, 
-	Stuart MacDonald <SMacDonald@kaimaging.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>, 
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Luca Milanesio <luca.milanesio@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Hi everyone,
+kristofferhaugsbakk@fastmail.com writes:
 
-A draft of a new Git Rev News edition is available here:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> Update git-config(1) according to the ps/config-subcommands series
+> (fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15)):
+>
+> 1. Document `--show-names`
+> 2. Document `--value`
+> 3. Mention `--value` throughout instead of the deprecated
+>    `value-pattern`
+> 4. Mention `--url` in the synopsis
+>
+> Kristoffer Haugsbakk (5):
+>   doc: config: document --[no-]show-names
+>   doc: config: use --value=<pattern> consistently
+>   doc: config: document --[no-]value
+>   doc: config: use --value instead of value-pattern
+>   doc: config: mention --url in the synopsis
+>
+>  Documentation/git-config.adoc | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
+>
+>
+> base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
 
-  https://github.com/git/git.github.io/blob/master/rev_news/drafts/edition-124.md
+Have you run tests with this series, especially t0450?
 
-Everyone is welcome to contribute in any section either by editing the
-above page on GitHub and sending a pull request, or by commenting on
-this GitHub issue:
+$ sh t0450-*.sh -i -v
+...
+expecting success of 0450.142 'config -h output and SYNOPSIS agree':
+                t2s="$(adoc_to_synopsis "$builtin")" &&
+                if test "$builtin" = "merge-tree"
+                then
+                        test_when_finished "rm -f t2s.new" &&
+                        sed -e 's/ (deprecated)$//g' <"$t2s" >t2s.new
+                        t2s=t2s.new
+                fi &&
+                h2s="$(help_to_synopsis "$builtin")" &&
 
-  https://github.com/git/git.github.io/issues/780
+                # The *.adoc and -h use different spacing for the
+                # alignment of continued usage output, normalize it.
+                align_after_nl "$builtin" <"$t2s" >adoc &&
+                align_after_nl "$builtin" <"$h2s" >help &&
+                test_cmp adoc help
 
-You can also reply to this email.
-
-In general all kinds of contributions, for example proofreading,
-suggestions for articles or links, help on the issues in GitHub,
-volunteering for being interviewed and so on, are very much
-appreciated.
-
-I tried to Cc everyone who appears in this edition, but maybe I missed
-some people, sorry about that.
-
-Jakub, Markus, Kaartic and I plan to publish this edition on Wednesday
-July 2nd, 2025.
-
-Thanks,
-Christian.
+--- adoc        2025-06-30 23:09:02.715600047 +0000
++++ help        2025-06-30 23:09:02.723600026 +0000
+@@ -1,7 +1,7 @@
+ git config list [<file-option>] [<display-option>] [--includes]
+-git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] [--url=<url>] <name>
+-git config set [<file-option>] [--type=<type>] [--all] [--value=<pattern>] [--fixed-value] <name> <value>
+-git config unset [<file-option>] [--all] [--value=<pattern>] [--fixed-value] <name>
++git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<value>] [--fixed-value] [--default=<default>] <name>
++git config set [<file-option>] [--type=<type>] [--all] [--value=<value>] [--fixed-value] <name> <value>
++git config unset [<file-option>] [--all] [--value=<value>] [--fixed-value] <name>
+ git config rename-section [<file-option>] <old-name> <new-name>
+ git config remove-section [<file-option>] <name>
+ git config edit [<file-option>]
+not ok 142 - config -h output and SYNOPSIS agree
+#
+#                       t2s="$(adoc_to_synopsis "$builtin")" &&
+#                       if test "$builtin" = "merge-tree"
+#                       then
+#                               test_when_finished "rm -f t2s.new" &&
+#                               sed -e 's/ (deprecated)$//g' <"$t2s" >t2s.new
+#                               t2s=t2s.new
+#                       fi &&
+#                       h2s="$(help_to_synopsis "$builtin")" &&
+#
+#                       # The *.adoc and -h use different spacing for the
+#                       # alignment of continued usage output, normalize it.
+#                       align_after_nl "$builtin" <"$t2s" >adoc &&
+#                       align_after_nl "$builtin" <"$h2s" >help &&
+#                       test_cmp adoc help
+#
+1..142
