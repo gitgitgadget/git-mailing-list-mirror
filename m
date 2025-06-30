@@ -1,83 +1,83 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A00221DB5
-	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:10:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B732E716B
+	for <git@vger.kernel.org>; Mon, 30 Jun 2025 19:10:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751310654; cv=none; b=cuD7iz2w1SgIRUwvbe6fqDCCGwkZH6txXemNVzSHolcQmPez++h91DT4D10nKZP1idoR0hC2JgRC/dTVukBi8m0d+u9UDybSuXHAuRdX+g7fkOlZukX1t4t4Du4XGk0EcqGm0gZuLxKTnGthYzQVH7Yw1fObs+hBbEY/57DQEiI=
+	t=1751310657; cv=none; b=Lcydsz8tItnyqeFPXc2oBs7EpkEtBJUxHfGWJX3raPaY4wVMp2uGq+UBxgED9n6dexEB6frd/cyjT9FuiD392/J25n7wGXnIaq8n5DNeSaubHDnnSNnOsemQIU0u0xnv8VPzEb6+TcR5MCz/jyMjYFGjITA9RbYHhI81WOvwYgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751310654; c=relaxed/simple;
-	bh=QKIajmlT7p+Hj7kKvO0ZNr+kdlAejp7pNYqhxG/zchg=;
+	s=arc-20240116; t=1751310657; c=relaxed/simple;
+	bh=VQuM+ZB9jJF5gEp/O4K4FkZeJN4luQfwtaJr0/k9u7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=bFqN2hwpDlhdsgd7iD0ZjUh+PJ8AzyehqfPIIo+egka7qEmjxLCJwu0P6d0+GsfaXwbPB0Dr7JhoQ03+7JSKKqfk2m3ZPHuKkadIAx05pAgyASMM9U8fL/rPJGNQ2DR+dz8q4t5bvlcSEgFwShua7qdYXGDKRQ2xUs2CIdJwng4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=ir1DAjLl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E5rD3I+R; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=t15XuJrAoTXGTvYLqSXiewtUFRepE9odXSUgSmoBaZtzp+VEm9lCBw7wQhSIEs5uWiu5tG3fd4b3Nk08QxGJ6vhRLvPJwvA1qAy0BBS0loJ+qlTP4c9zthApfOZKxTkWK/dvAiiAukNevYDxwq8AcBUe7gPiNtUY/genGi1lrg4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Q3hcBpRK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H9iUjz18; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="ir1DAjLl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E5rD3I+R"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2FE6414002F5;
-	Mon, 30 Jun 2025 15:10:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Q3hcBpRK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H9iUjz18"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id E0EB8EC03AE;
+	Mon, 30 Jun 2025 15:10:54 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Mon, 30 Jun 2025 15:10:51 -0400
+  by phl-compute-12.internal (MEProxy); Mon, 30 Jun 2025 15:10:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751310651;
-	 x=1751397051; bh=Mjq3KlGfItRlqheJVHM29ZHScgsON+0a5Uf+Bs0RdUI=; b=
-	ir1DAjLlNbYZfH+SpFaRnRxn8wTYJSIGoUwckDtd7qXOoKEm7OiUUaOPaqoQCUwM
-	HM9TS65X6gjXGsHUzCFmFF7xoDwDh3xIXeJZvG/hYkYGCKFEAUwKi+nLHmH3tlPy
-	aBoMCmDF1ht+ltJVCSVcO3mhNG0E/SpJ4KKs6plzR7EIXrjV9IyS9DKp+AhZwi1i
-	wJmFu8hPNhEL8ULKBFPVIbn0HuIamqNUpsuRw1isk2uqrbdD8cbU4Ug1Y6eIZ9mo
-	c2XRPMZWcdfEedfWmilipnutp6pRof5CEoB6F2Gu4Oqh620fI+JhQw8bQ5jICYVI
-	K2lsOVwIqsW1lZdsK+Wd8w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751310654;
+	 x=1751397054; bh=3pCw82SNiKFM4XFa6xgAwTDO4V1/ALE92nRPDzjpNZE=; b=
+	Q3hcBpRKhjQYlJKrdnZMBZsZ+6kofUHFFWSWPpBfyhjQDhPAGuztReBp8NCTCAea
+	6cdBkLPu13HjxP/ioUrCRsV9D3uZUOIgUDWDeolFf58jynpvLrViskhUplLEdOwY
+	aIgJwl6DuZ5iVdcqpWzocSyThi0pP8HSFqbfS8YOsC565wsow4+n+AXcwWvF2XU4
+	sbYy/+cDHt3hXnxRdt0Q2NBOPCd0cS+NzmlbTU36I7XWvYRcCWP4ziWoTpdvlwd1
+	9CFWzXLIOv0Zt86V/9xub/Ev5UaZPu+zX0XOmapTgfNK6Ct/QmUOr2V61stmf4VD
+	zF+W/t5QyMVb4rBsjp92NA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751310651; x=
-	1751397051; bh=Mjq3KlGfItRlqheJVHM29ZHScgsON+0a5Uf+Bs0RdUI=; b=E
-	5rD3I+RS3E9SA9nP753lXgN2CxDgH15k0Cf6GvCvMT+0klF7PyfljnVkfCzejhtj
-	19qvxQZ100MZUw8ZL2LGqTsCGXvfDKpysYk/VrA3j/spEE2s67F2LLtdAmoDQ5DV
-	gUwjwZUCPyWtzoLaFGHg++jyLPVmHrDYxZucRM/FSo8OnUTAqRWSI9XVF5ROmbDK
-	+GYsKsJus+Pu4O66OQDQmwSJTNI4ArjjCOA/HFvrKvo+lyKPO8jzBIVd1J76PjqZ
-	wVrzyOQYEVmHaOWE4pkYwWEMkLSBh1h6P1KnijT7AfcN0HJPBlZg4SypEHGCEdLK
-	Wr1Mac+ATitLs4Qs/OfkA==
-X-ME-Sender: <xms:O-FiaOCvReS57ai_osPrMfLjTZryrpZNlTMjuwNAPxgTnSp_YFTLqNU>
-    <xme:O-FiaIg-JXi-OjWopJ55yEVJiYpweaC-95JsiDX5_BRozCZzBpRRZwXpOleOZzWuI
-    xiBIllbsVQEYNF4TQ>
-X-ME-Received: <xmr:O-FiaBkoyipJVWdj6VaR2QJQ3kbG4IxpbEnplb74kEmcf3zyS3iQTVLUxpPJmRyKahkLSUR91JseEkXXERIX7r_dE6R6CJ8uIyimheA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751310654; x=
+	1751397054; bh=3pCw82SNiKFM4XFa6xgAwTDO4V1/ALE92nRPDzjpNZE=; b=H
+	9iUjz18MZqbmhWSMvP548Myc6PXO/tfEJ/UCqex1PcssYlVnODsQks56akGmmS3H
+	KEQ/JUjTb4+I+6ixBF/QxSh0IAjZ5k+C03aqE8Rst32HJ8HL5cHiL98TkTDDoAhk
+	xHUJrUVQ2uhqOg8oRwo9kLKG6GpEUvqLEDRNWtdssaeiOp4Sm3RFXiw5h3TrN2fA
+	MJ0KgpKt6WRdpvygxHrtCl1+pm4x32EEE9soFFERJMAQjeqiDABsB360H3KJjZcP
+	ry0JPfA9eiGfev9ydoy7MnBBJ6LbHc6t0bvfjB/vvGWd4P34BVw7V7+8EhYxincC
+	7QIB0waEdo+ulkVYDw+cg==
+X-ME-Sender: <xms:PuFiaGxDKnvb0fSlU2qjYJK9cPh7ZCuxacMN920e8ZPgINllk7Bo_ss>
+    <xme:PuFiaCTZF4HKmrIUIf-68JOE7HmPDZ1VeDODLsnyJQqsx9AHZZqMQSYGtKqYfj9oU
+    jvUl2wS4x2oDx6Mlw>
+X-ME-Received: <xmr:PuFiaIUkzsAiKbKSW5Ff7T-MUf3-evgEY0YVwYasA4Wst3w-PpYjlAmnJONRWez8cUi8kIbpsUyQ_PfdTkrQAhW3MIhoHlgqresRSfE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduvdehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufffkffojghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthho
     fhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvg
-    hrnhepudelgfeuieeuteekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffg
-    necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
-    sehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpshesph
-    hkshdrihhmpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhr
-X-ME-Proxy: <xmx:O-FiaMz0CMLuFkymXn_3p3gRUTNLC6UO6hySFECoS2lgciuHX0x3RA>
-    <xmx:O-FiaDRHE3o8pJPN0krB9MnN2TKedrMe_ap-226jd1X4I7BAR1bdzg>
-    <xmx:O-FiaHalBIk8l-xHeF4GH2epQp5BrmpOs2EIP33IyiHws9GQH2KseQ>
-    <xmx:O-FiaMQICNOgOASCIUoz2lbSHx5nCHJbFBa9OiF11vvX4F9GsVydVw>
-    <xmx:O-FiaDztrwheglRbMsRxGYBtQCWwb4gWGj1x_I2ncEdeLHWbAljhuT46>
+    hrnhephffggeelhfejkefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfek
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrih
+    hsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgt
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
+    nhgrmhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvih
+    hlrgesfhhrvggvrdhfrh
+X-ME-Proxy: <xmx:PuFiaMh2FJKVWcY2MTNDnYNJOywdUcN42nscRLMhg0LpA6FC2CguZA>
+    <xmx:PuFiaIAHEsKKgSrkBNtqLli81Vq7TwHHpsAQn3JT2ffIAit4NAaPkw>
+    <xmx:PuFiaNLNUD8JCaWubFs7RdENrW585yZtnmNp1XL2K8aNJV2VpEXzCg>
+    <xmx:PuFiaPDfh9qgXNFojcFiDEMm4yp0IZEEdW2eiQk_RwiOwLNgs9hiHA>
+    <xmx:PuFiaOjDPFaWeddMCm0QyjFjl5LrGZtU0jxfg0XtvsXHHeFRCCY1DOWa>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 30 Jun 2025 15:10:49 -0400 (EDT)
+ 30 Jun 2025 15:10:53 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Patrick Steinhardt <ps@pks.im>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH 1/5] doc: config: document --[no-]show-names
-Date: Mon, 30 Jun 2025 21:10:23 +0200
-Message-ID: <7d66a5403b31248995e605ed9330c0dfb2b80321.1751310455.git.code@khaugsbakk.name>
+Subject: [PATCH 2/5] doc: config: use --value=<pattern> consistently
+Date: Mon, 30 Jun 2025 21:10:24 +0200
+Message-ID: <a52322528dac34827abd5100a2d3ee49e376e2ed.1751310455.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.50.0-KH
 In-Reply-To: <cover.1751310455.git.code@khaugsbakk.name>
 References: <cover.1751310455.git.code@khaugsbakk.name>
@@ -92,49 +92,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-These options were introduced in 4e513890008 (builtin/config:
-introduce "get" subcommand, 2024-05-06) but not documented here.
-Use the description from the source code.
+This option was introduced in a series of commits from fe3ccc7aab (Merge
+branch 'ps/config-subcommands', 2024-05-15).  But two styles were used
+for the value provided to the option:
 
-Document this option and the negated form according to the current
-convention.[1]
+1. Synopsis: `--value=<value>`
+2. Deprecated Modes: `--value=<pattern>`
 
-`--show-names` is also the default when `--get-regexp` is given.  But
-don’t mention it here since all the deprecated modes are quarantined in
-the “Deprecated Modes” section.
+(2) is also used in the synopsis on the command.
 
-[1]: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
+Use (2) consistently throughout since it’s a pattern in the general
+case (`value` sounds more generic).
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
-
-Notes (series):
-    >The default is `--no-show-names` unless `--url` is given and there are
-    > no subsections in _<name>_.
-    
-    See: d4770964d50 (config: "git config --get-urlmatch" parses
-    section.<url>.key, 2013-07-31)
-
- Documentation/git-config.adoc | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/git-config.adoc | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-index 936e0c5130f..e05bf813d46 100644
+index e05bf813d46..d3ddc538555 100644
 --- a/Documentation/git-config.adoc
 +++ b/Documentation/git-config.adoc
-@@ -259,6 +259,12 @@ Valid `<type>`'s include:
- 	Output only the names of config variables for `list` or
- 	`get`.
- 
-+`--show-names`::
-+`--no-show-names`::
-+	With `get`, show config keys in addition to their values. The
-+	default is `--no-show-names` unless `--url` is given and there
-+	are no subsections in _<name>_.
-+
- --show-origin::
- 	Augment the output of all queried config options with the
- 	origin type (file, standard input, blob, command line) and
+@@ -10,9 +10,9 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git config list' [<file-option>] [<display-option>] [--includes]
+-'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<value>] [--fixed-value] [--default=<default>] <name>
+-'git config set' [<file-option>] [--type=<type>] [--all] [--value=<value>] [--fixed-value] <name> <value>
+-'git config unset' [<file-option>] [--all] [--value=<value>] [--fixed-value] <name>
++'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] <name>
++'git config set' [<file-option>] [--type=<type>] [--all] [--value=<pattern>] [--fixed-value] <name> <value>
++'git config unset' [<file-option>] [--all] [--value=<pattern>] [--fixed-value] <name>
+ 'git config rename-section' [<file-option>] <old-name> <new-name>
+ 'git config remove-section' [<file-option>] <name>
+ 'git config edit' [<file-option>]
 -- 
 2.50.0.138.gf67de2ec4e7
 
