@@ -1,122 +1,98 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B6425BF1C
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 07:00:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7FB1917F1
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 07:05:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751353250; cv=none; b=aAiJhDRjoO0xSM1mrwu4FGk8LynYfZeZl8EGtPnRDKiWz/TTMr388Fk4EVW5hEQZDQUK7wvG9/sBU2KocIxKFJCgVl9wokvqQWObxer9GQ3xjfIa4O8Qxpnh/RecdCRrnw7E+L0dElXu5v8r4VE7Mopt2/95LqwCKEL49KD3/zc=
+	t=1751353532; cv=none; b=gD1pq8EhxOZvWamB4k/a2L+//QcjgiYt9912dQZYBTjtwSC+7C3H4j7et55jkLnC5z+XkiDbXy5mriCG2WKIi/ceZsetvOcCvEEzv3lnc7TjziAuxv2h/aZj4YeLaHO0txSqBDxp+GtFlNAfEKXoAjqANu3GpZtoiUVQVQUeiC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751353250; c=relaxed/simple;
-	bh=Nub52wc5Ygziq4KGcoyacKceyssRzo18kcXo4WMwzSw=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=D8Ue8vmEM9UAmm6aGP+9KUifvO1rR2nIYhhaDfY9AzFeDWax9UmadCxJ6arf37M753O9gksZFttWn4jcm5Sxb7/bu4f57+rFrhIrvpg7Gy6QUJJPIiIECu13N2ou5pcDYr+i28ElLtP0C9OxRflnu4wwq/rG/1KUUSKW2VMJLpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nKMspiqu; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751353532; c=relaxed/simple;
+	bh=UGwo1/b82QbA0wJDKF74ayfrLbkUXn251X/Mf8To+sA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=WhPN/LZDrzLxb9HLCktXuSgFPKvAGiG6S3vAv5KTceZdPH2Iy189NyuiR9N32lcSeWBSC2PurWldl+1eMFx0yoWR864WvrheSgRwgbSkDZDSGGLoIGErk+ZJxSwfyrhb7mh2fVqpGNo+oNVvwP2TKi/KGcdIYZMwqWFvbymX9fk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=OmdIUplb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HGDlYQNJ; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nKMspiqu"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ae0bf1616b9so81170166b.0
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 00:00:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751353247; x=1751958047; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yBM3q8x7N1jsYiHosXn+702Yup7Knb+6qq2PSvXOi/s=;
-        b=nKMspiqunfb5V6TeRr2m5kJjthWCHh8h3AsjfR1Vggp3nq1dS+50SyOJQDjzNBsJ0Q
-         nq0ZyDa9HwlK3ASAPA1KA92++0VrJumNARNRuPq8tq8A0D1qenCuNe7Vg7yR9kcAyv/q
-         vWREAi8hRoielzIkZd6kPRZiRvzXri0eKCR7gomYnb39ODFq1rvFMEkLwnyqxhEJ4XyG
-         1gCR8oTgJ/gdDCkei+CfUUzL46MgqEXDXdAMl0qpPtHJA9YfkUBRUnez7Ig+2jybyhmh
-         pWR4D3GnJonT6R1FrQaQxBfLWH5+cQl3SsUZ9q4A4lMgsa7Rhv9l++f1QhXXOlwEz0fP
-         2fDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751353247; x=1751958047;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yBM3q8x7N1jsYiHosXn+702Yup7Knb+6qq2PSvXOi/s=;
-        b=ans4hC/V3IUDp45aOHa0wWsdjMqPazN3duZVhfkPjwNn6CGrsqUb2OgsaI6mUrV8bM
-         xponQjY/gW3oinq9WVKD03lO/5e5KorKhXQGo0p8ryhEosiZN8dd1x72wVqQvtgNxcBA
-         Ocr9BYNCJ8EpqW2PTiMWWA6EKv+uikS3FJDnrVqDUL9NuizmpI2Xf//f7nAOi1893c6A
-         a236gzYOEL/2WOKZtl04gjAjHyGEsFxQ0DoBBLMd4t5L3BlFFtpWPrn6luFrxg9Ob9DC
-         jb5tkgoQjlL+jmXLZ2ibSJybYgqq/jmHgZ+ft17bNAZvK0ZA1fvXXhk8CeFYesAaEAD2
-         5HRQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVGCGRH2xnmPCaAdFhJm37H+sy7EhNO4af0hIf3m5eSyx8+Dv9qsAS0awh/eRlp/g9nXTk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxDsw0mnxX4vfxXZKa6sUrRfEURv7KXTzFpw+S5JeZwvp4q+nxF
-	sqSkZAs3wc14aPeUUBFw+HsPXX6cOC7zv+SCr+t2/J9HseeDZveNFqRmgecWBKQpQV8V3u3WLWr
-	xq1PVvy4axda/7TDu7l8av6Oznn+3UOVVgB9y
-X-Gm-Gg: ASbGnctE7JYhJ/QQVr4UIDrqK2MtIS4MHc2cW+lh4bPdH6krG1qEkHHK3hQ9XIf+Hag
-	C3E2pSZOcoAa5wpJ5gC16A16P7FcYyF7Tl1tBMhgkaqUkklAJOVjk+Ji4+AV2WJ8F6YDOAm1YFd
-	m8moI7MTQqNBZhBVeF84XrXAZzEb/ElG6SbBUmOWGWg7c=
-X-Google-Smtp-Source: AGHT+IGNO61XOPOHBB5BzqGkvBDAttDZ+9nRft1yWpABvgC6N7LAqseVSAMIVM1gL/+nMmRrCaWcIrgJcm0h2NWjdMY=
-X-Received: by 2002:a17:907:7f22:b0:ad8:84f6:d896 with SMTP id
- a640c23a62f3a-ae3acfd0d1dmr68510766b.15.1751353247001; Tue, 01 Jul 2025
- 00:00:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="OmdIUplb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HGDlYQNJ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 96EE57A0221;
+	Tue,  1 Jul 2025 03:05:28 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 03:05:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
+	 t=1751353528; x=1751439928; bh=UGwo1/b82QbA0wJDKF74ayfrLbkUXn25
+	1X/Mf8To+sA=; b=OmdIUplbWzp581/aN1MhqUIGeFIF2F5QGYw417XhbHQ+alc2
+	jhPd8+L/vW3tAoLr27R6bMvZOTSDGKSvCqIL01a0yxi1oUMz5ThWl+Zv4FY+NMYi
+	T9p6wHdLkWqw+qMjAsd1tz6/yLD+Ol5qWj83IcLnfvdSh0/m0AXqVk/iB8ks0jtw
+	U7rzrbK08w2ekC7aA9TrvElJVNHSD9EV4t+32K+0W0tP8/4grBSi+B5Lf9P+RAWr
+	Ify7l/iMWpTDKNEkAjUGSWp+2o8WGQm3NG2DhNsF14i9fHjgQgyFlITrHmUKs9Ia
+	1D1PLzjFE0f9GIykU2g9RkZ0oBawmpN5tpkYaA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751353528; x=
+	1751439928; bh=UGwo1/b82QbA0wJDKF74ayfrLbkUXn251X/Mf8To+sA=; b=H
+	GDlYQNJaeHk6dCdG9viBWzORJwWQFzMh5WWTYuXNFbfrtOfPgHA2dHp3whtoh2Eu
+	GtVsO80MB4uJAGryZbjY0v1ODWXt1WJIKejMSmY3OU5LXlKfhHftxqr5pSOQ4siC
+	TQpg0wcPa4olVD/IItBy8or7Oz2sdxSXVwl8uGBQuLu7E4Fva45VGPVgBlfFOE9h
+	izPei0b+uP/0PeynuIcJXrbivTDSHmV9MMaDF1SKLUkH+md9D8c9LqD/MhofP+5F
+	PSOUdaRtquVe2ht+MJeZYtSxS9gdx6AdypXYV7e5M1K3Ubcb3HRbaJ6UKhJuLspe
+	uGFI7s9fWPlSVEkJqNajw==
+X-ME-Sender: <xms:uIhjaHTZDJPIequXAouDIJ9DUV4lL-pJ-CGYQ74_hYykdYF9Pai9tGA>
+    <xme:uIhjaIzqvH57EIH3l-eRs_C9rRylcX2kgt_0tm45cKzF-_JP97AcbYhABhjv3TtT_
+    7ZEH_WOBf5E9eKBTg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeelfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
+    grmhgvqeenucggtffrrghtthgvrhhnpeetkeefudehhfelfefgueeivdelledvjeegudej
+    gfehjedttdevlefgleekieevveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhn
+    rdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:uIhjaM39mUl9T5ZJJgh74NFP-Ixa0h_qZVjLmb3EbeMVpyALcUuPCA>
+    <xmx:uIhjaHCqdrQO1x5Lo7LgK4ngVMjV7j0vP2yJgZ7lEM42qWnT9G8uzg>
+    <xmx:uIhjaAj2Ku9a5VKm4LWx-GrzX-DpsI6gCvH1OVD0jIXQK-Vk0WkTew>
+    <xmx:uIhjaLqNnK6AL2pIk19PSQxpg7fmslft-r_VSgaC5l5kDnor7DZf1A>
+    <xmx:uIhjaLDeBirhc7bCYhEjrm1-tU3tElpstzbs4R_jrbezttD7hOKtwMnq>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1DB1C1EA0066; Tue,  1 Jul 2025 03:05:28 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAGJzqs=kJtPcMrWC8Dayd+VW7BvC1rmzS0zT+EwQXfLOpZ3Tfg@mail.gmail.com>
- <CAGJzqskDumbMSbC3rdYT8fZ8gNJ5MOjR_o8RAo9QS-nuvbBinQ@mail.gmail.com>
- <xmqqtt4u86x2.fsf@gitster.g> <CAGJzqsksmQmY4o-_7DoPFK8VP-h59ANUjroVv2+++ZG3gDBdUA@mail.gmail.com>
- <xmqqtt4puhwq.fsf@gitster.g> <CAGJzqs=Xur+=0=KUSR6TQA-A3zt-Bpyd5-T52_ntuV+mCUrAQA@mail.gmail.com>
- <xmqqjz5ijo97.fsf@gitster.g>
-In-Reply-To: <xmqqjz5ijo97.fsf@gitster.g>
-From: M Hickford <mirth.hickford@gmail.com>
-Date: Tue, 1 Jul 2025 08:00:00 +0100
-X-Gm-Features: Ac12FXy3e35-7lszlgQPFThKb-bytR-mqjUp5Iy7yorGDvLiyysfEO15Xwo4urw
-Message-ID: <CAGJzqskku=BSx_rZx0EgLLS-E2uJKLxu0rfqkKFTVSJ3Su749A@mail.gmail.com>
-Subject: Re: Fetch remote only if remote hasn't been fetched recently
-To: Junio C Hamano <gitster@pobox.com>
-Cc: M Hickford <mirth.hickford@gmail.com>, Git Mailing List <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-ThreadId: Tec469262b87623db
+Date: Tue, 01 Jul 2025 09:05:07 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org, "Patrick Steinhardt" <ps@pks.im>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <01ef5e34-66d3-40bb-aca9-8f12ad95c000@app.fastmail.com>
+In-Reply-To: <xmqqwm8sltbc.fsf@gitster.g>
+References: <cover.1751310455.git.code@khaugsbakk.name>
+ <xmqqwm8sltbc.fsf@gitster.g>
+Subject: Re: [PATCH 0/5] doc: config: update for the ps/config-subcommands series
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-On Wed, 11 Jun 2025 at 16:23, Junio C Hamano <gitster@pobox.com> wrote:
->
-> M Hickford <mirth.hickford@gmail.com> writes:
->
-> > To support Git users with sporadic connectivity, might it be useful to
-> > add an option to git fetch? Perhaps  `git fetch --offline` or `git
-> > fetch --complete-prefetch`?
->
-> "offline catch-up" is probably the phrase I would prefer to see in
-> the documentation page to explain the concept of the operation than
-> "complete prefetch".
+On Tue, Jul 1, 2025, at 01:10, Junio C Hamano wrote:
+> Have you run tests with this series, especially t0450?
 
-That makes sense to me.
-
-> In any case, to present it as a first-class option to end-users,
-> there needs a lot more thinking and a bit of work need to go into
-> the way "prefetch" works.  For example, the longhand I gave would
-> work as a good solution only when the user _knows_ that the prefetch
-> is more recent than their actual remote-tracking branches.  If
-> refs/prefetch/remotes/R/* is older, then you wouldn't be bringing
-> yourself closer to the present state of the remote at all with such
-> a fetch, but as far as I know, a normal "git fetch R" from the
-> remote R would not clear refs/prefetch/remotes/R/* when it
-> completes.  There is no "last time we fetched from there" record
-> kept anywhere in the repository either.  So offhand, you'd at least
-> need to do these:
->
->  - teach "git fetch" that updates remote-tracking branches to remove
->    the corresponding ref in the refs/prefetch/ hierarchy;
->
->  - decide on what option name to use for this new operation and
->    document it;
->
->  - implement the option "git fetch --that-option nickname" to
->
->    - figure out the remote-tracking hierarchy for nickname and call
->      it R
->
->    - when refs/prefetch/remotes/R/* exists, do an
->
->      $ git fetch . "+refs/prefetch/remotes/R/*:refs/remotes/R/*"
->
-
-Thanks Junio for your insight.
-
-I shall leave this as a feature request, perhaps suitable for a
-microproject #leftoverbits
+No. Sorry about that.
