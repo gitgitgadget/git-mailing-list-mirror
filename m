@@ -1,136 +1,108 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D9B281531
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 21:12:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B84266571
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 21:15:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751404377; cv=none; b=FVbmvy4rvPxip/dNd0q8BGil19rFr3jdVNmsSc2PG1WoN71cUUzbRCXIizsbZsXDNvnBsFX7kUSdRjjX+ZQyLD+JGTux4/WUF/getIjZ55BzCMDUbxYIP6Ju9mshoe/xLStI0vX7BOoun0c9qpVAWtJVJVo9TNTxMzl8C2KmmnM=
+	t=1751404502; cv=none; b=VAw1fumDAYAWZA56cjNtSnIX71mwzDvoMyoHY7OaQFP4GuImRaSKSHpawCJgN/bHFabOtRj3uIcTKbuhkLMkG3M/kPG1SFjEwmwI7Y5GTWQhuN1jMNVizv/hEvL0xP6iGRsTwt6ph9ReLsrd0YtURAQzJKac5jDIuZ7jzm+wJr0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751404377; c=relaxed/simple;
-	bh=x0Eg0YSVVEg8aZTdW/HTLj+fc8mdZEr7EEiviAZySg0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ahkNm92SbVI7e/GrLoE6/JR6FGkGJ/5gD0FrJAothmYpNwbwMi0Nh/u3i7q1asMzoV0x6nPmkr2cngX/v3CAkw+n1I7rrwk29zNifgsY8UNNxYVPt82kvlYfK24iWGZLfBeRb0ZT/2kIzr3shnqKzMix86qjs+TvUgx6br5OUfA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WMX78P8H; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751404502; c=relaxed/simple;
+	bh=+t1fAlq2xamD1MqazW5rvBgriukPvUyZdWQpTkEegw4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eTnvMAC46dLiyQggMbu/IcDGrp4qJwmQnmQYnHl//o4t+1Nr5bSk2iFIAgaod7VgiddfLmKUKBmF8W2i+rGjsDJSBe7cRvv3z/7cNvtd9aPiI3JvsNyOKRa5lFCBTCNsFkQm8GvN7ohemGzBz4ruMudRA1WZQzjVKrTIiq1WaO4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Q6qFyKzN; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WMX78P8H"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-748da522e79so2418153b3a.1
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 14:12:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751404375; x=1752009175; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=x+U+CZ+SABj8F0o9nTGF89xztyNyKcLu6JLJQw0NgfE=;
-        b=WMX78P8Hvx5MxWR6b/vRSsh0vNsBDMYc7WSd7+4R99PjgHclE3ZfJSHjtNQxs2Jizk
-         WyK/H6V1uXYYQ9l2kYxW2YJ5lefuqyl0NOI80wL6QReyaT47+76C2WZwv2frJ32kskEt
-         NE1smB9TonNsaJa8dsEeUdo+xfyW189EwTXWV6+mDa+kduOhbSIW8onzTfLmpD1KEX1S
-         KcUJQjThVCxTg6/t6U08aM2tGF+Vl/FBwfBnNMuiXXP2sAG5rrmJ/c8ZgK0s9MImckSy
-         B/2Y+d/Or5bAWwbDvSIsmTV2H2RFNeZ86pn83+TusuwxjrEXaU/ES4roBmrc7n+Xto18
-         8eMg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751404375; x=1752009175;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=x+U+CZ+SABj8F0o9nTGF89xztyNyKcLu6JLJQw0NgfE=;
-        b=YpkE0dKkUdF0lW9PPC4eJi/xce2rdM5ovaWnCwk8M3gavHCf8i9X5di6N8AkAf+fNk
-         wYbktTkPMqWWhsuIWqsIPz1y1ZRQc6WQ5vpzYAkohJ748Se7ZTWCtMPC29drpWUwQ20n
-         fZ+TG9jc4K5p1iv9Y5ztZ/3tLri0+bRxZwR22tptJWIsy94fKI5DtMM17nipaRRCBkma
-         CweOY7iqewF7O4o8SlBvjLuXNruJIrxLzuxKHCQh+HF5TWiKcvXHHeDH2iqIECeJfrpc
-         EwmnKs7nVQCEPfLJaTSGcPV8bgLXZJ1xYaVUCEckm7+Y4JBpiNbiEgCTYr5uqjwIfufx
-         wdVg==
-X-Gm-Message-State: AOJu0Yw+q5K7I494t3Oi+6AVagk2+VQ80kGcc+ZJrfIVsZ6tgPwn+qah
-	R9oM8/ncLQBzGhTFSda9BO8ULb44857EzDyLihFe27K8KKqT+KnD1EfS
-X-Gm-Gg: ASbGncvzsibopIw6h/VxIgE/ahS45AkCBFT7z0RXXyWmkdkGDdYhP7ZXqSPrZROgDur
-	AQVNsybf871ZgqhmxNgsajpkylsSaz4yknIXlCylGnxu/koo2o94n8JwBHUVtocSmDuCvxRCcEm
-	WsmU7MQswBJaL892Mu+U3xhKXWddTKErLfJwWIv54msr8Mt9bNXKMP9NreSkPGdSpBx2hFhUFG3
-	UqMlkqxu8TpcQsoIub0Q9c27VfIZH3cmk/SAxXOzfdh3R82d88PKhDQG0unIUtUAsiywU2t/qtL
-	LsnAa6ZTNl5uDiEDn9WUzByyHmWCkRE1BUiLFnBZGVSKiPb6tPdobkFvCdppEjYSK0RChRjS8Jx
-	9SYTwVb1Mo230KySRZo1YQztX9c8=
-X-Google-Smtp-Source: AGHT+IGzUm/jlwdOtIpbjnrPetWIYz5+yagkOtvvNmSmrSXlqC2ga5AVVQVdbIWRjGwFgARopTGdEg==
-X-Received: by 2002:a05:6a21:62c6:b0:220:82c7:309c with SMTP id adf61e73a8af0-222d7db195bmr999739637.7.1751404375192;
-        Tue, 01 Jul 2025 14:12:55 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af56cffe4sm12129740b3a.138.2025.07.01.14.12.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 14:12:54 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] send-pack: clean up extra_have oid array
-In-Reply-To: <753b6548-9b7c-411a-ab39-adbf769f83bd@intel.com> (Jacob Keller's
-	message of "Tue, 1 Jul 2025 13:36:29 -0700")
-References: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
-	<xmqqzfdnkdx6.fsf@gitster.g>
-	<753b6548-9b7c-411a-ab39-adbf769f83bd@intel.com>
-Date: Tue, 01 Jul 2025 14:12:53 -0700
-Message-ID: <xmqqwm8ripii.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q6qFyKzN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751404499;
+	bh=+t1fAlq2xamD1MqazW5rvBgriukPvUyZdWQpTkEegw4=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Q6qFyKzNOsUZ+86Cnig6SJaPlsDBKWHUiMgsR086jc5jkAMQJOBZ55oKnI6JswEeH
+	 6WEbGeiezpPQQw9rAxhZ1lvBjsiV0M9QufMn9eflEbLhVY6XvmUbSfWJdwU13YRRTJ
+	 BBQ9W3gbnubwhAA47uwpp8k7L+trABKZn/5U7ZsaP+/q6M0gqCcgtddFaFaaxlWLTr
+	 wjrMmKgZbu6N/WULsDp+EaBAp55u7y0181NsultMl4MlSilMHrtkDllwFT7S1RjvYT
+	 3tvy8RGNWrPNQh9nK3WpK7nm2y6dOT1hZBcq3ZTYKSN9p47FlE7/l/H6Xdw+07lCFV
+	 skNrO6y5QLD0PRA/35OatdsAn5pD3T6SsKaY5lwkcWjIKkfyl9NR18lrbBu6yPIq6Y
+	 /P4FV8xZzouP6yvEi7CeQfd1JVyTa5rIrZ/4wxgeFojeVrUzIoMm1/y13LlqwJpvK8
+	 Z/ES1VNLm5hUUG7ElTusib1X7F2M/IVoJRUxH20ycL79cxAh5rc
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:80e0:3dab:863b:d3a0])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 09A6D2003B;
+	Tue,  1 Jul 2025 21:14:59 +0000 (UTC)
+Date: Tue, 1 Jul 2025 21:14:57 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 03/10] builtin: use default hash when outside a repository
+Message-ID: <aGRP0WiG8ZRzgilp@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
+ <20250620011943.586596-4-sandals@crustytoothpaste.net>
+ <aGPIBa-1xjqk8EEE@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="tz9qV7xoothIIU+E"
+Content-Disposition: inline
+In-Reply-To: <aGPIBa-1xjqk8EEE@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> On 7/1/2025 10:40 AM, Junio C Hamano wrote:
->> Jacob Keller <jacob.e.keller@intel.com> writes:
->> 
->>> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
->>> index c6e0e9d05186..61486e378cab 100644
->>> --- a/builtin/send-pack.c
->>> +++ b/builtin/send-pack.c
->>> @@ -343,6 +343,7 @@ int cmd_send_pack(int argc,
->>>  	free_refs(remote_refs);
->>>  	free_refs(local_refs);
->>>  	refspec_clear(&rs);
->>> +	oid_array_clear(&extra_have);
->>>  	oid_array_clear(&shallow);
->>>  	clear_cas_option(&cas);
->>>  	return ret;
->> 
->> There is an early exit from the function that would bypass these
->> clean-up.  Perhaps something like this on top?
->> 
->>  builtin/send-pack.c | 8 +++++---
->>  1 file changed, 5 insertions(+), 3 deletions(-)
->> 
->> diff --git c/builtin/send-pack.c w/builtin/send-pack.c
->> index b28da7ddd7..6ce9f6665a 100644
->> --- c/builtin/send-pack.c
->> +++ w/builtin/send-pack.c
->> @@ -305,9 +305,10 @@ int cmd_send_pack(int argc,
->>  		flags |= MATCH_REFS_MIRROR;
->>  
->>  	/* match them up */
->> -	if (match_push_refs(local_refs, &remote_refs, &rs, flags))
->> -		return -1;
->> -
->> +	if (match_push_refs(local_refs, &remote_refs, &rs, flags)) {
->> +		ret = -1;
->> +		goto cleanup;
->> +	}
->>  	if (!is_empty_cas(&cas))
->>  		apply_push_cas(&cas, remote, remote_refs);
->>  
->> @@ -340,6 +341,7 @@ int cmd_send_pack(int argc,
->>  		/* stable plumbing output; do not modify or localize */
->>  		fprintf(stderr, "Everything up-to-date\n");
->>  
->> +cleanup:
->>  	string_list_clear(&push_options, 0);
->>  	free_refs(remote_refs);
->>  	free_refs(local_refs);
->
-> This addition looks good to me.
+--tz9qV7xoothIIU+E
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for a quick sanity check.  I'll queue it on top of yours,
-then.
+On 2025-07-01 at 11:35:33, Patrick Steinhardt wrote:
+> On Fri, Jun 20, 2025 at 01:19:35AM +0000, brian m. carlson wrote:
+> > We have some commands that can operate inside or outside a repository.
+> > If we're operating outside a repository, we clearly cannot use the
+> > repository's hash algorithm as a default since it doesn't exist, so
+> > instead, let's pick the default instead of specifically SHA-1.  Right
+> > now this results in no functional change since the default is SHA-1, but
+> > that may change in the future.
+>=20
+> With the preceding commit in mind that introduced GIT_HASH_ORIGINAL you
+> could also argue that those callsites should be converted to use that
+> define instead. We always used to treat them as SHA1 repositories, and
+> we have no better way of telling otherwise, so we use the historical
+> value of SHA1 so that scripts aren't dependent on how exactly Git was
+> built.
 
+I don't think I want to do that.  A lot of the functionality people use
+outside of repositories, such as index-pack and ls-remote, actually
+operates on repository objects and so it makes sense to use the default.
+
+For instance, it will be a major inconvenience to still have to specify
+a custom object format three to five years after the switchover.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--tz9qV7xoothIIU+E
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGRP0QAKCRB8DEliiIei
+gU6LAP4v7G+VPVKfdDOhS5LsepzRwToMcQt29q0IQ7fBYFWVsgEArU4UMRjTyYFp
+atO0AZv/n0nvka50Atc/PJgBxDW1YQU=
+=U/7V
+-----END PGP SIGNATURE-----
+
+--tz9qV7xoothIIU+E--
