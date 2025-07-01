@@ -1,108 +1,147 @@
-Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C1D273808
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 11:40:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBB0274FF5
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 11:57:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751370015; cv=none; b=SLunjB+BXxxVasC/gG8mTGHYjABaX1pK7qo9DOrJg02B5kvfHciJUI0dX0U5v/7PEeVgUR+ytXn/bL1HDfejhvC9bC5Bh1KvZAOWJzK79xjZSkTgvffbDi1Yc97Cns0U1/JLTD1NuR4rlI4CeinKf4YA2iByvBwvESu7qLZXArA=
+	t=1751371050; cv=none; b=H9xUYjzmpehJdsaDBJQFXzzp+8RoDi997YklDEJcupIckJO9Z1ZA25DsXMKFozBuQcQ0m+gETWvzhAbYrH732Yv//5d2YufRF8mrz0C1weOvNPXnnnkzqZhDzdJq9ZkyUL4+rWkILHuWBBp50C/ieRwlMhmf8445nfOXgpyfeSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751370015; c=relaxed/simple;
-	bh=dAWBLKhRhDUq2IlqatKthoVNbJ3Smi4KtS7Pm8x+3A8=;
-	h=From:Content-Type:Mime-Version:Subject:Date:References:To:
-	 In-Reply-To:Message-Id; b=AOAPM0pNTSTNMBezeL1O/InkPIa24JmqZsxGzzL4ZMD9MJGVogxXxjebNw0MAKYIs5RdB2WDzb4rs/sVRwacMUiYGeJqJ3cKi5c0p8Wiz/d4qSmrjfKvXtUUywOIdfMAst+fjK3PJFOHx7ayX443kPPzAhLzPz5d189GWJFGxtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EtZhIgIA; arc=none smtp.client-ip=209.85.214.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751371050; c=relaxed/simple;
+	bh=/5NF2E5SkyXky6PkGFOAhJKXVDF3u7h4VBar9D8KULc=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=K35mVzlpD2TibbBLVyHYjaYFagbe5wEEeUlWofmjWwT9QoLkqFQ5YSKA52rrwk1rI2Y9IZqydavrKQRgPU4d/kv3Hq/a+DRO4IiMbOg6QDWoeW5NmnIfqlFyaU9aTO6s+ep9M6vstM5XndJ5MvDettFla9CqLRHbi3EAdq5FRYA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=I45IUPOQ; arc=none smtp.client-ip=209.85.214.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EtZhIgIA"
-Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-2363616a1a6so25453645ad.3
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 04:40:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="I45IUPOQ"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-235d6de331fso38726125ad.3
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 04:57:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751370013; x=1751974813; darn=vger.kernel.org;
-        h=message-id:in-reply-to:to:references:date:subject:mime-version
-         :content-transfer-encoding:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qmoP9Rc9k6bRkS/AErUS6OO3r9dJeTrBDRKjllt6YEc=;
-        b=EtZhIgIAVcFDu/l9jfuxdBKmlKQ+gkOxLoa9v+fYNb0X+sGExBgdOdGUem4QO5mUgd
-         mhN2mNfdjT9hQSpKfU6ZiM6DSGdhKRJbU6k9CFlUt2PPRWUrrkwzM4rvTDviWlLQZqiM
-         7xJrPmZ+KALGwj0J0bv+MHfVOZoPRMbfPKVzCph2MVB/1HHA+po3kl3tY3MXnC6bqgZI
-         ucVei2rf9aYnOaUml2+tgAtsuX4kt+mUm267dnI9nVn+uUqlcXF5RsZhqVAkUhovwxtA
-         xhNP1NUfRfLvnX50OVSCb1tbn9Ll78snh2Mh4UR5vUuOz8NOCfkRLGnHopJIBY4h9Idb
-         BnsQ==
+        d=bytedance.com; s=google; t=1751371047; x=1751975847; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=A4s6PvwByUgNCV01Vt9S5xNyyg+nvgQQFOcJgrgRIs8=;
+        b=I45IUPOQVyLc3JoB/h/TjkbvQ7Fv1BeNQbRjfDLvyisT6rOkZVvULnUzCkP4wkvunn
+         jWu+WUHi42YzOhfsp3FwJhLim9G6XId1CwVO0jLlB8lUyN7kDzHqSgHB4tsPqoP3w2i4
+         JXeAIlmf12qxsQxc7W/ZmETq58mQ49BHUp6JY3omN4yym9rtKVfQLphiW2RG8lcDjCSI
+         gboinvGQJmYy48fTNqOH3vnUDHbNmrSamZC2V6yx01fW04s/u5kZ24Ot72cqNQVdSZr/
+         GHT+WY4PtwW4JU/HpkhCub9hQocFCF1USyTr4mDE4ugbwV/KCymzNETfEfKUVfo+rLkU
+         oKmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751370013; x=1751974813;
-        h=message-id:in-reply-to:to:references:date:subject:mime-version
-         :content-transfer-encoding:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qmoP9Rc9k6bRkS/AErUS6OO3r9dJeTrBDRKjllt6YEc=;
-        b=p+74huvmAJHKfoYWsGiZ7fVCJkDwzcW6wqeqfkLhH+fVs8B5zJlHHmqj1nh/IhG1g2
-         3bpQo0XJrQuuyrUgk282QNYirEhaDyErlw2f9mtg8a0vuyiRvLOncG8imGRkdd2jK6sG
-         4s+nQe0EUTpd5jFRCQ84OVboI9O3g1G2gi6M31vlDV64o+XKMDRi4TVgmZxaw0dAXC6f
-         EOAeNrDzYMpUt0eGx4vhXXR59U3NDUdxn2FTUHzfhoHLIy/uFrXxOax9CeolJdRnR9/5
-         bcgTboGhu4aO5SDJbE93PCkC8VDQwZ/M6OBR63Z/ubhBhj45uo6AEvI7DkcECWoTutum
-         iCTg==
-X-Gm-Message-State: AOJu0YzHCAktH5SgrgNT+F4IffvfQ5GRfeyP8LrX0YGtuJZFVcJ9uzMZ
-	xmu5xisQRPKGCKH5WSkVpQz/s6yKP8JOKdrLtxDT43aCVlrPndxvzZuJTzP7DspE
-X-Gm-Gg: ASbGnctxRW8eQBQiiqzVue6XHxxYypMh0m/lTOGrhyXBWvHtbzT3hN+m3M6FoHelnL3
-	ZNYmC/DdPOqUcqBmXez0FGF4bpwgR48enrqyNtqqyme5ffvgU4yU/XU/mTAoztcbTslHtkKH8ii
-	43VkDyHnUQysm5zjRGOuy/RKWZbFsntK0rjZzJcGz3Yu676t074B0HPPZj5QKhIl6DaUd1UfxGj
-	CM/0+oAnd4Pe0TnRrD6nR5EgemTh+9zX3BrtTmlDjYuAg1h2AQzW7QX8kJoXlDvAMEPC8g16TNu
-	CCv0+PA6lW+zJxj5AWXBCez2VA1mfothTDQBjd3xCqhQVKES8rby1X30PBZZ9p5GlUbVrKGZf5v
-	dl7ZDQksf4f0kkeazlgJ1mZJGWuiTLGgVIy7/kG4tydFCFddvPwVzNvG4ktjWgRk=
-X-Google-Smtp-Source: AGHT+IHfe/2FpKxzsNEZ//PZnHryeATMmMpra1teWCJ8zNQnE9yhEzDELD2YSGFzvd8rEvBdPheydg==
-X-Received: by 2002:a17:903:22cb:b0:234:b41e:37a4 with SMTP id d9443c01a7336-23ac3dec2damr227386555ad.6.1751370013473;
-        Tue, 01 Jul 2025 04:40:13 -0700 (PDT)
-Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb3c4b2esm108299775ad.211.2025.07.01.04.40.12
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Jul 2025 04:40:13 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+        d=1e100.net; s=20230601; t=1751371047; x=1751975847;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=A4s6PvwByUgNCV01Vt9S5xNyyg+nvgQQFOcJgrgRIs8=;
+        b=Jr1BfAG22mDgTEttmVzABWbNIVhQQxuA6FYsymdzR8+5A4L4teACmf2YzpU7xgoh+3
+         lt3yL1mvDPGimZCumWu9NQy+hjjCkYlmDj0/uAhYBKjHOgc3zcyJPTsMzzKC4hoCu4Lk
+         E+gAeVcjda7C9fqw6KPB8jexalKBNX12ArPeImSC4bD9nevssi8jJOVRRvkMnHY0XwtI
+         Zpi/1Mgjgh/VWNmvUAiq2KOYAN9U/vly2QS6oJlXdGoY0kzGZ8DmypHqgn1dkDdCrTyY
+         XbY15s4HztPZvsH7Icf+/tdAWC1WG3uz0X5abD48FRgV4ZUw+cHdEoQNOx/pFqOxjL8/
+         OY/w==
+X-Gm-Message-State: AOJu0YwqzAwggtHT9bPCNj0XjR+K7JjxuYwM9YZrPn3sDbU/rnlVXdrG
+	ZShMuj9y0qLAmInJ0G6mBYP5YsoGQIzpIsooPa5fXO6tIILsarslgdVJCac7dbUjwmOG0Y4wNub
+	2pMIB8lE=
+X-Gm-Gg: ASbGncu8yc5RfPgFC7H/YO7s1A+QX7qWIGTU1VXhSLNatbgiGCsP5f2kVgwhDYzDqm5
+	cmbNsvb9Hki3a4zZiIR43/xWwvY4pZ5mzPHd/jDKOzYlqDBSXDWALTpyMqlngmRLPATkSZC/EEK
+	BDPlWGVblxBKL3oYp3U7F0DOHIsaq/cpQfgqfl2URCfCr2H4f3C33xNF8OLZ4Rz1/8dM2C9hZpb
+	ClIMwhtOjy00eC4QzGkU1y0d9Dgz60MxDPiw67yVzrFvbjqNgX38KwYirp3WjHMYVrGmiFVTcy9
+	3v4h0Nxt7X2+kHV/yd6eHWjQxOD1hAh22YFUqG/7wvpQJP4OnA/Q3zkpDppQ2LlJR1aJW/353Yh
+	KTjmXJIYzUJ6atw/bxrd2EYs=
+X-Google-Smtp-Source: AGHT+IEUuGGD3P2QXC5unue+qwcICmpPV9T9+Q+KyOPRLMKus5yr6w///H/HdCbgk2lHtxysTz1OOw==
+X-Received: by 2002:a17:903:2451:b0:235:5a9:9769 with SMTP id d9443c01a7336-23ac4605d87mr244124355ad.25.1751371046639;
+        Tue, 01 Jul 2025 04:57:26 -0700 (PDT)
+Received: from LTY2K703JV.bytedance.net ([63.216.146.178])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb3b8be5sm103618635ad.189.2025.07.01.04.57.25
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Tue, 01 Jul 2025 04:57:26 -0700 (PDT)
+From: Han Young <hanyang.tony@bytedance.com>
+To: git@vger.kernel.org
+Cc: Han Young <hanyang.tony@bytedance.com>
+Subject: [PATCH] read-cache: report lock error when refreshing index
+Date: Tue,  1 Jul 2025 19:57:19 +0800
+Message-ID: <20250701115719.85226-1-hanyang.tony@bytedance.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-Date: Tue, 1 Jul 2025 19:40:01 +0800
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
- <20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
- <xmqqy0td8fa9.fsf@gitster.g> <aGOhY2YuJZNG8ovj@szeder.dev>
-To: git@vger.kernel.org
-In-Reply-To: <aGOhY2YuJZNG8ovj@szeder.dev>
-Message-Id: <BBAAC895-B24B-47DB-87DA-2276B645830A@gmail.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-SZEDER G=C3=A1bor <szeder.dev@gmail.com> writes:
->=20
-> On Fri, Jun 27, 2025 at 06:50:22AM -0700, Junio C Hamano wrote:
->> Totally outside the topic, but I wonder if we can further optimize
->> by adding an early rejection using .nowildcard_len?  Instead of
->> allowing a wildcarded "dir/*" pathspec element from disabling the
->> Bloom filter altogether, we could say "dir/ is not possibly altered,
->> so there may be dir/A, dir/B, etc., in the directory, nothing that
->> would match dir/* wildcard would have been modified", couldn't we?
->=20
-> Indeed, that's what I demonstrated back in:
->=20
->  =
-https://public-inbox.org/git/20200529085038.26008-35-szeder.dev@gmail.com/=
+In the repo_refresh_and_write_index of read-cache.c, we return -1 to
+indicate that writing the index to disk failed.
+However, callers do not use this information. Commands such as stash print
+  "could not write index"
+and then exit, which does not help to discover the exact problem.
 
+We can let repo_hold_locked_index print the error message if the locking
+failed.
 
-That's interesting. Though I find the bloom part of code changed and I =
-can't
-reuse your patch.
+Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+---
+ read-cache.c     |  2 +-
+ t/t3903-stash.sh | 15 +++------------
+ 2 files changed, 4 insertions(+), 13 deletions(-)
 
-Have you ever considered to optimize other kind of pathspec magic? I am
-not perfectly sure whether it is feasible to use the same trick (using =
-bloom filter on dir/ path)
-on patchspec magic except PATHSPEC_EXCLUDE.
-
-Thanks,
-Lidong
+diff --git a/read-cache.c b/read-cache.c
+index c0bb760ad..50e842bfa 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1456,7 +1456,7 @@ int repo_refresh_and_write_index(struct repository *repo,
+ 	struct lock_file lock_file = LOCK_INIT;
+ 	int fd, ret = 0;
+ 
+-	fd = repo_hold_locked_index(repo, &lock_file, 0);
++	fd = repo_hold_locked_index(repo, &lock_file, gentle ? 0 : LOCK_REPORT_ON_ERROR);
+ 	if (!gentle && fd < 0)
+ 		return -1;
+ 	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg))
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 35b85c790..39098ade4 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -1571,11 +1571,8 @@ test_expect_success 'stash create reports a locked index' '
+ 		echo change >A.file &&
+ 		touch .git/index.lock &&
+ 
+-		cat >expect <<-EOF &&
+-		error: could not write index
+-		EOF
+ 		test_must_fail git stash create 2>err &&
+-		test_cmp expect err
++		test_grep "error: Unable to create '.*index.lock'" err
+ 	)
+ '
+ 
+@@ -1588,11 +1585,8 @@ test_expect_success 'stash push reports a locked index' '
+ 		echo change >A.file &&
+ 		touch .git/index.lock &&
+ 
+-		cat >expect <<-EOF &&
+-		error: could not write index
+-		EOF
+ 		test_must_fail git stash push 2>err &&
+-		test_cmp expect err
++		test_grep "error: Unable to create '.*index.lock'" err
+ 	)
+ '
+ 
+@@ -1606,11 +1600,8 @@ test_expect_success 'stash apply reports a locked index' '
+ 		git stash push &&
+ 		touch .git/index.lock &&
+ 
+-		cat >expect <<-EOF &&
+-		error: could not write index
+-		EOF
+ 		test_must_fail git stash apply 2>err &&
+-		test_cmp expect err
++		test_grep "error: Unable to create '.*index.lock'" err
+ 	)
+ '
+ 
+-- 
+2.50.0
 
