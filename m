@@ -1,136 +1,97 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229FE26CE09
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:13:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C6D21771F
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:16:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364826; cv=none; b=h6BHD2t4cCNaj2FoEtGnc+/RtXNl7IrZ7DDKRH/F5e+PSEl7lkRPaMdDWTxPyIzxED6SszbIbP31XnvUcLjbUNSPG6mHwWAgu+1L5C2zefWMubma4ipQlrH1dupXrRFEFiSMl5blczeCw8VV3CYpYgb9nRkn5pcOW51x+7UT9F4=
+	t=1751364971; cv=none; b=YpH258xBux7efYzZzh3MlIe7fzzRENTW6elE0eN99xX4cnipzOT3FxGpj8+/C72jIoFOVrvCgBKGPCFC8/drToLN+h+EqEqpDSo1utsP7UgSIS+Sh9PTYvnDUiRBPmCQoIJb9b907kyqjdcCo8M30PFJFerOOxMSq5UReqpvw1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364826; c=relaxed/simple;
-	bh=qJNheJNP9bBeWa7fIkanxCPnr/92kInx65DzOtk4lJA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=drbB/qUpYcdI1MGqhABmaO5YqOEGh88wQExvR3/5qIkotx3b2Yu8LAsOTSfLAcLIQd+BChro62rPMf3NmsW5Zjp/1yIv/ejiPu7FHupbp7U94QuNNDmqfaFPcQ5XLvxiED3mT2oCIm7vHE2gMeguVIO4iDrfLOjs04RmEWykl18=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yHxx4nRM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QH8F0Tfk; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751364971; c=relaxed/simple;
+	bh=hRDDW+urFsWTyDt5aaq/tUw+BK2rOU9eqx0+Hw834oo=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Ye6h+InuOFsYw5EuhsLqB954W9+Syr/jrWjkBk9CUtIDsCmXDHCFYGKtig3my+eN81b3eMcnROG+eS+0iBqzbz8iVMhyWAqc0tg43hlvKJ/MIvNeV6JMkGkUiRlGmUer0c6yJg0/ltoIlf1y4fkOSkUptH2OlaFGyW6e0vkJg70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qzo0mjUB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q4Us164X; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yHxx4nRM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QH8F0Tfk"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 28C1E1D001F1;
-	Tue,  1 Jul 2025 06:13:44 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Tue, 01 Jul 2025 06:13:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751364824; x=1751451224; bh=paCB4e4aEe
-	PSWOR7Mobbox8QyXzix7is897Ox8V/0uI=; b=yHxx4nRMga1xV2ecT9KsbVIfiF
-	6+3CECu8f9JsfH4phKAmGp1Sz7JOTLb2WcRPIBx/4le0rlfKxM9Uf4vmvb4MaRWQ
-	fq/cMDCPEE93vQV1rSghj+X3D2gojDx1iU+8cvLbektffsJ9XwWD3rtoRXaAjLmA
-	88qqI6Bw/xuR37+KQMT818Nus0+YtNiOICI7YLQv1n2zXJuAw1leI2IohjSIEJHq
-	cta3W7vmdUWj2J9rWbCapGZUbnahz0yCSH/h66M7jl4cd/SC3R+F6+nTeCIIstlU
-	GiYQ5xa8XEDY794ziZ2zaORM7jWTsO7uDYEyavIn+sz/qCJ2wDBNclfuW0Bw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qzo0mjUB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q4Us164X"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 202A47A0048;
+	Tue,  1 Jul 2025 06:16:06 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 06:16:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751364965;
+	 x=1751451365; bh=hRDDW+urFsWTyDt5aaq/tUw+BK2rOU9eqx0+Hw834oo=; b=
+	qzo0mjUBchs4tZUc1Xcv4lctKoofFAYTm/OXLN2s4xjAeigq2lzutkF6O0/ql07e
+	o5ZDYosZm/y6QZnhuL/hF5c9w2/iTfBWkYC7hD4V8DRHxxE+wkScwjFa3obRsPS/
+	zJQhA50OQumBgr7GKe2WcoU9fQqbXXS+rN+HPJ2U3NNTBhjJX3MjVlWvwYAB0gI2
+	H92MtaJD/309X71W8ddG/Cfsdbd0aOF9c5eSm7V1Anrfv+H+QJVycAzWrZfpDQnC
+	fPU8LIvIRmZYrJt5FJHD7ARDtTH+qo5pTGMrqMACo5pzxkxWdbvYf+AjgqYQKIGL
+	Xnnvgdb7K7VfvcwclrJfGA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751364824; x=1751451224; bh=paCB4e4aEePSWOR7Mobbox8QyXzix7is897
-	Ox8V/0uI=; b=QH8F0Tfk1BoCUsWfquTIADS/XK5OlLzxfUV0nvl3BuD2kh1jHiv
-	j4b9RVS5ip0DEY9lNHKgQ//ocQXIWprTt9ULZr85b0vgOwK0BxJ12wr6aHNp2ncv
-	6M7uDwGhJLRWlF+N1NU87nVcaBoQYqjGnFzqGs4LE/kruY4RR50Zui2V0Ge3nv8w
-	e8ZfKRjgISM3sU3QnW8D6RrIjCrW0HA0lODDBxhrFCJ3S0qMmo5qIVNbD/NWqYBn
-	z/CcA2Onj4qCG8y1NFvFvRWSf/FEQz+Vnryq+8QxdSS1W0pFZ0AUmj4JeUqdkOf1
-	MntjZdAM3Ync/XcyFOQHQTD4FLH1f8xG/mg==
-X-ME-Sender: <xms:17RjaIGNql5lFZHT_X1X6cMG6Pmp9HqY7oStZAPZkx3X9Bkv0R-nkQ>
-    <xme:17RjaBVCoiJi7lRSvJcYa4cIdl30Hm-G3x_KLgkxCucKTaP8mvCNMXePCwDZZ_Nf4
-    T8T5jJenimVCO3p-Q>
-X-ME-Received: <xmr:17RjaCJZMZ-Fs7UOFte1Bbux3YZJ6TOnhX5wa2LY6e07WYRnn_HztYlquyQ4Zb_JrP-SD_51Isxa7eQSUgDEwE0EPBm1RqWQY0d9XbTZ3Q>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751364965; x=
+	1751451365; bh=hRDDW+urFsWTyDt5aaq/tUw+BK2rOU9eqx0+Hw834oo=; b=Q
+	4Us164XJHipuz7een7WNbTGDbwslhE1LiODn0akKjY5yrGUU8KMFCTV0FRKQMwxk
+	IIUZE09FjFr3uwbVrKr6vj57XINb7IxKH+BGfGOsOc16KKkRL9GoGGGrXkBchVxr
+	/a/m7IQYi5v+Mm4IXPHBY01kYayMdVz28q6wBjqGGRcA3I/twbLeFi9OCaaEhj1c
+	4naxNCbpI4DItgwa18Yi/7vOvYYMiFCrhwtJie5oz7z71BgZJFiXLC99nTDwGwmz
+	ZKxG8p4MbCz4pgySzgaX3DkP/bEAHcUHC4dR5NZVYhOZO9ArQ9VLbKyH4irjXLkJ
+	FpyPqv8wZZ6S2+L4HqHeA==
+X-ME-Sender: <xms:ZbVjaHh0ulqQ_paqLi8H9wfXyeRq1arhrjZVZJHrAFjTF7ESYwu1vqU>
+    <xme:ZbVjaECDndxxJnYw-odFX9YG4is4Q0OU1EUo50viZJh11A2DRD8rN3nkasC0TWNq-
+    MPJA5Uk3Gw495m-zg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtoh
-    holhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:17RjaKHrUgohKtGW1x4keVHjkKTnepTY0phjc54moYw9C9lZZjrFCQ>
-    <xmx:17RjaOW9sPfQF1E3VGUPwp6gyVBRnP6PWwtFqu2DJRB5u5D4jsVhLA>
-    <xmx:17RjaNM032YsPxElj0MuMEjjwfQaaeNe7fnNlz88N8H7F2xQ82mYWw>
-    <xmx:17RjaF2hoHXY7UwgdB4xbfTmsUk4a5WeJM2roukmtyQjxCpayVSA6A>
-    <xmx:17RjaJt59_GzLfyF_-RhVKNHb_7ejOOno0D4n-cZuEYGQBZrn1-ueMz1>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 06:13:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6c8971b6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 1 Jul 2025 10:13:41 +0000 (UTC)
-Date: Tue, 1 Jul 2025 12:13:37 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, chriscool@tuxfamily.org, jltobler@gmail.com,
-	gitster@pobox.com
-Subject: Re: [PATCH v2 3/3] meson: add rule to run 'git clang-format'
-Message-ID: <aGO00T4c2Q-EYXZx@pks.im>
-References: <20250630-525-make-clang-format-more-robust-v2-0-05cbcdbf7817@gmail.com>
- <20250630-525-make-clang-format-more-robust-v2-3-05cbcdbf7817@gmail.com>
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
+    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ZbVjaHG6XOkwVbNNBTSbLW58te2B8DzquLDC3EjiDP3EoS7E_oEdNA>
+    <xmx:ZbVjaERUDM8Od0VNfNDnLUnjK0qU2U8OGhv0C-PaJQdiUkqTZxx9vA>
+    <xmx:ZbVjaEy96B5AB7uphtmy-TILbHSnJXBxWvC86PODkDWzb4GLSZEjSw>
+    <xmx:ZbVjaK59IS5pxN-ZiG14Hbyc00hclj2acMIMFxZF_NwWEo25PSluow>
+    <xmx:ZbVjaMVsGffk_tAemVWrTQPPZOUTU_DGS6IkH_6IUkWp38OurH0Jj2m8>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id A85EF1EA0066; Tue,  1 Jul 2025 06:16:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250630-525-make-clang-format-more-robust-v2-3-05cbcdbf7817@gmail.com>
+X-ThreadId: Tec469262b87623db
+Date: Tue, 01 Jul 2025 12:15:45 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Patrick Steinhardt" <ps@pks.im>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <adeb38ed-fdd3-4261-9c5a-901813b102e2@app.fastmail.com>
+In-Reply-To: <aGOx3C7-9NNi7h8Z@pks.im>
+References: <cover.1751310455.git.code@khaugsbakk.name>
+ <aGOx3C7-9NNi7h8Z@pks.im>
+Subject: Re: [PATCH 0/5] doc: config: update for the ps/config-subcommands series
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jun 30, 2025 at 10:38:22AM +0200, Karthik Nayak wrote:
-> The Makefile has a 'style' rule to run 'git clang-format'. While Meson
-> intrinsically supports a 'clang-format' target, which can be run when
-> using the ninja backend by running 'ninja clang-format', this runs the
-> formatting on all existing files.
-> 
-> Our Meson build doesn't yet support a way to run 'git clang-format',
-> which runs the formatter between the working directory and commit
-> provided. Add a new 'style' target to Meson to mimic the target in the
-> Makefile.
+On Tue, Jul 1, 2025, at 12:01, Patrick Steinhardt wrote:
+> Except for the issues mentioned by Eric and Junio the changes look
+> sensible to me. Thanks for improving these docs!
 
-Hm. Meson already knows to wire up clang-format automaically if it's
-available. But it indeed doesn't know to only format files that have
-been changed, so I guess this style makes sense regardless of that.
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  meson.build | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
-> 
-> diff --git a/meson.build b/meson.build
-> index 7fea4a34d6..20ce0525a1 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2144,6 +2144,18 @@ if headers_to_check.length() != 0 and compiler.get_argument_syntax() == 'gcc'
->    alias_target('check-headers', hdr_check)
->  endif
->  
-> +git_clang_format = find_program('git-clang-format', required: false)
-> +if git_clang_format.found()
-> +  run_target('style',
-> +    command: [
-> +      'git', 'clang-format',
-> +      '--style', 'file',
-> +      '--diff',
-> +      '--extensions', 'c,h'
-> +    ]
-> +  )
-> +endif
-
-Do we want to call this target `clang-format-changed` though, so that it
-is consistent with the implicit `clang-format` target?
-
-Patrick
+Thanks. I=E2=80=99ll add your Acks to the changes.
