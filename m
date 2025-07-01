@@ -1,143 +1,116 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD4072621
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 23:01:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62232246BC5
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 23:53:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751410865; cv=none; b=N3cYckQw4ONbl7p2d2aqjkaLgm0cf9+tVkVoF/QTW93IqZCWAdETlMQDzWN/Dpe3OUJvIyVzVXCsSiX/5lc2iAd7AyK1ktYLWGR/8nSqSGa25r97XZAsPeG/inqQb8VxM4E2ZkWyeiZAwlWXgUXVXr5fgX3FQMs/iq9UelXf59k=
+	t=1751414005; cv=none; b=Ggl9NAJu92AtRIif2zrOwdT7AkRVzqucSzeydSpmw9P5nNVwa15FQofQ5VYdR26F6XJOqwD0LhK9ladS7sM1xTVMG+ZOkDd3T1YYwoOz8Ejzpc0r+ZCbZtenFkZ8PIiMvIlQe5YYgBu2qsA1Ftui3EKOCwvAIj+a/YQfzLbuBbw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751410865; c=relaxed/simple;
-	bh=TICfGTA/ncDtfx3VibCdEaZyIXKZkl02NcjdLiqbzVo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q966LkrTpb49Cy02nhOgaJcNCO0N8ufodNJt4ktkI1JLdCB4D1296HRBCGq6T4gN7Se4UkJpKZD/0guoBclWWfhwz9XYWUY17Mo4/ljsZyyBMOzc8Om9xBSO3OV3XLitPwFf9ETQUtUGI1vKwEGUY9ksOEhrulT5GiuuY3HPGfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=knfOTAlX; arc=none smtp.client-ip=209.85.210.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751414005; c=relaxed/simple;
+	bh=DwVotexqLTzT4o9nP47qaNtM7uX0hWNXAoaua+/jO+U=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=WjVESKCsR4I38LmY/8XmYNrXtPwzI+AjhBWFp/AS+Qazd/Gicc5UhhBGVUDMewYwZyMcUilxN2HPoiT/JUBdaofAyjc36YZRtNeDosFHYAtjfN/6qEpaaI5uqEQlm5ROAFfhtIrUkNxflsAXkFv4fqdSWuUNQmC9Gg5kp7dAuhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZ9UKwVj; arc=none smtp.client-ip=209.85.215.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="knfOTAlX"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-748f54dfa5fso5399497b3a.2
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 16:01:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZ9UKwVj"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b31d592bbe8so4833685a12.2
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 16:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751410863; x=1752015663; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=B10sNtu+Kb3vV6jy52W8bUPg7xv3pv2Qz3EHzplIYLs=;
-        b=knfOTAlXpNaeMBPmnPWzn43DkEbFmcUAQEptkqFwJwhl1RGXXgMX0AUmXd0VEuXelx
-         fTuYsP2d0DaYe7L+rWR+ZdY3z61TDpidvOYKxHl2zvnEmQ8TJHXmPwdP+mggB8wTde9c
-         6etbfdZiVTPul1hMAkbf4979gXN/rNNGudJt/UXpMmolOuqwTrsRVZ31WeYuExbLSUXh
-         xDLDZdHF4cAHilmDGKFLLFlehPk49TYSgYeiCMTo1RCi3MXm3gHPrrqJjLQ3xybYOVQK
-         l9epzSCUVhPoNOSqf0mOlMVP9kda16o2apnknE7+oY6dz3MFlGdGTll6uH/XfJLLx2SM
-         YFuA==
+        d=gmail.com; s=20230601; t=1751414004; x=1752018804; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=H4+a+FNe4CkbzRB4XBGtu+qRJGLM1l2uL5Oaz0AeD5o=;
+        b=NZ9UKwVj7U7UbMNol4f403+lySoQrOpMl7ZN08ZFidf1ByCO04AM8v0NGWzb3vuKFJ
+         Mq6NyUuauXx8iccXIp8IhYLA6LhxXbeY/7n/bUyCTcN7u7jCG28U2fJt7j63DbUjf5Em
+         HC2ePCcYdEz7CU7CG6sA2dhg3H/mE/y18fZaHwaPkESwFc9sy4VOYSsaygJW7OQE4JOH
+         xaeEIds/I5OvHPi3RUevaCGweH2+4NJXlT3aH/emGy8X7h4q94SzpvHI5OtyZDjLkBqp
+         9GvyWaL7y3IY8qcTNXcm0csLKEwhVqgUtBlwaKNZxfz9Ms07ivr7NgXBrTOH3AqrUx+/
+         WrPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751410863; x=1752015663;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=B10sNtu+Kb3vV6jy52W8bUPg7xv3pv2Qz3EHzplIYLs=;
-        b=u1Anhz0oDhIYKLwIl+ElEqgLXKyoreT2qBxFzBjfGgkK0A0ZL7av8eBhwpAg1smFT5
-         TXc4GPda0tabkhQl0q/I4HvPMMj/M4UK2ccTHNSw37DcElBTt2E2a4jLzmreaHR7jzND
-         CysHdp/qtYd6iZWPiJ9fZ0nOiAeWTHoAOv2CVgxzZvPYnwTLwUiadW6WVeh0m3sDhzfk
-         GzhwiPlu3vopbv76d9iEEpW+KNqDsGIuJF8kIrUMiIqeUTLKfYxZoUOjRG6/0xUHESad
-         hAOQXo71pgHKm0C4MeBnlhPggz+zWv0Cg5pe8W9KYKwjwz0RabjIsqon+6dH8GKiyYzx
-         5orA==
-X-Gm-Message-State: AOJu0YyUaqnR5MqTj4YJNYEyWPh9gAPV0BI7U2lESyYkArdeumvEA5iV
-	Fjm+JqGR6L5yq+nas1Y/99QgmiWBy+uyhVGdjmPvrnZ9kyVe2Q1TekAQ
-X-Gm-Gg: ASbGncsejA2rotzjZrhk4yvVefS3L8dWLPRE6u6FlLJYA95PpF4dc16pvkKLTa/qvGJ
-	3Ev6x+6SixfpIDaPf/s/wPSsF97qIOXMRPOQlJTWbqZj6BJkHLNGcYwu7bxuV5dzm5HRx3QDX0d
-	hrZL+F7z+Wj41QU2qCIec3FLJSNpqOEZZ/VnHFi0fRqbBgAPbJlPIVurNDCZ+t986XIKIAwNtPP
-	NQZ7stsjXkvQisYBCLb3Ef3bLoyfyGRamXGzx1kjhIwjz7+tZ+anPO/m9gM4N6GRnB35vq75Qf7
-	xp8rZg10DGBMUN+l1nANs8s0icjHhrmWaCi7ULiOjms98YbwqcoUxaFnsfvUcsHjP1nuMFo4hZQ
-	V2+0+flifpcz+vrNO+ClY1Sj8REM=
-X-Google-Smtp-Source: AGHT+IGQj4b+LDGotWGuoVJWIGmakVSuSkwVkrBjJN2V+2ym4M4XGNrzjkOx7h8sYI1zTlDde4qYWw==
-X-Received: by 2002:a05:6a00:2347:b0:740:a85b:7554 with SMTP id d2e1a72fcca58-74b50e69745mr861353b3a.2.1751410862549;
-        Tue, 01 Jul 2025 16:01:02 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af5409d62sm12054882b3a.27.2025.07.01.16.01.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 16:01:02 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v3 0/3] Introduce git-last-modified(1) command
-In-Reply-To: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com> (Toon
-	Claes's message of "Mon, 30 Jun 2025 20:49:22 +0200")
-References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
-	<20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-Date: Tue, 01 Jul 2025 16:01:01 -0700
-Message-ID: <xmqqa55nikia.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20230601; t=1751414004; x=1752018804;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H4+a+FNe4CkbzRB4XBGtu+qRJGLM1l2uL5Oaz0AeD5o=;
+        b=nNCqrgyATYCZLRvw0vRJXR4mVX3t5GY2VFM2Kr+3U835jS7l/zoJPVoZrHe6uQ9fNz
+         PyW/fT1dmre+wNOnAGaqTbB9TLQIB/HJfymh8hKspuLPiG/7dlRCPE5oayOVXM4piKP3
+         eUvjRo5ZcNigZh9zD4LO6mO6ai0tA2HqjsYFA9Gg1lrLZCmugdNQgZQq4+Gh8Xrh8lqT
+         NOS0FI1AOkgOSQBwG2yLuXt/nkjs7UF81e9GjofJhp0IlX04PCF3Rg7iKf26vbMOg165
+         uyycQQzEV7vAhUasFdsr+bQRVWnLc5PkFY2XM2WxGOQpFPGLZH+R2JbhNl88gtgMk3hY
+         qVzg==
+X-Forwarded-Encrypted: i=1; AJvYcCXHztUAXB/DZIvsGcovXaBt9H7JogPz5Admb8ePlwJdmsi9TZweJADAio8Y4JDi352bM9Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1Y+ZioKLR8FhhWIaQhcOP9nWA7tPsoxj7agpK9J/est9GwXWk
+	2+F+jDa+mstwsNacdqaOmKN/ALolJoP3lZznG9hk1QesgbjbL9bW1BRFNvoE7DU877h0Fzz4TJg
+	aK3WMepp+rtILGqjPMLUhpxBgkkkUGP975SgZGTA=
+X-Gm-Gg: ASbGncsDM5xni0KZItOrgtSW1bRJw/w8Gl9dvsuR3mhh/4+Z7OZM2mKaFUDWt/mAicT
+	+TzLanuhbnFiD5Unr8fl1YChq56HWh19DEWnriKcKcKNReWBedbNConJpFjgJ9DU1qi5HXOWekO
+	reXvBJP7+ohLgh4Uura5NP/fGhr1tFX6Ki5UXAiB4J1mTLEA==
+X-Google-Smtp-Source: AGHT+IHgunwcrc3PRuagNKRVyHrvIsGBmNqbXiuuJrPWbSHGVSCRmwdi3omfxIQmIL3WTkAKapG5Ksz69O3Xt0vk3WE=
+X-Received: by 2002:a17:90b:55c8:b0:311:df4b:4b93 with SMTP id
+ 98e67ed59e1d1-31a90afe5a0mr1371650a91.7.1751414003614; Tue, 01 Jul 2025
+ 16:53:23 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1751309770.git.ayu.chandekar@gmail.com> <45c84a6615aa15f19b34b7f3d73a6e418c178427.1751309770.git.ayu.chandekar@gmail.com>
+ <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
+In-Reply-To: <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Wed, 2 Jul 2025 05:23:12 +0530
+X-Gm-Features: Ac12FXzMFxOrM3fdkNXSW2MG3z8_9sFJsSKI3N-AmhmmgrDEgYtZ-Su5r2VhMhg
+Message-ID: <CAE7as+YeTuQh_BzZSLuVTimrddp5-OBtpMa81KFhd+3zDqDiMg@mail.gmail.com>
+Subject: Re: [GSOC PATCH v5 3/3] environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
+To: phillip.wood@dunelm.org.uk
+Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
+	gitster@pobox.com, ps@pks.im, ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Toon Claes <toon@iotcl.com> writes:
+On Tue, Jul 1, 2025 at 6:48=E2=80=AFPM Phillip Wood <phillip.wood123@gmail.=
+com> wrote:
+>
+> Hi Ayush
 
-> Again thanks to Taylor and the people at GitHub for sharing these
-> patches. I hope we can work together to get this upstreamed.
->
-> [1]: https://lore.kernel.org/git/patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com/
-> [2]: https://lore.kernel.org/git/Z+XJ+1L3PnC9Dyba@nand.local/
-> [3]: https://lore.kernel.org/git/20250326-toon-blame-tree-v1-3-4173133f3786@iotcl.com/
-> [4]: git@github.com:ttaylorr/git.git
-> [5]: https://lore.kernel.org/git/aCbBKj7O9LjO3SMK@pks.im/
->
-> --
-> Cheers,
-> Toon
->
-> Signed-off-by: Toon Claes <toon@iotcl.com>
-> ---
-> Changes in v3:
-> - Updated benchmarks in commit messages.
-> - Removed the patches that attempt to increase performance for tree
->   entries that have not been updated in a long time. (see above)
-> - Move handling failure in `last_modified_init()` to the caller.
-> - Sorted #include clauses lexicographically.
-> - Removed unneeded `commit` in `struct last_modified_entry`.
-> - Renamed some functions/variables and added some comments to make it
->   easier to understand.
-> - Removed unnecessary checking of the commit-graph generation number.
-> - Link to v2: https://lore.kernel.org/r/20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com
->
-> Changes in v2:
-> - The subcommand is renamed from `blame-tree` to `last-modified`
-> - Documentation is added. Here we mark the command as experimental.
-> - Some test cases are added related to merges.
-> - Link to v1: https://lore.kernel.org/r/20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com
->
-> ---
-> Toon Claes (3):
->       last-modified: new subcommand to show when files were last modified
->       t/perf: add last-modified perf script
->       last-modified: use Bloom filters when available
->
->  .gitignore                           |   1 +
->  Documentation/git-last-modified.adoc |  49 +++++++
->  Documentation/meson.build            |   1 +
->  Makefile                             |   2 +
->  builtin.h                            |   1 +
->  builtin/last-modified.c              |  44 ++++++
->  command-list.txt                     |   1 +
->  git.c                                |   1 +
->  last-modified.c                      | 257 +++++++++++++++++++++++++++++++++++
->  last-modified.h                      |  35 +++++
->  meson.build                          |   2 +
->  t/meson.build                        |   2 +
->  t/perf/p8020-last-modified.sh        |  21 +++
->  t/t8020-last-modified.sh             | 204 +++++++++++++++++++++++++++
->  14 files changed, 621 insertions(+)
+Hi Phillip,
 
-FWI, "git last-modified -h" does not work; its output is expected to
-match what is in "git help last-modified", and t0450 would not pass
-without it.
+>
+> On 30/06/2025 20:27, Ayush Chandekar wrote:
+> >
+> >   void clear_skip_worktree_from_present_files(struct index_state *istat=
+e)
+> >   {
+> > +     int sparse_expect_files_outside_of_patterns =3D 0;
+> > +     repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpa=
+tterns",
+> > +             &sparse_expect_files_outside_of_patterns);
+>
+> This changes the user facing behavior if
+> sparse.expectfilesoutsideofpatterns is not a valid boolean value.
+> Currently git will error out when it first starts because that config
+> value is parsed by git_default_config() which is called by almost all
+> git commands. This means that if someone sets an invalid value they get
+> timely feedback that the value is invalid and git dies before doing
+> anything. Now, if the value is invalid, git will only die if this
+> function is called and it is likely to die in the middle of a command.
+>
+> Thanks
+>
+> Phillip
+>
 
+Yes, I get your point. However, if we look at settings which are
+shifted to `struct repo_settings`, the behaviour is to set a
+fallback/default value in case of an invalid input, instead of
+throwing an error. This is done inside the `prepare_repo_settings()`
+function, which is often called in the middle of a process.
+
+Thanks
+
+Ayush:)
