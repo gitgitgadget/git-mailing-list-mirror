@@ -1,133 +1,132 @@
-Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EBD1F3BAE
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:36:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5C7270EA4
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751366200; cv=none; b=WdBFqfqyisoc7pFyz/3fV+x9WeCmADHF2200C1tddFiEpkPUCofNIUX2Y7qlrXmvRUt5E+S4QOfRmwgZs9BYWLycInI9ew+yIBhoiII6e+z92QeDT82UdZRsJL4boAzwU2OmHTT+vIkUdKzTa0VcD8oX/lhOUOtV+UO4gi1nLNQ=
+	t=1751367316; cv=none; b=jConsbuO/n5dlDDDinCfbcfkmBJfwZjjIk1rPb9Gtf3j/OFa09rPzMl9m3sSswAci4QxIvaFXAaX0VSD4TUqyaf3kS5YqTkMzqMzJZYomVkRm1qODMJ71Qfvqfq+d2EhpFXqJl9nosGHG8X+51sm3+GD/u/vN+kf8DXkpzQ2ef4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751366200; c=relaxed/simple;
-	bh=QO6wsllg7+Ko5aSE3yJJVtyNGHK3fhSCJRszfjgc6fY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rpANaBZWYCqFD9vlDa0GUNRZOK4BFbg88E1AfOEzEMxe1Z1u6Se1mxuFcm0B5TDJ7t8ZHkb7JRFADFMY85+8i2YtSQavfP+lLcAqah0CRtOg35EwJrvyBVK8HdmVCkQ0KhnvZq9HoCQbUK7nfmtJ4od3mNCEyY7dNlKgEAIm0lI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JorZWsUr; arc=none smtp.client-ip=209.85.208.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751367316; c=relaxed/simple;
+	bh=SmVRWGNl8GzGTFaOFQlRYiq45U0blNJwAizuzKEv3E0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cP/Q9nPywo8d1VeX/sJ5AEKx70AFa2MPhPCd6ria8htVRYn7FVAk1PjIlXGRfrhqwz67Ipdj6qyh9gNYibbc+RMzsN6TUevmZLLWfi1fODqpVK/CzBwOdDowcXkQHGo7bUruyFJ8HWP93R4FnXFR3TfND4BZTIxanUhUMLFkgGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bc8I91bE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nWSnqdsF; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JorZWsUr"
-Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-6077dea37easo5533437a12.3
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 03:36:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751366197; x=1751970997; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8vXPS7CN4ZN8lJoDN+l1HmFJWaOyq3dzWDl4kwahJOo=;
-        b=JorZWsUrLyrTnbF+BmvTzQkYVjRMSY1PNfGQOENqQ2zZ9mpg2iSnL3ojyQqrjqm9RR
-         y7bcJMSiaCuu0ykHVHx24CZwmJKzTV66Aa0TWJDmPDf70NtIqtj081XoEHpzQ4CNu08y
-         201M4V+C+ARKJ1lY96Pc6SJEW+J+mGneiuCFPQoa/EEmmxYmuiKknnT9aBYAFBYBCsQn
-         NABxkgzjKm+FkNh69biGng7++0FGn8+2K/PWknc2G8Rcpc2VJ/B4ZD2UGET4bOatvfC7
-         gFYEh01iHJSo183Kt7WGRbhvAQXowAanfihuFdaPVgI+qqe4xd95NqNYhveg0bryMj0L
-         +ehA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751366197; x=1751970997;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8vXPS7CN4ZN8lJoDN+l1HmFJWaOyq3dzWDl4kwahJOo=;
-        b=alE80NTBKjY6XsQjP1H2nKABxOHfpcN7SeoSyTYxB6u9UbYDlGHfy3mO4Y/acUePwG
-         SubconNbL2JOHBCK59nPumi27PMGVyT6rdJ1MWbxLze7agVckxYB4hQ3WU3G9N5AaDdi
-         KXI0y9vMkIJbRpPxYfmKASCxao2WsZLaDiJecy/MQpr+H807UV84iaVhD1Tc8semOexE
-         0eSd1uusyx+28TGzJxzI0xtnyaXCAcLb/pF5iA91KImqWWYXSVdOLTdLu6AsPac4QUma
-         iApG03RwgWxLYgZV+A+2mBo+fPBZzBcYMSRcI4q8P53BkmrJuSeav/oxCLmYiM0ruzs8
-         b+2w==
-X-Gm-Message-State: AOJu0YyYaBFseniSZ+czjLlOXtveRz06OEUCfDOvlWVB8IjSy68KwtZM
-	Xq9x16CxGEF4X+C5zkMjCQIqQhFOsiyVRnbLDrWze+ltmJkokl80LZjAVeDCMrx5jUPTZ/XrX8J
-	QSeWDKMgoLQyZAtdu6l4ZJC6i4TlC2qI=
-X-Gm-Gg: ASbGncsuLwFRhlXqUrdVp2dyKZ61BFiR/GNuNzd4MVvWf44JojTlUeUqtzEavOomAxE
-	OUeE5rhTZUbzOG2RgrZ+efNUhY8DgM7vGN4qAQWkfx1/lCEKzxZ1lWqm9gJQE+pQUNrXM0CdOIu
-	fcxrZTdmk4CKKSH9u2ibu37MT6+L6iXgh2fIewC4q5iv/epw==
-X-Google-Smtp-Source: AGHT+IFEUIm8U6CPPqGBHNlf2Nj/usCloK5rl2Q3q5fMc29TZkxX7G0FQ1Mh6MSnS/TLRAC9oZFxsjiAIi3ub9NCGlo=
-X-Received: by 2002:a17:907:3fa8:b0:ad8:9ab7:a270 with SMTP id
- a640c23a62f3a-ae3500b3f29mr1503149566b.38.1751366196972; Tue, 01 Jul 2025
- 03:36:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bc8I91bE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nWSnqdsF"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 755A51D0020D;
+	Tue,  1 Jul 2025 06:55:13 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Tue, 01 Jul 2025 06:55:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751367313;
+	 x=1751453713; bh=2h04j8XHhIOI50tueho1CQu/jjE0yjUer+8Y/tIMOCg=; b=
+	bc8I91bE1pnO65rWxY4tSx8Uulmi6eoYUi6IlPJuSCBw5ZCHBzHyLuM05ni+YF69
+	Zpxk4iSsQvqf7kHdFmXttfI/kkLEEK4hM5ZBDRRxl3FbBCjIl9D5zbEHXZE5v9o3
+	usXQCNRhgagl930rHP71IX4kqLiXUCkifBNtM4pWk5Kbf9eUhgEZuS5VUkc3iikm
+	VCPmxoNqxdW8S0VMXlZ0X6x6K3QEUOj3UGOUAwS+Mvnwmdl7U3xG1ouxk5c8eG3q
+	byYiHbtHwiF2eKZyfFCS/IEid4d/uzray/WvPDQedUg3X56hMW5yPbLeKQqcHJA4
+	1c/mXPHh5+cQPSrx3XJVpQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751367313; x=
+	1751453713; bh=2h04j8XHhIOI50tueho1CQu/jjE0yjUer+8Y/tIMOCg=; b=n
+	WSnqdsFVscI26xk5q37JqhqS14DNBQl7YwG/2RDqyLn4cRGyNbv7NNvKLDGv7x5W
+	+6myeBy2IQhhEt5mcSfM4ChiIVqRmK6OneV72dZOaHOgVbpSaj6iKzTFJgguvktE
+	w5q4+Nsqz5v13LFMnCENSrO9K4Gdi/U+18ulIprVruFLj2iMAULWKJWMP9JBvFAE
+	kAEv0ll44LQntaKtMwL0enElVcOFNhKAmGW8anmxeiRNdjWsU0JphwUSOpah/zca
+	rUZuDjCdnvZom5QS85YuBHXikamTsMkq06nd3suHEGXWcWCNt26S3C7C4AXqFQqJ
+	sThy20XjGfoIYdCwDE2bA==
+X-ME-Sender: <xms:kb5jaCLwBpFkcENtbQh03icVNQN1og-KGK7P7fyytBVFbUoOigJFow>
+    <xme:kb5jaKLmAB_LyeEFam0hDXgxQrmVZ1eg8FA1d2SWWM2F2Zn5rO6DuGMbpbPoG2yWW
+    6rjQnuiQIIpCMVmOw>
+X-ME-Received: <xmr:kb5jaCsXUBMwtVH0Is7YG2cqgbgwtTwTINeYSYTV7oos1J9lPce-wPzWkR0-RLmxPKDeMQhX04HRH_r-cmYIx8JUQum5bon_OglI6AvocQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeefiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
+    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
+    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
+    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
+    guvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:kb5jaHbrcRj4e7Qp2wLkjAVYtT4wa1SYbtCLKVEGfI0rewg9lcpVeA>
+    <xmx:kb5jaJYJGWOSaNaNOQ2HiSX_ZlufJapCgsP-lGkQmuYZW0caqCln-Q>
+    <xmx:kb5jaDB1dBuLSNM_Eb7fWgqA7H8jqgufTP1IkDDQRlBhWqS7XUFK4A>
+    <xmx:kb5jaPaWvGy-9i51ucTNQTq6Fz5jqQgO528B-bRLyRGmv5ra4Ll-0A>
+    <xmx:kb5jaGLDsE4YwYoiFTdv_qvWOCkoCnzOpnbxGCTF3ypR0a286mPmzE_P>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Jul 2025 06:55:12 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 916d1ffe (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 1 Jul 2025 10:55:10 +0000 (UTC)
+Date: Tue, 1 Jul 2025 12:55:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/6] parse-options: add precision handling for
+ PARSE_OPT_CMDMODE
+Message-ID: <aGO-i6V6_iN678_7@pks.im>
+References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
+ <d92697a6-5367-4412-88db-164ba4dd6230@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqcyalm0mh.fsf@gitster.g>
-In-Reply-To: <xmqqcyalm0mh.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 1 Jul 2025 12:36:24 +0200
-X-Gm-Features: Ac12FXyocedjWXlSs5JTxnVVSwyAvMr_r0qO1OhTbDpKDc57SwCb5goQU2w7osc
-Message-ID: <CAP8UFD0bd1PD03VPaenAd+76Q6CeCOmDOJsso1nMKk4tZ4vbMg@mail.gmail.com>
-Subject: Re: [RFC/PATCH] SubmittingPatches: forbid use of genAI to generate changes
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Git PLC <git@sfconservancy.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <d92697a6-5367-4412-88db-164ba4dd6230@web.de>
 
-On Mon, Jun 30, 2025 at 10:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Following the example set by QEMU folks, let's explicitly forbid use
-> of genAI tools until the copyright and license situations become
-> more clear.  Here is what QEMU folks say in their commit to adopt
-> such a rule:
->
->     The DCO requires contributors to assert they have the right to
->     contribute under the designated project license. Given the lack
->     of consensus on the licensing of AI code generator output, it is
->     not considered credible to assert compliance with the DCO clause
->     (b) or (c) where a patch includes such generated code.
+On Sun, Jun 29, 2025 at 01:50:31PM +0200, René Scharfe wrote:
+> Build on 09705696f7 (parse-options: introduce precision handling for
+> `OPTION_INTEGER`, 2025-04-17) to support value variables of different
+> sizes for PARSE_OPT_CMDMODE options.  Do that by requiring their
+> "precision" to be set and casting their "value" pointer accordingly.
 
-Here they forbid licensing any "AI code generator output" with the DCO.
+Makes sense.
 
-> and it applies equally well to ours.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/SubmittingPatches | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git c/Documentation/SubmittingPatches w/Documentation/SubmittingPa=
-tches
-> index 958e3cc3d5..63fd10ce39 100644
-> --- c/Documentation/SubmittingPatches
-> +++ w/Documentation/SubmittingPatches
-> @@ -439,6 +439,23 @@ highlighted above.
->  Only capitalize the very first letter of the trailer, i.e. favor
->  "Signed-off-by" over "Signed-Off-By" and "Acked-by:" over "Acked-By".
->
-> +
-> +[[ai]]
-> +=3D=3D=3D Use of AI content generators
-> +
-> +This project requires that contributors certify that their
-> +contributions are made under Developer's Certificate of Origin 1.1,
-> +which in turn means that contributors must understand the full
-> +provenance of what they are contributing.  With AI content generators,
-> +the copyright or license status of their output is ill-defined, without
-> +any generally accepted legal foundation.
+> get_value() needs to access all PARSE_OPT_CMDMODE values in addition to
+> the actual value it is supposed to get to detect conflicting changes.
+> Give it an example struct option pointer in cmdmode_list instead of just
+> the "value" pointer to allow it to use the proper "precision".
+> 
+> Use optbug() in get_int_value() to report options with unsupported
+> "precision" values without requiring enum opt_parsed flags, as we don't
+> have them in build_cmdmode_list().  Use BUG right afterwards to abort
+> for uses outside of build_cmdmode_list() by aborting immediately.
 
-Here we would forbid licensing any "AI content generator" output, not
-just AI code generator output. So what we would forbid might be more
-general than what QEMU folks forbid. For example they might still
-accept a new logo, or even commit messages, made using an AI while we
-wouldn't.
+Hm. I have a bit of a hard time understanding these two paragraphs, to
+be honest. Might be that my brain is still in vacation mode.
 
-> +Hence, the project asks that contributors refrain from using AI content
-> +generators on changes that are submitted to the project.
+> @@ -280,19 +297,18 @@ static void build_cmdmode_list(struct parse_opt_ctx_t *ctx,
+>  
+>  	for (; opts->type != OPTION_END; opts++) {
+>  		struct parse_opt_cmdmode_list *elem = ctx->cmdmode_list;
+> -		int *value_ptr = opts->value;
+>  
+> -		if (!(opts->flags & PARSE_OPT_CMDMODE) || !value_ptr)
+> +		if (!(opts->flags & PARSE_OPT_CMDMODE) || !opts->value)
+>  			continue;
+>  
+> -		while (elem && elem->value_ptr != value_ptr)
+> +		while (elem && elem->reference_opt->value != opts->value)
+>  			elem = elem->next;
 
-Here it looks like using an AI capable of generating content to just
-check code that would be submitted could also be forbidden. I don't
-think this is what we want, so I think we might want to reword this.
+Hm. Previously we checked for the pointers to be equal, now we check for
+the value to be equal. Are we sure that this is always equivalent? Can't
+it ever be that two elements might have the same value?
 
-> +Contributions in which use of AI is either known or suspected may not
-> +be accepted.
-
-Here also "use of AI" might forbid checking what we submit using any AI too=
-l.
+Patrick
