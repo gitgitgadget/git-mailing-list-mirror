@@ -1,121 +1,141 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21BD7274FC6
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 14:32:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B0818E1A
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 14:45:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751380322; cv=none; b=uZ6MqWj5p9UVm+ztLOhZTUFyp8VnPvGoBoqnS0I88HfhCY/Hyydv4/5wnVyLUShJ1oQyAULhZFsGNs5lk3qWgjnjE4QaYELiWADoBM0suHrFJNoRuQoV296w9ag9d3WN+YYOKGHcucOWZwX9cPQTKbEO8o7zviOl/Ne/j/KUVB0=
+	t=1751381161; cv=none; b=Pal9Xrg3wBDC7wCl59TjLil5AGRlEcUR4hE/OTuwIe2/Ea+QTiwtb5xAGsN4mczEYKbiBp04+0zi7PdS0Mtwz84qyv9gS3PzFYBLt2sK8Ivwiuw+6PQTelPevOECrwJYjoH04aqX6NxPYq4BB91qpk+47ONk0v3XIVNZXA3rS6Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751380322; c=relaxed/simple;
-	bh=hBA/kZREpQV4V6MfZBoB+u0e2jpLht8LlfwJHQHJ0N4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=sFY+OB2tvrintJ8QLc5ry8wNDMevm0JLQVTq/Ct88cY73rQ9WDoyll4EfmOVpdRz1EvFutwXdtIxTHWT7uTdlHB+LfHlJDlNDy2lIsoVSkcFkDegSGHmGz6xAL3o+V7V0/oYRPKH+mPFROITuuDI+jMUeuzu4kQPkDhqTEV7Wf4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lVKNsWRH; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751381161; c=relaxed/simple;
+	bh=rnEGA/QVazh4c61IE4A/9aGyLslBmHksjxWl6sNCwQk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SMqk7lSIXOTCHKaXlcgHmZqMN/sxzkemNt5NlxQTVu4dMVNwc+g8NgnoPbAguiMpNC8UsiM1hj9eVOira7NjW8boWJArVz03PqlNfe75fEZ1ctp2UFxU/AD7T9580byyifshVPybGSTxqGspnZaqflV/W3rYfwpzBmc1AxXWXtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Em+uIDI7; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lVKNsWRH"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-2efdd5c22dfso1890417fac.3
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 07:32:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Em+uIDI7"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7490cb9a892so4067685b3a.0
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 07:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751380320; x=1751985120; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=qFUvtp+3D7D3YdGsvlmT0pXYDmGWRwsYLb8ICArK1zM=;
-        b=lVKNsWRHM5hUKfd5d09Y9IAmXOJM40vIXqF7AmB9J2d0mFBkEida89kQ2jJMYPz9Uk
-         Rhny9sl5qKGFf691a72bQkXx7jQEC1z2E/FOG29H2blvEIPO8KZSld5G20yMksLZOpRp
-         RQtVrbXfurwG7+qBHldNGIBnYYd/X9U1RPxZxWp8nLQ4z44vrUm3PG4s5RrVqxd6NABN
-         5jmNnG1apbIjEfvGa0rgJArm3fj5v9pl3Yb8JRSAYKmfQaxu76bgB/oocitQe1a/72Vn
-         ULrr726Pqgsm8Nc0LNclHEtWfL7Zj4KbfvWPQ+YYjQP+HH+G89EGVYzZvZq0ulmT/IQc
-         3IkQ==
+        d=gmail.com; s=20230601; t=1751381159; x=1751985959; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Tgu53KIYTruEYVnrup6ZBqHOZrOKIeBDVWrYTufHgSk=;
+        b=Em+uIDI7OExEvzAxnOBEXsxxAQVqkmZxvbur3NF0XrhbxewVct7HVYV7BT9dtiLWwX
+         gy4hEK5dlOSgShz5nsmIEEwSsr3RUall29DPQjGxen5TVfGlAmvAXWAT8ZZl0Nlvdjq/
+         skxg0a6ckbEYn2fN/QYMPQAHVy/ku3bpfxcWjf943zVZZ57A6kznCZuEAv2kt997T1Se
+         stDJuLXqzjRn5OTAkwjxPBBREN97feQMExdyNLZEdAB2qECaI7NWn94XxxtjwSsETIFb
+         WSGu8ubxPbK76PCt/exTKiDjwocI/BGSfZLzJHX9os1tddB6yi2ZbqBRASt+VmXkZNdM
+         O6tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751380320; x=1751985120;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qFUvtp+3D7D3YdGsvlmT0pXYDmGWRwsYLb8ICArK1zM=;
-        b=Uf31w+mWG5BcRbPwlcLJUdzaXJXh2a3aOtAd1EEjac+YFZlnu4SFAjZF3VAE/Vsw/R
-         SU42i12YprahjxTP/OIWkJ7zB/3m5irQgAgd5apX0I4GERqxjlSgZ9q+hTMNsg8FOlRC
-         melo6XVoOQamH0qu6bM5gzoERXAkTCVZ8lViLsWwQD3+E4ztbEGGjveh2SLVH9KjU9eB
-         zadzeZVBHiI805K20VvF45ywCRKT8gTcpbxiMBf3SW3Ezv9acbo7/lYxomxyU5UjPpC4
-         zi+lfX84f0YUEl3Om5e/9/eweqRRC/pWV5VuAQ/JIV3F2q4UolaR8DXg3ec1UU3Jg2oU
-         znvg==
-X-Gm-Message-State: AOJu0YwM+oKoSRGFuNskJWjuugat3EX0EU9KK+xwyY/StOECrVBa7prh
-	bn+VhVJgyhVWjoH+DtIbJR2x2oPa7Logcc1pEHPZJcOW5fi2OqEKr3nY
-X-Gm-Gg: ASbGnctmRAJqQL/eurf1UvAGrjjkW6xnvxfPm5dCGbzS9vdCWkHL0nyFETmn4IDUla+
-	EUiU0RxyDmcHnvJrGL26QZp8S3k9dIE00nVWDwxSuk9+IqwQN4bp5+KvWKkpAxgln8Qjx6E65Az
-	t1Rc4iD5ARw7E48U6oHFTi3KziVw/XCWrmF1GY6rjcUONN+M71iIO+TKIR+GG2A7FJMr0J1wLXW
-	g7K1QA/pLmsT7+GomYYbNMjOANgqXHyI8jSqc8O1MvVLjahjXn7pOrmdYH9OLTcUgTdbxZC+zlM
-	OyVN55M2FSmbuwG0XTUkyzkkjM48bzC34EOQTY3biAOXVmqyWrt8glo=
-X-Google-Smtp-Source: AGHT+IFmgsPnC0rgL+NLHkafw6hGDxh3tvCLyWRTmbUtLBgNSeP57nyLY4ww7ovKvTzqlO8MK/u/Eg==
-X-Received: by 2002:a05:6871:2113:b0:2bc:716c:4622 with SMTP id 586e51a60fabf-2efed7c1ffdmr12331060fac.38.1751380318231;
-        Tue, 01 Jul 2025 07:31:58 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2efd4f36d0csm3281794fac.22.2025.07.01.07.31.56
+        d=1e100.net; s=20230601; t=1751381159; x=1751985959;
+        h=content-transfer-encoding:mime-version:user-agent:message-id:date
+         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Tgu53KIYTruEYVnrup6ZBqHOZrOKIeBDVWrYTufHgSk=;
+        b=SWDsqoVUkT3xzioOY8dvUWH3sUW4YwDytrbt9iZo1oJtf8h+AvJUvN7hbq13comhG7
+         hb05PPdqdo9KtS0YaN8TvHHfJ6ikKCDO0PabM0Rq0duIm/yrbHcaQsHjKbXkSuiuHEI+
+         JZbw1thZnvXcUOBLjjSaKhk3ajE/xxjfA30OVl14gqbqS9Q9GitNud7KG8A2lJl7UzRn
+         kMlqr0KYXJ2Bm0Yf1k2vkSFkk02+H2vrxkQYhr5vZF6KFCvH0PNFmK/ZifXEo4NrXpob
+         Lf50em1Re/XE/EbPt51M6T/dJCxkTL8L7ocJA81K7xTi1zpe4coWZGROCmlSdOCk2c2D
+         pUSg==
+X-Gm-Message-State: AOJu0YxdD2CuE5LnDC8u0zQv57uRrLLgEMM9rH8nTXioK0SRqxmjhwdf
+	m9GkqGk7DV9i6Mj1+L80DZhuGpYRWS2o+0P91jYLvEC9q/TSEqayq1QXrF4oQQ==
+X-Gm-Gg: ASbGncv9so9hhUP2XsMPthP7l6UUv86qb1KvAhQlXnHF0AJdBtdiDGdW/XYKZ+7Ky5j
+	d5QWkefB2E7rnur+J/XxBM2AAZBcrsDKHnCKHTAQnrufy7DSkE8cgzcyamxs8/osoVz7ixQ0ox4
+	s804WyY1TPd0KpqeCSyYzGQLkjlI++b+JVh4PZTK3ghoHq6OIIySJ0mZUnwXL2FEK+jOELAp9sT
+	XAYImhAC04Ok8bZcvCHjnS49PLk93/q4QRZ5e+yZWEbwP7v44PohIRlRdl95Ck2/CiCprUVOHlr
+	0POI51MTOs6cAz5TTCJ+3TyRqPl1w/eiRyDuMzChwpfsxjjQ3MI4TI0HjkwtshZl1HRIVhVay2j
+	tCUueR15Dn7npgvakjc71mWVS4Ps=
+X-Google-Smtp-Source: AGHT+IEZjq8KiNV1ApXQntUKmDmRoerWrzaYhHEjRwS4USs7ZZQrHK8oIaktz0+rRmJP6/2kCS6n/A==
+X-Received: by 2002:a05:6a00:1992:b0:748:fb2c:6b95 with SMTP id d2e1a72fcca58-74af6f2e8c1mr26000665b3a.18.1751381158644;
+        Tue, 01 Jul 2025 07:45:58 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af541e64asm12257630b3a.63.2025.07.01.07.45.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 07:31:57 -0700 (PDT)
-Date: Tue, 1 Jul 2025 09:26:30 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v6 00/17] object-store: carve out the object database
- subsystem
-Message-ID: <o6aswfyrrfgp3xytnnko6hmxiqowiwqbfmpto6nx4pvuvrzw66@ihcwxe4ek2ek>
-References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
- <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
+        Tue, 01 Jul 2025 07:45:58 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?=
+ <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?=
+ <carenas@gmail.com>
+Subject: Re: [PATCH] ci: update FreeBSD image to 14.3
+In-Reply-To: <pull.2006.git.git.1751345578742.gitgitgadget@gmail.com>
+ ("Carlo
+	Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= via GitGitGadget"'s message of "Tue,
+ 01 Jul 2025
+	04:52:58 +0000")
+References: <pull.2006.git.git.1751345578742.gitgitgadget@gmail.com>
+Date: Tue, 01 Jul 2025 07:45:57 -0700
+Message-ID: <xmqqsejgklzu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/07/01 02:22PM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series refactors the object store subsystem to become more
-> self-contained by getting rid of `the_repository`. Instead of passing in
-> the repository explicitly, we start to pass in the object store itself,
-> which is in contrast to many other refactorings we did, but in line with
-> what we did for the ref store, as well.
+"Carlo Marcelo Arenas Belón via GitGitGadget"
+<gitgitgadget@gmail.com> writes:
+
+> From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 >
-> This series also starts to properly scope functions to the carved out
-> object database subsystem, which requires a bit of shuffling. This
-> allows us to have a short-and-sweet `odb_` prefix for functions and
-> prepares us for a future with pluggable object backends.
+> FreeBSD 13.4 is no longer supported, and 13.5 will be the last
+> release from that series, so jump instead to 14.3 which should
+> be supported for another 10 months and will be at that point
+> the oldest supported release with the interim release of 15.
+>
+> While at it, move some variables to the environment and make
+> sure to skip a git grep test that assumes glibc regex.
+>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
+>     ci: update FreeBSD image to 14.3
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2006%2Fcarenas%2Fmaster-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2006/carenas/master-v1
+> Pull-Request: https://github.com/git/git/pull/2006
 
-Nice to see the odb subsystem take shape and become more self-contained.
+Thanks, will queue.
 
-> The series is structured as follows:
-> 
->   - Patches 1 to 3 rename `struct object_store` and `struct
->     object_directory` as well as the code files.
-> 
->   - Patches 4 to 12 refactor "odb.c" to get rid of `the_repository`.
-> 
->   - Patches 13 to 17 adjust the name of remaining functions so that they
->     can be clearly attributed to the ODB. I'm happy to kick these
->     patches out of this series and resend them at a later point in case
->     they create too much turmoil.
-> 
-> This series is built on top of 6f84262c44a (The eleventh batch,
-> 2025-05-05) with ps/object-store-cleanup at 8a9e27be821 (object-store:
-> drop `repo_has_object_file()`, 2025-04-29) merged into it. There are a
-> couple of trivial conflicts when merged with "seen", I have appended the
-> merge conflict resolution as a patch at the end of this mail.
 
-[snip]
- 
-> Changes in v6:
->   - Fix a mis-merged comment.
->   - A couple of commit message improvements.
->   - Link to v5: https://lore.kernel.org/r/20250605-pks-object-store-wo-the-repository-v5-0-779d1c28774b@pks.im
 
-The changes in the range-diff are good. This version looks good to me.
-
--Justin
+>
+>  .cirrus.yml | 8 +++++---
+>  1 file changed, 5 insertions(+), 3 deletions(-)
+>
+> diff --git a/.cirrus.yml b/.cirrus.yml
+> index 1fbdc2652b3..fef04a38402 100644
+> --- a/.cirrus.yml
+> +++ b/.cirrus.yml
+> @@ -5,11 +5,13 @@ freebsd_task:
+>    env:
+>      GIT_PROVE_OPTS: "--timer --jobs 10"
+>      GIT_TEST_OPTS: "--no-chain-lint --no-bin-wrappers"
+> -    MAKEFLAGS: "-j4"
+> +    GIT_SKIP_TESTS: t7815.12
+> +    MAKEFLAGS: -j4
+>      DEFAULT_TEST_TARGET: prove
+> +    DEFAULT_UNIT_TEST_TARGET: unit-tests-prove
+>      DEVELOPER: 1
+>    freebsd_instance:
+> -    image_family: freebsd-13-4
+> +    image_family: freebsd-14-3
+>      memory: 2G
+>    install_script:
+>      pkg install -y gettext gmake perl5
+> @@ -19,4 +21,4 @@ freebsd_task:
+>    build_script:
+>      - su git -c gmake
+>    test_script:
+> -    - su git -c 'gmake DEFAULT_UNIT_TEST_TARGET=unit-tests-prove test unit-tests'
+> +    - su git -c 'gmake test unit-tests'
+>
+> base-commit: 83014dc05f6fc9275c0a02886cb428805abaf9e5
