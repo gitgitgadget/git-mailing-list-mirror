@@ -1,134 +1,137 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C78E26A0CC
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 11:58:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59350239E7F
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751371102; cv=none; b=r5h5AfdvHuIT59C4Cv2G+xsks+23DEWCUaOnNIcufT6Z4NPcnGLqfUoEvzMilWJpKF2RfrojLqvNsoiBbsaiY4CtfPodzcedo4kC6o/rARW/DFGYpTO5kREKKvyRN9RjhyoMqoVaFCovNQGwMlXsOW2f447rP5/63DtBPPkhimI=
+	t=1751371337; cv=none; b=tlwbNaKj8xDwsmtx9Kqzf3nzlscBqDslwjlEmEfndP7jYQ/MrYgWLF6sEQ9CcB02tMcnw/mM8s4BpN5IvQO7o5DVsQl/sGFJS1KbReZKJTrkkcIDh+CQ0EYnPuqc4kZcJYgfGuyDvy7jy6S8pSxzQoOqgXTYhrrUHO4vAZTvMVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751371102; c=relaxed/simple;
-	bh=hOqjYmoA/H+KoLSZb5LPUSp2ceJXaCdZH7Wqnx3jmxE=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XI8irDbvPnpP8wYvlPhiYLTJ3YCuFWxPBxNCFPIuElWwIYdetoJWsCVS2jdFwy6W9cFiD1UwJ3+023LbxvmCMFbgMfiMAJxkWlVCVL57Gd8SZQGVOsTkNvBbKSsIGdgdUfbhska2aOmnmBefaqHnhLeP/+vtvCWlny8y///UG6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qHie1+P8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JLkSMCd0; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751371337; c=relaxed/simple;
+	bh=ouP1d3cGxdhjxv2bGPFfi9gQpknYznQE1mF990itQqI=;
+	h=Date:From:To:Subject:MIME-Version:Content-Type:Message-ID; b=WthLezI8eBNd/odoSOiGuNCqJ3DYLmUTQFYaUfLldwE4eNVukoCGcEUWWQRcofoATTYK31+S46q1Yvqgw/s2wX3mdVcpT9Qfc5ZLkexEbjzRFewLvLhBtUc9ar/FgcARwaAxx1inP80jCL6wiPGrjMW8cd6jL+0dgmcTiOGXG3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=k2RsBC1F; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qHie1+P8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JLkSMCd0"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CCAD7A0130;
-	Tue,  1 Jul 2025 07:58:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 07:58:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751371099; x=1751457499; bh=unN1cedvCQ
-	/y+TiMz+8kNNd3Rz6a/u0QavBh5KJlCfg=; b=qHie1+P8TXPJZvDbCIdWKiuwk2
-	Th4higpevtsZeduq1T96+6aWnxn6lEICySU2p5hyyWEgOSonm+wpjB0atw7F2jVq
-	gBbnXhzEulAHLoRZiTu8iCoAFpoJJp2mhxfwEhZt22f1xvifPPQyTF8PuLRVlOm8
-	43e5M+q4kRjzeeyAph5LInhl2dBoGxgIbs9iXG3SLQmaLV1bASfHxT92VDmCUQeI
-	l9vfzj34YdvrzeW+EyJL3oq75/s6p7BJaYElmJ38LaTcSpTO/GPkbtXDOkRNTrlX
-	lPkIyXzpJgp5wKUA/BqJ2wq7EEvMxtzjqgXcDdCor+0sYK8Tu6YhAKP/Cn9g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751371099; x=1751457499; bh=unN1cedvCQ/y+TiMz+8kNNd3Rz6a/u0QavB
-	h5KJlCfg=; b=JLkSMCd0YjB+rUGlwxcZ5aKmvFTCV6BraxAPj0wnIwSrRQYhqMS
-	lBn3TtIVnk8CHgUj1Q67sQG67tGlHRFZP14b6yyQ1KV4b609JAbyBmAfRzG82FLM
-	btXwtmQmcw9Y2b2hWUUKDpMT4YaKH5WEn8PLX3NZLMX3J/wqXlMChPfGZ38GQxW8
-	4klR16/6DnqjPvVHcDRvHIqFOdeCtxLoeXiCJjDOV/9xQgNTOV9uPQ9Lt1SS5Cq2
-	W6qrlas1LU6RL37PQZLr3H79tbYmCKC+2/VYe8NZgmPmoMDtyGlGxYOA564luwQ/
-	31+mb4biPHSVoQt9gdc9sg/ydf/8yzOo5VQ==
-X-ME-Sender: <xms:Ws1jaN1x5NQYyKsUMtlob_yKvuOz24gzqbE8pNXnsXWrm4vTMPi96Q>
-    <xme:Ws1jaEElQ8lbw0bqI-QQxy9_v4-cAX1QSdtejPrxIvggmCfpZ88r40Jwh3aZgF8fg
-    5tQCDDzZryUnddqXQ>
-X-ME-Received: <xmr:Ws1jaN6aW7KLZ1W-BoHrnJREHIlWG5_HSrCADEElhIV2LZIi7RTZWak1f4QL06Y32NbZ8Xg2WUr-0rXCCne5EjoOzSTvz6mDYr1gQuOxlw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeegkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvuffkfhggtggujgesthdtrodttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
-    dugffgtdffleetheevkeevtddtkeetgeeiveduhedvuedvueejhfehveejgefhnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhsse
-    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehhmhhoohhrvges
-    qhhumhhulhhordgtohhm
-X-ME-Proxy: <xmx:Ws1jaK3Qr8s6gWMcmz50aEs560Ua6xZ23HCr3GaSc06MyjdSZbev0Q>
-    <xmx:Ws1jaAEMF1Gq6mZQ9FMuXhXgdrIU7jbyYMDzqQWkszv1sMU-Sfwu7g>
-    <xmx:Ws1jaL-ea6uvzIbgA6CZnIZ5qjei1W-MAKYB1vJJq-YzZ4Sj8NDLDg>
-    <xmx:Ws1jaNnCIxrUsrNbxhTDOmFrfic_DNTfoGYKdz_pPL4jZmf3mSgHQQ>
-    <xmx:W81jaOGDA41fpxrfxqNwTkACY5wMM80DC8rdMM_iZQCE7MyqWJr_jfwk>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 07:58:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6be53135 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 1 Jul 2025 11:58:16 +0000 (UTC)
-Date: Tue, 1 Jul 2025 13:58:13 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Haylin Moore <hmoore@qumulo.com>, git@vger.kernel.org
-Subject: Re: git only writing 4k at a time
-Message-ID: <aGPNVRxZQiFpCIFs@pks.im>
-References: <CALnKHDCH_174KnP6Um+G8YCpDBGNNk40xS0T2K6VtnDv9hE37Q@mail.gmail.com>
- <aFM9Uh0K2TSAuoHb@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="k2RsBC1F"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1751371330; x=1751976130;
+	i=johannes.schindelin@gmx.de;
+	bh=+dH28FxfgwKKEgyZ0RNh8hMFu1unsi0pq4cqglQKSlA=;
+	h=X-UI-Sender-Class:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Message-ID:cc:content-transfer-encoding:content-type:date:from:
+	 message-id:mime-version:reply-to:subject:to;
+	b=k2RsBC1F895t7ScmVlOmdfimDM1lj/AtXnFeT0YvN1Giqa8J1rbNFPN1o4R6bQ8v
+	 O6DqgR8W4tkyrevAip1mbArnX87GIdfcZ+LEL2I98S9i9rhWyR2b9oVvKXAkPm3rn
+	 wtizHJM+miBM4AQlqH5d9/nFb9TdhSMYp16Ofz8JGoKxS5sFWPXMs6XoPl9C4bBt5
+	 iY+FUOjMxIDpZzfeOqQjrIwRibglSvVvBzwE94Y0HcUHMyvVuzx56c4vayFhyLOVT
+	 swoyPHXRL1RNC21zpIXU+SVElyCI2zN8RS6zDc+XevwluSX8kB3qs5sen02Gd2XDp
+	 UwprJxKQrTIptYcT3g==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.20]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MEFvp-1uOdD50VZl-004D0E; Tue, 01
+ Jul 2025 14:02:10 +0200
+Date: Tue, 1 Jul 2025 14:02:08 +0200 (CEST)
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+To: git@vger.kernel.org, git-packagers@googlegroups.com
+Subject: [ANNOUNCE] Git for Windows 2.50.0(2)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aFM9Uh0K2TSAuoHb@fruit.crustytoothpaste.net>
+Content-Type: text/plain; charset=US-ASCII
+Message-ID: <1My32F-1uuqTd0j0h-015Z5k@mail.gmx.net>
+X-Provags-ID: V03:K1:b8wp3QEdYJg8vAmt4zQlOEYVXlzgw0ATRYevCFIlkcTknrTuMQv
+ aPEddJQwQjVVD39ykJgPHPxAjmmGz/jEGfGAV+G5/gTuBFzaTx9kqOXyA2NK+eNm8U0AKli
+ WdACfSTJOuHY6DiHr7gTBXaBUQtOucmHswAjEZ0/HDcu77nlVyD9xZQL5MNGgS6GuceUCmq
+ ehCLuKZ0lttAhaubQj+JA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OrG4w7RlNzE=;vP0I6G8VzwcdW4OmVJ+0i69lwQR
+ 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
+ P08sgWj2RXp9+GH4Xoog==
 
-On Wed, Jun 18, 2025 at 10:27:30PM +0000, brian m. carlson wrote:
-> On 2025-06-18 at 20:58:52, Haylin Moore wrote:
-> > Hiya list,
-> > 
-> > I've been investigating some performance issues around git clones over
-> > network mounts. We have noticed that git is only writing 4k at a time.
-> > These small serial writes are making it such that even though each
-> > write is only a 3ms operation, the total time balloons. Looking around
-> > the source code I found that reftable_writer is initialized by default
-> > (though I cannot find the block_size argument being supplied in my
-> > cursory look) always to DEFAULT_BLOCK_SIZE (4096). Is there some way
-> > to increase/configure this block size such that larger writes happen?
-> > In git/Documentation/config/reftable.adoc this block size is mentioned
-> > in a manner that almost feels configurable, but I'm not sure if this
-> > is just internal for development.
-> 
-> It's fine to adjust reftable.blockSize upwards if you'd like, which
-> controls the block size for reftable writes (which is what you're seeing
-> if the writes are from the reftable code).  I think at least some
-> versions of JGit use 64 KiB for various reasons.
+Dear Git users,
 
-Yup. The default block size of 4kB was picked because most filesystems
-use it. Google uses 64kB because to the best of my knowledge they use
-Spanner to store the tables? At least that's what I recall from past
-conversations.
+I hereby announce that Git for Windows 2.50.0(2) is available from:
 
-> As the documentation describes, there may be some performance penalties
-> during reads since more refs will have to be read, so reading a single
-> ref will likely be more expensive.  However, you may find that
-> acceptable and you can adjust the values such that they provide the
-> right balance in your environment.  I would definitely recommend a
-> power-of-two block size, though.
+    https://gitforwindows.org/
 
-So this kind of depends on the filesystem's block size. If yours uses
-bigger blocks it's definitely recommended to adjust as needed. The block
-size is ultimately a tradeoff, and the best value heavily depends on
-both your system and on your use case.
+Changes since Git for Windows v2.50.0 (June 16th 2025)
 
-I'm curious though -- are you sure that this is actually the bottleneck?
-Reftables are only used if you explicitly opted into them, and I would
-be very surprised if a clone is really slowed down significantly by a
-clone.
+New Features
 
-Patrick
+  * Comes with Git LFS v3.7.0.
+
+Bug Fixes
+
+  * Cloning large repositories via SSH frequently hung with Git for
+    Windows v2.50.0, which was fixed.
+  * In Git for Windows v2.50.0, operations using the POSIX emulation
+    layer (cloning via SSH, generating the Bash prompt) cannot be
+    interrupted by Ctrl+C, which has been fixed.
+  * Git for Windows v2.50.0 is unable to initialize Git repositories on
+    Windows Server 2016, which has been fixed.
+
+Git-2.50.0.2-64-bit.exe | a22b0ddaaa6c698be63f8396b5e595c72a4ab2237bb8863c935752c02c1824b3
+Git-2.50.0.2-arm64.exe | 4d6306fa8f346615271acef9a6bbd9072485111e7c9717ee993bf72a29ab7cd1
+PortableGit-2.50.0.2-64-bit.7z.exe | de8e309e780201d74b09e4b248209fd5544c45acbb5a4d131562739460aeeb46
+PortableGit-2.50.0.2-arm64.7z.exe | ae8331ea65e1f7677b6ce140edb0f5501aa108abbd8bab943cd995c4ddf1218e
+MinGit-2.50.0.2-64-bit.zip | 6d28c7e9f9c219a16c078c94a80492dd10fa309fbd17a67b2230736fdfb263b9
+MinGit-2.50.0.2-arm64.zip | c0552ba67549d2cc0cb847a89cd0c45b884086c06c7e1ec8dc190931e0e48adc
+MinGit-2.50.0.2-32-bit.zip | 963ad1352e606f20a719ce1319432aaa23b18acd42cdc0f88f73694c29554a35
+MinGit-2.50.0.2-busybox-64-bit.zip | dddb446697623597ee84a7c544310f76cfa9e07bc34f951b8d3390a50d8e3d8b
+MinGit-2.50.0.2-busybox-32-bit.zip | f16162dc7c45d438a04f3969b20545699623d89acf92a6a32a6ff9353a9e32a8
+Git-2.50.0.2-64-bit.tar.bz2 | 295dfbf88b741aff20b3f50580f8601fe5e3cffa67f48ea21892789274a902eb
+Git-2.50.0.2-arm64.tar.bz2 | 7420699c4caf71ef79fd8edae7a0b5cacc708b5ba7c4200ec33963afb0365efa
+
+Ciao,
+Johannes
