@@ -1,296 +1,326 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9194F1E1308
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 20:36:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751402201; cv=fail; b=J81i9FBlsjE7kFLCXrLjwyM4P3+dXh0dXwTAZbDx3wwzW2pQUGU6dfSFifJJmXcL4ldXlw/nsL8bZlfWJtaXI9f9cK9CxiBmu5vmBiIDthIxTjMQu2qjiP4HAmN2Vej5KyV6lWlbL96/HwtG2M/xboCuXJtJiGUIZz4CA49J1RA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751402201; c=relaxed/simple;
-	bh=hKxb2vaj1vFZaoblBQ2HDDDkrmwPCsQxE0p+Nh34BO0=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=Nbq2UC6MQA1S6kyYX35MbyryTBANyEBarwy0Bz6EpS1gZhypIwez/Sh0jTx+oO8uZcnuJgy8CDALeVcn8XSF4NASDDXS//6eHrAcppd07m/5v8GyFlHNoL92nOifj7E/e73adp8GW2m5LNQ+Xi6ajOUgRjCyZwsKwlXfmvOUbS0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=c1/iBow6; arc=fail smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38CE23F28D
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 20:42:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751402575; cv=none; b=Thu5g35nx/l+HPD3s0sYiBCuAiRy+nH9ZyvzoEvyfofCKhufgpA+Lg8hvasw4Wjcqz+3wkQjKzE56idxxynmu7kU0cvfvO9xpjrMXYOZ1k1CSptDpZ+iunNHUEg8QPsdC5LUhn14tcJBCC06TnBc3O5k82YaNV4+oTKHuZU+GdE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751402575; c=relaxed/simple;
+	bh=OexY/Dijcufn+tJQxVVS96vLxJ1EOf9LW6aV2Ei5QNk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=U95tfA437Lz991mbDTD2XAzIYep26zoPunan2xele1WvQx9cKmjHesWQr06h2kRfZoDOBIDaafOx85tzUmqhs9MOyI/BujxkKugDL/4OpSXS1W3+/xiLkeJAQXeFsMbF7j2Ulc2SxiZ9hxxKVTOeOpc8dZfCaUQZ+o9ks7op7iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OKCVrnm3; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="c1/iBow6"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1751402199; x=1782938199;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:mime-version;
-  bh=hKxb2vaj1vFZaoblBQ2HDDDkrmwPCsQxE0p+Nh34BO0=;
-  b=c1/iBow6ATe+Q/ET4iKLt9EdPoD+03FKt4gKDa4gWtp89QNBKS8qMFXI
-   8acbQ+gJfuRLW3xd14u1mQwQJF3N1IZl0B4thazyecVPLwxXLiZYKSzk3
-   /+L4gIXKiTQMYDh2gFrIJuUFosZh1mlE755yK0H9omNbVnHXoP7IibmdA
-   D6pxurCVLPZmEtEOBCZDRhgnUD/4YW9avydakDJbnxWvUNtvxlFX2oiSE
-   Qq5V0m1GsGELLUKHXxgsg3C9NEUtMQxoLc00An5JSg93juZyyI8DUijw3
-   fCicLbL42XvTQ583fsv3ZFaPdhZNLGSOCkxl+l1z2dX//289mYDE2L3Mi
-   A==;
-X-CSE-ConnectionGUID: WTjBrHo9T/K/msYDP7wCew==
-X-CSE-MsgGUID: L0wK5+b6RO2igRRVOyw75g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11481"; a="57493866"
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
-   d="asc'?scan'208";a="57493866"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 13:36:39 -0700
-X-CSE-ConnectionGUID: +BmNMsxOTkmH4bLNE067fw==
-X-CSE-MsgGUID: K81Oo6IhTZ2IJvzJPPF8rQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,279,1744095600"; 
-   d="asc'?scan'208";a="154413201"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
-  by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Jul 2025 13:36:38 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 1 Jul 2025 13:36:38 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 1 Jul 2025 13:36:38 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.51) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 1 Jul 2025 13:36:37 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lfY7RBdsHSjY1Ic/Fv7XInfAwf+k0iENLAK+k0Sne+0pUdCo5oi5TE5tc9mws+NyEyjgm2oojylO4Efu9r5f2u/09JQ3axbaVxUacxG71eSuUYT1lkbLCpLtBLSDa/LzrefsSvzYZd7CfDSJxNOkXbr6wRUNV0CYYZevZR7iV/4broMn1sjyO1pDbYcPUJOmTQMXz/HmD149zlYS7tQAo7vtdNDgipvnoQyjJ1MjU1+MRtzINhrvdLScuc+xYs01d0ohYYMbkxkGO999B1yBz2IZ0sgfuJDrCciMu3e7qaSy5Q91febyTnlwL9JukGMsp/Jc7gCAI38bqMAq5xcwKw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nFkz9ZGjHQPPlKwCuAsuO2sT7uT9jyTqmVBRhYSXaDk=;
- b=En2JBCDaeEGquiEzGRnwRXOGr2nFGX1yFfntE0vPbXJiBir1glaIlKXoobyBTGuBj9Gf4YRTx2stezRfnGUO0A352j5EkZt39JaxjjrvazgJHvOdQPC6MSk4mjm/1oyahTQ9YluU6dlFJKUqAKcm7VatbWhIu0cUDsGQKQOAH+o+p9K2ugIvjFldbCSL6nJ2lYjH9E3iUp7pz1OGgreWSMRMVn45XB+VsskZEva9opRGgY0EOmoMFCpA9euEMn1LDpF5Q8qhhDYyA4n9XYv3kQToBVaCiPHlBWpSrXkr4zVTsUru3RDiicHCHJyQvx0xDzImZ0bfLiVdECYYXLyWZg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by CY8PR11MB7395.namprd11.prod.outlook.com (2603:10b6:930:86::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.28; Tue, 1 Jul
- 2025 20:36:31 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::81f7:c6c0:ca43:11c3%4]) with mapi id 15.20.8880.029; Tue, 1 Jul 2025
- 20:36:31 +0000
-Message-ID: <753b6548-9b7c-411a-ab39-adbf769f83bd@intel.com>
-Date: Tue, 1 Jul 2025 13:36:29 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] send-pack: clean up extra_have oid array
-To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>
-References: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
- <xmqqzfdnkdx6.fsf@gitster.g>
-Content-Language: en-US
-From: Jacob Keller <jacob.e.keller@intel.com>
-Autocrypt: addr=jacob.e.keller@intel.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- J0phY29iIEtlbGxlciA8amFjb2IuZS5rZWxsZXJAaW50ZWwuY29tPsKTBBMWCgA7FiEEIEBU
- qdczkFYq7EMeapZdPm8PKOgFAmhcfUoCGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AA
- CgkQapZdPm8PKOiZAAEA4UV0uM2PhFAw+tlK81gP+fgRqBVYlhmMyroXadv0lH4BAIf4jLxI
- UPEL4+zzp4ekaw8IyFz+mRMUBaS2l+cpoBUBzjgEaFx9ShIKKwYBBAGXVQEFAQEHQF386lYe
- MPZBiQHGXwjbBWS5OMBems5rgajcBMKc4W4aAwEIB8J4BBgWCgAgFiEEIEBUqdczkFYq7EMe
- apZdPm8PKOgFAmhcfUoCGwwACgkQapZdPm8PKOjbUQD+MsPBANqBUiNt+7w0dC73R6UcQzbg
- cFx4Yvms6cJjeD4BAKf193xbq7W3T7r9BdfTw6HRFYDiHXgkyoc/2Q4/T+8H
-In-Reply-To: <xmqqzfdnkdx6.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature";
-	boundary="------------m14d2WnyJtp8ZovfVkm0iZy5"
-X-ClientProxiedBy: MW2PR16CA0017.namprd16.prod.outlook.com (2603:10b6:907::30)
- To CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OKCVrnm3"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-7490cb9a892so4358275b3a.0
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 13:42:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751402573; x=1752007373; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=id7NCp9YL29EQY/81AiwmaaEymysUN7AWeNS14CoRNw=;
+        b=OKCVrnm3APgPkT0gRbr3w9QVommcXDVZyKE+uWMBks6rhREvM+G+v9yq8Imq5TjidZ
+         2Vt2JBYa+77OTG7lODHZ+2k+MGzCcttL2PEs10Af55mCZ/3F7bgI8rI7gENl8oR27YzP
+         6JXE8c/RxN4pbgkBjh03RUzgdZGOaLHF/q6I8re+cmUesMf1Hk+eUdiwnyvdz1JuY+E/
+         s8Eq5+0APK/PD5wrF6ejXNfBJhtuAI/i1MaF6q6wsz4dV3mwIhb0SetTuZfSpGCo4iFB
+         OzmN9w+W5ye+NwWS5y+lCiwPPiHRPcSbSAElZ411ma/1LsMD1MYKwgrPgdfrKvtoVqW3
+         CQ1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751402573; x=1752007373;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=id7NCp9YL29EQY/81AiwmaaEymysUN7AWeNS14CoRNw=;
+        b=T4ruGj3YLLTK20j+uDfBHTja/QZy8vbw96s1wQ4tNyhh66N2w3cMhUl0C1EyjurMUF
+         DJgJffrHq/+TDE+VNxt6WQbcsrpsXTLEcXXUHZCt12v249DcgR+P7Aw30QAG+3iyhf9C
+         P/tyztE2BJWE1mF3ixE5jJlVUvw9a2SIEYb/cW+o9DTu5FK1wJywZNtO5elEXUhIyFT8
+         YQtMkN3UoIV4fQ1SsGHyocLSAw6F9Q4ldpFDPgg/sfmDKzJUPWIjVASaXA5aNT3Xhvsv
+         2WryGzVnzSUVWQClpK4jCWsIzFamIr3V2m7bbaDh+5Gs8WKEL1I/0exovq7p1lzJZLPL
+         DvDA==
+X-Forwarded-Encrypted: i=1; AJvYcCXLM+4KE9cpVTCz4LqZBrYAC1pSCylJ+81MCe6VvNaIdK++/6PZJop1W7fnsZVPcGwSFpM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy4rQsqW7Rlu6gJ4bDOuRVJFAzyXWldPQT4JQC40c4QDUnG3ifW
+	4/xo8Mox5lXTPizcmsbkI1aKMtC5A0hPgKnx2WAVx+KroptW4QqvuYBL
+X-Gm-Gg: ASbGncttYZP2Gxs1SaP1MUQbhNxX+IOGhdovdjA/L1xE1tzQuJeuw1hYoQoKt3QMOHZ
+	XrJaR7FohPXWBRluox4AHeOQtBBdlk5rKD1Sj+cGvt9iDL8/utOp7+p/ZmnLk6sqwhRQN2gJeCO
+	EI4XXb3e9hATr9/gjMWAeINmWPrera0WJdMkQMBpKvNDDgMfvLun6XUgbUEo3IklL///cWs0ll8
+	FmZcrlyaAnK6jiC52ecASf8VtVIE+iivWHvmtKTo+uY1BM2UHrlz8+DplCpAlsu3lPbR6wLJTSL
+	2KvkZ+GGK8HIFaIAIcYuKwekFD8D72Rx5IOLKlE1JgBCIg9G5e8UY22K15mUM9nW2s9RcoNcnoa
+	sh8G56eLop9QTxUkgTbCf/D15Zco=
+X-Google-Smtp-Source: AGHT+IHBGs3M9/0T4Tsa2D02vKvHkspu1a45TwztP+e3SeSIfBSymSHw7H3cYLJK94gAb6jMyA0fvA==
+X-Received: by 2002:a05:6a21:328c:b0:21a:e091:ac25 with SMTP id adf61e73a8af0-222d7dbad9fmr902664637.6.1751402572818;
+        Tue, 01 Jul 2025 13:42:52 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b34e31e8118sm9539694a12.64.2025.07.01.13.42.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jul 2025 13:42:52 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Collin Funk
+ <collin.funk1@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>,  Patrick Steinhardt <ps@pks.im>,  =?utf-8?Q?Ren?=
+ =?utf-8?Q?=C3=A9?= Scharfe
+ <l.s.r@web.de>
+Subject: Re: .clang-format: how useful, how often used, and how well
+ maintained?
+In-Reply-To: <875xgcq9zf.fsf@iotcl.com> (Toon Claes's message of "Tue, 01 Jul
+	2025 16:08:52 +0200")
+References: <xmqqmsa3adpw.fsf@gitster.g>
+	<aFR-Yf0PMj30ex2O@fruit.crustytoothpaste.net>
+	<87msa3quzs.fsf@gmail.com>
+	<aFSVhpnNnj6p3r7n@fruit.crustytoothpaste.net>
+	<xmqqbjqi5tk3.fsf@gitster.g> <875xgcq9zf.fsf@iotcl.com>
+Date: Tue, 01 Jul 2025 13:42:51 -0700
+Message-ID: <xmqqh5zvk5h0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|CY8PR11MB7395:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6d3140a9-9338-4d85-70c5-08ddb8def65f
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Z0pnVVVnZWlKUjNaWW9hM3dJMEoxM0JwZ1BGSUFKYnJFMnoyL2cxbjlmY2x3?=
- =?utf-8?B?L2w1Z2U3aVl0SjBNaCtiM0M0STZIdU40b2U4Zy9HNytVZExQTitiZnZIZ2hO?=
- =?utf-8?B?Vit4bVd1SXFEUy8wQkNFS0xleHFQcUZXNmcrZUwvZW5CSENzbmhSczR5bVJG?=
- =?utf-8?B?M3kvcUxUUndNRmVVT3o0ZWsxTGNYb1lVMUlKMzFlV203QnR6eVdjejJvS3NN?=
- =?utf-8?B?R0ZtZnRhUEFXUWR3RnplM0NGZFlEbG01NDI0QUhDVWIyZnJHZzlWUjZJMzRS?=
- =?utf-8?B?cm85Smh0c2Y5Q3V2aGRrWlBiNllKaGltaU01M3piMi9NV08rRmJTVW5raFZt?=
- =?utf-8?B?d2ZFWVU2cVdMTjZUTDg3aGNSRzZhQ2t0ZC9kR2xuY2hhckhVRWY2RW91d25B?=
- =?utf-8?B?VmFNWlVwZkZqS29EU2Z1NWlES0dKV09hcWZjTzkrTGM4Um5WZjdnWjlGRGMr?=
- =?utf-8?B?WnlYdVc5Y2xpNldhQ0hkSzFJMzJjUE9iTlZQeUYwQ1A5SUY4OU1KKy9IREZ6?=
- =?utf-8?B?MVZULzM2VndOWEhTYWh5TUJxUGxMM3REeDhWdnFmQXpjSUsyVFZpNk5XK2pO?=
- =?utf-8?B?V21mWjBZNVZ1bjd4T1NoUmpIaTJEWUpuMjVVeEMvQjd1dGFhNkFmc0oyQTcv?=
- =?utf-8?B?cVcvK25aVFBpRi9CbXdjdUp0dmV4SVhtR0UyZEFSaVJ4Z1E0SC9DZjlwbXdz?=
- =?utf-8?B?cmFiZGZncHQxWXpDanZHNGlKdnhqVnZCblRxTTk4OS83QnQrYjVVOWlURmQ1?=
- =?utf-8?B?SnhEK201RWNXck9nTExuNVEycllsdzJWU2JGMGwyclVNS3lNQUV3WHZTaFly?=
- =?utf-8?B?QWs0RU9SSU1xVHZUQmszUUJ4NjFrVm1qdXdvZlBMOHRHbTFwV2pIV0c4K2xG?=
- =?utf-8?B?ZzF4aHN0T3E2dUxoSU9nOWZiSlJIS29Gc054d1lnUjJ4cldTQzBZbUViMEZq?=
- =?utf-8?B?cXprYWx0SnN1c2tnRkVnVXB3N1dyaXNMRlFEbGtvY1Nwd0VPbzljQVBQZjYw?=
- =?utf-8?B?WXR6Ny9rbXp4a2dlWEJmS0lOU2t5NSsrVkpvbTRZQSt4QU5vVEZidWNIL2RJ?=
- =?utf-8?B?WlR5a2NzNm1mUFFTRlppZkROalVwdElWOTZKSmp1SjZuSGhaWDlubmlzeGVY?=
- =?utf-8?B?VjFxS3ZSSm8zTzE3eGRMNzYzYzJuQmRWUmVxN0hOZlNpWjkxR01yK2F5QzZi?=
- =?utf-8?B?MXRldE1IcGthaTVZQzdDaE1ENWJ5T3IvVlptR0tsaTNKY3V0YlcrQnJ6bkhM?=
- =?utf-8?B?cU5lWG9NS2FRUG8yTVFKYnplMGtVYnlJL2xxZHF1ZklGaDVRdUVVRlVYTHBE?=
- =?utf-8?B?dGRXR2FZbEtSL0VIeWFBQmROWlg5ckptS0s5WjNWVnIydms1MytLL2ZvdFdD?=
- =?utf-8?B?WGFmem0zazF4SHRnNUlyM3BKekpkZEVaa21WOHk3S1d4VzdFNStxMFRvTVNj?=
- =?utf-8?B?RUI2aUV5MFdpQWlMZm9MT2ZwekpTRmVlYXBkS1JlSUlua0RTalpHcHpzSWVX?=
- =?utf-8?B?NjMzV0pMa2k4RGRYVkZjM2p2WUkxc1FodXZIWlFjbFNxZFpxRkVnck1xQXl4?=
- =?utf-8?B?M0NoK3FBRDIvWWFabjI5UVpjV2MwS2tnVWREWXNRZHhvU3lnM1N0eDFQMDdI?=
- =?utf-8?B?SEVoRnlNQ2lpcG9FNGZ2TjdmaHd1VE1ZcUtGTVg2cDBtMlZYOGpWMFVwSXps?=
- =?utf-8?B?Y1ZwWk5QMHFVR2xZVkdieXlKL0ZOR0NoY05YSTJFOUpCdkhBdWVBZzhMQXNV?=
- =?utf-8?B?eXh6VVZhd1BZSTFHVVBqckhFYnU3Z1A0TnYyWWJ4bVdYZHJWVGN4UnJvbU5v?=
- =?utf-8?B?akQxSzgrMGVSSm1ZVlFUdXFkWnk4ZjJNVXlVWjlxdVBYMnF5cGFHVGZFYVJV?=
- =?utf-8?B?Y1JDSmpZTk42bjVmSy9uMlNXVEUyZDdtOVJFVFVYelNIdVB1KzRWd3VEM3M2?=
- =?utf-8?Q?z1A1wQ36Y4g=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Zi9mdC9TNGo2N25MbWpIeFllaWpEcEF6U0FTTjlZUWIyTWl4bzFBcnMxM0hh?=
- =?utf-8?B?VVhEVm1yWUVQeldYcjJWV3BJM2FXMzE2cWczSW5NdThSNTIzSmhIUkMxSzZJ?=
- =?utf-8?B?OUVPM0FBeE1kM0VRYlJNQm4vYmZvd0R5WnBOVnlwNG9Wam13c0VmdEttY3BO?=
- =?utf-8?B?U2RnNGYxUXZxL1hOOGk0Ni9ZNmdtYkJNSzFOQUxXTDdhRjB2NjZiYnRTeUMw?=
- =?utf-8?B?LytMYUdNT2dHc0RpUThaY0w4UDkxMVovVmtpeDlKZWlnODdjMEdtT0xMU0po?=
- =?utf-8?B?blM2WXd4ZVdCZDZuY1luN0YrUXo1cjVkVXlwa2VkRkZ2TFdjSU9SSElKaWN6?=
- =?utf-8?B?QkNkbU5va1pJemhyczdsZlFDaUVWVUJLdXl5YWdOOGVvUzBQdFZZczcvV29P?=
- =?utf-8?B?UkFKdmh3NEpKMlBkdE1IRE5VVXVlRjcxTy9IazdERHh5ejdpcVFkWmpjM3dX?=
- =?utf-8?B?SDJydngrRjRUemdSaFBFdG1kS1hzR1VNUndzNlRIeFZ2SlM5bFY3U0hOZ1hi?=
- =?utf-8?B?WkdIU3B0SThKTUJCdThvMDc4K0xjVDZSY0R0QWdVQWFCK2x3dnZCaFVRVG9V?=
- =?utf-8?B?Y2IwZ0xDZnFJS20zZUxLMmdid3BzUW5oSVg3SVY1TWdKOWNZcmsxL1JGaEs4?=
- =?utf-8?B?VDZJa2x3SlJUNVQ3ZTdPWVlhelZ2S01yWXNoWVc2WDhBWTRvUm5OS0ZTVVN2?=
- =?utf-8?B?b2loUVpjd3QyRDJSczIrQ3doNHVPUmZxY0Jpemhqc0R3UHNHLzZ3RExPOHdh?=
- =?utf-8?B?MngwUlJSVnZrRVRrYkRaaVFjaUE1alFzZGUvSTFvcTBTNWd4ekE3NDFBdHo5?=
- =?utf-8?B?VTdPcmtFL1BqdnlpWXc3QWhVRzM2bWx6SFFHclVZN09xV2gxMjMxTlp2aHR3?=
- =?utf-8?B?ZlErd3JTbG9PZjJLcE9IeVBUUVdDREtwTStvQ25aNHhnTTBjVFg3a2NNalQ4?=
- =?utf-8?B?L3VQdk5nNnM4YTBGVnY4VVIvdndDMG4rVmd3UTFCTi9qbjV5Q2xLemltN1FY?=
- =?utf-8?B?OFI5RjlqekM2ZnVSUkhKNnBQY1A5WDZ0ajlNKzdEeE5nV0cvMzN3a1h0QXFm?=
- =?utf-8?B?TitWN1ZhUlZSeTQrQ2hZSXc4K1EwdllSRXJ6dDNGUkhQYWtTZTFVM3E0bHJa?=
- =?utf-8?B?dEZESTlDb3RyL2JzVHRFRlMrMkN2UjIzRURRSnRna3l4QjIrRVJBYm82Zktx?=
- =?utf-8?B?ek9GVkFNb1JJV0l0UWtTWnhUSk5ScWR3b0RiZ0dZeVMzYitXc1kzTk5MYjlK?=
- =?utf-8?B?RUZUK1RaT2dlV3o5RVJaWW5ndnM0UFZ3Z2ZaUmZ1OXJ6RkN4eC9TNkpaR2RI?=
- =?utf-8?B?UTk4YmYvS1k3VjloT2wreVJKb0xVdkFPd3VQZmZFTjF3SGd2NjB0dnkrdjBp?=
- =?utf-8?B?RHVEeWZJNm5CYVZqRDFMdjdUWnJkSEF5WDdxWmozeHVwLzlWK3NNaDU1c2pa?=
- =?utf-8?B?NUZWbkF3VzMzK21laENhaTNqYklabTlCWGpiaWtiT2hNd3Y1R25TbG0ycnNU?=
- =?utf-8?B?MHYreWt4R0lGYUxWWEZwVXIxR0w2cm40VzVzRWpLdDVUUUJsaWpRZXpxR1li?=
- =?utf-8?B?a0MzRjRmMVVkVTU4U0Y2dVNnNEM4cklZSEE3MzVIaVU4bWJPa2t0NTNtMzYy?=
- =?utf-8?B?R3B0am4rdHI4bkJLdUFaa1JCMUxmY2N5bzU2TzFJVHNuTWg1V2YrdkxjU3FI?=
- =?utf-8?B?V2xDbHNaRGlVK2tUZFFwaFVpUDdnV1RRMWVzVjJoTWJRVmJWVEV2WE9JUnht?=
- =?utf-8?B?cWpSdzFseGN6bFFDL09oSjQ5RlFtUWg4ek56UTNmMXdvbHdlbzBpYUc1ZWZj?=
- =?utf-8?B?K21KYmxSV2M2TGNzcFBYaG1vWFVUUkdvVFRUdENZT0twUWg4Z0hFakJDbnkw?=
- =?utf-8?B?d0ZrNkdkUkNaMnZ0U25kL0dWc1oyOXRoR3htZTBwSmhxSnhwZHRManlGNTgv?=
- =?utf-8?B?ejdYUWoyNkl2QnVwb0xKUXAxZ0Z5RWUxNDFlR2JVSDRiUW5qcUREUjAxRDRs?=
- =?utf-8?B?V1IzSndFMUFpZzBHQVR5N05nRXE0UWtVMi9iR0VxdUpxMEhoSDZqeXhIaS84?=
- =?utf-8?B?UzlKTFl2a2NXN1I0eU9oOHJnaElDR1ljQ0U4TnJ5T0Vwc3piTWZwQkVKWnlm?=
- =?utf-8?B?VkYyT2R2MER1K2J2L0hmVUFBNjdWUzZqbmFBbXY1NGFPZHk5b3JIeURiU2Zt?=
- =?utf-8?B?OUE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6d3140a9-9338-4d85-70c5-08ddb8def65f
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Jul 2025 20:36:31.4512
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rijxDG698TgHD5KFz82cePPMPN2YwH+m5HVOYS0MQdCv5ms0SaSC3NfDcC42Gg1Wzc8qmJ1rjgkyEg+tM9XwpaYKPlm8rkMmsc+lWMbL1mY=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR11MB7395
-X-OriginatorOrg: intel.com
+Content-Type: text/plain
 
---------------m14d2WnyJtp8ZovfVkm0iZy5
-Content-Type: multipart/mixed; boundary="------------0ZBAoqw7ebyZsBOzHVUp7eoc";
- protected-headers="v1"
-From: Jacob Keller <jacob.e.keller@intel.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jacob Keller <jacob.keller@gmail.com>
-Message-ID: <753b6548-9b7c-411a-ab39-adbf769f83bd@intel.com>
-Subject: Re: [PATCH] send-pack: clean up extra_have oid array
-References: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
- <xmqqzfdnkdx6.fsf@gitster.g>
-In-Reply-To: <xmqqzfdnkdx6.fsf@gitster.g>
-Autocrypt-Gossip: addr=jacob.keller@gmail.com; keydata=
- xjMEaFx9ShYJKwYBBAHaRw8BAQdAE+TQsi9s60VNWijGeBIKU6hsXLwMt/JY9ni1wnsVd7nN
- JUphY29iIEtlbGxlciA8amFjb2Iua2VsbGVyQGdtYWlsLmNvbT7ClgQTFgoAPgIbAwULCQgH
- AgIiAgYVCgkICwIEFgIDAQIeBwIXgBYhBCBAVKnXM5BWKuxDHmqWXT5vDyjoBQJoXH7qAhkB
- AAoJEGqWXT5vDyjoe8EA/1OU/7mbkVnufmQ/9+04ObhGJmLDNglAT27MGpPikmh2AQDQoVz7
- JRAnpV98jwFnJhADcLlQ5vuo6htfg3Li5CMeC844BGhcfUoSCisGAQQBl1UBBQEBB0Bd/OpW
- HjD2QYkBxl8I2wVkuTjAXprOa4Go3ATCnOFuGgMBCAfCeAQYFgoAIBYhBCBAVKnXM5BWKuxD
- HmqWXT5vDyjoBQJoXH1KAhsMAAoJEGqWXT5vDyjo21EA/jLDwQDagVIjbfu8NHQu90elHEM2
- 4HBceGL5rOnCY3g+AQCn9fd8W6u1t0+6/QXX08Oh0RWA4h14JMqHP9kOP0/vBw==
+Toon Claes <toon@iotcl.com> writes:
 
---------------0ZBAoqw7ebyZsBOzHVUp7eoc
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> I think the only way we can stop bikeshedding about formatting, is by
+> adopting clang-format and make it's output the golden standard. We might
+> not like it's output (similar to many people do not like `gofmt`s
+> output), but it's a standard.
 
+Having other people to blame when the tool leaves unreadable code
+that is not easy to read is certainly handy.  But I care more about
+the tool giving a reasonably readable result.  It is not about
+people not "liking" it.
 
+Here is what clang-format suggests on top of your "last-modified"
+series.  For this particular example, the tool gets the resulting
+format mostly right, except for an extra space after "foreach"
+before the opening parenthesis.  I presume that this is some setting
+in the .clang-format file can tweak?
 
-On 7/1/2025 10:40 AM, Junio C Hamano wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
->=20
->> diff --git a/builtin/send-pack.c b/builtin/send-pack.c
->> index c6e0e9d05186..61486e378cab 100644
->> --- a/builtin/send-pack.c
->> +++ b/builtin/send-pack.c
->> @@ -343,6 +343,7 @@ int cmd_send_pack(int argc,
->>  	free_refs(remote_refs);
->>  	free_refs(local_refs);
->>  	refspec_clear(&rs);
->> +	oid_array_clear(&extra_have);
->>  	oid_array_clear(&shallow);
->>  	clear_cas_option(&cas);
->>  	return ret;
->=20
-> There is an early exit from the function that would bypass these
-> clean-up.  Perhaps something like this on top?
->=20
->  builtin/send-pack.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->=20
-> diff --git c/builtin/send-pack.c w/builtin/send-pack.c
-> index b28da7ddd7..6ce9f6665a 100644
-> --- c/builtin/send-pack.c
-> +++ w/builtin/send-pack.c
-> @@ -305,9 +305,10 @@ int cmd_send_pack(int argc,
->  		flags |=3D MATCH_REFS_MIRROR;
-> =20
->  	/* match them up */
-> -	if (match_push_refs(local_refs, &remote_refs, &rs, flags))
-> -		return -1;
-> -
-> +	if (match_push_refs(local_refs, &remote_refs, &rs, flags)) {
-> +		ret =3D -1;
-> +		goto cleanup;
-> +	}
->  	if (!is_empty_cas(&cas))
->  		apply_push_cas(&cas, remote, remote_refs);
-> =20
-> @@ -340,6 +341,7 @@ int cmd_send_pack(int argc,
->  		/* stable plumbing output; do not modify or localize */
->  		fprintf(stderr, "Everything up-to-date\n");
-> =20
-> +cleanup:
->  	string_list_clear(&push_options, 0);
->  	free_refs(remote_refs);
->  	free_refs(local_refs);
+There is one instance of 80-column line wrapping making the result
+less easy to view.  If you need to wrap, keep related things
+together, i.e. when you rewrite this line ...
 
-This addition looks good to me.
+-int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
 
-Thanks,
-Jake
+... we should not wrap after "cb," only because it is still shorter
+than 80 columns.
 
---------------0ZBAoqw7ebyZsBOzHVUp7eoc--
++int last_modified_run(struct last_modified *lm, last_modified_callback cb,
++		      void *cbdata)
 
---------------m14d2WnyJtp8ZovfVkm0iZy5
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+In fact, slightly busting the 80-column limit like the original had
+would be easier to understand while coasting your eyes over the line.
+If we need to wrap, we should do this instead ...
 
------BEGIN PGP SIGNATURE-----
++int last_modified_run(struct last_modified *lm,
++		      last_modified_callback cb, void *cbdata)
 
-wnsEABYIACMWIQQgQFSp1zOQVirsQx5qll0+bw8o6AUCaGRGzQUDAAAAAAAKCRBqll0+bw8o6NmY
-AQD29CaJIfIr5+dPPEx1QYgpPTew/gx0vCJmdTDBX/KmjAD+OK5FMEbWbcxHVmv+D4fCrrAbm89r
-suEvqB+cAhFDzwE=
-=Cikw
------END PGP SIGNATURE-----
+... so that related things (i.e., the callback function and the
+data fed to it) are kept together.
 
---------------m14d2WnyJtp8ZovfVkm0iZy5--
+In this particular patch, there was only one such instance that the
+tools output was noticeably more irritating than the original.  With
+more excercise like this with enough positive experience (I do count
+this one as positive, if we fix the space after "foreach"), I might
+change my mind.
+
+Anyway, here is the patch.
+
+ builtin.h               |  3 ++-
+ builtin/last-modified.c |  6 ++----
+ git.c                   | 20 +++++++++++---------
+ last-modified.c         | 26 ++++++++++++--------------
+ last-modified.h         | 14 +++++---------
+ 5 files changed, 32 insertions(+), 37 deletions(-)
+
+diff --git c/builtin.h i/builtin.h
+index 6ed6759ec4..5f89e51c61 100644
+--- c/builtin.h
++++ i/builtin.h
+@@ -176,7 +176,8 @@ int cmd_hook(int argc, const char **argv, const char *prefix, struct repository
+ int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_interpret_trailers(int argc, const char **argv, const char *prefix, struct repository *repo);
+-int cmd_last_modified(int argc, const char **argv, const char *prefix, struct repository *repo);
++int cmd_last_modified(int argc, const char **argv, const char *prefix,
++		      struct repository *repo);
+ int cmd_log_reflog(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_log(int argc, const char **argv, const char *prefix, struct repository *repo);
+ int cmd_ls_files(int argc, const char **argv, const char *prefix, struct repository *repo);
+diff --git c/builtin/last-modified.c i/builtin/last-modified.c
+index 4ff058c302..86b98e7a46 100644
+--- c/builtin/last-modified.c
++++ i/builtin/last-modified.c
+@@ -23,10 +23,8 @@ static void show_entry(const char *path, const struct commit *commit, void *d)
+ 	fflush(stdout);
+ }
+ 
+-int cmd_last_modified(int argc,
+-		   const char **argv,
+-		   const char *prefix,
+-		   struct repository *repo)
++int cmd_last_modified(int argc, const char **argv, const char *prefix,
++		      struct repository *repo)
+ {
+ 	struct last_modified lm;
+ 
+diff --git c/git.c i/git.c
+index 65afc0d0e7..918d83762a 100644
+--- c/git.c
++++ i/git.c
+@@ -516,12 +516,10 @@ static struct cmd_struct commands[] = {
+ 	{ "check-attr", cmd_check_attr, RUN_SETUP },
+ 	{ "check-ignore", cmd_check_ignore, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "check-mailmap", cmd_check_mailmap, RUN_SETUP },
+-	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT  },
++	{ "check-ref-format", cmd_check_ref_format, NO_PARSEOPT },
+ 	{ "checkout", cmd_checkout, RUN_SETUP | NEED_WORK_TREE },
+-	{ "checkout--worker", cmd_checkout__worker,
+-		RUN_SETUP | NEED_WORK_TREE },
+-	{ "checkout-index", cmd_checkout_index,
+-		RUN_SETUP | NEED_WORK_TREE},
++	{ "checkout--worker", cmd_checkout__worker, RUN_SETUP | NEED_WORK_TREE },
++	{ "checkout-index", cmd_checkout_index, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "cherry", cmd_cherry, RUN_SETUP },
+ 	{ "cherry-pick", cmd_cherry_pick, RUN_SETUP | NEED_WORK_TREE },
+ 	{ "clean", cmd_clean, RUN_SETUP | NEED_WORK_TREE },
+@@ -578,10 +576,14 @@ static struct cmd_struct commands[] = {
+ 	{ "merge-file", cmd_merge_file, RUN_SETUP_GENTLY },
+ 	{ "merge-index", cmd_merge_index, RUN_SETUP | NO_PARSEOPT },
+ 	{ "merge-ours", cmd_merge_ours, RUN_SETUP | NO_PARSEOPT },
+-	{ "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+-	{ "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+-	{ "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+-	{ "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-recursive", cmd_merge_recursive,
++	  RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-recursive-ours", cmd_merge_recursive,
++	  RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-recursive-theirs", cmd_merge_recursive,
++	  RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
++	{ "merge-subtree", cmd_merge_recursive,
++	  RUN_SETUP | NEED_WORK_TREE | NO_PARSEOPT },
+ 	{ "merge-tree", cmd_merge_tree, RUN_SETUP },
+ 	{ "mktag", cmd_mktag, RUN_SETUP },
+ 	{ "mktree", cmd_mktree, RUN_SETUP },
+diff --git c/last-modified.c i/last-modified.c
+index 2097894c6e..f7f6a67d3b 100644
+--- c/last-modified.c
++++ i/last-modified.c
+@@ -19,8 +19,7 @@ struct last_modified_entry {
+ };
+ 
+ static void add_path_from_diff(struct diff_queue_struct *q,
+-			       struct diff_options *opt UNUSED,
+-			       void *data)
++			       struct diff_options *opt UNUSED, void *data)
+ {
+ 	struct last_modified *lm = data;
+ 
+@@ -72,9 +71,9 @@ static int populate_paths_from_revs(struct last_modified *lm)
+ }
+ 
+ static int last_modified_entry_hashcmp(const void *unused UNUSED,
+-				    const struct hashmap_entry *hent1,
+-				    const struct hashmap_entry *hent2,
+-				    const void *path)
++				       const struct hashmap_entry *hent1,
++				       const struct hashmap_entry *hent2,
++				       const void *path)
+ {
+ 	const struct last_modified_entry *ent1 =
+ 		container_of(hent1, const struct last_modified_entry, hashent);
+@@ -83,10 +82,8 @@ static int last_modified_entry_hashcmp(const void *unused UNUSED,
+ 	return strcmp(ent1->path, path ? path : ent2->path);
+ }
+ 
+-int last_modified_init(struct last_modified *lm,
+-		     struct repository *r,
+-		     const char *prefix,
+-		     int argc, const char **argv)
++int last_modified_init(struct last_modified *lm, struct repository *r,
++		       const char *prefix, int argc, const char **argv)
+ {
+ 	memset(lm, 0, sizeof(*lm));
+ 	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
+@@ -119,7 +116,7 @@ void last_modified_release(struct last_modified *lm)
+ 	struct hashmap_iter iter;
+ 	struct last_modified_entry *ent;
+ 
+-	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent)
++	hashmap_for_each_entry (&lm->paths, &iter, ent, hashent)
+ 		clear_bloom_key(&ent->key);
+ 
+ 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
+@@ -213,7 +210,7 @@ static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
+ 	if (!filter)
+ 		return 1;
+ 
+-	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
++	hashmap_for_each_entry (&lm->paths, &iter, ent, hashent) {
+ 		if (bloom_filter_contains(filter, &ent->key,
+ 					  lm->rev.bloom_filter_settings))
+ 			return 1;
+@@ -221,7 +218,8 @@ static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
+ 	return 0;
+ }
+ 
+-int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
++int last_modified_run(struct last_modified *lm, last_modified_callback cb,
++		      void *cbdata)
+ {
+ 	struct last_modified_callback_data data;
+ 
+@@ -245,8 +243,8 @@ int last_modified_run(struct last_modified *lm, last_modified_callback cb, void
+ 
+ 		if (data.commit->object.flags & BOUNDARY) {
+ 			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+-				       &data.commit->object.oid,
+-				       "", &lm->rev.diffopt);
++				      &data.commit->object.oid, "",
++				      &lm->rev.diffopt);
+ 			diff_flush(&lm->rev.diffopt);
+ 		} else {
+ 			log_tree_commit(&lm->rev, data.commit);
+diff --git c/last-modified.h i/last-modified.h
+index 04d5a1a5b6..3e83094d77 100644
+--- c/last-modified.h
++++ i/last-modified.h
+@@ -13,23 +13,19 @@ struct last_modified {
+ /*
+  * Initialize the last-modified machinery using command line arguments.
+  */
+-int last_modified_init(struct last_modified *lm,
+-		     struct repository *r,
+-		     const char *prefix,
+-		     int argc, const char **argv);
++int last_modified_init(struct last_modified *lm, struct repository *r,
++		       const char *prefix, int argc, const char **argv);
+ 
+ void last_modified_release(struct last_modified *);
+ 
+ typedef void (*last_modified_callback)(const char *path,
+-				    const struct commit *commit,
+-				    void *data);
++				       const struct commit *commit, void *data);
+ 
+ /*
+  * Run the last-modified traversal. For each path found the callback is called
+  * passing the path, the commit, and the cbdata.
+  */
+-int last_modified_run(struct last_modified *lm,
+-		   last_modified_callback cb,
+-		   void *cbdata);
++int last_modified_run(struct last_modified *lm, last_modified_callback cb,
++		      void *cbdata);
+ 
+ #endif /* LAST_MODIFIED_H */
+
