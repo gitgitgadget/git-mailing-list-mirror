@@ -1,216 +1,121 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04317272E56
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:01:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDA2274FCE
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 10:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751364062; cv=none; b=JKwtZyf+zZmn/O98Fx/8C5cY0YGdyvQ7QBEqjzK+O/+x7iAAiDkSFdwEy4kKwqKpUIX4sZijOgtbNC6bMqw8al0MX1nNWtItGqlC42pe8gkXUV59xsqDpBvELOC/Nwc2UXpL7IBXWEDT1pRF+irMnoWOKldZwknmgXlWGsommhU=
+	t=1751364071; cv=none; b=p5BW85sU0OXNttrSAf46G2LpVExjgi6z1rVmJnL1bnmmw3WPV6FbUEb0XIMLGiyLcrZjVMT9CQ5Hc0GI1zfzWz7CxNzsYldb2+vTR+dFXGTThvLyUFJ0Trs/1184dxsdlLUJwJYo1TULw8BOqgPiTrUutCUv/gudI8Y/32PJ7k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751364062; c=relaxed/simple;
-	bh=g80RwHrYkYY7e+SoM81dJZgx+gTE/QNkWbZSfZB3z+Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UpGW302EuKOaD4aaTUK9iMrnw02/+vbjUKCo5hZb9MF0ysOWcoMQ+VzJ/nQ+GNqD5/cr/RZF9+Fskhn0cjXkqtrQ0L2TkULfLsmFAsqukMMAXi04krrwrl1zrinw0P2h6cUAFiGgURQezlOTIi5LGad33mtJYeiWFNlsEkmVTNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fwjLHvK1; arc=none smtp.client-ip=209.85.218.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751364071; c=relaxed/simple;
+	bh=bgYXo6HJhKw0/oFI0Rz0md8CkTWx/HtuipcEUTrYYRk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dbnRgkW1CFSS1nIevd74aTEWc2jJHgE8WaQ7T34Uu4sYjCxAmCWo9QWc/0JES7fgtv3FXXxg4L6da5n7zfrMOQQlHJSfliM4GoddVy7BiC9bada0ppNvBrCJv+5CtVSdE8LUZ/HLe5SfU9LRkePhTDoxt2yNEd5CeDy7mElrfbQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UrU+lWHk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B+GjpWi6; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fwjLHvK1"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ae0de0c03e9so802002866b.2
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 03:01:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751364059; x=1751968859; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OHi9FlGtRg/EDnf2MgHBTqXZr0Gl2vvMcmNgU6VzNOg=;
-        b=fwjLHvK1Y0lZKQYdJjmEwSSJH04wMfIc9xgsv8hgApeexEIIsROF+IfqrLoYNH9hvM
-         AvwnUQT05L0khfibSlPuUDuXeC6/REri6NBXmeNnHjm+jLgDXS9rJFQCRbmDAGnNREiE
-         RCtQz8OlHH64aQDaGspLZge2VtFfT1R1J5FvT7PCyr7yH/eOfAKEX9BW5i0JxqAw+Kvf
-         jJ1kXfKZFg+I3QWSaBzrkStqWDCvT+NlLvFDPuyNWP+ucHKVtVKKem7+a87tqVyvAuJc
-         hrVOyBR2ggAgrvJggpKPfuhSXz+umiX3SI4rLYA1BxNEBagH6pknwbqnIKvIYpBpcZzd
-         vzWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751364059; x=1751968859;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OHi9FlGtRg/EDnf2MgHBTqXZr0Gl2vvMcmNgU6VzNOg=;
-        b=OVA+Ezx5/ypi5KFtPCHOtfSqStuXOGNCZXHGDSEFg0C4t/YRvj00O4jMgi1Bvj2wxv
-         pygRrY5e6GaH+pVlGVNezE6kH92AIxCp8h5fmBzwDgchTqiVdKiidSCd4Xvz2WP4/Mi8
-         UXnld4kAoubnWswga8BTKETOW6A4CQkagjSURDgSiYVwUdR4f4s9Bf09H5BLeXxANZ3d
-         e8t5EJHEgxMvi9GlKtFmxP0Dg0hSMoG8huy95UnQ17yM9QyRdo/6kdGRzsi5i/qNlP8b
-         k+FIq30DT5OA/JBknqfP9Ago+Hk9D+bGH9r28fOnjTCBIn9L7Dqu+y5ZMNCETTZhfsj7
-         M32g==
-X-Forwarded-Encrypted: i=1; AJvYcCWdPI06yliBY5/NU5nxjY51Dp7ZtGfXrpC93b/ChFgz1hwUuVubgTooGN1XSCY0IHD4CJg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzZj4clxMq5Le0NUcn1QTEQKz+Z41m+KHzBSABK915dl1orH2xR
-	jo3WkbDWo63fzcaO76bEy2gFDhbtx3kzFOxHGh7uMEzypq4aukvYsAiXRzM02g==
-X-Gm-Gg: ASbGncss7w0rxFNhwE4zxZjyiE/FVZd1ASqm/fQqiMw+Mj/icXFZuP79gc/otxaK1zW
-	yJrpCI0AujjGdUKT9ApvZhfRQvbiL16mbPlUbiv05YdD3P+0YQgBVXKWENKwku5RhYpxg0UxKmZ
-	sGOy+f+YXs3Ke7qA1XRk158BGJdAaOJ+j1oJLi0/sXfn9sDqDawvL8zWQVZ81JfOIQa4MAso1mq
-	2TQzsAg7mUcjcbw6NqafyQZr4voh3vu9YbA3GA6YwsJFr+s/dVHEdg56DXQ53YYWIMGRWotYHvq
-	M6tpUpY4Uu5gTnjUgTFpgLvulUut0/GWyGUH9njd5b3fv+ruZ9VC9QBWjoxr/42tW63k753JE1n
-	L0ny0k1Aa7NCQTL9UdUSe+k3aFqzRbF3tS6g0zQRZFsbxdk4=
-X-Google-Smtp-Source: AGHT+IEcHwcx7H+sq9QVGlsGFvYJ1m4UhbGEzUXW4VyaxMnECodMxZBHF+KEuxNu8E7a4Nv/6bfu0w==
-X-Received: by 2002:a17:906:eecb:b0:ae0:abec:dc13 with SMTP id a640c23a62f3a-ae3501a6ebfmr1510297866b.53.1751364058923;
-        Tue, 01 Jul 2025 03:00:58 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:8515:f93a:c957:e0a3? ([2a0a:ef40:700:a501:8515:f93a:c957:e0a3])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae353c01615sm851817066b.94.2025.07.01.03.00.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 01 Jul 2025 03:00:58 -0700 (PDT)
-Message-ID: <4fa954a7-ce48-41af-8106-21bb6f17d340@gmail.com>
-Date: Tue, 1 Jul 2025 11:00:57 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UrU+lWHk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B+GjpWi6"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2236B1D00011;
+	Tue,  1 Jul 2025 06:01:07 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 01 Jul 2025 06:01:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1751364066; x=1751450466; bh=YdsdEzCDjG
+	Pslq1xb21fmNrYOYfZ9v9m0eeR+jdg7dg=; b=UrU+lWHku1yrCLDqR6yKyBqHHl
+	YyHvpyfwsWlw5KjZQpy7AT9TGAmdRXEXnId4PMKLklyNo75fbU3eJ4vf00U40yzm
+	Sw82vdWBFb1fSuo+70rZZM1uql7MrxyH+VVDwHZskVPVPGhWZBwiniffMNyzr6rC
+	8Yhvrd6ejzPgfHEzwoLjd0+mIrqB+PNA2fb1AL9SLZogv55Yz7C2rPW0nqaZk5dK
+	jm0t7VSU7EOkii7MDyzFrFpWvJ9v7bWTUxOmadKS+VW5ILr7Zs6j6egY/rpba32L
+	WiOz3ElvlZSrfpr+wJkAeVeRB2JVWn5gKh8miV/AeDahFAg5LSDf/bNseHHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751364066; x=1751450466; bh=YdsdEzCDjGPslq1xb21fmNrYOYfZ9v9m0ee
+	R+jdg7dg=; b=B+GjpWi6JTmx+qqAAOAgbeIAM0o9A/qPFpFXOD+fGRLsKdRxrqw
+	GZVF55OLPK3CXyc3CayvP3ka2gG4WP3+9pxOnPfZYnRjgLqKSCjMsVd+7lY24RMj
+	/1W3mDhHs0GXbDTkvSOHhrhUffKLSZVuq2RcLe0dHlCgVN0msrEFRlI5GyYtcVY+
+	NfbgmhInvf5zNfn9JNpUHKLinRBJ/YDnQYNgtB/E4ve+js4yDngV5WQnqI4pbb0G
+	WlubjhY0sjsnkejn68/SurCWoJvZ74Vewu+Jqa59fwCYhQxLdPxKOSiwyGnUI6/K
+	pRW9fv0+aGUnl7NiQ26+pRJbwg/HLeDz3sw==
+X-ME-Sender: <xms:4rFjaEUFBNivyugMGDtv0glkWEMR7mZxX3qrZL7Mn0D6xTyjSYe3eA>
+    <xme:4rFjaIlYBJDHM7KSJKZt7q-v0gtCwsAJud00LRlCzUCSExorLifV3lcW-Tr9Xojt7
+    kHL7osclF8cCFE6Eg>
+X-ME-Received: <xmr:4rFjaIYgEZ0wv0EaLeM6uYWSUaskHSAobHemhF9JiWBl1prWj_xZIpYS7j_VZy7hSL747CEZjUZhKTUnd5pZCuzwHVH4vDOlZzCe88Nwqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugedvgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhn
+    rdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrg
+    hkkhdrnhgrmhgv
+X-ME-Proxy: <xmx:4rFjaDWp7rdfuZlDm0F9qCCDXr-fePOKYhmhLlbHR_YGhl-GHfGRcQ>
+    <xmx:4rFjaOltw-tQG1ys3crNquXMpk_KtcjENIuLsLXGS07zEoPcD2zLyw>
+    <xmx:4rFjaIe-p9gQn52H7TUvbOkByw1WJR1QeUHR0qeypO9WDvhW5xR34A>
+    <xmx:4rFjaAH7qh2LO_f-hKX-LVFnuMHJPUaui37NTGeYe63DBpLViTfvmA>
+    <xmx:4rFjaJm83vk4yU33AkK3CKGOAZTVG55GdslgidUZIuizhudw4qch5KXe>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Jul 2025 06:01:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 3a12ea84 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 1 Jul 2025 10:01:03 +0000 (UTC)
+Date: Tue, 1 Jul 2025 12:01:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	=?utf-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
+Subject: Re: [PATCH 0/5] doc: config: update for the ps/config-subcommands
+ series
+Message-ID: <aGOx3C7-9NNi7h8Z@pks.im>
+References: <cover.1751310455.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/4] add-patch: respect diff.context configuration
-To: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Christian Couder <christian.couder@gmail.com>,
- Leon Michalak <leonmichalak6@gmail.com>
-References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
- <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
- <1ec8a1384862765795f17e2d0fcb7b601ef2b25f.1751128487.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <1ec8a1384862765795f17e2d0fcb7b601ef2b25f.1751128487.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <cover.1751310455.git.code@khaugsbakk.name>
 
-Hi Leon
-
-On 28/06/2025 17:34, Leon Michalak via GitGitGadget wrote:
-> From: Leon Michalak <leonmichalak6@gmail.com>
+On Mon, Jun 30, 2025 at 09:10:22PM +0200, kristofferhaugsbakk@fastmail.com wrote:
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > 
-> Various builtins that use add-patch infrastructure do not respect
-> the user's diff.context and diff.interHunkContext file configurations.
-> This patch fixes this inconsistency.
+> Update git-config(1) according to the ps/config-subcommands series
+> (fe3ccc7aab (Merge branch 'ps/config-subcommands', 2024-05-15)):
 > 
-> This is because the plumbing commands used by "git add -p" to generate
-> the diff do not read those config settings. Fix this by reading the
-> config before generating the patch and passing it along to the diff
-> command with the "-U" and "--inter-hunk-context" command-line options.
-
-This looks good to me, thanks for working on it
-
-Phillip
-
-> Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
-> ---
->   add-interactive.c          | 17 +++++++++++++++++
->   add-interactive.h          |  1 +
->   add-patch.c                |  6 ++++++
->   t/t3701-add-interactive.sh | 22 ++++++++++++++++++++++
->   4 files changed, 46 insertions(+)
+> 1. Document `--show-names`
+> 2. Document `--value`
+> 3. Mention `--value` throughout instead of the deprecated
+>    `value-pattern`
+> 4. Mention `--url` in the synopsis
 > 
-> diff --git a/add-interactive.c b/add-interactive.c
-> index 97ff35b6f12a..e0aafb8dd02a 100644
-> --- a/add-interactive.c
-> +++ b/add-interactive.c
-> @@ -39,8 +39,12 @@ static void init_color(struct repository *r, struct add_i_state *s,
->   void init_add_i_state(struct add_i_state *s, struct repository *r)
->   {
->   	const char *value;
-> +	int context;
-> +	int interhunkcontext;
->   
->   	s->r = r;
-> +	s->context = -1;
-> +	s->interhunkcontext = -1;
->   
->   	if (repo_config_get_value(r, "color.interactive", &value))
->   		s->use_color = -1;
-> @@ -78,6 +82,19 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
->   	repo_config_get_string(r, "diff.algorithm",
->   			       &s->interactive_diff_algorithm);
->   
-> +	if (!repo_config_get_int(r, "diff.context", &context)) {
-> +		if (context < 0)
-> +			die(_("%s cannot be negative"), "diff.context");
-> +		else
-> +			s->context = context;
-> +	}
-> +	if (!repo_config_get_int(r, "diff.interHunkContext", &interhunkcontext)) {
-> +		if (interhunkcontext < 0)
-> +			die(_("%s cannot be negative"), "diff.interHunkContext");
-> +		else
-> +			s->interhunkcontext = interhunkcontext;
-> +	}
-> +
->   	repo_config_get_bool(r, "interactive.singlekey", &s->use_single_key);
->   	if (s->use_single_key)
->   		setbuf(stdin, NULL);
-> diff --git a/add-interactive.h b/add-interactive.h
-> index 693f125e8e4b..c63f35b14be8 100644
-> --- a/add-interactive.h
-> +++ b/add-interactive.h
-> @@ -18,6 +18,7 @@ struct add_i_state {
->   
->   	int use_single_key;
->   	char *interactive_diff_filter, *interactive_diff_algorithm;
-> +	int context, interhunkcontext;
->   };
->   
->   void init_add_i_state(struct add_i_state *s, struct repository *r);
-> diff --git a/add-patch.c b/add-patch.c
-> index 95c67d8c80c4..b43ca1600738 100644
-> --- a/add-patch.c
-> +++ b/add-patch.c
-> @@ -415,6 +415,8 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->   {
->   	struct strvec args = STRVEC_INIT;
->   	const char *diff_algorithm = s->s.interactive_diff_algorithm;
-> +	int diff_context = s->s.context;
-> +	int diff_interhunkcontext = s->s.interhunkcontext;
->   	struct strbuf *plain = &s->plain, *colored = NULL;
->   	struct child_process cp = CHILD_PROCESS_INIT;
->   	char *p, *pend, *colored_p = NULL, *colored_pend = NULL, marker = '\0';
-> @@ -424,6 +426,10 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
->   	int res;
->   
->   	strvec_pushv(&args, s->mode->diff_cmd);
-> +	if (diff_context != -1)
-> +		strvec_pushf(&args, "--unified=%i", diff_context);
-> +	if (diff_interhunkcontext != -1)
-> +		strvec_pushf(&args, "--inter-hunk-context=%i", diff_interhunkcontext);
->   	if (diff_algorithm)
->   		strvec_pushf(&args, "--diff-algorithm=%s", diff_algorithm);
->   	if (s->revision) {
-> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
-> index b088ee141ff4..18dc329ea1f6 100755
-> --- a/t/t3701-add-interactive.sh
-> +++ b/t/t3701-add-interactive.sh
-> @@ -1230,4 +1230,26 @@ test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
->   	test_cmp expect actual
->   '
->   
-> +test_expect_success 'add -p respects diff.context' '
-> +	test_write_lines a b c d e f g h i j k l m >file &&
-> +	git add file &&
-> +	test_write_lines a b c d e f G h i j k l m >file &&
-> +	echo y | git -c diff.context=5 add -p >actual &&
-> +	test_grep "@@ -2,11 +2,11 @@" actual
-> +'
-> +
-> +test_expect_success 'add -p respects diff.interHunkContext' '
-> +	test_write_lines a b c d e f g h i j k l m n o p q r s >file &&
-> +	git add file &&
-> +	test_write_lines a b c d E f g i i j k l m N o p q r s >file &&
-> +	echo y | git -c diff.interhunkcontext=2 add -p >actual &&
-> +	test_grep "@@ -2,16 +2,16 @@" actual
-> +'
-> +
-> +test_expect_success 'add -p rejects negative diff.context' '
-> +	test_config diff.context -1 &&
-> +	test_must_fail git add -p 2>output &&
-> +	test_grep "diff.context cannot be negative" output
-> +'
-> +
->   test_done
+> Kristoffer Haugsbakk (5):
+>   doc: config: document --[no-]show-names
+>   doc: config: use --value=<pattern> consistently
+>   doc: config: document --[no-]value
+>   doc: config: use --value instead of value-pattern
+>   doc: config: mention --url in the synopsis
+> 
+>  Documentation/git-config.adoc | 28 +++++++++++++++++++++-------
+>  1 file changed, 21 insertions(+), 7 deletions(-)
+> 
+> 
+> base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
 
+Except for the issues mentioned by Eric and Junio the changes look
+sensible to me. Thanks for improving these docs!
+
+Patrick
