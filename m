@@ -1,55 +1,55 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FFD3275869
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:15:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931AC2797B5
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:15:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751382910; cv=none; b=L29HZ7si/num5IBBKLzCQlhuDsrOFvbx9sXM0BfF4icOAUb4xwJg2i6noAtC9tRBUj6A1B+fd3XDY5VZVgKhufbTuNLXv5c49fyrtKVoja3tRSwAxQcreqcEdaNLL7W3CxL5XwXxyMYXKflPPUSJPUPmKO+49rUpBhoE0DzZWhM=
+	t=1751382914; cv=none; b=Fh9bANE0amobwJO4dyF8zYiTZyq8lBngRH/PRFuzXSwSlSoTtAg7IYw6Nu+vJAsi/POETO7MSDI3VvkuiAAvrAMa9sszO5Q8alfrY0iSn7WQgcI6ANV8rVFvPSXYncF7zUa/I9bZbqPf8m51tHJFuFm5rPTFGwj4qEyfG2rIIwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751382910; c=relaxed/simple;
-	bh=2EXwse3P89fc0GLsRLoq9mH+1OoHr8HrHpdrfv31hy8=;
+	s=arc-20240116; t=1751382914; c=relaxed/simple;
+	bh=tucn8+eIxjwIIw5NoV2zXuhEMuW89F0ERfqmE7vFDSY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=mbCltJrQpcDcAR915QhkfPhFPM4zQfXNH8zH9TYsEGVLPkpMUcq4EPIG8FDrS8YwQkm1x6sQ+dtCDqtJ5oxLhh3BGGHsu6ldfjb+7GDWF3/BD3JNubENX5NAtPS3xMY9/WqRxE3Pt8QrHy8mJbqI5bqrih2JrpQSzejkUgrm2uI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=MLcs6aW8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g9eM+PJD; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=J1VrRq1c9UYfDngkdKsowKGivuer9aY6c+iMrugyyAITodISZsr4YR4Kgi3DQVlIW5hJeG19/GaaVQr9DvYiXbBAcMaj2e3gCPLnzqNn2f8ZgW4IgwVaBP6SuMN7Q8nkRjWj04PFN+uHyY0HFlKGwEtblO5OWplWw6HDyAwTNrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=hoqgyCgX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e2JWN8P+; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="MLcs6aW8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g9eM+PJD"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DCA171400317;
-	Tue,  1 Jul 2025 11:15:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="hoqgyCgX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e2JWN8P+"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BCDB71400029;
+	Tue,  1 Jul 2025 11:15:11 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 11:15:07 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 01 Jul 2025 11:15:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751382907;
-	 x=1751469307; bh=CbLcRAL8CH9OtPmWxo+hijQYbMtJMdSAeLaLkgJWIv8=; b=
-	MLcs6aW8ROIky3w0bmSKhVHbSA2p+eqV6uv5oenKL746zMoyWwbjDH7BOsyjX5Gy
-	e6lCZYlwi0Z75g0hfVg23/6rDMl68TGGeWL8BGrZx4gsMkonwOe2sKK08cfisgry
-	2qeOZLrtHhxhm2mNAiz9jzdgZU9juyRCp/hc2y4W7zQ4INgEo0nUWY+4P054Ife0
-	IWOebWdvH1cv1z6v8rWlxyGeJ4bfnQ4iRfR79l9lFLwxOgxPtN8JmnzKHq5wi2MB
-	FJN1frdLSyCr3NhUPmDFIOR+pQTWXVNnmSlDPn58msf/GrwGh1hcfEhOW5QT1EsT
-	e6Thftiias4/6WMlvtiYcg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751382911;
+	 x=1751469311; bh=pDE1hUs/F7dcPxnwJFPQTK3bCG1+ggyvwr/GAD8h95w=; b=
+	hoqgyCgXrj2y5oTwKOU8pj3r841SS4v4pW8Udau4RWy4MtxKkj5IhbR7bC0NAXLy
+	5HjN8KMqDTt+LEjyZkK/CzM+YZxOgt8Ifqo9tYCQ+cf8t6NWZsR16A0rc9NYoEeN
+	wElSvvGWGoppLiJ5typ5XlNYJLSGxVvqYCHdCTeXRljo07N0PjanH6m7y6Nbp1DC
+	L3K6efN0tfEGYZxqLYJ8VqMPKZoECKQ5HzsH/+HwYs5yFD2BaS61lhl4Mqheg8Fq
+	+AqPU84ueTXUg+mWFMeDbey0ONPoT0rC1VDWQgQylD/f5pQWPmSUidzbkpxQlOAd
+	JRbrumKZe1s4bnF3aV6Mxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751382907; x=
-	1751469307; bh=CbLcRAL8CH9OtPmWxo+hijQYbMtJMdSAeLaLkgJWIv8=; b=g
-	9eM+PJDpT9CLethI6aqCvM9LodEWAc9iYy7lUMyMc07gBtjKUe6ku8yBHQcM6VjU
-	BinT7B1TwbXOGq1qvAK0uomZVS3v2vcKd7Q//Gm+pBO2/PG0jCt3B8wj7SasIjKy
-	2mBSlfawg1PyaJf0x4+1SGrWoZdjoLm9+iDegbux0MWDTvjgSASUDyVGlXQmx0+w
-	jWLIEPKUd2tieu0NU81d+BZh67Wzf8w49b4tmea6xBA6PIP/+xfW+ZoxSQSdMuSb
-	9i1SMgAcR2eFy0/O4h0bZLoCsvhqrSkkLjbENRz2VlBO+jUipQ+xexWoMFwsGSJv
-	UQ6T4IwazkH4QiGik3sHw==
-X-ME-Sender: <xms:e_tjaES9JwfhYIED7RdUrWWFEKHg4aKeO46ftluvMICJdMr03_vNOjM>
-    <xme:e_tjaBzKnHqRzkhX4WfS6Y6gnMu4KIf00O6bnuDGWwtv-b1xhIszu3--t62ZZRXlZ
-    wiWwaXs6VPJgAyi6w>
-X-ME-Received: <xmr:e_tjaB2Oh6MT5CRA7SMJxdlWXNicyNC3Pmsozk2kFX8Kz1U43Hvpv4PNRjsGJy6C76Np6ng6IP2ja3RZ6qA9P_DaNG4ffE2GKGUNsuQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751382911; x=
+	1751469311; bh=pDE1hUs/F7dcPxnwJFPQTK3bCG1+ggyvwr/GAD8h95w=; b=e
+	2JWN8P+44hhZQU4/T2fVyrNYChJa3H6OwfIoFuxzfwIJqgGoUXkUYetiS5TVrBVk
+	98vW0FDBRaCXHfloe7zNsB5emAhuT1M95sM8ovK/mev1DgnRx4k42a12zbyT5zbL
+	3Ygoq9QL5D/SSTTe6QDiTq3t9bOH/DCJttJARRj+RgyOtaOjApUg9zv0XzTrYfbV
+	RBzkasEv1n1KtE7xj8g6X90pfd3Hu38P+oB7wUCBkLH23m8dJrsv67pCKV98b1g/
+	TJkJz/CRdv2Mm3Bgv1SNMXM6kWN+nI1WUyMNizx+6FgBBduSJgedZN/RgSekvL5Q
+	bxQTpoB92XIt+rSX3LikQ==
+X-ME-Sender: <xms:f_tjaKgJMgVKBmEwPWgHC8O_QfeirOV2jYmPjMrQMC_J-15Qcig5MGM>
+    <xme:f_tjaLAo0QmyQMofM8yy6Ryo08nz55XOBCeSB0LrKgKhljfxgRSRb08s1i29Yd4D2
+    fE3DmOx1fqOQ3LQmA>
+X-ME-Received: <xmr:f_tjaCHLPDIPkZjiu1BLmX_9NLGLnvopUfts0-hN1afh8EKANbDicQ9LmFevENGMfw0D3b2YYUVG3glsJQh0tB57BVS444z9hWtJQoc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeekhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -63,23 +63,23 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeekhecutefuodetgg
     nhgrmhgvpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehjnhdrrghvih
     hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgv
     tghordgtohhm
-X-ME-Proxy: <xmx:e_tjaID8BNiGF0pst5wiKS89redzy_vji_Kf284KXidOu8Rb2fBuxQ>
-    <xmx:e_tjaNhGPnfmewaDK89eH_NTRfbZ63eCWL3hxpNi44VDbegJVmXpHA>
-    <xmx:e_tjaErWMNms6PFsyOePoHQP0YWDC_GyqW3SXFi3PL0uwRB3pWsKKg>
-    <xmx:e_tjaAhLJ4Wr5iEfGqZj1vbJjgiE6vbMM-INfKC4kQp9KtdmoEU0_w>
-    <xmx:e_tjaC_ZcoM2BKV7PS70hDkdgEhIL2C52sTd_SjUXQSc8GVWqB5T4mbe>
+X-ME-Proxy: <xmx:f_tjaDSPsSdvrOObBrvizK-B6WY2LSjn8vmEKEYfm9ZNC8MveUKmtg>
+    <xmx:f_tjaHx1dsUN1Dy12uErvccsbu6wvJRElJRQidNgmQX5p5RP3OVNXw>
+    <xmx:f_tjaB4KNNj89rYasp5rmAWBomLe5plsEdraVRGUoaBb9YnS_oPGhA>
+    <xmx:f_tjaEzUhJnJnJ6HFzcm8Fy8d3ngs5sTCuV8xRQsjXCZNYEBmKnWvg>
+    <xmx:f_tjaGNtoDOj1tb6XsMC53dSIUxfnEimbquWuMn5LYLMmiVeJNJ5Zt7o>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 11:15:06 -0400 (EDT)
+ 1 Jul 2025 11:15:10 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Patrick Steinhardt <ps@pks.im>,
 	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
 	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH v2 4/5] doc: config: use --value instead of value-pattern
-Date: Tue,  1 Jul 2025 17:14:31 +0200
-Message-ID: <e5eee1a0541b2b540bdac92b6b81858bf1eaed93.1751382830.git.code@khaugsbakk.name>
+Subject: [PATCH v2 5/5] config: mention --url in the synopsis
+Date: Tue,  1 Jul 2025 17:14:32 +0200
+Message-ID: <8300e0fc3491991bcc8e4a7bcdd1ac97313cba1a.1751382830.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.50.0.136.g907b27ebd9e
 In-Reply-To: <cover.1751382830.git.code@khaugsbakk.name>
 References: <cover.1751310455.git.code@khaugsbakk.name> <cover.1751382830.git.code@khaugsbakk.name>
@@ -94,54 +94,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This option was introduced in a series of commits from fe3ccc7aab (Merge
-branch 'ps/config-subcommands', 2024-05-15) and deprecated
-`value-pattern`.  But `value-pattern` is still used throughout the doc.
-
-The deprecated modes have been quarantined in the “Deprecated Modes”
-section.  So let’s only use `--value=<pattern>` in the rest of the doc.
+4e513890008 (builtin/config: introduce "get" subcommand, 2024-05-06)
+introduced `get` and `--url` but didn’t add `--url` to the synopsis.
 
 Acked-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-config.adoc | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+
+Notes (series):
+    v2:
+    • Unbreak t/t0450-txt-doc-vs-help.sh caused by source/doc synopsis being
+      out of synch
+
+ Documentation/git-config.adoc | 2 +-
+ builtin/config.c              | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/Documentation/git-config.adoc b/Documentation/git-config.adoc
-index 03808b18d3e..9d8f9bb04e5 100644
+index 9d8f9bb04e5..511b2e26bfb 100644
 --- a/Documentation/git-config.adoc
 +++ b/Documentation/git-config.adoc
-@@ -26,7 +26,7 @@ escaped.
+@@ -10,7 +10,7 @@ SYNOPSIS
+ --------
+ [verse]
+ 'git config list' [<file-option>] [<display-option>] [--includes]
+-'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] <name>
++'git config get' [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] [--url=<url>] <name>
+ 'git config set' [<file-option>] [--type=<type>] [--all] [--value=<pattern>] [--fixed-value] <name> <value>
+ 'git config unset' [<file-option>] [--all] [--value=<pattern>] [--fixed-value] <name>
+ 'git config rename-section' [<file-option>] <old-name> <new-name>
+diff --git a/builtin/config.c b/builtin/config.c
+index 706269647e5..5efe2730106 100644
+--- a/builtin/config.c
++++ b/builtin/config.c
+@@ -17,7 +17,7 @@
  
- Multiple lines can be added to an option by using the `--append` option.
- If you want to update or unset an option which can occur on multiple
--lines, a `value-pattern` (which is an extended regular expression,
-+lines, `--value=<pattern>` (which is an extended regular expression,
- unless the `--fixed-value` option is given) needs to be given.  Only the
- existing values that match the pattern are updated or unset.  If
- you want to handle the lines that do *not* match the pattern, just
-@@ -109,7 +109,7 @@ OPTIONS
- 
- --replace-all::
- 	Default behavior is to replace at most one line. This replaces
--	all lines matching the key (and optionally the `value-pattern`).
-+	all lines matching the key (and optionally `--value=<pattern>`).
- 
- --append::
- 	Adds a new line to the option without altering any existing
-@@ -209,10 +209,10 @@ See also <<FILES>>.
- Use `--no-value` to unset _<pattern>_.
- 
- --fixed-value::
--	When used with the `value-pattern` argument, treat `value-pattern` as
-+	When used with `--value=<pattern>`, treat _<pattern>_ as
- 	an exact string instead of a regular expression. This will restrict
- 	the name/value pairs that are matched to only those where the value
--	is exactly equal to the `value-pattern`.
-+	is exactly equal to _<pattern>_.
- 
- --type <type>::
-   'git config' will ensure that any input or output is valid under the given
+ static const char *const builtin_config_usage[] = {
+ 	N_("git config list [<file-option>] [<display-option>] [--includes]"),
+-	N_("git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] <name>"),
++	N_("git config get [<file-option>] [<display-option>] [--includes] [--all] [--regexp] [--value=<pattern>] [--fixed-value] [--default=<default>] [--url=<url>] <name>"),
+ 	N_("git config set [<file-option>] [--type=<type>] [--all] [--value=<pattern>] [--fixed-value] <name> <value>"),
+ 	N_("git config unset [<file-option>] [--all] [--value=<pattern>] [--fixed-value] <name>"),
+ 	N_("git config rename-section [<file-option>] <old-name> <new-name>"),
 -- 
 2.50.0.136.g303b50f9132
 
