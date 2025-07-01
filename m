@@ -1,53 +1,53 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DA6C1EA7FF
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:17:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD0E273D78
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:18:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751372280; cv=none; b=lZ5moqvSxOqy9ZujeUkmgqJBudL+TxBOpr1HTJ4rOhg9Qwjc4MuexeEFM1mnSX3MTvtl4j1oGEMxHtHVg9ioG53DOfoadll5/fPuPZ/bV9pLOi57fSQz7rq5bjq4DHS6FD29eJWy8zF9MEO7+vdSNKbBZQaxTwnV9Hkq5Pzr/j8=
+	t=1751372286; cv=none; b=f7569yAKTO6akBmvIl+72jRBlbfC5N5KR2jd2BzmR7XBjXOkkY/fTPRLeXgGL1yTGyYArR209+a6FDpjTC4peR2kHi14UlYnCHyESp2G/7WhuESLW1ohKdePpe+i0sqa8NO9BCyD7sizhnItGF6RwY9bp8fgH23hHBe6ve37Alo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751372280; c=relaxed/simple;
-	bh=HYfYDNALrKn2Chi4TYwK7gATUiLhEycfzFD1rrvsrng=;
+	s=arc-20240116; t=1751372286; c=relaxed/simple;
+	bh=Qlx+8QS+6iS3NdIt1l6l9ScaqONPo9lsrEbcVAffErs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=usQ/dd6M8B0arINjQO0/YMaXVwTfe3DLCuPbQzNXxFL69hajsPDRPxVi+AnIuRWiC/afTfk7bSbYRZVKGWAJyaEVRXELUfcVeGGbbNKi/5wW01dVuiHN5dw6wV9/jx87LwsCW0wrqjeX1S0KuB3B+PxnYiWHJsWdhmTXJ+BPhXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kokPhVBn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VpwMsjbO; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=Hgvvsy4UQ6wADyDt3Ahz6jCqvxrCHKc9q7S/974eXVnc6mHvjNX1+Dg8WQNdecgKdLRc6sGlCcTYk7vgIpzybBBUldvbXNu+mh58d1j+lGgD7Hvl1uEYJU1DUd3Y35BeyOUGSqiQDfd1G2MEuAjRcH9phYBf2pea9b0wPUce5bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W6T4+Iy3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b7M7J8Ui; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kokPhVBn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VpwMsjbO"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3C4EFEC0235;
-	Tue,  1 Jul 2025 08:17:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W6T4+Iy3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b7M7J8Ui"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 75AE714002FF;
+	Tue,  1 Jul 2025 08:18:03 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 01 Jul 2025 08:17:58 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 01 Jul 2025 08:18:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751372278; x=1751458678; bh=fTFf12tvpA
-	mDGrtMmvGuaxQp5VB+RF0qL1+b2+iK+Lc=; b=kokPhVBnTP7mR4h67ajfwgm/Zj
-	SSI0iFaRdP0aHvf8jj/dYogzYfXeFy3VXu5uZdvWPYcp5SIsfrxpIAqvryr29Lel
-	jfOSPlPbOEKom6+BtpgYrWZ+ll+3oUSQKjtCAc3fB/gYfSBLKrvhvpTF7je+HW0q
-	UpZmSeRPd9fV81SYMDZc/XRzD77eWcKt7tQA6jWJk28X4JzcpOkcChxK5IOlpsfL
-	M21XbTy9RToeH4GwBV91YtF3rsC54QJ52mD0h5r22aq5gVolTIhAFNpQTL74wztE
-	CdrYkUCWjdrQr+Ev4h/av+t4V+n4D5QjmYPp2nLGV2FSID2Q0yvIJDFFU5YQ==
+	:subject:to:to; s=fm2; t=1751372283; x=1751458683; bh=SsxbHXfhCa
+	Nmka9sg9D3tBzu0zYCM92R3YHHInIzXhE=; b=W6T4+Iy3YPi90H5VNc+cZdqpu1
+	BfagSCQ3iknRyE+apCsVuuY4VXp/9mFE+t6vWzInXB6nkmTt6vQljnzZy2TgUdOH
+	iwGjHg68I4lK5CPCNOku//FGyx8ytSw6ilrzEPIY010SqdmRBqH4bO/pUbW8Del6
+	KaSBk92sdJxV3PpUaeJjEVXqpUSxK1BDmqo55idfw/JODo+uB3Fj6KI8rkFq3kXL
+	L4+x2OiJFwLH4bwFRUlIdYNNwnuQiznVA8v5CkDTV9aSAf1p1v5g+0RFO1QTumq1
+	QMB2RfbxTKU1NR9xsLw/kNe/YmeUJb26O3Lnzht18ozXGiu0R2n/triA+lfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751372278; x=1751458678; bh=fTFf12tvpAmDGrtMmvGuaxQp5VB+RF0qL1+
-	b2+iK+Lc=; b=VpwMsjbO1Ib5B4WPGjV4e+AfWj8p2MB4H8RKA56/r/4qXTE5Z/b
-	H/T8/vv77QAmawu5aU2qT19PAg339jWJYKEz6gUT5DmUdpXZ2fxzQcSpERevIYHV
-	TA+pGa826fMIlcIkjpmDOuf2Uctro4irXYb8l6v1laU+JEtWWMOlje70PtI/NWf7
-	DVxS1GVP2XWJ8xSB9T3i1lTLT4CdAOZs70ewT2/S902XaryZ5Racjn7bgyCefQNh
-	J1B//xGSabFrfXIeLnr2uHWYwIUp/jMPL06JozEy8xH9ZJrI4xDu5TSZ8VcCwAwH
-	5IIF+KdR5OV40AI3LnTJnaeO2QMJTyrdaPA==
-X-ME-Sender: <xms:9dFjaBhAmh2Ar0ojL_g8kUtxVbujsyzOtlNrDog0aGIlJXt_AMTeHg>
-    <xme:9dFjaGD2WF5IdWSjV6ICzXPlZ6rjSdMrbU61a99vbAcm_K0BcJOzKtv55Jws0U06A
-    tmSBnnfH6sOIOCSQA>
-X-ME-Received: <xmr:9dFjaBF_G3GsJfP4YVBma9OXJ8k1S40MW9UuhI8GAAwiqGx_J-hk-Sj-EhHi9FgeS9yjBL8v3__CBrqsaXcrFE3dXAG4u629JU3BOKHwIA>
+	1751372283; x=1751458683; bh=SsxbHXfhCaNmka9sg9D3tBzu0zYCM92R3YH
+	HInIzXhE=; b=b7M7J8UiihOErZMryXwJuab4VXKQ+gOyziY7lZrK8kSH/NVx+j5
+	Gi/i6FgjKU/0ZKnVpXcFxfDK9dShuD6qnbjAm+cAveWFZuCHWZkhFzFGZgitghXC
+	TvtTds/b3cJPkLqRSVte/sJBJrA45l5xYdSORc797xKiavmU8HUGu2WEjGIInUG5
+	zlVDxX9uIeGy+WW5B9erUFN7XPPjCPsuM74+oWZ4ba1g2Cb9FYDYz+3G9cI6+8J6
+	waVi2svqJPL0L/FPU+rYqhkEvOA/3/anbeToslYBgGjOh8MEnM4aIrSMVXCbibmf
+	H9XEbqNBE98WMANRNIg5J9uRmcpX3NaRO5g==
+X-ME-Sender: <xms:-9FjaF1Ak-1KpbQcd2VuTU2LKEWI-_qzWcOYXtSv2RuZilS0fzfrhw>
+    <xme:-9FjaMEROLcuURuxymfjDgDRd7hebFuzEmKZaVyKwDSl69kG7-3kjn8RwHliLBOwV
+    6nWy-6tzlaZfaGFuw>
+X-ME-Received: <xmr:-9FjaF5NHxY11P_PWKD-e5qm4Mzc2G3y0KlskgSdfl1m24bVV_RNPPJh39i40zHTHx-Bz_-yyo42jjCBwmbwVJHVcOrLRsZ5J-M6MzFuTg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeehvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -56,32 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeehvdcutefuodetgg
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:9dFjaGTMbQPAGzodyN4G-j-wNR3FjchWKEVS-l8KvS8JKNapTCBdPg>
-    <xmx:9dFjaOyi1XuRDMnPd-pwkAkZ0RWOdeQw0MYcfSJYxKMWbQtkAu3GkA>
-    <xmx:9dFjaM4CzQTM1znXh1zNYe097xtcsE7910lzLkGavmmPhzpfeGOoWA>
-    <xmx:9dFjaDzXVOiG8Eb-W12YQH8u6vjh9alIVG3O5DcuAClbUzuNFRPqRg>
-    <xmx:9tFjaK60GOeObZR7rFdnyKRM4gcipEGa2801p8F_IcBtrza-kPOyh7xd>
+    pehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:-9FjaC3RYabyGUUE0o4ZRjHqbTG80GaAiJgm7PrYIzAwa5TCF_TBCA>
+    <xmx:-9FjaIFCVNHhqc4xqsMNfdxUM4LAR1sOPgX-mRiJ0OXwgOSoza08bQ>
+    <xmx:-9FjaD_TcoJfsbR74R8e0GH50ykEdXjGXjdPAV9XD3DEA4zyxzbGhA>
+    <xmx:-9FjaFkdYIduy3el5N6fIsAxIWp_i_hfyBYxBYU6OQ8UHIyDNkVLfg>
+    <xmx:-9FjaGdgNIjWVs1sCzGFRc9p1EKkU7YaeXeKdSqWljINJnJv4PRqSXam>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 08:17:56 -0400 (EDT)
+ 1 Jul 2025 08:18:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4daa9b4c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 1 Jul 2025 12:17:55 +0000 (UTC)
-Date: Tue, 1 Jul 2025 14:17:52 +0200
+	by mail (OpenSMTPD) with ESMTPSA id d7a98275 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 1 Jul 2025 12:18:02 +0000 (UTC)
+Date: Tue, 1 Jul 2025 14:17:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v5 02/17] object-store: rename `object_directory` to
- `odb_source`
-Message-ID: <aGPR8K_WxZj7jJvk@pks.im>
+Subject: Re: [PATCH v5 04/17] odb: introduce parent pointers
+Message-ID: <aGPR9zMyN1AZ4uUh@pks.im>
 References: <20250605-pks-object-store-wo-the-repository-v5-0-779d1c28774b@pks.im>
- <20250605-pks-object-store-wo-the-repository-v5-2-779d1c28774b@pks.im>
- <yeimqezalnffifo57opsmngxdyggu2rv53mj3plp5alx37j6pl@slkxiv4brpso>
+ <20250605-pks-object-store-wo-the-repository-v5-4-779d1c28774b@pks.im>
+ <xgbzzqyfnfmjmtucnq3qd3bfqdal6vjkaap3xfspeetbs6ontk@4vclbvlreere>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,19 +89,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <yeimqezalnffifo57opsmngxdyggu2rv53mj3plp5alx37j6pl@slkxiv4brpso>
+In-Reply-To: <xgbzzqyfnfmjmtucnq3qd3bfqdal6vjkaap3xfspeetbs6ontk@4vclbvlreere>
 
-On Sun, Jun 29, 2025 at 09:02:04PM -0500, Justin Tobler wrote:
-> On 25/06/05 08:46AM, Patrick Steinhardt wrote:
-> [snip]
-> > -struct object_directory *find_odb(struct repository *r, const char *obj_dir)
-> > +struct odb_source *find_odb(struct repository *r, const char *obj_dir)
+On Sun, Jun 29, 2025 at 09:34:12PM -0500, Justin Tobler wrote:
+> > @@ -167,22 +171,23 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
+> >  	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
+> >  		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+> >  
+> > -	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos))
+> > +	if (!alt_odb_usable(odb, &pathbuf, normalized_objdir, &pos))
+> >  		goto error;
+> >  
+> >  	CALLOC_ARRAY(alternate, 1);
+> > -	/* pathbuf.buf is already in r->objects->source_by_path */
+> > +	alternate->odb = odb;
+> > +	/* pathbuf.buf is already in r->objects->alternate_by_path */
 > 
-> Since we renamed `object_directory` to `odb_source`, should instead call
-> this function `find_odb_source`?
+> Should this comment instead say "odb->source_by_path"?
 > 
-> Otherwise, the renames in this patch look good to me.
+> The remaining restructuring in this patch looks good.
 
-The name gets adjusted to `odb_find_source()` in a later patch.
+Ah, good catch. I think I botched conflict resolution here.
 
 Patrick
