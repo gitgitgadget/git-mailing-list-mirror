@@ -1,82 +1,82 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0091F274FD0
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:22:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC727274FED
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:22:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751372567; cv=none; b=UoCIgN5mG2KFEf7Uxoh97TFcaU09QR5c9sx3TihnyUelFN54SVnajkZ4TVWZbmcIqS659VX9V9CifEFS/sWvZOhKw1ABCxXDvGi493xdgs87kjoTOTu4KJvELbJvrmq7u+0lKYP5rJownaYFuxFRZsNvz53T62NgK1UhI4rN4Ac=
+	t=1751372571; cv=none; b=VJs9wVGRtnJqOahLADfUFQChwpCvjxyiJM+5WANkYjJ17sTnwE1XQOJrjtyTeZJLCDwyVAJz8rLR/NX3/hzgIf8cW3D5z6SqcfmQEZhJk6exaOt6SFWgorBC12I+lKZdpv6kqpHQYg0gTAZ1bKMuFo1T+nDdEvSG3gUZSAe7z6U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751372567; c=relaxed/simple;
-	bh=xp4gtbTZmwQmXIa/V7MsaS9YY+gUoYhWFfzAFIM7uWY=;
+	s=arc-20240116; t=1751372571; c=relaxed/simple;
+	bh=/oay0EqZTmqrHjv3PxvXqXPEmH0FIXttO702H/WzEio=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YmyiQJgBZA9bkk0f6xU7kwXe4XiNCkzA3IAw0IUi1TzxwU9PiUvRrxri3lxzHMCf+aQfr6VcWfWICv2cUttSQvzb5PociQbyiGaECR4RbanMk5RIRU+ldSiZz1wgtPLrX1u0A22/PaR8l54xrCMsGbYclCuAukdr40GfG8k9acQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rbj8NBo8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cIZlNg1E; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=P0ro+n45q+YdeeC43CF02i3O1XT44v+6fgunoXBRYLe4BaLc8P8QfffTnoT1nF4exXlVjKF6lpmLEBeGDQNZVm3+OLBq+IuKBAIawc3bN4HPcHyn9Xh1+ydSKpjdnpCJUvVsm71jdl+ojclmyIIgoCgGkG6Kc8YbZ1uirFL2I0I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BFc7KCNb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q0SXuB56; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rbj8NBo8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cIZlNg1E"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 314A6EC04E8;
-	Tue,  1 Jul 2025 08:22:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BFc7KCNb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q0SXuB56"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5C951EC04DA;
+	Tue,  1 Jul 2025 08:22:48 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 01 Jul 2025 08:22:45 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 01 Jul 2025 08:22:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751372565;
-	 x=1751458965; bh=W8qwQDhhNFB2hmQDjbNKaJ61CFfj2ynrQDZNziEk/nM=; b=
-	Rbj8NBo8yVHKFBe4bk+6MBm1tbfn6VxGT7WcWx/w16ItLID6uhpT69UYI45zHbgg
-	zQYd5J8OYQzOmNp4TLJSUprkx49bF32hRgZ/BuItuUq8ti631mpqtD72URwjPrU8
-	Rvj9vVMJls33dLwn/OwmEtJINWr9FvWxzw7YdYj481TIvYXz2OYRhXRjht+rHpuM
-	SjRjW1pfl/78vd3zN3fzIRzYI/RNhqZBWFUdawAI1Qz8ca/KbAiuqtUQpp6vX6MQ
-	OVoatZCU3OKmjQqQLYhGqeKikjhAyphY2wyYg/1NXiQWLAcMUWFuuO1ElZsC0VW2
-	7rd4AKsaQinzhaGjjwz2Jw==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751372568;
+	 x=1751458968; bh=WWtksx2bgb6lEkYNU7HZuDaK7yWeyAHmzapiPOTmQtQ=; b=
+	BFc7KCNbYd6p2WlE+EdqOMlaBODEAxWhvl351xCTBhWllEN59MRZdNvl1RNrYDZR
+	W7dUVpQyF6GZTZWHs5t+lkx+LGkEUkVGbgoZy+1w3yXYma1y9yVhBe9GdihABcae
+	tFlCOiAeXUdWLlYA6YO3iywSCbqBYkWJJ39SjZlwIBe8ePjJyGrtUah8zcKhCVij
+	MucqbtYhVsXGKeZqVmJH+UfDJw5uk9a5wmWQdQDA6xXPmy/rkHQ1t/kQDce0Dm5v
+	WqrMh19RHfHgOZOR8wFr06cDZNLbWa6n0ZgosVMCAnUMuasLJNjFrVpLOg59Ips4
+	aDJ4RkoSUJ7iJrAshXqGZA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751372565; x=
-	1751458965; bh=W8qwQDhhNFB2hmQDjbNKaJ61CFfj2ynrQDZNziEk/nM=; b=c
-	IZlNg1EIbVcyVBjQXRIpL79fzqZVlw+Kfd55cSIqdzxLIyYZf6n501pyG64K0HXt
-	eiOg94obV7ff2E9i2M2gsTyDplEqKRwEgn5bfS513YRoXtU8R2n5PIAQObURnVL+
-	r+YrRu3YArmAbLS/HNA9TixwBOl5s2k7sYk8vkSMNQ6agp7OkT25GJGfQcY4cJuV
-	trwRWmX5NdP5YNnVk15v2rFRjcPP0td9hLH4uRpybECaHisfF2wtnKpd0sGy8DeQ
-	8uu3orro9I3gzlYEQt7v+O9DFAHzdoXaXa5OcUIipVZpUiJsH4pI6uVqUBPkQ0DR
-	9z+CmwPbO9Gjk0EnNqbjw==
-X-ME-Sender: <xms:FdNjaKx1EZ8spfJHtrlhg4pbTc7eU1DNIteh-ckZjp8S-bvMzlTuLg>
-    <xme:FdNjaGS-rVQdf2qTECVcBdknXnBijA_q-WiIcb-B3mce8j3QEr7Mah-Qo_yl3tNZf
-    ICgQ-gHTsRgYEp_7g>
-X-ME-Received: <xmr:FdNjaMVAmFpZmDyIPGUxxy6YIvQbGFaX-VNtoCDTBvIJxKmAu6nv34uFGiUKCNYnFscVUbdYmMRRFvHU_sdoxqi5jG1ALGQDOZf-h7gdWA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751372568; x=
+	1751458968; bh=WWtksx2bgb6lEkYNU7HZuDaK7yWeyAHmzapiPOTmQtQ=; b=Q
+	0SXuB564bvLmwwcHMFksub3hodt+CpCj3CJP8uItYDsowQZyH8wWq6zYA/g8QspW
+	UT3/Ddo3KlUecooJoO2xu3Xv8WZptSmzcQZQakzt2W2qjY9UQ6d0tz4z3qmM/qZQ
+	zUJ25axEts9tKlJiPU3jKognQGJP97S1wlyd0ffa77kmaJjQhJ3tEkIG6oW2ssuT
+	jjX3sM3nQzzaUP2VJVxaXkvR1z4Ol1zpiX1SnvWWlz9Qw6YxXwP5z7RSA9/6qacb
+	DJmK6433Ul2hfY4vJq8clTDbd4Y+dvhj31fnEqDQREuIlx0spZ7gEbrxHpdK65Mk
+	0jmxkWai5Opu44V00Wx+w==
+X-ME-Sender: <xms:GNNjaA2Q3vQUs1zqCkC8cEG2-yKaUmXH-dSz-eWPJtO-YIUwvGG21g>
+    <xme:GNNjaLEfIZKa-8uQGOXsGAdr0u7hoFF0SCWdEfYQPUxW4HOsytPs9SeaiYjHSgxvt
+    eXVxa8MJITgwhnyCw>
+X-ME-Received: <xmr:GNNjaI7cH6duPnZyiuAnNfk3-_Olyd12MtvBQHzzaA0kyblRkghDSSv-zRCXJ_ND2z_dOI7ITmM0eskRYrQNmGXJKMga5BJSsXe2zfuHgA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhr
-    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:FdNjaAj-gy1rjI_6rvcOe5ztsRwaThzK9HkbwvI0EZZC4tuISjBk9A>
-    <xmx:FdNjaMAdElPsWgY3hN5naInNQuO-luI4ESIdEWAQL4u6YpxrlWWe1A>
-    <xmx:FdNjaBLHVxP99TGXnYhnUSuAAKWxd3mfkabeN94aUQlPCmbvWKDYpw>
-    <xmx:FdNjaDCAb6wjbHzP2TCVaQOSYu0sbOncKUZ2pI8kS4ze1B0LFSfW1g>
-    <xmx:FdNjaBJa-EuzEBGkX5HQ3dAc9fDb3G7kA_0rZYK94MBlP2vU5edM-IrM>
+    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:GNNjaJ3og4QIo9l-kS7QH65UGFWmjrfwA1ezyjU_eiDUYNBkC1JrAA>
+    <xmx:GNNjaDHdJsLnsMOfLw0bfZsyjthVjC1iGosqyC3KYe0Scv8mcYgIkg>
+    <xmx:GNNjaC_QWH1ZhWbODj0KU0xXAV1B1QoR8Yov7OcoloK6OCRa4JI6TQ>
+    <xmx:GNNjaIlvzEkzTbEnv2NRyjnE4A_IOVxbfZwMkfmEva89EJK5QiPUIw>
+    <xmx:GNNjaNfI43OhUPrAhy08XTZLhnvK_82XGKooZcDHa9bG6CEsQFoPH01H>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 08:22:44 -0400 (EDT)
+ 1 Jul 2025 08:22:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f9f2047f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 1 Jul 2025 12:22:43 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2c9c00dc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 1 Jul 2025 12:22:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 01 Jul 2025 14:22:19 +0200
-Subject: [PATCH v6 07/17] odb: get rid of `the_repository` in
- `odb_mkstemp()`
+Date: Tue, 01 Jul 2025 14:22:20 +0200
+Subject: [PATCH v6 08/17] odb: get rid of `the_repository` when handling
+ alternates
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250701-pks-object-store-wo-the-repository-v6-7-dbf3894ab4e2@pks.im>
+Message-Id: <20250701-pks-object-store-wo-the-repository-v6-8-dbf3894ab4e2@pks.im>
 References: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
 In-Reply-To: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
 To: git@vger.kernel.org
@@ -93,171 +93,498 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-Get rid of our dependency on `the_repository` in `odb_mkstemp()` by
-passing in the object database as a parameter and adjusting all callers.
+The functions to manage alternates all depend on `the_repository`.
+Refactor them to accept an object database as a parameter and adjust all
+callers. The functions are renamed accordingly.
+
+Note that right now the situation is still somewhat weird because we end
+up using the object store path provided by the object store's repository
+anyway. Consequently, we could have instead passed in a pointer to the
+repository instead of passing in the pointer to the object store. This
+will be addressed in subsequent commits though, where we will start to
+use the path owned by the object store itself.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fast-import.c |  3 ++-
- builtin/index-pack.c  |  2 +-
- bundle-uri.c          |  3 ++-
- odb.c                 |  9 +++++----
- odb.h                 |  7 ++++---
- pack-bitmap-write.c   |  3 ++-
- pack-write.c          | 10 ++++++----
- 7 files changed, 22 insertions(+), 15 deletions(-)
+ builtin/clone.c           | 10 +++++----
+ builtin/fsck.c            |  6 +++---
+ builtin/grep.c            |  2 +-
+ builtin/repack.c          |  3 ++-
+ commit-graph.c            |  4 ++--
+ loose.c                   |  2 +-
+ object-file.c             | 10 ++++-----
+ object-name.c             |  2 +-
+ odb.c                     | 44 ++++++++++++++++++---------------------
+ odb.h                     | 53 ++++++++++++++++++++++++++++++++---------------
+ packfile.c                |  4 ++--
+ submodule.c               |  3 ++-
+ t/helper/test-ref-store.c |  2 +-
+ tmp-objdir.c              |  2 +-
+ 14 files changed, 83 insertions(+), 64 deletions(-)
 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 52c792488e1..413304db9b5 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -763,7 +763,8 @@ static void start_packfile(void)
- 	struct packed_git *p;
- 	int pack_fd;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 1eafeefb48d..3aabdf6570b 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -171,7 +171,7 @@ static int add_one_reference(struct string_list_item *item, void *cb_data)
+ 	} else {
+ 		struct strbuf sb = STRBUF_INIT;
+ 		strbuf_addf(&sb, "%s/objects", ref_git);
+-		add_to_alternates_file(sb.buf);
++		odb_add_to_alternates_file(the_repository->objects, sb.buf);
+ 		strbuf_release(&sb);
+ 	}
  
--	pack_fd = odb_mkstemp(&tmp_file, "pack/tmp_pack_XXXXXX");
-+	pack_fd = odb_mkstemp(the_repository->objects, &tmp_file,
-+			      "pack/tmp_pack_XXXXXX");
- 	FLEX_ALLOC_STR(p, pack_name, tmp_file.buf);
- 	strbuf_release(&tmp_file);
+@@ -212,12 +212,14 @@ static void copy_alternates(struct strbuf *src, const char *src_repo)
+ 		if (!line.len || line.buf[0] == '#')
+ 			continue;
+ 		if (is_absolute_path(line.buf)) {
+-			add_to_alternates_file(line.buf);
++			odb_add_to_alternates_file(the_repository->objects,
++						   line.buf);
+ 			continue;
+ 		}
+ 		abs_path = mkpathdup("%s/objects/%s", src_repo, line.buf);
+ 		if (!normalize_path_copy(abs_path, abs_path))
+-			add_to_alternates_file(abs_path);
++			odb_add_to_alternates_file(the_repository->objects,
++						   abs_path);
+ 		else
+ 			warning("skipping invalid relative alternate: %s/%s",
+ 				src_repo, line.buf);
+@@ -352,7 +354,7 @@ static void clone_local(const char *src_repo, const char *dest_repo)
+ 		struct strbuf alt = STRBUF_INIT;
+ 		get_common_dir(&alt, src_repo);
+ 		strbuf_addstr(&alt, "/objects");
+-		add_to_alternates_file(alt.buf);
++		odb_add_to_alternates_file(the_repository->objects, alt.buf);
+ 		strbuf_release(&alt);
+ 	} else {
+ 		struct strbuf src = STRBUF_INIT;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 9abd7b25580..014aa1344e2 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -997,7 +997,7 @@ int cmd_fsck(int argc,
+ 		for_each_packed_object(the_repository,
+ 				       mark_packed_for_connectivity, NULL, 0);
+ 	} else {
+-		prepare_alt_odb(the_repository);
++		odb_prepare_alternates(the_repository->objects);
+ 		for (source = the_repository->objects->sources; source; source = source->next)
+ 			fsck_object_dir(source->path);
  
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 1aabe6b8ee2..4d4d989eb1a 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -362,7 +362,7 @@ static const char *open_pack_file(const char *pack_name)
- 		input_fd = 0;
- 		if (!pack_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
--			output_fd = odb_mkstemp(&tmp_file,
-+			output_fd = odb_mkstemp(the_repository->objects, &tmp_file,
- 						"pack/tmp_pack_XXXXXX");
- 			pack_name = strbuf_detach(&tmp_file, NULL);
- 		} else {
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 2e623f8627a..f94e780e967 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -278,7 +278,8 @@ static char *find_temp_filename(void)
- 	 * Find a temporary filename that is available. This is briefly
- 	 * racy, but unlikely to collide.
- 	 */
--	fd = odb_mkstemp(&name, "bundles/tmp_uri_XXXXXX");
-+	fd = odb_mkstemp(the_repository->objects, &name,
-+			 "bundles/tmp_uri_XXXXXX");
- 	if (fd < 0) {
- 		warning(_("failed to create temporary file"));
- 		return NULL;
+@@ -1108,7 +1108,7 @@ int cmd_fsck(int argc,
+ 	if (the_repository->settings.core_commit_graph) {
+ 		struct child_process commit_graph_verify = CHILD_PROCESS_INIT;
+ 
+-		prepare_alt_odb(the_repository);
++		odb_prepare_alternates(the_repository->objects);
+ 		for (source = the_repository->objects->sources; source; source = source->next) {
+ 			child_process_init(&commit_graph_verify);
+ 			commit_graph_verify.git_cmd = 1;
+@@ -1126,7 +1126,7 @@ int cmd_fsck(int argc,
+ 	if (the_repository->settings.core_multi_pack_index) {
+ 		struct child_process midx_verify = CHILD_PROCESS_INIT;
+ 
+-		prepare_alt_odb(the_repository);
++		odb_prepare_alternates(the_repository->objects);
+ 		for (source = the_repository->objects->sources; source; source = source->next) {
+ 			child_process_init(&midx_verify);
+ 			midx_verify.git_cmd = 1;
+diff --git a/builtin/grep.c b/builtin/grep.c
+index a1d7ee7af39..336cfcab6fb 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -462,7 +462,7 @@ static int grep_submodule(struct grep_opt *opt,
+ 
+ 	/*
+ 	 * NEEDSWORK: repo_read_gitmodules() might call
+-	 * add_to_alternates_memory() via config_from_gitmodules(). This
++	 * odb_add_to_alternates_memory() via config_from_gitmodules(). This
+ 	 * operation causes a race condition with concurrent object readings
+ 	 * performed by the worker threads. That's why we need obj_read_lock()
+ 	 * here. It should be removed once it's no longer necessary to add the
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 16782320058..8145474cf8d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -1256,7 +1256,8 @@ int cmd_repack(int argc,
+ 	if (write_bitmaps && !(pack_everything & ALL_INTO_ONE) && !write_midx)
+ 		die(_(incremental_bitmap_conflict_error));
+ 
+-	if (write_bitmaps && po_args.local && has_alt_odb(the_repository)) {
++	if (write_bitmaps && po_args.local &&
++	    odb_has_alternates(the_repository->objects)) {
+ 		/*
+ 		 * When asked to do a local repack, but we have
+ 		 * packfiles that are inherited from an alternate, then
+diff --git a/commit-graph.c b/commit-graph.c
+index 6ced5b366e7..59265f89385 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -649,7 +649,7 @@ struct commit_graph *load_commit_graph_chain_fd_st(struct repository *r,
+ 	count = st->st_size / (the_hash_algo->hexsz + 1);
+ 	CALLOC_ARRAY(oids, count);
+ 
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 
+ 	for (i = 0; i < count; i++) {
+ 		struct odb_source *source;
+@@ -778,7 +778,7 @@ static int prepare_commit_graph(struct repository *r)
+ 	if (!commit_graph_compatible(r))
+ 		return 0;
+ 
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	for (source = r->objects->sources;
+ 	     !r->objects->commit_graph && source;
+ 	     source = source->next)
+diff --git a/loose.c b/loose.c
+index fab4041c03d..519f5db7935 100644
+--- a/loose.c
++++ b/loose.c
+@@ -112,7 +112,7 @@ int repo_read_loose_object_map(struct repository *repo)
+ 	if (!should_use_loose_object_map(repo))
+ 		return 0;
+ 
+-	prepare_alt_odb(repo);
++	odb_prepare_alternates(repo->objects);
+ 
+ 	for (source = repo->objects->sources; source; source = source->next) {
+ 		if (load_one_loose_object_map(repo, source) < 0) {
+diff --git a/object-file.c b/object-file.c
+index 2d3af8a77c0..04da19a1a3b 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -106,7 +106,7 @@ static int check_and_freshen_nonlocal(const struct object_id *oid, int freshen)
+ {
+ 	struct odb_source *source;
+ 
+-	prepare_alt_odb(the_repository);
++	odb_prepare_alternates(the_repository->objects);
+ 	for (source = the_repository->objects->sources->next; source; source = source->next) {
+ 		if (check_and_freshen_odb(source, oid, freshen))
+ 			return 1;
+@@ -205,7 +205,7 @@ static int stat_loose_object(struct repository *r, const struct object_id *oid,
+ 	struct odb_source *source;
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		*path = odb_loose_path(source, &buf, oid);
+ 		if (!lstat(*path, st))
+@@ -227,7 +227,7 @@ static int open_loose_object(struct repository *r,
+ 	int most_interesting_errno = ENOENT;
+ 	static struct strbuf buf = STRBUF_INIT;
+ 
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		*path = odb_loose_path(source, &buf, oid);
+ 		fd = git_open(*path);
+@@ -246,7 +246,7 @@ static int quick_has_loose(struct repository *r,
+ {
+ 	struct odb_source *source;
+ 
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		if (oidtree_contains(odb_loose_cache(source, oid), oid))
+ 			return 1;
+@@ -1439,7 +1439,7 @@ int for_each_loose_object(each_loose_object_fn cb, void *data,
+ {
+ 	struct odb_source *source;
+ 
+-	prepare_alt_odb(the_repository);
++	odb_prepare_alternates(the_repository->objects);
+ 	for (source = the_repository->objects->sources; source; source = source->next) {
+ 		int r = for_each_loose_file_in_objdir(source->path, cb, NULL,
+ 						      NULL, data);
+diff --git a/object-name.c b/object-name.c
+index 544634d0f40..381536e900e 100644
+--- a/object-name.c
++++ b/object-name.c
+@@ -376,7 +376,7 @@ static int init_object_disambiguation(struct repository *r,
+ 	ds->hex_pfx[len] = '\0';
+ 	ds->repo = r;
+ 	ds->bin_pfx.algo = algo ? hash_algo_by_ptr(algo) : GIT_HASH_UNKNOWN;
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	return 0;
+ }
+ 
 diff --git a/odb.c b/odb.c
-index d0ca2990774..8967e9fd548 100644
+index 8967e9fd548..691a8c7c681 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -63,7 +63,8 @@ static const struct cached_object *find_cached_object(struct object_database *ob
- 	return NULL;
+@@ -272,10 +272,11 @@ static void read_info_alternates(struct object_database *odb,
+ 	free(path);
  }
  
--int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
-+int odb_mkstemp(struct object_database *odb,
-+		struct strbuf *temp_filename, const char *pattern)
+-void add_to_alternates_file(const char *reference)
++void odb_add_to_alternates_file(struct object_database *odb,
++				const char *reference)
  {
- 	int fd;
- 	/*
-@@ -71,15 +72,15 @@ int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
- 	 * restrictive except to remove write permission.
- 	 */
- 	int mode = 0444;
--	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
-+	repo_git_path_replace(odb->repo, temp_filename, "objects/%s", pattern);
- 	fd = git_mkstemp_mode(temp_filename->buf, mode);
- 	if (0 <= fd)
- 		return fd;
+ 	struct lock_file lock = LOCK_INIT;
+-	char *alts = repo_git_path(the_repository, "objects/info/alternates");
++	char *alts = repo_git_path(odb->repo, "objects/info/alternates");
+ 	FILE *in, *out;
+ 	int found = 0;
  
- 	/* slow path */
- 	/* some mkstemp implementations erase temp_filename on failure */
--	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
--	safe_create_leading_directories(the_repository, temp_filename->buf);
-+	repo_git_path_replace(odb->repo, temp_filename, "objects/%s", pattern);
-+	safe_create_leading_directories(odb->repo, temp_filename->buf);
- 	return xmkstemp_mode(temp_filename->buf, mode);
+@@ -308,22 +309,23 @@ void add_to_alternates_file(const char *reference)
+ 		fprintf_or_die(out, "%s\n", reference);
+ 		if (commit_lock_file(&lock))
+ 			die_errno(_("unable to move new alternates file into place"));
+-		if (the_repository->objects->loaded_alternates)
+-			link_alt_odb_entries(the_repository->objects, reference,
++		if (odb->loaded_alternates)
++			link_alt_odb_entries(odb, reference,
+ 					     '\n', NULL, 0);
+ 	}
+ 	free(alts);
  }
  
+-void add_to_alternates_memory(const char *reference)
++void odb_add_to_alternates_memory(struct object_database *odb,
++				  const char *reference)
+ {
+ 	/*
+ 	 * Make sure alternates are initialized, or else our entry may be
+ 	 * overwritten when they are.
+ 	 */
+-	prepare_alt_odb(the_repository);
++	odb_prepare_alternates(odb);
+ 
+-	link_alt_odb_entries(the_repository->objects, reference,
++	link_alt_odb_entries(odb, reference,
+ 			     '\n', NULL, 0);
+ }
+ 
+@@ -335,7 +337,7 @@ struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy)
+ 	 * Make sure alternates are initialized, or else our entry may be
+ 	 * overwritten when they are.
+ 	 */
+-	prepare_alt_odb(the_repository);
++	odb_prepare_alternates(the_repository->objects);
+ 
+ 	/*
+ 	 * Make a new primary odb and link the old primary ODB in as an
+@@ -379,12 +381,6 @@ void restore_primary_odb(struct odb_source *restore_alt, const char *old_path)
+ 	free_object_directory(cur_alt);
+ }
+ 
+-/*
+- * Compute the exact path an alternate is at and returns it. In case of
+- * error NULL is returned and the human readable error is added to `err`
+- * `path` may be relative and should point to $GIT_DIR.
+- * `err` must not be null.
+- */
+ char *compute_alternate_path(const char *path, struct strbuf *err)
+ {
+ 	char *ref_git = NULL;
+@@ -455,7 +451,7 @@ struct odb_source *odb_find_source(struct object_database *odb, const char *obj_
+ 	char *obj_dir_real = real_pathdup(obj_dir, 1);
+ 	struct strbuf odb_path_real = STRBUF_INIT;
+ 
+-	prepare_alt_odb(odb->repo);
++	odb_prepare_alternates(odb);
+ 	for (source = odb->sources; source; source = source->next) {
+ 		strbuf_realpath(&odb_path_real, source->path, 1);
+ 		if (!strcmp(obj_dir_real, odb_path_real.buf))
+@@ -573,7 +569,7 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+ 	struct odb_source *alternate;
+ 	int r = 0;
+ 
+-	prepare_alt_odb(the_repository);
++	odb_prepare_alternates(the_repository->objects);
+ 	for (alternate = the_repository->objects->sources->next; alternate; alternate = alternate->next) {
+ 		r = fn(alternate, cb);
+ 		if (r)
+@@ -582,21 +578,21 @@ int foreach_alt_odb(alt_odb_fn fn, void *cb)
+ 	return r;
+ }
+ 
+-void prepare_alt_odb(struct repository *r)
++void odb_prepare_alternates(struct object_database *odb)
+ {
+-	if (r->objects->loaded_alternates)
++	if (odb->loaded_alternates)
+ 		return;
+ 
+-	link_alt_odb_entries(r->objects, r->objects->alternate_db, PATH_SEP, NULL, 0);
++	link_alt_odb_entries(odb, odb->alternate_db, PATH_SEP, NULL, 0);
+ 
+-	read_info_alternates(r->objects, r->objects->sources->path, 0);
+-	r->objects->loaded_alternates = 1;
++	read_info_alternates(odb, odb->sources->path, 0);
++	odb->loaded_alternates = 1;
+ }
+ 
+-int has_alt_odb(struct repository *r)
++int odb_has_alternates(struct object_database *odb)
+ {
+-	prepare_alt_odb(r);
+-	return !!r->objects->sources->next;
++	odb_prepare_alternates(odb);
++	return !!odb->sources->next;
+ }
+ 
+ int obj_read_use_lock = 0;
 diff --git a/odb.h b/odb.h
-index 13f5da45f54..5de952608f3 100644
+index 5de952608f3..eba16929a81 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -201,12 +201,13 @@ void odb_clear(struct object_database *o);
- struct odb_source *odb_find_source(struct object_database *odb, const char *obj_dir);
+@@ -13,6 +13,14 @@ struct oidtree;
+ struct strbuf;
+ struct repository;
  
++/*
++ * Compute the exact path an alternate is at and returns it. In case of
++ * error NULL is returned and the human readable error is added to `err`
++ * `path` may be relative and should point to $GIT_DIR.
++ * `err` must not be null.
++ */
++char *compute_alternate_path(const char *path, struct strbuf *err);
++
  /*
-- * Create a temporary file rooted in the object database directory, or
-- * die on failure. The filename is taken from "pattern", which should have the
-+ * Create a temporary file rooted in the primary alternate's directory, or die
-+ * on failure. The filename is taken from "pattern", which should have the
-  * usual "XXXXXX" trailer, and the resulting filename is written into the
-  * "template" buffer. Returns the open descriptor.
-  */
--int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
-+int odb_mkstemp(struct object_database *odb,
-+		struct strbuf *temp_filename, const char *pattern);
+  * The source is the part of the object database that stores the actual
+  * objects. It thus encapsulates the logic to read and write the specific
+@@ -65,27 +73,11 @@ struct odb_source {
+ 	char *path;
+ };
  
+-void prepare_alt_odb(struct repository *r);
+-int has_alt_odb(struct repository *r);
+-char *compute_alternate_path(const char *path, struct strbuf *err);
+ typedef int alt_odb_fn(struct odb_source *, void *);
+ int foreach_alt_odb(alt_odb_fn, void*);
+ typedef void alternate_ref_fn(const struct object_id *oid, void *);
+ void for_each_alternate_ref(alternate_ref_fn, void *);
+ 
+-/*
+- * Add the directory to the on-disk alternates file; the new entry will also
+- * take effect in the current process.
+- */
+-void add_to_alternates_file(const char *dir);
+-
+-/*
+- * Add the directory to the in-memory list of alternates (along with any
+- * recursive alternates it points to), but do not modify the on-disk alternates
+- * file.
+- */
+-void add_to_alternates_memory(const char *dir);
+-
+ /*
+  * Replace the current writable object directory with the specified temporary
+  * object directory; returns the former primary object directory.
+@@ -124,7 +116,7 @@ struct object_database {
+ 	/*
+ 	 * A list of alternate object directories loaded from the environment;
+ 	 * this should not generally need to be accessed directly, but will
+-	 * populate the "sources" list when prepare_alt_odb() is run.
++	 * populate the "sources" list when odb_prepare_alternates() is run.
+ 	 */
+ 	char *alternate_db;
+ 
+@@ -209,6 +201,33 @@ struct odb_source *odb_find_source(struct object_database *odb, const char *obj_
+ int odb_mkstemp(struct object_database *odb,
+ 		struct strbuf *temp_filename, const char *pattern);
+ 
++/*
++ * Prepare alternate object sources for the given database by reading
++ * "objects/info/alternates" and opening the respective sources.
++ */
++void odb_prepare_alternates(struct object_database *odb);
++
++/*
++ * Check whether the object database has any alternates. The primary object
++ * source does not count as alternate.
++ */
++int odb_has_alternates(struct object_database *odb);
++
++/*
++ * Add the directory to the on-disk alternates file; the new entry will also
++ * take effect in the current process.
++ */
++void odb_add_to_alternates_file(struct object_database *odb,
++				const char *dir);
++
++/*
++ * Add the directory to the in-memory list of alternate sources (along with any
++ * recursive alternates it points to), but do not modify the on-disk alternates
++ * file.
++ */
++void odb_add_to_alternates_memory(struct object_database *odb,
++				  const char *dir);
++
  void *repo_read_object_file(struct repository *r,
  			    const struct object_id *oid,
-diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
-index 37648b57125..c847369eaaa 100644
---- a/pack-bitmap-write.c
-+++ b/pack-bitmap-write.c
-@@ -1052,7 +1052,8 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 			    enum object_type *type,
+diff --git a/packfile.c b/packfile.c
+index 346c2f9ce90..ac0e29e99b9 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -1034,7 +1034,7 @@ static void prepare_packed_git(struct repository *r)
+ 	if (r->objects->packed_git_initialized)
+ 		return;
  
- 	struct bitmap_disk_header header;
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
+ 	for (source = r->objects->sources; source; source = source->next) {
+ 		int local = (source == r->objects->sources);
+ 		prepare_multi_pack_index_one(r, source->path, local);
+@@ -1059,7 +1059,7 @@ void reprepare_packed_git(struct repository *r)
+ 	 * the lifetime of the process.
+ 	 */
+ 	r->objects->loaded_alternates = 0;
+-	prepare_alt_odb(r);
++	odb_prepare_alternates(r->objects);
  
--	int fd = odb_mkstemp(&tmp_file, "pack/tmp_bitmap_XXXXXX");
-+	int fd = odb_mkstemp(writer->repo->objects, &tmp_file,
-+			     "pack/tmp_bitmap_XXXXXX");
+ 	for (source = r->objects->sources; source; source = source->next)
+ 		odb_clear_loose_cache(source);
+diff --git a/submodule.c b/submodule.c
+index 9b1018877df..386be234230 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -189,7 +189,8 @@ int register_all_submodule_odb_as_alternates(void)
+ 	int ret = added_submodule_odb_paths.nr;
  
- 	if (writer->pseudo_merges_nr)
- 		options |= BITMAP_OPT_PSEUDO_MERGES;
-diff --git a/pack-write.c b/pack-write.c
-index 6b06315f80a..eccdc798e36 100644
---- a/pack-write.c
-+++ b/pack-write.c
-@@ -84,7 +84,8 @@ const char *write_idx_file(struct repository *repo,
- 	} else {
- 		if (!index_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
--			fd = odb_mkstemp(&tmp_file, "pack/tmp_idx_XXXXXX");
-+			fd = odb_mkstemp(repo->objects, &tmp_file,
-+					 "pack/tmp_idx_XXXXXX");
- 			index_name = strbuf_detach(&tmp_file, NULL);
- 		} else {
- 			unlink(index_name);
-@@ -259,7 +260,8 @@ char *write_rev_file_order(struct repository *repo,
- 	if (flags & WRITE_REV) {
- 		if (!rev_name) {
- 			struct strbuf tmp_file = STRBUF_INIT;
--			fd = odb_mkstemp(&tmp_file, "pack/tmp_rev_XXXXXX");
-+			fd = odb_mkstemp(repo->objects, &tmp_file,
-+					 "pack/tmp_rev_XXXXXX");
- 			path = strbuf_detach(&tmp_file, NULL);
- 		} else {
- 			unlink(rev_name);
-@@ -342,7 +344,7 @@ static char *write_mtimes_file(struct repository *repo,
- 	if (!to_pack)
- 		BUG("cannot call write_mtimes_file with NULL packing_data");
+ 	for (i = 0; i < added_submodule_odb_paths.nr; i++)
+-		add_to_alternates_memory(added_submodule_odb_paths.items[i].string);
++		odb_add_to_alternates_memory(the_repository->objects,
++					     added_submodule_odb_paths.items[i].string);
+ 	if (ret) {
+ 		string_list_clear(&added_submodule_odb_paths, 0);
+ 		trace2_data_intmax("submodule", the_repository,
+diff --git a/t/helper/test-ref-store.c b/t/helper/test-ref-store.c
+index 2920ca59d72..8d9a271845c 100644
+--- a/t/helper/test-ref-store.c
++++ b/t/helper/test-ref-store.c
+@@ -79,7 +79,7 @@ static const char **get_store(const char **argv, struct ref_store **refs)
+ 		if (!repo_submodule_path_append(the_repository,
+ 						&sb, gitdir, "objects/"))
+ 			die("computing submodule path failed");
+-		add_to_alternates_memory(sb.buf);
++		odb_add_to_alternates_memory(the_repository->objects, sb.buf);
+ 		strbuf_release(&sb);
  
--	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
-+	fd = odb_mkstemp(repo->objects, &tmp_file, "pack/tmp_mtimes_XXXXXX");
- 	mtimes_name = strbuf_detach(&tmp_file, NULL);
- 	f = hashfd(repo->hash_algo, fd, mtimes_name);
+ 		*refs = repo_get_submodule_ref_store(the_repository, gitdir);
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index bef2f917cd2..4120badf5ce 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -304,7 +304,7 @@ const char **tmp_objdir_env(const struct tmp_objdir *t)
  
-@@ -531,7 +533,7 @@ struct hashfile *create_tmp_packfile(struct repository *repo,
- 	struct strbuf tmpname = STRBUF_INIT;
- 	int fd;
- 
--	fd = odb_mkstemp(&tmpname, "pack/tmp_pack_XXXXXX");
-+	fd = odb_mkstemp(repo->objects, &tmpname, "pack/tmp_pack_XXXXXX");
- 	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
- 	return hashfd(repo->hash_algo, fd, *pack_tmp_name);
+ void tmp_objdir_add_as_alternate(const struct tmp_objdir *t)
+ {
+-	add_to_alternates_memory(t->path.buf);
++	odb_add_to_alternates_memory(t->repo->objects, t->path.buf);
  }
+ 
+ void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
 
 -- 
 2.50.0.195.g74e6fc65d0.dirty
