@@ -1,111 +1,115 @@
-Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 747A61E5B6D
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 19:44:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC389220F23
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 20:03:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751399091; cv=none; b=COJDXCGCi2avgH82OSafQ016vBMP0BcvyancCGfrnGTPPc2J1py2yTU+56Eyabg5O+PNRKFWUfVZFXN7ZW8i+kASilLL1JTeMwAmyFN/htnhe3hUimw8Eq6eGe2OAqUxm9GJ6Ibo7mUCMNNdWGuKifXHbB/dmpCUuRn82Ruofow=
+	t=1751400201; cv=none; b=BP+k0CdbkBnwFTyPiVJL4LLC4lGrC13fFjtbAJxQhCsMotep3BfzQsSYyeix8WjQ8oZnEQTnyyobKEHoFcq9rM5WOGye4Wqtg/yiBDkF4NUu0Nq3PQBlaUVyl0z2l++4NCvkdvxWo6bBvBOX6KKDBi5Srt0SkakTeG2PyTnGvvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751399091; c=relaxed/simple;
-	bh=CbETRSRIp8j4hC4QYIN7q6FDIUHw7mrAlN+qFpQL0q8=;
+	s=arc-20240116; t=1751400201; c=relaxed/simple;
+	bh=IgM/SMa1rpM9RxAxIugDYhh9Qoeqx9ndTX23H2acKbY=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UdAVf9K38kznHXTktQ5MhQMfR3BFhe65bME1GcmvzzoxgbeEPIIRsRhDp101WazWP4JoDrbRX94lVjATh3K48wo9qI23x/by4RxM/ibDxGgkEuu6lTCHQRSIs7JaLWSc8m23JGMTSjpI0aWUoPyVe3QSdj+koH/XUZdoqeKXJ8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kBGNbqQE; arc=none smtp.client-ip=209.85.222.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	 To:Cc:Content-Type; b=C1uIjiSsQ5oE9E2VleBzP8LLUwIZcA4nLqHW4469jjD0YNrJzT70+xqcnmZZlpFijgqZwUfHR1CbuLk22AItl4/ih2+OjCYoG7sP/M4h7Kx9Bc3J3iloV60g8Xbct5DatV0SsfxBmBKf7EYamj5Ax4wCo6zvmvB0UbsBCiAEgaI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kBGNbqQE"
-Received: by mail-ua1-f54.google.com with SMTP id a1e0cc1a2514c-87ec5e1cd4aso1215521241.0
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 12:44:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751399089; x=1752003889; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xFZ0IUyUnw1fdxfYu+LQlH8Z3XBpdgLcL0pXEPZ40lY=;
-        b=kBGNbqQEwusRY/71SK3D16PdDMi3T4/lJmZ02BpMjvT710GvHn2LFBBBv3oU4uosQL
-         T/HeuoubvEHVih9hpB999agcZD4qeBfluXa9nrSGvfVhO9ZXAE354eVoqdnrk/87XRMJ
-         DsXzCVNN2/UFzySATT1hLbtvPCuVApGpUq7uzDF0SgVzOLCe/4U+3Muo24ZeGj5uuD9P
-         kmNxu4khPLWma4MONUchr3W3/VG2Q338XNGA0buPW2shNvJvOdl/mGrLgvC5ZWvUc5b3
-         byHL5VL2XV9mbEO874G0s/V9q96JyzSUzYzgkL2jkj6v0Yjl3N/eetfk4iR3A5BPPDsU
-         im7Q==
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7d21526eff6so50338085a.1
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 13:03:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751399089; x=1752003889;
+        d=1e100.net; s=20230601; t=1751400199; x=1752004999;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xFZ0IUyUnw1fdxfYu+LQlH8Z3XBpdgLcL0pXEPZ40lY=;
-        b=Ak4CzXg3fjao6FO5dCrbvFWW/1in+l81YBpjf9b8OGzgwips0cKtcOF1FbAFTgJbWt
-         6IQJLODJoNvk9pQ1WHVtVRF1Zb7hdK7q6vA1YsrxShtb5/UJrk8DneOBpuCG2mILDaA8
-         UW4mGil7B/vcVgTJu/3rI0sjqnvIwaw34qeZhNOSqjYZ98sTJs+bUhaWzhBrmbFZCkOi
-         Wgli853X3gTBw62P5nxmhIdjVnELQ449unaDZuexQzYzzXRZ37p0dUeXBvKCj3eWlSLC
-         8ltuhmuEhcMp3oNoYnS6roGJyNWObYWpy+3swp/1hCOy/f3zlp1DDbL/B0nqsPCfZv6d
-         HcSA==
-X-Forwarded-Encrypted: i=1; AJvYcCXHgVNu99Tx9/0bzWJNKCJdMCYF1/ulmfK1oewXVeWdMZV+pZFaS2r8Eef6k9gf7d4RYu4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YydpSvbCGx4CUQbXCrvvaKSEERPcZl3MHFU0mq1/URZrJp2g1fn
-	RR3+s3mMSGMPrC8D7eejPhc6Eh6UgCCbb+M/p9O9cucvI0vcVL9rVAeyy9d+v0tpS2duOxO44PO
-	oJ4qk5jvXKi2zGdZ/M81CVj0T0Hg/SIM=
-X-Gm-Gg: ASbGncspF4a+vAuV6B8Xh0BhZS44/Oy+I4SMpLdbcfM6didiizGzves0wqbH3dF1Zkf
-	MdQV+msVKZoMkoOIxFmqjq37sHjbj6ofHPvB9hpU8lM2B6OcuzaF6cg5IV8fcBBMr/NLHmC+FLl
-	lzkqrcOKi1nC79OdwMvhfjMwNPV0ga+S4cPjsGswAA+Po=
-X-Google-Smtp-Source: AGHT+IH6KwrtA55drSDcG2XpGuosO65c95vBWwitxzzZOV7RXBY4+j1IvdjLjZbsAY2FqwKA5B9cn4IO/FAdH6yW+Pk=
-X-Received: by 2002:a05:6122:1799:b0:526:720:704 with SMTP id
- 71dfb90a1353d-5345835feb4mr443583e0c.7.1751399089062; Tue, 01 Jul 2025
- 12:44:49 -0700 (PDT)
+        bh=Aillcs7vtTuR97PT8dOqxOJURjTo1lMBtXhwRftTqHA=;
+        b=H3/3thu2FKS68+isQ5Ynv7Lm0GJ54X1JeqK8sRaMmZvbq9Yw/gysRQP9wyzoKQn2yi
+         fK4J00Ju+sQIria9WPbGuGkIEKrOdDDmDpBLLDVL8J3mGbhGmprcfF3eJfCURxNAreGn
+         dJxD0xHNkJtQfM1k0m6zmaLfxyiriZpU2py8l57Heo9HfaEtqb7Kg8g/f/YWCJbR3K+3
+         GHZhTlMAXxOPs1QeY+vEydinldM8O4SihIJrsnQKZAc3dGJ4LncsIcrKUt6+junQ0oEW
+         MDgxNX1bkJPEF3maMuKWwYiwaRuIi69g+ppfVawrkJqTxt0Nlu/l7aTw9fIZYXxNEoyC
+         +vDA==
+X-Gm-Message-State: AOJu0YwXuqw8CjylRhjuR7qORfN/pVNx7yb4zs+YYg4JkfNGpZdo6fj7
+	zcgymQDVWJqH87pbnFBND/H9KZxOSJYEwWQITjTNTBfiGN1wdtEsjQk9jZSodNeyMgliVDOymZi
+	MG/qJtv0mPyqiwE7YXnBhIB+FWAdW/B4SFa61
+X-Gm-Gg: ASbGncusKh/PoDc9lWfl9jOgPWFS2Wf0JKAtIM5u/NKIHVGzINJd9xC6QRXYWd6pX9h
+	sIlw1/U8Nrfye89yCy5yIDA1PpQSlpMQJNB4bLT2IleE1UFeN2jNS1w9uyMrNiZe4a3Y5nygGmA
+	dZ0yr3PRSvYiYsrpYOktGZ2Ppl3OkAGD+hwZpDnU/AwFBd8UIXGKUFkkpTrLRZX3G/llRHIXmD4
+	A==
+X-Google-Smtp-Source: AGHT+IG2K1pzCBZsJSz65LAOg382yYyg/5xX+/AGQBTTt/Mrz+F2oA5etnvpdWrB/+N61nOjVvpXQYdYnvy67afa++M=
+X-Received: by 2002:a05:6214:4505:b0:6fb:1fc:7889 with SMTP id
+ 6a1803df08f44-7010bbc62bemr24757476d6.11.1751400198606; Tue, 01 Jul 2025
+ 13:03:18 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1751296633.git.ayu.chandekar@gmail.com> <f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
- <aGPcKgR0G72JRSlM@pks.im> <xmqqikkbkglx.fsf@gitster.g> <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
-In-Reply-To: <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 2 Jul 2025 01:14:37 +0530
-X-Gm-Features: Ac12FXxMBYGLAKWA4Az8cDIT80F5gmEK8rvFE8aYC6BY45GlTSlHnPbq052FkCs
-Message-ID: <CAPSxiM8EkctHgD=to=JxwDC8L6=5xgu=vpb5=bfhQ7bL592eWQ@mail.gmail.com>
-Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on 'the_repository'
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, christian.couder@gmail.com, 
-	git@vger.kernel.org, shyamthakkar001@gmail.com, shejialuo@gmail.com
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org> <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+In-Reply-To: <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Tue, 1 Jul 2025 16:03:07 -0400
+X-Gm-Features: Ac12FXxg5oGicGlb3PT-DVstLjG3WOeUsgAQndUaxp0nK2of_p7dNSj9HqJKduU
+Message-ID: <CAPig+cT6UNroSf=_BnDMa2HZutpKkqy5xUXwD4vEmhORag9x0w@mail.gmail.com>
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+To: Renato Botelho <garga@freebsd.org>
+Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 1, 2025 at 11:40=E2=80=AFPM Ayush Chandekar <ayu.chandekar@gmai=
-l.com> wrote:
->
-> On Tue, Jul 1, 2025 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
-> wrote:
+On Tue, Jul 1, 2025 at 12:09=E2=80=AFPM Renato Botelho <garga@freebsd.org> =
+wrote:
+> On 23/06/25 11:09, Renato Botelho wrote:
+> > FreeBSD has a libsysinfo package which contains GNU libc's sysinfo port=
+.
+> >   Some users reported git 2.50.0 was failing to build when this port is
+> > installed and it happened because configure script detected libsysinfo
+> > but -lsysinfo was not added to LDFLAGS, ending up with following error:
 > >
-> > Patrick Steinhardt <ps@pks.im> writes:
+> > scalar.o common-main.o libgit.a xdiff/lib.a reftable/libreftable.a
+> > libgit.a -lz -pthread
+> > ld: error: undefined symbol: sysinfo
 > >
-> > > On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
-> > >> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
-> > >>      expire =3D TIME_MAX;
-> > >>      save_commit_buffer =3D 0;
-> > >>      disable_replace_refs();
-> > >> -    repo_init_revisions(the_repository, &revs, prefix);
-> > >> +    repo_init_revisions(repo, &revs, prefix);
-> > >
-> > > Does this work correctly when running outside of a repository? In
-> > > general `cmd_prune()` is not executed and would instead die as it is
-> > > declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the u=
-ser
-> > > asks for help we may still execute the function with a NULL pointer.
+> > This patch [1] was added to git port adding a user option to enable/
+> > disable libsysinfo dependency and fix LDFLAGS when it's enabled.
 > >
-> > Good eyes.  "git prune -h" would safely exit in parse_options() in
-> > such a case, but this part happens before the parse_options() call.
+> > I'm not sure about what is best approach for git project in this case.
 > >
-Hello Ayush,
+> > [1] https://github.com/freebsd/freebsd-ports/blob/main/devel/git/files/
+> > patch-configure.ac
 >
-> Thanks for pointing that out, Patrick. Right now, `parse_options()` is
-> called just after the `repo_init_revisions()`. I can move the call to
-> it before this.
->
-> Although when I tried running "git prune -h", it still gave me the
-> expected output.
-Do try this outside a repo, i.e outside a git repository and try to
-run the all the test if it works.
->
+> If someone let me know what would be the desired approach here I can
+> work on a patch.  Would you like to make that option conditional as the
+> patch did?  Or detect if OS is FreeBSD and do something different?
+
+It depends upon how much effort you want to put into the patch. If the
+primary goal is to just get FreeBSD building again, then the least
+amount of work probably would be to use AC_LINK_IFELSE (with whatever
+tweaking that requires) instead of AC_COMPILE_IFELSE in configure.ac
+for the sysinfo check. With that change, HAVE_SYSINFO would not get
+defined if the link fails due to the missing `-lsysinfo`.
+
+If you do want sysinfo functionality to be used by Git on FreeBSD,
+then probably the most correct approach would be as follows:
+
+(1) Add a NEEDS_LIBSYSINFO to Makefile (patterned after existing
+"NEEDS_" definitions in that file). This would involve documenting it
+alongside HAVE_SYSINFO, and adding something along the lines of:
+
+    ifdef NEEDS_LIBSYSINFO
+        EXTLIBS +=3D -lsysinfo
+    endif
+
+(2) For people who build the project directly without utilizing the
+"configure" script, optionally update the FreeBSD section of
+config.make.uname to define HAVE_SYSINFO and NEEDS_LIBSYSINFO as
+appropriate. Those definitions probably ought to be conditional based
+upon some criteria that you determine so that compilation doesn't
+break on older versions of FreeBSD (if they were lacking the sysinfo()
+call or "libsysinfo").
+
+(3) Update configure.ac to check whether `-lsysinfo` is needed, and
+define NEEDS_LIBSYSINFO appropriately. This may mean employing both
+AC_COMPILE_IFELSE and AC_LINK_IFELSE for determining HAVE_SYSINFO and
+NEEDS_LIBSYSINFO, respectively, though there might be a cleaner way to
+do so (I haven't put much thought into it).
