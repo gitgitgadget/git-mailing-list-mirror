@@ -1,183 +1,101 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EF62253A4
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 16:01:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584FE27C875
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 16:02:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751385709; cv=none; b=J38l/KeK/7LpyoIqsqWkDzGeqZ+Q3hXfddhFU+r0Puht/4z/ktdAT3bBmkVPefx8BqEY4PIHneinyYjJ+DZ3qeUFUrw1YD77pJsB6pg6dRgUfJfYGbynKFk9hCTd/03eWM8BzShd//zP+vfkeDFio57a27nYjaQNae3BM/cDw6I=
+	t=1751385749; cv=none; b=sFe0uq5BhLMDUqfn5SiK8WlKrqDT5NAMP6f3BUR1NbJon8p7XGg48GZokMQBn6v3tYAV2KrRQfT8aviXEqr1Pb1k/EeYqlscqH7cnTCeAoPbgnMZ/enSZErN9x0NH+vDRPU22plzIAoIjF069Tgwcz5AOAMBRZAQPhxSDa+0jwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751385709; c=relaxed/simple;
-	bh=4v9LkZO/bdQ8NWL1z4AyK16MZQ0fN4WBxjlx+fr+3Kk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lWIpBdhmOLXUqfZYdA4Yre+xrmq9xH61sgKSvRiZyrPlmh1e7valojL+mhNRDVbdSd583BTLXoDhS68pyWuXk9gGgH53yk8eL0QNsyuMZKc9zArVkDxo1fHdsVNqMk6rnwyUDNIp86UWJVF6cj0a2VFeRZDfWxnG8QVdjW63/xc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=PTvL94dR; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1751385749; c=relaxed/simple;
+	bh=VB6MQXHv7TNSgl8mYao9SR8OLaxZtPJnO2L/qSBMohw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uD8tDDBHkrUdCnTYMPq/nx+JajYEo5U18sPg8DNJf8CdJZqhCZjsSOl7iH46qTr0gbPO7TS8Y6uAkAbkGxO4e8hT89Ddp4A4XsIVOT7eAo4kk2wOUsigeABWBosLlVQetGN7FN+KavRDb9CWwj8+HvqI7IXr1T0GHM+rik9HqdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LnsPf67d; arc=none smtp.client-ip=209.85.210.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="PTvL94dR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1751385705; x=1751990505; i=l.s.r@web.de;
-	bh=eenmidEx39RUxcXdSEiMZrLHdARs0xn4v4w9S47DMnM=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=PTvL94dRFq6IhRvQO2070Eg8LfdqQMXbCMYoPOTsz69YFmaTJ4ubSNkUVp06+NCK
-	 LO5aSUxUtrx1OpgzUVR/wT4I2SnkvsYE8/eG7d2olsmSynvD4UPUKtj0ACbfa2hWE
-	 T0RaqMq0QAB1PDt7J4ltG3OYM18XXu1Yo+MIW9fcDP1C06gctqZny0P+dnhHgDMPx
-	 XqP5BcGEDao46SHRltl+69uvGBcfxPbjRjSWVKBTJjExAC5Be1+lIxhjfYOwuB63R
-	 SbRiy58NoB+gJgvvHiReZNafI9ymhqAzx3BeLfNTs8F1IjWl4Ch2IiTrZQU6N9VO5
-	 hO3/TAwB4lpMHMp9gQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MMXx5-1uEpA61Sr9-00W4Dq; Tue, 01
- Jul 2025 18:01:45 +0200
-Message-ID: <591d618f-1b86-414c-8069-3621e00add74@web.de>
-Date: Tue, 1 Jul 2025 18:01:44 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LnsPf67d"
+Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-74b27c1481bso1585674b3a.2
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 09:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751385747; x=1751990547; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=huyu3bYuWZ5++ijy+y6Rfc6ZV+mZD9jZYTTdXvZam/Y=;
+        b=LnsPf67dJCLo/dBmYb9+TdKdT2nVLsX9A5YBt50YFlpKeXPBz1GxbPGny1r5RMMCh3
+         E6QXm5c25urJN+ZlGfhdlq/oBkxQ+URwwFGYXMojf3y7jsULJF/gL2caA0+IRPhktpM+
+         wNNtrSLymNN1YquD/jYBfWchauPfZ+Nu8FTdY4iIA1MNEzh7YV/3O7A3r3YiUMzmwB8w
+         LAgPH0FzcMjIAOuM28i0wCwZB6o+3m4bZkF1PBx1LKLd1o0mJxcFQyNz3yLFSMuOpxlQ
+         Q4g6HRqUJrZIuPeojdv5Q/IrXlyqVML8XUjgnw2cMg73csiDq+UTFYJ1syfwt17rbHbg
+         iQXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751385747; x=1751990547;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=huyu3bYuWZ5++ijy+y6Rfc6ZV+mZD9jZYTTdXvZam/Y=;
+        b=N4zYkUN46j54V1r84X5XZY/8eN4Lqexi+eEZG32oIX/DL9ZqU/S8cQ/8MJimUNEnhx
+         E3qTm/7cR7iaWprG7IyPfdV8jsczw7Sw64qh5DWKi3nd5Kwm7wfNvVanx7JteT7tJUoa
+         rqsNGA00lvMvCTCzpP78y9ctInW6BvMcB2X2QbDhn3mOdp0g8Y+yYVmJx0uMD/c7fSmn
+         FSAL042yJbd1wfRgdmZYuG/ghDuQTgTNgBzUd1A/w7kMMF+Y9jFmdqb+581Ylc8EXL06
+         frC+8xwx2UWHGnYaz6eo70MbHFtC7Y45h8fkzf4kiLswsN611KZVIBkNbpg67QJ9Kall
+         iXMQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV6fTW3nPYDbvoCUU4W5mBDmX+dPgjNEuro1Dlyc4kRTZNfuebTke65b8z+q3qey964Dbs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU3Jf9KBIFPRzHnxDVE8OtT44I5+aK0M8tqCGD3JXjjvzHcPt7
+	dgm1p1hOOZ09N7PzD1HTx9r+vU2O0DO5t+MiF7hRu2T/MrnZBabrcroo
+X-Gm-Gg: ASbGncvfccJK+HGOYczqIC1masHQJ7kwcXxFVSFJhZM9HwwJVLXl3wq3c+vcPJNciYH
+	L8I7heNu+rB291U+tJusIJVeay9IMVbjZioarhqlhsecm8AXb2UKZrqPQuRY4iDwSeFt2VaD9fg
+	X9Cvdc77hCf/1NRsKXJT+uhIysdI/4HavbT4h1NVdVWag+PDEha0/jTWXJkmKVSSN/ydxBsaw3q
+	i4QzC+2ZdMWl96A33rbXLEfOm4rY3qBjFLAJr4JiqbUhH8QAXaJNzAV5RgBQz/7+6fTizT/YRPZ
+	xlQqtwfvQBU8VY20AhotUDWBVWXhRFRkNgFf0DbWqTuioi0rfTMtRZ0MPHOenuGdHr67sPHrA6Y
+	IvBxGRhpksyzunXZTdNT3GPZHYfznOpmoY41zPg==
+X-Google-Smtp-Source: AGHT+IGEpEZxOAK4rCZprSc5BLwIEuqZ47Pwpi/W3RNk4iP3EcjnTRirCBTKvtWQLjx8l4LMNpu6Dg==
+X-Received: by 2002:a05:6a00:cd0:b0:746:2ae9:fc42 with SMTP id d2e1a72fcca58-74af6f7e391mr26593043b3a.19.1751385745764;
+        Tue, 01 Jul 2025 09:02:25 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af57ef0f3sm12465503b3a.154.2025.07.01.09.02.24
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jul 2025 09:02:24 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  chriscool@tuxfamily.org,  jltobler@gmail.com
+Subject: Re: [PATCH v2 3/3] meson: add rule to run 'git clang-format'
+In-Reply-To: <aGO00T4c2Q-EYXZx@pks.im> (Patrick Steinhardt's message of "Tue,
+	1 Jul 2025 12:13:37 +0200")
+References: <20250630-525-make-clang-format-more-robust-v2-0-05cbcdbf7817@gmail.com>
+	<20250630-525-make-clang-format-more-robust-v2-3-05cbcdbf7817@gmail.com>
+	<aGO00T4c2Q-EYXZx@pks.im>
+Date: Tue, 01 Jul 2025 09:02:24 -0700
+Message-ID: <xmqq5xgblx0v.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6/6] parse-options: add precision handling for
- OPTION_COUNTUP
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Git List <git@vger.kernel.org>
-References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
- <7322758a-9310-4892-b476-50dc57d559b4@web.de> <aGO-nSyCN7OD9Zae@pks.im>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <aGO-nSyCN7OD9Zae@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:SvHpyX4YucO6VAHYzYLrH7wkXkWiZeSIzcpfy7ms03UoMsGPtou
- AmKAL8KKLodBYp3wbxXG55cAIxctYf/9EHa71HSON/6JBQy36l5+rmkg7irsz+JVAgoFiYk
- /qPn7ENee4nTo9oK6Jh58cWr+NnRf75R8aZEPElGEpwDw7TwbgZ4l/CLYaHotvCn7lsyclV
- 2bLifZTPCXlu1KEt/OttA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:dzwk8voRt2g=;o/hjood0j6mqANxl/5QkGEqUcQ4
- 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
+Content-Type: text/plain
 
-On 7/1/25 12:55 PM, Patrick Steinhardt wrote:
-> On Sun, Jun 29, 2025 at 01:51:36PM +0200, Ren=C3=A9 Scharfe wrote:
->> diff --git a/parse-options.c b/parse-options.c
->> index 0dc9b0324a..0dd08a3a77 100644
->> --- a/parse-options.c
->> +++ b/parse-options.c
->> @@ -166,10 +166,22 @@ static enum parse_opt_result do_get_value(struct =
-parse_opt_ctx_t *p,
->>  	}
->> =20
->>  	case OPTION_COUNTUP:
->> -		if (*(int *)opt->value < 0)
->> -			*(int *)opt->value =3D 0;
->> -		*(int *)opt->value =3D unset ? 0 : *(int *)opt->value + 1;
->> -		return 0;
->> +	{
->> +		size_t bits =3D CHAR_BIT * opt->precision;
->> +		intmax_t upper_bound =3D INTMAX_MAX >> (bitsizeof(intmax_t) - bits);
->> +		intmax_t value =3D get_int_value(opt);
->> +
->> +		if (value < 0)
->> +			value =3D 0;
->> +		if (unset)
->> +			value =3D 0;
->> +		else if (value < upper_bound)
->> +			value++;
->> +		else
->> +			return error(_("value for %s exceeds %"PRIdMAX),
->> +				     optname(opt, flags), upper_bound);
->> +		return set_int_value(opt, flags, value);
->> +	}
->> =20
->>  	case OPTION_SET_INT:
->>  		return set_int_value(opt, flags, unset ? 0 : opt->defval);
->> @@ -630,10 +642,10 @@ static void parse_options_check(const struct opti=
-on *opts)
->>  		case OPTION_BIT:
->>  		case OPTION_NEGBIT:
->>  		case OPTION_BITOP:
->> +		case OPTION_COUNTUP:
->>  			if (!signed_int_fits(opts->defval, opts->precision))
->>  				optbug(opts, "has invalid defval");
->>  			/* fallthru */
->> -		case OPTION_COUNTUP:
->>  		case OPTION_NUMBER:
->>  			if ((opts->flags & PARSE_OPT_OPTARG) ||
->>  			    !(opts->flags & PARSE_OPT_NOARG))
->> diff --git a/parse-options.h b/parse-options.h
->> index 8bdf469ae9..312045604d 100644
->> --- a/parse-options.h
->> +++ b/parse-options.h
->> @@ -183,6 +183,7 @@ struct option {
->>  	.short_name =3D (s), \
->>  	.long_name =3D (l), \
->>  	.value =3D (v), \
->=20
-> It's a bit surprising that `COUNTUP` accepts a signed integer, so should
-> we maybe add `BARF_UNLESS_SIGNED(*(v))` here?
+Patrick Steinhardt <ps@pks.im> writes:
 
-Perhaps, but that would require more changes to callers that use unsigned
-variables than I can stomach.  That's why I declared it out of scope for
-this series in its cover letter.  Later, unless (hopefully) someone beats
-me to it.
+>> +git_clang_format = find_program('git-clang-format', required: false)
+>> +if git_clang_format.found()
+>> +  run_target('style',
+>> +    command: [
+>> +      'git', 'clang-format',
+>> +      '--style', 'file',
+>> +      '--diff',
+>> +      '--extensions', 'c,h'
+>> +    ]
+>> +  )
+>> +endif
+>
+> Do we want to call this target `clang-format-changed` though, so that it
+> is consistent with the implicit `clang-format` target?
 
->=20
->> +	.precision =3D sizeof(*v), \
->>  	.help =3D (h), \
->>  	.flags =3D PARSE_OPT_NOARG|(f), \
->>  }
->=20
-> Patrick
-
+It think this is trying to be consistent with the 'make style'
+target.
