@@ -1,81 +1,82 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48598274644
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D619274FD0
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 12:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751372560; cv=none; b=sABIZpXuNtphufTMLKF3Jw8xQyquod95B6krZ8wij/TXpV9I0em1KV/toylTJ/zKNsSrjuPDVG0zLHKw1/H2Fz52U/uDIZlYK8UCqejENIOemoAOqt8ICeJJrEd7Md160VZd4RvxztXm1X9OaLEZ+Maf9yvef42j440M85U2SGM=
+	t=1751372564; cv=none; b=SE+VR7oVlc2aAWz3MDP1AkSip/zQvoWgoZkVLz1oh7eN5ddFmeToNZDB6nQoAPgi9gA3XxNCFa5cmSTnjRAZ0LC05QFUstVOq4R0FAgz0lnd2a3xIj+uUK8CUOx1QCc7CAxz3Tmi6bmGZHEE920RpXzXxiaYMcwpMfuCGrs6+K4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751372560; c=relaxed/simple;
-	bh=B4IvBpcEWc8GFDrY8YkeDaUYkZQ8pLYhrR5u5Smcu1s=;
+	s=arc-20240116; t=1751372564; c=relaxed/simple;
+	bh=h33445rMbLkDzzDG0yy/eqgJVqy4F7rJu0BCmzxYh64=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=N5Fi/hUp5Kd9uZmbOiplDFVZPR2wYQlEn2Y7zkCHhIA4/EY7OluLWYVO9dkd8+Q0fBabrEugt9o9RoHnfWHnP2dM1ovaJsdgVZj4MVLTRA9BPo73mfosJGS+0M06sucITh+Yt+r7YAkqVF3M8pXbYO0N7xgSMCQ77y6Sh6Xuixc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rETNRbXr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nu6CrcjG; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=g7WSFFzn1WAclpQzn+rDiHEzoMpMx0wPyaNtnn862U3wITSzRf9iG2cFSpLk0zWTOu0ypStxwC4pkhmMhsgCSk0C4qRvSzYxRt1YqXRwPxV538Bd+enLtTfPD3OQyLB8kUosO/Gueks6Bu72hEtrrz1htqu+5of2JCj7Y9LtnHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BBF7GAnB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QnLwTSQO; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rETNRbXr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nu6CrcjG"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 77B6FEC04E7;
-	Tue,  1 Jul 2025 08:22:38 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BBF7GAnB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QnLwTSQO"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id EDF8EEC04DA;
+	Tue,  1 Jul 2025 08:22:41 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 01 Jul 2025 08:22:38 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 01 Jul 2025 08:22:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751372558;
-	 x=1751458958; bh=x6V+a0nQhySauJXhE8w0O/qY1LVX852j8PxGPJ2Xp7o=; b=
-	rETNRbXrOwdzJ5d87HSeXhGMkYLGW5kCNKtbYI1I37F9cCLVZ5HlxqeuTVFoPAJ/
-	QKjW6wt4AqqIpe+gND+vdUD7FA0IWPqSSp9MCD821jHX8DGdZTvpCIQkuUR8rc/T
-	ONUzEjWgN2VPzPTEo1YOgpsAxrakYg3JLg5FcsBafmm/79/M7/hfLzToUhH4OEu4
-	Q5SRt0W/KAFycWpsDdz8YEdVxBWXHXTb/swewMfNJz5ObiVB6AjQe8h22O0CvmT2
-	zhC/+IomlhKVPMtqePLb04+CUHkj/fyWixbR0rYrjcXAtIKmrSf/a5U7M1bZmg9k
-	LYGfX5vlJHl7rBVRYTN9Yg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751372561;
+	 x=1751458961; bh=Ee+RZP1F4LHbul8Qu3dYeXsM43gxfuhZhJFecT1ONLQ=; b=
+	BBF7GAnBSwdAngI/JIj6FTEM9x9uTv6Fj+gblb1ddBacxmPGs1u3N8Fk92ELixen
+	zvGm+9RglUz9ZF2fikU0NTvG3dqyTKS0OYbwb9BQ4kUTMZ3jVV3shIE/1FXoltCm
+	oDezx6JUIihs1OZaQB2HDNJCRHPkjdaSvw5LH3UGwkcDQlzRrY8ga5JRWazX1WEG
+	8yNf2uUiiOkgWmdsCGZgkB9qXhYN4tJyUjaUOIPovIq9VdR25zcRUAyR/83/XTET
+	h1Cc5Xvdd3iLBmjrmoI/pwSpygKS4bv4Nbp6hRFIxwzcHsgMyh5qRGdOnCfb52x+
+	H/C+n4qW/hbtLgpxPzNJFA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751372558; x=
-	1751458958; bh=x6V+a0nQhySauJXhE8w0O/qY1LVX852j8PxGPJ2Xp7o=; b=N
-	u6CrcjGhcCoRmojt7/AE67fZbzQCTNMWHurj+EkPT3BRr4r/uEKYcS0xIYbfLAfo
-	KYdGpLA8KR5OlNqihEUMYLTL9IMcyBXg09qS12OEo5vtSpQFO/iPKaKfeIQvRQtT
-	D17/jaDdMEpLV7VWkk6M3uD0gMHgJuQTOLuwNMH1lx1JgakNr1mPTD3ElhKCUqhf
-	SoB/pwWwQ5WDGa7w+R+dYnQob4AxAOuL/wOD6GmsQ1hA2j/8Cekj1NDVDfWz6E2P
-	EtllUUaxc0/N6WmxrhJBRnlKvFbNRfIy/Rpnsej46g5KLlmAZPVBNZq/584T/Rh5
-	AHPObkWZzlo+BDvY+6jhw==
-X-ME-Sender: <xms:DtNjaMcXVZMi7y57Q6iohc3_QKkAgUp9Q554fjIXuKhEcELIYjChIA>
-    <xme:DtNjaOMFAvTrv2psr2q_h2Y4rXuJ-O7frzL-CICwUwfZLsTRBMQasDO1lc0rRS3Nl
-    z-9VLt_D4ZrKNeaYQ>
-X-ME-Received: <xmr:DtNjaNjLyvT-qrzwHHB3tAP0d5rxvfrpaV7djvUVt036MxuOyecmk637-8yFzIGEv30CoQcH8JDyNTOWiLG8uzwMILpmHvEkEG-TbZssoA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751372561; x=
+	1751458961; bh=Ee+RZP1F4LHbul8Qu3dYeXsM43gxfuhZhJFecT1ONLQ=; b=Q
+	nLwTSQOBhRIRBMA4EN1aikPLplMc7tKgu5kZsLRtFJWfHdX0bCZlocqw7Hrjxr/D
+	QMmMlDjaJ7Lk5ESOA0XwC12f6tmtkGwi+MONBCe8ZoCi30GmnM9UMOOkBA6I9sjY
+	xCwtae0cf0gDEXivtGVVaAfBrmlbe99gWFHMI4UeuJcEMAYXgJC6bGE6/rOsJN4p
+	HXPyjBVV9eUSh7okqZsQpUhrtz7kn39xBOSVLN7QUVwKP4vON+5hGbZrxYoENvbK
+	si5yRMpR/om/xRlEJfUyIVfvJU3kmsWP8P+mMVICFr1oSHNKOTt5dy8Iq0R0FKqr
+	ANFGWN3Sw5duSawfTejeQ==
+X-ME-Sender: <xms:EdNjaIDJQ7i0UmFBDF-xEKTOnvnx0OcKFC_EoEbO927y2T8G7cVBIg>
+    <xme:EdNjaKjn22X_jvL1B7-DpGoMFcQnClX-t1axulvlra9a4zaqJ-KVQau97HkrZtnoN
+    DzXJV3_qHLoaiHKQQ>
+X-ME-Received: <xmr:EdNjaLnqAie0OOY2RDn3JA5wj6_4Sbu5eVhzUWgPVR14kcuTVOGy99YJQ9526IUt4I4F1yxPqWM6eUZU9ugJCwqq1RhFnkxs-ZKBCgixHw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddugeehfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtoh
-    hlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:DtNjaB9HgO0s5bYrSPWthV9xnwnCFC3w09pY7h__SthclVdBPCBvfA>
-    <xmx:DtNjaIvmWw6Z14Sj_8fo1YiOXePHzcz87MWUtgTtGhu-nLermVctjA>
-    <xmx:DtNjaIGnTEHym4wda2ldOD4quRXZZhOBzp_XjIuENA3T_utulGleHw>
-    <xmx:DtNjaHPJqmfqpJsBd0TelYdR9ZusYma0p9PZM3L7rrv1YE8lJOxgJw>
-    <xmx:DtNjaDkufn8FTsYFI39PaZUmUcJWbKyj6krBJQgRoj_AM7a8OhM3c12o>
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvg
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+    pdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepth
+    hoohhnsehiohhttghlrdgtohhm
+X-ME-Proxy: <xmx:EdNjaOySj1AmabyQ_8VMvYLQ-p3D9hXUhyCcxbSMPcfFGp6UpornHA>
+    <xmx:EdNjaNRa9aD4x302S4evI9zi9R35-iiZH5Yfgs5zMi69wSYh-UGS9g>
+    <xmx:EdNjaJbAaAxLDgU8qpATfdNdii_DO4B56GKDVqmGe5kyX4bp-7bPIA>
+    <xmx:EdNjaGRVhnYViKrYbl1D5ws9ZL21w-tsRm2akMmABfuGnBhJNdNrUA>
+    <xmx:EdNjaLaOcwKg6R6v-74NILjwr6YX09orD1J2wkhRqu4zni0wlZMyHbOr>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 08:22:37 -0400 (EDT)
+ 1 Jul 2025 08:22:40 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 879a86df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 1 Jul 2025 12:22:36 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id fef88d18 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 1 Jul 2025 12:22:39 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 01 Jul 2025 14:22:17 +0200
-Subject: [PATCH v6 05/17] odb: get rid of `the_repository` in `find_odb()`
+Date: Tue, 01 Jul 2025 14:22:18 +0200
+Subject: [PATCH v6 06/17] odb: get rid of `the_repository` in
+ `assert_oid_type()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250701-pks-object-store-wo-the-repository-v6-5-dbf3894ab4e2@pks.im>
+Message-Id: <20250701-pks-object-store-wo-the-repository-v6-6-dbf3894ab4e2@pks.im>
 References: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
 In-Reply-To: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
 To: git@vger.kernel.org
@@ -92,102 +93,76 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-Get rid of our dependency on `the_repository` in `find_odb()` by passing
-in the object database in which we want to search for the source and
-adjusting all callers.
+Get rid of our dependency on `the_repository` in `assert_oid_type()` by
+passing in the object database as a parameter and adjusting all callers.
 
-Rename the function to `odb_find_source()`.
+Rename the function to `odb_assert_oid_type()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-graph.c | 4 ++--
- midx-write.c           | 2 +-
- odb.c                  | 6 +++---
- odb.h                  | 7 ++++++-
- 4 files changed, 12 insertions(+), 7 deletions(-)
+ builtin/commit-tree.c | 2 +-
+ commit.c              | 2 +-
+ odb.c                 | 5 +++--
+ odb.h                 | 3 ++-
+ 4 files changed, 7 insertions(+), 5 deletions(-)
 
-diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
-index f04eaba5259..77d7e88a98c 100644
---- a/builtin/commit-graph.c
-+++ b/builtin/commit-graph.c
-@@ -101,7 +101,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
- 	if (opts.progress)
- 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
+index 546069f8682..31cfd9bd15d 100644
+--- a/builtin/commit-tree.c
++++ b/builtin/commit-tree.c
+@@ -48,7 +48,7 @@ static int parse_parent_arg_callback(const struct option *opt,
+ 	if (repo_get_oid_commit(the_repository, arg, &oid))
+ 		die(_("not a valid object name %s"), arg);
  
--	source = find_odb(the_repository, opts.obj_dir);
-+	source = odb_find_source(the_repository->objects, opts.obj_dir);
- 	graph_name = get_commit_graph_filename(source);
- 	chain_name = get_commit_graph_chain_filename(source);
- 	if (open_commit_graph(graph_name, &fd, &st))
-@@ -289,7 +289,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
- 	    git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
- 		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+-	assert_oid_type(&oid, OBJ_COMMIT);
++	odb_assert_oid_type(the_repository->objects, &oid, OBJ_COMMIT);
+ 	new_parent(lookup_commit(the_repository, &oid), parents);
+ 	return 0;
+ }
+diff --git a/commit.c b/commit.c
+index 1d30f8ce15a..aa65183d8b6 100644
+--- a/commit.c
++++ b/commit.c
+@@ -1706,7 +1706,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
+ 	/* Not having i18n.commitencoding is the same as having utf-8 */
+ 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
  
--	source = find_odb(the_repository, opts.obj_dir);
-+	source = odb_find_source(the_repository->objects, opts.obj_dir);
+-	assert_oid_type(tree, OBJ_TREE);
++	odb_assert_oid_type(the_repository->objects, tree, OBJ_TREE);
  
- 	if (opts.reachable) {
- 		if (write_commit_graph_reachable(source, flags, &write_opts))
-diff --git a/midx-write.c b/midx-write.c
-index ba4a94950a8..f2cfb85476e 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -922,7 +922,7 @@ static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
- 	struct strbuf cur_path_real = STRBUF_INIT;
- 
- 	/* Ensure the given object_dir is local, or a known alternate. */
--	find_odb(r, obj_dir_real);
-+	odb_find_source(r->objects, obj_dir_real);
- 
- 	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
- 		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
+ 	if (memchr(msg, '\0', msg_len))
+ 		return error("a NUL byte in commit log message not allowed.");
 diff --git a/odb.c b/odb.c
-index 0464d7f54a2..240fc62ca2b 100644
+index 240fc62ca2b..d0ca2990774 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -448,14 +448,14 @@ char *compute_alternate_path(const char *path, struct strbuf *err)
- 	return ref_git;
+@@ -946,9 +946,10 @@ int has_object(struct repository *r, const struct object_id *oid,
+ 	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
  }
  
--struct odb_source *find_odb(struct repository *r, const char *obj_dir)
-+struct odb_source *odb_find_source(struct object_database *odb, const char *obj_dir)
+-void assert_oid_type(const struct object_id *oid, enum object_type expect)
++void odb_assert_oid_type(struct object_database *odb,
++			 const struct object_id *oid, enum object_type expect)
  {
- 	struct odb_source *source;
- 	char *obj_dir_real = real_pathdup(obj_dir, 1);
- 	struct strbuf odb_path_real = STRBUF_INIT;
- 
--	prepare_alt_odb(r);
--	for (source = r->objects->sources; source; source = source->next) {
-+	prepare_alt_odb(odb->repo);
-+	for (source = odb->sources; source; source = source->next) {
- 		strbuf_realpath(&odb_path_real, source->path, 1);
- 		if (!strcmp(obj_dir_real, odb_path_real.buf))
- 			break;
+-	enum object_type type = oid_object_info(the_repository, oid, NULL);
++	enum object_type type = oid_object_info(odb->repo, oid, NULL);
+ 	if (type < 0)
+ 		die(_("%s is not a valid object"), oid_to_hex(oid));
+ 	if (type != expect)
 diff --git a/odb.h b/odb.h
-index c3851e29668..941329c6943 100644
+index 941329c6943..13f5da45f54 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -68,7 +68,6 @@ struct odb_source {
- void prepare_alt_odb(struct repository *r);
- int has_alt_odb(struct repository *r);
- char *compute_alternate_path(const char *path, struct strbuf *err);
--struct odb_source *find_odb(struct repository *r, const char *obj_dir);
- typedef int alt_odb_fn(struct odb_source *, void *);
- int foreach_alt_odb(alt_odb_fn, void*);
- typedef void alternate_ref_fn(const struct object_id *oid, void *);
-@@ -195,6 +194,12 @@ struct object_database {
- struct object_database *odb_new(struct repository *repo);
- void odb_clear(struct object_database *o);
+@@ -302,7 +302,8 @@ enum {
+ int has_object(struct repository *r, const struct object_id *oid,
+ 	       unsigned flags);
  
-+/*
-+ * Find source by its object directory path. Dies in case the source couldn't
-+ * be found.
-+ */
-+struct odb_source *odb_find_source(struct object_database *odb, const char *obj_dir);
-+
+-void assert_oid_type(const struct object_id *oid, enum object_type expect);
++void odb_assert_oid_type(struct object_database *odb,
++			 const struct object_id *oid, enum object_type expect);
+ 
  /*
-  * Create a temporary file rooted in the object database directory, or
-  * die on failure. The filename is taken from "pattern", which should have the
+  * Enabling the object read lock allows multiple threads to safely call the
 
 -- 
 2.50.0.195.g74e6fc65d0.dirty
