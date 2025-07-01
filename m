@@ -1,138 +1,143 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2F1E98EF
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 22:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BD4072621
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 23:01:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751408304; cv=none; b=Z95sOxqNMEkAOlG4fSPKT51/+2Iqm7Tu+fmuknGyAtwNR7MOx585cOXb+6H0sME1ZfNErM/FjcTsaGi+CTIXSR+odVQqiYRTlRSlKunPSVwK+h195jqiLaX5C9kfvPpBr/Ou6aCz4lMjOXWlsEECjPsmEyshLVJcVzBWH5Ovn8E=
+	t=1751410865; cv=none; b=N3cYckQw4ONbl7p2d2aqjkaLgm0cf9+tVkVoF/QTW93IqZCWAdETlMQDzWN/Dpe3OUJvIyVzVXCsSiX/5lc2iAd7AyK1ktYLWGR/8nSqSGa25r97XZAsPeG/inqQb8VxM4E2ZkWyeiZAwlWXgUXVXr5fgX3FQMs/iq9UelXf59k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751408304; c=relaxed/simple;
-	bh=9EP7VsKEdvuzq+viHV+5MrY7ECKoBirdiZ8GigOWymk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=clZJJ+B4/KyaxgBC/ymrevcE7SZP4OXgw498w+AxFTmLsXzJh2/GcicRs4YZo7ovtLXLSs4ToABJTtjyzCijGGdAZLH2eCqnjq1i6/e3wCI8KL5YB9YWNG+bs4B100MkDCGTe4Y82VJ27IlJ9UqkjU8fNHue1jhMAgXksw7zhgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9MdEm5U; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751410865; c=relaxed/simple;
+	bh=TICfGTA/ncDtfx3VibCdEaZyIXKZkl02NcjdLiqbzVo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q966LkrTpb49Cy02nhOgaJcNCO0N8ufodNJt4ktkI1JLdCB4D1296HRBCGq6T4gN7Se4UkJpKZD/0guoBclWWfhwz9XYWUY17Mo4/ljsZyyBMOzc8Om9xBSO3OV3XLitPwFf9ETQUtUGI1vKwEGUY9ksOEhrulT5GiuuY3HPGfE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=knfOTAlX; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9MdEm5U"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6fac7147cb8so102143886d6.1
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 15:18:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="knfOTAlX"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-748f54dfa5fso5399497b3a.2
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 16:01:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751408302; x=1752013102; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c8k5zUoxpsSocvSfptA8TzexxNyxHOo+9WfAmtdfmh4=;
-        b=C9MdEm5U0POaX+Bq0/E4jyZ4jj/jVUDo9VhrU7rOBqzIYM1bCKafhhoFl5dkkL97zF
-         vbnA4YYqr9PN9UGbtKhE9nTmEofApRRwjZacFfnW5KDxh797srJRf2Hoora/q9nG3WRb
-         7E/izb2jRJA0hqgFLa/H6l/LezGDSJQc0BtZJIFOMBD1MfjGDQJevach4eCR09qFvh9Q
-         05+GhHzU2iM2dJZSOnOyefoi+VI9AQjgP8FfgXqlJBxvY0GFioVsJl1cunkyI+yJD21v
-         /3ctKqBTBKEQkJcgnZUCSN69aoIsBUupv9kvro0dW6ul7bPbfXv/1r1cJSoCJtnzgwTx
-         uqTQ==
+        d=gmail.com; s=20230601; t=1751410863; x=1752015663; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=B10sNtu+Kb3vV6jy52W8bUPg7xv3pv2Qz3EHzplIYLs=;
+        b=knfOTAlXpNaeMBPmnPWzn43DkEbFmcUAQEptkqFwJwhl1RGXXgMX0AUmXd0VEuXelx
+         fTuYsP2d0DaYe7L+rWR+ZdY3z61TDpidvOYKxHl2zvnEmQ8TJHXmPwdP+mggB8wTde9c
+         6etbfdZiVTPul1hMAkbf4979gXN/rNNGudJt/UXpMmolOuqwTrsRVZ31WeYuExbLSUXh
+         xDLDZdHF4cAHilmDGKFLLFlehPk49TYSgYeiCMTo1RCi3MXm3gHPrrqJjLQ3xybYOVQK
+         l9epzSCUVhPoNOSqf0mOlMVP9kda16o2apnknE7+oY6dz3MFlGdGTll6uH/XfJLLx2SM
+         YFuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751408302; x=1752013102;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c8k5zUoxpsSocvSfptA8TzexxNyxHOo+9WfAmtdfmh4=;
-        b=klY+czWSDGE0YPiLsQJ36ZPcAk7UceA5emDNKyVpLxprxTVeo0gzt4n56Q+HYb2SKg
-         KWsH9vXQhUmVhB9YQSmlL1tz+bAzZ+4BKJgIQelsXezjUzMDDupRRZGbZCKs8cQrjRjA
-         9BPmIUiJHJtUUQCygeCYvZRB+gZOFM0tikkOy/SLZPlu6jGE5GMxvZsdIqRNDtUHHJBr
-         thNOFRwPIgmExTpJ/1/RGkgexQVh/RHmW/Er+Xi3G+bOMKUwUaSadLhmBz0xFZbFP8Kp
-         ftOxzkQi9Zq2Q8F6UO56BYK03wvZDOc4I3pCR79cfvzAcCLoDKW+c0kMOy1chLL6oQfU
-         C4bQ==
-X-Gm-Message-State: AOJu0Yzd0LOfrWCdEeV1ptp7twTTkqLoRdZj1iG5eRrHxcF2HVnYaGJx
-	ssDXauD6TU+13yFgcC/CclrFAwxoZWkD1+kOyinSBlI+2YWhLsoTbqgv
-X-Gm-Gg: ASbGncu2hJpMFt5cF3/Ck/TWHGCxL1RyTIEL+45rvUcAulrH1U3BRv8/qexrFCOFKsL
-	InNkfdXUthrngQTZnwHgAISDAdEzSILFgKEe1Knr52lHNJ9ZEbp5OoX8VGR2JHdthNezYWPL4TD
-	clEOjLNriRXyj5hv5LLKTSitB39OClMxO8ro0y8XAfszrWR8hcOm0/aDFNK93XEURtdCtX+SBPy
-	WOEfGZ+lOaFHUrIm7mxKzuIDzsYoq9LlETXm1a/JLRRnB5nH9LrassTDwSSqLIVZ5w4ROeK/4xG
-	o2ynPmA06H7eeXjHEQtQw/YzAS3z5/nhur0bIqP6h60HY7Wx6zAHJL9SzjRMSXJFNMjjKd+2okO
-	4+R9UW9+PkNNZ0kzx0kk=
-X-Google-Smtp-Source: AGHT+IE+sadGk/EkByIERi7OpHW3NU/UApFbHQIoGSV8uz9mvZCjktlJyE16/R2ihGaf4xDWVV9pIA==
-X-Received: by 2002:a05:6214:2aac:b0:6fb:15d3:7f3d with SMTP id 6a1803df08f44-702b1b3e6efmr3751766d6.13.1751408302037;
-        Tue, 01 Jul 2025 15:18:22 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:934a:f589:722d:abae:afdf])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7010b230d44sm20863566d6.106.2025.07.01.15.18.19
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 01 Jul 2025 15:18:21 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        d=1e100.net; s=20230601; t=1751410863; x=1752015663;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=B10sNtu+Kb3vV6jy52W8bUPg7xv3pv2Qz3EHzplIYLs=;
+        b=u1Anhz0oDhIYKLwIl+ElEqgLXKyoreT2qBxFzBjfGgkK0A0ZL7av8eBhwpAg1smFT5
+         TXc4GPda0tabkhQl0q/I4HvPMMj/M4UK2ccTHNSw37DcElBTt2E2a4jLzmreaHR7jzND
+         CysHdp/qtYd6iZWPiJ9fZ0nOiAeWTHoAOv2CVgxzZvPYnwTLwUiadW6WVeh0m3sDhzfk
+         GzhwiPlu3vopbv76d9iEEpW+KNqDsGIuJF8kIrUMiIqeUTLKfYxZoUOjRG6/0xUHESad
+         hAOQXo71pgHKm0C4MeBnlhPggz+zWv0Cg5pe8W9KYKwjwz0RabjIsqon+6dH8GKiyYzx
+         5orA==
+X-Gm-Message-State: AOJu0YyUaqnR5MqTj4YJNYEyWPh9gAPV0BI7U2lESyYkArdeumvEA5iV
+	Fjm+JqGR6L5yq+nas1Y/99QgmiWBy+uyhVGdjmPvrnZ9kyVe2Q1TekAQ
+X-Gm-Gg: ASbGncsejA2rotzjZrhk4yvVefS3L8dWLPRE6u6FlLJYA95PpF4dc16pvkKLTa/qvGJ
+	3Ev6x+6SixfpIDaPf/s/wPSsF97qIOXMRPOQlJTWbqZj6BJkHLNGcYwu7bxuV5dzm5HRx3QDX0d
+	hrZL+F7z+Wj41QU2qCIec3FLJSNpqOEZZ/VnHFi0fRqbBgAPbJlPIVurNDCZ+t986XIKIAwNtPP
+	NQZ7stsjXkvQisYBCLb3Ef3bLoyfyGRamXGzx1kjhIwjz7+tZ+anPO/m9gM4N6GRnB35vq75Qf7
+	xp8rZg10DGBMUN+l1nANs8s0icjHhrmWaCi7ULiOjms98YbwqcoUxaFnsfvUcsHjP1nuMFo4hZQ
+	V2+0+flifpcz+vrNO+ClY1Sj8REM=
+X-Google-Smtp-Source: AGHT+IGQj4b+LDGotWGuoVJWIGmakVSuSkwVkrBjJN2V+2ym4M4XGNrzjkOx7h8sYI1zTlDde4qYWw==
+X-Received: by 2002:a05:6a00:2347:b0:740:a85b:7554 with SMTP id d2e1a72fcca58-74b50e69745mr861353b3a.2.1751410862549;
+        Tue, 01 Jul 2025 16:01:02 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af5409d62sm12054882b3a.27.2025.07.01.16.01.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jul 2025 16:01:02 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
+ <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  =?utf-8?B?w4Z2?=
+ =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
+ Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH RFC v3 0/3] Introduce git-last-modified(1) command
+In-Reply-To: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com> (Toon
+	Claes's message of "Mon, 30 Jun 2025 20:49:22 +0200")
+References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
+	<20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
+Date: Tue, 01 Jul 2025 16:01:01 -0700
+Message-ID: <xmqqa55nikia.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving
- repository info
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
-Date: Tue, 1 Jul 2025 19:18:07 -0300
-Cc: git@vger.kernel.org,
- ps@pks.im,
- karthik.188@gmail.com,
- ben.knoble@gmail.com,
- gitster@pobox.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <EB2B7A97-B9C4-4F7E-BD27-688C6303DA1C@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com>
- <652FDA35-C20D-4F27-A22A-025CA08EB013@gmail.com>
- <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
-To: phillip.wood@dunelm.org.uk
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Toon Claes <toon@iotcl.com> writes:
 
-> The reason git uses NUL termination for other commands is to prevent =
-breaking the output when values contain newlines. The output format I'm =
-suggesting is
->=20
->    <key><LF><value><NUL>
->=20
-> so the output for "path.git-dir" written as a C string would be
->=20
->    "path.git-dir\n/home/phil/src/git/.git\0"
->=20
-> The value can safely contain newlines because it is terminated by =
-'\0'. The reason that "git config --list -z" exists is to provide an =
-unambiguous output format as config values can contain newlines.
+> Again thanks to Taylor and the people at GitHub for sharing these
+> patches. I hope we can work together to get this upstreamed.
+>
+> [1]: https://lore.kernel.org/git/patch-1.1-0ea849d900b-20230205T204104Z-avarab@gmail.com/
+> [2]: https://lore.kernel.org/git/Z+XJ+1L3PnC9Dyba@nand.local/
+> [3]: https://lore.kernel.org/git/20250326-toon-blame-tree-v1-3-4173133f3786@iotcl.com/
+> [4]: git@github.com:ttaylorr/git.git
+> [5]: https://lore.kernel.org/git/aCbBKj7O9LjO3SMK@pks.im/
+>
+> --
+> Cheers,
+> Toon
+>
+> Signed-off-by: Toon Claes <toon@iotcl.com>
+> ---
+> Changes in v3:
+> - Updated benchmarks in commit messages.
+> - Removed the patches that attempt to increase performance for tree
+>   entries that have not been updated in a long time. (see above)
+> - Move handling failure in `last_modified_init()` to the caller.
+> - Sorted #include clauses lexicographically.
+> - Removed unneeded `commit` in `struct last_modified_entry`.
+> - Renamed some functions/variables and added some comments to make it
+>   easier to understand.
+> - Removed unnecessary checking of the commit-graph generation number.
+> - Link to v2: https://lore.kernel.org/r/20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com
+>
+> Changes in v2:
+> - The subcommand is renamed from `blame-tree` to `last-modified`
+> - Documentation is added. Here we mark the command as experimental.
+> - Some test cases are added related to merges.
+> - Link to v1: https://lore.kernel.org/r/20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com
+>
+> ---
+> Toon Claes (3):
+>       last-modified: new subcommand to show when files were last modified
+>       t/perf: add last-modified perf script
+>       last-modified: use Bloom filters when available
+>
+>  .gitignore                           |   1 +
+>  Documentation/git-last-modified.adoc |  49 +++++++
+>  Documentation/meson.build            |   1 +
+>  Makefile                             |   2 +
+>  builtin.h                            |   1 +
+>  builtin/last-modified.c              |  44 ++++++
+>  command-list.txt                     |   1 +
+>  git.c                                |   1 +
+>  last-modified.c                      | 257 +++++++++++++++++++++++++++++++++++
+>  last-modified.h                      |  35 +++++
+>  meson.build                          |   2 +
+>  t/meson.build                        |   2 +
+>  t/perf/p8020-last-modified.sh        |  21 +++
+>  t/t8020-last-modified.sh             | 204 +++++++++++++++++++++++++++
+>  14 files changed, 621 insertions(+)
 
-OK!
-
-I can't see any downsides in this format. I'll use it in v3!
-
-> If this command is going to return "$GIT_DIR" and "$GIT_WORK_TREE" =
-then I don't see why it should not be able to provide other paths.
-
-Hmmm... I never used `git rev-parse --git-path`, but after inspecting =
-it,
-it seems to have special cases for:
-
-- grafts file
-- index file
-- objects directory
-- hooks directory
-
-What about adding them all to the `git repo-info` under the `path` =
-category?
-Currently, these are the fields that I plan to add:
-
-- git-dir
-- common-dir
-- toplevel-dir
-- superproject-working-tree
-
-> Those combined with "git var" and "git config" are all repository =
-settings. Having a unified interface to them would be an improvement on =
-the status quo where users have to know which command to call to query =
-different settings.
-
-Fair! By now, I'm focusing on rev-parse, but it seems to make sense.
-
-> Best Wishes
-
-Thanks again for your extensive review!
+FWI, "git last-modified -h" does not work; its output is expected to
+match what is in "git help last-modified", and t0450 would not pass
+without it.
 
