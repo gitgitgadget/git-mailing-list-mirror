@@ -1,126 +1,147 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3CC271452
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 16:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B05280002
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 16:41:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751386816; cv=none; b=X0KSWKLaR7LMYL9vPHglhA7RZgQtTRtXwKj34iTALc548BVaGj5qHoJEbcmyk+QJUmPcgRiwIvK0fQLJzgS9WPyn3mg3m+qO4iUO5I/hTiQg782kBePk/wo+OwOnwuwbyHODIc70+zK2Qfn5pW0juYq4HE9w83AA1JNb/BsXOTo=
+	t=1751388066; cv=none; b=P09qv4RCYqVIEjQNdnAZ9UEdDRk5vulOLkmlOcWfXbm/ue8VgHUg+uXBzUcG8tk7vgO22B7apRHPxY21BR8VFC9kE8/F/hOy8pP9Ho+wCKuXcRgcEQHGkPtobP7HzLJpkHiknrqiYXsnXRVDlQa9MD4Wz5hUUF83HKEvnXBfdc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751386816; c=relaxed/simple;
-	bh=JeyOmgXk0SkI1VSyvHtkFhdL4A+Ghtwhlvj79h+S3zk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FYIvtpSi8YunoiDzFu2VdtdLaYR6FCKhjaRvn2rdv1BjcQOXuqXZZLpSq/rbGOuteQPFKV53X/Y8Q0/jEi25Uqose1kXpQxeUltmpS/R59JS5sartG3dv1wTDBlELVYkrkA3W/6rL2IThVbU/J1LZIjH8YdnQSNHuSDo9Sxr9x0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HfaX9AIE; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751388066; c=relaxed/simple;
+	bh=EPZ+xtQjhcFk96xn7wOx7ctU+F0R5IA1hAut3tWEQOI=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=HYlYzZGZ7zwVSN6Ey0aj+HRQ0SXG9ha3mXEUn5IJiPnlPeDBAQ6NYR+YF65ot9RqXmr6+EPG0DEMm81KPC//bqIZUq+RWRilBP9CnWUgbrZ7gBe8g3Wa5pgdUycv7BkKCdZ5Pa5H2kkPqvTqjQqvNUEaCeoZ9tKydKWI6mZ3EL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=NW3ZWnPy; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HfaX9AIE"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-23649faf69fso30941825ad.0
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 09:20:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751386814; x=1751991614; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=K5Q5wmVIYo1src+PZPENi4qSVd+WiLoF8erOaoc0ozQ=;
-        b=HfaX9AIE/9e77ZPJhJ73xNwWTvD3obry80XIoFVldcbSvg83HdyqOcOBNMYmHnw2SW
-         m+YzUBjjv+MwsLTx2PEossRmqLgrR7/jejN/26TUkX4R6YLy4I6N1RLDgWDfqZ7NZ1da
-         L0t2qQwqDxWmGuyi8jLJYgR05yYMxn0yqWt2z85mo0t5NY3zu9MuctOBFKtRiADNaWBB
-         zDlrbKTtS/xVZlho4oaSy4RK3kJSIRjHgWfqgtebWMsDGUIh5BNSh3+fUzVHPmEC9Tn8
-         QOBGKgYfYUrpNpXi0okSzd1dFUpn7NX5gTaQQr61m1Q5oQ6Pghd/KaVIT3K4kU1aDDC0
-         fz7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751386814; x=1751991614;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=K5Q5wmVIYo1src+PZPENi4qSVd+WiLoF8erOaoc0ozQ=;
-        b=I/g+u24WUur6Du7uZxty578OHANisF1mb4Nz9npFLprtM7R6efwLYA4FOnvRPKB1FK
-         xNGYiDOXMbsT9RUgcV+O4l9Cay2y6wYLcN5Xkauejdyi0s3Zf0sWEN9s/Gfat0PGY/bI
-         KjQDzn6kiU9p9Rsq6phclD30byjwz+7K06KNB7oIizpS1m4tPsie0BpLYf0ikI/lbnGa
-         zeppeZhl2FiEFogQxzriG+hV9/5ev0XfUq9HU2Jszx831kd0kumKGWqW0+tAN5UdRvOo
-         9gKm8k3J/VjO4vXKhczdP2ZS/yV09csIJGsKJ7s7K2KfSbbRfhw+ySrQlAHFYB2fAkoR
-         lPEA==
-X-Gm-Message-State: AOJu0YzCvcNqoBV5R29LSJs/cVHWBKbmT7X5GjUzPrX6FarqZ1ACEeyB
-	6EH7MiMIA+LePaUr9Ris1QErNs6jxpExTEoFv0+jxCYr8wHxBrobHg+MTXJZ4w==
-X-Gm-Gg: ASbGncutZUUC+kKXbVR4/MeoddDGDJxnxAKdFzYZY7KlRqbnssLen0UAkPjPW1PpT/a
-	VEvP/wAB4n83riZCZApDHS3m0A/88565u98W6tgipMPEUfhJcdeCZkc9u5eXivvV6JeJT1Tyd4D
-	0/mvkuLHIZyUeOhroILoOToDZgeTBfDBSJDS4/EfL9UaG0hPkYHxP3ga4CD15bhdKqEsz96mYP+
-	9Nj3kjtyrFQ/ethwMCfjvzJymDoztA+UDiFKWZo+6wHuDQFNTMpCVyotMipTyqzrpUwPZaDmy46
-	fjnaWP3Hb6NB96BFxTZ7xZXV+9ibi+tlQ10iKXtm1hOkrESZNgBPg3cXAtRSIC65kV8Lmkpv0/+
-	sSAEDvic5csHQqW3fpkb+8/JB2ZI=
-X-Google-Smtp-Source: AGHT+IEsnIpKrYRXf5iX/u023JQE8liE2rIrxdatBi8NvG/7SnHmk1B2d/IAow50+4pT67pduQW8rg==
-X-Received: by 2002:a17:903:1c8:b0:223:f9a4:3f99 with SMTP id d9443c01a7336-23ac463414amr281087475ad.29.1751386813423;
-        Tue, 01 Jul 2025 09:20:13 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3b932csm107614445ad.182.2025.07.01.09.20.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 09:20:13 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Git PLC <git@sfconservancy.org>
-Subject: Re: [RFC/PATCH] SubmittingPatches: forbid use of genAI to generate
- changes
-In-Reply-To: <CAP8UFD0bd1PD03VPaenAd+76Q6CeCOmDOJsso1nMKk4tZ4vbMg@mail.gmail.com>
-	(Christian Couder's message of "Tue, 1 Jul 2025 12:36:24 +0200")
-References: <xmqqcyalm0mh.fsf@gitster.g>
-	<CAP8UFD0bd1PD03VPaenAd+76Q6CeCOmDOJsso1nMKk4tZ4vbMg@mail.gmail.com>
-Date: Tue, 01 Jul 2025 09:20:11 -0700
-Message-ID: <xmqqms9nkhms.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="NW3ZWnPy"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1751388061; x=1751992861;
+	i=johannes.schindelin@gmx.de;
+	bh=EPZ+xtQjhcFk96xn7wOx7ctU+F0R5IA1hAut3tWEQOI=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=NW3ZWnPyAJIpNFwo94BBchZuorSKFOPth/1wZBf/qsiY25Pm0glCrM28umBU3pWp
+	 E1FeAXuBFkkONlz3DhmqoN+HNlOf5S/wmgsb7iHYUmqCF1W+n7PO8SmdWitBdMkp7
+	 Jt/g8EH2cFp6KgdShsHug815R9ZH/QDuVrvHrINPrBOLHSZoEPiIkR6mpsvy9sS5A
+	 m1Zl3ysQd7FjIEqxhgzBhELjAJyfIThO3UHISdALjjgQN43EqG+qik+AuezuJtoUw
+	 YUZb5Pgein2g8772JYDzgGD6Aaytc3SEpwjr6SyebEcfu+bdLjH9lYSFb7T2CsVTd
+	 Xiz/mhr/UzlLnrlMyw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.213.20]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M7K3i-1uc9HF2ipY-006AE9; Tue, 01
+ Jul 2025 18:41:01 +0200
+Date: Tue, 1 Jul 2025 18:41:00 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Aditya Garg <gargaditya08@live.com>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Why git on windows pops up Git Credential Manager inspite of
+ having set a credential helper in .gitconfig
+In-Reply-To: <PN3PR01MB959737CFDDC39898364CBE34B841A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Message-ID: <610f64a5-015e-b2d8-03ea-78bb623f6af0@gmx.de>
+References: <PN3PR01MB959737CFDDC39898364CBE34B841A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UI74jRUfGGh4dP9L/pr7plfU+pq0nu1lll3MyOG51AQCdhsEg7I
+ UmlZAf20B9Zh2A7ac3hrDMLxy96cNtr4EAig7K8Dx/DXvZSl0zoybUUL73UHCDAElUJjEjT
+ h6nUTiQAmBZecATe837BMGu1tuMVGPM+sORlp0ueHWLTz3xmVzmymQVYLQui/EtScP3rYBO
+ DR8VwhZVJJXORbrxM/8dw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:artJGNodeHc=;WpmRhmowYkyQRPTEfaEiPQ0Ksg9
+ 16bEZ2kTTBn7zBxJM9FjVpP8vJ+hIGKMTJ4Gh6Y+3bxNGhS1Uw9sm8P8Z+dsXutHY9KIKoLoX
+ cvM1GVfy0MvsjCG0+FOWOdLsXBD0ht5ZIj+5BRiOLWvuZ1uc8GoQ8RHYYJZyeDq85vnzpRQ1v
+ oMHzkyyUcQ4As316AWhWDjRJlK7Qbhe7RPMNY8y05wf9Fwx9aet/54aPPrvo3YACDC7fsVrhl
+ b0B9Kkc32ZWQwHwWFaNVOhQF57PVDJ/2t1Ug2zx1JkTrzkzf7A9/FwnkqB8dxfUakDZSm1FkE
+ 7nWDYn+00hthPl9Y0iYQxx4VpEvtMu+rFil857pEX/ZynHCxBbf0aOFHfW+mAdMljnqiZj/4K
+ D7GLsqKByA9UnazkLb57MwMf/9OH7phnTEoaVD1A6f4uK5/A+TpJfhu4sRQ9kRgnaQd6ni9a+
+ TEm80ZY6WxpipAW/UuoVxzg4yPWNi80kj6jKrIpzkjKA6L2BHlIwW3KLmw8Od6HNeoUNatV1k
+ c8nziFbJpVN4wxMDPF2V1btlut6Lt2u4Gp+/Ly/xVqotlotJZFThxS0JH2pFiVXehA4biVq2w
+ UvZQmksaCo6QNwnH2e5rKA3WRdMnpN+m3uuh+iMaloGYGTLrE6W0cfdpKWJjJ/LtTqxI8LR1L
+ SkolVqr+/yVnNOIEG9oi+SASTttcmwMDghLzDjuglA+nZSdh6oudYBBW3+MMUzFB3Cuq1fezo
+ PaSTOosTkwOLX8xPBHSIY8Z7XBAoI5zRUd1MIF4KJAS29hVjHOagGy30XFA+AiH+Ld3P2aaT1
+ apJ4y7UacyFcKuy3PrrUCYbHevbNGkuIKFzc8pDaMiIeHHrvy+lkPzrECOuciRWz1WD3/835k
+ ZzfW4LhViZGAxK3DEnFjGGRR/Yd6iWv0O76dKRfdvTnhJDRjmqXceci5yWEfmld+U16FO7aaG
+ kdUMn9SilCO3ubPaGKEb/CccubyYsgM7wlu1uTcVY+VtQ3TyrKrSuHl7utvbzfKF1VYr4x5oO
+ /FY66hrPgvWVDr2yzRttOafEs7WviG3ZmnIOyH7ZE9eojywA7t4n/35jaW1wJHEtFo05plbPO
+ zOqTvI/lVJu5Cs8GIiJiOrvFv97bIOBQwauq/TMkKzfKiDeL73B7zbEbiZ+CVAsZd8oVXd5oz
+ 8n2UPFsWM2WtZ9zjtUCTScnOx/atwMlJzddicrSAT/vTeNpXCOkBKk0rCGSrFbpilfb1kZW2W
+ mdr3AMTLd2UmGZHzMhfEUaAzF3ZWF6gbvaW0kuwqR5GAQSghyMzoNWcU3EkLW0uMdadEF4BaP
+ 8EdXEmucQo4jRplTo9L3rAXdKJjljso16fz63PmOJDG3hmcGz/OYpQYfyB6Cvgz0Dk9679eC4
+ qQoxTDoj4Rk6wnYTXEngXc0Aw6M6zGxeHdRABMxz/2ub6nkXJnDtcvBbxF/5VaHXIt9c3uTzN
+ oJxp2XPelzfgRp7GmH/yzQcluMZbvgUdV0lK4ooWBIH+XsKyY/Nu82km+Kmjrj7Ci1CSvXQr+
+ QCIXyC/6U9h8QoTYd0gpfO5xK6+j+UkskBZiKB36XnSuagyVMORk4JvXRauaNVO2+j568e/G+
+ gqhGriVLsTU2N3kC/lAEFtqDHXbEMREtWzCQzmyVu0Fm7RH9uqySFJc/A3NSUzYGmJP57ON2b
+ Pok4ZdaVvYuN5vRHhlQSgpE/hUYjs9aGEap1wYpPxco4eEKsQkLitfOFitM8QXUlEP5mkDFXc
+ 8X+iKuVOz9GjM1loDUee65wK8xgaDSNGLM9RHJwaCw39PIDs9vtaY7i3gcjcDLoN/9/v1yl9e
+ hfbjz+x/pdZaVvyrsEfC5uK9Qz/K7dLPoosbdUUs6eiHHZtOj1lVrzQkI2uonkWdPSBt6XKNN
+ zPjblSrU+VwWFqY7BYCHcJUOKBOt98yLvXuFousfpNzSw99IUM1fzQGLkXazhpUCbYdceIP3W
+ RnRPDET759HEbVKIOl6WwSb+dmBws6coPQMBY0Y+lrMVnp1mq199vx9yaTLBiyfUiOd900+Ih
+ /Tsf5fmFy1A7WxrNjdLghosVf0Z1NrNoQWbULxezm1yYA1urs/n7wirDnrFx1by3wklacpgjf
+ WAnmrrA0XB65CzEau1xbU58RRbfr7QQpt4nkKi79KQ04kMppRBodohqBsyXWKh+l8x5j3Hf7G
+ dQh0P7RLfQFLGjuP/Sx01cghGT/Ynqa+WVeYiT1MYjB8wFUfAgbNpfaOP92lVEVS6/aAexf+l
+ cwFVjOmAytEKnOTNDU0MvG4fPiAFE34m4Lk9A7w+YxlOvqmYL93xVR1sawdkU8qWS6QxQr9YX
+ UxQ3+acsakZe83BPglfXftzPtU2P15g0U1iiYsqZrvSKsXVENGIK/7MYV+w7zskSE3isHCrgI
+ 2xvPpf0U1lLrn0/G/CSzlzJAU49pKIRnEf3MXY3dYzpHwravjGEEg4nThAwvKV7Ap2BUgLK2F
+ XgP1JYGty/cWbSMarkGLq0O0RxtWli1HjOK4jU6Evf5dLCZKvSNcLLfS9jkgM8UAOSJ/P75c7
+ rTWs01Knl6HlDeCXJf1COkwbPXsy5Z6zSiCUVJdD3VX+iVZHb5qdwZbrgbBLJ85PYjvfKVgEY
+ ozm3yNVFYRtVGZ5msBV6yCu8UCKmuWq+ygD+NYMmqimRumJt/OuGfik4X4vsZKWcTh5CjriPr
+ ZwFFcUW5k/ijnsOnBwrHF6bNm7SNPAS1rYi/+2M38wcah0BY7VVOxnR8Us7hGcwitnvPJV3Di
+ nPQnJX1zPmS8/32OBUbTJbyOE4xiBJBfI2HoBz0fC1dYKs3zwtm+6YCdWx67GC7Pu2wYoXnxP
+ Ri2+gAv26ZFxXhSZI3xYS7spUSv+OKTiZJJOEGIEcbkTd2WOJ8Uy9rHIS2oT4lmkJEhyhj8E8
+ RznHgkb78chtb/7rCei4XdsrQqSh41HCMDnM/lIu8Cvuy34nHTFtXGo7rZ7GTV5xY6adJgPEc
+ sm75W36N7sg8/h8ELI+e0AqEk/beLOdCW10prw66Zwq1Lundo/3lcSOmeoWaCcAPrVzeQyBco
+ B5pes40ZRuFniU3XxxDLUIO6URRBl5DJlN38ntK/2t0y81oY5nVGC8srd2oxGuCLAuP6hm5uZ
+ VvsjfpNr2ptJFA3jDMUuifqU7+YY0NpQdCTdayOZjFgBKImlXvTIVeC3T0zjurbOoZWjDbTBd
+ n4S6qz2LtGh5XmxhvFUuAoK5VsMqwHQ0SmD/SMe5yaxzvcq6cg9AnMbVUFmbo97TRR4m2jQN4
+ zqEjfmu+98c8EiTtvBKnDBvAVLiVbavjRPuzMMIg9WsbJQZW4ZnSwb8WOBCX21wZ143gxVlUw
+ drORk/CAcUb0mZu1mlIWVtnriTaii4tW6m1wTl2cbyLZlrOfjsuLecBeh5Qr3t7NjWn9v4zjf
+ p91cVrQfv8Of2ObsX/m7D1tPU12Z1xoP+y76nS2UbWwYoT47fPrPMrwybHOfj47dIl+MsMfEb
+ r7r9oK4N5lg==
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi Aditya,
 
->> +
->> +[[ai]]
->> +=== Use of AI content generators
->> +
->> +This project requires that contributors certify that their
->> +contributions are made under Developer's Certificate of Origin 1.1,
->> +which in turn means that contributors must understand the full
->> +provenance of what they are contributing.  With AI content generators,
->> +the copyright or license status of their output is ill-defined, without
->> +any generally accepted legal foundation.
->
-> Here we would forbid licensing any "AI content generator" output, not
-> just AI code generator output. So what we would forbid might be more
-> general than what QEMU folks forbid. For example they might still
-> accept a new logo, or even commit messages, made using an AI while we
-> wouldn't.
+On Tue, 1 Jul 2025, Aditya Garg wrote:
 
-I didn't think about the distinction you are trying to draw when I
-wrote the patch, but after thinking about it, I think it is a good
-thing to prevent us from adopting a new logo graphics somebody may
-have ownership rights without us knowing.  I would consider the
-commit log message as an integral part of any "contribution", and
-read the word "contribution" used in the [[dco]] section as such, if
-the rule covers the commit log message, that is very much
-appreciated.
+> I am having this issue with Git for Windows that in case I configure a c=
+redential helper by following the git
+> credentials documentation (https://git-scm.com/docs/gitcredentials), the=
+ Git Credential Manager still pops up.
+> I simply close the pop up window, and then it seems to be getting the pa=
+ssword from my credential manager.
+>=20
+> I removed it using git config --edit --system, but after every update, i=
+t pops out again.
 
->> +Hence, the project asks that contributors refrain from using AI content
->> +generators on changes that are submitted to the project.
->
-> Here it looks like using an AI capable of generating content to just
-> check code that would be submitted could also be forbidden. I don't
-> think this is what we want, so I think we might want to reword this.
+As per
+https://git-scm.com/docs/gitcredentials#Documentation/gitcredentials.txt-h=
+elper:
 
-Good point.  Asking agents to proofread and suggest improvements is
-like asking your friends to do so.  Care to suggest replacement to
-these two sentences (above and below)?
+If there are multiple instances of the `credential.helper` configuration
+variable, each helper will be tried in turn, and may provide a username,
+password, or nothing. Once Git has acquired both a username and a
+non-expired password, no more helpers will be tried.
 
->> +Contributions in which use of AI is either known or suspected may not
->> +be accepted.
->
-> Here also "use of AI" might forbid checking what we submit using any AI tool.
+> I wonder if some proper fix is there for this.
 
-Thanks.
+Yes, from the same page:
 
+If `credential.helper` is configured to the empty string, this resets the
+helper list to empty (so you may override a helper set by a lower-priority
+config file by configuring the empty-string helper, followed by whatever
+set of helpers you would like).
+
+So the trick is to call `git config set --global --add credential.helper '=
+'`
+followed by `git config set --global --add credential.helper $HELPER`.
+
+Ciao,
+Johannes
