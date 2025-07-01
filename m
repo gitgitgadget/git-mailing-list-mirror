@@ -1,108 +1,88 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57B84266571
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 21:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2038126B766
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 21:22:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751404502; cv=none; b=VAw1fumDAYAWZA56cjNtSnIX71mwzDvoMyoHY7OaQFP4GuImRaSKSHpawCJgN/bHFabOtRj3uIcTKbuhkLMkG3M/kPG1SFjEwmwI7Y5GTWQhuN1jMNVizv/hEvL0xP6iGRsTwt6ph9ReLsrd0YtURAQzJKac5jDIuZ7jzm+wJr0=
+	t=1751404965; cv=none; b=pQg3rcHjh7kqzVPj2s4HYNAJTjhJQ41tjUHSbaUW1/9lR+FNcfhQ0dHkg2GSGgq5ULdHOleFrCJjU2J0y10ojfbaHPiEuRoroh/AHWrzv97YW3fq0Hs/JKvoExXb38wIbgqnsWniC7ryFqGEdxTtycs02eYjCdOy2rF0c1+NQDI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751404502; c=relaxed/simple;
-	bh=+t1fAlq2xamD1MqazW5rvBgriukPvUyZdWQpTkEegw4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eTnvMAC46dLiyQggMbu/IcDGrp4qJwmQnmQYnHl//o4t+1Nr5bSk2iFIAgaod7VgiddfLmKUKBmF8W2i+rGjsDJSBe7cRvv3z/7cNvtd9aPiI3JvsNyOKRa5lFCBTCNsFkQm8GvN7ohemGzBz4ruMudRA1WZQzjVKrTIiq1WaO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Q6qFyKzN; arc=none smtp.client-ip=172.105.7.114
+	s=arc-20240116; t=1751404965; c=relaxed/simple;
+	bh=eLdzFreCTuNf0zaw57LhMKz5eCYKHFe7VvYDuhqBAto=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=GA6yniiaZywCcZUB+sS2/TySOs1xlEsF9U1kYHlCZA3tuEKzVP88ThiwiUpBQ4yiksCfS5bDu0ZKmjkFR2zFBO+IoY/EciOyDxycBvB+OyF26RxUdctljwSxTOaxOVagAXxVyrNhGEe2xnrec3SDOgnWdruVYq03tKaKMqc/n6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=pzEeXzg3; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Q6qFyKzN"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="pzEeXzg3"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1751404499;
-	bh=+t1fAlq2xamD1MqazW5rvBgriukPvUyZdWQpTkEegw4=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Q6qFyKzNOsUZ+86Cnig6SJaPlsDBKWHUiMgsR086jc5jkAMQJOBZ55oKnI6JswEeH
-	 6WEbGeiezpPQQw9rAxhZ1lvBjsiV0M9QufMn9eflEbLhVY6XvmUbSfWJdwU13YRRTJ
-	 BBQ9W3gbnubwhAA47uwpp8k7L+trABKZn/5U7ZsaP+/q6M0gqCcgtddFaFaaxlWLTr
-	 wjrMmKgZbu6N/WULsDp+EaBAp55u7y0181NsultMl4MlSilMHrtkDllwFT7S1RjvYT
-	 3tvy8RGNWrPNQh9nK3WpK7nm2y6dOT1hZBcq3ZTYKSN9p47FlE7/l/H6Xdw+07lCFV
-	 skNrO6y5QLD0PRA/35OatdsAn5pD3T6SsKaY5lwkcWjIKkfyl9NR18lrbBu6yPIq6Y
-	 /P4FV8xZzouP6yvEi7CeQfd1JVyTa5rIrZ/4wxgeFojeVrUzIoMm1/y13LlqwJpvK8
-	 Z/ES1VNLm5hUUG7ElTusib1X7F2M/IVoJRUxH20ycL79cxAh5rc
+	s=default; t=1751404962;
+	bh=eLdzFreCTuNf0zaw57LhMKz5eCYKHFe7VvYDuhqBAto=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=pzEeXzg3btUIbFVF8cRUZlu/vOA/RNiPPcWunNud32CSs9Ni1lxb9gGMUtNyn8rLc
+	 SJX1WzisA3gtF3hajnysRulodvg1b1etkBqIBPAmTklo+zZ7yIppyHF/VHNrvSG7gq
+	 4l+gAO1Wgwv4QNwyat4XRaacwG0DMThEqQjpf3kanlHwW7vRpaBDtaVTbBNhEmAPSY
+	 bI40JgtQvbnSQxbMd+UyWyeVAzDBGKdRvcna54PFTb4a0ri8g34xuqqlSi4ImAwYN/
+	 BHb9VendXJLSEDptiyLtUp9g2wVAQW+L8SlJTeoBF1uVrI8Lf1bu4qXiaD7erWdHBs
+	 HfBvQ1MT+Ufu4x0GBBVjtVP4v6l1106svTM6/s8RUCzW2hhDEJ5AFvGrKVXSPF+zP5
+	 uzoEEDYg3KKCoIpsypbVB4HzVmE2Z6N3MadmEC3cJaRq0LfUenGzXi3056F1vGnCrN
+	 A+YKyGdykN1zl0ySqvGnWlOiDD0fhgq2/XG5qGddYsQF3czpqTp
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:80e0:3dab:863b:d3a0])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 09A6D2003B;
-	Tue,  1 Jul 2025 21:14:59 +0000 (UTC)
-Date: Tue, 1 Jul 2025 21:14:57 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 429D720196;
+	Tue,  1 Jul 2025 21:22:42 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 03/10] builtin: use default hash when outside a repository
-Message-ID: <aGRP0WiG8ZRzgilp@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 02/11] hash: add a constant for the legacy hash algorithm
+Date: Tue,  1 Jul 2025 21:22:28 +0000
+Message-ID: <20250701212237.766774-3-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.50.0.714.g196bf9f422f
+In-Reply-To: <20250701212237.766774-1-sandals@crustytoothpaste.net>
 References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
- <20250620011943.586596-4-sandals@crustytoothpaste.net>
- <aGPIBa-1xjqk8EEE@pks.im>
+ <20250701212237.766774-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="tz9qV7xoothIIU+E"
-Content-Disposition: inline
-In-Reply-To: <aGPIBa-1xjqk8EEE@pks.im>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+We have a a variety of uses of GIT_HASH_SHA1 littered throughout our
+code.  Some of these really mean to represent specifically SHA-1, but
+some actually represent the original hash algorithm used in Git which is
+implied by older, legacy formats and protocols which do not contain hash
+information.  For instance, the bundle v1 and v2 formats do not contain
+hash algorithm information, and thus SHA-1 is implied by the use of
+these formats.
 
---tz9qV7xoothIIU+E
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Add a constant for documentary purposes which indicates this value.  It
+will always be the same as SHA-1, since this is an essential part of
+these formats, but its use indicates this particular reason and not any
+other reason why SHA-1 might be used.
 
-On 2025-07-01 at 11:35:33, Patrick Steinhardt wrote:
-> On Fri, Jun 20, 2025 at 01:19:35AM +0000, brian m. carlson wrote:
-> > We have some commands that can operate inside or outside a repository.
-> > If we're operating outside a repository, we clearly cannot use the
-> > repository's hash algorithm as a default since it doesn't exist, so
-> > instead, let's pick the default instead of specifically SHA-1.  Right
-> > now this results in no functional change since the default is SHA-1, but
-> > that may change in the future.
->=20
-> With the preceding commit in mind that introduced GIT_HASH_ORIGINAL you
-> could also argue that those callsites should be converted to use that
-> define instead. We always used to treat them as SHA1 repositories, and
-> we have no better way of telling otherwise, so we use the historical
-> value of SHA1 so that scripts aren't dependent on how exactly Git was
-> built.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ hash.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-I don't think I want to do that.  A lot of the functionality people use
-outside of repositories, such as index-pack and ls-remote, actually
-operates on repository objects and so it makes sense to use the default.
-
-For instance, it will be a major inconvenience to still have to specify
-a custom object format three to five years after the switchover.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---tz9qV7xoothIIU+E
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGRP0QAKCRB8DEliiIei
-gU6LAP4v7G+VPVKfdDOhS5LsepzRwToMcQt29q0IQ7fBYFWVsgEArU4UMRjTyYFp
-atO0AZv/n0nvka50Atc/PJgBxDW1YQU=
-=U/7V
------END PGP SIGNATURE-----
-
---tz9qV7xoothIIU+E--
+diff --git a/hash.h b/hash.h
+index 0d3d85e04c..953e840d15 100644
+--- a/hash.h
++++ b/hash.h
+@@ -176,6 +176,8 @@ static inline void git_SHA256_Clone(git_SHA256_CTX *dst, const git_SHA256_CTX *s
+ #define GIT_HASH_NALGOS (GIT_HASH_SHA256 + 1)
+ /* Default hash algorithm if unspecified. */
+ #define GIT_HASH_DEFAULT GIT_HASH_SHA1
++/* Legacy hash algorithm. Implied for older data formats which don't specify. */
++#define GIT_HASH_SHA1_LEGACY GIT_HASH_SHA1
+ 
+ /* "sha1", big-endian */
+ #define GIT_SHA1_FORMAT_ID 0x73686131
