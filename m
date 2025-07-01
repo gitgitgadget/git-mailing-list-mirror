@@ -1,91 +1,138 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35801CA81
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 22:10:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E2F1E98EF
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 22:18:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751407848; cv=none; b=M6E+pmETGxw9zg5Z2UZFVTxBL190PXg9OeOnlFxhQqHNPYGqgfXqvl+BLB+tl31i4BZwJ3iqi1a0MYTS60RAKzQEeTzXIYR9At2ZaSZbhA9cTTXNJCHEh2YK4bhkGstrwmqj6qGjtgnT6QycOVU4BI2XrAGQO7Mp+wLUOmT5DnM=
+	t=1751408304; cv=none; b=Z95sOxqNMEkAOlG4fSPKT51/+2Iqm7Tu+fmuknGyAtwNR7MOx585cOXb+6H0sME1ZfNErM/FjcTsaGi+CTIXSR+odVQqiYRTlRSlKunPSVwK+h195jqiLaX5C9kfvPpBr/Ou6aCz4lMjOXWlsEECjPsmEyshLVJcVzBWH5Ovn8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751407848; c=relaxed/simple;
-	bh=d39OvYdOH+7kUWrq7zf/6RAbHi0Y/agTcr21QHOl0bA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H2HO1y9vy2kvXmBsPzgnYp2fNx3fQKe6OBZRwhnLG4WRUZ2Vlrxd/9HWe5WsGJFlvvx6DCJObD91MF8IhvmpW/iff4Ekc6QLkdwufE4/FhULo87UfahpTaUkHgh/hEyHcaONuypnG2LPlnKUgtg4KJd2KOdwxy7wByZSabZUn0M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OUg4JxfX; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751408304; c=relaxed/simple;
+	bh=9EP7VsKEdvuzq+viHV+5MrY7ECKoBirdiZ8GigOWymk=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=clZJJ+B4/KyaxgBC/ymrevcE7SZP4OXgw498w+AxFTmLsXzJh2/GcicRs4YZo7ovtLXLSs4ToABJTtjyzCijGGdAZLH2eCqnjq1i6/e3wCI8KL5YB9YWNG+bs4B100MkDCGTe4Y82VJ27IlJ9UqkjU8fNHue1jhMAgXksw7zhgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C9MdEm5U; arc=none smtp.client-ip=209.85.219.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OUg4JxfX"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-748f54dfa5fso5377575b3a.2
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 15:10:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C9MdEm5U"
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6fac7147cb8so102143886d6.1
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 15:18:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751407846; x=1752012646; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=d39OvYdOH+7kUWrq7zf/6RAbHi0Y/agTcr21QHOl0bA=;
-        b=OUg4JxfXhpuFbNg29hDit3HuOswSYR8Oe23+6njBjtWuuWlWfEI4TO9r1MQzhMQaUS
-         neE67VmQltOsa4EcUkrhRfoL3I84O4hZbp5LrmfocpORRKHhrdKDSFaYp4crD074gpoA
-         S6SOJfjUIuOAHsUW2NlB03pQr4iaP/dy1GAdNk0jOp5dfgAKD2rFknQ6gVSpgzNiSF58
-         dFNX6u+sVZv0Nu8csSUWC31oNKE92KWFCCG8l5P4RjN7W7w4q8Yzs8PrxKSM8LJvs6TV
-         7ymdgBz2eS6CWg6CC/y9JrteoZVv8XtrK/5EgyEFO+6nvEHCXTeWnI43YMJ2SmgJNmw5
-         tz3Q==
+        d=gmail.com; s=20230601; t=1751408302; x=1752013102; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=c8k5zUoxpsSocvSfptA8TzexxNyxHOo+9WfAmtdfmh4=;
+        b=C9MdEm5U0POaX+Bq0/E4jyZ4jj/jVUDo9VhrU7rOBqzIYM1bCKafhhoFl5dkkL97zF
+         vbnA4YYqr9PN9UGbtKhE9nTmEofApRRwjZacFfnW5KDxh797srJRf2Hoora/q9nG3WRb
+         7E/izb2jRJA0hqgFLa/H6l/LezGDSJQc0BtZJIFOMBD1MfjGDQJevach4eCR09qFvh9Q
+         05+GhHzU2iM2dJZSOnOyefoi+VI9AQjgP8FfgXqlJBxvY0GFioVsJl1cunkyI+yJD21v
+         /3ctKqBTBKEQkJcgnZUCSN69aoIsBUupv9kvro0dW6ul7bPbfXv/1r1cJSoCJtnzgwTx
+         uqTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751407846; x=1752012646;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=d39OvYdOH+7kUWrq7zf/6RAbHi0Y/agTcr21QHOl0bA=;
-        b=MKzazw8sUZ+mO2Zsfm0zj0jGi5ftcgcynFN3kyPoe+nZN9WfxqHTP5C3gWUVTkCqtT
-         yva71q8yqNGUUiMyPuVixYGWWR3FBq5p9TmsZ4QaqhdqUXAe7YDEWJLw9HpnxR+ohRj5
-         FS8ntEqnlmPZIVccB6HXRTT1Dhe8ENDSYCBfFhlGlKtpzasSpwywRa5cAgFe5hJZOXKu
-         0rV/6Z/yfr9Nrorf2Rce2XVuoUU/QFV+U0OkFANzQ/yFwXv98vf7sR4rXMIUYyxkIMxU
-         vIgvGO4vgVSmAhHodPicORmyaAbwiIvfzunQt46D3I8a2l7R+wgSe7Rpjdi2UhMuK9/g
-         tMYQ==
-X-Gm-Message-State: AOJu0Yzeta9hkvtBGMZjIx6PmRP+VEd3qn+qMjsfRGeCANZHSC8Rm4uM
-	vWnKabJy5jwxfZ65EuV6DnSNL8oWgyGiyI1U0YToub/zpA2YSBydvGcg
-X-Gm-Gg: ASbGncttsYFJsm0jE2dv80dNKQmsIVVv9+w23/HGJAnGRJYVSnbes//1G7gII4AMCw9
-	VEDzF4mXcT/ExHQEQ3P4o9LUCgkO4fkNB8ge1r9sIzQEgxTd1exwBMVNHX6BYGgR2FbXiDC+fT1
-	KDgKaVyUXCVVjlhDSqjEFnaqguImqnh9fV4i8jkBHPIGd7broYybwE5fnD4TWiIj7Cs/USQuup/
-	hzp7ucw0cV7ISM/Xn+BTz6ZxEUxuASaHc8nzIdsjA6mrQt/xIyIeF/HQXUeC/TEUTe/DcvvmWgQ
-	AzyHoBn2aIEz3rtNzBblnD8UAZkhDiuaLe+fA1bAkvmwyuc/MddH5en9pLjOq+rmD4rKVuOZGCG
-	r6cEIZ3+9c15cHBRVbHgrTYWEUWI=
-X-Google-Smtp-Source: AGHT+IEr65x/ranPWHsEgBsj8L8fhDq7WybZNUTvf8YCszIKQF8lfv7MNSMQWQsG5GisB0AcUhA/bg==
-X-Received: by 2002:a05:6a00:23c5:b0:748:f6ee:d1f with SMTP id d2e1a72fcca58-74b5126bd46mr575835b3a.20.1751407845912;
-        Tue, 01 Jul 2025 15:10:45 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af540ae2bsm12059674b3a.26.2025.07.01.15.10.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 15:10:45 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 00/11] Add SHA-256 by default as a breaking change
-In-Reply-To: <20250701212237.766774-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Tue, 1 Jul 2025 21:22:26 +0000")
-References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
-	<20250701212237.766774-1-sandals@crustytoothpaste.net>
-Date: Tue, 01 Jul 2025 15:10:44 -0700
-Message-ID: <xmqqikkbimu3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20230601; t=1751408302; x=1752013102;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=c8k5zUoxpsSocvSfptA8TzexxNyxHOo+9WfAmtdfmh4=;
+        b=klY+czWSDGE0YPiLsQJ36ZPcAk7UceA5emDNKyVpLxprxTVeo0gzt4n56Q+HYb2SKg
+         KWsH9vXQhUmVhB9YQSmlL1tz+bAzZ+4BKJgIQelsXezjUzMDDupRRZGbZCKs8cQrjRjA
+         9BPmIUiJHJtUUQCygeCYvZRB+gZOFM0tikkOy/SLZPlu6jGE5GMxvZsdIqRNDtUHHJBr
+         thNOFRwPIgmExTpJ/1/RGkgexQVh/RHmW/Er+Xi3G+bOMKUwUaSadLhmBz0xFZbFP8Kp
+         ftOxzkQi9Zq2Q8F6UO56BYK03wvZDOc4I3pCR79cfvzAcCLoDKW+c0kMOy1chLL6oQfU
+         C4bQ==
+X-Gm-Message-State: AOJu0Yzd0LOfrWCdEeV1ptp7twTTkqLoRdZj1iG5eRrHxcF2HVnYaGJx
+	ssDXauD6TU+13yFgcC/CclrFAwxoZWkD1+kOyinSBlI+2YWhLsoTbqgv
+X-Gm-Gg: ASbGncu2hJpMFt5cF3/Ck/TWHGCxL1RyTIEL+45rvUcAulrH1U3BRv8/qexrFCOFKsL
+	InNkfdXUthrngQTZnwHgAISDAdEzSILFgKEe1Knr52lHNJ9ZEbp5OoX8VGR2JHdthNezYWPL4TD
+	clEOjLNriRXyj5hv5LLKTSitB39OClMxO8ro0y8XAfszrWR8hcOm0/aDFNK93XEURtdCtX+SBPy
+	WOEfGZ+lOaFHUrIm7mxKzuIDzsYoq9LlETXm1a/JLRRnB5nH9LrassTDwSSqLIVZ5w4ROeK/4xG
+	o2ynPmA06H7eeXjHEQtQw/YzAS3z5/nhur0bIqP6h60HY7Wx6zAHJL9SzjRMSXJFNMjjKd+2okO
+	4+R9UW9+PkNNZ0kzx0kk=
+X-Google-Smtp-Source: AGHT+IE+sadGk/EkByIERi7OpHW3NU/UApFbHQIoGSV8uz9mvZCjktlJyE16/R2ihGaf4xDWVV9pIA==
+X-Received: by 2002:a05:6214:2aac:b0:6fb:15d3:7f3d with SMTP id 6a1803df08f44-702b1b3e6efmr3751766d6.13.1751408302037;
+        Tue, 01 Jul 2025 15:18:22 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:934a:f589:722d:abae:afdf])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-7010b230d44sm20863566d6.106.2025.07.01.15.18.19
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 01 Jul 2025 15:18:21 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving
+ repository info
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
+Date: Tue, 1 Jul 2025 19:18:07 -0300
+Cc: git@vger.kernel.org,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EB2B7A97-B9C4-4F7E-BD27-688C6303DA1C@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com>
+ <652FDA35-C20D-4F27-A22A-025CA08EB013@gmail.com>
+ <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
+To: phillip.wood@dunelm.org.uk
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Changes since v1:
-> * Add a build option for the default hash and use it in the tests.
+> The reason git uses NUL termination for other commands is to prevent =
+breaking the output when values contain newlines. The output format I'm =
+suggesting is
+>=20
+>    <key><LF><value><NUL>
+>=20
+> so the output for "path.git-dir" written as a C string would be
+>=20
+>    "path.git-dir\n/home/phil/src/git/.git\0"
+>=20
+> The value can safely contain newlines because it is terminated by =
+'\0'. The reason that "git config --list -z" exists is to provide an =
+unambiguous output format as config values can contain newlines.
 
-WITH_BREAKING_CHANGES flips GIT_HASH_DEFAULT between SHA-1 and
-SHA-256 as before, but the choice is now exposed via "git help
---build-options", so test-lib.sh does not have to switch based
-on WITH_BREAKING_CHANGES and use the build-options embedded in
-the binary.
+OK!
 
-Very nice.
+I can't see any downsides in this format. I'll use it in v3!
+
+> If this command is going to return "$GIT_DIR" and "$GIT_WORK_TREE" =
+then I don't see why it should not be able to provide other paths.
+
+Hmmm... I never used `git rev-parse --git-path`, but after inspecting =
+it,
+it seems to have special cases for:
+
+- grafts file
+- index file
+- objects directory
+- hooks directory
+
+What about adding them all to the `git repo-info` under the `path` =
+category?
+Currently, these are the fields that I plan to add:
+
+- git-dir
+- common-dir
+- toplevel-dir
+- superproject-working-tree
+
+> Those combined with "git var" and "git config" are all repository =
+settings. Having a unified interface to them would be an improvement on =
+the status quo where users have to know which command to call to query =
+different settings.
+
+Fair! By now, I'm focusing on rev-parse, but it seems to make sense.
+
+> Best Wishes
+
+Thanks again for your extensive review!
+
