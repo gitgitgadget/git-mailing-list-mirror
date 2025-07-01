@@ -1,215 +1,153 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B421B72601
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 06:18:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83153190477
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 06:54:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751350728; cv=none; b=cWGas3nrBLsBIVps14uopFqRBgjJpm3/Vi6JXep88aCYDHVrO77az1WUakmZJORH92xcnHs3uGu+hfWP0ySS2n/pNciAMfdNokR23W4uhnBLH+cTUFidBrArbgHO2CJMzWH9x3cukyvaBUGArnHjLR4CnomOGCrsBW2raezmvLs=
+	t=1751352887; cv=none; b=IlWVPpiBm0GPFSdQ4LFiW2FNgbJmY/gbnqxPcBmgWcaoqp1mi7PaKAkIkQDCpjECqkZAZIBFjUgrGTHWUd2+yTeRMlm+aIDTHlzdIJs6Jn4+1/aQW3g1eyyblMMJQEqrQCUm1ooMiZo745UH2mBLWsGGVQfkFrhxh9JAnsuZcJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751350728; c=relaxed/simple;
-	bh=/Q3ZNjJLE9J8u60Cn8hRCbMLCcub5/OJVUFoZ86eVuI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PWvy4AGldzaYmtxMQS0hFKQWHApN8xKcZaCdFJU61cIFeM22KoM6ti2wOiQysjdRRHMvky1iAmoFDWHraQIZVsSWormOjuPgRnLlLoFGXtcoDIyrI4Xph9wajke9ULOTm54Pq6KhORgubLfo5MGvqJnkmR1HIEJ5K/GFdFA2Rr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=erwanleroy.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=erwanleroy.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-7115e32802bso29152867b3.1
-        for <git@vger.kernel.org>; Mon, 30 Jun 2025 23:18:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751350725; x=1751955525;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/Q3ZNjJLE9J8u60Cn8hRCbMLCcub5/OJVUFoZ86eVuI=;
-        b=PpDpu6KnnmZkrRAiGPezjJUPKAlm4Ykqu3FNusOmPuKDh8xfVgFMr68ZRr3ZzeLTOp
-         R680RIG6Jgs6/YLjda9P724mdDLuGbEWsK9sx1aBVFwpGOkOCx9074I6g5M4GxOHZath
-         mnmKNspfxzNpEiXVjFkGwXJ4hItpQxuvC6RUAXPRnJPka6Czp+as73+XI1SeJJQaajJg
-         2MwhxNIj0gSdkKXE11Em+4RcEYr+JOsDyEr+h7Fv0ouCcq9jGvy8st8Q59GhUl0oI1QW
-         ZCoOi2sgHppvwNu4aa0umKDZWLdth8CSq6nnrqLNmI4Lb0DkOtZ7y6pZx+hPxBBVQhqS
-         VIPg==
-X-Gm-Message-State: AOJu0Yx8e9r/Pw3oSBNAi9FTAJe7y1XfXfyYhZtAdArlZQETB9L2nDM2
-	2x70exxqqVyVKRYRL4A87HkitegJhOxLBVdtCwNNb4iecS7OMgm9oRx68jEMwAdTQbxr2LLFUZV
-	2y3Whx+PP0/kOl4BeckWJgOMtUJegVsE=
-X-Gm-Gg: ASbGnct29+3J517t0lnInBEADq5VGgTBZXS7+L3AwLObfAEzzH+EHOUgaeLwupXzvId
-	Q+CkChffyFud2fPUz8hnyX3bvCs0nxIfbZf7gDd7Wo9JKEL1sSuFxLphvjerz1GhTczvI+VN0NS
-	OEJcrA2it4fGLc1X5crLA1/Zdp2wvM0pLPhEEYci1Y/hiE4dCJ41c3ZkVx7Jv7A2t0LRk0afycD
-	NMk
-X-Google-Smtp-Source: AGHT+IGOK5nXO0ROgYWGJ7K1OHxmdbmxRQKdj67lAZZgq4bm8tB6prc69hEK+64OR7gARn5c88Optu++KUmC59MjkSI=
-X-Received: by 2002:a05:690c:7442:b0:711:a4af:43ad with SMTP id
- 00721157ae682-71517147badmr228794747b3.14.1751350724549; Mon, 30 Jun 2025
- 23:18:44 -0700 (PDT)
+	s=arc-20240116; t=1751352887; c=relaxed/simple;
+	bh=Ub7x8KTrhjcB/iiyCmWsTv/0Oh3rnLDZwcNs2YL03YY=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tZFFwFYdpY0rxyH5HgHGpL4PNbaMsELwJza22WVO3upXKcHm8f7kXRMWODK4/fCprSOF993y538EvyKOae9X4o6vqNOPgtxILn0FzvyGu4rJptn6iw3Eal0gsIkCUKNYinCvJnMEMrjVxmUShCZaW7I1DFHAy/OwsnZLCeU9WbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JMcXbJl4; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=YoRlnXqu; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=JMcXbJl4; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=YoRlnXqu; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JMcXbJl4";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="YoRlnXqu";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="JMcXbJl4";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="YoRlnXqu"
+Received: from kitsune.suse.cz (unknown [10.100.12.127])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id B20701F393;
+	Tue,  1 Jul 2025 06:54:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1751352883; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lKwjxS32F9atHqc78D0RBKihANqbxSnXYj9SMvR7eGs=;
+	b=JMcXbJl4JX/zDfHaV/v/YYWoRa8opJrIatUtHVzSR5PUJw4ehL3zcEg4jQwlHbvvUic0xF
+	cbyHF4TtBbMHW6dvtHW/qnyyawpnJghRF06sASSRNZMCbIjME2zhe3QkBZ+FkufU87NL8L
+	TuHfbm28tP8b4WhaqIKoHvGCrqmp6oE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1751352883;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lKwjxS32F9atHqc78D0RBKihANqbxSnXYj9SMvR7eGs=;
+	b=YoRlnXquALhqOYm7XyzNl08kbcgjRKHUnop/8zDoHovjKtlwb9Ev2GcWdGg8hQPD68ysKz
+	nglGIdFVUv5fOuCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1751352883; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lKwjxS32F9atHqc78D0RBKihANqbxSnXYj9SMvR7eGs=;
+	b=JMcXbJl4JX/zDfHaV/v/YYWoRa8opJrIatUtHVzSR5PUJw4ehL3zcEg4jQwlHbvvUic0xF
+	cbyHF4TtBbMHW6dvtHW/qnyyawpnJghRF06sASSRNZMCbIjME2zhe3QkBZ+FkufU87NL8L
+	TuHfbm28tP8b4WhaqIKoHvGCrqmp6oE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1751352883;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=lKwjxS32F9atHqc78D0RBKihANqbxSnXYj9SMvR7eGs=;
+	b=YoRlnXquALhqOYm7XyzNl08kbcgjRKHUnop/8zDoHovjKtlwb9Ev2GcWdGg8hQPD68ysKz
+	nglGIdFVUv5fOuCw==
+Date: Tue, 1 Jul 2025 08:54:42 +0200
+From: Michal =?iso-8859-1?Q?Such=E1nek?= <msuchanek@suse.de>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
+Subject: Re: Failing to push to a repository erases authentication helper
+ credentials
+Message-ID: <aGOGMpibpUM2JJuV@kitsune.suse.cz>
+References: <aGKU-o9eXB1VHuN9@kitsune.suse.cz>
+ <aGKfs5VRdmnw6Pqc@fruit.crustytoothpaste.net>
+ <aGKokqPJPh5fQ3fc@kitsune.suse.cz>
+ <aGLXmiYuM2C_xfWJ@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CADT1yYmQGG5mQnWk=+19UOEvcDyiUQmWsib9jUJsPDc=A27vMw@mail.gmail.com>
- <3bb920aa-5bb9-b9ca-64ed-cd8b3aecdce2@gmx.de> <CADT1yYndhgvj+AUB3PyWnSOZJ3uwvqjJSajJ-Y+7hVOzqUBHpw@mail.gmail.com>
-In-Reply-To: <CADT1yYndhgvj+AUB3PyWnSOZJ3uwvqjJSajJ-Y+7hVOzqUBHpw@mail.gmail.com>
-From: Erwan Leroy <erwan@erwanleroy.com>
-Date: Mon, 30 Jun 2025 23:18:33 -0700
-X-Gm-Features: Ac12FXx-FdnPEK4PeA6zl9VRBBy0Jqi5C7CSoeb_VbGkJWBDTnk3KDx2mmswcTY
-Message-ID: <CADT1yYn3q_y7eOnQqzcjXiS8uGNwgxe36k9Tgo39nb8=Dk4PzA@mail.gmail.com>
-Subject: Re: Git "Permission Denied" errors on DFS path only with newer versions
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aGLXmiYuM2C_xfWJ@fruit.crustytoothpaste.net>
+X-Spamd-Result: default: False [-4.30 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-0.998];
+	MIME_GOOD(-0.10)[text/plain];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	RCPT_COUNT_TWO(0.00)[2];
+	ARC_NA(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	MIME_TRACE(0.00)[0:+];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_ZERO(0.00)[0];
+	TO_DN_SOME(0.00)[]
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spam-Score: -4.30
 
-Hi Johannes
+On Mon, Jun 30, 2025 at 06:29:46PM +0000, brian m. carlson wrote:
+> On 2025-06-30 at 15:09:06, Michal Suchánek wrote:
+> > On Mon, Jun 30, 2025 at 02:31:15PM +0000, brian m. carlson wrote:
+> > > It is in fact desirable because otherwise the user continues to attempt
+> > > to use the bad credentials and then can never again authenticate
+> > > successfully, since they are never again prompted for credentials.
+> > 
+> > My proglem is that the credentials are actually valid, only the
+> > operation is not. The current behavior erases valid credentials.
+> 
+> Then the server needs to return a 403 or 404 and not a 401.  A 401
+> prompts Git to expire credentials and a 403 or 404 does not.  Only the
+> server knows whether the credentials are actually valid for some access
+> or not at all.
+> 
+> RFC 9110 § 15.5.2 says this:
+> 
+>     The 401 (Unauthorized) status code indicates that the request has
+>     not been applied because it lacks valid authentication credentials
+>     for the target resource.
+> 
+> and § 15.5.4 says this:
+> 
+>     The 403 (Forbidden) status code indicates that the server understood
+>     the request but refuses to fulfill it.
+>     […]
+>     If authentication credentials were provided in the request, the
+>     server considers them insufficient to grant access. The client
+>     SHOULD NOT automatically repeat the request with the same
+>     credentials. The client MAY repeat the request with new or different
+>     credentials.
+>     […]
+>     An origin server that wishes to "hide" the current existence of a
+>     forbidden target resource MAY instead respond with a status code of
+>     404 (Not Found).
+> 
+> So the server is incorrect in returning a 401 in this case if the
+> credentials are actually valid for a different operation on the same
+> resource.
 
-Thanks for your answer.
-I'll do my best to explain our network setup, unfortunately it's
-rather specific so reproducing it might be difficult, and I'm also not
-IT so I might be missing a few details.
+Is there any way to see what the server is returning?
 
-At the base we have a few Samba shares that each live on a different server=
-.
-These are mounted on Windows as UNC paths. That would be the
-`\\atl-xx\Basecamp` mentioned above.
-That one is the one for our Atlanta office. Those all work with Git.
+As the repository uses SSL capturing the communication with a proxy
+would be challenging.
 
-Then we have a DFS server, which would expose a different UNC path for
-each office, but also allows us to move things between servers without
-having every path change. This would expose everything under
-`\\xxx.local\Basecamp`, but under the hood resolves to the UNC path of
-the real server. This is where Git starts to have issues.
+Thanks
 
-Finally, the DFS path is mounted as our Y drive, which is what most
-employees use to access the data. This also doesn't work with Git, but
-I assume it's simply because that resolves to the non-functional DFS
-path. Another drive letter that points to a local drive works
-perfectly fine.
-
-Thanks for the build Snapshots, I'll take a look at those, if I can
-narrow the issue down to a single build I'm sure it would make finding
-the issue a lot easier.
-
-Best
-Erwan
-
-On Mon, Jun 30, 2025 at 8:41=E2=80=AFAM Erwan Leroy <erwan@erwanleroy.com> =
-wrote:
->
-> Hi Johannes
->
-> Thanks for your answer.
-> I'll do my best to explain our network setup, unfortunately it's rather s=
-pecific so reproducing it might be difficult, and I'm also not IT so I migh=
-t be missing a few details.
->
-> At the base we have a few Samba shares that each live on a different serv=
-er.
-> These are mounted on Windows as UNC paths. That would be the `\\atl-xx\Ba=
-secamp` mentioned above.
-> That one is the one for our Atlanta office. Those all work with Git.
->
-> Then we have a DFS server, which would expose a different UNC path for ea=
-ch office, but also allows us to move things between servers without having=
- every path change. This would expose everything under `\\xxx.local\Basecam=
-p`, but under the hood resolves to the UNC path of the real server. This is=
- where Git starts to have issues.
->
-> Finally, the DFS path is mounted as our Y drive, which is what most emplo=
-yees use to access the data. This also doesn't work with Git, but I assume =
-it's simply because that resolves to the non-functional DFS path. Another d=
-rive letter that points to a local drive works perfectly fine.
->
-> Thanks for the build Snapshots, I'll take a look at those, if I can narro=
-w the issue down to a single build I'm sure it would make finding the issue=
- a lot easier.
->
-> Best
-> Erwan
->
->
-> On Mon, Jun 30, 2025, 03:48 Johannes Schindelin <Johannes.Schindelin@gmx.=
-de> wrote:
->>
->> Hi Erwan,
->>
->> On Thu, 26 Jun 2025, Erwan Leroy wrote:
->>
->> > I'm writing to see if maybe this is a known issue, or if there is a
->> > possible known workaround. I've not been part of this mailing list
->> > before so I hope the format I'm using for reporting is going to be
->> > correct/helpful (this is attempt #2, I did not set plain text the
->> > first time).
->> >
->> > A bit of context:
->> > At work, we are fully Windows-based, and mount our network drives
->> > through DFS. We are fully cut-off from the internet so everything we
->> > run is local to the internal network, which makes certain tests a bit
->> > more time-consuming than they should be.
->> > We have been working for years with Git and a self-hosted gitlab
->> > server, and have had no issues.
->> > Recently, some of the new hires started reporting lots of Git errors,
->> > mostly apparent permission denied errors.
->> >
->> > One of the errors:
->> > PS Y:\Users\xx\Public\dev\test_for_it> git remote add origin
->> > git@gitlab.xx.local:xx/test.git
->> > Rename from '//atl-xx/Basecamp_Atl/Users/xx/Public/dev/test_for_it/.gi=
-t/config.lock'
->> > to '//atl-xx/Basecamp_Atl/Users/xx/Public/dev/test_for_it/.git/config'
->> > failed. Should I try again? (y/n) n
->> > error: could not write config file .git/config: Permission denied
->> > fatal: could not set 'remote.origin.url' to 'git@gitlab.xx.local:xx/te=
-st.git'
->>
->> Interesting. I would have expected a different type of error message tha=
-n
->> "Permission denied", as I had initially expected Git's new `rename()`
->> emulation that uses POSIX semantics on Windows to be the culprit. But Gi=
-t
->> v2.36 pre-dates that feature, and you said below that even that Git
->> version is affected.
->>
->> > What we found out:
->> > - The first thing we found out was that only network drives were affec=
-ted.
->> > - The second thing we noticed was that not only new employees after a
->> > certain date were getting issues, but also longer employees getting
->> > new workstations. This started to make an actual permission issue less
->> > likely, as there was no change to their user permissions.
->> > - Then we noticed that the delimiting factor was the Git version:
->> > Users on Git 2.21 and older had no problems. Users on Git 2.36 and
->> > newer (we also had some users on 2.47, and today downloaded and tested
->> > the latest 2.50). I would have tested every version in the range 2.21
->> > to 2.36 to help narrow exactly where it breaks, but I can't find
->> > pre-compiled versions for old versions and I'm not currently set up
->> > for compiling from source.
->>
->> There is a _huge_ list of pre-compiled versions, ordered chronologically=
-,
->> at https://gitforwindows.org/git-snapshots/. It is admittedly a bit
->> cumbersome to find a particular version by version number; I have been
->> meaning to add something there but keep being "distracted" by more
->> pressing problems like the one you reported.
->>
->> > - We also recently found out it only breaks when accessing through
->> > DFS, if we directly access the corresponding UNC path (what DFS
->> > resolves to), we do not get the same error.
->>
->> Could you describe this in a bit more detail? I see in the quoted text
->> above that you were accessing the worktree via `Y:\` and that its error
->> message references `\\atl-xx\Basecamp` instead, are you referring to the
->> latter as UNC path and the former as the DFS path?
->>
->> > It's not excluded that there is something wrong with our network, but
->> > the fact that it works with older git versions and not with newer ones
->> > makes me think git has a role to play in our issues.
->> > I wasn't able to find a changelog, if nobody is able to look into our
->> > issue closer I'd love to at least be pointed in the right direction to
->> > see the changes that happened between 2.21 and 2.36.
->>
->> The ChangeLog is rather huge, Git's changes are described in
->> https://github.com/git/git/tree/HEAD/Documentation/RelNotes and Git for
->> Windows' (substantially fewer) changes are described at
->> https://github.com/git-for-windows/build-extra/blob/HEAD/ReleaseNotes.md=
-.
->>
->> Hopefully we can figure this out soon,
->> Johannes
+Michal
