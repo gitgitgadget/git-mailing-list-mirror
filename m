@@ -1,41 +1,40 @@
-Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+Received: from out-172.mta1.migadu.com (out-172.mta1.migadu.com [95.215.58.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6BE72601
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 05:32:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C7B218ADC
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 05:44:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751347967; cv=none; b=AA24niUq4zvCvvbXdFY50/42kdx3CIUyWkqiFlByqC+bNXxaCsPsEZIORxJIcvDOdyApvcqT6FW9Htel9BjPgDjr43TMCr7m/5kMuVJMDHRCP0wbeW/5DoPsD/GuLsOKzJQsLp0VaUgR9NVZF9ML8id1MAoBPmRVOwKQ09Pvj7M=
+	t=1751348657; cv=none; b=iLI9prnXBwp0Vc7RooiOtOLEvt3llDsmdAj7fFLaodtYB9hC/jST1LKF+tqicjmFQjH7IAWSKXS+Ixc+ZqBl8NRV/6S/CA6OfGfmR4BMZAr+t6vHnEyWI0eKflnIjFsl/6gRZ8VWFZqy1LS4opWrUwTd0FPK1pTjFtG2/32d0c4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751347967; c=relaxed/simple;
-	bh=1noLOxrQg5y/PpSfpMKCeCR4xU1O0E6j/h6S/0q9ilw=;
+	s=arc-20240116; t=1751348657; c=relaxed/simple;
+	bh=0e9ikefU/ivkyjPh/obC+fabKdOkpXjBSPp0HoPmMnM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZJowtUclRSP+akFmSFERlZXIu3PWOP4tWe+iNTEYpFGgi3oMMXoOkL+cYY7tcnK2Yldq7B1hZEjYjoDWrBaPoaLpsO8qAIFGmzWGhHwMRNuRfO5KJm04wLMh1S55D+dlKkUjsY3E6tcXF+gxvdxv/a7BtezPgBxkLUSNMS/cnmw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=fy8iI8FH; arc=none smtp.client-ip=91.218.175.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=J71FQNq4qAUMZW2H8bOp9G/dtLEZkxp1omyDq+UzkyKRXDBDjE98VG1UxfOUnJ8VVKhWtHtUaMAAuTT7PWOD3UApMGs122Eew24JMeP0UEFBU7Dlz0WoKocqG3v0ctLTY800W/tn01k8OzcmMMBIbK/kaozmRX0XgUp0IDYx0pg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=GXrXY+u8; arc=none smtp.client-ip=95.215.58.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="fy8iI8FH"
-Date: Tue, 1 Jul 2025 01:32:39 -0400
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="GXrXY+u8"
+Date: Tue, 1 Jul 2025 01:44:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-	s=default; t=1751347962;
+	s=default; t=1751348651;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 in-reply-to:in-reply-to:references:references;
-	bh=DIU2LY29Kgen6eoCvcD8bW2Z7OHfpZXUJUlLc8OniPM=;
-	b=fy8iI8FH2aYQb/2FY65BkMO/0hRjFb+aqjhjc9r4dw+5OyyQ7PYwrf/+OJM8ddob2Jn1BS
-	/lmY+NRkveKyqvB63qnb/Nd+NV3xHseatDwEA5VG0LnXkEfFoG0Jxn/+i5U3AMmBzNucIN
-	DW0jYc2vf3QQcanXqXXwchUTX8bzP+8=
+	bh=E328LHJMufBprleWsUkniuLnO3uV52+BKOt/dhbfnj4=;
+	b=GXrXY+u8F7qymwq66aI6+9MunnBzMr2y387Y/APwuWp7s0f0o+gjdh0oSfE4IxDK7Lbuu4
+	h4vlamrs/ildIkVf+BiIFDCFs4CJ0ifYeCpkSLZQlSt0qbXZIuxjYAa52BZ6hZF3tq0kZg
+	6UihYH9ElCSMtk0b5MwaQJZW4Gt13rk=
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 From: "Raymond E. Pasco" <ray@ameretat.dev>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Ryan Hodges <rhodges@cisco.com>, 
-	Johannes Altmanninger <aclopte@gmail.com>
-Subject: Re: [PATCH 2/5] apply: read in the index in --intent-to-add mode
-Message-ID: <i5mft6pima4ft4gyhluoflktnr22dzl6vc2txqfwvhldecdk5b@rkfdkf2ryci7>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 3/5] apply: only write intents to add for new files
+Message-ID: <vzkxbwj5khnlzx23p2jz2omf4nfzfaal25gwlovvwgzxi2mmjx@vijooguwndsj>
 References: <20250628225819.1294068-2-ray@ameretat.dev>
- <20250628225819.1294068-4-ray@ameretat.dev>
- <xmqqbjq512y5.fsf@gitster.g>
+ <20250628225819.1294068-5-ray@ameretat.dev>
+ <xmqq7c0t12oz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,30 +43,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqbjq512y5.fsf@gitster.g>
+In-Reply-To: <xmqq7c0t12oz.fsf@gitster.g>
 X-Migadu-Flow: FLOW_OUT
 
-On 25/06/30 11:47AM, Junio C Hamano wrote:
+On 25/06/30 11:53AM, Junio C Hamano wrote:
 > "Raymond E. Pasco" <ray@ameretat.dev> writes:
 > 
-> > There are three main modes of operation for apply: applying only to the
-> > worktree, applying to the worktree and index (--index), and applying
-> > only to the index (--cached).
-> >
-> > The --intent-to-add flag modifies the first of these modes, applying
-> > only to the worktree, in a way which touches the index, because
-> > intents to add are special index entries. However, it has not ever
-> > worked correctly in any but the most trivial (empty repository)
-> > cases, because the index was never read in (in apply, this is done
-> > in read_apply_cache()) before writing to it.
+> > In the "update only the worktree" mode, the index should not be touched
+> > except to record intents to add when --intent-to-add is on. Because
+> > having --intent-to-add on sets update_index, to indicate that we are
+> > touching the index, we can't rely only on that flag to decide whether to
+> > write an index entry.
 > 
-> As the inventor of "add -N", I think what "apply -N" does may be
-> wrong (only judging from the above description; it's been a while
-> since I really read the code in apply.c).  It does not make any
-> sense to write a new index that has only the ITA entries.
+> Does that let us inspect state->ita_only alone and conclude that
+> state->update_index is set, though?  IOW ...
+> 
+> >  	if (patch->conflicted_threeway)
+> >  		return add_conflicted_stages_file(state, patch);
+> > -	else if (state->update_index)
+> > +	else if (state->check_index || (state->ita_only && patch->is_new > 0))
+> 
+> ... I would have expected the new code to check not just ita_only but
+> check ita_only only when update_index is in effect.
+> 
+> 
+> >  		return add_index_file(state, path, mode, buf, size);
+> >  	return 0;
+> >  }
 
-Yeah, that's the bug; it writes a new index with just ITA entries (iow,
-the index thinks every existing file has been deleted); the fix is to
-instead write ITA entries to the existing index, not make a new one. And
-the root cause is not having read the index, so it's starting from an
-empty tree.
+We're behind a more specific test on state->apply to enter this codepath
+at all (the only way in is the call to write_out_results around line
+4859). So we're already committed to applying the patch, which is one
+half of update_index, but the other half is check_index || ita_only and
+we must behave differently depending on which of those is in effect and
+causing us to touch the index.
