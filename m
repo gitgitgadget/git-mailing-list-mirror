@@ -1,112 +1,156 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A8B2798E6
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:19:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7718223504D
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:21:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751383171; cv=none; b=JFG4P5HWUClXrDiqEA0bdfm+27nZBhhonOWoHLHunDlIVZOiTYd/4sd3Mvugr/arxMayvuDmvE1KZ0+zqcQzP/aAIjv5dm0qTizw75DH2bgcdmyDq9qM5YnFE6BOQKWoHxZKXPfY5YDWWV9uC0F29YPDERj5rkJBcHIGpteA/1s=
+	t=1751383279; cv=none; b=No7pqYiL0qPNi45ss+PKdFz2WPE4TmaCDQ47Lxh931q1ir4AZeqzUKYp8KPZCPoOjdZGYFlaZvUxL47qfeTeT3ehzEdIa3+lBNX7TtKaP36Z5qSFZvmweDF0JBCF2aUogGT49L8OP1p0qOofGEvKRFBlJOVgvbaskyg8L7oOQjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751383171; c=relaxed/simple;
-	bh=1CUHmR/NGhTWRUDrqnbCQWpGd7GuWpgXlgq9kIgiW6M=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aB6pRaF++2M3b2ZP34TLItYOLsetJciRmsgABz/qOZ7oyHfI2JIKUgV6WyoZNUx6J0psGibvwjGj8hc/ZMehr67GDpnP/t1FnW+VNaeCwh2NrCyibqCM3A/azNwu8z1obYWXhWi7vIM7dzIQL2I2DHx9/uEyDzdmw7aNYUCEE8A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M+W8O8O9; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751383279; c=relaxed/simple;
+	bh=cZx74y0wvefWkuAfSd9eUOChpaSrFnPXIT+Z1iN65kk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=WiD7ugU4EKd4AtljwHkpR+ruaXIWL3baHmagkPIwn3T+Ys5beMLSHPsI/D6yNLX58SzR56Wjzbgx7+8D3PaQNaYDfKur9Yduxxbj7WYE6vdk5k36FtWlZIBeR4jXEDX7tHh/xo29I32TSJmy+39hnvwUP1CJ8J9lHHroVZqdKL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=RXj3odbj; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M+W8O8O9"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-234bfe37cccso69928945ad.0
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 08:19:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751383169; x=1751987969; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=QMap4cQVWHqkEFoNU2IBmR6aw5UhtluCbO9lIMPBfH8=;
-        b=M+W8O8O9kSvCAVfrKhijkGgBia2ZXDtYTUa+mnHXlFyP0m3lEArcvKqQb7KwW2Q/SL
-         gjxqZPqYlnoiKxgZ7TBdmZxSWxOKSyMJkJ9jRqXzbC91wum4JbNH7BVWrYqyys0Sk5Yg
-         lB8512GKwswQFfTFjoK2BxWqQo/zdd72AYH1CdYTN/aZOqnrKwh3W4U4crUkeTdMcbnR
-         XudcW1S4olKmJtnPt95vW66q6Dd0c3WHQ1ZM2+EmMUrYJuvaaZ/lEtTGqtljJv7llUW5
-         NftJLFqeZVtKN0WL9G4RVGEOA7CGMqJcZltIU5Xr9BW4W8LaPDpdiTNMil6jrIRdzw5p
-         OU5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751383169; x=1751987969;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=QMap4cQVWHqkEFoNU2IBmR6aw5UhtluCbO9lIMPBfH8=;
-        b=ivQbgj2vfsPPFqdIursU2qJ40YmFwHgN/H/tYb8Q8LQ+Tsre3EPLKR6bITgeHX/Bn4
-         mtHubCLJCZrQDWKTw+1F/RE27yl6xSVz2owYleHycrw1zF9P6ZnNUSMxf7IgcMaxq7Eo
-         5rnVzkZNHmNsiHMHxz2RBJd9YzjMLw3RzQG1TG51yR2JHKh3MHuofi336AHUsPj0l4Ff
-         EITB+ZyGD+vjTcjJHmQodgwfooamfM+Wg0nyZLd9j1g5xGym9CfQWPVa+xeR8hXDkegh
-         6kqQQd0bKiUEsffBBN1uulLY6ioFGbN9XB/CtxAY3ysnAYV/1xlfcCh2Mmr0R6n98CyD
-         nkTA==
-X-Gm-Message-State: AOJu0YykSw9MXycXudV9MsoWDYl7yeT1pI4ls1DskkuaizIhOKlCQjIY
-	M2OykpH++GS4EE1o6CFa9Z6U93lnpATOMn/jEzqDtB4WYjIarz9yu1na
-X-Gm-Gg: ASbGncsPNJuNuMiEX7ngX3QsEp+arspiVIJPZ3mkiu0FmS4p4PGsnJNx9oXTzaMArs+
-	F34ModXxRPPiCurnKUi/i4Dr/vp5jgB4ENptYsxJG3EXAgduVaFt7xeTkFmToPz+p4mM2HXrOkv
-	1paXnDltBHWPbM2VfRwZuZzrN/EC+o+dhOP81OShnQhqyTaXoPP31eb1CQsU674UJ54YVMdoMxD
-	h1Q5JfJUzcBF4Y1za2vcaw1pONXe4aN3toqrZrSvMAqi15YGg5vqIEtu/GUGD4K5iPcIX8kkzTx
-	RagHfYolefN8TD5y+Ia/HNGOKfJk/tTOyzyYZFN5D5l90up3ovjpbrpD0C6geAEG5ttaZDeVmlc
-	eVtBqZ6Ac+8aKBNwfGlqve26dTRw=
-X-Google-Smtp-Source: AGHT+IGsAxuhg//AMV28sZJp6cDGslViMsN3gkC0efhqmz7fig6V1n2n2rIcu9R032muIdbUGKcjbw==
-X-Received: by 2002:a17:902:f609:b0:235:f2d7:375e with SMTP id d9443c01a7336-23ac48e88efmr292593835ad.52.1751383168596;
-        Tue, 01 Jul 2025 08:19:28 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2e39f7sm109876315ad.49.2025.07.01.08.19.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 08:19:28 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-In-Reply-To: <C8E0D62E-11B1-4921-AD4C-2905F10E07B6@gmail.com> (Lidong Yan's
-	message of "Tue, 1 Jul 2025 13:52:26 +0800")
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
-	<20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
-	<xmqqy0td8fa9.fsf@gitster.g>
-	<C8E0D62E-11B1-4921-AD4C-2905F10E07B6@gmail.com>
-Date: Tue, 01 Jul 2025 08:19:27 -0700
-Message-ID: <xmqqo6u4kkg0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="RXj3odbj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1751383272; x=1751988072; i=l.s.r@web.de;
+	bh=3COS/yJy0J8HMCwE6ZIgQu3XbO79H9SHgV1BrMWMcWQ=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RXj3odbj8ld/H4J2sODPWJrR2QMrXtrqFLjfzlI1SWfdoTzgmslDmTmAkcScg4rb
+	 UsnqKhisYtUOLogly8BePGWLddL5k4+j6Z3UwbsmbFikjR3yrTUIaMWz+CWZYsXuZ
+	 FIbpMPZL1LLlZjKbapbMtHwwWES5ggtjt8x3b01n5I91MdbRzSFq8uAPlC347u5gH
+	 ijgeB5XCM1pNn9ucGDVgHHNoAsimrCal13qCtMWqCTruWVKfus7m9gDQHdQKdK56j
+	 qOc2qajsEQCYRgjD8v8+8ZgaEKFYhwSZ/525NW5ycfE+O+uFwTkQ4Zh8tYdiwSaHR
+	 +J1tBAiFoP/uh7+3BA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1N4N98-1ufjLV4BBm-00xkaW; Tue, 01
+ Jul 2025 17:21:12 +0200
+Message-ID: <978e38e1-45b4-4c74-856d-255a87d6c817@web.de>
+Date: Tue, 1 Jul 2025 17:21:11 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/6] parse-options: add precision handling for
+ OPTION_BITOP
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>
+References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
+ <7b970f48-05a8-40c6-8e5b-95ce830705c0@web.de> <aGO-kbdAgMMef-A5@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <aGO-kbdAgMMef-A5@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:3+LmqM3TnRwAlGLPSdpAlj+QXepRmI3vSNextKbjR5fJHYND2Df
+ M6qeEM9INLUzmLUJMApkNKP4XOqDY4pUD7hF0KQ57eWtc0VAeTz+2yHe+aE95mltdx/kEv3
+ HDWROlus8aGqFL4ycraBLZvmIByuO5n+vVmWE2c7keS1TuZYFy9nF8TpI/egvOiJEe5wKNd
+ syDmItG/UidJRCnWihnDA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:wy7mBSp8ClA=;Db6bICkMs3pSvGdl5vF91DzLTRT
+ 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
+ dgD759Xyf/XjHz55dnzg==
 
-Lidong Yan <yldhome2d2@gmail.com> writes:
+On 7/1/25 12:55 PM, Patrick Steinhardt wrote:
+> On Sun, Jun 29, 2025 at 01:51:19PM +0200, Ren=C3=A9 Scharfe wrote:
+>> Similar to 09705696f7 (parse-options: introduce precision handling for
+>> `OPTION_INTEGER`, 2025-04-17) support value variables of different size=
+s
+>> for OPTION_BITOP.  Do that by requiring their "precision" to be set,
+>> casting their "value" pointer accordingly and checking whether the valu=
+e
+>> fits.
+>>
+>> Checking "defval" has the side-effect of also requiring PARSE_OPT_NOARG=
+.
+>=20
+> Hm, requiring PARSE_OPT_NOARG for what? I cannot see it being touched in
+> this patch at all, so I'm a but puzzled.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->> Totally outside the topic, but I wonder if we can further optimize
->> by adding an early rejection using .nowildcard_len?  Instead of
->> allowing a wildcarded "dir/*" pathspec element from disabling the
->> Bloom filter altogether, we could say "dir/ is not possibly altered,
->> so there may be dir/A, dir/B, etc., in the directory, nothing that
->> would match dir/* wildcard would have been modified", couldn't we?
->
-> I think, except for PATHSPEC_EXCLUDE, all other pathspec magic flags
-> could potentially be optimized using .nowildcard_len by restricting checks to
-> just the dir/ part of each pathspec item.
+For options with OPTION_BITOP.  Adding the defval check also adds the
+no-argument check by falling through to it:
 
-A good observation.
-
-I do not know about icase; though.  Asking about "Dir/Path" and
-getting "Dir/ or Dir/Path cannot possibly be in the set of paths
-that were modified" from the changed-path Bloom filter would not
-help us optimize the tree comparison out, when we do not want to
-miss modifications for "dir/path".
-
-> Here;s are all possible pathspec magic
-> #define PATHSPEC_FROMTOP	(1<<0)
-> #define PATHSPEC_MAXDEPTH	(1<<1)
-> #define PATHSPEC_LITERAL	(1<<2)
-> #define PATHSPEC_GLOB		(1<<3)
-> #define PATHSPEC_ICASE		(1<<4)
-> #define PATHSPEC_EXCLUDE	(1<<5)
-> #define PATHSPEC_ATTR		(1<<6)
+diff --git a/parse-options.c b/parse-options.c
+index 6bd7158806..0dc9b0324a 100644
+=2D-- a/parse-options.c
++++ b/parse-options.c
+@@ -620,18 +623,19 @@ static void parse_options_check(const struct option =
+*opts)
+ 			optbug(opts, "uses feature "
+ 			       "not supported for dashless options");
+ 		if (opts->type =3D=3D OPTION_SET_INT && !opts->defval &&
+ 		    opts->long_name && !(opts->flags & PARSE_OPT_NONEG))
+ 			optbug(opts, "OPTION_SET_INT 0 should not be negatable");
+ 		switch (opts->type) {
+ 		case OPTION_SET_INT:
+ 		case OPTION_BIT:
+ 		case OPTION_NEGBIT:
++		case OPTION_BITOP:
+ 			if (!signed_int_fits(opts->defval, opts->precision))
+ 				optbug(opts, "has invalid defval");
+ 			/* fallthru */
+ 		case OPTION_COUNTUP:
+ 		case OPTION_NUMBER:
+ 			if ((opts->flags & PARSE_OPT_OPTARG) ||
+ 			    !(opts->flags & PARSE_OPT_NOARG))
+ 				optbug(opts, "should not accept an argument");
+ 			break;
 
