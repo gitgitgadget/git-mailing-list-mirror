@@ -1,75 +1,74 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6E71EC01D
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 07:10:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722FC72627
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 07:28:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751353817; cv=none; b=ZPPpsJUv5xeLNOTSo8nMeD39ZR0B7nxKTejCI/XtwFvfcqm1Jwxs89Isfqzu0SfpR7AxGZMF1cb8O/l8K/b2QaG5CyYVaIsnomAhfO14mYfCP9n95dA8t/kK0cmZAXnwv4pL0TlfEdrON8Mjn2f9R6KcZ2iCwcKWDR9OWeVX3b4=
+	t=1751354902; cv=none; b=UAdTQBx6iR86tFaeczB2OOOw2zy304FqabMiBZHVkAWtJ1I/9HBd6rzC0njHisE0xJ2rtOp4KgUjgz3j98HJkvTBTB6CeKHGEPBg4Y+N11QYjaoVuNhzJcj3PRflUoRrqTAjq7mPrSJiakZLF+UU2El9tZTwh9xcn4gtW9UUcLk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751353817; c=relaxed/simple;
-	bh=mD3jFbhVzVGzG+DDEM14Wivo+UFCHGaMMmSgrjq+Rk0=;
+	s=arc-20240116; t=1751354902; c=relaxed/simple;
+	bh=oMHTaTO/i0mxIh/06skNYw05fhG66PlLAM5x6+08vQM=;
 	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Whl2WvNb29OGMAwxhriem79c4QuzBlJLlBwnEH48mKP7DaTHBfGlxB5RtDBW7rSASRRKy4UV7r0jNwZvXpmamFqQsvYtlx/XgNUxVTeLmb088MKXOFrdgBABJyiPNBznVFzHeyZs9Q1lKJ6/Re4yeiWTCQn9IJqDJ6MlD/hdOJw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ryS1KyNN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z5wcGgJ2; arc=none smtp.client-ip=202.12.124.145
+	 Subject:Content-Type; b=kQmuPejoOXD7KG4OK2GDIVgUyN0agVISfRwgS96NxZqCCOLeWimPCcBm5JvDdg0z5EGGBX4eAwLGWQ89XmxocMbygPFExYlEHkxooERAFEdaqTkFVAzcYLpsVFrAAm1/PRlEV5PA2lFWboo8mvSNSc5/dFAThKOye6I8sMoezB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=1eGMWd+J; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HpByWmED; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ryS1KyNN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z5wcGgJ2"
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="1eGMWd+J";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HpByWmED"
 Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 84AE71D002A7;
-	Tue,  1 Jul 2025 03:10:14 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 718497A02C7;
+	Tue,  1 Jul 2025 03:28:19 -0400 (EDT)
 Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 03:10:14 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 01 Jul 2025 03:28:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
 	 h=cc:cc:content-transfer-encoding:content-type:content-type
 	:date:date:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:subject:subject:to:to; s=fm1;
-	 t=1751353814; x=1751440214; bh=mD3jFbhVzVGzG+DDEM14Wivo+UFCHGaM
-	MmSgrjq+Rk0=; b=ryS1KyNNFFlfb0KGjbuvjXN3ZsZeTEQjP1DTi1RKRNlDw0cX
-	hBw+LqchdqRScAJvkOIaDfYHgWbNxEA75ZdmNrIiW4Jdga8k0We1QoxI/vjJTOfI
-	CAaUZBLm3iKU8Nyp12uRSbINLWR58gZJFEauOfEvA+GrDj2KOhUYEer0mM/s43hI
-	7XZDKD+qtA5AkE9R0SmDpi7DxE7B4eSVDztbSL+O/fqvgiWmVzApM5ZJgW/T3Sxc
-	oTOCmSVesXP8cZbauxzJ+cr3xbkrKUPhM64Ot/adj45beAuOwsaRlbq5Yn1SySkg
-	7B/8RuD6bXyeX9dmVcO36d9hTeQIcNxweQ9Utg==
+	 t=1751354899; x=1751441299; bh=DdomYhGp1YwZvbFfTMFy2jSAdLzeEax5
+	DTLGD9CB294=; b=1eGMWd+JY1a2VYViHJMyM8pWNV3l4u6q52hB/N/tlsKqP8Ji
+	1V8zwQH8bitiguj+tFIcUXPzUtUwvqLFkEf4izgYBB8TaYxrO4CWQ7Ae1nGP1IaR
+	9KgmYZ0wCGHKV1T+rp1EVd/mia+UjCmaYubeUuCZRmIseM7RQ81CuLI7wnQRO37n
+	P69gKSd312MZg0Acp5W83rPrJMnfvNvmubHcLmCYBjDtOReboSXijQpSBQgobmbP
+	FO3YkAgmC+57KUBpLPOzrPFLUdGphLRAb1EWqeaGi9FqFnlcAl1RMF+kgSelwbPH
+	udY/pu9nrHhz1ECwxsIlpJQxHtqI87+PUwa1mA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751353814; x=
-	1751440214; bh=mD3jFbhVzVGzG+DDEM14Wivo+UFCHGaMMmSgrjq+Rk0=; b=Z
-	5wcGgJ2UtU8lX3dQS6UzgTfJmHa0yKTvYrY5zi5ReuOhLb3Q/XpCSnrfzpECVZ34
-	JthxF+hZmxTDkFqdFHa8CTxRyPWg5B92oJMqSaaWhB6efERUCPnWstHyeudNCmXm
-	C/HyjnQ2S3KaVD40377MXilQn2/yRtBKUiIrOSLGRBgG4mYS3Uq3hbbtk6vFQJi9
-	7X3vK23Wb18fnMy0PsZOZPqTnqhohBVQldt7kRlX7Y3AETk9EeVTSdGNaLMzHBI9
-	1uSoyq2rfr1a1GQwOkgFlHrVYtvD0NXegqxoV/uec++HL6H+zXEC3bRpdihOwz33
-	Fsk32682WcLqUyL31Vd/w==
-X-ME-Sender: <xms:1oljaHY1KWjMNgSKJg3ugOGbEWPIkKC8A7QmvSche_GaXsVdOV5FrLU>
-    <xme:1oljaGbjUURqccXJPM4tELNXpTVlYEiFoWfYJh0-YKptFNN3ulzzB5Lp4Cf7IkNoi
-    IIKaw2BDm-o3Qom3w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeelgecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751354899; x=
+	1751441299; bh=DdomYhGp1YwZvbFfTMFy2jSAdLzeEax5DTLGD9CB294=; b=H
+	pByWmEDaLkYMoXMXRpnpFEfGjMgIZYIjtnFfRldNLy0WL3/RhrERb03R0N7IINCS
+	3Wk3Q+RSUp18OgTaXUI+GbIzIKnN9KQjN9p/3+J1sPBCVNPm6oR8vN/O4u4CbiVe
+	sGU8/t57qDRdiCqetf0h91NwF0IKLR4PHe5PB2kD+faSsd7ZWtt8FkwI+F0BdzA/
+	IJ5mSKYxszpVHyEazCICSQge4X1dvqEmZGZWUeQ4a6wFoy6YipRMulRcuYJept+L
+	t/9QekDqcpjTpHBOCNCnJtQdxoskbVlpoE9qf9yWHjKVbblUfeelMSjhsJPlaTbB
+	C8o10eCkX+xJ0Oil3eboA==
+X-ME-Sender: <xms:Eo5jaPD55YDOwjebfNcF5K19QmQrONYCmm1XzLeIa3C0fdzN-3OI-Fo>
+    <xme:Eo5jaFgnr1Gai1ETRXJ8QOs9LZMAVDz8uTBC80ZZvNf5K03Jxrgz1kiJhZAIVRova
+    7lh1vFt_sAWy0rmoA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddufeelkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
     ohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnh
-    grmhgvqeenucggtffrrghtthgvrhhnpefggfeuteekjedutefffedtgfetveelledtheff
-    hfegueduieeuhfekheffueefhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehk
-    hhgruhhgshgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
-    thhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvihhlrgesfhhrvggvrdhfrhdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrgh
-X-ME-Proxy: <xmx:1oljaJ_Ok7ZNsKBhIWVboI0ulL3udwzeiUll97ROrhD094RsEOWINw>
-    <xmx:1oljaNo_CSqnjvlauWIbKZEbg_vR0g6cjPNnoAirjAe2kd83AVLu-Q>
-    <xmx:1oljaCrQiVpwOPnf8dAhFiqz-NP__LAkohv5M3ViswCnJTi0UGJblw>
-    <xmx:1oljaDT6UTHYDEje3V-_P143XDDkhsT1BaEd99_i8S9ugYfk5i2Y4g>
-    <xmx:1oljaAvPERMk__R-rB4U1sCS6m-b2NhpHndG_kWtg4zxgJcq2pxwCwC5>
+    grmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeetheeiveffudej
+    lefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepjhhn
+    rdgrvhhilhgrsehfrhgvvgdrfhhrpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Eo5jaKkobbESSWPlv2WCl91Cb2GE1ySYZ8H7EA3mCvEJ30iKwBxB5w>
+    <xmx:Eo5jaBySsexC3awWOaEKaT7ZXpEKk1zsuuQBaFpoP2bCDgYNzF9jhw>
+    <xmx:Eo5jaEQi9IaOrHuvx7hQt6SLiTvyrn3Y6IYccxel1FA7njTlx-A5gg>
+    <xmx:Eo5jaEZLUtxYtL7nvhCSL4eQe4dQeveB-q8jhe7ouKriLvx4cvHhEg>
+    <xmx:E45jaF2B5abMDrvvENqUOdgB3HQiMl6QJYGS8eP4kzC-eKHRFlvkKsYt>
 Feedback-ID: i2671468f:Fastmail
 Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 272B91EA0066; Tue,  1 Jul 2025 03:10:14 -0400 (EDT)
+	id D24FB1EA0066; Tue,  1 Jul 2025 03:28:18 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,32 +76,39 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T33683a0cbfa21653
-Date: Tue, 01 Jul 2025 09:09:42 +0200
+X-ThreadId: Tb0b14b73cc505ac3
+Date: Tue, 01 Jul 2025 09:27:58 +0200
 From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
 To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
  git@vger.kernel.org
 Cc: "Patrick Steinhardt" <ps@pks.im>,
  =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <47e5726c-a401-46a2-b975-ab6b311cbd4a@app.fastmail.com>
+Message-Id: <c61a5f21-06c5-40d5-8f35-f478a1db83d0@app.fastmail.com>
 In-Reply-To: 
- <ac3257a934d4c59de03757c2471c7067a8186108.1751310455.git.code@khaugsbakk.name>
+ <a52322528dac34827abd5100a2d3ee49e376e2ed.1751310455.git.code@khaugsbakk.name>
 References: <cover.1751310455.git.code@khaugsbakk.name>
- <ac3257a934d4c59de03757c2471c7067a8186108.1751310455.git.code@khaugsbakk.name>
-Subject: Re: [PATCH 5/5] doc: config: mention --url in the synopsis
+ <a52322528dac34827abd5100a2d3ee49e376e2ed.1751310455.git.code@khaugsbakk.name>
+Subject: Re: [PATCH 2/5] doc: config: use --value=<pattern> consistently
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, Jun 30, 2025, at 21:10, kristofferhaugsbakk@fastmail.com wrote:
 > From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> 4e513890008 (builtin/config: introduce "get" subcommand, 2024-05-06)
-> introduced `get` and `--url` but didn=E2=80=99t add `--url` to the syn=
-opsis.
+> This option was introduced in a series of commits from fe3ccc7aab (Mer=
+ge
+> branch 'ps/config-subcommands', 2024-05-15).  But two styles were used
+> for the value provided to the option:
+>
+> 1. Synopsis: `--value=3D<value>`
+> 2. Deprecated Modes: `--value=3D<pattern>`
+>
+> (2) is also used in the synopsis on the command.
+>
+> Use (2) consistently throughout since it=E2=80=99s a pattern in the ge=
+neral
+> case (`value` sounds more generic).
 >
 > Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-This makes `t/t0450-txt-doc-vs-help.sh` fail
-
-https://lore.kernel.org/git/xmqqwm8sltbc.fsf@gitster.g/T/#m0e3ad91ded146=
-f9c13f4ee52e4c37b15330c62a9
+This missed some `--value=3D<value>`.
