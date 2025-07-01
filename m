@@ -1,105 +1,121 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C554A1B95B
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 18:10:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850B427AC44
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 18:24:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751393403; cv=none; b=MSN5GAi/DJMVMV3A5bgsI9XnhPOoWjHzpfxfPDl8O/aazrZj32lK9Ju2fES7sjvHpMeGIMshEvE6hqjtAyvadumHu5pnouRjjswKmYUVFoRFVAb37+MaLumTnNsdCEujBRucfEdDY7a6cAsRz2EpHBFlM6HFkUUg/BW5o7e6O+k=
+	t=1751394257; cv=none; b=tAP7wgNW7E8A50si/xrbAFONfjqUOi32rC24e7emwz3yancZcJnouHEA7BEI9jGJ5tkcCUbEYlSFRtnNe9yVX3GVfzw2P0DGE9DO4zuzaaVf4jtrvVALGsQCUI9mP61TtbleX0wE456z7PeJno/INlOwrepCzfSgGU2r+OiWx1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751393403; c=relaxed/simple;
-	bh=yuu+FrZTJRWP5yI9nXcB5rcj8DZorI/PLuemM0icipM=;
+	s=arc-20240116; t=1751394257; c=relaxed/simple;
+	bh=aS7t3aEEwme/BzForkqhwoYZDDklICLCaqVdkZ2qVt4=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pZRAUqRgLYjwEc12d/PSD4r8mHYYvPFYXDNTp4f7Wil3K2iISIypK5w9nUUTpnFZB4dufPYBK37Cm85pgKxip/7vLiEH1WW5kX4etnIJFBuVEA8T+371ynK/lxlGNPdYnLs6liWXx6gertq+BXEXP6gJNdJTNh+chavC1oaekJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TadAFdKb; arc=none smtp.client-ip=209.85.216.48
+	 To:Cc:Content-Type; b=u5mCiBD+eY5e4d9y7YeLob7p/ofC78+q7wE1F9r46ATscDVgIfqnV6PORw1o2ojxSYILYy4FgLLr391ZkcPS/n9qMGWMxUuYiLR+lavyioG0GKtH+6EL3VpibtphHwbhEODVn/VpqhuG0Z4Nyc0qdXGsPjyBW7mMiFNMOblqqwI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eDODg4Ta; arc=none smtp.client-ip=209.85.216.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TadAFdKb"
-Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-315c1b0623cso3564398a91.1
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 11:10:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eDODg4Ta"
+Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-313b6625cf1so4512776a91.0
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 11:24:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751393401; x=1751998201; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751394255; x=1751999055; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3YeCqSymqJ0gTODSc+CgfxOC5uiJMFss5LhFu3xnXk8=;
-        b=TadAFdKbELM10UjtK0wia8SyPQVVESlvU0YvDFJoxaiVatiVXWYMTc9ux8RuuCjm9A
-         YdNteocaLV2VKBJfUps1hJ1bcKVe/6Vcp+9H0m0UZvdJ+fvpfMOyZFd5o3H38XJTzTwk
-         VECWncc47Xe61zXDzDrOqWNs+z/61NW9csmq2tx99cihTiOIyR/hNjJdkVJZ4FEySChp
-         fGam07V3L8mbrVyoMnKXhVnkvaPqK97uoCSw6ffA9ZoH4e0BaDGFG8yCwTDmpYBM0WXH
-         mw8rs70SV22YHdDu1KLqXSCoAD1IUb35bow9T0Ylu+BEsp+t+OPn/LWF29DvqmXVl0Wk
-         OZrQ==
+        bh=ez/pXwBjfYVBR5d646eCmsiXNrryWpQjuqLU8+evQ0I=;
+        b=eDODg4TapqY+/KRa1FAF9j/xEtW7Uhu2hEfbxduUWe4nIlfShsu6SfLnthr5cKnOuW
+         BDZjZIMszu1blLB/uExAZvCKfwGPxTq5BX/0SgmYTeBa5As4CiD4MkbdGX8GVgmuYjSw
+         JMztCvI4UdB4ireKRCPlhHzqDpoY8OC1X/TKvHiYk+Bs33Behd9YPUfa0BN6SzJDP0EF
+         W/6wSL/gKM9X9Vy4bWyIGLBIAmouluCBkKC18MPwejmCDn/7z9BIohywoNU5yNCmfslN
+         qmc6INQajikCBwqt4Yl4mA+pwwenHWeA+1wA/lpCy9JikbFEB9+0MxbGrb942O/l4jMq
+         VmmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751393401; x=1751998201;
+        d=1e100.net; s=20230601; t=1751394255; x=1751999055;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3YeCqSymqJ0gTODSc+CgfxOC5uiJMFss5LhFu3xnXk8=;
-        b=ABMtgl1DAnVyPc42TBPNIxdAE3F4aW8O+mGGKwyatrNdKgx9LdNFbZzT1z1+xVGZ1U
-         zGGaN5wl3jL69DZfWltLLx8VZs9rmEc39U/gKPdKAeHgCGBVMqXHHoE56dfxBHNW/zd7
-         YD01oGudWfCXp9XlDbk0VPE/SorXEG8i/hrRj8bcHkmVrRUNBNRJXnlvloBddSCtZGTK
-         sWYI2aWqlDnhl2CrsZYp46l1w0GFsBlNsNo/UU87O/g/N/pOhR7gj3OZdFi+Wcc9NuKu
-         Rv3qmGJ07IeQxl4QIzmPziy7F3uPN4+BPZQEC5WtXBWmLxTP+2nQQxVMTRvylgsMya2D
-         6rIg==
-X-Forwarded-Encrypted: i=1; AJvYcCUZyh9YoKIOmV/rO4tNF+9MntlVPPVLJd8hFBlQXiSF2N26Ui1ieyTNXtVLHV4taZQgWmg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyKKTNLhq2zAIjmz5GNEpq12mnT5yyhnWyZLtxlvBJBzUWbhh7+
-	UotUEiG+7uXVzY407jaqJVA6vQc7UK8h8sX2wnQjrFt7lCUoYr6QSCvfjBhytd06HInm+u8QZiU
-	H8LettrexJ8RStbjj5noT7XyUMoNtH/0=
-X-Gm-Gg: ASbGncvlnUeb0RlzvaLWbA5qkBUKj/ABkTMIO1vv1xfDdWvHokL1AMyxU8UmU9Qzc6p
-	+X6JmWy7kbnmF5XoCDVvrRslRDtuXuXH/++Y25WCAbTyVs1J0Fuo+hSPY2JQa0UmSFTJ3JYPZBN
-	54PzIERxB4OLw4hzSv6X4dNiym7WuGxWyiB3lGUASmJXDP0/aOMXa9o5SUG+DK2X6PN8Zr8QFX0
-	nPONA==
-X-Google-Smtp-Source: AGHT+IGvY8FUm2I+AHaWV6m+ClP1iGtUNFV+AhbhXDU4bk0iF7z7omsDZtfT1yWP2TVmLJNwGNN1Oahdsd8j0Nn9ZA0=
-X-Received: by 2002:a17:90b:50d0:b0:311:ea13:2e70 with SMTP id
- 98e67ed59e1d1-31a90b392a1mr10730a91.14.1751393400932; Tue, 01 Jul 2025
- 11:10:00 -0700 (PDT)
+        bh=ez/pXwBjfYVBR5d646eCmsiXNrryWpQjuqLU8+evQ0I=;
+        b=UJTacov3Ko2I5SotUVTAjyCh0BMJEEZz08mqSMmSCHnpijr0AZHbAPGtimoc5CtYFo
+         Q+1wJ8iqzngobC+z/weOH4BITNSZIVSP92Ni/DarqjvE+3ZCjl8OA+xFPcLCwP395yRK
+         2YRACIA3Tr+V3ZX8MTRHV2IHt9dRG+c4DgMX6uuiUu3rMsKbbvncoWck4Y2N8OVcGoG2
+         6ImOj8Fn+7iYylcj3zv/6ykLbgU7TUNFAwtmXPqYE7inQlSbfYmWkt/Sok7DOqzhjqOM
+         l/iU8m9acHFontqcs8qby6RwxXDBlSOoJjgao40fHEWVy1FH3xuPW5pcvwXuhZVD8hQ9
+         rZvA==
+X-Forwarded-Encrypted: i=1; AJvYcCVWZMvHu3Ucdr1A9rZ98va8eY633apyMgcwz5HEWQVSZ9/sw6S2IMIaNtZ3dBXvOd4E4iw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxT3j+e2v5BEpNi3r60oCvXEFLKXFJn1tK5gwCozO300f8BqOSn
+	I4RKZa77zLn9fN88bN/KBWGLs91bWrilTn9O7vepdpunJ7FStHZpigayFnicpa6TD1jjzbZtskf
+	LxD9kREnyW52fwOgNzshuQOaLnPDzVGQQgwH+wG0=
+X-Gm-Gg: ASbGncuaHMKTfseDytMBEb9DBbiSop6KOaIccNqf1qJLzaO6bllAvXKylqPWUSHTHqy
+	lrBvXs5gvrWTtC9MRVGa0pUrF6kubQ61KgyhKrNpjH3BnXM0mfmqQRee9V4MOWI0hmOnRRrbtt3
+	GsPOrsKYLGFoC1zl1xruIFbOy2QGTrOw8fdkjmzR6JpzzB5X1TuKTO/Xn+QS/U3ytazypGXhNUl
+	u2v17IVbb1tpVcS
+X-Google-Smtp-Source: AGHT+IFIJ3BcXg5aN85bQu7+kakqnvxqv5V8dCi616YlOgf7rYGtyUutUWB4Ss4lf/qnyM9sTTZl8b4IW3jkvfIKgyQ=
+X-Received: by 2002:a17:90b:17cb:b0:312:dbcd:b93d with SMTP id
+ 98e67ed59e1d1-31939b7bd6cmr7197148a91.14.1751394254497; Tue, 01 Jul 2025
+ 11:24:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1751296633.git.ayu.chandekar@gmail.com> <f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
- <aGPcKgR0G72JRSlM@pks.im> <xmqqikkbkglx.fsf@gitster.g>
-In-Reply-To: <xmqqikkbkglx.fsf@gitster.g>
+References: <cover.1751296633.git.ayu.chandekar@gmail.com> <995389d6229df0c2a76ee4ba57e663a43abb4540.1751296633.git.ayu.chandekar@gmail.com>
+ <aGPcJMfBCJuQLdtu@pks.im>
+In-Reply-To: <aGPcJMfBCJuQLdtu@pks.im>
 From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Tue, 1 Jul 2025 23:39:48 +0530
-X-Gm-Features: Ac12FXw7CZUHkoyfcKdWTEz7d4hZn8oqigJf0go3RQEH6_TQ94qIaPEuH6PtCQU
-Message-ID: <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
-Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on 'the_repository'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, christian.couder@gmail.com, git@vger.kernel.org, 
-	shyamthakkar001@gmail.com, shejialuo@gmail.com
+Date: Tue, 1 Jul 2025 23:54:02 +0530
+X-Gm-Features: Ac12FXwLcIOB3CfF4h1cD4pHxM1wsqyz8ozrAztq2-AcTVzTRgBBl2N9ohu9EH4
+Message-ID: <CAE7as+aVrZZtu7goaMC2W9dEc4xsqOT7RRxPZ6Dmvu=cm8h1vw@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2 1/2] repository: move 'repository_format_precious_objects'
+ to repo scope
+To: Patrick Steinhardt <ps@pks.im>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
+	shejialuo@gmail.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 1, 2025 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Tue, Jul 1, 2025 at 6:31=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> On Mon, Jun 30, 2025 at 10:11:04PM +0530, Ayush Chandekar wrote:
+> > The 'extensions.preciousObjects' setting when set true, prevents
+> > operations that might drop objects from the object storage.
+> > This setting is populated in the global variable
+> > 'repository_format_precious_objects'.
+> > Move this global variable to repo scope by adding it to struct
+> > `repository` and also refactor all the occurences accordingly.
 >
-> > On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
-> >> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
-> >>      expire =3D TIME_MAX;
-> >>      save_commit_buffer =3D 0;
-> >>      disable_replace_refs();
-> >> -    repo_init_revisions(the_repository, &revs, prefix);
-> >> +    repo_init_revisions(repo, &revs, prefix);
+> Tiny nit: the line wrapping of this paragraph is a bit weird -- it
+> should generally wrap at 72 characters and paragraphs are typically
+> separated from one another by an empty newline.
+>
+
+Okay, I will fix it.
+
+> > diff --git a/repository.c b/repository.c
+> > index 9b3d6665fc..62709d1c91 100644
+> > --- a/repository.c
+> > +++ b/repository.c
+> > @@ -284,6 +284,7 @@ int repo_init(struct repository *repo,
+> >       repo_set_ref_storage_format(repo, format.ref_storage_format);
+> >       repo->repository_format_worktree_config =3D format.worktree_confi=
+g;
+> >       repo->repository_format_relative_worktrees =3D format.relative_wo=
+rktrees;
+> > +     repo->repository_format_precious_objects =3D format.precious_obje=
+cts;
 > >
-> > Does this work correctly when running outside of a repository? In
-> > general `cmd_prune()` is not executed and would instead die as it is
-> > declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the use=
-r
-> > asks for help we may still execute the function with a NULL pointer.
+> >       /* take ownership of format.partial_clone */
+> >       repo->repository_format_partial_clone =3D format.partial_clone;
 >
-> Good eyes.  "git prune -h" would safely exit in parse_options() in
-> such a case, but this part happens before the parse_options() call.
+> The list of variables that we copy from `format` grows longer and
+> longer. I wonder whether it would make sense to embed a `struct
+> repository_format` in the repository and then copy over the whole
+> structure?
 >
+> Patrick
 
-Thanks for pointing that out, Patrick. Right now, `parse_options()` is
-called just after the `repo_init_revisions()`. I can move the call to
-it before this.
-
-Although when I tried running "git prune -h", it still gave me the
-expected output.
+Yeah, I suggested this in a discussion with my mentors and was
+expecting comments regarding the same. I can create a new patch for
+this change if there's consensus on this.
