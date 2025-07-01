@@ -1,121 +1,169 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.4])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B461DE8A8
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:54:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136CF274B37
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 15:54:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751385280; cv=none; b=XTeJfPa8LgQiXcPNxrWydQRSVAXGK1r1uWCNDQNvt03ye6hK+QI0M4Tm/YSInp624N/B1aIspQdsV6n2e/ChXLQ4fYUDXHsVL1Bql9+EMnS02te4YT2DRIzuqaeE+2p+/BP/Qd5SG6QIKOqksI1GAhGWLzEfBzQZbpDxJDb53Ik=
+	t=1751385289; cv=none; b=uxAIt3c2YJc/lnHH3TbkmL1+/3QNkT9MtJEw9D+V/cvgrLxPZkzDqyMaCJ4ZTslqpxjdXD2fyTs1ndQXi+GQgNIo3UOOH7GNthUFXAeYFsC910Cq3vruWqipenEtq6gTZLwQz1PQT1RUYfJl9iebe+yQnxbeF597S57JJ5p0ueQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751385280; c=relaxed/simple;
-	bh=2PSvOAe4kfX5yciucbxscKXE7A/3SddElmutdRV7BNA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lT4M5C4V/E0S1gJ5bo1F6GbDaSh+XBZzWORl9qwbMwpnUtxXFVDWXYle4fYX0VpBgs64SkmdzJ/YH+jsE/SGK6MrKaMf5WU8AIhe6RzAJ/6X1SlTsilocNFmTxhbkACU0e6RAgQO0bVET1SGJ10ReTyxF3RwRhSvexUACMlfCRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cJk7ltNE; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751385289; c=relaxed/simple;
+	bh=0IaFyUG6MOMqTeoUNVgwunNpp+fz4JXTv/CaM/7OD5s=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OjiVHZvUXekF+09hjtsta/421Cms1XfTE5F2kj4U1YaRA2Cs9ulF7gaMxN3ONiLSsoRfXu4opw6c8KrFUOHXXvYRvWTDrlF0Z8TL1e6G3QcVYkEyA4L64BGt/I1IU5dw1k2lnB03HQy+BkYhvMrlaD1gZW1AQNFCa2/BxOtLE+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=RqSsHCHN; arc=none smtp.client-ip=212.227.15.4
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cJk7ltNE"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-31393526d0dso3755336a91.0
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 08:54:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751385277; x=1751990077; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=h+KccZt8WWte29s3FHRxRhvO9a+dVihWdW7qfI9xxdw=;
-        b=cJk7ltNE++O6ANrwyb1MnrJT66WqL9AgfZlpQuDWgeDHE4bL3FBezl3qTxCA8wAVy1
-         u4Hd2e1BbgabQjOMWd10rYnjS6ANNCon7PJKFG9M4wU+pbsujlUDC8hMrkoBgKt3C+Y6
-         Osd3HBd3rhra1CIxrXhl044RDbV7gnfN6ieni4YdTs1RJP6k1bZ6jqgX9MlF6aqDnMTP
-         U1CF93w25jIlW4uncXLhweStrpsxr+TumNUWGqp5PtkegPy2xu3nPUPph5deslhlRWrv
-         jvCCFo0Ta/p+4IJYsQREu/Qmi16UIYeVlAlgViI2P9nh0BBY1GDVMaT42q01BzmAD41I
-         U2iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751385277; x=1751990077;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=h+KccZt8WWte29s3FHRxRhvO9a+dVihWdW7qfI9xxdw=;
-        b=YQ502Olu5h/mLXxrY0/+8UxagRjaugUFc4yyhvO+fd6Qu5BwUGmooZd5lLr8dDBITu
-         yl3YoLr90p4zbFQNyJqy0uBU+HeopsGK9bXEshwVuT6NDG5CZHGZgwceaBAsPcABAT/d
-         Ev+8NgFLDh5HcLE/iqK7wRTZMrJ3aal6uhgJivUOsWFRG+YpGHQHrMzMcRrBMFvX1gs+
-         bIJFP6FWIzQnuUdbhHdArNuSHuNojqKx1pqikfb8J7B/PIsyvvf2h9YkkHo37yNQorr7
-         dR0zyfBjGkhBy40ES9Wetf64PsKqVbWNgsv7GNL5RunZGpjJMRHsekObxOFvacq7ijZt
-         wDeg==
-X-Forwarded-Encrypted: i=1; AJvYcCVygvwXoXImVo3WM/t5m+tgOey4jDWOLH6yg2tLi9AlIIDM8R/K5FSWTVQL5QRsA1QCRNQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZKeHmb3ZZuTvlGjt9vhQSCw6Rxw0ccg7vr0iIuZ72caKxTHhs
-	YOn16J2I5uDw5KvP/CsYYE/5vJ8/5YKNM5xbyM+DJFFiIQIclyhY9mm53NpkBg==
-X-Gm-Gg: ASbGncvT5LHyVT4EkMlFXlaRvMyZX7Pu2TunGJzxKwkMnSYHmP+w9QkMR9uBP+4dpAw
-	cCUwf4IuRJUq+7rD0z2MGPywgL9qqB1PWRyLiZ4OuVz0fatkaM63pk8vidoEsJwYKijRXwcDXL1
-	dhihFsWbYyMDyU2FY4EgD/uOu8LQXbdm5lTmo9NF9wXKW1S8iLLoVcUybZhUxfrl3i9z1DvfdRZ
-	U5n6kkjh4HjmsqF2ujRKzSQsgT7MMLGlnIluywj8nHFLGYNxZ6jerhvMKvtlRfe4KtVedMcwJLf
-	NI/XttwyR6sWt+7JLd2uQvQwdRNeTAKoeVqH+xE+r96QyU4act+oepo3sHJdyW+8/wCc4Dgxq2/
-	zC5GNclqCCnlq6nzSEKnOcLhnEmc=
-X-Google-Smtp-Source: AGHT+IG40zxgQjE/ad9GpYTuhJJuVOQcLJzmQjT3Z++irgYnWoEBbU6C24jcZ3wBNojOubnbohjcrA==
-X-Received: by 2002:a17:90b:4ad0:b0:313:5d2f:54fc with SMTP id 98e67ed59e1d1-318c921993bmr28884374a91.10.1751385276561;
-        Tue, 01 Jul 2025 08:54:36 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-315f5382e87sm17315609a91.8.2025.07.01.08.54.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 08:54:36 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
-  Leon Michalak <leonmichalak6@gmail.com>
-Subject: Re: [PATCH v3 4/4] add-patch: add diff.context command line overrides
-In-Reply-To: <7686a5e0-23c3-4e3a-b5ea-3b8c80ba54fa@gmail.com> (Phillip Wood's
-	message of "Tue, 1 Jul 2025 10:59:55 +0100")
-References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
-	<pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
-	<b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
-	<xmqqplel17s3.fsf@gitster.g>
-	<7686a5e0-23c3-4e3a-b5ea-3b8c80ba54fa@gmail.com>
-Date: Tue, 01 Jul 2025 08:54:35 -0700
-Message-ID: <xmqqa55nlxdw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="RqSsHCHN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1751385282; x=1751990082; i=l.s.r@web.de;
+	bh=BVKakepg8Q4IrfBoZQIYGM5kSIDp7PRdvfbvynVbmYU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=RqSsHCHNCfZUWv8Pik84ojwwG9TycqYaB4St12T1G4lLn46vn7mu+tFgyQ9jwzkC
+	 7Wo01aiiXxlMCRTAFLMUamOjNe68cOfUwRWMiHHoOBm00idLwHqd8rcIhBSob+Cw4
+	 m1tcYclmsfXz/gMuxAltnFPtR1mqoB3dnO+s+zBdP0gtsZja7jj24sDdKlaEoHAei
+	 nsh1jYb1coPfhBL8gRp565KPlr5DvaUtlEA2dYh7x4t/43x2bbD2a6Qb7UA1fNwTl
+	 OKKt+a2U98018h3iD8BC7FOQsirxuvFjJ5MnJODHQoHNfWYkz6EDD9+WzgYyr677M
+	 fw3QD9ScwXk/jmo+rg==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb006
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MkVwo-1uyrL21QgY-00hIam; Tue, 01
+ Jul 2025 17:54:42 +0200
+Message-ID: <fb50bdea-f529-447a-9cf1-0fbde3f8e22e@web.de>
+Date: Tue, 1 Jul 2025 17:54:41 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/6] parse-options: add precision handling for
+ OPTION_SET_INT
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Git List <git@vger.kernel.org>
+References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
+ <3690df99-8a83-4377-9b03-6766f7958c21@web.de> <aGO-l81JiOESvbS9@pks.im>
+Content-Language: en-US
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <aGO-l81JiOESvbS9@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:l65Ueso+Gs4BJwwMMUZwVaIgmJ26Ou4SD+vckKVsRuntXMyFKTJ
+ hFmh6mVj4Fp10QXjlk4lN1pPr5FBhwV/ZqxgwofFgAIgf6zdHf12MqEGfjOGavmUU4RHHcG
+ JmHYTYfwZkwQ6TfKmzmiTuKTuNxOnaeMG1MovGv47H67zeq6A8OpbkHVM4sVCWWe8dFgY95
+ 2xpTRIsdGMMI6haRX2g9Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:p+GihLwgEKU=;QvQVbEf1GvhS5j7tPtSTK7e261t
+ 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
+ SA2TveDiQ0TPj31rM/yw==
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On 7/1/25 12:55 PM, Patrick Steinhardt wrote:
+> On Sun, Jun 29, 2025 at 01:50:39PM +0200, Ren=C3=A9 Scharfe wrote:
+>> diff --git a/parse-options.c b/parse-options.c
+>> index da07a000a3..bbb68603cc 100644
+>> --- a/parse-options.c
+>> +++ b/parse-options.c
+>> @@ -85,6 +85,36 @@ static intmax_t get_int_value(const struct option *o=
+pt)
+>>  	}
+>>  }
+>> =20
+>> +static enum parse_opt_result set_int_value(const struct option *opt,
+>> +					   enum opt_parsed flags,
+>> +					   intmax_t value)
+>> +{
+>> +	switch (opt->precision) {
+>> +	case sizeof(int8_t):
+>> +		*(int8_t *)opt->value =3D value;
+>> +		return 0;
+>> +	case sizeof(int16_t):
+>> +		*(int16_t *)opt->value =3D value;
+>> +		return 0;
+>> +	case sizeof(int32_t):
+>> +		*(int32_t *)opt->value =3D value;
+>> +		return 0;
+>> +	case sizeof(int64_t):
+>> +		*(int64_t *)opt->value =3D value;
+>> +		return 0;
+>> +	default:
+>> +		BUG("invalid precision for option %s", optname(opt, flags));
+>> +	}
+>> +}
+>=20
+> The function only ever dies or returns successfully, so can't we make it
+> return nothing instead? On the other hand it does make a couple of
+> callsites a bit nicer to read.
 
->>   * add OPT_DIFF_*() macros to parse-options API, as its utility is
->>     very narrow, and forces those who are learning parse-options API
->>     to learn one more thing.
->
-> It means that we have consistent help for all the commands with these
-> options which I think is valuable. We have a number of other macros
-> that define options that are shared between commands and I think that
-> works quite well.
+We can.  Not sure we should, obviously, but I don't have strong feelings
+either way.
 
-I understand that principe.  What I was wondering was if there are
-enough places to use these particular ones to make it worthwhile to
-enlarge the set of OPT_* macros.
+>=20
+>> +static int signed_int_fits(intmax_t value, size_t size)
+>> +{
+>> +	size_t bits =3D size * CHAR_BIT;
+>> +	intmax_t upper_bound =3D INTMAX_MAX >> (bitsizeof(intmax_t) - bits);
+>> +	intmax_t lower_bound =3D -upper_bound - 1;
+>> +	return lower_bound <=3D value && value <=3D upper_bound;
+>> +}
+>> +
+>=20
+> Should we s/size/precision/ so that it's clear what kind of size this
+> exactly is?
+It's the width of an integer variable as in sizeof(), so the name fits.
+We can inline this single-caller function if it's indeed confusing.
 
->>   * validation of the value range to be duplicated for each and
->> every
->>     users of the new OPT_DIFF_*() macros.
->
-> Yes the validation is awkward. If we changed the OPT_DIFF_* to use a
-> callback that rejected negative values that would reduce the
-> duplication.
+Ren=C3=A9
 
-Yeah, I was wondering about that approach, too.  Another benefit
-with the "validate just after we parse the value before we assign
-the result to a variable or a struct member" approach is that we can
-also complain about -1 that is given from the command line (which
-the current code ignores, if I am not mistaken, because it needs to
-be silent if that -1 is there merely because it is the "not set yet"
-sentinel value).
 
-Or perhaps the valid value range Réne has been workingon canbe used
-here?
