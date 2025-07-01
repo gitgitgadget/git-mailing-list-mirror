@@ -1,131 +1,113 @@
-Received: from mail.aegee.org (mail.aegee.org [144.76.142.78])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EE6238C0A
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 09:29:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=144.76.142.78
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67EF2701D9
+	for <git@vger.kernel.org>; Tue,  1 Jul 2025 09:59:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751362194; cv=none; b=L/X7alL2BUssgFpqA4its7pQNsNm6uiCbC596dwyjORzgB7Su53z5pxoA5yeueB4ArjX+fBXAfSF9fVUJKwz1UfqGMdVZszw7VTwUrkuJxfMUtygQEaz480IZOpmFm56GexepeTmfnfLQ0SFoDmJcc1XHjT51a4mmN7pTaj5hMk=
+	t=1751363994; cv=none; b=MQcakhFeN4fI0NtkFylTKJqUBFY6AsL6zIFsaVY04MgFANF1xYxWSWqdvoZiYczBivzBS8vu+A1he32X/dkpNYG1UeALdFVHIPitfPuQKE/5CpKmMAPwd5K4epcr6AyeFM52TIlrdvvopLJSeJQGSzh8G7YMw3+djfjI4NO0tF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751362194; c=relaxed/simple;
-	bh=vHpSuSq/lb+cBQOnXPbJBuYUNE1zv7pneP4n2BoAc2U=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=glvZGK7GNkHRY/Nv1ZIGYv6D978F4BBSK8+knMqiYErkF250l9/zTLERIVaFVJVPa0jA3pHrBNJsskg/o4P0lC95ybyveu3vnKTaKmReAXcpUsP8tGPVFWuzy2ZMReTSjd8SB3uIFerWRR2taRzxsGSi81+0IzhdMUjWUzlbZZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org; spf=pass smtp.mailfrom=aegee.org; dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-ssl@aegee.org header.b=CKy3kPyS; arc=none smtp.client-ip=144.76.142.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=aegee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=aegee.org
+	s=arc-20240116; t=1751363994; c=relaxed/simple;
+	bh=VAaTd69k2qI0aHVXrtzzx1ffae8Wn3fpWkTlPf1k078=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=maDLWrOzjkFT563gpjdmAQgLQPOneyDV2mSVEXLsTC0GTUZJqO6rc09/ZghUtgGc66HHg+9qe+Arhx3IOBrCJjvHLNXbtlMXmiIv21L+U3vSLbbi1pD+6B4B7/+MS0qPjv5No9Z+iqiJCrfBZYZi34uRnFCPwzh1bc3rQGmJCoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FFZRinQ8; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (4096-bit key) header.d=aegee.org header.i=dkim+MSA-ssl@aegee.org header.b="CKy3kPyS"
-Authentication-Results: mail.aegee.org/5619O6TC4169213; auth=pass (PLAIN) smtp.auth=didopalauzov@aegee.org
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=aegee.org; s=k4096;
-	t=1751361847; i=dkim+MSA-ssl@aegee.org;
-	bh=vHpSuSq/lb+cBQOnXPbJBuYUNE1zv7pneP4n2BoAc2U=;
-	h=Subject:From:To:Date;
-	b=CKy3kPySjdlGTbhOH01PrnWKeGRTDDEckVatGk6Y3bh/jlnfLJjWznMDIQfk69J6u
-	 F+LPMV9XeADOqnCT1YWM3q22G5cFVBjZStdt0D/nPB+qKeEuxoHoJ+/+ej1hU9++c1
-	 ZHAqIZLLty21mX7jaZisZvQSdx2TugxVHMoFMjkLom5FGBqMvLnhVwlWmasofHgSRi
-	 jb0VBdQZKmDUBe/zsVg7RocexVsPEOVI0R7bEvqURa+sUIq7il9SALgxo0lmpeNtJR
-	 gx6/H0/M82HILbGFYbRddDifumZQDN+ujj+0A9n5me4MY90TtTR+b3JibYXHZ85P1T
-	 R3z32CwFmxNlDxFHkC6yf7EuPMf0JmM0UP4vO3OeXruBDwQiMITowBl+Bh4HdigR62
-	 V/kFG3XYRxoPg1sQS+tMTIT/WGGjyzhdtFFQDMy755ATHwPlmqucDPKUuhB+Moox5w
-	 3GwVQhFGoN+VkbNO8HPG4L7jUBH7K51pzRPktOkrqL3R9lR7neCOSFLJaLiDyoEEmd
-	 v9bR0M7a1tZq2cmkDxiVMe2f7rh4fiu8NlkuLagB3Yr8V8uIkvYLZJC/YamwtzbkWD
-	 XGhb9z1aHM1umHg1WvKThYBP6FBLOojNMBDrByBPmHn7Ubo2EiuMZiWr+PbkFji1Ys
-	 /INlcUwZQ5gVWAG45YPuSqz4=
-Authentication-Results: mail.aegee.org/5619O6TC4169213; dkim=none
-Received: from [192.168.0.242] (95-43-114-153.ip.btc-net.bg [95.43.114.153])
-	(authenticated bits=0)
-	by mail.aegee.org (8.18.1/8.18.1) with ESMTPSA id 5619O6TC4169213
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO)
-	for <git@vger.kernel.org>; Tue, 1 Jul 2025 09:24:07 GMT
-Message-ID: <e7a2fdff63d9a90ef4dc1341fa642fff5197b64a.camel@aegee.org>
-Subject: git treeless-clone + wait + pull =?UTF-8?Q?=E2=86=92?= problem,
- again pull =?UTF-8?Q?=E2=86=92?= OK
-From: =?UTF-8?Q?=D0=94=D0=B8=D0=BB=D1=8F=D0=BD_?=
- =?UTF-8?Q?=D0=9F=D0=B0=D0=BB=D0=B0=D1=83=D0=B7=D0=BE=D0=B2?=
-	 <dilyan.palauzov@aegee.org>
-To: git@vger.kernel.org
-Date: Tue, 01 Jul 2025 12:24:05 +0300
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.57.2 
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FFZRinQ8"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4538bc1cffdso29392435e9.0
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 02:59:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751363991; x=1751968791; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=UfzI3hZVp9SYx8K84zkcw6WXCdbU+e3GE7TNqraR0Kw=;
+        b=FFZRinQ8P5E20sTH/bRDwYxGvx6K7TBW71NUiB9BwhG/NwqfK+W9kPACqqkL3QPO4D
+         XedBnpNcOBHYVyaxwpLlIc2YrV30o/qAkOXI8nLhjONcktw51cPZNEuvRWdGMMZfwptb
+         moZRioqW8GWxAjn2lfLuvuv3ZZui+Hm5GAyO5JI1wybaEQsjE9rKVsPewXC8efFNd0Kc
+         vY7DLujdU2pf9CaEKPH5/M8LMdjS/mN/EiqVeWJAhzcyUNr8wdDX3WhrcIZZMUA4cv+o
+         z04hwFD9YDTKqg9WjbB+ZtTrGXguS8iJ00PgUbTXkQ4+GSp3qbnWb73Q4Zw01lqpxYoQ
+         MKpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751363991; x=1751968791;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UfzI3hZVp9SYx8K84zkcw6WXCdbU+e3GE7TNqraR0Kw=;
+        b=LGH72awanTz4cU7M3oYYhx84ebIF7NdGd9tM4YCPvredRtR9O2IPEI34mdUW7ftSTb
+         mv8uO/uIfh0E/MD1A0NG/Ex9GGGPYDm0BaPwK1DpWvPc6zHJrnv1LpDywHU9VpDZMgdx
+         De38/GYt7TBulQWbX8a+GVimtbd+1Jfu4Wo5XOnXVuUVTNUg/k9Uv7dqxcGvJbfF/LHL
+         2/YVMCEVH9pU0FFZtFAu1M6jQUMqXH0fxAEHydeVKODxFGTuuTZEifhkOJYAqcdea6dq
+         S89lZiMJuwyXgnfgaqZFo9PtkYgUQZOze378OLKEflIQmF0/P68wR7SWrBXfSBcZ/M3Q
+         XP/g==
+X-Forwarded-Encrypted: i=1; AJvYcCUcwIZuD0aeOFpIrIwm5CVEorAXfNmkGJ0GQJfiaZhF1ZUkgcDsMDfkqCwxszm3C2V9WXc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzP3L49H32hTyFEa5F3HbpQdBt2HK64hdwA6vK5kxYMw8K0az92
+	5EOOOOvUQ69B0mCgE02Jroxon4FZ+U8ul7Ur5YA3oq1HuLs7P4ulZLJH
+X-Gm-Gg: ASbGncvRmDONVfQc6YmBkzDaSRHCORwu5q7PXGicLY7Ro8/Afi0BHjsiI0aZj9V96FM
+	XwN0s+LVYBwTsTtSChJw3yBxuIvRez7UELpnKL0WRlQznysencBlMjbduLdHGmneYGnnzDJC8SN
+	hila0Bcxx0TOLl5IbPO15JwXrMKmldOeuruQjZs9FhOd1COU8a6yAFsT568Q8Vg9vJs7CJ2FadN
+	pIZvYO1jfjl/nbDvU4+fIHoK3M7ponXFfBU2FUG2WySN1du9epJ8f8VkP8ubWxWTI2HQsCdHFl5
+	rfeEd2JYZl+thzJ07Kx9+XyFv+Bky2BScOIz7zBpC/KG6tYGA7UvoED8Pa28LEPVxHiyD8JPrZz
+	Brx3KXrhBilN7mugWROrSsMxkiVUJRIedEVav3AFjoafyqCnmOOUkE/INCg==
+X-Google-Smtp-Source: AGHT+IHqZ0IRKaYzG5gKXE7DG2A/2IPtZzhz4t0mufgG0uzlcu5hOT7bARpDBtl8lbCuWuX7GClkFQ==
+X-Received: by 2002:a05:600c:4ed2:b0:453:7b2b:ed2e with SMTP id 5b1f17b1804b1-4538ee8cb15mr165853795e9.24.1751363990789;
+        Tue, 01 Jul 2025 02:59:50 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:8515:f93a:c957:e0a3? ([2a0a:ef40:700:a501:8515:f93a:c957:e0a3])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453b3542838sm10272225e9.1.2025.07.01.02.59.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 01 Jul 2025 02:59:50 -0700 (PDT)
+Message-ID: <db172526-334f-404d-a9ea-530ec2e6e549@gmail.com>
+Date: Tue, 1 Jul 2025 10:59:49 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 4/4] add-patch: add diff.context command line overrides
+To: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+ Eric Sunshine <sunshine@sunshineco.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Leon Michalak <leonmichalak6@gmail.com>
+References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
+ <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
+ <b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+Hi Leon
 
-the problem is that when I do a treeless or blobless clone and some time la=
-ter git pull, git prints many, many lines that it tries to fetch data, then=
- I interrupt with Ctrl+C, then do git pull again and then it completes.  Ho=
-wever I never tried to precisely document this until now:
+On 28/06/2025 17:34, Leon Michalak via GitGitGadget wrote:
+> From: Leon Michalak <leonmichalak6@gmail.com>
+>  
+> +for cmd in add checkout restore 'commit -m file'
+> +do
+> +	test_expect_success "${cmd%% *} accepts -U and --inter-hunk-context" "
 
-On 26 June 2025 I do
+Looking at this again, I think the test bodies here and below should be 
+wrapped in single quotes because they are passed to eval and we want to 
+expand $cmd when the body is evaluated, not before. That would also 
+simplify the quoting inside the tests as we don't need to escape double 
+quotes. That's not your fault - you've just copied what I suggested before.
 
-$ git clone --filter=3Dtree:0 https://github.com/git/git.git
-=E2=80=A6
-$ git show --oneline
-cf6f63ea6 (HEAD -> master, origin/master, origin/HEAD) The fourth batch
+> +test_expect_success 'The -U option overrides diff.context for "add"' '
+> +	test_config diff.context 8 &&
+> +	git add -U4 -p >output &&
+> +	test_grep ! "^ firstline" output
+> +'
 
+Don't the tests above check this as they set diff.context and 
+diff.interhunkcontext and pass different values to -U and 
+--inter-hunk-context?
 
-Today I do=20
+Thanks
 
-$ git pull
-From https://github.com/git/git
-   cf6f63ea6..83014dc05  master     -> origin/master
-   74e6fc65d..83e99ddf4  next       -> origin/next
- + bc3287e71...a842a7780 seen       -> origin/seen  (forced update)
-   fefffbb31..7af8e2e03  todo       -> origin/todo
-fatal: You are attempting to fetch cf6f63ea6bf35173e02e18bdc6a4ba41288acff9=
-, which is in the commit graph file but not in the object database.
-This is probably due to repo corruption.
-If you are attempting to repair this repo corruption by refetching the miss=
-ing object, use 'git fetch --refetch' with the missing object.
-fatal: could not fetch 5e66731277a4d791043dc51e2804dc0b496c523b from promis=
-or remote
-
-$ git pull
-Updating cf6f63ea6..83014dc05                  =20
-remote: Enumerating objects: 22, done.                                     =
-                                    =20
-remote: Counting objects: 100% (21/21), done.  =20
-remote: Compressing objects: 100% (21/21), done.
-Receiving objects: 100% (22/22), 137.56 KiB | 8.60 MiB/s, done.
-remote: Total 22 (delta 0), reused 1 (delta 0), pack-reused 1 (from 1)
-Fast-forward                                           =20
- Documentation/RelNotes/2.51.0.adoc     |  15 +++   =20
- Documentation/config/merge.adoc        |  14 +-  =20
- Documentation/git-merge.adoc           |   2 +-
- Documentation/git-stash.adoc           |  29 ++++-
- Documentation/merge-options.adoc       |   3 +
- builtin/merge.c                        |  66 +++++++++-
- builtin/pull.c                         |   3 +
- builtin/stash.c                        | 460 +++++++++++++++++++++++++++++=
-++++++++++++++++++++++++++++++++++--
- contrib/coccinelle/commit.cocci        |   3 +-
- hash.h                                 |   1 +
- object-name.c                          |   6 +-
- t/t0021-conversion.sh                  |   4 +-
- t/t0610-reftable-basics.sh             |   6 +-
- t/t0612-reftable-jgit-compatibility.sh |  13 +-
- t/t0613-reftable-write-options.sh      |  24 +---
- t/t1400-update-ref.sh                  |  10 +-
- t/t3903-stash.sh                       | 101 +++++++++++++++
- t/t5004-archive-corner-cases.sh        |   5 +-
- t/t6422-merge-rename-corner-cases.sh   |  10 +-
- t/t7422-submodule-output.sh            |   9 +-
- t/t7600-merge.sh                       |  74 ++++++++++-
- t/test-lib-functions.sh                |  16 ++-
- 22 files changed, 789 insertions(+), 85 deletions(-)
-
-As can be seen, after treeless (or blobless) clone, git pull has to be exec=
-uted twice to complete the operation, the first time calling always git fai=
-ls.  With always I mean over longer period of time I tried this with many d=
-ifferent repositories.
-
-git version 2.50.0
-
-Kind regards
-  =D0=94=D0=B8=D0=BB=D1=8F=D0=BD
+Phillip
