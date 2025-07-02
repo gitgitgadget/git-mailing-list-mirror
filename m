@@ -1,109 +1,110 @@
-Received: from mail-pg1-f196.google.com (mail-pg1-f196.google.com [209.85.215.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7971518EAB
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 07:14:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.196
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7643B14A60C
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 07:16:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751440486; cv=none; b=USysXGlSHOANAlAzs5wIYf46PVwYN8Y5o2WgBIWFqiZHG9otByid8icK8z9YpB+KZi+7T8RTxjc1eJ5DCNFNc9kvIjiTcTyOgsQTYKTpvxyUhFDf8lXcMp/y+DeE7OBGH86XyLR1HAo5gE/Uuh+iT43tvdUuS1Yf8LzyH8n7SYg=
+	t=1751440612; cv=none; b=VznzUj05sckUy9tgmDQDptiKc6t/ZCOW/v95cP7UNokg+rpDzBNNOuXFq7g5P4ut5VEngPZdRpacoN1YaMhnYsZX6nWaPCj8thyzc6kdEWHWEuvmR9KXocYPM4lPeBe9ma3F8uXks52qkpZrCjBgkJN2eWglfcPjUtEgALgzOkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751440486; c=relaxed/simple;
-	bh=dpoNKP1KwepgaXYqqz6n6skyS7rToVcGDFOY6RN8WrM=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ltlP2p0xVD9bpRVSfvhgpSQICXiW81MprpaZxw2+PsGvs6zRQKZsrgAJuZpIXH/1D5MwU5U3EJeffjlN+AGuB/3QT0YvWR4KLgXhmfcJImOOpVkEGVaWaJ+ujKlBRhfR3dkYcTaEnfA5Zya/XiHOm1hhzFih+tg9p+cg9kfrWi0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=azGgDfC/; arc=none smtp.client-ip=209.85.215.196
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751440612; c=relaxed/simple;
+	bh=qX/lKJoRxJY5WfRjS8jKF8q1FsqOEvrzKtuqGHCYLFI=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=Idc0yITc3usXOhYP6c8SvFpy3hAFNXSMyPjpYMjiL+8vzDstPbQlUaWItUpKhPEGEJdxiKkZw48kZq2xCET+2UAYlKzBZGoXgKwMX02EgghQRRWwhTSPGJZBnlBAfnUT9uBQxRmBL+HaO9TyOheQXw49WU8/4KEiyuLBUReHNxY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=yG2mmcWi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g7qFehIi; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="azGgDfC/"
-Received: by mail-pg1-f196.google.com with SMTP id 41be03b00d2f7-b31d8dd18cbso8078342a12.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 00:14:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751440485; x=1752045285; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P8RpMuHgwjwHR/MPszwpgS3ibpxcF/qWzg8URcJEsV8=;
-        b=azGgDfC/c8DtIUD7YFag0KY2FfEzQFGYHjc00tQQKMMDzKJVFuaVisNwf7848bNzbd
-         kwQJ3YaWUM2b4cUyVVB7QlGuXzN9VsIRMsEEn7qYtCQ0IQ/XjwQiIbTTzyLq0vkXeyx+
-         4KSopBpJFUBmFgmSwSn7oiwNKAj/1TeAIhkV0P//+HoAFZdR7MD6x20tNeMZLEcAj/0d
-         abA1otqcrveeTYWSbx1bTNjKZGZTzkQOT+J1koXsXrtyRmdxjXLuiHtROmiatEaBnp01
-         Gyjr8YP1udHyHjd4D8QIXetKYb6H8h5f794tOIJMegGDe6QH087KEmdsnriipLMV1U58
-         Mzgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751440485; x=1752045285;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=P8RpMuHgwjwHR/MPszwpgS3ibpxcF/qWzg8URcJEsV8=;
-        b=epp77tB9CVSzWJ02cOGLAxsqt9wuzQNOKvLzN9VeJ+acfP1yBp91S1syDi4rp6bfIX
-         GsKaWGg0B8DZ/dZLah4/d3Knoz8UlYao+zhCeckkzZ1v4pTEsdQmy2xbY3UMyqqf9l8L
-         OY877y9aqdXVH04iHhEstvtZz6EKZpf+SnTEXTk+PlInopsM1WmYQa3Y2NcxvMqfq44d
-         Ygg8DJs3/BTdHIk2mAUFJHtWYNtCmnk9fjDsVc6y+P8XyapmGhkW/mMMVMm20RknNviu
-         iimR5T0KgyBoE064hqgKXIgvvpwMxzKt4af+zKgzhPDQ7Yva/NyYTtuWJnFcS+5ILiSh
-         Z43g==
-X-Gm-Message-State: AOJu0YyjEzpJ5LrN8EwLWsdj/aAgt7kORtvNHH14cC8wb2q6c149vLQB
-	d2yravmVh+LfjVDmdPwgvGnBoH959P6s4eZvMGlbvX9z0/JbDO+Po5IS
-X-Gm-Gg: ASbGncvzugBVZrPOO0GQqczHMt98YZUni4otkmYKTNKMzGQgjUsg+MLy0oELhohpoRg
-	aoNsv4hH7h2UBBElwixMif7+AL2D47f2LBR18uHJLX7vleyW0NDTlHTf7KX/Xpe9YrJ56VuWd3U
-	cB23D6TUXFGoNhEZLFQOZPdBXwDh5YLR1JbnYg75Zn3mRIEHOYDOV+Yc3HoOszXCS5ZAg/8P6yE
-	EYZMwVWTTIgW7Ii7wk660//ut/B6EVSgaRT62M7YSi+JUqSs26T4JcewYof5XtF5D5Ahq9V+ha+
-	CyfTatw6nn6stq4GBlKa+XIZDv7YohqVBgaco1X1ftLSsxpZA9TpwXjxomgtEht2PbV6VkZLyNq
-	3Rw8eDEH05t2hyDu3EeW7QhNmu5c3VX4DdBTmTeeqyfBuW8yMRQmDXBvOdZnjTrgEEnpjPtzkxg
-	==
-X-Google-Smtp-Source: AGHT+IGyMR1i+YA3yl+mHRvCGry5bXEFBMdM4vA6Lweyrl9Trn6C1SRwEUijXxrK/wY4Gnyzgpk87A==
-X-Received: by 2002:a05:6a21:4d17:b0:1f5:80a3:b008 with SMTP id adf61e73a8af0-222d7ee95camr4028277637.32.1751440484708;
-        Wed, 02 Jul 2025 00:14:44 -0700 (PDT)
-Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3642e9dcacsm280812a12.12.2025.07.02.00.14.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 02 Jul 2025 00:14:44 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="yG2mmcWi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g7qFehIi"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 92BE41400310;
+	Wed,  2 Jul 2025 03:16:49 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Wed, 02 Jul 2025 03:16:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751440609;
+	 x=1751527009; bh=xBadST5B3h1POsmoVaXbsp6odiz8FrR7mIjZuQbJMTU=; b=
+	yG2mmcWiYShEGutounxHe2IqF1ou5QVyEC/nEi8M7akf35nSA06n88NLrx8uR17y
+	8Xv3H1od8b/9EmKgM8ETIEiVcm2Z4PczctkQhzz7NNrzrGbVg7DFCUzYB5g1m8VF
+	klam21FyqPHf6L4kwXZttaZfUkPrk7bfXWXmtyGWVtB0kdFwoWLu7DiMO8kXFr6z
+	lPZR8VjzMRA2Udmp0me/hK8UR73KxxfuhGEvFcHZpH1lXJT5qVPQwu5Avlu8ZX8h
+	l3inu9ysFVXIz67eDmn8IbKH1w44Qhlz6Vqt95rdJqEOaQIl/jdF7nl+wKjyQQft
+	HsLVvSWmEIapFmHQwQoTRQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1751440609; x=1751527009; bh=x
+	BadST5B3h1POsmoVaXbsp6odiz8FrR7mIjZuQbJMTU=; b=g7qFehIivAiRTtkGg
+	tv8I5FfwGeB2xVavIUTah5RmHKQfuT/abzcuzoYK0Md6+bjCG2q2SIkO95yDxHLQ
+	6O77sTVNopbkyNPUyF+ztkzmHwIndC5IrRcdnAjqLrd0I1ugKE62o8IOt1J/AsS8
+	AbjYcggBWTPNj1FZbW/iNTdnG+5fPL1BVoHI5Le5FioF2ag+lhY6pUqi6ELQAcZ5
+	YUiulhVBlQTAgoMiVPGzkimQ/i+8OBpvSt+UvuXcjPb0VfkfaCf9T0/12zBXvzr6
+	e/FEPxzYWrLp+A2QvbRvHhw0sZhdIWjppwhl8hmMVtR2WRw/+wY2/dETz1rCILQN
+	Gns0Q==
+X-ME-Sender: <xms:4dxkaBRUx05vBgY6r4mA4yMtJfSOMDxv8wyTXproaZYQmebtbYFskvI>
+    <xme:4dxkaKzgzsLyj-aIrFWJDM8g54b7NnGWeeopIIzwrMIBEXm3V5G0ElAqYrSxteb32
+    JZdnAY4uLglgFWoiQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduieejjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
+    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
+    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
+    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhg
+X-ME-Proxy: <xmx:4dxkaG2J4A2J4BnQ7yfr_umSlqksrt0QxWrXEoStWS2PswoFgUYNlQ>
+    <xmx:4dxkaJDdcR9YuLRJ-9FxQ_N-RRRhdIT8fJwn5zcM1YZnS99_bKtu_A>
+    <xmx:4dxkaKh6jg3BGwka4dWwYM_Laie7fIexeIDMivvuFIehVbS-VIOmKw>
+    <xmx:4dxkaNrFowu8dtogqJsI0aTOudBwi0RQaxlmXBcB-ItKmfHHF5nZCA>
+    <xmx:4dxkaPZpY24cN1EN1Y4eB2Rjh-2hc_zMBKHBabxCQfbaGQz_dF_20Hwo>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 5464D1EA0066; Wed,  2 Jul 2025 03:16:49 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <xmqqo6u4kkg0.fsf@gitster.g>
-Date: Wed, 2 Jul 2025 15:14:26 +0800
-Cc: git@vger.kernel.org,
- =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+MIME-Version: 1.0
+X-ThreadId: Tad7c12f59a96d8fa
+Date: Wed, 02 Jul 2025 09:16:29 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
+Message-Id: <5c12c2f7-47b8-4908-8ca5-5fb95e0c6e13@app.fastmail.com>
+In-Reply-To: <xmqqwm8rh00m.fsf@gitster.g>
+References: <xmqqwm8rh00m.fsf@gitster.g>
+Subject: Re: What's cooking in git.git (Jul 2025, #01; Tue, 1)
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <D5CB9B7A-C7B2-4F5A-B358-8F46A4E18CDB@gmail.com>
-References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
- <20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
- <xmqqy0td8fa9.fsf@gitster.g> <C8E0D62E-11B1-4921-AD4C-2905F10E07B6@gmail.com>
- <xmqqo6u4kkg0.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Junio C Hamano <gitster@pobox.com> writes:
->=20
-> I do not know about icase; though.  Asking about "Dir/Path" and
-> getting "Dir/ or Dir/Path cannot possibly be in the set of paths
-> that were modified" from the changed-path Bloom filter would not
-> help us optimize the tree comparison out, when we do not want to
-> miss modifications for "dir/path".
+On Wed, Jul 2, 2025, at 03:08, Junio C Hamano wrote:
+> * kh/doc-config-subcommands (2025-07-01) 5 commits
+>  - config: mention --url in the synopsis
+>  - config: use --value instead of value-pattern
+>  - config: document --[no-]value
+>  - config: use --value=3D<pattern> consistently
+>  - config: document --[no-]show-names
+>
+>  Documentation updates.
+>
+>  Will merge to 'next'?
+>  source: <cover.1751382830.git.code@khaugsbakk.name>
 
-Make sense, both PATHSPEC_EXCLUDE and PATHSPEC_ICASE shouldn=E2=80=99t =
-be
-optimized by bloom filter.
+Ah, so you=E2=80=99ve normalized the area to `config`.  I had a mix of `=
+doc:
+config` and `config` since some touched both `builtin/config.c` and the
+doc. I=E2=80=99ll try to remember that for the next time.
 
-I found that my [PATCH v3 2/2] contains two unaligned parameters. Should =
-I reroll
-this patch and introduce the nowildcard_len change in a separate commit?
+--=20
+Kristoffer Haugsbakk
 
->=20
->> Here;s are all possible pathspec magic
->> #define PATHSPEC_FROMTOP (1<<0)
->> #define PATHSPEC_MAXDEPTH (1<<1)
->> #define PATHSPEC_LITERAL (1<<2)
->> #define PATHSPEC_GLOB (1<<3)
->> #define PATHSPEC_ICASE (1<<4)
->> #define PATHSPEC_EXCLUDE (1<<5)
->> #define PATHSPEC_ATTR (1<<6)
 
