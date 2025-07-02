@@ -1,120 +1,105 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CA932C85
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 02:54:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F77142E73
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 04:50:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751424898; cv=none; b=OA1CIflbH+pAVht2H6jBMNuFcvBRi+S4g1vdHJHD77/JhAeGURSU8Z0tDeStboLVUX+f2rA8MY8P0l1I7Bg+bp23Xda8lP9f+LkEU8H0yeu7irqgV2UTtVCa29BsBZKg9c0T7in2HFBiAYTGsd/uIoBZyCEU6H6BfTc45XhcXK0=
+	t=1751431854; cv=none; b=bQHqTnLntyWOu3xT5/PRRnxDyEFi9Jc8jX1NM3+ZXUscQcNS6ATMuVzVbWKxeNXDELtnyyvnfQqqiKXcdbBz/8WrSyGIv4jndcq/BgHf4RTY6suO1Mw0Tw4cNNJp9BfQXTw4no8uC0UeHR95sXEU9jmkMiNxh++UX9HQ+AsT2ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751424898; c=relaxed/simple;
-	bh=n9S2nxsSDSuY46Ewlhe7zKQhm0erno4TsqIYUTO2738=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Fb3nG/jd/UA5fq4RjMBdMdM3eQr2wsfq7MVkacqqRJU2dZzjC5t7U8kZ091wdf2TzVVJAWDCMNtvCjvIpMnUfFiN5p3IGF22drxcSimCtDdj48ZhHVMB5cXA4OIwQhSCgXph4Ez/kUehIiNUjrQgmrnZ/8Mj9y/6o7ocPCNLCkg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VE4HPIYL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NHmWDnWv; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751431854; c=relaxed/simple;
+	bh=lmPEf9ImG15j67mNL8Y6qT5zFI/7saO8UzOhdZjTv5Q=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=m8GhAYusRUmH86N2Ny4f0rHrziyNigDyX5feXn3nN+aem/TJf54HUvCbh8F0YmkYumzkvHDv/tzuiy+ytUZIdNfyAVNXP6F6mmuj0a5ezloXeR9T0E57iMJBd7wZFApMXLjmW6GsuNV+devGbkjIJlQIFIoVs+8lgYs4DigFGME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bSuMgaqA; arc=none smtp.client-ip=209.85.167.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VE4HPIYL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NHmWDnWv"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CBC9F1400335;
-	Tue,  1 Jul 2025 22:54:55 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 01 Jul 2025 22:54:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751424895; x=1751511295; bh=RY9H9jC+qr
-	lk8+g7I+EQhlH4ybKSGaxb4Cos5AnoqLA=; b=VE4HPIYLhEl8x9vcSgM9k5aHFA
-	WV3aDAuQzWKfxcvHvofXXKDGurifq/r0Q6JtNyKJgHALSWHuNyOOV9Rx04q9hcDu
-	ZGLiI1TgLMY8yBzX4fCWi/ufKwIl/51U8vWiL2JIy9z8F3VHqr4Uvr1lbFArpFNT
-	SWW2P53QVQHMXChhjeCHfFlIdpQnCYI7nCOCa94eLSG7oHElgRox1lfs7OqNl4AN
-	jvS9An4Kx0EViv5zncp4kRKWCablUA61R9sfuuXEo06rBA4/Y1MAV7IkaldzbtPj
-	/0tE/z/ndwC7c//RefBsHj9qLenYRu6PuH/p/2gkL5IgE8tgvrJS2h6jSfbg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751424895; x=1751511295; bh=RY9H9jC+qrlk8+g7I+EQhlH4ybKSGaxb4Co
-	s5AnoqLA=; b=NHmWDnWvtI1MWmDrmk/6YmASlehSOjjGB5LlMz/0GC02HqqMYMF
-	/lkpPD2e6xEDKD5qLLkKnftK7SjusNKLK4F+HZwp8GDZb1MNP8r1itt+ygBTb487
-	iQpGFAZim5lxeUejX4wa5iM3Ov/1kejc+arClClTzmicxBRHl0l4x7JeuFrB+di1
-	vrIsMe5yimH/hy6XSXXG8amGhElNcmuY2jnZFXLjsxYOeBSiWIXuBDQ4ckzd/h2p
-	/Ksf/Uvt6rRoI+D/Z/Rtl/Ub8mXJo3CTv1h3JYfzbxzF60hFWZuoLJuR5V8gl6d7
-	BcHQYeZHjXYxLoA9k8p4WhLbAQHj1XPx4kQ==
-X-ME-Sender: <xms:f59kaIQuyMgM_5Fv-qYBNivLPBuDDEAeYKMgLloSYmPDPVm9DegPeA>
-    <xme:f59kaFyCrPgWWFURI1HGkNMivI1L-b4x7O_nQLngHSRpBCrQEBkKr6kllui2_OmqV
-    0R7wiXd1VC9vL1dgw>
-X-ME-Received: <xmr:f59kaF2Bwsp3Ha3_QAPNhw5k1nZ-TQGq82ar1Poub1EFIXQnV4DobMqGom3ASOdeu4GJU2TKPsU7Vec6gVWmR-JByM6MjcORPUoiMA0X9A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhig
-    fhgrmhhilhihrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopeht
-    ohhonhesihhothgtlhdrtghomh
-X-ME-Proxy: <xmx:f59kaMAOqkH-Gmx8Cs-nfRBPXU-a4nXz8nlIypWKiHNBNFKUtqn9UA>
-    <xmx:f59kaBiM7BPztVFiCJ24kFfUAO26uDPf_TAOuS-NMFdCmgJcXNTULQ>
-    <xmx:f59kaIrSm3jAyTxwi2Tywy7VNjpWiaYKr46Nnq5Gih1XLqhAOsJ4Cw>
-    <xmx:f59kaEgyVo_2qkTWXsc1thQmmsP7fextKc4PUluXJQGk9URliITILg>
-    <xmx:f59kaPBlCO8XsGvFeOeAshgR8JehKeLUcr8WOsF4zrHUDNtzFFnDRKoZ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 1 Jul 2025 22:54:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c45a7694 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 2 Jul 2025 02:54:52 +0000 (UTC)
-Date: Wed, 2 Jul 2025 04:54:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Toon Claes <toon@iotcl.com>, git@vger.kernel.org,
-	chriscool@tuxfamily.org, jltobler@gmail.com, gitster@pobox.com
-Subject: Re: [PATCH v2 3/3] meson: add rule to run 'git clang-format'
-Message-ID: <aGSfedFVoMnhwZbJ@pks.im>
-References: <20250630-525-make-clang-format-more-robust-v2-0-05cbcdbf7817@gmail.com>
- <20250630-525-make-clang-format-more-robust-v2-3-05cbcdbf7817@gmail.com>
- <87bjq4qbxi.fsf@iotcl.com>
- <CAOLa=ZT6-Ea9iaNgYymmT6s5mjWk4i4RxZjcr+7G6HUbg4GdHw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bSuMgaqA"
+Received: by mail-lf1-f48.google.com with SMTP id 2adb3069b0e04-553b82f3767so4582759e87.3
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 21:50:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751431851; x=1752036651; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ie0yoEjbOGnPVjHT6gN06YfB8lTr2HXRmDzrW8E8Ab8=;
+        b=bSuMgaqA2+k2lkmjqfheGaXtTwyCtQSOCYuTE0ML/r2FzJ3Z7SupIVDHTUhbUzz+lQ
+         zIUAcQuMEXjS7ZyFwrcrGXsmZKuPlSIIAHvVGVdvR2++1eC9Im1XMDWFJWABaVvJHvFg
+         Hhcm94miVfACHYP59S7Aus0sX9KghB7gxMeGmNWy8PRPFPPzQIjMieJ/hJpTpVLU2Dqk
+         if5dYGZ0GIYeTjNHFIKgxbJox1EmrZWshTpEJ/ldeEd2qmHY22DB13aBovx2DIHPuQZY
+         6lJ32KG1Uuoy/bBLdvIHzhSgfOtMGPYDeL38p1VR2x8ipauIZ/ndVjRMIanNE+Z+u1K+
+         Q4Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751431851; x=1752036651;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ie0yoEjbOGnPVjHT6gN06YfB8lTr2HXRmDzrW8E8Ab8=;
+        b=QmbRFJjhAGPRAUO4KX+UyhAJvntr5g1jyY20JVNa890zRd6/FEQEVZ0SQZE+Q2k+2M
+         opyD4M7ypY1tF/7IufKEbJf1HgnAemXEDXh8oX4gFio1AIqh8XLyVusSf78cNS+6cw8D
+         fB+0J2+O2mzZV2Yw/OJTagUuCy2CApIatb6evIZj0EeoebqSZrl5yoWxNmY65r8kXOpK
+         lvwDVy9Q9RTNV+9RCCUd7WwG7IeWkH/DKlR4aMt2HzVqt/4RXpp26KhEsiH65UjWdAU+
+         LGCIcXJD5RVQuJ5rzsgX4WuGM4f4ZANMa3Q4eoGWh0kbVwDQchILfPcLbQ2cYf/0eiQV
+         tGow==
+X-Forwarded-Encrypted: i=1; AJvYcCUH9EVASCr1inS1H00sY03+47QLdCD2EFDKCx1iM+4XhfLce+oRSIr+OkvY318K3+EcY5I=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yya8l4S58ub/IUiPUXgw5yGf2O6vM//xfoL1vDtnY66i/efOiFH
+	fuvH8wlxqKFJTHIyRAmLq0d9CtOrfSEQ0Y/wfOmlG91SW29Eb03bQff9oYZXjZ7OnNF+nsXx3C2
+	c1UYoN0VnyFCFGTRm2ovq/edT3jKkfqs=
+X-Gm-Gg: ASbGncuiBBdBYwFwa5S4dhe6jMERVXHYaovWZk3XA4CyjtuYVG5iJ3vRG8CaU8E3Dtl
+	KRgxochNhLJmVt4L8rbgRnPKgLrzZ74C6xhbWVBFGIdEr7Cli4ftdlpcrSWJaL/MV5U8gYG1/2L
+	XLnfaxn3gblC5ikGwcg/sDCpSo6cPNJhh57GyqOdPyKSbP
+X-Google-Smtp-Source: AGHT+IEIZ8wa9pZKM1cQUZEXT4Mmf3GljO7nQoC4c5oV9DMNtXGhQDXV2JmklHVoc6tk1YtL5j+em6TFnI5ya6b20XY=
+X-Received: by 2002:a05:6512:a82:b0:553:2f8c:e631 with SMTP id
+ 2adb3069b0e04-556282e103fmr424519e87.9.1751431850355; Tue, 01 Jul 2025
+ 21:50:50 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZT6-Ea9iaNgYymmT6s5mjWk4i4RxZjcr+7G6HUbg4GdHw@mail.gmail.com>
+References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
+ <20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
+ <CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com> <aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
+In-Reply-To: <aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
+From: Chris Torek <chris.torek@gmail.com>
+Date: Tue, 1 Jul 2025 21:50:37 -0700
+X-Gm-Features: Ac12FXw89xpcIvBiFb1kqEOfYnHT5Zx-UpixWhQ_Hd9O2HM-cwB9mcLiEybungo
+Message-ID: <CAPx1Gveenh075k5W-KAKnyJKfdzMNL0iry-043mLB8rKZ_2wuQ@mail.gmail.com>
+Subject: Re: Re [bug] pull --prune could not delete references due to lock
+ file already exists error
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Karthik Nayak <karthik.188@gmail.com>, 
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 01, 2025 at 11:12:16AM -0400, Karthik Nayak wrote:
-> Toon Claes <toon@iotcl.com> writes:
-> > Karthik Nayak <karthik.188@gmail.com> writes:
-> >> diff --git a/meson.build b/meson.build
-> >> index 7fea4a34d6..20ce0525a1 100644
-> >> --- a/meson.build
-> >> +++ b/meson.build
-> >> @@ -2144,6 +2144,18 @@ if headers_to_check.length() != 0 and compiler.get_argument_syntax() == 'gcc'
-> >>    alias_target('check-headers', hdr_check)
-> >>  endif
-> >>
-> >> +git_clang_format = find_program('git-clang-format', required: false)
-> >
-> > I think we should include `native: true` as well.
-> >
-> 
-> Does it really matter here? I must admit I don't understand the
-> repercussions here.
+On Mon, Jun 30, 2025 at 7:21=E2=80=AFAM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+[regarding]
+> > +                             if (ignore_case && prev && !strcasecmp(re=
+f->next, prev))
+> This won't work in the general case, since the two refs that match case
+> insensitively aren't guaranteed to be adjacent.
 
-It doesn't really, as `native: true` is the default. But we explicitly
-say whether we want native or non-native binaries for all the other
-calls to `find_program()` to make it more obvious, so I think it would
-be a sensible addition here.
+Also worth mention: it's not just case-folding that matters.
 
-Patrick
+On OS X (Macs), path names get "normalized" so that the names
+
+   s c h combining-umlaut o n
+
+and
+
+   s c h umlaut-o n
+
+refer to the *same* file or directory. On a typical Linux/Unix FS, they dif=
+fer.
+
+(I don't know what Windows does!)
+
+So, if you have a "folder-full" of "pretty" German refnames, some
+spelled one way and some another, well...
+
+(It's not clear to me what, if anything, Git should attempt to do here.)
+
+Chris
