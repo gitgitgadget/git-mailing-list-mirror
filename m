@@ -1,121 +1,137 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38582DE6EC
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 20:22:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08751F1306
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 20:28:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751487754; cv=none; b=TqtdwowVg4b4NpRF2GFcraQdaRmxIVN2wWBC1KpcKE7TnltUKWGp8whRnqvcKojG5h+qXF4i7AukKmb/Qzg7uZ44Io9OfrwebL+saSsjc6xITARlM0ZTYEBLfQ/RdVnCmR2dXovnKSq5tYvTisRElhsFpb1u4JwUe/fsKG1j6+E=
+	t=1751488128; cv=none; b=gsD7xGG4l2c8Xg4qNANOMOw0lgAJQZCw1xJO5zMH7z5R+3G4pwKtvaDaT1+kT4QDhpq/3RVArff2v3BkTNtjdWPrrh0Zkiohd+ZcwYenawBA7tbr0HA9lqzYQTBwE7zNEp/2eiUsf7nl+2SOjO6By3Y9cSw0Pxo0TiYuZWtFDm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751487754; c=relaxed/simple;
-	bh=W7n3XOiv/d11rOSSzs2VLDk3eW1K0oGwyK9L3dMJ+BA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=huy35QdALrUZ3u7LoamLUwVvIFDbAJ1heCvk9+/a1TuYlu37sGy/D3rG2lo0aks0a2vtloxa050W6v78yJl/1H4AOshyAl/Z14ZCjLaS2DNk7UjWigdYEhw4jWDzOWG/A3W0Amy/D+2HyYAvyz1CXSL4zgnhId73f9dSdmDRnzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bt7nNYH7; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1751488128; c=relaxed/simple;
+	bh=X316NTpgTq4+mY9GjdR67UCJak3jFrr6DzEmU0GsEqk=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=agi5ciC/gB6cTE9tudxE2mxbUDCzSU6czCKb2tRRGZsPvWe5Y6E5Dd6a5TXBvxZb/L9VKRox8zlkALGwCM5E2O73Cqdsid0XbHN3Bv5M72de97rrTJI0hAwObg4/O3MkdiBAHHYOmsX3T2yrkXjK5n4/9Apygl/N3+xgbczeUBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PIzozMmF; arc=none smtp.client-ip=209.85.166.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bt7nNYH7"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b321bd36a41so4334716a12.2
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 13:22:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIzozMmF"
+Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3e05bb6efe0so3720685ab.3
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 13:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751487751; x=1752092551; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YKiBSKTrVmFF5nSEoIVyq9BiHccCOXfthEZlKq/4wBk=;
-        b=Bt7nNYH7J5+z84PI/mQGE1YauuHeB5/tXG6iY1NNVS5R3Pq8ABKNry/1HTCdBfZQ0G
-         r2SMoBCSEFnC+vfT4/P+M15CDZmgQ2RTKpxiUkXknrVNT4wQKc9TXSAQaFukwCniCAHR
-         ybKIQQJRmcLOrkhBOO5NfpxNjlye3lVQsg09kE7QK1z4s1zkiUIW67WvUpqb4zNJi78O
-         +d6pbp1w/Bglo4kE1gglCNPOgEYOrZr16/at0ZabRzCmSew0Nbk6QrChtd5wTsHk1HSM
-         +4V8qV3B3rIIvfZsP3EnVxoxzWYo/LjhjivHYHQThH98QiRX3xqgF1l6JkBKYw8dAKKK
-         92RA==
+        d=gmail.com; s=20230601; t=1751488125; x=1752092925; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jxv0Bwi3FpLVEY31OFzWBYhhGOt/3TGa1ct2FGDZKh0=;
+        b=PIzozMmFw46n20ASq/KKf/L42ZRu8Faq2urcp+lI/Z7c/G1WsClQXWlfgjmbjPJ8g5
+         R28H0eMaa4xfInypK0mpU/XANhP1X3K/poM8uAnPNg5cmr6efWy8TyCxP2Ax0dRVC81p
+         eV3KZqk+zhi66mmZgji8E80JJIzsenYLQ3cbiLr8DTik4PcgZsTMNoHZCG69BCTudlo7
+         B6aJqDDWEqmPNSreCiWFsnJ3RyExIkPFvocJBQkUhana4zr6HcrZbNgJ1dsVuULBDhjJ
+         lxsRJUCfc74qGHc9cN90wE/sjolrH2ORVYTKVqtOqGhJ7U4gEC7sF9CH03NvPkRfcorB
+         nfOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751487751; x=1752092551;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YKiBSKTrVmFF5nSEoIVyq9BiHccCOXfthEZlKq/4wBk=;
-        b=XdpZsSn/GwrniWhGiHGHux4RNVW5k0Vz9XgafExydmEzPJNjD2imat6X0UwC3LEOXf
-         /iw3eDR4yYvgHdzYzTBxpP72dN1H2uoy7W2mX5il8yl0yVNZRwTS/Zpc1m12I9Kofi2l
-         Ywx0MoC4p/oe3FyTvq6Y/T6Rffi7tSvM+p4XCdRAq5LjBmom/afVQWbbqJAPWm63UiFu
-         Qm8glFo+H8vP0ab3K+yQpjD30hjiaY3I50P1TrM0lWtM0wBpAA3wtAWOAbQDeOvETfBc
-         NmuBGpjNwHNWQq2SUu+mzWtgv4KctNEQlID8rvabz7jeLZXvd5+UVFXPOSTdu4y4dFuB
-         Cfbw==
-X-Gm-Message-State: AOJu0Yxb4X95QuvVAtkZ79IznqRqYQaKYfHfzngMPk05HwlLHubR27sN
-	6bXmC18clhKyU19RR89f5hDES/TzQUlyDqxOu7W36nbH5PBxttFkx9Pj
-X-Gm-Gg: ASbGncuTzK3pVcPs31N5UBDxe2bi4iP36qUvI2W0NqDlWZNLLIBL7T547pIzu6IdOuq
-	dp2e2YpDtYLTAN4AstNKg5LkS2CFcYiPyvs6hwn0DEn0m6CO3HsGCWqOKCRcluzZ2DaLduJSWlB
-	BlFRzmRvagW7flYeFYeOWvY7exN8V3SYyEJrx2h3jE5TM1zpWFB+ydFjWfOD705x/PyPAnzjnqa
-	3aRYRhnSR6YjOwlWWCimpcyHkQXonVItwQaTKS+0BQSaLBWKot5n/WVEny6goA0Dsyrwrk/NX5S
-	7+40pdnxN9bOPe8PJl/MGWjgIWVUDU96YXKxuKMkY0i9CRLuPcVELL5EWLonCsn0u5JY0EazbyX
-	lQePNzflxE2yph+/hMV4/68k=
-X-Google-Smtp-Source: AGHT+IEHe67UxHDja6J1sOt338M89V5ouPiYjrbkAzc2E3PCji3X8Ogo+EyIBFrIk0NA3hZI/M/w9g==
-X-Received: by 2002:a17:90a:c2cb:b0:312:1143:cf8c with SMTP id 98e67ed59e1d1-31a90bdb56cmr7225658a91.16.1751487750878;
-        Wed, 02 Jul 2025 13:22:30 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:8123:5123:76e8:a897])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9cc5204bsm541959a91.8.2025.07.02.13.22.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 13:22:30 -0700 (PDT)
-Date: Wed, 2 Jul 2025 13:22:29 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, pclouds@gmail.com, brad@comstyle.com, 
-	collin.funk1@gmail.com
-Subject: Re: [PATCH v2] builtin/gc: protect against sysctl() failure in
- total_ram
-Message-ID: <4vz7mwsyckx4ie74qdlitcmhg4vyuoiuwzufd4nktgzu5ppzfx@cqmznirthjcp>
-References: <20250702144244.43858-1-carenas@gmail.com>
- <20250702154649.44210-1-carenas@gmail.com>
- <xmqqikkacu30.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1751488125; x=1752092925;
+        h=content-transfer-encoding:subject:from:content-language:to
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jxv0Bwi3FpLVEY31OFzWBYhhGOt/3TGa1ct2FGDZKh0=;
+        b=O4L3vYK5A+ELq4UM2rnZJHty24c7qGrGeeHCspPc5HkHmYK8J8f8ufSmg5Xu6s7jMB
+         dz8hBnBnCnPEvAu7+KJrq1o16XLkInO6bB3AVKjddj1c2IbJdR0YqkNhJoqmeVtdDShj
+         yyOJZNlVskIqTsGxRNoAfa0ea4gCldqwh8lVj1C8zCO/Eo4nVg94Oo4qjF7Wr8tUehdP
+         qDINXWuPzBFgkRpQIrjGqcC+pBor47PNhDkzTNtHda9Nsjb6qepeR2vvxPZSTvmJ8yew
+         QxOq12HKbnzS4++vGcEggdzTDRvWflz4v0SwloCcaun/Z6nYLkfKsAdXN00WI+MYxDg6
+         rV8Q==
+X-Gm-Message-State: AOJu0YzUZQnN0PSoLwglv7V3zxAZU4O4cR7QvTB5UWXTXAzQ7X2aAzKM
+	xbXBx8u/XwZ1uJfRiCjyNf7XBdNO2vb56PXBlfv4oVsvdoHM4L1isDoK9sI48g==
+X-Gm-Gg: ASbGnct1LOkwoCxhA0mohTEShPvKj4JaIfRigUm1qbn3TGAo+RzBJv9jExk1/gPGi27
+	oj4lK3axATK7xzmU+zEVrp4RktRFdkmiveWJqHJtpRWu+rKwRjS/7ChwjKdWNzHqdw3nrrGUeVv
+	QRDYFJS7/MPiwWx2kFaSTCcKyzIegU4kpIJbQwnATWFlDcTnQks8cGFdDEgt3yspNpv6YtR3MYE
+	fnfRxSURyOU4KBrsw0Ykr6F0zeZkkyIKH3NPpkeEE4+HKpC1xloEI05uO9GiqYayrBm+wUYoKAe
+	Sti99y+FfEgaVmVB+Sf18jYkgXsy+bkmji37idKSOsedcxsQWf6GGes+x+XxTz5ij7Hq/0snxGA
+	XTgwjxBd62d+rXgLf1baL/Fisa8+O
+X-Google-Smtp-Source: AGHT+IE3iSKKFMx7FEQ/EJKmL70qr7DE0R7xTLjNn/OdQz+PRvoP/T5DBZ+ylh9d14LBX52tWMqESA==
+X-Received: by 2002:a92:c24d:0:b0:3dd:b7ea:c3d9 with SMTP id e9e14a558f8ab-3e05c94a668mr7442765ab.7.1751488124789;
+        Wed, 02 Jul 2025 13:28:44 -0700 (PDT)
+Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-502048d7d5bsm3097572173.61.2025.07.02.13.28.43
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jul 2025 13:28:44 -0700 (PDT)
+Message-ID: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
+Date: Wed, 2 Jul 2025 15:28:43 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqqikkacu30.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+To: git@vger.kernel.org
+Content-Language: en-US
+From: Eric Salem <ericsalem@gmail.com>
+Subject: Behavior of git log --diff-filter=d
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Jul 02, 2025 at 11:42:59AM -0800, Junio C Hamano wrote:
-> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
-> 
-> > In the unlikely scenario that sysctl() fails, and uninitialized
-> > value could be returned.
-> >
-> > Initialize the variable used and make sure its expected size
-> > was correct before using it.
-> 
-> Oh, that's interesting.  I wonder if the system returns physical
-> memory in 32 bits, we would want fall back doing something silly
-> like
+Hi all. What am I doing wrong here?
 
-Yes, a FreeBSD 32bit x86 system will report at most 4294963200 from
-this call, even if using PAE and more memory is available. 
+The git log --diff-filter documentation[1] for deleted files says:
 
-Eitherway, since the caller for this is ok with a smaller size than
-real, shouldn't be that big of an issue IMHO.
+> Select only files that are Added (A), Copied (C), Deleted (D)...
 
-> 	if (!sysctl(mib, 2, &i64_tmp, &length, NULL, 0)) {
-> 		if (length == sizeof(i64_tmp))
-> 			return i64_tmp;
-> 		else if (length == 4 &&
->                 	 !sysctl(mib, 2, &i32_tmp, &length, NULL, 0) &&
-> 			length == 4)
-> 			return i32_tmp;
-> 	}
+> Also, these upper-case letters can be downcased to exclude.
+> E.g. --diff-filter=ad excludes added and deleted paths.
 
-probably a little bit less silly in 20250702202118.48742-1-carenas@gmail.com
+A simple test:
 
-> > While at it, add a cast for consistency.
-> 
-> OK, I do not mind being more explicit than necessary, but wouldn't
-> "return X" take care of casting X to the expected return type of
-> that function?
+$ cd $(mktemp -d)
+$ git init
+Initialized empty Git repository in /tmp/tmp.xnvNav956B/.git/
+$ echo test1 > file1.txt
+$ git add file1.txt 
+$ git commit -m "first"
+[master (root-commit) 71288dd00aff] first
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file1.txt
+$ git rm file1.txt 
+rm 'file1.txt'
+$ git commit -m "second"
+[master 6ff8f522b744] second
+ 1 file changed, 1 deletion(-)
+ delete mode 100644 file1.txt
+$ echo test2 > file2.txt
+$ git add file2.txt 
+$ git commit -m "third"
+[master 41498d26ea5e] third
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file2.txt
+$ git log --format="%H"
+41498d26ea5ee6820834aa51351e1e7ce6ce8733
+6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
+71288dd00afff60f3a6576f93930aeb0130e5cd1
+$ git log --format="%H" --diff-filter=D
+6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
+$ git log --format="%H" --diff-filter=d
+$ git log --format="%H" --diff-filter=d --stat
+41498d26ea5ee6820834aa51351e1e7ce6ce8733
 
-yes it does, but the "implicit" sign conversion will trigger a warning
-eitherway, I had removed the cast in v3.
+ file2.txt | 1 +
+ 1 file changed, 1 insertion(+)
+71288dd00afff60f3a6576f93930aeb0130e5cd1
 
-Carlo
+ file1.txt | 1 +
+ 1 file changed, 1 insertion(+)
+$ git version
+git version 2.50.0
+
+--diff-filter=D behaves as expected, but when using "d" instead, I don't
+get any output unless I add another option (such as --stat or
+--name-only).
+
+Is this expected behavior?
+
+Thanks,
+
+Eric
+
+[1] https://git-scm.com/docs/git-log#Documentation/git-log.txt---diff-filterACDMRTUXB
