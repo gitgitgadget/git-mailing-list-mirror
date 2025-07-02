@@ -1,159 +1,134 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7CD7246BA5
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 09:38:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8E424A064
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 10:14:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751449091; cv=none; b=S7Dqjct81fIHSUU+ZPt6cXJbznwPDnHG0GUU/nW93FboJ2rIMksr40GamTEbfD8lwhm8dVxnAlV7kkRW7tpis7PEsF91Mqg6iMeMcOsxEpaQS7SX8qVkKbSnEwjQjfs/jsfOU/BQ9wxiEIfLTDdAHWzTyUNALzkzaz0kY88u/NE=
+	t=1751451285; cv=none; b=l7Yq6PjEiX6BmLfbYxYH4JXXsIcUTfbTcjfyo88XxfQRtiXAH9Vv0FWZKkj9ahFPaUtrjjX082i4V7Qx9uWzi0u7u33JSY/K7x7O+BdMNR51bhzGhobDnebvlgpdC9Ke0e3o3eNmOP4lGYi5keur6wQRUVHtTO9jk7FCdPxhBCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751449091; c=relaxed/simple;
-	bh=PcXnyVgpZCQDAJJ+JRSLDA1d+7kPK+PA54E+Rs2dEt4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lVj8UnciTrO2PqRiisjEm08HZmDdKbT80a9sDpnyRWdDZzi4D44KWzTQf/aufDzBDV/194CYmGWiPCy7thH0pkcuHiRTSFVTMe/vy3UnBuGZ2hfpSgq1tWlLEGZqZ0zpopSnWX9NSpDUGlrgWXYsNhT5bmKn6yM4+/IWYDbHXEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QkJO+LDZ; arc=none smtp.client-ip=209.85.210.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751451285; c=relaxed/simple;
+	bh=FL1+59T/FaRsIZSbd70bRbo/MJyQ9SV7c6j5WnOhNWY=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=Pr+88nyC2ZNNVzjitaqVTa8CAxGLDpDuvEYn7KVAwdxir2rylrpbk31mB8zA/FYC30Ljs/OQm5CgnF07SnMTDSAYXUnFNZ3mMXNbzgV3o6MJLDy1h38RKbTReSuQvh+nhEO/j927f9ln0sBVzjZ+37JWyZ7v1UnDb31KrFDsEu4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FXT8IsN5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TMGFZBcU; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QkJO+LDZ"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-74924255af4so3613060b3a.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 02:38:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751449089; x=1752053889; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DnrrVM0vN7XERTqUNUp8tkRj98tC5C/ySm1C8c4gaYo=;
-        b=QkJO+LDZmaT+HTbwlcxQeiQLjp9LxjYMNKf1OfxHDY84UWcPz6fg/N/xVYQ+FGrm+t
-         orOydyjmZwpR8qshbFQwrnFzXA20ragkBNckq1yVXcC/tl+1L8SKHY3Qu8ulwq/oWNLu
-         y+FTsP3J0Nwu6uhCRS7W2KbjQ5YfIy11yYZdd9GsMLWfrRFpB5JUNfDQwkQpliJZPzRM
-         zfwGUTuvlRgSw5A/nvI4hCkdzA8KtJKkRKfXXjJmj4ADnJ25Pm44hkXIooXBtDJ5jQwW
-         3AkB2d/WksL9tlMbhTTCEPvqWsAep89P0yDXOmRHSFs1q0z5Vv5hdofTR9DKGPSMuKWW
-         GccA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751449089; x=1752053889;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DnrrVM0vN7XERTqUNUp8tkRj98tC5C/ySm1C8c4gaYo=;
-        b=TdYuv1LeB0cGcNcxKc/6oijMPBjf7fDjwTr7s5aIAeTxJPuLpGsAeSC6ZIRjmh9gJ4
-         zhpBrvpmVHx+FnfqaLx6S80EF1OrmDUWVr3NKTqPM235/32YpCkofGvAdHvHyAi3VaLA
-         eQSk/t3ZD0HmzPCB8iuk7R0fAtQf3QXinZLCYK3XWJXTeBJ1l8peryDFkWWnITDkIe0P
-         Yu/cFwY1fZF9iqI7HbHMBC+RPKRFHRNpnV5/Dyz2pooN0p8Rh5ZpbSE6E6QPKb/Yzg4B
-         53QuWJ6m6KG7y2btxk9HuNl1FnII/NAXv+8HSJ8N4XN2R7SlnuxfCoAW4r/8qP7M1TaR
-         /1lw==
-X-Gm-Message-State: AOJu0Yyb3rOvcehCVeDOEp2ViWMg/YY2165zEPOU5uiY898b8g+XyQTi
-	WAo4lwpKFI/A1HRvN3OMtYIjTKr45h9gIPy7ZiWu4S4v5KJQ4zpHvj54QsvCeg==
-X-Gm-Gg: ASbGncslHePu0WbvYtQowLzzqlGYOzcLABjGaeM3dPpCqXbD2DT7lYAut8ZBJ/SnCWd
-	0E3bLT38b9+WSlMdjAFFFCphitciRjyJhc2kxUmHlOg9G9Uos9ESmtcKu9WaEt4cVgkROta8x9g
-	hjcdEKjUOH6aPdFuZ0ibimqLexHd/n0cr1C6GGQwHLvsYj4rEgesdeqWUFB1dh+B93c2OqZrxVT
-	MC4UeiN7eYYRD4OwDCSdM9MUbcDKZ5mEXQYGb4iKJn+nsDIlEtiF7M5toxsNrNDCAdU+ugyP0iz
-	q5RhlxcxWIzXQFKIw9FuyMiHOB7hc/wFMN0RzU1ZPiSckADRk943WP6ZoHgyVhuOwbiqQXmsZdx
-	Ok1RsAPkC2IRVXQ+R
-X-Google-Smtp-Source: AGHT+IHnefKe+bOLESlhQJo7DMRH5ckmbBF8Ba3PLSfYtv4Or1a+Z0Utcpfbf/tzqtkUw2OPL1FOuA==
-X-Received: by 2002:a05:6a00:2307:b0:748:2d1d:f7b7 with SMTP id d2e1a72fcca58-74b515128ccmr3097428b3a.21.1751449088668;
-        Wed, 02 Jul 2025 02:38:08 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:8123:5123:76e8:a897])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af5579d28sm13501895b3a.107.2025.07.02.02.38.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 02:38:08 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: brad@comstyle.com,
-	sandals@crustytoothpaste.net,
-	gitster@pobox.com,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH v4 2/2] build: retire NO_UINTMAX_T
-Date: Wed,  2 Jul 2025 02:37:36 -0700
-Message-ID: <20250702093736.36074-3-carenas@gmail.com>
-X-Mailer: git-send-email 2.50.0.147.gafe0d4ec5b
-In-Reply-To: <20250702093736.36074-1-carenas@gmail.com>
-References: <xmqqv7p0bpdl.fsf_-_@gitster.g>
- <20250702093736.36074-1-carenas@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FXT8IsN5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TMGFZBcU"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 131091400338;
+	Wed,  2 Jul 2025 06:14:42 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Wed, 02 Jul 2025 06:14:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1751451282; x=1751537682; bh=yuX9l41aYq
+	IT1I1z1JBoo5/QU6HAehhIotH7oRPd+/w=; b=FXT8IsN5CwsvqowT2eV2lXnmlU
+	qtSIQxm36Da04l7Q2ETjZKGgO9zmgYRTN/dS1uYnd9Z4WySgRQcIqQqhV/Io9pxv
+	bXmkZjSqlyfoUdNpgX8Eh9svzcft6HqCFdWUnW/KOJiiWISkqoO9rGVrKCpwbZ/q
+	TipdWpLbdAnxawCsbfxvp9im9FLpZTBbGDgVz2AGy6owI8WHMlJMybV3NpwI+z+o
+	eb00vcUZt7WfyMSRWVCqh5OVqQt08IawffGK0Qz1C2KL9eG8k5Vsf0gfAh+UgGWQ
+	xbd44iiuQtXKtxZMzpQspfbeQvXstO9RNPy2mtvt48MlO2C25REjwjXseavw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1751451282; x=1751537682; bh=yuX9l41aYqIT1I1z1JBoo5/QU6HA
+	ehhIotH7oRPd+/w=; b=TMGFZBcUljit4M+sy//5wjHafxAuou56913qSm4fgB7p
+	wWKn0h95QwfCk8Qd3UniF6OLxVdwO118nydQ6dpshVrdGVLeI6RrS1D4Tvd/WSzT
+	B4HZpqFQOUod69b8EBCSUU9/h4iee/GCYc88xeoaJarFYTwl1F/H35+0G199ZrU3
+	/H0KdKerj0AOPyxd5AcaJC4K2fb6YP9+hkPfV5NJ6Ei8x1SBXNd3yWz3E0fiaBRo
+	hyM8eNyo3YzN/WAjG4yjS4r1JzGrTSBJcx/4ZH6D7zQSXvkoSW2gkBfVolaVOxKP
+	m4tDNeQi0Ccqx5xlLjXWbgSQBaMaD46rdWBnStlGjw==
+X-ME-Sender: <xms:kQZlaB5nyxnNLVT1JbZzM4cnJWKlp3ukOA2WFW68dUIpC2I5__7u-Q>
+    <xme:kQZlaO733RWV2OMqPTMmMcCnGwhgDFqRCEj1o2cC75LhLpWy4n20tXN6Wgdf5jIPa
+    CJwyF67WHh5fG__kg>
+X-ME-Received: <xmr:kQZlaIe8CqcVRuxAWacmsp3bKuPz52M80CEa_NjCN7UYHTU9bbaOoOGk5sTTEy3GNXgwtbqWTY2ND-bIGwdvgOWQxfv_2d_SnxWqDfNelw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedufecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    eugeektdetieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoh
+    eprhihvghnuhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrhigrthhhvggvrhht
+    hhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:kQZlaKL7SuiHf5MlfsumMbXV6bbh8EqDyph2I0pPwNP2GtTJKSd4qA>
+    <xmx:kQZlaFJ0nPcVh_HzTWLbgVe_p0-5feT-iXSToWgiBL-H9tBZgFWC9A>
+    <xmx:kQZlaDzPndaz9e5UHOybPTWNjv0XookagVt0pFBFRL5CS0ComV8KMA>
+    <xmx:kQZlaBK2Tq_cJi9WHKa2F6-tI1UvQXIuJZ05hikMHAw3dce4PEpc6A>
+    <xmx:kgZlaDDvRWMSJ28wvy0A_KtEuadDNM0-xCDDWccPbQzN4zV5V99l1pap>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Jul 2025 06:14:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cbb47c5d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 2 Jul 2025 10:14:39 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/2] Add reftable by default as a breaking change
+Date: Wed, 02 Jul 2025 12:14:20 +0200
+Message-Id: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAH0GZWgC/x3MQQqDMBBA0avIrB1IE6zgVYqLSTKpQ0KUREtBv
+ HtTlx8e/4TKRbjC1J1Q+CNV1tzi0XfgFspvRvGtQSs9qFFp3GLFwmEnmxg9BzrSjpZc5Ozx6Yw
+ KxvwtQVtsTcr33r/m6/oBFdFfpW4AAAA=
+X-Change-ID: 20250702-pks-reftable-default-backend-6c30f330250a
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+ Karthik Nayak <karthik.188@gmail.com>, 
+ K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
-A previous commit removed the last user of it, and it is no
-longer useful with the codebase moving towards C99, which
-specifies its definition.
+Hi,
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+the recent thread at [1] motivated me to hack together this tiny patch
+series that paves our path towards making the reftable backend the
+default backend. It does two things:
+
+  - It announces the breaking change for Git 3.0.
+
+  - It makes it the default now already when "feature.experimental" is
+    enabled.
+
+The first item is subject to ecosystem support, most notably in
+libraries like Gitoxide, libgit2 and JGit. The second item is intended
+to extend the user base to power users so that we get more test exposure
+out in the wild before we make it the default in Git 3.0.
+
+Thanks!
+
+Patrick
+
+[1]: <xmqqtt3vkhwk.fsf@gitster.g>
+
 ---
- Makefile     |  5 -----
- configure.ac |  8 --------
- meson.build  | 11 -----------
- 3 files changed, 24 deletions(-)
+Patrick Steinhardt (2):
+      BreakingChanges: announce switch to "reftable" format
+      setup: use "reftable" format when experimental features are enabled
 
-diff --git a/Makefile b/Makefile
-index 3868edd349..ba111f191f 100644
---- a/Makefile
-+++ b/Makefile
-@@ -114,8 +114,6 @@ include shared.mak
- #
- # Define NO_INTPTR_T if you don't have intptr_t or uintptr_t.
- #
--# Define NO_UINTMAX_T if you don't have uintmax_t.
--#
- # Define NEEDS_SOCKET if linking with libc is not enough (SunOS,
- # Patrick Mauritz).
- #
-@@ -1915,9 +1913,6 @@ endif
- ifdef NO_INTPTR_T
- 	COMPAT_CFLAGS += -DNO_INTPTR_T
- endif
--ifdef NO_UINTMAX_T
--	BASIC_CFLAGS += -Duintmax_t=uint32_t
--endif
- ifdef NO_SOCKADDR_STORAGE
- ifdef NO_IPV6
- 	BASIC_CFLAGS += -Dsockaddr_storage=sockaddr_in
-diff --git a/configure.ac b/configure.ac
-index 5923edc44a..d8c3af161b 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1121,14 +1121,6 @@ GIT_CHECK_FUNC(strlcpy,
- [NO_STRLCPY=YesPlease])
- GIT_CONF_SUBST([NO_STRLCPY])
- #
--# Define NO_UINTMAX_T if your platform does not have uintmax_t
--AC_CHECK_TYPE(uintmax_t,
--[NO_UINTMAX_T=],
--[NO_UINTMAX_T=YesPlease],[
--#include <inttypes.h>
--])
--GIT_CONF_SUBST([NO_UINTMAX_T])
--#
- # Define NO_STRTOUMAX if you don't have strtoumax in the C library.
- GIT_CHECK_FUNC(strtoumax,
- [NO_STRTOUMAX=],
-diff --git a/meson.build b/meson.build
-index efe2871c9d..27d5f40741 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1331,17 +1331,6 @@ if compiler.compiles('''
-   libgit_c_args += '-DHAVE_CLOCK_MONOTONIC'
- endif
- 
--if not compiler.compiles('''
--  #include <inttypes.h>
--
--  void func(void)
--  {
--    uintmax_t x = 0;
--  }
--''', name: 'uintmax_t')
--  libgit_c_args += '-DNO_UINTMAX_T'
--endif
--
- has_bsd_sysctl = false
- if compiler.has_header('sys/sysctl.h')
-   if compiler.compiles('''
--- 
-2.50.0.147.gafe0d4ec5b
+ Documentation/BreakingChanges.adoc | 39 +++++++++++++++++++++++++++++
+ Documentation/config/feature.adoc  |  6 +++++
+ setup.c                            | 18 ++++++++++++++
+ t/t0001-init.sh                    | 50 ++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 113 insertions(+)
+
+
+---
+base-commit: 83014dc05f6fc9275c0a02886cb428805abaf9e5
+change-id: 20250702-pks-reftable-default-backend-6c30f330250a
 
