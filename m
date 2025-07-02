@@ -1,32 +1,32 @@
-Received: from out-178.mta0.migadu.com (out-178.mta0.migadu.com [91.218.175.178])
+Received: from out-177.mta0.migadu.com (out-177.mta0.migadu.com [91.218.175.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E0B26CE18
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FBBE26CE18
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:28:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751491722; cv=none; b=Kt9dPdVeQYNHepcOJnDc8OGskjmOF1/CyWApHbZgrQfhr1g2EjuuaJi6Uig5WpLiLDUXNIdKjce+CUFuxiv7BG/Xh5PY9kwso4QGMV2+qIxCfyFVgnhiMD147iVeBa0VKxZFbgQubIFO1oeAUDziV6mU+5Hzifwr70O+IuAgxTQ=
+	t=1751491725; cv=none; b=IQA7eQf3DFHdNysosrrwjWcnCoU4w/Sd+tK6Uqfn5mlP8xJY7vJBYY0LYQrXMkNz8FKdZQ3BqOJavxdzBDYiE/dBK3XBOGfEFyCsKLXm6VBKqCzkCyOX4cSsTWDzO/U1gz4OgcFa2j0pSf+GjDMzinHLVhr7ThxipKy7SPgiU9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751491722; c=relaxed/simple;
-	bh=vMkKRboLODMcWxD9x3zz02pj/UJ6cyZU0KCa7DX0HD0=;
+	s=arc-20240116; t=1751491725; c=relaxed/simple;
+	bh=1+EeG2i1Pse7vHixbby4A6VdGB086qur5ySU+hs5lHI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W1v9qJECoYZT8dg3pteeY8TCctMamfezdwVu44HXERje3TkSLUvSV0UDWhOR6LbhVu71IXVt9SsaXZhQG//t05+pivOMZURWweaHFkzbCq4e9+DsZOlzpVdG4Mb+9z/ZFcR0S7qEmSPeALdeABQ8JIEgxhM0BPvERtAsQS435LM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=VFJG55YW; arc=none smtp.client-ip=91.218.175.178
+	 MIME-Version; b=MEwSnP6R5h+lXJM++s7JQCLsyw8B4crAX4AsBwybwR5HH64dr+JN+IE2gr3WulkemliUAi4l6mhY58LkO8ni9JN/ICqkJ0WdpPO8rSBkkz7ydDWPCe/s3qKUKaE5eIT/t8JbpY2D3vt2EaOvKRkuWWB0zBCePt7wAxGmiz/DByE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=ekoppwK6; arc=none smtp.client-ip=91.218.175.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="VFJG55YW"
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="ekoppwK6"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-	s=default; t=1751491717;
+	s=default; t=1751491719;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=r3Y+kRTLH7PK0j7r55CbC9Kh1PxnCxrPSuKNjhXlfUo=;
-	b=VFJG55YW8X3NjQ/JrHaLPWtAhAVnO7dPPC4iUzh9gjDSVmGQHeqZCHZoAf8cX9Rb3FEtv9
-	J1WU8HdDrXWWEul6Rp0MFpjSb/+91c+31dauw+0DX8uwBfoJIhN3kuodjMNrXzod85FNBW
-	FV+3aSlTX1CwKEPCsLCBTID+Iiulrvw=
+	bh=GfVohsHJmYHTvY5QaCgbPxsCyjhmucMpGRzOEsN3rYU=;
+	b=ekoppwK6aw4LZ8ALbYZJJz518SLMiroptOJcUlCF3uUK8WoLOevqGVON35SOUzQTflXfw7
+	mA8Vhbbx3/BQLgQi8z9L09pokjzD5HeK/FtRLr5g4XNnDcJGM202aeMWfsiVSgVn4OYi8d
+	pnxR+UBuDKKSI94tCQ92iL+zalUKJk8=
 From: "Raymond E. Pasco" <ray@ameretat.dev>
 To: ray@ameretat.dev
 Cc: aclopte@gmail.com,
@@ -35,9 +35,9 @@ Cc: aclopte@gmail.com,
 	jason11choca@proton.me,
 	kristofferhaugsbakk@fastmail.com,
 	rhodges@cisco.com
-Subject: [PATCH v2 3/4] t4140: test apply --intent-to-add interactions
-Date: Wed,  2 Jul 2025 17:26:46 -0400
-Message-ID: <20250702212814.1923253-4-ray@ameretat.dev>
+Subject: [PATCH v2 4/4] apply docs: clarify wording for --intent-to-add
+Date: Wed,  2 Jul 2025 17:26:47 -0400
+Message-ID: <20250702212814.1923253-5-ray@ameretat.dev>
 In-Reply-To: <20250702212814.1923253-1-ray@ameretat.dev>
 References: <20250628225819.1294068-2-ray@ameretat.dev>
  <20250702212814.1923253-1-ray@ameretat.dev>
@@ -50,69 +50,37 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Test that applying a new file creation patch to an existing index works,
-and that applying a patch with both modifications and new file creations
-works.
+Avoid using a double negative, and keep in mind that --index and
+--cached are distinct modes of operation.
 
 Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
 ---
- t/t4140-apply-ita.sh | 31 ++++++++++++++++++++++++++++++-
- 1 file changed, 30 insertions(+), 1 deletion(-)
+ Documentation/git-apply.adoc | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/t/t4140-apply-ita.sh b/t/t4140-apply-ita.sh
-index c614eaf04c..0b11a8aef4 100755
---- a/t/t4140-apply-ita.sh
-+++ b/t/t4140-apply-ita.sh
-@@ -7,6 +7,10 @@ test_description='git apply of i-t-a file'
- test_expect_success setup '
- 	test_write_lines 1 2 3 4 5 >blueprint &&
+diff --git a/Documentation/git-apply.adoc b/Documentation/git-apply.adoc
+index 952518b8af..6c71ee69da 100644
+--- a/Documentation/git-apply.adoc
++++ b/Documentation/git-apply.adoc
+@@ -75,13 +75,14 @@ OPTIONS
+ 	tree. If `--check` is in effect, merely check that it would
+ 	apply cleanly to the index entry.
  
-+	cat blueprint >committed-file &&
-+	git add committed-file &&
-+	git commit -m "commit" &&
-+
- 	cat blueprint >test-file &&
- 	git add -N test-file &&
- 	git diff >creation-patch &&
-@@ -14,7 +18,14 @@ test_expect_success setup '
++-N::
+ --intent-to-add::
+ 	When applying the patch only to the working tree, mark new
+ 	files to be added to the index later (see `--intent-to-add`
+-	option in linkgit:git-add[1]). This option is ignored unless
+-	running in a Git repository and `--index` is not specified.
+-	Note that `--index` could be implied by other options such
+-	as `--cached` or `--3way`.
++	option in linkgit:git-add[1]). This option is ignored if
++	`--index` or `--cached` are used, and has no effect outside a Git
++	repository. Note that `--index` could be implied by other options
++	such as `--3way`.
  
- 	rm -f test-file &&
- 	git diff >deletion-patch &&
--	grep "deleted file mode 100644" deletion-patch
-+	grep "deleted file mode 100644" deletion-patch &&
-+
-+	git rm -f test-file &&
-+	test_write_lines 6 >>committed-file &&
-+	cat blueprint >test-file &&
-+	git add -N test-file &&
-+	git diff >complex-patch &&
-+	git restore committed-file
- '
- 
- test_expect_success 'apply creation patch to ita path (--cached)' '
-@@ -53,4 +64,22 @@ test_expect_success 'apply deletion patch to ita path (--index)' '
- 	git ls-files --stage --error-unmatch test-file
- '
- 
-+test_expect_success 'apply creation patch to existing index with -N' '
-+	git rm -f test-file &&
-+	cat blueprint >index-file &&
-+	git add index-file &&
-+	git apply -N creation-patch &&
-+
-+	git ls-files --stage --error-unmatch index-file &&
-+	git ls-files --stage --error-unmatch test-file
-+'
-+
-+test_expect_success 'apply complex patch with -N' '
-+	git rm -f test-file index-file &&
-+	git apply -N complex-patch &&
-+
-+	git ls-files --stage --error-unmatch test-file &&
-+	git diff | grep "a/committed-file"
-+'
-+
- test_done
+ -3::
+ --3way::
 -- 
 2.50.0.201.gfeb04032fb
 
