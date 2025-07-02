@@ -1,127 +1,182 @@
-Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3215D8F0
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 11:18:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751455113; cv=none; b=I0ufDvDTmQEbiQakiuV1Zu5Q3eFgjdzsB0G0z4RUo/Jkpdanmi7yJWsh3HrfSLEslUcOxKbdbMhDqNgGh7/r0PslPGAx2A5HrH14IzFu1tZVBcm5MUxQbqYjfbzjx82cEladpykBgxKDOyLBlBBEucz8nq9mKdH+ROwTc0Pn3pc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751455113; c=relaxed/simple;
-	bh=iJGxrQU+Vc+EP6eYT5m26q+9UzhSUC0Rfwk7+73Em1Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Yp2pidSbTGoe6AlDY3OybfW3Vg5d9EbhnPCVa7X/X86p7d7LVfNY7ZI4EyGeQpABHQM/W0yKT1n34Ryjv+bO4HojX7g1A9NKAaLTOSkkiR0XROVpY5uwHtfAX1jC2X6ejBF5Z+sPRmMKU9WoAHThnGlPNyFO33UTLjys7NGCeA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jg3jkEtt; arc=none smtp.client-ip=209.85.217.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91332528F3
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 11:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=96.47.72.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751455698; cv=pass; b=fpu5OK6l2J8PJ2eW/S8Y/HYpws6S1Gc9im74P3IN+vWiY8kBZSJCdSWWij72Iu9nmPG5Phd2hzN6JlAJgPLGI1IaGYrrGBDzCyRZmis7Pc2hOWLn/OCuXGngMF3Xe3ApDX10QiSZZiC3QHpiWy8WFnzG6zaLbyhYQ72Yi1tQxtg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751455698; c=relaxed/simple;
+	bh=+fsWZyeHZ+OyEBRC0vOqquE17wAdK6oW1ywgc6BJkIM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ifxMlllZxHTGQAbcpSWqxPENfB2hkOp13Uo6dGhMaggP4qKppHEZv91TNbqEFbREBOXlD/EihNQII40rKVnKm2l/sIPkgmCJvck92ZdC1U+qLAiUDEoNLM/KyTU1ApWARhW4ZqRODmt1RXGdZi6jI14zNb9YbSIE006eygmagKg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org; spf=pass smtp.mailfrom=FreeBSD.org; dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b=IsEogt9h; arc=pass smtp.client-ip=96.47.72.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=FreeBSD.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jg3jkEtt"
-Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4e9b26a5e45so2666340137.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 04:18:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751455110; x=1752059910; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=V81+HTDrQ6z7Ol6bWib4HyIBREAfti1Lp6U1q8AH4QM=;
-        b=Jg3jkEttmkc9S6u5rOJP0LawmHGnR4Tg7xD5h2rg5kPthfEr4uU63avfHHJvV120zg
-         sdgSHbQD6d7YuqRgytlPLiPdNoiwlFZ3kAFmgohNvl2j+kmR77RAGaIWrH+XMLvgDP//
-         dfZaZPdPfsQUlQhI5ob+SbFwPpL3VU0iFzlftzgmUjr+SIkcynMKQUSbUFW/EsR3zZr1
-         1q/o88hBAr6wp4ETqxQQtxrcglTBpjfv4iJq6S3ardNFVm4oNlHO+dxhD6+w/I3UgVQd
-         w0bhCV5B8i/oG8VRafVgAaaDedgU7z0/sYD+mJ+HroBXuF70IU+5x2jMknGipLUkJw0s
-         vdaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751455110; x=1752059910;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=V81+HTDrQ6z7Ol6bWib4HyIBREAfti1Lp6U1q8AH4QM=;
-        b=vZd5WiC2vC/do3j+hQgV0o0oIaCCPeW44RCslcU4EcJPzESllSiL04FhURwMiYnAPw
-         qKA6sqchIgK+juILmCToIKeFG6DqH+UlpG0nRkf7NejYVW0Muifm2yS8VtqCi35xVsCG
-         FrTh9GDmOpt9vEgkCquOzGWJpkxx1ashIthYCLHdU7KDku3EoO693uwiPZ1Yy/hFml1h
-         0MVpNHt+ikt+RUOjLskVcGxvfU4MoSQvYRIXGYozFPxS6BfLlPJqo3NCFNsJ7Kkr3lgB
-         erOeDlcGpPVD9ocK8OoWWWBo4H1AK3Al/9Yy+w9aas9eKIijjaONfpVG3TDQgW8/8/we
-         LUCg==
-X-Forwarded-Encrypted: i=1; AJvYcCVsowfKLKWuIx3XLR03rJ6HO8U6lvFped9B00fQbWAlCbX0YvfTalpVr2vDAEFUOfWHYP4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfQ+1DhNNSgP6edXxRpeGGlAD6toX95Cp01JW0tksYRRg7cki8
-	Ugi1GEvMJrqcc+BLV/ui0NHVle+j/bSzofvGohMAfPqP1d+ofyObXgAMvl9iJXnFu2jCs903ama
-	8TiIkKRds0P8CNJ6tFod+zRudQmAgaRI=
-X-Gm-Gg: ASbGncvvBAcJFwaBYkP6yg5H0QOburr2zZn9KfCunsDhqxSMxesTsRWFzq4Tx5Hmpqv
-	mX943o8VqXXwL3V9qpWGWczwiIfmYuFCRSStuHrL9qKOKZ1+p5jAUb/Y++mdYudRDmbnq02ZHkz
-	Vp5c4C+sn+FFVT2yTnOtp3eQTiEvD/XCzGSDmEkYFDM0M=
-X-Google-Smtp-Source: AGHT+IFCyALuQ8xKaOnGrw8nD31PXvk8qJh62RebTuDcU2jhb3wezlWrd5gOWcFPivEtTs+azgQFISGHdFbQqYeRypg=
-X-Received: by 2002:a05:6102:4bc8:b0:4ec:b36e:ad09 with SMTP id
- ada2fe7eead31-4f160e0b52fmr961547137.10.1751455110401; Wed, 02 Jul 2025
- 04:18:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b="IsEogt9h"
+Received: from mx1.freebsd.org (mx1.freebsd.org [96.47.72.80])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits)
+	 client-signature RSA-PSS (4096 bits))
+	(Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
+	by mx2.freebsd.org (Postfix) with ESMTPS id 4bXHhF3J5cz3Gfj;
+	Wed, 02 Jul 2025 11:28:13 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
+	by mx1.freebsd.org (Postfix) with ESMTPS id 4bXHhF2CZrz3btR;
+	Wed, 02 Jul 2025 11:28:13 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+	t=1751455693;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=zNxNGxSxFZUYyXzyFNG5WrT+h87lBM1A3Mye/3fN8QU=;
+	b=IsEogt9hVEt3wP7BVRfaFfrBJAQsp0GmkuVyipqQ64xcfNavq8EKZdMFU8QCq85olO8ZlP
+	atd3eukWIVFeweeQM0rovZPIsGhMJSYi2pkzRk59BTUqNuvN0joTJpIpQeIuCisPauHi8b
+	uluDUCv4SbSsM7HqEFiuYKcwjwx66toswZn/1fiJr9KUUyTpLUYr3L4vSGU7xlIRNjwOsZ
+	Q35gCvvsbTFVa97eUHKX4fQuYR+Xvwevi+ySEgw5OMaATecPm5EWKPU1ViW/5Jj6TJOWPv
+	ClRJ7eaQ+bfBCZFDYjRd7ONnllUKwae9ucfGx12HuICKZVgI15cGZUpTWLdJCg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+	s=dkim; t=1751455693;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=zNxNGxSxFZUYyXzyFNG5WrT+h87lBM1A3Mye/3fN8QU=;
+	b=DMAjY4x0MAzrmn55h9S9or+zsQY6D9u1DgSr7+bH33WOB8xEQWQbHXYm/OGUXQLt8dF0WT
+	FRNbjvXy+KyLozhKTWoGDCYMH0Lr+4xhbHFUT3CqE/zHRHJt4hHMdV9EFPC6GhGTYjVs9G
+	ZpcSeEHafFTp04DlKCzDkTWPEolohdtOK+woqr3HaZcoUAzwbIoaoGKmMnX1a3sv7LGu08
+	UJcxTxQut9IZsO162R07jbbL9k4TTOPZ/P/jCYGabQHz9Cr3yDNQhmxQQrLXNqPikyCKEv
+	pMl5IvpqaKL2BI0nEYyjDh7RD+0oSTRQAKQg1ruXpobVtOLyYFafc0EG0QMe2Q==
+ARC-Authentication-Results: i=1;
+	mx1.freebsd.org;
+	none
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1751455693; a=rsa-sha256; cv=none;
+	b=qqw7Ec9vT9rg0uPw6MP3MSkoVg41cXigLrqVPxyK0u3X1LvmJAhZN3MMQhDZ0MYjEw9wKw
+	8joGm/07osj0gExjIf91ZTOoO6aMuhke8OP8RUNgBCd5CQ7h+OzFUMQrF+r+wwIxi9xsNM
+	x7TqSzBtnjoDWsmUBJ7wZIp8wqr/BocHRMcd8EVCzEQiN6pGkIuU1m1u+VbrMAjtWMcCvJ
+	0pMVwSeY0U0RrxZo2f1kUlsKfDylLgDNvpVCruSfjJUq7Wy2dORSwjJx/TVZ0vc5na0m3E
+	eIlMOumc0ITVX6GB5DJJr83hkHDpfIdQIxmniNofIeKlQPIzznAaBkoXk9FPkw==
+Received: from [IPV6:2804:f1c:851:ac01:8109:c30d:783c:bf9e] (unknown [IPv6:2804:f1c:851:ac01:8109:c30d:783c:bf9e])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: garga)
+	by smtp.freebsd.org (Postfix) with ESMTPSA id 4bXHhD3gfqzZLV;
+	Wed, 02 Jul 2025 11:28:12 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+Message-ID: <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
+Date: Wed, 2 Jul 2025 08:28:10 -0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1751296633.git.ayu.chandekar@gmail.com> <f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
- <aGPcKgR0G72JRSlM@pks.im> <xmqqikkbkglx.fsf@gitster.g> <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
- <aGSYLJaqDziLqtXk@pks.im>
-In-Reply-To: <aGSYLJaqDziLqtXk@pks.im>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Wed, 2 Jul 2025 16:48:19 +0530
-X-Gm-Features: Ac12FXx8LE5Al7tgIAdxLYsZyIYRCaD7qFabwaVyThLoxDKyF8HWOGdDtCTvAuE
-Message-ID: <CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
-Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on 'the_repository'
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Ayush Chandekar <ayu.chandekar@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
-	shejialuo@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ GIT Mailing-list <git@vger.kernel.org>
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+ <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+ <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+Content-Language: en-US
+From: Renato Botelho <garga@FreeBSD.org>
+Autocrypt: addr=garga@FreeBSD.org; keydata=
+ xsBNBGStavwBCACjNlp/9+Y+VFe9ieR2h/WWbdvjz4Mb2z/f22bGoaskzCfvVNbo/v3i34I9
+ H6OdgZkGqheQEAD2jNfRbmPr4z40xDMUpYGLds+1Mvg7G3Hms3j5Ef8KaLSWUNWIfwKdfSVR
+ Qs35ccSJxAdRW5YdI6J3xZgika+3Bc4eJ05YE/nWW+PNTYevt5rqD50N3zybVYIcLoqVPpBi
+ AZE/sf5SLiLACIJb1t/s4x+pi8vgWevxVVT9u8V1f8zYErmHSLSqjxii0B3eRZphX9NCJOv9
+ +tfFZhnENInhn9gT7H4e2YumUltEy3jacONHJF3CC1pvvWEa6lEyypclMOkHQwNON7DLABEB
+ AAHNLFJlbmF0byBCb3RlbGhvIChGcmVlQlNEKSA8Z2FyZ2FARnJlZUJTRC5vcmc+wsCXBBMB
+ CgBBAhsDBQkFo5qABQsJCAcDBRUKCQgLBRYDAgEAAh4FAheAFiEERL7Dxegbnh7xTiQ5Ob6P
+ xxJcZXoFAmSta78CGQEACgkQOb6PxxJcZXrYlggAgaZmr6c1yIWzN8VksHrHpwt/uxONEP+h
+ ljy3yfrMsgfS5wx5Uzgfih1xYZUFC6jiI63CetqBqJpp3g1klRS1UWYKx2NeXphDMYZEdPm/
+ a6sXh4bKZbk6IE8Yn0/YiRT57d9DtbvswC7Gn7Igj/MSbhl49TvTGyvuB6juaffVoYZViomx
+ 5zMoee8Ml2o2qj3MrCJ+/K8GU54RlpOGqGRsqdwVdr9XEWub6fF2YFwR46cjmbiU3P5urFHH
+ nkJlBGPIwKxHimTW0lZsdx9aCKRDd/D80/WOEzXmk3k8B9lv/GsvOluHmveLhJG1R1tIJ31I
+ f2q8dfTvqsQXnu8CcWRcgc7ATQRkrWr8AQgA1DufoxScA+CWQbUR6zExIu8wXQKrhuRt4DG2
+ BgynT7EMUvEBadcbQRZXsBpemNfncc9Axyut/+rWiyKJf9BLQuo/9QYmSRvW1U6+0LJUYmdg
+ kMyBeYaPk+vnssv/u9jLuvV7FVgyE0yk1iaWIKOVDD+XrQCOvGw9uSceBrQyCyo3A/eRM/+p
+ vnDCaywR63PKE+3axk6lfNdGK3TnaWmS30/ZDCZlNsXuqprqR4JdT5wXids5o36dsuJ5EZ20
+ s5hNMD34s4Yr1Y1R9elH6qBsFCpozs0+jwrArxq+UJJCR6hH5W8ZEwJtRC8tzR8mRE1WywzX
+ BXYj0YhfGztQIxZckQARAQABwsB8BBgBCgAmFiEERL7Dxegbnh7xTiQ5Ob6PxxJcZXoFAmSt
+ avwCGwwFCQWjmoAACgkQOb6PxxJcZXr1vgf/SKXhoZcUU5I7TqcbHg0lJz9tICTupCGHWr/s
+ SQgjh9oEM5j1wqW7FlCGP90Tl9K0g3ow9YdbhU7VK470o6pymX9V9eLHzGgkZO/KMEtGBeK1
+ u+5ePjCJ/MK5B21KODLSU7WrIL1VN5ceXfQPLYt02LMLtPri+oduHD6RNBeA7US1DUzleq5F
+ 9NHGbvV2U7BdDUezpiO8NaFjFZVB11I5d99FxUM5XGVstI3VhsRKZxjY0KnqJzaQgTFsPGmv
+ AUfZVIN1pXgXiedhPXpr8+Y64jP+pHVwpVmh1zYWL6+q3kqFOUVP6c5iiMeoEXZvgJz7x/AC
+ ek3X5gvu8Hpcv+MZIg==
+In-Reply-To: <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 2, 2025 at 4:17=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
-:
->
-> On Tue, Jul 01, 2025 at 11:39:48PM +0530, Ayush Chandekar wrote:
-> > On Tue, Jul 1, 2025 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
-om> wrote:
-> > >
-> > > Patrick Steinhardt <ps@pks.im> writes:
-> > >
-> > > > On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
-> > > >> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
-> > > >>      expire =3D TIME_MAX;
-> > > >>      save_commit_buffer =3D 0;
-> > > >>      disable_replace_refs();
-> > > >> -    repo_init_revisions(the_repository, &revs, prefix);
-> > > >> +    repo_init_revisions(repo, &revs, prefix);
-> > > >
-> > > > Does this work correctly when running outside of a repository? In
-> > > > general `cmd_prune()` is not executed and would instead die as it i=
-s
-> > > > declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the=
- user
-> > > > asks for help we may still execute the function with a NULL pointer=
-.
-> > >
-> > > Good eyes.  "git prune -h" would safely exit in parse_options() in
-> > > such a case, but this part happens before the parse_options() call.
-> > >
-> >
-> > Thanks for pointing that out, Patrick. Right now, `parse_options()` is
-> > called just after the `repo_init_revisions()`. I can move the call to
-> > it before this.
-> >
-> > Although when I tried running "git prune -h", it still gave me the
-> > expected output.
->
-> Well, as long as it works and as long as we have a test somewhere that
-> ensures it keeps working I'm happy.
-To add to the testing part, I noticed that there is no test for
-checking "git prune -h".
+On 01/07/25 17:03, Ramsay Jones wrote:
+> 
+> 
+> On 01/07/2025 17:05, Renato Botelho wrote:
+>> On 23/06/25 11:09, Renato Botelho wrote:
+>>> FreeBSD has a libsysinfo package which contains GNU libc's sysinfo port.   Some users reported git 2.50.0 was failing to build when this port is installed and it happened because configure script detected libsysinfo but -lsysinfo was not added to LDFLAGS, ending up with following error:
+>>>
+>>> scalar.o common-main.o libgit.a xdiff/lib.a reftable/libreftable.a libgit.a -lz -pthread
+>>> ld: error: undefined symbol: sysinfo
+>>>
+>>> This patch [1] was added to git port adding a user option to enable/ disable libsysinfo dependency and fix LDFLAGS when it's enabled.
+>>>
+>>> I'm not sure about what is best approach for git project in this case.
+>>>
+>>> [1] https://github.com/freebsd/freebsd-ports/blob/main/devel/git/files/ patch-configure.ac
+>>
+>> If someone let me know what would be the desired approach here I can work on a patch.  Would you like to make that option conditional as the patch did?  Or detect if OS is FreeBSD and do something different?
+>>
+> 
+> Ah, Sorry for the late reply, but I was away ... :)
+> 
+> Hmm, I can think of several approaches we could take, but I can't test any
+> of them (since I don't have access to a FreeBSD system).
+> 
+> - it would not be difficult to add a 'library-check' to the configure.ac
+>    file, so that '-lsysinfo' would be added to the link. (We would also
+>    have to make a similar change to meson.build). However, I don't think
+>    this is the right solution; I'm guessing that the compat sysinfo library
+>    is implemented in terms of sysctl() anyway, so ...
+> 
+> - we could simply change the order of the preprocessor conditionals in
+>    'builtin/gc.c' L530-541 so that the 'HAVE_SYSINFO' block comes after
+>    the 'HAVE_BSD_SYSCTL' block. (BTW, I assume that the HW_ symbols are
+>    defined whenever the 'sysinfo compat library' is installed; i.e. old
+>    versions of FreeBSD which don't define them are also too old to support
+>    the compat library).
+> 
+> - we could suppress the setting of HAVE_SYSINFO if HAVE_BSD_SYSCTL has
+>    been defined (in both configure.ac and meson.build).
+> 
+> I very quickly knocked up a patch to do the last option above (I moved
+> the setting of HAVE_SYSINFO down the file rather that HAVE_BSD_SYSCTL
+> up. I guess it doesn't matter, but I gave it *no* thought!).
+> 
+> The patch is below. (I didn't write a commit message ;) ).
+> 
+> Does this work for you?
 
-You(Ayush) can add that in "t/t1517-outside-repo.sh" there is a
-similar test for that also in the file.
-"test_expect_success 'update-server-info does not crash with -h" You
-can check it out.
+Your patch works just fine for FreeBSD.  I tried it with libsysinfo 
+installed and it just ignored it, as expected.
 
-Usman
->
-> Patrick
->
+I didn't test meson build since FreeBSD ports is based on autotools yet.
+
+BTW, should I start moving the port to meson?  Is it the default build 
+method now?  Is there a plan to remove autotools?
+
+Thank you!
+-- 
+Renato Botelho
+
