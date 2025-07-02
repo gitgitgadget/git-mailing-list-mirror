@@ -1,81 +1,77 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BE9A2F50A6
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 17:06:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E5B2F2706
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 17:08:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751476003; cv=none; b=WhIFT4YbY76higN79/zewN6510OTeUoAYrf6/bBIqpgOlrI5mVtuh6tmLGgUEo2C8zXkCwwjchiSDuTVwh3KVw6hzCJum8FWX2Xjc1Ptlo79x6ee/+nxnC79tGvKc7mB7hd0Q6ZLkNp5yO1yw1c3um2tQ82m6g0nSqb4pRqe1Cw=
+	t=1751476121; cv=none; b=fjlPzU/cmNp3twFcGIO1pKKwkeYpu1t+4AMmLghRDJJvFsFqcnX9J6ngt/4tyI9uinuaIspwikZzOlk7A5UjqBdMHZ+fM4xCOl/CULTQ/hSKjeRFPiYdvPSP8ep9xEJ67hdzt7Qx6afoUg4lSxJnRHF8mog7Q3DX/6wb0Ceofzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751476003; c=relaxed/simple;
-	bh=XgXLcVCSd3QCR+y+34DL09PFfDwMiRj0iwpK8QQevUg=;
+	s=arc-20240116; t=1751476121; c=relaxed/simple;
+	bh=60hfnSx5+WNRsuHNIG2UZwUJoLwyYzNS54+Q+FXYj94=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ORF17KQQorvW11Wz8gw/Z3EvR+ZzZ4yxWxXA0LU3y5e8I9mmgDXz0MP2SBQvDF9OTPqN7h3xDwgmWrTRv49RIg7H4w54TQil6PtggI8WZ4BtBwDQco9Kk2wK5lWq3JGL+nYJ/VymCHWRjKd1YXenb6hsf9ZW7C6DB22+0lbpAHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P6HK786c; arc=none smtp.client-ip=209.85.210.182
+	 MIME-Version:Content-Type; b=sbPTxu0Uk/CailO3oKl43ghaXm5CD+BDIZl7Sq1UajJUSA0is1/9jurMy150DhEwx7flLW18CfJ9cym5KSDOUXNQ5jI1ZrMrC6gfEX6GfYW6OI4soS5d+SRkSkr093L7ohFDfcfk3wETYekQwsMFk+HmdT97OqP9di9EWoG4aqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HTfAJIcu; arc=none smtp.client-ip=209.85.214.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P6HK786c"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-748fe69a7baso6777172b3a.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 10:06:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HTfAJIcu"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-234d3261631so51557455ad.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 10:08:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751476001; x=1752080801; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751476119; x=1752080919; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=XgXLcVCSd3QCR+y+34DL09PFfDwMiRj0iwpK8QQevUg=;
-        b=P6HK786cMiPae3/h7gi3xCEVkEGD1M7uPzC8IjdBa1wNi+XEAQcHNAXP04+UxgqpS7
-         DNOKGqzTy7CPre9kMnG5kH6d+/mSxleaV8/KOW9jkAS56RhhUvJjelZ2f/Huvg+y6hM2
-         /hwEshKa7q0+T7ts6PMQxntxe8Jg3SfKchMKMeHZbvp7xHxkzMCPDhs+XvlPZX/yIX+/
-         bC1Md8HYLUNf+9Ure+Ti+Wi+oUlBxkwJglX+YCEopR7Z5jbJn+lpzoMHUFp8Fga4sEwE
-         xvCGGs9f8afLpetFPIwrPUBfgPJi2oITLj9NcPYA7a4dwvs5BwuDd4l/E2iuRYiLrjsl
-         3D2Q==
+        bh=KsMbMfuJdMEU+KEGkMicDOP0XDjNQd+Y8chQZLN+rEo=;
+        b=HTfAJIcuncgdZd6WoIKOKGvrc5wNYBfJCzw76QDgFm7Vx4XnxXhAAv4WKtdZst7H1V
+         oFYfOSGJ1NjtTv2xck4yJjCeCCEk9xF/attps1Gr2S50qmTe9/h2YcFEz/62sxO14Nd2
+         7Nmtsey1EJICvi/XjnOfD5RUOwygBBr4PLDYhCR5qs+J52koWNsKg38PmO7/CAdjSvfL
+         KWD/g0b78e8ANiEghDNh1vPgbrb/XPZsBy5G4LHyedtpWH5tAEI/Ccp1EEAcw6KGIPXK
+         XPOVMDao7cFThCHvEEt0yBZh+Qv4Xk9rpX7Id1GHNSVsHZSsvcJsfJGPhhC6VgbCzzoS
+         nf0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751476001; x=1752080801;
+        d=1e100.net; s=20230601; t=1751476119; x=1752080919;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=XgXLcVCSd3QCR+y+34DL09PFfDwMiRj0iwpK8QQevUg=;
-        b=hW3lsas9+PMiAJ6DYhPte/clDLoRjYCjNJrlAgDMBdEZgZQkFPZOgb5EJ47RkoB4jf
-         H4hGUM75LK3jLvFgGL0c3WWyvAMNZ6h+eGVB9QRhXcVdtXyf7LTmX7Why4FrkX4ga7J6
-         SAEskVUhqV0DhazkLGkm3yhoCUEb8Ov2twT68Qp9wT/slUfN3L+6hBUAG9MCdAI07WHS
-         cufNzfuQuuH4DJ4O/uHz1+L3a9io0ztgHZRk211W9rJayM18qeKtufA+qqX0iiDsGkK5
-         gWqTWzf5/qc7lHYTq/le2o+sILmH/gve1bt8QlVOxeQzw0FNfm3vwJfIwRSF2SKP5TOd
-         4JoA==
-X-Forwarded-Encrypted: i=1; AJvYcCUQByPQvy18guo6UkKZqNzXExD+fNZ0kr34+bOYusAHFu4cJsgEzhGg9sBtelman1Xlm78=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyvc0nI3MJmz0AfJGfgDXc3CopOdrEV3GzoSU3w8B7Yfkp0Oftz
-	cSDgznY/0G2ie1UA/E9mGovYbBNrFCvhjNYX5R4OiyPGE9vevWnYyaW9
-X-Gm-Gg: ASbGncvE9+EWC4KmXbHCLpDCbmiloQKosX+2m+0pF2CUVYOWsTWkBL0rPbs9S7o26xy
-	PihP5YtnanAfAhlDupqpOitfEUavwPvsVREGJks770JbMm02fixrYVtIns6PAsernIfVDSeB1o9
-	IEbRNhIiYTlargfBrD7weuYZ7HvnJtEQnNFtaL/gOCtO9fkeaE8cxFjCaPe+/teaKsnDJmQ9MuR
-	z3VNIZfA3Er4lntXE3M0/8RBjEoQin1SujcpjsNMLaULEhYLGQ4WMeBb4Oprg5D9itMy2fHlKgu
-	UIKqu0RP4l6etdA7rf+Wfs4MAQgCd1nXUAtDL6/0gh1OLk+9kR2Jm3zuqArQz6dtAX38tYaqWzZ
-	uzBAjtXJMXlPInUzdMWntJT8Z5QQ=
-X-Google-Smtp-Source: AGHT+IHizVpk8LxPiJ95RA8HjNi+Ygl3/vFWm94pXPuKFNikNAPeuPmdwsi35EqIR45DgWFqpEFZqg==
-X-Received: by 2002:a05:6a00:889:b0:748:ff39:a0ed with SMTP id d2e1a72fcca58-74b5126bd0emr5376891b3a.20.1751476001426;
-        Wed, 02 Jul 2025 10:06:41 -0700 (PDT)
+        bh=KsMbMfuJdMEU+KEGkMicDOP0XDjNQd+Y8chQZLN+rEo=;
+        b=U5sLMIAWRvfGA6i6yySYwWwFiJ8/jgAZ+mHKJtCIrWUCkR5CUk5zNq6DmO4/cKZYda
+         oqT8s1qeTc4KYrI6d5imwcpW3+tGWood1K0LucPfy31xTUZkpXOxBcxP4+ic2k990eaN
+         +Vqw0U8GpBLOux936b5Uwan8A7h90YPzhTFlmd11xoNd78vLWovNHSBbJhG6c/D09Qm1
+         mys+/YhlZ+3oPZB6fcBPJbxDEuNiF/BVqW7hJ4AHtqt1UCWxmN6/yPRUu/3XKIwLnwqW
+         pkXkUVfX4ON6TmqG3F1KUzNt36/NBwJtF8WPn7srk95bmC86oryZJs8WFsoBe3/XvkT5
+         s+7w==
+X-Forwarded-Encrypted: i=1; AJvYcCXUUyDgxJRzsi9ihlUsANmYfVtRgQvH66wmM7yrITTF7psuB1GDMFx3YsvqMGcWPFcagpY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzAeTA5tMjBV7F7gZYnIejLcXhTPahvnNL5lRqJQNh2pSSi1qQH
+	DVnGc3aAh87tGBasyYXrqwDYYAYkjSkhNXBDdpjgNDhieZFezTdFluuDUVm9GQ==
+X-Gm-Gg: ASbGncu8TUD0o0ZST7+yOm3VMTgJMqwIdOb+3qvYsv7HOiQwByeU4HFv9sthrvdtB/x
+	NFYt2B22yAnSSEwSXQiLHz8K7s74e9/cLRA/lt/8QK0ZDfauNSkZsyPLh1oH93+Q7c+4HVj8x0/
+	jN1f1ekA/geGJ8kJfdMfEUSN15eHmCMFnuBpG0p5HdARIE8uBzxZV1yRjwMMGwwkptnow+N2Jqm
+	IWihvjD32Zri93RXcR5U0xZK6bOticT7f0YBv+G3GSyLLhcXT/J+YBSPwuobdBURJBh5CONalLF
+	nUySaf++qcnbc+mUkutY23sLcMqX0tE2/TJEPfhQf/IADGgIktWDffE9dSZSmJrr38evCIRRhEi
+	wTmR62Nte03lot1NXvEnokaX57e4=
+X-Google-Smtp-Source: AGHT+IET2LKVAn8EiIQL9Gt+TQq8rD2Rn+SpBm67s9ENUlP/9eahO4JHnHb9PsTcx0nIsJswcWwknA==
+X-Received: by 2002:a17:902:d58d:b0:234:c549:d9dd with SMTP id d9443c01a7336-23c79842237mr1348185ad.48.1751476118921;
+        Wed, 02 Jul 2025 10:08:38 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af540ae4csm14499359b3a.34.2025.07.02.10.06.40
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb39bcbcsm132297385ad.134.2025.07.02.10.08.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 10:06:40 -0700 (PDT)
+        Wed, 02 Jul 2025 10:08:38 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  Ayush Chandekar
- <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
-  git@vger.kernel.org,  shyamthakkar001@gmail.com,  shejialuo@gmail.com
-Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on
- 'the_repository'
-In-Reply-To: <CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
-	(Usman Akinyemi's message of "Wed, 2 Jul 2025 16:48:19 +0530")
-References: <cover.1751296633.git.ayu.chandekar@gmail.com>
-	<f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
-	<aGPcKgR0G72JRSlM@pks.im> <xmqqikkbkglx.fsf@gitster.g>
-	<CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
-	<aGSYLJaqDziLqtXk@pks.im>
-	<CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
-Date: Wed, 02 Jul 2025 10:06:40 -0700
-Message-ID: <xmqq7c0qed3z.fsf@gitster.g>
+To: Renato Botelho <garga@FreeBSD.org>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,  Patrick Steinhardt
+ <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+In-Reply-To: <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org> (Renato
+	Botelho's message of "Wed, 2 Jul 2025 08:28:10 -0300")
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+	<9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+	<d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+	<818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
+Date: Wed, 02 Jul 2025 10:08:37 -0700
+Message-ID: <xmqq34beed0q.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,14 +81,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
+Renato Botelho <garga@FreeBSD.org> writes:
 
-> To add to the testing part, I noticed that there is no test for
-> checking "git prune -h".
+>> I very quickly knocked up a patch to do the last option above (I
+>> moved
+>> the setting of HAVE_SYSINFO down the file rather that HAVE_BSD_SYSCTL
+>> up. I guess it doesn't matter, but I gave it *no* thought!).
+>> The patch is below. (I didn't write a commit message ;) ).
+>> Does this work for you?
 >
-> You(Ayush) can add that in "t/t1517-outside-repo.sh" there is a
-> similar test for that also in the file.
-> "test_expect_success 'update-server-info does not crash with -h" You
-> can check it out.
+> Your patch works just fine for FreeBSD.  I tried it with libsysinfo
+> installed and it just ignored it, as expected.
+>
+> I didn't test meson build since FreeBSD ports is based on autotools yet.
+>
+> BTW, should I start moving the port to meson?  Is it the default build
+> method now?  Is there a plan to remove autotools?
+>
+> Thank you!
 
-Thanks for finding and suggesting a good place to add new test.
+So we have a bit of loose end that needs a finishing touch, but
+otherwise we are good to go?
+
+Thanks, both.  
+
