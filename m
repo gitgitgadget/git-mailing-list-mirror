@@ -1,263 +1,120 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157B319A
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 18:19:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEF92E4998
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 18:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751480356; cv=none; b=pKA5Eld6c9E7v/M757FdRpkHDCZnULX7l+BxT/akQeREgVLp6rAQt1r54Ot57UG35nCJbGSDD53xEQTWv4yxpDTcXzNxo23gXYEF0Hbm5FgJ7y7Lh7nLG5TIHlNS/fKr0bu5MtFLM2tzIKtD77GS2ojYQJSstmSD9ofRxyuL8Ac=
+	t=1751480892; cv=none; b=jYc3siGj7tQOvF7H+QRQcbk9u8JXP6nI3nkDzPVfShTRmW2Fwd+CdgZfliBm2y2nMylnEIwpXwyd+TCmxpWlB7SH5tLBE9SCSIycP88vSKoq6+r4z1qWBQF6D0N1f2np21AQhXvP7VhaAQjYGWMDeZxwV48LQmuaQnnUzvTZYBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751480356; c=relaxed/simple;
-	bh=V7w46kCLDr35/lDECy5COY3gvsdMEVt7nxF3KfmoRHo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PnK9nbZtSjNk5EtBDgm0CrYDyeNegV4k4NMoxEo7eExzyoXhoW4lhpr3WLA2do2FNwcR0bFRMQk1D6jJKCw86uJTxMp1e5wDgI8+irmzTBpcAPQw1GKpXXfND+Lt9XSGNY44lUmanaZUOU+mzCMR2fCSg/5bjLWVJYsDiKxpfHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cNoSjnBJ; arc=none smtp.client-ip=209.85.160.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751480892; c=relaxed/simple;
+	bh=P78KQqVOEnkCh+bSPJsdaursKEFF7N9P04Db1uo+fMU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LhBWGThEw+6dcp21q1JBzKZmoVlUYDMHI//AasDfsbZPOoeIjsIOGaVWJUBY6YK8XnIkLQz2/quteSd1Obe17PTaVFAs3whjIpasP6Y0O8vmzRawiu7CzkbO9FHjiLIvn+JJv2Oys2aL49ol36fT4yee/nZ00mFo2RgPGgDvnhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkUFg5ZY; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cNoSjnBJ"
-Received: by mail-qt1-f177.google.com with SMTP id d75a77b69052e-4a77ea7ed49so3071711cf.0
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 11:19:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkUFg5ZY"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7490cb9a892so5088727b3a.0
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 11:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751480353; x=1752085153; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2jpj3Z6cB7rSCyKS8oJoRRyi//EF/zTV3OrjAGAgpjI=;
-        b=cNoSjnBJQ9nIOZv8Ua3047N0OxHQ8FuqQBKYlBzVekDEgommh8HT9urEoALetM54ZA
-         c6tK8aDHthGPvydO9h9ZH1AFdimTNU+pp1ga8TSE57rA2WDwygazHNceZwV0F4AaoWAz
-         lwREb7AY8ksygH3VqoxwZM2x/MuG38GZPCf0I7k17IIIQN6/wD80s34y2hQYCoJH4+PY
-         LAOPceSnP2wjmMJY1kYEVZwJdSedpjMBpUpLc8rmFEN8a9sTYzHpjWKnfkEWj6S5T/Lb
-         bpTy4GNYoJFJc0vlz6SDL8fj/kDdLtIIV3UH2PAtqIxciSoxtjAiIR7CtpuSps0w4ZG2
-         H/Zg==
+        d=gmail.com; s=20230601; t=1751480890; x=1752085690; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Tby0GuA+rjwCFWLF2jyg7+NF3tfPqyhRVg0rF6a4EbE=;
+        b=KkUFg5ZY58opTO6aSQ2DcGeFB4AbY0kedDtLF15c8CkmOMuvA2yFBQnvlQjz7izznq
+         l1zq9zG/6alDbsbJmye8y6Zty34MGeU8hXR5zry/JbGte4umEnK3bDQvPu+g6PXTwl+J
+         LcZyfKC1zlEc/AfNPtkt61MD9PwE+CNdzkSPagtT6Tch6cZGaCx5NZcbjDFkQjymCOfW
+         5CZxGvi//3PKIZaIrE5APGumLuZN+3TvnW0OFmZpK/oftK8P/qw/NFK2taT+qqqU+Y4I
+         EaKI0WIrPka8RcLC1xqpzomL40ou1TEWOn5IyKvKtg5iNSvHpsJNJjrVr8YL3jFs750j
+         AO3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751480353; x=1752085153;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2jpj3Z6cB7rSCyKS8oJoRRyi//EF/zTV3OrjAGAgpjI=;
-        b=cqxdoalI9W5fJtt/MV0QrMldFv4ESAGmZ6nb7Jfdr4fzM3xDvhEhWAHrjPVDSHZEyD
-         dKWZ/yybFyiJXA4n8DEa636PVkfJs/K5Y0VvBti+eb57ujCI0nWQU4Xt8Y5N5Uw7UBnT
-         MYElvqPkTI1KQyrXgUnZV/ly0g/k4T2VBMXm8OSNf2QRoGlsikj7D3YplWDeUJpKxgM3
-         0SAOw7uz1kzRTLBb8c+MDYLlVLgk29Q2qZl81/8GunYw4qf73TsydiSK/nIYjwA3NZ7f
-         tJgY2Pvh8ZALizYtOVqp4B9H9tcZE3P0ven1QR1yM+fd8WtCwGr4ZDrZMHYjdvASW70m
-         PTDw==
-X-Gm-Message-State: AOJu0Yw3By5qX7uEtYtHiQqsatMrNTDnhgFzXQpb2hvMW1jXT7+LWPww
-	N1bMaU0oWjCxwFXzQKWw7ZbNPGXmTP0FpjZW8vVpOQyceV5dzcOuUs+ndoXpIXIZW0uw4Odig6V
-	CWKKOL9wZyNqFVkajwqsev9g00AQVmRHtkD18
-X-Gm-Gg: ASbGnct8r1AZmzbxQdFijHaM0o5OnDzAua9W0Fqir2YbOKSvYifboJTj8zPAv2/VCLF
-	9ARU+sTKapVjocwcKKOo7QL0b/ZwZNcxr9ARHOXhZlA5+D2bE8JosU0Wza3uXIeA8NWPkeE8UXL
-	YwadQjuBUQWOiT1DYBUF3DQmHfxzOid+0fGYrjCK3HVxi+nCWrJtdIiQxCCDAosSbOBwpwI7JYp
-	AyD1w==
-X-Google-Smtp-Source: AGHT+IEB9BPx7HS2lfJhCsiO2HPbU0Whk6/Orp9mOJVTIMqF+xxCjooHKiZtz1xjBATt7xDpABVC6V8174ohtS84v8c=
-X-Received: by 2002:a05:622a:58c5:b0:4a4:2fd6:90b7 with SMTP id
- d75a77b69052e-4a987337daamr8393841cf.17.1751480352687; Wed, 02 Jul 2025
- 11:19:12 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 2 Jul 2025 14:19:10 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqms9niod7.fsf@gitster.g>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <xmqqms9niod7.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1751480890; x=1752085690;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Tby0GuA+rjwCFWLF2jyg7+NF3tfPqyhRVg0rF6a4EbE=;
+        b=FwstCK0svt5lVrB3d2leOTyIRoDvgh02K2Jvq4hKQ3Alc0s8z5nG6UkDNs6CR3wU+9
+         Hx2NLpNRhtNSnKASkvTYqh9qT7hfdKg5BG1CrowT3mjTE0asnAqsFYl0J1OthBSwXNco
+         VXMbm/Badme/6pmsOGUiX8D/8SExhNEMungF34Srmk/XORLoh9dYP6HCdrz/s4BrZQAR
+         VyjLcO0U/GJX3HuKK4n4jPzbwgzWd0nOd43fy7KVp8LqUeXkRHzsfMHBrSyASgZBAT63
+         CmFrIvBhs/nPrzSYqXQ8duqPrWgYyx51shr/iiQs8I7pdtu8iEy8chfiXgSBCMiPHrH9
+         yC0w==
+X-Forwarded-Encrypted: i=1; AJvYcCUqlmDNys/fx22VtQI7Nq0edAW1sJRYJ3BE3+mdZW5pHFf5ejKSenZaTaDwpsKBlcgAHOY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzi++hFDPr+78BV05UCBa3F22J/JoC5hd1pgDGSvO0OTGc1lonJ
+	5UeM/Mw3kbPlawjDxAw62dswnR5JKukn2SjCNBcf5bEnIcI9t7lnqSIhA+Wlcw==
+X-Gm-Gg: ASbGnctJRXKi7F0EIS4Tn9LIPLxXTqXJDb2KoWSYE1+skJ87FjLyH/LqFc7jSDGXj8T
+	NwtW6gDLM83D3rl6IjzBAKxyeHVtE6R7M5eSHnSyCbxIJuiGljVw6N9L+A23gi2rn55yu2nvBMw
+	ozJwUsCykSGj/9rOE2Gci+fsjmAUmNvsSw2p6kZBpwlFMuIyD3NAdY29wQUADKqRfIaZs6SrgoO
+	b69Sb9fyP05cCV6a/AoFnNEP5Nmwpsyz8H4U6WH6bASyg+R8dhwT9z1STR2rDnIu02WCBSUHHAV
+	COk57T26pjRw+LknXbJQkxDXHKvatYQtD3fX5/L0+IsFsJZwaTERxE/kngr1I4V8Pe+ljp7y5xt
+	g4MYjgF3SGVbZQjpYlqLvGh9u+8s=
+X-Google-Smtp-Source: AGHT+IEy8ufSHcbc+ADavnHuHdjeWwYzGeLqWIMTojmrkhvXz29J+LHmvBS7mXvk9AkZISMutOMmJw==
+X-Received: by 2002:a05:6a21:6d88:b0:220:b05d:214e with SMTP id adf61e73a8af0-2240a01d66bmr1034564637.3.1751480890135;
+        Wed, 02 Jul 2025 11:28:10 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b34e3200fedsm13468789a12.73.2025.07.02.11.28.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 11:28:09 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Lidong Yan <yldhome2d2@gmail.com>,  git@vger.kernel.org,  Lidong Yan
+ <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH v3 1/2] bloom: replace struct bloom_key * with struct
+ bloom_keyvec
+In-Reply-To: <aGVLZ9VUf2M1sWhL@pks.im> (Patrick Steinhardt's message of "Wed,
+	2 Jul 2025 17:08:23 +0200")
+References: <20250627062154.1121530-1-502024330056@smail.nju.edu.cn>
+	<20250628042140.1097910-2-502024330056@smail.nju.edu.cn>
+	<aGVLZ9VUf2M1sWhL@pks.im>
+Date: Wed, 02 Jul 2025 11:28:08 -0700
+Message-ID: <xmqqy0t6curr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 2 Jul 2025 14:19:10 -0400
-X-Gm-Features: Ac12FXwpD4lIy1GklP0dWQTjnnxiAdbDcaUFnfGBkOW3mNlsy21CEzp-9N9_5xE
-Message-ID: <CAOLa=ZQZcX7Bh=63Bv5Sti89jsjq=FzVbkqqsP5Tgd7NzNr96g@mail.gmail.com>
-Subject: Re: [PATCH 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>
-Content-Type: multipart/mixed; boundary="0000000000004214d30638f64c31"
+Content-Type: text/plain
 
---0000000000004214d30638f64c31
-Content-Type: text/plain; charset="UTF-8"
+Patrick Steinhardt <ps@pks.im> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Offtopic.  After applying this topic, I asked clang-format if it
-> wants to change anything.
+>> +static inline void fill_bloom_keyvec_key(const char *data, size_t len,
+>> +					 struct bloom_keyvec *vec, size_t nr,
+>> +					 const struct bloom_filter_settings *settings)
+>> +{
+>> +	assert(nr < vec->count);
+>> +	fill_bloom_key(data, len, &vec->key[nr], settings);
+>> +}
+>> +
 >
->     $ git clang-format --diff $(git merge-base HEAD master)
->
-> The result was disasterous.  Can "clang-format --diff" mode be
-> taught a bit more focused to avoid touching existing entries in the
-> same array (in this case opts[] that has tons of options for the
-> "git for-each-ref" command), when only one new entry was added, I
-> wonder?
->
+> Similarly, this should probably be called `bloom_keyvec_fill_key()`.
 
-I couldn't find any way to do something like this.
+If so, a preliminary clean-up patch in front of the series is in
+order, as the <bloom.h> header file, without these patches, already
+has the follwoing external API functions and structures declared,
+that do not follow your naming rules at all (I have removed the ones
+that begin with "bloom_" from the below):
 
-> Also I am not impressed by the change it made to the code that is
-> commented out (in refs.h).
->
-> Line wrapping it did to refs_ref_iterator_begin() is an improvement,
-> but those to ref_iterator_seek() and do_for_each_ref_iterator() are
-> unnecessary (both of these were more readble in the original).
->
-> Even though I found its output better for Toon's "last-modified"
-> changes, I am not impressed by what clang-format suggested for this
-> series.
->
+    int load_bloom_filter_from_graph()
+    uint32_t murmur3_seeded_v2();
+    void fill_bloom_key();
+    void clear_bloom_key(s);
+    void add_key_to_filter();
+    void init_bloom_filters(void);
+    void deinit_bloom_filters(void);
+    struct bloom_filter *get_or_compute_bloom_filter();
+    struct bloom_filter *get_bloom_filter();
 
-It indeed looks really bad, I had a go with the new changes from
-'gitster/kn/clang-format-updates'. Which seems a lot better.
+It is very dubious that murmur3_seeded_v2() is exposed (nobody would
+know it is for Bloom filter subsystem from that name); as far as I
+can tell, it is only needed for t/helper testing, and makes me
+wonder if we can come up with a better division between the
+production code and t/helper/ code around there.
 
-However, this does show a problem with using 'RemoveBracesLLVM', where
-it formats the following:
+Thanks.
 
-  if (...) {
-     ...
-     ...
-  } else {
-     ...
-  }
-
-to:
-
-  if (...) {
-     ...
-     ...
-  } else
-     ...
-
-Which isn't our style, I think we should completely drop this too, from
-my patch series. Let me go ahead and do that. I really want to strip out
-as many rules as possible to make the number of false positives 0 so we
-can actually start enforcing clang-format. Once we enforce it, we can
-slowly see what additional rules work well for us.
-
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 543013cd11..2ec96eff74 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -8,7 +8,7 @@
- #include "strbuf.h"
- #include "strvec.h"
-
--static char const * const for_each_ref_usage[] = {
-+static char const *const for_each_ref_usage[] = {
- 	N_("git for-each-ref [<options>] [<pattern>]"),
- 	N_("git for-each-ref [--points-at <object>]"),
- 	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
-@@ -33,19 +33,19 @@ int cmd_for_each_ref(int argc,
- 	struct option opts[] = {
- 		OPT_BIT('s', "shell", &format.quote_style,
- 			N_("quote placeholders suitably for shells"), QUOTE_SHELL),
--		OPT_BIT('p', "perl",  &format.quote_style,
-+		OPT_BIT('p', "perl", &format.quote_style,
- 			N_("quote placeholders suitably for perl"), QUOTE_PERL),
--		OPT_BIT(0 , "python", &format.quote_style,
-+		OPT_BIT(0, "python", &format.quote_style,
- 			N_("quote placeholders suitably for python"), QUOTE_PYTHON),
--		OPT_BIT(0 , "tcl",  &format.quote_style,
-+		OPT_BIT(0, "tcl", &format.quote_style,
- 			N_("quote placeholders suitably for Tcl"), QUOTE_TCL),
--		OPT_BOOL(0, "omit-empty",  &format.array_opts.omit_empty,
--			N_("do not output a newline after empty formatted refs")),
-+		OPT_BOOL(0, "omit-empty", &format.array_opts.omit_empty,
-+			 N_("do not output a newline after empty formatted refs")),
-
- 		OPT_GROUP(""),
--		OPT_INTEGER( 0 , "count", &format.array_opts.max_count, N_("show
-only <n> matched refs")),
--		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format
-to use for the output")),
--		OPT_STRING(  0 , "skip-until", &filter.seek, N_("skip-until"),
-N_("skip references until")),
-+		OPT_INTEGER(0, "count", &format.array_opts.max_count, N_("show only
-<n> matched refs")),
-+		OPT_STRING(0, "format", &format.format, N_("format"), N_("format to
-use for the output")),
-+		OPT_STRING(0, "skip-until", &filter.seek, N_("skip-until"),
-N_("skip references until")),
- 		OPT__COLOR(&format.use_color, N_("respect format colors")),
- 		OPT_REF_FILTER_EXCLUDE(&filter),
- 		OPT_REF_SORT(&sorting_options),
-diff --git a/refs.c b/refs.c
-index a4220d3537..d492e1b423 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2669,23 +2669,21 @@ enum ref_transaction_error
-refs_verify_refnames_available(struct ref_store *refs
- 			if (!iter) {
- 				iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
- 							       DO_FOR_EACH_INCLUDE_BROKEN);
--			} else if (ref_iterator_seek(iter, dirname.buf, 1) < 0) {
--				goto cleanup;
--			}
-+				else if (ref_iterator_seek(iter, dirname.buf, 1) < 0) goto cleanup;
-
--			while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
--				if (skip &&
--				    string_list_has_string(skip, iter->refname))
--					continue;
-+				while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
-+					if (skip &&
-+					    string_list_has_string(skip, iter->refname))
-+						continue;
-
--				if (transaction && ref_transaction_maybe_set_rejected(
--					    transaction, *update_idx,
--					    REF_TRANSACTION_ERROR_NAME_CONFLICT))
--					continue;
-+					if (transaction && ref_transaction_maybe_set_rejected(
-+								   transaction, *update_idx,
-+								   REF_TRANSACTION_ERROR_NAME_CONFLICT))
-+						continue;
-
--				strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
--					    iter->refname, refname);
--				goto cleanup;
-+					strbuf_addf(err, _("'%s' exists; cannot create '%s'"),
-+						    iter->refname, refname);
-+					goto cleanup;
- 			}
-
- 			if (ok != ITER_DONE)
-diff --git a/refs.h b/refs.h
-index c5e08db0ff..41fe96d688 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1285,9 +1285,9 @@ enum do_for_each_ref_flags {
-  * The output is ordered by refname.
-  */
- struct ref_iterator *refs_ref_iterator_begin(
--		struct ref_store *refs,
--		const char *prefix, const char **exclude_patterns,
--		int trim, enum do_for_each_ref_flags flags);
-+	struct ref_store *refs,
-+	const char *prefix, const char **exclude_patterns,
-+	int trim, enum do_for_each_ref_flags flags);
-
- /*
-  * Advance the iterator to the first or next item and return ITER_OK.
-@@ -1342,5 +1342,4 @@ void ref_iterator_free(struct ref_iterator *ref_iterator);
- int do_for_each_ref_iterator(struct ref_iterator *iter,
- 			     each_ref_fn fn, void *cb_data);
-
--
- #endif /* REFS_H */
-
---0000000000004214d30638f64c31
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 5aff5a7ba62afb03_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1obGVCd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM2ZiQy85UFJhN0czaklnMG5Id2RvMmhZRFg3QzNWVgpmUHJOZ3o4ZnY5
-QTBFSXlEWjVqV0M0akIrdC9mRDd6SWJ1eUcwbzJYbkl0MGhteU1QRUthNUtDWWlsdC9CZjFsCjdM
-VjVoR1Q5UEdNbjNsZXMyS2k3VVFsK0R0WExoVUJ3Uzk4UjhoOGJPcGdWanlNR1dSYUNBb09FMlVL
-R0NKN2wKazlkMFdtMlQyRVhxL01BVlNoV24rODlZaHI4WVNaZ0E2WXdBYmFWRThqY0lvTWFYMTJK
-WGhMUTh2bzVOWTQ4dwp2OFFIZi9QeG91RC9Xb05FNnMyVkhYRmNCa21GYVZRWGdIYnNhZjN4OXJy
-c24yR1I4bFlKMDlPcUY0V2lEbStGCkFLRW9xc3FpZWNXbDl1U0NDN2czM1hQOFlLVHQwdHdXZXhB
-UU1sQVpNZ3NQa0hpMU5OQzU4NGppL0pBcktmaEYKRUhhbXR4NlpLQUc3SUVyNWtleVQzYk1VVXRT
-SitpVVVtalcxRHM4QlRSbEVMckdubHRuaG0ya00zdWMyRy9lcAo3L254amVKUFlUeHdmNFF0TEdV
-UWQrUDdESGw2bnBSWVdzYUVGdTRLRHh6dzM2eTJQb05nbm92WWloTVlRVU1qCjlSdkFkcWVXaTJr
-QWpJazYvL284NnE5K0lETndjaTJIK1JDamNmaz0KPTR1dk8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000004214d30638f64c31--
