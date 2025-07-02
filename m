@@ -1,121 +1,175 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D54220F23
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:14:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5152B2DE6FA
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:21:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751490860; cv=none; b=gWybPnASR0huNAbplwJg1DlrmPb7o5hJJfvo/v9tL4Va4AWriOgQBpEwtJE7kZSVKk1j4QyCvo2DwhlWlfmCMskUElTin4hBOCIHL6XlwUYRTBLxQs9mzlmiOOa8zD5rO13WPEtGoJPsryhoBrFMxYpM+cV4ZVaH4/iQ2OHfoJI=
+	t=1751491296; cv=none; b=YIYLkmrAgeHlaq+N7WRZOxI66mODk4GWYqYjqteQkS300QGlVFBl6NEmdMYFkLlP02WerHyDRg+1J4g+cuMp6KBOCi+peuZWiZAYD6RWkTYKlD0hLOCCkQydvExkcwHCQNFX/JQYs1U7XdZmNwyAEK3n6AhUs6RUiUx3Bm1gP/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751490860; c=relaxed/simple;
-	bh=RyFl3Y+1/Nk2f70dTgGv2nQbt6orLVCzQm9TkB0UQKg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f7KkDYVLw5YWbyIkDnNS7U1+EOamsyeAEGq2j3Oox6ADVwE0nUkVZoM6K8RNXe/C43wnYnItf5wEk2T2R94SyndY9bFOVbtcsX4dwHjFKvTcQ+e+dmU9R2Xfqlvvmt1La/D9gBm4B6nyDs9VNDeGMijaBUFwhfLMTZhBrHSqqz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dhBLxM2V; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751491296; c=relaxed/simple;
+	bh=E2fzhGUF0a/aw811IJ/4Lrec6xOqOXb2BnpYfZaK+4o=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=X6WeprzBfFay93jLcCVQ/Y+zPCW7co5tmbyJBSWJixt6+e91X7UQbBlsJ4UJ013XJLdkvmkFHqFtt+xL4V57WC1XoG7y901XWw6yi0AX8dW7srh9SHZQaFApCeFbVb8f5efeULSfrI8cBk1t1h2XN1zcwsLMc0Sb1TLS6n9FhsE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=tSsckoxT; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dhBLxM2V"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2363616a1a6so44619765ad.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 14:14:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751490857; x=1752095657; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=8bETkzV97UXrx43YZEbMB5XHa0uZ8dtZXPWj6ILZY1s=;
-        b=dhBLxM2VAw6LnIW9ZmRZL9BTImd9w/z0m39b/UVu5Kt46J3Lw/38c49VzlTm3O6gvT
-         q6TXpG3Ejg3e7WJQSxoVfmZiC0Kk9bSSp/r+ZBGVxmgvtA+rQ3s0rE7ozuP9SPyd2LVa
-         fETWcaJMECUlH6K0BWGC1zaFB1vwugdvOXeih+7L1uUl5v/s3GGFjtHIJFbnnco+MYER
-         va1K75mHZlifAxHWL8J8fLByXNQOCn+4AlH3SBeIfIEFiO3x8O/rlumrS3vywZWXbyb9
-         3zg7asFxpLeYLCo7ecOdyQq4djzC1YCRWAN6Q2f9Mf02qsaIUZ4qKoYF4P1wtbzVSwGJ
-         6ZYA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751490857; x=1752095657;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=8bETkzV97UXrx43YZEbMB5XHa0uZ8dtZXPWj6ILZY1s=;
-        b=PHRPGRduqDt0SmCiu3bnntsRvbbb4mR5Z3N4h5AEYsQ6vbdfF4vb8aEoLO1kWVHKd0
-         GlL5YinL+xtsMWJGQzJLjA9clok3SR9nj0yYnXdr765P/2zleb71FcNEb3QjDk+YBfSV
-         pjjK+rW3LMicJFtkHsuEpXdogxMucNNjLtWCGsHY1CfCpTskaODW54zDvO+0yiNX7tUL
-         Bu4AbPzEOwoucLkbCg7NmFzJ9a1USlYCS7zvymuKeCzMb+M7+izbmUQ3g5KRa3BI7MT/
-         pC3WiEBnwjRfkD+xVtA+ZgFYkBgDeKUILZwTwM5flOlTNOaw7i0oz0LwkIxxZVWZ5uJH
-         F4BQ==
-X-Gm-Message-State: AOJu0YyVnLrxbxY5e5/TKtkMdwYIXezhLo1pPbRh0fqjVgAZho3pgNy+
-	ovg9flcsBM8M9LZyKftimyqmMRdD36oMrv35458K7ylksHEm82/dsW4D
-X-Gm-Gg: ASbGnctpgOUKInyK1IXXeURY8rtOzHMvVu3deoCpb4tDZL3yO+Fi6UyPoCZZ5Vp+R5U
-	1c4r0Fp4VEtljStgVct8rk1nVh14az0qQIsOC4u8m2pQWSWW9E2sLumHZQMN10k4GRtPibnt6OA
-	YobMWVed1TCTZvRe6skIB/ye8EOgbrVkCuiSqWnxREd828zFF4DWPGQirLEWAuh+AiRPItl9Pby
-	L5sg3vH6QmrqCVfkRQcnOLGuSHqMqNcNtsrXlY+gbbPgG5g//KNFNwJKRFICuHbvLl/I+222W6C
-	6OYRlfuGYdyt7dADWYCjbnFChOp8sAE8xd/2rsW1LxKlY+1KD4RsxcGLGKQpheGqe7RSUkqfnU7
-	KhQlV92nmqakjie9wkL7u88Ta6zk=
-X-Google-Smtp-Source: AGHT+IExs3GdEsduK7Hzsu0omZXRaJY10XjEUgIsSS7d3bYaUUJjJ4iqfkCw/T2JRvdm9OO9nt/v1Q==
-X-Received: by 2002:a17:903:1b4f:b0:235:779:edfd with SMTP id d9443c01a7336-23c6e570636mr50882245ad.39.1751490856988;
-        Wed, 02 Jul 2025 14:14:16 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3bdfcesm135307825ad.206.2025.07.02.14.14.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 14:14:16 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org,  brad@comstyle.com,  collin.funk1@gmail.com,
-  pclouds@gmail.com,  ps@pks.im
-Subject: Re: [PATCH v3] builtin/gc: correct total_ram calculation with
- HAVE_BSD_SYSCTL
-In-Reply-To: <20250702202118.48742-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 2 Jul 2025 13:21:18 -0700")
-References: <20250702154649.44210-1-carenas@gmail.com>
-	<20250702202118.48742-1-carenas@gmail.com>
-Date: Wed, 02 Jul 2025 14:14:15 -0700
-Message-ID: <xmqq5xgacn2w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tSsckoxT"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751491286;
+	bh=E2fzhGUF0a/aw811IJ/4Lrec6xOqOXb2BnpYfZaK+4o=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=tSsckoxT+8TkYETdJD0H/QCuFBUHeNHy8JNe2LkAMnB1L0wWSceRWNrb0yEAQW+oD
+	 JEGFhoSizEIVW7H8bxrJt3vjxn9PMN8rzcQIb7ZHSkBBNuy7wcoMwdo4FA7+KLdRT5
+	 m7sWCncBFb3J6LdkfHjgxPw3SsQclJXJxzlOTdLXw+yuRNwwZU20u8hotOv5I2pzfy
+	 8e+Zdmy/3J0Kq4nIEbsi+O8JL2WSWvphFKV62PsG2ED2484bWGYbT5sx4RsyQVbtop
+	 +IsBGQShh5RLD+nGMHLh3rDo0Dg6ushi+rAsMGISb06FBkyAjEfySEj2WPIU94dCdZ
+	 h6EJfEtpMMre6CqCXDXJ32+47DzZx+x/FTgrl3E/EMvdgyrndn4DMzzGVCdG54L8P+
+	 MJjH0qKSbZTKe++DQLiMmn/DiOwFl2AIHXlsynTA230Yv0IEd7XOxreHpc7vOVhfFy
+	 m0pFeVHKJ+XeCEN58HSUjJCaOfSV4A58kufo0kQf1Z9v3Sx0+jJ
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ba1:ff85:fdc6:571a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8B0C62003B;
+	Wed,  2 Jul 2025 21:21:26 +0000 (UTC)
+Date: Wed, 2 Jul 2025 21:21:25 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Karthik Nayak <karthik.188@gmail.com>,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com
+Subject: Re: [PATCH 1/2] BreakingChanges: announce switch to "reftable" format
+Message-ID: <aGWi1bZMlbKCgB74@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com
+References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
+ <20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
+ <xmqqbjq2ed9e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="1Swam71C4HDpPdZy"
+Content-Disposition: inline
+In-Reply-To: <xmqqbjq2ed9e.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--1Swam71C4HDpPdZy
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+On 2025-07-02 at 17:03:25, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+>=20
+> > diff --git a/Documentation/BreakingChanges.adoc b/Documentation/Breakin=
+gChanges.adoc
+> > index c6bd94986c5..c96b5319cdd 100644
+> > --- a/Documentation/BreakingChanges.adoc
+> > +++ b/Documentation/BreakingChanges.adoc
+> > @@ -118,6 +118,45 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.=
+com>,
+> >  <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
+> >  <CA+EOSBncr=3D4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
+> > =20
+> > +* The default storage format for references in newly created repositor=
+ies will
+> > +  be changed from "files" to "reftable". The "reftable" format provides
+> > +  multiple advantages over the "files" format:
+> > ++
+> > +  ** It is impossible to store two references that only differ in casi=
+ng on
+> > ...
+> > +  ** Writing many references at once is slow with the "files" backend =
+because
+> > +     every reference is created as a separate file. The "reftable" bac=
+kend
+> > +     significantly outperforms the "files" backend by multiple orders =
+of
+> > +     magnitude.
+>=20
+> These list benefits of using "reftable".  Can we also add one point
+> that stresses why we want to make it the default?  Something like
+> "Having to do X once per user to make them opt-in is too cumbersome"
+> is probably good enough.
 
-> -	length = sizeof(int64_t);
-> -	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
-> +	length = sizeof(physical_memory);
-> +	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0)) {
-> +		if (length < sizeof(physical_memory)) {
-> +			unsigned bits = (sizeof(physical_memory) - length) * 8;
-> +
-> +			physical_memory <<= bits;
-> +			physical_memory >>= bits;
+Maybe an additional line about "most people pick the default option and,
+given the information above, we think that users will have a better
+experience with reftable as the default" (especially, in my view, users
+on case-insensitive file systems).
 
-I do not quite understand this version.  Does the correctness of
-this depend on the machine having a certain byte-order?  
+> > +A prerequisite for this change is that the ecosystem is ready to suppo=
+rt the
+> > +"reftable" format. Most importantly, alternative implementations of Gi=
+t like
+> > +JGit, libgit2 and Gitoxide need to support it.
+>=20
+> ... in order for them to access the same repository.
+>=20
+> How common is it to use a single repository from these multiple
+> implementations these days, I have to wonder?
 
-The system call treats &physical_memory as a mere blob of bytes, and
-may tell us that it filled only 4 bytes out of 8, but depending on
-the endianness, left shifting 4*8 bits first may discard the real
-information (i.e., big endian).
+Pretty common.  I know Rust's Cargo package manager uses libgit2 and I'm
+sure there are other development tools that do so.  At a previous
+employer, we had a linting tool that used libgit2 and we used
+command-line Git for normal operations.  I don't work with Java on a
+regular basis, but I expect that similar kinds of things happen there,
+especially in Java-based IDEs.
 
-On a little endian 32-bit box, it might give us length == 4, filling
-the lower half of the i64, and shifting by 32-bits to the left and
-then shifting it down by 32-bits to the right may fill the upper half
-with 1 if the result in the 4-byte long is more than 2GB because
-the type of physical_memory is signed, and then we cast that value
-to u64.  Which does not sound correct, either.
+> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> > index f11a40811f2..e0f27484192 100755
+> > --- a/t/t0001-init.sh
+> > +++ b/t/t0001-init.sh
+> > @@ -658,6 +658,22 @@ test_expect_success 'init warns about invalid init=
+=2EdefaultRefFormat' '
+> >  	test_cmp expected actual
+> >  '
+> > =20
+> > +test_expect_success 'default ref format' '
+> > +	test_when_finished "rm -rf refformat" &&
+> > +	(
+> > +		sane_unset GIT_DEFAULT_REF_FORMAT &&
+> > +		git init refformat
+> > +	) &&
+> > +	if test_have_prereq WITH_BREAKING_CHANGES
+> > +	then
+> > +		echo reftable >expect
+> > +	else
+> > +		echo files >expect
+> > +	fi &&
+> > +	git -C refformat rev-parse --show-ref-format >actual &&
+> > +	test_cmp expect actual
+> > +'
 
-Would it make more sense to pass &u64 and return it only when
-length==8 as you did in v2 while removing the need to cast?
+I might just make a recommendation here for a `default-ref-format` key
+(or some similar name) to `git version --build-options` as well.  That
+will get put in bug reports and troubleshooting output and will help
+people figure out what might be going wrong if there are any problems.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
+--1Swam71C4HDpPdZy
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGWi1AAKCRB8DEliiIei
+gYbUAQCEMGwJF8VbJtCvPT1aAbPY2CC+pMKWqTTIZ/hjd3exwQEAiYIY3AUvrb3h
+PgcIXFugRDhSKQFiF9+66K+88EcwAg0=
+=NafZ
+-----END PGP SIGNATURE-----
 
-> +		}
->  		return physical_memory;
-> +	}
->  #elif defined(GIT_WINDOWS_NATIVE)
->  	MEMORYSTATUSEX memInfo;
+--1Swam71C4HDpPdZy--
