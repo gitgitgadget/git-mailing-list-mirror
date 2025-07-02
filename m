@@ -1,78 +1,47 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C9F123D2B5
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 11:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C53B276056
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 13:00:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751457077; cv=none; b=rcP0v8ZycGb2DwzYqNWrRTIjO20dqDv6aIag7qdF4Rc/8H4Lry/9gXoTc3oscy67yLkkpR6lPDEgJ6Oxiy9Yg8QCLDpQGijmIRrdcOfLlJyl1IjZmaLRQiGUqHZbnVY4ZXl8BLMMNjJKqhMxiBSAENb0juM0Pg7WUtfo+VzNZG4=
+	t=1751461237; cv=none; b=eoDjpZTg2p2tGD/TCFJM4lPmurpNH/Bi+3zyYfurjXLOM2tzc32e8f9pdHVVt3oaiNX9V912D33Xn5wRQgiXRMqPZtFLX1ZdprnzfENQJtQp2oTzl+uYnClLifrAzd9ziuuW/K3FT0DWEDzKkcM7iHETKazs8JZB9bYe8+K7uJ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751457077; c=relaxed/simple;
-	bh=i4rrRPBJbbKyh82zz4hGq+R4/yKP5irIChP89tbNi5g=;
+	s=arc-20240116; t=1751461237; c=relaxed/simple;
+	bh=uBqR5lMzp0nKXOwxOtTA2p75C8fygn/42GvrlqRkgeo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i1lJIKVRKcxSvckQqFDPK5EhMBdnHlCXQDbiFrhlrnTjMvni+Qi7IGsJ7yjckh8fub7KjmVwL+roQCFYAjvbe8ey/C0BeZi5V+2YNVxMQO/LW2bMDfVgG/3YUP1nTw0J5VKbPPeBsOll0ScbM6sLZPC6PD2nInOepDVe4KB7ab4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hoz7NPEv; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=uRVK0JsW7jB2shJa/uHiOhhhKqU7o5qyVOtwCYZ26n24xfGkgoBAvxZXI4azlFRdPeA8/R2itFNJcrXga5T1baaSQTMMX4aInO4CRDgIaMuEZGBkXaR7R5ZXug2ISV8Hx2j4bGqeSOxVxoRm+U1W/FCsHiW3LfZ+wiVO1COYok4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=qJkH22I3; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hoz7NPEv"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-23694cec0feso66628665ad.2
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 04:51:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751457074; x=1752061874; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=f75V6xUxVSB5X8/M4gjlmJez4/WDInHJLsq1SEMKfcY=;
-        b=hoz7NPEvwwzGopHn5Bwrj/OH60itMhqIgtPpisrEjARnDuJmpIxONSWMQXmJvcbxFM
-         IgM+PLFOphj7A6HjI2a2Z51zzTErZpVBr1ZQF6ikR0OsyOr1oU/KRKfTFOw2MYl0++GE
-         DVyTQsu0MnALnnu1qOGTVYSfykXUjpZPE8NkoQTz4WYx+VievYo9kXKXdSljbxeKoiXL
-         +f+hJBqNx5i6Mo3CPzlrjpA/k7AXe3NDNPsib/wMfhbgukEBN3VCQD2NJI2CuorI3Hee
-         GJeK/QJacY5MkaMkFVPnpQwryuBqnfdjIpIY6t/sH4p3xN1xBum3fyvtHZBzURZF3ze2
-         zK6w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751457074; x=1752061874;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=f75V6xUxVSB5X8/M4gjlmJez4/WDInHJLsq1SEMKfcY=;
-        b=YMFH6sJ+1qBVg2lmjR4QU1UdkNRGALqSTouGuHIoXo7Az7CB9Vw5AnsjWB/Cpyg9l5
-         5O8juqMBwwvseEkHMOyBSBGmNej584vutqg7+G4bAuFLhh8lo6aDxArRS7+hVSHnciGQ
-         GXfCirYT+d4G1cujBr9mRNoTGoZCyvBxiXURA1H9eoSBcjRMci3ySBunR7TbgxfMIkle
-         CBxj4LeYJARCRSpisW0D2teFBmpK1ZqpdCi2Au25Nw1x4GZ2oOIU71wo4acDn1z1shTN
-         YgGmRhgr/Bi7bINntus9fi/hEsZxVM8+HkQHCiLeXJcdTThD9/KrnW6OfVWR9JhckfTZ
-         lEKA==
-X-Gm-Message-State: AOJu0YxrpzC69KemMa5f6azlUBD1J9dkQoDxmD+5NueJEwlOnmVUEyJk
-	k6TADK/iHAVjtIAG6KCK+7eETXfQITuUD7y9WtwqwZ++IvKjBSY/2LLm
-X-Gm-Gg: ASbGncsTi7eoCThnqaLO/wsbtyZ3kF4MaZXa1J8UvXDb/TUo4XfyQFnUkJ6+cFAJn5Y
-	dFWVUlXj3taRzT2KtLp4HjeGr//L5j7Z2mk+1M9+r7etggoVhAarOtpQAxUfpXpc/yzesxTH07G
-	YOijEL2DTfL/227wyhr/wYWhBevAqnYR1pTdWAssZks3O69BeU1AUhqpPZEZ6t3g6nh3RFJKMDH
-	fpwij6Q+GF/yY6HGTUrKKhGmQPaSDh9rhFRisetpkiUY0EbZGpolK8g+mTiWtEIjmNPOXNr+TsZ
-	0RocwAXDH7ZFg+Lh1iLqNMmX9XUiGBedc8NdxNGKiggTu/Ljuu+2sdrEJvoP5r5FyY1r+CAHDdR
-	ghkNpwfLs2ZkppCNuEGBSWphwYdY=
-X-Google-Smtp-Source: AGHT+IFulD5D/Zy+ZyisXsAbgPm7HLZBPW1pANY3M9+91Zkbgxg4j8dbsFFeil+/r09r0tRe/wQ9hQ==
-X-Received: by 2002:a17:902:d4d2:b0:234:9374:cfae with SMTP id d9443c01a7336-23c6e5023ecmr45050375ad.19.1751457074179;
-        Wed, 02 Jul 2025 04:51:14 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3b8be5sm127586865ad.189.2025.07.02.04.51.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 04:51:13 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="qJkH22I3"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1751461230;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=zykLEGOe6dEKdpiLBf/gazqWvtQ4rF88Qbzm4xBbJKg=;
+	b=qJkH22I3ckp/VIYIv2/8/pRqdaA98WKaYxTfbx41Z07IJyWLqApgpoblssmbPZAN8L7WYl
+	2BBpcy/rM/v1A0Ve91qc/EzAveKAm1sLFRzW1sYjFluayfIBgY51Nhxz+yGDfhPegs/gnN
+	BKsuACO4xNBJyKvJY/yLcRd/Bdouqbw=
+From: Toon Claes <toon@iotcl.com>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano
+ <gitster@pobox.com>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
+ <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
+ =?utf-8?B?QXJuZmrDtnLDsA==?=
  Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v3 1/3] last-modified: new subcommand to show when
- files were last modified
-In-Reply-To: <20250630-toon-new-blame-tree-v3-1-3516025dc3bc@iotcl.com> (Toon
-	Claes's message of "Mon, 30 Jun 2025 20:49:23 +0200")
-References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-	<20250630-toon-new-blame-tree-v3-1-3516025dc3bc@iotcl.com>
-Date: Wed, 02 Jul 2025 04:51:12 -0700
-Message-ID: <xmqqa55mg6a7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: [PATCH RFC v2 0/5] Introduce git-last-modified(1) command
+In-Reply-To: <d93c9199-80b1-4834-bfbb-8263a80d90d5@app.fastmail.com>
+References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
+ <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
+ <f0c508cc-5c6b-4c4b-a3f3-0cdd8d1071e5@app.fastmail.com>
+ <xmqq5xgbk4d2.fsf@gitster.g>
+ <d93c9199-80b1-4834-bfbb-8263a80d90d5@app.fastmail.com>
+Date: Wed, 02 Jul 2025 15:00:20 +0200
+Message-ID: <8734berbmj.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -80,59 +49,33 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Toon Claes <toon@iotcl.com> writes:
+>> I do not see anything unexpected.  Have you seen "git ls-tree"
+>> output without -r(ecursive) before?
+>>
+>>     $ git ls-tree HEAD refs.c refs.h Documentation
+>>     040000 tree a0f7113f63a19b70dff14bfd9f8f82809f5068e1	Documentation
+>>     100644 blob dce5c49ca2ba65fd6a2974e38f67134215bee369	refs.c
+>>     100644 blob 46a6008e07f2624239139cd8b2ff712545f07d3f	refs.h
 
-> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-> new file mode 100644
-> index 0000000000..4ff058c302
-> --- /dev/null
-> +++ b/builtin/last-modified.c
-> @@ -0,0 +1,44 @@
-> +#include "git-compat-util.h"
-> +#include "last-modified.h"
-> +#include "hex.h"
-> +#include "quote.h"
-> +#include "config.h"
-> +#include "object-name.h"
-> +#include "parse-options.h"
-> +#include "builtin.h"
+You raise a good point here. Let's compare:
 
-Apparently "parse-options.h" is included but is never used.
-How much of these include do you truly use in this step?
+$ git ls-tree HEAD -- refs.c refs.h Documentation/git-last-modified.adoc Documentation/git-config.adoc
+100644 blob 936e0c5130fe7d67f645501fbb9e70b94b437f54	Documentation/git-config.adoc
+100644 blob 1af38f402ed6437353fb5765f62251966d828df9	Documentation/git-last-modified.adoc
+100644 blob dce5c49ca2ba65fd6a2974e38f67134215bee369	refs.c
+100644 blob 46a6008e07f2624239139cd8b2ff712545f07d3f	refs.h
 
-I was looking at the code, since I was wondering why you forgot to
-handle "-h", which comes absolutely for free when you use the
-parse-options API in the most natural way.
+$ git last-modified HEAD -- refs.c refs.h Documentation/git-last-modified.adoc Documentation/git-config.adoc
+56073a0af90be947cfefbfc3cf762b268e5e20a9	Documentation
+062b914c841329a003f74e1340ea5178391274a6	refs.c
+47478802daddf3f9916111307f153c6298ffc0bc	refs.h
 
-> +int cmd_last_modified(int argc,
-> +		   const char **argv,
-> +		   const char *prefix,
-> +		   struct repository *repo)
-> +{
-> +	struct last_modified lm;
-> +
-> +	repo_config(repo, git_default_config, NULL);
-> +
-> +	if (last_modified_init(&lm, repo, prefix, argc, argv))
-> +		die(_("error setting up last-modified traversal"));
-> +
-> +	if (last_modified_run(&lm, show_entry, &lm) < 0)
-> +		die(_("error running last-modified traversal"));
-> +
-> +	last_modified_release(&lm);
-> +
-> +	return 0;
-> +}
+I have to agree with Kristoffer here, and the latter is not what I
+would expect. Thanks for the testing! I will try to address in next
+version.
 
-It is a bit unusual for the top-legvel cmd_foo() to totally give up
-the responsibility of command line parsing, and let a helper
-function take over everything.
-
-Is the idea that the family of last_modified_foo() functions wants
-to form a library-ish API?  I think the primary reason I find the
-arrangement a bit unusual is that such a library interface would not
-deal with end-user interactions like command line parsing.  Even
-commands that let setup_revisions() slurp the command line arguments
-typically does necessary set-up (like discoverying the git directory
-and reading the configuration files) on the side of the caller.
+-- 
+Cheers,
+Toon
