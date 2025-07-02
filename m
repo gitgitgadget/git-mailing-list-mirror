@@ -1,212 +1,94 @@
-Received: from mail-ot1-f46.google.com (mail-ot1-f46.google.com [209.85.210.46])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2438301126
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 17:23:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2842C2F50B2
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 17:33:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751477001; cv=none; b=oUmlXKClv1pT7Ggx+yHWK9g94HBRb+Sjru5xZucv+kvlpZFAGXUHNZ/q4a/AogwxCFacrYyi+Zm4PlT88XDUoiNkE3c9M1gto16MEmGojoKZ2YaQuMUxJKhIipk1a55TO4fpKBluzdyXUWCV/0g5TLPOcwN8p24aKZpsN9ZuyfU=
+	t=1751477599; cv=none; b=pZJzEyusAdriJ+0BNp85FoDH/XkpICVvxPRLDwS0zns8dUO2g09UPdxu3bEGvzGTN2gXmIiT/8qdpsl4aE+rxxxqiwoHZCH3+hJMjCURb+6SO5ce4VWR1ee8RXFjKDjWTh2WFSiW4VTH6l6w9NQxPfMBSc1PjB1Cg+0nf/UFfj8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751477001; c=relaxed/simple;
-	bh=RiaXcwqwoChEzE4SWsVZDtrjwU+udDPSOPRDkSbU9ro=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QVQXA2KkRMikOlKwhS6PaqcDs/kWI84oYrrTJMJBmhwBKgKlm2gqLWBVOC/8PIi1Uv4U5skcg00VliEUqLLVf8vuBaN/IH1hq4Lrq5+U/iZE72Y/f0eFGRe7OTGrBq78/+3+X6p24dv0aVd46hpa6UrokLlyqF89p7qjbPlPE2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Yzc0/QZg; arc=none smtp.client-ip=209.85.210.46
+	s=arc-20240116; t=1751477599; c=relaxed/simple;
+	bh=SVgYIr6QRyoJUjgJSZOCxevHekqPqxDpqK1G/H/0lJs=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=VkLbCMKkMmV2WiOJM4Iw3Lc5j8al7q82LtmFCpuPdcb/xWJTYXYG+OAq8eLVlfqo+lhecx1FmAJrjLahkj5sF6TAJgOm/KxCjjpLeNgHEtrXB8VZSNB0THMe5Z0p439eqnjbMVj1Xqpa3rKt7C8+ue6CJj+MYKP656XF4j0xvqo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTRwTKqL; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Yzc0/QZg"
-Received: by mail-ot1-f46.google.com with SMTP id 46e09a7af769-72c14138668so2258838a34.2
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 10:23:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTRwTKqL"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-60bfcada295so8318777a12.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 10:33:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751476999; x=1752081799; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IwkHEMIT7i5+KZovKpCC2tumjAJIzps5ZnSzQ6KZhvQ=;
-        b=Yzc0/QZg2UY34ZQzyt54xjQM0PnytVbeH28t0cXUDaOTCOOtFcSpHFrIm2Si64mE/+
-         KCKYanH2z9oimRK6B+cOJt57tl35MPX+i6CFspWn0xE9bJU1yNLi81ydPcBYsI7vt7o7
-         i++iilOKqbd6wZklLbogWrQIn+AHMY+yYo2nBkoODSKZnPSJ/WrlGYKM7jQmJqZo+PnS
-         Ac6kVBY6+y3WC32f9JVdl37ZCK1uqRvjv31A2C5lGQ2e5p0J7ZvsN/t7NF8igOwdfC5K
-         TJUB757AG4YrV4yA6Kn+oSL+9DnbRg5urMzgRCxHUpbTiclpU+ZdhC88PKIX2x0vnu9A
-         hJgg==
+        d=gmail.com; s=20230601; t=1751477596; x=1752082396; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=rO5HrSxbzmffQVYb5MSxNLE/QBwXduWzWXChaGVxvTg=;
+        b=XTRwTKqLsOz6hupWcdPTb5jVVEoV67lR4uxMToURZ9dCk7ar0dfO0awF016m7ucLOf
+         HX0myjMzl25dJdMaAUt4WAOgJP3q7DvoDoqwlMs2HNpS2qEN2md4+aEd7sYsFJC1p0uQ
+         7UAxWRERk0lNjoqGIro75KUnfHMwYsrIR1sflzssCEp/jm5R7G/eDthqaGkh0cC6/rCm
+         54fue425irkCNOY7+0ZWSXO8jXaX5uGe2Qo0DRfoDY47y5gfFR69KVeMPHDDyF1+aEpM
+         SO4TfRcN7HeJPiPsPHKBsXLZBWi3x2JuE4bLIPRJo2jNuO/UzrKCM5kiEAH8istVq0TM
+         0pdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751476999; x=1752081799;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IwkHEMIT7i5+KZovKpCC2tumjAJIzps5ZnSzQ6KZhvQ=;
-        b=VHSpfltke5+G6JYqKaDelhq28uxyjLukNiPfqMZ5e3GfFcDOhdRmetOEL5xOSSNHkC
-         adO9ED5bOaDJMoguDJf7b3SKCGjG3Zwmh6vj9CACVk6mgVKBVaFQqENkC/gybjTRxDVA
-         4eSiKnqcgR2b6wD1iXAFkHWJxt1uHQq9HCFPMDuPh6TbUmmXGhDR9bOcdrlAf66ioc4W
-         u+d/C+z0WB5ZcQ5VQFUiS0Zgz78TQdhchjXENmLNkA7xjEzcOekpttiVV24S3vvW3QZQ
-         m749kEekoNGaJdT/CGl1u3k6Xb/Fk61xQGMs9klxs8aR96M2yNF5D8Y9nfzpEqkQ1GoJ
-         rHGg==
-X-Gm-Message-State: AOJu0YyA38P6suJL4AJiyRzfG3y88qMGOjJKwLSh77ERUBpyKmX6HhGr
-	i/qrztTYb11VebwoE3ISap651y8up8I/RzjyqeEtlLkuwnmro7k8w3sL
-X-Gm-Gg: ASbGnctODSFAzbVcLZADhNr/KBixVEUE65fIbjxKEoujzYsPYC8IMpYoe9AzB6bquJc
-	VYhMhlNdO1XApyMpELPy1vHc807Tj0lkHIJeJbPZ+Cub3BsXmxDRri3zTLgJ0Ow7f/0Yda1VWYj
-	jLhwNYy1kE71xlQSkUMoMID8NmauO5vVnLuImme2Faugw1RkGXZSNniVzz+SpyeCNzcdAQl8mGY
-	gO0AOZo2hEc++pqSS2PJ9PgkDGe7f6hO3qYS3LmFwn8UlmWJSjmcAFR6IKhtTm6ExDARHz0isnw
-	DwyussO2ZAN8spGEUxvNB0OLAFczHGFwvRvbLcz1RQIJlKIkrMfDpn4=
-X-Google-Smtp-Source: AGHT+IEt1W7LF1Ym+qgBIa3XwO40a68LXu75dl4ks9fYuR6u+ctH+/RrorMR4sfqNdhSwulz/Mkm5A==
-X-Received: by 2002:a05:6830:3c08:b0:73a:8bf8:56b4 with SMTP id 46e09a7af769-73c897893f3mr184464a34.13.1751476998712;
-        Wed, 02 Jul 2025 10:23:18 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73afb0e2f7bsm2575722a34.41.2025.07.02.10.23.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 10:23:18 -0700 (PDT)
-Date: Wed, 2 Jul 2025 12:17:50 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	Karthik Nayak <karthik.188@gmail.com>, K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, 
-	ryenus@gmail.com, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] BreakingChanges: announce switch to "reftable" format
-Message-ID: <q6zyvqpyxobtp65ptrmkdg3kvc2plxmsltaurqf52hglitikir@5p5jpcqc577o>
-References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
- <20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
+        d=1e100.net; s=20230601; t=1751477596; x=1752082396;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rO5HrSxbzmffQVYb5MSxNLE/QBwXduWzWXChaGVxvTg=;
+        b=mY0fT3B4hwWoSqTLkuV9wA+KlJ+WRd76vxc1mYCraedRkBiLkY5CgsXKB3xmwhi3ZO
+         eSnMvYvRFInzHerdLcWYN0ghQ5fs4FLJm3egYNYmnCbVQur0sOJNokL85hrsm85/zKeU
+         iMRufFfOC9xu5pPvVtoBp3A1fCerenNmV1d2PqhxQT8muxT/5uwjickQr558+Gu+aDsG
+         w4XgfZa8EHFlZTXBUYpqLEYz7+hFKDCa81BmjkS2fyKuaQNZNhOiV7U/L9A4/VNBapTO
+         bC2gSBUaZZeV+utIjudDTt7B6gfLRiS4VWQ68b37qMv0gBv6LV9V7K2W7yAOJIkKi6yy
+         Eo0w==
+X-Gm-Message-State: AOJu0YyZxb7hFu+c/hpE/SdVdjVtQaT5Gijcyx+wvuwfJAar3xFPN9XB
+	IILV7HFGNmLr+didsXJVVoeEZ8NLqZ9eBli80YGcR6KWQPGmpLZP5IJEDR/C5Oxqezg/tjAhN3L
+	+S5G4lYEhvc7LRM11BcaGjnrvj19uOyEB99xn
+X-Gm-Gg: ASbGncsCpT/D9MDMJ820eKHk2nVtNuMyxugiLZvTX/GGlBo7PbecCsUQsnngG98p/9K
+	i1eu1bTB9Z+v+FYFftRcuBYabfG+trXvtJipNk2Goi5nRe3BKH5ocDGQxY1QYcp8Nip50E/rUty
+	0cAHDd2slShi4Hg4mtOgL53zcAe+us/0cUnxzAM9E/Yt4mnQ==
+X-Google-Smtp-Source: AGHT+IEkyue2FhqloWeLrYzMmaCo6XeKRU05GZNsjUeNlxL2KB8/1jzbrl4agmxn0dupENC7dhIa3052ud/JUetMSWY=
+X-Received: by 2002:a17:907:ec06:b0:ae0:a813:1bc0 with SMTP id
+ a640c23a62f3a-ae3c2cea8cbmr357879466b.53.1751477595627; Wed, 02 Jul 2025
+ 10:33:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Wed, 2 Jul 2025 19:33:03 +0200
+X-Gm-Features: Ac12FXy73bTuuMwHiJMfrjNXelOAXMFJb153h1JDBZD0r8kbHqY39_O-jSI_fJw
+Message-ID: <CAP8UFD2m468L8BFcZHcYO6oLkObgHTaXftAz4ONHVGmhLpso=Q@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 124
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>, 
+	Stuart MacDonald <SMacDonald@kaimaging.com>, Eric Sunshine <sunshine@sunshineco.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>, 
+	Luca Milanesio <luca.milanesio@gmail.com>, Bruno Brito <bruno@git-tower.com>, 
+	Lee Reilly <leereilly@github.com>, lwn@lwn.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 25/07/02 12:14PM, Patrick Steinhardt wrote:
-> The "reftable" format has come a long way and has matured nicely since
-> it has been merged into git via 57db2a094d5 (refs: introduce reftable
-> backend, 2024-02-07). It fixes longstanding issues that cannot be fixed
-> with the "files" format in a backwards-compatible way and performs
-> significantly better in many use cases.
-> 
-> Announce that we will switch to the "reftable" format in Git 3.0 for
-> newly created repositories.
-> 
-> This switch is dependent on support in the larger Git ecosystem. Most
-> importantly, libraries like JGit, libgit2 and Gitoxide should support
-> the reftable backend so that we don't break all applications and tools
-> built on top of those libraries.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/BreakingChanges.adoc | 39 ++++++++++++++++++++++++++++++++++++++
->  setup.c                            |  6 ++++++
->  t/t0001-init.sh                    | 16 ++++++++++++++++
->  3 files changed, 61 insertions(+)
-> 
-> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-> index c6bd94986c5..c96b5319cdd 100644
-> --- a/Documentation/BreakingChanges.adoc
-> +++ b/Documentation/BreakingChanges.adoc
-> @@ -118,6 +118,45 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
->  <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
->  <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
->  
-> +* The default storage format for references in newly created repositories will
-> +  be changed from "files" to "reftable". The "reftable" format provides
-> +  multiple advantages over the "files" format:
-> ++
-> +  ** It is impossible to store two references that only differ in casing on
-> +     case-insensitive filesystems with the "files" format. This issue is
-> +     especially common on Windows, but also on older versions of macOS. As the
-> +     "reftable" backend does not use filesystem paths anymore to encode
-> +     reference names this problem goes away.
+Hi everyone,
 
-I believe even modern macOS by default uses a case-insensitive
-file-system. Maybe we should instead say:
+The 124th edition of Git Rev News is now published:
 
-  This limitation is common on Windows and macOS platforms.
+  https://git.github.io/rev_news/2025/06/30/edition-124/
 
-> +  ** Similarly, macOS normalizes path names that contain unicode characters,
-> +     which has the consequence that you cannot store two names with unicode
-> +     characters that are encoded differently with the "files" backend. Again,
-> +     this is not an issue with the "reftable" backend.
-> +  ** Deleting references with the "files" backend requires Git to rewrite the
-> +     complete "packed-refs" file. In large repositories with many references
-> +     this file can easily be dozens of megabytes in size, in extreme cases it
-> +     may be gigabytes. The "reftable" backend uses tombstone markers for
-> +     deleted references and thus does not have to rewrite all of its data.
-> +  ** Repository housekeeping with the "files" backend typically performs
-> +     all-into-one repacks of references. This can be quite expensive, and
-> +     consequently housekeeping is a tradeoff between the number of loose
-> +     references that accumulate and slow down operations that read references,
-> +     and compressing those loose references into the "packed-refs" file. The
-> +     "reftable" backend uses geometric compaction after every write, which
-> +     amortizes costs and ensures that the backend is always in a
-> +     well-maintained state.
-> +  ** Operations that write multiple references at once are not atomic with the
-> +     "files" backend. Consequently, Git may see in-between states when it reads
-> +     references while a reference transaction is in the process of being
-> +     committed to disk.
-> +  ** Writing many references at once is slow with the "files" backend because
-> +     every reference is created as a separate file. The "reftable" backend
-> +     significantly outperforms the "files" backend by multiple orders of
-> +     magnitude.
+Thanks a lot to Luca Milanesio, Bruno Brito, Lee Reilly and =C5=A0t=C4=9Bp=
+=C3=A1n
+N=C4=9Bmec who helped this month!
 
-The examples above do a good job at explaining individual technical
-benefits. I do wonder if we should include a more general statement
-aimed at users as to why the change to reftables is beneficial. Maybe
-something like:
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
 
-  The reftables backend addresses several performance concerns as the
-  number of references scale in a repository. 
+PS: An issue for the next edition is already opened and contributions
+are welcome:
 
-> ++
-> +A prerequisite for this change is that the ecosystem is ready to support the
-> +"reftable" format. Most importantly, alternative implementations of Git like
-> +JGit, libgit2 and Gitoxide need to support it.
-> +
->  === Removals
->  
->  * Support for grafting commits has long been superseded by git-replace(1).
-> diff --git a/setup.c b/setup.c
-> index f93bd6a24a5..3ab0f11fbfd 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -2541,6 +2541,12 @@ static void repository_format_configure(struct repository_format *repo_fmt,
->  			repo_fmt->ref_storage_format = ref_format;
->  	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
->  		repo_fmt->ref_storage_format = cfg.ref_format;
-> +	} else {
-> +#ifdef WITH_BREAKING_CHANGES
-> +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_REFTABLE;
-> +#else
-> +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_FILES;
-> +#endif
-
-Ok so now when we build with `WITH_BREAKING_CHANGES` the default
-reference format is changed to reftables.
-
->  	}
->  	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
->  }
-> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> index f11a40811f2..e0f27484192 100755
-> --- a/t/t0001-init.sh
-> +++ b/t/t0001-init.sh
-> @@ -658,6 +658,22 @@ test_expect_success 'init warns about invalid init.defaultRefFormat' '
->  	test_cmp expected actual
->  '
->  
-> +test_expect_success 'default ref format' '
-> +	test_when_finished "rm -rf refformat" &&
-> +	(
-> +		sane_unset GIT_DEFAULT_REF_FORMAT &&
-> +		git init refformat
-> +	) &&
-> +	if test_have_prereq WITH_BREAKING_CHANGES
-> +	then
-> +		echo reftable >expect
-> +	else
-> +		echo files >expect
-> +	fi &&
-> +	git -C refformat rev-parse --show-ref-format >actual &&
-> +	test_cmp expect actual
-> +'
-
-And here add a test to verify this change. Looks good :)
-
--Justin
+  https://github.com/git/git.github.io/issues/786
