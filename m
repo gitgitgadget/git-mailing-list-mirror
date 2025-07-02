@@ -1,66 +1,64 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F2216AA7
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 09:01:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B4619D8A7
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 09:10:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751446898; cv=none; b=ntuWabp8Mj4B7f0Ag9A+4FJX83wfF4sNsQTs1s2kySs5DEDxWQkBXnabQJ10KwB/7kPOUIDlntnq9vS0VB77RZT/9yM5+XJD297svNR5rGtjT7xQZmoyJhFlQ/JgRWN5BMYzwzgypLiblHl4ZxLF+87Rh47oZTC3vgTFHyep3bE=
+	t=1751447413; cv=none; b=Cypx+Nu1kOA8Onq0+f3zSeGxvhaXhop2ZvTKyIbGahNh2C5vxEtWiKXKsAtLKJYhUH9GJEQdKKWafNJhNzn2J2to6x9vXlNe0Eju22kshHjWspr/nDLMYgeAc8CMeqhmJve7jBP9Mhv2OFmfTX2Ih/AjgYevlrVzLimj7DWL/FI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751446898; c=relaxed/simple;
-	bh=H9rHi5zUg6AmQto08GuD99i71jxKqtWZk4Sa9oE1hBI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ri+d56dWJjuQ+r8TrWAS0mzyFoAYAPmJe6UVo8UTblPukVUu2cq+oiq6mO+fcN3UB3YNeezHdncRclD54+fvo7keKpWe5q6Y9ouy/0rKH6vmYubx2585pFKsDBwEc8l5TTEcrf7pKJ+FOZSnp3LvneSvRR63WMvno/0UIi56ef4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IMDnOA0A; arc=none smtp.client-ip=209.85.221.42
+	s=arc-20240116; t=1751447413; c=relaxed/simple;
+	bh=lQIx/aQHOEIKFGxqXhfRIVH269meBtPI1ahNSPZLzMk=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=QrccatBLKQXUd1z3YltGcsE7RgZpK/P0mna3RJxoyKNsR6R2F1inFxp/od/v9bwpC+d4uvov5FDWr7cvZ4PnW/lecbWELCFqqDwxzbPKaCiCakH8JEJ71ALRqfXTZCXOohpyUVd/Vs3OY0SDM5ZN8C7ihVtfEllOAbRSPijMsTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iESxFQkm; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IMDnOA0A"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a588da60dfso2640203f8f.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 02:01:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iESxFQkm"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a548a73ff2so5905665f8f.0
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 02:10:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751446894; x=1752051694; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=ltG+4tADFpnnnfDwqTHW0ItZeWDGyROZEIqzYyl8dKc=;
-        b=IMDnOA0Akup25uUS4YdccifgLRceMs4lO/M9oEIBLOV0glJcLjtTk+ejEx7/w0DClB
-         8hE5Vuu3AtCDPHNKXd8FOhUGjxmjsrXQQvZ2Px4UfECeBHAFqPUUi1/ho60kOa6dUM33
-         iqy3gQmE/tVaMZVbHOqr6rbMpDq7UPNrhGYoXFSHQwheSlvSHoZr5qYkW8xwAmfqTUrS
-         CHKFNnBq+yfoGAhIwPdw9x5KeBPSZBo+Cje1S8138Mrav+dYRgd/5ipaG9emenEiKyZy
-         Tf0AfIXwxXn8CdoNnDfe6PGcTxLya2Q22zxaUaZBz31uJ9coEpBFirq63tt8GDhXFJQU
-         VcSg==
+        d=gmail.com; s=20230601; t=1751447410; x=1752052210; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=G471LOzOO5kuzDgiZTL5NqVkjHd78mb5d2BTlOFSCmg=;
+        b=iESxFQkm97Q7oYzBEoT57L+ln5hR2tp3b0h0RfdoT4+jPT/HrH0dAM9tdBzwIp3GmN
+         Sw4f5zXaJqOucpZ1PHnSCSZgkobce/CT8Xpcw2AnysvzJ62ecqBHIv18XwwU1gdPeErT
+         vgwGWPnt8xu28P2KLM1jgmwfUbvn1cVacY2HWxkP3BmMjgxPVpe/yCV/m9nnOWfl9YSE
+         JnqdSDdGLToILOBdUNaae9fK4209xkMEu2zIuIjULpFMtagiCFHxhRMNDDpnmEw7R5c+
+         RaQVde53tO7sHHo9K0WFm/8blC3o9joFTQf7PDO0Pi/tJ645HUP8yYUwJkMrw5MbTXEo
+         zKPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751446894; x=1752051694;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ltG+4tADFpnnnfDwqTHW0ItZeWDGyROZEIqzYyl8dKc=;
-        b=ApqROVUkd0A7ITuxhlZLqNo5D7+Jm3MuGvrh3UeKqawqlYb/b1dTBuRuHrzQq1vx4e
-         AxylbXwBxKoCZacYelqeO5xdA95pgc94H3butSDtu/aG6SsnIQlXsd8xj+lNx+JaYUEa
-         b6cT9oZc4umoYB2mxnNo9hL+ha394Lze6ffAKLT4r4RJjkmNtoG9xtL1AR1fN5DT7tzC
-         wXQC3upW16aN98Y9sL8svz+VpGyVJIE5Y9aktIaVWEUEabXNby9GRJ+ptBL6Vvhkpyus
-         BeS2xa4PrERKOUkjj258OyvqlMrEbPQ5gWYClND3q5JrHgj1u2x2mq+8TA41PoAA71/q
-         OvvA==
-X-Forwarded-Encrypted: i=1; AJvYcCUW92kMVag2oQywjC8Zre85RF9Ca8OMLy/C0pX0bQQFB7tGL2zsXWODyYmjRzLxDr+DYWE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzi/8eAAUP9KGANlnd2t1AVrVB/6jKHd5Cdcf2krCHBkT9azsoF
-	ah8DHbNB1a7ydOtrPahscUzACdRDkNDNHD4bm3IvJJ93qD5U++uQQWpx
-X-Gm-Gg: ASbGnctL93HGJZK/VcAOTylXJyDStN0wprk8pw6hne6qjtwBvq8OpmIzLwwKcBHfo44
-	1GtJl+CG41G86FX3jK//HTJ4gd+iDVw9dt8mTHYZtYTCTv6hoiFUNYEasV4NcQCHP2CI9nBw83N
-	6PSp9IOnRhG+CQ4jXX6dZFhWRKzCOVGLP2b4f7Dzs6EGt9Y3p0MJJ8MF2Uz5SvX2jNHen7tbfBU
-	g6PgwYyJqs1JLHkreagi2KMg0OiZzxfDDfGt6cdSmefKU2zYhcCvgEXbkOucTFwIhzvKwFS0ThK
-	MPEDy+O0EkX3gc8l9mXHyu7Zrr1zgK3ENHvauP28+jzKG8iAidZJNityRcx3TKWPi9A84ZmO/2s
-	ekG0mK1EYZbXfEcwxUmU2f/g15JARmnEU8OUisQ==
-X-Google-Smtp-Source: AGHT+IE+T9aH+r7RzZhvAd0v6mBqyr+wlXV35GAjCVPj+H9isyEV5FH/gpQEp+dkMnLB3zrkqgLK9A==
-X-Received: by 2002:a05:6000:4710:b0:3a4:f00b:69b6 with SMTP id ffacd0b85a97d-3b202443b86mr1129270f8f.54.1751446893556;
-        Wed, 02 Jul 2025 02:01:33 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751447410; x=1752052210;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=G471LOzOO5kuzDgiZTL5NqVkjHd78mb5d2BTlOFSCmg=;
+        b=VGVvCnsrN4jKStopVxIKyEhC5rtQ1P8cZMLMbnKCwDxbyCQQt3J1Eny7n1p1vF4RIw
+         XnVtf0zN81ww8B7SesbElVSRkyaSz5ZypHHq9jpTyyTynQx5FXq9l6XxK735XH4ApLpP
+         sebhYKaml8s7SAKKdjgUmdRK07ShKeUI5lp1FGnBthQI2j73Rd9Qd0hB+Wy5jPEPfsAA
+         BO5XQXKkM9Cu3gwdP/EM3XgYrmEznzNL5LpRy56EPM2PDQL90PC+hSceJbJnXXQBYX+h
+         WoC+VPzZknqZlFQ+Y2BzFXTUPKgLdPere3c0+VKpEfkmaTkks+L91eqCTFMI1F5vLWzg
+         Pw8w==
+X-Gm-Message-State: AOJu0Ywzuo2YonhDCVDdgi4Jj1M2LIy/8Y6KNIgzC511ebxtQp8SZvrw
+	DeZVgB/+Lvm69LDlynOMBvI4LRuaK8FZStYyzmFZU2e5X9t51P7INKwV
+X-Gm-Gg: ASbGncv4s6KwXjbCmV4Te3wiKn8MXVHZanyq49MZYYjnMLJnJogVB0Y1/RoiTo11NWM
+	HXBPnhAAzScIslNjsllEWvoht9SgJLHXk5nEjvF7F5nXPZLPKUNSiN/NZl2nLHIYUdtqSxNWMwI
+	AzQhWcsA4qvchVnFZPmKWrPUwlfdo9X0bGw5YZb3wGwxRisk0MfULtppV9i2RKnkOEWt3zv8te0
+	TqPCvELr7n3oj+Cd3MVKZSf1bPGqtr4m1DirwenWJU/azvuEfbJ92ceSxLJtwhuH8y/2XUyTlNb
+	rsJe5GkBM6bEnV+wLnV513vlesRLLHSqAJ1MierwpcwuH6qmrnC7ETdWQM+EboQHnUaoeZaFpFD
+	7WpnP2Yh5nX9Y1TxZQ3O2lM3McaUTnwekJC9bwA==
+X-Google-Smtp-Source: AGHT+IEjHW1CGHPzemW2GS+s4olltU0Vt82Z/lvtp3gpRIAPc7HWJUHeewbiNRTUQaIKVIS6s078zQ==
+X-Received: by 2002:a5d:5f01:0:b0:3a6:ec41:b9df with SMTP id ffacd0b85a97d-3b200c3ea31mr1390930f8f.49.1751447410196;
+        Wed, 02 Jul 2025 02:10:10 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823b6e9esm226052365e9.28.2025.07.02.02.01.31
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-453823b6c21sm222079075e9.29.2025.07.02.02.10.08
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jul 2025 02:01:32 -0700 (PDT)
-Message-ID: <70a10ec5-9fb7-4b7e-b4e3-3d04fb44c23e@gmail.com>
-Date: Wed, 2 Jul 2025 10:01:31 +0100
+        Wed, 02 Jul 2025 02:10:09 -0700 (PDT)
+Message-ID: <d61879e2-a93e-42ad-bd16-7a21b9819dbb@gmail.com>
+Date: Wed, 2 Jul 2025 10:10:08 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,60 +66,72 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSOC PATCH v5 3/3] environment: remove the global variable
- 'sparse_expect_files_outside_of_patterns'
-To: Ayush Chandekar <ayu.chandekar@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: christian.couder@gmail.com, git@vger.kernel.org,
- shyamthakkar001@gmail.com, gitster@pobox.com, ps@pks.im, ben.knoble@gmail.com
-References: <cover.1751309770.git.ayu.chandekar@gmail.com>
- <45c84a6615aa15f19b34b7f3d73a6e418c178427.1751309770.git.ayu.chandekar@gmail.com>
- <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
- <CAE7as+YeTuQh_BzZSLuVTimrddp5-OBtpMa81KFhd+3zDqDiMg@mail.gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 0/7] repo-info: add new command for retrieving
+ repository info
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+ phillip.wood@dunelm.org.uk
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com,
+ ben.knoble@gmail.com, gitster@pobox.com
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <af27af92-73d5-4f0a-84f4-9c91de6ab6e6@gmail.com>
+ <652FDA35-C20D-4F27-A22A-025CA08EB013@gmail.com>
+ <223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com>
+ <EB2B7A97-B9C4-4F7E-BD27-688C6303DA1C@gmail.com>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAE7as+YeTuQh_BzZSLuVTimrddp5-OBtpMa81KFhd+3zDqDiMg@mail.gmail.com>
+In-Reply-To: <EB2B7A97-B9C4-4F7E-BD27-688C6303DA1C@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Ayush
+Hi Lucas
 
-On 02/07/2025 00:53, Ayush Chandekar wrote:
-> On Tue, Jul 1, 2025 at 6:48 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> On 30/06/2025 20:27, Ayush Chandekar wrote:
->>>
->>>    void clear_skip_worktree_from_present_files(struct index_state *istate)
->>>    {
->>> +     int sparse_expect_files_outside_of_patterns = 0;
->>> +     repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpatterns",
->>> +             &sparse_expect_files_outside_of_patterns);
->>
->> This changes the user facing behavior if
->> sparse.expectfilesoutsideofpatterns is not a valid boolean value.
->> Currently git will error out when it first starts because that config
->> value is parsed by git_default_config() which is called by almost all
->> git commands. This means that if someone sets an invalid value they get
->> timely feedback that the value is invalid and git dies before doing
->> anything. Now, if the value is invalid, git will only die if this
->> function is called and it is likely to die in the middle of a command.
+On 01/07/2025 23:18, Lucas Seiki Oshiro wrote:
 > 
-> Yes, I get your point. However, if we look at settings which are
-> shifted to `struct repo_settings`, the behaviour is to set a
-> fallback/default value in case of an invalid input, instead of
-> throwing an error. This is done inside the `prepare_repo_settings()`
-> function, which is often called in the middle of a process.
+>> The reason git uses NUL termination for other commands is to prevent breaking the output when values contain newlines. The output format I'm suggesting is
+>>
+>>     <key><LF><value><NUL>
+>>
+>> so the output for "path.git-dir" written as a C string would be
+>>
+>>     "path.git-dir\n/home/phil/src/git/.git\0"
+>>
+>> The value can safely contain newlines because it is terminated by '\0'. The reason that "git config --list -z" exists is to provide an unambiguous output format as config values can contain newlines.
+> 
+> I can't see any downsides in this format. I'll use it in v3!
 
-I'm a bit confused by this and I'm not quite sure what you're saying for 
-a couple of reasons. Firstly this patch is not adding a new member to 
-struct repo_settings, it is parsing the config directly and will die() 
-in git_config_bool() if the config value is invalid. Secondly 
-prepare_repo_settings() ends up calling git_config_bool() and so will 
-also die if the config value is invalid rather than setting a default 
-value. In the case of prepare_repo_settings() commands that do not want 
-to die in the middle of an operation can call that function early on 
-before they start doing any real work. Looking at the output of "git 
-grep prepare_repo_settings()" many do exactly that. Here there is no 
-option for a command to die() early on invalid config values if it wants to.
+That's great
+
+> Hmmm... I never used `git rev-parse --git-path`, but after inspecting it,
+> it seems to have special cases for:
+> 
+> - grafts file
+> - index file
+> - objects directory
+> - hooks directory
+
+and all the paths that are adjusted by update_common_dir() as well.
+
+> What about adding them all to the `git repo-info` under the `path` category?
+
+That means keeping a list of paths that are special cased in two 
+separate places which means they'll almost certainly get out of sync at 
+some point in the future. It also means that instead of querying a whole 
+path of a hook the script author has to remember to look up the hooks 
+path and then append the hook name to that which makes it more of a faff 
+to use. Letting the user just query the path they are interested in is a 
+much nicer interface and makes it much easier to deal with the paths 
+that reside under $GIT_COMMON_DIR.
+
+> Currently, these are the fields that I plan to add:
+> 
+> - git-dir
+> - common-dir
+> - toplevel-dir
+> - superproject-working-tree
+
+git-prefix would be useful as well I think.
 
 Thanks
 
