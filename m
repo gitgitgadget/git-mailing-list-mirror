@@ -1,81 +1,132 @@
-Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C53B276056
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 13:00:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3C4286887
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 14:07:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751461237; cv=none; b=eoDjpZTg2p2tGD/TCFJM4lPmurpNH/Bi+3zyYfurjXLOM2tzc32e8f9pdHVVt3oaiNX9V912D33Xn5wRQgiXRMqPZtFLX1ZdprnzfENQJtQp2oTzl+uYnClLifrAzd9ziuuW/K3FT0DWEDzKkcM7iHETKazs8JZB9bYe8+K7uJ4=
+	t=1751465240; cv=none; b=k684syeJH857raoa6UoMcGGN+E4dmphsq+wz9I85N1jZU3i1RNu85MhagNPc2oVUSErkZ/SKgGAc5v2q03WdvrHShwD8eFIRsowuedG/pDSBVKhUKowqrgWQBVrcSKm3SSJfe3b4AMbCq3xnDbUVA3/HGpN3G8pejSrLiykXy4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751461237; c=relaxed/simple;
-	bh=uBqR5lMzp0nKXOwxOtTA2p75C8fygn/42GvrlqRkgeo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uRVK0JsW7jB2shJa/uHiOhhhKqU7o5qyVOtwCYZ26n24xfGkgoBAvxZXI4azlFRdPeA8/R2itFNJcrXga5T1baaSQTMMX4aInO4CRDgIaMuEZGBkXaR7R5ZXug2ISV8Hx2j4bGqeSOxVxoRm+U1W/FCsHiW3LfZ+wiVO1COYok4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=qJkH22I3; arc=none smtp.client-ip=95.215.58.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1751465240; c=relaxed/simple;
+	bh=G2X/t697Aj+XbLGggbggLGmlaxA85+dQVaZ6qsRxnQs=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=jVy+9JDt+pTg6DMne+V9PAr7Qjv2pIeXObdsXye+P2uUqsYUuVlsukmcYosj10L/VvzxHYOKoKQKh9P5G99SfZXWIGlb9gsTEuZJk4SR/nynM/4wNz97Ek04HpefMHhfIhjcV01CRAirt8gjwh/8PHjIgmGSTRvCToVVPnw4Yvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QK/XZfYV; arc=none smtp.client-ip=209.85.128.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="qJkH22I3"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1751461230;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=zykLEGOe6dEKdpiLBf/gazqWvtQ4rF88Qbzm4xBbJKg=;
-	b=qJkH22I3ckp/VIYIv2/8/pRqdaA98WKaYxTfbx41Z07IJyWLqApgpoblssmbPZAN8L7WYl
-	2BBpcy/rM/v1A0Ve91qc/EzAveKAm1sLFRzW1sYjFluayfIBgY51Nhxz+yGDfhPegs/gnN
-	BKsuACO4xNBJyKvJY/yLcRd/Bdouqbw=
-From: Toon Claes <toon@iotcl.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Junio C Hamano
- <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, Taylor Blau
- <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>, =?utf-8?B?w4Z2YXIg?=
- =?utf-8?B?QXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v2 0/5] Introduce git-last-modified(1) command
-In-Reply-To: <d93c9199-80b1-4834-bfbb-8263a80d90d5@app.fastmail.com>
-References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
- <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
- <f0c508cc-5c6b-4c4b-a3f3-0cdd8d1071e5@app.fastmail.com>
- <xmqq5xgbk4d2.fsf@gitster.g>
- <d93c9199-80b1-4834-bfbb-8263a80d90d5@app.fastmail.com>
-Date: Wed, 02 Jul 2025 15:00:20 +0200
-Message-ID: <8734berbmj.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QK/XZfYV"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-451d54214adso49319775e9.3
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 07:07:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751465237; x=1752070037; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=pXu7is2ufAv/2MqE6MP8Wqkqmz4gbq2JWs2DWraRVuI=;
+        b=QK/XZfYVO2s/3GPzcgqGnceZW7VErS6nt2Q4sY7ZCIe0G4/DwjveubTwINNJ3hHr6D
+         Hvvt1RoeBwO1x667sT3RQwdvWU0uwPVYnkZas2sXtAtGOCvZObdOd3gb7wK3pUXNz6/G
+         41EfM4w5dbDl8++7FRen2IE1ywl6Z7BWy7i1Mb0jNBguAI9XVGYDAyTX8bElKotnBfM1
+         lUewu3V32d+u1Q52andEJQHk6JpXfaOH00ZauzmAeGs6/957FOqZebKuuNC0pazYHnqT
+         j98Ynyazg4UhOZly/BnoLILO905KKnuPNF8Dat/xxY0uqDluh7mOw1lbYega7SEvvaKv
+         XY4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751465237; x=1752070037;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pXu7is2ufAv/2MqE6MP8Wqkqmz4gbq2JWs2DWraRVuI=;
+        b=HbPR4n74poHRKe9KmmK3WYKm2OSRJk5eT83cH7RsuEf3Jv0tcVX3uZ2TnYUMbp/tAV
+         rJcYGz67srm+LIeb5YzDYrIZzK0Ic8AvsAZOu0+dRU8GxJqADJBI5CGJJYEpsrUHgjO5
+         OqDgD+RZUflwHzCIG1CzB+DjJaF4DFt6umPLXuTXnwI6TXb8hRXgn5cLQWs/5UuIJGgM
+         oQbem919Ck3ia5j4tyq7sFeTVMV/KBOpUzr54Q2288NC1Wk5QhntQpsOIYHlPWfOeKiW
+         m/qVUmkhhi/sSpSHru5od94kNLuLGfqLvwZqzjATqLLvknSt8rBGsvNn+zCHNnxHjKac
+         dF3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUWmqCI3IrRFviOXfvlRA3QC8gVubFxukqjezL1NtsM89cJLcbE0ZsXMb/bSo47ulgB8L8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz4CcvzO6zudPw92l9ibrAuZgr1GTnynAogMbl7xybebP5X5coS
+	UOthLbRg6WEzj0J+W7yNYaWnZEqLq8jpGIB8tBSZj0r/fz7TQWgch+5P
+X-Gm-Gg: ASbGnctFcin13i/gmIIi27nFRoZM2npG9AiS8O43ZgGCrcu7izt8rCiPWhWk5wZp3x4
+	5kWuabLIber6ZkLbAx2LQlDhUIEsOtOd0VdgP9smazhPzAe800Ep3fYW104wYqSRQRBgyCOyPSc
+	6CHCLFQXZMClzpGOH1E4lCs48PpPtF1ngB2LU2gEUfLLZWbwm652Ku3J/s5QAtEbwlbsDFpIvG9
+	wpL8O+Jx9aUhkfN46nw+NJqqLvk78UQvQDkne3u9mgGuvu8rT5UVVhvlNLaXm4dYI6BMoBqWiLi
+	2l+6WLx+rLm8O8NmgXrpYitKnX9t3CK6aQRefkMndglb3sLmhoEdY9SmpSUU9zVEy2xgp31SzfB
+	Is9BN21Fs6iH2P17A2E8bruOCNEWvgDcoLynv9fuQGWcm6DRe
+X-Google-Smtp-Source: AGHT+IG6sHEe0dN8njUKG8Pi3jt4LvcGr13gCzUKZYfVwZrV2Osbe7IyyhLQf3JqeaXwxfXno3lNJw==
+X-Received: by 2002:a05:600c:35d5:b0:442:ffa6:d07e with SMTP id 5b1f17b1804b1-454a7e978c6mr8374875e9.1.1751465236959;
+        Wed, 02 Jul 2025 07:07:16 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4538a390d11sm203047135e9.7.2025.07.02.07.07.15
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 02 Jul 2025 07:07:16 -0700 (PDT)
+Message-ID: <2ee8df78-1c8b-42e6-bf93-a5aa42c20af3@gmail.com>
+Date: Wed, 2 Jul 2025 15:07:15 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 4/4] add-patch: add diff.context command line overrides
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
+ Christian Couder <christian.couder@gmail.com>,
+ Leon Michalak <leonmichalak6@gmail.com>
+References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
+ <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
+ <b68c58b667c29c66433b4634ad44ee9ec5257e80.1751128487.git.gitgitgadget@gmail.com>
+ <xmqqplel17s3.fsf@gitster.g> <7686a5e0-23c3-4e3a-b5ea-3b8c80ba54fa@gmail.com>
+ <xmqqa55nlxdw.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqa55nlxdw.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
->> I do not see anything unexpected.  Have you seen "git ls-tree"
->> output without -r(ecursive) before?
+On 01/07/2025 16:54, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>>    * add OPT_DIFF_*() macros to parse-options API, as its utility is
+>>>      very narrow, and forces those who are learning parse-options API
+>>>      to learn one more thing.
 >>
->>     $ git ls-tree HEAD refs.c refs.h Documentation
->>     040000 tree a0f7113f63a19b70dff14bfd9f8f82809f5068e1	Documentation
->>     100644 blob dce5c49ca2ba65fd6a2974e38f67134215bee369	refs.c
->>     100644 blob 46a6008e07f2624239139cd8b2ff712545f07d3f	refs.h
+>> It means that we have consistent help for all the commands with these
+>> options which I think is valuable. We have a number of other macros
+>> that define options that are shared between commands and I think that
+>> works quite well.
+> 
+> I understand that principe.  What I was wondering was if there are
+> enough places to use these particular ones to make it worthwhile to
+> enlarge the set of OPT_* macros.
 
-You raise a good point here. Let's compare:
+There are six users of each of these macros so I think it is worthwhile. 
+That's two more users than there are for OPT_RERERE_AUTOUPDATE() and 
+twice as many users as OPT_CONTAINS().
 
-$ git ls-tree HEAD -- refs.c refs.h Documentation/git-last-modified.adoc Documentation/git-config.adoc
-100644 blob 936e0c5130fe7d67f645501fbb9e70b94b437f54	Documentation/git-config.adoc
-100644 blob 1af38f402ed6437353fb5765f62251966d828df9	Documentation/git-last-modified.adoc
-100644 blob dce5c49ca2ba65fd6a2974e38f67134215bee369	refs.c
-100644 blob 46a6008e07f2624239139cd8b2ff712545f07d3f	refs.h
+>>>    * validation of the value range to be duplicated for each and
+>>> every
+>>>      users of the new OPT_DIFF_*() macros.
+>>
+>> Yes the validation is awkward. If we changed the OPT_DIFF_* to use a
+>> callback that rejected negative values that would reduce the
+>> duplication.
+> 
+> Yeah, I was wondering about that approach, too.  Another benefit
+> with the "validate just after we parse the value before we assign
+> the result to a variable or a struct member" approach is that we can
+> also complain about -1 that is given from the command line (which
+> the current code ignores, if I am not mistaken, because it needs to
+> be silent if that -1 is there merely because it is the "not set yet"
+> sentinel value).
+> 
+> Or perhaps the valid value range Réne has been workingon canbe used
+> here?
 
-$ git last-modified HEAD -- refs.c refs.h Documentation/git-last-modified.adoc Documentation/git-config.adoc
-56073a0af90be947cfefbfc3cf762b268e5e20a9	Documentation
-062b914c841329a003f74e1340ea5178391274a6	refs.c
-47478802daddf3f9916111307f153c6298ffc0bc	refs.h
+That would be nice
 
-I have to agree with Kristoffer here, and the latter is not what I
-would expect. Thanks for the testing! I will try to address in next
-version.
+Thanks
 
--- 
-Cheers,
-Toon
+Phillip
