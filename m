@@ -1,175 +1,173 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5152B2DE6FA
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:21:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503C91E5B72
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 21:28:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751491296; cv=none; b=YIYLkmrAgeHlaq+N7WRZOxI66mODk4GWYqYjqteQkS300QGlVFBl6NEmdMYFkLlP02WerHyDRg+1J4g+cuMp6KBOCi+peuZWiZAYD6RWkTYKlD0hLOCCkQydvExkcwHCQNFX/JQYs1U7XdZmNwyAEK3n6AhUs6RUiUx3Bm1gP/c=
+	t=1751491720; cv=none; b=elFYfei99OxYtE38JsJ3YOACdNOxBH4IKnu9YyKmiL5WX4zLMMAM2TaIvOa77i52cIsMesdYug5OCg3/7M1/Mls3PSfwKj7+iDQRxcIwNuS9vHPVTAYSPbOAY+JUwcBrVXh6YWAM3wDEpgEYyL5NN5CXBwCejBzy8KOvGdepxOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751491296; c=relaxed/simple;
-	bh=E2fzhGUF0a/aw811IJ/4Lrec6xOqOXb2BnpYfZaK+4o=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X6WeprzBfFay93jLcCVQ/Y+zPCW7co5tmbyJBSWJixt6+e91X7UQbBlsJ4UJ013XJLdkvmkFHqFtt+xL4V57WC1XoG7y901XWw6yi0AX8dW7srh9SHZQaFApCeFbVb8f5efeULSfrI8cBk1t1h2XN1zcwsLMc0Sb1TLS6n9FhsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=tSsckoxT; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1751491720; c=relaxed/simple;
+	bh=Y7EGYCziLfTU7v18nvaUBXbhfQ6WnA+UXveJvNhMeqE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=TuaELnC5QgOv5GI9vqJHiDg8UuIyq1BJH8Eg/ifbK182A8mzQYug/0Y4Fr6TsQGNGmDSa56kbQzjm0ceKoBfbG+miYaUxo5q2064J4XYjI6p0WWhxfG3s/xGzdiYS6kragPpi/2HtY4WUZSoYJ4ccmpHcwWs6b5VezN0DLTtSKU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=ofCLtUb2; arc=none smtp.client-ip=91.218.175.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="tSsckoxT"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1751491286;
-	bh=E2fzhGUF0a/aw811IJ/4Lrec6xOqOXb2BnpYfZaK+4o=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=tSsckoxT+8TkYETdJD0H/QCuFBUHeNHy8JNe2LkAMnB1L0wWSceRWNrb0yEAQW+oD
-	 JEGFhoSizEIVW7H8bxrJt3vjxn9PMN8rzcQIb7ZHSkBBNuy7wcoMwdo4FA7+KLdRT5
-	 m7sWCncBFb3J6LdkfHjgxPw3SsQclJXJxzlOTdLXw+yuRNwwZU20u8hotOv5I2pzfy
-	 8e+Zdmy/3J0Kq4nIEbsi+O8JL2WSWvphFKV62PsG2ED2484bWGYbT5sx4RsyQVbtop
-	 +IsBGQShh5RLD+nGMHLh3rDo0Dg6ushi+rAsMGISb06FBkyAjEfySEj2WPIU94dCdZ
-	 h6EJfEtpMMre6CqCXDXJ32+47DzZx+x/FTgrl3E/EMvdgyrndn4DMzzGVCdG54L8P+
-	 MJjH0qKSbZTKe++DQLiMmn/DiOwFl2AIHXlsynTA230Yv0IEd7XOxreHpc7vOVhfFy
-	 m0pFeVHKJ+XeCEN58HSUjJCaOfSV4A58kufo0kQf1Z9v3Sx0+jJ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ba1:ff85:fdc6:571a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8B0C62003B;
-	Wed,  2 Jul 2025 21:21:26 +0000 (UTC)
-Date: Wed, 2 Jul 2025 21:21:25 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Karthik Nayak <karthik.188@gmail.com>,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com
-Subject: Re: [PATCH 1/2] BreakingChanges: announce switch to "reftable" format
-Message-ID: <aGWi1bZMlbKCgB74@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com
-References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
- <20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
- <xmqqbjq2ed9e.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="ofCLtUb2"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
+	s=default; t=1751491713;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=YzmbRG6JuMj4YIuN8Wp6gW1/K1cUx1LLUACn3Bob5aU=;
+	b=ofCLtUb2jNXYkD/ctaTgRjKUd/YA2EqeKzz+mdsgiiAw+K1VQWtab3Jr38Hxk9ndxTc2PW
+	44VaGxBC1dX3KDl8dAfLzcHLlxQ2tIix9VKg+/r6PaESvk13q/6aEnoh9oF3zx2X64XDOs
+	D78LAv1kK9wLsfooi4g34rEtIaPOQB0=
+From: "Raymond E. Pasco" <ray@ameretat.dev>
+To: ray@ameretat.dev
+Cc: aclopte@gmail.com,
+	git@vger.kernel.org,
+	gitster@pobox.com,
+	jason11choca@proton.me,
+	kristofferhaugsbakk@fastmail.com,
+	rhodges@cisco.com
+Subject: [PATCH v2 0/4] fix apply --intent-to-add
+Date: Wed,  2 Jul 2025 17:26:43 -0400
+Message-ID: <20250702212814.1923253-1-ray@ameretat.dev>
+In-Reply-To: <20250628225819.1294068-2-ray@ameretat.dev>
+References: <20250628225819.1294068-2-ray@ameretat.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="1Swam71C4HDpPdZy"
-Content-Disposition: inline
-In-Reply-To: <xmqqbjq2ed9e.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
+X-Migadu-Flow: FLOW_OUT
 
+I've rerolled this taking comments into consideration; I've removed the
+first patch, because I'm convinced not erroring out is fine here, and
+expanded on the log messages somewhat. I've also fixed an issue where I
+was outsmarted by a text editor when writing the test patch.
 
---1Swam71C4HDpPdZy
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Raymond E. Pasco (4):
+  apply: read in the index in --intent-to-add mode
+  apply: only write intents to add for new files
+  t4140: test apply --intent-to-add interactions
+  apply docs: clarify wording for --intent-to-add
 
-On 2025-07-02 at 17:03:25, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->=20
-> > diff --git a/Documentation/BreakingChanges.adoc b/Documentation/Breakin=
-gChanges.adoc
-> > index c6bd94986c5..c96b5319cdd 100644
-> > --- a/Documentation/BreakingChanges.adoc
-> > +++ b/Documentation/BreakingChanges.adoc
-> > @@ -118,6 +118,45 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.=
-com>,
-> >  <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
-> >  <CA+EOSBncr=3D4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
-> > =20
-> > +* The default storage format for references in newly created repositor=
-ies will
-> > +  be changed from "files" to "reftable". The "reftable" format provides
-> > +  multiple advantages over the "files" format:
-> > ++
-> > +  ** It is impossible to store two references that only differ in casi=
-ng on
-> > ...
-> > +  ** Writing many references at once is slow with the "files" backend =
-because
-> > +     every reference is created as a separate file. The "reftable" bac=
-kend
-> > +     significantly outperforms the "files" backend by multiple orders =
-of
-> > +     magnitude.
->=20
-> These list benefits of using "reftable".  Can we also add one point
-> that stresses why we want to make it the default?  Something like
-> "Having to do X once per user to make them opt-in is too cumbersome"
-> is probably good enough.
+ Documentation/git-apply.adoc |  9 +++++----
+ apply.c                      |  4 ++--
+ t/t4140-apply-ita.sh         | 31 ++++++++++++++++++++++++++++++-
+ 3 files changed, 37 insertions(+), 7 deletions(-)
 
-Maybe an additional line about "most people pick the default option and,
-given the information above, we think that users will have a better
-experience with reftable as the default" (especially, in my view, users
-on case-insensitive file systems).
+Range-diff against v1:
+1:  b1c9ea7cac < -:  ---------- apply: error on --intent-to-add outside gitdir
+2:  3a422c8124 ! 1:  71ec291fba apply: read in the index in --intent-to-add mode
+    @@ Commit message
+         cases, because the index was never read in (in apply, this is done
+         in read_apply_cache()) before writing to it.
+     
+    -    If we merely gate read_apply_cache() behind update_index, then it will
+    -    not be read when state->apply is false, even if it must be checked.
+    -    Therefore, we instead read the index if it will be either checked or
+    -    updated, because reading the index is a prerequisite to either.
+    +    This causes the operation to clobber the old, correct index with a
+    +    new empty-tree index before writing intent-to-add entries to this
+    +    empty index; the final result is that the index now records every
+    +    existing file in the repository as deleted, which is incorrect.
+    +
+    +    This error can be corrected by first reading the index. The
+    +    update_index flag is correctly set if ita_only is true, because
+    +    this mode updates the index. However, if we merely gate the call
+    +    to read_apply_cache() behind update_index, then it will not be read
+    +    when state->apply is false, even if it must be checked. Therefore,
+    +    we instead read the index if it will be either checked or updated,
+    +    because reading the index is a prerequisite to either.
+     
+         Reported-by: Ryan Hodges <rhodges@cisco.com>
+         Original-patch-by: Johannes Altmanninger <aclopte@gmail.com>
+3:  df28144f82 ! 2:  5f49ff9035 apply: only write intents to add for new files
+    @@ Commit message
+         touching the index, we can't rely only on that flag to decide whether to
+         write an index entry.
+     
+    -    Instead, we must test whether we are in a mode which updates the
+    -    index, or else are in worktree-only mode with --intent-to-add on and
+    -    the current file being an addition. We do not need to check
+    -    state->apply, because we only enter write_out_results() if state->apply
+    -    is already set.
+    +    Because we have already entered write_out_results() and are performing
+    +    writes, we know that state->apply is true. If state->check_index is
+    +    additionally true, we are in a mode which updates the index and should
+    +    always write, whereas if we are merely in ita_only mode we must only
+    +    write if the patch is a new file creation patch.
+     
+         Signed-off-by: Raymond E. Pasco <ray@ameretat.dev>
+     
+4:  0bbae13b63 ! 3:  f8a6d8032f t4140: test apply --intent-to-add interactions
+    @@ t/t4140-apply-ita.sh: test_description='git apply of i-t-a file'
+      test_expect_success setup '
+      	test_write_lines 1 2 3 4 5 >blueprint &&
+      
+    -+  cat blueprint >committed-file &&
+    -+  git add committed-file &&
+    -+  git commit -m "commit" &&
+    ++	cat blueprint >committed-file &&
+    ++	git add committed-file &&
+    ++	git commit -m "commit" &&
+     +
+      	cat blueprint >test-file &&
+      	git add -N test-file &&
+    @@ t/t4140-apply-ita.sh: test_expect_success 'apply deletion patch to ita path (--i
+      '
+      
+     +test_expect_success 'apply creation patch to existing index with -N' '
+    -+  git rm -f test-file &&
+    -+  cat blueprint >index-file &&
+    -+  git add index-file &&
+    -+  git apply -N creation-patch &&
+    ++	git rm -f test-file &&
+    ++	cat blueprint >index-file &&
+    ++	git add index-file &&
+    ++	git apply -N creation-patch &&
+     +
+    -+  git ls-files --stage --error-unmatch index-file &&
+    -+  git ls-files --stage --error-unmatch test-file
+    ++	git ls-files --stage --error-unmatch index-file &&
+    ++	git ls-files --stage --error-unmatch test-file
+     +'
+     +
+     +test_expect_success 'apply complex patch with -N' '
+    -+  git rm -f test-file index-file &&
+    -+  git apply -N complex-patch &&
+    ++	git rm -f test-file index-file &&
+    ++	git apply -N complex-patch &&
+     +
+    -+  git ls-files --stage --error-unmatch test-file &&
+    -+  git diff | grep "a/committed-file"
+    ++	git ls-files --stage --error-unmatch test-file &&
+    ++	git diff | grep "a/committed-file"
+     +'
+     +
+      test_done
+5:  970c739ca9 ! 4:  ad42992d03 apply docs: clarify wording for --intent-to-add
+    @@ Documentation/git-apply.adoc: OPTIONS
+     -	Note that `--index` could be implied by other options such
+     -	as `--cached` or `--3way`.
+     +	option in linkgit:git-add[1]). This option is ignored if
+    -+	`--index` or `--cached` are used. Note that `--index` could
+    -+	be implied by other options such as `--3way`.
+    ++	`--index` or `--cached` are used, and has no effect outside a Git
+    ++	repository. Note that `--index` could be implied by other options
+    ++	such as `--3way`.
+      
+      -3::
+      --3way::
+-- 
+2.50.0.201.gfeb04032fb
 
-> > +A prerequisite for this change is that the ecosystem is ready to suppo=
-rt the
-> > +"reftable" format. Most importantly, alternative implementations of Gi=
-t like
-> > +JGit, libgit2 and Gitoxide need to support it.
->=20
-> ... in order for them to access the same repository.
->=20
-> How common is it to use a single repository from these multiple
-> implementations these days, I have to wonder?
-
-Pretty common.  I know Rust's Cargo package manager uses libgit2 and I'm
-sure there are other development tools that do so.  At a previous
-employer, we had a linting tool that used libgit2 and we used
-command-line Git for normal operations.  I don't work with Java on a
-regular basis, but I expect that similar kinds of things happen there,
-especially in Java-based IDEs.
-
-> > diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-> > index f11a40811f2..e0f27484192 100755
-> > --- a/t/t0001-init.sh
-> > +++ b/t/t0001-init.sh
-> > @@ -658,6 +658,22 @@ test_expect_success 'init warns about invalid init=
-=2EdefaultRefFormat' '
-> >  	test_cmp expected actual
-> >  '
-> > =20
-> > +test_expect_success 'default ref format' '
-> > +	test_when_finished "rm -rf refformat" &&
-> > +	(
-> > +		sane_unset GIT_DEFAULT_REF_FORMAT &&
-> > +		git init refformat
-> > +	) &&
-> > +	if test_have_prereq WITH_BREAKING_CHANGES
-> > +	then
-> > +		echo reftable >expect
-> > +	else
-> > +		echo files >expect
-> > +	fi &&
-> > +	git -C refformat rev-parse --show-ref-format >actual &&
-> > +	test_cmp expect actual
-> > +'
-
-I might just make a recommendation here for a `default-ref-format` key
-(or some similar name) to `git version --build-options` as well.  That
-will get put in bug reports and troubleshooting output and will help
-people figure out what might be going wrong if there are any problems.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---1Swam71C4HDpPdZy
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGWi1AAKCRB8DEliiIei
-gYbUAQCEMGwJF8VbJtCvPT1aAbPY2CC+pMKWqTTIZ/hjd3exwQEAiYIY3AUvrb3h
-PgcIXFugRDhSKQFiF9+66K+88EcwAg0=
-=NafZ
------END PGP SIGNATURE-----
-
---1Swam71C4HDpPdZy--
