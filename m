@@ -1,207 +1,127 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C8D24DD15
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 10:14:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F3215D8F0
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 11:18:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751451290; cv=none; b=Fbxq2gjGFs/+AoYCb540BZNMUNA2QvJWLHsyHeUUnjPplzbA8pqCxX2uSpmlr6nxtUynttn3Ew5jtqCGD0fogf2y1vzusJsQ6zPaHIT/uo3NRNE25VXtQuFcxiwyiYapRusg6lmCb59JP7M8ouUGcpipC6WRbqsh79owDcY+v/o=
+	t=1751455113; cv=none; b=I0ufDvDTmQEbiQakiuV1Zu5Q3eFgjdzsB0G0z4RUo/Jkpdanmi7yJWsh3HrfSLEslUcOxKbdbMhDqNgGh7/r0PslPGAx2A5HrH14IzFu1tZVBcm5MUxQbqYjfbzjx82cEladpykBgxKDOyLBlBBEucz8nq9mKdH+ROwTc0Pn3pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751451290; c=relaxed/simple;
-	bh=vkUXyf7gDeaHU3xTiXnXBgOdXYtWeikeYdcpfGfQvPE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=HLe9DLiTKupyZyShylUEZPpOOXEIsQiIh/EFOnT3GF5GqBiLupdO/pa/UI4dRAfHdpxvGxhkZHeCaM1GFkVzPsC4OtXyL9n2Yvw9to2IJNOPg74UrITBbztGk/GLZbRXRx5NXYHWL9uBKJIDQAIr9sygKCtiry6dt7ywfzlzxBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TgaWJ6oH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=itzcSiKw; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751455113; c=relaxed/simple;
+	bh=iJGxrQU+Vc+EP6eYT5m26q+9UzhSUC0Rfwk7+73Em1Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Yp2pidSbTGoe6AlDY3OybfW3Vg5d9EbhnPCVa7X/X86p7d7LVfNY7ZI4EyGeQpABHQM/W0yKT1n34Ryjv+bO4HojX7g1A9NKAaLTOSkkiR0XROVpY5uwHtfAX1jC2X6ejBF5Z+sPRmMKU9WoAHThnGlPNyFO33UTLjys7NGCeA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jg3jkEtt; arc=none smtp.client-ip=209.85.217.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TgaWJ6oH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="itzcSiKw"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 90F9DEC01C5;
-	Wed,  2 Jul 2025 06:14:47 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 02 Jul 2025 06:14:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751451287;
-	 x=1751537687; bh=j2eWDyJzx3GR6JioCMOUVdu0rEVN9KgV+1lWjLS9i2I=; b=
-	TgaWJ6oHuaOG1ehu7ejElJDDGIwWM9Q/ua1DrfawU2te5PwQOLFEVUjMtnfCyDyn
-	4O9JUEOIVmAbWC2cpD8rJioDBSxGQYni0vp+WMRM4WoaWA8pqp2VCvCqKWOhk/7I
-	j6jQe75Gx0SQjbep7JO5zcMTsOCtPdvf+WohxzQm8MdF0BwVcFdjKgIkFHUi3gHN
-	napOkx3HmF/qQgeKH0YLhdvBBj5bZT6r6Mh873K+YBDoSDsoZqsLYGkRGlnTTLi6
-	L+weruoX1QMibedwqJusVa0Wd1GcNmmdCesQXYqhAfMCle0nVIMgptaJ4lDD1McM
-	crKcvcbv7y8TtfrAKCxMOA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751451287; x=
-	1751537687; bh=j2eWDyJzx3GR6JioCMOUVdu0rEVN9KgV+1lWjLS9i2I=; b=i
-	tzcSiKwpIepcWVFJZnsLwWaIaTkwNkeuTDpFhuEiXU5ndKZHr9/drCmVi1MGJBM0
-	fmQLeUzosp23Ld759NjxLerw8KUr1oIVa46MlPTNnJflVgkqpsj7oRYMPD1W1xxZ
-	wfggVefrIN1d4e2i450yArll6y5e/kggRTG1YaY//KSh9+7bL04WbdOrPW9LjYJu
-	vjD8dsT53pC05PYbmB9Ns17l1cp7ZHgIcQHZtzUxli5F7ly1is+vfJa+2wa69eKE
-	hKeN6w5YcN5YcttxRCMylXtE8huovTWtR+jkBWbxicqAXpTenBt877j8sXMbwPJS
-	rozu73RMn7YTc8fHlrEMg==
-X-ME-Sender: <xms:lwZlaKeIdrwGAy4Qe3LiQTN-3SeEHG0JXdjSTNGv5MzsRUy2uHJp9A>
-    <xme:lwZlaENVKNHIdxONuyNOIc6A6yoUdvUv0nOA5x6LvCofuPQ8AIQ8olSESYKgBirbd
-    SlACVulma1k2AiSog>
-X-ME-Received: <xmr:lwZlaLjX6vVM-2wqdO8e2XfsUCAQu1Q37PBn2nkH4N3ZvTbgooRhn-HVHxhlv-_Nk_47-uaU-rqxbP2kGpGkUpF8RBnXhZ7We0mYWh1MeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujedufecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrhigvnhhush
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrg
-    hilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
-    hm
-X-ME-Proxy: <xmx:lwZlaH-VUGVStR4wHsAPAZZKC3BcTRQK3IuaieQ9-R5aq6fH77XYuw>
-    <xmx:lwZlaGuF97hTrLGsxoNW0lU6CJrqFIa4GKKLX_oNLFkSjw03o1nZ6g>
-    <xmx:lwZlaOGMzGxZcvaMV0EU59zUIfSIMhSAYk3n8jwNiqRk46X3lJLBqw>
-    <xmx:lwZlaFOzs4mB48UoDzxEF8LYl3DvciXEq-Noha2F05XlvFqjCvyPHg>
-    <xmx:lwZlaMEOYieS_0Ji_XS69HRPLEfbGmOx0uMrHhgLuIkGCyBJF4tiD7-6>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 2 Jul 2025 06:14:46 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5b9be9f8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 2 Jul 2025 10:14:45 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 02 Jul 2025 12:14:22 +0200
-Subject: [PATCH 2/2] setup: use "reftable" format when experimental
- features are enabled
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jg3jkEtt"
+Received: by mail-vs1-f41.google.com with SMTP id ada2fe7eead31-4e9b26a5e45so2666340137.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 04:18:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751455110; x=1752059910; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V81+HTDrQ6z7Ol6bWib4HyIBREAfti1Lp6U1q8AH4QM=;
+        b=Jg3jkEttmkc9S6u5rOJP0LawmHGnR4Tg7xD5h2rg5kPthfEr4uU63avfHHJvV120zg
+         sdgSHbQD6d7YuqRgytlPLiPdNoiwlFZ3kAFmgohNvl2j+kmR77RAGaIWrH+XMLvgDP//
+         dfZaZPdPfsQUlQhI5ob+SbFwPpL3VU0iFzlftzgmUjr+SIkcynMKQUSbUFW/EsR3zZr1
+         1q/o88hBAr6wp4ETqxQQtxrcglTBpjfv4iJq6S3ardNFVm4oNlHO+dxhD6+w/I3UgVQd
+         w0bhCV5B8i/oG8VRafVgAaaDedgU7z0/sYD+mJ+HroBXuF70IU+5x2jMknGipLUkJw0s
+         vdaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751455110; x=1752059910;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=V81+HTDrQ6z7Ol6bWib4HyIBREAfti1Lp6U1q8AH4QM=;
+        b=vZd5WiC2vC/do3j+hQgV0o0oIaCCPeW44RCslcU4EcJPzESllSiL04FhURwMiYnAPw
+         qKA6sqchIgK+juILmCToIKeFG6DqH+UlpG0nRkf7NejYVW0Muifm2yS8VtqCi35xVsCG
+         FrTh9GDmOpt9vEgkCquOzGWJpkxx1ashIthYCLHdU7KDku3EoO693uwiPZ1Yy/hFml1h
+         0MVpNHt+ikt+RUOjLskVcGxvfU4MoSQvYRIXGYozFPxS6BfLlPJqo3NCFNsJ7Kkr3lgB
+         erOeDlcGpPVD9ocK8OoWWWBo4H1AK3Al/9Yy+w9aas9eKIijjaONfpVG3TDQgW8/8/we
+         LUCg==
+X-Forwarded-Encrypted: i=1; AJvYcCVsowfKLKWuIx3XLR03rJ6HO8U6lvFped9B00fQbWAlCbX0YvfTalpVr2vDAEFUOfWHYP4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxfQ+1DhNNSgP6edXxRpeGGlAD6toX95Cp01JW0tksYRRg7cki8
+	Ugi1GEvMJrqcc+BLV/ui0NHVle+j/bSzofvGohMAfPqP1d+ofyObXgAMvl9iJXnFu2jCs903ama
+	8TiIkKRds0P8CNJ6tFod+zRudQmAgaRI=
+X-Gm-Gg: ASbGncvvBAcJFwaBYkP6yg5H0QOburr2zZn9KfCunsDhqxSMxesTsRWFzq4Tx5Hmpqv
+	mX943o8VqXXwL3V9qpWGWczwiIfmYuFCRSStuHrL9qKOKZ1+p5jAUb/Y++mdYudRDmbnq02ZHkz
+	Vp5c4C+sn+FFVT2yTnOtp3eQTiEvD/XCzGSDmEkYFDM0M=
+X-Google-Smtp-Source: AGHT+IFCyALuQ8xKaOnGrw8nD31PXvk8qJh62RebTuDcU2jhb3wezlWrd5gOWcFPivEtTs+azgQFISGHdFbQqYeRypg=
+X-Received: by 2002:a05:6102:4bc8:b0:4ec:b36e:ad09 with SMTP id
+ ada2fe7eead31-4f160e0b52fmr961547137.10.1751455110401; Wed, 02 Jul 2025
+ 04:18:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-pks-reftable-default-backend-v1-2-84dbaddafb50@pks.im>
-References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
-In-Reply-To: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
-To: git@vger.kernel.org
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
- Karthik Nayak <karthik.188@gmail.com>, 
- K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+References: <cover.1751296633.git.ayu.chandekar@gmail.com> <f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
+ <aGPcKgR0G72JRSlM@pks.im> <xmqqikkbkglx.fsf@gitster.g> <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
+ <aGSYLJaqDziLqtXk@pks.im>
+In-Reply-To: <aGSYLJaqDziLqtXk@pks.im>
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Date: Wed, 2 Jul 2025 16:48:19 +0530
+X-Gm-Features: Ac12FXx8LE5Al7tgIAdxLYsZyIYRCaD7qFabwaVyThLoxDKyF8HWOGdDtCTvAuE
+Message-ID: <CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
+Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on 'the_repository'
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
+	shejialuo@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-With the preceding commit we have announced the switch to the "reftable"
-format in Git 3.0 for newly created repositories. The format is being
-battle tested by GitLab and a couple of other developers, and except for
-a small handful of issues exposed early after it has been merged it has
-been rock solid. Regardless of that though the test user base is still
-comparatively small, which increases the risk that we miss critical
-bugs.
+On Wed, Jul 2, 2025 at 4:17=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
+>
+> On Tue, Jul 01, 2025 at 11:39:48PM +0530, Ayush Chandekar wrote:
+> > On Tue, Jul 1, 2025 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.c=
+om> wrote:
+> > >
+> > > Patrick Steinhardt <ps@pks.im> writes:
+> > >
+> > > > On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
+> > > >> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
+> > > >>      expire =3D TIME_MAX;
+> > > >>      save_commit_buffer =3D 0;
+> > > >>      disable_replace_refs();
+> > > >> -    repo_init_revisions(the_repository, &revs, prefix);
+> > > >> +    repo_init_revisions(repo, &revs, prefix);
+> > > >
+> > > > Does this work correctly when running outside of a repository? In
+> > > > general `cmd_prune()` is not executed and would instead die as it i=
+s
+> > > > declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the=
+ user
+> > > > asks for help we may still execute the function with a NULL pointer=
+.
+> > >
+> > > Good eyes.  "git prune -h" would safely exit in parse_options() in
+> > > such a case, but this part happens before the parse_options() call.
+> > >
+> >
+> > Thanks for pointing that out, Patrick. Right now, `parse_options()` is
+> > called just after the `repo_init_revisions()`. I can move the call to
+> > it before this.
+> >
+> > Although when I tried running "git prune -h", it still gave me the
+> > expected output.
+>
+> Well, as long as it works and as long as we have a test somewhere that
+> ensures it keeps working I'm happy.
+To add to the testing part, I noticed that there is no test for
+checking "git prune -h".
 
-Address this by enabling the reftable format when experimental features
-are enabled. This should increase the test user base by some margin and
-thus give us more input before making the format the default.
+You(Ayush) can add that in "t/t1517-outside-repo.sh" there is a
+similar test for that also in the file.
+"test_expect_success 'update-server-info does not crash with -h" You
+can check it out.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/feature.adoc |  6 ++++++
- setup.c                           | 12 ++++++++++++
- t/t0001-init.sh                   | 34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+)
-
-diff --git a/Documentation/config/feature.adoc b/Documentation/config/feature.adoc
-index cb49ff2604a..924f5ff4e3c 100644
---- a/Documentation/config/feature.adoc
-+++ b/Documentation/config/feature.adoc
-@@ -24,6 +24,12 @@ reusing objects from multiple packs instead of just one.
- * `pack.usePathWalk` may speed up packfile creation and make the packfiles be
- significantly smaller in the presence of certain filename collisions with Git's
- default name-hash.
-++
-+* `init.defaultRefFormat=reftable` causes newly initialized repositories to use
-+the reftable format for storing references. This new format solves issues with
-+case-insensitive filesystems, compresses better and performs significantly
-+better with many use cases. Refer to Documentation/technical/reftable.adoc for
-+more information on this new storage format.
- 
- feature.manyFiles::
- 	Enable config options that optimize for repos with many files in the
-diff --git a/setup.c b/setup.c
-index 3ab0f11fbfd..8e9c0ffa1fe 100644
---- a/setup.c
-+++ b/setup.c
-@@ -2481,6 +2481,18 @@ static int read_default_format_config(const char *key, const char *value,
- 		goto out;
- 	}
- 
-+	/*
-+	 * Enable the reftable format when "features.experimental" is enabled.
-+	 * "init.defaultRefFormat" takes precedence over this setting.
-+	 */
-+	if (!strcmp(key, "feature.experimental") &&
-+	    cfg->ref_format == REF_STORAGE_FORMAT_UNKNOWN &&
-+	    git_config_bool(key, value)) {
-+		cfg->ref_format = REF_STORAGE_FORMAT_REFTABLE;
-+		ret = 0;
-+		goto out;
-+	}
-+
- 	ret = 0;
- out:
- 	free(str);
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index e0f27484192..df14d88ebb4 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -754,6 +754,40 @@ test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides init.defaultRefFormat" '
- 	test_cmp expect actual
- '
- 
-+test_expect_success "init with feature.experimental=true" '
-+	test_when_finished "rm -rf refformat" &&
-+	test_config_global feature.experimental true &&
-+	(
-+		sane_unset GIT_DEFAULT_REF_FORMAT &&
-+		git init refformat
-+	) &&
-+	echo reftable >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "init.defaultRefFormat overrides feature.experimental=true" '
-+	test_when_finished "rm -rf refformat" &&
-+	test_config_global feature.experimental true &&
-+	test_config_global init.defaultRefFormat files &&
-+	(
-+		sane_unset GIT_DEFAULT_REF_FORMAT &&
-+		git init refformat
-+	) &&
-+	echo files >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides feature.experimental=true" '
-+	test_when_finished "rm -rf refformat" &&
-+	test_config_global feature.experimental true &&
-+	GIT_DEFAULT_REF_FORMAT=files git init refformat &&
-+	echo files >expect &&
-+	git -C refformat rev-parse --show-ref-format >actual &&
-+	test_cmp expect actual
-+'
-+
- for from_format in $backends
- do
- 	test_expect_success "re-init with same format ($from_format)" '
-
--- 
-2.50.0.195.g74e6fc65d0.dirty
-
+Usman
+>
+> Patrick
+>
