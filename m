@@ -1,98 +1,137 @@
-Received: from avasout-peh-003.plus.net (avasout-peh-003.plus.net [212.159.14.19])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3C11EFFB2
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 22:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.19
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F98A1DED52
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 22:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751495848; cv=none; b=ii0kF9+Ln/UGnYLlB1DM2uu1RgNZ62iQgtOsDgAg22WDUTUiJc5IZAYvsXa/ixZbAeZa9KnGZCVB/lfJqg2u4bh7EkDSJEK6NrH285Wx7U8nK1VNOnxfbyZauRxVHCM1xVAno/icLHe9kiYZDtWUzzsCfjjMc1mZERzhHMIvDv0=
+	t=1751496127; cv=none; b=CRmJ3hPO9AAlyTDbmCZ21XwNZMSP27vTwdOCTKt/OZQwBDschzR16xk6SqRoIyr6NENDwVQZuBv44qI1gHgQ626NZvak9D9b3rywAxn1d5fqJLq4g0T9Ol00wzY4pKxNvOfGDIyrInfCgSsBd0aY39AhOE52+wmgbSTvi/ZSxs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751495848; c=relaxed/simple;
-	bh=rcwtxBTQTvC6gGKOF37ho/C2LUIH02gdaxDYCTCHezY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ilDNRncrFBBThSxcOwNdCvzU0akQpAVHdU3P7pC8VtWzIWuRdBr27kntQH4GtOj87eeS4xph9JVJWmGjhym4ZOVS54AGyWqygvcgpV1NlX4S8/ehy1pF+tgueY6gBKUsORvg9QJ2+YRCrsmPqQPDoCPF0b5eBFV9HJhoxcBRAdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=f6f/7ecp; arc=none smtp.client-ip=212.159.14.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1751496127; c=relaxed/simple;
+	bh=P7cD6QfbRG5mstuCsjkMl9FabAMluWlj9xrXuN5Uls4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TpC9O3kBoeiOOrSNSB2kgYeP7lCzjgqEb7Uj81jHVxOhHcXiS3/D3bW2Wc+mgQrGeHGMWb9K2NF9HpK5ceHJs9hLrrzS4Ya1wCp6BqdeYNqo29swLwuc2Bm+C9oyDXyZsoPUr/H8DPLE5VS/BdEj9fVY7LtHuIIIrhAS1VjXm88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NKCQcB+h; arc=none smtp.client-ip=209.85.216.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="f6f/7ecp"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id X64xuyYTObccrX64zuWw0g; Wed, 02 Jul 2025 23:37:25 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1751495845; bh=rcwtxBTQTvC6gGKOF37ho/C2LUIH02gdaxDYCTCHezY=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=f6f/7ecpTFdsFAgAZG5grc+EhDfl8SGFVXvMBGehVoyxh8RkSmGROcj/crCFH/fAm
-	 Fruk3klwRfdGmtIcU1sjqqN7kuzNlXqLrhynLhWpF0meOLIkO8syup7iiVU0u9N6tn
-	 ecQjAXhtDkaRXHY1l8OZ3gCeOp0Ozr4UdwSQTEmQJsQTEM2j6Thdz0vR6bn23uRgcV
-	 DfapMC/RAAqhnYaKpNj3JMhSqC5RreDqfXIA8rtimR8HpFc+4Xhv4g+9waQXLE+lqB
-	 6njEG0ZZpdKY5WfpwnOoCSijxQxsFdwRg8O+StkVIpcg8SfKe5krH4rwTpEhWdZh/X
-	 0tqhan/Ld/7uQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=T54vTOKQ c=1 sm=1 tr=0 ts=6865b4a5
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=6I5d2MoRAAAA:8 a=t0GH1tZww8coZ9w2IOwA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <1993f24d-4433-427a-a834-360f6a9a963a@ramsayjones.plus.com>
-Date: Wed, 2 Jul 2025 23:37:23 +0100
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NKCQcB+h"
+Received: by mail-pj1-f48.google.com with SMTP id 98e67ed59e1d1-311e2cc157bso5798519a91.2
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 15:42:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751496125; x=1752100925; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Gx7ygXj/QFkHAPHvZbbt+8b+KbWQOlIQW2hVQzSMpQI=;
+        b=NKCQcB+hY6Yak7thg3ZnOT+nPYGtnKC6xkdX+zq5dCareYkQNM/NWsGUivqer9C/1Y
+         Em5kMqtHmEfeKnluGRQKolBp7hyM3fQABoL+rrVhcyO96ikltc6oTaj4KaF9S/n+d/Vh
+         PYnuggYU0vX0ia4SzdvgN12oXhyTNxweREOYYcjyUbaU91YHB0nkwMHlxGCf6Z4uzLIp
+         ScibvvKON19kPXfVEmYBLJrmvqQvdteA7FV8P85zFMXoJyqvC0ZXS9KP8CjsrpRzpaoB
+         pRDKwxae5pkF2H84vcA2jvQq7BjV14rpjOHPSHpig9g22tXLAMvUADhxQr/N19jRLWr8
+         STuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751496125; x=1752100925;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gx7ygXj/QFkHAPHvZbbt+8b+KbWQOlIQW2hVQzSMpQI=;
+        b=KJ0E6dMtTH7wXzVA6RGBaBg8DxMRXh9iJHomvQlUknon96/DiNcyfPCARnIVmey34d
+         KezzyZHkzxLq+40MZjAQD3T1oRHFvAWwKXgB2M5UTMYEgqj+mVL4YK7mCTkPgOoI0Xz5
+         6+WOta/lREb6E59MJVYAhxOhzF/0s0YGUXNXBY4eLpKVMWTC3L1YyQBJzX/9n6EbNXdb
+         0k5r2LHPvbuCGfn7BzGzsqA3EqY64s/fhTgC+g1O7W4G9dH7FgXMr3h0ZOHqEXdMOPBS
+         klIEEj1o831CKgpAbRgcRBW8vQD8w38MIbrcBPyUfoLObKoDLsSidTjGIqKg6ws4ksXc
+         vfdw==
+X-Gm-Message-State: AOJu0Yw1J2shjVpPENIIEXmuSaeZ2q6q4d63e9jAJinhgDzCRedX/qWB
+	C9YH3l/h5FnDT38gUHJESGabOY6YHbMeBbZkYK8AiLdoTVW4ViHhQxfO
+X-Gm-Gg: ASbGncsvT3xfx0RanTLunRA8qIbijn5qdRgwcFTPN1x3hkXfta3oOOYtZQsu8n9PgWs
+	R+SzrA4BfAAlxfkUAIJCdeByahN8kbl42GskWUE0vVJCRhA3Pj8tQZnnnwayq37TBqeV+YNYMN9
+	eNk0H6EuHyCc8lPfpRDRTjaIigk4vhYGMqjLnlFTdc0JnJxm2kbvQPiAJ46zaf2Frm6Xd19AoOU
+	0E7Q82Xe+wI9CP1jGQqwcvCA0ao53LTdNbPdnBfhLwRqfhc44jFMw6LuO+7fNEopVnFvGMB8uIl
+	w8PZG1MkNWQsnUhjiiHnbcSaD9FCdrXmR5aTPKSjRt8GIcJHZ6EFSAwPb8+15F+XUtvPF279k/w
+	bVXtTb+rSuTxRcrFc+mSTOOc=
+X-Google-Smtp-Source: AGHT+IHlxYMUHqstzz6RRPuh5gvc+Esl8ywDsVdJjVtjSBj1BP+ohNdsxNdX3IWvh2iJ0tW37cTQpA==
+X-Received: by 2002:a17:90b:5390:b0:313:d6d9:8891 with SMTP id 98e67ed59e1d1-31a90b6824cmr6522535a91.3.1751496125425;
+        Wed, 02 Jul 2025 15:42:05 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:8123:5123:76e8:a897])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9cd1ff78sm615327a91.47.2025.07.02.15.42.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 15:42:04 -0700 (PDT)
+Date: Wed, 2 Jul 2025 15:42:03 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, brad@comstyle.com, collin.funk1@gmail.com, 
+	pclouds@gmail.com, ps@pks.im
+Subject: Re: [PATCH v3] builtin/gc: correct total_ram calculation with
+ HAVE_BSD_SYSCTL
+Message-ID: <ep4q5xwbys4qwpkmmo5jujzjorrb24v5na4yuwpjr5owojwk2q@omb7xpp4oov5>
+References: <20250702154649.44210-1-carenas@gmail.com>
+ <20250702202118.48742-1-carenas@gmail.com>
+ <xmqq5xgacn2w.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
-To: Renato Botelho <garga@FreeBSD.org>, Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, GIT Mailing-list <git@vger.kernel.org>
-References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
- <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
- <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
- <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
- <xmqq34beed0q.fsf@gitster.g>
- <39e370f3-5113-4feb-8a19-2cbdba6c17ce@FreeBSD.org>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <39e370f3-5113-4feb-8a19-2cbdba6c17ce@FreeBSD.org>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfGm/kFEmsrjRlZUgCEm0GOZv4blEdWOUgU4kMiOBRomCtXCqPx2SFjYjBVVv2TbdPEOqTNL7GUTisln1zsUotHzaT0cA92C7FSSexwxHXLwnxtysyWSM
- li6siLBypORYGBQemdn3H3IOib/R++fzgqwTqeldM4co0mKozYoAiSrxlkP3KA34cjJmzLWoqI5Kqele1b0zrVOim67tRD+r8gc=
+In-Reply-To: <xmqq5xgacn2w.fsf@gitster.g>
 
+On Wed, Jul 02, 2025 at 02:14:15PM -0800, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > -	length = sizeof(int64_t);
+> > -	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
+> > +	length = sizeof(physical_memory);
+> > +	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0)) {
+> > +		if (length < sizeof(physical_memory)) {
+> > +			unsigned bits = (sizeof(physical_memory) - length) * 8;
+> > +
+> > +			physical_memory <<= bits;
+> > +			physical_memory >>= bits;
+> 
+> I do not quite understand this version.  Does the correctness of
+> this depend on the machine having a certain byte-order?  
 
+Yes, sorry and as you pointed out it is obviously incorrect and should had
+been instead something like (barelly tested, though so please let me make
+sure and not waste more of your time)
 
-On 02/07/2025 20:48, Renato Botelho wrote:
-> On 02/07/25 14:08, Junio C Hamano wrote:
->> Renato Botelho <garga@FreeBSD.org> writes:
->>
->>>> I very quickly knocked up a patch to do the last option above (I
->>>> moved
->>>> the setting of HAVE_SYSINFO down the file rather that HAVE_BSD_SYSCTL
->>>> up. I guess it doesn't matter, but I gave it *no* thought!).
->>>> The patch is below. (I didn't write a commit message ;) ).
->>>> Does this work for you?
->>>
->>> Your patch works just fine for FreeBSD.  I tried it with libsysinfo
->>> installed and it just ignored it, as expected.
->>>
->>> I didn't test meson build since FreeBSD ports is based on autotools yet.
->>>
->>> BTW, should I start moving the port to meson?  Is it the default build
->>> method now?  Is there a plan to remove autotools?
->>>
->>> Thank you!
->>
->> So we have a bit of loose end that needs a finishing touch, but
->> otherwise we are good to go?
-> From my side, yes.
+  uint64_t physical_memory = 0;
+  ...
+  if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0)) {
+  # if GIT_BYTE_ORDER == GIT_BIG_ENDIAN
+  	if (length < sizeof(physical_memory)) {
+  		unsigned bits = (sizeof(physical_memory) - length) * 8;
 
-OK, I will write a commit message and submit the patch to the list
-some time soon (I'm a little busy atm, sorry!).
+  		physical_memory >>= bits;
+	}
+  # endif
+  	return physycal_nenory
+  }
+		
+> then shifting it down by 32-bits to the right may fill the upper half
+> with 1 if the result in the 4-byte long is more than 2GB because
+> the type of physical_memory is signed, and then we cast that value
+> to u64.  Which does not sound correct, either.
 
-ATB,
-Ramsay Jones
+note that I changed the type to unsigned previously, but the rest was
+obviously wrong.
 
+the shifting was meant to be a cooler way to get those bits cleared,
+because I thought that relying in the initialization wasn't as cool
+from the previous comments.
 
+> Would it make more sense to pass &u64 and return it only when
+> length==8 as you did in v2 while removing the need to cast?
 
+v2 (without the cast) is indeed enough and better, but my concern was
+that this affects 32-bit FreeBSD which will be returning always 0.
+
+a fixed version of this, would allow at least a better return, and
+because most of the extra work is only needed in Big Endian (which
+could only affect Power) then it is almost a free upgrade.
+
+Carlo
