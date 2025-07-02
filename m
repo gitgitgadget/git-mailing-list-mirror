@@ -1,60 +1,62 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB7AC13D
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:08:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6578BC13D
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:08:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751418491; cv=none; b=swcdtK2vQ6ie0omfaV4K26xmxjTwsLygFbf/ftsfMoGzqy1Ei8ixeqgV3KEXaPLqSSSxJX3D2ttso2bklklsPdDJ9aLjB6Rl9hV/9xcrwdhVYwOpzsKoN/c4+x1xtQ6bsewAG9au4QcQzQXiEgH3hFr+Am2S0BG8Kz0pB3lpkmI=
+	t=1751418494; cv=none; b=Xtw38izKN2jNOqutIMw7BecOIQU3eXCDjyLFMa8I+l+GKdFM1wsSO2fQsFqaMv/AFc5MzSp56bnOZoEHcIgmtywZEn/knBGFMNICnPmeLD97up0RjkM5k3QbUdEUPnrCRMVAuyk5aRodJN6/6X5AGz+sHZV2+yKbay5FZVW7TqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751418491; c=relaxed/simple;
-	bh=jqVltbjmWBuakC/wVfiyVOmaADrQqOjpj7lBFbDVO/8=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TPuIm1iemIz+Q0qLRQK5uNDZ5nYOafQhqstgToDVj3THWUOPhHs/aAm1I27nnmzm8/K2rbTJYjoMwysY0rGeLYA/u+w9OAulQnPqWu95jsE4nGWgLWfvWLZ7NtjN3cFqKzKioijXZHavxGYeX+JnTf+HfA+9GKG94cSsAvrSmGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PmuyKaVs; arc=none smtp.client-ip=209.85.214.171
+	s=arc-20240116; t=1751418494; c=relaxed/simple;
+	bh=bjAJhaq0mkeVjU7S8d4ff4APs5rI3S47Nr0skCqU9Bw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=MKxnTTblifsz/ITOhNyCw8SsNTh7k467Q30xXDCr4A3S75BYHc8WH/q3DNlL96o98l5k2LHbcrjEK8Uo286usQn75Svywbjx+Gt0AlvuUx+SaBpObo6ANazRsH8fV5Vl3wfL1PrnOjuHi4kGVIRse1F3qPVQby4mIWVLjg8ZWPk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mh5zvsqg; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PmuyKaVs"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-234d3261631so45374355ad.1
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:08:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mh5zvsqg"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-237e6963f63so24675985ad.2
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751418490; x=1752023290; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=nv4OGfM9tl1QJCeQ737/hind62JfSMrSDr+dKD2omuM=;
-        b=PmuyKaVsXIMfSJXlT00q4x26eg+3UDzSWtM2k9Og2mkag3AyKlCx8NnpwEZN0MCwj/
-         uFGxhH4TU/890tc4Jj9fBaD8Y61MKWjNs0o6jcLwpE3R+on3o/diXNQoU8rEIq1Q8UcU
-         no/v/UQkQ6P676+PMcM5WVNxrp6AtlLYG6yvf6Tg24jcAosJelYBG8Jkf0xUgKWk+CwA
-         LdyfPruiEV3WS9RThCi6l/a+kVCVje/LJICcJZi7qbxkmSupCRRYIbQo2Nr2FL9iRBFL
-         q0XELC+2ny2UGRZsryrwX7r/y2MgwVYSlN7rULGBO2tUFQegiopE24LHMIbkqOSPUpE2
-         vbCA==
+        d=gmail.com; s=20230601; t=1751418493; x=1752023293; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jfNYabZm7mo7ot3VEPZw1OTLfynvOkKRRhmMrV6Olbw=;
+        b=Mh5zvsqgLgsr+Tl+XTMeTXpgFcuFUeNXb7Yn6FgUmS6NP/twiBwwWo3xX6enYkCRX3
+         sx675XgV1Ftbef0vUB5J1K+xTCiFBR+E6WIRCBz3/JvIqSd+8HdgqXxBWuYcXnBYmWKf
+         DyWF6KLXCeFyLl91VySOn2r3DLUhOyq0X/omgCHvI8apfskk2RN5klmw+tehnP6sx/J0
+         kGmeRnBiktw1dV8zc0cS1jSoON3G391f5AwkOQrRVNa7IRZesIB6c97nog/Cup3l4y8w
+         1W5hMIeABrT+8E06460G5wthqvDfVq3Og8RJ+kFQFsVe745GPJJfc13gVvpZLwPboprl
+         CRGA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751418490; x=1752023290;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nv4OGfM9tl1QJCeQ737/hind62JfSMrSDr+dKD2omuM=;
-        b=un1bWlO30j03jwqqzTHyZgtQoihj8MMMSxxvt2bEjLIxVLOzDT0xgGJttbQIhg8Ra3
-         5nKZm8SyYoNDDtYn9yk4vr0vRomL25anz1V8NNvt/iCMWdHYVtK5spZuURYJ9MbVK06E
-         V3Xw+DchkYHjOhXTlzvgrk6a4vd9N/eEe8V4N46EQ+iKz+vyJxlL34PRB+zZZrcvTcLW
-         QdxiOiwQFsV22tYdqkVy718eMLHmgAIe3r6uudJ7pfDtl/892LQAlc+cTGcxWlVXaAx/
-         NFNZCcIEeGhzd+GBA1iTs3eAKdsY4uWWadxTt8Ixbm9XGxxfmenRdM1zSELSRd9puHcw
-         CLdA==
-X-Forwarded-Encrypted: i=1; AJvYcCX0mmqRXzKZEJH/tEVf4Tiaeey7X0HMj4dTwVyxCrdjOlH7CunJVJv/m6WuteWA4OR+YlY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyj33OOhNeDWfLdNdv/VNw8WQHVoEMEktSR/12ii2DOYmjK1GSy
-	Vweu2UV64KTvYZRxMhJ25lE4kxrGpgC+Ma0jwEFWGR+v8BVytRYpFoyS
-X-Gm-Gg: ASbGncs6bQ6ksqyA0J3RlCdgce/baozJFjtNqWgNTunIIjuswCfx04aF2ycvLutc60Q
-	azG/XLsHBY77KRu1Hhie0fGs9YeJP3EOvWJiTM7LS45WO+PKDGvuHHKuMaU4Yp0veijPjVc3Ba/
-	zEhWuiElXXpnL8+M3DvsrV6oiOIXED2EXRxxAV50m5nguauEFQ8Du0epcf0EmYtINg083dONO3w
-	ujKDLb6N9fx5oIpVG6ZIkTx9kd3ilovJcQlKd5C4oJfnGZJ6+PVwI0hculKdR9A7nunYpD1nUkO
-	2/jOPdAJRgTIpn/v1ACxL82Vfo9/CdKbXKpv0HhI4xMTd3I7hpvLbg2+YrE=
-X-Google-Smtp-Source: AGHT+IG9u5JiTnM3dxM60MSOiggnFiZVPIycb7VtNsoVAb9ZdoYv5RvcXyqsmfR+px0zeIf81vL7pg==
-X-Received: by 2002:a17:903:1b63:b0:237:cc75:77a4 with SMTP id d9443c01a7336-23c6e6138edmr10213295ad.42.1751418489599;
-        Tue, 01 Jul 2025 18:08:09 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751418493; x=1752023293;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jfNYabZm7mo7ot3VEPZw1OTLfynvOkKRRhmMrV6Olbw=;
+        b=seIS0IpLvmJl4ybFQhUm7Pb4a0RRLgPOMLFUS8ZZk5jvwBKqN/Hhw0JEfWmqT3CKZI
+         NWurzmApt1YQqxhfOIPg1J7SeyhYEeSxLf11FIja67PttS4M/uVJSj/zC2VXVqmv6BPL
+         sAxSbUGowx8aixlV6WFRAQb++/DAZinttW1DIu50oR1w02qk4uwTxhum09uVAByB480x
+         oRcMGllJOZxCMevgCWVlELCduElIMtqXfiyihmKtBi22V/Dat+g5dm2WlxHu2UDT+2Fw
+         3FrHtFbv7QwuO0fPZyVHlzhNGQLV9VRIGhK+H3zsSeu2VADj3dz9pNJyI41LMOaxuBDe
+         McEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUO1VTk7j0p9nRN1iV+SP475AjA4X7UG418YH14OcJLn3zBqiqAo9bS7STenITveI124Eo=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyjl/5zsiObrQVV7WDG9lmi4vwvaMol0CxdOO/tA1/KyZLrlquP
+	WAPOIV4dEaWBeu9X765YcdSgSAqX5qVlZlFQJ+44+2UzlE8oOoKAPwaC
+X-Gm-Gg: ASbGncserFrVwPZhLNttSuQ/4+pCAmEX9Ja1dxQ61sW6DRAE47eSUZbAq+cJrUIVzJU
+	r8hRgTR6V4Dqundl9zE6fQA9TpcVGEqD1ibGl2f3XphJUzZKVXvhSLD2IJs2l/lYH+TVJwI6PS7
+	pHr4vx4AoeeUTFPbqHMhJPYHMpSMGK3AxV4RWhvdwZgbruI8zABa/KcVtPZ0+srbGdpqB31q4Kw
+	EDMybGaTOK8zy5TFQlNt4x+4FURkoaDop0vRKakEKK/09C+cSbMGQjY77ZgS/eORFSkhy6ENRPm
+	VPZxBkiDU+9D/HFm17tzKl3jqJRAItMfgUPQKHhoRqcYSlW0WkcR5D4sSMc=
+X-Google-Smtp-Source: AGHT+IEHjHgSK9IXK7y+GSl/yjbOdEbo2CMK+5FwCJVab/CVLXo8IHeld9cFpbnb5s130CgzOB1VNg==
+X-Received: by 2002:a17:902:db0b:b0:234:f182:a759 with SMTP id d9443c01a7336-23c6e54fd01mr13057605ad.28.1751418492645;
+        Tue, 01 Jul 2025 18:08:12 -0700 (PDT)
 Received: from dev-phord.dev.purestorage.com ([208.88.159.128])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb2e258csm124433705ad.38.2025.07.01.18.08.08
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb2e258csm124433705ad.38.2025.07.01.18.08.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 18:08:09 -0700 (PDT)
+        Tue, 01 Jul 2025 18:08:11 -0700 (PDT)
 From: Phil Hord <phil.hord@gmail.com>
 X-Google-Original-From: Phil Hord
 To: gitster@pobox.com
@@ -62,10 +64,12 @@ Cc: peff@peff.net,
 	git@vger.kernel.org,
 	Jacob Keller <jacob.e.keller@intel.com>,
 	Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH v3 0/2] fetch --prune performance problem
-Date: Tue,  1 Jul 2025 17:58:36 -0700
-Message-ID: <20250702005837.2813893-2-phil.hord@gmail.com>
+Subject: [PATCH v3 1/2] refs: remove old refs_warn_dangling_symref
+Date: Tue,  1 Jul 2025 17:58:37 -0700
+Message-ID: <20250702005837.2813893-3-phil.hord@gmail.com>
 X-Mailer: git-send-email 2.50.0.149.g2f19833911.dirty
+In-Reply-To: <20250702005837.2813893-2-phil.hord@gmail.com>
+References: <20250702005837.2813893-2-phil.hord@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -76,49 +80,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Phil Hord <phil.hord@gmail.com>
 
-`git fetch --prune` runs in O(N^2) time normally. This happens because the code
-iterates over each ref to be pruned to display its status. In a repo with
-174,000 refs, where I was pruning 15,000 refs, the current code made 2.6 billion
-calls to strcmp and consumed 470 seconds of CPU. After this change, the same
-operation completes in under 1 second.
+The dangling warning function that takes a single ref to search for
+is no longer used.  Remove it.
 
-The loop looks like this:
+Signed-off-by: Phil Hord <phil.hord@gmail.com>
+---
+ refs.c | 17 +----------------
+ refs.h |  2 --
+ 2 files changed, 1 insertion(+), 18 deletions(-)
 
-    for p in prune_refs { for ref in all_refs { if p == ref { ... }}}
-
-That loop runs only to check for and report newly dangling refs. A workaround to
-avoid this slowness is to run with `-q` to bypass this check.
-
-There is similar check/report functionality in `git remote prune`, but it uses a
-more efficient method to check for dangling refs. prune_refs is first sorted, so
-it can be searched in O(logN), so this loop is O(N*logN).
-
-    for ref in all_refs { if ref in prune_refs { ... }}
-
-We can use that function instead, with some minor cleanup to the output to deal
-with the ordering being changed.
-
-This patch version only adds the deleted branch name to the output of the dangling
-sym refs since the ordering has changed. This is only a minor cleanup and was
-not actually needed since, for example, `git origin prune` already did not
-mind losing track of this information in its output. But now it is improved
-to be more explicit.
-
-This version (V3) has three changes from V2:
- - Removes a header declaration I forgot to move previously
- - Cleans up the refs_warn_dangling_symrefs API to be more sane
- - Drops the ref shortening that seems ill-advised in retrospect
-
-Phil Hord (2):
-  refs: remove old refs_warn_dangling_symref
-  clean up interface for refs_warn_dangling_symrefs
-
- builtin/fetch.c  |  5 +----
- builtin/remote.c |  5 +----
- refs.c           | 34 ++++++++++++----------------------
- refs.h           |  5 ++---
- 4 files changed, 16 insertions(+), 33 deletions(-)
-
+diff --git a/refs.c b/refs.c
+index 651fb2d41299..07197c239e33 100644
+--- a/refs.c
++++ b/refs.c
+@@ -438,7 +438,6 @@ static int for_each_filter_refs(const char *refname, const char *referent,
+ struct warn_if_dangling_data {
+ 	struct ref_store *refs;
+ 	FILE *fp;
+-	const char *refname;
+ 	const struct string_list *refnames;
+ 	const char *msg_fmt;
+ };
+@@ -455,9 +454,7 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
+ 
+ 	resolves_to = refs_resolve_ref_unsafe(d->refs, refname, 0, NULL, NULL);
+ 	if (!resolves_to
+-	    || (d->refname
+-		? strcmp(resolves_to, d->refname)
+-		: !string_list_has_string(d->refnames, resolves_to))) {
++	    || !string_list_has_string(d->refnames, resolves_to)) {
+ 		return 0;
+ 	}
+ 
+@@ -466,18 +463,6 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
+ 	return 0;
+ }
+ 
+-void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
+-			       const char *msg_fmt, const char *refname)
+-{
+-	struct warn_if_dangling_data data = {
+-		.refs = refs,
+-		.fp = fp,
+-		.refname = refname,
+-		.msg_fmt = msg_fmt,
+-	};
+-	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
+-}
+-
+ void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
+ 				const char *msg_fmt, const struct string_list *refnames)
+ {
+diff --git a/refs.h b/refs.h
+index 46a6008e07f2..07f21824d480 100644
+--- a/refs.h
++++ b/refs.h
+@@ -452,8 +452,6 @@ static inline const char *has_glob_specials(const char *pattern)
+ 	return strpbrk(pattern, "?*[");
+ }
+ 
+-void refs_warn_dangling_symref(struct ref_store *refs, FILE *fp,
+-			       const char *msg_fmt, const char *refname);
+ void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
+ 				const char *msg_fmt, const struct string_list *refnames);
+ 
 -- 
 2.50.0.149.g2f19833911.dirty
 
