@@ -1,110 +1,126 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328CB1BC099
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 18:59:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB29224B01
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 19:39:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751482747; cv=none; b=X4+VlipVy9THN3YfeIYdXfmuJJqRqhr06IXmQwzVl8+Ris7vxclikMaryjSq2h1oZrJac5Yt1tJuAiL1rmqaUFmuZdWibtQQeh7gebbEy0vvha9Gb/o5i9FiJrRWOdsG+B1Ebz0TuKqIYo6/26DA1p8S95rF/xjeeYZ50s0d9B4=
+	t=1751485142; cv=none; b=PbcH0H8Crnwt7orc/j6eA+oQ1gk3xemzqW/lX/GoYrLb4j6RsGLQNzORTQJquBxO4sdSDWa0DVw7mO2maDV/r6fNjLwLUO3Wfqblb+0C42tZgLcJTyjfu/+Z0mfLpDmKIapfA5kfqbAjlghs8iCz54fO2yDKGZTG9UT4Zw0S7UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751482747; c=relaxed/simple;
-	bh=HXoJLm5pqg04uuiiaHlM0QaT5rkdOcB63hts76zq6ZE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=R2ufkhT4TK6nrExBsr998LucXrb26xICi7XzLqDaD81ygGS1A2WRbgDn3syN+9wGZMJhoogkPo1stuDlUqMw7VaoHMR73+dPrIg72z5sbS8SL/GERDVDG6wA1mbICSy7GEtSq0SCup5ERrf3pm66MBCLyWgv5m9Uuxcd8Kq+0D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LFOvwY4N; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751485142; c=relaxed/simple;
+	bh=Dd4bhJA2uzRwyi+XUiHeYqp05OxxzK0MgVKeRc+DjW8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=EZCJeEgZAoaPze1NlC+njhBKZuzjAYi3sh4nGntLmax7Yl1ZV37gfiCg9alVviCEI3vIHhAy8OSx1s9grWVbgfnpdTSqkBdHscZf1NheXCPOT99FpxrDbw8M0KVLCZ4jyQrwIlyNjkxO8TC8XbG8NHhxTOWbfcnY5OFxEH44wvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MoVX9HhR; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFOvwY4N"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-234d3261631so52291815ad.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 11:59:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MoVX9HhR"
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7d45f5fde50so290678385a.2
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 12:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751482745; x=1752087545; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=YN7a2ta23W2TQ1xs5OzNNCT1AqRJsFkU9zM1U3eEdVU=;
-        b=LFOvwY4NuoFLucvO9BBq4VUwT9Q+qKQhPsCQjh2iWow2rsd3AXluzR7IilYHiMhDg4
-         M5drpKgC9AQOC5nOvxS2qGfBbv2aqv5e+yZyoUi+QjiJ8OL+mUUg8U+xDnzHzUTfmo5j
-         W5f19GxqTQcZB5xG/+N4Xudwy5wYdGjKcxMveHmTX0aBk3gjF1LsRk85GPa1JwZ/wr2g
-         LBDDjaBGqgsF1y8lWmlT2S7iWaDMsDNoOCJnL2ySUOj87H+FPMd+vNbYifo8kUbGi/ye
-         D+Bfbc84hIropozY8MRC52GGiWDUwAVuEh8ZDw4tR7I8yhiLDAyDsMXCmB0FOmXth6fD
-         7Baw==
+        d=gmail.com; s=20230601; t=1751485139; x=1752089939; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EvVzYjCXljRuh5IXuXB83NrN94fTHylqw2JiA8BYV8I=;
+        b=MoVX9HhR0sfgH44mc8Kivf6CcfCorY75HEKIzwo5ltf3eSe1ivMPhWUvizEfXjeGu9
+         uU96XTLBHGsirAjVMUOKhHqJiqKfOBQsUysoYtTaP6LX0M3a8E/yFmQdh2CKAPEOR0zG
+         tTgxb//bJ6me9IGKdq1pJVXkOYXv+rFpAuY3W6LvPEjUVzh8s8XL/jgx+3sPWvmcXWC4
+         owHO6mYvTloiNgF1tAWq49cxrg0WbI+wkz3ZRCBH4UqPuXZ/Qia+4m9adlE5astNo6w3
+         BsvvJxCMt2DV6cHlXEAEDjWnrecAd/7UBmGElAd+HPUBsaFiYU1zBQVxN0TLEwRkxIMo
+         ECcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751482745; x=1752087545;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=YN7a2ta23W2TQ1xs5OzNNCT1AqRJsFkU9zM1U3eEdVU=;
-        b=oaSIiMW2ryJND+NvshBYMn3XYHLuX40Mwh82k61O8RikCA0M41lS+15XMTjc2wtZ9D
-         WvoHEPyZjLZY+P3/yFg84CdQW67EberRCHnr1mYm6aBqwor/HkEejG56derifBR1r7EQ
-         8UdkLS6a9pll45hSu3yGdCF+iJSHCgyvDr6ANPtoLKMgsVE4CnLMbD0EipWMwG0r+xpA
-         mThOpWO2oEYmQzZh1wTlcUdkx2t7aAlldkNTJnizoaUFzFPCzJYB/YOxhjMULPjmHPey
-         Cv8T+344ckth/0Szjsq/zprnaJPDUJze0KmiEx7lv/2KMeZnR6E4J62PAdk1N74v6ubh
-         H0+w==
-X-Gm-Message-State: AOJu0YxGNSVXFuXFgGBni7S+ZzpWHtxYFdbAl90EdAiLBQB/OJiA1636
-	Fx8EJxUBC372YJevkp2jIL68GbPkXM3yo4b7Mx/+2JsjP8o85I1pK3fA
-X-Gm-Gg: ASbGncus0HMldknedXa3RZ5dgciW4WXoSz2kugiGgDDCXjKxYGGvZmH7EcAeXCBXape
-	QLa8yATG7oiOYIAwWvZWzrIp+pb7lbaPI3qc/xjSYIozeRavA8TSNggISQRt3Yhw9EpDTnAzvTu
-	6fxb/WSpfDZBxTdAxGB2xZMg07MVQ8NwJaxxg5pnoZja2nOxioT+dLNSpkMNAE/LcTvwVB6lVea
-	TYur8fG5EL7NprRFPRSF3Fs6CMWnlBZukeEizxe3Lee5vKkR6lQHjlDgXgvKmV/fUFTCOKRmraU
-	O1wtYcOFGDZqHqdpXWV0C11YUNNY7mctnZuCw94VtdGMZc4RHH5gHEshhXJwP6MMhJYgJMT4+dl
-	7PD2oPNmUIALkFTTVbJLVwmpY3eI=
-X-Google-Smtp-Source: AGHT+IH+cx1puBc0iKnsL6mAtpoeKhhuprs/IjI5i7RM9uaWkr8EaQ0MX6FGPqmwsVapDHqLlvSRcA==
-X-Received: by 2002:a17:902:d48f:b0:22f:c19c:810c with SMTP id d9443c01a7336-23c79842fb1mr5473195ad.51.1751482745264;
-        Wed, 02 Jul 2025 11:59:05 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb2f1d0csm132611345ad.56.2025.07.02.11.59.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 11:59:04 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Brett A C Sheffield <bacs@librecast.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] gitremote-helpers.adoc: fix formatting
-In-Reply-To: <20250702161951.22908-2-bacs@librecast.net> (Brett
-	A. C. Sheffield's message of "Wed, 2 Jul 2025 18:19:52 +0200")
-References: <20250702161951.22908-2-bacs@librecast.net>
-Date: Wed, 02 Jul 2025 11:59:03 -0700
-Message-ID: <xmqqecuyctc8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        d=1e100.net; s=20230601; t=1751485139; x=1752089939;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EvVzYjCXljRuh5IXuXB83NrN94fTHylqw2JiA8BYV8I=;
+        b=j/D7BYNZWEhbs+AjbUv5UtdGiAUxhqQrSsm96ZIA65dSy145W+wloNkHCoBzt2T/Uz
+         W2IZMHvu1393/jbfqsq6h3WTWzPRtiv1WBtfEpvZXaS4LNa4l6UdH2vVl0Uun4qz40Ey
+         U6vTGnM+tqNGDSziM3uDjnr2iE5ofOnbRMrbBiGOQ9CPLK60WsRvcd7DpJQxzGbAZ6Bo
+         qoGRMW7EOkvmNfHFG13CxRq7WmaDz2Ul5nxoGPIU7QfveSowGmnFET1CN+Dm+iDomyW0
+         baTjU/XncWTX6+MhEj2OkGx7Dbdzd8i71rrsjbfYpRVGF5OGkVBlwI5HURYLzgQRbQ6q
+         nLGw==
+X-Gm-Message-State: AOJu0YxHZ6xoQTFIzYs0+HhvxuNPYBwUq1CwuniswJ+hC+TwaTS74qLX
+	GMcb85582/Zr8AraxSIYKVg5ti/o4W4NKxziPNnzO5p9xajJfVSJZz91
+X-Gm-Gg: ASbGncuKL9X4eo9W4iZWrbdi4hpVaCBJZeU8zSf1tKbf89JEtKT7ikn7cA2fuxyHnzx
+	CqhqeYjpddj2Boc0+24lyT2bhKVswS10bA9cW4O5oKMJ3CrpfdVlvVD8VjIYh8KOmK5cnydSGaH
+	cJB80IPc+Po6cPeARAgsXnXeBS5mMSaLo7TcwxXuzTZ9sHGTo5+IuLaYh3cO7TYzhsorQthuRhj
+	uqPze2qbkogzyTTjJgTGiyYGG/Yh0iTn4JoVdhhcrdZGiv+ifc5j1dwzDBE2yZgh8/XhnxpKqXO
+	k5TNKo1xFdH+TmtPcfgM+EKa8pYTp347S+QtxWtjJ724+siUUdL0ZePvqa063HctRLr1wvwDH5Y
+	APYl7v7HXUA==
+X-Google-Smtp-Source: AGHT+IFsg9zaRwUS76omZ+voV9ebYteLMnItFJxkf7TxtPuqtzrQMOXtvBiCijSLubdN4y3MMNjobg==
+X-Received: by 2002:a05:620a:2684:b0:7d4:5db0:5b95 with SMTP id af79cd13be357-7d5c47643bamr535143485a.58.1751485139283;
+        Wed, 02 Jul 2025 12:38:59 -0700 (PDT)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d44318800bsm985457485a.52.2025.07.02.12.38.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 02 Jul 2025 12:38:59 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: Feature Request git snap, Lightweight Commit Workflow for
+ Iterative Development
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAPGv+4ZT774b-LGMFpyv3cJYUrpWPMpkCGn25AfwD7MHskbV=g@mail.gmail.com>
+Date: Wed, 2 Jul 2025 16:38:44 -0300
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <5662B201-C668-4D40-99BC-4C499813730A@gmail.com>
+References: <CAPGv+4ZT774b-LGMFpyv3cJYUrpWPMpkCGn25AfwD7MHskbV=g@mail.gmail.com>
+To: Suraj Bhadrike <surajbh2233@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Brett A C Sheffield <bacs@librecast.net> writes:
 
-> From: Brett A C Sheffield (Librecast) <bacs@librecast.net>
->
-> Add missing colon to fix formatting.
->
-> Signed-off-by: Brett A C Sheffield <bacs@librecast.net>
-> ---
->  Documentation/gitremote-helpers.adoc | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/Documentation/gitremote-helpers.adoc b/Documentation/gitremote-helpers.adoc
-> index d0be008e5e..39cdece16e 100644
-> --- a/Documentation/gitremote-helpers.adoc
-> +++ b/Documentation/gitremote-helpers.adoc
-> @@ -498,7 +498,7 @@ set by Git if the remote helper has the 'option' capability.
->  	ask for the tag specifically.  Some helpers may be able to
->  	use this option to avoid a second network connection.
->  
-> -'option dry-run' {'true'|'false'}:
-> +'option dry-run' {'true'|'false'}::
->  	If true, pretend the operation completed successfully,
->  	but don't actually change any repository data.  For most
->  	helpers this only applies to the 'push', if supported.
->
-> base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
+> Hi Git contributors,
 
-Wow, that is an old typo that dates back a bit more than 10 years
-;-)
+Hi!
 
-Thanks for spotting and fixing it.
-Will queue.
+> The rise of AI assistants and agentic AI workflows has changed the
+> pace and nature of coding. A developer might cycle through dozens of
+> variations of a function or component in a short period while
+> collaborating with an AI.
+
+The use case for this features looks very clear to me!
+
+> The current Git workflow presents friction in this type of workflow.
+
+However, I still don't see that friction.
+
+Even though it's desirable to have a healthy commit history, when we
+are developing it's ok to create temporary and dirty commits and fixing
+them later.
+
+Looking specifically to each of the problem in the "problems" section:
+
+1. Commit Overhead: I can't see what's the difference between the WIP
+commits and the proposed snaps, which seems to be commits with empty
+messages (that can be created with `git commit -m ''
+--allow-empty-message`);
+
+2. Indeed, that's not the purpose of stash;
+
+3. Manual rebasing: another option without rebasing + squashing is: 
+
+```
+git reset <last useful commit>
+git add -A
+git commit -m "useful commit message"
+```
+
+and thinking from the user perspective, currently we need to learn
+`git rebase -i`. Creating another command would make us learn the
+new command and its use cases while we would still need to learn
+`rebase -i` for the other use cases.
+
+Looking to the features itself, the only one that looks new to me
+is the numbering from the oldest to the newest snap/commit. We can
+still do that using HEAD~<n> but it counts from the newest commit
+to the oldest. We also can't (as far as I remember) list the commits
+using the ~/^ syntax.
