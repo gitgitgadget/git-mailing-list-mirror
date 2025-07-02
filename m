@@ -1,112 +1,133 @@
-Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89133C26
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:47:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D968AEEBA
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 02:23:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751420878; cv=none; b=PgmoE5tZE3A4dNVauuPXe6xYC6UtNrHCOeLgNdNO+eO85RMipfqcGNXdJc5vMg+rlRzKF2zxRMrth47D1QHZGLVG0umjqPs5YFf4m86dPhxKfbL1OOkfMTyZ8t/OSW6hH73m3qeWPOcT7AQHX3USHEo24op4j7cgjqXC+szdjdU=
+	t=1751423030; cv=none; b=fHuIhj54dQoSuswwWQCWD0NahFHOfjwszI+aRBLq0tEO2dA8N//2sMyUwOQjc2gfdp1QU/hA7aNGdMtT5vBt2ld1d7JnpwM2Bg4m6Tsc47KMUvh2VG6sCIZOhWwt6OBWHXJh2BLAxIazHmoRGQYmNlNMS6x8bs+cm0Aou70ENM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751420878; c=relaxed/simple;
-	bh=1orR5hjbqAnrvNnF+J/kUDXBgCCOX6MusmWKdPqTXcs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nx/OU/PU1b8ppUgqTCGMIIN7qzyjNsWXNgLMwo+ZsRbb6NrQPcVVfCd+wXNEcqdykv2U5WeRvWuxYoFAS/kAiGF0bGDYa4KUvTcEEeYmqlrk087oDt4Z8kvewFChiLoWGNHmczq3cubrEdqdftjhmcpxI9Be2V8547jwJesragc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JP1Y//tG; arc=none smtp.client-ip=209.85.214.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751423030; c=relaxed/simple;
+	bh=Mx63AlK03xr9BuoeMpeBxH+JtF8D8hxmlmGgdw9GM7s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Cud7vsvQuYLkOCqf9to5vQ9UPBn+n9cuc1dQcTBEOZbNyyufTglwb1lXH8h/0KUGB7VcNixU+K73ZwnQmrN84SC0BJoEPxc05AbdJLy8ibJ++jFbtkF49YBtifYbyKmSi3uT+amIHT9c6ZiWyrHQFX85BF+eIBDJOltqyjdUUxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JB8mdDJc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TXXMooo5; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JP1Y//tG"
-Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-235d6de331fso50102985ad.3
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:47:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751420876; x=1752025676; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IlkIXGKGezHdIM6s0ncupEAgaAUyTf1el33IbrXXs3k=;
-        b=JP1Y//tGwksHlue7RsxwrUJynCfY+zs02PZSSNOXYQ5JW4+hsQMkg16Iq3V+WB4P81
-         Awv6YWHLz4jE2EwsCDyvpuKSLReT+tLXJSWhmL5zaTapzaFHa11L5f0mZRrbRvkeXyQ/
-         5xd35/mIFdThTYHB2xmxMuBrMUyC/GqRbGcGlj64AQz6X+VdblqFPlU19uDEbGiDFfeH
-         8Es24OtzvBU3j1BF99/B83scIgHVWeBUN1muRgUg2BGntxh69M23aGNIVjBqqksBJcjG
-         JNJz4sgrjGCl68XAve/v8QldEGi2gHkNALXWkFMUSkLlOhe1EWnBQ9LQiAuVXHeN7o1g
-         P34Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751420876; x=1752025676;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=IlkIXGKGezHdIM6s0ncupEAgaAUyTf1el33IbrXXs3k=;
-        b=bmRPIFt1Pj+Bcq7/cFya+Ok04s1hY/B1ZJjY9USe/LDCobwMCSzEekZTO0qK6WSx85
-         +AYc0XD+W5nMUJs/Jjm/uw+wW/p+UC0+9yKFztISs5fydUlLhuNqnLdP3xB+IREZL3a+
-         dYMv8z6qAvfBYRca6SNvg942AkOLgmAsMcXxVrjKQ3iG1qLfvGYKwoHOMBoBHCmLr+UH
-         toafROv4W/jGum/4LPkOAaGo4dBVPzVa4xMWHShEgJvbk+nhQTcekQ4QamMVTajrgt6a
-         WGQmgpBXtsFwjFbbZNsKP5TFS9DY8OvoBSJktyblWEWG8gQ1bHTGwfNP8vuAXpRXUkhC
-         +X4g==
-X-Forwarded-Encrypted: i=1; AJvYcCUMGTrhwornCVNYmGrpSBipjOLHOPm872xVXzebscsBAGrAn3LHkhjFdcyOT39mOYY3tV8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YydvlsLv/Z4H5gLrVlAfnjUb5ZDdT+8fmGyOzsfw+jw/dxbZ6f7
-	LbecAeZUXaMsEKdJi/fJdwIOmTeB0UNMfq0EbPPLT8n4WQLopnKy0lI+
-X-Gm-Gg: ASbGncuCh3cOUokxsgGWmvkOYvujnPsNXW0/675hd/3YpH8sOlWHgya2WxytUUaRsTo
-	O0hSp4pHz6X91LOIc10cnDBoGJaBwWw5KuUqKhUZZHxcuaVxUnQRfz/qN909x2SZFyUrfFT84Rd
-	y7HujcJXWfg+NNxCgNSDqJeSb16kUWPTi3ifRxNFVXyXxg3f3i4k1C/vesqF9Fxm3WMRnCAu2ST
-	cqwpr9liqUjoddL9z7BpM8bv3OZM21o8uR5TofyIOFyXtrpfHGAiJEKTYY+a/5qhLZ4FtbYS5Qi
-	Mh829Os/Aj6kjhpjWiLr8pAI4pWAuMXath+hYLbcoIWTZo/C/9FH326HOk+Pcg4OTwba7uR7geA
-	pwuD+SZAenFcSAgmUNRohXHG7Ggw=
-X-Google-Smtp-Source: AGHT+IFs3llTVs6HOCr1CwZcZOUzvmlgk/XUsaEjr+mQA7O10GueRzN3trBOc/DZPfmbe04WqTwM8g==
-X-Received: by 2002:a17:902:c412:b0:234:f6ba:e689 with SMTP id d9443c01a7336-23c6e56f630mr11298915ad.39.1751420876138;
-        Tue, 01 Jul 2025 18:47:56 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3ba047sm123983345ad.194.2025.07.01.18.47.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 18:47:55 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Phil Hord <phil.hord@gmail.com>
-Cc: peff@peff.net,  git@vger.kernel.org,  Jacob Keller
- <jacob.e.keller@intel.com>
-Subject: Re: [PATCH v3 0/2] fetch --prune performance problem
-In-Reply-To: <xmqqms9nfjvz.fsf@gitster.g> (Junio C. Hamano's message of "Tue,
-	01 Jul 2025 18:42:40 -0700")
-References: <20250702005837.2813893-2-phil.hord@gmail.com>
-	<xmqqms9nfjvz.fsf@gitster.g>
-Date: Tue, 01 Jul 2025 18:47:55 -0700
-Message-ID: <xmqqikkbfjn8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JB8mdDJc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TXXMooo5"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C890814000A2;
+	Tue,  1 Jul 2025 22:23:46 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Tue, 01 Jul 2025 22:23:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751423026;
+	 x=1751509426; bh=HlhzNCQhCq2MCEv05TDxl5ms+mnufMfUBAb8XxpIuqU=; b=
+	JB8mdDJcgH/oT6NDyxFaB1B0RShMheleeECJ+0HBsxffTsFOvI6RmVqkaG+JS+qn
+	dd8if51e2DIe6EzikNrKFHesByMIJ7DynAne5AlArP0zQhYYksttcT4bN1Bg8TG3
+	uU4cZjdb6llnBY/5IQBaMfkwo1AbkaN6qGEadL53FvOXp5VYNtlhQ7JVUnq4vr5Z
+	uqPbydUa/Tw8MQJbmiFN6KX9hmlDOpiZpwpve9oFi5dyORqw/f8q3iNBZnRjGYm+
+	0Sc5nwQ5b2G0LscORX7hBIYmZ0a8PlQxQUhryDxdBGvmpTuAsnbdc9H+DSRg/kzv
+	wchDA5QDR670fVdgaN2UKg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751423026; x=
+	1751509426; bh=HlhzNCQhCq2MCEv05TDxl5ms+mnufMfUBAb8XxpIuqU=; b=T
+	XXMooo5C/sON3SPg/N1n6WBZMHaeYfooZTG+fFnZVIpG9dIfH4eqzBrQPDSKde+C
+	IdByxrxOxJDSr2Gtjfq6sme51LUnMncsAl8OpnTiy9w3o9ShWubwIj6PKHeW19Qn
+	w51fWS1ZVYHX0PoJhS3WJWSUgWhv6KlZWiEqPbj0tfBuDtwtQpP3VRCd1Dq3o8sY
+	iYW9rfK4UI8qh9vErey1IfJhRW3bi3kq80XZyEXqz519BJpJpOZJgIyk0D3aTtIx
+	NCbvGnRZsYHNhK4ktykwRz8mAwmpQL4YJdYd9xcbM3jwlHpH28zD0J4sley5jPMs
+	7H9W5Wq4T2Vb5l7urGHqQ==
+X-ME-Sender: <xms:MphkaMLV9oNl2__Qam6jIjPt0_yZHXMR5RJTc1q0p8lPv0P1ZRMBuw>
+    <xme:MphkaMJr84ZLY41sBRoBShTkRbfEDCne51NXXquDhsXaTeknu4BmiLPCWIKkjT9nd
+    7WfcD8Cr135itkkug>
+X-ME-Received: <xmr:MphkaMuFrbL9153mlTJ0KLnnUvVKrqcs92FZNfpWNqP4f6ud_ewRUw-N9431BSRkSL9vUQtWzmyWBhkyyICWmkjhShB21ddVgogUIGXfXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduiedulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekrodttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epudetheffgeeutdefvefgteehhfegveffffdtveeiffejleeuteekteeujeegkeevnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehshhihrghmthhhrghk
+    khgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:MphkaJbFHaAcb_e-a7EH-GIus3w3wj65UJYcC81mgha1Y50qt8pCNA>
+    <xmx:MphkaDapvWLc1OXOT2oRc8z5fsW3D9xwbw4iCWe9WXjMvP3t73B4Dw>
+    <xmx:MphkaFAsdsNNq5EVbsZqdYoG3LBvg77khCO3_Re1qTugaqkNvj40mw>
+    <xmx:MphkaJZPfhENeU16KA3FbdBXQn0c-66UptJKdcGYQckGbHVlzAeO3A>
+    <xmx:MphkaHmzqR9YC4TaIM88MZwPi_HSpnGtBjzJSw2Bt-eeldTq8Z9i2xFQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 1 Jul 2025 22:23:45 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 4f4e9114 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 2 Jul 2025 02:23:44 +0000 (UTC)
+Date: Wed, 2 Jul 2025 04:23:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com,
+	git@vger.kernel.org, shyamthakkar001@gmail.com, shejialuo@gmail.com
+Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on
+ 'the_repository'
+Message-ID: <aGSYLJaqDziLqtXk@pks.im>
+References: <cover.1751296633.git.ayu.chandekar@gmail.com>
+ <f70de9d549f2cb744810df7a9ee09e0b3626e62a.1751296633.git.ayu.chandekar@gmail.com>
+ <aGPcKgR0G72JRSlM@pks.im>
+ <xmqqikkbkglx.fsf@gitster.g>
+ <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE7as+YtmRxD3P-T4bzccgJnd0Ocj0kdW00g-=3gtdoWhTRVeA@mail.gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jul 01, 2025 at 11:39:48PM +0530, Ayush Chandekar wrote:
+> On Tue, Jul 1, 2025 at 10:12 PM Junio C Hamano <gitster@pobox.com> wrote:
+> >
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> > > On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
+> > >> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
+> > >>      expire = TIME_MAX;
+> > >>      save_commit_buffer = 0;
+> > >>      disable_replace_refs();
+> > >> -    repo_init_revisions(the_repository, &revs, prefix);
+> > >> +    repo_init_revisions(repo, &revs, prefix);
+> > >
+> > > Does this work correctly when running outside of a repository? In
+> > > general `cmd_prune()` is not executed and would instead die as it is
+> > > declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the user
+> > > asks for help we may still execute the function with a NULL pointer.
+> >
+> > Good eyes.  "git prune -h" would safely exit in parse_options() in
+> > such a case, but this part happens before the parse_options() call.
+> >
+> 
+> Thanks for pointing that out, Patrick. Right now, `parse_options()` is
+> called just after the `repo_init_revisions()`. I can move the call to
+> it before this.
+> 
+> Although when I tried running "git prune -h", it still gave me the
+> expected output.
 
-> Phil Hord <phil.hord@gmail.com> writes:
->
->> This version (V3) has three changes from V2:
->>  - Removes a header declaration I forgot to move previously
->>  - Cleans up the refs_warn_dangling_symrefs API to be more sane
->>  - Drops the ref shortening that seems ill-advised in retrospect
->>
->> Phil Hord (2):
->>   refs: remove old refs_warn_dangling_symref
->>   clean up interface for refs_warn_dangling_symrefs
->
-> Hmph.  On top of which commit did you base these two patches?
-> The second one does not apply on top of applying 1/2 on top of
-> either v2.48.1 (where I queued the last round), v2.50.0 (the obvious
-> choice for a new development), or 'master'.
->
-> $ git am -s <patch-2-of-2.txt
-> error: patch failed: builtin/fetch.c:1384
-> error: builtin/fetch.c: patch does not apply
-> error: patch failed: builtin/remote.c:1521
-> error: builtin/remote.c: patch does not apply
-> error: patch failed: refs.c:458
-> error: refs.c: patch does not apply
->
-> Thanks.
+Well, as long as it works and as long as we have a test somewhere that
+ensures it keeps working I'm happy.
 
-Ah, nevermind.  I'll discard your v3 and will take a look at your v4
-instead later.
-
+Patrick
