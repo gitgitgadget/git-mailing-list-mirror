@@ -1,137 +1,135 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
+Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A08751F1306
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 20:28:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAFF3221F03
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 20:33:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751488128; cv=none; b=gsD7xGG4l2c8Xg4qNANOMOw0lgAJQZCw1xJO5zMH7z5R+3G4pwKtvaDaT1+kT4QDhpq/3RVArff2v3BkTNtjdWPrrh0Zkiohd+ZcwYenawBA7tbr0HA9lqzYQTBwE7zNEp/2eiUsf7nl+2SOjO6By3Y9cSw0Pxo0TiYuZWtFDm0=
+	t=1751488431; cv=none; b=PzsSfbhJI6QFNiqjcaNaWJuFOqUnRvcpAA5414RD50u2iluEdU5QoPgERW5gZRmkROnvyyhzL8VtcFgr6IS9A+suJvJ3DdQGHbsAmRJ0Z5qJ88FlwiRLOxL1/gO3txouBzdo4C3g4s9xC6PXPCuqUKIENacmn9WIPM6d7DXks90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751488128; c=relaxed/simple;
-	bh=X316NTpgTq4+mY9GjdR67UCJak3jFrr6DzEmU0GsEqk=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=agi5ciC/gB6cTE9tudxE2mxbUDCzSU6czCKb2tRRGZsPvWe5Y6E5Dd6a5TXBvxZb/L9VKRox8zlkALGwCM5E2O73Cqdsid0XbHN3Bv5M72de97rrTJI0hAwObg4/O3MkdiBAHHYOmsX3T2yrkXjK5n4/9Apygl/N3+xgbczeUBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PIzozMmF; arc=none smtp.client-ip=209.85.166.171
+	s=arc-20240116; t=1751488431; c=relaxed/simple;
+	bh=pQL4w5FkuTs2B+f54zAQOUtHJt7/DeHAIvKWXtuEmCg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=krQDCvQKHspbIZn8fHLSmuD35SieVCR0ICuPFi4NDCrL7J71EAyU5cpp86gHakDyjqz3jWZmQqFNB6DU2iEr/tbAMfu36W1JvIPbeVttci5udfs1aT/rBMjOVTp+cctacDrNSwwh+1+zUetpPKcnQWXwDu96FOSrxTt2CoGkkpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TOpv6Gy3; arc=none smtp.client-ip=209.85.222.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIzozMmF"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3e05bb6efe0so3720685ab.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 13:28:46 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TOpv6Gy3"
+Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-87f36c458afso2776217241.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 13:33:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751488125; x=1752092925; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jxv0Bwi3FpLVEY31OFzWBYhhGOt/3TGa1ct2FGDZKh0=;
-        b=PIzozMmFw46n20ASq/KKf/L42ZRu8Faq2urcp+lI/Z7c/G1WsClQXWlfgjmbjPJ8g5
-         R28H0eMaa4xfInypK0mpU/XANhP1X3K/poM8uAnPNg5cmr6efWy8TyCxP2Ax0dRVC81p
-         eV3KZqk+zhi66mmZgji8E80JJIzsenYLQ3cbiLr8DTik4PcgZsTMNoHZCG69BCTudlo7
-         B6aJqDDWEqmPNSreCiWFsnJ3RyExIkPFvocJBQkUhana4zr6HcrZbNgJ1dsVuULBDhjJ
-         lxsRJUCfc74qGHc9cN90wE/sjolrH2ORVYTKVqtOqGhJ7U4gEC7sF9CH03NvPkRfcorB
-         nfOQ==
+        d=gmail.com; s=20230601; t=1751488429; x=1752093229; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=bg92gWFLlEriKrkqiJ9lbyQFvX1IuNQqtPmu5A/+nm4=;
+        b=TOpv6Gy37V12duZppNTU4Wh91vxgbn0v9cQ6mqpVFubvHoa+6N7B9xEb2GI9ZInvCC
+         8FtTQjkRDo40yhBCR7rQSISJ3ACPoXz3mL78fz4nskugVwD8krgiCm3L7hk/LeVHzPRd
+         89l68mDY1cJSbLlUHDBe7dw54X9MskYl81sYa5iwR97Jyp1lKlpWWG8A4JCSXDYamKT1
+         S7JoLx9i06JICWo+FKCOlI1kkckI9Rg4qJBu8Z5HNh6kZ5c4kjXFup4fohTdt/MX2s9D
+         x83vJl7P6zQOGi0TCXEKVTFXNFoHH6eXtt3zfkba25ccpY/iP5e1BLG4Byd83PjjCpnk
+         yr3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751488125; x=1752092925;
-        h=content-transfer-encoding:subject:from:content-language:to
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=jxv0Bwi3FpLVEY31OFzWBYhhGOt/3TGa1ct2FGDZKh0=;
-        b=O4L3vYK5A+ELq4UM2rnZJHty24c7qGrGeeHCspPc5HkHmYK8J8f8ufSmg5Xu6s7jMB
-         dz8hBnBnCnPEvAu7+KJrq1o16XLkInO6bB3AVKjddj1c2IbJdR0YqkNhJoqmeVtdDShj
-         yyOJZNlVskIqTsGxRNoAfa0ea4gCldqwh8lVj1C8zCO/Eo4nVg94Oo4qjF7Wr8tUehdP
-         qDINXWuPzBFgkRpQIrjGqcC+pBor47PNhDkzTNtHda9Nsjb6qepeR2vvxPZSTvmJ8yew
-         QxOq12HKbnzS4++vGcEggdzTDRvWflz4v0SwloCcaun/Z6nYLkfKsAdXN00WI+MYxDg6
-         rV8Q==
-X-Gm-Message-State: AOJu0YzUZQnN0PSoLwglv7V3zxAZU4O4cR7QvTB5UWXTXAzQ7X2aAzKM
-	xbXBx8u/XwZ1uJfRiCjyNf7XBdNO2vb56PXBlfv4oVsvdoHM4L1isDoK9sI48g==
-X-Gm-Gg: ASbGnct1LOkwoCxhA0mohTEShPvKj4JaIfRigUm1qbn3TGAo+RzBJv9jExk1/gPGi27
-	oj4lK3axATK7xzmU+zEVrp4RktRFdkmiveWJqHJtpRWu+rKwRjS/7ChwjKdWNzHqdw3nrrGUeVv
-	QRDYFJS7/MPiwWx2kFaSTCcKyzIegU4kpIJbQwnATWFlDcTnQks8cGFdDEgt3yspNpv6YtR3MYE
-	fnfRxSURyOU4KBrsw0Ykr6F0zeZkkyIKH3NPpkeEE4+HKpC1xloEI05uO9GiqYayrBm+wUYoKAe
-	Sti99y+FfEgaVmVB+Sf18jYkgXsy+bkmji37idKSOsedcxsQWf6GGes+x+XxTz5ij7Hq/0snxGA
-	XTgwjxBd62d+rXgLf1baL/Fisa8+O
-X-Google-Smtp-Source: AGHT+IE3iSKKFMx7FEQ/EJKmL70qr7DE0R7xTLjNn/OdQz+PRvoP/T5DBZ+ylh9d14LBX52tWMqESA==
-X-Received: by 2002:a92:c24d:0:b0:3dd:b7ea:c3d9 with SMTP id e9e14a558f8ab-3e05c94a668mr7442765ab.7.1751488124789;
-        Wed, 02 Jul 2025 13:28:44 -0700 (PDT)
-Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-502048d7d5bsm3097572173.61.2025.07.02.13.28.43
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jul 2025 13:28:44 -0700 (PDT)
-Message-ID: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
-Date: Wed, 2 Jul 2025 15:28:43 -0500
+        d=1e100.net; s=20230601; t=1751488429; x=1752093229;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=bg92gWFLlEriKrkqiJ9lbyQFvX1IuNQqtPmu5A/+nm4=;
+        b=WC44wAGJU74ks9OAY8lX8p0BE89eDfWV7tPpEBj6frKx2236qdDWOYB8KwhG/lhQJz
+         EkvzNKUiwzHTCzhoBSW0rDiIC9gwoC+RULpQaVIROahe6jcCRFnPahItNZF371BFe1cd
+         LE5VvQHroyl8B+TmNM46mv/m8lqY1YDWyslLpUnH5yKA5o78Z+Sr9eiRZE47+gkHYm4W
+         w9x/BTOoyj/fkTtXXSpxtjvrse+CCl+QF5xs4eY2TaacGPE0CoFZVXerx2YejNgwYHXE
+         dvogaiyqBj8NxhycbLigh1IHayxwOCMdxorrrsZP4dqDJa3whXWPjhLY8Adaz/zZfIhc
+         ouOA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHRnRY4tgaXlqIKtRJKYvy5dGTUYAM69mRJd/FOH81pJgXqyBH/wOk2ujciELYnIm1Drs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzgFPIf68Tu6wi4g3jFDeDbuBsrBpe+m4IRfZB4lb6yG/RKJGTx
+	jhi1qULYHFxO2QutlM8O3qYtfT0HHFJ7zN0AyEj569117XS5jJU8i0fpeLA+ia8UWvWdTAapPJK
+	tWVJKxx8QNQnbQTsiP/zc9pIaXudW2p5iBv/j
+X-Gm-Gg: ASbGncvbAeIANaFCJGmyVitDL9m4OEzuCnjB9doD3o395r9EkaxFerW5I2/lRHkLs5R
+	OTN2h0Ve2OP048CDv7d+mwkaSrixdA0yXfHWzCuptS+fmDkavR/wbzrsLQAP3mEPRBjNAjgfj+C
+	gU8aaQPCmVQCYqrUuAZB6D2X88hCIzV75umDZW/CtKBUvo8toel8nG8WiJMp5Rr+Iyo9fmitYp2
+	CwHww==
+X-Google-Smtp-Source: AGHT+IGcYwICqeqOW2L9ET7wZCcqBk90za9cwFLWZND94DESUrUMaAOqb3BH+eFm2cMlKUSutJMBTRzytXrYEUBvkK8=
+X-Received: by 2002:a05:6102:5a88:b0:4e9:a2bd:b455 with SMTP id
+ ada2fe7eead31-4f1612cfee3mr2919429137.14.1751488428632; Wed, 02 Jul 2025
+ 13:33:48 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Jul 2025 15:33:47 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <5e9b3ef1-931b-4b70-8275-5aed5da3d6f3@gmail.com>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <5e9b3ef1-931b-4b70-8275-5aed5da3d6f3@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: git@vger.kernel.org
-Content-Language: en-US
-From: Eric Salem <ericsalem@gmail.com>
-Subject: Behavior of git log --diff-filter=d
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Date: Wed, 2 Jul 2025 15:33:47 -0500
+X-Gm-Features: Ac12FXzvaqXG68euNBi4zCmffdg8rpd_jY6Mh6qdc0qAHHOnNgArWxzROf9LjZs
+Message-ID: <CAOLa=ZTwvOiCnYK18GTEUkcW0-YLHkJ=MBggdzOYsbTT+OHPwQ@mail.gmail.com>
+Subject: Re: [PATCH 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000009e108a0638f82dde"
 
-Hi all. What am I doing wrong here?
+--0000000000009e108a0638f82dde
+Content-Type: text/plain; charset="UTF-8"
 
-The git log --diff-filter documentation[1] for deleted files says:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Select only files that are Added (A), Copied (C), Deleted (D)...
+Hello Phillip,
 
-> Also, these upper-case letters can be downcased to exclude.
-> E.g. --diff-filter=ad excludes added and deleted paths.
+> Hi Karthik
+>
+> On 01/07/2025 16:03, Karthik Nayak wrote:
+>>
+>> This enables efficient pagination workflows like:
+>>      git for-each-ref --count=100
+>>      git for-each-ref --count=100 --skip-until=refs/heads/branch-100
+>>      git for-each-ref --count=100 --skip-until=refs/heads/branch-200
+>
+> Doesn't that require you to know the name of the ref after the last one
+> returned by the previous batch? If the use case here is pagination then
+> being able to provide a numeric offset might be a better fit. For example
+>
 
-A simple test:
+It does require that you know the last ref from the previous batch.
 
-$ cd $(mktemp -d)
-$ git init
-Initialized empty Git repository in /tmp/tmp.xnvNav956B/.git/
-$ echo test1 > file1.txt
-$ git add file1.txt 
-$ git commit -m "first"
-[master (root-commit) 71288dd00aff] first
- 1 file changed, 1 insertion(+)
- create mode 100644 file1.txt
-$ git rm file1.txt 
-rm 'file1.txt'
-$ git commit -m "second"
-[master 6ff8f522b744] second
- 1 file changed, 1 deletion(-)
- delete mode 100644 file1.txt
-$ echo test2 > file2.txt
-$ git add file2.txt 
-$ git commit -m "third"
-[master 41498d26ea5e] third
- 1 file changed, 1 insertion(+)
- create mode 100644 file2.txt
-$ git log --format="%H"
-41498d26ea5ee6820834aa51351e1e7ce6ce8733
-6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
-71288dd00afff60f3a6576f93930aeb0130e5cd1
-$ git log --format="%H" --diff-filter=D
-6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
-$ git log --format="%H" --diff-filter=d
-$ git log --format="%H" --diff-filter=d --stat
-41498d26ea5ee6820834aa51351e1e7ce6ce8733
+The reason for picking a reference offset is mostly for performance
+optimization. Our reference backends are built with prefix matching in
+mind, in short they do a binary search through the reference namespace
+to find the required prefix. By using a reference offset we can utilize
+this binary search mechanism to arrive at offset.
 
- file2.txt | 1 +
- 1 file changed, 1 insertion(+)
-71288dd00afff60f3a6576f93930aeb0130e5cd1
+Using a count offset would require iteration to reach the desired
+offset (basically a O(N) operation). This wouldn't really matter in
+repositories with ~10^3 refs, but in larger repositories with around
+~10^6 refs this starts to make a large difference.
 
- file1.txt | 1 +
- 1 file changed, 1 insertion(+)
-$ git version
-git version 2.50.0
+> 	git for-each-ref --count=100 --start=200
+>
+> would show refs 200 to 300
+>
+> Thanks
+>
+> Phillip
 
---diff-filter=D behaves as expected, but when using "d" instead, I don't
-get any output unless I add another option (such as --stat or
---name-only).
+--0000000000009e108a0638f82dde
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: cbe2f86063bdc452_0.1
 
-Is this expected behavior?
-
-Thanks,
-
-Eric
-
-[1] https://git-scm.com/docs/git-log#Documentation/git-log.txt---diff-filterACDMRTUXB
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1obGw2b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mODVXQy80NEhZRi9ZU0Z3QUJTVTh3azRRTCthTEZGRAptbnRjMlV6N2RM
+bkdqWUkzUmVCaEI5NkJMcXpQRzlDN0tBZmdOYjF0Q1N3c3Y1UEpscGRsNVJZc2VzR0xuTFMwCmtE
+Y1ZBZC9iWEk1NmpSdmE0aHFwQ1lZVEFBb09GelZCMDJLWC9JVzFkdHFpd3ZYVTVZKzVUeVdGVzNF
+VUg2TGkKNjBVcDNINDkxN3M2aWJqZ3FSRnVrV1EyVlBsSWwwUXg0QXBGMnU0Y1RaTGY2eG9aV2ZF
+bnZUOFFuWTR6MDZucwpGREc2bytwRmFnSDdmdHczT1Fud28rOE5ENkRNSjNscG01c3EySUVWZFEr
+eWhaYmY5QkJQd1lWSStOL1hqTWpiCmpWNVRYeWx6ZTZ5Sm0vYVRNTDRnaEp3Y2twUWlQZzVCYkN1
+TUhFb3BNbEJIRGFaY1pMZWZ5Q0dQRkZnS2xVWWcKZjlUQUE2YnY4Ym1mK3I4aGhxOW9GTGZGSkpG
+azY3bkRLckNPakFQWDV0MGMrM0ovdzJ2N2RiRGRHVWg3K2lISgpsQzBodnVVLzlhbXlnVnYyTkQz
+L2RGVVhpZnNZWG5rNHp0RGFQWVFCZkJpckFlTlhhQTJVbzQ4emlyZlBIUXZjClNyVlJtVVlrM0h3
+YnoxcjFhbE1rZ1J4UkpBbXR6c2pUWGVCcmhwOD0KPWtBYU4KLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000009e108a0638f82dde--
