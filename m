@@ -1,116 +1,124 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62232246BC5
-	for <git@vger.kernel.org>; Tue,  1 Jul 2025 23:53:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB7AC13D
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751414005; cv=none; b=Ggl9NAJu92AtRIif2zrOwdT7AkRVzqucSzeydSpmw9P5nNVwa15FQofQ5VYdR26F6XJOqwD0LhK9ladS7sM1xTVMG+ZOkDd3T1YYwoOz8Ejzpc0r+ZCbZtenFkZ8PIiMvIlQe5YYgBu2qsA1Ftui3EKOCwvAIj+a/YQfzLbuBbw=
+	t=1751418491; cv=none; b=swcdtK2vQ6ie0omfaV4K26xmxjTwsLygFbf/ftsfMoGzqy1Ei8ixeqgV3KEXaPLqSSSxJX3D2ttso2bklklsPdDJ9aLjB6Rl9hV/9xcrwdhVYwOpzsKoN/c4+x1xtQ6bsewAG9au4QcQzQXiEgH3hFr+Am2S0BG8Kz0pB3lpkmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751414005; c=relaxed/simple;
-	bh=DwVotexqLTzT4o9nP47qaNtM7uX0hWNXAoaua+/jO+U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WjVESKCsR4I38LmY/8XmYNrXtPwzI+AjhBWFp/AS+Qazd/Gicc5UhhBGVUDMewYwZyMcUilxN2HPoiT/JUBdaofAyjc36YZRtNeDosFHYAtjfN/6qEpaaI5uqEQlm5ROAFfhtIrUkNxflsAXkFv4fqdSWuUNQmC9Gg5kp7dAuhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZ9UKwVj; arc=none smtp.client-ip=209.85.215.178
+	s=arc-20240116; t=1751418491; c=relaxed/simple;
+	bh=jqVltbjmWBuakC/wVfiyVOmaADrQqOjpj7lBFbDVO/8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=TPuIm1iemIz+Q0qLRQK5uNDZ5nYOafQhqstgToDVj3THWUOPhHs/aAm1I27nnmzm8/K2rbTJYjoMwysY0rGeLYA/u+w9OAulQnPqWu95jsE4nGWgLWfvWLZ7NtjN3cFqKzKioijXZHavxGYeX+JnTf+HfA+9GKG94cSsAvrSmGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PmuyKaVs; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZ9UKwVj"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b31d592bbe8so4833685a12.2
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 16:53:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PmuyKaVs"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-234d3261631so45374355ad.1
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:08:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751414004; x=1752018804; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H4+a+FNe4CkbzRB4XBGtu+qRJGLM1l2uL5Oaz0AeD5o=;
-        b=NZ9UKwVj7U7UbMNol4f403+lySoQrOpMl7ZN08ZFidf1ByCO04AM8v0NGWzb3vuKFJ
-         Mq6NyUuauXx8iccXIp8IhYLA6LhxXbeY/7n/bUyCTcN7u7jCG28U2fJt7j63DbUjf5Em
-         HC2ePCcYdEz7CU7CG6sA2dhg3H/mE/y18fZaHwaPkESwFc9sy4VOYSsaygJW7OQE4JOH
-         xaeEIds/I5OvHPi3RUevaCGweH2+4NJXlT3aH/emGy8X7h4q94SzpvHI5OtyZDjLkBqp
-         9GvyWaL7y3IY8qcTNXcm0csLKEwhVqgUtBlwaKNZxfz9Ms07ivr7NgXBrTOH3AqrUx+/
-         WrPQ==
+        d=gmail.com; s=20230601; t=1751418490; x=1752023290; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nv4OGfM9tl1QJCeQ737/hind62JfSMrSDr+dKD2omuM=;
+        b=PmuyKaVsXIMfSJXlT00q4x26eg+3UDzSWtM2k9Og2mkag3AyKlCx8NnpwEZN0MCwj/
+         uFGxhH4TU/890tc4Jj9fBaD8Y61MKWjNs0o6jcLwpE3R+on3o/diXNQoU8rEIq1Q8UcU
+         no/v/UQkQ6P676+PMcM5WVNxrp6AtlLYG6yvf6Tg24jcAosJelYBG8Jkf0xUgKWk+CwA
+         LdyfPruiEV3WS9RThCi6l/a+kVCVje/LJICcJZi7qbxkmSupCRRYIbQo2Nr2FL9iRBFL
+         q0XELC+2ny2UGRZsryrwX7r/y2MgwVYSlN7rULGBO2tUFQegiopE24LHMIbkqOSPUpE2
+         vbCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751414004; x=1752018804;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=H4+a+FNe4CkbzRB4XBGtu+qRJGLM1l2uL5Oaz0AeD5o=;
-        b=nNCqrgyATYCZLRvw0vRJXR4mVX3t5GY2VFM2Kr+3U835jS7l/zoJPVoZrHe6uQ9fNz
-         PyW/fT1dmre+wNOnAGaqTbB9TLQIB/HJfymh8hKspuLPiG/7dlRCPE5oayOVXM4piKP3
-         eUvjRo5ZcNigZh9zD4LO6mO6ai0tA2HqjsYFA9Gg1lrLZCmugdNQgZQq4+Gh8Xrh8lqT
-         NOS0FI1AOkgOSQBwG2yLuXt/nkjs7UF81e9GjofJhp0IlX04PCF3Rg7iKf26vbMOg165
-         uyycQQzEV7vAhUasFdsr+bQRVWnLc5PkFY2XM2WxGOQpFPGLZH+R2JbhNl88gtgMk3hY
-         qVzg==
-X-Forwarded-Encrypted: i=1; AJvYcCXHztUAXB/DZIvsGcovXaBt9H7JogPz5Admb8ePlwJdmsi9TZweJADAio8Y4JDi352bM9Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw1Y+ZioKLR8FhhWIaQhcOP9nWA7tPsoxj7agpK9J/est9GwXWk
-	2+F+jDa+mstwsNacdqaOmKN/ALolJoP3lZznG9hk1QesgbjbL9bW1BRFNvoE7DU877h0Fzz4TJg
-	aK3WMepp+rtILGqjPMLUhpxBgkkkUGP975SgZGTA=
-X-Gm-Gg: ASbGncsDM5xni0KZItOrgtSW1bRJw/w8Gl9dvsuR3mhh/4+Z7OZM2mKaFUDWt/mAicT
-	+TzLanuhbnFiD5Unr8fl1YChq56HWh19DEWnriKcKcKNReWBedbNConJpFjgJ9DU1qi5HXOWekO
-	reXvBJP7+ohLgh4Uura5NP/fGhr1tFX6Ki5UXAiB4J1mTLEA==
-X-Google-Smtp-Source: AGHT+IHgunwcrc3PRuagNKRVyHrvIsGBmNqbXiuuJrPWbSHGVSCRmwdi3omfxIQmIL3WTkAKapG5Ksz69O3Xt0vk3WE=
-X-Received: by 2002:a17:90b:55c8:b0:311:df4b:4b93 with SMTP id
- 98e67ed59e1d1-31a90afe5a0mr1371650a91.7.1751414003614; Tue, 01 Jul 2025
- 16:53:23 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751418490; x=1752023290;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=nv4OGfM9tl1QJCeQ737/hind62JfSMrSDr+dKD2omuM=;
+        b=un1bWlO30j03jwqqzTHyZgtQoihj8MMMSxxvt2bEjLIxVLOzDT0xgGJttbQIhg8Ra3
+         5nKZm8SyYoNDDtYn9yk4vr0vRomL25anz1V8NNvt/iCMWdHYVtK5spZuURYJ9MbVK06E
+         V3Xw+DchkYHjOhXTlzvgrk6a4vd9N/eEe8V4N46EQ+iKz+vyJxlL34PRB+zZZrcvTcLW
+         QdxiOiwQFsV22tYdqkVy718eMLHmgAIe3r6uudJ7pfDtl/892LQAlc+cTGcxWlVXaAx/
+         NFNZCcIEeGhzd+GBA1iTs3eAKdsY4uWWadxTt8Ixbm9XGxxfmenRdM1zSELSRd9puHcw
+         CLdA==
+X-Forwarded-Encrypted: i=1; AJvYcCX0mmqRXzKZEJH/tEVf4Tiaeey7X0HMj4dTwVyxCrdjOlH7CunJVJv/m6WuteWA4OR+YlY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyj33OOhNeDWfLdNdv/VNw8WQHVoEMEktSR/12ii2DOYmjK1GSy
+	Vweu2UV64KTvYZRxMhJ25lE4kxrGpgC+Ma0jwEFWGR+v8BVytRYpFoyS
+X-Gm-Gg: ASbGncs6bQ6ksqyA0J3RlCdgce/baozJFjtNqWgNTunIIjuswCfx04aF2ycvLutc60Q
+	azG/XLsHBY77KRu1Hhie0fGs9YeJP3EOvWJiTM7LS45WO+PKDGvuHHKuMaU4Yp0veijPjVc3Ba/
+	zEhWuiElXXpnL8+M3DvsrV6oiOIXED2EXRxxAV50m5nguauEFQ8Du0epcf0EmYtINg083dONO3w
+	ujKDLb6N9fx5oIpVG6ZIkTx9kd3ilovJcQlKd5C4oJfnGZJ6+PVwI0hculKdR9A7nunYpD1nUkO
+	2/jOPdAJRgTIpn/v1ACxL82Vfo9/CdKbXKpv0HhI4xMTd3I7hpvLbg2+YrE=
+X-Google-Smtp-Source: AGHT+IG9u5JiTnM3dxM60MSOiggnFiZVPIycb7VtNsoVAb9ZdoYv5RvcXyqsmfR+px0zeIf81vL7pg==
+X-Received: by 2002:a17:903:1b63:b0:237:cc75:77a4 with SMTP id d9443c01a7336-23c6e6138edmr10213295ad.42.1751418489599;
+        Tue, 01 Jul 2025 18:08:09 -0700 (PDT)
+Received: from dev-phord.dev.purestorage.com ([208.88.159.128])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb2e258csm124433705ad.38.2025.07.01.18.08.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 01 Jul 2025 18:08:09 -0700 (PDT)
+From: Phil Hord <phil.hord@gmail.com>
+X-Google-Original-From: Phil Hord
+To: gitster@pobox.com
+Cc: peff@peff.net,
+	git@vger.kernel.org,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Phil Hord <phil.hord@gmail.com>
+Subject: [PATCH v3 0/2] fetch --prune performance problem
+Date: Tue,  1 Jul 2025 17:58:36 -0700
+Message-ID: <20250702005837.2813893-2-phil.hord@gmail.com>
+X-Mailer: git-send-email 2.50.0.149.g2f19833911.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1751309770.git.ayu.chandekar@gmail.com> <45c84a6615aa15f19b34b7f3d73a6e418c178427.1751309770.git.ayu.chandekar@gmail.com>
- <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
-In-Reply-To: <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Wed, 2 Jul 2025 05:23:12 +0530
-X-Gm-Features: Ac12FXzMFxOrM3fdkNXSW2MG3z8_9sFJsSKI3N-AmhmmgrDEgYtZ-Su5r2VhMhg
-Message-ID: <CAE7as+YeTuQh_BzZSLuVTimrddp5-OBtpMa81KFhd+3zDqDiMg@mail.gmail.com>
-Subject: Re: [GSOC PATCH v5 3/3] environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
-To: phillip.wood@dunelm.org.uk
-Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
-	gitster@pobox.com, ps@pks.im, ben.knoble@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jul 1, 2025 at 6:48=E2=80=AFPM Phillip Wood <phillip.wood123@gmail.=
-com> wrote:
->
-> Hi Ayush
+From: Phil Hord <phil.hord@gmail.com>
 
-Hi Phillip,
+`git fetch --prune` runs in O(N^2) time normally. This happens because the code
+iterates over each ref to be pruned to display its status. In a repo with
+174,000 refs, where I was pruning 15,000 refs, the current code made 2.6 billion
+calls to strcmp and consumed 470 seconds of CPU. After this change, the same
+operation completes in under 1 second.
 
->
-> On 30/06/2025 20:27, Ayush Chandekar wrote:
-> >
-> >   void clear_skip_worktree_from_present_files(struct index_state *istat=
-e)
-> >   {
-> > +     int sparse_expect_files_outside_of_patterns =3D 0;
-> > +     repo_config_get_bool(istate->repo, "sparse.expectfilesoutsideofpa=
-tterns",
-> > +             &sparse_expect_files_outside_of_patterns);
->
-> This changes the user facing behavior if
-> sparse.expectfilesoutsideofpatterns is not a valid boolean value.
-> Currently git will error out when it first starts because that config
-> value is parsed by git_default_config() which is called by almost all
-> git commands. This means that if someone sets an invalid value they get
-> timely feedback that the value is invalid and git dies before doing
-> anything. Now, if the value is invalid, git will only die if this
-> function is called and it is likely to die in the middle of a command.
->
-> Thanks
->
-> Phillip
->
+The loop looks like this:
 
-Yes, I get your point. However, if we look at settings which are
-shifted to `struct repo_settings`, the behaviour is to set a
-fallback/default value in case of an invalid input, instead of
-throwing an error. This is done inside the `prepare_repo_settings()`
-function, which is often called in the middle of a process.
+    for p in prune_refs { for ref in all_refs { if p == ref { ... }}}
 
-Thanks
+That loop runs only to check for and report newly dangling refs. A workaround to
+avoid this slowness is to run with `-q` to bypass this check.
 
-Ayush:)
+There is similar check/report functionality in `git remote prune`, but it uses a
+more efficient method to check for dangling refs. prune_refs is first sorted, so
+it can be searched in O(logN), so this loop is O(N*logN).
+
+    for ref in all_refs { if ref in prune_refs { ... }}
+
+We can use that function instead, with some minor cleanup to the output to deal
+with the ordering being changed.
+
+This patch version only adds the deleted branch name to the output of the dangling
+sym refs since the ordering has changed. This is only a minor cleanup and was
+not actually needed since, for example, `git origin prune` already did not
+mind losing track of this information in its output. But now it is improved
+to be more explicit.
+
+This version (V3) has three changes from V2:
+ - Removes a header declaration I forgot to move previously
+ - Cleans up the refs_warn_dangling_symrefs API to be more sane
+ - Drops the ref shortening that seems ill-advised in retrospect
+
+Phil Hord (2):
+  refs: remove old refs_warn_dangling_symref
+  clean up interface for refs_warn_dangling_symrefs
+
+ builtin/fetch.c  |  5 +----
+ builtin/remote.c |  5 +----
+ refs.c           | 34 ++++++++++++----------------------
+ refs.h           |  5 ++---
+ 4 files changed, 16 insertions(+), 33 deletions(-)
+
+-- 
+2.50.0.149.g2f19833911.dirty
+
