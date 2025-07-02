@@ -1,139 +1,230 @@
-Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8157D1EEA5F
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 16:53:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A7D2F50A6
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 17:03:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751475233; cv=none; b=cfEFRZpvEGozOt6mY9kX7fYylhC08VanY1BcX01Ebxdn+tzLSKHjrwHvtAY1nIrwLUymYxtoAAYWWck/0lqulS5oBZLM0maR5wRB6JC8MqillMDDag6/oM6pi6XUmYzWRMf7VyogKAIbCCVzP17Uy5/IzHPSSVXhTinVqWM1VKI=
+	t=1751475809; cv=none; b=kqnydCA7HJ+nLz8qXKVVR4H5gUzoejydbjmVtnlLFebxLrZmTMFMVCR0dCRzvh5Sf2bKT7FqzUCH+O9Vnsp0Ddo7Ntwrx3J1OPpf4vpA0iokFdH/HVHwpOM/PooEc+Q0PjxoELbK4NQcr4tJFxM1WEX/4DjKMWAeOg5x7AjUU9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751475233; c=relaxed/simple;
-	bh=e2Y2BCs53AqZrxV/O/vTJV8BGCC2hH8Ik9jR0Ou4Wb4=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=qD1DO3jiU6vkgGxKmNaKGPQlxXW4c9lk+wwnffUIGUZdoiYRa30B/XC6d5XkbGXBfHGHBPwTmNqBn8r7uHwfHN9Jceul2StBcfD2/yK/pDTNDE0ou3qJgOpRsEDXUEcWArcTEI+rQytYWkWtC3XUtB9NTX9zMRNZ7khTaHshwoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UklGHMXx; arc=none smtp.client-ip=209.85.128.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751475809; c=relaxed/simple;
+	bh=b37CgHorxj/l3tO+upOvaF1XI1zWjVvKx4XPYRbilF4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gx0wNcgy2A8docvQ+7lWiRS8UmFb4EPAusjHhtpt/kScegz6DVk14QU+jyBppEyqt0skKx6BvSmoa37VbmaMQIqNgp+bODdL5+RX1hL+lLtPyWUUH7KpCG1++ffUflc20UXkdhQH4ofY7QrjJQNrmKzwUsU+y5qGNcnaOCwfjVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PBc/aiSw; arc=none smtp.client-ip=209.85.210.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UklGHMXx"
-Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-708d90aa8f9so72932127b3.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 09:53:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PBc/aiSw"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-74931666cbcso6991716b3a.0
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 10:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751475230; x=1752080030; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1751475807; x=1752080607; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=Fbd0B6wk/D+4XRRSrt3BosvMLR52NPRBMoAE+2k90A0=;
-        b=UklGHMXxBQPsOpkGfnn1vujC6CqMNnL5J6dtkds6FgPiL48d9Lh6BkhUQQtxXmk7kt
-         dbP51CxbqvJrdrZphAcRRkUc+HLoCOcACxvWzLGdBmsdE7NrttbV+v+0iC4g/JTGTbhE
-         yfMB7pOnmBATe2ao1y0vjE43ACx3D/HqHqMd0obUZomOyBKCSd8wwgP2/7nlTq8xxW41
-         31Ku5FXSsdwAVc11U5ptPcoNzTjv0Dki/cQfrvlJtUxRd4n2EMwAMZmZBmODi3OeV9RD
-         5Y+qPEtKmCQyR8Xt1nSdPSx4OLd/irwxjXbiPOZJmwsPQoNvvrHTzbc/kY9la9SfLgal
-         lUbQ==
+        bh=0EMcPETypQP4o0yTXwbOpw2ljPKi0r4TPBGMX7hpllo=;
+        b=PBc/aiSw1xxlzpSlggvUenVOC6hI0lHPSUHfcpwqQ9fUloDUtkat4FG1KgZFpjRz6v
+         eBwvs2dq/7WJ/pBt5UkayKv9+z93k06wChHdrHE+NLHox5ItrsnnI4vA3QZQYgTps7rk
+         lpuu/X0bOqoHG+B6Z6rqN3cdsDWjt86RtdXYSmCNhtIR25sUZW7VTu64sEmJ+4NR8Cxz
+         015lHN24vMpIwsqPiXdS35yaNGcM8I9iDhSrFYZPwn72yIjn7YYTpS0m+3NiKEOvOUNQ
+         O5txbhTc1AZhechafq+QieDoNP/+uS/XFJxkXgV/tLIQMyY0MvE7h+8+WA7u76vwAoMl
+         y8KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751475230; x=1752080030;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Fbd0B6wk/D+4XRRSrt3BosvMLR52NPRBMoAE+2k90A0=;
-        b=TuDJ7yjE+M6jVfM9n6LdD+9pFpD9RqGOacGaophZp+I0SsukOeJH4L15oNmTdIPoGO
-         HxnbcKfLAfWKaRMg217PXVxVoek20P2+s8RF/DxfxOSvFXo/c+3n+bvUyZcTw01afSi9
-         wWURUrPzF/SX9kf4pRSzHuafXWDCp3vSJrXjBAku0uyVhbVohpxaCwoD0imYn6ka3PsF
-         dISWafQm1/DICnWa7lpU1oCsKm5oH2EhqlUmQw6wisZ9TV3/lKoyxr3kbfaDWARmmhtX
-         cgVgXPxxOr2buLxAcGlZ7CV56Ze40ri8I575l9KF/mTz1c1DmHcAoOAVxriwpxSeoPj4
-         6MrA==
-X-Forwarded-Encrypted: i=1; AJvYcCWvrc/Hn0RJQV7Fg+z7IqlnKWCboThsVvpEXNrCshxm6YWtho2n2rcaLoDIfKmsHv17qSU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxaJnguDhFQd0FcAuvC0M0R5wh8xQTCIy5eUVCfUiq+oKxDdfeY
-	9dPC6v+A5aQh/eMI7+A/PMO3F4KemopA/vqct2CHlLoGleUfk4RDNHsLrxzXqTS7
-X-Gm-Gg: ASbGnctmc9OB7TlNAv/bGWd9P22tgtwP28vWs874aHGBlpWyyPNiJ1Pz/f0VEe0z7qo
-	QgftkVtMz6O37tC7tlhpclFWy7QAAocxr3a0g4fCwewZlmC1Q66NSg7JNXAopXuP57MuRIO44jx
-	YcSVKbfMxPtgE7pAke9NGS9sHim/pxWv/V2FZ1qoqq+gkgkHwA1xGum3IpAAo4xpds4685hkK+d
-	/F8Rq3nuJZlt+bNot28eUEnH5LaNUswLFCIkq6rkaNstsSQ2xyu4juipFBS7v2mhvg++uDHz/AS
-	VwobGHkR4OcJhRRapJX5fWnDRALMCbxz4CMOsT/o6wUCIGDsBhbFtW49gL85vJ0Rwy88SUjA4Jg
-	sS7I5tSDp4jRd7n1XRGJpcWD8kg==
-X-Google-Smtp-Source: AGHT+IFXwC7LVkb/Bv/5dzkgytp83B1zYMy/0VNgFm0MMlwnhJTz3RYt1TdKFR5VXpltpLgkBq66SQ==
-X-Received: by 2002:a05:690c:3801:b0:70b:6651:b3e2 with SMTP id 00721157ae682-7164d303420mr55159597b3.6.1751475230514;
-        Wed, 02 Jul 2025 09:53:50 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a6:1600:1001:c7c7:8205:abde])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-71515cc3c37sm25180497b3.106.2025.07.02.09.53.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 02 Jul 2025 09:53:50 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1751475807; x=1752080607;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0EMcPETypQP4o0yTXwbOpw2ljPKi0r4TPBGMX7hpllo=;
+        b=B7H9dez/kRrxpQPOEgvjEcJRnPKoW6TeLj6PexqOGPu4oJ6eD+YN6NPt36fyqJNrCH
+         YNebXpC7HrJymQawgscLdCNstlc1lfqwD722JRga01eDcLsKj0kjGIl/qMcLQ0rYW0VX
+         WXifrY6IpHPMlxv4m3gs/l/m4JEtuHtI+frN4ylYz+v31eETWoIuKp6bMYGmiXXU6Upr
+         PuFvinbvqEQSPkp0Zei1BTrjIAM/FlgtNcXMJr7WdFzEJYAequW5cTtuJSnKjagxOrq3
+         wL39cunAdFRkT7+2nbmHgojGS0niXnVQjBzWOvOZbgarUeTo2zUMJ1HI9hcQBIuukIPJ
+         VaYA==
+X-Gm-Message-State: AOJu0YyJlFOBSacTvfZoE6yRVgn+134nh3B0YXnRnwPWssq90YZvBqtI
+	Anro9jYdUegucVEkUegxAK+1T3K4HIh6qaiIooF/fUYB8TIlc2Nr1aR1W+Q9dA==
+X-Gm-Gg: ASbGnctnjHvtB9OtgQHs14QekF0iZuDL+32svkmNYfaNMY5H6C2tsBYSMpHTku/mWGw
+	RWTM9Ley36v7+xz9cRcapZlDUXVa+k06yGS/+K5GPnDSCiCPqMc7hO1EEovja6ru30Jh4LMzLDy
+	FaBca7/Eh7MRmeZidaF7D84BIQdKPGa0+r96jo56fW34Z1qIEyGBSjgYLse6fneXjQ7QeL2SM94
+	CRCilDW8d8Gq32C8hXhsnLLFnM/ZThfe1lK067g5ns4L7T4+mdALr639lWLEFale+673au9zTbt
+	+3H9e25Aaje3dl7t66iOgGnJQU1zpO7n0up6Ampf7sFoEECBvTK8JNaZYHa+WmF4sLijUt5CouF
+	Vbof57kpWuk4H4RNTqCQIIPc0Y+fJXXOVRjyVuA==
+X-Google-Smtp-Source: AGHT+IFqtZSNBoyqC/uKfYeGnpemurbD64TnHHECL8m5JYPN2QrS49q21u5Hmdjx+A/oa6W6XGhA0Q==
+X-Received: by 2002:a05:6a20:158b:b0:203:ca66:e30 with SMTP id adf61e73a8af0-222d7f2c63fmr6606957637.37.1751475806355;
+        Wed, 02 Jul 2025 10:03:26 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74af5409895sm14646768b3a.7.2025.07.02.10.03.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 10:03:25 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Karthik Nayak <karthik.188@gmail.com>,  K Jayatheerth
+ <jayatheerthkulkarni2005@gmail.com>,  ryenus@gmail.com
+Subject: Re: [PATCH 1/2] BreakingChanges: announce switch to "reftable" format
+In-Reply-To: <20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
+	(Patrick Steinhardt's message of "Wed, 02 Jul 2025 12:14:21 +0200")
+References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
+	<20250702-pks-reftable-default-backend-v1-1-84dbaddafb50@pks.im>
+Date: Wed, 02 Jul 2025 10:03:25 -0700
+Message-ID: <xmqqbjq2ed9e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [GSOC PATCH v2 2/2] builtin/prune: stop depending on 'the_repository'
-Date: Wed, 2 Jul 2025 12:53:39 -0400
-Message-Id: <3CBFE196-1666-497D-B92E-5272736E8B94@gmail.com>
-References: <CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,
- Ayush Chandekar <ayu.chandekar@gmail.com>,
- Junio C Hamano <gitster@pobox.com>, christian.couder@gmail.com,
- git@vger.kernel.org, shyamthakkar001@gmail.com, shejialuo@gmail.com
-In-Reply-To: <CAPSxiM9ahAPEr5fj_A1RpgYjJQmv9kZ2jYfR2Knat5yHZNDkEA@mail.gmail.com>
-To: Usman Akinyemi <usmanakinyemi202@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Le 2 juil. 2025 =C3=A0 07:18, Usman Akinyemi <usmanakinyemi202@gmail.com> a=
- =C3=A9crit :
->=20
-> =EF=BB=BFOn Wed, Jul 2, 2025 at 4:17=E2=80=AFPM Patrick Steinhardt <ps@pks=
-.im> wrote:
->>=20
->>> On Tue, Jul 01, 2025 at 11:39:48PM +0530, Ayush Chandekar wrote:
->>> On Tue, Jul 1, 2025 at 10:12=E2=80=AFPM Junio C Hamano <gitster@pobox.co=
-m> wrote:
->>>>=20
->>>> Patrick Steinhardt <ps@pks.im> writes:
->>>>=20
->>>>> On Mon, Jun 30, 2025 at 10:11:05PM +0530, Ayush Chandekar wrote:
->>>>>> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
->>>>>>     expire =3D TIME_MAX;
->>>>>>     save_commit_buffer =3D 0;
->>>>>>     disable_replace_refs();
->>>>>> -    repo_init_revisions(the_repository, &revs, prefix);
->>>>>> +    repo_init_revisions(repo, &revs, prefix);
->>>>>=20
->>>>> Does this work correctly when running outside of a repository? In
->>>>> general `cmd_prune()` is not executed and would instead die as it is
->>>>> declared as `RUN_SETUP`, without the `_GENTLY` suffix. But when the us=
-er
->>>>> asks for help we may still execute the function with a NULL pointer.
->>>>=20
->>>> Good eyes.  "git prune -h" would safely exit in parse_options() in
->>>> such a case, but this part happens before the parse_options() call.
->>>>=20
->>>=20
->>> Thanks for pointing that out, Patrick. Right now, `parse_options()` is
->>> called just after the `repo_init_revisions()`. I can move the call to
->>> it before this.
->>>=20
->>> Although when I tried running "git prune -h", it still gave me the
->>> expected output.
->>=20
->> Well, as long as it works and as long as we have a test somewhere that
->> ensures it keeps working I'm happy.
-> To add to the testing part, I noticed that there is no test for
-> checking "git prune -h".
->=20
-> You(Ayush) can add that in "t/t1517-outside-repo.sh" there is a
-> similar test for that also in the file.
-> "test_expect_success 'update-server-info does not crash with -h" You
-> can check it out.
+> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
+> index c6bd94986c5..c96b5319cdd 100644
+> --- a/Documentation/BreakingChanges.adoc
+> +++ b/Documentation/BreakingChanges.adoc
+> @@ -118,6 +118,45 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
+>  <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
+>  <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
+>  
+> +* The default storage format for references in newly created repositories will
+> +  be changed from "files" to "reftable". The "reftable" format provides
+> +  multiple advantages over the "files" format:
+> ++
+> +  ** It is impossible to store two references that only differ in casing on
+> ...
+> +  ** Writing many references at once is slow with the "files" backend because
+> +     every reference is created as a separate file. The "reftable" backend
+> +     significantly outperforms the "files" backend by multiple orders of
+> +     magnitude.
 
-Aha, TIL! I=E2=80=99ve been working on an (unpublished) series to make help-=
-all work outside repos, too, and I am going to add tests. This will be a nic=
-e place.=20
+These list benefits of using "reftable".  Can we also add one point
+that stresses why we want to make it the default?  Something like
+"Having to do X once per user to make them opt-in is too cumbersome"
+is probably good enough.
 
->=20
-> Usman
->>=20
->> Patrick
->>=20
->=20
+> +A prerequisite for this change is that the ecosystem is ready to support the
+> +"reftable" format. Most importantly, alternative implementations of Git like
+> +JGit, libgit2 and Gitoxide need to support it.
+
+... in order for them to access the same repository.
+
+How common is it to use a single repository from these multiple
+implementations these days, I have to wonder?
+
+> diff --git a/setup.c b/setup.c
+> index f93bd6a24a5..3ab0f11fbfd 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -2541,6 +2541,12 @@ static void repository_format_configure(struct repository_format *repo_fmt,
+>  			repo_fmt->ref_storage_format = ref_format;
+>  	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
+>  		repo_fmt->ref_storage_format = cfg.ref_format;
+> +	} else {
+> +#ifdef WITH_BREAKING_CHANGES
+> +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_REFTABLE;
+> +#else
+> +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_FILES;
+> +#endif
+>  	}
+>  	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
+>  }
+
+That's obvious one.  I think the approach taken by brian's SHA-256
+topic would have introduced REF_STORAGE_FORMAT_DEFAULT and did the
+build-time switching between the two in a single conditional
+definition
+
+        #ifndef WITH_BREAKING_CHANGES /* 3.0 */
+        # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_FILES
+        #else
+        # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_REFTABLE
+        #endif
+
+somewhere in a header file.  Either way would work, but I wonder if
+these breaking-changes definitions are collected together into a
+single header file (say <bc.h>), it may make the transition at 3.0
+version boundary simpler and less error-prone.  We can just discard
+selected conditionals into unconditional definition more easily.
+For example if we moved the default flip between SHA-1 and SHA-256,
+i.e.
+
+	#ifndef WITH_BREAKING_CHANGES /* 3.0 */
+	# define GIT_HASH_DEFAULT GIT_HASH_SHA1
+	#else
+	# define GIT_HASH_DEFAULT GIT_HASH_SHA256
+	#endif
+
+out of hash.h and have it next to the above REF_STORAGE_FORMAT_DEFAULT
+definition, and then in a subsystem specific header file, after
+including <bc.h>, can say
+
+	=== In hash.h ===
+	#include <bc.h>
+	#ifndef GIT_HASH_DEFAULT
+	# define GIT_HASH_DEFAULT GIT_HASH_SHA256
+	#endif
+
+	=== In refs.h ===
+	#include <bc.h>
+	#ifndef REF_STORAGE_FORMAT_DEFAULT
+        # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_REFTABLE
+	#endif
+
+If some reason making reftable backend the default when unspecified
+turns out to be a bit premature at 3.0 boundary while the world is
+ready for SHA-256 by default for new repositories, then we can tweak
+that single header file like so:
+
+        -#ifndef WITH_BREAKING_CHANGES /* 3.0 */
+        +#ifndef WITH_BREAKING_CHANGES /* 4.0? */
+         # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_FILES
+         #else
+         # define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_REFTABLE
+         #endif
+
+	-#ifndef WITH_BREAKING_CHANGES
+	-# define GIT_HASH_DEFAULT GIT_HASH_SHA1
+	-#else
+	-# define GIT_HASH_DEFAULT GIT_HASH_SHA256
+	-#endif
+
+and optionally change the "if default is not set, use 256" in <hash.h>
+to "unconditionally use 256 as the default", but forgetting to do so
+would not break anything, which makes the process less error prone.
+
+By doing something like this, we'll have a single place <bc.h> to
+see what are being planned, and we can "git log that-header-file" to
+see how our thinking has evolved over time.  Hopefully we do not
+have to keep too many entries in that file and can retire the
+conditionals as we plan ahead.
+
+> diff --git a/t/t0001-init.sh b/t/t0001-init.sh
+> index f11a40811f2..e0f27484192 100755
+> --- a/t/t0001-init.sh
+> +++ b/t/t0001-init.sh
+> @@ -658,6 +658,22 @@ test_expect_success 'init warns about invalid init.defaultRefFormat' '
+>  	test_cmp expected actual
+>  '
+>  
+> +test_expect_success 'default ref format' '
+> +	test_when_finished "rm -rf refformat" &&
+> +	(
+> +		sane_unset GIT_DEFAULT_REF_FORMAT &&
+> +		git init refformat
+> +	) &&
+> +	if test_have_prereq WITH_BREAKING_CHANGES
+> +	then
+> +		echo reftable >expect
+> +	else
+> +		echo files >expect
+> +	fi &&
+> +	git -C refformat rev-parse --show-ref-format >actual &&
+> +	test_cmp expect actual
+> +'
+
+Obvious ;-)
+
+Thanks.
