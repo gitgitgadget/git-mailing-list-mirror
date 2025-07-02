@@ -1,215 +1,105 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 680251519A6
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:13:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E51134CB
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 01:42:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751418815; cv=none; b=ko+A6zHtzQOCEmS0o22/1ERDlBKPr43AqHqb19G0J2Mub6AfShFhebjg2hlQzgek7fkeJjWdVKPRoQyHT60oL219TtIJ1UJ51zpeFeReq/5Qn9sWmhFRa3557Y1SrTnvmscmYJwefl/PxJdEwzZOrMI+K/ov6jP8S2qgISMIWHg=
+	t=1751420563; cv=none; b=oRJ0ODFWptFSmaYzeHWRUDocyI2nN8loWx7db0OVJTiz4mKEv1D86C4qm9BBH1tKvMMVt6qzON8N9jjfNyZkYp2XrG6xEfKyCWWZkJWugUm1ppxAmUdEsEWVJ+89LQDfk/R5KgEIfLFKAwCrq/6A2V5Bt3puoD67QuUqD+gzSr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751418815; c=relaxed/simple;
-	bh=CQGvVbGdJKFt/OsnQmtCP/UbDe80dlqx5Ag5ZR/R13U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PO+aQ00rUwQsRgwzVdL31aCKoq40c9tNUdVOeoMl/Or0SmGru0CeImaj7TioUqvKS7+o1E/3t2wo49xUBTSXm6JFav14JrQdH/lBMBbfC12ag4ovZm0jr6qVAbL4E8rUo5n4aYY0X2ohKrxFJBKqY2RhiQD8n3B6rJNNOyyh+ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=K675IIaP; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751420563; c=relaxed/simple;
+	bh=BkZi5wFZTxDyR76WohahlRDbpm/RmFCHo1dorqy7DPc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MMqYfvhhUf/VF6cLAdPpAmfkp5yM1PHK6mYb+Wa9TCDsO8w+t5x/W84Q7qUhLfQGnnWCHg/tJQEZPjPuxU3CkJ4szAE4Z5eIYh3OWemjP6JRyKZiB2dJLGQRzpqsDM5iI/YCZdqh8yQ0kvcfQZpGtqSS6r57t3jREqS8r7VMo5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P48BNz6I; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="K675IIaP"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-235ef62066eso78655945ad.3
-        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:13:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P48BNz6I"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2352400344aso59460695ad.2
+        for <git@vger.kernel.org>; Tue, 01 Jul 2025 18:42:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751418814; x=1752023614; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uuLY+89KRhlcNl4kC4hua+WSk4lTB7AaVC2Iq3sUZNA=;
-        b=K675IIaPHuPOMJL+nOueA9WlVhbnFJWZvYYxos3MXdIbKPiNZBka37pkg10RURoBNz
-         KcaQyghouR4F74xOaw+NAppNpYHvSkbjrsPFPd8Tqw3kN1BGoRGVxWDholaR0l9XjOtX
-         d7OePoAl3+mJ4Je9lqW0pnP4KAyNIZF3BeT/cTzSzFsL0SD/AUYZdLGW5SWhVFTFfoD1
-         RhaIu+baJxKf+1lBwp0yWBu075sEpfkCUFwmWnqVcgAbBZn0aGAHMFrlhKmU7ZGxZhr+
-         Wbq+bSp2/bwR+zeBcS9ar4AT9Jnq8y278c8+fUeIrDbL9FtZFWRXBSdp1NxkdUxJAL+2
-         37SA==
+        d=gmail.com; s=20230601; t=1751420562; x=1752025362; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+iPEByDjIGX/NAYhWIvIVNT7/P2mZmPrIYI0FQ4z1rg=;
+        b=P48BNz6I4O23eit/QBYt6Ei+toBSyRi9BPERCVjsBX7xzyeORH3UFQpUI9SI14pbyu
+         Zn+FcHRcdVjbfn9ge718uFHgmRNdKZsOPa39cMvnoofxa93GwBVd03StgyhdmQbZIE/t
+         VKdFScc6JuArZRe2r96SGkOMM4FnH08uvdtkN5QVljgfNqZUaW5dzlqrZ45zOXxsh/TN
+         XkS6mghhu6kgLh8FrfPPEhbBKhZv5RQSHBHS55rHqqcRiCWtcMvf0K7PVxL6jRgq9omx
+         hABDoAndf2wma1cubwAXcZrBvV0Z//dSoGXmqs2eNu7Zpl2BCqEHss4WtXxGEVj02aRZ
+         hHig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751418814; x=1752023614;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=uuLY+89KRhlcNl4kC4hua+WSk4lTB7AaVC2Iq3sUZNA=;
-        b=M3mY8wBA3+T+uJKFphiGIK9Ls4/b5Qx3E7BmT4asR+wUvL8QKYLoHiJxFLg9YH9FgR
-         4W2ELdsaQxw6/i69KpvXqlEL3Mgod9+J87hHndhyhvPJ1c4PJwmXV8AdlCyzUocfov+w
-         xoHkvnVhSGHzol2L6hQkddAJR+kG+R7ntzRNhwKvZg3dwjLbPVL6iFlWPC6UaZDw3XlT
-         YU4/MdPqAm1eiCqg2bkrl8fqG+6QQbsTGXDQWAR7SxCGo8RjdMClm1bfNR8xUz8RgVre
-         J2RGACE24X/gUiCWGb4tPhnSayeWRwikfcQHf6fkpZrezJjZ2yAPeBwcLC+lcY7aVw3g
-         TBAA==
-X-Forwarded-Encrypted: i=1; AJvYcCUD12tbSebw13JVmxMK9DRdNsESkUaFWM6evLya0xzGvgnuaynZ4OOkPPFzhu4rNshVovc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyR64XNf1BJ82OJbe/owT7ENzNTkoMM4ioXJNUVTeMyz1EbNzJk
-	4lbBo5/qqlNvXP0Z3awaDNSQR/LitGu6a55XcEg5Vv66t0zlC4yPZKmx
-X-Gm-Gg: ASbGncsvAZ3mF2sli8ziF2DV25SMALtyCdsv0GY0VL32/ffUyz1oP1esdYJibG5Mau2
-	nw58gVyTM3Ff0T73qtag3rvL5HyuLQDYgZ5KnV3o1TkFFOa0nnfKoXBlDIJDHADiUkRo7BDTB0O
-	UKk07/+64apWKt48I2jlfLuUXz/gDAtvx84r7oqaIvhg3x9VAqs+wLR90BoGBO7pqco7jOVwgvu
-	DbXbYVAskkJXyql2vpKuKgSCEdrBzjSR+u+ug/gQHt+kVR8FdMEoAZ0kv7MGgGzSPOPX9PainmM
-	FRHWetQF9eSdDqLa0IvcAAxB5jGpDG+x5I7X9HxO42lEQ8NiUKimL1lgjUc=
-X-Google-Smtp-Source: AGHT+IFB5p/pi1nj6hQW6qkKzoPrw3ui3/W3Qf5NcbP3+ry4G/H8cMgcn85zDDUs0wX9VeH7Ke4L0A==
-X-Received: by 2002:a17:903:19e7:b0:234:d292:be7a with SMTP id d9443c01a7336-23c6e4e4c8fmr11636785ad.1.1751418813601;
-        Tue, 01 Jul 2025 18:13:33 -0700 (PDT)
-Received: from dev-phord.dev.purestorage.com ([208.88.159.129])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb3af74fsm123208125ad.148.2025.07.01.18.13.32
+        d=1e100.net; s=20230601; t=1751420562; x=1752025362;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=+iPEByDjIGX/NAYhWIvIVNT7/P2mZmPrIYI0FQ4z1rg=;
+        b=KzamMcPmSxN/ZxVvFDtr7YHxXXd+n6Hp/n754Ajidjx21GNLH5jkXNL/GkLY0pqwD5
+         +QAUXHL+rezNIVJlweVDbnhuHKwVpJPXiyCBvfkiLqs3WqH0PTOCMXOXHsTrZYxxzw2S
+         EkAaebVyjx5npwt+BB97AbjWMlpIrjxX0hGinv/KsYlNlfjC8shburfKp9i7jUSzfeay
+         cyRh/jyw0+eMGRr5XhE5fQfNVp74KfRoQuTuVCdl01tDAZXwFNRpoYuKaHY51nn/e2I2
+         kxG/I717zPGs6Kr+soJ/5nqTH4Xqm7Ov7tC657uykRP/LAzZuQSVoTNnnVMJVW+5uFzB
+         yaWw==
+X-Forwarded-Encrypted: i=1; AJvYcCUrIOtEhrn7y3ch1qniZsWibo+AFwxT3KZwLP6ykfrQoVcQdRwvffEZ74fPqgeq93Vf87o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzwttpuF+BDVdVO36acKB9IVHVpkqK1YHfmDxpSx+wZzg+tVO9l
+	bSCtIoQLzyTqpcwckWQcZcfIroeJmMKTf4h3yjjovdcr2pxs50KNYIg6uaIvaA==
+X-Gm-Gg: ASbGncu89wdHWBIq++UdSbJO7cuSeJawXalhY+SmbJSID7Y4wgQr9Z4WnhOioEAZpRg
+	8ckbccDqL7PTTK5YXTnQW40fhs2TpGUgF6qKd3caIjylwwtAPK51X+Bh1jA3Pf3L73v6IhCbph+
+	brUNmQeEVEDBTxS2nmK1JGq8TiLueUKjUJckcD5y5hUllleZSYAleBm5/gLAZjFxvSO4gmxewjJ
+	caxOmrRiLMFptsSCygxvuLXZp/qxJ6vmdQMencoXGKCtFFZ188zBAO5G0I5O0FCAEOHXNinB7DA
+	Q1i0HEPv8Zzpj6tMYQraGR6lldBvj328lWRZhtkskhuvnsh2zxBjkvx0fc700/hyH1MsMuk/NAd
+	1/T0uFIxPafjajWmDB5LqwtxdxBo=
+X-Google-Smtp-Source: AGHT+IEwt/YqB0Ri5C4Me9lt2++53VtzHdGtyHHOcaa3Wbgk/bfj3TiK4LWI7WtPWEZgk4C7nF9Qpg==
+X-Received: by 2002:a17:902:fc4f:b0:235:e309:7dec with SMTP id d9443c01a7336-23c6e4ffac7mr11761595ad.26.1751420561692;
+        Tue, 01 Jul 2025 18:42:41 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23acb3c5a8csm118226315ad.223.2025.07.01.18.42.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 01 Jul 2025 18:13:33 -0700 (PDT)
-From: Phil Hord <phil.hord@gmail.com>
-X-Google-Original-From: Phil Hord
-To: gitster@pobox.com
-Cc: peff@peff.net,
-	git@vger.kernel.org,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Phil Hord <phil.hord@gmail.com>
-Subject: [PATCH v4 3/3] clean up interface for refs_warn_dangling_symrefs
-Date: Tue,  1 Jul 2025 18:12:15 -0700
-Message-ID: <20250702011214.2835529-5-phil.hord@gmail.com>
-X-Mailer: git-send-email 2.50.0.149.g1bab277d62
-In-Reply-To: <20250702011214.2835529-2-phil.hord@gmail.com>
-References: <20250702011214.2835529-2-phil.hord@gmail.com>
+        Tue, 01 Jul 2025 18:42:41 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Phil Hord <phil.hord@gmail.com>
+Cc: peff@peff.net,  git@vger.kernel.org,  Jacob Keller
+ <jacob.e.keller@intel.com>
+Subject: Re: [PATCH v3 0/2] fetch --prune performance problem
+In-Reply-To: <20250702005837.2813893-2-phil.hord@gmail.com> (Phil Hord's
+	message of "Tue, 1 Jul 2025 17:58:36 -0700")
+References: <20250702005837.2813893-2-phil.hord@gmail.com>
+Date: Tue, 01 Jul 2025 18:42:40 -0700
+Message-ID: <xmqqms9nfjvz.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Phil Hord <phil.hord@gmail.com>
+Phil Hord <phil.hord@gmail.com> writes:
 
-The refs_warn_dangling_symrefs interface is a bit fragile as it passes
-in printf-formatting strings with expectations about the number of
-arguments. This patch series made it worse by adding a 2nd positional
-argument. But there are only two call sites, and they both use almost
-identical display options.
+> This version (V3) has three changes from V2:
+>  - Removes a header declaration I forgot to move previously
+>  - Cleans up the refs_warn_dangling_symrefs API to be more sane
+>  - Drops the ref shortening that seems ill-advised in retrospect
+>
+> Phil Hord (2):
+>   refs: remove old refs_warn_dangling_symref
+>   clean up interface for refs_warn_dangling_symrefs
 
-Make this safer by moving the format strings into the function that uses
-them to make it easier to see when the arguments don't match. Pass a
-prefix string and a dry_run flag so the decision logic can be handled
-where needed.
+Hmph.  On top of which commit did you base these two patches?
+The second one does not apply on top of applying 1/2 on top of
+either v2.48.1 (where I queued the last round), v2.50.0 (the obvious
+choice for a new development), or 'master'.
 
-Signed-off-by: Phil Hord <phil.hord@gmail.com>
----
- builtin/fetch.c  |  5 +----
- builtin/remote.c |  5 +----
- refs.c           | 17 +++++++++++------
- refs.h           |  3 ++-
- 4 files changed, 15 insertions(+), 15 deletions(-)
+$ git am -s <patch-2-of-2.txt
+error: patch failed: builtin/fetch.c:1384
+error: builtin/fetch.c: patch does not apply
+error: patch failed: builtin/remote.c:1521
+error: builtin/remote.c: patch does not apply
+error: patch failed: refs.c:458
+error: refs.c: patch does not apply
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 04d10c9e781a..fc72f2119c56 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -1384,9 +1384,6 @@ static int prune_refs(struct display_state *display_state,
- 	struct ref *ref, *stale_refs = get_stale_heads(rs, ref_map);
- 	struct strbuf err = STRBUF_INIT;
- 	struct string_list refnames = STRING_LIST_INIT_NODUP;
--	const char *dangling_msg = dry_run
--		? _("   %s will become dangling after %s is deleted")
--		: _("   %s has become dangling after %s was deleted");
- 
- 	for (ref = stale_refs; ref; ref = ref->next)
- 		string_list_append(&refnames, ref->name);
-@@ -1417,7 +1414,7 @@ static int prune_refs(struct display_state *display_state,
- 		}
- 		string_list_sort(&refnames);
- 		refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
--					   stderr, dangling_msg, &refnames);
-+					   stderr, "   ", dry_run, &refnames);
- 	}
- 
- cleanup:
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 4de7dd373ae5..f672799e0d92 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1521,9 +1521,6 @@ static int prune_remote(const char *remote, int dry_run)
- 	struct ref_states states = REF_STATES_INIT;
- 	struct string_list refs_to_prune = STRING_LIST_INIT_NODUP;
- 	struct string_list_item *item;
--	const char *dangling_msg = dry_run
--		? _(" %s will become dangling after %s is deleted!")
--		: _(" %s has become dangling after %s was deleted!");
- 
- 	get_remote_ref_states(remote, &states, GET_REF_STATES);
- 
-@@ -1555,7 +1552,7 @@ static int prune_remote(const char *remote, int dry_run)
- 	}
- 
- 	refs_warn_dangling_symrefs(get_main_ref_store(the_repository),
--				   stdout, dangling_msg, &refs_to_prune);
-+				   stdout, " ", dry_run, &refs_to_prune);
- 
- 	string_list_clear(&refs_to_prune, 0);
- 	free_remote_ref_states(&states);
-diff --git a/refs.c b/refs.c
-index 07197c239e33..5602c18dbd5b 100644
---- a/refs.c
-+++ b/refs.c
-@@ -439,7 +439,8 @@ struct warn_if_dangling_data {
- 	struct ref_store *refs;
- 	FILE *fp;
- 	const struct string_list *refnames;
--	const char *msg_fmt;
-+	const char *indent;
-+	int dry_run;
- };
- 
- static int warn_if_dangling_symref(const char *refname, const char *referent UNUSED,
-@@ -447,7 +448,7 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
- 				   int flags, void *cb_data)
- {
- 	struct warn_if_dangling_data *d = cb_data;
--	const char *resolves_to;
-+	const char *resolves_to, *msg;
- 
- 	if (!(flags & REF_ISSYMREF))
- 		return 0;
-@@ -458,19 +459,23 @@ static int warn_if_dangling_symref(const char *refname, const char *referent UNU
- 		return 0;
- 	}
- 
--	fprintf(d->fp, d->msg_fmt, refname, resolves_to);
--	fputc('\n', d->fp);
-+	msg = d->dry_run
-+		? _("%s%s will become dangling after %s is deleted\n")
-+		: _("%s%s has become dangling after %s was deleted\n");
-+	fprintf(d->fp, msg, d->indent, refname, resolves_to);
- 	return 0;
- }
- 
- void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
--				const char *msg_fmt, const struct string_list *refnames)
-+				const char *indent, int dry_run,
-+				const struct string_list *refnames)
- {
- 	struct warn_if_dangling_data data = {
- 		.refs = refs,
- 		.fp = fp,
- 		.refnames = refnames,
--		.msg_fmt = msg_fmt,
-+		.indent = indent,
-+		.dry_run = dry_run,
- 	};
- 	refs_for_each_rawref(refs, warn_if_dangling_symref, &data);
- }
-diff --git a/refs.h b/refs.h
-index 07f21824d480..25bed4d792e7 100644
---- a/refs.h
-+++ b/refs.h
-@@ -453,7 +453,8 @@ static inline const char *has_glob_specials(const char *pattern)
- }
- 
- void refs_warn_dangling_symrefs(struct ref_store *refs, FILE *fp,
--				const char *msg_fmt, const struct string_list *refnames);
-+				const char *indent, int dry_run,
-+				const struct string_list *refnames);
- 
- /*
-  * Flags for controlling behaviour of pack_refs()
--- 
-2.50.0.149.g1bab277d62
-
+Thanks.
