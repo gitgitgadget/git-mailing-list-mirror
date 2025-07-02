@@ -1,126 +1,124 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610C02D7817
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 15:38:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147B02853EB
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 15:47:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751470682; cv=none; b=jcPpw1cAXJaf/4OR5QNspZD3BJZ6+6gPfNSkJmorgiQzgP+kwk0DOK1JNPDIjIHjawqdTJ2HYZAQrZHFRKw0JWdQlvSW7V7swYjQVxTW0qmspsWdc7kvLgudJce13BBkHpfPYXg+JiJHuxnu/OyXchwcCp2zsN7QfFZaGan7/AI=
+	t=1751471227; cv=none; b=RyVkybb7VguOONbJieJKqeI/0G413AayxKvy+nzyte8Ntq7wzG9nz5UBrrF1s6bfYFHyQn+Ufmw5keHDYuaZzO/1sK9diwVOVRxUnrppDfdkNjbrFT8k16tXJok54S3Zirqg0c/viM+fB4+LN8fzZzSuc8SDU+ZQR7tTOYt7R/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751470682; c=relaxed/simple;
-	bh=Xu0Wlrlaaq/gIsvkb9rJqgqpPXv6G/mkhUZtQ/4Avw0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AeUyCLzVhMSnxMSI/+ma0zwld6bHKulWuo+qhyI7wL2jdbr2oUxUnxfwOES7p5HjsedFOhaVQreWxwVQbSRO1koMB8BMJElgEr82WsDvm/0HY4aElgQ6xsb54xJRVdKQ9qr2m3qJEMjxtRo9fX6wPJDA9jFQZ//39j8umbSYfRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UvSohdIH; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+	s=arc-20240116; t=1751471227; c=relaxed/simple;
+	bh=6Y32wk6Ve9Z6kbRjH+6VD5rbHv3NtI2zoh4io/DIevs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Jq46z8u+/A0q6gtLGc7UXsGisrlmd5TUK8sRpa8ywo4QxW363xo2ShC+I6H7YvsPRMby2M0uC3uStjZAI20HlFTnXMkMXderK92mCtTMmjiD2M7C4V4PnWHOJFoBNqKyKVlGx9qq+L0FQ6tAxbf+/C0SQ0kX1Tlx+cPGoE39vlU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eRH/Oe0I; arc=none smtp.client-ip=209.85.210.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UvSohdIH"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b34a6d0c9a3so4869189a12.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 08:38:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eRH/Oe0I"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-74af4af04fdso42645b3a.1
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 08:47:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751470679; x=1752075479; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=AqofYmwvQMIcYsDfjw/1WU4WvMcNXgVK2Yin3IGaRG8=;
-        b=UvSohdIHcQ1VoCR6RhWzKOM7n0J5qr3isDuQOZlu5iKcJWECTrRQ3Kp18t03ta7CiN
-         xhT9RHNgdLdgwscac1s1gySMR92BO2I2eaVpruO/SZ22ndENIGTiNES7SP62HXLfNP4b
-         D413vr+Kzp9LjZ+0f44UuN2AXTHnVpSC9TCnKaLZ1tkatw6RLeuj5oW72jRzuTRTLJQm
-         XTpkGFGJlTs/MLAcaKAMB7xIoGrjzeY0amzOauP9ZHvjnJcFr113YcJLaDKDTCR13sdq
-         eebclFgzXeOsAaMxNCx2ugjfEQddcfwqrdg+k9m1lZrY8QFY8xsYC90XX5gz1Ym0omFg
-         aIWg==
+        d=gmail.com; s=20230601; t=1751471225; x=1752076025; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pAPcALZMlCbSybxxhOUzJlgiON0AKJN6EZu3eUb18jc=;
+        b=eRH/Oe0Io/9uc8rYoyJYenes2Ckf9iSbIi0E5IVXj7LH+SifrkGu7JY6Vgxi4uTy5b
+         mjH5swdJwgNQRpXXZHH+jQhzue3EIRElUAUTG5SO7k8O3f7Qu2Djv6T47g0yiB+nEsyl
+         PZWbvaa28qB/5kLkXsop/iCXMGP3dFMa47jIvjuBMgXgAon6Myt52uMI7IfJKLkryQhs
+         Z/X4GmMtCS9FAizVKlXwy3fEFevpxRJMmm6lEFUGlOf3ZVorq1vJ1QuJ+ZqVraR55Ool
+         gvYUnNwLngahjBtPrbhDn4bGxjQTVapeWXjPX/47Mil0UlJ4ZpjiNT4JZDYV4YnWAZiS
+         sPDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751470679; x=1752075479;
-        h=content-transfer-encoding:mime-version:user-agent:message-id:date
-         :references:in-reply-to:subject:cc:to:from:sender:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=AqofYmwvQMIcYsDfjw/1WU4WvMcNXgVK2Yin3IGaRG8=;
-        b=MbR5DmHxCc6898vnMCC9L2NFWCnCWPwqTN9AJFt9k1f6LcxMmLVz3H5aAss2c9lOJB
-         f/AsTLaPDjqQQYBxkU/gKf/L0ll8pan05LfrVssVA9O1N0yqaIjRHRMv40jVdiiVc5PO
-         UTU9sWXSn1euT5c3VKXNMzpCHUM9YloiMUkkNzILpz95jqpWh/EgZ4EHYCsHLEt5Fot0
-         +S/0Tms/R9Q0QPyDIsEss0sbHjHrLrXQYQwW/qEJ09oWuW/BxtWb5W1F9APLrRWbKcWt
-         GYXpkLkk7EW94NB4vySNk2kx7lfXFPN+RJWErLvQYcbJwUixrZk7ztT6WRv6H38usIIy
-         P6JQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUL4CQ7G1q2Y/hrxOsQc4y9DR1v7MwLtiDzH0S2IQHKIggh17bN5ZkLlIw8m7newp+EFFc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxwgefOmyNaj1S/GwYJFegFHi2tvY48zsWGsW8/hlZ9YBJgFjTc
-	YgEAVNGs580b1vgrYkpUPHdcuOvJNsu2ld5iFnFSOcRrKjE9eJm51GkyRhPmeQ==
-X-Gm-Gg: ASbGnct6F+rMn7wUDIONFUXvbmxYXRmd2JNxXyYszSV9mkIqbc8WB78DfryZ89l0qcR
-	J2wRcGMFA62Y5VMQwomxHk0Z2uK4oada6RgjvUtVeXc4WF1sZ1AOgHzQav+cbcoPI/4w0BCCYwp
-	ZnAOKkliiYa5133o34EZzGnfQcGOkuTrm2UwBTmSQN8icRM3+fm50c9Rve58F5ubmhg6wStLM2D
-	BuM7LGGGqteRV43aJrzsas0Y/aQOXd13aut++RwTK4DK3p0c318oPeGkg2daaMvVW6jTDnTD27l
-	QBvz+DwDl3TF7s0kA+DwYyj3gn9meVIC4d91Gc0M9K2MRSpL2a9d5VJ3tWTYTCqfTTwt7J8KPNt
-	vezXDGh0YM0mnyesjSC3I8oOaICg=
-X-Google-Smtp-Source: AGHT+IEqVAwo4Rw89oQVic6+th86VRucFKOTPlrzDKiiuX8kNvpUfaZ7z4RZRwIBYSJJf0OjaFm3eA==
-X-Received: by 2002:a17:90b:1847:b0:312:1d2d:18e2 with SMTP id 98e67ed59e1d1-31a90bddbcemr5152257a91.20.1751470679551;
-        Wed, 02 Jul 2025 08:37:59 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31a9cc4a4dbsm121518a91.10.2025.07.02.08.37.58
+        d=1e100.net; s=20230601; t=1751471225; x=1752076025;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=pAPcALZMlCbSybxxhOUzJlgiON0AKJN6EZu3eUb18jc=;
+        b=UiXhDdZoLAfqAxjO97HgDbOgFBGYDzvyt5X4vtRDEaDgPqyjfPnn5BwvD/qgiVjBFX
+         3hGaVenFZiAf6+tdVfEZ15Yg4GNNaCFNPlW8GHIOWFFqt/DTz8lfQ7RwBqpQoKFPm8dm
+         ybtEfmpR43MfD5RIpP90RNKmqZ4JfnOg4Ag0EyC0fXH+9mYCDqpnYpjug2BCku7JlHpX
+         G0fdF3I5gYNcb9V3FLaQP+Bnrla+JiO5YWBCNZafQ5ywU303a8sR/feCi7oWCaHO2upp
+         mNIKvFErbqG7iK4lqII7blyKyeTF5t6dHW1dJhZ+gvcIKpT24xUQmWus3dAOZrDP1wQ6
+         GXkQ==
+X-Gm-Message-State: AOJu0Yw6YwBFExlFMsPHnqbYVyfLIIs4TCqWRro/cxnlJVFfMU3rTElc
+	N1W2FllMmDAaxjCZOpMceSj+VFFKRSE/3aumhGirtwII1SvavO1lLvoTmA9Xng==
+X-Gm-Gg: ASbGncu4NrOmIBaNzda/A7C5X7cqw3OTH+Dg6/yxq7AdknrDJ2cYHHOEq4IYSc4HJz/
+	OvabjxMuAMCsSZ8WmTxin206smugzaHFttqWwzgaI3XBjf3bHsKxPsiKsXujxw7RG+oKcJoIzPr
+	Pky6C0wgJTj6PipVLwjIWGf9qahm0MAjAG0agI/9JhJ6kB0BbqsRsaKsTwDlEEMzW3/Nt8p0FGd
+	pw1gemywIlXCMd1TFpgP20wdn8J56HZsShf2SBCiKL5g4sfEiV/qnIB0djs10lcNjtD+QgrGNPR
+	zi/qle2/Jdg/ph5SPlg6HK/rL2VGhbW0ccnQmwkHsfz94japlW7htajIntrUov/g9OOFl6YZ+FB
+	+E2MQHDN4Wz4MVIfrE4eHenBZz6E=
+X-Google-Smtp-Source: AGHT+IFvk9JhFZ7w/t6ekDB8xeCfByjbn2Cp+Ni6bM/NRjVECdIq/ghtynCaLm6W3hkvYRcqLsR3xw==
+X-Received: by 2002:a05:6a21:33a4:b0:220:3804:f3d6 with SMTP id adf61e73a8af0-2241173a4c6mr80000637.2.1751471224625;
+        Wed, 02 Jul 2025 08:47:04 -0700 (PDT)
+Received: from localhost.localdomain ([2601:640:8e80:3680:8123:5123:76e8:a897])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b34e300a40dsm13334428a12.10.2025.07.02.08.47.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 08:37:58 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Torek <chris.torek@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Karthik Nayak
- <karthik.188@gmail.com>,  K Jayatheerth
- <jayatheerthkulkarni2005@gmail.com>,  ryenus@gmail.com,
-  git@vger.kernel.org
-Subject: Re: Re [bug] pull --prune could not delete references due to lock
- file already exists error
-In-Reply-To: <CAPx1Gveenh075k5W-KAKnyJKfdzMNL0iry-043mLB8rKZ_2wuQ@mail.gmail.com>
-	(Chris Torek's message of "Tue, 1 Jul 2025 21:50:37 -0700")
-References: <CAKkAvaw0sZ0sW9o_0NZdnZknS8M34UST3PetaPBQj5wwvJyjBA@mail.gmail.com>
-	<20250625141849.78834-1-jayatheerthkulkarni2005@gmail.com>
-	<CAOLa=ZSA273KGPnwZ2aRBU_ybcCTYogBHvUwpa+5CfDOc2bEWg@mail.gmail.com>
-	<aGKdICvmKlumU0ru@fruit.crustytoothpaste.net>
-	<CAPx1Gveenh075k5W-KAKnyJKfdzMNL0iry-043mLB8rKZ_2wuQ@mail.gmail.com>
-Date: Wed, 02 Jul 2025 08:37:58 -0700
-Message-ID: <xmqq5xgafvs9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        Wed, 02 Jul 2025 08:47:04 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: pclouds@gmail.com,
+	brad@comstyle.com,
+	collin.funk1@gmail.com,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH v2] builtin/gc: protect against sysctl() failure in total_ram
+Date: Wed,  2 Jul 2025 08:46:49 -0700
+Message-ID: <20250702154649.44210-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.50.0.147.gafe0d4ec5b
+In-Reply-To: <20250702144244.43858-1-carenas@gmail.com>
+References: <20250702144244.43858-1-carenas@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Chris Torek <chris.torek@gmail.com> writes:
+In the unlikely scenario that sysctl() fails, and uninitialized
+value could be returned.
 
-> On Mon, Jun 30, 2025 at 7:21 AM brian m. carlson
-> <sandals@crustytoothpaste.net> wrote:
-> [regarding]
->> > +                             if (ignore_case && prev && !strcasecmp(ref->next, prev))
->> This won't work in the general case, since the two refs that match case
->> insensitively aren't guaranteed to be adjacent.
->
-> Also worth mention: it's not just case-folding that matters.
->
-> On OS X (Macs), path names get "normalized" so that the names
->
->    s c h combining-umlaut o n
->
-> and
->
->    s c h umlaut-o n
->
-> refer to the *same* file or directory. On a typical Linux/Unix FS, they differ.
->
-> (I don't know what Windows does!)
->
-> So, if you have a "folder-full" of "pretty" German refnames, some
-> spelled one way and some another, well...
->
-> (It's not clear to me what, if anything, Git should attempt to do here.)
+Initialize the variable used and make sure its expected size
+was correct before using it.
 
-The system supplied argv[] is fed to the precompose_argv_prefix()
-helper in compat/precompose_utf8.c; opendir/readdir/closedir are
-also wrapped with similar NFD/NFC normalization (really, UTF-8-MAC
-vs UTF-8) helpers defined in the same file.  So the path you read
-(via the opendir/readdir like dir.c does) from the system, or the
-path you are fed from the command line (via argv[]), are normalized
-before code in Git above the compat layer even sees them.  The path
-recoreded in various mechanisms in Git like the index and the tree
-objects are all normalized.
+While at it, add a cast for consistency.
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+V1 would regress FreeBSD, so instead make sure that the obsoleted name isn't
+used in OpenBSD/NetBSD instead
+
+ builtin/gc.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 845876ff02..3958707feb 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -539,7 +539,7 @@ static uint64_t total_ram(void)
+ 		return total;
+ 	}
+ #elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM) || defined(HW_PHYSMEM64))
+-	int64_t physical_memory;
++	int64_t physical_memory = 0;
+ 	int mib[2];
+ 	size_t length;
+ 
+@@ -552,8 +552,9 @@ static uint64_t total_ram(void)
+ 	mib[1] = HW_PHYSMEM;
+ # endif
+ 	length = sizeof(int64_t);
+-	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
+-		return physical_memory;
++	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0) &&
++	    length == sizeof(int64_t))
++		return (uint64_t)physical_memory;
+ #elif defined(GIT_WINDOWS_NATIVE)
+ 	MEMORYSTATUSEX memInfo;
+ 
+-- 
+2.50.0.147.gafe0d4ec5b
 
