@@ -1,133 +1,111 @@
-Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
+Received: from mail-vs1-f46.google.com (mail-vs1-f46.google.com [209.85.217.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB512459FF
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 09:23:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A04B245032
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 09:25:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751448212; cv=none; b=gMUUYdOSsr8btajPzCfb42oLIJUEkkhZtEgYLoSNIMiw+QyDXbCiD8f+YSnRoXXxNCoTuql3+eAtYvLdVz7Pawmn8hjKE+BQpVhxqAnROqNHiElvaYXm1w9Ekokuo2/dwBZA8TlQ5tR7YY+mJTiu1i2rX17htTRME6CFjaGybmo=
+	t=1751448320; cv=none; b=iKI0FEyU8ISDGZi5NFUTNAk+QKEdAlZTa72NRafHCoW2p/aoz+jaYadkuabykPlo8mUqwdiSedfDp+R/mlwIWiFRNnBdQtQeJeVgMJypfuwC8ncxSAqln2+0YUPdY1QSm5YFB/Kw87220ovH3We3eypWnzr1OGV/e7d0+QMsddo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751448212; c=relaxed/simple;
-	bh=ChtGHjfmbUB14A/jJpRhaUJRAxfOUvDCj8VVJGjoZZg=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ke01Xh907FL9opqUj4apscD7uwQaApqqKp6IfYAP2pMaxY3+56ojg66V7YsW+qZUBJsXXetuuvuvUEaVhBhJHXfsYuzWkR5DLkq4R3hBSQG8SB6EEzykfjZmPmltZPopanvvF9LPYdkvajoBlM65YSqtakGHo0t6IbUfF3kZqs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H1yfneRC; arc=none smtp.client-ip=209.85.218.43
+	s=arc-20240116; t=1751448320; c=relaxed/simple;
+	bh=BH5OpTEEWKD10ak5Et0Gh3BtNo06zjF5eGgYLq+BvqQ=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=iYRH0q8O6VnxAZbEcnt0ZwI5q5OkMrdvS+LBh7nMBYy8Cbh5OEReCFACiR3OvkilTU/PZZQlUWXxcnH6p+NUUfYr1yqyzmreWIk55GCWImWWWtqQ4y8Cx7loqHRdYLATiT+SfmNiHeQf1CibDRN61AvfSrQ2i8yPrEPw6gDhrWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mme4jddF; arc=none smtp.client-ip=209.85.217.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H1yfneRC"
-Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-addda47ebeaso1376229666b.1
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 02:23:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mme4jddF"
+Received: by mail-vs1-f46.google.com with SMTP id ada2fe7eead31-4e80d19c7ebso4046599137.3
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 02:25:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751448209; x=1752053009; darn=vger.kernel.org;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Yv2iBf56CWO0Fdm7GFwQjBuMaJQZ1frtH3wd5pQyCkY=;
-        b=H1yfneRCVaJZ16llnyBe/hpKoecWcoPhTpH75gtTc5Hpl5joIOcsH2w2nMedD9ftC9
-         8Y1ZaLo8bmFH0qS+2yZWVIL3MWlO080+cKX1jF2OYBHkRc7ZmkhJ6Ay1BPsbByAECX5I
-         sT9oI/WNz4DTrNZdQdvrQKIeLqCfosIpjLljh7Ia99cuIPfBNQkMks9WSRjZ8t/tvDG9
-         3XUMOTH9tJz+IKPa7NmlVmcdoDUwDZhFY9YoKXYEaubkr8c/kiQiyDifWkbeTUInbInx
-         VcD/Rq5VCaIUA+hYVDqMGsUppHcpfwji4MrKwdLn3tDETUjB/8VTdYmmm+dU0nurM/aa
-         ye7Q==
+        d=gmail.com; s=20230601; t=1751448318; x=1752053118; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Nuh3Olk/QZTSxL1bIsgTJtpr8q5XWtjdVc+7t7Lf/8c=;
+        b=Mme4jddFK4lQQoUHWn16FXIWTyu756J5fANXmlMh2NXZd0F9rxDDnPbqLfn+SS3VWm
+         XXymkwbkO0eaImCNqjpMmCRdXkGjN06BOrp8KuXL37rN5Ynbi60rtCIf3fMhJG0JH9vL
+         y/H0ZYYJe6rWCv0AiavsUyqTIFwZ3uU0yHSp8ywj5LbAL1YxzaQPfJREDoiEs+S1gQ9Q
+         4ZdJquxfY2d7aMz703y21Ld974Zu/6PKd4S0DCTCZ3sribtmriCFvAL+hK09DUiW98f7
+         XClpYNfjqe2TdblvokgdXsgR5yTlMZSDzgh9aWSvxdkds797zxMDo75hrtmfb6AIP2/C
+         3E/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751448209; x=1752053009;
-        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
-         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Yv2iBf56CWO0Fdm7GFwQjBuMaJQZ1frtH3wd5pQyCkY=;
-        b=fEUVHdg7KxehjS3VFazkarM6HxTrMPsL5+tEiwNfU9EOAmv6VWm8lgKf7g6LeUcAfd
-         WqXl8YOFlaLUbqLuB2cRZr/teOtUqanbVVhJFU1kVT6H9S1ZDuEaQuuA8zETXdb20O78
-         /s3NB3oAGhUNflT7lsY/CtwTTCGENyKJRPqJ1U9K1dTfBKOOF9Nyteb3RlRNvOXD96MI
-         UmnxYXAvBJrI4JL9oZ2tlV/Kvm76phrBwjI90AzTJZh621xrowaYbsT2/5v57MNGvZ+1
-         XlUbmvfzh9FAgVBSq+FJkL/9s93+AufwOO73zTCbJrt0hePQMvl4vAH9mHoNz42fULvJ
-         vxeg==
-X-Gm-Message-State: AOJu0Yw9cmrMqdlSgj7/qXp0Jli0GZM/8q8mVOIYUgBijfdccfzozP59
-	4Jaw90AgeQ0m2S0RB7bvLrtPRcaYmyOufnzpBUhPLpYGfJg46QNG5bzC
-X-Gm-Gg: ASbGncuBYfmx5TUEu8nidbbWG/WyixCwZYi1iKoj3us6Zq66O1QtV7uXXr4UFW1qrBN
-	JEMg4jZCRuT39ggN+nD68G1rgdCRIcyZM7qGEO9NJVQsDtDa6sAQdn023CVnvdI7rgjQupwEivc
-	tFKNgGTv7kQCEJgjY/hj/VVV38Uo4nK6V/JNXp4MAhtpojh5P++TxG7AMiTfawn2kDEe3dGXkij
-	2rjuYFIaUi0rWA7xqqZOGhCZArLcFHmwMNJj1lbKJ5/YlQK6Ey9+KT9Ee9+0ODIrdWDd9RqKuDf
-	JHC6pnGUczhzxlej2KhXwfR1tTveWrSqqwEknN3hzGmJUg==
-X-Google-Smtp-Source: AGHT+IHqsZ3utOHtoQswkyI/X9wANHFeKJjR/mR/vHvhJG7gNpYauvANeKrUfLcRm9gIgd6dOtTSIQ==
-X-Received: by 2002:a17:907:9626:b0:ae0:a590:bc64 with SMTP id a640c23a62f3a-ae3c2b52858mr210034666b.18.1751448208505;
-        Wed, 02 Jul 2025 02:23:28 -0700 (PDT)
-Received: from [127.0.0.2] ([2a02:2455:8268:bc00:56cd:2345:b424:ce97])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae35363b1b9sm1052809066b.12.2025.07.02.02.23.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 02:23:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751448318; x=1752053118;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Nuh3Olk/QZTSxL1bIsgTJtpr8q5XWtjdVc+7t7Lf/8c=;
+        b=uawb31Fc4J7cNR22KydYL4IUkbXqhnAZvh6/1o8Lbuvp2LG9zJ9h0HjrsBiy95MvAd
+         JfMkI70+NB4NKQcvcs57+Cg3OrpQtylzxsRV2TjY0ieiJ4UIyrtMksKP71RBvdgVBVU0
+         DWWfo/pWrtdIrL5fKbytDgyjaJeQF/NT7u/OuIhzizblbAdqkTIN9kTyPWJf4CEWKHbB
+         kirePPPm0tHopONfNMa+jAi+ZO3Ai8OEa7hVnFF09YAJ7otGKDzSifDJSl6wfMORVkl3
+         OevHGqFcaAE9rxU6iMk9c0r7emQtjZLpl3TVTMffJK6HMXDn7WfSzF48L6Lr3aTPCw65
+         loQg==
+X-Forwarded-Encrypted: i=1; AJvYcCVtRGIEhU9UPHvYiVXoceaNsyTykJbkjTqTqPrA5YLV544jhxhRx3b9csi5Ez9FAqAPufI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwfzB85UaCds+rdrR+iuRlXgn/Ty1uFCGhaUh8mwRy4HLmQzqUA
+	7lUvRwGF+FKeATJ3SU+UXq4/aCHvYxAK5SkGy6+L31AFjBLxqrLD/MpZBKHVJr7mZadPIzhTIgN
+	ag6nhBYXbnMGSiDn0O0eTJGhAj/8dkaE=
+X-Gm-Gg: ASbGncuUAT3r4Pe/bSjjmlk96WYIBHkdyES5FVB3zQvz8w40j1MQ9YvY15Z2Z400Pr2
+	dLb2DeS4PY1pzTfbRbJaG7LoiM8dK544pois0vBuwzxWEmMpEk7ROxfbELpgKHuGf8azqcRx9sP
+	K5Irep2fbsKNfRyfi547Vpubd95cfYGsb9rURDjyF1TK/MTbgrYN9vUA5LfOlVsCnu6ORnCal2n
+	XeHew==
+X-Google-Smtp-Source: AGHT+IHXPRs0LwY7t71uCFJfyCBgHIMg6mreWrezDpoptK6jP5wvHPEvN4rOdNHsXFMinSzabKM/mxjt+FwDAnQM4m4=
+X-Received: by 2002:a05:6102:4488:b0:4e6:f86b:b663 with SMTP id
+ ada2fe7eead31-4f1611fa5d2mr798087137.20.1751448318399; Wed, 02 Jul 2025
+ 02:25:18 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 2 Jul 2025 04:25:17 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Wed, 02 Jul 2025 11:23:20 +0200
-Subject: [PATCH v3 3/3] meson: add rule to run 'git clang-format'
+In-Reply-To: <xmqqwm8rh00m.fsf@gitster.g>
+References: <xmqqwm8rh00m.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250702-525-make-clang-format-more-robust-v3-3-705344f30580@gmail.com>
-References: <20250702-525-make-clang-format-more-robust-v3-0-705344f30580@gmail.com>
-In-Reply-To: <20250702-525-make-clang-format-more-robust-v3-0-705344f30580@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com, chriscool@tuxfamily.org, ps@pks.im, toon@iotcl.com, 
- Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1278; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=ChtGHjfmbUB14A/jJpRhaUJRAxfOUvDCj8VVJGjoZZg=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhk+o1KMRQGQT/fZf4rS9MhYR1UC7cRnuEXl
- veklquxGaSerIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoZPqNAAoJED7VnySO
- Rox/5KYMAKMIkk77Pb8Da9KwFe1NYHKOfAf3/N9UV9FzRfhE8MYyFX6X/y06kiEz3pYEXZJDIrQ
- WPr45mRl4oyBUAg5gDdDJ3P+86vkQ6SiizhAFlfnrGCWIppvYPVEqza/hDuOd3EFNHQF7kndTlo
- TYqkTayXGrIMnPrv4CVSlBE1C9wFmDR4Qd494zPmsds4r+4Kbl3qSTQxk8duoB3Ee3Yls1EiYYg
- /KbW6hvQaBwSQo+0/3nP2ltt4h/2U2wzDqVkCWdTcZ64tGhxlcl1Livd02boPXXHu5TsZjshPH2
- UsnVgznxP0tsMLYeVHhqmUfoXCTkx94XH9BKu8C0yLuSEIRWWRIvIJJ8dJ/w0bC2WLlIURmTnB2
- 4kJG+uIuZmVS37Ok2HC/3fE4P+g3CPLnxfXEKMR4GnaB2PVdGNSqpsS60demmoEgmRsIMFc83g5
- 8XGapTHw0cD0/xASM3LXAbgasEHQMWPJxSCYxSKwSXleAt8JdeFw8QICNixrXscdh8ehgQqwFV3
- x0=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Date: Wed, 2 Jul 2025 04:25:17 -0500
+X-Gm-Features: Ac12FXxB7bF4OLMndxrOUi1hDL_kADsk2D8CoxUfUVeb2kw7Si5-Cv570dbg_C0
+Message-ID: <CAOLa=ZS4A-VonwLGTMZE7pA-dozY9ERoHD4F=u0pKN_mMg-mWw@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2025, #01; Tue, 1)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000dc6e3f0638eed6e6"
 
-The Makefile has a 'style' rule to run 'git clang-format'. While Meson
-intrinsically supports a 'clang-format' target, which can be run when
-using the ninja backend by running 'ninja clang-format', this runs the
-formatting on all existing files.
+--000000000000dc6e3f0638eed6e6
+Content-Type: text/plain; charset="UTF-8"
 
-Our Meson build doesn't yet support a way to run 'git clang-format',
-which runs the formatter between the working directory and commit
-provided. Add a new 'style' target to Meson to mimic the target in the
-Makefile.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- meson.build | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+> * kn/clang-format-updates (2025-06-30) 3 commits
+>  - meson: add rule to run 'git clang-format'
+>  - clang-format: add 'RemoveBracesLLVM' to the main config
+>  - clang-format: set 'ColumnLimit' to 0
+>
+>  Update ".clang-format" and ".editorconfig" to match our style guide
+>  a bit better.
+>
+>  Will merge to 'next'.
+>  source: <20250630-525-make-clang-format-more-robust-v2-0-05cbcdbf7817@gmail.com>
+>
 
-diff --git a/meson.build b/meson.build
-index 7fea4a34d6..48dff818e0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2144,6 +2144,18 @@ if headers_to_check.length() != 0 and compiler.get_argument_syntax() == 'gcc'
-   alias_target('check-headers', hdr_check)
- endif
- 
-+git_clang_format = find_program('git-clang-format', required: false, native: true)
-+if git_clang_format.found()
-+  run_target('style',
-+    command: [
-+      git_clang_format,
-+      '--style', 'file',
-+      '--diff',
-+      '--extensions', 'c,h'
-+    ]
-+  )
-+endif
-+
- foreach key, value : {
-   'DIFF': diff.full_path(),
-   'GIT_SOURCE_DIR': meson.project_source_root(),
+I sent in a new version, with a small change in the third patch.
 
--- 
-2.49.0
+--000000000000dc6e3f0638eed6e6
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 2e979b640184fb02_0.1
 
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oayt2c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mME0xQy85M2c0Q1RyeUVTZysvUlc0UitzOHhQNHdlZgpoTlpwdWFWbXcx
+Zkd2c2NUdGtVN3RjaFdwRFF4OGpqOFhyTEFFSXNERjIrR0cxTERaUzFPMTgrMGlTTUJabVQ0CmhG
+VnRxMzRCOFNhYmphNUlTWWxja1RUV1J5UHdhYWJtczBqeXY1NG0rbTJqR21ONEtkV1JoWk9aaVdQ
+QVVka0wKVTNHcGpxUVp6czlrNXdGbnJ4cjJkbmxoeHhBcCtFcUczdUxKQ1hnMjVIRkR4Y1gwZWR5
+WWdIL3dVZXNONTdQTQpRQXFhbU94SThNemZBWUVaelVOMXRhRnNLTlBEc1hrQWZrZlU4RXg5aHZU
+WjNyNi9SRUx2SjVzcGltdGFZck1RCmdPQW5VclJzSFF1V05qTEdPbHU3c1NCTGFONTU0czhaR3VB
+OHYrQlFWUHp2bGJXOWtJTWkwb3krZ0ZIRGdLUFkKVGRIZ0J6V1RnNHZoUXZhTmpQRU9VNGlEY2Na
+SzJoQlpjVFljYVJFRzdGV3EzTlBxVkxrY3h5VWtFNk45dUZMSQplakthdUR1WWtET2N3TTA5ZGp4
+UWkxSERNS3Z3YnUydU4wSE1wS3ZmcmRkRnByQjV2UlNnUDJZRkRmd1ZlTFdLCjY5NTBGNm5OT1pJ
+VEpiY3QyZGE2UC9kZVJFNUN2RWIxcFZYSjFmOD0KPTc1M0MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000dc6e3f0638eed6e6--
