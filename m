@@ -1,128 +1,116 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F223093BB
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 14:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E16128468C
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 14:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751467379; cv=none; b=ZcRtDIS9BPWWx/Owt/pv974nZC+iPEeBBIq+jTMaGbXMZwRXblI/SSG75i/3c+KYjKjleAJeWmHzqquhGKtMqynJCPpZ7vLncJUIt6F7frW9jHLYZ2HCmkLjX+xuD50KWv40UXojtmo6+rkNZfyWOtWHeHFJX/P6Cu3NA9obUVs=
+	t=1751467615; cv=none; b=jVhuG7Sg3egxzZ3SbpzfxekL9Jzu8Lhgld/5CNTI6rZ6Sz1fbf2/cOBmmfRYkRVe98C3+6JLDeoe8Oo0CHpzxLyE1WNMfDrtdFE05FRVKBvqJll6Qftp5BbYnLtFcZLx87HU7OCLNPJLR2xV6QiIH9tJqylneD7miaahiC+07tc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751467379; c=relaxed/simple;
-	bh=ahIo9iMeD3Q0NBLT36p+B09xUudlajyn7QqmPHOlL1Y=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=aMiYdmSBOABKDbNqmMhgkx2L6EEG4LBTNeAWaUouDFbP4ChFU6KXBo5O1Lo3Dfo53aEeba9M0bRotBwOvMN+4LN1vt760HViowUJ1prLCK8ilQWwTOGQfkytPKJC62bnx79vB6k5cDJgX+oUQzx8Y0+Tns41X92i+1RJwSp+o9g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EhOZ4JY7; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751467615; c=relaxed/simple;
+	bh=AVz/HKMYg84Mt3Zfugn+o13f6LGF5/w/qv224E4yrmk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FiFAyMhzOBeDa99HEjKKX2R2tD7dpMqASmNIjryI007cCpM7LGpnsZ0EeqOuG01MrQ1w8Ky8hrdphWTIo7mj9ms9T3qE6SX7Jj/DeazwXiNEKwbC750kj5lrm1GtAZxB8m6jxY9ftv6Rh1+ez+3mWTspw4zglWVSvNtrieQA6os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=U00j4d0B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lFYyYd2o; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EhOZ4JY7"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-748feca4a61so2619858b3a.3
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 07:42:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751467376; x=1752072176; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=NjrBiEbRcfiSdrZEJRnhgeL9rHOS3XH+ewXY/El6S4E=;
-        b=EhOZ4JY7Kz0GruAtP8CiC81Z66m89zoxzvnv2w9+uo/2ty5llHtypEGZJFSOf1vuIj
-         qonjpfaDUYpfobQzi3gV3GG4dY03ok7qXcZnvTZDN10xnTrff71+yvAIjLnBfh8P6+PG
-         MBReGu9JwDs4XPH9vDv6FQEPF0jqYiobovKjLJQFXk8YoURbLvO9W7PwOSsYSzwZulfY
-         SIElp4qPrliUnPBAiWzv6CPYyAoF+OaJnT1bp2a7Vgx3aZkWwZvVg6dOhc+ntALFt0Ab
-         mTnfQdIHhBxUq0NbXmoAqrZyxGtr91GZh1P8tVHKvtPon3IJnfrb0Kq4dKswo7SNuiv5
-         nHVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751467376; x=1752072176;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NjrBiEbRcfiSdrZEJRnhgeL9rHOS3XH+ewXY/El6S4E=;
-        b=LF+4J21gLctpG/r0/YeDD9JN8Ew4bqk20t0usX1kwvKzS9Ni9U5XWAGAQPDzZKuZnC
-         dh0f9OEsYLxsS59ng1qhj4gzJCisiQgrRSiB5/+eAdeImfFMCtrvu+8fKBH9vTWZtlXj
-         WBXYs18+CxYlQm1DZMkn7m8tkfbaEd3+mGbEj9SdVGTkg9uDFXqei43WdcY9pQvnkqGy
-         pCz5E5M0UGX08djooTFFbuw2rqHXFJXqvCg8H6tqqQJY9bFoq3j2a0VXlBuM8lrNqemE
-         c30yRQjS78TP+r8JGpbHaNZ8G1hk6rh1O5/SI4AVYTQPoR2Z0UlTyRoMy21BmhVc2tfH
-         M5mg==
-X-Gm-Message-State: AOJu0YzFea35t0u4y5kJIx6ZKrR+uJZl01tmGPWKZGcq17JJxrwe3IXw
-	2wn5gZj2XiFjuUETZQhw5b4QdgHAN0aU8yBtoxo3wusqqjc5w10ps9Y7a5mHiQ==
-X-Gm-Gg: ASbGncsEAJIOrW3ii1SsHVhUr9LaFOVSRFvMg95deWtjpVOINUjEOEr47IEoyT9qcpk
-	ssy9OK4P/qqA//6XvqJgkcIx60yU68OMpLPhqLKudku8kPMuuPWvuvJHe8aTtL+EiBGCyqsx1FM
-	WAm94OOURLzbq5+2695gk5oeCYSua4tvXXL6+CaUVnf6y5bTjrug397n8Iv8WWggxPmI1mg9C68
-	Mqxx+JgibnNmKyOMsGqP5Pq0BOWFvFYY+CVXWlGYtyHaGETnW3ECP+Ddqy6/qeBEz5uDjtLLrhO
-	tTlbNqdsp0rR/VzrhTL3FG0QOhtfJQ0EliV9F+GK7usPtY9v9OkhGSaVAAgGqp+0XPOk1qrpuO2
-	X0Br9hlk9eW4b/syg
-X-Google-Smtp-Source: AGHT+IGmn6mg7cd1Ws0ecnshucTgKxp+0i2xuWYySNheZiwxM9nVFLd+z1Ajrwsgby4zfAiQyf4hMg==
-X-Received: by 2002:a05:6a00:14cb:b0:748:e9e4:d970 with SMTP id d2e1a72fcca58-74b50ff200fmr4295475b3a.1.1751467376402;
-        Wed, 02 Jul 2025 07:42:56 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:8123:5123:76e8:a897])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74af558914dsm15429752b3a.78.2025.07.02.07.42.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 02 Jul 2025 07:42:55 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: pclouds@gmail.com,
-	brad@comstyle.com,
-	collin.funk1@gmail.com,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH] builtin/gc: improve total_ram calculation for HAVE_BSD_SYSCTL
-Date: Wed,  2 Jul 2025 07:42:44 -0700
-Message-ID: <20250702144244.43858-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.50.0.147.gafe0d4ec5b
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="U00j4d0B";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lFYyYd2o"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C8CEA7A0285;
+	Wed,  2 Jul 2025 10:46:51 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 02 Jul 2025 10:46:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1751467611; x=1751554011; bh=+zRJxtmDqV
+	IvyX4zzX5JcUy9HI3ncZkCg2oe5drbI5k=; b=U00j4d0B3POkSUTab6meBHD+CM
+	7og/mrt8TksEFRXj9tXNluC+eG5zb1DQWJHEgjdjzMLNGw5ldSJ4IONYYh++P1e4
+	3U093CVYWx539ydoC2G7JnHhSV9FBF0Xbr1oeWUAHdCj1XA1H5yMJdyy64VkzJX6
+	yh3Z/RXab6CxFX/UBlmAb8X22tWaVH000LdHaSpTFHlqxwZWUi2cL60pTWVHgyuh
+	6GoezQPIKhVYEVuwoDPusFSgvttZDdB6juJQMpM3jZlNsXGcHb8SYkLP0a5wby6D
+	DwEPwTvcXzTU4C9lS0UoxmBaGdfXOFRlvKAarx2jQOU3jMZKeXkwWe0SzXhQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751467611; x=1751554011; bh=+zRJxtmDqVIvyX4zzX5JcUy9HI3ncZkCg2o
+	e5drbI5k=; b=lFYyYd2oggDR+E/pPGSo9xBQBDTrWhylLcPfKh+wncmcuMh1hdl
+	amsH+FS2IWTN6dlW8k28Lz3sfz1JaKpclowIhdEPiGIvGKCxCQ/Ecgq5wT0ICbXR
+	s2iD8MTc7a6pl90rJO3X5Mb7J7NSa3eiMa2vgIgYBxq5Zul04TgVvXu6tGcZezAk
+	P9WC7IuitiBY4cR3FLG8Zg3GFnvXbmUR+cfbQN4I3lnvyn70wUyFlWUvUNVdIzeQ
+	VEuBsJC2AuVUPU88I5BCNwHYgZv6bDopBLtVcIRsTSuOez+xyW6F7ZxoIEp4OLaQ
+	WbJyQlXCsNMHaF3PJsY6vkvwFEYFvygNJbw==
+X-ME-Sender: <xms:W0ZlaGXULQoraG8VDGyHNu5orsBZ1oocpmXs7oQOGNman7r-0lfWqQ>
+    <xme:W0ZlaClJaC2-hN4s6vTD4k7KSc9kNfTZJ93Ydxb26h-Yd9_4FMIeLjQITEsaVf8dc
+    _r6ps6IYEaAH6khwg>
+X-ME-Received: <xmr:W0ZlaKZUTv7kEGnjOni-uK61C3so0_Fy6p-hd_sSwPb5nLxt63OO9GbKAmYrGhkj7Yl1DiqPq8SL6gxjg2s5Zoe4bWZsaqS4a-adot_1XA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddujeeijecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsh
+    grnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvght
+X-ME-Proxy: <xmx:W0ZlaNWaUukyqrY0Hp52ZePgQz8DxyUNjFQNRr3K_YUnon0ABS3AsQ>
+    <xmx:W0ZlaAkP5z1ziJThZXJ7-UNcgy6tN-Toq5RlEWpi9Mp237QjQpmE5A>
+    <xmx:W0ZlaCcZFh4np6S8M96Ri5orVqXCGDE_tZ3glSFlaIJCpe2oWyUVwQ>
+    <xmx:W0ZlaCFRkx6mTRQdkWiFpEDW4mYWSSu5UfXa6OB3ul0axzke48Pk2g>
+    <xmx:W0ZlaIt_GaEKjgHwtls2oNuLTG0zBTMX3vw65GRgl4MyE6MJCQJ4yYQL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 2 Jul 2025 10:46:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ea3423b2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 2 Jul 2025 14:46:48 +0000 (UTC)
+Date: Wed, 2 Jul 2025 16:46:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 00/11] Add SHA-256 by default as a breaking change
+Message-ID: <aGVGVIryDXD576iG@pks.im>
+References: <20250620011943.586596-1-sandals@crustytoothpaste.net>
+ <20250701212237.766774-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250701212237.766774-1-sandals@crustytoothpaste.net>
 
-In BSD systems other than macOS, since 9806f5a7bf (gc --auto:
-exclude base pack if not enough mem to "repack -ad", 2018-04-15),
-sysctl() use HW_PHYSMEM with the wrong size for the target.
+On Tue, Jul 01, 2025 at 09:22:26PM +0000, brian m. carlson wrote:
+> Our breaking changes document outlines that Git 3.0 will make SHA-256
+> the default hash algorithm, which is a sensible and prudent approach,
+> especially from a security perspective.  However, we haven't tested this
+> adequately and it would be helpful to allow users to test this behaviour
+> so their code and environments are ready for it.
+> 
+> Fortunately, c5bc9a7f94 (Makefile: wire up build option for deprecated
+> features, 2025-01-22) introduces a build option that we can use for
+> testing breaking changes: WITH_BREAKING_CHANGES.  This series introduces
+> functionality for SHA-256 by default in this mode so we can test it out.
+> 
+> Changes since v1:
+> * Add a build option for the default hash and use it in the tests.
+> * Rename GIT_HASH_ORIGINAL to GIT_HASH_SHA1_LEGACY.
+> * Improve some of the commit messages to better explain questions that
+>   have come up for review.
+> * Improve formatting of nested C preprocessor directives.
 
-Use the correct type for physical_memory on each option and make
-sure it is initialized, so it is safe to use even if sysctl() fails.
+I looked specifically for the things that I commented on, all of which
+seem to have been addressed. Given that there is no range diff I trust
+that there aren't any other unexpected changes.
 
-While at it, add a cast to the returned value for consistency.
+So this iteration looks good to me, and I think that this series is a
+step into the right direction overall.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- builtin/gc.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
-
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 845876ff02..3b2ca99af9 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -539,21 +539,25 @@ static uint64_t total_ram(void)
- 		return total;
- 	}
- #elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM) || defined(HW_PHYSMEM64))
--	int64_t physical_memory;
- 	int mib[2];
- 	size_t length;
--
--	mib[0] = CTL_HW;
- # if defined(HW_MEMSIZE)
-+	int64_t physical_memory = 0;
-+
- 	mib[1] = HW_MEMSIZE;
- # elif defined(HW_PHYSMEM64)
-+	int64_t physical_memory = 0;
-+
- 	mib[1] = HW_PHYSMEM64;
- # else
-+	int physical_memory = 0;
-+
- 	mib[1] = HW_PHYSMEM;
- # endif
--	length = sizeof(int64_t);
-+	mib[0] = CTL_HW;
-+	length = sizeof(physical_memory);
- 	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
--		return physical_memory;
-+		return (uint64_t)physical_memory;
- #elif defined(GIT_WINDOWS_NATIVE)
- 	MEMORYSTATUSEX memInfo;
- 
--- 
-2.50.0.147.gafe0d4ec5b
-
+Patrick
