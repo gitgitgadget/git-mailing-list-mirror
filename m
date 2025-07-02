@@ -1,92 +1,155 @@
-Received: from mail-oo1-f42.google.com (mail-oo1-f42.google.com [209.85.161.42])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C5F2E499A
-	for <git@vger.kernel.org>; Wed,  2 Jul 2025 18:30:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD37F2E4987
+	for <git@vger.kernel.org>; Wed,  2 Jul 2025 18:32:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751481053; cv=none; b=PPLXy6jJv2fDs7EmSmmnUn05ZHtBoPJhzpHc4lL0VFw6bq0wHOj8a5YnZHRJdKXl+ZC6f/uopj/gkPPFECuzVSuzRsziO9guSB5Uuv23oUbliUQsdEf0PR+WMglcKtCkYOglFLhLJycGDGD9EuVz2V94CS4xLTINvko7h16Mos4=
+	t=1751481167; cv=none; b=kmchMp6ca6/q42XOPm8lzB/474voZcl7oOH3aNKT7awtpONX+i6J45L2lNJ1x84VqTFHo6/A6vgDr9VUCP/R05XZd2CcJLmYjzqz8sUqBINs8XxwXrSuX1DIwHEq4Q3kZTP6+KA/HsMp6hu0VlMAVK8pnT59roRl8AcwbqfhJMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751481053; c=relaxed/simple;
-	bh=ROPrEOGCqXgIBftgTdL+fp3+THqYxO1f5BBLICfOtF8=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=jhAzkAah5TuibwcB4/Cx86pYVLdur6mL/q/pGQxXua1bejYP9Dkrp8o3rsA/8jiF7PSG+IGKNo21vuwwLIda9HrD6IUve/CBv+O3HHoiwAJt5wRHBFSiKCQ89fuvvn1zeT7XD4uEIeeQ+lfSjfASBiuQtvJ8+DmSYkzVx0c/qrc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XQuPwOJv; arc=none smtp.client-ip=209.85.161.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XQuPwOJv"
-Received: by mail-oo1-f42.google.com with SMTP id 006d021491bc7-610d86b3da9so1777663eaf.0
-        for <git@vger.kernel.org>; Wed, 02 Jul 2025 11:30:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751481051; x=1752085851; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=TRUONTKuPRUlDXbc3AG7c7g0ijdQZq6k6uqe8+zPYyw=;
-        b=XQuPwOJvdDeCn6l9ZwoBEyrRD5cl3yxUSCiD4wpd44VUxObI2rlL4OudXmj8n1c42u
-         oHLtzRv1REeo78ZKomBybxaQ+8ZwFMLJOoEXY1ABZKWK5DO3Ez9v3FfWfSD8qgpmipsu
-         +RLu+nxW9KnSgKXYM0Op7GVzwN1uy1SLtRT74Px7Pd8mkFg+v/irPYlrj/Id18vk/ftd
-         /IC7swZk2uxm8yV2uwnllwBPAHb+3pGnsIR204lE6pZi2dsgkVe4HeX845NN3k+PxfS+
-         CDFfrFxLo2dHEJnkBVgzQCba2ijxuwaTH/sCO7F0W0PG33rxkEnzu//We26/QWR7FH8l
-         VjcA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751481051; x=1752085851;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=TRUONTKuPRUlDXbc3AG7c7g0ijdQZq6k6uqe8+zPYyw=;
-        b=e+m77/wrKdfk7jgBXm4qvOI0sMHwcYYVqbPSqijDw7xjbj2rEupJx2UmaMJrfVOa3h
-         TKoLUDxwB1rAftCN4eXqmtZDKEvdfcQQdE7SrfAC9W/2+akgmv46IazEwWpBgi8Iggpl
-         pKPqSUI3m9h7XBGywxDQNs383ucXn6Oom034YVfUv3ldf1uEC3EsK3dZMDB0+W6IGoZY
-         TcwoGxV8zXOAnIQGTi9c7RV48xGF55KrHtepnCd1/NrTfRf+Wb1OjHbK39rS7dHe9Ir2
-         +QxreKb+okLauazwLwn59lkoXFfUXJt/upMjRjVkNAt15YcGwAAItQoXaaHOiwRRDAzE
-         +oIg==
-X-Gm-Message-State: AOJu0YwSoQND7SSwPP7YAW9WgFpstNFRNbRXxzBTlzNIagWoExb4F8o+
-	vsO80Z4RC1AHHAu8oqMuHp6YFbB42z7IadxtqGYVqK/T9b7sspPnya9waxMQA9g3Jdc0vm8jxAL
-	f4sqD5h3YGPmiFRG8yPNV9/LMU3U3Ehmlh9lO
-X-Gm-Gg: ASbGncvJbQi/CZd5D3J6TL+N6SPmqb56lpAURGHmzlPM4g7wv4iwYm597jR7Yj1Btp3
-	QCIIZR7SAkce8etdoqr9VKB2AHDtDfIG6iPk80ogTZg9e/xuB7+aZl2I+BVJGfEeqY+6ZeSRA7U
-	YPG9s/MZPOP4FxoBzTPKSfeaY9tq3bVeYGtdIYO44tB/3mHQ==
-X-Google-Smtp-Source: AGHT+IH+MW06JHQE/F4YN3Un6A7ZFGByraMnuoK3lBOPdsh0BY2m8iJrqUx8gA3EGMKKQakoxUmt+2kAGV5EPDR99+c=
-X-Received: by 2002:a05:6820:1994:b0:611:9a4d:fc44 with SMTP id
- 006d021491bc7-61201244fcfmr2806223eaf.3.1751481051030; Wed, 02 Jul 2025
- 11:30:51 -0700 (PDT)
+	s=arc-20240116; t=1751481167; c=relaxed/simple;
+	bh=oRCul9O/pml4bMIERGxaoRhpf5v3SiKH451lTOFx0VU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Qqx3e5N2rL3SiBqrM2jQfX8LFFEGZvsMMV8TnEUAZ0EE4tu9DMrRq5Vl/BCnvpVnU1aQaGZf/CGoQFPYwoQbADpAUIPdU9qyEeaOgUKyC8NCWfjBbk8eNziYpkvTvSE5vxG+mYX6lq6desi8PxdXZimvJf1JaP+8BMLorgYruQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id A6099340D30;
+	Wed, 02 Jul 2025 18:32:44 +0000 (UTC)
+Message-ID: <b57b1418-2179-480c-92a3-a107388d71f2@gentoo.org>
+Date: Wed, 2 Jul 2025 14:32:40 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Suraj Bhadrike <surajbh2233@gmail.com>
-Date: Thu, 3 Jul 2025 00:00:17 +0530
-X-Gm-Features: Ac12FXxraAfmESId8zwBfE-o_hIF_vjoZGCgjqlVqKGfVD2ayfzGb-9WfFZ5vDY
-Message-ID: <CAPGv+4ZT774b-LGMFpyv3cJYUrpWPMpkCGn25AfwD7MHskbV=g@mail.gmail.com>
-Subject: Feature Request git snap, Lightweight Commit Workflow for Iterative Development
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ Renato Botelho <garga@FreeBSD.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ GIT Mailing-list <git@vger.kernel.org>
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+ <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+ <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------teeaNQwVJBNCTDqr5tFUZunx"
 
-Hi Git contributors,
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------teeaNQwVJBNCTDqr5tFUZunx
+Content-Type: multipart/mixed; boundary="------------R3r804bScMyGEiEHkI1R1wN7";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ Renato Botelho <garga@FreeBSD.org>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+ GIT Mailing-list <git@vger.kernel.org>
+Message-ID: <b57b1418-2179-480c-92a3-a107388d71f2@gentoo.org>
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+ <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+ <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+In-Reply-To: <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
 
-This proposal introduces a new command git snap  designed to support
-highly iterative development workflows nowdays  influenced by AI
-coding assistants.
+--------------R3r804bScMyGEiEHkI1R1wN7
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-The rise of AI assistants and agentic AI workflows has changed the
-pace and nature of coding. A developer might cycle through dozens of
-variations of a function or component in a short period while
-collaborating with an AI.
+On 7/1/25 4:03 PM, Ramsay Jones wrote:
 
-This feature would provide a soft commit or snapshot capability,
-allowing developers to save their work state frequently and create a
-new commit every time as a snapshot or checkpoint without a commit
-message and flag where We can provide an option for developers to
-include files at the start of snap Session.
+> The patch is below. (I didn't write a commit message ;) ).
+>=20
+> Does this work for you?
+>=20
+> ATB,
+> Ramsay Jones
+>=20
+> ---- >8 ----
+> From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> Date: Tue, 1 Jul 2025 20:33:44 +0100
+> Subject: [PATCH] build: fix FreeBSD sysinfo build failure
+>=20
+> Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+> ---
+>  configure.ac | 61 ++++++++++++++++++++++++++++++----------------------=
 
-The current Git workflow presents friction in this type of workflow.
+>  meson.build  | 10 +++++----
+>  2 files changed, 41 insertions(+), 30 deletions(-)
 
-I've created a small Git repository with documents to help illustrate
-the concept.
-Please review it at your convenience :
-https://github.com/surajbh123/git-snap/tree/main
+> diff --git a/meson.build b/meson.build
+> index 7fea4a34d6..355cad730c 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1331,10 +1331,6 @@ if host_machine.system() !=3D 'windows'
+>    endif
+>  endif
+> =20
+> -if compiler.has_member('struct sysinfo', 'totalram', prefix: '#include=
+ <sys/sysinfo.h>')
+> -  libgit_c_args +=3D '-DHAVE_SYSINFO'
+> -endif
+> -
+>  if compiler.has_member('struct stat', 'st_mtimespec.tv_nsec', prefix: =
+'#include <sys/stat.h>')
+>    libgit_c_args +=3D '-DUSE_ST_TIMESPEC'
+>  elif not compiler.has_member('struct stat', 'st_mtim.tv_nsec', prefix:=
+ '#include <sys/stat.h>')
+> @@ -1449,6 +1445,12 @@ if compiler.has_header('sys/sysctl.h')
+>    endif
+>  endif
+> =20
+> +if not has_bsd_sysctl
+> +  if compiler.has_member('struct sysinfo', 'totalram', prefix: '#inclu=
+de <sys/sysinfo.h>')
+> +    libgit_c_args +=3D '-DHAVE_SYSINFO'
+> +  endif
+> +endif
+> +
+>  if not meson.is_cross_build() and compiler.run('''
+>    #include <stdio.h>
 
-Your feedback on this is highly valuable.
-Thanks,
-Suraj Bhadrike
+
+This seems reasonable to me. has_member only does a compile-check, not
+linkage, so we can't know if it's a BSD port. Only using it when a
+previously checked interface can't be found, lets us avoid doing
+extraneous work though.
+
+
+--=20
+Eli Schwartz
+
+--------------R3r804bScMyGEiEHkI1R1wN7--
+
+--------------teeaNQwVJBNCTDqr5tFUZunx
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaGV7SQUDAAAAAAAKCRCEp9ErcA0vV25W
+AQDWwtRVULL1hvEr1cyFCNPp1B3tzHsdxf6xOvS791GNfgD/TKSuP9Fq5FCRRm0Ihnf79OX/te5C
+MndpPbteWhX57gM=
+=VRis
+-----END PGP SIGNATURE-----
+
+--------------teeaNQwVJBNCTDqr5tFUZunx--
