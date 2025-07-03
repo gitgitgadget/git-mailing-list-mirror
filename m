@@ -1,157 +1,132 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579CC2DE6E1
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 07:45:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA5CA28D831
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:01:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751528723; cv=none; b=AS7+IyqjPENtQdVKSHzkXcV9aHIwJo6vdQcuOcF31iMMQR/kPLGsD6jUYIK4kAHejQTZGkE4P7TQSJO1ZR6AHC708IjgtUJuPup2sDfD3IeSjXMhTRM1l1fzNG3tXrD3BtRMaQBWruu3B8kkYrOfPRkvDlMdmmLkANMK6ZWNgaw=
+	t=1751529684; cv=none; b=osTtmmqPd8HiNGsdxIh1uiJ5fv2wmj5GBdtezA5zv5zXtEICxO93ZBELWflZFOlLSjn54QDdcOQM096aJQGr9vZoS4gKxOqM0DjcF7pk2Es3gCMm03YgfI931f0+Di/TdHFk023sjqa6bbprtRoXSuT14XwbqgdRZTxIyRy7qoA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751528723; c=relaxed/simple;
-	bh=sLk7EZ5IwUGQn34Rt30UsSX+HdgUKotYKN96mlyyNyM=;
+	s=arc-20240116; t=1751529684; c=relaxed/simple;
+	bh=fwdrLuKGQMyKINj22VKIzQ6U66cmcFoogkT86TGqJV0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4dcwkuoB43OLbU4tGXhcEwZraGH7Y/6KonN+l11SRhgvIfgRs/Zbql/b8/eTe7XtuYt4wHkSKeDzjpcq2jKQqLSaWj607j+fGRE4Vg3aRv2x8Aj5wz1Ik6ZIEiyUP0sPz9b8oG3N3Rbv+xZ6vL/YdqloKfQOKgIb4wNxEcek1U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=W+eXxaHE; arc=none smtp.client-ip=209.85.216.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 MIME-Version:Content-Type; b=o8fy95RLL5e/GZ3jauK3Z0hqzuPxYKra+wjdyJkixXv2Z/2kG18TzVpjfk0IxU0UH1vX56KnyjKhc8Hm5zS3ZewZR8rFZ0KE3DSqzRK1pV7XY8ck2Rkk8C5O+eIXDCQ9jxhXhNIw5/mwtT4PejVlTsORLL6ceZdFIlghS2vddA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lpqQN9Xt; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="W+eXxaHE"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so4415021a91.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 00:45:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lpqQN9Xt"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b34ab678931so6386363a12.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 01:01:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1751528720; x=1752133520; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751529681; x=1752134481; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rgd0TdpxrlWFhy1dpU4PLkitvMXg5zjr+BRMLN5ptwc=;
-        b=W+eXxaHEfaYrteZajikON5EKmqSodrT3QxE9XlrjL171Yne9V7l2OuosFVHP0TnRU+
-         lptAsOIE7SSGXWzS3dbXocIZqOWgIcYxFv8JlRJcZz4XH871aW5l5eaHURJC664dC1Sv
-         13bl58jU8y29KOyQb6bY0le1wJt4U5eLNhbyuCGuLNAo8bq9wglf7nWEl4WpPwP3vDjq
-         HlaMcOT1QiEDBVHOdTzMuRQaWNIEkOgWnt1R6GGDI9ZkT/SXxQyes7kfJyBnxpSm9XAQ
-         P+RVX7FAGzooOx5pPv3cuXOrkT1DbaBqz4YXSPyUDCR3DGMBS0BRPSW+VbpMmcG3NJu7
-         P9Tw==
+        bh=o0A46YedsE/tk4WcnWtBN+9Ck2nHCSrTUskFsN+VEGw=;
+        b=lpqQN9XtPxQa9bkFLt4suYweiVbIOEpGOZb3/I4J/uMYsP1ijcagEClFE2awLTsVRv
+         XtjasdELrHtot4nEFB5ZsAWnPVtmxo6v/tUMrfhOX/O+RNbZUKGIJ5AEoy3I0rzx0U3D
+         DIqYYMP66BtAnW3F6ZMsf4Mo9PSeebzWLSa1JCY2OKQC7owuyCAqFmACDe8VtFhUqoLo
+         AAjyRvhu4IMwaAznHgN+akrT93FMFZYK3X+EtH2N8F6ZQVABvaN/KmQ3lTeIiEZvYXIe
+         jgPdruHaq/lOA8rSWu/LC2gfghpZU31yPfCXo7zy+aifW9FdeUAljdgg/bjlku9K3Ue6
+         d/WQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751528720; x=1752133520;
+        d=1e100.net; s=20230601; t=1751529681; x=1752134481;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rgd0TdpxrlWFhy1dpU4PLkitvMXg5zjr+BRMLN5ptwc=;
-        b=CznxX7DZkqc4vVmetMKIng0BhdrqjLDNgirYg5UUpw7jk5PNeMYreXjgca7iAq4+w6
-         MlayLkyACjlr6YADnsAxCPEvK9hf+JkvhijDuI4FWkhw5jzDacGMWlN/+6UZA4RF5ldS
-         SYQunXk7Zkrl5XTBCJ9sPTk5mZ9YcUsq6fzJmFvhmE9ndUPnK80OsBN1IyJ6V1JLTD8w
-         rvSnLAinkkHXWD7XBXCJi0E2sb/3TSKCAJBng3LszI7Zq4XyzJYU3eKCFInKO8aNuoJE
-         P0DBGVwXfmq3hB4S4xii7MZN2i88yy+Vq7i3WJJpS7AHPPlFp0GMEbmT/9BcKNSm0/8l
-         NJvg==
-X-Gm-Message-State: AOJu0YxsKSgKJcMz5ZxRqpgg43zfKDSnLeNPhTNVNfNGsx2GRoe9JsCs
-	wpAdHikSncar7vooMmvbvFuxdHulbBquEp9yeX4gQda3k3deV7yBVY6M+P2W3tTXtuM60lcoVFm
-	oufy4ivU=
-X-Gm-Gg: ASbGncvrjFLmGVpWPII+ydeTIpd8+riq6oL6KZRhiF+bXD4rZayJ0PZv/yAuXcZ+DJS
-	njMT240p4eL0mvYNDjLzNq/j5Fwa49oW9a+GBUCnHRIqxm7bR/hTKK+wm6FCi9+pqw49qmgFxRA
-	jbiJz1sQdFma1b8zPMrMZJitpJmjBEqttsuJhlzhAuwziohGSE5SRePS+IIEGOA6BYrDYlB1Ff9
-	+3V8NkDXeex+R4xCsUxjjxAeRzU7lbwWJNFswRoRU0mvJ4ua/6X+lEL04DVuo6z4krq/PkJDdjK
-	lTbSKHxCscsQTZR5h8EGdxZdYBuaUgmJCjDZT0GnCvV4AHJBx7Q0NDg/NIxYkRkKosGbRB4jFpr
-	+mvG5ew4zJfpxkV75lzAcqU0VFN+cguo9OA==
-X-Google-Smtp-Source: AGHT+IGHnqnnZRLMd9jKklvmaTErpObZDUFWAaUYMJ7IuSddp5Br1pYqggPBldJDN23jsWwu/8xWIg==
-X-Received: by 2002:a17:90b:3cc5:b0:311:c939:c851 with SMTP id 98e67ed59e1d1-31a9d52bcbcmr3059871a91.4.1751528719972;
-        Thu, 03 Jul 2025 00:45:19 -0700 (PDT)
-Received: from LTY2K703JV.bytedance.net ([63.216.146.178])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9ccf871csm1626979a91.24.2025.07.03.00.45.18
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 03 Jul 2025 00:45:19 -0700 (PDT)
-From: Han Young <hanyang.tony@bytedance.com>
+        bh=o0A46YedsE/tk4WcnWtBN+9Ck2nHCSrTUskFsN+VEGw=;
+        b=RXdbZ6voJXaZCE0SBKtTS64kcFIxrtwfIBxIdPC3QV/4iBiItIK+xiP5eMDgvLULr8
+         PBAfaw8mEbPVP0ImAlV4gPw4E4DDAgJVKgKk3mZkjh+SWfsQtxm6zWTCj4jE+xfZD0MG
+         SwSYU7g5H5U48ejflHMPxy+06CggshKCptPZeNBTx5ZsY4P1Typ6KzqLxBLVu+wU9Qtn
+         QP+xgiDCFgsQxN21xRC+f/l5RNfk7dtd2200vknlBB1U/6cUIWBd2jrsyBWBe0faN6fx
+         iUon4As3rzhrim2HOAADnjmrIBEkXwdZlsvJiWPWyUG9I17byIJ05W/3PXU9eeHqmuwR
+         dCkQ==
+X-Gm-Message-State: AOJu0YyryKprBDvhFsRmxd3exHacAeBgI7a9uDJLrPDIw/BB44wZ28wy
+	QC6LUvUutEBeebhS8Gf94hDG1OJK022SCNoDv6XaOhdqt8AvsIcl6ddbITlFHg==
+X-Gm-Gg: ASbGnctLH1NHHfEeQ9CjS12+1zhtKSg5EZjbMVRVpW7vpQapTqN+qyNFaMCzWfT5cCD
+	V+Hgpbjg2yy+OTsm/BrDJ2Vfm5INiMi7NYeX0ubEsFq4dbhumasxanLflndjiBS55tm9m0OkaQE
+	BkU3y14GgI+JLpCkRQyNqYDPDGE8g/4TW3ph2PiD18RMklnWnK7RY+tGgqhW2sU/66TW2sQ+nUd
+	L2nmdV7dLu3T2Pebpab7rtqozOHIhV5tp7QgSyo9sxruzCZ8iyORl4g8bP6Zjzf1zQ52gxx09RD
+	qqY1FpGLNMed3ca48qmRG+CcheBy3sIXxngDZOdOzitAM9WbXxPT2Qp0j4hbkgRkHKZ8mkIlJga
+	VIlLSOWaAcxUGdZx5
+X-Google-Smtp-Source: AGHT+IGuqbZM5brYd7T6AOzs5O9j4BZqp6BrB1tuI8CD3/zNOe8oJFkjIheAW3FgXryKECoPeii9iA==
+X-Received: by 2002:a17:90b:2b4c:b0:312:e8ed:758 with SMTP id 98e67ed59e1d1-31a9d58f1bfmr3027553a91.13.1751529681449;
+        Thu, 03 Jul 2025 01:01:21 -0700 (PDT)
+Received: from localhost.localdomain ([2601:640:8e80:3680:1125:4ae7:7ddb:b0ff])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9cd1acfcsm1703006a91.43.2025.07.03.01.01.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jul 2025 01:01:19 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
 To: git@vger.kernel.org
-Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH v2] read-cache: report lock error when refreshing index
-Date: Thu,  3 Jul 2025 15:45:02 +0800
-Message-ID: <20250703074502.45593-1-hanyang.tony@bytedance.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250701115719.85226-1-hanyang.tony@bytedance.com>
-References: <20250701115719.85226-1-hanyang.tony@bytedance.com>
+Cc: brad@comstyle.com,
+	collin.funk1@gmail.com,
+	pclouds@gmail.com,
+	ps@pks.im,
+	gitster@pobox.com,
+	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH v4] builtin/gc: correct total_ram calculation with HAVE_BSD_SYSCTL
+Date: Thu,  3 Jul 2025 01:01:11 -0700
+Message-ID: <20250703080111.64276-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.50.0.rc0.48.gd8154328d9
+In-Reply-To: <20250702202118.48742-1-carenas@gmail.com>
+References: <20250702202118.48742-1-carenas@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In the repo_refresh_and_write_index of read-cache.c, we return -1 to
-indicate that writing the index to disk failed.
-However, callers do not use this information. Commands such as stash print
-  "could not write index"
-and then exit, which does not help to discover the exact problem.
+The calls to sysctl() assume a 64-bit memory size for the variable
+holding the value, but the actual size depends on the key name and
+platform, at least for HW_PHYSMEM.
 
-We can let repo_hold_locked_index print the error message if the locking
-failed.
+Detect any mismatched reads, and retry with a shorter variable as
+needed.  Make the second tentatively optional in little endian
+systems, as the variable was preinitialized and would work AS-IS.
 
-Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
 ---
-Changes since v1:
-also check the "could not write index" error output
+ builtin/gc.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
- read-cache.c     |  2 +-
- t/t3903-stash.sh | 18 ++++++------------
- 2 files changed, 7 insertions(+), 13 deletions(-)
-
-diff --git a/read-cache.c b/read-cache.c
-index c0bb760ad..50e842bfa 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1456,7 +1456,7 @@ int repo_refresh_and_write_index(struct repository *repo,
- 	struct lock_file lock_file = LOCK_INIT;
- 	int fd, ret = 0;
+diff --git a/builtin/gc.c b/builtin/gc.c
+index 7dc94f243d..b680a1f739 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -517,7 +517,7 @@ static uint64_t total_ram(void)
+ 		return total;
+ 	}
+ #elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM) || defined(HW_PHYSMEM64))
+-	int64_t physical_memory;
++	uint64_t physical_memory = 0;
+ 	int mib[2];
+ 	size_t length;
  
--	fd = repo_hold_locked_index(repo, &lock_file, 0);
-+	fd = repo_hold_locked_index(repo, &lock_file, gentle ? 0 : LOCK_REPORT_ON_ERROR);
- 	if (!gentle && fd < 0)
- 		return -1;
- 	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg))
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index c58ccb136..0bb4648e3 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1672,11 +1672,9 @@ test_expect_success 'stash create reports a locked index' '
- 		echo change >A.file &&
- 		touch .git/index.lock &&
- 
--		cat >expect <<-EOF &&
--		error: could not write index
--		EOF
- 		test_must_fail git stash create 2>err &&
--		test_cmp expect err
-+		test_grep "error: could not write index" err &&
-+		test_grep "error: Unable to create '.*index.lock'" err
- 	)
- '
- 
-@@ -1689,11 +1687,9 @@ test_expect_success 'stash push reports a locked index' '
- 		echo change >A.file &&
- 		touch .git/index.lock &&
- 
--		cat >expect <<-EOF &&
--		error: could not write index
--		EOF
- 		test_must_fail git stash push 2>err &&
--		test_cmp expect err
-+		test_grep "error: could not write index" err &&
-+		test_grep "error: Unable to create '.*index.lock'" err
- 	)
- '
- 
-@@ -1707,11 +1703,9 @@ test_expect_success 'stash apply reports a locked index' '
- 		git stash push &&
- 		touch .git/index.lock &&
- 
--		cat >expect <<-EOF &&
--		error: could not write index
--		EOF
- 		test_must_fail git stash apply 2>err &&
--		test_cmp expect err
-+		test_grep "error: could not write index" err &&
-+		test_grep "error: Unable to create '.*index.lock'" err
- 	)
- '
+@@ -529,9 +529,18 @@ static uint64_t total_ram(void)
+ # else
+ 	mib[1] = HW_PHYSMEM;
+ # endif
+-	length = sizeof(int64_t);
+-	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
++	length = sizeof(physical_memory);
++	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0)) {
++# ifndef __LITTLE_ENDIAN__
++		if (length == 4) {
++			unsigned mem;
++
++			if (!sysctl(mib, 2, &mem, &length, NULL, 0))
++				physical_memory = mem;
++		}
++# endif
+ 		return physical_memory;
++	}
+ #elif defined(GIT_WINDOWS_NATIVE)
+ 	MEMORYSTATUSEX memInfo;
  
 -- 
-2.50.0
+2.50.0.rc0.48.gd8154328d9
 
