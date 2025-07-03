@@ -1,146 +1,117 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B96D2D3A72
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 13:09:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FAD23AB86
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 13:13:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751548143; cv=none; b=HYkOb/mfZ8tBVupnoj7IDjF6s25xt3vrFCGZJ8LOF45/7HlPFN8QOQFqlFm8pS7uYkts1A8Mpz3kAqbl8JaicOariWKOZmAD7bCzQx7/+j0BpJ/Eh1mUDS2o5Qp8DVwCrKBhmeC0nuSenQe9542cfitH8V4KODtdDgAJQ2q1mDo=
+	t=1751548440; cv=none; b=rj8YeFt+kdAmYIbgor4UiyFdp9w06Qz9Dd29lvA5FujXGuTr4/MTfOXnkUL9L1NZyLmIcD38GXuVIW0Fmnbr22+HnpPjHqtVid++RuCjgIzuZGUmcJRpAu2wKVeA91Oz2uSJjt6FGowh8GOcQEfOZjFol/itlX3i6Pivvm7DqfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751548143; c=relaxed/simple;
-	bh=ebBepql+/RgqMQwnWQsJ5t9EI8A2DYDYECr+ahkyP7E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=jkgQWJvUckpwcTdsGXEx5JmiVec7W2eh6fTHznV+7AZMZuUFtuxuzhSi43OJNXDOpjyDn2lWFCBOChrrvzYRK5EcoRAeolz96bfTwSKjdTjZK/zA2GLUcQp9zM3AN3dA9VobfjqaTLRSVVNKn5fQFdix+tqlr9KITVUWQTgVZAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uy2/SQSf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jv4YSfln; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751548440; c=relaxed/simple;
+	bh=sSCZzgJlyTSNZQ7W9hiva37uR83u2cnJXXCGnTXJ7c4=;
+	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
+	 Cc:In-Reply-To:To; b=mwKKNfyBKjuA0IBbnfiUGSKGBx8pSxquIKPhDfUKr9iNODenAS3A8cmV7bI4qjiVIes35lumBKPLPd102ZAqlToB3Gbhh5H7T2QmVZZnaabBtiPhi9i2kqkG7Cc/YHVX1JPsdFnFKPNJjNilwH6jE2NMrFf1AQSiMManlL267+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S80mYZsh; arc=none smtp.client-ip=209.85.219.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uy2/SQSf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jv4YSfln"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 60E9A7A01F6;
-	Thu,  3 Jul 2025 09:09:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 03 Jul 2025 09:09:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751548140; x=1751634540; bh=tapVxQGPzj
-	8sqXfIr4uWqWwFpVYUzokrVs0TLtFKTkw=; b=uy2/SQSfzzuFPGAU0hzbkaY9r7
-	gyBEEbb9r1AV8nh/cXvWP2bZaH6DyOwmsqUkmm98KyP4lWyjfRDEw3Pl07fVfKNe
-	q8RHBvT6MjzyXJlEWokRdu9bMjGcEBE52O9IFZp25hG4pWfrCZtlQu2fxoifjxx0
-	38KS18FtMITyKtGxc8XDg1nNKPzw/lTpbqQpJSI7imdcW0r5uqvHNTKk5GB69AoK
-	y9fMGZCh1yBl3wLLNQISSV6e8riy/P44Bk5lg0ejzrU0xljEfNLKcWJNkxpprCUe
-	tPjUIfBoB/0goFDn86KDvae85w7jV9uUPJDep88N9/0qv2FKBbxJON/j+iKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751548140; x=1751634540; bh=tapVxQGPzj8sqXfIr4uWqWwFpVYUzokrVs0
-	TLtFKTkw=; b=jv4YSflnZ5ZsVVPn9l0i0Rs5De5cZRbX+EKTTwu6oR6ZcTa1gOW
-	wUdlqUSGeMHqI0vpC5skdmJbi8nKHkP7gx+y27pWZpLLWLxIv/ak5ofyfk0L1rDl
-	xbac2eChM6Kc+9q7xiSmbe5rRRDXSuXmGZhYmMMboRVjmHcoPHMoq67/vsza8paC
-	4hpsq3GCXRaWALMN/J1EQO2NNe7A7RDWA/MRiWpp2uaJUtRj0s//To4e4RKzj3wt
-	ekwp5ZW9cYFYUdUPtHLh70GxOgpnEuwi6aFMCqh4H+3kUfmlBc+cB9R0SIfstYbg
-	Xpn758PVhwzTetxquSVl0cjK4OZjxyTQnhg==
-X-ME-Sender: <xms:7IBmaKgy8N0f_MYDsn4yr9dOuNbUDyk_DR3aEAqBkAco7sfnKlBRXw>
-    <xme:7IBmaLCdnvcdQRytjMm3PyIlNTSZFkK44wRASnm21YOEGQDqisL8Fv23trclE8ZZ1
-    nUZU4D-bugea1WHtA>
-X-ME-Received: <xmr:7IBmaCGc1eVjE9uIvV3Hh2uHmAFENvx7lOaAvDMxlbBMAF705CKhE9xl-zaNhekYyW5amuFLHeOqpz6Wsg15Gvht6Rb64BM5UED3OUhYyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvtdefiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhgrhigrthhhvggvrh
-    hthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtoheprhihvghnuhhssehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtg
-    hpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:7IBmaDSMiJeox3JvxXsFMA_KpquKopBNNzdhI42YCBCoAaCFg5WUUw>
-    <xmx:7IBmaHwuTsccmjko16QPzikowyFE7t-eXhWdaEaUEQNUQzOZ7sKi3Q>
-    <xmx:7IBmaB7PQ_2nSGWNbKBJdvLk4D2LNhUqihXQWBWS1hmUZPr5YWxO9w>
-    <xmx:7IBmaEy1OSjXHO4Q-Ic5dsKurywbYN-dw0tPdR5qIWDGCqmiuIq-Mg>
-    <xmx:7IBmaDNWaIGOLH4IdyXWAAWkZgs6M9U826h7dEg4nQlMDYVuyo-8C-0l>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Jul 2025 09:08:58 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 933a91f3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 3 Jul 2025 13:08:57 +0000 (UTC)
-Date: Thu, 3 Jul 2025 15:08:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 1/2] BreakingChanges: announce switch to "reftable"
- format
-Message-ID: <aGaA5iwZDuougIwQ@pks.im>
-References: <20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im>
- <20250703-pks-reftable-default-backend-v2-1-5a27e72a8c5e@pks.im>
- <CAOLa=ZTJOqqr25Sj0YSAc9rDmar2qZiVD3H+K6qhdN3qKdqbGw@mail.gmail.com>
- <aGZslJSks2GF3uB7@pks.im>
- <CAOLa=ZQUp6S3yQ-zCfPxCvwoJeiPdXh5U9mojH+9-P1RAAa2gg@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S80mYZsh"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e812fc35985so6467753276.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 06:13:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751548438; x=1752153238; darn=vger.kernel.org;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qMLnC95MPSvSnTdWvBT+uyLa58HiIRME/h47Nfw9/6k=;
+        b=S80mYZshyR3s11w44QGnkv+caF6ws98mD8CIb8BXN81wNhlNUu2JTWWH9DawYFzROo
+         JyeEINCGLAA113eFV3yzirQ+/4avlqLs8eL0NTPHB5M3Z34fAim77fC8klh6rp6+f1hF
+         ExYtuSEcO3l2Wx3KkfM1stYxFU6XgR9gFqlVVGOD14W8kToJpJpsAfnoc3hkxCz8LicL
+         3QGSSHxz1Vc0ApSWzoHLW2MDnI/cQkpAGLsqwMmIXesWe4FSUzuAdPTG/0NLcOtEKd2l
+         pCCEyJXR1n8+oGCbrX7tKqFoFWxu90jlqGhi+MA+eTThIRtr5Z3uhjGjSKV+p6o2o/UV
+         F05w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751548438; x=1752153238;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qMLnC95MPSvSnTdWvBT+uyLa58HiIRME/h47Nfw9/6k=;
+        b=ZrqbQyJmRfsEUIK1/erXma9Ooq03aU3nvIpIsvdZ2EFOFfYsVMrxuxUaHVA19xdArf
+         t5ye7zYCcpP9N/g+JZw7L3JL10MNy9QL5qwUVhl19e0gbvzH4HLX9OyofeyHI45O0p4K
+         Zs5F0cVYpG+7Vqjj1j5QXiRHYUBOfINGcdmJor95J1PcYtKEaw1t5idJsG/3fQ4K0Kno
+         Xe7D0270QQ3aIz+FnDPwMTEjfrGEJoj5yjdns/XqWAayP6kdLRV04xpGxDmFuFGI+U2+
+         M+Zz8cVQzrDkKw2OWHkloWZewulJGBX7C4ALgGELjaPQ0fHNG1iQqOEt6EdgM1p3tYCq
+         imSw==
+X-Forwarded-Encrypted: i=1; AJvYcCXAKLOw9r40dpLVwbFf9zWsoONQ461r6uS1YmDr4sKMNiG3OwyDSERLaGDpEuVY/vehxhA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywmx1h+RZwIBxlG3xviMV6hFsimA/F8t+n2fUniTlvBf/kDjBZx
+	m7Meh1v33fOeAVR0vxUxNtZHTDDJ3LFtaHwmvQursf8ZXD8tCUea95fJ
+X-Gm-Gg: ASbGncuNVhaDwDeQ74KmOSSxhPSZnpsneRM2bQ3LcnUimt261LyZ3G0hSZVAkzERFzH
+	cXCbuhK5UMt84YLCmE2ku3Q+g2KCdDsQvJ53oJdzDLfGPDe8qpm9QzRR6A6m7d/dkPSERLMvwM6
+	5U3x45rQxGnVwfssgQQrzI+eNL03XThdo0bXl21n9BmiCUDjgZZo2CfpasqrcO3JjOV39c3zo1Z
+	e8hGGTKvHxquYAZHqL7UAnnDcPhKSjb0nDVn963p8wKjr2q10NboYmN4IMt6Fp0gi/1UiN9t65l
+	GbQvzOFqmQZWqWw8n9EC4IDiPVmV/6Uou/J721gjNmJcDApBLUAcyfilk2tmEu02cKasUXRqava
+	np5en6n+TtLxjmAxxBmRUdQM=
+X-Google-Smtp-Source: AGHT+IFhsjmKXW8QqoieKeMsEkBcliwEKWUJW2TOPrOkGmJKkFyKH4wZEttQm81AZfFjRx3pr/oRsg==
+X-Received: by 2002:a05:6902:100d:b0:e84:37e7:490b with SMTP id 3f1490d57ef6-e897e26007bmr8499193276.34.1751548438075;
+        Thu, 03 Jul 2025 06:13:58 -0700 (PDT)
+Received: from smtpclient.apple ([2605:a601:90a6:1600:d474:ea:3b09:dc6b])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e87a6b6c543sm4365422276.23.2025.07.03.06.13.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jul 2025 06:13:57 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Ben Knoble <ben.knoble@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQUp6S3yQ-zCfPxCvwoJeiPdXh5U9mojH+9-P1RAAa2gg@mail.gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: Feature Request git snap, Lightweight Commit Workflow for Iterative Development
+Date: Thu, 3 Jul 2025 09:13:47 -0400
+Message-Id: <88CDEF6D-A01C-46BB-A394-CE0E3C3F9B87@gmail.com>
+References: <aGWq7vBSYuuKW69o@fruit.crustytoothpaste.net>
+Cc: Suraj Bhadrike <surajbh2233@gmail.com>, git@vger.kernel.org
+In-Reply-To: <aGWq7vBSYuuKW69o@fruit.crustytoothpaste.net>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+X-Mailer: iPhone Mail (21F90)
 
-On Thu, Jul 03, 2025 at 08:24:01AM -0400, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > On Thu, Jul 03, 2025 at 12:54:24PM +0200, Karthik Nayak wrote:
-> >> Patrick Steinhardt <ps@pks.im> writes:
-> >> > diff --git a/setup.c b/setup.c
-> >> > index f93bd6a24a5..f0c06c655a9 100644
-> >> > --- a/setup.c
-> >> > +++ b/setup.c
-> >> > @@ -2541,6 +2541,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
-> >> >  			repo_fmt->ref_storage_format = ref_format;
-> >> >  	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
-> >> >  		repo_fmt->ref_storage_format = cfg.ref_format;
-> >> > +	} else {
-> >> > +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
-> >> >  	}
-> >> >  	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
-> >> >  }
-> >>
-> >> Shouldn't this change be instead made to REPOSITORY_FORMAT_INIT?
-> >
-> > It made me a bit uneasy to change `REPOSITORY_FORMAT_INIT` as it is used
-> > in several places. So I opted for the more contained change.
-> >
-> > In any case, I found the logic to be hard to follow anyway as it is not
-> > immediately clear where the default value actually comes from without
-> > the `else` branch. So I consider it a good change regardless. In fact, I
-> > would argue we could go even further and change `REPOSITORY_FORMAT_INIT`
-> > to be set to `_UNKNOWN`. Same for the hash.
-> >
-> 
-> Exactly, I just read your patch and the existing code around it and was
-> a bit confused because I couldn't pinpoint where we set the default to
-> '_FILES' when there is no ENV or config setup.
-> 
-> I think changing `REPOSITORY_FORMAT_INIT` to be set to `_UNKNOWN` makes
-> a lot of sense combined with your change. I'll leave it to you if you
-> want to include that in this series or not.
 
-I'd prefer to leave it out of this patch series. It's going to be a bit
-more involved than just switching out the values and adding the `else`
-branch for the hash, as well. The repository format code (or rather all
-of "setup.c") is a can of worms that I don't really want to open right
-now.
+> Le 2 juil. 2025 =C3=A0 17:56, brian m. carlson <sandals@crustytoothpaste.n=
+et> a =C3=A9crit :
+>=20
+> =EF=BB=BFOn 2025-07-02 at 18:30:17, Suraj Bhadrike wrote:
+>> Hi Git contributors,
+>>=20
+>> This proposal introduces a new command git snap  designed to support
+>> highly iterative development workflows nowdays  influenced by AI
+>> coding assistants.
+>>=20
+>> The rise of AI assistants and agentic AI workflows has changed the
+>> pace and nature of coding. A developer might cycle through dozens of
+>> variations of a function or component in a short period while
+>> collaborating with an AI.
+>=20
+> I mean, I do this too without an AI.  I frequently want to make changes
+> until something works, and then snapshot it and modify it to polish it
+> and make it more presentable.
 
-Patrick
+Yep. I think of this as =E2=80=9Clocally I do whatever I want; polish before=
+ publish.=E2=80=9D
+
+>=20
+>> This feature would provide a soft commit or snapshot capability,
+>> allowing developers to save their work state frequently and create a
+>> new commit every time as a snapshot or checkpoint without a commit
+>> message and flag where We can provide an option for developers to
+>> include files at the start of snap Session.
+>=20
+> I think a lot of this is achievable with current functionality, just in
+> a slightly different way.
+
+Agreed. My variant is something like
+
+Repeat: { hack && commit -m wip --amend }
+
+The first commit omits the amend option, of course, and I can inspect previo=
+us snapshots with the reflog.=
