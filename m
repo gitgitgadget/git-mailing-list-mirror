@@ -1,39 +1,37 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2502DE6F5
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 15:40:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126633596B
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 15:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751557251; cv=none; b=fcA1fZqnnUo4+/LCQ/ODNIojqGWfJIljP7uklwdLl/useRu+zoJ2fU6mwExrdDeP1X7JVP+jQl1aiF1DOkCfXpKHiF25O1VO7SmGpKHqFlzaS0YxW+zCRrXQJ68WIIgT2NQ9etz87Ol9XZm5IEaeN/wqjggslpuaPVJ/iL1pK3c=
+	t=1751557285; cv=none; b=n9T31Qy4YelA9h2zDSEcVa8wGrQS1LOKB6NYLX/BvmJUfXZeCwXsl4Nu1qxusH3cAB4KJHqWMQndgq4Va3qujyexigt1FAqsnWpJPrZ2Arb46SrUdXfzOENaIoWCCNBFmri7LEBL6CSw2IWvFOFU7xnTQK2rJMJ7AJ01fWpgZYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751557251; c=relaxed/simple;
-	bh=vIp/7mkD9zScRw2Ku2n9BQosF73CUaDv6pgXkJcX8j0=;
+	s=arc-20240116; t=1751557285; c=relaxed/simple;
+	bh=gwNJ183jBO8rSoolH1ITfrBzXCJaqNNX26SivUFA4IY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=c8wFGp48MJym20CQP/2R6F/r1IptkwuXR2TwWPCA2OES5itjYEiO+jgAAYprGtnOJEKuw0Am3MLlyi/ogGWapHmrGa1cvrpRpqNIL4WQaw5Js3ywi5s7ZPZ2OQtPT/NagWXfQfcg7b8WPaBijJChWkF8gYRJbQNDx6b6bE080E4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gy/5z3qA; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=j7zKoawaPWDPFO2SyTdyBxZcuLNddKjz6yu/HPqVTA4pOBuq5v5BItQmI4OKOfRnr1loF+sBGVhO7Do53BE8lOtU7bXI085cAvVjZJIAi3gyReJ/DY9B6p2nIm6QFwRcfvlDwkFd8/EUtpJ6jTZLISI/R98YUgFAH0Kww53dL8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=fzcF1HsD; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gy/5z3qA"
-Received: (qmail 5659 invoked by uid 109); 3 Jul 2025 15:40:48 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vIp/7mkD9zScRw2Ku2n9BQosF73CUaDv6pgXkJcX8j0=; b=gy/5z3qA14xkGTNIbALqzF94KjIPMOvXmPyjlY/O9O/vjrsWqzmldy7XwGTGkgSXtHNcMb1JX+zDZNBxTJGBPA8jKpd5XESAhBdXCgTarOOzt4LCXvzSeTX02KIkxmSHBXFQQAe0zj7JjVYXhfs7iDs3yTo2WEcwg5AVbyR2uC4kOSWhS7+NxFvIa7V8VpUAO+kOsYmi6t4irgBBDQswgyNuhSnVC5bBbwyTmq0EJ80An5mt5LUCxaU1/U/IBsSYAjfNeatjuo1pq//i9CYpRp+QB3YCmW0iUkYaZziIqXEFnpXdSBQvrlbE3nhMcmMMzjOyDDWBfYBS8nSkPZCP5A==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="fzcF1HsD"
+Received: (qmail 5589 invoked by uid 109); 3 Jul 2025 15:34:42 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=gwNJ183jBO8rSoolH1ITfrBzXCJaqNNX26SivUFA4IY=; b=fzcF1HsD7eshUpLj1S0AJJVzRTIeTCTasnxTanw2AvhRpy6WwN71MeTg+8lil6ovVO9cO0bO2O/+0mWgxu/aKg/IInBGn118MP4vdTbud4KJXpqLt2HsPTYevo4AQVzGxKqNPBW4symJgosYicMPVURZbKfmZ4AuTD6IAzMuOYs2W8uYkJ3NGTylyME2FxaiQ4oUvCA1Cz9SxZjeOLV1ScoLAfQ26JF/S98V+nhDfPtE+KLgRbiJ9UsE0Fd2bTtcEn+WUGsuJdw69yU2NQVFhpzvCLfRFHfsh+bfKs7rN5vfKrThvkNyUAiJWyb2vz/R277GlUlPdwsINoYfMEkF+w==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Jul 2025 15:40:48 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Jul 2025 15:34:41 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 1107 invoked by uid 111); 3 Jul 2025 15:40:48 -0000
+Received: (qmail 835 invoked by uid 111); 3 Jul 2025 15:34:39 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Jul 2025 11:40:48 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Jul 2025 11:34:39 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 3 Jul 2025 11:40:47 -0400
+Date: Thu, 3 Jul 2025 11:34:38 -0400
 From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH] send-pack: clean up extra_have oid array
-Message-ID: <20250703154047.GD1309870@coredump.intra.peff.net>
-References: <20250627-jk-fix-leak-send-pack-v1-1-aadcf0ed8a4b@gmail.com>
- <xmqqzfdnkdx6.fsf@gitster.g>
+To: Eric Salem <ericsalem@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Behavior of git log --diff-filter=d
+Message-ID: <20250703153438.GA1309870@coredump.intra.peff.net>
+References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,50 +40,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <xmqqzfdnkdx6.fsf@gitster.g>
+In-Reply-To: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
 
-On Tue, Jul 01, 2025 at 10:40:21AM -0700, Junio C Hamano wrote:
+On Wed, Jul 02, 2025 at 03:28:43PM -0500, Eric Salem wrote:
 
-> There is an early exit from the function that would bypass these
-> clean-up.  Perhaps something like this on top?
+> The git log --diff-filter documentation[1] for deleted files says:
 > 
->  builtin/send-pack.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
+> > Select only files that are Added (A), Copied (C), Deleted (D)...
 > 
-> diff --git c/builtin/send-pack.c w/builtin/send-pack.c
-> index b28da7ddd7..6ce9f6665a 100644
-> --- c/builtin/send-pack.c
-> +++ w/builtin/send-pack.c
-> @@ -305,9 +305,10 @@ int cmd_send_pack(int argc,
->  		flags |= MATCH_REFS_MIRROR;
->  
->  	/* match them up */
-> -	if (match_push_refs(local_refs, &remote_refs, &rs, flags))
-> -		return -1;
-> -
-> +	if (match_push_refs(local_refs, &remote_refs, &rs, flags)) {
-> +		ret = -1;
-> +		goto cleanup;
-> +	}
->  	if (!is_empty_cas(&cas))
->  		apply_push_cas(&cas, remote, remote_refs);
->  
-> @@ -340,6 +341,7 @@ int cmd_send_pack(int argc,
->  		/* stable plumbing output; do not modify or localize */
->  		fprintf(stderr, "Everything up-to-date\n");
->  
-> +cleanup:
->  	string_list_clear(&push_options, 0);
->  	free_refs(remote_refs);
->  	free_refs(local_refs);
+> > Also, these upper-case letters can be downcased to exclude.
+> > E.g. --diff-filter=ad excludes added and deleted paths.
+> 
+> A simple test:
+> [...]
+> --diff-filter=D behaves as expected, but when using "d" instead, I don't
+> get any output unless I add another option (such as --stat or
+> --name-only).
 
-This made me wonder if the remote_refs out-parameter is valid after
-match_push_refs() returns failure (especially since we do not initialize
-it at the top of the function).
+Looks like a bug. This used to produce the output I'd expect (i.e.,
+commits "first" and "third", which do not have deletions), but that
+changed in 75408ca949 (diff-filter: be more careful when looking for
+negative bits, 2022-01-28).
 
-I think the answer is "yes"; it is both an in-parameter and an
-out-parameter, and will have been earlier set up via get_remote_heads().
-So even on the failure case, match_push_refs() will leave it untouched
-and it is still valid (and needs to be cleaned up).
+I don't have time to dig into it now, but I've cc'd the author (and left
+your whole reproduction recipe quoted below).
 
 -Peff
+
+> $ cd $(mktemp -d)
+> $ git init
+> Initialized empty Git repository in /tmp/tmp.xnvNav956B/.git/
+> $ echo test1 > file1.txt
+> $ git add file1.txt 
+> $ git commit -m "first"
+> [master (root-commit) 71288dd00aff] first
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 file1.txt
+> $ git rm file1.txt 
+> rm 'file1.txt'
+> $ git commit -m "second"
+> [master 6ff8f522b744] second
+>  1 file changed, 1 deletion(-)
+>  delete mode 100644 file1.txt
+> $ echo test2 > file2.txt
+> $ git add file2.txt 
+> $ git commit -m "third"
+> [master 41498d26ea5e] third
+>  1 file changed, 1 insertion(+)
+>  create mode 100644 file2.txt
+> $ git log --format="%H"
+> 41498d26ea5ee6820834aa51351e1e7ce6ce8733
+> 6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
+> 71288dd00afff60f3a6576f93930aeb0130e5cd1
+> $ git log --format="%H" --diff-filter=D
+> 6ff8f522b744dfbc7c2201c5bf77cf5acc3028ce
+> $ git log --format="%H" --diff-filter=d
+> $ git log --format="%H" --diff-filter=d --stat
+> 41498d26ea5ee6820834aa51351e1e7ce6ce8733
+> 
+>  file2.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> 71288dd00afff60f3a6576f93930aeb0130e5cd1
+> 
+>  file1.txt | 1 +
+>  1 file changed, 1 insertion(+)
+> $ git version
+> git version 2.50.0
