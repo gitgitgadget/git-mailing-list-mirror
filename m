@@ -1,104 +1,133 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD89142E73
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55E232DE6E8
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:40:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751531192; cv=none; b=Edlym+8GSrgUYdq8S1me6Hwl6HlTEXbDqUJ/J81S5CnqWkerYcxDgLQSkt3HYo8z2Uoi8WJC5AOy5z2S9GoDktVWGf+KFBD9aTDpnqr0Ifye3ok/44FrqNcstTR/HlUtuyJecASr7SRJJX5L/bYa+Ng8qhk96bBByb1g1fuyuV8=
+	t=1751532034; cv=none; b=hHGNbI4knWRiS5jxjwVDwiOJvAScQZTlBQA1hPd6wQ5lizGe0YM0vbE2t+pQ1pdXgox+Pa234cUVVnJ7apycjaKYoHXFUDHYZMcSYo5l9zJmUWG0wHamriHFr51c6/xBP/E5GoAY5QZEyk9XUhNgUTMnvkGj8XtpukQVX9vczFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751531192; c=relaxed/simple;
-	bh=WdGziK3zZ3fDl4D/gp/p2RvsxVHVKgCQry6FBEnFxl8=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=g/TuYQx2x3UIapqdkJEjGrZeKyGgagwZWUBLyBiGam7v6bqx/gpfg6uIgZs2rkVPggbd4WdSr/1f+WfnQNh00UHh13et94CRFBXk+l+sycK93nDn3gU4uMbkfRroyma79/7VmFEL6mDWAIaa3gPb/5Z2cRk9IqksyGM1ovjZjzU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=kOyv9mZR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j86kjxdO; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1751532034; c=relaxed/simple;
+	bh=4T+FZ2QP5C84QJsH2b6eh/PugqCO02cDtDjYiBts3Jc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KgwK6Jh80o8OONRwk2An8FyCVrqy394YFyIcn/4RebF27N++UmPI5F+u2fbddosE7ucO+1hqd9JClp4ET8qXLtwgQao9J5KXw7SNqXxIq0fVkIrNnYOmM7tjyAF9ctKyMYaXxygmODcZVUQyvDPeT+xzJMdEEFNPPc7lSlcKsx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RYNPr/SI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ni2BsI0V; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="kOyv9mZR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j86kjxdO"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id C4C681D0006B;
-	Thu,  3 Jul 2025 04:26:28 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Thu, 03 Jul 2025 04:26:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RYNPr/SI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ni2BsI0V"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 576087A01EF;
+	Thu,  3 Jul 2025 04:40:31 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Thu, 03 Jul 2025 04:40:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751531188;
-	 x=1751617588; bh=WdGziK3zZ3fDl4D/gp/p2RvsxVHVKgCQry6FBEnFxl8=; b=
-	kOyv9mZRSwidEmgIQ+j3xubqc45DGh2lEcFRDLpmhyVSgYYOqGvLp+mLnFYFXl3f
-	wpgJNw5vuZI6qYL8jE71MW55EBMHgtGuU6KbyPoCf7o+TG9Ywut+d8Y5pLd9cd5W
-	+DVIcWEEwTsDBrWJ9+PX52IoDRbgibrFFekU6i2ClUXE11Pwt+MQ2KZT2qTtm6Hf
-	DFzdL+K2b3V9kegP5SSndp53Cq3zqQIJ92ANw0Lgjzz0Hth+C+elG1/UWnQjvlA9
-	yGN+l/CJBXMTLyROq7kEmGzsj5cd9bxfA0VlCysVti2vlRmjAZnngUhH19ZdgR6d
-	OMlrEWuKKRWLzVJ92masmQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751532031;
+	 x=1751618431; bh=dya59Y9MzcONr4+i+3qgwot/47OixIpYo0SAkm2+WFM=; b=
+	RYNPr/SIT1GUVmGHBlE7F6mGs8KNjjeu1wJ/qYve2v+0hpzkwIqO0ate35y888rT
+	HQc5KtFCkqlzxLGo+9zv7J3H1+Ermn0GdgTYLlmO290LnhUcPjY6QZrwzEliY/ee
+	VHt3wnPMnC2xpj94Yp30kQKVclUXT7lWC3jmx0gnpmVHtiZ6Sr3zmsNDBzzxe3Qd
+	eriek4gHfrGZE88dSo5ZQBsiJ/KFVeWKL6x7+CuUgjifDFvoE/iCkW9zJhuah03O
+	aE8MEgN7DkieMdmZIPh7YzR4oQgKbe5ehbNK2Z3cJ06B2I8udgNwQPaChURkVhjR
+	M4HRN1OV6MPTKRVT6oPVaQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1751531188; x=1751617588; bh=W
-	dGziK3zZ3fDl4D/gp/p2RvsxVHVKgCQry6FBEnFxl8=; b=j86kjxdOK1Gtn+OeI
-	u+HoRxSVl1UREv8ucDeA6s890q45dUqL3yNkbBAiFjlfmoVfR1yK45vb06LOJpAs
-	ibOrwCKI53GePcAVYtJ1wDVJYFYWzByvKMVCPhKJK04Id4AR/S8MH4NGqMuXvJM+
-	twZqmK8zpGMmgBwayxp0upE8IljY3icuAtRRkGXjva+ESmbraSiPH2siZal3ocwu
-	VFftLJdCo0erQSH/7XoF44sOlw79/vylv9QtDSMgqRVhNU63YRjelPvk4yCA5niK
-	xK4EMHqff9UkEprevQcm8KgMXLHx5I38uCGHAip1A6M5RSIlLJEcgzbuFKm7z5yP
-	6zDwQ==
-X-ME-Sender: <xms:tD5maHCxb07Rq0a7M01wm0Dte5HmWbVTFketUdE3SfTZ2TnqaxMFZ0A>
-    <xme:tD5maNhIL7or2XPQKKtlbWZNhJ34BKlHKUik9LthRGGUDM8ZimjbPD6cqHmzkBueH
-    JlrZAJFOrbSuel4kw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleejlecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751532031; x=
+	1751618431; bh=dya59Y9MzcONr4+i+3qgwot/47OixIpYo0SAkm2+WFM=; b=n
+	i2BsI0VrGyqsZcM0GsUYW6taaMCi23C/iqE8Pi4GqiUglOVqc3Ep7UdZNvd+hccy
+	uego2oUV9SDBlBHa3D5cHFlcGfBOAETkqKxMjT8cnyEsxNQ94q7xuKIQwkvdwTNE
+	hrDS0u2CrfGs6wHN79af3t6Ktd9cTJcPzXqrywgJaXCpcU2gXNviMb5yFS5f0gVU
+	/MrDcb25fJh2GhLBD25+douQFcj10iqqoWounUQfbvm0iiqYHPunFiTYX4W3Y4ay
+	9rAWhqzkPXo2eo3Al7uPAk6ggOD8MG/55IuhRUcF8qeiBQv4TIsPZlZOldncLiia
+	sXCnoynVCPhbzy+H5ONDQ==
+X-ME-Sender: <xms:_kFmaDzuXDgAAthoHahzr3JdhYJ3ELTgc7DBCA3bUci-NJPe8-ad7A>
+    <xme:_kFmaLRz4WxG0uQ0RknwHUPS9638VVzYrGuRxUiBxPDWeaibDLkoXnN4o08KJKXO6
+    unPJjahrGyPOFJAUQ>
+X-ME-Received: <xmr:_kFmaNVTQqN5SdIuTUPxMIHiJ6DkvjOBy_oHciEpa9KMIFd6f8ZZyINxXNojs-TzIfMr_uj86VylxFegb6KXYzE-3Jo9uwLXrNCJ7J9aNg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleekvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtre
-    dttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpefftdffhfefffejfeffteetvdettdevfeetheegtdehtdeiudefffdu
-    leffleeljeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhg
-    shgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehfrhgrnhgtvghstghordhnihgtohhlvghtthgr
-    phesrghmrghruhhlrghsohhluhhtihhonhhsrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:tD5maClsFDBbyP2kR7BCDeZOJIiTPAUO8pf5dH3ArA7L3rnJfFIAmg>
-    <xmx:tD5maJxPjloLFQRQsuWs-5edSJd4arnGe0TW1K4JPvUGGQ3JKfdg8Q>
-    <xmx:tD5maMTRMVJ-tOgCEKjeeMmPWClzgb9I5bNKKkvlscImTfH6bbFKHA>
-    <xmx:tD5maMYEQ5tRGUoEixvlc24c8PUcZsHNxGkScForcQiPwG_fZzk79w>
-    <xmx:tD5maMvQJYVQU1RtuXTAuuWgbjvStTNOhVdnab0NK9yxEeUb9akigaFk>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 52D561EA0068; Thu,  3 Jul 2025 04:26:28 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    oheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehgrghrghgrsehfrhgvvggsshgurdhorh
+    hg
+X-ME-Proxy: <xmx:_kFmaNh7zl0_CPwaGfR_yywGZ4sDsu2fHl_yHqzmgKYciZI0sL5BBw>
+    <xmx:_kFmaFCPkiteAlQwUxsOjZSLNzs_dh2AcREC_YNY7qkhdd1btPgq-Q>
+    <xmx:_kFmaGKBzzgvy0-vZ2Kg91OQ8PCj7gd_S6aXBXRRkVrCA4r0aaReHg>
+    <xmx:_kFmaEC0jVNyaWIz5vneaGuQWcyxQ3KZ6qh9sCTxYw4ExvcPCWEqHQ>
+    <xmx:_0FmaOflNKzlhxQfP-PjUA3vFImyscBfuYANzuK49zXnvSHdC3t90HxE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Jul 2025 04:40:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 78f6f80f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 3 Jul 2025 08:40:28 +0000 (UTC)
+Date: Thu, 3 Jul 2025 10:40:24 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Renato Botelho <garga@FreeBSD.org>, Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+Message-ID: <aGZB-DYo1nleB0bd@pks.im>
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+ <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+ <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+ <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
+ <c8f4ae13-8578-4db3-bee3-1619f03428d4@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T296588d16e96e508
-Date: Thu, 03 Jul 2025 10:25:21 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: 
- "Francesco Nicoletta Puzzillo" <francesco.nicolettap@amarulasolutions.com>,
- git@vger.kernel.org
-Message-Id: <099c2a59-ac60-474b-a535-ec7dcb1f44f8@app.fastmail.com>
-In-Reply-To: 
- <20250703081838.190603-1-francesco.nicolettap@amarulasolutions.com>
-References: 
- <20250703081838.190603-1-francesco.nicolettap@amarulasolutions.com>
-Subject: Re: [RFC PATCH] blame: avoid failing if ignoreRevsFile does not exist
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <c8f4ae13-8578-4db3-bee3-1619f03428d4@ramsayjones.plus.com>
 
-On Thu, Jul 3, 2025, at 10:18, Francesco Nicoletta Puzzillo wrote:
-> Setting ignoreRevsFile globally makes the blame command fail in
-> repositories that don't have the file present.
->
-> Check that the file exists before trying to parse it.
->
-> Signed-off-by: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarulasolutions.com>
+On Wed, Jul 02, 2025 at 11:33:23PM +0100, Ramsay Jones wrote:
+> On 02/07/2025 12:28, Renato Botelho wrote:
+> > On 01/07/25 17:03, Ramsay Jones wrote:
+> [snip]
+> > BTW, should I start moving the port to meson?  Is it the default build method now?
+> 
+> The git project only provides source code (i.e. the project does not
+> produce any binary distribution packages). So, each 'distributor' can
+> use whatever tools they prefer to create their packages.
+> 
+> [A long time ago, we had some support for producing Red Hat and Debian
+> packages (if my memory serves me correctly), but that didn't last long!]
+> 
+> If such a thing as a 'default build method' exists, then I would say that
+> the Makefile (without configure) is it! (Meson is the *latest* build system
+> used in the project, not the default).
 
-Relevant thread
+Right now Meson is still considered experimental, as there are still
+some things missing compared to our Makefiles. I will address those
+missing pieces this release cycle, and once done our Makefile and Meson
+build instructions will both be considered officially supported ways to
+build Git.
 
-https://lore.kernel.org/git/20210807202752.1278672-1-noah.pendleton@gmail.com/
+> >  Is there a plan to remove autotools?
+> 
+> At present there are no such plans.
+
+There are no plans to remove our Makefile right now, but there is intent
+to remove autotools once Meson reaches feature parity with our Makefile.
+It will probably still be a couple releases before that happens, and we
+of course still have to make the final decision to actually go through
+with the removal. But it likely is to happen in the not-too-distant
+future.
+
+Patrick
