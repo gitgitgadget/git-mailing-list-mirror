@@ -1,140 +1,166 @@
-Received: from mail-vk1-f173.google.com (mail-vk1-f173.google.com [209.85.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F647299924
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 12:24:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.173
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751545445; cv=none; b=C2DfCGgiOMkn5nVT4vHV7VEb59GSpX7K6ZwMUNywvYDXlWWrjF+AxDcGN95CGmIiVGyzukn6JX6mCtqvhpsiPF1f3V2Z6ZAtYdD8Y3O3fhhC/ktFJJ6wfFqEueukONHXnjRF5lc3ww0Evqz+gqo/SHnOofKVoQBUl6FTjE9cFUQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751545445; c=relaxed/simple;
-	bh=BE7w2MQ1ofWRwyn304plmRa2yj2LfzvitSe8+uTMxP4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iC1zfplvxk3/dWw7/SETvBpWs49ftB9oyzMKa2odBDBJnyhvET34hYA0pJIvQFyOLhKP+UstKIXlwHFjdj6twu92UtYfsjTV3YML4z2r7lqCFGCnUnz01nxOwZTUBcnzNUzl1wCuGi62oQQ7nYZ7UjkjkhHP/hkZ++l3f2VWvag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FpNBme/V; arc=none smtp.client-ip=209.85.221.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F918239086
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 12:35:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=96.47.72.81
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751546157; cv=pass; b=oAEjUD25NA6fJZCy41AYdbLLarCwP7tkySyZaZGyNh23kOqHhut+9EMdorhmiTMvXSJW0UikLIDl+oDsoHKVu6+lpR3ijYTTxF3lyS0T8dGUWSSieKzAICrBZHdnltRHrfSzQu1M2yt1Q/FGq7dWhk92mxcuHLKxG+1gYaIKvoc=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751546157; c=relaxed/simple;
+	bh=PdFjw16gNDsVBtRMlCKkELYEz+yKR2mXNZrrIt3kzj0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=DheqEQMfa7p2f7l4Dfw93ZpKgF3fwWbMq/nt7aaK8Y7LfodkRHmi8MbdCJ44X8Y35IH4m6kkR2joEBOe1rG/9dBuP287AO5NZ5/3N+BS39yleJUFgWD5z2v5u6DXxQa/ijhAtGR4Fs41nXeQY+LgCIWeYCNIVThcpFMiaJ/Iezg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org; spf=pass smtp.mailfrom=FreeBSD.org; dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b=VQJQoh06; arc=pass smtp.client-ip=96.47.72.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=FreeBSD.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FpNBme/V"
-Received: by mail-vk1-f173.google.com with SMTP id 71dfb90a1353d-530d764149eso2477485e0c.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 05:24:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751545443; x=1752150243; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/x0cZitdaZkFxj0tpvwwJiP5k/MchGneazxNxFiTsPw=;
-        b=FpNBme/VwK9eV3nZmWgxN2cLaIYkun3dYtSmvTu3PKkM35jpdO1/Mj0/E1CxIMdoxc
-         AA4Cox1qwta9ktrMXwCJB6jeygIfci/u/ojZeQjUFkZBxHxyJ/bJDk+KUFSAsDeRgWPt
-         w/EqyYtzOiAjzPK96EjHiK8zymOqpMNuEc60XLZBnzIG5nfp3HzMoBnYmwYPxbProQ3t
-         J0lxNUw4TQ/b35BQNshSOkGrSn8JX6BsCqR8dMcwNuw0wl0shop+qkjjHeQ6fUNnImQv
-         EF5tgefrajS4G1I+NQRp0WBojw2kpnr96siVkOdYpcOBU6t45nQJ/xEL48rmHNtsWXLf
-         3QCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751545443; x=1752150243;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/x0cZitdaZkFxj0tpvwwJiP5k/MchGneazxNxFiTsPw=;
-        b=uCPZMdisyDNigRieN0iTSOTZnyfKkCNkPZW+IOer0qOA5KXVjFsSE3TCwIgGDbnQWI
-         uqdp2weE00+jX1y+nAMFJKx/ePyh2Vw4fbga/S7SVpMBEULzaguSQtLVCo2hvkRrg+8D
-         RRnZ0DaSFuqCcw1I68gfpOmPkubZZ/WgiKD0OojhvPHvtWkj/mg5e7FRM1MCIkOMCCT4
-         qhR2XM7xdlL37yZdmNsIP/Y3KsEIEhY3NSTTtpgsPHubR/eKCCFinXiD0CR8QVL2R0Us
-         3cV7Mngp57L5jHqcXB2XFIshontAirzWpEZJRRhTgNjZPNXosyveEXy8CjOXIl6EWCZl
-         QL1g==
-X-Gm-Message-State: AOJu0YzAMipU3wf/CIVs3sYxh1IbJMMtslAp9zINfJnNZZomzeT684Bt
-	VkBuk3PpyiX89wea1+H1/ZjZZoGOFZknGNm/uCQ6Nci+PSeNb17XpDaSAM6SeXnCKwlrcSlZOEK
-	STICNxseVTV8Ip2fhCwMnWmJsdA/Ka418cg==
-X-Gm-Gg: ASbGncssHvk1DHgWrVIZt89ffOfpLllyI+9xES/w/j9HuOnom4IMuYgZjCN0t5/0JeV
-	CvC9jtLu5j909QA9Nqa0t2sMkL+OgJJxuRbuArK6orUDt7iZQkSy/MGVlu1weLHhRv0ck1dtYfd
-	C+paMOhXLLdRTuKFSXCYoCChQ4qDXYn+iIv/4uAHCPe5c9
-X-Google-Smtp-Source: AGHT+IEjeZKquJafZd7Ie5zQ7nCsO7K+bA17mX1QaIjrUiFaGOUkL3KACwYuVeogfBcEKbeuzKMrRTk9S2iJJAMre+k=
-X-Received: by 2002:a05:6122:8f81:b0:530:7101:68eb with SMTP id
- 71dfb90a1353d-534674f7f37mr2288791e0c.4.1751545442863; Thu, 03 Jul 2025
- 05:24:02 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Jul 2025 08:24:01 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aGZslJSks2GF3uB7@pks.im>
-References: <20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im>
- <20250703-pks-reftable-default-backend-v2-1-5a27e72a8c5e@pks.im>
- <CAOLa=ZTJOqqr25Sj0YSAc9rDmar2qZiVD3H+K6qhdN3qKdqbGw@mail.gmail.com> <aGZslJSks2GF3uB7@pks.im>
+	dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b="VQJQoh06"
+Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits)
+	 client-signature RSA-PSS (4096 bits))
+	(Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
+	by mx2.freebsd.org (Postfix) with ESMTPS id 4bXx7r3rRNz3Kp7;
+	Thu, 03 Jul 2025 12:35:52 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+Received: from smtp.freebsd.org (smtp.freebsd.org [IPv6:2610:1c1:1:606c::24b:4])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
+	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
+	(Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
+	by mx1.freebsd.org (Postfix) with ESMTPS id 4bXx7r0NN5z3wW0;
+	Thu, 03 Jul 2025 12:35:52 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
+	t=1751546152;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=FbIjoPfEzUrbagtEQjFfUvQQRgHVkSmOGdMLtXyfc3A=;
+	b=VQJQoh06u13yT9sAKlfXhAivJBS8Ll+mAIXpRYdv/iLiOZPcNomAPdwtUonzMEfSHeGuDQ
+	X3DBRACtLJ/faPZAQe1hyNnKtZzn+lJX5qhLOP8baifdhz+EnqjytIdyjDxvq6OTAoJ9Sv
+	dwPb840HvQW8r38aC0wat/l5DK4aqHkM4eiLt238faCf9e16w1txCfMdlHpSXvJnVVYA1U
+	YQd0tyXxo0SCsbB1u/TEpfb9cPIqz0MtGkxKpCDDlebVl2eNE1vHgtX9jcxldBTCZkkqec
+	Kgj7X1VkTWyXO+J5WmRI8ztVTyC4XtP6Qwt5+9wo8aGzxIF6Xmes4oW/QMsqtA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
+	s=dkim; t=1751546152;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+	bh=FbIjoPfEzUrbagtEQjFfUvQQRgHVkSmOGdMLtXyfc3A=;
+	b=ktSFu+/AqeMHFLdln+YJHPv8VFKSPjZ2+8b2ropxi2K39Fo4s7sv/xInthzuSg4UywP0SL
+	tcktN3MBitFvDbNkQJHYA+oW0eyVB7wJYZDP0ouSfq4RQZT/Cap8U1S0JMlLlTvOhN6G1O
+	GDYEFXGV/mBX6QpEkeNuReTdgaoQzgYLduD1FFu9S8WlwHIApw/g+zrmApucTxPvP1s1qu
+	Ir1Fj1a6TjH9XGiYy7KhmYtvjRqITaVca9rK5jDinvVpMUyl8zjDQ3ThsGeskbuZwT8UTD
+	eHrVeJUmFdYHJyogcuZTDy6JXMuEsz5JmENRttJn+gV5Zc3J6uO24M6kONeFFw==
+ARC-Authentication-Results: i=1;
+	mx1.freebsd.org;
+	none
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1751546152; a=rsa-sha256; cv=none;
+	b=KJ9qVzD0JHKUz8fP/1wsJ9/MMEelg3huU2q/ATVA+dl2qZzjcT0wBhBXZhOSqCD+thdYs8
+	QYKS7WIXgBvtKQE/VYpqKi/pldnbwsD2nv9FycNzo6z1Oek+F4k/bWBqfLCzHiiTOM5lEl
+	845SbSbZCrcQN74ubVJVSQLH27eDJXfY9pHUcX34Q1gA2zh4Sb41uSM6EDV2e5dAhNmuu8
+	0bP6h+V7w28DZSi5u/eTeqNSDDPi9/rgCYCbpPTKEu0Zti578f50I2HbpEAqcQn+0fOl62
+	0ESHM5bWickIrsmmDgXbn/xQDUtWPbo9puzE6cJSdGEIarhuA4HVENkH19cdVA==
+Received: from [IPV6:2804:f1c:851:ac01:29a5:d790:eea7:3d35] (unknown [IPv6:2804:f1c:851:ac01:29a5:d790:eea7:3d35])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	(Authenticated sender: garga)
+	by smtp.freebsd.org (Postfix) with ESMTPSA id 4bXx7q0FQGz2My;
+	Thu, 03 Jul 2025 12:35:50 +0000 (UTC)
+	(envelope-from garga@FreeBSD.org)
+Message-ID: <90f5ae50-51a5-4188-b76e-90ab2621551c@FreeBSD.org>
+Date: Thu, 3 Jul 2025 09:35:47 -0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 3 Jul 2025 08:24:01 -0400
-X-Gm-Features: Ac12FXzXBizY1kSbDtSl3b6axxLmFZ1D5NFxHGc-_tD5dYofacUuY6Iu2KeRiJY
-Message-ID: <CAOLa=ZQUp6S3yQ-zCfPxCvwoJeiPdXh5U9mojH+9-P1RAAa2gg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] BreakingChanges: announce switch to "reftable" format
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com, 
-	Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000ee29a90639057332"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
+To: Patrick Steinhardt <ps@pks.im>, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Junio C Hamano <gitster@pobox.com>, GIT Mailing-list <git@vger.kernel.org>
+References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
+ <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
+ <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
+ <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
+ <c8f4ae13-8578-4db3-bee3-1619f03428d4@ramsayjones.plus.com>
+ <aGZB-DYo1nleB0bd@pks.im>
+Content-Language: en-US
+From: Renato Botelho <garga@FreeBSD.org>
+Autocrypt: addr=garga@FreeBSD.org; keydata=
+ xsBNBGStavwBCACjNlp/9+Y+VFe9ieR2h/WWbdvjz4Mb2z/f22bGoaskzCfvVNbo/v3i34I9
+ H6OdgZkGqheQEAD2jNfRbmPr4z40xDMUpYGLds+1Mvg7G3Hms3j5Ef8KaLSWUNWIfwKdfSVR
+ Qs35ccSJxAdRW5YdI6J3xZgika+3Bc4eJ05YE/nWW+PNTYevt5rqD50N3zybVYIcLoqVPpBi
+ AZE/sf5SLiLACIJb1t/s4x+pi8vgWevxVVT9u8V1f8zYErmHSLSqjxii0B3eRZphX9NCJOv9
+ +tfFZhnENInhn9gT7H4e2YumUltEy3jacONHJF3CC1pvvWEa6lEyypclMOkHQwNON7DLABEB
+ AAHNLFJlbmF0byBCb3RlbGhvIChGcmVlQlNEKSA8Z2FyZ2FARnJlZUJTRC5vcmc+wsCXBBMB
+ CgBBAhsDBQkFo5qABQsJCAcDBRUKCQgLBRYDAgEAAh4FAheAFiEERL7Dxegbnh7xTiQ5Ob6P
+ xxJcZXoFAmSta78CGQEACgkQOb6PxxJcZXrYlggAgaZmr6c1yIWzN8VksHrHpwt/uxONEP+h
+ ljy3yfrMsgfS5wx5Uzgfih1xYZUFC6jiI63CetqBqJpp3g1klRS1UWYKx2NeXphDMYZEdPm/
+ a6sXh4bKZbk6IE8Yn0/YiRT57d9DtbvswC7Gn7Igj/MSbhl49TvTGyvuB6juaffVoYZViomx
+ 5zMoee8Ml2o2qj3MrCJ+/K8GU54RlpOGqGRsqdwVdr9XEWub6fF2YFwR46cjmbiU3P5urFHH
+ nkJlBGPIwKxHimTW0lZsdx9aCKRDd/D80/WOEzXmk3k8B9lv/GsvOluHmveLhJG1R1tIJ31I
+ f2q8dfTvqsQXnu8CcWRcgc7ATQRkrWr8AQgA1DufoxScA+CWQbUR6zExIu8wXQKrhuRt4DG2
+ BgynT7EMUvEBadcbQRZXsBpemNfncc9Axyut/+rWiyKJf9BLQuo/9QYmSRvW1U6+0LJUYmdg
+ kMyBeYaPk+vnssv/u9jLuvV7FVgyE0yk1iaWIKOVDD+XrQCOvGw9uSceBrQyCyo3A/eRM/+p
+ vnDCaywR63PKE+3axk6lfNdGK3TnaWmS30/ZDCZlNsXuqprqR4JdT5wXids5o36dsuJ5EZ20
+ s5hNMD34s4Yr1Y1R9elH6qBsFCpozs0+jwrArxq+UJJCR6hH5W8ZEwJtRC8tzR8mRE1WywzX
+ BXYj0YhfGztQIxZckQARAQABwsB8BBgBCgAmFiEERL7Dxegbnh7xTiQ5Ob6PxxJcZXoFAmSt
+ avwCGwwFCQWjmoAACgkQOb6PxxJcZXr1vgf/SKXhoZcUU5I7TqcbHg0lJz9tICTupCGHWr/s
+ SQgjh9oEM5j1wqW7FlCGP90Tl9K0g3ow9YdbhU7VK470o6pymX9V9eLHzGgkZO/KMEtGBeK1
+ u+5ePjCJ/MK5B21KODLSU7WrIL1VN5ceXfQPLYt02LMLtPri+oduHD6RNBeA7US1DUzleq5F
+ 9NHGbvV2U7BdDUezpiO8NaFjFZVB11I5d99FxUM5XGVstI3VhsRKZxjY0KnqJzaQgTFsPGmv
+ AUfZVIN1pXgXiedhPXpr8+Y64jP+pHVwpVmh1zYWL6+q3kqFOUVP6c5iiMeoEXZvgJz7x/AC
+ ek3X5gvu8Hpcv+MZIg==
+In-Reply-To: <aGZB-DYo1nleB0bd@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---000000000000ee29a90639057332
-Content-Type: text/plain; charset="UTF-8"
-
-Patrick Steinhardt <ps@pks.im> writes:
-
-> On Thu, Jul 03, 2025 at 12:54:24PM +0200, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->> > diff --git a/setup.c b/setup.c
->> > index f93bd6a24a5..f0c06c655a9 100644
->> > --- a/setup.c
->> > +++ b/setup.c
->> > @@ -2541,6 +2541,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
->> >  			repo_fmt->ref_storage_format = ref_format;
->> >  	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
->> >  		repo_fmt->ref_storage_format = cfg.ref_format;
->> > +	} else {
->> > +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
->> >  	}
->> >  	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
->> >  }
+On 03/07/25 05:40, Patrick Steinhardt wrote:
+> On Wed, Jul 02, 2025 at 11:33:23PM +0100, Ramsay Jones wrote:
+>> On 02/07/2025 12:28, Renato Botelho wrote:
+>>> On 01/07/25 17:03, Ramsay Jones wrote:
+>> [snip]
+>>> BTW, should I start moving the port to meson?  Is it the default build method now?
 >>
->> Shouldn't this change be instead made to REPOSITORY_FORMAT_INIT?
->
-> It made me a bit uneasy to change `REPOSITORY_FORMAT_INIT` as it is used
-> in several places. So I opted for the more contained change.
->
-> In any case, I found the logic to be hard to follow anyway as it is not
-> immediately clear where the default value actually comes from without
-> the `else` branch. So I consider it a good change regardless. In fact, I
-> would argue we could go even further and change `REPOSITORY_FORMAT_INIT`
-> to be set to `_UNKNOWN`. Same for the hash.
->
+>> The git project only provides source code (i.e. the project does not
+>> produce any binary distribution packages). So, each 'distributor' can
+>> use whatever tools they prefer to create their packages.
+>>
+>> [A long time ago, we had some support for producing Red Hat and Debian
+>> packages (if my memory serves me correctly), but that didn't last long!]
+>>
+>> If such a thing as a 'default build method' exists, then I would say that
+>> the Makefile (without configure) is it! (Meson is the *latest* build system
+>> used in the project, not the default).
+> 
+> Right now Meson is still considered experimental, as there are still
+> some things missing compared to our Makefiles. I will address those
+> missing pieces this release cycle, and once done our Makefile and Meson
+> build instructions will both be considered officially supported ways to
+> build Git.
+> 
+>>>    Is there a plan to remove autotools?
+>>
+>> At present there are no such plans.
+> 
+> There are no plans to remove our Makefile right now, but there is intent
+> to remove autotools once Meson reaches feature parity with our Makefile.
+> It will probably still be a couple releases before that happens, and we
+> of course still have to make the final decision to actually go through
+> with the removal. But it likely is to happen in the not-too-distant
+> future.
+Thank you for the explanation.  I'll keep an eye on the announcements 
+and as soon as meson is considered "feature-complete" I'll start 
+experimenting with it on FreeBSD ports to be ready to flip the switch 
+when the time comes.
 
-Exactly, I just read your patch and the existing code around it and was
-a bit confused because I couldn't pinpoint where we set the default to
-'_FILES' when there is no ENV or config setup.
+-- 
+Renato Botelho
 
-I think changing `REPOSITORY_FORMAT_INIT` to be set to `_UNKNOWN` makes
-a lot of sense combined with your change. I'll leave it to you if you
-want to include that in this series or not.
-
-> Patrick
-
-Thanks!
-
---000000000000ee29a90639057332
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a2f9f940d45eac69_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1obWRsOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOHIxREFDYXJFSldJTzFZdEFEVmhWT0xrL3Q1ZzlHRQpuU001RVM1bnR5
-M3B1bThGVDlwRTZqbkQreGF6emxzQVF0Z3A2MnBFOWE1RVlrQ3lDdkNVWDNLWmRycmxGSTNJCjBY
-VDFBWWdqOTE4ZmtQaFV5M3NJSWZra3R4RkxpQldYNmcrTVRhRE9ZRUJVejA1cVZEdXkwVTJ5QUxz
-cEdLV1gKM2NVd1FYMTJva0lIeHc1dDN1aDZEQnkzZEREYXpIVXU1U21zVzJxM2ZvU1hkY0hFbGZv
-MnpJTTRYbjI2dXE4Mgp0K3NEcHRhaElLdFB0RG1YZ2Y4aldWc2RmdHljSGtQcDRNK1pNWXlUMkFL
-aWY3alNXM1dxV3hqK0twMnV4NmxXCnJGd3ExckIvTEZIalVwOENQU3NNeFYzekJuWVFrTHJ3bVUx
-SjlHby9UWkRLWHVnT3dLYzZ4TUxZZnFrU3lGUy8KaHVuZ2dHZ2U2VndMdWV3Ym54MjNmQWZ1Nksw
-NGVIN1hBWW03VHl0cjdzclRmZERpQ05MUVRvR3dPTzRVckFZQQoxRm9tb0JlbFI3V3I1c1BEcVZu
-aWVWY0N0TnBrRjZGZGNxK21KL1hsQzRsNDRkY1JqVUoxZFZlNFVSaE9YWVpLClRya0J4NDhnNmEz
-alZOckxDZ1lmYUtSQnVPZ1BqUCtubndUdHBrcz0KPWN0RUsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ee29a90639057332--
