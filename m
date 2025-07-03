@@ -1,169 +1,97 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F031EF38E
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 05:55:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98ED1225D6
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 05:56:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751522157; cv=none; b=jXGwew+4oVowogeDeR7+WymD18FxB/qlFccYQz9/wSsBKX60J9MxEuHz/+OW5w8M4x3UUtXJ0E+NzBRN3xWth2iUyKoaBPNEBOQvZzA3Qb8Puf0ZswOAi8Poatcba0U0u1ncY2FsYa3nSFjPeSFU7Lh2sA0ROmEWry7GclGairw=
+	t=1751522182; cv=none; b=JHzlVrzjP8vnlUFVsWI0pbQ2hlJGR/4qLK9ZRJdZWs9vgpx6T+KlgoMb7oP5HPprpBMwNpcwHbnyGF99mfrMApE+cGGSEhW1CPOobb2U6ZnX+yQhMN9mqxvKDAAVHGYjv8UIRrkN3ToDykI9AUfJLXLyXmO4FGRInKVn8+yscno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751522157; c=relaxed/simple;
-	bh=W+cqG6WofB+fWRue65AsJhYhaX8srBRwax+hDPSlFGg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XgTK5j+lRa0Hz9hkwAMo11HKn3Cogbh6SLKIRQQpTyPKh+pN3HMkGIVFn5mCgxaPepHaE+pNb5bph3a4AbBNp3tLeIE93RHkHWCQaH9/tJM+PMtX6x5ifSfg77ShV+od16Y73vv2rW67PkVZwiH8tILCRvYoRE/H5Ao3Piou/p0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KmZ++MMl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NxrcXeW6; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751522182; c=relaxed/simple;
+	bh=Ox2/Uo79ySnGXxHy2+FmtLfY2wv/4EGDuhQ9+crM/eM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q9cgOy4tyZUzzAExs8XUuSiYvDrNCd4K7hVIJTY/t6AfwwlWeS5G/Zm21nCm5I7ub6BvpncevHrYou/DYY+6AsjoV1D3IfRGxOOgpQYMz5lVQviCMYCFTzqvZPIOwTDX+E747suAb0lZ3ejlB0i9/UgpDUV/B74zLwPBNb6vjWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W8Z8J8nn; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KmZ++MMl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NxrcXeW6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 84C307A01F0;
-	Thu,  3 Jul 2025 01:55:54 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 03 Jul 2025 01:55:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751522154; x=1751608554; bh=Rdgk4yKnSA
-	FT5DYTFS8m9XsNzJrKHjqL9RoNMQlQljU=; b=KmZ++MMlWF0bn4yL5CuoRAiLvl
-	Wy4IlsbrBttqIe58HiN7d4IhiIDCzj6eOESw/zIG2tA2Kbtm7aJW8L5KBbIl5d08
-	plI9TLfTwDGG25S3ZcEAZs7xPwz1ziPxwrOW/2eICOm47E1sHNYSzx5bNvqz/SOG
-	TXLx+2bykPWQ8p+xgitvnHBMKPiQdE7p7hefY9+U2jt0Uhk7BubxZTIpSxaGJ3Tg
-	INAncHU8H37/0MxabfJnZekvCi+1y/WQsw88wgKdpagT1CZU4wEvfmZakHGnavpp
-	4X0hjxkOniCn6zLpV316uHwvIIkckkeB0sHnu9UiV2Bw7lOXhT0cuotqtymQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751522154; x=1751608554; bh=Rdgk4yKnSAFT5DYTFS8m9XsNzJrKHjqL9Ro
-	NMQlQljU=; b=NxrcXeW6/NSrqWPpfdcxtUHgm65kQ7eXrITmj9HqZAofmx23NT1
-	b7WC36Pe+ZQqZjWlN51yHphLfOREInN/fJeg1IUxm9rRq7BbzmmoEFKX43uJzIV0
-	gS3bcL17nTgQEQQASU4DkDZVcJUlbluX4hT7h1WAmjGsNbTsu9VUwYkfFIH7E1Wv
-	Bzq8ZiUxd73Hkpwvg4DWfUlf44/9AVAucXG1zx4/LLfzfCZwdEzmOfu0gdfd0nA6
-	ReA8q+yYFnfhDLWYFLKFGmIsExZrr+7wyHytzwWbIvDWh1jh4gbe+lTcCEZol+v5
-	yZFRTYxKIxzgeCutmF6rcZNRrKTTJb2WYMA==
-X-ME-Sender: <xms:ahtmaMJHJTsqGQ6TVML6XFEvbkTXt9mLQyxpx3hG4xL_jbvLkseeFw>
-    <xme:ahtmaML1JVhgdLXW9Mw4-5AvoUaNTZT09RKOdTqYbERXlKqRRHgjZo2_ZdrgXyd-3
-    W4fG2Fe1KGBizuZ3A>
-X-ME-Received: <xmr:ahtmaMtHLmW328NPdJ8FGAcIujVPhutm17_OqEi9i8TiFQhl7GI3uF--MU-B9D-Ye5I5nSa_owk6KfMDiBueWhCHcHCR7sLhCxrECoqBrA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleeglecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:ahtmaJZfPCfBcdivDthdzyX9f8IIMMDRGH_IWddKtqFyhj7VyJRYOA>
-    <xmx:ahtmaDY7IWElIp8cMlKjn3e1fIxvOhBXZvU73dojSHoYqC8VxTQ_dA>
-    <xmx:ahtmaFBWByF-UiolrGTORPPuvMGY-QTij02pY-MF4AyFpWQVkziw2g>
-    <xmx:ahtmaJYxCQy5IwhMCX9wguS5sgpuTeYsoX5xVyDCZrGRq2ZaqTcj6w>
-    <xmx:ahtmaK1JVhwKQLwb3f9n4aoBUrf8YazF2z5jj7jVpKBlQQ-kSP7YgQO3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Jul 2025 01:55:53 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 08210c8a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 3 Jul 2025 05:55:52 +0000 (UTC)
-Date: Thu, 3 Jul 2025 07:55:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] for-each-ref: introduce a '--skip-until' option
-Message-ID: <aGYbZcXP2voT2IYE@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W8Z8J8nn"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-236470b2dceso45267155ad.0
+        for <git@vger.kernel.org>; Wed, 02 Jul 2025 22:56:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751522180; x=1752126980; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XTAuwopnvnT5fIjZ3jQJe92Y7AUUKCmwQbhaWCZzYXk=;
+        b=W8Z8J8nnfyYYtDN/X8w6SWThjGEHht9FlHdknnQV16d+jIp2R4YEj2OQkuII+9pPSV
+         7QMrbb6+GlCFDYwG63CG+7KSrEMhCRdmA7CnIPt7ie9u41NOFfSQIWnTNAiNwqX6AFCE
+         XGyVdV4MDvhy8+LBRH+IR2zKzq4BTopO+Sfv2282Y3snm3AkRb6I1oMjnwImdNYfrjBj
+         +tle8fdWnruLQX/LEPnLRLKR65+qWvGjUNkmi95VKZQnDYAPymHiaS+K+ZrdPA+5adje
+         0KbTEXrX95Vt5+yp+Gja3MYChcGj5f9gc6boIIUfu8E6YLunrohOs1WgtOuvdROllZC3
+         4jHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751522180; x=1752126980;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=XTAuwopnvnT5fIjZ3jQJe92Y7AUUKCmwQbhaWCZzYXk=;
+        b=ROKnXlF8X5gQbvk6ybaLszqE7yL9kyPylBy0M9/OLUicY8AZlCFOfFMmu/2uxSOUPm
+         SMEDtD+mDrse+Bk9/6P3ybo2tpO/HmrLwNa1e19z7ePsKFQS8GcI+7KpmbaDM5OD1BNc
+         JxSnMBpEryI1v2KUtCATtlgIdajP+eSL1BEMjxRf1yUXHzBCSGQS8zB+fuPuI7a1yemq
+         cIOOuv+DZrEkX6A1Jsvw6a/GIvR3OfZ29wuoweiVeZ/zM5Toli7wyoVVYk/DOksBbXqd
+         lWHhu+ELIyf0rd+hxQHnNGC6ipuvBKf+W9pmTHj5WLuuFTN7eVU4dqXf+sGQrDHFtr/O
+         e3DA==
+X-Forwarded-Encrypted: i=1; AJvYcCW7OlGfmsYLnFbcqaF9chki2cO4gSGl7UPyjvcc+AzM1WWHjdf9N4hIvvtv799yZPowmhs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzC6b4DN3ODCyrpS33Ix7uGm2jqi9vQUlg2P+Vh9ZkBIUm6SfoG
+	sYDg/oHDvEON1kvt5I2ikuJTXi6MInvUzW6kScQIzuqvnGTkDD/NgUTu
+X-Gm-Gg: ASbGncunO7hEkGLfI8nPyy5aRfgYkoL30HD9wIdXNqSRQODnboDZ11thWknHsam6okz
+	pU+1Z08tw6xArSI6aougfJZEXiwxWq76TiRjGzLKXCyYjGXykuT404gNmje3ISzViz8MpeBnirT
+	8TCzZHxq09/++Mrport/rrAE/zOMb+4RJPgBvyTIVJ1Kr4XQPH8dRjSAYVUGDxy7c8UzHh3SazH
+	S+7DQ3hHtYnIsBA9P6SVsf8o96YCnnS0pnnVvSGdbbsOuwUCZTeN+NpUT8lb0C4ssAlQN0fcZs0
+	DJaysIyhhsFSnTZztGRfwn4SxbuJSSPfyB4uyjGkwAKmjtRKZtsLxB+p86BqvVJIBKwAMlEqcij
+	cIGhrD3tMi2KM9dh4C5sbysrfpuU=
+X-Google-Smtp-Source: AGHT+IEkdZ10B9VW3JH9CWnnQdaMBr64NYMDOXCFh0Em+IGbgJ62NaMqyV6VW/hcite8qa9RvgFdcg==
+X-Received: by 2002:a17:903:2b05:b0:235:779:edf0 with SMTP id d9443c01a7336-23c6e5e23f1mr66432405ad.50.1751522179588;
+        Wed, 02 Jul 2025 22:56:19 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b34e3205b3dsm14280980a12.78.2025.07.02.22.56.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Jul 2025 22:56:19 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  phillip.wood@dunelm.org.uk,
+  git@vger.kernel.org
+Subject: Re: [PATCH 0/4] for-each-ref: introduce seeking functionality via
+ '--skip-until'
+In-Reply-To: <aGYSjf5H_ZBaVVJm@pks.im> (Patrick Steinhardt's message of "Thu,
+	3 Jul 2025 07:18:05 +0200")
 References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250701-306-git-for-each-ref-pagination-v1-4-4f0ae7c0688f@gmail.com>
+	<5e9b3ef1-931b-4b70-8275-5aed5da3d6f3@gmail.com>
+	<CAOLa=ZTwvOiCnYK18GTEUkcW0-YLHkJ=MBggdzOYsbTT+OHPwQ@mail.gmail.com>
+	<aGYSjf5H_ZBaVVJm@pks.im>
+Date: Wed, 02 Jul 2025 22:56:18 -0700
+Message-ID: <xmqqsejdbywt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250701-306-git-for-each-ref-pagination-v1-4-4f0ae7c0688f@gmail.com>
+Content-Type: text/plain
 
-On Tue, Jul 01, 2025 at 05:03:30PM +0200, Karthik Nayak wrote:
-> diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
-> index 5ef89fc0fe..4bf7c66b8c 100644
-> --- a/Documentation/git-for-each-ref.adoc
-> +++ b/Documentation/git-for-each-ref.adoc
-> @@ -14,7 +14,7 @@ SYNOPSIS
->  		   [--points-at=<object>]
->  		   [--merged[=<object>]] [--no-merged[=<object>]]
->  		   [--contains[=<object>]] [--no-contains[=<object>]]
-> -		   [--exclude=<pattern> ...]
-> +		   [--exclude=<pattern> ...] [--skip-until=<pattern>]
->  
->  DESCRIPTION
->  -----------
-> @@ -108,6 +108,10 @@ TAB %(refname)`.
->  --include-root-refs::
->  	List root refs (HEAD and pseudorefs) apart from regular refs.
->  
-> +--skip-until::
-> +    Skip references up to the specified pattern. Cannot be used with
-> +    general pattern matching.
-> +
->  FIELD NAMES
->  -----------
->  
+Patrick Steinhardt <ps@pks.im> writes:
 
-Is it "up to and including the specified pattern" or "up to but
-excluding the specified pattern"? It would help to make it very explicit
-whether the pattern itself would be yielded or not.
+> Even more importantly though, a numeric offset would be invalidated by a
+> concurrent write in case that write ends up inserting a ref in the range
+> of commits you intend to skip now.
 
-> diff --git a/ref-filter.c b/ref-filter.c
-> index 7a274633cf..9d0255d5db 100644
-> --- a/ref-filter.c
-> +++ b/ref-filter.c
-> @@ -2714,20 +2716,28 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
->  		 * so just return everything and let the caller
->  		 * sort it out.
->  		 */
-> -		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
-> -						"", NULL, cb, cb_data);
-> +		goto non_prefix_iter;
->  	}
->  
->  	if (!filter->name_patterns[0]) {
->  		/* no patterns; we have to look at everything */
-> -		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
-> -						 "", filter->exclude.v, cb, cb_data);
-> +		goto non_prefix_iter;
->  	}
->  
->  	return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_repository),
->  						 NULL, filter->name_patterns,
->  						 filter->exclude.v,
->  						 cb, cb_data);
-> +
-> +non_prefix_iter:
-> +	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
-> +				       NULL, 0, flags);
-> +	if (filter->seek)
-> +		ret = ref_iterator_seek(iter, filter->seek, 0);
+That argument cuts both ways, no?  You have shown up to some ref
+which you remember in the last cycle, and then while you are
+planning to formulate another query with --skip-until naming that
+ref, somebody removes that ref, then what happens?  Or somebody
+inserts a new ref that sorts earlier than the ref you stopped at the
+last time.
 
-Hm, this interface is somewhat weird now, as we have a split in what the
-prefix-string meeks when creating the iterator and seeking it. I think
-we should align those two functions.
-
-> +	if (ret)
-> +		return ret;
-> +
-> +	return do_for_each_ref_iterator(iter, cb, cb_data);
->  }
->  
->  /*
-> @@ -3200,6 +3210,8 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
->  	if (!filter->kind)
->  		die("filter_refs: invalid type");
->  	else {
-
-The `if` branch now needs to be updated to have curly braces, as well.
-
-Patrick
