@@ -1,126 +1,300 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61951A3168
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 11:42:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C142E173B
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 12:04:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751542941; cv=none; b=eQ1XgrYor8sL/4EcezjoMNv9x5sxTSGSbK4+i/4l5/a2Q4aSgQ/WkcHQT0x+YrjAC7XP/ZYUwXz5S8GYXQt5oCNBIlDpgGeJRw1yVr4f9iPiRxqJyc9muUSso6qzupW4hwBMeb45LNpuTqgJPWGOrTKDycYtDSc8ud2CbpPg5gQ=
+	t=1751544280; cv=none; b=OUuTxB4+1gbTy1nld89gpUFJxdhjzFDAa0U1vp8FL7cJfthHB+sWhdBBuVuqRG23ka4aNeLd/Bx9DH5GBSOpX1NyOB2DD0omXStDtdlVZK3z1EQXSptf7FHMyuZl/Wm+GPR+hA+/nvvoIdT83IlOMatK8rbgcvPwlaJqBhthiM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751542941; c=relaxed/simple;
-	bh=Tudvfx+kNDRsu/WyH/tk3Tppup7fL/QYiBUnqcwvrQU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UVbZxJRNXPWCkuB2ohd2smp40zTOChEBvSBvyCKPzshP/BUDsgnqiCJxNf8Ky5epqckQ7VqsUNPGPrUh+6LGGNqDnNoXXzf0BSlRc+fhfwbxaxJ1pEFw9l4qLfq43IW6h2+plrXbLWa/4olhA07rkgs3l1btofX3wiQyqK7RxFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mjwWMUAH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gwxDvWnS; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751544280; c=relaxed/simple;
+	bh=Clk+9L4/ALfD4gpD+4Wm2xURywzcMOMkN1nWl4Kb1jk=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version; b=mqePj5aJwUtoDB8cv83pOxHo/VfVL8kMAjWjWx1cEYYLZvHeUroXnUHfW/KEPtk6CxGL9g83nxY7xjtQlfphZ2mURQ0EvUm2fi2m+aANqeL53lB1eZJGoZ0kZQ2IpLfKPXM+S0vFB5HJsbozm2FENQ2lZTZua5lnqeZvg+/XPT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=LzNQk8oI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JSs+9B/d; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=LzNQk8oI; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=JSs+9B/d; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mjwWMUAH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gwxDvWnS"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C57E67A0178;
-	Thu,  3 Jul 2025 07:42:18 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 03 Jul 2025 07:42:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751542938; x=1751629338; bh=vZXpMtf+vH
-	VuqYUwE8xP/oEXT3O2s96TUJ2Euqg3A78=; b=mjwWMUAHCgrD8KRRHDusJM4S1i
-	lWGj5q50vGjvR22FYyjsda19dJOVdXA8kYPCX7XgbDkspZ4e3+ItHeD/rgjRyaPz
-	TNw5YZy3WxMly7YP2SgX+XxbgqN3962RAv9vRo4PvbnmuSEPRrmN2TJBArQwZMQ8
-	0BiaYkeIA8QOcicKBzQ1tJKBSOnYsiAv3FTbXNFGWOi8ClCo3kJ/4gtn05HTfHdR
-	kXjsyO3uetxSs4IsEriuwujYwdpXAndrOQsBnglyKMWmotWDMLXbpa5Z1YFiCDzY
-	D3dokqgssrs0IDFCzY/vmHSrGqn0I0YU+7XXI6nvFWsFwX3VdHjNIYvX9qIg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751542938; x=1751629338; bh=vZXpMtf+vHVuqYUwE8xP/oEXT3O2s96TUJ2
-	Euqg3A78=; b=gwxDvWnS3VT1smWUcUZJ+Z6MkKp+eddr/+t8PlYkiX/VweF+p9+
-	1f7lBAqmQ6skDGa368o2TE/k7egbN1AHh/HE19BIBHgJB5H3PanD8/NRbfX5pGhP
-	W6eg0UYGuajcXUq99VCAS7mhiJBA4vxmBwd22eOPcqWJ9vLy6jsU6WVja7RBF/Hu
-	7wXlUl1YLmill5nA7s/rNc8bdoYcjJgWhxCgdxUVlLaIODwlW+wInXUUBp84AU8h
-	JFPXcGHW0EioOYoA/8O55bHE0AjEbL/nPTdOIUI1Vur+UqO2yapCQTG/zBfCE2jr
-	vF8Os1kDucOdwQuz2cJy4Ly0uQdh8opGxng==
-X-ME-Sender: <xms:mmxmaBR9dJYitfo57Yz1DAiUgriYDYBmuNNMfVitSesJaTKKTM8y1Q>
-    <xme:mmxmaKxVX6YWHTcTd6yF9zXljg0JqCORCVonK-8uWJAB_OxCQXPTCC7nKJySygZIu
-    mFoEn5_R6xNDZnjnA>
-X-ME-Received: <xmr:mmxmaG1agJea_-RES4RNB2LUAQIo_ob8UQ0AKDpdXHJDaf0x9AmLfQ-UPEyg5iEvi7SjyFpq7lQ3lONrWs-lGoPnah_mSpwewvAhYJvdUQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvtddulecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsrghn
-    uggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehkrg
-    hrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehrhigvnhhushesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:mmxmaJDaQ_pJFhzj5uoqwvLUSqdaWTtywPwBOqnVDWJh6wYujRyPnw>
-    <xmx:mmxmaKgzRR6yUK46mKWkqSd1u2Ic2kjAt3y5wt3EPiscRKHejQY8xQ>
-    <xmx:mmxmaNqKpt-PdXPsIGUjNfQi-5uzK94fY37VQPfTprTKdWWOk74FZg>
-    <xmx:mmxmaFiMPlrejvzENn21vYOyOwoKGGWzSXV0z9Py6Q-Y6z-1wLc3DA>
-    <xmx:mmxmaA__rU952xt_aUMAxLyfmrYqpvMOwRKrwWvBmBhm_DSBg2J-lB35>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Jul 2025 07:42:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 729da958 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 3 Jul 2025 11:42:15 +0000 (UTC)
-Date: Thu, 3 Jul 2025 13:42:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, "brian m. carlson" <sandals@crustytoothpaste.net>,
-	K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com,
-	Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v2 1/2] BreakingChanges: announce switch to "reftable"
- format
-Message-ID: <aGZslJSks2GF3uB7@pks.im>
-References: <20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im>
- <20250703-pks-reftable-default-backend-v2-1-5a27e72a8c5e@pks.im>
- <CAOLa=ZTJOqqr25Sj0YSAc9rDmar2qZiVD3H+K6qhdN3qKdqbGw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="LzNQk8oI";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JSs+9B/d";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="LzNQk8oI";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="JSs+9B/d"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 15EE21F387;
+	Thu,  3 Jul 2025 12:04:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1751544276; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=IA54fAvp6KrABLRuvV/QlU/9dF2+2fdrOrnoG7GwL4E=;
+	b=LzNQk8oIbFaHJ4xwBulwJKDMZGpUBOVmcAYi8nQBt3VIT9TbyB1JYC25hoO6KmXABNNZYM
+	jMbeuwKjSbuYHOobXPxt1qkDqyL5shmkLxjtfP/doyKSeyzRIn5cLhq59W6ulDw+FUkqR7
+	ny5GHqLAwfoAQ2iD4h/wvXAw9QqBbpk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1751544276;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=IA54fAvp6KrABLRuvV/QlU/9dF2+2fdrOrnoG7GwL4E=;
+	b=JSs+9B/dcBj4c0Jtlw+cnQAXMq86lq0rsptuScWl/QwURA5VEdw1PxQHof/p7CFL8FydQB
+	jiLgBo3iWxXAyxCg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1751544276; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=IA54fAvp6KrABLRuvV/QlU/9dF2+2fdrOrnoG7GwL4E=;
+	b=LzNQk8oIbFaHJ4xwBulwJKDMZGpUBOVmcAYi8nQBt3VIT9TbyB1JYC25hoO6KmXABNNZYM
+	jMbeuwKjSbuYHOobXPxt1qkDqyL5shmkLxjtfP/doyKSeyzRIn5cLhq59W6ulDw+FUkqR7
+	ny5GHqLAwfoAQ2iD4h/wvXAw9QqBbpk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1751544276;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
+	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+	bh=IA54fAvp6KrABLRuvV/QlU/9dF2+2fdrOrnoG7GwL4E=;
+	b=JSs+9B/dcBj4c0Jtlw+cnQAXMq86lq0rsptuScWl/QwURA5VEdw1PxQHof/p7CFL8FydQB
+	jiLgBo3iWxXAyxCg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 084781368E;
+	Thu,  3 Jul 2025 12:04:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id ZQWKAdRxZmiKNQAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Thu, 03 Jul 2025 12:04:36 +0000
+From: Takashi Iwai <tiwai@suse.de>
+To: git@vger.kernel.org
+Subject: [PATCH v2] git-gui: Add support of SHA256 repo
+Date: Thu,  3 Jul 2025 14:04:28 +0200
+Message-ID: <20250703120430.17240-1-tiwai@suse.de>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTJOqqr25Sj0YSAc9rDmar2qZiVD3H+K6qhdN3qKdqbGw@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [0.20 / 50.00];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	R_MISSING_CHARSET(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	BAYES_SPAM(0.00)[27.50%];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	RCPT_COUNT_ONE(0.00)[1];
+	MIME_TRACE(0.00)[0:+];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	ARC_NA(0.00)[];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FROM_HAS_DN(0.00)[];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid,imap1.dmz-prg2.suse.org:helo];
+	FROM_EQ_ENVFROM(0.00)[];
+	TO_DN_NONE(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	RCVD_TLS_ALL(0.00)[]
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spam-Score: 0.20
 
-On Thu, Jul 03, 2025 at 12:54:24PM +0200, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/setup.c b/setup.c
-> > index f93bd6a24a5..f0c06c655a9 100644
-> > --- a/setup.c
-> > +++ b/setup.c
-> > @@ -2541,6 +2541,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
-> >  			repo_fmt->ref_storage_format = ref_format;
-> >  	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
-> >  		repo_fmt->ref_storage_format = cfg.ref_format;
-> > +	} else {
-> > +		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
-> >  	}
-> >  	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
-> >  }
-> 
-> Shouldn't this change be instead made to REPOSITORY_FORMAT_INIT?
+This patch adds the basic support of SHA256 Git repositories.
+The needed changes were mostly about adjusting the fixed ID length of
+SHA1 (40) to be variable depending on the repo type.
 
-It made me a bit uneasy to change `REPOSITORY_FORMAT_INIT` as it is used
-in several places. So I opted for the more contained change.
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+---
+v1->v2: Fix the handling in commit_committree, too
 
-In any case, I found the logic to be hard to follow anyway as it is not
-immediately clear where the default value actually comes from without
-the `else` branch. So I consider it a good change regardless. In fact, I
-would argue we could go even further and change `REPOSITORY_FORMAT_INIT`
-to be set to `_UNKNOWN`. Same for the hash.
+ git-gui/git-gui.sh                   | 13 ++++++++++++-
+ git-gui/lib/blame.tcl                | 12 ++++++++----
+ git-gui/lib/choose_repository.tcl    |  8 ++++++--
+ git-gui/lib/commit.tcl               |  3 ++-
+ git-gui/lib/remote_branch_delete.tcl |  4 +++-
+ 5 files changed, 31 insertions(+), 9 deletions(-)
 
-Patrick
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 28572c889c0e..206981190535 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1275,6 +1275,17 @@ if {[catch {
+ 	set picked 1
+ }
+ 
++# Use object format as hash algorightm (either "sha1" or "sha256")
++set hashalgorithm [exec git rev-parse --show-object-format]
++if {$hashalgorithm eq "sha1"} {
++	set hashlength 40
++} elseif {$hashalgorithm eq "sha256"} {
++	set hashlength 64
++} else {
++	puts stderr "Unknown hash algorithm: $hashalgorithm"
++	exit 1
++}
++
+ # we expand the _gitdir when it's just a single dot (i.e. when we're being
+ # run from the .git dir itself) lest the routines to find the worktree
+ # get confused
+@@ -1822,7 +1833,7 @@ proc short_path {path} {
+ }
+ 
+ set next_icon_id 0
+-set null_sha1 [string repeat 0 40]
++set null_sha1 [string repeat 0 $hashlength]
+ 
+ proc merge_state {path new_state {head_info {}} {index_info {}}} {
+ 	global file_states next_icon_id null_sha1
+diff --git a/git-gui/lib/blame.tcl b/git-gui/lib/blame.tcl
+index 8441e109be32..1f0b8ea28504 100644
+--- a/git-gui/lib/blame.tcl
++++ b/git-gui/lib/blame.tcl
+@@ -426,6 +426,7 @@ method _kill {} {
+ 
+ method _load {jump} {
+ 	variable group_colors
++	global hashlength
+ 
+ 	_hide_tooltip $this
+ 
+@@ -436,7 +437,7 @@ method _load {jump} {
+ 			$i conf -state normal
+ 			$i delete 0.0 end
+ 			foreach g [$i tag names] {
+-				if {[regexp {^g[0-9a-f]{40}$} $g]} {
++				if {[regexp [string map "@@ $hashlength" {^g[0-9a-f]{@@}$}] $g]} {
+ 					$i tag delete $g
+ 				}
+ 			}
+@@ -500,6 +501,8 @@ method _load {jump} {
+ }
+ 
+ method _history_menu {} {
++	global hashlength
++
+ 	set m $w.backmenu
+ 	if {[winfo exists $m]} {
+ 		$m delete 0 end
+@@ -513,7 +516,7 @@ method _history_menu {} {
+ 		set c [lindex $e 0]
+ 		set f [lindex $e 1]
+ 
+-		if {[regexp {^[0-9a-f]{40}$} $c]} {
++		if {[regexp [string map "@@ $hashlength" {^[0-9a-f]{@@}$}] $c]} {
+ 			set t [string range $c 0 8]...
+ 		} elseif {$c eq {}} {
+ 			set t {Working Directory}
+@@ -627,6 +630,7 @@ method _exec_blame {cur_w cur_d options cur_s} {
+ method _read_blame {fd cur_w cur_d} {
+ 	upvar #0 $cur_d line_data
+ 	variable group_colors
++	global hashlength
+ 
+ 	if {$fd ne $current_fd} {
+ 		catch {close $fd}
+@@ -635,7 +639,7 @@ method _read_blame {fd cur_w cur_d} {
+ 
+ 	$cur_w conf -state normal
+ 	while {[gets $fd line] >= 0} {
+-		if {[regexp {^([a-z0-9]{40}) (\d+) (\d+) (\d+)$} $line line \
++		if {[regexp [string map "@@ $hashlength" {^([a-z0-9]{@@}) (\d+) (\d+) (\d+)$}] $line line \
+ 			cmit original_line final_line line_count]} {
+ 			set r_commit     $cmit
+ 			set r_orig_line  $original_line
+@@ -648,7 +652,7 @@ method _read_blame {fd cur_w cur_d} {
+ 			set oln  $r_orig_line
+ 			set cmit $r_commit
+ 
+-			if {[regexp {^0{40}$} $cmit]} {
++			if {[regexp [string map "@@ $hashlength" {^0{@@}$}] $cmit]} {
+ 				set commit_abbr work
+ 				set commit_type curr_commit
+ 			} elseif {$cmit eq $commit} {
+diff --git a/git-gui/lib/choose_repository.tcl b/git-gui/lib/choose_repository.tcl
+index d23abedcb36f..6078b1c7e2c4 100644
+--- a/git-gui/lib/choose_repository.tcl
++++ b/git-gui/lib/choose_repository.tcl
+@@ -870,6 +870,8 @@ method _do_clone_HEAD {ok} {
+ }
+ 
+ method _do_clone_full_end {ok} {
++	global hashlength
++
+ 	$o_cons done $ok
+ 
+ 	if {$ok} {
+@@ -879,7 +881,7 @@ method _do_clone_full_end {ok} {
+ 		if {[file exists [gitdir FETCH_HEAD]]} {
+ 			set fd [open [gitdir FETCH_HEAD] r]
+ 			while {[gets $fd line] >= 0} {
+-				if {[regexp "^(.{40})\t\t" $line line HEAD]} {
++				if {[regexp [string map "@@ $hashlength" "^(.{@@})\t\t"] $line line HEAD]} {
+ 					break
+ 				}
+ 			}
+@@ -965,6 +967,8 @@ method _do_clone_checkout {HEAD} {
+ }
+ 
+ method _readtree_wait {fd} {
++	global hashlength
++
+ 	set buf [read $fd]
+ 	$o_status_op update_meter $buf
+ 	append readtree_err $buf
+@@ -986,7 +990,7 @@ method _readtree_wait {fd} {
+ 
+ 	# -- Run the post-checkout hook.
+ 	#
+-	set fd_ph [githook_read post-checkout [string repeat 0 40] \
++	set fd_ph [githook_read post-checkout [string repeat 0 $hashlength] \
+ 		[git rev-parse HEAD] 1]
+ 	if {$fd_ph ne {}} {
+ 		global pch_error
+diff --git a/git-gui/lib/commit.tcl b/git-gui/lib/commit.tcl
+index a570f9cdc6a4..7a7394a5c89c 100644
+--- a/git-gui/lib/commit.tcl
++++ b/git-gui/lib/commit.tcl
+@@ -348,6 +348,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+ 	global file_states selected_paths rescan_active
+ 	global repo_config
+ 	global env
++	global hashlength
+ 
+ 	gets $fd_wt tree_id
+ 	if {[catch {close $fd_wt} err]} {
+@@ -367,7 +368,7 @@ proc commit_committree {fd_wt curHEAD msg_p} {
+ 		close $fd_ot
+ 
+ 		if {[string equal -length 5 {tree } $old_tree]
+-			&& [string length $old_tree] == 45} {
++			&& [string length $old_tree] == [expr {$hashlength + 5}]} {
+ 			set old_tree [string range $old_tree 5 end]
+ 		} else {
+ 			error [mc "Commit %s appears to be corrupt" $PARENT]
+diff --git a/git-gui/lib/remote_branch_delete.tcl b/git-gui/lib/remote_branch_delete.tcl
+index 5ba9fcadd17f..8ea672479306 100644
+--- a/git-gui/lib/remote_branch_delete.tcl
++++ b/git-gui/lib/remote_branch_delete.tcl
+@@ -323,6 +323,8 @@ method _load {cache uri} {
+ }
+ 
+ method _read {cache fd} {
++	global hashlength
++
+ 	if {$fd ne $active_ls} {
+ 		catch {close $fd}
+ 		return
+@@ -330,7 +332,7 @@ method _read {cache fd} {
+ 
+ 	while {[gets $fd line] >= 0} {
+ 		if {[string match {*^{}} $line]} continue
+-		if {[regexp {^([0-9a-f]{40})	(.*)$} $line _junk obj ref]} {
++		if {[regexp [string map "@@ $hashlength" {^([0-9a-f]{@@})	(.*)$}] $line _junk obj ref]} {
+ 			if {[regsub ^refs/heads/ $ref {} abr]} {
+ 				lappend head_list $abr
+ 				lappend head_cache($cache) $abr
+-- 
+2.50.0
+
