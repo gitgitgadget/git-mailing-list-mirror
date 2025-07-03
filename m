@@ -1,135 +1,126 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449D62DE6E3
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:48:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE662D8DC2
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 09:30:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751532495; cv=none; b=cvRkTBIFfZB2WBqsOtMpHOxq2kpE132Ne0fsZnLPdSgpuRECsfGoeOYQ2SE3DnuZVRmOQ26YoDfPXsKpSIP2I4vHs/TZYqzKrU2u5D88zoU3nKMaBc0lOjmqe4s9qVFJxHTKxfy2CVzadMk/xlSwgfMce2Zsq7PI3X6rob6mU88=
+	t=1751535017; cv=none; b=j/gs11ao7B8p9cc3SjODNPqoOgFWm654ZIK7ML9KlyESE1ODm/4Xd21uv2ZgGl21CGgVoEemcOjOkZ+pM/23GXpPqkpByvc0s0UYNFyaLLWqQPXxqQ+FpPMgLEeSHGjMd0z/DVWdNrSxRgwrf3n8ZT7XpDuTNYLSCfCoNcD2XdM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751532495; c=relaxed/simple;
-	bh=FSTyyjpJ0GfC5ArjaxUmekKZ/3DGB8ht9RjemAq7NOM=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=vFAthTGE1xi4NGSNddmoQ9T4p7YJ0irHTwOIBYF2Uj2M9khlKnZR6CrWkgkZ4nRQrwQX3nLJD/XdewlU5BZcn/ZKxBAODoXGBLR8QFKJ85/m86+Xo6G54IGy6cneXp8CnqAAHnHsb9REzQQJ92ITX1FAPQAnUSe9VPwpqOAYg24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FrM4TUAl; arc=none smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751535017; c=relaxed/simple;
+	bh=apM1CrsuGI01dhLMBCPiDozCHAZrL7afNrwj+XfrlI8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UBN8ImqZCGOhbQafGD2nxpIGoGSQa6VOk2QgLF1KST1d5NsKaRS507zSk4elgkd1KFlKW0vVd5Dwzg/eP8ura3JZJNR38QhB4Vntaf50kKy5VZfpj5PcGGpriQpQ0YP7B6H068BJ8gXLsGrLFuf9uURlv1BoqvXafhHdeYaGfE4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wFSekP7V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IqVmZ1Qw; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FrM4TUAl"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4e7eb3fad4fso4510382137.0
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 01:48:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751532493; x=1752137293; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=34DGTAdrJbwZMhrgcsI2XQprbGJPAoPq/bz2RlqwBBE=;
-        b=FrM4TUAlmwgY/SsOu34lzgSj4RJQg0loqWehrlwSaL3gyxaJc05ZM7o296+W49IBJp
-         C4u4sRIbyotSo6slQwuLkqA6EQR0chJ6vzNBdBBb9t3olriAcz+X/EBjdF91XH6bI7MG
-         zIrj6i0F/NCs5zpzj5HeYmyPmCH66tiX7ObhVPfsWgLwryjU8HCSq4UOKAUFrVJdsXbI
-         jqNMbrVB3AWtwhOmUAKb+E03T34cE4iO4RfGxzRiWc7qgzOOCpQqENMAxeTdvOH2bMKc
-         +OTN9+UcLvaUFX9H2dRsPheVCw9wDDaRD2z4v5HfTKXerImtszN4u6+1Gx2pg1byWK8U
-         VF8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751532493; x=1752137293;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=34DGTAdrJbwZMhrgcsI2XQprbGJPAoPq/bz2RlqwBBE=;
-        b=QyE8Kfi5iL1mqKDwtt2IkFuWPPhaXLW9oiF2Q/51Wb1sT+mGGlHdaxGatKGlx4LOiK
-         t6u/OlEBcoef7UYxpnlT3bJ5E5ILZIDs9Rco/fW63QOIPLYYG2G/A2O2A1+LJr4wZPH6
-         uLGps4j1pdwjpHhV47HOGFRHvgeMRXJPLk17cPSVn4n3GXkKyKQIAo3q9yFiu7fh6PCA
-         n5lySUQii28TQnjxO3hlSuYfwaUn2itJ/m/w80qrmqPixAFez2rTLbjcc5A16T0/Yi0v
-         YQD5OggHJ7yVwRHfLcwXV91mZawkxuF06MFEnczAKA1B6JjGyB9JdOj1EFVFclBg+D67
-         7X0A==
-X-Forwarded-Encrypted: i=1; AJvYcCWHvanikT4PfptNjwhDPx85EStZn36b/SfVPU5ItvasSDt1T3m8nmxDPrfojVwCFo3MVEo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxurDJibfONX5x5H45Y30/aub3sJDTCoPWmqAggpx2I4oZteTD4
-	BGLlUFbCvJviq739bXlVpMgMck8Cl1hQTcWTe9Y7YGzWwFUhFqLSCciO+R+uT++/dAJlVx0opAO
-	wsgi8WxbeSDE1yt7VF3M0xorg8GuyvbNSEg==
-X-Gm-Gg: ASbGncuzS0Ond8gLF2UCSgvajk0ZgeY/9ZVBCylozwiWqWq1LQtDf2GRz37AJRdNnTj
-	lRkInMZe7FLADLH3AX2bJmpyPZnzuULjEkYlWtZw2uF1YfDFtl8KEkMMW7w7fLICZRYy6mCUJO+
-	hY2vjrEhLIrfVop3IwObE8Xg3l1WhfsXZ+1bzvtOyPARBs
-X-Google-Smtp-Source: AGHT+IH4vMWAncsvdSBduQh+VfWKEhvyPXD96mN/KXU85/X0njYz71mBUgvN9d+NzSJItssDQRBXwefvaBiNtTChAcI=
-X-Received: by 2002:a05:6102:a4f:b0:4e4:f503:6675 with SMTP id
- ada2fe7eead31-4f161199cf0mr4168903137.18.1751532493114; Thu, 03 Jul 2025
- 01:48:13 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 3 Jul 2025 04:48:11 -0400
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aGY9AyJ3c5wXpKaX@pks.im>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <5e9b3ef1-931b-4b70-8275-5aed5da3d6f3@gmail.com> <CAOLa=ZTwvOiCnYK18GTEUkcW0-YLHkJ=MBggdzOYsbTT+OHPwQ@mail.gmail.com>
- <aGYSjf5H_ZBaVVJm@pks.im> <xmqqsejdbywt.fsf@gitster.g> <aGY9AyJ3c5wXpKaX@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wFSekP7V";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IqVmZ1Qw"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5288B7A0275;
+	Thu,  3 Jul 2025 05:30:14 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Thu, 03 Jul 2025 05:30:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1751535014; x=1751621414; bh=6QDMPYUEdz
+	sAq/YbNmcFJfec2wvhVMs6G0AaJRDXHpo=; b=wFSekP7VhwHID3pEvjmaz7ronT
+	PdmPri204G2XpQopMfZJASEV3/+OGMU54fHujSrQm/+y2/IbSOb+ACaUqR/me8zf
+	U3qwIootgA1wPVb3TM8Zg2V3mu2Xxt+SrPQpJ/upDXebtwnlg/NIV/Vm0hqS8oQV
+	JI8jpZl4fiRlo99IjGROHE0lILQBDO9Qs4ebQ7mBGug1Tt3u9ZVffsirmYFC6rpD
+	4PzkWnVj+pm1mQy0lRgWmqHUPcuzTulpkL7YWulrv1ZkHmi5Lg6h3iwM+ZCS52LF
+	XkfYM0zJAmKKWm3qXklSNLxt9KymWrT4Ih90lNM/QrJFRJy5FD3o2HWfsJ2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1751535014; x=1751621414; bh=6QDMPYUEdzsAq/YbNmcFJfec2wvh
+	VMs6G0AaJRDXHpo=; b=IqVmZ1QwV+XVXXPWSzOY2jHE7nbQo43RgxBT9yyw6Iat
+	VQIa5lda9sjzWytkDMs1wz9P9kT5T9OGlqvQGTK4FFTsqRIxf9ja+r6YfjzM2HNk
+	nhRo8G8vKoKnm+8VrMtmqEp9lj5e0fgG2NO+lOhYIRLjMOu07Gnhmvs7RwwelzH0
+	uLz2WQLURIP/M4UhWcgrWCvQ3r+X91rlZqYJH7kuTJOJYqGpCSni25vnn2728SvR
+	GMq/LqIUjPJTbIH23T0Nn1X2U55K2rl+mzNFby2WsIo/YJ3kRjx3RVs/qM96VFQ8
+	niVRanWDOYMalcfCjQY9MgPNjlB3vA8G6vGsIhL3oQ==
+X-ME-Sender: <xms:pU1maFw8kD2ec9vEPDqKxab46PTP7bPo1PMaAUo6KeksAuZo3WISng>
+    <xme:pU1maFR3aoHw9wMXqJmyEgwf4v_gPwcQeXfmb2Bc-zPCk18hZ-bEvtZ-sJgc7ztnC
+    hPmF86GkEXS4Kj7Dg>
+X-ME-Received: <xmr:pU1maPWeWpJEHXDhjwsfHj1G5Gqk2cO0pOHmrYCybUpGfEyJUastVxduqGLcsZgSfnshfzacVZszn9sE2pakD8Tin_ONjvQFdvT0kyOqiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdduleelvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhufffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepve
+    eugeektdetieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    vghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihse
+    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehirhgvtggtrgdr
+    khhunhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhg
+X-ME-Proxy: <xmx:pU1maHg4JQD_TthWAPSUX9Bo2vsPZJtXRsdQf2zYpbf2WbalDq4_dQ>
+    <xmx:pU1maHCfeNvHEWb1KosEzr6aSqV3RhjBGpMeKQnxTGNplzN0PGDbBg>
+    <xmx:pU1maAIfwW1qWKZks-omTI1ndL_mSo-5no1O4d0gdGXBVmtkEN0x8A>
+    <xmx:pU1maGCRiwGVxIV9NzYTMMiCyC8eogapQbnm4Oj4_J0rr16Ln1A4NQ>
+    <xmx:pk1maDP25qSBoORuIdAXTBpEi1_4LPfSZpQ6tCuI60VsJ5uAlYHBL4p->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 3 Jul 2025 05:30:12 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 21ad690d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 3 Jul 2025 09:30:10 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/8] A handful of Meson cleanups and improvements
+Date: Thu, 03 Jul 2025 11:28:42 +0200
+Message-Id: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 3 Jul 2025 04:48:11 -0400
-X-Gm-Features: Ac12FXyOi8yjinJ41PJFkw1E2YoYciEuAGHHsQLYFaFjpazg7Anw37_yspmZMGI
-Message-ID: <CAOLa=ZSN+Fvr0ixQWV0Becj-ELMRSkhm+POKF=BQ=F615sSj4A@mail.gmail.com>
-Subject: Re: [PATCH 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="00000000000010aeb6063902707e"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEpNZmgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDcwNj3SQT3YLsYt3c1OL8PN3knNTEvNKCYt00U2MLU4sUM0uTNGMloN6
+ CotS0zAqwudGxtbUA9AEmlGcAAAA=
+X-Change-ID: 20250703-b4-pks-meson-cleanups-f53858d694f3
+To: git@vger.kernel.org
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, irecca.kun@gmail.com, 
+ Eli Schwartz <eschwartz@gentoo.org>
+X-Mailer: b4 0.14.2
 
---00000000000010aeb6063902707e
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Patrick Steinhardt <ps@pks.im> writes:
+this patch series contains a couple of more-or-less random cleanups and
+improvements for Meson that I have accumulated over the last two months.
 
-> On Wed, Jul 02, 2025 at 10:56:18PM -0700, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > Even more importantly though, a numeric offset would be invalidated by a
->> > concurrent write in case that write ends up inserting a ref in the range
->> > of commits you intend to skip now.
->>
->> That argument cuts both ways, no?  You have shown up to some ref
->> which you remember in the last cycle, and then while you are
->> planning to formulate another query with --skip-until naming that
->> ref, somebody removes that ref, then what happens?
->
-> This ref was already yielded, and it wouldn't and shouldn't be yielded
-> on the next page. This works as expected with the proposal, as
-> `--skip-until` does not care whether the value itself actually exists.
+Thanks!
 
-The current version of the series will include the reference provided to
-'--skip-until', if it exists. But your latter statement still holds, if
-the reference doesn't exist, it will still work by finding the next
-reference in the default sort order.
+Patrick
 
->> Or somebody inserts a new ref that sorts earlier than the ref you
->> stopped at the last time.
->
-> It wouldn't and shouldn't be shown. When I have already yielded all refs
-> up to refs/heads/something, I don't expect to see any ref that sorts
-> before refs/heads/something on the next page.
->
+---
+Patrick Steinhardt (8):
+      meson: stop discovering native version of Python
+      meson: stop printing 'https' option twice in our summaries
+      meson: improve summary of auto-detected features
+      meson: clean up unnecessary variables
+      meson: fix lookup of shell on MINGW64
+      meson: fix GIT_EXEC_PATH with overridden -Dlibexecdir=
+      meson: update subproject wrappers
+      ci: use Meson's new `--slice` option
 
-Yeah, this was my thought too. Another way to think of this is that in a
-cursor based approach, a particular reference is guarateed never to
-occur again, even with modifications to the repository made between
-requests. However in a count based approach this doesn't stand.
+ .github/workflows/main.yml |  2 +-
+ .gitlab-ci.yml             |  2 +-
+ Documentation/meson.build  |  5 ++---
+ meson.build                | 26 ++++++++++++--------------
+ subprojects/expat.wrap     | 18 +++++++++---------
+ subprojects/pcre2.wrap     | 18 +++++++++---------
+ 6 files changed, 34 insertions(+), 37 deletions(-)
 
-> Patrick
 
---00000000000010aeb6063902707e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: d4207e037136e038_0.1
+---
+base-commit: 8b6f19ccfc3aefbd0f22f6b7d56ad6a3fc5e4f37
+change-id: 20250703-b4-pks-meson-cleanups-f53858d694f3
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1obVE4b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meVlnQy93TWV0TzlSZnovMVVDVmRJaWpIcm5RTXI2YQp1SGtNeXZUUVJy
-ckhiMWdnM2JGb0ViVXQ2QXpsVEVhZzA5bHhWakVwdWxhQXVzanZjT2dQN0NqME1MS2VYSEg0CkZB
-Zkd5Ty9Vc1VEMXlJNGRYL2tpN1hPTXYxY3orTllKNllUTi83TzNiVk5UTi92OWFGU2hvTFloSENW
-ci9ucHUKbEJpN2FQdlkwRWFNNHRmb2ZFeVVpVzlVa1NhZUx3T2hERHRkdnJ0RFlCeXVheUt1NDhU
-YUpLbEhFS3NrYzNrRQphZ0hMcDl0QUw5MDAwOGJBQmdaY0RVdkVldzJVM09Rbm93elpSeGxLUEJu
-YndUd2xZeElSV0xhdHo0cHhDRzNYCmd5Zk5mWG40bHdwUElheW9jOThoQ2owS0w4VzJIUzFLYm5k
-RW4raHErSlFja2w4Y3pNcDAvM24wU3N6bTRxR3IKQzJKL3BWbE9hMzZzNXZyNUpmT3FReGszUE9t
-WmNhMzRKZ2xiSUI4aDBYT0ZqVEJqeHUzelRqZ3cvSUttM1BCSApic1RreC9vbFFWZzRDdDYrdHpy
-QWRhUVNGd1RiQUh3Y09DOW02OWpPdllDVnEyY1RjVzNsUGNTL0ViWkhmNEZkCnRCM3VPcVhwUDU0
-VUQ2S2cxaVNocE9ScnF4SGpSRm1QOTNyeng1ST0KPXRJTWoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000010aeb6063902707e--
