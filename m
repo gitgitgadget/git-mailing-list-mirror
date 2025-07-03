@@ -1,96 +1,86 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C50A51C6FE9
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 21:25:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D212BD5BB
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 21:30:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751577913; cv=none; b=ndOAMK5Bi8yURBhU0+Xquvk1KIj5fzirYX7IHubTnTcBFABxaGR/HUZ8jT4XgnQShw2rIYc+IV+RYbWqm4GMXpf1xMXP6zrt9r8noXZsPOmJ7yhyiDhsbSxWR3ZgzhgMmDsNqOGqy6kLeVfqWonvVzLanBSSsao7LZa49LlxoZM=
+	t=1751578215; cv=none; b=BqOR9mhxgFp/kX1HH9LOtbuYg/QgJAwSN4p6beviRFep0h9+wBbKPIUz3G/Eq3JqZ+bKIoUq+BFytYNdTxhUKrlvV0guwKEC7km0BLQ6nXuS0CwFebBvqYuwR038hCBwFp8bWhbglEDDGIufkO5M0zIZnmO32mU4INWgYM1ZD+4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751577913; c=relaxed/simple;
-	bh=Sz+2V8bcQ7ewRl0x+tIeocXluCCcjYWiJfLIsdwg4uE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=drN/zzXI+KRX5R0w3Q8CiERQuiQCCcT7ctgTRfBIsFGX0314s2ytLxk3Nv32q0bxGctglFipfBJhgOnmkXBT1HINUspaCAYaBE5mKl5AeisWz7EO/eQody262uoTNAvB1TCJ/IRY88RLzM0TU63uiia1gMaUKLq9JUi+X6njSCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=CpwYipl8; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1751578215; c=relaxed/simple;
+	bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ftb97vAkDEEMtLEalu+H5kp3reL0PlMvTtZuWtiQyAYAvE7XHKEKSUWzXQmBIwko/9MAhujSPta/hgpLKYgLrE1XzvQgyBLba/r4a/Hi6SeS7De1ZwayhxObbMoaqIkKw4OHhneZx4fcebjulpkZNr1+AzFInBYv10kPdHVcxcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ulk5zAHP; arc=none smtp.client-ip=209.85.166.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="CpwYipl8"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7d20f79a00dso40638585a.0
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 14:25:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ulk5zAHP"
+Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3df2df6a25aso1552485ab.1
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 14:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1751577910; x=1752182710; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=gmail.com; s=20230601; t=1751578212; x=1752183012; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=63qhGgAqsMzmMhNi+gejVdr09TpfVUlS3leFChYXsv4=;
-        b=CpwYipl8ZUTT2aIcIcPHQiq9q8tSInGd+kpM90fe72cGwUKOZlcXkpy7tOV+TNhlVC
-         OXCKPeFGb/UC5IH070Bvx0hpse7opmX/bIFlA3a6EOsK5E+xVKRbnOsYLBwHgSa8tOF4
-         ooYXOj8BgWmlKFtI4ORfjJfoSyneRXU3x8OHH+MBMMjUt5/5/6ii+Q+zYWkCl4+8BnG7
-         CD+CS52s15ijSzWEnqgQNSGj7ElmaynSCYTsQQ+3K797ivt2Pg3upzb55iEIt7slg/Uz
-         Usc1sMvIhodghWWgro40ILhPYbr7jxzipcBAC1QJ48CEl4R3K1QYYF/57ii/hVp61Z5O
-         oXoA==
+        bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
+        b=Ulk5zAHPVRC+QR9i3M3Qs3B5TFwpVUX3xTFux6lmZhyQT8u4889SYl9MJ4CDheQGZL
+         ZGAeM2+iOoxP1S+fIJun0AduW598n3OSy7jOnoGmvU3MmJC1D4aKkgIkvJWAh1Wedpip
+         2mKoAFZbmCvbGiKB9yICYukx5VbBfIhEijdp8OKBhcf6xBCI6RYgnzlNGm6LqwzCfIj+
+         8I4muk4PyX8u42Yac2H25S+bRcdQFB+H+2I7LN5uMMxYv2IoHCQ8CbqknN4hra9iU/Jl
+         /p4+qnlcfWn0ezAPOnh3OpvrqCSgXEVJRQLV3IdloIaHX0LwrS5cNlL/TzGdyIlfeAmx
+         ri1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751577910; x=1752182710;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+        d=1e100.net; s=20230601; t=1751578212; x=1752183012;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=63qhGgAqsMzmMhNi+gejVdr09TpfVUlS3leFChYXsv4=;
-        b=QHXiYXY1P408XSOzTAp3Chs4Y0HulmXi8LIiVFPytdy4LdXaBXpc6ITJCoU+t0J1Un
-         L2/jjp6HL/SdSLhAigVQvl27n5JgQmtKhAiIfdB5RYM6ynWOHk3attbG3o07rp8cmcNo
-         NMwkH+g2fYJpuplnwCNUeBPliHezezT71EigEMrInjRrWZxAWt1NPTFWPU2Pla8ceQjr
-         +/XITzwfOruD5r1F/e8EI7LAs+gPqYSzWZ1BdyjnLhOkHXRCupJcdwcfYpRPd/Fl32A5
-         /GcL1bTijlDLZvQG66eUlkEMBcvFKGOt6tBZOHbDql9Ymrqlu2v5Qs2+20i3YeuMhIj8
-         qSYw==
-X-Gm-Message-State: AOJu0YzJM+UmIJrulcAh9oZJmIKkYVXC0Ll/M+RjideKkTb2wzq+5FfQ
-	lTfnSsWf73z/SjpAndj7/UFL6G5FQaVHxV67wt4yARLu7pNuNNa5SbVg4CkzWuW58NxiYT9Qtpm
-	Njj+7Su0=
-X-Gm-Gg: ASbGncuQNuoqZ1jhRCu1KYbwWAX+nYkpSQERJEs7f4YB+jJ1CcBbolcCFWNTmfWoJCO
-	SMkASKVjqLETApf4IfDOgmmfYaUzUaZUBZ+cNZbJ8B4aXt51uOUheAJavfTloEdbAChz/4ed+R3
-	lyQ6L63IE4ymj9GN4EVvEFPwOJani97y2Sv/VqHSZA+MSZ2CpFISmK95WVSPNMhOVrrfgSVgsOZ
-	PJtYJauvftIpTmufl3xCvOsFFheLhjrFZVA29uLTLzPTOusIZJhhNzANrjOhYMOIRZffNRcj7rb
-	7hT68a9zGiZVgwaTQZJ7d8IwCMFtrvuy+m7a4MWjacxVCMI+3ZwZWLHe5JkMRL9wgAvGpjrOre7
-	4MmzjUWVk5qwfYjJ4qTkInXzZdGPzK0IvdQ==
-X-Google-Smtp-Source: AGHT+IFOPj7Vri8Ozn4gum0FU6MwB1lkSOR/NSsTCMbCGDvqsQCcLaT4i0EPspCjrD8bXylFHJ8D8w==
-X-Received: by 2002:a05:620a:1aa7:b0:7d4:57a5:9742 with SMTP id af79cd13be357-7d5dcd0783amr68071685a.39.1751577910600;
-        Thu, 03 Jul 2025 14:25:10 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-702c4d50f73sm3420886d6.66.2025.07.03.14.25.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 03 Jul 2025 14:25:10 -0700 (PDT)
-Date: Thu, 3 Jul 2025 17:25:08 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Additional travel sponsorships for Git Merge 2025
-Message-ID: <aGb1NAHN/+T/3oYH@nand.local>
+        bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
+        b=gXVXgI8qdLH7M0DCKK23uT/qlq5qr3VaWsZzA+NPk5u115lnhc+MbNZlX0ZcK7Y9Up
+         Fkws5kmv9hdc0qBqc7EIr8F2APnwpgtbKLy3K/gY4K1qVZ5J4ry/WeiMzXZIvPr7I9uP
+         6xHz0jLfpdHbYDVOWwPu6rNu6g6YUfjP9XzIrkQ6FFqPwM7eUpVerQsB8nzsxfVvBTY1
+         kNGiJot29+6ocLQygd2YlsO16j1HD4ekz4uT3/w5Eb6Xgyevrt3cAQIKcUoPoNMy2Xao
+         EtHiiwPrJYsQYAzhMXYsxgprFFPgAVajknEUaeix9FMGtY05AdMCz2KSRTmODcYjBMg8
+         uvIQ==
+X-Gm-Message-State: AOJu0YwrESl3GxgYLnDdZUPAdOuhLgN+WUGGD2IpLmCB0JAdZdDN7zAj
+	GN+XDndRS58x6qMdpIreHatnTHG+RlACJ0U5DQ6nE1kyN9aSGvtQiOZx
+X-Gm-Gg: ASbGncslq0caZH88hmXZPCkZL3DrfEvkizE/ITswR2kLOCODXJRoJioNZlYig4I+Lrd
+	Q0yTZClzJ/aMPPAgfqlZJKHaaW+CtHz62Os/O8gaUm/Yae94VHOa/yOetq9ey3n2JEKfZ9hbZOQ
+	XysivW1LONdTdodUttj/fxJi0huCKUW0DWg4RCp0y3dUc1orv8SyzuPXg9I4VHeY1v8J+PLidwm
+	udy0RuFyc50R/mcKE9r8pzUoKDDLOFwTTd9dgaHZBM1L8M3pUWIovPWq/mz47zCoyUGqqFFU2zQ
+	06b3vYmi/xSfPrGIKdMPQUHbjjrAGnJ44fPZQU51XlRQ8OwfAIFT6B5q5OhAcQj3XiMZDEsRI73
+	VkWiSTI418Nv3brjTIIvSApF6jxFydoJrWjiO9HQ=
+X-Google-Smtp-Source: AGHT+IGduMVdTEQ4pWxjq4Jtfwjnq7ra/jp9Kkwz/nHouhKdoioep8EwkhFb8kQTHIILyQVh40YPsg==
+X-Received: by 2002:a05:6e02:1527:b0:3df:5354:a804 with SMTP id e9e14a558f8ab-3e1355a819fmr901135ab.18.1751578212519;
+        Thu, 03 Jul 2025 14:30:12 -0700 (PDT)
+Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-503b59c92e0sm137962173.48.2025.07.03.14.30.11
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 03 Jul 2025 14:30:11 -0700 (PDT)
+Message-ID: <dea87c81-c2a4-4dad-b73b-bdd11d4c6877@gmail.com>
+Date: Thu, 3 Jul 2025 16:30:11 -0500
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re Behavior of git log --diff-filter=d
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
+ <20250703134220.31638-1-jayatheerthkulkarni2005@gmail.com>
+Content-Language: en-US
+From: Eric Salem <ericsalem@gmail.com>
+In-Reply-To: <20250703134220.31638-1-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-This is a small follow-up to the Git Merge[1] announcement to say that
-we are **accepting more requests for travel sponsorships** to attend
-the conference.
+Thank you, Jayatheerth. That was very helpful. Now it makes sense why
+Git is behaving like this. If I use --dirstat=<param> and then filter
+out the blank lines, I get the output I want.
 
-Some details:
+Thanks again for your help.
 
- - This is open to not only previous GSoC and Outreachy contributors,
-   but to current GSoC contributors as well.
-
- - If you are in either of these groups and interested in applying,
-   please email <git@sfconservancy.org> anytime before July 15, 2025
-   for more details.
-
-I'm looking forward to seeing many of you either in person or
-virtually in September. If you have any other questions in the
-meantime, please feel free to reach out to me either on- or off-list
-directly.
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/Z+L3Mt58n18KUNzs@nand.local/
+Eric
