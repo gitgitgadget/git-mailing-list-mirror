@@ -1,86 +1,146 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D212BD5BB
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 21:30:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBA72DE6EE
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 22:44:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751578215; cv=none; b=BqOR9mhxgFp/kX1HH9LOtbuYg/QgJAwSN4p6beviRFep0h9+wBbKPIUz3G/Eq3JqZ+bKIoUq+BFytYNdTxhUKrlvV0guwKEC7km0BLQ6nXuS0CwFebBvqYuwR038hCBwFp8bWhbglEDDGIufkO5M0zIZnmO32mU4INWgYM1ZD+4=
+	t=1751582673; cv=none; b=WDQPC5UUDVjXDmrZ39LVWLJ9CPpqc6tJtMGB5gfxEu1AY2gg26lkLDN8EOCrHtP5uchuAKFOzddl0L5Lj686FqwMC0z330CEolSYYQnblMrRNiSw2xuzZ5D2D2UTjN/ML1x8Jkt2koIdm87K9oa7AKgEoCBBGIr0owG+EYrUSLY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751578215; c=relaxed/simple;
-	bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ftb97vAkDEEMtLEalu+H5kp3reL0PlMvTtZuWtiQyAYAvE7XHKEKSUWzXQmBIwko/9MAhujSPta/hgpLKYgLrE1XzvQgyBLba/r4a/Hi6SeS7De1ZwayhxObbMoaqIkKw4OHhneZx4fcebjulpkZNr1+AzFInBYv10kPdHVcxcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ulk5zAHP; arc=none smtp.client-ip=209.85.166.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751582673; c=relaxed/simple;
+	bh=ykXjLnDr4R16P7R1STaCbPIwwouXsCCgl2p8Q4DowbI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CWbLbQ+Y1ndNB/deyISp3EYseOjpS6Sniu84+yN7VALamIACIMGcPMr5bD5jM9mDR5a2Hnw6EqRskFJpMGOxhLRvsyW2Lo9oY8c+O7ZHXTaz/IV6AZDsGnacdHp5FSObvFbNOOPGeNjAOzEbldCUe+cQkzUTP9XWQcS0rK6hyFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U6W5k8CH; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ulk5zAHP"
-Received: by mail-il1-f181.google.com with SMTP id e9e14a558f8ab-3df2df6a25aso1552485ab.1
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 14:30:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751578212; x=1752183012; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
-        b=Ulk5zAHPVRC+QR9i3M3Qs3B5TFwpVUX3xTFux6lmZhyQT8u4889SYl9MJ4CDheQGZL
-         ZGAeM2+iOoxP1S+fIJun0AduW598n3OSy7jOnoGmvU3MmJC1D4aKkgIkvJWAh1Wedpip
-         2mKoAFZbmCvbGiKB9yICYukx5VbBfIhEijdp8OKBhcf6xBCI6RYgnzlNGm6LqwzCfIj+
-         8I4muk4PyX8u42Yac2H25S+bRcdQFB+H+2I7LN5uMMxYv2IoHCQ8CbqknN4hra9iU/Jl
-         /p4+qnlcfWn0ezAPOnh3OpvrqCSgXEVJRQLV3IdloIaHX0LwrS5cNlL/TzGdyIlfeAmx
-         ri1A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751578212; x=1752183012;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EujLNqW/yhNndwlFsWseeDyumsGNicFPrGveMHciL1g=;
-        b=gXVXgI8qdLH7M0DCKK23uT/qlq5qr3VaWsZzA+NPk5u115lnhc+MbNZlX0ZcK7Y9Up
-         Fkws5kmv9hdc0qBqc7EIr8F2APnwpgtbKLy3K/gY4K1qVZ5J4ry/WeiMzXZIvPr7I9uP
-         6xHz0jLfpdHbYDVOWwPu6rNu6g6YUfjP9XzIrkQ6FFqPwM7eUpVerQsB8nzsxfVvBTY1
-         kNGiJot29+6ocLQygd2YlsO16j1HD4ekz4uT3/w5Eb6Xgyevrt3cAQIKcUoPoNMy2Xao
-         EtHiiwPrJYsQYAzhMXYsxgprFFPgAVajknEUaeix9FMGtY05AdMCz2KSRTmODcYjBMg8
-         uvIQ==
-X-Gm-Message-State: AOJu0YwrESl3GxgYLnDdZUPAdOuhLgN+WUGGD2IpLmCB0JAdZdDN7zAj
-	GN+XDndRS58x6qMdpIreHatnTHG+RlACJ0U5DQ6nE1kyN9aSGvtQiOZx
-X-Gm-Gg: ASbGncslq0caZH88hmXZPCkZL3DrfEvkizE/ITswR2kLOCODXJRoJioNZlYig4I+Lrd
-	Q0yTZClzJ/aMPPAgfqlZJKHaaW+CtHz62Os/O8gaUm/Yae94VHOa/yOetq9ey3n2JEKfZ9hbZOQ
-	XysivW1LONdTdodUttj/fxJi0huCKUW0DWg4RCp0y3dUc1orv8SyzuPXg9I4VHeY1v8J+PLidwm
-	udy0RuFyc50R/mcKE9r8pzUoKDDLOFwTTd9dgaHZBM1L8M3pUWIovPWq/mz47zCoyUGqqFFU2zQ
-	06b3vYmi/xSfPrGIKdMPQUHbjjrAGnJ44fPZQU51XlRQ8OwfAIFT6B5q5OhAcQj3XiMZDEsRI73
-	VkWiSTI418Nv3brjTIIvSApF6jxFydoJrWjiO9HQ=
-X-Google-Smtp-Source: AGHT+IGduMVdTEQ4pWxjq4Jtfwjnq7ra/jp9Kkwz/nHouhKdoioep8EwkhFb8kQTHIILyQVh40YPsg==
-X-Received: by 2002:a05:6e02:1527:b0:3df:5354:a804 with SMTP id e9e14a558f8ab-3e1355a819fmr901135ab.18.1751578212519;
-        Thu, 03 Jul 2025 14:30:12 -0700 (PDT)
-Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-503b59c92e0sm137962173.48.2025.07.03.14.30.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jul 2025 14:30:11 -0700 (PDT)
-Message-ID: <dea87c81-c2a4-4dad-b73b-bdd11d4c6877@gmail.com>
-Date: Thu, 3 Jul 2025 16:30:11 -0500
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U6W5k8CH"
+Received: (qmail 7649 invoked by uid 109); 3 Jul 2025 22:44:30 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ykXjLnDr4R16P7R1STaCbPIwwouXsCCgl2p8Q4DowbI=; b=U6W5k8CHGvZhP5nXubxDsbO4AfAdiHaNWh99BdoBokYhj80NnnsDssuRTB/sjnLhXT0eRr6lMt45HXVXBzljNthx80Yp995MtwxZ6ROy5edrZBc/v8ogTGXssk6AYNxD0Uf0sCNmA9mCbCduqURGHjuTRsQ5fIiv6guRMcVgdErYZiKusj74fibU9eP+Cz2NI497sZjC42eG5A8KbsRBwkBNXHk7U8emBlDWaUsxPcrC7jwWaOJduBF+gdYmB9vL5ET3CN4KQYMD2Ouv+UoFRJURIZpitMZfF7PZX+CEH2zi15LgOR7ZL5IgiHSMPqIkaGiCihN8ZLLCF/x4Z5swOg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 03 Jul 2025 22:44:30 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6428 invoked by uid 111); 3 Jul 2025 22:44:31 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 03 Jul 2025 18:44:31 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 3 Jul 2025 18:44:28 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Salem <ericsalem@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
+Subject: [PATCH] setup_revisions(): turn on diffs for all-negative diff filter
+Message-ID: <20250703224428.GB1909836@coredump.intra.peff.net>
+References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
+ <20250703153438.GA1309870@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Re Behavior of git log --diff-filter=d
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
- <20250703134220.31638-1-jayatheerthkulkarni2005@gmail.com>
-Content-Language: en-US
-From: Eric Salem <ericsalem@gmail.com>
-In-Reply-To: <20250703134220.31638-1-jayatheerthkulkarni2005@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250703153438.GA1309870@coredump.intra.peff.net>
 
-Thank you, Jayatheerth. That was very helpful. Now it makes sense why
-Git is behaving like this. If I use --dirstat=<param> and then filter
-out the blank lines, I get the output I want.
+On Thu, Jul 03, 2025 at 11:34:38AM -0400, Jeff King wrote:
 
-Thanks again for your help.
+> On Wed, Jul 02, 2025 at 03:28:43PM -0500, Eric Salem wrote:
+> 
+> > The git log --diff-filter documentation[1] for deleted files says:
+> > 
+> > > Select only files that are Added (A), Copied (C), Deleted (D)...
+> > 
+> > > Also, these upper-case letters can be downcased to exclude.
+> > > E.g. --diff-filter=ad excludes added and deleted paths.
+> > 
+> > A simple test:
+> > [...]
+> > --diff-filter=D behaves as expected, but when using "d" instead, I don't
+> > get any output unless I add another option (such as --stat or
+> > --name-only).
+> 
+> Looks like a bug. This used to produce the output I'd expect (i.e.,
+> commits "first" and "third", which do not have deletions), but that
+> changed in 75408ca949 (diff-filter: be more careful when looking for
+> negative bits, 2022-01-28).
+> 
+> I don't have time to dig into it now, but I've cc'd the author (and left
+> your whole reproduction recipe quoted below).
 
-Eric
+Argh, I forgot to add Johannes to the cc. Fortunately since then I had a
+moment to look at this, and the solution is pretty simple. So here it is
+as a patch with a test.
+
+-- >8 --
+Subject: setup_revisions(): turn on diffs for all-negative diff filter
+
+When the user gives us a diff filter like --diff-filter=D, we need to do
+a tree diff even if we're not planning to show the diff result itself,
+in order to decide whether to show the commit at all. So there's an
+explicit check of revs->diffopt.filter in setup_revisions(), and we set
+revs->diff if any bits are set.
+
+Originally that "filter" field covered both positive capital-letter
+filters (like "D") and also negative lowercase filters (like "d"), so it
+was sufficient for both cases. But later, 75408ca949 (diff-filter: be
+more careful when looking for negative bits, 2022-01-28) split the
+negative bits out into a "filter_not" field.
+
+We eventually fold those into "filter", but not until diff_setup_done()
+is called, which happens after our explicit check. As a result, a purely
+negative filter like:
+
+  git log --diff-filter=d
+
+failed to turn on diffs at all. But rather than fail to filter by diff,
+because the filter variable is eventually set, we mistakenly show no
+commits at all, thinking that the empty diffs were cases where nothing
+passed through the filter.
+
+The smallest fix here is to just have our check look for any bits in
+either "filter" or "filter_not". I suspect it would also be OK to
+reorder the function a bit to call diff_setup_done() earlier, but that
+risks violating some other subtle ordering dependency. So I went with
+the simple and safe solution here.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ revision.c     | 2 +-
+ t/t4202-log.sh | 6 ++++++
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/revision.c b/revision.c
+index afee111196..9892d08748 100644
+--- a/revision.c
++++ b/revision.c
+@@ -3112,7 +3112,7 @@ int setup_revisions(int argc, const char **argv, struct rev_info *revs, struct s
+ 
+ 	/* Pickaxe, diff-filter and rename following need diffs */
+ 	if ((revs->diffopt.pickaxe_opts & DIFF_PICKAXE_KINDS_MASK) ||
+-	    revs->diffopt.filter ||
++	    revs->diffopt.filter || revs->diffopt.filter_not ||
+ 	    revs->diffopt.flags.follow_renames)
+ 		revs->diff = 1;
+ 
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 4a6c4dfbf4..05cee9e41b 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -134,6 +134,12 @@ test_expect_success 'diff-filter=D' '
+ 
+ '
+ 
++test_expect_success 'all-negative filter' '
++	git log --no-renames --format=%s --diff-filter=d HEAD >actual &&
++	printf "%s\n" fifth fourth third second initial >expect &&
++	test_cmp expect actual
++'
++
+ test_expect_success 'diff-filter=R' '
+ 
+ 	git log -M --pretty="format:%s" --diff-filter=R HEAD >actual &&
+-- 
+2.50.0.438.g3b3bebd3e8
+
+
