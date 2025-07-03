@@ -1,80 +1,80 @@
 Received: from mx2.freebsd.org (mx2.freebsd.org [96.47.72.81])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F918239086
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 12:35:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DA82D3A72
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 12:40:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=96.47.72.81
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751546157; cv=pass; b=oAEjUD25NA6fJZCy41AYdbLLarCwP7tkySyZaZGyNh23kOqHhut+9EMdorhmiTMvXSJW0UikLIDl+oDsoHKVu6+lpR3ijYTTxF3lyS0T8dGUWSSieKzAICrBZHdnltRHrfSzQu1M2yt1Q/FGq7dWhk92mxcuHLKxG+1gYaIKvoc=
+	t=1751546460; cv=pass; b=Zw4kA/vvIOiXl05UUmDuk3wqWpg6h8mWXfp6P6zvGO+MpqPf2bqcw02r5pnbLc+9jL7S1r2LWZl6ZAqYVQ56K/brHG+qdhgZYQWy9x9Ayr+5Ou8nZoAUQ5G7t74POTtlpvpN4H5R8q6gfrf+JsDXrIKwE95Nn/uVCZ36YHPVtME=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751546157; c=relaxed/simple;
-	bh=PdFjw16gNDsVBtRMlCKkELYEz+yKR2mXNZrrIt3kzj0=;
+	s=arc-20240116; t=1751546460; c=relaxed/simple;
+	bh=bsFabzBqosiCkBablUXDghVhjl+kwx0Ct3GlENGJZ5w=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DheqEQMfa7p2f7l4Dfw93ZpKgF3fwWbMq/nt7aaK8Y7LfodkRHmi8MbdCJ44X8Y35IH4m6kkR2joEBOe1rG/9dBuP287AO5NZ5/3N+BS39yleJUFgWD5z2v5u6DXxQa/ijhAtGR4Fs41nXeQY+LgCIWeYCNIVThcpFMiaJ/Iezg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org; spf=pass smtp.mailfrom=FreeBSD.org; dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b=VQJQoh06; arc=pass smtp.client-ip=96.47.72.81
+	 In-Reply-To:Content-Type; b=m1ztQFwYaltOGdk9ldTqORwmtt27SMbXwLOHmoVEobA5lfrGF/Suf6LV30tksiRoTPp6lOCW5T6YiMF5pIWQ3SR1iggYfQk04swcFlk0MPs8I4aJ51yVCigP4VBV3DOl+mmZoRwm8gj0otNoAE1HGZl2ebjcJabLDeN5LRh153U=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org; spf=pass smtp.mailfrom=FreeBSD.org; dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b=KgaiJiDw; arc=pass smtp.client-ip=96.47.72.81
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=FreeBSD.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=FreeBSD.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b="VQJQoh06"
+	dkim=pass (2048-bit key) header.d=freebsd.org header.i=@freebsd.org header.b="KgaiJiDw"
 Received: from mx1.freebsd.org (mx1.freebsd.org [IPv6:2610:1c1:1:606c::19:1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits)
 	 client-signature RSA-PSS (4096 bits))
 	(Client CN "mx1.freebsd.org", Issuer "R10" (verified OK))
-	by mx2.freebsd.org (Postfix) with ESMTPS id 4bXx7r3rRNz3Kp7;
-	Thu, 03 Jul 2025 12:35:52 +0000 (UTC)
+	by mx2.freebsd.org (Postfix) with ESMTPS id 4bXxFj48kYz3KlW;
+	Thu, 03 Jul 2025 12:40:57 +0000 (UTC)
 	(envelope-from garga@FreeBSD.org)
-Received: from smtp.freebsd.org (smtp.freebsd.org [IPv6:2610:1c1:1:606c::24b:4])
+Received: from smtp.freebsd.org (smtp.freebsd.org [96.47.72.83])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256
 	 client-signature RSA-PSS (4096 bits) client-digest SHA256)
 	(Client CN "smtp.freebsd.org", Issuer "R11" (verified OK))
-	by mx1.freebsd.org (Postfix) with ESMTPS id 4bXx7r0NN5z3wW0;
-	Thu, 03 Jul 2025 12:35:52 +0000 (UTC)
+	by mx1.freebsd.org (Postfix) with ESMTPS id 4bXxFj1KRNz3wVC;
+	Thu, 03 Jul 2025 12:40:57 +0000 (UTC)
 	(envelope-from garga@FreeBSD.org)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org; s=dkim;
-	t=1751546152;
+	t=1751546457;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=FbIjoPfEzUrbagtEQjFfUvQQRgHVkSmOGdMLtXyfc3A=;
-	b=VQJQoh06u13yT9sAKlfXhAivJBS8Ll+mAIXpRYdv/iLiOZPcNomAPdwtUonzMEfSHeGuDQ
-	X3DBRACtLJ/faPZAQe1hyNnKtZzn+lJX5qhLOP8baifdhz+EnqjytIdyjDxvq6OTAoJ9Sv
-	dwPb840HvQW8r38aC0wat/l5DK4aqHkM4eiLt238faCf9e16w1txCfMdlHpSXvJnVVYA1U
-	YQd0tyXxo0SCsbB1u/TEpfb9cPIqz0MtGkxKpCDDlebVl2eNE1vHgtX9jcxldBTCZkkqec
-	Kgj7X1VkTWyXO+J5WmRI8ztVTyC4XtP6Qwt5+9wo8aGzxIF6Xmes4oW/QMsqtA==
+	bh=Bf+nzIHNELUTFPctQA3R5aW3s0Xt60dGvoRpMR2Uv1s=;
+	b=KgaiJiDwdD70YBf3Hm8iIWvL1yGVyzIk69XQOHmPNrX9plFMu5/9ngHAd5yF8DYT/d8hcE
+	pXKLyK42qNdFDlrsA35xOr8xqvi4AJDSUCVjlhY8vCtWXXzueKPiCNTFxoEyE5+2w+XU0k
+	q6BrkkktDgK/hltm0sPP1kgXAlURJiyp7FuV/HBBdfBWSdd62cjsuIWVg5olckaetgH/Jn
+	30JZeRGBpFuZaf4r65ytVGphvvQag5S8SRBlyR32F45/0Mzmslu6oUezN8XC9apEYMQbbV
+	pvzSWhGDwN4qCDm+Bd7w96iUt8V198Bo07Y5NklPOGZPUE5qxvLbyPolFWs3ig==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=freebsd.org;
-	s=dkim; t=1751546152;
+	s=dkim; t=1751546457;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
-	bh=FbIjoPfEzUrbagtEQjFfUvQQRgHVkSmOGdMLtXyfc3A=;
-	b=ktSFu+/AqeMHFLdln+YJHPv8VFKSPjZ2+8b2ropxi2K39Fo4s7sv/xInthzuSg4UywP0SL
-	tcktN3MBitFvDbNkQJHYA+oW0eyVB7wJYZDP0ouSfq4RQZT/Cap8U1S0JMlLlTvOhN6G1O
-	GDYEFXGV/mBX6QpEkeNuReTdgaoQzgYLduD1FFu9S8WlwHIApw/g+zrmApucTxPvP1s1qu
-	Ir1Fj1a6TjH9XGiYy7KhmYtvjRqITaVca9rK5jDinvVpMUyl8zjDQ3ThsGeskbuZwT8UTD
-	eHrVeJUmFdYHJyogcuZTDy6JXMuEsz5JmENRttJn+gV5Zc3J6uO24M6kONeFFw==
+	bh=Bf+nzIHNELUTFPctQA3R5aW3s0Xt60dGvoRpMR2Uv1s=;
+	b=eVOcDeAHQFFNEdD/B3g4h2rkvsueQp3Pg97zu3rLp7OLC1GvCObtiqTZT5+eSDcgBxBaNV
+	NFi+Xvg54i0+2s8k1CfXDqJYUlEgTKj1AZYEcayxTXGp013V5bwufT8PN0s8qQ7GQax+sY
+	RDNWyolMYupJTMW31rgdRoSoIAOYz7X9I0oSCed4vCm3TulBJu4F2JjxpWm/JzKEmsmwiN
+	Rn68JhRJT1be+EYWIkE/crvKH3w6nER99biNxIiL5HeHmY3bxmOhLXjNhAiV64uEysA2EY
+	hHq6w/EBTJXU0L4Rv/xVxEUafsK6VJLlm18z/T9sj/7hH9qNC6MY2RrJhN8kSQ==
 ARC-Authentication-Results: i=1;
 	mx1.freebsd.org;
 	none
-ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1751546152; a=rsa-sha256; cv=none;
-	b=KJ9qVzD0JHKUz8fP/1wsJ9/MMEelg3huU2q/ATVA+dl2qZzjcT0wBhBXZhOSqCD+thdYs8
-	QYKS7WIXgBvtKQE/VYpqKi/pldnbwsD2nv9FycNzo6z1Oek+F4k/bWBqfLCzHiiTOM5lEl
-	845SbSbZCrcQN74ubVJVSQLH27eDJXfY9pHUcX34Q1gA2zh4Sb41uSM6EDV2e5dAhNmuu8
-	0bP6h+V7w28DZSi5u/eTeqNSDDPi9/rgCYCbpPTKEu0Zti578f50I2HbpEAqcQn+0fOl62
-	0ESHM5bWickIrsmmDgXbn/xQDUtWPbo9puzE6cJSdGEIarhuA4HVENkH19cdVA==
+ARC-Seal: i=1; s=dkim; d=freebsd.org; t=1751546457; a=rsa-sha256; cv=none;
+	b=J++DVovSfGFrkeELvTsw3Gjk/wzKUZje5desumYPrAfSAFvlQ9XpHN5N73iLe9SgUbM/he
+	AfMeCeV+3mVGnSsMumyaDXw4ywcD+IQKQCxEXL4Qi1tPr5P89Xu1ZLIyLC2SdDumQsM67F
+	Odkk4meCH4H5SYHbCyXPY/3eKUu9+8MoLi9HqbE0NS20pQKWzp0g9H4yUmIkpWc4sEs3FV
+	WAix8fX2kJJ90sp7wwlQ1y2WC4104TMyJUiFTo9HiW7bFQewYXwd4fYjCIYmFKx7xVLk4N
+	4oXR5kLQRiagQrbbOA285aSDG2XbalWlFrS76E9V3+QjqG1NBxIn3NORXNfvcQ==
 Received: from [IPV6:2804:f1c:851:ac01:29a5:d790:eea7:3d35] (unknown [IPv6:2804:f1c:851:ac01:29a5:d790:eea7:3d35])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(Client did not present a certificate)
 	(Authenticated sender: garga)
-	by smtp.freebsd.org (Postfix) with ESMTPSA id 4bXx7q0FQGz2My;
-	Thu, 03 Jul 2025 12:35:50 +0000 (UTC)
+	by smtp.freebsd.org (Postfix) with ESMTPSA id 4bXxFh4D0jz2Kw;
+	Thu, 03 Jul 2025 12:40:56 +0000 (UTC)
 	(envelope-from garga@FreeBSD.org)
-Message-ID: <90f5ae50-51a5-4188-b76e-90ab2621551c@FreeBSD.org>
-Date: Thu, 3 Jul 2025 09:35:47 -0300
+Message-ID: <f61f6a80-da7c-4849-bc89-806eab84662e@FreeBSD.org>
+Date: Thu, 3 Jul 2025 09:40:54 -0300
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,15 +82,11 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Bug: build is broken on FreeBSD if libsysinfo is installed
-To: Patrick Steinhardt <ps@pks.im>, Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: Junio C Hamano <gitster@pobox.com>, GIT Mailing-list <git@vger.kernel.org>
-References: <f32292e0-4c99-47d0-8eac-21dbc5aca302@FreeBSD.org>
- <9dce7213-0b8c-4636-ab37-4c26081aedf4@FreeBSD.org>
- <d3b912ca-ba5a-4b56-81d1-0e8a10055d83@ramsayjones.plus.com>
- <818958f6-7387-48f8-a0a8-c050af212069@FreeBSD.org>
- <c8f4ae13-8578-4db3-bee3-1619f03428d4@ramsayjones.plus.com>
- <aGZB-DYo1nleB0bd@pks.im>
+Subject: Re: [PATCH] config.mak.uname: update settings for FreeBSD
+To: Junio C Hamano <gitster@pobox.com>, Brad Smith <brad@comstyle.com>
+Cc: git@vger.kernel.org
+References: <aEpF3ZjNwkR8FssX@humpty.home.comstyle.com>
+ <xmqqsek5fwnu.fsf@gitster.g>
 Content-Language: en-US
 From: Renato Botelho <garga@FreeBSD.org>
 Autocrypt: addr=garga@FreeBSD.org; keydata=
@@ -118,48 +114,58 @@ Autocrypt: addr=garga@FreeBSD.org; keydata=
  9NHGbvV2U7BdDUezpiO8NaFjFZVB11I5d99FxUM5XGVstI3VhsRKZxjY0KnqJzaQgTFsPGmv
  AUfZVIN1pXgXiedhPXpr8+Y64jP+pHVwpVmh1zYWL6+q3kqFOUVP6c5iiMeoEXZvgJz7x/AC
  ek3X5gvu8Hpcv+MZIg==
-In-Reply-To: <aGZB-DYo1nleB0bd@pks.im>
+In-Reply-To: <xmqqsek5fwnu.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-On 03/07/25 05:40, Patrick Steinhardt wrote:
-> On Wed, Jul 02, 2025 at 11:33:23PM +0100, Ramsay Jones wrote:
->> On 02/07/2025 12:28, Renato Botelho wrote:
->>> On 01/07/25 17:03, Ramsay Jones wrote:
->> [snip]
->>> BTW, should I start moving the port to meson?  Is it the default build method now?
->>
->> The git project only provides source code (i.e. the project does not
->> produce any binary distribution packages). So, each 'distributor' can
->> use whatever tools they prefer to create their packages.
->>
->> [A long time ago, we had some support for producing Red Hat and Debian
->> packages (if my memory serves me correctly), but that didn't last long!]
->>
->> If such a thing as a 'default build method' exists, then I would say that
->> the Makefile (without configure) is it! (Meson is the *latest* build system
->> used in the project, not the default).
+On 12/06/25 00:47, Junio C Hamano wrote:
+> Brad Smith <brad@comstyle.com> writes:
 > 
-> Right now Meson is still considered experimental, as there are still
-> some things missing compared to our Makefiles. I will address those
-> missing pieces this release cycle, and once done our Makefile and Meson
-> build instructions will both be considered officially supported ways to
-> build Git.
+>> FreeBSD 6.0 has memmem().
 > 
->>>    Is there a plan to remove autotools?
+> And anything older than that no longer matters?
+
+The oldest supported version of FreeBSD is 13.5, which will EOL in April 
+2026.
+
+> That may indeed be true (6.0 was from Nov 2005), but if that is the
+> reason why we simply lose NO_MEMMEM (instead of conditionally losing
+> for 6.0 and newer), that needs to be explained in the proposed log
+> message, together with the reason why we no longer do anything
+> special with version "4.x" (which could be "We ditch the support for
+> anything older than 6.0").
+> 
+> Assuming that our stance is "anything older than 6.0 no longer
+> matters", the patch itself looks good.
+> 
+>> Signed-off-by: Brad Smith <brad@comstyle.com>
+>> ---
+>>   config.mak.uname | 6 ------
+>>   1 file changed, 6 deletions(-)
 >>
->> At present there are no such plans.
+>> diff --git a/config.mak.uname b/config.mak.uname
+>> index b1c5c4d5e8..da592eeaa0 100644
+>> --- a/config.mak.uname
+>> +++ b/config.mak.uname
+>> @@ -302,16 +302,10 @@ ifeq ($(uname_S),FreeBSD)
+>>           ifeq ($(firstword $(subst -, ,$(uname_R))),10.1)
+>>   		OLD_ICONV = YesPlease
+>>           endif
+>> -	NO_MEMMEM = YesPlease
+>>   	BASIC_CFLAGS += -I/usr/local/include
+>>   	BASIC_LDFLAGS += -L/usr/local/lib
+>>   	DIR_HAS_BSD_GROUP_SEMANTICS = YesPlease
+>>   	USE_ST_TIMESPEC = YesPlease
+>> -        ifeq ($(shell expr "$(uname_R)" : '4\.'),2)
+>> -		PTHREAD_LIBS = -pthread
+>> -		NO_UINTMAX_T = YesPlease
+>> -		NO_STRTOUMAX = YesPlease
+>> -        endif
+>>   	PYTHON_PATH = /usr/local/bin/python
+>>   	PERL_PATH = /usr/local/bin/perl
+>>   	HAVE_PATHS_H = YesPlease
 > 
-> There are no plans to remove our Makefile right now, but there is intent
-> to remove autotools once Meson reaches feature parity with our Makefile.
-> It will probably still be a couple releases before that happens, and we
-> of course still have to make the final decision to actually go through
-> with the removal. But it likely is to happen in the not-too-distant
-> future.
-Thank you for the explanation.  I'll keep an eye on the announcements 
-and as soon as meson is considered "feature-complete" I'll start 
-experimenting with it on FreeBSD ports to be ready to flip the switch 
-when the time comes.
+> 
 
 -- 
 Renato Botelho
