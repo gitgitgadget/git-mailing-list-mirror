@@ -1,104 +1,126 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mx1.ddevault.org (mx1.ddevault.org [172.233.46.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7512E6D0F
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 11:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E3D22DE713
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 11:32:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.233.46.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751542340; cv=none; b=FY2a6xedZHy59iZz3PFnMEkd3pJb6UrNZZ1qBlTmCMdjkKMGXXV9j0yTyYi/lerQRw5iPQ3Ef/mpOmX/53vGQHe3GIpQEWYy/2oP68SdEZUFt32xKqpUPkMicrfWvQb28K1zgOGUDKVk2UUf92+MfsvG46/13MRcUrCxRHtArUE=
+	t=1751542370; cv=none; b=DNOVpgoJ+w+cb4xfyXtNlxUjhM/kg+ryfgHwxF9JiYt8aW9/S1pbmGwTbllWL5cKFsi7yZZwczUZK02Hvj/raSzQl2k3jLrWHbt8+FLndWfnA+pXVBkV8pgLTPVbbKTvTfsJFSpQJK/m5MjiyTSwXGvHvHVrQY0rrk6xSP+AD7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751542340; c=relaxed/simple;
-	bh=u8iDh4wmyAfhIc29D0fHg0+fh8+gj0FBc9SNTVY3b30=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RTnkujP/YsW9xg1YdJ5dCXPlHl86b46QzgcmI5nAr1ELl0hHdQCI7v0erggTRYxszeRZDJfBSOUPkWcDwIbh/3+FFx1m910gYQOmSvo2534X02NKGAkh4JIWlxv569wXppAICQQhGoLlz6hRi3rX/dZjylETOPxHN1lr5/rZi1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QH8fQvqr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F+puXB+H; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751542370; c=relaxed/simple;
+	bh=3Ld9HzSDoc9T9KvqZXFcansKJm0NRH/eMJbyVZgshpE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
+	 References:In-Reply-To; b=iv2B/hpV9HrhJYDamXJlh7BS+QaxrAE9rtZoXY/uyepAU8kAsAK1xNjpraJa61c6UpGs4IqsJKY0J552UQGRg3OfRX0OZX7iW7HqTeQBT41Utk07E3v92fbKD+u7uNSZeu3b1Nbzp2gahU/Y4ldeSbkmemB5d/H2fD86jtKzxCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=mbt3fRmL; arc=none smtp.client-ip=172.233.46.218
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ddevault.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QH8fQvqr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F+puXB+H"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6F26C1D00283;
-	Thu,  3 Jul 2025 07:32:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Thu, 03 Jul 2025 07:32:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751542338; x=1751628738; bh=u8iDh4wmyA
-	fhIc29D0fHg0+fh8+gj0FBc9SNTVY3b30=; b=QH8fQvqr1HDv6jI8blNYAGHJ+0
-	CBr1krDyOBWU74uibRfhPdWkIU2Lp+iaQFLZab8YT+3WkH66+vJH3VQoAXe/IVhg
-	Krxl4bPVFALwA5Ea6kHqwDyAVqcsy7fYMcYbseqdwnSwpq0MJadkVcIOudduflda
-	sxX4rQPXMYx1XN/pVvfIiJoge5Joz1cydX25162hlUA3R+qApMUjgFDQ3pIO5RWI
-	j/l2iP5FtFPFQJBR2njXbMgUCeXV+YCxntFf9oF/V4PpDY2GhvfpCFn7fetsgBEk
-	zpeVwLhp2XLVDRrs7aWxPzEKS8ODxVVnYQ91tBZUHKmiqPbKR9+L3lEuBXUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751542338; x=1751628738; bh=u8iDh4wmyAfhIc29D0fHg0+fh8+gj0FBc9S
-	NTVY3b30=; b=F+puXB+HxuWUYU74oFsrJjSohnsv9iGLDakY4ggDgBRAuQ/smEz
-	xSb/gLT7xHwW7cThM2+Uu1sxRm9eRc6F0QcEFj/pTS5aAEwYePLs0eT4fsvFTHqi
-	SbUjQRA5r7HnjTY3kGOd6tv4VZGypTtnqZ26R81Rq7ViEZdIw7pgYO4uOiy+qfWE
-	Pl8m7nk+M+2CMIXXkC9WCRB98IAa+PgK++qsoImv+zjcfUNuEIu98vFS9iD9Fbpn
-	pY2Ry65nK120RUHLvdsyUyFiSQuGu9EhlW1nYvbD+figIVN/6zztfGHU7eH2yTDR
-	h3h8l0hJWsD+FRMBe6AwHUWZF4BNub8kjUQ==
-X-ME-Sender: <xms:QmpmaIXP0W31ekyCFt-9plWr_E0N1d0vBzDAWCmTkNqyzwcZWGQkrA>
-    <xme:QmpmaMn1WC-mNFqv_rAr7w56w6FK5_O0U9Ic8RHmdn-OiVox2h5TZmHDAlhAfGGso
-    fMbsYpclRJTgyonog>
-X-ME-Received: <xmr:QmpmaMaUX_BpKaz3RNjx2dlbbAtFV5z3_GVSYjiP3E_QlhFBbyD6HNGMgqwzEO3lERacda4hRIWBzJpdceCYsnmwGf3d5HkJSF7JRfA6xg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvtdduiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkh
-    hnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:QmpmaHWox1eVpgSzqIYP9og_vhkKkqZc4kUyz7NzKlHcAKZF_ULurw>
-    <xmx:QmpmaCmce79z9xvMvSp_JZEaK4494iyY_-YF1GtqlM_fPP_lTcidWQ>
-    <xmx:QmpmaMfvoJoPR_JFVxTQpTFWpJu-c3y1AcvBz7jVrSLcd7ME0vUUgw>
-    <xmx:QmpmaEFzBH4Ugpb1s6k5dpyEhfpqpA8KfboWhO-T59SwyfqeudXOsQ>
-    <xmx:QmpmaH1ZRPUOXsQkfejZdPwz2_aWX-_RScq07kdHuH2oE0irVRT6LdV_>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 3 Jul 2025 07:32:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 78b3a742 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 3 Jul 2025 11:32:16 +0000 (UTC)
-Date: Thu, 3 Jul 2025 13:32:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
-	gitster@pobox.com
-Subject: Re: [GSoC RFC PATCH v2 6/7] repo-info: add field layout.bare
-Message-ID: <aGZqPC47iPMixyvW@pks.im>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-7-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="mbt3fRmL"
+DKIM-Signature: a=rsa-sha256; bh=Hf7FzL7zWH5+weZQPFdci8mkBMWHI9jqfAAdbthwZa0=;
+ c=relaxed/relaxed; d=ddevault.org;
+ h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
+ i=@ddevault.org; s=default; t=1751542354; v=1; x=1751974354;
+ b=mbt3fRmLelo+m1VYR2srNZK25/o0He5rIDiLAly4YDAmjzVx7kbMRBEnZ7MN9WHmDJTNKaqp
+ RPCTldh6xSIaFOEgKi+r2fAydXrFldwUPyRoEftT2aouIqqoCVBwz1lr1c9hMFKlHXmFc4f45cC
+ 5YEyl8EzdeoxQTm+pBSD92qKnMlzFegpfDDWDDSkbMksNCSSjikFrpwdG3GQq0TVSS8RcELmcqf
+ SOA4g4l91YmaHv2WonViPJeJfMf5MwueGJMd/sqQWPlO7MQ1MVoTTwxuIqaSdHKCZmME2TXPfZO
+ lltUUCTa0CMEZUiEck8kSdiCYKKc6adjc+renmduRVQOw==
+Received: by mx1.ddevault.org (envelope-sender <drew@ddevault.org>) with
+ ESMTPS id fb85823c; Thu, 03 Jul 2025 11:32:34 +0000
+Received: by taiga (Postfix, from userid 1000)
+	id E88C570206F2; Thu, 03 Jul 2025 13:32:33 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Mime-Version: 1.0
+Content-Type: multipart/signed;
+ boundary=0982028c20807ea899dd30facff606491b03d695ed11ead847147a8b48c4;
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Thu, 03 Jul 2025 13:32:32 +0200
+Message-Id: <DB2DY0C84G1R.3V7LEG87PHVTW@ddevault.org>
+From: "Drew DeVault" <drew@ddevault.org>
+To: "Remo Senekowitsch" <remo@buenzli.dev>, <git@vger.kernel.org>
+Cc: "Martin von Zweigbergk" <martinvonz@google.com>, "Patrick Steinhardt"
+ <ps@pks.im>, "Andy Koppe" <andy.koppe@gmail.com>
+Subject: Re: [PATCH] pretty: add X-Change-ID to mail formats
+X-Mailer: aerc 0.20.1-64-g7cb8e0e7ce24-dirty
+References: <20250703074952.20737-1-drew@ddevault.org>
+ <DB2AARC4OKR3.48T4CC70KBUC@buenzli.dev>
+In-Reply-To: <DB2AARC4OKR3.48T4CC70KBUC@buenzli.dev>
+
+--0982028c20807ea899dd30facff606491b03d695ed11ead847147a8b48c4
+Content-Type: multipart/mixed;
+ boundary=6aaf8d81ae687041dc51923b5f57e97b2e34749650471f6ab78c42f434e9
+
+--6aaf8d81ae687041dc51923b5f57e97b2e34749650471f6ab78c42f434e9
+Content-Type: multipart/alternative;
+ boundary=403cd526ec265ad1bfd61eef0c26f7cf5a2e2c95d56df67ce508497467e3
+
+--403cd526ec265ad1bfd61eef0c26f7cf5a2e2c95d56df67ce508497467e3
+Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
-In-Reply-To: <20250619225751.99699-7-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset=UTF-8
 
-On Thu, Jun 19, 2025 at 07:57:50PM -0300, Lucas Seiki Oshiro wrote:
-> diff --git a/builtin/repo-info.c b/builtin/repo-info.c
-> index 6ce3e6134f..1650d3595c 100644
-> --- a/builtin/repo-info.c
-> +++ b/builtin/repo-info.c
-> @@ -1,4 +1,8 @@
-> +#define USE_THE_REPOSITORY_VARIABLE
+Sweet! I'm going to send a follow-up with git-am support.
 
-Meh, `is_bare_repository()` strikes again :/
+On Thu Jul 3, 2025 at 10:41 AM CEST, Remo Senekowitsch wrote:
+> This can kind of be tested already. Because Jujutsu already writes the
+> change-id header and sends it via git push, it must also be able to
+> import those headers from commits it hasn't seen before. Possible steps
+> to verify this behavior:
+>
+> * Create a repo with Jujutsu, make some commits, push them to a remote.
+>   (can be one on the local file system)
+>
+> * Clone this repo via Git.
+>
+> * (optional) Confirm with `git cat-file -p @` that the change-id header
+>   was preserved.
+>
+> * Run `jj git init --colocate .` to upgrade the git repo to a jj repo.
+>
+> * Run `jj log` and observe that Jujutsu correctly imported the change-id
+>   headers of existing commits it didn't know about previously.
 
-Patrick
+I can confirm all of this works with the v2 I'm about to send, though I
+have ascertained as much through a manual testing procedure that
+resembles your recommendation here.
+
+One thing I'm less certain about is how to expand the tests in t/ to
+test this behavior. I'll elaborate in the timely commentary of v2.
+
+--403cd526ec265ad1bfd61eef0c26f7cf5a2e2c95d56df67ce508497467e3--
+
+--6aaf8d81ae687041dc51923b5f57e97b2e34749650471f6ab78c42f434e9
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename=42F3F1862E3CC4B8.asc
+Content-Type: application/pgp-keys; charset=UTF-8
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FWjdZOWt4WUpLd1lCQkFI
+YVJ3OEJBUWRBL3BQeTZYK25OTDVUMlFhSktFTTA4eE4vS3o3d0ZUQVpvSDVZCnJpVjl4MW0wSUVS
+eVpYY2dSR1ZXWVhWc2RDQThaSEpsZDBCa1pHVjJZWFZzZEM1dmNtYytpSk1FRXhZS0FEc0MKR3dN
+RkN3a0lCd0lDSWdJR0ZRb0pDQXNDQkJZQ0F3RUNIZ2NDRjRBV0lRU2Z0ZWMzM0NXeW5ZN3NScEZD
+OC9HRwpManpFdUFVQ1o3WTl3d0FLQ1JCQzgvR0dManpFdU1FRUFQOURIKzFMZ3ZUcVpETFo4YmFi
+QjVDZHA1eTBaVytRClR4NzhtaDFMOGpKZDZnRUFzc21nc0ltY3JadjRhZFAyVVc1UlU1QkhDZTlL
+VWR4MER5VjgzUXdsRkFTNE9BUm4KdGoyVEVnb3JCZ0VFQVpkVkFRVUJBUWRBR0FIOWRsYUNPTm9Y
+cG1RZ0hvUWdZSTJ0UytWTTNtelU4STJQeVZZUQoxR1VEQVFnSGlIZ0VHQllLQUNBQ0d3d1dJUVNm
+dGVjMzNDV3luWTdzUnBGQzgvR0dManpFdUFVQ1o3WTkxZ0FLCkNSQkM4L0dHTGp6RXVIY25BUDR5
+ak9pTTB5cWtTVDZ5WHpEVVd6ZTdCOUltMjRGOEhWeCt3TnFjRGFEdGNBRC8KZktRaHowU0NQaWJs
+TzZsYzdNRlV2bGFPejJ2ODdVcFVZUmh6UGRnUXF3az0KPWVtcmIKLS0tLS1FTkQgUEdQIFBVQkxJ
+QyBLRVkgQkxPQ0stLS0tLQo=
+--6aaf8d81ae687041dc51923b5f57e97b2e34749650471f6ab78c42f434e9--
+
+--0982028c20807ea899dd30facff606491b03d695ed11ead847147a8b48c4
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSftec33CWynY7sRpFC8/GGLjzEuAUCaGZqUAAKCRBC8/GGLjzE
+uO5HAP9GuFiIolWSsZM8olUMiN6D3/fShYRqREsStjf/AJeFLAD/cYXL+ZOZrdUE
+RZVUs9kDwUEk2zBDgpTypKJ5vVUSRwQ=
+=AyXk
+-----END PGP SIGNATURE-----
+
+--0982028c20807ea899dd30facff606491b03d695ed11ead847147a8b48c4--
