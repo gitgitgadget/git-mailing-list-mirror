@@ -1,101 +1,123 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67525188000
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 13:18:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7272D8DDA
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 13:42:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751548703; cv=none; b=cxBMyXkCxU3veD+Y7cKZ+a1CUtWP5Y/bCjsMwdXbfV5FLaQK7gQj1c5YRTILVVP4e6W1gp5qENstiouH6GTJfr7RR4rpUyRg1GryebVFM+Sp/51FBJy7Vajl1X2pUdelNw5/hV+fNGd2rSt+49fXBT1pOI3LzP43JhrKDSyxhUI=
+	t=1751550152; cv=none; b=XvTaUbJzqMCvK4iIazW4ijwfBNYKnRibgo2cOehV0A12FggT4UE/6fBJy+7Yh1ZT/FpmycAvBjjZzv7KUpX3+9U9QFTuLUSO6nTiU3u2GbQU6h/qa4Td29onnnyUIwBD6PBi3PUj7rsGmYdqestXwzOc58NWR7sEgYR0qkjBdK0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751548703; c=relaxed/simple;
-	bh=Q3ArFqk4/7nFhiNOO4Iz4K29P1rHV/NFV+u7vhvWiKc=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=OVx21eO9SepmxXsZEAT3gaRX0B/DFk2MvuW7SdSNQdTGLJH4DPMhDCqMoBEZdTSQRA2mmjXkl5QA4IgycQNbmfn6fAhjX3m5SDUd7gw84hKPIu5jnKJFuhyKlqZKBxf9YpxQIyEXuOFCfAy87ge4e6P8Wc6F0SAlqIDqz10Qvxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJjSKqYm; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1751550152; c=relaxed/simple;
+	bh=W61G01S/hjeGEv4qp9hYOIrG9IV5xVZozwxdnc3blAs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ZysCtegwi+sC9MXTmLw6r2ZvOmyZoCiA5Q2budEo6WRCZD3J+9SdncUN50Vs3Ino3PY30+HopGNdTrxCri7xkTVgB3bcT1QCGk5tCdLgOmzwgiM0W9ei6lQeFFLmuITc7VmkOiUoRPmuaZ1cbwCqdgfQg2QRQECOlDB6TZElBP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gtBROAtD; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJjSKqYm"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e733a6ff491so5259300276.2
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 06:18:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gtBROAtD"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-236470b2dceso48442205ad.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 06:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751548701; x=1752153501; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q3ArFqk4/7nFhiNOO4Iz4K29P1rHV/NFV+u7vhvWiKc=;
-        b=QJjSKqYm2Q4iUex66VnmpaCT1aZo5wugW2r78cv7g6Edaz95m2Tq8qLWf1oA+E+VrY
-         hGInn1h9X/O1LLP2tvw7cw5vunnE9YqqyBKkhS4BLvMqvYx11GAJjt3T2ZTIuVqCcoiO
-         Id5bkf+1py/qh4uahWAYaRDjvUaPanhSXrplf2jXT2JC8D18JXym2K6AsPvFqEIk5qjW
-         DVjujPXU02+VN/4zGMa2X7pUdZXYimPttc8xbbQq+VsKlZU4rgbrVSoj30QnHfnT2Ula
-         QuJ6+CVYOkAPvhMm0jKJ2CvDXMyAiHZFLgq7CuIkJdIThco8AYAgqfsbX7L+p1ZYEljU
-         KaIQ==
+        d=gmail.com; s=20230601; t=1751550150; x=1752154950; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4gxXxpD+dkLD1Vl54sHq53V6J1hpHOJcitCZ0rWyKUI=;
+        b=gtBROAtDKDAuJUD5cQS8k9VFncjzxPaAdZgISeafzIchh/wBdVWcPLs2uTDXihgvJO
+         zAjQkG/3x9rharxuzIJ2muLmAYsNwR/J0/cAP7a3rLw1okta9YkoxNb0Vf3vJNID9HYU
+         7XggKRPfij5lLvyJAj/zBY+nxiKvNQYOZHA1mKfq/bEp+5sAiX6sROfwp0CMAY01zvrH
+         spcKefN3hd0zkL6FUQOyULYlNK8zpGB6mkkHg2hO4P40h3gyOz8G8Uzs6b3VbDUlK39G
+         JqEMHBGbeLGAsR8N6mKPHa+S1rOYC6AgajZmzGikaPu+BMcZOlx2yhgxLynDKOx9NdKW
+         WF+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751548701; x=1752153501;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1751550150; x=1752154950;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q3ArFqk4/7nFhiNOO4Iz4K29P1rHV/NFV+u7vhvWiKc=;
-        b=u1imml+dZMlY9k+VcGchz+dUWYaheb49o6t3xfHRMGcscMZtDXZWmU5cyIV/fPCy/b
-         5TK4dR27+iyUoEvfNOE9DV/BZMjo2JKkEaTl9wICZvPglmcEFsyxJhuxJOck16lIJ6aM
-         monouz6BV1PA5GK8aTw89/+YmDuHzSaSZxd/fm0rEHcRlU1QQM9At7YN8RWsj4oUFssn
-         hLVfY7TmNRc+Zb1gtQ0u+V8fw/Fpf2cozTyQbzRwt1nIHIHoPSU37yh7qLvgSAAKtO1z
-         bCeKRUYzjnr+zCS8KZFer0oMJ3LtdeT4sLmPBuWPmbk4gpTSbMHzaq1S0DJCkqVeMjj7
-         FjFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWEX8aAihfQHFGzkfms291OUBEdfG8yozGl9N8+9ct8g+9fdtOwoVYJMu4IwAEPHFaaHDI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yypw99qZqI+NjP+CQwbdTCh8fCbxEmbpDFoVUmvB/qjOnjdGRCH
-	MamjWR97JcTGBOIiy+9SAQAvm1yk4rVZiyrbQgyAM7wpFI/msuEwRq3QMnKNTKb3
-X-Gm-Gg: ASbGncswTvX8OrLTW+iPThWVXhQO5auQPXVmpLnA6F43msY6laq+Ln0ZDHLjeO9wsuW
-	Q4VdYDSJ2pVpPFgPoX31hAUBozVg5hLW1usH0Cc9dVUWCr4iiN9JNBqnFgteS7GPilW5K81Mipc
-	60h587SemKluNjQOFYPbJWTHSl77uCoWfof+QDCsd0WWqcV7ulPGlkBP5B0MQw0NsrBlKL14lHx
-	wOQD1Iv6j03t6x+0vdbJslPN3ZXFq6YA8e1lBW7SZ1sUqnemuyuddmQp4lXnWM6almm03VYJTqK
-	GHlcKqaUaZDXfabhXmjKdcV+o/blkt9OeAM3RSfFFXAZ8g+V9LTkAh9dB+pQuRmkgFzB4oiGfrr
-	5T2y3ZMLjCbkt
-X-Google-Smtp-Source: AGHT+IF36MiSLKnQ0mY6ha/J7VrS9TSHi+eTOsbp/dFms4IxxT9v9oqfDo0ShKgLZxdXVi1seYW28A==
-X-Received: by 2002:a05:6902:844:b0:e84:ce8:135b with SMTP id 3f1490d57ef6-e898f8b21d3mr4414589276.44.1751548701164;
-        Thu, 03 Jul 2025 06:18:21 -0700 (PDT)
-Received: from smtpclient.apple ([2605:a601:90a6:1600:d474:ea:3b09:dc6b])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e87a6b61f65sm4361908276.13.2025.07.03.06.18.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jul 2025 06:18:20 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=4gxXxpD+dkLD1Vl54sHq53V6J1hpHOJcitCZ0rWyKUI=;
+        b=m6Iv50wOmFcIYAYCrK3XNWti0MqYrfaJggqZYDpszDAnc3+wpMMXUF96th1uc7oG0C
+         1zufO3aSC7gkrRo69OWIxWfieMF3WT/L+GfsWEwhfeQoSYFQnNWA6xa2CEcdQN1PIHRb
+         xJZ7LeWPwD3XEr30OdViskuXEoZJaVrRb3QrMcKtYKqRxaZWlt5NCLep2VRIKY3OdwWc
+         kvg3EZaivMvPScpuRWspm7Xa6LDsXIuvhwPZUwTf8DpXxHgS4A2dDyvU7+yIYi6BcTYD
+         wLHWEpJro7ZNmzfTMBfjV7ZNhUAdSQObEwF8XDciSVvPI2tOHrtugXofZ42UC7Q7/NT8
+         dAxg==
+X-Gm-Message-State: AOJu0YxflFF9QOtFZTP+/KqxTGyZjJSeA+6E/CnZ+Vv6/V+EhLYWC5/n
+	xN2bQF9mGLb5QAvskWGuF/3k77L1eZr0ZcwM9fujppjONzLkNdzmBzZwwO70Hw==
+X-Gm-Gg: ASbGncuhV559wdKuXKse0K9vB3z8+HfPwSK43mEPa27NUBDHtR2f4tZFKXwjxCDn9Tn
+	AOSb8gSVDwJXjAb6hkHz/lX8EOdyeVMBhadIJNkpeTDMxfIJCf06BLF/He/8PVFwS22kkrOZZRP
+	O5VTPLOnFpz62nRnuODbbOO8DZQuoev0fzyVTVZd7PZS88udfzDGcaI3+63HX1eCUFaTDC6Pih8
+	78bgJO6Ic1slBtFWn9XMidBQxxRB7LfHFyYOc5DW/OfhggMVz7OlAJA7O2Ja1RoRn+MlKf3WqA5
+	1aXbPS4IizVUZbC3NzEOTD1I+Q+4p5vxcWGWbor7YhkVrywCYX72dCLZoJJyAqTWiFbuwYfd1MU
+	=
+X-Google-Smtp-Source: AGHT+IEw7pHQPUKSB2koPcaXUikGpx1Smds13j3jk6CPTyRMGlLK5Ovq6Rq8JLVDT//8caXx9puw3g==
+X-Received: by 2002:a17:903:1a70:b0:234:ba37:879e with SMTP id d9443c01a7336-23c6e5b0f47mr125555645ad.38.1751550150155;
+        Thu, 03 Jul 2025 06:42:30 -0700 (PDT)
+Received: from fedora ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23acb3c4b23sm153819065ad.214.2025.07.03.06.42.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jul 2025 06:42:29 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: ericsalem@gmail.com
+Cc: git@vger.kernel.org
+Subject: Re Behavior of git log --diff-filter=d
+Date: Thu,  3 Jul 2025 19:12:20 +0530
+Message-ID: <20250703134220.31638-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.50.0
+In-Reply-To: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
+References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [RFC PATCH] blame: avoid failing if ignoreRevsFile does not exist
-Date: Thu, 3 Jul 2025 09:18:09 -0400
-Message-Id: <93842D18-3051-4169-B314-AD5A1407575D@gmail.com>
-References: <099c2a59-ac60-474b-a535-ec7dcb1f44f8@app.fastmail.com>
-Cc: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarulasolutions.com>,
- git@vger.kernel.org
-In-Reply-To: <099c2a59-ac60-474b-a535-ec7dcb1f44f8@app.fastmail.com>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
+Hi Eric,
 
-> Le 3 juil. 2025 =C3=A0 04:26, Kristoffer Haugsbakk <kristofferhaugsbakk@fa=
-stmail.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Thu, Jul 3, 2025, at 10:18, Francesco Nicoletta Puzzillo wrote=
-:
->> Setting ignoreRevsFile globally makes the blame command fail in
->> repositories that don't have the file present.
->>=20
->> Check that the file exists before trying to parse it.
->>=20
->> Signed-off-by: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarula=
-solutions.com>
->=20
-> Relevant thread
->=20
-> https://lore.kernel.org/git/20210807202752.1278672-1-noah.pendleton@gmail.=
-com/
->=20
+Nice question
 
-Indeed. IIRC there was some polish to do on Junio=E2=80=99s patches, which I=
- intend to get to unless someone beats me to it ;)=
+Yes, this is expected behavior
+You're seeing a difference because
+
+--diff-filter=d tells Git to exclude commits that have deleted files in their diffs.
+However, this filter only applies if there is a diff to filter.
+
+In other words, 
+if you run git log --format="%H" --diff-filter=d, 
+Git doesn't show any output unless 
+the diff logic is actually invoked. 
+But --format="%H" alone does not invoke diff generation...
+so --diff-filter silently does nothing.
+
+When you add --stat or --name-only, 
+you're explicitly telling Git: 
+"Please compute the diff". 
+
+Now Git has something to filter, 
+and it applies --diff-filter=d 
+to exclude those diffs that involve deletions.
+
+If you want to exclude deletion commits and get just commit hashes
+This is something I think should work
+probably set this up with an alias if you use this many times
+
+git log --format="%H" --diff-filter=d --name-only | grep -v '^$'
+
+This should work just fine...
+
+Or perhaps if you wanna tinker more
+git log --format="%H" --diff-filter=d --stat | grep -B1 -v "delete mode"
+
+But if you're just trying to filter commits 
+by file change type and want to see 
+only those hashes where a deleted file is not present, 
+you'll need some way to trigger the diff 
+even if you discard the output later.
+
+Hope that helps :)
+
+Thank you,
+
+- Jayatheerth
