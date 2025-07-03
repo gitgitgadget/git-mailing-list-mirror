@@ -1,44 +1,65 @@
-Received: from mx1.ddevault.org (mx1.ddevault.org [172.233.46.218])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D852BF3E2
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.233.46.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED39A2DE708
+	for <git@vger.kernel.org>; Thu,  3 Jul 2025 08:18:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751529931; cv=none; b=YzJjQQjAoTYGzmHKhCm5eRD9lAWp1wSbh1pbrL7XDroUtqBxs2WIZ5Rg37xZND2yliT7UgYuVPppXE3PzlvkMY5UNnQ/UmJhLAYK2rE1jMbb5Adwzx659jMnOp4a+DtBhcpoagYbkK8YK0bRA/ttfJD64ssDBY5jvL5fygmN5yQ=
+	t=1751530740; cv=none; b=AYmp1d37pFm4sv/bq7YV/mk8oiUfJp5JdcmxKsxK6I6kGbyOplYitcSPP4dIXi44wSlFk/NikY0+OgkKhztmdghkgKayKwFAepbBL+iVklQwpkvO87VZ/eIFU/POLQuTmOtRgSb3OzUZRoG1yAP6AjakIM/2tvrzWy09C/BKzYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751529931; c=relaxed/simple;
-	bh=ZASOqPwuL2duN3vAOKC81Q4T0mx4wfjktxlRnDnp7yI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=S5gMLBsVY3e415uDy+Wj+QFRzg2Ex6cBkNQHeP1VKXMULdiAMOkVAahA1quBpkPQKJ75B/CeyyWgTE3ZRQ1hNkxmpj4Dof2DBXqr/ElF7Q4BB5u++ebHv5VHdaj4lllzCMICUIU8anGDO5RHUdLSYWI8xx2UKzBNBH0QohatvXg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=SEnZIKRz; arc=none smtp.client-ip=172.233.46.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ddevault.org
+	s=arc-20240116; t=1751530740; c=relaxed/simple;
+	bh=4NebW/EVn6a5tg9sdCD3ybtczTo8y/T/TAnmuJHFrKw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=P9SB0jLklJp5gJz6Q9q0O1BnaZ9asOWx1cXGZajxLnni6cV/9KzlYMwJ9VJFBwqbat+bpdfOBvDVij/uwid+cs7suIoAXdAmHPy/vJ127IOiQm+z7N5/NEnBrvsxPClV89wYHliPJMX5aVDYlRPwfxssZgIT933ekQl4IlL8o1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=amarulasolutions.com; spf=pass smtp.mailfrom=amarulasolutions.com; dkim=pass (1024-bit key) header.d=amarulasolutions.com header.i=@amarulasolutions.com header.b=KTw8hKmm; arc=none smtp.client-ip=209.85.128.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=amarulasolutions.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amarulasolutions.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="SEnZIKRz"
-DKIM-Signature: a=rsa-sha256; bh=N35YjloQoXy54miLYyiwp8ZqcfL7GYq1d6DnEWx/l0w=;
- c=relaxed/relaxed; d=ddevault.org;
- h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Transfer-Encoding:Content-Transfer-Encoding:Reply-To:In-Reply-To:Message-Id:Message-Id:References:Autocrypt:Openpgp;
- i=@ddevault.org; s=default; t=1751529000; v=1; x=1751961000;
- b=SEnZIKRz6Y9qNp+k/78Ct20Yl1Pb8gkZeFD9+2nbLKePO2kZyoL6QlLDmaKs6aA6s4BjZIVp
- sFj9mTd4awlp6QYTVk0sENQUMg0VKz9nW4tZxgkqbK21U8ix6AyaTXNmWBYRkLT9OhPGGRIzxC8
- 7WF249BwUYuISBTRdp9jhl+J2enYZwYVYisMBudJMrzaiLhayAnRPBUbAmRSroPVsch7HTcAoL6
- bb3s6qTdvJf8DlrbOpvDxoD+4HaWAsFdTetC0RarzM4SYS9fLx+dZ68sNDdrs8YbWbvkzCCo/XW
- f9HcFMxSjWFzBJIEMI3Tzh9FRziCulohKmAIfzqYLJyuw==
-Received: by mx1.ddevault.org (envelope-sender <drew@ddevault.org>) with
- ESMTPS id 1bd92a2b; Thu, 03 Jul 2025 07:50:00 +0000
-Received: by taiga (Postfix, from userid 1000)
-	id 0A66870206F2; Thu, 03 Jul 2025 09:50:00 +0200 (CEST)
-From: Drew DeVault <drew@ddevault.org>
+	dkim=pass (1024-bit key) header.d=amarulasolutions.com header.i=@amarulasolutions.com header.b="KTw8hKmm"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-450cfb79177so46421365e9.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 01:18:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=amarulasolutions.com; s=google; t=1751530737; x=1752135537; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=dJxwRedniM1F+KF2l9ErXMkWca5D1KaiOoxs68Mqnf4=;
+        b=KTw8hKmmuyqA4ryZfekBhHQn75yTdnT+3k/AUrnF96MWZ2cYkWZXDrH3YJhrAvOoVr
+         yZP9J1nRmyh4cYAwM8r30oNiOMV2ZUNy6SL7c/k5TQMGi8JVyfYUmYuv5z6hKkBsTBo4
+         8lEPzsI3p8JIROYiIbFAOdzeAxSGiEYQn7JFM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751530737; x=1752135537;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dJxwRedniM1F+KF2l9ErXMkWca5D1KaiOoxs68Mqnf4=;
+        b=IXt8Z0oDxK1IgQujg0kGldbFFHWI9heRX1McqS6Ku3EbgNIYiAGDUg95Et2NivTJUY
+         MAL69ZC7GkV1VYQ8Rl9Xj49AuwvtYEamo6hAC2i6F91TgrDktbsoPPEF8dPXw4hL5vjx
+         qEFfegWW+exAuFsUwdh6t+/W8T7CFvtx/3C+aVdXmlAK8hAGy4Id+yx8XfPKKPFWejAY
+         nr9DHX7ZOQjkkftUT2iLlCFoaCRXyA4J7KOQfkaVQ0H3tgzi+l5eT+OeRkGMrq3DvQKp
+         IlUBOQBM96f68Re2rd1zdXEGo7fxh0++XkSyplfIJ1wTWub1BnfYCFS101n1nmYmcdKR
+         CfEQ==
+X-Gm-Message-State: AOJu0YzkmZh3flxnN+24yPDlDRW7s5rJGuzMEFAGklRjEJEAsPo2mBkq
+	AXZazmulrzKqZo4sy2nNviXp/89H+Q1XbvldDZA9b8Iv+legJPNL3T0o3oN6ldVL/m6YaT2oH6Q
+	Rg7Po
+X-Gm-Gg: ASbGncucCzmlVG+QIio4Axcd/rBglmNoeLlxr8N9o2jRs5mKVmYew61qNKKOPzgf+vX
+	3dfu381uGwgwk+62Bp5e1lfnkJ97rKjITjIVzlVG31KjxDQR4Tn05E6nIJAfUs8JUCXWE5FYgQt
+	iFm8cKPldfhRDhOr1HRQx2z2+D+kdtEVNAxDlRJ98z9QCKf7RBe9Nhg/E6QzbNin1F1h67lhwvq
+	5aBlzhuQC1g4Gf3jjvCozl2DoWUNHCrwE8vKqmvZTkKTVJxIReEaFvBTdmewSnd7WWboY+NxqZG
+	ddl9qfuFhz+OfVlQTaILBC8n+QjKIQTlgYn5eOwoXGzfVM2PPA8aj/UjKnJxDL9kJMIToY1Ymsq
+	dPiejAy2IUEMdhvqSVnRyPt/LoAUg3fLrSjdt4lU4+W3weScqk8ZJSkwiiLVyEprUuQ==
+X-Google-Smtp-Source: AGHT+IEl5uZsblwzZu6LPoAGCjCDKXF/sJ/z9OcnYjdUCvYypQAlgw6MKau/VA+POtJJxjkOZ+GzxQ==
+X-Received: by 2002:a05:600c:8115:b0:43d:fa5d:9315 with SMTP id 5b1f17b1804b1-454ad209a7amr9942605e9.33.1751530736468;
+        Thu, 03 Jul 2025 01:18:56 -0700 (PDT)
+Received: from nomnp-ThinkPad-T14s-Gen-2i.amarulasolutions.com ([2a01:e11:5420:5c40:9846:5f60:fd47:f869])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454a9989328sm19138895e9.18.2025.07.03.01.18.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jul 2025 01:18:56 -0700 (PDT)
+From: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarulasolutions.com>
 To: git@vger.kernel.org
-Cc: Drew DeVault <drew@ddevault.org>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Andy Koppe <andy.koppe@gmail.com>,
-	"Remo Senekowitsch" <remo@buenzli.dev>
-Subject: [PATCH] pretty: add X-Change-ID to mail formats
-Date: Thu,  3 Jul 2025 09:45:29 +0200
-Message-ID: <20250703074952.20737-1-drew@ddevault.org>
-X-Mailer: git-send-email 2.50.0
+Cc: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarulasolutions.com>
+Subject: [RFC PATCH] blame: avoid failing if ignoreRevsFile does not exist
+Date: Thu,  3 Jul 2025 10:18:38 +0200
+Message-ID: <20250703081838.190603-1-francesco.nicolettap@amarulasolutions.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,57 +68,53 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Introduce the X-Change-ID header to emails prepared by git (i.e. via
-format-patch, send-email). This allows tools which work with those
-emails (e.g. patchwork, sourcehut) to meaningfully integrate with tools
-that assign change IDs to commits.
+Setting ignoreRevsFile globally makes the blame command fail in
+repositories that don't have the file present.
 
-With some follow-up work, this is also the first step towards ensuring
-that those change IDs are preserved through from git-send-email to
-git-am as a change moves through its review lifecycle.
+Check that the file exists before trying to parse it.
 
-Signed-off-by: Drew DeVault <drew@ddevault.org>
+Signed-off-by: Francesco Nicoletta Puzzillo <francesco.nicolettap@amarulasolutions.com>
 ---
-I have refrained from implementing the git-am part of this work for now,
-on the basis that I'm not sure how downstream tools like Jujutsu would
-feel if git wrote the change-id header to new commits. Would that
-conflict with some internal deterministic process for coming up with the
-change-id that could come up with a different answer, leading to
-conflicts? I don't know, so I would appreciate some insights from those
-who understand the implications for their downstream systems.
+ builtin/blame.c  | 3 ++-
+ t/t8002-blame.sh | 6 ++++++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
-Adding the change ID to outgoing emails is useful on its own, however,
-so I think this patch is acceptable without the git-am side being
-initially present.
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 944952e30e..e4236f0ebc 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -868,12 +868,13 @@ static void build_ignorelist(struct blame_scoreboard *sb,
+ {
+ 	struct string_list_item *i;
+ 	struct object_id oid;
++	struct stat st;
+ 
+ 	oidset_init(&sb->ignore_list, 0);
+ 	for_each_string_list_item(i, ignore_revs_file_list) {
+ 		if (!strcmp(i->string, ""))
+ 			oidset_clear(&sb->ignore_list);
+-		else
++		else if (!stat(i->string, &st))
+ 			oidset_parse_file_carefully(&sb->ignore_list, i->string,
+ 						    the_repository->hash_algo,
+ 						    peel_to_commit_oid, sb);
+diff --git a/t/t8002-blame.sh b/t/t8002-blame.sh
+index 7822947f02..24010f544c 100755
+--- a/t/t8002-blame.sh
++++ b/t/t8002-blame.sh
+@@ -173,4 +173,10 @@ test_expect_success 'blame with uncommitted edits in partial clone does not cras
+ 	git -C client blame file.txt
+ '
+ 
++test_expect_success 'blame with ignoreRevsFile set but not present does not fail' '
++	test_commit A file line1 &&
++	git config --global blame.ignoreRevsFile .git-blame-ignore-revs &&
++	git blame file
++'
++
+ test_done
 
- pretty.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
-
-diff --git a/pretty.c b/pretty.c
-index 0bc8ad8a9a..70fba7b023 100644
---- a/pretty.c
-+++ b/pretty.c
-@@ -2045,7 +2045,7 @@ static void pp_header(struct pretty_print_context *pp,
- 	int parents_shown = 0;
- 
- 	for (;;) {
--		const char *name, *line = *msg_p;
-+		const char *name, *change_id, *line = *msg_p;
- 		int linelen = get_one_line(*msg_p);
- 
- 		if (!linelen)
-@@ -2089,6 +2089,11 @@ static void pp_header(struct pretty_print_context *pp,
- 			strbuf_grow(sb, linelen + 80);
- 			pp_user_info(pp, "Commit", sb, name, encoding);
- 		}
-+		if (skip_prefix(line, "change-id ", &change_id) &&
-+		    cmit_fmt_is_mail(pp->fmt)) {
-+			strbuf_addf(sb, "X-Change-ID: %.*s\n",
-+				    linelen - 11, change_id);
-+		}
- 	}
- }
- 
+base-commit: 8b6f19ccfc3aefbd0f22f6b7d56ad6a3fc5e4f37
 -- 
-2.50.0
+2.43.0
 
