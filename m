@@ -1,149 +1,242 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C3B1199FBA
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 20:43:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954A157C9F
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 21:11:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751661806; cv=none; b=Q8RkuMZkgpbI2BS5QFY0DU8kdoJQJ7mVkOG2rd5ZhJwTQN1dkhuQ61QsuY6vkU0CiIzSSnlzW1lnOPKGdZDL7srAoZmckhm4DKtE9TULvtYVJD9pTrY0So/Z5tvEvvOK25J9KfsKaDeAyXD+sr+xUNTBJ18f9Rs2yb9gZUZtSsM=
+	t=1751663502; cv=none; b=Nqald7aMssUTCrUrRQZipKsDckRj+Xwy/KTjV5vswNZnTONE85F2LfJEPRmJxXGGak+FzBSslN6t495K7SuQeTQwSUNa3OoctJTbr+ll/VhqO5p+P0Be9r6Vf3Ivjqx94LIub/SbVwf/2eOTLo/ZqkCyKKKquFEgFpcCfQYrGuE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751661806; c=relaxed/simple;
-	bh=wQSHHjIZvTd2QO2hC5U5rsdcfjb5Uvu/A6qg3hoQxn0=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=OpfWNcrANw1ieSEluE7DcbnNkOjDL4P/v24NdhaK73QtbR2K92NzTLO8CsD8H4HFG6ZWYWut3H4c2KgasX/pfG18bF62//aMHtrfl278DOknCEDF7rteJH8WXt+oPSeQXOlSWeluG7k2GBAsiwsDP1ROZaOiB5ATju4vqnLlPIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=oqM88p/y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kpy0RB4X; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1751663502; c=relaxed/simple;
+	bh=nWTZGML9S1hfVTFqYiaz6Uwdgo3Z+tNcVnlA6tGxvZY=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=HfaIK6wPzSmwyxLidEWBa4uSD0gbHBEKJhKUpdG2icbSs0I06RtbWDjSgxH3t6PE3Xam43pzsws4ma4hZvWu0AiQBEyoscAvm2qnG3UMKTzIqk/g9TQGdiSqeVveEOiZKNw3Vxqk+nJEQBCyu1hLxV9oiuhWtet1Y/GuQkZZnR8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B2z2TvwW; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="oqM88p/y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kpy0RB4X"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9F49BEC0B64;
-	Fri,  4 Jul 2025 16:43:23 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 04 Jul 2025 16:43:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751661803;
-	 x=1751748203; bh=szBSldWoNfy2GS4Z31hMZhKElDdtz1PcnspmJ2SW61U=; b=
-	oqM88p/ye9d+jaS46PSovQfVOa/PJru091zK+iBg90BhwNrrx785OAM3/xPDLGnY
-	SXvA1uHuMR6/XhvvnrGtItwX/q6PQhriGH1QBymFiO2BPW7Td5QmbjNDsdkqWElC
-	N59zhYhiOvVr3BW4nZKBUj8mHYoTJAM3ZTHMcYwfc8hQEesGI2OHl18Brb4qtXrb
-	68GGMFrR/PcTo99Yk6q7uRbO5s169ZeRoqUHXVWiI8HrTDSc/bt4x9/VHdMbmb48
-	W41e/JaKc1hYgXF2zdxGJqxqFqcyFAPVON3t+U6HGvioPisXN9eluLGWyTwmwQGJ
-	TsHjJbgHApBJuUxiJUKr5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751661803; x=
-	1751748203; bh=szBSldWoNfy2GS4Z31hMZhKElDdtz1PcnspmJ2SW61U=; b=K
-	py0RB4XiQyWts0+uvYk5Ugl0ClJAKTG4ixNWHtBlmpCixTmnTQHPzVGEVtFo+pCH
-	u9VtbXuE8dD+AE9BZVd/Kp4sssz+TYvXt4iA9yW3qxim2E3xe4Zx8JyrTHcP2qOH
-	lncOod+Ob4GDvBftmmXePLZKQFroNb/I/JLZL9OQJ/hkIz9mpbi6m8fUo2EXO/Wa
-	He2tu4gNechnjSKxFRAbXv/Qsask2vbJmjnUZp3BnMyptxCWT42MrrzyBzWVmGhU
-	PbsfrpdlUBSyw5wy9KGHkqGDYURFcL+VJmkEAXe2aC2a9hegCBTikhhqs8Nr1YJa
-	2sNhy0b1AQm7d7KoMF/cg==
-X-ME-Sender: <xms:6zxoaOyVArp-KJAhtFltDU21WlNI9HSsc4_Dh6O9-9Ty2wVZKrLL0JU>
-    <xme:6zxoaKT5UauJUdHNHSwapMn_Ke2hn6ZBgHHzAIyovyF3mROClKKRElMNxYGBf0ep9
-    Gb5OB5_m7QT1QFBPA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvgedugecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
-    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
-    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:6zxoaAX7wOrqICtA9BibzWjk9DE_aJpAZmgrHbIa9AZ9MEAqrjMhwQ>
-    <xmx:6zxoaEjLMFmvpGtkYCpFSs-1_TkcEPP-GGy72qCKjCo3tmKut3H6mQ>
-    <xmx:6zxoaAACDePSFnKMp-94DcrL-vHbNv4GJEjRAgVd2Rx1ZBDG9reEiQ>
-    <xmx:6zxoaFJ2PLVNXkBxRot4-R6ZJYIGT3RB_hH3jP8T51Qck8T4vkBJXQ>
-    <xmx:6zxoaDh1Ssxlt8tqkPaFRy6hj9QGNzOikaWxQZGS2RFEGI7X88qL7ESl>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5FE591EA0066; Fri,  4 Jul 2025 16:43:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B2z2TvwW"
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6fae04a3795so15949726d6.3
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 14:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751663499; x=1752268299; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3QHYUeMN0wXVxCUjpTrnXfsX3kF8+KePgX2qI5MUOPI=;
+        b=B2z2TvwWiCC2QdC4o8aC5Aool/IOc1OiOBs96y2J/4HAmvj0RKpJKm3o99n9/QRdG8
+         MJP+jQbgJGkdhuUK2Fm8eo37JA2dIch4nbnRXJoSEoOBw/JjgmZiTn863FgiXiMZk07w
+         O1E8CdApr7TLFCtTbclm0QCxtbChNTd4PbgQrAsegxet0ZxpjUdavhRnHkC1YIXI338w
+         nCnRajuULeGtY/Di5puKDVmVk3sTu4bmcQX9ju/VZ3JLvf/wdITjMXNFB2P5OZD0zboP
+         zfKBz+UYAFhdWBKI4ZfWfZ6CYZCpK8YBIECEDc/7mCDBSjoozwEPtS3QFb0jZYRqYbIz
+         VMxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751663499; x=1752268299;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3QHYUeMN0wXVxCUjpTrnXfsX3kF8+KePgX2qI5MUOPI=;
+        b=rlCH+ou/4xEqQSbGyuDwZXWvf2p0pExmQvyH1tG6jXcLA+PXpHklv55A8XsO2H4lgg
+         IEn08FaUobSFrIL4d2ooWujcEtLuk5gF289uI8CNZj7951ppHcx1ZvipmDvEWp2EHTCD
+         h0IgPfS/7m+QNkVIa+kLOjlZ7ulaudLAQEnv/NStBp0WsrrTRbIUJ0FeYvEDjnzUnsWL
+         HiUpl4CxVYpSzbvhONEGAO7ijS3GjfD5ixi39T3xE8CxUqkI4sCJI32r8ieoW2OuREsm
+         GdGi+EWkzZr8i/O0ACRbUSwrWFzEiOSTlf4Y4MGGNgiIlGnIxsbMhxaIP1Y2HN5t2pcc
+         JyHQ==
+X-Gm-Message-State: AOJu0YxIkZ1NL7a3H0fIpYWl1AT1Vrd54+bcPZv6r0l+xB4MOxQhdGj5
+	wAP9yHq0lc6oxwWaygLvRTtbiX5MK+uD53od4BhYfRNu/33LNeaJbw8M
+X-Gm-Gg: ASbGnctyks4Z1SgCJ8xGNt06r31esGRs79vZGPPt/DAP4WRLtJaEGTRrbIVI9V59HLx
+	IIBjegZOK4CbuqpCpug/G0K4EL5z3VOTMAp3BAdT8xvxwsGTCfTHPTaKVoeXq5eiQaiUPD294nM
+	ouvD5ivYZmFbbgGkyLDltmPm/bMbu/fv24AA5d8YM4JpnJqtZ/77H58Bh5QZ/GdjhcTlMupvS1O
+	S/2Cd1vlCVLDD4n3eAEeLH4PFxkPDsxBNY3ko/jDUXEfeGoidlwdnMBLEo8/WVGEmmFVGJiriSh
+	UbTl0TYAb8inLCYRUmTGtheSaHQ6CQaNcOhfC8zs+VqhLeL1Ocf4tHPkdEMEPR+J4YU+tlKKufM
+	EoCjqRSEA0Qo1Zsck3KQ=
+X-Google-Smtp-Source: AGHT+IGlDx/2sC5lo3CVY5WTO7Yg1AFn4DwXr4qnZsofSa/0YjWNjbV9XWM00ZSup18aU/eIRM8vNA==
+X-Received: by 2002:a05:6214:f65:b0:702:bf0a:b9d8 with SMTP id 6a1803df08f44-702d169572emr1458446d6.13.1751663499321;
+        Fri, 04 Jul 2025 14:11:39 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:934a:f0e9:50b4:12da:e6ee])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-702c4ccd6a1sm18499856d6.39.2025.07.04.14.11.37
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Jul 2025 14:11:39 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-ThreadId: T6a27cb3eb86664ec
-Date: Fri, 04 Jul 2025 22:43:03 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
-Message-Id: <bc18712a-8f72-4827-b47f-afac69ea6fa0@app.fastmail.com>
-In-Reply-To: 
- <d54e297567ac8f3009daa8fdf3de158338b2b700.1749373787.git.gitgitgadget@gmail.com>
-References: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
- <d54e297567ac8f3009daa8fdf3de158338b2b700.1749373787.git.gitgitgadget@gmail.com>
-Subject: Re: [PATCH 7/9] doc: git-log: convert pretty formats to new doc format
-Content-Type: text/plain; charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [GSoC RFC PATCH v2 5/7] repo-info: add the field
+ references.format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aGZqN-oqctJ79Chz@pks.im>
+Date: Fri, 4 Jul 2025 18:11:22 -0300
+Cc: git@vger.kernel.org,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <6FDFCF2E-1148-4531-B957-FC61F42793F7@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-6-lucasseikioshiro@gmail.com> <aGZqN-oqctJ79Chz@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-On Sun, Jun 8, 2025, at 11:09, Jean-No=C3=ABl Avila via GitGitGadget wro=
-te:
-> From: =3D?UTF-8?q?Jean-No=3DC3=3DABl=3D20Avila?=3D <jn.avila@free.fr>
->
-> - Use _<placeholder>_ instead of <placeholder> in the description
-> - Use `backticks` for keywords and more complex option
-> descriptions. The new rendering engine will apply synopsis rules to
-> these spans.
->
-> For all the formats in the form of %(foo), the formatting needs to be
-> heavier because we not want the parentheses to be rendered as syntax
-> elements,but as keywords, i.e. we need to circumvent the syntax highli=
-ghting
 
-nit: s/elements,but/elements, but/
+> Hm, okay. I guess later patches will add separate enums for each
+> category, so this saves us a couple bytes as the number of categories
+> grows.
 
-> -** 'prefix=3D<value>': Shown before the list of ref names.  Defaults =
-to
-> "{nbsp}`(`".
-> -** 'suffix=3D<value>': Shown after the list of ref names.  Defaults to
-> "`)`".
-> -** 'separator=3D<value>': Shown between ref names.  Defaults to
-> "`,`{nbsp}".
-> -** 'pointer=3D<value>': Shown between HEAD and the branch it points t=
-o,
-> if any.
-> -		      Defaults to "{nbsp}`->`{nbsp}".
-> -** 'tag=3D<value>': Shown before tag names. Defaults to "`tag:`{nbsp}=
-".
-> +** `prefix=3D<value>`: Shown before the list of ref names.  Defaults =
-to
-> "{nbsp}+(+".
-> +** `suffix=3D<value>`: Shown after the list of ref names.  Defaults to
-> "+)+".
-> +** `separator=3D<value>`: Shown between ref names.  Defaults to
-> "+,+{nbsp}".
-> +** `pointer=3D<value>`: Shown between HEAD and the branch it points t=
-o,
-> if any.
-> +		      Defaults to "{nbsp}+->+{nbsp}".
+Yeah, that's the idea.
 
-`+->+` gets rendered as `+=E2=86=92+` in the HTMl output.
-`Documentation/doc-diff` shows the same.
+However, even though it saves some bytes (we don't need to keep several =
+empty=20
+fields), I used a union here mostly because of what it means =
+semantically. In
+the print functions where I'm `switch`ing between values of one of those =
+enums,
+the compiler complains if I missed something :-).
 
-Has using `=E2=90=A3` to denote SP in verbatim code blocks been consider=
-ed
-by anyone?
+> I wonder a bit what it buys us that we have the difference between the
+> category and reference format. Right now it feels like it can cause =
+more
+> errors that it prevents, as we now always have doubly-nested switches.
 
-> +** `tag=3D<value>`: Shown before tag names. Defaults to "`tag:`{nbsp}=
-".
->
->  +
->  For example, to produce decorations with no wrapping
->  or tag annotations, and spaces as separators:
->  +
-> -`%(decorate:prefix=3D,suffix=3D,tag=3D,separator=3D )`
-> +++%(decorate:prefix=3D,suffix=3D,tag=3D,separator=3D )++
+I reckon that my solution was a little hacky bit, but I tried to solve =
+two
+things:
+
+1. The plaintext/linewise/null-terminated format can return the values =
+in the
+order they were requested, like this:
+
+```
+$ git repo-info --format=3Dplaintext layout.bare references.format =
+layout.shallow
+layout.bare=3Dtrue
+references.format=3Dfiles
+layout.shallow=3Dfalse
+
+```
+
+2. The same is not applicable to the JSON format, where the order =
+shouldn't
+matter and we can't have the same key repeating. Then it works like =
+this:
+
+```
+$ git repo-info --format=3Djson layout.bare references.format =
+layout.shallow
+{
+  "references": {
+    "format": "files"
+  },
+  "layout": {
+    "bare": false,
+    "shallow": false
+  }
+}
+```
+
+but not like this:
+
+```
+$ git repo-info --format=3Djson layout.bare references.format =
+layout.shallow
+{
+  "layout": {
+    "bare": false
+  },
+  "references": {
+    "format": "files"
+  },
+  "layout": {
+    "shallow": false
+  }
+}
+```
+.
+
+I'm still open to changes here. Perhaps keeping the same order in 1. is =
+not so
+useful from this v2 as I'll always return the name of the keys (like, =
+for
+example, git-config but unlike git-rev-parse).
+
+> Wouldn't it make more sense to only only pass around the fields as
+> `repo_info_references_field`? We could then have two arrays that we
+> define globally:
+>=20
+>    static const char const* name_by_field[] =3D {
+>        [FIELD_REFERENCES_FORMAT] =3D "references.format",
+>    };
+>=20
+>    static repo_info_category category_by_field[] =3D {
+>        [FIELD_REFERENCES_FORMAT] =3D CATEGORY_REFERENCES,
+>    };
+>=20
+> So `name_by_field[FIELD_REFERENCES_FORMAT]` would yield the name and
+> `category_by_field[CATEGORY_REFERENCES]` would yield its category. But
+> the benefit is that you only need to pass around the field enum from =
+now
+> on, all other information is implicit.
+>=20
+> The reverse information can also be obtained easily. To e.g. get all
+> fields of a reference you'd iterate through `category_by_field` and =
+take
+> all array indices whose value matches the desired category.
+
+A downside that I see is that it seems to be make the print_json =
+function
+too complex. Currently, the complexities of the printing functions are =
+(if
+I'm not missing something and ignoring the complexity of data the =
+retrieval):
+
+- plaintext: O(n_fields), as it only iterates over the fields
+
+- json: O(n_fields + F), where F is number of possible fields that we =
+can get,
+  as we first fill the `<category>_fields` variables and then we iterate =
+over
+  each possible field to find if it was requested
+
+In the plaintext format it wouldn't change too much, it would be still
+O(n_fields). But in the json format, it seems that will be something =
+like
+(in pseudocode):
+
+```
+jw =3D json_writer
+fields_to_print =3D array with F values set to false
+
+for (field in repo_info->fields)
+    fields_to_print[field] =3D true
+
+for (category in all_categories)
+    object_started =3D false
+
+    for (field in all_fields)
+        if (category_by_field[field] =3D=3D category)
+            if (!object_started)
+                jw_object_inline_begin_object(&jw, category)
+            jw_object(&jw, name_by_field[field], retrieve(field))
+   =20
+    if (object_started)
+        jw_end(&jw)
+
+```
+
+which would be O(n_fields + n_categories * F). To be honest I'm not =
+exactly
+thinking about performance (which would be in fact negligible in this =
+command),
+but how complex the code would be. If I understood it correctly, I =
+wwould be
+trading nested `switch`es by nested `for`s.
+
+But again, I'm still open to change everything again here!
+
+Anyway, thank you for your time reviewing this patch, seeing what I did =
+in the
+past weeks and joining again the discussion! :-)=
