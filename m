@@ -1,66 +1,65 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FED1E86E
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 08:23:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4370B328AE6
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 08:32:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751617389; cv=none; b=qzPbZSU6B45iIX4gGtPz+1jdWPO8Maca/SWzbQllqUxXzhVmt3JenfiCx/W83YwVa5TLqGZ0k/46HHF06j+CROwmLwKpnRi3pDqH769Qzyn1NQIbGs+U3/T6FIavkLPQbBrAW7r9aGbp+g4O7klVMqRKBNfeq7332S1aLn8mt5A=
+	t=1751617961; cv=none; b=LbexoapwPC3p4/z5YA75kgGxlsuBBKDm1aVqXrnx8Z31Uzoo9JsVzgjCsTk/I5IdtompHl93iKazokF1zAoVElEMzAxSeCYjGkPdxTmYu3czkLqHT27UuZqROnnFKMHlPh4KGLmM3mSCyM7e19XovPQM974DuAOO97BANTrOiwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751617389; c=relaxed/simple;
-	bh=300ldf3PLzdxHwgKhYd44HpQRqYN/LeOycRwzGw6l04=;
+	s=arc-20240116; t=1751617961; c=relaxed/simple;
+	bh=iSk3IqtUKeXG6i5fCP80pJxoiZ0ujv5puEWVW/Sp/3Y=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tXTWLvsJnjN4HsX6HN3FBLzU6KHg3oicrscPE4r6S6IeIxaF/A/R0vECFAoyyJCJkaHfcWIKoNuLILb1XiAX0i/FmUX+bTbnjT2ijSi7FvJydQlGt2MZmP7iGWfjEJn+qlBjTCy4GVJrIeTSnhSRinbq7vf3tmdydpX4fKuW5Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fNkcSV8X; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=ZlkOFseiFqczH8V38X4ZL71fjJzfbB0MRx7XBGXL4hCn6EJ08QvcUzbfDHuxNaDin3+eNSVVD2zaN8v9djrnCqTQJ/aNOPiaPKcoY8SkFPJX3OpDz8zihAXl4SFnt+hpMfHBvAFTUF43jGQkF9jXU+CQuEIjoK5zX0L+LF6IqWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhJCs1eM; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fNkcSV8X"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45310223677so4091185e9.0
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 01:23:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhJCs1eM"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4539cd7990cso3979275e9.0
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 01:32:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751617386; x=1752222186; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751617958; x=1752222758; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=MLUu/p5v8CYN9rtNxJktMUOPGv4vjWfVxT6pBoNLyoM=;
-        b=fNkcSV8XovqBcOjP/wKk6KkrIWlORFCSbIfHskc+FYonXbbgJ2t5PPXCS+slNmoXNG
-         MVvPpzCuj9V/kQOV8LJZzsSYQdg6YwPOHCq7c0o1Hp4wCING+Dlz8xgnLduIeNjZudrT
-         FV/AebMaBeFRpNfw1Tn97WSMju9qRxLGdXvfmmX2MRDIdHlQ9ol8zoxRrtTiOe9lKsEK
-         sZmySso+YrAWxdYzqDq7fqPvreQmLqxr5bRwW4+ZBwj3Rq6KBVofIpji03XiKH4dNQDh
-         TyNvDOuq15rHunFifBZA4aMU5Cc9F5NyZxoVoU3LPRr+O5I/N7ZmUKFQj755I1OoaN/7
-         N+hw==
+        bh=9k8WdJI2gqE5loM6O0EO0EqiB0NvYEkoMvS3grTOHxI=;
+        b=AhJCs1eM6kK5AlW4S4gHDAgY43uhUvdfMF9poTbr3qplDjbXB3k2JFNS8NsvvIi9Fr
+         2+UdVV30BUzWjDAh2NHpmTqhuy+V15v4oiBIWyLXcnt36lvAraxuvHxuBJhzviEm8d3z
+         QXrJ7CYiI/vED1D+jpqjWHat8raUWC3OvBaLBGA0k3CIuya4PjAwo8sg7JTryIDcLWZk
+         AGp1oh4JQY3hi13Pqy+efIvNqyJSiZpKPWQ4O0HkLsRyml7rkILSPOOAp17Sn7fkTk1i
+         5aTYDRcaGUHcjwraTtgVtsH7jDfMXSfPY4b0LZNcAaTeGaGzcwM0DpEiTib/2tUogBqg
+         hPQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751617386; x=1752222186;
+        d=1e100.net; s=20230601; t=1751617958; x=1752222758;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=MLUu/p5v8CYN9rtNxJktMUOPGv4vjWfVxT6pBoNLyoM=;
-        b=wpolLWTUd+xXVFt2nWhqzT/CUFZEJda+XLSfnH8qNhjc7ccEbpkKk87NE6AD+zfyOy
-         1sLbi+KVzzybG2LexF75h7ykP+YMvfPi0Yq1NvmEoCUC7oAmCKvKe/q7YBetbsj+kTBP
-         KdG5ZrooquzzLPJ7EwNpe0K9EpaQHXcR4+pFKn1M5/8UMmLRz75Of7uZ0zRK+tJHd/Vb
-         HItQ2VtRh7/Rqi37KRnXLxGbG7Qvr/d2KVzyhp8kF95oKiNntNrEWdeB4xEDWE4YO5hm
-         ntAbA4JQsjsjS4a21W6A7WrSil2zDYp+/hiyGwo+cS4D3pBwMxDO6wu+HBeQx0JcYWAo
-         5Zig==
-X-Forwarded-Encrypted: i=1; AJvYcCXFpJjvI272Q8+c/Wabo2nkRxE4V3JRQPfL5idwhU5sPgGvSqC3JTzFk+oM5xB1dCMDne4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwJqsNFQRQSgzSz8XiNEnEfU/mT9DZ4UOrBECpbUjHu6s3MdMVW
-	0xbp/1l7CPnzKYLTk4BQ5WJo5S3JtnTEQsixtCE/gfX0DJxMccYFWEmv
-X-Gm-Gg: ASbGncuEQk8eJmIPNVlQRYWIa2NOyLySuKFWUWe2qR/RCfRnEPZ0dM+EPFZHToqniXk
-	IC4pLRW3RPBG6eDcN998fuxVQLUDq3GNcx1RFHpd375EPxjI2gM6011F3Gs0JYH84jJ3p0apjg6
-	sG5/fN8tL5IEZNhxQxOEGmBhdpMK+6DjmPZzOoxb4IWT8oi2Lqm4VC+s1il7cuycz1wzbiiGvdT
-	Dgo/jaMEyblas6wp6G3v9F7sJUpSOFVEdKUH9xgrFrqMBx/gQOu1eGi9WBYe2CnlJ6WjPC/UKBU
-	PKAA1Xb7/OFQjui1Mcd3a76KW6klwgOlGGpd+KM6uBMaQnLqp/n2TI0/OL72Xnk6lJDPfEn35CC
-	UGRgUTha88ZU+8su6sRzpRA6H444qhw4RVMTxtw==
-X-Google-Smtp-Source: AGHT+IGU6jL64Orv2PXTJQg3Y1j03QNHcdqZ04ZLJPDfG9dF5DBLZZzADAQamXxHQwmiwvIoEhjcnA==
-X-Received: by 2002:a05:600c:1c94:b0:43c:ec97:75db with SMTP id 5b1f17b1804b1-454b4e79819mr10387035e9.11.1751617385651;
-        Fri, 04 Jul 2025 01:23:05 -0700 (PDT)
+        bh=9k8WdJI2gqE5loM6O0EO0EqiB0NvYEkoMvS3grTOHxI=;
+        b=a+CkIklf863PHIXwgvU//qvutv05opIyeMwMt8U5O9zmVt8Oc/4QC84lTrGtOgzHEs
+         nU8f8wAh+eqStxAaPTigTNlIoPMmmcyXWLXCIdIvuQJvNzUZZPgGAf8wmNObnNJ06Jep
+         pCO0mx15sMUh+Bq/vb6JkPD9SOTzvEbPOadKtLQ/HJBZXARsqeQse+/Cy9tDTPDmw9zt
+         BA4sr3+Co7mfYyl3aUdgZMz1d5+IbXaIg8GQqRUrypQkV5J34aaixRlDreLDbSSY/XeY
+         5EymVIe0PWxNzb2l169zLq2WRl37XuL+0cr0r2fqId+FsAdKfU5ywb+5oRz/4o0mWRhQ
+         NUYA==
+X-Gm-Message-State: AOJu0YxM7fJ+TS5ifPzbCi617Avsie3kHDtJ7BlkRWyJlfSkZP6EkX4g
+	KAICIDo/kxVrExujLEoRM9eCJCHFRH2HvEPTDmxJb0giBqK5HLkpuln5OtVONQ==
+X-Gm-Gg: ASbGncty/+9tzrTzJCK/3N1711ndOtpUAhApl83uET5Tex/kdc79vuF272APBEcVaDj
+	cFClS6duNow3w8xtovKp6UJJJNpRNS75lAkR0m8nnnt/hOR4ZFadimCoWNY4Wn6Pc2QkYJx58t4
+	Y0fKd9ahoJqG6ZHxQ64F+EXGrXbGDHc71Rg2TxYSlMDd+JoXKMKo+SmQ/MEr+GrWmsfIwNsNFXr
+	6Z3z7vx1PiarDUDEj51wfAvtInZSBeAFhJ0DwvE0jTl2gfQoR6Gb6Pxlux/m3G98/18NricbGxT
+	jXdXbv4PRVSM99eRAd7XLDW9lqSdQM2b5tW6Q1+a5ZafKPn8z5OW00kRcic7fjETbfNRaxmoxDZ
+	wZTv2DTWBpDIlVBX+/F56ebjO2RlJev7J86NdkQ==
+X-Google-Smtp-Source: AGHT+IHn7NHnPWDQeHAo8J2J4CtICpPKWXl3au/+XJfT8nxuYV1DD2EgnZbbwkkMmLLMR3eWg9Jv6g==
+X-Received: by 2002:a05:600c:c492:b0:450:c9e3:91fe with SMTP id 5b1f17b1804b1-454b38fa8a6mr14271835e9.0.1751617957465;
+        Fri, 04 Jul 2025 01:32:37 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454b161e8f1sm19849025e9.8.2025.07.04.01.23.04
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454adc71aadsm36791985e9.25.2025.07.04.01.32.36
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jul 2025 01:23:05 -0700 (PDT)
-Message-ID: <062e7abd-97b1-4806-9753-338906642265@gmail.com>
-Date: Fri, 4 Jul 2025 09:23:02 +0100
+        Fri, 04 Jul 2025 01:32:36 -0700 (PDT)
+Message-ID: <dbbde8e4-985d-4d72-b879-9110a4410abb@gmail.com>
+Date: Fri, 4 Jul 2025 09:32:34 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,68 +68,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSOC PATCH v3] commit: avoid scanning trailing comments when
- 'core.commentChar' is "auto"
-To: Ayush Chandekar <ayu.chandekar@gmail.com>, phillip.wood@dunelm.org.uk
-Cc: christian.couder@gmail.com, git@vger.kernel.org,
- shyamthakkar001@gmail.com, kristofferhaugsbakk@fastmail.com,
+Subject: Re: [GSoC RFC PATCH v2 6/7] repo-info: add field layout.bare
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+ Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
  gitster@pobox.com
-References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
- <20250630182527.69167-1-ayu.chandekar@gmail.com>
- <f22e864e-669d-457c-838e-961bbc977c4b@gmail.com>
- <CAE7as+Z7GXMB4LJGwESK3Pj63ppfFMKDq-xw46YCELJ7E3p+DA@mail.gmail.com>
- <9e96aaab-79a2-4632-94cd-d016d4a63b30@gmail.com>
- <CAE7as+abNzqbGSCWsuYe8D_c5dBUuRdDEbHL0pVW5j3kTMER4Q@mail.gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-7-lucasseikioshiro@gmail.com> <aGZqPC47iPMixyvW@pks.im>
+ <6DBB30CE-D30F-42B6-A81C-35460B462D45@gmail.com>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAE7as+abNzqbGSCWsuYe8D_c5dBUuRdDEbHL0pVW5j3kTMER4Q@mail.gmail.com>
+In-Reply-To: <6DBB30CE-D30F-42B6-A81C-35460B462D45@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Ayush
+Hi Lucas
 
-On 03/07/2025 00:46, Ayush Chandekar wrote:
-> On Wed, Jul 2, 2025 at 1:02 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
->> diff --git a/config.c b/config.c
->> index eb60c293ab3..bb75bdc65d3 100644
->> --- a/config.c
->> +++ b/config.c
->> @@ -1537,9 +1537,11 @@ static int git_default_core_config(const char
->> *var, const char *value,
->>                !strcmp(var, "core.commentstring")) {
->>                    if (!value)
->>                            return config_error_nonbool(var);
->> -                else if (!strcasecmp(value, "auto"))
->> +                else if (!strcasecmp(value, "auto")) {
->>                            auto_comment_line_char = 1;
->> -                else if (value[0]) {
->> +                        FREE_AND_NULL(comment_line_str_to_free);
->> +                        comment_line_str = "#";
->> +                } else if (value[0]) {
->>                            if (strchr(value, '\n'))
->>                                    return error(_("%s cannot contain
->> newline"), var);
->>                            comment_line_str = value;
->>
+On 03/07/2025 15:14, Lucas Seiki Oshiro wrote:
 > 
-> Thanks, I understood it.
+>> Meh, `is_bare_repository()` strikes again :/
 > 
-> What if we simply return the function `adjust_comment_line_char()` if
-> we get a non-zero value from `ignored_log_message_bytes()`, i.e we
-> won't scan the commit message in case conflict message exists, and we
-> let the old code exist as it is?
-> 
-> +       if(ignored_log_message_bytes(sb->buf, sb->len))
-> +               return;
+> Yeah... I tried to avoid it but removing that dependency is work for its own
+> patch...
 
-So we'd ignore core.commentChar=auto if we detected conflict comments? 
-That might be surprising to the user - it would mean that we'd always 
-avoid adding the conflict comments to the commit message but we'd lose 
-any lines that begin with the comment string. I think I'm leaning 
-slightly towards the original solution but it is not clear to me that 
-one option is much better that the other.
+I really wouldn't worry too much about using "the_repository" in code 
+that lives under builtin/. The reason to avoid it is so that one git 
+process can operate on multiple repositories but until our library code 
+stops using "the_repository" and actually respects the repository passed 
+to it there seems little point in worrying about using it in non-library 
+code. As it is we're currently adding more instances of "the_repository" 
+to our library code as a stepping stone to removing other global 
+variables. Once our library code can operate on an arbitrary repository 
+we can then think about which files under builtin/ want to operate on 
+more than one repository and avoid "the_repository" in those. Until then 
+worrying about using "the_repository" under builtin/ is a distraction 
+from fixing the library code.
 
 Thanks
 
 Phillip
+
+> I asked Ayush [1] about this as his GSoC project [2] is related to reduce the
+> dependency on `the_repository`.
+> 
+> 
+> [1] https://lore.kernel.org/git/CAE7as+bTKE5opov-Xn0P8R+cy+=-XRkX9Wpie_W0717XMF1b_w@mail.gmail.com/
+> [2] https://summerofcode.withgoogle.com/programs/2025/projects/no7dVMeG
 
