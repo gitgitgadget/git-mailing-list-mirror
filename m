@@ -1,145 +1,139 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AFF302048
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 13:53:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98CD7D07D
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 14:02:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751637203; cv=none; b=W4+jo0hpJI5VCDQJ40ObrUPSY0RlVxuhqWVWMVuq7Qwxo1v3gijnn2V0aYuNAxw3gpyl2zny5iCt2lCSgZzMpCOrCF55od4nYa2e2Q6Pw5LsUL+3yPaWvylVxgudpKtYePSa48qEt35hiJC1Fl6q6CL/kmBGHu+nXHl5efcp/j4=
+	t=1751637741; cv=none; b=sfAJsCHftL1eqemi81Rqeo38CnSjuekd0tz4ABjaKDwVt6I0DNbm5Vj7hthShEVXIB0V/9przIbnnm5bGDMNNpXMUHnp3mQC2OPrJ7owsTy/sYzmtGf2xRYvf1OCYLfCp8hgFbT+xgh6AGp+vaelx3QWj/PzHZcR47ZGWYqNUqA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751637203; c=relaxed/simple;
-	bh=jqmxEQLCWp9Cs9p62n7cqLt/wQg4Rmb8SSi+i7ZmqO8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tjM7q2LZITonxNX6Rff15vK1SuLzV9geZWScVZqlEmJNciMBmWHOmZDx78rMhTUk4H7M6WRLkrkuTp5BohZqtEXYzmZ1p41y/tQJJOHSSDcwlhT/PqNSJDTQ7TK+lQo1XjzZHYpOzUvsdncb+zVvnABZQqXQlnIEajxLO0fycOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iGvzz4HI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YXFc2B7t; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1751637741; c=relaxed/simple;
+	bh=7Ay0EIaQnBWBvxrW7KEjLjpSCTc5pvqrgz9EUAXjQWc=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ia/HSKwXpjiv/L+0SbK2BCEEszY7WiqWe06xNKmtBOae3r3XZSXR5yK1XWoH2dbTu+qIpNPqRTBBNWSxNpN4yjLk4qIXxYLG9n+WLdBAiPsfVgQQ1i4kf7mljj3cTFsauxSvtFhCoT8ovJkXIqaEJHbGIAKNthevGQCgFXoCl/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=koo+I4Vb; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iGvzz4HI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YXFc2B7t"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3A206EC01CC;
-	Fri,  4 Jul 2025 09:53:16 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 04 Jul 2025 09:53:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1751637196; x=1751723596; bh=3yd9eL6ssT
-	TCG0/eQzPakrqHAPDMAdzaNvvbhWIJseU=; b=iGvzz4HICtRkFHeFbaiPnmJvyf
-	nx4zw+PwJCugRQ/vfCXfM00cRlL+RYGWFd52x3a3/wObf/NlET00qQpveXBEdtwR
-	btPIKrgWAbH+6KOy8s3DRxDuLfZCgfb7PAAC0W/GpAcNXTz+9MbGyZICJqjAPK5g
-	SBO/ydmoGcm7cbJakYblFAZXXl6F6Hw9+cHSnoJ/W18HBITVHW/w//MiyOhO3kY3
-	LK2b2iMVAF2gPgb3Lj3hl18qtHdCm/up8JS51yITbjVqNK6UBytfBw7S3QF2ibGT
-	0aS8gLiiABoGjfAC+ws8UDCNivl4TLtTv7D0EZFG5N59GE+FuZPqC6M0SjDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751637196; x=1751723596; bh=3yd9eL6ssTTCG0/eQzPakrqHAPDMAdzaNvv
-	bhWIJseU=; b=YXFc2B7t1yHSWywnb1fHXvf0NmU6GZ4BSyYm4jLffLO89JSHYWt
-	eXgCe+C8dF6c3/9nFP27U6bCZvIBFXSFRklxpfOFMKAAyl/wVNFISXYTy27hapRN
-	Dwf5luE6nERZVxHkob02RThYhFONywJNqNUK4O0nIva7H5cy681PeKnzENLgZ8HF
-	Zypgp9A9bQpKs96aqz1fG1DtWxZd2qStXiX80GBdTiCe5pQVYsZRLwb4TQbnBVeR
-	/uKft7USqx/FqYvrqXkmd4VyK+bT0yCTN7Tx9GYf5M13lsZYy8+mNU739VfZt3+b
-	1sH3uPtVhSuMpU2lrGZYiz8vYVqku7fXqfQ==
-X-ME-Sender: <xms:y9xnaPJDGJieBsqWwUEEvBv4xNJFNv_X7zxf67cJpRNiovhVHrWAtQ>
-    <xme:y9xnaDJ2blapXIu_6g67Bqbanc8PioA6WGAMBvW3Z1dKelH9QonCf8tT4ypIF1t0a
-    mkSzxdn7ZHxbpiPnQ>
-X-ME-Received: <xmr:y9xnaHuXsVRKxYZa8Tlj6VJ7XlGbx4aFH_EB642ggK170IG5kWD4K_OHP3W7eG76np6s2CWDAHZiqqQKMEz-NcbiHwZqqq9OCDStegUqJnLalbSR-78->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvfeefvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghu
-    lhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    fgveefveeihfehhefhgeethfdvffehfeehueelheeiffeuvddvuefhveffiefgueenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpoh
-    gsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopegsohhrihhssegtohguvghshihnthhhvghsihhsrdgtohhmpdhrtghpthhtoh
-    ephhgrnhihrghnghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrvghnsegtoh
-    guvghshihnthhhvghsihhsrdgtohhm
-X-ME-Proxy: <xmx:y9xnaIZt_TFxxd7LKora4i2SGw07D_tNwZGveNQCOx5zRI4Y-2Uqbw>
-    <xmx:y9xnaGbKGWHBEC3bDWAqZDlFVw5R2WpdXTmDaXdG0d7yb2aHALFmeg>
-    <xmx:y9xnaMBtwQ7n2GO-A7321my4AeWfCVhKfUp20CPbdBxnvvkAkJyXEg>
-    <xmx:y9xnaEbMkzDruhhc393Zi_qUvrl3aDOfsPgu7-C5UYjQrWo126UAeA>
-    <xmx:zNxnaK60oPQH3CU3YscV4gNsgAEpkd-zeDIyjD1kfNIuZ25rXekjdiBO>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Jul 2025 09:53:15 -0400 (EDT)
-Date: Fri, 4 Jul 2025 09:53:13 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Boris Kolpackov <boris@codesynthesis.com>
-Cc: Han Young <hanyang.tony@bytedance.com>, git@vger.kernel.org,
-	karen@codesynthesis.com
-Subject: Re: Document ability to disable template directory in git-init
-Message-ID: <aGfcyfJ0hkZ7kF7_@teonanacatl.net>
-References: <boris.20250703161436@codesynthesis.com>
- <CAG1j3zEiD341X-_ZdR2puaEmZZ0ZBWSmyboyyGZaDXcDTcmAeA@mail.gmail.com>
- <boris.20250704123013@codesynthesis.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="koo+I4Vb"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-40ba3c10b3bso352660b6e.1
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 07:02:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751637738; x=1752242538; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZnZjjSlWP2hFqfmX+kvvdnvHf/HyCdDKkFWJMfOb41w=;
+        b=koo+I4Vb1EiXOWZgd479xY9upEPNGFrTdH7MS18FeeDQ3KwDrUtaOxFucXD5gstS4g
+         89Ow6ox6BrBszvOUwxgn1DW0uAWoJZri5DV1Jqp5KfrRjfXnBI3Y/svn0KqtrMBEHpTf
+         mSAKsoeQI1ag/gwa0sdvAV5nbcAC09KIdUfADaN4JdtfZpYXIEx/zvjG925pOL4NqTP1
+         Fc8YnNv5t4p90fsPFQg8RoEW6Jm4uZ3KzRFwuN4ug+MTkLRNvS+r5rXVfi0DfKPREpFz
+         jFf/2TmKqZ3Gq2IbFOvmqvdihNdEjcJz4ivHT/F3ifuoaAz21UUsoTFXciabXuKnXzCB
+         UTfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751637738; x=1752242538;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZnZjjSlWP2hFqfmX+kvvdnvHf/HyCdDKkFWJMfOb41w=;
+        b=K5baaagWtNzGBkkUqdU5htDao1hEoXxWks77fipRPttEtyiJlhpd41TNN6zKmHP1wX
+         iqsY/WAUFrEtFQ4x0qFcIZ8dD6yd575GculKxVWMlWtRbf9OYypOOo5D3gqNZvMZwbZj
+         t4ALzN26p3VWnOlgoyusvdrD9YJWKemQVoeQzc4Uxh3piypY59N+KUqMtmByL8t53YEQ
+         sK07DJzgBvhIvaIs1BN1pNpZsU7tzZXtPyUIiiud803+NQwwBLrlWCDR3874bxMxACXY
+         KA588n5QfnK2LI9i9CltDo4yO0AA5veoqQvFOwFr07Na5IAjQp4/r5tuHr6SoX4bTu0j
+         GRdg==
+X-Gm-Message-State: AOJu0YyhhtoipE55JLQ8A+SFpVrlcfRCR9/HWwdlx1JrgJhccQXiPE3j
+	Eo8M8BMPmIb8KebyBjSKCoSwoF4so8uDfnN9X1LtHZK37AOuLvrr44lf1Jkl3SQD2RwbRecJfJG
+	wjikHdtMzQWuc7wMWFyfMZajnN8ulxgg4e7Jg
+X-Gm-Gg: ASbGncsyufxl9Z5cXcQbx/URepRlHloNgifLzq/XQTWUtIKKT+7UvODU3AYinp/1jfA
+	mpcuVxfge13hUPESlBIv4/5q5mXDGW0q0orFIW7DMk5ibQCBsD295ilJdkVhdqY1iNmnt2ZIoJU
+	GPAkz8tcPIFgkblC+sVkUMUxr1jTUp+VRgJEB8WDYXOw==
+X-Google-Smtp-Source: AGHT+IH8s6nKivRbxYWkcQDA5EsM3LwdJgAj7KKDoS70GLj98+Qo2IT4PWax95/MVsowYfXCJ6s/Ec7HPmtqk2LMv3s=
+X-Received: by 2002:a05:6808:1927:b0:40b:2b2e:89c9 with SMTP id
+ 5614622812f47-40d043a3148mr2087187b6e.16.1751637737816; Fri, 04 Jul 2025
+ 07:02:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 4 Jul 2025 09:02:17 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <87ms9kcbtq.fsf@igel.home>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com> <87ms9kcbtq.fsf@igel.home>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <boris.20250704123013@codesynthesis.com>
+Date: Fri, 4 Jul 2025 09:02:17 -0500
+X-Gm-Features: Ac12FXxWkHvvpuK8iIfgASx5-bMKQr89OACFo5Y07-x1caFGlknlnLESSK_vQGw
+Message-ID: <CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
+To: Andreas Schwab <schwab@linux-m68k.org>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000023ff3e06391af135"
 
-Boris Kolpackov wrote:
-> Han Young <hanyang.tony@bytedance.com> writes:
-> 
->> Digging through the changelog, I think the feature is added in v1.5.6.4:
->> 
->>  "git init --template=" with blank "template" parameter linked files
->>  under root directories to .git, which was a total nonsense.  Instead, it
->>  means "I do not want to use anything from the template directory".
-> 
-> Thanks for digging this up. So in a sense this is an obscurely-
-> documented behavior that people could reasonably choose to rely
-> upon. I think only more reason to document this more prominently.
+--00000000000023ff3e06391af135
+Content-Type: text/plain; charset="UTF-8"
 
-The commit which added it, d65d2b2fb4 (init: handle empty
-"template" parameter, 2008-07-28), notes the behavior:
+Andreas Schwab <schwab@linux-m68k.org> writes:
 
-    init: handle empty "template" parameter
-    
-    If a user passes "--template=", then our template parameter
-    is blank. Unfortunately, copy_templates() assumes it has at
-    least one character, and does all sorts of bad things like
-    reading from template[-1] and then proceeding to link all of
-    '/' into the .git directory.
-    
-    This patch just checks for that condition in copy_templates
-    and aborts. As a side effect, this means that --template=
-    now has the meaning "don't copy any templates."
+> On Jul 04 2025, Karthik Nayak wrote:
+>
+>> This series adds a '--skip-until' option in 'git-for-each-ref(1)'. When
+>> used, the reference iteration seeks to the first matching reference and
+>> iterates from there onward.
+>
+> I would have named the option --start-with.  It has the advantage that
+> it is clear whether the matched ref is included.
+>
 
-It was released in 1.5.6.5, just in case anyone is looking
-at the release notes for 1.5.6.4 and wondering why this
-isn't mentioned. :)
+We did discuss this internally, some other names we thought of:
+--skip-to
+--start-after
+--start-from
+--seek
+--skip-before
+--start-at
 
-It came up in <20080722200911.GA3097@sigill.intra.peff.net>
-on the list.
+I think I was a bit against '--start-from' and '--start-at', because
+they imply that the reference provided must exist.
 
-It's been this way for 17 years and seems unlikely to
-change.  Documenting it ought to be a good thing.
+Consider the example
 
-I think that may fit best in the TEMPLATE DIRECTORY section
-of Documentation/git-init.adoc, if anyone here is interested
-in taking a stab at a patch.
+  $ git for-each-ref
+  refs/heads/bar
+  refs/heads/foo
+  refs/heads/main
 
-You'd probably want to confirm how git init behaves when
-`init.templatedir` and `GIT_TEMPLATE_DIR` are set to empty
-values as well, to document the effects fully and save a
-future user wondering why the docs mention --template= and
-not init.templatedir or GIT_TEMPLATE_DIR.
+  $ git for-each-ref --seek=refs/heads/cat
+  refs/heads/foo
+  refs/heads/main
 
-If they all behave the same (which I believe they do), the
-docs could just say an empty value causes no templates to be
-copied, without listing each of the methods by which it
-might be set.
+You can see that the reference doesn't have to exist. So implying that
+it should can be a bit confusing.
 
--- 
-Todd
+But I'm open to changing this, if we can conclude on any flag name...
+
+> --
+> Andreas Schwab, schwab@linux-m68k.org
+> GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+> "And now for something completely different."
+
+--00000000000023ff3e06391af135
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 5358e6e029f9406a_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1objN1Y1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL2hMREFDaVpFN1hvQzdlZVhKSTdpeDQrK2JibUwwMQptcGpkeGM3Q3FK
+ajIxdjRURXdmb2lBRDBKRVljL3ErdUZ5ZjIrN0Jtc1RJeVlLaTFMYnRHVmZVTzBOZ0V4STBxCk9P
+Qmw3b2JOR01tVWRyWHdQWEdiZ1NmWlpqdWU4S3pVUzY1OFNSMkhCRURMOFV3L09Jc3NndkRBYWV0
+NUl4cXYKYmxkRlUzZVdkeDZVcnlMeE9nUlVLbDMweU9CTHk0ZU1WZVp5RTJYMVRJRnFoVUs2RjlE
+bndveXloa2dhakFZVApFdHREVlZjdSs2ZWlmdjFYL3BubXNVcXlWNVlKNEdYZFBXYXRiOG1MVHMy
+MUFqdFB5WVdsMkRkRncxVGYwMWpyClNTTmR2c0ZiUXhnQklnUkUvcmcwSDVWNkRkbndkZ2VZZFNG
+UHdFUkc0NHFQKzg2aUU2V2VhVWZCY0ZuSUVwOVIKb2tpdnJaU1VEYmdyeDY1TzNvL0NTMm1KeTdt
+MTkzVTZVZlI1NnhVMldLZURkdTFPUlJLanVFeE1JTkZ0WHpONwpUMGRiQ1lmS240S2YvbEt0d2xy
+ekZERnhHWDdpMmk2Y2t6bUZYSjJRWUVZZWZodUZIeUYvd3N5RktYZjVuR0xBCkswRnppVUtZMjg5
+aHM3WHdZTGFiSmR4SnVCNHJKQ01FYUo0b2RuUT0KPVR2SVIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000023ff3e06391af135--
