@@ -1,71 +1,71 @@
 Received: from mail-pj1-f68.google.com (mail-pj1-f68.google.com [209.85.216.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7A42C15A0
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 11:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7CAA2F2C74
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 11:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.68
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751627696; cv=none; b=C5NOAO1gcOmPQvfR9eUoSqd1yF3Gc16WXGaCXLU+mQ+AMM6vVoCXDO3bXfzsazSBUjPyOGP6v4R5W1iMBN6PHIcNHm/fgjXkvuec/NzO4dsL2C1/976KbLHkbMFAdeLCHyLj30Q9yut/2N2I+JBd2zk67c/MkOa5R2epxEmQKsg=
+	t=1751627700; cv=none; b=iIG8JyH5VuqQjUVrmoyWaOx3i29UAqX5rs7X+6wmugMFu5Pgs27/sBZ0BQ26Abuzs24uiQRtSupHpyDhXKbiwBHGVESiKoAXsWiuV3o5zGTZFOTSdCYTKI3BIn3/omO8IUJ3lVYcKpivPNlR9EO5v1Gm2a8PsD2mmQvbuyw7FtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751627696; c=relaxed/simple;
-	bh=pNzUiiKWNnJq9VRfpitz61s15wgIT7EjPXmLDdpvBXA=;
+	s=arc-20240116; t=1751627700; c=relaxed/simple;
+	bh=EBfLaQ7JI1iEz/6R7yhMlhSjpaqaOBEC5+/xYwuyE28=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YT6yCR5QKOfKINUJd6hQroXI3H26gTv3+JivCb9Rq5YMxXcQjUAojUOVxbzKhAZ0Cpmb6z03ghUvEv5rR5+DUxrG5PdvXZgvxYkal9AfA01Uka5DA+j513HgyuzQKFhf7jrPaSt7uvi9SsLVsv62H9n4xUA+p+be6sCO0FctIBo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wu4XEfJZ; arc=none smtp.client-ip=209.85.216.68
+	 MIME-Version; b=susFuBzva8tTn3iPQZ73dSmwEqY42PMzi1cFVDRv1OmUjXErQxfXziL1d4VcLPk9+7ysyT+tnu+vunZRyq7VPD5B6eoiCxaKS1syLbH19PxMCPy8qyGX4rbqKVaCIFWpHM49aU/zWM24h4NnOVfIXvU2j/os8pY3rze7jfjsFAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ij40Nd8s; arc=none smtp.client-ip=209.85.216.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wu4XEfJZ"
-Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-3138e64b42aso1270216a91.0
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 04:14:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ij40Nd8s"
+Received: by mail-pj1-f68.google.com with SMTP id 98e67ed59e1d1-312e747d2d8so1632903a91.0
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 04:14:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751627694; x=1752232494; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751627698; x=1752232498; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VuWZAKL8LlAnNKhHzBQScgConp1Pd11NDyAa/432yGI=;
-        b=Wu4XEfJZDENSF+LfVRjh7cBBoS6RgHOY4Xnc29O7nT1+uxnXW6zzYsM3wa5WV5gWdC
-         wUjBfahDCRJhF24vyhcaa83pNvY6WroHnivGr2tDSYtmN8Yyl9MIpVjJ0rBED7HQqrns
-         TwVh/8JOBMAizT8k9r1Fu85tFzDjA5c92mKzSjDUebHzQ+YsMVIW4pRDJiJc/WkiwyJc
-         ouqeBNNZWmtIKO+XmASbW6djhXj7BxHguew0aveBI8CR49MEGo4DuH6eKtR1aP0Egj0K
-         gp6iCbIgw0PEgASFFrErJBp4akluqO8QwOOdNsjstSlflFEIqdyRFNGWXpk2Ccbt2wkS
-         Zo6A==
+        bh=/y4gkL0GxDcfyyvpy4xqQkOADtHXn5YhBXo/vK0K6PY=;
+        b=ij40Nd8s+vVWTVzxhlXh+FClSlXRkZ2ucPO6sl3W3fAoujKCzOtDN7BwWoC2z4Kyga
+         t2TUIwZtNmgW23Agz+9auVMmmd1fpIvHlV+Lx6r5g9UTbeaywL+UAbtWDqLfBSwJ7kny
+         AW4UUlE0NtumHCObL3cHycwWonL9STwy7QoCY1ddQfymyXi2sYTNQkpPfrtYRnMNsxen
+         kDkPpButnaRfMeMYZGicsUZRXLsAPscF+rYVwuKhhDilkc+5Qiy+dg+RKXcSWh+H/NzK
+         MZeuKuvpm/jAb9dbA5t9+vHZvra/6g4ttp/EFB94aiEa8iRQLX5p8MbkPSX8yZ0FA3ej
+         3ciQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751627694; x=1752232494;
+        d=1e100.net; s=20230601; t=1751627698; x=1752232498;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VuWZAKL8LlAnNKhHzBQScgConp1Pd11NDyAa/432yGI=;
-        b=hgEZuQITsbHm7DAq/V/fZLzdp2Tfkxfx5aMDcwUKP319K39jVo7tsluU2gSKuL5jtK
-         sC2vuCOoU3QwxH2nbKbYt/gvaj7ttDwQCCvFaUbtMDlAucckQKIC4mO9SYXh0DTM2P32
-         SNkXixPSlkHYU+ueuTAzi1mYwNVS6H8hmMDHIXBRoQBTA9061Z+u+KwYAs/SfLy684x3
-         Ycj0urCopHPP1Li7Mht2gcsODXFX24/L/O1Q1+dCixWwyXwXv9ia4ycquvVxTPzzjmqx
-         TjGoFY9fdxj+lvMnM+h1bViBU8c30Kj4QMR4/mNAra6HFCMlBKXJ1C8kGEjDHFd7rOJ9
-         /Ijg==
-X-Forwarded-Encrypted: i=1; AJvYcCVGHige765V3P7Aro91y7rlI0U2AE9bdtqh+5zYQ56PZnR18FdFklahK/CRBLRnhag6ZvM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyyAsWK5i307aEKtCcQtek27bS2Bwa+/oCX+2biKCReAZowH4Jw
-	pUnyJdhzxxI3DMHiusc7O7pycoXFo+WryX30okJ1Tb6aRE5EEsE+Gwm0jRRLyrGU8eRvxw==
-X-Gm-Gg: ASbGncvRdijKuT2ZW+xjokJw5fong4diO56T0kp0loSmwLN3mozT4PZMs9NIvzBMU6K
-	tWPFuEXIHYB79A4VR7GtL0TbR+PV1Yf9MxbtGT/8+DsO5zS70d+/O9IDfYshi1SEemsUdDJ8Aca
-	IoFowiE9RSVAOr882dcH67dRQI9Z5vXfrWwLPV1grnS3EhMNx4Tpc0WaWK8zjiYWQ6DAqlK0By/
-	mDhV9VzVlVwPoZDsGC4tZLiXA7AvA+gipWqq4du2rQc6JipQ9wmfRPTfe1Aakal1pVXx5ju74Sn
-	gilBdjNtB6D6hdKDxd9wqYVap8KvG4inWYD6vtZZKY482IG8dcCFaVI80+E5oKHSMeZK
-X-Google-Smtp-Source: AGHT+IGMBqXzaienZf9CnyUrVapX5p5oP1Z6q7vFkeThEAMPw5/6/rO6RdZUC90jLg2lnLKEVvR8cQ==
-X-Received: by 2002:a17:90b:3fcb:b0:313:1ea2:a577 with SMTP id 98e67ed59e1d1-31aac4f0653mr3440586a91.29.1751627693610;
-        Fri, 04 Jul 2025 04:14:53 -0700 (PDT)
+        bh=/y4gkL0GxDcfyyvpy4xqQkOADtHXn5YhBXo/vK0K6PY=;
+        b=g9nr22EZPTDDEWxc89mnZpcPaHOli598kVBAyDy9pOpqIEvZl4mPi6uJJ44Mn5E+HA
+         2hBrgmciQ3QXxquH/IufYJlcFelRHUoamzqFmy2r0WoAGvKswKmT3+imvEpr3Ym15l3U
+         3SydQKXgpK/Szsf61cz8OXzE0tOgBnz0Xv4iRjmFQoVnQf6mJNMddNzExsWtA0uZ1TyH
+         pfDsjAz+f2Uz7h0wC5ewG2P+3x64dDNQRnY17RrWZr7ltZi1YY4KH6j17GgUq/7f+yQT
+         xPUV4LIGIZ7gGfAExKLtgTL5IFf2SQHdffSrfb52pdmgbBlSEI+TdpIuu+E8V/nk99Zj
+         lifA==
+X-Forwarded-Encrypted: i=1; AJvYcCV5sH6zh+1H+uhYOD6rS+m0QEPbFSrUzvXARIlDYzb9OMLJNDAISC5FB/VStHDaBBkPVyM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxwOBKUcdz28K62ybxdq91w6w/xzlzca0Ur/YzHL8HRDf/SsiWq
+	hOcTlzrj++WbOIkyFBz7PyzZ1Ver0WIFMU+LOdOKmwpyAsas2rhC0CLl
+X-Gm-Gg: ASbGncttT7yBvGtg37J1Cxc3iZhvhbtCDfP4l6a3X11jzPZ1WWx3SexcOYPCiG1D2bU
+	pNt9uZ9kkZ9lI4wy4ECA2gR3n3oX6za4EZ1/MltR4FIlCvYoruA4AxqmyOPIgmCN5Jbq4zyZtSB
+	OAB7FDk6oQ4q671IgHQ2+0X/VmKQNbN2xE+ammHhEqG28hGfYUAVrcwRW3PltzaN1uDYVSoEdr1
+	lgv8zol0dcI7z5QcfVFgJWZPKhxJMJShngNVprulmm72KiMeLyTKRp6VeXnNzMAyC8ZoE6lQ0sW
+	ZsVR78Dzj3ETnu5623JnnyuKlD4hsPH29p0aDhm5/coz5K6XYi928CquSSk4nng/nEd/
+X-Google-Smtp-Source: AGHT+IFqQthobLSMHOsCzcXo7rbs5kUP7IG5UkVNnP8kmlTpRG6caCSQZKrhakPcMpqvGOXxhS9Nbg==
+X-Received: by 2002:a17:90b:4b82:b0:2fa:562c:c1cf with SMTP id 98e67ed59e1d1-31aaaf73033mr3776711a91.1.1751627698000;
+        Fri, 04 Jul 2025 04:14:58 -0700 (PDT)
 Received: from r760 ([188.253.126.205])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9ccf8881sm4720522a91.29.2025.07.04.04.14.52
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31a9ccf8881sm4720522a91.29.2025.07.04.04.14.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jul 2025 04:14:53 -0700 (PDT)
+        Fri, 04 Jul 2025 04:14:57 -0700 (PDT)
 From: Lidong Yan <yldhome2d2@gmail.com>
 X-Google-Original-From: Lidong Yan <502024330056@smail.nju.edu.cn>
 To: yldhome2d2@gmail.com
 Cc: 502024330056@smail.nju.edu.cn,
 	git@vger.kernel.org,
 	gitster@pobox.com
-Subject: [PATCH v4 1/4] bloom: add test helper to return murmur3 hash
-Date: Fri,  4 Jul 2025 19:14:34 +0800
-Message-ID: <20250704111437.2660251-2-502024330056@smail.nju.edu.cn>
+Subject: [PATCH v4 2/4] bloom: rename function operates on bloom_key
+Date: Fri,  4 Jul 2025 19:14:35 +0800
+Message-ID: <20250704111437.2660251-3-502024330056@smail.nju.edu.cn>
 X-Mailer: git-send-email 2.50.0.107.g33b6ec8c79
 In-Reply-To: <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
 References: <20250628042140.1097910-1-502024330056@smail.nju.edu.cn>
@@ -78,94 +78,156 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In bloom.h, murmur3_seeded_v2() is exported for the use of test murmur3
-hash. To clarify that murmur3_seeded_v2() is exported solely for testing
-purposes, a new helper function test_murmur3_seeded() was added instead
-of exporting murmur3_seeded_v2() directly.
+git code style requires that functions operating on a struct S
+should be named in the form S_verb. However, the functions operating
+on struct bloom_key do not follow this convention. Therefore,
+fill_bloom_key() and clear_bloom_key() are renamed to bloom_key_fill()
+and bloom_key_clear(), respectively.
 
 Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
- bloom.c               | 13 ++++++++++++-
- bloom.h               | 12 +++---------
- t/helper/test-bloom.c |  4 ++--
- 3 files changed, 17 insertions(+), 12 deletions(-)
+ blame.c               | 2 +-
+ bloom.c               | 8 ++++----
+ bloom.h               | 4 ++--
+ line-log.c            | 4 ++--
+ revision.c            | 6 +++---
+ t/helper/test-bloom.c | 4 ++--
+ 6 files changed, 14 insertions(+), 14 deletions(-)
 
+diff --git a/blame.c b/blame.c
+index 57daa45e89..459043a511 100644
+--- a/blame.c
++++ b/blame.c
+@@ -1310,7 +1310,7 @@ static void add_bloom_key(struct blame_bloom_data *bd,
+ 	}
+ 
+ 	bd->keys[bd->nr] = xmalloc(sizeof(struct bloom_key));
+-	fill_bloom_key(path, strlen(path), bd->keys[bd->nr], bd->settings);
++	bloom_key_fill(path, strlen(path), bd->keys[bd->nr], bd->settings);
+ 	bd->nr++;
+ }
+ 
 diff --git a/bloom.c b/bloom.c
-index 0c8d2cebf9..946c5e8c98 100644
+index 946c5e8c98..35ff36c31c 100644
 --- a/bloom.c
 +++ b/bloom.c
-@@ -107,7 +107,7 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
-  * Not considered to be cryptographically secure.
-  * Implemented as described in https://en.wikipedia.org/wiki/MurmurHash#Algorithm
-  */
--uint32_t murmur3_seeded_v2(uint32_t seed, const char *data, size_t len)
-+static uint32_t murmur3_seeded_v2(uint32_t seed, const char *data, size_t len)
- {
- 	const uint32_t c1 = 0xcc9e2d51;
- 	const uint32_t c2 = 0x1b873593;
-@@ -540,3 +540,14 @@ int bloom_filter_contains(const struct bloom_filter *filter,
- 
- 	return 1;
+@@ -221,7 +221,7 @@ static uint32_t murmur3_seeded_v1(uint32_t seed, const char *data, size_t len)
+ 	return seed;
  }
-+
-+uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
-+				   int version)
-+{
-+	assert(version == 1 || version == 2);
-+
-+	if (version == 2)
-+		return murmur3_seeded_v2(seed, data, len);
-+	else
-+		return murmur3_seeded_v1(seed, data, len);
-+}
+ 
+-void fill_bloom_key(const char *data,
++void bloom_key_fill(const char *data,
+ 		    size_t len,
+ 		    struct bloom_key *key,
+ 		    const struct bloom_filter_settings *settings)
+@@ -243,7 +243,7 @@ void fill_bloom_key(const char *data,
+ 		key->hashes[i] = hash0 + i * hash1;
+ }
+ 
+-void clear_bloom_key(struct bloom_key *key)
++void bloom_key_clear(struct bloom_key *key)
+ {
+ 	FREE_AND_NULL(key->hashes);
+ }
+@@ -500,9 +500,9 @@ struct bloom_filter *get_or_compute_bloom_filter(struct repository *r,
+ 
+ 		hashmap_for_each_entry(&pathmap, &iter, e, entry) {
+ 			struct bloom_key key;
+-			fill_bloom_key(e->path, strlen(e->path), &key, settings);
++			bloom_key_fill(e->path, strlen(e->path), &key, settings);
+ 			add_key_to_filter(&key, filter, settings);
+-			clear_bloom_key(&key);
++			bloom_key_clear(&key);
+ 		}
+ 
+ 	cleanup:
 diff --git a/bloom.h b/bloom.h
-index 6e46489a20..a9ded1822f 100644
+index a9ded1822f..edf14fef3e 100644
 --- a/bloom.h
 +++ b/bloom.h
-@@ -78,15 +78,6 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
+@@ -78,11 +78,11 @@ int load_bloom_filter_from_graph(struct commit_graph *g,
  				 struct bloom_filter *filter,
  				 uint32_t graph_pos);
  
--/*
-- * Calculate the murmur3 32-bit hash value for the given data
-- * using the given seed.
-- * Produces a uniformly distributed hash value.
-- * Not considered to be cryptographically secure.
-- * Implemented as described in https://en.wikipedia.org/wiki/MurmurHash#Algorithm
-- */
--uint32_t murmur3_seeded_v2(uint32_t seed, const char *data, size_t len);
--
- void fill_bloom_key(const char *data,
+-void fill_bloom_key(const char *data,
++void bloom_key_fill(const char *data,
  		    size_t len,
  		    struct bloom_key *key,
-@@ -137,4 +128,7 @@ int bloom_filter_contains(const struct bloom_filter *filter,
- 			  const struct bloom_key *key,
- 			  const struct bloom_filter_settings *settings);
+ 		    const struct bloom_filter_settings *settings);
+-void clear_bloom_key(struct bloom_key *key);
++void bloom_key_clear(struct bloom_key *key);
  
-+uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
-+				   int version);
-+
- #endif
+ void add_key_to_filter(const struct bloom_key *key,
+ 		       struct bloom_filter *filter,
+diff --git a/line-log.c b/line-log.c
+index 628e3fe3ae..a2aaf869a3 100644
+--- a/line-log.c
++++ b/line-log.c
+@@ -1172,12 +1172,12 @@ static int bloom_filter_check(struct rev_info *rev,
+ 		return 0;
+ 
+ 	while (!result && range) {
+-		fill_bloom_key(range->path, strlen(range->path), &key, rev->bloom_filter_settings);
++		bloom_key_fill(range->path, strlen(range->path), &key, rev->bloom_filter_settings);
+ 
+ 		if (bloom_filter_contains(filter, &key, rev->bloom_filter_settings))
+ 			result = 1;
+ 
+-		clear_bloom_key(&key);
++		bloom_key_clear(&key);
+ 		range = range->next;
+ 	}
+ 
+diff --git a/revision.c b/revision.c
+index afee111196..49fc650ac7 100644
+--- a/revision.c
++++ b/revision.c
+@@ -739,14 +739,14 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 	revs->bloom_keys_nr = path_component_nr;
+ 	ALLOC_ARRAY(revs->bloom_keys, revs->bloom_keys_nr);
+ 
+-	fill_bloom_key(path, len, &revs->bloom_keys[0],
++	bloom_key_fill(path, len, &revs->bloom_keys[0],
+ 		       revs->bloom_filter_settings);
+ 	path_component_nr = 1;
+ 
+ 	p = path + len - 1;
+ 	while (p > path) {
+ 		if (*p == '/')
+-			fill_bloom_key(path, p - path,
++			bloom_key_fill(path, p - path,
+ 				       &revs->bloom_keys[path_component_nr++],
+ 				       revs->bloom_filter_settings);
+ 		p--;
+@@ -3231,7 +3231,7 @@ void release_revisions(struct rev_info *revs)
+ 	oidset_clear(&revs->missing_commits);
+ 
+ 	for (int i = 0; i < revs->bloom_keys_nr; i++)
+-		clear_bloom_key(&revs->bloom_keys[i]);
++		bloom_key_clear(&revs->bloom_keys[i]);
+ 	FREE_AND_NULL(revs->bloom_keys);
+ 	revs->bloom_keys_nr = 0;
+ }
 diff --git a/t/helper/test-bloom.c b/t/helper/test-bloom.c
-index 9aa2c5a592..6a24b6e0a6 100644
+index 6a24b6e0a6..585a107802 100644
 --- a/t/helper/test-bloom.c
 +++ b/t/helper/test-bloom.c
-@@ -61,13 +61,13 @@ int cmd__bloom(int argc, const char **argv)
- 		uint32_t hashed;
- 		if (argc < 3)
- 			usage(bloom_usage);
--		hashed = murmur3_seeded_v2(0, argv[2], strlen(argv[2]));
-+		hashed = test_bloom_murmur3_seeded(0, argv[2], strlen(argv[2]), 2);
- 		printf("Murmur3 Hash with seed=0:0x%08x\n", hashed);
- 	}
+@@ -12,13 +12,13 @@ static struct bloom_filter_settings settings = DEFAULT_BLOOM_FILTER_SETTINGS;
+ static void add_string_to_filter(const char *data, struct bloom_filter *filter) {
+ 		struct bloom_key key;
  
- 	if (!strcmp(argv[1], "get_murmur3_seven_highbit")) {
- 		uint32_t hashed;
--		hashed = murmur3_seeded_v2(0, "\x99\xaa\xbb\xcc\xdd\xee\xff", 7);
-+		hashed = test_bloom_murmur3_seeded(0, "\x99\xaa\xbb\xcc\xdd\xee\xff", 7, 2);
- 		printf("Murmur3 Hash with seed=0:0x%08x\n", hashed);
- 	}
+-		fill_bloom_key(data, strlen(data), &key, &settings);
++		bloom_key_fill(data, strlen(data), &key, &settings);
+ 		printf("Hashes:");
+ 		for (size_t i = 0; i < settings.num_hashes; i++)
+ 			printf("0x%08x|", key.hashes[i]);
+ 		printf("\n");
+ 		add_key_to_filter(&key, filter, &settings);
+-		clear_bloom_key(&key);
++		bloom_key_clear(&key);
+ }
  
+ static void print_bloom_filter(struct bloom_filter *filter) {
 -- 
 2.50.0.107.g33b6ec8c79
 
