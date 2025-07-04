@@ -1,109 +1,112 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C2371DF256
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 05:24:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77040260571
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 06:43:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751606685; cv=none; b=lHwxWS0R9Hgc7WV4Cn5iJB6lE76/5CccwBQxx7hMe2QNMGJqtxHtKth9RzVi4gMdefjvdGkMONWmemx4qxGxTtOEXxKOyBuLl7fd6cvSsceUAfzaPvsDZp+o5oxc6tGT/QIupHeqtQMqK+YZqiQDwXOC8gmXEoTzOnSxxu+cs2g=
+	t=1751611394; cv=none; b=a4kLu/0LyoG9mf2iJwi5r3+vScJFLmUrqToXm6tXesQ8Z3Xd4euWHQfrQFK4VQLKU9GGfXw62cMwabN033pS0PWrtPTmeJjb4JaTsfkk6bRUQD1fEltYMhkl3UTxa/Fy5YYvoAjfrFBLiof57RHI1i4T5dO4Z45wlubdCWWW4Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751606685; c=relaxed/simple;
-	bh=a5s7gU23a441fMw3MT7AEsrmhQ3CM3R7x9d+pB+ZKik=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qrMIG2Q9ijEqUbS2Akv92ZcPR/lN9Be5hukwzUGRC4XqXZ2cWoO5TS+mPnmPKpUTHt06a9iEYOqmEQKnM5v7mdbckF7FqwHSMjFIEVZdVBc04KQxLXUgQUPdjmC2VLWDfj+AcbaaUqYQY72zu4AyA+gLt2CWCluojH3YBAz4C7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NNNk/go3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NpXEh+1W; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NNNk/go3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NpXEh+1W"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0E4C47A0141;
-	Fri,  4 Jul 2025 01:24:43 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Fri, 04 Jul 2025 01:24:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751606682; x=1751693082; bh=2vVzYULcPp
-	fW0IroNN6kjGTGWlydd2+dmc6dllfm3z8=; b=NNNk/go3/K1vfh/J+51TbnpcWX
-	4zepyftBloo94XrxZizpvKfXFUNGowdgP8OhQV08WHHkdaPVjYGQvEEz7OGfe5g+
-	B1kmBm28JMQ+VbC9A9hg/DCoRHaW+5RMmjmYW5wubiQf0viSMUMl/xiAkaa10Sax
-	YVApKRUoVznvBLmrjdFoHPiN0S71JN26zIO6KYyOuFCCEn+Nsz1bcdm1Z4qH4g0i
-	kZ6qYy0O/VnkZrqN3D1hzRgGadF6R6ngq4HEcxoeDcMY0CvobwWTXuQAHo4eS9AP
-	Vz8qUHfDMfCyYnqcET5FGM0h8zau2ASNqy2ADaGofThOCmDYIf6OBZTzH0EA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751606682; x=1751693082; bh=2vVzYULcPpfW0IroNN6kjGTGWlydd2+dmc6
-	dllfm3z8=; b=NpXEh+1W6cIuFnkld3aotzx9euyR3SjWdC/IZuE1wCWhi6phNvx
-	jCVonyYdjTsEmRlUKjsqFXt2S03pVPu09D3C1hru886daYdHAGkjrPielheaCIui
-	73aDLVyjA8/abpeuMWtc/cpgJ/46ibSS4vutNRGsC+zp99LRRJFJ5mcfa88SyA0z
-	nNMeWqzT/pXsUdidYa+Olxi2F/9fAeRf2ErLXCXE4R7uBKv/aE54jsWFpq83W4I8
-	VY9nbcnQo5nwNHzyZ5VR50AGATprq6UbEo6UJsTMiE2jS6XFHv+raIG5QwZibdeQ
-	9ezQIGRu5neDU6PoU1NvAeOLFUyBBXGni1Q==
-X-ME-Sender: <xms:mmVnaNfSNMGzqdC1b6wXcR4G1KSHNqUTa7YYRnIE9W7d3F3qx4YbvA>
-    <xme:mmVnaLMLFdHLcsRnFqaNd_NZhyCSVwA3njwdBi1A1S_gPgx6pZcPHwgtMsvzZiawu
-    75RyCWxEcDaH8507A>
-X-ME-Received: <xmr:mmVnaGgl3ei1mYjbyb6O38WNJ50YgFxqb42bqq_8bxgyG3azq8x2lfGNoLm5du7S-ET1r8sAQRSR4_ApeQNCqz_PlnM4lcGPeLTxybV-9QzO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvvdefudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhf
-    rdhnvght
-X-ME-Proxy: <xmx:mmVnaG_Jh8ZVnjFT8iGSKuYwNruFxqGCsU2xwcKGKDBYhesWJeax9Q>
-    <xmx:mmVnaJtCYrc0Qv9TU3VNe3Szk_yd0ZaS7Ohtj0YFH-3yTW-YT2Pu4g>
-    <xmx:mmVnaFE6eK5DQtg5D2MC_FJ0d0ImVT0sdydjoIukjXVdT1M6Pp1oNQ>
-    <xmx:mmVnaAMs38CuYmWfE3WBfo5gMMJMTRyCSSv2GfYd97MldnITb7hDmw>
-    <xmx:mmVnaI7PFMxw6Yx91SQS-zbTN8LHDIjUsBryjKdZ69v0TNlFZyudTn0->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Jul 2025 01:24:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2c81bfc4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 4 Jul 2025 05:24:40 +0000 (UTC)
-Date: Fri, 4 Jul 2025 07:24:36 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 0/8] enhance "string_list" code and test
-Message-ID: <aGdllONkAbTJt-Ud@pks.im>
-References: <aCoDB9P5XV1lHMil@ArchLinux>
- <aGDAZ6a0-PyXXGmK@ArchLinux>
+	s=arc-20240116; t=1751611394; c=relaxed/simple;
+	bh=F27mx1trzQmJ7UzBrKAgTvUlAu7s0Nx5K3Cjft2CUTU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QsYVkyij5W3t8cv5q3bsGSEY3VsU90x8HJAS5jwVO0OGpTIweWMpz+UFU0Ltl7h02VoZkZZ/hh/7y9YoOnCNL/7nNVRanGMcvltpm7re0qOiLhCAnZmcUdmF52Dy2zd+G0I3NkydixxMz3z+kns+LKh5b9brjng/f/3kxDkZ/zE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=lysator.liu.se; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.218.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=lysator.liu.se
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-adfb562266cso93785266b.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 23:43:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751611388; x=1752216188;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ociyWydQuugUTZnNQhYqVLSGRNmKPumLvncLMx2ZUzA=;
+        b=PJRfB5NCWlQVyi4g7EoIkGJ9mPDc9SLnUpOgYV21fgN+fgc9yKiJ2hFRBjgv3AvHFJ
+         1Va2t3XRspwxS8O3YNWaAr+qwjgTY4/xZ+r8aEmm21Wa4WRHripABhcUTjGTtff95olK
+         hf2YF9w2L7P+qr0kUQSUbUGV0bIf6GwQRGTqdUmJLWPOOUL1QO0NpUW2st5F3/Py6C0G
+         atjlTMz5RHm6dPOye03dggPVScUiYFjuprrmQYG3BmLxAHFb6crpRjaNu5XuRH9pbLLS
+         fpF8pYe2T9fyT3Xb6WfJfg5lVVli/OwIr063A+ZMPSgvvetOCzvyGP2iLQxgeFJR81kk
+         Ll5Q==
+X-Gm-Message-State: AOJu0YzPybrZu/85BAi7KEO62+cVwt4pFn+v/3igauN2c1wAhPQ/3tAP
+	OG5uvenoRzTRFqmmdlInd13LM0d6+oj7SZq7LLd5+cYATxdca4tJO9pvNyqz37PaRV3Ct2VKiJs
+	Qvc5FVUyKaVbW59YdlSLY/Ofk7oYXQwU=
+X-Gm-Gg: ASbGncvTSQm/Jc76X7loiRdnP2vRpILfxj6iINnSxQ/HWzG2uMzMFWjeRw7Hc2ba6aJ
+	wrrMBYodcOZbTGXtcBNHUpdOAWbWgF9Wo3K7zZIiALw90oQxSv/5NFAGdR2v/n9eQ0QEw9LRGCG
+	wKMuZ9ApYrtb7+zNS7K8YL613/0BYwr4WBDOJsoTUFig==
+X-Google-Smtp-Source: AGHT+IHOE94XR7nTqJ/SHPqHI5YjsqjlxAGElV0CDxcugT1u0ERk19S8eCDlvsUang78UNOaxTXBjxM4jmLN30zeM60=
+X-Received: by 2002:a17:906:b07:b0:ae3:5110:28a0 with SMTP id
+ a640c23a62f3a-ae3fbd873a2mr92094066b.44.1751611387406; Thu, 03 Jul 2025
+ 23:43:07 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aGDAZ6a0-PyXXGmK@ArchLinux>
+References: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
+ <xmqqikk8bltr.fsf@gitster.g>
+In-Reply-To: <xmqqikk8bltr.fsf@gitster.g>
+From: Per Cederqvist <ceder@lysator.liu.se>
+Date: Fri, 4 Jul 2025 08:42:56 +0200
+X-Gm-Features: Ac12FXyR-CnDFd3I0glb2JqqE-Xw1xp5N4RpZj_wP7yL13f4N_q81jF2eFiBfjo
+Message-ID: <CAHx6-UmL7qHf-0SoD1qrOKbWK5JjuESJaZdQK_rjy66RrYg0Xg@mail.gmail.com>
+Subject: Re: Allowing "/" in the name of a git remote is a strange choice
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jun 29, 2025 at 12:26:15PM +0800, shejialuo wrote:
-> Changes since v2:
-> 
-> 1. [PATCH v3 1/8]: improve the commit message to explain that we would
->    handle a warning in the later commits.
-> 2. [PATCH v3 2/8] and [PATCH v2 3/8]: improve the commit message to add
->    the history background.
-> 3. [PATCH v3 4/8]: improve the commit message to show why the current
->    bianry search algorithm introduces the sign warning and how to change
->    it to fix the sign warning.
-> 4. [PATCH v3 5/8] - [PATCH v3 8/8]: remove list into test helper instead
->    of test itself for reducing the shared state.
-> 5. [PATCH v3 8/8]: improve the commit message to say why we can't delete
->    "test-tool string_list" totally.
+On Fri, Jul 4, 2025 at 6:51=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Per Cederqvist <ceder@lysator.liu.se> writes:
+>
+> > Today I realized that git accepts "/" in a remote name.
+> >
+> > This can lead to problems. I have a repository that contains a branch
+> > called "master" and another called "chat/master". Just for fun, I
+> > added a second remote in this repository and named it
+> > "origin/chat".
+> >
+> > Now, does "refs/remotes/origin/chat/master" refer to the branch
+> > "chat/master" from "origin", or the branch "master" from
+> > "origin/chat"? Git seems to think it refers to both:
+>
+> That would have been a fun experiment ;-)
 
-Thanks, this version looks good to me!
+It was. Luckily I figured this out while trying to deduce the allowed forma=
+t
+of a remote name by reading the source code, not while trying to understand
+confusing behaviour from git.
 
-Patrick
+> > If it was up to me, I'd add a check to valid_remote_name() to ensure
+> > the name doesn't contain any "/" character.  I doubt it is used often.
+>
+> If your remote-naming discipline is to always use two-levels
+> (e.g. origin/chat, origin/chien, origin/lapin but never origin or
+> origin/chat/blanc mixed in), then there is no confusion.
+>
+> It becomes only confusing if you mix origin and origin/chat.
+>
+> So it is not like we can just forbid '/' retroactively and expect no
+> repercussions, especially given that I hear there are more than a
+> few thousands of existing Git users in the world.
+
+I wonder how many use "/" in a remote name, though. My guess is
+very few.
+
+If you want to do anything about this, there are a few possible ways:
+
+- forbid "/", but add a setting that allows it. Note that even if you forbi=
+d
+  "/", existing clones will continue to work. It is only when you add a
+  new remote that the name is checked.
+
+- require that the number of "/" character in a remote is equal for all
+   remotes in a particular clone
+
+- deperecate "/" and start warning about it now, and forbid it after a
+suitable period
+
+    /ceder
