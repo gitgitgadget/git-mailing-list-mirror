@@ -1,103 +1,98 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC81DC198
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 15:18:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03A6113EFF3
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 16:03:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751642298; cv=none; b=Pc/XUq0v+OtcIuehCjo1M+cavCfw70BnjcCNS1C8jiKyY8IvleYRhwn2FTANGsMc1AYGixz8UxKdczwyAFIbbNqMVkgT18FzqxQE9GTWnZhINd0rHOH65o8Lg6LSDTSwSLfQ3Ak/qTHMsWqEqWB5IX/o6cthmtq75X4Twn0mdfA=
+	t=1751644992; cv=none; b=NMl0i2kny6dk5WhULE4VHkjTE3CWiyx3aZK/yBwbWXptg5alNd5+kZIT3YllqX52MT2Fsg++LJo9QxxbkZPpsv+ZyAKxtqeHEWB0RGxklr0WuGSTztztwzjVl1aURmqwATuAyNvpvCEblOnJjeG/22lqQLIZB75CTxMVHcdfzns=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751642298; c=relaxed/simple;
-	bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=HL5Mlx7B26A26sneoVdpOd1jKUhhXKs91mvPMwQg2ECyuLMePBJXu0pdAeIc285LOw0d27eKUFGfFO6oC/251Niy/YMj2YKfKrDnP6HVhIhXbt93CYy1t/e+a60LdkjUSv80fu821v59q1yKLGCWFW9xHo72tRKEV6Zo9u2stAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cuyifslh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gDu4nPYr; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cuyifslh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gDu4nPYr"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 61DC71400220;
-	Fri,  4 Jul 2025 11:18:14 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Fri, 04 Jul 2025 11:18:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751642294;
-	 x=1751728694; bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=; b=
-	cuyifslh2QxlXKcq1ISWp5nSgGwKUeoCgazQA5iTYrgHSsBFR9hX7jsOZ2YH698J
-	4ZZ1QXJhH1MH+zGNtiqvDz2McqVFCh42HpbDjciQlKVhoSK5LLyhp23j8EEHhqsJ
-	8J5HyRNOyk0OczRSFONZudTNVeGKHr2OvBPNLctuW5zagQC28qm/aETr01p/vcsw
-	bm9RQqNC0cIbHjqfe89k5p40MDPeTGL7SPz6r0yJl1P1TuL6CVGWGMq2Stm9lq+E
-	Uz3sev9jJOKNDWHd6cWQTKuTo14bmxq2yvo5B/cc3mwW55/64YHwzJ9jvpVO+ux5
-	PeqZXbXp7lhU/IUM06P3PA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751642294; x=
-	1751728694; bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=; b=g
-	Du4nPYrRr2oa+ps26b3MohXnPsHaT4oaxlwgjr/M8kbgxA0vybI2UST4V0baMDvf
-	AfnNyf/E0kYRkK4xo2pTw/yJSqftNIGpBmfhuDM2tUpk61bdULlIUI5KT/VPD/bi
-	NrOTOIJrcbCJOzw5NM4cjZWIKyoDn+QPC4Hep14IQr8Wn3e2pBlY3Kj/O0E3/Wey
-	yR81Z0R+yjN5Llv+pNqDULe5RERhT3sDW2DOV1gLdnEmQPo977QjF62Ip6Zo1XTK
-	BNg1P0bPiY8Iwfj9D9EEicU+3PJW+5YZFGDnhovMyNMTYzG3W7P80mD0DgqCvcXf
-	uUDUcfZGg6A3cnSaoGP4g==
-X-ME-Sender: <xms:tvBnaBLhtOvZmwsEG-tXGuemgwevLGQbFI6n-pA_lcRhqlvM6Ri692Q>
-    <xme:tvBnaNIcyD4p4dHb9OZ6CMw6ironK_iJa8OZvrGC_LHMMrCYfGWCEOFBXSejRQVFq
-    tc8_3hN55RBkqJcSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvfeeglecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
-    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
-    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
-    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
-    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepsghorhhishestghouggvshihnhhthhgvshhi
-    shdrtghomhdprhgtphhtthhopehkrghrvghnsegtohguvghshihnthhhvghsihhsrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:tvBnaJtJESpIvPg4yeq1uC3uPa2iDTlFvXVnmkRwwVggqTVBVeR7Hw>
-    <xmx:tvBnaCYFRfsLM_nDU1n61Y6Ck1YMsJmwacKEwCUG9J7WxJB3-Cn_Qg>
-    <xmx:tvBnaIYZT-4oDTnXvsBIU3E9tz5M9jXDXcy8CmzcaROFUnl9Jw8DUQ>
-    <xmx:tvBnaGDeCsVzDKrCO2GaxXG2d6nCSKR87p82na6Z4fOl8I7p1ZbEhQ>
-    <xmx:tvBnaOx94Rq-dcb65zsZj4GR-q5jrmN61eahP2BLG4ha4NmmXYCCNgS9>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 1DC171EA0065; Fri,  4 Jul 2025 11:18:14 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	s=arc-20240116; t=1751644992; c=relaxed/simple;
+	bh=vK9N3m/BeCcP0C8Vyp80AcAxuWVfK5eGYr2dmQIwQRk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XmlD3mXtV60pzIhvP/R/K8MxyKi9UiaRahow6tOo/ecqiKgcEDPZ4VBNR/YujlhGUnb1OzFf9EpaOWsphavKWEYKvOQ6yYssDtcxpZTRWoz7BSFvPCzTKVoyvkQjVIiHdtgOG/+qH09bOzavxh84ZqXppf62+azDRQToqdMq2Jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
+Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
+	by mail-out.m-online.net (Postfix) with ESMTP id 4bYdWs600mz1sFNb;
+	Fri,  4 Jul 2025 17:55:37 +0200 (CEST)
+Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
+	by mail.m-online.net (Postfix) with ESMTP id 4bYdWs5cn3z1qqlW;
+	Fri,  4 Jul 2025 17:55:37 +0200 (CEST)
+X-Virus-Scanned: amavis at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.182])
+ by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
+ with ESMTP id wXtpPgFv4Klm; Fri,  4 Jul 2025 17:55:27 +0200 (CEST)
+X-Auth-Info: e+U3zXuz+uIxeqGx0pcJbtezzJ3qZVZLUR2eP4NGjv/An1AarlG0ldoyun2CbSvH
+Received: from igel.home (aftr-82-135-83-93.dynamic.mnet-online.de [82.135.83.93])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.mnet-online.de (Postfix) with ESMTPSA;
+	Fri,  4 Jul 2025 17:55:27 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 1000)
+	id 9DD1D2C1969; Fri,  4 Jul 2025 17:55:27 +0200 (CEST)
+From: Andreas Schwab <schwab@linux-m68k.org>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  gitster@pobox.com,  ps@pks.im
+Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality
+ via '--skip-until'
+In-Reply-To: <CAOLa=ZR2=5iZzUVTS1o81a5NhLLiyHLiJfznz2Us5q0VLU74og@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 4 Jul 2025 07:58:14 -0700")
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+	<20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
+	<87ms9kcbtq.fsf@igel.home>
+	<CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
+	<87ikk8c8jr.fsf@igel.home>
+	<CAOLa=ZR2=5iZzUVTS1o81a5NhLLiyHLiJfznz2Us5q0VLU74og@mail.gmail.com>
+Date: Fri, 04 Jul 2025 17:55:27 +0200
+Message-ID: <87ecuwc5n4.fsf@igel.home>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Td4c5bef4314aafce
-Date: Fri, 04 Jul 2025 17:17:52 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Boris Kolpackov" <boris@codesynthesis.com>, git@vger.kernel.org
-Cc: karen@codesynthesis.com
-Message-Id: <ecb6df31-1f3a-4373-91ed-ae5231af7f7e@app.fastmail.com>
-In-Reply-To: <c20e2e7b-8471-4398-9bfb-6534f8ad2b39@app.fastmail.com>
-References: <boris.20250703161436@codesynthesis.com>
- <c20e2e7b-8471-4398-9bfb-6534f8ad2b39@app.fastmail.com>
-Subject: Re: Document ability to disable template directory in git-init
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 4, 2025, at 16:57, Kristoffer Haugsbakk wrote:
-> You can apparently pass `--no-templates`
+On Jul 04 2025, Karthik Nayak wrote:
+
+> Andreas Schwab <schwab@linux-m68k.org> writes:
 >
-> ```
-> git init --template=$HOME/git-template --no-templates
-> ```
+>> On Jul 04 2025, Karthik Nayak wrote:
+>>
+>>> Consider the example
+>>>
+>>>   $ git for-each-ref
+>>>   refs/heads/bar
+>>>   refs/heads/foo
+>>>   refs/heads/main
+>>>
+>>>   $ git for-each-ref --seek=refs/heads/cat
+>>>   refs/heads/foo
+>>>   refs/heads/main
+>>>
+>>> You can see that the reference doesn't have to exist.
+>>
+>> That is even more confusing.  What is the first matching ref if none of
+>> them match?  Doesn't that mean skipping _all_ refs?
+>>
+>
+> Well the idea is it would seek to the offset where the reference would
+> fit in.
+>
+> This is to ensure that seeks to references which were deleted
+> concurrently doesn't leave the client hanging with no results while
+> paginating over all references.
 
-Typo:
+Then don't call it a pattern.  Pattern matching is a set operation,
+independent of sorting.  What you really have is a marker that divides
+the sorted list in two parts according to how the marker sorts.  And
+that makes --start-with more descriptive and less ambiguous.
 
-```
-git init --template=$HOME/git-template --no-template
-````
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
+"And now for something completely different."
