@@ -1,118 +1,188 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4370B328AE6
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 08:32:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34DC7A2D
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 09:43:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751617961; cv=none; b=LbexoapwPC3p4/z5YA75kgGxlsuBBKDm1aVqXrnx8Z31Uzoo9JsVzgjCsTk/I5IdtompHl93iKazokF1zAoVElEMzAxSeCYjGkPdxTmYu3czkLqHT27UuZqROnnFKMHlPh4KGLmM3mSCyM7e19XovPQM974DuAOO97BANTrOiwU=
+	t=1751622189; cv=none; b=I9KTq6zMcR4YcZbAY90yNGKN8AgRpeEKlan253RIYGiPta0Ll0MWxkq+o9+nmsqtm0Ifit8bJSwN3bdf3v7hUi+Y65zWAGZtDB3Fx1nW+Y11T+o0z+Z8UCFBZVzp7572Eeu+bXkGgJOJxrZtJelyVUZ9/tUcmOIronetIKEaHTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751617961; c=relaxed/simple;
-	bh=iSk3IqtUKeXG6i5fCP80pJxoiZ0ujv5puEWVW/Sp/3Y=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZlkOFseiFqczH8V38X4ZL71fjJzfbB0MRx7XBGXL4hCn6EJ08QvcUzbfDHuxNaDin3+eNSVVD2zaN8v9djrnCqTQJ/aNOPiaPKcoY8SkFPJX3OpDz8zihAXl4SFnt+hpMfHBvAFTUF43jGQkF9jXU+CQuEIjoK5zX0L+LF6IqWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AhJCs1eM; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751622189; c=relaxed/simple;
+	bh=nN5YmuESfkuAx81bCc3CCaAG8O4TpNR0U4DTKebk4O8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=qPgCti308977tr1cX6zpyXwwRNGz94Lwm1zXYooNT06t3fwtK9WbXov0Hhcsuajc98f3HnMvELZzB5vHxpZakKVscB8xYQvuRHtRzE+1kMhE4DMopb8P0RilKdJAG6s8OhXSXKVDG2uGYw4eGmQNhNQ/yOH9ofE8KGKH1bR5n2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pDy3KUZd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlihAp3/; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AhJCs1eM"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4539cd7990cso3979275e9.0
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 01:32:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751617958; x=1752222758; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=9k8WdJI2gqE5loM6O0EO0EqiB0NvYEkoMvS3grTOHxI=;
-        b=AhJCs1eM6kK5AlW4S4gHDAgY43uhUvdfMF9poTbr3qplDjbXB3k2JFNS8NsvvIi9Fr
-         2+UdVV30BUzWjDAh2NHpmTqhuy+V15v4oiBIWyLXcnt36lvAraxuvHxuBJhzviEm8d3z
-         QXrJ7CYiI/vED1D+jpqjWHat8raUWC3OvBaLBGA0k3CIuya4PjAwo8sg7JTryIDcLWZk
-         AGp1oh4JQY3hi13Pqy+efIvNqyJSiZpKPWQ4O0HkLsRyml7rkILSPOOAp17Sn7fkTk1i
-         5aTYDRcaGUHcjwraTtgVtsH7jDfMXSfPY4b0LZNcAaTeGaGzcwM0DpEiTib/2tUogBqg
-         hPQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751617958; x=1752222758;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=9k8WdJI2gqE5loM6O0EO0EqiB0NvYEkoMvS3grTOHxI=;
-        b=a+CkIklf863PHIXwgvU//qvutv05opIyeMwMt8U5O9zmVt8Oc/4QC84lTrGtOgzHEs
-         nU8f8wAh+eqStxAaPTigTNlIoPMmmcyXWLXCIdIvuQJvNzUZZPgGAf8wmNObnNJ06Jep
-         pCO0mx15sMUh+Bq/vb6JkPD9SOTzvEbPOadKtLQ/HJBZXARsqeQse+/Cy9tDTPDmw9zt
-         BA4sr3+Co7mfYyl3aUdgZMz1d5+IbXaIg8GQqRUrypQkV5J34aaixRlDreLDbSSY/XeY
-         5EymVIe0PWxNzb2l169zLq2WRl37XuL+0cr0r2fqId+FsAdKfU5ywb+5oRz/4o0mWRhQ
-         NUYA==
-X-Gm-Message-State: AOJu0YxM7fJ+TS5ifPzbCi617Avsie3kHDtJ7BlkRWyJlfSkZP6EkX4g
-	KAICIDo/kxVrExujLEoRM9eCJCHFRH2HvEPTDmxJb0giBqK5HLkpuln5OtVONQ==
-X-Gm-Gg: ASbGncty/+9tzrTzJCK/3N1711ndOtpUAhApl83uET5Tex/kdc79vuF272APBEcVaDj
-	cFClS6duNow3w8xtovKp6UJJJNpRNS75lAkR0m8nnnt/hOR4ZFadimCoWNY4Wn6Pc2QkYJx58t4
-	Y0fKd9ahoJqG6ZHxQ64F+EXGrXbGDHc71Rg2TxYSlMDd+JoXKMKo+SmQ/MEr+GrWmsfIwNsNFXr
-	6Z3z7vx1PiarDUDEj51wfAvtInZSBeAFhJ0DwvE0jTl2gfQoR6Gb6Pxlux/m3G98/18NricbGxT
-	jXdXbv4PRVSM99eRAd7XLDW9lqSdQM2b5tW6Q1+a5ZafKPn8z5OW00kRcic7fjETbfNRaxmoxDZ
-	wZTv2DTWBpDIlVBX+/F56ebjO2RlJev7J86NdkQ==
-X-Google-Smtp-Source: AGHT+IHn7NHnPWDQeHAo8J2J4CtICpPKWXl3au/+XJfT8nxuYV1DD2EgnZbbwkkMmLLMR3eWg9Jv6g==
-X-Received: by 2002:a05:600c:c492:b0:450:c9e3:91fe with SMTP id 5b1f17b1804b1-454b38fa8a6mr14271835e9.0.1751617957465;
-        Fri, 04 Jul 2025 01:32:37 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454adc71aadsm36791985e9.25.2025.07.04.01.32.36
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 04 Jul 2025 01:32:36 -0700 (PDT)
-Message-ID: <dbbde8e4-985d-4d72-b879-9110a4410abb@gmail.com>
-Date: Fri, 4 Jul 2025 09:32:34 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pDy3KUZd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlihAp3/"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1EE501D00126;
+	Fri,  4 Jul 2025 05:43:04 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Fri, 04 Jul 2025 05:43:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751622183;
+	 x=1751708583; bh=q1EHeaAA/NOuIlVLmKfSMeKsA4YlzEjmxhNedF+ln+0=; b=
+	pDy3KUZdC2VzTNajp4zQukI5tAqIlF1edRs5fV1ne24kiQYCSu2SrctyfrUiRvOb
+	yTeVje6V+gP37KOtCO+9b+3BaXLeK7SGuvprafKFvLg2Oy+8yUuA0My1QpYnrTSa
+	8IkwKli8Xum9XmWSSUdZUxg0KbbhaA+2gAP2x9b5dNQ7Q+Vpj/N2reXQorCw3Hz3
+	ScOsMmjImY/uxYTqNn2u3oXZHB0o9NNNUjseupuaQbIBHPgTl2hnZeJRrhErUKzp
+	7v/7t4xAXwY5nNgVqY+M57fncvsV8Od1e8QIwg6hSQwUf9ukx08OZUuQaynnIVAQ
+	8gGNoP4gzgzZCVRp2w3tqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751622183; x=
+	1751708583; bh=q1EHeaAA/NOuIlVLmKfSMeKsA4YlzEjmxhNedF+ln+0=; b=m
+	lihAp3//YhnIO/6kBcbAGTS6/1J9cl8vcbHAdyv4dx4ebyiTJgX2UVcUypz/vOIS
+	PVd7fx3IztkpRusgiKGBhx45bBOuvJ9lEs0S6HSRw9ydZcYyReQ0nr/TfAfIKfsA
+	wZpFiLru/4MZE25c/WdxiYZ8NMIajgTLjt/HX9Ump1a0iMmNPNqlI8AfKh6ekNcM
+	FmYKsJFbDP+ZBjO5Cny5PHMIbxIBUBJURCyZb/fq++dN2aqhxwp5J0EcJF3z2aMH
+	+xu/0HxK3/FFynN9itPZktZnkMx1kbxzxGjPNW27jKixlNgnrN0Bjgotnw1eeiC9
+	YR026rzxIF9OtG6anvpug==
+X-ME-Sender: <xms:J6JnaE6-QsD-fsXq0aw0XlmR0zV35Z90t5xZetRufbBLUiuZ7H8-jg>
+    <xme:J6JnaF43Qy_pjZIeYh7fEK5fU-64Dr7bW9hAQf5bCbzvRPwsqhIwC8t4kS8-EzP5E
+    29Zs3Lie5EgeEU0PA>
+X-ME-Received: <xmr:J6JnaDdfZQlQMfHiJMmml6spDThM2T9h5QWNhWtt66IqcrgiPk3J44rkIrL7q8lyBG_AXjMCrJ_jnpo_2Nj_MLQedsuoALqk9fYZrGocmCuI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvvdekfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epteeuueehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecu
+    ffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeej
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheprhihvghnuhhssehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddthe
+    esghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohho
+    thhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:J6JnaJJgTNH1aiX6KwmlZLn3cq5sKIqGpIbqeVydDPRjqJo7x7Bcgg>
+    <xmx:J6JnaIIOJJt1gF7fwpmjXRCnUwGz6zB1Fpdvpyo4Kv84Sod148Ot2w>
+    <xmx:J6JnaKyVIRBiC1jYu3Q-SAPzsRN1gsdA4k8vPkv7mHWK2Nj6d-Pfsw>
+    <xmx:J6JnaMLT8p_LlvwnDAOGLz1hJ8ZxboeBInYeBlTizAPv1kBRufrSMQ>
+    <xmx:J6JnaNGpgcOraVN28sXj84cD9t6R0D9d2BRmWLXTsEiutQgsvMfJQ1Hm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 4 Jul 2025 05:43:02 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0b5f18a9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 4 Jul 2025 09:43:00 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/2] Add reftable by default as a breaking change
+Date: Fri, 04 Jul 2025 11:42:55 +0200
+Message-Id: <20250704-pks-reftable-default-backend-v3-0-a1eb63e8442a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v2 6/7] repo-info: add field layout.bare
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
- gitster@pobox.com
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-7-lucasseikioshiro@gmail.com> <aGZqPC47iPMixyvW@pks.im>
- <6DBB30CE-D30F-42B6-A81C-35460B462D45@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <6DBB30CE-D30F-42B6-A81C-35460B462D45@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAB+iZ2gC/43NQQ6CMBCF4auQrh1TWivElfcwLqbtVBoQSIuNh
+ nB3CwvjTpf/5OWbmUUKniI7FTMLlHz0Q59D7gpmGuxvBN7mZoILxSsuYGwjBHIT6o7AksNHN4F
+ G01Jv4Wgkd1KuW2SZGPPSPzf+cs3d+DgN4bV9S+V6/RNOJXCoD1ajtei04uc83/s7W9UkviX5Q
+ xJZUigqqgTWRtFHWpblDSV2gWEPAQAA
+X-Change-ID: 20250702-pks-reftable-default-backend-6c30f330250a
+In-Reply-To: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
+References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
+To: git@vger.kernel.org
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+ Karthik Nayak <karthik.188@gmail.com>, 
+ K Jayatheerth <jayatheerthkulkarni2005@gmail.com>, ryenus@gmail.com, 
+ Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.14.2
 
-Hi Lucas
+Hi,
 
-On 03/07/2025 15:14, Lucas Seiki Oshiro wrote:
-> 
->> Meh, `is_bare_repository()` strikes again :/
-> 
-> Yeah... I tried to avoid it but removing that dependency is work for its own
-> patch...
+the recent thread at [1] motivated me to hack together this tiny patch
+series that paves our path towards making the reftable backend the
+default backend. It does two things:
 
-I really wouldn't worry too much about using "the_repository" in code 
-that lives under builtin/. The reason to avoid it is so that one git 
-process can operate on multiple repositories but until our library code 
-stops using "the_repository" and actually respects the repository passed 
-to it there seems little point in worrying about using it in non-library 
-code. As it is we're currently adding more instances of "the_repository" 
-to our library code as a stepping stone to removing other global 
-variables. Once our library code can operate on an arbitrary repository 
-we can then think about which files under builtin/ want to operate on 
-more than one repository and avoid "the_repository" in those. Until then 
-worrying about using "the_repository" under builtin/ is a distraction 
-from fixing the library code.
+  - It announces the breaking change for Git 3.0.
 
-Thanks
+  - It makes it the default now already when "feature.experimental" is
+    enabled.
 
-Phillip
+The first item is subject to ecosystem support, most notably in
+libraries like Gitoxide, libgit2 and JGit. The second item is intended
+to extend the user base to power users so that we get more test exposure
+out in the wild before we make it the default in Git 3.0.
 
-> I asked Ayush [1] about this as his GSoC project [2] is related to reduce the
-> dependency on `the_repository`.
-> 
-> 
-> [1] https://lore.kernel.org/git/CAE7as+bTKE5opov-Xn0P8R+cy+=-XRkX9Wpie_W0717XMF1b_w@mail.gmail.com/
-> [2] https://summerofcode.withgoogle.com/programs/2025/projects/no7dVMeG
+Changes in v2:
+  - Improve the breaking changes announcement a bit based on feedback.
+  - Introduce a `REF_STORAGE_FORMAT_DEFAULT` define.
+  - Print the default ref format as part of `git version --build-options`.
+  - Link to v1: https://lore.kernel.org/r/20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im
+
+Changes in v3:
+  - Small tweaks to the commit messages.
+  - Mention better data compression as another benefit.
+  - Link to v2: https://lore.kernel.org/r/20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im
+
+Thanks!
+
+Patrick
+
+[1]: <xmqqtt3vkhwk.fsf@gitster.g>
+
+---
+Patrick Steinhardt (2):
+      BreakingChanges: announce switch to "reftable" format
+      setup: use "reftable" format when experimental features are enabled
+
+ Documentation/BreakingChanges.adoc | 47 ++++++++++++++++++++++++++++++++++++++
+ Documentation/config/feature.adoc  |  6 +++++
+ help.c                             |  2 ++
+ repository.h                       |  6 +++++
+ setup.c                            | 14 ++++++++++++
+ t/t0001-init.sh                    | 45 ++++++++++++++++++++++++++++++++++++
+ 6 files changed, 120 insertions(+)
+
+Range-diff versus v2:
+
+1:  efbc0ba7338 ! 1:  ecf018b81ff BreakingChanges: announce switch to "reftable" format
+    @@ Commit message
+         significantly better in many use cases.
+     
+         Announce that we will switch to the "reftable" format in Git 3.0 for
+    -    newly created repositories.
+    +    newly created repositories and wire up the change, hidden behind the
+    +    WITH_BREAKING_CHANGES preprocessor define.
+     
+         This switch is dependent on support in the larger Git ecosystem. Most
+         importantly, libraries like JGit, libgit2 and Gitoxide should support
+    @@ Documentation/BreakingChanges.adoc: Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zo
+     +  ** It is impossible to store two references that only differ in casing on
+     +     case-insensitive filesystems with the "files" format. This issue is common
+     +     on Windows and macOS platforms. As the "reftable" backend does not use
+    -+     filesystem paths anymore to encode reference names this problem goes away.
+    ++     filesystem paths to encode reference names this problem goes away.
+     +  ** Similarly, macOS normalizes path names that contain unicode characters,
+     +     which has the consequence that you cannot store two names with unicode
+     +     characters that are encoded differently with the "files" backend. Again,
+    @@ Documentation/BreakingChanges.adoc: Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zo
+     +     every reference is created as a separate file. The "reftable" backend
+     +     significantly outperforms the "files" backend by multiple orders of
+     +     magnitude.
+    ++  ** The reftable backend uses a binary format with prefix compression for
+    ++     reference names. As a result, the format uses less space compared to the
+    ++     "packed-refs" file.
+     ++
+     +Users that get immediate benefit from the "reftable" backend could continue to
+     +opt-in to the "reftable" format manually by setting the "init.defaultRefFormat"
+2:  812cc75dfd8 = 2:  642f774d743 setup: use "reftable" format when experimental features are enabled
+
+---
+base-commit: 83014dc05f6fc9275c0a02886cb428805abaf9e5
+change-id: 20250702-pks-reftable-default-backend-6c30f330250a
 
