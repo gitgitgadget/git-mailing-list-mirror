@@ -1,63 +1,63 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C813E1922D3
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 14:14:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7628219C542
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 14:14:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751638450; cv=none; b=uULahdzmTp+j8DlSHvQlSVOBw75BYEi9dFrzkU2rGUPIx4OS6a5wmRfbjMCya+8z/W4jQmvlm4WqF9l94xg76hLSi0hvoFudICAtU6cZmZNSjQGBWDMhvNBG67ur3V9Pcq2FZn2TbRtMUYtRrZD+wPVqfB7u0WipaMeSVnf7Lf8=
+	t=1751638457; cv=none; b=krkIZ1ddIAuPlph39VAxXuXJZMVqLTBKr6X9bX2G8RHfPrRpX3jH3UIv8al28Klnl+6iqt0BV88d5UHi/NM7asL69m/IV9xbOUowY8FVsngL0Oz2czDbsD3YuxdD6i1WXHKO1mRFyDAOsnklVCKcxXqm5JTXuJ8aNqp21XcMtYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751638450; c=relaxed/simple;
-	bh=NbvqmdC0kR1CvGAMONEF7nRluS4hKZ8MRlTfQBNep+s=;
+	s=arc-20240116; t=1751638457; c=relaxed/simple;
+	bh=qx4eueFtoQEbqXj76WNAFntENR0YHUWUKYUF4rpOJ9s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hSMpGmhXAaGjmPkWcaOvOksBnpbmf0yZfG9izOaWR5oLyD4UO1clpGNz6w1URRdP1qjUOuXgAzFgT5xTCKZNh54YSX8Pv4806i7cJTWwiGFIKvC7+iQ6clUlQVVdDD66P//Fsu6H5gwvQFFwXjMPYgV2s42o6xmjdHzkwjfzOv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CpJm9RHD; arc=none smtp.client-ip=209.85.216.42
+	 MIME-Version; b=fB4pvDyXTlCgGcGyT88ny0+jFCfOc5EMao4FAKx/zKUU9AGua4iTdeyc4KDRzsG+jrAqHs7eI9pTupZxvoOirVizD/cPoh5D44PB5yV7DQynYvK9MJHweN0kCO0SGAtP0Jgm7BJE/ACJaAcK52zvAKzOOzsUDpkUAl17cpSXkWE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=R4bCwugl; arc=none smtp.client-ip=209.85.216.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CpJm9RHD"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-3121aed2435so1055466a91.2
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 07:14:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="R4bCwugl"
+Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-31329098ae8so845008a91.1
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 07:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751638448; x=1752243248; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751638455; x=1752243255; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=32RYXbVplVde+1JmNE5Ctvw3/BJghE2e9z+5XfA8ovY=;
-        b=CpJm9RHDzj2HriyirxKTIa8WdNd/7E4ZTS8iBAVWdPxgHZGT1beXXf39Imn5+b6N0+
-         C3B8SC4ntknOAU37xIkbaJ0i8NrAHVVvVL3lAKDP6/DVz6ZOF9KwK0X4KXJjy7SMjWti
-         lavd3tR61J9M/DCS6qtCYS8rc7UDCrgg5cB1IZFXH/+4kwoIQcXm9f0+iRCF3mlXPPw+
-         Tj5SEE+pl8Q6rQYlkntI1OkCQlKYEvbXXazsG86gCrqTsVBHHk7YNXg/dBytoSp5HCI4
-         T9UDerydxVyZI/r5mB9YZg6KzCp3fxwp9s3C3LbGb5TIBb8OaRbWir0VdFdQuukEp1i/
-         795Q==
+        bh=+BHhK2LCjii7mK8Q+aqHXFvptcvbarjqQ98wYAwlbUo=;
+        b=R4bCwuglStQp9U1yy59yVjvbqwaFr1+qyD9HX39iceQRFbw5PNHKnUHeEXsLO950aH
+         tpSR5qvG3FtzMC+DEpzRsBRQtfhNZ2I9SPEP5ffeLQK7zWnAXsYsgGKaL4sTR7G89Ge9
+         Bw11sk9ralPD3np6hQyKuADhzaxuCkJj/YbTFsO6EFGvCAxra0vV/O4HTw/4Oin9VNHD
+         VBGpJuZyRCFdDOl5lr539U1MBIcvDDru4SM6RWmyTV8NDK4L/7qJL0iuFAhWZjXnIRqt
+         Veif2GbwvnCV2eOFM7IXHk1YYcIskSUyYdDpOTgUUlE3bnuTLetFG0+OKR2d1VZ2rNAe
+         nZNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751638448; x=1752243248;
+        d=1e100.net; s=20230601; t=1751638455; x=1752243255;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=32RYXbVplVde+1JmNE5Ctvw3/BJghE2e9z+5XfA8ovY=;
-        b=U5KYkfHn5+xgAEjCA+v0Rdz3L6olBTzvOO4F1G/noQOCAHL67s1pjLIM0x6faHobxM
-         MEpdd267RqcLJwb9/dl4i1kD0k+Fcv6NyzrH82ysTa4qM4N/dA97mB1kU1mAI8fw9r0T
-         7qiddK5rFgdHKegrWlHdC4ggWymHs2RYHEbCoP5Fu2gnm77c0Vx1vj3FAAgmVObwbdMy
-         RoXSQVT/1L8w2w3ked5Y53TZcuKUwkYzI6UK3UfRpc/j9D/bOFDOm8Ovvpy34R3TjmAm
-         22KZ+d9jA2HAj0nISAkyGLHWxtjUYoVJjo6+Vke/5pohjYsji7o1JwImRv95Cu3ClqFC
-         6i0w==
-X-Forwarded-Encrypted: i=1; AJvYcCXTBdo4iLeO7mU2otEbyAYaA8UG0h81fYLgxJwQmzhs8NqJsaauKm7RJ1i6hw9zp094vyo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyjg/3eGDy1FIhLhuo10FIev/XTVgUOYTpgkWWiviNG9QjDEkfd
-	CqF9Wwd8t40XY/InybNQ4skOev9F1WrqTGNd6JQi4luFPOPid7b39o3tYWWfLb9VgPM=
-X-Gm-Gg: ASbGncvhROt3SbYvPa56ZmIoVMjBYDgnwNR4Vxf1zfGG7j3Asn4CTEb3j72SC+WohV/
-	PcHq4OqLTSca7RTgUJXpJVGAetqejxysFNOzOXCykWuKqbyG+G2IBbtUMiFxSse9v9Wg3mxJt4x
-	Nzb9qLQffhmYgcOODQmo359QubgzVil5YHkbsxdVZh9rPAtDozdjCjcKJovgAKDv8x/HGZW//6h
-	0aUJP7TjS1dVxlLh2iWSAG2BzT6K6SQeZuibPtzafu2VGtnodepqIsP9etfke+McLJPWMkMgr83
-	ifacZQ1lGDQJ0OcY34YvPvRd+i89Le4wkG+MS0pOcybW6N2neslkETq7yOrzZrnRiE90+eyKgnx
-	5yNaX
-X-Google-Smtp-Source: AGHT+IHF3tHwrfZwejq+ZTnxVdg82l+N9pZSsElNPpOXocPzgAo4k6yedDCDpLGi1+EXywMUZiuDKw==
-X-Received: by 2002:a17:90b:4a81:b0:313:f883:5d36 with SMTP id 98e67ed59e1d1-31aac436a54mr3963649a91.1.1751638447925;
-        Fri, 04 Jul 2025 07:14:07 -0700 (PDT)
+        bh=+BHhK2LCjii7mK8Q+aqHXFvptcvbarjqQ98wYAwlbUo=;
+        b=X0rElFGgrRP6g1HWFfLW/0wlCgacD4zmBiQeI52dYw+8MAttuc3OtR3IReBlWrHjZT
+         X0XA3Foym0JM2q6uezMMUsoNiy6OTpNff5kp6w2fGoZO/s24B4ranUWGKzv9ktHf490b
+         jSdMwPu/xZl48W/iW3YjIPQ9wFIwZW0w8ma0OThD/pRDFgXql1zS6hwGc9bXfwzipE42
+         Olv6NPiWjKyufRBaWwVHAe3AbILQzfFouG9uRxd1AeX3hrPvcZpbF5BXT4Is+8QC+Hpj
+         5UgedCH+Ooj5zoawt8watCvem+VY8jQlp40b1fUS/A1V7rvAHCj8DNZ7NhrrQg8xuSrF
+         IZEw==
+X-Forwarded-Encrypted: i=1; AJvYcCUNXiLPS+6ehJPt3XYS2W3djU1QVrY9OEH2nKR658TzSmqpNgaa0Qjzx6g7q22NDnwCgB0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx6eNLQLzbd6Rl7hFdiBU12n8UjOToSrS2fNjtQx3C5Bx1bvEoR
+	WsiZo+kNru2S272QxO2KvbutYLiZpQbaYX+BaWrun4QNXDYRJOYUdTIh
+X-Gm-Gg: ASbGncsqsqGaq3u7LgxkxZ2c6CyHO0R2+YebiXLSPt5MPgUah+ilGQ54tDC62k+morf
+	c9daR0MXFSjeZuR/Hchn2DckUfko/tb6QPJ38Nm3yY0qjGK/mZHMQ3lCSd3lETc2zvevlo9Z496
+	vUS3ZXeDj9qSqX9sN/mMNQdsLmN6X2ZSmDzlXRb1V8F7RpqBLc6r5tF+sWPf1yOzZcEwBOtWLie
+	tf8CF1NZf+3VvkD6rXR23v4QeHgp5M3d+bYBrxsVnYRnczjqXh3li2P2Krj6Ymuyee2e9YfHgqj
+	AyYKn+JQyjfWhrUiQcMKEFhPbU57ptMUKtvH0LP9proVj5Li8eg6ubf2ISQHkZC72sVBX3j4/5V
+	5F3k15oUhtTQ9Aro=
+X-Google-Smtp-Source: AGHT+IFCRZHTUtj8FpLpwP+q7DQYsJWO4xn60Zp7O6WsNJOOXfpv23LUPya109MZ/M5NXk2megRE5A==
+X-Received: by 2002:a17:90a:c2cc:b0:310:c8ec:4192 with SMTP id 98e67ed59e1d1-31aab039de0mr5054944a91.10.1751638454745;
+        Fri, 04 Jul 2025 07:14:14 -0700 (PDT)
 Received: from thinku.localdomain ([2401:4900:1c96:b11f:29cd:a954:9c31:7c0d])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31aaaf2cd54sm2115780a91.23.2025.07.04.07.14.05
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31aaaf2cd54sm2115780a91.23.2025.07.04.07.14.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 04 Jul 2025 07:14:07 -0700 (PDT)
+        Fri, 04 Jul 2025 07:14:14 -0700 (PDT)
 From: Ayush Chandekar <ayu.chandekar@gmail.com>
 To: ayu.chandekar@gmail.com
 Cc: christian.couder@gmail.com,
@@ -67,9 +67,9 @@ Cc: christian.couder@gmail.com,
 	ps@pks.im,
 	gitster@pobox.com,
 	usmanakinyemi202@gmail.com
-Subject: [GSOC PATCH v3 1/2] repository: move 'repository_format_precious_objects' to repo scope
-Date: Fri,  4 Jul 2025 19:42:34 +0530
-Message-ID: <a828ade541b9255a655ad6d4cb3b6a64c900627f.1751630981.git.ayu.chandekar@gmail.com>
+Subject: [GSOC PATCH v3 2/2] builtin/prune: stop depending on 'the_repository'
+Date: Fri,  4 Jul 2025 19:42:35 +0530
+Message-ID: <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1751630981.git.ayu.chandekar@gmail.com>
 References: <cover.1751630981.git.ayu.chandekar@gmail.com>
@@ -81,142 +81,128 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The 'extensions.preciousObjects' setting when set true, prevents
-operations that might drop objects from the object storage. This setting
-is populated in the global variable
-'repository_format_precious_objects'.
-
-Move this global variable to repo scope by adding it to 'struct
-repository and also refactor all the occurences accordingly.
-
-This change is part of an ongoing effort to eliminate global variables,
-improve modularity and help libify the codebase.
+Refactor builtin/prune.c to remove the dependency on the global
+'the_repository'. Replace all the occurrences of 'the_repository' with
+repo and thus remove the definition '#define
+USE_THE_REPOSITORY_VARIABLE'. Also, add a test to make sure that 'git
+prune -h' can be called when the repository is `NULL`.
 
 Mentored-by: Christian Couder <christian.couder@gmail.com>
 Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
 Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
 ---
- builtin/gc.c     | 2 +-
- builtin/prune.c  | 2 +-
- builtin/repack.c | 2 +-
- environment.c    | 1 -
- environment.h    | 2 --
- repository.c     | 1 +
- repository.h     | 1 +
- setup.c          | 5 ++++-
- 8 files changed, 9 insertions(+), 7 deletions(-)
+ builtin/prune.c         | 27 ++++++++++++---------------
+ t/t1517-outside-repo.sh |  7 +++++++
+ 2 files changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 845876ff02..ec10b81dcc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -998,7 +998,7 @@ int cmd_gc(int argc,
- 	if (opts.detach <= 0 && !skip_foreground_tasks)
- 		gc_foreground_tasks(&opts, &cfg);
- 
--	if (!repository_format_precious_objects) {
-+	if (!the_repository->repository_format_precious_objects) {
- 		struct child_process repack_cmd = CHILD_PROCESS_INIT;
- 
- 		repack_cmd.git_cmd = 1;
 diff --git a/builtin/prune.c b/builtin/prune.c
-index e930caa0c0..dab3c19b6f 100644
+index dab3c19b6f..320e9c2341 100644
 --- a/builtin/prune.c
 +++ b/builtin/prune.c
-@@ -177,7 +177,7 @@ int cmd_prune(int argc,
+@@ -1,4 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "builtin.h"
+@@ -64,7 +63,7 @@ static void perform_reachability_traversal(struct rev_info *revs)
+ 		return;
+ 
+ 	if (show_progress)
+-		progress = start_delayed_progress(the_repository,
++		progress = start_delayed_progress(revs->repo,
+ 						  _("Checking connectivity"), 0);
+ 	mark_reachable_objects(revs, 1, expire, progress);
+ 	stop_progress(&progress);
+@@ -78,7 +77,7 @@ static int is_object_reachable(const struct object_id *oid,
+ 
+ 	perform_reachability_traversal(revs);
+ 
+-	obj = lookup_object(the_repository, oid);
++	obj = lookup_object(revs->repo, oid);
+ 	return obj && (obj->flags & SEEN);
+ }
+ 
+@@ -99,8 +98,7 @@ static int prune_object(const struct object_id *oid, const char *fullpath,
+ 	if (st.st_mtime > expire)
+ 		return 0;
+ 	if (show_only || verbose) {
+-		enum object_type type = oid_object_info(the_repository, oid,
+-							NULL);
++		enum object_type type = oid_object_info(revs->repo, oid, NULL);
+ 		printf("%s %s\n", oid_to_hex(oid),
+ 		       (type > 0) ? type_name(type) : "unknown");
+ 	}
+@@ -154,7 +152,7 @@ static void remove_temporary_files(const char *path)
+ int cmd_prune(int argc,
+ 	      const char **argv,
+ 	      const char *prefix,
+-	      struct repository *repo UNUSED)
++	      struct repository *repo)
+ {
+ 	struct rev_info revs;
+ 	int exclude_promisor_objects = 0;
+@@ -173,20 +171,19 @@ int cmd_prune(int argc,
+ 	expire = TIME_MAX;
+ 	save_commit_buffer = 0;
+ 	disable_replace_refs();
+-	repo_init_revisions(the_repository, &revs, prefix);
  
  	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
  
--	if (repository_format_precious_objects)
-+	if (the_repository->repository_format_precious_objects)
+-	if (the_repository->repository_format_precious_objects)
++	repo_init_revisions(repo, &revs, prefix);
++	if (repo->repository_format_precious_objects)
  		die(_("cannot prune in a precious-objects repo"));
  
  	while (argc--) {
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 5ddc6e7f95..d0e4fa6bed 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1240,7 +1240,7 @@ int cmd_repack(int argc,
- 	po_args.depth = xstrdup_or_null(opt_depth);
- 	po_args.threads = xstrdup_or_null(opt_threads);
+ 		struct object_id oid;
+ 		const char *name = *argv++;
  
--	if (delete_redundant && repository_format_precious_objects)
-+	if (delete_redundant && the_repository->repository_format_precious_objects)
- 		die(_("cannot delete packs in a precious-objects repo"));
- 
- 	die_for_incompatible_opt3(unpack_unreachable || (pack_everything & LOOSEN_UNREACHABLE), "-A",
-diff --git a/environment.c b/environment.c
-index 7bf0390a33..7c2480b22e 100644
---- a/environment.c
-+++ b/environment.c
-@@ -37,7 +37,6 @@ int ignore_case;
- int assume_unchanged;
- int is_bare_repository_cfg = -1; /* unspecified */
- int warn_on_object_refname_ambiguity = 1;
--int repository_format_precious_objects;
- char *git_commit_encoding;
- char *git_log_output_encoding;
- char *apply_default_whitespace;
-diff --git a/environment.h b/environment.h
-index 9a3d05d414..3d806ced6e 100644
---- a/environment.h
-+++ b/environment.h
-@@ -189,8 +189,6 @@ extern enum object_creation_mode object_creation_mode;
- 
- extern int grafts_keep_true_parents;
- 
--extern int repository_format_precious_objects;
--
- const char *get_log_output_encoding(void);
- const char *get_commit_output_encoding(void);
- 
-diff --git a/repository.c b/repository.c
-index 9b3d6665fc..62709d1c91 100644
---- a/repository.c
-+++ b/repository.c
-@@ -284,6 +284,7 @@ int repo_init(struct repository *repo,
- 	repo_set_ref_storage_format(repo, format.ref_storage_format);
- 	repo->repository_format_worktree_config = format.worktree_config;
- 	repo->repository_format_relative_worktrees = format.relative_worktrees;
-+	repo->repository_format_precious_objects = format.precious_objects;
- 
- 	/* take ownership of format.partial_clone */
- 	repo->repository_format_partial_clone = format.partial_clone;
-diff --git a/repository.h b/repository.h
-index c4c92b2ab9..ad23a243c6 100644
---- a/repository.h
-+++ b/repository.h
-@@ -151,6 +151,7 @@ struct repository {
- 	/* Configurations */
- 	int repository_format_worktree_config;
- 	int repository_format_relative_worktrees;
-+	int repository_format_precious_objects;
- 
- 	/* Indicate if a repository has a different 'commondir' from 'gitdir' */
- 	unsigned different_commondir:1;
-diff --git a/setup.c b/setup.c
-index f93bd6a24a..3ea01e9331 100644
---- a/setup.c
-+++ b/setup.c
-@@ -753,7 +753,8 @@ static int check_repository_format_gently(const char *gitdir, struct repository_
- 		die("%s", err.buf);
- 	}
- 
--	repository_format_precious_objects = candidate->precious_objects;
-+	the_repository->repository_format_precious_objects = candidate->precious_objects;
-+
- 	string_list_clear(&candidate->unknown_extensions, 0);
- 	string_list_clear(&candidate->v1_only_extensions, 0);
- 
-@@ -1864,6 +1865,8 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 			the_repository->repository_format_partial_clone =
- 				repo_fmt.partial_clone;
- 			repo_fmt.partial_clone = NULL;
-+			the_repository->repository_format_precious_objects =
-+				repo_fmt.precious_objects;
+-		if (!repo_get_oid(the_repository, name, &oid)) {
+-			struct object *object = parse_object_or_die(the_repository, &oid,
+-								    name);
++		if (!repo_get_oid(repo, name, &oid)) {
++			struct object *object = parse_object_or_die(repo, &oid, name);
+ 			add_pending_object(&revs, object, "");
  		}
+ 		else
+@@ -200,16 +197,16 @@ int cmd_prune(int argc,
+ 		revs.exclude_promisor_objects = 1;
  	}
- 	/*
+ 
+-	for_each_loose_file_in_objdir(repo_get_object_directory(the_repository),
++	for_each_loose_file_in_objdir(repo_get_object_directory(repo),
+ 				      prune_object, prune_cruft, prune_subdir, &revs);
+ 
+ 	prune_packed_objects(show_only ? PRUNE_PACKED_DRY_RUN : 0);
+-	remove_temporary_files(repo_get_object_directory(the_repository));
+-	s = mkpathdup("%s/pack", repo_get_object_directory(the_repository));
++	remove_temporary_files(repo_get_object_directory(repo));
++	s = mkpathdup("%s/pack", repo_get_object_directory(repo));
+ 	remove_temporary_files(s);
+ 	free(s);
+ 
+-	if (is_repository_shallow(the_repository)) {
++	if (is_repository_shallow(repo)) {
+ 		perform_reachability_traversal(&revs);
+ 		prune_shallow(show_only ? PRUNE_SHOW_ONLY : 0);
+ 	}
+diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+index 6824581317..8f59b867f2 100755
+--- a/t/t1517-outside-repo.sh
++++ b/t/t1517-outside-repo.sh
+@@ -114,4 +114,11 @@ test_expect_success 'update-server-info does not crash with -h' '
+ 	test_grep "[Uu]sage: git update-server-info " usage
+ '
+ 
++test_expect_success 'prune does not crash with -h' '
++	test_expect_code 129 git prune -h >usage &&
++	test_grep "[Uu]sage: git prune " usage &&
++	test_expect_code 129 nongit git prune -h >usage &&
++	test_grep "[Uu]sage: git prune " usage
++'
++
+ test_done
 -- 
 2.49.0
 
