@@ -1,56 +1,56 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1232DAFC7
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 09:43:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F112DAFC7
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 09:43:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751622190; cv=none; b=SbXxO0rsVke5Dmi1y7HOUFWQkWpjgAklBhdnnPecPdZGPvQvZ8ani983FAA3dGD7DJf/Is9feOXHFZVXDg9aZNuD8tFB38ZVLaUp2S13nJOxBj+P4qHVmJVN/Iy2x71QB9foC563ByPzzGE5Y+huwnxBypEivBZ3BIuJxh/pwFs=
+	t=1751622194; cv=none; b=ZP7n97WPLRLtmMH4XFGvxDSL4lJmE9JmHEYG161hc38hjvPfQSrbeVimeZGm6W6MvGKBKIzVOfezrKriqvTgSSlD8bRAxl+nUUWNlJp0pqRQar2xfEwW4Iwisc6F5dJ+lQL0yAT+JvP5yLCYykTVSRucRdSzVYTBgjnlxkXBaKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751622190; c=relaxed/simple;
-	bh=0MRgJj0NJLZs9k8cE9PLZVWwys0AdAxfly8xLpzMqzQ=;
+	s=arc-20240116; t=1751622194; c=relaxed/simple;
+	bh=6M6wpZ05NsqajG9uUrkWoGtcndIusLHZAob4KLcl+ls=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=iHu3VLevsTV4+Z1XQaYXiP3Gnsl+14IAxim/uvcO+P9/PhSPMiGCq4MP/+oGd8jJypXQC4TooMERXqR/hIfjjFFF0SIa5xRdvqoYa9P6ffRG6bs9c2t0MvQUznOXglWHpnuY7rNPIQ4tNsBTpD9Jw6XTu8kSgjmQaLpspkFWuP8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=UB9CTb0O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ArZicPZ2; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=A4+6swdVAIBET2MXH9TFzLe06bKJz3yI7KANeQ4MvWMqmMdhbzzqz0JbKnNVcdjvJj2EiCGS4oxwDRkegy9UNZ++uhIrP542Ayd7LYkfIAHybY93/D11f5ZgL3y8OGgqfkbApm4dKJNfshsssL3lgmEv83ZCBCGPHB/G4merv4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eotr7Q9i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hBHZldPi; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="UB9CTb0O";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ArZicPZ2"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 160057A011F;
-	Fri,  4 Jul 2025 05:43:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eotr7Q9i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hBHZldPi"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id E1D071D000E3;
+	Fri,  4 Jul 2025 05:43:11 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Fri, 04 Jul 2025 05:43:07 -0400
+  by phl-compute-09.internal (MEProxy); Fri, 04 Jul 2025 05:43:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751622186;
-	 x=1751708586; bh=ETMIs19xfNkMUKBYkSQzsYp9pfCHZxaLtfyicrqAGW8=; b=
-	UB9CTb0OVezyK/ktfBZZvpeQ8Zr0Hg8sozl1UqJiSK5A+7srQRgKa5qqQz/9fvnh
-	m2zg9TeYkxl/0A1ILjvr/OnF3GWw2txN1M0ayqJnjUkyMkaVPJv/6IgsFEyGNAzc
-	gsCN0okaemQLPgCWTHixh9fm3/FE2nP2MiDdV+opxgk4xbExBBH9Kg/an1kK0KwM
-	I6K63BaLura54Tq6jdXck2IrbIo5zdvuT/uIl6g7kZHqJWcexaWCYRbIKIFKO3lS
-	MxG/6YAd1RMIXRqMkCiVLc4edKM6JQXz5VQwwTDztWFEdJxWqXsEhsiPHWQeLn4g
-	Ed2xPpScwHalIO2pE/KkeA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751622191;
+	 x=1751708591; bh=k6Oil3XpGiojlWFPgh9/UwjlM78QACoOjWq5oBpvBJc=; b=
+	eotr7Q9imjqWWfiasVWUHc3AWSCyC569RUWf2ok5jRTLulGPCaP9u+eIqBxxwPYX
+	drRKvI9XVFkmo/m3JFHLtgqs0KJK2jSAXMOs8P5jhQ3rpPVBcGol0cmrAjZ8lVzd
+	tgVohYC2YYsgDytfKB8OfO/YGAjb1gvjtx6H5Vgvk3YcqLfM6omvysREiSfXvjik
+	62EIzwreUKqSE1P+QVLB6Mrm5cxUa3sW6OyCxk53WTTLSbmOMnroDY0h2192BGwg
+	ljIJEh33AGMgfiSaC4LH5sGs8jwHGP2SlTC6T6SECHGIBk6nLI90fMvkxDBL6a4U
+	CzgqFgDUVt6ZZCDn1vtk9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751622186; x=
-	1751708586; bh=ETMIs19xfNkMUKBYkSQzsYp9pfCHZxaLtfyicrqAGW8=; b=A
-	rZicPZ2QGgSzwB9WYQ/ufz0MbLWeRaCdMjowzI/yMpdhZC7a3ldsy8WnvCh27pCi
-	wu+o9TxzlPMu31/xpdT2/+/RQaNarsKNn+DEqEW3UhL5461FFyBEp5EdL+WDDdSK
-	dD+0hqtcGoyLqHuZW4TrBMwxY/2ib79gDX0aNQJVQ1tKTojxjs9YkJLJg2BAOo/W
-	LQND5HdqlrAhbfINsOm4TNBqZKy7GYsC/rLtBZyhjQNfr1d9ubSXIuRKrKlWLzS5
-	wRcmW1Ldl9M8W3hbz0bhGXr455E71LQeDFSaA+Rl2+wgxzN/MyAuYwVuS144PlBm
-	MVuQql6Lv4pxPahv+5srA==
-X-ME-Sender: <xms:KqJnaLNj0rygerd6xc0-pRSMTjDUZsAhxsbrhw1E4izRiuoM9pkeMA>
-    <xme:KqJnaF9hIdbHdHO_exQ0eLVUoBSITVxpA9ikt0C-lquw0N3quDttdWlEXWQIPDDdW
-    IyBxxCkS5wqCvtp7A>
-X-ME-Received: <xmr:KqJnaKQnpkbtD7O1Hg6Zu86CdKDNoX3HMoZagfCbgDsxogiRwzueCNgaDwkYFWPz1dolxVhTH0_O65Ocofm0fNnaelXgTLZYlRDB_KI4l1mq>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvvdekfecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751622191; x=
+	1751708591; bh=k6Oil3XpGiojlWFPgh9/UwjlM78QACoOjWq5oBpvBJc=; b=h
+	BHZldPixbJQs7g5Fc3OpPwpD4amCjGdyLqPmqtjVMzGqfGsA66hKLjN6oizZHR97
+	Sq5KhzP9T1CdfDg4SV5fWE4eRle9oARa4tAglwRhUFQ25TeK/rxrx8VIMwyix1vq
+	KH8SfsHbgLRhQafwtbM+K13DyxNDVuZ2YB4Ld1E8rkyz1Jo5H5O2uV1/ckkGryb2
+	8C3ml02pMr3h9nxeEI1NdALkZD7t0+hHQBDF53UQ1tM3AZykrBm6bWBlxGn2bse6
+	frwSr/JLBhare4iapaLikP2gm1eEnbPW1b5qLYmOGOfqeJ+JTySvobZsgL6rpkvw
+	mommOkiFqNjT0DDKGwEiQ==
+X-ME-Sender: <xms:L6JnaEeHvBsI3PnzLy5v--B3MdVD4rfzI2mKcYuvfSD9ub3sdm1CXw>
+    <xme:L6JnaGN_OcBJ5XKcoodz3OdA_Pcb_OYOMbJfZ6wUYzJqhk8t9enws4EDzmztS3Oy0
+    rwjiWE_fRTBNVoLEg>
+X-ME-Received: <xmr:L6JnaFiHksGnkoQ7PpH8Z7tEiJocD1BCPI8pKmoTqQ_bxAGHRiIrcAAHrXen9EXj69D_aFEPc4zeuaU1cfdV4pEm_50JsEmKrRwl1lbiti3S>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvvdekvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
@@ -58,27 +58,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvvdekfecutefuodetgg
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
     vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehjrgihrghthhgvvg
-    hrthhhkhhulhhkrghrnhhivddttdehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhl
-    thhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhh
-    phgrshhtvgdrnhgvthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtoheprhihvghnuhhssehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:KqJnaPukb2SR3a41jjRlEfO0PT3KJRS3iPf275LIF3TXELGn6h9KLg>
-    <xmx:KqJnaDeFag_6wG4WGfQwbMP47U_tffdS0AO6KmtlXfMuF4Ff1VMDqQ>
-    <xmx:KqJnaL2-pEXYrC2qfPsw4_vES3rtJjJUeQS01BjB3VIRpXYWWxvcZg>
-    <xmx:KqJnaP-VXNmRkQAtVy-AX6svRsWGBBk5xtyBA2jyxW_pnEgSCTqv9Q>
-    <xmx:KqJnaJpXO0k_BBa6v5sxD79BHlg7eDs4RW0yJEzNM8NYqdR_rBmlPLgo>
+    oheprhihvghnuhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrhigrthhhvggvrh
+    hthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsth
+    ihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:L6JnaJ8cAGtNr4_oHlNTE95yEQp6iISCxP999S4wRYy3x3JKPOcfpQ>
+    <xmx:L6JnaAvOmikgb8TBXE6YfABhMwZRfei5H8gcPbeF9U7qJehtpKUC7w>
+    <xmx:L6JnaAE5Esmf53l3inG7sH6-xzNwTLx3saEqinwx2Ngb4j5hVwd9ww>
+    <xmx:L6JnaPO8gtmofOvYYel2ap3vnh7ehp2QcLcTyKAJAWS4-GBf2dYWWQ>
+    <xmx:L6JnaL6012JdfnsAbNwLKYxhBj3EFY1VHL_wyH3C6NEwVsxIFSaoMbn_>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 4 Jul 2025 05:43:05 -0400 (EDT)
+ 4 Jul 2025 05:43:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7f20b2ca (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 4 Jul 2025 09:43:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9e9979c6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 4 Jul 2025 09:43:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 04 Jul 2025 11:42:56 +0200
-Subject: [PATCH v3 1/2] BreakingChanges: announce switch to "reftable"
- format
+Date: Fri, 04 Jul 2025 11:42:57 +0200
+Subject: [PATCH v3 2/2] setup: use "reftable" format when experimental
+ features are enabled
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250704-pks-reftable-default-backend-v3-1-a1eb63e8442a@pks.im>
+Message-Id: <20250704-pks-reftable-default-backend-v3-2-a1eb63e8442a@pks.im>
 References: <20250704-pks-reftable-default-backend-v3-0-a1eb63e8442a@pks.im>
 In-Reply-To: <20250704-pks-reftable-default-backend-v3-0-a1eb63e8442a@pks.im>
 To: git@vger.kernel.org
@@ -97,153 +97,110 @@ Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
  Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-The "reftable" format has come a long way and has matured nicely since
-it has been merged into git via 57db2a094d5 (refs: introduce reftable
-backend, 2024-02-07). It fixes longstanding issues that cannot be fixed
-with the "files" format in a backwards-compatible way and performs
-significantly better in many use cases.
+With the preceding commit we have announced the switch to the "reftable"
+format in Git 3.0 for newly created repositories. The format is being
+battle tested by GitLab and a couple of other developers, and except for
+a small handful of issues exposed early after it has been merged it has
+been rock solid. Regardless of that though the test user base is still
+comparatively small, which increases the risk that we miss critical
+bugs.
 
-Announce that we will switch to the "reftable" format in Git 3.0 for
-newly created repositories and wire up the change, hidden behind the
-WITH_BREAKING_CHANGES preprocessor define.
-
-This switch is dependent on support in the larger Git ecosystem. Most
-importantly, libraries like JGit, libgit2 and Gitoxide should support
-the reftable backend so that we don't break all applications and tools
-built on top of those libraries.
+Address this by enabling the reftable format when experimental features
+are enabled. This should increase the test user base by some margin and
+thus give us more input before making the format the default.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/BreakingChanges.adoc | 47 ++++++++++++++++++++++++++++++++++++++
- help.c                             |  2 ++
- repository.h                       |  6 +++++
- setup.c                            |  2 ++
- t/t0001-init.sh                    | 11 +++++++++
- 5 files changed, 68 insertions(+)
+ Documentation/config/feature.adoc |  6 ++++++
+ setup.c                           | 12 ++++++++++++
+ t/t0001-init.sh                   | 34 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 52 insertions(+)
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index c6bd94986c5..f8d2eba061c 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -118,6 +118,53 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
- <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
- <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
- 
-+* The default storage format for references in newly created repositories will
-+  be changed from "files" to "reftable". The "reftable" format provides
-+  multiple advantages over the "files" format:
+diff --git a/Documentation/config/feature.adoc b/Documentation/config/feature.adoc
+index cb49ff2604a..924f5ff4e3c 100644
+--- a/Documentation/config/feature.adoc
++++ b/Documentation/config/feature.adoc
+@@ -24,6 +24,12 @@ reusing objects from multiple packs instead of just one.
+ * `pack.usePathWalk` may speed up packfile creation and make the packfiles be
+ significantly smaller in the presence of certain filename collisions with Git's
+ default name-hash.
 ++
-+  ** It is impossible to store two references that only differ in casing on
-+     case-insensitive filesystems with the "files" format. This issue is common
-+     on Windows and macOS platforms. As the "reftable" backend does not use
-+     filesystem paths to encode reference names this problem goes away.
-+  ** Similarly, macOS normalizes path names that contain unicode characters,
-+     which has the consequence that you cannot store two names with unicode
-+     characters that are encoded differently with the "files" backend. Again,
-+     this is not an issue with the "reftable" backend.
-+  ** Deleting references with the "files" backend requires Git to rewrite the
-+     complete "packed-refs" file. In large repositories with many references
-+     this file can easily be dozens of megabytes in size, in extreme cases it
-+     may be gigabytes. The "reftable" backend uses tombstone markers for
-+     deleted references and thus does not have to rewrite all of its data.
-+  ** Repository housekeeping with the "files" backend typically performs
-+     all-into-one repacks of references. This can be quite expensive, and
-+     consequently housekeeping is a tradeoff between the number of loose
-+     references that accumulate and slow down operations that read references,
-+     and compressing those loose references into the "packed-refs" file. The
-+     "reftable" backend uses geometric compaction after every write, which
-+     amortizes costs and ensures that the backend is always in a
-+     well-maintained state.
-+  ** Operations that write multiple references at once are not atomic with the
-+     "files" backend. Consequently, Git may see in-between states when it reads
-+     references while a reference transaction is in the process of being
-+     committed to disk.
-+  ** Writing many references at once is slow with the "files" backend because
-+     every reference is created as a separate file. The "reftable" backend
-+     significantly outperforms the "files" backend by multiple orders of
-+     magnitude.
-+  ** The reftable backend uses a binary format with prefix compression for
-+     reference names. As a result, the format uses less space compared to the
-+     "packed-refs" file.
-++
-+Users that get immediate benefit from the "reftable" backend could continue to
-+opt-in to the "reftable" format manually by setting the "init.defaultRefFormat"
-+config. But defaults matter, and we think that overall users will have a better
-+experience with less platform-specific quirks when they use the new backend by
-+default.
-++
-+A prerequisite for this change is that the ecosystem is ready to support the
-+"reftable" format. Most importantly, alternative implementations of Git like
-+JGit, libgit2 and Gitoxide need to support it.
-+
- === Removals
++* `init.defaultRefFormat=reftable` causes newly initialized repositories to use
++the reftable format for storing references. This new format solves issues with
++case-insensitive filesystems, compresses better and performs significantly
++better with many use cases. Refer to Documentation/technical/reftable.adoc for
++more information on this new storage format.
  
- * Support for grafting commits has long been superseded by git-replace(1).
-diff --git a/help.c b/help.c
-index 21b778707a6..89cd47e3b86 100644
---- a/help.c
-+++ b/help.c
-@@ -810,6 +810,8 @@ void get_version_info(struct strbuf *buf, int show_build_options)
- 			    SHA1_UNSAFE_BACKEND);
- #endif
- 		strbuf_addf(buf, "SHA-256: %s\n", SHA256_BACKEND);
-+		strbuf_addf(buf, "default-ref-format: %s\n",
-+			    ref_storage_format_to_name(REF_STORAGE_FORMAT_DEFAULT));
- 	}
- }
- 
-diff --git a/repository.h b/repository.h
-index c4c92b2ab9c..77c4189d5dc 100644
---- a/repository.h
-+++ b/repository.h
-@@ -20,6 +20,12 @@ enum ref_storage_format {
- 	REF_STORAGE_FORMAT_REFTABLE,
- };
- 
-+#ifdef WITH_BREAKING_CHANGES /* Git 3.0 */
-+# define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_REFTABLE
-+#else
-+# define REF_STORAGE_FORMAT_DEFAULT REF_STORAGE_FORMAT_FILES
-+#endif
-+
- struct repo_path_cache {
- 	char *squash_msg;
- 	char *merge_msg;
+ feature.manyFiles::
+ 	Enable config options that optimize for repos with many files in the
 diff --git a/setup.c b/setup.c
-index f93bd6a24a5..f0c06c655a9 100644
+index f0c06c655a9..97d7824d07a 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -2541,6 +2541,8 @@ static void repository_format_configure(struct repository_format *repo_fmt,
- 			repo_fmt->ref_storage_format = ref_format;
- 	} else if (cfg.ref_format != REF_STORAGE_FORMAT_UNKNOWN) {
- 		repo_fmt->ref_storage_format = cfg.ref_format;
-+	} else {
-+		repo_fmt->ref_storage_format = REF_STORAGE_FORMAT_DEFAULT;
+@@ -2481,6 +2481,18 @@ static int read_default_format_config(const char *key, const char *value,
+ 		goto out;
  	}
- 	repo_set_ref_storage_format(the_repository, repo_fmt->ref_storage_format);
- }
+ 
++	/*
++	 * Enable the reftable format when "features.experimental" is enabled.
++	 * "init.defaultRefFormat" takes precedence over this setting.
++	 */
++	if (!strcmp(key, "feature.experimental") &&
++	    cfg->ref_format == REF_STORAGE_FORMAT_UNKNOWN &&
++	    git_config_bool(key, value)) {
++		cfg->ref_format = REF_STORAGE_FORMAT_REFTABLE;
++		ret = 0;
++		goto out;
++	}
++
+ 	ret = 0;
+ out:
+ 	free(str);
 diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index f11a40811f2..186664162fc 100755
+index 186664162fc..f593c536874 100755
 --- a/t/t0001-init.sh
 +++ b/t/t0001-init.sh
-@@ -658,6 +658,17 @@ test_expect_success 'init warns about invalid init.defaultRefFormat' '
- 	test_cmp expected actual
+@@ -749,6 +749,40 @@ test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides init.defaultRefFormat" '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'default ref format' '
++test_expect_success "init with feature.experimental=true" '
 +	test_when_finished "rm -rf refformat" &&
++	test_config_global feature.experimental true &&
 +	(
 +		sane_unset GIT_DEFAULT_REF_FORMAT &&
 +		git init refformat
 +	) &&
-+	git version --build-options | sed -ne "s/^default-ref-format: //p" >expect &&
++	echo reftable >expect &&
 +	git -C refformat rev-parse --show-ref-format >actual &&
 +	test_cmp expect actual
 +'
 +
- backends="files reftable"
- for format in $backends
++test_expect_success "init.defaultRefFormat overrides feature.experimental=true" '
++	test_when_finished "rm -rf refformat" &&
++	test_config_global feature.experimental true &&
++	test_config_global init.defaultRefFormat files &&
++	(
++		sane_unset GIT_DEFAULT_REF_FORMAT &&
++		git init refformat
++	) &&
++	echo files >expect &&
++	git -C refformat rev-parse --show-ref-format >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success "GIT_DEFAULT_REF_FORMAT= overrides feature.experimental=true" '
++	test_when_finished "rm -rf refformat" &&
++	test_config_global feature.experimental true &&
++	GIT_DEFAULT_REF_FORMAT=files git init refformat &&
++	echo files >expect &&
++	git -C refformat rev-parse --show-ref-format >actual &&
++	test_cmp expect actual
++'
++
+ for from_format in $backends
  do
+ 	test_expect_success "re-init with same format ($from_format)" '
 
 -- 
 2.50.0.195.g74e6fc65d0.dirty
