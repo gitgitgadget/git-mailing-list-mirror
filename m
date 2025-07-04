@@ -1,153 +1,140 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010007.outbound.protection.outlook.com [52.103.67.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f196.google.com (mail-pl1-f196.google.com [209.85.214.196])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 154F9242D64
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 11:18:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.7
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751627898; cv=fail; b=n/CeoqTLmrUEHbyc04dJD66nOdttCfHqI5XEF2NeNhGnka+bzyL0WUA5xoHGu0Yvzn8I96OZXvcLfMZWflYH79uej4ZE7p3xMGyhMFKCPNxq1qXJ6rHZl6Bq0rUXzzmQIp7j4nrzTohXumeD7zGtCtIYixtnKsbwqCt68wwCan0=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751627898; c=relaxed/simple;
-	bh=RmaABkm2jfUNHz0otYRYqKswiyw4MinbeuawzZGS/w0=;
-	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=CBKuIhS/O98VFPiNKdYvvjGD4xzD+Mln6go81Muoyu2XzKoQsos44ib04gK0/L+NT4WNu2pY0zU5wNpijy/6z9Fn4eVMW1sS2VAnMBDW0YrYC1RBcU3KTQmvWvUGTE3PmHkKuMCqJ8TG51AdMZA8vZKKR8CaZxKrIKiiC7Vlh+M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=uPeJwJWY; arc=fail smtp.client-ip=52.103.67.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA40723A58E
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 12:09:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.196
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1751630981; cv=none; b=qYQ521rFl890ASlY+sDPwrT4GUvGDYh5bebkJOGi9hERu8z/Tz9SzV9LeXc0GLG69GtA4uHrJlLZfNcs7bnHmH2Djzobht2CLqAeJZ0Pj3LC26WzFXl/wKJ9/uFdqAt4v7DDoGRh3zGNnBe05obbh4TWB47HxhiCNBjyWIIxDd0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1751630981; c=relaxed/simple;
+	bh=tF8TEXVxJo9fHViccnk+ArgDRpIXjZoGgnSZsO/xUY4=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=TFZC5gQfcvGI9f/H0R28tWykoGDpT+KGQ9ShMqA9r1w8oxSMUnlgvxhjPZj0SyozyiwTw1ja1QfDAEBkQIZb9kzCYKubxyAgGXqJ5YF8TyZ8ZxZoBSj4DlkcFVNUPhdBmyhIsD9KDuQDTyv6zWAF5kEpAnp95/yxP+Zqy7RWrrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=COLD7G1j; arc=none smtp.client-ip=209.85.214.196
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="uPeJwJWY"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=YkRVcZ139aiCk0iqX6m+IcBT6NYOsagHX2N2QjSX1bANl0K+L67xSJeiaG6zZlaDgtzt//xPAowXths+SQtgy6ZqmVWjIvb3F5PSMcVjt61esXN/ke1LEPhQ6iI5G+t40z0W8KrRxMh6X1dj5hVRI6VVXMp237wOtOl2SA9L3Akpbuk4cZUyED4pRyo254Meqmmnjfayoe5pBxLyNNWzKYnzvabT545JfQvzXuEMh9kSjjSk6PQFnsT3m74CwrXBI7eRw9vsDYP/Q8ftU1NtVUrc/BV71AfalGbEDcmpehyLrcYaaKoZx/sEZ5no/xENvzRQx/Dx8+IketyK5C8KOw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lB9dyLlhlWhSYokHUTrmlqUsX1MGEs/c3sup0kLS638=;
- b=b3H1FQtX909a4xhm/eLMhdRTomvKR0xnR+BxcXNtkKseudjk2dmX4bh3/4kVktSVjOtS/YlbOrGHXt4ndXtbMcfb+ZBjygaIJ45gvJh55sWZUewLGBvdg9el40EP0JUm6mfAlJZ7UOGxbh7kGc7r/xZh9sRKtWmn9UeV1hD+uFtlGoPeHzlwzYe7R+WOz8lXW+G6oPGuiKodoaMHVtuhiOeuqIWjsVKCjmwbMXSnhui/QOQ+dxXnz7gG6fn273Hm+Zwr5BoE6yIVQeSFfNQx5C8x+g1mpoMjlC34xJgbfzmi6zb3cfuOyTxycQHYPFxF25ng3ZwD/UoZbFRqj7hLhg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lB9dyLlhlWhSYokHUTrmlqUsX1MGEs/c3sup0kLS638=;
- b=uPeJwJWYaGefyAIj7JEf+6eZ8nvStERZky6qd6sUT1yu2WD/uLida9ad4ofiNwc35IXWRxnLCBwGULjucRDlaxEOofyz7V59Lg9q+6wkC46ktFiZTl6kXUeJX9eaMQlmL4HTs+UdQdfMwAxiDMhQONa0QSfu7fhZHY2oeWlNdP3gsnKQnct96g8A5ZLqdQ7zoPH16C54ETuMLgMCkN5iz6QrMa0t1deh/QfQmyqzXJ/v9rvVykBKW9D8PA/u3OeIp/Hp0JafLCECxsyxKkuGxqdnaTIqgXsnl1mzgZ14RiHVgO5sVHL7Z9ATUIkknTQYkjxz3Na+C11315nnqL5jUw==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN3PPF23F8E8F71.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c04:1::50b) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.28; Fri, 4 Jul
- 2025 11:18:12 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8901.021; Fri, 4 Jul 2025
- 11:18:12 +0000
-Message-ID:
- <PN3PR01MB9597524FAEAA3B26B15804B9B842A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 4 Jul 2025 16:48:12 +0530
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-From: Aditya Garg <gargaditya08@live.com>
-Subject: Question: how will sha256sum be implemented in git
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BMXP287CA0012.INDP287.PROD.OUTLOOK.COM
- (2603:1096:b00:2c::24) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <d8d36583-0683-4a29-a603-59ab87033201@live.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="COLD7G1j"
+Received: by mail-pl1-f196.google.com with SMTP id d9443c01a7336-235ef62066eso14079275ad.3
+        for <git@vger.kernel.org>; Fri, 04 Jul 2025 05:09:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751630977; x=1752235777; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rhJKb7hAG68v+Ce3CFT7bOVJ83dpmj1X3j/NwSdTYvw=;
+        b=COLD7G1jH/2YwFHZtAGH3kMp5tG7CoLt44xrbKtI7gc+15f4bAO/2PnDgmEeGZkWEM
+         FwAsw/XLIxzj3ihtEdYMGti9Bf0LYI/NbKCUpW0aQRwpOFtg6QAA8RgCBoJMVSNKr4wx
+         7nHjeGbobFAPD4+fk+f6O2e2uLd9BWxEWTnVQDqt61xGC23xkX0k3KB5Gmw2c0ja/Kfg
+         RIPuDZ/lh0Zk1hScvBddqUPnypTeopaNg3dA1e9qcI9EL5InrXScmyh/U+QwT5d+Ek7+
+         VMdfOPRWyPedOH8piGP1CWR1aKN1HlgrFe9wJ1X9vY7FisE53njOn8MU25UFNIC+7rrT
+         RLtg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751630977; x=1752235777;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rhJKb7hAG68v+Ce3CFT7bOVJ83dpmj1X3j/NwSdTYvw=;
+        b=qICvVT8LtD9k3wM4h9ALxue+bNYGkjMd2bz44PCYE2iC/zdAEdl0oXJqGePrZWwXEr
+         4jo30uG+VKSet/LB4ttirWobVu/4JDyMaJRNQJAuwXzS5ksmmQUn9E9W4MYK2GyMobAK
+         nZyzsvIZfy0Toqu9QKDl/rjoeSZtZXD5+q0ab/vQ1+l0LOCDy19xJRDdNCJ3Z0QXETCq
+         S44NmRa2UqlmAmJnxtlJdj8HlR+07NrVUnCF+/gkN5RVRYk1EqgyhVBiuXO+Ha3k4yxY
+         yiU49yT8UxWm4B37k4lncRm9bJhgUe7f6YXrZgGYdVx2bW6oOCr3cc0buuv4hWfOdgqt
+         snXw==
+X-Gm-Message-State: AOJu0YyUJj+O0rObqGl88qPbOyNat4Hmc2cfTCwteIOqjkN8Yb2mUZPE
+	uraJsImCa7+2cNwxHcIClUgj++i8cljPyPQuM9QbR6StxvYGc1N7Dan/TfYDjYCKDpQ=
+X-Gm-Gg: ASbGncscX7hgrYhpOJz848UgIbiHh2lIwWqQ+beuk5FV+lCKWAoADxLjp3tVRIf+Tzo
+	hsFJxcTdMo0QpK+KDWkT3C65t1aNKU5tOOw5iEbixC/QPFoAFQVYMlfHPWOm19z02jxWznbUnW3
+	dGYF9x/GtDAtAZkpZTRANdRKSdCyYhJJSfB1tiTqBAwqJ8d0MY7QfMmxQM7nDApnsBjIIuUniTp
+	sAolNlRSFaZNmTJGx0+vIk9h2QXZ6lirla70onWIiqcI/TdbWkYfXNznBLS3qlmwKldK0hf820O
+	dbxQM02q2o4omwR1J3m4A5W0ENV3o2xMdvOUo74Z4zE+6G2R+p4JCnwY974IxRZ2IXZaVjqO6/2
+	H2L6fRTlxOKi74kBQdZrgc78fgKW16KYrcCmYuA7+fC4MXiWCwyidlcuwxy3aHg==
+X-Google-Smtp-Source: AGHT+IETl7+dCBEevbJHAzDo7m2Hq/EgxNYD5EgzANzK0SmSVHXlP/mzVhpxpfjaDFyk/blVHCifUA==
+X-Received: by 2002:a17:902:d2cd:b0:235:f459:69c7 with SMTP id d9443c01a7336-23c862375e1mr40617485ad.52.1751630976748;
+        Fri, 04 Jul 2025 05:09:36 -0700 (PDT)
+Received: from smtpclient.apple (awork062012.netvigator.com. [203.198.28.12])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c845be91esm18408525ad.250.2025.07.04.05.09.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 04 Jul 2025 05:09:36 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PPF23F8E8F71:EE_
-X-MS-Office365-Filtering-Correlation-Id: 77ff170c-7b76-4d93-848d-08ddbaec7683
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|15080799009|19110799006|6090799003|8060799009|5072599009|7092599006|461199028|3412199025|440099028|40105399003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?L3dKRkRBa3poZUZ5MW5UMEowaTRpK1MwWVF3NmM4TDgyUDJ3S2lvdk5TMzNl?=
- =?utf-8?B?WTh6citBemFVYlVIb0g0d085aXV0cnh4anJQdmxSaVJJV09sbUZpZVoya0E5?=
- =?utf-8?B?azVPYVA1UFR3Z2hFWW1JTmlBRTZmaG05Y1FTWkI1dEhLemZBUjZzbHdNc0Fz?=
- =?utf-8?B?QkJZNFBpcjJjMnNDY012QUIyQzBCNkhYSFJXZ1NUK1diYXN1RDhweGRjQUI2?=
- =?utf-8?B?ekcwZUR0L3F3V2ZHMm11Y0JGR0hnV0FBdDVUUTQ5UzdVL29MaDZ3clR3Rkxm?=
- =?utf-8?B?eVRIb1IxbFowcjBnQng0WjFzNlNoNFFpekFSQ2phbnhvZERDWDIxMUVNN0l3?=
- =?utf-8?B?c0dTMTFONnpvVmplcTNld2lxV1pMblVqL2wvajFhVEFOMStIMXpWV2pKNk9x?=
- =?utf-8?B?K3JWYURBUHhMVFZnaUhidnExOGlZa3lKOHNCNWRHUW8vZFBLa3BVcmh2ckUr?=
- =?utf-8?B?OXFTWVBta2RTN0tvREVoQ2F5WTIwT3VDbzdodDZsaXI4U1dUNDYwY0poZ2xP?=
- =?utf-8?B?cE11Ylh5QnV2dG00TFoyeWVQYkhaYmR4ditocWloRmRPbmFDUVJWM09HMnZP?=
- =?utf-8?B?enEzV0FtTUNDUEJncmgySmppTUo3b3JMME5wQmhGMjR1TkZGRk5lZGYzM2Z6?=
- =?utf-8?B?a1VpcVpFMzI5bGMySmwrdHZpMU5uRXlLWCtCeS9aTDJzL01qS0R6OEtvRHcx?=
- =?utf-8?B?R0dSd2JWUk42UG93NVR5ZGZzaWFzdVlsbVhxTDZNUy9jR3dTTFlWLzR2T29L?=
- =?utf-8?B?UmRDSUlWOVFlK0lnSENjU3BoYTAxOGlOVVROVHY5a3ZxTlN4bThqWjFXakNy?=
- =?utf-8?B?K1R1V0pqUjNYMjM5dEdaRUZMTlZtQ0Z1OUhNeno1bDdzZkJudHNQWlM2ODBF?=
- =?utf-8?B?NVA5NE90OEVySVRoQVpLYzA2d09oUGFTKzJrbEdxUHZEa2hDS2pqZkp2TzRh?=
- =?utf-8?B?WXBaN1l4Y1U1SzVESlpZNWdTYUFUREFQdEVMM2ZieVYvSGcxUlhTb01nM3kr?=
- =?utf-8?B?aEwvSEkwU2hxOXBOZW0wSzlFWGVoVnRadE5FOFJYYjloZnZCRUFyaHJDcmJv?=
- =?utf-8?B?aS9vMGV6OUpseEw1YW9DcFNGUHlTZFRJRm0zdVpxTGtJMHZKRGIrdXRuRUNL?=
- =?utf-8?B?UTdqTm1nTGZUY3FmRkFQTDY3dFF6R0dMZThWS2dVRS9jeHNib1RlYVJjNCt4?=
- =?utf-8?B?ZElHL01ZSm9XMVVrdkoyUm5aVnlvbUxHdUtOUmNGeFhCbWdOWW9yZkRCWWky?=
- =?utf-8?B?Vkd6NGRrZ2dtdWJKbEViT3licVBHc1YyZ0MvQzIyMThYbmUvMm45RThGUitq?=
- =?utf-8?B?dlNTUGQwZnpCUHZ0WE9uTnZ3TXpaeHI1Z1MwdmwrNU9ZY0c3bjVKdDFGdUdL?=
- =?utf-8?B?VlpIWmFXWTFPOUZuVDAyRExvREpuVUlHbFlPNnlsSmxZWDhDMHlGb0V0b3dG?=
- =?utf-8?B?RFVld1p4dk1mVWdnNGdlQkkvNG1oUkdOYTc1OWhnWUI5ZWsrWEkxMFVCNHYz?=
- =?utf-8?B?SUR2TndWcTNpYU9jejRLemovdmRrYWdWOXUwRWJ3U3hWTHd0K1RvUzZmZHQx?=
- =?utf-8?Q?W/ixVw07EjPPdyPkkpiCjQHVU=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?NlNYTXlqcGd1YlQ5Nyt4ZFhzWkc1d2VNNWRJQXQyR1p5RGVxeUNBK2xobEti?=
- =?utf-8?B?VmNxaTdlcnN6dndLNE9yM3l4TUVpZmpHZnRkM0FKZC9pRm5tQzUydzRZam1L?=
- =?utf-8?B?eklLYmRGeURibzNnQ05UM2VreVR5SG5SQVp0SFZGaEk4RHJoZHlUcVBjRENE?=
- =?utf-8?B?Z1BaSFpGenZoVlB3clJXNXhIZEN1c1k4Sys1Vk9md2NLeXFCbEVKL1kydlJO?=
- =?utf-8?B?bFBDV3gvTGtIbEszRVg5cFVBZVBLOWVSbGN0dktOSEJVV0dnbDNqNkUzNXpk?=
- =?utf-8?B?dFhpMXF3MlFMMWd2WEFUdyt1TVdvckI0VUV6dHFSQmg4a1NCb1VLQmtUdmhQ?=
- =?utf-8?B?MUN3WHNCcW4wSndGdVpPcVVXeldQVU93NjVrMVVmUmp4bW93QnlLcElta3Fp?=
- =?utf-8?B?a2tkcDF4aXVGdTF6ekEyWFhVSWtNZUhxNEV2dTFRTERTQU5wNUZxNFVaaEZ2?=
- =?utf-8?B?ZlVYNElKRElKQ0hwcWN5NFFjdUpSSi85RmkwOUdsV1U3RktSTm03Z1doLzl3?=
- =?utf-8?B?aEJYTVhEeWxucC8vbVZEVXlsV0tZVjRTK3ZHSGdCRHFmdjMwVnRkdUIrcTgw?=
- =?utf-8?B?M2g0SWFrOTRPeFJtZ2lrK3c1YW4yenNLK3E1dmFXY3d2NEVVakIySm80RWJG?=
- =?utf-8?B?aUhGdm5GM0hCUWJZNjFRc1lZa2FpalZ4Uk85ekRwWGNqT2VqSmZiZFJubThs?=
- =?utf-8?B?dHd2RVhmckg4Rm94OWR4UTdEcWVJZGVTUVZXZ1lEc3ovMHlkOWxSWFphWHdO?=
- =?utf-8?B?cFNseVk2ZjhLTWdXN1Fma1JQLzE1Mm9SS0ZWNEhjOW81dVVOTmZrVGtBaERK?=
- =?utf-8?B?Z0owcFovRVhyb0dDQk5HbkIyOXU2RGRheXdUN3hyckJ6bmVLVmtkOG1vVTFs?=
- =?utf-8?B?TzU3NHNaZVpQaHNuOFM4cFVhaHRBYnl1R0x4dElqWXFoeFZyZEV4czVEcUNn?=
- =?utf-8?B?LzFWUU5IeVpQNDdqM2hUWUQ0ZlhHL0VBandPU003MmVvUkd2UHdidmwxdDM4?=
- =?utf-8?B?RGlzQ3lNR0dLTDlraWhUVDlkOWlSa2JzS05IbWNoT2lVNWV1WGQxUmFnczVn?=
- =?utf-8?B?R1czNWE3K0FzNzZVMTZDZGZjenQ0VHZDR0dPeUszNEEvSCtKWTR5VGJSWCtv?=
- =?utf-8?B?UmZuZzBXbEpiWXR3MWVXMGRMd2pLL284bElLNG5DaDlQWVhETjlwaDVMazF2?=
- =?utf-8?B?RWJHRkxBNlZUQUJia0hKZmFRWUpSZ3kzL2pKeCs4N2JiaXJrejRmWENSbHkr?=
- =?utf-8?B?cEFOL1gxNXpHcnl5VnVibW9Lb1dQb0JHZTdKYi9yQWxHYWdDajJPeFp2Vi8v?=
- =?utf-8?B?TkdGdS9TUmNXb3pycitGRC9aVHduaUx2cERVWjBtSnZNRUE0VUFxaDgvQWp4?=
- =?utf-8?B?cmljMElJU2NSUCtxcnBPb1poOVZ6QmdBd0JVaFBDNmJiOGt2VVROYkxGNlQ0?=
- =?utf-8?B?cFNtOS81VVZOK3Zja2FMTzJBOU9xSFZVdGFobmZlNlNtMkZaVlg4eW0xWHhC?=
- =?utf-8?B?RkZFbW5IaUgvb1hmK2NpSEhpWCtHZ0pnYkdiaXZkQ09FNUpBOFdBbWlmb0c0?=
- =?utf-8?B?eDhUNG5EZzdCQW5qWUxWdFpHUDA4ZHlNVW10Nk9BdDYxVnE3aXQ5VmlDMkFn?=
- =?utf-8?B?OHRXV2dDVDR2RDBsNlI5WEt5VHdZU3NGa28yOEEzYVhCN3ZFYXNobUJRWUt0?=
- =?utf-8?B?TzVnUGdTMTZoQlg0dDBzdzBRWGlucjBVd0tXNXVEMDc2ZFkvdExkcldOUjI4?=
- =?utf-8?Q?IU6x9JiXejdYbUbt9LCplNjl5l2zMrCbq2gyRj/?=
-X-OriginatorOrg: sct-15-20-8813-0-msonline-outlook-f2c18.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 77ff170c-7b76-4d93-848d-08ddbaec7683
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jul 2025 11:18:12.3681
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PPF23F8E8F71
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH 2/2] bloom: enable multiple pathspec bloom keys
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqq1pqyfvb2.fsf@gitster.g>
+Date: Fri, 4 Jul 2025 20:09:23 +0800
+Cc: git@vger.kernel.org,
+ =?utf-8?Q?SZEDER_G=C3=A1bor?= <szeder.dev@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1BD174FD-887A-4002-955C-A67E7DBFEFCA@gmail.com>
+References: <20250625125541.3048632-1-502024330056@smail.nju.edu.cn>
+ <20250625125541.3048632-3-502024330056@smail.nju.edu.cn>
+ <xmqqy0td8fa9.fsf@gitster.g> <C8E0D62E-11B1-4921-AD4C-2905F10E07B6@gmail.com>
+ <xmqqo6u4kkg0.fsf@gitster.g> <D5CB9B7A-C7B2-4F5A-B358-8F46A4E18CDB@gmail.com>
+ <xmqq1pqyfvb2.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Hi all
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Before concluding so, we may want to double check how Bloom filters
+> are built on case insensitive systems, though.  If we normalize the
+> string by downcasing before murmuring the string, the resulting
+> Bloom filter may have more false positives for those who want to
+> (ab)use it to optimize case sensitive queries (without affecting
+> correctness), but case insensitive queries would be helped.  I do
+> not think we support (or want to support) a repository that spans
+> across two filesystems with different case sensitivity, so those who
+> worked on our changed-path Bloom filter subsystem may have already
+> placed such an optimization, based on the case sensitivity recorded
+> in the repository (core.ignorecase).
 
-I just read that git aims to transition to SHA256 by default, and conversion from SHA1 to SHA256 is needed for old
-repos. I was just curious how will that be achieved.
+In bloom.c:get_or_compute_bloom_filter(), the computation of a bloom =
+filter
+looks like:
+    diff_tree_oid(c=E2=80=99s parent or NULL, &c->object.oid, "", =
+&diffopt);
+    diffcore_std(&diffopt);
+    struct hashmap path_hashmap;
 
-Dumb idea, but maybe we can just encode the existing SHA1 sums' string to SHA256?
+    for (path : diff_queue_diff) {
+        Add all parts of path to path_hashmap;
+    }
 
-Eg: 
+    for_each(path_hashmap) {
+        Add path to filter
+    }
 
-$ echo -n 8994f255af5451b6cd1db01ee16d8cf15b9df81e | sha256sum
-bf8d6d915848377db81ee47e883c0a683b3d86a49ab120191ea1c3d76a30c33f *-
+All these steps do not check config.ignoreCase, so I believe the Bloom =
+filter we
+build in the commit graph is case-sensitive.
 
-so bf8d6d915848377db81ee47e883c0a683b3d86a49ab120191ea1c3d76a30c33f will be our new commit hash.
+To demonstrate this assumption=E2=80=94and since I happen to be a Mac =
+user (where
+config.ignoreCase is true by default)=E2=80=94I ran the following =
+commands under the
+llvm-project repository:
 
-I think we can do that since sha256sum is chosen due to negligible collisions right?
+$ git commit-graph write --split --reachable --changed-paths
+$ time git log -5 -t -- README.md > /dev/null
+real	0m0.089s
+user	0m0.067s
+sys	0m0.021s
+$ time git log -5 -t -- ':(icase)README.md' > /dev/null
+real	0m0.281s
+user	0m0.239s
+sys	0m0.041s
+$ time git log -5 -t -- =E2=80=98rEADME.md=E2=80=99 > /dev/null
+real	0m0.458s
+user	0m0.394s
+sys	0m0.061s
+
+And I think it proves that changed-path Bloom filter doesn=E2=80=99t =
+optimize icase
+pathspec item in case insensitive file system.=
