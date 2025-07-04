@@ -1,146 +1,218 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4A52E36F1
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 21:40:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E621547C9
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 22:26:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751665228; cv=none; b=TdjMdWY6yuHITahjxjdKsWWaaiKrrUm9WwTkzaj3ViFHzlVUny48rT2KDHpxMnQMv/By/y+qylEn1jjM2M+3qhZWq1oGtZbHyB/KBIKxOJZ2NbR67at2H2MLKDUXmDph7/ztm10DEQbeuvU4nBYC4ULMEUtL9uOeJVPR+mO2Nbc=
+	t=1751667991; cv=none; b=EpjlwmQzwnT1d686WnJzdcOpyGBc8ZYiButzIAN1D5szXLz6dQG+NgjwuobUj/YZL5KOzvTHqBOc40OnZqwzgQduPeXhsNniUfm1b3kOnZgqP+gDHaVXnYCidbxfdKMCWq9wqzpORSglWxzZSTkbM5b+KrImrmy2UnCoCn4PQZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751665228; c=relaxed/simple;
-	bh=sj6sa7BjqOLiP2iBMlk7al70LGO0nOL8PeF/dPRZYSg=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=t8qKWk46xS7bPUdUOBkL+4ylsD1BvSlKAl5fLbBmmG6/wQTe5q6uId0Ym/mNsuxvy/qu8sM3F2GjqIA08JyhQZRbLnkD2iuOLSIYnfD9g1WVSJRgq6f6ljvwTLxFy0bYAvdnvqd+55qpTRFNTX2lLe74D2Eyrcr+UoKiHocw8Qc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UxfIq+CI; arc=none smtp.client-ip=209.85.222.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751667991; c=relaxed/simple;
+	bh=/hbMcuKW7O/yqJAnv3Lm8I6Tc4V1Z+PmGJ2FeQMZKvM=;
+	h=Message-ID:Date:MIME-Version:To:Cc:From:Subject:Content-Type; b=fQc9k+C9QZcRXMgBMr8JsOc1d9MzUSdtkyro48RuCZ73mxTcpFYwZ9wGaw9XYhFYbraMmw6/3Voc1WXHI/ORtlurBYQTVFioJE7mG+gsi7Xz74TJIRIulPh2xFZznt7ztbw+uJ8LsSm3d34/Hi99P+DjqSZrGL2i8BfTMiqyOxQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=BcTJDKJa; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UxfIq+CI"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7d45f5fde50so122278485a.2
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 14:40:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751665226; x=1752270026; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zSSUtPXuzTGWVofaNMCogpfiRm6LCk4OYu+7JdtUYxM=;
-        b=UxfIq+CIJRsae/m950AhESZtGqQH6kAZAi4nN9+ywbKmYLoPiMNvMlmOWDrhR0VHTv
-         eKyEqv85+Be0py0iIqojY1puD7K4Wf9/9ak6nhiyqgpZYaSdiSht88oThOVQGjP/cqZr
-         K3IWd25MWzfX6wl/yIvY8QsQvPx7uTfi39KoDivbCucmPjYWCc3a45UzXK6ZfPlubHfR
-         9wBUi3H4Rau/TiPP2WGFzi3P66I5E0/PP0YSwP7ZMpmTHqObpEaAAiEoD8ZrZFHlEf1j
-         Isxo9u9LRMnkZN9H7oYSmfVPkDHXwfx4HYHXJ4MScF6/PJdYeDczU0aG1Vp/M42SUJ2u
-         kWVw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751665226; x=1752270026;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zSSUtPXuzTGWVofaNMCogpfiRm6LCk4OYu+7JdtUYxM=;
-        b=wwH2rLNGfCiNfKQAbLE3JIiWBdDuZVPF4I7FHeN/eZEZGMgfum0xqoll3cAg/Dvure
-         77UTIqD66gbw/zkrbeJRG2XRu9DBi+kvyW72D6JVssem+rTbcnHe9dYzTpV1oWkGAEcF
-         be6QJS/vIEsutEjk5JM4q30aiqnqavcO9JcaVN3G8T6EI5Ej7ZbjLLDzYUMIL7VNfInR
-         LT7Kec7MYTZUToSWuweAkATWag9do3MyfHl0Hn5GDu/hYFq0gYl148L0G9BVyu+HXIAb
-         rEq6XZEq/Va8YRJR/UAWetpoolam1HGxjretYVb9+LnoiY8gblZbLvZndbvIAOs4rM1S
-         CeNg==
-X-Gm-Message-State: AOJu0YyfPNTsTu22VtFQ/84G8ZtuGdl2/7yrQB78WXDJ321KabFlyqPB
-	qtBgmWaO/JG78fazU9nakbjyr0RC0NFPurRHjS57PcOH8I9vyCUbiItW
-X-Gm-Gg: ASbGncsurW9ubumiMFlPgBdPhAKTh8NDpJyvVUkWDlerU4bDP7RN1AZXO3YAoVq2FDk
-	eN0z7FwhwA0H7AVURtI+DrLZm5ilxSMBhWIj/zyjlk0WU8s01geFb7ScHto7IGXaKQ0GsHnN0Po
-	bWQ2BhjClIbsQqxDllaCrsn7SpSAA0O1GMz0orqpCH7OW4/aBzPp5hMGpbhTkFFYmJ/iChMY/Mx
-	5yCNaAdti2/yRdRZ0uOrbkRrsjWtP0sb+4jpavstFeu5FneNlaEbVWjmyMfnEOH1nUFZkYlDeJV
-	2vRCy+kz+MFgQ7OhDcAXsmHoIjnTbqDYHdmzo+zZBR50I+OrYyUUF1H1pKBww4DgLj9M5ej23Ri
-	IeAyZnXAmbgrSo/s0fKiZg6+AacypSQ==
-X-Google-Smtp-Source: AGHT+IGl2RMUchKFaSfrNbYX/j6J8qR49LhKjDegZXCNVzZ8AH2F2sLSWteCDK4cFB4ijSsEwaBdCA==
-X-Received: by 2002:a05:620a:45a8:b0:7d2:11a:5d07 with SMTP id af79cd13be357-7d5f20b77b8mr58919285a.51.1751665225636;
-        Fri, 04 Jul 2025 14:40:25 -0700 (PDT)
-Received: from smtpclient.apple ([2804:14c:32:934a:f0e9:50b4:12da:e6ee])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d5dbec037dsm209811985a.113.2025.07.04.14.40.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 04 Jul 2025 14:40:25 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="BcTJDKJa"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id XooJuHX7v2676XooLuXOUB; Fri, 04 Jul 2025 23:23:14 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1751667794; bh=IvrHk9E6gVr27MfB5a2NMhRNywgxQWNVh1MrHPR+XCM=;
+	h=Date:To:Cc:From:Subject;
+	b=BcTJDKJa1MTBAQmbqMlLsNTyxP0j+B7Wi2YEy1xfu69Au0u29S7W8NUv5ddJf01Li
+	 Yb4wY0HGAlWYNgwhg4TaqGjdRG3JN17k3ZZ5BNs93FVY1xLQAYg85inOfmin1PDGPu
+	 slJMLCglsq8lpw44Xobi5fhBXqPTFDb2i4YVk+TjoUjQdFZdHfhJ3npIIwnD6TLy3e
+	 TvnHocr/wXIEABmA8rFtUWXl63GdP2x3YGgGF4fcMdpol1c8A3LRpQIkwM8J4+yskg
+	 7Y8Vva+Re/kAPq9Jirvlg/nPkTu54/Su+AIldPvcI0dwmdGLgKQQGgwvqDUnCt9lRb
+	 LIujtJLQG089w==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=SeJUdeRu c=1 sm=1 tr=0 ts=68685452
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=6I5d2MoRAAAA:8 a=EBOSESyhAAAA:8 a=i7iwPn7RvGA3eeREyiIA:9
+ a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <e6a80163-47ef-436b-98a6-2ac39c477080@ramsayjones.plus.com>
+Date: Fri, 4 Jul 2025 23:23:11 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <aGZqK5eBA18vHAa_@pks.im>
-Date: Fri, 4 Jul 2025 18:40:11 -0300
-Cc: git@vger.kernel.org,
- karthik.188@gmail.com,
- ben.knoble@gmail.com,
- gitster@pobox.com,
- Justin Tobler <jltobler@gmail.com>,
- Derrick Stolee <stolee@gmail.com>
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ Renato Botelho <garga@FreeBSD.org>, Eli Schwartz <eschwartz@gentoo.org>
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: [PATCH] build: fix FreeBSD build when sysinfo compat library
+ installed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Message-Id: <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-2-lucasseikioshiro@gmail.com> <aGZqK5eBA18vHAa_@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-CMAE-Envelope: MS4xfKrpmIuiWEbUwZeomTFgKt5AYE80VAwl5nMiCvE0xdE+aZ97V6l+xhqwOM9jE/Cyd++uJvDVaJYRDoMn4z2nnsbB3ZvmG0IxpaUJiu3YpLjE6LALYC9F
+ 5tftpCEigoLdJgX/PVdv/K5szl2e6iy81iXftaC0B5lI8XGklsMosn44dVhSZ6qLQ9MxvAy7sCbjp8hbRergiwCDYEnWZak8sTo=
 
 
-> One thing I wondered: Justin is currently iterating on git-survey(1),
-> which is the command Stolee proposed a while ago to gather repository
-> metrics.
+Commit 50dec7c566 ("config.mak.uname: add sysinfo() configuration for
+cygwin", 2025-04-17) and later commit 187ce0222f ("configure.ac: upgrade
+to a compilation check for sysinfo", 2025-05-19) added a 'sysinfo()'
+check to the autoconf build.
 
-I didn't find it in the mailing list, but I remember seeing it in the
-the GitLab's fork. Is it this unmerged MR? 
-https://gitlab.com/gitlab-org/git/-/merge_requests/369
+The FreeBSD system has an optional sysinfo compatibility library, used
+to assist in porting software, which causes the build to fail when it
+is installed. The reason for the failure is the lack of '-lsysinfo'
+during the linking step.
 
-> Would it make sense to maybe have such whole-repo commands
-> grouped together in a `git repo` top-level command? E.g. `git repo info`
-> for your command, `git repo size` to gather information about the repo
-> size.
+Several solutions were considered:
 
-It seems to be very nice for me! In fact, this being a home also for
-statistics is something I considered while writing the first versions of
-my GSoC proposal.
+  - add an 'linking' check to configure.ac in order to determine the
+    need to link a separate library (-lsysinfo). (This would require
+    a similar change to meson.build).
 
-And what about merging the two codes into a single API? Something like:
+  - change the order of the preprocessor conditionals in the total_ram()
+    function in 'builtin/gc.c', so that the *BSD sysctl() function
+    (in the HAVE_BSD_SYSCTL block) takes priority over the sysinfo()
+    function (in the HAVE_SYSINFO block).
 
-```
-git repo-info layout.bare references.format survey.commit-count
-{
-  "layout": {
-    "bare": true
-  },
-  "references": {
-    "format": "files"
-  },
-  "survey": {
-    "commit-count": 42
-  }
-}
+  - suppress the setting of HAVE_SYSINFO when HAVE_BSD_SYSCTL has been
+    defined (in both configure.ac and meson.build).
 
-?
+The first solution above, while simple, adds unnecessary code (the
+sysinfo compat function is likely implemented using sysctl() anyway)
+when git is happy to use sysctl() on *BSD systems.
 
-During our meetings, Karthik suggested (I'm planning to it later) to also
-allow to request an entire category instead of only the fields. Then, this
-would also be possible:
+The second solution would only be required by the autoconf and meson
+build systems, the Makefile already sets the build variables to the
+required values (since they are not 'auto-detected').
 
-```
-$ git repo-info survey
-{
-  "survey": {
-    "commit-count": 42,
-    "blob-count": 1234
-}
-```
+Here we opt for the final solution above, since it only requires that
+we prioritise the 'auto-detected' build variables in the autoconf and
+meson builds.
 
-But I don't know what are Justin's plans for git-survey, if it would be a
-porcelain command for showing those stats to the user of if it is targeted
-for being parsed like this `repo-info`.
+In order to fix the FreeBSD build, move the sysinfo() check after the
+determination of the HAVE_BSD_SYSCTL build variable, suppressing the
+setting of HAVE_SYSINFO if HAVE_BSD_SYSCTL is defined. Apply this logic
+to both the configure.ac and meson.build file.
 
-I'm just brainstorming because I liked the idea :-)
+[Thanks go to Renato Botelho <garga@FreeBSD.org> for testing this patch
+on FreeBSD.]
 
-> Nit: missing colon. It's also present in subsequent patches.
+Tested-by: Renato Botelho <garga@FreeBSD.org>
+Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
+---
+ configure.ac | 61 ++++++++++++++++++++++++++++++----------------------
+ meson.build  | 10 +++++----
+ 2 files changed, 41 insertions(+), 30 deletions(-)
 
-Oops
-
-> Patrick
-
+diff --git a/configure.ac b/configure.ac
+index f6caab919a..bf710ac91a 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -1067,32 +1067,6 @@ AC_CHECK_LIB([iconv], [locale_charset],
+                      [CHARSET_LIB=-lcharset])])
+ GIT_CONF_SUBST([CHARSET_LIB])
+ 
+-#
+-# Define HAVE_SYSINFO=YesPlease if sysinfo is available.
+-#
+-AC_DEFUN([HAVE_SYSINFO_SRC], [
+-AC_LANG_PROGRAM([[
+-#include <stdint.h>
+-#include <sys/sysinfo.h>
+-]], [[
+-struct sysinfo si;
+-uint64_t t = 0;
+-if (!sysinfo(&si)) {
+-	t = si.totalram;
+-	if (si.mem_unit > 1)
+-		t *= (uint64_t)si.mem_unit;
+-}
+-return t;
+-]])])
+-
+-AC_MSG_CHECKING([for sysinfo])
+-AC_COMPILE_IFELSE([HAVE_SYSINFO_SRC],
+-	[AC_MSG_RESULT([yes])
+-	HAVE_SYSINFO=YesPlease],
+-	[AC_MSG_RESULT([no])
+-	HAVE_SYSINFO=])
+-GIT_CONF_SUBST([HAVE_SYSINFO])
+-
+ #
+ # Define HAVE_CLOCK_GETTIME=YesPlease if clock_gettime is available.
+ GIT_CHECK_FUNC(clock_gettime,
+@@ -1221,6 +1195,41 @@ AC_COMPILE_IFELSE([BSD_SYSCTL_SRC],
+ 	HAVE_BSD_SYSCTL=])
+ GIT_CONF_SUBST([HAVE_BSD_SYSCTL])
+ 
++#
++# Define HAVE_SYSINFO=YesPlease if sysinfo is available.
++#
++
++HAVE_SYSINFO=
++# on a *BSD system, sysctl() takes precedence over the
++# sysinfo() compatibility library (if installed).
++
++if test -z "$HAVE_BSD_SYSCTL"; then
++
++  AC_DEFUN([HAVE_SYSINFO_SRC], [
++  AC_LANG_PROGRAM([[
++  #include <stdint.h>
++  #include <sys/sysinfo.h>
++  ]], [[
++  struct sysinfo si;
++  uint64_t t = 0;
++  if (!sysinfo(&si)) {
++	t = si.totalram;
++	if (si.mem_unit > 1)
++		t *= (uint64_t)si.mem_unit;
++  }
++  return t;
++  ]])])
++
++  AC_MSG_CHECKING([for sysinfo])
++  AC_COMPILE_IFELSE([HAVE_SYSINFO_SRC],
++	[AC_MSG_RESULT([yes])
++	HAVE_SYSINFO=YesPlease],
++	[AC_MSG_RESULT([no])
++	HAVE_SYSINFO=])
++  GIT_CONF_SUBST([HAVE_SYSINFO])
++
++fi
++
+ ## Other checks.
+ # Define NO_SYMLINK_HEAD if you never want .git/HEAD to be a symbolic link.
+ # Enable it on Windows.  By default, symrefs are still used.
+diff --git a/meson.build b/meson.build
+index 7fea4a34d6..355cad730c 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1331,10 +1331,6 @@ if host_machine.system() != 'windows'
+   endif
+ endif
+ 
+-if compiler.has_member('struct sysinfo', 'totalram', prefix: '#include <sys/sysinfo.h>')
+-  libgit_c_args += '-DHAVE_SYSINFO'
+-endif
+-
+ if compiler.has_member('struct stat', 'st_mtimespec.tv_nsec', prefix: '#include <sys/stat.h>')
+   libgit_c_args += '-DUSE_ST_TIMESPEC'
+ elif not compiler.has_member('struct stat', 'st_mtim.tv_nsec', prefix: '#include <sys/stat.h>')
+@@ -1449,6 +1445,12 @@ if compiler.has_header('sys/sysctl.h')
+   endif
+ endif
+ 
++if not has_bsd_sysctl
++  if compiler.has_member('struct sysinfo', 'totalram', prefix: '#include <sys/sysinfo.h>')
++    libgit_c_args += '-DHAVE_SYSINFO'
++  endif
++endif
++
+ if not meson.is_cross_build() and compiler.run('''
+   #include <stdio.h>
+ 
+-- 
+2.50.0
