@@ -1,146 +1,101 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3EF54723
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 19:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269E72E36F3
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 20:32:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751657261; cv=none; b=qRDZUzPD3rspaqGY+Pf4ZxzFbxG9LnWXUKNoWN8icYXZGiNj5aupMaVeh3CZwgw5EO6yOn32hK6XlTeJUbktJkuEc3zbhLBxnLpKSNE4K5PlYh0ecCwB2JBGqhvrW7mmnd6TrmGqzqFTN8TpFrZIXwYarzwlNBbSr7wWU+t8NB0=
+	t=1751661131; cv=none; b=iGXG+9xe8gOTIykfGH6xuBYw1eCn9cIVuD9g1hrUbhovZQ+bIER1KVRxkGeIW6B70OfHF9OF/EePdEtjM/urhd/fryTnTPCRb1AceS5xNQuoAJvRRvgxEAQI2Mf3IrXhOY12FGwO3GTTylkNmLlIlUzjMJbpBE1cN++bMCAMouY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751657261; c=relaxed/simple;
-	bh=SZqm2o51TX0ehIqwcwJyxUvlgAqaV/N71rFv0ZR1cTY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=awqru/Dis/gI26RSmsXcMVb71GLihzXrBDndnpRQk+8NMrS1xKTOhbCBkcgJQhAdjMWlJlDPN7W2tJH+yd3rK94VOMo17HG31XyEljG/A7jEGvT7m5zEwVFB3llpRqjVniE+GbmjgqejuGomJOUmJmOrFPzJhQbmV3crUx1YBMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Ft3oCO0L; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1751661131; c=relaxed/simple;
+	bh=kSReUY7iPTQSNa92YhzIhLyrHt3j4UMKTk/gGb8OhHQ=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=bQsPHohppyJhvrMzIUdFlg0VSbUIBfwgJ3PN4Z4Ivoxgi1yImaF4rEkyeOpcQzbyO6EksRJHcPscYhsVUhsJu1NXhtcvgmbVWISaCZJJq1CqcW4Q3ODaOXLjAukba8me0NSWbvsvPCucI/Ln6NAE3QQwzfgvviVRKW6eD2X83xU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=KE8uv2qK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gc2B5+3A; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ft3oCO0L"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1751657251;
-	bh=SZqm2o51TX0ehIqwcwJyxUvlgAqaV/N71rFv0ZR1cTY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Ft3oCO0LLhHx504uhlYgumjuxJKirxsIJhG/3xqv5VbBanaOpzG52721AsKnDA1jv
-	 9xPF8W8o7F09Cl0oeNLd+HQai7rD98RQUJRwSw9dfRiK7X5+CGHt6aDCMtqGQjO3UH
-	 IIsrwCebKvBJgh5La9vSDF9ErD2Hrp30DNRSIEQJK928XUm6UDRDTrnzwJwg6YZFw7
-	 JFTPQA3n7Gq+GyY1OtKw/7RmwoUurKawvTRATVFIgKPLT6mypaRIML8RDZg9/Lntsm
-	 XELcTO09QecPrqvDbP0XABaroBc+SyKncDq0adGUPovy/4nflLCdIC+dAC8wp9Imn0
-	 eFLUvyoqUIQ2y1uXgKGw/JtszuzCauG7aUzWsfDpbP6HWNgiDfUbzm3ssQOyNk1oHe
-	 t40gM0FLw1TERXrVkLk3YoiC9JTG2zCoQrPAg+9WPHBKAZzp/9APg3ASNIoNawH2Wp
-	 18nIY9jPmhrwvPmW6/31Ppjz7EtzBHWB3w32TUKwWvpl5Iiym4q
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:5878:520e:9384:2dc2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3C1BE2006F;
-	Fri,  4 Jul 2025 19:27:31 +0000 (UTC)
-Date: Fri, 4 Jul 2025 19:27:29 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Question: how will sha256sum be implemented in git
-Message-ID: <aGgrIWSitF1NsN2L@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Aditya Garg <gargaditya08@live.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <PN3PR01MB9597524FAEAA3B26B15804B9B842A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="KE8uv2qK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gc2B5+3A"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 22B83EC01C4;
+	Fri,  4 Jul 2025 16:32:08 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 04 Jul 2025 16:32:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751661128;
+	 x=1751747528; bh=XOSmTR1XNmSOx14ncawB627a5QCzp2HxUFQ976eUHo0=; b=
+	KE8uv2qKija/ylerWIoAdYEo2iiYRAbYbT2ZdIJF6DMDT92an/SDYJj+t6fIo9rR
+	+ss0vEa5pvk9r44PS1K9luSVKZyay6BPHzATOswRGNLfUahM6kQ4DUaOfDgdzBKJ
+	clnkVMZcOkOye8158VAV9Sez/C/9sdedbzAwggHtaXm1jPKkSev6ZmBOOrBykM/z
+	1bbMyTC1pNKQRaW9Q/761Txmk6jNvheAdku4JEexUG6AU/dFUXgpMJ4cd7gak0j0
+	ZV7NCNILEFbKJPq+HEz3w4tJ6RHov24tPUUxIpgADxHfC7ZM1rnQe34E5Zsbw+XZ
+	S5SivqZd73AY7hB3EGnWew==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751661128; x=
+	1751747528; bh=XOSmTR1XNmSOx14ncawB627a5QCzp2HxUFQ976eUHo0=; b=G
+	c2B5+3AZPVE/ns5FLxyFGGuCmUlBzMXRVEQjNPPmRbpFt5byszI4J5LcEv4bJ0IT
+	JvGrYHSFTHcE2XJuFGiIStvDI45QBifAaxiZjEUDJZ8ertXn6wrdiFStDKVhQ03i
+	YE3OfdfmK67w/BAVbhqsyvTrKxCsFOtEpv+/3mVp66d1RrelpAhLyh4WbVsmXgg4
+	z4ffaAeGaIdTdaOe1/hb42tdheJbly15aAhr33Q+2MeO3W73ZU++QLq+UiIiIoe7
+	bkWs4qeZjFYTvxWJeZ4FaDzLJZI79OH3KxxlNSNuGRsLgmb0jcUgGmwhzY1sSOHh
+	Z2qol+ss7h7x08f+JrZxQ==
+X-ME-Sender: <xms:RzpoaAM2TkEd3WgiAa2U_wqy6hZa83cmZk2-_KGK4Cv3CiewKA42tGg>
+    <xme:RzpoaG_Njb-SHVymKEWrzHag9UYhB3Y9v8v4k2xiiExYtII0fCPS3qchzGUBJuZi9
+    uxZzr8qxvxg1otNnQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvgeduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeej
+    hfehuedvgeejkeelgeduudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepjhhnrdgrvhhilhgrsehfrhgvvgdrfhhrpdhr
+    tghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:RzpoaHSKppH5ze_qheqmEzuN2EUbxUyzeFiFFB5NlCahpfp72rgJNg>
+    <xmx:RzpoaIuXICT81iOLy0ezGjllbdrmn5Dg1TymOQy92Wp4m91dEaymqw>
+    <xmx:RzpoaIcsbyRzHNEyu3I9IXNFVMmwNMYYoPwFoutT2UKp3lPoQ1EHCQ>
+    <xmx:RzpoaM3bsQRIpy9bEi7STlb-alOHhOfzxiZHAdudbo9pEkqZoRCB6w>
+    <xmx:SDpoaA94341Zv_y2gaWu9H9L127D52kKZf_ATj99si0sMQePtXN00cPr>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id D9A2A1EA0066; Fri,  4 Jul 2025 16:32:07 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ShcI8uNvcHB5fRy2"
-Content-Disposition: inline
-In-Reply-To: <PN3PR01MB9597524FAEAA3B26B15804B9B842A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---ShcI8uNvcHB5fRy2
+X-ThreadId: T4addccd1017fcf40
+Date: Fri, 04 Jul 2025 22:31:46 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: =?UTF-8?Q?Jean-No=C3=ABl_AVILA?= <jn.avila@free.fr>
+Message-Id: <482f4eb0-b11e-42cd-87fe-3ad9e53f7610@app.fastmail.com>
+In-Reply-To: 
+ <01835272c2e92269ba0e571b29d0756f63fe9c79.1751203241.git.gitgitgadget@gmail.com>
+References: <pull.1933.git.1749373787.gitgitgadget@gmail.com>
+ <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
+ <01835272c2e92269ba0e571b29d0756f63fe9c79.1751203241.git.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2 6/9] doc: git-log: convert pretty options to new doc format
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-07-04 at 11:18:12, Aditya Garg wrote:
-> Hi all
->=20
-> I just read that git aims to transition to SHA256 by default, and convers=
-ion from SHA1 to SHA256 is needed for old
-> repos. I was just curious how will that be achieved.
->=20
-> Dumb idea, but maybe we can just encode the existing SHA1 sums' string to=
- SHA256?
->=20
-> Eg:=20
->=20
-> $ echo -n 8994f255af5451b6cd1db01ee16d8cf15b9df81e | sha256sum
-> bf8d6d915848377db81ee47e883c0a683b3d86a49ab120191ea1c3d76a30c33f *-
->=20
-> so bf8d6d915848377db81ee47e883c0a683b3d86a49ab120191ea1c3d76a30c33f will =
-be our new commit hash.
 
-This would unfortunately still be vulnerable to collisions in SHA-1,
-which is the problem we're trying to avoid.  For instance, if I can
-create two blobs with that SHA-1 hash, then I can also create two blobs
-with the corresponding SHA-256 value, since the input in this case is
-just the SHA-1 value.
+On Sun, Jun 29, 2025, at 15:20, Jean-No=C3=ABl Avila via GitGitGadget wr=
+ote:
+>  See the "PRETTY FORMATS" section for some additional details for each
+> -format.  When '=3D<format>' part is omitted, it defaults to 'medium'.
+> +format.  When `=3D<format>` part is omitted, it defaults to `medium.
 
-The way we do the transition is pretty simple.  Blobs don't change; we
-just hash them with either SHA-1 or SHA-256.  For trees, we re-write all
-of the entries to use the SHA-256 object IDs instead of the SHA-1 object
-IDs and then we hash the result with SHA-256.  And for commits and tags,
-the headers that represent objects (tree, parent, and object) are
-converted in a similar manner and then, again, hashed with SHA-256.
-
-You can actually see how the conversion operates in
-`object-file-convert.c`.  `repo_oid_to_algop` converts an object from
-one format to another based on the loose object map outlined in
-`Documentation/technical/hash-function-transition.adoc`, or the v3 pack
-index functionality which is not yet upstream but is available in my
-`sha256-interop` branch.  In general, the hash function transition
-document explains a lot of the decision behind why we're doing what
-we're doing and how it works.  I have to give credit to Jonathan Nieder
-for writing the document and to many people on the list for helping to
-contribute to it, and I encourage you to read it: it's not too complex.
-
-So with this approach, the SHA-256 object ID is computed totally
-independently of the SHA-1 object ID but in the exact same way, just
-with SHA-256 object IDs inside.  We already have support for
-SHA-256-only repositories right now: you can do `git init
---object-format=3Dsha256` and create one, although not all forges and
-tools currently support them.
-
-The process of the conversion when we're in interoperability mode means
-that we can take a repository that's in SHA-1, convert it to SHA-256,
-continue to interoperate with the old SHA-1 version if we like, and
-then, when we no longer want to use SHA-1, simply stick with the SHA-256
-version and avoid using SHA-1 at all.  That's part of what I'm working
-on right now, and I'm pleased to report that I'm making a good amount of
-progress.  If you're able to attend Git Merge this year, either in
-person or remotely, I'll be giving a talk on this topic.
-
-I'm also planning to open a discussion on the list within the next
-couple days or weeks about some protocol extensions that will be
-necessary to let us fetch, clone, and push all repositories in
-interoperability mode, so please feel free to follow along for that.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---ShcI8uNvcHB5fRy2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGgrIQAKCRB8DEliiIei
-gZ0OAQCdcTB1w6ru7Gf7588NbVw6bYMsUu3YkoPqIuFLBGgjBAD/f7Dx7wbBrAT/
-DTWLd81jWIJwlUlnplbpsee9Gq6g7QE=
-=Hn2Y
------END PGP SIGNATURE-----
-
---ShcI8uNvcHB5fRy2--
+s/`medium./`medium`./
