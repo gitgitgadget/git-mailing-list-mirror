@@ -1,130 +1,103 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4A719D07E
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 14:58:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BC81DC198
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 15:18:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751641101; cv=none; b=oMKLUMEOIaVgu8otTIPGuOXokihWpKk9m2ZgqtT8TYEWtBbqEQMvrSaZuzYO0CWjCUj93PtSE0J2vIq+lojBfa2k4OzRSIZscEdINZeujc0P5CWwVDUuvqalcY75rOOCWxfUcQYCnlaKnGDguhvxgaZE7Kq1YElc0/IbsMd4GPI=
+	t=1751642298; cv=none; b=Pc/XUq0v+OtcIuehCjo1M+cavCfw70BnjcCNS1C8jiKyY8IvleYRhwn2FTANGsMc1AYGixz8UxKdczwyAFIbbNqMVkgT18FzqxQE9GTWnZhINd0rHOH65o8Lg6LSDTSwSLfQ3Ak/qTHMsWqEqWB5IX/o6cthmtq75X4Twn0mdfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751641101; c=relaxed/simple;
-	bh=KcqSjqYaG9gvSgFkzpeff8b4QsILw/y0y0YHvDKWEVE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Byz+0vYssjfhjiAYcl7yT/eOzWOMVqXd5tN4IsGikALQr3ntSmOZggfpiR9GyQjUXTLFKnj14Gj8aq2SA52kJJFBD3kYyoNBz8Ho/MuxTFNJe5KJRzOS68JVhjX2oyu3K7Cya79V5BQCs+jvhBofaSRjodT1buVT1046bdFslps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OiiHdIOv; arc=none smtp.client-ip=209.85.222.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751642298; c=relaxed/simple;
+	bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=HL5Mlx7B26A26sneoVdpOd1jKUhhXKs91mvPMwQg2ECyuLMePBJXu0pdAeIc285LOw0d27eKUFGfFO6oC/251Niy/YMj2YKfKrDnP6HVhIhXbt93CYy1t/e+a60LdkjUSv80fu821v59q1yKLGCWFW9xHo72tRKEV6Zo9u2stAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cuyifslh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gDu4nPYr; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OiiHdIOv"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-87f04817bf6so550265241.0
-        for <git@vger.kernel.org>; Fri, 04 Jul 2025 07:58:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751641095; x=1752245895; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=K2mRFqLocQrNVeknC1oVnBjCUGvRceFFglsT0tSPM/0=;
-        b=OiiHdIOvvoKkVLShi+GveCcOw6gU6ciw3WF7L9KyJIv1FoZk8MIjmY5HVE4PBB9OuO
-         aWGwNa8sezcajlruT1pv+/Pg1X/NDCW6UwFaJdIFvU3K9q0Ok/4ZcoiuNvkhBOlmxjc6
-         sVM/wcnPhTXj9ccrwN/UK1NuoqOBNRO28S7f9JmXC+q0zd47gLoTi+feXl5dvsVhYY+p
-         LeCm6n/PPufRKBoC8GYCX7K81V/hOkYcrhvr7jAQIkqKxV078AWE9hiaVKe0tYfKIxgw
-         uDrDfKEdMGD+omimKb7feKbSfTSgh+gxbVVhjJiInI2zfKfvhux4TJHFFhrSlV1MLgny
-         ebfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751641095; x=1752245895;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K2mRFqLocQrNVeknC1oVnBjCUGvRceFFglsT0tSPM/0=;
-        b=Chwhu0/lqtoyqzBW1ajm+jGSaAfg9E0CrItaIpstbOAiv3ot7ZKNFes3sKyk0f6LmC
-         KC0OkFMyiC04N3+RAZMaXNVtDW4qBP7DSjDxQs23wBz258b3dSoIOeclLl1/6n8CH1wy
-         T6BhO2irbfLftaXPoCjGEpL1izeVSI6WqrsdBloKtknMRmHk0fcLP54VWJjxcGGMEJ6s
-         aE0gzM+upnXA7CfeuREFmHiOZjx+tGn0XoLD0vt7qV/C4o3E7261nBsZNt5+bC+FvYeB
-         iiPMfWu7/rEBQe9309/lRnqWGLwiK4vgJ2zlFzVIrnI3IxsmgT2rh1qvDMp4r3yhZkuK
-         VpJg==
-X-Gm-Message-State: AOJu0Yy6GBhIt9Gx/YkGUo6F0SSJv9f5sYFR8SP0Ai1ebvPAshoCkgdO
-	uls7msmnTV0v13izoR8vkoGF2Unr+ogqBw2du7l/lJzJ5cQfLbyWvpB6K+Z9DPga9RslWR2PQfs
-	A6WvS5dlXICfdPnjeTgLfZKhotjbXCA8=
-X-Gm-Gg: ASbGncs8cXVs+ohkMsLMx4N4xDT2Eyj3quSm3uD7UXNMXgn5+s5HwydIZhRqCmr0/vO
-	um46W/yDOqfb4kCSOa8HM/KkXyweNDHWvY+ngq9gCZc/9EaRiMx5oznirmAydJl5guAx2jVvzJs
-	jteeJu69uQnaLZP8MH8r8u0yoVG8+c0fAN0iCfkUnUsWdRalH/sFX5
-X-Google-Smtp-Source: AGHT+IFgJEho2udJa2fbhIGqc6gIkz7+aj693Sd2dTFIoZqPPv3HVQSBcTwcVsKaRECA8i/7f6LMH0VaBQu4aOlmEA0=
-X-Received: by 2002:a05:6102:6481:20b0:4ec:c513:f3d with SMTP id
- ada2fe7eead31-4f2f1bb51b3mr1168293137.25.1751641095263; Fri, 04 Jul 2025
- 07:58:15 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 4 Jul 2025 07:58:14 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <87ikk8c8jr.fsf@igel.home>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
- <87ms9kcbtq.fsf@igel.home> <CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
- <87ikk8c8jr.fsf@igel.home>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cuyifslh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gDu4nPYr"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 61DC71400220;
+	Fri,  4 Jul 2025 11:18:14 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Fri, 04 Jul 2025 11:18:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751642294;
+	 x=1751728694; bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=; b=
+	cuyifslh2QxlXKcq1ISWp5nSgGwKUeoCgazQA5iTYrgHSsBFR9hX7jsOZ2YH698J
+	4ZZ1QXJhH1MH+zGNtiqvDz2McqVFCh42HpbDjciQlKVhoSK5LLyhp23j8EEHhqsJ
+	8J5HyRNOyk0OczRSFONZudTNVeGKHr2OvBPNLctuW5zagQC28qm/aETr01p/vcsw
+	bm9RQqNC0cIbHjqfe89k5p40MDPeTGL7SPz6r0yJl1P1TuL6CVGWGMq2Stm9lq+E
+	Uz3sev9jJOKNDWHd6cWQTKuTo14bmxq2yvo5B/cc3mwW55/64YHwzJ9jvpVO+ux5
+	PeqZXbXp7lhU/IUM06P3PA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751642294; x=
+	1751728694; bh=BW04M+aS5WxF2DiEMudmoGEoYxhxKqsVMsk6QgNGllU=; b=g
+	Du4nPYrRr2oa+ps26b3MohXnPsHaT4oaxlwgjr/M8kbgxA0vybI2UST4V0baMDvf
+	AfnNyf/E0kYRkK4xo2pTw/yJSqftNIGpBmfhuDM2tUpk61bdULlIUI5KT/VPD/bi
+	NrOTOIJrcbCJOzw5NM4cjZWIKyoDn+QPC4Hep14IQr8Wn3e2pBlY3Kj/O0E3/Wey
+	yR81Z0R+yjN5Llv+pNqDULe5RERhT3sDW2DOV1gLdnEmQPo977QjF62Ip6Zo1XTK
+	BNg1P0bPiY8Iwfj9D9EEicU+3PJW+5YZFGDnhovMyNMTYzG3W7P80mD0DgqCvcXf
+	uUDUcfZGg6A3cnSaoGP4g==
+X-ME-Sender: <xms:tvBnaBLhtOvZmwsEG-tXGuemgwevLGQbFI6n-pA_lcRhqlvM6Ri692Q>
+    <xme:tvBnaNIcyD4p4dHb9OZ6CMw6ironK_iJa8OZvrGC_LHMMrCYfGWCEOFBXSejRQVFq
+    tc8_3hN55RBkqJcSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvfeeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishht
+    ohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeegtdejieetgefh
+    uedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepsghorhhishestghouggvshihnhhthhgvshhi
+    shdrtghomhdprhgtphhtthhopehkrghrvghnsegtohguvghshihnthhhvghsihhsrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:tvBnaJtJESpIvPg4yeq1uC3uPa2iDTlFvXVnmkRwwVggqTVBVeR7Hw>
+    <xmx:tvBnaCYFRfsLM_nDU1n61Y6Ck1YMsJmwacKEwCUG9J7WxJB3-Cn_Qg>
+    <xmx:tvBnaIYZT-4oDTnXvsBIU3E9tz5M9jXDXcy8CmzcaROFUnl9Jw8DUQ>
+    <xmx:tvBnaGDeCsVzDKrCO2GaxXG2d6nCSKR87p82na6Z4fOl8I7p1ZbEhQ>
+    <xmx:tvBnaOx94Rq-dcb65zsZj4GR-q5jrmN61eahP2BLG4ha4NmmXYCCNgS9>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 1DC171EA0065; Fri,  4 Jul 2025 11:18:14 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 4 Jul 2025 07:58:14 -0700
-X-Gm-Features: Ac12FXwMmGLe4uO09xQkOViFDANfhILzRK5sMcik4-58DGt-u28TrbNbWvurJiI
-Message-ID: <CAOLa=ZR2=5iZzUVTS1o81a5NhLLiyHLiJfznz2Us5q0VLU74og@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000041f85606391bb98b"
+X-ThreadId: Td4c5bef4314aafce
+Date: Fri, 04 Jul 2025 17:17:52 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Boris Kolpackov" <boris@codesynthesis.com>, git@vger.kernel.org
+Cc: karen@codesynthesis.com
+Message-Id: <ecb6df31-1f3a-4373-91ed-ae5231af7f7e@app.fastmail.com>
+In-Reply-To: <c20e2e7b-8471-4398-9bfb-6534f8ad2b39@app.fastmail.com>
+References: <boris.20250703161436@codesynthesis.com>
+ <c20e2e7b-8471-4398-9bfb-6534f8ad2b39@app.fastmail.com>
+Subject: Re: Document ability to disable template directory in git-init
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
---00000000000041f85606391bb98b
-Content-Type: text/plain; charset="UTF-8"
-
-Andreas Schwab <schwab@linux-m68k.org> writes:
-
-> On Jul 04 2025, Karthik Nayak wrote:
+On Fri, Jul 4, 2025, at 16:57, Kristoffer Haugsbakk wrote:
+> You can apparently pass `--no-templates`
 >
->> Consider the example
->>
->>   $ git for-each-ref
->>   refs/heads/bar
->>   refs/heads/foo
->>   refs/heads/main
->>
->>   $ git for-each-ref --seek=refs/heads/cat
->>   refs/heads/foo
->>   refs/heads/main
->>
->> You can see that the reference doesn't have to exist.
->
-> That is even more confusing.  What is the first matching ref if none of
-> them match?  Doesn't that mean skipping _all_ refs?
->
+> ```
+> git init --template=$HOME/git-template --no-templates
+> ```
 
-Well the idea is it would seek to the offset where the reference would
-fit in.
+Typo:
 
-This is to ensure that seeks to references which were deleted
-concurrently doesn't leave the client hanging with no results while
-paginating over all references.
-
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-> "And now for something completely different."
-
---00000000000041f85606391bb98b
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 1d34eae0bb563a03_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1objdBSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMkVYREFDSGUxbUdMSUUvMmg2S2FHc09XNzNNSXE0LwpwQmEwR3VOTVNW
-TkFEOGY4NzV1QWJZTStaUXNWODJydk9sOThNNElqaFZwQlpqZTU3OWFCMEwzNjNTcUgwZ1ZZCnRv
-RFNXNkVSbmpTTVF3RHZvQkxPanlhVXV3MWVrZ3BLNStuSGZFdEdEaTdXQTJEbTZlSXljaXQ0TFpC
-eDczak8KamE5YWtYaWxzM1Y0cjVsbW5CajZYTFd2QnZySlRMeTdoZWZaWUhDOXpQUVdrbXRkU056
-cDFqcHJiOUpkNFR1VgphS3JhMmlKY1BxZzhGT3B6eFpyZEFPTk1GZW1iR2pXU2dRK3NBNUxXTmlv
-ZVJCVkt5VWxQdWE2dUFFTjg1OXVLCjZWQWFRVDNuZ0kzdXFHVk56SXo0bVFlSWRIQzZaMVBKeEFG
-ajBMMGRoUlpwcEJ2bFdjWDdpM1Bha3BhcFZkNEkKUXoybm90RGMzSVpOdjVqZ3JUTzg1c2lkQVRG
-dk01UnF4Z1VtaHBvQUFFS3pBaDZ4YmMyMUgyT2FFWFJIR1FwTAptUHlOTmZPMGxYOUdXaVVtRXhx
-SUJtbXNZRW1peXZGT3JqYlcvL2pmeXZrcFp1WDZPdnlnS3IwbGFzZnBnb1BBClpqZXB4ZVlYWm5N
-NHNyai84TjF6WlBMME9iV2FwQ1VXbmNJU0pyST0KPW1EWS8KLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000041f85606391bb98b--
+```
+git init --template=$HOME/git-template --no-template
+````
