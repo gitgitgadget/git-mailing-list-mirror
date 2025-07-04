@@ -1,90 +1,95 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B801C07C3
-	for <git@vger.kernel.org>; Thu,  3 Jul 2025 23:42:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969FF1FC3
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 02:49:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751586162; cv=none; b=GRLiPsYNmPTqOvvjLG6E63rX27Mo588x3FIMuhFXWRCAdmrW3Z3cJQQ5LB5hY/QvnR2VqViwVzR1VSZ45wS6cCRVtOrKUMK1fNAqU2itaUevgcmhPPBssUx4CRuDZ1kW0Wizhns0omQSeGTDXnOXlMoQuDOuORXlk7APiA3bkR4=
+	t=1751597363; cv=none; b=KjwBZlo4mmyZshCc6evzuSUc31Zz1jtuzHrhUdKikWMctMFNs0eWMRhbEwAwU/C9X60jRzsJWXnOFnJEr/r6YV1zO2GcroYu7WEGqTW31Ba9MLTNCIhf5RmiFPbHg0Wj7dQhuib1qaC1A01YwWPMCJ4ULdrzCIWPGJEzD8GjGVg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751586162; c=relaxed/simple;
-	bh=ku959tBScn5uWaMF9Rb7bo33P1cgYvWtPrZePgLbw4U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gL4mcNWUZ/cDD81aV/GOWpWX52LhCdQcYQtrhe6CRANUZC2RieD7GnQlhda19lLsBqRoqs1MKYg+JwIhKDu/p7dJ8TDsvMbyFol0eswax4dFK6K7VWL8LLzMTB0fGNLqGy89Ei2kDfQlj/MZzaP0WVBQ79vZ5XAM8Ll7XluMW9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cqeqgSqQ; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751597363; c=relaxed/simple;
+	bh=ry8QzQ+slRErj5SWOhw16YUuWrRbbzXkAzUfd88V2lU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AkJhlPbt4Mn2OhMjp8smsUBIcR17ee1yPstJG+vcJJolRtXHQ0dYOrHXApoP1hiMSxJmbw9GaALJ/bFJAqgftqVadwUZ5wHz9USxm742Nz/uCu01/4OWF8xtk+h0BdWmwPYrH/Fsv2AlCfnEKmCABkZxLEyvl+K5du2e10i4DKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=FKTjxfF9; arc=none smtp.client-ip=209.85.215.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cqeqgSqQ"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d948ce7d9dso2255275ab.2
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 16:42:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="FKTjxfF9"
+Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b3220c39cffso479031a12.0
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 19:49:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751586160; x=1752190960; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ku959tBScn5uWaMF9Rb7bo33P1cgYvWtPrZePgLbw4U=;
-        b=cqeqgSqQIBH25DjGD728TdoKe/2Z+KdJ4aaoVy9+9F1YaKjV6dVvvy3tr3YOfn0mjI
-         n6895M64xVUdoTN4fOFPZQAKA3kTzFu/MND09HRRNZ7QHZ5fCOvIwwaIGrbr0zvVYhLr
-         ZsRgS14wjK3hr47iv3Hjtk/+wHP+XLQ6PX+fQDrF/KzlMiWK7kEFu6c4/WqGG7iX7Gpu
-         /N5ywxYYJyUT7jq/XqQ1Cb7RtuowddqEE0L75bd2YVH0R5hc0CjufJP2bnHgTZcH2rxM
-         sA4nSpNljcJrTDtFqYCIbmvLstorcfnjD/teYijs1nQdBDg6DHCWt1sPBosIVRH0sc6p
-         89sg==
+        d=bytedance.com; s=google; t=1751597360; x=1752202160; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Vrh+9maVKt8vYR4QpPjZyjBL+unbqdGoSg/ZSYeW4fw=;
+        b=FKTjxfF9eLy0D3+c9lnoBvc19xNRWaobTidwO7oyegcilBo62pCDt1iH+KehEBe9u/
+         rFN0Xc/xhFBvawStSFDD9xyOzpNGA1KOMuIa5mOmLCDOg3UIZqKc1xLn/h8MP/Yekfqo
+         47g/BiFkMlGqwzTctW46lIBS5hw9N4A9I5S10vvyQKH34U1QxZnK34aCg3NeOVS4xzLv
+         IvVYYMznndcL1Ew55T8fcOmmPxZP/paerfvOX4V6PPgY3Ktilu76qHi016U3v/gtNtVz
+         D+9e6gKvjw3QAs/M7T46f7CYGfJT+Un6YZFWxlrlxL4Iu1zGmpgyxI/d1sBzEiDM+353
+         zh4A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751586160; x=1752190960;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ku959tBScn5uWaMF9Rb7bo33P1cgYvWtPrZePgLbw4U=;
-        b=tSmWmVEMNkZbOUpFcwlEkwznRPzcTZX9ZI9mmoutiwxHHimD9NXZBPfuORZKPC/6lr
-         Fld6zqIhikb4xafBRobMrpZTT700A+4XZHusMeiX5d/EY+0iUfc8WtQfH6DlrsxpiZV/
-         O7NGLRhyKiyYFvKXzzmxC8mgaZAyW+zHxgHCo1cmG4wrNRsTyxAIjgTl9rcuR5JEdvgQ
-         b0/tDZ7kJojKKcKhzCu23Fn1LRCUy7zk3tZE3G63aj1o13a0heIi+iqHhHPshAz2aY+Q
-         ocsX+z+gK2ngqcfa1CV5F9jFA7F0juDFPKc+59ZzqgNzMcW5NQPsvxchunh+5KiIG45b
-         zJxg==
-X-Forwarded-Encrypted: i=1; AJvYcCV/jFq1gxxYti6VvomkUVt40FvExCS54cZgGT20NjukrIDhZWuv2yoqrX0Hv//4xmHJgds=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwnuWuXBDdPidrklipaV04EvAJs1cQLwvo+QMMp6lEDHC0tbWCC
-	/xCcOT+3D4Zvbm/+qYSXpISB8ijtJB9+cOvqqndloI9fm6df76IFN2JH
-X-Gm-Gg: ASbGncv1+gqFwLsUeZ25XhIGCb10FVY3/BkMP2/lNZn2lxc30Du075e9Ih6qvMnuYPQ
-	fT0Cjh+bV4R/l8hy+M2vNQxR8CIaLM7/kJ0UvFjq9FApFK2KhpIw7YaUYabNcIx5adOdH8/xyy3
-	TtVPihRJn105+O41VphmaMBlmyfPxK8ToGnTQa8234BvZ7g2WiL5JDDSbweeSbULmRSMFFj7Yj5
-	7RQYC9AF+i6PKrGSJg4X5J9Xq1tlgGsnV8fAdGayy71tmgX87JaoUbuiSJY3vfHqrha0hYxPUGr
-	Bg2bN0Rw+IFY8vU8o8JOMsZ6BHjv4J23d4FyvefhBiY6h6Z+e1zmIuIzuefHA5EY9tA/e73usCN
-	7khlubJxI/ErnYjv1j3NLeWWVlY/aLu5LmpMr8bY=
-X-Google-Smtp-Source: AGHT+IGnzha6tIUU/nGLpVMpAliz+soKE4iQJLX2XAY/ikh8tOaql3giu2kOHRaNEBEBQ6+WTCs9uA==
-X-Received: by 2002:a05:6e02:12ed:b0:3df:52fc:42ea with SMTP id e9e14a558f8ab-3e1355ec4a7mr3231815ab.13.1751586160121;
-        Thu, 03 Jul 2025 16:42:40 -0700 (PDT)
-Received: from [192.168.1.105] (c-73-176-204-61.hsd1.il.comcast.net. [73.176.204.61])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3e1004b78f0sm2603455ab.53.2025.07.03.16.42.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 03 Jul 2025 16:42:38 -0700 (PDT)
-Message-ID: <cb8eb906-b0eb-43fe-b7c9-3fbf8c84f4d1@gmail.com>
-Date: Thu, 3 Jul 2025 18:42:37 -0500
+        d=1e100.net; s=20230601; t=1751597360; x=1752202160;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Vrh+9maVKt8vYR4QpPjZyjBL+unbqdGoSg/ZSYeW4fw=;
+        b=Qkebkt+6PEj/Vd8pOxDfi5AJPtT0gHHd7svPjNEYZxkWwF68hgxxOlyPP3MubaUizP
+         04ij3R3TFgmSxhM5zfE/UnZAjEwU8Nkk6uy2+htLG6RSpMMDLkKujRUUtSBCwBdqYYxA
+         LKb1SowlUttxZRvzEw2rV6MCn2OON1LcHuVjcpgNrl1iYt3bbZdzBUKrrnKo1PfVScyn
+         iHRAhJVk8K39iKXF0OOVUT1HsUgPZ+ZzwiRMhDFZg1A0NB2Wsi4sAuZYuYzlKKOxZ5Q+
+         Z8VLiNYvh2dRjpS56J/vGVrS5TUn4l8eSxLW6myClP25EyTMD0RYYezr5SPEc+jWcpv3
+         EkwQ==
+X-Gm-Message-State: AOJu0Yy4pVjgT9p5iNTNbTzJ59VJyV5QhOkW2S06Y3h/XZV04niUyqgi
+	27135I2lGb6dGMqLcIron64WoynKZo2xAa9IZe+kb/LDd4RH4G1aPVd+QSLX8z4MqwTCsLcLxh4
+	Ebu5w+9ULH8TVR87X6IfHWt1e0L/GbGCCvz4PcYW5StKvd1SUHe9twpk=
+X-Gm-Gg: ASbGnctEKQu9uHQD4+5B/N/M/WJEl7HKlON5sHDzjrbq4Dvkm3cRZ4NDimy0FdeltoR
+	dHTwYo/qn3c0p9CLQB9zR2M/o9n1AV7wL8J4EvkE0Sbk0ik+Pw3h09gACM1fZmS/X0lmWIEeoRi
+	cqFi6sVrN3CqcXmGfcUsLxBhJB1C+WLHiO1ti+SQ45bOWnXQ==
+X-Google-Smtp-Source: AGHT+IEjJ+NZ1mvzRJZi8isMu0+fFplEr8qPnVMYjqbAkrZDpzfUDj79TMHgQqxQOZs/WiCZAgKV+/9E1MoVILOZKDw=
+X-Received: by 2002:a17:90b:5289:b0:313:f9f6:309f with SMTP id
+ 98e67ed59e1d1-31aaddc3354mr486085a91.34.1751597359747; Thu, 03 Jul 2025
+ 19:49:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] setup_revisions(): turn on diffs for all-negative diff
- filter
-To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>, git@vger.kernel.org
-References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
- <20250703153438.GA1309870@coredump.intra.peff.net>
- <20250703224428.GB1909836@coredump.intra.peff.net>
-Content-Language: en-US
-From: Eric Salem <ericsalem@gmail.com>
-In-Reply-To: <20250703224428.GB1909836@coredump.intra.peff.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <boris.20250703161436@codesynthesis.com>
+In-Reply-To: <boris.20250703161436@codesynthesis.com>
+From: Han Young <hanyang.tony@bytedance.com>
+Date: Fri, 4 Jul 2025 10:49:08 +0800
+X-Gm-Features: Ac12FXxtScCVcWJyn8uwDI6wk97N-L4IMHWIOHMTF0suioUyZgPlaUJgHpwc0Jk
+Message-ID: <CAG1j3zEiD341X-_ZdR2puaEmZZ0ZBWSmyboyyGZaDXcDTcmAeA@mail.gmail.com>
+Subject: Re: [External] Document ability to disable template directory in git-init
+To: boris@codesynthesis.com
+Cc: git@vger.kernel.org, karen@codesynthesis.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 7/3/25 5:44 PM, Jeff King wrote:
-> Argh, I forgot to add Johannes to the cc. Fortunately since then I had a
-> moment to look at this, and the solution is pretty simple. So here it is
-> as a patch with a test.
+On Thu, Jul 3, 2025 at 10:51=E2=80=AFPM Boris Kolpackov <boris@codesynthesi=
+s.com> wrote:
+> Looking at the code, this undocumented (AFAICS) behavior appears to
+> be there at least from git 2.1:
 
-Patch worked great for me. Thanks for fixing it so quickly, Jeff!
+Digging through the changelog, I think the feature is added in v1.5.6.4:
 
-Eric
+ "git init --template=3D" with blank "template" parameter linked files
+ under root directories to .git, which was a total nonsense.  Instead, it
+ means "I do not want to use anything from the template directory".
+
+> I would like to suggest that we document this behavior so that it can
+> be relied upon. The motivation for omitting the default template are
+> repositories created by tools, such as package managers, for the sole
+> purpose of fetching some information from remotes. In this case all
+> the stuff copied from the template (such as hooks) is an unnecessary
+> waste of time and space.
+I've seen some package managers pass "--template=3D" to git-clone, I'd
+say this is a widely used undocumented feature :P
+Document the behavior would help people understand the existing
+usages of --template=3D
+
+Thanks.
