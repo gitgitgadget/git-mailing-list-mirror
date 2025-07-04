@@ -1,95 +1,105 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 969FF1FC3
-	for <git@vger.kernel.org>; Fri,  4 Jul 2025 02:49:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A17213D8A4
+	for <git@vger.kernel.org>; Fri,  4 Jul 2025 04:51:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751597363; cv=none; b=KjwBZlo4mmyZshCc6evzuSUc31Zz1jtuzHrhUdKikWMctMFNs0eWMRhbEwAwU/C9X60jRzsJWXnOFnJEr/r6YV1zO2GcroYu7WEGqTW31Ba9MLTNCIhf5RmiFPbHg0Wj7dQhuib1qaC1A01YwWPMCJ4ULdrzCIWPGJEzD8GjGVg=
+	t=1751604677; cv=none; b=DRvx+xltQPaFQWUSW518ncKnmBdPeSmY2RzqqixH30E1kUy6DpcAkGeaZCF84IoMtEG15K/yD1q7kfob3ag50MHyS3kvKxg3TfGD+t+CSdHgD2jqhouGFWtkOuJnWhwvTiyLvvvfKtyruODdke6U+XxtVwzixMR0nqCrr+8RPe4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751597363; c=relaxed/simple;
-	bh=ry8QzQ+slRErj5SWOhw16YUuWrRbbzXkAzUfd88V2lU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=AkJhlPbt4Mn2OhMjp8smsUBIcR17ee1yPstJG+vcJJolRtXHQ0dYOrHXApoP1hiMSxJmbw9GaALJ/bFJAqgftqVadwUZ5wHz9USxm742Nz/uCu01/4OWF8xtk+h0BdWmwPYrH/Fsv2AlCfnEKmCABkZxLEyvl+K5du2e10i4DKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=FKTjxfF9; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1751604677; c=relaxed/simple;
+	bh=Aw3/VH3phN2haMR+gWxEj8qFDQusGZlHQCh2DuGI8+E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=iuHZs1hfLNj7len5GqhdhwYtRrVoOD0yyjql9v84FI1dFwPKE15K9oBbd/GtXLFjkKef5cJlIGg5II4mpWRWGonCmjn3ZWRzQgDHIFtvgdS2RSbxCh91hwqtD7sRfWVTit1Fd8fN8FskIw8NU7G94MxX2XSJ4TPC6vFSMviTzXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fGkbHPQR; arc=none smtp.client-ip=209.85.214.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="FKTjxfF9"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-b3220c39cffso479031a12.0
-        for <git@vger.kernel.org>; Thu, 03 Jul 2025 19:49:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fGkbHPQR"
+Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-23694cec0feso5069935ad.2
+        for <git@vger.kernel.org>; Thu, 03 Jul 2025 21:51:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1751597360; x=1752202160; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Vrh+9maVKt8vYR4QpPjZyjBL+unbqdGoSg/ZSYeW4fw=;
-        b=FKTjxfF9eLy0D3+c9lnoBvc19xNRWaobTidwO7oyegcilBo62pCDt1iH+KehEBe9u/
-         rFN0Xc/xhFBvawStSFDD9xyOzpNGA1KOMuIa5mOmLCDOg3UIZqKc1xLn/h8MP/Yekfqo
-         47g/BiFkMlGqwzTctW46lIBS5hw9N4A9I5S10vvyQKH34U1QxZnK34aCg3NeOVS4xzLv
-         IvVYYMznndcL1Ew55T8fcOmmPxZP/paerfvOX4V6PPgY3Ktilu76qHi016U3v/gtNtVz
-         D+9e6gKvjw3QAs/M7T46f7CYGfJT+Un6YZFWxlrlxL4Iu1zGmpgyxI/d1sBzEiDM+353
-         zh4A==
+        d=gmail.com; s=20230601; t=1751604674; x=1752209474; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mJixP4TAhktGHVpJYi8MBq3V/yl4NZqSOIPcEaUwIQ0=;
+        b=fGkbHPQRn8SY0k+yY2axZ6S7uBFA/tv8SnLWQhfRT7DAgrTifAPkP9mgINbFtPFq7P
+         UZUdAfy5f6Jz+6N2EUypKj0kuvtvqz0ef81XJz2MZhDE8nHfs23GLudiufG+XV45J/qy
+         H6TnaRSvdIXwVHT8dP1TCifqHYB7dZM8+En5JXw5qCJmM+j9HoHYyuZ/JRbh4YIRxhmq
+         h98hCarXawuGRpCBlbOJYS1dz7fxY7trYF2PDKrI01bzxlKJzjAC7nGrr12WLwsjFLPT
+         E/icB1VfEv632ldjwfJFmgeAl5P2DTdldq8v0a7XeJNlMEYxADVlRsdKQ5R1ngvy1+bw
+         Ks0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751597360; x=1752202160;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Vrh+9maVKt8vYR4QpPjZyjBL+unbqdGoSg/ZSYeW4fw=;
-        b=Qkebkt+6PEj/Vd8pOxDfi5AJPtT0gHHd7svPjNEYZxkWwF68hgxxOlyPP3MubaUizP
-         04ij3R3TFgmSxhM5zfE/UnZAjEwU8Nkk6uy2+htLG6RSpMMDLkKujRUUtSBCwBdqYYxA
-         LKb1SowlUttxZRvzEw2rV6MCn2OON1LcHuVjcpgNrl1iYt3bbZdzBUKrrnKo1PfVScyn
-         iHRAhJVk8K39iKXF0OOVUT1HsUgPZ+ZzwiRMhDFZg1A0NB2Wsi4sAuZYuYzlKKOxZ5Q+
-         Z8VLiNYvh2dRjpS56J/vGVrS5TUn4l8eSxLW6myClP25EyTMD0RYYezr5SPEc+jWcpv3
-         EkwQ==
-X-Gm-Message-State: AOJu0Yy4pVjgT9p5iNTNbTzJ59VJyV5QhOkW2S06Y3h/XZV04niUyqgi
-	27135I2lGb6dGMqLcIron64WoynKZo2xAa9IZe+kb/LDd4RH4G1aPVd+QSLX8z4MqwTCsLcLxh4
-	Ebu5w+9ULH8TVR87X6IfHWt1e0L/GbGCCvz4PcYW5StKvd1SUHe9twpk=
-X-Gm-Gg: ASbGnctEKQu9uHQD4+5B/N/M/WJEl7HKlON5sHDzjrbq4Dvkm3cRZ4NDimy0FdeltoR
-	dHTwYo/qn3c0p9CLQB9zR2M/o9n1AV7wL8J4EvkE0Sbk0ik+Pw3h09gACM1fZmS/X0lmWIEeoRi
-	cqFi6sVrN3CqcXmGfcUsLxBhJB1C+WLHiO1ti+SQ45bOWnXQ==
-X-Google-Smtp-Source: AGHT+IEjJ+NZ1mvzRJZi8isMu0+fFplEr8qPnVMYjqbAkrZDpzfUDj79TMHgQqxQOZs/WiCZAgKV+/9E1MoVILOZKDw=
-X-Received: by 2002:a17:90b:5289:b0:313:f9f6:309f with SMTP id
- 98e67ed59e1d1-31aaddc3354mr486085a91.34.1751597359747; Thu, 03 Jul 2025
- 19:49:19 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751604674; x=1752209474;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mJixP4TAhktGHVpJYi8MBq3V/yl4NZqSOIPcEaUwIQ0=;
+        b=EZakrML9iUQNjd8UblzCRpT1n8L+mYyOEqKkQsEhdoAWGufj9YV9J5VhAUN4IyfEIz
+         gdR9uUrd3tBj4QW2mfn4f2aMQMrpbVdZEtcRJSejDpaObjDtvL54yA+BuHc7p6kb05lZ
+         sGSxE1pmoV6xhBzbSQPEhEN3y2NYo896iP3HBqGlrc1z3a4PlUE7+9VV/A6PJ9ZdlYyp
+         c9Enyl2rZNAQfxmAi0sdjjNRNWv6ty5SJJEFJ0yiQxpi+zb84bkBB+Yo7bvxKzeFyZ8u
+         yrpUoSCEC960k3IyIx5TGwHqOEeuLItcjhOnxxDPMwz1UKXhGrEtBf31NrSt8pZGBsf6
+         BYgw==
+X-Gm-Message-State: AOJu0YzqGXztiZNVP/cSMhB4w04nwUw14wgU2VvwdAdVlvLx+vqIGzIK
+	33koKgR0Me8B9nVTjf58xiPGBh7nsjvmvJaWPNsvcQF1DPeCpNWW7k/Z
+X-Gm-Gg: ASbGncvAYRi6YhsA0yLW0cn0P1PS23WgiDbyH6zQTQKFtYTS85ej1vF/Q9+GlMH2qks
+	6B4xBtMm6jmkLtWLRcYs39JmOEF6F3FpdiXB2kPnJunkFf8XhifG9/neLkKTfv7nPP0dlCkTuUq
+	GRz656+pf5fm5HsUyULgA1tZkopV2dgYwn+Vf1YpQSsDy6AyoOuQSORXnr1+7lZCXHak/ytNva/
+	dYHztY5reK3bsgW2Fwp2Fo/xMMzSsWnNNsAW31GtK1Q77eTKTZDwcbH5jc/iHdoPaLwPBy3Ieg9
+	kKJ4sfAjgnTVxE6kUzUnUL3AzzhQuwh8C3RVKPUknAhaADYYo5YddtSV73sb1dVQOuNQ9/prBtN
+	dGjDX9gxXQSBWG/B8d0ssLjEqcNvTn1yx5Nn+Bg==
+X-Google-Smtp-Source: AGHT+IFYn5+/VWUK+rb04uSIkekYtvnm0LUbiAmwWzKbWRNNjTfiK5Aky6g6wC1DVvAilQx9affqoQ==
+X-Received: by 2002:a17:903:41c4:b0:235:f298:cbbe with SMTP id d9443c01a7336-23c86074d43mr18667155ad.12.1751604674137;
+        Thu, 03 Jul 2025 21:51:14 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23c8431a3fcsm9916145ad.37.2025.07.03.21.51.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 03 Jul 2025 21:51:13 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: Per Cederqvist <ceder@lysator.liu.se>
+Cc: git@vger.kernel.org
+Subject: Re: Allowing "/" in the name of a git remote is a strange choice
+In-Reply-To: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
+	(Per Cederqvist's message of "Thu, 3 Jul 2025 21:33:20 +0200")
+References: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
+Date: Thu, 03 Jul 2025 21:51:12 -0700
+Message-ID: <xmqqikk8bltr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <boris.20250703161436@codesynthesis.com>
-In-Reply-To: <boris.20250703161436@codesynthesis.com>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Fri, 4 Jul 2025 10:49:08 +0800
-X-Gm-Features: Ac12FXxtScCVcWJyn8uwDI6wk97N-L4IMHWIOHMTF0suioUyZgPlaUJgHpwc0Jk
-Message-ID: <CAG1j3zEiD341X-_ZdR2puaEmZZ0ZBWSmyboyyGZaDXcDTcmAeA@mail.gmail.com>
-Subject: Re: [External] Document ability to disable template directory in git-init
-To: boris@codesynthesis.com
-Cc: git@vger.kernel.org, karen@codesynthesis.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jul 3, 2025 at 10:51=E2=80=AFPM Boris Kolpackov <boris@codesynthesi=
-s.com> wrote:
-> Looking at the code, this undocumented (AFAICS) behavior appears to
-> be there at least from git 2.1:
+Per Cederqvist <ceder@lysator.liu.se> writes:
 
-Digging through the changelog, I think the feature is added in v1.5.6.4:
+> Today I realized that git accepts "/" in a remote name.
+>
+> This can lead to problems. I have a repository that contains a branch
+> called "master" and another called "chat/master". Just for fun, I
+> added a second remote in this repository and named it
+> "origin/chat".
+>
+> Now, does "refs/remotes/origin/chat/master" refer to the branch
+> "chat/master" from "origin", or the branch "master" from
+> "origin/chat"? Git seems to think it refers to both:
 
- "git init --template=3D" with blank "template" parameter linked files
- under root directories to .git, which was a total nonsense.  Instead, it
- means "I do not want to use anything from the template directory".
+That would have been a fun experiment ;-)
 
-> I would like to suggest that we document this behavior so that it can
-> be relied upon. The motivation for omitting the default template are
-> repositories created by tools, such as package managers, for the sole
-> purpose of fetching some information from remotes. In this case all
-> the stuff copied from the template (such as hooks) is an unnecessary
-> waste of time and space.
-I've seen some package managers pass "--template=3D" to git-clone, I'd
-say this is a widely used undocumented feature :P
-Document the behavior would help people understand the existing
-usages of --template=3D
+> If it was up to me, I'd add a check to valid_remote_name() to ensure
+> the name doesn't contain any "/" character.  I doubt it is used often.
 
-Thanks.
+If your remote-naming discipline is to always use two-levels
+(e.g. origin/chat, origin/chien, origin/lapin but never origin or
+origin/chat/blanc mixed in), then there is no confusion.
+
+It becomes only confusing if you mix origin and origin/chat.  
+
+So it is not like we can just forbid '/' retroactively and expect no
+repercussions, especially given that I hear there are more than a
+few thousands of existing Git users in the world.
