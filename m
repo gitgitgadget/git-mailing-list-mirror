@@ -1,130 +1,177 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EB6405F7
-	for <git@vger.kernel.org>; Sat,  5 Jul 2025 17:39:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0988F1CEAD6
+	for <git@vger.kernel.org>; Sat,  5 Jul 2025 18:58:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751737163; cv=none; b=Y0lXHAZ3znqV4zEFPHNwIbUg4GdIVne20qUq5xxzku5eDwyNCl9cJWSp2OBmMeb/dpGzDSitRnUn+d3c7AJBfnIZU9Z6E5rN7gBd1olF+a5vweF6J3HWX0vnLNm82Iml9L0B9RtbEr4wMxx1pSjJRvITN/WkzFHb6E8clQv3u2w=
+	t=1751741927; cv=none; b=k3MeIhKjiumWX3rXrvsTqvXZDkJKHe7MsICJqE0CBphGZn/BQ3d7V4wHhmHfEu9s3hi4Ut6cPLDfGcPMy7M+dnPLXOLTGOh2fYwCVHS8gjSzq+e+or26lMsUa1oNd/LUyG4nk3fDhHXKDCL9fRadhrmlvWGxBsdIW/vRyoDiIDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751737163; c=relaxed/simple;
-	bh=3cXK2MiV7csvnHjSq1MuFK88yyNmhf3dS12lOGbJ2Pc=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=JKfX8uIXg9pc/HVKC94qql29aeRUTblZfmS3G0p4csZTWtPMydalrDFvS2NAoLwIutgjfJ99dvYQlzg3Rg7MPbKO4yLc+zQ1NckXYlVJJpOvVD2qlid708GemQxDJhMhK4ZxxbVxSXYnDk5ryg3anZ53/voDM158QZl9jsIUQzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hMnIk0bi; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751741927; c=relaxed/simple;
+	bh=3FK9IlU/h5Eq7aoEOvnRFkBNc3n7JuN1u7u8uLWEJHQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JAn7plNlRJSsToaXvWcEfyxgbfAR7Y+QTF/gG1Z553/3n3SN1eEU2CCXeT3P4QItrqqwNFniuBj7QwNuy2DEj2dIrpdS1V6TG1EeV92xI2k29PZ+IrrVz55+hua2yJ85w7cPi8DWx97WxbJBqpPWMGrrYiusExdfxrbaZbsDPho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=HZB48QvZ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hMnIk0bi"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a51481a598so975135f8f.3
-        for <git@vger.kernel.org>; Sat, 05 Jul 2025 10:39:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751737160; x=1752341960; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=OPKRSU8tNADHFMUeKSZ9CIV2/J6h14Hq87JslXvFYHs=;
-        b=hMnIk0bimBszixLpvPR2B/Qoc46B+orZxRQeF+vsgML6pioJGF3wsj9lLbUpGDGFh2
-         yRZ3/OR4XkSAHiBymd513uLHMzwj20hIGZn4HPzmSw2YwwonkeBjrQdr5sa4c2EhZ9UX
-         ovL/srjvxPsfbOpkOPWfBKwh64PdhMmsf4298MihNNCdmmlrcQPRoaeU+smwnVzNZkaI
-         V+NH7p3NpaIRM5hyVGY8dT8cZDHLBgoZTZ3PIxIBcu1lSzkkhvy/lvUZlwxL240W+L1Z
-         KMYDSsE2tsUBD3/PK11QSikGXJAv+c8VP3AYViohC8Ipiq1FHPVcG7yRgzX45CWf39eI
-         MBmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751737160; x=1752341960;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OPKRSU8tNADHFMUeKSZ9CIV2/J6h14Hq87JslXvFYHs=;
-        b=YtuS8RvRN05TBcfOMYAcnJamKaifN5FNABA3a2VG/JZtKP71EHVgc1xMdU4+hM4B6M
-         +G4oEPlPlqOKY8GRxd3e/55uPbH7rCuU7+y9G3o3RnWkQAS33FKmA8kSfho2fbS6/GPO
-         EK+Ms/P7M6YUgtDxEfQ9WPVPgdBjUZMeYtCT/3HmHjQ/9g5oae9WSLfi9zXY4q5WKoBb
-         29HEMD2yyRTH6kUnYCnyUI7yYC6ocjvbo0koVS+5Djr/kPSOFB4XzHIJERKsqdZdKTZz
-         QzvfckYZxRxW44A9y5IfrqpCIQKVlchJ7s3KophCEHkdZSmDisfa1sJKepIfFcZ6HPib
-         PwaQ==
-X-Gm-Message-State: AOJu0YwwjQss9uX7+Sh3ctm5CFBHWP+Rf7BrTRVzDhocstL5g6vDmevv
-	ZDPBCbziM2rMUGPSehg0gxCBSX9enTu6dnTb/pTB+iySWFF9BjRxmAWnLCohtg==
-X-Gm-Gg: ASbGncuNMvY6KfzuL8xEnmGTDdAF/VESF4YoUvtCECx6QgVp0+pqzJZ+73x+9DQKG3W
-	vCYdT5ojckQOs61JxGPPad6m+rixhXOsHC/aBaupn0oqScJnghae930mj1dGR+cWuWFoo2ct7uq
-	2d3oN2rUMIFtAQ1+aFtXejMprCTrom8hYSaLH9r7Np5Tkr4HpXrtoYQ30bnjashTYo5aKPUaVhh
-	k6WbB3XIVhhmm/vG4dIqujscVE59NhTKnX3spzoZUnJ44xXTgGNZ1WIpDJGDnvdBm2SALXykAHA
-	MMtNTJdcGKrHewZ2XEmlsVtcszUa8DT66UiMkI3Na0hxkOt0gc1zLqRfsHjqIFs=
-X-Google-Smtp-Source: AGHT+IF30b8yqqPpNMBypZ+uYAwoGkx+vhybZdGTB659GJq2EUDNOOdTZmalO4Rv9BaqdAqfR82d+w==
-X-Received: by 2002:a5d:5f48:0:b0:3a5:2b1d:7889 with SMTP id ffacd0b85a97d-3b49703dd8fmr5075371f8f.43.1751737159748;
-        Sat, 05 Jul 2025 10:39:19 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454a998a47dsm87029005e9.18.2025.07.05.10.39.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 05 Jul 2025 10:39:19 -0700 (PDT)
-Message-Id: <pull.1940.git.1751737158670.gitgitgadget@gmail.com>
-From: "Timur Sultanaev via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 05 Jul 2025 17:39:18 +0000
-Subject: [PATCH] docs: correct mistakes in git-merge
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="HZB48QvZ"
+Received: (qmail 24281 invoked by uid 109); 5 Jul 2025 18:58:43 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3FK9IlU/h5Eq7aoEOvnRFkBNc3n7JuN1u7u8uLWEJHQ=; b=HZB48QvZXXAM0Wiinb8+qdmsv9OzP6DZop6Niw6zOKugT8Hc6U27QW6KZEUIsFDPirceuCk+V8Bu13P6O2I90gGnYt7x3XYzCLPS4of5gzadSLgDq00uOix7a+PY4foBDZdG6D9MaoxbxOPHgUuu4w67fSafYA23VxDjwgb7zuD2gImhJ2GMAqOV0BqFgDVDZf0fxhGdDAFGNhNuqm650dT9xcBkjK9GgvTCUn8deGYxL0nKNkeiEDXubBKKsHYlLI+esCXnHJUIz4HCU3Q7a2RHdwBwMw5tl/Ef1K9lrRJE8Y9KiVBU8eo/FDZyImY6d32knIGLn7f89m9y/eTQOw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Jul 2025 18:58:43 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 4597 invoked by uid 111); 5 Jul 2025 18:58:44 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Jul 2025 14:58:44 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 5 Jul 2025 14:58:42 -0400
+From: Jeff King <peff@peff.net>
+To: Per Cederqvist <ceder@lysator.liu.se>
+Cc: git@vger.kernel.org
+Subject: [PATCH] remote: detect collisions in remote names
+Message-ID: <20250705185842.GA2496172@coredump.intra.peff.net>
+References: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
+ <20250705165750.GA1951664@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Timur Sultanaev <str.write@gmail.com>,
-    Timur Sultanaev <str.write@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250705165750.GA1951664@coredump.intra.peff.net>
 
-From: Timur Sultanaev <str.write@gmail.com>
+On Sat, Jul 05, 2025 at 12:57:50PM -0400, Jeff King wrote:
 
-Documentation for git-merge incorrectly notes that
-tip of the current branch on ascii diagram is C
-, while it is actually G (current branch is
-master, HEAD on diagram is G).
+> So I dunno. It feels like a configuration error in most cases, but not
+> all. I'd probably say that people touching the config manually should be
+> allowed to do what they want, but maybe "git remote" should be a bit
+> more careful about names being proper subsets of existing remotes (it
+> should already prevent the exact-match above, I'd think, because the ref
+> namespace it uses will always match the configuration name).
 
-Additionally diagrams on the page are adjusted
-to use spaces instead of tabs, so that they align
-regardless of tab size. This is in line with
-diagrams on other git documentation pages.
+So I'm not entirely convinced we should do anything here. The answer
+might just be "if it hurts, don't do it". But if we wanted any
+protections in the "git remote" porcelain, they might look like this:
 
-Signed-off-by: Timur Sultanaev <str.write@gmail.com>
+-- >8 --
+Subject: [PATCH] remote: detect collisions in remote names
+
+When two remotes collide in the destinations of their fetch refspecs,
+the results can be confusing. For example, in this silly example:
+
+  git config remote.one.url [...]
+  git config remote.one.fetch +refs/heads/*:refs/remotes/collide/*
+  git config remote.two.url [...]
+  git config remote.two.fetch +refs/heads/*:refs/remotes/collide/*
+  git fetch --all
+
+we may try to write to the same ref twice (once for each remote we're
+fetching). There's also a more subtle version of this. If you have
+remotes "outer/inner" and "outer", then the ref "inner/branch" on the
+second remote will conflict with just "branch" on the former (they both
+want to write to "refs/remotes/outer/inner/branch").
+
+We probably don't want to forbid this kind of overlap completely. While
+the results can be confusing, there are legitimate reasons to have
+multiple refs write into the same namespace (e.g., if one is a "backup"
+of the other that is rarely fetched from).
+
+But it may be worth limiting the porcelain "git remote" command to avoid
+this confusion. The example above cannot be done with "git remote",
+because it always[1] matches the refspecs to the remote name, and you
+can only have one instance of each remote name. But you can still
+trigger the more subtle variant like this:
+
+  git remote add outer [...]
+  git remote add outer/inner [...]
+
+So let's detect that kind of name collision (in both directions) and
+forbid it. You can still do whatever you like by manipulating the config
+directly, but this should prevent the most obvious foot-gun.
+
+[1] Almost always. With the --mirror option, the resulting refspec will
+    just write into "refs/*"; the remote name does not appear in the ref
+    namespace at all.
+
+    Our new "names must not overlap" rule is not necessary for that
+    case, but it seems reasonable to enforce it consistently. We already
+    require all remote names to be valid in the ref namespace, even
+    though we won't ever use them in that context for --mirror remotes.
+
+    Likewise, our new rule doesn't help with overlap here. Any two
+    mirror remotes will always overlap (in fact, any mirror remote along
+    with any other single one, since refs/remotes/ is a subset of the
+    mirrored refs). I'm not sure this is worth worrying about, but if it
+    is, we'd want an additional rule like "mirror remotes must be the
+    only remote".
+
+Signed-off-by: Jeff King <peff@peff.net>
 ---
-    Correct mistakes in git-merge documentation
+ builtin/remote.c  | 17 +++++++++++++++++
+ t/t5505-remote.sh | 14 ++++++++++++++
+ 2 files changed, 31 insertions(+)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1940%2Fstrowk%2Fmaster-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1940/strowk/master-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1940
-
- Documentation/git-merge.adoc | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/Documentation/git-merge.adoc b/Documentation/git-merge.adoc
-index d53923c3b73..a055384ad69 100644
---- a/Documentation/git-merge.adoc
-+++ b/Documentation/git-merge.adoc
-@@ -28,8 +28,8 @@ Assume the following history exists and the current branch is
- `master`:
+diff --git a/builtin/remote.c b/builtin/remote.c
+index 0d6755bcb7..b18730ddb2 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -157,6 +157,21 @@ static int parse_mirror_opt(const struct option *opt, const char *arg, int not)
+ 	return 0;
+ }
  
- ------------
--	  A---B---C topic
--	 /
-+          A---B---C topic
-+         /
-     D---E---F---G master
- ------------
++static int check_remote_collision(struct remote *remote, void *vname)
++{
++	const char *name = vname;
++	const char *p;
++
++	if (skip_prefix(name, remote->name, &p) && *p == '/')
++		die(_("remote name '%s' is a subset of existing remote '%s'"),
++		    name, remote->name);
++	if (skip_prefix(remote->name, name, &p) && *p == '/')
++		die(_("remote name '%s' is a superset of existing remote '%s'"),
++		    name, remote->name);
++
++	return 0;
++}
++
+ static int add(int argc, const char **argv, const char *prefix,
+ 	       struct repository *repo UNUSED)
+ {
+@@ -208,6 +223,8 @@ static int add(int argc, const char **argv, const char *prefix,
+ 	if (!valid_remote_name(name))
+ 		die(_("'%s' is not a valid remote name"), name);
  
-@@ -38,11 +38,11 @@ Then `git merge topic` will replay the changes made on the
- its current commit (`C`) on top of `master`, and record the result
- in a new commit along with the names of the two parent commits and
- a log message from the user describing the changes. Before the operation,
--`ORIG_HEAD` is set to the tip of the current branch (`C`).
-+`ORIG_HEAD` is set to the tip of the current branch (`G`).
++	for_each_remote(check_remote_collision, (void *)name);
++
+ 	strbuf_addf(&buf, "remote.%s.url", name);
+ 	git_config_set(buf.buf, url);
  
- ------------
--	  A---B---C topic
--	 /         \
-+          A---B---C topic
-+         /         \
-     D---E---F---G---H master
- ------------
+diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
+index bef0250e89..2701eef85e 100755
+--- a/t/t5505-remote.sh
++++ b/t/t5505-remote.sh
+@@ -1644,4 +1644,18 @@ test_expect_success 'empty config clears remote.*.pushurl list' '
+ 	test_cmp expect actual
+ '
  
-
-base-commit: 8b6f19ccfc3aefbd0f22f6b7d56ad6a3fc5e4f37
++test_expect_success 'forbid adding subset of existing remote' '
++	test_when_finished "git remote rm outer" &&
++	git remote add outer url &&
++	test_must_fail git remote add outer/inner url 2>err &&
++	test_grep ".outer/inner. is a subset of existing remote .outer." err
++'
++
++test_expect_success 'forbid adding superset of existing remote' '
++	test_when_finished "git remote rm outer/inner" &&
++	git remote add outer/inner url &&
++	test_must_fail git remote add outer url 2>err &&
++	test_grep ".outer. is a superset of existing remote .outer/inner." err
++'
++
+ test_done
 -- 
-gitgitgadget
+2.50.0.438.g3b3bebd3e8
+
