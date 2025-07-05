@@ -1,111 +1,108 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3DB19CC27
-	for <git@vger.kernel.org>; Sat,  5 Jul 2025 07:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F42015278E
+	for <git@vger.kernel.org>; Sat,  5 Jul 2025 16:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751699773; cv=none; b=RAp+cQvPfi1TScRkc7mwzIpKjf2wrWRBJVVmQFBM7j2OClhoWulz7HmIQSQ0nKgaDrv96qEVbV6RgaUCmLIg7n+jfcW99p2aFeOlc9KMFc/4y+0vS7x6+x2DskyAL0Payq7NBPvPwLZP7zkdjyE3I/2w1xGy5DtQI+Mu1vUQih8=
+	t=1751734680; cv=none; b=QPZSGZtVuJXUH23TIBiag+oFFwiQMb39wmDmp5UHBM8vLTFZ8uECzm4R12WJsXYSHFb82PIMUyQ808X54/uKagB9HonFUZTCht7vFUNLhGrfZaKLlNwe1Xv25impyyEvkNkhrcMztecqtj5ng1KK1O+ezIZR04f/WeCwmum7Dbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751699773; c=relaxed/simple;
-	bh=yzECm/EP1GGphFF0rpOyyddk//EdcXPhmdkGsn35Tk4=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=MdnihdIj7aSuDH9uHZ1SWMzBCqe8GnouH/c7A6NIRDszKNo/8Xtcs7grl+OdkwK74Qm2VpkswCnZjmRywEF5Iwv+BDFQn7tLT0FuC2g9tzAwKPhRpdQcRl0jfRPxuSL9qcBeXUvlfobYV1jcF+vl05hS51fNIkgZspR+7x2in0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e4C1QbZR; arc=none smtp.client-ip=209.85.216.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751734680; c=relaxed/simple;
+	bh=pYdWkBjuXVFxoCxxZR24GtDs4sxB+VZL6VCQdU6ztVc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OIeUJPZecM/TMCBsni95wPulXyHHgYTEVteIC7HogbjsfEgyqXBpCbWpleDRqp4jFPbnttzDdkW2x/+81tjImVQDG1PFh2x2LChmENEWghewiqYdJm2nYxeCbnewa8FJhvf2h7QF3H6grt5pClDZPZhMWhZR5zsUdQo5bQoEoec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TAnQV027; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e4C1QbZR"
-Received: by mail-pj1-f41.google.com with SMTP id 98e67ed59e1d1-31223a4cddeso1168075a91.1
-        for <git@vger.kernel.org>; Sat, 05 Jul 2025 00:16:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751699770; x=1752304570; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=yzECm/EP1GGphFF0rpOyyddk//EdcXPhmdkGsn35Tk4=;
-        b=e4C1QbZR+90NqBcL3RtwT6CGm2NkDwOq1Hf/7tYye6MhddNUrgE5lviWQ9GRNHs1sh
-         ODoQSIi7EXoslFp1TXEpWjAyuTwdwVWF7vTDMYsmDPZkavcAOUAchdj5V0AcKAP/Lj3f
-         ymBJyjnPfpjkvxBaSHfOFulmBUzFzcemWUiFa/ZEj8brUCHeXSwFPDRK5zOS/33H5WVv
-         u62J/5ubqjrKb+SADHzB5ShdBCVNGG61Enex8RbseapjiXZhpOSnPYhBhFNZOQRr/PBZ
-         0xTokLEyc9HV3vtYR24xG4afEqX0SQ2CWKQFn8ByRjxxkmJi/m6HWGbdF3xmsxBxkFsW
-         3bbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751699770; x=1752304570;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=yzECm/EP1GGphFF0rpOyyddk//EdcXPhmdkGsn35Tk4=;
-        b=GXa6UVNSh57Me9We1+Xtbu/mZW6ulaUlUo5hmqe0oWI0MvDD7/amTaalE1GyGXHwJ0
-         ER2bEBryoI1JIIBa27A+mvG91ekHY6/dutQUCNoTNZr/y0RsHuwgwS9Q5nyZnX228woG
-         K/imthxoybTRtiVZbrsrQMSK6vJsERAyb3CCbBgozx28K1SsQjV9LIW8OErmX00wiGMh
-         KNKNGedJpRPytMbbZOwcPyW9/kqfhcHzsSAP9PdZaValwF2dE6X/I1roMYA2z2wWn87G
-         HX/TQfwrzjf1eH9m5slCVeSIOTE/f2axnrh4JD1rad/vWf2C6Th5NbwMZ/mW3jVwiSpm
-         n7WQ==
-X-Gm-Message-State: AOJu0Yw/d8sayp3nVGNbNQHTWry2Yi0g8wosX8HXHfN+qglFXwLiasbN
-	b3jNRSb+jziInzw5eJEmgPjSKT7al8hJjR06qLFHrcRlc59MEphMRuK5kMz/j4a6kjVJV+Dwi09
-	wSQBbfToJTt44wAQXrV6XZwYcp69pWM9pT1Fzkv4=
-X-Gm-Gg: ASbGncsKiU5y9Fo/HsWZKax2F+TpRsd7xQAyTa7uhhUAxOg5jT2Yj7udE06tMd1pA0I
-	mzrWZVvxm4S/E4y0XU5VbJgxqL8xh8/QlJJ2xJjU5QGAIZ6ba2YbX0WGRjITOo0zNcIy1MvptKq
-	bhiRP5Mw0FQQXJUz4B5UOsIn2gAxenGZ+wTQeEHm/wnzEBBdyhVcJDqVwcQJsWWfLbqcFKkg9Yv
-	SCdPw==
-X-Google-Smtp-Source: AGHT+IFbcH/qEQdDRK256If9/Rwj/sfKOz44CGO1iyrAKETTNgFUzBWq1814To/46PybZ94JkGeP5wfvw4vuA9V8aLY=
-X-Received: by 2002:a17:90b:584e:b0:312:db8:dbdd with SMTP id
- 98e67ed59e1d1-31aadd9ffccmr7048405a91.28.1751699770312; Sat, 05 Jul 2025
- 00:16:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TAnQV027"
+Received: (qmail 23872 invoked by uid 109); 5 Jul 2025 16:57:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pYdWkBjuXVFxoCxxZR24GtDs4sxB+VZL6VCQdU6ztVc=; b=TAnQV027ErMI0Hesnj2KKdXy2f9OU4m70ndPg7jXxvDsDBl+t2dlPFEc8XChe84BvoeZfxxzY4AyYY9cvG7ntrDbZ3UcabZ1a1M/uTEhq+tqcSAaySS+3Dq3pRpIjh2VTq7EXoIlL2DK7jD5a3+FLeS3oUeAwIRkRwUUVEvYlKDwvmN4ABvJwzjrlGDol5O1LU78iJsaMs7+ev1s4Zn+4JPHXd96N07klaaFc2fhQyYl9nqaW453QPRsrvMfOyHPSnTWrtH4g66kjj/R+TqZUX09l+1nxm7iF9iPzwPaq4TsRUGQkiCmJXcCugqMx00l26BDWPpgSK1eHM9kBFW3bg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 05 Jul 2025 16:57:51 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 3256 invoked by uid 111); 5 Jul 2025 16:57:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 05 Jul 2025 12:57:52 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 5 Jul 2025 12:57:50 -0400
+From: Jeff King <peff@peff.net>
+To: Per Cederqvist <ceder@lysator.liu.se>
+Cc: git@vger.kernel.org
+Subject: Re: Allowing "/" in the name of a git remote is a strange choice
+Message-ID: <20250705165750.GA1951664@coredump.intra.peff.net>
+References: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sat, 5 Jul 2025 12:45:59 +0530
-X-Gm-Features: Ac12FXxv2ttsazJ-ckKnuae3zEXhpCvWt1EHFo_e0Xja3f_Ha9uj35bNR2qPCN0
-Message-ID: <CAE7as+YXwesgk2tna4kEC34EbQ=-eA+thQBqU3qnveDh9rbt8g@mail.gmail.com>
-Subject: [GSOC RFC] commit: commentChar=auto bug-fix suggestion
-To: git@vger.kernel.org
-Cc: Christian Couder <christian.couder@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Patrick Steinhardt <ps@pks.im>, 
-	karthik nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
 
-Hey everyone,
+On Thu, Jul 03, 2025 at 09:33:20PM +0200, Per Cederqvist wrote:
 
-This rfc is related to the patch for bug-fix [1] I sent recently.
-In few words: When core.commentChar is set to "auto", Git scans the
-commit message to pick a comment character that isn't present. If old
-conflict comments remain, Git mistakenly reads the comment character
-in conflict comments as a part of the commit message and chooses
-another, causing the conflict lines to be included in the commit
-message. Skipping the trailing comment block during the scan allows
-Git to reuse the original character, keeping the final commit message
-clean.
+> > $ git fetch --all
+> > Fetching origin
+> > From $PRIVATE_URL
+> >  + 4e31956300f...30e26ebbb19 chat/master -> origin/chat/master  (forced update)
+> > Fetching origin/chat
+> > From  $PRIVATE_URL
+> >  + 30e26ebbb19...4e31956300f master     -> origin/chat/master  (forced update)
+> 
+> Every time I run "git fetch --all" git updates the origin/chat/master ref twice.
+> 
+> If it was up to me, I'd add a check to valid_remote_name() to ensure
+> the name doesn't contain any "/" character.  I doubt it is used often.
 
-So after doing this, Phillip and Junio informed me about another bug
-which comes across [2]: If conflict comments already use a character
-that isn't "#" (e.g., "% Conflicts:") and core.commentChar=auto is
-set, Git will ignore these lines during the scan using
-ignored_log_message_bytes()(which uses the comment character used in
-the conflict message) and then pick a new comment character based on
-the rest of the message. The newly chosen character is different from
-the one used in the conflict comments, those lines get no longer
-treated as comments and end up in the final commit message.
+I think the "/" here is really just a special case of a more general
+problem: overlapping fetch refspec destinations.
 
-To make this behavior consistent, as Phillip suggested, we can set
-comment_line_str to "#" when core.commentChar=auto. So that even if it
-breaks, it breaks consistently.
+For example, try this:
 
-An alternative approach I thought of is to return early from the
-'adjust_comment_line_char()' when ignored_log_message_bytes() finds
-conflict markers. This would skip the comment charater detection which
-ends up keeping the same comment character as the one in conflict
-comments. This fixes the issue, but we end up ignoring the
-core.commentchar=auto when we detect conflict comments.
+  git init repo
+  cd repo
 
-You can check the attempts on my branches [3] & [4].
-I'd appreciate thoughts on which approach makes more sense.
-Thanks!
+  git init one
+  git -C one commit --allow-empty -m foo
 
+  git init two
+  git -C two commit --allow-empty -m bar
 
-[1]: https://lore.kernel.org/git/20250626132233.414789-1-ayu.chandekar@gmail.com/
-[2]: https://lore.kernel.org/git/f39a3285-574a-45c6-9646-04eb175f4770@gmail.com/
-[3]: https://github.com/ayu-ch/git/commits/fix-rebase-commit-9
-[4]: https://github.com/ayu-ch/git/commits/fix-rebase-commit-8
+  git config remote.one.url one
+  git config remote.one.fetch +refs/heads/*:refs/remotes/collide/*
+  git config remote.two.url two
+  git config remote.two.fetch +refs/heads/*:refs/remotes/collide/*
+
+  git fetch --all
+
+which gives similar output to what you showed above. Of course it's
+easier to see here when the names are identical rather than one being a
+prefix of the other. But it's fundamentally the same issue, and
+forbidding "/" would not fix it.
+
+We could perhaps detect these kinds of overlap, but I wonder:
+
+  1. How expensive is it to do so, and when should we do it? Obviously
+     for a handful of refs a quadratic approach is OK. But what if you
+     had 10,000 remotes (this is not purely hypothetical; GitHub used to
+     manage object migration in its fork networks with configured
+     remotes, but hit enough performance issues to switch away from
+     that). So I'd be hesitant to check this on every "git fetch".
+
+  2. Is it something people actually want to do? It's certainly a
+     _weird_ configuration, but I could imagine there being useful
+     corner cases (e.g., one URL is an infrequently backup of the other,
+     so you don't usually do "--all", or you set skipDefaultUpdate for
+     one of them.
+
+So I dunno. It feels like a configuration error in most cases, but not
+all. I'd probably say that people touching the config manually should be
+allowed to do what they want, but maybe "git remote" should be a bit
+more careful about names being proper subsets of existing remotes (it
+should already prevent the exact-match above, I'd think, because the ref
+namespace it uses will always match the configuration name).
+
+-Peff
