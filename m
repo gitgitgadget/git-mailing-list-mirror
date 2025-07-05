@@ -1,159 +1,102 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from 20.mo561.mail-out.ovh.net (20.mo561.mail-out.ovh.net [178.33.47.94])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4DF16DEB3
-	for <git@vger.kernel.org>; Sat,  5 Jul 2025 20:07:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C69818DB1A
+	for <git@vger.kernel.org>; Sat,  5 Jul 2025 23:22:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.33.47.94
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751746069; cv=none; b=sS/DoWhpUxDa7xMCziXLNeX/6fi+LhK/4bHfZAozoL+DF/eKN6zbqcALuCR3tD9PdNq9whd957wiYhRVC1rPwLvG1H4niNdgsozZUgVnh9+A3exJ/vXdWAaQisPR7KTOYZweyrfxfK0j+AMYcZPvS+UPzocuyz6anxyDRYVd5f4=
+	t=1751757754; cv=none; b=ifErRqckWvZrJDdrFd2FESozc4VjTPd2OTssUh2PndU4sjp06p84Dhmbmr1inp/6exsZHzUfi0fIj4/Er17fAHAQL4IGvkV5jz1Nq51ECaVTGvmJegMGkO0Pom7DAGF57Cuwn+kV1aCRJwF+Mmw/DLi1OhPxeigcECT6Kog6cCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751746069; c=relaxed/simple;
-	bh=InihbGgkkF6URs2GkKv8RVEhPgECdtkqRUx4SJh1weY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oidm6t5PH1BApFgLQQ3A6a4xevfY+D8uKLzGRZgpkwVjuSsfDpWKgH9wExvdxJRZXjfZsktR0RLl5K4wVCf3sm2ylVI94fpyFT9CsFR+ZBtDxPEmyDbNZ6Hcvver7uJ5FpAWuHVgAU4IoqGP2R1xS4UywX0co/SAMqERc+8k+BM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=bvvyVchb; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1751757754; c=relaxed/simple;
+	bh=QsBaVaR0b+aFjYP7ZrxsySbBOn3qOsQ0ujW8HqVE0kU=;
+	h=Mime-Version:Content-Type:Date:Message-Id:To:Cc:Subject:From:
+	 References:In-Reply-To; b=g4taITZuQ37lcgbk8G4fsOG+/Dgnq+jdBFSxh4TsFnTj/vmnU882CRraJo3gyDku85RzIZUa3bvzD/21r7bUhbKMIYuEo2sLLn6jeWofM0kfBPQrVXEd5D83x+3V0gPVrzl3i3qjEqcH/HNosfca3wCo9q2HaNWvQKj3ei7Bt2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz; spf=pass smtp.mailfrom=redoste.xyz; dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b=Ylcejyoq; arc=none smtp.client-ip=178.33.47.94
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redoste.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="bvvyVchb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1751746059;
-	bh=InihbGgkkF6URs2GkKv8RVEhPgECdtkqRUx4SJh1weY=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=bvvyVchbP+ilLibELOcAN9YVR94OgT21H18ZpgZJY3lPwaXPwskh6bfbuhek5XcZT
-	 wHL9ECB65VN7SbgfrROSR2y6aQn9cdk6/TtY4hIjRwu14GQParciRQR5PrmyrGccGH
-	 Ln/mqM2/n2oUesxinaquxJUG5WGX2F8A4EjH5xXliD4bWb+QQh+fXThw8jH0dgoFix
-	 rVzb451Gj5A6aVtFsvNYtSru7/hOZbJhsax5noAYGld7LmDRFqa3PIN2ZGK5DcpfoP
-	 K68cgjvK0cGUdHsAKWJHcWyi1OLLufN1OSvFN5cQ1WwEy+kf2JinB+P1aR8d/D2k8n
-	 msdlYWNMTBydVaVHs3DiTxsj9ovzfa8dzP361COudW+71SWymr+qzFG6l25hBdO2f0
-	 nXPEmF/6ZojQpD7Qgije2GGUyqL7m83NcO5351vURQPu2AYbJDCT5mC6Crza2Tqwr5
-	 9+c5YYA2YucSsFDyfwVoS6bZBIyTopTRzi/0kL43kc1vtlQ6ZPA
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f46e:145:3ba4:8bd6])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id A6D412003B;
-	Sat,  5 Jul 2025 20:07:39 +0000 (UTC)
-Date: Sat, 5 Jul 2025 20:07:38 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: redoste <redoste@redoste.xyz>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Fabian Stelzer <fs@gigacodes.de>, Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] ssh signing: don't detach the filename strbuf from
- key_file tempfile
-Message-ID: <aGmGCmkwC1HlSyog@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>, redoste <redoste@redoste.xyz>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Fabian Stelzer <fs@gigacodes.de>, Elijah Newren <newren@gmail.com>
-References: <20250704230829.29696-1-redoste@redoste.xyz>
- <20250705192113.GB2496172@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b="Ylcejyoq"
+Received: from director5.ghost.mail-out.ovh.net (unknown [10.110.58.102])
+	by mo561.mail-out.ovh.net (Postfix) with ESMTP id 4bZQzs15F9z5xfh
+	for <git@vger.kernel.org>; Sat,  5 Jul 2025 23:04:09 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-c46tb (unknown [10.108.54.3])
+	by director5.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 8E545100205;
+	Sat,  5 Jul 2025 23:04:08 +0000 (UTC)
+Received: from redoste.xyz ([37.59.142.98])
+	by ghost-submission-5b5ff79f4f-c46tb with ESMTPSA
+	id 1iFCFGivaWgfEAAAbh9nmQ
+	(envelope-from <redoste@redoste.xyz>); Sat, 05 Jul 2025 23:04:08 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-98R0027f9d0c43-98bc-47f4-9fba-1a9764a13049,
+                    03B360DA9A158DBC4F736A687BEA6D6B8F7DE961) smtp.auth=redoste@redoste.xyz
+X-OVh-ClientIp:62.34.249.37
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="8/9gsF7z/D6tyYzf"
-Content-Disposition: inline
-In-Reply-To: <20250705192113.GB2496172@coredump.intra.peff.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---8/9gsF7z/D6tyYzf
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 06 Jul 2025 01:04:05 +0200
+Message-Id: <DB4HWL9M36X4.2GND0UHYOS8Q0@redoste.xyz>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>, "Jeff King" <peff@peff.net>, "Junio C Hamano"
+ <gitster@pobox.com>, "Fabian Stelzer" <fs@gigacodes.de>, "Elijah Newren"
+ <newren@gmail.com>, "redoste" <redoste@redoste.xyz>
+Subject: Re: [PATCH] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+From: "redoste" <redoste@redoste.xyz>
+X-Mailer: aerc 0.20.1
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+ <20250705192113.GB2496172@coredump.intra.peff.net>
+ <aGmGCmkwC1HlSyog@fruit.crustytoothpaste.net>
+ <DB4HMD2HLG24.1V8Y9JDW6BACQ@redoste.xyz>
+In-Reply-To: <DB4HMD2HLG24.1V8Y9JDW6BACQ@redoste.xyz>
+X-Ovh-Tracer-Id: 12639633829473064341
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -30
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvjeefudcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlhcuvffnffculdejtddmnecujfgurhepggfgtgffkffvvefuhffofhgjsehtqhertdertdejnecuhfhrohhmpedfrhgvughoshhtvgdfuceorhgvughoshhtvgesrhgvughoshhtvgdrgiihiieqnecuggftrfgrthhtvghrnhepiedugffgudevjeetueehudelkeegudevgfevheekjeefhfevgefgvdduleehffeknecukfhppeduvdejrddtrddtrddupdeivddrfeegrddvgeelrdefjedpfeejrdehledrudegvddrleeknecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehinhgvthepuddvjedrtddrtddruddpmhgrihhlfhhrohhmpehrvgguohhsthgvsehrvgguohhsthgvrdighiiipdhnsggprhgtphhtthhopedupdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdpoffvtefjohhsthepmhhoheeiudgmpdhmohguvgepshhmthhpohhuth
+DKIM-Signature: a=rsa-sha256; bh=oSnv3LYTA5oXjyw3OvLoZwVwBV2+AUT7djhwPv1LaHM=;
+ c=relaxed/relaxed; d=redoste.xyz; h=From; s=ovhmo3968190-selector1;
+ t=1751756649; v=1;
+ b=Ylcejyoqlktx4NOqKAhKq5nB8594jc6FjrddO5NWMBygQyGvk+vMiiadVgCmVHhMBTBWiZTT
+ jFhjYYtNCUS8S8yJJvNPjHzsQv3oKvIxJiGMLCIleOVshH+wN+He4g0LZ2RwTEY/Gjy2pyOn5Rj
+ BeKDRj3ulxS0IU08ZBJt0u/CdNDzwI6jlQ9yih6FpBBebPLFyRNNpkiUErId2yyB05EYb3ACr7O
+ A5Sp5qtoG8K5l1jy+8wzCccE6KM+yMd/iuipYF3HGHEgBh7esQd4lIgRTgyen4IuGYQn+Zb9iGC
+ dySxxVS7yOg63gpP5/vawbeOGrCYNUz00uGAF3DhgN9Qg==
 
-On 2025-07-05 at 19:21:13, Jeff King wrote:
-> On Sat, Jul 05, 2025 at 01:08:28AM +0200, redoste wrote:
->=20
-> > Detaching the filename string from the tempfile structure used to cause
-> > delete_tempfile() to fail and the temporary file was not cleaned up.
->=20
-> Good catch. I can reproduce this easily with:
->=20
->   git -c gpg.format=3Dssh \
->       -c user.signingkey=3Dkey::does-not-exist \
->       commit --allow-empty -S -m foo
->=20
-> which creates /tmp/.git_signing_key_tmp* and never cleans it up.
->=20
-> I wonder if it is worth adding a test, or if it would be too weirdly
-> focused on this obscure case to be very useful against future
-> regressions.
+On Sun Jul 6, 2025 at 00:50 CEST, redoste wrote:
+> Maybe something like this?
+Sorry, it's my first time contributing via a mailing list and I stupidly
+copy-pasted the output of `git diff` without checking the whitespaces.
+Here is the proper version of the diff that can be applied:
 
-I don't have a strong view either way, but I do wonder if it's a good
-idea to have the testsuite poking around in `/tmp`, although maybe if we
-honour `TMPDIR` then it would be possible to do in a tidy way.
+diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
+index 065f780636..359dc8eba8 100755
+--- a/t/t7528-signed-commit-ssh.sh
++++ b/t/t7528-signed-commit-ssh.sh
+@@ -85,6 +85,7 @@ test_expect_success GPGSSH 'sign commits using literal pu=
+blic keys with ssh-agen
+ 	eval $(ssh-agent) &&
+ 	test_when_finished "kill ${SSH_AGENT_PID}" &&
+ 	ssh-add "${GPGSSH_KEY_PRIMARY}" &&
++	export TMPDIR=3D$(pwd) &&
+ 	echo 1 >file && git add file &&
+ 	git commit -a -m rsa-inline -S"$(cat "${GPGSSH_KEY_PRIMARY}.pub")" &&
+ 	echo 2 >file &&
+@@ -95,7 +96,8 @@ test_expect_success GPGSSH 'sign commits using literal pu=
+blic keys with ssh-agen
+ 	git commit -a -m ecdsa-inline -S"key::$(cat "${GPGSSH_KEY_ECDSA}.pub")" &=
+&
+ 	echo 4 >file &&
+ 	test_config user.signingkey "key::$(cat "${GPGSSH_KEY_ECDSA}.pub")" &&
+-	git commit -a -m ecdsa-config -S
++	git commit -a -m ecdsa-config -S &&
++	! ls .git_signing_key_tmp*
+ '
+=20
+ test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed commits with k=
+eys having defined lifetimes' '
 
-> > Signed-off-by: redoste <redoste@redoste.xyz>
->=20
-> We look for a real name in the sign-off trailer, since it indicates an
-> acceptance of the DCO and the ability to legally contribute the patch to
-> the project. See the section of Documentation/SubmittingPatches starting
-> with the '[[dco]]'. Or here:
->=20
->   https://git-scm.com/docs/SubmittingPatches#sign-off
->=20
-> Looking at your web page, it looks like you may prefer not to associate
-> your online identity with a legal name. I can't remember if we've dealt
-> with this before. I'm adding brian to the cc, who has given a lot of
-> thought to naming and privacy issues.
-
-I don't know if we have a strict policy.  I do know that there are
-developers who always go by a pseudonym, such as chromatic[0], the
-contributor to Perl, and obviously we'd want to allow them to
-contribute. We also let people use shortened forms of their names or
-initials (for instance, Jeff King).
-
-I also have some friends who are trans and have transitioned or are in
-the process of transitioning but have simply not gotten around to
-getting legal paperwork done[1].  Obviously they have a distinct and
-identifiable name that they go by and we'd allow them to use a preferred
-name.
-
-There might also be good reasons that a contributor might not want to
-use a legal name: harassment, threats, employer hostility, fame[2], or a
-hostile government, to name a few.  I think those are legitimate reasons
-to contribute pseudonymously.
-
-So I would say that if someone has a distinct and identifiable identity
-that is pseudonymous and that is generally used and visible in the
-public sphere online, that's probably good enough.  While I'm not a
-lawyer, it's my understanding that in many locales, making a legal
-promise of sorts (such as a sign-off) is equally binding whether made
-with one's real name or a pseudonym, so I don't see a problem with the
-legal aspect of it.
-
-[0] https://en.wikipedia.org/wiki/Chromatic_(programmer)
-[1] In some locales this involves hiring an attorney, getting paperwork
-=66rom a doctor, and getting a court order, so it can be expensive and
-kind of a hassle to do.  It may also not be legally possible to do that
-in some places.
-[2] Notably the frontman of the band Weezer, Rivers Cuomo, is involved
-in coding under his real name (https://github.com/riverscuomo), but
-perhaps a CEO, musician, actor, or other famous person might not want
-their open-source contributions to be associated with their real name.
 --=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---8/9gsF7z/D6tyYzf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGmGCQAKCRB8DEliiIei
-gXYhAQCjXgFgqAWaItyJfnNgBFYbZAqo2LeZVu/fe86rXmLMggD/VAFl2nNOMoLk
-GRhm5bVpQhYacg6/9g/6kQbxjESUuQw=
-=urYh
------END PGP SIGNATURE-----
-
---8/9gsF7z/D6tyYzf--
+redoste
