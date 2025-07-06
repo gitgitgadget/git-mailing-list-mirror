@@ -1,73 +1,74 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D601F288C2D
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:41:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFA8846F
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751838101; cv=none; b=uRw1J8o+syaqvWOReHVQqvkFKwyjk3O1NFAZ55mUwX/jASOVfU3vp7q/AVPeX8FkVb+3dcBsgH4Ap7v//RnFr32xT4JfeOU0ARvfWF+oUi29hjBz9YwN707YwOhX2wa2GDLwGydhGPxCWlEeyYK4ayG0uePYO43gAEMhU2a6V9w=
+	t=1751838648; cv=none; b=kq34SHR3vfhZyS9XEDi+QnyjE1YOzzbjBDiGzGPQ7WYQvYQ82kPX5PNKFVo+YbX46yb3bgN5wKRkqPzfnvXLS8VAutNIg4IadWx1t0BD6/bmlZY7e3DBafksLYsDBw8A+8LK3f04FDfhQIgrdf3+5yqzBN4Ejjl1EQuxfp0IjKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751838101; c=relaxed/simple;
-	bh=OUqIraMhV/ovaQYEA5cJq1iqg9loAhW41Ir/U058j/U=;
+	s=arc-20240116; t=1751838648; c=relaxed/simple;
+	bh=Y34xFMXSSc8JJTH6Ujy44cfIhIIv7fNkabK8jh+gBDA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aWNehUhPZVUnQCCfjh9YqweWpQLKej//SH9GT6OInstMM2rsrDgVk4/De3qiE2/qDEKzuj0Oa3EEBPLPBT2QWU+MH+00XoqlhCs20boH8AKrxOxaV2PJlgPu8Md08gGqNAP4IO2IBxNN/zlT+fFqPitT0n3xAkTAcEMCFyK54DE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lOm84H6+; arc=none smtp.client-ip=209.85.210.175
+	 MIME-Version; b=Z0X8Ths9upolRK7QvtSUrxar6zFaI33BEKlDWyP4ZRWPBJ58A+IcbQWvOSWEqeE94loqsMUTH1Zmj74fd+HkhYQFerJFUhR/T9qzeP0Y4JiUB5GZY0INQMotmRNIIz/gNSEMurFyAaJnVfkl5+F6vhocAuGqkGAyeaucaQspaTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VW099qzS; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lOm84H6+"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-74ad4533ac5so2694022b3a.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:41:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VW099qzS"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b170c99aa49so1631785a12.1
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:50:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751838097; x=1752442897; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751838646; x=1752443446; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vlZymSS9r3W5Rr7srxoF1qARUYC22vbSIPL6X0s6HMs=;
-        b=lOm84H6+wXyXiljFEj22Zd3eND7oi791BDub4uVFFezxvHFxnJ9ObLew5GGIUBIXgr
-         Rb8JOipzpLRiYZ2OVo9+pIDtxvoOrAUGgqrvaN3aQZNMDRhJdSwo8EB8prQCfPYOhrvs
-         X8vPvni/O0huX7wLhxaBMgZI7kcsmg6oCgrLsEcYEUjYSVQt/1PZfHzEl7/3zvA912HQ
-         A1WQbDopyAEvFJ3pA3+l5GZK23XE/M257dQ7osDZFpLgMlFKiirdC7JMAQiV8wFsMcn7
-         rdFENopkR0UA9RXedJJjadbeMYjaOj6yioLhNvJIpwKIr6nbmDOdkbNNA9DdjGqKSrcY
-         zUGA==
+        bh=GI//1jHfKK99/7636C/KS63ejO3PkzNVFf3bDNgjdhk=;
+        b=VW099qzS1tWKNesHIEDYItgL6AkRccq8ec4N7QV7/nbYGliC94ERxknGFs+CuipoB6
+         qshprguIjnxSYr1o8v2yghOC1/Hpq/OguCJu4nRRtmtblgW1TUA3Gjwy8REjhigLXXFB
+         LdxYu6zN4NmNO73NAwhslgg0o1a7gvOHmaOjfYqPNg0jq3x4TOXdenezt2yi67FYSUOK
+         V68mQ+/Gw5o3+OTB55fTkM4PP2Ob8OghDO6AoOrSBAZ/ThXcOOPM1cHRJ6EF6Wi62VAY
+         zVlFN0CXjhYhIJuqwNt6o6k5htMjLudKaM0UFMxRQMyKmGjtFDHNxMIK5ADUhQQIfmi0
+         kj8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751838097; x=1752442897;
+        d=1e100.net; s=20230601; t=1751838646; x=1752443446;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vlZymSS9r3W5Rr7srxoF1qARUYC22vbSIPL6X0s6HMs=;
-        b=gpYQ0oM6jUXkByJST2mx1t6/X2pyTR1qWkARQs7S9EnXDvn5KdS4/P9NJxWUoIsO2S
-         kq3hp5sIKqP0T6WuBC8OgrnOyOeQIZGylrqIcEJ6KC0G/1erwD8EDK5Adp1FI1A8wGl7
-         KzP72bLPyuH3SrN6f3IAMVamKQpwSyGZX6+v9+8J3WurnvUPj/B3azyU9f7NwG7WDtrZ
-         mmlc656mTIRKKlBKe9a85pUC3/LXaPjVDY2nFItJFWrGR06cOOGhfiuNvv9IE4pWFwqu
-         wRA+9rTzWGquUzdaLkrzDWonwWFMkGGyQTWAw5TGv6PzIbHV6XOySBTGiw3rxnTI+ykw
-         UrTg==
-X-Gm-Message-State: AOJu0YxO8ss87HrmraCoshK6yC+9fpQBvzMbyYsmva0Hb/QssI1won2H
-	YGF8p7FHNfj9Q28szCe/43U7fY2A93Y68ZZdLkWISccKMcdxJm2DimNKrmlYsd0oZUs=
-X-Gm-Gg: ASbGncsNY38MaVH1I5SQIK3MN5eCRddrP5z9slLwmtFm5nxKfMJ0BGgxB40Pc1EspLg
-	3PjV/OQ2zN6zUuUMmXYGdD1gcKbfYIIkKSnMPQSNwZvS/cvzgK+jVl7FG/LES8PI+hBoH/ktDr+
-	2GdCdlIFMAk6fev+o+HusNIfbgcDdlSZBlxnCSu3m0KUEU+aDfRrJ1PHl72KIWciHh8/+67apIp
-	uaTv3du579gE2M6LYmdn5o6rKMFDyxrua1WzjMC1iVmUQX+sJe78Xtwhd+IoJHfO2f48KIxu+O+
-	1gFymhHIKM6hfGhLvYX5r999YIzP4e81BtGTvKQHweznS6eGPDH7X6s0f7Bl2fdLXpli3hjIGTU
-	CkGnCTCPZGm0=
-X-Google-Smtp-Source: AGHT+IFvSERr0+PCtYAfRvNjl+F4evT+tCzZ6WywJPH7Q3GQxWemvm4yW2f6+pwH27LzsBouCAvK/w==
-X-Received: by 2002:a05:6a20:549d:b0:1f3:3547:f21b with SMTP id adf61e73a8af0-225ad6c1d25mr16512718637.5.1751838096892;
-        Sun, 06 Jul 2025 14:41:36 -0700 (PDT)
+        bh=GI//1jHfKK99/7636C/KS63ejO3PkzNVFf3bDNgjdhk=;
+        b=CmHOJGycPpy5amIThpLb6RU3jZtBD8ExTLXQO6d7WnDNEDZQwCgeU8VThf/+UCWy07
+         YMejo/chKKH+ycgsFCA1Pis3r/G01/WyXODJdsYHgq9S1zu9Iiip5D6rnYwdk1T6aKqf
+         guBfuSdqCbgCILLRAha5eU+Yd/NzX7mXalAK+o644UghK6IXKXxWDoM2GpdIqTgfC1eh
+         oRBOEP2C2vqd1FDXBcIxh1T15/LFThDCQnnzMzHD6HalCvZ+KDUL4H4Znb7P58b/IYCX
+         Rzfb+d4h21xdUcSCOkKFrtxgP7A5Sz/VxD7pE3diXunibzLcx3DWXhg1Bw1DXtIA/kjy
+         G1mw==
+X-Forwarded-Encrypted: i=1; AJvYcCURmwD0ecV0AzOo9hzyrLf7iep8ZqbVKLG5XE0/h4kGIwTbd4ll7qtYWnv4yHS9kR5hhIk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyjp170UdwNHFctgEZOpEOdcgZKxv4SicIwoXzs4etZOA9BudwB
+	NcvuXpGU/eiGbeFNCBqV/LgQA3rFxRexKH5t8KYOrlGgW80CVYNmKequ
+X-Gm-Gg: ASbGncvoywKYnWmO7h+iuPlpMJp0LCN9TlS8qPrOUz2+8DGdlvDOO68nBRCLdSUkl+Q
+	5We9q5X16hVNgxZUYSZkNufh4WQ0OTo46fFn7RtdxktdycIzVtUZTBaM/iX0lcw0bLvrPbnoy5K
+	mayYhi3YrIIiYGBD74q6APXeBuKEM854uIkDZjSgI9vcDxe0XezkKnbUB12gpnx5HwNb6CcKYaV
+	y0cWWCdDzKZssEQ2roj/P+17a2jG5e16A4ByAkv5RRr9z2MGVT11h+C9HJlpc3zAVeIbD9keMoQ
+	UwaIyYHPgJfHhRlLjeDDI7U3aFS/PAkdCEzQRD0sx1uxH/6WZ31jmeoY2wE3DUZtV1rtvP3gzfG
+	Od0boEACPnxs=
+X-Google-Smtp-Source: AGHT+IExPSjbbDcqydibIrgbXGQxESF60pStdSwFjPHLBLwFdIwEwWbnxg43vsxw3QClyRjHVgIlUQ==
+X-Received: by 2002:a17:902:e5cf:b0:235:6aa:1675 with SMTP id d9443c01a7336-23c91070e40mr103288255ad.52.1751838645663;
+        Sun, 06 Jul 2025 14:50:45 -0700 (PDT)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee60c55csm7363968a12.43.2025.07.06.14.41.34
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23c8457f308sm72912335ad.149.2025.07.06.14.50.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 14:41:36 -0700 (PDT)
+        Sun, 06 Jul 2025 14:50:45 -0700 (PDT)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	chriscool@tuxfamily.org,
+To: usmanakinyemi202@gmail.com,
+	git@vger.kernel.org
+Cc: chriscool@tuxfamily.org,
 	christian.couder@gmail.com,
 	gitster@pobox.com,
 	me@ttaylorr.com,
-	usmanakinyemi202@gmail.com
-Subject: [PATCH v2 7/7] t/t1517: move verify-tag -h test to t1517
-Date: Mon,  7 Jul 2025 03:11:08 +0530
-Message-ID: <20250706214108.714499-8-usmanakinyemi202@gmail.com>
+	ps@pks.im
+Subject: [PATCH v2 0/7] move builtin help test to t1517
+Date: Mon,  7 Jul 2025 03:20:32 +0530
+Message-ID: <20250706215039.715732-1-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250706214108.714499-1-usmanakinyemi202@gmail.com>
 References: <20250706214108.714499-1-usmanakinyemi202@gmail.com>
@@ -79,55 +80,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The test 'verify-tag does not crash with -h' checks that
-the command exits cleanly with usage information, both inside and
-outside of a repository.
+In patch series which contain this
+"[*]: 43a8391977 (builtin/verify-tag: stop using `the_repository`, 2025-03-07)"
+and some other builtin commands, the help test was added into their
+respective test files. Since it better fits thats tests that check
+command behavior outside a repository should be in t/t1517-outside-repo.sh.
+Patrick suggest moving the test to t/t1517-outside-repo.sh.
 
-Move this test from "t/t7030-verify-tag.sh" to
-"t1517-outside-repo.sh" since it better fits with tests that check
-command behavior outside a repository.
+This patch series moved the all the test.
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t1517-outside-repo.sh | 7 +++++++
- t/t7030-verify-tag.sh   | 7 -------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+Changes since v3:
+  - Fix the typo which I thought I was able to fix in v2
 
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 42381ef7eb..0755757d86 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -156,4 +156,11 @@ test_expect_success 'verify-commit does not crash with -h' '
- 	test_grep "[Uu]sage: git verify-commit " usage
- '
- 
-+test_expect_success 'verify-tag does not crash with -h' '
-+	test_expect_code 129 git verify-tag -h >usage &&
-+	test_grep "[Uu]sage: git verify-tag " usage &&
-+	test_expect_code 129 nongit git verify-tag -h >usage &&
-+	test_grep "[Uu]sage: git verify-tag " usage
-+'
-+
- test_done
-diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-index 2c147072c1..6f526c37c2 100755
---- a/t/t7030-verify-tag.sh
-+++ b/t/t7030-verify-tag.sh
-@@ -7,13 +7,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- 
--test_expect_success GPG 'verify-tag does not crash with -h' '
--	test_expect_code 129 git verify-tag -h >usage &&
--	test_grep "[Uu]sage: git verify-tag " usage &&
--	test_expect_code 129 nongit git verify-tag -h >usage &&
--	test_grep "[Uu]sage: git verify-tag " usage
--'
--
- test_expect_success GPG 'create signed tags' '
- 	echo 1 >file && git add file &&
- 	test_tick && git commit -m initial &&
+Usman Akinyemi (7):
+  t/t1517: move checkout-index -h test to t1517
+  t/t1517: move for-each-ref -h test to t1517
+  t/t1517: move ls-files -h test to t1517
+  t/t1517: move pack-refs -h test to t1517
+  t/t1517: move send-pack -h test to t1517
+  t/t1517: move verify-commit -h test to t1517
+  t/t1517: move verify-tag -h test to t1517
+
+ t/t0610-reftable-basics.sh      |  7 -----
+ t/t1517-outside-repo.sh         | 49 +++++++++++++++++++++++++++++++++
+ t/t2006-checkout-index-basic.sh |  7 -----
+ t/t3004-ls-files-basic.sh       |  7 -----
+ t/t5400-send-pack.sh            |  7 -----
+ t/t6300-for-each-ref.sh         |  7 -----
+ t/t7030-verify-tag.sh           |  7 -----
+ t/t7510-signed-commit.sh        |  7 -----
+ 8 files changed, 49 insertions(+), 49 deletions(-)
+
 -- 
 2.50.0
 
