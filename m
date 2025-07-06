@@ -1,97 +1,131 @@
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F8E513E02D
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 15:28:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1746A19ABC2
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 16:30:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751815682; cv=none; b=ptQY3HFA7ZjVncw3owpqHEzl+CmTxRRj+JLprDDanPar5ao/SsbclJdSQnDqLGdJAmFzgNQyJT55tPKKhZebqVrSqHDr32svs1vv3jMXJ3U7DkJBXj0jKFK1oslpPTX3+aUA3Gwv7hdNmaYZEdgjuUFzIlIBLTkDU4Y/2taQdcI=
+	t=1751819417; cv=none; b=Hrak4ovuN3/SjXLExTaoOn4gKl3ijupUCEhbjaT5BAhLQC9TYywQsm/xwrugsoHyE7TnRcvhGwEBUU/VGmEDBm4oZvQBYQxd+SbTufjI3B2cDdRWQU7BVYGCOjZHeS+btCIl4nNWsnu9iVw0gr+zQoL7OKb1qzx/ef40ZkfiznQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751815682; c=relaxed/simple;
-	bh=AG7io94O55u+26XUAJ3lBKN2OjSahYPPh2tmDe45X20=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Xa3PJV2etmwBKKBjHZNthxP/z6Dm7d1I4g4K11vToC01FmLlzFe8aCwcVfBxfqYYatGy3tRCc+HrXqAbzgPyMGCSny3hfwDXgoXbNrv46SfIFCMAXloLxBs1yYugWJh38otda7Q3wkaKCP88YEevRMlfixfGnk+Ds74AfJp0tqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=S1hxreYz; arc=none smtp.client-ip=212.27.42.1
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1751819417; c=relaxed/simple;
+	bh=QWqDgO+poCO7VAMg/QZqfpDMboFnKuRVIKoXp+KVs/U=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=hNf8LV6C91xRyKtucXywJ+odL1TkfNjGkKtBOU0lvLU/lGwgsbGNqi1wE2+HgoHq3SLpMrxiUf0eBLieKsdLtc2O7BlKsjiuV4DwXelFp2tgf/pLsO9O3ChoI4AmgpIeeVR9SUiw4oxsLESs/DEX9Q1X3Q8UzlCzJ2uKSuIFXC4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=ZZFaBgow; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="S1hxreYz"
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:13:fc41:fd1a:ba1])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPSA id A1696B0055E;
-	Sun,  6 Jul 2025 17:27:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1751815678;
-	bh=AG7io94O55u+26XUAJ3lBKN2OjSahYPPh2tmDe45X20=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1hxreYzQHg/rxZApqesl8HmjCr5b8bV1UEGkMAtvk6JC/XAf9SCqQ/YvKurXNWxP
-	 JR1msvDX6yMk2A7ALtCEIW0uNUXjLhHswoDpK+HU0siQF8+/VVJc9f1Gawo6BKE/9h
-	 wdeOT+f6z9U9g3xb3urZPNeYPuTGKePKPRIvljgOOXe+Moi2vh+Mu8wRrjwFyDPoQf
-	 gEjN1muxuWoHwbUAaHQm2kQBfUw9Y9vf/6s5qGRG0zl4NwKN9RRz2w/lJ55PeDO9+Z
-	 xNMuk/LyHjdz75MTI3iXEDccU5psu1ZrSKMx3zr0JKjUZK+9WEJcDWHoeCRB8FbMQ0
-	 6mBDZNs+UPo9Q==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To:
- =?UTF-8?B?SmVhbi1Ob8OrbA==?= Avila via GitGitGadget <gitgitgadget@gmail.com>,
- Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/9] Doc git log
-Date: Sun, 06 Jul 2025 17:27:56 +0200
-Message-ID: <7824165.EvYhyI6sBW@cayenne>
-In-Reply-To: <xmqq4iwcenrc.fsf@gitster.g>
-References:
- <pull.1933.git.1749373787.gitgitgadget@gmail.com>
- <xmqq4iwcenrc.fsf@gitster.g>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="ZZFaBgow"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751819413;
+	bh=QWqDgO+poCO7VAMg/QZqfpDMboFnKuRVIKoXp+KVs/U=;
+	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=ZZFaBgowHa5FcH49XS94Cqlhkwrw9bRiyHfbgiQqxdIcJD4bfeR4j3MWm8cmT6KE5
+	 aiz52QdcWN018DGdNp7mAx109V8U/fOyTbF4iNhv8R+6vmOKdXWbeQXXbp7sbf9DvH
+	 duVPhuqVW3H/H1Ou2WqShYdFZ5X48GmYc5R5+WBfvyz5NS1W8KYfQIks1KMJudZP2u
+	 HWTwpr9Ce/GLKEMw1Pn4k1RuOp/WCLVDYjexPF1tmXb4ygYliYP1RBx1/uJxpBjZEP
+	 ifI9jQOXsw/EiexBpSpgSiIrXplCjEd/uOiE1X9k8zYu5tM92h1NAYNwdzdLWMBdAd
+	 zq+mIJ3JcRKhfkIhZWo75NtQ9Fjzp7j1zKK9vMvYA3cmcdRon+H5sPcbR8iZ1NH78c
+	 GCg+cVNUUQ39q82WPpBekp/obsZ7C7jCmG/zukSiOmN3B1Ao1PoSU5hGAYDjzOqPdk
+	 6lNu36tsllDL0Gzhl/w9pCXfejhBdhR87Q0AoW3wyoeV2VqdXHg
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:f46e:145:3ba4:8bd6])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6AD612006F;
+	Sun,  6 Jul 2025 16:30:13 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>,
+	redoste <redoste@redoste.xyz>
+Subject: [PATCH] SubmittingPatches: allow non-real name contributions
+Date: Sun,  6 Jul 2025 16:30:09 +0000
+Message-ID: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.50.0.714.g196bf9f422f
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 
-On Wednesday, 18 June 2025 23:35:51 CEST Junio C Hamano wrote:
-> "Jean-No=C3=ABl Avila via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > This series converts the man page of git log to the synopsis format sty=
-le.
-> > Git log is the second largest manpage after git config, which makes the
-> > changes quite large.
->=20
-> ;-)
->=20
-> Other than the "add % to literal" in [5/9], which I couldn't figure
-> out if it truly belongs to "doc: git-log: convert rev list options
-> to new doc format", everything looked pretty reasonable.
+Our submission guidelines require people to use their real name, but
+this is not always suitable for various reasons.
 
-TBH, I'm not entirely satisfied with this patch, because it reintroduces=20
-complicated format marks everywhere instead of pushing this complexity into=
-=20
-the formatting logic.  The problem is coming again that we have some signs=
-=20
-which are used for the synopsis syntax but can appear as "keywords". First=
-=20
-there was the three dot notation, now it's the parenthesis. Coming up with=
-=20
-basic regexps that can handle the context difference to tell apart their=20
-grammatical meaning is increasing difficult, if not impossible.
+For people who are transgender or non-binary and are transitioning or
+who think they might want to transition, it can be a major obstacle and
+cause major discomfort to require the use of their real name.  This is
+made worse by the fact that Git provides no way to change names built
+into history, so the use of a deadname is forever.  Our code of conduct
+states that we "pledge to act and interact in ways that contribute to an
+open, welcoming, diverse, inclusive, and healthy community," and
+changing this policy is one way we can improve things for contributors.
 
-=46or git-scm.com, with asciidoctor, an extension managing the synopsis sty=
-le=20
-using a parser combinator was introduced to alleviate the difficulty of the=
-=20
-task.
+In addition, there are some developers who are so widely known
+pseudonymously that they have a Wikipedia page with their handle and no
+real name.  It would seem silly to reject patches from people who are
+known and respected in their open-source community just because they
+don't wish to share a real name.
 
-The problem is that, as far as I can tell, asciidoc.py does not propose suc=
-h=20
-extensions in a programmable way. If anybody can direct me to an example of=
-=20
-using a parser combinator in asciidoc.py, that would be great. For the mome=
-nt,=20
-this patch is the best proposition.
+There are also other good reasons why people might operate
+pseudonymously: because they or their family members are well known and
+they wish to protect their privacy, because of current or past
+harassment or retaliation or fear of that happening in the future, or
+because of concerns about unwanted attention from government officials
+or other authority figures.  As much as possible, we want to welcome
+contributions from anyone who is willing to participate positively in
+our community without having them worry about their safety or privacy.
 
-Thanks
+In all of these cases, we should allow people to proceed using a
+preferred name or pseudonymously if, in their best judgment, that's the
+right thing to do.  State that it is common to use a real name but
+explicitly mention that contributors who are not comfortable doing so or
+prefer to operate pseudonymously or under a preferred name can proceed
+otherwise.  Use "some form of your real name" since some current
+contributors use shortened forms of their name or use initials, which
+have always been considered acceptable.
 
-JN
+Retain the prohibition on anonymous contributions that the Linux kernel
+has to ensure that we have some line of provenance to a known (if
+pseudonymous) author who might be able to respond to questions about it.
 
+This helps guide people who would be fine using their real name but have
+misconfigured `user.name` thinking it is intended to be a username or is
+used for authentication (despite our documentation to the contrary), but
+also allows for a variety of circumstances where the contributor would
+feel more comfortable not doing so.
 
+Additionally, retain the section header ID for ease of linking across
+versions.
+
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+I don't claim that this is the best possible wording and I'm open to
+changing it.   The term "known identity" comes from Linux, but if we
+need to clarify using different language or otherwise change any part of
+this up, we can do so.
+
+ Documentation/SubmittingPatches | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index 958e3cc3d5..a4f4ca0205 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -408,8 +408,11 @@ your patch differs from project to project, so it may be different
+ from that of the project you are accustomed to.
+ 
+ [[real-name]]
+-Also notice that a real name is used in the `Signed-off-by` trailer. Please
+-don't hide your real name.
++Please use a known identity in the `Signed-off-by` trailer, since we
++unfortunately cannot accept anonymous contributions. It is common to use some
++form of your real name. We realize that some contributors are not comfortable
++doing so or prefer to contribute under a pseudonym or preferred name and we can
++accept your patch either way.
+ 
+ [[commit-trailers]]
+ If you like, you can put extra trailers at the end:
