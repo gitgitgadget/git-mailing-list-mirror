@@ -1,122 +1,109 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64C753595C
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 12:20:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2F620E31B
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 12:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751804420; cv=none; b=AuNfqkn4SdtBEsaN13hZtFgYeYQxdFE5e8f96JDQpJlGt/cBfVw0nzb/at2l8+HmGCgr4IW8sBA94BDzbYolq5WvNoD/khkrgqxZelsIJ0c0Po2c2+KPdc/kRimsjvpajneHCrXMtVXw/4LfzoEGePJgSh/olESWDai+NKQY1h0=
+	t=1751806712; cv=none; b=JMxJhGD8Oo4HfgDhevoPUURhGjbGo7ufgSpv+AKFflzEwPMK5S3dlglf7UVzxsbjmzhn6GghQknU0WTSopBUfyrEfk50pKNWaN/E2biXda73dRceXRMbjTGl9qWdoyGamaiLR54CwawAnADgkPyUvthtHuS0a8e5o9SpBV/ags8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751804420; c=relaxed/simple;
-	bh=LH3x2oH0Q9vMnE2kESAt4YcwrYStw5gjagi6yRA4hPI=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ra2LZWxnthqu56UPnt+Wi5MNJY/Hrk4J/XcYr5eWDZmrIG/2BZsEx9VV+IswxFrquUbvIvrDsPnfgJ3xfbfk+MPhZ9wkHnqqQIJJni0HfZdeKMwrSnk5x6jmu8jvqxoHBSnsWxh/PiLQGF5nn4w3G/WjxOy3zzMoPHjrlfjdZx4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b=TDR8LYyw; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1751806712; c=relaxed/simple;
+	bh=jHmS8j3IxKYS0kccH1uS1+8RQWBqY4WbPVtQtCo7A+4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ULrFUTUHk/afX42sJWEVuhssAxcqD3wrNpwa3qnaervBkuJJ5pHJm+i7fq2/k6czJydWom4mhQfsdYQOHDXPjXWDDXnkcaVWxox7k97oTKtWg7bsmMlAdpJlExUr67RyTfWBlvOXfZZxuIx0czqQpNu3shEpvu941vH3MtY5B2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ELwObnB1; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=markus.elfring@web.de header.b="TDR8LYyw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1751804408; x=1752409208; i=markus.elfring@web.de;
-	bh=LH3x2oH0Q9vMnE2kESAt4YcwrYStw5gjagi6yRA4hPI=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=TDR8LYywAFvurfOTbJY/FxcDqcDwCfX38mlszJwElwiVyeugICP0ckGUWCPFEIaR
-	 QJmUJoYQMYb52TGOtoIrhrjza1LJcIDC2RpeAgx52t3NzaimlspsgAPIus+s0ZVji
-	 ivaDm6N6mVsz3wAvxRhjAnJEPnnCeOc9xxeKFkvS7HoH7ZfHcbcHYRMTrasVAH4XA
-	 IiTFxFycEF17TN3BvXZVavZEQegnHlIuQ8exp5abUq+bFtFsZXeZizzeZv2kAf7zK
-	 eeQ4+nrPlTVQ/IGz3deXrhjFsupgstttDR1q9PWYjFh47UgKjwq0v/Yf7XpYtTr3E
-	 hyRqpY5T6pS5dwD9pw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.178.29] ([94.31.69.242]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MODmf-1uJCqH0yxV-00SJHr; Sun, 06
- Jul 2025 14:20:08 +0200
-Message-ID: <b1753222-0043-4b1d-acd4-9afac0197c65@web.de>
-Date: Sun, 6 Jul 2025 14:20:06 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ELwObnB1"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-74931666cbcso1938457b3a.0
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 05:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751806710; x=1752411510; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=V5NgAhOzw9wqqDOSlEeeEnEBAHMzhKBNSDG365wgsAE=;
+        b=ELwObnB15+4RkQ22hCMrw7eNiU69CukbC9zh1f4ECmzj67j/SrqKzl0otKyQaq4DpG
+         aiduU6dbaqhNZO4nO9HIgjDk5/STJggapfc+Svg/9NgwBSo3+dgK8OolqGZpbUljnATN
+         HlXpbefZhTxpuxG2sni2IBZAic9oixkjwdZGbTWksrTw2ezwWHJ6/A6u+wNtZOKSq85g
+         +WFD9+THdnJnrYXfxQr1xNx+cbzELyrtnDJq/NYEpBrUoaa+FNvwggk9z1RiiemLBekR
+         7fAVJXUAzzyDK9HsMIZjrZzmUokNrIkjfHYczk+KMAlZV6a05eGAhlvQRfZCTNOLL/JR
+         WBHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751806710; x=1752411510;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V5NgAhOzw9wqqDOSlEeeEnEBAHMzhKBNSDG365wgsAE=;
+        b=NXuRmT5Mzg6FmrttLX36bRxlKtpcyrBJ61l3NLQUZS+/JZI9L4HuyXl8rmYA4jULJv
+         XJjrEQK8RrHVMYnx+DOyK5jKL9yHX1HJ6iU71waGVu5zwcRU0d43HhZZjZN39Zr+OQln
+         Lbc9O6LgP0TNoMdREkZKJjw+Sow/YOCEfh4RIwkZFwEXk5Nsv9QvJoadTETjSShMMq5c
+         gx0jbgsxMTqk0r23S7oxpPDXcuvEAy5WhBstEqLn73OdUCxeidLg8BeKfPWwKQOfr6K2
+         drJ2oKFcQGSWOe3At5e5rqXe9xtn9sjq6mzvn76MwwQHGzpnXxqhAZ7xc3ZtxGQhH2fO
+         QTkg==
+X-Forwarded-Encrypted: i=1; AJvYcCXQ2cOyFcOa/wjUbmTj8M1MKWAWTjvjopwm3PJasu0kbGZiniUDM7sWZnsCi7Y+ypZ04go=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyU3+VTqNNF8oGbX+I7UAr2kGi98mMfdKpxqBNDrmuV7cOxpzgP
+	3AV8SvhnQZy5ujTIQUE2Tzk/atl+u2iDETLlVMi/4V2qDH90YCGVuuOZ+s96Gw==
+X-Gm-Gg: ASbGncvkuydxEl7u9NM417OXOExoryEeRZXOVTxWUx0kFc16mVvLYKiVWWwApcBBYDN
+	vEOQLBwWx+EC0QolbLMZu3uwbLtsCxLYut8g/+E49zftNZ28woy93PuphZbjvndTlpUTVRayg/4
+	yeDCA0uk26KXgsWbFHxlSKurYkXDiuw27TZLBhHXKAUIKoQKWjJpS2N4Qs7bV04QuuLrJhYPRB5
+	wUPTPBt0igOLoHcrdOVIFiat8u7Nj74MHIhU8mvbgIlztFW4RT1Q++haK8vWbAbcL3qxp1t2hKP
+	cgXo4HmjPLKqw+qAU3No+dpEihyfw6KbZzgg7hzcoF3wziKnu4BsgJFJqg==
+X-Google-Smtp-Source: AGHT+IGmzTJJXwK22pXkpgnArzuDQcr3I7la+pMbEBSiHKj1FUBhv9lgjgd3IGxjmnIoch4tv8U89Q==
+X-Received: by 2002:a05:6a00:3d0d:b0:748:34a4:ab13 with SMTP id d2e1a72fcca58-74cf6f15ac7mr7274895b3a.6.1751806710501;
+        Sun, 06 Jul 2025 05:58:30 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce429fde7sm6623051b3a.135.2025.07.06.05.58.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Jul 2025 05:58:29 -0700 (PDT)
+Date: Sun, 6 Jul 2025 20:58:27 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org, ps@pks.im,
+	karthik.188@gmail.com
+Subject: Re: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+Message-ID: <aGpy8zQRsEjqX3mw@ArchLinux>
+References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
+ <xmqqh60183ku.fsf@gitster.g>
+ <aF-iSSOmcplFjKQt@ArchLinux>
+ <xmqqo6u55npk.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: =?UTF-8?Q?Re=3A_How_to_restrict_command_=E2=80=9Cgit_grep=E2=80=9D_?=
- =?UTF-8?Q?to_the_first_search_result_per_file=3F?=
-To: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
-References: <fb74577d-f7b8-4fde-ab5a-5283e70b8258@web.de>
- <87wm8lo89w.fsf@igel.home>
-Content-Language: en-GB, de-DE
-From: Markus Elfring <Markus.Elfring@web.de>
-In-Reply-To: <87wm8lo89w.fsf@igel.home>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:368lnqT9dYBegpB2WnLDiaBYsh6LfbhjGOk65IbskL2ZsZtqbIg
- nzy4PXBGIp8JEf5FF7yQygEUJNuYxf0O0CqLK2220oaKwTjSaUizgu+DMiyctC5t4LNuCIb
- Lz72Ep6agboBkfWiPGOHloMSEXcddK6IPWekBjy9ypXZ7JvuOc/j1qiLU5qkcdTgjTnTUMv
- SNGAH5zTqUPB7lNen3SNA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yFHTiJawMZM=;+M3moALsjM5a0//UgJEejVXUmWt
- 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
- qwiO6ewz/2Q==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6u55npk.fsf@gitster.g>
 
->> Would you become interested to find specified items only once in each f=
-ile
->> (instead of multiple times)?
->=20
-> Does "git grep -l" suit your needs?
-I imagine that it can occasionally matter see a bit more context for a sea=
-rch result
-besides a file name.
+On Mon, Jun 30, 2025 at 07:05:43AM -0700, Junio C Hamano wrote:
+> shejialuo <shejialuo@gmail.com> writes:
+> 
+> > If so, we would make "git refs list" to place "git for-each-ref" at
+> > all. However, in the current implementation, we indeed introduce
+> > duplicate code path if we decide to do above.
+> 
+> I do not know what you meant by your first sentence.
+> 
 
-Regards,
-Markus
+Sorry, I think I made you confused here. My meaning is exactly below
+what you have said.
+
+> If you make "git refs list <anything>" a thin wrapper for "git
+> for-each-ref <anthing>", you can satisfy "I want to teach any and
+> all features related to references to the 'git refs' command" while
+> not penalizing existing users.  After all, that is essentially what
+> "git branch" and "git tag" do as their listing mode and supports the
+> featurs from for-each-ref, isn't it?
+
+That's right. I just want to let Meet know, if we decide to make "git
+refs list" a wrapper for "git for-each-ref", we need to change the
+current code design as we introduced repeated code path.
+
+---
+
+Sorry for the late reply, as I am extremely busy with my own business.
+
+Thanks,
+Jialuo
