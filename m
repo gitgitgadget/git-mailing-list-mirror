@@ -1,133 +1,105 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7DB2E36ED
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:09:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2BA21A9B24
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:21:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751836148; cv=none; b=Zz49h5SvRVrRuaLaXSVmOYUI18Q86BUhSpVuW0rupS9K3L6IJxNJ4c1HCq/s84unEPpqxYMIv6h+4D6Srbok+MHHi7UcCg447cTHaFc8TN5cK7WggBegbwnjelYLWRuyl15p88d52JgFo4E7YxxdZteV5q17kJbDWnCDe2r0vzM=
+	t=1751836902; cv=none; b=SciJyyQ6A7BMqaouo7ILybp3uFwhDoQlp1C5PusVRS4wp1joP5XokHRoRL9y1Oj8RfLDLg/+o0C1KCeI5v5vOTHfdEqtd5D0U9T29jo0G2yqyrl+8yJc+Lz8U+9JDqw1NsvHLVB3lXLXzd7ylT5yZP3jtBAFBNCZBl6lIoeWmkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751836148; c=relaxed/simple;
-	bh=OUqIraMhV/ovaQYEA5cJq1iqg9loAhW41Ir/U058j/U=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SLvWIUz0RCApGutbvMdIiQDuvQb7c5yD12wSgy7saXQ38Sg9PrkdJTlJYG368pmCNbXE6zOFJbth9pBFLxZUOpGo/jCSEqaIWN4Wip9Iajq7dsM73uAws2y4PO9QcZpJnzLFMMddchLHF8qiO4TvfWQbgI+ffN8/zUgnZujzE2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OgAFRSrG; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751836902; c=relaxed/simple;
+	bh=unuhPo6QSGquoQ8YHJsG9uBtx2uJOUbjwaT8ANoUOuw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=G2ouX6Dr67d+r5uYImN6NzEzNEhYbbM3gwDmkwroCdbqEc6/1ezqApjxKOq6NO1J/ogPaG9Mn/QLVgEm6EDjuoCz7Unn6BBOLUUaKCEj8ID/rXxs6QspTrPgM6W3ITg1XKim80vZjdAwENJbl7V0egfoAwWpy37aE7IkrAdjKbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=h4wmLdir; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OgAFRSrG"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2123414b3a.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751836146; x=1752440946; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vlZymSS9r3W5Rr7srxoF1qARUYC22vbSIPL6X0s6HMs=;
-        b=OgAFRSrG7fZUfF9aaNUqtOgPcjUNQDu2jg1pp2x39jwlg4T404I2jxd/f8LT56OvcC
-         8hkjuB1xqIgFDPuSC4EdXE2qG8kJjDoC2S53ciCvCqTeTFP8dTPPiFmkDFWqm4AfsoFK
-         Peqmil846nrGfH67t9czJasO3h9IT+AqtTvWH4MXBzv1Fex0u6KlzRpmQsgBu10A5jZd
-         XKCE8wWwrbb2HHc/BOm4lzB1G99fiYFmiWGpp9JgFGPNAbdTwJcnxSeyeLhfRLhF70SL
-         L3HY5Xh8y24hvUbcV6bEUKx72x15hl6IPxS3/RCthkSO5uNsa8OwPhiCcQ8RgETn+oQI
-         zkZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751836146; x=1752440946;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vlZymSS9r3W5Rr7srxoF1qARUYC22vbSIPL6X0s6HMs=;
-        b=OdkZWcP5qYtCOlOifp75+ViAocsF1jmjY30FJtEQ0287ss3Cxoh6MGDzR+JoyYhyPK
-         SoZ+czgPBUykr6eW0g0YCLuY+emha/AN0ArIN1sLUcNO+ved7tl91EvLiXadbnLT8P/b
-         bBn874t+jHPb88suCA6gtH/MxdRLMuHs+Gcq7NPe0ESSKADm3M78dUeEX6L1ASzw7U/Z
-         lBPFa6OVQKLgf2W7x0AWf+npiuwC/D1zBLDIPKrFkH/WBMx8W/fZNwkL8bDp6sj7E8+p
-         QY21RMgsQqV3QvWoDGFtUMcDuTCy3PnPKYpYbo+UAwdrNwvVLQB1C7tEnDLs2dj4joCR
-         peTw==
-X-Gm-Message-State: AOJu0Yw57fyYDbnkcKPjvTveSBUEYJ1/rqntHY/QDORAouS/pn4AH8EE
-	hDfoHY6cC2fdLaNYdhrcAkFpvtd8D2Yx9JejsOAJhj++JwPFE/GEW3on7fDiIUi5sJU=
-X-Gm-Gg: ASbGncvxw3mlNXT0PwicFdSY6dm2rgDUiS0QtzXC8mIDY0s+Su8v8GPZ3kfSyXgx2DQ
-	3xi7omUJ7SJonVHyliAfURbQ5m1AmR0rzlrhCjixPKHjfQtMDS3H5n5M4x4NuYB5JTT5BoBu0vt
-	2K55fOCCbm6byMgB1rykX2ngbr4VLJ/2ua4Rw07B4Xrm9UBiwEvftvaGW7uCE2j08vVjVLMhoKu
-	g3Q59vs2q3emDHmrDY1ILZVH84aOUGLB9c/+GNziVtS7I80eGwlGQ5bxrDnLdbsbjSwQXgGuMF0
-	0ZKhedtuKo2KupBTXgZdAQ62S4Y9G5juEml9+y/XVLCh0kY9GCULm+bOIzmPLASKriWz38VoT7x
-	PeTIw2MyJpSA=
-X-Google-Smtp-Source: AGHT+IFDpB5WR5kJ+/TquhFKwWelNi2AljbbOslwdGtqGjPHXMTmJXxI+3BZhBkdzZ/vnDBtrVoclQ==
-X-Received: by 2002:a05:6a00:2450:b0:748:f8ae:bdd7 with SMTP id d2e1a72fcca58-74ce8837899mr11917640b3a.9.1751836146408;
-        Sun, 06 Jul 2025 14:09:06 -0700 (PDT)
-Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42a2c10sm7220117b3a.136.2025.07.06.14.09.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 14:09:06 -0700 (PDT)
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	chriscool@tuxfamily.org,
-	christian.couder@gmail.com,
-	gitster@pobox.com,
-	me@ttaylorr.com,
-	usmanakinyemi202@gmail.com
-Subject: [PATCH 7/7] t/t1517: move verify-tag -h test to t1517
-Date: Mon,  7 Jul 2025 02:37:25 +0530
-Message-ID: <20250706210725.79903-8-usmanakinyemi202@gmail.com>
-X-Mailer: git-send-email 2.50.0
-In-Reply-To: <20250706210725.79903-1-usmanakinyemi202@gmail.com>
-References: <20250706210725.79903-1-usmanakinyemi202@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="h4wmLdir"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751836891;
+	bh=unuhPo6QSGquoQ8YHJsG9uBtx2uJOUbjwaT8ANoUOuw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=h4wmLdirMIm8uGlVYTZO9kraZMbTvKn3UgToADT/Pv4Kt3YdJJ9+r+J9vqhYmDRHu
+	 nryzk8f8vSHCX6Ibj0wPTKlwVmyF7Xyqzr4srX/oARDii67h4fo7nRopAUVkZLdWxd
+	 soZUTpL/HMIWfi31r1qOA0JE8BWIFlawxJdHy4fiWn4axsIgpK3RJw6MxleU3Yv5y6
+	 RI5m0xkwV3ZYhLJRTW26bKKnz/nkhSjtseom9Sz2AvHtpFrgXNSXZ5D6hUSXcb5SJZ
+	 IKUWnAes97kTz1gUh9upDVjaqCZLFUmj5/B9Qg+wvce9BDYvWDicx9l7+BjXa8fp+i
+	 bQiCoETwPZK41AxPU5aypccKR8FpgkwVZSZDxoEfI/csQDT3WEz5aRUls4KF5b21FY
+	 Mewe9nAjJuaiaBWDRj6PgyXINi97ulXwQa2LIP+/nhQ0x/l7UY7coSxvh/D3LzW/o/
+	 JlOmgt740fwkVZykI3VZj8Zfx486DDcQH9zJ3SUTfoGtLlRuLXv
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:63d3:f0a0:2fc3:f348])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 70DCE20075;
+	Sun,  6 Jul 2025 21:21:31 +0000 (UTC)
+Date: Sun, 6 Jul 2025 21:21:30 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: redoste <redoste@redoste.xyz>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Fabian Stelzer <fs@gigacodes.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+Message-ID: <aGro2h1VsSEYYCmp@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	redoste <redoste@redoste.xyz>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Fabian Stelzer <fs@gigacodes.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+ <20250706173450.12995-1-redoste@redoste.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="g0Tfs44nOl4H+dqm"
+Content-Disposition: inline
+In-Reply-To: <20250706173450.12995-1-redoste@redoste.xyz>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-The test 'verify-tag does not crash with -h' checks that
-the command exits cleanly with usage information, both inside and
-outside of a repository.
 
-Move this test from "t/t7030-verify-tag.sh" to
-"t1517-outside-repo.sh" since it better fits with tests that check
-command behavior outside a repository.
+--g0Tfs44nOl4H+dqm
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
----
- t/t1517-outside-repo.sh | 7 +++++++
- t/t7030-verify-tag.sh   | 7 -------
- 2 files changed, 7 insertions(+), 7 deletions(-)
+On 2025-07-06 at 17:34:49, redoste wrote:
+> Detaching the filename string from the tempfile structure used to cause
+> delete_tempfile() to fail and the temporary file was not cleaned up.
+>=20
+> While it's possible to get rid of the allocation and copy from
+> xstrdup(), it keeps the code symetric with the other branch since
+> interpolate_path() also allocates and ssh_signing_key_file is freed
+> in both cases.
+>=20
+> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+> Signed-off-by: redoste <redoste@redoste.xyz>
 
-diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 42381ef7eb..0755757d86 100755
---- a/t/t1517-outside-repo.sh
-+++ b/t/t1517-outside-repo.sh
-@@ -156,4 +156,11 @@ test_expect_success 'verify-commit does not crash with -h' '
- 	test_grep "[Uu]sage: git verify-commit " usage
- '
- 
-+test_expect_success 'verify-tag does not crash with -h' '
-+	test_expect_code 129 git verify-tag -h >usage &&
-+	test_grep "[Uu]sage: git verify-tag " usage &&
-+	test_expect_code 129 nongit git verify-tag -h >usage &&
-+	test_grep "[Uu]sage: git verify-tag " usage
-+'
-+
- test_done
-diff --git a/t/t7030-verify-tag.sh b/t/t7030-verify-tag.sh
-index 2c147072c1..6f526c37c2 100755
---- a/t/t7030-verify-tag.sh
-+++ b/t/t7030-verify-tag.sh
-@@ -7,13 +7,6 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- . ./test-lib.sh
- . "$TEST_DIRECTORY/lib-gpg.sh"
- 
--test_expect_success GPG 'verify-tag does not crash with -h' '
--	test_expect_code 129 git verify-tag -h >usage &&
--	test_grep "[Uu]sage: git verify-tag " usage &&
--	test_expect_code 129 nongit git verify-tag -h >usage &&
--	test_grep "[Uu]sage: git verify-tag " usage
--'
--
- test_expect_success GPG 'create signed tags' '
- 	echo 1 >file && git add file &&
- 	test_tick && git commit -m initial &&
--- 
-2.50.0
+Yup, this looks good to me.  Thanks so much for the patch; I always
+appreciate keeping the temporary directory tidy.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
+--g0Tfs44nOl4H+dqm
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGro2QAKCRB8DEliiIei
+gdcaAP0a5LUGm1ToOkIV6K+HHMX0o05PerzaMBzr9dLbZnHaUAEAxi0IlI49V4++
+0RK3n2YS+u4tSGYjtEb0l1vWhVH5eQQ=
+=ODiX
+-----END PGP SIGNATURE-----
+
+--g0Tfs44nOl4H+dqm--
