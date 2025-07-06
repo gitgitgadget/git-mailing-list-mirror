@@ -1,131 +1,108 @@
-Received: from 20.mo583.mail-out.ovh.net (20.mo583.mail-out.ovh.net [91.121.55.239])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD1CD2FB
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 01:19:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.121.55.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE8E8125DF
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 01:29:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751764792; cv=none; b=MQsQW8pNzorSNjf28kKWQvi4XKh+57Ac0kC4s7v89kx666VR71+kuQjZORg2IcVzVvd39uTS8sGiSQEDLROTGIIWm4mqZToz0Xp5OE1TyV6gBRupPF+c9xeTJlnynxKYCpQo5P/kXZ6Mf5y31dGAff+xnq2+2rzI38T6tCiUz3I=
+	t=1751765361; cv=none; b=dTueHe3si14XqXB6m20awGmO/oKY1gc//MW6bppdjNQruV/z3CnPWU7BArl8IKGXAKe0PIQ68U3ysac0+Rd2eMKTA+FlsH2CFn739zJE1YwRFV76ozzzqmf4GTGaQpUvPS6JgAUuVIPJU8i6vLbtJIwXmwIpioQPi1yMwasqkSI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751764792; c=relaxed/simple;
-	bh=cIuEi8XH0/jea3QMJUaa7DdxAhMCFOh4KzGqJoC6aO8=;
-	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
-	 References:In-Reply-To; b=fCx56n7an3wpGb07rDnQrdz062/d22CGm8xzJ85gZBfsaN4J1E+5v3S8j6MfMSZiICSuoofPCCBJf4VVlX1+6XVpKthjr1Ghrkm+vIzJU86Ullpza/ZHhsjhtpuAXZaEFsTGUOLDjrNIWIV4ClAXjW634jRf+mUyA1WQ/B+A+Is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz; spf=pass smtp.mailfrom=redoste.xyz; dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b=s7s+dxko; arc=none smtp.client-ip=91.121.55.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redoste.xyz
+	s=arc-20240116; t=1751765361; c=relaxed/simple;
+	bh=gremM6Q0cR/LefHEsR9mLTDxDm2QxFK71MYDDZ4ME40=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=IOqQVDtup4w4ZLAu3PGBxc1NVIOhDk43FOGDuoKFEeVtUqLjS+6TvzMohGhaTWe+q9ciAUJhC2e7lDoAr8vgnHG2yWy0PhC0uWmSfaW56I5uI96xqOdsSJVgWTfJ/UQMQts3oXoy/nmJPOkElEoRyeg91787CKMPjtHWs+BSV9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OfY9nP6T; arc=none smtp.client-ip=209.85.208.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b="s7s+dxko"
-Received: from director5.ghost.mail-out.ovh.net (unknown [10.110.54.180])
-	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4bZQhb0d6xz5ydb
-	for <git@vger.kernel.org>; Sat,  5 Jul 2025 22:50:55 +0000 (UTC)
-Received: from ghost-submission-5b5ff79f4f-774q8 (unknown [10.110.113.83])
-	by director5.ghost.mail-out.ovh.net (Postfix) with ESMTPS id 73926100152;
-	Sat,  5 Jul 2025 22:50:54 +0000 (UTC)
-Received: from redoste.xyz ([37.59.142.96])
-	by ghost-submission-5b5ff79f4f-774q8 with ESMTPSA
-	id +yQME06saWipHwYAuOgIrg
-	(envelope-from <redoste@redoste.xyz>); Sat, 05 Jul 2025 22:50:54 +0000
-Authentication-Results:garm.ovh; auth=pass (GARM-96R001fe107187-55d4-4038-8b6d-dda2361cb188,
-                    03B360DA9A158DBC4F736A687BEA6D6B8F7DE961) smtp.auth=redoste@redoste.xyz
-X-OVh-ClientIp:62.34.249.37
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OfY9nP6T"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-60780d74c8cso3136149a12.2
+        for <git@vger.kernel.org>; Sat, 05 Jul 2025 18:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751765354; x=1752370154; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=97knQsyN5BnZSYMKRus8FYTpsimR4CXY+iPBU8/GmAU=;
+        b=OfY9nP6TQ0aPvbbWW9duAaqpQPFU9ryedkvIQ8T/U4cSL0lSkl+7zFV9w6QV+I6dEF
+         ucqy5JTum9Iq/DHqis76VTIH/vEICpYocywG0rh5v2KHFP9Svt7AYwvBIpevDKhgbGl9
+         JY53dLvJAulkDtII4BjkHhiwT9e7ev4Zu9tl7Oeg+PEyJx2o3UWOPcGEEEFIJ0nrcLge
+         79OFR2fbBVX3Fr0f/dunMksTJYTHY+i4PbNObFtWXg9t7v8pGRY9Esx5dITvkB78UVgP
+         N9KRDBhnweuc9LHrr4cvMnLTGv7ucOhFET9SV21g+8/evUmISYDpcRXEeyuXRXlae1tO
+         Cmqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751765354; x=1752370154;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=97knQsyN5BnZSYMKRus8FYTpsimR4CXY+iPBU8/GmAU=;
+        b=QApS2ckBcd1BlYbwld7oIk9GSiqMYz2R9zYkP2Ta8HwI4ejc7HCWTZnJ3t1K8v7kI3
+         PDibARufZ1jSOGAJUJlKqMgNlBtaGbeLN6QW0zw4JQG02f1HPE2mnQYDUm4fzhzg4g32
+         nO5nB9rD4PY9dy3QCb8nRzxGXJLKXq8Hi7m8dy5/GDvl4pozPudfZi2Q7ZumwEwfbvhO
+         puiDhyD1/vOC50pBncW9LAvbBboOwt2Jro/r4O7OYXXrHLArDIWSyAoF7IPJxJyekM2t
+         sDfwzgzltKCYOUU48XAJRo4NrjTVODZkSdZ70XXrmNUqnsr+4KO4PWCl9wTWdFCZa871
+         cP7w==
+X-Gm-Message-State: AOJu0YyAamZq9lqJaS6vy54Qtw7fd9lf1WDkCgLPmyggXIoLCk+xB5Ti
+	hZUSR/RxeYVvzGOHrgsia4BJPNmgiAHBU35+wy4jAf2znXR6dQzRBOL+RrJqQJlWF/bGgUCQmnG
+	dR+4LhHbMvFm+kamI0SWKQoeNu3tQ9nZAtFDB
+X-Gm-Gg: ASbGnctO5oNwEvr6CcejDD6paDOvnd1W7PPbFtldR7zh7nzXY2W+xRBJZuZDTiP5oHZ
+	ttDCsUhJ3DmX+QvYiWKfwRc7Wk78zx+FixYa9CVNpdVA5T7I6kktqgsD3QM19U5c3oiTxpYZJ7J
+	9lRELbSns4BgKrm+faYGW06nmj6cSj/hlFPyNDgSsKNN8=
+X-Google-Smtp-Source: AGHT+IHt1jks9JNgbcem0N1Ja3yuMktkjAqVdMG+2YRvCASPtGD3/8L1SAPR8UlBQQBZsIa3nHqrSj4NfAdCRxdvx0Q=
+X-Received: by 2002:a05:6402:3489:b0:60c:40bd:8843 with SMTP id
+ 4fb4d7f45d1cf-60fd6511a99mr6865071a12.11.1751765354182; Sat, 05 Jul 2025
+ 18:29:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Sun, 06 Jul 2025 00:50:43 +0200
-Message-Id: <DB4HMD2HLG24.1V8Y9JDW6BACQ@redoste.xyz>
-Cc: <git@vger.kernel.org>, "Jeff King" <peff@peff.net>, "Junio C Hamano"
- <gitster@pobox.com>, "Fabian Stelzer" <fs@gigacodes.de>, "Elijah Newren"
- <newren@gmail.com>, "redoste" <redoste@redoste.xyz>
-Subject: Re: [PATCH] ssh signing: don't detach the filename strbuf from
- key_file tempfile
-From: "redoste" <redoste@redoste.xyz>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-X-Mailer: aerc 0.20.1
-References: <20250704230829.29696-1-redoste@redoste.xyz>
- <20250705192113.GB2496172@coredump.intra.peff.net>
- <aGmGCmkwC1HlSyog@fruit.crustytoothpaste.net>
-In-Reply-To: <aGmGCmkwC1HlSyog@fruit.crustytoothpaste.net>
-X-Ovh-Tracer-Id: 12415861226444985749
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -65
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgddvjedvlecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlhcuvffnffculdefhedmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedfrhgvughoshhtvgdfuceorhgvughoshhtvgesrhgvughoshhtvgdrgiihiieqnecuggftrfgrthhtvghrnheptdetudfhtdejkedtkeffhedtvddvleejfeeihffguddutdeklefgveeuudeguefgnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkphepuddvjedrtddrtddruddpiedvrdefgedrvdegledrfeejpdefjedrheelrddugedvrdelieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprhgvughoshhtvgesrhgvughoshhtvgdrgiihiidpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkeefmgdpmhhouggvpehsmhhtphhouhht
-DKIM-Signature: a=rsa-sha256; bh=PwCCLhn239Nq9bDH7fRVPhjDDc4nCrq4VzCxmuNS9tM=;
- c=relaxed/relaxed; d=redoste.xyz; h=From; s=ovhmo3968190-selector1;
- t=1751755855; v=1;
- b=s7s+dxkoAKTcxtGaN7RVlcEHUGHovDDNphDf/SSXHbJd3UFQAWmvlYTgBobTl9LIdmuPMP31
- eg31GP+8D9MtdyeY/LUrFx0/3wpyP33ryqpG++GUBL6llQHYow64u4qyF0iI6F5Z5BXOwXHJt8w
- pFuheIATSL2wQBI9LzVgCE4qE5a44KWeMMZGyZKCtT/Pe6zboIVixIlY0gCTQp1OeWJsLI/ZtNg
- awIrszVx3vuhGa6da88/Rf2LmUICl/ayCx476yFvNXP6ZtzqDM7di8VtdyfWy4lS5uDN/CQWhVJ
- nLFvddANJVywFssd0utTqaXYlx2s9zkmhfBr/HPtdj/Fw==
+MIME-Version: 1.0
+From: =?UTF-8?Q?Jos=C3=A9_Miguel_Armijo_Fidalgo?= <jm.armijo.f@gmail.com>
+Date: Sun, 6 Jul 2025 11:28:46 +1000
+X-Gm-Features: Ac12FXzNMuf5U7q5D35HwycUTWS7njdL94tFu5E2YKfQ46syk58uguNx2Tmca5I
+Message-ID: <CAKMuBmSeFh63212_GhBHfOTbW5VaqvQjo7jz4aowm8bntCXkVw@mail.gmail.com>
+Subject: Bug: "git stash create" ignores "message" argument
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Sat Jul 5, 2025 at 22:07 CEST, brian m. carlson wrote:
-> On 2025-07-05 at 19:21:13, Jeff King wrote:
->> I wonder if it is worth adding a test, or if it would be too weirdly
->> focused on this obscure case to be very useful against future
->> regressions.
->
-> I don't have a strong view either way, but I do wonder if it's a good
-> idea to have the testsuite poking around in `/tmp`, although maybe if we
-> honour `TMPDIR` then it would be possible to do in a tidy way.
-I looked into adding a test, but I didn't find any other tests checking
-for temporary files and I agree that messing in /tmp doesn't feel really
-appropriate for the testsuite.
+What did you do before the bug happened? (Steps to reproduce your issue)
+    $ git stash create "example message"
+    1e9b483d1f9477de5c99a708f4aa512ba
+    $ git stash store 1e9b483d1f9477de5c99a708f4aa512ba
+    $ git stash list
 
-Maybe something like this?
+What did you expect to happen? (Expected behavior)
+     stash@{0}: example message
 
-diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
-index 065f780636..359dc8eba8 100755
---- a/t/t7528-signed-commit-ssh.sh
-+++ b/t/t7528-signed-commit-ssh.sh
-@@ -85,6 +85,7 @@ test_expect_success GPGSSH 'sign commits using literal pu=
-blic keys with ssh-agen
-	eval $(ssh-agent) &&
-	test_when_finished "kill ${SSH_AGENT_PID}" &&
-	ssh-add "${GPGSSH_KEY_PRIMARY}" &&
-+	export TMPDIR=3D$(pwd) &&
-	echo 1 >file && git add file &&
-	git commit -a -m rsa-inline -S"$(cat "${GPGSSH_KEY_PRIMARY}.pub")" &&
-	echo 2 >file &&
-@@ -95,7 +96,8 @@ test_expect_success GPGSSH 'sign commits using literal pu=
-blic keys with ssh-agen
-	git commit -a -m ecdsa-inline -S"key::$(cat "${GPGSSH_KEY_ECDSA}.pub")" &&
-	echo 4 >file &&
-	test_config user.signingkey "key::$(cat "${GPGSSH_KEY_ECDSA}.pub")" &&
--	git commit -a -m ecdsa-config -S
-+	git commit -a -m ecdsa-config -S &&
-+	! ls .git_signing_key_tmp*
- '
-=20
- test_expect_success GPGSSH,GPGSSH_VERIFYTIME 'create signed commits with k=
-eys having defined lifetimes' '
+What happened instead? (Actual behavior)
+     stash@{0}: Created via "git stash store".
 
-I can add it in a v2 if you think it's a good way to test it.
+What's different between what you expected and what actually happened?
+    The documentation does not explain what the message "argument" is used for.
+    I would have expected that the message would be used by the store command.
 
-> I also have some friends who are trans and have transitioned or are in
-> the process of transitioning but have simply not gotten around to
-> getting legal paperwork done[1].
-This is the exact reason why I'm not very comfortable with using my
-legal or real name, (well, it's mostly because I still can't find a name
-I like).
-And since it's a simple patch that's probably not even copyrightable, I
-figured out that using a pseudonym was fine.
+Anything else you want to add:
+    If the message argument is not used at all, I would expect to
+remove the argument, or
+    alternatively, that the documentation explains why the argument
+exists and what it does/doesn't do.
 
-Since I knew that the Linux kernel changed their documentation to remove
-the use of "real name", I thought it was more common and didn't relly
-think about it a lot.
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?=
-id=3Dd4563201f33a022fc0353033d9dfeb1606a88330
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
 
-I'm sorry, I should have read the git documentation more thoroughly.
-
-If it's really an issue I don't mind signing off with a different and
-more distinctive name.
-
---=20
-redoste
+[System Info]
+git version:
+git version 2.50.0
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.7.1
+zlib: 1.2.12
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+uname: Darwin 24.5.0 Darwin Kernel Version 24.5.0: Tue Apr 22 19:54:33
+PDT 2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T8122 arm64
+compiler info: clang: 17.0.0 (clang-1700.0.13.3)
+libc info: no libc information available
+$SHELL (typically, interactive shell): /bin/zsh
