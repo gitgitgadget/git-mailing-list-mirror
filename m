@@ -1,62 +1,62 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CBD2E36ED
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:08:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10192E36ED
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:08:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751836123; cv=none; b=MADq5dbmD1mQRzS+jUMx8kuGI08XhVoCCzuzUAxA1TpKG4wQHNVKwB1p1vV2QrkCxwki8k0TIp0vEv/QX8ItHyOlR3lwrkJQZkWPtC5tpGzaAU00PNQKCBZ4mUD7+BUsIcgkq/53nZYk5xBM0Sd3iD3oZXm9CaRTXjBJlnTG+QA=
+	t=1751836128; cv=none; b=tOvSJD0fHwsijmx/tY5MP9egnO9NEEpKpMyEssCyDmhKj3MglmCgPGeE3boWqLxB7Vq9/fOnVWJyn4vLKRrXEYRDWIZkEMI6NBjfU7xsLJe0H01C+uTGCKpmkb+nOuZeqaGKAxS3FlOPgOUwewBAk+wgXhPO4CkwJKOslK9Wo4c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751836123; c=relaxed/simple;
-	bh=dy2+NJGSchTWSrEfUVkYakgaTxZXNpF3vmFysG+xB9A=;
+	s=arc-20240116; t=1751836128; c=relaxed/simple;
+	bh=zXNyI3iAu+z2j6kPWQrmOBxju1A1wzpfLBcR+HeK48M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kKNVp/lgjUC7oTTuacIuMcNh4YLBLVGriAgM9wIHIWjbNmpsijDBaD8IocFVSvGTdUXpyE/I468uCG7oWs0JzJruIogY0261l94LPm4v8tSpxy3/AlojNOGnm1atNeNsVNGFQMwiAZSb+l4A25iTSFXsd4UogoW9q5jlvDl2Q9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3fO3w1U; arc=none smtp.client-ip=209.85.210.180
+	 MIME-Version; b=O7D40tOIkjgnBXFw5PkaBTX8ESXruSAmuDaHv3ZDKhz5OD1nYS3FT5ngfSJ79bD2L9dZwI7l/MsBatG3UUHIm5v7YSHQhXRKra+1cTrZEzhIMtg46qJBBndle8d08T/Nu37XxX4UsIySxrTQYL/xOFq900wmNptOgKDmlS+nkrc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGcdqYhQ; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3fO3w1U"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-74ad4533ac5so2682547b3a.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:08:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGcdqYhQ"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-749248d06faso2022848b3a.2
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751836121; x=1752440921; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751836126; x=1752440926; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fhSw9iK/XJJzbmXSFpcqY1YVf6vcxjoslpXI9bdxXmA=;
-        b=k3fO3w1URGnpnYBjBBTLSKOwSWXao0QxZxQQ+THswFGr32zAlW7p8xUWkG9LZcUXxJ
-         1+n5ZGXr8Wm85zrB9D0D0OBiqgx/nKIctHCO8YIiMG2jEI+9ARiANkvGA5mkC8wO8vUp
-         AQDemsjSNBuXdNABIAc9pBjJr9FB5fm6EoTO2aAOhSQKUX6wx/AYFlGn1a8I/DVbGa6Y
-         NeTL9P5Cs+u635MkC2m6YDSgqYlvhtbG4IP5aGmBacy34Pzv5FJhfYkI0Oe4MOU4oLyS
-         h6OEKRwrW+TZXbL4O7pYNAj+M1ndIueFSwkaG+bYc+ozChXxB5doLqm38EDME/56s06T
-         YI/A==
+        bh=Gw0+cyixDBek6HKBJK2biFdG5zoip9i4i8poQFGeNyg=;
+        b=cGcdqYhQ1FSFDvxFDrAaBIYFZx9KCz4UYId0SYu3iIl6ANAlmDqWg85f5Yfqfiy8iN
+         ZyQW8ApZD4UESDrnYHAevTnu3l6WmSQQQMeqZgDdhvtwREgmHk3vMO0REj64XAoGAhpJ
+         YwHfm5wOSKIIuk66paa25X+3j14/QiIFOw0QC+LYcXND8GHDgnhJoBFpISTmZrtA7iL9
+         DqphMnuhL0KxTnK+xlMO8IZRhtUt7tk+dh3fUR4e3OIN31oWSJ+V7IogUiMpluw7T1qa
+         r83zK1auEa4OsEJNugmfnEvdY7RxlX+6I9SWjFq3E/rT9ucVLDYuTdEprAcYjIiJNeMy
+         nCuw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751836121; x=1752440921;
+        d=1e100.net; s=20230601; t=1751836126; x=1752440926;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fhSw9iK/XJJzbmXSFpcqY1YVf6vcxjoslpXI9bdxXmA=;
-        b=DxkQ7vcijfJdt8kQIB+ICY0vjiG+9CgFMZTFe7OsP/ZIC8yMhIDVsjGnhiGer8lw+x
-         vRPAG/EILQPW9hSNvUoIiRoLdgUK3W7tEiotCu14p2pf8cKvdprppxc0EOQjiXslY/1Z
-         xmvUSW+vhHLQZYVqgmmDAP7nPsW6/ojb0umMBVQbYltb+OZjuhPf/cc2k8fsMCT00sW7
-         QXb+71dC9qpR28TUOlzqHC35oKMnuv6Zgawo9oja/KuhzUUYB7Rtjcs9dXKIBhK41VkR
-         zjQc6svlHNhGjy+sAExmJznnx8HXqrrQWayPu+LKsm0b65J5yMDoK6uZqNkwHK9D8bLL
-         VCKw==
-X-Gm-Message-State: AOJu0YzJrTUXg2IwjnQI3PfvKJ3qSNGOib6iAOwn2QjWBflF1xF43qNP
-	XAfdbeKqeQUWLgYvJqYBnj5RoPW8FEppWZRNpNvvKmv5ifugXp7ltYMNppfgcQNbAgY=
-X-Gm-Gg: ASbGnctcj0MxBbdBGICICcURKCDdS+i7Py0hDzLuNpNawLF39OX3G4E4V20xnzTwjvL
-	4VMtPXsgA1ktQitOCOoi5xM8k/11U3KuvYY7bSaQ31WZLFNVq0dZPKffsSa2RL1FeAIWxIb3BoF
-	wKqbTswKLwqoU4E9DH2C8jbWFjBOjyxVY+HiG91LdBiiFKKZzP9pTWKfGldk3Lv45EECU3yBfmd
-	q9hlFvwaX29grl/c1PpUp8d50ovis+kCZW0b2oAH01e85N9J5PkLTDAdOMLUKGaJMrDTYwU37pd
-	nc9wh7bBl/uR9n8beOU/Mk1Hzod1O+3lAeb4YEvbActIwY5+VjIk5KjU13AE/Yp7Ai261UVZYnp
-	6ouZIX+uOGdc=
-X-Google-Smtp-Source: AGHT+IGVyG6PoJVa0Gfm14cK38g82QCZS2dvRWT0mNlcqtwV7sy5bTmfqdSGkpGxuMOtV0jzJ0mZ4A==
-X-Received: by 2002:a05:6a20:d492:b0:1f3:31fe:c1da with SMTP id adf61e73a8af0-225af054ca1mr12648295637.11.1751836120735;
-        Sun, 06 Jul 2025 14:08:40 -0700 (PDT)
+        bh=Gw0+cyixDBek6HKBJK2biFdG5zoip9i4i8poQFGeNyg=;
+        b=atxnROh+Dp6vCKur2gmYSf0mKo2cGIo4wf4uBodp50Y/6PLA8Hy25xCGkQoOdTy+lT
+         yBoT6eNuP0MlN8iQCl/bN9ZXfVPDIw3/cuPexTkv/gH3poD8fBN2+RPPf/k4+LCnUdN+
+         4sSfzXY7RH1N+3Y/Chx4QPlZ3OLWvbD2FXy9/x4Tw9oB9lZsnDmKjhKg/GSK+RP0lRWJ
+         Bqn+GYr6F8s7TJr/QapVVfozFy5JljOt5B6bglXVb/5rD7Iqaj29VVHPNzN9RuM+hDnL
+         3m9LOpEIDOMbVSFRdVK5qtEOuCmeKCGl7PU1+u+4sz1eyzNl/qkiAi/sAJtivlzU5gTt
+         hquQ==
+X-Gm-Message-State: AOJu0YwjRbYKpI8CtUJKTKbwEITNDDg1MJY71LE7xuwVv4mYYZcU2U0J
+	XS4EY8pTYGOiOjT+r+sEZnS8hmwi8OnPI/goq4CoHCHjRLUP6fngDgzmihP9QbZvRow=
+X-Gm-Gg: ASbGnct3n71vJ5SqcWq+XsQ0d303tYDqnLsHgwHhqVmwanupMSkpaOrMFUbLErzfXWn
+	whNhbD5gdcApQPIWcLXH5+RMwHPZt+fZ1lGA4cI95baWL4eOravnFIO5LaxxuwVftD7RnaQd0aR
+	2SZjxon45roK1V8OCXtQh9dbK6uVbNIRtexL5iLxP7nSO9AF09doK5pF6MLB2qJEg6sWahe0jlv
+	+UDmtZMKlTn31HJcng8iunnRhC6X+VrhAAmO1ksBIDRPIy6OZE6tasXw2HjSaodHzJwq5FoItHC
+	uIPrHrGOGJNupGJ406MnC6ewKoIeiCRRsaJKlfgcDN1zS2+A+eLCn9rwfvO8vZvTpK1IxBNkkRy
+	XZ/p684IgWyU=
+X-Google-Smtp-Source: AGHT+IGPWUuKXuDyiM/eDF6lNPPYXcNPPCz3aRpnIL4pVjyPDShud2DcydP7nX68OVePiejuzM/kgA==
+X-Received: by 2002:a05:6300:14d:b0:1f5:8b9b:ab54 with SMTP id adf61e73a8af0-22720cbaf61mr9956594637.23.1751836126170;
+        Sun, 06 Jul 2025 14:08:46 -0700 (PDT)
 Received: from archlinux.plaksha.edu.in ([202.164.41.66])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42a2c10sm7220117b3a.136.2025.07.06.14.08.37
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42a2c10sm7220117b3a.136.2025.07.06.14.08.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 14:08:40 -0700 (PDT)
+        Sun, 06 Jul 2025 14:08:45 -0700 (PDT)
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -65,9 +65,9 @@ Cc: ps@pks.im,
 	gitster@pobox.com,
 	me@ttaylorr.com,
 	usmanakinyemi202@gmail.com
-Subject: [PATCH 2/7] t/t1517: move for-each-ref -h test to t1517
-Date: Mon,  7 Jul 2025 02:37:20 +0530
-Message-ID: <20250706210725.79903-3-usmanakinyemi202@gmail.com>
+Subject: [PATCH 3/7] t/t1517: move ls-files -h test to t1517
+Date: Mon,  7 Jul 2025 02:37:21 +0530
+Message-ID: <20250706210725.79903-4-usmanakinyemi202@gmail.com>
 X-Mailer: git-send-email 2.50.0
 In-Reply-To: <20250706210725.79903-1-usmanakinyemi202@gmail.com>
 References: <20250706210725.79903-1-usmanakinyemi202@gmail.com>
@@ -79,55 +79,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The test 'for-each-ref does not crash with -h' checks that
+The test 'ls-files does not crash with -h' checks that
 the command exits cleanly with usage information, both inside and
 outside of a repository.
 
-Move this test from "t6300-for-each-ref.sh" to
+Move this test from "t3004-ls-files-basic.sh" to
 "t1517-outside-repo.sh" since it better fits with tests that check
 command behavior outside a repository.
 
 Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
 ---
- t/t1517-outside-repo.sh | 7 +++++++
- t/t6300-for-each-ref.sh | 7 -------
+ t/t1517-outside-repo.sh   | 7 +++++++
+ t/t3004-ls-files-basic.sh | 7 -------
  2 files changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-index 98a453db58..92ad159b58 100755
+index 92ad159b58..e04be2d811 100755
 --- a/t/t1517-outside-repo.sh
 +++ b/t/t1517-outside-repo.sh
-@@ -121,4 +121,11 @@ test_expect_success 'checkout-index does not crash with -h' '
- 	test_grep "[Uu]sage: git checkout-index " usage
+@@ -128,4 +128,11 @@ test_expect_success 'for-each-ref does not crash with -h' '
+ 	test_grep "[Uu]sage: git for-each-ref " usage
  '
  
-+test_expect_success 'for-each-ref does not crash with -h' '
-+	test_expect_code 129 git for-each-ref -h >usage &&
-+	test_grep "[Uu]sage: git for-each-ref " usage &&
-+	test_expect_code 129 nongit git for-each-ref -h >usage &&
-+	test_grep "[Uu]sage: git for-each-ref " usage
++test_expect_success 'ls-files does not crash with -h' '
++	test_expect_code 129 git ls-files -h >usage &&
++	test_grep "[Uu]sage: git ls-files " usage &&
++	test_expect_code 129 nongit git ls-files -h >usage &&
++	test_grep "[Uu]sage: git ls-files " usage
 +'
 +
  test_done
-diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-index ce9af79ab1..5db7038c41 100755
---- a/t/t6300-for-each-ref.sh
-+++ b/t/t6300-for-each-ref.sh
-@@ -292,13 +292,6 @@ test_expect_success 'Check invalid atoms names are errors' '
- 	test_must_fail git for-each-ref --format="%(INVALID)" refs/heads
+diff --git a/t/t3004-ls-files-basic.sh b/t/t3004-ls-files-basic.sh
+index 4034a5a59f..a1078f8701 100755
+--- a/t/t3004-ls-files-basic.sh
++++ b/t/t3004-ls-files-basic.sh
+@@ -34,13 +34,6 @@ test_expect_success 'ls-files -h in corrupt repository' '
+ 	test_grep "[Uu]sage: git ls-files " broken/usage
  '
  
--test_expect_success 'for-each-ref does not crash with -h' '
--	test_expect_code 129 git for-each-ref -h >usage &&
--	test_grep "[Uu]sage: git for-each-ref " usage &&
--	test_expect_code 129 nongit git for-each-ref -h >usage &&
--	test_grep "[Uu]sage: git for-each-ref " usage
+-test_expect_success 'ls-files does not crash with -h' '
+-	test_expect_code 129 git ls-files -h >usage &&
+-	test_grep "[Uu]sage: git ls-files " usage &&
+-	test_expect_code 129 nongit git ls-files -h >usage &&
+-	test_grep "[Uu]sage: git ls-files " usage
 -'
 -
- test_expect_success 'Check format specifiers are ignored in naming date atoms' '
- 	git for-each-ref --format="%(authordate)" refs/heads &&
- 	git for-each-ref --format="%(authordate:default) %(authordate)" refs/heads &&
+ test_expect_success SYMLINKS 'ls-files with absolute paths to symlinks' '
+ 	mkdir subs &&
+ 	ln -s nosuch link &&
 -- 
 2.50.0
 
