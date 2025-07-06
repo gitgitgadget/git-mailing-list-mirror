@@ -1,131 +1,108 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF97815B54A
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 19:36:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC61BF58
+	for <git@vger.kernel.org>; Sun,  6 Jul 2025 21:07:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751830613; cv=none; b=E4SgrmBqjnH7+V/NmnU6Oqk7RPEOHySXlw/AAIIYYC88buxeP+A7wl6cLdCceZgocB1xgNw12scSTSDr234Z3FHjJ1+0xA1jaD4yVraBXxoIZtLiL+g8FEBKKeRPyCdTlXRoluKyqobh1GV1o/m7f8THIHZ9ecIfRcFHKLP31r0=
+	t=1751836057; cv=none; b=RxsAo9A6vtQgUydZ+v22LiCdKJ3Yn9mWkgYmYv2VfeYYBZwA39upjL9P7FHGcxBYV2UQcuPbffnHZ0W/uffBAwprT1gPuSsUdIwmfb3Cdpsu0MM10Fm6gSF0mvdjunS2gyOp0tPH2ThtFEb3J258Cvtm9EntRbDrSRL4HVoUFzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751830613; c=relaxed/simple;
-	bh=33mg/uls5hGG6cJ2br47h7hrzjALxZPPK8/dauszg5g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ODveyXt8NnnumfYigrENXjCKLp4xNc7YPpfVA5n5M26ek13UCZwqbBY6aisJXfUkZ9yxlpDvLjJpInoXRamrLm6cmniAbEBqMVD1v1Af8V0kd1DQdQootEdSfninr1YUlP6C+1xTOTowJGnAgEvVajt7PnOHSvvDf+szkBtGVfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DvufYhJe; arc=none smtp.client-ip=209.85.160.41
+	s=arc-20240116; t=1751836057; c=relaxed/simple;
+	bh=r2YjZ5YDWkD7gSZWZ/8P19SieVPvJnp+Gp5FaooeOE0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=igEooteb7HW6cR4qMoZLHBfY/5yFy/j3Y/eDbx+z58uttXBWlsDCONAsldAdH3oWYyhWh72zzIgq3xG+R42NogqZU9+RNu61Y7pSSCOMZuGymWx/UU3QJu1xENW1PoT5QULHxD0GRxjyggfnRo0V7qitIvXnPkOnH1alBGQUeUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O8i+KGqs; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DvufYhJe"
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-2f75f1c7206so647654fac.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 12:36:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O8i+KGqs"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-73c17c770a7so3110538b3a.2
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 14:07:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751830611; x=1752435411; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6q7pY4gKIpGI/Y9PX3oODBCmSgAcJMzVDIh0Qs3RMyU=;
-        b=DvufYhJewL/DlISgTzG6/+T9m/jOlmXt62cwOMgpXVdocR94f3KcKyagMgsbY19hHd
-         xP8U0q1bZz6SLjS35d16TVRZ3yNqTs7NDIOp/DJsNyrKJFy3LSozplwsB3Rm928+R7eP
-         kkHjoF0EK+PFVgweCzsAW4TBQRx5gUb9TJHo+JnVpe3bIsIX/tEruFEQbk4kM2HwKwiL
-         nILnjhPGl2fYkltnIhZoosPIhqoGuGVmrYOSgzAPFIjf8SYxGJmcnUFqNctMDK2o/5W1
-         cLUppkqjTID56VzEkXbAZ1GOwGEtMNqLhVvM0trMTeBT0KNG3mmYP5sd0E0t+dGUej+/
-         fjwQ==
+        d=gmail.com; s=20230601; t=1751836053; x=1752440853; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ox5hTM3tBINRsg38El0P8fHf2SrJm2w2Kb4RSAttpQc=;
+        b=O8i+KGqsrJ6STfBstkMH1zxI8rZGX0AjnvH0e1VyDIQ7be91Oh4QoIJgeo+ONf/LS4
+         4esK7Dcd718qkdFAQZc+NQhr6Mqd9U46a4Ue00VjNmfM4pahE1gy6cRh8aagu3pQe6wH
+         LJC2P4yCCJF5b6JPzH/07ezHuZ0bzYksL8nrIooaWNszYIffjQIQApO6hz3iZr2txm+F
+         li5FppK3Z3Syb76I6AerCKgHRf/45D25ztv5qKHRIgQvwh/rxbG35bTi5n0GoFWTTLvU
+         ixtw2kh/siLdxLIxIoBzus+VJxo834rJswjT4CfYvd67lsoADKEstQFcru96V7njCIW9
+         tZZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751830611; x=1752435411;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6q7pY4gKIpGI/Y9PX3oODBCmSgAcJMzVDIh0Qs3RMyU=;
-        b=aLq9a4VNaUt/+j1pR7MdknMCGqV0dIbWfPceQ4wtktdS8tjKknKuRC+q+hLwmTQhsX
-         IuNXSZBNoFH8cOiyKUIay/IOkgYQooJruL7+FodY+0DO3m9mfQZtYqopoAMumy43fdN8
-         9CHlwZaYB4RBbAXmpmugDQKYlfPmxoYhhJu7hZ08g8YvXRjYKPqJ5IG29epZ2M0qu0hg
-         h2Oxft5Aavg0L+hNLbqDJHmxKYYDBRgz8WLh5XreHKqbSFU5i/6Mgnnjoqs1msPwvC6c
-         5RrGbbM9WSfOPw6/OtmiMKb30pxXTsmm1K0bEEhwTv++QSNPJjQ9sOBUT5UJoQg0+SFS
-         9A/w==
-X-Gm-Message-State: AOJu0YwowkoTdTANWTxDcMWO79iNxiISa40Yyyjfj+yR1j8V+NSEjw6V
-	o15e7M7PdbMmwEcml4ZhZfj5GFp5GVQRdrXr9pedN1IFSY4Ajihkl0j59AsxLt5OpL+n2B5Ec0D
-	yf+uP7iGLV0vIkJAwWbTO09laun/EMv8yYLrc
-X-Gm-Gg: ASbGncu5aVt9TTXzdlhwm+Ks+DZUuaa3J7LHe/1qasv4e33Ga2npOz97bQbR7hC2qPv
-	C5miEuVMoQXkJ4o1qyLBLTrb+1GiLPFeZBNX5N/fKKEALs4M4FhyDpPNMgb/eyzA5y9YG1dBuPk
-	6WebdLDfP6usfFP+p0bBKmZxXsLYQ2P4zX0WESATUlyA==
-X-Google-Smtp-Source: AGHT+IFswYqgBnwoSLY+Ex36G6877inTQQyIlx9tJ1rJp1AIz2Y6YQYK4eZ+ZBobPKEUVXsA1nwEBH/u+/VlriNFj64=
-X-Received: by 2002:a05:6870:48e:b0:2db:a997:7a62 with SMTP id
- 586e51a60fabf-2f7aff300b0mr4830725fac.17.1751830610693; Sun, 06 Jul 2025
- 12:36:50 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751836053; x=1752440853;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ox5hTM3tBINRsg38El0P8fHf2SrJm2w2Kb4RSAttpQc=;
+        b=eKG+ZRZVYnAGQJrtFNFDHVXM73+mZRXykh80/g5v9czKvhFh4qy3RMqfZjYg4RYa3m
+         LUoLEHPT7NbHxEvp5E9BAiJJEYsg1mQDNjKiWRm5kCXLEAuQsAEHv3p2H8Z2AUTolhNg
+         bDdvs1+FP851Fd9tjuWKCNCyRLWdND5LBldgPteGYcWqcE9iw1wGhSfhoxcJY565scHg
+         g4KSezmqtpQECMVcZc/cUlcrB+Xw3fk+eduXfZvIrNc5pI0vW4/ABfY9lH9GBsB8eL/d
+         7LPT4uAXRfvVHQNuSxrUMlraLDKqOf6yuuIp24Pg46TqzAhqF0T8XafTTpXsNT3lseEl
+         35WQ==
+X-Gm-Message-State: AOJu0Yx+E+65mqFa/TlNUn+50hKZBvrpr9N3s8qALJ3wNHdCPMnixYTR
+	rZGTtdFt8WVy0Jl/p6OAmDQcDhr3mRGfKSvz8i1kAzSo3bE7dS1N0zhW/JFK9azUW/0=
+X-Gm-Gg: ASbGncugxR6CY7pN9J4g4NrWS0Hqjiv5KexeV23yZbMn8Psw9nAPUNdvBRCfJk0yVnb
+	fomx8AL8E5mhH2qAfQ1+JSErXWt1LN0YYtUTSuzFF6pE7a1l74uc+gy1jvFqCRrGRuKvCVWVNhk
+	jtn435ZsGBgNC+45rtVs7R59XZ9LrtP3LUk/FWrejLAYU3Y6NYRIAtaZIwBkrDVZV2dtZQQa3PK
+	nNpabVc+/UTalvul42peZd806KC9ZffRDaOnnyemPCA0yEGbZ7be8+Ot/1+hc8SOl6cuKQtA4b+
+	BLoeSHQtPiwLS1AgcWOAnRqJCo6CaqAE17LtKaxCgxPTghlfn1KCEBQJJUrsuQeIGqEeBd4ahOv
+	49pYL31TN7WQ=
+X-Google-Smtp-Source: AGHT+IFiCuLQppa3jq8OfF5PU0Z18f3iMiJUJhMTDXOQjLd+K9QlfzKEum+GMhfx6G9V2z80eFN13g==
+X-Received: by 2002:a05:6a20:2451:b0:216:1ea0:a51a with SMTP id adf61e73a8af0-2260cfebb51mr14174142637.38.1751836053275;
+        Sun, 06 Jul 2025 14:07:33 -0700 (PDT)
+Received: from archlinux.plaksha.edu.in ([202.164.41.66])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42a2c10sm7220117b3a.136.2025.07.06.14.07.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Jul 2025 14:07:32 -0700 (PDT)
+From: Usman Akinyemi <usmanakinyemi202@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	chriscool@tuxfamily.org,
+	christian.couder@gmail.com,
+	gitster@pobox.com,
+	me@ttaylorr.com,
+	usmanakinyemi202@gmail.com
+Subject: [PATCH 0/7] move builtin help test to t1517
+Date: Mon,  7 Jul 2025 02:37:18 +0530
+Message-ID: <20250706210725.79903-1-usmanakinyemi202@gmail.com>
+X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
-In-Reply-To: <20250706163009.335780-1-sandals@crustytoothpaste.net>
-From: Jacob Keller <jacob.keller@gmail.com>
-Date: Sun, 6 Jul 2025 12:36:40 -0700
-X-Gm-Features: Ac12FXz_UObfBIlbyexVgHdmQygDpO1iZH82k2P12p_CszQZY9lEzg0tKjlAYTs
-Message-ID: <CA+P7+xrZVG0piKt1gd7heEibdXud8Kt=2eGd0KvHTMwNp7RcWg@mail.gmail.com>
-Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	redoste <redoste@redoste.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Sun, Jul 6, 2025 at 9:30=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
->
-> Our submission guidelines require people to use their real name, but
-> this is not always suitable for various reasons.
->
-> For people who are transgender or non-binary and are transitioning or
-> who think they might want to transition, it can be a major obstacle and
-> cause major discomfort to require the use of their real name.  This is
-> made worse by the fact that Git provides no way to change names built
-> into history, so the use of a deadname is forever.  Our code of conduct
-> states that we "pledge to act and interact in ways that contribute to an
-> open, welcoming, diverse, inclusive, and healthy community," and
-> changing this policy is one way we can improve things for contributors.
->
-> In addition, there are some developers who are so widely known
-> pseudonymously that they have a Wikipedia page with their handle and no
-> real name.  It would seem silly to reject patches from people who are
-> known and respected in their open-source community just because they
-> don't wish to share a real name.
->
-> There are also other good reasons why people might operate
-> pseudonymously: because they or their family members are well known and
-> they wish to protect their privacy, because of current or past
-> harassment or retaliation or fear of that happening in the future, or
-> because of concerns about unwanted attention from government officials
-> or other authority figures.  As much as possible, we want to welcome
-> contributions from anyone who is willing to participate positively in
-> our community without having them worry about their safety or privacy.
->
-> In all of these cases, we should allow people to proceed using a
-> preferred name or pseudonymously if, in their best judgment, that's the
-> right thing to do.  State that it is common to use a real name but
-> explicitly mention that contributors who are not comfortable doing so or
-> prefer to operate pseudonymously or under a preferred name can proceed
-> otherwise.  Use "some form of your real name" since some current
-> contributors use shortened forms of their name or use initials, which
-> have always been considered acceptable.
->
-> Retain the prohibition on anonymous contributions that the Linux kernel
-> has to ensure that we have some line of provenance to a known (if
-> pseudonymous) author who might be able to respond to questions about it.
->
-> This helps guide people who would be fine using their real name but have
-> misconfigured `user.name` thinking it is intended to be a username or is
-> used for authentication (despite our documentation to the contrary), but
-> also allows for a variety of circumstances where the contributor would
-> feel more comfortable not doing so.
->
-> Additionally, retain the section header ID for ease of linking across
-> versions.
->
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
+In patch series which contain this
+"[*]: 43a8391977 (builtin/verify-tag: stop using `the_repository`, 2025-03-07)"
+and some other builtin commands, the help test was added into their
+respective test files. Since it better fits thats tests that check
+command behavior outside a repository should be in t/t1517-outside-repo.sh.
+Patrick suggest moving the test to t/t1517-outside-repo.sh.
 
-I wholeheartedly agree with this suggested change.
+This patch series moved the all the test.
 
-Reviewed-by: Jacob Keller <jacob.keller@gmail.com>
+Usman Akinyemi (7):
+  t/t1517: move checkout-index -h test to t1517
+  t/t1517: move for-each-ref -h test to t1517
+  t/t1517: move ls-files -h test to t1517
+  t/t1517: move pack-refs -h test to t1517
+  t/t1517: move send-pack -h test to t1517
+  t/t1517: move verify-commit -h test to t1517
+  t/t1517: move verify-tag -h test to t1517
+
+ t/t0610-reftable-basics.sh      |  7 -----
+ t/t1517-outside-repo.sh         | 49 +++++++++++++++++++++++++++++++++
+ t/t2006-checkout-index-basic.sh |  7 -----
+ t/t3004-ls-files-basic.sh       |  7 -----
+ t/t5400-send-pack.sh            |  7 -----
+ t/t6300-for-each-ref.sh         |  7 -----
+ t/t7030-verify-tag.sh           |  7 -----
+ t/t7510-signed-commit.sh        |  7 -----
+ 8 files changed, 49 insertions(+), 49 deletions(-)
+
+-- 
+2.50.0
+
