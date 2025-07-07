@@ -1,158 +1,86 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from 12.mo583.mail-out.ovh.net (12.mo583.mail-out.ovh.net [46.105.39.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60442749C
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 16:15:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A3A1A316E
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 16:22:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=46.105.39.65
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751904954; cv=none; b=KjXu2lZNJwK8LQ8VfhS7es91LjHU78szs5f/gOwIhZv75HvHDt5ZL3EzBt+249Dv++FO57gZEq3d6CslHjEoPD1+24OS2655Tal2mSnJVwUkEAhUOneNtAbaxRQr43WjJ2ZtTbYs2UC0Y6ZYNcO4N67d6BwauhCDPrdkXGb23sk=
+	t=1751905368; cv=none; b=iDhNonznU9QxjbMB1Wfx7PqTlu+1UoZwhSZzXJ7wRv8+673BpnAIbWMKF+oIQCAWoRruOhNH5WPnKDPIOA3MEYS+XNDOg01IqHnEV7FfE9dn1GetFHZalE7ddKxJeYsRwf1jIA07vpFTIjflRjdOKkVOykki0LYprxIrxKiKClo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751904954; c=relaxed/simple;
-	bh=XCGLCIVadfGj3kK35GLVXsTCnx65tOY4BMlP48x+OvU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GqnBrfWteuVM7zumYJhwcOXyOU5okZU2GP2m90RtR3AMnlP8n7Z+MZpEX+gxCPJM4knhWZbTqKrZN0nSGapOQi5p4mco5jaMi87liW3q7/qQaTM9VQ79GLY7oxbJMKgGIDrPUoR8JA3AJpaVRidRJfZPER/eKprnTM0tzZOfGd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Clkyf/tx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a1A727s7; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1751905368; c=relaxed/simple;
+	bh=NOtvoysODMWJcMhClgXYR2TaNDSd8wW8MjAxDWtI0FM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=joKoQd2sYzXeWxXgYQoURV18zmHNPdLH2ByO//H+MeIlw/8h1Yz/FRb65Qk+zMHjN/qMMkrmr5mksBnGxV9lTL2s3dYzGx7v8TnbNVDzHN6SuYB4SCACr6D3t2VtKT7LWruMHIxcJUJals2tER+AWlOB6BFDRcQBwH4h5shXVFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz; spf=pass smtp.mailfrom=redoste.xyz; dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b=IxiIw08E; arc=none smtp.client-ip=46.105.39.65
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=redoste.xyz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redoste.xyz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Clkyf/tx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a1A727s7"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5C2E91D0008E;
-	Mon,  7 Jul 2025 12:15:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 07 Jul 2025 12:15:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1751904951;
-	 x=1751991351; bh=yU8zFfkZxYyD1iwsR9gZm3TH/WVdsmovUeKNNsBWLkU=; b=
-	Clkyf/txTX04XXgoyZI60Q8dbn96hg+BzNYRi/JrHDYidJWdc7p5oPZQX+HGQ7Vf
-	LhoV6C+vkMyYVPUOglF0SC+xdcG07zgIzGFMs1O7FFnp721FnjMJwOau/pp/yznG
-	WpXR6kzGDzpHQJcdJMXB+FmUTWgiLhcK1w0lX0/pDgJ+dLJTJ8PfQ9OtRR5vr1xh
-	c6zGiO3W+b3QHE9R94zi1c63enKon6ScIFBiLX189apbzFWNn0LLXUngQq78WP1L
-	SjhY93L9uORALgXduPgcRZ9Rc90A7tomQ0nQmKLRpeeD/Znr8Z51pFphxOtV5nox
-	q4xdAMngXgN0LSQEKMmy/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751904951; x=
-	1751991351; bh=yU8zFfkZxYyD1iwsR9gZm3TH/WVdsmovUeKNNsBWLkU=; b=a
-	1A727s7zyc7VkYrtEmjZZgU6yzL2zbnicUpYBmq7CK3YufqQILf8rEbqV29qBdNi
-	ela3ULfFev8RjL9OIwdgsJK5M3rFZN74hxn9SrH/sAlHVFqlfM/k8kzBiq3jfpo1
-	dgRyBGN+qHZqs1RHW88ARIruuCgFKaJLcRasP+SKysiGEH6Yd4Rcvtqc65EBbzBi
-	4ATGxjOutaAXk7NdwH3xUx38zSvbYqNmdIbnsnK3yBM0QFMKNu97DTRlzgBK+Faq
-	Zf63vS8x+PbbPBeolDneJyCmpVVZzPuP3ohqB2FtqskNUGwXwEaGRJHIAVRHpNPT
-	kZpTS1jm/54b0GgrISC0w==
-X-ME-Sender: <xms:tvJraDdjOOcnGoKDT1pPzOKXOX3306NBANZxf-0MRDAU1Kxp18sPqA>
-    <xme:tvJraDy2w7JjKJdO9G8Q7_W2_XDODVSId8V3IM5nmVaRouiWpWdPM7p2Szh4Ocnak
-    X1z1991tlqzGzKKyg>
-X-ME-Received: <xmr:tvJraJGNftOatojWvysp7vJ3uWDRU8SSkH7bXLWBOsZzt8hxqJRtoHC7UDma7eE0IAbCI1um3El-re4CL9IcS9WEQLnWyctHnNNtbps>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvddvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshiivgguvghrrdguvghvsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:t_JraHzC_6wtXLWjf4UfaNIaQQx0Kl70cxoEeujF8-QXukSgt8dS_g>
-    <xmx:t_JraKuEh5JYfCRyzu0Ib-MbGf_RyEuUbfD5WwR84O_Av4K4Cx2RWg>
-    <xmx:t_JraE0ydES2cPx47l-hhgH_r1Oxucg06XDHd-qdjI5kuaJ6plTv3g>
-    <xmx:t_JraF9_08qnhiZ6LOLVXz0VnMksmqwr9B1xam9YaDqbbK_HTAVing>
-    <xmx:t_JraJv6PpYH9gaxZ-3F7KgKlDD8EeG_9Qs7SymlLEpZfb-ySw7jFnCl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 12:15:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  SZEDER =?utf-8?Q?G=C3=A1bor?=
- <szeder.dev@gmail.com>
-Subject: Re: [PATCH 2/2] t5333: fix missing terminator for sed(1) 's' command
-In-Reply-To: <20250707-b4-pks-t-perlless-fixes-v1-2-92b2de1c3dd0@pks.im>
-	(Patrick Steinhardt's message of "Mon, 07 Jul 2025 13:08:34 +0200")
-References: <20250707-b4-pks-t-perlless-fixes-v1-0-92b2de1c3dd0@pks.im>
-	<20250707-b4-pks-t-perlless-fixes-v1-2-92b2de1c3dd0@pks.im>
-Date: Mon, 07 Jul 2025 09:15:49 -0700
-Message-ID: <xmqqplec3rka.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=redoste.xyz header.i=@redoste.xyz header.b="IxiIw08E"
+Received: from director1.ghost.mail-out.ovh.net (unknown [10.110.54.85])
+	by mo583.mail-out.ovh.net (Postfix) with ESMTP id 4bbTzY2HnTz6X0h
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 16:22:33 +0000 (UTC)
+Received: from ghost-submission-5b5ff79f4f-f42j5 (unknown [10.110.113.120])
+	by director1.ghost.mail-out.ovh.net (Postfix) with ESMTPS id EB8E1C1635;
+	Mon,  7 Jul 2025 16:22:31 +0000 (UTC)
+Received: from redoste.xyz ([37.59.142.114])
+	by ghost-submission-5b5ff79f4f-f42j5 with ESMTPSA
+	id /2bEE0f0a2iXEAEAZnShUA
+	(envelope-from <redoste@redoste.xyz>); Mon, 07 Jul 2025 16:22:31 +0000
+Authentication-Results:garm.ovh; auth=pass (GARM-114S008f60d3274-2e9f-44cb-9850-3fe81ba5cd83,
+                    D0C7EFB74D5D647EA3E92B704F5959655B36BFB1) smtp.auth=redoste@redoste.xyz
+X-OVh-ClientIp:62.34.249.37
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Mon, 07 Jul 2025 18:22:25 +0200
+Message-Id: <DB5YM57RVQTT.35ZS2BA5SHY@redoste.xyz>
+Cc: <git@vger.kernel.org>, "Jeff King" <peff@peff.net>, "brian m. carlson"
+ <sandals@crustytoothpaste.net>, "Fabian Stelzer" <fs@gigacodes.de>, "Junio
+ C Hamano" <gitster@pobox.com>, "Elijah Newren" <newren@gmail.com>, "Patrick
+ Steinhardt" <ps@pks.im>, "redoste" <redoste@redoste.xyz>
+Subject: Re: [PATCH v2] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+From: "redoste" <redoste@redoste.xyz>
+To: "Phillip Wood" <phillip.wood@dunelm.org.uk>
+X-Mailer: aerc 0.20.1
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+ <20250706173450.12995-1-redoste@redoste.xyz> <aGuNCGNk96DK4GzX@pks.im>
+ <05d66f9c-78b6-4624-a0e3-32235df05105@gmail.com>
+ <DB5W4LH0MI5K.EJ0IILQ1IWR@redoste.xyz>
+ <7130651b-76a6-4eb1-93cf-c9e237d398d7@gmail.com>
+In-Reply-To: <7130651b-76a6-4eb1-93cf-c9e237d398d7@gmail.com>
+X-Ovh-Tracer-Id: 17602600622602032533
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -30
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvddviecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfghrlhcuvffnffculdejtddmnecujfgurhepggfgtgffkfevuffhvffofhgjsehtqhertdertdejnecuhfhrohhmpedfrhgvughoshhtvgdfuceorhgvughoshhtvgesrhgvughoshhtvgdrgiihiieqnecuggftrfgrthhtvghrnhepjeeuteeiuefgleevvdffleeiieeghfdufffgieettdeuhefhgfettefhleeihfeknecukfhppeduvdejrddtrddtrddupdeivddrfeegrddvgeelrdefjedpfeejrdehledrudegvddruddugeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomheprhgvughoshhtvgesrhgvughoshhtvgdrgiihiidpnhgspghrtghpthhtohepuddprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdfovfetjfhoshhtpehmohehkeefmgdpmhhouggvpehsmhhtphhouhht
+DKIM-Signature: a=rsa-sha256; bh=NOtvoysODMWJcMhClgXYR2TaNDSd8wW8MjAxDWtI0FM=;
+ c=relaxed/relaxed; d=redoste.xyz; h=From; s=ovhmo3968190-selector1;
+ t=1751905353; v=1;
+ b=IxiIw08EgYEVDeYjcxU5+mmsXqwr8XJc/k9nl5yHqnRXQ5VkqZZ7pw7wax7nK53oePuUH5+7
+ 07TN94xEnI94Ic9NrOQ39WTkxunFSSms8fWYcl0NbtVSGThubxn3fGCxHxAw6Sj52U1XnLuCLPM
+ T1X9EDtIEp0ReZIo0xPdrHTztnQznxkhJdXFVevi0AHj47X8PFEtRVMVFw233QJCreMKdd+mHie
+ lqW9GHqyBCvIvnO+o2dO6hbHTxHDbj+CROjHI9t29xzvswP+ht8HOqQJZ+bfmNNFS4GslyCJR24
+ eC0BzTarm6T7XZimhBAPBvv14whYXTtwvQOriAm+y4nvA==
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Mon Jul 7, 2025 at 17:26 CEST, Phillip Wood wrote:
+> test_file_is_empty will print a diagnostic message if it fails so it=20
+> should be clear what has caused the test failure
+Uh, okay, this makes sense and I think it will be clear enough.
+However there is only `test_file_not_empty`, `test_file_is_empty`
+doesn't exist. I will implement it in an other commit.
 
-> In 6aec8d38fdd (t: refactor tests depending on Perl to print data,
-> 2025-04-03) we have changed some of the tests in t4150 to use sed(1)
-> instead of Perl. One of the conversions is broken though:
->
->     sed: -e expression #1, char 41: unterminated `s' command
->
-> Curiously enough, the test itself still passes. This is caused by a
-> sequence of failures:
->
->   1. The output of sed(1) is piped into git-update-ref(1), and because
->      sed(1) is the upstream command we don't notice that it fails.
->
->   2. git-update-ref(1) does not receive any input and thus won't create
->      any references.
->
->   3. We then repack the repository with the configured pseudo merges
->      pattern, but as we didn't create any references the pattern doesn't
->      match anything.
->
->   4. We use `test_pseudo_merges()` to compute the list of pseudo-merges
->      and write it into a file. This file is empty as there are none.
->
->   5. The loop over the pseudo-merges becomes a no-op.
->
->   6. The final test succeeds as well because the number of lines in an
->      empty file is obviously the same as the number of unique lines,
->      namely zero.
->
-> Fix the issue by adding the terminating '|' to the sed(1) command.
+> The way I see it is that the changes that are being tested are related
+> to commit signing as the invariant that we want to assert is that
+> temporary files are cleaned up after signing commits.
+I see.
 
-OK.
+I will update this for a v3.
+Thanks for the feedback!
 
-> Furthermore, make the test a tiny bit more robust by not using it as
-> part of a pipe.
-
-While I do not think it would give us big enough improvement to
-revert this part of the change, I would have liked not to see this
-"furthermore" change.  We are not in the business of catching
-segfault in 'sed' that is supplied by the platform, so there is no
-point in breaking the pipeline here.
-
-Will queue.  Thanks.
-
-> Reported-by: SZEDER Gábor <szeder.dev@gmail.com>
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  t/t5333-pseudo-merge-bitmaps.sh | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/t/t5333-pseudo-merge-bitmaps.sh b/t/t5333-pseudo-merge-bitmaps.sh
-> index ba5ae6a00c9..1f7a5d82ee4 100755
-> --- a/t/t5333-pseudo-merge-bitmaps.sh
-> +++ b/t/t5333-pseudo-merge-bitmaps.sh
-> @@ -234,8 +234,8 @@ test_expect_success 'pseudo-merge pattern with capture groups' '
->  			test_commit_bulk 16 &&
->  
->  			git rev-list HEAD~16.. >in &&
-> -			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1" in |
-> -			git update-ref --stdin || return 1
-> +			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1|" in >refs &&
-> +			git update-ref --stdin <refs || return 1
->  		done &&
->  
->  		git \
+--=20
+redoste
