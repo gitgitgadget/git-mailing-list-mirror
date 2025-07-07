@@ -1,196 +1,140 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6412877F8
-	for <git@vger.kernel.org>; Sun,  6 Jul 2025 23:20:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CAC7E9
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 01:11:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751844022; cv=none; b=Llafc8+Pu9zW5H5yJAdtewSXeZ9pxnXBMblxPtWQKdBdwLn2rG8XK5FUxpM4hFxNPR2QueiWn831w8fPCbo66+YFqFDDf8paYyefXVwgl/vbcESdd29agRdSEBaulU4IAA+0XA699+oNTHTRIF+ZJB3dQhRSquHxUbjENG+8HaE=
+	t=1751850666; cv=none; b=jeajyrVXx0KvMCglzTSZAzoqjFZ5IyaIK+Y8A6XFCdmSkrcl/UuEQ7xcmZ0Pk1j4OjDoy6NrCOw4LYwK9cM1FEqxD3uWc/ruLWYu99QQA0vk9iyw3KEGts1Z0pc2TswAYK6b3oWhI1tGYLlxBR/Qb7wlYKqOC5g5l3uv3vuYzOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751844022; c=relaxed/simple;
-	bh=jlrA82gweUnTQuYyPDx1iSTcdCUS/DPuOjDfdMze+QA=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=UMWKlJccwvt+gusKfZWqX0fNOJHUTaztblHXqgVb+MsXfmPcKp5cpWzlR09p7sA2Xwrehl09QEsD1uN82zMA1aHSkEZw5CagegNxDEqhMmQnntzWElrUT7fffc0BCko04mXyN4CD2lsXdKW7N43v16AzpCV+P5NmEmV3MVMTH8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BqvURbur; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1751850666; c=relaxed/simple;
+	bh=5xXZEYGfzb+GvPnO/klLCxsBZc4HEYpsCYvjevsRHJE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MqNX3MKfzQRtEmGIcL6VX4lk4lh0t13NKPdnkG/vp5Y0CBGmop3iI34i3iTunYnipccG3etTS79BG4wQzGmmRCUmE3PTxuNVquTI1VIJcTGDMLvD4XA4SHBCk7PbcpVDDG3e3TojsN2nE+evbzB0b7JiZ4VPi5KIR8zdiwtg8yE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KihQKVox; arc=none smtp.client-ip=209.85.210.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BqvURbur"
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-6ecf99dd567so38649956d6.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 16:20:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KihQKVox"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2213033b3a.0
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 18:11:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751844020; x=1752448820; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aTKhSScI+hJwfB7b5yxY4EHtDHm5gHXLR3yAis9hJpk=;
-        b=BqvURburPHF6pCmmdif3SxPhKBZlLbui/2Opa88Pa/E4ubRdSmUTomGK0lBN4QNIgH
-         iS5MWKgmYW0K5iSb44cMy4YQh+yWM63Xgdv9Bbp7J81ev0jTQmnK9AHwCj0Mzk/TX2wt
-         87yJ8CD0jYVXEhRPnnM7tCRaTectoH5MRbN33K+S/jO8Oh+0BBZNX+dz4og5MNohNyD9
-         L4j0gHC9Riqur35D6EHqp7xFz1knH/eKYWETzj9p4Z8fR/ol1kPRAgyhfmhro8rwdYww
-         RlgsoPa4xQdY+FwDHUTw7ue3ScG19me7lZ+S5OBBG0GVvg3arp4qXZIa4tR+iGoyR5IJ
-         FFIA==
+        d=gmail.com; s=20230601; t=1751850664; x=1752455464; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uwG6SPA5cBI55qSLjcuR0YHnnkxxdLm6qKfIXcZAZMM=;
+        b=KihQKVoxuhJtNsFMSANmg+fhfpvpcf2YjJNqV9ooCiB66bwC43JFV3w7yiW+BU4C5y
+         0EPeYkfJRt7Gmd8VwG2YsRpkAzDiKzDHKG0/Vq+LEqCPHIV444Lr0+MGRYGzeVj0VKfV
+         kEH/56mCLD9dCg8oBYOuzSUCKuWsEFtNwOjetCw0LEIhkTHnTPO2pIkJIjYxI8ApsocF
+         cw+HuTFQbHGA42EGlMXFTPlc2JbxwHc/rlpHZ4Wu4ogGcoBnpnpk3yoe04UJsGmiZYBn
+         A9EbQh38jShK42i7LB00frIV31RlhMuQhjNNa0mLVRA3yCo0qTOfRayNMkCijB3pYChw
+         CsrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751844020; x=1752448820;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aTKhSScI+hJwfB7b5yxY4EHtDHm5gHXLR3yAis9hJpk=;
-        b=hpiflXari25C0WRQbmpit20ON2unHN3z74M9Wt7Nkp/TG8yPitEZIe9NUaUcGIQxyY
-         IEndAE2q5wxzVnz3yfaH0RKyUIAQY0p7Mr1Jier8tMCQYasSLfQJxEZCeUXmxIgs2wWL
-         tXaLSBBmHe2O6n1msVY0Ll4Bv79ZfmVZg0GBlcLuKzXL07MO2gV4D617thIA3fGaK/yL
-         b5/dTBh7DIjS7uStaK/dVR8yB1/lKFRlBTPyDkHwHVqOlYIGZR/sbkjLEDaedhDlAaRK
-         bcAM/qUi4C/6VJ95a3qMY8IAnTjOXBCQmwiI8qu1np7lnfbiA9W0NezQwFEGT72ARvz1
-         gwpA==
-X-Gm-Message-State: AOJu0Yw9O4zO+hxUyBcKFIE8wyT2cf2kmWyvwLnLsBot1ouQ4y6wVR9J
-	Wu9ehowpjWvVk+AJx8ctarOt7wHFlyaTfKFLdFVwGKW5ojYkbjiq+kr8o/Lj8g==
-X-Gm-Gg: ASbGncsrXSuU7BY6V9zNcyfgDo1qHQXQEwK+90J1LQC4vw989IXlVOj5zKpjaRMF7Xf
-	vvQRN5bHOR/i88+96H07PPKlh1WBBLX6BiIHRLrDUXQLaqErsh6ISMRPbD7gwPxKLSMqyUpphKe
-	Jxpi3bhqxaeoQpjiEoZt2uSX+XAEu/WOEles627Bf2RHtRIJqpZx/NPfEJKbZk55O6dS4WQZgsd
-	SaFfxwCd2sMzn9/quSsuNE/P8EuFjRhV4fSbuNv1uxjm1oTqkd+jq3VXm9akv9uMBzVR0T2O3+2
-	wO0miTFfjsyMGHLmvsKhY6HOHraBpOlBJHl+fn5IGdwGR/V2Szou9OKQe3xVcFCsqPs1/NPbLnE
-	UnAPl8kFF/Aw/kFMEeadbUPEnuA==
-X-Google-Smtp-Source: AGHT+IGJtlro6ONWay4Rq2LVFlCmDotFvxG8B14E3Z6msq2BztAyLgeNzD9e32ZdUMvyoLpN6PdpRw==
-X-Received: by 2002:a05:6214:4008:b0:6fa:cb05:b455 with SMTP id 6a1803df08f44-702c8bd3e7fmr146572326d6.35.1751844019955;
-        Sun, 06 Jul 2025 16:20:19 -0700 (PDT)
-Received: from localhost.localdomain ([2804:14c:32:934a:8cb5:107d:e42b:6887])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-702c4d50947sm49891716d6.78.2025.07.06.16.20.17
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 06 Jul 2025 16:20:19 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	ben.knoble@gmail.com,
-	gitster@pobox.com,
-	phillip.wood@dunelm.org.uk,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC RFC PATCH v3 5/5] repo-info: add field layout.shallow
-Date: Sun,  6 Jul 2025 20:19:38 -0300
-Message-Id: <20250706231938.16113-6-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250706231938.16113-1-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250706231938.16113-1-lucasseikioshiro@gmail.com>
+        d=1e100.net; s=20230601; t=1751850664; x=1752455464;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=uwG6SPA5cBI55qSLjcuR0YHnnkxxdLm6qKfIXcZAZMM=;
+        b=NxRFBKjNz4hvn97/sE4At5jt3AnNtt4SMoEDJW8eptYlgn7w9unHLSojCH9XCGoSJ0
+         uBJ0gOLo3ZrbSepsW6BHAqlxR4SgLFHlEBm1mkiTlZUMEoavTiUMtmfZzM8VB21qepuK
+         ktkIUdQKtYQ77PWlhPO7/k5PxRxThaGRL4IaDgeaFs6HWlpa2/WrmVxukqBSQo/3XXb3
+         mV51fgrBoLgOuRVG/OoyQ+Ze6xOYwpvLHFnNv16m35IU72n/DUzv6nbAiF6hq3LLxUQo
+         5PlBl4TK4NrrH6ZHcfw2J4QgVWCidRQBgx11tVoROoijGcyAKLlsRCr7k0dyFoRE0dDf
+         +Wdw==
+X-Gm-Message-State: AOJu0Yymp6Zq0qm7zZ7kNQD5jJM8+gkasc07PxAwBCU33hwpsEkqW+Oq
+	bm0zkFEkOmOwPrvXHFIwPMraCn4BsnGri8zUBztBJeu83/+H4ySY/H3m
+X-Gm-Gg: ASbGncsBRivOSJDUbOaz20PYW23tG8+JZCtSlhegM9PPN+6cmQqev8DUq5ZnsjekVyo
+	pSt14L5HcnQgMhOts+jSl9iunIw/LiGN3Hqi+OTeh5XJRd4D4J+WRdU9jDzQwH07hwiw5WWWwTr
+	XQQya8qd9FGnLLsfKcMQa06hBK0Ob7thT4WEoVcttN98KEAntH4/N+EmNJIfq63xeru/JUymhqU
+	uSFIPrhzH3Dvudu5vAhKk9z3PZd7u2+djH29WNgdI0dhCilExOEVk+uWksBlunCoWQ0X4pN2RIY
+	85/Io7fKE29LyrpgooljsNqehTb7wCb6kpkEGhhdxbiZFgM9b156Gnifix4BEa4kZLJfbs+aThN
+	v2EdZivaZowgnVA0ufvZZswoUDQQ=
+X-Google-Smtp-Source: AGHT+IEgmHx3ivuJ6DugP0+xHpYmxUzesovzk7UMkCo/ZQx+Z8WE/uimQmtvjk3pi155jz1SJ4SiDQ==
+X-Received: by 2002:a05:6300:6141:b0:1f3:33bf:6640 with SMTP id adf61e73a8af0-22609a89960mr15459487637.18.1751850663625;
+        Sun, 06 Jul 2025 18:11:03 -0700 (PDT)
+Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce429af7asm7370853b3a.123.2025.07.06.18.11.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 06 Jul 2025 18:11:03 -0700 (PDT)
+Sender: Junio C Hamano <jch2355@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>,  redoste
+ <redoste@redoste.xyz>
+Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
+In-Reply-To: <20250706163009.335780-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Sun, 6 Jul 2025 16:30:09 +0000")
+References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+Date: Sun, 06 Jul 2025 18:11:02 -0700
+Message-ID: <xmqqv7o4ajq1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-This commit is part of the series that introduces the new command
-git-repo-info.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-The flag `--is-shallow-repository` from git-rev-parse is used for
-retrieving whether the repository is shallow. This way, it is used for
-querying repository information, fitting in the purpose of
-git-repo-info.
+> Our submission guidelines require people to use their real name, but
+> this is not always suitable for various reasons.
+> ...
 
-Then, add a new field `layout.shallow` to the git-repo-info command
-containing that information.
+Another thing to consider, which may matter even more in the context
+of SubmittingPatches, is if it is necessary.  If there is a
+requirement, which may or may not be the "real name", that is
+essential to keep DCO enforceable, we will not be able to drop such
+an essential requirement, even if it is "not suitable" for some
+people.  We would have to rather ask these people refrain from
+contributing.
 
-Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Mentored-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/git-repo-info.adoc |  1 +
- builtin/repo-info.c              | 15 +++++++++++++++
- t/t1900-repo-info.sh             | 14 ++++++++++++++
- 3 files changed, 30 insertions(+)
+But if a requirment we currently have, like "real name", is not
+necessary and if "known identity" is sufficient, then by all means,
+let's make sure we can loosen the wording to make it "suitable" to
+more people.
 
-diff --git a/Documentation/git-repo-info.adoc b/Documentation/git-repo-info.adoc
-index 67d19406ad..3261cd97b5 100644
---- a/Documentation/git-repo-info.adoc
-+++ b/Documentation/git-repo-info.adoc
-@@ -73,6 +73,7 @@ Reference-related data:
- `layout`::
- Information about the how the current repository is represented:
- * `bare`: `true` if this is a bare repository, otherwise `false`.
-+* `shallow`: `true` if this is a shallow repository, otherwise `false`.
- 
- SEE ALSO
- --------
-diff --git a/builtin/repo-info.c b/builtin/repo-info.c
-index 7e29ae8519..2fa6544d15 100644
---- a/builtin/repo-info.c
-+++ b/builtin/repo-info.c
-@@ -6,6 +6,7 @@
- #include "json-writer.h"
- #include "parse-options.h"
- #include "refs.h"
-+#include "shallow.h"
- 
- enum output_format {
- 	FORMAT_JSON,
-@@ -23,6 +24,7 @@ enum repo_info_references_field {
- 
- enum repo_info_layout_field {
- 	FIELD_LAYOUT_BARE = 1 << 0,
-+	FIELD_LAYOUT_SHALLOW = 1 << 1,
- };
- 
- struct repo_info_field {
-@@ -66,6 +68,9 @@ static void repo_info_init(struct repo_info *repo_info,
- 		} else if (!strcmp(arg, "layout.bare")) {
- 			field->category = CATEGORY_LAYOUT;
- 			field->u.layout = FIELD_LAYOUT_BARE;
-+		} else if (!strcmp(arg, "layout.shallow")) {
-+			field->category = CATEGORY_LAYOUT;
-+			field->u.layout = FIELD_LAYOUT_SHALLOW;
- 		} else {
- 			die("invalid field '%s'", arg);
- 		}
-@@ -103,6 +108,11 @@ static void append_null_terminated_field(struct strbuf *buf,
- 			strbuf_addstr(buf, is_bare_repository() ? "true" :
- 								  "false");
- 			break;
-+		case FIELD_LAYOUT_SHALLOW:
-+			strbuf_addstr(buf, "shallow\n");
-+			strbuf_addstr(buf, is_repository_shallow(repo) ? "true" :
-+									 "false");
-+			break;
- 		}
- 		break;
- 	}
-@@ -165,6 +175,11 @@ static void repo_info_print_json(struct repo_info *repo_info)
- 			jw_object_bool(&jw, "bare",
- 				       is_bare_repository());
- 		}
-+
-+		if (layout_fields & FIELD_LAYOUT_SHALLOW) {
-+			jw_object_bool(&jw, "shallow",
-+				       is_repository_shallow(repo));
-+		}
- 		jw_end(&jw);
- 	}
- 	jw_end(&jw);
-diff --git a/t/t1900-repo-info.sh b/t/t1900-repo-info.sh
-index 246c4bc40c..fdbbfb42a0 100755
---- a/t/t1900-repo-info.sh
-+++ b/t/t1900-repo-info.sh
-@@ -67,4 +67,18 @@ test_repo_info 'bare repository = false is retrieved correctly' '
- test_repo_info 'bare repository = true is retrieved correctly' '
- 	git init --bare repo' 'layout.bare' 'true'
- 
-+test_repo_info 'shallow repository = false is retrieved correctly' '
-+	git init repo' 'layout.shallow' 'false'
-+
-+test_repo_info 'shallow repository = true is retrieved correctly' '
-+	git init remote &&
-+	cd remote &&
-+	echo x >x &&
-+	git add x &&
-+	git commit -m x &&
-+	cd .. &&
-+	git clone --depth 1 "file://$PWD/remote" repo &&
-+	rm -rf remote
-+	' 'layout.shallow' 'true'
-+
- test_done
--- 
-2.39.5 (Apple Git-154)
+> In addition, there are some developers who are so widely known
+> pseudonymously that they have a Wikipedia page with their handle and no
+> real name.  It would seem silly to reject patches from people who are
+> known and respected in their open-source community just because they
+> don't wish to share a real name.
 
+Yup.
+
+> Retain the prohibition on anonymous contributions that the Linux kernel
+> has to ensure that we have some line of provenance to a known (if
+> pseudonymous) author who might be able to respond to questions about it.
+
+Where is this reference to "Linux kernel" come from?  Shouldn't we
+name our own project and adopt this new language for our own rules?
+
+And yes, total anonymity goes directly against provenance traceability,
+so it is not a passive "unfortunately we cannot accept" with regret;
+it is a lot more active and positive "we must not accept an
+anonymous contributions."
+
+> I don't claim that this is the best possible wording and I'm open to
+> changing it.   The term "known identity" comes from Linux, but if we
+> need to clarify using different language or otherwise change any part of
+> this up, we can do so.
+
+Thanks for writing this.
+
+>  [[real-name]]
+> -Also notice that a real name is used in the `Signed-off-by` trailer. Please
+> -don't hide your real name.
+> +Please use a known identity in the `Signed-off-by` trailer, since we
+> +unfortunately cannot accept anonymous contributions. It is common to use some
+
+Drop "unfortunately".  We will not accept anonymous contributions.
+It is not like we would wish to if we can but somebody else tells us
+not to.
+
+> +form of your real name. We realize that some contributors are not comfortable
+> +doing so or prefer to contribute under a pseudonym or preferred name and we can
+> +accept your patch either way.
+
+Thanks.
