@@ -1,121 +1,145 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B4A179BD
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 18:31:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3603B1B4257
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 18:53:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751913070; cv=none; b=Rq461NiYw1GHmuDFHeTmjkjCi4olPd6LsXZlQOHDqmkSH5Efub+kizkNJ2lYP2FQEEqPBjkBdmGrarzL1+8ZAWl2Au2Z9Vrk3w2SFBVZatqfc8yfUawFIMqSACbiDYu2JjsAgcq5H5SSErsM1wHQ04Pbv+ebvrQ2K3gbrzd+2wE=
+	t=1751914419; cv=none; b=i26CvakrW8vynSy8u5FlNyj+jdk5HlgRsbfE1ZYpoJ7MMTA0QsSoPpH450OheC7z6+6ctPIGa4XsutyugkFELOSMDUCmgdS+msbhcINOrNQk7eIdSQ/WvzQWRsmQpLcG4l0Efsww3CINTsB2gP1X9pEqqrQ09gIPL8EULh82Shk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751913070; c=relaxed/simple;
-	bh=qJAQS+bTeBbFrBp/uzfwSMsbjJPQCWZo36Hvod468Rs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UQ8okpVGES/WApiw+n503XSoDewS8N7s8+NwzBiLB8GQkNuLE5vundQMvy4C93gnnj0Hd4hqten0K5AQvUDU15aTPh0m/Nv4dUEmYpugDuVhUMQ4uXqFr5zPidSROLz+gfiD+Vw4m10/cDDxa8arkmYKaLZdxQ3LP5ykr+IAA9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KhWxVY8B; arc=none smtp.client-ip=209.85.221.182
+	s=arc-20240116; t=1751914419; c=relaxed/simple;
+	bh=HaJ4JcbEhLxmMFoDHrZhgrNoJ3vzABI6b9FOxtO3iJk=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=KOVY3gcgQzCURZGjimMXooAih2dOUOfR9mpX6vxJL6ssGsXJ90pblxmG+OYk3AF1IqujW+mCP+irwGug6o7Hc7QdTrSLjZUuupXU2X1uDEL76W2oBEtSD+dqS0OVy14hjjOIA5GMOeQhXal6Dadw9tGppsQABv/1zoZDHvYb9hY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BkQ3eizL; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KhWxVY8B"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-532d498eb95so1206554e0c.1
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 11:31:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BkQ3eizL"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a51481a598so1934097f8f.3
+        for <git@vger.kernel.org>; Mon, 07 Jul 2025 11:53:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751913067; x=1752517867; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=FrH6hE76Y5z8AAugiL9xpEc1BpSM0fxDo1td3swH7IQ=;
-        b=KhWxVY8BFO4CuQc7K+MPhY39BZbD0p8gdwSrGYxmuIrfb1lOhdcDLa4OOeWlmxqojr
-         ySZlxkzNRkrrdYNBrcG0O+9OskPEEKUfzV6boOqtk4fi9Jw6Min4GS82INSkqXBT6EfV
-         9ttHQSk4H6pJI0FG3pprPTvAyXsuc04FCrbhiZ4zWc0JvFsBm30nFpYle29QXys4Ps7m
-         iie27uuPBl6LrK8yLHJ2gXYke3LBSErmdBB9Gk2Xlo3Zv8AwxFfHvMAiPde1Hu+Yphtn
-         YxeAe/pHx/OoXkvThJvT1E7ASYdDWJsacH+CnKA+HtuOqgZley567A8dS47yiZ1Likuz
-         LfmQ==
+        d=gmail.com; s=20230601; t=1751914415; x=1752519215; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qqDZ0wf9fncq0amelGhfsdDnKvlaDzOdS3s/s40yok8=;
+        b=BkQ3eizLroT0GUlISah5bltxdiMDah3OiE0yia7xMFt5u2IAy1bfK0lNBpoMkZvWYU
+         KMO6JsWQuRat/7bhrv4Zi4NP6KMIjI4f4hE0knKv7FwUJI+Iee9KbF0mp+Kbkz3FtV+Z
+         TWcLerOHF2xsxdKA81n1I5wi72jZHu1qTKC37q2mcIBtQZKuWIgx95wAEeztaBzFoAOM
+         E68aigc/Uax9ffwWYxdQFP25wX8bdevrMFHccSMaMP62lRsLgSGR/Jx7vwy+iimM+37W
+         VvH/bZtHRrscKjJU4T60hg59aqQsBd9bOrBx6CpMr7laKvGpiyQFA3/HP7lJrb4OQjsm
+         WAkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751913067; x=1752517867;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FrH6hE76Y5z8AAugiL9xpEc1BpSM0fxDo1td3swH7IQ=;
-        b=jAPr/bLUXoa/2vYz2PALrP9zdQeJZmpLv6m6o/2gri3Ru+sAuNpx6Ql4p2Omw950bW
-         CDc3P/1NItyywjHRdPIosbeoVSitw5PJPDsmTnu9vTLfgzBzO4r6CNc+GTGT1E0bLNED
-         xufGKXy/gK5Vh/ryfv/dH5Htp3Vhi5EtfsHzMbDiafypiLhnQNXNEZ82IoGDntN5PZZ6
-         oTG8L9txbD7m0nivZIgglpIj4WewdQW0H9u49UBGwt6csWnJXdQsRlzZGH1PR01jTO0B
-         ptKO+noQhFswUBwhbeisHf/7t3aaZfqPpxaHkCZFY0ZwFJXAFkFfMZ8pIIx5Yz9NVoOv
-         vpMA==
-X-Gm-Message-State: AOJu0YxIyAhWf6wO3mAXbFSqQNnMuhtzVJEK5hPPxQtbRUYYDUIKkXWy
-	ba/2w64FGP7ig2Mk2Etet06ANJSW86HEaYT8voPqo98/oVzcH62OUzV4w6vWAGPqLWXgP0e2APG
-	Ih5nxiNBqY/27+7L4FbZeED4FkDkd65Br/5zS
-X-Gm-Gg: ASbGncuiLHSxkUpOEIZ8iuiwlsMR11ysfeGeQGDYVzY9urPjFiVkv0mELNPvCv7X70J
-	0v154greN33xehzMPGLB0Q95Bno28QUWhkpLWchB6KRaHuvEpEUIql0nWLvGn6ZKYp8b8DLtLcc
-	MCinmeju98cdOVFv8gvE9KKCub74k0+7XrRMv8ei14ludvWlrd3OSPsS5HU+Q/2LcVRLoV7jiR7
-	PS5
-X-Google-Smtp-Source: AGHT+IEwdoIctfdZ6jv9na7O7NSkn2AOsCdQ8PtyMadTKsxNWl6kgzFXddGr1JBB1QOh7fUjTiu1ilQxXggkAVR0itg=
-X-Received: by 2002:a05:6122:251c:b0:52f:47de:3700 with SMTP id
- 71dfb90a1353d-5347bf435c2mr8676947e0c.5.1751913067580; Mon, 07 Jul 2025
- 11:31:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 7 Jul 2025 11:31:06 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq5xg4588e.fsf@gitster.g>
-References: <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
- <20250704-306-git-for-each-ref-pagination-v2-4-bcde14acdd81@gmail.com> <xmqq5xg4588e.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1751914415; x=1752519215;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qqDZ0wf9fncq0amelGhfsdDnKvlaDzOdS3s/s40yok8=;
+        b=tVfVl0AvN/CO15QfQ7q1nXrrxqPEKCg1vFFGyjlQgtfuXZNbc3Ptdwhz6mTrdu8Aqw
+         ca+BAUXmgQdTg1mVtJLzA2TxVouA3AyCELyC63abPykwDmtYjOV6nLG8GEgZZv9qPpk8
+         /GiIzd8x9zCb9l1W6vo+dy14MSW9cIc0M5zEynNRyaZ+hmJfq4ML7gXBHM/hxXzGBG1P
+         gU59iUKQtfoDYaYzgWyo+MgwQZadByO4jVaccrZsGV2M3UMLKQ39df6+H9R1oycDnk0t
+         28oMYWqBH7QFZw0TpexE02RgyNoq6TGQEX9gVB5HmRdyTk0K/9rxSLjiU7v0CA9gsulw
+         zjdw==
+X-Gm-Message-State: AOJu0YwARVFUY33/gGQ4bsF/W6mgFRAh2WMRuUMBZ9gXjUx48vhp7Pwk
+	lxOTOp6yMHuWLCwzi1vfZ5IIwP0hlckvbbhmlCnRsQxtrRO2dfJMEU3u9XJAwA==
+X-Gm-Gg: ASbGncvqhTXvGGMITpWqCEvuu4MOaJotH6fhQE80zzHOgP1zphYyt5z3YKvUmMqXdqn
+	pcfbG8r2cCkkhwHeU09S0UXdmfQb+wGTRsnl2ByInWGKiKJ5l+AAf9fWAiRuSTPHfIFoO3iPCbw
+	f4tcJx6o5daVfW9vvJV97W6yhZV3xyp2Uc91K32whBgQOHuz228H13ZIQWN+Wl5nNuIVQQ/eDmB
+	rnDACqwQZAPuEXcBdlEUKkLEl+i6805s95yg0oPx8nCkfo823ythJZsNP7BcgvYc4vBUafCNyUh
+	QWu90OgHHHj1FHzW+Cc6pany17rptbnpRm3gLV2MSAfl3+8PKEneOCh8kschzYE=
+X-Google-Smtp-Source: AGHT+IGy2c45YADILHvNtR74wna28wV/SyfFlJT+72Tkz2eD99xL5W/g1LujAA3ZH4RWIeN37HuG0A==
+X-Received: by 2002:a05:6000:24c8:b0:3a5:1c70:5677 with SMTP id ffacd0b85a97d-3b497011a0amr11156309f8f.7.1751914414833;
+        Mon, 07 Jul 2025 11:53:34 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b472259842sm11044796f8f.72.2025.07.07.11.53.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 07 Jul 2025 11:53:34 -0700 (PDT)
+Message-Id: <pull.1933.v3.git.1751914412.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
+References: <pull.1933.v2.git.1751203241.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Jean-No=C3=ABl?= Avila via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 07 Jul 2025 18:53:23 +0000
+Subject: [PATCH v3 0/9] doc: convert git log man page to new synopsis format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 7 Jul 2025 11:31:06 -0700
-X-Gm-Features: Ac12FXxBHBLTcJ_0AYMvym1z-oxnvvNjDnTMICR4fgycDzJwIaZDVC5acu4GRbo
-Message-ID: <CAOLa=ZSSQJxm04x1RArP2VxbbxE5ySGiYZ+p-3PaUOu9hXUt0w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] for-each-ref: introduce a '--skip-until' option
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000012380806395b0cc2"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>
 
---00000000000012380806395b0cc2
-Content-Type: text/plain; charset="UTF-8"
+This series converts the man page of git log to the synopsis format style.
+Git log is the second largest manpage after git config, which makes the
+changes quite large.
 
-Junio C Hamano <gitster@pobox.com> writes:
+A special note about the log format description which required escaping the
+synopsis processing of parentheses.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> +	if (filter.seek && sorting_options.nr > 1)
->> +		die(_("cannot use --skip-until custom sort options"));
->
-> Missing "with" before "custom sort".
->
+Changes since V1:
 
-Thanks, will fix in the next version.
+ * rework the grammar style when refering to plural placeholders . The text
+   is more descriptive and does not rely on puns. Puns may be difficult to
+   understand and to translate.
+ * change commit message to reflect the conversion of inline description of
+   several option to a list.
 
-> When I commented on the previous iteration about sorting, I didn't
-> mean to suggest making them incompatible---it may have some use case
-> to grab a batch out of the underlying refstore, sort refs in that
-> batch, and then show them.  But from usability's point of view, I
-> tend to agree with this design decision.  Such an unnatural batching
-> and sorting operation is probably not worth supporting.
+Jean-Noël Avila (9):
+  doc: convert git-log to new documentation format
+  doc: git-log convert rev-list-description  to new doc format
+  doc: git-log: convert line range options to new doc format
+  doc: git-log: convert line range format to new doc format
+  doc: git-log: convert rev list options to new doc format
+  doc: git-log: convert pretty options to new doc format
+  doc: git-log: convert pretty formats to new doc format
+  doc: git-log: convert diff options to new doc format
+  doc: git-log: convert log config to new doc format
 
-I think so too, there might be some usecase, when that usecase is more
-concrete we can probably re-visit this.
+ Documentation/asciidoc.conf.in             |   2 +-
+ Documentation/asciidoctor-extensions.rb.in |   4 +-
+ Documentation/config/log.adoc              |  47 +--
+ Documentation/diff-options.adoc            |  40 ++-
+ Documentation/git-log.adoc                 |  86 ++---
+ Documentation/line-range-format.adoc       |  26 +-
+ Documentation/line-range-options.adoc      |  10 +-
+ Documentation/pretty-formats.adoc          | 283 +++++++--------
+ Documentation/pretty-options.adoc          |  71 ++--
+ Documentation/rev-list-description.adoc    |   6 +-
+ Documentation/rev-list-options.adoc        | 390 ++++++++++-----------
+ 11 files changed, 493 insertions(+), 472 deletions(-)
 
-For now, it is confusing and it is just easier to not support them
-together.
 
---00000000000012380806395b0cc2
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: a5f8785181420cc5_0.1
+base-commit: 8b6f19ccfc3aefbd0f22f6b7d56ad6a3fc5e4f37
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1933%2Fjnavila%2Fdoc_git_log-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1933/jnavila/doc_git_log-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1933
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oc0Vta1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMGZTQy85MXplbUx0M1RzRllCaGlycHAwMXVET0JPYwpMRzRDNHZKUDdo
-QlR6eXAyN3ZONzJMR0d5bHJLdzhSSWhQL1NoNDg1eHdSYllmTlZjQjJiZmQ5b0pEVWg3YUd3CldG
-UU8wSVFBWndMV1IyNmdBMjVTZEFjUGt4WmVTd0l6ZmlyMU9PcFkwbWhhcnRjaFVNV0RSYWZYMThF
-dkNKZHIKbE9RL1I5MHFQTzlPREloblpSVUFsdE5HaWhvMURWODhVZGF0cGF5cDJCb0NyWVhIc2ZT
-MGVvbkxEMGNGSzljWAp0QXBDNVNwdk5EUFJJWGtEbkdDSGtqYTZvVHoxRkVzK3F3akZTTkhzcDQ2
-d01rTktsZE14MlV2Smxad1h5ZStRCnZrODdyRDdmS2lmZ3BVcm9YTGxVdU10MU1hSkgySWdsVVVZ
-UXVQU1Q4ak5WaDFmZzdkYUtYRWhRK2loSjZSb2UKVnZFVU5xUVJqSGQwQ29wZVNCc0h1VWlaU1BV
-RURLVGZCWWh5QThCalAwTkNyMmlpc3M0aUVmMFZhbFY4QWZGRQpUR09hZGdIMFV4L1pYeTFzOWI0
-YkIyWktXMUZaUi84S0R4OWRBNW55UElSdjRSYXVVTDV0VTI4WExuenNXZWFDCnVmcHdwWTBvS0hz
-bjhXYldtRkoyR2pNdkhMVFFOLzhaa0FmSWVxbz0KPUJBTWIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000012380806395b0cc2--
+Range-diff vs v2:
+
+  1:  f2b69588195 =  1:  10ea4ad1cbe doc: convert git-log to new documentation format
+  2:  1f6c951726b =  2:  9b52a62204c doc: git-log convert rev-list-description  to new doc format
+  3:  7bab515e136 =  3:  b0b229082ce doc: git-log: convert line range options to new doc format
+  4:  384a7d23563 =  4:  a4ac3ea5306 doc: git-log: convert line range format to new doc format
+  5:  c2e857105d4 =  5:  1eb897ee9ad doc: git-log: convert rev list options to new doc format
+  6:  01835272c2e !  6:  b860561069d doc: git-log: convert pretty options to new doc format
+     @@ Documentation/pretty-options.adoc
+       +
+       See the "PRETTY FORMATS" section for some additional details for each
+      -format.  When '=<format>' part is omitted, it defaults to 'medium'.
+     -+format.  When `=<format>` part is omitted, it defaults to `medium.
+     ++format.  When `=<format>` part is omitted, it defaults to `medium`.
+       +
+      -Note: you can specify the default pretty format in the repository
+      +NOTE: you can specify the default pretty format in the repository
+  7:  d5490f7d868 =  7:  0d461544c9d doc: git-log: convert pretty formats to new doc format
+  8:  c2346eb580c =  8:  207fc49a201 doc: git-log: convert diff options to new doc format
+  9:  b12b8294b86 =  9:  b51d3621964 doc: git-log: convert log config to new doc format
+
+-- 
+gitgitgadget
