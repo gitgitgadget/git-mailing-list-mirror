@@ -1,53 +1,53 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BA00237164
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 22:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79892221FAE
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 22:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751927647; cv=none; b=tH1lXfIOc3UKCXphLkj7nKImLg+eufO2qN0jYFSXchBBQfiApuT5KBBUDvAvx/ueh6EjeyhPlin1dzJpTr9aA7pc4QgZrkk+yQYpHtBN/ObSlMiN/zixPip1Ikxf3wmjzXEvHWvgJC7mQJ78TIrfIiGo3JYHlqGzTVZOmDPkEuE=
+	t=1751927762; cv=none; b=DehtIEEu+lFFH9/qvpOoNuO+u8LVku+RhRU7WS68fB7R3N90fWaf49BDH62MoLj6ZHZ3fUg52wJuKrwlZEozC/aVH716fwriUbF7Br5sxvuYHDp+JVtD/hjeNSyFHdrz4RDXHxND7MtBuv5b4OdbrwSJsoUeSc+fODrPlkk+d00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751927647; c=relaxed/simple;
-	bh=hq881p13E5gI/fadQF7obu6pVSZJpy9vDGPYyaRnbLY=;
+	s=arc-20240116; t=1751927762; c=relaxed/simple;
+	bh=0yqB9zM8KdoPczo6BaKxklnnAvjG/qQkRgkI0QYOZNA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UYm1FIS+QzcvSTSMSVlb8mhI5mvfAXIB3QFI3Joottg0wlTN4QxFpU/q8AxP9HxReutEDyVAKuV3IGb/jMMT+hv0noxVY7AZaTcVWrnoGPqgd5Ryf7yQuqaC35ZTFehsQMG7/PI5gxAzHRUYsg2w1FX7DFKu+ycSgayXi3SDvOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F0a3E8bA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0PfHtQ3; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=PpXb6nVESm8+GwylSwpZU1ktt+LHvAMgaKUf3nXnEkEYDk/MSP1DneR1MSlCNFeumHcd5sQ9S0MI6QYEhIf1DaUCvy2kgRYr//bob8p8mJDJOh2VNGLlzs33CDTqOaIff1B8CYoVBdSvdxgRzM7IvzCfJWPPOAAE1kmLwCo4IoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=T5/Kqnvt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eIy4Z74w; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F0a3E8bA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0PfHtQ3"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 22F1F1400200;
-	Mon,  7 Jul 2025 18:34:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Mon, 07 Jul 2025 18:34:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="T5/Kqnvt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eIy4Z74w"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9360FEC02BC;
+	Mon,  7 Jul 2025 18:35:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Mon, 07 Jul 2025 18:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1751927645; x=1752014045; bh=xrt4E+iS3H
-	RQ2SX9h95isi5gi9cXEjehDGDxJCAIwTI=; b=F0a3E8bAshpn27HpHtVvWcIsdD
-	LEGXdXBq1aOZtE8vCYcOzVgg+vFORhf3HUTuR6948MEDhnTYUn3PZLKudL7MebjF
-	L99TmFCM2XPbCJ5cs9ykdl+MSnoktnZsS12hGCKPC9OEaC0PYRUvFENRoYKuBUBg
-	v8iG8H2yfcc+TbP3S41QzpGtrvHgC3bMnu9J3Ecsai4faZ5mJHoHMuNYiYxF0IGa
-	fK9U9Zrf5hgcya1/moux9+klHzttNWiLUZksDyJZ2n+MRSXDwS9NQbGIa9Qamhj/
-	OwVR93sT7afL7wvjsWyaGBJBDkwpPlFKaoZVVArtyhoi2n7ThpTucdE8ljRw==
+	:subject:to:to; s=fm1; t=1751927759; x=1752014159; bh=0PADbAH5Ph
+	jXCCVMV2Y5mW4rwABrvRrNeLlyqzGsIT8=; b=T5/Kqnvt9iFUp6zN5dAkNWtqLV
+	EGTuxFE/yNnd615bDc/ZQsnJztpWBfmSMeyY3vrTo1ztaXaIFEkg74JPfgVDs0S/
+	/kltuuKU0NJGezHfbTidwsGyTJc2BJcSfqhTZvrEjIViKtVNXnzOps+1EYzE6AVN
+	5R67kqipDf/MWfV4Bd/5PLKX3MUzrfzVUeB61jB06k2QRMpj3+MV2hEODm+7Wwcf
+	q/9OCbZRh4cgkY+rNomtyVeFxNFOKV29vKxfyfrilBZnoBVYhRqNRxvRCtokAwmh
+	ddjmXKmIhaTdwIR9urH6LHn7RuOiGgFwmcJFmXvS32FoLXUPv7v/FpAZC5cA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751927645; x=1752014045; bh=xrt4E+iS3HRQ2SX9h95isi5gi9cXEjehDGD
-	xJCAIwTI=; b=E0PfHtQ3DwWyyJiHBo+/2+RzP4Bw9Hp6mqmwyvyIOjL6kgduoH+
-	KRrKvPtbLHAjAclj48YyTfMuQfIMT0tIt+EOK+/uXNDBPQ5yPaLcvYcMybzyfbAS
-	ajUlvylSA5NfKH8Q9su2HiJIXc9JzzW7xpIIuR3SQMMFGYTnFmuCCwZ9jXCyL4bo
-	eXIYz9EzDZ4c/+D2c+m7RYMDan1Lz4UBL1peIq/jfvcGxGv8Ce9L8Veb4hneYy43
-	7vWK3wH4gkQjag1GeCjQi3MYbtSPE1a0aGreZJflb2+PiBlLpLX7AuiYA21Ezf51
-	1BG/OuueZ9OdsBKpxgku+qIeiPcysulRDuA==
-X-ME-Sender: <xms:XEtsaNtmFs8L-ueIGDvlQJGv_GHP2E_6wpvljGvgSa-3zRcLNgvRGw>
-    <xme:XEtsaJuVVD1h60gIeP_6C7s7qm17VIkYLJZpFQscHV5f26AG7sR6XipCyk5vol8yY
-    Dwh7JWXitugtcL0NQ>
-X-ME-Received: <xmr:XEtsaKN4G1m52egzBLj1ScyuS3KyCmUd9SjZM2MqdJBCg3e94PnSqzbFLNsc40uhtEPzmGGitKxazCGfgebw5Tlyzy4Dn8KWit0YCbk>
+	1751927759; x=1752014159; bh=0PADbAH5PhjXCCVMV2Y5mW4rwABrvRrNeLl
+	yqzGsIT8=; b=eIy4Z74wii9eUN1g5wrJkuHDgXdS4/7gh05+GIMPmzIWY5bjjtR
+	ZnNKxtfbZ9FATewH+2frIYc7plXgDaRz30REyg09QQWC74ubUJejAdddvPb96wPy
+	eW07pC2A5j/AT2WF0YmHu/yl+EV+Af3vfBQS6eG/jKD2ryM+rNrPeyOEIxINaa+3
+	3fkBm7SF4IaoULZEdNtVmm9ziaz68Yzmuo3xhbfXFtySC3KC2w1uMXuLvaW0DEFZ
+	TcTwh0IIHjNhIMz06xqD85LaSm4ERmKpacNslr/DWKDMoYOpbj/UruECMzfRKEei
+	f/oAlAANCfzMjVLJMOEtdVfLPrkG7XAe/ew==
+X-ME-Sender: <xms:z0tsaFAIoPGaUTzI_tXDuzn1xsDwRJ3s3vUSflfnRBHis_SXyOBjQg>
+    <xme:z0tsaBFGn53QwQVzsnHrO1wQQXUW7mRwWZ5FsDIxalQvkC4BFpnqc4XaDOvMCMcPv
+    V3SoEnyrOMeuOECyQ>
+X-ME-Received: <xmr:z0tsaHCJHxoTY3gADYwA8s4O69_uk70CiVchI5HRvyjNAqtGbOT2FnaVKcVSGFIBftm_zQD_IJOoSPSfZVYhhQaH-xpMs9REsk6YfII>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeffedtudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,29 +55,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeffedtudcutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XEtsaP1KupnwATOJnnVTHU-1PQeA1AaJOnNKfL-0ehYGCaU_voYwyA>
-    <xmx:XEtsaOO8fmXOu09TQYUxmhfQ8WBYihdIw52_EV5NA89-9OS8CuN8XA>
-    <xmx:XEtsaH1owX3zNLKDc57P9yCRGDbe-FYih46PcigkTn6wtXx3aGIUIQ>
-    <xmx:XEtsaNGLpGvODfeVZnKSwsnCBpyiWNgyazCbTP6LZ9qLWLCN_ieOnw>
-    <xmx:XUtsaOX5BiH2FFgpqVVWsyrYMS5LGixdDE5gyvFQPjaaTJU97biloCui>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:z0tsaBX53I8BR99A_831cWc2OS6Cpz_VMTr89AqSeJSKBNbTk4yLZg>
+    <xmx:z0tsaLpLiPC9x9-MPmwKJr9oTP7bmEoZGlkHltJSOAiWcrNqm8KQIA>
+    <xmx:z0tsaNS1Y22RzQMcm9lqILqv0cAiFL8c-r3_-UB7EOtZxZ9Nd5VBkg>
+    <xmx:z0tsaF3eqS7aqR6K0odnShDcPLB9EzHM0VwDr3dPRYBFuub3_AEGJw>
+    <xmx:z0tsaJe43hdX1t-q4NxDztN-VupDLxvt5_agOYcCAkd7RwcoULOON6Ae>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 18:34:04 -0400 (EDT)
+ 7 Jul 2025 18:35:58 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Subject: Re: [PATCH v8 0/2] Avoid submodule overwritten and skip redundant
- active entries
-In-Reply-To: <20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 8 Jun 2025 08:57:03 +0530")
-References: <CA+rGoLdTT3kdELUyHdZLWyy8e6AbfRU7kDFcVUdCmVtDi11hMw@mail.gmail.com>
-	<20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 07 Jul 2025 15:34:03 -0700
-Message-ID: <xmqq4ivn3a1w.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v5 0/5] Make the "promisor-remote" capability support
+ more fields
+In-Reply-To: <20250625125055.1375596-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 25 Jun 2025 14:50:50 +0200")
+References: <20250611134506.2975856-1-christian.couder@gmail.com>
+	<20250625125055.1375596-1-christian.couder@gmail.com>
+Date: Mon, 07 Jul 2025 15:35:58 -0700
+Message-ID: <xmqqzfdf1ve9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,35 +92,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> The first patch i.e. prevent overwriting .gitmodules entry on path reuse
-> is exactly the same 
+> Changes since v4
+> ----------------
 >
-> The second patch however i.e. 
-> skip redundant active entries when pattern covers path
-> has changed logic 
-> with the helper function being code maintainance because 
-> of the duplicated logic. I've tried to wrap it as much as 
-> possible to it's own core need without having to change it
-> unless the core way of submodules addition and active status
-> itself changes.
+> Thanks to Patrick, Junio, Karthik and Justin for their comments on the
+> previous versions.
 >
-> The CI was tested in which 
-> the only compiler error I found was 
-> osx-gcc
-> Which I suppose is already addressed,
-> apart from this all of the other tests 
-> ran successfully which includes the 
-> t7413 (prvious 9) and the new one.
+> There are very few changes compared to v4 and they are quite small.
 >
+> In patch 1/5, in the commit message:
 >
-> K Jayatheerth (2):
->   submodule: prevent overwriting .gitmodules entry on path reuse
->   submodule: skip redundant active entries when pattern covers path
+>   - a few sentences were added to explain why using 'struct strvec'
+>     for the new fields wouldn't scale well,
+>
+>   - a typo "use use" was fixed.
+>
+> In patch 1/5, in the code, a BUG() message was improved.
+>
+> In patch 2/5, in the code, some code comments were added in
+> fields_from_config().
 
-Haven't seen any comment from others on this topic for quite a
-while.  How does this one look to those who do use submodules (I am
-not one of them)?
+The topic saw only a few comments in this last iteration.  Would we
+be seeing a hopefully small and final update to tie the loose ends
+before we declare that the topic is ready for 'next'?
 
 Thanks.
