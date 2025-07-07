@@ -1,91 +1,89 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F28155757
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 06:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6921533993
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 06:08:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751868128; cv=none; b=D7YwBj7TvRGLPcLi3YApM8t4piZo3UIwJHOHoACDEVy2XCBsOOcLmtV3waQPXxcGcwQ62kJ1yhVR8aZ+wJY4RgmMucPLWtxsFqN7YWsmod0zkZShkykjZ5mgXbRF/1YNxWNV8Pwed2crgu+iXaCTmmWZs633YFhRzT/cPTVOMVU=
+	t=1751868527; cv=none; b=WSzNLBopft9mP4zk+6Z4fKSSXlAfEQCw1BJbZvOsCpdmM1fe7JFmj8yziw6jw8QH7tLDP07AFR/Ens0zufDTHTF9rQEPJDPa39DmjPauEHSSnQtRDksYPIep8nO4EXVoSY5svPSQQ+AbUk6Nij62dpUz8atYRWh3NLTQOerYcBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751868128; c=relaxed/simple;
-	bh=ubZ31+8Shnvc/VnQ10ETJ+nX4bqnQzpg1YPaURjcANQ=;
+	s=arc-20240116; t=1751868527; c=relaxed/simple;
+	bh=j4G0Wx2yr4Ie076V8PuheN4NOheXivQOkTLVOcN52K8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=K6peTH5Xoth/Km6EZsc56cv5CvnPByA+ZufLcTDns3fe4Y0jm2J1X60Ew557ceXIxH3DZm2Mo0qNviPPf9LPMuzsOqGTCcBKEY2d4cXHJOsc2gKFSoG4Jq7Vi2wA81wEMV0qhtHul0o//8uKtupew44PrbZ1fi6EYFCzRt9tcvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lCxsnilF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=caRfbDXF; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=r6LPZDNn4U10XMb0W3A5m7mwcVBGdfHSrVctJxuF4E6zrdDcLo9JYKkNzjSVtjP20hbRJ5+CFmEMNoX4DlYf42BUvHQUikce4KbC0HU2RnZjvWr5dHd9FSHC33TDtHyIajme3ijU2+CRIZkJiZLa+VyvWXvdBd5ogeYGUudKRSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yRjvoK1N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FeI3twQN; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lCxsnilF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="caRfbDXF"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8E3DAEC023B;
-	Mon,  7 Jul 2025 02:02:04 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 07 Jul 2025 02:02:04 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yRjvoK1N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FeI3twQN"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 85DC7EC0470;
+	Mon,  7 Jul 2025 02:08:44 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 07 Jul 2025 02:08:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751868124; x=1751954524; bh=UTBIjDvhu9
-	aAkwk0QAFqB/y/3L76epY78krd+D2phbg=; b=lCxsnilFfi5Ls9DEJjoPKHRcRl
-	6iZfa6So6NrDKRetNGOjwWD8v/2+jdCW+YWdiph5eYNgP1C7cJ1l5iFyyqeuAgZd
-	gUg6+SnqcXUpK5lAs50RYpilvFKUtYg+d2UfWhf50koxF4Jg07oZnOraoJj8RNFg
-	6ZFDrG0+XN6cDK/jSGTCdK+J7r0We1dKBzJr7iVaqmmjAPB8GzXR0vJY5HCMzUI7
-	iViHhhjP+7ZcUBD0XhUXhSDPYQEIrUDppz2Wu+MqHlUwffFIJAaMwAYaHfk5Bgfr
-	RRdNFbcrEmmpQEVkMS+aUY45pFqFni+MZ7/ARGeXqNYcIXOQiLl4H+WQbXtw==
+	:subject:to:to; s=fm2; t=1751868524; x=1751954924; bh=llsS4IwazH
+	e8dEv6keGAKuQEwnblUiuOP4AYnaS9gKQ=; b=yRjvoK1NQDyj+wtTuOermolX8d
+	pu5N+RV/xzU+zC6OIBJ2PRUqxQGUFuy66HIyH2nZwnqBrOzFcPkkDbBq3zPQOiwI
+	ZvoNSY4hK/bJmnvFf//gfUiWbsuLHsKD6VJWHfSal17GFLR1Bks0JNCmVAW+o+lJ
+	m6xX1Fa2ghm+oAiugyaCt3DNgvHTuM/oIi53kneugLLwN2Qxxhg2ZSTu4ZhlYWUm
+	B7HW2CYuVO8owhGoOd3jmFMwbjm1m+bno20xyhnzGgPE2uheLxjz+NFkjR6eWieH
+	AEaZUnX9CbBQjbEnIQ9KgQ20YfRwyFD22PMCDKVI7c7fqa6RsJcQDkWcLk7w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751868124; x=1751954524; bh=UTBIjDvhu9aAkwk0QAFqB/y/3L76epY78kr
-	d+D2phbg=; b=caRfbDXFPAk59NLfwHUcda3A5zosUjxwPTpcpZl/+xPpOdkGRgV
-	GOyjCN15q5z0TEr942V1RgAhsePdFQ0EpUnVx3Plar90hl3UULDPIYH4VTmJurD+
-	u1qx8UCiRhWcPvuSAQ/kvVN030x+HIcZkthIqvEky21DzHGlN6suNd8ttUMJeNXw
-	/vtFmp5VcTjpSSx56oGiMuzHLYxXm3CG1iicGYK46ne8ZA669aWwCdWdnJUFyzzf
-	bK984rGZSe7j+f557+qKu6a1pXrL0dbaSKCkuEprrIPDks3YkaVSyrpN87Ejgjs1
-	7+AhNRBGeAXBQYaVj878RDuMkf4coSUaRew==
-X-ME-Sender: <xms:3GJraIMXPMWvlapnPEEh6ria5jjbLHbfWmtLLT00d9VwoQr4bH3FqA>
-    <xme:3GJraMiQvSni9q0ndOaI92T7PSI2IotORozCdKzT8FK52MSDgiYYi5wLHGbl5T4zD
-    cDCCieNSJQk2OIr3w>
-X-ME-Received: <xmr:3GJraFvD2YwveeJUQhTKiPfz_TPxy5bBMNHbeY2Y01TlybQvHUlXNvaBFM1ihAlOF6HCwZUl5ICyxFQ2k4NQBMKdnlxi0c0jNVvWB5KCkQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefuddtvdcutefuodetggdotefrod
+	1751868524; x=1751954924; bh=llsS4IwazHe8dEv6keGAKuQEwnblUiuOP4A
+	YnaS9gKQ=; b=FeI3twQN9gm3iX0O2/l8oygnZDt+Ay1496Ct4iXZ+NJv8EUSPzQ
+	wcRvInnRQza8cWnG4b8vLV4D/iGyTcp9NuaOaT9rdTv/ulNI+6D1vHWkeJXo3T9k
+	4ermVaOA8FRwotL+VLd0c21Fg69ewwDAUde3HGcS47UyAi94zhFybnM2AE6mk1HT
+	OeGKfHezzzpb8YSZdSN1InbI7Ddf9p6Nyw2OstY/LZOl87xpOdtv8BYUQJJt4jGT
+	paJZA0f9F9RLVz/0DVdCx2FCPcSt83/AofOYfVUdwtCFRr07gZVqKf+ff8TOxpod
+	GmrkqPUtc6noLg/Ha8jwACPQLygWnPWj49w==
+X-ME-Sender: <xms:bGRraJF8-eU9-xk42iMdq0oR9CvHF2RtEqOk9D0JBLpXAZMirEyYaA>
+    <xme:bGRraPC9fzP4TzC3rep7Hq7FFLdbfcmNizC2TYPA3i_YZ1dS8WNwcNVTAuY6EqHOm
+    1TWOpPeBTDipOj7RQ>
+X-ME-Received: <xmr:bGRraJVT_jIeyZy95ZDYRXxrcGawLCkuqFVVLzdMZLTIkGmkAlNp4vBa3ww-pqMZXp_mEN66hf1T253OOmhCZJI6hp3iMlHct6y3ByshXw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefuddtgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evhfeffedtteeluefgtdeugfdtkeeugfelkedtheegieekudduueevgeehudekffenucff
-    ohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:3GJraCTE1Oc2P3cDBnikS3MeVXmhxIAmGmQMtqT9gIkfO6wrs4rWTg>
-    <xmx:3GJraB07TTknp8cyUCvcTCHP98yB58ttvuqmkAu70k9rdvwcLXweVw>
-    <xmx:3GJraPuUlOHIthoG6mvpu4McXIi2p4QOZTGHaWWSnGOxA3cgzRncog>
-    <xmx:3GJraPjr6Rn9Lfygq28-Bx_JnbtFUQiIC4bIOdKnkgKM0JFlfYrO9w>
-    <xmx:3GJraCPc317CtTF9xcmbMdUhBRcFsZMMW4jUViWSurJ0qnSyVb7TRg3L>
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdr
+    tghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkh
+    grrhesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:bGRraDrUCstHYZOSVF6783aMMzo84uB239DSMQ7rQEd6ZIBUAaqZlw>
+    <xmx:bGRraFTUmpOttYf_MGrrjNRZIH5mqEKBUkGrRcz_IQDwtyO6uiz07A>
+    <xmx:bGRraN3aiBeykd59UBAkYL38-2pWsvm_022XDcfcBcdpuFMZ3T6Fig>
+    <xmx:bGRraBB8MPed0JcFOj_-cVecBDvJL6F4QUbOp0K-p1uTOYWO6TnfRg>
+    <xmx:bGRraBq20tpJumKKNYPe7ekYNi8ENFq-gJtb2MvSWNodAUEqKsbQF9gR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 02:02:03 -0400 (EDT)
+ 7 Jul 2025 02:08:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ba423542 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 7 Jul 2025 06:02:01 +0000 (UTC)
-Date: Mon, 7 Jul 2025 08:01:51 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b33f41db (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 7 Jul 2025 06:08:41 +0000 (UTC)
+Date: Mon, 7 Jul 2025 08:08:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
-	gitster@pobox.com, Justin Tobler <jltobler@gmail.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
-Message-ID: <aGtiyGW4MIYUw3Ed@pks.im>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-2-lucasseikioshiro@gmail.com>
- <aGZqK5eBA18vHAa_@pks.im>
- <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, shejialuo@gmail.com,
+	shyamthakkar001@gmail.com, gitster@pobox.com,
+	usmanakinyemi202@gmail.com
+Subject: Re: [GSOC PATCH v3 2/2] builtin/prune: stop depending on
+ 'the_repository'
+Message-ID: <aGtkZgbJhO-GQ1XX@pks.im>
+References: <cover.1751630981.git.ayu.chandekar@gmail.com>
+ <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,93 +92,51 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
+In-Reply-To: <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
 
-On Fri, Jul 04, 2025 at 06:40:11PM -0300, Lucas Seiki Oshiro wrote:
-> 
-> > One thing I wondered: Justin is currently iterating on git-survey(1),
-> > which is the command Stolee proposed a while ago to gather repository
-> > metrics.
-> 
-> I didn't find it in the mailing list, but I remember seeing it in the
-> the GitLab's fork. Is it this unmerged MR? 
-> https://gitlab.com/gitlab-org/git/-/merge_requests/369
+On Fri, Jul 04, 2025 at 07:42:35PM +0530, Ayush Chandekar wrote:
+> diff --git a/builtin/prune.c b/builtin/prune.c
+> index dab3c19b6f..320e9c2341 100644
+> --- a/builtin/prune.c
+> +++ b/builtin/prune.c
+> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
+>  	expire = TIME_MAX;
+>  	save_commit_buffer = 0;
+>  	disable_replace_refs();
+> -	repo_init_revisions(the_repository, &revs, prefix);
+>  
+>  	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
+>  
+> -	if (the_repository->repository_format_precious_objects)
+> +	repo_init_revisions(repo, &revs, prefix);
+> +	if (repo->repository_format_precious_objects)
+>  		die(_("cannot prune in a precious-objects repo"));
+>  
 
-Yup. It's been posted to the mailing list as part of [1].
+Okay, we now only end up using the passed-in potentially-NULL `repo`
+after we have called `parse_options`. Makes sense.
 
-> > Would it make sense to maybe have such whole-repo commands
-> > grouped together in a `git repo` top-level command? E.g. `git repo info`
-> > for your command, `git repo size` to gather information about the repo
-> > size.
-> 
-> It seems to be very nice for me! In fact, this being a home also for
-> statistics is something I considered while writing the first versions of
-> my GSoC proposal.
-> 
-> And what about merging the two codes into a single API? Something like:
-> 
-> ```
-> git repo-info layout.bare references.format survey.commit-count
-> {
->   "layout": {
->     "bare": true
->   },
->   "references": {
->     "format": "files"
->   },
->   "survey": {
->     "commit-count": 42
->   }
-> }
-> 
-> ?
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index 6824581317..8f59b867f2 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -114,4 +114,11 @@ test_expect_success 'update-server-info does not crash with -h' '
+>  	test_grep "[Uu]sage: git update-server-info " usage
+>  '
+>  
+> +test_expect_success 'prune does not crash with -h' '
+> +	test_expect_code 129 git prune -h >usage &&
+> +	test_grep "[Uu]sage: git prune " usage &&
+> +	test_expect_code 129 nongit git prune -h >usage &&
+> +	test_grep "[Uu]sage: git prune " usage
+> +'
+> +
+>  test_done
 
-We could in theory do that. But there's two things we need to be
-cautious about:
+And we have another test that verifies that all of this works outside of
+a repository.
 
-  1. We should be mindful about what specifically this tool is about. It
-     shouldn't become the next tool that does way too many different
-     things.
-
-  2. One of the idea of git-survey(1) is to eventually replace
-     git-sizer(1). This will require very specific presentation formats
-     that aren't really compatible with any of the other information.
-
-Out of these two I think the second item is the more important one why
-git-survey(1) should exist as a standalone tool, either as a top-level
-command or as a subcommand.
-
-> During our meetings, Karthik suggested (I'm planning to it later) to also
-> allow to request an entire category instead of only the fields. Then, this
-> would also be possible:
-> 
-> ```
-> $ git repo-info survey
-> {
->   "survey": {
->     "commit-count": 42,
->     "blob-count": 1234
-> }
-> ```
-
-It raises another question though: if we ever were to add `--all` we'll
-need to step a bit careful about what kind of information we add to this
-tool. All of the information proposed so far can be computed rather
-trivially. But computing repository sizes has way higher computational
-complexity and may easily take seconds, maybe even minutes in large
-repositories.
-
-That to me further points into the direction of giving those two tools a
-common top-level command (`git repo info`, `git repo survey`), but to
-not mix concerns too much with one another.
-
-> But I don't know what are Justin's plans for git-survey, if it would be a
-> porcelain command for showing those stats to the user of if it is targeted
-> for being parsed like this `repo-info`.
-> 
-> I'm just brainstorming because I liked the idea :-)
-
-I've already pinged him on this and he liked the idea of having a common
-top-level command. I guess he'll respond later today or this week.
+This addresses my review comments, so this version looks good to me.
+Thanks!
 
 Patrick
