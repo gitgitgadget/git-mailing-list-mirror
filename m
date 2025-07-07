@@ -1,104 +1,171 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC8CF19D880
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 13:59:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA052BEC31
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 14:15:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751896744; cv=none; b=ZamLP0Vo9IxXhc90GTjo2E6wwv1YEHdZ/GEQSYccDTKIjtfjSJi4yVRA9obWgzE/4wiJ1hqfq4rTFcvQGy+t/V+ieMdluhbBRd90A19JnsyZWTmGPg08h/w95rP1JGdl+uTq8Fxu+lqwqNAu0uRG51kSAIUWSVNZVmNf2Z45Kt8=
+	t=1751897721; cv=none; b=Rram1tgv8aL+NY7Kn5Y36r3oZnR3b7u8dTSbwjsc5FbrSEDHT6a+jJRXMM3Ct02VaZqUzhpLk7m6b9N0UhR64Q7z24pss2gJADaHKnwb4UhghGNFp0HaFpOMfPWCUfPQlZXPmZB9H9Lo4GwgKcmfvz1MO4ekGLu87KsAXoL56Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751896744; c=relaxed/simple;
-	bh=vv1TvnqWdYdw5TlQo5ANfg/qI0PnQa9vMXVO7LwdVFo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=M/UMXayPEdnD/unyrKmTxaggXG2v6Yuux/stMDk8C1U9mQaYB39fRweCEDKkFvJu4gkPjaOQ4hTILOazuij/HnxnMuZ+ZxDz6FTCBmOFnIy33CsTQR3hfFwmN2q0/+5FwGvPJqKHYNj2TJ1MJiIBZNh+gFpzKDpvwWRdnBj9HQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iysCb8ui; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iysCb8ui"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b391ca6146eso837089a12.3
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 06:59:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751896742; x=1752501542; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5AMhK7KdiGJHXv8v11LNp3mdu4M8sBSjI1AlVwfN8K8=;
-        b=iysCb8uio91WHgl/U/N63nhjTXa/LNUtpisiUj5SqMJln0e9VStSHcG4JI+t1u3IrQ
-         KsID5WRN7kGyOqJhiJD/awwKBiukTcbcXI30EO5pm2AwL+wTNWVqzqm9Y3pzHTXgN6/1
-         IBA4vw7QEc1OOZoqPNmJ6iLAIMUzQbQO5+ibHoFJkjo53yPDq8B4DXJ4I+oqKagUv39x
-         Sk23yl13vsuSz4BUNG94riwMjlXODxqXcGjX+wDpXFRUcK+9L3He3aOVs6YZbl4BUXBq
-         R9ajEy+e01PBd08BlialSeTql6qI3RQPkogVtUHPDVnzEj3UGej4OXUnAg2mDhK9VhBb
-         bSGQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751896742; x=1752501542;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5AMhK7KdiGJHXv8v11LNp3mdu4M8sBSjI1AlVwfN8K8=;
-        b=ga7nJpuZS0e17nAAJhHXIlfYj3AuzpUudO0JxCVVTSIL4q2qXgSMCuqI7v5uGXo3G7
-         Umi3wcBwiggq99JjCricYoTf422ulZnjiOf4y0Rq7ojIsjL0dLauYoEv95D0K032QNDI
-         sMVoqZ7KkUHwgmqentYhvB7M7V3Q7OGlVVZJXzm12fDJzXMeqSR+HM/WRdriJGKs4gBk
-         b0JTOoIwpBYtgE7tWymwq6LWLWEGVlL7lSP3RARlaVENONlLfE3Y/8IUO86AQOkXJ8Hr
-         XpFTyJzpc1iokbcWSoVT8slYJbkrxinnKQQqiVxZwpk8NcOlLLylXigHMgERl+LPC74e
-         MANg==
-X-Forwarded-Encrypted: i=1; AJvYcCXNQELgkPqStHu6oRSqGbU2O+jzz9khPjSkWk7RqmWOr9EG8uYl4wOA/+wZDxfSN9u+YlI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywj+08JrrDobB2Tw1rdCQ//PrWE+N9SGB6ghcD+n3Sm601Eh3YR
-	LIuPr+x2SfRE9L/Nvpg3ZMQDj01s+w1pcTrMd9Rw+PeKy3wm9ZK/VoQ3
-X-Gm-Gg: ASbGnctwMcS3s7fE2aWP/KPmfVQHi8CwtXlQLgI6JSDWlXL39ygG8q3bYouppm8cAuJ
-	uIlw/ioMfk2p58DHGb9WG3b3xlZUE8C7SJeFdeIkhiJk3mfjBUHAmnGok/AkI++TGnMrcQz2Gny
-	+LTeQ2JunScKgkCb514YObEsFGPUrkd5mnJBHGWRmkAfrXjiHRgYhhZdf83XTVHiPddsQSRZTa3
-	o9GBKiQMpXVDP1RGJmdAa9rd469sMLpSBz/O9S7vS/oY4OegdF0EA5t+uqLmq4a4j1h8FibQuMi
-	9924UOky50sG40wkQFhSCH00dQuJOvfyoBqVdOwNzpaVvaxt3cfSjkuZZ+/HZh6IXWNDvnPUOhN
-	U7G0d20KMGm5FZs/8fkbwprWJP6Q=
-X-Google-Smtp-Source: AGHT+IFfzshRCbCc6wPhPx7y7OXUnTmXdtvDuteLDEcAvbOttjHr87Ao8G0ocYVjn7yooWASdUMZvQ==
-X-Received: by 2002:a05:6a21:594:b0:220:150b:15d2 with SMTP id adf61e73a8af0-22720cbae26mr14016297637.25.1751896741939;
-        Mon, 07 Jul 2025 06:59:01 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce359d1a7sm9738042b3a.11.2025.07.07.06.59.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 06:59:01 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Per Cederqvist <ceder@lysator.liu.se>,  git@vger.kernel.org
-Subject: Re: [PATCH] remote: detect collisions in remote names
-In-Reply-To: <20250705185842.GA2496172@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 5 Jul 2025 14:58:42 -0400")
-References: <CAHx6-Um1dq0xJ-RkW+qXe=sEa6JGViSJxjzNw56u55DHLYoT2Q@mail.gmail.com>
-	<20250705165750.GA1951664@coredump.intra.peff.net>
-	<20250705185842.GA2496172@coredump.intra.peff.net>
-Date: Mon, 07 Jul 2025 06:59:00 -0700
-Message-ID: <xmqqqzys5cgr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1751897721; c=relaxed/simple;
+	bh=r+rK5OH3lxOcViCUhl0C1PdVObst7/JPBz1/9E9wjk8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=fmxc+p7NrFI/WlWNRM/MQnXm4E+J+GdbUhs2GPsrDebQCV0Rn44rJeEpjJhSCk2mNQ3qGdsf2f912IRmHm6r+wwWTxyJlT/V8MtU2RDLMZHtP6tgDbM9+VL/37FANaXommkKiJ/9NF1CtJL6HLMjNkbR8UjlAD6P0QtCkGNxEuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz8t1751897674tc74cf793
+X-QQ-Originating-IP: bzzW6hDuDTPbCSjupDvX8SpEjcB458G+fRgEX6gNtCU=
+Received: from smtpclient.apple ( [202.119.43.124])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Mon, 07 Jul 2025 22:14:32 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 12594746258158291414
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v4 3/4] bloom: replace struct bloom_key * with struct
+ bloom_keyvec
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <65dc80f9-a91c-463b-9c6b-cb20d293432b@gmail.com>
+Date: Mon, 7 Jul 2025 22:14:22 +0800
+Cc: git@vger.kernel.org,
+ gitster@pobox.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <5DB7714D-4009-47C4-A8F7-1C375C6D29AF@smail.nju.edu.cn>
+References: <20250628042140.1097910-1-502024330056@smail.nju.edu.cn>
+ <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
+ <20250704111437.2660251-4-502024330056@smail.nju.edu.cn>
+ <65dc80f9-a91c-463b-9c6b-cb20d293432b@gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: Mn6sU2dhbGGPfL4ohwsaSDaFedBwYdF4q0rPFsCHBftrUUycaHuEO8JF
+	7jhXrb25EYkOjs2IN4QcvVlrVYTC/AqHC4m+CQ9n+9mLxc6UHQvT6jbhCVqs7+DBz7zu8nJ
+	nU6AdzDfNn0G6AUVkFd31SnDEZaCjR4Vd96aEJlV7NU0Ryiw65i5oEZEk2NQLJPBZgKxFoK
+	P8AvQcSrz0fbVTxHciPgvh9rAMFrJwLz6cPLSXJcWkmgKnfYq0BYbxh9dUo3TN0b8+Aj1b9
+	H5M37QTDskCcIoFMqX/4AnE5/P2DndAaP8XblDEHamT0DK86ekIneihTud7EqCl7HZS1VeI
+	wQcCdUkLx9uM5Whc0OMQQuqMzGpdA30EfZG2D8aaqVAPU5rtkRX3lUKDtIE8NzW29L83hRu
+	qhmOgt6WbbF6AZWGOIFASpgeBIO8A+0oMKnx8iYaBGeLxP/VEvEF3FHe/vaymt8TXtxE71y
+	2jTN8/QJvZ/qrCuX6Wk4Lu4n9RQkP01ZvMMtqasu9+1jRRbiCjVB7K6yZrBK33o+dzihvwk
+	zoF13fg/Vf4QYZ37N19k7QvKQjw0k1jUxyT0P+9oe0A+w5bUh4enZJ3sgKI5XE4OOAvKt22
+	hZN/SgQyCKKt9Bns4NntdpmrnkIsrNv84Rt1eL2psQPVsKjmoZnwa9YM0o/ODw5Xu3/zC6D
+	3sb9IRMM2Y7PZPQelBE3w+rUUnB+HZa9HOVtYkuIMz+WX/FFirXp62rMGmkNPZCBqT4w+kj
+	2GTO3Gkq9ugYRFDcn9eEHyYyX5SC5IbIxSljndvYcGG3+c/gSEaBoQKNHxlt2iM7QGegu67
+	aypChHSTjTSdWWaXDCyzeuYBEtXOOqbzf/4VRPim48z6Eilcly2yOivB9NfgE9KCwPEwxoh
+	XM8BsQOBQbbhb3hJ+Hf6JsEgRnimALv1DE6YOVFSRw+fYqPQXjqGtVfKHiG/mTwlDkYxBru
+	N6tUonc7DWrDTkKNixukFvtlV1+Qy14PcAzH2fSqK3Bf7YagRoUcP1Zd8FejhBOD31vAfAx
+	pjgh3DywvFe3qgUHjJ
+X-QQ-XMRINFO: MPJ6Tf5t3I/ycC2BItcBVIA=
+X-QQ-RECHKSPAM: 0
 
-Jeff King <peff@peff.net> writes:
+Derrick Stolee <stolee@gmail.com> wrote:
+>=20
+> BEFORE: "NOT TREESAME if there EXISTS a bloom key that reports NO"
+>=20
+> AFTER: "NOT TREESAME if FOR EVERY pathspec there EXISTS a bloom key
+>        that reports NO."
+>=20
+> This "FOR EVERY" condition makes it impossible to use a flat array
+> of bloom keys for multiple pathspecs, justifying this change.
+>=20
+> What is further confusing here is that we already have logic that
+> deals with arrays of bloom keys, so I expected that the vector was
+> the single structure storing a list of those arrays. Instead, the
+> vector is replacing the array itself. This is made clear by using
+> the vector immediately in the existing implementation.
 
-> On Sat, Jul 05, 2025 at 12:57:50PM -0400, Jeff King wrote:
->
->> So I dunno. It feels like a configuration error in most cases, but not
->> all. I'd probably say that people touching the config manually should be
->> allowed to do what they want, but maybe "git remote" should be a bit
->> more careful about names being proper subsets of existing remotes (it
->> should already prevent the exact-match above, I'd think, because the ref
->> namespace it uses will always match the configuration name).
->
-> So I'm not entirely convinced we should do anything here. The answer
-> might just be "if it hurts, don't do it". But if we wanted any
-> protections in the "git remote" porcelain, they might look like this:
+I think the problem here is that it clearly enough in my comments.
+When writing the code, I thought about converting the original
+one-dimensional array struct bloom_key *keys into a two-dimensional
+array struct bloom_key **. Then I came up with the idea that this
+two-dimensional array could be designed as struct bloom_keyvec *keyvecs,
+which might be clearer. Each struct bloom_keyvec would represent all the
+bloom_key elements for a single pathspec item.
 
-I have firmly been in the "if it hurts..." camp.  People can do
-weird things that may not make much sense to me, but do make sense
-in their workflow that may be vastly different from mine.
+>> +struct bloom_keyvec *bloom_keyvec_new(size_t count)
+>> +{
+>> + struct bloom_keyvec *vec;
+>> + size_t sz =3D sizeof(struct bloom_keyvec);
+>> + sz +=3D count * sizeof(struct bloom_key);
+>> + vec =3D (struct bloom_keyvec *)xcalloc(1, sz);
+> You could use CALLOC_ARRAY() to simplify this and drop
+> the 'sz' variable.
 
-But I do not think of any downsides from forbidding outer and
-outer/inner existing at the same time, either ;-).
+You are right. I think you suggest to write struct bloom_keyvec like:
 
-Thanks.
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94-
+|        count        |
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+|         *keys       |  =E2=80=94=E2=80=94>     key0 | key1 | key2 | =
+=E2=80=A6 |
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+
+And I am doing here makes struct bloom_keyvec looks like
+
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+|       count        |
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+|        key[0]      |
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+|        key[1]      |
+=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94=E2=80=94
+|        =E2=80=A6            |
+
+Although bloom_keyvec_new() appears more complex, the advantage
+is that bloom_keyvec_destroy() no longer needs to free keys manually.
+And if I understand correctly, junio had suggested to use the second way
+[here](https://lore.kernel.org/git/xmqqtt43u36t.fsf@gitster.g/).
+
+>=20
+>> + vec->count =3D count;
+>> + return vec;
+>> +}
+>> +
+>> +void bloom_keyvec_free(struct bloom_keyvec *vec)
+>> +{
+>> + if (!vec)
+>> + return;
+>> + for (size_t nr =3D 0; nr < vec->count; nr++)
+>> + bloom_key_clear(&vec->key[nr]);
+>> + free(vec);
+>> +}
+>> +
+>> static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
+>>       const struct hashmap_entry *eptr,
+>>       const struct hashmap_entry *entry_or_key,
+>> @@ -541,6 +560,18 @@ int bloom_filter_contains(const struct =
+bloom_filter *filter,
+>> return 1;
+>> }
+>>=20
+>> +int bloom_filter_contains_vec(const struct bloom_filter *filter,
+>> +      const struct bloom_keyvec *vec,
+>> +      const struct bloom_filter_settings *settings)
+>> +{
+>> + int ret =3D 1;
+>> +
+>> + for (size_t nr =3D 0; ret > 0 && nr < vec->count; nr++)
+>> + ret =3D bloom_filter_contains(filter, &vec->key[nr], settings);
+>> +
+>> + return ret;
+>> +}
+>=20
+> This implementation is where the subtle detail comes in. Might be =
+worth
+> a comment to say "if any key in this list is not contained in the =
+filter,
+> then the filter doesn't match this vector."
+
+I will add comment in the next version
+
+Thank you for your review,
+Lidong
+
