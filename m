@@ -1,108 +1,170 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6AC52E36E6
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 09:45:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174A1275844
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 09:53:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751881550; cv=none; b=M5Zdp0E2Gc/+cbREEiilnoG2gwFsr8cgdfRVjvtf/iDfyWCzMMI/qVF+4W6Q0LRttbr3LmrBbVmCLyZNmXwbzhEkWLnO+7uFpmZK7GOWvrTC+Y6C858sk7rg+Fs3IKOn5XahP5rjk4mFzFVmhxqb/K9PR5FGzLdVdYd0pBPU9Eg=
+	t=1751882014; cv=none; b=ExmVSFenb759VPsDqTqYElMEe4qVw1829VrxvuI1kQkYn6I1M3sKyiVv0Vh6bw8vgTtKCdFQT/EnXAF2Y39rmv6Q2Ac5LafwzZaCa3tSRvXVVxtmrvofh3McqS6AcDr2jYxF2lhZMubaK5La0U6otCl36cvW7ZxMsns2tfkfweI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751881550; c=relaxed/simple;
-	bh=lMdLHcDME2B4BF0JjuI+YpOUcJDt5zH1WCqClNmD2Iw=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JcopCH+GBaO7r87XVi1md/EIptAi3OkHcTnL6WPQrqmy3ZLOFp/yGr00IdC+Hk4NCiudfCMZK+8pm5Oa917uSrDDoac8BEZuNBbkirGyLKjFEKgTGDtspkPfh3prtJlTnL5WBA369/nr6/38imNmCSGWdDCdlosnTqUVMSL9Gks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ToMin6gm; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751882014; c=relaxed/simple;
+	bh=kqE5c4zYnVtOvomsfsi9DS0NJ5KgHEz9bYmIVBDlYis=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=uaRlMIvfrw3U0KHaJUqN/3AejjsulF7Mw194f7BydVhQQy2+e6j8zyrfK2zjqKIBwwR38SP/aa8Y10l2ruhAKafplyvKfz4gizMrfGnTOAoZ4jtXegBMouFAZP/01SQGBpJHRhdol7I8nMkVyNrQyRFclY1nD1tUMR6WEU+q7Bo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QIkS8GC+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jGL0yvUc; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ToMin6gm"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a510432236so1992468f8f.0
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 02:45:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751881546; x=1752486346; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=nnJ/sDwKTr3SOK0WHuTY3u+Lh9JCdhpvRdUbu/J2l0Q=;
-        b=ToMin6gmR9EKBR9hkFG4oadg/5uteA6D63B3MPXvxTAxJD/9BEZE47gZBI7pN5qtfN
-         4nXracwuqNRpq0r+3D/ZKycQFPAvW5JGCwrJW/X8avP6PFCCeUb8Cz2RGpd6i08Zd+En
-         Uzb9CCfP5NBo4+Hg8gsamSJPqhEtG44fd3e+EpFk23lUlM9PCXxkbdgxnZ0Bbq3YecP1
-         oFxI+IJpOB0ug+vgIpHf0og3cuI3ssVtst/WyzDhh6knVm62e8yC28sHqdbh6NerCO6o
-         flg4NtIepSjDMlSROPX0PqofhYkbxZRQgdqpg3IhYfuxP1JXvV8+XpD6M2h5k/TGkypn
-         MhOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751881546; x=1752486346;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=nnJ/sDwKTr3SOK0WHuTY3u+Lh9JCdhpvRdUbu/J2l0Q=;
-        b=LBu/IznWRuguSV6/sU08Sz3dMKZS4jCpkvDADoigVmrqla0HOYtKg6lyT4qlcae+EL
-         uob4z+HoMlIt96xIxjBJbjlGZtYBWI4mO9//5Z458g8Hc0WxNawtyF/d15LYl+Wdy6lf
-         ZhrZDNL0IgH1Xrh2CkRGl1hTK05AxORFxtNkjztqaRtul80bdqEnMEW+rSYKfJZJaSlY
-         Qoaw2b7+2d6nvEdCvqLTY850q08rw378XV4wR+5pVol6ijRzGZoAWLInA1y/lEmvtj/c
-         v17Tlu3zE+41hg4VwRZjvuQryN21uA/FDlhztd3IKpWCWfyEHexjrlFsehWr0mRoCZWo
-         okEg==
-X-Forwarded-Encrypted: i=1; AJvYcCUsTHuawfi3mnaisSLAccktCUrSg1VdbLmifvmS623H5/Zd8RCNL+LBlHebywNTvHHoMl8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQ/1m+b7dj/vSEUdT1u0waNFV0L1ADhr87SvUnR3fqbJrbg+SU
-	LWrQHOcCYpdfLjR1OC2DXhFnNXXZJCysQFHrUwvzDzYLTI6Wsvl6Vy8I
-X-Gm-Gg: ASbGncuQ01JS/hT0PE9yreR6URT4wcBcEAykHZ7aIIBQsjImsuWTpu2eAfVfTL4yCYj
-	CEW/d1mGbdrhlIhDzwgJBBuW3EGWncHhhdU55IQ/Enu6MGYNZNxTv7V+Q2tHKolKa9N3qQ+4UAf
-	fXHsRHYgfXJb54HC0bN/f2zzr4chFUB8AmeFD6LHpXkUScwfBoSvjBAfuZ44WM4auJ+r90R7RJu
-	1bElYd/g7BvId4NZETfferZDTCBg8SsjE2tC4Pan9f7tAZrqkyf+grycf/qB4tXYSjrULWbZTuO
-	yfm23Bga1vUHp/HxTTrvRmyhuXp9Nw72x28TCF6Kjc2pfrzQecIXZhlI0t3eMO92pArBPtPlBNa
-	uGfQetXa4TXFEz66c2LvmKoAX8pT0yI3tf4+FBXirSAXDdzQR
-X-Google-Smtp-Source: AGHT+IFZqixXRh1UoIbB4xHlzt3W9w2B4WRCNs1GUgNIbYo8ufXLpYqXEW/e3G1i8C89EeDunA5G+g==
-X-Received: by 2002:a5d:6f0a:0:b0:3a4:ef70:e0e1 with SMTP id ffacd0b85a97d-3b49703dd84mr9523465f8f.55.1751881546161;
-        Mon, 07 Jul 2025 02:45:46 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b471b966cbsm9500155f8f.49.2025.07.07.02.45.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 07 Jul 2025 02:45:45 -0700 (PDT)
-Message-ID: <3d95d37c-7352-4e57-8d50-6fd4fcb77095@gmail.com>
-Date: Mon, 7 Jul 2025 10:45:45 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QIkS8GC+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jGL0yvUc"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 48090EC0763;
+	Mon,  7 Jul 2025 05:53:31 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-10.internal (MEProxy); Mon, 07 Jul 2025 05:53:31 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751882011;
+	 x=1751968411; bh=a6DoP4HjmqKIGoEQJaUgLGowBj1tHGZFThiqCK5NC1w=; b=
+	QIkS8GC+/VatdGu6BjdmN7VCWvLSRCc3qFd3d+H1nTi6TRdd5azSHfZOsYGIxEXr
+	wt2IO1oCnpikZVeT/SALSXl7fKcpQmcNYrHBI8SYHpEMba1NOSEreG/5xQJkxheI
+	aMCbCvSkn/0g6Olia3Wxt4RJ+gQKGs1vjz3wuPFJuOyOrehCeBTz0bnUBU4YqCJb
+	/Z3HCDptMfgkBIIuRtONOGz0pD+xdtfb2zWOrZWry51KLzlZRNOx87L9Xj2llqHt
+	ZlxAtffJbKzBVdxCovanASFtUOAHb3UUm1wypgFtyE5z1IDJVt/NcDjxYJckFmQS
+	Cnm5nbnZshb+Xa+xc6bD4A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751882011; x=
+	1751968411; bh=a6DoP4HjmqKIGoEQJaUgLGowBj1tHGZFThiqCK5NC1w=; b=j
+	GL0yvUch3Qc+1+OYrwFDUsrKkku7HOe0BQc18VgRvSM9uqldKXFpDp73AFJ+0HXL
+	rwzzZ4YAMM0fYK8hFFFWImgKjXqi0194YwdcBP5e7wQtIzoenFuaB+jdGPEjMnd6
+	x10o1wyO2OQsw/0+TrQiGcsFOQnFhvH2bfIm3lFC/GzlP40GiAVvH3at1BCzmJEC
+	pCYGwtczqxxxRPKSAlFhB5xjE7X4k5ZJYdswTZNoWbLSvpwQGu8ax5nHouHUbFOq
+	XmymNrt1LAVN0DNbITZyFS2VUtD2IovxpSXFGSnSvKHF0wIWKv3c8+feWd2tWAcb
+	at7OSH/Qh9uZThUQ9eaEQ==
+X-ME-Sender: <xms:G5lraMCY5QQTIxAzwJ5-rIMgvJ18hzhAQcLgvb49udjgH0lLSYYs_g>
+    <xme:G5lraMFlQpm8E_D-8iWUwqUq1MooQO3DZFvmP22Lwa2zc5Fsj8miv0Ew-RBFsefLW
+    B0TgiFtD6mcpP1PpA>
+X-ME-Received: <xmr:G5lraGAnTKMSEZlh91gSAamNk_xBraEd2rCb9m3e7JCl5Uri4O_1hGlJuYuvF1Qb08nPxF6-lYidCUxgXuWA5rYGjRxDBj7ChesdJt0HZg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefudegkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhn
+    uggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfe
+    esghhmrghilhdrtghomhdprhgtphhtthhopehsiigvuggvrhdruggvvhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
+X-ME-Proxy: <xmx:G5lraEXYAceppr-sFO9aqpLBOJTEeporSNWDFr5-Nx6UNB7i1wDwmQ>
+    <xmx:G5lraCpzAOwzHf2erYMCMK3KdYktiiLxRFe0Su_cTwPqt69YHh2Xpg>
+    <xmx:G5lraIQgO-72yZmoYVf8ORWCDxUOxz7OH9tTgqaWt0CHkKe2oFag9A>
+    <xmx:G5lraE1rfI47ZVx27v7RHgHCJNNQ7Nj9Uic5qi08LAibUR1GwovFkw>
+    <xmx:G5lraDl8-1z7yLIPemyEMfVXVMcqA0HFpZvwWxgIixJQUgrXGj_CqhU7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Jul 2025 05:53:29 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bc807665 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 7 Jul 2025 09:53:28 +0000 (UTC)
+Date: Mon, 7 Jul 2025 11:53:24 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v4 12/20] t: refactor tests depending on Perl to print
+ data
+Message-ID: <aGuZFIWFA3J0VkDZ@pks.im>
+References: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
+ <20250403-b4-pks-t-perlless-v4-12-be20ac3db39a@pks.im>
+ <aEiNBwUkjbo2QlFY@szeder.dev>
+ <xmqq5xh3mgg9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality via
- '--skip-until'
-To: Karthik Nayak <karthik.188@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org, ps@pks.im
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
- <87ms9kcbtq.fsf@igel.home>
- <CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
- <xmqqa55jc3md.fsf@gitster.g>
- <CAOLa=ZTDcssjQcNcvDOA4-r-j2asp-XHCy2D_qoHEidz+KsKCQ@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOLa=ZTDcssjQcNcvDOA4-r-j2asp-XHCy2D_qoHEidz+KsKCQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq5xh3mgg9.fsf@gitster.g>
 
-On 07/07/2025 09:59, Karthik Nayak wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Jun 10, 2025 at 02:31:34PM -0700, Junio C Hamano wrote:
+> SZEDER Gábor <szeder.dev@gmail.com> writes:
+> >> @@ -241,8 +234,7 @@ test_expect_success 'pseudo-merge pattern with capture groups' '
+> >>  			test_commit_bulk 16 &&
+> >>  
+> >>  			git rev-list HEAD~16.. >in &&
+> >> -
+> >> -			perl -lne "print \"create refs/remotes/$r/tags/\$. \$_\"" <in |
+> >> +			sed "s|\(.*\)|create refs/remotes/$r/tags/\1 \1" in |
+> >
+> > This conversion results in the error:
+> >
+> >   sed: -e expression #1, char 41: unterminated `s' command
 > 
->> Karthik Nayak <karthik.188@gmail.com> writes:
-> I do agree, I was modelling this after what would be the best approach
-> within the Git codebase. 
+> This not just misses the terminating "|", but the conversion seems
+> not very faithful to the original.  It used to create tags 1 2 3 4
+> 5... but now the tags it tries to create (unsuccessfully) are the
+> names of tagged objects in full hexadecimal glory.
 
-That was my fear when I asked about using a numeric offset. Patrick has 
-made a principled argument for using a ref name rather than a numeric 
-ofsset - I think you should build the motivation for this series around 
-that and the documentation should explain the implications of references 
-being added and deleted while paging them.
+Yup, that change was intentional. Anything past "refs/remotes/$r/tags"
+doesn't matter: the pseudo-merge patterns only match on
+"refs/remotes/([0-9]+)/tags/", so the final part of the tag name does
+not matter. It was simply easier to slightly change the format than to
+faithfully retain the original refnames.
 
-> With that I think '--start-after' sounds like the best option. I'll
-> modify for the next version accordingly.
-That sounds like a good name
+> > I find it suspicious that the test still succeeds...
+> 
+> That is because the downstream "update-ref --stdin" does not notice
+> anything wrong in its input, which is empty.
 
-Thanks
+Ugh, indeed.
 
-Phillip
+> >>  			git update-ref --stdin || return 1
+> >>  		done &&
+> 
+> And the step after this, which is not touched by this patch, may not
+> be testing what it wants to test.  test_pseudo_merges produces no
+> lines, and iterating over the lines in that file produces an empty
+> result in "remotes" below ...
 
+Yup. This is a consequence of us not having created the tags though. The
+pseudo-merge patterns we have configured don't match anything, and
+because of that the test doesn't do anything.
+
+> >> @@ -258,7 +250,7 @@ test_expect_success 'pseudo-merge pattern with capture groups' '
+> >>  		do
+> >>  			test_pseudo_merge_commits $m >oids &&
+> >>  			grep -f oids refs |
+> >> -			perl -lne "print \$1 if /refs\/remotes\/([0-9]+)/" |
+> >> +			sed -n "s|refs/remotes/\([0-9][0-9]*\)/|\1|p" &&
+> >>  			sort -u || return 1
+> >>  		done >remotes &&
+> 
+> ... and then it checks remotes has no duplicated lines with
+> 
+> 		test $(wc -l <remotes) -eq $(sort -u <remotes | wc -l)
+> 
+> No wonder it passes, as remotes is an empty file ;-)
+
+True.
+
+But in any case, the test does what it's intended to do again if we
+append the missing "|" terminator.
+
+I'll send a patch in a bit, thanks!
+
+Patrick
