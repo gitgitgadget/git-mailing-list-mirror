@@ -1,77 +1,76 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A56262FC7
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 05:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FD619E992
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 05:37:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751866320; cv=none; b=VDSRInzT0Vg3HNCjeShq7HEOMHeQnPrduExGOLPWfSjkZEXGXToY9AzehoQiPnZkVSycPRdqnvXUh9wb2JvTNtax9cndtH9VZoJfcVuiZ1YcJrlNYuSC46XOeU/LZNGusLxNVuMs9CBwmryPQjtBkA4w6TC2QLOsAW6YNlJzr8c=
+	t=1751866640; cv=none; b=FMc7/Up2xU9afQM95cLK+3S/IlzjAmvCT4ik836TusEjh8jD0PfajseO5yCIVqNxybBjYXJff1i+RGQqeSaIspfueYPOF0Pc7mbXhMI1+Rr3pzuHMLO4RtPc66e8Z7XgO05y6joFfPKSs+t0gX+x8gho2RkO5qBupteUEnSy1r0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751866320; c=relaxed/simple;
-	bh=ZkDVthlgQ9JTU9s9jtyFGkL+T/VpgWpfRU229MbTcEI=;
+	s=arc-20240116; t=1751866640; c=relaxed/simple;
+	bh=gQQ0B2A3d5Kms4SOC8VcZHw2JY9SvWR1jh0POVfgtL8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H0P4NFo7F5qpj5ujub/kVQutqlTvGWLGkdoY5sAPm33350qIE0ocZAHdZxJT77X6h076hNbMXnBRr6osvV25/0vJx4wGXAHmBto9A3CZPyGA8Pt7MTZ3ZjkCU65MOBi3F0kL7BOd/wqh/3ouKhTvohsGoPkApDguvyN7R2LvgW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L3bz5L2+; arc=none smtp.client-ip=209.85.214.173
+	 MIME-Version:Content-Type; b=C2gPgbt3VgNYM92e3SNTxShh5c5mvBRSUS1vg+uPj35uxLga2J7InwHRBYw/hCe1yxJ+aA0Sq4DabARssj+8PqmgmO6+Vos+0vAUWnTEr5P4fZZw1zxeWPGBU0wsJOlBpYLVLgdyKRW2kiK1Z3GTUV126Xh0UmnGalPC/bEaSws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NvtuXT/5; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L3bz5L2+"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-2350b1b9129so16888765ad.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 22:31:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NvtuXT/5"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2310592b3a.0
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 22:37:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751866318; x=1752471118; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751866638; x=1752471438; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ZkDVthlgQ9JTU9s9jtyFGkL+T/VpgWpfRU229MbTcEI=;
-        b=L3bz5L2+fjD6WHiPyk+ysptimBgNTBtRDxwA3IJnW6v9lmiMkUS578E7H7rfl4tCPu
-         DkCSaBhh+4SqQZ4Je8gQjxcLfCMi6eIfwkK/GkFY5ny7599vrBwG5Ux6RnEz5PXL0b+4
-         69mzFHMzsNNGrNBRvLOJunOHnF8itzUAAiVPqtul7zJZ7yUYHIIrZGxe9nbHOzSwlGvO
-         5VbKBKYXwEWiLVySf9m9wcrlhY4Vhj7w7Hz/kxifp8OazY5wpUuP4uFNiIml/fUQzTod
-         lhf0/lxDHicQJD+LGuWm1SuDOvNscZCn4PAhfMGvJj+mFEOQL7wi7s3stNsO3QEIreJD
-         Emrg==
+        bh=rnTdWtkKyZXeo2wKdcJ+ZoHLegI+yGLadnq4lWFAi8k=;
+        b=NvtuXT/54duXllonlASYL4Bs2UPSiVBNq7TE7mVqjq4Z+GEsX5xzfhaNg0IKSXHxZq
+         olbg95fHgPxzHmgzLCHZ2RSrtKG57at+6dG60UJ8Dnnb+wAOv6k+lnCO1ysVZ8tmWmPn
+         NkZm6jmx1ZRtRgJZWmMPB7UxlWsumk9Tkqh/teDJ/lZA3AJq5rdiMWOgruW6omm9HCMS
+         dIlQxHhFfnI/jrtw30SUarC0Ow5lY0O5E1+YWLLpKa1C3O0CNMrg1SLo4ZO+QF9lji8d
+         +po9GiZlEXQ5a8SoWVNqcK4X09iLkSMh88RP2lqFuMoAfmPcD1nqE8YhkhAxhiCtYSJl
+         nsiA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751866318; x=1752471118;
+        d=1e100.net; s=20230601; t=1751866638; x=1752471438;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ZkDVthlgQ9JTU9s9jtyFGkL+T/VpgWpfRU229MbTcEI=;
-        b=U/3CMql87m41IL2eOEgg08Tk3DtkLdtqOz7SwQJR+pPBTJZw1vC5yEF0pWoDTBcesT
-         fGqFUQ3bKdmFLokiJGmMtmI75SCyNW2iwIJJ9oJTkl1/3JnHRkKfuA0u7HCMxbyfnVkY
-         JDNidcus/EvIQ/+4RoLrHAE1X2deiS0LXpknGIbFdKNpx31Ccro1MEYVaYrhdBWWhfYD
-         NIL/YNsyBnVfDw+egn+t1Co7RcXkyolT9Q8xfSyEU7QZBUWsh9L/4TITxFEteQ0se+AG
-         1kOsQMOtWAkDfBfvdENqm6cCwP46MLMz2iQFafTbSdD9oGjfL24j52gfe+luMC15kd71
-         vPFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXVdZrOmkvIvCTMWYCOJ00dpVgDQE/rrqB+HNr8ZVSsh0nyjJgmV/yHE3ocier/owUhmk0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyc6+wXI1R0//QLl43ke5f3N+zsuMH1FF3SVCvnKQE7G9UIs5IL
-	pTtEAvpP1BiGJqAx4fCbb83otzs0Gh3YhVKGm0mz5JYXszJvrzZ5XPyTPL5/rA==
-X-Gm-Gg: ASbGncu0zNvyFm83mJ29rXwptQQVK8HW8U8WQJktBpNd6fkAbQbfkOrItH2J3FClMQE
-	aynxy8m7ovSaqjnWzHEdLbv6K3uQj0v6Wl/vlpOjCKgpkUL4w9d0fRiA4VMcHh5LqY2MdptwUAV
-	YtqNuLjayrZ/7UNnOFKRJnVFZEgzwPS7lXqHY2hLX1FqRh7k5zdrlCysqy18YNkA542G4YicD4U
-	dCujm5EF0P587TgCmE3n3GddXw70UoFTQ54rRz6ggRW6LxwCJ3mrcEPR4OEw+07ETF+4ojsDcuN
-	R3P5AQhJV9OG7Z71n6oDXRPHuiYHk+t3c0q1q+u75sSMl2d3+7QscSPDIELOQz1/gcnJwzUR3rw
-	BUQf16ewIp9hp6HcX35u9vDSXpyc=
-X-Google-Smtp-Source: AGHT+IEcCigXJu8OoGc2QGRiQoxCv2Wwu2CtyTRveqc+kDQDWhEF1/iGnt7WCBtzjrvjfNoGsxv3gw==
-X-Received: by 2002:a17:903:90d:b0:234:c549:da0e with SMTP id d9443c01a7336-23c85ec731dmr125716455ad.47.1751866318409;
-        Sun, 06 Jul 2025 22:31:58 -0700 (PDT)
+        bh=rnTdWtkKyZXeo2wKdcJ+ZoHLegI+yGLadnq4lWFAi8k=;
+        b=EpKfrKRxEta3ahNC+6Y0LTe5r8uwOcpu5uI5sEszUhMM2kFoWwg0WXpY2hB8i1fkom
+         Nfoy1ASOv2Uw/pDP1Gj4/f+uty41LqWW8mtJc1e8La4bylcj4D20+9q73lalYkqm1PQZ
+         /FHJ7XuMbz/PUfX002OXp2pCuMKCJ70u+ZAyDH5nKpIzdOhn2hjRX80u971YLjGBNgX0
+         95tbzaS5sU3GABb79v4rXEqNXN3cw264fQHd57gA53CI2+kNFCh07gu72zJxZvvZcSgx
+         tS8pwfGh4e625cWpWG7leUPPb2SGrI1dWmpfF830RzMH8BcObYeA5wO0FD+tFUrjgJjx
+         A3Lw==
+X-Gm-Message-State: AOJu0Ywzgl9si5M4fd0Pr0HF2Efe0K0ljmZ8JTSkSu1IizFCRnTG3aHj
+	MSIB0KS311IOkcz3c+BzHK0IgWXzfUEj4i0fvuWyDqunWb1ZQg2ve0os
+X-Gm-Gg: ASbGncsE4n5JwrxoQc3ej5ykxFQ8UOiQBje7gQQIEeczVUZE62dt68vZMzVYCVE8JwY
+	OdoEy96buSkRPWT25WryINeP6ofAg64FY6OFSMryoyQzYn2doDpvCM5IdqunZ+E0GF8ZbojAgqs
+	0rX1fcczFr7koxMljHBc8txpKpbm4Pi7E9ccUJjshsH4cJkKXlxZtIv+lECXQtMZjE6NvMknF5/
+	DSp4AvA47dFCVROZR09vcoAEaJxwoQ/rDXzkihQnFI1LarTEIOQJ2uQ1+F3VQxxw5QsNACE+mVW
+	clmgAiozweUXmARfXFdTHtQursq34s1DdqkVWb0Nfh930HEaBXsFryVZfxhJGse9lp/lsk15F49
+	OkakWVhvhWVf8iTm697k5mH65ynQ=
+X-Google-Smtp-Source: AGHT+IEX6Cx5GbeokOkj0nIXAxSSawZDlMhWdT15DSWAEnt5GxO8UqGxsEYoMW2OuYIBRnjkn/Kk2w==
+X-Received: by 2002:a05:6a00:ab86:b0:74c:f1d8:c402 with SMTP id d2e1a72fcca58-74cf1d8eefdmr13211096b3a.8.1751866638263;
+        Sun, 06 Jul 2025 22:37:18 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23c8431a1aasm75720505ad.15.2025.07.06.22.31.57
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce417ddf9sm7887545b3a.74.2025.07.06.22.37.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 22:31:57 -0700 (PDT)
+        Sun, 06 Jul 2025 22:37:17 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Eric Salem <ericsalem@gmail.com>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  git@vger.kernel.org
-Subject: Re: [PATCH] setup_revisions(): turn on diffs for all-negative diff
- filter
-In-Reply-To: <20250703224428.GB1909836@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 3 Jul 2025 18:44:28 -0400")
-References: <64308d3f-281b-49a3-bc10-57878903bf4c@gmail.com>
-	<20250703153438.GA1309870@coredump.intra.peff.net>
-	<20250703224428.GB1909836@coredump.intra.peff.net>
-Date: Sun, 06 Jul 2025 22:31:57 -0700
-Message-ID: <xmqq7c0ka7n6.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  "brian m. carlson" <sandals@crustytoothpaste.net>,
+  Karthik Nayak <karthik.188@gmail.com>,  K Jayatheerth
+ <jayatheerthkulkarni2005@gmail.com>,  ryenus@gmail.com,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 0/2] Add reftable by default as a breaking change
+In-Reply-To: <20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im>
+	(Patrick Steinhardt's message of "Thu, 03 Jul 2025 08:15:29 +0200")
+References: <20250702-pks-reftable-default-backend-v1-0-84dbaddafb50@pks.im>
+	<20250703-pks-reftable-default-backend-v2-0-5a27e72a8c5e@pks.im>
+Date: Sun, 06 Jul 2025 22:37:17 -0700
+Message-ID: <xmqq34b8a7ea.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,28 +80,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Argh, I forgot to add Johannes to the cc. Fortunately since then I had a
-> moment to look at this, and the solution is pretty simple. So here it is
-> as a patch with a test.
->
-> -- >8 --
-> Subject: setup_revisions(): turn on diffs for all-negative diff filter
->
-> When the user gives us a diff filter like --diff-filter=D, we need to do
-> a tree diff even if we're not planning to show the diff result itself,
-> in order to decide whether to show the commit at all. So there's an
-> explicit check of revs->diffopt.filter in setup_revisions(), and we set
-> revs->diff if any bits are set.
->
-> Originally that "filter" field covered both positive capital-letter
-> filters (like "D") and also negative lowercase filters (like "d"), so it
-> was sufficient for both cases. But later, 75408ca949 (diff-filter: be
-> more careful when looking for negative bits, 2022-01-28) split the
-> negative bits out into a "filter_not" field.
+> Changes in v2:
+>   - Improve the breaking changes announcement a bit based on feedback.
+>   - Introduce a `REF_STORAGE_FORMAT_DEFAULT` define.
+>   - Print the default ref format as part of `git version --build-options`.
 
-Ah, ouch, so the patch somehow ended up to be less careful about
-negative bits after all ;-)
-
-Thanks for noticing the breakage and fixing it.
+All changes relative to the previous round look excellent.  Thanks.
