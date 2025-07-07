@@ -1,127 +1,100 @@
 Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FA4FBF6
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 17:45:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0BD25A320
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 17:51:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751910336; cv=none; b=IevEkdwI52EAZRZRdBHKunETqKoDtjViZZ9ll8Dt/cNjLYg4Jj+A/wQtPAjZ5yUXCR5TrPmw9FojurfpKbnpHRPf3MeO23KEcDTXhCKTn9YNblm3KDKRfYZRxTLcNjXV8psCoCq0yaHpYnFiWLPofkZndiBIN5uoL4yqYdLScwE=
+	t=1751910678; cv=none; b=uw5yZrEEQHPmeNyW5QCjRxaEt824tW0XR5xZ2+9GUKugoO7kEgEgDp5UtH8KZUZIHmERbwRyThSlGamNbAUR6+k5+x7FlXYcsWM/ld3bhd2DnGhXvAZkLmxm054I7QhKyoHHlElMU4VR87JeMdxbVLJ1zTK74KWyoYYFn70CE3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751910336; c=relaxed/simple;
-	bh=/WIjA6+87+scFdFvixFXT4HvbhtNx2XLPBE32x1o1u0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=gqAXMZN2d49cTv9aoC/IRmZtNb8T4a07TSI4RaKofj7BTvwkl6LcrN6cBrT4h5HwKX3Fxn7I9Or7spPKx3VxP9zczEWioNAdmAiJTUGVYQz4G7lWoMHdFGHZMm6jkaL6NWwANmZtKYzoRqi22/wh1Lmh8zXADuuBlLfSERIZDZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dLiag/ch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VFIxnrzk; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751910678; c=relaxed/simple;
+	bh=J1OrGpQompLuATOibSqUqySuU9tLm3d+d+4cH9wN2BE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=MTda5Ndn2PqZ8K5Peo73DOR0lyP6QaRJF5I3iQbJqm/wLY9bjmn7Uf0PruP6herNIgN9fM2FriL5G+PohjEw5VPfwruC7Ws1x7h3qAeuJRsoE2Je+P1hHGalz09cm2Uq6he1zk/2qtLGMnKf4fzbFKDGwnlXjfxeEyVqdqi9uUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K5meHMMG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VmRXNpZ1; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dLiag/ch";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VFIxnrzk"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 0576B1D001B1;
-	Mon,  7 Jul 2025 13:45:31 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Mon, 07 Jul 2025 13:45:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1751910331; x=1751996731; bh=IJU9LEaZQ2VmZR6VEKqECDCFovPWskUL
-	oYDoYpEopLY=; b=dLiag/chI0eY3q8RBF5TNumKs3ABm2+abVvlIoWmeIOPSYgQ
-	4tE+AXMK3buAcKqyzUT1Fbyzf7qYqtrHDczq20qeQ2XQwI901sw5Aj7aPpEAFAaF
-	hV469FD8jfTje9fgWL9568tD8nlMb4CQTuDk3+7k0EhLQZrohHr0SdVTYZxk5mr4
-	S+dGrX2O4ibxUCsVaN60xBDT8jx8SlBmGR9ReBj4Hrof5bUf8V8xfbEvoBPNj/t3
-	X8m95oNsp55wsvKMp+IJRuvctWe8DET78x4GUo9lkWrmDp9qm+u6+cT7muG2jlOC
-	/9s1H5YVWcHWZKpJgRsI7Qxru75k0o0lTEvkSg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K5meHMMG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VmRXNpZ1"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 120441D000B4;
+	Mon,  7 Jul 2025 13:51:15 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 07 Jul 2025 13:51:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1751910674; x=1751997074; bh=jzqyeLR6Cm
+	3ZnjpOxVv38tNlGj14Y9uY2oCve4Z+VkM=; b=K5meHMMGW+o3VgvSZJn7/+Zv5o
+	AAsVQoiipytSXDbtvza2KAoT6wtfU0/7bIv+pcp1uUmLOLTdF+ofebDq+RpLGmcv
+	pBGeISyEnm8bErFUgp0khdCqLo4OPc2Us2yxE+1WogHE2l+gsKGJPWg297p2oeog
+	7W5KLc041gjgiANB4IjlpGBn/u1ixq2aWOYH1E1sCzdgnHN7G+ALsh+sUud4w0dH
+	P2PNvWjMDDQ4S1WBm5fIMCUTriy4Plpn/YkJfw50+U0LG28y4N1Yb5Pk7I50I2Z2
+	n/ag7Ajv8+TKs+Z2N0njQZdKkF0AJgHB57aDOfnyO93FW6OFt5KmBx+ZevJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751910331; x=
-	1751996731; bh=IJU9LEaZQ2VmZR6VEKqECDCFovPWskULoYDoYpEopLY=; b=V
-	FIxnrzkLpCNpS6qVJgsRV5A0iw3FbfmbpgsX1l5neFc22Y89HZ9SPtmGaas4QE4q
-	/3EOitP8YvugjwvfpXKYmf7cCwGpOe/KwhCJhLIYDIeoesg5g1DbXuVH0wsSG2FF
-	0WgE4PBOmrUnTyhu2zeE+72VtgSkhykYUKdEtcHqr0nV4adAVoHB25aduKsOzlcf
-	cYPw54wqwwhPiOKiN9iAaUtlAOJp+1r2AJX/SE320zxO/vxosduNAa1NFbFUDcYF
-	QJT9DaRmMHwPTxKo6UdOs9Oq65o13yAHZxGctl4rOITO7V6kDKKH381njkX0EoHg
-	5rPQXtg9TL15xLtFQ37Bg==
-X-ME-Sender: <xms:uwdsaFkqDPhNBzL7YHb36G2t7j6k-yvoxipX0MznziPHe2Qi3XTPSQ>
-    <xme:uwdsaMWQWGZJmY8eb2j1oo8PSwTuzO3t5c_3kNfTvdqK3BCdhbLStjDTJaZ4OvaUj
-    KK4onBxOIIlhN3btQ>
-X-ME-Received: <xmr:uwdsaCHMA_dVWce-Jsi1Itzatezac7e5dRzpjZh4Ey-x4ldgp0sIudAqNDZWxVLRV0PgnkC2OsN-P56d0aN9sGuo2FBG-skhC3bWMJyF2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdegfecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751910674; x=1751997074; bh=jzqyeLR6Cm3ZnjpOxVv38tNlGj14Y9uY2oC
+	ve4Z+VkM=; b=VmRXNpZ1g+S/HHGrZ04DzwpaCjDA7u95W5iB7GU7xhJDInlOC3q
+	CYj9hIP1PkgXJ4avnAeF+NpLPXJOVBAQ2Wba6AGt13ps27EVe4mR7xT+SL3U67PX
+	xxkJwoO53V5k0723CF3mlY4wVOdJRerMcKnIOggtr4rX0dw9lSuO5/XteOTGMrdR
+	uNcYCYUfaCVtKUwxj+RVg060FOjfD8Muqhv1DJdZB8nRd5M2KsKM99Cr+DfSuCcY
+	cb2uqLQcL6vducy7VC2047JSzlcNsj2bBp41+pegrjbKBcvLAPLu2vG/ZZYljlRs
+	+eBrQ+0MA6TYBz0OS4QcqterhLcYSOrsz7g==
+X-ME-Sender: <xms:EglsaOkH0DI15GS2PggQGXQw3xTfN_4Zke4JM-1xF5YkZ3lbSVMr5Q>
+    <xme:EglsaDaQvs1lnIXCP_qwkD2SfHyyQ_qk5KhdEeSzH_9fMOUS_GNqHF2ZYq5pTK7aJ
+    7IUR2yWq5LegK6kyA>
+X-ME-Received: <xmr:EglsaDFZKyTUmgE50Npce9xoLHgh0efnI6-IfiiR291BSNPjVFLnHAMdiMafXhAlJZZXkjRyCnP6V2vR8tOU_0eCh8WswrIoTGNf2Y8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdeggecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfggtggusehttdertddttddvne
-    cuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhm
-    qeenucggtffrrghtthgvrhhnpefhhfefgffhtdeiffdvffeuudehfffffeehtddvieeuff
-    ettdffkeevffevledukeenucffohhmrghinheplhhinhhugihfohhunhgurghtihhonhdr
-    ohhrghdpghhithdqmhgvrhhgvgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeh
-    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrghsrghmuhhffhhinhesghhooh
-    hglhgvrdgtohhmpdhrtghpthhtohepuggrnhhisehgvghrrhhithhfohhrghgvrdgtohhm
-    pdhrtghpthhtoheplhhutggrsehgvghrrhhithhfohhrghgvrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehstghhrggtohhn
-    sehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:uwdsaAdNhZcvVFPKIJsiS9t0oKomMuIMqTFPo3gZxwzoWQ2nexX9jA>
-    <xmx:uwdsaLJvZl9_IM05Qfl2eY9rw579cOVEmkno4DENaB1QTPqVoRx9tQ>
-    <xmx:uwdsaNHCSFHH2uT1KMbvbSKD09fbPfWyKBykfwWzUOhF9iCpnMAntw>
-    <xmx:uwdsaGD6H8lX7zfMlwppOM-O75D-XFWDExMxK7b446KBHkduW2bCGw>
-    <xmx:uwdsaNj8TJuc6CJaYd2QP5o6nmp5u3MQnh4RoLykGi97mx_2FXglVSWZ>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrhiesrghm
+    vghrvghtrghtrdguvghvpdhrtghpthhtoheprggtlhhophhtvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    jhgrshhonhduudgthhhotggrsehprhhothhonhdrmhgvpdhrtghpthhtohepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
+    rhhhohgughgvshestghishgtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:EglsaELUd1drGIQv1wqAAgSLRD_V_1FfyOQLNNIYDNY_G3QAbHvrxQ>
+    <xmx:EglsaOML3iEUSu7JlIujBCO_cLts5ls3t_pjfXNY2PJ-HPyeAmzOOg>
+    <xmx:EglsaEldVy2oRpwpxVoIYnjjNelyJBN-YboLjBM4O6Y2jll0Vr7EoA>
+    <xmx:EglsaC5Jt6fszsfLTxqjVTwGmXOXj_txwxAC2625qI0pQqqMvYEtWw>
+    <xmx:EglsaKjGASmhvMRBOZKilDNopf4pIcscMFqYlglwfSZsO-THe7ocuUsc>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 13:45:30 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9a497b78 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 7 Jul 2025 17:45:28 +0000 (UTC)
-Date: Mon, 7 Jul 2025 19:45:27 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: [ANNOUNCE] Git Mini Summit at Open Source Summit Europe, Amsterdam,
- August 28th
-Message-ID: <aGwHt9HCd86hVuKh@pks.im>
+ 7 Jul 2025 13:51:14 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Raymond E. Pasco" <ray@ameretat.dev>
+Cc: aclopte@gmail.com,  git@vger.kernel.org,  jason11choca@proton.me,
+  kristofferhaugsbakk@fastmail.com,  rhodges@cisco.com
+Subject: Re: [PATCH v3 0/4] fix apply --intent-to-add
+In-Reply-To: <20250707121534.2933349-1-ray@ameretat.dev> (Raymond E. Pasco's
+	message of "Mon, 7 Jul 2025 08:12:29 -0400")
+References: <20250702212814.1923253-1-ray@ameretat.dev>
+	<20250707121534.2933349-1-ray@ameretat.dev>
+Date: Mon, 07 Jul 2025 10:51:12 -0700
+Message-ID: <xmqqcyab51pr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Content-Type: text/plain
 
-Hi,
+"Raymond E. Pasco" <ray@ameretat.dev> writes:
 
-I am happy to announce that there will be a Git Mini Summit co-located
-with the Open Source Summit Europe in Amsterdam [1]. The details are as
-follows:
+> I've rerolled this to considerably expand the commit messages, because
+> it took me a while to learn apply.c and a while to relearn it as well,
+> so the messages should be as specific as possible to aid the next
+> person.
 
-  Date: August 28th
-  Time: 9:00 - 13:00
-  Location: RAI Amsterdam, Europaplein 24, 1078 GZ Amsterdam
-
-This event is not intended to be a replacement for the upcoming Git
-Merge 2025 [2]. Rather, it is intended to be a smaller community event
-for those who cannot travel to the Git Merge due to whatever reason, or
-those who are interested in Git and already attend the Open Source
-Summit anyway.
-
-The event will be structured so that we have a section of lightning
-talks (probably two to three hours) followed by some time for people to
-connect with one another (probably one or two hours).
-
-The registration is not yet open, but as the date is approaching fast I
-wanted to give the community a heads up so that they can plan. It is
-expected that sign up for this event starts next week. Tickets can be
-either bought as an add-on to your already existing Open Source Summit
-Europe ticket or standalone and will cost 10$. I will send an update as
-response to this announcement once tickets are available.
-
-If you want to submit a talk, please send a short proposal to me. I will
-vet these proposals together with other involved parties. Deadline is
-July 28th. Furthermore, if you got any other input, please feel free to
-send me an email, too.
-
-Thanks!
-
-Patrick
-
-[1]: https://events.linuxfoundation.org/open-source-summit-europe/
-[2]: https://git-merge.com/
+Thanks.  Will queue.
