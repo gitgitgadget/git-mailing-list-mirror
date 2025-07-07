@@ -1,129 +1,122 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF31523CB
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 16:45:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D422248BE
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 16:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751906744; cv=none; b=X4IyOcZHTMFftdQSuo9cbtHN2NYvgx95NOLP1JoIs38MR3hhsejgZOjE0rXCk91HoXLUorSTNSjeKd0nCIENvoykAKus5UzZ6b7RnGp5q7zPGP51kPZuxicDyoz/obcY9M55UhpSgGXUOx/dL73VIH4FA/EWqsw7VRTYNy6i5zw=
+	t=1751907277; cv=none; b=StGNwX90No4uQ2X+mhs00ImsFZJMEGtfxU8XArbVBj67pWzngD1tm1P0RRH33Poxk/eA8aJRURZ+m1XhshZhxsnP9CVo5/ZJNizSLZw0nqCCv8BmXzMTxA4JEMWFGjjSmu1eYEZsvPghgcQh0dDI4FlZCNICEzwoLSnBHLjKb1g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751906744; c=relaxed/simple;
-	bh=D6H6iAIwlPYRbH6d/46vUVyREpMMsw2lnmLbqSxB5vw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GeJNrO/6jXJ5ws6eT4XKWwOJ7r2AYNkeXUD8x6Rz5VutU6fEUVbVu+Z6IQUza9m5TKNfdl5iSit+d8e4kk4/n/kcdQZdI4HCbrZHkpUlYzV4XMnm6LrRzt6jMBsfTq42CFXsk7/pJSJmOpJgBDWjl9Te7CH+JYzQM2vBCPqSqJ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KLwjvheU; arc=none smtp.client-ip=209.85.210.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751907277; c=relaxed/simple;
+	bh=ewp+KOlqCTv9XcKiWiVFzXH9Mn6R3xHhwkoXWoZPY9U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h54cU+81Rwi5IWOlQ9vJKPxRby7QnTR8hTDGNi0mq1X5ZUY1+pQvP6LLXP3uy/2BgUfkE4KwfNoHf8ZrjeGLU5K0Zf2O54hL+3se/ASmbJlWqn7DOERwNzK0HKgB7pRPoTyX5quTQuc/x8LTiS4rCxajMQ6m5yItT0QkeiyUAg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=DsXLejFG; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KLwjvheU"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-7399a2dc13fso4079374b3a.2
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 09:45:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751906742; x=1752511542; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=c5fRevnfn3Dk9c2UzqFM3YfgxoDdBWEQtHWlyvir3q0=;
-        b=KLwjvheUyIM175sqHDHjgHuOr/rcQv7stGSGnOdepih4CMilDeK+M176WzIFZCJseg
-         wdAFSAE5Tg5541aSDB0kUy7IqHHssJJw+Ff4k65+ul9bi6JXDfsgmgN5h+v/3PYEWB7R
-         KSqnSoSciTn/XWIQ/8tJzAGVLjGA2JjuLCuh9XXOViX2wsm7WW0whKKAPN4f6tYyUy3I
-         lEo6GkvGEMq+ZHPEY0OTPejTgA1YTRh7BDvit47oTbAdHKl5cSg5yRDJNVRPyI0pyMt2
-         U8999n7keqZA+JQaigxG6Wqp5dXzOQ77KDCXSxq6DFKFkpRSUJdEPa+z5eHqdNOyR3iU
-         pnjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751906742; x=1752511542;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=c5fRevnfn3Dk9c2UzqFM3YfgxoDdBWEQtHWlyvir3q0=;
-        b=rc277cvGXvHUw1SUAwz4QLavEBYH4p99jlAetNg4FrAPkdR05DTjBGXUmhZUH2YzfF
-         Mrlkb9LQo2aLvLkWWpvivMHXg2ZfmNpnT1LWwYFXT/jNimyyuRep0ksLF7dVQB0M2R8w
-         BFzUoTSNmUMlS2QRkhH22/QF8Rki4XGbrXWGo6bPRj7p22iYsl1O9NXh0R82mwpTjMsK
-         K55GGQiU2pYDsatBEREAwaJlPLU6gkWkP+Yrkmu5HqeSVYeNW2zkMMLDIrUy8+00lCEc
-         BUx2gkCAH9Gj2DBjIVn01O9RNTmG/OhJc9lkR66SEGBhcrLN/19nM7kiV+TS5gyqk7T6
-         Fw9A==
-X-Gm-Message-State: AOJu0Yyo7xnxag16Agu0UfJtxgEwPnFhQSsNLLeJ0ApU8WROW3MSXL/1
-	suToAyI2BlAriOuPOCrw5Ja9wXhu50j7DkNRJN9nVLgSA+irYOAvRzh4XC24Tw==
-X-Gm-Gg: ASbGncv+NdFBCwPr1k48lmIaRvf+geENSeQLDLJfLPV3QZGJuq/d3yveX9nyNAbrvuN
-	buT0phqRAOdJF10x9IlpWrQ028vK08fVQJRdXZcrB2w+yCo/tcJwewXm4fyhCiMqelL30Uwy/Y4
-	McgHEV4eH0qvkkGeMrDzvZoXrsmZlDH5nBGLLLgfUqkYg4+aoZJZktVk2Sxg9js30pdREL+fM+c
-	LDR0ngAxqJaSsv+NmknCCDdKsLDaW7AY1SGbEGWTSI18xLtpcQqxLslo1gbZjyPstCWHczHdYml
-	K9vxIzYz3Dyj3nTmrccs6oB42/Ih35fauP9rIbVDOyPgXHPKdhqK9sBBp9UzNzx6+sKztZAdO1g
-	LfpeSatWDF2Va
-X-Google-Smtp-Source: AGHT+IHF8x+7ghTTkRiZctf/HpwdZQtaA3dTMcZUd+FaI5jl/CJtQ7J0WEmpMhB/WvpTBaQAwiTZDw==
-X-Received: by 2002:a05:6a00:178a:b0:748:de24:1ade with SMTP id d2e1a72fcca58-74ce65aef02mr18779051b3a.7.1751906741601;
-        Mon, 07 Jul 2025 09:45:41 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:151b:4ec:76e5:19])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce417de3esm9465444b3a.86.2025.07.07.09.45.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 07 Jul 2025 09:45:41 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: brad@comstyle.com,
-	collin.funk1@gmail.com,
-	gitster@pobox.com,
-	pclouds@gmail.com,
-	ps@pks.im,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-Subject: [PATCH v5] builtin/gc: correct total_ram calculation with HAVE_BSD_SYSCTL
-Date: Mon,  7 Jul 2025 09:45:18 -0700
-Message-ID: <20250707164518.6600-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.50.0.90591.ge5deae765f.dirty
-In-Reply-To: <20250703080111.64276-1-carenas@gmail.com>
-References: <20250703080111.64276-1-carenas@gmail.com>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="DsXLejFG"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id Yp3qu4rkr7HMwYp3ruSrII; Mon, 07 Jul 2025 17:51:25 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1751907085; bh=ZjY2UaHZtF33umVwdzSzEe79sJ1ndX43HYfR9JM51y0=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=DsXLejFGTM+XYP/y0QbWmqh0StP7htCn/eeB3kf2sXChHp1cpzdc85TwuPeRHofaT
+	 icrwQEsDhhAj6T0ijb4mS4JfmyPEb7ytX1VsL6lZLC2SvUEUenMnoqoTO/rY3s6vCK
+	 C6cT4MAWyFR147/DxjiH8swyqzyfINU7Y4JimHKOh6IFDCmbTy5AvNdt8dZ08VtoWT
+	 Y8GHdBd53T+NnDJFa1o4IWIIxm1RDWWGBKE2Y93sqhELhNm+ZIgjdardx/oTp4lBSP
+	 pmOEp1l+0uVLCADwm6VYQ4OymXlE2PEREg86HrYzX5rjAQJ6oUz9ZwjARFtFGtPpg5
+	 y6Nzn2G5JQ6DA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=ZNB0mm7b c=1 sm=1 tr=0 ts=686bfb0d
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=BCjA09oAAAAA:8 a=FaduoGd_yjwJ_Q1EiYwA:9 a=QEXdDO2ut3YA:10
+ a=jYKBPJSq9nmHKCndOPe9:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <ba0a3469-3a4d-44f4-b1b8-d9c1a825cb94@ramsayjones.plus.com>
+Date: Mon, 7 Jul 2025 17:51:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] build: fix FreeBSD build when sysinfo compat library
+ installed
+To: Junio C Hamano <gitster@pobox.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ Renato Botelho <garga@freebsd.org>, Eli Schwartz <eschwartz@gentoo.org>
+References: <e6a80163-47ef-436b-98a6-2ac39c477080@ramsayjones.plus.com>
+ <CAPig+cTybBgkwFEsMVNNu2o1w9T5qnhau4chvGU2opEPJO78zg@mail.gmail.com>
+ <xmqqzfdg3t78.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqzfdg3t78.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfAUEm1jRLWvvF212km1E4SDon0UY3meb3QyChLLYR7SvHQF+Ma28QO1dKuUZzGRPyk/SbIfZqQLvHuk7hq2FmTceIxxD+pI0pwMCgdH2GJH1/Z1X3X6D
+ EGJQLwoaIguazGVqtJfTxVlZVnPi4dJgTqb/WfSAYolK3kqpF3osYQoRosOof6C9u/SH0SnDnVcn5UnNUVNvRRNRlbc9vtfGGOo=
 
-The calls to sysctl() assume a 64-bit memory size for the variable
-holding the value, but the actual size depends on the key name and
-platform, at least for HW_PHYSMEM.
 
-Detect any mismatched reads, and retry with a shorter variable
-when needed.
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- builtin/gc.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+On 07/07/2025 16:40, Junio C Hamano wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> 
+>>>     need to link a separate library (-lsysinfo). (This would require
+>>>     a similar change to meson.build).
+>>>
+>>>   - change the order of the preprocessor conditionals in the total_ram()
+>>>     function in 'builtin/gc.c', so that the *BSD sysctl() function
+>>>     (in the HAVE_BSD_SYSCTL block) takes priority over the sysinfo()
+>>>     function (in the HAVE_SYSINFO block).
+>>>
+>>>   - suppress the setting of HAVE_SYSINFO when HAVE_BSD_SYSCTL has been
+>>>     defined (in both configure.ac and meson.build).
+>>> ...
+>>> The second solution would only be required by the autoconf and meson
+>>> build systems, the Makefile already sets the build variables to the
+>>> required values (since they are not 'auto-detected').
+>> ...
+>> The final solution is almost certainly good enough (and is definitely
+>> simple), although the second solution has the benefit that it "fixes"
+>> the problem once and for all even if someone defines both
+>> HAVE_BSD_SYSCTL and HAVE_SYSINFO (say, in config.mak), assuming I'm
+>> understanding correctly.
+> 
+> Yeah, I think I agree with this assessment.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 7dc94f243d..6880f5b13d 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -517,7 +517,7 @@ static uint64_t total_ram(void)
- 		return total;
- 	}
- #elif defined(HAVE_BSD_SYSCTL) && (defined(HW_MEMSIZE) || defined(HW_PHYSMEM) || defined(HW_PHYSMEM64))
--	int64_t physical_memory;
-+	uint64_t physical_memory;
- 	int mib[2];
- 	size_t length;
- 
-@@ -529,9 +529,16 @@ static uint64_t total_ram(void)
- # else
- 	mib[1] = HW_PHYSMEM;
- # endif
--	length = sizeof(int64_t);
--	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0))
-+	length = sizeof(physical_memory);
-+	if (!sysctl(mib, 2, &physical_memory, &length, NULL, 0)) {
-+		if (length == 4) {
-+			uint32_t mem;
-+
-+			if (!sysctl(mib, 2, &mem, &length, NULL, 0))
-+				physical_memory = mem;
-+		}
- 		return physical_memory;
-+	}
- #elif defined(GIT_WINDOWS_NATIVE)
- 	MEMORYSTATUSEX memInfo;
- 
--- 
-2.50.0.90591.ge5deae765f.dirty
+[Sorry for the late reply - real life keeps getting in the way!]
+
+Yep, I thought about including this fix *in addition to* the solution
+implemented in this patch, but decided that the chances that anyone would
+set both in a Makefile build was practically zero. (famous last words ;) ).
+
+Of course, practically zero is not zero, so we could do this in a
+follow-up patch if we wanted to take a more conservative approach.
+(Carlos has a series in progress which would conflict with such a
+patch - but the conflict resolution would be simple).
+
+>>> In order to fix the FreeBSD build, move the sysinfo() check after the
+>>> determination of the HAVE_BSD_SYSCTL build variable, suppressing the
+>>> setting of HAVE_SYSINFO if HAVE_BSD_SYSCTL is defined. Apply this logic
+>>> to both the configure.ac and meson.build file.
+>>
+>> Nicely described. I wasn't really following along with the discussion,
+>> but this commit message summarizes the situation well, so I can
+>> understand the reason for the change and (I hope) the implications.
+> 
+> Agreed.  Thanks, all.
+
+Thanks!
+
+Let me know if you would like that follow-up patch.
+
+ATB,
+Ramsay Jones
+
+
 
