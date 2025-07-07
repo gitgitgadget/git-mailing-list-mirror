@@ -1,145 +1,152 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CF51FF5E3
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 08:52:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D45128983B
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 08:59:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751878349; cv=none; b=roJeC5pTsSRBLSuXlDeEUc/8gZ3q2Wsv0wtvaioGP27JXbNfo1hl0Axzob2Oy633UyA9qk8JYMGySETss84qSyn6UxCEWgb9sLVZDx5mn0fOzGeiAk8/XotdjDDKT1dmptf/pcCvFJAf128so2xAmDy5Hkow3tCu77k3JrJb4bI=
+	t=1751878750; cv=none; b=Y9pMgpsCWK+2qFGZvdFT29pqFBud3dfYkmlQIFrz+azarrgtfnCHa4vGvptt6cYCd4Z6mRYKN8Y/wo/w4pY8cUaK0y/LShtMFLCVM2TCypJOnNMYpWS9TztCdf+xtfC3RI2hUQue9nnus7m7MTME+wPfNJhX5Nfird06Ok2hTCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751878349; c=relaxed/simple;
-	bh=QF0pPJMPWkwRCAJ/wnheMLpxMVuiTT4zgU/4QMnJwFU=;
+	s=arc-20240116; t=1751878750; c=relaxed/simple;
+	bh=tREWDpVo6WzFSzS6gh7KcDFawLE/PkCKffO0uQ9GMeo=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iD+GxZiiy67apRfGMuLQg1g/4s//CC8YGJn0KTL0krdhwpWxzd5xw/reMO3uRwZtL6TcpNyRnoXBF98nbytaCwgEjMRLgnYWH8w/SSnXADtEHfKL3CVJ3VxzEAqxSiRTL0NMyXn7hOMvUmbMFx3UCi07X0ezgA1/o5vmXpiOH0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bIi/WkHf; arc=none smtp.client-ip=209.85.222.47
+	 To:Cc:Content-Type; b=mn6mwED+jDcpiVFNPGOj4rcEmkgwtxmigHdzHAv/4FKSFBBlpcEwpjPAehCCWdSSKUvjO7PIHMww7IxJxM5JbARHaNNXuHIz9JuhFShn9EnykfG752zbYrK6BcVU8b1Ip72RiWUB7pab/gluumZKL0SFNj1uJ6EfJUCKqmjurGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ajj8inEH; arc=none smtp.client-ip=209.85.221.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bIi/WkHf"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-8815049d0a8so873184241.2
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 01:52:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ajj8inEH"
+Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-532de49b7e2so973268e0c.0
+        for <git@vger.kernel.org>; Mon, 07 Jul 2025 01:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751878346; x=1752483146; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751878747; x=1752483547; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=/+228gnCNqA5updjxQ2fTKhZ8Lw1KuqjEozgvamG3Hw=;
-        b=bIi/WkHfiMZiSofOmJtH/+kNXKcbVWBL0no573nmeb+4pdrdT6hN4Zf+QPupJe2ySw
-         6q//j7Mn7hgJnU+VbV5qvigQPjuTb+mRVQCaS3NU5anuh/CPzrjAtCmwW7eo3oV8poo9
-         j6JUI7YpBm37c7KUU7BvZOoxXxX+vSHTXXMwfDeEXy9mg3fdwYVhuYtyeyjuQ4UISSng
-         saeGD1C7RMhKhozB/gNiH6Cdn6eijwtX4dKH6cRRCuEkTrMv+//63RwIkLpViUATXTnG
-         EDsT/4peimZivnXf1mgP2B6EZK4OQsQHrYIlIKliybsYfahIVtpw4UuC2UXPXrJ3dR0s
-         Sucg==
+        bh=p6AiVrD/hecDeVQ0kRFXJFU2u67LlF5bfQjR5RnMv+s=;
+        b=Ajj8inEHbYmlNhaIJRxZyxSoT+iJ82iNCspYqkK6Z6tZkyxsit52F9W3HSHtayoANE
+         K+Vwg9oq3AslKq2Dmrk4+50+5YsD6OAOtXQRxA8nTva0NIhkPg3heW2CIr2mFzzh1Pvy
+         fId0ZB63OVDrCaPPENCGS+nPQzKXuC2g+iMzYQfEy0tDRRjFLK2KJUt8ttbFePtrymDG
+         +qtRDb1aMk4gI9UEhANZHjfc69Iwdhgx0nGwXYspZbzRONoFaX0lsfWKSKc/Hjxym73Z
+         udww+/S+KmdPh7xF0Sm9x7L00e5SsU2NqwfUDjq1XmEbSm7heTWa8TmyhO0Q0csrbDpS
+         JMxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751878346; x=1752483146;
+        d=1e100.net; s=20230601; t=1751878747; x=1752483547;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=/+228gnCNqA5updjxQ2fTKhZ8Lw1KuqjEozgvamG3Hw=;
-        b=RdKieCxwVQigfcYPVkjB/eDnDV/j+Diki5FBl990U+5ryzE4FIfSpjd8lvuiTbApcH
-         k98Fa7oIFtUX/SepTpu34rFfuuVBa/IE2rOc1iYdwcyGGM9FsXVo1i6BLj6yskocRAgm
-         R31Vu7rWrZt++xKN5sBf2BuK5C4ysNSeJMWSEiJjdLYncBDPjOHA08bddeu4I3MtAcPI
-         g8itr0o0npQFte74ygz7Q1qS3+bBHaGhJQf/4zQmqTZyiA8G4Mj+K9xmgaWGFabQnxHh
-         6H7t7jDcPsEeFL7scWLtzBmVlHA9K2F0uvGzkZLtHsiBDI2HKRGWj8TTQ5Nl9iQYt3gm
-         ijsw==
-X-Gm-Message-State: AOJu0YxN60JRfF6svzlH8SftadBe3M888V38NCx0COzThIZ7ynH8BjqE
-	K3uhAb+/OcBZVUs/0UsO7zaS/4UmF5d/NGFRyr3x3dufvqx5O+aHWiykIUQPxAc8X03tIoeNm5n
-	PtkU4aiNsm6dDfNbCayk6nQ+eYx2IU24=
-X-Gm-Gg: ASbGncv3JOG0bcetLVYVvgl9+fBs31lPDYBxYV6akMO/FyZxz2RpVW/xml7DUD9g9B2
-	4WBEBEYTbnmeuWh8YwjsrmKQZZputUbDOfAIK0ewaOl2i5AyuYzqUmZwMNr45EWz/gH4FXRFzyF
-	XgQw2iTQufreAd25WW+omM9bomd0T4Hy2zqkzWED8TdnjwsxPFdqXgyn53S3cAXGoiGxIPchm7/
-	NMEvA==
-X-Google-Smtp-Source: AGHT+IEyXNkQn9U9dbiK8zXthRgZiVqP8sPDFwT8+ln/rp+y6Ikylf4Uo0zEsQ3G5grt2CHCXV8wglwKaU4Tgq0XR1M=
-X-Received: by 2002:a05:6102:162b:b0:4e9:b66d:3c29 with SMTP id
- ada2fe7eead31-4f2f23dc4b9mr6477824137.19.1751878346226; Mon, 07 Jul 2025
- 01:52:26 -0700 (PDT)
+        bh=p6AiVrD/hecDeVQ0kRFXJFU2u67LlF5bfQjR5RnMv+s=;
+        b=D605yuUUCjb7JEATyg0TxyHIV51QEiF+/DG5cAReTk5UnaslZ2+WRQdrWVMnqdHgb4
+         BjAFQdbC5osg9m2+HfOFD+YboGBtc1B1TiFrYWQyQABCStM2igwmwpJ4ln8UPxzmZ8Ll
+         JLjpfC+TztRxnKSKm6y4S9Y0/COwOJB0DfQSlPNEAdJr/DEgfMLalEG3hUe/2uw2tlma
+         wGL1WYuwJVq03vioVPeavZOpQyAYj2049faocPa7Ycos3M6BdSPFt4nM7zcnGzBrtQHq
+         kQlRXsJ3BNHAxH9vFZeQKCtsEirhxEJVTlsLvmmjubmcUqdKB6Ry3nEi58yTxOIDr953
+         CVwA==
+X-Forwarded-Encrypted: i=1; AJvYcCVrYh2Y98zejt1rFvIGOy01H4pdqB0NFUD+HnwYAwmJMZxAcDtVUF/NBkETT5hCPhKJhiQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5aGsHIvnb80PHA/1YEfz2e/4ZYOd2Nc2H6eDXstkZMG/mZ1WF
+	+vKUoPNQFNBg+sRUdAbkNJIw6mes6ZARk0fmNcg0TMZp/xhR05aJJEADzFzTZ6etlF942+UB3vO
+	pjVaHrFtChPvHCJk9YrMB3uyHaVhZx4k=
+X-Gm-Gg: ASbGncuwbGKE3CvlcXV1cCS1JwQtl8hmcGyFka36JaOyz4OrQrsHLH3vggnW+1rljyl
+	3aMzUd6mTypYqy+OVFR09SuNhi/5yywl77SUFY6wNKhf5c9QysJvxqr+aISWnH+/qL7vlZ4dlxw
+	WmL1fXnqFz3xUsSCAMgC+va/y8U2B2OJ8lyPvAMICQqOGa9R50nVwDMEm37qeH3oXaBqblnjrp0
+	6eLGw==
+X-Google-Smtp-Source: AGHT+IGohkQciTB80/ErdsD9IkmxUNBQwRUETKmobblde3YxAa/nK4wUGeVhgdHl97nNl/yrCCe3vN98Wr851tyIvbA=
+X-Received: by 2002:a05:6122:3708:b0:531:188b:c19e with SMTP id
+ 71dfb90a1353d-5347bee764fmr8032793e0c.2.1751878747300; Mon, 07 Jul 2025
+ 01:59:07 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 7 Jul 2025 04:52:24 -0400
+ HTTPREST; Mon, 7 Jul 2025 01:59:06 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <87ecuwc5n4.fsf@igel.home>
+In-Reply-To: <xmqqa55jc3md.fsf@gitster.g>
 References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
  <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
  <87ms9kcbtq.fsf@igel.home> <CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
- <87ikk8c8jr.fsf@igel.home> <CAOLa=ZR2=5iZzUVTS1o81a5NhLLiyHLiJfznz2Us5q0VLU74og@mail.gmail.com>
- <87ecuwc5n4.fsf@igel.home>
+ <xmqqa55jc3md.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 7 Jul 2025 04:52:24 -0400
-X-Gm-Features: Ac12FXz24Ir0uOR8EJaSHhJh2Y-IkmPex6WCBOgwuD5nnb9kay13h0LH9qgIRnU
-Message-ID: <CAOLa=ZRSFH7F=cU2owPjhVrupSSubEArak6abmhRcP97wStVyA@mail.gmail.com>
+Date: Mon, 7 Jul 2025 01:59:06 -0700
+X-Gm-Features: Ac12FXztr0jD4BW7zPjy7AQhSg6TGBt94hgCQOUakpPE_xeyhQar9AGkg7cxe1o
+Message-ID: <CAOLa=ZTDcssjQcNcvDOA4-r-j2asp-XHCy2D_qoHEidz+KsKCQ@mail.gmail.com>
 Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
-To: Andreas Schwab <schwab@linux-m68k.org>
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000008459ad063952f6fc"
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000006c44250639530ef1"
 
---0000000000008459ad063952f6fc
+--0000000000006c44250639530ef1
 Content-Type: text/plain; charset="UTF-8"
 
-Andreas Schwab <schwab@linux-m68k.org> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Jul 04 2025, Karthik Nayak wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> Andreas Schwab <schwab@linux-m68k.org> writes:
->>
->>> On Jul 04 2025, Karthik Nayak wrote:
->>>
->>>> Consider the example
->>>>
->>>>   $ git for-each-ref
->>>>   refs/heads/bar
->>>>   refs/heads/foo
->>>>   refs/heads/main
->>>>
->>>>   $ git for-each-ref --seek=refs/heads/cat
->>>>   refs/heads/foo
->>>>   refs/heads/main
->>>>
->>>> You can see that the reference doesn't have to exist.
->>>
->>> That is even more confusing.  What is the first matching ref if none of
->>> them match?  Doesn't that mean skipping _all_ refs?
->>>
->>
->> Well the idea is it would seek to the offset where the reference would
->> fit in.
->>
->> This is to ensure that seeks to references which were deleted
->> concurrently doesn't leave the client hanging with no results while
->> paginating over all references.
+>> I think I was a bit against '--start-from' and '--start-at', because
+>> they imply that the reference provided must exist.
 >
-> Then don't call it a pattern.  Pattern matching is a set operation,
-> independent of sorting.  What you really have is a marker that divides
-> the sorted list in two parts according to how the marker sorts.  And
-> that makes --start-with more descriptive and less ambiguous.
+> It also implies that if the reference does exist, that would be the
+> first one that is shown.  But I do not think you want that, as ...
+>
+>> Consider the example
+>>
+>>   $ git for-each-ref
+>>   refs/heads/bar
+>>   refs/heads/foo
+>>   refs/heads/main
+>
+>
+> ... after a paging application starts from the beginning and showed
+> a single page of some items, it knows the "last" one it showed.
+> That last entry may have been refs/heads/bar.  The application may
+> not have seen the next entry (i.e. refs/heads/foo).  So if it has to
+> use '--start-at=refs/heads/bar', the first entry it gets from such a
+> request may be for refs/heads/bar again.  The application needs to
+> remember the "last" one it showed and skip that, which is a bit
+> awkward, isn't it?
 >
 
-Fair enough. I'll change the documentation and description in the next
-version.
+I do agree, I was modelling this after what would be the best approach
+within the Git codebase. But I think it would be nicer for the clients
+if we skip the provided reference.
 
-> --
-> Andreas Schwab, schwab@linux-m68k.org
-> GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-> "And now for something completely different."
+>>   $ git for-each-ref --seek=refs/heads/cat
+>>   refs/heads/foo
+>>   refs/heads/main
+>>
+>> You can see that the reference doesn't have to exist. So implying that
+>> it should can be a bit confusing.
+>
+> For that reason, whatever verb you pick from seek or start or skip,
+> it would be great if the option name also made it explicit that the
+> named one, if exists, is not shown.  Conceptually, it is "skip
+> everything that sorts before the named item, including the named
+> item itself" that such a paging application would want, wouldn't it?
+>
+> Thanks.
+>
 
---0000000000008459ad063952f6fc
+With that I think '--start-after' sounds like the best option. I'll
+modify for the next version accordingly.
+
+Thanks!
+
+--0000000000006c44250639530ef1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 649915b3d93ffdf4_0.1
+X-Attachment-Id: 8bc9c04672d56251_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ocmlzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOEhKQy85eEhNRlE5eWNiYjI4eGUwckJ2eUJUUFZZMQpPcGpvbUdWYUtx
-NlBsb3BGUGZIbVk3MnVtc1dlalhzbjJsNTNYYXkvUjZpK0lIQjRFMkRxUHlzaFlnb0IvNVlwClZj
-Q0tkQmhKT01hbFJieUZXZyt1eHYxNWRmNW5jV2pRbEtLTzU4V2Z2Uy84UHRrbkdQQzU0S21GWVNR
-ZVlKODcKci9tclllbEY1bTh0QXpwRjR5ZDdLMjdaTjQvRE1wOUF3RDk1bTRWcytjSFVCWjB0MW9j
-dm9LYklLUldxaUFPUgo4WG10MFVwTjZGbnRDaXZkWk5FVEdjcjRndU5VTTFma0h6V2loL0VsdFox
-dnVqTWZNNE9lT0NjZjBWeG1oWjJoCjB0WmxZSWhmR1RNL2NCQzNSQ0NQUVVVYUx3VXAvTitxUUpS
-djhvRlU5ZkF5enljNGpRcnNpQTM4dmQ5U0pmSE0KTzhCaWIrT3d1Z1QvbVZaMitsVTIwRW4zSmJC
-Nk5jaUxJa1FGQVlGaUZHQ2hTeUtheHU0UWNFek9CWGg0N3UzUgpyYXJnUy9qL1ZzejRqUklqelFv
-MzRMblZqWUNudDIyYTEzRXlSTUsrSTFrWjBMWTJ2UFNLWFhWSkJMVkpiK1k2CkVjVVJZZVpwMWpZ
-ZnpDUG5XVkxGb05uRnJMcEgzYmRnMDJPbWZJVT0KPVhWL0sKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ocmpGZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1md2NUQy80K0QwbGR6QVNaMzhpdy96NlBrMExCWkN4cgpzTkNnR3JZMEhT
+dDhBdFR0eExodE05ZDlSelQ1T0l4Yzg2NFFhTG1LVjdrTGpNVFhhTmFGcGI0QWtCVEdid01VCnQ3
+YThzTld6Q3VrV3Y2SUw3ZGVIVkdUR0tXZjd5MVFvZ3lhOFlFbXIyN0dOTWR3NkVIK2t1dW9ZWmY5
+VW0rWnMKQjAvRmZ6MmpSOUdiOWxTVHpVSmU0a3hGc2RtNHMzd09NSWYzY2pLQlEyWEhHMXpxM1dO
+RURHQmpCMUUxUGVONApRNWNIREU5VklrSmp0a1g1Z3kyRi9pQ3l2QlhZTkd0L0g2U2RDMWNFRjlX
+MkEvVSttdks2Q052eW1ySXZPUU1LCnlJYW5OUkZraFZFNDZKK3RMYmVVdkFvMTZjZ3VEdUU2eXRS
+L0tHaFFRRVVzeXVBeDR0UlJIb24vUjNNMHVGeTAKanp0VDEyZGV1cnEwajRkR1VmenM4dmFzamVv
+U3IrUEI1QjhIRDNyeWt5SGRNMHNZeDIrdmYzY0ZCUCtGa0tsQgo5MENxWGZjaktYWWZDUE1jWUFJ
+M0REQXNUNVJLKzZxVDFQQW50dkRjSXR0T3dMb2I4NEV2SjZ5TkNlRFBKcjBtCkRNQjQxeTY2c3I4
+cnNHUjhNbXVnaEszUXFSQUEvTEl1WVlmUUwrRT0KPUpYYUYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000008459ad063952f6fc--
+--0000000000006c44250639530ef1--
