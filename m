@@ -1,144 +1,186 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B3219E992
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 05:53:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F28155757
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 06:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751867635; cv=none; b=gkiyrwoGi0B6tRkJ88UUQ3kz5Q6PEIjoSMrf0Bbc5/qho94Wn2IJ32oc37QtnJeNZkEf7bZQS4LEZQYgYCMkosYRXKntI85MILvDxfKkI+pb0Ya3srAmqVcG2RY3ZeIaw0pYJstBKHSP92rhZlTKAjfn6Vxo4b0OIdOVgrz+q3Q=
+	t=1751868128; cv=none; b=D7YwBj7TvRGLPcLi3YApM8t4piZo3UIwJHOHoACDEVy2XCBsOOcLmtV3waQPXxcGcwQ62kJ1yhVR8aZ+wJY4RgmMucPLWtxsFqN7YWsmod0zkZShkykjZ5mgXbRF/1YNxWNV8Pwed2crgu+iXaCTmmWZs633YFhRzT/cPTVOMVU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751867635; c=relaxed/simple;
-	bh=4CQeX+ooaTE5w7hcI65ge600AJ3JIArdkF2JbZA8q1Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uXcT/BjzBZcab9XHCMdmsKE0+2nQU1KlifXt/hYntP1sQdxcfEq8wv2W1Bjo/dsGcvVvkeYbPi2E/uUZT+BvCui3Se3I/06v58bJbVf6Rifu9VERLHKH9o5U1TbVYuIihtciq2C0uN38xOcgK9fGNmRoHB2wtJlyNpsU9pnFlbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ObNA3Xls; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751868128; c=relaxed/simple;
+	bh=ubZ31+8Shnvc/VnQ10ETJ+nX4bqnQzpg1YPaURjcANQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=K6peTH5Xoth/Km6EZsc56cv5CvnPByA+ZufLcTDns3fe4Y0jm2J1X60Ew557ceXIxH3DZm2Mo0qNviPPf9LPMuzsOqGTCcBKEY2d4cXHJOsc2gKFSoG4Jq7Vi2wA81wEMV0qhtHul0o//8uKtupew44PrbZ1fi6EYFCzRt9tcvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lCxsnilF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=caRfbDXF; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ObNA3Xls"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b34a6d0c9a3so2686306a12.3
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 22:53:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751867633; x=1752472433; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KqoHUnZSv+ygoKB8HiEsBxYNE2//a+8HRKxHr+RZjcc=;
-        b=ObNA3XlsKNW9fkfa0yiSpxIMVqKqAnBvMxSiXBniflctUjspZu4iGbRPettXw2zuBK
-         Upk/sLJ6Fa2uhV7Z/EzU1ekCprrcqQftbn/W9OyEVdRmSRyz0onxLFlbg/q5eVO3nMnx
-         O1EVWW2hmdNWF+VZVzUXqCl5raj3KLCA6UJC6tD7D+jUyqDv2rsn5zKFUANI6BZERSwN
-         zblP3PvJUHldXGa0P2pW9tkrW3jkkn+8pZEmdcpWM4NdzPAy0ouFhSNjngAxhAx2wgXb
-         B0S9ZIG24u9kVupCstfsfuDoMPk8Jz6/3OxOWor0PsDpbaGQvUKKG6wqt7GB/wIAklw9
-         w2Og==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751867633; x=1752472433;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=KqoHUnZSv+ygoKB8HiEsBxYNE2//a+8HRKxHr+RZjcc=;
-        b=Lofin/K3BvlhdwbSYkAEjt4D9WVQgH72d57Sraf28+bS2rZvQ+0q9su6paQFUfAUEg
-         67AW2hTMxpKDcOqRrZGoXV9soyYAt8V7+UPgFVJL3ZzEtaVNL5wA9wUSgSiSbeeTfXIa
-         4bd2O05MxDNwOhYXSpz4V998gl66WIscLeOvU+13ChWvxqISAxf2I4+CfG2QPSO0Vsh3
-         V4ZJ3JiMBlCJi2E1Y/6IXWLqGsdGL64SUyzC8PgrKrlie9AqZuZCT0xGUuyCRCzSBq44
-         gFe086z3x7/RSw3sJxb5BfI1r+oPqtvKt3GtKhy/D/Z02SIexLucXeZtV4XJzGbRf/Oz
-         Mh2Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXyQtKHVm66AQhJBfz/qK0JZqdnIYVFLJtzyXexIYDaeU/kFkQwaXaa1XlfyyXxXzwJo78=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8TAO58Rs7dprrZo2J7tF/5th/XMC9sfB0+XtYirOAFO5RfTWo
-	Koru7Uc5LuLbLzb3pOyzkN/aw/QMex1TZNFUY2mGfjTA8C5sS9illBqC
-X-Gm-Gg: ASbGncsuBzAjQp0H+IM36umqtwibmKeWBi4jlh1pr8vVScAwM8X29aKKsqtPz8+T7zR
-	rBAivDqnMvXwHRQYwHqOfBMXAbk8D9nLNwbgglOm5gvuRnrPtlSZ46hHvEmYIVDAesPQTHNCuOt
-	udZc7gXghGBMsmPX/IjGQTgNkVkBHGGnsj4i+XdB2gz2lcfTywxguu48CWmmQ33IXLPOPdfHCiI
-	6gbJkA3TRSvjUbhRSL8kcYv4Twa1sH7iPvC3VKDt6Q5BK31dACPMlxs9MbGSC6AsnFOH0wAOyN9
-	gImcN/kf13krPK5amjni6BJBn9RBSWOOCDJCbtMZSrCddu/PeO+ASynexwg3nLmhQYpu1ZCMki+
-	et07czcIJwcFUHWeMH57t7f+VHCjSlHfdQBUmLg==
-X-Google-Smtp-Source: AGHT+IGK1/N7y2CpUwOhKG6ygrrGnNvWFfRSPbSbHCW7TV1FOv73OZU6rxFg6lX5xmC0sEOMHHroNw==
-X-Received: by 2002:a17:90b:4ccc:b0:312:ea46:3e66 with SMTP id 98e67ed59e1d1-31aac4b2f34mr17699871a91.21.1751867633122;
-        Sun, 06 Jul 2025 22:53:53 -0700 (PDT)
-Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31a9cc4c8a5sm11363704a91.10.2025.07.06.22.53.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 22:53:52 -0700 (PDT)
-Sender: Junio C Hamano <jch2355@gmail.com>
-From: Junio C Hamano <gitster@pobox.com>
-To: "Drew DeVault" <drew@ddevault.org>
-Cc: "Aditya Garg" <gargaditya08@live.com>,  <git@vger.kernel.org>,  "Martin
- von Zweigbergk" <martinvonz@google.com>,  "Patrick Steinhardt"
- <ps@pks.im>,  "Andy Koppe" <andy.koppe@gmail.com>,  "Remo Senekowitsch"
- <remo@buenzli.dev>,  "Jeff King" <peff@peff.net>
-Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
-In-Reply-To: <xmqqfrf8ait6.fsf@gitster.g> (Junio C. Hamano's message of "Sun,
-	06 Jul 2025 18:30:45 -0700")
-References: <20250703113505.11889-1-drew@ddevault.org>
-	<PN3PR01MB9597069B8CF014BFE01B53F3B84CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org> <xmqqfrf8ait6.fsf@gitster.g>
-Date: Sun, 06 Jul 2025 22:53:51 -0700
-Message-ID: <xmqqfrf88s28.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lCxsnilF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="caRfbDXF"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8E3DAEC023B;
+	Mon,  7 Jul 2025 02:02:04 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Mon, 07 Jul 2025 02:02:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1751868124; x=1751954524; bh=UTBIjDvhu9
+	aAkwk0QAFqB/y/3L76epY78krd+D2phbg=; b=lCxsnilFfi5Ls9DEJjoPKHRcRl
+	6iZfa6So6NrDKRetNGOjwWD8v/2+jdCW+YWdiph5eYNgP1C7cJ1l5iFyyqeuAgZd
+	gUg6+SnqcXUpK5lAs50RYpilvFKUtYg+d2UfWhf50koxF4Jg07oZnOraoJj8RNFg
+	6ZFDrG0+XN6cDK/jSGTCdK+J7r0We1dKBzJr7iVaqmmjAPB8GzXR0vJY5HCMzUI7
+	iViHhhjP+7ZcUBD0XhUXhSDPYQEIrUDppz2Wu+MqHlUwffFIJAaMwAYaHfk5Bgfr
+	RRdNFbcrEmmpQEVkMS+aUY45pFqFni+MZ7/ARGeXqNYcIXOQiLl4H+WQbXtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751868124; x=1751954524; bh=UTBIjDvhu9aAkwk0QAFqB/y/3L76epY78kr
+	d+D2phbg=; b=caRfbDXFPAk59NLfwHUcda3A5zosUjxwPTpcpZl/+xPpOdkGRgV
+	GOyjCN15q5z0TEr942V1RgAhsePdFQ0EpUnVx3Plar90hl3UULDPIYH4VTmJurD+
+	u1qx8UCiRhWcPvuSAQ/kvVN030x+HIcZkthIqvEky21DzHGlN6suNd8ttUMJeNXw
+	/vtFmp5VcTjpSSx56oGiMuzHLYxXm3CG1iicGYK46ne8ZA669aWwCdWdnJUFyzzf
+	bK984rGZSe7j+f557+qKu6a1pXrL0dbaSKCkuEprrIPDks3YkaVSyrpN87Ejgjs1
+	7+AhNRBGeAXBQYaVj878RDuMkf4coSUaRew==
+X-ME-Sender: <xms:3GJraIMXPMWvlapnPEEh6ria5jjbLHbfWmtLLT00d9VwoQr4bH3FqA>
+    <xme:3GJraMiQvSni9q0ndOaI92T7PSI2IotORozCdKzT8FK52MSDgiYYi5wLHGbl5T4zD
+    cDCCieNSJQk2OIr3w>
+X-ME-Received: <xmr:3GJraFvD2YwveeJUQhTKiPfz_TPxy5bBMNHbeY2Y01TlybQvHUlXNvaBFM1ihAlOF6HCwZUl5ICyxFQ2k4NQBMKdnlxi0c0jNVvWB5KCkQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefuddtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evhfeffedtteeluefgtdeugfdtkeeugfelkedtheegieekudduueevgeehudekffenucff
+    ohhmrghinhepghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:3GJraCTE1Oc2P3cDBnikS3MeVXmhxIAmGmQMtqT9gIkfO6wrs4rWTg>
+    <xmx:3GJraB07TTknp8cyUCvcTCHP98yB58ttvuqmkAu70k9rdvwcLXweVw>
+    <xmx:3GJraPuUlOHIthoG6mvpu4McXIi2p4QOZTGHaWWSnGOxA3cgzRncog>
+    <xmx:3GJraPjr6Rn9Lfygq28-Bx_JnbtFUQiIC4bIOdKnkgKM0JFlfYrO9w>
+    <xmx:3GJraCPc317CtTF9xcmbMdUhBRcFsZMMW4jUViWSurJ0qnSyVb7TRg3L>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Jul 2025 02:02:03 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ba423542 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 7 Jul 2025 06:02:01 +0000 (UTC)
+Date: Mon, 7 Jul 2025 08:01:51 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
+	gitster@pobox.com, Justin Tobler <jltobler@gmail.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
+Message-ID: <aGtiyGW4MIYUw3Ed@pks.im>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-1-lucasseikioshiro@gmail.com>
+ <20250619225751.99699-2-lucasseikioshiro@gmail.com>
+ <aGZqK5eBA18vHAa_@pks.im>
+ <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Fri, Jul 04, 2025 at 06:40:11PM -0300, Lucas Seiki Oshiro wrote:
+> 
+> > One thing I wondered: Justin is currently iterating on git-survey(1),
+> > which is the command Stolee proposed a while ago to gather repository
+> > metrics.
+> 
+> I didn't find it in the mailing list, but I remember seeing it in the
+> the GitLab's fork. Is it this unmerged MR? 
+> https://gitlab.com/gitlab-org/git/-/merge_requests/369
 
->> IMO the right way forward is to use a mail header.
->
-> No.  In the change-id case, trailer is the right way to go.
-> ...
-> But after thinking thrice, we may find a set of good pieces of
-> information that should be added as new commit header ...
-> ... and there will be times when we need
-> to convey them over e-mailed workflow to allow patch recipient not
-> to lose such information.
+Yup. It's been posted to the mailing list as part of [1].
 
-Or a third-party software may add a new commit header without
-gauging and waiting for the community consensus anyway, which may or
-may not have much structural meaning, and then we may want to extract
-that piece of information hidden in the commit header out, because
-it was not written as trailer (in which case there wouldn't have
-needed any extra effort to extract it in the first place).
+> > Would it make sense to maybe have such whole-repo commands
+> > grouped together in a `git repo` top-level command? E.g. `git repo info`
+> > for your command, `git repo size` to gather information about the repo
+> > size.
+> 
+> It seems to be very nice for me! In fact, this being a home also for
+> statistics is something I considered while writing the first versions of
+> my GSoC proposal.
+> 
+> And what about merging the two codes into a single API? Something like:
+> 
+> ```
+> git repo-info layout.bare references.format survey.commit-count
+> {
+>   "layout": {
+>     "bare": true
+>   },
+>   "references": {
+>     "format": "files"
+>   },
+>   "survey": {
+>     "commit-count": 42
+>   }
+> }
+> 
+> ?
 
-This part can use a bit of clarification.
+We could in theory do that. But there's two things we need to be
+cautious about:
 
-My endorsement below to use an extra e-mail header applies when some
-commit objects ended up with extra non-standard headers holding
-pieces of information that we want to send as part of a patch,
-whether it is a good idea or a bad idea to place that particular
-kind of information in a commit header.  And the question is "Now,
-what is the best way to transfer it over a patched e-mail?"
+  1. We should be mindful about what specifically this tool is about. It
+     shouldn't become the next tool that does way too many different
+     things.
 
-If it were a good idea to place that particular kind of information
-in a header, that is of course an effort worth investing in.
+  2. One of the idea of git-survey(1) is to eventually replace
+     git-sizer(1). This will require very specific presentation formats
+     that aren't really compatible with any of the other information.
 
-If it were a horrible idea to place it in a header, it still is
-worth investing in an effort to give ourselves a way to salvage such
-information out of the header, even though we wouldn't have needed
-such extra tool if they didn't hide it in the header.
+Out of these two I think the second item is the more important one why
+git-survey(1) should exist as a standalone tool, either as a top-level
+command or as a subcommand.
 
-But once a generic mechanism is written, then Git does not have to
-behave differently if an extra commit header is something a more
-recent versions of Git tools started using after the idea gained
-community consensus, or a third-party software unilaterally added
-without gauging or waiting for community consensus.  The same single
-mechanism can be used to extract the information and carry it in
-e-mails, and mailinfo can be told to extract it out.  It can be left
-up to the consumer after mailinfo disects the pieces of information
-out of the e-mail.
+> During our meetings, Karthik suggested (I'm planning to it later) to also
+> allow to request an entire category instead of only the fields. Then, this
+> would also be possible:
+> 
+> ```
+> $ git repo-info survey
+> {
+>   "survey": {
+>     "commit-count": 42,
+>     "blob-count": 1234
+> }
+> ```
 
-> In such a case, I fully agree that embedding in an e-mail header
-> would be the way to go.
->
-> I would suggest a lot more generic implementation to solve it once
-> and for all.  How about doing it more like this:
->
->    "git format-patch --extra-headers" grabs all extra headers
->    (i.e. those that are not the bog-standard "tree", "parent",
->    "author", "committer") and emit these
->
->     X-git-extra-commit-header: encoding=iso8859-1
->     X-git-extra-commit-header: frotz=nitfol
->
->    next to "Subject:", etc.
+It raises another question though: if we ever were to add `--all` we'll
+need to step a bit careful about what kind of information we add to this
+tool. All of the information proposed so far can be computed rather
+trivially. But computing repository sizes has way higher computational
+complexity and may easily take seconds, maybe even minutes in large
+repositories.
+
+That to me further points into the direction of giving those two tools a
+common top-level command (`git repo info`, `git repo survey`), but to
+not mix concerns too much with one another.
+
+> But I don't know what are Justin's plans for git-survey, if it would be a
+> porcelain command for showing those stats to the user of if it is targeted
+> for being parsed like this `repo-info`.
+> 
+> I'm just brainstorming because I liked the idea :-)
+
+I've already pinged him on this and he liked the idea of having a common
+top-level command. I guess he'll respond later today or this week.
+
+Patrick
