@@ -1,142 +1,152 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6921533993
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 06:08:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F4C2797AB
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 06:57:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751868527; cv=none; b=WSzNLBopft9mP4zk+6Z4fKSSXlAfEQCw1BJbZvOsCpdmM1fe7JFmj8yziw6jw8QH7tLDP07AFR/Ens0zufDTHTF9rQEPJDPa39DmjPauEHSSnQtRDksYPIep8nO4EXVoSY5svPSQQ+AbUk6Nij62dpUz8atYRWh3NLTQOerYcBA=
+	t=1751871442; cv=none; b=fNece8RDtWRlHNnC7VpA0kM+y7Op/YGuCWo3QqrWi4dAQk0CwvcxyxPGbw3oplAt23dmcATl1vMjG4W9HyCOsTXFW1KTwid4QT312i1KK0nVK+ySbE2GEujjqKgaXN/lruXOn5rfallfyfAwJOtoBYyOCQfinQsG8Pv3auXQ8ME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751868527; c=relaxed/simple;
-	bh=j4G0Wx2yr4Ie076V8PuheN4NOheXivQOkTLVOcN52K8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=r6LPZDNn4U10XMb0W3A5m7mwcVBGdfHSrVctJxuF4E6zrdDcLo9JYKkNzjSVtjP20hbRJ5+CFmEMNoX4DlYf42BUvHQUikce4KbC0HU2RnZjvWr5dHd9FSHC33TDtHyIajme3ijU2+CRIZkJiZLa+VyvWXvdBd5ogeYGUudKRSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yRjvoK1N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FeI3twQN; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751871442; c=relaxed/simple;
+	bh=RR8UYhvvSDX9Q1JwgSVqrdM7YxjuDY5naN7s61liFD4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Eo20UgBIgSbiBE4VoQLUaAxHx4AKt1yRWqotHf91AvP/ogIBdSNSIhNOgIbn8jVsm8J1XUzqAkfTeFoEZeMLEG8haV3PGwiYtWPKD+u/OEd0b+7b1wy+HGhwsyAuuY9X246JLCuvhjFV++0eLQInjF33ncRngVWsnESkrj+CqA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=Uad/I+Yo; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yRjvoK1N";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FeI3twQN"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 85DC7EC0470;
-	Mon,  7 Jul 2025 02:08:44 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 07 Jul 2025 02:08:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751868524; x=1751954924; bh=llsS4IwazH
-	e8dEv6keGAKuQEwnblUiuOP4AYnaS9gKQ=; b=yRjvoK1NQDyj+wtTuOermolX8d
-	pu5N+RV/xzU+zC6OIBJ2PRUqxQGUFuy66HIyH2nZwnqBrOzFcPkkDbBq3zPQOiwI
-	ZvoNSY4hK/bJmnvFf//gfUiWbsuLHsKD6VJWHfSal17GFLR1Bks0JNCmVAW+o+lJ
-	m6xX1Fa2ghm+oAiugyaCt3DNgvHTuM/oIi53kneugLLwN2Qxxhg2ZSTu4ZhlYWUm
-	B7HW2CYuVO8owhGoOd3jmFMwbjm1m+bno20xyhnzGgPE2uheLxjz+NFkjR6eWieH
-	AEaZUnX9CbBQjbEnIQ9KgQ20YfRwyFD22PMCDKVI7c7fqa6RsJcQDkWcLk7w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751868524; x=1751954924; bh=llsS4IwazHe8dEv6keGAKuQEwnblUiuOP4A
-	YnaS9gKQ=; b=FeI3twQN9gm3iX0O2/l8oygnZDt+Ay1496Ct4iXZ+NJv8EUSPzQ
-	wcRvInnRQza8cWnG4b8vLV4D/iGyTcp9NuaOaT9rdTv/ulNI+6D1vHWkeJXo3T9k
-	4ermVaOA8FRwotL+VLd0c21Fg69ewwDAUde3HGcS47UyAi94zhFybnM2AE6mk1HT
-	OeGKfHezzzpb8YSZdSN1InbI7Ddf9p6Nyw2OstY/LZOl87xpOdtv8BYUQJJt4jGT
-	paJZA0f9F9RLVz/0DVdCx2FCPcSt83/AofOYfVUdwtCFRr07gZVqKf+ff8TOxpod
-	GmrkqPUtc6noLg/Ha8jwACPQLygWnPWj49w==
-X-ME-Sender: <xms:bGRraJF8-eU9-xk42iMdq0oR9CvHF2RtEqOk9D0JBLpXAZMirEyYaA>
-    <xme:bGRraPC9fzP4TzC3rep7Hq7FFLdbfcmNizC2TYPA3i_YZ1dS8WNwcNVTAuY6EqHOm
-    1TWOpPeBTDipOj7RQ>
-X-ME-Received: <xmr:bGRraJVT_jIeyZy95ZDYRXxrcGawLCkuqFVVLzdMZLTIkGmkAlNp4vBa3ww-pqMZXp_mEN66hf1T253OOmhCZJI6hp3iMlHct6y3ByshXw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefuddtgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdr
-    tghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkh
-    grrhesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bGRraDrUCstHYZOSVF6783aMMzo84uB239DSMQ7rQEd6ZIBUAaqZlw>
-    <xmx:bGRraFTUmpOttYf_MGrrjNRZIH5mqEKBUkGrRcz_IQDwtyO6uiz07A>
-    <xmx:bGRraN3aiBeykd59UBAkYL38-2pWsvm_022XDcfcBcdpuFMZ3T6Fig>
-    <xmx:bGRraBB8MPed0JcFOj_-cVecBDvJL6F4QUbOp0K-p1uTOYWO6TnfRg>
-    <xmx:bGRraBq20tpJumKKNYPe7ekYNi8ENFq-gJtb2MvSWNodAUEqKsbQF9gR>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 02:08:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b33f41db (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 7 Jul 2025 06:08:41 +0000 (UTC)
-Date: Mon, 7 Jul 2025 08:08:38 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ayush Chandekar <ayu.chandekar@gmail.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, shejialuo@gmail.com,
-	shyamthakkar001@gmail.com, gitster@pobox.com,
-	usmanakinyemi202@gmail.com
-Subject: Re: [GSOC PATCH v3 2/2] builtin/prune: stop depending on
- 'the_repository'
-Message-ID: <aGtkZgbJhO-GQ1XX@pks.im>
-References: <cover.1751630981.git.ayu.chandekar@gmail.com>
- <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="Uad/I+Yo"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-6098ef283f0so35714a12.0
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 23:57:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1751871439; x=1752476239; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qty3adp/TjeoC/ZlNbz1BSw6tAn/GVk6hgBiaCGpxGQ=;
+        b=Uad/I+YoJvkDuP1QZ4QzIDsQ3v8UNNCvOUKQvBY5Xq11E/Hr/lbc53enYVGTjSRAZ+
+         PmjPyaWccNdGZFvXnNJd30oQzt7W6ia6RmiXWQlPC+DAwkskTYwBUcjsWqDqMcUEWljF
+         mox78iu1zaFpZ0ZKr/2rcUAt+4ZFfq80QfvZw3VyCUAhy7GBkQe5hzbMdNgt2cRIQfo9
+         7S5hjWBXDoVpqawJ/DNJdm4agDiSrH3tUWYBh7BlAfgZXPb6H0e/GRbyzV2NPjCcf0nA
+         ifiATLpC/9tbWaxOlzch77e4143rF6qPx/6eqA7f3eUfjbq67GQ1LoKy5Lie/aoPQJVk
+         PwvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751871439; x=1752476239;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qty3adp/TjeoC/ZlNbz1BSw6tAn/GVk6hgBiaCGpxGQ=;
+        b=Eqlsfd4G9hvBwrB8m0skcfAk5S4oI1bRCc9oH1f37c96N48AMrFZE5El0v6fryH9Nm
+         qe0brJu3SkKjg4/4WxzhslpUMayXviw/vkpXUIDRPDUKhQU+AkFYS9SUmbRjI2qYuJ6s
+         9XYe31saWXFHyCYoCu6iP1QEf/DWe5ZaoZhzlJQ+AJ4U1u3yXAL2gJZ5SckIWMwSl1Qz
+         54dnqAwoAHEs3KIbsZot7EUu4bWwqe4MDJBAX6GUgK3P4uH+ywxp99v2F02ma0UeObKO
+         qm8JD5TiNoG7bVjpP+JL6bJzaMlh6KBVh8C93pzSO7FQAP5h68iVc++jQIruky7XiLJU
+         3a6A==
+X-Forwarded-Encrypted: i=1; AJvYcCU7rcdZ1GLlOUKaT4Qsgnh6HR2TkL9Lbo4McuAsiCtSLPd1X1jNvyKJIHnh4t7TM5zt3S8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwVlwHJmIWeetipcovej4+DbczQs5B0C6CH9qozrJl5ku2MDGjR
+	xlaCSF5jHQ70q14FC00qyt0qdKEa2yCNwhzp8MC3vS93d41yxzMVH6aURvO6SVUmMduc/jkzI1M
+	gA3XkTJc3yXmmwL/1kq7+XHajAWCNDvFHJyLVvmde
+X-Gm-Gg: ASbGncu5foR/NiYwkfmJCjDUrwTBDEaxGjQlPJ8PCKCTt901f+j7ETpTTcuhfd4PJYS
+	mvgtj/xunvaytLI/u4fUU1aRVQ8PJkbSaySwlSv/wdAzhvOgptm0+nUJyfd3bTbgptdms5Gnhwz
+	3IN6k3mZ1ojom10yyICrW43LGB3qFuw4ukVgDdZ7NGT/c=
+X-Google-Smtp-Source: AGHT+IGoNagVscZSpg5jm+uND4BkzvaNX9BtgtzjUSW6oPered+8m448QeHHYgZghwUFKpwE8akHATYZa/OxadI77T8=
+X-Received: by 2002:a05:6402:40d3:b0:60e:64b9:9e1c with SMTP id
+ 4fb4d7f45d1cf-60e712705cdmr299471a12.4.1751871439109; Sun, 06 Jul 2025
+ 23:57:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
+References: <20250703113505.11889-1-drew@ddevault.org> <PN3PR01MB9597069B8CF014BFE01B53F3B84CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org> <xmqqfrf8ait6.fsf@gitster.g> <xmqqfrf88s28.fsf@gitster.g>
+In-Reply-To: <xmqqfrf88s28.fsf@gitster.g>
+From: Martin von Zweigbergk <martinvonz@google.com>
+Date: Sun, 6 Jul 2025 23:57:07 -0700
+X-Gm-Features: Ac12FXzjBLhQaI-15XKCLh2FPclI4TgTbZZqWDJjtwnwkiyABcsvN25-zhA6tCM
+Message-ID: <CAESOdVAGEBCYOnFGUFojRk=6s=7RHc0i2jzuOVdBd91dXsCTEQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Drew DeVault <drew@ddevault.org>, Aditya Garg <gargaditya08@live.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Andy Koppe <andy.koppe@gmail.com>, Remo Senekowitsch <remo@buenzli.dev>, 
+	Jeff King <peff@peff.net>
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jul 04, 2025 at 07:42:35PM +0530, Ayush Chandekar wrote:
-> diff --git a/builtin/prune.c b/builtin/prune.c
-> index dab3c19b6f..320e9c2341 100644
-> --- a/builtin/prune.c
-> +++ b/builtin/prune.c
-> @@ -173,20 +171,19 @@ int cmd_prune(int argc,
->  	expire = TIME_MAX;
->  	save_commit_buffer = 0;
->  	disable_replace_refs();
-> -	repo_init_revisions(the_repository, &revs, prefix);
->  
->  	argc = parse_options(argc, argv, prefix, options, prune_usage, 0);
->  
-> -	if (the_repository->repository_format_precious_objects)
-> +	repo_init_revisions(repo, &revs, prefix);
-> +	if (repo->repository_format_precious_objects)
->  		die(_("cannot prune in a precious-objects repo"));
->  
+On Sun, 6 Jul 2025 at 22:53, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+> >> IMO the right way forward is to use a mail header.
+> >
+> > No.  In the change-id case, trailer is the right way to go.
+> > ...
+> > But after thinking thrice, we may find a set of good pieces of
+> > information that should be added as new commit header ...
+> > ... and there will be times when we need
+> > to convey them over e-mailed workflow to allow patch recipient not
+> > to lose such information.
+>
+> Or a third-party software may add a new commit header without
+> gauging and waiting for the community consensus anyway, which may or
+> may not have much structural meaning, and then we may want to extract
+> that piece of information hidden in the commit header out, because
+> it was not written as trailer (in which case there wouldn't have
+> needed any extra effort to extract it in the first place).
+>
+> This part can use a bit of clarification.
+>
+> My endorsement below to use an extra e-mail header applies when some
+> commit objects ended up with extra non-standard headers holding
+> pieces of information that we want to send as part of a patch,
+> whether it is a good idea or a bad idea to place that particular
+> kind of information in a commit header.  And the question is "Now,
+> what is the best way to transfer it over a patched e-mail?"
+>
+> If it were a good idea to place that particular kind of information
+> in a header, that is of course an effort worth investing in.
+>
+> If it were a horrible idea to place it in a header, it still is
+> worth investing in an effort to give ourselves a way to salvage such
+> information out of the header, even though we wouldn't have needed
+> such extra tool if they didn't hide it in the header.
 
-Okay, we now only end up using the passed-in potentially-NULL `repo`
-after we have called `parse_options`. Makes sense.
++1
 
-> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-> index 6824581317..8f59b867f2 100755
-> --- a/t/t1517-outside-repo.sh
-> +++ b/t/t1517-outside-repo.sh
-> @@ -114,4 +114,11 @@ test_expect_success 'update-server-info does not crash with -h' '
->  	test_grep "[Uu]sage: git update-server-info " usage
->  '
->  
-> +test_expect_success 'prune does not crash with -h' '
-> +	test_expect_code 129 git prune -h >usage &&
-> +	test_grep "[Uu]sage: git prune " usage &&
-> +	test_expect_code 129 nongit git prune -h >usage &&
-> +	test_grep "[Uu]sage: git prune " usage
-> +'
-> +
->  test_done
+Does this also apply to commit signatures? I just created a signed
+commit and checked what `git format-patch` produces. I was a bit
+surprised to see that it doesn't seem to show up anywhere. Is it not
+supported or did I miss some flag or config?
 
-And we have another test that verifies that all of this works outside of
-a repository.
+>
+> But once a generic mechanism is written, then Git does not have to
+> behave differently if an extra commit header is something a more
+> recent versions of Git tools started using after the idea gained
+> community consensus, or a third-party software unilaterally added
+> without gauging or waiting for community consensus.  The same single
+> mechanism can be used to extract the information and carry it in
+> e-mails, and mailinfo can be told to extract it out.  It can be left
+> up to the consumer after mailinfo disects the pieces of information
+> out of the e-mail.
+>
+> > In such a case, I fully agree that embedding in an e-mail header
+> > would be the way to go.
 
-This addresses my review comments, so this version looks good to me.
-Thanks!
 
-Patrick
+Is it another option to put it somewhere in the body? Could we fit
+additional headers (e.g. signatures and third-party ones) somewhere
+between the `---` line and the additional diff? Or how about after the
+final `--` line? I haven't checked the specification. I just saw these
+lines in the `git format-patch` output.
+
+> >
+> > I would suggest a lot more generic implementation to solve it once
+> > and for all.  How about doing it more like this:
+> >
+> >    "git format-patch --extra-headers" grabs all extra headers
+> >    (i.e. those that are not the bog-standard "tree", "parent",
+> >    "author", "committer") and emit these
+> >
+> >     X-git-extra-commit-header: encoding=iso8859-1
+> >     X-git-extra-commit-header: frotz=nitfol
+> >
+> >    next to "Subject:", etc.
