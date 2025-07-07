@@ -1,125 +1,121 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B25618A6DF
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 18:01:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B4A179BD
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 18:31:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751911278; cv=none; b=pUwncfNM9QKBKZOn1ddQJm0w69dsoeErf0I7tgqFc0vrvqPGAHGv8eFBN9b97tf8i2drPcU6NgiNVpuPe1/eC0NWukP0b/x9CxmXu0R1cQg35StBai8VY2Gnof7e/cs26T4GjB8aNb6esMQEGE1mK5pwUNWGHnkMjKIKURjaMew=
+	t=1751913070; cv=none; b=Rq461NiYw1GHmuDFHeTmjkjCi4olPd6LsXZlQOHDqmkSH5Efub+kizkNJ2lYP2FQEEqPBjkBdmGrarzL1+8ZAWl2Au2Z9Vrk3w2SFBVZatqfc8yfUawFIMqSACbiDYu2JjsAgcq5H5SSErsM1wHQ04Pbv+ebvrQ2K3gbrzd+2wE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751911278; c=relaxed/simple;
-	bh=T2EpUx2p/IZhNe5NLxVxsi3iPS37IKdnIwjuxX7V4gA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uTIuqnuuU8aveXzWnc59kg4xGE3v7PSb9IcTJIQOZ/usW8uhZmXpGQhY0/IUUlPt3rm1tRzpXRTXiV/DR15psvI+txoXorVzRBrvZxFdy37Qtdrrp9sQCSjthGDbyzq06RZ3u1TfBg3wUUbYzyt++GlMLRqbglNPr65S3yyI/Vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lzi1ZcOv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YZ+QY1p7; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1751913070; c=relaxed/simple;
+	bh=qJAQS+bTeBbFrBp/uzfwSMsbjJPQCWZo36Hvod468Rs=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UQ8okpVGES/WApiw+n503XSoDewS8N7s8+NwzBiLB8GQkNuLE5vundQMvy4C93gnnj0Hd4hqten0K5AQvUDU15aTPh0m/Nv4dUEmYpugDuVhUMQ4uXqFr5zPidSROLz+gfiD+Vw4m10/cDDxa8arkmYKaLZdxQ3LP5ykr+IAA9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KhWxVY8B; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lzi1ZcOv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YZ+QY1p7"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B6DAA1400213;
-	Mon,  7 Jul 2025 14:01:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 07 Jul 2025 14:01:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1751911274; x=1751997674; bh=0nnV8By0fk
-	CEuBZcTxtr4lPQz61Xi9EBv1xVx/Gs4bg=; b=Lzi1ZcOvBq6BINLH9tw+r6z+PN
-	oP7neK5K6kHCjBNf5vE0JF4jKS0iYextoQzmuptNZ51wTW4rMPDW3XRlVLIMjK9L
-	+wYYf2qkVv1exz29ShM2eUdjrmelns/jJm9g17ZZqle3tKqzvb1wgErHUHr62I91
-	NW6UkUxgOe3ThBybNi851exIRJDVwyjUmcUoY2N373aKEO+d5RhigPQuDxJdKihd
-	ZqttwB8m+fPM7869WtaA3sj4T0Ogi3ZVmBQZDm1/NXt3DHkh6Dbst8Lyw1GbiZQl
-	jReNZ6j3iC+lzD0slIHf+Jhe5dABOzvTavkL+ei9/O33f3s+BRVXcikEAo8g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751911274; x=1751997674; bh=0nnV8By0fkCEuBZcTxtr4lPQz61Xi9EBv1x
-	Vx/Gs4bg=; b=YZ+QY1p75s+Bu4ctWq7sKYXcOyqxZGvdRwTiccsa0LkNTcVKWAr
-	rOIRNp96qDmuBB+JCyEGcDl2qfYTxpBd/87tm7mWr2rOZtyOpo2XjSLtaZqem+Bk
-	P1eIbJfu+C75uI3mhErduGE3UUL/DA87jEoTJH29bc1tgMc2sxYge8ONnly3RCpY
-	UPtfzFHJu4P5WsGHc2myP8Vyo27zi5iwdSmJLIfo+ToENXS6tS+L6MJ/a6Zwm8ff
-	GmbyE4E9UxPCygvTajsrZvGUaT8D7UGO9LbFAV+li2919/eedNeNAkc2MzclDD28
-	/0JTSE0zdh+At0B2IkR0Mjhb2CWHI3wu1FA==
-X-ME-Sender: <xms:agtsaFL3fuCzS55jB_Jq-xpVpsbF4E_AHzX3iX25HupRN14j0e0-9g>
-    <xme:agtsaEYCWfia85NWSKYcjfrmqk3isYlPS-RzuRw7ZXE6XEyFcnmGXa6FQ-lvrJ7Jb
-    z9G1KgYWFcxH8o0aw>
-X-ME-Received: <xmr:agtsaHJfQ2shdkSCDXapvaRENiqSZyhQoPbGCglZN06S8Xe2f1b9Sjuma8pjIMc2FnetGw12da9aNsuKZ3HLmHQwXYy-TTzwCbFQzw8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgrnhihrghn
-    ghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:agtsaCCL6XYdS4UD1AdSf3hSkBHmnLEEZgWzQiduJYyZqJYcuBPqUg>
-    <xmx:agtsaMp9gIDEjC5M-3aN8OZCG4-cllnqgb7OQaO71H39Kr9uaMa-Bw>
-    <xmx:agtsaNgUxLeTWfvh0vKSgNw0HQ0yDpJNWzOSqSYoxe6Yfj72qle1kA>
-    <xmx:agtsaJCwhVOVbN_ENwn9LLYg5QMZ8QcWN0OPHBiaelcA019z4GO8Kg>
-    <xmx:agtsaCCoG6esahE6V8bKbz05VIr8Xw6RAo6Yn9JWZymlUb6ykuBitEQS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 14:01:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] read-cache: report lock error when refreshing index
-In-Reply-To: <20250703074502.45593-1-hanyang.tony@bytedance.com> (Han Young's
-	message of "Thu, 3 Jul 2025 15:45:02 +0800")
-References: <20250701115719.85226-1-hanyang.tony@bytedance.com>
-	<20250703074502.45593-1-hanyang.tony@bytedance.com>
-Date: Mon, 07 Jul 2025 11:01:12 -0700
-Message-ID: <xmqq8qkz5193.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KhWxVY8B"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-532d498eb95so1206554e0c.1
+        for <git@vger.kernel.org>; Mon, 07 Jul 2025 11:31:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751913067; x=1752517867; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FrH6hE76Y5z8AAugiL9xpEc1BpSM0fxDo1td3swH7IQ=;
+        b=KhWxVY8BFO4CuQc7K+MPhY39BZbD0p8gdwSrGYxmuIrfb1lOhdcDLa4OOeWlmxqojr
+         ySZlxkzNRkrrdYNBrcG0O+9OskPEEKUfzV6boOqtk4fi9Jw6Min4GS82INSkqXBT6EfV
+         9ttHQSk4H6pJI0FG3pprPTvAyXsuc04FCrbhiZ4zWc0JvFsBm30nFpYle29QXys4Ps7m
+         iie27uuPBl6LrK8yLHJ2gXYke3LBSErmdBB9Gk2Xlo3Zv8AwxFfHvMAiPde1Hu+Yphtn
+         YxeAe/pHx/OoXkvThJvT1E7ASYdDWJsacH+CnKA+HtuOqgZley567A8dS47yiZ1Likuz
+         LfmQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751913067; x=1752517867;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FrH6hE76Y5z8AAugiL9xpEc1BpSM0fxDo1td3swH7IQ=;
+        b=jAPr/bLUXoa/2vYz2PALrP9zdQeJZmpLv6m6o/2gri3Ru+sAuNpx6Ql4p2Omw950bW
+         CDc3P/1NItyywjHRdPIosbeoVSitw5PJPDsmTnu9vTLfgzBzO4r6CNc+GTGT1E0bLNED
+         xufGKXy/gK5Vh/ryfv/dH5Htp3Vhi5EtfsHzMbDiafypiLhnQNXNEZ82IoGDntN5PZZ6
+         oTG8L9txbD7m0nivZIgglpIj4WewdQW0H9u49UBGwt6csWnJXdQsRlzZGH1PR01jTO0B
+         ptKO+noQhFswUBwhbeisHf/7t3aaZfqPpxaHkCZFY0ZwFJXAFkFfMZ8pIIx5Yz9NVoOv
+         vpMA==
+X-Gm-Message-State: AOJu0YxIyAhWf6wO3mAXbFSqQNnMuhtzVJEK5hPPxQtbRUYYDUIKkXWy
+	ba/2w64FGP7ig2Mk2Etet06ANJSW86HEaYT8voPqo98/oVzcH62OUzV4w6vWAGPqLWXgP0e2APG
+	Ih5nxiNBqY/27+7L4FbZeED4FkDkd65Br/5zS
+X-Gm-Gg: ASbGncuiLHSxkUpOEIZ8iuiwlsMR11ysfeGeQGDYVzY9urPjFiVkv0mELNPvCv7X70J
+	0v154greN33xehzMPGLB0Q95Bno28QUWhkpLWchB6KRaHuvEpEUIql0nWLvGn6ZKYp8b8DLtLcc
+	MCinmeju98cdOVFv8gvE9KKCub74k0+7XrRMv8ei14ludvWlrd3OSPsS5HU+Q/2LcVRLoV7jiR7
+	PS5
+X-Google-Smtp-Source: AGHT+IEwdoIctfdZ6jv9na7O7NSkn2AOsCdQ8PtyMadTKsxNWl6kgzFXddGr1JBB1QOh7fUjTiu1ilQxXggkAVR0itg=
+X-Received: by 2002:a05:6122:251c:b0:52f:47de:3700 with SMTP id
+ 71dfb90a1353d-5347bf435c2mr8676947e0c.5.1751913067580; Mon, 07 Jul 2025
+ 11:31:07 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 7 Jul 2025 11:31:06 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqq5xg4588e.fsf@gitster.g>
+References: <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
+ <20250704-306-git-for-each-ref-pagination-v2-4-bcde14acdd81@gmail.com> <xmqq5xg4588e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Mon, 7 Jul 2025 11:31:06 -0700
+X-Gm-Features: Ac12FXxBHBLTcJ_0AYMvym1z-oxnvvNjDnTMICR4fgycDzJwIaZDVC5acu4GRbo
+Message-ID: <CAOLa=ZSSQJxm04x1RArP2VxbbxE5ySGiYZ+p-3PaUOu9hXUt0w@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] for-each-ref: introduce a '--skip-until' option
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000012380806395b0cc2"
 
-Han Young <hanyang.tony@bytedance.com> writes:
+--00000000000012380806395b0cc2
+Content-Type: text/plain; charset="UTF-8"
 
-> In the repo_refresh_and_write_index of read-cache.c, we return -1 to
-> indicate that writing the index to disk failed.
-> However, callers do not use this information. Commands such as stash print
->   "could not write index"
-> and then exit, which does not help to discover the exact problem.
+Junio C Hamano <gitster@pobox.com> writes:
+
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
-> We can let repo_hold_locked_index print the error message if the locking
-> failed.
+>> +	if (filter.seek && sorting_options.nr > 1)
+>> +		die(_("cannot use --skip-until custom sort options"));
 >
-> Signed-off-by: Han Young <hanyang.tony@bytedance.com>
-> ---
-> Changes since v1:
-> also check the "could not write index" error output
+> Missing "with" before "custom sort".
 >
->  read-cache.c     |  2 +-
->  t/t3903-stash.sh | 18 ++++++------------
->  2 files changed, 7 insertions(+), 13 deletions(-)
->
-> diff --git a/read-cache.c b/read-cache.c
-> index c0bb760ad..50e842bfa 100644
-> --- a/read-cache.c
-> +++ b/read-cache.c
-> @@ -1456,7 +1456,7 @@ int repo_refresh_and_write_index(struct repository *repo,
->  	struct lock_file lock_file = LOCK_INIT;
->  	int fd, ret = 0;
->  
-> -	fd = repo_hold_locked_index(repo, &lock_file, 0);
-> +	fd = repo_hold_locked_index(repo, &lock_file, gentle ? 0 : LOCK_REPORT_ON_ERROR);
 
-Let's wrap this line to stay under 80-columns, i.e.
+Thanks, will fix in the next version.
 
-	fd = repo_hold_locked_index(repo, &lock_file,
-				    gentle ? 0 : LOCK_REPORT_ON_ERROR);
+> When I commented on the previous iteration about sorting, I didn't
+> mean to suggest making them incompatible---it may have some use case
+> to grab a batch out of the underlying refstore, sort refs in that
+> batch, and then show them.  But from usability's point of view, I
+> tend to agree with this design decision.  Such an unnatural batching
+> and sorting operation is probably not worth supporting.
 
-No need to resend, as I've done so locally while applying.
+I think so too, there might be some usecase, when that usecase is more
+concrete we can probably re-visit this.
+
+For now, it is confusing and it is just easier to not support them
+together.
+
+--00000000000012380806395b0cc2
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: a5f8785181420cc5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oc0Vta1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMGZTQy85MXplbUx0M1RzRllCaGlycHAwMXVET0JPYwpMRzRDNHZKUDdo
+QlR6eXAyN3ZONzJMR0d5bHJLdzhSSWhQL1NoNDg1eHdSYllmTlZjQjJiZmQ5b0pEVWg3YUd3CldG
+UU8wSVFBWndMV1IyNmdBMjVTZEFjUGt4WmVTd0l6ZmlyMU9PcFkwbWhhcnRjaFVNV0RSYWZYMThF
+dkNKZHIKbE9RL1I5MHFQTzlPREloblpSVUFsdE5HaWhvMURWODhVZGF0cGF5cDJCb0NyWVhIc2ZT
+MGVvbkxEMGNGSzljWAp0QXBDNVNwdk5EUFJJWGtEbkdDSGtqYTZvVHoxRkVzK3F3akZTTkhzcDQ2
+d01rTktsZE14MlV2Smxad1h5ZStRCnZrODdyRDdmS2lmZ3BVcm9YTGxVdU10MU1hSkgySWdsVVVZ
+UXVQU1Q4ak5WaDFmZzdkYUtYRWhRK2loSjZSb2UKVnZFVU5xUVJqSGQwQ29wZVNCc0h1VWlaU1BV
+RURLVGZCWWh5QThCalAwTkNyMmlpc3M0aUVmMFZhbFY4QWZGRQpUR09hZGdIMFV4L1pYeTFzOWI0
+YkIyWktXMUZaUi84S0R4OWRBNW55UElSdjRSYXVVTDV0VTI4WExuenNXZWFDCnVmcHdwWTBvS0hz
+bjhXYldtRkoyR2pNdkhMVFFOLzhaa0FmSWVxbz0KPUJBTWIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000012380806395b0cc2--
