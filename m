@@ -1,86 +1,82 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF0BD25A320
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 17:51:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B25618A6DF
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 18:01:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751910678; cv=none; b=uw5yZrEEQHPmeNyW5QCjRxaEt824tW0XR5xZ2+9GUKugoO7kEgEgDp5UtH8KZUZIHmERbwRyThSlGamNbAUR6+k5+x7FlXYcsWM/ld3bhd2DnGhXvAZkLmxm054I7QhKyoHHlElMU4VR87JeMdxbVLJ1zTK74KWyoYYFn70CE3U=
+	t=1751911278; cv=none; b=pUwncfNM9QKBKZOn1ddQJm0w69dsoeErf0I7tgqFc0vrvqPGAHGv8eFBN9b97tf8i2drPcU6NgiNVpuPe1/eC0NWukP0b/x9CxmXu0R1cQg35StBai8VY2Gnof7e/cs26T4GjB8aNb6esMQEGE1mK5pwUNWGHnkMjKIKURjaMew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751910678; c=relaxed/simple;
-	bh=J1OrGpQompLuATOibSqUqySuU9tLm3d+d+4cH9wN2BE=;
+	s=arc-20240116; t=1751911278; c=relaxed/simple;
+	bh=T2EpUx2p/IZhNe5NLxVxsi3iPS37IKdnIwjuxX7V4gA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MTda5Ndn2PqZ8K5Peo73DOR0lyP6QaRJF5I3iQbJqm/wLY9bjmn7Uf0PruP6herNIgN9fM2FriL5G+PohjEw5VPfwruC7Ws1x7h3qAeuJRsoE2Je+P1hHGalz09cm2Uq6he1zk/2qtLGMnKf4fzbFKDGwnlXjfxeEyVqdqi9uUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K5meHMMG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VmRXNpZ1; arc=none smtp.client-ip=202.12.124.144
+	 MIME-Version:Content-Type; b=uTIuqnuuU8aveXzWnc59kg4xGE3v7PSb9IcTJIQOZ/usW8uhZmXpGQhY0/IUUlPt3rm1tRzpXRTXiV/DR15psvI+txoXorVzRBrvZxFdy37Qtdrrp9sQCSjthGDbyzq06RZ3u1TfBg3wUUbYzyt++GlMLRqbglNPr65S3yyI/Vk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Lzi1ZcOv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YZ+QY1p7; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K5meHMMG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VmRXNpZ1"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 120441D000B4;
-	Mon,  7 Jul 2025 13:51:15 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Lzi1ZcOv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YZ+QY1p7"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B6DAA1400213;
+	Mon,  7 Jul 2025 14:01:14 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 07 Jul 2025 13:51:15 -0400
+  by phl-compute-04.internal (MEProxy); Mon, 07 Jul 2025 14:01:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1751910674; x=1751997074; bh=jzqyeLR6Cm
-	3ZnjpOxVv38tNlGj14Y9uY2oCve4Z+VkM=; b=K5meHMMGW+o3VgvSZJn7/+Zv5o
-	AAsVQoiipytSXDbtvza2KAoT6wtfU0/7bIv+pcp1uUmLOLTdF+ofebDq+RpLGmcv
-	pBGeISyEnm8bErFUgp0khdCqLo4OPc2Us2yxE+1WogHE2l+gsKGJPWg297p2oeog
-	7W5KLc041gjgiANB4IjlpGBn/u1ixq2aWOYH1E1sCzdgnHN7G+ALsh+sUud4w0dH
-	P2PNvWjMDDQ4S1WBm5fIMCUTriy4Plpn/YkJfw50+U0LG28y4N1Yb5Pk7I50I2Z2
-	n/ag7Ajv8+TKs+Z2N0njQZdKkF0AJgHB57aDOfnyO93FW6OFt5KmBx+ZevJg==
+	:subject:to:to; s=fm1; t=1751911274; x=1751997674; bh=0nnV8By0fk
+	CEuBZcTxtr4lPQz61Xi9EBv1xVx/Gs4bg=; b=Lzi1ZcOvBq6BINLH9tw+r6z+PN
+	oP7neK5K6kHCjBNf5vE0JF4jKS0iYextoQzmuptNZ51wTW4rMPDW3XRlVLIMjK9L
+	+wYYf2qkVv1exz29ShM2eUdjrmelns/jJm9g17ZZqle3tKqzvb1wgErHUHr62I91
+	NW6UkUxgOe3ThBybNi851exIRJDVwyjUmcUoY2N373aKEO+d5RhigPQuDxJdKihd
+	ZqttwB8m+fPM7869WtaA3sj4T0Ogi3ZVmBQZDm1/NXt3DHkh6Dbst8Lyw1GbiZQl
+	jReNZ6j3iC+lzD0slIHf+Jhe5dABOzvTavkL+ei9/O33f3s+BRVXcikEAo8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751910674; x=1751997074; bh=jzqyeLR6Cm3ZnjpOxVv38tNlGj14Y9uY2oC
-	ve4Z+VkM=; b=VmRXNpZ1g+S/HHGrZ04DzwpaCjDA7u95W5iB7GU7xhJDInlOC3q
-	CYj9hIP1PkgXJ4avnAeF+NpLPXJOVBAQ2Wba6AGt13ps27EVe4mR7xT+SL3U67PX
-	xxkJwoO53V5k0723CF3mlY4wVOdJRerMcKnIOggtr4rX0dw9lSuO5/XteOTGMrdR
-	uNcYCYUfaCVtKUwxj+RVg060FOjfD8Muqhv1DJdZB8nRd5M2KsKM99Cr+DfSuCcY
-	cb2uqLQcL6vducy7VC2047JSzlcNsj2bBp41+pegrjbKBcvLAPLu2vG/ZZYljlRs
-	+eBrQ+0MA6TYBz0OS4QcqterhLcYSOrsz7g==
-X-ME-Sender: <xms:EglsaOkH0DI15GS2PggQGXQw3xTfN_4Zke4JM-1xF5YkZ3lbSVMr5Q>
-    <xme:EglsaDaQvs1lnIXCP_qwkD2SfHyyQ_qk5KhdEeSzH_9fMOUS_GNqHF2ZYq5pTK7aJ
-    7IUR2yWq5LegK6kyA>
-X-ME-Received: <xmr:EglsaDFZKyTUmgE50Npce9xoLHgh0efnI6-IfiiR291BSNPjVFLnHAMdiMafXhAlJZZXkjRyCnP6V2vR8tOU_0eCh8WswrIoTGNf2Y8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdeggecutefuodetggdotefrod
+	1751911274; x=1751997674; bh=0nnV8By0fkCEuBZcTxtr4lPQz61Xi9EBv1x
+	Vx/Gs4bg=; b=YZ+QY1p75s+Bu4ctWq7sKYXcOyqxZGvdRwTiccsa0LkNTcVKWAr
+	rOIRNp96qDmuBB+JCyEGcDl2qfYTxpBd/87tm7mWr2rOZtyOpo2XjSLtaZqem+Bk
+	P1eIbJfu+C75uI3mhErduGE3UUL/DA87jEoTJH29bc1tgMc2sxYge8ONnly3RCpY
+	UPtfzFHJu4P5WsGHc2myP8Vyo27zi5iwdSmJLIfo+ToENXS6tS+L6MJ/a6Zwm8ff
+	GmbyE4E9UxPCygvTajsrZvGUaT8D7UGO9LbFAV+li2919/eedNeNAkc2MzclDD28
+	/0JTSE0zdh+At0B2IkR0Mjhb2CWHI3wu1FA==
+X-ME-Sender: <xms:agtsaFL3fuCzS55jB_Jq-xpVpsbF4E_AHzX3iX25HupRN14j0e0-9g>
+    <xme:agtsaEYCWfia85NWSKYcjfrmqk3isYlPS-RzuRw7ZXE6XEyFcnmGXa6FQ-lvrJ7Jb
+    z9G1KgYWFcxH8o0aw>
+X-ME-Received: <xmr:agtsaHJfQ2shdkSCDXapvaRENiqSZyhQoPbGCglZN06S8Xe2f1b9Sjuma8pjIMc2FnetGw12da9aNsuKZ3HLmHQwXYy-TTzwCbFQzw8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdegiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
     ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
     sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
     eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
     rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrhiesrghm
-    vghrvghtrghtrdguvghvpdhrtghpthhtoheprggtlhhophhtvgesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    jhgrshhonhduudgthhhotggrsehprhhothhonhdrmhgvpdhrtghpthhtohepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
-    rhhhohgughgvshestghishgtohdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:EglsaELUd1drGIQv1wqAAgSLRD_V_1FfyOQLNNIYDNY_G3QAbHvrxQ>
-    <xmx:EglsaOML3iEUSu7JlIujBCO_cLts5ls3t_pjfXNY2PJ-HPyeAmzOOg>
-    <xmx:EglsaEldVy2oRpwpxVoIYnjjNelyJBN-YboLjBM4O6Y2jll0Vr7EoA>
-    <xmx:EglsaC5Jt6fszsfLTxqjVTwGmXOXj_txwxAC2625qI0pQqqMvYEtWw>
-    <xmx:EglsaKjGASmhvMRBOZKilDNopf4pIcscMFqYlglwfSZsO-THe7ocuUsc>
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephhgrnhihrghn
+    ghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:agtsaCCL6XYdS4UD1AdSf3hSkBHmnLEEZgWzQiduJYyZqJYcuBPqUg>
+    <xmx:agtsaMp9gIDEjC5M-3aN8OZCG4-cllnqgb7OQaO71H39Kr9uaMa-Bw>
+    <xmx:agtsaNgUxLeTWfvh0vKSgNw0HQ0yDpJNWzOSqSYoxe6Yfj72qle1kA>
+    <xmx:agtsaJCwhVOVbN_ENwn9LLYg5QMZ8QcWN0OPHBiaelcA019z4GO8Kg>
+    <xmx:agtsaCCoG6esahE6V8bKbz05VIr8Xw6RAo6Yn9JWZymlUb6ykuBitEQS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 7 Jul 2025 13:51:14 -0400 (EDT)
+ 7 Jul 2025 14:01:13 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Raymond E. Pasco" <ray@ameretat.dev>
-Cc: aclopte@gmail.com,  git@vger.kernel.org,  jason11choca@proton.me,
-  kristofferhaugsbakk@fastmail.com,  rhodges@cisco.com
-Subject: Re: [PATCH v3 0/4] fix apply --intent-to-add
-In-Reply-To: <20250707121534.2933349-1-ray@ameretat.dev> (Raymond E. Pasco's
-	message of "Mon, 7 Jul 2025 08:12:29 -0400")
-References: <20250702212814.1923253-1-ray@ameretat.dev>
-	<20250707121534.2933349-1-ray@ameretat.dev>
-Date: Mon, 07 Jul 2025 10:51:12 -0700
-Message-ID: <xmqqcyab51pr.fsf@gitster.g>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] read-cache: report lock error when refreshing index
+In-Reply-To: <20250703074502.45593-1-hanyang.tony@bytedance.com> (Han Young's
+	message of "Thu, 3 Jul 2025 15:45:02 +0800")
+References: <20250701115719.85226-1-hanyang.tony@bytedance.com>
+	<20250703074502.45593-1-hanyang.tony@bytedance.com>
+Date: Mon, 07 Jul 2025 11:01:12 -0700
+Message-ID: <xmqq8qkz5193.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,11 +86,40 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Raymond E. Pasco" <ray@ameretat.dev> writes:
+Han Young <hanyang.tony@bytedance.com> writes:
 
-> I've rerolled this to considerably expand the commit messages, because
-> it took me a while to learn apply.c and a while to relearn it as well,
-> so the messages should be as specific as possible to aid the next
-> person.
+> In the repo_refresh_and_write_index of read-cache.c, we return -1 to
+> indicate that writing the index to disk failed.
+> However, callers do not use this information. Commands such as stash print
+>   "could not write index"
+> and then exit, which does not help to discover the exact problem.
+>
+> We can let repo_hold_locked_index print the error message if the locking
+> failed.
+>
+> Signed-off-by: Han Young <hanyang.tony@bytedance.com>
+> ---
+> Changes since v1:
+> also check the "could not write index" error output
+>
+>  read-cache.c     |  2 +-
+>  t/t3903-stash.sh | 18 ++++++------------
+>  2 files changed, 7 insertions(+), 13 deletions(-)
+>
+> diff --git a/read-cache.c b/read-cache.c
+> index c0bb760ad..50e842bfa 100644
+> --- a/read-cache.c
+> +++ b/read-cache.c
+> @@ -1456,7 +1456,7 @@ int repo_refresh_and_write_index(struct repository *repo,
+>  	struct lock_file lock_file = LOCK_INIT;
+>  	int fd, ret = 0;
+>  
+> -	fd = repo_hold_locked_index(repo, &lock_file, 0);
+> +	fd = repo_hold_locked_index(repo, &lock_file, gentle ? 0 : LOCK_REPORT_ON_ERROR);
 
-Thanks.  Will queue.
+Let's wrap this line to stay under 80-columns, i.e.
+
+	fd = repo_hold_locked_index(repo, &lock_file,
+				    gentle ? 0 : LOCK_REPORT_ON_ERROR);
+
+No need to resend, as I've done so locally while applying.
