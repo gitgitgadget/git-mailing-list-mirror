@@ -1,85 +1,107 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D17551FBE8B
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 20:42:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203F933086
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 20:57:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751920947; cv=none; b=cGWnWKBXgEGZmDDKPz4s0PnDL+gjkRsivbn3TRbb4Yws0ewhVYBMC6TCidnSp6TqLHIJpcVMiQoQUoYAnaObFayMagtXWfP+a7tntpWisfKi8HH3ZgBTI1fdPnLd5/J09vMDDGZruiFkBHampNRJYAqDU4df37jm43XeIw6ouG8=
+	t=1751921865; cv=none; b=P18SYOeqj7/Vw/9Fd4UwbeMm5q0cZ2gR2qW8k4RE4qr7gbIbwz4eTMGkMZVcSQT02wZb+XakWSdAJgJdHjxzgjLjQq+oC54II+Vk++BPf8eZ/n0yn82kz4dIhU5hGiKygDdhY2pOzpJHNL2DgCYpqn3O3ZFIOYCOJVcOM+stCpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751920947; c=relaxed/simple;
-	bh=U1FXTL8oWOQiIviJ/ZrY7Hab5gUqE6/RUAH1V462Jtc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gOpACj2B1qPZzeh8eCsAt7Acf1hx1YcD209LsM/8i5WH8B82gwlLqfWbAKb/60SzODPhBRR0vlq6odAzLE+ZxEkp/a4P5or+BKyNL9G4mSXtXGjBFmgq5AvgTfmuuL2MveeJXTkF9OxKt37eRPk990TJZTZbFTqoRFuWsB50N/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=C9SOEp6u; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1751921865; c=relaxed/simple;
+	bh=QhNSjB1hW6pVTdDgLH7hgQTn9lBzLM3AJylMJoKWZ0s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aEq4GetZ11flnVewnJjDNY5XCjsJX/Nk0uQhURuAehyk5b8XhUsXMysePw+syEBb9+BHj1F1At2cgrJCaVEqndbzc3PbGZjo5jdlw+oMkSfd44BvoSWpjlRW2X0ri9v2Iu/Gk3BZvvqkz/w/LynWDRyLrAmp2RtXSlDHUt7r9pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IAhLHGv+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=huUWe8ZG; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="C9SOEp6u"
-Received: (qmail 9467 invoked by uid 109); 7 Jul 2025 20:42:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=U1FXTL8oWOQiIviJ/ZrY7Hab5gUqE6/RUAH1V462Jtc=; b=C9SOEp6unzf2cnkYYDzGTtMaNO3EBX94A+aDmh2Ap+8glpuKrJ611myImGr1LNntky9o4YyH/jHItTQwp8lgh5fmRLM0+yTN723hPmdlFNhOJLkpHcYNSDbhpKBjh6BHSL6uSzbYtari0Owf4aUJyXAIF+e1e6uqWmhe6vc4HDZMHdRqb+CACyw2FUWmVK1DseYQSMbA/r4j3SqZHjrjUp7QH+99OXKmVafFT0+Z1SK33OLzzN2wYzEP3J8IoJ8FxkJKGT36GWX/XKyuZ040jOgboXG25HB+uisC33+yzS+Wj4ARg9Tq5jBxH6nDndExriqSK8G0ICQKmcoCBXl/GQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 07 Jul 2025 20:42:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 9353 invoked by uid 111); 7 Jul 2025 20:42:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 07 Jul 2025 16:42:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Mon, 7 Jul 2025 16:42:24 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	redoste <redoste@redoste.xyz>
-Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
-Message-ID: <20250707204224.GB3115893@coredump.intra.peff.net>
-References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IAhLHGv+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="huUWe8ZG"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 33ECA14000F0;
+	Mon,  7 Jul 2025 16:57:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 07 Jul 2025 16:57:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1751921862; x=1752008262; bh=iiW+tX11Ft
+	j+dkyk1BoMB2zM7aUuxgRxp8OumDsGVjQ=; b=IAhLHGv+yZnCj+nFSVNAaKpxWx
+	JmuTmrva2uUpLPLQG7GEOb3eYcjGDHjAfTIpvTaGFccE/VgtK9NlFxGSk71Ko0pB
+	UfsfXnSYpPajl3VSoN/JY+6phnttrzUaR4ZSBjV83iRDDZeBZ+YIzzjinWbDdUXK
+	qfEhy1IAZDvgFb+YafKidMjWaCAcCqZwUNj6Jci6Bw84Csacf8209iR3x+EP090N
+	JdZYsQoL6crzZq/f73QNB5KcNTlgPgXXHp5YlFPRESEjjvHUonlylXgBn981LDoz
+	1VpxVRgArMrp1LQOnKl6SeQ3YO3LSsQzacs+DenhcC+Ld25/Q1MRcybCww3A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751921862; x=1752008262; bh=iiW+tX11Ftj+dkyk1BoMB2zM7aUuxgRxp8O
+	umDsGVjQ=; b=huUWe8ZGy6WpVmr0di0y7wvcgHsgkm4bkPiQcpp7sEZ1sqfBgFY
+	mku2SMBZ4Q0SqGyqW/ktcgcI5uQhvMmWNKgtfRHeh0hkAQnK9oB2sspZ1Xa6iQ/M
+	fEziawDliNLGuNDXj56cfgGQNH+p5ML84oVm9Tp05RrAAkQ9N775Xc/B2GbumxL6
+	6Hd2sFqQdFPfXRPisO6ksuFtyIukqG6RtVlJkjiD9MeKxyYlwdXSliQdrKwn8QoN
+	ohPovbiD1L/4O+kfwRbAydhBuvPrqVkEmKS4tG3ZIcT1/3/JfEIyJszKrwe8PqiX
+	UnlHcM/21r15VZvqsLsZou0qLu35dkBEfVQ==
+X-ME-Sender: <xms:xDRsaHHN8caQ27lKtD1vz6FVamZQC6QzI7_Y1NNXTTKhIfYp86VEpQ>
+    <xme:xDRsaO8uNNcwzsEH9bo3B0bvRKcYD6VNcFu4zbjGGSscQnainxZ2_HR_8df8bui4n
+    m0KDnqWVAbXD-5TFA>
+X-ME-Received: <xmr:xDRsaPJrWBtBFHjRXUgaPRDrp9Eww7VJ-SVurD8alonAq8OYNk1Rqal6qZPax-6i0skkfcaUHN4NZ01PbYNZrCSd1GGKpV1E8_wiSTw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefvdekvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehrvgguohhsthgvsehrvgguohhsthgvrdighiiipdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhooh
+    hthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
+    hnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehfshesghhighgrtghouggv
+    shdruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xDRsaEtewD1kjyL023g9sKAeBvaJn-wOiaYIzEQlTb9ZOuf6D3vv3A>
+    <xmx:xDRsaOBuj463ZTTMXMNXvQVX5BkARK9pSwYxvKAZJEFeOKFnAj4vmg>
+    <xmx:xDRsaEOu1XqgDCFGkz6z5ATTf2ILlRf980Mu9Hq7yfkQxNUJn8pXzw>
+    <xmx:xDRsaOBlxDc4-xlQFEvDmsLJjpIFGq-epb7APgq98W04JhTqhbE7nw>
+    <xmx:xjRsaHG3COuK1OxPUjY2I0jV-u708aI39A3N3H2KLyXaW1mul76Vavl4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Jul 2025 16:57:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: redoste <redoste@redoste.xyz>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  Patrick Steinhardt <ps@pks.im>,  Phillip
+ Wood <phillip.wood@dunelm.org.uk>,  Elijah Newren <newren@gmail.com>,
+  Fabian Stelzer <fs@gigacodes.de>
+Subject: Re: [PATCH v3] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+In-Reply-To: <20250707184852.16010-1-redoste@redoste.xyz>
+	(redoste@redoste.xyz's message of "Mon, 7 Jul 2025 20:48:51 +0200")
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+	<20250707184852.16010-1-redoste@redoste.xyz>
+Date: Mon, 07 Jul 2025 13:57:39 -0700
+Message-ID: <xmqq4ivn4t30.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+Content-Type: text/plain
 
-On Sun, Jul 06, 2025 at 04:30:09PM +0000, brian m. carlson wrote:
+redoste <redoste@redoste.xyz> writes:
 
-> Our submission guidelines require people to use their real name, but
-> this is not always suitable for various reasons.
-> [...lots of reasons...]
+> v2->v3:
+>  * merge the test with the previous ssh-agent test
+>  * export TMPDIR in a subshell to prevent the environment variable from
+>    leaking in the next tests
+>  * use test_must_be_empty instead of test_line_count
 
-I certainly don't disagree with any of those, though IMHO it is not even
-our business why somebody would not want to disclose their real name.
-What is much more interesting to me from the project side is this part:
+These sound all good.  Will queue.
 
-> Retain the prohibition on anonymous contributions that the Linux kernel
-> has to ensure that we have some line of provenance to a known (if
-> pseudonymous) author who might be able to respond to questions about it.
-
-I.e., why are we sure that it is OK for us to loosen this requirement
-(without jeopardizing the legal status of contributions). And I think
-the answer is along the lines of "the kernel did it, and they checked
-with lawyers, so we can piggy-back on that work". But it would be nice
-if we could cite that source, and maybe even lift some of their
-language.
-
-Looks like the kernel commit here:
-
-  https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d4563201f33a022fc0353033d9dfeb1606a88330
-
-cites CNCF here:
-
-  https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
-
-I don't know if there's any public discussion or statement from the
-Linux Foundation or other legal folks on the kernel's wording. So there
-might not be anything better to cite. And possibly we could run it past
-Conservancy's counsel. I'll leave that up to PLC folks to decide on.
-
-I kind of like the CNCF wording, which seems clear (though naturally,
-IANAL).
-
-Regardless, thanks for keeping this moving forward.
-
--Peff
+Thanks.
