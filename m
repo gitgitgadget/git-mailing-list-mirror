@@ -1,73 +1,78 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CAC7E9
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 01:11:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1144FC2D1
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 01:30:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751850666; cv=none; b=jeajyrVXx0KvMCglzTSZAzoqjFZ5IyaIK+Y8A6XFCdmSkrcl/UuEQ7xcmZ0Pk1j4OjDoy6NrCOw4LYwK9cM1FEqxD3uWc/ruLWYu99QQA0vk9iyw3KEGts1Z0pc2TswAYK6b3oWhI1tGYLlxBR/Qb7wlYKqOC5g5l3uv3vuYzOI=
+	t=1751851850; cv=none; b=IOFOl571o6XgZ8ceGmhn7g2Jj0un27MWFCDIj5Y6lOXq9l+FO6ASP/rel1m1UHkIK25PcLRHsX0KI+foQrnvfsBZhAWswCI52SDdJAmgweTM7YgAzvHDKJtBNaqKoROthVhkN/PVjOq0mcCg6ac38sL+5G3wPQvHWzoZRqzXz9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751850666; c=relaxed/simple;
-	bh=5xXZEYGfzb+GvPnO/klLCxsBZc4HEYpsCYvjevsRHJE=;
+	s=arc-20240116; t=1751851850; c=relaxed/simple;
+	bh=HTfQf2lhEjNd0Bwc+CIilgNZ+VLi1F02xPNrL+SvSEw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MqNX3MKfzQRtEmGIcL6VX4lk4lh0t13NKPdnkG/vp5Y0CBGmop3iI34i3iTunYnipccG3etTS79BG4wQzGmmRCUmE3PTxuNVquTI1VIJcTGDMLvD4XA4SHBCk7PbcpVDDG3e3TojsN2nE+evbzB0b7JiZ4VPi5KIR8zdiwtg8yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KihQKVox; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version:Content-Type; b=V/g0WLl/kxVxAAv0ScfCScqGRwO0iqpxYI6Ku+vLTdpsb75KuGl8mtWpjZC7Pus7c8Qhu13b8sI9HCbqfV4GdjbP+bAGIUoCpKCXLokgEdyjNNYBDr4wMT5Zr3c1+RRO98ogmnCxDqw///VMyZpRl/QQkUe3DsxtNTYYWu0vORI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPwracHi; arc=none smtp.client-ip=209.85.216.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KihQKVox"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7425bd5a83aso2213033b3a.0
-        for <git@vger.kernel.org>; Sun, 06 Jul 2025 18:11:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPwracHi"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3122368d7cfso1555994a91.1
+        for <git@vger.kernel.org>; Sun, 06 Jul 2025 18:30:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751850664; x=1752455464; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751851848; x=1752456648; darn=vger.kernel.org;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=uwG6SPA5cBI55qSLjcuR0YHnnkxxdLm6qKfIXcZAZMM=;
-        b=KihQKVoxuhJtNsFMSANmg+fhfpvpcf2YjJNqV9ooCiB66bwC43JFV3w7yiW+BU4C5y
-         0EPeYkfJRt7Gmd8VwG2YsRpkAzDiKzDHKG0/Vq+LEqCPHIV444Lr0+MGRYGzeVj0VKfV
-         kEH/56mCLD9dCg8oBYOuzSUCKuWsEFtNwOjetCw0LEIhkTHnTPO2pIkJIjYxI8ApsocF
-         cw+HuTFQbHGA42EGlMXFTPlc2JbxwHc/rlpHZ4Wu4ogGcoBnpnpk3yoe04UJsGmiZYBn
-         A9EbQh38jShK42i7LB00frIV31RlhMuQhjNNa0mLVRA3yCo0qTOfRayNMkCijB3pYChw
-         CsrQ==
+        bh=HYWtfbI0s5se/Rk3rypUx/+XCbdTbnOUni/j+YbgA0I=;
+        b=GPwracHiZSx1WVQBfPBy7jkacuDkFgMmp8UvMva4tbTTCP7uwxbzO/up7T2xhmwtgh
+         w0KrFDgk5uzRchQTC7e2uZqvThWacl4wjU0KU2cRmoGvAA9CWP3jeiInvN//aFuSz3Sh
+         ABceZZ0qYamdET1bYuLuuvDrtDPGxg7CsRVJyayQwJESWmm0xSg3jAESeJEO+JEiAjIf
+         A3xRQpxxV5m0VipxlNivUZUY819IjLZCTCtqs0GSn8CQ7265wjnE0eBHHYIto2OCKNYr
+         lhQuOM453xdOm0+amupdI5MfEoWRTMDx2IAUuJM/XwvjRK4rP+K8W+Jc934fImypC55g
+         xT7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751850664; x=1752455464;
+        d=1e100.net; s=20230601; t=1751851848; x=1752456648;
         h=mime-version:user-agent:message-id:date:references:in-reply-to
          :subject:cc:to:from:sender:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=uwG6SPA5cBI55qSLjcuR0YHnnkxxdLm6qKfIXcZAZMM=;
-        b=NxRFBKjNz4hvn97/sE4At5jt3AnNtt4SMoEDJW8eptYlgn7w9unHLSojCH9XCGoSJ0
-         uBJ0gOLo3ZrbSepsW6BHAqlxR4SgLFHlEBm1mkiTlZUMEoavTiUMtmfZzM8VB21qepuK
-         ktkIUdQKtYQ77PWlhPO7/k5PxRxThaGRL4IaDgeaFs6HWlpa2/WrmVxukqBSQo/3XXb3
-         mV51fgrBoLgOuRVG/OoyQ+Ze6xOYwpvLHFnNv16m35IU72n/DUzv6nbAiF6hq3LLxUQo
-         5PlBl4TK4NrrH6ZHcfw2J4QgVWCidRQBgx11tVoROoijGcyAKLlsRCr7k0dyFoRE0dDf
-         +Wdw==
-X-Gm-Message-State: AOJu0Yymp6Zq0qm7zZ7kNQD5jJM8+gkasc07PxAwBCU33hwpsEkqW+Oq
-	bm0zkFEkOmOwPrvXHFIwPMraCn4BsnGri8zUBztBJeu83/+H4ySY/H3m
-X-Gm-Gg: ASbGncsBRivOSJDUbOaz20PYW23tG8+JZCtSlhegM9PPN+6cmQqev8DUq5ZnsjekVyo
-	pSt14L5HcnQgMhOts+jSl9iunIw/LiGN3Hqi+OTeh5XJRd4D4J+WRdU9jDzQwH07hwiw5WWWwTr
-	XQQya8qd9FGnLLsfKcMQa06hBK0Ob7thT4WEoVcttN98KEAntH4/N+EmNJIfq63xeru/JUymhqU
-	uSFIPrhzH3Dvudu5vAhKk9z3PZd7u2+djH29WNgdI0dhCilExOEVk+uWksBlunCoWQ0X4pN2RIY
-	85/Io7fKE29LyrpgooljsNqehTb7wCb6kpkEGhhdxbiZFgM9b156Gnifix4BEa4kZLJfbs+aThN
-	v2EdZivaZowgnVA0ufvZZswoUDQQ=
-X-Google-Smtp-Source: AGHT+IEgmHx3ivuJ6DugP0+xHpYmxUzesovzk7UMkCo/ZQx+Z8WE/uimQmtvjk3pi155jz1SJ4SiDQ==
-X-Received: by 2002:a05:6300:6141:b0:1f3:33bf:6640 with SMTP id adf61e73a8af0-22609a89960mr15459487637.18.1751850663625;
-        Sun, 06 Jul 2025 18:11:03 -0700 (PDT)
+        bh=HYWtfbI0s5se/Rk3rypUx/+XCbdTbnOUni/j+YbgA0I=;
+        b=q29xphyWfkdqJrgjEpn589ykJ3OdgjliBBzcOWsMigz4M2bqdsx0XftXqD8qnU5Exf
+         d2mjqkLcInr8n/sv297WFnDjXbj7G+mlVJxb0uzvut+rY9BBubhvVHwSpO0IIqiFvRLp
+         kaTbjLkVo1PFvl9f/hTyltHmbIFpttVokapHO/GC8q8W80fMMU5MumelFZ3k5t759SRh
+         WNJ19nbRdB2CUhajfhOzIEuVwxzj0On/zDRLUpgVp8ySJEjwip15n2olBu/kZ/NxI6OO
+         NvfurxiAxt3aNtETLu7Zs1ZCpb736it8nT3X6N8zU8fbMNQkKw0WkJiFivXZEDEqRDXf
+         sP6g==
+X-Forwarded-Encrypted: i=1; AJvYcCV3CSXdPhy9kqVhJwdy+Eg5A6WbuHQPFhM0yfS7I14Kpl1/5FfrU0z0VgmBAMtmNrKzedM=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzdVIiEw/R8yFumGj2bmPfijowMwwSRdcy0PW5/zVveANiC0gxq
+	ozBKmRss8lq3v4hnSQyuL4p4mokaYmTotq+F8Z+83bMik+3XyxlmZZPv
+X-Gm-Gg: ASbGncu3+MFQmr7zy3EhfJpf3WUbIstWROhk9Cdb8/XNKnXNSv5GGe1GZ6b1jsYwQTI
+	XpJmph8bH55T5CK73fAw5dxiLAHQsoYVbIaAxP3OFEOp13y1RRZzsoJPmepIIOlpT4IhnDBzEYC
+	JZiroLrcRDYvxjszFPFHhrrzAqo5UAFeuFXGJXUDExP9UtvZ6xbe12mKlRnf8QD2gbLx3FiLBzj
+	eGzZJk0w1eCBPNCT3rUciZwDSWxItjVfWv5yw7r5/bjIqMjBm0Ys06i6iwtzDWyLMvODMm4p6VZ
+	8ArbTbrbUYiy9MLvLNt7w1hayDSZB3KhUupmPDv3SWtFvzeuY1iFoLJrRxx4HROl0fbOPAwmYOS
+	oXN6yicwq4Vn9PAioEjTzRp99mpk=
+X-Google-Smtp-Source: AGHT+IF3u25UUvmohmWU1cv4BLGumbPT/iT3G7gQSkQTRP2qsPKPHqXNErwxQED2k+0cfNcUpmErEQ==
+X-Received: by 2002:a17:90b:2ec7:b0:313:5d2f:54fc with SMTP id 98e67ed59e1d1-31aba84750fmr10820621a91.10.1751851846894;
+        Sun, 06 Jul 2025 18:30:46 -0700 (PDT)
 Received: from localhost (209.255.125.34.bc.googleusercontent.com. [34.125.255.209])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74ce429af7asm7370853b3a.123.2025.07.06.18.11.03
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31aaaf6f8b4sm7897830a91.46.2025.07.06.18.30.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 06 Jul 2025 18:11:03 -0700 (PDT)
+        Sun, 06 Jul 2025 18:30:46 -0700 (PDT)
 Sender: Junio C Hamano <jch2355@gmail.com>
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Jeff King <peff@peff.net>,  redoste
- <redoste@redoste.xyz>
-Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
-In-Reply-To: <20250706163009.335780-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Sun, 6 Jul 2025 16:30:09 +0000")
-References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
-Date: Sun, 06 Jul 2025 18:11:02 -0700
-Message-ID: <xmqqv7o4ajq1.fsf@gitster.g>
+To: "Drew DeVault" <drew@ddevault.org>
+Cc: "Aditya Garg" <gargaditya08@live.com>,  <git@vger.kernel.org>,  "Martin
+ von Zweigbergk" <martinvonz@google.com>,  "Patrick Steinhardt"
+ <ps@pks.im>,  "Andy Koppe" <andy.koppe@gmail.com>,  "Remo Senekowitsch"
+ <remo@buenzli.dev>,  "Jeff King" <peff@peff.net>
+Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
+In-Reply-To: <DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org> (Drew DeVault's message
+	of "Sun, 06 Jul 2025 12:41:50 +0200")
+References: <20250703113505.11889-1-drew@ddevault.org>
+	<PN3PR01MB9597069B8CF014BFE01B53F3B84CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org>
+Date: Sun, 06 Jul 2025 18:30:45 -0700
+Message-ID: <xmqqfrf8ait6.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -77,64 +82,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+"Drew DeVault" <drew@ddevault.org> writes:
 
-> Our submission guidelines require people to use their real name, but
-> this is not always suitable for various reasons.
-> ...
+> Trailers and headers are different. The main point of the change-id
+> discussion earlier on this list was to avoid adding trailers.
 
-Another thing to consider, which may matter even more in the context
-of SubmittingPatches, is if it is necessary.  If there is a
-requirement, which may or may not be the "real name", that is
-essential to keep DCO enforceable, we will not be able to drop such
-an essential requirement, even if it is "not suitable" for some
-people.  We would have to rather ask these people refrain from
-contributing.
+It sounds like this "avoiding trailers" is the root cause of the
+problem.  If change-id is something not precious as you earlier
+said, having various operations lose it by design or by accident
+may not hurt a lot, but then doesn't it make it harder to notice
+by hiding it in a non-standard commit header field?  There is no
+easy way to tell "git log --format" to show such a custom header,
+you'd need to tell amend, rebase, cherry-pick, etc. to carry the
+custom header forward (or not---have all the change-id loving
+communities agreed on when to propagate and when not to?).
 
-But if a requirment we currently have, like "real name", is not
-necessary and if "known identity" is sufficient, then by all means,
-let's make sure we can loosen the wording to make it "suitable" to
-more people.
+Keeping it as one of the trailer fields will always make it
+available [*], propagate existing one by default with any existing
+tool, and because it is in the same place as log message, the user
+can easily remove it if it is not appropriate to keep it.
 
-> In addition, there are some developers who are so widely known
-> pseudonymously that they have a Wikipedia page with their handle and no
-> real name.  It would seem silly to reject patches from people who are
-> known and respected in their open-source community just because they
-> don't wish to share a real name.
+    Side note: [*] Unless you are doing "log --oneline", that is,
+    but I'd say at that point you are hiding it deliberately.
 
-Yup.
+> I also suspect that if we added this as an "inbody header" that older
+> git implementations would ingest the X-Change-ID header into the commit
+> message, which is not a desirable behavior.
 
-> Retain the prohibition on anonymous contributions that the Linux kernel
-> has to ensure that we have some line of provenance to a known (if
-> pseudonymous) author who might be able to respond to questions about it.
+Of course not.  If the thing is a trailer, you do not even have to
+worry about such sillyness caused by adding it as a new in-body
+header.
 
-Where is this reference to "Linux kernel" come from?  Shouldn't we
-name our own project and adopt this new language for our own rules?
+> IMO the right way forward is to use a mail header.
 
-And yes, total anonymity goes directly against provenance traceability,
-so it is not a passive "unfortunately we cannot accept" with regret;
-it is a lot more active and positive "we must not accept an
-anonymous contributions."
+No.  In the change-id case, trailer is the right way to go.
 
-> I don't claim that this is the best possible wording and I'm open to
-> changing it.   The term "known identity" comes from Linux, but if we
-> need to clarify using different language or otherwise change any part of
-> this up, we can do so.
+Having said all that, you may sense that I am not all that impressed
+by the previous rounds of dicsussions arguing for recording
+change-id as an extra non-standard commit header.  We should think
+twice or more before making anything that structurally does not
+cause Git to behave differently taking advantage of the information
+recorded there an extra commit header field.
 
-Thanks for writing this.
+But after thinking thrice, we may find a set of good pieces of
+information that should be added as new commit header that are
+structurally more meaningful, and there will be times when we need
+to convey them over e-mailed workflow to allow patch recipient not
+to lose such information.
 
->  [[real-name]]
-> -Also notice that a real name is used in the `Signed-off-by` trailer. Please
-> -don't hide your real name.
-> +Please use a known identity in the `Signed-off-by` trailer, since we
-> +unfortunately cannot accept anonymous contributions. It is common to use some
+In such a case, I fully agree that embedding in an e-mail header
+would be the way to go.
 
-Drop "unfortunately".  We will not accept anonymous contributions.
-It is not like we would wish to if we can but somebody else tells us
-not to.
+I would suggest a lot more generic implementation to solve it once
+and for all.  How about doing it more like this:
 
-> +form of your real name. We realize that some contributors are not comfortable
-> +doing so or prefer to contribute under a pseudonym or preferred name and we can
-> +accept your patch either way.
+   "git format-patch --extra-headers" grabs all extra headers
+   (i.e. those that are not the bog-standard "tree", "parent",
+   "author", "committer") and emit these
 
-Thanks.
+    X-git-extra-commit-header: encoding=iso8859-1
+    X-git-extra-commit-header: frotz=nitfol
+
+   next to "Subject:", etc.
+
