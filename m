@@ -1,152 +1,149 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D45128983B
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 08:59:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F6925E828
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 09:02:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751878750; cv=none; b=Y9pMgpsCWK+2qFGZvdFT29pqFBud3dfYkmlQIFrz+azarrgtfnCHa4vGvptt6cYCd4Z6mRYKN8Y/wo/w4pY8cUaK0y/LShtMFLCVM2TCypJOnNMYpWS9TztCdf+xtfC3RI2hUQue9nnus7m7MTME+wPfNJhX5Nfird06Ok2hTCs=
+	t=1751878932; cv=none; b=OtGCFpTMSukofQMri3LIJXNcktnj/nVObQy9lrCaLuchg1ougWUYbUAV7sJ3LX1iuWuMEd2DlvcOh9E6pcnobZC6AgAwkaeJg1rswPpPZ14VY1uyGzd6CsD2+yTxnzifTBGI/tv81dymV13Q9fXUFH2Nnt5IJEO5YigBZ9B/ndI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751878750; c=relaxed/simple;
-	bh=tREWDpVo6WzFSzS6gh7KcDFawLE/PkCKffO0uQ9GMeo=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mn6mwED+jDcpiVFNPGOj4rcEmkgwtxmigHdzHAv/4FKSFBBlpcEwpjPAehCCWdSSKUvjO7PIHMww7IxJxM5JbARHaNNXuHIz9JuhFShn9EnykfG752zbYrK6BcVU8b1Ip72RiWUB7pab/gluumZKL0SFNj1uJ6EfJUCKqmjurGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ajj8inEH; arc=none smtp.client-ip=209.85.221.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751878932; c=relaxed/simple;
+	bh=/gQhKVtQQzEZnXILw2FA8N/Txagfu9svv96IjnpJTNU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ArI1EeqtxkeOxOH/Actc+YACd6qdkY+osCalbsvSMtpwmCsZRpc3+SAPA2GthimphM4zf8HzgKmHpr08LzaqW/zwYQa4f0rgRWX/4XgdB/9mgz25XvaHa503JNeXKsPF2rnfc1LvJfYEZrcRqQ16ptkKjXnRvmzx5tCRd8CLby8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=e+keRDjk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZqMFCefN; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ajj8inEH"
-Received: by mail-vk1-f175.google.com with SMTP id 71dfb90a1353d-532de49b7e2so973268e0c.0
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 01:59:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751878747; x=1752483547; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6AiVrD/hecDeVQ0kRFXJFU2u67LlF5bfQjR5RnMv+s=;
-        b=Ajj8inEHbYmlNhaIJRxZyxSoT+iJ82iNCspYqkK6Z6tZkyxsit52F9W3HSHtayoANE
-         K+Vwg9oq3AslKq2Dmrk4+50+5YsD6OAOtXQRxA8nTva0NIhkPg3heW2CIr2mFzzh1Pvy
-         fId0ZB63OVDrCaPPENCGS+nPQzKXuC2g+iMzYQfEy0tDRRjFLK2KJUt8ttbFePtrymDG
-         +qtRDb1aMk4gI9UEhANZHjfc69Iwdhgx0nGwXYspZbzRONoFaX0lsfWKSKc/Hjxym73Z
-         udww+/S+KmdPh7xF0Sm9x7L00e5SsU2NqwfUDjq1XmEbSm7heTWa8TmyhO0Q0csrbDpS
-         JMxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751878747; x=1752483547;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6AiVrD/hecDeVQ0kRFXJFU2u67LlF5bfQjR5RnMv+s=;
-        b=D605yuUUCjb7JEATyg0TxyHIV51QEiF+/DG5cAReTk5UnaslZ2+WRQdrWVMnqdHgb4
-         BjAFQdbC5osg9m2+HfOFD+YboGBtc1B1TiFrYWQyQABCStM2igwmwpJ4ln8UPxzmZ8Ll
-         JLjpfC+TztRxnKSKm6y4S9Y0/COwOJB0DfQSlPNEAdJr/DEgfMLalEG3hUe/2uw2tlma
-         wGL1WYuwJVq03vioVPeavZOpQyAYj2049faocPa7Ycos3M6BdSPFt4nM7zcnGzBrtQHq
-         kQlRXsJ3BNHAxH9vFZeQKCtsEirhxEJVTlsLvmmjubmcUqdKB6Ry3nEi58yTxOIDr953
-         CVwA==
-X-Forwarded-Encrypted: i=1; AJvYcCVrYh2Y98zejt1rFvIGOy01H4pdqB0NFUD+HnwYAwmJMZxAcDtVUF/NBkETT5hCPhKJhiQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5aGsHIvnb80PHA/1YEfz2e/4ZYOd2Nc2H6eDXstkZMG/mZ1WF
-	+vKUoPNQFNBg+sRUdAbkNJIw6mes6ZARk0fmNcg0TMZp/xhR05aJJEADzFzTZ6etlF942+UB3vO
-	pjVaHrFtChPvHCJk9YrMB3uyHaVhZx4k=
-X-Gm-Gg: ASbGncuwbGKE3CvlcXV1cCS1JwQtl8hmcGyFka36JaOyz4OrQrsHLH3vggnW+1rljyl
-	3aMzUd6mTypYqy+OVFR09SuNhi/5yywl77SUFY6wNKhf5c9QysJvxqr+aISWnH+/qL7vlZ4dlxw
-	WmL1fXnqFz3xUsSCAMgC+va/y8U2B2OJ8lyPvAMICQqOGa9R50nVwDMEm37qeH3oXaBqblnjrp0
-	6eLGw==
-X-Google-Smtp-Source: AGHT+IGohkQciTB80/ErdsD9IkmxUNBQwRUETKmobblde3YxAa/nK4wUGeVhgdHl97nNl/yrCCe3vN98Wr851tyIvbA=
-X-Received: by 2002:a05:6122:3708:b0:531:188b:c19e with SMTP id
- 71dfb90a1353d-5347bee764fmr8032793e0c.2.1751878747300; Mon, 07 Jul 2025
- 01:59:07 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 7 Jul 2025 01:59:06 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqa55jc3md.fsf@gitster.g>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com>
- <87ms9kcbtq.fsf@igel.home> <CAOLa=ZS0uP+5xso_SEG2GJZHeac-0F2_wMJKtvbFj_wROKbBkw@mail.gmail.com>
- <xmqqa55jc3md.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="e+keRDjk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZqMFCefN"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5BE92EC04AA;
+	Mon,  7 Jul 2025 05:02:09 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 07 Jul 2025 05:02:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1751878929; x=1751965329; bh=hotTWbnoza
+	zWXKvbOZskBBwG+jMH+jH+JZQmLfZAINY=; b=e+keRDjkirDR44JHX5OsSTcgHc
+	bhWJkAswlADfbFK9rnUWdp2lr6nKK2sPPdkOkp/ObwUfQs023qY8h4B7BpYCuuWm
+	xG/HDz8ums3z4gQAWN/Lc+WhoA4nAOlXtFKqyX6pgAwWPfQwrql0hqMIfoGi1Yf2
+	UHEK+i/QtMqGvJ6jBwFI1Fg0jOlY3VLNgHqwwLH1g0QpOOWWIfORTvyspYF3jLO3
+	FOZkA18DdJxAyIWa15lXvaQr9ByYbYRQZCuXBnan/2Y/YvXz9vqNOsUYHjxgcayv
+	L/cpHedfEsyxbQZ2sPsAoTvp2OnYSHiOpSuymr0RUgX03QerZ0UpII5muZaw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751878929; x=1751965329; bh=hotTWbnozazWXKvbOZskBBwG+jMH+jH+JZQ
+	mLfZAINY=; b=ZqMFCefN0Clcmu+yScGGD53p5BsCpsdxPzERBhTeimNrARdIW2p
+	05vBVL5CwHZlg4eZKSbWnKOnYPcEymaUGVrF7NvMpr8KqS0CrFqLPjaMMaMEEnZ1
+	5Lv8JIA591Qh73yuHY5JR47+6prQ+xcmoYJ+lOb28bgptp+0Q8Fz0iSaDc9dBzCU
+	/sVq4ZbKrOBiQok9H4Fdwy+GQv0yhxPpZCia5a2/0KdnQQrR+A1NZaOWMgcf5kV/
+	orljj+tsWZDRCA1YP2HJ5pw0FRI97JBp934BrR9GeTB5CE6jdVAbzWzSe2ZywOMr
+	NyIaCbaGuoUJiNfzbDU/+1Q/w0UChVpOx5A==
+X-ME-Sender: <xms:EI1raEQnNqQh8bryDMEv7TtQa2JHUIEv3hscNO-RTZrlPzUgPjcpOw>
+    <xme:EI1raPWrSahmgmHIXyuqBvLVEiPy-ZTeuQk0CTmhrhqxnSeRrgQpx3Qp1DHFWoSGj
+    iHIc7IzpYwtmtYgSg>
+X-ME-Received: <xmr:EI1raITDZ2LYZK9xJTgrizNCJrB2xubaQjzs_cVCGiRvgrQb6tg28r-qvgeOfdPbuyzFAcWt_h4BcHzIHF9pxPnKHSTNcF30C0nShCQnDQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefudefkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtth
+    hopehrvgguohhsthgvsehrvgguohhsthgvrdighiiipdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
+    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehfshesghhighgrtghouggvshdrug
+    gv
+X-ME-Proxy: <xmx:EI1raJmrOx3pvrhJ0gVYoUQ6zby-4d23xgkHQ2BYOT5ybWhk8Ra8Sw>
+    <xmx:EI1raO7l7D_uNZXHV1QcoWilQfI4icJkdo2oTMMNEroC8BN67UYbqA>
+    <xmx:EI1raPgVtN3GNEKNmEd0R-irp83H6MyroRpRr4t2eVLDxpM7epF-qA>
+    <xmx:EI1raLElcxDm63Glj_Jyfe7UmGUHlDI9BOPaVCvrj4i7ycPEuYl5YQ>
+    <xmx:EY1raL6YlsIcAtpIV5e5A79jRmg-6fb15rq7-0i95-50e_v8-0VD-8KJ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 7 Jul 2025 05:02:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id def859a4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 7 Jul 2025 09:02:05 +0000 (UTC)
+Date: Mon, 7 Jul 2025 11:02:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: redoste <redoste@redoste.xyz>
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Fabian Stelzer <fs@gigacodes.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH v2] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+Message-ID: <aGuNCGNk96DK4GzX@pks.im>
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+ <20250706173450.12995-1-redoste@redoste.xyz>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 7 Jul 2025 01:59:06 -0700
-X-Gm-Features: Ac12FXztr0jD4BW7zPjy7AQhSg6TGBt94hgCQOUakpPE_xeyhQar9AGkg7cxe1o
-Message-ID: <CAOLa=ZTDcssjQcNcvDOA4-r-j2asp-XHCy2D_qoHEidz+KsKCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/4] for-each-ref: introduce seeking functionality via '--skip-until'
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org, ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000006c44250639530ef1"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250706173450.12995-1-redoste@redoste.xyz>
 
---0000000000006c44250639530ef1
-Content-Type: text/plain; charset="UTF-8"
+On Sun, Jul 06, 2025 at 07:34:49PM +0200, redoste wrote:
+> diff --git a/t/t7528-signed-commit-ssh.sh b/t/t7528-signed-commit-ssh.sh
+> index 065f780636..1a8d96f355 100755
+> --- a/t/t7528-signed-commit-ssh.sh
+> +++ b/t/t7528-signed-commit-ssh.sh
+> @@ -390,6 +390,22 @@ test_expect_success GPGSSH 'check config gpg.format values' '
+>  	test_must_fail git commit -S --amend -m "fail"
+>  '
+>  
+> +test_expect_success GPGSSH 'check temporary files clean up when signing commits' '
+> +	test_config gpg.format ssh &&
+> +	eval $(ssh-agent) &&
+> +	test_when_finished "kill ${SSH_AGENT_PID}" &&
+> +	mkdir tmpdir &&
+> +	TMPDIR="$(pwd)/tmpdir" &&
+> +	export TMPDIR &&
 
-Junio C Hamano <gitster@pobox.com> writes:
+I think this exported environment variable now leaks into subsequent
+tests, doesn't it? We may want to do it in a subshell.
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->> I think I was a bit against '--start-from' and '--start-at', because
->> they imply that the reference provided must exist.
->
-> It also implies that if the reference does exist, that would be the
-> first one that is shown.  But I do not think you want that, as ...
->
->> Consider the example
->>
->>   $ git for-each-ref
->>   refs/heads/bar
->>   refs/heads/foo
->>   refs/heads/main
->
->
-> ... after a paging application starts from the beginning and showed
-> a single page of some items, it knows the "last" one it showed.
-> That last entry may have been refs/heads/bar.  The application may
-> not have seen the next entry (i.e. refs/heads/foo).  So if it has to
-> use '--start-at=refs/heads/bar', the first entry it gets from such a
-> request may be for refs/heads/bar again.  The application needs to
-> remember the "last" one it showed and skip that, which is a bit
-> awkward, isn't it?
->
+	mkdir tmpdir &&
+	TMPDIR="$(pwd)/tmpdir" &&
+	(
+		export TMPDIR &&
+		ssh-add "${GPGSSH_KEY_PRIMARY}" &&
+		echo 1 >file && git add file &&
+		git commit -a -m inline -S"$(cat "${GPGSSH_KEY_PRIMARY}.pub")" &&
+		echo 2 >file &&
+		git commit -a -m file -S"${GPGSSH_KEY_PRIMARY}"
+	) && 
+	find tmpdir -type f >tmpfiles &&
+	test_line_count = 0 tmpfiles
 
-I do agree, I was modelling this after what would be the best approach
-within the Git codebase. But I think it would be nicer for the clients
-if we skip the provided reference.
+Patrick
 
->>   $ git for-each-ref --seek=refs/heads/cat
->>   refs/heads/foo
->>   refs/heads/main
->>
->> You can see that the reference doesn't have to exist. So implying that
->> it should can be a bit confusing.
->
-> For that reason, whatever verb you pick from seek or start or skip,
-> it would be great if the option name also made it explicit that the
-> named one, if exists, is not shown.  Conceptually, it is "skip
-> everything that sorts before the named item, including the named
-> item itself" that such a paging application would want, wouldn't it?
->
-> Thanks.
->
-
-With that I think '--start-after' sounds like the best option. I'll
-modify for the next version accordingly.
-
-Thanks!
-
---0000000000006c44250639530ef1
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8bc9c04672d56251_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ocmpGZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md2NUQy80K0QwbGR6QVNaMzhpdy96NlBrMExCWkN4cgpzTkNnR3JZMEhT
-dDhBdFR0eExodE05ZDlSelQ1T0l4Yzg2NFFhTG1LVjdrTGpNVFhhTmFGcGI0QWtCVEdid01VCnQ3
-YThzTld6Q3VrV3Y2SUw3ZGVIVkdUR0tXZjd5MVFvZ3lhOFlFbXIyN0dOTWR3NkVIK2t1dW9ZWmY5
-VW0rWnMKQjAvRmZ6MmpSOUdiOWxTVHpVSmU0a3hGc2RtNHMzd09NSWYzY2pLQlEyWEhHMXpxM1dO
-RURHQmpCMUUxUGVONApRNWNIREU5VklrSmp0a1g1Z3kyRi9pQ3l2QlhZTkd0L0g2U2RDMWNFRjlX
-MkEvVSttdks2Q052eW1ySXZPUU1LCnlJYW5OUkZraFZFNDZKK3RMYmVVdkFvMTZjZ3VEdUU2eXRS
-L0tHaFFRRVVzeXVBeDR0UlJIb24vUjNNMHVGeTAKanp0VDEyZGV1cnEwajRkR1VmenM4dmFzamVv
-U3IrUEI1QjhIRDNyeWt5SGRNMHNZeDIrdmYzY0ZCUCtGa0tsQgo5MENxWGZjaktYWWZDUE1jWUFJ
-M0REQXNUNVJLKzZxVDFQQW50dkRjSXR0T3dMb2I4NEV2SjZ5TkNlRFBKcjBtCkRNQjQxeTY2c3I4
-cnNHUjhNbXVnaEszUXFSQUEvTEl1WVlmUUwrRT0KPUpYYUYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000006c44250639530ef1--
+> +	ssh-add "${GPGSSH_KEY_PRIMARY}" &&
+> +	echo 1 >file && git add file &&
+> +	git commit -a -m inline -S"$(cat "${GPGSSH_KEY_PRIMARY}.pub")" &&
+> +	echo 2 >file &&
+> +	git commit -a -m file -S"${GPGSSH_KEY_PRIMARY}" &&
+> +	find tmpdir -type f >tmpfiles &&
+> +	test_line_count = 0 tmpfiles
+> +'
+> +
+>  test_expect_failure GPGSSH 'detect fudged commit with double signature (TODO)' '
+>  	sed -e "/gpgsig/,/END PGP/d" forged1 >double-base &&
+>  	sed -n -e "/gpgsig/,/END PGP/p" forged1 | \
+> -- 
+> 2.49.0
+> 
+> 
