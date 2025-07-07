@@ -1,34 +1,34 @@
 Received: from mx1.ddevault.org (mx1.ddevault.org [172.233.46.218])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF58A2620E7
-	for <git@vger.kernel.org>; Mon,  7 Jul 2025 07:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B3E9277CBE
+	for <git@vger.kernel.org>; Mon,  7 Jul 2025 07:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.233.46.218
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751872189; cv=none; b=sXkXY+ftrMmzBknYznfOWIyNxZN2d/JcsT7iOi1lA2IDqc9vZ7fKUPmqbE2hC+YJanvrTepJwr82g0aIOv8DWunyhO7panCuOwM6B3m61xHYkbzwTi3aU8t0TuiNZehyeWE3IGeHx6B2dX8n7P08d2YRaXQqGXybzypRhE42TXI=
+	t=1751872331; cv=none; b=IIQfQm1PLhNd3sKSZLda8N7RJPpjWO0UEB6gL/DuVJJ7PPipUBwYgqldnAIuUhTh2iuU5DV3KnhlHybVvRF7nGM2z1vzjcoJS2XfCU2w5Zq3PnIl2bcO4vLneVey4scXnq/J6iDUohZF3lat6gwXa0U2T2rzFKBOdGf+M/abmEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751872189; c=relaxed/simple;
-	bh=5KTdX7qLvNEcrXtDke+/M7pXcf+Ha9v3hNW+gcfKQdk=;
-	h=Mime-Version:Content-Type:Date:Message-Id:From:To:Cc:Subject:
-	 References:In-Reply-To; b=tKj+to79FcTjpGwnfcIw3TMOxOS0trr6Wf/ZPC8q+BjFhsFHByl5l8P/pbenHgHqS2Fqa/LxctFB8oT4BPSibs752B3RVBts28TFzyD0UHBbet2TmSmII5IEU44Zi8BZM8FSeqK/o/UDZCcku5EtK4FMi1CQotIhTay4mPwhZqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=YSAEc0s0; arc=none smtp.client-ip=172.233.46.218
+	s=arc-20240116; t=1751872331; c=relaxed/simple;
+	bh=Iq/ty7cEkoiaBIdAJNdBwdFYAWw+31O3ri7IR9BJlTM=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Subject:From:To:Cc:
+	 References:In-Reply-To; b=YZE0xczXrcGnItMCKvXR5SiiwfHOBoSlLu7yOnKPWUXLrowTZqPjL7AhJHChRSWiDNt1JuVU16JqZE5XpqtDi3yLWYn8EV8wpWguDSBxUWgllV3qQ0h0CzL9eHBIXJzqXoe4n7nCsP7785nXsO1GKX8Pu/ogASX+nyhoiTjQz8I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org; spf=pass smtp.mailfrom=ddevault.org; dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b=1kJtLc6O; arc=none smtp.client-ip=172.233.46.218
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ddevault.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ddevault.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="YSAEc0s0"
-DKIM-Signature: a=rsa-sha256; bh=Dtaxb+s9acgCGtWxSrkjviDv/EScuDHyzfEq7Y07IOY=;
+	dkim=pass (2048-bit key) header.d=ddevault.org header.i=@ddevault.org header.b="1kJtLc6O"
+DKIM-Signature: a=rsa-sha256; bh=Iq/ty7cEkoiaBIdAJNdBwdFYAWw+31O3ri7IR9BJlTM=;
  c=relaxed/relaxed; d=ddevault.org;
  h=Subject:Subject:Sender:To:To:Cc:Cc:From:From:Date:Date:MIME-Version:MIME-Version:Content-Type:Content-Type:Content-Transfer-Encoding:Reply-To:In-Reply-To:In-Reply-To:Message-Id:Message-Id:References:References:Autocrypt:Openpgp;
- i=@ddevault.org; s=default; t=1751872176; v=1; x=1752304176;
- b=YSAEc0s0Tnw3pay7TxprxeVtdok1SECA+16jLOBZuis96zHfmmbrgAfIEGwaW2R+uYLXRC6Y
- C/v0z6xYBuQPM/UiY5sunvtMSZTsPFXz8BkD8fDRUCC+CqrBnhXa+9zRAUDoqmRVu23mDtxiZXP
- PiwwIbDW0wTbUzXfUqBLZQPeUQ49bzWoOcvOOIBZ5yZUpN9K5651DEqP21wfg/Mn9Qr4AOt+yaH
- OcfmRhYUTmWqdzh3xZzeVPk/4uLPj38bL1yr88I6n2PVJell7UwkzqnjHINT84uBtwzrA83Z00Q
- Z4OLpnV4+OX0eTJzzQjk0xE9niEQa+GjoMJlu6c/pUXEg==
+ i=@ddevault.org; s=default; t=1751872325; v=1; x=1752304325;
+ b=1kJtLc6OgTaIGsTTEKE27pMil9I1dv1Ax/+/B17RWpzJTLupT5TtsqGj9TOhBWhyB03MzuTB
+ VJ1SiZAM/AP49VnVqUTjlYjqAW8b4oquVVEeJlmUvMlwJPB1fW0nzPDuUev6vz+XCI4q+2VAWAl
+ nZ2QfyAMZfBYb+nuxNKzssQC9LrImNy1WtdS9k3EPkz2SLECKGekrIyw3aayNVvrToB+n6yG0v0
+ PeHVMWHBOfvDSMEXIeX4wdFhnu0sJQdK6TyrHjGUlMl01EhhsNwcqCKx9lH6A+p6UjtkVpgU6E7
+ JMi4G3/JDSm1th0t/HdJXsTUXCgkvq6/7XGWFMys7OfBQ==
 Received: by mx1.ddevault.org (envelope-sender <drew@ddevault.org>) with
- ESMTPS id a67284c1; Mon, 07 Jul 2025 07:09:36 +0000
+ ESMTPS id ddff5ef6; Mon, 07 Jul 2025 07:12:05 +0000
 Received: by taiga (Postfix, from userid 1000)
-	id 3F0F470206F2; Mon, 07 Jul 2025 09:09:36 +0200 (CEST)
+	id EF4B170206F2; Mon, 07 Jul 2025 09:12:04 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -36,70 +36,66 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0
 Content-Type: multipart/signed;
- boundary=7af60d983b7d262fa79eae05247ddca0cbee402a9f1f7f20c19f1910e934;
+ boundary=f5464bf135f76a793858bb44bd4e9a80a70e4bda6d8164fd0aabc73fb485;
  micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Mon, 07 Jul 2025 09:09:34 +0200
-Message-Id: <DB5MUUDPF6C0.3OR02N6JQB8H8@ddevault.org>
-From: "Drew DeVault" <drew@ddevault.org>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: "Aditya Garg" <gargaditya08@live.com>, <git@vger.kernel.org>, "Martin
- von Zweigbergk" <martinvonz@google.com>, "Patrick Steinhardt" <ps@pks.im>,
- "Andy Koppe" <andy.koppe@gmail.com>, "Remo Senekowitsch"
- <remo@buenzli.dev>, "Jeff King" <peff@peff.net>, "Junio C Hamano"
- <jch2355@gmail.com>
+Date: Mon, 07 Jul 2025 09:12:04 +0200
+Message-Id: <DB5MWRN5WUCZ.1DZ2SZ6WT3981@ddevault.org>
 Subject: Re: [PATCH v2 1/2] pretty: add X-Change-ID to mail formats
+From: "Drew DeVault" <drew@ddevault.org>
+To: "Martin von Zweigbergk" <martinvonz@google.com>, "Junio C Hamano"
+ <gitster@pobox.com>
+Cc: "Aditya Garg" <gargaditya08@live.com>, <git@vger.kernel.org>, "Patrick
+ Steinhardt" <ps@pks.im>, "Andy Koppe" <andy.koppe@gmail.com>, "Remo
+ Senekowitsch" <remo@buenzli.dev>, "Jeff King" <peff@peff.net>
 X-Mailer: aerc 0.20.1-64-g7cb8e0e7ce24-dirty
 References: <20250703113505.11889-1-drew@ddevault.org>
- <PN3PR01MB9597069B8CF014BFE01B53F3B84CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org> <xmqqfrf8ait6.fsf@gitster.g>
-In-Reply-To: <xmqqfrf8ait6.fsf@gitster.g>
+ <PN3PR01MB9597069B8CF014BFE01B53F3B84CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <DB4WQTRHWZN3.3VG20AZDK8VN@ddevault.org> <xmqqfrf8ait6.fsf@gitster.g> <xmqqfrf88s28.fsf@gitster.g> <CAESOdVAGEBCYOnFGUFojRk=6s=7RHc0i2jzuOVdBd91dXsCTEQ@mail.gmail.com>
+In-Reply-To: <CAESOdVAGEBCYOnFGUFojRk=6s=7RHc0i2jzuOVdBd91dXsCTEQ@mail.gmail.com>
 
---7af60d983b7d262fa79eae05247ddca0cbee402a9f1f7f20c19f1910e934
+--f5464bf135f76a793858bb44bd4e9a80a70e4bda6d8164fd0aabc73fb485
 Content-Type: multipart/mixed;
- boundary=330c2d711f65ee66bf1bb0a137cab8207cf88c6500d94497e8e71aa02544
+ boundary=90660a5eea18371f42aa8edbfe2577f18444544c7b9b6d8f1ba82555ec86
 
---330c2d711f65ee66bf1bb0a137cab8207cf88c6500d94497e8e71aa02544
+--90660a5eea18371f42aa8edbfe2577f18444544c7b9b6d8f1ba82555ec86
 Content-Type: multipart/alternative;
- boundary=165ec16f4967138206d61f7487e38a56022b441db4d74089de46a9790de6
+ boundary=023a7b9735601a961567bd32d4e3c1c21e1f69ad73f7fa5470dfc4a75f2c
 
---165ec16f4967138206d61f7487e38a56022b441db4d74089de46a9790de6
+--023a7b9735601a961567bd32d4e3c1c21e1f69ad73f7fa5470dfc4a75f2c
 Content-Transfer-Encoding: quoted-printable
 Content-Disposition: inline
 Content-Type: text/plain; charset=UTF-8
 
-On Mon Jul 7, 2025 at 3:30 AM CEST, Junio C Hamano wrote:
-> I would suggest a lot more generic implementation to solve it once
-> and for all.  How about doing it more like this:
+On Mon Jul 7, 2025 at 8:57 AM CEST, Martin von Zweigbergk wrote:
+> +1
 >
->    "git format-patch --extra-headers" grabs all extra headers
->    (i.e. those that are not the bog-standard "tree", "parent",
->    "author", "committer") and emit these
+> Does this also apply to commit signatures? I just created a signed
+> commit and checked what `git format-patch` produces. I was a bit
+> surprised to see that it doesn't seem to show up anywhere. Is it not
+> supported or did I miss some flag or config?
+
+There is, to the best of my understanding, no serious effort being made
+towards causing commit signatures to survive the git-format-patch/git-am
+process. There's also some confusion that often occurs here because
+commit signatures are unrelated to PGP signatures and it is not possible
+to make either system meaningfully aware of the other.
+
+>> > In such a case, I fully agree that embedding in an e-mail header
+>> > would be the way to go.
 >
->     X-git-extra-commit-header: encoding=3Diso8859-1
->     X-git-extra-commit-header: frotz=3Dnitfol
->
->    next to "Subject:", etc.
+> Is it another option to put it somewhere in the body? Could we fit
+> additional headers (e.g. signatures and third-party ones) somewhere
+> between the `---` line and the additional diff? Or how about after the
+> final `--` line? I haven't checked the specification. I just saw these
+> lines in the `git format-patch` output.
 
-+1. I particularly like how this approach throws out a bunch of arguing
-over the utility of the specific use-case -- clever :)
+I really think that it would be much wiser of us to put it in the email
+headers, which already exist as a well-defined structured data format
+for this purpose, rather than introduce something like commit trailers
+to the timely commentary section.
 
-Do you think there's any reason not to throw all extra headers into
-X-git-extra-commit-header (or whatever) unconditionally? Does it need to
-be behind a flag or config option? If some tool added the extra commit
-headers, they presumably have a good reason for doing so and we ought to
-encode that information so we can reproduce the commit properly, same as
-we would with the rest of the commit headers.
+--023a7b9735601a961567bd32d4e3c1c21e1f69ad73f7fa5470dfc4a75f2c--
 
-I suppose there is a scenario where this breaks something because
-someone has a poorly thought-out string munging parser for git
-format-patch output that will barf upon encountering the unexpected, or
-some mail provider rejects emails rather than silently dropping headers
-it doesn't like, but both possibilities seem remote -- especially when
-considering that these hypothetical edge cases have to be combined with
-a use-case which deploys extra commit headers in the first place.
-
---165ec16f4967138206d61f7487e38a56022b441db4d74089de46a9790de6--
-
---330c2d711f65ee66bf1bb0a137cab8207cf88c6500d94497e8e71aa02544
+--90660a5eea18371f42aa8edbfe2577f18444544c7b9b6d8f1ba82555ec86
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename=42F3F1862E3CC4B8.asc
 Content-Type: application/pgp-keys; charset=UTF-8
@@ -116,17 +112,17 @@ dGVjMzNDV3luWTdzUnBGQzgvR0dManpFdUFVQ1o3WTkxZ0FLCkNSQkM4L0dHTGp6RXVIY25BUDR5
 ak9pTTB5cWtTVDZ5WHpEVVd6ZTdCOUltMjRGOEhWeCt3TnFjRGFEdGNBRC8KZktRaHowU0NQaWJs
 TzZsYzdNRlV2bGFPejJ2ODdVcFVZUmh6UGRnUXF3az0KPWVtcmIKLS0tLS1FTkQgUEdQIFBVQkxJ
 QyBLRVkgQkxPQ0stLS0tLQo=
---330c2d711f65ee66bf1bb0a137cab8207cf88c6500d94497e8e71aa02544--
+--90660a5eea18371f42aa8edbfe2577f18444544c7b9b6d8f1ba82555ec86--
 
---7af60d983b7d262fa79eae05247ddca0cbee402a9f1f7f20c19f1910e934
+--f5464bf135f76a793858bb44bd4e9a80a70e4bda6d8164fd0aabc73fb485
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSftec33CWynY7sRpFC8/GGLjzEuAUCaGtyrgAKCRBC8/GGLjzE
-uCDCAP4/IIvEqbWx1aBc9SDzub5xrtA22mbi/7gLPYvTBeh3fAD+LHeJUYh4/Nym
-ec5jii0+8oRFruakxD7c8SzUFD1xqQM=
-=VcR5
+iHUEABYKAB0WIQSftec33CWynY7sRpFC8/GGLjzEuAUCaGtzRAAKCRBC8/GGLjzE
+uB4HAQCNvO4tkAaQ8WyS7KADurxXolYfWtw7FIWwDGzOCppfoAEAn9EotoKwm2AN
+7vWlyGQ9MIsTTFLGq1L49HfMomcjUQE=
+=dMtJ
 -----END PGP SIGNATURE-----
 
---7af60d983b7d262fa79eae05247ddca0cbee402a9f1f7f20c19f1910e934--
+--f5464bf135f76a793858bb44bd4e9a80a70e4bda6d8164fd0aabc73fb485--
