@@ -1,387 +1,1021 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4CF3597A
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 09:17:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB521E521B
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 09:18:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751966237; cv=none; b=EsgZGTWlc7u/tjAMe62ylsymSDgxsHn4XXn/woa+g/c07ZiXJIJmqJEUZgSMUfQoEcemWW9xtcgXHkZzXlN3FUpzBq4OkyPuMZL9irIzqsiBp/SlxuK5WlbpmMRrBlUzsz8VQqAtZY0O3B4KFj/e6Jim148+3QTlySoOBDMKmaY=
+	t=1751966286; cv=none; b=FY2zeijHCXWZf76kPVS9seyPYnLNUdU2FWrMS3ITLkXW/zkc/89RApEvmFy0IKXUwJNaIMjr0O4TnCwllantxS1G4zCpQ1GzkpDC/Npl27bU5PYoUYNp55g3KsxIghjz5c+dW0kdcbHMCzHKEJTJz3cTWTJUcNVDwnecznoaxDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751966237; c=relaxed/simple;
-	bh=DI24h+pln3vyVWV/BRiIvAI11cL67NnUZeIMpQBfd5g=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=IbDZmakwiV+bRoyP9EaL0NeNrpJW8M+i3ciX553RyFpggL11csuHG+OGTxARlbBiVpPWmj0ZSWrqTH20zdYDxhf1Zsje8FHyiEm/3EGFf4YFrhlHplMFPOcOjpxuC3e8zyyqxIvMlBwve6JGkL3cQQ3az1hRDVIfTX+Q8W233SI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HLfNEjdY; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1751966286; c=relaxed/simple;
+	bh=iH5bqf8U1Qc6DoE+UBQIfNxUARkDuMVDQJgGlaICE0o=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=EfOiz+18Rc5RtFloIS7CJS+icosuOW3LFQgNsHK10tKttrTqC+nbOE93HGMVy5D7xogZt5/KPCsEoieoGFopuc+ICNTZjj11rH37O398xSjH17p/eweK+WPQz1EI8t4d9dTKH0bgr+gbA1Puz9iqOnkFi/7krhMvdI2f2Ghyo3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CeNiWx45; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HLfNEjdY"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-60c6fea6742so8597097a12.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 02:17:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CeNiWx45"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-450ce3a2dd5so37429505e9.3
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 02:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751966233; x=1752571033; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1751966281; x=1752571081; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vo63RKyWyzI1uI/96M9rB7TnIdFvz98F0PQyY/Z6Lb0=;
-        b=HLfNEjdYcq2EmoSGfwT3lP1yHnn9nT/PN2P8ibfhT56LwMvrBaaybzjly1cl8VMGa9
-         72bPREn9o+OiQeB4PoIRVsSOIw5LatHmLafe2BWCfwGLw6JoY01RW68FpICRUcuzTFyv
-         b/P4gTTWML2A+nj2A39eFnIOi+fStgFlQJ45pzZdorCVG9YYhzaGOCIl9lqaLysIgkFA
-         OT5XNLx4rbhxt44m7Dup4QkR8FGTgK/JfiOTMQPXZ7Y16OyBOGD7gUT5rBy6EVvo6Fnr
-         ww7e9yPS8KHFwjKAB33Sthqs7J6DhEMg1MsnZYcNizvDD6G6A9MMaEdb2tzJ1JipfAw0
-         cyKQ==
+        bh=aV6VvDN4ATRB1e3SwEdqKXD3Yf5eqc4aUZC+p/nY5Jw=;
+        b=CeNiWx45uiX5AbqMFrhP5jcQRD4IvHw2damX6liuy0Of/KNxl0HcUlTieBpbux8rML
+         2ZKMe+PxThg42yS1YjTZWKs6YArAgdD1Wu8I91jWYl2Dr5Q/WsXNFUy6VdWzR74VRvxV
+         vBEZ4PuXhHZU7B7iLWh7OdClypgVR3T0CiwcHsdu+Bry7Armebjo8AiVcWKruaSm5ro8
+         9itTTHi84fIdo+LF/TR9Q0fDbQm3g/hZV0EL4kyGAUwEv/9tj71psJkWj8cOiW/7S5oc
+         5eV4oODiwnz6X4LrQIiJY+GRX2sTnmMt89EH7EZwbcNy/r0qcBPDvmim9FoHQUI09Ecw
+         q3jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751966233; x=1752571033;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1751966281; x=1752571081;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vo63RKyWyzI1uI/96M9rB7TnIdFvz98F0PQyY/Z6Lb0=;
-        b=T1dxtPzU/qC7ynKkk6nIQ4bRYoslRMPTfCO2xIVh0Sty+WDItml6UL7FgCRoPn/suq
-         qFVuRqFwRUaykf17mqEuOHqx9FjLx6rL/t6aO3unn+Ty9DtQZTew9T2jB2XvlgZ0S+UK
-         qacQRSZvIAqE6tpAfEGJuURSUWVmckBDc7tGDAFWD0BwYs7okjHbO4HW8XOfnth26rfH
-         hOq2r2D4WBzg5FsPpRFARRf5Ws5ImRaZkm7gaKuUr/0SbHhojX1bn4cDSAHAgxsvdlkp
-         vf4VZf6DWn2L+QU4Vy4nj4Lh7AGNQEQC9v8YZ2lFNNmyMj6orbSNrWz6SCuaKvqBbCZJ
-         F9Pg==
-X-Gm-Message-State: AOJu0YwMcnc+9TFGXJ9kSUY7LyyipPLspuhDZA3c0+/j/4bcXtfXUmXN
-	rYZj9Zi7a1XnleLCAia6EfulbgxARI6e+vj4QF76V/klmZvpEWOa0MI54rtk1a8rGjEwDK3cqey
-	3xih/SunBGf2IGKhxZVdkXQuRSgzcy8OU4Z+S
-X-Gm-Gg: ASbGnctCVBYs/hcLiu43eoaIaEPVmPTR30fUD20HPEk6BWRzMJtssIxQDHSN414yZQH
-	VT6NA4UBNT2Exrob8isG9Yvfumlwi5HavlqCHTa6PAEGjlczPAAY95Spslw+S1zjD54LvYBJntu
-	nvJPwGT/XCrMZKVGjMJyhMcek5HB0v0P0HFI1to1fqxock6EpuIU6hiw2J1DU/PpnTHMBLeZ5TR
-	5yV
-X-Google-Smtp-Source: AGHT+IGv43SbrBVPzsIivm4KVoJv9yUfqafg6X/U/KxhDbdTbHsdYgK53pkntz8uNL2CXdxl67GzehfTlwYUICGTf9E=
-X-Received: by 2002:a17:907:d701:b0:ae3:6708:941c with SMTP id
- a640c23a62f3a-ae6b0048f2amr251148166b.6.1751966232783; Tue, 08 Jul 2025
- 02:17:12 -0700 (PDT)
+        bh=aV6VvDN4ATRB1e3SwEdqKXD3Yf5eqc4aUZC+p/nY5Jw=;
+        b=i6GdPJjN8T0BwF8+hYSjaplYnF4bZzMA5QyYWKDANqgSkrb74ajIxBkbnQKYuJss/6
+         tmqaM6eIFgxzrvSo9puvAW1BPvUcPGwVfPOxPkgO5p59+yn2QjRNmHDzfErFmdn9buRK
+         9xGkKGVB6V1mmn/3Hp4myYcW87mVrBkwngI3LqmN+/XWczmogLzBiP63p6RDgsICPG3e
+         DqKs/mVV40mQepLtIWS1cdkCJegBcuj/nn2XEoCiA91xksPqnPa6aPV5d1BSd6EvPgbI
+         SXSbB/QaqooVHZ4hB1V9qyvjzpjrd2ch//C/c1f20X4tJz/ukIEFFbvjPf5IM2V87tj6
+         8JVA==
+X-Gm-Message-State: AOJu0YybIdRFe+rc+HeedeEXyrlnM1GiUBszilbYHqruTw57lXtTA60Z
+	hWcvPi1/Qv8cmWBXjgSzKw0k2Eujs9SW66TLPiwwv1hcdna66+dMOpaYd6tf7g==
+X-Gm-Gg: ASbGncvLp6LCaMR3LNlkm2rCTn7YjTRpHXctza2KgoiUmJ8MCnmehlCxKw5lY+eFBvl
+	BWysLTDjseosnxZ60stgv5oJxT8+Ffa84J+L93ti52bSzeOt2nXxKZ6fuCDKo7HhCvRQ1Tskg8S
+	ihlijafTT01QfQGDiupIjl6LaYaeATqZnQ9KsXddIAbhAP9lBI1oDOe3UZBQE7vbX3T9Hsy4rkS
+	qb6lSm6NctwQh1Kp2mBPQFkWwg1MXS89x5AtdrRi8PaHBZQ4eToM9v4uEcMVQICLmmb420gR2eh
+	qphQXIaYlQItIHDmszAuSNWfGvmj3ZtIBo4GM2uis3bdl8J0T+aKA6idEJLebYyRvDP4OysQ2nw
+	Kg/LmH6QL3/eCJzkGHg==
+X-Google-Smtp-Source: AGHT+IHeS2kkkedq3EXA6Z7lsV0zgCPEWf1ZRhS88G5PqY0gOqHAU98XM9vK8r1QUwwgji8pOtlXgw==
+X-Received: by 2002:a05:600c:4686:b0:442:f12f:bd9f with SMTP id 5b1f17b1804b1-454b4eb82f0mr151124325e9.27.1751966280966;
+        Tue, 08 Jul 2025 02:18:00 -0700 (PDT)
+Received: from christian--20230123--2G7D3 ([2a04:cec0:1939:8f30:3df9:bd7:e476:38d8])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454cd3dd12bsm16259015e9.38.2025.07.08.02.17.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jul 2025 02:18:00 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v5] fast-(import|export): improve on commit signature output format
+Date: Tue,  8 Jul 2025 11:17:38 +0200
+Message-ID: <20250708091738.4072857-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.50.0.174.gcf836c1ec7
+In-Reply-To: <20250619133630.727274-1-christian.couder@gmail.com>
+References: <20250619133630.727274-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250618151821.528627-1-christian.couder@gmail.com>
- <20250619133630.727274-1-christian.couder@gmail.com> <CABPp-BF6ZjfJ2MSHkhXQwv00=63qG3wLU8ie=_WVxnWTffFpRA@mail.gmail.com>
- <CAP8UFD24LayEi-=PREqbiyC7PeJbYEP1ghOZ+T-ma=DZVaPtSg@mail.gmail.com> <CABPp-BE8b8Ju3zaB04DzQJoSKwNkHcHTw8q95ux_bb4hOpboBg@mail.gmail.com>
-In-Reply-To: <CABPp-BE8b8Ju3zaB04DzQJoSKwNkHcHTw8q95ux_bb4hOpboBg@mail.gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 8 Jul 2025 11:16:59 +0200
-X-Gm-Features: Ac12FXwWAYoo38J3Peg0baYZM6KhYt-5XsB07SxPzl8EAGCCUfhZtUlRGdJuAmg
-Message-ID: <CAP8UFD0Xi+9rA+M_0j0gGpyLTmLYB2u5PT2--cRFqqyrV4NFYg@mail.gmail.com>
-Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
- output format
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jun 26, 2025 at 9:12=E2=80=AFPM Elijah Newren <newren@gmail.com> wr=
-ote:
->
-> On Fri, Jun 20, 2025 at 9:12=E2=80=AFAM Christian Couder
-> <christian.couder@gmail.com> wrote:
+A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
+signed-commits, 2025-03-10), added support for signed commits to
+fast-export and fast-import.
 
-> > In https://lore.kernel.org/git/aD4i7YhUnT5Kgew-@tapette.crustytoothpast=
-e.net/
-> > brian said:
-> >
-> > "Actually, what I was saying is that we should have one for the hash
-> > algorithm that is used in the Git object.  I don't care about the hash
-> > algorithm used in OpenPGP, X.509, or OpenSSH (that is, whether it's
-> > signed with SHA-512 or SHA-256), but we can have multiple signatures in
-> > a single commit such that there's both a SHA-1 signature and a SHA-256
-> > signature."
-> >
-> > so I implemented the possibility that there's both a SHA-1 signature
-> > and a SHA-256 signature in a single commit.
-> >
-> > If you disagreed with what brian suggested, it would have been nice to
-> > reply to brian then.
->
-> Sorry about that.  I hadn't read the whole thread; further, I was
-> previously trying to avoid the details of signatures beyond the basics
-> and hoping to leave those details to others, but between v2 and some
-> words you had in this version plus deciding to just take a closer look
-> while on vacation (as I was last week), I decided to try to look a bit
-> closer.
+When a signed commit is processed, fast-export can output either
+"gpgsig sha1" or "gpgsig sha256" depending on whether the signed
+commit uses the SHA-1 or SHA-256 Git object format.
 
-Thanks for taking a closer look.
+However, this implementation has a number of limitations:
 
-> Turns out, though, that despite my attempts to read a bit more
-> documentation and code in the project, I still had a fundamental
-> misunderstanding last week when I was responding.  I had been assuming
-> that the gpgsig headers would appear on sha1-commits and gpgsig-sha256
-> headers would appear on sha256 commits.  I didn't understand that both
-> types of headers can appear on both types of commits (so that, for
-> example, gpgsig-sha256 would be use the sha256-commit as the source
-> and sign that data but write the result to a sha1-commit). I talked
-> with brian this morning to ask a few questions and he clarified this
-> for me.
->
-> (Side note: It might be nice to clarify this in
-> Documentation/technical/hash-function-transition.adoc; that document
-> did not dispel this confusion when I read it last week.)
+  - the output format was not properly described in the documentation,
+  - the output format is not very informative as it doesn't even say
+    if the signature is an OpenPGP, an SSH, or an X509 signature,
+  - the implementation doesn't support having both one signature on
+    the SHA-1 object and one on the SHA-256 object.
 
-I agree that it would help to improve that document. I think it's a
-separate topic though.
+Let's improve on these limitations by improving fast-export and
+fast-import so that:
 
-> And the part I didn't understand the first time around is that e.g.
-> the SHA-1 commit can include both the signatures on the SHA-1 object
-> and on the SHA-256 object.  (Similarly, the SHA-256 commit can include
-> both signatures as well.)
->
-> > > >   - if there is more than one signature on the SHA-1 object or on
-> > > >     the SHA-256 object, a warning is emitted,
->
-> This is now ambiguous to me.  more than one signature using the SHA-1
-> as source for signing, or more than one signature recorded within the
-> SHA-1 commit?  I think you mean the former.
+  - all the signatures are exported,
+  - at most one signature on the SHA-1 object and one on the SHA-256
+    are imported,
+  - if there is more than one signature on the SHA-1 object or on
+    the SHA-256 object, fast-import emits a warning for each
+    additional signature,
+  - the output format is "gpgsig <git-hash-algo> <signature-format>",
+    where <git-hash-algo> is the Git object format as before, and
+    <signature-format> is the signature type ("openpgp", "x509",
+    "ssh" or "unknown"),
+  - the output is properly documented.
 
-Yes, it's the former. I am not sure there is a simple and short way to
-disambiguate these meanings.
+About the output format:
 
-> > My opinion on this is that in cases like this we might not always know
-> > what could be useful for tools or users in general, so it might be
-> > better to provide more information that can be easily discarded if not
-> > useful rather than not enough information.
-> >
-> > brian seemed to say that <git-hash-algo> and <signature-format> are
-> > important so I just prefered to have both, especially as they are not
-> > costly to get.
->
-> So, with my new understanding, <git-hash-algo> is necessary because if
-> you only had the gpg signature on a commit object, you don't know what
-> it was a signature of -- it might be a signature of that commit
-> object, or it might be a signature of it's "compatibility" object
-> created with a different git hashing algorithm.
+  - <git-hash-algo> allows to know which representation of the commit
+    was signed (the SHA-1 or the SHA-256 version) which helps with
+    both signature verification and interoperability between repos
+    with different hash functions,
 
-I agree that it's important for this reason.
+  - <signature-format> helps tools that process the fast-export
+    stream, so they don't have to parse the ASCII armor to identify
+    the signature type.
 
-> So, fast-import --
-> regardless of whether it is writing into a sha1 repo or a sha256 repo
-> -- won't be able to know how to check the validity of the gpg
-> signature unless it knows whether to check the signature of the sha1
-> commit or the sha256 commit. And if the repository that fast-import> is w=
-riting to isn't writing compatibility objects for interoperation
-> at all, then it won't be able to check any compatibility signatures at
-> all; it'll only be able to check signatures of the actual object it
-> wants to write.
+It could be even better to be able to import more than one signature
+on the SHA-1 object and on the SHA-256 object, but other parts of
+Git don't handle that well for now, so this is left for future
+improvements.
 
-Yeah, right.
+Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+Helped-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
 
-> > > Is the <signature-format> merely self-inflicted pain from stripping
-> > > the ascii armor lines?  If so, would it make more sense to just
-> > > include those armor lines as-is in the fast-export stream and let
-> > > fast-import process it?
-> >
-> > The ascii armor lines are kept in the fast-export stream, but
-> > fast-export's ouput is supposed to be processed somehow sometimes
-> > before being fed back to fast-import, so I think we should make it
-> > easy for tools or people processing the output to get signature
-> > information.
->
-> Ah, just for convenience of the importer/processor; fair enough.
+This v5 is similar in spirit to v4, especially the format of the
+"gpgsig ..." command didn't change, but there are a number of
+improvements:
 
-Yeah, right.
+  - All the signatures are now exported. On the import side, still at
+    most one signature for SHA-1 and one for SHA-256 are imported (and
+    a warning is still emitted for additional signatures) though.
 
-> > > Is the <git-hash-algo> due to the fact that we have separate `gpgsig`
-> > > and `gpgsig-sha256` commit headers and we want to use that informatio=
-n
-> > > to avoid writing these headers to the wrong-sized objects (and/or to
-> > > avoid checking whether the signature is valid on the wrong-sized
-> > > objects)?
-> >
-> > Yeah, I think it could help with that, but brian might better answer th=
-at.
->
-> I think the answer is actually no, this isn't at all what these are
-> about.  These are about knowing how to check the validity of the
-> signatures, because the signatures aren't necessarily associated with
-> the object they were read from; they could be a signature of its
-> compatibility object instead.
+  - The code makes sure each signature ends with a LF character. While
+    this is not mandatory, it is encouraged and makes the output more
+    human readable and 'grep'able.
 
-First I am now not sure what "wrong-sized objects" meant in your
-previous sentence. I thought it meant "object using SHA-1 vs object
-using SHA-256". In that case, the <git-hash-algo> could indeed help
-check the signature on the right object.
+  - A test with both a SHA-1 and a SHA-256 signature on the same
+    commit has been added.
 
-Also git fast-import has to recreate the `gpgsig` and `gpgsig-sha256`
-commit headers when importing signatures, so <git-hash-algo> can help
-it with that too.
+  - Some tests check that either "sha1" or "sha256" is in the "gpgsig
+    ..."  command instead of matching "sha(1|256)".
 
-> > > If so, could that be spelled out in the docs as well,
-> > > especially since it appears that the intent of these headers is left
-> > > unimplemented due to not changing fast-import to do anything with
-> > > them?
-> >
-> > fast-import puts back the `gpgsig` or `gpgsig-sha256` headers
-> > depending on <git-hash-algo>, so it's useful at least for that. I will
-> > improve the docs about it.
+  - The format of the "gpgsig ..." command is better explained both in
+    the commit message and in the fast-import documentation.
 
-In v5, I have improved the fast-import documentation with the following:
+  - There are some typo fixes, lines wrapped, and a few other such
+    small changes.
 
-* `<git-hash-algo>` specifies which Git object format this signature
-  applies to, either `sha1` or `sha256`. This allows to know which
-  representation of the commit was signed (the SHA-1 or the SHA-256
-  version) which helps with both signature verification and
-  interoperability between repos with different hash functions.
+Thanks to brian, Elijah and Junio who commented on the v1 and v2.
 
-* `<signature-format>` specifies the type of signature, such as
-  `openpgp`, `x509`, `ssh`, or `unknown`. This is a convenience for
-  tools that process the stream, so they don't have to parse the ASCII
-  armor to identify the signature type.
+CI tests:
 
-The commit message is improved too.
+They have all passed:
 
-> > > And if <git-hash-algo>'s purpose is to ensure they are only used when
-> > > writing same-sized object as what was exported, then...isn't that a
-> > > bug?
-> >
-> > I am not sure I understand what would be the bug.
->
-> It's not relevant given my misunderstanding, but to explain what I was
-> thinking last week (note that the first two bullets are my mistake):
->
->   * gpgsig headers only occur on sha1 commits and are the signatures
-> of the sha1 commit sans the gpgsig header
->   * gpgsig-sha256 headers are similar with respect to sha256 commits
->   * we were using <git-hash-algo> as an optimization to only sign
-> commits in fast-import if the repository we were writing to was using
-> the same hash function as the repo we were writing from
->
-> In such a case, that'd be a bug for anyone that wanted a
-> 'resign-commits-that-were-previously-signed-if-the-signature-becomes-inva=
-lid'.
-> Although a signature of a sha256 commit clearly won't verify if we
-> exported a sha256 repo and imported it as a sha1 repo and tried to
-> verify that signature using a sha1 commit, that doesn't mean we should
-> just ignore the fact that the sha256 commit had a signature.  The user
-> clearly expressed the intent to resign any commits that had a
-> signature before but where the signature is no longer valid.
+https://github.com/chriscool/git/actions/runs/16136587558
 
-I see.
+Range-diff with v4:
 
-> > > This series was started because people wanted to be able to do
-> > > things like keeping signature even when they are no longer valid or
-> > > resigning commits that have a no longer commit signature (among other
-> > > uses), but that would mean that if someone exports a sha1 repository
-> > > and imports it as sha256, we don't want to ignore the fact that the
-> > > sha1 commit was signed for those usecases.
-> > >
-> > > If, however, the <git-hash-algo>'s purpose is merely as a performance
-> > > optimization that fast-import can employ in the cases where it checks
-> > > for signatures being valid, so it can avoid checking when it know the
-> > > hash size isn't even the same, then it could make sense.
-> >
-> > I think it could be used for that, but I'd like brian's opinion about t=
-his.
->
-> No, I was just wrong; it can't be used as such a performance
-> optimization.  A signature of a sha256 commit stored in a sha1 commit
-> (or a signature of a sha1 commit stored in a sha256 commit) isn't
-> accidental, it's part of the intentional design of the hash-function
-> transition.
->
-> But, it might mean that the rules for what to do with signatures in
-> fast-import need to be more complex than what I previously
-> wrote...which I'll comment on a bit below.
+1:  b3d8b13c0e ! 1:  5791617d7d fast-(import|export): improve on commit signature output format
+    @@ Commit message
+         Let's improve on these limitations by improving fast-export and
+         fast-import so that:
+     
+    -      - both one signature on the SHA-1 object and one on the SHA-256
+    -        object can be exported and imported,
+    +      - all the signatures are exported,
+    +      - at most one signature on the SHA-1 object and one on the SHA-256
+    +        are imported,
+           - if there is more than one signature on the SHA-1 object or on
+    -        the SHA-256 object, a warning is emitted,
+    +        the SHA-256 object, fast-import emits a warning for each
+    +        additional signature,
+           - the output format is "gpgsig <git-hash-algo> <signature-format>",
+             where <git-hash-algo> is the Git object format as before, and
+             <signature-format> is the signature type ("openpgp", "x509",
+    -        "ssh" or "unknown",
+    +        "ssh" or "unknown"),
+           - the output is properly documented.
+     
+    -    Note that it could be even better to be able to export and import
+    -    more than one signature on the SHA-1 object and on the SHA-256
+    -    object, but other parts of Git don't handle that well for now, so
+    -    this is left for future improvements.
+    +    About the output format:
+    +
+    +      - <git-hash-algo> allows to know which representation of the commit
+    +        was signed (the SHA-1 or the SHA-256 version) which helps with
+    +        both signature verification and interoperability between repos
+    +        with different hash functions,
+    +
+    +      - <signature-format> helps tools that process the fast-export
+    +        stream, so they don't have to parse the ASCII armor to identify
+    +        the signature type.
+    +
+    +    It could be even better to be able to import more than one signature
+    +    on the SHA-1 object and on the SHA-256 object, but other parts of
+    +    Git don't handle that well for now, so this is left for future
+    +    improvements.
+     
+         Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
+         Helped-by: Elijah Newren <newren@gmail.com>
+    @@ Documentation/git-fast-export.adoc: resulting tag will have an invalid signature
+     +`gpgsig sha1 openpgp`, while an SSH signature on a SHA-256 commit
+     +starts with `gpgsig sha256 ssh`.
+     ++
+    -+Currently for a given commit, at most one signature for the SHA-1
+    -+object and one signature for the SHA-256 object are exported, each
+    -+with their respective <git-hash-algo> identifier. A warning is
+    -+emitted for each additional signature found.
+    ++While all the signatures of a commit are exported, an importer may
+    ++choose to accept only some of them. For example
+    ++linkgit:git-fast-import[1] currently stores at most one signature per
+    ++Git hash algorithm in each commit.
+     ++
+      NOTE: This is highly experimental and the format of the data stream may
+      change in the future without compatibility guarantees.
+    @@ Documentation/git-fast-import.adoc: their syntax.
+     +The `gpgsig` command takes two arguments:
+     +
+     +* `<git-hash-algo>` specifies which Git object format this signature
+    -+  applies to, either `sha1` or `sha256`.
+    ++  applies to, either `sha1` or `sha256`. This allows to know which
+    ++  representation of the commit was signed (the SHA-1 or the SHA-256
+    ++  version) which helps with both signature verification and
+    ++  interoperability between repos with different hash functions.
+     +
+     +* `<signature-format>` specifies the type of signature, such as
+    -+  `openpgp`, `x509`, `ssh`, or `unknown`.
+    ++  `openpgp`, `x509`, `ssh`, or `unknown`. This is a convenience for
+    ++  tools that process the stream, so they don't have to parse the ASCII
+    ++  armor to identify the signature type.
+     +
+     +A commit may have at most one signature for the SHA-1 object format
+     +(stored in the "gpgsig" header) and one for the SHA-256 object format
+    @@ builtin/fast-export.c: static const char *find_commit_multiline_header(const cha
+     +	if (!signature)
+     +		return;
+     +
+    -+	printf("gpgsig %s %s\ndata %u\n%s",
+    ++	printf("gpgsig %s %s\ndata %u\n%s\n",
+     +	       object_hash,
+     +	       get_signature_format(signature),
+     +	       (unsigned)strlen(signature),
+     +	       signature);
+     +}
+     +
+    -+static void warn_on_extra_sig(const char **pos, struct commit *commit, int is_sha1)
+    ++static const char *append_signatures_for_header(struct string_list *signatures,
+    ++						const char *pos,
+    ++						const char *header,
+    ++						const char *object_hash)
+     +{
+    -+	const char *header = is_sha1 ? "gpgsig" : "gpgsig-sha256";
+    -+	const char *extra_sig = find_commit_multiline_header(*pos + 1, header, pos);
+    -+	if (extra_sig) {
+    -+		const char *hash = is_sha1 ? "SHA-1" : "SHA-256";
+    -+		warning("more than one %s signature found on commit %s, using only the first one",
+    -+			hash, oid_to_hex(&commit->object.oid));
+    -+		free((char *)extra_sig);
+    ++	const char *signature;
+    ++	const char *start = pos;
+    ++	const char *end = pos;
+    ++
+    ++	while ((signature = find_commit_multiline_header(start + 1,
+    ++							 header,
+    ++							 &end))) {
+    ++		string_list_append(signatures, signature)->util = (void *)object_hash;
+    ++		free((char *)signature);
+    ++		start = end;
+     +	}
+    ++
+    ++	return end;
+     +}
+     +
+      static void handle_commit(struct commit *commit, struct rev_info *rev,
+    @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+      	const char *encoding = NULL;
+      	size_t encoding_len;
+     -	const char *signature_alg = NULL, *signature = NULL;
+    -+	const char *sig_sha1 = NULL;
+    -+	const char *sig_sha256 = NULL;
+    ++	struct string_list signatures = STRING_LIST_INIT_DUP;
+      	const char *message;
+      	char *reencoded = NULL;
+      	struct commit_list *p;
+    @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+     -			signature_alg = "sha1";
+     -		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+     -			signature_alg = "sha256";
+    -+		const char *sig_cursor = commit_buffer_cursor;
+    -+		const char *after_sha1 = commit_buffer_cursor;
+    -+		const char *after_sha256 = commit_buffer_cursor;
+    -+
+    -+		/*
+    -+		 * Find the first signature for each hash algorithm.
+    -+		 * The searches must start from the same position.
+    -+		 */
+    -+		sig_sha1 = find_commit_multiline_header(sig_cursor + 1,
+    -+							"gpgsig",
+    -+							&after_sha1);
+    -+		sig_sha256 = find_commit_multiline_header(sig_cursor + 1,
+    -+							  "gpgsig-sha256",
+    -+							  &after_sha256);
+    -+
+    -+		/* Warn on any additional signatures, as they will be ignored. */
+    -+		if (sig_sha1)
+    -+			warn_on_extra_sig(&after_sha1, commit, 1);
+    -+		if (sig_sha256)
+    -+			warn_on_extra_sig(&after_sha256, commit, 0);
+    -+
+    ++		const char *after_sha1 = append_signatures_for_header(&signatures, commit_buffer_cursor,
+    ++								      "gpgsig", "sha1");
+    ++		const char *after_sha256 = append_signatures_for_header(&signatures, commit_buffer_cursor,
+    ++									"gpgsig-sha256", "sha256");
+     +		commit_buffer_cursor = (after_sha1 > after_sha256) ? after_sha1 : after_sha256;
+      	}
+      
+    @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+      	       (int)(author_end - author), author,
+      	       (int)(committer_end - committer), committer);
+     -	if (signature) {
+    -+	if (sig_sha1 || sig_sha256) {
+    ++	if (signatures.nr) {
+      		switch (signed_commit_mode) {
+      		case SIGN_ABORT:
+      			die("encountered signed commit %s; use "
+    -@@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct rev_info *rev,
+    - 				oid_to_hex(&commit->object.oid));
+    + 			    "--signed-commits=<mode> to handle it",
+    + 			    oid_to_hex(&commit->object.oid));
+    + 		case SIGN_WARN_VERBATIM:
+    +-			warning("exporting signed commit %s",
+    +-				oid_to_hex(&commit->object.oid));
+    ++			warning("exporting %"PRIuMAX" signature(s) for commit %s",
+    ++				(uintmax_t)signatures.nr, oid_to_hex(&commit->object.oid));
+      			/* fallthru */
+      		case SIGN_VERBATIM:
+     -			printf("gpgsig %s\ndata %u\n%s",
+     -			       signature_alg,
+     -			       (unsigned)strlen(signature),
+     -			       signature);
+    -+			print_signature(sig_sha1, "sha1");
+    -+			print_signature(sig_sha256, "sha256");
+    ++			for (size_t i = 0; i < signatures.nr; i++) {
+    ++				struct string_list_item *item = &signatures.items[i];
+    ++				print_signature(item->string, item->util);
+    ++			}
+      			break;
+      		case SIGN_WARN_STRIP:
+     -			warning("stripping signature from commit %s",
+    @@ builtin/fast-export.c: static void handle_commit(struct commit *commit, struct r
+      			break;
+      		}
+     -		free((char *)signature);
+    -+		free((char *)sig_sha1);
+    -+		free((char *)sig_sha256);
+    ++		string_list_clear(&signatures, 0);
+      	}
+      	if (!reencoded && encoding)
+      		printf("encoding %.*s\n", (int)encoding_len, encoding);
+    @@ builtin/fast-import.c: static struct hash_list *parse_merge(unsigned int *count)
+     +			    const char *hash_type)
+     +{
+     +	if (stored_sig->hash_algo) {
+    -+		warning("Multiple %s signatures found, ignoring additional signature",
+    ++		warning("multiple %s signatures found, "
+    ++			"ignoring additional signature",
+     +			hash_type);
+     +		strbuf_release(&new_sig->data);
+     +		free(new_sig->hash_algo);
+    @@ t/t9350-fast-export.sh: test_expect_success GPG 'signed-commits=abort' '
+      
+      	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
+     -	grep "^gpgsig sha" output &&
+    -+	test_grep -E "^gpgsig sha(1|256) openpgp" output &&
+    ++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+      	grep "encoding ISO-8859-1" output &&
+      	(
+      		cd new &&
+    @@ t/t9350-fast-export.sh: test_expect_success GPG 'signed-commits=verbatim' '
+      
+      	git fast-export --signed-commits=warn-verbatim --reencode=no commit-signing >output 2>err &&
+     -	grep "^gpgsig sha" output &&
+    -+	test_grep -E "^gpgsig sha(1|256) openpgp" output &&
+    ++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+      	grep "encoding ISO-8859-1" output &&
+      	test -s err &&
+      	(
+    @@ t/t9350-fast-export.sh: test_expect_success GPG 'signed-commits=warn-strip' '
+     +test_expect_success GPGSM 'round-trip X.509 signed commit' '
+     +
+     +	git fast-export --signed-commits=verbatim x509-signing >output &&
+    -+	test_grep -E "^gpgsig sha(1|256) x509" output &&
+    ++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH x509" output &&
+     +	(
+     +		cd new &&
+     +		git fast-import &&
+    @@ t/t9350-fast-export.sh: test_expect_success GPG 'signed-commits=warn-strip' '
+     +test_expect_success GPGSSH 'round-trip SSH signed commit' '
+     +
+     +	git fast-export --signed-commits=verbatim ssh-signing >output &&
+    -+	test_grep -E "^gpgsig sha(1|256) ssh" output &&
+    ++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH ssh" output &&
+     +	(
+     +		cd new &&
+     +		git fast-import &&
+    @@ t/t9350-fast-export.sh: test_expect_success GPG 'signed-commits=warn-strip' '
+      test_expect_success 'setup submodule' '
+      
+      	test_config_global protocol.file.allow always &&
+    +@@ t/t9350-fast-export.sh: test_expect_success 'fast-export handles --end-of-options' '
+    + 	test_cmp expect actual
+    + '
+    + 
+    ++test_expect_success GPG 'setup a commit with dual signatures on its SHA-1 and SHA-256 formats' '
+    ++	# Create a signed SHA-256 commit
+    ++	git init --object-format=sha256 explicit-sha256 &&
+    ++	git -C explicit-sha256 config extensions.compatObjectFormat sha1 &&
+    ++	git -C explicit-sha256 checkout -b dual-signed &&
+    ++	test_commit -C explicit-sha256 A &&
+    ++	echo B >explicit-sha256/B &&
+    ++	git -C explicit-sha256 add B &&
+    ++	test_tick &&
+    ++	git -C explicit-sha256 commit -S -m "signed" B &&
+    ++	SHA256_B=$(git -C explicit-sha256 rev-parse dual-signed) &&
+    ++
+    ++	# Create the corresponding SHA-1 commit
+    ++	SHA1_B=$(git -C explicit-sha256 rev-parse --output-object-format=sha1 dual-signed) &&
+    ++
+    ++	# Check that the resulting SHA-1 commit has both signatures
+    ++	echo $SHA1_B | git -C explicit-sha256 cat-file --batch >out &&
+    ++	test_grep -E "^gpgsig " out &&
+    ++	test_grep -E "^gpgsig-sha256 " out
+    ++'
+    ++
+    ++test_expect_success GPG 'export and import of doubly signed commit' '
+    ++	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
+    ++	test_grep -E "^gpgsig sha1 openpgp" output &&
+    ++	test_grep -E "^gpgsig sha256 openpgp" output &&
+    ++
+    ++	(
+    ++		cd new &&
+    ++		git fast-import &&
+    ++		git cat-file commit refs/heads/dual-signed >actual &&
+    ++		test_grep -E "^gpgsig " actual &&
+    ++		test_grep -E "^gpgsig-sha256 " actual &&
+    ++		IMPORTED=$(git rev-parse refs/heads/dual-signed) &&
+    ++		if test "$GIT_DEFAULT_HASH" = "sha1"
+    ++		then
+    ++			test $SHA1_B = $IMPORTED
+    ++		else
+    ++			test $SHA256_B = $IMPORTED
+    ++		fi
+    ++	) <output
+    ++'
+    ++
+    + test_done
 
-Ok.
 
-> > > Wait..does this mean fast-export is obligated to walk over both all
-> > > sha1 commits and all "equivalent" sha256 commits when exporting a
-> > > repo?  I thought most operations on the repo would walk over only one
-> > > or the other; walking over both seems to be against the spirit of the
-> > > "fast" in "fast-export".  Am I missing something?  (Possibly related
-> > > question: Does "git log" bother walking over both, or does it only
-> > > walk over one?)  Even if this really is wanted by some users,
-> > > shouldn't they manually request it rather than making exports slow fo=
-r
-> > > everyone else by default?
-> >
-> > No fast-export doesn't walk over both the sha1 commits and all
-> > "equivalent" sha256 commits, it can just process at most 2 signatures
-> > for a given commit, one with the `gpgsig` header and one with the
-> > `gpgsig-sha256` header. I will try to reword the doc to make it
-> > clearer.
+ Documentation/git-fast-export.adoc |  17 +++++
+ Documentation/git-fast-import.adoc |  36 +++++++--
+ builtin/fast-export.c              |  62 +++++++++++----
+ builtin/fast-import.c              | 118 +++++++++++++++++++++++------
+ gpg-interface.c                    |  12 +++
+ gpg-interface.h                    |  12 +++
+ t/t9350-fast-export.sh             | 102 ++++++++++++++++++++++++-
+ 7 files changed, 315 insertions(+), 44 deletions(-)
 
-In v5 all the signatures are exported, so the doc is now:
+diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-export.adoc
+index 43bbb4f63c..297b57bb2e 100644
+--- a/Documentation/git-fast-export.adoc
++++ b/Documentation/git-fast-export.adoc
+@@ -50,6 +50,23 @@ resulting tag will have an invalid signature.
+ 	is the same as how earlier versions of this command without
+ 	this option behaved.
+ +
++When exported, a signature starts with:
+++
++gpgsig <git-hash-algo> <signature-format>
+++
++where <git-hash-algo> is the Git object hash so either "sha1" or
++"sha256", and <signature-format> is the signature type, so "openpgp",
++"x509", "ssh" or "unknown".
+++
++For example, an OpenPGP signature on a SHA-1 commit starts with
++`gpgsig sha1 openpgp`, while an SSH signature on a SHA-256 commit
++starts with `gpgsig sha256 ssh`.
+++
++While all the signatures of a commit are exported, an importer may
++choose to accept only some of them. For example
++linkgit:git-fast-import[1] currently stores at most one signature per
++Git hash algorithm in each commit.
+++
+ NOTE: This is highly experimental and the format of the data stream may
+ change in the future without compatibility guarantees.
+ 
+diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+index 250d866652..89dec1108f 100644
+--- a/Documentation/git-fast-import.adoc
++++ b/Documentation/git-fast-import.adoc
+@@ -445,7 +445,7 @@ one).
+ 	original-oid?
+ 	('author' (SP <name>)? SP LT <email> GT SP <when> LF)?
+ 	'committer' (SP <name>)? SP LT <email> GT SP <when> LF
+-	('gpgsig' SP <alg> LF data)?
++	('gpgsig' SP <algo> SP <format> LF data)?
+ 	('encoding' SP <encoding> LF)?
+ 	data
+ 	('from' SP <commit-ish> LF)?
+@@ -518,13 +518,37 @@ their syntax.
+ ^^^^^^^^
+ 
+ The optional `gpgsig` command is used to include a PGP/GPG signature
+-that signs the commit data.
++or other cryptographic signature that signs the commit data.
+ 
+-Here <alg> specifies which hashing algorithm is used for this
+-signature, either `sha1` or `sha256`.
++....
++	'gpgsig' SP <git-hash-algo> SP <signature-format> LF
++	data
++....
++
++The `gpgsig` command takes two arguments:
++
++* `<git-hash-algo>` specifies which Git object format this signature
++  applies to, either `sha1` or `sha256`. This allows to know which
++  representation of the commit was signed (the SHA-1 or the SHA-256
++  version) which helps with both signature verification and
++  interoperability between repos with different hash functions.
++
++* `<signature-format>` specifies the type of signature, such as
++  `openpgp`, `x509`, `ssh`, or `unknown`. This is a convenience for
++  tools that process the stream, so they don't have to parse the ASCII
++  armor to identify the signature type.
++
++A commit may have at most one signature for the SHA-1 object format
++(stored in the "gpgsig" header) and one for the SHA-256 object format
++(stored in the "gpgsig-sha256" header).
++
++See below for a detailed description of the `data` command which
++contains the raw signature data.
++
++Signatures are not yet checked in the current implementation though.
+ 
+-NOTE: This is highly experimental and the format of the data stream may
+-change in the future without compatibility guarantees.
++NOTE: This is highly experimental and the format of the `gpgsig`
++command may change in the future without compatibility guarantees.
+ 
+ `encoding`
+ ^^^^^^^^^^
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index fcf6b00d5f..7b4e6a6e41 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -29,6 +29,7 @@
+ #include "quote.h"
+ #include "remote.h"
+ #include "blob.h"
++#include "gpg-interface.h"
+ 
+ static const char *const fast_export_usage[] = {
+ 	N_("git fast-export [<rev-list-opts>]"),
+@@ -652,6 +653,38 @@ static const char *find_commit_multiline_header(const char *msg,
+ 	return strbuf_detach(&val, NULL);
+ }
+ 
++static void print_signature(const char *signature, const char *object_hash)
++{
++	if (!signature)
++		return;
++
++	printf("gpgsig %s %s\ndata %u\n%s\n",
++	       object_hash,
++	       get_signature_format(signature),
++	       (unsigned)strlen(signature),
++	       signature);
++}
++
++static const char *append_signatures_for_header(struct string_list *signatures,
++						const char *pos,
++						const char *header,
++						const char *object_hash)
++{
++	const char *signature;
++	const char *start = pos;
++	const char *end = pos;
++
++	while ((signature = find_commit_multiline_header(start + 1,
++							 header,
++							 &end))) {
++		string_list_append(signatures, signature)->util = (void *)object_hash;
++		free((char *)signature);
++		start = end;
++	}
++
++	return end;
++}
++
+ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 			  struct string_list *paths_of_changed_objects)
+ {
+@@ -660,7 +693,7 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	const char *author, *author_end, *committer, *committer_end;
+ 	const char *encoding = NULL;
+ 	size_t encoding_len;
+-	const char *signature_alg = NULL, *signature = NULL;
++	struct string_list signatures = STRING_LIST_INIT_DUP;
+ 	const char *message;
+ 	char *reencoded = NULL;
+ 	struct commit_list *p;
+@@ -700,10 +733,11 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	}
+ 
+ 	if (*commit_buffer_cursor == '\n') {
+-		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
+-			signature_alg = "sha1";
+-		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+-			signature_alg = "sha256";
++		const char *after_sha1 = append_signatures_for_header(&signatures, commit_buffer_cursor,
++								      "gpgsig", "sha1");
++		const char *after_sha256 = append_signatures_for_header(&signatures, commit_buffer_cursor,
++									"gpgsig-sha256", "sha256");
++		commit_buffer_cursor = (after_sha1 > after_sha256) ? after_sha1 : after_sha256;
+ 	}
+ 
+ 	message = strstr(commit_buffer_cursor, "\n\n");
+@@ -769,30 +803,30 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+ 	printf("%.*s\n%.*s\n",
+ 	       (int)(author_end - author), author,
+ 	       (int)(committer_end - committer), committer);
+-	if (signature) {
++	if (signatures.nr) {
+ 		switch (signed_commit_mode) {
+ 		case SIGN_ABORT:
+ 			die("encountered signed commit %s; use "
+ 			    "--signed-commits=<mode> to handle it",
+ 			    oid_to_hex(&commit->object.oid));
+ 		case SIGN_WARN_VERBATIM:
+-			warning("exporting signed commit %s",
+-				oid_to_hex(&commit->object.oid));
++			warning("exporting %"PRIuMAX" signature(s) for commit %s",
++				(uintmax_t)signatures.nr, oid_to_hex(&commit->object.oid));
+ 			/* fallthru */
+ 		case SIGN_VERBATIM:
+-			printf("gpgsig %s\ndata %u\n%s",
+-			       signature_alg,
+-			       (unsigned)strlen(signature),
+-			       signature);
++			for (size_t i = 0; i < signatures.nr; i++) {
++				struct string_list_item *item = &signatures.items[i];
++				print_signature(item->string, item->util);
++			}
+ 			break;
+ 		case SIGN_WARN_STRIP:
+-			warning("stripping signature from commit %s",
++			warning("stripping signature(s) from commit %s",
+ 				oid_to_hex(&commit->object.oid));
+ 			/* fallthru */
+ 		case SIGN_STRIP:
+ 			break;
+ 		}
+-		free((char *)signature);
++		string_list_clear(&signatures, 0);
+ 	}
+ 	if (!reencoded && encoding)
+ 		printf("encoding %.*s\n", (int)encoding_len, encoding);
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index b2839c5f43..332073d0f6 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -29,6 +29,7 @@
+ #include "commit-reach.h"
+ #include "khash.h"
+ #include "date.h"
++#include "gpg-interface.h"
+ 
+ #define PACK_ID_BITS 16
+ #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
+@@ -2718,15 +2719,87 @@ static struct hash_list *parse_merge(unsigned int *count)
+ 	return list;
+ }
+ 
++struct signature_data {
++	char *hash_algo;      /* "sha1" or "sha256" */
++	char *sig_format;     /* "openpgp", "x509", "ssh", "unknown" */
++	struct strbuf data;   /* The actual signature data */
++};
++
++static void parse_one_signature(struct signature_data *sig, const char *v)
++{
++	char *args = xstrdup(v); /* Will be freed when sig->hash_algo is freed */
++	char *space = strchr(args, ' ');
++
++	if (!space)
++		die("Expected gpgsig format: 'gpgsig <hash-algo> <signature-format>', "
++		    "got 'gpgsig %s'", args);
++	*space++ = '\0';
++
++	sig->hash_algo = args;
++	sig->sig_format = space;
++
++	/* Remove any trailing newline from format */
++	space = strchr(sig->sig_format, '\n');
++	if (space)
++		*space = '\0';
++
++	/* Validate hash algorithm */
++	if (strcmp(sig->hash_algo, "sha1") &&
++	    strcmp(sig->hash_algo, "sha256"))
++		die("Unknown git hash algorithm in gpgsig: '%s'", sig->hash_algo);
++
++	/* Validate signature format */
++	if (!valid_signature_format(sig->sig_format))
++		die("Invalid signature format in gpgsig: '%s'", sig->sig_format);
++	if (!strcmp(sig->sig_format, "unknown"))
++		warning("'unknown' signature format in gpgsig");
++
++	/* Read signature data */
++	read_next_command();
++	parse_data(&sig->data, 0, NULL);
++}
++
++static void add_gpgsig_to_commit(struct strbuf *commit_data,
++				 const char *header,
++				 struct signature_data *sig)
++{
++	struct string_list siglines = STRING_LIST_INIT_NODUP;
++
++	if (!sig->hash_algo)
++		return;
++
++	strbuf_addstr(commit_data, header);
++	string_list_split_in_place(&siglines, sig->data.buf, "\n", -1);
++	strbuf_add_separated_string_list(commit_data, "\n ", &siglines);
++	strbuf_addch(commit_data, '\n');
++	string_list_clear(&siglines, 1);
++	strbuf_release(&sig->data);
++	free(sig->hash_algo);
++}
++
++static void store_signature(struct signature_data *stored_sig,
++			    struct signature_data *new_sig,
++			    const char *hash_type)
++{
++	if (stored_sig->hash_algo) {
++		warning("multiple %s signatures found, "
++			"ignoring additional signature",
++			hash_type);
++		strbuf_release(&new_sig->data);
++		free(new_sig->hash_algo);
++	} else {
++		*stored_sig = *new_sig;
++	}
++}
++
+ static void parse_new_commit(const char *arg)
+ {
+-	static struct strbuf sig = STRBUF_INIT;
+ 	static struct strbuf msg = STRBUF_INIT;
+-	struct string_list siglines = STRING_LIST_INIT_NODUP;
++	struct signature_data sig_sha1 = { NULL, NULL, STRBUF_INIT };
++	struct signature_data sig_sha256 = { NULL, NULL, STRBUF_INIT };
+ 	struct branch *b;
+ 	char *author = NULL;
+ 	char *committer = NULL;
+-	char *sig_alg = NULL;
+ 	char *encoding = NULL;
+ 	struct hash_list *merge_list = NULL;
+ 	unsigned int merge_count;
+@@ -2750,13 +2823,23 @@ static void parse_new_commit(const char *arg)
+ 	}
+ 	if (!committer)
+ 		die("Expected committer but didn't get one");
+-	if (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
+-		sig_alg = xstrdup(v);
+-		read_next_command();
+-		parse_data(&sig, 0, NULL);
++
++	/* Process signatures (up to 2: one "sha1" and one "sha256") */
++	while (skip_prefix(command_buf.buf, "gpgsig ", &v)) {
++		struct signature_data sig = { NULL, NULL, STRBUF_INIT };
++
++		parse_one_signature(&sig, v);
++
++		if (!strcmp(sig.hash_algo, "sha1"))
++			store_signature(&sig_sha1, &sig, "SHA-1");
++		else if (!strcmp(sig.hash_algo, "sha256"))
++			store_signature(&sig_sha256, &sig, "SHA-256");
++		else
++			BUG("parse_one_signature() returned unknown hash algo");
++
+ 		read_next_command();
+-	} else
+-		strbuf_setlen(&sig, 0);
++	}
++
+ 	if (skip_prefix(command_buf.buf, "encoding ", &v)) {
+ 		encoding = xstrdup(v);
+ 		read_next_command();
+@@ -2830,23 +2913,14 @@ static void parse_new_commit(const char *arg)
+ 		strbuf_addf(&new_data,
+ 			"encoding %s\n",
+ 			encoding);
+-	if (sig_alg) {
+-		if (!strcmp(sig_alg, "sha1"))
+-			strbuf_addstr(&new_data, "gpgsig ");
+-		else if (!strcmp(sig_alg, "sha256"))
+-			strbuf_addstr(&new_data, "gpgsig-sha256 ");
+-		else
+-			die("Expected gpgsig algorithm sha1 or sha256, got %s", sig_alg);
+-		string_list_split_in_place(&siglines, sig.buf, "\n", -1);
+-		strbuf_add_separated_string_list(&new_data, "\n ", &siglines);
+-		strbuf_addch(&new_data, '\n');
+-	}
++
++	add_gpgsig_to_commit(&new_data, "gpgsig ", &sig_sha1);
++	add_gpgsig_to_commit(&new_data, "gpgsig-sha256 ", &sig_sha256);
++
+ 	strbuf_addch(&new_data, '\n');
+ 	strbuf_addbuf(&new_data, &msg);
+-	string_list_clear(&siglines, 1);
+ 	free(author);
+ 	free(committer);
+-	free(sig_alg);
+ 	free(encoding);
+ 
+ 	if (!store_object(OBJ_COMMIT, &new_data, NULL, &b->oid, next_mark))
+diff --git a/gpg-interface.c b/gpg-interface.c
+index 0896458de5..6f2d87475f 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -144,6 +144,18 @@ static struct gpg_format *get_format_by_sig(const char *sig)
+ 	return NULL;
+ }
+ 
++const char *get_signature_format(const char *buf)
++{
++	struct gpg_format *format = get_format_by_sig(buf);
++	return format ? format->name : "unknown";
++}
++
++int valid_signature_format(const char *format)
++{
++       return (!!get_format_by_name(format) ||
++	       !strcmp(format, "unknown"));
++}
++
+ void signature_check_clear(struct signature_check *sigc)
+ {
+ 	FREE_AND_NULL(sigc->payload);
+diff --git a/gpg-interface.h b/gpg-interface.h
+index e09f12e8d0..60ddf8bbfa 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -47,6 +47,18 @@ struct signature_check {
+ 
+ void signature_check_clear(struct signature_check *sigc);
+ 
++/*
++ * Return the format of the signature (like "openpgp", "x509", "ssh"
++ * or "unknown").
++ */
++const char *get_signature_format(const char *buf);
++
++/*
++ * Is the signature format valid (like "openpgp", "x509", "ssh" or
++ * "unknown")
++ */
++int valid_signature_format(const char *format);
++
+ /*
+  * Look at a GPG signed tag object.  If such a signature exists, store it in
+  * signature and the signed content in payload.  Return 1 if a signature was
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 76619765fc..46700dbc40 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -314,7 +314,7 @@ test_expect_success GPG 'signed-commits=abort' '
+ test_expect_success GPG 'signed-commits=verbatim' '
+ 
+ 	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
+-	grep "^gpgsig sha" output &&
++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+ 	grep "encoding ISO-8859-1" output &&
+ 	(
+ 		cd new &&
+@@ -328,7 +328,7 @@ test_expect_success GPG 'signed-commits=verbatim' '
+ test_expect_success GPG 'signed-commits=warn-verbatim' '
+ 
+ 	git fast-export --signed-commits=warn-verbatim --reencode=no commit-signing >output 2>err &&
+-	grep "^gpgsig sha" output &&
++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+ 	grep "encoding ISO-8859-1" output &&
+ 	test -s err &&
+ 	(
+@@ -369,6 +369,62 @@ test_expect_success GPG 'signed-commits=warn-strip' '
+ 
+ '
+ 
++test_expect_success GPGSM 'setup X.509 signed commit' '
++
++	git checkout -b x509-signing main &&
++	test_config gpg.format x509 &&
++	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
++	echo "X.509 content" >file &&
++	git add file &&
++	git commit -S -m "X.509 signed commit" &&
++	X509_COMMIT=$(git rev-parse HEAD) &&
++	git checkout main
++
++'
++
++test_expect_success GPGSM 'round-trip X.509 signed commit' '
++
++	git fast-export --signed-commits=verbatim x509-signing >output &&
++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH x509" output &&
++	(
++		cd new &&
++		git fast-import &&
++		git cat-file commit refs/heads/x509-signing >actual &&
++		grep "^gpgsig" actual &&
++		IMPORTED=$(git rev-parse refs/heads/x509-signing) &&
++		test $X509_COMMIT = $IMPORTED
++	) <output
++
++'
++
++test_expect_success GPGSSH 'setup SSH signed commit' '
++
++	git checkout -b ssh-signing main &&
++	test_config gpg.format ssh &&
++	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
++	echo "SSH content" >file &&
++	git add file &&
++	git commit -S -m "SSH signed commit" &&
++	SSH_COMMIT=$(git rev-parse HEAD) &&
++	git checkout main
++
++'
++
++test_expect_success GPGSSH 'round-trip SSH signed commit' '
++
++	git fast-export --signed-commits=verbatim ssh-signing >output &&
++	test_grep -E "^gpgsig $GIT_DEFAULT_HASH ssh" output &&
++	(
++		cd new &&
++		git fast-import &&
++		git cat-file commit refs/heads/ssh-signing >actual &&
++		grep "^gpgsig" actual &&
++		IMPORTED=$(git rev-parse refs/heads/ssh-signing) &&
++		test $SSH_COMMIT = $IMPORTED
++	) <output
++
++'
++
+ test_expect_success 'setup submodule' '
+ 
+ 	test_config_global protocol.file.allow always &&
+@@ -905,4 +961,46 @@ test_expect_success 'fast-export handles --end-of-options' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success GPG 'setup a commit with dual signatures on its SHA-1 and SHA-256 formats' '
++	# Create a signed SHA-256 commit
++	git init --object-format=sha256 explicit-sha256 &&
++	git -C explicit-sha256 config extensions.compatObjectFormat sha1 &&
++	git -C explicit-sha256 checkout -b dual-signed &&
++	test_commit -C explicit-sha256 A &&
++	echo B >explicit-sha256/B &&
++	git -C explicit-sha256 add B &&
++	test_tick &&
++	git -C explicit-sha256 commit -S -m "signed" B &&
++	SHA256_B=$(git -C explicit-sha256 rev-parse dual-signed) &&
++
++	# Create the corresponding SHA-1 commit
++	SHA1_B=$(git -C explicit-sha256 rev-parse --output-object-format=sha1 dual-signed) &&
++
++	# Check that the resulting SHA-1 commit has both signatures
++	echo $SHA1_B | git -C explicit-sha256 cat-file --batch >out &&
++	test_grep -E "^gpgsig " out &&
++	test_grep -E "^gpgsig-sha256 " out
++'
++
++test_expect_success GPG 'export and import of doubly signed commit' '
++	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
++	test_grep -E "^gpgsig sha1 openpgp" output &&
++	test_grep -E "^gpgsig sha256 openpgp" output &&
++
++	(
++		cd new &&
++		git fast-import &&
++		git cat-file commit refs/heads/dual-signed >actual &&
++		test_grep -E "^gpgsig " actual &&
++		test_grep -E "^gpgsig-sha256 " actual &&
++		IMPORTED=$(git rev-parse refs/heads/dual-signed) &&
++		if test "$GIT_DEFAULT_HASH" = "sha1"
++		then
++			test $SHA1_B = $IMPORTED
++		else
++			test $SHA256_B = $IMPORTED
++		fi
++	) <output
++'
++
+ test_done
+-- 
+2.50.0.174.gcf836c1ec7
 
-"While all the signatures of a commit are exported, an importer may
-choose to accept only some of them. For example
-linkgit:git-fast-import[1] currently stores at most one signature per
-Git hash algorithm in each commit."
-
-I hope it avoids misunderstandings.
-
-> Right, but fast-import might need to *write* both sha1 commits and
-> sha256 commits (or at least write one of them and keep a mapping
-> between the two in memory) in order to correctly verify and process
-> both gpgsig headers...or at least, it will be unable to verify
-> signatures of compatibility objects if people do not have the
-> appropriate extensions.compatObjectFormat config setting set within
-> the repository they are importing to.
-
-Yeah, it seems to me that when extensions.compatObjectFormat is set,
-then a compatibility mapping between objects can be used. I don't
-think using it should be part of this patch though. When I will work
-on making it possible for fast-import to check signatures, I will try
-to use it to write both sha1 commits and sha256 commits, and check
-both signatures.
-
-> This actually expands the usecases I mentioned previously a bit.
-> Those usecases were:
->
-> (A) Make fast-export include signatures, and make fast-import include
-> them unconditionally (even if invalid)
-> (B) Similar to (A), but make *fast-import* check them and either error
-> out or drop them if they become invalid
-> (C) Simliar to (B), but make *fast-import* re-sign the commit if they
-> become invalid
-> (D) Similar to (A), but make *fast-import* re-sign the commit even if
-> the signature would have been valid
->
-> Cases (B) and (C) might either need special care or need to bifurcate
-> into additional options given that we can have two signatures on a
-> commit.  "Validity of gpg signature stored in the commit" now becomes
-> "Validity of gpg signatureS stored in the commit".  Whereas before we
-> only considered the cases of "no valid signatures" and "all valid
-> signatures", we also need to worry about the case where one signature
-> is valid and the other is either known to be invalid or simply cannot
-> be checked because this repo isn't set up to write compatibility
-> objects.
-
-Yeah, I agree that there might be new cases to consider. I don't think
-this affects this patch though as long as it allows one signature for
-each hash to be exported and imported which is the case.
-
-> > Yeah, I would have been happy if we could have been aligned with the
-> > goals of the format and the fields earlier, but better late than
-> > never.
->
-> I think the proposal for the fields in this version make sense now,
-> but it might have been easier to get alignment if (1) we could get
-> real testcases of the multiple signature case,
-
-There is such a multiple signature test case in v5.
-
-> and (2) we could see
-> the actual code for fast-import to deal with the signatures (trying to
-> guess the needs of the importer and the meanings of the fields we
-> export is supposed to be is harder when their usage has been left
-> unimplemented).  That said, I also understand you wanting to avoid
-> implementing too much and throwing things away if we disagreed on
-> early decisions.
-
-Yeah, I prefer to move forward step by step on this.
-
-> Anyway, I'm on board with these new fields and their purpose, though
-> I'm still curious if we start diverging when we run across surprises
-> as we dig further into the implementation.
-
-As we have clearly warned that the current implementation is
-experimental, I think we should have more flexibility to adapt the
-formats and behaviors if we run across surprises in the next steps.
-
-Thanks for your thoughts and reviews.
