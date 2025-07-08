@@ -1,138 +1,94 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B2C12FF69
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 21:58:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 429F61FF1A1
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752011912; cv=none; b=oycuzuh3ilPiH7M10SN/rElivIGCiMT9OZv1G31ERxhvOJOKc9LdFLVqJjtBgWDOCGygrrxN1nMjMlV14I6S5FFOjraNdhsDDvAKnH/o8Fw8C6PzqgLDTFUqIugXmRTnS9TQDAcBpAOZDF18mUymVXi5KCp2+Lu5DiGza3j+cUk=
+	t=1752012094; cv=none; b=M7Xf3rgW3p7DYBXuJIVYoie731gtcgwEkHbL0T7rqzTJ5+W86i8Tr6sOL8KIK5tkVXdwar159jRTj9nXdRHgTfGpFnSYzmP8YpEDnI/e5So0C4dDSE8rhbfhfrH83gqCE4jqenRh11zNqTqqT2KLuy3xl9Y28kfM9c7Y8lNb0cI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752011912; c=relaxed/simple;
-	bh=qr/tKGV0fIRK2ovjCLdX2qbUToNKzY4oLfTh+Rmfqxg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kCc2LBqP01VJKGOOiU6xORvGPFVeqDlJ0Q1EFIHmCyBSE+YTFELJPgGScV5kKfsIZJFU5Ahqv556usX8WJCTPp8qjKsrp4vvPt2G7+j/iSb2dTZO0wS0o4RLiA4FrWTkTAWOT+Yj4t18d3UdFVZ6SfEJ1Cro4ArnL4gGnUaCj2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N7aCBIu4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KIYdm9U0; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752012094; c=relaxed/simple;
+	bh=6ECStTAyeMkTca5cDnMuvQY7+OdzAH1gTbs2u0wdr3o=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UQYq8yCQqjxo6ekCSFB33dkVY7URQfi3JCNR0d4l2q5U/D4VVtzmwWw/2ExFVICXDHD4aObK9jmylPnYlBwM/A7FMz9pkvKeP/OX5mbaeqhmUkopBgh9msgG6ETSTjQBVZ+owxtUpYaIJXzaRv+gSyaZvgGKwACFv/cD4Sz4NiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cL4nlDmy; arc=none smtp.client-ip=209.85.166.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N7aCBIu4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KIYdm9U0"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8100D14005D5;
-	Tue,  8 Jul 2025 17:58:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 08 Jul 2025 17:58:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752011909; x=1752098309; bh=fKg1VX/fvi
-	56sJtf8EI5E9SctXkz9M76zZ2XxHP2qVA=; b=N7aCBIu4beca+83FyHCBvGGCIA
-	gvG8yk/Y1efdqgzNW1nJCUn/a4zXxFpgGHdx6No0k72XV+C3NtCLEJJwVDJQ9V9v
-	fYM5O7Z713nRtfYYzr5WxGxIwbpBfwwFufU9Sprs/CL7z07VM+oxRYhZShPMAC1U
-	eQAG1KODQ6XU5KoWfMC/KJ2IRHBhIMT8pZICNVqroLS9i3d3DeSYI9DqRIBcoQwE
-	MxQ8xWyLkJvhvTJqx1wwZIBLKXFa9UQrmSAYdNPNepXFyet5j9NbdBRcEyqhDNY+
-	TzRtVR77lJbw/4vOa/Bq77bRV/+Aw6/kN/Y1FosI1w7XjUJC5b5KHHcFOYeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752011909; x=1752098309; bh=fKg1VX/fvi56sJtf8EI5E9SctXkz9M76zZ2
-	XxHP2qVA=; b=KIYdm9U0suQlalA1+fxAT11kklbxiTWeWm5ob10s4lB5n77ib8V
-	yt6S7wr7BPHbHbckAsjJoIlIFtmfBZLu+XRWPDvZ3GYhqMJ8awbQnCz4bpUg+WVB
-	r2FyIoePrAwgGqWgmfUmJrle9ZiHEJ5z7wKNh6zvYBkeoIFUYO9U9T1d1i4JGr/F
-	9P+Z9EBPp1xo8Mg+rJEL2B4MqfBajFME7igSmJ1zTvJ5i0Dxn2EJq3AchgCEUFnv
-	ia28Cm7vXJoqrTCQEX36IGosxX1oJ3WApi3y5xsOPSj49EMlTRPejq94B4AHb5Xj
-	YGJa812/9PDO1YsSOi546eRkvMUSbLGtPQw==
-X-ME-Sender: <xms:hJRtaK-F2Vwhv2w9sulMw4JvnUzMV1XigzIWdBbw9UL-wnm6hotriQ>
-    <xme:hJRtaHn6Kn3_E-el83XbCzxD-R0v7I-owu6sXZiqy36V-49PUrSsinCvyMvLCk_90
-    EZ2IomJ0yuTvMvpDQ>
-X-ME-Received: <xmr:hJRtaPwQbstnStN6HT1XDVz7vZPw0-SBEl_B8wh5fvDEyvggLQu9HNzDbU0bSLeEeEO5p0TBOLGc8K0a0CCKxp9kX9AY7udj2c5Pedw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheekvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgu
-    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhi
-    shgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:hZRtaB7T7zJy0SYVQhFboc1Quwfo7N4ZQQVQepyo3SXYePSG5z6txg>
-    <xmx:hZRtaPWNE90PVvbxZM3C3bDNGERswbdvvU9x9kQ1z5jBxMus2bRSmA>
-    <xmx:hZRtaJKLwM_yGZJN4t2hrk88kXupeiBHfLuEpy5C0ixzBwy3Vp_F_Q>
-    <xmx:hZRtaBuAxDCDPBO1kHBchow8x1tWv3dDixEqITkpk9No7zhArRgTqA>
-    <xmx:hZRtaBRo1z8JE3t7k1ApIaiDDB3SrNhD26ouZCcsSW_YN4fsS7y8XiYh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 17:58:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5] fast-(import|export): improve on commit signature
- output format
-In-Reply-To: <20250708091738.4072857-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Tue, 8 Jul 2025 11:17:38 +0200")
-References: <20250619133630.727274-1-christian.couder@gmail.com>
-	<20250708091738.4072857-1-christian.couder@gmail.com>
-Date: Tue, 08 Jul 2025 14:58:27 -0700
-Message-ID: <xmqqv7o2s5to.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cL4nlDmy"
+Received: by mail-il1-f175.google.com with SMTP id e9e14a558f8ab-3dda399db09so45561905ab.3
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 15:01:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752012092; x=1752616892; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/4ceUD4O23CSWZ7BoQuyIJ48ffssTi+LMpy83QV9/6E=;
+        b=cL4nlDmyLWlfJxgZ7jFx7sR75PjI6B49/YkO7wnlMH1P9rPlx34xiRPx4mqdU+KUrX
+         nWCtRS5BuSP96xQPXLL+KWzA+RD91s54XaGwDx5hMsGYNDfAtw6NwbpKzCjRacaryfyN
+         xYNUvycLymCbMe5Za6YykFBnC3MlUJy7o+Sk+tc566GvEESLHOG4Bljx9sRVrXyv1GPH
+         dIpGKoTLM9HN7kiAeiIA2HfYSof6u5pLaP/Q3nwT5lUVvmHLVVGohhtyO7p8bcC/CxaZ
+         uGO0cAI0oZgEX6qehRoZEMVf96cL+JdAynGf80cdpgdF0H1K7ujAR1b6BhZjczKzv1bx
+         OuYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752012092; x=1752616892;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/4ceUD4O23CSWZ7BoQuyIJ48ffssTi+LMpy83QV9/6E=;
+        b=CaXU/zEjghPkyjh7sAPY+eNlBjCsn9Yz7bontDEJjGYNIRGzJanjSKeu8AeMP0UZMM
+         8TUHB1heOGRGBjKx4J0pxnF2W5qEuYGm9rm73y+g0fbCC4jhycBHT1X0SuIYRz3NkicU
+         r0P8MV0NAfL6a5kaxiHCQukBnbsfiQffhKgkEs4s7MN9+sAzLm6MULhcmKbHsmiNOU2P
+         xbucmopuLPVddCRDvrBxRordrmWf49X1XBcdjS4uTdZhlv+jtmYT38fH4UO1Yt7EGxd+
+         yDHe6YoYR1fsges79gEyBngQrF3OmAxB45LF//nMJA6BlBT/vLqnXXbKYhOx7NCKi8md
+         biDA==
+X-Gm-Message-State: AOJu0YxERvQI3Mqvv3UTdZ5hbAQKZGOpVp2o/e9yLqFuLxz0OzRIgY0t
+	EGIT1jNk6ea4MjBDDNdeds5ieWsLXZUU+JPUSRbS3vhBmK9fWda2MzV80vRcwKnz5AV3DzEnCkv
+	Gf/GN4CTkFOoliywN5RNYJYUWxCkIQa8=
+X-Gm-Gg: ASbGncuIQTRwtVnS3ll4/+2GcXV2tUqt3eRk4rfZ9mQuji5JrOLCIqv1q7j79tfsSwH
+	6ZszM45L7o0kvG2vYsgc06O/75w7jfbvuEjeexLwy0ar00hhCrE/ciWEn5DENTJSN+wI8WJm7Ae
+	VLuT+ZPQEvyr4fgA5lIQqjCRpIXGzBCns1TqtBYFKA3zxe8mI9Nj2C9eEopvzJtyWxc0Vc
+X-Google-Smtp-Source: AGHT+IFXmGwusTS6IazXHq+eSVSDnMw1J/czqPYX0GFY9DRv1dpG5ryFHXMz4E2bVDeeyEMoTp38BK49iSAh6k0tdsU=
+X-Received: by 2002:a05:6e02:3b85:b0:3df:49fa:7af5 with SMTP id
+ e9e14a558f8ab-3e167111fc3mr3665585ab.21.1752012092090; Tue, 08 Jul 2025
+ 15:01:32 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com> <CABPp-BGSEsQ5Ljm4j81VUuM+_U6CJYDG64wKxj_-oEK=WVD4iw@mail.gmail.com>
+In-Reply-To: <CABPp-BGSEsQ5Ljm4j81VUuM+_U6CJYDG64wKxj_-oEK=WVD4iw@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 8 Jul 2025 15:01:21 -0700
+X-Gm-Features: Ac12FXwxX4o5RzNn9RgpILjH49ydhp4M13bpQzcqpS-5dccgaCsOe3bRiKBYxT8
+Message-ID: <CABPp-BEh5FdPSr84-YG=Bw6fBaE1P2s8Zcy5D68bSZ+_nsQrvw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] sparse-checkout: add 'clean' command
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Tue, Jul 8, 2025 at 1:36=E2=80=AFPM Elijah Newren <newren@gmail.com> wro=
+te:
+>
+> On Tue, Jul 8, 2025 at 4:19=E2=80=AFAM Derrick Stolee via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> >
+[...]
+> I'm also curious what happens when (1) you are in cone mode and there
+> is no sparse index, or (2) when you are not in cone mode.  I suspect
+> those and the questions above will be answered as I read the
+> individual patches, so I'll keep going...
 
-> A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
-> signed-commits, 2025-03-10), added support for signed commits to
-> fast-export and fast-import.
-> ...
-> It could be even better to be able to import more than one signature
-> on the SHA-1 object and on the SHA-256 object, but other parts of
-> Git don't handle that well for now, so this is left for future
-> improvements.
->
-> Helped-by: brian m. carlson <sandals@crustytoothpaste.net>
-> Helped-by: Elijah Newren <newren@gmail.com>
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->
-> This v5 is similar in spirit to v4, especially the format of the
-> "gpgsig ..." command didn't change, but there are a number of
-> improvements:
->
->   - All the signatures are now exported. On the import side, still at
->     most one signature for SHA-1 and one for SHA-256 are imported (and
->     a warning is still emitted for additional signatures) though.
->
->   - The code makes sure each signature ends with a LF character. While
->     this is not mandatory, it is encouraged and makes the output more
->     human readable and 'grep'able.
->
->   - A test with both a SHA-1 and a SHA-256 signature on the same
->     commit has been added.
->
->   - Some tests check that either "sha1" or "sha256" is in the "gpgsig
->     ..."  command instead of matching "sha(1|256)".
->
->   - The format of the "gpgsig ..." command is better explained both in
->     the commit message and in the fast-import documentation.
->
->   - There are some typo fixes, lines wrapped, and a few other such
->     small changes.
+After reading the series, I know the answer to (2).  I think the
+answer to (1) is that it effectively turns into a silent (but not
+instantaneous) no-op, which may be confusing for users.  We might want
+to provide them with an alternative implementation, or at least a
+warning or error that the mode doesn't (currently?) do anything when
+sparse index isn't in use.
 
-Thanks.  Will queue.
+Anyway, I think the series is a good direction and you've explained
+the motivation very well, but I'm a bit worried the current
+implementation might be using too coarse of a hammer.
