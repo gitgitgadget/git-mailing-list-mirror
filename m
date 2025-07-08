@@ -1,168 +1,90 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A452F2356D9
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:20:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8087267B9B
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:52:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751970002; cv=none; b=MF0RPsnVbYDEeJH+quduLKzUv7qGUIHPtQ2ytoRSBujURBnddVSfodEg+sIdUMypwE3dNj8PR5h/npUPFUVyXl625rfPcfK3L92MKv3uC65sqOlEknpzhlKpJjqyS1TpiFODVUyFwfkZvjmGepOsPeC2iBDVXlpVZsKEWllf/xs=
+	t=1751971951; cv=none; b=bCSzQ+bMizE30Gw+b4yCUKN/sICoiwyAUZ9wd3QEk9ULu4/aJJq37y6fXZE/dFoHYmovaxZZbTWKwoHLfeqb0azU73IxflcByQJ6c8aVlU6d2EaYYF8nqme4jrAS/Q17fBeBqBxnNo2svlV98onghT7sfOLrIOGtnpHTA0pdl2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751970002; c=relaxed/simple;
-	bh=YvInzDr1/ahIMLvfVO75K57e39j8osi3YAT65Gq/ci4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=NSN830BwtilOAlBzS+iw1khpiHNHxen1YuJAXJaWqLpEBJCCFsfJPPNSN5CZQt+THdlE63bNqMi1Yv6t2n3GW2gShyo7Z+8mUtO5aYRqHo4c9PuW49hNnydYHmCUIPAnkNxOQlTYKOC+ixt/+GkfQNgmbp84TJckOjuxqDOVmOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VaOe451P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JUAwP95M; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751971951; c=relaxed/simple;
+	bh=rDbbsiVOb2nRaJ/QW3EAiCKbaO29BEbVxIqSfUFUCNQ=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=qsaDJ+sxns56ng4r61lUtSJ8Ja0n6l8KXHbEvJ1X94/2fXNo1x8WjzPyXORdtmt8hR5ycKYmc4tyOvgUmfAGwY/Q+CN5ZqvkxIxNkKW/7FQDEm02himA/74Xlr17RxddNmMiscomS65lStgGul0jo1BiORtkAcoSb/8sec465OA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A9+igyR1; arc=none smtp.client-ip=209.85.215.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VaOe451P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JUAwP95M"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A245814003CF
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 06:19:59 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 08 Jul 2025 06:19:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm2; t=1751969999; x=1752056399; bh=L+t+8fHnpW
-	AlI0W5CCx6afDCRJ190oentCNg876Vl6Y=; b=VaOe451PVmkeSd/SaxbwrZ7fxx
-	m3sr0GWGmOoi1WuwYjUpaygUEEiaptY9wQYsucsmpE6nxO7ZgEyBVl28bQXw3Gaq
-	/7xDT1//pdM+GA8MOPRymlRpeG2NHBjyNIALsYCqvXD7cX5WMfV0O/XU/Ihmsopa
-	9dGTYNH60p2gBRx9NC9w+gUGCNaTDsCZND4kBXoxivTQhxR5mWewMJRYyW7BhurL
-	SouckdHjEtFqDarnXF+p799UxgvJsa7sB+DXBPHxh1uhsJOHyxoSdWyO/uOIlAde
-	etuuxqh9q1OII4qC52qrFLDxSrY6o4bRzYJAbeusrSyg5iSNOtxF5RpHIuDg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1751969999; x=1752056399; bh=L+t+8fHnpWAlI0W5CCx6afDCRJ19
-	0oentCNg876Vl6Y=; b=JUAwP95Mf08r32CjQ/aF5QKJwyWbsCJUAezuRPJvAVJF
-	jzzifssCYjyj9JyGGreWNgcIwyfJ3PkvSak70c0ssXOrmefP6NmOuRFcFmSzCUnh
-	WZgyHqh+7iASVpbzXuo2yOkMkmt3iv0sx5Bs/UR/1EH4jmibR3T1uAH7X1cOhFYQ
-	4eluLZehLR7Hd3sTY5pX2ULVpWuXxwPra//yQ2y22RI0beGt09iwF1Ny2u6tFUy8
-	MG5CiR2PEC/92oYcehAAOQHHODcyQJ6g8+5gwbFxlQiwEbuSnBDdNtmO9bw6B7T/
-	Yx5fqxIDVvQRkjcDr4zFAoG+t/dC/8vfTIQuLWkwnQ==
-X-ME-Sender: <xms:z_BsaOY-NlGVobvL_SQZ2rBxsjAa5N_ypjus_oHD2ZHjc3lpzwwm9g>
-    <xme:z_BsaDbXxTy0N1ToVuNxNX0b5BZv7l6RJL0sCERCFZOPsz2K95AWXSVMXwxzKI7Bd
-    bxbyJk7uuXxWEWD6g>
-X-ME-Received: <xmr:z_BsaCWn1EH91pmGDCCrVIgXrMaQGM0dJrYZ-EFM87GPgnPsqqHYaI6vf-fjP_Ln2tDK5Pr70GtYfGNAtOEt-v3-XJSErdYpK1cBIGc_3kc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgeegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkffvvefosehtjeertdertd
-    ejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
-    ihhmqeenucggtffrrghtthgvrhhnpeeigfeitdffffdvvdeuheehjeehheeludduhfehke
-    ekgeeggfeuffehveegteejfeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:z_BsaC1e9-IUHeR1es5e7zAHNG49CaZY1n_95boCbDcLWJVfAWhvlw>
-    <xmx:z_BsaBZ0Fnthedksx0EqiRBdUH5Rqj312ZrvXfQ6k5iEECY17AIY3w>
-    <xmx:z_BsaNo6IrzZvBo6GjbmfBF4AntFcHkT-Qn-e-HNXv_wNm4ajGNEoQ>
-    <xmx:z_BsaFqK_gAZTBbHDEUwnG7P_Iv1hKjB8aiUvQ58JIWCuS09YyCDsQ>
-    <xmx:z_BsaFxoGu5j19Akl0TORZJUohTz5PGY6LTWmsKdIVLploWz237oDoMH>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 8 Jul 2025 06:19:58 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 076d48aa (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 8 Jul 2025 10:19:58 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 08 Jul 2025 12:19:54 +0200
-Subject: [PATCH] refs/files: remove empty parent dirs when ref creation
- fails
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A9+igyR1"
+Received: by mail-pg1-f172.google.com with SMTP id 41be03b00d2f7-b0b2d0b2843so2910192a12.2
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 03:52:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751971949; x=1752576749; darn=vger.kernel.org;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=jvTZErGk9WH3iykmTdcUGHIJa4ECoM6it/aAHQg/izk=;
+        b=A9+igyR12GYkpYKc7jNu4jlikek7kvAzB0SQ3mpflw723giucfdaapNPqTpeRLctfE
+         HvBlAMjM4gmv9Y8SmoRNHWuzS/57os7SvsbdI6c3/VXnzUyDVG0gEAOMGTcFAb7oirTm
+         YVKPkCzA4HfWvI0I8544Nc7JkPP9JaU00w1UZyOU8caSQbbtfukukZ75gZ1r7yN3QJ8d
+         qX/Y185p5SCu05/oPiLiKcmO+4PPKRgEJtD8ZjvrnYuQ1lim34n2XPM2LxEDG9jz62nC
+         /z9CuZ45aP0lH7LXxGGb25S31Xlsv3k2xQvvK9HWyYnBE6a3egz8VDf10UqLUOxkJxA8
+         5eCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751971949; x=1752576749;
+        h=content-transfer-encoding:subject:from:to:content-language
+         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=jvTZErGk9WH3iykmTdcUGHIJa4ECoM6it/aAHQg/izk=;
+        b=IQd52NginOty6LKq/5s5GymrpCclKgbgxaTJNZ3ePin7Gd9pWWLCmf9fs8t+ef57wW
+         U1t2hTmIte1EldoKE49px47kYG1EkoiGHUIuSAHYfSXMhcJ7oWrFXnsaUr4lBtNOBrXs
+         yseisZcWUiILyNpCA7OXrvPYV10IzgttjzRixCM3k8U0AYVF8ltColqrVLaKZP2aUZ/D
+         gCXSZunoQpGal9lEOjI9+oy1xRcGUQLL8R5c8XrX7YtlRPZ6u4BiW/LPxtARbXlH1JFX
+         jK3cq12/+x8e2jgjVX/vKpzkXwPiR8fuWOiwKWo1EtjylxH2bC6S5HznnTyL3pwX1uSI
+         2Eyg==
+X-Gm-Message-State: AOJu0Yx0qXMc9IQjqyyMRLD3fYHwO2nD2X6suNeN7ekE/5UOKWSyVfFm
+	m/z+uY0UlYug01ApQgvztDL04UzzVs+sHXPIXu2MYLZ2faeoKr1CeSPxA0pM1RicXEo=
+X-Gm-Gg: ASbGncvXIq4qdJf3uFLdBJNDOJpzDz8vNEqyuX7bRcZoRQ1WwmwKQ8nxDrvFoYlbKxw
+	agIfqAF2BWArO2hoLetyjU4VkdHGYBQir9ztLduhsi450ONjl2ApyCDeLqGTgRUi9MUMxkPY2as
+	rcqg9StdarmhTWM7BvHQuT5UBikoofmEaP0AsCBJZ/aasf2+OqyGkdPEqD/q95KjljXbzWnrNZk
+	kfNLG6OP11TnMjZmjo0kNScX3XON9ho7Djy9zOHJprmCWKSQG/fiIGyZDgP1hxKpoHaJreMLG6H
+	vtHwwo4/yhOOMJdGoC++SNmXpM+aChsp/c1/p/GGldOZDMBdAuTFSQJ6SO6upbMY1qN3/Pc=
+X-Google-Smtp-Source: AGHT+IE4tYsn0cYhaQvZIR8MhK0Dd3m7Ocw2CG1rwNC0816qZpZitCqJByuiXFdFxzjh6neWR414Rw==
+X-Received: by 2002:a05:6a20:72aa:b0:220:81e2:eae4 with SMTP id adf61e73a8af0-22b45d23fafmr3965823637.39.1751971948726;
+        Tue, 08 Jul 2025 03:52:28 -0700 (PDT)
+Received: from [192.168.1.5] ([103.80.119.54])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee450a61sm11184688a12.8.2025.07.08.03.52.27
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 08 Jul 2025 03:52:28 -0700 (PDT)
+Message-ID: <3e964e0d-bb90-4074-a9ae-a10fb02b3f50@gmail.com>
+Date: Tue, 8 Jul 2025 16:22:23 +0530
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250708-b4-pks-reffiles-prune-empty-dirs-on-abort-v1-1-3bae02e4f034@pks.im>
-X-B4-Tracking: v=1; b=H4sIAMnwbGgC/x2NQQrCMBAAv1L27EIaLKl+RTwkzaZd1CTsVlFK/
- 27ocQ4zs4GSMClcuw2EPqxccoP+1MG0+DwTcmwM1tjBODNiOGN9KAqlxE9SrPLOhPSq6w8ji2L
- J6EORFfthct4l6y4hQuvV5vD3eN3u+/4HLferUnsAAAA=
-X-Change-ID: 20250708-b4-pks-reffiles-prune-empty-dirs-on-abort-15c7a7f279bd
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
 To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+From: Sahil Gautam <printfdebugging@gmail.com>
+Subject: locally storing issues/comments/projects
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-When creating a new reference in the "files" backend we first create the
-directory hierarchy for that reference, then create the lockfile for
-that reference, and finally rename the lockfile into place. When the
-transaction gets aborted we prune the lockfile, but we don't clean up
-the directory hierarchy that we may have created for the lockfile.
+hi
 
-In some egde cases this can lead to lots of empty directories being
-cluttered in the ".git/refs" directory that really serve no purpose at
-all. We know to prune such empty directories when packing refs, but that
-only patches over the issue.
+i was previously on github but recently moved to gitea  as i want to be 
+sure that things won't change over night because some big company thinks 
+so, things like addition of an annoying chatbot button everywhere. i now 
+feel that the things like issues/projects/comments should be stored in 
+separate private branches in git so that one doesn't have to depend on 
+the hosting service providers.
 
-Improve this by removing empty parents when cleaning up still-locked
-references in `files_transaction_cleanup()`. This function is also
-called when preparing or committing the transaction, so this change also
-helps when not explicitly aborting the transaction.
+i asked it to the gitea devs 
+https://github.com/go-gitea/gitea/issues/34993#issuecomment-3048363965 
+and they said that most of these operations are database-based. I 
+thought what if git supports it inherently, so i write this mail :)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
-
-this issue is something we recently discovered in Gitaly. It's nothing
-world breaking, but I think it makes sense to try and keep the refdb in
-a as-clean-as-possible state anyway.
-
-Thanks!
-
-Patrick
----
- refs/files-backend.c  |  2 ++
- t/t1400-update-ref.sh | 19 +++++++++++++++++++
- 2 files changed, 21 insertions(+)
-
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bf6f89b1d19..00128f21832 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -2760,6 +2760,8 @@ static void files_transaction_cleanup(struct files_ref_store *refs,
- 
- 		if (lock) {
- 			unlock_ref(lock);
-+			try_remove_empty_parents(refs, update->refname,
-+						 REMOVE_EMPTY_PARENTS_REF);
- 			update->backend_data = NULL;
- 		}
- 	}
-diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
-index e373d9108b6..c9893f65464 100755
---- a/t/t1400-update-ref.sh
-+++ b/t/t1400-update-ref.sh
-@@ -2304,4 +2304,23 @@ test_expect_success 'update-ref should also create reflog for HEAD' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success REFFILES 'empty directories are pruned when aborting a transaction' '
-+	test_path_is_missing .git/refs/heads/nested &&
-+	git update-ref --stdin <<-EOF &&
-+	create refs/heads/nested/something HEAD
-+	prepare
-+	abort
-+	EOF
-+	test_path_is_missing .git/refs/heads/nested
-+'
-+
-+test_expect_success REFFILES 'empty directories are pruned when not committing' '
-+	test_path_is_missing .git/refs/heads/nested &&
-+	git update-ref --stdin <<-EOF &&
-+	create refs/heads/nested/something HEAD
-+	prepare
-+	EOF
-+	test_path_is_missing .git/refs/heads/nested
-+'
-+
- test_done
-
----
-base-commit: 41905d60226a0346b22f0d0d99428c746a5a3b14
-change-id: 20250708-b4-pks-reffiles-prune-empty-dirs-on-abort-15c7a7f279bd
+sahil gautam
 
