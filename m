@@ -1,103 +1,153 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8B12571BC
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 07:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DCC1386B4
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 07:16:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751958661; cv=none; b=gugiViXgMeiXxIS5tt4wex4LpXD3igDninMsEZAt3zTW1sFddQJ7llGZggn5CFuZFt5wP1xk6O1luxLpSt2Khgxbl46aBBxXQO3ghEBJEtBm3YwPbIBYggHqa6hX3So6ytj+vXXnTybkbJe+/iEZ6Xv1mUUXzsbN/g57jkRQ808=
+	t=1751959000; cv=none; b=Am4H5+H6n3sLQnAEi+rd6b5FEIKKMEjxQrp+NUZg3T3JUekAcf1BShxZaWcuFG0uwaLuifVpryqiSgzjituAXIfGuZVfSAw8fk9CZpPm5SiN+N7PQT4V6kVG0KwX/JTNIqQXZIuoyJtYIc54qklVkCBHO5/pdlaiiDpG+PLC8iE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751958661; c=relaxed/simple;
-	bh=TmBLfUX8cEWfz1Q+OthMJwn6dIS1be+WdzJ2FY5beiQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RmKSdxiq4hkOn9m2Wd1HpuZPvrB0Ucw1htbKkhvd4mJ6N9590e7aIDNbjcT41502Tld74X3MjOPCowl2Cv8d5SV6sk/hJszbawNpIF44z5+RdbsqRgH7X2DHV3gq1lcaQq6c2gwfZfwr/GzPxebPqkUvFp7YabzFNxshMVMITw0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pl6f0LfM; arc=none smtp.client-ip=209.85.128.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751959000; c=relaxed/simple;
+	bh=bESxJWahSSKZ9F7j6kYrYs0uX2gcxt882jiyQ7gcgEo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DspfRw0OTaSYdLbMMUHLbmeS4lk8CwS7O+jEKv3uvcSjgaoBTv4lSJZgwglaSCkmBV0MQ4TBZn/WmQRBKzhBZPlq/MryFqgJpGi4zlb7m/lNDmEuFGrkh6uknXedcWwwZdMnGIWcoqbr16twamNbyMbu1KSssIGHndDnP9We0B8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uNGGUXIK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JEGNmeXR; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pl6f0LfM"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-45363645a8eso27131995e9.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 00:10:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751958658; x=1752563458; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=chc9hBe12W6hr5UGexQztq0z+yxxG6l4br7zxVVDOTI=;
-        b=Pl6f0LfMS1q1Ky0EU01EJpvZY3ECmqJVbWxbJNsny7svmG+yIMAW8uydOpocHM8t0F
-         86IjwNX5sJWALeTH1mJivuAXVZ1Vdi3dfxbhF8K663p2TFxkU56dK5g55sy/M7YkUiW3
-         7ThsGZRHeGsTz810BSEZXLEPGHSv2mSiOLGec0lXWmDwmHtNeAhnZDWdboW0C2XmIID2
-         qhqMQv7gmvnOfecVqCzUQodzDcynZM8CTCOo2ksW/ce0igJ3yBpwjw5nHTIoyyx+rQYc
-         F+Ycb3T1DovhJfFDDbI+QJCybM+hvTFrcRY7ClO4CeSKbo9qt2cia3G/CyhzVyptE6jr
-         ZKTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751958658; x=1752563458;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=chc9hBe12W6hr5UGexQztq0z+yxxG6l4br7zxVVDOTI=;
-        b=e+n8fRaf9wTzIxABjWWs4Rr0FNyf+1guIGbU493+Knihg5q4XRNiBPsUNS98KFfyXF
-         yNEU1c5dY3PfubMqVx/caSFU3IhTxSdsMsd+p7doohqn1NEIcpJ1dILRz7WtveCwzN45
-         HbMZ9hN+7EAPAtrfhhQSmoyGDSpt5nzEwE4+95wXVs6rxEapJaBM0rYH7wuEx249y6sx
-         QIniTR47lDSd/Ptm4UmwiGhG596nD2BD+QLfJzrpinTZLWhG4bXQYofdKQHxj+CL0as8
-         PXf2jcKc1TZjVpuBG5mWoW5qMI4tcmzxRiPXws3rqqLitQAPw2Lgbhc9TMwKBDOeHFD2
-         HKcA==
-X-Forwarded-Encrypted: i=1; AJvYcCUBED2YRcslrgOtQRrDuUE+jf8EbR3HPjA2pCi+Fg8eaz/uvieBVOgLKjVkwYYYUCUx6es=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyT6mJ0BlRQsGMHqvXKmtddW5diQmtAPSQQ3w+d1Ksu8/EA44qJ
-	xE1+tiQt/TPF0amhARqBGiXOU/+QSy05O1jfX9iU6CmnV8MSv4BqlzzHr4eVi9eZF7KRCc2Gcxl
-	Zu6r1/4ReNe6j5rTU5/36OFvUMKkrPgI=
-X-Gm-Gg: ASbGnctzKG5co0CvsacKax9gKOjAwHmQ3cOHu5EtIwCYhMtp1hAnDkgA8deCMb0K6Vp
-	VpCCeWVD+UQH5gaV5gsrSSVpnMi+EmdM4A932FkOgeJLD0hw+t1oLZp455pB+dftFb6EasEz2+m
-	iSnLym4+p8OV07atHsJPJ1ckba1iuYqkc5oNdXCkVUmA==
-X-Google-Smtp-Source: AGHT+IE/nv3z6M9IO1VKBTgfJAut+wgyf7R+17DsBVJSZ4r52JsCnaCRsF4F6WtEPPamtYTDyu+eWwwoirVJzITzods=
-X-Received: by 2002:a05:600c:4e47:b0:440:6a37:be0d with SMTP id
- 5b1f17b1804b1-454ccc89031mr26477965e9.15.1751958657445; Tue, 08 Jul 2025
- 00:10:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uNGGUXIK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JEGNmeXR"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id A1CBAEC0B83;
+	Tue,  8 Jul 2025 03:16:37 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Tue, 08 Jul 2025 03:16:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1751958997; x=1752045397; bh=GNEPB0ujzl
+	kEQIivTocIlFUSjtq8U7zavthg7v5kxFQ=; b=uNGGUXIK5bIWcDUkdVvwqN5w9t
+	WZGA0Qe/MyDR+hZ34YDjfZfVmydk7StyXpjUwEfqF6SsdM7KgVskZrvJslitvgZr
+	hLugJp/g1RpJd+3rZUWNyL7k81PVQ+SQA8dkg8tJhGkdBwmPs7woCG54XdGyChZV
+	E/+1eworAzW94am8rfxglF8ylTCwumgHlyEdGzMnLf756wxHA5+wYXQQmXtTAHFX
+	pxWdTQP51VFW1H0CoHLhrMJYYOgUmvQGDWMEv4ExvMdGbYN2DQcxN+XnWsV2Zige
+	MT52jD9H/J66r9UQNoqZ7UYfFvoT4A6DDBFXByViZmEC5yBb0R8Q2cTng/jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1751958997; x=1752045397; bh=GNEPB0ujzlkEQIivTocIlFUSjtq8U7zavth
+	g7v5kxFQ=; b=JEGNmeXRXJyQuCMWLcOejlh+XzupYaDFKsjgANsZdzYB6uI6aMN
+	ooF7QRquv3kTyirFB71NvDnd08b4azp0qCbvBzwv0JCamYcoESLnAsMwx1jINwWm
+	JW7EJgSA/gKyNkOv2gpfAmil42JpF9t9nNuJY2A4ddXWiHZSX1cCJgQEMEi0E/UK
+	/il9cxLx7OP1YyYuebbbLiS3K0oCHcYi15Kn+0+Y8m+vD5OIPmHbT64mGaDD0GfS
+	40oNNaNbikD6EcXqKwqRhkvuZ6cWLWU7LNptpDKRtCyF0/C79Jo3uot2V688AWWL
+	o2bk+/C14mSGvL1wPbGcwOZJsdVjPucVuKw==
+X-ME-Sender: <xms:1cVsaMrh_4T3u1yLpWijiFhEIOz1EBLMOgW7SEXRt7KImQmPZbLSpg>
+    <xme:1cVsaDZufD5P2tIsoES7nXwrAbDhpKmiC4_KVVHlPhphu4vHWA5SQpPAa31wdUUyl
+    niwbk9P2qPkQpnIIg>
+X-ME-Received: <xmr:1cVsaNWP92KB7rxRAAd_obgAoeg6jqAz9crM2j-SzR0T9wXjekPS6H_qmB-oSsHvmFxTtOZK2nmLyExHLJ_3ne8hCVCr_b4elWPcB-iyR7o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    elgeekveejleeitefhtdekteejlefgveffuefhgefhjeeuueejveffvdekveegheenucff
+    ohhmrghinhepmhgrthhrihigrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
+    grmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtgho
+    mhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtth
+    hopehirhgvtggtrgdrkhhunhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+X-ME-Proxy: <xmx:1cVsaE8SBuscAxTxVq5VbYcyQJd1npQaFxdYLhtHC4E5AKiHQZUpmA>
+    <xmx:1cVsaO_JqueWuwrc9rL5TRK_-35KM0Lk3z6trGSgzs08-y8QM8DxpQ>
+    <xmx:1cVsaMSQvGotfTacrjUWzNSPMwTgDLDbbeYy-XVW16sUE_dDi9sbNA>
+    <xmx:1cVsaKcpudfk8tHA-fcNighJGZj3sVdH0ceZ1KIznbBcKgLgSq08XA>
+    <xmx:1cVsaGYHNvX7iTdaKJ84eDES2A8iwv64FQzrt7pu5VMvEahfgkqRnPO->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 03:16:36 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ad433546 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 8 Jul 2025 07:16:34 +0000 (UTC)
+Date: Tue, 8 Jul 2025 09:16:31 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, irecca.kun@gmail.com,
+	Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH 8/8] ci: use Meson's new `--slice` option
+Message-ID: <aGzFzw8pxZRAvtIQ@pks.im>
+References: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
+ <20250703-b4-pks-meson-cleanups-v1-8-2804c2932abe@pks.im>
+ <xmqqldozzge4.fsf@gitster.g>
+ <20250708011249.GA547084@coredump.intra.peff.net>
+ <20250708013935.GA549322@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250706163009.335780-1-sandals@crustytoothpaste.net> <20250707204224.GB3115893@coredump.intra.peff.net>
-In-Reply-To: <20250707204224.GB3115893@coredump.intra.peff.net>
-From: =?UTF-8?Q?Martin_=C3=85gren?= <martin.agren@gmail.com>
-Date: Tue, 8 Jul 2025 09:10:44 +0200
-X-Gm-Features: Ac12FXyi4aE8SOEcWlHqO3WB9-wg86pi_128FWRGS9T0NoWcmypr7o9LXG-PlAo
-Message-ID: <CAN0heSou=BgC8ec9ZE+V-pYKt+XQiNfOBHj-5CZY8s5XCatZTg@mail.gmail.com>
-Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
-	Junio C Hamano <gitster@pobox.com>, redoste <redoste@redoste.xyz>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250708013935.GA549322@coredump.intra.peff.net>
 
-On Mon, 7 Jul 2025 at 22:42, Jeff King <peff@peff.net> wrote:
->
-> On Sun, Jul 06, 2025 at 04:30:09PM +0000, brian m. carlson wrote:
->
-> I.e., why are we sure that it is OK for us to loosen this requirement
-> (without jeopardizing the legal status of contributions). And I think
-> the answer is along the lines of "the kernel did it, and they checked
-> with lawyers, so we can piggy-back on that work". But it would be nice
-> if we could cite that source, and maybe even lift some of their
-> language.
->
-> Looks like the kernel commit here:
->
->   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d4563201f33a022fc0353033d9dfeb1606a88330
->
-> cites CNCF here:
->
->   https://github.com/cncf/foundation/blob/659fd32c86dc/dco-guidelines.md
->
-> I don't know if there's any public discussion or statement from the
-> Linux Foundation or other legal folks on the kernel's wording.
+On Mon, Jul 07, 2025 at 09:39:35PM -0400, Jeff King wrote:
+> On Mon, Jul 07, 2025 at 09:12:49PM -0400, Jeff King wrote:
+> 
+> > I was just digging into this, too. I guess:
+> > 
+> > diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> > index 673b1c44b9..717bd2763b 100644
+> > --- a/.github/workflows/main.yml
+> > +++ b/.github/workflows/main.yml
+> > @@ -289,7 +289,7 @@ jobs:
+> >      strategy:
+> >        fail-fast: false
+> >        matrix:
+> > -        nr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+> > +        nr: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+> >      concurrency:
+> >        group: windows-meson-test-${{ matrix.nr }}-${{ github.ref }}
+> >        cancel-in-progress: ${{ needs.ci-config.outputs.skip_concurrent == 'yes' }}
+> > 
+> > is probably the right fix?
+> 
+> That does renumber the job titles. Probably not important, but they
+> wouldn't match the non-meson ones anymore (though I am not sure if we
+> even slice in the same way, so maybe it does not matter at all).
+> 
+> Anyway, the more minimal fix is:
+> 
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 673b1c44b9..7739bd2d76 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -306,7 +306,7 @@ jobs:
+>          path: build
+>      - name: Test
+>        shell: pwsh
+> -      run: meson test -C build --no-rebuild --print-errorlogs --slice ${{ matrix.nr }}/10
+> +      run: meson test -C build --no-rebuild --print-errorlogs --slice "$(1+${{ matrix.nr }})/10"
+>  
+>    regular:
+>      name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
+> 
+> with the additional bonus that I can put "PowerShell Hacker" on my
+> resume now.
+> 
+> Curiously the quotes around the whole thing are required. If you do
+> just:
+> 
+>   $(1+1)/10
+> 
+> you will get two arguments: "2" and "/10". Definitely surprising to me
+> coming from a bourne shell background.
 
-The commit is "Acked-by: Michael Dolan <mdolan@linuxfoundation.org>",
-which seems to be a lawyer at LF, e.g., as per Ted's post elsewhere in
-this thread. So that could be seen as some kind of statement.
+Thanks for digging into this! I probably should make it a habit to
+always run CI changes through both GitHub and GitLab. :/
 
-> So there
-> might not be anything better to cite. And possibly we could run it past
-> Conservancy's counsel. I'll leave that up to PLC folks to decide on.
-
-Martin
+Patrick
