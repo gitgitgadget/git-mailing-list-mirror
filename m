@@ -1,181 +1,151 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1676B2066F7
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 20:59:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65318213E77
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 21:06:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752008349; cv=none; b=pZS4lAqZiRwzimR7OkSQKPzwcMo09rSDIjYsVz+TzzeNRvn5Bx15FLzcGF7l5OUKtfARRpFxvvykjf1N8JRNRMYE4B3cBAJsoKuacUzDinGL6PUTD7YtQW7ClzVnIFLh4FPZdRn6M5DOh+W9vR6UdXvhuTXztYUts0OgXtn7ji0=
+	t=1752008780; cv=none; b=pXfdRXwtrOUmWxkx3vNP0jLYNnquVGWQvKb/kTUJg98HjjyWbTPl8YY3xO4n46mwrJVNg4wjcJgi50aSizlGCahMnf4eINxQiaC71usZX5zYDaMqxL8I3tuiMygkumiw3vJk747rQuSfcF9CRJfkEf1sLWVBHWh2f/JiDlOJrBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752008349; c=relaxed/simple;
-	bh=iZJREtchUOfACWcOwy9MD/Prq5RCA+41jMdniH5lHR8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=STSalYZ5jJFI5RxR5lEwnPkcKfaMfWIPwseisKDYkunZPu9oPmfyddVshJ2WAUozyMa/z2CXfBNkn+OaS/IUKZSzAZVUEXPcT5COUBn/sJCYqZiHtg7X5jbVTmAPowCa3MePRIjCoLkGDZFya6OFdLxfprLBsluAUIkEm8H6BKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MfD3XNSX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UhyD4ldr; arc=none smtp.client-ip=103.168.172.158
+	s=arc-20240116; t=1752008780; c=relaxed/simple;
+	bh=dIzfy0ZRK6Ab2nw8s1W6Waj1tWbyNLMD0R1leNMNIr8=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=CofadbCmyI/se6Ys4XyacQHNePNscNXJLzWgIYPSljBKGHxCci+Nc7GiTUEMYXNC21iMjHyqsUEaN8uPoy6EzvxQzvRevMPlmrZXVDg1gKWIL7HyDmAb3OXCMf+cLBj+vskWROUkkNfI7KfgZKydNbgqu8830stdP7FQ5FzlUpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rQ3Hlu2t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A6PCJUsy; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MfD3XNSX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UhyD4ldr"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 34E0B1400240;
-	Tue,  8 Jul 2025 16:59:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rQ3Hlu2t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A6PCJUsy"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7C30D14003BA;
+	Tue,  8 Jul 2025 17:06:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 08 Jul 2025 16:59:06 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 08 Jul 2025 17:06:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752008346; x=1752094746; bh=RRkLEkmLIE
-	0SJKONHajgXcP+tgOy1Wq0Zxi9PXbZqXo=; b=MfD3XNSXjje+qPJKCPoKXMyi7b
-	jYXURr3/2yzd3YEPuKKknJk7aRx14+EFhukpHVgFvMY4SS6XOdFxkbLk7WnmIwp4
-	PmVrASgUz63NqyFpWNqXrB61nKLE4o177tveotKJMSGKqwf/XgdSOp5jX1IWRhyw
-	alruA6w48n2AZ1ad8xkBP1Sqn9W1EXQetjJZ9Rp7teH+AEsN27ZHf2F8VVocpiEQ
-	QOOQz5mj0C4IzgA7Fs/q49s7cZgDc7IuBpkXumyfCJsHDK+NYGiq2eeB3Fyh01Xo
-	A4PpqflKXsKkWZy1WjqAfNCimOja02Ek9+Amf7BLnLNrwJyi8uy9n1ncp1iA==
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm1; t=1752008776; x=
+	1752095176; bh=Bu3mtoQHVaIDRqc3cegm875fAI510cQfaqwfyF8LNFQ=; b=r
+	Q3Hlu2t9+bThuIo2XhhaflTkfWxaE0TSLiUuDzJ/jXR9TQdXsgozO2cJjVoflqIT
+	qbrijTwZWmafUhJ6+DY8WSaTh8rd9cp2NNNOEW0Nei0k9/wP73N5wlVKy5poMZfn
+	xhVyOeJYkflNwRsbbwjSFOlvH0yvfxf9rtbQp0OD0q4PdTGOy/53A40ROo1L4RI1
+	4o23llIQHxaAgzf2sUVsblpAEcf3Hw2RW8CycUlkAEqIuZFrulfv/oi86RWFKYEr
+	53j1o+Zw9qoyx0nqMT3WLQJHwbdN5DTkhTGu/jJ5UunUpwqtKi2U6288VYUoSXPC
+	OXSNx50nXx2Ccxi2QeRPA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752008346; x=1752094746; bh=RRkLEkmLIE0SJKONHajgXcP+tgOy1Wq0Zxi
-	9PXbZqXo=; b=UhyD4ldrWEcYd7ifTiQdaMkYBDb39ekv86jQqBuiyEgUoDioOno
-	kAjbKVDbNRtWW0dwKHX/LDVhcBuKzSbE1ygUZUxUyfDEVywV7deKCBRTFgYuzTXu
-	HccPQw5B5a65Q9Q6TleT0CWGDgxxUtSTNEEduCK6OdjHuWBAe62jD+9MC5wNYs7/
-	sl4Q+koD+sVIAWjqBx4w9A8K03W0MmrLoDcsBpG1OQsQ8pLkUOGUSxAPwUwGFu69
-	IWriXvI47yG2aa3W6LUFs+WmG2mqGDs5j4AFrTWkhQtl9SpV48cSDA9ZADRILXuC
-	D2ZWuEqpi8Q9+N3vRJapFpTA336VZRkefyg==
-X-ME-Sender: <xms:moZtaEn4AqyZUOCumoXonhN1rYY_Bg_ad7tzcXiIn_4MM5kNEBVW3w>
-    <xme:moZtaPXfs7zKNMwHhLVP7z-cB9uNtC9_A-u0oYgtGCfT85NgdIJVTtOm74RkHglI4
-    SgO30ngiWXCo2LM5w>
-X-ME-Received: <xmr:moZtaJGjSWU2JYL54kGBjuLCwY3T9nuluJaGiLC8Rwf8eDDUkdS4P5A80FCQaNBwQO8m4fdy5tfEVmX8l5MC693r1ODt7HdwO2845R8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheejtdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm2; t=1752008776; x=1752095176; bh=B
+	u3mtoQHVaIDRqc3cegm875fAI510cQfaqwfyF8LNFQ=; b=A6PCJUsyIb0+bgPJG
+	zZTcHajaKU8yxBtVEhbFVQiTDqloFDQ/7JF6QX9qz6slTXPwzsJrjKcKW9tqhfa7
+	+KRCmTSUzrOsZ8mMW+wyua6TllZ4oNyBtDKUbJVqFVoceQnhrfgE/CEo4ey/YZ2I
+	smbl8uS7ENfHaaailuhLr25clcCv16e1bpzF2JDjwoGXdszUu4/dZP+VA7G32Lc7
+	cqoQcInSP5dE60sdQ4laxx38Kiwri9nMI6Nxh9RSJJrhd9ajdvAl+h1UubqsQsh8
+	qnlBBbv4yjYlHGvMtW53YNdUNUW09L8fhrW7VwENign1oiwyIV9QBxI1n9rkEiD0
+	XjrCQ==
+X-ME-Sender: <xms:SIhtaB9yOXJ0T8k1powvaIQFYZBf6z_ijKeP_54dlxCR0oTSZp_XWA>
+    <xme:SIhtaI95D4p-bLem1bLhXw85ja3ZcxO5f5JoyrxXrxvFfEc6b9MYKVKaboPCi4Q-c
+    BLwnNPfzdZiH5jHWQ>
+X-ME-Received: <xmr:SIhtaIe_a6rs_iNKAN9HvrOqcJ_0iQ0sSp8fXNAU1qUesLP4bDau43WOj75s2aRCSGcnwraunei4rcFUWz300pMmFS8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheejvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:moZtaLenEAagDff-bT7U9f3HwOFUoZnCCKYEKmMb_UPQrhTVBddhvw>
-    <xmx:moZtaKIsdt6BIfCdt-odKuIbhvxh00BUmTHJWH_GnFdBkMxriAu_HA>
-    <xmx:moZtaAHV-9vNpZas6NNvo_MyEYTGzlSkMnNRe8UPtI2PQP6elzpLyg>
-    <xmx:moZtaNDY9R3dhjrTK2-tLE7BDmnULVr3g6kHoeR2jcuxmPZ3JbdJzQ>
-    <xmx:moZtaO0TwmkLwSKSKYi9KmonITqjj3IogCmz42WRd2GJs6LQoYKyQaXD>
-Feedback-ID: if26b431b:Fastmail
+    hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefvohguugcukghu
+    lhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    eukedulefhleehgeelffehledujeeigfffvddvhfevvdeggfegjeekueehkeegteenucff
+    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthht
+    ohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:SIhtaBFSyWpNc7aup1wdF6rTHDQYfM1QUq6jW1GgcsHrlrOkPFBBXw>
+    <xmx:SIhtaGe4sMdO8H44cbSLg97ctpXk-Acwgx_5A_CK8dur7rNNEkWWeQ>
+    <xmx:SIhtaLEXsoqcSBGNBQaVRSUbyMQkoBWbcrJ6uGg_KRXKU6fxIneg2g>
+    <xmx:SIhtaPXcd8c5N7yGcqH_oRDPTYLrN5S68X9ZC7LUFFOOUgzUQZbxJw>
+    <xmx:SIhtaNnWVsqKLOVHw9yuXrPla5sN64lDTvpWUjIZO_vhlAzzbFh9pT67>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 16:59:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  newren@gmail.com,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 1/3] sparse-checkout: remove use of the_repository
-In-Reply-To: <3cdc44a9e8c8e6718b24bc25def291348a0b2613.1751973594.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Tue, 08 Jul 2025
-	11:19:51 +0000")
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
-	<3cdc44a9e8c8e6718b24bc25def291348a0b2613.1751973594.git.gitgitgadget@gmail.com>
-Date: Tue, 08 Jul 2025 13:59:04 -0700
-Message-ID: <xmqqikk2tn53.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 8 Jul 2025 17:06:15 -0400 (EDT)
+From: Todd Zullinger <tmz@pobox.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH] t: avoid git config syntax from newer releases
+Date: Tue,  8 Jul 2025 17:05:27 -0400
+Message-ID: <20250708210529.1214574-1-tmz@pobox.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <aG1_eqSpH46UddZJ@teonanacatl.net>
+References: <aG1_eqSpH46UddZJ@teonanacatl.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+In a recent security release, 05e9cd64ee (config: quote values
+containing CR character, 2025-05-19) added calls to `git config get`,
+`git config set`, and `git config unset` which are not present on the
+maint-2.43 branch.
 
-> From: Derrick Stolee <stolee@gmail.com>
->
-> The logic for the 'git sparse-checkout' builtin uses the_repository all
-> over the place, despite some use of a repository struct in different
-> method parameters. Complete this removal of the_repository by using
-> 'repo' when possible.
->
-> In one place, there was already a local variable 'r' that was set to
-> the_repository, so move that to a method parameter.
->
-> We cannot remove the USE_THE_REPOSITORY_VARIABLE declaration as we are
-> still using global constants for the state of the sparse-checkout.
->
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  builtin/sparse-checkout.c | 119 ++++++++++++++++++++------------------
->  1 file changed, 63 insertions(+), 56 deletions(-)
+These subcommands were added in the following commits, released in
+git-2.46.0:
 
-OK.  The damage is not too bad for a partial update ;-).
+  4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06),
+  00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06),
+  95ea69c67b (builtin/config: introduce "unset" subcommand, 2024-05-06)
 
-As the file-scope static functions in builtin/sparse-checkout.c are
-not going to be called by anybody else, it does not really matter if
-they internally pass an extra parameter around or use the_repository
-since the end result is the same.  But doing this may hopefully help
-those that may want to move some of these functions to a more
-library-ish part of the system outside builtin/ hierarchy.
+Revert to the previous `git config` syntax for older maintenance
+branches.
 
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 1bf01591b275..8b70d0c6a441 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -204,12 +204,12 @@ static void clean_tracked_sparse_directories(struct repository *r)
->  		ensure_full_index(r->index);
->  }
->  
-> -static int update_working_directory(struct pattern_list *pl)
-> +static int update_working_directory(struct repository *r,
-> +				    struct pattern_list *pl)
->  {
->  	enum update_sparsity_result result;
->  	struct unpack_trees_options o;
->  	struct lock_file lock_file = LOCK_INIT;
-> -	struct repository *r = the_repository;
->  	struct pattern_list *old_pl;
+Signed-off-by: Todd Zullinger <tmz@pobox.com>
+---
 
-As this already used short-and-sweet 'r', we just follow suit to
-minimize the damage, which is fine.
+This is based on maint-2.43.  I tested that it merges cleanly to 2.44 and 2.45.
+I have only run a build with 2.45.4 so far.  I pushed this to a github fork,
+which looks like it will run the CI for each branch:
 
-> @@ -327,7 +327,8 @@ static void write_cone_to_file(FILE *fp, struct pattern_list *pl)
->  	string_list_clear(&sl, 0);
->  }
->  
-> -static int write_patterns_and_update(struct pattern_list *pl)
-> +static int write_patterns_and_update(struct repository *repo,
-> +				     struct pattern_list *pl)
->  {
->  	char *sparse_filename;
->  	FILE *fp;
-> @@ -336,15 +337,15 @@ static int write_patterns_and_update(struct pattern_list *pl)
->  
->  	sparse_filename = get_sparse_checkout_filename();
->  
-> -	if (safe_create_leading_directories(the_repository, sparse_filename))
-> +	if (safe_create_leading_directories(repo, sparse_filename))
->  		die(_("failed to create directory for sparse-checkout file"));
->  
->  	hold_lock_file_for_update(&lk, sparse_filename, LOCK_DIE_ON_ERROR);
->  
-> -	result = update_working_directory(pl);
-> +	result = update_working_directory(repo, pl);
->  	if (result) {
->  		rollback_lock_file(&lk);
-> -		update_working_directory(NULL);
-> +		update_working_directory(repo, NULL);
->  		goto out;
->  	}
+    https://github.com/tmzullinger/git/actions
 
-But this introduces a new parameter.  Both of two instances of
-repository struct used in the existing code in this function, other
-than references to struct repository *UNUSED, use "r", and with this
-patch, the name "repo" becomes more prevanent.
+ t/t1300-config.sh           | 4 ++--
+ t/t7450-bad-git-dotfiles.sh | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-We would probably want to rename "r" to "repo" for consistency in
-clean_tracked_sparse_repositories() and update_working_directory(),
-but that is better done later after the dust settles and the code
-around here becomes quiescent again, not as part of this topic as an
-extra churn.
-
-Looking good.  Thanks.  Will queue.
+diff --git a/t/t1300-config.sh b/t/t1300-config.sh
+index 1010410b7e..baf9b48231 100755
+--- a/t/t1300-config.sh
++++ b/t/t1300-config.sh
+@@ -2595,8 +2595,8 @@ test_expect_success 'writing value with trailing CR not stripped on read' '
+ 
+ 	printf "bar\r\n" >expect &&
+ 	git init cr-test &&
+-	git -C cr-test config set core.foo $(printf "bar\r") &&
+-	git -C cr-test config get core.foo >actual &&
++	git -C cr-test config core.foo $(printf "bar\r") &&
++	git -C cr-test config --get core.foo >actual &&
+ 
+ 	test_cmp expect actual
+ '
+diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
+index 2026285566..d1546e3311 100755
+--- a/t/t7450-bad-git-dotfiles.sh
++++ b/t/t7450-bad-git-dotfiles.sh
+@@ -362,10 +362,10 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
+ 	git -C repo mv sub $(printf "sub\r") &&
+ 
+ 	# Ensure config values containing CR are wrapped in quotes.
+-	git config unset -f repo/.gitmodules submodule.sub.path &&
++	git config --unset -f repo/.gitmodules submodule.sub.path &&
+ 	printf "\tpath = \"sub\r\"\n" >>repo/.gitmodules &&
+ 
+-	git config unset -f repo/.git/modules/sub/config core.worktree &&
++	git config --unset -f repo/.git/modules/sub/config core.worktree &&
+ 	{
+ 		printf "[core]\n" &&
+ 		printf "\tworktree = \"../../../sub\r\"\n"
+-- 
+2.50.1
