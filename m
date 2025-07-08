@@ -1,226 +1,523 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1D97206F23
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 12:15:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5A62DD5F0
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 13:48:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751976918; cv=none; b=LZVq1F6u7SXapM3RXVoUIbVY1BpdKLlYXT+/bsBtQNG3b6JGoNc7VfOCqKut6rqmJj8LtoLafmAixE3dPlub8jzcT5Z46IGm6fYlp6GOHvWFoWIK+8Xc0RtjEEtAk6Q1R+w4LRE0BarBLwrGUIhfvXRNf2IuGD+Po5086wXLJeI=
+	t=1751982485; cv=none; b=c4Pa78sWVGyDWeDxcddzUPRezj+rQ8NQvTOcwv1i8JO016udc09qJuBF3un3hkam/DrXh72VL8w8Owgx5a47tYkgMlOTHgp9nM3NNPZsYU8z4jLuJfb0U1rbGzXdlfRLgq0dVlZMk2e+N9ZvAuW5aNQXrXH6YU/HeVhFJ1b30lY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751976918; c=relaxed/simple;
-	bh=occ4ZnYgXRnYmcyfqDPaA6npjM2rCR+KWfgqOi/yjaU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=C4Qhttmw2owvGYaMX4+D1Pi4u+/AS0XQhGLzPldaWw7oPgJ4oOLaDy9u8585pgYL+Wv4/yu7CGtKEwaST4JyjOYaBpUG2lfL/H/gJNZ+TNGIoUQlkflE+s3iOGYTftp5sduXC7O08Vq08x5N+rAdIWzSIvKlo8AzMpHMqLFzSVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=C5TEN9hC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I6+8SfTP; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751982485; c=relaxed/simple;
+	bh=NFVjd7kh+sIrlBQoVtxIs7E5IiH2HEGxRBqf/fPaS8o=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=AK5Pw6txSlwdYAgFPZWa6WLaaZA7EWqa2YYZ3BtEpDDaDiMCdu+6BSXXcoB5LaZVkESq50QOFTILasuF3oKSRjp1QXvOppxougjsol7p6xxwXEw4q6w2AlmkV2v0Av1eCUBTG1peoI4vgGl0DO5Z5vwcgL/VhyE9WssReI389dA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OwZmKkP0; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="C5TEN9hC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I6+8SfTP"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 09075EC0C71;
-	Tue,  8 Jul 2025 08:15:15 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 08 Jul 2025 08:15:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751976915; x=1752063315; bh=zVfUFzEhv6
-	+Y8a2y8DPxdZvYccGMNQAHmpJTuNh1A8s=; b=C5TEN9hC4na/ki81J/A4a/JXIZ
-	q0NxqgX6AQo/D7jLYi6UuJturMkj+JicbNlCKXR8tt3PQj5avScINCu7Ev9UpdIM
-	YeRiFSaNO+bvpNE6EECU/oEy7dxArq9eAIf/dAFcbYXkJx+L9yn9Dox4W1cNQNLj
-	AMhXUEb6JvVovqJNGOscsbu5BmefdZIFgT0BJXtmKHmUz5/PfhmHDNqWFqw4mDtm
-	3JNMhZTguag1IgjFNK+rsQBiTbon8lKT+1BW0/j4nMH+4P9gT5F8C4pIhjBIxoRX
-	5K7Ik6oa4wNH4zjKXUd6QOr4H47M77eLFLvgNHLblB445QgclISJgXA1q5Yw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751976915; x=1752063315; bh=zVfUFzEhv6+Y8a2y8DPxdZvYccGMNQAHmpJ
-	TuNh1A8s=; b=I6+8SfTP8nLVTBgjCUMOQQR5MpvepFV6RaiFEdExzl6sEWerDIQ
-	znY/IH2E8YfyQ/GTyQAMBBZHoZ+tNU1GqEj2JlmlN5iEycxGGIwyzGjiLPEwLt46
-	eZnwdGwzZZeR6wO7Q6xmnQhga1d7V7PzPQOaebJRLRGUXSQ8z78RWN1zwSa9oNGm
-	UXHkXWTQhtCqqdfEU2ui8mxU5SiNHJXJFqzDpNrZpJ2LuHOdGOhEWsgSY6IYrJWE
-	wkdYZ7Gf/sZSnxgpwptDl+N+1fsok9shw9ofs5ITfrqHkswqIWhR+Fd++ix7rU+x
-	C+OMHYkfKEJmUJHa9QxMwOrdVEUDQBt35Aw==
-X-ME-Sender: <xms:0gttaBion6bAzpDwrL_jjiUdrP5EX14GQti8mfdBWu08SUMJ7mL1DA>
-    <xme:0gttaBi1MswbCYFlhRxotllxLPxVCEFNVvTuAfEchxTmvTmToPrjyEiVErxgqMqod
-    dtJwWlLzRndA6dxvA>
-X-ME-Received: <xmr:0gttaHjVC8iOVpxT8XI076C-RzCfUj2lkZE4UM0SgJErbmMfyh0vSW1Q1fKLBISPSbE0FP_4OJnjSSKuoWWcCxy4QPbv_nfEtLbGkfTBHeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgeeihecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:0gttaBJxid4VMLZggbyA3cK809e9jEYHz5X3YqXvPe_tg2UUBstsCg>
-    <xmx:0gttaGGqrxhBIL3oO8X0JtsVEUmOwelxhqWA89P01aqDhxxAmagAyg>
-    <xmx:0gttaFT5g9tOvngrw5w8ztILAAXdBLWngw4-plcM0y2NcmQVcLFnuA>
-    <xmx:0gttaCfiE7J7zCNLkccKrjbRwvFqHCpmm1OAMeioXdcaElDe61nUaA>
-    <xmx:0wttaAj9Vs0LEF9hWy0FX7dXa9FuAv2cg9rhiXLhX9QU5-9HLHvGEZZL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 08:15:13 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e24bb89c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 8 Jul 2025 12:15:13 +0000 (UTC)
-Date: Tue, 8 Jul 2025 14:15:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, newren@gmail.com,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/3] sparse-checkout: add 'clean' command
-Message-ID: <aG0LzlnfoQVDdetk@pks.im>
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
- <49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OwZmKkP0"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60c5b8ee2d9so9627763a12.2
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 06:48:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751982482; x=1752587282; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=289Cv1iuCLVHE7wzzgzVzH4kTnksMDPj10knSH7RN1Q=;
+        b=OwZmKkP0wz/463jGRSjeb4nVtpI0D0q3DD912CSNJtpqVUEyc6Gl/oUBzFfNRWfJwr
+         GmQQ2mWsglyywCQiUXvzdEsfDM2S9rhwtdfdt050IW9KCJUaphG9QJ0OuH8Jcp/RdeyE
+         UBjwQn3hoXbw2UhZ2yLQSttQgw+Tr9/I2WzaFwX79wMK2Y6rl9ezMemCS0xZa1yJKKWi
+         9Td4EmN59lXklemk0kGtHXj77jkDar++s7kRbnlawG1VyKiC36jjM4NBoiXLv+ySk8GU
+         24B4l9luemsPwJr+gm1XBRZld2EL+BJH62togFG41hnrB99/tB4JBxwzRROmidwUPLuv
+         ABFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751982482; x=1752587282;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=289Cv1iuCLVHE7wzzgzVzH4kTnksMDPj10knSH7RN1Q=;
+        b=gs398Ks4iY7A82ORFSGp9o5UZamVRRNHwn6J1Pjxh2Cuq34TUdpYjXrHOh+zd9DNWX
+         FqVaHrrDHCxB2Tc7t4wp4zXmaAeF2SDAgNToZnzqHmPa5LJwlaGd3PzfLmYIeB5PsTzq
+         CsQQto/W4uB72y5CCad0N2h+/6vFoBWL+V4Vcif+w4uVFIoXRiTj/Z7SSna5qnwL4Pcq
+         wLz+Iv1SY2rQ4A4gzLM9hVjzcCOGN0aezzLlMbSunLn5DL59AbxATb4kNIelqVjWAE5v
+         7HPFn9hi1sFrWKIH8vqTiQ7/5ljlSNEnn8VYRFTBYy1uv3D1zy04mhQFe2VKTcJq3LG3
+         2YjQ==
+X-Gm-Message-State: AOJu0YzhRYdk+lLh1+DdMECAyql9FVcKUv27dBm99XTYzcmhXv9YjLgS
+	tnDeAIf190QhRnLqrsozCzroEHfgZULsel3IRyKHiKfU3OZmM79r6xKx
+X-Gm-Gg: ASbGncslXyYZp2QoRwFmV2e+pAzED1W6h2kHJssS74SY9sse/w6Ncjn5h3uEniZF9HB
+	b0OXSBH2ASSi9zMneKsNIuxTgermYmS6cXUHxn6D2f6p+eN58q4qRjLfac81XA3/1igQqLaK1E3
+	q1q4FyZ0yh8zhRxSvna9xMqJRb2RpDp5dvq94l9FDnzS16HaiOauKumAOQiZm7Wdy8xmRzKQIRY
+	hdeKDEVPfHuL5GaRj2TpdYzNp+vVVqeRVH+oWL+bfhnO2UMC+Vin0WtYAcjVDbmU+SSBmZkbG7F
+	G870LBqYO5uYsfUM04uUSHoW4gPn0amJvJlZQ2sI06hrra/B2BA=
+X-Google-Smtp-Source: AGHT+IHslIL8iUdIzuQKpmW5Qgrt4atWib08vb5VZsYS8lKmsbl1feZGnvcYAJI/Qi/E0zVjHrttlQ==
+X-Received: by 2002:a17:907:720b:b0:ade:198c:4b6f with SMTP id a640c23a62f3a-ae6b0b1f475mr331811466b.1.1751982481268;
+        Tue, 08 Jul 2025 06:48:01 -0700 (PDT)
+Received: from [127.0.0.2] ([82.163.201.34])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b03032sm886575466b.124.2025.07.08.06.48.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jul 2025 06:48:00 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v3 0/4] for-each-ref: introduce seeking functionality via
+ '--start-after'
+Date: Tue, 08 Jul 2025 15:47:45 +0200
+Message-Id: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAIEhbWgC/4XNPQ6DMAwF4KugzHXlBAi0U+9RdTDBgKXyo4BQK
+ 8TdG+jCxvhsve8tamQvPKp7tCjPs4zSdyHEl0i5hrqaQcqQlUGTosUUYrRQywRV74HJNeC5goF
+ q6WgKXcCCcjI3YptYFZQh/OWzLzxfITcyTr3/7oOz3q5/O0N9as8aEJIKiTOHNs+rR92SvK+ub
+ 9Vmz+boJeeeCV7hStYJubLM9dFb1/UHSDSh5B4BAAA=
+X-Change-ID: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
+In-Reply-To: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im, 
+ schwab@linux-m68k.org, phillip.wood123@gmail.com
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=19336;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=NFVjd7kh+sIrlBQoVtxIs7E5IiH2HEGxRBqf/fPaS8o=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhtIY4eBQgLF63FCBn1ykSL/tk9iQXxaldwv
+ /2IHOuHUbynA4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJobSGOAAoJED7VnySO
+ Rox/5/8L/iTIZu2E2q1fifLYPxkVDZK21Xxe2xG4rpMT8G5s8bEZlB7hcNOfCkT/H1DloTyjP93
+ N4gQw9UmHDJgbDuGNxehJ/ObD6QiaFFDnnivc746F3ZgDRuA7lSZwWkOGcA+ChqJQHYjZ3UZeIM
+ HAxZ1NS1VZ4B4VXe5h++TRXXIewnlswQfzH+5zSWhCl7doK0DIbck9iqQUi+XW2dIZQSx5kgftu
+ lkziaOpdqe8A6H8/GqJexX278udBP9JJAfwb4HWkmhutsIXNRQfMOQEVsJt3VLaYu4OYSXb6thp
+ PS3S4R+nlr2JIDmSTs3SzzE3hrcnhkRxHS1UcsxLipeElr1DHcBeV/g7Pl8LFxBZN8uxpTz3ioV
+ iYtYlJARhNSZNuKOLLz3txsU/Fgf1qTs0xDUbRj4+dUGaj8DbrOnQRfbm+4juht7sp/r44eXcZe
+ 8flgSfhShY6HzOcb+BZuziracXJA5lBw+71V5onyM4lzHQJN+dJj+I324AEb0Bx9SW8js3PX456
+ LE=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Tue, Jul 08, 2025 at 11:19:52AM +0000, Derrick Stolee via GitGitGadget wrote:
-> diff --git a/Documentation/git-sparse-checkout.adoc b/Documentation/git-sparse-checkout.adoc
-> index 529a8edd9c1e..21ba6f759905 100644
-> --- a/Documentation/git-sparse-checkout.adoc
-> +++ b/Documentation/git-sparse-checkout.adoc
-> @@ -111,6 +111,17 @@ flags, with the same meaning as the flags from the `set` command, in order
->  to change which sparsity mode you are using without needing to also respecify
->  all sparsity paths.
->  
-> +'clean'::
-> +	Remove all files in tracked directories that are outside of the
-> +	sparse-checkout definition. This subcommand requires cone-mode
-> +	sparse-checkout to be sure that we know which directories are
-> +	both tracked and all contained paths are not in the sparse-checkout.
-> +	This command can be used to be sure the sparse index works
-> +	efficiently.
-> ++
-> +The `clean` command can also take the `--dry-run` (`-n`) option to list
-> +the directories it would remove without performing any filesystem changes.
-> +
+The `git-for-each-ref(1)` command is used to iterate over references
+present in a repository. In large repositories with millions of
+references, it would be optimal to paginate this output such that we
+can start iteration from a given reference. This would avoid having to
+iterate over all references from the beginning each time when paginating
+through results.
 
-Hm. This is somewhat different from `git clean`, where you have to pass
-`-f` to make it delete any data. I'm not particularly a fan of that
-mode, but should we maybe retain it regardless to ensure that things are
-at least a tiny bit more consistent?
+This series adds a '--start-after' option in 'git-for-each-ref(1)'. When
+used, the reference iteration seeks to first reference following the
+marker alphabetically. When paging, it should be noted that references
+may be deleted, modified or added between invocations. Output will only
+yield those references which follow the marker lexicographically. If the
+marker does not exist, output begins from the first reference that would
+come after it alphabetically.
 
-> diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-> index 8b70d0c6a441..6d2843827367 100644
-> --- a/builtin/sparse-checkout.c
-> +++ b/builtin/sparse-checkout.c
-> @@ -924,6 +924,76 @@ static int sparse_checkout_reapply(int argc, const char **argv,
->  	return update_working_directory(repo, NULL);
->  }
->  
-> +static char const * const builtin_sparse_checkout_clean_usage[] = {
-> +	"git sparse-checkout clean [-n|--dry-run]",
-> +	NULL
-> +};
-> +
-> +static struct sparse_checkout_clean_opts {
-> +	int dry_run;
-> +} clean_opts;
-> +
-> +static int sparse_checkout_clean(int argc, const char **argv,
-> +				   const char *prefix,
-> +				   struct repository *repo)
-> +{
-> +	struct strbuf full_path = STRBUF_INIT;
-> +	size_t worktree_len;
-> +	static struct option builtin_sparse_checkout_clean_options[] = {
-> +		OPT_BOOL('n', "dry-run", &clean_opts.dry_run,
-> +			 N_("list the directories that would be removed without making filesystem changes")),
-> +		OPT_END(),
-> +	};
-> +
-> +	setup_work_tree();
-> +	if (!core_apply_sparse_checkout)
-> +		die(_("must be in a sparse-checkout to clean directories"));
-> +	if (!core_sparse_checkout_cone)
-> +		die(_("must be in a cone-mode sparse-checkout to clean directories"));
-> +
-> +	argc = parse_options(argc, argv, prefix,
-> +			     builtin_sparse_checkout_clean_options,
-> +			     builtin_sparse_checkout_clean_usage, 0);
-> +
-> +	if (repo_read_index(repo) < 0)
-> +		die(_("failed to read index"));
-> +
-> +	if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY))
-> +		die(_("failed to convert index to a sparse index"));
+This enables efficient pagination workflows like:
+    git for-each-ref --count=100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-200
 
-I noticed that there are several cases in `convert_to_sparse()` where we
-simply do nothing. Should we check whether `repo->index->sparse_index`
-matches `INDEX_COLLAPSED` after the operation?
+To add this functionality, we expose the `ref_iterator` outside the
+'refs/' namespace and modify the `ref_iterator_seek()` to actually seek
+to a given reference and only set the prefix when the `set_prefix` field
+is set.
 
-> +	strbuf_addstr(&full_path, repo->worktree);
-> +	strbuf_addch(&full_path, '/');
-> +	worktree_len = full_path.len;
-> +
-> +	for (size_t i = 0; i < repo->index->cache_nr; i++) {
-> +		DIR* dir;
+On the reftable and packed backend, the changes are simple. But since
+the files backend uses 'ref-cache' for reference handling, the changes
+there are a little more involved, since we need to setup the right
+levels and the indexing.
 
-Nit: the `*` goes with the variable, not the type.
+Initially I was also planning to cleanup all the `refs_for_each...()`
+functions in 'refs.h' by simply using the iterator, but this bloated the
+series. So I've left that for another day.
 
-> +		struct cache_entry *ce = repo->index->cache[i];
-> +		if (!S_ISSPARSEDIR(ce->ce_mode))
-> +			continue;
+Changes in v3:
+- Change the working of the command to exclude the marker provided. With
+  this rename the flag to '--start-after'.
+- Extend the documentation to add a note about concurrent modifications
+  to the reference database.
+- Link to v2: https://lore.kernel.org/r/20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com
 
-Okay, we only need to handle sparse directories.
+Changes in v2:
+- Modify 'ref_iterator_seek()' to take in flags instead of a
+  'set_prefix' variable. This improves readability, where users would
+  use the 'REF_ITERATOR_SEEK_SET_PREFIX' instead of simply passing '1'.
+- When the set prefix flag isn't usage, reset any previously set prefix.
+  This ensures that the internal prefix state is always reset whenever
+  we seek and unifies the behavior between 'ref_iterator_seek' and
+  'ref_iterator_begin'.
+- Don't allow '--skip-until' to be run with '--sort', since the seeking
+  always takes place before any sorting and this can be confusing.
+- Some styling fixes:
+  - Remove extra newline
+  - Skip braces around single lined if...else clause
+  - Add braces around 'if' clause
+  - Fix indentation
+- Link to v1: https://lore.kernel.org/git/20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com/
 
-> +		strbuf_setlen(&full_path, worktree_len);
-> +		strbuf_add(&full_path, ce->name, ce->ce_namelen);
-> +
-> +		dir = opendir(full_path.buf);
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ Documentation/git-for-each-ref.adoc |  11 +-
+ builtin/for-each-ref.c              |   8 ++
+ ref-filter.c                        |  80 +++++++++++----
+ ref-filter.h                        |   1 +
+ refs.c                              |   6 +-
+ refs.h                              | 158 +++++++++++++++++++++++++++++
+ refs/debug.c                        |   7 +-
+ refs/files-backend.c                |   7 +-
+ refs/iterator.c                     |  26 +++--
+ refs/packed-backend.c               |  17 ++--
+ refs/ref-cache.c                    |  99 ++++++++++++++----
+ refs/ref-cache.h                    |   7 --
+ refs/refs-internal.h                | 152 ++--------------------------
+ refs/reftable-backend.c             |  21 ++--
+ t/t6302-for-each-ref-filter.sh      | 194 ++++++++++++++++++++++++++++++++++++
+ 15 files changed, 568 insertions(+), 226 deletions(-)
 
-Shouldn't it be sufficient to use `is_directory()`?
+Karthik Nayak (4):
+      refs: expose `ref_iterator` via 'refs.h'
+      ref-cache: remove unused function 'find_ref_entry()'
+      refs: selectively set prefix in the seek functions
+      for-each-ref: introduce a '--start-after' option
 
-> +		if (!dir)
-> +			continue;
+Range-diff versus v2:
 
-This is the good and expected case, right? The entry is sparse, so
-ideally it doesn't exist. If it does we have to recurse into to end up
-with the full index.
+1:  c0ce873c35 = 1:  dbb03c2aa9 refs: expose `ref_iterator` via 'refs.h'
+2:  2c50d1eba2 = 2:  fa5a0cb722 ref-cache: remove unused function 'find_ref_entry()'
+3:  fae849749f = 3:  9940d390cc refs: selectively set prefix in the seek functions
+4:  a0725a6647 ! 4:  ebe864095a for-each-ref: introduce a '--skip-until' option
+    @@ Metadata
+     Author: Karthik Nayak <karthik.188@gmail.com>
+     
+      ## Commit message ##
+    -    for-each-ref: introduce a '--skip-until' option
+    +    for-each-ref: introduce a '--start-after' option
+     
+         The `git-for-each-ref(1)` command is used to iterate over references
+         present in a repository. In large repositories with millions of
+    @@ Commit message
+         through results.
+     
+         The previous commit added 'seek' functionality to the reference
+    -    backends. Utilize this and expose a '--skip-until' option in
+    +    backends. Utilize this and expose a '--start-after' option in
+         'git-for-each-ref(1)'. When used, the reference iteration seeks to the
+    -    first matching reference and iterates from there onward.
+    +    lexicographically next reference and iterates from there onward.
+     
+         This enables efficient pagination workflows like:
+             git for-each-ref --count=100
+    -        git for-each-ref --count=100 --skip-until=refs/heads/branch-100
+    -        git for-each-ref --count=100 --skip-until=refs/heads/branch-200
+    +        git for-each-ref --count=100 --start-after=refs/heads/branch-100
+    +        git for-each-ref --count=100 --start-after=refs/heads/branch-200
+    +
+    +    Since the reference iterators only allow seeking to a specified marker
+    +    via the `ref_iterator_seek()`, we introduce a helper function
+    +    `start_ref_iterator_after()`, which seeks to next reference by simply
+    +    adding (char) 1 to the marker.
+    +
+    +    We must note that pagination always continues from the provided marker,
+    +    as such any concurrent reference updates lexicographically behind the
+    +    marker will not be output. Document the same.
+     
+         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+     
+    @@ Documentation/git-for-each-ref.adoc: SYNOPSIS
+      		   [--merged[=<object>]] [--no-merged[=<object>]]
+      		   [--contains[=<object>]] [--no-contains[=<object>]]
+     -		   [--exclude=<pattern> ...]
+    -+		   [--exclude=<pattern> ...] [--skip-until=<pattern>]
+    ++		   [--exclude=<pattern> ...] [--start-after=<marker>]
+      
+      DESCRIPTION
+      -----------
+    @@ Documentation/git-for-each-ref.adoc: TAB %(refname)`.
+      --include-root-refs::
+      	List root refs (HEAD and pseudorefs) apart from regular refs.
+      
+    -+--skip-until::
+    -+    Skip references up to but excluding the specified pattern. Cannot be used
+    -+    with general pattern matching or custom sort options.
+    ++--start-after::
+    ++    Allows paginating the output by skipping references up to and including the
+    ++    specified marker. When paging, it should be noted that references may be
+    ++    deleted, modified or added between invocations. Output will only yield those
+    ++    references which follow the marker lexicographically. If the marker does not
+    ++    exist, output begins from the first reference that would come after it
+    ++    alphabetically. Cannot be used with general pattern matching or custom
+    ++    sort options.
+     +
+      FIELD NAMES
+      -----------
+    @@ builtin/for-each-ref.c: static char const * const for_each_ref_usage[] = {
+      	N_("git for-each-ref [--points-at <object>]"),
+      	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
+      	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
+    -+	N_("git for-each-ref [--skip-until <pattern>]"),
+    ++	N_("git for-each-ref [--start-after <marker>]"),
+      	NULL
+      };
+      
+    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
+      		OPT_GROUP(""),
+      		OPT_INTEGER( 0 , "count", &format.array_opts.max_count, N_("show only <n> matched refs")),
+      		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
+    -+		OPT_STRING(  0 , "skip-until", &filter.seek, N_("skip-until"), N_("skip references until")),
+    ++		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-start"), N_("start iteration after the provided marker")),
+      		OPT__COLOR(&format.use_color, N_("respect format colors")),
+      		OPT_REF_FILTER_EXCLUDE(&filter),
+      		OPT_REF_SORT(&sorting_options),
+    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
+      	if (verify_ref_format(&format))
+      		usage_with_options(for_each_ref_usage, opts);
+      
+    -+	if (filter.seek && sorting_options.nr > 1)
+    -+		die(_("cannot use --skip-until custom sort options"));
+    ++	if (filter.start_after && sorting_options.nr > 1)
+    ++		die(_("cannot use --start-after with custom sort options"));
+     +
+      	sorting = ref_sorting_options(&sorting_options);
+      	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
+      		filter.name_patterns = argv;
+      	}
+      
+    -+	if (filter.seek && filter.name_patterns && filter.name_patterns[0])
+    -+		die(_("cannot use --skip-until with patterns"));
+    ++	if (filter.start_after && filter.name_patterns && filter.name_patterns[0])
+    ++		die(_("cannot use --start-after with patterns"));
+     +
+      	if (include_root_refs)
+      		flags |= FILTER_REFS_ROOT_REFS | FILTER_REFS_DETACHED_HEAD;
+      
+     
+      ## ref-filter.c ##
+    +@@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+    + 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
+    + }
+    + 
+    ++/*
+    ++ * We need to seek to the reference right after a given marker but excluding any
+    ++ * matching references. So we seek to the lexicographically next reference.
+    ++ */
+    ++static int start_ref_iterator_after(struct ref_iterator *iter, const char *marker)
+    ++{
+    ++	struct strbuf sb = STRBUF_INIT;
+    ++	int ret;
+    ++
+    ++	strbuf_addstr(&sb, marker);
+    ++	strbuf_addch(&sb, 1);
+    ++
+    ++	ret = ref_iterator_seek(iter, sb.buf, 0);
+    ++
+    ++	strbuf_release(&sb);
+    ++	return ret;
+    ++}
+    ++
+    + /*
+    +  * This is the same as for_each_fullref_in(), but it tries to iterate
+    +  * only over the patterns we'll care about. Note that it _doesn't_ do a full
+     @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
+      				       each_ref_fn cb,
+      				       void *cb_data)
+    @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
+     +non_prefix_iter:
+     +	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
+     +				       NULL, 0, flags);
+    -+	if (filter->seek)
+    -+		ret = ref_iterator_seek(iter, filter->seek, 0);
+    ++	if (filter->start_after)
+    ++		ret = start_ref_iterator_after(iter, filter->start_after);
+    ++
+     +	if (ret)
+     +		return ret;
+     +
+    @@ ref-filter.c: static int do_filter_refs(struct ref_filter *filter, unsigned int
+     +			iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+     +						       "", NULL, 0, 0);
+     +
+    -+			if (filter->seek)
+    -+				ret = ref_iterator_seek(iter, filter->seek, 0);
+    ++			if (filter->start_after)
+    ++				ret = start_ref_iterator_after(iter, filter->start_after);
+     +			else if (prefix)
+     +				ret = ref_iterator_seek(iter, prefix, 1);
+     +
+    @@ ref-filter.h: struct ref_array {
+      
+      struct ref_filter {
+      	const char **name_patterns;
+    -+	const char *seek;
+    ++	const char *start_after;
+      	struct strvec exclude;
+      	struct oid_array points_at;
+      	struct commit_list *with_commit;
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+      	test_cmp expect actual
+      '
+      
+    -+test_expect_success 'skip until with empty value' '
+    ++test_expect_success 'start after with empty value' '
+     +	cat >expect <<-\EOF &&
+     +	refs/heads/main
+     +	refs/heads/main_worktree
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until="" >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after="" >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until to a specific reference' '
+    ++test_expect_success 'start after a specific reference' '
+     +	cat >expect <<-\EOF &&
+    -+	refs/odd/spot
+     +	refs/tags/annotated-tag
+     +	refs/tags/doubly-annotated-tag
+     +	refs/tags/doubly-signed-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until to a specific reference with partial match' '
+    ++test_expect_success 'start after a specific reference with partial match' '
+     +	cat >expect <<-\EOF &&
+     +	refs/odd/spot
+     +	refs/tags/annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/sp >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/sp >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until just behind a specific reference' '
+    ++test_expect_success 'start after, just behind a specific reference' '
+     +	cat >expect <<-\EOF &&
+     +	refs/odd/spot
+     +	refs/tags/annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/parrot >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/parrot >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until to specific directory' '
+    ++test_expect_success 'start after with specific directory match' '
+     +	cat >expect <<-\EOF &&
+     +	refs/odd/spot
+     +	refs/tags/annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until to specific directory with trailing slash' '
+    ++test_expect_success 'start after with specific directory and trailing slash' '
+     +	cat >expect <<-\EOF &&
+     +	refs/odd/spot
+     +	refs/tags/annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/lost >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/lost >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until just behind a specific directory' '
+    ++test_expect_success 'start after, just behind a specific directory' '
+     +	cat >expect <<-\EOF &&
+     +	refs/odd/spot
+     +	refs/tags/annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/ >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/ >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until overflow specific reference length' '
+    ++test_expect_success 'start after, overflow specific reference length' '
+     +	cat >expect <<-\EOF &&
+     +	refs/tags/annotated-tag
+     +	refs/tags/doubly-annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spotnew >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spotnew >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until overflow specific reference path' '
+    ++test_expect_success 'start after, overflow specific reference path' '
+     +	cat >expect <<-\EOF &&
+     +	refs/tags/annotated-tag
+     +	refs/tags/doubly-annotated-tag
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot/new >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot/new >actual &&
+    ++	test_cmp expect actual
+    ++'
+    ++
+    ++test_expect_success 'start after, last reference' '
+    ++	cat >expect <<-\EOF &&
+    ++	EOF
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/tags/two >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until used with a pattern' '
+    ++test_expect_success 'start after used with a pattern' '
+     +	cat >expect <<-\EOF &&
+    -+	fatal: cannot use --skip-until with patterns
+    ++	fatal: cannot use --start-after with patterns
+     +	EOF
+    -+	test_must_fail git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot refs/tags 2>actual &&
+    ++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot refs/tags 2>actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    -+test_expect_success 'skip until used with custom sort order' '
+    ++test_expect_success 'start after used with custom sort order' '
+     +	cat >expect <<-\EOF &&
+    -+	fatal: cannot use --skip-until custom sort options
+    ++	fatal: cannot use --start-after with custom sort options
+     +	EOF
+    -+	test_must_fail git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot --sort=author 2>actual &&
+    ++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot --sort=author 2>actual &&
+     +	test_cmp expect actual
+     +'
+     +
 
-> +		else if (ENOENT != errno) {
 
-Nit: style. If one branches requires curly braces, all branches should
-use them.
+base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+change-id: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
 
-> +			warning_errno(_("failed to check for existence of '%s'"), ce->name);
-> +			continue;
-> +		}
-> +
-> +		closedir(dir);
-> +
-> +		printf("%s\n", ce->name);
+Thanks
+- Karthik
 
-git-clean(1) says "Removing %s\n". Should we do the same here?
-
-> +		if (!clean_opts.dry_run) {
-> +			if (remove_dir_recursively(&full_path, 0))
-> +				warning_errno(_("failed to remove '%s'"), ce->name);
-> +		}
-> +	}
-> +
-> +	strbuf_release(&full_path);
-> +	return 0;
-> +}
-> +
->  static char const * const builtin_sparse_checkout_disable_usage[] = {
->  	"git sparse-checkout disable",
->  	NULL
-
-Patrick
