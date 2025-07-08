@@ -1,133 +1,127 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1962DEA92
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 13:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C467B881E
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 13:57:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751982748; cv=none; b=uYqiUaOXbvAuynnBWDEgoZUoLOp7RXjilN4rluUCJ+yaghq5UoR2k3ROEiaoLfx933DqgFo2sx+yOtOZKSpXRH0UPN0ooX8Iq36J2zS/w6lCjUs6wtolvS5R247TO8ujV72h9uXq4ja+zmzZ2120DhgANkS6ulF2hEW0T8tSaro=
+	t=1751983031; cv=none; b=g9t9s+gtlUGgAyMXlFIb7KY1syCDZtAH6461v5oD2hc7WHnpQ+VNI1qByBVWMt7lB+FOtOKyD3pE8bwZKvFQqc/avbobliN+7sgn63Mmt0KgHOnIaNYCMrfJZSOSv6Mt9uFrQYzK8RBwvTximmPnd+boxoJZjvSK4Q/rKosFFpw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751982748; c=relaxed/simple;
-	bh=b7HMgee8Ry4mqGjXChiyKs+SBaBLzRp3w4wZt3FHlQc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sGpeuvQJ3HDnYw2NGJcFz5mfuJr3s9tyv5yZfrP7h/xkyotIaSKPCJr9IhVsXmR+E7ji6JjLY4j/tZNi8I5vm+zwxKn5ilG3gtmrNciORH97fE/Wf7KSMgKlQTPWxy2WXkcYrAcgUXqJaRfJXWsoRzPcK+QsBYD/JLGv/QHlAMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jp0wTtBT; arc=none smtp.client-ip=209.85.216.45
+	s=arc-20240116; t=1751983031; c=relaxed/simple;
+	bh=3t0qUrhrz5CTwjte3idYh69I/Ac9AVdrjBcrV0tYFwQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=K3K3ik45DI879BaVZMg7akxuJJUz3ely0UrYA7HZ/Yo9Jr7yq9Sut/V+qIUiMQBaYSSeVpcE24Is/3ESCvIZvfjLkoQf5GgpN1vYJMzxMBVXfqiC+RSqP//yFBmiKFO2yvB8dhra7JVvdAKGBy4+WflslY43IH3J+5MZCIZAz/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dNuEsYQp; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jp0wTtBT"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-311d5fdf1f0so4063792a91.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 06:52:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dNuEsYQp"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-453647147c6so41672975e9.2
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 06:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751982746; x=1752587546; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4U8JGM0SOhkwjC5pvEeGJQSRmYhaoExVb76UsPRkrH0=;
-        b=Jp0wTtBTrfd/9hKYv2tIYgbjQgVty/ZFylGc1+0iGjwHFUHqFG3HTGbetFLrQ+k3l1
-         5nQUjcQZ8K8vQga8qvwYay+SEv+wbtS9PO/o0naz6ZirDYP0+mk4lRu/ODtl/Q4Jku32
-         HviFzb2wr6QZkorC0JJ7++2kkzlx1ZcoVoi/Q1IoqHsq4rlIFlqDZkDmfaiPmvlZY8um
-         m4WjnmTFYz49NGBACNxsauyDerMurfZW/rQ1tI6/vLwN+viUy7cOdsabZg2XI74O4tyy
-         Iu2ygsLnLaWWFUj5Dt2i4kndB6xG/FnwuWkLo8swqhEtdf6zxyR6Tl9zWkDoKp1Hbs8I
-         kIBw==
+        d=gmail.com; s=20230601; t=1751983028; x=1752587828; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Sg8CVRD2mCYyVaItpKM8YpyqUN0zE+lsIVukwwIs3mI=;
+        b=dNuEsYQpfac6NF7CzEda3jtHigsPWOfGCu6zHgPDiOdQy0IEgHDlNSqGo43N89uuNM
+         NbYYW/cFADA6ogkd1YPquM4/1xX7j5je46DILADENJNxKsnqEmf06ncDhIixlQUuCMTr
+         BR49jrBgHG/7+0RHk/MgHe/NrnffmF+5bsPYVNse6S2r4f3kVxWNJy6tqsoNPquVm7+M
+         G7XTRb8OtKcW3eJWL8PI6SKeiPUGwywY4oDc/lGGdZ3V+1FVhsFP/U/zyXH1I9tXNDpf
+         fxzM0LG/FR87TiElHjz7O8k+O19nl3m2uO+dojpn7br2Z30cYKJExOVDZGUWefsoFBqQ
+         oHLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751982746; x=1752587546;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4U8JGM0SOhkwjC5pvEeGJQSRmYhaoExVb76UsPRkrH0=;
-        b=dj4jLxC3C9vzYCvdsKYUZqyv2UFV95yDsiTwbXX9Y0PdZAU4aynADRoW0IbfMGj6yC
-         VRlowb5RBdmh97s6AM66E1jvf9YDoJ/twbemJIlrZBYedBMBSDsoPdAlc6AqK8C/NQh2
-         LCPi9Vo1f58BxtIK0Ko2zDzacpbEX8EMwO9gEbLFkGPqVW+FEvlZg+41OlQ2ftlkPiP4
-         wOCn8uJLDGbuhrb+eolY4bUeZPzWstPaUsaV0VfSgA7k+TEAUE5AYWh3Au5dZSZd7GoC
-         2dniuokNOZg2aDmZtmarkV56ZY01DW71mNcbHttDRf6dkutYCjBblH64g06Nf2Oxl1cg
-         uvWw==
-X-Forwarded-Encrypted: i=1; AJvYcCWFFcNsC6ffCcVY832DZMx4gitU6dXKH9M+4BuW/N+GuoF/Ctaes50yjgCiAoj1UrEOymM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZcA0WsjWEgQCC5QnuIxlW9jdo+U7QCCN38cmkpjYwpfeM3pPA
-	tg+MzQIXtD9F2RpFyYSn+46yL2erSdLGkOF6wKLzh+UPl4AMr0spzROp/btAHxB0J/0n0CqDPRC
-	CbxZCCCjZIa574/wm8kRAor35D/pAkqQ=
-X-Gm-Gg: ASbGncs1p8fZVEcpv5hfdyUhi1IR+tJwtD/XWtTJudm+e8lzmV0o/hmZC+SKPZKjZbl
-	iCZHd4oQlbik29DBAslMZExtJhe7gFs5AYSXvKgNo5LCOWhfDdcUXSi5ey3VN3vLiBIopi+Ca8v
-	YUEI8RExrnFwblI+XJZ5l3HehQgNTCvmTGS+WHdvMfsT0AHM910UNRc6dddnVWwIsvMrXFUnsZW
-	Thpjj2gaPZoqA==
-X-Google-Smtp-Source: AGHT+IG+x3XcZGGwXfU6Fn2rNEkXvj/npN3R14nDo0NOOt/uRtkSEtVhwafkjlw2V9bJJlcZ/ZEc3gBnsmoV0z5eBp4=
-X-Received: by 2002:a17:90b:3804:b0:312:da0d:3d85 with SMTP id
- 98e67ed59e1d1-31aac438684mr23162619a91.6.1751982745832; Tue, 08 Jul 2025
- 06:52:25 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751983028; x=1752587828;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Sg8CVRD2mCYyVaItpKM8YpyqUN0zE+lsIVukwwIs3mI=;
+        b=Iryj/yhP0rQU29/hWErk+LmGxjJqbWjR6KcwJ5r9MLi+Dn6NXyWF04ocFAAixKT/CR
+         eKsXDxEnyd6yRBRiEIttqcsLnUuZ3X1JoLVuNu2rPKUa12Tyo+i7SyrNoKRFpBuPuC2O
+         CMvL1v0EGB2f1d6gkEHL4J229UZV2IT9NY1BLsHK5ss1mdB+8kubMU0KfGrOM2qY7e4D
+         FnMoM/YjQuSXdo/4Pp1U2yoE9pst2t8IxOmMKA+PHC7x4ClujmcmoZe1tiL7oNDnGmtU
+         oku3Ha6J5ZC/wB13rET/5uOpAePbSIRr8unInCKZs1+RqGfZAHYn5f/Z80Uw/8G29it/
+         AY6A==
+X-Gm-Message-State: AOJu0YzjP1+gS4zuZLJh6LklDgq4Kg5pXGB4L+sL+nvDdGAXHcfgwvjP
+	JxJBqJP8cMPe9KUXnX3lWfWmz8tmxHMQoeth6e/JFP2WgTGM5nfL4a3NJd/ICg==
+X-Gm-Gg: ASbGnctpJezNzP1M5zPa1LWzNJwORHMtDx3CsNlHE3C3et/RQNLG5nrPK9Qut22fFrz
+	Eu+Cgpr1iOXpnS849Oym5eel8XDgknMym3EI6tj1AGcWoGHVaOMoYjEukp8uXm60UjC/Ko3csoF
+	rnqvv2WLOFRZLYBUbuP/BKhOBeBNUJ9mqh7YSuMyTndp3qLiW9HbJEjEHwPD+KRqqj3GwYd2ocG
+	mwijDU+J+f7J5BbpdHW5rV8Lz6j9jUSL686uhSfIeFegGqA5cQ6KNG7RMhNbaFo67G2g0SfY+td
+	wEacjbLeCWloGV6OYodkj8mDpn8uV2kQ5gY5Cr7PhAUSQ2zC3IMXDpFKdKN446Vve+xBs61yf8T
+	g3VIRedg=
+X-Google-Smtp-Source: AGHT+IGwjA0AsHcjFpwKopAvBmAPQs8OIS6PlmgNM39zSxReO+H/A6KyALRFF+7aQaelNDj/NyS33w==
+X-Received: by 2002:a05:600c:4ec7:b0:44b:eb56:1d45 with SMTP id 5b1f17b1804b1-454cd4d6e82mr39275425e9.15.1751983027740;
+        Tue, 08 Jul 2025 06:57:07 -0700 (PDT)
+Received: from localhost.localdomain ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b470f871casm13089252f8f.45.2025.07.08.06.57.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jul 2025 06:57:07 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,
+	Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
+	Taylor Blau <me@ttaylorr.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: [PATCH 0/2] breaking-changes: deprecate support for core.commentChar=auto
+Date: Tue,  8 Jul 2025 14:56:50 +0100
+Message-ID: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1751630981.git.ayu.chandekar@gmail.com> <22fbbc8cf1b5cd622197e6d9f009acdbbcc0e802.1751630981.git.ayu.chandekar@gmail.com>
- <aGtkZgbJhO-GQ1XX@pks.im>
-In-Reply-To: <aGtkZgbJhO-GQ1XX@pks.im>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Tue, 8 Jul 2025 19:22:14 +0530
-X-Gm-Features: Ac12FXx4Hymg39X7bVVpWRvwISJP1faM51n9A3g1550zyhEGJOZF9siNanlm_ME
-Message-ID: <CAE7as+ZVk0jNb7jXZgrUBHpMAMQqB_3D04qmR-rsjeKNg2mdoA@mail.gmail.com>
-Subject: Re: [GSOC PATCH v3 2/2] builtin/prune: stop depending on 'the_repository'
-To: Patrick Steinhardt <ps@pks.im>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, shejialuo@gmail.com, 
-	shyamthakkar001@gmail.com, gitster@pobox.com, usmanakinyemi202@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-Hi Patrick,
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On Mon, Jul 7, 2025 at 11:38=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> On Fri, Jul 04, 2025 at 07:42:35PM +0530, Ayush Chandekar wrote:
-> > diff --git a/builtin/prune.c b/builtin/prune.c
-> > index dab3c19b6f..320e9c2341 100644
-> > --- a/builtin/prune.c
-> > +++ b/builtin/prune.c
-> > @@ -173,20 +171,19 @@ int cmd_prune(int argc,
-> >       expire =3D TIME_MAX;
-> >       save_commit_buffer =3D 0;
-> >       disable_replace_refs();
-> > -     repo_init_revisions(the_repository, &revs, prefix);
-> >
-> >       argc =3D parse_options(argc, argv, prefix, options, prune_usage, =
-0);
-> >
-> > -     if (the_repository->repository_format_precious_objects)
-> > +     repo_init_revisions(repo, &revs, prefix);
-> > +     if (repo->repository_format_precious_objects)
-> >               die(_("cannot prune in a precious-objects repo"));
-> >
->
-> Okay, we now only end up using the passed-in potentially-NULL `repo`
-> after we have called `parse_options`. Makes sense.
->
-> > diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
-> > index 6824581317..8f59b867f2 100755
-> > --- a/t/t1517-outside-repo.sh
-> > +++ b/t/t1517-outside-repo.sh
-> > @@ -114,4 +114,11 @@ test_expect_success 'update-server-info does not c=
-rash with -h' '
-> >       test_grep "[Uu]sage: git update-server-info " usage
-> >  '
-> >
-> > +test_expect_success 'prune does not crash with -h' '
-> > +     test_expect_code 129 git prune -h >usage &&
-> > +     test_grep "[Uu]sage: git prune " usage &&
-> > +     test_expect_code 129 nongit git prune -h >usage &&
-> > +     test_grep "[Uu]sage: git prune " usage
-> > +'
-> > +
-> >  test_done
->
-> And we have another test that verifies that all of this works outside of
-> a repository.
->
-> This addresses my review comments, so this version looks good to me.
-> Thanks!
->
-> Patrick
+This series implements the plan to deprecate and remove support for
+core.commentChar=auto outlined in [1]. This feature has been the
+source of a couple of bug reports recently [2,3] and as explained in
+the first patch the design is tricky to fix. When git sees the
+deprecated config setting it will print advice like the example below
+to help the user either remove the setting or set a custom comment
+string.
 
-Thanks a lot for reviewing!
+hint: Support for 'core.commentChar=auto' is deprecated and will be removed in git 3.0
+hint:
+hint: To use the default comment string (#) please run
+hint:
+hint:     git config unset --file ~/.config/git/config --all core.commentString
+hint:     git config unset --file ~/.config/git/config core.commentChar
+hint:     git config unset --global core.commentChar
+hint:
+hint: To set a custom comment string please run
+hint:
+hint:     git config set --global core.commentChar <comment string>
+hint:
+hint: where '<comment string>' is the string you wish to use.
 
-Ayush
+[1] https://lore.kernel.org/git/6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com
+[2] https://lore.kernel.org/git/20250315140913.577404-1-oswald.buddenhagen@gmx.de
+[3] https://lore.kernel.org/git/20250626132233.414789-1-ayu.chandekar@gmail.com
+
+Base-Commit: f0135a9047ca37d4d117dcf21f7e3e89fad85d00
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fremove-auto-comment-char%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/f0135a904...83d0d3ece
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/remove-auto-comment-char/v1
+
+
+Phillip Wood (2):
+  breaking-changes: deprecate support for core.commentString=auto
+  commit: print advice when core.commentString=auto
+
+ Documentation/BreakingChanges.adoc |   4 +
+ Documentation/config/core.adoc     |  20 ++-
+ builtin/commit.c                   | 192 +++++++++++++++++++++++++++++
+ config.c                           |   4 +
+ environment.c                      |   2 +
+ environment.h                      |   2 +
+ t/t3404-rebase-interactive.sh      |   2 +-
+ t/t7502-commit-porcelain.sh        |  32 ++++-
+ 8 files changed, 252 insertions(+), 6 deletions(-)
+
+-- 
+2.49.0.897.gfad3eb7d210
+
