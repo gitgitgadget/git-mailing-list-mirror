@@ -1,108 +1,143 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AB92DAFAB
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 11:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE8BD21FF53
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 11:24:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751973612; cv=none; b=pLi67xMUWLlQvwU3iaQzXCbleA5yuPGmHT+TvKrhxCtHhBNsnkvLB9/HLltPGogRhIsowfEOaoifbrtam7d93pMtPg6zxdZvQsgaliT/SS3PFTsooBGTzUGqplFafzD1oRKSrlbH6QNBTcizH5mv6xBPiLgy287wQYq2RO7iWW0=
+	t=1751973845; cv=none; b=lAZZLM0unnMxOqn8F8a5+WRuxuguhESC83W42Q/Ox5i0mapKneyACjIddv+BoJtDHbBc1DVZ72SFaEIo7zWBHJ4f1zCrfOwhrHwFLBwbzDfecj7ROjixtLFc3UVNyjPWK5G7qv9+lDeT8VJyj4yJxkMJoJKAqb/83B58RfYZVng=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751973612; c=relaxed/simple;
-	bh=WJFSUeFA7DPMwJDlWOPoqxbBOoZis4/fh86OdGCHS3A=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bFD92gL1rQ7JOPjlw4618GMBYC4njJN/VNylx55h+K8lTwcs1mZ1PAZDMuRNWbuxU2lura4SX484wB06ZIM2SFiM1oGtqLaNvmDUheNluR+TlI73ZCasBOwtgc+Uc5ZB1Djmvv962caDdXOQ2eKBxG0kTgdG8Pe0SflnEGKEx9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ccaqtcnj; arc=none smtp.client-ip=209.85.128.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751973845; c=relaxed/simple;
+	bh=oEWTbIT8Tvb0ALSCxJ6bwXBShm5LuqajNDiXY3xpHMs=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=hMAvEqFnDkuL2VfShslgLmd9vlhEugj2X7KotXMVWiOWg39iT0W8Zy4b9Wv0/toHbCGbzLuKM//aua+bF2q69/DIFVe6Q3/O1ko9xCmCCGrv7YoAI1syKVL1fXEvXw11uA09kbl0NJyijcNUvllwBDnneNOJntNePywKlB2MYYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FavAdRRh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XCC5cUsa; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ccaqtcnj"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-453749af004so20731285e9.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 04:20:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751973608; x=1752578408; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=LM1GzmX6eOAxXd7dU+WsaxDshi0YBVJ50L8rySD/Pms=;
-        b=ccaqtcnjyi6jYGtoA08Yuwkqf/k2BD3iFT6jaHUDu2So+D+/DIrIo9ouR3mE06vQSx
-         XJ5Js4sNYv4oB5QtqPdGwUyDNLAsdZ7zKtDwqw3rySfEQGuQBaHGUQqIJR7vC0YzlkiK
-         nFarssBLZgxU2yH+Pd+Gm0FSCkp+v6EOgUPtI1Ig/H1qvf/pAYz4gwnRVmgIYoCzNMsS
-         5mB+P1zDk2TxkykdOtVEt76gRrwD8vmX2A+gnqZnMYnqPrHbM/vfzJkewy5o1bBLYqX9
-         KM76CUjXkNYzH06ZDg3PqlXauVQj7ercRS5s/8CNx3lQw9MVz3P21u1c/eoor5dEh7Kr
-         cBFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751973608; x=1752578408;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=LM1GzmX6eOAxXd7dU+WsaxDshi0YBVJ50L8rySD/Pms=;
-        b=RgM2fcRZtIjfr9CNInfFV+144CnEV9tZwrqtm0NY6C1gpuejgXbyeKIcFfUuFFo9Tm
-         diGLguXJuQfmmqLkqX9IEcvQbPrK88k1Cut4g+vFqpvFkf8z3XGLBssFmMsgOVFEkFvY
-         cAS73zWlX0KmG78mEnEs4BbxnOn3ucW4IqEwEGic0DI29pdvfvjJbnzyIJdkm1alB5Sf
-         ltgStB0Xvc6EydXWAh7oHf8BOs0XJ7gmIG9Vr2nnctr8iC6ytAv6Byj+y7DxCVNWLuoz
-         DhDyQXzNiWyBGD9IXkEUKDdHULciCrBXRnNBxyFy+gsYlB7HYS+5O4f1yLd0uPBIfyj0
-         8yfw==
-X-Gm-Message-State: AOJu0YxAOJlXRSoBjS7kWnsRW+C/ptaFj/LQbv7XjwZ5kproomDhccpl
-	82ZaUOGwDj8H1qyidFTPGJiiKJTYrZaHrpyEYfUHb7fG6FnmBYikQzwuejYhKw==
-X-Gm-Gg: ASbGncu9UhH4U1FseUdPMA89M3b+M3Q7pShVALt9XaX0AqUNKPO7YcqvTmhbMz53euH
-	CZ4wnt9nTnJJC6BFIT8hOvX9T6kQy8B8fGQdZdam/XzQu/IZ8bQrqz5JnJzobV1nD7yVD99xceW
-	SAERO1W3o41f8u1ijIDsTqqXhv2gq7aFN2QsVIfo3+htSMHz2G3BFqogGP486VBw4tERYnBMqAp
-	B7QzZmr/ePnAecajXTlNB8ApXxctmjeUU5KQiJ6Uf1HfHX3XMAKAlMEdb8vNH6AD32nP7OR/E6O
-	W32/sO2LX0QvS0p4nkhauS5fGqJzNA3TeXE3X1mv7xr3xoweFc7XSKQpapAjtaE=
-X-Google-Smtp-Source: AGHT+IGEI5lNfIMFjDqaJ/ze+012IcRemGMjCl6s5/jDqlPugCBCumb4opY/GsoPrcq9WP80ND/mjA==
-X-Received: by 2002:a05:600c:5250:b0:453:a95:f07d with SMTP id 5b1f17b1804b1-454cd4cbed3mr29957415e9.10.1751973608240;
-        Tue, 08 Jul 2025 04:20:08 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454cd49d0e0sm19421575e9.28.2025.07.08.04.20.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 04:20:06 -0700 (PDT)
-Message-Id: <80d7a7641daa7a6f0e1db73e0a433701e9f37209.1751973594.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 08 Jul 2025 11:19:53 +0000
-Subject: [PATCH 3/3] sparse-index: point users to new 'clean' action
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FavAdRRh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XCC5cUsa"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D6E49140016A;
+	Tue,  8 Jul 2025 07:24:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 08 Jul 2025 07:24:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1751973841; x=1752060241; bh=9EmMn4rcBQ
+	1dCZTwf6S7hR08a5Lbb8Sl+p572rlsYnM=; b=FavAdRRh4A1cDFHHaHLzWA0IoG
+	4hZh50U+xj5iAh7DqU1qFMkgdpTsVTL8Bw7qFVJ6xf2q5hTv2icZ+n+U8TvCJe+9
+	owDImrEwpw/dRaZBVMYkg9Wb+6PuP5pGQrUHcB3qCneYGfTGQtJE5QPYAfqV0NRk
+	2vsbOPfmuO72lSseVSaCtTE6zF5+DTLMb9wP2YOO2SNkaPzLq+RiK48kVOhX1THm
+	QqdLOG3Y+4gSewJW5SlBdgTpMrpc5010c+V7tb+0qhJT19XuYdGoT3j28mF5ERFZ
+	n/RRdxm0UPzkXYO0XXzMSdQbjd2jLz0r6r/9LOTWMJ9tw8Ve2mNAQaHsUV2A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1751973841; x=1752060241; bh=9EmMn4rcBQ1dCZTwf6S7hR08a5Lb
+	b8Sl+p572rlsYnM=; b=XCC5cUsaDrq0TZHd1m7/BMUDzJNb0ovXePv7gcZhfsi8
+	VILGa9KSznYdvDxm45IwWicj4KWK9yxrB7KS3ErcgeH48ohUcrbvrCVLEEKjMZep
+	CBfTXd5Lm2StKw6JoJP88WY5lIkS3oZQ7RM6qDLlPmeBUVpeoeGZXZfrngU1t50B
+	WyQGsnsdkm0RqTpSH3sxReb/kY7MpTW7uSVpM0Sxh+2VlozLHskQLzbvirhk7Onp
+	YfjMozFCG51Gcy3exmws/rLkMmgFOVguyjLxiXjbQVjRU1SAxeu9dWM+Nl6SrdQw
+	JlB+4z+FaBl7q4yNYxhhmU0oYT0h0tnADKItntCnaQ==
+X-ME-Sender: <xms:0f9saBStuPuV-YI-Ybvc-sIk_LAMpWk5LpZnKDx8HjnHjDfjrS7VcQ>
+    <xme:0f9saK-f2jPbbzWy5mr1QJrgZuUXFrKWH1bKfpRlJeYvFkycSn6KvVfHEPbnHiJRi
+    QjCzzgC8QsTYYhHIQ>
+X-ME-Received: <xmr:0f9saIqAu541OYz7cZQVRQLMJ0p7ba6UMJNw69fj3ssAw14qdDmq9FEZVkoVLkZ_A7yVN_vE7VmMntGNAcIVFy6C8v7EQ9crhgSxgTf_mgI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgeehhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepie
+    fgiedtffffvddvueehheejheehleduudfhheekkeeggefgueffheevgeetjeefnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:0f9saHk0UCB96H76n178oNWpaEcVetUnHVNZK8XzoQBaJb2WtK9n2A>
+    <xmx:0f9saPL4bryIb4yR2vxSoXXA8kidyy8YA1bRMlKj7RYUaRIS22uleQ>
+    <xmx:0f9saMwdliXgeHaBzGP7xxIj-sjE2Ckc3mO1Quu47Y68AjotWymJcg>
+    <xmx:0f9saHvvkfEKAEVEy9j4ePhQ4WntWpSOGhhukmhw_Tj1qpzBa87FTw>
+    <xmx:0f9saCjrgvDRSu7oVB036EA3YbMRhmU4D7KDShsWdveuhkDwKrQmq9Kq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 07:24:01 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 57e20c98 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 8 Jul 2025 11:23:59 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 08 Jul 2025 13:23:56 +0200
+Subject: [PATCH] docs/git-pack-refs: document heuristic used for packing
+ loose refs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250708-b4-pks-pack-refs-document-files-heuristic-v1-1-e28d65a94573@pks.im>
+X-B4-Tracking: v=1; b=H4sIAMv/bGgC/x2NwQ6CMBAFf4Xs2ZdUBAV/xXgo7VY2aGm6YEgI/
+ 27jcZLJzE7KWVjpXu2U+SsqcyxwPlXkRhtfDPGFqTZ1a26mw9AgTYpk3YTMQeFnt344LgjyZsX
+ IaxZdxKHtbO/DxYe+uVLppaLL9n89nsfxAxi9m2p7AAAA
+X-Change-ID: 20250708-b4-pks-pack-refs-document-files-heuristic-58a9df3df946
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    newren@gmail.com,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.14.2
 
-From: Derrick Stolee <stolee@gmail.com>
+The `git pack-refs --auto` flag asks the ref backend to decide for
+itself whether or not references need to be repacked. This is done to
+ensure that we don't repack in cases where the backend is already in a
+good-enough state, which is typically the case for the "reftable"
+backend that performs auto-compaction on writes.
 
-In my experience, the most-common reason that the sparse index must
-expand to a full one is because there is some leftover file in a tracked
-directory that is now outside of the sparse-checkout. The new 'git
-sparse-checkout clean' command will find and delete these directories,
-so point users to it when they hit the sparse index expansion advice.
+As such, we initially only had heuristics in place for the "reftable"
+backend. The "files" backend didn't have any heuristics, so we'd repack
+loose references every time `git pack-refs --auto` was executed. This
+caused excessive repacking with that backend though, which is why we
+eventually implemented a heuristic via c3459ae9ef2 (refs/files: use
+heuristic to decide whether to repack with `--auto`, 2024-09-04).
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
+The documentation for the `--auto` flag hasn't been updated accordingly
+and still claims that we don't have any metrics for the "files" backend.
+Update it to reflect the new reality.
+
+Reported-by: Karthik Nayak <karthik.188@gmail.com>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- sparse-index.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Hi,
 
-diff --git a/sparse-index.c b/sparse-index.c
-index 5634abafaa07..5d14795063b5 100644
---- a/sparse-index.c
-+++ b/sparse-index.c
-@@ -32,7 +32,8 @@ int give_advice_on_expansion = 1;
- 	"Your working directory likely has contents that are outside of\n"     \
- 	"your sparse-checkout patterns. Use 'git sparse-checkout list' to\n"   \
- 	"see your sparse-checkout definition and compare it to your working\n" \
--	"directory contents. Running 'git clean' may assist in this cleanup."
-+	"directory contents. Running 'git sparse-checkout clean' may assist\n" \
-+	"in this cleanup."
- 
- struct modify_index_context {
- 	struct index_state *write;
--- 
-gitgitgadget
+a small fix for our out-of-date documentation, as discovered by Karthik.
+
+Thanks!
+
+Patrick
+---
+ Documentation/git-pack-refs.adoc | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/Documentation/git-pack-refs.adoc b/Documentation/git-pack-refs.adoc
+index 652c5497715..42b90051e69 100644
+--- a/Documentation/git-pack-refs.adoc
++++ b/Documentation/git-pack-refs.adoc
+@@ -66,7 +66,10 @@ Pack refs as needed depending on the current state of the ref database. The
+ behavior depends on the ref format used by the repository and may change in the
+ future.
+ +
+-	- "files": No special handling for `--auto` has been implemented.
++	- "files": Loose references are packed into the `packed-refs` file
++	  based on the ratio of loose references to the size of the
++	  `packed-refs` file. The bigger the `packed-refs` file, the more loose
++	  references need to exist before we repack.
+ +
+ 	- "reftable": Tables are compacted such that they form a geometric
+ 	  sequence. For two tables N and N+1, where N+1 is newer, this
+
+---
+base-commit: 41905d60226a0346b22f0d0d99428c746a5a3b14
+change-id: 20250708-b4-pks-pack-refs-document-files-heuristic-58a9df3df946
+
