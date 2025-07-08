@@ -1,66 +1,64 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5A62DD5F0
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 13:48:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6BEB2DD5F3
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 13:48:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751982485; cv=none; b=c4Pa78sWVGyDWeDxcddzUPRezj+rQ8NQvTOcwv1i8JO016udc09qJuBF3un3hkam/DrXh72VL8w8Owgx5a47tYkgMlOTHgp9nM3NNPZsYU8z4jLuJfb0U1rbGzXdlfRLgq0dVlZMk2e+N9ZvAuW5aNQXrXH6YU/HeVhFJ1b30lY=
+	t=1751982486; cv=none; b=S36xMwNBiwrk/RO+i/a0p7y33TULwp84juPITnmXm9upRKLDyu0Kn/Xmki0Yh2/ZGn957fYuJuGps9wgFPpiU43inYCw7Lovccx5zBA8/hz6rbQmEQqvsL1oslncUAoTstxAlaa6FGpjei58MqTM16FIPYKq15CcjI3NTgf1gww=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751982485; c=relaxed/simple;
-	bh=NFVjd7kh+sIrlBQoVtxIs7E5IiH2HEGxRBqf/fPaS8o=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=AK5Pw6txSlwdYAgFPZWa6WLaaZA7EWqa2YYZ3BtEpDDaDiMCdu+6BSXXcoB5LaZVkESq50QOFTILasuF3oKSRjp1QXvOppxougjsol7p6xxwXEw4q6w2AlmkV2v0Av1eCUBTG1peoI4vgGl0DO5Z5vwcgL/VhyE9WssReI389dA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OwZmKkP0; arc=none smtp.client-ip=209.85.208.50
+	s=arc-20240116; t=1751982486; c=relaxed/simple;
+	bh=XU8l02xxNNhgEVZz3rM+FvIaKvR39lV560YINx0RLdQ=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=Nrt09YvsEKud7b8tiB5M3Giohdqbwbb1rM4LXouYXUWG7Ln9PPd8SfjCaVbh/ZejRiHccvAJenx8UEtda0Vpr/GJWYq8fQEVpzk2OgD3gvUe1aL7VASyCxzrhROG/jW+1lVp462OxPmWyDFZzmLLq4jIA8Cko1hnVw/5RPzluPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9D6wMUI; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OwZmKkP0"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-60c5b8ee2d9so9627763a12.2
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 06:48:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9D6wMUI"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-60780d74c85so6066866a12.2
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 06:48:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751982482; x=1752587282; darn=vger.kernel.org;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+        d=gmail.com; s=20230601; t=1751982483; x=1752587283; darn=vger.kernel.org;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=289Cv1iuCLVHE7wzzgzVzH4kTnksMDPj10knSH7RN1Q=;
-        b=OwZmKkP0wz/463jGRSjeb4nVtpI0D0q3DD912CSNJtpqVUEyc6Gl/oUBzFfNRWfJwr
-         GmQQ2mWsglyywCQiUXvzdEsfDM2S9rhwtdfdt050IW9KCJUaphG9QJ0OuH8Jcp/RdeyE
-         UBjwQn3hoXbw2UhZ2yLQSttQgw+Tr9/I2WzaFwX79wMK2Y6rl9ezMemCS0xZa1yJKKWi
-         9Td4EmN59lXklemk0kGtHXj77jkDar++s7kRbnlawG1VyKiC36jjM4NBoiXLv+ySk8GU
-         24B4l9luemsPwJr+gm1XBRZld2EL+BJH62togFG41hnrB99/tB4JBxwzRROmidwUPLuv
-         ABFw==
+        bh=utmrJ2jdgbNibv3JKQte8WUhjvFULp0A1QeV3YonqBo=;
+        b=X9D6wMUIFEuqwn7w55tMQ3OOad8w4WXpDr7lmIjyL2hmQA0xbF/MNFZElN3gOOgLaT
+         3uM/qPzVBEiy3xx6Ou3ShDq1NGe+OABP+XuZkxYDjyJEcCsbhKZDKKjzkr9oMKFA/Hbo
+         BzMODmZZwvuhpKNINJ5m/bjCcHn7/uc8kle8e0zacNtK8adKIvsQy2BaNNgemD2IDRHS
+         mDXRA+GPlaE4bNLSpa3VnJIIjnzjNaiJPiosGHeM5vyBxz5x6pP4kMsYvEE6S62vp+DD
+         pr/L+MbQS/iu+1GoCKUu9tpqm09J0iVrxnT0nl3dUELpONFE0HwfFMD3Y4LPz9gzw4MX
+         TQyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751982482; x=1752587282;
-        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
-         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=289Cv1iuCLVHE7wzzgzVzH4kTnksMDPj10knSH7RN1Q=;
-        b=gs398Ks4iY7A82ORFSGp9o5UZamVRRNHwn6J1Pjxh2Cuq34TUdpYjXrHOh+zd9DNWX
-         FqVaHrrDHCxB2Tc7t4wp4zXmaAeF2SDAgNToZnzqHmPa5LJwlaGd3PzfLmYIeB5PsTzq
-         CsQQto/W4uB72y5CCad0N2h+/6vFoBWL+V4Vcif+w4uVFIoXRiTj/Z7SSna5qnwL4Pcq
-         wLz+Iv1SY2rQ4A4gzLM9hVjzcCOGN0aezzLlMbSunLn5DL59AbxATb4kNIelqVjWAE5v
-         7HPFn9hi1sFrWKIH8vqTiQ7/5ljlSNEnn8VYRFTBYy1uv3D1zy04mhQFe2VKTcJq3LG3
-         2YjQ==
-X-Gm-Message-State: AOJu0YzhRYdk+lLh1+DdMECAyql9FVcKUv27dBm99XTYzcmhXv9YjLgS
-	tnDeAIf190QhRnLqrsozCzroEHfgZULsel3IRyKHiKfU3OZmM79r6xKx
-X-Gm-Gg: ASbGncslXyYZp2QoRwFmV2e+pAzED1W6h2kHJssS74SY9sse/w6Ncjn5h3uEniZF9HB
-	b0OXSBH2ASSi9zMneKsNIuxTgermYmS6cXUHxn6D2f6p+eN58q4qRjLfac81XA3/1igQqLaK1E3
-	q1q4FyZ0yh8zhRxSvna9xMqJRb2RpDp5dvq94l9FDnzS16HaiOauKumAOQiZm7Wdy8xmRzKQIRY
-	hdeKDEVPfHuL5GaRj2TpdYzNp+vVVqeRVH+oWL+bfhnO2UMC+Vin0WtYAcjVDbmU+SSBmZkbG7F
-	G870LBqYO5uYsfUM04uUSHoW4gPn0amJvJlZQ2sI06hrra/B2BA=
-X-Google-Smtp-Source: AGHT+IHslIL8iUdIzuQKpmW5Qgrt4atWib08vb5VZsYS8lKmsbl1feZGnvcYAJI/Qi/E0zVjHrttlQ==
-X-Received: by 2002:a17:907:720b:b0:ade:198c:4b6f with SMTP id a640c23a62f3a-ae6b0b1f475mr331811466b.1.1751982481268;
-        Tue, 08 Jul 2025 06:48:01 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1751982483; x=1752587283;
+        h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
+         :mime-version:subject:date:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=utmrJ2jdgbNibv3JKQte8WUhjvFULp0A1QeV3YonqBo=;
+        b=T/47PttydvMTG6uTS/mHiCD663IDWaXxVAlPZs6rst11EdnqAyYtApYSP2n4ogFehB
+         MQLdytUmCSId5ZPO86rXIb8MSz06pvq8K3/q4xUS+1Z71L5YunNXKhoJKDV8cCMrAPMR
+         3riGTJnkKxU9/ow0ITfzpFqg9TvjWeo5sGvnoJI8tLVaE+ht3uuTpwG3pUZ46Kf9l9rt
+         /QikGJ7NDli1Fwc8W+2E3bxisdclglG9eo1CnC8pLe8gW3WYWoCSpgK3J73MQ7sxxjEz
+         Yf/jqw5rtJueD/STiOsE2YPBc8G2IBTP3GljZ2BfTrtWkNaMGOSzuLik5H4+Nnl06vWO
+         F3fQ==
+X-Gm-Message-State: AOJu0YzaGcN8/cH6xVcvAE7IVYUOCJDyn3wHDoZwm/3f15Vmuvg5Tf0s
+	lqqaxTTgetIYQkeFfczJPElK3FhoDIuIZQNM0eeRZ4KeulnfZt6rCbP8
+X-Gm-Gg: ASbGncv5vpGT7VfMamU5Kw8Iej+IQXSaWNqHDia0XCS6xyL9VWls6L6jerjt7yLKiHg
+	KIBXY2eyAPN9gibc5pbYkFWIwkclHVsbV/dDCo/TRwXYVYJqtyjHCIL93aFLk6AagwdVnf5n4Xc
+	3pc4R473FXEptk26avWnIObpRnSM353RQ3hfTnYR3nyvXz1DfwtXtwKIC7O66LFTee2ESZZfVmc
+	q2RAR9IoIxEEk0Tuht2+6T7iSL3XB7e+A7tNaI7eeTMxEhEhbBdDZUVxKrwh04eVAuxUiruz6Nd
+	m5JWsTFsy2rAwKopmDF4ACkPjbk6/lQTUHidS9gN
+X-Google-Smtp-Source: AGHT+IHu9Ar61neLzOOyu6yFVGe29eB+Dtd+/IH5vgXIAQFN4Yqx39EKRT+/QpBXGyDKC3nL6T5qhw==
+X-Received: by 2002:a17:907:7f22:b0:ad8:9c97:c2e5 with SMTP id a640c23a62f3a-ae6b02600f2mr279938866b.0.1751982482505;
+        Tue, 08 Jul 2025 06:48:02 -0700 (PDT)
 Received: from [127.0.0.2] ([82.163.201.34])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b03032sm886575466b.124.2025.07.08.06.48.00
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ae3f6b03032sm886575466b.124.2025.07.08.06.48.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 06:48:00 -0700 (PDT)
+        Tue, 08 Jul 2025 06:48:01 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH v3 0/4] for-each-ref: introduce seeking functionality via
- '--start-after'
-Date: Tue, 08 Jul 2025 15:47:45 +0200
-Message-Id: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
+Date: Tue, 08 Jul 2025 15:47:46 +0200
+Subject: [PATCH v3 1/4] refs: expose `ref_iterator` via 'refs.h'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,455 +67,380 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAIEhbWgC/4XNPQ6DMAwF4KugzHXlBAi0U+9RdTDBgKXyo4BQK
- 8TdG+jCxvhsve8tamQvPKp7tCjPs4zSdyHEl0i5hrqaQcqQlUGTosUUYrRQywRV74HJNeC5goF
- q6WgKXcCCcjI3YptYFZQh/OWzLzxfITcyTr3/7oOz3q5/O0N9as8aEJIKiTOHNs+rR92SvK+ub
- 9Vmz+boJeeeCV7hStYJubLM9dFb1/UHSDSh5B4BAAA=
-X-Change-ID: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
-In-Reply-To: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+Message-Id: <20250708-306-git-for-each-ref-pagination-v3-1-8cfba1080be4@gmail.com>
+References: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
+In-Reply-To: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im, 
  schwab@linux-m68k.org, phillip.wood123@gmail.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=19336;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14218;
  i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=NFVjd7kh+sIrlBQoVtxIs7E5IiH2HEGxRBqf/fPaS8o=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhtIY4eBQgLF63FCBn1ykSL/tk9iQXxaldwv
- /2IHOuHUbynA4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJobSGOAAoJED7VnySO
- Rox/5/8L/iTIZu2E2q1fifLYPxkVDZK21Xxe2xG4rpMT8G5s8bEZlB7hcNOfCkT/H1DloTyjP93
- N4gQw9UmHDJgbDuGNxehJ/ObD6QiaFFDnnivc746F3ZgDRuA7lSZwWkOGcA+ChqJQHYjZ3UZeIM
- HAxZ1NS1VZ4B4VXe5h++TRXXIewnlswQfzH+5zSWhCl7doK0DIbck9iqQUi+XW2dIZQSx5kgftu
- lkziaOpdqe8A6H8/GqJexX278udBP9JJAfwb4HWkmhutsIXNRQfMOQEVsJt3VLaYu4OYSXb6thp
- PS3S4R+nlr2JIDmSTs3SzzE3hrcnhkRxHS1UcsxLipeElr1DHcBeV/g7Pl8LFxBZN8uxpTz3ioV
- iYtYlJARhNSZNuKOLLz3txsU/Fgf1qTs0xDUbRj4+dUGaj8DbrOnQRfbm+4juht7sp/r44eXcZe
- 8flgSfhShY6HzOcb+BZuziracXJA5lBw+71V5onyM4lzHQJN+dJj+I324AEb0Bx9SW8js3PX456
- LE=
+ bh=XU8l02xxNNhgEVZz3rM+FvIaKvR39lV560YINx0RLdQ=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhtIY/8EySLS7RDy9xTr4iRxT0ePYtCRyLr7
+ vo+1ry5NXpNH4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJobSGPAAoJED7VnySO
+ Rox/n90L/j/27P2AszOR4JfBofWFZEyK6pV0eKjtczdPFGeo6cB0bn+rAKWy3IDv4sg80ZXqwfQ
+ bBXl/wGE+1uYEoDAAqeLxatMrtYcnW1YK2WmCIE4hYTLRt9+/jDAjwqS714R8+5aPSVpfFaOLvx
+ dRHxsL0M+CUNdzaS5jrFZm5HLMd2ARD4UkjKW7C11kxyishR+Za4tFJvDz7vg30EAn/kwUF4tfp
+ 81QXrJMgAwC+HIVVlIzIusnxPl3uFpvTvLSGuJhqBdyX0Ntp2oL23z3R1yqSWdwvjhJy3JnocVN
+ N9+olhWGwzY/qL/tOtsdn3E3KhQTn+kdSPYVAg38lAPA1rUaL/SVtaogEHzl4eUTM+2ucAYY4FG
+ TKAlxLJqFC/eEL/jgCgRazS+YnVLOQDMEt6F4/8aMsohA6l+tv08u+omOc86sMGEU4RvdVosZn6
+ iEv63mNHUZw25Zj3JmKjRCP2vKomRD1dQgekeCzPaUunPOA37LOw2X6baRriMzR3v7OGyUPoBT5
+ qo=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The `git-for-each-ref(1)` command is used to iterate over references
-present in a repository. In large repositories with millions of
-references, it would be optimal to paginate this output such that we
-can start iteration from a given reference. This would avoid having to
-iterate over all references from the beginning each time when paginating
-through results.
+The `ref_iterator` is an internal structure to the 'refs/'
+sub-directory, which allows iteration over refs. All reference iteration
+is built on top of these iterators.
 
-This series adds a '--start-after' option in 'git-for-each-ref(1)'. When
-used, the reference iteration seeks to first reference following the
-marker alphabetically. When paging, it should be noted that references
-may be deleted, modified or added between invocations. Output will only
-yield those references which follow the marker lexicographically. If the
-marker does not exist, output begins from the first reference that would
-come after it alphabetically.
-
-This enables efficient pagination workflows like:
-    git for-each-ref --count=100
-    git for-each-ref --count=100 --start-after=refs/heads/branch-100
-    git for-each-ref --count=100 --start-after=refs/heads/branch-200
-
-To add this functionality, we expose the `ref_iterator` outside the
-'refs/' namespace and modify the `ref_iterator_seek()` to actually seek
-to a given reference and only set the prefix when the `set_prefix` field
-is set.
-
-On the reftable and packed backend, the changes are simple. But since
-the files backend uses 'ref-cache' for reference handling, the changes
-there are a little more involved, since we need to setup the right
-levels and the indexing.
-
-Initially I was also planning to cleanup all the `refs_for_each...()`
-functions in 'refs.h' by simply using the iterator, but this bloated the
-series. So I've left that for another day.
-
-Changes in v3:
-- Change the working of the command to exclude the marker provided. With
-  this rename the flag to '--start-after'.
-- Extend the documentation to add a note about concurrent modifications
-  to the reference database.
-- Link to v2: https://lore.kernel.org/r/20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com
-
-Changes in v2:
-- Modify 'ref_iterator_seek()' to take in flags instead of a
-  'set_prefix' variable. This improves readability, where users would
-  use the 'REF_ITERATOR_SEEK_SET_PREFIX' instead of simply passing '1'.
-- When the set prefix flag isn't usage, reset any previously set prefix.
-  This ensures that the internal prefix state is always reset whenever
-  we seek and unifies the behavior between 'ref_iterator_seek' and
-  'ref_iterator_begin'.
-- Don't allow '--skip-until' to be run with '--sort', since the seeking
-  always takes place before any sorting and this can be confusing.
-- Some styling fixes:
-  - Remove extra newline
-  - Skip braces around single lined if...else clause
-  - Add braces around 'if' clause
-  - Fix indentation
-- Link to v1: https://lore.kernel.org/git/20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com/
+External clients of the 'refs' subsystem use the various
+'refs_for_each...()' functions to iterate over refs. However since these
+are wrapper functions, each combination of functionality requires a new
+wrapper function. This is not feasible as the functions pile up with the
+increase in requirements. Expose the internal reference iterator, so
+advanced users can mix and match options as needed.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- Documentation/git-for-each-ref.adoc |  11 +-
- builtin/for-each-ref.c              |   8 ++
- ref-filter.c                        |  80 +++++++++++----
- ref-filter.h                        |   1 +
- refs.c                              |   6 +-
- refs.h                              | 158 +++++++++++++++++++++++++++++
- refs/debug.c                        |   7 +-
- refs/files-backend.c                |   7 +-
- refs/iterator.c                     |  26 +++--
- refs/packed-backend.c               |  17 ++--
- refs/ref-cache.c                    |  99 ++++++++++++++----
- refs/ref-cache.h                    |   7 --
- refs/refs-internal.h                | 152 ++--------------------------
- refs/reftable-backend.c             |  21 ++--
- t/t6302-for-each-ref-filter.sh      | 194 ++++++++++++++++++++++++++++++++++++
- 15 files changed, 568 insertions(+), 226 deletions(-)
+ refs.h               | 147 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ refs/refs-internal.h | 145 +-------------------------------------------------
+ 2 files changed, 149 insertions(+), 143 deletions(-)
 
-Karthik Nayak (4):
-      refs: expose `ref_iterator` via 'refs.h'
-      ref-cache: remove unused function 'find_ref_entry()'
-      refs: selectively set prefix in the seek functions
-      for-each-ref: introduce a '--start-after' option
+diff --git a/refs.h b/refs.h
+index 46a6008e07..7c21aaef3d 100644
+--- a/refs.h
++++ b/refs.h
+@@ -1190,4 +1190,151 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+ 				    unsigned int flags,
+ 				    struct strbuf *err);
+ 
++/*
++ * Reference iterators
++ *
++ * A reference iterator encapsulates the state of an in-progress
++ * iteration over references. Create an instance of `struct
++ * ref_iterator` via one of the functions in this module.
++ *
++ * A freshly-created ref_iterator doesn't yet point at a reference. To
++ * advance the iterator, call ref_iterator_advance(). If successful,
++ * this sets the iterator's refname, oid, and flags fields to describe
++ * the next reference and returns ITER_OK. The data pointed at by
++ * refname and oid belong to the iterator; if you want to retain them
++ * after calling ref_iterator_advance() again or calling
++ * ref_iterator_free(), you must make a copy. When the iteration has
++ * been exhausted, ref_iterator_advance() releases any resources
++ * associated with the iteration, frees the ref_iterator object, and
++ * returns ITER_DONE. If you want to abort the iteration early, call
++ * ref_iterator_free(), which also frees the ref_iterator object and
++ * any associated resources. If there was an internal error advancing
++ * to the next entry, ref_iterator_advance() aborts the iteration,
++ * frees the ref_iterator, and returns ITER_ERROR.
++ *
++ * The reference currently being looked at can be peeled by calling
++ * ref_iterator_peel(). This function is often faster than peel_ref(),
++ * so it should be preferred when iterating over references.
++ *
++ * Putting it all together, a typical iteration looks like this:
++ *
++ *     int ok;
++ *     struct ref_iterator *iter = ...;
++ *
++ *     while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
++ *             if (want_to_stop_iteration()) {
++ *                     ok = ITER_DONE;
++ *                     break;
++ *             }
++ *
++ *             // Access information about the current reference:
++ *             if (!(iter->flags & REF_ISSYMREF))
++ *                     printf("%s is %s\n", iter->refname, oid_to_hex(iter->oid));
++ *
++ *             // If you need to peel the reference:
++ *             ref_iterator_peel(iter, &oid);
++ *     }
++ *
++ *     if (ok != ITER_DONE)
++ *             handle_error();
++ *     ref_iterator_free(iter);
++ */
++struct ref_iterator;
++
++/*
++ * These flags are passed to refs_ref_iterator_begin() (and do_for_each_ref(),
++ * which feeds it).
++ */
++enum do_for_each_ref_flags {
++	/*
++	 * Include broken references in a do_for_each_ref*() iteration, which
++	 * would normally be omitted. This includes both refs that point to
++	 * missing objects (a true repository corruption), ones with illegal
++	 * names (which we prefer not to expose to callers), as well as
++	 * dangling symbolic refs (i.e., those that point to a non-existent
++	 * ref; this is not a corruption, but as they have no valid oid, we
++	 * omit them from normal iteration results).
++	 */
++	DO_FOR_EACH_INCLUDE_BROKEN = (1 << 0),
++
++	/*
++	 * Only include per-worktree refs in a do_for_each_ref*() iteration.
++	 * Normally this will be used with a files ref_store, since that's
++	 * where all reference backends will presumably store their
++	 * per-worktree refs.
++	 */
++	DO_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
++
++	/*
++	 * Omit dangling symrefs from output; this only has an effect with
++	 * INCLUDE_BROKEN, since they are otherwise not included at all.
++	 */
++	DO_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
++
++	/*
++	 * Include root refs i.e. HEAD and pseudorefs along with the regular
++	 * refs.
++	 */
++	DO_FOR_EACH_INCLUDE_ROOT_REFS = (1 << 3),
++};
++
++/*
++ * Return an iterator that goes over each reference in `refs` for
++ * which the refname begins with prefix. If trim is non-zero, then
++ * trim that many characters off the beginning of each refname.
++ * The output is ordered by refname.
++ */
++struct ref_iterator *refs_ref_iterator_begin(
++	struct ref_store *refs,
++	const char *prefix, const char **exclude_patterns,
++	int trim, enum do_for_each_ref_flags flags);
++
++/*
++ * Advance the iterator to the first or next item and return ITER_OK.
++ * If the iteration is exhausted, free the resources associated with
++ * the ref_iterator and return ITER_DONE. On errors, free the iterator
++ * resources and return ITER_ERROR. It is a bug to use ref_iterator or
++ * call this function again after it has returned ITER_DONE or
++ * ITER_ERROR.
++ */
++int ref_iterator_advance(struct ref_iterator *ref_iterator);
++
++/*
++ * Seek the iterator to the first reference with the given prefix.
++ * The prefix is matched as a literal string, without regard for path
++ * separators. If prefix is NULL or the empty string, seek the iterator to the
++ * first reference again.
++ *
++ * This function is expected to behave as if a new ref iterator with the same
++ * prefix had been created, but allows reuse of iterators and thus may allow
++ * the backend to optimize. Parameters other than the prefix that have been
++ * passed when creating the iterator will remain unchanged.
++ *
++ * Returns 0 on success, a negative error code otherwise.
++ */
++int ref_iterator_seek(struct ref_iterator *ref_iterator,
++		      const char *prefix);
++
++/*
++ * If possible, peel the reference currently being viewed by the
++ * iterator. Return 0 on success.
++ */
++int ref_iterator_peel(struct ref_iterator *ref_iterator,
++		      struct object_id *peeled);
++
++/* Free the reference iterator and any associated resources. */
++void ref_iterator_free(struct ref_iterator *ref_iterator);
++
++/*
++ * The common backend for the for_each_*ref* functions. Call fn for
++ * each reference in iter. If the iterator itself ever returns
++ * ITER_ERROR, return -1. If fn ever returns a non-zero value, stop
++ * the iteration and return that value. Otherwise, return 0. In any
++ * case, free the iterator when done. This function is basically an
++ * adapter between the callback style of reference iteration and the
++ * iterator style.
++ */
++int do_for_each_ref_iterator(struct ref_iterator *iter,
++			     each_ref_fn fn, void *cb_data);
++
+ #endif /* REFS_H */
+diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+index f868870851..03f5df04d5 100644
+--- a/refs/refs-internal.h
++++ b/refs/refs-internal.h
+@@ -244,90 +244,8 @@ const char *find_descendant_ref(const char *dirname,
+ #define SYMREF_MAXDEPTH 5
+ 
+ /*
+- * These flags are passed to refs_ref_iterator_begin() (and do_for_each_ref(),
+- * which feeds it).
+- */
+-enum do_for_each_ref_flags {
+-	/*
+-	 * Include broken references in a do_for_each_ref*() iteration, which
+-	 * would normally be omitted. This includes both refs that point to
+-	 * missing objects (a true repository corruption), ones with illegal
+-	 * names (which we prefer not to expose to callers), as well as
+-	 * dangling symbolic refs (i.e., those that point to a non-existent
+-	 * ref; this is not a corruption, but as they have no valid oid, we
+-	 * omit them from normal iteration results).
+-	 */
+-	DO_FOR_EACH_INCLUDE_BROKEN = (1 << 0),
+-
+-	/*
+-	 * Only include per-worktree refs in a do_for_each_ref*() iteration.
+-	 * Normally this will be used with a files ref_store, since that's
+-	 * where all reference backends will presumably store their
+-	 * per-worktree refs.
+-	 */
+-	DO_FOR_EACH_PER_WORKTREE_ONLY = (1 << 1),
+-
+-	/*
+-	 * Omit dangling symrefs from output; this only has an effect with
+-	 * INCLUDE_BROKEN, since they are otherwise not included at all.
+-	 */
+-	DO_FOR_EACH_OMIT_DANGLING_SYMREFS = (1 << 2),
+-
+-	/*
+-	 * Include root refs i.e. HEAD and pseudorefs along with the regular
+-	 * refs.
+-	 */
+-	DO_FOR_EACH_INCLUDE_ROOT_REFS = (1 << 3),
+-};
+-
+-/*
+- * Reference iterators
+- *
+- * A reference iterator encapsulates the state of an in-progress
+- * iteration over references. Create an instance of `struct
+- * ref_iterator` via one of the functions in this module.
+- *
+- * A freshly-created ref_iterator doesn't yet point at a reference. To
+- * advance the iterator, call ref_iterator_advance(). If successful,
+- * this sets the iterator's refname, oid, and flags fields to describe
+- * the next reference and returns ITER_OK. The data pointed at by
+- * refname and oid belong to the iterator; if you want to retain them
+- * after calling ref_iterator_advance() again or calling
+- * ref_iterator_free(), you must make a copy. When the iteration has
+- * been exhausted, ref_iterator_advance() releases any resources
+- * associated with the iteration, frees the ref_iterator object, and
+- * returns ITER_DONE. If you want to abort the iteration early, call
+- * ref_iterator_free(), which also frees the ref_iterator object and
+- * any associated resources. If there was an internal error advancing
+- * to the next entry, ref_iterator_advance() aborts the iteration,
+- * frees the ref_iterator, and returns ITER_ERROR.
+- *
+- * The reference currently being looked at can be peeled by calling
+- * ref_iterator_peel(). This function is often faster than peel_ref(),
+- * so it should be preferred when iterating over references.
+- *
+- * Putting it all together, a typical iteration looks like this:
+- *
+- *     int ok;
+- *     struct ref_iterator *iter = ...;
+- *
+- *     while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
+- *             if (want_to_stop_iteration()) {
+- *                     ok = ITER_DONE;
+- *                     break;
+- *             }
+- *
+- *             // Access information about the current reference:
+- *             if (!(iter->flags & REF_ISSYMREF))
+- *                     printf("%s is %s\n", iter->refname, oid_to_hex(iter->oid));
+- *
+- *             // If you need to peel the reference:
+- *             ref_iterator_peel(iter, &oid);
+- *     }
+- *
+- *     if (ok != ITER_DONE)
+- *             handle_error();
+- *     ref_iterator_free(iter);
++ * Data structure for holding a reference iterator. See refs.h for
++ * more details and usage instructions.
+  */
+ struct ref_iterator {
+ 	struct ref_iterator_vtable *vtable;
+@@ -337,42 +255,6 @@ struct ref_iterator {
+ 	unsigned int flags;
+ };
+ 
+-/*
+- * Advance the iterator to the first or next item and return ITER_OK.
+- * If the iteration is exhausted, free the resources associated with
+- * the ref_iterator and return ITER_DONE. On errors, free the iterator
+- * resources and return ITER_ERROR. It is a bug to use ref_iterator or
+- * call this function again after it has returned ITER_DONE or
+- * ITER_ERROR.
+- */
+-int ref_iterator_advance(struct ref_iterator *ref_iterator);
+-
+-/*
+- * Seek the iterator to the first reference with the given prefix.
+- * The prefix is matched as a literal string, without regard for path
+- * separators. If prefix is NULL or the empty string, seek the iterator to the
+- * first reference again.
+- *
+- * This function is expected to behave as if a new ref iterator with the same
+- * prefix had been created, but allows reuse of iterators and thus may allow
+- * the backend to optimize. Parameters other than the prefix that have been
+- * passed when creating the iterator will remain unchanged.
+- *
+- * Returns 0 on success, a negative error code otherwise.
+- */
+-int ref_iterator_seek(struct ref_iterator *ref_iterator,
+-		      const char *prefix);
+-
+-/*
+- * If possible, peel the reference currently being viewed by the
+- * iterator. Return 0 on success.
+- */
+-int ref_iterator_peel(struct ref_iterator *ref_iterator,
+-		      struct object_id *peeled);
+-
+-/* Free the reference iterator and any associated resources. */
+-void ref_iterator_free(struct ref_iterator *ref_iterator);
+-
+ /*
+  * An iterator over nothing (its first ref_iterator_advance() call
+  * returns ITER_DONE).
+@@ -384,17 +266,6 @@ struct ref_iterator *empty_ref_iterator_begin(void);
+  */
+ int is_empty_ref_iterator(struct ref_iterator *ref_iterator);
+ 
+-/*
+- * Return an iterator that goes over each reference in `refs` for
+- * which the refname begins with prefix. If trim is non-zero, then
+- * trim that many characters off the beginning of each refname.
+- * The output is ordered by refname.
+- */
+-struct ref_iterator *refs_ref_iterator_begin(
+-		struct ref_store *refs,
+-		const char *prefix, const char **exclude_patterns,
+-		int trim, enum do_for_each_ref_flags flags);
+-
+ /*
+  * A callback function used to instruct merge_ref_iterator how to
+  * interleave the entries from iter0 and iter1. The function should
+@@ -520,18 +391,6 @@ struct ref_iterator_vtable {
+  */
+ extern struct ref_iterator *current_ref_iter;
+ 
+-/*
+- * The common backend for the for_each_*ref* functions. Call fn for
+- * each reference in iter. If the iterator itself ever returns
+- * ITER_ERROR, return -1. If fn ever returns a non-zero value, stop
+- * the iteration and return that value. Otherwise, return 0. In any
+- * case, free the iterator when done. This function is basically an
+- * adapter between the callback style of reference iteration and the
+- * iterator style.
+- */
+-int do_for_each_ref_iterator(struct ref_iterator *iter,
+-			     each_ref_fn fn, void *cb_data);
+-
+ struct ref_store;
+ 
+ /* refs backends */
 
-Range-diff versus v2:
-
-1:  c0ce873c35 = 1:  dbb03c2aa9 refs: expose `ref_iterator` via 'refs.h'
-2:  2c50d1eba2 = 2:  fa5a0cb722 ref-cache: remove unused function 'find_ref_entry()'
-3:  fae849749f = 3:  9940d390cc refs: selectively set prefix in the seek functions
-4:  a0725a6647 ! 4:  ebe864095a for-each-ref: introduce a '--skip-until' option
-    @@ Metadata
-     Author: Karthik Nayak <karthik.188@gmail.com>
-     
-      ## Commit message ##
-    -    for-each-ref: introduce a '--skip-until' option
-    +    for-each-ref: introduce a '--start-after' option
-     
-         The `git-for-each-ref(1)` command is used to iterate over references
-         present in a repository. In large repositories with millions of
-    @@ Commit message
-         through results.
-     
-         The previous commit added 'seek' functionality to the reference
-    -    backends. Utilize this and expose a '--skip-until' option in
-    +    backends. Utilize this and expose a '--start-after' option in
-         'git-for-each-ref(1)'. When used, the reference iteration seeks to the
-    -    first matching reference and iterates from there onward.
-    +    lexicographically next reference and iterates from there onward.
-     
-         This enables efficient pagination workflows like:
-             git for-each-ref --count=100
-    -        git for-each-ref --count=100 --skip-until=refs/heads/branch-100
-    -        git for-each-ref --count=100 --skip-until=refs/heads/branch-200
-    +        git for-each-ref --count=100 --start-after=refs/heads/branch-100
-    +        git for-each-ref --count=100 --start-after=refs/heads/branch-200
-    +
-    +    Since the reference iterators only allow seeking to a specified marker
-    +    via the `ref_iterator_seek()`, we introduce a helper function
-    +    `start_ref_iterator_after()`, which seeks to next reference by simply
-    +    adding (char) 1 to the marker.
-    +
-    +    We must note that pagination always continues from the provided marker,
-    +    as such any concurrent reference updates lexicographically behind the
-    +    marker will not be output. Document the same.
-     
-         Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-     
-    @@ Documentation/git-for-each-ref.adoc: SYNOPSIS
-      		   [--merged[=<object>]] [--no-merged[=<object>]]
-      		   [--contains[=<object>]] [--no-contains[=<object>]]
-     -		   [--exclude=<pattern> ...]
-    -+		   [--exclude=<pattern> ...] [--skip-until=<pattern>]
-    ++		   [--exclude=<pattern> ...] [--start-after=<marker>]
-      
-      DESCRIPTION
-      -----------
-    @@ Documentation/git-for-each-ref.adoc: TAB %(refname)`.
-      --include-root-refs::
-      	List root refs (HEAD and pseudorefs) apart from regular refs.
-      
-    -+--skip-until::
-    -+    Skip references up to but excluding the specified pattern. Cannot be used
-    -+    with general pattern matching or custom sort options.
-    ++--start-after::
-    ++    Allows paginating the output by skipping references up to and including the
-    ++    specified marker. When paging, it should be noted that references may be
-    ++    deleted, modified or added between invocations. Output will only yield those
-    ++    references which follow the marker lexicographically. If the marker does not
-    ++    exist, output begins from the first reference that would come after it
-    ++    alphabetically. Cannot be used with general pattern matching or custom
-    ++    sort options.
-     +
-      FIELD NAMES
-      -----------
-    @@ builtin/for-each-ref.c: static char const * const for_each_ref_usage[] = {
-      	N_("git for-each-ref [--points-at <object>]"),
-      	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
-      	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
-    -+	N_("git for-each-ref [--skip-until <pattern>]"),
-    ++	N_("git for-each-ref [--start-after <marker>]"),
-      	NULL
-      };
-      
-    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
-      		OPT_GROUP(""),
-      		OPT_INTEGER( 0 , "count", &format.array_opts.max_count, N_("show only <n> matched refs")),
-      		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
-    -+		OPT_STRING(  0 , "skip-until", &filter.seek, N_("skip-until"), N_("skip references until")),
-    ++		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-start"), N_("start iteration after the provided marker")),
-      		OPT__COLOR(&format.use_color, N_("respect format colors")),
-      		OPT_REF_FILTER_EXCLUDE(&filter),
-      		OPT_REF_SORT(&sorting_options),
-    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
-      	if (verify_ref_format(&format))
-      		usage_with_options(for_each_ref_usage, opts);
-      
-    -+	if (filter.seek && sorting_options.nr > 1)
-    -+		die(_("cannot use --skip-until custom sort options"));
-    ++	if (filter.start_after && sorting_options.nr > 1)
-    ++		die(_("cannot use --start-after with custom sort options"));
-     +
-      	sorting = ref_sorting_options(&sorting_options);
-      	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
-    @@ builtin/for-each-ref.c: int cmd_for_each_ref(int argc,
-      		filter.name_patterns = argv;
-      	}
-      
-    -+	if (filter.seek && filter.name_patterns && filter.name_patterns[0])
-    -+		die(_("cannot use --skip-until with patterns"));
-    ++	if (filter.start_after && filter.name_patterns && filter.name_patterns[0])
-    ++		die(_("cannot use --start-after with patterns"));
-     +
-      	if (include_root_refs)
-      		flags |= FILTER_REFS_ROOT_REFS | FILTER_REFS_DETACHED_HEAD;
-      
-     
-      ## ref-filter.c ##
-    +@@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const char *refname)
-    + 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
-    + }
-    + 
-    ++/*
-    ++ * We need to seek to the reference right after a given marker but excluding any
-    ++ * matching references. So we seek to the lexicographically next reference.
-    ++ */
-    ++static int start_ref_iterator_after(struct ref_iterator *iter, const char *marker)
-    ++{
-    ++	struct strbuf sb = STRBUF_INIT;
-    ++	int ret;
-    ++
-    ++	strbuf_addstr(&sb, marker);
-    ++	strbuf_addch(&sb, 1);
-    ++
-    ++	ret = ref_iterator_seek(iter, sb.buf, 0);
-    ++
-    ++	strbuf_release(&sb);
-    ++	return ret;
-    ++}
-    ++
-    + /*
-    +  * This is the same as for_each_fullref_in(), but it tries to iterate
-    +  * only over the patterns we'll care about. Note that it _doesn't_ do a full
-     @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
-      				       each_ref_fn cb,
-      				       void *cb_data)
-    @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
-     +non_prefix_iter:
-     +	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
-     +				       NULL, 0, flags);
-    -+	if (filter->seek)
-    -+		ret = ref_iterator_seek(iter, filter->seek, 0);
-    ++	if (filter->start_after)
-    ++		ret = start_ref_iterator_after(iter, filter->start_after);
-    ++
-     +	if (ret)
-     +		return ret;
-     +
-    @@ ref-filter.c: static int do_filter_refs(struct ref_filter *filter, unsigned int
-     +			iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
-     +						       "", NULL, 0, 0);
-     +
-    -+			if (filter->seek)
-    -+				ret = ref_iterator_seek(iter, filter->seek, 0);
-    ++			if (filter->start_after)
-    ++				ret = start_ref_iterator_after(iter, filter->start_after);
-     +			else if (prefix)
-     +				ret = ref_iterator_seek(iter, prefix, 1);
-     +
-    @@ ref-filter.h: struct ref_array {
-      
-      struct ref_filter {
-      	const char **name_patterns;
-    -+	const char *seek;
-    ++	const char *start_after;
-      	struct strvec exclude;
-      	struct oid_array points_at;
-      	struct commit_list *with_commit;
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-      	test_cmp expect actual
-      '
-      
-    -+test_expect_success 'skip until with empty value' '
-    ++test_expect_success 'start after with empty value' '
-     +	cat >expect <<-\EOF &&
-     +	refs/heads/main
-     +	refs/heads/main_worktree
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until="" >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after="" >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until to a specific reference' '
-    ++test_expect_success 'start after a specific reference' '
-     +	cat >expect <<-\EOF &&
-    -+	refs/odd/spot
-     +	refs/tags/annotated-tag
-     +	refs/tags/doubly-annotated-tag
-     +	refs/tags/doubly-signed-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until to a specific reference with partial match' '
-    ++test_expect_success 'start after a specific reference with partial match' '
-     +	cat >expect <<-\EOF &&
-     +	refs/odd/spot
-     +	refs/tags/annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/sp >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/sp >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until just behind a specific reference' '
-    ++test_expect_success 'start after, just behind a specific reference' '
-     +	cat >expect <<-\EOF &&
-     +	refs/odd/spot
-     +	refs/tags/annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/parrot >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/parrot >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until to specific directory' '
-    ++test_expect_success 'start after with specific directory match' '
-     +	cat >expect <<-\EOF &&
-     +	refs/odd/spot
-     +	refs/tags/annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until to specific directory with trailing slash' '
-    ++test_expect_success 'start after with specific directory and trailing slash' '
-     +	cat >expect <<-\EOF &&
-     +	refs/odd/spot
-     +	refs/tags/annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/lost >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/lost >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until just behind a specific directory' '
-    ++test_expect_success 'start after, just behind a specific directory' '
-     +	cat >expect <<-\EOF &&
-     +	refs/odd/spot
-     +	refs/tags/annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/ >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/ >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until overflow specific reference length' '
-    ++test_expect_success 'start after, overflow specific reference length' '
-     +	cat >expect <<-\EOF &&
-     +	refs/tags/annotated-tag
-     +	refs/tags/doubly-annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spotnew >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spotnew >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until overflow specific reference path' '
-    ++test_expect_success 'start after, overflow specific reference path' '
-     +	cat >expect <<-\EOF &&
-     +	refs/tags/annotated-tag
-     +	refs/tags/doubly-annotated-tag
-    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
-     +	refs/tags/three
-     +	refs/tags/two
-     +	EOF
-    -+	git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot/new >actual &&
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot/new >actual &&
-    ++	test_cmp expect actual
-    ++'
-    ++
-    ++test_expect_success 'start after, last reference' '
-    ++	cat >expect <<-\EOF &&
-    ++	EOF
-    ++	git for-each-ref --format="%(refname)" --start-after=refs/tags/two >actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until used with a pattern' '
-    ++test_expect_success 'start after used with a pattern' '
-     +	cat >expect <<-\EOF &&
-    -+	fatal: cannot use --skip-until with patterns
-    ++	fatal: cannot use --start-after with patterns
-     +	EOF
-    -+	test_must_fail git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot refs/tags 2>actual &&
-    ++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot refs/tags 2>actual &&
-     +	test_cmp expect actual
-     +'
-     +
-    -+test_expect_success 'skip until used with custom sort order' '
-    ++test_expect_success 'start after used with custom sort order' '
-     +	cat >expect <<-\EOF &&
-    -+	fatal: cannot use --skip-until custom sort options
-    ++	fatal: cannot use --start-after with custom sort options
-     +	EOF
-    -+	test_must_fail git for-each-ref --format="%(refname)" --skip-until=refs/odd/spot --sort=author 2>actual &&
-    ++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot --sort=author 2>actual &&
-     +	test_cmp expect actual
-     +'
-     +
-
-
-base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
-change-id: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
-
-Thanks
-- Karthik
+-- 
+2.49.0
 
