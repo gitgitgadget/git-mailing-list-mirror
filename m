@@ -1,84 +1,82 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41E8C220F52
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 07:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59E6299952
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 07:57:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751961473; cv=none; b=LEBikX7F/FO8+uVh95a3EJJiOrOAI0cZ8qfDs9ZKKq3yTedEGtE6oRChmuyhTAER0PCXovlOx+PVCiYMvA1dqsZoSzzYKVVUkuuvaz+KvrY7pPzMwA65m1h5bxGlcOllEO7HuGNnh7JraexEwsT+CtokF15d2il02ftva/WeVVc=
+	t=1751961475; cv=none; b=Yjs6+ZA7H8B8GgIOrzJ035r3zfu2wiCBkJnVBsZCwRXiyPh9hH6avwfsOxdQtwE6tSa/A8YS7ZXjSDld4Tq8SI/3lXVJLAmdZVnFfF9n0PzUkgk8O9WLsqyACCWohOo9uHD6MM/56XkTi96DhKrBXxBkDjRwKRWdmAtZmMaH5Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751961473; c=relaxed/simple;
-	bh=DvGqP+Mi0sSze6nmf48jAJbfzs/cjYc6J/JKpoGEKck=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=jO6VvNiqhV26vzlnOBkK3Ov8lW2if01CmkRaeDnLquRFpZKeqbmGUji33UFKkK5BVAAeR1b1yNOOQJEYhBOJZAoqOj/uL6noQqQN4fkLxrDpyXVWxdhjFwanw9N17ZgAmqqSXlQB77BrV0jDoz837uDK1fxa5QSkvkJDgFcZvmQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lupplcmv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fTHXLqfD; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1751961475; c=relaxed/simple;
+	bh=pvdEgr2OMh9tSPD22gr1dFFGAjTVD2KyR1MAiISTp68=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=V9H4cTbJ39yV4tvhQFpskv/+zezLrYtrZslraDHWejAvaL+xEZFd4Hic+XX2oN6FH22gch7Qx04Tf23eexB1o9rXFBm7g+7sTvWTUbbImp1WuzdhiD3ADAv77NGngxwYwyLCB2ZlcKt3s9jyucA4Qeone6zr5nMmMlV9DOi8sqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wXPegfy+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kjqUjHWJ; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lupplcmv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fTHXLqfD"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 61A28EC0886;
-	Tue,  8 Jul 2025 03:57:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wXPegfy+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kjqUjHWJ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 05ECBEC0B5A;
+	Tue,  8 Jul 2025 03:57:53 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 08 Jul 2025 03:57:50 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 08 Jul 2025 03:57:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1751961470;
-	 x=1752047870; bh=r5QAU8hm4JBm4KfduWvnK2oxPKKo1YotcZD7rwuyDkw=; b=
-	lupplcmv9hsMoGah2VoPM9A+LKfdvx1kAwHIfnE8rtav7qQwAIGjV1qDoshMX6qE
-	Tybr8ZRXRkz3KvJLVN7STFWrxgHNb4qoOtMDz56WZ3jrB3aH9Ke1M7qO+MMtYYN1
-	YpDsNqo12LgDS3iaemhGqWafAM5ANnDyysiCYYXOoN5vAWqKM20He+VVaJ6gz6uh
-	xypX377Ixvj4wr+C7g21aBOSpnUMAwbkYJqwdtoV10kj3zVnoFwaYUYN6t5uXXoN
-	9FtBRY7NLZkg7S8eKJgDqe/8mHEp4DHg1/hcY0wpCtOHrIT577qJoLC4Y4Wwas02
-	VLpj9zYJjPP3pr6/usyfvA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1751961473;
+	 x=1752047873; bh=bY18c6Na0HcGj3JnbNTthyY1geHUvQDdMU4gy+XbLh4=; b=
+	wXPegfy+L6VafekpEW3J6kmVU18xA9Cty2V0fvpf0WOHJ2uzwmR2cuENALYeHYCi
+	dkQzNcEAfw8yNj2e0Ze9Gbo6G6yN44aYLL/pVsVh24AO/bgFvKUbOU8hSQbcM9AQ
+	kp3D7DXqb/2HJkwQDZtQoxzu4RmlbFrM2KSXIfiZJom6gp19W64oOlOqggsksIAd
+	JTp4l7Ly2hCw727XalxEj6i8cKYIi3Wf2GoZApxNCVJU6EUnZ6wNZcCEtSlMzcje
+	V1ySS1KKb5DdEoQTkBhrXP7sW+0XV/5LUvGLlCKr37x3fUqdNuES/cPXi1/9SWzV
+	GUAQ0AnEx01r4ojRW7+IoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751961470; x=
-	1752047870; bh=r5QAU8hm4JBm4KfduWvnK2oxPKKo1YotcZD7rwuyDkw=; b=f
-	THXLqfDpiAorGUMhtlVRi1ZhEEGTZK0X/mW25A2s1QpCPl/NkFE0BWyxl4npeGoQ
-	WS0GHnAEUSouSlBCv00A6n2EyshMlMrSgoKXeQFULxAzZnuXOoAVvTLBKRLe83gt
-	DONfOVx2HwMKagqeso7RF7C8VXVoD6H8pDVyg418hPMMmoQJqws4WPMLEolX9MCD
-	chUchwC7mACLJ/xKEv2inuZ+MjXTb4HzIZuAG065JymeHg/+httq5YVVjw9zDnTM
-	gxD/2c8VZ0nsHeHAhZyZxrHxtmsdV9ptNXwR4LBlNrOE3QNtBa4RZBvowU4mcYQC
-	Jg6HR5AlaYzk48Kj3dq+g==
-X-ME-Sender: <xms:fc9saPpJLQX4Q9fuvgLyZzz17iERUitXQE3hWex5re44JuDUV-PP4g>
-    <xme:fc9saKbqrElom1Qare73a0bDsu-lxX6jzjIQcRxzVHn1ObXlRsmqp0P5mlBLB_rOo
-    hec5SzpO0RetpxH7g>
-X-ME-Received: <xmr:fc9saIUrqY3KJ087K-cMvq3YO4uJgK-1KzNREXrIvGFAWK7CtSkaTIHso4cI8SjbjMMVFZUMQGMTN7czR1uHjI59Xl5sK3WCwWUoglYc4rE>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1751961473; x=
+	1752047873; bh=bY18c6Na0HcGj3JnbNTthyY1geHUvQDdMU4gy+XbLh4=; b=k
+	jqUjHWJdBhDjSRlrE+IBnBAGbHVrSTwn4WqixXYDcKu0p1EysKnx+A+ChpE6WxiO
+	gRVEcJKn0Oq0lKqP1Hdo5GeNjjDNM5vpwIt0bXKyLlq/Non+cMuUC9I8adT1HYDJ
+	msS3wZCnjY2AyvSzDJ+avZaTPHx3bBWQZhhyunH6WZgidCPavDFHeyirZaQtR0z2
+	Ji+NBbmYae3LtzznQFBQ6AN7S8YtIhU1QmM20MY3CprRkhxQ4bJY/M0XsZ5uuTdL
+	KAJCweICsZHO4JSAF0suZm6A+UHyeerUskqFKLx9zpJJ6dn48W4iZU1+f7QYHsQp
+	r9E9xyZa4Z8OoQg/HQvRg==
+X-ME-Sender: <xms:gM9saAfQjITCtEK0-NyUzxqV1fMnQLYu_vn43scFgFCcSl98gjPljw>
+    <xme:gM9saC-sxDFNG92CWIn92PQRBnU7tEYjWbRBwqOR7SlRBwYC46Q6sGXEmw6r8XYKm
+    tltOgnBZY_h01_2tg>
+X-ME-Received: <xmr:gM9saNqo8-_BbHsIeFIVvTo5SZsL0A0FHyb1vpk0MudRhpIG7V3MJoJKq3yKDhfEFVQaXdImPoXLwLEts1n_O0ukA9KN3_tCY48uHFJzcXM>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgedugecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhufffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
+    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epteegveehtdehffeuveegudelkeeludetieffvdefvdduffegueduueefueehgfdvnecu
-    ffhomhgrihhnpehgihhtlhgrsgdrtghomhdpghhithhhuhgsrdgtohhmpdhkvghrnhgvlh
-    drohhrghdpmhgrthhrihigrdhnrhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehirhgvtg
-    gtrgdrkhhunhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplh
-    hushdrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrgh
-X-ME-Proxy: <xmx:fc9saD98xdB3dKk0RT9Jp9h3p2UPLc_ORscloyfmEhTnRH5zdtjIiw>
-    <xmx:fc9saB-FmHzRYIeOEK7sdv6w6FXYpTFZeiFx_qRzvdEOcvBvsE6Fag>
-    <xmx:fc9saDRkYpoxXXsArfMUC-6G_8RT30g223zOAJa7O0G_rJOErHHnhQ>
-    <xmx:fc9saFfQiigbwW2l7EhMNvhdbf37qRKMk7xnCLdpMH_1jVOijJphdg>
-    <xmx:fs9saFLs8hkISgwL0rCh7vsHITOU-5MTbCm1948ZMvMpK-go2eJzdbNY>
+    epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepihhrvggttggrrdhkuhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdr
+    phhluhhsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghs
+    tghhfigrrhhtiiesghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:gM9saHA3c9cE_GAtKSFKYShMAuJGVmRIy_j8hADDzj84NW79YZuolQ>
+    <xmx:gM9saPw-63mXhIzwK2iwLZgdlO2r29n1n02pacsWlpAHPD8W3we7gw>
+    <xmx:gM9saE0VVMfoISC6F9J1I2tl3zUFHRK72P7y7DVsQZgjlO5sUOo-wA>
+    <xmx:gM9saPytm2FDLoWPkTKjVLoHTmm-6yup6cNG6e1tx6HSo03nyP66yQ>
+    <xmx:gM9saMd6MngTsBUiu-1OSQiOZ1lA50cm4Z6-bldzZILVZMf9YKnmuvGp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 03:57:48 -0400 (EDT)
+ 8 Jul 2025 03:57:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d9a5944f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 8 Jul 2025 07:57:47 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id f0db05c9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 8 Jul 2025 07:57:50 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 0/8] A handful of Meson cleanups and improvements
-Date: Tue, 08 Jul 2025 09:57:41 +0200
-Message-Id: <20250708-b4-pks-meson-cleanups-v2-0-94ac53cd4b95@pks.im>
+Date: Tue, 08 Jul 2025 09:57:42 +0200
+Subject: [PATCH v2 1/8] meson: stop discovering native version of Python
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,74 +85,68 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHbPbGgC/4WNQQ6CMBBFr0Jm7ZjSggIr72FYlDLIRGlJR4mGc
- HcrF3D5fv5/fwWhyCTQZCtEWlg4+AT6kIEbrb8Rcp8YtNKlOiuDXYHzXXAiCR7dg6x/zYJDaaq
- y6k91MRhI2znSwO/de20TjyzPED/7zZL/0n/GJUeFulKF07XRtqNLKh15gnbbti8HpcECtwAAA
- A==
-X-Change-ID: 20250703-b4-pks-meson-cleanups-f53858d694f3
-In-Reply-To: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
-References: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
+Message-Id: <20250708-b4-pks-meson-cleanups-v2-1-94ac53cd4b95@pks.im>
+References: <20250708-b4-pks-meson-cleanups-v2-0-94ac53cd4b95@pks.im>
+In-Reply-To: <20250708-b4-pks-meson-cleanups-v2-0-94ac53cd4b95@pks.im>
 To: git@vger.kernel.org
 Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, irecca.kun@gmail.com, 
  Eli Schwartz <eschwartz@gentoo.org>, Jeff King <peff@peff.net>, 
  Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+When Python features are enabled we search both for a native and
+non-native version of Python. This is wrong though: we don't use Python
+in our build process, so there is no need to search for it in the first
+place.
 
-this patch series contains a couple of more-or-less random cleanups and
-improvements for Meson that I have accumulated over the last two months.
+There is one location where we use the native version of Python, namely
+when deciding whether or not we want to wire up git-p4(1). This check is
+invalid though, as we shouldn't check for the build host to have Python,
+but for the target host.
 
-Changes in v2:
-  - Fix an off-by-one error for test slices used in GitHub Workflows.
-  - Now tested with both GitLab (https://gitlab.com/gitlab-org/git/-/merge_requests/375)
-    and GitHub (https://github.com/git/git/pull/2010).
-  - Link to v1: https://lore.kernel.org/r/20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im
+Fix this invalid check to use the non-native version of Python and stop
+searching for a native version of Python altogether.
 
-Thanks!
-
-Patrick
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (8):
-      meson: stop discovering native version of Python
-      meson: stop printing 'https' option twice in our summaries
-      meson: improve summary of auto-detected features
-      meson: clean up unnecessary variables
-      meson: fix lookup of shell on MINGW64
-      meson: fix GIT_EXEC_PATH with overridden -Dlibexecdir=
-      meson: update subproject wrappers
-      ci: use Meson's new `--slice` option
+ meson.build | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
- .github/workflows/main.yml |  2 +-
- .gitlab-ci.yml             |  2 +-
- Documentation/meson.build  |  5 ++---
- meson.build                | 26 ++++++++++++--------------
- subprojects/expat.wrap     | 18 +++++++++---------
- subprojects/pcre2.wrap     | 18 +++++++++---------
- 6 files changed, 34 insertions(+), 37 deletions(-)
+diff --git a/meson.build b/meson.build
+index 7fea4a34d68..21fdff0f496 100644
+--- a/meson.build
++++ b/meson.build
+@@ -866,9 +866,8 @@ if host_machine.system() == 'cygwin' or host_machine.system() == 'windows'
+ endif
+ build_options_config.set_quoted('X', executable_suffix)
+ 
+-python = import('python').find_installation('python3', required: get_option('python'))
+-target_python = find_program('python3', native: false, required: python.found())
+-if python.found()
++target_python = find_program('python3', native: false, required: get_option('python'))
++if target_python.found()
+   build_options_config.set('NO_PYTHON', '')
+ else
+   libgit_c_args += '-DNO_PYTHON'
+@@ -1979,7 +1978,7 @@ if perl_features_enabled
+   subdir('perl')
+ endif
+ 
+-if python.found()
++if target_python.found()
+   scripts_python = [
+     'git-p4.py'
+   ]
+@@ -2202,7 +2201,7 @@ summary({
+   'iconv': iconv.found(),
+   'pcre2': pcre2.found(),
+   'perl': perl_features_enabled,
+-  'python': python.found(),
++  'python': target_python.found(),
+ }, section: 'Auto-detected features')
+ 
+ summary({
 
-Range-diff versus v1:
-
-1:  34bb9288218 = 1:  2130ccdfb14 meson: stop discovering native version of Python
-2:  a6f1b52d44f = 2:  4274c321f0b meson: stop printing 'https' option twice in our summaries
-3:  01a8c379314 = 3:  cdc8c9d8655 meson: improve summary of auto-detected features
-4:  306af85a4a3 = 4:  373496880ce meson: clean up unnecessary variables
-5:  d8308e96c74 = 5:  cd2bfeaccd2 meson: fix lookup of shell on MINGW64
-6:  583c3e701c8 = 6:  9135b7f6012 meson: fix GIT_EXEC_PATH with overridden -Dlibexecdir=
-7:  c3edc233952 = 7:  16e0f2d1e22 meson: update subproject wrappers
-8:  22a62721031 ! 8:  2ab73ae33df ci: use Meson's new `--slice` option
-    @@ .github/workflows/main.yml: jobs:
-          - name: Test
-            shell: pwsh
-     -      run: meson test -C build --list | Select-Object -Skip 1 | Select-String .* | Group-Object -Property { $_.LineNumber % 10 } | Where-Object Name -EQ ${{ matrix.nr }} | ForEach-Object { meson test -C build --no-rebuild --print-errorlogs $_.Group }
-    -+      run: meson test -C build --no-rebuild --print-errorlogs --slice ${{ matrix.nr }}/10
-    ++      run: meson test -C build --no-rebuild --print-errorlogs --slice "$(1+${{ matrix.nr }})/10"
-      
-        regular:
-          name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
-
----
-base-commit: 8b6f19ccfc3aefbd0f22f6b7d56ad6a3fc5e4f37
-change-id: 20250703-b4-pks-meson-cleanups-f53858d694f3
+-- 
+2.50.0.195.g74e6fc65d0.dirty
 
