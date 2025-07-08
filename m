@@ -1,156 +1,115 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5562BEC30
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 08:44:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CA222541C
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 09:16:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751964272; cv=none; b=onXYhGFTHIW5ZGNXPMNImB8M7RQth4JxeS1tRi8UeZXN67KOaeN7Sd1Xxmi5LWxRlFd0YL6msk00E+VpZNNGncYSt/PNQek7Wr5gIb9vwFGqoh0FqsCMVvVoKlXeE0I1KJtSbeYHPxCQWkZs2KNndc4Mpd9E/KIFh5YQl7loqKs=
+	t=1751966210; cv=none; b=mQspf012Gm+SXhgWLbrfKnL66uLM9TCpMdHnMop9U5Z7uiE47tUQLT3F5W8Xx4AT2sChZAoi9dpjQXEU5m4b0uSh243YRK0f1hIPY25SB+CJlbb1S0BQJUNQOYX2Dre63bDnwLxnvnB2lJwbifOx/yVXD2CtF8GwK9zuLxfxaxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751964272; c=relaxed/simple;
-	bh=MVe1wsoJvaNOnd3j2v54sUy9hnSY2nNI9FKQSOmWe84=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZtfCsSHP1ByRckmgkkyDSQ065gI/jeGwI+bjubuwWCatuMc7RF/sublz+s5zeNhr0Z51OoKXu+U42IqtooDAxt5OxtEokKbrhrR6o+ISxg0tdXTgPwlnhxLwCCKdmklcwzFSJJIIpoUAp7lb2L2OVGaYWTHdECU7xEuKytljaNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hCsXMsxr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FERMAcXb; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1751966210; c=relaxed/simple;
+	bh=DsKOG8ptV1GQ7rJ5V6HdVvLcS/f2sMIZIKHnVHjRt/g=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L8GFQm6qG0o/MqQb1qInAnBacIoszWCb8DeqQexrmxXPLG+iDQq5s/qgFNjO4GWxU4CklOWOcetHFdNPYzXiqtc9glx8WVhN3GFNg7zpaKlyt2m7gEITI7pUnUa/bAtv7oOsDGBotgsCKO43RF5eGf5orknCdYLimjuV0I42tNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mUDLIOIp; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hCsXMsxr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FERMAcXb"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 027E214001BB;
-	Tue,  8 Jul 2025 04:44:30 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 08 Jul 2025 04:44:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751964269; x=1752050669; bh=IquHOl8uem
-	bPMOnHk4F9po+t/LqJ9RkBCEmrVxk7wTE=; b=hCsXMsxrXwTKIc76WQ7fcjwgiR
-	DX8HyC5j5xCvvI3s/hwkuziXWbKiDUDSs6n3YicxyiYPAuOaLBgd8Ixyb9+zG+X2
-	nANlt/1kb74x7jFL7fbomnymzfzsNMKv/kEQeN6EU6w3LXRct4tK+OliF7CYJxdi
-	mmvI5isDT9xILerJwe8XzLObFFy5mahQ83zJyliy5zqzACZ4OnN9olvNmdY+ND8U
-	GC181lnQdm+yH7CKTna7GBYrZkylqX55NCBApQR9nkEdbq3sSqqJQP33KkHgbgYz
-	kLmOIQ7Ap7yb+TxDHYxUOs3ncFkBx6QVqwWYX4l+JP6kZE7538AFavh8qGoQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751964269; x=1752050669; bh=IquHOl8uembPMOnHk4F9po+t/LqJ9RkBCEm
-	rVxk7wTE=; b=FERMAcXb53oVYosF6HT41BMoi+o5bfwhsUKEPw/MwZYS32uKy2L
-	WuqYFiF0AFPMmGlu2oOBtJioGEpSrG6DlNA7Lo/0ew3aKKSWkYoQImDpFceyb8hO
-	BzEvcc3avgHALbV62TQvPobHs7HrfJJzVbAq7SFD1NSLrflaIEKElZr1YKHvcZJa
-	d6giuaV77+QKu1ddprDaQbzerZueAkhT8mZZ1yAW5oX0ZN5rOKXz98pmTVFCpJ+h
-	f4LvxZN2vh4V/g890JX1XLkc4hEWmQOfvcsq6M2S9yxzXOfLsVXqbekzk1d6pQUM
-	cJ3nLtlBuemXBYPN/9eErGoLfDVykcGwcrQ==
-X-ME-Sender: <xms:bdpsaNeOFn1GotRJnZ074Ktz8NwdbxCD85qzjgh2iPiKoq5gXisD-A>
-    <xme:bdpsaEoxZVQSqYNP6arx0j31AjV1unBIyonnlyOgM6Mi_LY3ei6YhtpoIGvp-MyRf
-    v7wfp7qFkYjKVy-3Q>
-X-ME-Received: <xmr:bdpsaGHGLMSSGXTqx8GZxJN_qei-6thJr3q0_-va4BM0t935ceQOeoCdPUUl-T9qoNv11iYrTLQT1H0qO-7zqHd_MYxU8OZ4-Ztvt_iPH9k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgedvfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehirhgvtggtrgdrkhhunhesghhmrghilhdrtghomhdprhgtphhtthhopehrrghmshgrhi
-    esrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepvghstghhfigr
-    rhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:bdpsaMuwokhBbZQjoS2WtNpLuQf55IkDy-u-kW3D4ip1RNjaMgXhtg>
-    <xmx:bdpsaAWPbDifEAYjrSCaARgAmjndeuSx1AOAcI7Vo09pgcoOHTKwBg>
-    <xmx:bdpsaAH2ZWBv0cHzCH3-QV5Jj0seCp2_2N02LwX9m7cfPr8U3k2FKQ>
-    <xmx:bdpsaK3O-9Iq4MnIh2-jWTWljNeuN7p11yTUD17X1dQL-ngQtXI6HQ>
-    <xmx:bdpsaN7knGZx6k79_muCsDEgzG6BOhcipvSF5eQ2jAnuVBdQHOvcRjE7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 04:44:28 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0ef3bb09 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 8 Jul 2025 08:44:27 +0000 (UTC)
-Date: Tue, 8 Jul 2025 10:44:23 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: git@vger.kernel.org, irecca.kun@gmail.com,
-	Eli Schwartz <eschwartz@gentoo.org>
-Subject: Re: [PATCH 6/8] meson: fix GIT_EXEC_PATH with overridden
- -Dlibexecdir=
-Message-ID: <aGzaZ7zHYbjzFo23@pks.im>
-References: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
- <20250703-b4-pks-meson-cleanups-v1-6-2804c2932abe@pks.im>
- <ad58469d-e8a7-4a9e-9f34-2afa68458f00@ramsayjones.plus.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mUDLIOIp"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae04d3d63e6so685092166b.2
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 02:16:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1751966207; x=1752571007; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QSnL8I+nYCfQDf/ro9/qqyqOTnjNd67cTSDvM0f9lPE=;
+        b=mUDLIOIpERRv40NsicyDr/kSJOIn1oXQkyaaKIiLQZMkVjyPwbWlXY8l3EWOll7WMJ
+         4ylDNGDl05M6WoHByvjxoNKiJsn3aD4uyqLvaU2YhJKyS8O0nU+F6eR/ovuJbzvWK4Bc
+         BqcWfe5Lsv9xncTo3abI9EYYeie3DAvwiOIF+v0ys+wMVOsH9szr+cS1746yDIan/6f6
+         moGCaSPtALMbNBKKYqZaYlK289WpMqy4yp2gLQQe5beKBwbyQ6xWM01wnle3dmXtjhu5
+         DroGM8P38X604U9+bb7uBT2B9z6H4kJ8uZXszVzTQxuLNT+3m68XeHyrm1Jcu5Y8ZYMx
+         fVvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1751966207; x=1752571007;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=QSnL8I+nYCfQDf/ro9/qqyqOTnjNd67cTSDvM0f9lPE=;
+        b=rMi7Exe3hEpy6oJG98dVvNNeMJacdSdJioDt8yXUQ+dxWXDD3TRGZorcDnm52m5m7i
+         DEl+PPMAHin2qCW7YbbcaK6WARHtpzz7irhyQGhBI35lit69kMviE5xbOwzuSdJXqNlY
+         xFK5sBICLRSNzOcV9uDblW3f8foacRoLmMdyxeKJGO+qiksqbKUpoUCcT2eBYD0nUBsz
+         eEbDRg4WtRzdamW9Ef/zzwSQoykse0ck/D1/bpUsKULaYOTjZmv1qkdZ86nuLGyPmL5N
+         B87ooBvQDgHIxV0RllPYdIuKS7ftIM8nrBD53tVLp1vtjywacjojQo6Q2iCRzmXXNQnH
+         ++Wg==
+X-Gm-Message-State: AOJu0YwwNZhZNBwkp/5/fYOPwlVRsN96vAlb+3yGomXUlFXlzf+IscDK
+	vwI/ebhpAVm2pxhdpt7ZuziN/r8mGYeAM87Vdx6XLlJj6sVKkca07ucLtM32LQtFXVBpj+2OZdC
+	ulj1wFzSY6D93qIVqg6LSX/0sm6XUf8Q=
+X-Gm-Gg: ASbGncs1LNivYFGHFupKFHb9hLpTprK/l/czQUiLNcpdkukmA9eVVWa61HiUj+xM5zv
+	kqbKhXuwM07K83J1k5uI6XDTDKpaM0OkaxX0UTVhoKlrQDNJGRxLFwjX6f5Jul/mG8x8bziXibw
+	LmXvleiigXUbPR6fxmjU2Fl/vpZsJEvXC3ZdkbQ8TwFbHsDEsFFLaaStJAy6m9sgjczuAoe1MQA
+	JKs
+X-Google-Smtp-Source: AGHT+IEj+zFArxzwAbL7kgZVdQU9p6xeHPbkVwvqJDg4Rdji4zyxGogh7kJ2FNf9Y+6HN/5YzcKn7y9K9RIuE8qLky8=
+X-Received: by 2002:a17:907:dac:b0:adf:7740:9284 with SMTP id
+ a640c23a62f3a-ae3fbda7a41mr1491760566b.57.1751966206748; Tue, 08 Jul 2025
+ 02:16:46 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ad58469d-e8a7-4a9e-9f34-2afa68458f00@ramsayjones.plus.com>
+References: <20250618151821.528627-1-christian.couder@gmail.com>
+ <20250619133630.727274-1-christian.couder@gmail.com> <xmqqbjqjdbmj.fsf@gitster.g>
+In-Reply-To: <xmqqbjqjdbmj.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 8 Jul 2025 11:16:34 +0200
+X-Gm-Features: Ac12FXxpQQSiWyqmFYeRP-pUzZLhW8M9v5wdV7Tny4e_UiuBS4mks5Vq7nl2qtA
+Message-ID: <CAP8UFD0aXSvepjvwHu_dDcoEn5j6p=HxSEMgftotiZg3B1Hzmw@mail.gmail.com>
+Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
+ output format
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 03, 2025 at 05:39:31PM +0100, Ramsay Jones wrote:
-> 
-> 
-> On 03/07/2025 10:28, Patrick Steinhardt wrote:
-> > In 837f637cf51 (meson.build: correct setting of GIT_EXEC_PATH,
-> > 2025-05-19) we have fixed how we configure GIT_EXEC_PATH in some cases.
-> > It was reported [1] though that this causes a new issue when overriding
-> > libexecdir with `-Dlibexecdir=`:
-> 
-> Yep, I noticed this report when I got back. My first thought was 'no, we
-> may just as well revert commit 837f637cf51', since that is in effect what
-> this patch does! ;)
-> 
-> Then I had a quick look and left a diff/commit 'note to myself' which
-> effectively did a global search/replace of the string:
-> 
->     install_dir: get_option('libexecdir') / 'git-core'
-> 
-> with:
-> 
->     install_dir: git_exec_path
-> 
-> and put it on my TODO list. (Note, that is *all* I did - I didn't even
-> attempt a build, let alone test!)
-> 
-> Of course, I need to spend some time on this (if nothing else, git-gui and
-> presumably gitk will need some changes as well?).
+On Thu, Jun 19, 2025 at 4:55=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > This v4 is just about fixing a few bugs in the tests using the SHA-256
+> > object format compared to the v3. (I had issues with CI tests on v3,
+> > so I sent it without waiting for the results.)
+>
+> Thanks.
+>
+> I am not sure if "I am happy is either 1 or 256" is what you really
+> want, though.  The test presumably knows what algorithm is being
+> used during its run, so wouldn't you want to say more like "I know I
+> used sha256, and I expect seeing sha256, ah, I see sha256 and even
+> better I see no sha1, so I am very happy"?
 
-Neither git-gui nor gitk are currently supported by Meson. I do have a
-local patch series that backfills the support though.
+Yeah, I agree it's better to have tests say things like "I know I used
+sha256, and I expect to see sha256". So in v5 tests now use:
 
-> Hopefully, I can find some time soon (those round tuits are in short supply).
-> 
-> > 
-> >     $ meson setup -Dprefix=/tmp/git -Dlibexecdir=libexec-different
-> >     $ meson install
-> >     $ /tmp/git/bin/git --exec-path
-> >     /tmp/git/libexec-different
-> >     $ /tmp/git/bin/git daemon
-> >     git: 'daemon' is not a git command. See 'git --help'.
-> > 
-> > While we correctly propagate the libexecdir to Git's GIT_EXEC_PATH, we
-> > forgot to append 'git-core'. Consequently, it cannot find its binaries
-> > anymore.
-> > 
-> > Fix this issue by appending 'git-core' to libexecdir. With this, things
-> > work as expected:
-> > 
-> >     $ meson install
-> >     $ /tmp/git/bin/git --exec-path
-> >     /tmp/git/libexec-different/git-core
-> >     $ /tmp/git/bin/git daemon -h
-> >     ...
-> 
-> Hmm, I'm pretty certain I tested commit 837f637cf51 in a similar (but
-> not identical) way! ;) I will use the above test next time.
-> 
-> Sorry for causing a regression. :(
+  test_grep -E "^gpgsig $GIT_DEFAULT_HASH x509" output
 
-No worries, it happens to all of us.
+as "$GIT_DEFAULT_HASH" should be either "sha1" or "sha256" depending
+on the current hash.
 
-Patrick
+I am not sure "and even better I see no sha1" is worth it then though,
+so I haven't added that.
+
+> > There are no tests in this v4 and in v3 with both a SHA-1 and a
+> > SHA-256 signature on the same commit though, as I am not sure yet how
+> > to best generate a commit with such signatures. Suggestions welcome!
+>
+> Good point to fill potential gaps.  If we had such a commit, then
+> would these tests say "I know I want both 1 and 256, and I do see
+> one instance each of 1 and 256, so I am happy"?
+
+There is a test with such a commit in the v5 I am about to send and
+yeah it checks that there is one instance of 1 and 256.
