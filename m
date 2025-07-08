@@ -1,180 +1,150 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24CF1C6FEC
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:17:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E59D2E3711
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:19:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751969871; cv=none; b=Yeyd4MwCW8kC710daj1JCoFUbyBq/ddr9fbjlKKFDWD1biKxNLyCpZBVpZtGkfXIndBigy6CVIFk7cTC5MzBjClRL3XL++mLTTijiMpWK4RgF7C8XqtHfwhaO5txQl4rtfybzlmfX4UnqNdhM44fXw4jYqLn6XlGplxwGzpxdhY=
+	t=1751969952; cv=none; b=SAzvV6Gk0+tviweDBvJEbFho6DMIAigN00db7QU+dfYn4EzoYznpJx5c3DuA+l33D0PmwIe3dPg523PaKcby0Tdy8QzTYXpgoi5ibl0JmcRuhXZ+2fWZ37Z1DJmSv2pcFjkkZoaIydJ7WVurjXZNRfYFoUlkKCkiLJY2qv2gqys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751969871; c=relaxed/simple;
-	bh=j3jVhf+M7/IA78QyA2DH2W3H4EIXFoYkeVvbD4JNN18=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kUmx9ltH+1W5u4X3hoS3TeSWgpy+Y+BeDRhSLwFgb9LdNk4kiyqPPIdYYtfH5tPWgpZIyg25z1hQ8POd0J4Nu79r/RKVO+eolLm75pKBf/SP9BNFvbRblosT0cL2mEPc/lBz5NnZzD2+usT8/Gn8l6LRlH5n5OR+PEDsqITSRSQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aMSFKsot; arc=none smtp.client-ip=209.85.208.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751969952; c=relaxed/simple;
+	bh=V4GUUsqKGMlzQ99vBORmmjT54N65UoKs8IQbh8muh/o=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=Zfu7axoTZJdUQitnxSyf1ivJ1Sdl6vOFYjWZtW2/0zDcGFbNLHEA+iiayhvWlIoMa6RlanDpWmhTAnMlkgnwhfwwsqlNDJjbK5DMAKUH5xRlNxfWdz/Gj0yRh9TQD5Tjism9VdYr45kOt6vcLnlgtm3OheCid2f6rTSW90b4RCY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dyFlPEWu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nGIqBwBa; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMSFKsot"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-60c3aafae23so11423561a12.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 03:17:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751969868; x=1752574668; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3iokrQTZ55QL6rKfcAeorPIUAe+PjsmrnWv3gTZq/M4=;
-        b=aMSFKsot2boiJdSidhAkagyrYb06642owIuCibSDm6Vgdnh2ijXU3lOSWL+xkOzLcH
-         cAFYVTeI+j5yiT0jccPjyersUzO0OYS7UWJX6vxT0/FQ2wP9kbLOrrQIWwfRFXrRVY/W
-         hiORzSRqk6dKE0IGj65jSSXq8z9GQXcGQzqeSfVXAhJEKyZoc8hK9cIrY/Hpb6hs8y+s
-         libfZbIHU4AwMYyDDqahOIUeWlIflBvTvRlelIOo1Xm9jQe3na0JHIHyG8YJQPdPCMWp
-         y7S59PPnNjVjWxRKT0NvnUa3K81FWGC18nOf/wgoHJ1+9i4mylsnJV6py32BHwQiaP1B
-         vwsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751969868; x=1752574668;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3iokrQTZ55QL6rKfcAeorPIUAe+PjsmrnWv3gTZq/M4=;
-        b=tGnw3AsDPPlOMvAylj11kztksIzloo6BFDKoV9+Sd/ET+x1WIPtPPrcRm9Dj99ADdz
-         N8khY0JUCwAJQb0VD2IR+scr9dvSGhUvyyL0unHwW+R5I1lpxDv0WDZ7Rap0eeFssZ3U
-         CALGQ1LVpIpdCcCihyszfi3rD7aLL7uCgqBhh0hRg7ZXnu5urkqM30vTBqLsv3+qswSH
-         epJLutjcj2YwkU4Ba6yqXPSSR4kQsaThbDfQA4n9i/Q4/+PUfTSLYv/kJMlx2FOVrsGX
-         0+XwYAGU3dqwN1UzrLBkzMfx/1Vp2BUIm/8OKyk8VaHSMJIfkV08SCv9Xw78/+D37r4y
-         jyeg==
-X-Gm-Message-State: AOJu0Yyipl3CcqSXvTFlFDsLiRfnNxL4osTb6TOW3tUZSk922h5E4PFx
-	pMohrQFPlGk4bUX+l310o+dOo3CQlIyI+zI9GuH/Lreq6K9Vnr/ilhLuTKpsyoRCrgOnOL1rDu2
-	NNh1KLXOZLSd0skUFVirK68xuYRxzdQo=
-X-Gm-Gg: ASbGncu3LCaAIq1PqACdoOmxxqOwK2VHMf2Va+Wi5zJRlMyQ8CXM01wc6KJxwliRb6C
-	KnylNUgGZ+vGBQbNvv1PFQrtt2VQh7Uu7SRzyDDQpaVEspLV0IQPEghzwmSaegsBGQ35ZaizV/R
-	ntNypDD4iGKzrdrXXPrUXTWHv6gNxk2P+6AShCsWtCAYzml+BMieNMIn64QUSqMbsGw5KGyVGue
-	VO3
-X-Google-Smtp-Source: AGHT+IEftW8UiokhXTvQrVa8hvmHu+vKHnjsjWryOrykOF1HpFuuBiUQUB8krX/RZL3nMvbjOL8D+QJHJbfUyEW40fw=
-X-Received: by 2002:a17:907:3fa7:b0:add:f68c:5200 with SMTP id
- a640c23a62f3a-ae6b2a45b79mr236388566b.6.1751969867899; Tue, 08 Jul 2025
- 03:17:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dyFlPEWu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nGIqBwBa"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8715DEC0BBE;
+	Tue,  8 Jul 2025 06:19:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 08 Jul 2025 06:19:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1751969948; x=1752056348; bh=f0SN4HjWwV
+	O2ZIx39v0tsnLdDw9QBh97WuKaFXw/Pl4=; b=dyFlPEWugt3XnlEI6PgpLqnA0q
+	rX3iQ1Cmv35gITUKZZwfA5A9vl0f3XCRftSx/XaWYZPLlMVb5QdiEmjzI5sPUASP
+	x5L1s6qA+Xvbz2zUlCnRq6iohby2GlYwTId4cr/Kt303z+z/u0Ke/otOH5SMjBY6
+	L0Nn/Bbqs8RrVI/visk40znpqfiiJ0/5xdnnqx+ebCHrkSyJRVbbl0a/yCT4zjZ2
+	Lx9qJE571LbU6OMhu7fKnfGFL+D3wqtmpREGd3GM6Sio9EC9wOb/eJMeOAPWyA0n
+	Eq3JoI0x+5gMP6di7Rcy4Kkg/umY8kC0s8laE0ekSTgz97xuMvjN1x06Ofvw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1751969948; x=1752056348; bh=f0SN4HjWwVO2ZIx39v0tsnLdDw9Q
+	Bh97WuKaFXw/Pl4=; b=nGIqBwBakB3mskgcn/9n4blHogt+A5USlNdP1JP4M1fX
+	kdwB6xcBRLLaYx6o7+6oV3JckIM24GO9Hm7fFJbigiWZ+KzQyJ33axlO5rk1CmU0
+	r249WF1AjRk5lD2KJjjpbEhXsDfgciXZz2cdswo2Pd5HzmNyuHRi3aBfdx+zJHZU
+	byAwBYOWyegm9tC7qOWXYsyNZIelIZ0SQaQAt/JocxsYBveRK+riZO3bzUfNyQyI
+	PrvNzUkXCMlOcaA4D3wNv8z3Bw3nj/BX+IOLiXVtmvhfHeELeYGmCo80MRnVrhLd
+	uObsHnFSeIMilH1diEk/J0j2gPaNFPx8k5LICYdOZA==
+X-ME-Sender: <xms:nPBsaITdtC0aIhH6s6HUOpkA62p8RuCW7LIavImT0N3f61ORKCAxsQ>
+    <xme:nPBsaF_f_9ZvYf7mmuA4Gysu012pmDIfQk3WmQMi_DZxMWTa0pf5Id6Z4VEi9TBBY
+    TDhWJEeFhJbky1Lzg>
+X-ME-Received: <xmr:nPBsaHq-D-NlkEfw9cp-FDEmvn9SEnIxbiqbwz7ybsGgSi_knjD7_eUqKoCU14ZZGDhcrw_-3yo8WvtsoYSMdQj70ntfSrJRntT5kRRYJBU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefgeegvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhfffugggtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcu
+    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepie
+    fgiedtffffvddvueehheejheehleduudfhheekkeeggefgueffheevgeetjeefnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
+    himhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehvugihvgesghhith
+    hhuhgsrdgtohhm
+X-ME-Proxy: <xmx:nPBsaKkzFCElXDtUOyoAjH5zgkxQhIIwDVYHOAdtrBPkcqi-a76cNg>
+    <xmx:nPBsaGLAZwdu0exO5CNNO4DjPDH0UVZ-MuzJDkqLHFGV8DwcsTzYQA>
+    <xmx:nPBsaHyo8Y-kYe7q38Q1xOeOBFoy1IKEOUxdBrldsHV7bFWGUe7N-A>
+    <xmx:nPBsaGscZvO6XSVOcmfqyw5ByKYrXhwhYAdBmSK8Gy5ZRPra1tB76w>
+    <xmx:nPBsaJiiaK7mY41c3pPj_H21QJM5VEDZMDy7StZ94sbcKUrQ_W-2ROtg>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 06:19:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d2dc2230 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 8 Jul 2025 10:19:05 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 08 Jul 2025 12:18:58 +0200
+Subject: [PATCH] t1006: fix broken TAP format
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250618151821.528627-1-christian.couder@gmail.com>
- <20250619133630.727274-1-christian.couder@gmail.com> <xmqqbjpv1ucb.fsf@gitster.g>
- <CAP8UFD223ja7jKU+wb6TiGkc9frh5dt1rCJkOkk+O+J2MPokrw@mail.gmail.com> <xmqqwm8jxoj3.fsf@gitster.g>
-In-Reply-To: <xmqqwm8jxoj3.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 8 Jul 2025 12:17:35 +0200
-X-Gm-Features: Ac12FXwjOg62C5GQ9a5sPfglUmRtF-4sUIX1f8K6AfMEbjeuB4rUYeBZVUKfWsw
-Message-ID: <CAP8UFD3ZitsRz3ccAjmB_k+DhdYw+AJgf-2vPCGUaRAgWd9SEA@mail.gmail.com>
-Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
- output format
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
-	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250708-b4-pks-t1006-fix-tap-format-v1-1-c3f837448364@pks.im>
+X-B4-Tracking: v=1; b=H4sIAJHwbGgC/x3MTQqEMAxA4atI1hNIi/9XGVykGjUMo6UtIoh3t
+ 7j84PEuiBJUIvTFBUEOjbpvGeZTwLjytgjqlA2WbEUNtehK9L+IyRDVOOuJiT3Oe/hzQsvO1N3
+ YtJYJ8sEHycV7/w73/QA8rE9bbQAAAA==
+X-Change-ID: 20250708-b4-pks-t1006-fix-tap-format-2ab169c782a0
+To: git@vger.kernel.org
+Cc: Victoria Dye <vdye@github.com>
+X-Mailer: b4 0.14.2
 
-On Tue, Jul 8, 2025 at 7:03=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> > On Tue, Jul 8, 2025 at 12:58=E2=80=AFAM Junio C Hamano <gitster@pobox.c=
-om> wrote:
+When running t1006 via Meson we receive an error about invalid TAP
+format:
 
-> >> We haven't heard much after a few comments were posted on this
-> >> latest round, since Elijah's
-> >> <20250619133630.727274-1-christian.couder@gmail.com>; I understand
-> >> that it would be the author's turn to respond (the response does not
-> >> necessarily have to be with an updated iteration).  If so, let me
-> >> mark the topic as Stalled in the draft of the latest issue of the
-> >> "What's cooking" report.
-> >
-> > I will hopefully send a v5 later today.
+    $ meson test t1006-cat-file
+    1/1 t1006-cat-file        OK              3.86s   420 subtests passed
 
-I just sent it and replied to the pending reviews about v4.
+    stdout: 147: UNKNOWN: c308ae01840d8e620ad554ee5d77fe114dc2d912:path with spaces
+    stdout: 159: UNKNOWN: 3625298bf5e7c464a7d0e38ea80c2a5b5904d9a3e5b2b025b67f360e09b68dc7:path with spaces
+    ERROR: Unknown TAP output lines for a supported TAP version.
+    This is probably a bug in the test; if they are not TAP syntax, prefix them with a #
 
-> Thanks.
->
-> By the way, I noticed that you often do not respond to reviews until
-> the last minute, at the same time as when you send your next
-> iteration, or even soon after doing so.
+    Ok:                1
+    Fail:              0
 
-Yeah, right.
+While Meson copes with it alright, it's still annoying to see these
+errors on every test run.
 
-> That is quite different from how other contributors operate, i.e.
-> respond and engage in discussions triggered by the reviews, and
-> after people involved in discussion got an (even rough) idea of what
-> the right next step would be, if not a total consensus, send the
-> next iteration.
->
-> I do not know which style is more efficient form of cooperation, but
-> it somewhat makes my job harder, if I do not hear much _heartbeats_
-> after I see review comments on the list.  I do not mind waiting for
-> seeing the next round for quite a while---after all, any substantial
-> (re)work takes time.  And responding to reviews may need thinking
-> things through carefully, which may take some time, so I would not
-> demand an immediate response, either.  But it would be nearly
-> impossible to feel the current status of such a topic---a few review
-> comments are seen, the author goes silent for a while, we cannot
-> tell if the author is working on a new iteration or where the author
-> and reviewers agree and disagree.
+The root cause of the broken format is a call to grep(1) that gets
+executed outside of a test case, which has been added recently via
+9fd38038b9c (t1006: update 'run_tests' to test generic object
+specifiers, 2025-06-02). This call is done to determine whether a
+subsequent test case is expected to succeed or fail, so it makes sense
+to have it execute outside of a test case. But whenever we do that, we
+must be extra careful to not generate any output that breaks the TAP
+format.
 
-Sorry if it makes your job harder.
+Fix the issue by adding '-q' to the command so that it doesn't print
+any matching lines.
 
-When I work on a number of different things, I alternate between
-topics. Just after I send a new version of some series to the mailing
-list, I usually start working on a different topic. These days for
-example I alternate between this topic and the promisor-remote
-capability topic. So it seems to me that if I were to respond to
-reviews right away, I could be switching topics all the time if there
-are discussions happening on several topics I work on.
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
-I know I still have to switch often anyway between topics because I
-might be pinged internally at GitLab about some issues or because
-someone I mentor asks me a question privately, etc. And maybe for you
-or others switching topics often is not an issue, but when topics are
-quite complex I feel it makes it much harder for me to focus on what I
-am doing. I don't think I am the only one in this case by the way.
+this issue has been bugging me for a couple days, so I decided to
+finally fix it :) With this fix all tests that aren't skipped on my
+machine conform to the TAP format.
 
-> Also a review response that comes at the same time or immediately
-> after a new iteration is already sent out makes it look like the
-> author is refusing to continue discussion and reviewers are not
-> welcome to make follow-up suggestions during such a discussion.
+Patrick
+---
+ t/t1006-cat-file.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Sorry if it looks like this. I am not refusing any discussion or
-follow up suggestions. As you say above, responding to reviews may
-need thinking and often working to try things out, and often it seems
-to me that I cannot really reply properly if I haven't worked enough
-to try some ideas.
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index f123ef1e360..1f61b666a7d 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -197,7 +197,7 @@ $content"
+     # FIXME: %(rest) is incompatible with object names that include whitespace,
+     # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
+     # test this instead of the raw object name.
+-    if echo "$object_name" | grep " "; then
++    if echo "$object_name" | grep -q " "; then
+ 	test_rest=test_expect_failure
+     else
+ 	test_rest=test_expect_success
 
-Let me take for example the v5 I just sent. It's only by researching
-and trying different ideas without knowing if they would work that I
-found (after a long time) a way to write a proper test with both a
-SHA-1 and a SHA-256 signature on the same commit. It was the same for
-using "$GIT_DEFAULT_HASH" instead of "sha(1|256)" in the tests.
+---
+base-commit: 41905d60226a0346b22f0d0d99428c746a5a3b14
+change-id: 20250708-b4-pks-t1006-fix-tap-format-2ab169c782a0
 
-So yeah, I could have replied early with "I will do it in v5." or "I
-will try to do it in v5." or "Ok" or "I will think about it." to most
-suggestions I got, but what would have really been the value of a
-response with mostly those kinds of sentences in it?
-
-> Instead, the next iteration comes as a fait accompli,
-
-Even if I had replied with mostly "I will do it in v5." or "I will try
-to do it in v5.", etc, to many suggestions, I could still have found
-or decided for some reasons to actually implement something else and
-use those reasons to justify it. Would it have been less of a fait
-accompli?
-
-> and makes it
-> less useful to continue the review discussion on the previous round
-> by responding to such a late response.
-
-In my opinion the discussion can continue with more useful and higher
-quality information, as I have worked significantly to think through
-and try to implement the suggestions that were made or to research and
-then often implement other solutions. Yeah, it doesn't continue on the
-previous round, but hopefully the new round is better, so ...
