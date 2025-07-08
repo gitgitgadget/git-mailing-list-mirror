@@ -1,152 +1,108 @@
-Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1FA224D7
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 20:02:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25EAD224D7
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 20:04:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752004931; cv=none; b=loN6tvC2OtLmeGt8pJ2BGF/OKwOS60IjjMauJkeZMd/NMCLzRt8vRavoNDzvwU+5qQaiSZfecCyk+Ppdf9mfm7mR3Jhq5+qY1j3ttmcV181Pk4w1ABx1DP8Fg76u35pqndEI/0O/lVQQK6s3xhTCZodDJuN+dt9knUZSI2izULw=
+	t=1752005045; cv=none; b=dtmvrV/fx6SOZGGu3RkL2wsrQAD3muAJcQAvKLL2vWEzdXfRHEhYjyeEvh+uRxMWYU/sgS5Zg7MUgLjzumHgbWcc/rmBb267a9cBVvH59dyprf+HOM3cXcIUNIfQufoIWjKV9nyiVgPvluGvgLgeQhMu5mm04P9mSEQ3Si3I9r4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752004931; c=relaxed/simple;
-	bh=i1YuFKgL3RDwNXtqfnViraTtZVICv288r0zgxLDIlvU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ELfuYIt7k2B3pCA4wG+l2zNmr4CHAVPHUARASWngBAmGuX3PB8xtdUKWeOVITNzUUy1izwqy3LGZ1MexWx+uSv4ruNPBnOvcQAicKIVyWSzpwxW+xGPNBYGgw6lRozkA7JsYXmnrcPnLgTWWaiDmBfeGPf7ZRsbrulW8G+xP2TI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XsDwD1D8; arc=none smtp.client-ip=209.85.160.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752005045; c=relaxed/simple;
+	bh=0xjPqeRIjvEV8oG0UKBpbYJaqbcHCp5wlNuiirP6Zq0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=a2+1P5IzCnIBxH2L+EczTLw0pQADSKSad+/tXOQGQ0M3GUG7HISgEmtlRONtopHQbFcT8EEdKRYl+grvle9VDzGlNYuAaJeqnykn6U4ORGG9IyhE/7IlrblAdDksqanZVstHIWmZpjFxHeFKtOo6CX80hEtmQ/1gKGOgFZEWm8E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZhiMQZ7I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fhf6MscX; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XsDwD1D8"
-Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-2ea080f900cso1334191fac.2
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 13:02:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752004928; x=1752609728; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ukl+FYYT6cG2Z+7NOHkXQAX2HqSMIsXK1BNVj32SvfI=;
-        b=XsDwD1D8g0dGR8k6FzlKYV0QK8u5fkq6gJ1n/Lka4UQzfCrRBPDK3o2JexP3O5SGC9
-         e8b+5quWm3TMHKmwMJcAvJilp4CLQlaVSRGWb3GoIuq+t9RObxSlLtClwNFV2k8ekWBG
-         7Em66rU2//WSL88S1JDlPAUgJBf4Tw77JbnStg7Z+Zadxe+vQwh6LJ1nZRF9NPOEhLhC
-         i9Og2OEAe+tNKFSCDIo8nZZoPvLmiVMj6KiRWNseUbIWKowW3+1xzXIIxEZRIjyMU6sl
-         Nfv0l1jRJ6OgDzX48BtfoJZX/LsZ/haCw53m+x0aAMGMxIIeH7hcOJZrp0ts7/XvUPyB
-         +NGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752004928; x=1752609728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ukl+FYYT6cG2Z+7NOHkXQAX2HqSMIsXK1BNVj32SvfI=;
-        b=Hr+u3cHh1BRdmd+kQ0q6+FwDDo97g8Y2wegYunSdDJVa8GFC6EPHvKN+IM6+S3CQY6
-         ubmYtsbxMwnhWtU62hiXrcDo+L02gRV2l5e36XBN5DP35DtHreVvtDOn7T+svP1mHnv5
-         WfrYZ3AWi+htn0Y5IuFKAtL8hoXJmGJ2/pXeO2ksqtfv3BTVe+GBjnL4bPENQXY1xTlX
-         ky0yWnwHC/OMbmaSdwAQJq0zwSkCVOQyFVY37zOBp0uC9dx1G75VAEbbYSTgShmeTtQH
-         W03qO/yu3UwY3tOEmHiDNTOn1+723jxsJoqTucY9z9HLEGYWyoOrxaF/gOmvFv4AyK19
-         2i2Q==
-X-Gm-Message-State: AOJu0YwIVrmv5kX9X7I7aReyM1Ua77Bd0phepu4887f4wWKheeePjIbv
-	0r2EuHHGBFOlWHPdFy9Mt5lkHhSQKPEO0oQCFoCB/vcY4aDsoicscYal0x+tBQ==
-X-Gm-Gg: ASbGncu6jfRP/gtG5XAWh2hJj9LfBvm5Sk//80GmywPMfUDrab4yk02y69kwsEpx85f
-	gpM0w0YLWVaFPLgloQUY+ZD8HzYRa21e7vKLWUasiInjYiVnUSPmxeWrN+etYTtRLihqaPm3kZB
-	65Q2xRJ1iwy5TRxcuecvDdLBn32W8XRJ6Ce8j5mphQHNSDuqcIYPF+cfl2Wr+O930HBnlckqDwc
-	X0DVsvfksK7ruHDMhIgA25qXjCGox/W2yDyiiEFjWQxLztWqUaDa35klHKzWYzwLOMGDvA/09/Z
-	kjPsB8X0Rn0f2n/HmivIw7Sv+zkUOdPZ/5YftSQdHwvww0AOlIFihX4=
-X-Google-Smtp-Source: AGHT+IH7momzzAZEUjkxA6JPPccwTomCKaZMzVx7BaO6bjOUWhgkROhOSmmQp7B2HNMPvjzT207sjw==
-X-Received: by 2002:a05:6871:1d1:b0:2d4:ce45:6993 with SMTP id 586e51a60fabf-2f79206502bmr14087847fac.30.1752004927839;
-        Tue, 08 Jul 2025 13:02:07 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73cdfa7844bsm253831a34.57.2025.07.08.13.02.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 13:02:07 -0700 (PDT)
-Date: Tue, 8 Jul 2025 14:56:32 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
-	irecca.kun@gmail.com, Eli Schwartz <eschwartz@gentoo.org>
-Subject: Re: [PATCH 3/8] meson: improve summary of auto-detected features
-Message-ID: <apzpu3ydbiyfxckqewqfsgjqm2kwpisj3gx4q5cb73ntsldxqy@vfzpgnu57rl6>
-References: <20250703-b4-pks-meson-cleanups-v1-0-2804c2932abe@pks.im>
- <20250703-b4-pks-meson-cleanups-v1-3-2804c2932abe@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZhiMQZ7I";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fhf6MscX"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2EB89EC02BE;
+	Tue,  8 Jul 2025 16:04:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Jul 2025 16:04:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752005042; x=1752091442; bh=S8QFo4fqPa
+	bsbO4DKHCXMqb0doC/1PT+x1qoWLu5o3E=; b=ZhiMQZ7Ig3rwC/pxbonz4MY3x7
+	HwmP7XkG/w3bl48ABCL9bA8b2xK8P1Bi0A95iicy3AcpN4uDZk89EMjGN2BkvZEZ
+	0A+OM41TnmAs1aOjVu+YGBoEHWUd9UIJjEFZWvVfSswR2bzOHPl9NIeCSF8aMrGb
+	sX/Dl97tqtOrjVdvof86ya2adJpY9TbwQCz6S0SQIOka6ddnhg8VAJ4ePkSYev9o
+	g/WnJK4S+OdE6cmjVXfsn93Cz3OtKhk/ref7kvnFLUA1YBvqxFeyWFY46uff91I+
+	eFdq4jLuXNq13CR3zo26p6wJDdpN5nM0AwNtXkADu2anyVdGuVP3jWChfE7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752005042; x=1752091442; bh=S8QFo4fqPabsbO4DKHCXMqb0doC/1PT+x1q
+	oWLu5o3E=; b=Fhf6MscXcpBqd2RTqZtcGnIAh6fSo7s+y7mCIqnQdcdAMJmOyWz
+	BQV74obXu93Z0E/BfNZhL9iwupeLrlOhkSxPqs1ohYbOTkr6Jk26ASbrXyc/K/mm
+	qpbHbeggbejQmaTtkJDlq9CQm5aAyTS4+7P1gVgEIRd25cmYWBkAtK3zUGM9VNdb
+	64h6x4fkynGv1Eh61k/5RwYgtKF1HBiRzn40IlNY1yJa/lslZJiue+M7NqaGtFF3
+	kVuiujVAmFraMVRPhk32eymyVRAZvFkxUe3eSVtPz/nyCaurLOsWL2rhkp5khVfY
+	WbIQbgsGGaFBdaC9COX7/U73w+5ZEh22QEw==
+X-ME-Sender: <xms:sXltaPt9exkj4GHEbHc4Lll0decdwPT7xQWye9l3XIWw4zGrV4vmNQ>
+    <xme:sXltaDsups4xEth1t0m3__nEJiHNR7YKiEYHbrZplJWUQT3R4I9hhX-UmnU6wtm7X
+    r0vRtf6LNDDBCyY8A>
+X-ME-Received: <xmr:sXltaMM0eftEJI_ST6zt7_7-GeLYozdJquaUd688uXDzIh_epMYINtjsTRIeaFVHInOeAJSlCdab4hzSy2omgW30uJTF89Z5UkBxqaI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
+    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
+    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
+    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
+    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
+    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgr
+    hihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:snltaJ0kKCCkLSSgKFtukvQ4kZlgnTrLwvFq6OQ_QCqGUXKpEyubIw>
+    <xmx:snltaAMmSrP_BH4nOAGsKkF1rF5SZ3Zy6bo4wYw_jaOGu4jdCCetmg>
+    <xmx:snltaB3rTwfhC8WVvNc-H-CCYLysk2Tafv8PdF3PBZfJe4G-aLW1fA>
+    <xmx:snltaPHpLTK1QZ6vUHDFXpnXOLeMhMUMZ0GT_MQgOu0PWw9qcIxKuQ>
+    <xmx:snltaOgiSX_izVwE79vgvVZb_-M50_o4Nn4rN141OIpmXBnu4MFPCgue>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 16:04:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Documentation/RelNotes: use .adoc extension for new
+ security releases
+In-Reply-To: <d45d881536585ebaaf21ad5089afcd45523df783.1752000456.git.me@ttaylorr.com>
+	(Taylor Blau's message of "Tue, 8 Jul 2025 14:47:50 -0400")
+References: <d45d881536585ebaaf21ad5089afcd45523df783.1752000456.git.me@ttaylorr.com>
+Date: Tue, 08 Jul 2025 13:04:00 -0700
+Message-ID: <xmqqfrf6v49b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250703-b4-pks-meson-cleanups-v1-3-2804c2932abe@pks.im>
+Content-Type: text/plain
 
-On 25/07/03 11:28AM, Patrick Steinhardt wrote:
-> The summary of auto-detected features prints a boolean for every option
-> to tell the user whether or not the feature has been auto-enabled or
-> not. This summary can be improved though, as in some cases this boolean
-> is derived from a dependency. So if we pass in the dependency directly,
-> then Meson knows to both print a boolean and, if the dependency was
-> found, it also prints a version number.
-> 
-> Adapt the code accordingly and enable `bool_yn` so that actual booleans
-> are formatted similarly to dependencies. Before this change:
+Taylor Blau <me@ttaylorr.com> writes:
 
-Ok so without `bool_yn` enabled, only the dependencies listed directly
-would say YES/NO and not match the other entries.
-
->   Auto-detected features
->     benchmarks      : true
->     curl            : true
->     expat           : true
->     gettext         : true
->     gitweb          : true
->     iconv           : true
->     pcre2           : true
->     perl            : true
->     python          : true
-> 
-> And after this change, we now see the version numbers as expected:
-> 
->   Auto-detected features
->     benchmarks      : YES
->     curl            : YES 8.14.1
->     expat           : YES 2.7.1
->     gettext         : YES
->     gitweb          : YES
->     iconv           : YES
->     pcre2           : YES 10.44
->     perl            : YES
->     python          : YES
-> 
-> Note that this change also enables colorization of the boolean options,
-> green for "YES" and red for "NO".
-
-Ok, it looks like colorization it not an explicit option, but comes
-automatically with the `bool_yn` and dependency change. Nice.
-
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> When preparing the latest round of security fixes, we wrote release
+> notes in v2.43.7, and then successively merged those up through to the
+> various 'maint' branches.
+>
+> However, the 2.49 release series is the first to have commit 1f010d6bdf
+> (doc: use .adoc extension for AsciiDoc files, 2025-01-20). This means
+> that we should have renamed the new-but-historical release notes from
+> *.txt to *.adoc during the merge into the 'maint-2.49' branch, but
+> neglected to do so.
+>
+> Rename them accordingly to match the convention introduced by
+> 1f010d6bdf. Since the release materials in question here were prepared
+> before v2.50.0 was tagged, the 'maint' track for that release series is
+> OK as is.
+>
+> Signed-off-by: Taylor Blau <me@ttaylorr.com>
 > ---
->  meson.build | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 4e41c3007bb..4f22d72641e 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2193,15 +2193,15 @@ meson.add_dist_script(
->  
->  summary({
->    'benchmarks': get_option('tests') and perl.found() and time.found(),
-> -  'curl': curl.found(),
-> -  'expat': expat.found(),
-> -  'gettext': intl.found(),
-> +  'curl': curl,
-> +  'expat': expat,
-> +  'gettext': intl,
->    'gitweb': gitweb_option.allowed(),
-> -  'iconv': iconv.found(),
-> -  'pcre2': pcre2.found(),
-> +  'iconv': iconv,
-> +  'pcre2': pcre2,
->    'perl': perl_features_enabled,
->    'python': target_python.found(),
-> -}, section: 'Auto-detected features')
-> +}, section: 'Auto-detected features', bool_yn: true)
 
-Looks good!
-
--Justin
+Thanks.  Will take it directly on top of maint-2.49 branch.
