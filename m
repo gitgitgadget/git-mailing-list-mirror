@@ -1,120 +1,79 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DBA23C4FE
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:35:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 142D922A4DA
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:50:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752014157; cv=none; b=sop3Z33zKUu8dsl90ZLmoZVEFdtR2id4RkSVLOvNCJNzFrMxzEl5yC+26XO5DAawrIOt/WGH3yoLSbO8bqZpj6m66ClxcuUkv3C/3GKn53JzY+uuQTv+97MEv0yIFp77VDsszA6AbfpqsOIxwV3r1lmLAzgHNoS4T5R+++Iu7fI=
+	t=1752015018; cv=none; b=ZvAlH55aZlfv4LQyiP7WpioDvf+DKRRHzVqclMksJLFOAogC5oZT0k9FZ+0kcfSrBT67GNyqo2rQzEAbhr5okPGAltoxgg7ZBaYwZKRvO4c3/6Mcts3FFJS8UV322X1Sv2kmzvovAj976e2ylM6jjwIoyzsdrRfK34jY8qhZvH4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752014157; c=relaxed/simple;
-	bh=Q+PRg+f5ednCaRmvDkdnJqnNO4xgDx4JfcPv1XgkD1A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cBogSglXqaeOLrTN9ALH3+QhnrNhAjLcUUVL0NfoCKKGjm3jOLMPD7mzt9VSVUzUNNCmCTrP2thanwR9xwihEnh4wMHaYP699SgUPwO+pGALBDEDB2iWyHs3ltSos9W9IGX79cOujWRX8SaZ3jb0xVKt2ydnEQIdkJ8EXWqtJEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mrc11OuR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EV5PdUqI; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752015018; c=relaxed/simple;
+	bh=SfU98DpzF8ByaVNY4DGREpsb5QGXuuE3/syLGgj+3NQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b0U7i9/NI5ypTQZH4LBEj9ns/VxCZwy8bsDnf4m16t+zSNov2cclQk3mTM3rZRdjobHJq2KnYxGK4tN/P9ptnuNlKw8X1Q55KrpP7idjKmFQTipmLzosJsHPG6LLlak2ioFwlMscw1C/pRtz837My0txiihKNqd1OFnfPSbbpmM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=I1PlRu1j; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mrc11OuR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EV5PdUqI"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id A3C3AEC0B61;
-	Tue,  8 Jul 2025 18:35:54 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 08 Jul 2025 18:35:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752014154; x=1752100554; bh=4u97ez0qi2
-	rlnuYZ/tXmYmxifFCxM5+orv7weNuoa0M=; b=mrc11OuRcp56WsMwUiFtpgRBgR
-	3hiECjdy3csLt9rbZaQGJHUkryl25IVwIRES2IOayzzAealIoHoI44fXHg7Aj52f
-	L7etUiM4cPBS2ZoMMdrM8jkAOzfvr5C9aQzglU5UhGEe5rokyME6iwGRglQQjz70
-	KB5wZqJzBn2xlCCa+P8j3VWKSjzeTxAGDEsSZoA2krG2SQQFaHlbolhw3WaRqPP7
-	fC91ZiiToeuGyXSIKikbp8Uf76ldGV7yMJjVSLWW0RcSC5dDzsdMH8fOzv9LTrrN
-	rxBVD7dXvZunnOC+xdhnYq4Rw/SB6foiMDIUCeFFihKwKU0prSxzNmQaXfKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752014154; x=1752100554; bh=4u97ez0qi2rlnuYZ/tXmYmxifFCxM5+orv7
-	weNuoa0M=; b=EV5PdUqI1OoRtFhhQDLjp1QZxX2qyASmWjVhat8PikwEmcNv0zs
-	ZyGGUA7VlmXZWuhrT1DWSPzqcu06MhBItd8DiE85fL4Rux8JbcYr4tFVynQKdcaw
-	JjGudrbf/uZgve7H44PydnkAjKjvYCEK19k7h8fJKHZaOQKxUUJG1uT5HuWaXKKb
-	rZeqlu90fzlEkRCE815UK6Bp3K0r8qBTV6+eAT+HUl323HuF7VU5dkjgIzqik1lw
-	u8PgsRi8k8mIt0ELCIZLBOIrp9TSQ4FKhKdV8XD9DiUVBvUWGfN97+6ZHJc6LyZV
-	U0Sf0ty4wyTyBVSsC4Zng7vtGTFfSMtYeQw==
-X-ME-Sender: <xms:SZ1taP9b0nIDwM_sq8zrn6fQzSqeEZr_v2pnoK3t56-Bqg7Fm_n-CQ>
-    <xme:SZ1taDG8VOEiEQK7fs019r6X_lC8tfWeodQlwn1QJL0uA1RWHGu1EBJDhgHzFUTso
-    45bOJVr9g5FJ7RRLA>
-X-ME-Received: <xmr:SZ1taCkrIgzo-TUQBnQUR9LInf8-_sNWFHbamyugTDmc4F4ljrT42Bc60VLD-RLkcZMS7h7Cc08EfoOZgKnzC1ZSPsYrORSc09es7tI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheeklecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhg
-    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
-    htpdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughu
-    rdgtnhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SZ1taHYSYyDEUy_38e6QNp0lE42Fjfw2a-EBBaIDe9-N48C6eKJe0Q>
-    <xmx:SZ1taHFOPLR6QgQV_LhrW_7F-VSrBTR5p-5JU-YsSdvy7ToYTJ_Y6A>
-    <xmx:SZ1taILAB4Kf4ydaFc1wa3EXc-U7oQcirsrdZf7f8WYXRz5VXtgxAw>
-    <xmx:SZ1taCMjZ9oYLnYKTIKiIOeC2wfHynLn7JY72_5VU7iau8Qv-LF67Q>
-    <xmx:Sp1taGrpLib5iv6nMj7KwWZ6oZxd79Bif9a6hIyFj3KUGSvWPm2rEt4h>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 18:35:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org,  Lidong Yan via GitGitGadget
- <gitgitgadget@gmail.com>,  Jeff King <peff@peff.net>,  Lidong Yan
- <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v6 0/3] pack-bitmap: fix memory leak if load_bitmap failed
-In-Reply-To: <aG2XZYamUv5FWq/W@nand.local> (Taylor Blau's message of "Tue, 8
-	Jul 2025 18:10:45 -0400")
-References: <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
-	<pull.1962.v6.git.git.1751347929.gitgitgadget@gmail.com>
-	<xmqqfrf71ull.fsf@gitster.g> <aG2XZYamUv5FWq/W@nand.local>
-Date: Tue, 08 Jul 2025 15:35:52 -0700
-Message-ID: <xmqqms9es43b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="I1PlRu1j"
+Received: (qmail 17151 invoked by uid 109); 8 Jul 2025 22:50:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=SfU98DpzF8ByaVNY4DGREpsb5QGXuuE3/syLGgj+3NQ=; b=I1PlRu1jXhCJeKBFSP9r5uC0HkTPJuLWD9M7Jb7I+yXshzW/AHSn+0uIAiYmoP0OqahW+ekJ1Rp4HpfiCrzKF1jvng3fZvS4DhH+KqJtuQKPBSTeyGeOa+yPZrUVWVsH8DFV26L+6vGFomfv6aCQzMig2FeyVZEm/LXBLFv0rq2KiffzfRCsmbDaWii14oLolmSk1toU/7lkPjHUoyX6rukBEqwp7Zv6jpV7hb35J0ehwl2yj6ScfOz47cV0165Xu8Oouj7w/BysXd7K1F9kGL5zIUWg9v4CbVQYNr6+JAvCxWhFPP3L4srCQUmGQ+mQOgyToLWEmCRHUfpZ1NsuHw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 08 Jul 2025 22:50:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 30485 invoked by uid 111); 8 Jul 2025 22:50:10 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 08 Jul 2025 18:50:10 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 8 Jul 2025 18:50:07 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?Sm9zw6k=?= Miguel Armijo Fidalgo <jm.armijo.f@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: Bug: "git stash create" ignores "message" argument
+Message-ID: <20250708225007.GA1180568@coredump.intra.peff.net>
+References: <CAKMuBmSeFh63212_GhBHfOTbW5VaqvQjo7jz4aowm8bntCXkVw@mail.gmail.com>
+ <20250706032512.GB3041790@coredump.intra.peff.net>
+ <xmqqv7o2vc64.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqv7o2vc64.fsf@gitster.g>
 
-Taylor Blau <me@ttaylorr.com> writes:
+On Tue, Jul 08, 2025 at 10:13:07AM -0700, Junio C Hamano wrote:
 
-> On Mon, Jul 07, 2025 at 03:53:10PM -0700, Junio C Hamano wrote:
->> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
->>
->> > Since it seems this patch has been inactive for some time, I have revised
->> > the comments according to Taylor's feedback and submitted a new version.
->> >
->> > This patch prevents pack-bitmap.c:load_bitmap() from nulling
->> > bitmap_git->bitmap when loading failed. Thus eliminates memory leak. This
->> > patch also add a test case in t5310 which use clang leak sanitizer to detect
->> > whether leak happens when loading failed.
->> >
->> > Lidong Yan (2):
->> >   pack-bitmap: reword comments in test_bitmap_commits()
->> >   pack-bitmap: add load corrupt bitmap test
->> >
->> > Taylor Blau (1):
->> >   pack-bitmap: fix memory leak if load_bitmap() failed
->>
->> OK, now, how does this iteration look to folks?  We haven't heard
->> anybody say yet.  Is it ready to be marked for 'next' yet?
->
-> Oops, this fell off of my review queue. This version looks great to me.
-> Thanks, Lidong!
+> Jeff King <peff@peff.net> writes:
+> 
+> >   2. Possibly "stash store" could pull the default message from the
+> >      commit, rather than using the generic one.
+> 
+> This might be a good compromise.  Even we discourage the use of
+> "store" and "create" combo to interactive users, we do care about
+> ergonomics for script writers.
+> 
+> Those who use "create" to write a detailed log message (which may
+> later be reused for a real commit that is created out of the stashed
+> changes) would end up with a huge and unpleasant stash entries if
+> they use "store" without any message, which may be a negative
+> experinece for them, though.
 
-Thanks.
+I'd feel a bit better about tweaking the ergonomics of "stash store" if
+I thought it was generally useful to script writers. But it appears to
+have been created solely as an implementation detail of
+rebase.autostash, and I do not recall ever hearing of anybody using it
+in the 12 years since.
+
+I.e., without understanding why somebody would want to use it in the
+first place, I don't know what potential we have to disrupt them by
+switching the behavior (and nor am I all that excited to spend time
+working on it. ;) ).
+
+Maybe José can tell us a bit more about his use case.
+
+-Peff
