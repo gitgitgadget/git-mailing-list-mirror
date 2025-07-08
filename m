@@ -1,79 +1,85 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42165226CFE
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 02:47:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9D42367B8
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 03:34:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751942874; cv=none; b=P6nw8w8lHgO/1KQTys1GEkt4og4EVdO90GJOxc8jJSR1LXNoG5VQXJy6ev28QB71ie+ACfOxjKkqcvQyGD9UZhUlqZpFQjIbzs5Loq1iSXxBU5Uuc7+sbNTenFffLqwJ2+wW7GbyirTZ6BGN3ED078BGKTR5hAFfOM2wwISQrxw=
+	t=1751945682; cv=none; b=s1ffW3vw86JO3w0sFs554s+2zmzduMq9KsGIItYjAnKjuAY2ABVmltBTqIcFQ9FDE/ZQtFu9egsKLnnT4lJvjWL5D5cf2GqHnrXxKeMIMwkZq9OEUSqBY8MoHXfdrbDKWj8ofPtxx/JmNhQamNI/OPz/ZUk5L9YeBJYBFVogXbI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751942874; c=relaxed/simple;
-	bh=Hdjji6hGTaX6IgepML2wfa95xXgjPqMSDyyubRYH5tw=;
+	s=arc-20240116; t=1751945682; c=relaxed/simple;
+	bh=tL2V8tx9fvOeL+xfUB2rJNOysm+tF8k9UX/i09aJ7VI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YK07Tz3W0EpLuTbk/1cptwsUjRaVLnPCrEXlp2ZFjWDjHELXFkKGDHQf0xskFrXCZHT5WUtEZbIgdDFRJ1TWvL7bTe85BR8ZZthommQT7oQODvCruRVSnw/faem2Ni38HYzdqkQBzhIiOvARNlbkCWAAJoJnnVWzJQcpCu1ZRnY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=lJhX0gQV; arc=none smtp.client-ip=209.85.215.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	 To:Cc:Content-Type; b=fQnkeepuEJll4eJhuQ6oCuOEmB6JU+JB0EcFuEbL2rpwrI1gOqZLi0013wQ2LLSK7R/2CGqbUU8jZoOzHh5F2XQoHpHtcxdp3CYZrA79wFDwJo8iS7sNM47l2LT8r3lpF2cn1d/LqBsWoZp2HhiBlsPd8EvfQMPx4U8jxm/2sY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YfnzCQjN; arc=none smtp.client-ip=209.85.218.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="lJhX0gQV"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b3508961d43so3004859a12.3
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 19:47:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YfnzCQjN"
+Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-ade76b8356cso705967366b.2
+        for <git@vger.kernel.org>; Mon, 07 Jul 2025 20:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1751942872; x=1752547672; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751945679; x=1752550479; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Hdjji6hGTaX6IgepML2wfa95xXgjPqMSDyyubRYH5tw=;
-        b=lJhX0gQVqzfbILr1I5BqaLeSbLwHnpXLz76ZPp8Tw2y6G1u94l0EQaz4sr/nIExjzH
-         47SV5Ai0V8uV+oC+3RZcTdRfjhLsdps55t53FAqxYvG6gN0lqgGgfB4KQ8yByADZFrWl
-         ycK9M+SuUwAtVLKI6tejfSAWl1c5n+yKVQdeiArgYxl4BrqV6m/+OFy/BNg8JRQj7GDv
-         V8+QiUbBRa2q/Kn9PBvcJ8mreD+bTG21OWVvEeo/7q2trPxnAJIYl1V4eGMLynjbdSE/
-         n2HkbH+NuQ1EecCeSWARV3aV0ACIN94aHdbizuW+LrLn+nVjJrdhVOx/AkaebYA++AFW
-         5NDQ==
+        bh=jMj92tNiTNuygLvQNviqxj//2qDE2omMTESlQ49t0Xw=;
+        b=YfnzCQjNA9TJkbYP6pXbFc0FteL1M9i/kdgssPlvzr19rvn6FY6Cby7USZozIkid1U
+         ewHlqndUKdtrVMEey2mPmS5FMDBw8Zn+5wFODlwk/nlulpI4Fre3WahHRvgiHHLM7anj
+         wHwJTtD5+9aqUbgayv56LYYh0vejVMqwKXM4v32Mw1Nwd2i+ea7/tPKD5eOHs7PCOaM0
+         R/bSFtYEV4Mf6isFRlPr3qMaaXVc9g+c+8TSPOlSXS63ckF4m5ADOu0a8VR+UGjHJdDU
+         V9SOtluJKBWQF0ruI4OHr2U8jYNJjD7D5v3PNkszWp3915wvPDdvn0Mk/U4uu9DZna43
+         1uvw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751942872; x=1752547672;
+        d=1e100.net; s=20230601; t=1751945679; x=1752550479;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Hdjji6hGTaX6IgepML2wfa95xXgjPqMSDyyubRYH5tw=;
-        b=e1Ws82XcdHNvI5RZnuPzyzGfqERox9Gx5dw2seF0rtBikQr3bphgTKmeWUVcxFWjNu
-         qRh2egGbdfdj5OyzHK5W5kwIx9+c680ZjwqsJd6TaBLze+oc16fKW/IwyF05GXojWhG/
-         6SkmU+szCYInGDUBUKD0aJOmvIgsh3Pn7Z8hUBB5DAuFOq9kEcPQffzmHZKCeqkGRp7B
-         ZqUfhizW9Olzs/Ff5jgwM7qVSXYdfzaDSawuadevotLWRa5Lpng6W7ib9DI1mtEDc75H
-         kL7opjyFivWa3Pe7zeKlOeq7CyylhoWzWXUdX5MkpP9I3M9lrpAkdNlW6fn7sbVVwQp+
-         eRiQ==
-X-Gm-Message-State: AOJu0Yy5evmTNBrtjZgcuGI1fz+cw50nyj7z8pL0WOxOcefCc7cLcpvt
-	C7ERINTpD/uGd81HZ7kX24pKXTvERMOhGYCbEevxjHHlYMKt0UfXDJhN7WaQvvDaaglMmfptFF7
-	e0Kn9M8Mz9W6Un17IsfO8Hg74ZMr9NmL8HFLVGYfCNw==
-X-Gm-Gg: ASbGncujdJrgkYnuE9np6hoPFHJNir9pWhCYgRoMTXQj4/bW7dY3nCTuUgAjmRnKBur
-	bflVxQJ5OyNHCMAX66iXIJvF1kEBIIGlG2BcngYyQpd8S47qR0g+Ev6HB7WUh0sK8kh+8u29wBq
-	+xWDoEj/0RWAqPHx4K+lGbDxGx/sz/WdpAGbuxPSXHIZTtvXXdQH0Nfd0t
-X-Google-Smtp-Source: AGHT+IFP48i4DvHY0sYX8Gc1VMXsXOkwBoCyj7E4049ib3hf4jBvwmyEhd2bf3elwjXIR789qDZ0dFhO2UHg/fyCP9w=
-X-Received: by 2002:a17:90b:3b4f:b0:315:9cae:bd8 with SMTP id
- 98e67ed59e1d1-31c20e58391mr1969171a91.23.1751942872378; Mon, 07 Jul 2025
- 19:47:52 -0700 (PDT)
+        bh=jMj92tNiTNuygLvQNviqxj//2qDE2omMTESlQ49t0Xw=;
+        b=NcXdOws7UKUDPkH6aKdzFPw29aoggIIGZKSxguak7qX9p+AHVtWzqh7W9GyKRcgmT3
+         RfvqQhrEWGeOALnlpTT5sHB+/PiKFxWDPOMd7IwXwFwocAe8kaQCU232stSuerdz52jQ
+         QeXnwS48Xp9s2G9cNyG2x5XjYkshUA85KK/KDXSxAd5aWhJbNuOr9lp1mkN+C/a7DnSh
+         tgWc4y0km/lPo102rPq0lT6IEHm/74geKjfEMf92FuowGkA0mt7jvq8X2YaLlR0tzoLb
+         MnWhZpYRLnRYSVF2+pg84ru/qztzpf1PhffeYT34DwR2f7oOoWY8VYbDjv3fbR4Ylcv2
+         gTvA==
+X-Gm-Message-State: AOJu0YyLzPJXE79+cL9CtgSbYvi/j+204ZWnKZRzlwzR2DNTgDl3utPD
+	5mL2nXmaQaBCnuYfSoqN+XfTCWgUYIFP+kBaTByT2yTB/V/3Qb1PW7+zNo9acngi7dhBCbMelTU
+	uKVYKxwZK5a9Uv4OHKte30UJ2u1rX3uw=
+X-Gm-Gg: ASbGncs5UC4AnnUkmzQjQsDykQuq2aCIGr0RoTbxZL/uC3VCxvrE5Rbjbxka0jVrqm9
+	2Ig1rWxtB9uY7d44FwG7kmDECEm21Mizeof4AOoZ1j9nAHUq113hNOtUsI8UEMkqqHAJgZvyJfC
+	ib8C3n2uh8R1B3nh/OZnz+a33W86S6FyNKMhjRYU5D/KQJ7QcXg9fOzlDv38O9oqqnguEOicL/P
+	YERHtoRXML5RckE
+X-Google-Smtp-Source: AGHT+IFrwnh/YOMcsrV4cehNyZyniUBkGmTFLUcu1WzwNsZwIgqeYNtWK/73Mm5K7kes/vimuZzeaL8IeSXtAbqCL+Q=
+X-Received: by 2002:a17:907:f486:b0:ade:42a7:dad2 with SMTP id
+ a640c23a62f3a-ae3fbd87488mr1509965566b.33.1751945678640; Mon, 07 Jul 2025
+ 20:34:38 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250701115719.85226-1-hanyang.tony@bytedance.com>
- <20250703074502.45593-1-hanyang.tony@bytedance.com> <xmqq8qkz5193.fsf@gitster.g>
-In-Reply-To: <xmqq8qkz5193.fsf@gitster.g>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Tue, 8 Jul 2025 10:47:41 +0800
-X-Gm-Features: Ac12FXwG8Uj9g0dM7lbLhJjp0Z11oPBubn-lWAJMnXcZGHks3avb2R0rq3YbjBI
-Message-ID: <CAG1j3zFz0RQ3mf=BRAQhCDWucOR0J9Z26Wmmz8G6+9dMbNO3Ag@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH v2] read-cache: report lock error when
- refreshing index
+References: <20250611134506.2975856-1-christian.couder@gmail.com>
+ <20250625125055.1375596-1-christian.couder@gmail.com> <xmqqzfdf1ve9.fsf@gitster.g>
+In-Reply-To: <xmqqzfdf1ve9.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 8 Jul 2025 05:34:26 +0200
+X-Gm-Features: Ac12FXzIKL08W90y9uJB_Plm_0v4YPghp2WG1e93Ncp9_Ol2xBlsU2wMJcUoOmU
+Message-ID: <CAP8UFD1GKjcV=-4SdWSPSe737ghJ9G3=CyTLX1=UodxqWY-USQ@mail.gmail.com>
+Subject: Re: [PATCH v5 0/5] Make the "promisor-remote" capability support more fields
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Justin Tobler <jltobler@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 8, 2025 at 2:01=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
-> No need to resend, as I've done so locally while applying.
+On Tue, Jul 8, 2025 at 12:35=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 
-Thank you, I'll be careful next time.
+> The topic saw only a few comments in this last iteration.  Would we
+> be seeing a hopefully small and final update to tie the loose ends
+> before we declare that the topic is ready for 'next'?
+
+Yeah, I am planning to work on a small update soon.
+
+Thanks.
