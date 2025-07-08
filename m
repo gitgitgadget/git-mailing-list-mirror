@@ -1,83 +1,92 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426C3221D92
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 06:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C3AF21B9D6
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 06:47:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751957086; cv=none; b=uIdOyu4B9ANOKdPEW0rVUrA8lhcs9Qj96SodJhUigRjfsQXfi7cPHBt1/dHTUp5E6V44UNu+DklVBf4jdFEVCvlaZ0EBeok9etwgAdT/xCnXmLtJEUv00z6Gbkr5nqQiYM8yvAFNBLStuZlmp6Bz+GB3dfwahbTiRbB8gi7iGM0=
+	t=1751957270; cv=none; b=CUWsdJP8L9tlCHfmzhak41X4BmZW1iOghGPDurJcB8p7PfXmQR23sQaD0Dvh3KpiMomQT+/cVBkRDYMXSlRlyDXNdqSM9/+ww+rWkV4G4vL+IwVTvMTS71a1Ehlkf1ZGScxlAFBJwn68qRP13Muqyk7js2CFp058VrJYMuQG0fY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751957086; c=relaxed/simple;
-	bh=0zEcVzVbloJqbN+29wK69kFZB3rqbdJFNATf/8mocB0=;
+	s=arc-20240116; t=1751957270; c=relaxed/simple;
+	bh=IyoICV20HpPIZGGSiBbrOmCQ0q32ELaq0Y+mhpwQiJU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pbhumLjnS7uJPo0VXtQ9J+OsfEh5dzCfpfUeKhJBO3SUWg0df5Fe9dJbmo62MWqrOZ1FH7WjBylQed0r5/0L5PvTYY7Dagn4dHpQMW/J4FtF2mYcjuNlPC0XbFY2psab2ol8QOZZnGTSwptyoRBNIU6787FxdGA4qtFpmyo+Kpk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WhHD8ZLP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cL31Be2b; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=urSXD5NCPftiB9Qpdwp+4CWn0WoXzq0giRF1MUsn+bHNaWD+jXISoq72hmk+SM3pdJk9mS9+HPuqKxObex66pFC/T8AwwVklCcRFksYWFeaUv0hr68zLbMj+dbx+WZiA1Q+qkDmFi8/v2PmKl8yJOxcBzttzo9QwjMnRZ8uoVfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Y3krrCIv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EI3y/Zs8; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WhHD8ZLP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cL31Be2b"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 334E5EC02BC;
-	Tue,  8 Jul 2025 02:44:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Y3krrCIv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EI3y/Zs8"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 64FC8EC0B39;
+	Tue,  8 Jul 2025 02:47:47 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 08 Jul 2025 02:44:42 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 08 Jul 2025 02:47:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1751957082; x=1752043482; bh=G4WtZKgVvb
-	DOyV+oe2PXt3/4yLxN3mqYWvkA5eJVa74=; b=WhHD8ZLP2pWHmKZ85dYd1MUp2W
-	G8V+UIez0UNa+VOzothIKXezy9KN57XEDPze8KtSvT8KkTDK8gbqIkO7w9qTnKdx
-	8KMSTWP/Sj7JO2mrNcusUdcKPYOnKS2mfAfAx//+mmGE0rTCzr0UItr/0bsjtwsn
-	/PaJu4WXxTslTqMXiJbhcuLX3nxWNTQQRep+O6WdegJ77DYHbGQ5OWk1n6HxhTg+
-	ocyTNxdTqa8W6VjdU48GLgJyFraQSPrmYe3MLLV8x7R6CPRPF4BIqXb4xe9z47of
-	5/t59GIkLxwjsRLfZOP31Lahu3+fXJSZU54E1y8cHbytQPnA8gyt0AnZ97sQ==
+	:subject:to:to; s=fm2; t=1751957267; x=1752043667; bh=SpaMXFB7EM
+	Fy3MBdw7FEHZxoUc980cb3UNfQUo98UUM=; b=Y3krrCIvpYC9TczIAeFXNpZ9iC
+	DsCSQbrsfKmglYFCWJW62UtZuIzK1A/tad3hYOufdLqDoiKCh/4nyL6Z8xe/Rt0J
+	Vb8U7xzPQ4/29/G7N5+nVVZZ3qFN7S2m8v4ZABEUPWdvmxeutj9b8Kuw9sQwpwgY
+	rCHyGYDDtwnU6I5unGaEf9KTfOme7clL9uyC8tgQCht67Dcc4CB+8x/46Wetk/m4
+	ls838ZjwXWLEIYz88eUgAVUg2298XGxMR/rUfkDUTgIs9ldtMlcHiXYvLhOo7aib
+	o7Ws4S8UzPh+iNQgkDMPhEThqo05I/52kb7FDsfjxOz36S2LyohYAysuATow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1751957082; x=1752043482; bh=G4WtZKgVvbDOyV+oe2PXt3/4yLxN3mqYWvk
-	A5eJVa74=; b=cL31Be2bFezbihYou0kPpHy9pDIcl+ub1GiWrUIBrVEoh8irdTc
-	s3rj0soyt6xpNvrGgph3+0pUgEX1C2tZnMDegoXx9Cg/5IwTvuCd8bvWTmG8SYSB
-	RzRnTg6oeXw2d9+Mk88pRg8fRYlA25qjXtboDDGMkeoNIf2r2tLGcaQQYsDHutFU
-	1j7JKB0lBrOYUE9vOx8LP/Xhxaqdek2jR1zP3LBnJYyBtQW1qLWXJcNv9VWR3kC8
-	NRIqRGfRYYrPXJvaiiJD9JWC1tqUAnx9sGJVo6HwVgxNTkm/TV250pvfa0MqW6hE
-	y+3zqTlK95VxZ9Ne1dljAyKciWXrX5WlYDA==
-X-ME-Sender: <xms:Wr5saCfSGsRmaJeOC6aUmIx5_OsoUw08kMHNJ31J_BWk37K6M7O7OA>
-    <xme:Wr5saPeMrFqYmX1CxjDgF-wXNLX5LWb-lI7en-BB56-spt1Rg2VjYLgKWwSfhLj56
-    A80Bcl8VJiixyFl8Q>
-X-ME-Received: <xmr:Wr5saM9ynLD8qf8mee2J4ciDXGaVqbxeW5ebAS6fsj6zr2IGa1X-Y3zS_4EtJRc9r0JnB-MDHT_SEYzhuecww7nN26Mt4znv3yoHCK80fvY>
+	1751957267; x=1752043667; bh=SpaMXFB7EMFy3MBdw7FEHZxoUc980cb3UNf
+	QUo98UUM=; b=EI3y/Zs884vA4FMiOc086/m5y2Cb6XSvGNfQ5r1R3Q44PvDCsIy
+	EbM11sCHKUTXdJOyjDvpjwO8IpnD+smrQq62w/j6i2nH+7zYKFn31Ij+Nk0OuhsK
+	6utckAa1pV2Lg1i0P+XFewm3f2CXUCrHDgRiVIu3SaMGzCMhgjezqSjU59u8vRuF
+	Pza0/qpYrdYMbHQFe9UdkuRRzMswCXwowdfBDcoZTsqWD1RCZYYgmKQkFLYo8XmL
+	4EIzYsNC6FqGowMlg5Zrzf/URNt9M5y0vK0gTwR+f2Xhe76Q8RMV5iJHDbEYIyBu
+	ZEyzgVMnGUduD6w1nDBfwOUJCEfCdNFSDww==
+X-ME-Sender: <xms:Er9saEx-MggZAI9rk2ZVhgt4MDzdldulfKYQmokAD4AQYKm6BtcX1Q>
+    <xme:Er9saNecRllXOtJBXDDpYHCSiVNtLSgeLSZrVkLTgGpQqGeue5V1qzJpPiLANkMjl
+    FbPecBQZMSMwxceBg>
+X-ME-Received: <xmr:Er9saHPv5Vz2bbzkG9m3-G7G_Zv4zN9xE0VFKP8TpDET_W2Cm9qyDrvy1D_c84ZuyXn4XMKCeeJCTMzyhfUSKV0LfzvLWi8cObhHRp09-hg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeffeellecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsh
-    iivgguvghrrdguvghvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:Wr5saLlX-IQE8EcVWPAkNjqXkiNasJKgnPVi0Oax-jWVfmO6IScOlQ>
-    <xmx:Wr5saO8QqxMAY_7rbLMQ2oYU_YcjIQ_Q2SJDaPqV0rL3PZgQMiDhng>
-    <xmx:Wr5saJn5M13AtG8LiW_f1zwx583YXuw91cC8d4z1KWt_LtnxHJzjdA>
-    <xmx:Wr5saL18m4s8dVILquffeSu-O2qIRsIlAiH-n2jev5udFob39AKfTQ>
-    <xmx:Wr5saC5tTjRLh0XcDRM3V9Gg4xWv2ArxeCtPCxTD7Vfp0gAo1jxah6hv>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehfshesghhighgrtghouggvshdruggvpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprhgvughoshhtvges
+    rhgvughoshhtvgdrgiihiidprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhk
+X-ME-Proxy: <xmx:Er9saIuWzx0bvqC4QStCTvQ8VqMxjYn157V67R45tjpme37oELJ8wQ>
+    <xmx:Er9saIDbe7duYMITFFzMKyxFSbsIrhmeh6Yy7dWbIkbtII08raxB9g>
+    <xmx:Er9saHZKD0gwr9cMHT3pg1Ce4KhZ4UnTsv59Zw_VPH5YyaZ2fCUwiQ>
+    <xmx:Er9saLVtvXH9gA1Gu8_2SAXTy-6PSkDKzwGHqMWc_MFiG75LagxEdw>
+    <xmx:E79saK_r8zavgvr-Gb2UKqT3ohtRFtr8FV1_6MdiOX1INbhWngwc_5PN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 02:44:41 -0400 (EDT)
+ 8 Jul 2025 02:47:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 092344b9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 8 Jul 2025 06:44:39 +0000 (UTC)
-Date: Tue, 8 Jul 2025 08:44:36 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 1d8b63b4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 8 Jul 2025 06:47:44 +0000 (UTC)
+Date: Tue, 8 Jul 2025 08:47:40 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-Subject: Re: [PATCH 2/2] t5333: fix missing terminator for sed(1) 's' command
-Message-ID: <aGy-VBk5nO8UJItZ@pks.im>
-References: <20250707-b4-pks-t-perlless-fixes-v1-0-92b2de1c3dd0@pks.im>
- <20250707-b4-pks-t-perlless-fixes-v1-2-92b2de1c3dd0@pks.im>
- <xmqqplec3rka.fsf@gitster.g>
+Cc: redoste <redoste@redoste.xyz>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>,
+	Elijah Newren <newren@gmail.com>, Fabian Stelzer <fs@gigacodes.de>
+Subject: Re: [PATCH v3] ssh signing: don't detach the filename strbuf from
+ key_file tempfile
+Message-ID: <aGy_DEehFgw4A6va@pks.im>
+References: <20250704230829.29696-1-redoste@redoste.xyz>
+ <20250707184852.16010-1-redoste@redoste.xyz>
+ <xmqq4ivn4t30.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,63 +95,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqplec3rka.fsf@gitster.g>
+In-Reply-To: <xmqq4ivn4t30.fsf@gitster.g>
 
-On Mon, Jul 07, 2025 at 09:15:49AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Mon, Jul 07, 2025 at 01:57:39PM -0700, Junio C Hamano wrote:
+> redoste <redoste@redoste.xyz> writes:
 > 
-> > In 6aec8d38fdd (t: refactor tests depending on Perl to print data,
-> > 2025-04-03) we have changed some of the tests in t4150 to use sed(1)
-> > instead of Perl. One of the conversions is broken though:
-> >
-> >     sed: -e expression #1, char 41: unterminated `s' command
-> >
-> > Curiously enough, the test itself still passes. This is caused by a
-> > sequence of failures:
-> >
-> >   1. The output of sed(1) is piped into git-update-ref(1), and because
-> >      sed(1) is the upstream command we don't notice that it fails.
-> >
-> >   2. git-update-ref(1) does not receive any input and thus won't create
-> >      any references.
-> >
-> >   3. We then repack the repository with the configured pseudo merges
-> >      pattern, but as we didn't create any references the pattern doesn't
-> >      match anything.
-> >
-> >   4. We use `test_pseudo_merges()` to compute the list of pseudo-merges
-> >      and write it into a file. This file is empty as there are none.
-> >
-> >   5. The loop over the pseudo-merges becomes a no-op.
-> >
-> >   6. The final test succeeds as well because the number of lines in an
-> >      empty file is obviously the same as the number of unique lines,
-> >      namely zero.
-> >
-> > Fix the issue by adding the terminating '|' to the sed(1) command.
+> > v2->v3:
+> >  * merge the test with the previous ssh-agent test
+> >  * export TMPDIR in a subshell to prevent the environment variable from
+> >    leaking in the next tests
+> >  * use test_must_be_empty instead of test_line_count
 > 
-> OK.
-> 
-> > Furthermore, make the test a tiny bit more robust by not using it as
-> > part of a pipe.
-> 
-> While I do not think it would give us big enough improvement to
-> revert this part of the change, I would have liked not to see this
-> "furthermore" change.  We are not in the business of catching
-> segfault in 'sed' that is supplied by the platform, so there is no
-> point in breaking the pipeline here.
-> 
-> Will queue.  Thanks.
+> These sound all good.  Will queue.
 
-Segfaults not, but if the pipeline was broken up from the beginning we
-would have noticed that sed(1) returned an error due to the missing
-separator. True though that it doesn't buy us much now that the error is
-fixed. It's not like this line of code is likely to change regularly in
-the future.
-
-I'll not send a new version of this patch series to get rid of it, but
-if I need to resend I'll remove that part.
-
-Thanks!
+Yup, the patch looks good to me. Thanks!
 
 Patrick
