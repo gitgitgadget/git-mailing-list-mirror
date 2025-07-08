@@ -1,113 +1,106 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADDBC1A8F84
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:08:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D74FAD21
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:10:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752012515; cv=none; b=YwdJQ8EkHlJ7F6xMGkrS2ggihkYvWuai31bofRxnWaoFBpfj4AAH4wX6HVGZA688yIUgmFFJGGk02w4TGp6jT/8EjAzrLLE1icGT+20+w2GGcztsiMr33HbaVm5bc+VhEEOgLdQWT+boe5x5rHCo2p2hJJ8/kPRwpZ17zIoQcg8=
+	t=1752012654; cv=none; b=Oiujd63mEUJgIEIU6pwdgYhwqqbdeTrsT1k0jdNwLScF2P0dRaKgJIw2wnlgBnBaWB4nP7WW3zZ1RNmO4rfe4Dfby0+Su/h+l1trJRJcwkavJvhhKSaTeGfeta+UR1NCDLX6OaMkld/BcUQvqxJh6qD/+QSCKUz5DDa5LgwkL0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752012515; c=relaxed/simple;
-	bh=QGvUsulMuBFMTuTiDR6+MTtzwyyKrDO38Y5uSTpP30Y=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SYZDuQySTfCtG9ZgWJAv2ANg6NL9wId247vH/IG8weMisBBkKOLL8cy+BxDvcNKXmfH4/mDJsVPJ/KjQcxRZY1D7Qyp9ugbfWuSAnDbptE0h+HzpZhVVpXTLAQs9+4A6tTu+1qkEwmp0A8vdT5cFjtuso48rlGz8QJs4BkVMIAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G+32FRt2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gYB1HIzk; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752012654; c=relaxed/simple;
+	bh=vNp2BQcC0a1g+SS4p8w5Z5h2j79uGoQoPppL7eDX/ZM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k0NemDD/eKsESy5KmXj/QU9eToxQxc7TG5rO0Ebs04WhDC/zMS+ZzWOvTu+hJR0/nTLOHqWRrjp/BKJtJhURwDnRKAdUDqzUf/q3MNOrhC6Jbez5MZdJSrc1e+/fN4+qybNVouhLtL/tAFpZmby4YFg9dKIoOuuiuP747FqIpxc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=c+jdQgR8; arc=none smtp.client-ip=209.85.219.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G+32FRt2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gYB1HIzk"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id C59C61400A40;
-	Tue,  8 Jul 2025 18:08:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 08 Jul 2025 18:08:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752012512; x=1752098912; bh=W3OH1KbmvM
-	96eWwHZlUYbQgosO2DobYsyO9tlWXO9f0=; b=G+32FRt2LBMsF2g3JtbjcEr+hn
-	S5rw5IY5EvZpdRZxs8ER22AZLolPmPDOUG1Y9wA3pKpt5VYJg9IGpgta97b7biVh
-	pJi1Pu9QVnsxvDo+nyC/hBew4oMJCtQE81oJnnB4qyT4k5/XlAaz/lEk5DfMqXFR
-	P0k9grlVogu/Snraj+nzMiKmwtyPjGUrRAdGjQ0nJ/HUWmjLkrXD+fFBHvDJ3J+c
-	dbJT8RwO/Qp3wQbnVKrXRW8N2cYBHPA6KKEVRHSmnaF4vrHnmwF/p/XG6BvOdXkw
-	3Flx01ZfVA6qHwdlp+8X8mH1q64LJYSJSTa4pIjm4LzRVdt/sUVcSP7LaSOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752012512; x=1752098912; bh=W3OH1KbmvM96eWwHZlUYbQgosO2DobYsyO9
-	tlWXO9f0=; b=gYB1HIzkd3Mfy/9R6djuVf6BauXqVCuSRVO8/dxxz70W1edZ5Ww
-	NSFT4OAjzkIT7EFskc7SEfIMlsgWIw0mrl804tCjyITZju5dDqS8UYKtG1VdtwTI
-	EjNvfRFRup1dSyD1XDsCOcZwJ6sSzqgaUQN/97TAKbHA36LOF8Llgy5Kr1t4+Zkn
-	5YOxM9fspyO8V0Eb/maXkU87RQoDZfKuamnPjiQyzocGJfPDHHANJBW7TIrfDtlh
-	Bw5q53+D0f7D8/BHyfFFCfSpFrwcaQ8R2OOyuaCSwOuLFqTaVIH1/cf+kHUUVf+V
-	vlikRpHTLQgR5sMBucnev4pabl2sHy3Or6w==
-X-ME-Sender: <xms:4JZtaICSM6M7H0Vb3Aj6mx_3D2PYq8XkY-inedb5gsPsYDE9kGzCAA>
-    <xme:4JZtaFFufk7EEDVq_qVNSO09O1k7C6xTUK_VxY0DQSrZqdFlkDvzGJa3GVAxF66jx
-    mqkqbB6TJb6kXDw9Q>
-X-ME-Received: <xmr:4JZtaILMvcyLc2tdnkkYejX1IvAPrRn7Pew7IFle443xknEQwAsH5IhV0jwOizYThiWXv2XJweYaa4n3rbC_I0yITgjFLWXcDbqJ4z0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheekfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:4JZtaBkVpqM8molrSDPSBV9epYwxwIvB-c0aZfOdafXI_wlblbq7Iw>
-    <xmx:4JZtaIS_TVQy1CqmukA5MS4cOGVd0YpjQ90MmYTM_hzvFhaWvYH4NQ>
-    <xmx:4JZtaLI2xky4IfPYOXwcBD3bwD-R6qLFmG-anM2hhbJFLaV_x8Zvgw>
-    <xmx:4JZtaGAczqheYBOav6Th32kV5bCyYNnNeHAjIYI9o-RvuAvvXzNXow>
-    <xmx:4JZtaMzw1gcRZTB_xbDxewJ0BuhAV4uXpqhiwwPkIy--XHIm8XoYF5ST>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 18:08:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: git@vger.kernel.org,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH] t: avoid git config syntax from newer releases
-In-Reply-To: <20250708210529.1214574-1-tmz@pobox.com> (Todd Zullinger's
-	message of "Tue, 8 Jul 2025 17:05:27 -0400")
-References: <aG1_eqSpH46UddZJ@teonanacatl.net>
-	<20250708210529.1214574-1-tmz@pobox.com>
-Date: Tue, 08 Jul 2025 15:08:30 -0700
-Message-ID: <xmqqqzyqs5cx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="c+jdQgR8"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e8259b783f6so4061290276.3
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 15:10:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1752012652; x=1752617452; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=E4Xw/B5VliA3egaOyEx1hDk/slY6eyVTlaoFfYMjzXs=;
+        b=c+jdQgR8EnDxqOknv04/A6qv5j30BASzAeh5uYwIsMk+V5K7rMwbITq1RBU7yhc94L
+         H1DdDwewRYphhpnjL4oewh3uRdcb/c47XBsxMd5GB1asNlvhaxzDqHpM9njjr8H/+WlJ
+         vixfBeoTA+7PboMzJRUR7k0V4VEq3rjmFU6VstvAyGFbvg4j+5QZ5M6CExGuePUpjy+j
+         F4770ScFOOOs0vvkBDhbxmibRFyT1aWL3fh1KCMsE8NAPx0qmN/Z2SC0UcduL40K/uqN
+         gB/Q8dh2fPReI0ubNg+5PEXPPUDQ+yASeTQYDNJv1Ne15MfoUEV653xyGORBnEZwQPGs
+         IEsQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752012652; x=1752617452;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E4Xw/B5VliA3egaOyEx1hDk/slY6eyVTlaoFfYMjzXs=;
+        b=MtKAHHY7kIIVufLy47jFb4Cwf9Ac5OpVDf55u24WcCW2ykzb5c4ui4hrs2D6T9Q7/e
+         PyjV3GHkjV9gd9I+nyaG+eUM6B4hg/1DKoOJ8mjTzOtAZQYNAoSfyZ1E9YSd6V2Akf3i
+         u2n6oLKli8+N9/vokrw9hCDbawy4kz0Z15roIM4mW1t1m5bj8Kl4zdQ9/li/8tEqcC9v
+         tuiJJWlaOqP4NLWPG09l/vo5x+oJRmO/dJC7UuKSRG0+QXc7m7ChXqWGzI/sqJ1RTFuL
+         cFi2uLxJOclgxvNd4zNFk/qOdwoua7NvV22R/P34qVjP/sjU89+KtTOHpmD+Zlinh6aY
+         X5GA==
+X-Gm-Message-State: AOJu0YxnhYZ3UxWri0vI5Aqp1cB8duvd6JkO4RwYQtA6Jwr/YN8IoVet
+	ppLDzmX2uWNM/LPeV9yeRJd5SL4cgQLxZS7jyfskMWYGRgL9KfcgTW/4pLxqQVEx63s=
+X-Gm-Gg: ASbGncunQM1G83xq3F/Jg9a/nJfwe+DArR95roBvZBHvY3Td0NOBUI2CTxtFAHtwDd+
+	n2/wOJ4oRcY8xaQKly3s9MsFg46VZ2mrE5YgbSMJQAyKXzcg5EMZy3nhMponcGDS8BxxTWqGcuM
+	xJgspcRsFDL51PrR88PU0x8Hau2cVb9+q77wVtfyli/bnsTPFMdXfdJCZ7+WUOzTfFa+hBwpjUj
+	ZwP4aV9XgXVNqLzDfWP8Q7UwUhSk+ZbN7wp3MS/z4WuKbpNnrC93XRlzEomtjnVL8UaoeuDrQj4
+	sOfTbqkeRiWRPIzw94yLaqR+vrBmMN+N5HU8Msyv4TQX8DWa9enRILaWXMXHOMjqeih4PmqeG6H
+	5ZG/OtcH0zVgcrb4xcUsJE8pN6BK9PLCK4g==
+X-Google-Smtp-Source: AGHT+IHzvtU0HS3UYtccEZuWZG6dDFLJIk4TQXqxWgcXSFtmegc0dMe4hN9iya52QrEgLAYSCfgIOQ==
+X-Received: by 2002:a05:690c:6c08:b0:715:2081:f2f8 with SMTP id 00721157ae682-717b19bf0b5mr6533967b3.27.1752012652000;
+        Tue, 08 Jul 2025 15:10:52 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-71665b1b09esm22686537b3.102.2025.07.08.15.10.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 08 Jul 2025 15:10:51 -0700 (PDT)
+Date: Tue, 8 Jul 2025 18:10:45 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org,
+	Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH v6 0/3] pack-bitmap: fix memory leak if load_bitmap failed
+Message-ID: <aG2XZYamUv5FWq/W@nand.local>
+References: <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
+ <pull.1962.v6.git.git.1751347929.gitgitgadget@gmail.com>
+ <xmqqfrf71ull.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfrf71ull.fsf@gitster.g>
 
-Todd Zullinger <tmz@pobox.com> writes:
+On Mon, Jul 07, 2025 at 03:53:10PM -0700, Junio C Hamano wrote:
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > Since it seems this patch has been inactive for some time, I have revised
+> > the comments according to Taylor's feedback and submitted a new version.
+> >
+> > This patch prevents pack-bitmap.c:load_bitmap() from nulling
+> > bitmap_git->bitmap when loading failed. Thus eliminates memory leak. This
+> > patch also add a test case in t5310 which use clang leak sanitizer to detect
+> > whether leak happens when loading failed.
+> >
+> > Lidong Yan (2):
+> >   pack-bitmap: reword comments in test_bitmap_commits()
+> >   pack-bitmap: add load corrupt bitmap test
+> >
+> > Taylor Blau (1):
+> >   pack-bitmap: fix memory leak if load_bitmap() failed
+>
+> OK, now, how does this iteration look to folks?  We haven't heard
+> anybody say yet.  Is it ready to be marked for 'next' yet?
 
-> In a recent security release, 05e9cd64ee (config: quote values
-> containing CR character, 2025-05-19) added calls to `git config get`,
-> `git config set`, and `git config unset` which are not present on the
-> maint-2.43 branch.
->
-> These subcommands were added in the following commits, released in
-> git-2.46.0:
->
->   4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06),
->   00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06),
->   95ea69c67b (builtin/config: introduce "unset" subcommand, 2024-05-06)
->
-> Revert to the previous `git config` syntax for older maintenance
-> branches.
->
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
-> ...
-> This is based on maint-2.43.  I tested that it merges cleanly to 2.44 and 2.45.
-> I have only run a build with 2.45.4 so far.
+Oops, this fell off of my review queue. This version looks great to me.
+Thanks, Lidong!
 
-Thanks, will queue.
-
+Thanks,
+Taylor
