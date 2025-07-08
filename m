@@ -1,151 +1,161 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65318213E77
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 21:06:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07AEC23D289
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 21:20:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752008780; cv=none; b=pXfdRXwtrOUmWxkx3vNP0jLYNnquVGWQvKb/kTUJg98HjjyWbTPl8YY3xO4n46mwrJVNg4wjcJgi50aSizlGCahMnf4eINxQiaC71usZX5zYDaMqxL8I3tuiMygkumiw3vJk747rQuSfcF9CRJfkEf1sLWVBHWh2f/JiDlOJrBw=
+	t=1752009635; cv=none; b=HZHdKZbHJBRozY7QUF565q8E9KJUUK581XZaqrUyOCXiP64KsblhNtgmhLawcaZafnkx9GPmf8W52tYdPixkuYOjs6Jq7thmr3fBYTAvxsJvr80hGPh94luKNHNtN+lWdL4C8bnsGWxJUqxr5CjTVaGnZh5mohEPVZj6pLuqnD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752008780; c=relaxed/simple;
-	bh=dIzfy0ZRK6Ab2nw8s1W6Waj1tWbyNLMD0R1leNMNIr8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CofadbCmyI/se6Ys4XyacQHNePNscNXJLzWgIYPSljBKGHxCci+Nc7GiTUEMYXNC21iMjHyqsUEaN8uPoy6EzvxQzvRevMPlmrZXVDg1gKWIL7HyDmAb3OXCMf+cLBj+vskWROUkkNfI7KfgZKydNbgqu8830stdP7FQ5FzlUpw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=rQ3Hlu2t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=A6PCJUsy; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1752009635; c=relaxed/simple;
+	bh=0R6sBINYYCEctSj3L//Frb0HrOTKJpuBlGjKFSL04Ds=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=JgruWKkRyjkvaUkC90J7zTBTGxJWaezbmpwHArJswL/6K5G8C8XieufR8BUU+qUYrBlShsJCNlfEWdCoPF2fm28B76QEkjNNp251ea2quB4HRdCPizzxCLpmPCaAhn8l92HWB4fVru6kKXcwqQZmR8vEgkr/717Wl3h3QVlORSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PN5dj4+4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XbFDVBbI; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="rQ3Hlu2t";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="A6PCJUsy"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7C30D14003BA;
-	Tue,  8 Jul 2025 17:06:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 08 Jul 2025 17:06:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PN5dj4+4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XbFDVBbI"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 014BE14003BA;
+	Tue,  8 Jul 2025 17:20:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Jul 2025 17:20:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm1; t=1752008776; x=
-	1752095176; bh=Bu3mtoQHVaIDRqc3cegm875fAI510cQfaqwfyF8LNFQ=; b=r
-	Q3Hlu2t9+bThuIo2XhhaflTkfWxaE0TSLiUuDzJ/jXR9TQdXsgozO2cJjVoflqIT
-	qbrijTwZWmafUhJ6+DY8WSaTh8rd9cp2NNNOEW0Nei0k9/wP73N5wlVKy5poMZfn
-	xhVyOeJYkflNwRsbbwjSFOlvH0yvfxf9rtbQp0OD0q4PdTGOy/53A40ROo1L4RI1
-	4o23llIQHxaAgzf2sUVsblpAEcf3Hw2RW8CycUlkAEqIuZFrulfv/oi86RWFKYEr
-	53j1o+Zw9qoyx0nqMT3WLQJHwbdN5DTkhTGu/jJ5UunUpwqtKi2U6288VYUoSXPC
-	OXSNx50nXx2Ccxi2QeRPA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752009629; x=1752096029; bh=BNDY9i94FP
+	NNgyyGsaVWSXdvhD7GaulO9uLIkmObX0s=; b=PN5dj4+4OactkVHbCXLwRje8kH
+	T9P4Df7L/KjA1jgd/PV+oZLVkoT4Cqc2pqZBM56cucahAVIVzV4l51AREvF4jnJh
+	D5gS9cInfBHHx7DbS0aF9CgIe2FaKfXGoRQxjT9AZDRn4/TWm0od0O1N1j9RVwfx
+	E8Kz1HO6hVK7lq2HMdwyoFg0WdqllMAmTi1MHI8FrPyZJgUxKOCaVK2jM2Tbjgqi
+	HoULcFN8ZktTQjjlyF4cpNJM2OFHKBBu36cZc980hNwlDjGNJF/kLlOCMKD0O2d/
+	avrhapTrHK9gTOTfvbWygO/IJQWFnjf6MjEZL4eqztfZlQOlw28vy5v6flmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1752008776; x=1752095176; bh=B
-	u3mtoQHVaIDRqc3cegm875fAI510cQfaqwfyF8LNFQ=; b=A6PCJUsyIb0+bgPJG
-	zZTcHajaKU8yxBtVEhbFVQiTDqloFDQ/7JF6QX9qz6slTXPwzsJrjKcKW9tqhfa7
-	+KRCmTSUzrOsZ8mMW+wyua6TllZ4oNyBtDKUbJVqFVoceQnhrfgE/CEo4ey/YZ2I
-	smbl8uS7ENfHaaailuhLr25clcCv16e1bpzF2JDjwoGXdszUu4/dZP+VA7G32Lc7
-	cqoQcInSP5dE60sdQ4laxx38Kiwri9nMI6Nxh9RSJJrhd9ajdvAl+h1UubqsQsh8
-	qnlBBbv4yjYlHGvMtW53YNdUNUW09L8fhrW7VwENign1oiwyIV9QBxI1n9rkEiD0
-	XjrCQ==
-X-ME-Sender: <xms:SIhtaB9yOXJ0T8k1powvaIQFYZBf6z_ijKeP_54dlxCR0oTSZp_XWA>
-    <xme:SIhtaI95D4p-bLem1bLhXw85ja3ZcxO5f5JoyrxXrxvFfEc6b9MYKVKaboPCi4Q-c
-    BLwnNPfzdZiH5jHWQ>
-X-ME-Received: <xmr:SIhtaIe_a6rs_iNKAN9HvrOqcJ_0iQ0sSp8fXNAU1qUesLP4bDau43WOj75s2aRCSGcnwraunei4rcFUWz300pMmFS8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheejvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752009629; x=1752096029; bh=BNDY9i94FPNNgyyGsaVWSXdvhD7GaulO9uL
+	IkmObX0s=; b=XbFDVBbIKVKP/tW9W+a9V/8Rku/Wl0LuJnUHU5ZIUlltrYZjaDZ
+	9r4j291/HSG4/gpb3gK1f3KvqO949CgRPYJJTvv/LXMgiWevH+pQAdrSRUtUeCzs
+	upFN7mQ01NL0YdhzhUUMZwYIFrad/5L8iHOAHFOEMCRGujWPfOR3byM3DBLXPsCm
+	0XVvze/Px0hQp4cJZg7+lj/yeR3SJ9aELoGRa0q4cVOligpw23aVnq4Y+0VbbVqI
+	s3ryov515XHlNpElqm0RKl6uNR/M9EvqAhBV1vru41MPpNVsOQE0wdlLvnYu6iJw
+	iw6HLlrGS6Wx7ynTHB100+WlmhQeB5KPmiw==
+X-ME-Sender: <xms:nYttaLH4ffJhd7fL1RUeY-SokZIiLec7M4obXy9gHGVVhKjy1727_g>
+    <xme:nYttaD18UNG_dHzMeiLUd2hHxhD9ro8Hg4BZWy9XJp0bvqBLuthuIRc6-O3qM7RnY
+    cpHPnVn3CV9hVGhnA>
+X-ME-Received: <xmr:nYttaDnewGIF7aCw4DTYLqz8_HLzq2qOGldvdb5_ttlLT9tN8ekO-9FBzjhUqReSwp8lK-nkQ0qb3Wt0OTwKLZ13go0_tg53NnUUN-I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheejgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpefvohguugcukghu
-    lhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    eukedulefhleehgeelffehledujeeigfffvddvhfevvdeggfegjeekueehkeegteenucff
-    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthht
-    ohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
-    tghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:SIhtaBFSyWpNc7aup1wdF6rTHDQYfM1QUq6jW1GgcsHrlrOkPFBBXw>
-    <xmx:SIhtaGe4sMdO8H44cbSLg97ctpXk-Acwgx_5A_CK8dur7rNNEkWWeQ>
-    <xmx:SIhtaLEXsoqcSBGNBQaVRSUbyMQkoBWbcrJ6uGg_KRXKU6fxIneg2g>
-    <xmx:SIhtaPXcd8c5N7yGcqH_oRDPTYLrN5S68X9ZC7LUFFOOUgzUQZbxJw>
-    <xmx:SIhtaNnWVsqKLOVHw9yuXrPla5sN64lDTvpWUjIZO_vhlAzzbFh9pT67>
-Feedback-ID: ia13843cf:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:nYttaD-RZ9MkrjSUMbYmsF8QptvQqMNxrpilaS6TbXzq2VEImsJJrA>
+    <xmx:nYttaIrLp5tWhfp0-2BE_S25MCiRzkPwmrx3uIu34atgvJpglZklUA>
+    <xmx:nYttaMntwKwYwLPZDFruYAViCs68fjdGjje7oQ2vprzcaWNCKLGH0g>
+    <xmx:nYttaPgVhV4HXEhDOwh12WQS7QnmF1_51Cz-aGo_W4U5juTq163-Jg>
+    <xmx:nYttaHU3wcJbhH0So68K0dBcVi3JLF4v0r65dqk2Cc-t3qr1CjHmIW_x>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 17:06:15 -0400 (EDT)
-From: Todd Zullinger <tmz@pobox.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH] t: avoid git config syntax from newer releases
-Date: Tue,  8 Jul 2025 17:05:27 -0400
-Message-ID: <20250708210529.1214574-1-tmz@pobox.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <aG1_eqSpH46UddZJ@teonanacatl.net>
-References: <aG1_eqSpH46UddZJ@teonanacatl.net>
+ 8 Jul 2025 17:20:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  newren@gmail.com,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/3] sparse-checkout: add 'clean' command
+In-Reply-To: <49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Tue, 08 Jul 2025
+	11:19:52 +0000")
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
+	<49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+Date: Tue, 08 Jul 2025 14:20:27 -0700
+Message-ID: <xmqqa55etm5g.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-In a recent security release, 05e9cd64ee (config: quote values
-containing CR character, 2025-05-19) added calls to `git config get`,
-`git config set`, and `git config unset` which are not present on the
-maint-2.43 branch.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-These subcommands were added in the following commits, released in
-git-2.46.0:
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> When users change their sparse-checkout definitions to add new
+> directories and remove old ones, there may be a few reasons why
+> directories no longer in scope remain (ignored or excluded files still
+> exist, Windows handles are still open, etc.). When these files still
+> exist, the sparse index feature notices that a tracked, but sparse,
+> directory still exists on disk and thus the index expands. This causes a
+> performance hit _and_ the advice printed isn't very helpful. Using 'git
+> clean' isn't enough (generally '-dfx' may be needed) but also this may
+> not be sufficient.
+>
+> Add a new subcommand to 'git sparse-checkout' that removes these
+> tracked-but-sparse directories, including any excluded or ignored files
 
-  4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06),
-  00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06),
-  95ea69c67b (builtin/config: introduce "unset" subcommand, 2024-05-06)
+Are excluded files and ignored files form two separate sets, or are
+they one and the same?  Do files that users forgot to add (e.g. new
+source file that would not match any patterns listed in .gitignore)
+and object files left over from the previous compilation (most
+likely match *.o in .gitignore) treated the same way for the purpose
+of determining if the directory that is no longer in the cone can be
+removed?
 
-Revert to the previous `git config` syntax for older maintenance
-branches.
+> underneath. This is the most extreme method for doing this, but it works
+> when the sparse-checkout is in cone mode and is expected to rescope
+> based on directories, not files.
+>
+> Be sure to add a --dry-run option so users can predict what will be
+> deleted. In general, output the directories that are being removed so
+> users can know what was removed.
 
-Signed-off-by: Todd Zullinger <tmz@pobox.com>
----
+Hmph.  It would be safer to show not just the directories but which
+excluded files are about to be lost, wouldn't it, especially when
+the user is trying to play safe and see what potential damage they
+are looking at?
 
-This is based on maint-2.43.  I tested that it merges cleanly to 2.44 and 2.45.
-I have only run a build with 2.45.4 so far.  I pushed this to a github fork,
-which looks like it will run the CI for each branch:
+Also even though ignored files are "ignored and expendable", nobody
+marks their temporary file as "ignored but precious" (yet), so "it
+is listed in .gitignore so we can safely remove it" may not be a
+safe assumption for us to be making (yet).  Shouldn't we at least be
+listing these ignored files in --dry-run output, next to those files
+that the user may have forgotten to add?
 
-    https://github.com/tmzullinger/git/actions
+> Note that untracked directories remain. Further, directories that
+> contain staged changes are not deleted. This is a detail that is partly
+> hidden by the implementation which relies on collapsing the index to a
+> sparse index in-memory and only deleting directories that are listed as
+> sparse in the index. If a staged change exists, then that entry is not
+> stored as a sparse tree entry and thus remains on-disk until committed
+> or reset.
 
- t/t1300-config.sh           | 4 ++--
- t/t7450-bad-git-dotfiles.sh | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+Removing untracked directories is a job for "clean -d", so it makes
+sense for this new command not to touch them.  Not losing changes
+that have already been added is just a bad as losing new files that
+the user forgot to add, so it does make sense not to remove them.
 
-diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-index 1010410b7e..baf9b48231 100755
---- a/t/t1300-config.sh
-+++ b/t/t1300-config.sh
-@@ -2595,8 +2595,8 @@ test_expect_success 'writing value with trailing CR not stripped on read' '
- 
- 	printf "bar\r\n" >expect &&
- 	git init cr-test &&
--	git -C cr-test config set core.foo $(printf "bar\r") &&
--	git -C cr-test config get core.foo >actual &&
-+	git -C cr-test config core.foo $(printf "bar\r") &&
-+	git -C cr-test config --get core.foo >actual &&
- 
- 	test_cmp expect actual
- '
-diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-index 2026285566..d1546e3311 100755
---- a/t/t7450-bad-git-dotfiles.sh
-+++ b/t/t7450-bad-git-dotfiles.sh
-@@ -362,10 +362,10 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
- 	git -C repo mv sub $(printf "sub\r") &&
- 
- 	# Ensure config values containing CR are wrapped in quotes.
--	git config unset -f repo/.gitmodules submodule.sub.path &&
-+	git config --unset -f repo/.gitmodules submodule.sub.path &&
- 	printf "\tpath = \"sub\r\"\n" >>repo/.gitmodules &&
- 
--	git config unset -f repo/.git/modules/sub/config core.worktree &&
-+	git config --unset -f repo/.git/modules/sub/config core.worktree &&
- 	{
- 		printf "[core]\n" &&
- 		printf "\tworktree = \"../../../sub\r\"\n"
--- 
-2.50.1
+I wonder if we need "-x" and/or "-X" options "clean" has (and
+perhaps "-d" that is a no-op, as the whole point of this subcommand
+is about removing directories from the working tree) to control its
+operation a bit finer-grained way.
+
+> +	for (size_t i = 0; i < repo->index->cache_nr; i++) {
+> +		DIR* dir;
+
+The asterisk sticks to the variable, not the type, i.e.
+
+		DIR *dir;
+
+Thanks.
