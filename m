@@ -1,103 +1,105 @@
-Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E3635963
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 00:48:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DE7AD21
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 01:01:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751935690; cv=none; b=n5wIMClBOYjj9w9THC6/e21bXuvsr5b3vwC3X1hSmZOCTkP/bvpdsCx6KXDXaFMY5IoJslxaXhmq2F7SapRPKBQAJ07ZCewbUFszs3s+n3Y47PwCv6ClX4/84bZsjTrsuDXSWw6zeogvOGkVpbXngBOnXrsrbftMZzxQOIse984=
+	t=1751936465; cv=none; b=WtlAZkocJJO36HNvm44S16FxZ5OVBICVz1CJkci1dGV5I1+wCGPed5qq/kDsWNKFC0ePYGUGqwKWMQEL5ZTdRYDiKKxqYBMlo0dJf6cZOe0sb7Yr7Vu+LcvnCiSOh8t0nMAhFMVgvSm0/ceMk/P3wp2X+LW2aGt3nbyNw9RX58M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751935690; c=relaxed/simple;
-	bh=vR07fBQFPoPGM1mDdJAL+QMPvc+5/3rd8OcUxnBsD/U=;
+	s=arc-20240116; t=1751936465; c=relaxed/simple;
+	bh=94QxK73kvX2kjzgCTJfv1kAFvfJeJv8isIqG8Ozm/08=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=plK3g0C0apftRi1rtuATjStSU18MBkgp71Te25Ec6VpscPkp1s84FjnzfNoSECRm0gdC0/m1vLejPoMEUIW/obO7sxZzu8dWH2Q2R+msDxUNuE+xSxIwqbL09tRLnoa4Mx5OlAtHrBjbOCOhxqtVkt3GLoOOVbDZ3/7j8NIVDAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vd9Myf6i; arc=none smtp.client-ip=209.85.215.176
+	 To:Cc:Content-Type; b=a6wdOmSfCBPd5TE+LeErQLCV6o79Xmoe9mLQWWUxVrjBoQAJySneinz3Pfqfc7oNMLG5UMcYQ/P4C0sjrt4z2v587RhuSgmBK7w/sCqT87cNcUDJBD9G3JF4OGvnD5OO/0eObGhF97tX8N5AluVN7XgB1vG8I/ukydVjPdMUi+g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Mkfo0p/O; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vd9Myf6i"
-Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-b39011e5f8eso1987310a12.0
-        for <git@vger.kernel.org>; Mon, 07 Jul 2025 17:48:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Mkfo0p/O"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-528ce9730cfso1424930e0c.3
+        for <git@vger.kernel.org>; Mon, 07 Jul 2025 18:01:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751935688; x=1752540488; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1751936463; x=1752541263; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0sxjlmLWbtUh876GsypXkgOkDrKaIXGfHKVMgd9AuPc=;
-        b=Vd9Myf6i+WCwVookFav1D+9xXFtLACBPgDwkOe+4pvX9wCA+LRWDBpwhw27aPO6zVo
-         Wb9B0SS0Vp7dRb6vp3VLl7pQLEQ072Ayj25n5qkixBAbEnWrnrA6do3+fTXHxzYRFiKF
-         FJpUZTTTBKwCwC9U+1dhv0AMhoVUe7VMi5WWWgRMDkp0UpX3Vb8gB+6cy5SiL7RKZjI7
-         Pnlc+z/OBSyGEfvrY5PZ2J0v1B1Zqk2C+hAVDM9xH9bUeYZnR0Pht6rhnuXc2KF/JpOY
-         liRvqShtkoHbgC4JOuzgPk+v+QgdANfShs59Lz/r+0ZYpA3UToVqL0KaoGPQ5LpoSJuo
-         kyGw==
+        bh=JwPAXYlyZXkWUnI04wVTEwbM61OJKAZ0wNPGGK/92g8=;
+        b=Mkfo0p/ODeiRzfwh0ZMJT4amQuNNM/9J/ln4ntnf2g8eMcUjjmOzr6IZp4zZdz0KEd
+         MNh2v4rTSBx2kr5jSsBMIKUUvd8+3ib2Fu3j73wzln35GwiLMSTeSkqTxgVqJ3TUNvku
+         ejgH1n3te2WvKeZlJWajHNVDe8rATTVVZahcl5Qd9hYymkbPUYaq7ResufVmIiHkNAzR
+         gkJRwxWdJR9YSZR001w52VpII+2xJ/hKDc6mT5E11IPQODCG7Jqw7eG1t+NI5ebfRMJG
+         p7Ap+HYRKzQw+uhS5F6aL9VIri4nz8nHRb6kql8sOs5s+a0QlPYjl1+iLu913TwmVERH
+         FUdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751935688; x=1752540488;
+        d=1e100.net; s=20230601; t=1751936463; x=1752541263;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0sxjlmLWbtUh876GsypXkgOkDrKaIXGfHKVMgd9AuPc=;
-        b=DhJOcisUUJntoJDNh6OIlXt3r0eRnoxQzPFa/WXa5LKkrYcegO3/l+YOgA5VzCcnI2
-         u8/AfOzalWo5tKidFzmJQD9A4kV+IQrNg0N44fJ8sB5hBdWkqUNgn8cZNz6ovTF94Z3G
-         t89qPrG/jL61ISIGPvESOyDLQd01v38oK8Rr7G/bIcZDL4wXU2Jsk0V9YhRXNlEQbCyL
-         XXf89ZGoSuvGPROWtWaEhfHIxY5oZ+10iIn+FodqNvhsFKUR6UalIs2BYGkPpyEqefZ3
-         HwAzpzNvWQZbH+mJ22knP/sB9fkQWiZJkOZGx0Ri2iJWyp6d0ZdSC8GgjgsNAYfAlCX6
-         0kDA==
-X-Gm-Message-State: AOJu0Yx7iMCaDO6NlelMcf0wIxRLCR+Bp8oMw9Sviz8rSUJW05kYQ/kE
-	LNDzy8MUIljFb9/n4TVguwEhYmXRTFx0RKC3eB7MVnoiDk1pNsMGIyvNq/wAQ5w0gAIKt3jR3JO
-	ApeTL8dqlxg3LuoUojvyYVMxyaMDE3x9Aui6n
-X-Gm-Gg: ASbGncvHB16NDr8iRDKO3llCeCkaOEHG5bkYLbfcMoIixgP273/h9zza8nHMhCyv69M
-	SChx2XnrBTSFFx2+jqzi3MElniEL+y+JizwInqzGqiKxdE539snTQ7HgYD61oLVTVMlTmtNqBrp
-	/vl54RYur/GfZQMi601OaZ6qbHmfxpXi3jTll/idYacm/p8jpj+WfecLbbEvCm390IHKQICkveb
-	4UeNg==
-X-Google-Smtp-Source: AGHT+IFXP+Bvij8F9qx2r+W7NdaB6JuqNVzm4A5vCRD9csxjtI81Ig5beeD/8UPeec89aOTQcPQBm8K+Af/hXz8sRfk=
-X-Received: by 2002:a17:90a:d60f:b0:311:e731:523a with SMTP id
- 98e67ed59e1d1-31aadcf75cbmr23767564a91.11.1751935688138; Mon, 07 Jul 2025
- 17:48:08 -0700 (PDT)
+        bh=JwPAXYlyZXkWUnI04wVTEwbM61OJKAZ0wNPGGK/92g8=;
+        b=CuBI0yopkSU5UInGlGWp6M53mh+JLVDplnJGYu40yvjeA4OPC4Z/0fWciUd5hXJYFO
+         oWop8DAOsVGPsXFQMuI2PtStBd/78NaYa6mOJ6DK7OqH7Sv0Pc3mowlFnSyLHLk5n7CN
+         UkYdCJxSU+I6RHr4Yy6tHo7y6nZQV5UqPczxPLdahmsRcwHb2yTOqab1NI+YuTdd7N4l
+         Z0/kT5Tk98YMSErXAbkp+Uz6ERfjZmkml72PdVWITYxKU9LD5JiU1PMNHiS8EeDrcfbb
+         XcO/nfadq8exsAuquBWguJuFfC1oo4dtyA0LnhS7xhza3ffBrAzwcKuJYCAFP9V1NggP
+         xbFQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUfvX67R2aT/2G+X10MASLVA8ZJVLUtHxs1jgvfTw02WnPiwcMoD9s0+fiOpZcf15oV6f0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyc1zH1N23sAiIUFMfSWvtYLtErC9mdwz5xe+HHapHlC77PrN52
+	p7JrAcNqPyu9wQOb2XFO5CAIXrovQSTqIewCQmSC7ugP8C24CF6hMKjaK2QaURFlbV2NlgGruO8
+	pkDmKpPccpi+DMy1SbEI+Q+xG79S6iPE=
+X-Gm-Gg: ASbGncv7gyBPjHP/W8MIg9bBtNDKVw98g/k8TwZOoAM5GoDSYUxiSGBiuvJ5svC/jD3
+	8uQi7pgbaQCjuXYw3vg6wwbGlO5VJhQObjM0BcWl8BroD7dN9Nl8qCOSLf79+rzXuJ1n6vWgeuV
+	bmZIaGpOTz+ykn3qWunFEYrexDWFvmvBGCkByLgzJs05o8
+X-Google-Smtp-Source: AGHT+IH7l9G9OaY9R+Z2g9yj6YCnlzUiKIXEXM3/QSZhcssWyn/UAsq4jxHg/5Ln7AEHLWjli1DxDwVat+7cnvCpXeM=
+X-Received: by 2002:a05:6122:2a4b:b0:530:5996:63a2 with SMTP id
+ 71dfb90a1353d-5347bfe01dbmr9580085e0c.7.1751936462814; Mon, 07 Jul 2025
+ 18:01:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqplebzgm7.fsf@gitster.g>
-In-Reply-To: <xmqqplebzgm7.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Tue, 8 Jul 2025 06:17:57 +0530
-X-Gm-Features: Ac12FXzaawfSGWXcZccT9tnx0OVSJNCKS1N3v1rwpOeaE52MTa1eT1mlnSgyxhU
-Message-ID: <CAE7as+YC9kP57hz+6TxuXq1c72mcvEdzwZ1Y3mNTTH5Dfh0mJQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2025, #02; Mon, 7)
+References: <20250702011214.2835529-2-phil.hord@gmail.com> <xmqqtt3n1v27.fsf@gitster.g>
+In-Reply-To: <xmqqtt3n1v27.fsf@gitster.g>
+From: Phil Hord <phil.hord@gmail.com>
+Date: Mon, 7 Jul 2025 18:00:50 -0700
+X-Gm-Features: Ac12FXzUDPyCuvB8sKyOGHoqVwFTHO51AqScimlxnc7CUkutENyoKqbx6QKz1B4
+Message-ID: <CABURp0ohikpNPjxP_SfzK+txfbyvmM1adHZJ1C_Oa3SmY-EJwQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/3] fetch --prune performance problem
 To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>, Git <git@vger.kernel.org>, 
+	Jacob Keller <jacob.e.keller@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
-
-On Tue, Jul 8, 2025 at 5:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+On Mon, Jul 7, 2025, 3:43=E2=80=AFPM Junio C Hamano <gitster@pobox.com> wro=
+te:
 >
-
-[snip]
-
+> Phil Hord <phil.hord@gmail.com> writes:
 >
-> * ac/auto-comment-char-fix (2025-06-30) 1 commit
->  - commit: avoid scanning trailing comments when 'core.commentChar' is "a=
-uto"
+> > From: Phil Hord <phil.hord@gmail.com>
+> >
+> > `git fetch --prune` runs in O(N^2) time normally. This happens because =
+the code
+> > iterates over each ref to be pruned to display its status. In a repo wi=
+th
+> > 174,000 refs, where I was pruning 15,000 refs, the current code made 2.=
+6 billion
+> > calls to strcmp and consumed 470 seconds of CPU. After this change, the=
+ same
+> > operation completes in under 1 second.
+> > ...
+> > V3 forgot to include the first commit in the series (I forgot it grew).
+> > So here's V4.
+> >
+> > Phil Hord (3):
+> >   fetch-prune: optimize dangling-ref reporting
+> >   refs: remove old refs_warn_dangling_symref
+> >   clean up interface for refs_warn_dangling_symrefs
 >
->  "git commit" that concludes a conflicted merge failed to notice and remo=
-ve
->  existing comment added automatically (like "# Conflicts:") when the
->  core.commentstring is set to 'auto'.
+> It seems that the thread has gone quiet.  What's the status of this
+> topic?
 >
->  Expecting a reroll.
->  cf. <f22e864e-669d-457c-838e-961bbc977c4b@gmail.com>
->  source: <20250630182527.69167-1-ayu.chandekar@gmail.com>
->
+> Thanks.
 
-I sent an RFC related to this recently: [1]
-I will send an updated patch once I receive some feedback on it.
-
-Thanks!
-
-[1]: https://lore.kernel.org/git/CAE7as+YXwesgk2tna4kEC34EbQ=3D-eA+thQBqU3q=
-nveDh9rbt8g@mail.gmail.com/
+LGTM
