@@ -1,139 +1,177 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B21F21D018
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 18:47:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315EB8488
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 18:51:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752000474; cv=none; b=D7q+hH3PuPFTM20Vp3dPnw/UJkh2oC1y/pE0Y9iEu40Rb8P5O+y4TqIS6N032H82SvOgizbJo32BNWEk5zuQEEmiZgG62TdyjNIXGHZ+ep30cPPc/LRMlEvTZLdZsGeMtO86hR7XT5rfBT6Ju7G0M+eXyCaSR7lzhLLHLZx1dvA=
+	t=1752000672; cv=none; b=EXkyiQbikrxzQA4tcfKYt5VyRD+EnhoDJcoeg4fza/EGy04WrFJOdnYs2wVSS+EEAs7/HuavNHzlFdklQG1kRcOA9u5tAHCK1A39iKC8rnpQWDhNehklqKr76WmT/KBvykxo46UbDs4MN/ZWSmNmWrw7QH8C22fyfIuzp7tVtME=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752000474; c=relaxed/simple;
-	bh=6BwsRcm2lPFHWUH5Cgk6cz20C8r3R0MUO96JSm62O9Y=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=YDPBwy/DjxBrYImQHSnQySNnRhjPbhSR05jjQSa8/kfB96YlHk/3YY4SgZ6k50U9hYRL3z1LFXBelWhpWaYkT1VrLIqWr4lgfTqscyYFjpbM5JqMRgBpmY3fd4Qto1N6kAajWx4PAwsHYJjwOzt7GcF1+r/+fjoX6nVLmWUFKC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=YRKbKYZJ; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752000672; c=relaxed/simple;
+	bh=etaFGkfvjO4iMKNeschonIrgIlnDCGg0ncHSRhtXHGA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WHVkycuwN3lKMNdpNfUN2uXvWhnO076/nygcuIWgP2DNvYpTl17Oahuq1a8TkS05w0bVHr/pVWnZ++dK3uWfexS2sqoe2YF9ua7hWr5FgN7WQhV9LZNqkPLf0XjASrizMrWK9utvYmOE+7rI0m20oqTvIAPRsEacLhyGrzW6bYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4pLmvQj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j/WTOO8t; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="YRKbKYZJ"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e812fc35985so4047361276.0
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 11:47:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752000472; x=1752605272; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=sdMIywRD2WWUppIH8DpJah0zl9E1OGs7eIDaLvhT3zY=;
-        b=YRKbKYZJN5J5XsV/22HGejD9dHD8oOpaqIdhx50KlbH2xhDGTPto+rkw49ce4jiajx
-         TLPxzVeyRiMmUULBHTfazv7fGQm0/pas+lO5hZFDQG3S499uALAds8GDuypVmzchvzLn
-         9LaynJZezMmeWL+oX6gxOvgaRL34JlRe2rzph7ftofF9GI1sx/TFzcnbC1DMyLgv0CgX
-         RJTdR9Z7VCb+DJBvdCtiRraFdvSsZ3/sdehZ1e9Sddv6dLyK2fiptYIP4X8rcBFHNAhL
-         xNDzhn7GWPh2KyDuEIgJkM5H3s9elG4ymIpTWM6/fG4DBkCQDFNzKEXsR2jJjv9xHCyZ
-         i4lA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752000472; x=1752605272;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=sdMIywRD2WWUppIH8DpJah0zl9E1OGs7eIDaLvhT3zY=;
-        b=R3lHdGDZeNiNs51HQ29ZNseV232qSQjEXEbXsZsTZLmipm5bDKHQHw7CjfrXO92wwy
-         eMqTwB7GcSwNfHFzj+5bB1uX/I7B4dlQjIT+7h7OEsLzYigdPxtIBy9DBw8PinxkhtI2
-         BBpdqNuna30Rt38ZjdAT4tB7as1rHVAGOXYVoWI2Y649VzulTsJ1650em00m0obZjHT9
-         qD3il3k0TBKp9/qs4JEAlFCnQE0vYW7fvFpOvLI0io7JkrpesYxJsOECCr1De5TyAEve
-         IgQAx+4krfhnrrgj6TmzEVNq5JpAAqnKyFli2+540q2rb6A7fikJ011+zaVGgpzHRykS
-         yvTg==
-X-Gm-Message-State: AOJu0Ywtcwy7suDhBbaGksyFdFQoGwyUSb8OzLb8Iqq5YGzwGB15p4y2
-	oOLETGfttdUrMqo0iDoKecrGsdLD4kTnodKa2SXJd39hF4Z+Kna0XAW7UAIbS0sPCUWv4q+A+6E
-	Es+JD5H8=
-X-Gm-Gg: ASbGncvMCiRy7W/fmOOucJ9Vp3DuJvx8VTsepzYUtRo+Z5tjZj0tEV4Xq5RfdqkPSYj
-	xHcNCimHPgjV3ZwlEPtv3eMaCJW4A3F2Wn/DfhgoKeWSe8IkYWYI2HvMpz4IN9U3zfXazho1qdk
-	ZwXf99GjsIaKJmwdPoASG2dIogspYhfh3yFH/TIC5rBMMu+p4GNA91pXD+7ZXYUMAOc+Wz8jMR0
-	uJnFGZBpuPPBUPb5IF9az2fZn554nYu7cTZGAbyg3IK//B/MR7o5krDSD1tsahJ/Lkm8zLd4Wey
-	eZI+d4LpexPKGoXKfv8nySaRPCQsxGiIlVDMZ9WNtKtn38pUWqo/qoOeUUtDU7GMmg2uGlW0h6x
-	ds8xEciknLLfRXTeaupwAdjc7LMxQTtoC/g==
-X-Google-Smtp-Source: AGHT+IGJlJkagh8qNKV0Jj2DfhSO/KibA1BxVRfEv7RbsG9bak2g+y4Czy3mnosDJ53N5YQL/4564g==
-X-Received: by 2002:a05:6902:6012:b0:e81:7acd:f77e with SMTP id 3f1490d57ef6-e8b6c44b518mr987901276.6.1752000471682;
-        Tue, 08 Jul 2025 11:47:51 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e899c340aa3sm3468350276.21.2025.07.08.11.47.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 11:47:51 -0700 (PDT)
-Date: Tue, 8 Jul 2025 14:47:50 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] Documentation/RelNotes: use .adoc extension for new security
- releases
-Message-ID: <d45d881536585ebaaf21ad5089afcd45523df783.1752000456.git.me@ttaylorr.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4pLmvQj";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j/WTOO8t"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 439CBEC0015;
+	Tue,  8 Jul 2025 14:51:08 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Jul 2025 14:51:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752000668; x=1752087068; bh=7b2NCuflwa
+	DyOzrou6OgGMfv2LhMv7I7rf+5M22s9Sc=; b=X4pLmvQjAjtXedJrgxvpS2ACyJ
+	cNZFbA+NqH9KVNhZfd1n9fJEoCAPY7YbsW6+Dr94ct3b5C2+EzsU/tJ3IRjqI3t6
+	H+NaCwj+i40G4TrpfttqjV+FX6HsjmbgJ6WFNvCle8l2RVMYMrHMzgwlQeHHsfDg
+	BB2SEf7FxCo8k/5ZeCGsD4D1agEWU2LCDzAXpvRAn1nuONprkymyKf5RDxO6mLU0
+	Wb52+Bxo3AFRLFXWYAORlT2rRZ+upqTAt2XsrxtlkFxPyKyVhL1ugzGWY8RdRH1O
+	oXJz7OR+xWhpJPFIdKWzCug3if49q134rsmybWsqwHNqR0qK4OvlEaWvPQOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752000668; x=1752087068; bh=7b2NCuflwaDyOzrou6OgGMfv2LhMv7I7rf+
+	5M22s9Sc=; b=j/WTOO8tVr/lh+Vr2zKvk0gJBE5JCPZCXl/3wT9iKO79081COlK
+	xITYdm7WHlK1HqNHU4hem/x0yUQrcCUbcJqCtmnmCx9GUYVgqTILTJ+k58w1a2rQ
+	n7qG0lPWhf963y8erukoSXQnQkQDwWJTBFFgkAXmdwcmbVXAji1iUcve1JE+YboN
+	e7gnmH1H2M3SMcjaSx759A8TybJdk+x68Xm2WAEEL7FTO/aHz/Q8DZbFhPi7c8jE
+	vfAGJKSDhykwIB+wSpZVKr54OvFMdIWiuIf3q3iqDdrwlxk3pBtQvMejjkK0haZE
+	coaN3sVrHm4oDVJaUvqgnX4yIxXZTtlcpdg==
+X-ME-Sender: <xms:nGhtaNc3KgOPhfd5yVvx9fIz3dnKvgpZqiblK5Yw1YP5SfR0eA1LWw>
+    <xme:nGhtaL5eCMJgj5q79sj-pkJUR9ixbOlZt1zNLpFzYcAP26iiHwRvdZmm1DesBwl63
+    hhQl7wGYxlvWcvaoA>
+X-ME-Received: <xmr:nGhtaEvfi4UPpG9FGPU0wUqAsVltsCZqZDvqvqKPIfQdeh77V2iDghcbdQdbgzNA8A954h2Fb2_aY5ctA00uwYWSzN6tkhy6rtpgEtY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheeggecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeevleelhffgudfgtefgueetgedvffevgfevtefgteehgeekhfefueeviefghfeg
+    ueenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrhi
+    hurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhsfigrlhgu
+    rdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhes
+    fhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:nGhtaLjUnLyOQ7mGI5x2M_CVJmmmNq9t8ocqIsl_DHrcvRPTMI45hQ>
+    <xmx:nGhtaPo9XlP3hep5d_E-vEk9qiNBkbxoTm1XSuli9BAeYWAgAf47Mg>
+    <xmx:nGhtaIv6r6eUy3PyP6YCtC3Jflle0omxj6XNKzm0x-LKtGm2Se7J9g>
+    <xmx:nGhtaCZNt5Zlbqa7oHxuzCvy1Q-L0CzWXPDiue7dedpZYnMQV3ZFng>
+    <xmx:nGhtaOLC9aNaGdFT_X_kXFSfctxvBT1E6J6xzV4d1iFpG8q93ExKrLAd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 14:51:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
+ Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 0/2] breaking-changes: deprecate support for
+ core.commentChar=auto
+In-Reply-To: <cover.1751983009.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
+	message of "Tue, 8 Jul 2025 14:56:50 +0100")
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+Date: Tue, 08 Jul 2025 11:51:06 -0700
+Message-ID: <xmqqjz4iv7mt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Type: text/plain
 
-When preparing the latest round of security fixes, we wrote release
-notes in v2.43.7, and then successively merged those up through to the
-various 'maint' branches.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-However, the 2.49 release series is the first to have commit 1f010d6bdf
-(doc: use .adoc extension for AsciiDoc files, 2025-01-20). This means
-that we should have renamed the new-but-historical release notes from
-*.txt to *.adoc during the merge into the 'maint-2.49' branch, but
-neglected to do so.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> This series implements the plan to deprecate and remove support for
+> core.commentChar=auto outlined in [1]. This feature has been the
+> source of a couple of bug reports recently [2,3] and as explained in
+> the first patch the design is tricky to fix. When git sees the
+> deprecated config setting it will print advice like the example below
+> to help the user either remove the setting or set a custom comment
+> string.
+>
+> hint: Support for 'core.commentChar=auto' is deprecated and will be removed in git 3.0
+> hint:
+> hint: To use the default comment string (#) please run
+> hint:
+> hint:     git config unset --file ~/.config/git/config --all core.commentString
+> hint:     git config unset --file ~/.config/git/config core.commentChar
+> hint:     git config unset --global core.commentChar
 
-Rename them accordingly to match the convention introduced by
-1f010d6bdf. Since the release materials in question here were prepared
-before v2.50.0 was tagged, the 'maint' track for that release series is
-OK as is.
+We'd need to clear both variants from all scopes, wouldn't we?
 
-Signed-off-by: Taylor Blau <me@ttaylorr.com>
----
- Documentation/RelNotes/{2.43.7.txt => 2.43.7.adoc} | 0
- Documentation/RelNotes/{2.44.4.txt => 2.44.4.adoc} | 0
- Documentation/RelNotes/{2.45.4.txt => 2.45.4.adoc} | 0
- Documentation/RelNotes/{2.46.4.txt => 2.46.4.adoc} | 0
- Documentation/RelNotes/{2.47.3.txt => 2.47.3.adoc} | 0
- Documentation/RelNotes/{2.48.2.txt => 2.48.2.adoc} | 0
- Documentation/RelNotes/{2.49.1.txt => 2.49.1.adoc} | 0
- 7 files changed, 0 insertions(+), 0 deletions(-)
- rename Documentation/RelNotes/{2.43.7.txt => 2.43.7.adoc} (100%)
- rename Documentation/RelNotes/{2.44.4.txt => 2.44.4.adoc} (100%)
- rename Documentation/RelNotes/{2.45.4.txt => 2.45.4.adoc} (100%)
- rename Documentation/RelNotes/{2.46.4.txt => 2.46.4.adoc} (100%)
- rename Documentation/RelNotes/{2.47.3.txt => 2.47.3.adoc} (100%)
- rename Documentation/RelNotes/{2.48.2.txt => 2.48.2.adoc} (100%)
- rename Documentation/RelNotes/{2.49.1.txt => 2.49.1.adoc} (100%)
+	for scope in "" --local --global --worktree
+	do
+		for variant in commentString commentChar
+		do
+			git config unset $scope --all core.$variant
+		done
+	done
 
-diff --git a/Documentation/RelNotes/2.43.7.txt b/Documentation/RelNotes/2.43.7.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.43.7.txt
-rename to Documentation/RelNotes/2.43.7.adoc
-diff --git a/Documentation/RelNotes/2.44.4.txt b/Documentation/RelNotes/2.44.4.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.44.4.txt
-rename to Documentation/RelNotes/2.44.4.adoc
-diff --git a/Documentation/RelNotes/2.45.4.txt b/Documentation/RelNotes/2.45.4.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.45.4.txt
-rename to Documentation/RelNotes/2.45.4.adoc
-diff --git a/Documentation/RelNotes/2.46.4.txt b/Documentation/RelNotes/2.46.4.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.46.4.txt
-rename to Documentation/RelNotes/2.46.4.adoc
-diff --git a/Documentation/RelNotes/2.47.3.txt b/Documentation/RelNotes/2.47.3.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.47.3.txt
-rename to Documentation/RelNotes/2.47.3.adoc
-diff --git a/Documentation/RelNotes/2.48.2.txt b/Documentation/RelNotes/2.48.2.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.48.2.txt
-rename to Documentation/RelNotes/2.48.2.adoc
-diff --git a/Documentation/RelNotes/2.49.1.txt b/Documentation/RelNotes/2.49.1.adoc
-similarity index 100%
-rename from Documentation/RelNotes/2.49.1.txt
-rename to Documentation/RelNotes/2.49.1.adoc
+> hint:
+> hint: To set a custom comment string please run
+> hint:
+> hint:     git config set --global core.commentChar <comment string>
+> hint:
+> hint: where '<comment string>' is the string you wish to use.
 
-base-commit: aadf8ae518afd80b73d49eff8aff475161aa5157
--- 
-2.49.0.dirty
+I do not particulary find it sensible to nudge users to use the same
+commentChar across all projects with possibly different project
+conventions by suggesting use of the --global option here.
+
+It would be necessary to special case "auto" after 3.0 boundary
+anyway, whether we (1) die when we notice the value is set to
+"auto", and refuse to work until the user chooses a comment char, or
+(2) use "#" or something hardcoded.  Either would be better than
+using literal string "auto" as comment char.
+
+So, a simpler approach might be to treat literal string "auto" as if
+"#" was specified under WITH_BREAKING_CHANGES so that the end-user
+does not have to do anything when they want to "revert" to the
+default comment string.  Then we do not have to give any large text
+like the above.  We can instead say something like
+
+	The 'auto' setting of core.commentChar (or core.commentString) 
+	will change its meaning in Git 3.0 and later and will always
+	use the default '#'.
+
+Hmm?
+
+> [1] https://lore.kernel.org/git/6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com
+> [2] https://lore.kernel.org/git/20250315140913.577404-1-oswald.buddenhagen@gmx.de
+> [3] https://lore.kernel.org/git/20250626132233.414789-1-ayu.chandekar@gmail.com
+>
+> Base-Commit: f0135a9047ca37d4d117dcf21f7e3e89fad85d00
+> Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fremove-auto-comment-char%2Fv1
+> View-Changes-At: https://github.com/phillipwood/git/compare/f0135a904...83d0d3ece
+> Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/remove-auto-comment-char/v1
+>
+>
+> Phillip Wood (2):
+>   breaking-changes: deprecate support for core.commentString=auto
+>   commit: print advice when core.commentString=auto
+>
+>  Documentation/BreakingChanges.adoc |   4 +
+>  Documentation/config/core.adoc     |  20 ++-
+>  builtin/commit.c                   | 192 +++++++++++++++++++++++++++++
+>  config.c                           |   4 +
+>  environment.c                      |   2 +
+>  environment.h                      |   2 +
+>  t/t3404-rebase-interactive.sh      |   2 +-
+>  t/t7502-commit-porcelain.sh        |  32 ++++-
+>  8 files changed, 252 insertions(+), 6 deletions(-)
