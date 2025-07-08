@@ -1,203 +1,180 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D25215746E
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:12:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B24CF1C6FEC
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 10:17:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751969523; cv=none; b=crv8Ds7nhZQuSR9FFHTEQeqwqpzKJAdnY2xWqw2f6xNgHhrLcUME9QncL0fofWyPvPEbsaawKAip9SYuxY+8m6513kczOcQYbPAHNc6J5TutTqVFtnWECQgilxMXSGd461dOK/QjiIsaBwEuZGi6tbp29maptER88qq/L0iDhIM=
+	t=1751969871; cv=none; b=Yeyd4MwCW8kC710daj1JCoFUbyBq/ddr9fbjlKKFDWD1biKxNLyCpZBVpZtGkfXIndBigy6CVIFk7cTC5MzBjClRL3XL++mLTTijiMpWK4RgF7C8XqtHfwhaO5txQl4rtfybzlmfX4UnqNdhM44fXw4jYqLn6XlGplxwGzpxdhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751969523; c=relaxed/simple;
-	bh=WdIFpBI32nOEndM44pr2+LPOJlhtkXXGEeDjk/1b5iM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=S/pvSNGkNS3yr/dIXby/M7hU6/gf3i3+S2rZpu2BhcjTzX5FMfTaQrB4dZo4y0IlU9o23AlhlWB1xKkwtQAKIBsesbp+NX9ugChgKBwdKVKUAyfneLU2WM0VTECoo70GPYZdAMdGHFRT+GUSZiTviieV6LXIyPIHM7rfwQ1QT40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lpN4P4i5; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1751969871; c=relaxed/simple;
+	bh=j3jVhf+M7/IA78QyA2DH2W3H4EIXFoYkeVvbD4JNN18=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=kUmx9ltH+1W5u4X3hoS3TeSWgpy+Y+BeDRhSLwFgb9LdNk4kiyqPPIdYYtfH5tPWgpZIyg25z1hQ8POd0J4Nu79r/RKVO+eolLm75pKBf/SP9BNFvbRblosT0cL2mEPc/lBz5NnZzD2+usT8/Gn8l6LRlH5n5OR+PEDsqITSRSQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aMSFKsot; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lpN4P4i5"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a54700a46eso2191816f8f.1
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 03:12:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aMSFKsot"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-60c3aafae23so11423561a12.1
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 03:17:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751969520; x=1752574320; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=EkJfKkbYpQEUHS2NwuGR7bkV7c8hGOiSosKy3DzMYS4=;
-        b=lpN4P4i5HJVYVvS1Aozl9ke/hJVNdlQrsl7Lnm+Hu4UKpTnpXBf0X0MvIOSnvGRf1+
-         mgQ4aTr2vD+9TgdmQd8zyz2nkT8S3DhXXDKGAlnJPrrGWSEL9TgEcx8+1wSXQ9dE2VVW
-         NyhD/WK1XBbxWYYW5a4SOLjKK/Yl5T0OpymAR5fdWiWHViFcBGVl2yFTrjZFUSNB4ac4
-         8bFjqa2QmoCy+ka4xA3uEwD2sdykQj7JAoBb5TkDFkF7SyV3kIqDTU69KEzESGly2th7
-         T+KA/qCiT7W7U/2aPbEk5eJ5YS8mXqXifpiPUo4KLc9vz6qEugCYw3d9zs/2NhK2g2br
-         5AyQ==
+        d=gmail.com; s=20230601; t=1751969868; x=1752574668; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3iokrQTZ55QL6rKfcAeorPIUAe+PjsmrnWv3gTZq/M4=;
+        b=aMSFKsot2boiJdSidhAkagyrYb06642owIuCibSDm6Vgdnh2ijXU3lOSWL+xkOzLcH
+         cAFYVTeI+j5yiT0jccPjyersUzO0OYS7UWJX6vxT0/FQ2wP9kbLOrrQIWwfRFXrRVY/W
+         hiORzSRqk6dKE0IGj65jSSXq8z9GQXcGQzqeSfVXAhJEKyZoc8hK9cIrY/Hpb6hs8y+s
+         libfZbIHU4AwMYyDDqahOIUeWlIflBvTvRlelIOo1Xm9jQe3na0JHIHyG8YJQPdPCMWp
+         y7S59PPnNjVjWxRKT0NvnUa3K81FWGC18nOf/wgoHJ1+9i4mylsnJV6py32BHwQiaP1B
+         vwsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751969520; x=1752574320;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EkJfKkbYpQEUHS2NwuGR7bkV7c8hGOiSosKy3DzMYS4=;
-        b=Ae9jp5l94V3Mi9IEXTZ/OwXAiY6h1mq0QLl0RAj9ZPkhhewwLyOkVxlQhcZi+1n5RZ
-         mKySI4Zwqrc6gl/JKD7v/8bDGQD390S401hOdqmEGcSXr8TChRj8An8IBIgzJsLUJAlP
-         5S3N8V17S5aKnqgnyrsVONxyvdSAqVHpEM+CPJYdQhjszxZW0+ebXvEiZe0hIDVa1TSd
-         Wz1Z1LUA2Ld/HsnjZ2ME6nPg12uyRYTm5T2siHQtGyWeAXZrYvooklu9N1FhTp/tNH9s
-         v63C1AU1mFpUPLXqdSPfJFeuBccoJkzICKh2MHwbkMNJxv72uAOcCyPlX8BRLNWux3DJ
-         Hsrg==
-X-Forwarded-Encrypted: i=1; AJvYcCXQScCxZrhSUW8Jd8VM291WaV8aIA0JQJuVtWjMRSC0B5TavdeT+SZk6lO8paidXNrEaR4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyvNxLxfA4WXtXxJuLjeqZqEWYjAiWhSTkc9W2ribgLp12crHrU
-	XKDPDhEYptct0P3Tg1fQG2ClevdhPnFe176EiZKi2CHA4o/KvD17lLV3
-X-Gm-Gg: ASbGncsRFIAJ47IZ3zD8f/IyVGcztWttxZXwypLdBDJ08FyTakTI0lH24F0xtUtzSys
-	QBXuUmjONznJOo7RT209Qc4HHRYWhpw2TAFJFTumNDQr56u4Dir6SISskvsyyEkIMCArb/lcsRI
-	MroU2oIRD7tiVSZmx1L2e87USrjLkoqXJpvnSWNsuwX8vlNj4zm2tTC+6HmIoLPyRK45/yEY6ZA
-	oHZ+9WBV9Yn9RfVZZGelMKrT4HOUelES0w6kIuv6xjeDPCHsazqlaXSEYau+OtuLOukzOVmHvJH
-	Mjbp8J3mwJb2+yx3gkNgJqgc1VRby0Vpa3vkTd5kFT++CfRZgDm0a2sAkr3DGKyd+K6ZzcYgVZi
-	NH7UAm/+2FYlL9FXx9H3NnJhpxZfUYkEWIlovdrF0xrtL7NE=
-X-Google-Smtp-Source: AGHT+IGhxzBuqw9CIzdwCwA0oia3fSgI/A8XxFxZaxa0tft6xaWY6w9Y6CGceqgXrntiuLmXdAUn7Q==
-X-Received: by 2002:a05:6000:4304:b0:3a4:ee40:715c with SMTP id ffacd0b85a97d-3b5dde94faemr1842730f8f.14.1751969520243;
-        Tue, 08 Jul 2025 03:12:00 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:414b:41bc:10fc:30d3? ([2a0a:ef40:700:a501:414b:41bc:10fc:30d3])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454cd3dd150sm17702125e9.40.2025.07.08.03.11.59
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 03:11:59 -0700 (PDT)
-Message-ID: <c1f871ec-96a0-4dbc-b84b-4add36bec682@gmail.com>
-Date: Tue, 8 Jul 2025 11:11:58 +0100
+        d=1e100.net; s=20230601; t=1751969868; x=1752574668;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3iokrQTZ55QL6rKfcAeorPIUAe+PjsmrnWv3gTZq/M4=;
+        b=tGnw3AsDPPlOMvAylj11kztksIzloo6BFDKoV9+Sd/ET+x1WIPtPPrcRm9Dj99ADdz
+         N8khY0JUCwAJQb0VD2IR+scr9dvSGhUvyyL0unHwW+R5I1lpxDv0WDZ7Rap0eeFssZ3U
+         CALGQ1LVpIpdCcCihyszfi3rD7aLL7uCgqBhh0hRg7ZXnu5urkqM30vTBqLsv3+qswSH
+         epJLutjcj2YwkU4Ba6yqXPSSR4kQsaThbDfQA4n9i/Q4/+PUfTSLYv/kJMlx2FOVrsGX
+         0+XwYAGU3dqwN1UzrLBkzMfx/1Vp2BUIm/8OKyk8VaHSMJIfkV08SCv9Xw78/+D37r4y
+         jyeg==
+X-Gm-Message-State: AOJu0Yyipl3CcqSXvTFlFDsLiRfnNxL4osTb6TOW3tUZSk922h5E4PFx
+	pMohrQFPlGk4bUX+l310o+dOo3CQlIyI+zI9GuH/Lreq6K9Vnr/ilhLuTKpsyoRCrgOnOL1rDu2
+	NNh1KLXOZLSd0skUFVirK68xuYRxzdQo=
+X-Gm-Gg: ASbGncu3LCaAIq1PqACdoOmxxqOwK2VHMf2Va+Wi5zJRlMyQ8CXM01wc6KJxwliRb6C
+	KnylNUgGZ+vGBQbNvv1PFQrtt2VQh7Uu7SRzyDDQpaVEspLV0IQPEghzwmSaegsBGQ35ZaizV/R
+	ntNypDD4iGKzrdrXXPrUXTWHv6gNxk2P+6AShCsWtCAYzml+BMieNMIn64QUSqMbsGw5KGyVGue
+	VO3
+X-Google-Smtp-Source: AGHT+IEftW8UiokhXTvQrVa8hvmHu+vKHnjsjWryOrykOF1HpFuuBiUQUB8krX/RZL3nMvbjOL8D+QJHJbfUyEW40fw=
+X-Received: by 2002:a17:907:3fa7:b0:add:f68c:5200 with SMTP id
+ a640c23a62f3a-ae6b2a45b79mr236388566b.6.1751969867899; Tue, 08 Jul 2025
+ 03:17:47 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC RFC PATCH v3 0/5] repo-info: add new command for retrieving
- repository info
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im, karthik.188@gmail.com, ben.knoble@gmail.com,
- gitster@pobox.com, phillip.wood@dunelm.org.uk
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250706231938.16113-1-lucasseikioshiro@gmail.com>
-From: Phillip Wood <phillip.wood123@gmail.com>
-Content-Language: en-US
-In-Reply-To: <20250706231938.16113-1-lucasseikioshiro@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20250618151821.528627-1-christian.couder@gmail.com>
+ <20250619133630.727274-1-christian.couder@gmail.com> <xmqqbjpv1ucb.fsf@gitster.g>
+ <CAP8UFD223ja7jKU+wb6TiGkc9frh5dt1rCJkOkk+O+J2MPokrw@mail.gmail.com> <xmqqwm8jxoj3.fsf@gitster.g>
+In-Reply-To: <xmqqwm8jxoj3.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Tue, 8 Jul 2025 12:17:35 +0200
+X-Gm-Features: Ac12FXwjOg62C5GQ9a5sPfglUmRtF-4sUIX1f8K6AfMEbjeuB4rUYeBZVUKfWsw
+Message-ID: <CAP8UFD3ZitsRz3ccAjmB_k+DhdYw+AJgf-2vPCGUaRAgWd9SEA@mail.gmail.com>
+Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
+ output format
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Lucas
+On Tue, Jul 8, 2025 at 7:03=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Christian Couder <christian.couder@gmail.com> writes:
+>
+> > On Tue, Jul 8, 2025 at 12:58=E2=80=AFAM Junio C Hamano <gitster@pobox.c=
+om> wrote:
 
-On 07/07/2025 00:19, Lucas Seiki Oshiro wrote:
-> Hi!
-> 
-> This is the third version of the patchset introducing the new Git command
-> called `repo-info`, which will return repository information currently stored
-> under git-rev-parse using machine-readable formats.
-> The main changes since v2 are:
-> 
-> - Documentation for git-repo-info has been added.
-> - The `--allow-empty` flag was removed. In this version, repo-info no longer
->    returns a default set of data when called without parameters. However, an
->    `--all` flag is planned for a future version.
-> - The `plaintext` format was replaced by a null-terminated format, following
->    the syntax of `git config --list -z`.
+> >> We haven't heard much after a few comments were posted on this
+> >> latest round, since Elijah's
+> >> <20250619133630.727274-1-christian.couder@gmail.com>; I understand
+> >> that it would be the author's turn to respond (the response does not
+> >> necessarily have to be with an updated iteration).  If so, let me
+> >> mark the topic as Stalled in the draft of the latest issue of the
+> >> "What's cooking" report.
+> >
+> > I will hopefully send a v5 later today.
 
-These all look like good changes. Looking through this series I do think 
-that it would be more readable and maintainable if you adopted the table 
-drive approach suggested by Junio. That way we would avoid the nested 
-switch statements and each piece of information only needs to be 
-retrieved once rather that having to retrieve it separately for the JSON 
-and plaintext output. Below is a sketch of might look. Each key is 
-handled by a callback and we have a table that maps key names to 
-callbacks. For the json output we use one json writer per category to 
-build output for each category.
+I just sent it and replied to the pending reviews about v4.
 
-Best Wishes
+> Thanks.
+>
+> By the way, I noticed that you often do not respond to reviews until
+> the last minute, at the same time as when you send your next
+> iteration, or even soon after doing so.
 
-Phillip
+Yeah, right.
 
+> That is quite different from how other contributors operate, i.e.
+> respond and engage in discussions triggered by the reviews, and
+> after people involved in discussion got an (even rough) idea of what
+> the right next step would be, if not a total consensus, send the
+> next iteration.
+>
+> I do not know which style is more efficient form of cooperation, but
+> it somewhat makes my job harder, if I do not hear much _heartbeats_
+> after I see review comments on the list.  I do not mind waiting for
+> seeing the next round for quite a while---after all, any substantial
+> (re)work takes time.  And responding to reviews may need thinking
+> things through carefully, which may take some time, so I would not
+> demand an immediate response, either.  But it would be nearly
+> impossible to feel the current status of such a topic---a few review
+> comments are seen, the author goes silent for a while, we cannot
+> tell if the author is working on a new iteration or where the author
+> and reviewers agree and disagree.
 
-enum format {
-	FORMAT_JSON,
-	FORMAT_PLAINTEXT,
-};
+Sorry if it makes your job harder.
 
-enum category {
-	CATEGORY_LAYOUT,
-};
+When I work on a number of different things, I alternate between
+topics. Just after I send a new version of some series to the mailing
+list, I usually start working on a different topic. These days for
+example I alternate between this topic and the promisor-remote
+capability topic. So it seems to me that if I were to respond to
+reviews right away, I could be switching topics all the time if there
+are discussions happening on several topics I work on.
 
-static const char *category_name[] = {
-	[CATEGORY_LAYOUT] = "layout",
-}
+I know I still have to switch often anyway between topics because I
+might be pinged internally at GitLab about some issues or because
+someone I mentor asks me a question privately, etc. And maybe for you
+or others switching topics often is not an issue, but when topics are
+quite complex I feel it makes it much harder for me to focus on what I
+am doing. I don't think I am the only one in this case by the way.
 
-struct context {
-	struct json_writer *writer[ARRAY_SIZE(category_name)];
-	enum format format;
-};
+> Also a review response that comes at the same time or immediately
+> after a new iteration is already sent out makes it look like the
+> author is refusing to continue discussion and reviewers are not
+> welcome to make follow-up suggestions during such a discussion.
 
-static struct ensure_writer(struct context ctx, enum category cat)
-{
-	struct json_writer *writer = ctx.writer[cat];
+Sorry if it looks like this. I am not refusing any discussion or
+follow up suggestions. As you say above, responding to reviews may
+need thinking and often working to try things out, and often it seems
+to me that I cannot really reply properly if I haven't worked enough
+to try some ideas.
 
-	if (!writer) {
-		writer = xmalloc(sizeof(*writer));
+Let me take for example the v5 I just sent. It's only by researching
+and trying different ideas without knowing if they would work that I
+found (after a long time) a way to write a proper test with both a
+SHA-1 and a SHA-256 signature on the same commit. It was the same for
+using "$GIT_DEFAULT_HASH" instead of "sha(1|256)" in the tests.
 
-		jw_init(writer);
-		jw_object_begin(writer, 1);
-		ctx->writer[cat] = writer;
-	}
+So yeah, I could have replied early with "I will do it in v5." or "I
+will try to do it in v5." or "Ok" or "I will think about it." to most
+suggestions I got, but what would have really been the value of a
+response with mostly those kinds of sentences in it?
 
-	return writer;
-}
+> Instead, the next iteration comes as a fait accompli,
 
-static void handle_layout_bare(struct context ctx)
-{
-	int bare = ...;
-	
-	if (ctx->format == FORMAT_JSON) {
-		struct json_writer *writer =
-			ensure_writer(ctx, CATEGORY_LAYOUT);
+Even if I had replied with mostly "I will do it in v5." or "I will try
+to do it in v5.", etc, to many suggestions, I could still have found
+or decided for some reasons to actually implement something else and
+use those reasons to justify it. Would it have been less of a fait
+accompli?
 
-		jw_object_bool(writer, "layout.bare", bare);
-	} else {
-		printf("%s\n%s\c", "layout.bare", bare ? "true", "false", '\0');
-	}
-}
+> and makes it
+> less useful to continue the review discussion on the previous round
+> by responding to such a late response.
 
-static int cmd_repo_info(int argc, const char **argv, sturct repo *r)
-{
-	struct context = { 0 };
-	struct {
-		const char *key;
-		void (*cb)(struct *ctx);
-	} handler = {
-		{ "layout.bare", handle_layout_bare, },
-	};
-
-	/* parse options */
-
-	for (int i = 0; i < argc; i++) {
-		/* TODO use bsearch()? */
-		for (size_t j = 0; j < ARRAY_SIZE(handler); j++) {
-			if (!strcmp(argv[i], handler[j].key) {
-				handler[j].cb(&ctx);
-				break;
-			}
-		}
-	}
-
-	if (ctx->format == JSON) {
-		struct json_writer writer = JSON_WRITER_INIT;
-		jw_object_begin(&writer, 1);
-		for (size_t i = 0; i < ARRAY_SIZE(category); i++) {
-			if (ctx.writer[i]) {
-				jw_object_end(ctx.writer[i]);
-				jw_object_sub_obj(&writer,
-						  category_name[i],
-						  ctx.writer[i]);
-			}
-		}
-		jw_object_end(&writer);
-		fputs(writer.buf.buf);
-	}
-
-	context_release(&ctx);
-	
-	return 0;
-}
-
+In my opinion the discussion can continue with more useful and higher
+quality information, as I have worked significantly to think through
+and try to implement the suggestions that were made or to research and
+then often implement other solutions. Yeah, it doesn't continue on the
+previous round, but hopefully the new round is better, so ...
