@@ -1,106 +1,120 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D74FAD21
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5DBA23C4FE
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 22:35:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752012654; cv=none; b=Oiujd63mEUJgIEIU6pwdgYhwqqbdeTrsT1k0jdNwLScF2P0dRaKgJIw2wnlgBnBaWB4nP7WW3zZ1RNmO4rfe4Dfby0+Su/h+l1trJRJcwkavJvhhKSaTeGfeta+UR1NCDLX6OaMkld/BcUQvqxJh6qD/+QSCKUz5DDa5LgwkL0U=
+	t=1752014157; cv=none; b=sop3Z33zKUu8dsl90ZLmoZVEFdtR2id4RkSVLOvNCJNzFrMxzEl5yC+26XO5DAawrIOt/WGH3yoLSbO8bqZpj6m66ClxcuUkv3C/3GKn53JzY+uuQTv+97MEv0yIFp77VDsszA6AbfpqsOIxwV3r1lmLAzgHNoS4T5R+++Iu7fI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752012654; c=relaxed/simple;
-	bh=vNp2BQcC0a1g+SS4p8w5Z5h2j79uGoQoPppL7eDX/ZM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k0NemDD/eKsESy5KmXj/QU9eToxQxc7TG5rO0Ebs04WhDC/zMS+ZzWOvTu+hJR0/nTLOHqWRrjp/BKJtJhURwDnRKAdUDqzUf/q3MNOrhC6Jbez5MZdJSrc1e+/fN4+qybNVouhLtL/tAFpZmby4YFg9dKIoOuuiuP747FqIpxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=c+jdQgR8; arc=none smtp.client-ip=209.85.219.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752014157; c=relaxed/simple;
+	bh=Q+PRg+f5ednCaRmvDkdnJqnNO4xgDx4JfcPv1XgkD1A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cBogSglXqaeOLrTN9ALH3+QhnrNhAjLcUUVL0NfoCKKGjm3jOLMPD7mzt9VSVUzUNNCmCTrP2thanwR9xwihEnh4wMHaYP699SgUPwO+pGALBDEDB2iWyHs3ltSos9W9IGX79cOujWRX8SaZ3jb0xVKt2ydnEQIdkJ8EXWqtJEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mrc11OuR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EV5PdUqI; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="c+jdQgR8"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e8259b783f6so4061290276.3
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 15:10:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752012652; x=1752617452; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=E4Xw/B5VliA3egaOyEx1hDk/slY6eyVTlaoFfYMjzXs=;
-        b=c+jdQgR8EnDxqOknv04/A6qv5j30BASzAeh5uYwIsMk+V5K7rMwbITq1RBU7yhc94L
-         H1DdDwewRYphhpnjL4oewh3uRdcb/c47XBsxMd5GB1asNlvhaxzDqHpM9njjr8H/+WlJ
-         vixfBeoTA+7PboMzJRUR7k0V4VEq3rjmFU6VstvAyGFbvg4j+5QZ5M6CExGuePUpjy+j
-         F4770ScFOOOs0vvkBDhbxmibRFyT1aWL3fh1KCMsE8NAPx0qmN/Z2SC0UcduL40K/uqN
-         gB/Q8dh2fPReI0ubNg+5PEXPPUDQ+yASeTQYDNJv1Ne15MfoUEV653xyGORBnEZwQPGs
-         IEsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752012652; x=1752617452;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=E4Xw/B5VliA3egaOyEx1hDk/slY6eyVTlaoFfYMjzXs=;
-        b=MtKAHHY7kIIVufLy47jFb4Cwf9Ac5OpVDf55u24WcCW2ykzb5c4ui4hrs2D6T9Q7/e
-         PyjV3GHkjV9gd9I+nyaG+eUM6B4hg/1DKoOJ8mjTzOtAZQYNAoSfyZ1E9YSd6V2Akf3i
-         u2n6oLKli8+N9/vokrw9hCDbawy4kz0Z15roIM4mW1t1m5bj8Kl4zdQ9/li/8tEqcC9v
-         tuiJJWlaOqP4NLWPG09l/vo5x+oJRmO/dJC7UuKSRG0+QXc7m7ChXqWGzI/sqJ1RTFuL
-         cFi2uLxJOclgxvNd4zNFk/qOdwoua7NvV22R/P34qVjP/sjU89+KtTOHpmD+Zlinh6aY
-         X5GA==
-X-Gm-Message-State: AOJu0YxnhYZ3UxWri0vI5Aqp1cB8duvd6JkO4RwYQtA6Jwr/YN8IoVet
-	ppLDzmX2uWNM/LPeV9yeRJd5SL4cgQLxZS7jyfskMWYGRgL9KfcgTW/4pLxqQVEx63s=
-X-Gm-Gg: ASbGncunQM1G83xq3F/Jg9a/nJfwe+DArR95roBvZBHvY3Td0NOBUI2CTxtFAHtwDd+
-	n2/wOJ4oRcY8xaQKly3s9MsFg46VZ2mrE5YgbSMJQAyKXzcg5EMZy3nhMponcGDS8BxxTWqGcuM
-	xJgspcRsFDL51PrR88PU0x8Hau2cVb9+q77wVtfyli/bnsTPFMdXfdJCZ7+WUOzTfFa+hBwpjUj
-	ZwP4aV9XgXVNqLzDfWP8Q7UwUhSk+ZbN7wp3MS/z4WuKbpNnrC93XRlzEomtjnVL8UaoeuDrQj4
-	sOfTbqkeRiWRPIzw94yLaqR+vrBmMN+N5HU8Msyv4TQX8DWa9enRILaWXMXHOMjqeih4PmqeG6H
-	5ZG/OtcH0zVgcrb4xcUsJE8pN6BK9PLCK4g==
-X-Google-Smtp-Source: AGHT+IHzvtU0HS3UYtccEZuWZG6dDFLJIk4TQXqxWgcXSFtmegc0dMe4hN9iya52QrEgLAYSCfgIOQ==
-X-Received: by 2002:a05:690c:6c08:b0:715:2081:f2f8 with SMTP id 00721157ae682-717b19bf0b5mr6533967b3.27.1752012652000;
-        Tue, 08 Jul 2025 15:10:52 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-71665b1b09esm22686537b3.102.2025.07.08.15.10.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Jul 2025 15:10:51 -0700 (PDT)
-Date: Tue, 8 Jul 2025 18:10:45 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org,
-	Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Lidong Yan <502024330056@smail.nju.edu.cn>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mrc11OuR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EV5PdUqI"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A3C3AEC0B61;
+	Tue,  8 Jul 2025 18:35:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 08 Jul 2025 18:35:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752014154; x=1752100554; bh=4u97ez0qi2
+	rlnuYZ/tXmYmxifFCxM5+orv7weNuoa0M=; b=mrc11OuRcp56WsMwUiFtpgRBgR
+	3hiECjdy3csLt9rbZaQGJHUkryl25IVwIRES2IOayzzAealIoHoI44fXHg7Aj52f
+	L7etUiM4cPBS2ZoMMdrM8jkAOzfvr5C9aQzglU5UhGEe5rokyME6iwGRglQQjz70
+	KB5wZqJzBn2xlCCa+P8j3VWKSjzeTxAGDEsSZoA2krG2SQQFaHlbolhw3WaRqPP7
+	fC91ZiiToeuGyXSIKikbp8Uf76ldGV7yMJjVSLWW0RcSC5dDzsdMH8fOzv9LTrrN
+	rxBVD7dXvZunnOC+xdhnYq4Rw/SB6foiMDIUCeFFihKwKU0prSxzNmQaXfKQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752014154; x=1752100554; bh=4u97ez0qi2rlnuYZ/tXmYmxifFCxM5+orv7
+	weNuoa0M=; b=EV5PdUqI1OoRtFhhQDLjp1QZxX2qyASmWjVhat8PikwEmcNv0zs
+	ZyGGUA7VlmXZWuhrT1DWSPzqcu06MhBItd8DiE85fL4Rux8JbcYr4tFVynQKdcaw
+	JjGudrbf/uZgve7H44PydnkAjKjvYCEK19k7h8fJKHZaOQKxUUJG1uT5HuWaXKKb
+	rZeqlu90fzlEkRCE815UK6Bp3K0r8qBTV6+eAT+HUl323HuF7VU5dkjgIzqik1lw
+	u8PgsRi8k8mIt0ELCIZLBOIrp9TSQ4FKhKdV8XD9DiUVBvUWGfN97+6ZHJc6LyZV
+	U0Sf0ty4wyTyBVSsC4Zng7vtGTFfSMtYeQw==
+X-ME-Sender: <xms:SZ1taP9b0nIDwM_sq8zrn6fQzSqeEZr_v2pnoK3t56-Bqg7Fm_n-CQ>
+    <xme:SZ1taDG8VOEiEQK7fs019r6X_lC8tfWeodQlwn1QJL0uA1RWHGu1EBJDhgHzFUTso
+    45bOJVr9g5FJ7RRLA>
+X-ME-Received: <xmr:SZ1taCkrIgzo-TUQBnQUR9LInf8-_sNWFHbamyugTDmc4F4ljrT42Bc60VLD-RLkcZMS7h7Cc08EfoOZgKnzC1ZSPsYrORSc09es7tI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefheeklecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtghhithhg
+    rggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvg
+    htpdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughu
+    rdgtnhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SZ1taHYSYyDEUy_38e6QNp0lE42Fjfw2a-EBBaIDe9-N48C6eKJe0Q>
+    <xmx:SZ1taHFOPLR6QgQV_LhrW_7F-VSrBTR5p-5JU-YsSdvy7ToYTJ_Y6A>
+    <xmx:SZ1taILAB4Kf4ydaFc1wa3EXc-U7oQcirsrdZf7f8WYXRz5VXtgxAw>
+    <xmx:SZ1taCMjZ9oYLnYKTIKiIOeC2wfHynLn7JY72_5VU7iau8Qv-LF67Q>
+    <xmx:Sp1taGrpLib5iv6nMj7KwWZ6oZxd79Bif9a6hIyFj3KUGSvWPm2rEt4h>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 8 Jul 2025 18:35:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Lidong Yan via GitGitGadget
+ <gitgitgadget@gmail.com>,  Jeff King <peff@peff.net>,  Lidong Yan
+ <502024330056@smail.nju.edu.cn>
 Subject: Re: [PATCH v6 0/3] pack-bitmap: fix memory leak if load_bitmap failed
-Message-ID: <aG2XZYamUv5FWq/W@nand.local>
+In-Reply-To: <aG2XZYamUv5FWq/W@nand.local> (Taylor Blau's message of "Tue, 8
+	Jul 2025 18:10:45 -0400")
 References: <pull.1962.v5.git.git.1748920444.gitgitgadget@gmail.com>
- <pull.1962.v6.git.git.1751347929.gitgitgadget@gmail.com>
- <xmqqfrf71ull.fsf@gitster.g>
+	<pull.1962.v6.git.git.1751347929.gitgitgadget@gmail.com>
+	<xmqqfrf71ull.fsf@gitster.g> <aG2XZYamUv5FWq/W@nand.local>
+Date: Tue, 08 Jul 2025 15:35:52 -0700
+Message-ID: <xmqqms9es43b.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqqfrf71ull.fsf@gitster.g>
+Content-Type: text/plain
 
-On Mon, Jul 07, 2025 at 03:53:10PM -0700, Junio C Hamano wrote:
-> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Taylor Blau <me@ttaylorr.com> writes:
+
+> On Mon, Jul 07, 2025 at 03:53:10PM -0700, Junio C Hamano wrote:
+>> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>>
+>> > Since it seems this patch has been inactive for some time, I have revised
+>> > the comments according to Taylor's feedback and submitted a new version.
+>> >
+>> > This patch prevents pack-bitmap.c:load_bitmap() from nulling
+>> > bitmap_git->bitmap when loading failed. Thus eliminates memory leak. This
+>> > patch also add a test case in t5310 which use clang leak sanitizer to detect
+>> > whether leak happens when loading failed.
+>> >
+>> > Lidong Yan (2):
+>> >   pack-bitmap: reword comments in test_bitmap_commits()
+>> >   pack-bitmap: add load corrupt bitmap test
+>> >
+>> > Taylor Blau (1):
+>> >   pack-bitmap: fix memory leak if load_bitmap() failed
+>>
+>> OK, now, how does this iteration look to folks?  We haven't heard
+>> anybody say yet.  Is it ready to be marked for 'next' yet?
 >
-> > Since it seems this patch has been inactive for some time, I have revised
-> > the comments according to Taylor's feedback and submitted a new version.
-> >
-> > This patch prevents pack-bitmap.c:load_bitmap() from nulling
-> > bitmap_git->bitmap when loading failed. Thus eliminates memory leak. This
-> > patch also add a test case in t5310 which use clang leak sanitizer to detect
-> > whether leak happens when loading failed.
-> >
-> > Lidong Yan (2):
-> >   pack-bitmap: reword comments in test_bitmap_commits()
-> >   pack-bitmap: add load corrupt bitmap test
-> >
-> > Taylor Blau (1):
-> >   pack-bitmap: fix memory leak if load_bitmap() failed
->
-> OK, now, how does this iteration look to folks?  We haven't heard
-> anybody say yet.  Is it ready to be marked for 'next' yet?
+> Oops, this fell off of my review queue. This version looks great to me.
+> Thanks, Lidong!
 
-Oops, this fell off of my review queue. This version looks great to me.
-Thanks, Lidong!
-
-Thanks,
-Taylor
+Thanks.
