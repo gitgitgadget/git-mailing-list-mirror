@@ -1,127 +1,107 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19D6B267B19
-	for <git@vger.kernel.org>; Tue,  8 Jul 2025 11:08:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 542361FAC4E
+	for <git@vger.kernel.org>; Tue,  8 Jul 2025 11:15:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1751972901; cv=none; b=lDdS/K8HNlPaZeOd0sVPLdTL1/WoNM86pSNeZIYbAndlsz9q1vX18SsH7yjLxQdLGJrZn7BC22kmIp7h+uRAf0VQ7FId3nUq0GsKxgMvCW9ODpWpACaPTio46xLqJNB7rmiV3ByBjKRk1tG7utT0Op902wmPpbvz3TQWNtzGWuk=
+	t=1751973360; cv=none; b=kQwEgxteolaCJDBTXNlpN6tPBmv0JNav2l+1TfdC/X0c/t8StdQiD46KtyWGNsByM0CT+jJtTAAW1L0sZfZlAbXqo3k7SpR+rg8fP3w7ZKVbz1vXxPyKpLum6goQ9Dh3WYKPwYxyCs0tdExaE6VOvNY5GWjg58lg+OTHU6HmiNI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1751972901; c=relaxed/simple;
-	bh=0/kTY244PKCJ8HBs93orFJPP5zesU+Uy5qZQaUwXKcQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iPCx3pyWj5jpJtAD6L84821hxw/DtMNs9ir6nO2ANIhMSdnGJDZIh4J9jTabgl98ramc4XpI1J+Tcutc+iiAfITBByGNybU1Hhs3c8xgDYLT7jFMGhHlrEzO+8bDSBNsZIrvVoCy/eJmq9y52oay6WEqijt5TYWX/PC7LvD8TAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KAAW33Jx; arc=none smtp.client-ip=209.85.208.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1751973360; c=relaxed/simple;
+	bh=cTXLVj7JUWpkARue+ZaTiBfHVgKIJLkJ92pF5TbgWXc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AyKp6RPFfFuu7nr7FbNZX4e5F8rQjSoV0w2yCriNYNpInRtIwgbB6SIKBDaqorhKhcFRHdZyAwuPbgud1rkZ6ZGzyPAp1JbO+fiOhHHWRR+uCkJF9+EYKujAp2TEMBqTe06cBpX5XI0qaGLVSyHgkh+7g7IK+x/dL/7NtvQJil8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=KEfM7yE2; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KAAW33Jx"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-60c4521ae2cso7534331a12.0
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 04:08:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1751972898; x=1752577698; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lJSA1jN/LpimQOqun3eOi6v5mZBAg7QzPoDVnkbsplU=;
-        b=KAAW33JxUJbJ3oQ5up46N2fUH7L0qi6u22iItVPk2uKbEg+XyajUddfaGLMX6bWTu+
-         6xd5HvAnRBSbgo3T2kPHA2PlNxNnAQjWebuB/YINnEWkDl9F3gQqWoVXzD8BFZfTT6SM
-         5xYQOj3D0bKvpkpMp809pFWxcsQ4MxEgh5UNtX32KB09jV7rjvAKl6QIGXhltItRroWp
-         HLH3iLRRVRZ5FxvvruXBhrpS58X6M2z9q/KHvPQv0hs3hwACm18s4a24VH8xTnp5bvTL
-         xxYjusbJcNgbN1IPWg3QUj5yiXcn5nYgC1XlruMm3Cmf2n6iWUQhfD4pO4DcI/GcTRIq
-         yKcQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1751972898; x=1752577698;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lJSA1jN/LpimQOqun3eOi6v5mZBAg7QzPoDVnkbsplU=;
-        b=HXYRDsG/wXAlkHMSfIxl5sYQ9x2iC+CKyIzOiVEojHa6zfUHkpKW7YJzhwH3i2goHF
-         ZYc4Lze0tR2eb75EakZii/0cxCOp24F2G0lwjjWWZtM3itWqZ7yYi0YUXMYMXqjPAR38
-         gySmaoLxvg7bn8Fe7iLKB7TtZZzeKBBKqP0Rp8dElpGJ9hK6ERSthpCS/D5pbIRiml8Z
-         HuwU3LpVxevxUOiOMB7YJm7/CbCgSH7/Q4JGCLjpE8mzdUtT8+XuDRXVfd0N34IlGdjo
-         1lLjtnTUUraYIDi2IGg2W1cisbmp5GIwZAm6DlmtU3n4iMFinguQpvWmHM0TNBFiGl8V
-         Bnzw==
-X-Forwarded-Encrypted: i=1; AJvYcCU84MIO8dAox5rSuLUjZtd0TIc1fIfxAZ1lYOvKRz+jXVwq4taR6np2gz8XN47uVg4RFKA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGAnkJQC33xwdCOClkjsi627Pamy3aKDG0l8trE4Zp4zjBYAi2
-	6hlAMDBm0iMeo8uxm+pXCw/xX8hi5tbct+oAEnf8IJrIOpNTvcT9vX8OA6Yq1zq4xg/OiUmC3xo
-	+fI87OPie8jOzU1XmTUk0GVeB6Omhq8E=
-X-Gm-Gg: ASbGnct/J3aDXneVNtJYHnizgQJhvlSyT85AODkejrwv0uS3dbAIAoWLtmWB4BaB9+4
-	q8GdDn64kMwq7/RiIkIA3VN/8C9qewhhZJ42A3kK3/o59pCLPBXLNAwmjcMAxL+vVGaYUmX4Ntu
-	3eHAkYpCfXoZNfUfw9g69RjeZCMw28Q8F6l7w86tySTMKfidj0mehdG5RbdTfDGNHdksynacHaI
-	k/j
-X-Google-Smtp-Source: AGHT+IFJZxgJ24uxf5HiunrK6+cYVfpP60TCrQoeRCE5L8GTDxJo4fh1sh4KokBlH1+OYvcKFL9nOuQjnyPu/UOiNLE=
-X-Received: by 2002:a17:907:fd88:b0:ae3:bb0a:1cc6 with SMTP id
- a640c23a62f3a-ae6b0081537mr326467466b.16.1751972897868; Tue, 08 Jul 2025
- 04:08:17 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="KEfM7yE2"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1751973350;
+	bh=cTXLVj7JUWpkARue+ZaTiBfHVgKIJLkJ92pF5TbgWXc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=KEfM7yE2G2IC+3iY/F1dEl6eXfBrXqwz3MBHdr5sn3fLc9xxC7N8ZnflgxTDMsGmZ
+	 82xGx4SI7RdI62GRwdwVx8hi+GewOhB657g+/6D9soFwWS0DY4bpXO2DP3oqpAQb6u
+	 LnBjpM9ieFRmwx8Sq3OJ9hUZLWBmT31jNG8jrjYm6HtHtoS7SeXTqCic7nuk+kdfAp
+	 qEXpvZu7m98oBDO6IzEUdRZKz+vrbwOpZVb3/45GnX/M03uhPoA6zfRUhMLO3PFvKp
+	 AY5D826I33qmNuvLqYO3K8QjyPGtJTBXfK8RQpkl+c6O0hd6lTOuDSljcfwtXZbyUf
+	 3NfYKON8eMIzCnXAwxFgv7jyToeEy6Nq5RYFnFeCvqbsIJeWb1FQELvbn1u2qz7AQ6
+	 7BuExruyhRLIeRAzJQnfGqvr1T3KhESB64rRxa1mCR3M3P3Zv+7OWF8gEXtmtoMIX2
+	 osQ/ScPtvbqOGKphWG8jZCeh574nJrpRwViPm2Fh4KJxFwn7vSZ
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9b33:1455:7422:1bd9])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id AAED52006F;
+	Tue,  8 Jul 2025 11:15:50 +0000 (UTC)
+Date: Tue, 8 Jul 2025 11:15:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Fabio Frumento <frumento.fabio@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Git bash 2.50.0(2) not working on windows 11 PRO 64bit
+Message-ID: <aGz95cpfS0s4zsMc@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Fabio Frumento <frumento.fabio@gmail.com>, git@vger.kernel.org
+References: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250618151821.528627-1-christian.couder@gmail.com>
- <20250619133630.727274-1-christian.couder@gmail.com> <xmqqbjpv1ucb.fsf@gitster.g>
- <CAP8UFD223ja7jKU+wb6TiGkc9frh5dt1rCJkOkk+O+J2MPokrw@mail.gmail.com>
- <xmqqwm8jxoj3.fsf@gitster.g> <aGy82TiRFcij5V_9@pks.im>
-In-Reply-To: <aGy82TiRFcij5V_9@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 8 Jul 2025 13:08:05 +0200
-X-Gm-Features: Ac12FXyP-sDQ9qWnzCBCk135FN137RaFI3hfLub0svGDOgkIh_Hje8-tM2-FJbQ
-Message-ID: <CAP8UFD1A+eV9hbmp4P3pC71+oSTrtLgxtWGyt++J8a+bk497qA@mail.gmail.com>
-Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
- output format
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>, 
-	"brian m . carlson" <sandals@crustytoothpaste.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="pbaT0FlxsaFCaZwR"
+Content-Disposition: inline
+In-Reply-To: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--pbaT0FlxsaFCaZwR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 8, 2025 at 8:38=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrote=
-:
+On 2025-07-07 at 12:18:08, Fabio Frumento wrote:
+> Hi,
 
-> I agree with your points. Overall, a fast response cycle is key to good
-> collaboration from my point of view. I think it not only makes your life
-> as a maintainer easier, but it also makes the reviewer feel like they
-> are being heard and is the prerequisite for good discussion.
+Hi,
 
-I don't agree with "is the prerequisite for good discussion".  I think
-it's perfectly possible to have good long running discussions even
-when people's replies are delayed. And people can have vacations or
-weekends or private issues or work on other things which can delay
-some replies. And when people work significantly for a long time on a
-topic before replying, I really think it can increase the quality of
-the discussion.
+> After upgrading from 2.49 to 2.50 git bash won=E2=80=99t start anymore, a=
+ prompt window shortly appears and close immediately, downgrading to 2.49 s=
+olve the issue
+>=20
+> So 2.50 don=E2=80=99t work on windows 11 Pro
 
-Also if a contributor comes back with improved patches that try to
-follow closely what a reviewer suggested, then I think it can (and
-should) make a reviewer feel like they have really been heard better
-than just a hollow reply right away followed later by less well
-thought out patches.
+The Git project doesn't ship any binaries, only source code, and we
+don't ship bash at all.  The Git for Windows project, however, does ship
+Git bash, and you can report this problem to them at
+https://github.com/git-for-windows/git/issues.
 
-This doesn't mean that I think there is no value in a fast response
-cycle. But I think it depends a lot on the circumstances.
+I would suggest reading the contributor documentation and seeing if you
+can pin down more about why it's not working, since the report as it
+stands seems unlikely to be resolved.  I feel confident that Git for
+Windows 2.50 actually works fine for many people on Windows 11 Pro, so
+the more information you can provide about what might be going on, the
+more likely it is that your bug will be addressed.
 
-Yeah, for someone new in the community I think it can often help a
-lot. And I encourage the contributors I mentor to respond soon.
+Best of luck with your problem.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-When someone has been part of the community for a long time, I think
-it's different though. It can happen, but it's much less likely that
-they are going to disappear tomorrow or otherwise not follow up on
-feedback they got from reviewers.
+--pbaT0FlxsaFCaZwR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-It doesn't mean that I think oldtimers should have some kind of
-privilege, and yeah they should also try to give a good example. But
-we should allow people to not always behave in a very formatted way.
-As I mentioned above and in my reply to Junio, many things outside Git
-development can happen, and people can behave differently, have
-different preferences in the way they work, and especially not like or
-want to switch topics very often for example to keep a better mental
-focus on what they are currently doing.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
-> On our team's handbook page [1] we have the following couple of bullet
-> points regarding how to respond to reviews:
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaGz95AAKCRB8DEliiIei
+gaWoAP9jJ7/HYzAelCbSrNyrsbHFs84esZ4EZn+tRTrY+BqogwD9HowLDK59Kw/R
+Qbe6N2KPPpZ1pWUdVIuXCoHP0IgJRws=
+=BQwz
+-----END PGP SIGNATURE-----
 
-Yeah, I think they are likely to be good for newcomers.
+--pbaT0FlxsaFCaZwR--
