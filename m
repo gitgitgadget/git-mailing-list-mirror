@@ -1,39 +1,39 @@
-Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
+Received: from out-181.mta1.migadu.com (out-181.mta1.migadu.com [95.215.58.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BDA299ABD
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:26:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55FA92E7BB6
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:26:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752074810; cv=none; b=VOC7FW3hZPa+iRlERCYWFy9m3FymqPLfrLQZx/Foer7dlAXZgiGFC7vUeBmpASXGoM76ckdLRo/Prk9QW+Q6/XUhvHOKTnDqQcyYUBu6GoWPIRQy3kMix8eaugavl/y0RxmRKCBexus4PJcFVlZPCVlJLIjzYbrgfmQ810gfTe0=
+	t=1752074813; cv=none; b=AT3KYQfFf46U+jjDI+nAxLg9jFJ5v99UJK316DnyKf1KQxv+t750jABXWUwPBD9UhrlyAbGg6F9oaijqmT1o860b61yNsha0VGtIog9CEy9SzO6QcNYLUF+m8SwFidWgY2dOBK3PHqqi++O1ZplM7Q74hwQlWOLjX/2LUTjLqOI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752074810; c=relaxed/simple;
-	bh=RwYQvJZ0sHHw4QrwR5oZ5gDEAVuvC2tsaR8XrkkIxmg=;
+	s=arc-20240116; t=1752074813; c=relaxed/simple;
+	bh=240sd7ENOVhEHARw4KC8OsEJtkAiebyxurnJj7A6JKA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=enyRjmjq/ioX+vM3so/uJYD/FM2MJplekL7mRLG2IX5pkQs7fuTgmqr4wMVoTeOKbQ03mGWBG8Rp1e0SYyPbn15KSx1Wmj1E0h/iJ+d3khFv2f53r8X9k+W10w7CItrXpNFl7gXfLaKaT1NnR3W91AHCk+q3xS1+14Yji2oXEZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=f9NLGzk2; arc=none smtp.client-ip=91.218.175.182
+	 MIME-Version; b=VGyR4nGaxzz2fC+DdpBNk4/1KHTQH6kqbja+UEyVncLp/xI4CNbg5Z3zv91UyUInLjBJS3yRyFAaO9tQNWrGQIeZUvgSKqjE6z1Gum73IfKXVGyBDKL0b+U0OwNKao5T3B1jfHW0TK4ZqYkl6x5shouva8YQn8+8rERgiqz9dnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=TrwVF+O9; arc=none smtp.client-ip=95.215.58.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="f9NLGzk2"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="TrwVF+O9"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1752074806;
+	t=1752074809;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=no5T5PdcOPLzmUDsovrSMuSHxnmnUo9cvRPYlRu78LA=;
-	b=f9NLGzk2NqwRsz0q6aA7Y/ccBZ2UGOyMpDJPCi+S+NrGIKhy833A6/DqbC5+KB0xf7mijH
-	S/oNDtiyoNZGm+fmWohdwJfQZi9r1Cx4czh/S39BhADaL247ikyL8Te/71z5rL1A1dbDvZ
-	NTiB7KhJ+LB8UlDg/vud7nuHIYdHSaE=
+	bh=tEC4Yjl+0W/ofQ5Ade078o/MKUaeh9LeSilg45Ay164=;
+	b=TrwVF+O9VMta+bL5LbK8SzLxr3/YylpaBlrBbq+Bt7UxOJz9J9JRHYRkWi1/Zbjob+Pcg/
+	BV8gVUP2K3wuA8Xz0SJoQ4KGMUOgeWkjc+XJ3Nz3lcFPAQDHdNgzEycPHHT8JRHk7oCxYb
+	M5e+OICvCFblXIA36rJ6gJg4UBjeuOs=
 From: Toon Claes <toon@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v4 2/3] t/perf: add last-modified perf script
-Date: Wed,  9 Jul 2025 17:26:27 +0200
-Message-ID: <20250709152628.1644521-3-toon@iotcl.com>
+	Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH v4 3/3] last-modified: use Bloom filters when available
+Date: Wed,  9 Jul 2025 17:26:28 +0200
+Message-ID: <20250709152628.1644521-4-toon@iotcl.com>
 In-Reply-To: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
 References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
 Precedence: bulk
@@ -45,57 +45,138 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-This just runs some simple last-modified commands. We already test
-correctness in the regular suite, so this is just about finding
-performance regressions from one version to another.
+Our 'git last-modified' performs a revision walk, and computes a diff at
+each point in the walk to figure out whether a given revision changed
+any of the paths it considers interesting.
 
-Based-on-patch-by: Jeff King <peff@peff.net>
+When changed-path Bloom filters are available, we can avoid computing
+many such diffs. Before computing a diff, we first check if any of the
+remaining paths of interest were possibly changed at a given commit by
+consulting its Bloom filter. If any of them are, we are resigned to
+compute the diff.
+
+If none of those queries returned "maybe", we know that the given commit
+doesn't contain any changed paths which are interesting to us. So, we
+can avoid computing it in this case.
+
+Comparing the perf test results on git.git:
+
+    Test                                        HEAD~             HEAD
+    ------------------------------------------------------------------------------------
+    8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
+    8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
+    8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
+
+Based-on-patch-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- t/meson.build                 |  1 +
- t/perf/p8020-last-modified.sh | 21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+)
- create mode 100755 t/perf/p8020-last-modified.sh
+ builtin/last-modified.c | 45 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 45 insertions(+)
 
-diff --git a/t/meson.build b/t/meson.build
-index eee1863eb3..b41dfc41d7 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -1154,6 +1154,7 @@ benchmarks = [
-   'perf/p7820-grep-engines.sh',
-   'perf/p7821-grep-engines-fixed.sh',
-   'perf/p7822-grep-perl-character.sh',
-+  'perf/p8020-last-modified.sh',
-   'perf/p9210-scalar.sh',
-   'perf/p9300-fast-import-export.sh',
- ]
-diff --git a/t/perf/p8020-last-modified.sh b/t/perf/p8020-last-modified.sh
-new file mode 100755
-index 0000000000..a02ec907d4
---- /dev/null
-+++ b/t/perf/p8020-last-modified.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
+diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+index 63993bc1c9..466df04fba 100644
+--- a/builtin/last-modified.c
++++ b/builtin/last-modified.c
+@@ -1,5 +1,7 @@
+ #include "git-compat-util.h"
++#include "bloom.h"
+ #include "builtin.h"
++#include "commit-graph.h"
+ #include "commit.h"
+ #include "config.h"
+ #include "diff.h"
+@@ -17,6 +19,7 @@
+ struct last_modified_entry {
+ 	struct hashmap_entry hashent;
+ 	struct object_id oid;
++	struct bloom_key key;
+ 	const char path[FLEX_ARRAY];
+ };
+ 
+@@ -40,6 +43,12 @@ struct last_modified {
+ 
+ static void last_modified_release(struct last_modified *lm)
+ {
++	struct hashmap_iter iter;
++	struct last_modified_entry *ent;
 +
-+test_description='last-modified perf tests'
-+. ./perf-lib.sh
++	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent)
++		clear_bloom_key(&ent->key);
 +
-+test_perf_default_repo
+ 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
+ 	release_revisions(&lm->rev);
+ }
+@@ -67,6 +76,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
+ 
+ 		FLEX_ALLOC_STR(ent, path, path);
+ 		oidcpy(&ent->oid, &p->two->oid);
++		if (lm->rev.bloom_filter_settings)
++			fill_bloom_key(path, strlen(path), &ent->key,
++				       lm->rev.bloom_filter_settings);
+ 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
+ 		hashmap_add(&lm->paths, &ent->hashent);
+ 	}
+@@ -126,6 +138,7 @@ static void mark_path(const char *path, const struct object_id *oid,
+ 		data->callback(path, data->commit, data->callback_data);
+ 
+ 	hashmap_remove(data->paths, &ent->hashent, path);
++	clear_bloom_key(&ent->key);
+ 	free(ent);
+ }
+ 
+@@ -169,6 +182,28 @@ static void last_modified_diff(struct diff_queue_struct *q,
+ 	}
+ }
+ 
 +
-+test_perf 'top-level last-modified' '
-+	git last-modified HEAD
-+'
++static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
++{
++	struct bloom_filter *filter;
++	struct last_modified_entry *ent;
++	struct hashmap_iter iter;
 +
-+test_perf 'top-level recursive last-modified' '
-+	git last-modified -r HEAD
-+'
++	if (!lm->rev.bloom_filter_settings)
++		return 1;
 +
-+test_perf 'subdir last-modified' '
-+	path=$(git ls-tree HEAD | grep ^040000 | head -n 1 | cut -f2)
-+	git last-modified -r HEAD -- "$path"
-+'
++	filter = get_bloom_filter(lm->rev.repo, origin);
++	if (!filter)
++		return 1;
 +
-+test_done
++	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
++		if (bloom_filter_contains(filter, &ent->key,
++					  lm->rev.bloom_filter_settings))
++			return 1;
++	}
++	return 0;
++}
++
+ static int last_modified_run(struct last_modified *lm,
+ 			     last_modified_callback cb, void *cbdata)
+ {
+@@ -189,6 +224,9 @@ static int last_modified_run(struct last_modified *lm,
+ 		if (!data.commit)
+ 			break;
+ 
++		if (!maybe_changed_path(lm, data.commit))
++			continue;
++
+ 		if (data.commit->object.flags & BOUNDARY) {
+ 			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+ 				      &data.commit->object.oid, "",
+@@ -238,6 +276,13 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
+ 		return argc;
+ 	}
+ 
++	/*
++	 * We're not interested in generation numbers here,
++	 * but calling this function to prepare the commit-graph.
++	 */
++	(void)generation_numbers_enabled(lm->rev.repo);
++	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
++
+ 	if (populate_paths_from_revs(lm) < 0)
+ 		return error(_("unable to setup last-modified"));
+ 
 -- 
 2.50.0.rc0.18.gfcfe60668e
 
