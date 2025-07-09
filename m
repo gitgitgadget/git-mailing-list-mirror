@@ -1,40 +1,39 @@
 Received: from out-182.mta0.migadu.com (out-182.mta0.migadu.com [91.218.175.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54BF92E7655
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92BDA299ABD
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:26:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752074810; cv=none; b=rck0D1sEP/HqaUchj9GV1hQEDJ/KrnXS+eJg4vWNHaAbTEunHbjiYA/kJR8a6+TFA1zqjltPWwuAjUuc2K7gZTSDwmW5ZBD4OomLifDhqXUSds9VmElOxmPZCqebWipn4kQeIMYQV8SiPGF/E9YJnvGt3j/iNQH7sJzK5A/rRg4=
+	t=1752074810; cv=none; b=VOC7FW3hZPa+iRlERCYWFy9m3FymqPLfrLQZx/Foer7dlAXZgiGFC7vUeBmpASXGoM76ckdLRo/Prk9QW+Q6/XUhvHOKTnDqQcyYUBu6GoWPIRQy3kMix8eaugavl/y0RxmRKCBexus4PJcFVlZPCVlJLIjzYbrgfmQ810gfTe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752074810; c=relaxed/simple;
-	bh=VNpYgZRMwLqGltszNS1/Edj+sbu81QNwO3WtWsGezTI=;
+	bh=RwYQvJZ0sHHw4QrwR5oZ5gDEAVuvC2tsaR8XrkkIxmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P31pwEDfESTjMOYL2HHJMVm/qxtHDXUiZrlxpdcIsqwK0nxeVGmBmLv1uHmOjT0JIerkvuyy6WG4eUSFhjcEJ2ph3M+IzskeBz97NiYFH53v17d4VUxAGe1P46mMUMst43YNMgJRBd7FyYF6Gjly6IQMhOTgcUXB674zIEcswUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=RYn8lcQG; arc=none smtp.client-ip=91.218.175.182
+	 MIME-Version; b=enyRjmjq/ioX+vM3so/uJYD/FM2MJplekL7mRLG2IX5pkQs7fuTgmqr4wMVoTeOKbQ03mGWBG8Rp1e0SYyPbn15KSx1Wmj1E0h/iJ+d3khFv2f53r8X9k+W10w7CItrXpNFl7gXfLaKaT1NnR3W91AHCk+q3xS1+14Yji2oXEZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=f9NLGzk2; arc=none smtp.client-ip=91.218.175.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="RYn8lcQG"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="f9NLGzk2"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1752074803;
+	t=1752074806;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=xKIRVYFN3DQT2htRqVt7h7QtT1uMtTyxxL8IQAarQOM=;
-	b=RYn8lcQG3A79IA9IZsUVGOwE1f6hfHzQuaVREmgwjtlLdX/wprKf+j021kot+c2/vWyOps
-	PyhSOj/1PVnVrQvF8lnd7xLiuQ3NIPomqKkua598sXQEyJVPK9y+EefNmpFEDz1u4RQBVS
-	UsqC69XcjX+zxv5WFJ1Av1cvV9Mc3C0=
+	bh=no5T5PdcOPLzmUDsovrSMuSHxnmnUo9cvRPYlRu78LA=;
+	b=f9NLGzk2NqwRsz0q6aA7Y/ccBZ2UGOyMpDJPCi+S+NrGIKhy833A6/DqbC5+KB0xf7mijH
+	S/oNDtiyoNZGm+fmWohdwJfQZi9r1Cx4czh/S39BhADaL247ikyL8Te/71z5rL1A1dbDvZ
+	NTiB7KhJ+LB8UlDg/vud7nuHIYdHSaE=
 From: Toon Claes <toon@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>,
-	Jeff King <peff@peff.net>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
-Subject: [PATCH v4 1/3] last-modified: new subcommand to show when files were last modified
-Date: Wed,  9 Jul 2025 17:26:26 +0200
-Message-ID: <20250709152628.1644521-2-toon@iotcl.com>
+	Jeff King <peff@peff.net>
+Subject: [PATCH v4 2/3] t/perf: add last-modified perf script
+Date: Wed,  9 Jul 2025 17:26:27 +0200
+Message-ID: <20250709152628.1644521-3-toon@iotcl.com>
 In-Reply-To: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
 References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
 Precedence: bulk
@@ -43,690 +42,57 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Similar to git-blame(1), introduce a new subcommand
-git-last-modified(1). This command shows the most recent modification to
-paths in a tree. It does so by expanding the tree at a given commit,
-taking note of the current state of each path, and then walking
-backwards through history looking for commits where each path changed
-into its final commit ID.
+This just runs some simple last-modified commands. We already test
+correctness in the regular suite, so this is just about finding
+performance regressions from one version to another.
 
 Based-on-patch-by: Jeff King <peff@peff.net>
-Improved-by: Ævar Arnfjörð Bjarmason <avarab@gmail.com>
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- .gitignore                           |   1 +
- Documentation/git-last-modified.adoc |  49 +++++
- Documentation/meson.build            |   1 +
- Makefile                             |   1 +
- builtin.h                            |   1 +
- builtin/last-modified.c              | 289 +++++++++++++++++++++++++++
- command-list.txt                     |   1 +
- git.c                                |   1 +
- meson.build                          |   1 +
- t/meson.build                        |   1 +
- t/t8020-last-modified.sh             | 204 +++++++++++++++++++
- 11 files changed, 550 insertions(+)
- create mode 100644 Documentation/git-last-modified.adoc
- create mode 100644 builtin/last-modified.c
- create mode 100755 t/t8020-last-modified.sh
+ t/meson.build                 |  1 +
+ t/perf/p8020-last-modified.sh | 21 +++++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+ create mode 100755 t/perf/p8020-last-modified.sh
 
-diff --git a/.gitignore b/.gitignore
-index 04c444404e..a36ee94443 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -87,6 +87,7 @@
- /git-init-db
- /git-interpret-trailers
- /git-instaweb
-+/git-last-modified
- /git-log
- /git-ls-files
- /git-ls-remote
-diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
-new file mode 100644
-index 0000000000..89138ebeb7
---- /dev/null
-+++ b/Documentation/git-last-modified.adoc
-@@ -0,0 +1,49 @@
-+git-last-modified(1)
-+====================
-+
-+NAME
-+----
-+git-last-modified - EXPERIMENTAL: Show when files were last modified
-+
-+
-+SYNOPSIS
-+--------
-+[synopsis]
-+git last-modified [-r] [-t] [<revision-range>] [[--] <path>...]
-+
-+DESCRIPTION
-+-----------
-+
-+Shows which commit last modified each of the relevant files and subdirectories.
-+
-+THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-+
-+OPTIONS
-+-------
-+
-+-r::
-+	Recurse into subtrees.
-+
-+-t::
-+	Show tree entry itself as well as subtrees.  Implies `-r`.
-+
-+<revision-range>::
-+	Only traverse commits in the specified revision range. When no
-+	`<revision-range>` is specified, it defaults to `HEAD` (i.e. the whole
-+	history leading to the current commit). For a complete list of ways to
-+	spell `<revision-range>`, see the 'Specifying Ranges' section of
-+	linkgit:gitrevisions[7].
-+
-+[--] <path>...::
-+	For each _<path>_ given, the commit which last modified it is returned.
-+	Without an optional path parameter, all files and subdirectories
-+	in path traversal the are included in the output.
-+
-+SEE ALSO
-+--------
-+linkgit:git-blame[1],
-+linkgit:git-log[1].
-+
-+GIT
-+---
-+Part of the linkgit:git[1] suite
-diff --git a/Documentation/meson.build b/Documentation/meson.build
-index 2fe1a1369d..99aeb6d0e0 100644
---- a/Documentation/meson.build
-+++ b/Documentation/meson.build
-@@ -74,6 +74,7 @@ manpages = {
-   'git-init.adoc' : 1,
-   'git-instaweb.adoc' : 1,
-   'git-interpret-trailers.adoc' : 1,
-+  'git-last-modified.adoc' : 1,
-   'git-log.adoc' : 1,
-   'git-ls-files.adoc' : 1,
-   'git-ls-remote.adoc' : 1,
-diff --git a/Makefile b/Makefile
-index 70d1543b6b..11bf4fb55a 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1267,6 +1267,7 @@ BUILTIN_OBJS += builtin/hook.o
- BUILTIN_OBJS += builtin/index-pack.o
- BUILTIN_OBJS += builtin/init-db.o
- BUILTIN_OBJS += builtin/interpret-trailers.o
-+BUILTIN_OBJS += builtin/last-modified.o
- BUILTIN_OBJS += builtin/log.o
- BUILTIN_OBJS += builtin/ls-files.o
- BUILTIN_OBJS += builtin/ls-remote.o
-diff --git a/builtin.h b/builtin.h
-index bff13e3069..6ed6759ec4 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -176,6 +176,7 @@ int cmd_hook(int argc, const char **argv, const char *prefix, struct repository
- int cmd_index_pack(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_init_db(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_interpret_trailers(int argc, const char **argv, const char *prefix, struct repository *repo);
-+int cmd_last_modified(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_log_reflog(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_log(int argc, const char **argv, const char *prefix, struct repository *repo);
- int cmd_ls_files(int argc, const char **argv, const char *prefix, struct repository *repo);
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-new file mode 100644
-index 0000000000..63993bc1c9
---- /dev/null
-+++ b/builtin/last-modified.c
-@@ -0,0 +1,289 @@
-+#include "git-compat-util.h"
-+#include "builtin.h"
-+#include "commit.h"
-+#include "config.h"
-+#include "diff.h"
-+#include "diffcore.h"
-+#include "hashmap.h"
-+#include "hex.h"
-+#include "log-tree.h"
-+#include "object-name.h"
-+#include "object.h"
-+#include "parse-options.h"
-+#include "quote.h"
-+#include "repository.h"
-+#include "revision.h"
-+
-+struct last_modified_entry {
-+	struct hashmap_entry hashent;
-+	struct object_id oid;
-+	const char path[FLEX_ARRAY];
-+};
-+
-+static int last_modified_entry_hashcmp(const void *unused UNUSED,
-+				       const struct hashmap_entry *hent1,
-+				       const struct hashmap_entry *hent2,
-+				       const void *path)
-+{
-+	const struct last_modified_entry *ent1 =
-+		container_of(hent1, const struct last_modified_entry, hashent);
-+	const struct last_modified_entry *ent2 =
-+		container_of(hent2, const struct last_modified_entry, hashent);
-+	return strcmp(ent1->path, path ? path : ent2->path);
-+}
-+
-+struct last_modified {
-+	struct hashmap paths;
-+	struct rev_info rev;
-+	int recursive, tree_in_recursive;
-+};
-+
-+static void last_modified_release(struct last_modified *lm)
-+{
-+	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
-+	release_revisions(&lm->rev);
-+}
-+
-+typedef void (*last_modified_callback)(const char *path,
-+				       const struct commit *commit, void *data);
-+
-+struct last_modified_callback_data {
-+	struct commit *commit;
-+	struct hashmap *paths;
-+
-+	last_modified_callback callback;
-+	void *callback_data;
-+};
-+
-+static void add_path_from_diff(struct diff_queue_struct *q,
-+			       struct diff_options *opt UNUSED, void *data)
-+{
-+	struct last_modified *lm = data;
-+
-+	for (int i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		struct last_modified_entry *ent;
-+		const char *path = p->two->path;
-+
-+		FLEX_ALLOC_STR(ent, path, path);
-+		oidcpy(&ent->oid, &p->two->oid);
-+		hashmap_entry_init(&ent->hashent, strhash(ent->path));
-+		hashmap_add(&lm->paths, &ent->hashent);
-+	}
-+}
-+
-+static int populate_paths_from_revs(struct last_modified *lm)
-+{
-+	int num_interesting = 0;
-+	struct diff_options diffopt;
-+
-+	memcpy(&diffopt, &lm->rev.diffopt, sizeof(diffopt));
-+	copy_pathspec(&diffopt.pathspec, &lm->rev.diffopt.pathspec);
-+	/*
-+	 * Use a callback to populate the paths from revs
-+	 */
-+	diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	diffopt.format_callback = add_path_from_diff;
-+	diffopt.format_callback_data = lm;
-+
-+	for (size_t i = 0; i < lm->rev.pending.nr; i++) {
-+		struct object_array_entry *obj = lm->rev.pending.objects + i;
-+
-+		if (obj->item->flags & UNINTERESTING)
-+			continue;
-+
-+		if (num_interesting++)
-+			return error(_("can only get last-modified one tree at a time"));
-+
-+		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
-+			      &obj->item->oid, "", &diffopt);
-+		diff_flush(&diffopt);
-+	}
-+	diff_free(&diffopt);
-+
-+	return 0;
-+}
-+
-+static void mark_path(const char *path, const struct object_id *oid,
-+		      struct last_modified_callback_data *data)
-+{
-+	struct last_modified_entry *ent;
-+
-+	/* Is it even a path that we are interested in? */
-+	ent = hashmap_get_entry_from_hash(data->paths, strhash(path), path,
-+					  struct last_modified_entry, hashent);
-+	if (!ent)
-+		return;
-+
-+	/*
-+	 * Is it arriving at a version of interest, or is it from a side branch
-+	 * which did not contribute to the final state?
-+	 */
-+	if (!oideq(oid, &ent->oid))
-+		return;
-+
-+	if (data->callback)
-+		data->callback(path, data->commit, data->callback_data);
-+
-+	hashmap_remove(data->paths, &ent->hashent, path);
-+	free(ent);
-+}
-+
-+static void last_modified_diff(struct diff_queue_struct *q,
-+			       struct diff_options *opt UNUSED, void *cbdata)
-+{
-+	struct last_modified_callback_data *data = cbdata;
-+
-+	for (int i = 0; i < q->nr; i++) {
-+		struct diff_filepair *p = q->queue[i];
-+		switch (p->status) {
-+		case DIFF_STATUS_DELETED:
-+			/*
-+			 * There's no point in feeding a deletion, as it could
-+			 * not have resulted in our current state, which
-+			 * actually has the file.
-+			 */
-+			break;
-+
-+		default:
-+			/*
-+			 * Otherwise, we care only that we somehow arrived at
-+			 * a final oid state. Note that this covers some
-+			 * potentially controversial areas, including:
-+			 *
-+			 *  1. A rename or copy will be found, as it is the
-+			 *     first time the content has arrived at the given
-+			 *     path.
-+			 *
-+			 *  2. Even a non-content modification like a mode or
-+			 *     type change will trigger it.
-+			 *
-+			 * We take the inclusive approach for now, and find
-+			 * anything which impacts the path. Options to tweak
-+			 * the behavior (e.g., to "--follow" the content across
-+			 * renames) can come later.
-+			 */
-+			mark_path(p->two->path, &p->two->oid, data);
-+			break;
-+		}
-+	}
-+}
-+
-+static int last_modified_run(struct last_modified *lm,
-+			     last_modified_callback cb, void *cbdata)
-+{
-+	struct last_modified_callback_data data;
-+
-+	data.paths = &lm->paths;
-+	data.callback = cb;
-+	data.callback_data = cbdata;
-+
-+	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
-+	lm->rev.diffopt.format_callback = last_modified_diff;
-+	lm->rev.diffopt.format_callback_data = &data;
-+
-+	prepare_revision_walk(&lm->rev);
-+
-+	while (hashmap_get_size(&lm->paths)) {
-+		data.commit = get_revision(&lm->rev);
-+		if (!data.commit)
-+			break;
-+
-+		if (data.commit->object.flags & BOUNDARY) {
-+			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
-+				      &data.commit->object.oid, "",
-+				      &lm->rev.diffopt);
-+			diff_flush(&lm->rev.diffopt);
-+		} else {
-+			log_tree_commit(&lm->rev, data.commit);
-+		}
-+	}
-+
-+	return 0;
-+}
-+
-+static void show_entry(const char *path, const struct commit *commit, void *d)
-+{
-+	struct last_modified *lm = d;
-+
-+	if (commit->object.flags & BOUNDARY)
-+		putchar('^');
-+	printf("%s\t", oid_to_hex(&commit->object.oid));
-+
-+	if (lm->rev.diffopt.line_termination)
-+		write_name_quoted(path, stdout, '\n');
-+	else
-+		printf("%s%c", path, '\0');
-+
-+	fflush(stdout);
-+}
-+
-+static int last_modified_init(struct last_modified *lm, struct repository *r,
-+			      const char *prefix, int argc, const char **argv)
-+{
-+	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
-+
-+	repo_init_revisions(r, &lm->rev, prefix);
-+	lm->rev.def = "HEAD";
-+	lm->rev.combine_merges = 1;
-+	lm->rev.show_root_diff = 1;
-+	lm->rev.boundary = 1;
-+	lm->rev.no_commit_id = 1;
-+	lm->rev.diff = 1;
-+	lm->rev.diffopt.flags.recursive = lm->recursive || lm->tree_in_recursive;
-+	lm->rev.diffopt.flags.tree_in_recursive = lm->tree_in_recursive;
-+
-+	if ((argc = setup_revisions(argc, argv, &lm->rev, NULL)) > 1) {
-+		error(_("unknown last-modified argument: %s"), argv[1]);
-+		return argc;
-+	}
-+
-+	if (populate_paths_from_revs(lm) < 0)
-+		return error(_("unable to setup last-modified"));
-+
-+	return 0;
-+}
-+
-+int cmd_last_modified(int argc, const char **argv, const char *prefix,
-+		      struct repository *repo)
-+{
-+	int ret;
-+	struct last_modified lm;
-+
-+	const char * const last_modified_usage[] = {
-+		N_("git last-modified [-r] [-t] "
-+		   "[<revision-range>] [[--] <path>...]"),
-+		NULL
-+	};
-+
-+	struct option last_modified_options[] = {
-+		OPT_BOOL('r', "recursive", &lm.recursive,
-+			 N_("recurse into subtrees")),
-+		OPT_BOOL('t', "tree-in-recursive", &lm.tree_in_recursive,
-+			 N_("recurse into subtrees and include the tree entries too")),
-+		OPT_END()
-+	};
-+
-+	memset(&lm, 0, sizeof(lm));
-+
-+	argc = parse_options(argc, argv, prefix, last_modified_options,
-+			     last_modified_usage,
-+			     PARSE_OPT_KEEP_ARGV0 | PARSE_OPT_KEEP_UNKNOWN_OPT);
-+
-+	repo_config(repo, git_default_config, NULL);
-+
-+	if ((ret = last_modified_init(&lm, repo, prefix, argc, argv))) {
-+		if (ret > 0)
-+			usage_with_options(last_modified_usage,
-+					   last_modified_options);
-+		goto out;
-+	}
-+
-+	if ((ret = last_modified_run(&lm, show_entry, &lm)))
-+		goto out;
-+
-+out:
-+	last_modified_release(&lm);
-+
-+	return ret;
-+}
-diff --git a/command-list.txt b/command-list.txt
-index b7ade3ab9f..b715777b24 100644
---- a/command-list.txt
-+++ b/command-list.txt
-@@ -124,6 +124,7 @@ git-index-pack                          plumbingmanipulators
- git-init                                mainporcelain           init
- git-instaweb                            ancillaryinterrogators          complete
- git-interpret-trailers                  purehelpers
-+git-last-modified                       plumbinginterrogators
- git-log                                 mainporcelain           info
- git-ls-files                            plumbinginterrogators
- git-ls-remote                           plumbinginterrogators
-diff --git a/git.c b/git.c
-index 07a5fe39fb..76a0b2a1a4 100644
---- a/git.c
-+++ b/git.c
-@@ -565,6 +565,7 @@ static struct cmd_struct commands[] = {
- 	{ "init", cmd_init_db },
- 	{ "init-db", cmd_init_db },
- 	{ "interpret-trailers", cmd_interpret_trailers, RUN_SETUP_GENTLY },
-+	{ "last-modified", cmd_last_modified, RUN_SETUP },
- 	{ "log", cmd_log, RUN_SETUP },
- 	{ "ls-files", cmd_ls_files, RUN_SETUP },
- 	{ "ls-remote", cmd_ls_remote, RUN_SETUP_GENTLY },
-diff --git a/meson.build b/meson.build
-index 7fea4a34d6..a45608f0a4 100644
---- a/meson.build
-+++ b/meson.build
-@@ -607,6 +607,7 @@ builtin_sources = [
-   'builtin/index-pack.c',
-   'builtin/init-db.c',
-   'builtin/interpret-trailers.c',
-+  'builtin/last-modified.c',
-   'builtin/log.c',
-   'builtin/ls-files.c',
-   'builtin/ls-remote.c',
 diff --git a/t/meson.build b/t/meson.build
-index 6d7fe6b117..eee1863eb3 100644
+index eee1863eb3..b41dfc41d7 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -961,6 +961,7 @@ integration_tests = [
-   't8012-blame-colors.sh',
-   't8013-blame-ignore-revs.sh',
-   't8014-blame-ignore-fuzzy.sh',
-+  't8020-last-modified.sh',
-   't9001-send-email.sh',
-   't9002-column.sh',
-   't9003-help-autocorrect.sh',
-diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
+@@ -1154,6 +1154,7 @@ benchmarks = [
+   'perf/p7820-grep-engines.sh',
+   'perf/p7821-grep-engines-fixed.sh',
+   'perf/p7822-grep-perl-character.sh',
++  'perf/p8020-last-modified.sh',
+   'perf/p9210-scalar.sh',
+   'perf/p9300-fast-import-export.sh',
+ ]
+diff --git a/t/perf/p8020-last-modified.sh b/t/perf/p8020-last-modified.sh
 new file mode 100755
-index 0000000000..921d2a0807
+index 0000000000..a02ec907d4
 --- /dev/null
-+++ b/t/t8020-last-modified.sh
-@@ -0,0 +1,204 @@
++++ b/t/perf/p8020-last-modified.sh
+@@ -0,0 +1,21 @@
 +#!/bin/sh
 +
-+test_description='last-modified tests'
++test_description='last-modified perf tests'
++. ./perf-lib.sh
 +
-+. ./test-lib.sh
++test_perf_default_repo
 +
-+test_expect_success 'setup' '
-+	test_commit 1 file &&
-+	mkdir a &&
-+	test_commit 2 a/file &&
-+	mkdir a/b &&
-+	test_commit 3 a/b/file
++test_perf 'top-level last-modified' '
++	git last-modified HEAD
 +'
 +
-+test_expect_success 'cannot run last-modified on two trees' '
-+	test_must_fail git last-modified HEAD HEAD~1
++test_perf 'top-level recursive last-modified' '
++	git last-modified -r HEAD
 +'
 +
-+check_last_modified() {
-+	local indir= &&
-+	while test $# != 0
-+	do
-+		case "$1" in
-+		-C)
-+			indir="$2"
-+			shift
-+			;;
-+		*)
-+			break
-+			;;
-+		esac &&
-+		shift
-+	done &&
-+
-+	cat >expect &&
-+	test_when_finished "rm -f tmp.*" &&
-+	git ${indir:+-C "$indir"} last-modified "$@" >tmp.1 &&
-+	git name-rev --annotate-stdin --name-only --tags \
-+		<tmp.1 >tmp.2 &&
-+	tr '\t' ' ' <tmp.2 >tmp.3 &&
-+	sort tmp.3 >actual &&
-+	test_cmp expect actual
-+}
-+
-+test_expect_success 'last-modified non-recursive' '
-+	check_last_modified <<-\EOF
-+	1 file
-+	3 a
-+	EOF
-+'
-+
-+test_expect_success 'last-modified recursive' '
-+	check_last_modified -r <<-\EOF
-+	1 file
-+	2 a/file
-+	3 a/b/file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified recursive with tree' '
-+	check_last_modified -t <<-\EOF
-+	1 file
-+	2 a/file
-+	3 a
-+	3 a/b
-+	3 a/b/file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified subdir' '
-+	check_last_modified a <<-\EOF
-+	3 a
-+	EOF
-+'
-+
-+test_expect_success 'last-modified subdir recursive' '
-+	check_last_modified -r a <<-\EOF
-+	2 a/file
-+	3 a/b/file
-+	EOF
-+'
-+
-+test_expect_success 'last-modified from non-HEAD commit' '
-+	check_last_modified HEAD^ <<-\EOF
-+	1 file
-+	2 a
-+	EOF
-+'
-+
-+test_expect_success 'last-modified from subdir defaults to root' '
-+	check_last_modified -C a <<-\EOF
-+	1 file
-+	3 a
-+	EOF
-+'
-+
-+test_expect_success 'last-modified from subdir uses relative pathspecs' '
-+	check_last_modified -C a -r b <<-\EOF
-+	3 a/b/file
-+	EOF
-+'
-+
-+test_expect_success 'limit last-modified traversal by count' '
-+	check_last_modified -1 <<-\EOF
-+	3 a
-+	^2 file
-+	EOF
-+'
-+
-+test_expect_success 'limit last-modified traversal by commit' '
-+	check_last_modified HEAD~2..HEAD <<-\EOF
-+	3 a
-+	^1 file
-+	EOF
-+'
-+
-+test_expect_success 'only last-modified files in the current tree' '
-+	git rm -rf a &&
-+	git commit -m "remove a" &&
-+	check_last_modified <<-\EOF
-+	1 file
-+	EOF
-+'
-+
-+test_expect_success 'cross merge boundaries in blaming' '
-+	git checkout HEAD^0 &&
-+	git rm -rf . &&
-+	test_commit m1 &&
-+	git checkout HEAD^ &&
-+	git rm -rf . &&
-+	test_commit m2 &&
-+	git merge m1 &&
-+	check_last_modified <<-\EOF
-+	m1 m1.t
-+	m2 m2.t
-+	EOF
-+'
-+
-+test_expect_success 'last-modified merge for resolved conflicts' '
-+	git checkout HEAD^0 &&
-+	git rm -rf . &&
-+	test_commit c1 conflict &&
-+	git checkout HEAD^ &&
-+	git rm -rf . &&
-+	test_commit c2 conflict &&
-+	test_must_fail git merge c1 &&
-+	test_commit resolved conflict &&
-+	check_last_modified conflict <<-\EOF
-+	resolved conflict
-+	EOF
-+'
-+
-+
-+# Consider `file` with this content through history:
-+#
-+# A---B---B-------B---B
-+#          \     /
-+#           C---D
-+test_expect_success 'last-modified merge ignores content from branch' '
-+	git checkout HEAD^0 &&
-+	git rm -rf . &&
-+	test_commit a1 file A &&
-+	test_commit a2 file B &&
-+	test_commit a3 file C &&
-+	test_commit a4 file D &&
-+	git checkout a2 &&
-+	git merge --no-commit --no-ff a4 &&
-+	git checkout a2 -- file &&
-+	git merge --continue &&
-+	check_last_modified <<-\EOF
-+	a2 file
-+	EOF
-+'
-+
-+# Consider `file` with this content through history:
-+#
-+#  A---B---B---C---D---B---B
-+#           \         /
-+#            B-------B
-+test_expect_success 'last-modified merge undoes changes' '
-+	git checkout HEAD^0 &&
-+	git rm -rf . &&
-+	test_commit b1 file A &&
-+	test_commit b2 file B &&
-+	test_commit b3 file C &&
-+	test_commit b4 file D &&
-+	git checkout b2 &&
-+	test_commit b5 file2 2 &&
-+	git checkout b4 &&
-+	git merge --no-commit --no-ff b5 &&
-+	git checkout b2 -- file &&
-+	git merge --continue &&
-+	check_last_modified <<-\EOF
-+	b2 file
-+	b5 file2
-+	EOF
-+'
-+
-+test_expect_success 'last-modified complains about unknown arguments' '
-+	test_must_fail git last-modified --foo 2>err &&
-+	grep "unknown last-modified argument: --foo" err
++test_perf 'subdir last-modified' '
++	path=$(git ls-tree HEAD | grep ^040000 | head -n 1 | cut -f2)
++	git last-modified -r HEAD -- "$path"
 +'
 +
 +test_done
