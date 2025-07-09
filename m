@@ -1,65 +1,64 @@
-Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A565C286D66
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:38:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0EA286D6E
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752053885; cv=none; b=NrMSLFyYeQ6kJYE8W4Kb5Q/yLMw3fgF2qQTb7GAgPbDvNzzCFWYoE1vJY7yx+DsC/OTgYvXXzoXxSqRVj/s1y5Ho3EXgWB4dLcc9SrUIuTVE1nX/WofcmKqYqrFgsvZQIxnQYxJ2RjOU3TUSZhE7Euibh7xyhM55mgwmusRl4Fs=
+	t=1752053905; cv=none; b=PwFu6GBzBDmO0YgZ5OyOyGiva3/FZyDTnq1TH1K7934didT9wY+O0cmJQYMIlDHNGN6rWIpNQw73KnhY2q66rZ2mxmQv7OO/RH6FbChWgU2SggeSrkFV5fw2qhWU5+wN1elkeURQfRxdEYLx71Rw6nvUGoyM/XhaPxzADHkt7TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752053885; c=relaxed/simple;
-	bh=EvZBEuxFH/aKLgL4TF/Y5eqROzMjcgESCk53W9QQMRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=LhSX9ZSe57hhTztoX/RrP5NPiEeVDqHwC082nfay0xDZQintFOKBtCS9CKViYLZC122qWOE999JCTvk87JhJMD6VnQcebKwt8O2qexpF8+hbcD6neNidY8OWFwhabbDOlXfTmAfmjM9L0SjHk27xYZCX5K2jZP7xnBC+ZOhVeKc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ThbubNL6; arc=none smtp.client-ip=209.85.221.46
+	s=arc-20240116; t=1752053905; c=relaxed/simple;
+	bh=IVNFVWlJi2m6H7yBTtschwIjRrYVe1auBk9KT8XCvN4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=baOZqTliu8kfTip/ercfvMBsScnKkgvn8w9o7r1eBz4UuFcXRu1WwVHChYZ0LixA+tpR5fy4PFBBFSsSqw/fA+oRjK4JriEgJV9L217Hlv7aICl1OOdhzys5IxwHhQVUg0V3uqI1w+BF0P9e6aipU5VtU3vUO3yOZRaStQg0rpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OOykRudT; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ThbubNL6"
-Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a6f2c6715fso4769880f8f.1
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 02:38:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OOykRudT"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-450cb2ddd46so29152435e9.2
+        for <git@vger.kernel.org>; Wed, 09 Jul 2025 02:38:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752053882; x=1752658682; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=T1cuV2fkBwMr2gF+3/wGXtc4XUWI7BnRb/KycLZHo3M=;
-        b=ThbubNL6u7weu0FU9kK7+WW5RIf0Qnk1us43ey5xoK8WX79hX5m7VDbE7dcY4wQdHh
-         TULst2u8UNq6nXnWa912uF27y31B8okX0Scw2vTZeCaf6P1JTvDi3T7tiOpa3Mk/q2oO
-         axwzINO/XW+Rb6l+jTYYxrSFaNzZZCO6fNqVvr6O5LOkoi6UEieT2B8v1CATeohxCLTP
-         DyOsw6Yi/9ixJcf1arqdyzeE5G0VVnk/B3/TJvNKNapWsVIpJ7Tso2Cw0Xv+/8waUYNh
-         ITmqO/wsiVzbEHC34uf4+X5VmZWmxuN8RqiOzAEvm0HV7kPkvUsIzZ2zju5+wkdSc+cH
-         7LTw==
+        d=gmail.com; s=20230601; t=1752053901; x=1752658701; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=5LIV0+ddN7Jz+LXwbtgQsFw4OsAYOlAkrXPy6mp6u8I=;
+        b=OOykRudTdPNi1pmvaFANZkweqxa8h+32Q//XLH0bIVRpGX1uKgJmWBD6UB2bjrah08
+         7EneSP4+8bMKUQfH1vMuf+8CmUL6rDH0Jiqu8DxTA/Wdd3VfGheHFQT6M2xKwgobuJ7O
+         WqME7KLvk5dwCbz44Fn6V8HRLuuICGI/7K26PdeYt9/MyRA2M/bksRS64yap7Evv7Fob
+         ikMj6L0+hjMsrM0vXn4JIWHsobPVqZu9RHd8tKVlwRdJ5AVSX9nToC50sDCbZ88SYCpQ
+         sUHjWB+B61cWbZbGAnKnm+9vy2twMqB0GJJJ+sMO6t8HV/HftCJbtVusyMSUmsKzowoN
+         GpHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752053882; x=1752658682;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T1cuV2fkBwMr2gF+3/wGXtc4XUWI7BnRb/KycLZHo3M=;
-        b=Bus1eISE8esXFdR7+9T753PAQ9hRtDvZOadiSWFcXSLhqPIayL7LecvgnWo4dweZAG
-         tma8cV0RTpSAbJzEOzVBskyZ2y7t2F5xCcXDf5cQhcFRsnramHqNIPLJNBjS3rMsm+Qp
-         dXS8dTdPbPMbD7d5zatHbip3gIuko0rktPJsnnyF2DvCj94mkjuY+h477qhR7XChKT+q
-         4UfPCNF9VyaDOoE4gFeEFcLfpjxtRDzlHCabHL+cDOqyqDReK2IO0dpFs2fUvWyQ1l+H
-         SxUsSvqyUcjJ57OIZL2cpFSSbZLYqfwjWhWIlWE78OmGnE7sDO8t6csKhjDhHjfMRrC+
-         VqOw==
-X-Gm-Message-State: AOJu0Yx5ovaLIwEqbJbmCqUecdIneUDDYaTBLkiLNQBmsdrKz8E3iRcA
-	p4shtZxT/kHoGMv9s+BivysAULo/EMYNk0U95ZFgSL8bB6QoUaGSYryPzdRW1Q==
-X-Gm-Gg: ASbGncvUkAwtF57FB2mlxVTRcvtXHk7jW3lENHNC6/gq9+bOHG2UhlPdrXZmYg/j5K2
-	nmDDSDyeXzDf0PqY4urL5Pf9I12XqHX1pE+6wczVgte5w65SJQT2TAJ5n1MOqN+d97mJE6WrGqo
-	kFnIIokEvqAkgfkvjl3o5ijhieFFH5ftVUAJ7Kr2nbCseeVq9bufCMKoZ/0PWD01GFg2R1JVrNO
-	1x8RrUq+9DcLbw14MW9QGro4j/2VEIk2x3bndZjKZH9FlRX9JJVyS1JRE/pjzGizn+/VK/hTz52
-	VymkPFNW0KiPW9UXWCp8IWlrmC6myNYLGPCxYSoXFpSXrrv4LKLFrWmbmlqpJEXoDTtaK9B0CAv
-	Kfub+V6RzgaSvuPJbVlSkOs8H43PlJF95An7psw==
-X-Google-Smtp-Source: AGHT+IE8v5+PvLw3UYMbX0LHMEyrTJL4HjmZTnqczIWBdZn/pnirwOSXWtZHfnRKYdfXftftlCxiqA==
-X-Received: by 2002:a05:6000:25c2:b0:3a5:783f:528a with SMTP id ffacd0b85a97d-3b5e453ed0dmr1446194f8f.59.1752053881620;
-        Wed, 09 Jul 2025 02:38:01 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752053901; x=1752658701;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=5LIV0+ddN7Jz+LXwbtgQsFw4OsAYOlAkrXPy6mp6u8I=;
+        b=Xqo8y77kH0/ip5/xIbDxZ+Vn2B8QjECL7i5JU/ILtei+j9XmrXm80HXLJaPlQZ9IBf
+         KiPva1LsP5Qmnxi3CRsn1pdB5ZRuMXt8WLy5LJAUHYVeLIjkh3HTIHgK46xYgPuzt6h0
+         CEPXY8ZsysoKfjdbqQ5LkTH+84M3XxS7sZJX9kYgaVdp41zwp9zWF5/Z+508bTw89xPt
+         ddCJXQvUnmfkJaSp6tkR5rFZNERnh88hz9NpfaJhmlS/JyJ5cpVhZlrS8XPfJwzwnFsi
+         nlJHrVCttM+V6nvrNvAnPQ8KJRzfrUxCRJNxzmnLSFTUu0t0x6g+W9WZ+U6RsAVGcePd
+         DOcg==
+X-Gm-Message-State: AOJu0Yy0nnG4IIEZq7sS9u5ZsGJdb56q1cxWm3KkNv4QPwRxcdDd7dQa
+	OWEtXOBFQT7qt7ZKar+kQOX8UoEbu+NwYQASUh+WqGm1KlL/P+EM15rxQaHwag==
+X-Gm-Gg: ASbGnct2fVq3jV5gJTEKtoxlRfZx3K5E4NfJtREbN91QT7YTMAakaIUt9WUw9oFlaXV
+	UkSsPqKYFoyeh2GxVVHuzdjCg3/sLqJNpIqYCsxAEnob4240hRCYSHXuOLdjzWtQ9D5D2LH8U4a
+	/aLBfyFDGyM2ZXaUxDL5etVn2N1q7A7aMCsDwf2iQTaxnuQUgNJX8kqeoIXAme3avWwnrnIWm4q
+	y9cvbCwCcyWZ0kvvma57kA1tW21Tw3svbFiHaX/LL67jZFX3tW6rwU1p1qo751ctH1D41ppRQDC
+	pmC9K2ZgreR6OzcFmjUKvzZHh+W88lxkHZ3wfoqUkEtiAgkpCh4qEu35XpD/yRi0NAiEpOPKCVg
+	aOuVTlgHUTooZwhNqLcyGWBEgchIJu96/1OGDuQ==
+X-Google-Smtp-Source: AGHT+IEl/hPmu04LPLKAAtjGUNUg7Zv5c3/yz3adPnpwQuheRKsGb8DqCIf45tRTW/83Z9f+EVYk6Q==
+X-Received: by 2002:a05:600c:548d:b0:454:ac5d:3919 with SMTP id 5b1f17b1804b1-454d530eb35mr14923165e9.2.1752053901299;
+        Wed, 09 Jul 2025 02:38:21 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b4708d085asm15163479f8f.25.2025.07.09.02.38.00
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454d5061450sm17165375e9.22.2025.07.09.02.38.20
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 02:38:01 -0700 (PDT)
-Message-ID: <f1fad7f4-209f-47a9-8ad2-5e236c0b0006@gmail.com>
-Date: Wed, 9 Jul 2025 10:38:00 +0100
+        Wed, 09 Jul 2025 02:38:20 -0700 (PDT)
+Message-ID: <f679151a-c843-44d4-9e28-27112d26f30c@gmail.com>
+Date: Wed, 9 Jul 2025 10:38:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,6 +66,7 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH 0/2] breaking-changes: deprecate support for
  core.commentChar=auto
@@ -75,59 +75,125 @@ Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>,
  Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, Taylor Blau
  <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
 References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
- <xmqqy0syp30y.fsf@gitster.g>
+ <xmqqjz4iv7mt.fsf@gitster.g>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <xmqqy0syp30y.fsf@gitster.g>
+In-Reply-To: <xmqqjz4iv7mt.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 09/07/2025 02:27, Junio C Hamano wrote:
+On 08/07/2025 19:51, Junio C Hamano wrote:
 > Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
 >> This series implements the plan to deprecate and remove support for
 >> core.commentChar=auto outlined in [1]. This feature has been the
 >> source of a couple of bug reports recently [2,3] and as explained in
->> the first patch the design is tricky to fix.
-> 
-> FWIW, this fails some tests that expect "# commented lines" by
-> treating "auto" too literally.
-> 
-> https://github.com/git/git/actions/runs/16157263228/job/45602188411#step:10:2970
+>> the first patch the design is tricky to fix. When git sees the
+>> deprecated config setting it will print advice like the example below
+>> to help the user either remove the setting or set a custom comment
+>> string.
 
-That's a semantic conflict between this series and seen - the test 
-should be marked !WITH_BREAKING_CHANGES as it is testing 
-core.commentChar=auto
-> I wonder if our braincycles are better spent to actually perform the
-> "tricky"[*] fix than deprecating the feature and then perfecting the
-> deprecation process (which does not seem to be without cost either).
+With hindsight I should have been clearer here that the advice given is 
+based on the user's config settings. In this case the files look like
+
+~/.gitconfig:
+     [core]
+         commentChar = auto
+
+~/$XDG_COMFIG/HOME/git/config
+     [core]
+         commentString = %
+         commentString = !
+         commentChar = auto
+
+>> hint: Support for 'core.commentChar=auto' is deprecated and will be removed in git 3.0
+>> hint:
+>> hint: To use the default comment string (#) please run
+>> hint:
+>> hint:     git config unset --file ~/.config/git/config --all core.commentString
+>> hint:     git config unset --file ~/.config/git/config core.commentChar
+>> hint:     git config unset --global core.commentChar
 > 
->   - We can and should keep the "auto" magic and use '#' when it gets
->     specified, if we really wanted to do this deprecation.  I am not
->     a huge fan of it, though.
+> We'd need to clear both variants from all scopes, wouldn't we?
 > 
->   - Or leave it as a known-broken feature in certain corner cases,
->     which may motivate some future developers to tackle these
->     "tricky" code paths.  If we were to go this route, the first step
->     would be to document what works and what does not as "known
->     limitations".  I am slightly more in favor of this than "we punt,
->     because we cannot fix it", but not by a large margin.
+> 	for scope in "" --local --global --worktree
+> 	do
+> 		for variant in commentString commentChar
+> 		do
+> 			git config unset $scope --all core.$variant
+> 		done
+> 	done
 
-I've thought about fixing it but I don't see a good way for templates 
-and hooks to say "lines that begin with this character are comments" - 
-for a hook the choice of comment char needs to be based on the message 
-so we cannot use a fixed config setting. Unless we have a way of doing 
-that it is never going to work. The cherry-pick/rebase issues could be 
-addressed by writing some state that is then read by "git commit" though 
-goodness knows how we'd make that work with the prepare-commit-msg hook 
-that wants to introduce its own comments. I don't really see the point 
-of just fixing the rebase case if templates and hooks are still broken.
+The advice includes commands to clear all the scopes that are set. It 
+correctly handles include files and correctly handles cases where both 
+.gitconfig and $XDG_CONFIG_HOME/git/config exist (where "git config 
+unset --global <key>" will only unset <key> in ~/.gitconfig)
 
-Now that the commentChar can be an arbitrary string rather than just a 
-single byte I think is much easier for users to pick something unique 
-that isn't going to be at the start of a line in their commit messages.
+>> hint:
+>> hint: To set a custom comment string please run
+>> hint:
+>> hint:     git config set --global core.commentChar <comment string>
+>> hint:
+>> hint: where '<comment string>' is the string you wish to use.
+> 
+> I do not particulary find it sensible to nudge users to use the same
+> commentChar across all projects with possibly different project
+> conventions by suggesting use of the --global option here.
 
-Best Wishes
+The advice will recommend a command that updates commentChar in the 
+scope where it is currently set so if it is set globally it will not 
+prompt you to set it locally in each repository and if it is set locally 
+it will prompt you to update it there.
+> It would be necessary to special case "auto" after 3.0 boundary
+> anyway, whether we (1) die when we notice the value is set to
+> "auto", and refuse to work until the user chooses a comment char, or
+> (2) use "#" or something hardcoded.  Either would be better than
+> using literal string "auto" as comment char.
+
+We can do that if you've changed your view from 
+<xmqqfrj6vfsn.fsf@gitster.g>
+
+> So, a simpler approach might be to treat literal string "auto" as if
+> "#" was specified under WITH_BREAKING_CHANGES so that the end-user
+> does not have to do anything when they want to "revert" to the
+> default comment string.  Then we do not have to give any large text
+> like the above.  We can instead say something like
+> 
+> 	The 'auto' setting of core.commentChar (or core.commentString)
+> 	will change its meaning in Git 3.0 and later and will always
+> 	use the default '#'.
+
+That's certainly simpler for us but it does not help the user to update 
+their config. Presumably they're using the auto commentchar because '#' 
+does not work for them.
+
+Thanks
 
 Phillip
+> Hmm?
+> 
+>> [1] https://lore.kernel.org/git/6a3154e0-e7bc-45ae-b554-67ccab18727a@gmail.com
+>> [2] https://lore.kernel.org/git/20250315140913.577404-1-oswald.buddenhagen@gmx.de
+>> [3] https://lore.kernel.org/git/20250626132233.414789-1-ayu.chandekar@gmail.com
+>>
+>> Base-Commit: f0135a9047ca37d4d117dcf21f7e3e89fad85d00
+>> Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fremove-auto-comment-char%2Fv1
+>> View-Changes-At: https://github.com/phillipwood/git/compare/f0135a904...83d0d3ece
+>> Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/remove-auto-comment-char/v1
+>>
+>>
+>> Phillip Wood (2):
+>>    breaking-changes: deprecate support for core.commentString=auto
+>>    commit: print advice when core.commentString=auto
+>>
+>>   Documentation/BreakingChanges.adoc |   4 +
+>>   Documentation/config/core.adoc     |  20 ++-
+>>   builtin/commit.c                   | 192 +++++++++++++++++++++++++++++
+>>   config.c                           |   4 +
+>>   environment.c                      |   2 +
+>>   environment.h                      |   2 +
+>>   t/t3404-rebase-interactive.sh      |   2 +-
+>>   t/t7502-commit-porcelain.sh        |  32 ++++-
+>>   8 files changed, 252 insertions(+), 6 deletions(-)
 
