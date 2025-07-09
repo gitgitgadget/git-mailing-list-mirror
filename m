@@ -1,111 +1,146 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C8B722538F
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 12:45:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F71D2DAFD2
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 13:36:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752065139; cv=none; b=EOXM5Nu0DeWMZn0mUa0u4jP7sOM/x8NARWhcRHoAZbn3c6QRELDpEss8BLw+z2fQCT/KFSrqVsGVHWGkextYk1yXeJhaULODPkBxIsWVe3JIUySZ2ueV8MPRa97mvYTm4sxESTw0BJE4rpDVml/Fy4uTCRB7e+1fb1Ie7IZ3Vxs=
+	t=1752068183; cv=none; b=Bh5895l2F2lamUuQJFRWHZ9hxaY4WpLn//8BS0zWF9t9ITGtkPAOuVbO7uymNW3TEhskSb4d0+3kxtsDtEcPzQ5cUFGCTbNgqeKdaSOOtvlMYag20YiXzhkNpiOKolI8l/u90Da4IQyz3Ct3xivbosAOGSo4jMWChLj6AkHPgIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752065139; c=relaxed/simple;
-	bh=Av/23UcLh1N1iPB1nnTI7izYbrD4B1BKTZ4Q8SitMFU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=tTIaR3LhDxcLuTwixQ6n8Ou5vlUY3L5wHVfsDdBiR9IbCzE2ALjk+Sei8j8Y4mMoRHmCBUcAjrk4MH/HtD50y0HaPteCGOKwaGv5kMdCKdx7h4nUN7QL4mZI8FnT/iynNMznY3HFFoGL5ishKK+U9u2Laurr7i+EahSDxZXbllg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kdooY6cV; arc=none smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752068183; c=relaxed/simple;
+	bh=+LExDh8AmS7uRcnFKyEnaqin4nexJHxkvfP1GwIGV0A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ng/ypfmJJM720lW/X5KaUZEQEz94P0cnhIBxBri1tOjzw2/8KshIjNANd3EybwfUALdfDR3jUxi9UtmN2OqIPsV9jrtJMRHQGGS+bGTNV0zXLYpnSK7kDNkXaHUSDga+4RmCz6AO9sL8Mmlxfdx47gSG4MK+Iwv0sY1pW4Qdo3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TJrwBC6M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B3OyNFZ4; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kdooY6cV"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-40a6692b75cso3914256b6e.1
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 05:45:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752065137; x=1752669937; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Av/23UcLh1N1iPB1nnTI7izYbrD4B1BKTZ4Q8SitMFU=;
-        b=kdooY6cVnNJnEyTytfeodWFaBafFM+Y56FdEfo+TMHmkBCuyjyBhAbKS87H0W+bmCX
-         y+kjhQJUi3ghnTsDns980PZINgPR/RFs+at6pnx3pM3n9noO86/ufvT8Jdq2aCwioeYV
-         TsbedLzdpyTaG5PBubwGMm5yYLm8FJFiCb/jjAWv9qkOzFzG4fiI4TjSU4My3J4aGNd7
-         0hO5oD5yP7Lru3Pqurt3U23JtwI/oCgwJNI10v80Pqb202l0GrWNPLLRwYPZ8AJ8jQUo
-         x/6XUqFTIhh/s1ytI+VqKX/PUvTEqPH3g3b2wVeCREAbC5CfGBSOt07JGdW0ARkfjF2b
-         q0ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752065137; x=1752669937;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Av/23UcLh1N1iPB1nnTI7izYbrD4B1BKTZ4Q8SitMFU=;
-        b=IxiuxvqADVlmj0n7PdxLcpKsIOydHPSKwN+a798xouYi62r1tHldy0x+7QZzqrb/Kt
-         zpYv5VWjiBotL1V2qsUegVlWOWxJPGfNtJzrO79jZHrMsTaAlGWe2L6VlExKK1Ps77EQ
-         awrauR7zUGgapGlxVU1G68tzJ/uPE8BCRyRDajByVA1G09I6FCL61f3r8yqaPETpVoNA
-         gGKQKKTF1ezbpwSf2I2wPTQrWvvvKY3tY/awTosFriDk6PG1UYxE8KIjAB6VNoUtpXU4
-         sXPqro+WOtFETPS6e8xvZIj1cviCEGYUXCQ5jkg+t2Nex2gnL28cvyZKAzrHbFt5Nsaq
-         jEBg==
-X-Gm-Message-State: AOJu0YyZjFtVQvPKqC4joQFqCJb8ITk90WAxFj72Q0wMdq7e04nzoNFl
-	TkQk0Z6KL9BMziTTC5a4Xx2A949RUTOGNZtrcT2wbgC6VN8NhNNtLKDdXdwb4Z2shA7TnbMFv8r
-	bqGvgb/GgZaur4Ny6k1plmf1NvfTY+92tUPbP
-X-Gm-Gg: ASbGncsA7a/71gjd1kXX7ucuMhZTXqh3zWbNk2Hg0SG6FUrqZGcWzGdOQ+jbdQRBBoL
-	SIByM92UWJLx3yZPalLDDPBclNFky5YoVI2n1HG/o/1GkCbDmL34hJNG3HbbrqqvcEcGpP6Krgt
-	bIeI+EiM+CdWqyxZ5BSaX7g1Wn1SQlSEKIpQ9KYvDoWAQ=
-X-Google-Smtp-Source: AGHT+IGwe1/j85HvZiFfprzqhXfxKfkDANX/2JK55LBt+1pb+PyrcODMKxU5y0zd86HPbiGXqn9qpeBpYXaiQ63kDhA=
-X-Received: by 2002:a05:6808:4a4c:10b0:40a:a971:3918 with SMTP id
- 5614622812f47-412bd499a85mr1096141b6e.38.1752065136702; Wed, 09 Jul 2025
- 05:45:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TJrwBC6M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B3OyNFZ4"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 766BE1400332;
+	Wed,  9 Jul 2025 09:36:20 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Wed, 09 Jul 2025 09:36:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752068180;
+	 x=1752154580; bh=9VigSL+sQzR/Sm4AIf+mPNYXsxeQDrztz2fR8yh86/s=; b=
+	TJrwBC6ME31Tfb6rV7JgTojyjwI9GwL9MhRkaIXqK958JiOt00gFIAjBla80tL1R
+	Htx1d+ilWw0yj9W9n34XD449moYMUnB7LD/TCwWxxRLExPSzHbQy7TaqUa742+DJ
+	nZQl4dQ7ZMin4AFWBI286TWPpKWVFzHPSSmSpRPMCTMWTIDQs39WvbgrhXGcW9Ng
+	pO4RmBYXHEPlpuYumVXzJivm3mZqibOydGnaJ3fXdnDygCMa7o8C1UC2eAcfAo6f
+	m3AuZNNB9qzGejLfTKPVhOdeHio6CzIF8bAmbH/jGxKrPoUMuTZxVOslDm+0UT+h
+	WeGGzna6+yfFToPuJ9h21g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752068180; x=
+	1752154580; bh=9VigSL+sQzR/Sm4AIf+mPNYXsxeQDrztz2fR8yh86/s=; b=B
+	3OyNFZ4fUn3im1xHBCyDR3r5VCyYz/h4VBI8QwxTeLP6xVy8TWV+YbrHgZLvCT5o
+	dGOXwSD+woJW/3KyVlK2IsG7v+3zo1xRl39SoQKWouKfeZvQlszN/NECYwW5JyYs
+	xCgpKTAvUzEQAhPQbJ0M+dsItPVB+rGqyZhksX74bSavQ+Kmn57FszqDOMLQ4BNS
+	vdIK0hJq//5GHRF5w2/MbqSHaZS4VORhQ89SCrIBpKI5+PTBNfKanZTM4AlaM2KG
+	ipNFQSqdW0wnPZFu0y/k+iCNOulouUOky+Et0uEfSocKmFZp0Zl7fNLxIF0G/3YV
+	aAkwpS9c8I7cYv3vqX2QA==
+X-ME-Sender: <xms:VHBuaIB9QiTSazJolG0VeXuCqmfcInHwtKJ6N4jSSupbf6pfT6RmcA>
+    <xme:VHBuaGACI4J2tXpRBjrmf7tWu2cCYY3lLxCJlO8pCWNVt0cmoeOK5KTabGwjujzda
+    Stp6K1JCnO7298SHA>
+X-ME-Received: <xmr:VHBuaCBtK9OAtYH6fOH8zIfMedFBh7OFiz9L-BdWr8xMJDcjERJeKRuM40DYpbxTblflO8OxIDjEgdP89boUXq7WYUyOfl7UfSA394ii10lBGA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:VHBuaJrzHXx48pLcfU5i9k0HHqnZV7HLi-oFysqprFGECtqHT-uk6w>
+    <xmx:VHBuaElukePH5Y3jY5AE1wSPoNNwRlkFFFLof4CM2QHr4MWwTYeqJQ>
+    <xmx:VHBuaBzTht1oKxHWrXn1jCmAeaLtV8wfJ2fI7pVMf3CSkWTpR9xwhQ>
+    <xmx:VHBuaE9MVFEViWafQBSgFbmnVe6JVFy-bZEvfbX1oNYyGx2qgwthyA>
+    <xmx:VHBuaAQ-Ru5kzfMclDyz49F0mv1R6GmEdR4otahB-7GaCwvucQZVzK_p>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Jul 2025 09:36:19 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id aac442fc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 9 Jul 2025 13:36:17 +0000 (UTC)
+Date: Wed, 9 Jul 2025 15:36:08 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Meet Soni <meetsoni3017@gmail.com>, git@vger.kernel.org,
+	shejialuo@gmail.com, karthik.188@gmail.com
+Subject: Re: [GSoC][RFC PATCH 0/2] Add refs list subcommand
+Message-ID: <aG5wSB_ce5Z0BCJc@pks.im>
+References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
+ <xmqqh60183ku.fsf@gitster.g>
+ <CAPhwyn01spdT-hFxVPcr4cnwBJ=YL3Ty-johXvGKXKRdCTpHXg@mail.gmail.com>
+ <xmqqldp9m1mr.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAKMuBmSeFh63212_GhBHfOTbW5VaqvQjo7jz4aowm8bntCXkVw@mail.gmail.com>
- <20250706032512.GB3041790@coredump.intra.peff.net> <xmqqv7o2vc64.fsf@gitster.g>
- <20250708225007.GA1180568@coredump.intra.peff.net>
-In-Reply-To: <20250708225007.GA1180568@coredump.intra.peff.net>
-From: =?UTF-8?Q?Jos=C3=A9_Miguel_Armijo_Fidalgo?= <jm.armijo.f@gmail.com>
-Date: Wed, 9 Jul 2025 22:45:10 +1000
-X-Gm-Features: Ac12FXw4tHtX6T3krIUICy14ZuYAR757RNwYODMiMy7XOE-YP9pNL64UfR8EUDA
-Message-ID: <CAKMuBmS+jFO61iFP5H7-B0UKsiguZ4ufkqsUg7YpZGoJVMHYaw@mail.gmail.com>
-Subject: Re: Bug: "git stash create" ignores "message" argument
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqldp9m1mr.fsf@gitster.g>
 
-Hi all,
+On Mon, Jun 30, 2025 at 01:10:36PM -0700, Junio C Hamano wrote:
+> Meet Soni <meetsoni3017@gmail.com> writes:
+> 
+> > To clarify, I don't have specific options or improvements in mind right now.
+> > The idea behind mentioning them was to acknowledge that having a consolidated
+> > interface like git refs might open the door to such discussions.
+> 
+> One complaint we heard a lot about Git in the past (I do not know if
+> people got used to and learned to live with, or they are still
+> complaining about the same these days) was that there were always
+> multiple ways to do related things slightly differently.
+> 
+> The machinery of for-each-ref is shared by branch and tag to give
+> them feature-parity.  Adding yet another command that behaves
+> slightly differently, with the intention to make it diverge even
+> more in the future, feels going backwards.
 
-Thank you for taking the time to look at this issue.
+That's fair. I do think that the common infrastructure should be shared
+indeed, and that includes the options. So the most important benefit of
+the new subcommand would be an improvement to discoverability.
 
-I don=E2=80=99t have a specific use case for these commands yet. I was simp=
-ly
-trying to learn more about Git and naturally turned to the
-documentation. However, it didn=E2=80=99t provide many answers for these
-commands. I understood that a use case is to create a commit object
-and then store it in the stash reference. And as I kept experimenting,
-I noticed I could pass a message to the create command, but it wasn=E2=80=
-=99t
-clear what the command does with it.
+But there is one default in git-for-each-ref(1) that has been biting us
+multiple times at GitLab already, namely the default format. In
+git-for-each-ref(1) it is:
 
-From the perspective of someone trying to become more proficient with
-Git, the documentation didn=E2=80=99t help in this case. I wasn=E2=80=99t s=
-ure if this
-was a bug in the code, a documentation issue, or both. After reading
-your answers, this seems to be mostly a documentation issue: if the
-command and options are there, they should provide enough clarity to
-understand their basic purpose and functionality, right? It also makes
-me wonder if these commands aren=E2=80=99t commonly used because their use
-case and concrete usage steps are unclear (chicken-egg problem?)
+    %(objectname) %(objecttype)\t%(refname)
 
-For example, my understanding was that commit objects created with git
-stash create could only be used to add them to the stash. But your
-comments have let me see that this is incorrect, and that these commit
-objects can actually be used to create new branches, perform a
-cherry-pick, and so on. tbh, I find it odd that a command of the
-"stash" family can create a commit object that can be used for other
-things. I can understand that this is legacy and can live with that,
-but it=E2=80=99d still be great to have it documented so people can learn
-about these commands.
+The problem with this format is `%(objecttype)` -- it requires us to not
+only read refs from the reference database, but also resolve the object
+via the ODB so that we can figure out its type. And that can be a huge
+slowdown in large repositories. Take e.g. the Chromium repository:
 
-Looking forward to hearing more from your insights.
+    Benchmark 1: git for-each-ref
+      Time (mean ± σ):     148.9 ms ±   1.0 ms    [User: 80.7 ms, System: 67.2 ms]
+      Range (min … max):   147.2 ms … 154.2 ms    100 runs
 
-Cheers,
-Jos=C3=A9 Miguel
+    Benchmark 2: git for-each-ref --format="%(objectname) %(refname)"
+      Time (mean ± σ):      22.4 ms ±   0.3 ms    [User: 21.4 ms, System: 1.0 ms]
+      Range (min … max):    22.0 ms …  24.0 ms    100 runs
+
+    Summary
+      git for-each-ref --format="%(objectname) %(refname)" ran
+        6.65 ± 0.09 times faster than git for-each-ref
+
+So from my point of view, this is a thing we should consider changing in
+the new subcommand. For all the other options I agree, we should have
+common infra and thus common options.
+
+Patrick
