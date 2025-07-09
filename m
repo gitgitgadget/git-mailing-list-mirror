@@ -1,144 +1,199 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D7D13D2B2
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:04:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABC31242D76
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:22:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752098689; cv=none; b=r03acBaCtmqAKZo6Y6rMwAylTxBZuIoVU1UCf6N8cD8ozyss704sezh+twbd8JBSmVWwKXtLqbrNOq0j7PkQTdnfyWHgzFmilyERC+LS38L5+X3ySWICjbB3aPPVtCGtYC6RQjKcyB67af/Me85QHXvj9gtJVLs9u4wpNpD2yJg=
+	t=1752099772; cv=none; b=RaL+0+JMzNHGHLjCKLexHBoEv7of2QqcNSJLCzVHM0lmetwxnwox7ONWeKqoknMlMNoLcD7Ic6rzyp4re8kmemf5FoHomzs3gT6atHzCY+F3cKqbb5G/ZGlj2IYBzivQUCsAtS1uUpNIByaS01NeuOX2tjdVliemITLUefX9N9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752098689; c=relaxed/simple;
-	bh=BirA/QT27ApG+N9CNWk+D5s15PLvCDSyxP+CaHk42UI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bQHFvz/JKFrtv8LYegnzjUA1i/pfuIelrI/eTb4XqDZm31GbUkFrWdb1whtlG7tsp6I5aQg5s3eagV9QX19mou22G7J3Gv+AgNZoLaMQg3qfYERs2e90B0gFIZeWdJ3vfngkwGh239C5v/033eEJywKfOvn6042TDfT15g5BhqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RJZXl+/4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k/8gMsq0; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RJZXl+/4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k/8gMsq0"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3B1481D00151;
-	Wed,  9 Jul 2025 18:04:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 09 Jul 2025 18:04:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752098686; x=1752185086; bh=Zl6/jiP7g5
-	ok2+PZeZaculFNsKdqMZqAgPejeI36pJk=; b=RJZXl+/4eOXi7XZ9R6Ikvbf4gZ
-	2TAarpNGzTa/Yh13qh5gOS8RLlNxXCCQdlkSqer4imuIvGoLh3xd+n3qxRH82Wud
-	Th5h+frfG8xWgPbQJ8xxW7+bJhNmkNW5NH3ArlKGSjbmcFsy7VDWFmvRhzHHc+KW
-	BWAq8b8Z/cSBNHcyb6OuiNkA6Op3OZA66Nt7uc/0FQrUs86zDjq3Wm3gu++N5y/g
-	WA5f/d1l9rt6jxe2bcjt1Iq9Ib+w2O+3enyB56FsidNc75uI3cL5hoO8xGajye+8
-	+ZAXI7St2f0OmgsF0VINhkcE/xtFudXwoqH4E63HeNB6Ip1Eic8YS9L3h7UQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752098686; x=1752185086; bh=Zl6/jiP7g5ok2+PZeZaculFNsKdqMZqAgPe
-	jeI36pJk=; b=k/8gMsq0Y4A7sMBo8xpv5JWI2y9TcmMD4g/l9HIlQEPY7/xBNuZ
-	0t3IMHP3Nlc7QJW5nFN+TOSK9dkSIwss6MxMqoFMZMm7hy125i1HUT9r8HjuPY19
-	pXb+4L6rgVU/y8Oj6pAouM23BxtjDOea5JMQH/Er0hbgDbxMeZkJfD+hCm0a5KgX
-	INW197S8AhH1dv5r+AA2I163e8c0s5H8Hs/kpEuer4GhSrYkiO1yxXVzCFvT5uOp
-	oexIUZP7EuBnitstKRP8LT+5T2XJydR25KnygI2aGpbnn0wx6GOUxBkfGpdd0ADO
-	aU5fMjal/W/Pv7YuUGnLJLzE+f8IZaNk2sQ==
-X-ME-Sender: <xms:feduaKGC2sSD899cdYFh3T1aWbqB8-nVzlMc_XPFlJg8qGcxUP_r7g>
-    <xme:feduaF5SvJpLnxqBk8cYEvmT6Q9X8yD3xdgbh-Y77Riv6e4eSrFIJP--9d_fJrj0Z
-    Sb18iGTsZKflhtRxw>
-X-ME-Received: <xmr:feduaAuU91_Dpjx8Ovm8OVnMpk9ACGzeiakkQHAitZ7Vz38FbautnBuovPYHes3fs80QBxZJC3XX5jIHtMY3fHkbVtYolJvbJR46HgE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkeejvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepmhgvsehtth
-    grhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:feduaG4g0fwqaPEsDD31jmvnQB48lgzzKkaV7QKoP4jlbpnPnRxrbw>
-    <xmx:feduaLXwKyCfT1Mom8n1DZ4nMmQ9ZPt1a8slXzh7KyjjafuEATi5oA>
-    <xmx:feduaI8uv5GMRGzuClqAvwtI__fhUvzT6kBxsP8PhyCeJXlbTWSBSQ>
-    <xmx:feduaHkzPNuKPvIFbiYrm3Wn6-Ah_3DeJmlno3-b0DQ9a3LC_TxjaQ>
-    <xmx:fuduaCtWUmWa1eTlZJBHeR0iCKACem-Q6SI1HTZnJ8BCiLcB8voa6GvT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 18:04:45 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>,
-    Taylor Blau <me@ttaylorr.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/8] odb: track multi-pack-indices via their object sources
-In-Reply-To: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
-	(Patrick Steinhardt's message of "Wed, 09 Jul 2025 09:54:48 +0200")
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
-Date: Wed, 09 Jul 2025 15:04:44 -0700
-Message-ID: <xmqq34b5aumb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1752099772; c=relaxed/simple;
+	bh=I7oZMiKYc8QcWm9bM0Dryr/Am3cvQ2lfUXEkhS7BS0E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kiSEe8tuQN05+cQS3Y9kci5C8iRTI3zpWBQ5nNOdSRpkXNR56Sdnk8pXvwrp+GFrlIuPEFqqOso7b3+23vtlzKrzd1anZpA8uS0Dpr7CcRWutHwVg8B786u6GdVLHpohKB/vYqXI62jm5gTfzDA0oZ+f2jCtEcQa1XYLpnnHwjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 54371341FB2;
+	Wed, 09 Jul 2025 22:22:49 +0000 (UTC)
+Message-ID: <1664d442-7985-41b7-9391-78f78ece7601@gentoo.org>
+Date: Wed, 9 Jul 2025 18:22:46 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/8] meson: stop discovering native version of Python
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ irecca.kun@gmail.com, Jeff King <peff@peff.net>,
+ Justin Tobler <jltobler@gmail.com>
+References: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
+ <20250709-b4-pks-meson-cleanups-v3-1-29ab15b9ab85@pks.im>
+ <xmqqikk1pfiz.fsf@gitster.g>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <xmqqikk1pfiz.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------j95jdjUi2L9cciyEiXYxuxKC"
 
-Patrick Steinhardt <ps@pks.im> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------j95jdjUi2L9cciyEiXYxuxKC
+Content-Type: multipart/mixed; boundary="------------1z0sER8caQNH3hpMBWTyALJL";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ irecca.kun@gmail.com, Jeff King <peff@peff.net>,
+ Justin Tobler <jltobler@gmail.com>
+Message-ID: <1664d442-7985-41b7-9391-78f78ece7601@gentoo.org>
+Subject: Re: [PATCH v3 1/8] meson: stop discovering native version of Python
+References: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
+ <20250709-b4-pks-meson-cleanups-v3-1-29ab15b9ab85@pks.im>
+ <xmqqikk1pfiz.fsf@gitster.g>
+In-Reply-To: <xmqqikk1pfiz.fsf@gitster.g>
 
-> This patch series thus refactors the codebase to stop tracking MIDX's
-> globally. Instead, they are being pushed down one level so that every
-> `struct odb_source` has an optional MIDX itself. This simplifies some of
-> our code and will make it easier in a future iteration to move the data
-> into a packfile-specific object source backend.
->
-> This series is built on top of a30f80fde92 (The eighth batch,
-> 2025-07-08) with "ps/object-store" at 841a03b4046 (odb: rename
-> `read_object_with_reference()`, 2025-07-01) merged into it.
+--------------1z0sER8caQNH3hpMBWTyALJL
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-You do not have to deal with it just yet, but FYI, another topic in
-flight has a commit that adds a few more callers to a function this
-topic renames away.  Namely, 5ee86c27 (repack: exclude cruft pack(s)
-from the MIDX where possible, 2025-06-23).
+On 7/9/25 11:09 AM, Junio C Hamano wrote:
 
-If this topic needs to be rerolled after the other topic graduates
-to 'master', we may need to see this topic rebased on a newer
-'master' with something like the attached patch squashed in, but
-because the other topic is at least a few more days away from
-'next', and it might still need another final finishing touch
-iteration, let's keep these two topics independent from each other a
-bit longer, and let me deal with this trivial semantic conflict
-resolution, at least for now.
+>> -python =3D import('python').find_installation('python3', required: ge=
+t_option('python'))
+>> -target_python =3D find_program('python3', native: false, required: py=
+thon.found())
+>> -if python.found()
+>> +# Python is not used for our build system, but exclusively for git-p4=
+=2E
+>> +# Consequently we only need to determine whether Python is available =
+for the
+>> +# build target.
+>> +target_python =3D find_program('python3', native: false, required: ge=
+t_option('python'))
+>> +if target_python.found()
+>>    build_options_config.set('NO_PYTHON', '')
+>>  else
+>>    libgit_c_args +=3D '-DNO_PYTHON'
+>=20
+> We ask explicitly for Python 3 here.
+>=20
+> Does find_program() have some magic to deal with installations where
+> Python3 is simply called /usr/bin/python (and worse yet, not as a
+> symbolic link to /usr/bin/python3)?
+>=20
+> I found
+>=20
+>     "Since 0.50.0 if the "python3" program is requested and it is
+>     not found in the system, Meson will return its current
+>     interpreter",
+>=20
+> which I suspect refers to the path to python3 used during the build
+> and is not what we want, at
+>=20
+> https://mesonbuild.com/Reference-manual_functions.html#find_program
+>=20
+> which got me a bit worried.
 
-Thanks.
 
-diff --git a/builtin/repack.c b/builtin/repack.c
-index a74b2ca7f3..21723866b9 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -1531,7 +1531,7 @@ int cmd_repack(int argc,
- 		 * midx_has_unknown_packs() will make the decision for
- 		 * us.
- 		 */
--		if (!get_local_multi_pack_index(the_repository))
-+		if (!get_multi_pack_index(the_repository->objects->sources))
- 			midx_must_contain_cruft = 1;
- 	}
- 
-@@ -1614,9 +1614,9 @@ int cmd_repack(int argc,
- 
- 	string_list_sort(&names);
- 
--	if (get_local_multi_pack_index(the_repository)) {
-+	if (get_multi_pack_index(the_repository->objects->sources)) {
- 		struct multi_pack_index *m =
--			get_local_multi_pack_index(the_repository);
-+			get_multi_pack_index(the_repository->objects->sources);
- 
- 		ALLOC_ARRAY(midx_pack_names,
- 			    m->num_packs + m->num_packs_in_base);
--- 
-2.50.1-382-gda22511645
+Well, this patch doesn't really change that. But a cross compile where
+build !=3D host and thus the build meson and build python don't represent=
 
+the host `git`, already needs a cross env setup to define the right C
+compiler which can produce host binaries, and that's where you'd define
+the host python too.
+
+[binaries]
+c =3D 'usr/bin/aarch64-linux-gnu-gcc'
+
+# we have python 3.13, but our cross target is really old
+python3 =3D '/usr/bin/python3.6'
+
+
+> Perhaps everybody with Python3 has it at /usr/bin/python3 these
+> days, and my worries are unfounded? ;-)
+>=20
+> Thanks.
+
+
+Python installs as python3.13 or some other major.minor version.
+"python3" is a symlink to that.
+
+"python" may be a symlink to python 2.x, or 3.x, or not exist at all. I
+am not aware of *any* scenario where a distributor has re-packaged
+Python, "python" exists on PATH and is a real Python 3.x interpreter,
+but "python3" doesn't exist.
+
+I am not aware of this ever being an existing real world scenario in the
+past, either -- it is not a "we no longer live in the bad old days"
+scenario.
+
+The only big change to how people deploy python was around the
+unversioned "python" name.
+
+Since 1996 and earlier, "python" was a symlink pointing to the "full"
+name, "python1.4". The full name was created by "make altinstall".
+
+And "make install" had a Makefile dependency on "altinstall", and then
+additionally created symlinks. You could run "install" for a full
+default install, or "altinstall" if you wanted to install multiple
+versions side by side.
+
+Python 3.x originally didn't create a "python" symlink, only a "python3"
+symlink, because too many people would have scripts running "python" and
+expect it to be version 2.x; this problem obviously never existed for
+"python3", as having the major version was new for "python3" and indeed
+the whole point of adding a new "prog{MAJORVERSION}" was to avoid
+confusing versions 2.x and 3.x
+
+Anyways, yes, it is in my reasonably knowledgeable opinion flat out
+*impossible* for
+
+
+find_program('python')
+
+to ever be a good idea when you could do
+
+find_program('python3')
+
+The former will correctly work in a strict subset of cases that the
+latter already works; in some cases it seems to work but returns a bad
+program; in some cases it fails but using the right name would work.
+
+
+--=20
+Eli Schwartz
+
+--------------1z0sER8caQNH3hpMBWTyALJL--
+
+--------------j95jdjUi2L9cciyEiXYxuxKC
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaG7rtgUDAAAAAAAKCRCEp9ErcA0vVxCU
+AP4l9nAIn4ctgW6nb5rRu9JBR3KgkDF3mn1XdvU234hj7AD+JzPjx+egcK18wMx+I2taCH+UenNz
+o0pDQCPblSmg2wc=
+=Le2e
+-----END PGP SIGNATURE-----
+
+--------------j95jdjUi2L9cciyEiXYxuxKC--
