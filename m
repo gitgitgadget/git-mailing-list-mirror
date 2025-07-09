@@ -1,146 +1,186 @@
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A742DFF3F
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 14:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152BD1DFCE
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 14:39:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752071755; cv=none; b=LnVynlrYr46qK8RK60lOKeno3Y1yB7h9sSeEDqpWON/TkhCz+9NkVm18EgcdXfOshJAlSRG7LHkN6jUSckr3vaSArf8VZGMipQPk7Wn/RjV0JSL3SodW4GeGSO8bYco09LjN/g8Pl8P4rt8DcIZC9BWQdyhkP6UMEAI5laELtE0=
+	t=1752071974; cv=none; b=fFgVBuft02GgoPO8iGSPlRr18L1uEptB6IjYI3Lciy/YdYx1i8vtyswxAjeGRIsT+EtXaJbvy32PJhR6fyar0+HxKHtqDFv9JHQ7UgvTjsG1GlLn466aNirsOV6amy4ixfYoLKVhyAy6nW/mUB9822xY7sksAcQLukIgUd+Zz54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752071755; c=relaxed/simple;
-	bh=P5tg6GUugn9zkuGE9fBkBYNgqWQ/RspsulVa4+aBIh4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Pe9cHdQnX+ZE3+XzfKm7qGtQj2Y7T17FJJyqn6FAk1EMQRid8tUsVpCjVT903BDFLTCTo3ziuhbQtDLYMSmsU7Tjq0MiqeaY6lFO/2CkHwZK3e1yvq5e8kBJzBCj1GCCoVQz3ex7e3KzLWyuyUkNRUJ9jA1Zu6ELlHXSq4Pnk/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TUw2Qarv; arc=none smtp.client-ip=209.85.167.176
+	s=arc-20240116; t=1752071974; c=relaxed/simple;
+	bh=2D79RAZ334na5MYby1nvfYtBEn/TDbR1D13mW9R7tlU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hlaGAjds9jDH+huIQUVroDv47SnUxMFA5gqRNpxcvJbZujpJJ8BExqZBhJb0k4MsAe9YuyC1aT63FDsRL/A2CLOeoGs3T+GXStwkKFktMi9GGtffkaJuHRSFQzpj0Mvlmuqdd0DowjP8xQ+QIqtOfKb8Psuj0udObu5+ui46O5w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=epeVPBKC; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TUw2Qarv"
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-40a7322f081so1577b6e.3
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 07:35:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="epeVPBKC"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e7dc89108bfso5034131276.3
+        for <git@vger.kernel.org>; Wed, 09 Jul 2025 07:39:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752071753; x=1752676553; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9ZU8Fs57MpLoJTFENT1wxzkJ4u+Hp6GbAqzXv10d2CU=;
-        b=TUw2Qarvlk00kcaKoAGkFYoUItt2SZqstUZQ2Wv/o2GVaciQmZGlCQNxu/OUW4Qmbq
-         ki7vhf2x0p6GgaE0Uc+9Zss24ifT6gIbWmCjvKsjIZk+k1hX0OPlNyN2W2t6KHbTnlSL
-         by3MMAnLHIli9zy9bq+itieMB0BQSizn5iqDlTndJivhZMxYmIxBb0Gwvvj0v/5p3Arr
-         ZzCzenj+uAc7WU0OqwuL4xWmPElcrUboO9qnqkbMhmRvIOtrMvAJJdP5Ppvg4vzkBmKP
-         qZe6hICrBKNrsOQpNCHUSGhhrDfWnAzgOONbMr/KZfYVMxqDBQsqX7Gn/bFHlIQoD/QS
-         xcQg==
+        d=gmail.com; s=20230601; t=1752071971; x=1752676771; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XdXzrfSt3P6aTJ3KVOtmby3vwZtljrK4pSep3BuXLNM=;
+        b=epeVPBKCI8Tov8CZytpDHKACWFrCMCNOmkkLVhOmeYNfKd66+t8UftmgSvKCnkJ5YY
+         SZocqJX8nPgW0NUa1Mk5MU6prC/ZpVY6djv0r8HyOkNMs7je0GmBXupoxrMxdhE/5vJe
+         c5zuHJT7Dg1N1b2Jwxs/M+yckVC8eQLRKirh7PtuSc154nByex3XrS9/fvL+GxsDV9aY
+         ybkIGojMC3uTPJNTGahhbRDvE9iO1tNvZ+h8f02j7EZ3WPaPnN6ErFKeiebp3KNby2pA
+         T991F9HciLyYVWJNTkCg/81XkMAsh0er2gBmkNLYK/17SmFLkqpkRfdhf3HdIFrQUujl
+         7W1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752071753; x=1752676553;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9ZU8Fs57MpLoJTFENT1wxzkJ4u+Hp6GbAqzXv10d2CU=;
-        b=nCjVBOd81Unt8+xgpD5kGmvrUGQvbRgLTgKvwfEqSrrVcEQMzny8it8QvTVqxMnI5e
-         lI3vYYyr7c7Cr3UBouAaUFdFNFEKd+ttDKyw8bnjMLG2gX0SwGGbQwKvjvdWPAoNjMiX
-         tjCHT9FdrR7U2TO5r10Bav0kCmH9wlCBvHf0T57P+G/YBZsSslSWtIWd64d8X22EyuCr
-         w7SFqyoYvOjKYXop5AcUQ7ngpPtnUfgRXLnS1Do8zD5FqfTB0+gz//v1UtslQ1iAGaJ0
-         3YeIeEriV3FBXxUby4PVFy4YyT/K5jEKn8cg+MztnBMpeEy6LMae+C6x1Vb9vSVNVaMx
-         snng==
-X-Gm-Message-State: AOJu0Yw62V7apQt+ytY1Q9I9It7Cdl+88GRgY6aLgGi4AuwStzL9pKdr
-	B0o1ofJH4SkWrMOrO44ycIqyL05u6+/PFjegGxtkc7x/Ho5XKursw3CO3nBeeg==
-X-Gm-Gg: ASbGncs4BihiilmHBnmpzRi8rV4aTeljI1V19wOuZ8fj9/4JuPgjSN7Pl/Zg3R/5YmS
-	MaJLZOiZ3XmpsUp71AqS2SKbAxrb0E8v70Lk8NswnhBhWTvUShSoQIt5raREXh5nm6wtHGMvwAL
-	IButVNDPZcrsoLXaSZiQqXwoXPtNpAB0Xtmtr+92PEAup6saOd/su+MNHNNAKZLIREzrLQqlcS7
-	OiDQuvgY+VoBJ0bq2iVO3k1nJscPsPorrnA2vo5L5FIB3oCTIAOb9weLtGJnQGWE6hWCWNA8mfK
-	3I5WkQygXjv0yRXdUVgjB81rMxOnQCeB+hzMA88Oa4pi9MEGyWbfZoI=
-X-Google-Smtp-Source: AGHT+IExV1SEiKmYYW0fYLCEFMrOuoyo6UOnfdjhRJpejsiOi3MqpTfsbe4PGQ9a1ntQqtgJtbA1Ug==
-X-Received: by 2002:a05:6808:1205:b0:406:76e4:c4f with SMTP id 5614622812f47-413adeca2ebmr31128b6e.18.1752071752896;
-        Wed, 09 Jul 2025 07:35:52 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-40d02a4f87fsm1939427b6e.22.2025.07.09.07.35.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 07:35:52 -0700 (PDT)
-Date: Wed, 9 Jul 2025 09:30:16 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Todd Zullinger <tmz@pobox.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t: avoid git config syntax from newer releases
-Message-ID: <iuravzuqoqagie37is72e773zufuxcedwnc4i6ehhklpszg25t@bzu66havljcq>
-References: <aG1_eqSpH46UddZJ@teonanacatl.net>
- <20250708210529.1214574-1-tmz@pobox.com>
+        d=1e100.net; s=20230601; t=1752071971; x=1752676771;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XdXzrfSt3P6aTJ3KVOtmby3vwZtljrK4pSep3BuXLNM=;
+        b=fk5tVJodLZ7kbgWuvkQKFmsScyD76g/ZL9px9GwR7UkxF8Op72dF5BMn18dPj79HR9
+         fQJVtigNfvfqKFipY3ymMFxNBW9d0jd5Ebe0FIP6WUaD4UtPg7iL8zCfoxCHYfYq36do
+         nclO1O3siw7A2FyqNxunb8Qe37KJM4kQkzToyTYpKObetbTmMFuXlVNomjyuwHuI2+ht
+         ERmcSRBt3eOzpNg1poCYvDeoQ3rkyulH3c2uxVLqblzs0gzHLQI5CLz+bq6Pkq1GdPtN
+         RxSunICUe31Y6QnCmGLnl8NLCUyIu4TXq7cKLoP3JnWT+Blrphei1V1MgpBHGMrg7M6J
+         EKUA==
+X-Gm-Message-State: AOJu0YzzKi501BAAOeAQ+xD8qZ+9w7eoQDUpaykKo8Pt4ILZl0ltvRb5
+	p0FzYIzuJ4YyNOXws0UCdFsNd5zmdJNwneIT1UXyaQjEBhJx0ypqufg44Rbhwhnj
+X-Gm-Gg: ASbGnct2LA9UGeqbGS2AfTMuYCCEo9yTspI259i4EQabBnFRot7s03E2C0MqVc0RDD0
+	Une7aRg19PK5OuFa/3mKkbSl4GTLBS66mlmljo5J/GRZMErsaOZ1uOraqWCU4PRVVHfI91xd/mB
+	XHMtLkSP2DQFkzsXJwGOgSE56E9IuwaG0qTFUpp8UvYMYOld07+nATirDABRphEtHoSz+G3WW3W
+	4zO45iM5OuHRmZS8ELSeAgj92WiiqfFHjWsbaUN/s6MTzOZQ4fBZI4//v2OoLRoqhhTL/Zkfht3
+	Lvftg8HBVamylDHzo8qo/LVDByy0HX7Gv/juW1rALkgLZY2uydYvgKWet8Rv4hoJRWCg54nhrWD
+	fefSITzSP3caMwFMNp0eYfDML0I6FzvX1GblfEg==
+X-Google-Smtp-Source: AGHT+IGeIhCkTDEP8dvrLSQVKg8xGDKoIK9OhNtwkpWgBsHVl4XsWoV6+PrNObgAPJik534ffVYT8w==
+X-Received: by 2002:a05:6902:6807:b0:e8b:4282:65d7 with SMTP id 3f1490d57ef6-e8b6e193725mr2337264276.25.1752071970684;
+        Wed, 09 Jul 2025 07:39:30 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:c467:2cb3:90ce:6b3a? ([2600:1700:60ba:9810:c467:2cb3:90ce:6b3a])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e899c30a5b8sm4023232276.1.2025.07.09.07.39.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 09 Jul 2025 07:39:30 -0700 (PDT)
+Message-ID: <2503c79c-68f3-4ed5-bbfd-3a7af07a89cc@gmail.com>
+Date: Wed, 9 Jul 2025 10:39:29 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250708210529.1214574-1-tmz@pobox.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] sparse-checkout: add 'clean' command
+To: Junio C Hamano <gitster@pobox.com>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, newren@gmail.com
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
+ <49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+ <xmqqa55etm5g.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqa55etm5g.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On 25/07/08 05:05PM, Todd Zullinger wrote:
-> In a recent security release, 05e9cd64ee (config: quote values
-> containing CR character, 2025-05-19) added calls to `git config get`,
-> `git config set`, and `git config unset` which are not present on the
-> maint-2.43 branch.
+On 7/8/2025 5:20 PM, Junio C Hamano wrote:
+> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 > 
-> These subcommands were added in the following commits, released in
-> git-2.46.0:
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> When users change their sparse-checkout definitions to add new
+>> directories and remove old ones, there may be a few reasons why
+>> directories no longer in scope remain (ignored or excluded files still
+>> exist, Windows handles are still open, etc.). When these files still
+>> exist, the sparse index feature notices that a tracked, but sparse,
+>> directory still exists on disk and thus the index expands. This causes a
+>> performance hit _and_ the advice printed isn't very helpful. Using 'git
+>> clean' isn't enough (generally '-dfx' may be needed) but also this may
+>> not be sufficient.
+>>
+>> Add a new subcommand to 'git sparse-checkout' that removes these
+>> tracked-but-sparse directories, including any excluded or ignored files
 > 
->   4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06),
->   00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06),
->   95ea69c67b (builtin/config: introduce "unset" subcommand, 2024-05-06)
-> 
-> Revert to the previous `git config` syntax for older maintenance
-> branches.
+> Are excluded files and ignored files form two separate sets, or are
+> they one and the same?  Do files that users forgot to add (e.g. new
+> source file that would not match any patterns listed in .gitignore)
+> and object files left over from the previous compilation (most
+> likely match *.o in .gitignore) treated the same way for the purpose
+> of determining if the directory that is no longer in the cone can be
+> removed?
 
-Thanks for raising this fix! Apologies, it slipped my mind that the
-config subsommands wouldn't be available on older versions.
+I think of them as separate in my head because:
 
-The changes here look good to me. :)
+* .gitignore is committed to the repo, and is common to all users of
+  the repo.
 
--Justin
+* .git/info/exclude is custom to each user, so users are choosing to
+  ignore extra files that are atypical from most users.
 
+In the monorepo I'm thinking about, .gitignore files are rather small
+because all build output has already been redirected out of the
+worktree for performance reasons. Thus, _most_ users don't have this
+problem. However, some users add extra excludes for things like vim
+files and those get leftover, causing invisible (to 'git status') pain.
+
+>> underneath. This is the most extreme method for doing this, but it works
+>> when the sparse-checkout is in cone mode and is expected to rescope
+>> based on directories, not files.
+>>
+>> Be sure to add a --dry-run option so users can predict what will be
+>> deleted. In general, output the directories that are being removed so
+>> users can know what was removed.
 > 
-> Signed-off-by: Todd Zullinger <tmz@pobox.com>
-> ---
+> Hmph.  It would be safer to show not just the directories but which
+> excluded files are about to be lost, wouldn't it, especially when
+> the user is trying to play safe and see what potential damage they
+> are looking at?
+> > Also even though ignored files are "ignored and expendable", nobody
+> marks their temporary file as "ignored but precious" (yet), so "it
+> is listed in .gitignore so we can safely remove it" may not be a
+> safe assumption for us to be making (yet).  Shouldn't we at least be
+> listing these ignored files in --dry-run output, next to those files
+> that the user may have forgotten to add?
+
+I considered this, but mostly behind a potential --verbose option to
+list the files that are leftover. Much of the design here is that
+these _directories_ are out of scope, skipping over any details about
+the contained files, so I thought this directory-based output would
+communicate enough information.
+
+A curious user may want to know "why are these directories still
+around?" and the more verbose output would assist.
+
+>> Note that untracked directories remain. Further, directories that
+>> contain staged changes are not deleted. This is a detail that is partly
+>> hidden by the implementation which relies on collapsing the index to a
+>> sparse index in-memory and only deleting directories that are listed as
+>> sparse in the index. If a staged change exists, then that entry is not
+>> stored as a sparse tree entry and thus remains on-disk until committed
+>> or reset.
 > 
-> This is based on maint-2.43.  I tested that it merges cleanly to 2.44 and 2.45.
-> I have only run a build with 2.45.4 so far.  I pushed this to a github fork,
-> which looks like it will run the CI for each branch:
+> Removing untracked directories is a job for "clean -d", so it makes
+> sense for this new command not to touch them.  Not losing changes
+> that have already been added is just a bad as losing new files that
+> the user forgot to add, so it does make sense not to remove them.
 > 
->     https://github.com/tmzullinger/git/actions
-> 
->  t/t1300-config.sh           | 4 ++--
->  t/t7450-bad-git-dotfiles.sh | 4 ++--
->  2 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/t/t1300-config.sh b/t/t1300-config.sh
-> index 1010410b7e..baf9b48231 100755
-> --- a/t/t1300-config.sh
-> +++ b/t/t1300-config.sh
-> @@ -2595,8 +2595,8 @@ test_expect_success 'writing value with trailing CR not stripped on read' '
->  
->  	printf "bar\r\n" >expect &&
->  	git init cr-test &&
-> -	git -C cr-test config set core.foo $(printf "bar\r") &&
-> -	git -C cr-test config get core.foo >actual &&
-> +	git -C cr-test config core.foo $(printf "bar\r") &&
-> +	git -C cr-test config --get core.foo >actual &&
->  
->  	test_cmp expect actual
->  '
-> diff --git a/t/t7450-bad-git-dotfiles.sh b/t/t7450-bad-git-dotfiles.sh
-> index 2026285566..d1546e3311 100755
-> --- a/t/t7450-bad-git-dotfiles.sh
-> +++ b/t/t7450-bad-git-dotfiles.sh
-> @@ -362,10 +362,10 @@ test_expect_success SYMLINKS,!WINDOWS,!MINGW 'submodule must not checkout into d
->  	git -C repo mv sub $(printf "sub\r") &&
->  
->  	# Ensure config values containing CR are wrapped in quotes.
-> -	git config unset -f repo/.gitmodules submodule.sub.path &&
-> +	git config --unset -f repo/.gitmodules submodule.sub.path &&
->  	printf "\tpath = \"sub\r\"\n" >>repo/.gitmodules &&
->  
-> -	git config unset -f repo/.git/modules/sub/config core.worktree &&
-> +	git config --unset -f repo/.git/modules/sub/config core.worktree &&
->  	{
->  		printf "[core]\n" &&
->  		printf "\tworktree = \"../../../sub\r\"\n"
-> -- 
-> 2.50.1
+> I wonder if we need "-x" and/or "-X" options "clean" has (and
+> perhaps "-d" that is a no-op, as the whole point of this subcommand
+> is about removing directories from the working tree) to control its
+> operation a bit finer-grained way.
+I'm of two minds here.
+
+My first inclination is "we already have 'git clean' for fine-grained
+control of removing ignored/excluded files".
+
+My second inclination is "'git clean' would remove these ignored files
+even when they are within the sparse-checkout, so that's too big of a
+hammer".
+
+There are a lot of ways to filter the files that would be removed,
+but I think that in this case most users are wanting a one-command way
+to get their sparse-checkout into a better state.
+
+I'm not making any final statements here. I appreciate all of the
+thoughts around which options should be default and which should be
+hidden behind options.
+
+Thanks,
+-Stolee
+
