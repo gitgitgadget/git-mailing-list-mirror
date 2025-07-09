@@ -1,130 +1,176 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878C12E973D
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:58:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF25E2DA779
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 16:08:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752076691; cv=none; b=PCM7OnBK7k9Fl16/dUeCTt10xqUNwLNgIROE7J4HvVj6T+Kf/n8DW9EgsnSIRCN47W34blm5bL86TnpTnRPtTxj7PyNQKNNOrJasKtF98SARG51sXH4g7LaqzJyzZIGqWTejOT7EyR1U2IWrVR9Ki4Gu15jzo7AqW16Ydi9ybWk=
+	t=1752077293; cv=none; b=VuezyRH3X6LNso6euzbfYD254YkOzJyOid35HDxDUTPRB41g7eagTmWgr28yWm5+HzC0dHO9RNFmU58ofeUaKUJyMlYda7st/6BC8V3bkmFCcKFzetJw77sfRtMCQU4HtpD7CfecbyP6yHY9vVyCS8LsCxJyvqc4BTc+SMY7FnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752076691; c=relaxed/simple;
-	bh=u1MANrlss2BHkZvGfGq7bCYt48Rji5n5I3B+XlR3rxY=;
+	s=arc-20240116; t=1752077293; c=relaxed/simple;
+	bh=EynJ/CLMrMbFwTzC2WDD2aQ/qI5WFwp6EJhXtrkTUTI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g8b644mEDNLxtz6LkE79+Vjg+LO/sNWm3hKm8oWR0kwUNCKBgWLwvuA/GTYlp8dgAKFzIkcO5We6fUAQe4ccjdz5zLyLGISZ3NC3PDK3vHFxyCkJw/IkpANpqWSyvG+ckqArlypTEbPuFYP+AiekhR7smLtyjL4kNQqq55ASQiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=M0XN4gCt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QYI4SJ4C; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=s0H/cFcCJPS+/LUEzmFCkVM/E5YjGeEwGOSXgtW64MhMyh4EePgH00kkxofWU0hvqThKYTmTkAOemLgRnOb0oWI4J3YLMAg0vq3xa3ylrIAd+OSbh7q0jmMxHqhR6GsiTgt3LzpVkduUuPIMK3TvjGeXx3KfHPmaiBxaR6zFJG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eBKDR57t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ibOTNCEQ; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="M0XN4gCt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QYI4SJ4C"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id B58FB1400353;
-	Wed,  9 Jul 2025 11:58:07 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Wed, 09 Jul 2025 11:58:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752076687;
-	 x=1752163087; bh=J/jJAOJZTzy5KR1HptaiGgIJbh6CNU4lQokv6c4JZg8=; b=
-	M0XN4gCtLzNeiB8Rxh+CWuqHS2Lrs8Jo0ivKOC7mFHuP0K0Xc93FbuWfjhgfco5Z
-	AFxbEsD0/fCVOP5unPwWxHPaTg9CYVRvcyMnuhsyoZ5W9xaH4Aqt1ExHhu2pnHHL
-	qM6pLXgxv6qtUJ3i+eSXO666Ml0ck3VJ3tGAoLZ2cM3G9phdyxDpDbzhh39v1K8g
-	/A6TzTiBcRepkWye/EvAddD7CIMHvRsDKt1T+PwzRhDEF3ZC/FbgY19dgcCoYJ9X
-	jfvji+IV7yvETEFzLEOBi8v9Lu/SboDel8Z0s2JCuaAN9muprUGObg32hulfi6Fn
-	8+cuNtlffn9IdbKWvyxDaQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eBKDR57t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ibOTNCEQ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D4A5F7A0318;
+	Wed,  9 Jul 2025 12:08:09 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 09 Jul 2025 12:08:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752077289; x=1752163689; bh=3dUTwtwhDX
+	VKACqfrgqyhd7PeV+leQ9NuaUTMBL3LuE=; b=eBKDR57tA7tbVNiyabaReEVVxY
+	OTBbmGpMnr9sqSyc7HVtKbMy6ZFwn7kEDyqUD9xt0GBPyDXgTee+3czvEefVLQZy
+	vL1gRs4iE3sVfC/npmDcqVYkNQHgJxw8o2l/m38n4FK9IrdyLsr3fBuHiwbWFZsD
+	DmCAoTNpk8nqLF1gqRxF4L+xxAVXSZpYNAQS+ZXWhwp073SqQn84ChMsWCQGc6Tm
+	zN1bFY6Ce2SX+SxHnrID+0TDb6Mx1VrMTtg9V861anc/KmX2dTXrekZta71RQWFB
+	wvb1l900L5bew8j4AW5pXwfRO0/CGnPF3Ihq7MhT7L0luJZfxkO41trtleKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752076687; x=
-	1752163087; bh=J/jJAOJZTzy5KR1HptaiGgIJbh6CNU4lQokv6c4JZg8=; b=Q
-	YI4SJ4C+1XyOkPg6QL4E83CZzPuaEMASM+Fp5vAe6yv7q0MFA7bWSMwy7b/RI5kI
-	OT8xKXxJIn4y8a+Gmtk5HJJDNIoAeeapQ9gLU5BHsU/WtVtpQCtU/LzBorSmeOC2
-	sQbw+veiS9hJHmyWdVfsuxaQBPsOlwfVwvgGSi9viCfz3TUprXbUDW0nrrpvJ29N
-	LlIL4/ZpPfCVE9TlSDXPlgY6RY0ymq131q2y2v43QQgpz3t+OSS2SSFkTz/2/+Kx
-	DfqRGcMV0w7pUfEHRMv+SO1BPKOmUVKZqo7LnYJBJpHCtvytFsv8xI6zsC4ZEmoF
-	kgOsFmuCsQs3CedRWSY2w==
-X-ME-Sender: <xms:j5FuaMKi6-KdOLRSd1mB0DwRi_wTKuCPJSoyBBUcNK9geFih85bIRA>
-    <xme:j5FuaMWOr81jds7CZXpK_UWUUOkxRrf01t9k2DbSawSDmSFDYTVBJEVTqqKwmilsV
-    sUCeJn0qI1apQvhfQ>
-X-ME-Received: <xmr:j5FuaOgQe-nltYpSxZWyGipJ8vQn8-FbmwGv1GOphMLm7jnXgfsOlgQESihyYErQ0dib8oYbcvbjU5sdI8sPsW0lAWB8Sa6B5zX1WyRPmFHcnA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeeljecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752077289; x=1752163689; bh=3dUTwtwhDXVKACqfrgqyhd7PeV+leQ9NuaU
+	TMBL3LuE=; b=ibOTNCEQlCoag6P/dtrhVU6x+Z/DJpu7BAKlOFOrl1QgL5IXffD
+	fHF8SZ+KHTTFqWlmxUGI+h5k5vi51vkirsdhgClydrwN3MB+SGclSxB6pZQu0AeS
+	egxXgaUtdwrSG5OWUspP4PT4s3Wft+HcPiWvWqIq5ZxVoGZTaCPQQyf7Ws7ZVVWS
+	h54ttaed+qTHhE6kfLD3YXHMHE6xsYRqtfmmtBZZu9pms2tqrD5144UW431VwicS
+	eDyOCvufG9omFGeuNMNmKvqyhuv1g4yS4LddHQm82HOwgt+symN22KkUHIPh11ve
+	TOwkBpjCpOaSbPJaW9as3T9yeqF2NjROglg==
+X-ME-Sender: <xms:6ZNuaBZxTXeekZgCUPONBKcTrCd0ePog67oqMahINCWm_ghc0mSJSg>
+    <xme:6ZNuaLryWOhOqGNU9aiaJMV6HJG0n7Najp-Uo3tHoGl9KzjXPMk5oWYUYqunDgqvX
+    3SjUJ4sqtDCsLTpeg>
+X-ME-Received: <xmr:6ZNuaNb4NNCUAUFsqz-Co4lD4D_t7usdG4hRBZMDvLv3tX2EXziSE4XdZNn0LQzEVDmc5LEqHSTspWSTgqtN5LdIM_Xr8244HVcqldg31nXXps6HoZ53>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkedttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertd
-    dttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehke
-    dvveetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheplhdrshdrrhesfigvsgdruggv
-X-ME-Proxy: <xmx:j5FuaH8gPapH1WhYk-F_OBFhGwjctSF-JjeCYVZU7anfZmxlCEb-mg>
-    <xmx:j5FuaIDb5BvB1kCRLdazQK64XAForzLH_DORvMVtRw2Ct-kDp0WR7Q>
-    <xmx:j5FuaEIoO7OmF3semqD4E7bZAVXjEuGYbfSdUdIicTSQpe04EK9GUg>
-    <xmx:j5FuaLlnBYGcUTJMRd38AnZ0u50-r6DdNhu5STaOwd8IyaGkFvdWRQ>
-    <xmx:j5FuaGsnv5C8M9yyPzNUiH9O7zOo7a9uCMi11KM-b00BgbXbbXxTwy8U>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvohguugcukghu
+    lhhlihhnghgvrhcuoehtmhiisehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    fgveefveeihfehhefhgeethfdvffehfeehueelheeiffeuvddvuefhveffiefgueenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehtmhiisehpoh
+    gsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:6ZNuaLSyx6HSQarolAnr2tQbTtH056JU_jlYEXE8n3n6E3ZLOOc2bA>
+    <xmx:6ZNuaM5PFi34V4ivHRJM5eO5qgzAODuXczPwtm2Mr1CCsMihndeVvg>
+    <xmx:6ZNuaIwY7uFW0a7pYn5DRijtnud0rGvvCNb-CPiuK6Y8Ub75wSjdWA>
+    <xmx:6ZNuaDT8rIgTWCEUX1hJYbOHxoqunRk_NU83_D-7bJ3B8NxQfa1uAA>
+    <xmx:6ZNuaMRTuKsNJ1PAjTPEKTPYs1t3cDozXrpaAYKU0tWaEujEbn49TfXJ>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 11:58:06 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c2aa277 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 9 Jul 2025 15:58:04 +0000 (UTC)
-Date: Wed, 9 Jul 2025 17:58:01 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
-Cc: Git List <git@vger.kernel.org>
-Subject: Re: [PATCH v2 2/7] parse-options: add precision handling for
- PARSE_OPT_CMDMODE
-Message-ID: <aG6RidvxUqV25Fli@pks.im>
-References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
- <802eba72-c100-429a-80b7-7a0e8b6559ed@web.de>
- <77b841ea-eab1-4e76-98ff-f7a16653fcb8@web.de>
- <aG51nFpH6kMT95uf@pks.im>
- <144ecb24-4da2-4311-bf26-3101788f4b12@web.de>
+ 9 Jul 2025 12:08:09 -0400 (EDT)
+Date: Wed, 9 Jul 2025 12:08:07 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t: avoid git config syntax from newer releases
+Message-ID: <aG6T5ylikwrGEEo2@teonanacatl.net>
+References: <aG1_eqSpH46UddZJ@teonanacatl.net>
+ <20250708210529.1214574-1-tmz@pobox.com>
+ <iuravzuqoqagie37is72e773zufuxcedwnc4i6ehhklpszg25t@bzu66havljcq>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <144ecb24-4da2-4311-bf26-3101788f4b12@web.de>
+In-Reply-To: <iuravzuqoqagie37is72e773zufuxcedwnc4i6ehhklpszg25t@bzu66havljcq>
 
-On Wed, Jul 09, 2025 at 05:05:35PM +0200, René Scharfe wrote:
-> On 7/9/25 3:58 PM, Patrick Steinhardt wrote:
-> > On Wed, Jul 09, 2025 at 11:45:14AM +0200, René Scharfe wrote:
-> >>
-> >> Call the function that does the raw casting do_get_int_value() to
-> >> reserve the name get_int_value() for a more friendly wrapper we're
-> >> going to introduce in one of the next patches.
+Justin Tobler wrote:
+> On 25/07/08 05:05PM, Todd Zullinger wrote:
+>> In a recent security release, 05e9cd64ee (config: quote values
+>> containing CR character, 2025-05-19) added calls to `git config get`,
+>> `git config set`, and `git config unset` which are not present on the
+>> maint-2.43 branch.
+>> 
+>> These subcommands were added in the following commits, released in
+>> git-2.46.0:
+>> 
+>>   4e51389000 (builtin/config: introduce "get" subcommand, 2024-05-06),
+>>   00bbdde141 (builtin/config: introduce "set" subcommand, 2024-05-06),
+>>   95ea69c67b (builtin/config: introduce "unset" subcommand, 2024-05-06)
+>> 
+>> Revert to the previous `git config` syntax for older maintenance
+>> branches.
 > 
-> >> diff --git a/parse-options.c b/parse-options.c
-> >> index 68ff494492..ddac008a5e 100644
-> >> --- a/parse-options.c
-> >> +++ b/parse-options.c
-> >> @@ -68,6 +68,26 @@ static char *fix_filename(const char *prefix, const char *file)
-> >>  		return prefix_filename_except_for_dash(prefix, file);
-> >>  }
-> >>  
-> >> +static int do_get_int_value(const void *value, size_t precision, intmax_t *ret)
-> > 
-> > Nit: after the fourth patch we have `do_get_int_value()` and
-> > `get_int_value()`, where the major difference is that the latter dies if
-> > we failed to parse the value. It might be easier to discern which is
-> > which if we called them `get_int_value()` and `get_int_value_or_die()`.
-> 
-> That would be misleading because get_int_value() doesn't die() like a
-> function from write-or-die.c, it BUGs instead.  I don't think it makes
-> sense to advertise the presence of assertions in a function's name.
-> But we do have a tradition of using a prefix of "do_" with wrapped
-> functions that have a more raw interface and do the actual work.
-> 
-> Nit: They don't parse, but cast a void pointer to the appropriate type
-> and dereference it.
+> Thanks for raising this fix! Apologies, it slipped my mind that the
+> config subsommands wouldn't be available on older versions.
 
-Fair enough. I don't mind it much either way, thanks!
+No worries.  Thanks for working on these CVE fixes!
 
-Patrick
+I thought that the CI might catch those failures, but I
+imagine they slipped past others as easily as some other
+failures slipped past me last night.
+
+There are unrelated test failures on those older maint
+branches which make noticing any new test failures less
+likely.  Even more so when you're working on a security
+issue and there is less time and fewer eyes on some of the
+less important details. :)
+
+I looked at a couple of the failed jobs at the time and they
+were unrelated to the tests I'd changed.  I incorrectly
+presumed that was the reason for all of the failures.
+
+A few (linux-leaks (ubuntu-latest), linux-reftable-leaks
+(ubuntu-latest) failed t7450.50 (submodule must not checkout
+into different directory) with:
+
+  + printf sub\r
+  + git -C repo mv sub sub
+  Aborted (core dumped)
+  error: last command exited with $?=134
+  + rm -rf sub repo bad-clone
+  + exit 134
+  + eval_ret=134
+  + :
+  not ok 50 - submodule must not checkout into different directory
+
+I don't know if that is worth looking at, given the age of
+these maint branches.
+
+While I was poking though, here are the other failures from
+the maint-2.45 branch runs at GitHub:
+
+Several jobs (linux-musl (alpine), osx-gcc (macos-13))
+failed in imap-send.c and http.c, with:
+
+    call to '_curl_easy_setopt_err_long' declared with
+    attribute warning: curl_easy_setopt expects a long
+    argument [-Werror=attribute-warning]
+
+I think this has been fixed in later releases.  It rings a
+tiny bell, anyway.
+
+The 'pedantic (fedora)' and 'win build' jobs both failed
+with:
+
+  Error: object-file.c:58:9: initializer-string for array of
+  'unsigned char' truncates NUL terminator but destination
+  lacks 'nonstring' attribute (33 chars into 32 available)
+  [-Werror=unterminated-string-initialization]
+     58 |         "\x47\x3a\x0f\x4c\x3b\xe8\xa9\x36\x81\xa2" \
+        |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  object-file.c:80:17: note: in expansion of macro 'EMPTY_BLOB_SHA256_BIN_LITERAL'
+     80 |         .hash = EMPTY_BLOB_SHA256_BIN_LITERAL,
+        |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+which I presume is also fixed in later releases and may not
+be worth fixing on these old maintenance branches.
+
+> The changes here look good to me. :)
+
+Thanks for the extra eyes.
+
+-- 
+Todd
