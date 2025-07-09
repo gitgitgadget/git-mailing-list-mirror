@@ -1,181 +1,112 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5025121D3D9
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 16:36:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047405695
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 16:47:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752078968; cv=none; b=N/c9ZN5QrIlQQD0D5MuOmk9X9G03FZAe7tOg0dnhgGjG0QMzyolGthzKiiFlbPqYlz3ekue9ZOlvC/PtElsh+ER2wvdWhrBsNGY6/FdToNy7xaQlTroQzA3aaBX8jkLl9E+8TD4RWPKtJ4A7A/aaYI7QwrZy2gP8QFTWQK0ko0o=
+	t=1752079623; cv=none; b=Xpwya7eqHUpseX8fsiQxcbS3qtfM5T7byYmlSvm6ihrjXsxJbWunqJyvgCdWP9P7nx0NTceuSuWstPLHg2/Wk6CYkjYdtHqp/ElwJjQSEfjUmC4QdFQEr8g5qPchu2krLHv7No7rTvjNzKd/ovvPyR5HJei1VeYWJLA1NznbkCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752078968; c=relaxed/simple;
-	bh=ELyYedTBVZh9w8KfCOzeM6dhrEosYgw/tYtEEldbEGI=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=En7BuWia4rFARbhXYAvHFBMKzm4f3upepYo5AOVniD9JdKgJ+nAyPIozawZtFVqgPDDxeKKoRi6ASx4vK9NEE0lL0iQ6PHVMhzUpnJs249jdPHo54vs3GeXQAoVjeEANHAo2ObbVXXqHNHn15jj4Zg35BY6eOK0mb9shyyLupVg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VK8b6nBY; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752079623; c=relaxed/simple;
+	bh=TStb76rZKpqdrQdBqku/DipV5bkW6P8znbliGiEt7NI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CiS7k/kCTNERzZ71uFNMoFFewLHJYRzri/EJMgTWiWo0mPZAdSnKz8ybewp0b9VMf3v1DZIGeiPPiuxr7nY22jO6TA7Sx6WOsw/tGMTP0/ZKuiW1snxTC9roIUjNdP4H0uPup7vDxtcKXKt2zyg+ynpdDsSN5A3UxO3gr9E7tUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R/iE9u78; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eWFYluZT; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VK8b6nBY"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-73972a54919so63731b3a.3
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 09:36:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752078966; x=1752683766; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=HALWPgII0vsBquyiPgCmCnM+9KSO/sdjsNdksKt8Ilw=;
-        b=VK8b6nBYQaZmTu0oUsromzR/DkvH3BSglSx3lktl6NZl1SghFjjLlaVDt9VmHuiEtR
-         hSIq6fClsXD3jO3DHKuYoA/ViRlOFnWSEusTIihx+LWN5GFwLgbN2okgiKY9eXFQJ1L3
-         2kd0jcy2IisxmwQzgT+Dd/I+2EnS9nQeeSaTsWOHaNekQtN/H8iX5aSZE1c/X7Optj3R
-         ndSiw1o5QceadNDSpZEbNU0dn1zDiN9+t/M2QKkeKPy/5Vy8eQK2M1eFrWfwXmx/QpLI
-         w1awTfM52LeOB1g9AUteFN49va1Mc5W0JYIdMyhwvf9wvycWvLmBDN0zCIgZQf77u4Te
-         p6AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752078966; x=1752683766;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HALWPgII0vsBquyiPgCmCnM+9KSO/sdjsNdksKt8Ilw=;
-        b=Q5iNkO+Lic2wwAcRlXVwokpUCPziYwXSZOH6ujTuMUIi602yWgJ5Z+IcY/0ZLVjsZi
-         jNXqF/6gJp3vVLb2+nqbZOp89FDA77HORcESmc2mfZqVXMqdstvDFscEzc5DIgDHE46A
-         1G64IIDVLe44+0gmGDArNPrsofLCMqiNNae994jc54PRpvu0qUA1/p0nS61UpcFql6iK
-         5mkzOa5UxaDAavua17gkJ/s3a+hi8GjYsaR6VFu4K/VevhS1ZDlf+msp54/uNTvRo2gf
-         tjdEUsTXMjbyeAc0dXe6r0g+X2lAGEioerKTzvBgKIDD07g3vdA7vLYY4of1xHN8ZPHd
-         z0LQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVqk2bMV+ShXwwnRzKR9KuncJ4Nshmel/r5Xkkfy3PgxXpHth5KqUi9706NY1U843rMooY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzyPr02awyyy1g1Vc2NgisQzozNQKg1gpWWPP+ofkT+lKhanGXp
-	ppbWezPfjOC/s1sWhaXqyxZ1syRencBZNne/GGDZHgVKUOI2bNOC2hFG
-X-Gm-Gg: ASbGncvsQFwwIIpEFzvtyHTdtjAhYIZ1tft6X9B/GQ02kEm+wyUhr19W+pT7sSPoGTU
-	MlUqWyd8LeMrMyHpALt5lZozA/yhmKN7TQAhILaiGeXSCtnVxTlfKT/jap2aUNGjWwW21r+r/Ea
-	SD95FLMcySefsouwR7u2YLF0QvA/xcG/wY3ePNm+39YybfagK3Di3LztHoT5Eum+mS8dAlejGsh
-	zhjRX4dKIfkLPwiy3Y4S5wbPAsYfVMGO4DmkTmPhLhubvF4MnQODQYd2KZDHLlc6aqaTJtnpc2q
-	xUX6aJtFa/pilwsepdtW9uurDtlCAvRCKKLg+qcdudfdxLWX+SHtdmGoJ/8ErWSlqTKmsx9Wrjn
-	kzwkaSmxakoMgQQ0kkfbADkU=
-X-Google-Smtp-Source: AGHT+IF3WwWWqD1nLcjJN0lNo7i/Mem5F7IEz+StvFpKMA3YImi7Wtf1UGyzBj6rayUQhpV9QFhpfw==
-X-Received: by 2002:a05:6a20:7d9c:b0:21f:563e:b7e8 with SMTP id adf61e73a8af0-22cd541efc7mr5581881637.4.1752078966312;
-        Wed, 09 Jul 2025 09:36:06 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:ed82:7a2e:d82d:94a6])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce42a26f7sm14554933b3a.133.2025.07.09.09.36.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 09:36:05 -0700 (PDT)
-Date: Wed, 9 Jul 2025 09:36:04 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: phillip.wood@dunelm.org.uk
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
-	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/4] compat/mingw: allow sigaction(SIGCHLD)
-Message-ID: <3hrbpiapamvfiuilebjcbcruppz3vukf6mndg62j6gvko2jfs4@ll24s25shcgv>
-References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
- <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
- <3f63479119ffe6fdcf694dac3cb47cd7838564b7.1750927989.git.gitgitgadget@gmail.com>
- <49cf7749-fc86-4829-8e94-c1f1e87803aa@gmail.com>
- <qizh636elher65bsdzkiqohzyo23tmon7hxcl4jcuftculbtm6@nupmqjy3igja>
- <a1fb8c27-6ddf-42d5-a062-a9710f6cc1cd@gmail.com>
- <o6cihjnfj4q6uiks3syovjun3fcijvsqto444osw7tgtpkttvt@42r37athz2tw>
- <0dd51eab-8869-46be-beca-238a616dd6f3@gmail.com>
- <p6xegxqqq4wzi6gnokypy3k5auxk3d2wxmj4pj45ugfomace3q@y5q3e2al42oj>
- <0931e1f2-6254-474f-be91-664cec9745f5@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R/iE9u78";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eWFYluZT"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2518D14001CA;
+	Wed,  9 Jul 2025 12:47:00 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 09 Jul 2025 12:47:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752079620; x=1752166020; bh=mA6iv+fqW+
+	y4RWwtRel07kkbt6e4w9G6/rmerYf1mOk=; b=R/iE9u78ApyZwRG0p248SqBu7m
+	OiWgqEQAqgzXXRLGbCpLzgxo9YQr7JeWTQoywT9u+GlwyXlwNZvIHUxz+YoDzkku
+	QhNW7jcYUTWse0BT9sU7b95QO+V1pxGcRx+HT24jkfCEOKP+oSVh9ywH8AZ37iwg
+	6FYeo2qI09mk36v5LENsXcIX+l2pYJzpeOJRTbGH08cde0HAdaDmaqprSDVEA6mU
+	2FSDa6h45Qs7xLLMIHP4l0NI61nC7RtlLveNZ86KeGliDmbNJLju618jUHlQJLJT
+	HOagwQk5zUwfA/cJ76Md6lctPUM/k58RasDU69E1CBth8pxXX3ARXwjRHmIg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752079620; x=1752166020; bh=mA6iv+fqW+y4RWwtRel07kkbt6e4w9G6/rm
+	erYf1mOk=; b=eWFYluZT7W4IolmktMjphm3PdTjdLKpIppw/fxwqANmx6CyrikB
+	pbKwK2lV9BxLL03XiIF5h7yRacJxlVSngAktyvyJedFxaU1H+AAqxbFbzD4mzE2d
+	MewK0tjRWXtViYEKrYKWeq+CidvWCKEeIx9j8f885PdbE3DfD94xvVrZD9btU3wP
+	rXoKtdk69Ei7QrK4z1hD15zxYKvx1Ey6XOURLEwHXRGzhr0xy5OwPOmixBM5eS+t
+	5CArl5VvDb4gAntO0+MmkbtiMeN+IelHaL59hMgM4lI/rLWxEl9w4ZS3ZzZXpOfo
+	MyTAm7oQF7qAyk9ZtalK4Vhh9tYoVyYuGXg==
+X-ME-Sender: <xms:A51uaOhfm7j1seJOeDB81BxcKYV27iUw3FxvZ0isO_zCiM19NDBgzA>
+    <xme:A51uaKjYRG92tZeLVY99_RjmOD41l0yB4KYPgvT0Ed0hoMxGTXXsa2xYO1W7y3-wL
+    gIpkD0ptNnlmFjniw>
+X-ME-Received: <xmr:A51uaMhZeCukfspY7kuDN_COlVxPGeY6ZEfiFeOQj53qtGthnUghtFIgviHZONsIrwJNbKFmzH6OF1EKyVVm1-Tg_GGR7SgQcrIH4dQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkedtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
+    hopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepnhgvfihrvghnsehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:A51uaCKnXQxuNGFCzdrLg7Xc-JZ4f5cuxdOqS1mYoRBg6xIzFH0e7A>
+    <xmx:A51uaDEPXft5s7FrTw5zhO93Vsj1roVn_oaBNZA5-LH5H1gAyGsNdA>
+    <xmx:A51uaOTFqncZ4Vg-zslpxSG3OqR6yWXkbhS-LSWpKbcXeXgtD2I5dg>
+    <xmx:A51uaHdbIn8RPV0oKe_VzvM23QQgC2PrfMT588tP8fN3v6_yFIh1Eg>
+    <xmx:BJ1uaBhnNdpkK9nxJufo8JNLJlOFESvk70Jvqb7HDXeylWIPGdpk3h56>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Jul 2025 12:46:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  newren@gmail.com
+Subject: Re: [PATCH 2/3] sparse-checkout: add 'clean' command
+In-Reply-To: <2503c79c-68f3-4ed5-bbfd-3a7af07a89cc@gmail.com> (Derrick
+	Stolee's message of "Wed, 9 Jul 2025 10:39:29 -0400")
+References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
+	<49418e8ec8a4c3e0ce9c65aa700042b6f3f3f4d7.1751973594.git.gitgitgadget@gmail.com>
+	<xmqqa55etm5g.fsf@gitster.g>
+	<2503c79c-68f3-4ed5-bbfd-3a7af07a89cc@gmail.com>
+Date: Wed, 09 Jul 2025 09:46:58 -0700
+Message-ID: <xmqq5xg1cnwd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <0931e1f2-6254-474f-be91-664cec9745f5@gmail.com>
+Content-Type: text/plain
 
-On Wed, Jul 09, 2025 at 03:13:06PM -0800, Phillip Wood wrote:
-> On 26/06/2025 21:09, Carlo Marcelo Arenas Belón wrote:
-> > On Thu, Jun 26, 2025 at 04:19:11PM -0800, phillip.wood123@gmail.com wrote:
-> > > On 26/06/2025 15:58, Carlo Marcelo Arenas Belón wrote:
-> > > > On Thu, Jun 26, 2025 at 02:56:22PM -0800, Phillip Wood wrote:
-> > > > > On 26/06/2025 14:15, Carlo Marcelo Arenas Belón wrote:
-> > > > > > On Thu, Jun 26, 2025 at 01:52:47PM -0800, Phillip Wood wrote:
-> > > > > > > On 26/06/2025 09:53, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
-> > > > > > > > From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-> > > > > > > > 
-> > > > > > > > A future change will start using sigaction to setup a SIGCHLD signal
-> > > > > > > > handler.
-> > > > > > > > 
-> > > > > > > > The current code uses signal() which returns SIG_ERR (but doesn't
-> > > > > > > > seem to set errno) so instruct sigaction() to do the same.
-> > > > > > > 
-> > > > > > > Why are we returning -1 below instead of SIG_ERR if we want the behavior to
-> > > > > > > match?
-> > > > > > 
-> > > > > > By "match", I mean that in both cases we will get an error return value
-> > > > > > and errno won't be set to EINVAL (which is what POSIX requires)
-> > > > > > 
-> > > > > > In our codebase since we ignore the return code anyway, it wouldn't make
-> > > > > > a difference, either way.
-> > > > > > 
-> > > > > > signal() returns a pointer, and sigaction() returns and int,
-> > > > > 
-> > > > > Oh right, I'd forgotten they have different return types. I think we should
-> > > > > probably be setting errno = EINVAL before returning -1 to match what this
-> > > > > function does with other signals it does not support - just because our
-> > > > > current callers ignore the return value doesn't mean that future callers
-> > > > > will and they might want check errno if they see the function fail.
-> > > > 
-> > > > I agree, and indeed had to triple check and change my implementation after I
-> > > > confirmed that signal(SIGCHLD) does not change errno on Windows (not our
-> > > > version, neither of the windows libc or mingw, even if it is documented[1] to
-> > > > do so.
-> > > > 
-> > > > It might be because the signal number itself is bogus (there is none for
-> > > > SIGCHLD in their headers, and git uses their own numbers in compat), but
-> > > > either way, I would rather be consistent with signal() at least originally.
-> > > 
-> > > I'm not sure I understand - don't we want the sigaction() wrapper to behave
-> > > like sigaction() would?
-> > 
-> > for at least the first iteration, I would rather have sigaction() behave
-> > like signal(), so that the change doesn't introduce any regressions.
-> 
-> What regressions are you worried about?
+Derrick Stolee <stolee@gmail.com> writes:
 
-Any code that might be surprised by a non 0 errno, even if I agree it unlikely
-to be an issue.
+> A curious user may want to know "why are these directories still
+> around?" and the more verbose output would assist.
 
-FWIW, the Windows compat layer is not very strict on setting errno, and since
-a call to the CRT (at least with the current codepaths) doesn't either
+Understood.  That one is what I was primarily after, as opposed to
+"These directories will be gone, as there is nothing interesting or
+worth saving", which I find much less interesting (and perhaps
+should only be shown with --verbose, as opposed to "this will be
+kept even though it is out of cone, as it contains these things that
+may worth saving", which I think is something the user would care
+more).
 
-> We're talking about changing a
-> single call from signal() to sigaction(). I'd have thought we're far more
-> likely to introduce regressions if we change the behavior of the windows
-> implementation of sigaction() to behave like signal() as that introduces
-> more variation between different platforms.
+>> I wonder if we need "-x" and/or "-X" options "clean" has (and
+>> perhaps "-d" that is a no-op, as the whole point of this subcommand
+>> is about removing directories from the working tree) to control its
+>> operation a bit finer-grained way.
+> I'm of two minds here.
 
-Don't get me wrong, I also want sigaction() to behave the same regardless of
-platform, but I would rather do that in an independent change.
-
-Indeed that is why I was asking for the possibility to change the SIGCHLD
-definition, so that signal() starts also behaving as documented and we can
-fix sigaction(SIGCHLD) to match.
-
-> > eventually, sigaction() should behave like any other sigaction(), but to
-> > do so, I suspect the windows emulation might need to change their SIGCHLD
-> > to match.
-> > 
-> > just confirmed with MSVC that if I use 20 instead of 17, errno gets updated
-> > just like the documentation says it should.
-> 
-> Oh not so setting errno as you want to do would not actually match signal()
-> on Windows in that case?
-
-I explained my thinking before already. I am not a Windows expert and indeed I
-am surprised that signal() in the CRT behaves this way, but I suspect it might
-be because of the same reasons why raise() triggers debugger breaks that are
-explicitally called for and avoided in the mingw compat code.
-
-Eitherway my preference is for this to be handled indpendently and preferably
-not as a prerequisite of this change.
-
-> > Carlo
-> > 
-> > PS. Maybe we should get dscho involved?
-> > > > 
-> > > > [1] https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/signal
+Same here, and that is why I said "I wonder" ;-)
