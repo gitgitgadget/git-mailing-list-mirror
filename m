@@ -1,59 +1,52 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386ED801
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667EC944F
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:47:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752100989; cv=none; b=l0xDJh2fz1jyKSf03CAciY1wqpSd+uVHmrdEqgOAgVMhlUio/mHLsStlioPF1jda2+Mb5vSlo6BCAYSW2c5CB1sVy4jYA07G77gn1Hd+1QqX0noiW4nad2F98+0VtNCQpuK5cZmgIh650eqD12K9h+NqL1xmVsgvBgtq+ZY3Mcc=
+	t=1752101234; cv=none; b=feHXzFyVFVqsDdyPFdPQEyi7Rj+Uow5nDM6POaVQFR9R6mvDoMa5FF92AWsjkdXPvd80msgIrOwJiL7cUji3sf15fhedcoQzlvqADqdJjVChNVCQNxZy8h5MU5g4K3LuVuOuDGZgwYRjHM7eGw4UAipdMZESSYOqySAOtzxHlJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752100989; c=relaxed/simple;
-	bh=EFCfPaYoRYLr2TRqZm6Woxy3Aneh30Ci8ParaNnaGEY=;
+	s=arc-20240116; t=1752101234; c=relaxed/simple;
+	bh=hv8Zo+nUcAN1a0to3CB5TKFxAEanfXecmIR1QGJLj5M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cTPDVl6KTMOs1zWZ1OPwsDGw2wN27HinEIMSoRbIrX0iMPNZZ5AGuRt/mw4aNpH3S/vh4+MsCaxWSnlr/upH/p3aluqmUjBV1c0oEv7HxvkVDaXR70b/1KX9PNe02PI0vAGaHPGlx+QN+efscezj8W3aVbipi26yt38JXstoyfY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PaA09Lot; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=gxF0mfW8tpxDG/tTb9Vk4vu56ODUFjZA1z2bZCFIwgGExMuA1yodniNHsj2bW+ZH5W+5xo2vUwUc3m8YVUj0iPcozndLwbVZAz4fmqxewI6szKmjAr/vU/JMEUB2aTZLRNWAmrjEETkKQ714ck9NZrMxj6MW1a9W7kgwVbXqcxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=HrvMwsPj; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PaA09Lot"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HrvMwsPj"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1752100979;
-	bh=EFCfPaYoRYLr2TRqZm6Woxy3Aneh30Ci8ParaNnaGEY=;
+	s=default; t=1752101231;
+	bh=hv8Zo+nUcAN1a0to3CB5TKFxAEanfXecmIR1QGJLj5M=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=PaA09LotnNERX9GcPpdnBOdplLJe557GDeGbMNXodqLS/8m4k4+uCNc2hLIUqqCNS
-	 2m4pEGeO/7rWN5lMGGvstBAO6lOsdegJmQl5H7bwn15I/5d4FquulEFIAndFJBoHhe
-	 QGnk2OsDxhtXmJvrttcQnjIxu9HCp9jyijYbClL6aKny+o9hYVSLaBq7ps/aBlxKEN
-	 0rZodCNPXdwj3UNMeYAX6ctey+tesqrXy7+2PWBXRP3//Ko3T+EJU8AMVHcw6mgDOw
-	 bmB4m7EQflK2WSI2bgVEsrSI6YkLtpu0psih6n1/1iiRSESDbEsyEC6GY68fXnVCbc
-	 lOA5j1H5Pyf9S7bKosb/EzM+2ZLSitekgCWS2Oo41RWYS019h+i82erzKOeQwZTMzT
-	 BvSYHV1qEAxhRoO3kK4ePGx67fGNsr6LVEPwMMGKnY9dUkAOnnap/OGYBCRq8la2/R
-	 YiDSt8BG2SlMUV86PK+zbWtlT2C2rsdlAZMLsTXY1eDPYNVCAo4
+	b=HrvMwsPjUva3A3Tapt4N/m5wnAsY88BujBVFUtaHDNUmxbV0X+e/7Hh5ax9jwZu+F
+	 3A8W4SStvpNUPzLFN/Q5KhukKM/yV+Zgui4LmtWzfAek+PkWe04i/s9CTuQcY3m0C/
+	 pVGL+E7AUpUwrW2/RdyTeO2r4C3bbY1h6VEBX8mRX2p95qaXdSlzxOtjDvunnC4Igu
+	 b8rt/VrJsBsa17/KqSC+DXVcaDZD4xlG0QGqoLILbY3Z6N9unPkd4a7m3VjtIvFBVv
+	 klzcnfScpZuuDDDM2kCenJLxNdLK81iAyqRk9F0QfVYI9InC52DgRzExZsHEn+xL/f
+	 pWo7waYTKShno/lCWoFOT0bY+0qD0qGgYBws1kCwH/v+lYJgYm0B4iKIklZuRDqy+m
+	 HlUt4pMqnXWbp0Vigdw9FFbn8DogQI9TMf3pWWN/r94l0+xK+UkH5mSN5raqhGG3xk
+	 c/QFItX2ZRslFXnoUcnOjnAXa1vrG6jOj76/t2fMwaObuHvU2yD
 Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E7B5920075;
-	Wed,  9 Jul 2025 22:42:59 +0000 (UTC)
-Date: Wed, 9 Jul 2025 22:42:58 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E69EA20075;
+	Wed,  9 Jul 2025 22:47:10 +0000 (UTC)
+Date: Wed, 9 Jul 2025 22:47:09 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Jeff King <peff@peff.net>
-Cc: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	redoste <redoste@redoste.xyz>
-Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
-Message-ID: <aG7wcoy3gTzSd_4w@fruit.crustytoothpaste.net>
+To: "Preston, David J." <David.Preston@onegas.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: git bash bug
+Message-ID: <aG7xbbPf2ZsTh1ND@fruit.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Jeff King <peff@peff.net>,
-	Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	redoste <redoste@redoste.xyz>
-References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
- <20250707204224.GB3115893@coredump.intra.peff.net>
- <CAN0heSou=BgC8ec9ZE+V-pYKt+XQiNfOBHj-5CZY8s5XCatZTg@mail.gmail.com>
- <20250708225134.GB1180568@coredump.intra.peff.net>
+	"Preston, David J." <David.Preston@onegas.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+References: <PH7PR11MB65466DEE20BA470C600C7B9B9549A@PH7PR11MB6546.namprd11.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,75 +54,63 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="D7vz128WWDWEVLOC"
+	protocol="application/pgp-signature"; boundary="+FMpVaAXOE5ZX/Wo"
 Content-Disposition: inline
-In-Reply-To: <20250708225134.GB1180568@coredump.intra.peff.net>
+In-Reply-To: <PH7PR11MB65466DEE20BA470C600C7B9B9549A@PH7PR11MB6546.namprd11.prod.outlook.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---D7vz128WWDWEVLOC
+--+FMpVaAXOE5ZX/Wo
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-07-08 at 22:51:34, Jeff King wrote:
-> Yeah, I agree (and didn't know that before; thanks for mentioning). I
-> think mostly I was just hoping that some of this reasoning and these
-> pointers would make it into the commit message.
+On 2025-07-09 at 17:20:22, Preston, David J. wrote:
+
+Hi,
+
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
 >=20
-> The content of the patch looked OK to me, though I do still like the
-> CNCF wording a bit better.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> started happening after an update to a newer version of git... has been h=
+appening for a while, so i am not sure what version it started with
+>=20
+> What did you expect to happen? (Expected behavior)
+> when using git bash in windows environment, when a previously typed comma=
+nd is executing and i start typing, i expect that what i type will eventual=
+ly show up on the command line, in the order i typed it, once the executing=
+ command completes.
 
-In case it isn't clear, I'll be sending a v2, probably this weekend with
-more of this information and some updated wording.
+The Git project doesn't ship bash, a terminal, or any software other
+than the source code to Git.  Git Bash is part of Git for Windows, which
+is a separate project.  You may want to report this https://github.com/git-=
+for-windows/git/issues.
 
-I don't love the CNCF wording because I feel it's too ambiguously
-worded.  What is the "community"?  The open-source community?  My
-neighbourhood?  My friend group?  Can a real name be a username or
-handle that's distinct and unambiguous?  What about communities where
-people share the same name?  (Debian has, or at least had, two
-contributors who both have the exact same full legal name and can
-therefore only be distinguished by handle.)
+I would recommend searching for any relevant issues, open or closed,
+first and providing any information that might be relevant.  For
+instance, does this problem only occur when the system is loaded or does
+it happen all the time, even with little load?  Is there anything else
+going on that is correlated with the problem (e.g., a virus scan)?  Does
+the same thing happen when running Git for Windows's bash through
+Windows Terminal, or is it only the built-in MinTTY?  Those kinds of
+things might help the maintainer solve the problem more quickly.
 
-I also think redefining "real name" in that way is misleading and leads
-to confusion that might put people off, especially those that are not
-native English speakers.  I know it's common for lawyers to redefine
-language to mean something very precise but different from the language
-that ordinary humans use[0], but that's ultimately dishonest and tends
-to deceive and we shouldn't do it.  Most people take the phrase "real
-name" to mean something equivalent to "legal name", so we should use
-language to describe the requirement that doesn't confuse or mislead
-people when it's used without further context (such as in a social media
-post).
-
-By contrast, we suggest that `user.name` "conventionally refer to some
-form of a personal name".  That doesn't work here because I did intend
-for us to allow handles or usernames, but Wikipedia describes it as "the
-set of names by which an individual person or animal is known" and, due
-to the use of the passive voice (an intentional choice, I'm sure) is
-specifically ambiguous and allows lots of allowance for personal
-circumstances.
-
-I'll take some inspiration from the CNCF post and rephrase to make it
-more approachable in v2.
-
-[0] For instance, one time where I was told that my laptop's removable
-battery was an "accessory" and was therefore not covered under warranty,
-despite the fact that it was required for the machine to boot.
+Best of luck on this.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---D7vz128WWDWEVLOC
+--+FMpVaAXOE5ZX/Wo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.4.7 (GNU/Linux)
 
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaG7wcgAKCRB8DEliiIei
-gapkAQCQuQS0ITlh6KcOaI388pBxCsfuiYxSMRZo7mwMcasfSgD9ErehfkqplZZH
-w52CohF+yIHlA1YG2PukTOuggXDsNgA=
-=obgA
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaG7xbQAKCRB8DEliiIei
+gcofAQC3qwmrc5J18QhdudryGOt0E8rLKvLRdD9JzJHhvak+KAEA8wj10vCDxLmf
+/gWKOIpZ6rPQPAUY/OhggwYtWdNerQg=
+=EPUn
 -----END PGP SIGNATURE-----
 
---D7vz128WWDWEVLOC--
+--+FMpVaAXOE5ZX/Wo--
