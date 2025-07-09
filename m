@@ -1,123 +1,107 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 775B114F9D6
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 17:00:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD92322068D
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 17:04:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752080457; cv=none; b=il/ESklbJMHybMeWIoIfEUpxhar7vayQ+Vfa6eqQUA6HMeinqxldpEfx6VqMp8faYhf8usT3z2Q5s3Abj89GiDYFr9Ww2LF3H4N37DKre2DucV9vboBr80fwi/E3YKatqeiFKYDsIKv/tGTrFSOCkTn+KEKnZ+MZ1MTsycpvA0k=
+	t=1752080700; cv=none; b=S3my0XnkgfI1LNP7MyoxA4ecDeOx+iEJwpapWgZldeupEYBotvbIguXAS/qJpKpwpu2tGxhVo3Ywtrgn5TErqruzgSjN1E+oOIE9fY9tK28zA0CzOohxEtwl1HMa2jA6LoA+lgK2sFzK7M2ikq1PbDrsaU6DaeLbUW8MVlDR64M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752080457; c=relaxed/simple;
-	bh=gUX09qwat1WxD/zCtNQn2seZ2TlqE8RLQWAhAJA/l5E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GmVZMNdxfFtWOOLiMcGf2fnb+z47BYlz9qVREDCD53C+mKKLgTjQoXpXlfTY1aMjoJxjRKrMEwtSmLw6PfRj/Lq3+QPpuCqRq2Kos0Xlz8mjMF8eqajohNEPf8uI5tEs5F/LMvxikSJlQSO4L1Z/GmCE87xlTMcZQrI9OKSeNvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NzZuyelu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HnuAReKb; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752080700; c=relaxed/simple;
+	bh=8Zqzx25tFRQnTKMEZpTqeCSVbCokzTxySy6/LMOwZdY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bPxQZUxTlx/4WotRKhBUPm9bdRdF4K4hAJcK1csXkwpDdajZfvtkSb64tCbh/EVwVNM6ifNg8XEufYqCv75EDQRUkNmhoPmnfEML4j14ONmT0sN0VYroJNTMwNJeIIqjVBygY6vHUOgF1EO3+KznKw2rXHmaoPISmi2qvLukBHs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nSKor3dN; arc=none smtp.client-ip=209.85.215.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NzZuyelu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HnuAReKb"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9E68614003A4;
-	Wed,  9 Jul 2025 13:00:54 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 09 Jul 2025 13:00:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752080454; x=1752166854; bh=fZGUzUyj2p
-	0j/4lEJw6aFO6W9ndJIvj48xrgEfbCDzk=; b=NzZuyelu2N/cW5QDLgJvOyG9sv
-	/MIvoU8BIOF7z6Bt2KCluX3nmXqFJf4GfZr4mobBgyFi75TYQ5lK8N2tFrizRUNO
-	9MshF6VbW3GwgGbW5I8GpIt5TStS0LNOcr3aCBDpZ+/ri+bViIvWdrk1EZm4toh/
-	BvHbBfwS+wVpenrqncqlpUUVU1EZwI9s5H4tlXCWwrD5dw9rEqX9Bd/VtwSS8QnR
-	YCMTZ+ExD0qOrzXHgAYWbDR6UTvo2Pej6U1OVAokjTKgZU+2ZMlKscF4iJeUSeUJ
-	NyhpBLQ1/vK2SWwvRapyJKBmPVkelOrQ1aE3xtt2iNZ8KDArYISUaGBsIsAQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752080454; x=1752166854; bh=fZGUzUyj2p0j/4lEJw6aFO6W9ndJIvj48xr
-	gEfbCDzk=; b=HnuAReKbLcoXZtciQuDCQHPfHaN53PNlpH9Kg8xT1pjJISj/Z0h
-	LMtDl9u56iEr8O0upkm5uNMh8mjRQW5/ppRqXm12V5I7zMwqhwJboMTIMLehjR0N
-	Jm/Zan3p323679neLb0HyPwihRzONFnPmkiod0QMpgsA6u+YvB0nynzRKYtvebm7
-	/1cvUbmmHna07gLPGEJjfBNMdSTFzStLByIgPSnu3N6coRHrbZXbJhH0wxWfY/qh
-	eKwHGbI9HibH+D+pPp1xVtPZmOXd34tgNC033HQaGWNsIIQAV8dGwWkeTnzHgHd8
-	SXkGkIxgkVRd6yiAd2XExG2uCebWH46yYsQ==
-X-ME-Sender: <xms:RaBuaPKJX5sYhb6-1v49qPsKGaJ5YfRwQKGaMqeNEU4ZNaIZhNzK5g>
-    <xme:RaBuaAHmQZg3uSlndLjcBxlYWFPL5q7nSPUzYsKz43m1rdh3bARCwin92WG1H4b2q
-    Ncn9fqbYywc7eKMag>
-X-ME-Received: <xmr:RaBuaDXyiGTgrgMBCpRPR1FcWymXEv_IAQdbM1qR1vex6OZXGY9FyO0zrE3EzxbH7fqGsOHMb_TpEJxKGjJYs235zyCmDEaWSGksQt0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkedutdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
-    hkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhr
-    tghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtoheprghvrghrrg
-    gssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:RaBuaAxNBT8PKEV2sHnOj34vqL5tqdylB02wyR5n-ehkMNrRlnYBdg>
-    <xmx:RaBuaASUQuiaIb9mg1sDXyRzirOt7tPPgWgUPUJ_bh5Xf4FE7Tn3Yg>
-    <xmx:RaBuaEjuxyM-Vg34tCUNeu827V5F00ao7vnF8XyFf7i01lUSVLzhKQ>
-    <xmx:RaBuaPkESSkYo9bybOLxoDV43x6wFBlih3QRW_klM0Gtv54zwTiTaA>
-    <xmx:RqBuaMa9XqnYPS9jGjN9ginq3ATtSspHrFh7P3H-1taUfObpRwNhF2Ja>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 13:00:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v2 0/5] Introduce git-last-modified(1) command
-In-Reply-To: <87y0sxpdi4.fsf@iotcl.com> (Toon Claes's message of "Wed, 09 Jul
-	2025 17:53:07 +0200")
-References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
-	<20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
-	<f0c508cc-5c6b-4c4b-a3f3-0cdd8d1071e5@app.fastmail.com>
-	<xmqq5xgbk4d2.fsf@gitster.g>
-	<d93c9199-80b1-4834-bfbb-8263a80d90d5@app.fastmail.com>
-	<8734berbmj.fsf@iotcl.com> <87y0sxpdi4.fsf@iotcl.com>
-Date: Wed, 09 Jul 2025 10:00:52 -0700
-Message-ID: <xmqqy0sxb8or.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nSKor3dN"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b3508961d43so180644a12.3
+        for <git@vger.kernel.org>; Wed, 09 Jul 2025 10:04:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752080698; x=1752685498; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=FDhcWY/Sh8r5Q0K1H4DQHCiRuv6tpezjJz1ZNEQZqWs=;
+        b=nSKor3dNVO76RWz9bDWGzpuuaHJoUwZ32G2dwHLfu247uVaVipoMmsx3HA/aFHA8yl
+         nb5iiAkLie1gArLVPT/TJjEehq3hzVJoXxUd55HwKGiD6CMlyM11BfGqiFFbXMdAYcUT
+         7KusDafRINxB4aEAaUp6FbQzeTgwPx+yE5AShZ2RJjYGBUYV+zTbPG1uVqxZ4SJuOyBr
+         PlsSumznhz/Jt7iT9ngo+i7SjXfyLg4w2rNhQBYkuaSa7kmfE0/DEHspp0mYFDXRkNW6
+         qPm6gEgBY6bd60/PbumjPgIQvz/J9FML7IxRynZ8DSVlsmYoEKAajPPnhtAkNHdQSATr
+         A1yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752080698; x=1752685498;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FDhcWY/Sh8r5Q0K1H4DQHCiRuv6tpezjJz1ZNEQZqWs=;
+        b=RAPfvtEkAPSWP1DEJCh5rl7SOeLXnYdxeqfO3opyzIfNXKwRpkRsSV839zekgCZemQ
+         k0WiL3ZBg7y6uagOTE92QEjxnb2b41UjS5GbJa8LyZ3Il8l/Da6zo0wadZFkn26jd5Cs
+         3q+n8IM7kBFJF0RAbEiCEIyKojvk0bADyr5izupQYEO6WRO+gpJ2/wZI0B14xmYBavam
+         4EhXq40R62rRYi6vkkk3dwl0bWcNCxjKQv2jfYeNiiqHfoF+TU5lBuySrH7kiQOT/+1z
+         tsj07FmmIPM42au6XW/WkvYCilfHvKYt47BZ9DMiTzpSat74uR1nqNzxRXyI8EoyEqeo
+         adCA==
+X-Forwarded-Encrypted: i=1; AJvYcCXlHasZ+tHxDukBt5z7HSMi7KG23yXAHgrsagVVakKjFssnCWFFaKT/TMZqh2FBRkZdAMk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwA0XROmHK6SMKOUCagfknb7+mvPPC9KO7kIUFI2jELsDEpMEr9
+	YCMl+nO6OyX4wlHPyeNecDmfdfoJaeFYdOH4MbqOeNuZxnh0pRkCrnxI
+X-Gm-Gg: ASbGnctWavX4Ffm1IuumLxzWaKeQArjTP9ZXPJe6JaeMcBM/lPsVaBAxzrzfcLfKSQ5
+	zXHy0NwP0SYZK1ulqkSYJwC1jJCDNfrwMPaq/00dXrEAOA5JrnmhG4ca+rC1k+Pz+aK+kIUi6fC
+	7vAK+JfE9iAE79GqMxtheoOKwiImC/dqs/sWik1L9pKgfjE17Fr1gECiwyj+LW7FEfRkTbu+0jM
+	xdr8VTmAO/MGRjHa5CZmqNglPGzvgJEGuV5CMHRcYgCZjYm5iEr03WzH2KLC3ga7SLvuS4gCnSM
+	IxaF3U6mJ6LzpWe08IBEWFV1z7PDPeD3jDB4WvbH8j0bxmTESXdzuAwVWrTh4CLsRjFvjt80u2V
+	hRx1Aqfwll564ICfilEK5gLirdDB6Uk8I+g==
+X-Google-Smtp-Source: AGHT+IFovWKkCzQTsbwtuDtjW+EqzWmatqrgXB6qaLnh6GtY80pMnVbIBv3AAaSwq9f4DPqmIGcFVw==
+X-Received: by 2002:a17:90b:4c84:b0:311:ad7f:3281 with SMTP id 98e67ed59e1d1-31c3c29beedmr1031984a91.12.1752080697825;
+        Wed, 09 Jul 2025 10:04:57 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:ed82:7a2e:d82d:94a6])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c3003e413sm2674389a91.9.2025.07.09.10.04.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 09 Jul 2025 10:04:57 -0700 (PDT)
+Date: Wed, 9 Jul 2025 10:04:55 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= via GitGitGadget <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>
+Subject: Re: [PATCH v3 0/4] daemon: explicitly allow EINTR during poll()
+Message-ID: <fqqx2jvtwlsqghgjxrp5e4q2ti5mjbwg52ttcbaabmtrlacrpw@t4pbsdiebeft>
+References: <pull.2002.v2.git.git.1750836928.gitgitgadget@gmail.com>
+ <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
+ <b1027221-3e17-40d2-b293-4b1625fa095d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <b1027221-3e17-40d2-b293-4b1625fa095d@gmail.com>
 
-Toon Claes <toon@iotcl.com> writes:
+On Wed, Jul 09, 2025 at 03:12:43PM -0800, Phillip Wood wrote:
+> On 26/06/2025 09:53, Carlo Marcelo Arenas Belón via GitGitGadget wrote:
+> > This series addresses and ambiguity that is at least visible in OpenBSD,
+> > where zombie proceses would only be cleared after a new connection is
+> > received.
+> > 
+> > The underlying problem is that when this code was originally introduced,
+> > SA_RESTART was not widely implemented, and the signal() call usually
+> > implemented SysV like semantics, at least until it started being
+> > reimplemented by calling sigaction() internally.
+> 
+> I'm all in favor of using sigaction() but I think the SA_RESTART parts of
+> this series are an unnecessary complication that has the potential to hide
+> bugs as we support platforms without SA_RESTART.
 
-> After some more testing and tinkering with the code, I've decided to
-> keep the behavior for several reasons:
->
-> 1. While behavior differs from git-ls-tree(1) (see above), current
->    behavior is identical to git-diff-tree(1):
->
->    $ git diff-tree HEAD~1000 HEAD -- refs.c refs.h Documentation/git-last-modified.adoc Documentation/git-config.adoc
->    :040000 040000 810861a07e1360d3e3fa00db3c0d01e0604ff27a 1b01b770c15e7ae586452bb3587c3ce7c01abd91 M	Documentation
->    :100644 100644 55d2e0b2cb9e959443e98eb329fdf97eff9073a9 dce5c49ca2ba65fd6a2974e38f67134215bee369 M	refs.c
->    :100644 100644 d278775e086bfa7990999c226ad1db2f488e890d 46a6008e07f2624239139cd8b2ff712545f07d3f M	refs.h
->
->    Both git-diff-tree(1) and git-last-modified(1) are marked as plumbing
->    commands, git-ls-tree(1) isn't. So I think that okay.
+True, but those platforms (except for Windows, which is otherwise not that
+relevant as it doesn't fail system calls with EINTR anyway) don't have that
+many users and are therefore less likely to uncover any possible issues with
+their use cases.
 
-Good.
+I know patch 4 looks silly, by enabling SA_RESTART just to disable it around
+poll(), but it addresses the root cause of the problem stated originally,
+which is that we are very likely to have SA_RESTART enabled on SIGCHLD and
+relying on the system to excempt poll() from it.
 
-We may want to "fix" this "inconsistency" someday, and I think it is
-a bug that ls-tree is not marked as plumbing.  But this is a topic
-about last-modified, so it is fine.
-
-Thanks.
+Carlo
