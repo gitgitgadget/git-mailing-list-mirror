@@ -1,65 +1,40 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.17.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E29E2868B4
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:40:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 168711DE2B4
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:44:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752054038; cv=none; b=FEQrkDSUVMQCHr7d6Q5uUrH6NB8cWB0yPyD3DMXi8hg3Fwxx1GE4z/ehU50ee549kx7XjlAVawwpNiBFNBtVpwLSHucciEWVfGsEtb8gJVJ2D8YDFGoriNvYa+csmsqRNaLJP/Npzm91wcvApv08S2IFGeR6M5VfSiEHoi5h0EE=
+	t=1752054258; cv=none; b=j67wUsL65Z/4d4SjyYIW3bEOFf9iN3ZlJ9e9vuksDbYdbAdyx80aPcY+HsBa4N1vh1cYi2ecN3ufiR8TXUSVdlOaSrmIy3D8G0gIAeonHpnje3pN4vGVGIarMDGXmZTtKWLP5ZZWEaS1oOS9XlKFwWjzPMakh0t+7MNy1SUPptw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752054038; c=relaxed/simple;
-	bh=4XJ/TK+6gm2bUTutvkti++UsTzUjZ5YsalpAKnfuwI8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ZCT+nOM+39qAeEoliqmWadwVUH1oR5mj8JJIcCSMo2tCWtw/9T/ANn2Ii6fRXZydcGsJqcKRDZsnhxPIhgBtabtqM32UuHSSrnk6z44LYnuTw8LBwsKFncbu1NOD1MJ8Ii/6fdeO3lPrgd+0W5BTdf8YHrut1YmQ6S8MNRdpBcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KCrRz0KQ; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752054258; c=relaxed/simple;
+	bh=8YdvYLoZc+dyJYpAVS9ShRBCbjvHkPLCsbxoi9tE0BY=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=P7CuvSQEOQ8gCOMBJJJMYpUM4jQmcUSq/Fdpak/lHJ3EW3bSkO1ow95/Bpz5YeBzO4QJPAVsatYgyZmRrBrAZd12w6W2zCOBWbQpBxR+iH/qHY062agQRdFYV+EDSLCUBatQGFDlAwdQgXGWvhZFOD39dvxlXfUHOeW8TGH0mAU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=qptxHMhI; arc=none smtp.client-ip=212.227.17.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KCrRz0KQ"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-450cf214200so42118235e9.1
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 02:40:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752054035; x=1752658835; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=CdINw8QVRgl/ZadkJXjTkwuKdGwtENJOe2K/tPhhP3o=;
-        b=KCrRz0KQsF3wpUB+46M72hpH5OiDdfBitsAaYhWHLohHZma+DOH6yEO/ve0FTDwvnz
-         L/lwp1hJGysEodoT9gLQ51yoBNQaoHc2zlhTkq8gGlF0/htFFguvUDj36Mxf5XInUv5G
-         84eZ4UtadvME+RhgnV4YeJi6aQW4B9ASVEifmd2hw3Ub8rVk8OFiC8vc5pPfIjES78Vm
-         v0TbnthO+vQcRV/FGSLW8NGEhU8mJerqBT2RqZYBfwCQedC5FjmdQQk8SLuV8/R+qN39
-         jnrFDB61UrUHCdN9JpbO7MHgO2O4blaLe9gy/Gx8Cn9EMPu0wuWZlzQENVEOEjQ0ZBSg
-         HB/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752054035; x=1752658835;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CdINw8QVRgl/ZadkJXjTkwuKdGwtENJOe2K/tPhhP3o=;
-        b=TnXWQJ84UGd25R0VrLbG6v+gqZAx9styOUyuy8qTlowScoEWfs34GTznXKzdF5ha5E
-         t7UV9OZklO7qb+/ilnPhgvPv75c/NjBa5+Rh1k+tlqRlF9hhlRB/xT9h/WOboQodiRo3
-         ALoqDADno8PU0T7+GLz16E73G2nGr4eMbNBmoOiSnYfqaIoCH1y4RRw4cDgEvYfSvOms
-         CV22S4OkHRy58vZs2lo0YBAtmaI6DOqlr+SaXsxka51DlTZCqoexQR2w2m5mukxn8FRP
-         YhjECXB3/wAXylQr4P7AByZtR0TMCZgIbYdDXDTbT5WwXL0GEXHANnZa1LHzNZwDPw6g
-         Cfog==
-X-Gm-Message-State: AOJu0YwCDOkafYZkx4NQQYUq/jx9qRwIkN3yxt8alepGknz4hynvLKlj
-	yxgybJoxjh5XU8Hnr+fn/kIH8+NPaFfKo9FrQ/T0ONjO5JaeS+MVPSwp
-X-Gm-Gg: ASbGncub5CqqsG3yNdkzgICAxF+78xYNXlfMcGm+G+bRQ2eRx2mnZBsLcjPM/xV6Nyn
-	Fa3ng6ABYt7QNEmuQFYthiYmo+bVpZVjWYKjRdzibhHL5KAfz79H4DAswNZ5g6n4loQjXHgwASq
-	p7EOPJsFAEcduu/pr4W63pqWOvdG846gbwMn6TwANyk/jgNkRwxtPY+CZMax1Fvi0Mn1uC2JYcx
-	GZRS5X+AlrK4EcpR1Rv6O/LfxwYHjNOLVKiF1OK76oaMVlwraNZ0Sf2dXqpUBCn7CK3nJETO/IQ
-	K5HSpG0yfrKEAbqzyPubjdsBsvo9zSO8irUXQqY3NUXAKMOMRHTMYbpvH/rLVMoXzSr90B0RSiN
-	FQv3YBDrEyP9F8EdBP9CgatKSMnFqC89vluW9tQ==
-X-Google-Smtp-Source: AGHT+IEhX9f1i5GEu+iwuDo6AELtOwEqpjNC/egwS6W3bwIvmwXcCnAduIfQCh+rMKbC03Mn9BctNA==
-X-Received: by 2002:a05:6000:2410:b0:3a4:ed62:c7e1 with SMTP id ffacd0b85a97d-3b5e44deefbmr1331376f8f.12.1752054035357;
-        Wed, 09 Jul 2025 02:40:35 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b4708d0af7sm15618847f8f.35.2025.07.09.02.40.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 09 Jul 2025 02:40:34 -0700 (PDT)
-Message-ID: <2b0ddaf6-9242-47b5-914a-73fdd1dde4a4@gmail.com>
-Date: Wed, 9 Jul 2025 10:40:34 +0100
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="qptxHMhI"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1752054250; x=1752659050; i=l.s.r@web.de;
+	bh=le+QvtTcVJXIrMiZkpF5men/dqk5+7VYxMNBEiNUVoU=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
+	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=qptxHMhIcvzjP7hJYU0JhWMdN3U83snD0bFmL/tgn3Ac47JpZHTVOXwpbr9t1OiX
+	 REymteO7LS9HZFE3+i6tAtrPw+xcu/9zzfUyPJqgelvVckipOvofSL1NcR5V1s7oq
+	 +OhAYB1912pa8tZAHW8HIN7bjyOnHwpUgFiUJbf6EZeJ57rRztLlTQTS3wfqJmB0W
+	 HHzO4QUoBOJjI1YwNnk8PJbgA4tHuAlQXLDDpzaXMRA8cDeGe+n/hUAm0NZtCdkye
+	 TTiokobrB1w9zovrnauiw7yWFGFd43KTCPlBsJsLeTFe96SVLU0vMFVjtZd3/UgCn
+	 jIgB1ycXy43eldhhlA==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MmQcl-1v0DNL10i1-00b8zd; Wed, 09
+ Jul 2025 11:44:10 +0200
+Message-ID: <4d91754b-00a4-47ab-86eb-0da201e7889d@web.de>
+Date: Wed, 9 Jul 2025 11:44:09 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,77 +42,93 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/2] breaking-changes: deprecate support for
- core.commentString=auto
-To: Ayush Chandekar <ayu.chandekar@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Oswald Buddenhagen <oswald.buddenhagen@gmx.de>,
- Taylor Blau <me@ttaylorr.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
- <3747a1f77f03bf2572e195673d021dcf827ae59b.1751983009.git.phillip.wood@dunelm.org.uk>
- <CAE7as+YyKHzHjpCn2fFym0e5JquhroeDPHo_FHtdNCCb1HVSgw@mail.gmail.com>
+Subject: [PATCH v2 1/7] parse-options: require PARSE_OPT_NOARG for
+ OPTION_BITOP
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+To: Git List <git@vger.kernel.org>
+Cc: Patrick Steinhardt <ps@pks.im>
+References: <cf5cd57d-733f-4239-80f8-23bdc1523ab2@web.de>
+ <802eba72-c100-429a-80b7-7a0e8b6559ed@web.de>
 Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAE7as+YyKHzHjpCn2fFym0e5JquhroeDPHo_FHtdNCCb1HVSgw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <802eba72-c100-429a-80b7-7a0e8b6559ed@web.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:xXYgOa4kIhAhjwxzvEfVlk0c1/2hFQlyLSxSKlRXTcrIDB2skYN
+ P5dPe/hl4+ScWD8JMtKyWYvBuafoL6hmetOk1lVy0Mi3ylQx3H4XorF0kJ2OFgdFQBE7Brn
+ zZnqApyu+2kH7ybb5wBCD84wtyqe7f8ITndsPzdyode9rehu4QocFMDiBNF+g6WLYXHriv4
+ 5wbpWRiPFFYVqNsu6R3hA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ikGs5gzg1+8=;qHKfMC06Zen6xMRYcRpe5Ib1dr3
+ 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
+ qwXGNkCH0dw==
 
-Hi Ayush
+OPTION_BITOP options don't take arguments.  Make sure they are declared
+that way using the flag PARSE_OPT_NOARG.
 
-On 08/07/2025 16:28, Ayush Chandekar wrote:
-> On Tue, Jul 8, 2025 at 7:27 PM Phillip Wood <phillip.wood123@gmail.com> wrote:
->>
->> When "core.commentString" is set to "auto" then "git commit"
->> will automatically select the comment character ensuring that it
->> does not the first character on any of the lines in the commit
->> message. This was introduced by commit 84c9dc2c5a2 (commit: allow
->> core.commentChar=auto for character auto selection, 2014-05-17) The
->> motivation seems to be to avoid commenting out lines from the existing
->> message when amending a commit that was created with a message from
->> a file.
->>
-> 
-> s/that it does not the first character/that it does not appear on the
-> first character?
+Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
+=2D--
+ parse-options.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-Well spotted - I was trying to change it say "that it is not the first 
-character" but edited the message badly
-
->> Unfortunately this feature does not work with:
->>
->>   * commit message templates that contain comments.
->>
->>   * prepare-commit-msg hooks that introduce comments.
->>
->>   * "git commit --cleanup=strip --edit -F <file>" which means that it
->>     is incompatible with
->>
->>     - the "fixup" and "squash" commands of "git rebase -i" as the
->>       comments added by those commands are then treated as part of the
->>       commit message.
->>
->>     - the conflict comments added to the commit message by "git
->>       cherry-pick", "git rebase" etc. as these comments are then treated
->>       as part of the commit message.
->>
->> It is also ignored by "git notes" when amending a note.
->>
->> The issues with comments coming from a template, hook or file are a
->> consequence of the design of this feature and are therefore hard to
->> fix.
->>
->> As the costs of this feature outweigh the benefits deprecate it and
->> remove it in Git 3.0. If someone comes up with some patches that fix all
->> the issues in a maintainable way then I'd be happy to see this change
->> reverted.
->>
-> Nit: s/benefits deprecate/benefits, deprecate.
-
-Good idea
-
-Thanks
-
-Phillip
-
+diff --git a/parse-options.c b/parse-options.c
+index a9a39ecaef..68ff494492 100644
+=2D-- a/parse-options.c
++++ b/parse-options.c
+@@ -591,6 +591,7 @@ static void parse_options_check(const struct option *o=
+pts)
+ 		case OPTION_NEGBIT:
+ 		case OPTION_SET_INT:
+ 		case OPTION_NUMBER:
++		case OPTION_BITOP:
+ 			if ((opts->flags & PARSE_OPT_OPTARG) ||
+ 			    !(opts->flags & PARSE_OPT_NOARG))
+ 				optbug(opts, "should not accept an argument");
+=2D-=20
+2.50.0
