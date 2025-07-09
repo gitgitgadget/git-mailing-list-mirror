@@ -1,159 +1,88 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0232F1C36
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:09:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A6A20E6
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:11:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752019764; cv=none; b=H5fqsT+pXXuc2GvAUnK6UAZeJkTiHPVtrgv+F9Bp5W1Zm/FnBdsON4GyOaVPq7tfkx/uCeqarL/r0bhYX7yx3QlFP7ub4lbzGyLModdWTXo8cn8zwdyNuvCcnqx8yXyjEPYRu/lYcyJ32XjSOcqWzB056bgETQgcHYVjTUIFrRk=
+	t=1752019870; cv=none; b=AAWmR0ERPoRJpx+ijUcfwR17xKQDJ6DHX8sIeSrwFjKzSfB0UeaxEj3tTOBGeLCkwTax2cR3uz9KrQbPGl9nic4fLLZjMyDet1lsBEEuhAce5Tx+mOlHe/b5aCnafhfi0mCMqfBZc6wa0PvPZMD/ZYRMnmu6+LSd0LnRd0Wknfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752019764; c=relaxed/simple;
-	bh=OZyVXldGIoiRv/ohk9gD9QCfu5viUNxVcfbxUWBwCxA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FpWOd/zT9TC/ELTUeBOuSA+puj4+sJNnTUH2qO36cxk4LCZSiVQSwXMY+Hj86O/Ipq3EbC37bdQEjVZMf6MosGHFyKrDgQFZJ+oKy50WMjXliwZf+5J58M6J0RLwSRaUVW5RvRSAsUCKsi3CdVdZmNVYE84+MMA9G/rgUPzxWlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ITXvvidw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Fer3aOA8; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752019870; c=relaxed/simple;
+	bh=6Uxxzsb66ST8VFVy2XwA1Je68cSZyaHX42Ma3J1ef9Y=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=BroM/mhXVk5TluM3kAXzUcghIT0Jq+G2gHJE68YFqzWq1A5UBU5aI9nXM8Spe5iPW0demyiSgprc/I5/x5p+UhKZiW2BYcTyeYKIzQaprRlkXQ+/xAbdUaU2wfezxDoPUNxZNajEgA3X9sbvBW2Q2epT6qh72SbqbR9Fb5iBqYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fx5olXj4; arc=none smtp.client-ip=209.85.166.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ITXvvidw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Fer3aOA8"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id F05E91D0026B;
-	Tue,  8 Jul 2025 20:09:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 08 Jul 2025 20:09:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752019761; x=1752106161; bh=9RzFmnocO/
-	0S7JIU73F4cODCaoii9gtAYyBruJoORg4=; b=ITXvvidwmUoMb3aFILcsnrfs7I
-	qDW1R+DfyLx1LfcxomXU4d1XvnSXZLXjVQJnASN+ghrWSLbMXX/y78LRn5heXhcB
-	hsZ2KADL7Q6mlWc5cDv5wRVUurY/HvOQki4ahayusJypInfCB2BNRX95gkldMYLM
-	qm4GeLo8lo9EiU3loxOXpNP+2gZQRiWdQZQAkMT6vgL2qBmDoFz7VEww0uaJGHX0
-	S8FxM3BCdjQI0th4dJ05+LlESWrg2NiEA3bdWOuVHaQOhJCcqHtzGJ0ufLWPn3v2
-	bn3ee3/W1Ugp9GIPVGqbE5meiHwxaKcCEWmOdTsvU9SpCfBKypo4rlWihg0g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752019761; x=1752106161; bh=9RzFmnocO/0S7JIU73F4cODCaoii9gtAYyB
-	ruJoORg4=; b=Fer3aOA8z0OAHZ59ERF0Ytz3Kn1NcJkwYW7Op/xA4p/s6855NTx
-	O0jMBpwYxvfjJmbsW05txpSwHtOD7+v4rtiAhKYNbMyGiel6QXpUyhwrWva3RSAx
-	rZ8g1DMjDNjnVuA0kIan9iAMbdhuVvsdojov4B87i9aJNo7kMNoOg7ceLqZxgdR8
-	MWCtXTHUtxiGJl2/qVy3Y4wy+tamuMmvkkglL31OtQ2ec9jNpqosOEiM7MIRwCio
-	KNSw6HJbJZndL/wHoLRIHNNl6XGzHgLszTWriWB3pG4fNtNJJFW5JGCCPIexcUx3
-	guXTQjkqz4lDCnRGzbO6sAle9P/IY5Hflsg==
-X-ME-Sender: <xms:MbNtaEFRw05PiGejeaFdphSM2NfwW89yXDuFAOsa2QLaPH7mSr2p_g>
-    <xme:MbNtaKS8ot12NRqBV-PAfgIajycL3544KKzZI4fIpXEOB01X5oU54D_xLqa5zpbDz
-    jWja_bRBMASbX08lQ>
-X-ME-Received: <xmr:MbNtaJzH3ifT1oDg3BZRTdc7XITcDfue1vtnqca9VphVfizXnR7uL0JgckW3jcjQEqKVpAc51myeFSm8E5YPlMSA0nLaJxXOEWHetbM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefiedtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhu
-    nhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrih
-    hlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:MbNtaOezP5WLM621acL3s5PYQzXErIZneGjtC2xfYEhe1DPmy2ufrA>
-    <xmx:MbNtaEMhbdNtvVyC2WUh_XlRKWSxNkadHKGdLGI8FTkRvRnzZWcyNA>
-    <xmx:MbNtaBus4FegWhwlwNwlZe_ddGzqrZQ2JuZtNWNCGDzGFvwvFKmQXw>
-    <xmx:MbNtaNBp4YqkFvxziKGH6tbREqv32leIVO-0yjKnNnvL8jluvHVx9g>
-    <xmx:MbNtaGmCppQQRqw2jg9pP3fMMEVX9L4VPqG-PMfmMTCbJIAu5JqMYVvx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 20:09:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Leon Michalak
- <leonmichalak6@gmail.com>
-Subject: Re: [PATCH v3 0/4] Better support for customising context lines in
- --patch commands
-In-Reply-To: <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com> (Leon
-	Michalak via GitGitGadget's message of "Sat, 28 Jun 2025 16:34:42
-	+0000")
-References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
-	<pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
-Date: Tue, 08 Jul 2025 17:09:20 -0700
-Message-ID: <xmqqms9eql73.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fx5olXj4"
+Received: by mail-io1-f47.google.com with SMTP id ca18e2360f4ac-86d00ae076dso14617439f.0
+        for <git@vger.kernel.org>; Tue, 08 Jul 2025 17:11:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752019868; x=1752624668; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7/HJAz3e7gCYb1SWAipOaq3K22WhU9NW6xpDQEQJtM0=;
+        b=fx5olXj4dJ1CsHrUvGFua3sbt9MVOFtRxI39jBqPPoTYcv9uiR+2qzGf9i9nUfAD+k
+         yYBIW91ap7m2PCXHDC9SyAZ7BvSNRGtrADjkEySkmRhc+VIW6irG8va4Uls85IZM0mXK
+         BR7A4bmxLXM2ilfH6wKZzekbs9H0mGZ+p2tJDAIsPx6V6yjnMjtLZDxvMBQakrd2rxrk
+         GmbuqJPcZvhf5vsXNpOtDJ123LU8nqhlfxDeTTohdW7pLn8WVWZtuj1B2UzD/98LpKcE
+         qQl4ImPcBtruSH0fCIXKu0l71pov1fA0Dr9rkGJl9eppFyOXUYBnB4Fks6XnXGg1ndJP
+         TGFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752019868; x=1752624668;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7/HJAz3e7gCYb1SWAipOaq3K22WhU9NW6xpDQEQJtM0=;
+        b=KdVMkH/+m/S7Bs78r2vM0+97bYYGPfOQxcBPfGOeyUg0pr6DAjURNy2MptkISIXnh/
+         F8FhbK/V+dTlF0pYcuCUwO3gPCeCvEkNKei0iwF9TtYXb0q61UTxIjjdjonhK+OrttV3
+         ZVLsH6ZPMf3R7abNR4m3eOQiomyp1WbsifMQF7epKAI8G+cJZ0JYBItfdKh40FSFMBYY
+         lamQP8pATwdxjSuhICR0GNr3z+OkwRUs+95p7Doy9zKG+MIrItYni+LnAewpD/Ql7s+H
+         C6I7Z4S8BS/3UdUdnUK5otZqAeJTK+TSVBi2zxdOKOc2VDSU5kPTeKEotqj8d2kWLRST
+         k0Eg==
+X-Forwarded-Encrypted: i=1; AJvYcCVwGM7Q3tVlxE354sN2AzrfK/Y0l3a70OIUTC14Ws+1x9r9a4ljG06j44ESWJ9gLSgRhjg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwGBLVNiPq6+zPafZVDwPdwWE2Y/1y0K7MuNFY90yVhYlPQnpBz
+	m8qP/cZ5j63tOZTSW4oUj9ts38Bx+D9amq4d75PFDXdr4iJ0WWA7wMISK25P7In4WxjzLrjfMXN
+	KDJggiEiiaQcz/RHSjG7p6YKGLNiD0I4=
+X-Gm-Gg: ASbGncuXKwXJrvIGPdl5mxcXSE8ESNIrL8j6A6OwuYQ4NgDpvK2EXcYUy/NHeRvlGVR
+	xsKA1km1+Ku9HFVmmJ8UM5KMnAihSPxqXA8pa8Bt+KI+VMuTExaNtB3ZhN6qkWJUxXPnxcmR298
+	XvTcqM3LmoiY1+e8XbiT/oBiLDJwT2TJcAy4KOwH462hW0yt8hwDWjFMMhSQ==
+X-Google-Smtp-Source: AGHT+IGeWXJlD/Xj/3q56n/uHa8kih6U+4dyfgqZaOHUaudFpUMydn/8VnGKwxQyd0BqN9P2+1MYFaxgcpn6teCj2zM=
+X-Received: by 2002:a5d:9383:0:b0:879:39eb:988f with SMTP id
+ ca18e2360f4ac-8794c371680mr476370639f.2.1752019868458; Tue, 08 Jul 2025
+ 17:11:08 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250619133630.727274-1-christian.couder@gmail.com>
+ <20250708091738.4072857-1-christian.couder@gmail.com> <CABPp-BF6OvH8oh=jG_8fWoC5gW+9E+wx=uDEk1uerJTOva5isg@mail.gmail.com>
+ <xmqqqzyqqlh3.fsf@gitster.g>
+In-Reply-To: <xmqqqzyqqlh3.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 8 Jul 2025 17:10:57 -0700
+X-Gm-Features: Ac12FXzuYUSsx51LyzTZH1hSIqN-guXcKUuFNjXJFGZ1R1nlYDjxhANR_9DDG7M
+Message-ID: <CABPp-BHb-yK1E0h4K9rJ1dk3HC6urv6b16birVv-L1pMsqs3Fg@mail.gmail.com>
+Subject: Re: [PATCH v5] fast-(import|export): improve on commit signature
+ output format
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	"brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, Jul 8, 2025 at 5:03=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+[...]
+> Yup, thanks, both of you.  It seems that we are getting closer to
+> the finish line?
 
-> This series of patches attempt to give --interactive/--patch compatible
-> builtins ("add", "commit", "checkout", "reset", "restore" and "stash")
-> better support and nicer experience for configuring how many context lines
-> are shown in diffs through a variety of ways.
->
-> Prior to these patches, the user could not choose how many context lines
-> they saw in --patch commands (apart from one workaround by using
-> GIT_DIFF_OPTS=-u<number> ..., however this isn't a good user experience or a
-> persistent solution). Additionally, the behaviour around reading from the
-> diff.context and diff.interHunkContext configs was also inconsistent with
-> other diff generating commands such as "log -p".
->
-> The summarised changes below hopefully make this experience better and fix
-> some inconsistencies:
->
->  * diff.context and diff.interHunkContext configs are now respected by
->    --patch compatible commands
->  * --unified and --inter-hunk-context command line options have been added
->    to --patch compatible commands (which take prescendence over file
->    configs)
->  * "add" and "commit" in --interactive mode now expose a new "context"
->    subcommand which configures the amount of context lines you wish to see
->    in subsequent diffs generated from other subcommands such as "patch" or
->    "diff"
->
-> The original discussion for this can be read at:
->
->  * https://lore.kernel.org/git/CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com/
->
-> Changes since v1:
->
->  * Update commit descriptions
->  * Update tests to use the more modern and robust test_grep and test_config
->    utils
->  * Reword some documentation / user messages
->  * Ensure each commit is atomic and builds/passes tests on it's own
->  * Make new command line options DRY
->  * Add tests for interhunk context interaction
->  * Error if context config/command line options are negative
->  * Drop previous last commit to do with new subcommand for --interactive
->    add/commit. My motivations behind this patch series originally where
->    quite simple, just for add-patch commands to respect context configs.
->    This subcommand, after the discussion in v1, will require more thought
->    and a larger implementation that what I had anticipated. I would prefer
->    to leave this for another time as it's the least impactful but the most
->    time intensive and complicated idea.
->
-> Changes since v2:
->
->  * Update tests to only test single command (following Philip's suggestion)
->  * Add negative option checks
->  * Minor commit re-wording
-
-This iteration seems to have attracted a few review comments that
-are left ananswered.  Will we see responses to them, and/or, a
-hopefully small and final update sometime soon?
-
-Thanks.
+I think so; a few small touch-ups and I think this one should be good to go=
+.
