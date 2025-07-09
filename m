@@ -1,125 +1,107 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7C22609D9
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 23:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83A1125F97E
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 23:14:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752102865; cv=none; b=Rmhg/Gnv4qUhWs4ZiNFk+Vz3O1X+AcxucVjF2VqBkT5d+q7Snu4KjyUXB6xjPaa6KaXrJ6qcgE2CstZrvDK20lKXRnwqpJ7Wvj6LUwS45W4+9GNdGDqE7ptSgbPSuU+srgD96frtrwG24tdnRi7LljJHZtRMqA0jysXw+dInPp4=
+	t=1752102877; cv=none; b=CFrgsVVaQblCz7EOlZor2Lgy8XRpqTCZ17B+qq44bU8tWTlF/42rPUpsEq6RrZBYUdRg3ZrIXP3VuJ4MS96nfaqNqBRvVJ9DzHouUbEq7JRPHuYKO69QKFf3VOY4IQa/Fyz69JoCL4MRcppKZALSNJ17ZcbZI+I1xRHNGf2yb7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752102865; c=relaxed/simple;
-	bh=q88ulpzDPHiLwKJNAuq/6d0lFy2eIzUYLRyHvjNXtm0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uKqktX6kWsaj9WlBkChJFhufZudSmPjj7uTXIY+GKMQI6yHz7eeL8fjIEIx9W57gEa7TbUYIA9P5mpt8lf15v2VDpVFBjeqx3P2o9CIXHjV6Ijj4v8kvMFayAJIM+teRTazCgl2pc+5JrJTUYImA69+P54/asmBOvVU1MtKqpqk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dt5txcw6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eUPyW/n1; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752102877; c=relaxed/simple;
+	bh=Foi+VJFIjYH0oL7N0a9Kp4YGlAMirsK2ahUQzsvU+FI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TG0jcPckvPOVQuedVx6ncnO9xTrM5/v8i89qk7HGOBo8j2Dr67Rnk9ZurNHw1R2LW7femZpiCL+/iH67XLXZRaRhZ8veRzwAWDmO0xdOKcxrp/3f+nbZ/aKDJ73nVdnLeYAt7wj9ax5KfhdEluu0SrcXX5H2ObgUQ3Foce2PFkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yAxHhN8B; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dt5txcw6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eUPyW/n1"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4EA457A026C;
-	Wed,  9 Jul 2025 19:14:22 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 09 Jul 2025 19:14:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752102862; x=1752189262; bh=PQzYB4iU4T
-	sscnrBCIIOLL8D8e10SLEQ9WgxA9vRav4=; b=Dt5txcw6wR/vt339QAct/vqWuj
-	60rU/x97cnQoHaEmMLBRospmQ6980q7GCVm32AGF0eVIxqJoF58lZfiycbw+hFQ5
-	fzJjSsTzMRI8yPVXqFCnEAryI3CoWp57/2Mph87Tzsnu3k3/dPMdOHm+OjyJi761
-	+AB2Ke4WOnJZFoPrQhuf5FoX6h2ImveBMOKZLEAzLgwUHbGp8PZBa55xu7qu62Z2
-	jzRpTFPo+tuyXODZVxJdRBSl3foaoIECj40NgKCaERGkCW2bLdYfKL8X6/REzT8Z
-	Z+Njdf1YPzBKkmgxdviVXz//efNwM5pLdidfkx9Os2PLEfpm9gRK1E9piQUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752102862; x=1752189262; bh=PQzYB4iU4TsscnrBCIIOLL8D8e10SLEQ9Wg
-	xA9vRav4=; b=eUPyW/n1fPPvI1fMjiIe3FLrQQmRHJCyQON4bXvLp7BscToqiry
-	SDbWRGkqVZ2jHZpu29Rj7Zpptg2Fp1uCmMYDaxfC5Lz59ybb+OuV0U/cEWDkd1xF
-	ydJv3IrfpFjYFJGQiVpjA3nmQNmlkrnbnod2nAXHHnbt1E3fuyD/YG3801O/UDi5
-	UlsaDMVMmYM2gU44XJdlUJRy0Ti5pjAjaONkWjkzm1ht1fQFTq1IG+liLYZ+ALXr
-	2c28UsOCObp4Xi3X5qqRl6Q8u8Axau/XPDOtUXkCZNNFLhk9eW7WpJoEeJ2D/Leb
-	a+ypzf1ASFmMxXSpWRtcTvnL+duixGuo3fg==
-X-ME-Sender: <xms:zfduaDzms6DiBlVCI088ya2oHbZdesrZhDePrd23oxKTnrvsy8VGxA>
-    <xme:zfduaILE4NtJlVncIuKCHPCu50ltl2iw-wLcib0sOBcZpkRx44bnCAnSKMH8mj341
-    qOePeG1aJVSoTXXdg>
-X-ME-Received: <xmr:zfduaNEspYDqBo_N-GhnKr9jsxnik50GZigUj1oqCKGBDwXuyMDkUP7RXOHHOQtp47lbeYQET7FnVEzYl8nw_LR0FnfYgBY0FYHU1QU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkeekhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgu
-    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhi
-    shgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zfduaM8KxDzXWA6MECdvRmzveRXZH1hGcZF4i-zvA6xZiTCahfp_lw>
-    <xmx:zfduaFJKpIsghkXt_YH6VFZCbpK0XEVACP74RTZx1iIBCjbmKjRQsg>
-    <xmx:zfduaCtNWHjaQwCDT7iWnHUaUNMMGLMzPljU7bGz3o-PK9horNj_mw>
-    <xmx:zfduaEBkXXh005UPplxzVdiLbP_SZwP8N-1n4OMPrAs9AcE-lA_25g>
-    <xmx:zvduaJOm_EGmlcDG2QKt56unVUibS9oBX7_xZ9wldCHqkIkbLX5VnNv1>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 19:14:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
- <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6] fast-(import|export): improve on commit signature
- output format
-In-Reply-To: <20250709141253.623563-1-christian.couder@gmail.com> (Christian
-	Couder's message of "Wed, 9 Jul 2025 16:12:53 +0200")
-References: <20250708091738.4072857-1-christian.couder@gmail.com>
-	<20250709141253.623563-1-christian.couder@gmail.com>
-Date: Wed, 09 Jul 2025 16:14:20 -0700
-Message-ID: <xmqqple99ctv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yAxHhN8B"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1752102874;
+	bh=Foi+VJFIjYH0oL7N0a9Kp4YGlAMirsK2ahUQzsvU+FI=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=yAxHhN8B5BadOIl8r377wT10l+mGyAUgtgm32rLqT0nGB5EkLnVX5osfkikGdZplt
+	 vpC3JHWw2RgjxLnrYQAEkrjB+uew57wcbgsLXXv86CB1ZIshCuQOCSJv1phaOqzBCP
+	 UXVZHv4EzI+y5BL9ITNKzZ3sZv874/sZkmgvtMtgo4So4ytdd4M1dHK8GMdxg4Sb2+
+	 z5nYi/zNtvRp1bzVEW3RxSzZYo5K+PdMyqLtGCnLcamSXoyKC8VzD2FgSXL/Pr+aFS
+	 HFWWl9UUBdZxsatApR6uS65vNSvx4FkDAUUXO3ovwT4Ez58WW3XBAcOD/TgnKUb0cA
+	 xeAUODUT1dD71alhdtVdOOmA7GXaO3TpUNjqxg5uvRuBZ4JGhXShoLzsCpfF04EtXl
+	 T5PWZhxa9oI+doXMcVixiehQROJQMST8RM3PI6PJCiso6v02IohWBHzAPgn+o/q7R1
+	 pfufYq0YG0KwXjw8+VW7RvllcHYnxq9Lw2U8J60Nw0Z9XfSd4so
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 518BA2018E;
+	Wed,  9 Jul 2025 23:14:34 +0000 (UTC)
+Date: Wed, 9 Jul 2025 23:14:33 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #02; Mon, 7)
+Message-ID: <aG732RLqENitRwlv@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqplebzgm7.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="IqHFP9MOujTRSShS"
+Content-Disposition: inline
+In-Reply-To: <xmqqplebzgm7.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Christian Couder <christian.couder@gmail.com> writes:
 
-> +static void parse_one_signature(struct signature_data *sig, const char *v)
-> +{
-> +	char *args = xstrdup(v); /* Will be freed when sig->hash_algo is freed */
-> +	char *space = strchr(args, ' ');
-> +
-> +	if (!space)
-> +		die("Expected gpgsig format: 'gpgsig <hash-algo> <signature-format>', "
-> +		    "got 'gpgsig %s'", args);
-> +	*space = '\0';
-> +
-> +	sig->hash_algo = args;
-> +	sig->sig_format = space + 1;
+--IqHFP9MOujTRSShS
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-This is minor, but as I already said in the discussion of the
-previous round, let me remind readers.
+On 2025-07-08 at 00:11:12, Junio C Hamano wrote:
+> * bc/use-sha256-by-default-in-3.0 (2025-07-01) 11 commits
+>  - Enable SHA-256 by default in breaking changes mode
+>  - help: add a build option for default hash
+>  - t5300: choose the built-in hash outside of a repo
+>  - t4042: choose the built-in hash outside of a repo
+>  - t1007: choose the built-in hash outside of a repo
+>  - t: default to compile-time default hash if not set
+>  - setup: use the default algorithm to initialize repo format
+>  - Use legacy hash for legacy formats
+>  - builtin: use default hash when outside a repository
+>  - hash: add a constant for the legacy hash algorithm
+>  - hash: add a constant for the default hash algorithm
+>=20
+>  Prepare to flip the default hash function to SHA-256.
+>=20
+>  Will merge to 'next'?
+>  source: <20250701212237.766774-1-sandals@crustytoothpaste.net>
 
-I think "*space++ = '\0'" followed by "->sig_format = space", as you
-wrote originally, was easier to follow.  If I were doing this 6th
-iteration, I would have kept that part of the code around here, but
-would have renamed "space" to a more generic "cp" (very often used
-in this codebase to stand for a character pointer).
+Patrick Steinhardt thought this looked fine and I didn't have any
+intentions for another round, so I suspect it's ready.
 
-Will replace and requeue (unless you have v7 before my tomorrow's
-integration cycle, in which case this iteration may be skipped).
+Of course, if people disagree and would like more changes, please say
+so.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Thanks.
+--IqHFP9MOujTRSShS
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaG732AAKCRB8DEliiIei
+gapBAP9E+yg+MSuyBLmoN7KQRnopsCl2rkeYfaghlDsSDqnURAD/WyY7KrE7gZAN
+Vp2x1wvMgUaxKCCzLA0Iq06ysBgNuAA=
+=2Gtj
+-----END PGP SIGNATURE-----
+
+--IqHFP9MOujTRSShS--
