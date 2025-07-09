@@ -1,64 +1,28 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A621BC2A
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:22:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F15B4317D
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:42:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752020526; cv=none; b=AHw7m2n0uhCbQWiDDFVQ4aFWW1VtPyfjoH5caK3/ZHWY/UOQBlmQjeRlqvOdm0EssbF9qHvt/UrbZNiW0cM6rKdHuIja1uClP4TjGKxBYh0CsbEGrg21HWA3XVheUW8IVvf1JBri/uNGX34SsZu0NF0twPq/L4n7+SFzXvgNGp4=
+	t=1752021732; cv=none; b=PLV48+gMdcyhT0La0iV+8FktidzvZooVePfCG1xWAOQq9DCfkMbK6RD5YzP/U+qtVsnZNx35D3WnFPDTPXml9gCZ2VrgivZhXiuTlbQMqtGguLjhnZH4u0/05xS8SuYBKOQbS2EDdH4euFrqabJn1ZpLHDZll4RXkbnSRei5xrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752020526; c=relaxed/simple;
-	bh=q2ZM16vC58bxtrSTA/Lprq4Aubzg1FCsd1MBXCP+k6E=;
+	s=arc-20240116; t=1752021732; c=relaxed/simple;
+	bh=pWdAb5uEqj2QaY0xgqhpIHbJJFb2P1Wa2cShbJ1I1Bg=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ePN2bvLkAkQA9ODr3Q+mrqp4VWaH2pJX6ovzCaMHqkhExEBwGxTGkC5zO/8EytWENgMr9e4MXzkYM77tSZ5tzbj/uc4Dm7CmpvQvPx92G305i3OBpXIgnl4oeyImaNpy2HbT286lVBhlCIeK0iqJBDDvFplf677s1ofcX6kelMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L0Mj3C6m; arc=none smtp.client-ip=209.85.216.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L0Mj3C6m"
-Received: by mail-pj1-f51.google.com with SMTP id 98e67ed59e1d1-312e747d2d8so385678a91.0
-        for <git@vger.kernel.org>; Tue, 08 Jul 2025 17:22:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752020524; x=1752625324; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=C0ZTVrhSY3uqxMeMUEq3YU6Agk2IUUPUVWYcI/4MMms=;
-        b=L0Mj3C6mwBSlpkDyKCkjGotYMPM6CRhNQiLGeiAfwUDia5MSkjNY9IAZ8Tj1/V05uS
-         y8ajBxdeP6oRzgyW2ADWLrP5dgK78PY3PIZK20rMWdq/hdAwosuj0zB63zQcYajBsK6E
-         joYcRmIOhfDgNoFdo/530qqjeiF7dIUa75IryGvoNlINGkiLkmqsYLClgCLrgv0kEtl+
-         4GxXn5MBKEjUxHBG4utPmgkU9sbsqL5jIjnTpoHWSp5hCTO+Gt8Q5qn7mpMPyzaDEAGG
-         dozAwPRuLLgdI0yoEr9GJ161mFy0P5UuOhMnXGJgIV7agnpLzknukxJQ7zz/n6cxshIy
-         vaDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752020524; x=1752625324;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=C0ZTVrhSY3uqxMeMUEq3YU6Agk2IUUPUVWYcI/4MMms=;
-        b=IA9GcZGcYrK6kZMiqZqnfLGfgOkSzUcJ51tM6KxuGoCfJqA91ryLyQOb0daNI0D9yg
-         y03mew+XbkTbrtCBparRQJW8C6n8Uudmb5ntkvM7082xarnSR5dt54uc9OibyS6+cOw8
-         Spau7FZn5Q8WLZPB0COXKvzZC5pk1v8qtt2QJvo6t6wtqlFFqXKUrD0jJxfgVmJiVqZN
-         949d9Zeavk8XZVes0HhX74Y0mo6w/Fmd4Rq2r3oCDOw5rR2UZ6PcIgm3kP9nvxCdQPmd
-         /ursH75ALMA5E7XcQqPBvR/R3KWjfJeUZUiFsTIHqH1rq8IUa5WZH3+5K/aJUnYi3lI3
-         jM9g==
-X-Gm-Message-State: AOJu0YwfxE37TeOGIfex1hrV0ocJHbWgnzFkGeAJKWuXWis8GhT8P8lH
-	p19WBXw1/cPIBPA2ZFIauWrwS7mvvDkijWT1cPb4UD8t+N3K2zwIGlTh
-X-Gm-Gg: ASbGncsZFMwR7WdmLjT1JwVgQwt37lzo+x7lk7UGMBI+Kj0FXIuR8pHFF94G108UJV9
-	pQ2wuzlFwe6/6ARLtjW2zmNn8k4i2g47IlR6yJwvFKhvvLffQ62hITeMr/rUiqfv/ccVTkTWsmj
-	7g4vAf5yImjHS/Sqvt+9pHwxVBhi0hH8ydvCY1WFBnpf3MoR4TgEoBgt2nPuvvO65Ix50k5Krp4
-	71o7KtpcHmZyLivG61p0hMnL7d6O/Pb685U1uRszmoL7UBTUF71tUiLJofP7i/KaOAKwzyUsocj
-	kMERLJQ+9cpocsWPqVPg9ozT+4GcX5n9ZUIsUE8GdmqLhcHsZ96Fz+iaVzyG2zRxFriuA5K2rLj
-	8K5MrXA==
-X-Google-Smtp-Source: AGHT+IHohXGCyXujbjvRA1tZ1mjadHo/cgZIPHTNCMfkdPUNotxuwgUCXjnFG/t1Ma54Ug49mPuPMA==
-X-Received: by 2002:a17:90b:3944:b0:311:b5ac:6f7d with SMTP id 98e67ed59e1d1-31c306630c9mr607241a91.6.1752020523623;
-        Tue, 08 Jul 2025 17:22:03 -0700 (PDT)
-Received: from [192.168.1.5] ([103.80.119.54])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c300b88edsm302692a91.35.2025.07.08.17.22.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 08 Jul 2025 17:22:03 -0700 (PDT)
-Message-ID: <3a8590f3-ab8d-4155-b8c1-7cd34dc9db00@gmail.com>
-Date: Wed, 9 Jul 2025 05:51:59 +0530
+	 In-Reply-To:Content-Type; b=bgYuDETShgmeqd2Omoum8MuMXMNxJu1A//jWKBtLut5ajZgmRUNf2EF6/V1NGX0xwEB72ZtRfxc/2SH7lt8jDTFmVYV4fTGqeg8Gsiu21UfcWrz5xbJDL8tny28b2fkbShDEzgV9GHTumGSawjbYaalECotrWkRHpai5Im0iPhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E6214342536;
+	Wed, 09 Jul 2025 00:41:16 +0000 (UTC)
+Message-ID: <c629f3a6-4749-4ac0-8fbb-fd1fb9db1d0a@gentoo.org>
+Date: Tue, 8 Jul 2025 20:41:13 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,30 +31,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: locally storing issues/comments/projects
-To: Junio C Hamano <gitster@pobox.com>
+To: Sahil Gautam <printfdebugging@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 References: <3e964e0d-bb90-4074-a9ae-a10fb02b3f50@gmail.com>
- <xmqq4ivmtlnf.fsf@gitster.g>
+ <xmqq4ivmtlnf.fsf@gitster.g> <3a8590f3-ab8d-4155-b8c1-7cd34dc9db00@gmail.com>
 Content-Language: en-US
-From: Sahil Gautam <printfdebugging@gmail.com>
-In-Reply-To: <xmqq4ivmtlnf.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <3a8590f3-ab8d-4155-b8c1-7cd34dc9db00@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------6cpG7U024buTQVfLun1iI2Ok"
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------6cpG7U024buTQVfLun1iI2Ok
+Content-Type: multipart/mixed; boundary="------------fsqFTU568uy5mE5TZh0I2weN";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Sahil Gautam <printfdebugging@gmail.com>,
+ Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Message-ID: <c629f3a6-4749-4ac0-8fbb-fd1fb9db1d0a@gentoo.org>
+Subject: Re: locally storing issues/comments/projects
+References: <3e964e0d-bb90-4074-a9ae-a10fb02b3f50@gmail.com>
+ <xmqq4ivmtlnf.fsf@gitster.g> <3a8590f3-ab8d-4155-b8c1-7cd34dc9db00@gmail.com>
+In-Reply-To: <3a8590f3-ab8d-4155-b8c1-7cd34dc9db00@gmail.com>
+
+--------------fsqFTU568uy5mE5TZh0I2weN
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+On 7/8/25 8:21 PM, Sahil Gautam wrote:
+>=20
+> On 7/9/25 3:01 AM, Junio C Hamano wrote:
+>> It would be very nice if these hosting providers can agree to make
+>> project metainformations interchangeable in an open way.
+>=20
+> it's not just about migrations, it's about a repository being self
+> reliant in itself. think of some git
+> hosting provider blocking my account because of some ai algorithm, thin=
+k
+> of some disaster striking
+> some data center or some malware deleting all the data on the servers,
+> all these are quite possible.
+>=20
+> having git store that data means that you clone the whole thing and
+> doesn't matter what happens
+> to the hosting provider, if you have the repository, you have the whole=
+
+> thing.
 
 
-On 7/9/25 3:01 AM, Junio C Hamano wrote:
-> It would be very nice if these hosting providers can agree to make
-> project metainformations interchangeable in an open way.
+You may be interested in https://github.com/git-bug/git-bug
 
-it's not just about migrations, it's about a repository being self 
-reliant in itself. think of some git
-hosting provider blocking my account because of some ai algorithm, think 
-of some disaster striking
-some data center or some malware deleting all the data on the servers, 
-all these are quite possible.
 
-having git store that data means that you clone the whole thing and 
-doesn't matter what happens
-to the hosting provider, if you have the repository, you have the whole 
-thing.
+--=20
+Eli Schwartz
 
+--------------fsqFTU568uy5mE5TZh0I2weN--
+
+--------------6cpG7U024buTQVfLun1iI2Ok
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaG26qQUDAAAAAAAKCRCEp9ErcA0vV4tQ
+AQCAwQyjrVEUzapZCI2MOgp4//q2JXg3Z6FicCWT4FsFPwD/akznPuvGAIUslbi3Lqepb8+7lmEe
+gX2S1IUiX5B9owk=
+=KK5o
+-----END PGP SIGNATURE-----
+
+--------------6cpG7U024buTQVfLun1iI2Ok--
