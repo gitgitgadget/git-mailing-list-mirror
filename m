@@ -1,53 +1,53 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2770AA920
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:32:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCBE21FF5F
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 15:35:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752075172; cv=none; b=YBbIyuqlz0PiCiuga64rG81z7KV52DtEDKZ//ZPZmBvFzPr/rOgLR+gNAMCNBsGmHjMWMOCVBk5prIEoY7gA8EXe8RvHaif1Hdn/XL+OWnur1PpE7L8VnUJaD0+m+Tb+r+pA546+UKAQbQxaPQ09DEDPfiWybdOQpy5Al4G1aCY=
+	t=1752075324; cv=none; b=f+krgDjXjY6FoULqFuTTlUrrkwzpsCkvlMWRbe4IN3oZMXfnM5RgVqMhXkhXe5DVLgt8XUxU5KrZrlNxZ8CHMdis3TJPqP7Cw9oXnjfbeMHTrCV0occt2KHnWGG7MhGElWG9LM7GH04Li3i74vGE69KNzfvC28VWKXBnh6JrKQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752075172; c=relaxed/simple;
-	bh=b6zInezxSZkDmW3qey9CQashlnNZyYK4yejP5E6SWM8=;
+	s=arc-20240116; t=1752075324; c=relaxed/simple;
+	bh=baUoOHaaLTONuPNj5+YWGATTJn4+R59MAUf3iq8/zQw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aa8rsn3D+LWlzWm5J6xRppbv6nv9PVybp6HZfxqrqj4zyJFsD7qHaWKjq8Ske+95gcxcpW6mPMtKOQpMVwn3XrJUWgQpbQ+Oyjyn3jRzxTIKhcLdDhSfxyOfdIqqQo7nUDKXYAVBCV1LGEnuwFjt/aguiT/qmla79bMew/tR+pc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h15oG/RD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=H4Hd/yuj; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=ZNjFfhkd1dOT3X2gAFZTFYnNttD5PYSKKxCsjPGVSMI39DXWc5ZMKvg/XG0dKUOC3DtAIgb52B6S/Y05w6IAwnlVMO8U9iXGimxwhZiszmAPtovpB1cydRuwcEpzDHajUEtjozLkW86dJgXerG76C3xba/FD0zltFz0EKbA1fj0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HO6BMxAH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=glama1iU; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h15oG/RD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="H4Hd/yuj"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4D2DB1400353;
-	Wed,  9 Jul 2025 11:32:50 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HO6BMxAH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="glama1iU"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4546E140003E;
+	Wed,  9 Jul 2025 11:35:22 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-08.internal (MEProxy); Wed, 09 Jul 2025 11:32:50 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 09 Jul 2025 11:35:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752075170; x=1752161570; bh=w3untXEfaR
-	O666j/OQOdRFMx+iQ44YMChQmP/jZQ2ks=; b=h15oG/RDh9S9YQm4LZlnPv003T
-	1/fii4ZlWwxbtzBKRl22VG6IRbYX1+/ugIhPifnETWJrnIsZPF6nAb0snFxF4K+b
-	GrgbRarww/dhYdB3kaTfOpxnR+q9uw8klnz6gRbMqy32nhMaO/dt4VENccTKZrU+
-	5w+OC1oheMW/TIUSClU/3OEK++qz5R7xvrm06NrCsrA03SfiLbzXQFv8pk3kW3Ch
-	2JRwKUuM8g7wPUL0tA8N42YTBiIaZXIY2+UcEFy1WKglcpZTFWqJ8xdBk9v4xzOW
-	BSmb46eB32eo8uRgmdCkWYee+e1vYgSYzqcgPljRlf84qh4bGXfv+Mupc7kw==
+	:subject:to:to; s=fm1; t=1752075322; x=1752161722; bh=JVuE0FW54l
+	RHtMdx2TtYt+dgAJpKigzDay3I4B7ZLZI=; b=HO6BMxAH/seQqX303fHvwuFnhF
+	UqeldJ1Goi+nHskHjoYlVqJYken/+fGgvQQuAVg87GhPcOY1+jq/XkLRdYkJZnq2
+	iZhsYBmMH9UQU3uSZjBHdpbf06mUEiTIrrZP2hrK15h8OT3AhDlP01v+7vX+xJAB
+	9TOBG+zI/VT5CEVw8lTiDrLC1i7ULGBxWlsOihZXz98uoeE7Wmi79+XF+8fC07zf
+	m+dFoBoOcPahxH5BJsaQKfIGz+gN6vQWSIHjcUEo1E9WjQ50JDrBpwiM4LLH/i9/
+	dYt1dCjH74sUsfb74YjWKh7nuqmclRamO9BG4WQllStBwxKb8xYfCZrw3gJg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752075170; x=1752161570; bh=w3untXEfaRO666j/OQOdRFMx+iQ44YMChQm
-	P/jZQ2ks=; b=H4Hd/yuj1vmnLuWFwp5FNA41pS7i6gB+SJsCwbYlvasI4MUgTYe
-	hqANER4tin0EzeezQo/3kLS/izMGBIFIjLgIjuSDd6Zte5VwTe0C/oYGAeg5RnTU
-	CcpQTpXm5Wwa1DCYXArWtCUZjGJbW3cb/tOwuM3qCAAZa2WdpYAsktl9NfNAo/QM
-	7o4hVt6agZLwUNfXbULDI4eBtnP8kQ1o/wJ8sEZcUIS8IuYOwcbfyhOKlPqAar78
-	jJ+cZLsIUYYf3eMNwEwa6ItTcPMAtshsSaPgUElpDwxdFtWXdb6Syp9bO7B0705W
-	4hiaMHuCGosZAQMzgv9c6MpN9E0dGyMX5uA==
-X-ME-Sender: <xms:oYtuaNHh11kwp8FTJcR6lbe5HotipqBmE9jcGsQqKNcuxK6fHcWHlQ>
-    <xme:oYtuaPSpBTQ2LMYIDSW4FOWehuz4NJzZJ3g_Au-UhduYwX6a5PpcNL8bAcyGWQ1A8
-    29aiVVTEZUgakblGg>
-X-ME-Received: <xmr:oYtuaKyy8_bb8xo-pjCQ9ZdXMcFkWNP8ABidkNRGkPVAYni72aLEnuwPL-DCaFND_EYOxlZZgncEdOLLCxp_Wk1xCZRMNiOohxAc6gM>
+	1752075322; x=1752161722; bh=JVuE0FW54lRHtMdx2TtYt+dgAJpKigzDay3
+	I4B7ZLZI=; b=glama1iUy6EMmTJvZdD6n29ZO//blrRzM/c5s4+0syUr13R9Ye4
+	3pYLVyCphjolDau4nuWXOk1FLK7JieCGk+ykZeP+8SSLbOXhPKq4UPKYFCBk8D0y
+	QsMULJJ3EcczL2o+Ai2HpJpvY1ldjTGRrf+l50K7LWJTFGtnoqiGYaUEamrd7vCn
+	VUK5Xft08D7ckpfHGGU9cYSiehIYTMkvViI5l0m7IrW5+KVJCVE8h0bpLdQ6SiQc
+	AgwXf3ZG7Rio5Dqy+HOihB+ovXC60YVFCoBFx98RtGYN/EdC+lHdf5FOfw/ixXXH
+	RF5gNeB2g75cENNe2OWuLYMG4cUObmC/0cw==
+X-ME-Sender: <xms:OYxuaMYexNT1lbugjy5q4N76NrSb1-5cvkgAJiuvqgN4RUXcgtrE9g>
+    <xme:OYxuaETTzGQgxftgj4swb_LWuwXGUY-u8GKGECsZqDyhxUQdpf-Xl1YvB_EjLz8le
+    Viq95hnJWi283xGNg>
+X-ME-Received: <xmr:OYxuaGvBQbnSJqpfzSQkFU4gHEkVdtGT7ZnWLYVFuRNg_qP5fpfod9kLfiU1G8Fp8wTgFtNu6BbYeOOCuR_3z3BEKNSlFsuFI_t6n4w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeelfecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,40 +55,43 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeelfecutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptghhrh
-    hishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhl
-    lhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ootuaLcpGB-Rs7TpnSw_GPiv6cxiU75667DCanGF2Y-mvdFC5khKaA>
-    <xmx:ootuaNMqMPoI3R6lhg0NqdXuJTicHIIRNoZQXI_gLTiDFfPTt1tbqg>
-    <xmx:ootuaGseQ8RpDBAEz7aeGRyEOCQ2xL5WCzu5hZGtf4FH5JyqUpkFMA>
-    <xmx:ootuaOD1P-XiShhn6jbfJ8WErjqPpNRuKUfYP2kpLnBYnoZiUk4o9A>
-    <xmx:ootuaFnb-e-zknCIPRgJdJu4ocW5kvFIkxvKHsDlQZQLHleVjD_XT09Y>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgu
+    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhi
+    shgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OYxuaGGs6Y6kkJoSIvFAz8bYE5fww0SEEvngMFX4tqNmyW6PT2Gsyw>
+    <xmx:OYxuaHxBa-PUBJDQa6FNgVETP0ZxtHQsK9iLNg_LQztr8wOaGZGsEg>
+    <xmx:OYxuaA1G1-D8_UkvYTD7kitH_X2maLFXurTl4kRzLDAskzDaEzsS0Q>
+    <xmx:OYxuaHpoYHY4sIyg1pMCa8wCniJDaMOTafTgVsbw7ppcVMcP1QlLzg>
+    <xmx:OoxuaFXZ3W6QfVRJN6TO-dzH40La7s1wnQXDCLytKj9QUdgcNMl0ADLs>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 11:32:49 -0400 (EDT)
+ 9 Jul 2025 11:35:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Leon Michalak <leonmichalak6@gmail.com>
-Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v3 0/4] Better support for customising context lines in
- --patch commands
-In-Reply-To: <CAP9jKjE0DiZeCB7LG-a7sFP+GXk8WoLy=uZ4qkyCjzYxpPopvQ@mail.gmail.com>
-	(Leon Michalak's message of "Wed, 9 Jul 2025 08:57:04 +0100")
-References: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
-	<pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
-	<xmqqms9eql73.fsf@gitster.g>
-	<CAP9jKjE0DiZeCB7LG-a7sFP+GXk8WoLy=uZ4qkyCjzYxpPopvQ@mail.gmail.com>
-Date: Wed, 09 Jul 2025 08:32:47 -0700
-Message-ID: <xmqq7c0hpeg0.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v4] fast-(import|export): improve on commit signature
+ output format
+In-Reply-To: <CAP8UFD1mgKT0AFuoYfisHMinP6KEDahcXCwiK6-wRFBKKymfsQ@mail.gmail.com>
+	(Christian Couder's message of "Wed, 9 Jul 2025 02:19:06 +0200")
+References: <20250618151821.528627-1-christian.couder@gmail.com>
+	<20250619133630.727274-1-christian.couder@gmail.com>
+	<xmqqbjpv1ucb.fsf@gitster.g>
+	<CAP8UFD223ja7jKU+wb6TiGkc9frh5dt1rCJkOkk+O+J2MPokrw@mail.gmail.com>
+	<xmqqwm8jxoj3.fsf@gitster.g> <aGy82TiRFcij5V_9@pks.im>
+	<CAP8UFD1A+eV9hbmp4P3pC71+oSTrtLgxtWGyt++J8a+bk497qA@mail.gmail.com>
+	<xmqqbjpuwsbm.fsf@gitster.g>
+	<CAP8UFD1mgKT0AFuoYfisHMinP6KEDahcXCwiK6-wRFBKKymfsQ@mail.gmail.com>
+Date: Wed, 09 Jul 2025 08:35:20 -0700
+Message-ID: <xmqq34b5pebr.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,19 +101,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Leon Michalak <leonmichalak6@gmail.com> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
-> I will respond to everything soon I hope, life has been in the way and
-> I didn't anticipate so many comments :-)
+>> And I totally agree with you that reviews often deserve very well
+>> reasoned responses, which take time to prepare; a response that
+>> comes as spinal reflex without much thought is often not very
+>> useful.
+>>
+>> It really depends on the definition of "fast" in "fast response".
+>>
+>> If we need a week to come up with a newer iteration,
+>
+> The issue is that whatever the time we could set as a norm, like "a
+> week" here or 2 or 3 days, or one month, or whatever,
 
-Sure, no problem.  
+Yeah, topic sizes varies.
 
 Historically, summer is a slower season and these messages I sent
-are primarily for me to keep track of topics on flight.  "No, I am
-on vacation for a few more weeks" would have been perfectly fine
-response ;-).
+are primarily for me to keep track of topics on flight.  "I am on
+vacation for a few more weeks so expect response time longer than
+usual" would have been a perfectly fine response.
 
-> Based on a skim read of the comments, the main thing I'm not sure I
-> will be able to achieve is implementing the valid value range that a
-> Rene has been working on as I don't have that context, but I'm not
-> sure if this is a necessity to add?
+Not even acknowledging receipt of review comments was what I
+primarily saw as a communication gap.
