@@ -1,40 +1,40 @@
 Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE0A287248
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:45:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FDE2857EA
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 09:45:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752054322; cv=none; b=TMFRP35ECgo34C5/cs7ZaeDk8QJWUvomvmQs669UamQGIe+fuJFEfMIZv3eaKrg9rPhcuiVv3UPf5Cn9QHeIjgsGpsdGsfNA23Lb//1neynuVkGOZufpYoJDYGDr+218l/+pfxvqu838Q8fG9GrG6obBFKrTuzRWLouzcsvlTHU=
+	t=1752054332; cv=none; b=YG5zjlTeWcFgq1FqY5BHWfeNk+1kDJhDkeV/rMdjA6C+TpU9T+PXJy5UOSRypYcRXDEr2Qqt7QkyMOBSbVoGhmuAuNeLtt0EESwBJwzcUXUPJBsDRpCQBclSm19aouqxZX7AOJ7fhFbkWnhaGJoo6S+KdKKcgBmem/dm2qCUa+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752054322; c=relaxed/simple;
-	bh=SN8gZB6DFWgX2Fkdir4nwCApLBqLUOvXWbEw8OkyjuA=;
+	s=arc-20240116; t=1752054332; c=relaxed/simple;
+	bh=YfMMeAUjbyInC2920ZZgrCRJM4FO6O8NZrhvwT2ukAA=;
 	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=n0BiKg9Z79ftfae1wYVYGbAe+VuE4EYzqgrHjrtdRk5+edJn0bzXw6b8fR/+6jSmkOgFo5MWplrZNSepfO7LZ52/tkr9T62YuO1cEw+cEWe/ThvxELNZynOsyDS6bjQ/EroJktQeN9xdQgLIeqQLWQfvhPfwKoneVGjcPOJ0wZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=qcBvTi5d; arc=none smtp.client-ip=217.72.192.78
+	 In-Reply-To:Content-Type; b=VaNNPgAeneopEofSQuOsx28Ky6T4zY529uo/kr9v89640obhYX5pa7l0TUu8FSzf8ufZA3WiC5mbwP7VSfrQfDDxGC61muQVb/tt8+74aiaBiNJbN2n8tKBRslCyUaDTenj/OPlZ0EptcLx78Reu4iyc3PP/4W7JJKAFh2Iudsk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=hEa1ErM4; arc=none smtp.client-ip=217.72.192.78
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="qcBvTi5d"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="hEa1ErM4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1752054315; x=1752659115; i=l.s.r@web.de;
-	bh=aPOOcg9JRlcKbzIW5o5Rgr3I0nIFX7MtDs5VW+RZwjU=;
+	s=s29768273; t=1752054325; x=1752659125; i=l.s.r@web.de;
+	bh=zynpyAgdbMObJ89/swIpfngTwuuoBDu8mJdwdKFST0A=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:From:To:
 	 Cc:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:
 	 cc:content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=qcBvTi5diU/I8g6Va9vlesixMRL1JLl5lm6rUadtgyTWBM0hsZk9jkOgdcGswisH
-	 l6z4AGdq2ND78Xj85Mdzc1r4Yawara3ayuRengJ2c32Mdlm5sQbQXIPYgilOT0bfe
-	 a6OWHX4v7DysKaEXvXj2W+5A82FwX39hj0mgiPaPYpGDMWG2CW7kP7bBGhdRg0PSR
-	 WsHefzR1LXRrbKr9KdvuAq1+DjgfDhOP7jl8aWYBQ3S+ab7qyJUpwKHDAcuRD3Oii
-	 NW13oqd4bnvX9eguK8X34ZzSBaH12tFvCoe9SLpP/xX9w0Zp+aHgNQzBCSkAUjE6Y
-	 qT9aCFoATvkD9Nr77Q==
+	b=hEa1ErM4uBt9h38Yr0ODl3epOL0cHZYfJUxECDVHTaZyTkJbzeIwpyZLcnzkEMRu
+	 GPTgdudKYSD1TeC1FL2y29y+T/vbWmxW/T0jw677FF5KE6FQKc1l7QjVc+sdRo6YF
+	 Ufvfr2XOoOwtV4kOPuAeJjsJeDkp5DkFl75bg8biC+FLSHpGEufE2d3eSIiPUo8FE
+	 xGFEXCTv1Pxb5c/Ll1bFUc9Q2N7y7y/LDkRCk0yUEXAUOEkxD591/CYMRyj+WYXZE
+	 qg2mIx0PcHxquqO9H0L80Fhbtq0BVCQ9Oi7yBuLTlcErVDP4GJPNU1huaD+9Y/pAK
+	 FeVw+QHhGPCMUtFdHw==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MMp8Y-1uGoaE3ELE-00RDHP; Wed, 09
- Jul 2025 11:45:14 +0200
-Message-ID: <77b841ea-eab1-4e76-98ff-f7a16653fcb8@web.de>
-Date: Wed, 9 Jul 2025 11:45:14 +0200
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1N0Igv-1uuG021g99-014NJr; Wed, 09
+ Jul 2025 11:45:25 +0200
+Message-ID: <fbb7d5fe-e7ae-440f-80c4-991a2aff1d6a@web.de>
+Date: Wed, 9 Jul 2025 11:45:24 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,8 +42,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: [PATCH v2 2/7] parse-options: add precision handling for
- PARSE_OPT_CMDMODE
+Subject: [PATCH v2 3/7] parse-options: add precision handling for
+ OPTION_SET_INT
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 To: Git List <git@vger.kernel.org>
 Cc: Patrick Steinhardt <ps@pks.im>
@@ -53,226 +53,261 @@ Content-Language: en-US
 In-Reply-To: <802eba72-c100-429a-80b7-7a0e8b6559ed@web.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:j3rSWP6WF/ZHwMsuToMVbM6baeTk/6xWgtgogMY9XXF5rBNhDMC
- kXmOveqIZDxFfNzY6C6YiHQ8LOR9YTEOu0QOIeH9vJWD/ksp4tPCOVQ7RuOW1H9/x9OndPe
- w/NS/aSfoQq9uRtm+PrqeA/7o5pNo5XcMU0XLzgRbehLuX3SkCg8uaWxMTesTXejPIDKAx2
- o0/qLGCD5JdzyNqvg8l4A==
+X-Provags-ID: V03:K1:0jGnzpeIIYC9Pt5lpMhUNeWmiW4mqc7GHRtMR8A0ctb019DK87g
+ P494WmPn5fpFDgft+x83GfCvlYac9BJML+k8vdz0lWbLUE5QCf8PierYNCx6kczFHdAltf+
+ Yr9pF0ao52OFW0rX34+uiryY/AFEG02foR3PmBH3MB+lsS+N6iiA3/l1HwFho83bwTpU+0E
+ 8l8zTlwEmTjwmNS9uR/Ew==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:yQjSTX6B8Bk=;pyRTdiLO+0iCL/S8PnHo2iq9G7U
- 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
+UI-OutboundReport: notjunk:1;M01:P0:n12mp2/A0pM=;NtAQ1jse0ycZSCmVZJZOoTdD0+z
+ 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
 
-Build on 09705696f7 (parse-options: introduce precision handling for
-`OPTION_INTEGER`, 2025-04-17) to support value variables of different
-sizes for PARSE_OPT_CMDMODE options.  Do that by requiring their
-"precision" to be set and casting their "value" pointer accordingly.
+Similar to 09705696f7 (parse-options: introduce precision handling for
+`OPTION_INTEGER`, 2025-04-17) support value variables of different sizes
+for OPTION_SET_INT.  Do that by requiring their "precision" to be set,
+casting their "value" pointer accordingly and checking whether the value
+fits.
 
-Call the function that does the raw casting do_get_int_value() to
-reserve the name get_int_value() for a more friendly wrapper we're
-going to introduce in one of the next patches.
+Factor out the casting code from the part of do_get_value() that handles
+OPTION_INTEGER to avoid code duplication.  We're going to use it in the
+next patches as well.
 
 Signed-off-by: Ren=C3=A9 Scharfe <l.s.r@web.de>
 =2D--
- builtin/am.c                  |  1 +
- parse-options.c               | 41 ++++++++++++++++++++++++++++++-----
- parse-options.h               |  1 +
- t/helper/test-parse-options.c | 13 ++++++++---
- 4 files changed, 48 insertions(+), 8 deletions(-)
+ builtin/update-index.c        |  6 ++++
+ parse-options.c               | 56 ++++++++++++++++++++++-------------
+ parse-options.h               |  2 ++
+ t/helper/test-parse-options.c |  1 +
+ 4 files changed, 45 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index a800003340..c9d925f7b9 100644
-=2D-- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -2406,6 +2406,7 @@ int cmd_am(int argc,
- 			.type =3D OPTION_CALLBACK,
- 			.long_name =3D "show-current-patch",
- 			.value =3D &resume_mode,
-+			.precision =3D sizeof(resume_mode),
- 			.argh =3D "(diff|raw)",
- 			.help =3D N_("show the patch being applied"),
- 			.flags =3D PARSE_OPT_CMDMODE | PARSE_OPT_OPTARG | PARSE_OPT_NONEG | PA=
-RSE_OPT_LITERAL_ARGHELP,
+diff --git a/builtin/update-index.c b/builtin/update-index.c
+index 538b619ba4..0c1d4ed55b 100644
+=2D-- a/builtin/update-index.c
++++ b/builtin/update-index.c
+@@ -981,6 +981,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "assume-unchanged",
+ 			.value =3D &mark_valid_only,
++			.precision =3D sizeof(mark_valid_only),
+ 			.help =3D N_("mark files as \"not changing\""),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D MARK_FLAG,
+@@ -989,6 +990,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "no-assume-unchanged",
+ 			.value =3D &mark_valid_only,
++			.precision =3D sizeof(mark_valid_only),
+ 			.help =3D N_("clear assumed-unchanged bit"),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D UNMARK_FLAG,
+@@ -997,6 +999,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "skip-worktree",
+ 			.value =3D &mark_skip_worktree_only,
++			.precision =3D sizeof(mark_skip_worktree_only),
+ 			.help =3D N_("mark files as \"index-only\""),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D MARK_FLAG,
+@@ -1005,6 +1008,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "no-skip-worktree",
+ 			.value =3D &mark_skip_worktree_only,
++			.precision =3D sizeof(mark_skip_worktree_only),
+ 			.help =3D N_("clear skip-worktree bit"),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D UNMARK_FLAG,
+@@ -1079,6 +1083,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "fsmonitor-valid",
+ 			.value =3D &mark_fsmonitor_only,
++			.precision =3D sizeof(mark_fsmonitor_only),
+ 			.help =3D N_("mark files as fsmonitor valid"),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D MARK_FLAG,
+@@ -1087,6 +1092,7 @@ int cmd_update_index(int argc,
+ 			.type =3D OPTION_SET_INT,
+ 			.long_name =3D "no-fsmonitor-valid",
+ 			.value =3D &mark_fsmonitor_only,
++			.precision =3D sizeof(mark_fsmonitor_only),
+ 			.help =3D N_("clear fsmonitor valid bit"),
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D UNMARK_FLAG,
 diff --git a/parse-options.c b/parse-options.c
-index 68ff494492..ddac008a5e 100644
+index ddac008a5e..639f41b83b 100644
 =2D-- a/parse-options.c
 +++ b/parse-options.c
-@@ -68,6 +68,26 @@ static char *fix_filename(const char *prefix, const cha=
-r *file)
- 		return prefix_filename_except_for_dash(prefix, file);
+@@ -88,6 +88,36 @@ static int do_get_int_value(const void *value, size_t p=
+recision, intmax_t *ret)
+ 	}
  }
 =20
-+static int do_get_int_value(const void *value, size_t precision, intmax_t=
- *ret)
++static enum parse_opt_result set_int_value(const struct option *opt,
++					   enum opt_parsed flags,
++					   intmax_t value)
 +{
-+	switch (precision) {
++	switch (opt->precision) {
 +	case sizeof(int8_t):
-+		*ret =3D *(int8_t *)value;
++		*(int8_t *)opt->value =3D value;
 +		return 0;
 +	case sizeof(int16_t):
-+		*ret =3D *(int16_t *)value;
++		*(int16_t *)opt->value =3D value;
 +		return 0;
 +	case sizeof(int32_t):
-+		*ret =3D *(int32_t *)value;
++		*(int32_t *)opt->value =3D value;
 +		return 0;
 +	case sizeof(int64_t):
-+		*ret =3D *(int64_t *)value;
++		*(int64_t *)opt->value =3D value;
 +		return 0;
 +	default:
-+		return -1;
++		BUG("invalid precision for option %s", optname(opt, flags));
 +	}
++}
++
++static int signed_int_fits(intmax_t value, size_t precision)
++{
++	size_t bits =3D precision * CHAR_BIT;
++	intmax_t upper_bound =3D INTMAX_MAX >> (bitsizeof(intmax_t) - bits);
++	intmax_t lower_bound =3D -upper_bound - 1;
++	return lower_bound <=3D value && value <=3D upper_bound;
 +}
 +
  static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
  					  const struct option *opt,
  					  enum opt_parsed flags,
-@@ -266,7 +286,9 @@ static enum parse_opt_result do_get_value(struct parse=
+@@ -136,8 +166,7 @@ static enum parse_opt_result do_get_value(struct parse=
 _opt_ctx_t *p,
- }
+ 		return 0;
 =20
- struct parse_opt_cmdmode_list {
--	int value, *value_ptr;
-+	intmax_t value;
-+	void *value_ptr;
-+	size_t precision;
- 	const struct option *opt;
- 	const char *arg;
- 	enum opt_parsed flags;
-@@ -280,7 +302,7 @@ static void build_cmdmode_list(struct parse_opt_ctx_t =
-*ctx,
+ 	case OPTION_SET_INT:
+-		*(int *)opt->value =3D unset ? 0 : opt->defval;
+-		return 0;
++		return set_int_value(opt, flags, unset ? 0 : opt->defval);
 =20
- 	for (; opts->type !=3D OPTION_END; opts++) {
- 		struct parse_opt_cmdmode_list *elem =3D ctx->cmdmode_list;
--		int *value_ptr =3D opts->value;
-+		void *value_ptr =3D opts->value;
+ 	case OPTION_STRING:
+ 		if (unset)
+@@ -219,23 +248,7 @@ static enum parse_opt_result do_get_value(struct pars=
+e_opt_ctx_t *p,
+ 			return error(_("value %s for %s not in range [%"PRIdMAX",%"PRIdMAX"]")=
+,
+ 				     arg, optname(opt, flags), (intmax_t)lower_bound, (intmax_t)upper=
+_bound);
 =20
- 		if (!(opts->flags & PARSE_OPT_CMDMODE) || !value_ptr)
- 			continue;
-@@ -292,10 +314,13 @@ static void build_cmdmode_list(struct parse_opt_ctx_=
-t *ctx,
-=20
- 		CALLOC_ARRAY(elem, 1);
- 		elem->value_ptr =3D value_ptr;
--		elem->value =3D *value_ptr;
-+		elem->precision =3D opts->precision;
-+		if (do_get_int_value(value_ptr, opts->precision, &elem->value))
-+			optbug(opts, "has invalid precision");
- 		elem->next =3D ctx->cmdmode_list;
- 		ctx->cmdmode_list =3D elem;
+-		switch (opt->precision) {
+-		case 1:
+-			*(int8_t *)opt->value =3D value;
+-			return 0;
+-		case 2:
+-			*(int16_t *)opt->value =3D value;
+-			return 0;
+-		case 4:
+-			*(int32_t *)opt->value =3D value;
+-			return 0;
+-		case 8:
+-			*(int64_t *)opt->value =3D value;
+-			return 0;
+-		default:
+-			BUG("invalid precision for option %s",
+-			    optname(opt, flags));
+-		}
++		return set_int_value(opt, flags, value);
  	}
-+	BUG_if_bug("invalid 'struct option'");
- }
-=20
- static char *optnamearg(const struct option *opt, const char *arg,
-@@ -317,7 +342,13 @@ static enum parse_opt_result get_value(struct parse_o=
-pt_ctx_t *p,
- 	char *opt_name, *other_opt_name;
-=20
- 	for (; elem; elem =3D elem->next) {
--		if (*elem->value_ptr =3D=3D elem->value)
-+		intmax_t new_value;
-+
-+		if (do_get_int_value(elem->value_ptr, elem->precision,
-+				     &new_value))
-+			BUG("impossible: invalid precision");
-+
-+		if (new_value =3D=3D elem->value)
- 			continue;
-=20
- 		if (elem->opt &&
-@@ -327,7 +358,7 @@ static enum parse_opt_result get_value(struct parse_op=
-t_ctx_t *p,
- 		elem->opt =3D opt;
- 		elem->arg =3D arg;
- 		elem->flags =3D flags;
--		elem->value =3D *elem->value_ptr;
-+		elem->value =3D new_value;
- 	}
-=20
- 	if (result || !elem)
+ 	case OPTION_UNSIGNED:
+ 	{
+@@ -617,10 +630,13 @@ static void parse_options_check(const struct option =
+*opts)
+ 		    opts->long_name && !(opts->flags & PARSE_OPT_NONEG))
+ 			optbug(opts, "OPTION_SET_INT 0 should not be negatable");
+ 		switch (opts->type) {
++		case OPTION_SET_INT:
++			if (!signed_int_fits(opts->defval, opts->precision))
++				optbug(opts, "has invalid defval");
++			/* fallthru */
+ 		case OPTION_COUNTUP:
+ 		case OPTION_BIT:
+ 		case OPTION_NEGBIT:
+-		case OPTION_SET_INT:
+ 		case OPTION_NUMBER:
+ 		case OPTION_BITOP:
+ 			if ((opts->flags & PARSE_OPT_OPTARG) ||
 diff --git a/parse-options.h b/parse-options.h
-index 91c3e3c29b..c75a473c9e 100644
+index c75a473c9e..71516e4b5b 100644
 =2D-- a/parse-options.h
 +++ b/parse-options.h
-@@ -269,6 +269,7 @@ struct option {
+@@ -190,6 +190,7 @@ struct option {
  	.short_name =3D (s), \
  	.long_name =3D (l), \
  	.value =3D (v), \
 +	.precision =3D sizeof(*v), \
  	.help =3D (h), \
- 	.flags =3D PARSE_OPT_CMDMODE|PARSE_OPT_NOARG|PARSE_OPT_NONEG | (f), \
+ 	.flags =3D PARSE_OPT_NOARG | (f), \
  	.defval =3D (i), \
+@@ -260,6 +261,7 @@ struct option {
+ 	.short_name =3D (s), \
+ 	.long_name =3D (l), \
+ 	.value =3D (v), \
++	.precision =3D sizeof(*v), \
+ 	.help =3D (h), \
+ 	.flags =3D PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, \
+ 	.defval =3D 1, \
 diff --git a/t/helper/test-parse-options.c b/t/helper/test-parse-options.c
-index f2663dd0c0..1e03ff88f6 100644
+index 1e03ff88f6..2ba2546d70 100644
 =2D-- a/t/helper/test-parse-options.c
 +++ b/t/helper/test-parse-options.c
-@@ -148,9 +148,16 @@ int cmd__parse_options(int argc, const char **argv)
- 		OPT_SET_INT(0, "set23", &integer, "set integer to 23", 23),
- 		OPT_CMDMODE(0, "mode1", &integer, "set integer to 1 (cmdmode option)", =
-1),
- 		OPT_CMDMODE(0, "mode2", &integer, "set integer to 2 (cmdmode option)", =
-2),
--		OPT_CALLBACK_F(0, "mode34", &integer, "(3|4)",
--			"set integer to 3 or 4 (cmdmode option)",
--			PARSE_OPT_CMDMODE, mode34_callback),
-+		{
-+			.type =3D OPTION_CALLBACK,
-+			.long_name =3D "mode34",
-+			.value =3D &integer,
-+			.precision =3D sizeof(integer),
-+			.argh =3D "(3|4)",
-+			.help =3D "set integer to 3 or 4 (cmdmode option)",
-+			.flags =3D PARSE_OPT_CMDMODE,
-+			.callback =3D mode34_callback,
-+		},
- 		OPT_CALLBACK('L', "length", &integer, "str",
- 			"get length of <str>", length_callback),
- 		OPT_FILENAME('F', "file", &file, "set file to <file>"),
+@@ -131,6 +131,7 @@ int cmd__parse_options(int argc, const char **argv)
+ 			.short_name =3D 'B',
+ 			.long_name =3D "no-fear",
+ 			.value =3D &boolean,
++			.precision =3D sizeof(boolean),
+ 			.help =3D "be brave",
+ 			.flags =3D PARSE_OPT_NOARG | PARSE_OPT_NONEG,
+ 			.defval =3D 1,
 =2D-=20
 2.50.0
