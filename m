@@ -1,116 +1,125 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667EC944F
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:47:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7C22609D9
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 23:14:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752101234; cv=none; b=feHXzFyVFVqsDdyPFdPQEyi7Rj+Uow5nDM6POaVQFR9R6mvDoMa5FF92AWsjkdXPvd80msgIrOwJiL7cUji3sf15fhedcoQzlvqADqdJjVChNVCQNxZy8h5MU5g4K3LuVuOuDGZgwYRjHM7eGw4UAipdMZESSYOqySAOtzxHlJw=
+	t=1752102865; cv=none; b=Rmhg/Gnv4qUhWs4ZiNFk+Vz3O1X+AcxucVjF2VqBkT5d+q7Snu4KjyUXB6xjPaa6KaXrJ6qcgE2CstZrvDK20lKXRnwqpJ7Wvj6LUwS45W4+9GNdGDqE7ptSgbPSuU+srgD96frtrwG24tdnRi7LljJHZtRMqA0jysXw+dInPp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752101234; c=relaxed/simple;
-	bh=hv8Zo+nUcAN1a0to3CB5TKFxAEanfXecmIR1QGJLj5M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gxF0mfW8tpxDG/tTb9Vk4vu56ODUFjZA1z2bZCFIwgGExMuA1yodniNHsj2bW+ZH5W+5xo2vUwUc3m8YVUj0iPcozndLwbVZAz4fmqxewI6szKmjAr/vU/JMEUB2aTZLRNWAmrjEETkKQ714ck9NZrMxj6MW1a9W7kgwVbXqcxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=HrvMwsPj; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1752102865; c=relaxed/simple;
+	bh=q88ulpzDPHiLwKJNAuq/6d0lFy2eIzUYLRyHvjNXtm0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uKqktX6kWsaj9WlBkChJFhufZudSmPjj7uTXIY+GKMQI6yHz7eeL8fjIEIx9W57gEa7TbUYIA9P5mpt8lf15v2VDpVFBjeqx3P2o9CIXHjV6Ijj4v8kvMFayAJIM+teRTazCgl2pc+5JrJTUYImA69+P54/asmBOvVU1MtKqpqk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Dt5txcw6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eUPyW/n1; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="HrvMwsPj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1752101231;
-	bh=hv8Zo+nUcAN1a0to3CB5TKFxAEanfXecmIR1QGJLj5M=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=HrvMwsPjUva3A3Tapt4N/m5wnAsY88BujBVFUtaHDNUmxbV0X+e/7Hh5ax9jwZu+F
-	 3A8W4SStvpNUPzLFN/Q5KhukKM/yV+Zgui4LmtWzfAek+PkWe04i/s9CTuQcY3m0C/
-	 pVGL+E7AUpUwrW2/RdyTeO2r4C3bbY1h6VEBX8mRX2p95qaXdSlzxOtjDvunnC4Igu
-	 b8rt/VrJsBsa17/KqSC+DXVcaDZD4xlG0QGqoLILbY3Z6N9unPkd4a7m3VjtIvFBVv
-	 klzcnfScpZuuDDDM2kCenJLxNdLK81iAyqRk9F0QfVYI9InC52DgRzExZsHEn+xL/f
-	 pWo7waYTKShno/lCWoFOT0bY+0qD0qGgYBws1kCwH/v+lYJgYm0B4iKIklZuRDqy+m
-	 HlUt4pMqnXWbp0Vigdw9FFbn8DogQI9TMf3pWWN/r94l0+xK+UkH5mSN5raqhGG3xk
-	 c/QFItX2ZRslFXnoUcnOjnAXa1vrG6jOj76/t2fMwaObuHvU2yD
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E69EA20075;
-	Wed,  9 Jul 2025 22:47:10 +0000 (UTC)
-Date: Wed, 9 Jul 2025 22:47:09 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "Preston, David J." <David.Preston@onegas.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: git bash bug
-Message-ID: <aG7xbbPf2ZsTh1ND@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Preston, David J." <David.Preston@onegas.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <PH7PR11MB65466DEE20BA470C600C7B9B9549A@PH7PR11MB6546.namprd11.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Dt5txcw6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eUPyW/n1"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4EA457A026C;
+	Wed,  9 Jul 2025 19:14:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 09 Jul 2025 19:14:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752102862; x=1752189262; bh=PQzYB4iU4T
+	sscnrBCIIOLL8D8e10SLEQ9WgxA9vRav4=; b=Dt5txcw6wR/vt339QAct/vqWuj
+	60rU/x97cnQoHaEmMLBRospmQ6980q7GCVm32AGF0eVIxqJoF58lZfiycbw+hFQ5
+	fzJjSsTzMRI8yPVXqFCnEAryI3CoWp57/2Mph87Tzsnu3k3/dPMdOHm+OjyJi761
+	+AB2Ke4WOnJZFoPrQhuf5FoX6h2ImveBMOKZLEAzLgwUHbGp8PZBa55xu7qu62Z2
+	jzRpTFPo+tuyXODZVxJdRBSl3foaoIECj40NgKCaERGkCW2bLdYfKL8X6/REzT8Z
+	Z+Njdf1YPzBKkmgxdviVXz//efNwM5pLdidfkx9Os2PLEfpm9gRK1E9piQUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752102862; x=1752189262; bh=PQzYB4iU4TsscnrBCIIOLL8D8e10SLEQ9Wg
+	xA9vRav4=; b=eUPyW/n1fPPvI1fMjiIe3FLrQQmRHJCyQON4bXvLp7BscToqiry
+	SDbWRGkqVZ2jHZpu29Rj7Zpptg2Fp1uCmMYDaxfC5Lz59ybb+OuV0U/cEWDkd1xF
+	ydJv3IrfpFjYFJGQiVpjA3nmQNmlkrnbnod2nAXHHnbt1E3fuyD/YG3801O/UDi5
+	UlsaDMVMmYM2gU44XJdlUJRy0Ti5pjAjaONkWjkzm1ht1fQFTq1IG+liLYZ+ALXr
+	2c28UsOCObp4Xi3X5qqRl6Q8u8Axau/XPDOtUXkCZNNFLhk9eW7WpJoEeJ2D/Leb
+	a+ypzf1ASFmMxXSpWRtcTvnL+duixGuo3fg==
+X-ME-Sender: <xms:zfduaDzms6DiBlVCI088ya2oHbZdesrZhDePrd23oxKTnrvsy8VGxA>
+    <xme:zfduaILE4NtJlVncIuKCHPCu50ltl2iw-wLcib0sOBcZpkRx44bnCAnSKMH8mj341
+    qOePeG1aJVSoTXXdg>
+X-ME-Received: <xmr:zfduaNEspYDqBo_N-GhnKr9jsxnik50GZigUj1oqCKGBDwXuyMDkUP7RXOHHOQtp47lbeYQET7FnVEzYl8nw_LR0FnfYgBY0FYHU1QU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkeekhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshgrnhgu
+    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhi
+    shgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zfduaM8KxDzXWA6MECdvRmzveRXZH1hGcZF4i-zvA6xZiTCahfp_lw>
+    <xmx:zfduaFJKpIsghkXt_YH6VFZCbpK0XEVACP74RTZx1iIBCjbmKjRQsg>
+    <xmx:zfduaCtNWHjaQwCDT7iWnHUaUNMMGLMzPljU7bGz3o-PK9horNj_mw>
+    <xmx:zfduaEBkXXh005UPplxzVdiLbP_SZwP8N-1n4OMPrAs9AcE-lA_25g>
+    <xmx:zvduaJOm_EGmlcDG2QKt56unVUibS9oBX7_xZ9wldCHqkIkbLX5VnNv1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Jul 2025 19:14:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  "brian m . carlson"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6] fast-(import|export): improve on commit signature
+ output format
+In-Reply-To: <20250709141253.623563-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Wed, 9 Jul 2025 16:12:53 +0200")
+References: <20250708091738.4072857-1-christian.couder@gmail.com>
+	<20250709141253.623563-1-christian.couder@gmail.com>
+Date: Wed, 09 Jul 2025 16:14:20 -0700
+Message-ID: <xmqqple99ctv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+FMpVaAXOE5ZX/Wo"
-Content-Disposition: inline
-In-Reply-To: <PH7PR11MB65466DEE20BA470C600C7B9B9549A@PH7PR11MB6546.namprd11.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Christian Couder <christian.couder@gmail.com> writes:
 
---+FMpVaAXOE5ZX/Wo
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> +static void parse_one_signature(struct signature_data *sig, const char *v)
+> +{
+> +	char *args = xstrdup(v); /* Will be freed when sig->hash_algo is freed */
+> +	char *space = strchr(args, ' ');
+> +
+> +	if (!space)
+> +		die("Expected gpgsig format: 'gpgsig <hash-algo> <signature-format>', "
+> +		    "got 'gpgsig %s'", args);
+> +	*space = '\0';
+> +
+> +	sig->hash_algo = args;
+> +	sig->sig_format = space + 1;
 
-On 2025-07-09 at 17:20:22, Preston, David J. wrote:
+This is minor, but as I already said in the discussion of the
+previous round, let me remind readers.
 
-Hi,
+I think "*space++ = '\0'" followed by "->sig_format = space", as you
+wrote originally, was easier to follow.  If I were doing this 6th
+iteration, I would have kept that part of the code around here, but
+would have renamed "space" to a more generic "cp" (very often used
+in this codebase to stand for a character pointer).
 
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
->=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> started happening after an update to a newer version of git... has been h=
-appening for a while, so i am not sure what version it started with
->=20
-> What did you expect to happen? (Expected behavior)
-> when using git bash in windows environment, when a previously typed comma=
-nd is executing and i start typing, i expect that what i type will eventual=
-ly show up on the command line, in the order i typed it, once the executing=
- command completes.
+Will replace and requeue (unless you have v7 before my tomorrow's
+integration cycle, in which case this iteration may be skipped).
 
-The Git project doesn't ship bash, a terminal, or any software other
-than the source code to Git.  Git Bash is part of Git for Windows, which
-is a separate project.  You may want to report this https://github.com/git-=
-for-windows/git/issues.
-
-I would recommend searching for any relevant issues, open or closed,
-first and providing any information that might be relevant.  For
-instance, does this problem only occur when the system is loaded or does
-it happen all the time, even with little load?  Is there anything else
-going on that is correlated with the problem (e.g., a virus scan)?  Does
-the same thing happen when running Git for Windows's bash through
-Windows Terminal, or is it only the built-in MinTTY?  Those kinds of
-things might help the maintainer solve the problem more quickly.
-
-Best of luck on this.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---+FMpVaAXOE5ZX/Wo
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaG7xbQAKCRB8DEliiIei
-gcofAQC3qwmrc5J18QhdudryGOt0E8rLKvLRdD9JzJHhvak+KAEA8wj10vCDxLmf
-/gWKOIpZ6rPQPAUY/OhggwYtWdNerQg=
-=EPUn
------END PGP SIGNATURE-----
-
---+FMpVaAXOE5ZX/Wo--
+Thanks.
