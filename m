@@ -1,79 +1,80 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D472D662D
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 11:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BC128D8EB
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 11:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752059871; cv=none; b=jJ+xhITq1AD3UEuw2mRL4AbDCCuIWTLfVsTO72f0IU+Tfcij+bJla92T6rg7gDTafg9gANkQUfx4fZz3mFHir57EhJylk+ZwMy/atQYfXwkHXyPGYPhga+7NupfCsCcWOMqS7nbLyt+OV2lvjtHS3XFPEU0yc0S94e435iLEWKw=
+	t=1752059873; cv=none; b=VmPyLmO9iQRo8XMA1dFsnOQ5MnweThZWPea4vUHdDTu1Rlf8inW4//fJvf2Rr7mx1V2/nn8anOx1oGQHbhjNs56Ju7Qr6HeZcSghf5wwHFXbmXU1A63ho5pmhcpeANskxN5evKPMrMaVkF6uci+zcSPEBhrBhfrbAm9gtXrPNZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752059871; c=relaxed/simple;
-	bh=i9+5hgLvcXEMbUlfV0kJdJC7Bq+QurWhyoQw2jd+gUY=;
+	s=arc-20240116; t=1752059873; c=relaxed/simple;
+	bh=CT/Q1ZmRG43YVxWgoRTcY9BZDq7sUKohDUF+SlPXuWI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tPfWyeYD1ZMkg/PY+NQc/K9SYYcBXzQ2orvmKHWwqiDKTnXqRXtuk6aJ5Oli2sVUzDWCIut9fLOJ13kjhluEodiAtuzEkDno0D6SlwcJVBdR9+RJFqfKiCyV6qrHwWcp9d0ejZHZtbzCuGuCA5pSHwDaP1HVsenkm6vHHWZHzBc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hQmHrxyv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UJTSXpzc; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=GOHBIq+CMxHBQdAon3IhzxXecXERbFOm3Oy82O5EalDHYH5mWRXcJ8P+ydI4OU5X8Q9JGQWMwozA2YoS8NVE5N3gaXxWXNb0BWahdHQ8Ag0dAgyh1mrVNmGNioEGCg8P8V2Gsn/ngD5Mp3cR/LkgQF4WVxAEM9Eud1STWxbbpiE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AnLAQMzl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EEomxPtg; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hQmHrxyv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UJTSXpzc"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A5A381400330
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 07:17:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AnLAQMzl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EEomxPtg"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 69BBD1400360
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 07:17:50 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 09 Jul 2025 07:17:47 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 09 Jul 2025 07:17:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752059867;
-	 x=1752146267; bh=UfPXhmeR6+rRpMiOxcwxVtr0kF63X5J3pUXGGI11jj8=; b=
-	hQmHrxyvX6jRd0WevZcrka46TkzQGs4RKItL6pcmPtjGdRWYMWNF2lAjO6csIUcZ
-	U1Qz1rQDr0Lc2Cp+fcdqhvRK2dRAnTnI+XYfNSAdSIWDK++FTLGlzL++LyWJyVzW
-	d+y+hCNhj/tzPr5hjrq43vZleycOzA19zNpk/YIvXLEASUiGQe0uD0N0b+Ocb91j
-	NzwE7Ar0LoxMSgSE+1M9EdliU3i3dW+yykaylHBn4inGbFzCyl+Muc98U3SQIMKD
-	kGfKf2VqsCGO6esXE6YSH4INUNm/R67oKcC5u8AGpXbUol9S+7khqMiSOtqHQtGe
-	NeOCqFCPuRgvEAcsvU6KdA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752059870;
+	 x=1752146270; bh=OcrxVr09WrwwG9lP5Hf9lqWwjcF+DU+iUIfN2GksSgo=; b=
+	AnLAQMzlvFQBEw2uLpVApmDlxXWf7RarsrnHYxsHXeouuRillZaMJyHzjoOp01bT
+	H5Qiq1+EiKT9uaMgRvd7YPjozXV7RJ4tPaBvn0FOLLzJe+ArUv17iNycqV0wW1RM
+	p69vdOz9YJOcN7expxcvSsGAYncNnLgnWbTDE0kc+rghdpp3JHg/u07WenDwKO4g
+	S2laVdVXQkT9S8g4RvVG/Xk5adKXDokV4NxDtOtUcH+hwsfpSExklymfGI77Tc/P
+	nqoTRFbIw4n97XjnkL0nay3xKAo8dQkUW9G1ZNOzyO+DJvQZ+4h984+zeQy2ctk4
+	1s7/p5h2nYtwMy1SX+Lp3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752059867; x=
-	1752146267; bh=UfPXhmeR6+rRpMiOxcwxVtr0kF63X5J3pUXGGI11jj8=; b=U
-	JTSXpzcHFCqO5FaI1JoPysCHVQfjPIu3pFwwwdCufAULq2zADlk1rnkZz9pyN5f1
-	O29SVRRsD8iuuPcVY7x9qMdSttSiqksTgGKsLhssbfW4sK1hTTSh9pfzzHn4jrq0
-	AvlYTsznl2DqkYS93bQsp3tCmg6aaJgV8mcg0KQBcguVhiYRb5EAsgODxICz7o+p
-	Pb4ph2iKkCTsttty2NriTbgSG7ducY8NDAld4uYQhV8/gwLdvDHKGZEb+F2+RRAq
-	Helh1+XArIN2ivC1nsb4/pOeCWoqewSOYpJqV6cr84PTcCb/1sraEWZDRJKRGRgL
-	vxg+UIJyiMsE9w8/rcPSQ==
-X-ME-Sender: <xms:209uaLrta2Ck2PBh3ipW824qVlHLL25OpwnSuqHg2fOeHlv-V9VKhg>
-    <xme:209uaHq_I_XfiUeaRsVtNTSabYU7682WTJ2BIfBmUF8_fzv5YCGpdy3PsWusXamht
-    YwnirbSHzs1CFnXDQ>
-X-ME-Received: <xmr:209uaBmkLTerNIW-xpoRI43i8lN5fiP7dbukgUVGTQycK9PvqRjLuY1NnscLfmMR4XWsuTuKnk0NOBSz-xBwu3-K5b2dDb82pqRpRSiGzWZ0ig>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752059870; x=
+	1752146270; bh=OcrxVr09WrwwG9lP5Hf9lqWwjcF+DU+iUIfN2GksSgo=; b=E
+	EomxPtgcqwWY7SRrNbdmqpK+9LMDKYQUsUGud6OgKykzv3wrVJOw2UC148R7iFMq
+	/VQaI+dXwUJL/+BNilrTjHKdDHm5p/5/YImr7d1/EaJ2Zcpsb5BKYFzQIXgxBBRk
+	8Y6uviqJ6gZJw+q2dsQ8mRY564ItzB3LyqgQEeF0JT1T2BDDdDzflE/SjW3X5koh
+	wyGqa0+W366hKtMXDPZxJuRNg+KjzVpuZTNhYj45aTC3B0JJHm++Q+g9pJ6KdRLz
+	Psgpx6XWNWrHSKdFqxcSefHYubVfZ9pRzTySB3Lxa1qycYsGhBgm+xQ56QaiDH/5
+	hOyzpjunyu73pGuAR13YA==
+X-ME-Sender: <xms:3k9uaA6xzzZTC-JD5IereHdKNWwLAMsCFqb5H2RE54RG6pqpqTw-OQ>
+    <xme:3k9uaD5ii8gtrPbA7ATYec5j2gAgX8HlzI2erz-g0X95IkUxeTPBYaRtAndIYTZ8A
+    2fPGEsF6P46MViXfA>
+X-ME-Received: <xmr:3k9uaI0JOltaT_jhOy1Ux31yGHa8haA6TVAgaeusSg_klAUtDA6gBLsTWMw0DJBKg_ZQGsm0z0gUByurslSLxi9yRhERFmt-qHO2SMTmiDOXaw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:209uaBFKDhYzMP2Og7taOmULok9e1EJ_trKxXY8LW47jMBqL865V7A>
-    <xmx:209uaCq89wH5wqyUzzsGt9h79MAvuD3kd8dcScGI_GChXXI7Z2-_kg>
-    <xmx:209uaF7jP1uDbPIsYPkr28y0v9IJJyySoyynRUAjjkAPU6oAjMkP8Q>
-    <xmx:209uaI7itTewCalgJku7XLcFNsE27-STlz1SX6eXROK7HP_b87wcvg>
-    <xmx:209uaEAVFHi-aCTclpR-af-1s958lJu5-5oGLqi9k4fv6ZHwarZDRfR5>
+X-ME-Proxy: <xmx:3k9uaHW0a7HBnINHOgkS7YZo8pxjaV8wU30MnQGrIt_utJ-5eqEO6Q>
+    <xmx:3k9uaL7gg-JfclDjvPBkrEX7wogadgTD6LhpKTxGcJw0MuPnfcsNUg>
+    <xmx:3k9uaGJuOPCvB-IbilNjZYrXaGfCIXZ9AGhU1XZTCIT8DjVXrR84zg>
+    <xmx:3k9uaEKrHpLsZtMK8R3KD_IKOmU_fF0AIcEf-qmG4yNHB5dW4GEE8Q>
+    <xmx:3k9uaKTg8FpMbjz3ddtAy3s3X3CRkTQLgekFJK9du1vGZ7ojm__U077M>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 9 Jul 2025 07:17:47 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 9 Jul 2025 07:17:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7a0b8742 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 781d1421 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 9 Jul 2025 11:17:46 +0000 (UTC)
+	Wed, 9 Jul 2025 11:17:49 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 09 Jul 2025 13:17:19 +0200
-Subject: [PATCH 09/19] odb: introduce `odb_write_object()`
+Date: Wed, 09 Jul 2025 13:17:20 +0200
+Subject: [PATCH 10/19] object-file: get rid of `the_repository` when
+ writing objects
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,550 +83,385 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-pks-object-file-wo-the-repository-v1-9-62627b55707f@pks.im>
+Message-Id: <20250709-pks-object-file-wo-the-repository-v1-10-62627b55707f@pks.im>
 References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
 In-Reply-To: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-We do not have a backend-agnostic way to write objects into an object
-database. While there is `write_object_file()`, this function is rather
-specific to the loose object format.
-
-Introduce `odb_write_object()` to plug this gap. For now, this function
-is a simple wrapper around `write_object_file()` and doesn't even use
-the passed-in object database yet. This will change in subsequent
-commits, where `write_object_file()` is converted so that it works on
-top of an `odb_source`. `odb_write_object()` will then become
-responsible for deciding which source an object shall be written to.
+The logic that writes loose objects still relies on `the_repository` to
+decide where exactly the object shall be written to. Refactor it so that
+the logic instead operates on a `struct odb_source` so that we can get
+rid of this global dependency.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c                  | 11 +++++++----
- builtin/checkout.c       |  2 +-
- builtin/merge-file.c     |  3 ++-
- builtin/mktag.c          |  2 +-
- builtin/mktree.c         |  2 +-
- builtin/notes.c          |  3 ++-
- builtin/receive-pack.c   |  4 ++--
- builtin/replace.c        |  3 ++-
- builtin/tag.c            |  4 ++--
- builtin/unpack-objects.c | 12 ++++++------
- cache-tree.c             |  5 ++---
- commit.c                 |  4 ++--
- match-trees.c            |  2 +-
- merge-ort.c              |  7 ++++---
- notes-cache.c            |  3 ++-
- notes.c                  | 12 ++++++++----
- object-file.c            | 18 +++++++++---------
- object-file.h            | 26 +++-----------------------
- odb.c                    | 10 ++++++++++
- odb.h                    | 38 ++++++++++++++++++++++++++++++++++++++
- read-cache.c             |  2 +-
- 21 files changed, 106 insertions(+), 67 deletions(-)
+ builtin/unpack-objects.c |  3 +-
+ object-file.c            | 96 +++++++++++++++++++++++++-----------------------
+ object-file.h            |  6 ++-
+ odb.c                    |  4 +-
+ 4 files changed, 58 insertions(+), 51 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index a6836692d0c..ffb9d9f76d6 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3621,7 +3621,7 @@ static int try_threeway(struct apply_state *state,
- 
- 	/* Preimage the patch was prepared for */
- 	if (patch->is_new)
--		write_object_file("", 0, OBJ_BLOB, &pre_oid);
-+		odb_write_object(the_repository->objects, "", 0, OBJ_BLOB, &pre_oid);
- 	else if (repo_get_oid(the_repository, patch->old_oid_prefix, &pre_oid) ||
- 		 read_blob_object(&buf, &pre_oid, patch->old_mode))
- 		return error(_("repository lacks the necessary blob to perform 3-way merge."));
-@@ -3637,7 +3637,8 @@ static int try_threeway(struct apply_state *state,
- 		return -1;
- 	}
- 	/* post_oid is theirs */
--	write_object_file(tmp_image.buf.buf, tmp_image.buf.len, OBJ_BLOB, &post_oid);
-+	odb_write_object(the_repository->objects, tmp_image.buf.buf,
-+			 tmp_image.buf.len, OBJ_BLOB, &post_oid);
- 	image_clear(&tmp_image);
- 
- 	/* our_oid is ours */
-@@ -3650,7 +3651,8 @@ static int try_threeway(struct apply_state *state,
- 			return error(_("cannot read the current contents of '%s'"),
- 				     patch->old_name);
- 	}
--	write_object_file(tmp_image.buf.buf, tmp_image.buf.len, OBJ_BLOB, &our_oid);
-+	odb_write_object(the_repository->objects, tmp_image.buf.buf,
-+			 tmp_image.buf.len, OBJ_BLOB, &our_oid);
- 	image_clear(&tmp_image);
- 
- 	/* in-core three-way merge between post and our using pre as base */
-@@ -4360,7 +4362,8 @@ static int add_index_file(struct apply_state *state,
- 			}
- 			fill_stat_cache_info(state->repo->index, ce, &st);
- 		}
--		if (write_object_file(buf, size, OBJ_BLOB, &ce->oid) < 0) {
-+		if (odb_write_object(the_repository->objects, buf, size,
-+				     OBJ_BLOB, &ce->oid) < 0) {
- 			discard_cache_entry(ce);
- 			return error(_("unable to create backing store "
- 				       "for newly created file %s"), path);
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 0a90b86a729..f95eb64ffb3 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -320,7 +320,7 @@ static int checkout_merged(int pos, const struct checkout *state,
- 	 * (it also writes the merge result to the object database even
- 	 * when it may contain conflicts).
- 	 */
--	if (write_object_file(result_buf.ptr, result_buf.size, OBJ_BLOB, &oid))
-+	if (odb_write_object(the_repository->objects, result_buf.ptr, result_buf.size, OBJ_BLOB, &oid))
- 		die(_("Unable to add merge result for '%s'"), path);
- 	free(result_buf.ptr);
- 	ce = make_transient_cache_entry(mode, &oid, path, 2, ce_mem_pool);
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index 9464f275629..b8b25a14e6d 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -155,7 +155,8 @@ int cmd_merge_file(int argc,
- 		if (object_id && !to_stdout) {
- 			struct object_id oid;
- 			if (result.size) {
--				if (write_object_file(result.ptr, result.size, OBJ_BLOB, &oid) < 0)
-+				if (odb_write_object(the_repository->objects, result.ptr,
-+						     result.size, OBJ_BLOB, &oid) < 0)
- 					ret = error(_("Could not write object file"));
- 			} else {
- 				oidcpy(&oid, the_hash_algo->empty_blob);
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 27e649736cf..12552bbb217 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -106,7 +106,7 @@ int cmd_mktag(int argc,
- 	if (verify_object_in_tag(&tagged_oid, &tagged_type) < 0)
- 		die(_("tag on stdin did not refer to a valid object"));
- 
--	if (write_object_file(buf.buf, buf.len, OBJ_TAG, &result) < 0)
-+	if (odb_write_object(the_repository->objects, buf.buf, buf.len, OBJ_TAG, &result) < 0)
- 		die(_("unable to write tag file"));
- 
- 	strbuf_release(&buf);
-diff --git a/builtin/mktree.c b/builtin/mktree.c
-index 81df7f6099f..12772303f50 100644
---- a/builtin/mktree.c
-+++ b/builtin/mktree.c
-@@ -63,7 +63,7 @@ static void write_tree(struct object_id *oid)
- 		strbuf_add(&buf, ent->oid.hash, the_hash_algo->rawsz);
- 	}
- 
--	write_object_file(buf.buf, buf.len, OBJ_TREE, oid);
-+	odb_write_object(the_repository->objects, buf.buf, buf.len, OBJ_TREE, oid);
- 	strbuf_release(&buf);
- }
- 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index a9529b1696a..a3580b4aa3d 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -229,7 +229,8 @@ static void prepare_note_data(const struct object_id *object, struct note_data *
- 
- static void write_note_data(struct note_data *d, struct object_id *oid)
- {
--	if (write_object_file(d->buf.buf, d->buf.len, OBJ_BLOB, oid)) {
-+	if (odb_write_object(the_repository->objects, d->buf.buf,
-+			     d->buf.len, OBJ_BLOB, oid)) {
- 		int status = die_message(_("unable to write note object"));
- 
- 		if (d->edit_path)
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index dd1d1446e75..bd9baf81e56 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -760,8 +760,8 @@ static void prepare_push_cert_sha1(struct child_process *proc)
- 		int bogs /* beginning_of_gpg_sig */;
- 
- 		already_done = 1;
--		if (write_object_file(push_cert.buf, push_cert.len, OBJ_BLOB,
--				      &push_cert_oid))
-+		if (odb_write_object(the_repository->objects, push_cert.buf,
-+				     push_cert.len, OBJ_BLOB, &push_cert_oid))
- 			oidclr(&push_cert_oid, the_repository->hash_algo);
- 
- 		memset(&sigcheck, '\0', sizeof(sigcheck));
-diff --git a/builtin/replace.c b/builtin/replace.c
-index 5ff2ab723cb..7c46d05ec15 100644
---- a/builtin/replace.c
-+++ b/builtin/replace.c
-@@ -488,7 +488,8 @@ static int create_graft(int argc, const char **argv, int force, int gentle)
- 		return -1;
- 	}
- 
--	if (write_object_file(buf.buf, buf.len, OBJ_COMMIT, &new_oid)) {
-+	if (odb_write_object(the_repository->objects, buf.buf,
-+			     buf.len, OBJ_COMMIT, &new_oid)) {
- 		strbuf_release(&buf);
- 		return error(_("could not write replacement commit for: '%s'"),
- 			     old_ref);
-diff --git a/builtin/tag.c b/builtin/tag.c
-index 46cbf892e34..8fbe9e7be04 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -271,8 +271,8 @@ static int build_tag_object(struct strbuf *buf, int sign, struct object_id *resu
- 	struct object_id *compat_oid = NULL, compat_oid_buf;
- 	if (sign && do_sign(buf, &compat_oid, &compat_oid_buf) < 0)
- 		return error(_("unable to sign the tag"));
--	if (write_object_file_flags(buf->buf, buf->len, OBJ_TAG, result,
--				    compat_oid, 0) < 0)
-+	if (odb_write_object_ext(the_repository->objects, buf->buf,
-+				 buf->len, OBJ_TAG, result, compat_oid, 0) < 0)
- 		return error(_("unable to write tag file"));
- 	return 0;
- }
 diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index a69d59eb50c..1a4fbef36f8 100644
+index 1a4fbef36f8..1d405d156e4 100644
 --- a/builtin/unpack-objects.c
 +++ b/builtin/unpack-objects.c
-@@ -204,8 +204,8 @@ static void write_cached_object(struct object *obj, struct obj_buffer *obj_buf)
- {
- 	struct object_id oid;
+@@ -403,7 +403,8 @@ static void stream_blob(unsigned long size, unsigned nr)
+ 	data.zstream = &zstream;
+ 	git_inflate_init(&zstream);
  
--	if (write_object_file(obj_buf->buffer, obj_buf->size,
--			      obj->type, &oid) < 0)
-+	if (odb_write_object(the_repository->objects, obj_buf->buffer, obj_buf->size,
-+			     obj->type, &oid) < 0)
- 		die("failed to write object %s", oid_to_hex(&obj->oid));
- 	obj->flags |= FLAG_WRITTEN;
- }
-@@ -272,16 +272,16 @@ static void write_object(unsigned nr, enum object_type type,
- 			 void *buf, unsigned long size)
- {
- 	if (!strict) {
--		if (write_object_file(buf, size, type,
--				      &obj_list[nr].oid) < 0)
-+		if (odb_write_object(the_repository->objects, buf, size, type,
-+				     &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
- 		obj_list[nr].obj = NULL;
- 	} else if (type == OBJ_BLOB) {
- 		struct blob *blob;
--		if (write_object_file(buf, size, type,
--				      &obj_list[nr].oid) < 0)
-+		if (odb_write_object(the_repository->objects, buf, size, type,
-+				     &obj_list[nr].oid) < 0)
- 			die("failed to write object");
- 		added_object(nr, type, buf, size);
- 		free(buf);
-diff --git a/cache-tree.c b/cache-tree.c
-index a4bc14ad15c..66ef2becbe0 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -456,9 +456,8 @@ static int update_one(struct cache_tree *it,
- 	} else if (dryrun) {
- 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
- 				 OBJ_TREE, &it->oid);
--	} else if (write_object_file_flags(buffer.buf, buffer.len, OBJ_TREE,
--					   &it->oid, NULL, flags & WRITE_TREE_SILENT
--					   ? WRITE_OBJECT_FILE_SILENT : 0)) {
-+	} else if (odb_write_object_ext(the_repository->objects, buffer.buf, buffer.len, OBJ_TREE,
-+					&it->oid, NULL, flags & WRITE_TREE_SILENT ? WRITE_OBJECT_SILENT : 0)) {
- 		strbuf_release(&buffer);
- 		return -1;
- 	}
-diff --git a/commit.c b/commit.c
-index 15115125c36..bcc9aea55f6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1797,8 +1797,8 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 		compat_oid = &compat_oid_buf;
- 	}
+-	if (stream_loose_object(&in_stream, size, &info->oid))
++	if (stream_loose_object(the_repository->objects->sources,
++				&in_stream, size, &info->oid))
+ 		die(_("failed to write object in stream"));
  
--	result = write_object_file_flags(buffer.buf, buffer.len, OBJ_COMMIT,
--					 ret, compat_oid, 0);
-+	result = odb_write_object_ext(the_repository->objects, buffer.buf, buffer.len,
-+				      OBJ_COMMIT, ret, compat_oid, 0);
- out:
- 	free(parent_buf);
- 	strbuf_release(&buffer);
-diff --git a/match-trees.c b/match-trees.c
-index 5a8a5c39b04..4216933d06b 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -246,7 +246,7 @@ static int splice_tree(struct repository *r,
- 		rewrite_with = oid2;
- 	}
- 	hashcpy(rewrite_here, rewrite_with->hash, r->hash_algo);
--	status = write_object_file(buf, sz, OBJ_TREE, result);
-+	status = odb_write_object(r->objects, buf, sz, OBJ_TREE, result);
- 	free(buf);
- 	return status;
- }
-diff --git a/merge-ort.c b/merge-ort.c
-index 473ff61e36e..535ef3efc6f 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -2216,8 +2216,8 @@ static int handle_content_merge(struct merge_options *opt,
- 		}
- 
- 		if (!ret && record_object &&
--		    write_object_file(result_buf.ptr, result_buf.size,
--				      OBJ_BLOB, &result->oid)) {
-+		    odb_write_object(the_repository->objects, result_buf.ptr, result_buf.size,
-+				     OBJ_BLOB, &result->oid)) {
- 			path_msg(opt, ERROR_OBJECT_WRITE_FAILED, 0,
- 				 pathnames[0], pathnames[1], pathnames[2], NULL,
- 				 _("error: unable to add %s to database"), path);
-@@ -3772,7 +3772,8 @@ static int write_tree(struct object_id *result_oid,
- 	}
- 
- 	/* Write this object file out, and record in result_oid */
--	if (write_object_file(buf.buf, buf.len, OBJ_TREE, result_oid))
-+	if (odb_write_object(the_repository->objects, buf.buf,
-+			     buf.len, OBJ_TREE, result_oid))
- 		ret = -1;
- 	strbuf_release(&buf);
- 	return ret;
-diff --git a/notes-cache.c b/notes-cache.c
-index dd56feed6e8..bf5bb1f6c13 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -98,7 +98,8 @@ int notes_cache_put(struct notes_cache *c, struct object_id *key_oid,
- {
- 	struct object_id value_oid;
- 
--	if (write_object_file(data, size, OBJ_BLOB, &value_oid) < 0)
-+	if (odb_write_object(the_repository->objects, data,
-+			     size, OBJ_BLOB, &value_oid) < 0)
- 		return -1;
- 	return add_note(&c->tree, key_oid, &value_oid, NULL);
- }
-diff --git a/notes.c b/notes.c
-index 97b995f3f2d..7596c0df9a1 100644
---- a/notes.c
-+++ b/notes.c
-@@ -682,7 +682,8 @@ static int tree_write_stack_finish_subtree(struct tree_write_stack *tws)
- 		ret = tree_write_stack_finish_subtree(n);
- 		if (ret)
- 			return ret;
--		ret = write_object_file(n->buf.buf, n->buf.len, OBJ_TREE, &s);
-+		ret = odb_write_object(the_repository->objects, n->buf.buf,
-+				       n->buf.len, OBJ_TREE, &s);
- 		if (ret)
- 			return ret;
- 		strbuf_release(&n->buf);
-@@ -847,7 +848,8 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 	free(new_msg);
- 
- 	/* create a new blob object from buf */
--	ret = write_object_file(buf, buf_len, OBJ_BLOB, cur_oid);
-+	ret = odb_write_object(the_repository->objects, buf,
-+			       buf_len, OBJ_BLOB, cur_oid);
- 	free(buf);
- 	return ret;
- }
-@@ -927,7 +929,8 @@ int combine_notes_cat_sort_uniq(struct object_id *cur_oid,
- 				 string_list_join_lines_helper, &buf))
- 		goto out;
- 
--	ret = write_object_file(buf.buf, buf.len, OBJ_BLOB, cur_oid);
-+	ret = odb_write_object(the_repository->objects, buf.buf,
-+			       buf.len, OBJ_BLOB, cur_oid);
- 
- out:
- 	strbuf_release(&buf);
-@@ -1215,7 +1218,8 @@ int write_notes_tree(struct notes_tree *t, struct object_id *result)
- 	ret = for_each_note(t, flags, write_each_note, &cb_data) ||
- 	      write_each_non_note_until(NULL, &cb_data) ||
- 	      tree_write_stack_finish_subtree(&root) ||
--	      write_object_file(root.buf.buf, root.buf.len, OBJ_TREE, result);
-+	      odb_write_object(the_repository->objects, root.buf.buf,
-+			       root.buf.len, OBJ_TREE, result);
- 	strbuf_release(&root.buf);
- 	return ret;
- }
+ 	if (data.status != Z_STREAM_END)
 diff --git a/object-file.c b/object-file.c
-index a9248760a26..84ece01337e 100644
+index 84ece01337e..fc061c37bb5 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -755,7 +755,7 @@ static int start_loose_object_common(struct strbuf *tmp_file,
+@@ -667,9 +667,10 @@ void hash_object_file(const struct git_hash_algo *algo, const void *buf,
+ }
  
- 	fd = create_tmpfile(tmp_file, filename);
+ /* Finalize a file on disk, and close it. */
+-static void close_loose_object(int fd, const char *filename)
++static void close_loose_object(struct odb_source *source,
++			       int fd, const char *filename)
+ {
+-	if (the_repository->objects->sources->will_destroy)
++	if (source->will_destroy)
+ 		goto out;
+ 
+ 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+@@ -701,7 +702,8 @@ static inline int directory_size(const char *filename)
+  * We want to avoid cross-directory filename renames, because those
+  * can have problems on various filesystems (FAT, NFS, Coda).
+  */
+-static int create_tmpfile(struct strbuf *tmp, const char *filename)
++static int create_tmpfile(struct repository *repo,
++			  struct strbuf *tmp, const char *filename)
+ {
+ 	int fd, dirlen = directory_size(filename);
+ 
+@@ -720,7 +722,7 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+ 		strbuf_add(tmp, filename, dirlen - 1);
+ 		if (mkdir(tmp->buf, 0777) && errno != EEXIST)
+ 			return -1;
+-		if (adjust_shared_perm(the_repository, tmp->buf))
++		if (adjust_shared_perm(repo, tmp->buf))
+ 			return -1;
+ 
+ 		/* Try again */
+@@ -741,26 +743,26 @@ static int create_tmpfile(struct strbuf *tmp, const char *filename)
+  * Returns a "fd", which should later be provided to
+  * end_loose_object_common().
+  */
+-static int start_loose_object_common(struct strbuf *tmp_file,
++static int start_loose_object_common(struct odb_source *source,
++				     struct strbuf *tmp_file,
+ 				     const char *filename, unsigned flags,
+ 				     git_zstream *stream,
+ 				     unsigned char *buf, size_t buflen,
+ 				     struct git_hash_ctx *c, struct git_hash_ctx *compat_c,
+ 				     char *hdr, int hdrlen)
+ {
+-	struct repository *repo = the_repository;
+-	const struct git_hash_algo *algo = repo->hash_algo;
+-	const struct git_hash_algo *compat = repo->compat_hash_algo;
++	const struct git_hash_algo *algo = source->odb->repo->hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	int fd;
+ 
+-	fd = create_tmpfile(tmp_file, filename);
++	fd = create_tmpfile(source->odb->repo, tmp_file, filename);
  	if (fd < 0) {
--		if (flags & WRITE_OBJECT_FILE_SILENT)
-+		if (flags & WRITE_OBJECT_SILENT)
+ 		if (flags & WRITE_OBJECT_SILENT)
  			return -1;
  		else if (errno == EACCES)
  			return error(_("insufficient permission for adding "
-@@ -887,7 +887,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
- 		utb.actime = mtime;
- 		utb.modtime = mtime;
- 		if (utime(tmp_file.buf, &utb) < 0 &&
--		    !(flags & WRITE_OBJECT_FILE_SILENT))
-+		    !(flags & WRITE_OBJECT_SILENT))
+ 				       "an object to repository database %s"),
+-				     repo_get_object_directory(the_repository));
++				     source->path);
+ 		else
+ 			return error_errno(
+ 				_("unable to create temporary file"));
+@@ -790,14 +792,14 @@ static int start_loose_object_common(struct strbuf *tmp_file,
+  * Common steps for the inner git_deflate() loop for writing loose
+  * objects. Returns what git_deflate() returns.
+  */
+-static int write_loose_object_common(struct git_hash_ctx *c, struct git_hash_ctx *compat_c,
++static int write_loose_object_common(struct odb_source *source,
++				     struct git_hash_ctx *c, struct git_hash_ctx *compat_c,
+ 				     git_zstream *stream, const int flush,
+ 				     unsigned char *in0, const int fd,
+ 				     unsigned char *compressed,
+ 				     const size_t compressed_len)
+ {
+-	struct repository *repo = the_repository;
+-	const struct git_hash_algo *compat = repo->compat_hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	int ret;
+ 
+ 	ret = git_deflate(stream, flush ? Z_FINISH : 0);
+@@ -818,12 +820,12 @@ static int write_loose_object_common(struct git_hash_ctx *c, struct git_hash_ctx
+  * - End the compression of zlib stream.
+  * - Get the calculated oid to "oid".
+  */
+-static int end_loose_object_common(struct git_hash_ctx *c, struct git_hash_ctx *compat_c,
++static int end_loose_object_common(struct odb_source *source,
++				   struct git_hash_ctx *c, struct git_hash_ctx *compat_c,
+ 				   git_zstream *stream, struct object_id *oid,
+ 				   struct object_id *compat_oid)
+ {
+-	struct repository *repo = the_repository;
+-	const struct git_hash_algo *compat = repo->compat_hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	int ret;
+ 
+ 	ret = git_deflate_end_gently(stream);
+@@ -836,7 +838,8 @@ static int end_loose_object_common(struct git_hash_ctx *c, struct git_hash_ctx *
+ 	return Z_OK;
+ }
+ 
+-static int write_loose_object(const struct object_id *oid, char *hdr,
++static int write_loose_object(struct odb_source *source,
++			      const struct object_id *oid, char *hdr,
+ 			      int hdrlen, const void *buf, unsigned long len,
+ 			      time_t mtime, unsigned flags)
+ {
+@@ -851,9 +854,9 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 	if (batch_fsync_enabled(FSYNC_COMPONENT_LOOSE_OBJECT))
+ 		prepare_loose_object_bulk_checkin();
+ 
+-	odb_loose_path(the_repository->objects->sources, &filename, oid);
++	odb_loose_path(source, &filename, oid);
+ 
+-	fd = start_loose_object_common(&tmp_file, filename.buf, flags,
++	fd = start_loose_object_common(source, &tmp_file, filename.buf, flags,
+ 				       &stream, compressed, sizeof(compressed),
+ 				       &c, NULL, hdr, hdrlen);
+ 	if (fd < 0)
+@@ -865,14 +868,14 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 	do {
+ 		unsigned char *in0 = stream.next_in;
+ 
+-		ret = write_loose_object_common(&c, NULL, &stream, 1, in0, fd,
++		ret = write_loose_object_common(source, &c, NULL, &stream, 1, in0, fd,
+ 						compressed, sizeof(compressed));
+ 	} while (ret == Z_OK);
+ 
+ 	if (ret != Z_STREAM_END)
+ 		die(_("unable to deflate new object %s (%d)"), oid_to_hex(oid),
+ 		    ret);
+-	ret = end_loose_object_common(&c, NULL, &stream, &parano_oid, NULL);
++	ret = end_loose_object_common(source, &c, NULL, &stream, &parano_oid, NULL);
+ 	if (ret != Z_OK)
+ 		die(_("deflateEnd on object %s failed (%d)"), oid_to_hex(oid),
+ 		    ret);
+@@ -880,7 +883,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
+ 		die(_("confused by unstable object source data for %s"),
+ 		    oid_to_hex(oid));
+ 
+-	close_loose_object(fd, tmp_file.buf);
++	close_loose_object(source, fd, tmp_file.buf);
+ 
+ 	if (mtime) {
+ 		struct utimbuf utb;
+@@ -891,7 +894,7 @@ static int write_loose_object(const struct object_id *oid, char *hdr,
  			warning_errno(_("failed utime() on %s"), tmp_file.buf);
  	}
  
-@@ -1032,9 +1032,9 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+-	return finalize_object_file_flags(the_repository, tmp_file.buf, filename.buf,
++	return finalize_object_file_flags(source->odb->repo, tmp_file.buf, filename.buf,
+ 					  FOF_SKIP_COLLISION_CHECK);
+ }
+ 
+@@ -921,10 +924,11 @@ static int freshen_packed_object(struct object_database *odb,
+ 	return 1;
+ }
+ 
+-int stream_loose_object(struct input_stream *in_stream, size_t len,
++int stream_loose_object(struct odb_source *source,
++			struct input_stream *in_stream, size_t len,
+ 			struct object_id *oid)
+ {
+-	const struct git_hash_algo *compat = the_repository->compat_hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	struct object_id compat_oid;
+ 	int fd, ret, err = 0, flush = 0;
+ 	unsigned char compressed[4096];
+@@ -940,7 +944,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 		prepare_loose_object_bulk_checkin();
+ 
+ 	/* Since oid is not determined, save tmp file to odb path. */
+-	strbuf_addf(&filename, "%s/", repo_get_object_directory(the_repository));
++	strbuf_addf(&filename, "%s/", source->path);
+ 	hdrlen = format_object_header(hdr, sizeof(hdr), OBJ_BLOB, len);
+ 
+ 	/*
+@@ -951,7 +955,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 	 *  - Setup zlib stream for compression.
+ 	 *  - Start to feed header to zlib stream.
+ 	 */
+-	fd = start_loose_object_common(&tmp_file, filename.buf, 0,
++	fd = start_loose_object_common(source, &tmp_file, filename.buf, 0,
+ 				       &stream, compressed, sizeof(compressed),
+ 				       &c, &compat_c, hdr, hdrlen);
+ 	if (fd < 0) {
+@@ -971,7 +975,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 			if (in_stream->is_finished)
+ 				flush = 1;
+ 		}
+-		ret = write_loose_object_common(&c, &compat_c, &stream, flush, in0, fd,
++		ret = write_loose_object_common(source, &c, &compat_c, &stream, flush, in0, fd,
+ 						compressed, sizeof(compressed));
+ 		/*
+ 		 * Unlike write_loose_object(), we do not have the entire
+@@ -994,18 +998,18 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 	 */
+ 	if (ret != Z_STREAM_END)
+ 		die(_("unable to stream deflate new object (%d)"), ret);
+-	ret = end_loose_object_common(&c, &compat_c, &stream, oid, &compat_oid);
++	ret = end_loose_object_common(source, &c, &compat_c, &stream, oid, &compat_oid);
+ 	if (ret != Z_OK)
+ 		die(_("deflateEnd on stream object failed (%d)"), ret);
+-	close_loose_object(fd, tmp_file.buf);
++	close_loose_object(source, fd, tmp_file.buf);
+ 
+-	if (freshen_packed_object(the_repository->objects, oid) ||
+-	    freshen_loose_object(the_repository->objects, oid)) {
++	if (freshen_packed_object(source->odb, oid) ||
++	    freshen_loose_object(source->odb, oid)) {
+ 		unlink_or_warn(tmp_file.buf);
+ 		goto cleanup;
+ 	}
+ 
+-	odb_loose_path(the_repository->objects->sources, &filename, oid);
++	odb_loose_path(source, &filename, oid);
+ 
+ 	/* We finally know the object path, and create the missing dir. */
+ 	dirlen = directory_size(filename.buf);
+@@ -1013,7 +1017,7 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 		struct strbuf dir = STRBUF_INIT;
+ 		strbuf_add(&dir, filename.buf, dirlen);
+ 
+-		if (safe_create_dir_in_gitdir(the_repository, dir.buf) &&
++		if (safe_create_dir_in_gitdir(source->odb->repo, dir.buf) &&
+ 		    errno != EEXIST) {
+ 			err = error_errno(_("unable to create directory %s"), dir.buf);
+ 			strbuf_release(&dir);
+@@ -1022,23 +1026,23 @@ int stream_loose_object(struct input_stream *in_stream, size_t len,
+ 		strbuf_release(&dir);
+ 	}
+ 
+-	err = finalize_object_file_flags(the_repository, tmp_file.buf, filename.buf,
++	err = finalize_object_file_flags(source->odb->repo, tmp_file.buf, filename.buf,
+ 					 FOF_SKIP_COLLISION_CHECK);
+ 	if (!err && compat)
+-		err = repo_add_loose_object_map(the_repository->objects->sources, oid, &compat_oid);
++		err = repo_add_loose_object_map(source, oid, &compat_oid);
+ cleanup:
+ 	strbuf_release(&tmp_file);
+ 	strbuf_release(&filename);
  	return err;
  }
  
--int write_object_file_flags(const void *buf, unsigned long len,
--			    enum object_type type, struct object_id *oid,
--			    struct object_id *compat_oid_in, unsigned flags)
-+int write_object_file(const void *buf, unsigned long len,
-+		      enum object_type type, struct object_id *oid,
-+		      struct object_id *compat_oid_in, unsigned flags)
+-int write_object_file(const void *buf, unsigned long len,
++int write_object_file(struct odb_source *source,
++		      const void *buf, unsigned long len,
+ 		      enum object_type type, struct object_id *oid,
+ 		      struct object_id *compat_oid_in, unsigned flags)
  {
- 	struct repository *repo = the_repository;
- 	const struct git_hash_algo *algo = repo->hash_algo;
-@@ -1159,7 +1159,7 @@ static int index_mem(struct index_state *istate,
+-	struct repository *repo = the_repository;
+-	const struct git_hash_algo *algo = repo->hash_algo;
+-	const struct git_hash_algo *compat = repo->compat_hash_algo;
++	const struct git_hash_algo *algo = source->odb->repo->hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	struct object_id compat_oid;
+ 	char hdr[MAX_HEADER_LEN];
+ 	int hdrlen = sizeof(hdr);
+@@ -1051,7 +1055,7 @@ int write_object_file(const void *buf, unsigned long len,
+ 			hash_object_file(compat, buf, len, type, &compat_oid);
+ 		else {
+ 			struct strbuf converted = STRBUF_INIT;
+-			convert_object_file(the_repository, &converted, algo, compat,
++			convert_object_file(source->odb->repo, &converted, algo, compat,
+ 					    buf, len, type, 0);
+ 			hash_object_file(compat, converted.buf, converted.len,
+ 					 type, &compat_oid);
+@@ -1063,13 +1067,13 @@ int write_object_file(const void *buf, unsigned long len,
+ 	 * it out into .git/objects/??/?{38} file.
+ 	 */
+ 	write_object_file_prepare(algo, buf, len, type, oid, hdr, &hdrlen);
+-	if (freshen_packed_object(repo->objects, oid) ||
+-	    freshen_loose_object(repo->objects, oid))
++	if (freshen_packed_object(source->odb, oid) ||
++	    freshen_loose_object(source->odb, oid))
+ 		return 0;
+-	if (write_loose_object(oid, hdr, hdrlen, buf, len, 0, flags))
++	if (write_loose_object(source, oid, hdr, hdrlen, buf, len, 0, flags))
+ 		return -1;
+ 	if (compat)
+-		return repo_add_loose_object_map(repo->objects->sources, oid, &compat_oid);
++		return repo_add_loose_object_map(source, oid, &compat_oid);
+ 	return 0;
+ }
+ 
+@@ -1101,7 +1105,7 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 				     oid_to_hex(oid), compat->name);
  	}
- 
- 	if (write_object)
--		ret = write_object_file(buf, size, type, oid);
-+		ret = odb_write_object(istate->repo->objects, buf, size, type, oid);
- 	else
- 		hash_object_file(istate->repo->hash_algo, buf, size, type, oid);
- 
-@@ -1184,8 +1184,8 @@ static int index_stream_convert_blob(struct index_state *istate,
- 				 get_conv_flags(flags));
- 
- 	if (write_object)
--		ret = write_object_file(sbuf.buf, sbuf.len, OBJ_BLOB,
--					oid);
-+		ret = odb_write_object(istate->repo->objects, sbuf.buf, sbuf.len, OBJ_BLOB,
-+				       oid);
- 	else
- 		hash_object_file(istate->repo->hash_algo, sbuf.buf, sbuf.len, OBJ_BLOB,
- 				 oid);
-@@ -1287,7 +1287,7 @@ int index_path(struct index_state *istate, struct object_id *oid,
- 		if (!(flags & INDEX_WRITE_OBJECT))
- 			hash_object_file(istate->repo->hash_algo, sb.buf, sb.len,
- 					 OBJ_BLOB, oid);
--		else if (write_object_file(sb.buf, sb.len, OBJ_BLOB, oid))
-+		else if (odb_write_object(the_repository->objects, sb.buf, sb.len, OBJ_BLOB, oid))
- 			rc = error(_("%s: failed to insert into database"), path);
- 		strbuf_release(&sb);
- 		break;
+ 	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
+-	ret = write_loose_object(oid, hdr, hdrlen, buf, len, mtime, 0);
++	ret = write_loose_object(repo->objects->sources, oid, hdr, hdrlen, buf, len, mtime, 0);
+ 	if (!ret && compat)
+ 		ret = repo_add_loose_object_map(the_repository->objects->sources, oid, &compat_oid);
+ 	free(buf);
 diff --git a/object-file.h b/object-file.h
-index 370139e0762..8ee24b7d8f3 100644
+index 8ee24b7d8f3..622e2b2bb7d 100644
 --- a/object-file.h
 +++ b/object-file.h
-@@ -157,29 +157,9 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
+@@ -157,7 +157,8 @@ enum unpack_loose_header_result unpack_loose_header(git_zstream *stream,
  struct object_info;
  int parse_loose_header(const char *hdr, struct object_info *oi);
  
--enum {
--	/*
--	 * By default, `write_object_file()` does not actually write
--	 * anything into the object store, but only computes the object ID.
--	 * This flag changes that so that the object will be written as a loose
--	 * object and persisted.
--	 */
--	WRITE_OBJECT_FILE_PERSIST = (1 << 0),
--
--	/*
--	 * Do not print an error in case something gose wrong.
--	 */
--	WRITE_OBJECT_FILE_SILENT = (1 << 1),
--};
--
--int write_object_file_flags(const void *buf, unsigned long len,
--			    enum object_type type, struct object_id *oid,
--			    struct object_id *compat_oid_in, unsigned flags);
--static inline int write_object_file(const void *buf, unsigned long len,
--				    enum object_type type, struct object_id *oid)
--{
--	return write_object_file_flags(buf, len, type, oid, NULL, 0);
--}
-+int write_object_file(const void *buf, unsigned long len,
-+		      enum object_type type, struct object_id *oid,
-+		      struct object_id *compat_oid_in, unsigned flags);
+-int write_object_file(const void *buf, unsigned long len,
++int write_object_file(struct odb_source *source,
++		      const void *buf, unsigned long len,
+ 		      enum object_type type, struct object_id *oid,
+ 		      struct object_id *compat_oid_in, unsigned flags);
  
- struct input_stream {
- 	const void *(*read)(struct input_stream *, unsigned long *len);
+@@ -167,7 +168,8 @@ struct input_stream {
+ 	int is_finished;
+ };
+ 
+-int stream_loose_object(struct input_stream *in_stream, size_t len,
++int stream_loose_object(struct odb_source *source,
++			struct input_stream *in_stream, size_t len,
+ 			struct object_id *oid);
+ 
+ int force_object_loose(const struct object_id *oid, time_t mtime);
 diff --git a/odb.c b/odb.c
-index 1f48a0448e3..519df2fa497 100644
+index 519df2fa497..2a92a018c42 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -980,6 +980,16 @@ void odb_assert_oid_type(struct object_database *odb,
+@@ -980,14 +980,14 @@ void odb_assert_oid_type(struct object_database *odb,
  		    type_name(expect));
  }
  
-+int odb_write_object_ext(struct object_database *odb UNUSED,
-+			 const void *buf, unsigned long len,
-+			 enum object_type type,
-+			 struct object_id *oid,
-+			 struct object_id *compat_oid,
-+			 unsigned flags)
-+{
-+	return write_object_file(buf, len, type, oid, compat_oid, flags);
-+}
-+
- struct object_database *odb_new(struct repository *repo)
- {
- 	struct object_database *o = xmalloc(sizeof(*o));
-diff --git a/odb.h b/odb.h
-index e922f256802..c96d2c29e9f 100644
---- a/odb.h
-+++ b/odb.h
-@@ -437,6 +437,44 @@ enum for_each_object_flags {
- 	FOR_EACH_OBJECT_SKIP_ON_DISK_KEPT_PACKS = (1<<4),
- };
- 
-+enum {
-+	/*
-+	 * By default, `odb_write_object()` does not actually write anything
-+	 * into the object store, but only computes the object ID. This flag
-+	 * changes that so that the object will be written as a loose object
-+	 * and persisted.
-+	 */
-+	WRITE_OBJECT_PERSIST = (1 << 0),
-+
-+	/*
-+	 * Do not print an error in case something gose wrong.
-+	 */
-+	WRITE_OBJECT_SILENT = (1 << 1),
-+};
-+
-+/*
-+ * Write an object into the object database. The object is being written into
-+ * the local alternate of the repository. If provided, the converted object ID
-+ * as well as the compatibility object ID are written to the respective
-+ * pointers.
-+ *
-+ * Returns 0 on success, a negative error code otherwise.
-+ */
+-int odb_write_object_ext(struct object_database *odb UNUSED,
 +int odb_write_object_ext(struct object_database *odb,
-+			 const void *buf, unsigned long len,
-+			 enum object_type type,
-+			 struct object_id *oid,
-+			 struct object_id *compat_oid,
-+			 unsigned flags);
-+
-+static inline int odb_write_object(struct object_database *odb,
-+				   const void *buf, unsigned long len,
-+				   enum object_type type,
-+				   struct object_id *oid)
-+{
-+	return odb_write_object_ext(odb, buf, len, type, oid, NULL, 0);
-+}
-+
- /* Compatibility wrappers, to be removed once Git 2.51 has been released. */
- #include "repository.h"
- 
-diff --git a/read-cache.c b/read-cache.c
-index 531d87e7905..be17ca7f586 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -690,7 +690,7 @@ static struct cache_entry *create_alias_ce(struct index_state *istate,
- void set_object_name_for_intent_to_add_entry(struct cache_entry *ce)
+ 			 const void *buf, unsigned long len,
+ 			 enum object_type type,
+ 			 struct object_id *oid,
+ 			 struct object_id *compat_oid,
+ 			 unsigned flags)
  {
- 	struct object_id oid;
--	if (write_object_file("", 0, OBJ_BLOB, &oid))
-+	if (odb_write_object(the_repository->objects, "", 0, OBJ_BLOB, &oid))
- 		die(_("cannot create an empty blob in the object database"));
- 	oidcpy(&ce->oid, &oid);
+-	return write_object_file(buf, len, type, oid, compat_oid, flags);
++	return write_object_file(odb->sources, buf, len, type, oid, compat_oid, flags);
  }
+ 
+ struct object_database *odb_new(struct repository *repo)
 
 -- 
 2.50.1.327.g047016eb4a.dirty
