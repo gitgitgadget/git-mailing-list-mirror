@@ -1,79 +1,80 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B37292B5B
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 11:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23862D4B58
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 11:17:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752059849; cv=none; b=GkXzIMmlbSCmaU9iqoTSwxRKNrcbsAYz4kzO4zvHu3SVgUXHOVr9KHO5Be8sXPkiwLvZ9J7olj6PgD/qCq3kxVRucyv8lP7hQV0ySnpchPVCPWB4PUS806Gk0j74DDXTq5r+hYvOE7J15rHzqTrcgeQ/0868dYHUWxO3mYMd2uQ=
+	t=1752059851; cv=none; b=YZTJX9/1VLknylU7K1SPlCa3b1j4EnLXVVvIoR2E6HF0TF0FOVYg/vEmcJNJl72EdSjLURkGw7jZqOYGDFmXwr1/wMS6n8p7fZYN+v5blGjxaeUsHc56Ucsv2rxjdW766YysilMWc4CZ04uLOFJTziyEEQIcy7TOaK8wHQVj8mw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752059849; c=relaxed/simple;
-	bh=s3nfdC78fI33foNPomhyMi7/AwZOc7HuwEVp111218o=;
+	s=arc-20240116; t=1752059851; c=relaxed/simple;
+	bh=ZmJbeTk9nf3V+UsN+4Dh21QuGtxSpb6iz40afG8KbhI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=a8woN9OVrcuL7E6OVkVIAgpCaXgo8LgHqgsraap52TUmEcChJck2oGbi5MtMU9MeBiEID6+NWs8TgPI5xPJm7AaD4+7KH6D/ZnKV/YkBnBGYufZdtQCbAQlAQJeZB+fDlqbYRSmPH/Wpl6rUggSBpCPACAPYgchxEB/BVrcZgww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B0deYCKb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=boRFI/IY; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=NTqpTNWVOhvpK563bi1uVAaPrDMx9kZasoDjU04jOZhXQGnaPpRDNIQC1Ws1ZEQ85wMuRhrGFBZjLlgTBXCAnCBqyia1h8oSFPQV/SKXvV++ljW2xt/UwC+SOuqnvVIbhCULqtvk79/hgLykZMzLiguy0+cDiKfgvogYHgetN4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TG12i8U4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qa0G+D15; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B0deYCKb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="boRFI/IY"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3E00B140035E
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 07:17:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TG12i8U4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qa0G+D15"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 004BFEC03F8
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 07:17:29 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Jul 2025 07:17:26 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 09 Jul 2025 07:17:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752059846;
-	 x=1752146246; bh=nmPIBIpWmtG+2A1K8M80Rd9v00UXzDwFbvoMWlh7Wbs=; b=
-	B0deYCKbfEmWJrpdY60qP9PmYyvT1ZQ6xViUhxqLo7qt3ZPTqeUvyF/butpFItBS
-	MllwlWYbsgNYG8VLkPLz4gcoFrcYPn0r1mCC0py2KbcLVa0YgFfzziZbQeHDMY+b
-	As6hCHpRFNSWEu3UslEC8krAdGjtHB4rV1oMLt2DI3+O81xDX8HiZ0coUis5+yVq
-	2vXQQ4dbQu/rZ1eeISUL4If4jP0n3q9FR8z/DO2a1fiWVO0Y3qIMNIUUPFa/Uhos
-	6MxPLXS+0zW6dK+9MdMdV290bNqM9zp+XVzBZTa2uv/krMSogySuJ5QokRyk4zHq
-	/9wbrBBURoksPixZPoT8/w==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752059848;
+	 x=1752146248; bh=5afwZB9FsQQy2EtjMEs+aiXZ1XLK3x/ecmCqct6/evc=; b=
+	TG12i8U43d0uexAfHA7vBFBlbu1KDLRECbw2TH6d0LYEuaTh2Ue62wPChWlv9K2B
+	QDxxfqm0FPA9KVMx0SqxAxIS/V4SwsDWsuM6QRZlDWsJyNAARO2SMcdPhA79rzFE
+	n2W1u9SLfnOrV+Gud43qfXUC6SyeCZCmqrbY+EUxvgSaY3dlq109rM4uDs4NyMgo
+	6H+38rRSW8BNzSgSc3mI5/0wHfD6UFMKvRS970Cdym72BghJBIIbvG6p3oe/CQus
+	mJVd/vfZnQPcz8xKYpK39YXFhaV55kKGeXzvGbpfzMXj4qWeMrRcBf2pllKcrYEq
+	usVJin8j9MowTaDuNTQYuA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752059846; x=
-	1752146246; bh=nmPIBIpWmtG+2A1K8M80Rd9v00UXzDwFbvoMWlh7Wbs=; b=b
-	oRFI/IYn6g73HUQ4tKUQTIEb9Iul+r8YuU4g/CBqmvjadSzn+KaaKpcggMaJx/dV
-	8wsQE/xLUXZv6p/DJssl58f2h0MU/fL4auo0QsEduiKCjgIyvsbwSLsRTNbnY5P7
-	lZgFIeVhjtfba7ztnyPlL4OpVDhz1bRF51Bw5ud9dSK5J7iNcOzwbPbCgfs2cGau
-	aMlpnghkGRLU991CCQxfzhuUOKKIX3jGO2GNgQISCGvOvVWp9H0EnJa0eFAPg+Ym
-	7gezQSZ2hOGNQ38eyIOJp70hfZJ3aLuZx7ihtOwGjUcf8hujCjZnFNqdX5CDz6IZ
-	L8AsIXH0k9Q9e468BOnog==
-X-ME-Sender: <xms:xk9uaE3SckNQMs8_eVvHChJQfVlWVt-ObIFhbPUL_vQI4VbzlJm6GA>
-    <xme:xk9uaBEk8wH3inuuo6mtUdf-DHeEUlkeE91HADMSe8DIwTsdiLbIpD5VCQPvlJ1Fk
-    QowILsvngusREUX4g>
-X-ME-Received: <xmr:xk9uaGQiD63f59n-kGV2HvnKb2PBV72xWzg4xNXltcjhLNfdrV-E70AMbzD0Fgngbss34QIMn5utlK-dHFMcYjuzJieo5VbLc8TZY1k1QxaWtA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752059848; x=
+	1752146248; bh=5afwZB9FsQQy2EtjMEs+aiXZ1XLK3x/ecmCqct6/evc=; b=Q
+	a0G+D15ZAEJBEUPJhubx7uadmBnyNkFQSoRTo2J7Nqys67RDd+6dDZcSbD46aM8p
+	i94wTqxoGoC3beBs91HFpJPDmfZuhDWmKsmFaT9VIz/PCciHFSkUmybPGztw5e/F
+	4Zapy+APrqnHLeNpITg2W6YSoMUKtXzLuqyWW0ScRijIpXHZc/GxkWckgPj9Bt8o
+	sYqV412CcXZEJY5h+7Mmeiv2E/5IxkxMd/EvY+CMvlESSEHvU4JfUSEcltBxwehc
+	osncvyoEc7h/UuSFFvTCweIHlglNI/TBSgc1zeCKtPO/hyzOfEKVkH6yLTxbkALc
+	9vnn5MxWVyXP1RPh/7zkQ==
+X-ME-Sender: <xms:yE9uaEoj7eHmtVB7dinu24eAiJcCpK_E98GTHwZmd-faw9GtOgmI2w>
+    <xme:yE9uaMrtBnD0mTQvd9IZWfGA2slYpMtQV95WRkxCJiw0wn9OUsJFNxidU--Tn6U3S
+    O-iMBsKUFFwWnxU4w>
+X-ME-Received: <xmr:yE9uaCk8RLcbDbzUFs07vTfBNTCLpY66ODitlZjHYkyd-Lzvd5pNDb57zspipJhCocLye9SIxYOy56zUVRJA2YOXLA6jMaLVFGkmL__unLKI9A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjeegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:xk9uaAByrFWd2FdUeUtP9sCuPlNhHrbzfC9pRVoGjmLROa1WChpSfg>
-    <xmx:xk9uaO12g0IGAnRpj5i2lIp0Sdw2GPJuBTBjrqfRlTdk88EophItCA>
-    <xmx:xk9uaGWaTaZ-HyjtaKgiyelXFrOgdfidK03hG88qYSEUhgo74tdvOQ>
-    <xmx:xk9uaIkacUvYqu7z5oarWgl32BuJ28qSTV4tPNc0l4n5tvODf10RuQ>
-    <xmx:xk9uaO8W2JPlUx8tzGIi0AcUCC9Ft43Rtxq4PUcp3lomi2UAm5yEt3am>
+X-ME-Proxy: <xmx:yE9uaOFoC_tsKyGr-3mEATLhOQTrLkyP8Cu48RlSQayplvY0U1M_TQ>
+    <xmx:yE9uaLq6LLNv_MatuHHngV2GB8ufRfJXCyBEtrzejvNO6jYM9Ln10Q>
+    <xmx:yE9uaK6mRfjUTvxm5taqN_5-HESyuEN225w4re2TYd-uz-Uq-P5pNQ>
+    <xmx:yE9uaJ7rY67vCa0tR8gwX4oWzUZTBUR_Z22b8luT5-42_rYej0iA0g>
+    <xmx:yE9uaBCI1oxlS1q6NS7G7RKITl-3yDgIzCzosZ7IQS84IaKnkFZR2531>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 9 Jul 2025 07:17:25 -0400 (EDT)
+ <git@vger.kernel.org>; Wed, 9 Jul 2025 07:17:28 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eef1473e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id a7253677 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Wed, 9 Jul 2025 11:17:25 +0000 (UTC)
+	Wed, 9 Jul 2025 11:17:28 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 09 Jul 2025 13:17:12 +0200
-Subject: [PATCH 02/19] object-file: stop using `the_hash_algo`
+Date: Wed, 09 Jul 2025 13:17:13 +0200
+Subject: [PATCH 03/19] object-file: get rid of `the_repository` in
+ `has_loose_object()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,182 +83,146 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-pks-object-file-wo-the-repository-v1-2-62627b55707f@pks.im>
+Message-Id: <20250709-pks-object-file-wo-the-repository-v1-3-62627b55707f@pks.im>
 References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
 In-Reply-To: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-There are a couple of users of the `the_hash_algo` macro, which
-implicitly depends on `the_repository`. Adapt these callers to not do so
-anymore, either by deriving it from already-available context or by
-using `the_repository->hash_algo`. The latter variant doesn't yet help
-to remove the global dependency, but such users will be adapted in the
-following commits to not use `the_repository` anymore, either.
+We implicitly depend on `the_repository` in `has_loose_object()`.
+Refactor the function to accept an `odb_source` as input that should be
+checked for such a loose object.
+
+This refactoring changes semantics of the function to not check the
+whole object database for such a loose object anymore, but instead we
+now only check that single source. Existing callers thus need to loop
+through all sources manually now.
+
+While this change may seem illogical at first, whether or not an object
+exists in a specific format should be answered by the source using that
+format. As such, we can eventually convert this into a generic function
+`odb_source_has_object()` that simply checks whether a given object
+exists in an object source. And as we will know about the format that
+any given source uses it allows us to derive whether the object exists
+in a given format.
+
+This change also makes `has_loose_object_nonlocal()` obsolete. The only
+caller of this function is adapted so that it skips the primary object
+source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- object-file.c | 40 ++++++++++++++++++++++++----------------
- object-file.h |  1 +
- 2 files changed, 25 insertions(+), 16 deletions(-)
+ builtin/pack-objects.c | 24 ++++++++++++++++++++----
+ object-file.c          | 16 +++++++---------
+ object-file.h          |  7 +++----
+ 3 files changed, 30 insertions(+), 17 deletions(-)
 
-diff --git a/object-file.c b/object-file.c
-index 987cf289420..bc395febc9d 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -25,6 +25,7 @@
- #include "pack.h"
- #include "packfile.h"
- #include "path.h"
-+#include "read-cache-ll.h"
- #include "setup.h"
- #include "streaming.h"
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 5781dec9808..a44f0ce1c78 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -1703,8 +1703,16 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
+ 	struct list_head *pos;
+ 	struct multi_pack_index *m;
  
-@@ -41,9 +42,11 @@ static int get_conv_flags(unsigned flags)
- 		return 0;
- }
- 
--static void fill_loose_path(struct strbuf *buf, const struct object_id *oid)
-+static void fill_loose_path(struct strbuf *buf,
-+			    const struct object_id *oid,
-+			    const struct git_hash_algo *algop)
- {
--	for (size_t i = 0; i < the_hash_algo->rawsz; i++) {
-+	for (size_t i = 0; i < algop->rawsz; i++) {
- 		static char hex[] = "0123456789abcdef";
- 		unsigned int val = oid->hash[i];
- 		strbuf_addch(buf, hex[val >> 4]);
-@@ -60,7 +63,7 @@ const char *odb_loose_path(struct odb_source *source,
- 	strbuf_reset(buf);
- 	strbuf_addstr(buf, source->path);
- 	strbuf_addch(buf, '/');
--	fill_loose_path(buf, oid);
-+	fill_loose_path(buf, oid, source->odb->repo->hash_algo);
- 	return buf->buf;
- }
- 
-@@ -1165,7 +1168,7 @@ static int index_mem(struct index_state *istate,
- 
- 		opts.strict = 1;
- 		opts.error_func = hash_format_check_report;
--		if (fsck_buffer(null_oid(the_hash_algo), type, buf, size, &opts))
-+		if (fsck_buffer(null_oid(istate->repo->hash_algo), type, buf, size, &opts))
- 			die(_("refusing to create malformed object"));
- 		fsck_finish(&opts);
- 	}
-@@ -1173,7 +1176,7 @@ static int index_mem(struct index_state *istate,
- 	if (write_object)
- 		ret = write_object_file(buf, size, type, oid);
- 	else
--		hash_object_file(the_hash_algo, buf, size, type, oid);
-+		hash_object_file(istate->repo->hash_algo, buf, size, type, oid);
- 
- 	strbuf_release(&nbuf);
- 	return ret;
-@@ -1199,7 +1202,7 @@ static int index_stream_convert_blob(struct index_state *istate,
- 		ret = write_object_file(sbuf.buf, sbuf.len, OBJ_BLOB,
- 					oid);
- 	else
--		hash_object_file(the_hash_algo, sbuf.buf, sbuf.len, OBJ_BLOB,
-+		hash_object_file(istate->repo->hash_algo, sbuf.buf, sbuf.len, OBJ_BLOB,
- 				 oid);
- 	strbuf_release(&sbuf);
- 	return ret;
-@@ -1297,7 +1300,7 @@ int index_path(struct index_state *istate, struct object_id *oid,
- 		if (strbuf_readlink(&sb, path, st->st_size))
- 			return error_errno("readlink(\"%s\")", path);
- 		if (!(flags & INDEX_WRITE_OBJECT))
--			hash_object_file(the_hash_algo, sb.buf, sb.len,
-+			hash_object_file(istate->repo->hash_algo, sb.buf, sb.len,
- 					 OBJ_BLOB, oid);
- 		else if (write_object_file(sb.buf, sb.len, OBJ_BLOB, oid))
- 			rc = error(_("%s: failed to insert into database"), path);
-@@ -1328,6 +1331,7 @@ int read_pack_header(int fd, struct pack_header *header)
- 
- int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 				struct strbuf *path,
-+				const struct git_hash_algo *algop,
- 				each_loose_object_fn obj_cb,
- 				each_loose_cruft_fn cruft_cb,
- 				each_loose_subdir_fn subdir_cb,
-@@ -1364,12 +1368,12 @@ int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 		namelen = strlen(de->d_name);
- 		strbuf_setlen(path, baselen);
- 		strbuf_add(path, de->d_name, namelen);
--		if (namelen == the_hash_algo->hexsz - 2 &&
-+		if (namelen == algop->hexsz - 2 &&
- 		    !hex_to_bytes(oid.hash + 1, de->d_name,
--				  the_hash_algo->rawsz - 1)) {
--			oid_set_algo(&oid, the_hash_algo);
--			memset(oid.hash + the_hash_algo->rawsz, 0,
--			       GIT_MAX_RAWSZ - the_hash_algo->rawsz);
-+				  algop->rawsz - 1)) {
-+			oid_set_algo(&oid, algop);
-+			memset(oid.hash + algop->rawsz, 0,
-+			       GIT_MAX_RAWSZ - algop->rawsz);
- 			if (obj_cb) {
- 				r = obj_cb(&oid, path->buf, data);
- 				if (r)
-@@ -1405,7 +1409,8 @@ int for_each_loose_file_in_objdir_buf(struct strbuf *path,
- 	int i;
- 
- 	for (i = 0; i < 256; i++) {
--		r = for_each_file_in_obj_subdir(i, path, obj_cb, cruft_cb,
-+		r = for_each_file_in_obj_subdir(i, path, the_repository->hash_algo,
-+						obj_cb, cruft_cb,
- 						subdir_cb, data);
- 		if (r)
- 			break;
-@@ -1481,6 +1486,7 @@ struct oidtree *odb_loose_cache(struct odb_source *source,
- 	}
- 	strbuf_addstr(&buf, source->path);
- 	for_each_file_in_obj_subdir(subdir_nr, &buf,
-+				    source->odb->repo->hash_algo,
- 				    append_loose_object,
- 				    NULL, NULL,
- 				    source->loose_objects_cache);
-@@ -1501,7 +1507,8 @@ static int check_stream_oid(git_zstream *stream,
- 			    const char *hdr,
- 			    unsigned long size,
- 			    const char *path,
--			    const struct object_id *expected_oid)
-+			    const struct object_id *expected_oid,
-+			    const struct git_hash_algo *algop)
- {
- 	struct git_hash_ctx c;
- 	struct object_id real_oid;
-@@ -1509,7 +1516,7 @@ static int check_stream_oid(git_zstream *stream,
- 	unsigned long total_read;
- 	int status = Z_OK;
- 
--	the_hash_algo->init_fn(&c);
-+	algop->init_fn(&c);
- 	git_hash_update(&c, hdr, stream->total_out);
+-	if (!exclude && local && has_loose_object_nonlocal(oid))
+-		return 0;
++	if (!exclude && local) {
++		/*
++		 * Note that we start iterating at `sources->next` so that we
++		 * skip the local object source.
++		 */
++		struct odb_source *source = the_repository->objects->sources->next;
++		for (; source; source = source->next)
++			if (has_loose_object(source, oid))
++				return 0;
++	}
  
  	/*
-@@ -1594,7 +1601,8 @@ int read_loose_object(const char *path,
- 
- 	if (*oi->typep == OBJ_BLOB &&
- 	    *size > repo_settings_get_big_file_threshold(the_repository)) {
--		if (check_stream_oid(&stream, hdr, *size, path, expected_oid) < 0)
-+		if (check_stream_oid(&stream, hdr, *size, path, expected_oid,
-+				     the_repository->hash_algo) < 0)
- 			goto out_inflate;
+ 	 * If we already know the pack object lives in, start checks from that
+@@ -3928,7 +3936,14 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
  	} else {
- 		*contents = unpack_loose_rest(&stream, hdr, *size, expected_oid);
+ 		if (!want_object_in_pack_mtime(oid, 0, &pack, &offset, mtime))
+ 			return;
+-		if (!pack && type == OBJ_BLOB && !has_loose_object(oid)) {
++		if (!pack && type == OBJ_BLOB) {
++			struct odb_source *source = the_repository->objects->sources;
++			int found = 0;
++
++			for (; !found && source; source = source->next)
++				if (has_loose_object(source, oid))
++					found = 1;
++
+ 			/*
+ 			 * If a traversed tree has a missing blob then we want
+ 			 * to avoid adding that missing object to our pack.
+@@ -3942,7 +3957,8 @@ static void add_cruft_object_entry(const struct object_id *oid, enum object_type
+ 			 * limited to "ensure non-tip blobs which don't exist in
+ 			 * packs do exist via loose objects". Confused?
+ 			 */
+-			return;
++			if (!found)
++				return;
+ 		}
+ 
+ 		entry = create_object_entry(oid, type, pack_name_hash_fn(name),
+diff --git a/object-file.c b/object-file.c
+index bc395febc9d..7aecaa3d2a0 100644
+--- a/object-file.c
++++ b/object-file.c
+@@ -121,14 +121,10 @@ static int check_and_freshen(const struct object_id *oid, int freshen)
+ 	       check_and_freshen_nonlocal(oid, freshen);
+ }
+ 
+-int has_loose_object_nonlocal(const struct object_id *oid)
++int has_loose_object(struct odb_source *source,
++		     const struct object_id *oid)
+ {
+-	return check_and_freshen_nonlocal(oid, 0);
+-}
+-
+-int has_loose_object(const struct object_id *oid)
+-{
+-	return check_and_freshen(oid, 0);
++	return check_and_freshen_odb(source, oid, 0);
+ }
+ 
+ int format_object_header(char *str, size_t size, enum object_type type,
+@@ -1103,8 +1099,10 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	int hdrlen;
+ 	int ret;
+ 
+-	if (has_loose_object(oid))
+-		return 0;
++	for (struct odb_source *source = repo->objects->sources; source; source = source->next)
++		if (has_loose_object(source, oid))
++			return 0;
++
+ 	oi.typep = &type;
+ 	oi.sizep = &len;
+ 	oi.contentp = &buf;
 diff --git a/object-file.h b/object-file.h
-index 67b4ffc4808..222ff2871a1 100644
+index 222ff2871a1..5b63a05ab51 100644
 --- a/object-file.h
 +++ b/object-file.h
-@@ -89,6 +89,7 @@ typedef int each_loose_subdir_fn(unsigned int nr,
- 				 void *data);
- int for_each_file_in_obj_subdir(unsigned int subdir_nr,
- 				struct strbuf *path,
-+				const struct git_hash_algo *algo,
- 				each_loose_object_fn obj_cb,
- 				each_loose_cruft_fn cruft_cb,
- 				each_loose_subdir_fn subdir_cb,
+@@ -45,13 +45,12 @@ const char *odb_loose_path(struct odb_source *source,
+ 			   const struct object_id *oid);
+ 
+ /*
+- * Return true iff an alternate object database has a loose object
++ * Return true iff an object database source has a loose object
+  * with the specified name.  This function does not respect replace
+  * references.
+  */
+-int has_loose_object_nonlocal(const struct object_id *);
+-
+-int has_loose_object(const struct object_id *);
++int has_loose_object(struct odb_source *source,
++		     const struct object_id *oid);
+ 
+ void *map_loose_object(struct repository *r, const struct object_id *oid,
+ 		       unsigned long *size);
 
 -- 
 2.50.1.327.g047016eb4a.dirty
