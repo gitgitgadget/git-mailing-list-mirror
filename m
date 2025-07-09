@@ -1,83 +1,87 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473C920E6
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:14:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2C52A944
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 00:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752020058; cv=none; b=rKXZsoPnjhnVK+nm6e5BS9MrWquJ8xBQMBkDmnj/tmt2UmtWRbzo+3VB+z69m83aQxt6oL2TAk5wU5vLDVa38y5pwmofsp68t8niCA0zarjMu1vOPtnzkgD/2n7X7H2Pkn5VipQ3CQ469vGSHUIEVNowsRsui6nx3wt5ihuuI5E=
+	t=1752020325; cv=none; b=bNoVhnTofTLfFi88Kv2nizXvRx3jmptzwQaDX4uMjy60CfTtnFQ4pqmvmR26m0ZuMSEAYOyQpwEdWk6+wtOnkKI1cVdamPBVxZRI0G/kWOi52QJ7IeMaL90CwW3ME7GJK7/ut84Q6wUiSZ7bC1qAtguujGfIGWlRmvf5uCUn33g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752020058; c=relaxed/simple;
-	bh=77kzzYiHD1ltiPn1GDtJNL+aBjgDHIPZSZunv1Zb1yA=;
+	s=arc-20240116; t=1752020325; c=relaxed/simple;
+	bh=tOrJyNsghK0qj2mDK9lADtFy9Cg6jKCS97vaEDqRItg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KDK125KER3/Z3XlJJYOsXwZbIEwV1z6eAqTU8RDeNmAcWSRT921ma+S/lYOV+1MpbLeWx5Ecz3s3KDqws5Qi3GrjtOu0E1ZtYh7gPNKYtsyLcKamDDUWDN4jdqTyA8Npkqq++Nmt1iEkoNy8DwcxdLopQpidKkVu3CazRal/xYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bChHZ4kG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JuG3SzmV; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=qGAC6TsK4b7lQ6VySFJD7FGibgsY4Erk5DrBJ0SQ6qyz1O/eJSIetNjYyhV6vF+774fGiW2adQZCDhMEJkBh8Uw0/z99oCMYatw7OVrAmA3f1s5ljxrsGyfvJr49J9Jy2h3CfFGq74gFZsUtGDBHmhKiZYknoUObcCD2dc93iXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E/evAqNW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SzmmNCo/; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bChHZ4kG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JuG3SzmV"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3655B1D001F1;
-	Tue,  8 Jul 2025 20:14:15 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Tue, 08 Jul 2025 20:14:15 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E/evAqNW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SzmmNCo/"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A6FD57A007B;
+	Tue,  8 Jul 2025 20:18:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 08 Jul 2025 20:18:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752020055;
-	 x=1752106455; bh=7oqhJQ/AeGSPVSaivu1jZudMjuJnrI8RAZSPDHdmzd8=; b=
-	bChHZ4kGCOo0F/skOWWBFLNFhFIN6q2+jAcxQs3/NG/jRljzLDISEeWafD9YvLXi
-	YWe7T3mxqzzxGZtxuV5ZjscX99kAxccONBPkMVamE6FxaJ7p0I8fTK+Waigvgu2C
-	ElsqrN4qR6wLCML1ByQI1S2y655YO3l/QdXjSdCmgZZ2RN0CQ6i58cW7B7ZE5lJF
-	hxztLQ4hOgpevOik90c8AqtBVNIZHGOhrFC/x3RgMFj+OvSB6LQ5MfURscVMgw3v
-	uni82EQ3/lOpOw8gSl/lOi+xzcb7bMAD+MO1SIlHD+/R6jv5wNP54cRHWKDSck8c
-	L17q9imZH++p+zE/KJiMZg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752020322; x=1752106722; bh=gDrTv2WD3i
+	mLCMjymj5r0k3qAGBV42+nmeHu6XlANSU=; b=E/evAqNWrUzmJPHNnjym1p6V64
+	8H8u+ScSGjGz+ru8fZ9vdGg9uQp57NcZs4WtPN5GKtHmrg8BZWPI+cb7zAAh5c3j
+	PVJZ9oQoIb/pA9v/aVIVP+xWibrkeMPDKA9wmTYLYuXX4dCCiBc0N0I/Z7Hi0/gT
+	ZOCL1RxTxwMHDWOEbIwVSECUi3+oK1KynYVTVzm50905amgnexUHYRhEHIwtUHJZ
+	NFiX7HJ3EBncG0KLZUyLXSuvu+jggQHYqtPjMpI1GfjpYfcMceXGuhIDr1H4hzi6
+	cYid34666G8AdejEgEEtLFVQjdS5tVPSny0cxnJLkxmCxzYR+ym/dBOa94Yw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752020055; x=
-	1752106455; bh=7oqhJQ/AeGSPVSaivu1jZudMjuJnrI8RAZSPDHdmzd8=; b=J
-	uG3SzmVYvNxriUBTCR7Icc26lmI+tRibYsKaFn3WqFqpXdtWcl+jZi5PVCR+S63B
-	pFm6qEVBMcoX0nCCgWQFxZEPEzwahUru+pTrfujBj5gprW/qt/2satKvccoWQRzP
-	lqlGk1V0/s/6GfZaPynHQ0x5TfVv55YgOzGM9mhSkRS2RDAl17SV+SnW+N196xiM
-	OVC28TTWtINOkISGg8GAGxVUCc0v/UbON7/4KSqrnTCIx6ADiuwcndkxtPfcezvf
-	Ff0xX917pFpCbPnLjT+oZZrNGmyRAYG/iD9lGFXc1ZVVf1HdHaU7NMhlFsssu96S
-	exdJ4NP8CdFLt0kGawvlw==
-X-ME-Sender: <xms:VrRtaJCO3pKQkWab8fEFEtLh6Gk-_4Cz9n1H1Qzk4nz3zU_fiAaQzg>
-    <xme:VrRtaKwbFv73PUJDJ0m8VypHjcbFlNYCxVU0tEGCUqxhlXzHbEUSCkL6ZpAtkwFLe
-    xcBzX5FGXytCa3ezA>
-X-ME-Received: <xmr:VrRtaODToJ-shhANzxCji0mnu_8_yi4qqEMK4iuT6jjJ1B0QXYUEcjnN-qW0Kr1D_m9TAKT0IqoOjcL1dqUW7JJwHasuAEQu3g2BVEA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefiedtlecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752020322; x=1752106722; bh=gDrTv2WD3imLCMjymj5r0k3qAGBV42+nmeH
+	u6XlANSU=; b=SzmmNCo/uD/+mMdAb6qnA/NXNDVI6d1DEEKia71zkgd2N17Ywuf
+	UBxrbcycngz8Jcwz73yh8caecuWphbiqf7uTCSsHd+rFznp0SRSHZogpTWI0CDWa
+	sIhibOo3JPEoQ1gC5nQPvsspAGXr2iF0p1NIJA7vGyR/39vJK50HsIjmOgssfKxu
+	gVjmn0PLnVSlUoFWcD5d9uTLY0J4KPSm4YI19gDocvIRizT23qguYJxHuE+RNM7T
+	tB2lYS0PtcIIGtYl29/lUvO5XcCGYd9j4td38xQs/FZkHYH/3I8WUTyZDEImI+Jb
+	fLbI0/X4HwAwo8bP5ESEZ1Cy3FkXQVAK2ig==
+X-ME-Sender: <xms:YrVtaGwk0snOIcNLtEb8XxoBWzHQsOeWyMBykw6eemfb_RR5MhbGIg>
+    <xme:YrVtaP1lBuJeDxjc17tlBcKLFktCxEOPn2E4oWa9BIKQWxjKO319s2r8n1hWdyA-2
+    5K7VbzHq-hUk2bJpA>
+X-ME-Received: <xmr:YrVtaOwoRvZ56L7zDcfUOh1TJLcHHMzCPuvz_CJcUTtf4w6WUmqPAEp3EmhzlGY5vAP2_jLiIzbiiuMYSTOM3HG1ZF30sLdrkCnL4_w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefiedutdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
-    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehohihsthif
-    rgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VrRtaPbxtnLkW4e2dvqNuNYg2VC8XFj_jr2QaDr30P0OFZ-7t15P_w>
-    <xmx:VrRtaOiKoaL4tP7RpCnCzh0dSPYC6fs-X9TlSU6-NF1eoFuploNWHw>
-    <xmx:VrRtaJ6eRw0GGXbjmzc4Ehb9n6Ysp-hFMJj1ojHpU2mcZatxHFb99Q>
-    <xmx:VrRtaN4916BdlS_QZcOiUIei4DZ6a96EHu-C9L_ouwCzOpZrohKuIA>
-    <xmx:V7RtaDZf9f1bvkrW9n48FKZSUML0eb-fE7TLmarY9znjl9KoG_jTP7Zh>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhs
+    sehpkhhsrdhimhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YrVtaOFI6I3phOQzlhf94qnJXSn-trskc0BZJWlxBjQVMM06qHjNDw>
+    <xmx:YrVtaJaNGr1TZedcYZ-51k9s2PaYC8lN1_w_Qz6iHkKbmQvHFKLscQ>
+    <xmx:YrVtaIBopW03dQIGVxKmmtij1rWeJ1GRCY9RnFubwXSeyR-BbWWBaQ>
+    <xmx:YrVtaJl5uS92zknNiL48DBdBsl7MmWXgrReoC--BjC3zQc__aVkiTA>
+    <xmx:YrVtaOhnRWjIDhrpjsVivuJSL2XYg_bpBgKbZbiIj2doM7clHo4Z6xLR>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Jul 2025 20:14:14 -0400 (EDT)
+ 8 Jul 2025 20:18:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rebase: write script before initializing state
-In-Reply-To: <20250609221055.136074-1-oystwa@gmail.com> (=?utf-8?Q?=22?=
- =?utf-8?Q?=C3=98ystein?= Walle"'s
-	message of "Tue, 10 Jun 2025 00:10:55 +0200")
-References: <20250609221055.136074-1-oystwa@gmail.com>
-Date: Tue, 08 Jul 2025 17:14:13 -0700
-Message-ID: <xmqqfrf6qkyy.fsf@gitster.g>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,
+  shyamthakkar001@gmail.com,  ps@pks.im,  ben.knoble@gmail.com
+Subject: Re: [GSOC PATCH v5 0/3] environment: remove sparse-checkout related
+ global variables
+In-Reply-To: <cover.1751309770.git.ayu.chandekar@gmail.com> (Ayush Chandekar's
+	message of "Tue, 1 Jul 2025 00:57:45 +0530")
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+	<cover.1751309770.git.ayu.chandekar@gmail.com>
+Date: Tue, 08 Jul 2025 17:18:40 -0700
+Message-ID: <xmqqbjpuqkrj.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,46 +89,20 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Øystein Walle <oystwa@gmail.com> writes:
+Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 
-> If rebase.instructionFormat is invalid the repository is left in a
-> strange state when the interactive rebase fails. `git status` outputs
-> boths the same as it would in the normal case *and* something related to
-> interactive rebase:
->
->     $ git -c rebase.instructionFormat=blah rebase -i
->     fatal: invalid --pretty format: blah
->     $ git status
->     On branch master
->     Your branch is ahead of 'upstream/master' by 1 commit.
->       (use "git push" to publish your local commits)
->
->     git-rebase-todo is missing.
->     No commands done.
->     No commands remaining.
->     You are currently editing a commit while rebasing branch 'master' on '8db3019401'.
->       (use "git commit --amend" to amend the current commit)
->       (use "git rebase --continue" once you are satisfied with your changes)
->
-> By attempting to write the rebase script before initializing the state
-> this potential scenario is avoided.
-> ---
-> The diff looks perhaps more messy than required. The only required
-> change is the filling in of make_script_args and the call to
-> sequencer_make_script() above the call to init_basic_state(). But then
-> the `if (ret)` looks out of place, and moving that up means adding `goto
-> cleanup` which means the code that was previously the else case can be
-> dedented.
->
-> get_commit_format() calls die() in this case, so cleaning up the
-> sequencer state isn't an option. Maybe it shouldn't call die in the
-> first place, but that looks to be much larger change.
+> This patch series aims to remove global variables related to
+> sparse-checkout from the global scope and to remove the definition
+> '#define USE_THE_REPOSITORY_VARIABLE' from a few files.
 
-The patch has been stalled for a few weeks since Phillip's review
-comments.  What's the status of this?  Will we see a response and/or
-an updated patch sometime soon?
+For this topic, it seems that the ball is in the author's court
+after a few review comments.  What's the status of it?
+
+If it is back-burnered for now, then we may eject the topic out of
+'seen' to make room for a new topic that touches the same area with
+overlapping changes.
 
 Thanks.
+
