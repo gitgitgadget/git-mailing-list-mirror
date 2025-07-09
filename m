@@ -1,84 +1,76 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C88226CE18
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 06:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C588D5383
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 07:55:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752042249; cv=none; b=oDVesU5VZHyIH4tjDXy2n9zSrXG6hI00VlFwzwlrTQ5dZXKNkjPpWm6r5cDdNO5G4RM394lKcBW32ZZ5IvIYxVQRaPjShelNjPidKBb5pEe45JKsaSyO7XEstSSIRzJa1Ta61u2dBe+MfJvtgu9ETysZDSK+PbQ0kZ2T5RFmDw4=
+	t=1752047721; cv=none; b=amSntoNsjk9kq0LBL57AIwQa+MiUXqN1AURQgaeCJNS4DivdEhkYBnJKE4vqyz/7flnsP0578Ywt3VTf3d6J/hTg0ncyk1pKkMWWjlORpxuur3Zocol3zDUNyz8UjE2jRUcuKVwqtMOyWUn0uGrzrLkU2mpT0lVPyZer7ECvZYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752042249; c=relaxed/simple;
-	bh=RcZJfKiVrapadjSbyiKjI/UKYKFE1ngyYvZGcm7/Kgo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ob5KrNEDv3i/SbpGo1nDonnTRRVJfFdCbJ9CaSe+CLu3rh0HzP9oAyBLEWTMZ113b0wjBWMgjjhFx7pvJ0/8UobTK6K/FUsZRwe3JFCnPE0fvVlpvGaLCDx8Gdtu4g1Zq2t9q9HHavWgTBGNTmFixfto3xyoL+eW4rOnJyh7mRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JnFAGhW2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gVpchh4A; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1752047721; c=relaxed/simple;
+	bh=wO2EERqe1XC3pKXMt1A3XmpQPz45k5I8Gi0gPmD2hoU=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=b6EsIiEJtllslUOq4pe+/5I4IkRkJZqTiXu0sOASuxBK50F7VznSncKCXr/iLFVW5l5+nwGeU8IY+ihZ+8MJUyWAdJe9qBOxFagyX8wOdLjW2mb2D3FFF1CngikzCI51rSpfS6XJtIk2PLUTsUFqtaYA2PQEI9fqwum+ka2YRTY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uzQ+yfhu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WX8f4Vgd; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JnFAGhW2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gVpchh4A"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 4CFAA140025B;
-	Wed,  9 Jul 2025 02:24:07 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uzQ+yfhu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WX8f4Vgd"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EB5511400231
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 03:55:18 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Wed, 09 Jul 2025 02:24:07 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 09 Jul 2025 03:55:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752042247;
-	 x=1752128647; bh=TSUIUK9jiTJddhd7Z1cEm6gbIyChedhCCraEQBnmyFI=; b=
-	JnFAGhW2FJ+FY2Q2fiXDWnNEu2s6k1fpUkFnMci60lSjrtq90/1KM+RHbGwcZpPA
-	kP7q6oyP4U+BPT3j/5ka23WYC8VTWsqJlefwUmJklRr6bcCpxxWQVSBfcDun61U+
-	GhZm2+K7X0ma8if6OOTTQFYNwQvbKdmhRJd1BnbWnk7eaMHBT9MBZCO+ntRzoiiW
-	KZlQWziVbBJ8xVwwQka+RTfNPqILxYjS7lEgr6G/U27eMwICQ6HEWGDgLA0pUYL9
-	l0Ik7Tk5LtNilO3Zq8kWm7gUGryO1aU0KknW8CFtoigx69wBp2RGY6AW1SXF1jl9
-	OrFyhn/i03dmX0da0zO8Ug==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1752047718; x=1752134118; bh=De24GmpxPO
+	MtiD6b0GX7f74ShV2SE34BSxwfbq8CRBk=; b=uzQ+yfhuP391H4PVFiHh7HB8PU
+	YxfXPAqs/KEhlcdiFiWKPWyUW1vrjiVJA7tIDFfaXB+AzggUfEUk1Pni8uMJx6oV
+	OG7r1sckZlbuLoAsznFLmPWng/Bfz8FbpRAP7eb6PBJlNEPvnRHTYQry4yb0OoHg
+	8ARG9umNjlzSGlRNLoKNGH5NQVA1c57UDZj2GYnj7KJaW054s9fv3XupD1xmo7Al
+	yZ9MY6RY4MHFxDAEZld8a1YoEFrhloDebvlfAR2d9K7Wgwjh6V9NvjBehnHgq6Xl
+	6hq0fp4yWar3APwIZ6XQtTuUxAe2PSC2/ua/qq8zWni0ytgtO0gBimjBm98w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752042247; x=
-	1752128647; bh=TSUIUK9jiTJddhd7Z1cEm6gbIyChedhCCraEQBnmyFI=; b=g
-	Vpchh4Aagl8v+rNbrPG/+FWgsm8hqXwsU8tw2e06TMQY5d5OkVv/EaRMLMhOnP+f
-	C8zhevr4C1C9Tzj76L0tUcXIUzEREhmAo7bCj5IUZ45gWasQQ6oxFnYaC007Y5YA
-	2654poH7TpunXDiWUgxUBcr88bfB20ufaIgGb3ahe/Le5HSqH0vGoybK/0mg53ME
-	UhQxW2r6bj5GDjI+QsowWU2mbG9l3LBEIBYEY/EPQRzarykRB13KEeA7dLt43azX
-	wqJZsQzHl2ntXYTxFyQuAuhiH7lJ7ubFo/vi1Qo5w+mCye9ZxLxKpB6eb9uXBCJb
-	AnU3H3HBucAH4qYXvdKJw==
-X-ME-Sender: <xms:BgtuaKKfmSQgaNisAJPv0DiCLW4QDuyCx2OxqYzu0mEM2SXoZH7ZNA>
-    <xme:BgtuaF9Y4YcI4EgMh5gS2NnyBPXimcWeOS7AxlJ3XgmU4CLu-att2xZEArjZt35tp
-    np6TdJFRZFaVNH9ag>
-X-ME-Received: <xmr:BgtuaDxaOXyGS_xe8LwIFXzrEUzO-bePpBsZhb-w8N1Mc2ZSbPfaPglBXPzmxoKB0Np0WUzf9CBbLg1PGvFV9ihuc_ERtftFWEIgAYLi49LVpA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefieekfecutefuodetggdotefrod
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1752047718; x=1752134118; bh=De24GmpxPOMtiD6b0GX7f74ShV2S
+	E34BSxwfbq8CRBk=; b=WX8f4Vgdr20nWI0AKM6r+on+avU8jcEzgaTvb3SSvx8M
+	0AkR81oq2I1yQ+1hO3oZObwVeGDkgGZROue4zKJL1/5kf2/4ho/s68OJjJoYCxDe
+	cSTfrxcHOXor2mbLCR9F8TZTXIynYfzR4zrljlHcN9ZjZc0YQ5zKIWaOsu+90pt5
+	kv9BZCZquQua2L6sozcgn9qtOjsxWL4gCkNLHVRnIB2vGZbJdAwZKIjX8TKzfBx8
+	9tudbXTPeycnw6bBUBZ19Eof5yOdKQIyszbEBfkxVD9Jj/zFjsaNow0zeY2mkOrB
+	wpUMZFdxWoVUtrAwEY5W+TIxRv1FLciuwyG8uT31fA==
+X-ME-Sender: <xms:ZiBuaKEMIE48DKMbh6pohZyN_xElw3HWAMqC1yUdChx3-GVhGGHAYQ>
+    <xme:ZiBuaNVxjM04iYIFlvRUSESSjlqkAxQ03K5DgnEP5v1uZlVAzd-AT8l281QHvb8-s
+    OHkn91IkY80OTnfPw>
+X-ME-Received: <xmr:ZiBuaNhW48FYywWT6bAVycq80757LGr8pewYfkfRs5XYuF3xMno90iKeMyI8X-_M1XKK7JcfVG7PsxOvGPqTwvb5KiSTxowAX797Ws8pjt5FlA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefjedtvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epleevjeffvddtheeuvddutdfhkedvtdefueejffehjeegudehieekvddtieejuedtnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhdpmhgrthhrihigrdhnrhenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
-    sggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegvshgthh
-    ifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhr
-    tghpthhtohepihhrvggttggrrdhkuhhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjh
-    hlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvth
-X-ME-Proxy: <xmx:BwtuaC6vpxbzjYwGctqisr8dWSiQeRyzg_tJ3M5jVHNJRTj7S91Cfg>
-    <xmx:BwtuaK_lmT2vuyzbXgxkjDyaUtKQBj7I3i43xORzk311PTk-Htgnuw>
-    <xmx:BwtuaHrDwpHUA2-5_7kqJU2iQJCJA5hQribuS2k4hzXSQd2wLf0I-g>
-    <xmx:BwtuaLr07YDxHNzGYkInmoOvPGDcV7zAePiiG5ms3Q15b24ruSYmTw>
-    <xmx:BwtuaAxr95kpWj1Bcke19yFK_jdLsyFmTcyov5gHKXo38iskFbMSyqSO>
+    ihhlohhuthemuceftddtnecunecujfgurhephffufffkgggtgffvvefosehtjeertdertd
+    ejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdr
+    ihhmqeenucggtffrrghtthgvrhhnpeevueegkedtteeigeejueehuedugfevleefveehue
+    ehgfetffffvefhuefhueekveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ZiBuaGT_Fs48RXXselrF8HzxyoBf392EorUqazyRROvYStWDxwAiCg>
+    <xmx:ZiBuaIGCGVMPXiAT070R3cgNK79duQXbwnOGs0gONsg2IOf-QoM2ow>
+    <xmx:ZiBuaGmAB4mMfLOuEHj9PDqpMY-YB9icqPvI_uQG1-wWNqqpMqrcgg>
+    <xmx:ZiBuaD2i71xOXb73hzUBy7Sq_2VIrlnhHu6UWJZqfkVevauUIoOfJQ>
+    <xmx:ZiBuaFPFUI3AKJwFkqeSmz89FCzgF622363Et3CtQfPJAsE0C8khEDz8>
 Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 02:24:05 -0400 (EDT)
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 9 Jul 2025 03:55:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0526b4a7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 9 Jul 2025 06:24:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3c1b8c36 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 9 Jul 2025 07:55:16 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 09 Jul 2025 08:23:42 +0200
-Subject: [PATCH v3 8/8] ci: use Meson's new `--slice` option
+Subject: [PATCH 0/8] odb: track multi-pack-indices via their object sources
+Date: Wed, 09 Jul 2025 09:54:48 +0200
+Message-Id: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,60 +79,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-b4-pks-meson-cleanups-v3-8-29ab15b9ab85@pks.im>
-References: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
-In-Reply-To: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
+X-B4-Tracking: v=1; b=H4sIAEggbmgC/x3MwQqDMAwA0F+RnA3U2oLzV8RDaqKGbVVaEUH89
+ 5Ud3+XdkCWpZOirG5KcmnWLBU1dwbRSXASVi8Ea641vWgwO93fGr/KFpxJuHJA+h6RIhyC74F/
+ OkO0mhnLsSWa9/v8wPs8P/x+EH28AAAA=
+X-Change-ID: 20250513-b4-pks-midx-via-odb-alternate-d4b5940a28cd
 To: git@vger.kernel.org
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, irecca.kun@gmail.com, 
- Eli Schwartz <eschwartz@gentoo.org>, Jeff King <peff@peff.net>, 
- Junio C Hamano <gitster@pobox.com>, Justin Tobler <jltobler@gmail.com>
+Cc: 
 X-Mailer: b4 0.14.2
 
-As executing our test suite is notoriously slow on Windows we use matrix
-jobs in our CI systems to slice up tests and run them via multiple jobs.
-On Meson this is done with a comparatively complex PowerShell invocation
-as Meson didn't yet have a native way to slice tests like this.
+Hi,
 
-I have upstreamed a new `--slice` option [1] that addresses this use
-case though, which has been merged and released with Meson 1.8. Both
-GitLab and GitHub CI have Meson 1.8.2 available by now, so let's update
-the jobs to use that new option.
+multi-pack-indices are tracked via `struct multi_pack_index`. This data
+structure is stored inside `struct object_database`, which is the global
+database that spans across all of the object sources
 
-[1]: https://github.com/mesonbuild/meson/pull/14092
+This layout causes two problems:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+  - Multi-pack indices aren't global to an object database, but instead
+    there can be one multi-pack index per object source. This creates a
+    mismatch between the on-disk layout and how things are organized in
+    the object database subsystems and makes some parts, like figuring
+    out whether an object source has an MIDX, quite awkward.
+
+  - Multi-pack indices are an implementation detail of how efficient
+    access for packfiles work. As such, they are neither relevant in the
+    context of loose objects, nor in a potential future where we have
+    pluggable backends.
+
+This patch series thus refactors the codebase to stop tracking MIDX's
+globally. Instead, they are being pushed down one level so that every
+`struct odb_source` has an optional MIDX itself. This simplifies some of
+our code and will make it easier in a future iteration to move the data
+into a packfile-specific object source backend.
+
+This series is built on top of a30f80fde92 (The eighth batch,
+2025-07-08) with "ps/object-store" at 841a03b4046 (odb: rename
+`read_object_with_reference()`, 2025-07-01) merged into it.
+
+Thanks!
+
+Patrick
+
 ---
- .github/workflows/main.yml | 2 +-
- .gitlab-ci.yml             | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Patrick Steinhardt (8):
+      midx: start tracking per object database source
+      packfile: refactor `prepare_packed_git_one()` to work on sources
+      midx: stop using linked list when closing MIDX
+      midx: track whether we have loaded the MIDX
+      packfile: refactor `get_multi_pack_index()` to work on sources
+      packfile: stop using linked MIDX list in `find_pack_entry()`
+      packfile: stop using linked MIDX list in `get_all_packs()`
+      midx: remove now-unused linked list of multi-pack indices
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 7dbf9f7f123..d122e79415a 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -298,7 +298,7 @@ jobs:
-         path: build
-     - name: Test
-       shell: pwsh
--      run: meson test -C build --list | Select-Object -Skip 1 | Select-String .* | Group-Object -Property { $_.LineNumber % 10 } | Where-Object Name -EQ ${{ matrix.nr }} | ForEach-Object { meson test -C build --no-rebuild --print-errorlogs $_.Group }
-+      run: meson test -C build --no-rebuild --print-errorlogs --slice "$(1+${{ matrix.nr }})/10"
- 
-   regular:
-     name: ${{matrix.vector.jobname}} (${{matrix.vector.pool}})
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index bb6d5b976cd..af10ebb59a3 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -178,7 +178,7 @@ test:msvc-meson:
-     - job: "build:msvc-meson"
-       artifacts: true
-   script:
--    - meson test -C build --list | Select-Object -Skip 1 | Select-String .* | Group-Object -Property { $_.LineNumber % $Env:CI_NODE_TOTAL + 1 } | Where-Object Name -EQ $Env:CI_NODE_INDEX | ForEach-Object { meson test -C build --no-rebuild --print-errorlogs $_.Group; if (!$?) { exit $LASTEXITCODE } }
-+    - meson test -C build --no-rebuild --print-errorlogs --slice $Env:CI_NODE_INDEX/$Env:CI_NODE_TOTAL
-   parallel: 10
- 
- test:fuzz-smoke-tests:
+ builtin/pack-objects.c |  9 ++++--
+ builtin/repack.c       |  4 +--
+ midx-write.c           | 22 ++-----------
+ midx.c                 | 38 +++++++++-------------
+ midx.h                 |  9 +++---
+ object-name.c          | 21 ++++++++-----
+ odb.h                  | 19 +++++------
+ pack-bitmap.c          | 20 ++++++++----
+ packfile.c             | 85 ++++++++++++++++++++++----------------------------
+ packfile.h             |  3 +-
+ 10 files changed, 105 insertions(+), 125 deletions(-)
 
--- 
-2.50.1.327.g047016eb4a.dirty
+
+---
+base-commit: 1ad11c8963b6902bb6a98f5071591ad358329fe4
+change-id: 20250513-b4-pks-midx-via-odb-alternate-d4b5940a28cd
 
