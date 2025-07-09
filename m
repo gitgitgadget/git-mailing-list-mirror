@@ -1,75 +1,72 @@
-Received: from mail-ot1-f50.google.com (mail-ot1-f50.google.com [209.85.210.50])
+Received: from mail-oo1-f52.google.com (mail-oo1-f52.google.com [209.85.161.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C506C111A8
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 20:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F3A3248F57
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 21:41:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752091883; cv=none; b=UtTK9wpt7TmardFrp54wa/LyCFaWfRmpQVspqMVlW1GM0qX5vGggKroGRah7IXMI1EvUCl+qJT9R5JkjZpQHr9LjDp5klwXH6s8NE8b3E0e1K7gQvKZ++bZTiDOkJ+OXa1wSHwm5NMWYZUbyOy5i4kUCNqwi4aTf+DGmyBfZBpU=
+	t=1752097309; cv=none; b=uwVvUuop88kL2Izsl6AxhHc6ZSWLPFgh3tXCUKLsjbhLMor0e/lYgRf9n3+Me//+/ipGVxhYb56bhzzt0noXM3H/K0WTmm5b6ySNY8uybOnPk68klFHo2TX21pR2ujIx48pS1VgYFM32Y6yVS9LCc4bc75drgHcWPH+eQaqVFlA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752091883; c=relaxed/simple;
-	bh=pO1ful3+ggC3f9Rtk/d/ZhkKd5t+2iQnrqmIfFr43tQ=;
+	s=arc-20240116; t=1752097309; c=relaxed/simple;
+	bh=giFuxEMuPmsdO5n09SENU0w2VD6ENPINQ6fNn/sNbNg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gwy9iLEcCOrRNVCsCosWwzUVOsfjTr8UdATczKFks57/0vq6p4v5aszS56006FfQQUddDuGHPxYR5puqAUhm+jOalWRV+kle9lPM9ejDIzTlp7A6K3Z6MYBw4/4uXNQlAJ0CVWF+vnMXCniw+KwB7u/n5ctvpBkpRG5VexVf9WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BN2lMk/a; arc=none smtp.client-ip=209.85.210.50
+	 Content-Type:Content-Disposition:In-Reply-To; b=pX3+QrT1qWz1uRzFDkAyzlU8c6aWDBlhODKNGiQLF+jKVnLVDcG1RBRlR+QdNwYlh/AhAz77snr3icPfSnqF6snff09TnHJZzfgXYyBNyJo6oF01bDbyPmf7PAcE1RipoJVx+JD8Atj7Cnohp9nIg6XiAmS3fCT9xIl8GUp8s9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EBu4dasy; arc=none smtp.client-ip=209.85.161.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BN2lMk/a"
-Received: by mail-ot1-f50.google.com with SMTP id 46e09a7af769-73caf1152bdso106610a34.3
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 13:11:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EBu4dasy"
+Received: by mail-oo1-f52.google.com with SMTP id 006d021491bc7-60d666804ebso741617eaf.1
+        for <git@vger.kernel.org>; Wed, 09 Jul 2025 14:41:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752091871; x=1752696671; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752097307; x=1752702107; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9RpOGMlsT0QjvpgisRXgXmYoraAxlNH64g1GWc7DQdk=;
-        b=BN2lMk/apm/IaEB5xSH/NFv66d/xk3ISwVvqjy999sPDF14wOsgRgTqWr0m3excF7s
-         WD8QUiYDKUmi0/Gcupc9i0cM89B/oq0BhqpCw0tNDQMSSCGzt7pkf53Rrk1ORl2/2vv4
-         s6m+nuoA7YAzaGfk4epyW8FTCTfCycA45OOT7ZlMNoWuGwZvnI+74KWPnpeLRFKkg0Mo
-         vuUQJnd9F+WZG/0fvcVd5eIAZxi678iQFTJBMMtkIzacNwz7HTJmDNFUfuMCMOxNiOux
-         8IIcOLSdVBbJBhFpocnI3gzX0jZ202I5yp7OWRrTPRAX75S2nxOBdNZ2OwVYDDfaIKW3
-         7E7A==
+        bh=u9x9kn4E+65eAn8ZfRem4QVx8ofT/7hiR5HR5ntWFYs=;
+        b=EBu4dasy1VqxOGYhwbHTOnZJooG1c9YHkwXRZ1gGMkuePdERWvwDkeWUP0thi/wnsi
+         02m54ke+2bw45M8B/0PkfC4W1FZJG6oBPEzelhjGLiV4fttRT3/7A23Gq6Wd+CY/QhEP
+         2izQXs+fn9A+bvUbWsJPp600oS+SA91w9U/d13JTgIRD0aCCVEZKWafXfONSHMKOGS8D
+         NGJwyJ6klaVRP/DlXuVU9RPftsujBYyW1tH2oxbBImhvcn4XR58urmIlgj5/k3BjpiIh
+         HL38MmjtV5AXOP98WkUQnJfQw1NP0vWnFR2YBva13Asq8HTOD+qtfq0qLgAx8nF8/iYZ
+         qxUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752091871; x=1752696671;
+        d=1e100.net; s=20230601; t=1752097307; x=1752702107;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9RpOGMlsT0QjvpgisRXgXmYoraAxlNH64g1GWc7DQdk=;
-        b=ehFc74Y80lCr1B4Cvpfdsm09FEajGMZvXKZt6/A4plDoboU89g6M/oWUSI0iWIloWY
-         Sv9BkhOETQeGdN6J7jYSDbzEUNjm/XviTnsggbVccsTKiPju3dnvco0tb4Xk6jc0/krp
-         dlZI5RNA/cUVmmGjVraBWiXC9myNlLjuF50WyGMdJu9s96Rox8dY2K8xUM974SAckfDr
-         HVD9BlUihwA95mYCTSVPnegVjMtNl7kIiCPWNmo1LeJ41k7+BjSRJrAIXGzMJF6WmPtk
-         botM3kw5Ah/izSQzFczH5SrQOh1IGddj1NAcsACr0lhynvk6UF7YUKXahmyx9iuED4zg
-         q+5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCXimbTTWCR/SLKt5bWMKFZad3dKmbi5YSPMB7dOV9BzMg83x4jYiueakpT8oy7WQUIwz7o=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBrkn52d1I/V4YVxmIzGWiP8a9D9Tc5fxMOx6u7vTiP6uT+aTZ
-	G/5CB9nDSjqYmTcnvh3r09pzglQapxiXkWiqFilg8lBNFjII0ynd9p3I
-X-Gm-Gg: ASbGncvLQPLtOtGiBP6PYtozcPS+lISr3Mk16sXgRdR2X5ZCq6wgT/NQ/Z3TkE1qCL8
-	5nSu6LZDBKGqeIjnXEG5BWAoYqu0oQBYczlq9IYvD6trNae0IUk+76GLR9SeVWrAvyAKmgpsXM9
-	icW/shNXMix+Xe0oufA4doo6FADdPvZnvOa4y3eMCLhLJe8fJpy6/6rn4PFlse66zmouOrMF3mK
-	/bMKG+BqmSD+kjZdEbI3EPxU97gBv5NSOtMWMedJxau1t/q+ez7Thmtep+0vxRMMxOQDyTuVGhv
-	QObcTx1IjutQT6J/BeJYZEfNsRHtivv4zD5qE1K+mEHdj/HJeT/nFJc=
-X-Google-Smtp-Source: AGHT+IF7qGVR7RmVdP22rbj7ccpMf69SB8UuK72u4eRT/38U3L4TvszUF9pgKmtkRUvx2kCFmJY9PQ==
-X-Received: by 2002:a05:6830:3506:b0:727:3303:7ea8 with SMTP id 46e09a7af769-73ce63871cbmr3167308a34.25.1752091870651;
-        Wed, 09 Jul 2025 13:11:10 -0700 (PDT)
+        bh=u9x9kn4E+65eAn8ZfRem4QVx8ofT/7hiR5HR5ntWFYs=;
+        b=pOll8+fHxpsQjwXHGztx7vZ3E8CrH9ZY0VNpfzS1Cs2mxzgWztRT6BteEy9pqOok93
+         p+uyzk3TMhTwaqrzK11+7+CxXp+zG1uyiH21RCvyn5eWK5qWjC5FmGRvGNgWK0CfG+Gl
+         wWO7akAswLG9+JscyZaUhyCYLjRnhowFaiVab8d5PdiUTa7luou3AYMk+a5W8cKW0l02
+         m6UT1DWqEgrebpPxfVhh5gn05smUstRc/6oZz5hGOR4/cZgw6Jcg0TlQI76jUUoLw/sz
+         nyOEuG46pX7YgpX6bJdL9is91fakqkPjYmFYJggUyMRderB9ZtVpaaY8oL6YXEa9EvHn
+         qp/g==
+X-Forwarded-Encrypted: i=1; AJvYcCXnk1HJmtpc2ZPPh1cBiUNcmOsJL6zQ6Ft+0cY+WeX/IFHpFhGMQ2AaWeq/YXzoziGtVtE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYIR+5FoMacAOZgTfmK0UjT/mnf3Xb/W4JzqxTpk6o7Xd/MtYW
+	wnXtx7R4Gov3H3JzsgdFFW9qhMSeN98vgWmvvC4lkdCDQNIl8M7+6b5hHg4lu52N
+X-Gm-Gg: ASbGncsJQrJZV7mvgoZIyzs7WTP30C17gJ4TAW4JtA52vFbXqGP+ZrjCBiIAGVXY3LV
+	x/FEuVHz8olwB5Df+IZNsTmJFSEGrp+pUmF8AqpFc+QIh4PDc+ti7+3L7kO97uvCzhCrqCMO64n
+	dWMtQ7i3ocmoPcQOlOVBJPrto7LKp6qQxA1zkNWeA6KUwnjD5hIpGurPv1OoaZhfUlAisrG2kph
+	s1/WNFlVDtFpK4C7mIm+vld8NRyUfAx4Tz0MLpgD0+mmuqXYdC+x+z5uGiQ2TeeFr2bX5sOuF//
+	qCVTySVd50Puf4EuQthziT+evmqp1IAE9aaHQ6O/yAGsLbjPxpSbTpQ=
+X-Google-Smtp-Source: AGHT+IE0dW6KCllyCaXtzqyLq+fQrfBFjkH0/LcBBYRXLb6JzGAa/0XXRzrimA0xGCsLuGKbsW+1CA==
+X-Received: by 2002:a05:6870:c48:b0:2ea:1e58:7a69 with SMTP id 586e51a60fabf-2ff0c7b7825mr981533fac.15.1752097306937;
+        Wed, 09 Jul 2025 14:41:46 -0700 (PDT)
 Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73c9f938806sm2469547a34.55.2025.07.09.13.11.09
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2ff11259495sm28011fac.17.2025.07.09.14.41.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 13:11:10 -0700 (PDT)
-Date: Wed, 9 Jul 2025 15:05:34 -0500
+        Wed, 09 Jul 2025 14:41:46 -0700 (PDT)
+Date: Wed, 9 Jul 2025 16:36:10 -0500
 From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
-	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [GSoC RFC PATCH v2 1/7] repo-info: declare the repo-info command
-Message-ID: <vygdkwopfzrbdpxpxebnq3xdlg3ow4i3w5y5evduae2zuelqcn@la2dikht2qrf>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-1-lucasseikioshiro@gmail.com>
- <20250619225751.99699-2-lucasseikioshiro@gmail.com>
- <aGZqK5eBA18vHAa_@pks.im>
- <AD2EE71A-1395-4665-BB9C-38DD4B941574@gmail.com>
- <aGtiyGW4MIYUw3Ed@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, irecca.kun@gmail.com, Eli Schwartz <eschwartz@gentoo.org>, 
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v3 1/8] meson: stop discovering native version of Python
+Message-ID: <mku4cmu4tgib637ptpile5nch72cr55565o6oyaxjklc756j4c@63zony3qdzio>
+References: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
+ <20250709-b4-pks-meson-cleanups-v3-1-29ab15b9ab85@pks.im>
+ <xmqqikk1pfiz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -78,135 +75,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aGtiyGW4MIYUw3Ed@pks.im>
+In-Reply-To: <xmqqikk1pfiz.fsf@gitster.g>
 
-On 25/07/07 08:01AM, Patrick Steinhardt wrote:
-> On Fri, Jul 04, 2025 at 06:40:11PM -0300, Lucas Seiki Oshiro wrote:
-> > > Would it make sense to maybe have such whole-repo commands
-> > > grouped together in a `git repo` top-level command? E.g. `git repo info`
-> > > for your command, `git repo size` to gather information about the repo
-> > > size.
-> > 
-> > It seems to be very nice for me! In fact, this being a home also for
-> > statistics is something I considered while writing the first versions of
-> > my GSoC proposal.
-> > 
-> > And what about merging the two codes into a single API? Something like:
-> > 
-> > ```
-> > git repo-info layout.bare references.format survey.commit-count
-> > {
-> >   "layout": {
-> >     "bare": true
-> >   },
-> >   "references": {
-> >     "format": "files"
-> >   },
-> >   "survey": {
-> >     "commit-count": 42
-> >   }
-> > }
-> > 
-> > ?
+On 25/07/09 08:09AM, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > -python = import('python').find_installation('python3', required: get_option('python'))
+> > -target_python = find_program('python3', native: false, required: python.found())
+> > -if python.found()
+> > +# Python is not used for our build system, but exclusively for git-p4.
+> > +# Consequently we only need to determine whether Python is available for the
+> > +# build target.
+> > +target_python = find_program('python3', native: false, required: get_option('python'))
+> > +if target_python.found()
+> >    build_options_config.set('NO_PYTHON', '')
+> >  else
+> >    libgit_c_args += '-DNO_PYTHON'
 > 
-> We could in theory do that. But there's two things we need to be
-> cautious about:
+> We ask explicitly for Python 3 here.
 > 
->   1. We should be mindful about what specifically this tool is about. It
->      shouldn't become the next tool that does way too many different
->      things.
+> Does find_program() have some magic to deal with installations where
+> Python3 is simply called /usr/bin/python (and worse yet, not as a
+> symbolic link to /usr/bin/python3)?
+
+My understanding is that find_program() won't do anything in this case.
+I would imagine if the target host has Python3 in a non-standard
+location, there would probably need to be a cross-file that defines it.
+
+> I found
 > 
->   2. One of the idea of git-survey(1) is to eventually replace
->      git-sizer(1). This will require very specific presentation formats
->      that aren't really compatible with any of the other information.
+>     "Since 0.50.0 if the "python3" program is requested and it is
+>     not found in the system, Meson will return its current
+>     interpreter",
 > 
-> Out of these two I think the second item is the more important one why
-> git-survey(1) should exist as a standalone tool, either as a top-level
-> command or as a subcommand.
-
-As Patrick mentioned, the focus for git-survey(1) is to be an eventual
-substitute for git-sizer(1). For the initial implementation I was
-imagining a simple plaintext format that outputs key/value pairs and
-looks something like the following example:
-
-  references.branches.count=15
-  references.tags.count=2
-  references.remotes.count=5
-  references.others.count=1
-  objects.commits.count=50
-  objects.commits.total_size=1234567
-  objects.commits.max_size.oid=1817dc08b8ea00fce4cd1fb6bc75713ad00a74d3
-  objects.commits.max_size.size=1234
-  objects.commits.max_parents.oid=1817dc08b8ea00fce4cd1fb6bc75713ad00a74d3
-  objects.commits.max_parents.count=8
-  objects.trees.count=100
-  objects.trees.total_size=12345
-  objects.trees.total_tree_entries=999
-  objects.trees.max_tree_entries.oid=1817dc08b8ea00fce4cd1fb6bc75713ad00a74d3
-  objects.trees.max_tree_entries.count=99
-  objects.blobs.count=142
-  objects.blobs.total_size=99999999
-  objects.blobs.max_size.oid=1817dc08b8ea00fce4cd1fb6bc75713ad00a74d3
-  objects.blobs.max_size.size=999999
-  objects.tags.count=1
-  repo.max_depth=999
-  <etc...>
-
-The command will also need to eventually support other output formats,
-namely a more human friendly table format that provides something
-similar to git-sizer(1). As layed out above, this looks like it could
-also work well with the git-repo-info(1) JSON format. This makes me
-wonder if we should add this functionality as a separate flag for
-git-repo-info(1). Maybe something like `--stats` and append the info do
-the output. If we want a more clear distiction though, we could
-implement this as a separate subcommand.
-
-For a more human-readable format, maybe we could still implement a
-standalone git-survey(1) that is more of a porcelain command and uses
-git-repo-info(1) under the hood. I think the other information such as
-reference format and object format may be useful to provide in
-git-survey(1) output.
-
-> > During our meetings, Karthik suggested (I'm planning to it later) to also
-> > allow to request an entire category instead of only the fields. Then, this
-> > would also be possible:
-> > 
-> > ```
-> > $ git repo-info survey
-> > {
-> >   "survey": {
-> >     "commit-count": 42,
-> >     "blob-count": 1234
-> > }
-> > ```
+> which I suspect refers to the path to python3 used during the build
+> and is not what we want, at
 > 
-> It raises another question though: if we ever were to add `--all` we'll
-> need to step a bit careful about what kind of information we add to this
-> tool. All of the information proposed so far can be computed rather
-> trivially. But computing repository sizes has way higher computational
-> complexity and may easily take seconds, maybe even minutes in large
-> repositories.
+> https://mesonbuild.com/Reference-manual_functions.html#find_program
 > 
-> That to me further points into the direction of giving those two tools a
-> common top-level command (`git repo info`, `git repo survey`), but to
-> not mix concerns too much with one another.
+> which got me a bit worried.
 
-Getting the info for git-survey(1) is certainly more computationally
-complex so there should be a way to run the command without performing
-the more expensive checks if the user doesn't want them. At the same
-time, I think it may be nice to have a way for a user to request a dump
-of "interesting" repository info via a single command.
-
-> > But I don't know what are Justin's plans for git-survey, if it would be a
-> > porcelain command for showing those stats to the user of if it is targeted
-> > for being parsed like this `repo-info`.
-
-I think the intent for git-survey was to provide a more porcelain
-command to display interesting repository stats to the user, but also
-provide an option to print in a machine-parsable format. I like the idea
-of computing everything as part of git-repo-info though. This could
-allow a standalone git-survey to focus on just being a human-friendly
-porcelain command. For scripted use-cases, users could then just use
-git-repo-info.
+As you mentioned, I think this is only relevant for Python scipts
+executed at build time.
 
 -Justin
