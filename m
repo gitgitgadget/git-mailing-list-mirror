@@ -1,114 +1,143 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtprelay05.ispgateway.de (smtprelay05.ispgateway.de [80.67.31.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22641237713
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 10:41:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86464225A37
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 11:05:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.67.31.98
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752057678; cv=none; b=jqsgqKnLtQCa4nGpjgbLYNgfElZLLZ2cgZhmCGwCWPy6SzgCeleCBtkxq/eLbgb1fSo3/SXHQdd7YajPQawb4Vv3m2/zj/BSCjNNAaKPhEY0k0j2ydFvuzwQ3GAWor+uoRHiv1Edl5ElmheXp9xfkW7Xrcrzj7fUknIlx1cBnxM=
+	t=1752059136; cv=none; b=kl86pC5fRNUld79iHBh2JDgqUCYxhRFvOC6MmQREh51S7f3KychBnCXnAP7DqGSbgb+91ijTVlBaA92Eqgw6HWGaeuktfcmDfEDaZHpwjOF3nfaHWLPdUroWzCGGG4mIxSHNHbQpiEynflHNe527JKm8BvIUT28H/BqNmrVOkFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752057678; c=relaxed/simple;
-	bh=daIlC5NJ8Pp+B+T/6yrpTaPjgZij84yQlGU0l5fR29M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aZKKBv5XeqRl0rjoYqylC6iD5qvBM18AcH5pmhKo0J0IIbItmkwmJC6mvT56uG6SnKmLgGtHpvgYFgYsDLaBqEg8Pu25tITiyDLKzIq5JycaywFQt2LC8jNwVPIYwFN38BMWiZQy4QhMTCPvKH/M4FkJe868SU3NXLfJN9cCyis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f0MdnOUL; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f0MdnOUL"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-74ce477af25so3278053b3a.3
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 03:41:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752057676; x=1752662476; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=KVgoTehqznH1Mf+y6CGrKgp081qg1XVPP1pkX//UpQQ=;
-        b=f0MdnOULokDEq4ppUOtMuIL6h1J8jLC3E9o+lBG5WmomTgwL6MfYeOVldba8ADUEZh
-         jFAKN1xszxjqhdPoWY61xiRkVzByprRwv48g9QZ6v8SkyoOforUq8psmV6oRjaF0lFbA
-         nqXvzxn97WA8iKYGI9n7BQ3TyX+GV8jHExDpLTUIroOc0b1dZqlrglw+CafeliAVSsug
-         VFNdSTPCKB385VR/VKrvuKtcAqqHi6+/AJM6g8TThCICqmYDY1/UWmD/Z0mH0BteJWYw
-         PWfzxrjuMIslBClwnVauKVyBAtWsTg306ZXq3vCAP3FQQz7bVMC/mDFIR2+1DOvc0rE3
-         STWA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752057676; x=1752662476;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=KVgoTehqznH1Mf+y6CGrKgp081qg1XVPP1pkX//UpQQ=;
-        b=kwCBYgWI3gyLWGd9SzEs0MLAgV6C9ZW3K033BWg+bFxtw/raWDvPauQaSiFFX3xv8z
-         W80f5PX0nOyEgzmRH4YXXrVRYYBtVIUKNVtUf9hDmXd65rfanI9/nZJG0z5fMvQYpadS
-         lXIguukQLZakJow7FpyByxozNANht4PeO8KnPvbLvtOoPLMJXdYRt9NhVAO+tx2z2xUq
-         ywTiZcQ8oFTskMwK2IDj3J97UzRsS/J2gNxD3oDufpoXvKo4WxEZMeFtI3x/tc/nnzYP
-         PumYbQGee/BcfVctTtXKiYJsfY69NputQTMxstk9iCpp8G3maCE+mBWSu+8sJ86EmGHx
-         4yyQ==
-X-Gm-Message-State: AOJu0YxTHgoxhl3HrTmZq5YCx9nGUfuseclUL8hiaUZb6+F6yAGpEYY/
-	2hfsmPAy++rEN+I+cAjRQV+S77XdGRJLSDBCAw1katVw9lk4AppmZzGs
-X-Gm-Gg: ASbGncteyrB95R9XwmsMA+SgMCruk3DjoflpMhx0zmtWkyH/nB33YIr1hToMxENXsxR
-	A9zsceP60xuLuWDHKEPtee6p5n43bd86L9LwPa8lwi1ic1RMhHmqR0KniojBuz4Mj0NbuB+PrhE
-	k4xHt7g9ezxEun9ijthO/dMn2alD7fJ2roSHxUg1GA5stEeQ3afTxnC0FCOHLkgQX1HtatSREcr
-	UbBAwHxoBnB1krG1M6wzYypvPrHD4/1jXR4YTUedqcevKUQcNKE2ZCJzOyUKEzmGW7p1H0Jh4WI
-	YA5J+sXzRq+AqVSKGiHZtyNHhtA+xWONCTxoOncxt+gMGX1Gp4rnwDc9mkHZMYK80vni/7EED1N
-	niPzN/Uqp++ohov2/KAV8ITY=
-X-Google-Smtp-Source: AGHT+IGuMDw0y8QzRyUgUrWYZxNFKHz+YG9Wyi1Z1/TpFHet90EBQpAjoTGoMahUfy0f9TufhjkwxQ==
-X-Received: by 2002:a05:6a20:a11d:b0:1f5:6c7b:8920 with SMTP id adf61e73a8af0-22cd68be3f4mr3238510637.9.1752057676153;
-        Wed, 09 Jul 2025 03:41:16 -0700 (PDT)
-Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:ed82:7a2e:d82d:94a6])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b38ee62dd54sm12539194a12.52.2025.07.09.03.41.14
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Jul 2025 03:41:15 -0700 (PDT)
-Date: Wed, 9 Jul 2025 03:41:13 -0700
-From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, j6t@kdbg.org, phillip.wood123@gmail.com
-Subject: Re: What's cooking in git.git (Jul 2025, #02; Mon, 7)
-Message-ID: <vl7ahhcqgci3xemqhtdugdhar24ewl7mu4wqwxnc3jag5blpoo@l7b24mahadyi>
-References: <xmqqplebzgm7.fsf@gitster.g>
+	s=arc-20240116; t=1752059136; c=relaxed/simple;
+	bh=P6SD15ldayc4A9ff8BHs2du46e8WcHcG+SnDW4Bu/IE=;
+	h=Content-Type:Message-ID:Date:MIME-Version:From:To:Subject; b=ef0W9tmKNKXq+x4UOCz35HRfas3864ke4sry5EJP9ya4GZ0syKlIENJsrsCToA8y1jHJwITLxF7pbBt+XYAvDFWDm1AiVC0m2xTvxXktnMT0fJ4tRI0hCemI1zEtZEceCf7TBI2auDMlsxXt9e7mtj/85vkhanBMUrsVKcEDzm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akr.yagii.de; spf=pass smtp.mailfrom=akr.yagii.de; arc=none smtp.client-ip=80.67.31.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=akr.yagii.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=akr.yagii.de
+Received: from [193.5.235.15] (helo=[192.168.0.30])
+	by smtprelay05.ispgateway.de with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.98)
+	(envelope-from <obs@akr.yagii.de>)
+	id 1uZSYD-000000002uf-2l4L
+	for git@vger.kernel.org;
+	Wed, 09 Jul 2025 13:01:21 +0200
+Content-Type: multipart/mixed; boundary="------------v0XDR5ly74SxzGVbVdWF0zmT"
+Message-ID: <6907e423-324f-459f-a62e-fe6be14f4f73@akr.yagii.de>
+Date: Wed, 9 Jul 2025 13:01:28 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqplebzgm7.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+From: Alexander Krupp <obs@akr.yagii.de>
+Content-Language: de-DE, en-US
+To: git@vger.kernel.org
+Subject: git-subtree documentation fix request: split example causes fatal
+ error
+X-Df-Sender: b2JzQGFrci55YWdpaS5kZQ==
 
-On Mon, Jul 07, 2025 at 05:11:12PM -0800, Junio C Hamano wrote:
-> 
-> * cb/daemon-reap-children (2025-06-26) 4 commits
->  - daemon: explicitly allow EINTR during poll()
->  - daemon: use sigaction() to install child_handler()
->  - compat/mingw: allow sigaction(SIGCHLD)
->  - compat/posix.h: track SA_RESTART fallback
-> 
->  Futz with SIGCHLD handling in "git daemon".
-> 
->  Stalled?
->  cf. <dba9ae0d-1e43-4345-a7ec-b57a07d45a07@gmail.com>
->  source: <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
+This is a multi-part message in MIME format.
+--------------v0XDR5ly74SxzGVbVdWF0zmT
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-I don't think so, but definitely missing reviews (specially for patch 2)
-and slightly controversial.
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-I wasn't planning any further changes, and while I have some for the
-"related" patchset which enhances the notifications by using a self pipe
-was holding them (as well as the related feedback) to allow for this to
-mature on its own.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-On the rationale on why this is independently useful, note that we are
-currently relying in at least 2 "unspecified" behaviours:
+Read the documentation on git-subtree and try it:
 
-1) using signal() means that it is implementation defined if SA_RESTART
-will be enabled or not for that signal, and
-2) if SA_RESTART is enabled, it is implementation defined if we might get
-interrupted in poll().
+ > git clone git://git.kernel.org/pub/scm/git/git.git test-git
+Cloning into 'test-git'...
+remote: Enumerating objects: 392367, done.
+remote: Counting objects: 100% (7710/7710), done.
+remote: Compressing objects: 100% (1126/1126), done.
+remote: Total 392367 (delta 7015), reused 7002 (delta 6575), pack-reused 
+384657
+Receiving objects: 100% (392367/392367), 131.92 MiB | 49.57 MiB/s, done.
+Resolving deltas: 100% (296075/296075), done.
+ > cd test-git/
+ > git subtree split --prefix=gitweb --annotate='(split) ' \
+ >                      0a8f4f0^.. --onto=1130ef3 --rejoin \
+ >                      --branch gitweb-latest
+fatal: '0a8f4f0^..' does not refer to a commit
+ >
 
-both are resolved by using sigaction() instead, and it is up to us to
-decide if SA_RESTART is enabled or not (which might make patch 4 obsolete
-if we decide against).
+What did you expect to happen? (Expected behavior)
 
-Carlo
+Example should work as documented.
 
-CC: Johannes Sixt on feedback for SIGCHLD in mingw which uses 17 instead
-    of 22 (cygwin and others) and therefore seem to cause signal to err
-    without setting errno as it should.
+What happened instead? (Actual behavior)
+
+see above.
+
+What's different between what you expected and what actually happened?
+
+Anything else you want to add:
+
+Recommend a fix of the documentation. Due to lack of experience with 
+subtree I cannot provide.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.43.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+uname: Linux 6.4.0-150600.23.50-default #1 SMP PREEMPT_DYNAMIC Fri May  
+9 22:09:52 UTC 2025 (dee422c) x86_64
+compiler info: gnuc: 7.5
+libc info: glibc: 2.38
+$SHELL (typically, interactive shell): /bin/bash
+
+
+[Enabled Hooks]
+
+--------------v0XDR5ly74SxzGVbVdWF0zmT
+Content-Type: text/plain; charset=UTF-8;
+ name="git-bugreport-2025-07-09-1251.txt"
+Content-Disposition: attachment; filename="git-bugreport-2025-07-09-1251.txt"
+Content-Transfer-Encoding: base64
+
+VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQpQbGVhc2UgYW5z
+d2VyIHRoZSBmb2xsb3dpbmcgcXVlc3Rpb25zIHRvIGhlbHAgdXMgdW5kZXJzdGFuZCB5b3Vy
+IGlzc3VlLgoKV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3Rl
+cHMgdG8gcmVwcm9kdWNlIHlvdXIgaXNzdWUpCgpSZWFkIHRoZSBkb2N1bWVudGF0aW9uIG9u
+IGdpdC1zdWJ0cmVlIGFuZCB0cnkgaXQ6Cgo+IGdpdCBjbG9uZSBnaXQ6Ly9naXQua2VybmVs
+Lm9yZy9wdWIvc2NtL2dpdC9naXQuZ2l0IHRlc3QtZ2l0CkNsb25pbmcgaW50byAndGVzdC1n
+aXQnLi4uCnJlbW90ZTogRW51bWVyYXRpbmcgb2JqZWN0czogMzkyMzY3LCBkb25lLgpyZW1v
+dGU6IENvdW50aW5nIG9iamVjdHM6IDEwMCUgKDc3MTAvNzcxMCksIGRvbmUuCnJlbW90ZTog
+Q29tcHJlc3Npbmcgb2JqZWN0czogMTAwJSAoMTEyNi8xMTI2KSwgZG9uZS4KcmVtb3RlOiBU
+b3RhbCAzOTIzNjcgKGRlbHRhIDcwMTUpLCByZXVzZWQgNzAwMiAoZGVsdGEgNjU3NSksIHBh
+Y2stcmV1c2VkIDM4NDY1NwpSZWNlaXZpbmcgb2JqZWN0czogMTAwJSAoMzkyMzY3LzM5MjM2
+NyksIDEzMS45MiBNaUIgfCA0OS41NyBNaUIvcywgZG9uZS4KUmVzb2x2aW5nIGRlbHRhczog
+MTAwJSAoMjk2MDc1LzI5NjA3NSksIGRvbmUuCj4gY2QgdGVzdC1naXQvCj4gZ2l0IHN1YnRy
+ZWUgc3BsaXQgLS1wcmVmaXg9Z2l0d2ViIC0tYW5ub3RhdGU9JyhzcGxpdCkgJyBcCj4gICAg
+ICAgICAgICAgICAgICAgICAgMGE4ZjRmMF4uLiAtLW9udG89MTEzMGVmMyAtLXJlam9pbiBc
+Cj4gICAgICAgICAgICAgICAgICAgICAgLS1icmFuY2ggZ2l0d2ViLWxhdGVzdApmYXRhbDog
+JzBhOGY0ZjBeLi4nIGRvZXMgbm90IHJlZmVyIHRvIGEgY29tbWl0Cj4KCldoYXQgZGlkIHlv
+dSBleHBlY3QgdG8gaGFwcGVuPyAoRXhwZWN0ZWQgYmVoYXZpb3IpCgpFeGFtcGxlIHNob3Vs
+ZCB3b3JrIGFzIGRvY3VtZW50ZWQuCgpXaGF0IGhhcHBlbmVkIGluc3RlYWQ/IChBY3R1YWwg
+YmVoYXZpb3IpCgpzZWUgYWJvdmUuCgpXaGF0J3MgZGlmZmVyZW50IGJldHdlZW4gd2hhdCB5
+b3UgZXhwZWN0ZWQgYW5kIHdoYXQgYWN0dWFsbHkgaGFwcGVuZWQ/CgpBbnl0aGluZyBlbHNl
+IHlvdSB3YW50IHRvIGFkZDoKClJlY29tbWVuZCBhIGZpeCBvZiB0aGUgZG9jdW1lbnRhdGlv
+bi4gRHVlIHRvIGxhY2sgb2YgZXhwZXJpZW5jZSB3aXRoIHN1YnRyZWUgSSBjYW5ub3QgcHJv
+dmlkZS4KClBsZWFzZSByZXZpZXcgdGhlIHJlc3Qgb2YgdGhlIGJ1ZyByZXBvcnQgYmVsb3cu
+CllvdSBjYW4gZGVsZXRlIGFueSBsaW5lcyB5b3UgZG9uJ3Qgd2lzaCB0byBzaGFyZS4KCgpb
+U3lzdGVtIEluZm9dCmdpdCB2ZXJzaW9uOgpnaXQgdmVyc2lvbiAyLjQzLjAKY3B1OiB4ODZf
+NjQKbm8gY29tbWl0IGFzc29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxkCnNpemVvZi1sb25nOiA4
+CnNpemVvZi1zaXplX3Q6IDgKc2hlbGwtcGF0aDogL2Jpbi9zaAp1bmFtZTogTGludXggNi40
+LjAtMTUwNjAwLjIzLjUwLWRlZmF1bHQgIzEgU01QIFBSRUVNUFRfRFlOQU1JQyBGcmkgTWF5
+ICA5IDIyOjA5OjUyIFVUQyAyMDI1IChkZWU0MjJjKSB4ODZfNjQKY29tcGlsZXIgaW5mbzog
+Z251YzogNy41CmxpYmMgaW5mbzogZ2xpYmM6IDIuMzgKJFNIRUxMICh0eXBpY2FsbHksIGlu
+dGVyYWN0aXZlIHNoZWxsKTogL2Jpbi9iYXNoCgoKW0VuYWJsZWQgSG9va3NdCg==
+
+--------------v0XDR5ly74SxzGVbVdWF0zmT--
