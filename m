@@ -1,108 +1,135 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 774AE801
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:40:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386ED801
+	for <git@vger.kernel.org>; Wed,  9 Jul 2025 22:43:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752100843; cv=none; b=s0T8ADGnOJJ/pv/Ni5p5EiH7fXro3RcaX8AzBs4YRUaKTWj2TSMYqo5w3P+IJzGlY9Mi6te7mvyh60pBOHDltftiFsguu/tjJRXlX9jYVD0Rxsv9yxrnFJ6WOoUM7KFqcxjEOTMSJfx6dw4Rgys/Rn6bpkJG5oAq3kJXfzMkubA=
+	t=1752100989; cv=none; b=l0xDJh2fz1jyKSf03CAciY1wqpSd+uVHmrdEqgOAgVMhlUio/mHLsStlioPF1jda2+Mb5vSlo6BCAYSW2c5CB1sVy4jYA07G77gn1Hd+1QqX0noiW4nad2F98+0VtNCQpuK5cZmgIh650eqD12K9h+NqL1xmVsgvBgtq+ZY3Mcc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752100843; c=relaxed/simple;
-	bh=bxZrT1e/UASSviaWtw3G32fBHEsb6VioJpBsOltLLZs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LO4gKnxcmZrYqBcufcIUCZTqJUpiqHdScKPnxS/5cvJ1KQJB/bRbroaZh8y8R5+pyJs1Ztcwkz0p9pR9N8AXdwEU3ce4Y2Pf0WKr9OSDAjuE+FeOJ6sygnAJ7dg0uYDK7i3Fh6uDzdcj/+xfUPKs6URRyXd6uvILqBHdu1uSSDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=saoRsQHd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LIBS/mp2; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752100989; c=relaxed/simple;
+	bh=EFCfPaYoRYLr2TRqZm6Woxy3Aneh30Ci8ParaNnaGEY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cTPDVl6KTMOs1zWZ1OPwsDGw2wN27HinEIMSoRbIrX0iMPNZZ5AGuRt/mw4aNpH3S/vh4+MsCaxWSnlr/upH/p3aluqmUjBV1c0oEv7HxvkVDaXR70b/1KX9PNe02PI0vAGaHPGlx+QN+efscezj8W3aVbipi26yt38JXstoyfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=PaA09Lot; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="saoRsQHd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LIBS/mp2"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 309691D00217;
-	Wed,  9 Jul 2025 18:40:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Wed, 09 Jul 2025 18:40:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752100840; x=1752187240; bh=lb+xSseMv9
-	LomDH8+Z2vdwvA170CX8juPWTbc38wZ7s=; b=saoRsQHd4lh2QQ0So1TLkfo7Lz
-	R2i5ulXFKPPJf/UENcFop9526zmV+06LSDgJK4KlQWgbvLAhF1BafWt1tJ65FAtW
-	p0BHDiUJr1+zAEJAJUOi8xO3J8qH0Vm1ypf0qjnIE5MZy11LvnGbJI9ruKQFw387
-	onhkJjRxsrDNWPTlXghcJcCeXYkuDGBrZuUjsuQYwfAIAkg0Z2OowCkvnEvdttCF
-	yMSpPpYcrKiRC99enbJPlXqTkpF2BigOmhXiuz5m+MRO2Sqkfgxy6CWnXkLyhofM
-	9Ul2i4oSlcSi/JYpTJRTst+1nb2O/d9vWKN0jXQ2YbVzVtk6Jh96e549SHwQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752100840; x=1752187240; bh=lb+xSseMv9LomDH8+Z2vdwvA170CX8juPWT
-	bc38wZ7s=; b=LIBS/mp2tpTFXaGSNiAfxzoCLn6S4Fw+dD06hbVtzf2Y2A+uW1v
-	MnTooEU9eObz4IBXzZfUvJyc8+SqMESFk9NUKhieelffTXYph0SIr1Xv0+hePJZP
-	fyDRvM964BlIoTBLoRd9UDivV8lJbsxASznsXlhQkn1jbVc5vU/SjhCHscAzpshX
-	+ySYI6EOSswBONStMxSCKNwniaSvozL8YAg2SGiDxUPWzQY88OMpMQbFppj2BFia
-	tMW21JAzn4qShfRsjhZKldwtYGXTf+zBpeUe3Qf/a6/HJRgayQFhdmwju70y0Kg2
-	fK29vVz1kXN5SU/NT9070MuF1a2X5iJhSVg==
-X-ME-Sender: <xms:5-9uaLhyXb7LzWrSq3JKY0IaPIXvWQ13BNSyj5A_yy4tUQl4JZKboA>
-    <xme:5-9uaNO2uXw02i2K3ejdTpMkZf5vIq-dz5jYGBy-VLSa7g9y53bR4EucB1UPXB8Be
-    xDs_u7aARB3VvN8Hw>
-X-ME-Received: <xmr:5-9uaL9nkFrXJyeg34e0DK-k8Yw-ffAKnIEMm4gH6De4THQVskQBCPbRZaQHY_w8iUU8ee-x3DPz_TEZfpXdNFJpRKh_wz2u_dEKdEc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkeejlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprh
-    gtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrph
-    hluhhsrdgtohhmpdhrtghpthhtohepihhrvggttggrrdhkuhhnsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehjlhhtohgslh
-    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:5-9uaOcWiRW1Y9Osd5Ka5Qeb69w95Vquq1-8EWWU2kznk5E3rU7BuQ>
-    <xmx:5-9uaKwqmvfRo6BEJuOyFD5qUFBrVgK0xcyGTEpEyeQU_ZhZjTAL7Q>
-    <xmx:5-9uaDKIqPQWZq_baY2ObQMEVDwoOEXmmr8FC9UENzBPljhP1aOTkg>
-    <xmx:5-9uaMGew411lHfqvKt8eUCW8CrOR41wXLdGL01iAzULANbi3jLTUw>
-    <xmx:6O9uaH7C7v2NFjx098GxF2Z8zfvEHtNZPowUZwZCZnmscUXM6Wau-a66>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 9 Jul 2025 18:40:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ramsay Jones
- <ramsay@ramsayjones.plus.com>,  irecca.kun@gmail.com,  Jeff King
- <peff@peff.net>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 1/8] meson: stop discovering native version of Python
-In-Reply-To: <1664d442-7985-41b7-9391-78f78ece7601@gentoo.org> (Eli Schwartz's
-	message of "Wed, 9 Jul 2025 18:22:46 -0400")
-References: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
-	<20250709-b4-pks-meson-cleanups-v3-1-29ab15b9ab85@pks.im>
-	<xmqqikk1pfiz.fsf@gitster.g>
-	<1664d442-7985-41b7-9391-78f78ece7601@gentoo.org>
-Date: Wed, 09 Jul 2025 15:40:37 -0700
-Message-ID: <xmqqy0sx9ee2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="PaA09Lot"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1752100979;
+	bh=EFCfPaYoRYLr2TRqZm6Woxy3Aneh30Ci8ParaNnaGEY=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=PaA09LotnNERX9GcPpdnBOdplLJe557GDeGbMNXodqLS/8m4k4+uCNc2hLIUqqCNS
+	 2m4pEGeO/7rWN5lMGGvstBAO6lOsdegJmQl5H7bwn15I/5d4FquulEFIAndFJBoHhe
+	 QGnk2OsDxhtXmJvrttcQnjIxu9HCp9jyijYbClL6aKny+o9hYVSLaBq7ps/aBlxKEN
+	 0rZodCNPXdwj3UNMeYAX6ctey+tesqrXy7+2PWBXRP3//Ko3T+EJU8AMVHcw6mgDOw
+	 bmB4m7EQflK2WSI2bgVEsrSI6YkLtpu0psih6n1/1iiRSESDbEsyEC6GY68fXnVCbc
+	 lOA5j1H5Pyf9S7bKosb/EzM+2ZLSitekgCWS2Oo41RWYS019h+i82erzKOeQwZTMzT
+	 BvSYHV1qEAxhRoO3kK4ePGx67fGNsr6LVEPwMMGKnY9dUkAOnnap/OGYBCRq8la2/R
+	 YiDSt8BG2SlMUV86PK+zbWtlT2C2rsdlAZMLsTXY1eDPYNVCAo4
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id E7B5920075;
+	Wed,  9 Jul 2025 22:42:59 +0000 (UTC)
+Date: Wed, 9 Jul 2025 22:42:58 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Jeff King <peff@peff.net>
+Cc: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	redoste <redoste@redoste.xyz>
+Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
+Message-ID: <aG7wcoy3gTzSd_4w@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Jeff King <peff@peff.net>,
+	Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	redoste <redoste@redoste.xyz>
+References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+ <20250707204224.GB3115893@coredump.intra.peff.net>
+ <CAN0heSou=BgC8ec9ZE+V-pYKt+XQiNfOBHj-5CZY8s5XCatZTg@mail.gmail.com>
+ <20250708225134.GB1180568@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="D7vz128WWDWEVLOC"
+Content-Disposition: inline
+In-Reply-To: <20250708225134.GB1180568@coredump.intra.peff.net>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Eli Schwartz <eschwartz@gentoo.org> writes:
 
-> "python" may be a symlink to python 2.x, or 3.x, or not exist at all. I
-> am not aware of *any* scenario where a distributor has re-packaged
-> Python, "python" exists on PATH and is a real Python 3.x interpreter,
-> but "python3" doesn't exist.
->
-> I am not aware of this ever being an existing real world scenario in the
-> past, either -- it is not a "we no longer live in the bad old days"
-> scenario.
+--D7vz128WWDWEVLOC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Good.  Thanks.
+On 2025-07-08 at 22:51:34, Jeff King wrote:
+> Yeah, I agree (and didn't know that before; thanks for mentioning). I
+> think mostly I was just hoping that some of this reasoning and these
+> pointers would make it into the commit message.
+>=20
+> The content of the patch looked OK to me, though I do still like the
+> CNCF wording a bit better.
+
+In case it isn't clear, I'll be sending a v2, probably this weekend with
+more of this information and some updated wording.
+
+I don't love the CNCF wording because I feel it's too ambiguously
+worded.  What is the "community"?  The open-source community?  My
+neighbourhood?  My friend group?  Can a real name be a username or
+handle that's distinct and unambiguous?  What about communities where
+people share the same name?  (Debian has, or at least had, two
+contributors who both have the exact same full legal name and can
+therefore only be distinguished by handle.)
+
+I also think redefining "real name" in that way is misleading and leads
+to confusion that might put people off, especially those that are not
+native English speakers.  I know it's common for lawyers to redefine
+language to mean something very precise but different from the language
+that ordinary humans use[0], but that's ultimately dishonest and tends
+to deceive and we shouldn't do it.  Most people take the phrase "real
+name" to mean something equivalent to "legal name", so we should use
+language to describe the requirement that doesn't confuse or mislead
+people when it's used without further context (such as in a social media
+post).
+
+By contrast, we suggest that `user.name` "conventionally refer to some
+form of a personal name".  That doesn't work here because I did intend
+for us to allow handles or usernames, but Wikipedia describes it as "the
+set of names by which an individual person or animal is known" and, due
+to the use of the passive voice (an intentional choice, I'm sure) is
+specifically ambiguous and allows lots of allowance for personal
+circumstances.
+
+I'll take some inspiration from the CNCF post and rephrase to make it
+more approachable in v2.
+
+[0] For instance, one time where I was told that my laptop's removable
+battery was an "accessory" and was therefore not covered under warranty,
+despite the fact that it was required for the machine to boot.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--D7vz128WWDWEVLOC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaG7wcgAKCRB8DEliiIei
+gapkAQCQuQS0ITlh6KcOaI388pBxCsfuiYxSMRZo7mwMcasfSgD9ErehfkqplZZH
+w52CohF+yIHlA1YG2PukTOuggXDsNgA=
+=obgA
+-----END PGP SIGNATURE-----
+
+--D7vz128WWDWEVLOC--
