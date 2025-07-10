@@ -1,71 +1,69 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780523208
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:19:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8A352F2374
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:23:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752189560; cv=none; b=ATC7OxreeTiWow5NVOCRrX2ZKhZ6V3jN5ENiXS3mcLdkGST++zt8vDkwl9ZtZUfJq5uqOz+ovP+/gt+ySmihk358K36StT7yqjFksogtia30R+R458y1n5Uz/SySlTX3YUy5KJE2yvFfoRa4KbWQN88dn4L89uRdnIjF6xoFhiw=
+	t=1752189782; cv=none; b=lka46VfcP3xBY+DF046ooegym7EBEgAyuLEQKvFztMbftHKtIDq/2Her73yZZw+OgDZoAdtr7gKfrzPZcnKeOA2DCxl4Kz2FJOfJBFt/akLBiz5EJT/I+8Ed2ZfoDdc7+iOIxHR4GGcqqduGBeehyRAidCmAWlYZGWFSedm2uxo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752189560; c=relaxed/simple;
-	bh=C8Kldw4QsrYeQ77O6eKm4xkSyywCUTeqk6jK2MY6gi8=;
+	s=arc-20240116; t=1752189782; c=relaxed/simple;
+	bh=p6FdQAYWHgsijHVlqVtZwhPEoiihWQt5kV7OZoaIctE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Ze0c9iFLD/836z6nhlLIDuWtuw76es6iTaz12wYdYjnfzc0JnQBUSsqrpSntjRGroSe9Uj2MD1nlSiBN09355QCuGRFzqbvWlzGfjDpR4laang5hBG5Szps5sgfHYUf+Up3XVdVjkA8x4UiRIDYO0Jmh7WESP7/65jxsRaneqyQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=L5liEKQ0; arc=none smtp.client-ip=209.85.128.177
+	 Content-Type:Content-Disposition:In-Reply-To; b=uhCXG2Kb31NqjmD89K6RacLmZZ8+RsX7mXJ2t38rIGkS86HWWZ7LkB+qns3ITtThtVpa9uop1RFxHjLW+F2xe7Q1HUH34cA33NQ+KIpE1CTeX11bjwQ3fDTamEcG1ErjqKVKiplwLLdd4Mi07wEE0Ays08EGuD7EzcXAi+mgJ3g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=gCq0hcLi; arc=none smtp.client-ip=209.85.219.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="L5liEKQ0"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-711756ae8c9so11942267b3.3
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:19:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="gCq0hcLi"
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-e81826d5b72so1360799276.3
+        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752189557; x=1752794357; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1752189780; x=1752794580; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8fBWYHs2pN102p8115r8OTpUprfsCYbSmi/6BAyiqTY=;
-        b=L5liEKQ01J5eYmSFOK060huGQTzWuYi4dfKccgyCaCbnfhjnHgI83gQYfSbja40ile
-         jd6xZNnbiTH0DarH6q3puebg27eHjFqlK7odkYWYYdqniIY4A1DzJ+DYFUHn9eHKkORw
-         vGA2AR44B0mjAzv848VYcc6Bccxjf8Drx+25oEW9GgzeCuwNo75Fa4L6UekofNbpu75d
-         bEW8DP/LK2RmIgOiuZgqBKdFkcd7QswMVyn4hBdaXwzcGxy79BKR0VTygLeOigBy06Ly
-         MjJSe21xP7F9OStc3BXtTWlqLfxeTksJIeorbiBNocEwSHhMHHnJ2Tk2UTQmom1h6wmg
-         P5Aw==
+        bh=SqMOaIscugpvTvSBvXMGgvfs979lMqMr1W2zJPrWeiA=;
+        b=gCq0hcLimKBCanjNs1LrtQ/yPZw4ClNuwJRHdG9SYU1pjC3LuUCHVHOccWoaPTlWHw
+         1viQquB2pZp/+Qqv8HdIM+mN1PP5nehu41FBQOr4GbuUWE+hdmWAk2ampIp2v2irM6Kz
+         2Gelbp+r3mQair2U4+y2gHPBtNgqZl2cjh3Kl5dBjki1CRkp2k2hASUg6tdmVTlCOEQ7
+         IIp80nkuLG4G8aZkTJZN2D57mAIRUo2AIG+YfJhd+hZeqi1i9P+d3Z+bu4kfgfvwPavQ
+         pUUeaghtqoB6SxG/BojKUn2iF7SQ13+dJczBHjYiVv2E/jSdaZaKQFgAROt3VzMDk/xu
+         RuXw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752189557; x=1752794357;
+        d=1e100.net; s=20230601; t=1752189780; x=1752794580;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8fBWYHs2pN102p8115r8OTpUprfsCYbSmi/6BAyiqTY=;
-        b=csau1tybBKLSFWWrFWcwUuIaocyzu6z3BahnHxkCNdW5I23pPRbacpQRIjIc7o6a2t
-         QsgfV4VSwS+RaQPH5eRsDSzxM2YCCePFi4cYiHmz1+MX4LlvGR/cBKmGM9fcLhZMAcNw
-         UBM8kqTuVm6DQV6A150FbDk+Ds71Z2Sh92lZftOvVFff5WIddWm8R3swN9VQD0J6gcFf
-         pB/ZsB7zCCV+ki9zXRpzlQ8kHw/w42KJbM9MaXsKD7SpIrQvVXjS6eoBWEZRWjAwhEoR
-         8h3yREB984a1vlXgnyLYMJ7YbkC+B9uWQzYUDBn1HUE7LFPgK/mMiv0hpzlLiteRrFKf
-         Pjbw==
-X-Gm-Message-State: AOJu0Yw2zLwqW1ZMO3FZmI5QumDIw12NS97f0jAp8AUeIF+XwkCjgO9P
-	dbnlrV3IWQADLxC2GQevQaeMAH6PUMkHT8LpP8/PCo7m2sIrsbk28w1d+D0W0TfPf0aywmazIOA
-	acjDLHQM=
-X-Gm-Gg: ASbGncvauHILB5z+PSFy0f51ma244/QrBcKZtW7WwhXOaVMVKdYj4Y1RGF6cbQHNWFQ
-	wxS9PtDHcx+F9Z23p8rrbEUzUaZ+EF/E96ZZP6uUxTiKN6sY2gOtCfb1Y9Z1YOixLQmjuh68xSO
-	pisVBcKHd+Q4xsuRtsRwavR9ke5sbFKa7LP268pG/01wBBN42sC++XgU5hL3qtyOmBfT2YruKBJ
-	n2VuAvljTl0MGegzck8R4o4IIqD4Vi7Fsm/7lCaFGmBE31M6CzjMccKZwlkiThmDV/WSubuxZeW
-	0KbC0r05G/m4xXEwHVlnTno2Xakawg90OF3tuELBZa79Bx5EPZryuYqH0Of6osuczIgc+XiCLx8
-	/sWL5qXo8t+haCd+StxVx0WodIHIyUnmktjhfTkxpC6Dmo7IFbAc+KhinlRsGaX01t2hDbA==
-X-Google-Smtp-Source: AGHT+IGuS4OvlwxJcec8v0xCN5Ts06TSWS06cl1J20Xsfnugi/c7m5bsfet6JiY+bBSMrikAKcwobg==
-X-Received: by 2002:a05:690c:fc9:b0:711:406f:7735 with SMTP id 00721157ae682-717d5d7b900mr28643287b3.13.1752189557323;
-        Thu, 10 Jul 2025 16:19:17 -0700 (PDT)
+        bh=SqMOaIscugpvTvSBvXMGgvfs979lMqMr1W2zJPrWeiA=;
+        b=hUc+qfW74txa8aehLNRKdO0BJLyc9ceR5eu2Rz/TJjVBxs2bpSa4cD6p3GIeY2Z0/J
+         egPdpjLKZ5TQRb/6bZfq+lpZjlWFfFfV/fYj/lliiH2c+gNoUc+IAitQmMciE/gZ4Yh0
+         tw26TUdl2DVk8N7COaXu0gT8ZAP8D48U9EypKHUP0oJI+CLxVfVvh4tJHtXmU1ziRsyx
+         EUIyjBkZt0tGw18ijT6BDrM8GuSKNMomrMdZfCJOKjm95Qh8E/z6DPmnGC/w4sWRjoRw
+         U29stE6wPayQ2DYJytMnW5WEnEfytEUgy/qqACQOQsqas5SSUB6S57GpkkHHla1g8P/+
+         f+dw==
+X-Gm-Message-State: AOJu0YzOQ12aeN0aLKRTiFAybJ0fyOIdiVvQ0jTaOqnMyGt/cEZXaq00
+	8yvG9AxfhRL7E8pKNamM9T0j8riAeU+Xr8PaOI7ADHpSRnqmz8qFb5+wk0LUYxgErMU=
+X-Gm-Gg: ASbGncslz7DDy388sB8iPFsySB9RRE5c+pfGaXH6lRqRHfPydBrgKthQ2+IBvSHEUoj
+	L8n6uyRnPr625zqLcFt8DB5KNWp2CHKZ5xlZmfidTwyvkQntSE6BVYRapA4Tm1UCiuhQkKVokSk
+	IAkQObQhhUNJ6qREXCq+nz5mHFMaMYJJMzmAitdq0VVCsmaB3z8ZKNxEkrhWcePdrH6rpP5nY5/
+	v+O9ir1tyzkn/O/uMZpjjF5svyeFFr9fNCD+nFdBZddTZWr+DLz1OQfepXtUeRGtG5cpMK+OfR5
+	nj2iiSWwQ2T6SrLMm/RhNtaFT1Ap53lEmIILORPoHuqnuhbwulwCswWmNvGfBI2nPgiKIwFJfaD
+	7TT+O2JfKJVeTc8nhHXviv6vLJW4IaheSsnmWZV1jQmcHChgi+0In12BMHxEDu/dMuBeDCA==
+X-Google-Smtp-Source: AGHT+IGF1WIsgsYm9h7slki5bi1UYh/MVSScfbgwR9X1bzRLW1Ox+2ka2DkZyEowFJjneu4en3kS5A==
+X-Received: by 2002:a05:6902:1895:b0:e84:2cec:1c9e with SMTP id 3f1490d57ef6-e8b85caaademr1170065276.49.1752189779660;
+        Thu, 10 Jul 2025 16:22:59 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-717c5d72ca2sm5104517b3.32.2025.07.10.16.19.16
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e8b7ae26ec8sm733330276.8.2025.07.10.16.22.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 16:19:17 -0700 (PDT)
-Date: Thu, 10 Jul 2025 19:19:16 -0400
+        Thu, 10 Jul 2025 16:22:59 -0700 (PDT)
+Date: Thu, 10 Jul 2025 19:22:58 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/8] midx: start tracking per object database source
-Message-ID: <aHBKdGfVfn7Xigip@nand.local>
+Subject: Re: [PATCH 3/8] midx: stop using linked list when closing MIDX
+Message-ID: <aHBLUg7Y1cgf8i7k@nand.local>
 References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-1-f31150d21331@pks.im>
- <aHBISjW/OErOy3Cp@nand.local>
+ <20250709-b4-pks-midx-via-odb-alternate-v1-3-f31150d21331@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,44 +72,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aHBISjW/OErOy3Cp@nand.local>
+In-Reply-To: <20250709-b4-pks-midx-via-odb-alternate-v1-3-f31150d21331@pks.im>
 
-On Thu, Jul 10, 2025 at 07:10:02PM -0400, Taylor Blau wrote:
-> On Wed, Jul 09, 2025 at 09:54:49AM +0200, Patrick Steinhardt wrote:
-> > Multi-pack indices are tracked via `struct multi_pack_index`. This data
-> > structure is stored as a linked list inside `struct object_database`,
-> > which is the global database that spans across all of the object
-> > sources.
-> >
-> > This layout causes two problems:
-> >
-> >   - Multi-pack indices aren't global to an object database, but instead
-> >     there can be one multi-pack index per source. This creates a
-> >     mismatch between the on-disk layout and how things are organized in
-> >     the object database subsystems and makes some parts, like figuring
-> >     out whether a source has an MIDX, quite awkward.
+On Wed, Jul 09, 2025 at 09:54:51AM +0200, Patrick Steinhardt wrote:
+> When calling `close_midx()` we not only close the multi-pack index for
+> one object source, but instead we iterate through the whole linked list
+> of MIDXs to close all of them. This linked list is about to go away in
+> favor of using the new per-source pointer to its respective MIDX.
 >
-> This is a little confusing to me. What do we consider to be an "object
-> database", and what do we consider to be a "source"?
+> Refactor the function to iterate through sources instead.
 >
-> For instance, if I have a repository with one or more alternates, I
-> would imagine that each alternate is a separate "source", and the
-> sources together comprise the object database. Does that match the way
-> you're thinking about it?
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  midx.c     | 11 ++++++-----
+>  packfile.c | 10 +++++-----
+>  2 files changed, 11 insertions(+), 10 deletions(-)
 >
-> If so, that makes sense. But if not (i.e., we consider all alternates to
-> belong to the same object database and share a single source), then I
-> don't know how this will interact with the existing MIDX alternates
-> mechanism.
+> diff --git a/midx.c b/midx.c
+> index a91231bfcdf..416b3e8b54f 100644
+> --- a/midx.c
+> +++ b/midx.c
+> @@ -401,7 +401,6 @@ void close_midx(struct multi_pack_index *m)
+>  	if (!m)
+>  		return;
 >
-> Some clarification here would be helpful, I think.
+> -	close_midx(m->next);
 
-Ahh..., after applying part of this series locally, the documentation in
-"struct odb_source" clarifies that (at least as of yet) there is one
-source per alternate, along with a source for the local object database,
-and that these collection of sources comprise the object database.
+OK, so previously this recursive call to "close_midx()" would have freed
+up the `m->next` MIDX...
 
-Makes sense.
+>  	close_midx(m->base_midx);
+>
+>  	munmap((unsigned char *)m->data, m->data_len);
+> @@ -835,11 +834,13 @@ void clear_midx_file(struct repository *r)
+>
+>  	get_midx_filename(r->hash_algo, &midx, r->objects->sources->path);
+>
+> -	if (r->objects && r->objects->multi_pack_index) {
+> -		close_midx(r->objects->multi_pack_index);
+> -		r->objects->multi_pack_index = NULL;
+> -		for (struct odb_source *source = r->objects->sources; source; source = source->next)
+> +	if (r->objects) {
+> +		for (struct odb_source *source = r->objects->sources; source; source = source->next) {
+> +			if (source->multi_pack_index)
+> +				close_midx(source->multi_pack_index);
+>  			source->multi_pack_index = NULL;
+
+...and then this line would NULL the now-free()'d memory out.
+
+But instead we are directly iterating through the sources and both
+closing and NULL-ing out their respective MIDXs (if any).
+
+As an aside: I know we do the C99-style for loop with declarations in
+many places, but in this instance it seems to have produced an awfully
+long line. I wonder if in this instance it would be better to write:
+
+    struct odb_source *source;
+    for (source = r->objects->sources; source; source = source->next) {
+        /* ... */
+    }
+
+That's still a little lengthy, but it's fewer than 80 characters ;-).
+
+
+> +		}
+> +		r->objects->multi_pack_index = NULL;
+
+Presumably this pointer will go away at some point in the future as
+well?
+
+>  	}
+>
+>  	if (remove_path(midx.buf))
+> diff --git a/packfile.c b/packfile.c
+> index b43dd2fe6cb..546c161d0c1 100644
+> --- a/packfile.c
+> +++ b/packfile.c
+> @@ -369,12 +369,12 @@ void close_object_store(struct object_database *o)
+>  		else
+>  			close_pack(p);
+>
+> -	if (o->multi_pack_index) {
+> -		close_midx(o->multi_pack_index);
+> -		o->multi_pack_index = NULL;
+> -		for (struct odb_source *source = o->sources; source; source = source->next)
+> -			source->multi_pack_index = NULL;
+> +	for (struct odb_source *source = o->sources; source; source = source->next) {
+
+Same comment here as well.
 
 Thanks,
 Taylor
