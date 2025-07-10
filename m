@@ -1,108 +1,129 @@
-Received: from mail-oo1-f43.google.com (mail-oo1-f43.google.com [209.85.161.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7648633F
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 22:21:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 467354C97
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 22:36:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752186112; cv=none; b=hjnIIIqaHzuBB25HfqHIyaLqRHj+b3SHl3/yG4NEqsNzhOXZk+pJ6rUnDwpJM+JiahvreEu01Xxd7dTOotyWGxwIL5L/B+7tAUrtx1KvMOJam5cvCkVixbtlcEZ6NEE8xcPuiDXJzBLuUQnojKIX+I4Iin+DvnrD/JYZGtFYvDc=
+	t=1752186985; cv=none; b=qo9r2HSnIxStdtfqBQuCwMDAC8EZuRc+C69jhmxBmtGRiPYBRPseFU+i446JbuDqQdtmhzsAD8QYava3GVtj3eRd+niQGxZwsn9slsj3ePfjwFdRULASaFMz4BurVxeMxNYAXTLWWYl1BRinf/VthE3v9H3MNm3vsTKKBX/RS/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752186112; c=relaxed/simple;
-	bh=0WLcAuh47X/Sbak05Ek9wZfC1xlvg9dFbZ4Dcv9n52E=;
+	s=arc-20240116; t=1752186985; c=relaxed/simple;
+	bh=KuC99j+ZLcUYfoycPo/hdDikMkZ9/uo6LDgEeCNQNRc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dZcNfz9LneTPI4I1FecA0JVBzXBA3fEyx7SuJ79I6tqHvpKOhoKLKEEoSwxBSy3dGjXI33+M/ArFmbg3WdJcIo1tAB1YTMZY8MYPjVIXCcR/DhN2mLj62Q2UMJrLlIgAj75aam4cQHGM6Xl8zz4U5yXhLEZR3O05TYmCF+XmP4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QKEJPPFc; arc=none smtp.client-ip=209.85.161.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=b/RTxOWBzf59ePgQ/ZarhlfZUnMNBMb8mF6hvrt1bc7uF2cpmlkRQyEVtPKm/Lz1GVBYefsr1qUC8JIvwnaV25pFq6EslU+hhYuyDUNU4xRTsa90MS6NcfahiGCrJW8mRSqjCjM9H1ZqGNU7HOwRE0ObgmafxenLIiipEH61x1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=J9CHS9SY; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QKEJPPFc"
-Received: by mail-oo1-f43.google.com with SMTP id 006d021491bc7-612033bb26cso629742eaf.3
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 15:21:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752186110; x=1752790910; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+TQTwupbSC6X73QETxzsIy/TVxk6bcJq7bDL4WEBT/k=;
-        b=QKEJPPFcdguemBEI4LFFzXmP7k0MrJT40S/AYccHlZPcgY4UXdfg1S7xfXK3qahpVZ
-         FGdEr9z8WPya6MPjLbO0QoKim9lYZ2c9NXtacLPzNSE+P7KczKGJLJjgmzNwoNmEP/05
-         BM5JJJskg+p1HhvJTBdO9DM5WteJAoFWSQYqHczRmk1NQmXAW6k4XxoVejYXonqFyTYx
-         YY4hcOqVmo0p1mXcxExqLCN78SevY+6Sqqa9WIXob/N4fmYe8EaN2wHQu+HrfaOU+pbx
-         hIkKGyr3zNmxcWfaw9RzcrFE0nfrkZxTon8qqp5DVnmV6Sb6EUEEcdiRZhf0g9eZ+27J
-         Z3AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752186110; x=1752790910;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+TQTwupbSC6X73QETxzsIy/TVxk6bcJq7bDL4WEBT/k=;
-        b=wEVzQuM0DjFAue4TxfsyGPxOTjjZmUrPsoRHm7NJ7lpssbhpAdxcxdddtPYz1A1L3Y
-         2BIWb9bumaH2DSnKsb0IElbyx4v5CcuxmWKtngzzUMEgXAC9arMXJ1l6rMEsk1gqIvH9
-         6s0PTc2OAlvzw7Z8PSF5jJtN06LSvViqbI0f4y1U0i8SJ4LAEa9WLnk22IRgHyVXKpKE
-         nGExrNodXR48PrFY1VLO9s1PcHwXYeR2bYN9jy3FSUlYPYX1AoTIfo1gCsvHBpd5Q1Ar
-         ZXWcz22Nrp6Lnme6kvW3F0YpKQyxjEWanOcFK5fDihMJOYUXKNMOlsLiIiEBtfZzBAOJ
-         3i7w==
-X-Gm-Message-State: AOJu0YzkTHU+wS8Ldg0+Gu0OiHWJyaTuTA4gSUQPz71/YPDkmtGxFtLv
-	CRPw4zyfIVFnKeGaSChfq8HW9xmp8LEVaYA8Wtuu/VqJt19dIEUGQcHO+HwdlQ==
-X-Gm-Gg: ASbGncsjZq2MVI+te1nBLOhFfIFJO83WvTDhXsCeW874U9m//2AV5Sc99QRA5M/dQmr
-	2PsKK1qISIojRN/Z88S3ykN4E0hk8eYEPv2Cm5OPCKCcwZh0kWfaf/pgM6UCWtvnoiAVNO4Asdx
-	zE/hgraGoqh4BnG+FUYz/HbMQTB4PlmwFy6nEsbMt/VqOBx7MjosMT56kUTNnGjOXN06rEO/fvp
-	iYLNiMzzhn3HEjFYt+VL4JcOLBARhc0nVAfUMf/DhGRc+uZpZGVSzPpzVXJVLXuZ3nzTYb8zHy2
-	VyWVA5JfEQh+uEBm4opS1Vm3oV5M6YLt1fcfuWMV257LQDz+ODP0Wt0MQrn/ISEUA2Gvl2DlBAD
-	8LF/PYo3Z29DuktM=
-X-Google-Smtp-Source: AGHT+IGNkWinFfJrwdPbr0T7HOA4QsyFkDDS9FH0mF7OeYC05+mENzpQH0+TTdeku78OvqgxmTHvdg==
-X-Received: by 2002:a05:6808:4f5e:b0:406:45ae:b0 with SMTP id 5614622812f47-41511df506amr1047063b6e.35.1752186110286;
-        Thu, 10 Jul 2025 15:21:50 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-414191e561esm355110b6e.11.2025.07.10.15.21.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 15:21:49 -0700 (PDT)
-Date: Thu, 10 Jul 2025 17:16:12 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="J9CHS9SY"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1752186982;
+	bh=KuC99j+ZLcUYfoycPo/hdDikMkZ9/uo6LDgEeCNQNRc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=J9CHS9SYKirjSLVQBkjjOasg2KAwdH7Y+w55bb6699TRzNJgHt8QR6mTfdV/kf2+M
+	 VooRDuQWKmHqqaYQ+IjVSAqW7dlF/fRXXu46SGQadE2yh+n/HFyt3H7oVBEfwujwS8
+	 M2Nhtl6OenrAlUybE5xy3kvCuISMCQQRTsoRv73hn9a8Uf0fu937RyZt5eyTfaGmJL
+	 Gtu9090Ix07bqFysIrtG6xeDB3KmVt7bd0Px/9b2PKIz9vrkNrLBgf5ogDsaMWh52R
+	 94qCG/e4Ax2EN4PymPBJgf5a8WRvFpBN7c9V4jAFgmWMGE4AWzo/lNAyqisIfAZ5Qf
+	 hM6kFm7H0xac3KWREaVjyK/dlg1ibBJLlJhf9lt7Ueuih5TkIu0nCJBYiUmbRmukjN
+	 kLs3tRvyERyC5NugyPs3iTeFLmf0qc50QDp25a3rBb5bwk7+/1Ugwu4HdLUEsP3DNl
+	 TFT4kVDmPIrVuoZBYfx7EF0ZByRevprCtsbOEFgiUA3srz4nGoF
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:828b:3227:a916:b7f5])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2F80A20077;
+	Thu, 10 Jul 2025 22:36:22 +0000 (UTC)
+Date: Thu, 10 Jul 2025 22:36:20 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/8] midx: track whether we have loaded the MIDX
-Message-ID: <kmprav735ntlgo3x47ptxyhqc6c5n7tyyub5c545gw2g4achng@sst72rcazce4>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-4-f31150d21331@pks.im>
+Subject: Re: [RFD] helping distributors by changing the release schedule?
+Message-ID: <aHBAZLC4xTcy9-UR@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <xmqqldov4rpt.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="v2HP/lac4eunYVYJ"
 Content-Disposition: inline
-In-Reply-To: <20250709-b4-pks-midx-via-odb-alternate-v1-4-f31150d21331@pks.im>
+In-Reply-To: <xmqqldov4rpt.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 25/07/09 09:54AM, Patrick Steinhardt wrote:
-> When calling `prepare_multi_pack_index_one()` we know to skip loading a
-> multi-pack index that we have already loaded beforehand. While this
-> works well in case there actually is a multi-pack index, it doesn't work
-> when we already tried to load a nonexistent one.
-> 
-> This doesn't cause problems with the current layout, where users
-> typically iterate through MIDXs via the linked list stored in the object
-> database. But that linked list is going away, and those users will
-> instead have to call `get_multi_pack_index()` for each object source. So
-> if one of those sources doesn't have an MIDX, we may end up trying to
-> repeatedly load it even though we know it doesn't exist.
 
-IIUC, in its current form `get_multi_pack_index()` returns the global
-list of MIDXs. The MIDXs are loaded when calling `prepare_packed_git()`
-into both the global `r->objects->multi_pack_index` and
-`source->multi_pack_index` for each source as appropriate.
+--v2HP/lac4eunYVYJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Looking at `prepare_packed_git()`, it checks
-`r->objects->packed_git_initialized` to see if it has already been
-initialized. If the intent is to start calling `get_multi_pack_index()`
-for each source individually, doesn't `prepare_packed_git()` still only
-execute once regardless already?
+On 2025-07-10 at 22:16:14, Junio C Hamano wrote:
+> If we "release" reasonably often enough to make the distinction
+> between the tags so smooth and meaningless, would it help in weaning
+> the distros off of their mentality that pick one "major" version and
+> stick to that version unless the user upgrades the Operating System
+> version as a whole?  After all, we do not make changes that are
+> backward-incompatible at the end-user level, and the "we stick to a
+> given single major released version to give stability to our users"
+> mantra that leads distros to ship and support an ancient version is
+> hurting them (and their users) more than helping.
 
-> Address this issue by introducing a new variable that tracks whether we
-> have tried to load multi-pack index of a given source.
+I don't think this is going to help.  We do, from time to time, make
+incompatible changes (e.g., changes to defaults), as well as
+user-visible changes which are not expected in a stable release (e.g.,
+advice.defaultBranchName)[0].  There are also just bugs that crop up
+=66rom time to time: I remember that one time I broke things when cloning
+two files that only differed in case if it was a case-insensitive file
+system.  Users will not appreciate that kind of addition to their stable
+OS[1].
 
-The contents of the patch look good, but I'm not entirely sure
-introducing a separate variable to track if the source has attempted to
-load a MIDX is useful.
+Most non-rolling-release distributions will not want new non-security
+updates, no matter how we package them.  Distros already are not
+delighted by the fact that Chromium and non-ESR Firefox release new
+versions every six weeks, often with new toolchain requirements, and
+_every_ major release is a security update and therefore must be shipped
+no matter what.
 
--Justin
+If you want to do this to help users and provide them more frequent
+releases, great.  If you want to do this to help distros, I fear that
+you're not going to get many adopters.
+
+If it makes you feel any better, this is a common issue for upstreams
+and it certainly was a problem when I was one of the maintainers of Git
+LFS, since people would use versions from the distro that had a bug we'd
+fixed years before.  I'm not sure there's a great solution out there.
+
+[0] I very much wanted the underlying feature and was looking forward to
+it (and still think it's great, to be clear), but the thing that got me
+to set init.defaultBranch nearly immediately was the giant advice
+message that I didn't want to see every time I initialized a repository.
+This is the kind of change which users would be annoyed to see on a
+stable upgrade.
+[1] Many companies, mine included, use unattended-upgrades to
+automatically apply security updates on a periodic basis.  Any sort of
+substantial change to the package risks breaking users doing this in a
+very noticeable production incident kind of way.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--v2HP/lac4eunYVYJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaHBAZAAKCRB8DEliiIei
+gUP5AP9w7YR8qA3Ga0tJcimCfhWfrTVEwMqZFT6AqcCVj2WoJgD/eSb5uvf7rjxt
+llcc1SQducUqoW7dAd/BDDxljTmuNAw=
+=fl7R
+-----END PGP SIGNATURE-----
+
+--v2HP/lac4eunYVYJ--
