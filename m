@@ -1,352 +1,128 @@
-Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96772C08CE
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 22:41:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543248633F
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 22:45:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752187275; cv=none; b=iaBsbtmaKUflav5o92tWAdtUK+yIoXPm7hDQH15TJAYzEnFbdudmaXPg+owhOzMmr/4nt+H12/l9F+UqTR8SB++Hp3V7Pf7vVOcIt5Ktd3oa8b4fISc7q3acTBrdZNuz2ZSgtjxRVsfYscZUfK85ht3dPletFKiXgVeJLyaaAls=
+	t=1752187525; cv=none; b=eTJPL8zdQPoTtSV5CNDIls9+tD6eiGrq5mbYYp1IyHFW6Phdf46mOeeU22HeIv/yEGihvFnQZoWLClwu5DYYJER5CGj3xRkCKfdTl99BngLn6Gu/sr4hs0ptyJhsRUX/Wm2FoFx7O7Mt8yg4RY5zCckzZLN2aFPsvot3z4w7n2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752187275; c=relaxed/simple;
-	bh=4vNJC+KdQ371u9BGWnKUNmHtHIeJe4S4g52M8VH7K3U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KPNS5e7iKOTLK4bCvweFjqWPFi1AsBnKN5qeFn9ZR3ysoS24sRB4fJH0h+UGkX7KlXAvzWvFWuJCKluFA4T46R43Yvbk9Xo6CwDbE5cLM73Z5kPD+Jh0Mxs46nNdhM2UtCG32QEjhM9DK2k8iMKjdCK+Td6k2Dr6mqM51gyfZHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EP5difu7; arc=none smtp.client-ip=209.85.160.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752187525; c=relaxed/simple;
+	bh=W6B4AV69VnUvI8RwOzDai187AWsj18y0a/ZO2W+g7PA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sXiUN0rc/aFzxn3HyGl9mk87fqqzg5IZl+FwOTnPEQM5e8afpuyYQd0x5TLG1kh9gYDDnAVzbQX29k0OthU5IWSlAcZ8IzqFfMyXPgDobNPk+S17HFmmk4Nd1Tn+Eo5BmYev3FCur/UBnZOBa5hQ3nrNb+qqTWhXcMVwKxdPSCU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mcMXyWa+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ba6RiK0d; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EP5difu7"
-Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-2ef60dbaefbso929670fac.1
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 15:41:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752187271; x=1752792071; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8LAnExpuDvMeJpoEnHpRhZg0OZdEPPV6lHSsaomJdN0=;
-        b=EP5difu7+LS2c/R9gJa0M3r0mNU8aDVSwcNgv9DbZUY+ZfF23fAK6LwBQ4LkpaMroT
-         ojkr+aqTV3ARVOks0qgv8rBo6iFGo0EBqoV7BIoSKvLzAfR/eXe+49rybn1uhpKPwnuS
-         oJzUmf4yGh2jC3lgPDNJBe8vjg8ozdi/7/awFJdzXKtk1ngH6pGXBB3r4k9u1jtxs21z
-         QPRZozQ7CP5fi5QKm3p+EumPzzR+dLLiwwJFdZJzJNLYVMs98vzHpImh444o1CN1EHrO
-         qB42zb9t5+YSKpQ1TXJgGu4DUVblURyvUB2KkFbyT5iJauS0JOXtNzTHCV2ccmO5cF+M
-         3Ncw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752187271; x=1752792071;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8LAnExpuDvMeJpoEnHpRhZg0OZdEPPV6lHSsaomJdN0=;
-        b=kqDxIY1qGM8E0FefXm5NqqNQs3IDr8dvpAD0Gjj/dHPmaEuWCW2sh49t0wM/OhTGK4
-         FBQNG6C67WXGGeACFkaGSWutmRvdCVRrutI2bHNcjzMame7W3avSlsV1WcGE7Yhv2NZP
-         r1cKUsE2Ib5PgPoZ9zstAkgpsVx6XfHKkETT0b3PbwJoB5WEi1AxxGWHAo+H929UdYgB
-         wMLEvNsAQj5rGP01M1FPZPHs20vijhug53guj0f4LgZX1ml1g3HlWMfAzkBAPkHOLwM2
-         SyQ4srkiuh+k0p7ulG/uQrXAj7LpyjHndoEqR0YKve0kdWW3804a/cAQo2BJB47L/LGP
-         DGFQ==
-X-Gm-Message-State: AOJu0YyVDADB3QWPIT0gzHkR8jK3+tBc5Gc0iFAxpEYBX5kBSMJlecM5
-	T62n3PIJ9QC5/knenYulkXZW2wKlpWga7WxQPMk6W6eO74ryWkdaNW/n
-X-Gm-Gg: ASbGncshn4zPYMKSaXYkf3UkmYU2pwHrOuPcwHJPF58BDNihyB4bCtRPsaFk01S77Ak
-	zPl4BKYm9TvJV4d0qNVvtjr8oQ6QVMsJP27rWd+RU7cLSnA/KyXNaL0xf1zxZtJpsq/H4xIe0GF
-	11Zuie7y/C7raTtZ4z5RvLx2cF9029TLXp87HNFYRxBKgsKGuCYHIka4w1eH0jtzN3//R1xb7Tf
-	IKFQbjqwnCgCrTxfNh0ZRULw3GxZQaWgJK96IHDFfhpGcGl1fBPFNJ3YPtv2kLhZouqkH53tgNo
-	UrFUCO7VrX4Y1sKo8/xsJkVxqnE2cP+m4I9dvK1yk+13nD5Wbs9X0ckExJ0PLgfcD8biJC9xhPf
-	cFweHtYvKP45aIY8=
-X-Google-Smtp-Source: AGHT+IFbl5OD+wRn3sXQdB/bXDmi8iczDh8lN0EXK/7o/jhHhHH/zrk9hytKReDkYakGo16hjMIciQ==
-X-Received: by 2002:a05:6870:7889:b0:2d6:2a40:fb9d with SMTP id 586e51a60fabf-2ff2698443amr796462fac.28.1752187270750;
-        Thu, 10 Jul 2025 15:41:10 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73cf12b62e8sm357023a34.60.2025.07.10.15.41.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 15:41:10 -0700 (PDT)
-Date: Thu, 10 Jul 2025 17:35:33 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/8] packfile: refactor `get_multi_pack_index()` to work
- on sources
-Message-ID: <5ordhipbyhkkwx64jfr26ojirs77tumowxy6g5yhibo6ylb4uv@v6wwpjnqomcv>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-5-f31150d21331@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mcMXyWa+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ba6RiK0d"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0A9077A0135;
+	Thu, 10 Jul 2025 18:45:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 10 Jul 2025 18:45:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752187521; x=1752273921; bh=Je7Cru2m+m
+	6gS51RYqxffa91qwgerGoSZgJzpw0wYMk=; b=mcMXyWa+lxgyeY/5qZPhETkKYe
+	G0yyhfk7slYQjzmcP/KTIzYgnRlztEmcpayQ/yoP3qgk7PpVERPB2kqQlJ8dFQSj
+	7zk9OzSXM0ylU6NnUvOzY5keTkemFmDfbui5bsSp7p120tjKYifA41X30SS8wYJD
+	YpWhVrPWS1elljpkyyNZs4hWvNc5DdBD8tgp1lqfPYi4GtQ5m+MT1T8KygQu4oEo
+	xaPuXwk80Ees8dFTAPdTCg3JIwA5M7QFMyKJq5AX0hu9m7sjfN0dQd5rGqenkHqX
+	XmXWmmcJdlnIs3VUepbByZt1sic0WXiw84InuOwp0qIHifRnQyadgykE8BKA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752187521; x=1752273921; bh=Je7Cru2m+m6gS51RYqxffa91qwgerGoSZgJ
+	zpw0wYMk=; b=ba6RiK0dMI0J9P+X2B0N4OmBm4BbSgGBw/xxJ9B6mmt/3ChS8yR
+	CmCx/Q2R46a6st1BGw6S5edCpxXZN+LHdGhkbCssSjMmvXLUfdnqpnxrRv89qVkM
+	lyTI0YpvQPRWgj6oxRSlL0ocmjZ/+rXYSQh1kKHTBKQ+rfCN0na07TDW8L8XomOF
+	kbvacc38C93U7cEWJBxB4mLmmsXL6c1AUwJrV9t3FL/8UReKrZOhTO72DxVzX3g4
+	ErlOH+p+hbXYYi9Jeb8wfL3fxVuEji4Jmrz5cmfhAvBcWvJRodwMcMgb0jrK1eWw
+	fJVS6EAZOovwl5lhRgFUqI51OqJ7g+0i47w==
+X-ME-Sender: <xms:gUJwaJAGclckQHrDG0ylXn1ZfZG7JPSTw9lWXcz98Dnx6QM0-VpArw>
+    <xme:gUJwaDC-RD21egFwVXPdlfTtdAKruC4ya0AhEv-SBwEJpETIKtgmiEhW6NkYIW83L
+    6cOr6E9A9q7zg6Jvg>
+X-ME-Received: <xmr:gUJwaLBEBVNMdNVaCInDWZgI8zyr02iZyzVbo069_35NuHW672gm8erLqaVdU0MksUs4FEWde50wK2GYrGx3-kgl4M3r3DI44no6t34>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegudeijecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpedthefgveejleelheehgefguedvtdegvdeuheetleeiffefteeuieetffdtteel
+    heenucffohhmrghinhepghhithhlrggsrdgtohhmpdhhthhtphdqphhushhhqdhsmhgrrh
+    htrdhshhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhh
+    phgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopegvuhhn
+    ghhjuhhnrdihihesnhgrvhgvrhgtohhrphdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:gUJwaOobSjye9-3X_2ILlzvOWpz2KpCN0tCQRNb7caZSyVOVaUg8uA>
+    <xmx:gUJwaFl4Vuw6dWMgujelpvRdVXFM10338f1v_yqOtbadxSS5KWXIpw>
+    <xmx:gUJwaOx7NsfAZ6PUBDTuaJa-vDF585qWofx-K_VE_6oleCbW9ILnZQ>
+    <xmx:gUJwaN8MiqJKf63xSx13aKaHgW3lNOIOuHEeYQtbp4V2MvqKGAyqLQ>
+    <xmx:gUJwaFW0vNTKakMFooR-LOAD3khTZPpq4_fZ0nrfesJn-P8XJw8L02YT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Jul 2025 18:45:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Taylor Blau <me@ttaylorr.com>,  Yi EungJun
+ <eungjun.yi@navercorp.com>
+Subject: Re: [PATCH 0/1] Filter C and POSIX out of Accept-Language
+In-Reply-To: <20250710221641.857081-1-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 10 Jul 2025 22:16:40 +0000")
+References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
+Date: Thu, 10 Jul 2025 15:45:20 -0700
+Message-ID: <xmqqfrf34qdb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250709-b4-pks-midx-via-odb-alternate-v1-5-f31150d21331@pks.im>
+Content-Type: text/plain
 
-On 25/07/09 09:54AM, Patrick Steinhardt wrote:
-> The function `get_multi_pack_index()` loads multi-pack indices via
-> `prepare_packed_git()` and then returns the linked list of multi-pack
-> indices that is stored in `struct object_database`. That list is in the
-> process of being removed though in favor of storing the MIDX as part of
-> the object database source it belongs to.
-> 
-> Refactor `get_multi_pack_index()` so that it returns the multi-pack
-> index for a single object source. Callers are now expected to call this
-> function for each source they are interested in. This requires them to
-> iterate through alternates, so we have to prepare alternate object
-> sources before doing so.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/pack-objects.c |  9 ++++++---
->  builtin/repack.c       |  4 ++--
->  midx-write.c           | 22 ++--------------------
->  object-name.c          | 21 ++++++++++++++-------
->  pack-bitmap.c          | 20 ++++++++++++++------
->  packfile.c             | 30 +++++++++++-------------------
->  packfile.h             |  3 +--
->  7 files changed, 50 insertions(+), 59 deletions(-)
-> 
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 5781dec9808..f889e69e07d 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1701,7 +1701,6 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
->  {
->  	int want;
->  	struct list_head *pos;
-> -	struct multi_pack_index *m;
->  
->  	if (!exclude && local && has_loose_object_nonlocal(oid))
->  		return 0;
-> @@ -1721,9 +1720,13 @@ static int want_object_in_pack_mtime(const struct object_id *oid,
->  		*found_offset = 0;
->  	}
->  
-> -	for (m = get_multi_pack_index(the_repository); m; m = m->next) {
-> +	odb_prepare_alternates(the_repository->objects);
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Previously this explicit call to `odb_prepare_alternates()` was not
-necessary because it was done when `prepare_packed_git()` was invoked.
-Now that we iterate though the sources upfront to call
-`get_multi_pack_index()` on, we need to prepare those sources first.
-Makes sense.
+> At work, I've seen some cases where people provide "C" in the
+> Accept-Language header of their Git requests, such as when they provide
+> us with debugging traces, but "C" and "POSIX", while valid locales, are
+> not valid languages and do not belong in the Accept-Language header.
+>
+> It turns out this is actually very easy to reproduce and fix, so there's
+> a patch to filter these out.  I have not actually myself seen "POSIX" in
+> the header, but it's equivalent to "C" and I've seen it in non-Git
+> requests in various places online, so we reject that as well.
+>
+> This can be seen in GitLab's issues as well at
+> https://gitlab.com/gitlab-org/gitlab/-/issues/412077.
 
-> +
-> +	for (struct odb_source *source = the_repository->objects->sources; source; source = source->next) {
-> +		struct multi_pack_index *m = get_multi_pack_index(source);
->  		struct pack_entry e;
-> -		if (fill_midx_entry(the_repository, oid, &e, m)) {
-> +
-> +		if (m && fill_midx_entry(the_repository, oid, &e, m)) {
->  			want = want_object_in_pack_one(e.p, oid, exclude, found_pack, found_offset, found_mtime);
->  			if (want != -1)
->  				return want;
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index 9bbf032b6dd..5956df5d927 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
-> @@ -218,9 +218,9 @@ static void mark_packs_for_deletion(struct existing_packs *existing,
->  static void remove_redundant_pack(const char *dir_name, const char *base_name)
->  {
->  	struct strbuf buf = STRBUF_INIT;
-> -	struct multi_pack_index *m = get_local_multi_pack_index(the_repository);
-> +	struct multi_pack_index *m = get_multi_pack_index(the_repository->objects->sources);
->  	strbuf_addf(&buf, "%s.pack", base_name);
-> -	if (m && midx_contains_pack(m, buf.buf))
-> +	if (m && m->local && midx_contains_pack(m, buf.buf))
->  		clear_midx_file(the_repository);
->  	strbuf_insertf(&buf, 0, "%s/", dir_name);
->  	unlink_pack_path(buf.buf, 1);
-> diff --git a/midx-write.c b/midx-write.c
-> index f2cfb85476e..c1ae62d3549 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -916,26 +916,8 @@ static int write_midx_bitmap(struct write_midx_context *ctx,
->  static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
->  							const char *object_dir)
->  {
-> -	struct multi_pack_index *result = NULL;
-> -	struct multi_pack_index *cur;
-> -	char *obj_dir_real = real_pathdup(object_dir, 1);
-> -	struct strbuf cur_path_real = STRBUF_INIT;
-> -
-> -	/* Ensure the given object_dir is local, or a known alternate. */
-> -	odb_find_source(r->objects, obj_dir_real);
-> -
-> -	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
-> -		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
-> -		if (!strcmp(obj_dir_real, cur_path_real.buf)) {
-> -			result = cur;
-> -			goto cleanup;
-> -		}
-> -	}
-> -
-> -cleanup:
-> -	free(obj_dir_real);
-> -	strbuf_release(&cur_path_real);
-> -	return result;
-> +	struct odb_source *source = odb_find_source(r->objects, object_dir);
-> +	return get_multi_pack_index(source);
+Sorry, I am confused.  Is that Authentication failure in the cited
+issue "caused by" the client sending "Accept-Language: C"?
 
-Nice and simple :)
+"reproduce and fix" makes it sound like a correct exchange between
+such a client and a server is somehow broken (i.e. unable to clone,
+unable to authenticate, etc.) if the client sends C (or POSIX) as if
+it were a langauge, but is there a breakage there?
 
->  }
->  
->  static int fill_packs_from_midx(struct write_midx_context *ctx,
-> diff --git a/object-name.c b/object-name.c
-> index ddafe7f9b13..1e7fdcb90a8 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -198,16 +198,19 @@ static void unique_in_pack(struct packed_git *p,
->  
->  static void find_short_packed_object(struct disambiguate_state *ds)
->  {
-> -	struct multi_pack_index *m;
->  	struct packed_git *p;
->  
->  	/* Skip, unless oids from the storage hash algorithm are wanted */
->  	if (ds->bin_pfx.algo && (&hash_algos[ds->bin_pfx.algo] != ds->repo->hash_algo))
->  		return;
->  
-> -	for (m = get_multi_pack_index(ds->repo); m && !ds->ambiguous;
-> -	     m = m->next)
-> -		unique_in_midx(m, ds);
-> +	odb_prepare_alternates(ds->repo->objects);
-> +	for (struct odb_source *source = ds->repo->objects->sources; source && !ds->ambiguous; source = source->next) {
-> +		struct multi_pack_index *m = get_multi_pack_index(source);
-> +		if (m)
-> +			unique_in_midx(m, ds);
-> +	}
-> +
->  	for (p = get_packed_git(ds->repo); p && !ds->ambiguous;
->  	     p = p->next)
->  		unique_in_pack(p, ds);
-> @@ -792,11 +795,15 @@ static void find_abbrev_len_for_pack(struct packed_git *p,
->  
->  static void find_abbrev_len_packed(struct min_abbrev_data *mad)
->  {
-> -	struct multi_pack_index *m;
->  	struct packed_git *p;
->  
-> -	for (m = get_multi_pack_index(mad->repo); m; m = m->next)
-> -		find_abbrev_len_for_midx(m, mad);
-> +	odb_prepare_alternates(mad->repo->objects);
-> +	for (struct odb_source *source = mad->repo->objects->sources; source; source = source->next) {
-> +		struct multi_pack_index *m = get_multi_pack_index(source);
-> +		if (m)
-> +			find_abbrev_len_for_midx(m, mad);
-> +	}
-> +
->  	for (p = get_packed_git(mad->repo); p; p = p->next)
->  		find_abbrev_len_for_pack(p, mad);
->  }
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index 0a4af199c05..7b51d381837 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -692,14 +692,16 @@ static int open_midx_bitmap(struct repository *r,
->  			    struct bitmap_index *bitmap_git)
->  {
->  	int ret = -1;
-> -	struct multi_pack_index *midx;
->  
->  	assert(!bitmap_git->map);
->  
-> -	for (midx = get_multi_pack_index(r); midx; midx = midx->next) {
-> -		if (!open_midx_bitmap_1(bitmap_git, midx))
-> +	odb_prepare_alternates(r->objects);
-> +	for (struct odb_source *source = r->objects->sources; source; source = source->next) {
-> +		struct multi_pack_index *midx = get_multi_pack_index(source);
-> +		if (midx && !open_midx_bitmap_1(bitmap_git, midx))
->  			ret = 0;
->  	}
-> +
->  	return ret;
->  }
->  
-> @@ -3307,9 +3309,15 @@ int verify_bitmap_files(struct repository *r)
->  {
->  	int res = 0;
->  
-> -	for (struct multi_pack_index *m = get_multi_pack_index(r);
-> -	     m; m = m->next) {
-> -		char *midx_bitmap_name = midx_bitmap_filename(m);
-> +	odb_prepare_alternates(r->objects);
-> +	for (struct odb_source *source = r->objects->sources; source; source = source->next) {
-> +		struct multi_pack_index *m = get_multi_pack_index(source);
-> +		char *midx_bitmap_name;
-> +
-> +		if (!m)
-> +			continue;
-> +
-> +		midx_bitmap_name = midx_bitmap_filename(m);
->  		res |= verify_bitmap_file(r->hash_algo, midx_bitmap_name);
->  		free(midx_bitmap_name);
->  	}
-> diff --git a/packfile.c b/packfile.c
-> index e5d9d7ac8bc..e1ced050451 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -963,14 +963,17 @@ static void prepare_packed_git(struct repository *r);
->  unsigned long repo_approximate_object_count(struct repository *r)
->  {
->  	if (!r->objects->approximate_object_count_valid) {
-> -		unsigned long count;
-> -		struct multi_pack_index *m;
-> +		unsigned long count = 0;
->  		struct packed_git *p;
->  
->  		prepare_packed_git(r);
-> -		count = 0;
-> -		for (m = get_multi_pack_index(r); m; m = m->next)
-> -			count += m->num_objects;
-> +
-> +		for (struct odb_source *source = r->objects->sources; source; source = source->next) {
-> +			struct multi_pack_index *m = get_multi_pack_index(source);
-> +			if (m)
-> +				count += m->num_objects;
-> +		}
-> +
->  		for (p = r->objects->packed_git; p; p = p->next) {
->  			if (open_pack_index(p))
->  				continue;
-> @@ -1074,21 +1077,10 @@ struct packed_git *get_packed_git(struct repository *r)
->  	return r->objects->packed_git;
->  }
->  
-> -struct multi_pack_index *get_multi_pack_index(struct repository *r)
-> -{
-> -	prepare_packed_git(r);
-> -	return r->objects->multi_pack_index;
-> -}
-> -
-> -struct multi_pack_index *get_local_multi_pack_index(struct repository *r)
-> +struct multi_pack_index *get_multi_pack_index(struct odb_source *source)
->  {
-> -	struct multi_pack_index *m = get_multi_pack_index(r);
-> -
-> -	/* no need to iterate; we always put the local one first (if any) */
-> -	if (m && m->local)
-> -		return m;
-> -
-> -	return NULL;
-> +	prepare_packed_git(source->odb->repo);
-> +	return source->multi_pack_index;
+I understand and agree with the change in patch 1/1 that it is the
+right thing to do (to more strictly adhere to the standard in what
+we send out) for hygiene.  I just want to understand if this caused
+real problems, or if it is primarily a preemptive clean-up to avoid
+non-standard behaviour causing problems in the future.
 
-Now get_multi_pack_index() provides the MIDX for the specified source.
+Thanks.
 
->  }
->  
->  struct packed_git *get_all_packs(struct repository *r)
-> diff --git a/packfile.h b/packfile.h
-> index 53c3b7d3b43..f16753f2a9b 100644
-> --- a/packfile.h
-> +++ b/packfile.h
-> @@ -147,8 +147,7 @@ void install_packed_git(struct repository *r, struct packed_git *pack);
->  
->  struct packed_git *get_packed_git(struct repository *r);
->  struct list_head *get_packed_git_mru(struct repository *r);
-> -struct multi_pack_index *get_multi_pack_index(struct repository *r);
-> -struct multi_pack_index *get_local_multi_pack_index(struct repository *r);
-> +struct multi_pack_index *get_multi_pack_index(struct odb_source *source);
->  struct packed_git *get_all_packs(struct repository *r);
->  
->  /*
-> 
-> -- 
-> 2.50.1.327.g047016eb4a.dirty
-> 
-> 
+> brian m. carlson (1):
+>   http: don't send C or POSIX in Accept-Language
+>
+>  http.c                     |  8 ++++++++
+>  t/t5541-http-push-smart.sh | 18 ++++++++++++++++++
+>  2 files changed, 26 insertions(+)
