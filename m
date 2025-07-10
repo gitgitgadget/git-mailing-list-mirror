@@ -1,115 +1,231 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
+Received: from mail-pf1-f194.google.com (mail-pf1-f194.google.com [209.85.210.194])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0594ADF49
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 01:05:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C8E82E36E0
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 03:00:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752109530; cv=none; b=ru6mkIlqK/w6XlYREGWYOizYFXrG7/qVIqa+Gpmr0lLnPwJ3iqKim4faZ+c5GD4cemB+oFpBvsLyT2F5GDXZTYgslduh1tmL2tr23+6EYzqOcM7xjm+xLv9PClhfZ69UNIWojPS7CgQKaqOoXptN+OSUcXzLZBHsSDYjDHYVdqI=
+	t=1752116454; cv=none; b=gYElnFMt6hzRHfnjYpjK5Xu2R+11YfWoX/biVhbNRoIS2100ffWoSbJiVkqyET9uKh2lx3j46/ooD9yKrh7auMKoAZeCt31xfg+WXaMeNIi0TTF42yF7qzaUAgmMT+t7cAbJG2qg3l20DcGy+jPcQPLCYr3jXgMZf+yPvoL9S48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752109530; c=relaxed/simple;
-	bh=3tHWvtOt0A/e/TKdahPjfh+/pqG4HJHNzUjzyVOlx/A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ee63uik6ArK45R56vVIgMz27IvwMkTwehlS5kXGu6iyi0Q2vqZWfPvT12UDM0z6yRC4zV33nLpr05npN007t299RI5qF0pPVAOv5JchMVcOu6L/x1ehYLIoXQpj9+7XcvhIaoFTfDW14TAyOEz2aXDb5lXcbTZM+b7lX0D0HPG0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cwWsGjj9; arc=none smtp.client-ip=209.85.166.178
+	s=arc-20240116; t=1752116454; c=relaxed/simple;
+	bh=+SE1dLf9/FaeHkidnnD7kUhJZlu/8+FyWWQy6XqovYo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=oIuInr5dJVzHw0ZUxEKZawb6EoJiGvfrt+2aIX9p93bw9SNQie3Uq9FbsAE1g/turA7cVvpOknQzGKLziwU1mEO+x2EK0u1Uo+6mo7Dh0ZPz9WcmOQn94f1uIAedorCXKido8W7TC7Ah+3HCGRF558MbOlUXD5i+HKpBidwOSK4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i1uOmJJE; arc=none smtp.client-ip=209.85.210.194
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cwWsGjj9"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3df2e7cdc64so3786415ab.1
-        for <git@vger.kernel.org>; Wed, 09 Jul 2025 18:05:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i1uOmJJE"
+Received: by mail-pf1-f194.google.com with SMTP id d2e1a72fcca58-7490acf57b9so425399b3a.2
+        for <git@vger.kernel.org>; Wed, 09 Jul 2025 20:00:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752109528; x=1752714328; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1752116452; x=1752721252; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nCbrJu2JSOjBJ87rFvbAvRgssc52IQDpdMnyH7DemaY=;
-        b=cwWsGjj9K2dP5H9FXyf5bqJ27WerKhrFVjUV/b4NY1yyd3/F3mkUhHoRhebPBDzO7G
-         fprQXVKEXZJhEE/1C/1NxwwJ1OlmjPbIVG9ryLzau82BAX/R4oH8h4tWfYlLKllDyERu
-         W/H2U3RBskTaSPNECAnn4Hh59OvBgjN/JG8L85GLOYxhq3BiOXS30u7HYAB7BaxlVm/t
-         b9MvGqpjyFzcReD33+OAYynwDFqVzPz40KqnlGahg1qp04ukIQx5D510Y2+aP5al1blx
-         zk9nY6GGROvV6UqPOYAOIEz5VPmF5jc5O1hyA6e5uBhCzls0CvyQWMeNDS9pLmiqdM0+
-         kmmA==
+        bh=XFzxD5fxNTOJ98UcGrRbDOAyrknSId836ViYf9qoStw=;
+        b=i1uOmJJEBm0qiRb+m8J6ssz76c9+gt1RG2beZsbEhwyILz87yQTsBM2cF1RMm9iOk0
+         FOzVM9PwxOv4izLp6n5rD9bMh46I/2CkvyxCstzRnPNn4KRDOXSmMpK+/gDhERIh4CNg
+         Nkxkk5Q3X9VLwNFalpNipA0+mwrCyyrIWzVheJnkr5yVusdh7VbBaiV+uBYBLHGbkGyr
+         sehdyoxvEifsMRtV0F1z23ovm/i0Js58YcF9hz3F6ePUuZY4rXtL4gQpLgKsrnnlj3Yn
+         kdkAVsk5OUXrcQVsqIiDWmcTUsqH91FM7xzp4HJ7ic62EWQM5FAH3avXfxHdrXslk5I2
+         0oBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752109528; x=1752714328;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1752116452; x=1752721252;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nCbrJu2JSOjBJ87rFvbAvRgssc52IQDpdMnyH7DemaY=;
-        b=PZ+FWFROw2dpq2aU/TYJ4vSTUnTqI1K4EORBuKGwzKdfjhZtC/a/d6RAeOZHT3SU65
-         UVlCMtljlu2AbjOZpMG8Dlj8FguT0HgqrBjJnkOgA29ybmZSI7UGm5hi3JnebkXrTk1x
-         5UxXvkCifEAudn+MlgdxPL+0df9/jWyBGiAn7P+2TVER+Lkd5Tjrf9VRipbqUTG9R7DK
-         /yACYNN4KqNZWhmrcCoxZzfEi9mPA6JJ4Q4dIozpQNlOxRNr6Y1Fv9BwUzRs1RE3Lyws
-         lqRIT8NI36msuDtkWBF3ucxhDfoEkTKGq9uM6yBUJzpvjIMd6Z4NHJHKNMAy0TvsuV4D
-         HNlQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVlP6m3BDta00r6qsQpiQ/sm6PxERDfvXKt7tGDM3ZeqjvD2viSCfDzeLW2z8ZUhaF7r9w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yygd7QfwXrTozFqA/RO1Ld71G33E2J9nWlFZhjHWr29j2muxw8t
-	AZRcvT7jdkwYqyEhuQA0JgtM/eKGHO0EvvkTVJCUIERe6e2JGv0UktXccy0UTEccpvy39ghnE1X
-	Gi6YY4GtMBp8LW4myS5O8fKOeusmfJa67zg==
-X-Gm-Gg: ASbGncu2V/ejrL0Z8tNMgTDR09XffmL0K2WJISloG+zwfP85E7jSVUdzuyCL8+uLhMb
-	ZGyALb4QoH9cZb3jeVIaIsZkSYq70xnF0l7zAzwgZwpFtM3Qzywq3w9s44WGxwYEyq0fXQya8B2
-	QWtGRcA1KYxxsLMxxwCkOztEaPvKf+Fe5d9FCaObYQTjuyF/vbaEluV3B+/2nh0Bu/svYBvvFqp
-	I0=
-X-Google-Smtp-Source: AGHT+IHqovRI5wSbCqv1Pl60jJLdRqJIocLzUZS5CA6q9v6Q3ViFZL3lruhbXjKGxGHXUAxDiY0koqkmASirrgdtcMU=
-X-Received: by 2002:a05:6e02:16cc:b0:3df:3b77:1ed8 with SMTP id
- e9e14a558f8ab-3e167018cc6mr55463535ab.7.1752109527899; Wed, 09 Jul 2025
- 18:05:27 -0700 (PDT)
+        bh=XFzxD5fxNTOJ98UcGrRbDOAyrknSId836ViYf9qoStw=;
+        b=ekn3k23ItmDtJVwCe8hZEl9vhe/XCyC3cROWuFm3Aw6sN9QvIWdq5XV/rrU0P/q1o8
+         KD8xwNjBddhmEAtiP+J+gm4RRUSKpuG4zZLZAwc7ElkIcXYwfOQDyXXQCIMp6fnPNa0k
+         OLn/BwOcy8ERsv/tXccbgbpKNVtWK5gNwydTy4tz/dnAbx3vI5Vo3yFyEfGBr1XiobG0
+         zPg4vLJVBtmyj8uCb7XUzpDx2EQoTQ6ZRpHUvT8fqvv68eBaLmgrEyawPTCnDnSeOGEB
+         h3vL0OGpE0oufhLM39LZxVDIvhdK5mE1pn6Q3xBnlLWZCCFDgBxdzpcoAIOfRqWncUfs
+         nPBw==
+X-Gm-Message-State: AOJu0Yzl4sv0GzC8w9ZAix0jSPT3Bp7oAlYQrK7JOxQkoHYgiPRcUCxB
+	NWDBP4MgYONIrWsMJRTMBzRUX2xMguDBs4wmpqAdCdedhPEDe0JR/B5c
+X-Gm-Gg: ASbGncvMeonsRtpPJd/UM1w5vJTK9vmLDO+9WWpxC+/byKZLRsMuAhOwqwdH+renPw8
+	ggky0TpBIz9iKDGVOrIzyJolpMWeq8U6mMNbzV3LVMA4f2IcuJXMu/nGvigxVTlz+ACR6a3j+l8
+	JDdwC8Vxz1elHoEC4ne5Z6kl9I+b719SmWrpTp+jvXNrYHH2RABCCDIixBG+S6p8txayk7v9bCv
+	gukdBFTKcWyP/wM9aep8m+0fOP67eTcq3rVdHWVN8FqksABO4KarX7BBSVlJ7Feji0UJASDERXF
+	3ViWfYBpHRg9NKK0+cFXeScyNjgAr+/YoRYTpk+m1BHxWxsIredIHViX0QLxhXTr6cqHOkghTLK
+	nuaWjDJ84Y7fUBalSDi/lZ/KAl1DZCkFCPV1vygLjb1Nz6TZCeFne2RgHYqj49Bs=
+X-Google-Smtp-Source: AGHT+IHwf2Fj6XyhZ251QFoT6+0UKMAPDLsIE/Sm1MX17s/By+4gSxkah5GA+GCd8keY+WxRzNX8nQ==
+X-Received: by 2002:a05:6a00:a8e:b0:736:4d05:2e2e with SMTP id d2e1a72fcca58-74eb5400abcmr2693936b3a.6.1752116452062;
+        Wed, 09 Jul 2025 20:00:52 -0700 (PDT)
+Received: from smtpclient.apple (awork062199.netvigator.com. [203.198.28.199])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9dd7384sm606175b3a.35.2025.07.09.20.00.50
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 09 Jul 2025 20:00:51 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-References: <xmqqplebzgm7.fsf@gitster.g> <aG6A19ZgxwpdJuow@nand.local> <xmqqecuoap89.fsf@gitster.g>
-In-Reply-To: <xmqqecuoap89.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Wed, 9 Jul 2025 18:05:16 -0700
-X-Gm-Features: Ac12FXypJoov-5jh6SqbYBPAS52t6dyMUEhL8CLzkGuanScn_LkpcU5pQX4oioI
-Message-ID: <CABPp-BHRf52jD31ioiDj_j9eOkZk0sHxPUi1ew=m3UPd+N57OQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2025, #02; Mon, 7)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v2] reflog: close leak of reflog expire entry
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <20250709-jk-fix-leak-reflog-expire-config-v2-1-f9af934be8c1@gmail.com>
+Date: Thu, 10 Jul 2025 11:00:38 +0800
+Cc: git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ Jeff King <peff@peff.net>,
+ Jacob Keller <jacob.keller@gmail.com>
 Content-Transfer-Encoding: quoted-printable
+Message-Id: <D34FE2DE-EE5B-43F3-A706-1AC133AA72F1@gmail.com>
+References: <20250709-jk-fix-leak-reflog-expire-config-v2-1-f9af934be8c1@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-On Wed, Jul 9, 2025 at 5:01=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
-rote:
->
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> >> * tb/midx-avoid-cruft-packs (2025-06-23) 9 commits
-> >>  - repack: exclude cruft pack(s) from the MIDX where possible
-> >>  - pack-objects: introduce '--stdin-packs=3Dfollow'
-> >>  - pack-objects: swap 'show_{object,commit}_pack_hint'
-> >>  - pack-objects: fix typo in 'show_object_pack_hint()'
-> >>  - pack-objects: perform name-hash traversal for unpacked objects
-> >>  - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
-> >>  - pack-objects: factor out handling '--stdin-packs'
-> >>  - pack-objects: limit scope in 'add_object_entry_from_pack()'
-> >>  - pack-objects: use standard option incompatibility functions
-> >>
-> >>  "pack-objects" has been taught to avoid pointing into objects in
-> >>  cruft packs from midx.
-> >>
-> >>  Will merge to 'next'?
-> >>  source: <cover.1750717921.git.me@ttaylorr.com>
-> >
-> > I think that this one is ready to go. Since Elijah and Peff last
-> > reviewed it, it hasn't changed substantially (other than a few
-> > bugfix-related changes that were discovered while rolling this out at
-> > GitHub).
-> >
-> > The series has been running on GitHub's production infrastructure for
-> > the last month or two without issue, so I think this is good from a
-> > stability perspective.
-> >
-> > I've CC'd Elijah and Peff here, since they were the last two to review
-> > the series, but I don't think that they have any objections to this
-> > moving along.
->
-> OK.  As they both seem to be active, let me wait for a bit and then
-> mark it for 'next' unless we hear anything unexpected.
->
-> Thanks.
+Jacob Keller <jacob.e.keller@intel.com> wrote:
+>=20
+> From: Jacob Keller <jacob.keller@gmail.com>
+>=20
+> find_cfg_ent() allocates a struct reflog_expire_entry_option via
+> FLEX_ALLOC_MEM and inserts it into a linked list in the
+> reflog_expire_options structure. The entries in this list are never
+> freed, resulting in a leak in cmd_reflog_expire and the gc reflog =
+expire
+> maintenance task:
+>=20
+> Direct leak of 39 byte(s) in 1 object(s) allocated from:
+>    #0 0x7ff975ee6883 in calloc (/lib64/libasan.so.8+0xe6883)
+>    #1 0x0000010edada in xcalloc ../wrapper.c:154
+>    #2 0x000000df0898 in find_cfg_ent ../reflog.c:28
+>    #3 0x000000df0898 in reflog_expire_config ../reflog.c:70
+>    #4 0x00000095c451 in configset_iter ../config.c:2116
+>    #5 0x0000006d29e7 in git_config ../config.h:724
+>    #6 0x0000006d29e7 in cmd_reflog_expire ../builtin/reflog.c:205
+>    #7 0x0000006d504c in cmd_reflog ../builtin/reflog.c:419
+>    #8 0x0000007e4054 in run_builtin ../git.c:480
+>    #9 0x0000007e4054 in handle_builtin ../git.c:746
+>    #10 0x0000007e8a35 in run_argv ../git.c:813
+>    #11 0x0000007e8a35 in cmd_main ../git.c:953
+>    #12 0x000000441e8f in main ../common-main.c:9
+>    #13 0x7ff9754115f4 in __libc_start_call_main =
+(/lib64/libc.so.6+0x35f4)
+>    #14 0x7ff9754116a7 in __libc_start_main@@GLIBC_2.34 =
+(/lib64/libc.so.6+0x36a7)
+>    #15 0x000000444184 in _start =
+(/home/jekeller/libexec/git-core/git+0x444184)
+>=20
+> Close this leak by adding a reflog_clear_expire_config() function =
+which
+> iterates the linked list and frees its elements. Call it upon exit of
+> cmd_reflog_expire() and in reflog_expiry_cleanup().
+>=20
+> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+> ---
+> Changes in v2:
+> - Actually fix the leak properly. (Thanks Jeff for catching my brain =
+fart!)
+> - Link to v1: =
+https://lore.kernel.org/r/20250709-jk-fix-leak-reflog-expire-config-v1-1-3=
+4d5461cf8f5@gmail.com
+> ---
+> reflog.h         |  2 ++
+> builtin/reflog.c |  3 +++
+> reflog.c         | 15 +++++++++++++++
+> 3 files changed, 20 insertions(+)
+>=20
+> diff --git a/reflog.h b/reflog.h
+> index 63bb56280f4e..74b3f3c4f0ac 100644
+> --- a/reflog.h
+> +++ b/reflog.h
+> @@ -34,6 +34,8 @@ struct reflog_expire_options {
+> int reflog_expire_config(const char *var, const char *value,
+> const struct config_context *ctx, void *cb);
+>=20
+> +void reflog_clear_expire_config(struct reflog_expire_options *opts);
+> +
+> /*
+>  * Adapt the options so that they apply to the given refname. This =
+applies any
+>  * per-reference reflog expiry configuration that may exist to the =
+options.
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index 3acaf3e32c27..d4da41aaea73 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -283,6 +283,9 @@ static int cmd_reflog_expire(int argc, const char =
+**argv, const char *prefix,
+>     &cb);
+> free(ref);
+> }
+> +
+> + reflog_clear_expire_config(&opts);
+> +
+> return status;
+> }
+>=20
+> diff --git a/reflog.c b/reflog.c
+> index 15d81ebea978..3ce1780924dd 100644
+> --- a/reflog.c
+> +++ b/reflog.c
+> @@ -81,6 +81,20 @@ int reflog_expire_config(const char *var, const =
+char *value,
+> return 0;
+> }
+>=20
+> +void reflog_clear_expire_config(struct reflog_expire_options *opts)
+> +{
+> + struct reflog_expire_entry_option *ent =3D opts->entries, *tmp;
+> +
+> + while (ent) {
+> + tmp =3D ent;
+> + ent =3D ent->next;
+> + free(tmp);
+> + }
+> +
+> + opts->entries =3D NULL;
+> + opts->entries_tail =3D NULL;
+> +}
+> +
 
-Yep, I think this version is good to merge to next; thanks.
+This looks correct.
+
+> void reflog_expire_options_set_refname(struct reflog_expire_options =
+*cb,
+>       const char *ref)
+> {
+> @@ -490,6 +504,7 @@ void reflog_expiry_cleanup(void *cb_data)
+> for (elem =3D cb->mark_list; elem; elem =3D elem->next)
+> clear_commit_marks(elem->item, REACHABLE);
+> free_commit_list(cb->mark_list);
+> + reflog_clear_expire_config(&cb->opts);
+> }
+>=20
+> int count_reflog_ent(struct object_id *ooid UNUSED,
+>=20
+
+In builtin/reflog.c, we have code like
+
+---
+	for (i =3D 0; i < argc; i++) {
+		char *ref;
+		struct expire_reflog_policy_cb cb =3D { .opts =3D opts =
+};
+
+		if (!repo_dwim_log(the_repository, argv[i], =
+strlen(argv[i]), NULL, &ref)) {
+			status |=3D error(_("reflog could not be found: =
+'%s'"), argv[i]);
+			continue;
+		}
+		reflog_expire_options_set_refname(&cb.opts, ref);
+		status |=3D =
+refs_reflog_expire(get_main_ref_store(the_repository),
+					     ref, flags,
+					     reflog_expiry_prepare,
+					     should_prune_fn,
+					     reflog_expiry_cleanup,
+					     &cb);
+		free(ref);
+	}
++      reflog_clear_expire_config(&opts);
+---
+
+I think allowing reblog_expiry_cleanup() to free all opt->entries might
+cause reblog_expire_options_set_refname() to behave incorrectly.=
