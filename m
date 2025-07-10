@@ -1,185 +1,125 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 145358633F
-	for <git@vger.kernel.org>; Wed,  9 Jul 2025 23:42:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47D1E79E1
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 00:01:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752104523; cv=none; b=pBDGGjmwHAc6PAQMXKdXP6WjuXjU173nghpM/gLZhqtrFP/w4QRUSEj/1ReFFqMD/CdefEWEkEXNGn2E6o67tni6ZWp+m4BnsRTu9Fh822trFIBAcmjpVo+BSrAOTB/u5OLRuvxD3ysWV16GRlr9Ewar5Z4uknsCeUrKDDE1H04=
+	t=1752105675; cv=none; b=p2fLKn//NDyU7jLido0OSd9JjihYCUZr/Fl14pNJlja4vrei6F9jSSI+sGKpWsU5SKgv5eVWT54wwXSPCLyXpF/QKEZZECsua4ZgeQ0inPDprG12235Omgvg4HU/IULM0czmLC1A5fiKz8gxOS4r+u82oJBwnL+4wA0Z6xNRlws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752104523; c=relaxed/simple;
-	bh=6tLFDD31eQLBuYVRVUq3VrdKPq0j2DWWjFqHmn3ih6k=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=FI2dwlzUpfcIlImAIh71rpRgjT4Ves8ESqxUEPJ/46HYWVfs+lVij77Oy4twujVWS9B+tv7W7Tq/vNTJrE5TAYqv5GGvfyqcp/cXudvfiqUl4/eCs4lQMPeC252IXkRmNbW/ImXlGA1b3YJfnPmDHqI2XydmeiQnj8VmHj8EWhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=D4UHJDqs; arc=none smtp.client-ip=192.198.163.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1752105675; c=relaxed/simple;
+	bh=wN5fXdSUZ+8rvAscqMubqqyq43fjbpHyyNnqGA6Xw/o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=eOuBh0Ok6e2DtKCx8fonsXRVW6Pu7mQu2NFqhkGllqdfUF+D1Di+ADeyYoh8NETKd3Jpr3Oa4xk2n0S2lgI7KXwn+MUGd0qMqk2tZNL6GXnfe+7bw8poB4XMJAY9crKYwHrKXHM8dqPgPDSOCnY8dqRjb78EJkZ92tPE/Hl/VP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AoKFPFTB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JTbwwnmW; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="D4UHJDqs"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1752104522; x=1783640522;
-  h=from:date:subject:mime-version:content-transfer-encoding:
-   message-id:to:cc;
-  bh=6tLFDD31eQLBuYVRVUq3VrdKPq0j2DWWjFqHmn3ih6k=;
-  b=D4UHJDqsh+i5Z+adazQnJwAxOcJ7vbWN4JAVnyUTJfu1YRj2Qq7898Xx
-   qP3DUsy7DkpZX4PDYzXHc9LgTShFOpseDyet3TV9aSbk1G9+byjttI6o6
-   lTZcS8LCp7jr6eCr/Bcbi3bMhE0Yy7vvcyaDIJdao7wqunfZVwCs6L9Hh
-   Ka9Hoh7P01XfgzuHLX2ZCRGVBPvg1NuD/7wjAYqMZw8insVlOjlY7K8zk
-   D19TcZNTl55W5BwpIQflaCsUH2qZt/IVXY3KSf3wDhNCAhJWJTLrsFC4t
-   BLw2r1vmRZRNVUHwxVd3VYnYGclOnzPtGT0mUy+zrwG9cY7FGDrquIBdW
-   A==;
-X-CSE-ConnectionGUID: PPHPIhpdRjaIMI/CR13tfw==
-X-CSE-MsgGUID: PisNKzUjRHuoCc2Com3LzA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11489"; a="58182384"
-X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; 
-   d="scan'208";a="58182384"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 16:42:01 -0700
-X-CSE-ConnectionGUID: LouwFZu5REW0Q53P8zZ1cg==
-X-CSE-MsgGUID: SVedL1QJTL2xOMARPa948Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,299,1744095600"; 
-   d="scan'208";a="160186948"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 09 Jul 2025 16:42:01 -0700
-From: Jacob Keller <jacob.e.keller@intel.com>
-Date: Wed, 09 Jul 2025 16:41:17 -0700
-Subject: [PATCH v2] reflog: close leak of reflog expire entry
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AoKFPFTB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JTbwwnmW"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2404A7A0071;
+	Wed,  9 Jul 2025 20:01:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 09 Jul 2025 20:01:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752105671; x=1752192071; bh=uK+o/gCBHM
+	4ffPP5k3Vms9wC9LsM4vlMUkCzQ2/7KcM=; b=AoKFPFTBSxoi0IbwV8F9XdTkk0
+	Lke2x7iO2tBxHx/+KQfuH38i8VgLGTXaQCn6shLw0ZS15lSDOOkj3HGKLvgLqpS0
+	Gf0f+5J1b5g0B6FMwgxfQb3oJocp54KL/okzUL2JbtuRZrrTKYJ7s4hSFHdKwD+I
+	dJs8HPNJdoB4SzGbU9QoDpoTEcupVtppPyKHAyS2dqtjeoqYxUVn4nT8Gfn+I78l
+	zLbqwUUii5DMYSijEdHEW3piHXzhHaHCohVqYweUYz6TzsRVM1ncKgaYJcS71/m+
+	5yiqrBaHpdwkRuAIOJVHrZ30Ba2jNc6H/PtlOBxUkA5Wc8YweCubt9VU/zMQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752105671; x=1752192071; bh=uK+o/gCBHM4ffPP5k3Vms9wC9LsM4vlMUkC
+	zQ2/7KcM=; b=JTbwwnmW+bcTNwHOq9ZxAm5Il8Z5UK6etWiPYQs1Ff0aMqhYQyN
+	yAFlpj04NBRYkpWDugbjoG2ykBYYysy28g+MHWRWe2BM9CBii5SnmkgXlh11sW7G
+	mlkYzjigcUi72Ts3Tkt5sJLXViOHtL7eqsLDo9TrXsIsrT0RzfHxpDHKyiYQ12sP
+	dvQoLin/6Hcf3v+TJkBunooIkyKlOUw6CAmIgGqxgiKuAynUnpB4W66aVs6a4gvz
+	elMgasRWEenJW8Kr4M7MzyqE68/rgg9ZxZv7cEhzZsVrkyO66og+0Ss3kaXv2BHg
+	SmSRBNFfIvPzFgP9J5p4GOzPTVQxc3MtBhQ==
+X-ME-Sender: <xms:xwJvaI-oYhOwiTfxl6durIV1tw_mQVwgQPdDYJrfl9W1-SRqDdsAJw>
+    <xme:xwJvaMPRWO0D7WTXN7VaOk-pYnYsWoqiofOm-kyLIZNiU1kWuaDA7gY--lbKHF8K1
+    Ni2eEPIvo2nBkOmZA>
+X-ME-Received: <xmr:xwJvaEesq9qfO1Rk4CAmCMW8dmH40danq3Lop3_1G3MQ8FpPfJpdTk0RFjbrZBlmMhXgWduyuEsZF5xtyRhqdgKRlgzRLMR_Z_3f_Gs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdefkeelgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoh
+    epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xwJvaDXhafD2sLbMaAmyOtxbYrxpP0PEw8wf7rkGx-bcvKzICGnWSg>
+    <xmx:xwJvaEjbQhRPQD08aIxOyS9GBYmI1SvXqaPP0TTMZpAac_4hzzpRJw>
+    <xmx:xwJvaK9VE570szlgI7yt2EisxrylNphESpBqnQba65exg-u3rChGjw>
+    <xmx:xwJvaOb2-2MvYNH1_Pjf-IUDiyuWdXLandV6aw8Alz9L_Hnfl0I8vQ>
+    <xmx:xwJvaGgdRkaNYvhXyF3j65XlwFUUJxSW-n2Pdcf8XuCNxLi14QJeoCMR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 9 Jul 2025 20:01:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Jeff King <peff@peff.net>,  Elijah Newren <newren@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #02; Mon, 7)
+In-Reply-To: <aG6A19ZgxwpdJuow@nand.local> (Taylor Blau's message of "Wed, 9
+	Jul 2025 10:46:47 -0400")
+References: <xmqqplebzgm7.fsf@gitster.g> <aG6A19ZgxwpdJuow@nand.local>
+Date: Wed, 09 Jul 2025 17:01:10 -0700
+Message-ID: <xmqqecuoap89.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250709-jk-fix-leak-reflog-expire-config-v2-1-f9af934be8c1@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAB3+bmgC/5WNTQ6CMBBGr0Jm7RhaKSAr72FYNGVaRn5KWkMwh
- LtbuYHL9+XLeztECkwRmmyHQCtH9nMCecnA9Hp2hNwlBplLlVf5HV8DWt5wJD1gIDt6h7QtHAi
- Nny07rIQ0uuxMWSsNSbOkF29n4tkm7jm+fficxVX81j/kq0CBt6JTRSmMra16uEnzeDV+gvY4j
- i/Jgwhy0AAAAA==
-X-Change-ID: 20250709-jk-fix-leak-reflog-expire-config-712ca6dc685a
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Jacob Keller <jacob.keller@gmail.com>
-X-Mailer: b4 0.15-dev-d4ca8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3860;
- i=jacob.keller@gmail.com; h=from:subject:message-id;
- bh=l+BRe94q8RRzLvaC6tTOjO3EvQJIu3Mn2cVMNSlOso0=;
- b=owGbwMvMwCWWNS3WLp9f4wXjabUkhoy8f85lC7+my61/w9YlvfDhiQldd4z/qgmXfUxotm6e2
- 2ZnmFzWUcrCIMbFICumyKLgELLyuvGEMK03znIwc1iZQIYwcHEKwESupDH8d/kbFN0Rwnaiy8Tm
- 33uJvmkP1OQ3tX3f8+5r0dEgJ4VMS0aGryIByyKy1pqvivjqu0PF68x7a17p5RWHpY7dqvn6o7q
- HBQA=
-X-Developer-Key: i=jacob.keller@gmail.com; a=openpgp;
- fpr=204054A9D73390562AEC431E6A965D3E6F0F28E8
+Content-Type: text/plain
 
-From: Jacob Keller <jacob.keller@gmail.com>
+Taylor Blau <me@ttaylorr.com> writes:
 
-find_cfg_ent() allocates a struct reflog_expire_entry_option via
-FLEX_ALLOC_MEM and inserts it into a linked list in the
-reflog_expire_options structure. The entries in this list are never
-freed, resulting in a leak in cmd_reflog_expire and the gc reflog expire
-maintenance task:
+>> * tb/midx-avoid-cruft-packs (2025-06-23) 9 commits
+>>  - repack: exclude cruft pack(s) from the MIDX where possible
+>>  - pack-objects: introduce '--stdin-packs=follow'
+>>  - pack-objects: swap 'show_{object,commit}_pack_hint'
+>>  - pack-objects: fix typo in 'show_object_pack_hint()'
+>>  - pack-objects: perform name-hash traversal for unpacked objects
+>>  - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
+>>  - pack-objects: factor out handling '--stdin-packs'
+>>  - pack-objects: limit scope in 'add_object_entry_from_pack()'
+>>  - pack-objects: use standard option incompatibility functions
+>>
+>>  "pack-objects" has been taught to avoid pointing into objects in
+>>  cruft packs from midx.
+>>
+>>  Will merge to 'next'?
+>>  source: <cover.1750717921.git.me@ttaylorr.com>
+>
+> I think that this one is ready to go. Since Elijah and Peff last
+> reviewed it, it hasn't changed substantially (other than a few
+> bugfix-related changes that were discovered while rolling this out at
+> GitHub).
+>
+> The series has been running on GitHub's production infrastructure for
+> the last month or two without issue, so I think this is good from a
+> stability perspective.
+>
+> I've CC'd Elijah and Peff here, since they were the last two to review
+> the series, but I don't think that they have any objections to this
+> moving along.
 
-Direct leak of 39 byte(s) in 1 object(s) allocated from:
-    #0 0x7ff975ee6883 in calloc (/lib64/libasan.so.8+0xe6883)
-    #1 0x0000010edada in xcalloc ../wrapper.c:154
-    #2 0x000000df0898 in find_cfg_ent ../reflog.c:28
-    #3 0x000000df0898 in reflog_expire_config ../reflog.c:70
-    #4 0x00000095c451 in configset_iter ../config.c:2116
-    #5 0x0000006d29e7 in git_config ../config.h:724
-    #6 0x0000006d29e7 in cmd_reflog_expire ../builtin/reflog.c:205
-    #7 0x0000006d504c in cmd_reflog ../builtin/reflog.c:419
-    #8 0x0000007e4054 in run_builtin ../git.c:480
-    #9 0x0000007e4054 in handle_builtin ../git.c:746
-    #10 0x0000007e8a35 in run_argv ../git.c:813
-    #11 0x0000007e8a35 in cmd_main ../git.c:953
-    #12 0x000000441e8f in main ../common-main.c:9
-    #13 0x7ff9754115f4 in __libc_start_call_main (/lib64/libc.so.6+0x35f4)
-    #14 0x7ff9754116a7 in __libc_start_main@@GLIBC_2.34 (/lib64/libc.so.6+0x36a7)
-    #15 0x000000444184 in _start (/home/jekeller/libexec/git-core/git+0x444184)
+OK.  As they both seem to be active, let me wait for a bit and then
+mark it for 'next' unless we hear anything unexpected.
 
-Close this leak by adding a reflog_clear_expire_config() function which
-iterates the linked list and frees its elements. Call it upon exit of
-cmd_reflog_expire() and in reflog_expiry_cleanup().
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-Changes in v2:
-- Actually fix the leak properly. (Thanks Jeff for catching my brain fart!)
-- Link to v1: https://lore.kernel.org/r/20250709-jk-fix-leak-reflog-expire-config-v1-1-34d5461cf8f5@gmail.com
----
- reflog.h         |  2 ++
- builtin/reflog.c |  3 +++
- reflog.c         | 15 +++++++++++++++
- 3 files changed, 20 insertions(+)
-
-diff --git a/reflog.h b/reflog.h
-index 63bb56280f4e..74b3f3c4f0ac 100644
---- a/reflog.h
-+++ b/reflog.h
-@@ -34,6 +34,8 @@ struct reflog_expire_options {
- int reflog_expire_config(const char *var, const char *value,
- 			 const struct config_context *ctx, void *cb);
- 
-+void reflog_clear_expire_config(struct reflog_expire_options *opts);
-+
- /*
-  * Adapt the options so that they apply to the given refname. This applies any
-  * per-reference reflog expiry configuration that may exist to the options.
-diff --git a/builtin/reflog.c b/builtin/reflog.c
-index 3acaf3e32c27..d4da41aaea73 100644
---- a/builtin/reflog.c
-+++ b/builtin/reflog.c
-@@ -283,6 +283,9 @@ static int cmd_reflog_expire(int argc, const char **argv, const char *prefix,
- 					     &cb);
- 		free(ref);
- 	}
-+
-+	reflog_clear_expire_config(&opts);
-+
- 	return status;
- }
- 
-diff --git a/reflog.c b/reflog.c
-index 15d81ebea978..3ce1780924dd 100644
---- a/reflog.c
-+++ b/reflog.c
-@@ -81,6 +81,20 @@ int reflog_expire_config(const char *var, const char *value,
- 	return 0;
- }
- 
-+void reflog_clear_expire_config(struct reflog_expire_options *opts)
-+{
-+	struct reflog_expire_entry_option *ent = opts->entries, *tmp;
-+
-+	while (ent) {
-+		tmp = ent;
-+		ent = ent->next;
-+		free(tmp);
-+	}
-+
-+	opts->entries = NULL;
-+	opts->entries_tail = NULL;
-+}
-+
- void reflog_expire_options_set_refname(struct reflog_expire_options *cb,
- 				       const char *ref)
- {
-@@ -490,6 +504,7 @@ void reflog_expiry_cleanup(void *cb_data)
- 	for (elem = cb->mark_list; elem; elem = elem->next)
- 		clear_commit_marks(elem->item, REACHABLE);
- 	free_commit_list(cb->mark_list);
-+	reflog_clear_expire_config(&cb->opts);
- }
- 
- int count_reflog_ent(struct object_id *ooid UNUSED,
-
----
-base-commit: a30f80fde927d70950b3b4d1820813480968fb0d
-change-id: 20250709-jk-fix-leak-reflog-expire-config-712ca6dc685a
-
-Best regards,
---  
-Jacob Keller <jacob.keller@gmail.com>
-
+Thanks.
