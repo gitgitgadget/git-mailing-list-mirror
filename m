@@ -1,40 +1,43 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF38748F
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 03:42:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDC8B660
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 03:46:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752118971; cv=none; b=kmgFPGMRHXgS0eULwAUlJwe0b1bi1Mq+4gcgf/f89C3tea+PIyyXSDIcJ1YrQZCcbKsNRbzxu5JVUPdoBkbFuLfeWXtuTQkFvHPYo6vHlLQX/vTS0sU/Wk+I4cH8NzfsT2FJVuikLDFKPLFet0oZEvwNNZI0xE8uIMOliJ9Id1Y=
+	t=1752119187; cv=none; b=GXhkPIExH1AXqhyvPc7IimZ7bT0axyrBW/VSjC2CxRlEx+NIpDSAnjlym8BwXq1L9Zs2vSx9Y2EHDYqD/RQAIS6ykgYvc0RKcdqQtaNthVwAHMeTgz2/vtoEypOfj0AEUk8HKKdk64+Pzrol+6Dnxgr7NKvGl1q6PlUNlwMsdn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752118971; c=relaxed/simple;
-	bh=auEBURgylRCrPlkIowWhFs5rkoXn0L1GhsrrMi3cuws=;
+	s=arc-20240116; t=1752119187; c=relaxed/simple;
+	bh=3D4CSavDj/Ol/584Xm2jgmvMEjlv03xGxqmsRHPPhMA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kN26ERpc3kL5TJ0Z/1F9E3rvVZJCJqC4W2h1QyreE1SSgbOJEFggCpXv+IQeQQxNgwbixuVzTnZsfYxqfwHFrPz6gl7Tpd/oHukmJrxrnLmOdVjCHQ+FggW1NdqM6u57GcuTxLhHY3Vzo97rWVXL+zf1QTbJrNf2U1FdknLjU/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=KKiuzZbm; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=hg9/0EtjMlL/WEnWmljSQv5U32/nN4e4fTa56wFgHXEGcxcvwqe5NuesW4MpVj5OtqEtgKogBycVpj4blEY1Mkr8P22aku+kUnH5VeaOcqpdBmPZ9FzP9W9wFY+LT01qtYv48SaGcqcgXp0eGIBuzLiGJdPutd3Uq3aIe9y4Mzg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Dp3xFM3M; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="KKiuzZbm"
-Received: (qmail 750 invoked by uid 109); 10 Jul 2025 03:42:42 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=auEBURgylRCrPlkIowWhFs5rkoXn0L1GhsrrMi3cuws=; b=KKiuzZbmxuaEatsyuEwy7h9zW3EasWLq1JgWYY243V+Hd9jXknRbetMT2GRpmetEEArRglwQhBexTFBJGebG15VhrXo9y3mEz7bqryH6dIHv7DzxDXy56QErhyjDB3YNUSS0iK7r6El6iHVlzYGOPFnMDyiykx3P4mvHTbmowDa3K7iHYXYgX51b3D+vsZvyT/bP0BlhXkhJ/jw19XjO7wlZN4ieFfvBcBjy+/gNzQ+EFlpHZdJuEHctGtoBWujsWsS2PPelxbBthk5iNP+Vaq9VkiYGu/vL2RcqkWS85WtfgF7YPg6qmsc66v58N7GldVMnnvrydxe7VZbSn8YEmA==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Dp3xFM3M"
+Received: (qmail 780 invoked by uid 109); 10 Jul 2025 03:46:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=3D4CSavDj/Ol/584Xm2jgmvMEjlv03xGxqmsRHPPhMA=; b=Dp3xFM3MVq2WDuNq8+0AmJeOOXSDOOZnkpf8xz6i9NmXsUk3+vDTDlmjAe5abdVZwpnstex0A9jWxlcOrksazr1FPcutAIRzu+OJtuhmf+gaB/EhAVEqnbVZElzYDUq5Hns+qC4DgVr01hS/fKYOY+S5J6ApMzZYlCkfldlTvuHVIVPm0pGNp5fEdKhMNylPq1plCvIsdxEAyiGvVmOQI0KAnurMiB16iM0+uNaGmmBu+9DnzPEkKDKpBrbxLVLS/8qqheHD4aWc+cVjhwI3sFzwbrHh5ixU2no5TW5PVbffcXT7y8kvIDkCXrCOqLfIVcTlKlTwGtEcmzV4ubfPCw==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jul 2025 03:42:42 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 10 Jul 2025 03:46:24 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21144 invoked by uid 111); 10 Jul 2025 03:42:45 -0000
+Received: (qmail 21213 invoked by uid 111); 10 Jul 2025 03:46:27 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Jul 2025 23:42:45 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 09 Jul 2025 23:46:27 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 9 Jul 2025 23:42:41 -0400
+Date: Wed, 9 Jul 2025 23:46:23 -0400
 From: Jeff King <peff@peff.net>
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v2] reflog: close leak of reflog expire entry
-Message-ID: <20250710034241.GA2057509@coredump.intra.peff.net>
-References: <20250709-jk-fix-leak-reflog-expire-config-v2-1-f9af934be8c1@gmail.com>
- <D34FE2DE-EE5B-43F3-A706-1AC133AA72F1@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Martin =?utf-8?B?w4VncmVu?= <martin.agren@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	redoste <redoste@redoste.xyz>
+Subject: Re: [PATCH] SubmittingPatches: allow non-real name contributions
+Message-ID: <20250710034623.GA2066787@coredump.intra.peff.net>
+References: <20250706163009.335780-1-sandals@crustytoothpaste.net>
+ <20250707204224.GB3115893@coredump.intra.peff.net>
+ <CAN0heSou=BgC8ec9ZE+V-pYKt+XQiNfOBHj-5CZY8s5XCatZTg@mail.gmail.com>
+ <20250708225134.GB1180568@coredump.intra.peff.net>
+ <aG7wcoy3gTzSd_4w@fruit.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,61 +46,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <D34FE2DE-EE5B-43F3-A706-1AC133AA72F1@gmail.com>
+In-Reply-To: <aG7wcoy3gTzSd_4w@fruit.crustytoothpaste.net>
 
-On Thu, Jul 10, 2025 at 11:00:38AM +0800, Lidong Yan wrote:
+On Wed, Jul 09, 2025 at 10:42:58PM +0000, brian m. carlson wrote:
 
-> In builtin/reflog.c, we have code like
+> On 2025-07-08 at 22:51:34, Jeff King wrote:
+> > Yeah, I agree (and didn't know that before; thanks for mentioning). I
+> > think mostly I was just hoping that some of this reasoning and these
+> > pointers would make it into the commit message.
+> > 
+> > The content of the patch looked OK to me, though I do still like the
+> > CNCF wording a bit better.
 > 
-> ---
-> 	for (i = 0; i < argc; i++) {
-> 		char *ref;
-> 		struct expire_reflog_policy_cb cb = { .opts = opts };
+> In case it isn't clear, I'll be sending a v2, probably this weekend with
+> more of this information and some updated wording.
 > 
-> 		if (!repo_dwim_log(the_repository, argv[i], strlen(argv[i]), NULL, &ref)) {
-> 			status |= error(_("reflog could not be found: '%s'"), argv[i]);
-> 			continue;
-> 		}
-> 		reflog_expire_options_set_refname(&cb.opts, ref);
-> 		status |= refs_reflog_expire(get_main_ref_store(the_repository),
-> 					     ref, flags,
-> 					     reflog_expiry_prepare,
-> 					     should_prune_fn,
-> 					     reflog_expiry_cleanup,
-> 					     &cb);
-> 		free(ref);
-> 	}
-> +      reflog_clear_expire_config(&opts);
-> ---
+> I don't love the CNCF wording because I feel it's too ambiguously
+> worded.  What is the "community"?  The open-source community?  My
+> neighbourhood?  My friend group?  Can a real name be a username or
+> handle that's distinct and unambiguous?  What about communities where
+> people share the same name?  (Debian has, or at least had, two
+> contributors who both have the exact same full legal name and can
+> therefore only be distinguished by handle.)
 > 
-> I think allowing reblog_expiry_cleanup() to free all opt->entries might
-> cause reblog_expire_options_set_refname() to behave incorrectly.
+> I also think redefining "real name" in that way is misleading and leads
+> to confusion that might put people off, especially those that are not
+> native English speakers.  I know it's common for lawyers to redefine
+> language to mean something very precise but different from the language
+> that ordinary humans use[0], but that's ultimately dishonest and tends
+> to deceive and we shouldn't do it.  Most people take the phrase "real
+> name" to mean something equivalent to "legal name", so we should use
+> language to describe the requirement that doesn't confuse or mislead
+> people when it's used without further context (such as in a social media
+> post).
 
-Hmm, yeah. We are calling this in a loop, so we'd want the config to
-persist until the loop ends. I didn't test, but I'd guess that:
+Fair points. I think what I liked about it is that it emphasized the
+purpose of the policy:
 
-  git -c 'gc.refs/heads/*.reflogExpire=now' \
-    reflog expire refs/heads/foo refs/heads/bar
+  The key concern is that your identification is sufficient enough to
+  contact you if an issue were to arise in the future about your
+  contribution.
 
-would apply the config for "foo" but not for "bar". So I think
-reflog_expiry_cleanup() has to just clean up per-traversal data, not the
-config.
+I also liked the sentence before:
 
-So the call at the end here looks reasonable, but the call in
-reflog_expiry_cleanup() is wrong. I guess it was trying to cover the
-call in reflog_expire_condition(). That probably just needs a manual:
+  Your real name is the name you convey to people in the community for
+  them to use to identify you as you.
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 845876ff02..37f5437365 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -346,6 +346,7 @@ static int reflog_expire_condition(struct gc_config *cfg UNUSED)
- 				 count_reflog_entries, &data);
- 
- 	reflog_expiry_cleanup(&data.policy);
-+	reflog_clear_expire_config(&data.policy);
- 	return data.count >= data.limit;
- }
- 
+but I agree that "community" is vague there. I think it mostly means
+"the development community", but I agree that we could perhaps sidestep
+the whole issue by just saying we need some way to be able to identify
+and get in touch with you.
+
+> I'll take some inspiration from the CNCF post and rephrase to make it
+> more approachable in v2.
+
+Great, thank you.
 
 -Peff
