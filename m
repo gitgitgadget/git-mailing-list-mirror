@@ -1,65 +1,65 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com [209.85.219.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E05727056F
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 13:49:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4895256C61
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 13:51:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752155395; cv=none; b=acYzqbMhjMQPlv7bG6gUq/M83opJCugctSz9ayvxyCn/RM2fLCU0LYSgi5v/TpDDrHRXSDnVwiQYamDcpLhvp/mWLswnZlKFFfuYha6ZPbbHoRU0Up8Z0zYwu+9fUHdXIhHKJTx8uQTQkaizVucFP9xZftEj6hOFYucIllrSvpE=
+	t=1752155479; cv=none; b=U8G87WJa2N9RoH3F0r+3T1M7GuV0KZdUI613fIWwHnR3R9/qq1TZqg68XXZ+cry+avMa3eufVzFiuqtDvz1SH6gXUuhxv6QC0Q88dkcjvG5YqP6Gify6zIiyOxBsuvbMhLH1j6RqRKQAknlx6MSe1R1NtgcX6z6PtxmqTDBpZa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752155395; c=relaxed/simple;
-	bh=g3eTIzRkWMa63zHXC+TE8FT32UGdi72MlLy4MAShwLI=;
+	s=arc-20240116; t=1752155479; c=relaxed/simple;
+	bh=lAkoEIx9PvdX+cX13VK+ysW/anmU1UshF6HTBMK+SBc=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Yi0cVunXsvylpEBwiUmIaT+mALpWVXEeonTa2aljTsdZmEuyLuz/O+xnnQghP/MxrlFZ0wVSDiO5zTTJjdmOHhogmOoMG1NtQnJXH1kX3lappSx4+lQF3S2Vq+hKo4fyiRs6QR5gZwemqSse6407eVloumaRTUDpgnRYgUGaEKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I9q2tS2D; arc=none smtp.client-ip=209.85.128.176
+	 In-Reply-To:Content-Type; b=mZPvVxE06IJslwcLeJd4Ts8Pvs/lMuhQjnLszxjxWt6EWjfBvozyn1/+PWw9oTy8XSN0kacku0sk/kui+I1+Bn3BLa2HNfjvfWtCzx8JriNUPplQ7oSPleUih8ii0fERXo7abNqNhkVEfQXilV+jvc9m+AN9kgxLKNWxYe4e60w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b+jPheqh; arc=none smtp.client-ip=209.85.219.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I9q2tS2D"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-712be7e034cso10036807b3.0
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 06:49:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b+jPheqh"
+Received: by mail-yb1-f171.google.com with SMTP id 3f1490d57ef6-e7b4ba530feso859623276.1
+        for <git@vger.kernel.org>; Thu, 10 Jul 2025 06:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752155392; x=1752760192; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752155475; x=1752760275; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6BFMaZgBv8F+CyhnEECpmK9UTJSFV/jP6MRngQjAlgQ=;
-        b=I9q2tS2DsRhrpnaU5CA+6FbhqdUUAtq0UxBVEURYxh4aATwZclYrsRr7vG90OAiVEU
-         e1tCzJy89Se2H2hodzRlCqLKBgvIqFg1/jHQMKFce/Y724oy5VqSHA+PtteEumOhr6gC
-         wgVhr7oU3mki2d+1lgKmCHhoihV68zoqkCN3LehZmeGXvQH7VwauHlGeoupYm03XbRiJ
-         am2g8lr8IgYMeDkT4uV6qg2KdwYWU+2cct8zL1/FPfMQCl5y6dwuzOdgyXg41MwSG5hT
-         cpf54V+nrsWM1bfHShI23NsdcOtIjjrk2GOk/YS2APKPaGuycAEcOK4TTQQRQY1PzbL2
-         Dclg==
+        bh=ceXSbAm3hrligKODgcQt7M7p6SIzVet8X6V8X/K4jL4=;
+        b=b+jPheqhobc0ca+BeI32erzEJe+TyMhtKOpLU4iEMr3gmanc4GCDQKiS1U2BT3yBsW
+         VYea/B15B6lmFkNtFLawiz8IQRNmlB4lB2pMWS7S1Nan7Hg8eWGNlpUzKmoDf95zB66d
+         tp6tzSiL9QgFByljMpPKdToAEJNmhP9upJ3LhTj6nGTr7iQhqAb5rXRcrEA3tXXOoIj0
+         GKdZsZII8HhEPh6z0cawYWyUXGy5R38y93FObBPtZcVkCEo3CG11q/V/3onSxUK2tqVu
+         icuHS5JBVcCuOErcOBFlzopxeN10DVuu4ACGmGCt3hrp1iueD4Upn4V+/onl9KtyoSCO
+         WOzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752155392; x=1752760192;
+        d=1e100.net; s=20230601; t=1752155475; x=1752760275;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6BFMaZgBv8F+CyhnEECpmK9UTJSFV/jP6MRngQjAlgQ=;
-        b=TiINCniOsJLn03Ek8P31YOSKBc92cgua8lBy3wcbxvXmssA/X++oDR80guWpS8pJcU
-         T+5hk47nTzJl2sOHF3xDZA/2/qDIah1yGXW6OwVuVytBsjQTCDr2MTDuikdQCBB3wIG5
-         LPqm96SAJeWqsoCstY3jua1m51/gNKpfvNu98oVr+MECZixpDTGOigxcmwIcZvixGWIe
-         wYK+I6NGu98Jx6Dx3R9YbwXPZjF8YGkajrFyRwqvSz9veT1Po2JNqT4OlcOi+8f4Ki00
-         r18UkdLHLFpGoDTUujK8mga0yEau8kNuoTRpvCsnlvddrhuW889fCy8twGjq1fi9hHj4
-         pVHg==
-X-Forwarded-Encrypted: i=1; AJvYcCW0jOpIcJtRMRwhxO4srDyzRBkT25A7MIwm7dnGlsHcVRrKREWB5iS1+XVkYeQ+K12EGNA=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx6E19YMlTME56HwpzYZlzEZj/k0r0RHN7UexXhKDCt0pXidRUz
-	3qkadJKJkg/soav3jUpqdMnPw0Ygb2xCO/tekHkhjlT+1wZDwwWah4BI
-X-Gm-Gg: ASbGncsSPCFyogci7NjcrRftWAZTLfjwIpZcW61VdUOGAEgSjDCZEaFDzH3ChZZaJIL
-	OaKZHrIIa4xijlNDOLk92XtEO9yY+MlK19fcMrVRY82ORVMolBw4QB/HsZiYQo0f8HFcugvDDZ4
-	wqO1JlAE4EmcaCk9iV6BmNMbPuPCzBkUyPcqpid8tDm910lV0kOz81BYjFXCH8/plpdwKfKWjX2
-	ccocfRAHEOga5RmNG1z5/ryioStYAvWVuO/g87fVVkZMGvuxNJfDbQnkoYW0V4kN79grY4l+p3C
-	9eroKDR9qDyya4hVcVlgHcvOnXi3I3fYjubKUnyoyMepk7rYnlIwIelODYyVzYFuLyqYORuQk3c
-	CLe6OZFPyp3vIDr5Zu49VE5BvChtcf1kfbqQhjw==
-X-Google-Smtp-Source: AGHT+IHa0UCWQWHiZ6BHka6Nxqk1qgZ0w1rjO+yI7UEpaGoxh/pD78F+eY5SxtT1d0Bh/zuvL64wRw==
-X-Received: by 2002:a05:690c:6602:b0:70e:6333:64ac with SMTP id 00721157ae682-717c4656a02mr37155517b3.10.1752155391886;
-        Thu, 10 Jul 2025 06:49:51 -0700 (PDT)
+        bh=ceXSbAm3hrligKODgcQt7M7p6SIzVet8X6V8X/K4jL4=;
+        b=nlf41F+Xdk/PTqA/KnSFdEU9OSFP6QvwPCf9XVBaBLqn0W9cyNx7BEhvVQT3JwTf4p
+         HUPDY2EWzHNpgqcniHRvLuGFXyv/slWBC+TJU6IJ3flp/u0r+xvxdYWlHKxk55sNfpLY
+         Oc5po6MTr8fNBFiWsru6/Dra5TUPRiUCtjOzWLeDlmau48tJeJ105jh9pxBlZYpXcfpF
+         n4XLM/IfB340KEq2l1VJWbAK/8AM2N5+4PbTUcrIgthy9WkS34IkhUzrdhNkFLWNOref
+         xV9V9yWPeR9PNYn2A8RItB3Tu8cQhDR51fB2T6mEdHiRGccH9P8JxFN6tsKNSyvuUPpV
+         VhJw==
+X-Forwarded-Encrypted: i=1; AJvYcCXIqNC7hk91mRovmRl0ciiNgw1IRVVRUuaqsW91AhZAVLL4lmCt60ibXwXLj4HJumFtZ/Y=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwDOYApExe87uNB/au02VjNDw4ec55Lyn0vd6mvWFx4hxyb4F/o
+	M8yTl+A/y0mmsKZMqHlxwHqjgwSS1PTSnlePA+SoS122lNcgqZXSORvZ
+X-Gm-Gg: ASbGncs87Z27QmQb+Os0oZhmDb2YdtrF2UhqV+BA1j3RI1gEvhppXc48D88OAK2aC1J
+	v7BCVKE0BYZmdY4XzgnIU9hwHNRgnm3Lh5Vk8Rfp4Q/a+gXEytAGzyU8uYZ9hsHwtMYoNUMFrWB
+	3GAgiqXeo/gJvnnvpGnzBE7UO5hweXF/bJEgXM5O4tEXrCyryrNZXPlN4c7d0ptkal2gxLePlZB
+	1fwoc+7SCQp1p1Yr0gQ8sYKqMrDrpFFNX1wULXZpe4VgJsER99r/ZxnsqxWHQh1kP2uaC4e7hjp
+	Vni1iXc5o7HHVab9LRz6zXBlpGZuN+4x5BpGtlmFQwwNqAZf3aXaXcEdNdFo+qEM+dHRHnaZO6e
+	SFqOy2K+caFGoFulnmX3OhoZiPhoPK614v5bFyg==
+X-Google-Smtp-Source: AGHT+IHGNYRjw/qNhAex5sllI++eRqjKTOUZRgKyrniQ+LSrRjRtPInVXisq8Fi4WUK63+XSaynOXA==
+X-Received: by 2002:a05:6902:200d:b0:e82:249a:b3ee with SMTP id 3f1490d57ef6-e8b7a329b7dmr3104700276.15.1752155474659;
+        Thu, 10 Jul 2025 06:51:14 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:c538:4e9c:cfeb:f6ff? ([2600:1700:60ba:9810:c538:4e9c:cfeb:f6ff])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-717c61b4cc4sm2855197b3.67.2025.07.10.06.49.51
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8b7afa3608sm426962276.26.2025.07.10.06.51.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 10 Jul 2025 06:49:51 -0700 (PDT)
-Message-ID: <afb68948-218b-4b56-9faa-29578ef9c73c@gmail.com>
-Date: Thu, 10 Jul 2025 09:49:50 -0400
+        Thu, 10 Jul 2025 06:51:14 -0700 (PDT)
+Message-ID: <3c59af48-23fe-4cc7-87e9-1de94f509a2b@gmail.com>
+Date: Thu, 10 Jul 2025 09:51:13 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,157 +67,165 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/4] bloom: enable bloom filter optimization for
- multiple pathspec elements in revision traversal
+Subject: [PATCH v5.1 3.5/4] revision: make helper for pathspec to bloom key
 To: Lidong Yan <yldhome2d2@gmail.com>
 Cc: 502024330056@smail.nju.edu.cn, git@vger.kernel.org, gitster@pobox.com,
  toon@iotcl.com
 References: <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
  <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+ <20250710084829.2171855-5-502024330056@smail.nju.edu.cn>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+In-Reply-To: <20250710084829.2171855-5-502024330056@smail.nju.edu.cn>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
 On 7/10/2025 4:48 AM, Lidong Yan wrote:
+> @@ -710,23 +709,26 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+>  	if (!revs->pruning.pathspec.nr)
+>  		return;
+>  
+> -	revs->bloom_keyvecs_nr = 1;
+> -	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
+> -	pi = &revs->pruning.pathspec.items[0];
+> +	revs->bloom_keyvecs_nr = revs->pruning.pathspec.nr;
+> +	CALLOC_ARRAY(revs->bloom_keyvecs, revs->bloom_keyvecs_nr);
+> +	for (int i = 0; i < revs->pruning.pathspec.nr; i++) {
+> +		pi = &revs->pruning.pathspec.items[i];
+>  
+> -	/* remove single trailing slash from path, if needed */
+> -	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+> -		path_alloc = xmemdupz(pi->match, pi->len - 1);
+> -		path = path_alloc;
+> -	} else
+> -		path = pi->match;
+> +		/* remove single trailing slash from path, if needed */
+> +		if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+> +			path_alloc = xmemdupz(pi->match, pi->len - 1);
+> +			path = path_alloc;
+> +		} else
+> +			path = pi->match;
+>  
+> -	len = strlen(path);
+> -	if (!len)
+> -		goto fail;
+> +		len = strlen(path);
+> +		if (!len)
+> +			goto fail;
+>  
+> -	revs->bloom_keyvecs[0] =
+> -		bloom_keyvec_new(path, len, revs->bloom_filter_settings);
+> +		revs->bloom_keyvecs[i] =
+> +			bloom_keyvec_new(path, len, revs->bloom_filter_settings);
+> +		FREE_AND_NULL(path_alloc);
+> +	}
 
-> The difference from v4 is:
->   - for the bloom_key_* functions, we now pass struct bloom_key *
->     as the first parameter.
->   - bloom_keyvec_fill_key() and bloom_keyvec_new() have been merged
->     into a single function, so that each key is filled during the
->     creation of the bloom_keyvec.
-> 
-> Below is a comparison of the time taken to run git log on Git and
-> LLVM repositories before and after applying this patch.
-> 
-> Setup commit-graph:
->   $ cd ~/src/git && git commit-graph write --split --reachable --changed-paths
->   $ cd ~/src/llvm && git commit-graph write --split --reachable --changed-paths
-> 
-> Run git log on Git repository
->   $ cd ~/src/git
->   $ hash -p /usr/bin/git git # my system git binary is 2.43.0
->   $ time git log -100 -- commit.c commit-graph.c >/dev/null
->   real	0m0.055s
->   user	0m0.040s
->   sys	  0m0.015s
->   $ hash -p ~/bin/git/bin/git git
->   $ time git log -100 -- commit.c commit-graph.c >/dev/null
->   real	0m0.039s
->   user	0m0.020s
->   sys	  0m0.020s
-> 
-> Run git log in LLVM repository
->   $ cd ~/src/llvm
->   $ hash -p /usr/bin/git git # my system git binary is 2.43.0
->   $ time git log -100 -- llvm/lib/Support/CommandLine.cpp llvm/lib/Support/CommandLine.h >/dev/null
->   real	0m2.365s
->   user	0m2.252s
->   sys	  0m0.113s
->   $ hash -p ~/bin/git/bin/git git
->   $ time git log -100 -- llvm/lib/Support/CommandLine.cpp llvm/lib/Support/CommandLine.h >/dev/null
->   real	0m0.240s
->   user	0m0.158s
->   sys	  0m0.064s
+This diff is still bigger than I was hoping, so I'm sending a couple
+of patches that simplify this code movement. Feel free to ignore
+them as being too nit-picky.
 
-Thanks for these stats, though I'd recommend trying hyperfine [1]
-which with this setup would let you run these experiments as the
-following:
+--- >8 ---
 
-$ $ hyperfine --warmup=3 \
-> -n 'old' '~/_git/git-sparse-checkout-clean/git log -100 -- commit.c commit-graph.c' \
-> -n 'new' '~/_git/git/git log -100 -- commit.c commit-graph.c'
-Benchmark 1: old
-  Time (mean ± σ):      73.1 ms ±   2.9 ms    [User: 48.8 ms, System: 23.9 ms]
-  Range (min … max):    69.9 ms …  84.5 ms    42 runs
+From 69fa36dc615e140ae842b536f7da792beaebb272 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <stolee@gmail.com>
+Date: Thu, 10 Jul 2025 08:06:29 -0400
+Subject: [PATCH v5.1 3.5/4] revision: make helper for pathspec to bloom key
+
+When preparing to use bloom filters in a revision walk, Git populates a
+boom_keyvec with an array of bloom keys for the components of a path.
+Before we create the ability to map multiple pathspecs to multiple
+bloom_keyvecs, extract the conversion from a pathspec to a bloom_keyvec
+into its own helper method. This simplifies the state that persists in
+prepare_to_use_bloom_filter() as well as makes the next change much
+simpler.
+
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
+ revision.c | 50 +++++++++++++++++++++++++++++++-------------------
+ 1 file changed, 31 insertions(+), 19 deletions(-)
+
+diff --git a/revision.c b/revision.c
+index 22bcfab7f93..4c09b594c55 100644
+--- a/revision.c
++++ b/revision.c
+@@ -687,14 +687,37 @@ static int forbid_bloom_filters(struct pathspec *spec)
  
-Benchmark 2: new
-  Time (mean ± σ):      55.1 ms ±   2.9 ms    [User: 30.5 ms, System: 24.4 ms]
-  Range (min … max):    51.1 ms …  61.2 ms    52 runs
+ static void release_revisions_bloom_keyvecs(struct rev_info *revs);
  
-Summary
-  'new' ran
-    1.33 ± 0.09 times faster than 'old'
-
-And for LLVM:
-
-$ hyperfine --warmup=3 \
-> -n 'old' '~/_git/git-sparse-checkout-clean/git log -100 -- llvm/lib/Support/CommandLine.cpp llvm/lib/Support/CommandLine.h' \
-> -n 'new' '~/_git/git/git log -100 -- llvm/lib/Support/CommandLine.cpp llvm/lib/Support/CommandLine.h'
-
-Benchmark 1: old
-  Time (mean ± σ):      1.974 s ±  0.006 s    [User: 1.877 s, System: 0.097 s]
-  Range (min … max):    1.960 s …  1.983 s    10 runs
+-static void prepare_to_use_bloom_filter(struct rev_info *revs)
++static int convert_pathspec_to_filter(const struct pathspec_item *pi,
++				      struct bloom_keyvec **bloom_keyvec,
++				      const struct bloom_filter_settings *settings)
+ {
+-	struct pathspec_item *pi;
+-	struct bloom_keyvec *bloom_keyvec;
+-	char *path_alloc = NULL;
+-	const char *path, *p;
+ 	size_t len;
++	const char *path;
++	char *path_alloc = NULL;
++	int res = 0;
++
++	/* remove single trailing slash from path, if needed */
++	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
++		path_alloc = xmemdupz(pi->match, pi->len - 1);
++		path = path_alloc;
++	} else
++		path = pi->match;
++
++	len = strlen(path);
++	if (!len) {
++		res = -1;
++		goto cleanup;
++	}
++
++	*bloom_keyvec = bloom_keyvec_new(path, len, settings);
  
-Benchmark 2: new
-  Time (mean ± σ):     262.9 ms ±   2.4 ms    [User: 214.2 ms, System: 48.4 ms]
-  Range (min … max):   257.7 ms … 266.2 ms    11 runs
++cleanup:
++	FREE_AND_NULL(path_alloc);
++	return res;
++}
++
++static void prepare_to_use_bloom_filter(struct rev_info *revs)
++{
+ 	if (!revs->commits)
+ 		return;
  
-Summary
-  'new' ran
-    7.51 ± 0.07 times faster than 'old'
+@@ -712,22 +735,12 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 
+ 	revs->bloom_keyvecs_nr = 1;
+ 	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
+-	pi = &revs->pruning.pathspec.items[0];
+ 
+-	/* remove single trailing slash from path, if needed */
+-	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+-		path_alloc = xmemdupz(pi->match, pi->len - 1);
+-		path = path_alloc;
+-	} else
+-		path = pi->match;
+-
+-	len = strlen(path);
+-	if (!len)
++	if (convert_pathspec_to_filter(&revs->pruning.pathspec.items[0],
++				       &revs->bloom_keyvecs[0],
++				       revs->bloom_filter_settings))
+ 		goto fail;
+ 
+-	revs->bloom_keyvecs[0] =
+-		bloom_keyvec_new(path, len, revs->bloom_filter_settings);
+-
+ 	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
+ 		atexit(trace2_bloom_filter_statistics_atexit);
+ 		bloom_filter_atexit_registered = 1;
+@@ -737,7 +750,6 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ 
+ fail:
+ 	revs->bloom_filter_settings = NULL;
+-	free(path_alloc);
+ 	release_revisions_bloom_keyvecs(revs);
+ }
+ 
+-- 
+2.47.2.vfs.0.2
 
-[1] https://github.com/sharkdp/hyperfine
-
-Finally, putting these performance numbers in the commit message will
-make the results permanently findable in the repo history.
-
-> 3:  c042907b92 ! 3:  60a3b16bbb bloom: replace struct bloom_key * with struct bloom_keyvec
-
->     -+struct bloom_keyvec *bloom_keyvec_new(size_t count)
->     ++struct bloom_keyvec *bloom_keyvec_new(const char *path, size_t len,
->     ++				      const struct bloom_filter_settings *settings)
->      +{
->      +	struct bloom_keyvec *vec;
->     -+	size_t sz = sizeof(struct bloom_keyvec);
->     -+	sz += count * sizeof(struct bloom_key);
->     ++	const char *p;
->     ++	size_t sz;
->     ++	size_t nr = 1;
->     ++
->     ++	p = path;
->     ++	while (*p) {
->     ++		/*
->     ++		 * At this point, the path is normalized to use Unix-style
->     ++		 * path separators. This is required due to how the
->     ++		 * changed-path Bloom filters store the paths.
->     ++		 */
->     ++		if (*p == '/')
->     ++			nr++;
->     ++		p++;
->     ++	}
->     ++
->     ++	sz = sizeof(struct bloom_keyvec);
->     ++	sz += nr * sizeof(struct bloom_key);
->      +	vec = (struct bloom_keyvec *)xcalloc(1, sz);
->     -+	vec->count = count;
->     ++	if (!vec)
->     ++		return NULL;
->     ++	vec->count = nr;
->     ++
->     ++	bloom_key_fill(&vec->key[0], path, len, settings);
->     ++	nr = 1;
->     ++	p = path + len - 1;
->     ++	while (p > path) {
->     ++		if (*p == '/') {
->     ++			bloom_key_fill(&vec->key[nr++], path, p - path, settings);
->     ++		}
->     ++		p--;
->     ++	}
->     ++	assert(nr == vec->count);
->      +	return vec;
->      +}
-
-These additions to bloom_keyvec_new() certainly help simplify some
-of the code movement I was talking about, but there is more that
-can be done to simplify patch 4. I'll send a couple example patches
-in reply to patch 4 with what I mean.
-
-Overall, the patch series is correct. My complaints are stylistic
-more than anything.
-
-Thanks,
--Stolee
 
