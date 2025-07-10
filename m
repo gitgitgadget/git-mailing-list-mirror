@@ -1,141 +1,249 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB337464
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 15:45:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F1AA274FDE
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 15:50:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752162342; cv=none; b=CtP6xZlkr970I2xfesvmkKf+pNSbWfNKO4qz0GEsa1ZTy7xyIpsZpNZETHLZ2M890kfybXM2JosZnNoxfSSvDKUcT7vNXoBWkZWe2yjnjS0rtZHrgMcCrX8SB/Sq0xKHjOk4jHp5iGo5HGnn+07JPTYRLjywKDHobsVQWrkfaL0=
+	t=1752162661; cv=none; b=IkpJqptOc//gC8KbWaKwwPYAOlfIAfOVa10uofY7xi23rLc7EaKxvx+lDBZvM0hUYQT6T4+AQLMwrjZGzDAhsq5UEMigNPPxERoWyFe2UyWJc8MqcsWhQkTVT+yrGJuTjmpztx5jTPiERO0nxsSFCGV2rRlOOVq3I8KR47gzAAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752162342; c=relaxed/simple;
-	bh=ruua+FxV1uBe825/ykNCvxHZilHhgOKkKk/HznwFc/g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q5I0Y4PZIPMmj6rD3kdEwwS5pHptGuUQxNETPZaYPazkq5InYTsTfW5rN/jCTRTmrgff6Ha508mVUQ9VWIBLCCYFvINkKtoK/pi4WjVtGya+D5apG7d9OaHS/ubMSV94ZOTpfk0f8eQdplrgoTQ5HMW3HPB1lrYpk9EakJ7m+ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WacjwPpU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KrSmhLZ/; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WacjwPpU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KrSmhLZ/"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id 462ED1D00263;
-	Thu, 10 Jul 2025 11:45:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Thu, 10 Jul 2025 11:45:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752162339; x=1752248739; bh=5lzqCZLY74
-	M/KT0uPfpFH3bOC7xCq6wywYEg9JQebKQ=; b=WacjwPpUl5JIKYia3UE7BxQZF7
-	616IXb9MkloleVtiHDvCb1GydldTDz3dL34Hla80ohlNn0GmS5X9Wvf9txgYH+xW
-	hKarpx+gaysOerbj0hgPVij1HgO+y/LeyVvPIo/v5IBQTV4DYo/PFjYYQOZyD7iI
-	6mDL/v3wekuWm2hLCWRiF5BJx3rTm+wm3FC2sL3+WE2LkdXGQOdrgDgLV38q36vI
-	vnAZhxpUogk4x41atPjFlXga19bPFYc/EPbwIJNj3g5+JlHf5QDLZWCXfIOzmDOq
-	OzK+sa4B2ES8B6u+wylaCX7yQvRExHs4W56JYYDOe7yAhwAydolJZkoRT5Ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752162339; x=1752248739; bh=5lzqCZLY74M/KT0uPfpFH3bOC7xCq6wywYE
-	g9JQebKQ=; b=KrSmhLZ/ldRsIZl5Em175SwcJqD3aBG/nSKAAyQwbWuX/JDT4Me
-	KM7qmY/SQuW3D+G91PAKaF57lfe794Haq2oKiHPXC1lCbowC/1t9L+r/b8WYEQ1E
-	GuTdFaFnxBCcCIDiTjRtVpl3FSM5xijPObmTMd5ol7SCS8JVR31nhsXhBt+cNeku
-	LUC5696RRjP4euDCFnIliRWd6J8FNQ+0Qw8Ru4vColNCitJBitjHLeXuy5hchjIN
-	VcHA6Wx8DUa+5F5MaFAb3PkGumbkzQNFk8Bs5831p2BwgsaL1a6edtvAEh4nZbTG
-	ef0OES3s/tDJkv43sp1+v/uw9IKCYmR0VRw==
-X-ME-Sender: <xms:IuBvaHhsH9f9dYHDhojIn2O-Jhgv_4Jlfkhg-LxpAQ1T0T6ieM3m5w>
-    <xme:IuBvaHQH8xbqwjab7lS9nr8BCfobIfxMEXrZaN9yrC6Dw5Lih_hg5vNGtTNuID8py
-    Yw5Nb7yYUW_COkjNA>
-X-ME-Received: <xmr:IuBvaAjo5n2wdIPjs22rkJGhiuzNu8gQBPOS04LBzRoInYNAVOs97ZGwvQNwmDi8PC3qEFMIQ18BWobyyAWaxZfIHGtnOu-cAcqFTu4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegtdekgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeegveevffdtheeukeeugfdvveefvdffffdvjeevuedtgfetfedtieekffdvfeeh
-    leenucffohhmrghinhepfhgvthgthhdrtghinecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
-    pghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepohhrvghnlh
-    esvgigohhnqdhmvgguihgrrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IuBvaP52iVEi0SLITte7RP_Z_NeKEmihWsPhbMYd2FdricEJoBUlXA>
-    <xmx:IuBvaFBfKTksivPw0GAJXIrhGCQEk_XN_JMWY-JM39hRCRDlDstBKQ>
-    <xmx:IuBvaOZ-0i0lmKDjeRbIBUT7d97mwQfmefhOsfO65dF7sWDYVPomSA>
-    <xmx:IuBvaIZs2XNN56EzwjE0zZBDwOAKlUBSSm9A97mp1VR8Toa1Vzn0Kg>
-    <xmx:I-BvaP7U-xqWUMl6BElCe80mLEWTa4EdcF54gcywmVUt3t_32VJxTQSw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 10 Jul 2025 11:45:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Oren Levi <orenl@exon-media.com>
-Cc: git@vger.kernel.org
-Subject: Re: bug: `git commit --verbose` not removing text below scissor-line
-In-Reply-To: <CACpw4KCYrgjCPO6z-czSa=rW+5z5m4Xpy_RSgxEkUGdeMEvULA@mail.gmail.com>
-	(Oren Levi's message of "Thu, 10 Jul 2025 12:07:21 +0300")
-References: <CACpw4KCYrgjCPO6z-czSa=rW+5z5m4Xpy_RSgxEkUGdeMEvULA@mail.gmail.com>
-Date: Thu, 10 Jul 2025 08:45:37 -0700
-Message-ID: <xmqqecuo82xq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1752162661; c=relaxed/simple;
+	bh=agDmncD5LkBoYcs9DXW29MCvpFKcfHcvy1dlmAHMVRo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=AwwrGVH25bxpxBeBB6Vy7r5tVW0Dlp+M3DI4O8lIvPqso0eBro4mY2ql44EtyupLnVdaKWLxa1GGFsQKb6Hb8/jCVHSpltYwKheYj7PAnw9BY7t91BuvsTpfylwlzAVojrVZAtRSqnPN13ve4L90kAd4nYbHZI1stxRjsEUoTg8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=15.184.224.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: esmtpsz11t1752162584t1adf3cba
+X-QQ-Originating-IP: 2vF53YFEggKke1IJ4YBeoHP6LlOibbRgM1P0H6uJCV0=
+Received: from smtpclient.apple ( [202.119.44.124])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Thu, 10 Jul 2025 23:49:42 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 8865972795330565231
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v5.1 4/4] bloom: optimize multiple pathspec items in
+ revision
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <2619038e-05f5-4af8-bb20-e4e01138f839@gmail.com>
+Date: Thu, 10 Jul 2025 23:49:40 +0800
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ toon@iotcl.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <EF8BBC5E-52A7-46D4-8B7B-9EFB2B726852@smail.nju.edu.cn>
+References: <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
+ <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+ <20250710084829.2171855-5-502024330056@smail.nju.edu.cn>
+ <2619038e-05f5-4af8-bb20-e4e01138f839@gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: OUC5DGN0mB58Y3GDSJPVST7diq2QxGf7HJMbyDn+HVV8SQX77h5nNUTs
+	6l+Lg9F1KB1DqHu2vIby77Nk1kJC6yfZ8eWPMriTQxylAJKo2JQpA/aSqx3e2wbGPnrkV/E
+	Ye/WfFMmmKvDNMz9H3DeT8x4bN6Pkt6jNMA/8ZyTZBOW9RJPoSbXdgSYxk5sRbFFYzMwqhe
+	wBDyZy51vOdMuQveJncuhMNV+HCrJPL7tuXrgLZCDIwupfpiOJC0YhcfU+ZPP24EmIaKLpP
+	IjhiBmIesrLpaaSHkW654mGYs50tqTgN67mA00Dokh6OE/Vtz35eR68xjX8EkaNpsADnVVY
+	V9RjM1tCL2zQAlCmsb0J1LLeJJOqlMVRK4BrcoMuZyHdMH8zVhNFElxCETYms6X3sbQ/SfI
+	3+BuZN05FwRy3kjzlMVWFnASz/p/YayAxGT9nCzCVZgpmroZ5RBd3SEc4wGz0YL+DqfMag2
+	cl1CaN4vIGVd4+t25YoYcp50i1tMQkLiaKGnWMSxcQBQnlJUgfO3O2LgS1LV1BfHVeSPzzD
+	rAcIr6CWBkpMgk7EPR1Zi9am/X4M17yTLrf8/yokJnLXZuK8IAg0OvLoaU59tUfqfg2sLEk
+	2WWhMlvIQ7DZE1MHvq9pLs4s3LXPeMZ4FVYKTY4fvFhlokPtgKqnjc22D4G6cat0uh9zKYn
+	xglWwpxgHPFc2OIdNMsIUIU2/pRu1ZWzQ98SNIP/XEdDkTvnQGlmAlgG7EIjbYLTA4VWgyX
+	h3G+TXCxmhrxa9CHyz299n3jVyJlN21N66TQfzrplFILyhcKugqXyYTgJTS/nOMhiEUrMy6
+	jUqAQambHTluT76Z9AfWfg9Z1c4lqrWrwOeTG4PN7bBw9zTbkOoFsoLQtb1beTiy9mlVoDQ
+	9MY5wLHQqV2sFPhScGA0zVdb9Eh5V7/vmsBJmpFQ6KdEPdJ33LUNiBzzvqOxdydcwYAZZw3
+	iBu8u7uVzz2ljc885+x52QDMud6HRm69Oi8j0xuNdvV+zofAmUTSmgp7gD9Vyp6kwEU2s5b
+	DvbZhmc3KptBFW/Qsw
+X-QQ-XMRINFO: M/715EihBoGSf6IYSX1iLFg=
+X-QQ-RECHKSPAM: 0
 
-Oren Levi <orenl@exon-media.com> writes:
+Derrick Stolee <stolee@gmail.com> wrote:
+>=20
+> --- >8 ---
+>=20
+> =46rom fe255b1acfbe90fa8e4c335435ae18ee95e6243c Mon Sep 17 00:00:00 =
+2001
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+> Date: Thu, 10 Jul 2025 08:04:34 -0400
+> Subject: [PATCH v5.1 4/4] bloom: optimize multiple pathspec items in =
+revision
+> traversal
+>=20
+> To enable optimize multiple pathspec items in revision traversal,
+> return 0 if all pathspec item is literal in forbid_bloom_filters().
+> Add for loops to initialize and check each pathspec item's =
+bloom_keyvec
+> when optimization is possible.
+>=20
+> Add new test cases in t/t4216-log-bloom.sh to ensure
+>  - consistent results between the optimization for multiple pathspec
+>    items using bloom filter and the case without bloom filter
+>    optimization.
+>  - does not use bloom filter if any pathspec item is not literal.
+>=20
+> With these optimizations, we get some improvements for multi-pathspec =
+runs
+> of 'git log'. First, in the Git repository we see these modest =
+results:
+>=20
+> Benchmark 1: old
+>  Time (mean =C2=B1 =CF=83):      73.1 ms =C2=B1   2.9 ms
+>  Range (min =E2=80=A6 max):    69.9 ms =E2=80=A6  84.5 ms    42 runs
+>=20
+> Benchmark 2: new
+>  Time (mean =C2=B1 =CF=83):      55.1 ms =C2=B1   2.9 ms
+>  Range (min =E2=80=A6 max):    51.1 ms =E2=80=A6  61.2 ms    52 runs
+>=20
+> Summary
+>  'new' ran
+>    1.33 =C2=B1 0.09 times faster than 'old'
+>=20
+> But in a larger repo, such as the LLVM project repo below, we get even
+> better results:
+>=20
+> Benchmark 1: old
+>  Time (mean =C2=B1 =CF=83):      1.974 s =C2=B1  0.006 s
+>  Range (min =E2=80=A6 max):    1.960 s =E2=80=A6  1.983 s    10 runs
+>=20
+> Benchmark 2: new
+>  Time (mean =C2=B1 =CF=83):     262.9 ms =C2=B1   2.4 ms
+>  Range (min =E2=80=A6 max):   257.7 ms =E2=80=A6 266.2 ms    11 runs
+>=20
+> Summary
+>  'new' ran
+>    7.51 =C2=B1 0.07 times faster than 'old'
 
-> What did you do before the bug happened? (Steps to reproduce your issue)
-> 1. Run `git ci -a`
-> 2. Edit COMMIT_EDITMSG (using vscode)
-> 3. Save&Close
+Hyperfine do looks better. I will put this into commit message and
+cover letter in v6.
 
-As you have commit.verbose set, and your "ci" is merely a short-hand
-for "commit", this is "git commit -a -v".  It should give us a patch
-text after a scissors line, that looks like
+>=20
+> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+> revision.c           | 22 +++++++++++-----------
+> t/t4216-log-bloom.sh | 23 ++++++++++++++---------
+> 2 files changed, 25 insertions(+), 20 deletions(-)
+>=20
+> diff --git a/revision.c b/revision.c
+> index 4c09b594c55..ca8c1dde8ca 100644
+> --- a/revision.c
+> +++ b/revision.c
+> @@ -675,12 +675,11 @@ static int forbid_bloom_filters(struct pathspec =
+*spec)
+> {
+> if (spec->has_wildcard)
+> return 1;
+> - if (spec->nr > 1)
+> - return 1;
+> if (spec->magic & ~PATHSPEC_LITERAL)
+> return 1;
+> - if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
+> - return 1;
+> + for (size_t nr =3D 0; nr < spec->nr; nr++)
+> + if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
+> + return 1;
+>=20
+> return 0;
+> }
+> @@ -733,13 +732,14 @@ static void prepare_to_use_bloom_filter(struct =
+rev_info *revs)
+> if (!revs->pruning.pathspec.nr)
+> return;
+>=20
+> - revs->bloom_keyvecs_nr =3D 1;
+> - CALLOC_ARRAY(revs->bloom_keyvecs, 1);
+> -
+> - if (convert_pathspec_to_filter(&revs->pruning.pathspec.items[0],
+> -       &revs->bloom_keyvecs[0],
+> -       revs->bloom_filter_settings))
+> - goto fail;
+> + revs->bloom_keyvecs_nr =3D revs->pruning.pathspec.nr;
+> + CALLOC_ARRAY(revs->bloom_keyvecs, revs->bloom_keyvecs_nr);
+> + for (int i =3D 0; i < revs->pruning.pathspec.nr; i++) {
+> + if (convert_pathspec_to_filter(&revs->pruning.pathspec.items[i],
+> +       &revs->bloom_keyvecs[i],
+> +       revs->bloom_filter_settings))
+> + goto fail;
+> + }
+>=20
+> if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
+> atexit(trace2_bloom_filter_statistics_atexit);
+> diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
+> index 8910d53cac1..639868ac562 100755
+> --- a/t/t4216-log-bloom.sh
+> +++ b/t/t4216-log-bloom.sh
+> @@ -66,8 +66,9 @@ sane_unset GIT_TRACE2_CONFIG_PARAMS
+>=20
+> setup () {
+> rm -f "$TRASH_DIRECTORY/trace.perf" &&
+> - git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" $1 =
+>log_wo_bloom &&
+> - GIT_TRACE2_PERF=3D"$TRASH_DIRECTORY/trace.perf" git -c =
+core.commitGraph=3Dtrue log --pretty=3D"format:%s" $1 >log_w_bloom
+> + eval git -c core.commitGraph=3Dfalse log --pretty=3D"format:%s" "$1" =
+>log_wo_bloom &&
+> + eval "GIT_TRACE2_PERF=3D\"$TRASH_DIRECTORY/trace.perf\"" \
+> + git -c core.commitGraph=3Dtrue log --pretty=3D"format:%s" "$1" =
+>log_w_bloom
+> }
+>=20
+> test_bloom_filters_used () {
+> @@ -138,10 +139,6 @@ test_expect_success 'git log with --walk-reflogs =
+does not use Bloom filters' '
+> test_bloom_filters_not_used "--walk-reflogs -- A"
+> '
+>=20
+> -test_expect_success 'git log -- multiple path specs does not use =
+Bloom filters' '
+> - test_bloom_filters_not_used "-- file4 A/file1"
+> -'
+> -
+> test_expect_success 'git log -- "." pathspec at root does not use =
+Bloom filters' '
+> test_bloom_filters_not_used "-- ."
+> '
+> @@ -151,9 +148,17 @@ test_expect_success 'git log with wildcard that =
+resolves to a single path uses B
+> test_bloom_filters_used "-- *renamed"
+> '
+>=20
+> -test_expect_success 'git log with wildcard that resolves to a =
+multiple paths does not uses Bloom filters' '
+> - test_bloom_filters_not_used "-- *" &&
+> - test_bloom_filters_not_used "-- file*"
+> +test_expect_success 'git log with multiple literal paths uses Bloom =
+filter' '
+> + test_bloom_filters_used "-- file4 A/file1" &&
+> + test_bloom_filters_used "-- *" &&
+> + test_bloom_filters_used "-- file*"
+> +'
+> +
+> +test_expect_success 'git log with path contains a wildcard does not =
+use Bloom filter' '
+> + test_bloom_filters_not_used "-- file\*" &&
+> + test_bloom_filters_not_used "-- A/\* file4" &&
+> + test_bloom_filters_not_used "-- file4 A/\*" &&
+> + test_bloom_filters_not_used "-- * A/\*"
+> '
+>=20
+> test_expect_success 'setup - add commit-graph to the chain without =
+Bloom filters' '
+> --=20
+> 2.47.2.vfs.0.2
+>=20
 
-    #
-    # ------------------------ >8 ------------------------
-    # Do not modify or remove the line above.
-    # Everything below it will be ignored.
-    diff --git c/builtin/fetch.c i/builtin/fetch.c
-    index d48262bdc7..3267617a54 100644
-    --- c/builtin/fetch.c
-    +++ i/builtin/fetch.c
-    @@ -640,9 +640,6 @@ static struct ref *get_ref_map(struct remote *remote,
-            return ref_map;
-     }
+Looks great, I will apply this above patch 3.
 
-Here is what I did as a quick sanity check
+Thanks,
+Lidong
 
-    $ git checkout --detach HEAD
-    $ git reset --soft HEAD~23
-    $ git commit -a -v
-
-and
-
- (1) I do see the "# ---- >8 ----" followed by "# Do not modify or
-     remove the line above."
-
- (2) after making edit near the top of the file, without touching
-     anything around the "---- >8 ----" line, saving the file made a
-     commit.
-
- (3) "git show" does show the patch after the log message, but "git
-     show -s" or "git cat-file commit HEAD" do not, i.e. "Everything
-     below is ignored." the message says was true.
-
-so, in short, does not reproduce for me with the info provided.
-
-Since I do not use vscode, my reproduction attempt used an editor
-different from it.  It is possible that your editor may be mangling
-the line that it is not supposed to touch, but that is not something
-I can tell.
-
-> Anything else you want to add:
-> related config:
-> core.editor = code --wait
-> commit.verbose = true
-> alias.ci = commit
