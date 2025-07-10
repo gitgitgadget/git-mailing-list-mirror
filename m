@@ -1,140 +1,78 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF4028B7DF
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:14:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856873208
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752189273; cv=none; b=gfaBOao1VqimdwPtiUtZ1rOwaMXhYBjh9DsUKTNjtQ5RsQ49j3DCmGsEnPAe9Y3rWVmrekgLOqr34VL7dnB++1+w4EvW9ofaQYL1b5RNLnbxJddCT5Am1pAXL5/kq666fpMRJRWdvRNqvxZkhrrqYuBvDkeNZwbTM896HNju6/Q=
+	t=1752189553; cv=none; b=jMEDsM9YKRzAIgWYLkYRw/znTmb6WW1FVThh53xB8f+LS7ubKsDGuLH/hJSbgR/4epc7d43yc720eXrWNmqSIBG2y6Dz+sspC8NZM/DLv7Ut5A4mtB/u9aCodNim598mK3iJQoc7p+oCZoOC6kqCf4lt/Y9jNL2bo+xRDf/Vlaw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752189273; c=relaxed/simple;
-	bh=Km837+LKK+l693qbT6sAONgFJlLafZgfiph6Qc8Cw9M=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m488f7tys7Ph+3p5+jLjS1+XoBYXe26ZqlKQ4zCyw25i6Z2RIWn0P5r6vbAar8WOl8hBTbCOhZc3hwa+5Kwwai2KFg+oXsvxJRXOaJ+0I1Y3sO3osXYiVtGI+UpP+URib2v0teXDAMn1NQ4D7OIJsd8Ai+5Pc/O9JnvsG5nEvXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ND8XNYM/; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752189553; c=relaxed/simple;
+	bh=HTgWe9w+/2+cyCiqL7g4hdHHh/IoDfrTdby/H0SWuYk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XJHHdD/0pEHJ2AWvAG9uM9dM5PXcIxh07QCyxDWylA8qI1WRFeX0y/zeKnLlG2OnTYDVuSCzTRYsAgSScEibVtJRFEvtzM0m8h38a4N6kc/XWtbXp8FqRv1T5UXZ8Hisiel5kZf5VuNY4p23pKiMk64NjrgGHpJv9ooLwB32vU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KJUPNw6w; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ND8XNYM/"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-710e344bbf9so15948287b3.2
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:14:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KJUPNw6w"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so1716857f8f.0
+        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:19:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752189270; x=1752794070; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=45ZBbL35eD7ZxxekwcaFyPLtZgjXw6rHkV8/0PjLpnA=;
-        b=ND8XNYM/+4g+qVrxRdrulE4OsPD1vPOcFSf3JmCdWkHvw0EImd7BndAN7q3gNIVG7B
-         PKz/AOa6b9cSsEu8ZwyMwS+qgsI1zsFtlqpXyMxTyNdE+yZ0T/JcTI9WDWyk7yVnEVSq
-         RhWvoNfdgIXcU6DG+zh1LGEjiUdjMwv1AIW4Y2JU3QF6qvAfvhlGcl86bdJf52VIPmOU
-         2A8AjJJAVuXKCBxpaOgLihBR5wdk8FaoZWX5VfFp7uQhGtkBbClDPCvjfq7HOGC2j88N
-         4ix6vVUWykkzNSetvC/QLNhyhf37+9iRVVTmbL+IdL7MIXmNRluSOo9fGPv57ALaK2kD
-         8ukQ==
+        d=gmail.com; s=20230601; t=1752189550; x=1752794350; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=HTgWe9w+/2+cyCiqL7g4hdHHh/IoDfrTdby/H0SWuYk=;
+        b=KJUPNw6wTHQ7pooJBKxpjaIB/lzRbVtbz/CKAkE9XMflK+4W30M6yNVwnhqFtI6rHn
+         f93hAED0nhr4ueSaacGahc82lxJctdHV5EcVm9d0B+Vdqy6r66hey8YKJQl/0zjPTfF5
+         aA0eOAx+CM1BeJVReUWcbx9LRKTuqrEB5YaJONczutK25P+jtqeSyJK6rpA4Hw1diWGs
+         LAvrMdmOUENfHeWHg0FjF35K42buFZDrO9yfz6ummOA8u8YfreWmgHrLqWjP+UQJNCig
+         +3otn/ZxB8sxBkaF3cYRlqBB6n3gRnUAO9awMutVy5ZPZ4KRRbGPLvPu9DlB87q4nzuK
+         cZGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752189270; x=1752794070;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=45ZBbL35eD7ZxxekwcaFyPLtZgjXw6rHkV8/0PjLpnA=;
-        b=JezOdMfslX1I1g7wKyILa265dXKhJqE0DcVEJYiX2UXkMFCJ3G6vfroy9ltoBjCo/D
-         HaiKkDxGB3edsS9tp4SfUKGNuEyTYZzT+kToVvrzFIkm7MFlzujeWCKNc0W4ooIJkyik
-         RAfLFO37OFax0kkn+Yj899P1UJ+Xsldr6HvBjCNNcaQPu3Dj7bnc3By5x8nTplEsYjEd
-         2+9J2ymWFUkE4boDVJ4d5XNTvv08ITGPYEci+CI7XRmQdV/cp/m7dyAr2n0Jcdr5Kpmu
-         X2069983GZ+j/MisHoNYJ84K8RwHuZbTtNOzbV5LWJrWuYYdJLni0oYX9Q8ZBj1rVqAd
-         VqOw==
-X-Gm-Message-State: AOJu0YyqP5GMmNyJqXY5Qg8+d1+LioKwvMeHVlsq53PPDmwWEC2zsNA4
-	T++IP+LFSUjZe670Wb21FdR3fNbZjyQmuYRKs5p9rjFHXl/k11yQA3bo99+a48uUV8IE0zfoYQw
-	ciiGBRzA=
-X-Gm-Gg: ASbGnctYFAY8V6tTTw5RP1NigiwF0YTAovMDagVqSFzATwisCgVKr3Xc23sWTUHXlQO
-	eOuU2jRVXzindn6WGuAbhhdtkhLXOB2QFYt2XuW4wkG6LPJuJCEbPSDBd+zXkllb4/r4UfNc92T
-	JtIcDkXHe1UVkMIZZLT13xXDUL775VeEUZvwa9E9sENFpqg/2JlKHysrJvjkR0Idlr2ZEu2v68X
-	dac5ysHQlSG5NZr38xqOjrHs7vTyM8G+D/9SM7ThFL+c0jS+TTpDFEaN4iPGEJNKf6JcYBhK4AB
-	fbHR5SPRBpW+oUnhm9IrhC0DDSmn5BhxgM9TJaRpufqGAt61Uz6Oj9t4aVfketHtV2tf3jwT7Io
-	gXdmcWuel5thdACcd4xFeS8hZMhwSc/4gFiqMUzUe9IjA11hSeSEg3FAwlWrCobqKInmp+A==
-X-Google-Smtp-Source: AGHT+IHj5yE68qz3grCELDAoTUPoGGFo593mwNAHoOliwxsov87NhB640E4k9mX7jVv6Rlyf6RybDg==
-X-Received: by 2002:a05:690c:730a:b0:70e:7882:ea8e with SMTP id 00721157ae682-717d7a619b4mr16684587b3.31.1752189270470;
-        Thu, 10 Jul 2025 16:14:30 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-717c5d5a71esm5117727b3.19.2025.07.10.16.14.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 16:14:30 -0700 (PDT)
-Date: Thu, 10 Jul 2025 19:14:29 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/8] packfile: refactor `prepare_packed_git_one()` to
- work on sources
-Message-ID: <aHBJVZsFRUUM+vXu@nand.local>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-2-f31150d21331@pks.im>
+        d=1e100.net; s=20230601; t=1752189550; x=1752794350;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=HTgWe9w+/2+cyCiqL7g4hdHHh/IoDfrTdby/H0SWuYk=;
+        b=sVIruMsAGPmf288L1sviUtvQLJrcNFXRzTlboseqCSPx0xuDX+B/lXVVr0vUI48fm8
+         cwpG3VFhWjzosiAx0UoM2pnWKboOZ+7m7JMSk10FdRxA5G8D/xkGOP9kdpH87SGzdqle
+         xtpN28Hs57q3S6y+zQNPhoB/8iXUDiDw5u8uJJ95SlwvREiq5LUVP6zWJjLyF0OVzKvr
+         /Xo5hdc71vRLhgBz7Lx43WND9dqQNyHPD01uKKMgtn/LjXt9JW7Wr2P8DJkYWhONDOBJ
+         01y2t1g2Hvp++dnIT8N+JfaBNtIbIa3kbsxvznOMEQF14t9OWIkuyKYJGAtKBSBPIGCd
+         56rA==
+X-Forwarded-Encrypted: i=1; AJvYcCXy+jXNzsbCHG5x5BsPax/F6O1khU08s2EyU69DI1rwowFl8xxhx5VCEqGvpPmNaqtKiBE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxI+cOARtg6px+Oumyy5e26uRDanOtn9KyMTqsWkK0MrbmEOfxa
+	adc1eLdYDhw0+kwGxQ0/+noJJ9I1K5NnVIrHbtfI6gbUpCg7rzrBTx/r6+VFqv17k2PK3dYtNfD
+	GKGFTy6aMmim8YLcT5bAG08xbcp+XYsc=
+X-Gm-Gg: ASbGnct1O8s1G2YGWWKFLQ4ecHezW3rYoNIKVeun7EPxeZUnIYHKVoT2KKR9Favm+6Z
+	m9hHGa2/BkR47X9eZ1S6sCWWH+hhaYhXZWyeZlxVFC5TbHjCNxsD6hhXxfBihUaUagcxdkXx+g0
+	08gTi5Wc/Y50puhgrH9unysjiyDGYQ6nPrT+oFSN2ETV79MXBMPjf6Z8wMQ9zdGH36hObsAw5IU
+	RZV48tTq2gWBaTiz+T1VjrAv0XvXnlwYP1AekgR
+X-Google-Smtp-Source: AGHT+IEOop48IbyuH7vQ7XUYLZOtPv8wvzR0i+xNB5PYkIt81UFLMVpop4x2rnwjYrOBZ8w4wQtS/s3lSVq9ejhgrK0=
+X-Received: by 2002:a05:6000:2f82:b0:3b5:e275:75a2 with SMTP id
+ ffacd0b85a97d-3b5f1c67c29mr938118f8f.4.1752189549565; Thu, 10 Jul 2025
+ 16:19:09 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250709-b4-pks-midx-via-odb-alternate-v1-2-f31150d21331@pks.im>
+References: <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
+ <pull.2002.v4.git.git.1752176743.gitgitgadget@gmail.com> <xmqqfrf368lz.fsf@gitster.g>
+In-Reply-To: <xmqqfrf368lz.fsf@gitster.g>
+From: Carlo Arenas <carenas@gmail.com>
+Date: Thu, 10 Jul 2025 16:18:58 -0700
+X-Gm-Features: Ac12FXwJMTSCxqVEgLH3K_SfPpmNBr2NIq1Uc0ly9MQKGi78VOoKgV9iAW4D2Gs
+Message-ID: <CAPUEsphPrP+EGgwX2od-ymcqrkehePX0kNavJRv08ahfesnb+w@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] daemon: explicitly allow EINTR during poll()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?= <gitgitgadget@gmail.com>, 
+	git@vger.kernel.org, Chris Torek <chris.torek@gmail.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jul 09, 2025 at 09:54:50AM +0200, Patrick Steinhardt wrote:
-> In the preceding commit we have refactored how we load multi-pack
-> indices so that we take take the source as input for which we want to
-> load the MIDX. As part of this refactoring we started to store a pointer
-> to the MIDX in `struct odb_source` itself.
+Thanks for the typo fixes
 
-The first sentence here is a little confusing, but may read more clearly
-if written as:
-
-    In the preceding commit we refactored how we load multi-pack
-    indices to take a corresponding "source" as input.
-
-> Refactor loading of packfiles in the same way: instead of passing in the
-> object directory, we now pass in the source for which we want to load
-
-s/for/from
-
-> packfiles. This allows us to simplify the code because we don't have to
-> search for a corresponding MIDX anymore, but we can instead directly use
-> the MIDX that we have already prepared beforehand.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  packfile.c | 23 +++++++++--------------
->  1 file changed, 9 insertions(+), 14 deletions(-)
->
-> diff --git a/packfile.c b/packfile.c
-> index 16efc2fdca3..b43dd2fe6cb 100644
-> --- a/packfile.c
-> +++ b/packfile.c
-> @@ -935,22 +935,17 @@ static void prepare_pack(const char *full_name, size_t full_name_len,
->  		report_garbage(PACKDIR_FILE_GARBAGE, full_name);
->  }
->
-> -static void prepare_packed_git_one(struct repository *r, char *objdir, int local)
-> +static void prepare_packed_git_one(struct odb_source *source, int local)
->  {
-> -	struct prepare_pack_data data;
->  	struct string_list garbage = STRING_LIST_INIT_DUP;
-> +	struct prepare_pack_data data = {
-> +		.m = source->multi_pack_index,
-> +		.r = source->odb->repo,
-> +		.garbage = &garbage,
-> +		.local = local,
-> +	};
->
-> -	data.m = r->objects->multi_pack_index;
-> -
-> -	/* look for the multi-pack-index for this object directory */
-> -	while (data.m && strcmp(data.m->object_dir, objdir))
-> -		data.m = data.m->next;
-
-Right, since we know that the MIDX corresponding to this source belongs
-to the same "object_dir" path. Having an ASSERT() here may make that
-more clear, but this change looks correct to me.
-
-I am still a little unclear on how sources and ODBs correspond to one
-another, but under my working assumption from the previous patch, I
-think this is right.
-
-Thanks,
-Taylor
+Carlo
