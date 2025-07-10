@@ -1,77 +1,97 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C229A1E520B
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 21:38:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F5E23717C
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 21:44:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752183510; cv=none; b=un2tICGy+8e8mK8iLbOITUILqkVTqUu528Opih8NkKXpXpd8IJhP9PHQ56B2szMsDwv8NeMTQlveZ/Cln4ZvxUQ4vDwmbQdPvoORNsGX/+dfqRnYpO6OgFi+JH48NJFNw9Wh+WlQDzzedWdFcb78Xsi3lVcTiWCrINLrN/pQWS0=
+	t=1752183861; cv=none; b=BLk3UvoanMVsQd/+2FuLzm29L4AnzyJctjZqB1OfdES/S8QWy+eXQa6rlAYUB2twxmp7XawadUBWy0PrFDZ18sjGj4EwVkWd5cj3awFyndTszBmD7OnScp8MUcErvgwm6EN7NpwUaHFDyDk7ZOQGuDNmN3FhpE/3aZU4RgdDjmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752183510; c=relaxed/simple;
-	bh=IapYYDm6+bGJRoKZ8++IfnGZqhe7PBE0C5G4wM4RhMU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=nuIhN5UeRI5Le7e75Z4Kh3pKsG+9lPDNzIBpD7UV2TmVRlypUeEAZ6y+aFTufwoF/1paA7/qNnFmE8GG6DpD1K3cHQwHDVTQ9idzQN9xwJfQA7D3Kh0PT6rs3TfvKwgttTBy1YqEWxO+bN4DjOmeojfUVrTVoQw4lpSuKb8YLmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7d5cc7beae4so23632585a.2
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 14:38:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752183507; x=1752788307;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=IapYYDm6+bGJRoKZ8++IfnGZqhe7PBE0C5G4wM4RhMU=;
-        b=xUtdiTxQ/Puil5ndA94Goqf65lChyAQUElELwJrX5OZCxsEFbDu9e1Mx5xiv062d4F
-         Saluxi2uLC5wzNIpl83njr1F69QtSYO+0ijdyuy1IhOv4ad+JNOymzryoerxi0kY3t3h
-         3LaGPqd775h4vz0a7gi4Z6ADw4VFJLz2h15pQmMbRGfbwPvxZNK+HVJtMWJ7JVXbX+AI
-         Pso5EnHAiyFNz8uOxaPKnzhOm44xGvqCAypxLl3ENH55l/VZn8ei5aPOMRs6tBh9anKi
-         RPr03XiM/AjEByk6sBzFIH2m1I6ZHRja0c0THA1i5reaGrMVLiEYhBqArmUPhzbZe0ah
-         RVjw==
-X-Gm-Message-State: AOJu0YzdrxIhf7b+LP0498JOrnWgU08KD38kmgA7Hb2k7+fNJmZKSbZf
-	MQAx1SbgO/r80clYGY9ciij3AVSxLg4mLJLBxvB+9TH53s7Dc3YqdP5rUl2R9vcpdxuXtJHLAXt
-	Fth8KBO9+5NKqb6N230bI9MIbQ7SrGas=
-X-Gm-Gg: ASbGnctmGE09itAI02hKUtRBM7vSx1TdhUXYGrjBzucJZfk94sddaqvt0/PHtbwupN0
-	2YmG6Xj5ohhlNDIJZFQ/x76R/MczQ5O/8aZyHJpXyJdB0ZTz+11qU8ODu/gn9eiO9k11YP4sJ39
-	Q7p2HJuLT01XN2GHE/f74unV69d2jpI9/k++98a6xQEUS0zLvvcPH3pWZ6MRcUWI25f/hj2iUtZ
-	edI
-X-Google-Smtp-Source: AGHT+IFG8pHRG2eiIsraWjWWywjrfytrOcmiZR5V6PQJD9c6qdAMo5GGfM0LL8Ce4aL/qTWG44yH/iH2CDThlhijxDs=
-X-Received: by 2002:a05:620a:2703:b0:7d4:2901:2b3c with SMTP id
- af79cd13be357-7dea4af9ab6mr7468685a.9.1752183507411; Thu, 10 Jul 2025
- 14:38:27 -0700 (PDT)
+	s=arc-20240116; t=1752183861; c=relaxed/simple;
+	bh=mc18lkYccH9+/CezEn25Z7dPshEY1zGROr/5DvwR7X8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=eSM8mp9bWzjbjxQOJS4ZzNcyl9Tw1BMkXuHzoovEr+27KiWoQWPf4EAkW0R/u/K2g96huHFZQo8HVxZjoTVvFqkTXFfFmFR8Cphqraat3pArMb7DpQ+mNSK+eP7lc2Ba/gTmzNr8srSdrdiferjwX/g8lMmkwymyLt2YKn7jLWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com; spf=pass smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=UvI9NJZm; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="UvI9NJZm"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id Zz3nu7nmp7HMwZz3ouTAtC; Thu, 10 Jul 2025 22:44:09 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1752183849; bh=TSk8itYWutrhZrIO08d3Gm6MrrCfi4fvIROQMwQmu+o=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=UvI9NJZmKunO1nC/qSiMAURC37Tn7IE4aoJl1bbYlrDLcpx4wyeGUjcfOvxGGxxHI
+	 PUjruWO/+YDHK9SDvIOOAPeVZgVP+3SD0Iz94YICEXvunbPNGjCdvjqr/tIPLz5ixH
+	 KBOJKq50ovVSDo9BwzypVMUH9o3yLuTlCW6+mV0tbQn4itTb3HjaU7S8MbZIBumMId
+	 xDQTJncfg75T3sCjTEz21mB1Uv04ba9m8OjomiMPiLnGYGsqSjmMiCZSP6Ex0CAJra
+	 6+ZtQ51qbBaTP4OOV7xemHZJTlW1sYO3DxZYzA4vIYVCbcx80izTRYTT9y6LB+P09+
+	 8Ox/1wVOpWZlg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=ZNB0mm7b c=1 sm=1 tr=0 ts=68703429
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=EBOSESyhAAAA:8 a=1eCY9CL9KBXtGoZ4x6kA:9 a=QEXdDO2ut3YA:10
+ a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <61a9185d-8ed8-4794-8f7e-1ed64503cc62@ramsayjones.plus.com>
+Date: Thu, 10 Jul 2025 22:44:07 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
- <pull.2002.v4.git.git.1752176743.gitgitgadget@gmail.com> <f21e8ff5c9df0989ce09b3d9a50c0dc81af18837.1752176743.git.gitgitgadget@gmail.com>
-In-Reply-To: <f21e8ff5c9df0989ce09b3d9a50c0dc81af18837.1752176743.git.gitgitgadget@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 10 Jul 2025 17:38:13 -0400
-X-Gm-Features: Ac12FXy6dY-u-tE4eqOezjXjEFCNDrb7V17yTD1N-j1Gg5PSGwMqbRlQF-yDY_E
-Message-ID: <CAPig+cScQN7O-cs+-9X+RpjQqJUstD10LgNYZqSHFwyAdRL+Cg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] compat/mingw: allow sigaction(SIGCHLD)
-To: =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n_via_GitGitGadget?= <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>, 
-	Chris Torek <chris.torek@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [-SPAM-] What's cooking in git.git (Jul 2025, #03; Wed, 9)
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <xmqqv7o08ocn.fsf@gitster.g>
+ <f614e1c8-91a9-4430-9d60-5aca05170b4a@ramsayjones.plus.com>
+ <xmqqo6tr698f.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqo6tr698f.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfO2mtdbGXIHBLXLcqeW2tuJy2g6ZgwSG8MkAbTSPx18voqLkZiUJt7TZXHmCNJ+1mm8xTjpJJZ/MZYblQRhrnwAZBE+AljrMbVExfDBzA5P01AbsQxn0
+ myjD9VmfbEFX68wj8Fk9j8+Cjaa8VKVjQF2kPU+fMnJNCJPUriMAchgB9HZfcVB2YYBVtLKgCByGPRPaxLWkn0nRw2U9qohHCLM=
 
-On Thu, Jul 10, 2025 at 3:45=E2=80=AFPM Carlo Marcelo Arenas Bel=C3=B3n via
-GitGitGadget <gitgitgadget@gmail.com> wrote:
-> A future change will start using sigaction to setup a SIGCHLD signal
-> handler.
->
-> The current code uses signal(), which returns SIG_ERR (but doesn't
-> seem to set errno) so instruct sigaction() to do the same.
->
-> A new SA flag will be needed, so copy the one from Cygwinr; note that
-> the sigacgtion() implementation that is provided won't use it, so
-> its value is otherwise irrelevant.
 
-s/Cygwinr/Cygwin/
-s/sigacgtion/sigaction/
 
-> Signed-off-by: Carlo Marcelo Arenas Bel=C3=B3n <carenas@gmail.com>
+On 10/07/2025 22:12, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+>>
+>> How would you like to proceed? (yes, I haven't written the commit message
+>> yet).
+> 
+> ... appears near the end of the message, and the way _I_ would like
+> to proceed is to make sure two parties involved in overlapping
+> solutions to the same problem talk to each other and come up with a
+> solution together.  The first step to get you going would be to CC
+> the other parties involved.
+
+Oops, I had intended to cc Patrick! :(
+
+> If the controversial step in Patrick's 8-patch series is relatively
+> independent from others (which was the impression I got from "more
+> or less random cleanups and improvements"), one approach with less
+> friction is to simply omit it and make it 7-patch series.  While you
+> and Patric work out what the best approach to solve the libexecdir
+> problem, the rest of the series can proceed without waiting,
+> hopefully?
+
+Yep, that would be my preferred route.
+
+Having said that, Patrick's patch does remove the regression, so we
+could keep them separate if that is preferred. I don't mind either
+way. :)
+
+Thanks!
+
+ATB,
+Ramsay Jones
+
+
