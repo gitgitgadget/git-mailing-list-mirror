@@ -1,107 +1,97 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C7228C02A
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:26:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B6928C02A
+	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:26:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752189980; cv=none; b=f5Sn/EdMcVr4arhkJARBWARjJ+2+bo+Au14hRGofOwQRjmKQeCqh0XUtxihSMEGvNRwuUPMyGTeOa/sqVJ5RST/kcCcqQdbNxWYzmh1Nc9i75+R+r2BrubaqzLnVh83UxBjclzXdzSkjelIHmAhRvMkWht0kuyC/V5zu0NWoTSQ=
+	t=1752189983; cv=none; b=F3smuw5dfaZuldiYO5bJq+PJXlVTd7tgXLNv9gZaN/KFjYs2aajkXPj/c1qZxTiKB3Al5tiy2Tc7ocEigGDYV8RNd4n3XqdteFR2QWfmx7PQg0AC7FMmGgNFmh/SRRapK838dl8GqdSpCef0j8CF2t4s6vGlNYe2g1Rq0pDJT+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752189980; c=relaxed/simple;
-	bh=rBIbHVTl5FCOo3XsAJ//bUcgEAwGhwb1qkJ5k1gnR+U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k6lPnaHof01iEBzsvGc/tnGk4H2xqaXRA8BdZEgf5BpbCRVLmuPTqtVmxxCprxxY8JbduPQ7knDl0s35pbejXv+/yK2TysnV/rEMnKL7qhDE/sQnZueVdMvuBrMUoSt1ddm4nKrpHdq8EHjW6ZAw7S7DPAsMrAsJcQyM5vsipPk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=X1oONtUp; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752189983; c=relaxed/simple;
+	bh=WQ/+M805VPMqR9HkRiYnY8kPN845JDQq5LDD878BWvs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Atlc2+qPRRtg2QG/HKwB2jF6xKxbowI54MK3igMVLmj2a7BlrPqTJRnBInV9KTek4IqQfsuAmAn/EbsUhXzlX1Al2EqiIqFMeoXf0RLGNgEfKNR4hbutrNvrnuHU1n1cPczYSqzvDs5inzVg0QRcSwXCQEfpOwS+18Fgkg16Zjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c7kqtARW; arc=none smtp.client-ip=209.85.216.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="X1oONtUp"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e8b62d09908so1412383276.2
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:26:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7kqtARW"
+Received: by mail-pj1-f52.google.com with SMTP id 98e67ed59e1d1-31c4a546cc2so589180a91.2
+        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:26:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752189978; x=1752794778; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=rBIbHVTl5FCOo3XsAJ//bUcgEAwGhwb1qkJ5k1gnR+U=;
-        b=X1oONtUpyh8ReKFbqzuoxPDbTjyTXTx7IfJK4pmoKcGpkdt4zTZt7x+jiq1ApMfsaF
-         wik+uJIWWjFTsAMZjuuS07lJOol9nNBWwVIKaQyOHZnfoCavDnhH9ufwQgVb6AnsZFzk
-         0j08zegWK3muN1RWR5NMg1aEHir49NJCae2aSFWZhMch2V7hBE82H/qYpC7n4I8sAFAp
-         feDAsFJuZnk6Odn1y8MiTcYSBpZKWDfuCySRlt3Gt/l2tRUBTjcBayQqk0vjTfM5VgIX
-         z7Mctxi8Z35+oQqjtsCejR0PvIJrAVdydjkNDZePC6LhgOTk4wf+m6dyj92xK6jhw0NQ
-         o9ZQ==
+        d=gmail.com; s=20230601; t=1752189981; x=1752794781; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=XBN77VG/PjKE4KrutNgnTohGBpbrJJPOBvgQh8RP3ZQ=;
+        b=c7kqtARWjPrfkM1zqmGll5l7AO4CrLVf+RxKNV95iBzQ+3Z7+RF76BQ0JAI82/U+Az
+         T3EsNEgj6Ggdz6KiE9T3QJ9oRR/+OFJtPxZ5p14HsO4NI4s9fE10G5C+uGMjAp6FYabA
+         EbU3XeKZqbiW4JxGNf+CTn2/FNnmGYXUgkoWjBoSBNPH5I1nG+LxkeZT1lh7RZXIVyWn
+         RkDIciUsVMYmyb02DA+Uj4o2HjPIjZe5wMqLdLjfgVkL2LmPn4K3+JU1xE5qweoBUI6Q
+         mT3vVN7x4yjFaWRKV8+dQS9/KbVHEbB38oAN9d9gwg+VDYp3BSft+Eqx0fZaJya3B7GG
+         +3cw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752189978; x=1752794778;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20230601; t=1752189981; x=1752794781;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rBIbHVTl5FCOo3XsAJ//bUcgEAwGhwb1qkJ5k1gnR+U=;
-        b=sxFoRGYCNKEguNdfg56Py6fBK5isNVtjCNGXIesuTVf2tqGX4UTglcKNHJ3hMqvUrR
-         VQJJcW0yoOGvnrrzlXSmyxrosvy5mY1vYUhXfDrGNwzAxbIFfixTjwDxiGlWG2lN3DLP
-         Lj7Wq/Nfj5GmoRwHPuu3VJAyFWw1Cv/QhSMh2SQSqiGF3Z/HKdFvaztxN0lMJcljD7uQ
-         upv2Sj2jJ5TWANF/u6lkpW5Y2L/5wugew374Ujt+rglkGDCNjr57TV6Lk/kPKg+I5vhV
-         bQLg0Xta8nl0vDMEF8nLLLiqUPclnXooAbTH4wag0LwjI813hU+die5ime2BVygLT4Ke
-         LiUw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuJ1J4HfAKH2wlwNweJWQMZEKp5aiFXO//Ccpz7GaX+uc2Uq+Xi/FtJ+9jjCpBbSM9EQE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9PLOKKQSCGPiC4pD0e4jHKamniVAwSV3D8Es66RXg9bNOqLRH
-	ey0zq+C6VapFixaytK7MUF1QnEAZTnEwqu/xuoqCyJWEizem6RO7RVm20RQ7Cmta+wI=
-X-Gm-Gg: ASbGncvz+Rnwn9Is+V776eGbRkv8T5DyKlRUC5LBWhDngdC6H5sY3Ct5zVT69rr8exY
-	F4aeXqL6HrL93PwUZoOcOm0osl2GckDWKWQukoWf6yBYPVAa9+zxW+1W+vNrIL/wTne+T7HNzdr
-	3SeYRJJLWS8wqkDeCLaR2Qnl/c7UCz4pEgQBnwEWZpEyG7ga9cqf3ODTHzw0ZRc1QqAt8Yc1yKk
-	vAZJ/QzCzrKFwqsZrBxik2Ek4gZQ/OJsjBbGgDFxwBWcIJht8tfJmVlV7+5sNLj/5B1QSJGjqJQ
-	KbEW1RsxuOwzIwuN4V31SDI7txOm4luMPOc7T7xPxz9wA42EH/kyy1pHxdPv8e/iDw7HN5dnvFc
-	A7t14j2lMFVgKa2eybNrZu3g7vKM+lcHIGTxaw1cvip5Z3ZEwjsUmYthc08N0iNXZjqKbaQ==
-X-Google-Smtp-Source: AGHT+IGKreakWCA5GtqRdE2yAU5Mx4FGct8Ldx7xyov4LUzQQnR9soTrB/1jlZgFgcxslQkEgK6XZA==
-X-Received: by 2002:a05:690c:708a:b0:70e:142d:9c56 with SMTP id 00721157ae682-717d7a1c4fcmr16616557b3.26.1752189977854;
-        Thu, 10 Jul 2025 16:26:17 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-717c61b4d04sm5097937b3.57.2025.07.10.16.26.17
+        bh=XBN77VG/PjKE4KrutNgnTohGBpbrJJPOBvgQh8RP3ZQ=;
+        b=VaBt1FfGjZBwjKgJgpEhoN+nfYBn5/oZ0j4qP8HuYJR5TJiktf/yVvdsAydwGZPhXd
+         1dPOSTlJD2E2zQ5Q2h9+DgB8wgATG4v/ACpadSfeQ9rlHz7fZBFNU/9IFhgPKuXNjXYa
+         KGKM2kpA3wB94mlJxg0+V+WT8Ri4piMw0bmPVIVVD3fvDL5JJY3JCFdisw5NEh2mFudv
+         8hkJnfcZKb8Xqx7uobnZVs2arj8HBE8qQkt66Q+GYg41l2ZI+RGv+IhXjyUKsoqUUSMh
+         32m6S6cOJsnZSZkFKiQuxIAn+Lw/sg20mMcxyXZ/JHhjZ1FxFWV1TFFP5j8ihf96RhPz
+         iQxg==
+X-Forwarded-Encrypted: i=1; AJvYcCWngy3ax9axOHKthd64MexxOeKUZCd5d7hCFtYols7yd8vOj+mN1nBI0NANEA9H4UjBEis=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyaXflwTkJX3JxgSb+Uwuhp1uGgEuHBdK6Ra/DIdqLXGFHu3MUC
+	FwFvMp7f46jOxBQ50k1WiKRO7+OwTMKRphbpHOaldcTjzZg4wD5nnCmx
+X-Gm-Gg: ASbGncvJqhq/Nbte62lVD6mjMpOui+jgCGUFOkENc2IrW1hMlRafbTbL+mSM+/li7F8
+	k7c+A1Y8Ki45rsnCHh2GB15Ayp4GB80bH+yq784KCG2LCJFyN2o35dEATRYzj15OOZ72btd3Tni
+	Wx3ayTS+8oqC5Q3ymo5kXRbAx9lmXv4EySeT9YV7HgRaMpt9YUj4JgH698KKxTmv7Sruj6z6NLt
+	4eweTwvXdyKbHYL/wI99BLJAssQUFTLdLvZSeWKm/mK6Xbc0P/WwU+Aonb4MQMFDeDtdpD4diqH
+	p5qeufGMJ/p8shzNtMnJbAvglELMVqENxmuz+E4dp25e94oVbLTbvGUjmmL5g/MyUCn12+fK9p0
+	ZmhX0JjRWApdWyTbem/M+FOMgxOUpURcR+7kcrMo=
+X-Google-Smtp-Source: AGHT+IGqEoNAI03UWfkMynCWJBebwfCO7cGwx4A61BLwQfO5b6ecmCnf4nmppCpkh7CowaNj9tKxww==
+X-Received: by 2002:a17:90b:1d84:b0:312:db8:dbdd with SMTP id 98e67ed59e1d1-31c4f54963amr516870a91.28.1752189981435;
+        Thu, 10 Jul 2025 16:26:21 -0700 (PDT)
+Received: from XTHCYRY1WD-Collin-Funk (redis-162.tisch.gvad.net. [207.135.66.162])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c3003d2e8sm6541063a91.8.2025.07.10.16.26.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 16:26:17 -0700 (PDT)
-Date: Thu, 10 Jul 2025 19:26:16 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 4/8] midx: track whether we have loaded the MIDX
-Message-ID: <aHBMGBHaD/Yfx/uT@nand.local>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-4-f31150d21331@pks.im>
- <kmprav735ntlgo3x47ptxyhqc6c5n7tyyub5c545gw2g4achng@sst72rcazce4>
+        Thu, 10 Jul 2025 16:26:21 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Junio C Hamano <gitster@pobox.com>,  git@vger.kernel.org,  Taylor Blau
+ <me@ttaylorr.com>
+Subject: Re: [PATCH 0/1] Filter C and POSIX out of Accept-Language
+In-Reply-To: <aHBH0nRLPxBg2HAj@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Thu, 10 Jul 2025 23:08:02 +0000")
+References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
+	<xmqqfrf34qdb.fsf@gitster.g>
+	<aHBH0nRLPxBg2HAj@fruit.crustytoothpaste.net>
+Date: Thu, 10 Jul 2025 16:26:20 -0700
+Message-ID: <m1h5zjk4pv.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <kmprav735ntlgo3x47ptxyhqc6c5n7tyyub5c545gw2g4achng@sst72rcazce4>
+Content-Type: text/plain
 
-On Thu, Jul 10, 2025 at 05:16:12PM -0500, Justin Tobler wrote:
-> Looking at `prepare_packed_git()`, it checks
-> `r->objects->packed_git_initialized` to see if it has already been
-> initialized. If the intent is to start calling `get_multi_pack_index()`
-> for each source individually, doesn't `prepare_packed_git()` still only
-> execute once regardless already?
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-I was wondering the same thing. Perhaps that packed_git_initialized
-field is going away sometime in the future and this is its logical
-replacement (at least for MIDXs)?
+> I'm not aware of it causing any practical problems for people, although
+> I could imagine some cases where it could, in theory, break things.  I
+> merely noticed this in trace output and thought we should tidy it up.
+> If users are using the header and expecting a localized response, this
+> will make it more likely that they get the one they were expecting.
 
-In either case, that would be worth clarifying. If it's not doing
-anything (i.e., because we have no plans to get rid of
-packed_git_initialized), then I agree that this patch could probably be
-dropped, but I suspect that I don't have the full picture in my head yet.
+I feel like it is a bit strange to only exclude "C" or "POSIX".
 
-> > Address this issue by introducing a new variable that tracks whether we
-> > have tried to load multi-pack index of a given source.
->
-> The contents of the patch look good, but I'm not entirely sure
-> introducing a separate variable to track if the source has attempted to
-> load a MIDX is useful.
+I think the correct behavior would be to accept any values, or convert
+the current locale to the closest BCP 47 language tag.
 
-Yup.
+But as you mentioned converting them would require a database of all
+tags...
 
-> -Justin
-
-Thanks,
-Taylor
+Collin
