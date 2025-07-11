@@ -1,65 +1,65 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25B02EF9B2
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 16:18:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6902EF9DF
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 16:18:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752250730; cv=none; b=NMCipCv33pSJtu3IPT2XVMSS6vYGO5Bj0xEQBSmDyHzCtY8t75Nxw9JY5SUTqhfa8bwuXtfQnz3Y+MGbmWjG6RLormg/hHYlLGSclzb7BhhCZqqakRZxb/HCLKekdZBVycp6UztuxHvWk953PD2bHF0vDSmJbtFZQ+x2WemArj0=
+	t=1752250731; cv=none; b=ST1o9d4xJ7SxGYPh7PBNHY4STe///BY2myd2DIhXB7tKw4/cl9XJ115gPOnlelVbYfBrg6Zw/dKEIcc27Mm8ucuky7klkGFnzTXEPTymKYcA1aeoOnZBaAGy4tvyyPFMV1e7X7TXMCjPJ7jDxmRT9mPzHnCc1jP+i5npOdby4CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752250730; c=relaxed/simple;
-	bh=JHEPY2I86R1SQHoWAP8b51YlLJRd/1bFVlptoJh2xUs=;
+	s=arc-20240116; t=1752250731; c=relaxed/simple;
+	bh=Q8cdp+vuidbJ7PGCIfLVnWmU0LOxcuceVnHgZX3Bh3U=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Rk6bPjYmzkYvQNJa+/cdT1/0ASZNOmmfRO85nmxZSiT8X5P0HdJMtDIislRaQOKWxd0iIRYwTWT+S0QDNmcj9+ELOy1b7wOg0vpRFYM+wBHXKgvhM2GdyuwOypq5CY5ZM0bcjc2n7bPRqCaxn4TOrAKDq9wKUBy/C6BxBXL7IOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZRt8kHgj; arc=none smtp.client-ip=209.85.128.51
+	 In-Reply-To:To:Cc; b=ELgkHSNs+kG+8aWqapovaRABNKRdCEjouZTopLpWHjJDH76LKlBck70gWkz13gOcefDVA2TzfIVIcXHqaz6cnhLC5wCX7uhdRkfmeMsVTCGVmW48PJnkCOE7O2yJK1Lisn04IkqzAsUUl1ZepZgs7O91xQVPj+NTXYJGtfAECMw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fttGvWM3; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZRt8kHgj"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-454df871875so7132425e9.0
-        for <git@vger.kernel.org>; Fri, 11 Jul 2025 09:18:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fttGvWM3"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-455fdfb5d04so172005e9.2
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 09:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752250726; x=1752855526; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752250727; x=1752855527; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=w2ZS77XRgUA7p/3S6TNil6+kpOF3plwWACj5jE5PJ44=;
-        b=ZRt8kHgjXU7S+lh9JhhxUCUoEZfH0MJoWdHAdkH9c+EMr+LOB6ziyjPAQMQbF5w5G3
-         4jlQLP2zKSwGFiVSMWzpeiv6Z86lf9fn+qXw6EK1CvLHF3HMtoSuQTRViuMH1iKXdp4G
-         Tn8FjRGiGM1oIPJe/+qLV3ewiJLBrznUtxWtvrh8EQOpvK5mE8YZcSlXbBXoNDzf6pZL
-         BMSOJS84gLNBoOa2lfJi+iAGdhnLTdf93mulywzZimvA0LIJ+5C9pq0OBfbaPQDNjyeq
-         x3aIKhgdsnfbB06BjjYK/FEADQnuc2lLuaP5pFncpkTLBzyGlzNw/WXSUkxW0TzzYFXt
-         qx9g==
+        bh=EFHVQoNlAax8Q3wO5OYYTqA90at3VFWLygfW7z0EmVA=;
+        b=fttGvWM3e2mg+/OAuRT+fAJbgHAn0wCTPtEs9YuzGCY1fBzY8ASzqXv7B/AnqZ+9VC
+         ItnsWO8A7QcE1nuSCEYuDkWrxYGHZX+7wM2FTCSk9LDjoBFp9NipMTtRDdrUT+5uhG+O
+         OcqKbUCEEgYSihe2hAUvzGPqomdK9VTGP0mColxWMoAZG8zbWD+mNHUgGUHJEL4AtluA
+         CpgB25xIVkCeNUEnf0Tk3r2+ovmEuT9gnEbRKGQxizWKfm4mIfWVn/vs8vHOW6Vjo3Dx
+         qo6WN0vKBJDtndbdx/IutwqBq3OeEoHOraxGEMbFeHxFZDpR2hC0St3bHj8K9rFplCwD
+         tOYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752250726; x=1752855526;
+        d=1e100.net; s=20230601; t=1752250727; x=1752855527;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=w2ZS77XRgUA7p/3S6TNil6+kpOF3plwWACj5jE5PJ44=;
-        b=wB/e6pUMu4ckDE6CLsRm4cBg3jGV0V3z7c0iAJSNsv+ZR0Onrl4DmAbvjDDjDax4fw
-         9tWBg4sC2bkxNPUA5z9o/DVz6fAbqBjtuUhOliKZ95QFpHLF/MwSATUVA/tWt1XAYWhH
-         ktJYQ3BoOzSJOhCLRYqbEInINrUB3ZgqsKM3BIo8kZ3AZMwAdjvP5eMyx1YnY/J4fAIZ
-         FsjAqa8Sixhalw7hp1bRbAXVx1wxTS2wEZGFbUgY0zbBhsskrUPP7bser942+HpzX4nG
-         wBea+vbKQJtirM0aWbU+prxs2G/KsLdXuOczC2Ti9XdxuUBj2JewlyYlbfBVzxNLqGAN
-         t0JA==
-X-Gm-Message-State: AOJu0YzHnnV6nymnPzQ4CQ5bNkIKDzCo0CCvX2asgEBzPZDH8zV4l1uN
-	cJmTWOoE8kBkg40BJIoh+oAnOicWmocdqMPPTe+/Q9xWDLW2U4aInzdU
-X-Gm-Gg: ASbGncvi9XPlVnUiXh7qozlDiVDrPwdQBFdKTBNfbLaeKy8ENbvl2Y9Yp9gfHpwTMDc
-	YnUfLLiTM7j5D3jRxfPZ+gsEPIrSbiqOMPIvSygMKaprWKA96S5F6XkLvzb5PFkINplN/kiqI3h
-	OWT9OijHURf2ROyDZ9/ygaIIBqvg4zrRWtQuOlDCrmOEhEbJuY0xpKVegkh0trNBptFiBsTxLlW
-	3zelunF2QtfWKpEzYycqh4/teSKXm4xdCnTu355Cb8WMbX8IN8XKrj3vyFtImqnh7THOkP8dXig
-	Ek047kE4B/vprc9tAWh9eAXXrvzhHZ5U67pw650MQYRWCCBtx/YGisISg9SDq9bloSNuneBjZDr
-	GA/zs9g==
-X-Google-Smtp-Source: AGHT+IFYkM0pfxMiT6I4FRCTS2m1f1moATbcUIgvNhhMWXa3u7O0kCOzJp3v7gWSz8Gw3KsyugeBNg==
-X-Received: by 2002:a05:600c:314c:b0:450:c210:a01b with SMTP id 5b1f17b1804b1-454fe0f93e3mr45317075e9.17.1752250725934;
-        Fri, 11 Jul 2025 09:18:45 -0700 (PDT)
+        bh=EFHVQoNlAax8Q3wO5OYYTqA90at3VFWLygfW7z0EmVA=;
+        b=iPNc1lD8kPFjREUni1yBe0HlK5Ny1SADJc0QTmAym1Tuo6q7Si++8l59VM6/eWJ9JL
+         19lptGRtyzgyVZzxtMZXkXAC8XzzIOssUTmZO5Rbok6qAJx/ELKEMONUeyG1dEdwRPIh
+         CcS24iYrzaLXPR9f+AuMVJaegCjHeclVNOZcygI1ehSvsnTK8i9WON52GerPMgNv4Xep
+         nsjhZgE97uYW/UmyGHM0GAxGp5ZCf2yVeY/iQK+ofa+UktvQCd6zaTGjGujBucinA2Yi
+         p95K71TDXNEeNOLn+vaVxanBrAvLQMefjuL5jecL3vjk7feY4UDSkuKD04l4dcyKfhPy
+         o4zw==
+X-Gm-Message-State: AOJu0Ywd5JcatAFDsp1rupcWY4l8IT/aTasXkRJYTICt81NkJO1Wu5Bl
+	EW4g+KYs3NOKpNzmitCIlSE041tPb2hpiRuWOP5LyUqgp4f/cyzKVLUz
+X-Gm-Gg: ASbGncv/Ut+H8JwPfq+vN8R1GTaZngz1b81qJcfLv0zCNj59qZSznDvpPdUNjPx5prM
+	8ooJNDFe3KMDuUrPCI+o3QPrOCCDH3jD/MEm6xNAYJEFiFfqW6R7aNUQmLJ0wPSTkv2efmyJYhk
+	GEJJ6EabXrALeHRnREcZ8O8CQbqBngDF3toAQHiGR5Bc7RIjOEdonFyOLzVZ65lf2JhbKUHdzHA
+	s+z2EN1ag7t3/3tBd/Bz3dgKVz7MJ1H/AOhhjMjUiB6jsNRrtTr9u5/rT9bgTHxx+hgw1npNzb5
+	MrR0584iV4us0cSU2Sjf9USEb5RhM0rFwtPZ/Ptx1BaTK3D5BQYNubClHRxUMd7dx1UwtCyarVL
+	K79YNcQ==
+X-Google-Smtp-Source: AGHT+IEWjsmqjBUCpSg/Iiqps16Rkx6MR2j0ZLahkcuXbFpz4uOnAK72UPyDYRrMku8+c71mqfxU6A==
+X-Received: by 2002:adf:9c87:0:b0:3b3:9ca4:ac8e with SMTP id ffacd0b85a97d-3b5f18d2a80mr3009073f8f.44.1752250726789;
+        Fri, 11 Jul 2025 09:18:46 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:5049:80b7:8726:cf1e])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454dd55b0e4sm51293955e9.39.2025.07.11.09.18.45
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-454dd55b0e4sm51293955e9.39.2025.07.11.09.18.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 09:18:45 -0700 (PDT)
+        Fri, 11 Jul 2025 09:18:46 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Fri, 11 Jul 2025 18:18:39 +0200
-Subject: [PATCH v4 3/4] refs: selectively set prefix in the seek functions
+Date: Fri, 11 Jul 2025 18:18:40 +0200
+Subject: [PATCH v4 4/4] for-each-ref: introduce a '--start-after' option
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,475 +68,491 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250711-306-git-for-each-ref-pagination-v4-3-ed3303ad5b89@gmail.com>
+Message-Id: <20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com>
 References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
 In-Reply-To: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im, 
  schwab@linux-m68k.org, phillip.wood123@gmail.com
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=15979;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=15324;
  i=karthik.188@gmail.com; h=from:subject:message-id;
- bh=JHEPY2I86R1SQHoWAP8b51YlLJRd/1bFVlptoJh2xUs=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhxOWIBw4xiSAlANHI8iiwUfaw710D7W0yxz
- mYSI3bXptIhL4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJocTliAAoJED7VnySO
- Rox/5poL/32Ru8omAb4elNGlRgnToOdluq4WgSTZzZ0NtxjSpeRIM9nZq4zGLDl57MbEU/8tImW
- CyFp4C3CqS8mf/xI5i26bNrRjshwpnTCtBZXG97pYn5oB6FI3+1Q3yIyyvrSAHNB6p487B37ZmL
- Ua9zOQAh+Rs57WIwt+uoaMkt6fwPh8F971M0SOzKZThzTkQxCPVklGFjbxE+8OYJaxI+amblnmY
- ufxraK6W1B+JziPPTvSK2Hp30YFJEdU4vBAbKRkx3yESDpYrDHmyAYV3PIJpvJZTMzv5veRYu5g
- PYZqprG0KhMKjO1UemPL+NT7ddeKmNgXcJHK9TzQmkVl31WvSwUXf7UhKa6V8snQArSyZv4TBpr
- fyg6XuI9Z4SuZOkJLsqsW4i4X+uFMyTwh20zJESY1DLiZdfSfxxnFYMvkPYX1nK0fsV4gnorC15
- VvyBik7DmuWYBYfxNjOOVojFvPTDIMwmYzCCheAEDMVt8/t/yNqiitQcHrc9CXijamc+BIQGJ56
- Vc=
+ bh=Q8cdp+vuidbJ7PGCIfLVnWmU0LOxcuceVnHgZX3Bh3U=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGhxOWKn6SE41UvisEFQ/5r3xDreajtoHB7sY
+ mPJyZFEcIGIlIkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJocTliAAoJED7VnySO
+ Rox/vIQL/RULUu8sa/e0Z3h78EsEoyT13k3+4Er5pSqzJFzf+T7zasChOArybufw8vPCmYlqDF4
+ VpN0YO0DfNjX26zgqqgWU84OLhITh5AW8qQ9z6qB1d6EVfLIuJuU4sEm1Ii8FHo0pQCCXcE3taU
+ 678har0G7RMh+8A0RWbabxY93gSiS2rBmvltqAt818yV7JvDR/j8U18wiOhGjgDcO8VImiIsOUL
+ SYCgRFjfp5L3RNu4OHoHW9pe/vS8EMjdU89pURZXBjnw6RUPuAtzG8mF5T3CNtQxVRq/FtoJDot
+ M+ve81brZtVb1L7LMYukE+FwvD0nDwI2DyUfWG6O0EAgRhrqhi5bvkqXNDkPeiGyhVphV35/oQw
+ xlETXqIyi+1ohBWSBPRR/C/vI+t01oz6TpDyKhb4TkwCIHSx6/E34o2xzvwUR3cpExiQ3SYgWwF
+ tHRb68BREnqpqC0ITNtruF3t2J5F+LKfrCOzB9+wJNHf6rBNFbsYeEUIRSN4LgyfruqmZyh2QF5
+ dw=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-The ref iterator exposes a `ref_iterator_seek()` function. The name
-suggests that this would seek the iterator to a specific reference in
-some ways similar to how `fseek()` works for the filesystem.
+The `git-for-each-ref(1)` command is used to iterate over references
+present in a repository. In large repositories with millions of
+references, it would be optimal to paginate this output such that we
+can start iteration from a given reference. This would avoid having to
+iterate over all references from the beginning each time when paginating
+through results.
 
-However, the function actually sets the prefix for refs iteration. So
-further iteration would only yield references which match the particular
-prefix. This is a bit confusing.
+The previous commit added 'seek' functionality to the reference
+backends. Utilize this and expose a '--start-after' option in
+'git-for-each-ref(1)'. When used, the reference iteration seeks to the
+lexicographically next reference and iterates from there onward.
 
-Let's add a 'flags' field to the function, which when set with the
-'REF_ITERATOR_SEEK_SET_PREFIX' flag, will set the prefix for the
-iteration in-line with the existing behavior. Otherwise, the reference
-backends will simply seek to the specified reference and clears any
-previously set prefix. This allows users to start iteration from a
-specific reference.
+This enables efficient pagination workflows, where the calling script
+can remember the last provided reference and use that as the starting
+point for the next set of references:
+    git for-each-ref --count=100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-200
 
-In the packed and reftable backend, since references are available in a
-sorted list, the changes are simply setting the prefix if needed. The
-changes on the files-backend are a little more involved, since the files
-backend uses the 'ref-cache' mechanism. We move out the existing logic
-within `cache_ref_iterator_seek()` to `cache_ref_iterator_set_prefix()`
-which is called when the 'REF_ITERATOR_SEEK_SET_PREFIX' flag is set. We
-then parse the provided seek string and set the required levels and
-their indexes to ensure that seeking is possible.
+Since the reference iterators only allow seeking to a specified marker
+via the `ref_iterator_seek()`, we introduce a helper function
+`start_ref_iterator_after()`, which seeks to next reference by simply
+adding (char) 1 to the marker.
 
-Helped-by: Patrick Steinhardt <ps@pks.im>
+We must note that pagination always continues from the provided marker,
+as such any concurrent reference updates lexicographically behind the
+marker will not be output. Document the same.
+
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- refs.c                  |  6 ++--
- refs.h                  | 26 +++++++++------
- refs/debug.c            |  7 ++--
- refs/files-backend.c    |  7 ++--
- refs/iterator.c         | 26 ++++++++-------
- refs/packed-backend.c   | 17 ++++++----
- refs/ref-cache.c        | 85 ++++++++++++++++++++++++++++++++++++++++++++++---
- refs/refs-internal.h    |  7 ++--
- refs/reftable-backend.c | 21 ++++++++----
- 9 files changed, 152 insertions(+), 50 deletions(-)
+ Documentation/git-for-each-ref.adoc |  10 +-
+ builtin/for-each-ref.c              |   8 ++
+ ref-filter.c                        |  80 +++++++++++----
+ ref-filter.h                        |   1 +
+ t/t6302-for-each-ref-filter.sh      | 194 ++++++++++++++++++++++++++++++++++++
+ 5 files changed, 272 insertions(+), 21 deletions(-)
 
-diff --git a/refs.c b/refs.c
-index dce5c49ca2..243e6898b8 100644
---- a/refs.c
-+++ b/refs.c
-@@ -2666,12 +2666,12 @@ enum ref_transaction_error refs_verify_refnames_available(struct ref_store *refs
- 		if (!initial_transaction) {
- 			int ok;
+diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
+index 5ef89fc0fe..ae61ba642a 100644
+--- a/Documentation/git-for-each-ref.adoc
++++ b/Documentation/git-for-each-ref.adoc
+@@ -14,7 +14,7 @@ SYNOPSIS
+ 		   [--points-at=<object>]
+ 		   [--merged[=<object>]] [--no-merged[=<object>]]
+ 		   [--contains[=<object>]] [--no-contains[=<object>]]
+-		   [--exclude=<pattern> ...]
++		   [--exclude=<pattern> ...] [--start-after=<marker>]
  
--			if (!iter) {
-+			if (!iter)
- 				iter = refs_ref_iterator_begin(refs, dirname.buf, NULL, 0,
- 							       DO_FOR_EACH_INCLUDE_BROKEN);
--			} else if (ref_iterator_seek(iter, dirname.buf) < 0) {
-+			else if (ref_iterator_seek(iter, dirname.buf,
-+						   REF_ITERATOR_SEEK_SET_PREFIX) < 0)
- 				goto cleanup;
--			}
+ DESCRIPTION
+ -----------
+@@ -108,6 +108,14 @@ TAB %(refname)`.
+ --include-root-refs::
+ 	List root refs (HEAD and pseudorefs) apart from regular refs.
  
- 			while ((ok = ref_iterator_advance(iter)) == ITER_OK) {
- 				if (skip &&
-diff --git a/refs.h b/refs.h
-index 7c21aaef3d..e6780a8848 100644
---- a/refs.h
-+++ b/refs.h
-@@ -1299,21 +1299,29 @@ struct ref_iterator *refs_ref_iterator_begin(
-  */
- int ref_iterator_advance(struct ref_iterator *ref_iterator);
- 
-+enum ref_iterator_seek_flag {
-+	/*
-+	 * When the REF_ITERATOR_SEEK_SET_PREFIX flag is set, the iterator's prefix is
-+	 * updated to match the provided string, affecting all subsequent iterations. If
-+	 * not, the iterator seeks to the specified reference and clears any previously
-+	 * set prefix.
-+	 */
-+	REF_ITERATOR_SEEK_SET_PREFIX = (1 << 0),
-+};
++--start-after=<marker>::
++    Allows paginating the output by skipping references up to and including the
++    specified marker. When paging, it should be noted that references may be
++    deleted, modified or added between invocations. Output will only yield those
++    references which follow the marker lexicographically. Output begins from the
++    first reference that would come after the marker alphabetically. Cannot be
++    used with general pattern matching or custom sort options.
 +
- /*
-- * Seek the iterator to the first reference with the given prefix.
-- * The prefix is matched as a literal string, without regard for path
-- * separators. If prefix is NULL or the empty string, seek the iterator to the
-+ * Seek the iterator to the first reference matching the given seek string.
-+ * The seek string is matched as a literal string, without regard for path
-+ * separators. If seek is NULL or the empty string, seek the iterator to the
-  * first reference again.
-  *
-- * This function is expected to behave as if a new ref iterator with the same
-- * prefix had been created, but allows reuse of iterators and thus may allow
-- * the backend to optimize. Parameters other than the prefix that have been
-- * passed when creating the iterator will remain unchanged.
-+ * This function is expected to behave as if a new ref iterator has been
-+ * created, but allows reuse of existing iterators for optimization.
-  *
-  * Returns 0 on success, a negative error code otherwise.
-  */
--int ref_iterator_seek(struct ref_iterator *ref_iterator,
--		      const char *prefix);
-+int ref_iterator_seek(struct ref_iterator *ref_iterator, const char *refname,
-+		      unsigned int flags);
+ FIELD NAMES
+ -----------
  
- /*
-  * If possible, peel the reference currently being viewed by the
-diff --git a/refs/debug.c b/refs/debug.c
-index 485e3079d7..da300efaf3 100644
---- a/refs/debug.c
-+++ b/refs/debug.c
-@@ -170,12 +170,13 @@ static int debug_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
+diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+index 3d2207ec77..3f21598046 100644
+--- a/builtin/for-each-ref.c
++++ b/builtin/for-each-ref.c
+@@ -13,6 +13,7 @@ static char const * const for_each_ref_usage[] = {
+ 	N_("git for-each-ref [--points-at <object>]"),
+ 	N_("git for-each-ref [--merged [<commit>]] [--no-merged [<commit>]]"),
+ 	N_("git for-each-ref [--contains [<commit>]] [--no-contains [<commit>]]"),
++	N_("git for-each-ref [--start-after <marker>]"),
+ 	NULL
+ };
  
- static int debug_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				   const char *prefix)
-+				   const char *refname, unsigned int flags)
- {
- 	struct debug_ref_iterator *diter =
- 		(struct debug_ref_iterator *)ref_iterator;
--	int res = diter->iter->vtable->seek(diter->iter, prefix);
--	trace_printf_key(&trace_refs, "iterator_seek: %s: %d\n", prefix ? prefix : "", res);
-+	int res = diter->iter->vtable->seek(diter->iter, refname, flags);
-+	trace_printf_key(&trace_refs, "iterator_seek: %s flags: %d: %d\n",
-+			 refname ? refname : "", flags, res);
- 	return res;
- }
+@@ -44,6 +45,7 @@ int cmd_for_each_ref(int argc,
+ 		OPT_GROUP(""),
+ 		OPT_INTEGER( 0 , "count", &format.array_opts.max_count, N_("show only <n> matched refs")),
+ 		OPT_STRING(  0 , "format", &format.format, N_("format"), N_("format to use for the output")),
++		OPT_STRING(  0 , "start-after", &filter.start_after, N_("start-start"), N_("start iteration after the provided marker")),
+ 		OPT__COLOR(&format.use_color, N_("respect format colors")),
+ 		OPT_REF_FILTER_EXCLUDE(&filter),
+ 		OPT_REF_SORT(&sorting_options),
+@@ -79,6 +81,9 @@ int cmd_for_each_ref(int argc,
+ 	if (verify_ref_format(&format))
+ 		usage_with_options(for_each_ref_usage, opts);
  
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index bf6f89b1d1..8b282f2a60 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -929,11 +929,11 @@ static int files_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int files_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				   const char *prefix)
-+				   const char *refname, unsigned int flags)
- {
- 	struct files_ref_iterator *iter =
- 		(struct files_ref_iterator *)ref_iterator;
--	return ref_iterator_seek(iter->iter0, prefix);
-+	return ref_iterator_seek(iter->iter0, refname, flags);
- }
- 
- static int files_ref_iterator_peel(struct ref_iterator *ref_iterator,
-@@ -2316,7 +2316,8 @@ static int files_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int files_reflog_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
--				      const char *prefix UNUSED)
-+				      const char *refname UNUSED,
-+				      unsigned int flags UNUSED)
- {
- 	BUG("ref_iterator_seek() called for reflog_iterator");
- }
-diff --git a/refs/iterator.c b/refs/iterator.c
-index 766d96e795..17ef841d8a 100644
---- a/refs/iterator.c
-+++ b/refs/iterator.c
-@@ -15,10 +15,10 @@ int ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	return ref_iterator->vtable->advance(ref_iterator);
- }
- 
--int ref_iterator_seek(struct ref_iterator *ref_iterator,
--		      const char *prefix)
-+int ref_iterator_seek(struct ref_iterator *ref_iterator, const char *refname,
-+		      unsigned int flags)
- {
--	return ref_iterator->vtable->seek(ref_iterator, prefix);
-+	return ref_iterator->vtable->seek(ref_iterator, refname, flags);
- }
- 
- int ref_iterator_peel(struct ref_iterator *ref_iterator,
-@@ -57,7 +57,8 @@ static int empty_ref_iterator_advance(struct ref_iterator *ref_iterator UNUSED)
- }
- 
- static int empty_ref_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
--				   const char *prefix UNUSED)
-+				   const char *refname UNUSED,
-+				   unsigned int flags UNUSED)
- {
- 	return 0;
- }
-@@ -224,7 +225,7 @@ static int merge_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int merge_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				   const char *prefix)
-+				   const char *refname, unsigned int flags)
- {
- 	struct merge_ref_iterator *iter =
- 		(struct merge_ref_iterator *)ref_iterator;
-@@ -234,11 +235,11 @@ static int merge_ref_iterator_seek(struct ref_iterator *ref_iterator,
- 	iter->iter0 = iter->iter0_owned;
- 	iter->iter1 = iter->iter1_owned;
- 
--	ret = ref_iterator_seek(iter->iter0, prefix);
-+	ret = ref_iterator_seek(iter->iter0, refname, flags);
- 	if (ret < 0)
- 		return ret;
- 
--	ret = ref_iterator_seek(iter->iter1, prefix);
-+	ret = ref_iterator_seek(iter->iter1, refname, flags);
- 	if (ret < 0)
- 		return ret;
- 
-@@ -407,13 +408,16 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int prefix_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				    const char *prefix)
-+				    const char *refname, unsigned int flags)
- {
- 	struct prefix_ref_iterator *iter =
- 		(struct prefix_ref_iterator *)ref_iterator;
--	free(iter->prefix);
--	iter->prefix = xstrdup_or_null(prefix);
--	return ref_iterator_seek(iter->iter0, prefix);
++	if (filter.start_after && sorting_options.nr > 1)
++		die(_("cannot use --start-after with custom sort options"));
 +
-+	if (flags & REF_ITERATOR_SEEK_SET_PREFIX) {
-+		free(iter->prefix);
-+		iter->prefix = xstrdup_or_null(refname);
-+	}
-+	return ref_iterator_seek(iter->iter0, refname, flags);
- }
- 
- static int prefix_ref_iterator_peel(struct ref_iterator *ref_iterator,
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 7fd73a0e6d..5fa4ae6655 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -1004,19 +1004,23 @@ static int packed_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int packed_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				    const char *prefix)
-+				    const char *refname, unsigned int flags)
- {
- 	struct packed_ref_iterator *iter =
- 		(struct packed_ref_iterator *)ref_iterator;
- 	const char *start;
- 
--	if (prefix && *prefix)
--		start = find_reference_location(iter->snapshot, prefix, 0);
-+	if (refname && *refname)
-+		start = find_reference_location(iter->snapshot, refname, 0);
- 	else
- 		start = iter->snapshot->start;
- 
--	free(iter->prefix);
--	iter->prefix = xstrdup_or_null(prefix);
-+	/* Unset any previously set prefix */
-+	FREE_AND_NULL(iter->prefix);
-+
-+	if (flags & REF_ITERATOR_SEEK_SET_PREFIX)
-+		iter->prefix = xstrdup_or_null(refname);
-+
- 	iter->pos = start;
- 	iter->eof = iter->snapshot->eof;
- 
-@@ -1194,7 +1198,8 @@ static struct ref_iterator *packed_ref_iterator_begin(
- 	iter->repo = ref_store->repo;
- 	iter->flags = flags;
- 
--	if (packed_ref_iterator_seek(&iter->base, prefix) < 0) {
-+	if (packed_ref_iterator_seek(&iter->base, prefix,
-+				     REF_ITERATOR_SEEK_SET_PREFIX) < 0) {
- 		ref_iterator_free(&iter->base);
- 		return NULL;
+ 	sorting = ref_sorting_options(&sorting_options);
+ 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
+ 	filter.ignore_case = icase;
+@@ -100,6 +105,9 @@ int cmd_for_each_ref(int argc,
+ 		filter.name_patterns = argv;
  	}
-diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-index 8aaffa8c6b..1d95b56d40 100644
---- a/refs/ref-cache.c
-+++ b/refs/ref-cache.c
-@@ -434,11 +434,9 @@ static int cache_ref_iterator_advance(struct ref_iterator *ref_iterator)
- 	}
+ 
++	if (filter.start_after && filter.name_patterns && filter.name_patterns[0])
++		die(_("cannot use --start-after with patterns"));
++
+ 	if (include_root_refs)
+ 		flags |= FILTER_REFS_ROOT_REFS | FILTER_REFS_DETACHED_HEAD;
+ 
+diff --git a/ref-filter.c b/ref-filter.c
+index 7a274633cf..2dfd385313 100644
+--- a/ref-filter.c
++++ b/ref-filter.c
+@@ -2683,6 +2683,24 @@ static int filter_exclude_match(struct ref_filter *filter, const char *refname)
+ 	return match_pattern(filter->exclude.v, refname, filter->ignore_case);
  }
  
--static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				   const char *prefix)
-+static int cache_ref_iterator_set_prefix(struct cache_ref_iterator *iter,
-+					 const char *prefix)
- {
--	struct cache_ref_iterator *iter =
--		(struct cache_ref_iterator *)ref_iterator;
- 	struct cache_ref_iterator_level *level;
- 	struct ref_dir *dir;
- 
-@@ -469,6 +467,82 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
- 	return 0;
- }
- 
-+static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
-+				   const char *refname, unsigned int flags)
++/*
++ * We need to seek to the reference right after a given marker but excluding any
++ * matching references. So we seek to the lexicographically next reference.
++ */
++static int start_ref_iterator_after(struct ref_iterator *iter, const char *marker)
 +{
-+	struct cache_ref_iterator *iter =
-+		(struct cache_ref_iterator *)ref_iterator;
++	struct strbuf sb = STRBUF_INIT;
++	int ret;
 +
-+	if (flags & REF_ITERATOR_SEEK_SET_PREFIX) {
-+		return cache_ref_iterator_set_prefix(iter, refname);
-+	} else if (refname && *refname) {
-+		struct cache_ref_iterator_level *level;
-+		const char *slash = refname;
-+		struct ref_dir *dir;
++	strbuf_addstr(&sb, marker);
++	strbuf_addch(&sb, 1);
 +
-+		dir = get_ref_dir(iter->cache->root);
++	ret = ref_iterator_seek(iter, sb.buf, 0);
 +
-+		if (iter->prime_dir)
-+			prime_ref_dir(dir, refname);
-+
-+		iter->levels_nr = 1;
-+		level = &iter->levels[0];
-+		level->index = -1;
-+		level->dir = dir;
-+
-+		/* Unset any previously set prefix */
-+		FREE_AND_NULL(iter->prefix);
-+
-+		/*
-+		 * Breakdown the provided seek path and assign the correct
-+		 * indexing to each level as needed.
-+		 */
-+		do {
-+			int len, idx;
-+			int cmp = 0;
-+
-+			sort_ref_dir(dir);
-+
-+			slash = strchr(slash, '/');
-+			len = slash ? slash - refname : (int)strlen(refname);
-+
-+			for (idx = 0; idx < dir->nr; idx++) {
-+				cmp = strncmp(refname, dir->entries[idx]->name, len);
-+				if (cmp <= 0)
-+					break;
-+			}
-+			/* don't overflow the index */
-+			idx = idx >= dir->nr ? dir->nr - 1 : idx;
-+
-+			if (slash)
-+				slash = slash + 1;
-+
-+			level->index = idx;
-+			if (dir->entries[idx]->flag & REF_DIR) {
-+				/* push down a level */
-+				dir = get_ref_dir(dir->entries[idx]);
-+
-+				ALLOC_GROW(iter->levels, iter->levels_nr + 1,
-+					   iter->levels_alloc);
-+				level = &iter->levels[iter->levels_nr++];
-+				level->dir = dir;
-+				level->index = -1;
-+			} else {
-+				/* reduce the index so the leaf node is iterated over */
-+				if (cmp <= 0 && !slash)
-+					level->index = idx - 1;
-+				/*
-+				 * while the seek path may not be exhausted, our
-+				 * match is exhausted at a leaf node.
-+				 */
-+				break;
-+			}
-+		} while (slash);
-+	}
-+
-+	return 0;
++	strbuf_release(&sb);
++	return ret;
 +}
 +
- static int cache_ref_iterator_peel(struct ref_iterator *ref_iterator,
- 				   struct object_id *peeled)
- {
-@@ -509,7 +583,8 @@ struct ref_iterator *cache_ref_iterator_begin(struct ref_cache *cache,
- 	iter->cache = cache;
- 	iter->prime_dir = prime_dir;
- 
--	if (cache_ref_iterator_seek(&iter->base, prefix) < 0) {
-+	if (cache_ref_iterator_seek(&iter->base, prefix,
-+				    REF_ITERATOR_SEEK_SET_PREFIX) < 0) {
- 		ref_iterator_free(&iter->base);
- 		return NULL;
- 	}
-diff --git a/refs/refs-internal.h b/refs/refs-internal.h
-index 03f5df04d5..90de7837f8 100644
---- a/refs/refs-internal.h
-+++ b/refs/refs-internal.h
-@@ -353,11 +353,12 @@ void base_ref_iterator_init(struct ref_iterator *iter,
- typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
- 
  /*
-- * Seek the iterator to the first reference matching the given prefix. Should
-- * behave the same as if a new iterator was created with the same prefix.
-+ * Seek the iterator to the first matching reference. If set_prefix is set,
-+ * it would behave the same as if a new iterator was created with the same
-+ * prefix.
-  */
- typedef int ref_iterator_seek_fn(struct ref_iterator *ref_iterator,
--				 const char *prefix);
-+				 const char *refname, unsigned int flags);
- 
- /*
-  * Peels the current ref, returning 0 for success or -1 for failure.
-diff --git a/refs/reftable-backend.c b/refs/reftable-backend.c
-index 4c3817f4ec..c3d48cc412 100644
---- a/refs/reftable-backend.c
-+++ b/refs/reftable-backend.c
-@@ -719,15 +719,20 @@ static int reftable_ref_iterator_advance(struct ref_iterator *ref_iterator)
- }
- 
- static int reftable_ref_iterator_seek(struct ref_iterator *ref_iterator,
--				      const char *prefix)
-+				      const char *refname, unsigned int flags)
+  * This is the same as for_each_fullref_in(), but it tries to iterate
+  * only over the patterns we'll care about. Note that it _doesn't_ do a full
+@@ -2692,10 +2710,13 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ 				       each_ref_fn cb,
+ 				       void *cb_data)
  {
- 	struct reftable_ref_iterator *iter =
- 		(struct reftable_ref_iterator *)ref_iterator;
- 
--	free(iter->prefix);
--	iter->prefix = xstrdup_or_null(prefix);
--	iter->prefix_len = prefix ? strlen(prefix) : 0;
--	iter->err = reftable_iterator_seek_ref(&iter->iter, prefix);
-+	/* Unset any previously set prefix */
-+	FREE_AND_NULL(iter->prefix);
-+	iter->prefix_len = 0;
++	struct ref_iterator *iter;
++	int flags = 0, ret = 0;
 +
-+	if (flags & REF_ITERATOR_SEEK_SET_PREFIX) {
-+		iter->prefix = xstrdup_or_null(refname);
-+		iter->prefix_len = refname ? strlen(refname) : 0;
-+	}
-+	iter->err = reftable_iterator_seek_ref(&iter->iter, refname);
+ 	if (filter->kind & FILTER_REFS_ROOT_REFS) {
+ 		/* In this case, we want to print all refs including root refs. */
+-		return refs_for_each_include_root_refs(get_main_ref_store(the_repository),
+-						       cb, cb_data);
++		flags |= DO_FOR_EACH_INCLUDE_ROOT_REFS;
++		goto non_prefix_iter;
+ 	}
  
- 	return iter->err;
+ 	if (!filter->match_as_path) {
+@@ -2704,8 +2725,7 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ 		 * prefixes like "refs/heads/" etc. are stripped off,
+ 		 * so we have to look at everything:
+ 		 */
+-		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						"", NULL, cb, cb_data);
++		goto non_prefix_iter;
+ 	}
+ 
+ 	if (filter->ignore_case) {
+@@ -2714,20 +2734,29 @@ static int for_each_fullref_in_pattern(struct ref_filter *filter,
+ 		 * so just return everything and let the caller
+ 		 * sort it out.
+ 		 */
+-		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						"", NULL, cb, cb_data);
++		goto non_prefix_iter;
+ 	}
+ 
+ 	if (!filter->name_patterns[0]) {
+ 		/* no patterns; we have to look at everything */
+-		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						 "", filter->exclude.v, cb, cb_data);
++		goto non_prefix_iter;
+ 	}
+ 
+ 	return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_repository),
+ 						 NULL, filter->name_patterns,
+ 						 filter->exclude.v,
+ 						 cb, cb_data);
++
++non_prefix_iter:
++	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
++				       NULL, 0, flags);
++	if (filter->start_after)
++		ret = start_ref_iterator_after(iter, filter->start_after);
++
++	if (ret)
++		return ret;
++
++	return do_for_each_ref_iterator(iter, cb, cb_data);
  }
-@@ -839,7 +844,8 @@ static struct reftable_ref_iterator *ref_iterator_for_stack(struct reftable_ref_
- 	if (ret)
- 		goto done;
  
--	ret = reftable_ref_iterator_seek(&iter->base, prefix);
-+	ret = reftable_ref_iterator_seek(&iter->base, prefix,
-+					 REF_ITERATOR_SEEK_SET_PREFIX);
- 	if (ret)
- 		goto done;
+ /*
+@@ -3197,9 +3226,11 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
+ 	init_contains_cache(&filter->internal.no_contains_cache);
  
-@@ -2042,7 +2048,8 @@ static int reftable_reflog_iterator_advance(struct ref_iterator *ref_iterator)
- }
+ 	/*  Simple per-ref filtering */
+-	if (!filter->kind)
++	if (!filter->kind) {
+ 		die("filter_refs: invalid type");
+-	else {
++	} else {
++		const char *prefix = NULL;
++
+ 		/*
+ 		 * For common cases where we need only branches or remotes or tags,
+ 		 * we only iterate through those refs. If a mix of refs is needed,
+@@ -3207,19 +3238,28 @@ static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
+ 		 * of filter_ref_kind().
+ 		 */
+ 		if (filter->kind == FILTER_REFS_BRANCHES)
+-			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						       "refs/heads/", NULL,
+-						       fn, cb_data);
++			prefix = "refs/heads/";
+ 		else if (filter->kind == FILTER_REFS_REMOTES)
+-			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						       "refs/remotes/", NULL,
+-						       fn, cb_data);
++			prefix = "refs/remotes/";
+ 		else if (filter->kind == FILTER_REFS_TAGS)
+-			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+-						       "refs/tags/", NULL, fn,
+-						       cb_data);
+-		else if (filter->kind & FILTER_REFS_REGULAR)
++			prefix = "refs/tags/";
++
++		if (prefix) {
++			struct ref_iterator *iter;
++
++			iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
++						       "", NULL, 0, 0);
++
++			if (filter->start_after)
++				ret = start_ref_iterator_after(iter, filter->start_after);
++			else if (prefix)
++				ret = ref_iterator_seek(iter, prefix, 1);
++
++			if (!ret)
++				ret = do_for_each_ref_iterator(iter, fn, cb_data);
++		} else if (filter->kind & FILTER_REFS_REGULAR) {
+ 			ret = for_each_fullref_in_pattern(filter, fn, cb_data);
++		}
  
- static int reftable_reflog_iterator_seek(struct ref_iterator *ref_iterator UNUSED,
--					 const char *prefix UNUSED)
-+					 const char *refname UNUSED,
-+					 unsigned int flags UNUSED)
- {
- 	BUG("reftable reflog iterator cannot be seeked");
- 	return -1;
+ 		/*
+ 		 * When printing all ref types, HEAD is already included,
+diff --git a/ref-filter.h b/ref-filter.h
+index c98c4fbd4c..f22ca94b49 100644
+--- a/ref-filter.h
++++ b/ref-filter.h
+@@ -64,6 +64,7 @@ struct ref_array {
+ 
+ struct ref_filter {
+ 	const char **name_patterns;
++	const char *start_after;
+ 	struct strvec exclude;
+ 	struct oid_array points_at;
+ 	struct commit_list *with_commit;
+diff --git a/t/t6302-for-each-ref-filter.sh b/t/t6302-for-each-ref-filter.sh
+index bb02b86c16..a43e099118 100755
+--- a/t/t6302-for-each-ref-filter.sh
++++ b/t/t6302-for-each-ref-filter.sh
+@@ -541,4 +541,198 @@ test_expect_success 'validate worktree atom' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'start after with empty value' '
++	cat >expect <<-\EOF &&
++	refs/heads/main
++	refs/heads/main_worktree
++	refs/heads/side
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after="" >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after a specific reference' '
++	cat >expect <<-\EOF &&
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after a specific reference with partial match' '
++	cat >expect <<-\EOF &&
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/sp >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after, just behind a specific reference' '
++	cat >expect <<-\EOF &&
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/parrot >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after with specific directory match' '
++	cat >expect <<-\EOF &&
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after with specific directory and trailing slash' '
++	cat >expect <<-\EOF &&
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/lost >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after, just behind a specific directory' '
++	cat >expect <<-\EOF &&
++	refs/odd/spot
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/ >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after, overflow specific reference length' '
++	cat >expect <<-\EOF &&
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spotnew >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after, overflow specific reference path' '
++	cat >expect <<-\EOF &&
++	refs/tags/annotated-tag
++	refs/tags/doubly-annotated-tag
++	refs/tags/doubly-signed-tag
++	refs/tags/foo1.10
++	refs/tags/foo1.3
++	refs/tags/foo1.6
++	refs/tags/four
++	refs/tags/one
++	refs/tags/signed-tag
++	refs/tags/three
++	refs/tags/two
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/odd/spot/new >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after, last reference' '
++	cat >expect <<-\EOF &&
++	EOF
++	git for-each-ref --format="%(refname)" --start-after=refs/tags/two >actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after used with a pattern' '
++	cat >expect <<-\EOF &&
++	fatal: cannot use --start-after with patterns
++	EOF
++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot refs/tags 2>actual &&
++	test_cmp expect actual
++'
++
++test_expect_success 'start after used with custom sort order' '
++	cat >expect <<-\EOF &&
++	fatal: cannot use --start-after with custom sort options
++	EOF
++	test_must_fail git for-each-ref --format="%(refname)" --start-after=refs/odd/spot --sort=author 2>actual &&
++	test_cmp expect actual
++'
++
+ test_done
 
 -- 
 2.49.0
