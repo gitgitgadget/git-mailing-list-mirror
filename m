@@ -1,140 +1,115 @@
-Received: from mail-ua1-f50.google.com (mail-ua1-f50.google.com [209.85.222.50])
+Received: from mail-vk1-f170.google.com (mail-vk1-f170.google.com [209.85.221.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CDC283C97
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 10:25:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487D128640D
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 10:38:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752229555; cv=none; b=SpVsVwZ416E6BbxPSdyoYHuT9iI026JFifaQdSzRRy2NxYgDKUIYbf9DKjGmvalR8HbhH4DfUTf1kpv6OOpM1bwBS0jDi8cM1saBdZexdRZS4kiqyy9jjiiRW6riG4ilNbs7tWHBdNCfb7m9oLiH4qX0bqalyOehE8/uV2S6CAU=
+	t=1752230319; cv=none; b=ggdG2WXb/1ag4gL/ZuRg09I65AK4a0y4ahyxbVhWNGThBjly2CaydGeuW5/SsUi7waJVFzE/8kSjqomAFAz/XfIDI+wkjqvkunLJ45jz5G87u7Kpqbd3IniFZ6isYVUPVp9pxkMzHLwDbcEMQ+5jbEQbKd5AkCHUOF967qsaMbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752229555; c=relaxed/simple;
-	bh=wgg89ZYx8W2hUVymT9EiGmszfZod47LnbhUcoSxT7pg=;
+	s=arc-20240116; t=1752230319; c=relaxed/simple;
+	bh=NKq5v+3Un6z0ocWGYPMqNEXAgsdhmEX9wpBdzcZKslo=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=q66DBsiW0nuxzSpZDEmOHngIaygnPfdIowVkF2cOqOb29SRXO7gu2yxIZWfgHDBkEtzD2sz09HMFgfzaBsoBnQqafeiYyId/1Tpv7gQQ70v+Qum2CNNy6st+2Fp6AKykAW12806h73rWGQbMPE5foTTK/XqtWE+2qcxZnNot51g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eX9l8J7X; arc=none smtp.client-ip=209.85.222.50
+	 To:Content-Type; b=bp65zT9mUuG0mD6HYJBfzUO0T46pE7KecM/xop4beliV8DVSqSJ45ANKtyICgqKpo4I58AWMrhKfyiqVGNuDJ+Ds7S1mlq79PdcP8rmdzctWWlOcnKipfi/s0amvgJ5UAN8NVF7XtwOfClXN1mhBpBlddz9MtU66GSkMwU1cw4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KUC1v7tt; arc=none smtp.client-ip=209.85.221.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eX9l8J7X"
-Received: by mail-ua1-f50.google.com with SMTP id a1e0cc1a2514c-88131f0badcso1992730241.2
-        for <git@vger.kernel.org>; Fri, 11 Jul 2025 03:25:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KUC1v7tt"
+Received: by mail-vk1-f170.google.com with SMTP id 71dfb90a1353d-5314b486207so815864e0c.2
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 03:38:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752229553; x=1752834353; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752230316; x=1752835116; darn=vger.kernel.org;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=hza+qBJYNoyQQDzSwDyW6gXSS/aGEDUlhRpkMZoiVTM=;
-        b=eX9l8J7XxV1Q6qd7x6FQmP1Q3sR944Bu3vKxCPTKNf2JtFqHrWTdo3pNigoBqggplI
-         XpVQauxz1g2kj7UQk2MUoygRjBRwEL+ZzQvYYM+kAuYvoyjRvtrkXRMEM0eNx/wmN907
-         o/u268tCVUM+N1HUDJQ8YReQuszLw01mSEwPD/SFrzwcLaxGCW4FVJuxm8iFTq78NB1k
-         Ynx0XCCEEzByjHLaCDtLYwQsgdk/zly8AEhdgi/6E8bPYGl6JeAzBMzWN0gCZxFPkqZs
-         Mr9+8hcXdhfUpSeQL8QzxsxuA5PDTyA4Bf0D4QL0/YlqKWlIPW6NQiDMlePZzLBCcov3
-         uTDQ==
+        bh=NKq5v+3Un6z0ocWGYPMqNEXAgsdhmEX9wpBdzcZKslo=;
+        b=KUC1v7ttDKQ0mOkQM7N2n9Lj/bdon/Ze5WJEEnFd42XLPjHfuLEFlQVvEnnGmdsTO2
+         BFT1kIa5U8s6OTyB/KojgnEXOj4ZDUXHsjjA6aEctzhJJw/VBwIW+vz6OX9aNPTgR17j
+         lJJa+RxhFjrX161q1+0g+3rqjk6AgbxhYpsFDoLMYSSCy+b2NGkxPamh64kYEYkL0c5+
+         toPTGhFBHBYnedRZwte9TWhv4n/6zB09JZFLeiWDMjQyTg/9vimkX++V505HhzKI64op
+         KvgPhV+E18qrHhcS7Hy6PFRU8fdTZH+71PaJGdjZJ1ExmRhXooK+l+OIpx2nOfpv5kYf
+         swHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752229553; x=1752834353;
+        d=1e100.net; s=20230601; t=1752230316; x=1752835116;
         h=to:subject:message-id:date:mime-version:references:in-reply-to:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hza+qBJYNoyQQDzSwDyW6gXSS/aGEDUlhRpkMZoiVTM=;
-        b=NBoElwLgY+e7oqB4RmZrdusoZ8j6e/o619JuLwKl3fn33q+8jEWEfiKA2KNfP0Rw8a
-         dw1AE7To87wsrzLHmdioajg6vO5T+d/6wG67QIBaY38vF3AbfcQmp38Y4sbtPkh3SW56
-         uTbU0/A24vhhsKEg8T8jTAHfuW93W/+VkYj9Lni9vYVQUwju89TaNvZN0dLwFJijOtqB
-         J0ETX8OIBOwvN6WSohl/Wtlf8V2XBidkZJKSMIj5AQ/kmnSE6GlifxFtSAoQPilgtGK3
-         +jhq1pXKrVBXT5WIGffQIyHc8+Xzw+fIYJRaoDOXCOZq9h1+N1xL+syHoB+HveAkSuan
-         THgw==
-X-Forwarded-Encrypted: i=1; AJvYcCWqJ0WUYtACd3226NzPJN1kHqW+U88cc1wivSjeBbIUlGewK1T/vsFf6ped4RCb0Hr3Pac=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxGfwLHSGthJLoUxBrMKEEde4C+80K1YdLcBn3DhUY2fQrHEv81
-	TalQ9igf5440HSJW/dt14prc0ahgwMvaUe8238m1jvIagdV0mUpgCKfqNrm/FEFzm5wxZp76m/l
-	apnT8m5ySWPFBNvy2TN5SFicvY9CtUiI=
-X-Gm-Gg: ASbGnctXt4v519wiN443hZ7YJ8DvZ3SMJVnBmMyHiGmgWoyTD67d5NCGO73AA2ksMhS
-	LludkbgL1AUKkQpendWfvr8rBWMNOitr2BawkI83blKvwWNaHkwfxRySjw4UDz2shHLechItjWO
-	5FaARxcWfKsVAl1C3iKwOojcIy2aIwkH7J6ojgnCUGRLhwH0BC0xlnhnJQ1dY+hmL/YgV1VkFF3
-	z9kF9MAqFHG1YXbVcsGqIpESYUvyMzL/fWVcnhg
-X-Google-Smtp-Source: AGHT+IGdc/roCykY4F+VNAmRye3pUdqx1VeGZKFJ0H/Ebx+5wry2iJ0WXJmqEFytvFSNMsiCJF2ShMaRo7fBjE+U86w=
-X-Received: by 2002:a05:6102:2c0a:b0:4e5:c51b:ace4 with SMTP id
- ada2fe7eead31-4f6426a6685mr1607629137.20.1752229552782; Fri, 11 Jul 2025
- 03:25:52 -0700 (PDT)
+        bh=NKq5v+3Un6z0ocWGYPMqNEXAgsdhmEX9wpBdzcZKslo=;
+        b=YalhTefXPd2B+rgFBrL06az03emEc7UYQanukL9H39whNpKG2AxUM7RELhuAM8oQ+G
+         WW+wyKq2PeqLgzWgwnmLmyFQYpvr4yk3UrjzmKvzD5pZ7jdgR/Ah4tNNw0XCafrR8CFX
+         YxszuA1YkZ0s5o0g1OvfDyvZ71vCzEHV7ijBLhr5TWxn04Ma7pecOnsabbSNK10n3jd/
+         TuU5/z/ENSALnHwmyh+ZO+Lbl3ArxQ8kQ2QUtUu0oF+5YBBg8xcyRHh6vfh0EKb1ib3V
+         qNnB2Jn6ltEGl3AvbJobe+gSqiifdgca43Q3jZF0z8TxZeatD9sZsILKPeoXRaGSWaji
+         8gKA==
+X-Forwarded-Encrypted: i=1; AJvYcCWl7PALKda6m06H14RSk+QXLbt3CoZ4qynfgXeR6g9JyUMA57l18smeyuWH+0lmfGu636E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx39QdiNHVI8rrYbqt51WqUsIkPgz16dTFQbvD3FQZv4sG42R+f
+	nMIreBZmRjUO8xQCtr9ufODlGE9XGfPLbaRXmY+Lbt8beNoNF7VX+H6FoMSGydkrJnCQUsldFd3
+	APeg7ZxBvbjNaheyBsoP5Iwz9MxDovzI=
+X-Gm-Gg: ASbGncuHuTfhLRxvxc13/w4FE6KpxilE8cS7qcAFrTH9Sp8MBaSYpx2AdcuVTmZG5Pt
+	EmTJMkbba9+ZlS1RXjp6PPZW2TQmYVPUvOrfZb5MMS1P98s7yICMb6eFdLBEoUiWCxDBUwDOLBq
+	Iabnm8d83JRy5oXvOsI700vLpIr6bzS5qYflHjVpNWqqKeIMOIvQQmY6o8MDHhptEXltCTm0bci
+	eReq+JYG2aLjuqP47V+QAU/ZyLcTwO7o8Ll4+P/
+X-Google-Smtp-Source: AGHT+IHFyk9m8gIGD6h+jsSxRjJWmMvUeaUsUlJ2hmp1Rd+CVczdQhzx1F5twSPAJ1owqN/+QaBZ1pD5pjq+mdRnoOg=
+X-Received: by 2002:a05:6122:8b04:b0:520:60c2:3fd with SMTP id
+ 71dfb90a1353d-535f4704334mr1439946e0c.3.1752230316153; Fri, 11 Jul 2025
+ 03:38:36 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Jul 2025 05:25:51 -0500
+ HTTPREST; Fri, 11 Jul 2025 05:38:35 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Jul 2025 05:25:51 -0500
+ HTTPREST; Fri, 11 Jul 2025 05:38:35 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250709-pks-object-file-wo-the-repository-v1-8-62627b55707f@pks.im>
+In-Reply-To: <20250709-pks-object-file-wo-the-repository-v1-15-62627b55707f@pks.im>
 References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
- <20250709-pks-object-file-wo-the-repository-v1-8-62627b55707f@pks.im>
+ <20250709-pks-object-file-wo-the-repository-v1-15-62627b55707f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 11 Jul 2025 05:25:51 -0500
-X-Gm-Features: Ac12FXyY1zNJEhTYaWFFoxcOwWGvi6bjGsBoq6pQvv-H4xwxQ6UUqNmKZB6RMeg
-Message-ID: <CAOLa=ZQhWh9OKapT2=BB1kJNghYYPF+_133Qs_q8ZkyU1ONzew@mail.gmail.com>
-Subject: Re: [PATCH 08/19] loose: write loose objects map via their source
+Date: Fri, 11 Jul 2025 05:38:35 -0500
+X-Gm-Features: Ac12FXwrG7BVAJNPdZYOMKLyEvXRAKacR4fHPQQfCp8zWWwSCbqGh17xQ8VAA-Y
+Message-ID: <CAOLa=ZQ2msNYfURDXe1eNBtbFxDjmc4dJ-u1s0Fo-mqyjnnQHA@mail.gmail.com>
+Subject: Re: [PATCH 15/19] object-file: get rid of `the_repository` in `force_object_loose()`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="0000000000000f1e050639a4bc69"
+Content-Type: multipart/mixed; boundary="0000000000008f37730639a4e95b"
 
---0000000000000f1e050639a4bc69
+--0000000000008f37730639a4e95b
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> When a repository is configured to have a compatibility hash algorithm
-> we keep track of object ID mappings for loose objects via the loose
-> object map. This map simply maps an object ID of the actual hash to the
-> object ID of the compatibility hash. This loose object map is an
-> inherent property of the loose files backend and thus of one specific
-> object source.
+> The function `force_object_loose()` forces an object to become a loose
+> object in case it only exists in its packed form. To do so it implicitly
+> relies on `the_repository`.
 >
-> Refactor the interfaces to reflect this by requiring a `struct
-> odb_source` as input instead of a repository. This prepares for
-> subsequent commits where we will refactor writing of loose objects to
-> work on a `struct odb_source`, as well.
+> Refactor the function by passing a `struct odb_source` as parameter.
+> While the check whether any such loose object exists already acts on the
+> whole object database, writing the loose object happens in one specific
+> source.
 >
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  loose.c       | 16 +++++++++-------
->  loose.h       |  4 +++-
->  object-file.c |  6 +++---
->  3 files changed, 15 insertions(+), 11 deletions(-)
->
-> diff --git a/loose.c b/loose.c
-> index 519f5db7935..e8ea6e7e24b 100644
-> --- a/loose.c
-> +++ b/loose.c
-> @@ -166,7 +166,8 @@ int repo_write_loose_object_map(struct repository *repo)
->  	return -1;
->  }
->
-> -static int write_one_object(struct repository *repo, const struct object_id *oid,
-> +static int write_one_object(struct odb_source *source,
 
-Nit: In one of the earlier commits, we renamed a function working on a
-particular source to have the '_source' suffix. Should we do the same
-here?
-
-I understand that this is related to a specific source (loose files) and
-probably would move into its own file under the objects namespace. But
-perhaps something to think about.
+Q: Since it exists in the packed form, won't the check always return
+true?
 
 [snip]
 
---0000000000000f1e050639a4bc69
+--0000000000008f37730639a4e95b
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 25e4820fde49177e_0.1
+X-Attachment-Id: e39685a6cd8ed2d0_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1odzVxMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOXZOQy8wZWsycTQyZGdNdk9TMlJuRGlsQlpnMktpMApDSHFpWnNCMkMw
-R0xSbGNsMGRJVFVYbCs0UStqVzg3UDRwR3V5enFEOVFOSFNMNVk1TWRWa1piWmltYVVkOWdJCnlT
-YUNrVDE4emkxOW4veHFCdXNreEZpQTkzcU5vWWdDMWgyOEJEVFRnNmdMVlVnb3dCd0dhcElIN2FC
-UUdQRjIKSXpvbk8yanFPZ2J2Zlp3SG1SV2lpRFE4RjZzNmNFWlhQSldlWGh2K1htVHQwZ1BJTm9R
-S0ZDUE9jNU4xcEJKWgpzcmtjQmgwdFFoeHVqWTZCYlJnTjZLRDBQQkcwYWRMNnJHbWM4WGpJRjIw
-bTVRTzJBTTRVbTVUdlJ2SG9aR3k4Ck1yNGU5WU9XaVJmbFh0dm9Pdm83ZlpKREtCdm1zZzdnU2lZ
-b1RzVHNEa2tUS2J6dEx4a1dwc24xbkVGeWt2SXcKRXdRVE14bkRHVm4zTWQrbDJyL09zTjNKUllP
-bTZCOGNYVVhKYVJIVU11NFZxSnFrc1NrdXJEOUlKcGlNTUs4ZwpKQlhHV1oxOXdZUVpmZ2hGMGVT
-MFFwQk9oVk50dWdzZ0JJVVArU0VuWE52WUVSZkxFeGxNajMxK0tWY1FTSlRQCkx5cnVJdVVDM3Vs
-cWYxcW5lOTUrSG1ZZ2hXaEFnVDI4bUUvNzI3dz0KPUZZcXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1odzZha1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMkI2Qy93SXlYM2tRV0VRTWhxWmxZNEhLM29CbXp6UgpwRFltZmtSelg5
+dVgrcEJzbjRMYzRwanNsVmh5b1ZBcGtCL0pUcjNxTjdkMHo1eFVPRkJDTFBkS2tFejRQbk53CnNW
+QWFLdGc1VnE2RHJLblNZYUtCWllGVzhrRjk2clZnL1laSkJ5bjVrMENuakQxeTc5MDhVUzlScm1r
+M2xpYTMKRUdZNEFncFFlQ2NjVG1IZytkRXlnVEFUSVV6bkVZcW8rL2ZSdHZmNXZOcGNQY3NMRkgr
+bm1YUHNpY2UzaStTdAorV3BRZlVhajYyejNCQTE0OWREaFlrT004MUNPUmtjcm5YMTBpTmtDNlVO
+V0JKV1NSaVlGL0k4Y0pLMzNpazBGClRPM1JpOWZMbHdFSS9aTW1TNHVMZENQN2lEdlJZbUM5bTlO
+VmJ4OWwzZkpUYnRzRzJrL05YelFnOUFxaDdjVnIKSE1jeEJHOWZFdzhFcGY0cXRQVXYwWGEyWGxZ
+b0NaM2ZLVjdacGNnamh6RDJPREppbFd1Zk1qeGkwS3hXeGo2QgpOb3gzTXF1bzJSVUNDQmc4YnFv
+ZWd1QUlCNUV2eVJWMkRoMFFBdTJyNkNjV3ZtWUlMOXU0T2ZqR1JnbVZOR1FzCk1VSmZlQ3p6WmRH
+eUZabm9ub3JNbFJ6R1g4RnF5eTVLelJZcXFnTT0KPXhjVGkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000000f1e050639a4bc69--
+--0000000000008f37730639a4e95b--
