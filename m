@@ -1,116 +1,134 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D435D1991C9
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 21:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD10521B9E5
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 22:12:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752270049; cv=none; b=EnRzbCF+XnGETiIBACqVPXljlKafdFrA4A/k8vE0cpFQcKJ/CZGR3TruYv3J/fvVpTty0p0PPHi4tfC23fFXqTRZZr6K+ArNjSfbf2CFSx7JQ4/P9LlbCjNK8+AAmwt0Plm+NMOTJdbg/D+b9c+vk2edzB/mHbtqyvs7l9QxzRw=
+	t=1752271938; cv=none; b=kLisHEs3OcEaBb0rIa0EVuqGhOULe68jwa2h9UuD/qDnq8JL2CIZhTpJ6sc7emTtXmkIBmgAgNOW885vuErPDcibEpPl7mgLJQXhrLZLex1XvqIP8UbvaToofXKUrLq6pPc6qCeYGDOKe4UqRrsf058h5t1gQvbXZmgQvivKa54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752270049; c=relaxed/simple;
-	bh=hDDv6CRk3gkj6ybZ4TogUS8aOkIgK0hRrDQVe18GywQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UyP+h6OjMQ4w9ghcQPwH+41cCu3v0MWYedNS3/aq6ZXmSKlWRtgpU2wmWJk47IlLFWx2p7PtRTbj/ik1gdDDMoFjuuD68+g+jDwo4dk34ChfJ3bf7tRw+oCYTFq1xGQR0HG1enprnFugDneUu9IcFvlM15OKiO33NW9LwB03n5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KTlBL6UC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mtBxsgaT; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752271938; c=relaxed/simple;
+	bh=HXJGHjrdUCQkKdzDkS8cLTA5SEBlw4Q3+5oRp8hozVI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=ose3kM2zRGMTNc6jeop0HSPxo5iM5y12yPzGI2YWewpIm4lOWt3V++MWl2f04u7GGiqBgJ9R96wll1oEHimtO8j/hasJZpY8zHV+8nJn4yyY7SMruIuCVaX4X9/0Vkl/mdKJT6X0hDrFrkZvqe1QENp1b6rdcoQwerue5kcDoKQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nZz8qE9m; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KTlBL6UC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mtBxsgaT"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 02D341D002A9;
-	Fri, 11 Jul 2025 17:40:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 11 Jul 2025 17:40:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752270046; x=1752356446; bh=LpYXsea8VQ
-	f7HCT1l55l5+7C4UJBZrOeRtSt38NI38E=; b=KTlBL6UCJFs2e4DfcywJSzuDWM
-	UsTnTvKfV1SxAdyt7A4l9/xju0KcQxDiIHh7gE/IN5R5hM1KtpB6z/ndllCYQ0/I
-	kLxiTnAZICpXFQTfSbSh/4IyO4uqC4HSuJX1snf+MZA3Z712ZBByIPKRlg+0PE0U
-	cZCOoWBihvEiTQ0NWsT6jlySiUOhxXAH+4DLDUZLP/6M8oeToOJyQJiGh+YrcXXV
-	zHIFYVLeo7Vy91GC93EAzmxnMVvCqK6DHqdFLNEIqYBbjGE7ecS6rju1xrcZn79S
-	C+FFoLM1DwWHBQvxKjJSpFPBq6BsldK4GxooWrEchX8jD7hOTngCi3EHBUOw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752270046; x=1752356446; bh=LpYXsea8VQf7HCT1l55l5+7C4UJBZrOeRtS
-	t38NI38E=; b=mtBxsgaT0NWUa9MESvTt5PQDEvPES+nJlSIls/xhMFZJsQxZYlS
-	ftPqYT4hqz+gN/eibWSkm4KS4SYRFSK9FMWucUpgYha0lIt7Vvyd+uz8YpbAonxG
-	otAkygi0ApICwj2qf2UniceBvZRZsOfBizROKuW5tZdxGV6yaU1Lnt9EdUW0Ni6m
-	Zqm+7j/vWDJeCQe1BsaFhYodphNXdKSE8Cj7uy4uJuDzG4tfJ+FWuA5LuurZkYGw
-	wT7NyCzRU4uFCZ9UAH5APfxO9pwitBk7gHLqd5rGPnPupcxusxvx4XUtYpi8t+Ku
-	1yxTHqvcqLUYR2Se82tNg+igpKuSmGmKV3w==
-X-ME-Sender: <xms:3oRxaPZViXYp7g0WHwY89RVItYiToXx1gYiYkG8npvpENnC-muA_XA>
-    <xme:3oRxaBqm-qKmQLrA4oXwTu9LTJFjfvIHfnpAQlNWa4ExD-geLh2YhsrUxNnanUhxm
-    kDWWEB3Ctt7HVWsgA>
-X-ME-Received: <xmr:3oRxaLaYtirzy1GIqO3NzsQqxzcLuQmpZHvXBfs6P6TKoe5MfYOPBg0waKPJ9Jb3DWmU2huRF5xLNIY5K2GZm94fG6r6VhocC3DJeS8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggeegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3oRxaBQFHENziwr5frsmHjdK_XOPzSSKsPf255NmIh7xKJfJ634eQA>
-    <xmx:3oRxaK6if9C1vSOBJNl7j-9yQdppY7TpN4Z_vlajbdW71_ro6baUZw>
-    <xmx:3oRxaOyhu7zAFsIgsZjUgbNAFwJ5asJr_Tw0bLI2161YPxt1K6V-QA>
-    <xmx:3oRxaBS6HECoOWC4HjjrDD5JItGw27XbpAYNVLz6G8jHRlAAMyE0Tw>
-    <xmx:3oRxaCT_184bKway_FNT55do5l9EsalgB9DkVHVpB9ia3mn0DoXA0K71>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 17:40:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] tag: allow idempotent "git tag" without "--force"
-In-Reply-To: <dt5ruadvr7lmhsbypmb6yili5cookfx5btw4gzfeui7ehxxajv@ziael4udbbcy>
-	(Justin Tobler's message of "Fri, 11 Jul 2025 15:57:00 -0500")
-References: <xmqqzfefodje.fsf@gitster.g> <xmqqv7nyzgp7.fsf@gitster.g>
-	<dt5ruadvr7lmhsbypmb6yili5cookfx5btw4gzfeui7ehxxajv@ziael4udbbcy>
-Date: Fri, 11 Jul 2025 14:40:44 -0700
-Message-ID: <xmqqcya6z9r7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nZz8qE9m"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-453398e90e9so19547855e9.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 15:12:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752271933; x=1752876733; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RoxFlYYe8mP74u9qHfrYlKTJRb+gORbngmUcQ1B+Vgc=;
+        b=nZz8qE9mOd3cLIfk//zsWiU8h/A/bjtzrRmXOT+7c4OaZfTujWzMn/u88XLuNcgY7B
+         CfTUiB4alim6A8VpOFT/y5zkhm0w5aOM+hrTUPmD1qENHyOZFkRNA511Zo1vbe8yeAqG
+         Wj7HFxvbVoGc578rfpEZZxIa/TNNDGAOwft+hEeDDhAusfdiz47rEO9lkbhMeDarwyxo
+         0f2S01FNcy4MwO+i94DgnGmkLuMEokWLjMJfx7Af6HqcPViczwc4KyCWZAXRX5ixDbhL
+         GA5IKSQ/MZBIBch8JEKtEHitF99vi45NqhD6Afhe0NYeR/7wH3TwDSWJIp8kV9jlkpk2
+         K3tA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752271933; x=1752876733;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RoxFlYYe8mP74u9qHfrYlKTJRb+gORbngmUcQ1B+Vgc=;
+        b=FXGfkl5jaIWauTZBIZNc7oeRWgYHJAtl9iiTrUqks3XgNi7gX8hveRMmeaAMemef9D
+         5xfJqFRb+ggaZw1QaADEnSKasFJ/vzHh/UOHL3Hq2kHaJPvMYuD3rycbVyarqJ+OmlOa
+         ISmqn54Tev57+V+kebtqD0jRn8osBgVQBaW8hoEm4mA+fQl+XB5fI8r1mpNNiOYE3qM7
+         mvQs5QTDs/SpnJNDJKDTNAArvukmRKkWycpKusDwhKgngzuoku7kzwMNs4MQY3/OxGxU
+         8OJxHQBMBR/YHz6/2YoSKhpYmDdszay3Zrh4pdtyMc/niN8DHx4rI+uPy+RPvwI/YDcv
+         66KA==
+X-Forwarded-Encrypted: i=1; AJvYcCU+KjzrQ/ZRL9v4wvsufCSWfCsEe8xKYU/IIIczjb52ZRISZ9OX3RdaABJNRMeMV0CP3Hc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yynt7h1peUvhdXcDfnB2xUvp7adYGBWmkXWjSPNUGmWLXPQ8P6T
+	LU9Rk9PpfjnrBBsh9WIiyzfwh+5/qnqFncCt6idPS1IHKBoLO97KbWYL0jU81ijcEdxPGYoJSx/
+	wSyyfeVxo25eHL7tUAjGKJnAGNoXqj3A=
+X-Gm-Gg: ASbGncs9nl0Z1yEhdN6Gzkk1dl3BzK27CKEq88m5yFpG+pmy0IsxgwOo2RstAQB09sH
+	Gp1755a8rq7/S4k5nxc2GO4BBzSk7hMftjdugC7j99gJIW2z0slXJpP6W2wAFjhMBkjpx490An0
+	t97RQTDwiqSVWEPaZGHXnqwnTHXkdyguNKMzf2yI+/li6XFnqhxQdSryRllAcDWV+mUhqVW5EQT
+	1gr47MHzygiMn3tci8MDW4z0PmQwvPLreSbSkFZ
+X-Google-Smtp-Source: AGHT+IFaP3ZsWf5bpGT/XgfDIY33vyq7MiU/gxr83vxBSihvgsTqLiE/FNjjx6qWaBPnDmj4BVzv3KGOHS/rOlCaqnw=
+X-Received: by 2002:a05:600c:35c5:b0:453:78f:faa8 with SMTP id
+ 5b1f17b1804b1-454ec151dc4mr47228925e9.6.1752271932745; Fri, 11 Jul 2025
+ 15:12:12 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
+ <20250710221641.857081-2-sandals@crustytoothpaste.net> <r34i7fhxwbxhppc4ia7lpyr3xqj4tgusaeikaaonpwtywlywxw@ygfmv3f3q67u>
+ <875xfypsom.fsf@gmail.com> <idgdx2au3zgpowozspvu6ttvehybtwwuqf5kwqga4yok7uo2uj@wno7evyjg6pq>
+ <aHGCRLGHEB0m_cXZ@fruit.crustytoothpaste.net>
+In-Reply-To: <aHGCRLGHEB0m_cXZ@fruit.crustytoothpaste.net>
+From: Carlo Arenas <carenas@gmail.com>
+Date: Fri, 11 Jul 2025 15:12:01 -0700
+X-Gm-Features: Ac12FXx2PQ96YMFFwsBApjTGQ1gP1g3sYTiMBPPWczxfCBgnbDCvxZEQeWhmo7w
+Message-ID: <CAPUEsphkzaibm2FMBoj-9nbFch7UgRvyvmzErmno0z+2k5X+OA@mail.gmail.com>
+Subject: Re: [PATCH 1/1] http: don't send C or POSIX in Accept-Language
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
+	=?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>, 
+	Collin Funk <collin.funk1@gmail.com>, Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org, 
+	Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, semtlenori@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-> For example push the newly created tag:
+On Fri, Jul 11, 2025 at 2:29=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
->   git tag T O && git push --tags
+> On 2025-07-11 at 20:57:03, Carlo Marcelo Arenas Bel=C3=B3n wrote:
+> > except that it would be incorrect, as language tags are defined in RFC5=
+646
+> > and are larger than that.
+> >
+> > most importantly, deriving language tags from locales provides some ver=
+y
+> > useful tags when including the characters after the _, because zh_CN an=
+d
+> > zh_HK use completely different scripts, for example.
+>
+> Yes, that's true.  You have some private use and some irregular tags and
+> you also have some tags that include scripts or country codes.
+>
+> For instance, Swahili can be written in Latin or Arabic script.  As I
+> understand it, the Arabic script form is older and less common these
+> days, so if I learned Swahili (which I would like to), then I might only
+> learn the Latin script variant in a course.  I would need to specify
+> that script in the language code to be sure that I was presented with
+> content in a form that I could read and understand.  Similar concerns
+> exist with the variants of Serbo-Croatian: some are written in Latin
+> scripts, some in Cyrillic, and some in both, and it's not guaranteed
+> that all speakers understand all forms.
+>
+> And then there's pt-PT and pt-BR, which are not always mutually
+> intelligible.  Most free software I've seen ships these as separate
+> translations.
+>
+> I don't want to implement language tag parsing here since we don't need
+> to do that.  I would like to do the simple thing to prevent commonly
+> used locales that don't represent actual language tags from being
+> included and not overengineer this design
 
-The above is not quite a scalable workflow and is not recommendable,
-though.  What if you are publishing to more than one place, and/or
-sometimes some of them are not reachable?  You want to push out your
-tag not because you newly created it, but because you know some
-remotes may not have it for whatever reason.  "I just created one"
-is a crude approximate for the latter.  "Last time I created one, it
-somehow failed to push out" (so I have to try again) needs to be
-considered.
+I think that your design of filtering C and POSIX accomplishes that,
+even if it might seem like hardcoding those two values is a little dirty.
 
-Having said that, ever since I invented "push --follow-tags", I
-rarely push tags out just for the sake of pushing them out.  Only
-when the real contents that matter are pushed out, tags that point
-at them would follow.
+Moving the logic (including the filtering, which is already happening
+for the `!NO_GETTEXT `code path adds several chances to modernize
+and cleanup the code though which will be beneficial (ex: using and
+strvec or even a hashtable to process the candidates, improve
+validation and tests)
 
-> To me atleast, the feedback of knowing whether tag was created seems a bit more
-> interesting. I also don't feel super strongly though.
+Carlo
 
-I do not fell strongly one way or anothre, either.  Discarding the
-topic is easier than keeping it for me, so let me mark it for trash
-bin.
+CC Yi EungJun at a hopefully working email address with link to thread
+https://lore.kernel.org/git/20250710221641.857081-1-sandals@crustytoothpast=
+e.net/
 
-Thanks.
+.
+> --
+> brian m. carlson (they/them)
+> Toronto, Ontario, CA
