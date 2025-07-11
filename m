@@ -1,86 +1,88 @@
-Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF961DC994
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 18:55:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4D11D6DB9
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 19:08:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752260132; cv=none; b=UOAXfz6jD6CQTFmKHEc5guYw2gypuD9dOoNYhgYX2rmHi3pXZNx7RAh40fFzLpgoI0vl8PnSxHRO0DFJ2kmRgi1Ths6vYqfUlHZ7gXWGEjM6c54qzO/j2wKg4wJnN0E4xnJ+dq95o2qdffYGsQhu+OzMyoQorYw75Z4KOz+mTAg=
+	t=1752260906; cv=none; b=ZPZOkyahRAgNHeOaccoJHnDCZqmz6oV+KwNoO79FQWv+l3R0WRJ0eBV+LRfFQaLAMfybBJWr2plb/kOG1ke9FRzkpQNg0C6GBhqDgbwmnF/pUyocV9xq4ZvzDV6SQwyJfvRXTPVjrKdtT05KAi6Nkr8a60FlCcPYIpvMDVC1tOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752260132; c=relaxed/simple;
-	bh=OkeFeVVMJ8ehlnoIJA+kEwLjg3ZtshQHU38SYIxNT4c=;
+	s=arc-20240116; t=1752260906; c=relaxed/simple;
+	bh=xOKIXjNjOfAfTaHUB6psVO88djxDx2qyHa0JMNEITAU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=csfR4PvjFK61X0t2mi/s24glmZkUyJIY6DUYh6tvkiZSkwKisdi3tE6taeEN5wvZcwnEE+eoSQrDIvBPnOu4ByNHbA9PgUY4WbHbFEOAcriyJjBinlfXqvsk3WZq8QNCh0p5GDoC+I9hLWZrwC5gvT/jZafdI1JFoEUZZQ8hyQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZxfLJLG2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e5YJngOe; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=gseDJFybB7S7B884oVEQF9gCE1kvA9exbOBujCgS169JYdJ+IgDDoolsVSQOnB+XF834Nj5MAe/Z627/TlbFmr7TIpfdNsZQzOVpd303kmImG80zwzaEls87ZFuVCenTOl46oNK6w6/q05sbgeVJkUMAlTd2T7xc30tIIzsIn34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ilnJUg3u; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QFcBm4cf; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZxfLJLG2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e5YJngOe"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EFD567A01EF;
-	Fri, 11 Jul 2025 14:55:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ilnJUg3u";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QFcBm4cf"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 10A9C1D002A9;
+	Fri, 11 Jul 2025 15:08:24 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Fri, 11 Jul 2025 14:55:30 -0400
+  by phl-compute-12.internal (MEProxy); Fri, 11 Jul 2025 15:08:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752260129; x=1752346529; bh=OkeFeVVMJ8
-	ehlnoIJA+kEwLjg3ZtshQHU38SYIxNT4c=; b=ZxfLJLG2/qcL991JZv09UV8Vey
-	0a/coRjLEIsQMPvhGGPDb2fqz3kZJFZxD0ch9ilSTobmI76MnaJOSdk7jJ0F8qg2
-	hAE2AKyI6f7tOlyhuNdCfp3neYVfrcDob5IAYEJeFxGfnOyCOjFQnxJd+U+dDUNz
-	Lxa3fGnBQJOUhJCb3MPsoa9W07sh9KLj3p3Pf8Qv/DP2UNvH/TFJiHJtx7G8l/xh
-	JVWiEa8xM5/01n2n5WNZl5mUWmBLeIYtGsaC9/Sug1e8HF3eWGxR7tD1sY2eaO6U
-	7FJ/ww8KmYTNY1PuBTTGH10KUYE4AmcgNX5QmYPabZzVRZWzVxsqSk94qnoQ==
+	:subject:to:to; s=fm1; t=1752260903; x=1752347303; bh=5gS4/gudNh
+	8oRAlMmjA8QFF2rO0864UXtytWsggXcDE=; b=ilnJUg3u7SkvGjeO07+pNcUsrX
+	N7UlrtbOk8hns7Qx0SIDt55MpBB7Mtdu5EmtHMjW+VAELrX3sE2qY1i3BALZ6s7+
+	yHOiv9nHxfVhqOeHD8TqM7lWQGcQNsVqp4tHRAUOZeFDtU6rD8M96OFeqHkmt6/L
+	ZpTGoXQGp3vbshDabhDr129HpF1t6FU/TDRSS7Qp9G+iHuRAk4CCaFGLwB/CoVXY
+	1N1r8etEYRjvLie+5z0SCA3OHirdFbbWVJg9Xr29d6tCCb1JuT8HMiyiLEEGbKw1
+	5Lysd6qhZjOsG/5Cqkrwai2XXLq+io9adIxLYXuh1KKSFuRFhSQUNw6NABRw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752260129; x=1752346529; bh=OkeFeVVMJ8ehlnoIJA+kEwLjg3ZtshQHU38
-	SYIxNT4c=; b=e5YJngOez5kagpX1D8IyZ860IppeQcrD4L/lwSGI0xyrAlWM5hF
-	djF/72gv7DIM6EU5m+Bmm0Gb35fQVNqO1P63zIFdzX6keNbKkt+WeL8baAglGK0A
-	iznBMhc45bD2LdI+LeHrZhIi7sy8xmbU0gTsI9hMYfJ9efV3mehEtePi6vJKpgsd
-	jlOfgXjg1syZvc1UoO2V0V3AtpQuzCLQC+pJKVlM1DHqKU1au+KtkuZVrrbKKXnP
-	yuazcq1dv2tlNuYtozDXWmQk9cwf2hhf/v5Rvl/7bxDlIscjTsVk0pDxMHX2j0Gl
-	wFMTWq2MUGpUU7RDkXWhQ8OqxxXkrjnkSaw==
-X-ME-Sender: <xms:IV5xaPkBInSWLRaI1avIyARulnMo33dtrGdVIsi7JI3WaXAvEakp2g>
-    <xme:IV5xaOUf32LaDaIam4EbjD3SBSa_4iO2nhj0cgjRePXcsuxcfP05yY4wbVbUtoEfm
-    tNILrDEeEdwd4x9fQ>
-X-ME-Received: <xmr:IV5xaMF8ZRJQkd0Cdkw03i3jb9fLeBuLDwERMf1FLszR7BBs2d9sSMBZ_u9eDAC4BpXKvHtqKUXVwq3GvVYQJVZGKqOrc652H3-DIXI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggedtlecutefuodetggdotefrod
+	1752260903; x=1752347303; bh=5gS4/gudNh8oRAlMmjA8QFF2rO0864UXtyt
+	WsggXcDE=; b=QFcBm4cff77l5psFDAoiDmSOok/2EVUjQ/1G4iG9ZWjc1yip5wF
+	WI3F1FMlg4nj2HyBh1KjlIjMdcmodW77deOlN9ngpjcIcvEU6MJkMqzFdgRW/fLc
+	UenkboMdlrbFCBldRiMOHqO/tH/eIV2UR9yTuwT19W13KZQ23XemBsmty0K84xi3
+	BSYwFYr1ar9/8CZnkRlY3FjBUIIQVafDpChsprKEeFU4v5AOLwbbCpxTNV0owenJ
+	PX97Uy0+x/2oLWjLrPOJx1sPK19vlEG40bz2Yv4/QtSrVb27OM/Z9vbWhu3ik6PK
+	6mtuw5uxgyiI9pIYbEDLXoW5x4StEhoN06A==
+X-ME-Sender: <xms:J2FxaAOj7XvJu_Ht-PjMlxQaJ0DXfZ4WP-dCMnkGvt85yJ65EYDvcA>
+    <xme:J2FxaBgoUZMPcnfDPq0w8SPnQqHBoAU8Ka2EA0oLET2c8_bZmORscdM91Ebt54jyT
+    JuQcORXiz-4WrgKTg>
+X-ME-Received: <xmr:J2FxaD2w00I5Z0kaVik-Ybiy0joIQ0DwZPHLqAFicFOahUi0QUqieZXCjhkdixqXCzEgWfmHdL8ol7P0vB5bvLs3ORlLW8htKbrux9c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeggeduvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:IV5xaCdBTZiSPAmEdMLHmBjLhtJ67s4gey2X2Vt5Qshndvx9-usb5Q>
-    <xmx:IV5xaFIhXifZzrDw8GIPFLsPlH_c1PijrBp4Q563BABBc3Of7r4sWQ>
-    <xmx:IV5xaPEj1X4GQVFqXhLLQxJjM4fUOc5rYPNGeG1WB1MM43_DW2gc5A>
-    <xmx:IV5xaAAVqJZaXK-3sWasWBH8_3GBBRSKrDSdObBTNHldLtY7ovQV4A>
-    <xmx:IV5xaF3ZwgwqXbJQLMjUWUM9_LF130XZC6T725wi5n51uyom8zn5RqI2>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    mhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:J2FxaLgN9q-m6G77lAulTCRjZXcXpfG1a_CEolKpqUESSTlK1HN99w>
+    <xmx:J2FxaDd1TYAEkW3RN4H8hLkSG7vu8Ildwb5PJ8kFL4wEyCnkB_f-PQ>
+    <xmx:J2FxaOll6YAtUM_UAS3qltXMsfr6GpaKDUOtY-mnMe4kNoOKEZzSSQ>
+    <xmx:J2FxaMug6LCLPO-8zHsyhih0KZ5HMN7KMUSqscioRncP627-McZ0vw>
+    <xmx:J2FxaNcQssjpJbEXfPp04nMac8gQ79X49-VO3xLoNKoAKcJWOsB7rKCE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 14:55:29 -0400 (EDT)
+ 11 Jul 2025 15:08:23 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
-    Ayush Chandekar <ayu.chandekar@gmail.com>
-Subject: Re: [PATCH 17/19] environment: move compression level into repo
- settings
-In-Reply-To: <32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com> (Phillip Wood's
-	message of "Wed, 9 Jul 2025 16:26:54 +0100")
-References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
-	<20250709-pks-object-file-wo-the-repository-v1-17-62627b55707f@pks.im>
-	<32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com>
-Date: Fri, 11 Jul 2025 11:55:27 -0700
-Message-ID: <xmqqbjpq1rs0.fsf@gitster.g>
+To: <rsbecker@nexbridge.com>
+Cc: "'Git Mailing List'" <git@vger.kernel.org>,  "'M Hickford'"
+ <mirth.hickford@gmail.com>
+Subject: Re: Suggestion: error "tag ... already exists" should distinguish
+ between tagging different or same commit:
+In-Reply-To: <00ca01dbef94$b155f380$1401da80$@nexbridge.com>
+	(rsbecker@nexbridge.com's message of "Mon, 7 Jul 2025 19:12:58 -0400")
+References: <CAGJzqsnvTnp3k8Ab2exaBAw5pszQRz00UcucnK=ECtY5vhG+1A@mail.gmail.com>
+	<xmqqcybcrc2u.fsf@gitster.g>
+	<CAGJzqskj803dUcEuV+P-yuWdT0tiaidb7h3YxQSCgYHWgBfaWA@mail.gmail.com>
+	<xmqqzfefodje.fsf@gitster.g> <xmqqfrf73ahu.fsf@gitster.g>
+	<00ca01dbef94$b155f380$1401da80$@nexbridge.com>
+Date: Fri, 11 Jul 2025 12:08:22 -0700
+Message-ID: <xmqq34b21r6h.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,18 +92,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+<rsbecker@nexbridge.com> writes:
 
-> I do not think adding prepare_repo_settings() calls all over the place
-> is a good way forward as it makes it very easy to introduce
-> regressions like this. Our builtin commands parse the config at
-> startup for good reasons if we're going to move settings out of
-> git_default_core_config() we should ensure that they are still parsed
-> at startup.
+> Considering that git tag T O will generally require a git push
+> --force and always a git pull --force in order to update tags on
+> the upstream and receiving an update to the tag locally, I think
+> requiring git tag --force T O when O is different from the current
+> tag is a reasonable idea from a consistency standpoint. I do
+> support the notion of git tag T O not requiring a --force if O is
+> already where the tag is pointing.
 
-I think that is a good guideline that applies not just to this
-series but to other topics that attempt to move globals to a member
-in struct repository (or repository_settings)
+Yup, that is essentially the idea behind that patch.
 
-Thanks.
-.
+> The only counter case I can really see in this is when -s is used
+> to allow the sign to be updated but even then, does --force really
+> change anything when only signing (I think not) because O does not
+> change.
+
+In "git tag -s T O" (or "-a" for that matter), O may not change, but
+the resulting tag object would certainly be different from the
+object that is pointed at by the existing tag reference T, due to
+tagger identity and the message in the tag being different from the
+original.  So even without O changing ...
+
+> If O changes when signing, I think that --force is almost
+> essential to avoid messing up the signatures.
+
+... we would require --force and that would be a good thing.
