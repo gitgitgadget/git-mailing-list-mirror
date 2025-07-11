@@ -1,119 +1,132 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925FA2E8DF6
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 15:06:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F057482
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 15:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752246369; cv=none; b=azeZr1Q6/7ei2GJ2r1YrO1XseGvLOVKPTNBQFv9DTXDsFXiW0V1m5H21QCmHfhG4aa0smHXu3TUiGwIeQlJReDHMvizL6fP8fW26IvJ/MMqNIRBFLBjrj5zkMx8zDS4D+cbc79wIARDKRyfCzOazBA1/e5vK8dfsbQJsiuQQrJs=
+	t=1752246565; cv=none; b=p7UFGYS6aNWyVfkyBIRJGlKmL3gxAC0DvLkXimaRBSe94iurWgEG6M5uw7QwahV1GsT4wBm0fsbQ7pJe5f0gAD9tgmxPPWQ4VDjRyh+Q5+hBBVD9ux8un+8z46wsWqJ4s5eJPfJDcodkRZ2blPnldiJMS8crx/FcibcvjoKYiSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752246369; c=relaxed/simple;
-	bh=i6dOmIS0VCc1dTCYyDsY/RK6hNi3DRMqLkyvyp0Mwrg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aErnpTS0Ce3FKXpMielhgUsPLyNe6RSMNz6LEZm0WfYEZEGBj4c6LyKiRzsThd7s8bIhm2IXgTtzhrJHM0y93P3zrlX7AHZYGIqbjbJP8AWDu2wyCoL4GKhxKW7/avParoEASyg34VKqyhPqVNc7B0b7ZTwMSLv5jYS+aNRE4xI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dJJFyAKI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=N8lJGwI+; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752246565; c=relaxed/simple;
+	bh=AOBvyOMTmCa3Eo/wWGSlDHi9dQISpSTJI/tkj6XGM7g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AeFjQf5SxmMQPVTQQUpEbN3q6YFXGUZ36tB/32zzikau5B6eOyY3A31ScE9WAzl2MXhVTsc4woAAmHBRU/3XAZVfKbJ5RGxxA58+EIO3TxfQUvsQJLZlprc9tP8TIXTiYt62FCndX13n1p1xaneFrf+mL2MRDgFHBk7J2AsmIcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aUuNofJc; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dJJFyAKI";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="N8lJGwI+"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id B7013EC02D0;
-	Fri, 11 Jul 2025 11:06:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 11 Jul 2025 11:06:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752246366; x=1752332766; bh=TNDKGkh7db
-	aNu7766BgPS94PfWCgblaynWFIeaYrr3E=; b=dJJFyAKI5JPMtYbglSsrEGiZ+Z
-	Lfg57ypZ5JNv/pPBcqOybC38ShUCn8YSDyVskfQqa+SC4frRcyJm+aBoit6mEPYe
-	lqAsQlCI3Ny9JB0bMbO6XmsgOb8sTt/T6DNLXzOR/BHyOYDaisfG+w8KPWnQmF4k
-	Z7jbYdHVjzWXn61KonVZcUaNeyIXxUXmvhVm2CA1rOWv7v5aEt5dUG7LE3wxTr97
-	GcevpEOa0azdEAMH7A8e4VxevOfD869hOJ6c/Jj/QsYImOn+lBU0kAkYdW+U+8qj
-	aAQFh9kDsxgywl5FQpKvZSgjZzzA5BazG0aZ2rX89ZNpEjdBFQmNe5qyI+lA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752246366; x=1752332766; bh=TNDKGkh7dbaNu7766BgPS94PfWCgblaynWF
-	IeaYrr3E=; b=N8lJGwI+ZkIyAFXmk5wUudbNRmYpo3l5tB9ljUQgjXnhEkm0ovz
-	r8o44dMHg+djm+lA32Fv38vsg3az15cnGlsxAAX+0/jomraxQkkSKifF7g2Zq5Mm
-	i5ngL/EuR3Lmhh+t819w1xlFuxOFGdFUXkX0zjdbzqkur+ZBAYrUyKNU9lZUwlED
-	ef5p3rSmVDCe9M5uwFXRmfqYTTFy1KGzE8MIYezFknI1tHB9QTQ0OKYvwRjmHhuF
-	v+WK9RTA1rRmgwufsvaDbUm5ubRqDWI9yCn+l7usPve7wFgjIxqXcH/dNyDCB26A
-	J8MNe8t1KmmNc9xInksCKqdn+38s63QA77Q==
-X-ME-Sender: <xms:XShxaGI4O8cUbAr4cOgPqAkFGa74QfOQZ44OAXymgtW3Th6Y3IYrkQ>
-    <xme:XShxaDghIodVY80liyoVRsKi6pavZ5KTUk0XYnpisrxqS9qXwSO-UmGfm044nGpXJ
-    j4BlA2VHA7nDgzgSQ>
-X-ME-Received: <xmr:XShxaG5bLX4BJd0BddyTJc8e5-QQer_1WjOxglIpq2cFcrV6ox2WRbpOvY4C9fFEBcQeLR15FTSctz_TjUDgZ7-7qEJy3tbz2cEUQVA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeeigecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephedtvddtvdeg
-    feeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgt
-    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:XShxaLZU78mqXDHLdHSu-X6CefPZfpj1sMPbE9N0i0e6s8Ke2l71aA>
-    <xmx:XShxaL6_a3JmNOqzcejcktkqUHy-XyquOGSRVImWafdloH_278sXqA>
-    <xmx:XShxaOAUY0LbZvsjPaLw2Zq_ezyZ4JerpAhllSYGOg5ld7o8WIPASA>
-    <xmx:XShxaBd9bcvAjTgufuG1unZJA-rseSgTzMhG4a4zP_87mhy_vWH-gw>
-    <xmx:XihxaHf6_ghDtTkuADAuEgU2NK2CKo6UgsqRFxN4Y0WH4HF-l35RCRRZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 11:06:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Lidong Yan <502024330056@smail.nju.edu.cn>
-Cc: git@vger.kernel.org,  toon@iotcl.com
-Subject: Re: [PATCH v5 3/4] bloom: replace struct bloom_key * with struct
- bloom_keyvec
-In-Reply-To: <1B012532-E1B3-43CE-871B-B850D86419B1@smail.nju.edu.cn> (Lidong
-	Yan's message of "Fri, 11 Jul 2025 20:46:27 +0800")
-References: <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
-	<20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
-	<20250710084829.2171855-4-502024330056@smail.nju.edu.cn>
-	<xmqqv7o06mw2.fsf@gitster.g>
-	<1B012532-E1B3-43CE-871B-B850D86419B1@smail.nju.edu.cn>
-Date: Fri, 11 Jul 2025 08:06:03 -0700
-Message-ID: <xmqqy0su3gys.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aUuNofJc"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-453398e90e9so17389955e9.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 08:09:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752246562; x=1752851362; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KYzUW1hMdWhCWwrJupq7Ji8Inkk1xukPI3jgGXBxSKA=;
+        b=aUuNofJcXtl1WP7oV8xjo332UXiSgfLJl4VMnJvJFE3LBd7D3D5/sZpc/eONpeoC1c
+         HHXRp1uAVkwNPoKLUtrOFvz1GCqXjnEugCuXoDSFmWw2Umh5JMA+oYy/c6q8ounqk8ue
+         k4A+518bGdkNAnHvvd6LO1pr2Ro8kZT/Jk4KJRbCI7R/L/bZlnT2KAU4gmVeVbCN/UW0
+         Hoh03ITC00jdBazCGcMyUL6RrGJPBCec/xv+RS75EMwbmyAQXS0grDynXWpBgATCKqjs
+         otsf4PVq2ZFV7S00Y7RsADTCnPCslngqeCMtKXeUT5FELQJ0h9DbnDlV4JnDKmjYPrC+
+         duxQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752246562; x=1752851362;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KYzUW1hMdWhCWwrJupq7Ji8Inkk1xukPI3jgGXBxSKA=;
+        b=WaUv67jXoXoY4LfwYClLmOS8uafJ+9zqKrZSLVWS6PIMbdU/VTKfoyw+jofORJ5WJw
+         1eMt4OP4Acdg78vJCmTJi9HA2Rpe6Q16i4eFXtaaPnPKrVcLjdqKWJt6cc+doeUdwb2W
+         E5vDtpaMMbVsQuprFKfd/rf/zw4knwrmrpM3ABQJFLRHl61+ptMOYIVyonjMmuzZnnLy
+         DPBjAnfiM1AOt6xc+JzMK9ywVd4C81Thffn1ePCTUT7o/0F3G423TlSGLSwaxBXK08c2
+         rveUc8lSEGC1liSOxvftbmx0tyyxgfBLhdS5JXUmSA2iavBAB4hyoJK2ltJvlFA9oe9+
+         4UGA==
+X-Gm-Message-State: AOJu0YyI4bYKJ6kvot5RFsF4GeR0mFsYChziCUdRH96Rso9Ea26NSW8X
+	UvcUaruhx8ECVa/EFTJ3GMjBzj2WLwA19+wZuddbrAVSuSuHINpVZT92
+X-Gm-Gg: ASbGncvl6ate8T8V/WHFB70tEu3SIAwbq+1Y294p4s6IMOdBSP3/o3GHgoIAVhqEZU1
+	f3mtFFUMdCPiSvirE3YjuBzNzIlIqLpJyYfaiMpuqH56gwtNDuQNlNW+F2fYM+/YEWvyrEJSWgI
+	nLsf1NREdRn4qThSph5ZffjmqHN+baTkub0/FsSy4DswFomckzs/O2SQbQXiNlfslAQSsi9UOBF
+	bKKqpQCyUlO25nVancTW7T649P9MP26nZoKLwoIXTsKEUBNi/vVjdxWWsFbJm541quCwU2lYGkg
+	yaxO643zWjhcB84xbXTa3MxookG12NGwW072M+Q/NDM6ZTBOSyIFYulnCORtNV5iPUlsfELXD7s
+	WyEJCoFudvmtSHpibMqBzEezfC1TB4w3Ito0rwDo2jy/+XE4JTqA1mW/k8M6rDwUTEWK94cisg1
+	5L
+X-Google-Smtp-Source: AGHT+IEt68wBKlop+UmP10Z96AqNfYLANqWW0j08kz8U6g5raGxkLprccAfdzDzvUnS0SlD87noWBA==
+X-Received: by 2002:a05:600c:8010:b0:43c:f513:9591 with SMTP id 5b1f17b1804b1-454ec16a08amr39556625e9.14.1752246560932;
+        Fri, 11 Jul 2025 08:09:20 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:750:6901:92bb:fbdb:4a2f:315b? ([2a0a:ef40:750:6901:92bb:fbdb:4a2f:315b])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-455f13ec67asm10428975e9.4.2025.07.11.08.09.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 11 Jul 2025 08:09:20 -0700 (PDT)
+Message-ID: <b811a0dc-fb49-4f66-a9ae-89a45d7ff104@gmail.com>
+Date: Fri, 11 Jul 2025 16:09:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/2] breaking-changes: deprecate support for
+ core.commentChar=auto
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>,
+ Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, Taylor Blau
+ <me@ttaylorr.com>, Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+ <xmqqjz4iv7mt.fsf@gitster.g> <f679151a-c843-44d4-9e28-27112d26f30c@gmail.com>
+ <xmqqfrf5nxnq.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqfrf5nxnq.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Lidong Yan <502024330056@smail.nju.edu.cn> writes:
+On 09/07/2025 17:20, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> With hindsight I should have been clearer here that the advice given
+>> is based on the user's config settings.
+> 
+> Ahh, OK.  If the "hint" advice message gets generated with custom
+> sequence of commands, that explains why the sample looked so uneven.
+> Disregard what I said about clearing every variant from every scope.
+> 
+>> The advice will recommend a command that updates commentChar in the
+>> scope where it is currently set so if it is set globally it will not
+>> prompt you to set it locally in each repository and if it is set
+>> locally it will prompt you to update it there.
+> 
+> Again, I misunderstood the set-up that would lead to the sample
+> output.  If the user has "auto" in ~/.gitconfig, replacing it at the
+> same place may make sense.
+> 
+> If the "auto" comes from /etc/gitconfig then we'd recommend
+> changing it there, instead of overriding it per-user in ~/.gitconfig?
 
-> Junio C Hamano <gitster@pobox.com> write:
->> 
->> Lidong Yan <yldhome2d2@gmail.com> writes:
->> 
->>> static void prepare_to_use_bloom_filter(struct rev_info *revs)
->>> {
->>> struct pathspec_item *pi;
->>> + struct bloom_keyvec *bloom_keyvec;
->> 
->> This new variable is no longer used, since the code to create a new
->> keyvec is in a helper function and its return value is directly
->> stored in the array of keyvecs.
->> 
->>> char *path_alloc = NULL;
->>> const char *path, *p;
->> 
->> And the "p" variable no longer is used, because the logic it used to
->> create a new keyvec is moved elsewhere.
->
-> Will fix in v6, Thanks,
+Yes, though I'm on the fence about that. I wonder if we should recommend 
+~/.gitconfig instead if the user account that git is running under does 
+not have write access to /etc/gitconfig. That also raises the question 
+of what advice we should give about clearing settings in the system 
+config file if the user does not have write access to it. It is possible 
+the human user has write access to the system config even if the user 
+account that git is running under does not but we have no way of finding 
+that out.
 
-FWIW, what I queued have these two already removed from v5.
+>>> It would be necessary to special case "auto" after 3.0 boundary
+>>> anyway, whether we (1) die when we notice the value is set to
+>>> "auto", and refuse to work until the user chooses a comment char, or
+>>> (2) use "#" or something hardcoded.  Either would be better than
+>>> using literal string "auto" as comment char.
 
-Thanks.
+I'm leaning towards dying to avoid any nasty surprises when the commit 
+message contains lines beginning with '#'.
+
+I'll try and re-roll next week
+
+Thanks
+
+Phillip
 
