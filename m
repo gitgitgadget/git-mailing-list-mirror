@@ -1,207 +1,109 @@
-Received: from mail-lj1-f179.google.com (mail-lj1-f179.google.com [209.85.208.179])
+Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F88221F29
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 20:36:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1F2221F29
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 20:57:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752266208; cv=none; b=jSt2Or7SVr/4lKvdwUMiq2OB9XJ8pGGP+9wJp7U1njbQO/WEWtA7lVPC8AIjV7mJTocfcqPVexvBbhfAX9fm8k9ewG9q58+vpco5kreoh5KETmyqTw1m4bR/gsy35glqxilRphn7sUI2b8Gz50XHm2n2GzPYFSX1M+f9XNP7Pos=
+	t=1752267427; cv=none; b=OcVnjJ5HF/ANHZKpqTqZNNV3K5Kh3JRl5fT51zBqOR23asoJcRKrAHRYYiBWyKMftpG74IcXonOHb4Z53YC+nCwxPeT0VnIxQhnpoK+v6i+A/toX1yOqL4SzZqYuOhUXpECnPv/LJfYxPEn+Wd0nPdpjT529bB0CeZXAsCV+LgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752266208; c=relaxed/simple;
-	bh=jywRh4HaZ9f3xcrLXJjcY947yFdI1y0Kdf0YmZ4H4Nc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uTbVjrgH4Jco3z6yw9kfgeVqnhh7RZIenBUbpRx52s8Uf0Qhb/4pyeOO4ycxB9rioe3d/wA0yU+QhfNq1/S1RV+gBs4YzMxEVOHeQUjjLNoRhmTjKdsf2ZJN61mby5S5I05/dHuuo08HigLozmx280u6CCUSsYOzmHoA+Ikf83k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IaMwHTb8; arc=none smtp.client-ip=209.85.208.179
+	s=arc-20240116; t=1752267427; c=relaxed/simple;
+	bh=8QAIE2GRQLz8SbVIwjoG5nd3ah8LSni8e7KZk4Gt4yg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=N/uGVeSfLvLOTIPLubxDqmS3mJ7YMXY/FKESngkGSyrkN26xYzEhP/r46Q2ir9s1JqhS0oAWY8iI83aAhpFXtP1RFoukuMJbE5nFnLT+/QTkg7SXmmVPyiAfSiEwkg+WXFEOdMrP/C7AqANIR8U8XPuF5Bl68qmXnbwcAQcDz64=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LeWUCVlD; arc=none smtp.client-ip=209.85.210.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IaMwHTb8"
-Received: by mail-lj1-f179.google.com with SMTP id 38308e7fff4ca-32f474ded39so2367781fa.3
-        for <git@vger.kernel.org>; Fri, 11 Jul 2025 13:36:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LeWUCVlD"
+Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-74801bc6dc5so2185731b3a.1
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 13:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752266204; x=1752871004; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CSQTiLarGM1FpM0z8wc7hQKAD+98SEeSJYyXn8WXe5E=;
-        b=IaMwHTb8AMSPsuCDfJ2CSsaKn14Q8vu4dk97ED0xG57LtnrZY3TP7Z6TOFbq+5VXx3
-         +W1yZPXp/ZisDuyYaSsYT4RrYJJJprAuUpwrIt1kSrxg80QqNH3PXklszjt4AtebfSlK
-         DRXgtfMMBP/zFYd0DAzcwtxJcOTgNt6pPFg5vEZqikism5RhqmJunwHklg15HM4IGzWZ
-         KgHV/F9cU4xfIm0nNh+M55uYUH8/E4ga0Igut8ECSFmyZh4i/kVRYt72tCxQ9TYVc08P
-         HCLd5YUFATVwKYW0XYRN9KP2QZXa22HRtRbn1oKiQMDdODJv21A8R+mojT0y73+27P5L
-         6zqQ==
+        d=gmail.com; s=20230601; t=1752267425; x=1752872225; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=7ONi1eCB2iDfjMmDave02uUcS4VV7KRYysi2PeeOu5Q=;
+        b=LeWUCVlDsxjF+XVXpKlod4p0VX8FFgjxrgqQnIFouTR3hE5iH0AkFTlwRDvdI4il29
+         ISSSVY/c12JodwYgC9EI/jzduXRXg2GIVvRW6aOqOA6zjVCwDmQ7i7bXxcd0DTbTxp93
+         qv0dpdWmxEnDZ1J5nlS7IO2/lXb8TliohLrRCzHUnD7k0nLsIgdqCGZtOZJZf6/y4iU3
+         6Ig7GtZg4e3sFXdHZL7VuMPgtaHBRtDb8fl7XWLe4VsP2ocGARKV9JroO5BxC888BFZj
+         U+pQFksg+xyhnS+2gZJtFLWSY42dT0QG/HHnhkpTwjjeYA3PlCH24ub0y02HQ8sEyVBR
+         a26A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752266204; x=1752871004;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CSQTiLarGM1FpM0z8wc7hQKAD+98SEeSJYyXn8WXe5E=;
-        b=S6T10NY09WUO0COlXVOvv4Fc0HbEwBmccEZNQV1N+PNP+HIuiIYw0AUFB0hcR/6PRA
-         udtBC6+BVHHbtLcKm1x8Ls+4hcntvkO+Qj829hdkQJsfB7LdlpzaSs7vRBUMZsyXmnfE
-         RYPd65yjMD8Ean0A/oc4C8YYm+F1v9Jr9XsEPuH7tCUYUxCuFZhCiDd7h/CxPKiFMCy5
-         LqP3s+W4Ye1PkLFKdj9Xx9ct5aBvAifFKQfsqABB8byqkIwW3z8FY2EZFfKfbIP1M8Lg
-         8kK+07YQnPVxJoUwNVjDA7hjQTbOYXbP5XQ9NOXVLMwfnmPmdWQzJT0x2sTdzQ+osnVL
-         jgAQ==
-X-Gm-Message-State: AOJu0YyY+7DvjZA6Mo5N76qKEF2NhX4ZYqHV4GrWTD7QWnEvlAyIJTaj
-	G5/XKjeUyaKLfRPUOQ6jkLRb264M3L/FckNtMFf9EG4rqRCw98jMrri2TmspV25D
-X-Gm-Gg: ASbGncvp45do9XbiItJE7D63YUgcp6SkxDv4nw4/YhMGvO9sxYxZgT7uwnRNWO+es0y
-	BbHoBqxsz4VWU8UXpqc2kRvXK9K1CgfuHzTIW86lyW7yQzdZoX8sD6gRTHbDKZo1wOpk+wNnq0P
-	ox7N3CWjTWZC13ZuO0X74wU+pkaBf3gbY5cBqcA+P+GvQ64S6ZNeCCHZXM/0RBw94BEUYYMs+a+
-	DAgUqSXP1IIMRiyD2dPJ3u0jKrxo86pMlABBdbYpieghxXjjWw8lMs6yBVezpTx3/eZzq/v8C4z
-	JknPuqIveoA3vr4izWxU7Fx6ozkjiHK2ZA7wGQSlDXeAS9NUDB9oFvYOVLzarJU4Mg9Ura4MqGt
-	4l0YmY2+2sFaLvOPv9UYXc+vPUKFP
-X-Google-Smtp-Source: AGHT+IEDiFMhedI4IslUGRI+3Jp5FaDHdINX1zYAUbvcHQ3GbGjKqs8Jj2wnjRBrLZfxbW3rWyaABQ==
-X-Received: by 2002:a05:651c:54f:b0:30b:d156:9ea2 with SMTP id 38308e7fff4ca-330535ede1dmr4308531fa.0.1752266203774;
-        Fri, 11 Jul 2025 13:36:43 -0700 (PDT)
-Received: from paasan.tail13fe4.ts.net ([2001:4641:9d1:0:c6a9:2307:c38e:a2])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-32fab91a64csm8246021fa.111.2025.07.11.13.36.41
+        d=1e100.net; s=20230601; t=1752267425; x=1752872225;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7ONi1eCB2iDfjMmDave02uUcS4VV7KRYysi2PeeOu5Q=;
+        b=Sf9PRLCP9cSiLsnY0R6i59p3UKE735C6D3NJ0K2V8DMvmkkUsGqFWu0HcmNSRgoV82
+         JYMofrftiXFZlRJiJknbNCh9LeiweVZdtGIdQAxi4Cm1QRwwE3oYaIdW4AVUDyaQmDyW
+         G6tQ60k2M83xyu6Oa9eE/RxVodTY62cW1lwPlSgTTNBDOVzjJYK/KmbjZM09Icf0WrwT
+         XvmidbUeJrp99xY5EMdDio+s+I8CB8BaYLk5tu0zO1J4KZwhhCR/ykV7EYF1tpdbbuXQ
+         PvG8QheNFym/V8c4Yma5EwYPCavz0oon3L+ZM5SZUjZS6p5DuOg3zJkRgMqb9mb4DpdC
+         idQw==
+X-Forwarded-Encrypted: i=1; AJvYcCX3uhpn3tL+NIB+mahgq3So4WD0oLCSi96avk/BVFFiwWew0uyKmRGbAGV3FGIwGtpVdGc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzyVQGy6BOZCez0QEsZ2W741bRRsznQjgADnJ6fFdbPePhSM8bd
+	cteLH6t+eHUYyIem++WSNho9OvUQrQ3+zUkD6RJ/2ChAePsJ+B2AFW2V
+X-Gm-Gg: ASbGncsj49D4VsTCRbnSKLqVKItJRgUzsA1tAq5UmDgGsvWhpUT4Vvbxk+dzOyTDC3m
+	eEunxtBep7if8YwAbrb2aKXeeK7/jemca24ZBybHKa6kb26LFeV3nBEUWMc3spc8m/ojqH+TnPC
+	vlaTzZo1TmCiyf2dE7+u0hHr5bew+PJo46xzux5xPmSuYwsaW7uwP9daozPkPmx1m3ocuArocQB
+	5qwxhs2hO59JgHQ8rqDItnvPBri/MjiE2YVF7EmpxLLA+pq+ALzOPtD9tddfKm+q4W5J9wmQazw
+	2Yp5CepT7hxgLzyO6Y6t/734BAXbG4zmbt8++EiB5aG89JNCdiV0hFlrRH/jw6gjKxt11Ia+fL5
+	4+VtL/SbtCrw90cST0nlGCQ2nK5TGcbj6vmO2dkXfyAlYxWllynfRSysVFYw=
+X-Google-Smtp-Source: AGHT+IGsI1UZEsyIvthl6HOG7lcPHshgs1Ps/uA0q4ZXUmSBSTmYRrk4d1f8j7vGQputzZkFaO+9EQ==
+X-Received: by 2002:a05:6a00:660a:b0:746:195b:bf1c with SMTP id d2e1a72fcca58-74eb5ace4ddmr9280453b3a.10.1752267425351;
+        Fri, 11 Jul 2025 13:57:05 -0700 (PDT)
+Received: from Carlos-MacBook-Pro-2.local ([2601:640:8e80:3680:b052:91b3:8fe0:c52d])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f49f80sm5478617b3a.117.2025.07.11.13.57.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 11 Jul 2025 13:36:41 -0700 (PDT)
-From: =?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-To: gitster@pobox.com
-Cc: git@vger.kernel.org,
-	phillip.wood123@gmail.com,
-	=?UTF-8?q?=C3=98ystein=20Walle?= <oystwa@gmail.com>
-Subject: [PATCH v2] rebase: write script before initializing state
-Date: Fri, 11 Jul 2025 22:36:15 +0200
-Message-ID: <20250711203615.9982-1-oystwa@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <xmqqfrf6qkyy.fsf@gitster.g>
-References: <xmqqfrf6qkyy.fsf@gitster.g>
+        Fri, 11 Jul 2025 13:57:04 -0700 (PDT)
+Date: Fri, 11 Jul 2025 13:57:03 -0700
+From: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Justin Tobler <jltobler@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, 
+	Taylor Blau <me@ttaylorr.com>, Yi EungJun <eungjun.yi@navercorp.com>
+Subject: Re: [PATCH 1/1] http: don't send C or POSIX in Accept-Language
+Message-ID: <idgdx2au3zgpowozspvu6ttvehybtwwuqf5kwqga4yok7uo2uj@wno7evyjg6pq>
+References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
+ <20250710221641.857081-2-sandals@crustytoothpaste.net>
+ <r34i7fhxwbxhppc4ia7lpyr3xqj4tgusaeikaaonpwtywlywxw@ygfmv3f3q67u>
+ <875xfypsom.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <875xfypsom.fsf@gmail.com>
 
-If rebase.instructionFormat is invalid the repository is left in a
-strange state when the interactive rebase fails. `git status` outputs
-both the same as it would have in the normal case *and* something
-related to the interactive rebase:
+On Fri, Jul 11, 2025 at 10:02:01AM -0800, Collin Funk wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> 
+> > From my understanding, each language is expected to be defined in the
+> > following form:
+> >
+> >   language[_territory][.codeset][@modifier]
+> >
+> > When we parse the list of languages we only care about the
+> > `language[_territory]` part though.
+> >
+> > From looking at ISO 639 language codes, only codes with two or three
+> > characters are valid. If we wanted to be a bit more strict, we could
+> > check the length of the language code (everything before the first '_')
+> > and filter out anything outside of those limits. This would naturally
+> > filter out "C" and "POSIX" without having to mention them explicitly.
+> 
+> Filtering out anything that isn't 2-3 letters seems like a good
+> heuristic to me.
 
-    $ git -c rebase.instructionFormat=blah rebase -i
-    fatal: invalid --pretty format: blah
-    $ git status
-    On branch master
-    Your branch is ahead of 'upstream/master' by 1 commit.
-      (use "git push" to publish your local commits)
+except that it would be incorrect, as language tags are defined in RFC5646
+and are larger than that.
 
-    git-rebase-todo is missing.
-    No commands done.
-    No commands remaining.
-    You are currently editing a commit while rebasing branch 'master' on '8db3019401'.
-      (use "git commit --amend" to amend the current commit)
-      (use "git rebase --continue" once you are satisfied with your changes)
+most importantly, deriving language tags from locales provides some very
+useful tags when including the characters after the _, because zh_CN and
+zh_HK use completely different scripts, for example.
 
-get_commit_format() calls die() on failure so we cannot handle the error
-gracefully. By attempting to write the rebase script before initializing
-the state this bad state can be avoided.
-
-Signed-off-by: Øystein Walle <oystwa@gmail.com>
----
-So sorry for the delay. I saw that the signoff was missing, then saw
-Phillip's review, decided to think about it and then life happened in
-the mean time...
-
-This patch is identical to the first one except it has the missing
-signoff and a few typos in the commit message corrected. Phillip's
-suggestions are noted and appreciated but unfortunately I am unable to
-work on the at the moment. And I do think my patch is at least an
-improvement albeit perhaps less thorough than it could have been.
-
-Øsse
-
- builtin/rebase.c             | 42 ++++++++++++++++++------------------
- t/t3415-rebase-autosquash.sh | 10 +++++++++
- 2 files changed, 31 insertions(+), 21 deletions(-)
-
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 2e8c4ee678..8139816417 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -293,15 +293,6 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 				&revisions, &shortrevisions))
- 		goto cleanup;
- 
--	if (init_basic_state(&replay,
--			     opts->head_name ? opts->head_name : "detached HEAD",
--			     opts->onto, &opts->orig_head->object.oid))
--		goto cleanup;
--
--	if (!opts->upstream && opts->squash_onto)
--		write_file(path_squash_onto(), "%s\n",
--			   oid_to_hex(opts->squash_onto));
--
- 	strvec_pushl(&make_script_args, "", revisions, NULL);
- 	if (opts->restrict_revision)
- 		strvec_pushf(&make_script_args, "^%s",
-@@ -310,21 +301,30 @@ static int do_interactive_rebase(struct rebase_options *opts, unsigned flags)
- 	ret = sequencer_make_script(the_repository, &todo_list.buf,
- 				    make_script_args.nr, make_script_args.v,
- 				    flags);
--
--	if (ret)
-+	if (ret) {
- 		error(_("could not generate todo list"));
--	else {
--		discard_index(the_repository->index);
--		if (todo_list_parse_insn_buffer(the_repository, &replay,
--						todo_list.buf.buf, &todo_list))
--			BUG("unusable todo list");
--
--		ret = complete_action(the_repository, &replay, flags,
--			shortrevisions, opts->onto_name, opts->onto,
--			&opts->orig_head->object.oid, &opts->exec,
--			opts->autosquash, opts->update_refs, &todo_list);
-+		goto cleanup;
- 	}
- 
-+	if (init_basic_state(&replay,
-+			     opts->head_name ? opts->head_name : "detached HEAD",
-+			     opts->onto, &opts->orig_head->object.oid))
-+		goto cleanup;
-+
-+	if (!opts->upstream && opts->squash_onto)
-+		write_file(path_squash_onto(), "%s\n",
-+			   oid_to_hex(opts->squash_onto));
-+
-+	discard_index(the_repository->index);
-+	if (todo_list_parse_insn_buffer(the_repository, &replay,
-+					todo_list.buf.buf, &todo_list))
-+		BUG("unusable todo list");
-+
-+	ret = complete_action(the_repository, &replay, flags,
-+		shortrevisions, opts->onto_name, opts->onto,
-+		&opts->orig_head->object.oid, &opts->exec,
-+		opts->autosquash, opts->update_refs, &todo_list);
-+
- cleanup:
- 	replay_opts_release(&replay);
- 	free(revisions);
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index 26b42a526a..5d093e3a7a 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -394,6 +394,16 @@ test_expect_success 'autosquash with empty custom instructionFormat' '
- 	)
- '
- 
-+test_expect_success 'autosquash with invalid custom instructionFormat' '
-+	git reset --hard base &&
-+	test_commit invalid-instructionFormat-test &&
-+	(
-+		test_must_fail git -c rebase.instructionFormat=blah \
-+			rebase --autosquash  --force-rebase -i HEAD^ &&
-+		test_path_is_missing .git/rebase-merge
-+	)
-+'
-+
- set_backup_editor () {
- 	write_script backup-editor.sh <<-\EOF
- 	cp "$1" .git/backup-"$(basename "$1")"
--- 
-2.43.0
-
+Carlo
