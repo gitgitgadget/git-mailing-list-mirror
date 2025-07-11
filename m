@@ -1,123 +1,166 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D8E29ACDE
-	for <git@vger.kernel.org>; Thu, 10 Jul 2025 23:58:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B274E195
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 00:07:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752191926; cv=none; b=ae+u8I2WyvgoLYZ97cNuVKWNv5sBmxCSb9iXTZy36Dz5q/HmWklgPRX8eRaH65wDxhRURH91KBG8rjr+4aZMDxdMz8DgnYrpMmxi3Yc7i0Oj+OXlPRvrHInxk48R7zNxh8OSfShVZ33Gj8P8laL8pwxSVc+GBaI3beZ5D72ziFo=
+	t=1752192448; cv=none; b=mHiJokZPy5UtDAF8+JA+5gnuuu28dSgySx2dCEzVUKVmBBMG2pIja/yMwzoJmH4IfLY2uUerHgOJ6XZL5ooH8v9r3aimhz99qc1Tezea6vHkaklS9UmYX8r5suxO4K4o0rYJbHQFnx/aBLNICEiXJIXkw9Gccwk6ItslXZFZOCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752191926; c=relaxed/simple;
-	bh=DnsFmz5HBiDAJ6NxMJTCEFBvY2s2YFx359emsSzMaUo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FqzAPJYWaGYuMJF56flilHDFgAhGToQYpPsFePu/RSisQ61L98CG9c/9uwvlyw4YWiwEOQ5IclKotK6gRilHsd0TR1fwDuV0Lj7UdmSGBof+qL6XX6+36eyGj6KN6Om1n9uHcIjGvUv5jU4g/sR8Xpa55oJ+pPinqO6f/fGiSTI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=hIU/x3fr; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752192448; c=relaxed/simple;
+	bh=HVe2Baf+IUq5SzN+V6EVuH6dhHLahHWmKkOXplOOHg0=;
+	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Gmli6+c5v1aS8clySdw37Mf/LUXsL4UaCe+nRSTTjWiI22Y406JwcZRsxw8TOENvSPiVeib9CjzSvY3xO1G4RM5RQ5s0pNdZizaCJgn9JPjUwaP1+ChSj2CZgLFDccY9tn98yeZEg4tU4PhWl2N6km0mT1omIwdGTq2c5PuEbdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HXHGDzbB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OWd+7hHY; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="hIU/x3fr"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e84207a8aa3so1080306276.3
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 16:58:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752191924; x=1752796724; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=4Hl2AHD0ZeMRaGyBl8533+a1brrPLjkCipau/6NBf4Q=;
-        b=hIU/x3frHVO4KWhpN6BCI88qdb1hHsermUOJrLt7mLP2xfJ57Q+UB/KBYfpkWdbfEn
-         3KCNQajC2OuEfOcrdI9JOIiGgRkI7k25j/XhA9SJOIrHjMWIPm0KWItQdCIMqt6ggBgb
-         e6kFzf1pb3IE9exGsQCQBrIP0YoTolLr19TpR3nnhhyevrzPD6j6KIn8BaEhE+X0UPtd
-         Svs558inhuhK7n62TaVJEuQclF3k7o+Xr357DKmAv3JsPLuRqabpzQIDUSSR9tjTiZQ4
-         vXujQpCuMl02YU8FhKOvHeD0rdbR+/0myyJTVu3olWTpY+iMDfgkQDy/K20TZi8JuV75
-         imhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752191924; x=1752796724;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4Hl2AHD0ZeMRaGyBl8533+a1brrPLjkCipau/6NBf4Q=;
-        b=BE8Ah+mHJ5T+PksnrphwTwjohBBS9wyRSXhrm+0650v21yKVBtQG9dyky2+RjF3rgF
-         EWlbGvSPTsz0RBolaBpoQMWdxflpr/2ms3CV1z5gt7bDRRaB2Gky+8sfUHon9CZEitqd
-         1b+oWA7NmBY1JCVo+UvHj4LksZ5lTGbsm3+ft5yPw0SLjoIXmACI8qvcnBNefifG8e0e
-         EUj449mLLieD/lbBroCMXkazHQRtK9eEjl7Rn2z7xWvL4TpLf33Es/GMZdWLSGeqoBhb
-         sZROHQZhuT7qEDhBNLaNORr89gmTILhBs7Hw4spGjsUIxRgg8ogG9FwE5K8YHl4vaCk8
-         N+1Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVd3CjcNTV9AgeUhV+c4Sljk/CSTM5GIkbvZhWI+llKkImnGpByuBzUUVSw8pp7l+AmHcU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzvTCj9kVrWEWaddUG9oxCnnulQQW9z6esOBLdNfctXRovqDMmt
-	8ioXxYSZgOC7TFKnLBJiURcR0RFCqsmVcVxFNmjU0jQyRuax9c4pUrQCR3SUFDQlHbY=
-X-Gm-Gg: ASbGnctP2mxRguH5Mq1FL78/wGtuj+ui97amOmeVO7bRE8LWwYhpuaehGWwixTCgYW0
-	7glz/80LsOF5Ylp6cJv01HAGkN3Nij76G2bKuE2TKPoeUUn6SgmJv5WDXllk5loxY5Lttjv6QCB
-	t6BM/tHFhwhPx6G+d01VUTHmIaU+E4hz0nEe9P0r5pTz4xN/MpmI39kN7JSJJoLbGfTOnFyUsmW
-	fZVqwhTroqspiMk8n0uwwiHCgKm7o2gvbcWd+Lk8C5+nO/Xq1Z0+BQHAh01Ci3IsBbDHKsjY7Q0
-	2qqiDo60JP76WHwugK1q0C6A35H2+ZufKFxvikUD1sGAC4DU3G/G9hEQ4KFy0UK8aGV4zwGphKr
-	QOmtLV7GBAVZLP8wfPbuT0BGx0HI4ASck76VKGC5wV1i3N0rl2Vt+JjbSKAZ7dHzgRKvTow==
-X-Google-Smtp-Source: AGHT+IGFj5b+ppEONxMXs6lz8RfDUYqStZq6h44zzqSORrXsTaif6Iab4IT44EPqaDOPgzuQwxghHQ==
-X-Received: by 2002:a05:6902:4901:b0:e81:b080:31df with SMTP id 3f1490d57ef6-e8b85bc8226mr1472122276.36.1752191923668;
-        Thu, 10 Jul 2025 16:58:43 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e8b7ae26ec8sm750618276.8.2025.07.10.16.58.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Jul 2025 16:58:43 -0700 (PDT)
-Date: Thu, 10 Jul 2025 19:58:42 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Subject: Re: [PATCH 0/8] odb: track multi-pack-indices via their object
- sources
-Message-ID: <aHBTsm6fUexaTKB4@nand.local>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <xmqq34b5aumb.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HXHGDzbB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OWd+7hHY"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E9E147A0186;
+	Thu, 10 Jul 2025 20:07:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 10 Jul 2025 20:07:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752192445; x=1752278845; bh=ppwsFfIonc
+	PQtfSQOvf2CdjpbGn38yHMD0lwbZZbyBY=; b=HXHGDzbBG2t2rIHNxod6D8nklU
+	5wjJBNVxovdwbw3B450w8iYur9Im9qwQDaqkxFKyxnp8xLIZY7Z1XImjYuaaZh5f
+	GGLcbgBPT6awfMMkX/UjDwSGYLX27hG1aQXOGkEK6GHtHT8n5ajuIYhyIJPXmdKX
+	S45r9w0bKhIrgRTDhsSWWzR66d0fItOqVSenUnNn6gqkHHoiGBw5XipkRRC12+8h
+	3b5NS4zn9aSKRWgqwv1TFI3WU4qlZaQIhDPVHSeVdNkYelzJYC7pAZT3vkmTPplM
+	mVg0zx46TEY0r9ZQP3wQ4xi4klcsnnQ5on3fnuFEk/j8WECN5Rdi5EF7wOxQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752192445; x=1752278845; bh=ppwsFfIoncPQtfSQOvf2CdjpbGn38yHMD0l
+	wbZZbyBY=; b=OWd+7hHYJHeHkhju95wCfdMekImmztBRns26p9gJQcuYnitDi38
+	qS2iZYeGRfztBX+0MrFoIZ4MA+ipw/CI4/bbkdz6u9zSPWqRBToMEoaRCrO28zeP
+	YgnNAEH6mBvaTTxpiI+jfsrdWXR6TR4bxsNZfGOfMYmAIwcNB+abGgvuvi8jIE/K
+	H3EDgR6SvCJZavwuaEUN7iJ7GX36lkeGT9Odnkuk+h4F1ARAz7CVQajDrJKQzsZC
+	5L7DT1mZlgT3lyV2k3yiLTLWiWNjeZcGlCjOzhKjplP7hqyZR26l5/UpZVhP7DV0
+	YmXgckg5ifgWRIOoWDg6Q8mVETYFU6p3iPA==
+X-ME-Sender: <xms:vVVwaNzQ23VgC1yCZdm_UEONUezEzOBo13FeDuwdGqTPjMWYsuzN0g>
+    <xme:vVVwaNeLVjMZ-0bHXYHIIErRjtSWvcFcOku7IpD-as_fegOcKttEuh9M1RBaiD2IE
+    wm5b9y9vcuu52BH5Q>
+X-ME-Received: <xmr:vVVwaJL9iiFgfobPvtuuR0sFKg6f9IhKKAIko7OlGqT3bg3LO3-V1V0J5DK7w4wD7VBt7uzJQ8BWpQspA80UUu3D0RkGGHyjDOnLnfk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegudekfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvufgjfhffkfgfgggtsehttdertddtre
+    dtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffkedvveejhfekueektdeutdeiteetue
+    etleefieeiffefvdevjedvfeevheeigeenucffohhmrghinhepphhkshdrihhmpdhsvghn
+    ugdqvghmrghilhdrrhhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohep
+    vddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:vVVwaOGgXXBEWlfcSxXILluanZXGdl4ouleFBE-PsAsEGO4Dw-jMvQ>
+    <xmx:vVVwaDqRawH9NwoR-ZxLq7OWSZDE5Ckf7WxlSG9so3lgvpa5wZSwEg>
+    <xmx:vVVwaHSkU0gkN_1ZajK3aMJJ2RAQyxEFLOD7qQVh2ka2N62vGYZ_gw>
+    <xmx:vVVwaAM1H9YmQNoGGJck5J9c-IYXt2dRuviuNvRYnAvmgj6sg0RMYg>
+    <xmx:vVVwaIVqcpElLhY6CYQyzp8Otmf4RH2791dMHyd-Fi_a0zMTC7ZbXabi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 10 Jul 2025 20:07:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: "What's cooking" incremental update report
+In-Reply-To: <xmqqv7o08ocn.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
+	10 Jul 2025 01:03:04 -0700")
+References: <xmqqv7o08ocn.fsf@gitster.g>
+Date: Thu, 10 Jul 2025 17:07:23 -0700
+Message-ID: <xmqq7c0f4mkk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq34b5aumb.fsf@gitster.g>
+Content-Type: text/plain
 
-On Wed, Jul 09, 2025 at 03:04:44PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
->
-> > This patch series thus refactors the codebase to stop tracking MIDX's
-> > globally. Instead, they are being pushed down one level so that every
-> > `struct odb_source` has an optional MIDX itself. This simplifies some of
-> > our code and will make it easier in a future iteration to move the data
-> > into a packfile-specific object source backend.
-> >
-> > This series is built on top of a30f80fde92 (The eighth batch,
-> > 2025-07-08) with "ps/object-store" at 841a03b4046 (odb: rename
-> > `read_object_with_reference()`, 2025-07-01) merged into it.
->
-> You do not have to deal with it just yet, but FYI, another topic in
-> flight has a commit that adds a few more callers to a function this
-> topic renames away.  Namely, 5ee86c27 (repack: exclude cruft pack(s)
-> from the MIDX where possible, 2025-06-23).
+Since the latest issue of "What's cooking" (2025/07 #03),
+here are the changes.  Two topics are now in 'next', a few topics
+have been updated with their new iteration.
 
-Yup, there are a handful of new get_local_multi_pack_index() calls in
-that topic.
+--------------------------------------------------
+[New]
 
-> If this topic needs to be rerolled after the other topic graduates
-> to 'master', we may need to see this topic rebased on a newer
-> 'master' with something like the attached patch squashed in, but
-> because the other topic is at least a few more days away from
-> 'next', and it might still need another final finishing touch
-> iteration, let's keep these two topics independent from each other a
-> bit longer, and let me deal with this trivial semantic conflict
-> resolution, at least for now.
->
-> Thanks.
->
-> diff --git a/builtin/repack.c b/builtin/repack.c
-> index a74b2ca7f3..21723866b9 100644
-> --- a/builtin/repack.c
-> +++ b/builtin/repack.c
+ * ps/sane-ctype-workaround (2025-07-09) 1 commit
+  - sane-ctype: fix compiler error on Amazon Linux 2
+ 
+  Our <sane-ctype.h> header file relied on that the system-supplied
+  <ctype.h> header is not later included, which would override our
+  macro definitions, but "amazon linux" broke this assumption.  Fix
+  this by preemptively including <ctype.h> near the beginning of
+  <sane-ctype.h> ourselves.
+ 
+  Comments?
+  source: <fabacc9bc7ef7d462d1c7198d5edc18c76b82270.1752139420.git.ps@pks.im>
 
-Assuming that in these three cases that the first entry in
-the_repository->objects->sources refers to the local object database,
-then I agree with the proposed changes.
+--------------------------------------------------
+[Merged to 'next']
 
-Thanks for flagging it :-).
+ * ag/doc-send-email (2025-06-30) 5 commits
++  (merged to 'next' on 2025-07-09 at cf940e82a1)
++ + docs: mention possible options for Proton Mail users
++ + docs: add a paragraph explaining the `sendmailCmd` option of sendemail
++ + docs: add an OAuth2.0 credential helper for AOL accounts
++ + docs: add outlookidfix config option to sendemail documentation
++ + docs: link OpenSSL's verify(1) manual page to know about -CAfile and -CApath options
+ 
+  Documentation updates for "git send-email".
+ 
 
-Thanks,
-Taylor
+ * rs/parse-options-precision (2025-07-09) 7 commits
++  (merged to 'next' on 2025-07-09 at aefffa21b7)
++ + parse-options: add precision handling for OPTION_COUNTUP
++ + parse-options: add precision handling for OPTION_BITOP
++ + parse-options: add precision handling for OPTION_NEGBIT
++ + parse-options: add precision handling for OPTION_BIT
++ + parse-options: add precision handling for OPTION_SET_INT
++ + parse-options: add precision handling for PARSE_OPT_CMDMODE
++ + parse-options: require PARSE_OPT_NOARG for OPTION_BITOP
+ 
+  Define .precision to more canned parse-options type to avoid bugs
+  coming from using a variable with a wrong type to capture the
+  parsed values.
+ 
+
+--------------------------------------------------
+[Updated]
+
+-* cb/daemon-reap-children (2025-06-26) 4 commits
++* cb/daemon-reap-children (2025-07-10) 2 commits
+- - daemon: explicitly allow EINTR during poll()
+  - daemon: use sigaction() to install child_handler()
+  - compat/mingw: allow sigaction(SIGCHLD)
+- - compat/posix.h: track SA_RESTART fallback
+ 
+  Futz with SIGCHLD handling in "git daemon".
+ 
+- Stalled?
+- cf. <dba9ae0d-1e43-4345-a7ec-b57a07d45a07@gmail.com>
+- source: <pull.2002.v3.git.git.1750927988.gitgitgadget@gmail.com>
++ Will merge to 'next'?
++ source: <pull.2002.v4.git.git.1752176743.gitgitgadget@gmail.com>
+
+-* ly/changed-paths-traversal (2025-07-04) 4 commits
++* ly/changed-paths-traversal (2025-07-10) 4 commits
+  - bloom: optimize multiple pathspec items in revision traversal
+  - bloom: replace struct bloom_key * with struct bloom_keyvec
+  - bloom: rename function operates on bloom_key
+  - bloom: add test helper to return murmur3 hash
+ 
+  Lift the limitation to use changed-path filter in "git log" so that
+  it can be used for a pathspec with multiple literal paths.
+ 
+  Expecting a reroll.
+- cf. <5DB7714D-4009-47C4-A8F7-1C375C6D29AF@smail.nju.edu.cn>
+- source: <20250704111437.2660251-1-502024330056@smail.nju.edu.cn>
++ cf. <7885EBB2-0D99-4456-A704-86362219AC17@smail.nju.edu.cn>
++ source: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
