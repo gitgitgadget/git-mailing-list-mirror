@@ -1,95 +1,120 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EC710E9
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 02:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129161F4722
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 07:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752202161; cv=none; b=HxMviGX22TmoU52hg5F/zWdeCqYvg/Ch9k6b9U9tD4pQhiFn6VJ+owQXesQrTwx39tJAQ/mBWgXk4vGNow3fhiW/qBdVw+2Rl2cv1k17RgAIdM2PT+EjH+uz1kPNqk4kqqlrS7jRmeFs4TWhNjo98VSKLs06wQUhr1cq/JfMEro=
+	t=1752220584; cv=none; b=E+v0MSLu33pcicWyfHbmmdFHG2OQFyzG1f36++KVXRHa2y7GvKUO7aQBvOMcoe65i4jmLYhMHdQhjx7rQxlB1gN96V6W3MgRRfwNJPoJzDT+Lqvin0cTEsi46IyslsEilqZb/uVSKjW8Oa9oLPqcP5L9lbU6JcLR5w3joeAmjd4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752202161; c=relaxed/simple;
-	bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TyX8kF7jxx6o717q40L53pZ4ffAufoe2EQp8WY7CO10Y8BiWQGa2UaqE3PulmcDuw+Ts7O8R4o23tUsupPL71xNTL/bh01KO2vEZADIjorQ+TtPFKlX1q/PJkpocFuQlBRZdTUmfP/T7MBQHNj0eXZ7MroOPizGbBptCub77r68=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=kF6aP+gk; arc=none smtp.client-ip=209.85.215.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1752220584; c=relaxed/simple;
+	bh=HeFMkMLABVvCVBIax3nf/6f+8WrpYX1VYU3v7+mMNw4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nh6zjunzvUP5TSoAyJRDBhxGnazhWKRWeDdmU39YeAqhIx7pNrJH0LCIq35ej/gaFrteEv13/vkKA/7WGHxWw3lEuFpWb4uh6aBrQGcYshvkY0b7VJhjdgIgppsSEi6Ami4C63VvdeQQ6JCLVXeuyuZ7IO1AsVaSh6Opji6Kv/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=EzsEgum+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jeifu0Up; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="kF6aP+gk"
-Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b350704f506so1384898a12.0
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 19:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1752202155; x=1752806955; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
-        b=kF6aP+gkQCVbrX6ZQOkjYJu/YlxwzusXau1rvB1gGOD0GMMCJd8qXRpY1Sv/Wojrgw
-         67NDRX71+z66wwjRhBwp3llVNP6/gSELQhbaRCzNzatmkG+qltdTgRvICkky2o5XPpod
-         lXnkzKw2/b6/KYxIs89eDxt3vfeENEJrzros+l10gaQ3gzXA7lVAYMxCbeiBMCgG0+LG
-         Z+tQjeEmQfFbm6VnYTkWlZb7HqqGE9kyMaXZZBTdAbW6e3gAnRaDt+2nVrA12/1ToeCa
-         tROyuUPv7rCNH6aDveRAuUhghvgnXGWQcxhwDvyYD6U4IYtQKbIS6B2QAuNRSe9Z/9e9
-         bdGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752202155; x=1752806955;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
-        b=Q/uoYFRhfyNHfU9SPw+g5USxHu+LH0tXq0zX6n+uJjLP7fMw8DGTJaTDzMiBZ+109h
-         wJ98Co+3k4I7lxissguuIHFzGgrX3R41ucIpG8UixWl+QaivxzLZehyNMTzznMhapROZ
-         aFV85OizUgiXmG559MwarpRAbiJDNOxclon3nC72yc3/w7EaNk3EvAZzi36sJagrLgnf
-         Uw1jvA46Z1E2r1NWpnC5JSO4UR3MFCYH36MD1PFz6+uh9RaAc37Z3wHL786FHxx/DKUo
-         pabjaaG75m2hFIm3ItQU530yqtlLrm96ser5eyGmWzJKQuMxrWXfJz3Oli74z2B09jy8
-         +Kgg==
-X-Forwarded-Encrypted: i=1; AJvYcCW5fOBzsJqY7Tfc0hixp0XGAv7HRf7CVfQJfszDXaD0R/bmofV6hTgWT0CEM7AygGxafJ4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzH1OcyN42Ehv5kzJdD6cSgkX/aAvpfT2NTAjpC8bQLjqBSBCRw
-	e8HmH892jw8w2H94hqOXL7g9OgBKDLkwxRFG7NzyyO83qWmXafruCZ2P+YITUm9mYCe0FqelAe5
-	trzgkbjPwAz1bbkSxK2zYspLc4uNWpy6+GmWH2oyxIw==
-X-Gm-Gg: ASbGncvyd6EcRB882LyG1qFIBalGO/GevckIzFvTfZ+cl/gTOJ42aBqnG8h2bE5lGHw
-	fDf29LxotsNzCUnArScKaww8gS5GDbadAWVs16LVssMNtocdna3fOFdrHGU63vUA8990QpScUH/
-	VsDJVstC+7Pw6LDkeTsRK03uvejQAtyUH5ctYgsDzepf54lxL8q087oRWSQtOw1AbthX5bmVQJp
-	j3zdqhpOQ==
-X-Google-Smtp-Source: AGHT+IGbwoJdzxBAFlcsfPMySJKcmLGyoCP/RcPKelz8za6C/dZHYiOiHN7KtPxU7gaORpzrUItC67FBK3X13gNry5I=
-X-Received: by 2002:a17:90b:2e47:b0:313:f995:91cc with SMTP id
- 98e67ed59e1d1-31c3cf1a3d5mr8593936a91.2.1752202155049; Thu, 10 Jul 2025
- 19:49:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="EzsEgum+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jeifu0Up"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 017517A011C;
+	Fri, 11 Jul 2025 03:56:18 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 11 Jul 2025 03:56:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1752220578; x=1752306978; bh=OIxToSwx80
+	1yQOp4nk44OPOdUGVkJG/KAXFWQFyfdq4=; b=EzsEgum+dNPUES82wYzGgPo24m
+	tB1RROGIzSMe1k24Kdttrbl6Yx0uCCixwWUjAghiogDx3iCM3dcKBdSkPdbo8Zi5
+	NEU5fsV6YjNcCy/45neAA83AqLckb6JDRmlBIm0uEUX1rfYbTqeo9qwUSg3iiYAB
+	7AyR46+Rr+rrNSa4isG299UXoZinx7yd+64cMCvyZbhNy3rsCDx4eiaYZlItr6+n
+	YgA6ixA8a/OZOcrHCAf3wfZ8QgnzO4JsNybwrgyXWfu9WwrY2GGxUX4zOQ7BMOvn
+	tpF6gapEuQOuV1+ojszDWIeHXnPA7+MHi+/Avss+cIAIIAnu/7SWuHZw2DKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752220578; x=1752306978; bh=OIxToSwx801yQOp4nk44OPOdUGVkJG/KAXF
+	WQFyfdq4=; b=Jeifu0UpfR1063mVfX8JPUNcaCEUd8IDnLsUeZzpxjK4vC3TOtb
+	+52yTmOEBu7zl5yVB5m5q6glK//0DtQt0qj3t7rWPjWA19hls3foQRAweVQRxm0q
+	SIBZjRrwpUgUYFNc9qrmY3gvzrd96JdBEI4k3RaWXOvkD6BLvCrG14A/nMnwosh6
+	cloPY67g4bif73GHtq+Y1ZJA8HUUaLyU6Hd31detGdXkQOwMZqL2J6XliXpKZe47
+	Bj/wNu+NPGmGejKvWVkoamfJ8ccfVlc/auYrXCdeH9ZUHjVNzbLU6KEs5EB08NEx
+	4TP/YRgPkVeh0ryBxpCw/AkXIUJ1mK4cS7w==
+X-ME-Sender: <xms:osNwaH2ITLyasAggPxiggXwBFMRZKVr-jYD4IBrbu5u5J5ALi7RYng>
+    <xme:osNwaAp5XJbPQNnfVi7cl6Jg8hSnIpkLqelokX8W2A97Z9Eh4v9hUBbSh7RUlXZlx
+    gGe4_tfBMinXYRBKQ>
+X-ME-Received: <xmr:osNwaEeTdjRvAURbntwk2bI33tr_LcwgTJdmdCmAy4N_qnBQlK4yqFddF4cZy3cu4SAjNCCyKF7NbrhkZHxplsuwkGfp4I94bNgZtzvubA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegvdejkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehsthgrnhhhuhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmpdhrtghpthhtohepkhhonhhsthgrnhhtihhnsehlihhnuhigfhhouhhn
+    uggrthhiohhnrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrgh
+X-ME-Proxy: <xmx:osNwaPq0g-MeQFNMVVrXjRqTU9G1HFdQi-uIridJdzK4L7PEToCaOA>
+    <xmx:osNwaFH4uiTl8bhP1vJMH9l7g6sWWVyl5doEwWedFJmwOk7RvmSVPQ>
+    <xmx:osNwaPuTS09EWmCfiDMP6W32t9w7mr-FOVWNfarYlbQUTmymCp03Ew>
+    <xmx:osNwaHVqstqVljf4oHVe48IvE-qYh1oLBes6xq5-o8z9q5woAHQ8dQ>
+    <xmx:osNwaKnMnwQBUgnAZUP7ab5WVRH6ezJcEx7oE0hJmuN5lSfz8vgC04Gc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 11 Jul 2025 03:56:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 44f9295d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 11 Jul 2025 07:56:15 +0000 (UTC)
+Date: Fri, 11 Jul 2025 09:56:12 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Stan Hu <stanhu@gmail.com>,
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: Re: [PATCH RESEND] sane-ctype: fix compiler error on Amazon Linux 2
+Message-ID: <aHDDnKx9sK1ctzIR@pks.im>
+References: <20250710-pks-ctype-v1-1-1db7e7568ea2@pks.im>
+ <aG-EfIfyXxmS_x22@pks.im>
+ <aG-HMnO11lCYgPiY@pks.im>
+ <xmqqtt3j69r8.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
- <xmqqfrf34qdb.fsf@gitster.g> <aHBH0nRLPxBg2HAj@fruit.crustytoothpaste.net> <m1h5zjk4pv.fsf@gmail.com>
-In-Reply-To: <m1h5zjk4pv.fsf@gmail.com>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Fri, 11 Jul 2025 10:49:03 +0800
-X-Gm-Features: Ac12FXzfYjX3gOUTerUfYxyiifvFm3RkoLvrT2eAHD5Y8ctOtK-55Nl7P9IuCFc
-Message-ID: <CAG1j3zGn5fS=_Oftu7bBmWsoMc-aCa84AtDXdfxgL8QFEkp+yA@mail.gmail.com>
-Subject: Re: [External] Re: [PATCH 0/1] Filter C and POSIX out of Accept-Language
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt3j69r8.fsf@gitster.g>
 
-On Fri, Jul 11, 2025 at 7:26=E2=80=AFAM Collin Funk <collin.funk1@gmail.com=
-> wrote:
+On Thu, Jul 10, 2025 at 02:01:15PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+> >> > This error bisect back to 75a044f748 (git-compat-util.h: split out
+> >> > POSIX-emulating bits, 2025-02-18), where lots of bits got split out of
+> >> > "git-compat-util.h" into a new "compat/posix.h" header.
+> 
+> So there was a subtle change in the inclusion order or something,
+> i.e. we used to include <sane-ctype.h> a lot earlier as part of the
+> <git-compat-util.h> that tightly controls inclusion order exactly to
+> avoid this kind of problems, but that has eroded recently?
+> 
+> In any case, it means that our definitions in <sane-ctype.h> will be
+> overwritten if we allow system-supplied <ctype.h> included, and this
+> is an obvious workaround, likely to remain correct as long as their
+> <ctype.h> is not so broken to allow multiple inclusion.
 
-> I think the correct behavior would be to accept any values, or convert
-> the current locale to the closest BCP 47 language tag.
+Yup, exactly. Toon figured out that this is actually neither glibc nor
+GCC that causes this -- it's OpenSSL that transitively pulls in
+<ctype.h>. Later versions of OpenSSL seem to not do that anymore.
 
-On some Linux systems, not all BCP languages are supported. Not all
-Linux distributions generate all the locales, and musl doesn't even support
-locales. Converting to the closest BCP 47 language alone does not
-ensure the locale is valid. Not to mention the tricky heuristics of languag=
-e
-matching (pt_PT or pt_BR if LANGUAGE is pt?).
+I can reroll and update the commit message, but am a bit hesitant given
+that I wasn't able to send out this mail in the first place due to
+whatever reason :/
 
-> But as you mentioned converting them would require a database of all
-> tags...
-
-Hardcoding all the locale names in the code should be fine, I guess?
-Though the problem of filtering out locales unsupported by glibc is more
-troublesome.
+Patrick
