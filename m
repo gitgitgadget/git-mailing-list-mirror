@@ -1,91 +1,74 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77B51A08DB
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 16:46:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 257D91DDA1E
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 17:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752252397; cv=none; b=e6bY52KIHmll2i9f8cg6SMgenD16wJ0gPAL1Yj9yvldtna2+vEKMx+iU15SZLPJYmMx2ihTlY1/iegcdNl7ZqRCHnfJW+8xQsEys/ieR9kNFnsuTXwXhsa5sZ3kaNUuDzAQudN9eoMixsebTOHDjzPqQhRBwfXE2wY1v7T8kp9U=
+	t=1752253327; cv=none; b=WxX3kpuwoOqddorzwUO9HCrVom4odV6oxc2hTkBlGO9mOhV+aa1kGySOcH63d3hCkN+W+76Q89FyVuWVB1QsvBNxh3+vLDjc7w7NC8fdY1oJjPvsrPRqln8s5FiWIw8aF45S4Zos4AYzC6EBwmULOd9+LNlinEdAWFytTFzfXx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752252397; c=relaxed/simple;
-	bh=0D+TV1dMelrsVIlwLRTxpcMgJQdrBLt8iW15JFDGaEs=;
+	s=arc-20240116; t=1752253327; c=relaxed/simple;
+	bh=qzRZYxn3s6vLdV2p3QateUM5qEoiteJfmeSq/gJyuaQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=H4Vtmu8mw4HhYfZEj+17SAoCrKk5M68QZIV0d+f+nbOxIiFMoifiF3Bfe/vaXne0JPtyI2pVRvCSSGvaJxLo8OY0EE8H3Dgf0gNY/anARS1oFmzr862JyiJjmWqSHWRQhJvN2DN+z4ckIG/65V3pKHqRj34NAXaNtuOJShip4+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Pqby1V+9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YCrE5NsG; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=rmX0SoXnis6KNRtLtp5gLSsd8eYiBl5AXMRJ/lLEwjscmrc0zIGZlcaDQetg1iat2ec4mkZGPwl8Ck4qx6HKrjgsMzGHz9xc6/PYw2Y9XV/vsxdZyXqphqs/p3w71XDmHpHIHOGIypW05S25iwFBpseBhPaBFRdQdS11R0PMr0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MHXqqngz; arc=none smtp.client-ip=209.85.210.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Pqby1V+9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YCrE5NsG"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CAFBD1400238;
-	Fri, 11 Jul 2025 12:46:34 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Fri, 11 Jul 2025 12:46:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752252394; x=1752338794; bh=0D+TV1dMel
-	rsVIlwLRTxpcMgJQdrBLt8iW15JFDGaEs=; b=Pqby1V+9wP0bDqOLSSlOrKY9tU
-	EJyqMVMswOrwlgM53vF7cSTD3iP4QZyJ9G/da/oPoxn2crWfUh8/kGcZDRMZ3mau
-	JLxytChsgQPRkogqCNHy2cL1kl2dfxG7IKgq8Zxpou/42OCO0UFihs4Rp4sHdvYW
-	fcCnADLL6XFH/LhkMbXaScBxO4eaXaiAZjvi0xc+4Wtmu8M5ippJNFRcq0/zACa1
-	IbLAR83rKMQ+ZuOtzJQaB7iljtroXn8AeziDo2zsCC33l8STQG95xJGDqeiH1AnE
-	Ik3d0asqULmqG7PruoY5nTY1XmREkM/EGKHK8aVwmCHNcJ5ndWY+7//3f03g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752252394; x=1752338794; bh=0D+TV1dMelrsVIlwLRTxpcMgJQdrBLt8iW1
-	5JFDGaEs=; b=YCrE5NsG2blgqOeeoNuI7YL9db8KtRSLLIkt5M3jzwzACj4BIlO
-	f0m3NW5Q2NE7ZPqxNG2gOeprkT42EyuIYRNMo0v/pV7QYk01Mno21vT13GJYpdw3
-	lNuff41VqBM1yA52mGoP2a5GZ8cLg/pEIJjNfhFO1n4bm8icys5T4tT5oGGvLRJ9
-	nDXmTJtPjJG5RloGyU8xZjXJSq/W3fxX15nL+KJ4W8BvyyI90E0ObXLoHZ3VWZD0
-	OLrW+wPsp68oNsOWqFyCFaJqYow5ilsmGtcP3ltPDdAI6fHoGsA4ZP3dvVGcBYBY
-	WgYEuvGtYr3oL1FD8WfQvutalvu677KCmIA==
-X-ME-Sender: <xms:6j9xaB21WRdzdcT54ZPR24VAZ3aTIA6Bk8n4MT0QodkdjqOMnY6kYg>
-    <xme:6j9xaAiGae-noAfDQp_aKt4zlr065Y-xFx1DPFSbhhb7m2NeWneUt3aH_TUWWpVvD
-    DEb8AuBROXsPzMoQQ>
-X-ME-Received: <xmr:6j9xaCWxpiGqAcgHbz2b-Tin9ZpDbHcKJiiXiAAwJ29SL3ekVpii8qqfqZadIuki1XyAnRcqDNKHn0XKte_NYHjKJ9qfEY7FkFXrIQc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdegfeekfecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehhrghnhigrnhhgrdhtohhnhiessgihthgvuggrnhgtvg
-    drtghomhdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:6j9xaPV5suErxcNwC2h55V1O-if9oqAEjHwVXsCZZSbGM62PIZbvKw>
-    <xmx:6j9xaCgqnOXetuKAleHuNqXQYvI-WgjXTCym0feFhJkcezfPrH0Yrg>
-    <xmx:6j9xaKZZRqzyZSFd6ZK6E637P7R4zSXRGQ4I5eYeSe7SskisR2M3JA>
-    <xmx:6j9xaPpTVSbtb2JKQPVaBrmpw4amumgB9dU1ylHVlwBFMKWDE0t0AQ>
-    <xmx:6j9xaNO1u-brrQBa0UdbuON11M1M9qN-ZiYsDYgVRub3Y1qtu0QXtkdv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 11 Jul 2025 12:46:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Han Young <hanyang.tony@bytedance.com>
-Cc: Collin Funk <collin.funk1@gmail.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org,  Taylor Blau
- <me@ttaylorr.com>
-Subject: Re: [External] Re: [PATCH 0/1] Filter C and POSIX out of
- Accept-Language
-In-Reply-To: <CAG1j3zGn5fS=_Oftu7bBmWsoMc-aCa84AtDXdfxgL8QFEkp+yA@mail.gmail.com>
-	(Han Young's message of "Fri, 11 Jul 2025 10:49:03 +0800")
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MHXqqngz"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-73c17c770a7so3133559b3a.2
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 10:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752253325; x=1752858125; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=j6leK0VXB6FlJ42wCUguuks8IZB852KLIdi7el2mFR8=;
+        b=MHXqqngzHMkoGH3UK2Hguuj4QhByv0rDlCi/1CF6IgkbeyHtAoNro2LhIvcWNF41/k
+         zbg2LXsejf/k5cy4X++zOl9ajFolrAkx3ZLB7pFEkX0hC3nufj7/A5yxhJp7rnG1WWhg
+         eyiN8+6KRZthpyzsRRICyT22XeJc+5gLOIbBqYkrNx0LfnFeaPvySgwEoju/jZmsvq6o
+         8ATuWs5Sj+nEsdm3KFwXxtVm2k2X4evz9nU5kC3Po/sCS3KFDX/HCdmbnckScCdhMNBB
+         KvgT2xOIaMSO47I9FAFleetR8o3ILNl6ZN1FvIkB8BPZbyRU8iD8IScqnCAhrIyvU2Du
+         NMlQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752253325; x=1752858125;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j6leK0VXB6FlJ42wCUguuks8IZB852KLIdi7el2mFR8=;
+        b=YxZOG0u7yBjvQJZIzNby6HqhVc4LUPj8ypWjba0bgCytEK6G0rnVduwkPfiZ7AXtr3
+         tp90/BVlHtGkfhL9/KIWceryey1zcxsdbqKZe+ecfAUV1PzcfVbnEYWIUgsHdutNg30g
+         cgG23Gb617DsLLA4vN9/S4jhg17uNYTmRoRtEmfiD5JvTguAXXVTlZHnMSVje2+urMY3
+         DfR2ftx98DekICXcnqyniauwtfEqnIL0BDDtoDnQU4XcQiKLAtZAfaoeW54fu2tVbHDK
+         FgoeGRGEX5fyJ8Bma/mKo+BRsJHi+EdROjjLDCbpj7brq5LBZS7WVROmgRaAlsAtiy/+
+         uUfQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWEO/Gl2VqXntXZR+I0Pw+H0iNg83GJxWQwJrSlnbgmsIFTXhkedzRGCe7QEt5PTG6bow8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxtKKJLytELktJq3J1WR4ToLX/Das9JkSkw6AIvIFGO3xf1QG3+
+	kbIePGSH3ym0/bf5AUz6j76Bvn1uG7ccXEZYhrXrjayzBsaRcIhVlCRq
+X-Gm-Gg: ASbGncvfHJOgyOvbgAzbSV5BnTtYERhOrfObN8nxfZ6W0vMjb8v4QsPAJEWztEs+bRJ
+	/Rm/JbP19bhNgcVRxlxrR9lU4wi8KT8RLesanfitbehHOtQtvH8NCi/eDmRRhOhplYpXxJ/Stjp
+	YGNQSG0CR1s/AntE1CTKOjJ6xPMPGF4fiLP5tteiNTkOSYwGY2frdLKKSQdTSzf3oNoqEE5d9rs
+	RU3Tk/uQhX3358IBv9ghO+3evUovpFjMz2Dbm1t3IfQ1czPMo0+VMwQk5ZIr+Lu0lCZR/S1aDD5
+	vK4uuWLTkvfnM05yAt6dOGFLGsZ1ytY5qLX9Tm5TY5NRWcJXI+kL8FVJ1PK1jZitEFJNW/lpBcQ
+	NET4=
+X-Google-Smtp-Source: AGHT+IFHExqa/7oEqIOoY0FSebQIXZhaIX0h55iAAviD4eXj/rmhwpMshU2x2S2BeBBK8BXCj5vdgQ==
+X-Received: by 2002:a05:6a00:21c6:b0:74a:d1ac:dd48 with SMTP id d2e1a72fcca58-74ee343387cmr5170564b3a.23.1752253323600;
+        Fri, 11 Jul 2025 10:02:03 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::39a0])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9dd598csm6357736b3a.17.2025.07.11.10.02.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 11 Jul 2025 10:02:03 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
+  Junio C Hamano <gitster@pobox.com>,  Taylor Blau <me@ttaylorr.com>,  Yi
+ EungJun <eungjun.yi@navercorp.com>
+Subject: Re: [PATCH 1/1] http: don't send C or POSIX in Accept-Language
+In-Reply-To: <r34i7fhxwbxhppc4ia7lpyr3xqj4tgusaeikaaonpwtywlywxw@ygfmv3f3q67u>
 References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
-	<xmqqfrf34qdb.fsf@gitster.g>
-	<aHBH0nRLPxBg2HAj@fruit.crustytoothpaste.net>
-	<m1h5zjk4pv.fsf@gmail.com>
-	<CAG1j3zGn5fS=_Oftu7bBmWsoMc-aCa84AtDXdfxgL8QFEkp+yA@mail.gmail.com>
-Date: Fri, 11 Jul 2025 09:46:32 -0700
-Message-ID: <xmqq5xfy3cbb.fsf@gitster.g>
+	<20250710221641.857081-2-sandals@crustytoothpaste.net>
+	<r34i7fhxwbxhppc4ia7lpyr3xqj4tgusaeikaaonpwtywlywxw@ygfmv3f3q67u>
+Date: Fri, 11 Jul 2025 10:02:01 -0700
+Message-ID: <875xfypsom.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,15 +78,30 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Han Young <hanyang.tony@bytedance.com> writes:
+Justin Tobler <jltobler@gmail.com> writes:
 
->> But as you mentioned converting them would require a database of all
->> tags...
+> From my understanding, each language is expected to be defined in the
+> following form:
 >
-> Hardcoding all the locale names in the code should be fine, I guess?
+>   language[_territory][.codeset][@modifier]
+>
+> When we parse the list of languages we only care about the
+> `language[_territory]` part though.
+>
+> From looking at ISO 639 language codes, only codes with two or three
+> characters are valid. If we wanted to be a bit more strict, we could
+> check the length of the language code (everything before the first '_')
+> and filter out anything outside of those limits. This would naturally
+> filter out "C" and "POSIX" without having to mention them explicitly.
+>
+> Not sure if being more strict adds much more value here in practice
+> though. So it may be fine to keep it as-is. :)
 
-That is exactly the "database" we do not want to have to maintain,
-so not fine.
+Filtering out anything that isn't 2-3 letters seems like a good
+heuristic to me.
 
-> Though the problem of filtering out locales unsupported by glibc is more
-> troublesome.
+It seems better than only filtering out "C" and "POSIX" and allowing
+anything else. And it keeps us from having to keep a list of updated BCP
+47 language tags.
+
+Collin
