@@ -1,105 +1,95 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30D9422318
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 02:05:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19EC710E9
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 02:49:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752199549; cv=none; b=G3JoqwZ7c+MgHFEQVs8VEBUAHW61XF6VsEbkN2mZ5PzGXqlgnM0atahocLOM38pa2D3vgidIvAbsew75wxwkm6ZPN8nrJjTf3pLx196qcE/8bAo1bV0miHyRhkah4DUwVVw99WV3GrNQg03mEQf3YmWD1DF1S3aybp43pzQX7EI=
+	t=1752202161; cv=none; b=HxMviGX22TmoU52hg5F/zWdeCqYvg/Ch9k6b9U9tD4pQhiFn6VJ+owQXesQrTwx39tJAQ/mBWgXk4vGNow3fhiW/qBdVw+2Rl2cv1k17RgAIdM2PT+EjH+uz1kPNqk4kqqlrS7jRmeFs4TWhNjo98VSKLs06wQUhr1cq/JfMEro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752199549; c=relaxed/simple;
-	bh=Fd7mtMvXcDgS1E6ouMuJgNdxQCGZB8k91K3BlzB+Y2g=;
+	s=arc-20240116; t=1752202161; c=relaxed/simple;
+	bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eYoubrTEXpEoLidWQ9ojqfSfL+JS+bb5ZEvkUAtNBEGe+45hTP6W86p7nK1Zm7sBYLtN/bH4XdN3wuV1EpLyuX7vZsr9pLOy8bHCVPWvj6/hdLTBT14UGM6RrNcu53eunb7hTWsocIt05csYgaXMLFd2FDwxduHBtQ6FZ/E72XU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kv5MfgPR; arc=none smtp.client-ip=209.85.216.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=TyX8kF7jxx6o717q40L53pZ4ffAufoe2EQp8WY7CO10Y8BiWQGa2UaqE3PulmcDuw+Ts7O8R4o23tUsupPL71xNTL/bh01KO2vEZADIjorQ+TtPFKlX1q/PJkpocFuQlBRZdTUmfP/T7MBQHNj0eXZ7MroOPizGbBptCub77r68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=kF6aP+gk; arc=none smtp.client-ip=209.85.215.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kv5MfgPR"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-31c4a546cc2so656942a91.2
-        for <git@vger.kernel.org>; Thu, 10 Jul 2025 19:05:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="kF6aP+gk"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-b350704f506so1384898a12.0
+        for <git@vger.kernel.org>; Thu, 10 Jul 2025 19:49:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752199547; x=1752804347; darn=vger.kernel.org;
+        d=bytedance.com; s=google; t=1752202155; x=1752806955; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hot+ohH4+uphVPA7yq6e2FzSdqX5i0WRHdhtKmEThrw=;
-        b=Kv5MfgPRYTrYcorTUIT1IX1nJTNGtMX08J1Y5FGCQ22vndP1++7Deo+b8ly4KrozYI
-         XaW6tUUwOdgSbGWZqUu9+5rufnCkJ8lfn8ljpdzay8A/i3Oy8vSdyOa1+bfpZ88RhSzD
-         /cYXRMfTdO/cPHpo/VO7yN5DcgEPoftW26hRQFJ7Se0gogQ9ZJxsghsTxQLCV8HDPx8p
-         LC4YFDi+cbf7Sgsqo2hKJ6PzpO14SRB3b8B4vjho86mUJvREYIDjbz/nzTRrJ4+XQkHi
-         wSPMRS4TzSgaxUzuacDJYjXqPHFA2cvzRsyTdO17D33KFn5gweuyd3IzukTTXA4fgAV5
-         yzQA==
+        bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
+        b=kF6aP+gkQCVbrX6ZQOkjYJu/YlxwzusXau1rvB1gGOD0GMMCJd8qXRpY1Sv/Wojrgw
+         67NDRX71+z66wwjRhBwp3llVNP6/gSELQhbaRCzNzatmkG+qltdTgRvICkky2o5XPpod
+         lXnkzKw2/b6/KYxIs89eDxt3vfeENEJrzros+l10gaQ3gzXA7lVAYMxCbeiBMCgG0+LG
+         Z+tQjeEmQfFbm6VnYTkWlZb7HqqGE9kyMaXZZBTdAbW6e3gAnRaDt+2nVrA12/1ToeCa
+         tROyuUPv7rCNH6aDveRAuUhghvgnXGWQcxhwDvyYD6U4IYtQKbIS6B2QAuNRSe9Z/9e9
+         bdGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752199547; x=1752804347;
+        d=1e100.net; s=20230601; t=1752202155; x=1752806955;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hot+ohH4+uphVPA7yq6e2FzSdqX5i0WRHdhtKmEThrw=;
-        b=m1Qhui/T3h7Eg2TkaYAWGmyXz7I+YHTAdwlJrd6pyzzrRaNguEpmjX+WHuOzBECzJ+
-         MdsGu7POrKEIdAhkeTnoJCgBoRV5JTMrtFsdbrktY2wuUWk6Y2nphm6dKu2pt6WPe0w2
-         vbUdm/OEME9pc3DVUehBp6daE6SzZeAtfI4nLsFeQjKE80fqhLEhSvnIFeLILmqDnGuV
-         N+bKu4HPS7yqVHqfv3c339I4CVSwFn9zeBT0u53+QXRPOTfaB4DvPYi57IGGRLjUt+yx
-         Sgt98RVinLvlGcqP5U0OI03y/o+Z47HW3x6uvPitf2RCDQcyI1KK+tfp7QGNsLLrvCYj
-         j4Sg==
-X-Gm-Message-State: AOJu0Yx9P8sKhfpiH1fTU9iqxlMSQu+a4aRPy2Y0S3UET8i9X3+oQq1w
-	coa43J9aP9q880rlsUXcLem6sQCev35PS1I5JuaOaHE89TQpNp3/ZLyF6rApKrgwCU5OXoxw2+O
-	V3gEjz2JY4Vre5rdblqSgc7MsaZrOUNc=
-X-Gm-Gg: ASbGnctxhqOTXFpb73Vo9UNMocRQQqBKLHzy7hQr2GJgDtsn8bT0QUaQmqidUPOYOeJ
-	gJ1INIVIg1YS0gKc1Un6GjKrpjiGXeaUTh/UiHtfYhDAG5TA1FV/cqsRsq/TkOG3qFtbwwqg5y/
-	pE7efyWHhnTg30/LLDOGa7KNpmwNI8jy4cOZq0/HZEe9IvoBml90+6Ik3fYJrflW/r1S4hyftR/
-	uLjaE1z54XnEV5PczflflC0QatDgpEygaPDLa+Exw==
-X-Google-Smtp-Source: AGHT+IEoFAy9HtV9UGFGvV/XJV8Ul7ZtLinN6TZEe5thWIxO+Sjc1BOvbZGpziIe6c3q//mME6YJzEAQVDyzafJmrwg=
-X-Received: by 2002:a17:90b:5144:b0:313:db0b:75d7 with SMTP id
- 98e67ed59e1d1-31c4f54a12amr1219964a91.27.1752199547425; Thu, 10 Jul 2025
- 19:05:47 -0700 (PDT)
+        bh=aEqEX7DuWn+AVOMSZ8zvunmu6dzijvg0+N0okhJ81PI=;
+        b=Q/uoYFRhfyNHfU9SPw+g5USxHu+LH0tXq0zX6n+uJjLP7fMw8DGTJaTDzMiBZ+109h
+         wJ98Co+3k4I7lxissguuIHFzGgrX3R41ucIpG8UixWl+QaivxzLZehyNMTzznMhapROZ
+         aFV85OizUgiXmG559MwarpRAbiJDNOxclon3nC72yc3/w7EaNk3EvAZzi36sJagrLgnf
+         Uw1jvA46Z1E2r1NWpnC5JSO4UR3MFCYH36MD1PFz6+uh9RaAc37Z3wHL786FHxx/DKUo
+         pabjaaG75m2hFIm3ItQU530yqtlLrm96ser5eyGmWzJKQuMxrWXfJz3Oli74z2B09jy8
+         +Kgg==
+X-Forwarded-Encrypted: i=1; AJvYcCW5fOBzsJqY7Tfc0hixp0XGAv7HRf7CVfQJfszDXaD0R/bmofV6hTgWT0CEM7AygGxafJ4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzH1OcyN42Ehv5kzJdD6cSgkX/aAvpfT2NTAjpC8bQLjqBSBCRw
+	e8HmH892jw8w2H94hqOXL7g9OgBKDLkwxRFG7NzyyO83qWmXafruCZ2P+YITUm9mYCe0FqelAe5
+	trzgkbjPwAz1bbkSxK2zYspLc4uNWpy6+GmWH2oyxIw==
+X-Gm-Gg: ASbGncvyd6EcRB882LyG1qFIBalGO/GevckIzFvTfZ+cl/gTOJ42aBqnG8h2bE5lGHw
+	fDf29LxotsNzCUnArScKaww8gS5GDbadAWVs16LVssMNtocdna3fOFdrHGU63vUA8990QpScUH/
+	VsDJVstC+7Pw6LDkeTsRK03uvejQAtyUH5ctYgsDzepf54lxL8q087oRWSQtOw1AbthX5bmVQJp
+	j3zdqhpOQ==
+X-Google-Smtp-Source: AGHT+IGbwoJdzxBAFlcsfPMySJKcmLGyoCP/RcPKelz8za6C/dZHYiOiHN7KtPxU7gaORpzrUItC67FBK3X13gNry5I=
+X-Received: by 2002:a17:90b:2e47:b0:313:f995:91cc with SMTP id
+ 98e67ed59e1d1-31c3cf1a3d5mr8593936a91.2.1752202155049; Thu, 10 Jul 2025
+ 19:49:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqv7o08ocn.fsf@gitster.g>
-In-Reply-To: <xmqqv7o08ocn.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Fri, 11 Jul 2025 07:35:35 +0530
-X-Gm-Features: Ac12FXxm8enrJy8HboaGJrbzPrNVKPpo3n_QqaEAGc-KKRjvWQ9R6nJY78X10Lg
-Message-ID: <CAE7as+Ze8EHda0wMfRKC4z9jE0OLsxxSgckBLisJuoxasgzTaQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2025, #03; Wed, 9)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+References: <20250710221641.857081-1-sandals@crustytoothpaste.net>
+ <xmqqfrf34qdb.fsf@gitster.g> <aHBH0nRLPxBg2HAj@fruit.crustytoothpaste.net> <m1h5zjk4pv.fsf@gmail.com>
+In-Reply-To: <m1h5zjk4pv.fsf@gmail.com>
+From: Han Young <hanyang.tony@bytedance.com>
+Date: Fri, 11 Jul 2025 10:49:03 +0800
+X-Gm-Features: Ac12FXzfYjX3gOUTerUfYxyiifvFm3RkoLvrT2eAHD5Y8ctOtK-55Nl7P9IuCFc
+Message-ID: <CAG1j3zGn5fS=_Oftu7bBmWsoMc-aCa84AtDXdfxgL8QFEkp+yA@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH 0/1] Filter C and POSIX out of Accept-Language
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
+	Taylor Blau <me@ttaylorr.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+On Fri, Jul 11, 2025 at 7:26=E2=80=AFAM Collin Funk <collin.funk1@gmail.com=
+> wrote:
 
-On Thu, Jul 10, 2025 at 1:36=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-[snip]
+> I think the correct behavior would be to accept any values, or convert
+> the current locale to the closest BCP 47 language tag.
 
->
-> * ac/deglobal-sparse-variables (2025-06-30) 3 commits
->  - environment: remove the global variable 'sparse_expect_files_outside_o=
-f_patterns'
->  - environment: move access to "core.sparsecheckoutcone" into repo_settin=
-gs
->  - environment: move access to "core.sparsecheckout" into repo_settings
->
->  Two global variables related to sparse checkout have been moved to
->  the repository settings structure.
->
->  Expecting a response.
->  cf. <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
->  cf. <xmqqbjpuqkrj.fsf@gitster.g>
->  source: <cover.1751309770.git.ayu.chandekar@gmail.com>
->
->
+On some Linux systems, not all BCP languages are supported. Not all
+Linux distributions generate all the locales, and musl doesn't even support
+locales. Converting to the closest BCP 47 language alone does not
+ensure the locale is valid. Not to mention the tricky heuristics of languag=
+e
+matching (pt_PT or pt_BR if LANGUAGE is pt?).
 
-I have responded to your message about keeping the topic in 'seen' or not: =
-[1]
+> But as you mentioned converting them would require a database of all
+> tags...
 
-Thanks,
-Ayush
-
-[1]: https://lore.kernel.org/git/CAE7as+aTBTx8rZ467uv9QV5Wiqnyed5ndY-+smJ1a=
-yYVx6qmRw@mail.gmail.com/
+Hardcoding all the locale names in the code should be fine, I guess?
+Though the problem of filtering out locales unsupported by glibc is more
+troublesome.
