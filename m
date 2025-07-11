@@ -1,193 +1,133 @@
-Received: from mail-ua1-f53.google.com (mail-ua1-f53.google.com [209.85.222.53])
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FAE727A139
-	for <git@vger.kernel.org>; Fri, 11 Jul 2025 09:44:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78AE8217736
+	for <git@vger.kernel.org>; Fri, 11 Jul 2025 09:52:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752227102; cv=none; b=evJYGziq+rkl+GfTomDp49vhedngYY1zIycnB29/0mzZgCOmXYwNxRzMacGHOTJEE+EtdPDzSbAGP8cx37nSDL5CXIC86g7m9Pw2QFyKuNMEtCI6oEkfZnJb8Cul+un8mCF4bJMe25+GyRAXXaUUT8yz+A84UjBWaLgpjsiqZYU=
+	t=1752227532; cv=none; b=sT7+Ess7DhMmlgMQTiPAUj0UZPx3Iw7Pi6EjLeOv5XiY6FstVfKv+3Wlk+R7fSBUXdxmicushGJJo7KwyVpIJ6HO1EECt0zndNxgUqlQ0P5CO4SmLak1ftisSZzyBZucVDn5MyURkxX/UKRfNPvr10EN7N1bzOVncIdqYahWytA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752227102; c=relaxed/simple;
-	bh=IadBQtyJAIVuZ6ahW3Z7O9pHuZ6VSGZKdQforPEwh5E=;
+	s=arc-20240116; t=1752227532; c=relaxed/simple;
+	bh=xhIPCoWLmn5XfI1uxg4b54je5Z1Q8s9v8CZTp+T3ybE=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h1OHIIffxVIznxEAncf/bJsYgUfVjcXVr1JcIZTvr4x5SUocQU88EQ07FzKFqqmd79HhkxN1nBDEpPI7UNLenGqdtqC/J0mDRpTm4/rI3Ce1r90KZ2j3jjsxYWZQzAk7SaafFp+WLRs9bVWTp8lEOaJdRVN9dWlxiJwajexWhAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kkT7lU2b; arc=none smtp.client-ip=209.85.222.53
+	 To:Content-Type; b=h15vJLlREFYh22qhNWiMieayRGQwH6po+G/r2fy/JzS4A4NUcSzF8rPrD2576xgU9WQwwJE1qNtj1sXxaiAF+eEpCHaYpBBcmbmxxhSw9XLj3cb79V3glM7nRhITYA/mBuOWGfhcGVOo77cxhgXXjBBWj+fCD28ChrRJUFA0/hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Zmgk7pWj; arc=none smtp.client-ip=209.85.222.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kkT7lU2b"
-Received: by mail-ua1-f53.google.com with SMTP id a1e0cc1a2514c-87ec9aee6dbso794421241.0
-        for <git@vger.kernel.org>; Fri, 11 Jul 2025 02:44:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Zmgk7pWj"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-8815049d0a8so841764241.2
+        for <git@vger.kernel.org>; Fri, 11 Jul 2025 02:52:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752227098; x=1752831898; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0sSaVNDI8d24CmSt3i78Gp/e9g86yKWFFNqQEUMjR3U=;
-        b=kkT7lU2bQVlWEvbrvee0AmCVqMiG71+TLEJEiULIIh7uK2PsFvRVG6EIf4RQQCBxxX
-         EPmptuXRtu0oACd12XCzi1YapbLnKbaLuDyF6h5Z5Kh5G9Poyd7puqO0aESAlbYLg6Od
-         2/ZOqqEpbRRjcBNShD/O/Nu69Sa2YnG7BL5Vh+Ax86jIlyIl0NQVKW0OEDDpl+8pOtaO
-         wkb+WuhWgRqDMlG0yI1O/aWWa+Q9EPVnetuOwa9INEiMPPhHCG7oLRgxcCpUcNoFCica
-         GTgFgDK0o0VmNSQji7g1l0rk7vomI37sVrjmJE6dEWA9Z7CCJFLCwjPd5DIH0dPEYJu0
-         3zJw==
+        d=gmail.com; s=20230601; t=1752227528; x=1752832328; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Qwi1Wsr3LXAzfotPmHla+o3hB4Fl6ZETiYvfHi41F7I=;
+        b=Zmgk7pWjsK2DVjQv+k7Qx35x+ViaCgvDP1j7l83zeZu+YsP8GHUjcePx3WfGVpWmNb
+         KHS0eZAaYm1s02yXlI16qespxkec1tX9RZaJiudRE6zjyX2sOKbJ1okYHPHb2U05it5S
+         CgPmSJyJ+rXnKO6eF9ljHedecMouEh3njL2RcRnPIpdjJvmbm8tsMsqLIVp6IsYFwrjo
+         ENjje4z9QzVIQwkItISvTtmYU/MAxKPIPwYigKYfjQqOlr+iLfRoaHc1tHjYMPVXs4l/
+         G3w+STkzQf0C9YD9S3CHmt/S1kdSbcBz4sBHmYJKjdKqFinfH5cf0LpGc07vDnJIihy7
+         kzxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752227098; x=1752831898;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0sSaVNDI8d24CmSt3i78Gp/e9g86yKWFFNqQEUMjR3U=;
-        b=m3+Nf6OJIxBL0mbd2PslE0UQzWPSLrdEZrDMguL/xuQZTj75DhbzL1MLDDYs/hH1WV
-         JUTnL63OEZQGWtxi22EyTA7k+XbZVE4QOarh+TildSjRrN+eBepUcBJ1jAgT4B8gRt1r
-         ADKhcTpO6IjeG1vp31jzkDnJNzoH8kjPwOSkfqBuli7WJFSBfexFWxMYZhnFPNIgqi+w
-         qs/83mf/EB3dSxt3pNufDEGBssL1SpK0iPsemFhNGQ4CCs1FglDzYlEnl5OyeMasEiln
-         esKMgjHOZjZfQG1Rr4+lDMZxUwihpckPRVivA3rQtBWMpD8AVDoCeY3qTFcxhbjDTpFT
-         KyVA==
-X-Gm-Message-State: AOJu0YzIMmtBTD8NOoZvNIp5DNFGy/Pa//TXtrpLWTJUKeooqFt9AF2E
-	0aer2KanVzYFrMGadEw1CI6pciuZNxrEGY4gk1yEuW70LihTsWEsDPaHSyMpA4y6j6rm9eqM41y
-	dd/+G524JbNpyBtxNVgzXB7Kczm5CruA=
-X-Gm-Gg: ASbGncsnY6KqsqZLr0YoEjf4BfQCiYeCkGEGvWd+ss9NxmJzXwKQGHiuQrH0qxiqLlg
-	1yDQayr7g4NJNq0kMIsLHIzAXHNdC0ZulQOHV3sA07L27iL4SgOTOSo0FYKeMILNl6yJmtsg0xn
-	YZBYXlE8xXieImtgyFC6xSLTwXfncmu/EXRXKhr3CDwXk2OMwlT0dJTt/xlPktq1qcUc0T5VXQB
-	fG9hWeioeyQuZEnj0L5xnyJTg9nku+AZIggetfk
-X-Google-Smtp-Source: AGHT+IH6mK8a1VhVGmqWWP/GwWjgB71Xxi/nVJ05jU2makUVeyr64x0tKlyXsGU6t3HEwnNXgfIJHOiovkso6ZcybmA=
-X-Received: by 2002:a05:6102:4b0f:b0:4f1:7946:ed52 with SMTP id
- ada2fe7eead31-4f6e2e3a18amr606812137.12.1752227098409; Fri, 11 Jul 2025
- 02:44:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752227528; x=1752832328;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qwi1Wsr3LXAzfotPmHla+o3hB4Fl6ZETiYvfHi41F7I=;
+        b=F8aB+9nXOFbqiupC2Okx73yqHhXhT4RuxvVMCihoBlYmBXUO014AAs8KcH+9/+9QNq
+         gl6ig0nS7osTIxGJKej9bEdSkq8jW/gxMtxMQ0EuABBJkV+CoiUPD/efE1TMtfRoEnVI
+         4o6yBwUsTylquhxyvkKn9pACxxAGfm+TPoN/C5yChTEJdcQ5j0h2zNNbM2R55g+qgCOL
+         +dogRAD9HsDC5KlGF6Se+C6wvXNdLBeeAejhHOObOSCOF4+FY46YF+klWsxnpjoo3nfT
+         CZz9SuP+8vA0uSSUsfCzdclwY8HoUMyc9mU9JAC35bi1wt9iaQB+FFmH1LNRgCdE5IgJ
+         hipA==
+X-Forwarded-Encrypted: i=1; AJvYcCVsa/IuH3Sfux2UyoYU/xIfbjci7Ho82mRqw37SWpqEUZt/QWd+w39PQ6Zp9jRYYhSmzHc=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxHqWnnGnN+ZSEIkyFRhECHfYGVRk/T8l7xM7H1w8kPFJOPE3Cd
+	XGysIU6ZzjC/Eg9+5Y+eObP1HWwclHYWPtGAfgVAU1tNBytIsZgqB7udfeXCNj6j0Zyu6Y2kye5
+	oH2zyDIvfFa35MtsACoA+oz1pTV3MTM8=
+X-Gm-Gg: ASbGncsJF/blyBMMgX9ihrGF84rhQB5/c9c9phoZld6iUhOfN4+BxHt0lgIQ4MsMYkA
+	7Sdl1+IB+e4TgbEMte6/cddU9hMYZdLZ1CnRhaE6i4S9DyBV0fvE0d9tb+kJjF0VT07OZz9bqjX
+	4efPMJEM8cudat5uPnatvjsBGkhCXF2pWw0ohEMpLAY+TsVWFUhg5MGn6w18AQvXqxS9oALrkv5
+	FsxLnlLiDfwv9ND3Ib9nDCSNkTxVzbZ6Rxq8xk14IDIBXMChDU=
+X-Google-Smtp-Source: AGHT+IG1VZUkf2A5Gi2B9ymUgoaTXzXZYPdWUXHH+D52knn1wOD0M0Vpn3S375fwQprZPoLhZAl19N08plkkIqhkW7I=
+X-Received: by 2002:a05:6102:5cc3:b0:4ec:c549:161 with SMTP id
+ ada2fe7eead31-4f64270d96bmr1509865137.21.1752227528238; Fri, 11 Jul 2025
+ 02:52:08 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Jul 2025 04:44:56 -0500
+ HTTPREST; Fri, 11 Jul 2025 11:52:07 +0200
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 11 Jul 2025 04:44:56 -0500
+ HTTPREST; Fri, 11 Jul 2025 11:52:07 +0200
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aG9hMP9gEFLhVgJL@pks.im>
-References: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
- <20250708-306-git-for-each-ref-pagination-v3-3-8cfba1080be4@gmail.com> <aG9hMP9gEFLhVgJL@pks.im>
+In-Reply-To: <20250709-pks-object-file-wo-the-repository-v1-2-62627b55707f@pks.im>
+References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
+ <20250709-pks-object-file-wo-the-repository-v1-2-62627b55707f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 11 Jul 2025 04:44:56 -0500
-X-Gm-Features: Ac12FXz_xuusH7pEuZDQUWFO8uvpuaJwnQpEV77roTPyGaxC6VUemwsISvdSSPo
-Message-ID: <CAOLa=ZSo==Ukdt546PHSPGUpD9zqLUn_=tkf1-5_pqnkTViDZA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] refs: selectively set prefix in the seek functions
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, gitster@pobox.com, schwab@linux-m68k.org, 
-	phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000c45c100639a429bb"
+Date: Fri, 11 Jul 2025 11:52:07 +0200
+X-Gm-Features: Ac12FXzgQXv1H6xQNcQCFI86SD3OBPsb635fCtX7IAXeu-7982FaBYhnnI3hSds
+Message-ID: <CAOLa=ZQhuaXV_XqQ6ekqVq0hA5bu8EUyt5P6vVG321eU6brcHQ@mail.gmail.com>
+Subject: Re: [PATCH 02/19] object-file: stop using `the_hash_algo`
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000006303e30639a44390"
 
---000000000000c45c100639a429bb
+--0000000000006303e30639a44390
 Content-Type: text/plain; charset="UTF-8"
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Tue, Jul 08, 2025 at 03:47:48PM +0200, Karthik Nayak wrote:
->> diff --git a/refs.h b/refs.h
->> index 7c21aaef3d..7852ad36f3 100644
->> --- a/refs.h
->> +++ b/refs.h
->> @@ -1299,21 +1299,32 @@ struct ref_iterator *refs_ref_iterator_begin(
->>   */
->>  int ref_iterator_advance(struct ref_iterator *ref_iterator);
->>
->> +enum ref_iterator_seek_flag {
->> +	/*
->> +	 * Also set the seek pattern as a prefix for iteration. This ensures
->> +	 * that only references which match the prefix are yielded.
->> +	 */
->> +	REF_ITERATOR_SEEK_SET_PREFIX = (1 << 0),
->> +};
->> +
->
-> Nit: I think it's a tiny bit confusing that the documentation of this
-> enum is split up across here and the doc of `ref_iterator_seek()`. I
-> think it would be sensible to move the last paragraph of the function
-> over here so that the whole behaviour of the enum is explained in a
-> single place.
+> There are a couple of users of the `the_hash_algo` macro, which
+> implicitly depends on `the_repository`. Adapt these callers to not do so
+> anymore, either by deriving it from already-available context or by
+> using `the_repository->hash_algo`. The latter variant doesn't yet help
+> to remove the global dependency, but such users will be adapted in the
+> following commits to not use `the_repository` anymore, either.
 >
 
-Yeah I think that makes sense.
+The 'either' doesn't make sense here.
 
->>  /*
->> - * Seek the iterator to the first reference with the given prefix.
->> - * The prefix is matched as a literal string, without regard for path
->> - * separators. If prefix is NULL or the empty string, seek the iterator to the
->> + * Seek the iterator to the first reference matching the given seek string.
->> + * The seek string is matched as a literal string, without regard for path
->> + * separators. If seek is NULL or the empty string, seek the iterator to the
->>   * first reference again.
->>   *
->> - * This function is expected to behave as if a new ref iterator with the same
->> - * prefix had been created, but allows reuse of iterators and thus may allow
->> - * the backend to optimize. Parameters other than the prefix that have been
->> - * passed when creating the iterator will remain unchanged.
->> + * This function is expected to behave as if a new ref iterator has been
->> + * created, but allows reuse of existing iterators for optimization.
->> + *
->> + * When the REF_ITERATOR_SEEK_SET_PREFIX flag is set, the iterator's prefix is
->> + * updated to match the seek string, affecting all subsequent iterations. If
->> + * not, the iterator seeks to the specified reference and clears any previously
->> + * set prefix.
->>   *
->>   * Returns 0 on success, a negative error code otherwise.
->>   */
->> -int ref_iterator_seek(struct ref_iterator *ref_iterator,
->> -		      const char *prefix);
->> +int ref_iterator_seek(struct ref_iterator *ref_iterator, const char *seek,
->> +		      unsigned int flags);
 >
-> Another tiny nit: instead of calling the variable `seek` we can just
-> call it `refname`. That might give a bit more of a hint what you're
-> actually seeking for.
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  object-file.c | 40 ++++++++++++++++++++++++----------------
+>  object-file.h |  1 +
+>  2 files changed, 25 insertions(+), 16 deletions(-)
 >
+> diff --git a/object-file.c b/object-file.c
+> index 987cf289420..bc395febc9d 100644
+> --- a/object-file.c
+> +++ b/object-file.c
+> @@ -25,6 +25,7 @@
+>  #include "pack.h"
+>  #include "packfile.h"
+>  #include "path.h"
+> +#include "read-cache-ll.h"
 
-Fair enough, let me change that.
+I wonder why we add this header.
 
-> But other than that I'm happy with the new behaviour, where we are now
-> consistently either setting or resetting the prefix depending on whether
-> or not the caller set the flag.
->
+The rest of the patch looks good.
 
-Thanks for the review!
+[snip]
 
->> diff --git a/refs/iterator.c b/refs/iterator.c
->> index 766d96e795..f2364bd6e7 100644
->> --- a/refs/iterator.c
->> +++ b/refs/iterator.c
->> @@ -407,13 +408,16 @@ static int prefix_ref_iterator_advance(struct ref_iterator *ref_iterator)
->>  }
->>
->>  static int prefix_ref_iterator_seek(struct ref_iterator *ref_iterator,
->> -				    const char *prefix)
->> +				    const char *seek, unsigned int flags)
->>  {
->>  	struct prefix_ref_iterator *iter =
->>  		(struct prefix_ref_iterator *)ref_iterator;
->> -	free(iter->prefix);
->> -	iter->prefix = xstrdup_or_null(prefix);
->> -	return ref_iterator_seek(iter->iter0, prefix);
->> +
->> +	if (flags & REF_ITERATOR_SEEK_SET_PREFIX) {
->> +		free(iter->prefix);
->> +		iter->prefix = xstrdup_or_null(seek);
->> +	}
->> +	return ref_iterator_se
-
---000000000000c45c100639a429bb
+--0000000000006303e30639a44390
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 14d8200f24ab3358_0.1
+X-Attachment-Id: c981a23504c1715e_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1odzNSVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1memYrQy8wWTVoek91L3lzZ2dWLzZQaTlMa3VONlVaZAozMUtlRUNXUWhz
-Uzg5TCtocWlMcE5GR1l6Z1BWdCtNaUt3VGFkanArNlZjcERlZlBmSUFCRHN6TmRnWC9RdVg2CkQr
-dHZ6a2VpU2NyMVZMY1ZUSzhVeDRSZDVNM1dwV2p6WkxRU2pyaDRaUGN5MXJ1SU1VNUFWdTJhNkxR
-N25XL0MKUW1ZcTdPSnhmSmg0UVplaW9uNUFFOE1sRlpKL0VUZGpCZHRuRmQzd0h1VE5wQVRKcEQ2
-MG1lZzM0MXhvSFc3NgpyWlBIUk9IQzQzQzUwYXgrK0M4Qy9jOG93MXlQSy9MTkp2RTRZaWxLdzUr
-dFhPZDE4a1VocVRiN2tZUkxIeTJOCnRDTHQ3a2owSVhad1oza0VVdGhqV2EzajF0N25Ma0dKcFRy
-SDRBLzZ5eUU5dk5tSlFQekVGaTRsRExUSkFiQW4KNHRsd3dUREJSYTY3VzNFK2xMRU9ndVBWMWd5
-cVhyTlhJQ1d2RW9SbU5RUE5sbnlZeDFkMGRLM0k1RzNFdG5mTwo2YzIvU3lsVDBNTk1sSS9EY0x1
-a3J2YjFUNGFBR0VzQ2RaMkpVZC9KMWw1S0UrVnJ4Y09xd1B3ZDNlS01EWDdjCkZxaFkxbjFmUXFD
-VC9UZjRQNHdDVkhLQi9SKzVsSU14c2tJenhxVT0KPUZtTmYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1odzNzUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1meHh4REFDZzNqam9WNWNGeW00MGVoVkNKU3hlZUh3dgptS3JjYjZ2Zzlh
+RzJKQlNqeGFSR3BDRlZOWG13R0ZzTm1DYTZESDMwNnYrUVZWTEZDT1k0SmlTSWs1UGZ6SlRECjhz
+bSs4cS9LZzc1V1dYSHliZVl4YStZdXByWlBGWmdoUWVyMk5FaEVWUWp4UGRjaE5Zc0VqV3E3N1JH
+TzN0TFgKZDZrd0ZuT0NFbEtCUjYzQ2x2NC9Ca3pwMmJieXFpT2JjU3Q1aEsxSk10d0RnSG03K3p2
+ZDBTYWRaN3JQOEl5eQpwVTF5YXRJRlF6RGwyUStLbk9EYlRMWTZLTzVXQnJqeTR5VVlRSWVqYVdn
+Kzd3R2xIN2RLVEt3QkpYTWlnY3dpCnc0QmFEcmRXVUJoQVlaRnkxZEh0ai9ZSzVNTDhoMTZMS3lW
+cUROdGZWZkFXSFZ3YzVyaHFIaXpaUnUxbjZ3dEwKOENIcHplRFlsSXN4bFJoSUFNOVBKbUc1K01h
+YzRRVk1aM2UrT3ZPWVQrdlRBNmR1UWlnWkxBMXNpVTlmMUtqOQp0VzR4RDg4dk9FZXpYTVRralBH
+T2tIUnFveHdSRHZjS09aV29oZUFGU2liU3pLcWpJbUJuY2hpQVl3T29EallhCkE4T1dHZnl0dHZz
+dGd4RFF2S09EZkFqNGM2Y0FJYVJwcWJEaTV5OD0KPW1wWWMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000c45c100639a429bb--
+--0000000000006303e30639a44390--
