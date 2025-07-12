@@ -1,38 +1,38 @@
-Received: from forward203b.mail.yandex.net (forward203b.mail.yandex.net [178.154.239.154])
+Received: from forward206d.mail.yandex.net (forward206d.mail.yandex.net [178.154.239.215])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D104195B1A
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:25:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CADD13A258
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.215
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752315940; cv=none; b=OiT7e1NhlUKfkxrQsVQ9DRnVe5HeFI7t6i/J+C/tlRfclZnHJYMtVB0ctZA9wH8PU6u4xQmhMOaJANS46VUjPrSPEyD9QOTfBu4laZNqYa/fsUtdpjz+ziwTy9Qizbggo0Dgj7kn+InrQwPAEd0Ri5vFpZiXJ80PXXkgLnd/2aM=
+	t=1752316049; cv=none; b=KAdY1eMwjGSDVRN2JBCP+byNK7FtqDe4/u+IY5Qj1bLyxNtcqUxktFd/kwSF2IU+0HLMIQmSAuZ+s8eRG6a4nqU/7tbKwGAm+Ju5LYxH6gYO25txFFuGx6O8zoDedZI/Zb3rV0g6GuMbvvPepE9kTY7GQemDkDxjFkHWX4MPG4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752315940; c=relaxed/simple;
+	s=arc-20240116; t=1752316049; c=relaxed/simple;
 	bh=f5PN5EUjIaPqICCp+M3gQNMTDD7skt9pXtui5FR15EU=;
-	h=From:To:Subject:MIME-Version:Date:Message-Id:Content-Type; b=qX5t4asmXo/yL9sSXjU60fnbhWBNRC+PTJpG+ILrg/V59UbS7afpQE/d40/8V7xD4Ww69hCkESf6EZsgMLq/PrB9JF/56KYvJD+Zjxcj2jOarPXY9YivTtp2AYsUbeccZ+cXbflgC4yGCf8h+LzUjsiPd0ZDLX2xobYU4s8bOMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=dpC4Vqk+; arc=none smtp.client-ip=178.154.239.154
+	h=From:To:Subject:MIME-Version:Date:Message-Id:Content-Type; b=O+nwqLFxDytv6xGonTm7RFqgvXC56bKkVfHBUJ4sCr4LwGsPL32Tv+xO5iy9MVqf3J8VXpdH+GNi3jvWgrODw/X5EsOMb3d0IqRlG7kqK/Dzi0Xafyanbzm+TzJV64N4/TG8PmWDxOjtVNS4/Sa8DJXtWs/dCIbmh3Dxawcpg00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=LOViMPsJ; arc=none smtp.client-ip=178.154.239.215
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieml.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="dpC4Vqk+"
-Received: from forward102b.mail.yandex.net (forward102b.mail.yandex.net [IPv6:2a02:6b8:c02:900:1:45:d181:d102])
-	by forward203b.mail.yandex.net (Yandex) with ESMTPS id C9F7863CDE
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:20:06 +0300 (MSK)
-Received: from mail-nwsmtp-mxback-production-main-75.iva.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-75.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:172d:0:640:f98a:0])
-	by forward102b.mail.yandex.net (Yandex) with ESMTPS id D779B609A1
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:19:56 +0300 (MSK)
-Received: from mail.yandex.ru (2a02:6b8:c0c:8b14:0:640:643d:0 [2a02:6b8:c0c:8b14:0:640:643d:0])
-	by mail-nwsmtp-mxback-production-main-75.iva.yp-c.yandex.net (mxback/Yandex) with HTTPS id pJFUlO7MfiE0-F3TTD1cU;
-	Sat, 12 Jul 2025 13:19:56 +0300
+	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="LOViMPsJ"
+Received: from forward101d.mail.yandex.net (forward101d.mail.yandex.net [IPv6:2a02:6b8:c41:1300:1:45:d181:d101])
+	by forward206d.mail.yandex.net (Yandex) with ESMTPS id 3FCC964C4B
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:20:05 +0300 (MSK)
+Received: from mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net [IPv6:2a02:6b8:c43:480a:0:640:578f:0])
+	by forward101d.mail.yandex.net (Yandex) with ESMTPS id 836FE60023
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:19:57 +0300 (MSK)
+Received: from mail.yandex.ru (2a02:6b8:c42:6523:0:640:3143:0 [2a02:6b8:c42:6523:0:640:3143:0])
+	by mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net (mxback/Yandex) with HTTPS id kJFBY39MgSw0-kBHLI7mp;
+	Sat, 12 Jul 2025 13:19:57 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ieml.ru; s=mail;
-	t=1752315596; bh=U2p4Yuwqew75ajyP1bgYEaDAFMgh4Oo+cZr4jLzlU1w=;
+	t=1752315597; bh=U2p4Yuwqew75ajyP1bgYEaDAFMgh4Oo+cZr4jLzlU1w=;
 	h=Message-Id:Date:Subject:To:From;
-	b=dpC4Vqk+9+h+Ruijugg6pnlI8CBHFYBCAkMzRhq0IfDxy8FeqOfYlUMz2GPnpDbFM
-	 2VVrmQit0sDM3Kq2J8X9orvLPygVeMffj1GoWg0RXu2YBM7vSX8+Hh3ukRkS+dryRJ
-	 JS7HjmhR5qgUTr+Bmkj0G8HqW2Ol1wxbDEQ4mIHY=
-Authentication-Results: mail-nwsmtp-mxback-production-main-75.iva.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
-Received: by sb3hpb4oycqcuvtz.iva.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id d7fe0c163184e5e5845179853b890111;
+	b=LOViMPsJ3tUV4n7tREf4xx8b08ySYsf20bBWBL/1u0MZKEyCQFMhZXXzarjlmq+lB
+	 zIqsXZOCbGzGK6i3873VjAElZ9B0tt1RZ9KqftzP1CIT8c5cbeYf2TYXaZiBYhrJGP
+	 /DK93gX/Ky6E2ezyfLyUnwLQ9HXnDKGeqBq01M8A=
+Authentication-Results: mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
+Received: by mail-sendbernar-production-main-91.klg.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id cb385870bb1838e9a86b91560c695437;
 	Sat, 12 Jul 2025 13:19:56 +0300
 From: =?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>
 To: git@vger.kernel.org
@@ -45,7 +45,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Date: Sat, 12 Jul 2025 13:19:56 +0300
-Message-Id: <8515891752315596@sb3hpb4oycqcuvtz.iva.yp-c.yandex.net>
+Message-Id: <8232771752315596@mail-sendbernar-production-main-91.klg.yp-c.yandex.net>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8
 
