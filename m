@@ -1,234 +1,112 @@
-Received: from forward501a.mail.yandex.net (forward501a.mail.yandex.net [178.154.239.81])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBB69DDBC
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 15:46:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.81
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3094119ABC3
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 17:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752335195; cv=none; b=Miqlj9DJAsUvIBOzAzqoJKL7tt0GooPvXDLaSZ9HXBBj4TGgylwpVn8JF/6sBxjxKeru1VcJ9pxHqFi30X4phCM9ylo/VXTkjDLEPtCxSzPSpFWuDPg6ZWBFP6uH/EIr7sdudlc/2jX3kT/qLi9ntTvHPmLXFkcw8nJfK+8jiT4=
+	t=1752341247; cv=none; b=Kmk7S8oJrJp77EmgUg/pHimT3zqg+M5+udZcc7HO1MwjnRTFnl4Q3Td7hjA7xJQgojtCArIP7SJLB4+8Z0OpM4y478Qpy1KUIK9/8xShrf6KYqQOOJ71+wEn39H18XMomOZ/mxg5Z8xUPEgQE6LB7f2IDUlBymlsxy7j8nBowmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752335195; c=relaxed/simple;
-	bh=jTpu6oZ0l3eLxmPhg6za1MJLo8YyS1ltGLEpw3jtv3c=;
-	h=From:To:Cc:In-Reply-To:References:Subject:MIME-Version:Date:
-	 Message-Id:Content-Type; b=OTvkGemn9hqy72+U8XiHbWZcjQECYx3aR5lWe+ncDkxYQvzJg8nn05saWEFCI85kZj4SAQKI+yTRNChg13oDw/lOtkYvCliMd9AxuKh+5hFKSZQBOyvooQPOtwE2AyzuPY7bX7ULRnwt7yvgEfUAp1ceYKgnJzoyBdjtpk0CzOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=hBsO7hM4; arc=none smtp.client-ip=178.154.239.81
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieml.ru
+	s=arc-20240116; t=1752341247; c=relaxed/simple;
+	bh=VuamH3nSPL1YaFcZUzsJlkgiaGV/F87cT3y0N514hjY=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=BR6dYPFSRqECKbtIbmpAkQCSy8u8TlsA5Wmd1aeVG/xGHq8xYXTp6TBOkOMH1d4muySwYOYf6gTFlI4HRLBpZIwwD+YlJ9ZgBpaK6pLqpQsN5P9Ysi1eWk8h/Gg9y0YGCmQgaDPpydWjctzFjJVgHcGyx6oGeQiN8R/3mrkLaIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hiRGkMU1; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="hBsO7hM4"
-Received: from mail-nwsmtp-mxback-production-main-29.vla.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-29.vla.yp-c.yandex.net [IPv6:2a02:6b8:c1f:e88:0:640:8b42:0])
-	by forward501a.mail.yandex.net (Yandex) with ESMTPS id C8A3562178;
-	Sat, 12 Jul 2025 18:41:01 +0300 (MSK)
-Received: from mail.yandex.ru (2a02:6b8:c0f:1610:0:640:ac18:0 [2a02:6b8:c0f:1610:0:640:ac18:0])
-	by mail-nwsmtp-mxback-production-main-29.vla.yp-c.yandex.net (mxback/Yandex) with HTTPS id LeKQpn8MniE0-jw267YdK;
-	Sat, 12 Jul 2025 18:41:01 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ieml.ru; s=mail;
-	t=1752334861; bh=m/gUvbNPdlJIPJLBZ9PclVdV8uIGs1Og1KDyrGtnpx4=;
-	h=Message-Id:References:Date:Cc:Subject:In-Reply-To:To:From;
-	b=hBsO7hM4MWBvuyzFuVFf+/wZOVStK7iXrhfd+mIBDLqI9AK0L2Tbv1UAp+gwRHg+K
-	 njrdnXng/C36ygoVVxAe7+XhkZzKMwFbN88QbssNqtRanZ7AWPKNTxV5N/IPbZ/EtW
-	 W/BaYtZVZVvnGpKWdxbwvhaFrb4Ak1qrULU0Dy4s=
-Authentication-Results: mail-nwsmtp-mxback-production-main-29.vla.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
-Received: by mail-sendbernar-production-main-77.vla.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id 5882f267e3bd692e0a76bc3d900e9e37;
-	Sat, 12 Jul 2025 18:41:00 +0300
-From: =?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>
-To: phillip.wood@dunelm.org.uk
-Cc: git@vger.kernel.org
-In-Reply-To: <f636840b-ec66-4059-9d0c-3cca07d42007@gmail.com>
-References: <1615371752315594@mail-sendbernar-production-main-92.sas.yp-c.yandex.net> <f636840b-ec66-4059-9d0c-3cca07d42007@gmail.com>
-Subject: Re: git 2.50 and 2.50.1 src fails to compile in rhel 6
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hiRGkMU1"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-2350b1b9129so22241355ad.0
+        for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:27:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752341245; x=1752946045; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=bqhdUhikATKs2TnULIMoKj5cJ0/XOwN7sJRt4uBfU2I=;
+        b=hiRGkMU18c3fhjrSXAdbyidL/P8+2ehem44olN91+xyAhW3liZARb/7w/yhAyvfzk7
+         hO8TP3dO27b6jeSZhJ46yEK+81Nxnfs/wFVgwaOqx+GWK6ngx/QWlw7UpZDha4aW+5TY
+         tGrmzy5H3WoCrDCc/2u6y7kgl9LeBj64mYsk+RTlCiQLWTyVYieL6RhlRhXRiGiqAfsW
+         UEV/TNDDQA9uCrlyo8zwqvaK/e/EUMHMPPaVUHBmRukFwgnGS+vffE+kqa/L2aW7k7yt
+         JqdKQjgyOV/qxu741VgJtsYR62OWzn0KNqvZWVz+aUDyLvADOQgNEqxbB2HEpTfuFlQI
+         zzMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752341245; x=1752946045;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bqhdUhikATKs2TnULIMoKj5cJ0/XOwN7sJRt4uBfU2I=;
+        b=t9+CmX3NiRthTyIqKmAEGEbVNqQLxsO3n87XQrNvgR26mdMdipiEXHVUUFIWg9wgBP
+         vNidjYnzlIw7EZrmgE00xP3DEhQrfN/A9rFhaLb6uy5jWa5eSuF6486MVBaj4kYHKMVw
+         pi2HfVtocjVP0Brfwh+s8e+JHfRxzfyJkIk5AHsiwP2EhdfG1odYckqnujGACchrehsK
+         8oYzhknqdKCqA9Cb2X8l4Ieu3TLkdL6ctpH8szkucdqhGadHBKoIZSnZYaKmsjWEOazk
+         NjHNT0E0+GX5buJYZgDM228GaQowlUnJzuKC6+mTwANtcE3sTQM8CgbH49gYC+u+3BWN
+         d52w==
+X-Gm-Message-State: AOJu0YwTHL14l68VMS4EtUJ5e3o8NEYV0HfxD+isUy16V+pQPzQnwYlr
+	Zz7nRp3ELFxe4OFMRQCh0b+lyTYm0thMV5XG5goCS2Sk75iLebbeLxzvmavm5w==
+X-Gm-Gg: ASbGncvP5qwjp3xgddS7mdgtUGvGJ14++prbOITChIAheCfo+FqXBB1Fc/kJv2iay5s
+	Au0YGFW60g5YJbuCkMWs1GUa4pJRYQzXfA6/R7Y9AIJJVHleqwHZr/b+RoZ9ZeuvFjk1F11ZCo6
+	a6rWchVGDovBx+I1dURgCFbw1eo9TJ0emjKLdph+3B0llO+O5Svv9Wy9O1DseW0r19hlfqiAxzV
+	vjrYvS630T5nQwsAPVAapUFZgINRDh2M+goC9pkjMQynr+XZlMv85ie8APk2Wq4KGdMBqE1A4E5
+	AgAAB2VRbkFYccKgnrz8To5BOffBSI46SeOUIIkwIXxqkDtCc1m2I8fpLH7T4AMhnbVkPjH7dCK
+	JAe5QJgBIjF0e5nK13ewpoyi4jYPx7Lvto+XY52SjxcoA1XxLrf4zezgixYiTOPACyhESu8mp
+X-Google-Smtp-Source: AGHT+IFFpH4LbuOBhNyZ4eSsNC5GPcVeWSmL5Vfzr0PmQk9sqHPKCgLD257MG1nMr54Uo409no0N6A==
+X-Received: by 2002:a17:902:f745:b0:235:225d:30a2 with SMTP id d9443c01a7336-23dee0ded1fmr109302555ad.48.1752341244893;
+        Sat, 12 Jul 2025 10:27:24 -0700 (PDT)
+Received: from localhost.localdomain (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe579b0esm7160858a12.22.2025.07.12.10.27.23
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sat, 12 Jul 2025 10:27:24 -0700 (PDT)
+From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
+Subject: [PATCH] meson: disable PCRE2 dependency by default
+Date: Sat, 12 Jul 2025 10:26:15 -0700
+Message-Id: <20250712172615.11364-1-carenas@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Sat, 12 Jul 2025 18:41:00 +0300
-Message-Id: <8795721752334860@mail-sendbernar-production-main-77.vla.yp-c.yandex.net>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain; charset=utf-8
 
+Makefile requires the user to provide the USE_LIBPCRE2 flag to
+enable this dependency, but meson has it enabled by default,
+which can be problematic, at least in macOS.
 
-I/m soorry for the noob quesion but how do I get the patched version of the sane-ctype.h? I/m not sure where exactly to apply the patch to. I only see the diff, and not the whole file itself. And what are the chances of this patch being merged to master branch
-> 
->> Hello everyone! I'm having trouble compilig git source since version 2.50 , for RHEL 6 (both in redhat 6-6 and 6.10).
->> the same source compiles fine in RHEL8 (Red Hat Enterprise Linux release 8.10 (Ootpa))
->> first compiler complans about missing random.h in compat/posix.h ,if you copy missing random.h file to RHEL6 machine to the /usr/include/sys directory then errors change to whole bunch of other errors like
->> error: expected declaration specifiers or ‘...’ before numeric constant
->>
->> 45 | #define toupper(x) sane_case((unsigned char)(x), 0)
->> both working and non working systems have same gcc 13-4.0 . Last version that compiles in both rhel 6 and rhel 8 is 2.49.1 Any ideas ?
-> 
-> There is a patch to fix this issue available at
-> https://lore.kernel.org/git/xmqqtt3j69r8.fsf@gitster.g/
-> 
-> Thanks
-> 
-> Phillip
-> 
->> git-2.50.1# make -j $(nproc) configure && ./configure && make -j $(nproc) && make -j $(nproc) install && make -j $(nproc) clean
->> GIT_VERSION=2.50.1
->> GEN configure
->> configure: Setting lib to 'lib' (the default)
->> configure: Will try -pthread then -lpthread to enable POSIX Threads.
->> configure: CHECKS for site configuration
->> checking for gcc... /usr/local/gcc-13.4.0/bin/gcc-13.4
->> checking whether the C compiler works... yes
->> checking for C compiler default output file name... a.out
->> checking for suffix of executables...
->> checking whether we are cross compiling... no
->> checking for suffix of object files... o
->> checking whether the compiler supports GNU C... yes
->> checking whether /usr/local/gcc-13.4.0/bin/gcc-13.4 accepts -g... yes
->> checking for /usr/local/gcc-13.4.0/bin/gcc-13.4 option to enable C11 features... none needed
->> checking for stdio.h... yes
->> checking for stdlib.h... yes
->> checking for string.h... yes
->> checking for inttypes.h... yes
->> checking for stdint.h... yes
->> checking for strings.h... yes
->> checking for sys/stat.h... yes
->> checking for sys/types.h... yes
->> checking for unistd.h... yes
->> checking for size_t... yes
->> checking for working alloca.h... yes
->> checking for alloca... yes
->> configure: CHECKS for programs
->> checking whether the compiler supports GNU C... (cached) yes
->> checking whether /usr/local/gcc-13.4.0/bin/gcc-13.4 accepts -g... (cached) yes
->> checking for /usr/local/gcc-13.4.0/bin/gcc-13.4 option to enable C11 features... (cached) none needed
->> checking for inline... inline
->> checking if linker supports -R... no
->> checking if linker supports -Wl,-rpath,... yes
->> checking for gar... no
->> checking for ar... ar
->> checking for gtar... gtar
->> checking for gnudiff... no
->> checking for gdiff... no
->> checking for diff... diff
->> checking for asciidoc... no
->> configure: CHECKS for libraries
->> checking for SHA1_Init in -lcrypto... yes
->> checking for curl_global_init in -lcurl... yes
->> checking for curl-config... curl-config
->> configure: Setting CURL_LDFLAGS to '-L/usr/local/lib -lcurl'
->> checking for XML_ParserCreate in -lexpat... yes
->> checking for iconv in -lc... yes
->> checking for deflateBound in -lz... yes
->> checking for socket in -lc... yes
->> checking for inet_ntop... yes
->> checking for inet_pton... yes
->> checking for hstrerror... yes
->> checking for basename in -lc... yes
->> checking if libc contains libintl... yes
->> checking for libintl.h... yes
->> configure: CHECKS for header files
->> checking for sys/select.h... yes
->> checking for poll.h... yes
->> checking for sys/poll.h... yes
->> checking for inttypes.h... (cached) yes
->> checking for old iconv()... no
->> checking whether iconv omits bom for utf-16 and utf-32... no
->> configure: CHECKS for typedefs, structures, and compiler characteristics
->> checking for socklen_t... yes
->> checking for struct itimerval... yes
->> checking for struct stat.st_mtimespec.tv_nsec... no
->> checking for struct stat.st_mtim.tv_nsec... yes
->> checking for struct dirent.d_type... yes
->> checking for struct passwd.pw_gecos... yes
->> checking for struct sockaddr_storage... yes
->> checking for struct addrinfo... yes
->> checking for getaddrinfo... yes
->> checking for library containing getaddrinfo... none required
->> checking how to run the C preprocessor... /usr/local/gcc-13.4.0/bin/gcc-13.4 -E
->> checking for grep that handles long lines and -e... /bin/grep
->> checking for egrep... /bin/grep -E
->> checking whether the platform regex supports REG_STARTEND... yes
->> checking whether system succeeds to read fopen'ed directory... yes
->> checking whether snprintf() and/or vsnprintf() return bogus value... no
->> checking whether the platform uses typical file type bits... yes
->> configure: CHECKS for library functions
->> checking for libgen.h... yes
->> checking for paths.h... yes
->> checking for libcharset.h... no
->> checking for strings.h... (cached) yes
->> checking for locale_charset in -liconv... no
->> checking for locale_charset in -lcharset... no
->> checking for sysinfo... yes
->> checking for clock_gettime... no
->> checking for CLOCK_MONOTONIC... yes
->> checking for sync_file_range... yes
->> checking for library containing sync_file_range... none required
->> checking for setitimer... yes
->> checking for library containing setitimer... none required
->> checking for strcasestr... yes
->> checking for library containing strcasestr... none required
->> checking for memmem... yes
->> checking for library containing memmem... none required
->> checking for strlcpy... no
->> checking for uintmax_t... yes
->> checking for strtoumax... yes
->> checking for library containing strtoumax... none required
->> checking for setenv... yes
->> checking for library containing setenv... none required
->> checking for unsetenv... yes
->> checking for library containing unsetenv... none required
->> checking for mkdtemp... yes
->> checking for library containing mkdtemp... none required
->> checking for initgroups... yes
->> checking for library containing initgroups... none required
->> checking for getdelim... yes
->> checking for library containing getdelim... none required
->> checking for BSD sysctl... no
->> checking for POSIX Threads with ''... no
->> checking for POSIX Threads with '-mt'... no
->> checking for POSIX Threads with '-pthread'... yes
->> configure: creating ./config.status
->> config.status: creating config.mak.autogen
->> config.status: executing config.mak.autogen commands
->> * new build flags
->> * new link flags
->> CC base85.o
->> CC bisect.o
->> * new prefix flags
->> CC blame.o
->> CC blob.o
->> CC bloom.o
->> CC branch.o
->> CC bulk-checkin.o
->> CC bundle-uri.o
->> CC bundle.o
->> CC cache-tree.o
->> CC cbtree.o
->> CC chdir-notify.o
->> CC checkout.o
->> CC chunk-format.o
->> CC color.o
->> CC column.o
->> In file included from compat/posix.h:449,
->> from git-compat-util.h:26,
->> from checkout.c:3:
->> compat/../sane-ctype.h:29:60: error: expected expression before ‘]’ token
->> 29 | #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
->> | ^
->> 0)
->> | ^
->> make: *** [Makefile:2821: cbtree.o] Error 1
->> make: *** Waiting for unfinished jobs....
->> make: *** [Makefile:2821: base85.o] Error 1
->> make: *** [Makefile:2821: chdir-notify.o] Error 1
->> make: *** [Makefile:2821: chunk-format.o] Error 1
->> make: *** [Makefile:2821: blob.o] Error 1
->> make: *** [Makefile:2821: color.o] Error 1
->> make: *** [Makefile:2821: checkout.o] Error 1
->> make: *** [Makefile:2821: column.o] Error 1
->> make: *** [Makefile:2821: bulk-checkin.o] Error 1
->> make: *** [Makefile:2821: branch.o] Error 1
->> make: *** [Makefile:2821: cache-tree.o] Error 1
->> make: *** [Makefile:2821: bloom.o] Error 1
->> make: *** [Makefile:2821: bundle-uri.o] Error 1
->> make: *** [Makefile:2821: bundle.o] Error 1
->> make: *** [Makefile:2821: bisect.o] Error 1
->> make: *** [Makefile:2821: blame.o] Error 1
+While a popular option and matching what was done by cmake
+(which itself reflects what is preferred by Git for Windows)
+could result in a broken build or linking with the wrong PCRE2
+library.
+
+While not git's fault, macOS provides a PCRE2 library in base
+that is not usable (even if it would pass the test) and not
+configured properly, as it installs a pkgconf module that
+points to a non existent pcre2.h header in /usr/local/include.
+
+Change the default to off, and let the user enable it once a
+proper dependency is installed or meson instructed to fallback to
+the wrap.
+
+Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+---
+ meson_options.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/meson_options.txt b/meson_options.txt
+index e7f768df24..0a0cac6f99 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
+   description: 'Build Git web interface. Requires Perl.')
+ option('iconv', type: 'feature', value: 'auto',
+   description: 'Support reencoding strings with different encodings.')
+-option('pcre2', type: 'feature', value: 'enabled',
++option('pcre2', type: 'feature', value: 'disabled',
+   description: 'Support Perl-compatible regular expressions in e.g. git-grep(1).')
+ option('perl', type: 'feature', value: 'auto',
+   description: 'Build tools written in Perl.')
+-- 
+2.39.5 (Apple Git-154)
+
