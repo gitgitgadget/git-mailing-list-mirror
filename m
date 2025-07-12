@@ -1,64 +1,64 @@
-Received: from mail-pg1-f193.google.com (mail-pg1-f193.google.com [209.85.215.193])
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2EB21F4285
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 09:36:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D1E274B4E
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 09:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752312966; cv=none; b=KniXFfXuDIfj2wP4rjchh/y0SeRhj9/pjoGdhQaXhJbiefR3BS/NSMh56vhYh8gG4/xqBJDOTBGjcxrQrSWWCg9p0ohVZKIWt6xYEKYmxAUjplbRxWAaF7l70qoDgiGwaheUbeM7m1P+BgMGTwrelRgzPFaLQLPrsZIWzix/g4k=
+	t=1752312971; cv=none; b=nqyvZbQI206sKYrSvj1txoxLGl3w43jXbWfMVFSyZml2eegnowHqgLGNyZbIxnPcuQHO8bFpHu1JAbZdlqg+bT/DjblDfl9ck+O52IRk7S8NZGCYENpbrYbOksp261X9yVuE2U9m9twsNvMaUm2O/DZdQGmiTUkR+rWjIRULlN4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752312966; c=relaxed/simple;
-	bh=jSH5cqFtvz5vg3DNLtY3cXp4PnusHgO8hYX5R8+J6+o=;
+	s=arc-20240116; t=1752312971; c=relaxed/simple;
+	bh=dZbZx5PBKOwWWLcfoAyoMQwC7XOhpnZf71uXNPqEtZA=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=bdaD9v9nIPrwmHkewPO5+bM+MmaJHD4fkkDJp9J6zcrfMGnQVYCmigcAcEpiNyQtksdX8ahBnfm+yQ10ixj9aCi/oGcEBTXIUm9XKTuGgNbcf5KWvLL9I3s8yaxzaxxzHY0z/SAUU3WYLQgIlJcdTr35PgXannOxKjMhYNUdCMM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aqce77Ib; arc=none smtp.client-ip=209.85.215.193
+	 MIME-Version; b=dBLvNHCEzUf4rtrxNuwxHTQobvcLXSysiMWs+w1DLlrwJ9+H0pIPZGVaLEmvhGk+8XkV4m+vGXAzDrYkjwH63s/5Bd/zOOJnwiGUdUXfaObejdubVY2y9t2i59K6rPaoZnyraEnyqrbDLImLejRIaOXEXmb1qppij4jtih6Uzg0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Dt2x87z1; arc=none smtp.client-ip=209.85.210.193
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aqce77Ib"
-Received: by mail-pg1-f193.google.com with SMTP id 41be03b00d2f7-b34a6d0c9a3so2966846a12.3
-        for <git@vger.kernel.org>; Sat, 12 Jul 2025 02:36:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Dt2x87z1"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-7481600130eso3461532b3a.3
+        for <git@vger.kernel.org>; Sat, 12 Jul 2025 02:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752312964; x=1752917764; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752312969; x=1752917769; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hrGwOXoJWTyMSkOru9Piow5jcOSDQ/lGXtV3OkLbMDU=;
-        b=aqce77IbuvE9z4Xv2JPagE2GToT+IZEPAxl4zec4W6rHFD5IZi6Nmmde6AUpOnZ5bX
-         unkXo8JyKQgqAw2WATDpVcI12G3WCZxBjis9XUGr7JtfGpHn6IUccJSvR3WJFrSxGDuJ
-         pxUzRXo5+/cfEQ4ycat5L4oZfZGJ2/Xbp+XO/wvK8AP8n9vNyRP+TYjAsaAYwJ3VsxyO
-         8lS9CfH5CY7VDEB6XaZSeiZbGFgsPFvkXFwZnycCMGnL/ZsJoOBtiOYg3grUDofJGyw6
-         yqQOMYEljGirxSosnwcdUP/5g8NxR2CghhO18msEl/UQIsNdV/aoFZIKjh+MtI6FY6xl
-         cgEw==
+        bh=7Q13B+wyULX7kFaRx71CbfXzjuTw74ci9wdj3mX9Fo4=;
+        b=Dt2x87z1gytBIZSnVfdkrcdqdOutHgMqxbF3H+nVoGmdrffvwBHac5KK55WO6W44/5
+         UJRQIsfvorgpD2Uhl4kpECO5ueF4QCkwRMW92SyI27dMkvi/ghcALGDkBGoZ6c/QKJbL
+         D7x0N7JB8TEMLi6aTd6tCIcL2Dh2MTGIlIhb9QtcFk8l1GtePfW8//8IAG3XGsYc7sj/
+         zLFKux0PnMQuPF1/dmuZGOgZ24tgJ2VBT8+LgwUIzMTgptoGx+dDYo1WQP3L+NCqm3pM
+         NLElB3+mJCOlDVJzRV3YNQNLb9iFNN4VdJJ/m4rJJeagpw5+odrC9ArxYR5VbDlh620Y
+         VfSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752312964; x=1752917764;
+        d=1e100.net; s=20230601; t=1752312969; x=1752917769;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hrGwOXoJWTyMSkOru9Piow5jcOSDQ/lGXtV3OkLbMDU=;
-        b=ObR1A04Hnm5Tpjwc+9uE7F2Xyt0SEAa88uLBkEMn8KXIh8mhBUG0B+WrgOz0pDW2by
-         iXIEFV0b/jpnf17Bx3t8mXzgbOXHG3Xyk9gj4TXUchxslA9HfHUX3wi8nP0KpGBzIoR7
-         abZGw3wUiVNmmkbl7Kc21TIdCZ50Zih1z5qaH7feZXNBgckrP2MubFfmP6p2tY5Cl36N
-         eNi+JcNXMQscfaWyTbD5iuAFfNVWdnv/bwm7TL68nXXkP0vxUgV7/rsBtxswtg9SFWg3
-         6OvAvTLgWVGpD9vGewAFaZpr5U5jFo8sb1ukoeUobtWFecUZ1iaOSWISMXKyhlgnRCxt
-         43xw==
-X-Forwarded-Encrypted: i=1; AJvYcCUEkqoSKzjUGhIUzxD73zrmjH/HBRse/zOaZUIRM3wnUwKhMY6k0zaY0zktrbaBox9NSIg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YympE7DgaT8at6qMIUtJDG2yeErk9W9NTzVqSH24GpyJfIjJ0FY
-	Buk5pN2OIS6hXwwyb50GlL+66epNKkv1jwF5PeIeXigostsTEJ8jSPz6
-X-Gm-Gg: ASbGncvVO7jKDNk1S84k+/B0/nQxkudzauGae149WSHR63BOC+qbPu1ZlIX0bkP2Sk0
-	a4j6mo5+cln1Gyl3tVK+C0REDJUhBx4OZe8vUioHpXH85QXz16sGfAvHCfrpS+y3g1XQyRGdlLT
-	XeWL+qjAJlxRUa8HEOL2TvdAUet7hrDfxbbJYvVCYTigv1HbGRkhGQzJ2G7IFiTsgZ15IO291sC
-	ARhkd/i5eg9PYp/zfLJjxCAnoNeNk+xlUXlw+/PruhcKkhockRD20JM4UuXydFqjOkJnWYeBt5q
-	rc3puf17IeiJ+y6QJT6nWV7HQK7keyV/HmnnyKaNDXrzyVSvM8Gd8VgogjtrGBnON515ODj7wpK
-	aHRSm3RPMBEhT63b3+RSbjdYGY1ma6mE9NOBk+2zPf4yUlq+O1CvIa3kkCP/MQVJEjFx5bNHxws
-	Fw9vXerfYHuYgxHCmNFt5W3U5PITm5hA==
-X-Google-Smtp-Source: AGHT+IH4lyLSLh7i6rBD+fnduM/qKekeMp4kZKlzZ2iAO9xFfJgJEQLx0MecFuT14+rB5OWI/aCO0g==
-X-Received: by 2002:a05:6a20:2d23:b0:215:d611:5d9b with SMTP id adf61e73a8af0-2311d95ce85mr8919914637.12.1752312963657;
-        Sat, 12 Jul 2025 02:36:03 -0700 (PDT)
+        bh=7Q13B+wyULX7kFaRx71CbfXzjuTw74ci9wdj3mX9Fo4=;
+        b=a012WPAUd+nHnxTb8uPaIAFe3E8QbFP1n+utFDYCY4i8A45IW1RO0QiQX7b2PcOr36
+         U4YTZNsCdlRHlth3Z22W9nhHmuDRsE9ITq8dvIGuhyUGcv/DT+fSMbOn/QhIAgWFaEv1
+         b36PNuOcjwm2nQKXJLD7pq/CG+Vhfp7HElDIdoi8wQhyKlCUrQ300xoDpI2oQpPeximS
+         ACn20EwWj9S8JKTMOBFpMXl3J1ws+NzPKkSn/itLNPy3vz5I8nB3XyUfjzeK/scRamj1
+         p84101NguT/YSX4GkkEjHNO3oND31R1MD4qghzR/DStRpPNBbGRY491lt4lHl4dvEqbk
+         ioTw==
+X-Forwarded-Encrypted: i=1; AJvYcCXeJsmd2VCA6mPfFrCA2nQXg1pm269d38HfL513F4oVHvVgr+6lcyrc8mQi/CCefeBBzsI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxLENclD2M0mueDWHHjf8+CDqClmBs5E+M23CgO6Oe56pBPlINK
+	qL83J/FTnNbah4USGDOyw7iL02vdgZQkZzMQL+7lqqmYB7GiVBz0xqku
+X-Gm-Gg: ASbGncv2TVkWwJQYROiy6zKaDa3uwipAy54txmSXuns+uR5Xj0dS9QwVqtPICVAmkYK
+	z6xlXrxyLPnjI2xIJb9DQAvrjpMCDWS8rhXZp/SkZXqRtE0tqSHjXeTM40nvsJ5UM85DaocUuqm
+	oo9h2HEDecOGQjOPo5LKAp1mUXc9Oabqa69f8At2eXSnHmsJ1NEQERXkDZ0mKCI4Bt2jVRJ0zGT
+	YBq7+/mRjHVBZfOg2GQirR1OUf5eB1GZ3l7+tFzwaI4lWDomO+WNODTAtbe6rgXfy+PkDCOLK+Q
+	8KFWZoLQaK6Q7GWiJSI3QiwtfZg00iuHe0wTL/TA291MWnTUeTs0WRFa//lI2B43dypq4aRK0Fd
+	X5/5aDdhZZ4h/em980/ebsV2aA162srFi42jHyR5NkCAwivV7E63v9TLRh5S7d8mpu5/clbANM8
+	6a+wAPMWOCBThIHMshQZxlS5RwFfwfLA==
+X-Google-Smtp-Source: AGHT+IEcFp3zXckeijQhbSJGLgI8ARer92XpSwRe7OC/VFvXNW+npyP3Ydgy/WrKAe40NbTcLRNmwA==
+X-Received: by 2002:a05:6a21:670d:b0:230:f020:ddf2 with SMTP id adf61e73a8af0-2311ee4b248mr9721191637.19.1752312968997;
+        Sat, 12 Jul 2025 02:36:08 -0700 (PDT)
 Received: from localhost.localdomain (awork062176.netvigator.com. [203.198.28.176])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f1b43dsm7126997b3a.79.2025.07.12.02.36.00
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f1b43dsm7126997b3a.79.2025.07.12.02.36.05
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 12 Jul 2025 02:36:03 -0700 (PDT)
+        Sat, 12 Jul 2025 02:36:08 -0700 (PDT)
 From: Lidong Yan <yldhome2d2@gmail.com>
 To: yldhome2d2@gmail.com
 Cc: 502024330056@smail.nju.edu.cn,
@@ -66,9 +66,9 @@ Cc: 502024330056@smail.nju.edu.cn,
 	gitster@pobox.com,
 	toon@iotcl.com,
 	stolee@gmail.com
-Subject: [PATCH v6 3/5] bloom: replace struct bloom_key * with struct bloom_keyvec
-Date: Sat, 12 Jul 2025 17:35:15 +0800
-Message-Id: <20250712093517.17907-4-yldhome2d2@gmail.com>
+Subject: [PATCH v6 4/5] revision: make helper for pathspec to bloom keyvec
+Date: Sat, 12 Jul 2025 17:35:16 +0800
+Message-Id: <20250712093517.17907-5-yldhome2d2@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250712093517.17907-1-yldhome2d2@gmail.com>
 References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
@@ -81,355 +81,98 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Previously, we stored bloom keys in a flat array and marked a commit
-as NOT TREESAME if any key reported "definitely not changed".
+When preparing to use bloom filters in a revision walk, Git populates a
+boom_keyvec with an array of bloom keys for the components of a path.
+Before we create the ability to map multiple pathspecs to multiple
+bloom_keyvecs, extract the conversion from a pathspec to a bloom_keyvec
+into its own helper method. This simplifies the state that persists in
+prepare_to_use_bloom_filter() as well as makes the future change much
+simpler.
 
-To support multiple pathspec items, we now require that for each
-pathspec item, there exists a bloom key reporting "definitely not
-changed".
-
-This "for every" condition makes a flat array insufficient, so we
-introduce a new structure to group keys by a single pathspec item.
-`struct bloom_keyvec` is introduced to replace `struct bloom_key *`
-and `bloom_key_nr`. And because we want to support multiple pathspec
-items, we added a bloom_keyvec * and a bloom_keyvec_nr field to
-`struct rev_info` to represent an array of bloom_keyvecs. This commit
-still optimize only one pathspec item, thus bloom_keyvec_nr can only
-be 0 or 1.
-
-New bloom_keyvec_* functions are added to create and destroy a keyvec.
-bloom_filter_contains_vec() is added to check if all key in keyvec is
-contained in a bloom filter.
-
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
 Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
- bloom.c    | 61 +++++++++++++++++++++++++++++++++++++++++++
- bloom.h    | 38 +++++++++++++++++++++++++++
- revision.c | 76 +++++++++++++++++++++---------------------------------
- revision.h |  6 ++---
- 4 files changed, 132 insertions(+), 49 deletions(-)
+ revision.c | 45 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 29 insertions(+), 16 deletions(-)
 
-diff --git a/bloom.c b/bloom.c
-index 5523d198c8..b86015f6d1 100644
---- a/bloom.c
-+++ b/bloom.c
-@@ -278,6 +278,55 @@ void deinit_bloom_filters(void)
- 	deep_clear_bloom_filter_slab(&bloom_filters, free_one_bloom_filter);
- }
- 
-+struct bloom_keyvec *bloom_keyvec_new(const char *path, size_t len,
-+				      const struct bloom_filter_settings *settings)
-+{
-+	struct bloom_keyvec *vec;
-+	const char *p;
-+	size_t sz;
-+	size_t nr = 1;
-+
-+	p = path;
-+	while (*p) {
-+		/*
-+		 * At this point, the path is normalized to use Unix-style
-+		 * path separators. This is required due to how the
-+		 * changed-path Bloom filters store the paths.
-+		 */
-+		if (*p == '/')
-+			nr++;
-+		p++;
-+	}
-+
-+	sz = sizeof(struct bloom_keyvec);
-+	sz += nr * sizeof(struct bloom_key);
-+	vec = (struct bloom_keyvec *)xcalloc(1, sz);
-+	if (!vec)
-+		return NULL;
-+	vec->count = nr;
-+
-+	bloom_key_fill(&vec->key[0], path, len, settings);
-+	nr = 1;
-+	p = path + len - 1;
-+	while (p > path) {
-+		if (*p == '/') {
-+			bloom_key_fill(&vec->key[nr++], path, p - path, settings);
-+		}
-+		p--;
-+	}
-+	assert(nr == vec->count);
-+	return vec;
-+}
-+
-+void bloom_keyvec_free(struct bloom_keyvec *vec)
-+{
-+	if (!vec)
-+		return;
-+	for (size_t nr = 0; nr < vec->count; nr++)
-+		bloom_key_clear(&vec->key[nr]);
-+	free(vec);
-+}
-+
- static int pathmap_cmp(const void *hashmap_cmp_fn_data UNUSED,
- 		       const struct hashmap_entry *eptr,
- 		       const struct hashmap_entry *entry_or_key,
-@@ -539,6 +588,18 @@ int bloom_filter_contains(const struct bloom_filter *filter,
- 	return 1;
- }
- 
-+int bloom_filter_contains_vec(const struct bloom_filter *filter,
-+			      const struct bloom_keyvec *vec,
-+			      const struct bloom_filter_settings *settings)
-+{
-+	int ret = 1;
-+
-+	for (size_t nr = 0; ret > 0 && nr < vec->count; nr++)
-+		ret = bloom_filter_contains(filter, &vec->key[nr], settings);
-+
-+	return ret;
-+}
-+
- uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
- 				   int version)
- {
-diff --git a/bloom.h b/bloom.h
-index 603bc1f90f..92ab2100d3 100644
---- a/bloom.h
-+++ b/bloom.h
-@@ -74,6 +74,16 @@ struct bloom_key {
- 	uint32_t *hashes;
- };
- 
-+/*
-+ * A bloom_keyvec is a vector of bloom_keys, which
-+ * can be used to store multiple keys for a single
-+ * pathspec item.
-+ */
-+struct bloom_keyvec {
-+	size_t count;
-+	struct bloom_key key[FLEX_ARRAY];
-+};
-+
- int load_bloom_filter_from_graph(struct commit_graph *g,
- 				 struct bloom_filter *filter,
- 				 uint32_t graph_pos);
-@@ -82,6 +92,23 @@ void bloom_key_fill(struct bloom_key *key, const char *data, size_t len,
- 		    const struct bloom_filter_settings *settings);
- void bloom_key_clear(struct bloom_key *key);
- 
-+/*
-+ * bloom_keyvec_new - Allocate and populate a bloom_keyvec with keys for the
-+ * given path.
-+ *
-+ * This function splits the input path by '/' and generates a bloom key for each
-+ * prefix, in reverse order of specificity. For example, given the input
-+ * "a/b/c", it will generate bloom keys for:
-+ *   - "a/b/c"
-+ *   - "a/b"
-+ *   - "a"
-+ *
-+ * The resulting keys are stored in a newly allocated bloom_keyvec.
-+ */
-+struct bloom_keyvec *bloom_keyvec_new(const char *path, size_t len,
-+				      const struct bloom_filter_settings *settings);
-+void bloom_keyvec_free(struct bloom_keyvec *vec);
-+
- void add_key_to_filter(const struct bloom_key *key,
- 		       struct bloom_filter *filter,
- 		       const struct bloom_filter_settings *settings);
-@@ -126,6 +153,17 @@ int bloom_filter_contains(const struct bloom_filter *filter,
- 			  const struct bloom_key *key,
- 			  const struct bloom_filter_settings *settings);
- 
-+/*
-+ * bloom_filter_contains_vec - Check if all keys in a key vector are in the
-+ * Bloom filter.
-+ *
-+ * Returns 1 if **all** keys in the vector are present in the filter,
-+ * 0 if **any** key is not present.
-+ */
-+int bloom_filter_contains_vec(const struct bloom_filter *filter,
-+			      const struct bloom_keyvec *v,
-+			      const struct bloom_filter_settings *settings);
-+
- uint32_t test_bloom_murmur3_seeded(uint32_t seed, const char *data, size_t len,
- 				   int version);
- 
 diff --git a/revision.c b/revision.c
-index a7eadff0a5..e4e0c83b0c 100644
+index e4e0c83b0c..1614c6ce0d 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -685,13 +685,14 @@ static int forbid_bloom_filters(struct pathspec *spec)
- 	return 0;
- }
+@@ -687,13 +687,37 @@ static int forbid_bloom_filters(struct pathspec *spec)
  
-+static void release_revisions_bloom_keyvecs(struct rev_info *revs);
-+
- static void prepare_to_use_bloom_filter(struct rev_info *revs)
+ static void release_revisions_bloom_keyvecs(struct rev_info *revs);
+ 
+-static void prepare_to_use_bloom_filter(struct rev_info *revs)
++static int convert_pathspec_to_bloom_keyvec(struct bloom_keyvec **out,
++					    const struct pathspec_item *pi,
++					    const struct bloom_filter_settings *settings)
  {
- 	struct pathspec_item *pi;
+-	struct pathspec_item *pi;
  	char *path_alloc = NULL;
--	const char *path, *p;
-+	const char *path;
+ 	const char *path;
  	size_t len;
--	int path_component_nr = 1;
++	int res = 0;
++
++	/* remove single trailing slash from path, if needed */
++	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
++		path_alloc = xmemdupz(pi->match, pi->len - 1);
++		path = path_alloc;
++	} else
++		path = pi->match;
++
++	len = strlen(path);
++	if (!len) {
++		res = -1;
++		goto cleanup;
++	}
  
++	*out = bloom_keyvec_new(path, len, settings);
++
++cleanup:
++	free(path_alloc);
++	return res;
++}
++
++static void prepare_to_use_bloom_filter(struct rev_info *revs)
++{
  	if (!revs->commits)
  		return;
-@@ -708,6 +709,8 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	if (!revs->pruning.pathspec.nr)
- 		return;
  
-+	revs->bloom_keyvecs_nr = 1;
-+	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
- 	pi = &revs->pruning.pathspec.items[0];
+@@ -711,22 +735,12 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
  
- 	/* remove single trailing slash from path, if needed */
-@@ -718,53 +721,30 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 		path = pi->match;
+ 	revs->bloom_keyvecs_nr = 1;
+ 	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
+-	pi = &revs->pruning.pathspec.items[0];
  
- 	len = strlen(path);
--	if (!len) {
--		revs->bloom_filter_settings = NULL;
--		free(path_alloc);
--		return;
--	}
+-	/* remove single trailing slash from path, if needed */
+-	if (pi->len > 0 && pi->match[pi->len - 1] == '/') {
+-		path_alloc = xmemdupz(pi->match, pi->len - 1);
+-		path = path_alloc;
+-	} else
+-		path = pi->match;
 -
--	p = path;
--	while (*p) {
--		/*
--		 * At this point, the path is normalized to use Unix-style
--		 * path separators. This is required due to how the
--		 * changed-path Bloom filters store the paths.
--		 */
--		if (*p == '/')
--			path_component_nr++;
--		p++;
--	}
--
--	revs->bloom_keys_nr = path_component_nr;
--	ALLOC_ARRAY(revs->bloom_keys, revs->bloom_keys_nr);
-+	if (!len)
-+		goto fail;
+-	len = strlen(path);
+-	if (!len)
++	if (convert_pathspec_to_bloom_keyvec(&revs->bloom_keyvecs[0],
++					     &revs->pruning.pathspec.items[0],
++					     revs->bloom_filter_settings))
+ 		goto fail;
  
--	bloom_key_fill(&revs->bloom_keys[0], path, len,
--		       revs->bloom_filter_settings);
--	path_component_nr = 1;
+-	revs->bloom_keyvecs[0] =
+-		bloom_keyvec_new(path, len, revs->bloom_filter_settings);
 -
--	p = path + len - 1;
--	while (p > path) {
--		if (*p == '/')
--			bloom_key_fill(&revs->bloom_keys[path_component_nr++],
--				       path, p - path,
--				       revs->bloom_filter_settings);
--		p--;
--	}
-+	revs->bloom_keyvecs[0] =
-+		bloom_keyvec_new(path, len, revs->bloom_filter_settings);
- 
  	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
  		atexit(trace2_bloom_filter_statistics_atexit);
  		bloom_filter_atexit_registered = 1;
- 	}
+@@ -736,7 +750,6 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
  
-+	return;
-+
-+fail:
-+	revs->bloom_filter_settings = NULL;
- 	free(path_alloc);
-+	release_revisions_bloom_keyvecs(revs);
+ fail:
+ 	revs->bloom_filter_settings = NULL;
+-	free(path_alloc);
+ 	release_revisions_bloom_keyvecs(revs);
  }
  
- static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 						 struct commit *commit)
- {
- 	struct bloom_filter *filter;
--	int result = 1, j;
-+	int result = 0;
- 
- 	if (!revs->repo->objects->commit_graph)
- 		return -1;
-@@ -779,10 +759,10 @@ static int check_maybe_different_in_bloom_filter(struct rev_info *revs,
- 		return -1;
- 	}
- 
--	for (j = 0; result && j < revs->bloom_keys_nr; j++) {
--		result = bloom_filter_contains(filter,
--					       &revs->bloom_keys[j],
--					       revs->bloom_filter_settings);
-+	for (size_t nr = 0; !result && nr < revs->bloom_keyvecs_nr; nr++) {
-+		result = bloom_filter_contains_vec(filter,
-+						   revs->bloom_keyvecs[nr],
-+						   revs->bloom_filter_settings);
- 	}
- 
- 	if (result)
-@@ -823,7 +803,7 @@ static int rev_compare_tree(struct rev_info *revs,
- 			return REV_TREE_SAME;
- 	}
- 
--	if (revs->bloom_keys_nr && !nth_parent) {
-+	if (revs->bloom_keyvecs_nr && !nth_parent) {
- 		bloom_ret = check_maybe_different_in_bloom_filter(revs, commit);
- 
- 		if (bloom_ret == 0)
-@@ -850,7 +830,7 @@ static int rev_same_tree_as_empty(struct rev_info *revs, struct commit *commit,
- 	if (!t1)
- 		return 0;
- 
--	if (!nth_parent && revs->bloom_keys_nr) {
-+	if (!nth_parent && revs->bloom_keyvecs_nr) {
- 		bloom_ret = check_maybe_different_in_bloom_filter(revs, commit);
- 		if (!bloom_ret)
- 			return 1;
-@@ -3201,6 +3181,14 @@ static void release_revisions_mailmap(struct string_list *mailmap)
- 
- static void release_revisions_topo_walk_info(struct topo_walk_info *info);
- 
-+static void release_revisions_bloom_keyvecs(struct rev_info *revs)
-+{
-+	for (size_t nr = 0; nr < revs->bloom_keyvecs_nr; nr++)
-+		bloom_keyvec_free(revs->bloom_keyvecs[nr]);
-+	FREE_AND_NULL(revs->bloom_keyvecs);
-+	revs->bloom_keyvecs_nr = 0;
-+}
-+
- static void free_void_commit_list(void *list)
- {
- 	free_commit_list(list);
-@@ -3229,11 +3217,7 @@ void release_revisions(struct rev_info *revs)
- 	clear_decoration(&revs->treesame, free);
- 	line_log_free(revs);
- 	oidset_clear(&revs->missing_commits);
--
--	for (int i = 0; i < revs->bloom_keys_nr; i++)
--		bloom_key_clear(&revs->bloom_keys[i]);
--	FREE_AND_NULL(revs->bloom_keys);
--	revs->bloom_keys_nr = 0;
-+	release_revisions_bloom_keyvecs(revs);
- }
- 
- static void add_child(struct rev_info *revs, struct commit *parent, struct commit *child)
-diff --git a/revision.h b/revision.h
-index 6d369cdad6..ac843f58d0 100644
---- a/revision.h
-+++ b/revision.h
-@@ -62,7 +62,7 @@ struct repository;
- struct rev_info;
- struct string_list;
- struct saved_parents;
--struct bloom_key;
-+struct bloom_keyvec;
- struct bloom_filter_settings;
- struct option;
- struct parse_opt_ctx_t;
-@@ -360,8 +360,8 @@ struct rev_info {
- 
- 	/* Commit graph bloom filter fields */
- 	/* The bloom filter key(s) for the pathspec */
--	struct bloom_key *bloom_keys;
--	int bloom_keys_nr;
-+	struct bloom_keyvec **bloom_keyvecs;
-+	int bloom_keyvecs_nr;
- 
- 	/*
- 	 * The bloom filter settings used to generate the key.
 -- 
 2.39.5 (Apple Git-154)
 
