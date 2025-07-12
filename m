@@ -1,222 +1,221 @@
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from forward103d.mail.yandex.net (forward103d.mail.yandex.net [178.154.239.214])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74DEF320F
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 09:51:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627B71B87F2
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:20:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.214
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752313900; cv=none; b=t05GLIc/QxvKEGB0LlPTtvTOkyb7TXVwxdAGE2szI4H1dRzoqesFHJF7gyXv+FWjdOph2W4/wln/IoSdPGmKh/Sf2dQhcUAqb/Ys/7qpFDfTFtYhy1+oZoAYROFerD+ErCiXVNCuCDS14MPOB6ei7441QihsZFcGVmqtdxlTp9g=
+	t=1752315610; cv=none; b=lUJI7NphWI3nwU2vxjqpM9bWKFJSzhRghjtX5y4tDmmqJeqOGtYIxbUEDAaSyTmsUcOiBUqweXI2uz6+L0PUIUn19WkYay18LItbuiKqBTfrPm2ZWwM56w6c/gUnLeod2z6ygADgrgwXC3PLTiv1eUsyesgHpMOQKcJZHh1VNjk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752313900; c=relaxed/simple;
-	bh=nY244iA7jXDnYv6LFlxMWzOn4M0ouhxNCUuRsXXAbkQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C5Qk2RGLx3M7qO4SobchQPP1iJnxix9F/E1IOvU8Bub+XVI8zFemCANdsV7eaKI3vdt7dc1gvZo+AF+R1PDG4cGiTddIqKzflOLetMYTxX5raK6EiKe1G1dXcCydaWmOACamWxx3QgqO367M8XU7BERjq5Xv22ApPuvLGDIKJYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZpwXyFYz; arc=none smtp.client-ip=209.85.210.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752315610; c=relaxed/simple;
+	bh=f5PN5EUjIaPqICCp+M3gQNMTDD7skt9pXtui5FR15EU=;
+	h=From:To:Subject:MIME-Version:Date:Message-Id:Content-Type; b=VMq2XO4hxqKiu0fCRCOf729WE3cWUi2eNp3naywEiuXW/ZHM+rZZ0n2ejqW9/A0P9Rb3XkdAnVPovavsdABzIdf6O/fM3bohxLKjYit5/G/fEQaKKlzLwtyOnTthhnX+IGOZSgOytf70yfOesoNeo0gM050CW82sZ4V1Spg34os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=KfHhudQl; arc=none smtp.client-ip=178.154.239.214
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieml.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZpwXyFYz"
-Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-739b3fe7ce8so2645468b3a.0
-        for <git@vger.kernel.org>; Sat, 12 Jul 2025 02:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752313898; x=1752918698; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=aOSm2mWMrVu6SiRsbAZ/sp5lSpRwqs4krM39TJfnf8k=;
-        b=ZpwXyFYznUY88i+e2U9Ql8ezBRTGvbBoLzUTnVGJp0y9jxZYMCkcboZoIQaMuqefAs
-         xLD8m+jOecGDwL0Om4AM4QPJX9668TO5N87a4R8lnflzDmAsVKbQXYJ/t3IkvV75Y427
-         Nf7+n5CauHc9QguqEsTg7rYBg0NzAAVujqpacTFImB3KX+sMI2evvznW9bxgipIMU+Iy
-         WRZiOoV1TRTxzQhHPqnJOIPSJt1K3yN1lKidmnVX34a5wv2GDuFiED7+w+feVApa/fQs
-         1D647DTYpThCDlZNrLXdUTzisJYk1jHKHuEt+AMGsZVgvj4QWKT05SNngGPsla5FTviV
-         tVIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752313898; x=1752918698;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=aOSm2mWMrVu6SiRsbAZ/sp5lSpRwqs4krM39TJfnf8k=;
-        b=DgJ33vmMWdX8dgNgz85e7D1hHlwS93ywIdtZTcB7MXwsNs6HFfEq94MTJCnvgHPYOv
-         y3oCPqiuFLg8iUY9Kr/srd7s/Nm0WzyojQIQW8IvWmdMLmjE0OQVITYwnCupxtmgaQov
-         tMGQIK5QfkuMqJij0BZh3FUvddwAjzfgDUmtz+2fBhmv5FsvnAJ9dxCdKwTwtovaMVR/
-         VC3+1OBrvf96AA7uMdiQF393qPIxIh4BV5emQbr6ChDmqkxmkHzeaUHh/nVoQNibwk5r
-         PuiPZbnaBH7nhpR60HBhDwoEIazbgQSS3h48suXX+7DBTjUhRWfvGmtNFWIcilAqMpwd
-         ePWQ==
-X-Gm-Message-State: AOJu0YyUocu2Et4ZVPQtpLxnbW73g1+wqYD93nfWlQ2kLiEfP1q+3x99
-	2HOLZKq/yGFQ4BAg1Se5hJPgOwT6CmuMzFyHTiEgzIxzQJRg7mFIw6MXNtDs0CCC1Tg=
-X-Gm-Gg: ASbGnctsYgZeVqfazotZZOHOKb8nkuPtrdWRurxzCqeD+hX67k0tIanSx8LBMaLzAGY
-	lVFKpzFsH7SbhAZTQURqzT2ddrUD0XN3ygppAGQy3JFyeG9jJGUWfPz53xOolyUmUdBtwrLSSVP
-	lNL/40sPPJustA4SjM/r795Wvlspl5mm5jIQ+X4draglWi5wB9NBTaBpvXbcQMCffAp8bKATyYv
-	N8hb/XoIrd+dhZtQ3Mk5oXvnNl1MTPxXbyUuWQZx/ts9rTkcg1+cFAmYaUCyJ5/GQ964byNsT3X
-	1W0AjJnGIaRVRvcvwekXwzIUrtDCcEW4uSdigd4Wp7Ieu6Jl4MSUDFSNhr8wMVGuj937E8Odvtg
-	IVHzwj0a4avg2yq/FlH9l41BfcZQb72VpD32KLwDIhuAXrx34CzsYat+RE69LYlTCXLWyY42tg2
-	yLXYaDZiff4ObeYKRQ6NVQnCBf4hT4ZQ==
-X-Google-Smtp-Source: AGHT+IFavYCfM2tl6JxyMTRYxBLIYG0mhpGH+WAjzr9MTz13kidQ2ntOY2XvLVEaAqxjTss5TQ0OYg==
-X-Received: by 2002:a05:6a00:b70f:b0:748:e1e4:71ec with SMTP id d2e1a72fcca58-74ee2556e2bmr8146407b3a.12.1752313897570;
-        Sat, 12 Jul 2025 02:51:37 -0700 (PDT)
-Received: from localhost.localdomain (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f1d507sm7095680b3a.83.2025.07.12.02.51.34
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sat, 12 Jul 2025 02:51:37 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-To: yldhome2d2@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	stolee@gmail.com,
-	Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: [PATCH v6 5/5] bloom: optimize multiple pathspec items in revision
-Date: Sat, 12 Jul 2025 17:51:29 +0800
-Message-Id: <20250712095129.24642-1-yldhome2d2@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
-References: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
+	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="KfHhudQl"
+Received: from mail-nwsmtp-mxback-production-main-79.iva.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-79.iva.yp-c.yandex.net [IPv6:2a02:6b8:c0c:c104:0:640:83a9:0])
+	by forward103d.mail.yandex.net (Yandex) with ESMTPS id 49DDC60061
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:19:56 +0300 (MSK)
+Received: from mail.yandex.ru (2a02:6b8:c0c:6985:0:640:fbb3:0 [2a02:6b8:c0c:6985:0:640:fbb3:0])
+	by mail-nwsmtp-mxback-production-main-79.iva.yp-c.yandex.net (mxback/Yandex) with HTTPS id sJFkpK0MLmI0-noMhyb5C;
+	Sat, 12 Jul 2025 13:19:55 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ieml.ru; s=mail;
+	t=1752315595; bh=U2p4Yuwqew75ajyP1bgYEaDAFMgh4Oo+cZr4jLzlU1w=;
+	h=Message-Id:Date:Subject:To:From;
+	b=KfHhudQlI6drRTgdqL6vhJ9TDBmqb/unhX05eX9J6du8QrUGdlVwDvgOh/Nzdhl6c
+	 As3ppLWZWU1hj7sGoUJ/TS4ODUf7oh/7Ucw/VuzzzoxUyG89goIu87KuTdp8BEd9tt
+	 uM6bvFVgJykCg6DA/yzTszDAIpQRQ2UJSJ1jdSkc=
+Authentication-Results: mail-nwsmtp-mxback-production-main-79.iva.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
+Received: by mail-sendbernar-production-main-62.iva.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id 45774157b17cf9377b7c0c2fc983fa64;
+	Sat, 12 Jul 2025 13:19:55 +0300
+From: =?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>
+To: git@vger.kernel.org
+Subject: git  2.50 and 2.50.1  src fails to compile in rhel 6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Sat, 12 Jul 2025 13:19:55 +0300
+Message-Id: <1939471752315595@mail-sendbernar-production-main-62.iva.yp-c.yandex.net>
 Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
 
-To enable optimize multiple pathspec items in revision traversal,
-return 0 if all pathspec item is literal in forbid_bloom_filters().
-Add for loops to initialize and check each pathspec item's bloom_keyvec
-when optimization is possible.
-
-Add new test cases in t/t4216-log-bloom.sh to ensure
- - consistent results between the optimization for multiple pathspec
-   items using bloom filter and the case without bloom filter
-   optimization.
- - does not use bloom filter if any pathspec item is not literal.
-
-With these optimizations, we get some improvements for multi-pathspec runs
-of 'git log'. First, in the Git repository we see these modest results:
-
-Benchmark 1: old
- Time (mean ± σ):      73.1 ms ±   2.9 ms
- Range (min … max):    69.9 ms …  84.5 ms    42 runs
-
-Benchmark 2: new
- Time (mean ± σ):      55.1 ms ±   2.9 ms
- Range (min … max):    51.1 ms …  61.2 ms    52 runs
-
-Summary
- 'new' ran
-   1.33 ± 0.09 times faster than 'old'
-
-But in a larger repo, such as the LLVM project repo below, we get even
-better results:
-
-Benchmark 1: old
- Time (mean ± σ):      1.974 s ±  0.006 s
- Range (min … max):    1.960 s …  1.983 s    10 runs
-
-Benchmark 2: new
- Time (mean ± σ):     262.9 ms ±   2.4 ms
- Range (min … max):   257.7 ms … 266.2 ms    11 runs
-
-Summary
- 'new' ran
-   7.51 ± 0.07 times faster than 'old'
-
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- revision.c           | 21 +++++++++++----------
- t/t4216-log-bloom.sh | 23 ++++++++++++++---------
- 2 files changed, 25 insertions(+), 19 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 1614c6ce0d..cf7198c0ea 100644
---- a/revision.c
-+++ b/revision.c
-@@ -675,12 +675,11 @@ static int forbid_bloom_filters(struct pathspec *spec)
- {
- 	if (spec->has_wildcard)
- 		return 1;
--	if (spec->nr > 1)
--		return 1;
- 	if (spec->magic & ~PATHSPEC_LITERAL)
- 		return 1;
--	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
--		return 1;
-+	for (size_t nr = 0; nr < spec->nr; nr++)
-+		if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
-+			return 1;
+Hello everyone! I'm having trouble compilig git source since version 2.50 ,  for RHEL 6 (both in redhat 6-6 and 6.10).
+the same source  compiles fine in  RHEL8 (Red Hat Enterprise Linux release 8.10 (Ootpa))
+first compiler complans about missing random.h in compat/posix.h ,if you copy missing random.h file to RHEL6 machine to the /usr/include/sys directory  then errors change to  whole bunch of other errors like  
+error: expected declaration specifiers or ‘...’ before numeric constant
  
- 	return 0;
- }
-@@ -733,13 +732,15 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	if (!revs->pruning.pathspec.nr)
- 		return;
+   45 | #define toupper(x) sane_case((unsigned char)(x), 0)
+both working and non working systems have same gcc 13-4.0 . Last version that compiles  in both rhel 6 and rhel 8 is 2.49.1 Any ideas ?
  
--	revs->bloom_keyvecs_nr = 1;
--	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
-+	revs->bloom_keyvecs_nr = revs->pruning.pathspec.nr;
-+	CALLOC_ARRAY(revs->bloom_keyvecs, revs->bloom_keyvecs_nr);
  
--	if (convert_pathspec_to_bloom_keyvec(&revs->bloom_keyvecs[0],
--					     &revs->pruning.pathspec.items[0],
--					     revs->bloom_filter_settings))
--		goto fail;
-+	for (int i = 0; i < revs->pruning.pathspec.nr; i++) {
-+		if (convert_pathspec_to_bloom_keyvec(&revs->bloom_keyvecs[i],
-+						     &revs->pruning.pathspec.items[i],
-+						     revs->bloom_filter_settings))
-+			goto fail;
-+	}
- 
- 	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
- 		atexit(trace2_bloom_filter_statistics_atexit);
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 8910d53cac..639868ac56 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -66,8 +66,9 @@ sane_unset GIT_TRACE2_CONFIG_PARAMS
- 
- setup () {
- 	rm -f "$TRASH_DIRECTORY/trace.perf" &&
--	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
--	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.perf" git -c core.commitGraph=true log --pretty="format:%s" $1 >log_w_bloom
-+	eval git -c core.commitGraph=false log --pretty="format:%s" "$1" >log_wo_bloom &&
-+	eval "GIT_TRACE2_PERF=\"$TRASH_DIRECTORY/trace.perf\"" \
-+		git -c core.commitGraph=true log --pretty="format:%s" "$1" >log_w_bloom
- }
- 
- test_bloom_filters_used () {
-@@ -138,10 +139,6 @@ test_expect_success 'git log with --walk-reflogs does not use Bloom filters' '
- 	test_bloom_filters_not_used "--walk-reflogs -- A"
- '
- 
--test_expect_success 'git log -- multiple path specs does not use Bloom filters' '
--	test_bloom_filters_not_used "-- file4 A/file1"
--'
--
- test_expect_success 'git log -- "." pathspec at root does not use Bloom filters' '
- 	test_bloom_filters_not_used "-- ."
- '
-@@ -151,9 +148,17 @@ test_expect_success 'git log with wildcard that resolves to a single path uses B
- 	test_bloom_filters_used "-- *renamed"
- '
- 
--test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
--	test_bloom_filters_not_used "-- *" &&
--	test_bloom_filters_not_used "-- file*"
-+test_expect_success 'git log with multiple literal paths uses Bloom filter' '
-+	test_bloom_filters_used "-- file4 A/file1" &&
-+	test_bloom_filters_used "-- *" &&
-+	test_bloom_filters_used "-- file*"
-+'
-+
-+test_expect_success 'git log with path contains a wildcard does not use Bloom filter' '
-+	test_bloom_filters_not_used "-- file\*" &&
-+	test_bloom_filters_not_used "-- A/\* file4" &&
-+	test_bloom_filters_not_used "-- file4 A/\*" &&
-+	test_bloom_filters_not_used "-- * A/\*"
- '
- 
- test_expect_success 'setup - add commit-graph to the chain without Bloom filters' '
--- 
-2.39.5 (Apple Git-154)
-
+ git-2.50.1# make  -j $(nproc) configure && ./configure && make -j $(nproc) && make -j $(nproc) install && make -j $(nproc) clean
+GIT_VERSION=2.50.1
+    GEN configure
+configure: Setting lib to 'lib' (the default)
+configure: Will try -pthread then -lpthread to enable POSIX Threads.
+configure: CHECKS for site configuration
+checking for gcc... /usr/local/gcc-13.4.0/bin/gcc-13.4
+checking whether the C compiler works... yes
+checking for C compiler default output file name... a.out
+checking for suffix of executables...
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether the compiler supports GNU C... yes
+checking whether /usr/local/gcc-13.4.0/bin/gcc-13.4 accepts -g... yes
+checking for /usr/local/gcc-13.4.0/bin/gcc-13.4 option to enable C11 features... none needed
+checking for stdio.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for strings.h... yes
+checking for sys/stat.h... yes
+checking for sys/types.h... yes
+checking for unistd.h... yes
+checking for size_t... yes
+checking for working alloca.h... yes
+checking for alloca... yes
+configure: CHECKS for programs
+checking whether the compiler supports GNU C... (cached) yes
+checking whether /usr/local/gcc-13.4.0/bin/gcc-13.4 accepts -g... (cached) yes
+checking for /usr/local/gcc-13.4.0/bin/gcc-13.4 option to enable C11 features... (cached) none needed
+checking for inline... inline
+checking if linker supports -R... no
+checking if linker supports -Wl,-rpath,... yes
+checking for gar... no
+checking for ar... ar
+checking for gtar... gtar
+checking for gnudiff... no
+checking for gdiff... no
+checking for diff... diff
+checking for asciidoc... no
+configure: CHECKS for libraries
+checking for SHA1_Init in -lcrypto... yes
+checking for curl_global_init in -lcurl... yes
+checking for curl-config... curl-config
+configure: Setting CURL_LDFLAGS to '-L/usr/local/lib -lcurl'
+checking for XML_ParserCreate in -lexpat... yes
+checking for iconv in -lc... yes
+checking for deflateBound in -lz... yes
+checking for socket in -lc... yes
+checking for inet_ntop... yes
+checking for inet_pton... yes
+checking for hstrerror... yes
+checking for basename in -lc... yes
+checking if libc contains libintl... yes
+checking for libintl.h... yes
+configure: CHECKS for header files
+checking for sys/select.h... yes
+checking for poll.h... yes
+checking for sys/poll.h... yes
+checking for inttypes.h... (cached) yes
+checking for old iconv()... no
+checking whether iconv omits bom for utf-16 and utf-32... no
+configure: CHECKS for typedefs, structures, and compiler characteristics
+checking for socklen_t... yes
+checking for struct itimerval... yes
+checking for struct stat.st_mtimespec.tv_nsec... no
+checking for struct stat.st_mtim.tv_nsec... yes
+checking for struct dirent.d_type... yes
+checking for struct passwd.pw_gecos... yes
+checking for struct sockaddr_storage... yes
+checking for struct addrinfo... yes
+checking for getaddrinfo... yes
+checking for library containing getaddrinfo... none required
+checking how to run the C preprocessor... /usr/local/gcc-13.4.0/bin/gcc-13.4 -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking whether the platform regex supports REG_STARTEND... yes
+checking whether system succeeds to read fopen'ed directory... yes
+checking whether snprintf() and/or vsnprintf() return bogus value... no
+checking whether the platform uses typical file type bits... yes
+configure: CHECKS for library functions
+checking for libgen.h... yes
+checking for paths.h... yes
+checking for libcharset.h... no
+checking for strings.h... (cached) yes
+checking for locale_charset in -liconv... no
+checking for locale_charset in -lcharset... no
+checking for sysinfo... yes
+checking for clock_gettime... no
+checking for CLOCK_MONOTONIC... yes
+checking for sync_file_range... yes
+checking for library containing sync_file_range... none required
+checking for setitimer... yes
+checking for library containing setitimer... none required
+checking for strcasestr... yes
+checking for library containing strcasestr... none required
+checking for memmem... yes
+checking for library containing memmem... none required
+checking for strlcpy... no
+checking for uintmax_t... yes
+checking for strtoumax... yes
+checking for library containing strtoumax... none required
+checking for setenv... yes
+checking for library containing setenv... none required
+checking for unsetenv... yes
+checking for library containing unsetenv... none required
+checking for mkdtemp... yes
+checking for library containing mkdtemp... none required
+checking for initgroups... yes
+checking for library containing initgroups... none required
+checking for getdelim... yes
+checking for library containing getdelim... none required
+checking for BSD sysctl... no
+checking for POSIX Threads with ''... no
+checking for POSIX Threads with '-mt'... no
+checking for POSIX Threads with '-pthread'... yes
+configure: creating ./config.status
+config.status: creating config.mak.autogen
+config.status: executing config.mak.autogen commands
+    * new build flags
+    * new link flags
+    CC base85.o
+    CC bisect.o
+    * new prefix flags
+    CC blame.o
+    CC blob.o
+    CC bloom.o
+    CC branch.o
+    CC bulk-checkin.o
+    CC bundle-uri.o
+    CC bundle.o
+    CC cache-tree.o
+    CC cbtree.o
+    CC chdir-notify.o
+    CC checkout.o
+    CC chunk-format.o
+    CC color.o
+    CC column.o
+In file included from compat/posix.h:449,
+                 from git-compat-util.h:26,
+                 from checkout.c:3:
+compat/../sane-ctype.h:29:60: error: expected expression before ‘]’ token
+   29 | #define sane_istest(x,mask) ((sane_ctype[(unsigned char)(x)] & (mask)) != 0)
+      |                                                            ^
+  0)
+      |                                                  ^
+make: *** [Makefile:2821: cbtree.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Makefile:2821: base85.o] Error 1
+make: *** [Makefile:2821: chdir-notify.o] Error 1
+make: *** [Makefile:2821: chunk-format.o] Error 1
+make: *** [Makefile:2821: blob.o] Error 1
+make: *** [Makefile:2821: color.o] Error 1
+make: *** [Makefile:2821: checkout.o] Error 1
+make: *** [Makefile:2821: column.o] Error 1
+make: *** [Makefile:2821: bulk-checkin.o] Error 1
+make: *** [Makefile:2821: branch.o] Error 1
+make: *** [Makefile:2821: cache-tree.o] Error 1
+make: *** [Makefile:2821: bloom.o] Error 1
+make: *** [Makefile:2821: bundle-uri.o] Error 1
+make: *** [Makefile:2821: bundle.o] Error 1
+make: *** [Makefile:2821: bisect.o] Error 1
+make: *** [Makefile:2821: blame.o] Error 1
