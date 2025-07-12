@@ -1,39 +1,39 @@
-Received: from forward206d.mail.yandex.net (forward206d.mail.yandex.net [178.154.239.215])
+Received: from forward201a.mail.yandex.net (forward201a.mail.yandex.net [178.154.239.92])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CADD13A258
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:27:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.215
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E1F010F9
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 10:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.154.239.92
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752316049; cv=none; b=KAdY1eMwjGSDVRN2JBCP+byNK7FtqDe4/u+IY5Qj1bLyxNtcqUxktFd/kwSF2IU+0HLMIQmSAuZ+s8eRG6a4nqU/7tbKwGAm+Ju5LYxH6gYO25txFFuGx6O8zoDedZI/Zb3rV0g6GuMbvvPepE9kTY7GQemDkDxjFkHWX4MPG4g=
+	t=1752316078; cv=none; b=uJbkeQIJ8lxizqEjAWHmt5Bl74tYVUX4bT+otZHDlsyoUj2GXXW6VXDkXuhKnBjtbZ5WU1yMn7b9KAPNc10IBG88ruBXKM9Fr+yyiOL6OjtnJ09OsVxoU7g6eujmwUJMNXWfjCsEzvLnY6z1RU82yHSciIV92age1fTenRnB+lI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752316049; c=relaxed/simple;
+	s=arc-20240116; t=1752316078; c=relaxed/simple;
 	bh=f5PN5EUjIaPqICCp+M3gQNMTDD7skt9pXtui5FR15EU=;
-	h=From:To:Subject:MIME-Version:Date:Message-Id:Content-Type; b=O+nwqLFxDytv6xGonTm7RFqgvXC56bKkVfHBUJ4sCr4LwGsPL32Tv+xO5iy9MVqf3J8VXpdH+GNi3jvWgrODw/X5EsOMb3d0IqRlG7kqK/Dzi0Xafyanbzm+TzJV64N4/TG8PmWDxOjtVNS4/Sa8DJXtWs/dCIbmh3Dxawcpg00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=LOViMPsJ; arc=none smtp.client-ip=178.154.239.215
+	h=From:To:Subject:MIME-Version:Date:Message-Id:Content-Type; b=r4FjsKC2/dP1DbaAvVx7IVNR0vmREQO3WlJJgtA4/iyb83dFqmaS6OqJqG5ZApa+mDjcpLLdEof7F+zQqU1mcYL3c0RfWqje5GBSvU+YWFK3IZ1Ti0aQvQJ1kPa++aqHK9jfyVzkyX6BaMno7OnjVEQzC1awgBICCUlVXZhXc2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru; spf=pass smtp.mailfrom=ieml.ru; dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b=NWXBhObo; arc=none smtp.client-ip=178.154.239.92
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieml.ru
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieml.ru
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="LOViMPsJ"
-Received: from forward101d.mail.yandex.net (forward101d.mail.yandex.net [IPv6:2a02:6b8:c41:1300:1:45:d181:d101])
-	by forward206d.mail.yandex.net (Yandex) with ESMTPS id 3FCC964C4B
+	dkim=pass (1024-bit key) header.d=ieml.ru header.i=@ieml.ru header.b="NWXBhObo"
+Received: from forward102a.mail.yandex.net (forward102a.mail.yandex.net [IPv6:2a02:6b8:c0e:500:1:45:d181:d102])
+	by forward201a.mail.yandex.net (Yandex) with ESMTPS id 3BBED66E09
 	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:20:05 +0300 (MSK)
-Received: from mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net [IPv6:2a02:6b8:c43:480a:0:640:578f:0])
-	by forward101d.mail.yandex.net (Yandex) with ESMTPS id 836FE60023
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:19:57 +0300 (MSK)
-Received: from mail.yandex.ru (2a02:6b8:c42:6523:0:640:3143:0 [2a02:6b8:c42:6523:0:640:3143:0])
-	by mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net (mxback/Yandex) with HTTPS id kJFBY39MgSw0-kBHLI7mp;
-	Sat, 12 Jul 2025 13:19:57 +0300
+Received: from mail-nwsmtp-mxback-production-main-38.vla.yp-c.yandex.net (mail-nwsmtp-mxback-production-main-38.vla.yp-c.yandex.net [IPv6:2a02:6b8:c2d:214e:0:640:b361:0])
+	by forward102a.mail.yandex.net (Yandex) with ESMTPS id B859F608F7
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 13:19:56 +0300 (MSK)
+Received: from mail.yandex.ru (2a02:6b8:c18:151e:0:640:24c3:0 [2a02:6b8:c18:151e:0:640:24c3:0])
+	by mail-nwsmtp-mxback-production-main-38.vla.yp-c.yandex.net (mxback/Yandex) with HTTPS id fJF2QQ8MeeA0-qQqSzUTP;
+	Sat, 12 Jul 2025 13:19:56 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ieml.ru; s=mail;
-	t=1752315597; bh=U2p4Yuwqew75ajyP1bgYEaDAFMgh4Oo+cZr4jLzlU1w=;
+	t=1752315596; bh=U2p4Yuwqew75ajyP1bgYEaDAFMgh4Oo+cZr4jLzlU1w=;
 	h=Message-Id:Date:Subject:To:From;
-	b=LOViMPsJ3tUV4n7tREf4xx8b08ySYsf20bBWBL/1u0MZKEyCQFMhZXXzarjlmq+lB
-	 zIqsXZOCbGzGK6i3873VjAElZ9B0tt1RZ9KqftzP1CIT8c5cbeYf2TYXaZiBYhrJGP
-	 /DK93gX/Ky6E2ezyfLyUnwLQ9HXnDKGeqBq01M8A=
-Authentication-Results: mail-nwsmtp-mxback-production-main-10.klg.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
-Received: by mail-sendbernar-production-main-91.klg.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id cb385870bb1838e9a86b91560c695437;
-	Sat, 12 Jul 2025 13:19:56 +0300
+	b=NWXBhOboQ0AU1AxzEKFNA6sgr/lYAz41jPDFfkBQIbXAs27GybClPKC3z2/mC+LIo
+	 4IuL0254SQP5J5WHzBz/JOdFX7L6GHbR0Kez/ndUKm5ZBwKsm/zW7VAvYTx+ZZ6Xfv
+	 XjRZ5UEoJJGIfXHcSQeRa5+JCac6O4MuS7I5CR/0=
+Authentication-Results: mail-nwsmtp-mxback-production-main-38.vla.yp-c.yandex.net; dkim=pass header.i=@ieml.ru
+Received: by ojoxssgk44elcwk5.vla.yp-c.yandex.net (sendbernar/Yandex) with HTTPS id 9dd05d9096dac2b122521412b6c001e5;
+	Sat, 12 Jul 2025 13:19:55 +0300
 From: =?utf-8?B?0JDQt9Cw0YIg0KPRgdC80LDQvdC+0LI=?= <usmanov@ieml.ru>
 To: git@vger.kernel.org
 Subject: git  2.50 and 2.50.1  src fails to compile in rhel 6
@@ -44,8 +44,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Sat, 12 Jul 2025 13:19:56 +0300
-Message-Id: <8232771752315596@mail-sendbernar-production-main-91.klg.yp-c.yandex.net>
+Date: Sat, 12 Jul 2025 13:19:55 +0300
+Message-Id: <5605231752315595@ojoxssgk44elcwk5.vla.yp-c.yandex.net>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain; charset=utf-8
 
