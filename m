@@ -1,74 +1,99 @@
-Received: from mail-out.m-online.net (mail-out.m-online.net [212.18.0.10])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D8122094
-	for <git@vger.kernel.org>; Sat, 12 Jul 2025 09:48:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.18.0.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D551F1FFC59
+	for <git@vger.kernel.org>; Sat, 12 Jul 2025 09:48:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752313690; cv=none; b=ABt9nQm517BzF2HJq+LEh6AzcLQAVxsR5X8eh1IXuokzMKXXi7E+FKELVRCK87UgB2GlSA/5fTRivFCK610qlffh8dzusJfzdyFrFtyPHwHhwkdDpQq7KOuR97AJxM6WaLAlAAcrYL215A3gxMMCbfjyJnTuJ1K82+GMqTH4lAE=
+	t=1752313690; cv=none; b=gTRUtJ4Lc33gTGkIBkrxuxXqf9pRdbeoahtC8PlvViN8GfhCwimPsR6b1OiIH4KJoBWKeC5YlkYeIz8O9Olq90lJnDvOSSUtnn0Z6tr5O2d6k7tNhHVLkD7ocHFsHBmOmZ6p9IM8XOfa8qNodA1etsAoVWTHqxcJWVvhU32v2Q0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752313690; c=relaxed/simple;
-	bh=yTfB6C9kGL3bC5tptlxMfwVa+7xhwpbXMnk1fm8b/ss=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=araVavP4BI9IvL69PDs9rLeQ84RawrvBXD62cQutorutAwBJ/uxTaeO+izQ0pw7qvWS7B8i06Gzky0BSpZy9KpWYXiqBxGHDNm+zFGVDyNZDAeaJkgWnKu1wPj4rYxvURRigU+j4RBS0vnxK9NRmSMfT72xQZ64mETYyNdeodZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org; spf=pass smtp.mailfrom=nefkom.net; arc=none smtp.client-ip=212.18.0.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux-m68k.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nefkom.net
-Received: from frontend01.mail.m-online.net (unknown [192.168.8.182])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4bfNn73SZYz1sG7q;
-	Sat, 12 Jul 2025 11:38:35 +0200 (CEST)
-Received: from localhost (dynscan1.mnet-online.de [192.168.6.68])
-	by mail.m-online.net (Postfix) with ESMTP id 4bfNn733nLz1qqlW;
-	Sat, 12 Jul 2025 11:38:35 +0200 (CEST)
-X-Virus-Scanned: amavis at mnet-online.de
-Received: from mail.mnet-online.de ([192.168.8.182])
- by localhost (dynscan1.mail.m-online.net [192.168.6.68]) (amavis, port 10024)
- with ESMTP id xoB7vCjJwU_q; Sat, 12 Jul 2025 11:38:25 +0200 (CEST)
-X-Auth-Info: +4PJB5rwhbGCsj/b7Fz9nvZWfMqOzpj5g8YFvCe76Isa7zFmg4sj63LlL+mP+Gqo
-Received: from tiger (aftr-82-135-83-85.dynamic.mnet-online.de [82.135.83.85])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.mnet-online.de (Postfix) with ESMTPSA;
-	Sat, 12 Jul 2025 11:38:25 +0200 (CEST)
-From: Andreas Schwab <schwab@linux-m68k.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Ross MacArthur <ross@macarthur.io>,  git@vger.kernel.org
-Subject: Re: [BUG] gpg.program: '~' not expanded to home directory
-In-Reply-To: <xmqq8qkuxoh3.fsf@gitster.g> (Junio C. Hamano's message of "Fri,
-	11 Jul 2025 17:05:44 -0700")
-References: <CAF1X4d7N1xdZt9JkVZytbEU1=7q3X_F_nqm4EG82B8-cVa7g8Q@mail.gmail.com>
-	<xmqq8qkuxoh3.fsf@gitster.g>
-Date: Sat, 12 Jul 2025 11:38:24 +0200
-Message-ID: <87ple521gv.fsf@linux-m68k.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	bh=l7/gL1MwNcrxWDwPesOsPM6npFiuQqNvRhHiss5Qks0=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=tNdvWCVKdgR8LCeqVYBUvf3YfDlgy3PIOJI9io/lizUbITX88kFBuwVJGgYZb8xVdqF1Asz5Dwi+I3hVwIaLeM6uZ3qAfnVJX6SRlgHnnpmGuX22eV/wqcnQ5qGaAthUgRuVwfi74CPyHG34AxcuQZrUc0IPakrjQBDu7nwF7w8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Bpk7fm3B; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Bpk7fm3B"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-748e378ba4fso3491376b3a.1
+        for <git@vger.kernel.org>; Sat, 12 Jul 2025 02:48:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752313688; x=1752918488; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hZxo9UJiruEIqHGu435GEwVPovLwzt+uXXhuT6hg/uc=;
+        b=Bpk7fm3BI4wwelCifG+QtxqJhENw7Yki1wkm1aNIQ9hPgVN5Pe9ZuwTrZX8SAtnrgU
+         Rq6A+SOf0J1kIae9UEI/TANDdk1eRQtw3IRfqmBANqVxLlfZBchqWT0q3M73ciWp2JPf
+         AkxLMoNrXOkdG1bwDUEnd+ZTu+6vMgzAJzpjnSz3VrCaBQptqF3vvurcjycqK1nhaeet
+         vUejfPlylUmrW+5TsGcT3dP956vD6MmHyGH6pv8psLD4+tX/+HI5eObSoZI0Dex7Wnqv
+         BjaBIcpoujAlBZUZ3soXebn62o7ovBwVikmaltPjeIM11Jp4GAXSuj9YYNIlhz9OE+Kw
+         Jy4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752313688; x=1752918488;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hZxo9UJiruEIqHGu435GEwVPovLwzt+uXXhuT6hg/uc=;
+        b=KVUr2cBuMJpIfz/ms8iVT3YU1WriNmZTyChstWAfBYFGA6GmOcLanAfrcMXKPxF9lj
+         fH0kouERgnukZmEfyLKLcLMHHx1uuBchYxpzI+w81/zqZLQYuCC6spOY9Urxug0jUz+j
+         wyvRpAPUnHmsu546WMPOmB5fUIjYonU7xJ/oBpqG0ixEdJyz66fjK2WTP8/TcjZLB7l5
+         xYS1dEI6196MXPSMP0lKNzq4PhDLOu8tK5pgor9seCWXboAvUFxUMXqRVdzeGuWKBiNS
+         8O6sal6OvZjQqR0XX98wK7SYYV4bhyGZB2GVmDIbZuNXxB/xTIlBM4C507lBJtYoD2QH
+         B/cA==
+X-Gm-Message-State: AOJu0Yz56b8OWKyAb48cfZf8fxYlZCi8wiEPQ23Wi98rc5OLUG3Yzzzd
+	as1sVVFQJ9HdxaQMXA6mCn3UQtRZpT5rHoYKG4aZevCYkwifkE3ApxZX
+X-Gm-Gg: ASbGnctw8ht4qsnNeAR8+QK44SKRPkDjs8LsLpO+e9LlmEGwE2YecV84fxpqjKPtF7V
+	9dEBXIKsDErBYgZelLavMyHvgE+0d1G6fEhdQBuGTaZhQZoCWs7F0XADgtkcC+Hd3npojNIn6J0
+	AaHuT4BxV3hh4qmsGMw4SH04/8Np0T1TOi5fu2IazklcNCAfmkCEVeyLiJy+CHFIb/RXtOm6i5Q
+	9IKGOM92aFVa57YX9JwODx5C9WOjuQLdj6CMh/Ih0Xiink0yDi6uKjv3aNvmiE3MsBdCkJYF2/T
+	AitmLLdJ3PRGb9IEI1hbph89GGj0sOOmYKOEM3VQBCKmz3+m1bhwInMbzaU3r1itMFAuK3ODSDO
+	GM4roGYrpFyMavZmwo9BIJsxR4DvoCfRSy7SeGOwSMQMRtIKN6L2NePL+37NkkpSOyARZdzlKVj
+	V19yThSWScHYMxi7aTnhrTOKzj
+X-Google-Smtp-Source: AGHT+IETxbVkU0araotTB+0VCqAMfsuyE1C8i6qQwm+wv8ugTlXuE5U0aDT/rhv+srUlebCQSDf06A==
+X-Received: by 2002:a05:6a00:1385:b0:746:227c:a808 with SMTP id d2e1a72fcca58-74ee3df47ffmr10614040b3a.24.1752313687936;
+        Sat, 12 Jul 2025 02:48:07 -0700 (PDT)
+Received: from smtpclient.apple (n058152022104.netvigator.com. [58.152.22.104])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f1af40sm7003419b3a.72.2025.07.12.02.48.05
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 12 Jul 2025 02:48:07 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v6 5/5] To enable optimize multiple pathspec items in
+ revision traversal, return 0 if all pathspec item is literal in
+ forbid_bloom_filters(). Add for loops to initialize and check each pathspec
+ item's bloom_keyvec when optimization is possible.
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <20250712093517.17907-6-yldhome2d2@gmail.com>
+Date: Sat, 12 Jul 2025 17:47:53 +0800
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ stolee@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
+References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+ <20250712093517.17907-1-yldhome2d2@gmail.com>
+ <20250712093517.17907-6-yldhome2d2@gmail.com>
+To: Lidong Yan <yldhome2d2@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-On Jul 11 2025, Junio C Hamano wrote:
+Lidong Yan <yldhome2d2@gmail.com> writes:
+> 
+> Add new test cases in t/t4216-log-bloom.sh to ensure
+> - consistent results between the optimization for multiple pathspec
+>   items using bloom filter and the case without bloom filter
+>   optimization.
+> - does not use bloom filter if any pathspec item is not literal.
+> 
+> With these optimizations, we get some improvements for multi-pathspec runs
+> of 'git log'. First, in the Git repository we see these modest results:
 
-> I think that is correct; I do not think gpg.program is to give a
-> path to the program, so comparison with core.excludesfile is
-> probably not so appropriate.
->
-> It gives a command line, e.g. "mysign --compat=gnupg",
+Sorry, seems like I wrote bad commit message, I will resend patch 5/5 soon.
 
-gpg-interface does not use the shell to run gpg.program, so this won't
-work.
-
-$ git config gpg.program "echo --compat=gnupg"
-$ git commit -m foo -S
-error: cannot run echo --compat=gnupg: No such file or directory
-error: gpg failed to sign the data:
-(no gpg output)
-fatal: failed to write commit object
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 7578 EB47 D4E5 4D69 2510  2552 DF73 E780 A9DA AEC1
-"And now for something completely different."
