@@ -1,126 +1,182 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABBF251792
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 14:00:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB16C19047A
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 14:26:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752501661; cv=none; b=g4zIvS/T32n1bMA11dGWokcIv9Gk397yTWJDTHv2uC0F0sGlqU2Xy6p5L4d6rdzoATiOz0PX4QVvlgi1ooG8P21h8kwlw5gUD52fsPDpJ7XkEzpHk1rffsxuoda3adLZtYabz2RQuc2XCxWJz7fu08zLAdkFjaB+zNrzFZqRZaw=
+	t=1752503221; cv=none; b=qjn0Nbk23j9mPcWmMmOMnyOBavWquw6fTfLmO3gVfY430oevGKS2FhuF62tVLoPyGwL69pWDfJkBDan7BWEIvsaFMuqbUi+z1mXO76bRk/HW/Myp3deIKUKmqSNhBCsHDOBRGtbnOO+F7JjeXgjT3SAQxE1hq3Itp5GY3IlyMhQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752501661; c=relaxed/simple;
-	bh=ptXQCbB1ndT1kei3yk9cF3DHgTmYkYQcq0EwN04TU0U=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=SIV/oI3vq5OgCVMCFM0OoCEQh8Lz2afgfN6JpwwA7BUllsM81C9K9c9XOYdDapNbllyQ3zX//8mgDTjPyCZ5s0sREqzMSOxIFY7Mo/OyGV9Ba8pTodYCxQWNMLeXyChSvVQvQU9E8fx3YAIwEHJYW8qH10nyl9LzQka7e8UQEu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FvC2YY08; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752503221; c=relaxed/simple;
+	bh=ulrsI8N0z+UZ/sO+TU+7sAuQMrOiP2vVGZItUjZHuZI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AaAqH9Ubk5FnyqHTVgdK8hMvlV7FAwqzjGc52GEN7Lv/r1hXOkEEd3JRgp+ubLPnvf2a0ganWdo5VC5bofsV2uD2JY1TEMcrsfJGoIenvowuw0dybSIM1e8DQlUc1gwS4aXeEgdHC2QsfDOQQnkGerOMYph+dbQkSWzOOQLPljs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QjaV7Mch; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JTfPRcxr; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FvC2YY08"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45611a6a706so7363315e9.1
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 07:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752501658; x=1753106458; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ptXQCbB1ndT1kei3yk9cF3DHgTmYkYQcq0EwN04TU0U=;
-        b=FvC2YY0894Z3gU6huWk4vIq3/BtmA0guMQGTTJgcu0h1ZlMP31bQIgNW9AgyzPkLJb
-         EUWayJR52Dnzg9WNnrqpfapixzvLhZFhXnl3nahD6X8xIqs3sImO6HnS6p+oLi2tLXwH
-         MYMa482+yzf90Ux5OeMoB/vj7Sex+fDOfKn907hibxH2dHF4LMi/LUpGsy20Qs6hG5Ov
-         6FZK6nM3HUgF/9vb2TW5SmuXbkAYcaSyI6HUpIWpnY7Vc3Rrog85kPvY3t5fGrzKu7PX
-         V7Bd2kJXofnqHXS8WpKuJdGFtm5hNeprkdfFR4ACR6jpHozWAl0JQWxEclr8m1XqnqcE
-         TY/g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752501658; x=1753106458;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ptXQCbB1ndT1kei3yk9cF3DHgTmYkYQcq0EwN04TU0U=;
-        b=o8ARbwFRHvlWnoNpH+EQtL7BD5YoLrXcDVpYYDK8TQt1YgThMnfDdRI3QEWBmAqijV
-         sMxozONMrdcBMNR/kdGTmAGAt7GFrIYkEXaowujEfcadMdRlRXkq+5b9QrTU7B1mczIu
-         cOE85q744y6NtBV8nDnADszZ2UECWYYlmWfpNOi4BKBlzFgSdDTdi/PNARuQcJn8XvW8
-         P4aAwzIv1kRNuHcTwwLYEAxAnqX4OYRuZ+vYkr/Xc7iTuGaulixc7zxJWL/Jpd5Im4rm
-         zDjauqHEETk/c/GrSi4WfqL6yPzrNgmpkVZ9nTPgN/4PUyd0FSLxg2I5xYrBZ6EhybJB
-         YRsA==
-X-Forwarded-Encrypted: i=1; AJvYcCV8jHzZLGxJ6EWz0weKMCiaqNBbBL4qFZRYAi7YTCJIbJbNnEFsSZf/6XfEBj/nsR5G7j0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx31MHsPA7HkjMY6m5Q4D3hlzzdISr+YGYjyRRUnbe+64FsUirN
-	tI9UZnyvpCSbAuSuxVkgGxMbd6Vfx5GungRqS6BoNnltxEfyBAE3FRjQYBpDcfxbo60rChMLQQg
-	ActsCaYraoIVwrv4WrLBOT99tbBjXWdU=
-X-Gm-Gg: ASbGncvzf6JNWCAAENflEcW/8Sniodhu1a80v+HP/FKUufgzMz7HWpDGyMNXn5wDLTG
-	PxiypTTSQl04QPj3azrJwYz8ZIrqjwA5hAohTE58PmWtPfSN5vqH8mg+LivxqOmaKS4w1vroeP0
-	/WIVlGrzDx/Nxvo0QYE/Tu//curvae/hxMwR9LMsrGWk7Dn/UDvYXwpx9+lGBQxtu6PcoYjsZ+e
-	93/aO/8/d7C1m5CYGStKuoCMgKbvTke7uYnl0g=
-X-Google-Smtp-Source: AGHT+IEmiShfGAhwhDxb/kxFdjw3AxMR+5Rq70HLiVx7Bs2NY/1igBctuXMKxldADXOuOfGyR/FD3QQZi3+5aUDYZxo=
-X-Received: by 2002:a05:6000:23c8:b0:3a5:2b75:56cc with SMTP id
- ffacd0b85a97d-3b5f1895be6mr7620340f8f.23.1752501656764; Mon, 14 Jul 2025
- 07:00:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QjaV7Mch";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JTfPRcxr"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AC3F614003B5;
+	Mon, 14 Jul 2025 10:26:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Mon, 14 Jul 2025 10:26:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752503217; x=1752589617; bh=7t6MTf8HFl
+	A5/HNpPUt6Xi+Qp37kyn/MaMnhM9yds8E=; b=QjaV7MchEj7JqPBv4incy1iR8V
+	xWpp51Prdo5MEeGOQJYVIY23tGYUjYnIlu/86ZC60tb71ppkOKlv7HdMa1obddx3
+	iiE23dJ9CLdXO2JOcXwrf5EVumcBAJR/GOHQCFT5h8P90REKZ2ltY4/+ZAB400BP
+	iH4mnLF0RhPtSVBor4l7KyHNdNn51dDs7PyFdVsuvoDNJDnN/KOV4p7RfgdUvGrc
+	40iVoK6cHo8yuXdTKqImX9XZPraMHvyO9UoRHW8OGENeVD/Ae8tqEwh33Wo+ovcz
+	d69ntJISAVW5F8kjBGaQbTcia+rWVUDilnhvOP8Fc3rjWpwnBU2Osz/08T3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752503217; x=1752589617; bh=7t6MTf8HFlA5/HNpPUt6Xi+Qp37kyn/MaMn
+	hM9yds8E=; b=JTfPRcxrfGtIiYym2qdY/UCeQHYB3I66eb3VWpJ5DKvfFjM22LR
+	y4LqerqQajEFYFAhDHtHCYGydM6bNiZx1oBGmXwEoyGe0FqB3t5u2Ot8vnJ35TFn
+	g5b22p1l8I7EvsjoqlCwgzMV0sm4xh2DdJX9gtLvCH9Dt4ss2/4SJHzlF8NrwxSD
+	ftnZIkYPM/fgBJKhRyE+Q732bB6wItHV8nn44j1hFKWl9fC6Zb5+xZE+nxuLVTFr
+	rQznRFBZh4oPE4vs5BllLNjnRhtMYO/06hWknqVrZk5J5JFyfuccV0Z8QfeH9+Ly
+	mkr5x68Np6gi9JoLWLgI5LtqNez68AH9w6g==
+X-ME-Sender: <xms:sRN1aCtEelU6RS6IPve3-VI0kUzZm3gv-Io7WR30YSTUUIRS01qb_g>
+    <xme:sRN1aKuwb5REVzV5EjtvyqwIbGOcGyWHNAhcYZrTNJ7ptMiKzat-NzwZR3y7VWrqA
+    stnWM2ansOuCOtZ0g>
+X-ME-Received: <xmr:sRN1aHNetpzCTP9FG58LGf7DueGNgFyS7tM80tk6obT9N_jzTWnBe96dGt8eEmEAerHmIE5fMGtmULkTIQL8rOwC1AFYbjAUxegN7t0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvddulecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:sRN1aI0E58jrp_AJMGe10foAazDDBRLj0sF7xuvK0UUv8IdyLZkdrA>
+    <xmx:sRN1aDMfAZvc6aM5hntne_RD_QNplbIpdoHtcV8Ke3QY24JSlWyKFw>
+    <xmx:sRN1aI0kWWxE6RvQivFSS-jjo4yUegYJ73FaP7te8f_7dBNfTYr-ew>
+    <xmx:sRN1aKH-9ZOe-7FwNNbppmuYG7euAx1Eim8vdw7-S_umGC_ENxBdcw>
+    <xmx:sRN1aPWI3Bn90u87Hv9QmegWvMKloq4H4qcW-Us0x1kqo96WiAkjc6FK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Jul 2025 10:26:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] strbuf: add compound literal test balloon
+In-Reply-To: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Mon, 14 Jul 2025 14:27:37 +0100")
+References: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
+Date: Mon, 14 Jul 2025 07:26:55 -0700
+Message-ID: <xmqqa556x2z4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250712172615.11364-1-carenas@gmail.com> <aHKgu3Ew3Pk0PL2v@fruit.crustytoothpaste.net>
-In-Reply-To: <aHKgu3Ew3Pk0PL2v@fruit.crustytoothpaste.net>
-From: Carlo Arenas <carenas@gmail.com>
-Date: Mon, 14 Jul 2025 07:00:45 -0700
-X-Gm-Features: Ac12FXwvvrYWXT20iaq_AgSO7KsNe-EMxeRqiSLO4481RwBOGjg41SzSV28KmJA
-Message-ID: <CAPUEsphoFaS7CnxXs_PsMCtCrB7ByE+y+SxQGaxoovjAdH7UFQ@mail.gmail.com>
-Subject: Re: [PATCH] meson: disable PCRE2 dependency by default
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, 
-	=?UTF-8?Q?Carlo_Marcelo_Arenas_Bel=C3=B3n?= <carenas@gmail.com>, 
-	git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Sat, Jul 12, 2025 at 10:51=E2=80=AFAM brian m. carlson
-<sandals@crustytoothpaste.net> wrote:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> On 2025-07-12 at 17:26:15, Carlo Marcelo Arenas Bel=C3=B3n wrote:
-> > Makefile requires the user to provide the USE_LIBPCRE2 flag to
-> > enable this dependency, but meson has it enabled by default,
-> > which can be problematic, at least in macOS.
-> >
-> > While a popular option and matching what was done by cmake
-> > (which itself reflects what is preferred by Git for Windows)
-> > could result in a broken build or linking with the wrong PCRE2
-> > library.
-> >
-> > While not git's fault, macOS provides a PCRE2 library in base
-> > that is not usable (even if it would pass the test) and not
-> > configured properly, as it installs a pkgconf module that
-> > points to a non existent pcre2.h header in /usr/local/include.
-> >
-> > Change the default to off, and let the user enable it once a
-> > proper dependency is installed or meson instructed to fallback to
-> > the wrap.
+> A C99 compound literal creates an unnamed object whose value is given by
+> an initializer list. This allows us to simplify code where we cannot use
+> a designated initalizer because the values of some members of the object
+> need to be calculated first. For example this code from builtin/rebase.c
 >
-> Can we disable it by default on macOS instead of everywhere?
+> 	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+> 	struct reset_head_opts ropts = { 0 };
+> 	int ret;
+>
+> 	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+> 		    opts->reflog_action,
+> 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+> 	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+> 		    opts->reflog_action, opts->head_name);
+> 	ropts.branch = opts->head_name;
+> 	ropts.flags = RESET_HEAD_REFS_ONLY;
+> 	ropts.branch_msg = branch_reflog.buf;
+> 	ropts.head_msg = head_reflog.buf;
+> 	ret = reset_head(the_repository, &ropts);
+>
+> can be be simplified to
+>
+> 	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+> 	int ret;
+>
+> 	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+> 		    opts->reflog_action,
+> 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+> 	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+> 		    opts->reflog_action, opts->head_name);
+>         ret = reset_head(the_repository, &(struct reset_head_opts) {
+>                 .branch = opts->head_name,
+>         	.flags = RESET_HEAD_REFS_ONLY,
+>         	.branch_msg = branch_reflog.buf,
+>         	.head_msg = head_reflog.buf,
+>         });
+>
+> The result is more readable as one can see the value of each member
+> of the object being passed to the function at the call site rather
+> than building the object piecemeal in the preceding lines.
 
-Yes, but I don't like it much, as it is:
+Hmph, is it simpler, I have to wonder, in other words, I doubt you
+simplified the code.
 
-* inconsistent with artifacts created with other build systems
-* really an issue that should be fixed by Apple or at least handled
-better in meson itself.
+One thing the above rewrite did is to make it clear to readers that
+the struct instance is used just once and then immediately got
+discarded.  As long as the object that gets passed this way does not
+hold resources that need to be discarded itself (in other words,
+does not require a call to reset_head_opts_release()), it makes the
+code easier to follow.
 
-> For most
-> builds on Linux, the system libpcre2 is the right one and users will
-> expect to find PCRE support by default.
+But once the struct gains members that need to be released, I am not
+sure if this construct does not make it harder to spot leaks.
+Somebody who adds a member to _release() to the struct presumably
+audits and find all places that need to call _release(), but among
+them they find this place---now what?  They need to first convert it
+to the old fashioned way and then call _release() after the
+reset_head() call returns, I guess.
 
-Agree with you on that, and indeed I think every packager
-of git (except for NonStop) does enable it at packaging time.
+I am not arguing against all uses of literals---I am just
+anticipating future fallouts of encouraging overuse of this pattern,
+and preparing what we would say when somebody adds a new use to
+inappropriate places.  Simple cases like the initialier should be
+fine.
 
-Maybe this is an argument to enable it by default?, one thing
-that I wonder though, is if we should first isolate the code on
-its own and link it only with `git grep`.
+>  strbuf.c | 3 +--
+>  1 file changed, 1 insertion(+), 2 deletions(-)
+>
+> diff --git a/strbuf.c b/strbuf.c
+> index f30fdc69843..c93c1208c93 100644
+> --- a/strbuf.c
+> +++ b/strbuf.c
+> @@ -68,8 +68,7 @@ char strbuf_slopbuf[1];
+>  
+>  void strbuf_init(struct strbuf *sb, size_t hint)
+>  {
+> -	struct strbuf blank = STRBUF_INIT;
+> -	memcpy(sb, &blank, sizeof(*sb));
 
-I think the rationale behind the current setup was that we will
-eventually replace all other regex engines with PCRE2, having
-better performance and retiring compat/regex, but code to do
-that failed to materialise, and I am not sure how realistic that
-was.
+We should mark this clearly as a weather-balloon so that people do
+not copy and paste it to elsewhere not just yet, shouldn't we?  If
+it proliferates everywhere and then later we discover that some
+vintage of compiler on a platform we still care about miscompiles
+the construct, we want to keep it simpler to revert.
 
-Carlo
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
+> +	*sb = (struct strbuf) STRBUF_INIT;
+>  	if (hint)
+>  		strbuf_grow(sb, hint);
+>  }
+
+Other than that, thanks for taking an initiative.
