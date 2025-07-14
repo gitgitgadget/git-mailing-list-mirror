@@ -1,145 +1,224 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791EE25D21A
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 15:46:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6158925C83A
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:04:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752507979; cv=none; b=P2InK4tnZvb+8LUU1mVSxBC6xRG78NI46f/KLBgSYzJGTwZQiricmnGNvuBjfr8eYoWY3hvufwzolGALUbZqE+5ndtO83MAL1uaYbt4qKXqDuzhaFRa91ZPtUiUXVAIySrmfa8+dVPp3q/WdtY3ls3cOYJYzoLcUKZA2loZkxdM=
+	t=1752509078; cv=none; b=s9EUVclGGp3pgaVjya+exBacXrfYhwRM3DB6Gcb+cJnRU6WAPNj4tucJiittMMeAlx2tICrqwK4SeDv4zJbJyigjyPVXtNyITE780vDvjV13LAD0yZzii0Vmd3MZPXvNP6SEKsc9BCpefdOPWX1Kd+9hUVgg3JJOCer9IKn3uY0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752507979; c=relaxed/simple;
-	bh=Rv/JYzRyoYWRdeQfNdaT3P52mh8W0UXXw5f+jm6RLWA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zoy2UZH9kExfnjGd/8PaUAzA8Y3XYqhUB97ybUyfIohQSwWxik2J/fjnWzR2kIUKIkjC49HW9ZzDvtq6SB2TIkI6DdK28hUOFDIzf7DhcG+5XoPj10q9QY7i+u+QsZ33/7a4lwA/MGvdqe3em7Yy5bQRRtHtYHSNB5rlRTHYHCw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WVSiFuZS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=azDnfKyo; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752509078; c=relaxed/simple;
+	bh=ngaDm1pehSAa4tZ5Jv3IVPR3qKaredS34Q8TVQYaeSA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jne22mTfpDBZIqzXMa8lPlWHa70L59uRD7OfSnXeBN+708D66I8yJNEC06jXmA1xlAVXHp5FIHIi6IGR/ky8o9dbVNhvAEDGMQKIW7TEH8HALyrN9zllJK1X2zm71LcXemiMbl2tYuquB4a/v2WyBlq5FveLfZu4WNgqmTZwfaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LVDe4grb; arc=none smtp.client-ip=209.85.218.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WVSiFuZS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="azDnfKyo"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 63B2E14003D8;
-	Mon, 14 Jul 2025 11:46:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 14 Jul 2025 11:46:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752507976; x=1752594376; bh=UIU+tv8zRb
-	gFFztaZz7Nx2tn6T/yN6Gi6D2pOQYMTKk=; b=WVSiFuZSTK4JPCQXypetD1Rft5
-	Fne/8dfzJLaywfIy6HuvgNbB/KZiYtLq3iw32CPj7AP3Adc/AanOv0q39vajdPTB
-	rc4SOA4w6kIPU0AKMkgOiezILqWhcM55duMTNcrxbkkuZdPhZUsBnjT7qyGMV6Jz
-	hLkDp8gnoBX/m04QE5kIevhDrra+uPs1D9VhlsYf1JodOLAOnYC9oTuQDCb/qxTi
-	PxZ/zNM+WmSI1fA6+Xbjod+GeksClw2QzNxqTeXLYmxSfRDGQ0lYlTLdpGJPKrEs
-	UPoAJihZtme8XBS6mIwXnPPu85VXdmCHppnZgW9ReVGdTVEAfSeZv20HkFew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752507976; x=1752594376; bh=UIU+tv8zRbgFFztaZz7Nx2tn6T/yN6Gi6D2
-	pOQYMTKk=; b=azDnfKyoY92IZkdwXjl2fvCRtIK4HjgXOytGLWyMSiw74FhlUGy
-	GmoQ3S8BDgH0paKhH3ZUfennAXL3if3E8QcDEwnO1RjhStbs4pcrG+mnaTbBU6qx
-	8HoK3HYQIN+IsiV/m9+76MdpnvG5x976WFc4XTYIuD3zF6/HD1t3Sz76eZokIGDi
-	Lepsuk0hPn1q24RPuQmzvqEcrs1HrYiRWzuITIuimOKwsKr25K+kXueWUXFwB7c2
-	kVoPEJUlqwYNPTYV6wVrQCyOagjNIJwoz7wp6XrtC8f3pNd73Pj5YKvIV1fZwlHA
-	8DSb49XOrWRXPHN6KXHlqMjXOzWbxy7V9jA==
-X-ME-Sender: <xms:SCZ1aGrABmUfpXXAwUpKyfmUWctFYyH-50STkMBEiXB2Lw77ifhk-w>
-    <xme:SCZ1aH4x9ZbqEKbvtFFL5_umXPwOmkp9OnVFiRm-Wk3e1VzpLpefwyFcnU20LkSaD
-    YZG1mzG32iBOOxVFQ>
-X-ME-Received: <xmr:SCZ1aErKz12uBob9oVOqglx2ffUSrEncUDTOlV9aFbIxjskCT8kw1Rm4KuLksfFABBImQKkO1rjybC5T4naZQoejY9fL4w2mPJEo4PQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SCZ1aBgZ0bPZ8yLCl04QoVDDggyWH1_ljYPrWhCobU-PzJUBDkuRAQ>
-    <xmx:SCZ1aGLARGk2VsXxZBZ809HK_30o2ATEAX_oAl4tSlvbStJQVi1XYQ>
-    <xmx:SCZ1aJD_SFt7Uf7Ru5O3xyuEg1ORDMwTJLIO0m8Rz1c4bf-KqRWOjg>
-    <xmx:SCZ1aOjwnk_lajocsAD-RO_bchtlA0NbisVB8tWbcnzFWBXA38nNtQ>
-    <xmx:SCZ1aIgvSZ-ntvyNZdZpS7P-LRcr_zOKBxlusfyJHb7-PJ43XB1bwuv2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 11:46:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/4] ref-cache: remove unused function 'find_ref_entry()'
-In-Reply-To: <20250701-306-git-for-each-ref-pagination-v1-2-4f0ae7c0688f@gmail.com>
-	(Karthik Nayak's message of "Tue, 01 Jul 2025 17:03:28 +0200")
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
-	<20250701-306-git-for-each-ref-pagination-v1-2-4f0ae7c0688f@gmail.com>
-Date: Mon, 14 Jul 2025 08:46:14 -0700
-Message-ID: <xmqqecuivkqh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LVDe4grb"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ae401ebcbc4so797872066b.1
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 09:04:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752509075; x=1753113875; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rum/h8kC1JsBlEl+qG4Edlf6OA//i6KmYeCM/8Mvxzo=;
+        b=LVDe4grbfq+uwIOlBTZG+VHJpHu2z/hJUx5S0ZTNgJLCxNOl2qhrSd/b+ljkpnlwYZ
+         rD9GfpmNsUamvwQy/HBK0QbISy+PN3ybzuA4lpdUCuxvX463syRYz7uXjPLOCkvc0SoA
+         iTA7a1WSpAFCE8egC4uNXkYqVYM8b8cy89L87G7SebXnePysm9u0UQoqHFeYjWjw1Gi6
+         U9GFfkEXuzhu5/QHrkPcNgs7UiNBxXtx2NBNbJA1RoC7KofPJT+nYEmjad9rc1Y4qKW/
+         dXr3sWSx98EMW3TGNH11my18ArLwcjdwk5QduoB7hhpbHSKRcRWlomwW+qLCiB+8QuQO
+         htog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752509075; x=1753113875;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rum/h8kC1JsBlEl+qG4Edlf6OA//i6KmYeCM/8Mvxzo=;
+        b=EDMymZrGBo8JaEb7jj13YNT+h9PIaNDW2LDqoiA9o0hf5fDwvGL9oUbg/aXXD6OxR6
+         cAsXfNzhUsUn8+/etgF/ln/EtWcElKCIVTmXDZd3b88APP7XuO6SbPj0EQ4PupAwjDm7
+         gPOhPHIQJWDPIl+njNYceJQMNTL/kVd76DEQsG67xYwggBlt8SaV3kSaUyfiiFHdVX8q
+         aJmkFrTWbKdlOCFGvpepR+8BemYlVODO+O0K92mFbdapUd67/YPtMJ6fqRVA7QN3I8Tr
+         meyEkUY0+XnZDBEnDxsDyCxYSckmqcpF7AOdC/FPS1ypLaHWYisvZzwjx0k/SGY0Zsb6
+         xuEQ==
+X-Gm-Message-State: AOJu0Yz0SD0zJGsVPHHEuA5jaA5xUg/WzSV7Ya826vDqZT5lO2+oR0rP
+	2KdQlUiBiDaoDxeDJ5sJv/hinHxXwsz8ZoSHIFHkwYTWGHWiMtKEUlrSwUw4opOpuMZ6OMoMwro
+	cETkCKzCOPthm8pkaOyLfAxLkt2Jj27U=
+X-Gm-Gg: ASbGnctzitJYRFnycle9R9rTvEncCtagTgRT8UycRCJLmAGgkjkssT20yR4/5/W64nf
+	KgGpNVXAKCsvob5KjDYon85XRZen9jxRGeqxUkNgy+1rFdHliCQXEpIle3HFLVrr1MA1D0ds8IN
+	vAAF2VdRuxo/Be2W+fuiLeteZb/CPMR6HAZC3TSHsPXqAAEv7WUYQnnr0XrNSWcBGmPCBccRMHE
+	MDREe4OHj2HJWyaBEKYBOheODKqRECSNqI3iA==
+X-Google-Smtp-Source: AGHT+IHHUn2MuvZHAAlgLTVzcsI0PPhHcgDeNwUH0pV6POKVzg6XPoj3LD2SWCe/GBC/OBkGpdYjfu9cZfDRyvKBllo=
+X-Received: by 2002:a17:906:c115:b0:ad5:2e5b:d16b with SMTP id
+ a640c23a62f3a-ae6fbe3d07emr1559010366b.27.1752509073736; Mon, 14 Jul 2025
+ 09:04:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
+ <20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com>
+In-Reply-To: <20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 14 Jul 2025 18:04:21 +0200
+X-Gm-Features: Ac12FXwG6cbPlkPMuGdDRiOTwUH_-H50859xZMuDJ7DYRbnRHgU2mCfQY6eEznU
+Message-ID: <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] for-each-ref: introduce a '--start-after' option
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On Fri, Jul 11, 2025 at 6:21=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
 
-> The 'find_ref_entry' function is no longer used, so remove it.
-
-It seems that ba1c052f (ref_store: implement `refs_peel_ref()`
-generically, 2017-09-25) removed the last caller of it.  This is
-long overdue ;-)
-
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  refs/ref-cache.c | 14 --------------
->  refs/ref-cache.h |  7 -------
->  2 files changed, 21 deletions(-)
+>  /*
+>   * This is the same as for_each_fullref_in(), but it tries to iterate
+>   * only over the patterns we'll care about. Note that it _doesn't_ do a =
+full
+> @@ -2692,10 +2710,13 @@ static int for_each_fullref_in_pattern(struct ref=
+_filter *filter,
+>                                        each_ref_fn cb,
+>                                        void *cb_data)
+>  {
+> +       struct ref_iterator *iter;
+> +       int flags =3D 0, ret =3D 0;
+> +
+>         if (filter->kind & FILTER_REFS_ROOT_REFS) {
+>                 /* In this case, we want to print all refs including root=
+ refs. */
+> -               return refs_for_each_include_root_refs(get_main_ref_store=
+(the_repository),
+> -                                                      cb, cb_data);
+> +               flags |=3D DO_FOR_EACH_INCLUDE_ROOT_REFS;
+> +               goto non_prefix_iter;
+>         }
 >
-> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> index c1f1bab1d5..8aaffa8c6b 100644
-> --- a/refs/ref-cache.c
-> +++ b/refs/ref-cache.c
-> @@ -194,20 +194,6 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
->  	return dir;
+>         if (!filter->match_as_path) {
+> @@ -2704,8 +2725,7 @@ static int for_each_fullref_in_pattern(struct ref_f=
+ilter *filter,
+>                  * prefixes like "refs/heads/" etc. are stripped off,
+>                  * so we have to look at everything:
+>                  */
+> -               return refs_for_each_fullref_in(get_main_ref_store(the_re=
+pository),
+> -                                               "", NULL, cb, cb_data);
+> +               goto non_prefix_iter;
+>         }
+>
+>         if (filter->ignore_case) {
+> @@ -2714,20 +2734,29 @@ static int for_each_fullref_in_pattern(struct ref=
+_filter *filter,
+>                  * so just return everything and let the caller
+>                  * sort it out.
+>                  */
+> -               return refs_for_each_fullref_in(get_main_ref_store(the_re=
+pository),
+> -                                               "", NULL, cb, cb_data);
+> +               goto non_prefix_iter;
+>         }
+>
+>         if (!filter->name_patterns[0]) {
+>                 /* no patterns; we have to look at everything */
+> -               return refs_for_each_fullref_in(get_main_ref_store(the_re=
+pository),
+> -                                                "", filter->exclude.v, c=
+b, cb_data);
+> +               goto non_prefix_iter;
+>         }
+>
+>         return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_r=
+epository),
+>                                                  NULL, filter->name_patte=
+rns,
+>                                                  filter->exclude.v,
+>                                                  cb, cb_data);
+> +
+> +non_prefix_iter:
+> +       iter =3D refs_ref_iterator_begin(get_main_ref_store(the_repositor=
+y), "",
+> +                                      NULL, 0, flags);
+> +       if (filter->start_after)
+> +               ret =3D start_ref_iterator_after(iter, filter->start_afte=
+r);
+> +
+> +       if (ret)
+> +               return ret;
+> +
+> +       return do_for_each_ref_iterator(iter, cb, cb_data);
 >  }
->  
-> -struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname)
-> -{
-> -	int entry_index;
-> -	struct ref_entry *entry;
-> -	dir = find_containing_dir(dir, refname);
-> -	if (!dir)
-> -		return NULL;
-> -	entry_index = search_ref_dir(dir, refname, strlen(refname));
-> -	if (entry_index == -1)
-> -		return NULL;
-> -	entry = dir->entries[entry_index];
-> -	return (entry->flag & REF_DIR) ? NULL : entry;
-> -}
-> -
+
+Nit: I wonder if what is under the 'non_prefix_iter' label could be in
+a new function and instead of `goto non_prefix_iter` we could return
+the result of the new function.
+
 >  /*
->   * Emit a warning and return true iff ref1 and ref2 have the same name
->   * and the same oid. Die if they have the same name but different
-> diff --git a/refs/ref-cache.h b/refs/ref-cache.h
-> index 5f04e518c3..f635d2d824 100644
-> --- a/refs/ref-cache.h
-> +++ b/refs/ref-cache.h
-> @@ -201,13 +201,6 @@ void free_ref_cache(struct ref_cache *cache);
->   */
->  void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
->  
-> -/*
-> - * Find the value entry with the given name in dir, sorting ref_dirs
-> - * and recursing into subdirectories as necessary.  If the name is not
-> - * found or it corresponds to a directory entry, return NULL.
-> - */
-> -struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname);
-> -
->  /*
->   * Start iterating over references in `cache`. If `prefix` is
->   * specified, only include references whose names start with that
+> @@ -3197,9 +3226,11 @@ static int do_filter_refs(struct ref_filter *filte=
+r, unsigned int type, each_ref
+>         init_contains_cache(&filter->internal.no_contains_cache);
+>
+>         /*  Simple per-ref filtering */
+> -       if (!filter->kind)
+> +       if (!filter->kind) {
+>                 die("filter_refs: invalid type");
+> -       else {
+> +       } else {
+
+Nit: the `else` could be removed altogether here, but maybe that
+should be done in a preparatory patch.
+
+> +               const char *prefix =3D NULL;
+> +
+
+[...]
+
+> +test_expect_success 'start after with specific directory and trailing sl=
+ash' '
+> +       cat >expect <<-\EOF &&
+> +       refs/odd/spot
+> +       refs/tags/annotated-tag
+> +       refs/tags/doubly-annotated-tag
+> +       refs/tags/doubly-signed-tag
+> +       refs/tags/foo1.10
+> +       refs/tags/foo1.3
+> +       refs/tags/foo1.6
+> +       refs/tags/four
+> +       refs/tags/one
+> +       refs/tags/signed-tag
+> +       refs/tags/three
+> +       refs/tags/two
+> +       EOF
+> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/los=
+t >actual &&
+
+I don't see a trailing slash.
+
+> +       test_cmp expect actual
+> +'
+> +
+> +test_expect_success 'start after, just behind a specific directory' '
+> +       cat >expect <<-\EOF &&
+> +       refs/odd/spot
+> +       refs/tags/annotated-tag
+> +       refs/tags/doubly-annotated-tag
+> +       refs/tags/doubly-signed-tag
+> +       refs/tags/foo1.10
+> +       refs/tags/foo1.3
+> +       refs/tags/foo1.6
+> +       refs/tags/four
+> +       refs/tags/one
+> +       refs/tags/signed-tag
+> +       refs/tags/three
+> +       refs/tags/two
+> +       EOF
+> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/odd=
+/ >actual &&
+
+Here there is a trailing slash though.
+
+> +       test_cmp expect actual
+> +'
