@@ -1,101 +1,126 @@
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A104C2AE99
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:53:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9525672632
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:58:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752512019; cv=none; b=uQUbFrIZzl9o9GD2RF9oINhtfXrlGS6ccEKVJ4aXCvJ1sFo1mwYNcerYnz8XawKts/IqtgupdPAaJVfveuqZgPZMRhKmfoCmo/zgFcZ399AWjoPAhi/m+WOItVv8LJs0wEjuA/wkpTLF1YwAFNi0gPkXKSaJZ1ZC4Xpsb2S+DWA=
+	t=1752512313; cv=none; b=m6LfXBrYMbyVLcbMc/MIsrL/TueQaG3KLD1xCyDxqOn0aKTvJ9j/iMAuAP6+JjRGPu8ShEBDytUlDd7tb96cvxEHA20mhICmnLQnksoofgeeaFIulsqlUOkhGEIKK8ZPi7uTdnybMmXAzD2AyJbY4fLxTZhcxRYb/yQiQfz+Q+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752512019; c=relaxed/simple;
-	bh=Ympon810XCjxCV1AWy6HwyrbRUvwC1W5hdZHU9kAE94=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=m1wHVPpPB/AN6VKpXP/cEtCAlAZyV2Ft6jbB976ola8VxLSlnqt68YAoY1PwUIwwrrRyTGPJK4YA+PyPgF/2x3KcdI6ABeCcDobgas03Owwykqg8yi74TLaoAAokwwqGI8qL4WboPWH+3Xw/vsh/QbY091ucuYmxP6eTOiMx1Ds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIFOZrzO; arc=none smtp.client-ip=209.85.219.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752512313; c=relaxed/simple;
+	bh=ozmLBg0hFzsL2MmgUxD9pzw3HxzplmwxGc2Wo5bk+A4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uUJfojksIOhR80VXhigI6SqWNi392NWxJcKIed9CgLtxCiOkO0pAMRxvaCHAvj5THCEplqZJ6Pdw562SM77c8gdS2x3jQZ9jeSAch8ARAM8vj3njhE8GWyYAxq+VrqGNosfGbnr9U4fSUS3taguGEmmZPKdkRP9a/YGQUXRgDM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iiibYz1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aa6Us2Tm; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIFOZrzO"
-Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e8986a25cbfso3196795276.0
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 09:53:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752512016; x=1753116816; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OW/NDjno88nvzF6F/0wDIIVAjJoCJaeiMh8nM9q4KHY=;
-        b=fIFOZrzOPvvtESRlyfCzlEZRP5BGB6vtjXIr7Jlac4t5M68bi9Naq020j1NJQz0l2I
-         vroDfJOW8/NycjOKbpSx8AOWt4cMkdwxNzkL13Hz+C4z1uuU7UT2vUcJKBxe+J8mTzFK
-         bpPRdsNZqXIiCt6rTv56/3DOrNrCZUm25dVuNqimUUK/2jq4Tl2SVob4MhH4DYDVIgcR
-         5d5+rYzPb2KA/pgiyaaCRieQfPfOHk2jVwKeTnPB3x2pThFgNdchtFKOBdss04vUlpkX
-         iGMaiDLFb7XwfZ+PIP3KUIZzwvbH2yTfu947NzaRB3ZTLkyw5Fv2kJOFFC3KGglyUnDt
-         BdAw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752512016; x=1753116816;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OW/NDjno88nvzF6F/0wDIIVAjJoCJaeiMh8nM9q4KHY=;
-        b=U73G3t16etEgE22O7P5gN8wxMOlvJzcmy6yJalNOscs9t72ZRM9ZWK1bS/SsXOloxI
-         BXlUjWSh9+lzMTCqMVpzlpQGWbzgHHQ/GMpoMwae0MI7cf5UxL3+cl2D6VVYy8IKx/h/
-         gm9XqyZ8xVc2BYniT6mTmfxXDyRSvft6SNDVK/WfzG55cOO5TT8FG1x7QXFkoACVhPXP
-         Is02WFQn4bMqVl4GswdFAmERRO2WcDUNbnC9COg9b9N0MEYRyDqLfkgFp7E86dUP2Yh4
-         p9QFmOJJBI9Fml7qabeAlHeyUZE3G2OlIOUvghz4zXNHHUpjc6yltTAfjJbfnfwzgULI
-         T+1w==
-X-Forwarded-Encrypted: i=1; AJvYcCUPKwYPAAsdL+TCta59GB891TkAsuVhpatoiSWwjDadsSZLQHQfyawxs3n1R7XNGa5seIQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4JR73Y4JTHEgYti8VmHZ0LXWbe7ZqtONk0wd5s+3iuzyMcYnS
-	PC4xubku3/ByHFt+RYfu5ZpNp33asEBXxRPkrrbZLT15bi2T+qmm+2O5
-X-Gm-Gg: ASbGncsNqCZpu3vOcjGiJFCDvhS2TFFloKzRhJe27Ee2ndg55pwN3w2XM5iuN76K4cA
-	60PJgDhaTsQIgFN+oWr0Rjd4FjFl9YHK/bKDvcoNGisL7WDtxGgKDW7r2Z5zvdJoyUtO2xYs0Qo
-	ZetjP8yaosc+4nAYZS2XdD2KNfvDSkPBJ45MV5holnAv4cy3s41XtGuMMSHH4/6lS5OCcYcUegt
-	+kicoQ7CHgzsJSTsoCdEkpKE29DgaV2GDyzgnqvHJhcu5gFg1QwiNjhZUNv+FYgLGXnPKiezZys
-	uCbhFBY6J8k/L4Hq0EHIUV8voM8A/iwi7S7hQKk6iySYMumL/Uzn72Nfep5LZcvHk2XTVcJO0TN
-	R3xdLlJhQP1t/jnEfXcB5tCStSrf8XQfG70Gxl3gFTUU16oI54w1ZrAh++P3CDNGdBgPfaYEFO2
-	kkhg3razfyVw==
-X-Google-Smtp-Source: AGHT+IFGCLJUWo3N4XT+I8IjzXZtgHEUANo/wK8o2Lolvc42cLVpjc0r5BG2mr0HGI0H8HTs5kbH4w==
-X-Received: by 2002:a05:6902:18cd:b0:e8b:9c25:d18d with SMTP id 3f1490d57ef6-e8b9c25d3ecmr7365251276.25.1752512016520;
-        Mon, 14 Jul 2025 09:53:36 -0700 (PDT)
-Received: from [192.168.1.237] (70-237-88-18.lightspeed.rlghnc.sbcglobal.net. [70.237.88.18])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8b7ae66a49sm3059048276.18.2025.07.14.09.53.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 09:53:36 -0700 (PDT)
-Message-ID: <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
-Date: Mon, 14 Jul 2025 12:53:35 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iiibYz1G";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aa6Us2Tm"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A10F214004E5;
+	Mon, 14 Jul 2025 12:58:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 14 Jul 2025 12:58:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752512310;
+	 x=1752598710; bh=ftX+KAaT/Qya6yl5HLk/ZKDkC1SJQ1v3OjUxXN3Tt+M=; b=
+	iiibYz1GFcntCwa49d7Ihf7+N3jfXI5rWr0xdNnSHHnTERR50EWIAdk5uS7Sj8ZO
+	0l3ItutRg+eubvIijniU5HdBvvpa+eyHNn1rKBYxiUC90DGWnsan/LHBVaAchVGZ
+	ZHyGpN5/bVZeAmOkvQjiMebjkKvLkVRUfBg8RZ6qd/gmQ91xPhTQuur3TFJdxuAf
+	KpBZRJfH+sWg3sydMUEoBlOpPrn6iXLAbfaZjFJPN7ixyL8ZAKKpaBmgTzj5F47B
+	FhGq3nUtRotk4sI3dRL1G2C2TdSYX4Z6MrT9HQpSlAEV+A81wp2Oay4Xmsil9zqm
+	GFnNtb0ODmNn/lWjlSIcyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752512310; x=
+	1752598710; bh=ftX+KAaT/Qya6yl5HLk/ZKDkC1SJQ1v3OjUxXN3Tt+M=; b=A
+	a6Us2Tm0TnZXJ6tmwdGAD4Cz75qtRTvsuaf6o7GVF0ihWDxQ+3ie/SXPB4K0oTVZ
+	ItsJoZxg84mtv9MtKHOq1lWcnBPnaYH0lG2/LV/4vs3+yuG6igwl4Q5v7Nlwk+fe
+	l9qA36+PgKcA4dFkg3pFSZyc4O7XQKBdyaXKDYJb57f5GJjIWVYgWsIy5vP7Za6s
+	54Zt6HRuRcoQoQtXbdbkTbVAYpYafoxE+Pd6SSLOYob8dKxL+hGdS7e850Hm7pR3
+	JpckJLHcWGuhep/R2rIX3T8Bhi6/nvg8i108csLzPGGIozZUqZmcEoVMDD/aOiCN
+	g50hifDRbqKnMOGCBpXfA==
+X-ME-Sender: <xms:Njd1aC0QUxP4RLgwzEwPaGPvpQxXfuY-leKhsXiOrNAlivEj7Pn38Q>
+    <xme:Njd1aPpeTDihCAtfgWRcSWuMm2ElT1_JMriZmOC_PO8MFQqQ0Sv5h4lVy3Hh9Z1rU
+    gkxd7br4mxJk5KFMA>
+X-ME-Received: <xmr:Njd1aHcacckh5-EEpiyZE2yM19V90xGn-yF_fCERvMEr1i7QpVYrveOIeq838XcWQIiBXVk539SDIGPdj7O2NN3Xd69rjuCqcFDgASI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
+    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Njd1aGpk5KfaClqiSPcRr2G09ROieVze20QfqppwvJx7JEtk_olJ7w>
+    <xmx:Njd1aAFLxHpCO2i1Z7BOK4iCrAwMTjwton7dlz2OmDORL7N-D2jraw>
+    <xmx:Njd1aOvozSsAx9QAIA_mafQOYBg1S6M0ZrNjDAos_9qh9T0EIXJKnQ>
+    <xmx:Njd1aKU0wENIuy5JlNkLlq9aAZa5sO6-Kl1OUxe_JjOo0-Py2CPRjQ>
+    <xmx:Njd1aMEhGb_4ARf4LtF0f9mz_x0L2_AgD4274coHFsHVY3Bk4bLQkUDw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 14 Jul 2025 12:58:30 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: [PATCH] meson: disable PCRE2 dependency by default
+In-Reply-To: <ymreouejava2acp3xpvrviffd3bd7cu3wwmi3fadzykkaaubim@25oyqvcfhrda>
+	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 14 Jul
+ 2025 09:46:29
+	-0700")
+References: <20250712172615.11364-1-carenas@gmail.com>
+	<aHKgu3Ew3Pk0PL2v@fruit.crustytoothpaste.net>
+	<CAPUEsphoFaS7CnxXs_PsMCtCrB7ByE+y+SxQGaxoovjAdH7UFQ@mail.gmail.com>
+	<xmqqikjuvlxc.fsf@gitster.g>
+	<ymreouejava2acp3xpvrviffd3bd7cu3wwmi3fadzykkaaubim@25oyqvcfhrda>
+Date: Mon, 14 Jul 2025 09:58:29 -0700
+Message-ID: <xmqqfreyu2tm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 0/5] bloom: enable bloom filter optimization for
- multiple pathspec elements in revision traversal
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: 502024330056@smail.nju.edu.cn, git@vger.kernel.org, gitster@pobox.com,
- toon@iotcl.com
-References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
- <20250712093517.17907-1-yldhome2d2@gmail.com>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250712093517.17907-1-yldhome2d2@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 7/12/2025 5:35 AM, Lidong Yan wrote:
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-> The difference from v5 is:
->   - extract convert pathspec item to bloom_keyvec logic to
->     a separate function, which simplifies the prepare_to_use_bloom_filter()
->     function.
->   - fix few bugs in v5.
+> This part was more of a: let's assume that we enable PCRE2 by default
+> in the Makefile as well, what is the impact to the libification
+> efforts now that there is a chance that libgit will be linked (probably
+> statically if using meson) with libpcre2?
+>
+> Since the plan you mentioned above is still dreamware, wouldn't it be
+> better to move all the pcre2 functions out of grep.c, export them back
+> to it through a semi private header and convert `git-grep` into a
+> standalone binary that might link with pcre2 as needed?
 
-Thanks for making these changes. Including your fixed patch 5, this
-version looks ready to me.
+The engineering effort that such a move (and encapsulation of
+"grep_pat" that may or may not have pcre enabled) would go quite a
+long way and brings us quite a lot close to that "dreamware", I
+suspect.  So it may not be a bad thing.
 
-I wouldn't say "fix a few bugs" but instead "fix some compile-time
-linting complaints when using DEVELOPER=1" to be clear that the
-functionality hasn't changed but the code is cleaner.
+But even if you move code out of grep.c to a new "abstracted regcomp
+and regexec that may or may not use pcre" source file, "git grep"
+would need to run with the code you move to the latter anyway, so
+unless your plan for libified "git grep" engine is to make the
+library user responsible for supplying their own "abstracted regcomp
+and regexec that may or may not use pcre" (and "git grep" brings in
+its own in that new file), I do not know it changes the picture all
+that much.
 
-Thanks,
--Stolee
+Thanks.
+
 
