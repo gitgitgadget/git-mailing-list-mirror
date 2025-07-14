@@ -1,24 +1,66 @@
-Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com [209.85.219.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4103F23C4FF
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:52:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A104C2AE99
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:53:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752511957; cv=none; b=QAMKliwkqmz21UFSqmu6hFb9mzYY2DW67Tt8+8Ba3gexW7jxtE1lo9XYPFaPCNPU7JsWXmoNs8xklmZkTYAixazWPSdCWt4ys2UTtD5yRy2yvG5+lcksGR07Z6F7oIXBq9VbB/YnPh5/W6GJd9in8onVMgfUd3mTGUvMAFv3vUA=
+	t=1752512019; cv=none; b=uQUbFrIZzl9o9GD2RF9oINhtfXrlGS6ccEKVJ4aXCvJ1sFo1mwYNcerYnz8XawKts/IqtgupdPAaJVfveuqZgPZMRhKmfoCmo/zgFcZ399AWjoPAhi/m+WOItVv8LJs0wEjuA/wkpTLF1YwAFNi0gPkXKSaJZ1ZC4Xpsb2S+DWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752511957; c=relaxed/simple;
-	bh=iD8loS0Krnd/aQ+/7lMmgVcTD0oMLGRARoLw3d4hBm4=;
+	s=arc-20240116; t=1752512019; c=relaxed/simple;
+	bh=Ympon810XCjxCV1AWy6HwyrbRUvwC1W5hdZHU9kAE94=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f8HfkuJPUqsn3Awuenatf/IEQPmpg5V796mo9RsYRsOq3kR9w4MyoS01Z8lwQy+ai4N8WpfQ2pp/Mx7CsYWs2diHWsioa7NgPx9+c/tDxpPT5NhVPSfvunHO5u5ODPynRMuvS917X/+fLs+0EKDVKLJfoAtw/fMPKLhQFBSwnrs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.1.102] (089144220187.atnat0029.highway.webapn.at [89.144.220.187])
-	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4bgpJv3PWyzRpLG;
-	Mon, 14 Jul 2025 18:52:31 +0200 (CEST)
-Message-ID: <878b4335-873c-4bc5-a7c1-581d3a71901e@kdbg.org>
-Date: Mon, 14 Jul 2025 18:52:30 +0200
+	 In-Reply-To:Content-Type; b=m1wHVPpPB/AN6VKpXP/cEtCAlAZyV2Ft6jbB976ola8VxLSlnqt68YAoY1PwUIwwrrRyTGPJK4YA+PyPgF/2x3KcdI6ABeCcDobgas03Owwykqg8yi74TLaoAAokwwqGI8qL4WboPWH+3Xw/vsh/QbY091ucuYmxP6eTOiMx1Ds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fIFOZrzO; arc=none smtp.client-ip=209.85.219.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fIFOZrzO"
+Received: by mail-yb1-f180.google.com with SMTP id 3f1490d57ef6-e8986a25cbfso3196795276.0
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 09:53:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752512016; x=1753116816; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=OW/NDjno88nvzF6F/0wDIIVAjJoCJaeiMh8nM9q4KHY=;
+        b=fIFOZrzOPvvtESRlyfCzlEZRP5BGB6vtjXIr7Jlac4t5M68bi9Naq020j1NJQz0l2I
+         vroDfJOW8/NycjOKbpSx8AOWt4cMkdwxNzkL13Hz+C4z1uuU7UT2vUcJKBxe+J8mTzFK
+         bpPRdsNZqXIiCt6rTv56/3DOrNrCZUm25dVuNqimUUK/2jq4Tl2SVob4MhH4DYDVIgcR
+         5d5+rYzPb2KA/pgiyaaCRieQfPfOHk2jVwKeTnPB3x2pThFgNdchtFKOBdss04vUlpkX
+         iGMaiDLFb7XwfZ+PIP3KUIZzwvbH2yTfu947NzaRB3ZTLkyw5Fv2kJOFFC3KGglyUnDt
+         BdAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752512016; x=1753116816;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=OW/NDjno88nvzF6F/0wDIIVAjJoCJaeiMh8nM9q4KHY=;
+        b=U73G3t16etEgE22O7P5gN8wxMOlvJzcmy6yJalNOscs9t72ZRM9ZWK1bS/SsXOloxI
+         BXlUjWSh9+lzMTCqMVpzlpQGWbzgHHQ/GMpoMwae0MI7cf5UxL3+cl2D6VVYy8IKx/h/
+         gm9XqyZ8xVc2BYniT6mTmfxXDyRSvft6SNDVK/WfzG55cOO5TT8FG1x7QXFkoACVhPXP
+         Is02WFQn4bMqVl4GswdFAmERRO2WcDUNbnC9COg9b9N0MEYRyDqLfkgFp7E86dUP2Yh4
+         p9QFmOJJBI9Fml7qabeAlHeyUZE3G2OlIOUvghz4zXNHHUpjc6yltTAfjJbfnfwzgULI
+         T+1w==
+X-Forwarded-Encrypted: i=1; AJvYcCUPKwYPAAsdL+TCta59GB891TkAsuVhpatoiSWwjDadsSZLQHQfyawxs3n1R7XNGa5seIQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw4JR73Y4JTHEgYti8VmHZ0LXWbe7ZqtONk0wd5s+3iuzyMcYnS
+	PC4xubku3/ByHFt+RYfu5ZpNp33asEBXxRPkrrbZLT15bi2T+qmm+2O5
+X-Gm-Gg: ASbGncsNqCZpu3vOcjGiJFCDvhS2TFFloKzRhJe27Ee2ndg55pwN3w2XM5iuN76K4cA
+	60PJgDhaTsQIgFN+oWr0Rjd4FjFl9YHK/bKDvcoNGisL7WDtxGgKDW7r2Z5zvdJoyUtO2xYs0Qo
+	ZetjP8yaosc+4nAYZS2XdD2KNfvDSkPBJ45MV5holnAv4cy3s41XtGuMMSHH4/6lS5OCcYcUegt
+	+kicoQ7CHgzsJSTsoCdEkpKE29DgaV2GDyzgnqvHJhcu5gFg1QwiNjhZUNv+FYgLGXnPKiezZys
+	uCbhFBY6J8k/L4Hq0EHIUV8voM8A/iwi7S7hQKk6iySYMumL/Uzn72Nfep5LZcvHk2XTVcJO0TN
+	R3xdLlJhQP1t/jnEfXcB5tCStSrf8XQfG70Gxl3gFTUU16oI54w1ZrAh++P3CDNGdBgPfaYEFO2
+	kkhg3razfyVw==
+X-Google-Smtp-Source: AGHT+IFGCLJUWo3N4XT+I8IjzXZtgHEUANo/wK8o2Lolvc42cLVpjc0r5BG2mr0HGI0H8HTs5kbH4w==
+X-Received: by 2002:a05:6902:18cd:b0:e8b:9c25:d18d with SMTP id 3f1490d57ef6-e8b9c25d3ecmr7365251276.25.1752512016520;
+        Mon, 14 Jul 2025 09:53:36 -0700 (PDT)
+Received: from [192.168.1.237] (70-237-88-18.lightspeed.rlghnc.sbcglobal.net. [70.237.88.18])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8b7ae66a49sm3059048276.18.2025.07.14.09.53.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Jul 2025 09:53:36 -0700 (PDT)
+Message-ID: <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
+Date: Mon, 14 Jul 2025 12:53:35 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -26,76 +68,34 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] gitk: Add support of SHA256 repo
+Subject: Re: [PATCH v6 0/5] bloom: enable bloom filter optimization for
+ multiple pathspec elements in revision traversal
+To: Lidong Yan <yldhome2d2@gmail.com>
+Cc: 502024330056@smail.nju.edu.cn, git@vger.kernel.org, gitster@pobox.com,
+ toon@iotcl.com
+References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+ <20250712093517.17907-1-yldhome2d2@gmail.com>
 Content-Language: en-US
-To: Takashi Iwai <tiwai@suse.de>
-Cc: Denton Liu <liu.denton@gmail.com>, Eric Huber <echuber2@illinois.edu>,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Avi Halachmi <avihpit@yahoo.com>, Christoph Sommer <sommer@cms-labs.org>,
- Paul Mackerras <paulus@ozlabs.org>, Rostislav Krasny <rosti.bsd@gmail.com>,
- git@vger.kernel.org
-References: <20250617055957.9794-1-tiwai@suse.de>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250617055957.9794-1-tiwai@suse.de>
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20250712093517.17907-1-yldhome2d2@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Am 17.06.25 um 07:59 schrieb Takashi Iwai:
-> This patch adds a basic support of SHA256 Git repository to Gitk, so
-> that Gitk can show and operate on both SHA1 and SHA256 repos
-> gracefully.  Since SHA256 has a longer ID length (64 char) than SHA1
-> (40 char), many field widths are adjusted to fit with it.
-> 
-> A caveat is that the configuration of auto selection length is shared
-> between SHA1 and SHA256 repos.  That is, once when this value is saved
-> and read, it's applied to both repo types, which may result in shorter
-> selection than the full SHA256 ID.  We may introduce another
-> individual config for sha256 (actually I did write in the first
-> version), but for simplicity, the common config is used as of writing
-> this.
-> 
-> Many lines still refer "sha1" although they may point to both SHA1 and
-> SHA256.  They are left untouched for making the changes simpler.
-> 
-> This patch is based on the early work by Rostislav Krasny:
->   https://patchwork.kernel.org/project/git/patch/pull.979.git.1623687519832.gitgitgadget@gmail.com
-> I refreshed, revised and extended to the latest state.
-> 
-> Signed-off-by: Takashi Iwai <tiwai@suse.de>
-> ---
-> 
-> v1: https://lore.kernel.org/20250320154136.23262-1-tiwai@suse.de
-> v1->v2:
-> - Fix other procs using fixed 40 length
-> - Don't use tabs
-> - Drop autosellensha256 config
-> - Some code simplification
-> - Fix patch description
+On 7/12/2025 5:35 AM, Lidong Yan wrote:
 
-Thank you for the update. I'll queue this patch, but...
+> The difference from v5 is:
+>   - extract convert pathspec item to bloom_keyvec logic to
+>     a separate function, which simplifies the prepare_to_use_bloom_filter()
+>     function.
+>   - fix few bugs in v5.
 
-> @@ -12491,6 +12513,17 @@ if {$tclencoding == {}} {
->      puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
->  }
->  
-> +# Use object format as hash algorightm (either "sha1" or "sha256")
-> +set hashalgorithm [exec git rev-parse --show-object-format]
-> +if {$hashalgorithm eq "sha1"} {
-> +    set hashlength 40
-> +} elseif {$hashalgorithm eq "sha256"} {
-> +    set hashlength 64
-> +} else {
-> +    puts stderr "Unknown hash algorithm: $hashalgorithm"
-> +    exit 1
-> +}
-> +
->  set gui_encoding [encoding system]
->  catch {
->      set enc [exec git config --get gui.encoding]
+Thanks for making these changes. Including your fixed patch 5, this
+version looks ready to me.
 
-... I'll move the setup of $hashlength after the gui_encoding setup that
-is visible in the context, so that the new code is not in the middle of
-the encoding section.
+I wouldn't say "fix a few bugs" but instead "fix some compile-time
+linting complaints when using DEVELOPER=1" to be clear that the
+functionality hasn't changed but the code is cleaner.
 
--- Hannes
+Thanks,
+-Stolee
 
