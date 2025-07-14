@@ -1,72 +1,67 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC91924BD02
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 13:27:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B9342065
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 13:27:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752499650; cv=none; b=Clqmuw5JFTvB8ST8Db89kqJn3YBnUOb3VX1H0w5ay5Gc+iAKdO0QvMYgNQWfM7rLV8GmheQYAsrHRz5Pf9UvvpoO0cUKXWviKRsI0+T8YzyP66I9JO4aCehknnYcr/+CrAviMBie79K0071fQgILaU/zE9qfE1hjH3pBSbkp8Po=
+	t=1752499677; cv=none; b=uP/GV4Hi+4bED245QOZ1eKVMlU5Boh9D0a/FPU16AXZr5YhkJtSzBfxS5xcsvXouRBBerp47BNDEgAonmqNtLz9EsftifxvEOgRhr9OVngGlxBfkt8PJCgJ1gL0k6m3V0hvOvsjxiltLYqKPG9keVIYOkXTcVnUfcg/WnBlVBCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752499650; c=relaxed/simple;
-	bh=VbLbGvm+PB3unTX3rlisYturvfB+j3opxessMsEPko4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MTCVnfu5ovVFRRalIkbXVadJUKwupcxSM45Dn0Lk2e57nzQ+Zbtnq1e2nn9MLEUMjDnEnoNGXdMhZivHs5Kw7+l8Ao6ZuxZGAPi0y9lxHSGRneW1b0atNO7retKE9KaY/I8+BYf+pCMe7LKklV9txzZDnW3cJ5aI4Rb1AFNJRI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YLsNP+uo; arc=none smtp.client-ip=209.85.128.43
+	s=arc-20240116; t=1752499677; c=relaxed/simple;
+	bh=MOAB2fmbcTDW+WS9E47cU6WpYAw34qCT6QZcw5tnnAE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=fxPguDz8+H3Od692d6ZGhmMd0nqP9GsUiSoasigXJOef0JDkRbMDiOnyg4WT9xm8CHRkLlwQeYhpLjjLZb5RoXcf/7RJMq8X/dhK0DJSY9miIjN3+KPLThXgwV2wWhooscdLMRWWRzRQdP58v0QqCm5XcFxTzuLtH5py2ReqqbM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fBCHr+3a; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YLsNP+uo"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4560cdf235cso9549885e9.1
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 06:27:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fBCHr+3a"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3b45edf2303so3730637f8f.2
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 06:27:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752499647; x=1753104447; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=le2QGaGzo0bSe4kbwhr/jCVyaZqfv5a/FTodEzgsr1o=;
-        b=YLsNP+uoIbVAlzQgf3ZO6RtFtT7RmXIptTMcvH7uSIQwv72qsrIyguxpyIaaM7Jyse
-         Ld7L31RO22wT+5u2d0mkPRkjUI6/o1KzAvZ1PWqrIkwKX8tsrt/qqH9KbndIce67KbSt
-         m/VsjNEzzGPEX8Pump7L2QLua8D+AfPBaJ92q5k6dQ6PJkueIdtkMT+OXdbLWh9rOT6x
-         xY1V1qDlfEm7R/T1ReOxSMoyNmAoPYfWD2QzIZTInvMjucBNAFjBqvCguKbWPsplXv2d
-         s1KWn99BrlTD9t4SQPiQ4grlomnuzTn36rGQ2yHzwNVW6VmFHvbpJwBNLjSyj9/tYalg
-         bMVg==
+        d=gmail.com; s=20230601; t=1752499674; x=1753104474; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=nkODo8EZRh50913qZ/pSoeAguBQ7adLGR0DhHIjUy3I=;
+        b=fBCHr+3aqXNTYvsg7EGbOMaLhCijUY+HPqeQ6SgpiAdTNn7O75cQDT+KPfwxTo57qU
+         Tzi2hhqSy2CsNURccgC7n1xYM7Uxizlx/pzeCqKdcLQAj50+770zSoX68Ndz1og5gArw
+         nDvdkKwa4BkR7EsJ13npPZ/mHL9OrM2pgqHJn1YZvG5I4R/L+q62tVOYaYK7Pl+zRWcb
+         h/qsM7bFgq18oMuWSI4NbzkTL1fKmM0eD/QUgkiZU5G8lE6b3FEYWFYGQFtLZbW4uj9l
+         JA7kRwaKH3/dFMdabJozYCNdW8mrhi2TrJoCfekSd2VfhHl2MzAcPsWoonHkdlE6IXGR
+         xUfw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752499647; x=1753104447;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=le2QGaGzo0bSe4kbwhr/jCVyaZqfv5a/FTodEzgsr1o=;
-        b=jlvbRMYnVDlyslZO3H1WSVm97KUpwz2C9Sr6PUtrCapTCPXNV23oiGqCnefYOm5It/
-         Z8lY3hOfug7lXY0Yq7Sc7lUwfhOIZtKWAEESb+WIo21Rj8QtAztNwJXHhD+42jv5ULH/
-         alcZnxAAX40M8Og1j/k5RgdaaQ9kDxD5cBigpwt8Z6d/VEThr1keLwD8Jj5hXie6l94j
-         wk3kyBKXhdSZhgcLyldeLq8wGg9cnpgFPAF9ItYQLoQOJDc9m1l+5kdYszTH8JzCfuPh
-         JNvFpYr2I6bjvByhSzFeAhrhl80W2LdUiaWvv07RYWIo+m0JZ0CsY4RIYpp06Gg/HszO
-         YkDg==
-X-Gm-Message-State: AOJu0Yy2kliHq/pcdM+cYLsfpNY6UNvGk3P96SFJwLCJSzR3tG70Iur/
-	f9yJBNhzOazSvZ8LUsNpOmMBKoZE3pJ3d2F+G5LRc7j+RFWkPKhIIvYaGAqyJw==
-X-Gm-Gg: ASbGncuDHqIb2AMvMWUmC7DMrPAoTVTe3YMEICmo9Oj9Qo/9+oqHtATSI/bk4y2vPiw
-	sg2tUhTTXUKCjzBWEZqVEMnPoovL+anhXJMJOffH6LQAvZhogva/A9YjRTdiPRVnYs1wsJmhTKX
-	2qG5OX5LjQB/FVkdqzVXMPU8xJ+aYvM0ljB7qWzubfRBaPu/JwxE7ljEwp9bwdZyIpdq+yptUbm
-	2OIkeIwuomNXn0HYryVlhrEaY4UW2QocfyG23g1xrKqPu4GzMQVfgWYwMR6DPOkXzeq6iJDHa5U
-	Ih+As58EsJSjURpk3jlbCRRYTo3pFo8uQ7z0QrRrBwKLIg8j+85x0Y5mSWcVjvHZif2t8kfoNgo
-	FLShG7GEScLJm5HDPlSdABZnLlukIIH+LGScUYd6KA08e
-X-Google-Smtp-Source: AGHT+IFDfDdmq+Lmly/N5lnKuCOYwyS3o6qo6pV5qxOvCnerqfMjIaExY6p3pP7VsukCgcHcQmguTQ==
-X-Received: by 2002:adf:9d82:0:b0:3a4:dd02:f724 with SMTP id ffacd0b85a97d-3b5f18d2bd0mr9216438f8f.43.1752499647114;
-        Mon, 14 Jul 2025 06:27:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752499674; x=1753104474;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nkODo8EZRh50913qZ/pSoeAguBQ7adLGR0DhHIjUy3I=;
+        b=hX3R+9eyFOfPz4mTaNmus0b4OTOp1YxhJ2UOE6z+e2PgJD1WKj1x/Nq7F7vLr9BR5a
+         lyaJj0ehJ0+HtsBKgZgKNl6k5cJ7ljiTDUc6UzC4HEDKAthwVDzm06eDqMixrCJIxoTc
+         uMqWGuzT5VEMiVHimn4559eVOHtygFfCjgimvoLZ9mmdbWDMF0JwCMSFWRbqKfLClW9U
+         C+exdNIfx0N11miEYsd4EgSFgL85eLGWYnOTtGsWo8RKl+cTMNz77L7gz7oXJgUQYkYr
+         ozYiMn5oloMwKyXnq61Z6pVwMQIua90yufhnsyHVtmVy8hzJNcSmnwspcEPeysLo749x
+         VF2A==
+X-Gm-Message-State: AOJu0YzXSRkwMj6rAiqKEKX4VG5ilFbGS9KAvMRRft+mFtCUeOsv2uzF
+	dntZ1yfr1A5kfiTCrnxm8X4BOVckZc2rOok6eSN9pyabLOu8HlABZ0IZJmqklw==
+X-Gm-Gg: ASbGncsEFKu/D7Z6CJGqdkyo7FVHTy8wGSYv+c69hNF09nKaMIAGxdmGSpjX/TZ/l7S
+	lazBr3ylH/64FCtQ2YyRoJLgvJb2aIDNkrjAejPUAjSoG0rfLFYU0sC5Gnm1lYiKV/3mHfLOckC
+	1Tyoj43d2aqelnbY+68awRTRihrfXPoQhppLCTF1ZQ/Y2VbmuhT5g2OX6HR/4v9olSH/ql5SaPS
+	lMcri2N1jQ9x1svGeUNPm2FvjIZ+6HKsyYCJ7DXT6m6DMyleRScKf1THJZRQ1q6UXMM09uWrtn5
+	BeRp3BjeDWuhfBDPhOJE57wvTc2xZLPu9m/8oMYt2Nwhjzve098UrUn2iKGDLrPzFYER08MAnPT
+	8Xnly+GPEFbqg1VePzOwDMGH1Rhf8uFuiNvwm+cPjTi2f
+X-Google-Smtp-Source: AGHT+IECK7ljYB60oj9MjL1ZdOyMrLlbuvnvWNoiGh5X7dVlkAis5mRDmzyWvoIRJEEcd21/QyawyQ==
+X-Received: by 2002:a05:6000:4186:b0:3a5:527b:64c6 with SMTP id ffacd0b85a97d-3b5f18565fcmr11359230f8f.1.1752499673567;
+        Mon, 14 Jul 2025 06:27:53 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d867sm12616750f8f.61.2025.07.14.06.27.26
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8bd1784sm12331706f8f.5.2025.07.14.06.27.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 14 Jul 2025 06:27:26 -0700 (PDT)
+        Mon, 14 Jul 2025 06:27:53 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
-Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 3/3] strbuf: convert predicates to return bool
-Date: Mon, 14 Jul 2025 14:27:02 +0100
-Message-ID: <7eaf80420611aab498089a2bddead892330606b8.1752499610.git.phillip.wood@dunelm.org.uk>
+Cc: Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH] strbuf: add compound literal test balloon
+Date: Mon, 14 Jul 2025 14:27:37 +0100
+Message-ID: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
-In-Reply-To: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
-References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,127 +73,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Now that the string predicates defined in git-compat-util.h all
-return bool let's convert the return type of the string predicates
-in strbuf.{c,h} to match them.
+A C99 compound literal creates an unnamed object whose value is given by
+an initializer list. This allows us to simplify code where we cannot use
+a designated initalizer because the values of some members of the object
+need to be calculated first. For example this code from builtin/rebase.c
+
+	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+	struct reset_head_opts ropts = { 0 };
+	int ret;
+
+	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+		    opts->reflog_action,
+		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+		    opts->reflog_action, opts->head_name);
+	ropts.branch = opts->head_name;
+	ropts.flags = RESET_HEAD_REFS_ONLY;
+	ropts.branch_msg = branch_reflog.buf;
+	ropts.head_msg = head_reflog.buf;
+	ret = reset_head(the_repository, &ropts);
+
+can be be simplified to
+
+	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+	int ret;
+
+	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+		    opts->reflog_action,
+		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+		    opts->reflog_action, opts->head_name);
+        ret = reset_head(the_repository, &(struct reset_head_opts) {
+                .branch = opts->head_name,
+        	.flags = RESET_HEAD_REFS_ONLY,
+        	.branch_msg = branch_reflog.buf,
+        	.head_msg = head_reflog.buf,
+        });
+
+The result is more readable as one can see the value of each member
+of the object being passed to the function at the call site rather
+than building the object piecemeal in the preceding lines.
+
+A common pattern in our code base is to define a struct together
+with an initializer macro to initialize automatic variables and an
+initializer function to initialize dynamically allocated instances
+of the struct. Typically the initializer function for "struct foo"
+looks like
+
+        void foo_init(struct foo *f)
+        {
+                struct foo blank = FOO_INIT;
+                memcpy(f, &blank, sizeof(*f));
+        }
+
+which enables us to reuse the initializer macro FOO_INIT to initalize
+dynamically allocated objects. By using a compound literal we can
+simplify this to
+
+        void foo_init(struct foo *f)
+        {
+                *f = (struct foo) FOO_INIT;
+        }
+
+Let's add a test balloon to check for compiler support by changing
+strbuf_init() to use a compound literal in the hope of using this
+feature more widely in the future.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- strbuf.c | 28 ++++++++++++++--------------
- strbuf.h | 12 ++++++------
- 2 files changed, 20 insertions(+), 20 deletions(-)
+Base-Commit: a30f80fde927d70950b3b4d1820813480968fb0d
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fcompound-literal-test-balloon%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/a30f80fde...7ac55a509
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/compound-literal-test-balloon/v1
+
+ strbuf.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/strbuf.c b/strbuf.c
-index f30fdc69843..6c3851a7f84 100644
+index f30fdc69843..c93c1208c93 100644
 --- a/strbuf.c
 +++ b/strbuf.c
-@@ -8,55 +8,55 @@
- #include "utf8.h"
- #include "date.h"
+@@ -68,8 +68,7 @@ char strbuf_slopbuf[1];
  
--int starts_with(const char *str, const char *prefix)
-+bool starts_with(const char *str, const char *prefix)
+ void strbuf_init(struct strbuf *sb, size_t hint)
  {
- 	for (; ; str++, prefix++)
- 		if (!*prefix)
--			return 1;
-+			return true;
- 		else if (*str != *prefix)
--			return 0;
-+			return false;
+-	struct strbuf blank = STRBUF_INIT;
+-	memcpy(sb, &blank, sizeof(*sb));
++	*sb = (struct strbuf) STRBUF_INIT;
+ 	if (hint)
+ 		strbuf_grow(sb, hint);
  }
- 
--int istarts_with(const char *str, const char *prefix)
-+bool istarts_with(const char *str, const char *prefix)
- {
- 	for (; ; str++, prefix++)
- 		if (!*prefix)
--			return 1;
-+			return true;
- 		else if (tolower(*str) != tolower(*prefix))
--			return 0;
-+			return false;
- }
- 
--int starts_with_mem(const char *str, size_t len, const char *prefix)
-+bool starts_with_mem(const char *str, size_t len, const char *prefix)
- {
- 	const char *end = str + len;
- 	for (; ; str++, prefix++) {
- 		if (!*prefix)
--			return 1;
-+			return true;
- 		else if (str == end || *str != *prefix)
--			return 0;
-+			return false;
- 	}
- }
- 
--int skip_to_optional_arg_default(const char *str, const char *prefix,
-+bool skip_to_optional_arg_default(const char *str, const char *prefix,
- 				 const char **arg, const char *def)
- {
- 	const char *p;
- 
- 	if (!skip_prefix(str, prefix, &p))
--		return 0;
-+		return false;
- 
- 	if (!*p) {
- 		if (arg)
- 			*arg = def;
--		return 1;
-+		return true;
- 	}
- 
- 	if (*p != '=')
--		return 0;
-+		return false;
- 
- 	if (arg)
- 		*arg = p + 1;
--	return 1;
-+	return true;
- }
- 
- /*
-diff --git a/strbuf.h b/strbuf.h
-index 6362777c0a0..a580ac6084b 100644
---- a/strbuf.h
-+++ b/strbuf.h
-@@ -660,9 +660,9 @@ char *xstrvfmt(const char *fmt, va_list ap);
- __attribute__((format (printf, 1, 2)))
- char *xstrfmt(const char *fmt, ...);
- 
--int starts_with(const char *str, const char *prefix);
--int istarts_with(const char *str, const char *prefix);
--int starts_with_mem(const char *str, size_t len, const char *prefix);
-+bool starts_with(const char *str, const char *prefix);
-+bool istarts_with(const char *str, const char *prefix);
-+bool starts_with_mem(const char *str, size_t len, const char *prefix);
- 
- /*
-  * If the string "str" is the same as the string in "prefix", then the "arg"
-@@ -678,16 +678,16 @@ int starts_with_mem(const char *str, size_t len, const char *prefix);
-  * can be used instead of !strcmp(arg, "--key") and then
-  * skip_prefix(arg, "--key=", &arg) to parse such an option.
-  */
--int skip_to_optional_arg_default(const char *str, const char *prefix,
-+bool skip_to_optional_arg_default(const char *str, const char *prefix,
- 				 const char **arg, const char *def);
- 
--static inline int skip_to_optional_arg(const char *str, const char *prefix,
-+static inline bool skip_to_optional_arg(const char *str, const char *prefix,
- 				       const char **arg)
- {
- 	return skip_to_optional_arg_default(str, prefix, arg, "");
- }
- 
--static inline int ends_with(const char *str, const char *suffix)
-+static inline bool ends_with(const char *str, const char *suffix)
- {
- 	size_t len;
- 	return strip_suffix(str, suffix, &len);
 -- 
 2.49.0.897.gfad3eb7d210
 
