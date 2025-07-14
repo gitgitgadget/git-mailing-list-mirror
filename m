@@ -1,884 +1,170 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com [209.85.166.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6F2C238C36
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 20:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9E623182D
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 21:07:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752526423; cv=none; b=u6FyHQGYIKt9Bj95tmpXT2+V+4juMSpMcAU1SWuRN9JkxI/UJ1b0RhpCMMSeGK6Jb1MgDbS/RfpmWcsqsTz8iEsbMaeIEELjahchreveKTkSAju4cjdT9oel2T4WhtbmeK4vCDGKJWp709PynwycppJeFDu0InwcJuG2qMKoV9E=
+	t=1752527248; cv=none; b=KTqneztGzziU4XdkDI02WVHp8eDNQ0sT0sMYsmTDNDxoKEJ0N/4mLEHiLY2YkwV/Jy3Q0ZcoitdjpRJakl+glVeQFPpjZlndT3ooMVGkMf5GbTtsAT+iHwTlpBcuO2JEXd1curZmuyC1W+Ooj7bHaNP4nw3yQCmAduPN91HIo4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752526423; c=relaxed/simple;
-	bh=BptyC3AULNh6NAWOOaS3GuSfopY3UX21tJq96yp+Dm4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=uELEPVZLd7+WOkfgT660IoSwOC9iCg1UIGTBSqVMXHGF1tnRwY/AETKauqBoicZ4wX2oGTwkrFx7agIZXWq/ekOCQBkX72xslaXsFZpIWllhnNiz9HLlSJJ4QjQQuy1LM3U5SwHJNEYMUnT4WM2eN33xBX2SjKQR/GdPPV+Vqr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nN+Yzi86; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nuCHZX8I; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752527248; c=relaxed/simple;
+	bh=hygco9OgAxBhvfXpz6QF4gZRJVxIjyGSEYuZr+fhLQ4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hXeQAadMFsPcIPqgQrccH48myk9Qqtp2jMMoNckut0IonNqTQvpe4DdsqJFvN3UuVd46v7fwMNAqXWYnnF35Yp1/XJc+mVjiPi6Cfdg0qz+ojjqUdpCUo+iA19dQ3vxeqBTrvsbas6K6fNHZ6TAvbU+UdlSrdL8ljPIUzr6Gj0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=agvUsZ+B; arc=none smtp.client-ip=209.85.166.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nN+Yzi86";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nuCHZX8I"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id DA6BAEC050C;
-	Mon, 14 Jul 2025 16:53:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Jul 2025 16:53:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1752526418; x=1752612818; bh=km9b0UVzvHg+ppgR2tSFUYJ28n2+Cy/t
-	xSzvhYaEKsQ=; b=nN+Yzi862ImRJQfc/P2npzLY3f0OT6l64ZRCVKrLnVttOzE0
-	je1DAAN0P3Lnbxn+96Y+NM8cfIRtsnr7losRkXnLhMdxMXPKi9QaMrl8q4Z2IPpc
-	ZxBAtBTOglRenGQ7C8iR5W2DpNIRr7UY7laLhWYGo72dsdBcdsapJZS0/BEEUZHD
-	fTxeuPZpHsxCWXpPR4/9sD2tykwUMuz5Gu9m2ZwqPPSXT204v4qGkIvSWt8UbuqI
-	2Vp93/RRQ8u+lh6IdFJxnuBkRUJqog/316WJHiHDzJs3aD4sKZj9v87MiREgnhpA
-	naeU/1C1qNYStPXIy8X4y+5L+H6+ldbBl9j6nw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752526418; x=
-	1752612818; bh=km9b0UVzvHg+ppgR2tSFUYJ28n2+Cy/txSzvhYaEKsQ=; b=n
-	uCHZX8ISDmrULDOuelMravjrWBa++MTha3sKVnmaWPhyjlOVOGQyiB30PGN5y26l
-	ael5AOEmxIb0AYzVs5yjMqWV0eWeRxShmbqd+PKgh+56oSfVjwsINxEjHk5SIZVi
-	zxktuesAuSkKb84zWRI2apyE7l0wlg83+1M7edpHT5A7al26HlPnfghiokwgyYxh
-	CHVVdGVrktBvx85CoB909U+pI/0Dmr98cLFvkvs9gqEgqKY1rqlmKYX8FZH99fCT
-	Y3BKQl/D93R6QeBAtZ1d39h8mmjTxRiZi5GN+FImoadaUlO4ejP8x5m4Cm+YySeJ
-	SP7lh4idsoC0qCifioJJw==
-X-ME-Sender: <xms:Um51aDtx11iSe81QjucMiOlUzYprStCp0-Ii_tg7r9uOmUQDyyDwlw>
-    <xme:Um51aHtAWCRUbKPZg3xFkYdLSpLKiY-VCEZYazEdx4sZszx3JPQprNvcfsQmIjKqI
-    vgM8uFGbaUeV6YX5Q>
-X-ME-Received: <xmr:Um51aAN6sMdv_bRtIO20T4jQkwPqkP-EJMZUjX6VZ9HECV99xs3sm5iBvVIEnHLZ8B-OUqKtxcN7-xQI-iNoM8lUMTIAC-IvHZJrqDk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdelhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecufghrlhcuvffnffculdejmdenucfjughrpefhvffufffkfg
-    ggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhi
-    thhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhephfduuedtvedvve
-    fgheekleduteettdfhhfdtvdehiedvtdeghfdtffefgeeiffehnecuffhomhgrihhnpehk
-    vghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtohhmpdhgih
-    hthhhusgdrtghomhdpghhithhlrggsrdgtohhmpdhpkhhsrdhimhenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsoh
-    igrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhifnheslh
-    ifnhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Um51aN0g6BJ9oUXB9v3sZaWhydE7hcGdTrGyCSx3_vlvv4zdYDXK7A>
-    <xmx:Um51aEMNqpaP7dSByos3weOD1FGMAZJ22_2ikIR8nXfmeLdSvAX4AQ>
-    <xmx:Um51aF3h6K-1bO1A3HotIFvrn6vMhB5B4dd9QjGmucc1Y7Xl76QddQ>
-    <xmx:Um51aDFDjOvZnm36ftWFg2fhvYM1YVGDO1mdgXbUDSqePr96mdJUaA>
-    <xmx:Um51aBiTMU6aMyWHWLH4geoaKSEi3n91-qISwAqSMZkOIY1KF8iueiUS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 16:53:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Jul 2025, #04; Mon, 14)
-X-master-at: d30e120486c5e0632d97f3cba79c03efb6dbb3cb
-X-next-at: e9779f64349fbcc8d177d055208039877316e652
-Date: Mon, 14 Jul 2025 13:53:36 -0700
-Message-ID: <xmqqa556sddb.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="agvUsZ+B"
+Received: by mail-il1-f172.google.com with SMTP id e9e14a558f8ab-3df2ddd39c6so18588735ab.0
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 14:07:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752527246; x=1753132046; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Mggomhgn7zGkm2+E2/wv+XacTCR6Pk+5I4VC8McpyHk=;
+        b=agvUsZ+BvTd8fUgClWL/HXcD13Glz1WnTacGdx6iINMDkvkcQgT0u55oVfJp7Anv84
+         DdFZVvCD40cRrtyosXMr+LaxkQhUJpZeDx7OeQ6Yjd/FaE+cKj63buag8wtW4iRzIgIH
+         bQtuiprc6h6OSb7GQvma9MJhZcAEr/MpqZf3ppJ61s+423R3kf8ZJxI8RjyGI2KlpbnU
+         SQigIWl5W74UplKJFeE8a1h/MXqhCN4Y3eGFlA8IBj05vkFQg6ghT+mRoOzr0iXoyBMt
+         /jwLefy2P6uSIqxas88Dcfk3gssQvtrpi2eIaQafcc2QKIdmtrUcCapnyQvu116VoKNT
+         vzRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752527246; x=1753132046;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Mggomhgn7zGkm2+E2/wv+XacTCR6Pk+5I4VC8McpyHk=;
+        b=RIypWtudd7OhhT1P5kBZ7boc2i4+7Udo5s9wlqJIQyV1rj5zGj5yeZfi8L7rQwS31E
+         q8pt/jO4IvEHE0Qd2w+k6OL9a0i84e95YaeSxblPT6PVYu+QsgCua7LNIJCuuqPgHjTX
+         OoTqCZKgXx97b861/rbyQP+RW0KR2QTHqkHpyYS6U0RsmFRZOHp2l9N+QEYYJk1aF4dd
+         KO6bulwbf8tnVJpEA9UIOJn1rJwPL1ma1oKGUITUZ1fKYy8fjGXPluZ7y90BbGLE5yM6
+         gbamb9HBoCmj6p1ROe996Km+rCXqaGvIK5js3cJKbNI4yIUZSuu6v90c+G6B3ozN3KSr
+         XmoA==
+X-Gm-Message-State: AOJu0YxxuAYE8BKhDKAu16W7r0mdsu+kKNjLj9cln+yBVkdU8fYWddKS
+	vVsIgC8nXd1Zow4iJn3qCKTIIztyj+LdcJvxBLU9eUmj/KCNLOQPyj0dAUh2u3zY3FaZMMj6mAn
+	orB5H1AbKzXz1TPMvws6IgwN7zZj53sY=
+X-Gm-Gg: ASbGnctVp8Oh1sEGu1fdHLG1PqTb/Sc6oMj+WxRgTn6Y7OxKOsOoHYspa+1+6KkECYK
+	87wZ+YiDumKsX1vzUCUAmMJjzSc8h/kb1WR1c0d5gBE0Yai+NTKaJRivDIn9atZrCqe46b3RwTH
+	7vtMmncG4hd/nskFaE5VkOeryOUZ0jxFXyanU9VohF4vwWiXn1AlAfzJjmvWyA7ap5tuWnftC9b
+	R4URT+3triVy8AA6fwXEOlfmk4xwFSYDD/2KpVwqASMWF7HSys=
+X-Google-Smtp-Source: AGHT+IEUbCSgxZIhpuJZqnZwUg5WK5gTPQ7VsuGORiYg7+YuyrjRPDn/mpOVm6H67wZ4aOQhuPFdRusUtadPDhfEqyg=
+X-Received: by 2002:a92:ca09:0:b0:3dc:7f3b:acb1 with SMTP id
+ e9e14a558f8ab-3e25426be83mr113602505ab.13.1752527246305; Mon, 14 Jul 2025
+ 14:07:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ac/prune-wo-the-repository (2025-07-04) 2 commits
-  (merged to 'next' on 2025-07-07 at 3dd296a911)
- + builtin/prune: stop depending on 'the_repository'
- + repository: move 'repository_format_precious_objects' to repo scope
-
- Some code paths in the "git prune" used to ignore passed in
- repository object and used the_repository singleton instance
- instead, which has been corrected.
- 
- source: <cover.1751630981.git.ayu.chandekar@gmail.com>
-
-
-* bs/config-mak-freebsd (2025-07-02) 2 commits
-  (merged to 'next' on 2025-07-07 at d6761aa225)
- + build: retire NO_UINTMAX_T
- + config.mak.uname: set NO_MEMMEM only for functional version
-
- Drop FreeBSD 4 support and assume we are at least at FreeBSD 6 with
- memmem() supported.
- 
- source: <20250702093736.36074-1-carenas@gmail.com>
-
-
-* bs/remote-helpers-doc-markup-fix (2025-07-02) 1 commit
-  (merged to 'next' on 2025-07-07 at 60c2a47d1b)
- + gitremote-helpers.adoc: fix formatting
-
- Docfix.
- 
- source: <20250702161951.22908-2-bacs@librecast.net>
-
-
-* cb/total-ram-bsd-fix (2025-07-07) 1 commit
-  (merged to 'next' on 2025-07-07 at d9a7ca747c)
- + builtin/gc: correct total_ram calculation with HAVE_BSD_SYSCTL
-
- Use of sysctl() system call to learn the total RAM size used on
- BSDs has been corrected.
- 
- source: <20250707164518.6600-1-carenas@gmail.com>
-
-
-* hy/read-cache-lock-error-fix (2025-07-03) 1 commit
-  (merged to 'next' on 2025-07-07 at a97a188a9e)
- + read-cache: report lock error when refreshing index
-
- A failure to open the index file for writing due to conflicting
- access did not state what went wrong, which has been corrected.
- 
- source: <20250703074502.45593-1-hanyang.tony@bytedance.com>
-
-
-* jc/coccicheck-fails-make-when-it-fails (2025-06-23) 1 commit
-  (merged to 'next' on 2025-07-07 at 0b7affe7cd)
- + coccicheck: fail "make" when it fails
-
- "make coccicheck" succeeds even when spatch made suggestions, which
- has been updated to fail in such a case.
- 
- source: <xmqqbjqe77vw.fsf@gitster.g>
-
-
-* jk/all-negative-diff-filter-fix (2025-07-03) 1 commit
-  (merged to 'next' on 2025-07-07 at 139dd3db75)
- + setup_revisions(): turn on diffs for all-negative diff filter
-
- A diff-filter with negative-only specification like "git log
- --diff-filter=d" did not trigger correctly, which has been fixed.
- 
- source: <20250703224428.GB1909836@coredump.intra.peff.net>
-
-
-* kh/doc-config-subcommands (2025-07-01) 5 commits
-  (merged to 'next' on 2025-07-07 at b0db48b397)
- + config: mention --url in the synopsis
- + config: use --value instead of value-pattern
- + config: document --[no-]value
- + config: use --value=<pattern> consistently
- + config: document --[no-]show-names
-
- Documentation updates.
- 
- source: <cover.1751382830.git.code@khaugsbakk.name>
-
-
-* kn/clang-format-updates (2025-07-02) 3 commits
-  (merged to 'next' on 2025-07-07 at 0b0770e97a)
- + meson: add rule to run 'git clang-format'
- + clang-format: add 'RemoveBracesLLVM' to the main config
- + clang-format: set 'ColumnLimit' to 0
-
- Update ".clang-format" and ".editorconfig" to match our style guide
- a bit better.
- 
- source: <20250702-525-make-clang-format-more-robust-v3-0-705344f30580@gmail.com>
-
-
-* mc/netrc-service-names (2025-06-25) 3 commits
-  (merged to 'next' on 2025-07-07 at e98100afdd)
- + contrib: better support symbolic port names in git-credential-netrc
- + contrib: warn for invalid netrc file ports in git-credential-netrc
- + contrib: use a more portable shebang for git-credential-netrc
-
- "netrc" credential helper has been improved to understand textual
- service names (like smtp) in addition to the numeric port numbers
- (like 25).
- 
- source: <20250625142511.28857-1-maxim@guixotic.coop>
-
-
-* ps/perlless-test-fixes (2025-07-07) 2 commits
-  (merged to 'next' on 2025-07-07 at 2c56966ff8)
- + t5333: fix missing terminator for sed(1) 's' command
- + t4150: fix warning printed by awk due to escaped '\@'
-
- Test fixes.
- 
- source: <20250707-b4-pks-t-perlless-fixes-v1-0-92b2de1c3dd0@pks.im>
-
-
-* ps/use-reftable-as-default-in-3.0 (2025-07-04) 2 commits
-  (merged to 'next' on 2025-07-07 at 3f3402f221)
- + setup: use "reftable" format when experimental features are enabled
- + BreakingChanges: announce switch to "reftable" format
-
- The reftable ref backend has matured enough; Git 3.0 will make it
- the default format in a newly created repositories by default.
- 
- source: <20250704-pks-reftable-default-backend-v3-0-a1eb63e8442a@pks.im>
-
-
-* re/ssh-sign-buffer-fix (2025-07-07) 1 commit
-  (merged to 'next' on 2025-07-07 at 36dad3e4dc)
- + ssh signing: don't detach the filename strbuf from key_file tempfile
-
- Tempfile removal fix in the codepath to sign commits with SSH keys.
- 
- source: <20250707184852.16010-1-redoste@redoste.xyz>
-
-
-* rj/freebsd-sysinfo-build-fix (2025-07-04) 1 commit
-  (merged to 'next' on 2025-07-07 at bc4cbfd76d)
- + build: fix FreeBSD build when sysinfo compat library installed
-
- Build fix for FreeBSD.
- 
- source: <e6a80163-47ef-436b-98a6-2ac39c477080@ramsayjones.plus.com>
-
-
-* rp/apply-intent-to-add-fix (2025-07-07) 4 commits
-  (merged to 'next' on 2025-07-07 at 957e3fd081)
- + apply docs: clarify wording for --intent-to-add
- + t4140: test apply --intent-to-add interactions
- + apply: only write intents to add for new files
- + apply: read in the index in --intent-to-add mode
-
- "git apply -N" should start from the current index and register
- only new files, but it instead started from an empty index, which
- has been corrected.
- 
- source: <20250707121534.2933349-1-ray@ameretat.dev>
-
-
-* sj/string-list (2025-06-28) 8 commits
-  (merged to 'next' on 2025-07-07 at 5a95dc8007)
- + u-string-list: move "remove duplicates" test to "u-string-list.c"
- + u-string-list: move "filter string" test to "u-string-list.c"
- + u-string-list: move "test_split_in_place" to "u-string-list.c"
- + u-string-list: move "test_split" into "u-string-list.c"
- + string-list: enable sign compare warnings check
- + string-list: return index directly when inserting an existing element
- + string-list: remove unused "insert_at" parameter from add_entry
- + string-list: fix sign compare warnings for loop iterator
-
- Code and test clean-up around string-list API.
- 
- source: <aGDAZ6a0-PyXXGmK@ArchLinux>
-
-
-* ts/merge-orig-head-doc-fix (2025-07-05) 1 commit
-  (merged to 'next' on 2025-07-07 at 08f4a573e5)
- + docs: correct ORIG_HEAD example in "git merge" documentation
-
- Doc fix.
- 
- source: <pull.1940.git.1751737158670.gitgitgadget@gmail.com>
-
---------------------------------------------------
-[New Topics]
-
-* ps/sane-ctype-workaround (2025-07-09) 1 commit
- - sane-ctype: fix compiler error on Amazon Linux 2
-
- Our <sane-ctype.h> header file relied on that the system-supplied
- <ctype.h> header is not later included, which would override our
- macro definitions, but "amazon linux" broke this assumption.  Fix
- this by preemptively including <ctype.h> near the beginning of
- <sane-ctype.h> ourselves.
-
- Will merge to 'next'.
- source: <fabacc9bc7ef7d462d1c7198d5edc18c76b82270.1752139420.git.ps@pks.im>
-
-
-* rh/doc-glob-pathspec-fix (2025-07-07) 1 commit
-  (merged to 'next' on 2025-07-14 at 1561f0726d)
- + doc: correct doc for glob pathspec
-
- Docfix.
-
- Will merge to 'master'.
- source: <20250708024507.62386-2-rhanneken@pobox.com>
-
-
-* cb/meson-avoid-broken-macos-pcre2 (2025-07-13) 1 commit
- - meson: disable PCRE2 dependency by default in macOS
-
- Build fix for macOS.
-
- Will merge to 'next'.
- source: <20250713174807.32444-1-carenas@gmail.com>
-
-
-* jb/gpg-program-variable-is-a-pathname (2025-07-11) 1 commit
- - gpg-interface: expand gpg.program as a path
-
- The gpg.program configuration variable, which names a pathname to
- the (custom) GPG compatible program, can now be spelled with ~tilde
- expansion.
-
- Will merge to 'next'.
- source: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
-
-
-* pw/adopt-c99-bool-officially (2025-07-14) 3 commits
- - strbuf: convert predicates to return bool
- - git-compat-util: convert string predicates to return bool
- - CodingGuildlines: allow the use of bool
-
- Declare weather-balloon we raised for "bool" type 18 months ago a
- success and officially allow using the type in our codebase.
-
- Comments?
- source: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
-
-
-* pw/compound-literal-test-balloon (2025-07-14) 1 commit
- - strbuf: add compound literal test balloon
-
- Gauge if the world is ready for compound literal that can make the
- resulting code clearer in some places.
-
- Comments?
- source: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
-
---------------------------------------------------
-[Cooking]
-
-* ps/doc-pack-refs-auto-with-files-backend-fix (2025-07-08) 1 commit
-  (merged to 'next' on 2025-07-09 at 200b4b24a8)
- + docs/git-pack-refs: document heuristic used for packing loose refs
-
- Doc update.
-
- Will merge to 'master'.
- source: <20250708-b4-pks-pack-refs-document-files-heuristic-v1-1-e28d65a94573@pks.im>
-
-
-* ps/refs-files-remove-empty-parent (2025-07-08) 1 commit
-  (merged to 'next' on 2025-07-09 at f726af7117)
- + refs/files: remove empty parent dirs when ref creation fails
-
- When a ref creation at refs/heads/foo/bar fails, the files backend
- now removes refs/heads/foo/ if the directory is otherwise not used.
-
- Will merge to 'master'.
- source: <20250708-b4-pks-reffiles-prune-empty-dirs-on-abort-v1-1-3bae02e4f034@pks.im>
-
-
-* ps/t1006-tap-fix (2025-07-08) 1 commit
-  (merged to 'next' on 2025-07-09 at bbed1acc2a)
- + t1006: fix broken TAP format
-
- Test fix.
-
- Will merge to 'master'.
- source: <20250708-b4-pks-t1006-fix-tap-format-v1-1-c3f837448364@pks.im>
-
-
-* pw/3.0-commentchar-auto-deprecation (2025-07-08) 2 commits
- - commit: print advice when core.commentString=auto
- - breaking-changes: deprecate support for core.commentString=auto
-
- Proposes to deprecate "core.commentChar=auto" that attempts to
- dynamically pick a suitable comment character, as it is too much
- trouble to support for little benefit.
-
- Expecting a reroll.
- cf. <b811a0dc-fb49-4f66-a9ae-89a45d7ff104@gmail.com>
- source: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
-
-
-* ps/object-store-midx (2025-07-09) 9 commits
- - midx: remove now-unused linked list of multi-pack indices
- - packfile: stop using linked MIDX list in `get_all_packs()`
- - packfile: stop using linked MIDX list in `find_pack_entry()`
- - packfile: refactor `get_multi_pack_index()` to work on sources
- - midx: track whether we have loaded the MIDX
- - midx: stop using linked list when closing MIDX
- - packfile: refactor `prepare_packed_git_one()` to work on sources
- - midx: start tracking per object database source
- - Merge branch 'ps/object-store' into ps/object-store-midx
- (this branch uses ps/object-store.)
-
- Redefine where the multi-pack-index sits in the object subsystem,
- which recently was restructured to allow multiple backends that
- support a single object source that belongs to one repository.  A
- midx does span mulitple "object sources".
-
- Expecting responses.
- source: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
-
-
-* ps/object-file-wo-the-repository (2025-07-09) 20 commits
- - object-file: drop USE_THE_REPOSITORY_VARIABLE
- - environment: move object creation mode into repo settings
- - environment: move compression level into repo settings
- - object-file: get rid of `the_repository` in index-related functions
- - object-file: get rid of `the_repository` in `force_object_loose()`
- - object-file: get rid of `the_repository` in `read_loose_object()`
- - object-file: get rid of `the_repository` in loose object iterators
- - object-file: remove declaration for `for_each_file_in_obj_subdir()`
- - object-file: inline `for_each_loose_file_in_objdir_buf()`
- - object-file: get rid of `the_repository` when writing objects
- - odb: introduce `odb_write_object()`
- - loose: write loose objects map via their source
- - object-file: get rid of `the_repository` in `finalize_object_file()`
- - object-file: get rid of `the_repository` in `loose_object_info()`
- - object-file: get rid of `the_repository` when freshening objects
- - object-file: inline `check_and_freshen()` functions
- - object-file: get rid of `the_repository` in `has_loose_object()`
- - object-file: stop using `the_hash_algo`
- - object-file: fix -Wsign-compare warnings
- - Merge branch 'ps/object-store' into ps/object-file-wo-the-repository
- (this branch uses ps/object-store.)
-
- Reduce implicit assumption and dependence on the_repository in the
- object-file subsystem.
-
- Needs a bit of redoing around the configuration reading.
- cf. <32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com>
- source: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
-
-
-* jk/remote-avoid-overlapping-names (2025-07-08) 1 commit
-  (merged to 'next' on 2025-07-11 at 097c87760a)
- + remote: detect collisions in remote names
-
- "git remote" now detects remote names that overlap with each other
- (e.g., remote nickname "outer" and "outer/inner" are used at the
- same time), as it will lead to overlapping remote-tracking
- branches.
-
- Will merge to 'master'.
- source: <20250708225946.GC1180568@coredump.intra.peff.net>
-
-
-* ps/meson-cleanups (2025-07-08) 7 commits
-  (merged to 'next' on 2025-07-14 at 5fb402f51a)
- + ci: use Meson's new `--slice` option
- + meson: update subproject wrappers
- + meson: fix lookup of shell on MINGW64
- + meson: clean up unnecessary variables
- + meson: improve summary of auto-detected features
- + meson: stop printing 'https' option twice in our summaries
- + meson: stop discovering native version of Python
-
- Meson-based build update.
-
- Will merge to 'master'.
- cf. <87h5zkcbk2.fsf@iotcl.com>
- source: <20250709-b4-pks-meson-cleanups-v3-0-29ab15b9ab85@pks.im>
-
-
-* ua/t1517-short-help-tests (2025-07-06) 7 commits
- - t/t1517: move verify-tag -h test to t1517
- - t/t1517: move verify-commit -h test to t1517
- - t/t1517: move send-pack -h test to t1517
- - t/t1517: move pack-refs -h test to t1517
- - t/t1517: move ls-files -h test to t1517
- - t/t1517: move for-each-ref -h test to t1517
- - t/t1517: move checkout-index -h test to t1517
-
- Test shuffling.
-
- Expecting a reroll.
- cf. <CAPSxiM_ZZrbFpgvxqYgZ8oeTbRs+HW=rM+9Dud0G_Qr7eq3=FA@mail.gmail.com>
- source: <20250706215039.715732-1-usmanakinyemi202@gmail.com>
-
-
-* ag/doc-send-email (2025-06-30) 5 commits
-  (merged to 'next' on 2025-07-09 at cf940e82a1)
- + docs: mention possible options for Proton Mail users
- + docs: add a paragraph explaining the `sendmailCmd` option of sendemail
- + docs: add an OAuth2.0 credential helper for AOL accounts
- + docs: add outlookidfix config option to sendemail documentation
- + docs: link OpenSSL's verify(1) manual page to know about -CAfile and -CApath options
-
- Documentation updates for "git send-email".
-
- Will merge to 'master'.
- source: <20250630180511.499-1-gargaditya08@proton.me>
-
-
-* rs/parse-options-precision (2025-07-09) 7 commits
-  (merged to 'next' on 2025-07-09 at aefffa21b7)
- + parse-options: add precision handling for OPTION_COUNTUP
- + parse-options: add precision handling for OPTION_BITOP
- + parse-options: add precision handling for OPTION_NEGBIT
- + parse-options: add precision handling for OPTION_BIT
- + parse-options: add precision handling for OPTION_SET_INT
- + parse-options: add precision handling for PARSE_OPT_CMDMODE
- + parse-options: require PARSE_OPT_NOARG for OPTION_BITOP
-
- Define .precision to more canned parse-options type to avoid bugs
- coming from using a variable with a wrong type to capture the
- parsed values.
-
- Will merge to 'master'.
- source: <802eba72-c100-429a-80b7-7a0e8b6559ed@web.de>
-
-
-* kn/for-each-ref-skip (2025-07-11) 4 commits
- - for-each-ref: introduce a '--start-after' option
- - refs: selectively set prefix in the seek functions
- - ref-cache: remove unused function 'find_ref_entry()'
- - refs: expose `ref_iterator` via 'refs.h'
-
- "git for-each-ref" learns "--skip-until" option to help
- applications that want to page its output.
-
- Will merge to 'next'.
- cf. <CAP8UFD06KKF0A0WjBSw77A7fKp_pGJGVyw-OPd8-X92h=RSF+w@mail.gmail.com>
- source: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
-
-
-* tc/last-modified (2025-07-09) 3 commits
- - last-modified: use Bloom filters when available
- - t/perf: add last-modified perf script
- - last-modified: new subcommand to show when files were last modified
-
- A new command "git last-modified" is proposed to show the closest
- ancestor commit that touched each path.
-
- Comments?
- source: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
-
-
-* cb/daemon-reap-children (2025-07-10) 2 commits
- - daemon: use sigaction() to install child_handler()
- - compat/mingw: allow sigaction(SIGCHLD)
-
- Futz with SIGCHLD handling in "git daemon".
-
- Will merge to 'next'?
- source: <pull.2002.v4.git.git.1752176743.gitgitgadget@gmail.com>
-
-
-* ac/auto-comment-char-fix (2025-06-30) 1 commit
- - commit: avoid scanning trailing comments when 'core.commentChar' is "auto"
-
- "git commit" that concludes a conflicted merge failed to notice and remove
- existing comment added automatically (like "# Conflicts:") when the
- core.commentstring is set to 'auto'.
-
- Expecting a reroll.
- cf. <f22e864e-669d-457c-838e-961bbc977c4b@gmail.com>
- source: <20250630182527.69167-1-ayu.chandekar@gmail.com>
-
-
-* ly/changed-paths-traversal (2025-07-12) 5 commits
- - bloom: optimize multiple pathspec items in revision
- - revision: make helper for pathspec to bloom keyvec
- - bloom: replace struct bloom_key * with struct bloom_keyvec
- - bloom: rename function operates on bloom_key
- - bloom: add test helper to return murmur3 hash
-
- Lift the limitation to use changed-path filter in "git log" so that
- it can be used for a pathspec with multiple literal paths.
-
- Will merge to 'next'?
- source: <20250712093517.17907-1-yldhome2d2@gmail.com>
-
-
-* ph/fetch-prune-optim (2025-07-01) 3 commits
-  (merged to 'next' on 2025-07-09 at f0a1daff6a)
- + clean up interface for refs_warn_dangling_symrefs
- + refs: remove old refs_warn_dangling_symref
- + fetch-prune: optimize dangling-ref reporting
-
- "git fetch --prune" used to be O(n^2) expensive when there are many
- refs, which has been corrected.
-
- Will merge to 'master'.
- cf. <20250708013612.GB549007@coredump.intra.peff.net>
- source: <20250702011214.2835529-2-phil.hord@gmail.com>
-
-
-* bc/use-sha256-by-default-in-3.0 (2025-07-01) 11 commits
-  (merged to 'next' on 2025-07-11 at 893c183a5f)
- + Enable SHA-256 by default in breaking changes mode
- + help: add a build option for default hash
- + t5300: choose the built-in hash outside of a repo
- + t4042: choose the built-in hash outside of a repo
- + t1007: choose the built-in hash outside of a repo
- + t: default to compile-time default hash if not set
- + setup: use the default algorithm to initialize repo format
- + Use legacy hash for legacy formats
- + builtin: use default hash when outside a repository
- + hash: add a constant for the legacy hash algorithm
- + hash: add a constant for the default hash algorithm
-
- Prepare to flip the default hash function to SHA-256.
-
- Will merge to 'master'.
- source: <20250701212237.766774-1-sandals@crustytoothpaste.net>
-
-
-* lo/repo-info (2025-06-19) 7 commits
- . repo-info: add field layout.shallow
- . repo-info: add field layout.bare
- . repo-info: add the field references.format
- . repo-info: add the --allow-empty flag
- . repo-info: add plaintext as an output format
- . repo-info: add the --format flag
- . repo-info: declare the repo-info command
-
- A new subcommand "git repo-info" gives users a way to grab various
- repository characteristics.
-
- Expecting a reroll.
- cf. <0FEC4502-867F-4B9C-B752-376EF9464983@gmail.com>
- source: <20250619225751.99699-1-lucasseikioshiro@gmail.com>
-
-
-* cc/fast-import-export-signature-names (2025-07-09) 1 commit
- - fast-(import|export): improve on commit signature output format
-
- Clean up the way how signature on commit objects are exported to
- and imported from fast-import stream.
-
- Will merge to 'next'?
- source: <20250709141253.623563-1-christian.couder@gmail.com>
-
-
-* ac/deglobal-sparse-variables (2025-06-30) 3 commits
- - environment: remove the global variable 'sparse_expect_files_outside_of_patterns'
- - environment: move access to "core.sparsecheckoutcone" into repo_settings
- - environment: move access to "core.sparsecheckout" into repo_settings
-
- Two global variables related to sparse checkout have been moved to
- the repository settings structure.
-
- Needs a bit of redoing around the configuration reading.
- cf. <17b7f51c-0c3d-4d63-a501-47ce829f7345@gmail.com>
- cf. <xmqqbjpuqkrj.fsf@gitster.g>
- source: <cover.1751309770.git.ayu.chandekar@gmail.com>
-
-
-* ow/rebase-verify-insn-fmt-before-initializing-state (2025-06-09) 1 commit
- - rebase: write script before initializing state
-
- "git rebase -i" with bogus rebase.instructionFormat configuration
- failed to produce the todo file after recording the state files,
- leading to confused "git status"; this has been corrected.
-
- Expecting a reroll.
- cf. <7e796844-97e2-4b45-a76e-4c1fcb1da3ae@gmail.com>
- source: <20250609221055.136074-1-oystwa@gmail.com>
-
-
-* jc/tag-idempotent-no-op (2025-07-11) 1 commit
- - tag: allow idempotent "git tag" without "--force"
-
- "git tag T O" when the tag T is already pointing at the object O is
- a no-op; we used to but no longer error out such a request and
- require "--force" and instead turn it into a no-op.
-
- Will discard.
- cf. <dt5ruadvr7lmhsbypmb6yili5cookfx5btw4gzfeui7ehxxajv@ziael4udbbcy>
- source: <xmqqv7nyzgp7.fsf@gitster.g>
-
-
-* ss/compat-bswap-revamp (2025-06-11) 6 commits
- - bswap.h: provide a built-in based version of bswap32/64 if possible
- - bswap.h: remove optimized x86 version of bswap32/64
- - bswap.h: always overwrite ntohl/ntohll macros
- - bswap.h: define GIT_LITTLE_ENDIAN on MSVC as little endian
- - bswap.h: add support for __BYTE_ORDER__
- - Merge branch 'ss/revert-builtin-bswap-stuff' into ss/compat-bswap-revamp
-
- Clean-up compat/bswap.h mess.
-
- Stalled.
- cf. <xmqqo6tv1v1z.fsf@gitster.g>
- source: <20250611221444.1567638-1-sebastian@breakpoint.cc>
-
-
-* ja/doc-git-log-markup (2025-07-07) 9 commits
- - doc: git-log: convert log config to new doc format
- - doc: git-log: convert diff options to new doc format
- - doc: git-log: convert pretty formats to new doc format
- - doc: git-log: convert pretty options to new doc format
- - doc: git-log: convert rev list options to new doc format
- - doc: git-log: convert line range format to new doc format
- - doc: git-log: convert line range options to new doc format
- - doc: git-log convert rev-list-description to new doc format
- - doc: convert git-log to new documentation format
-
- Doc mark-up updates.
-
- Will merge to 'next'.
- source: <pull.1933.v3.git.1751914412.gitgitgadget@gmail.com>
-
-
-* sk/reftable-clarify-tests (2025-06-05) 10 commits
- - t/unit-tests: finalize migration of reftable-related tests
- - t/unit-tests: convert reftable stack test to use clar
- - t/unit-tests: convert reftable record test to use clar
- - t/unit-tests: convert reftable readwrite test to use clar
- - t/unit-tests: convert reftable table test to use clar
- - t/unit-tests: convert reftable pq test to use clar
- - t/unit-tests: convert reftable merged test to use clar
- - t/unit-tests: convert reftable block test to use clar
- - t/unit-tests: convert reftable basics test to use clar test framework
- - t/unit-tests: implement clar specific reftable test helper functions
-
- The reftable unit tests are now ported to the "clar" unit testing
- framework.
-
- Expecting a reroll.
- cf. <xmqqikla86id.fsf@gitster.g>
- source: <20250605140644.239199-1-kuforiji98@gmail.com>
-
-
-* ly/load-bitmap-leakfix (2025-06-30) 3 commits
-  (merged to 'next' on 2025-07-08 at 6e6d182a8c)
- + pack-bitmap: add load corrupt bitmap test
- + pack-bitmap: reword comments in test_bitmap_commits()
- + pack-bitmap: fix memory leak if load_bitmap() failed
-
- Leakfix with a new and a bit invasive test.
-
- Will merge to 'master'.
- cf. <aG2XZYamUv5FWq/W@nand.local>
- source: <pull.1962.v6.git.git.1751347929.gitgitgadget@gmail.com>
-
-
-* tb/prepare-midx-pack-cleanup (2025-05-28) 5 commits
- - midx: return a `packed_git` pointer from `prepare_midx_pack()`
- - midx-write.c: extract inner loop from fill_packs_from_midx()
- - midx-write.c: guard against incremental MIDXs in want_included_pack()
- - midx: access pack names through `nth_midxed_pack_name()`
- - Merge branch 'ps/midx-negative-packfile-cache' into tb/prepare-midx-pack-cleanup
-
- Improvement on Multi-pack-index API.
-
- Expecting a reroll.
- cf. <20250530065034.GC1321283@coredump.intra.peff.net>
- source: <cover.1748473122.git.me@ttaylorr.com>
-
-
-* kj/renamed-submodule (2025-06-07) 2 commits
- - submodule: skip redundant active entries when pattern covers path
- - submodule: prevent overwriting .gitmodules entry on path reuse
-
- The case where a new submodule takes a path where used to be a
- completely different subproject is now dealt a bit better than
- before.
-
- What's the status of this one?
- cf. <xmqq4ivn3a1w.fsf@gitster.g>
- source: <20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com>
-
-
-* lm/add-p-context (2025-06-28) 4 commits
- - add-patch: add diff.context command line overrides
- - add-patch: respect diff.context configuration
- - test: use "test_config"
- - test: use "test_grep"
-
- "git add/etc -p" now honors diff.context configuration variable,
- and learns to honor -U<n> option.
-
- Expecting responses.
- cf. <xmqqms9eql73.fsf@gitster.g>
- source: <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
-
-
-* ps/object-store (2025-07-01) 17 commits
-  (merged to 'next' on 2025-07-07 at e19db55858)
- + odb: rename `read_object_with_reference()`
- + odb: rename `pretend_object_file()`
- + odb: rename `has_object()`
- + odb: rename `repo_read_object_file()`
- + odb: rename `oid_object_info()`
- + odb: trivial refactorings to get rid of `the_repository`
- + odb: get rid of `the_repository` when handling submodule sources
- + odb: get rid of `the_repository` when handling the primary source
- + odb: get rid of `the_repository` in `for_each()` functions
- + odb: get rid of `the_repository` when handling alternates
- + odb: get rid of `the_repository` in `odb_mkstemp()`
- + odb: get rid of `the_repository` in `assert_oid_type()`
- + odb: get rid of `the_repository` in `find_odb()`
- + odb: introduce parent pointers
- + object-store: rename files to "odb.{c,h}"
- + object-store: rename `object_directory` to `odb_source`
- + object-store: rename `raw_object_store` to `object_database`
- (this branch is used by ps/object-file-wo-the-repository and ps/object-store-midx.)
-
- Code clean-up around object access API.
-
- Will merge to 'master'.
- source: <20250701-pks-object-store-wo-the-repository-v6-0-dbf3894ab4e2@pks.im>
-
-
-* cc/promisor-remote-capability (2025-06-25) 5 commits
- - promisor-remote: use string constants for 'name' and 'url' too
- - promisor-remote: allow a client to check fields
- - promisor-remote: refactor how we parse advertised fields
- - promisor-remote: allow a server to advertise more fields
- - promisor-remote: refactor to get rid of 'struct strvec'
-
- The "promisor-remote" capability mechanism has been updated to
- allow the "partialCloneFilter" settings and the "token" value to be
- communicated from the server side.
-
- What's the status of this one?
- cf. <xmqqzfdf1ve9.fsf@gitster.g>
- source: <20250625125055.1375596-1-christian.couder@gmail.com>
-
-
-* tb/midx-avoid-cruft-packs (2025-06-23) 9 commits
-  (merged to 'next' on 2025-07-11 at 3fc02a8a1a)
- + repack: exclude cruft pack(s) from the MIDX where possible
- + pack-objects: introduce '--stdin-packs=follow'
- + pack-objects: swap 'show_{object,commit}_pack_hint'
- + pack-objects: fix typo in 'show_object_pack_hint()'
- + pack-objects: perform name-hash traversal for unpacked objects
- + pack-objects: declare 'rev_info' for '--stdin-packs' earlier
- + pack-objects: factor out handling '--stdin-packs'
- + pack-objects: limit scope in 'add_object_entry_from_pack()'
- + pack-objects: use standard option incompatibility functions
-
- "pack-objects" has been taught to avoid pointing into objects in
- cruft packs from midx.
-
- Will merge to 'master'.
- source: <cover.1750717921.git.me@ttaylorr.com>
+References: <20250708091738.4072857-1-christian.couder@gmail.com> <20250709141253.623563-1-christian.couder@gmail.com>
+In-Reply-To: <20250709141253.623563-1-christian.couder@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Mon, 14 Jul 2025 14:07:14 -0700
+X-Gm-Features: Ac12FXzgL10c5CbA8KUy40XhIlFqePmrLLava9zfKNzIPachKsao_u3jJqNdkbc
+Message-ID: <CABPp-BHM5afgiUf7GsTPWmrf_tm6mWnvHWMKiZPxApJzN-U8gg@mail.gmail.com>
+Subject: Re: [PATCH v6] fast-(import|export): improve on commit signature
+ output format
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Sorry for the delay; noticed this in what's cooking and wanted to
+double check whether I missed anything, and decided to add a comment
+here...
+
+On Wed, Jul 9, 2025 at 7:13=E2=80=AFAM Christian Couder
+<christian.couder@gmail.com> wrote:
+>
+[...]
+> Let's improve on these limitations by improving fast-export and
+> fast-import so that:
+>
+>   - all the signatures are exported,
+>   - at most one signature on the SHA-1 object and one on the SHA-256
+>     are imported,
+>   - if there is more than one signature on the SHA-1 object or on
+>     the SHA-256 object, fast-import emits a warning for each
+>     additional signature,
+>   - the output format is "gpgsig <git-hash-algo> <signature-format>",
+>     where <git-hash-algo> is the Git object format as before, and
+>     <signature-format> is the signature type ("openpgp", "x509",
+>     "ssh" or "unknown"),
+>   - the output is properly documented.
+>
+[...]
+>
+> +test_expect_success GPGSM 'setup X.509 signed commit' '
+> +
+> +       git checkout -b x509-signing main &&
+> +       test_config gpg.format x509 &&
+> +       test_config user.signingkey $GIT_COMMITTER_EMAIL &&
+> +       echo "X.509 content" >file &&
+> +       git add file &&
+> +       git commit -S -m "X.509 signed commit" &&
+> +       X509_COMMIT=3D$(git rev-parse HEAD) &&
+> +       git checkout main
+> +
+> +'
+> +
+> +test_expect_success GPGSM 'round-trip X.509 signed commit' '
+> +
+> +       git fast-export --signed-commits=3Dverbatim x509-signing >output =
+&&
+> +       test_grep -E "^gpgsig $GIT_DEFAULT_HASH x509" output &&
+> +       (
+> +               cd new &&
+> +               git fast-import &&
+> +               git cat-file commit refs/heads/x509-signing >actual &&
+> +               grep "^gpgsig" actual &&
+> +               IMPORTED=3D$(git rev-parse refs/heads/x509-signing) &&
+> +               test $X509_COMMIT =3D $IMPORTED
+> +       ) <output
+> +
+[...]
+> +
+> +test_expect_success GPGSSH 'round-trip SSH signed commit' '
+> +
+> +       git fast-export --signed-commits=3Dverbatim ssh-signing >output &=
+&
+> +       test_grep -E "^gpgsig $GIT_DEFAULT_HASH ssh" output &&
+> +       (
+> +               cd new &&
+> +               git fast-import &&
+> +               git cat-file commit refs/heads/ssh-signing >actual &&
+> +               grep "^gpgsig" actual &&
+> +               IMPORTED=3D$(git rev-parse refs/heads/ssh-signing) &&
+> +               test $SSH_COMMIT =3D $IMPORTED
+> +       ) <output
+> +
+> +'
+> +
+
+Overall, the patch looks great now.  There's just one little nit-pick
+left; I'm still not a fan of tests of the form
+
+  (
+    cd dir &&
+    git fast-import
+    ...lots of other commands...
+  ) <output
+
+because I think the "<output" should really be moved to the "git
+fast-import" line since it's only meant to be used there.
+
+This series adds 2 such tests.  You did point out in the discussion on
+v5 that the testsuite already uses this idiom and you wanted to match
+existing style.  (Though there were only 2 tests previously that used
+it, and you already modified both as part of this patch.)
+
+However...we've been through enough rounds and this is really just a
+nit-pick; I can submit a follow-on patch later to clean up the four
+tests and see if others agree with me that this is an eyesore, or if
+I'm just weird.
+
+I think it's good to merge down.
