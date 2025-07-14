@@ -1,138 +1,107 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4D7288C08
-	for <git@vger.kernel.org>; Sun, 13 Jul 2025 17:48:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6305B1FE461
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 10:34:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752428938; cv=none; b=eQsWlSoLeyl4EkK6fI0/DyOgBAT6Nc4rjJECN8ZQOwL/CdEahhLHh2BFADR9B6Y+UMqftj7yEVws3AOr2EjMqYAvVv4rz1Y9lR3UZclOMM0NVmHJa5u9yTCXlGameVlQhoBVTWymfIOcdPhlgRBeyC9KLz67SSAKSZzRHO/VYHQ=
+	t=1752489274; cv=none; b=e5Volfa5Iur59JyM0k8AVHir4FoIcDZDpieUb5GGm2tuKKe0vNGxsWmlTgYlIB0RpfyOBp+kamM6OKKpF3JSrTG90EKwD3OYkkMhAroeJIOESFErYo9F2UULMfTADNWMoNFhFNMwgLrnrNPxE1SxzRnrh4DWejUL6K9KcKvkYrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752428938; c=relaxed/simple;
-	bh=pcj+JwUDkZmfK/8jpvBKcqeAatM162eKu0oymyVz9T0=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=uOGgzo6+hTqJlsC+YqcACxkXVuE07aILsQvXHhSmflqpiDo0FF/PSaBJD1C7GUj7SfNOe2+KiyMBOnhM0gKLY3sU5048+sHEpLMlZfhdu4jdie4ezuk/dRKTQXT1SoM5eQF/+xVadFDl2K3SXpsoQuDnxY/VCqssGTtVnfnEDxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V5mnE5Fq; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1752489274; c=relaxed/simple;
+	bh=2khAHQYF5P3AH78dEjNARLjzEYoayKWQobpCocGp7qU=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uB43G2HniGCUoUs0bxBviRRBct9uklNkz0jyB0ZWcMU5v7jMJvSv0Wl2tPHua76o4DanEnUmkIjyI8luEjhNh0no9EOnePRZFR9zJpkyku5yEn2aJZSevKx7lnEwCPGiReUnPbxamY+75WnOUoD4tjV7dAflIPDrkmLfYK2d+bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z2hNm2YP; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V5mnE5Fq"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3122368d7cfso2913998a91.1
-        for <git@vger.kernel.org>; Sun, 13 Jul 2025 10:48:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z2hNm2YP"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-adfb562266cso720721366b.0
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 03:34:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752428936; x=1753033736; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1752489271; x=1753094071; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DItmQFVrTCXuLI8s7IfP0BLq+5d/nxgHPhtWA9D1LRU=;
-        b=V5mnE5FqD62wd5p9vPwWottqZZsaxRATv7VBtdQ468/hbA2EBfOK0StXcXaV+oj6hu
-         K+qie7SSp1wvmVX3CETbzJsDK1Y46ARqwzXOSC5g4PNwUZvRJe3/0O9b4LGPucPJI3sF
-         x6ha9zZ/OGZdoi5Q0iNxJ7PFcEo3KMZ1Zu3G1ZQmcP41mr2VAxuADtG8X+uW6ovOtzb2
-         oYju00gif3ctsb4euAW1L816lKp9938VIbqurOnYHKSYajPbvSDpoinsAmc64rEVYND5
-         J9RBO8ylAnAn1G+A4pTa/MimLl5lgtMkOV3LajtZPEyVCzzZCCmbB+4KGGZhCe1QByg9
-         T2OA==
+        bh=Ks+eGyJq1pRFZO0foSWPe5BKWE0nRPJULpk9FRg6+eo=;
+        b=Z2hNm2YPzqSlDVtxiFIkMBI1HJveCrO8eJSnY3m2MAec364XsEAooWw7gLHVxnyF6M
+         dLh4doZaJPmxTwLl70Ti5dbT3JhIBmYDRVbrxfZcMVBokBr1SGX5+8cJyi+RKsnFfMfU
+         E9FuxfFMPyV+E8Oxk3X7y/RCLl+z4NPBYIbPKUGZ5xUXu3gySu2iaFN0a8lQjb3ArOke
+         GPOIxVjD67NHtCRq/Z2h0QQLnSY9Pzza1H4r7wP9tmz8bRMhqiYM/XimMsx6Iir/P6iZ
+         fc4NUEn4wR0HR/8UgF8rAxcs7s1Q2lgzqb5zRBM6RGg2WWcXTEnVr9MCz1HghBQoguWJ
+         gMvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752428936; x=1753033736;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1752489271; x=1753094071;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DItmQFVrTCXuLI8s7IfP0BLq+5d/nxgHPhtWA9D1LRU=;
-        b=VdYPksHM01SaKJaWmAfGNZ8Eut90rhlze6/qCj+KdmgrkSMid5SVAws05pw7usLW+v
-         VwSBlloFNAWs7bAJIna1Vlvei3eGXV29Wc066OqN6Z+PlScHnzxsow32eOmzTR+7oKjs
-         EVtw+imBcF2+Jwbp+LP51UpniFYTDuzOe2HzN1PXnyMTMJlNy1uaIaei6VSYJXqppKSM
-         mQtnD6T1Qxf7drXhKerspokB9gbfSOL/B9LUI68gg5Q5YJmi6SBbkEP6ndc/+lBHyCuw
-         EbLyFi33KXMbFq9tccvs95hEHJosfguv41N/Tif8kUJxSQBaAObxR27p9XkwlQ3V0IUQ
-         9MvA==
-X-Gm-Message-State: AOJu0YwiCTiABB5kdhzZWrtT/F590kYEy3ezrwRiJ0uiEbA8K6NRhnJm
-	m06bz00I8bcTk+7b5ez/hW9xgghz2CUN72dH8fpuxJ3n7TmH57G/EeKgw7Yp6g==
-X-Gm-Gg: ASbGncvC64uMS8JEuLFLxJoMSAO8Tt+SWHPzEgswHG1o3QkLV4xumlngxTD2gCbxsMy
-	O/QbaZ8th9zsgmeK6H84FjydkX7t3i1JPqWa/DskVxGMT/d2TOysbPK7XJlhwvZu3bGyyC+lYjL
-	bptXm4wZWFvjwc54gMOlCSIWDsDnq5hy6sLw9q5VxLC72Yj1ZBErpgZepKutv5ePHTtoVb72YAm
-	kqSLjrPaP+ucgn3JYmLC2VRdmBexCcZK9yuro1DUxeYb9GG5fYji5WCxf5N6K1cD3VHbR6nA5uV
-	t2Kxq2WHLT6q6mgT/KOPmo/8UB5lJJpoxrHYVUNHkPnaCMMl8KEjvQYWs6gyIWyd82AUD6GvqoO
-	SU8IESkBOZrxNNwgZlHHja44yH2fn+ootgSLqFtljEbm3vVj/gtOyHToTi/cK2Im/35E+tHzf
-X-Google-Smtp-Source: AGHT+IGERxYIkP7Hk2Oawe9o77hiE0dB2GMM3n6FXSb5EMGUBpFpJgKwrLcS7ZheQwFm5Gd7hx504Q==
-X-Received: by 2002:a17:90b:3844:b0:311:df4b:4b93 with SMTP id 98e67ed59e1d1-31c4cc9c984mr16015102a91.7.1752428935876;
-        Sun, 13 Jul 2025 10:48:55 -0700 (PDT)
-Received: from localhost.localdomain (c-73-70-17-6.hsd1.ca.comcast.net. [73.70.17.6])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c301a95ffsm11617280a91.40.2025.07.13.10.48.54
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 13 Jul 2025 10:48:55 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	carenas@gmail.com,
-	sandals@crustytoothpaste.net
-Subject: [PATCH v3] meson: disable PCRE2 dependency by default in macOS
-Date: Sun, 13 Jul 2025 10:48:07 -0700
-Message-Id: <20250713174807.32444-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250713122341.17976-1-carenas@gmail.com>
-References: <20250713122341.17976-1-carenas@gmail.com>
+        bh=Ks+eGyJq1pRFZO0foSWPe5BKWE0nRPJULpk9FRg6+eo=;
+        b=hXCgZw6IiUHgZagWyYj8xT75a423Z//FOY0J5biw/G7ZS9OLHjoV+vrlLuBffPwTiI
+         kmHA1AZ+iwy48rzXj+zBwTvoCdM/8QxzYKzB7IJaerD6VMm83ikp2nXfn/foX45lbwf+
+         8xImxRoeHUrubm5vfEzzHo8rFgO0kVpO3+Mnsxg/ZLJ6fGg2rCrQ99QdKeSEThx+cfRO
+         BM6nxpOMaumCilf23xhdeTCgd3gkQyM4jputYJj4fnAHR5aHD7Gayi8XKJSAx4oFD/WT
+         uqeSYdxyDnKO9qyO3LbwIjY01AGpPE9cCB3nnyMfJLic+l3F3Mz1OJgxYJEnavjyAwMv
+         wFCA==
+X-Gm-Message-State: AOJu0YxHOoBkDXjgm32Qnq657X/SL3bTj61dwrYgiLwK/L5c9i8AKT28
+	HI8wnW1l8OFzReumH7lapDB9nCWRfhbrbTtni7nf78wU3JTXMl+ANAnnIkBQT8o2mYdZjgiSfXA
+	0ixmdBMSstFj60dYLPbC1ouOHbeT/gx8=
+X-Gm-Gg: ASbGncsPyVqRn3B/fx4E7w+1a1fhd9gpxG95TJNaWbbnMT0j6HVx7jJoEaB85/tQDpk
+	aZOTd16BczHwb3zGQbzQMn84iQubRafSILg2d0EbLUm9GlBl0p1cVw0f3Jh4MqrYXhcaZUBU5t3
+	xIdiirE77mtzCgjc7b3F6tFxV0t7NlRUBZIs+M5Cy7a4B5UD3X83vakNuSFfRycCiKXBvwQUCSA
+	0m/ewIYvcIyqRtE2fbyGjqp7rrC0tquXU+tRQ==
+X-Google-Smtp-Source: AGHT+IHSt+f3u7Z8N8j74UuzXB982YNANlJicfM+xnG0riwqrnbzykl7mBIIJlCztkS8lK7vjhidZiyI8+Jzv3+PSWQ=
+X-Received: by 2002:a17:906:c104:b0:ad8:9a3b:b274 with SMTP id
+ a640c23a62f3a-ae6fc1259cbmr1234126066b.52.1752489270263; Mon, 14 Jul 2025
+ 03:34:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
+ <20250711-306-git-for-each-ref-pagination-v4-3-ed3303ad5b89@gmail.com>
+In-Reply-To: <20250711-306-git-for-each-ref-pagination-v4-3-ed3303ad5b89@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 14 Jul 2025 12:34:17 +0200
+X-Gm-Features: Ac12FXxqUL0OKZDzuqtRO47TmCLJ720Ah1VOgReOpMzIjGkQ29Fckikh-HKaG3M
+Message-ID: <CAP8UFD06KKF0A0WjBSw77A7fKp_pGJGVyw-OPd8-X92h=RSF+w@mail.gmail.com>
+Subject: Re: [PATCH v4 3/4] refs: selectively set prefix in the seek functions
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Makefile requires the user to provide the USE_LIBPCRE2 flag to
-enable this dependency, but meson has it enabled by default,
-which can be problematic, at least in macOS.
+On Fri, Jul 11, 2025 at 6:20=E2=80=AFPM Karthik Nayak <karthik.188@gmail.co=
+m> wrote:
 
-macOS provides a PCRE2 library in base that is not usable and not
-configured properly, as it installs a pkgconf module that
-points to a non existent pcre2.h header in /usr/local/include.
+> diff --git a/refs/refs-internal.h b/refs/refs-internal.h
+> index 03f5df04d5..90de7837f8 100644
+> --- a/refs/refs-internal.h
+> +++ b/refs/refs-internal.h
+> @@ -353,11 +353,12 @@ void base_ref_iterator_init(struct ref_iterator *it=
+er,
+>  typedef int ref_iterator_advance_fn(struct ref_iterator *ref_iterator);
+>
+>  /*
+> - * Seek the iterator to the first reference matching the given prefix. S=
+hould
+> - * behave the same as if a new iterator was created with the same prefix=
+.
+> + * Seek the iterator to the first matching reference. If set_prefix is s=
+et,
 
-Add an option that will need to be turned to true once an
-alternative PCRE2 library is installed (which hopefully provides
-its own pkgconf module earlier in PKG_CONFIG_PATH) or meson has
-been instructed to use its subproject as a suitable dependency
-by `--force-fallback-for=pcre2`.
+s/If set_prefix is set/If the REF_ITERATOR_SEEK_SET_PREFIX flag is set/
 
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- meson.build       | 3 ++-
- meson_options.txt | 4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+> + * it would behave the same as if a new iterator was created with the sa=
+me
+> + * prefix.
 
-diff --git a/meson.build b/meson.build
-index 7fea4a34d6..e1475be6c8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1055,7 +1055,8 @@ else
-   build_options_config.set('NO_ICONV', '1')
- endif
- 
--pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
-+pcre2_feature = get_option('pcre2').disable_auto_if(host_machine.system() == 'darwin' and not get_option('macos_workaround_system_pcre2'))
-+pcre2 = dependency('libpcre2-8', required: pcre2_feature, default_options: ['default_library=static', 'test=false'])
- if pcre2.found()
-   libgit_dependencies += pcre2
-   libgit_c_args += '-DUSE_LIBPCRE2'
-diff --git a/meson_options.txt b/meson_options.txt
-index e7f768df24..f63ff32556 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
-   description: 'Build Git web interface. Requires Perl.')
- option('iconv', type: 'feature', value: 'auto',
-   description: 'Support reencoding strings with different encodings.')
--option('pcre2', type: 'feature', value: 'enabled',
-+option('pcre2', type: 'feature', value: 'auto',
-   description: 'Support Perl-compatible regular expressions in e.g. git-grep(1).')
- option('perl', type: 'feature', value: 'auto',
-   description: 'Build tools written in Perl.')
-@@ -73,6 +73,8 @@ option('breaking_changes', type: 'boolean', value: false,
-   description: 'Enable upcoming breaking changes.')
- option('macos_use_homebrew_gettext', type: 'boolean', value: true,
-   description: 'Use gettext from Homebrew instead of the slightly-broken system-provided one.')
-+option('macos_workaround_system_pcre2', type: 'boolean', value: false,
-+  description: 'A working PCRE2 library is available or will be provided by a subproject.')
- 
- # gitweb configuration.
- option('gitweb_config', type: 'string', value: 'gitweb_config.perl')
--- 
-2.39.5 (Apple Git-154)
+Maybe: s/with the same prefix/at the same reference/
 
+>   */
+>  typedef int ref_iterator_seek_fn(struct ref_iterator *ref_iterator,
+> -                                const char *prefix);
+> +                                const char *refname, unsigned int flags)=
+;
