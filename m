@@ -1,53 +1,53 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4E845945
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 17:01:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E0EB18E3F
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 17:02:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752512482; cv=none; b=dNF+w5bQe/EHDeSk6fpuDXcRlc2sS+2cS4v402NLO/D293iInnjUiOlV3ecOIU8QusHZ0s7HVFFUGFnBHIFf0AoXw2UdC6ABfZ2RUpw6/GV+Y8mxJIXYbOK+3bVttcz2Pp2itda6nRLnl8F+P/zU5mksuLT0yTHr3E1EVWJAoDs=
+	t=1752512525; cv=none; b=Y4tmNtl576Rrs7aamA2eNoPKJUBDRMGhbc7pDzJCo0y1g1uMjlAQMCrmwhQurXSlFqwc4NS93kcF9sr6iPQ9nhojUwfpYICNlPD1i8zaxI8VVwwoOotwa0CgBTWLEDX9yHe9AjuGFx79RUqS9Pvh3FuZoQuX4HYUtmoA9Sg7aIY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752512482; c=relaxed/simple;
-	bh=juy74xCceq1qL8d/pTXHHk4cXlBx4zOBI94DAeXjetc=;
+	s=arc-20240116; t=1752512525; c=relaxed/simple;
+	bh=RDLW6UKm1zN5OHXifkKWiJCR+MGxO5yspdfQkSeQY8U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GwsKkaQjcPt1IjDmPO3kdZybk/oI/lw+Sd4Zd5LzOg9QaNMMekon5toKBnxETjf/mgGY1J04iDKpMId0Co8B+2P+M66Vph85JLm+bTyvLEz6bvzuX9SLudqXtp/h4pd+z1scNNhQahT+VY0l6f1kmhk/QdwkHvXbFcDJNqXNxXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CtIZQbNk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lf2YEuRO; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=itNNRPRfqflYxRih3inxdFAykGKcCQse5jBw04ckZA3C5NW1v+SRieV/aFqAfd7lKwCm6q/gdoKzPIXzoxvJWiu2F0wsHgp3mwrxbZ5ocXKBq4XgXvXNv2dVcBsti7zlWKgYx0pUf2++mDmWAaPPQV8d99wC9KZ/k+l44O5QbyU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bjqOJa7+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OgNUyavM; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CtIZQbNk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lf2YEuRO"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F06151400191;
-	Mon, 14 Jul 2025 13:01:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Jul 2025 13:01:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bjqOJa7+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OgNUyavM"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7ABA6140038F;
+	Mon, 14 Jul 2025 13:02:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 14 Jul 2025 13:02:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752512478; x=1752598878; bh=/mboUPNHmM
-	8+xFoutzi/CdWLLj+GQutMCMgBJVoW1G4=; b=CtIZQbNk2lvpPaJgcQF0GufhDE
-	/ujSezBOYEOqICr93qWJ2xwJ+mmTm/+T2ksvxiG0psNPQylotbVsqh819j95/PSx
-	Zkbzn1k7ifQ3dpBa5ZQTzmwCcKMJEn7uh2c6lDZv93RrdHCcmlDsY9tajuY8y+ch
-	pbYC3jaSIJORYgDVHDSRba9fD+lDrtt0nAc4v20Dj94QVXgKAGGodLElSI5ArQTF
-	Dh48g5gFFPtHMG1Q5QnT1kXYndf/0Aa8EnBHvG2SnNtRJasROgU+ETQndp8njKUo
-	KK1I9PkDPWXTumPT0mDDk2YFC6agbrx9OsibCK6y2jpL0tDx3nm+G9+IsI9w==
+	:subject:to:to; s=fm1; t=1752512523; x=1752598923; bh=9WLUkmTWUO
+	iRMiH7q1MK09QSBxdBKL4JECwmAKVbQzo=; b=bjqOJa7+swo8AbMLyA33YAt7J8
+	kR0/KJavEX8oAidcwQxJFk/Q1u5Mfr/GCJ0q0W3pFrVFNmzX0A+jJYlAQI1v6nuC
+	nmjHNGh7Yhp0GM1S4w47Z6xD1pjIA2c29wo/5k7Rhda3JlIhhTISAPcuqDoGkInc
+	5Q8Lhq7CWEYnvMuJAvPmP8AxLAgcm5EwnS45XxJ53BGaRZOX5MI4Dl2hCBPXXKeq
+	z0Le8nXXpTE4hYHFt7pGDvqhQPn0y6S3XkFK6ERMMFTYFS2oPqcW1hXnvg5OvpPu
+	+rqPEl5zG4bwVpbRZ3t+mqajNDkkn3R5owLi/OrDVdFFutSf5oO8sZDZRqKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752512478; x=1752598878; bh=/mboUPNHmM8+xFoutzi/CdWLLj+GQutMCMg
-	BJVoW1G4=; b=Lf2YEuROGhdqP1jjXi65z4rfWkS8MDg2pYslfSn8nPmaFzB1aK6
-	P3z5qXJSOZ8q7wA0BwX4Xlz6ac7DTtyqv6kk/3YH5f5dAMlY++vX61E5TYWjzP0l
-	gb9eAU58u6gZBeWjv+s+EQQsvIziGexa4sxUJxY/cmeG5Ruidb6oNV3Zn5ziKMY4
-	mynXQvzqr68dwwr0Q+ODOoQsh2Ua2+Z3O+bIsqkoGmLe/SWuSieYSYXF2ZchhtTd
-	iB6UH12aOSEL6tCIrrgkHTFmElvfyhdw9QSxuCnJAf6la3A2Yu226Y+OMvFr1f11
-	LKnXLt708Ou4i9AzBYBJOJoceOdJEUOsPwQ==
-X-ME-Sender: <xms:3Td1aCKXvmOeWhnC2-0zt3FBJpUXLNZ_q7QKufBxSs0MPVsfoszShA>
-    <xme:3Td1aIEtgNl7eT-0IQZK8Via8jvtvjs7I78etNYW8jQxrg9iWMb-iJ4JfvMSBsGyI
-    27bUIv8QYyr8U_KJg>
-X-ME-Received: <xmr:3Td1aFCH0oyTsPo0TtNck3BmjS5M8LKjYAzWethtO_YuXmeZBvW15eyziJPSLuYoApObi4GcsjLueDItwmhb_ay-X56jqhJn1iqdLPY>
+	1752512523; x=1752598923; bh=9WLUkmTWUOiRMiH7q1MK09QSBxdBKL4JECw
+	mAKVbQzo=; b=OgNUyavMyhrnZPUBJSk+CkZWNddoqcxG0UOt/IjdG4nKZ0hMW/V
+	3EEYGqXEQf2grbeB0BXiSWLGSoYdxh0XVAflM8ROzrJ4yzPrpxuBKA9bLn6Excfb
+	0gLf+W8EPomaFnMprHOGRDRCKQQAJm1in0CuJ1dqizFzrPWf7A7lIc2awXIFc4I1
+	plDs57mQ3JYDvOsuMW+1CuM8ewJURPOGOoc6VmiW1px6BG2u2qJPuAz2lQHLy8Tn
+	Y5183iJv9IQ1k0p2doQHK4RKIYILiyuowd6USrbMAzZJgwM8y7ESH02aFMz6L1ee
+	sN+zcM5BFqbhQK9urSJw9X2LzAU5gYT8WIg==
+X-ME-Sender: <xms:Cjh1aL8DTop8Xc6FIge8Wu4QHkYoSFmT0ZLlhsmk9W7uHpakXyuUNQ>
+    <xme:Cjh1aPGosR6no-Y4Y6sXn2bXgw5z2W2JZ0dSho51QDSalePlVx-O0alb0e_JsdEyd
+    33dObh-fzLCcH_I-A>
+X-ME-Received: <xmr:Cjh1aOl4Z2qEWkHZgN4dmt2vtDx4yXmMrJRO1I_K_sPY1eXmdYcpWUvoWjWK0MKtvLFCjPeYfhlt9_O4utDxPiR8WGv8rRH86HcYR_E>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,32 +55,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdehtdcutefuodetgg
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
-    hopeihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephedtvddtvdegfeeftddtheeise
-    hsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:3jd1aL_XuIGPeTHo9R9GGQvtteSGV09G5_ryzh_suE9FUQfqkWBeIA>
-    <xmx:3jd1aBDmircjHCOZqa7yNoX-aLhGTQnw-6KW-jdGoQb4SKdlD1tX0Q>
-    <xmx:3jd1aAQkDE4kaI-62zbfSOjN7sUU3BrjMg0HD2i2gblDFjRcfoaGdw>
-    <xmx:3jd1aIsMZ15E4C19Vwl3a_r8_Y3JKgK03KP8_7mEbloiHV8b9lGWQw>
-    <xmx:3jd1aC6BZDpAMLn_sFaTCER5wviDKVXJ9exU09MbwZm9H8hTQttaTbts>
+    hopeihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopeehtddvtddv
+    geeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Cjh1aDatv7QOfamOQY7p824lrMk1K9J-wrBrnRieiNVTQufpX5vNzQ>
+    <xmx:Cjh1aDGysjvgoGi1d4mMaRaejx6zzG_av6nKyE7uv1rKBNChAUarjg>
+    <xmx:Cjh1aEK5DgL4HaabesY7HLb16GTDK_ylWKzkaZDY46lEi2SyjSwWGQ>
+    <xmx:Cjh1aOOM23EP-_PwCEYOPUZc9ourix0WXEuF9dSWkas9XOo5oFdRXA>
+    <xmx:Czh1aA7AqgnA1eb0jn8YgQbbhfLWIswTUSLu_n9M33n1v164saY3jnuo>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 13:01:17 -0400 (EDT)
+ 14 Jul 2025 13:02:02 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Derrick Stolee <stolee@gmail.com>
-Cc: Lidong Yan <yldhome2d2@gmail.com>,  git@vger.kernel.org,  Lidong Yan
- <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v6 5/5] bloom: optimize multiple pathspec items in revision
-In-Reply-To: <30afce8c-c932-4c51-9a27-e63385608514@gmail.com> (Derrick
-	Stolee's message of "Mon, 14 Jul 2025 12:51:56 -0400")
-References: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
-	<20250712095129.24642-1-yldhome2d2@gmail.com>
-	<30afce8c-c932-4c51-9a27-e63385608514@gmail.com>
-Date: Mon, 14 Jul 2025 10:01:16 -0700
-Message-ID: <xmqqbjpmu2oz.fsf@gitster.g>
+Cc: Lidong Yan <yldhome2d2@gmail.com>,  502024330056@smail.nju.edu.cn,
+  git@vger.kernel.org,  toon@iotcl.com
+Subject: Re: [PATCH v6 0/5] bloom: enable bloom filter optimization for
+ multiple pathspec elements in revision traversal
+In-Reply-To: <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com> (Derrick
+	Stolee's message of "Mon, 14 Jul 2025 12:53:35 -0400")
+References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+	<20250712093517.17907-1-yldhome2d2@gmail.com>
+	<0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
+Date: Mon, 14 Jul 2025 10:02:01 -0700
+Message-ID: <xmqq7c0au2nq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,29 +93,20 @@ Content-Type: text/plain
 
 Derrick Stolee <stolee@gmail.com> writes:
 
-> On 7/12/2025 5:51 AM, Lidong Yan wrote:
->> To enable optimize multiple pathspec items in revision traversal,
->> return 0 if all pathspec item is literal in forbid_bloom_filters().
->> Add for loops to initialize and check each pathspec item's bloom_keyvec
->> when optimization is possible.
+> On 7/12/2025 5:35 AM, Lidong Yan wrote:
 >
-> The patch itself is good.
+>> The difference from v5 is:
+>>   - extract convert pathspec item to bloom_keyvec logic to
+>>     a separate function, which simplifies the prepare_to_use_bloom_filter()
+>>     function.
+>>   - fix few bugs in v5.
 >
->> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
->> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> Thanks for making these changes. Including your fixed patch 5, this
+> version looks ready to me.
 >
-> Here, I'll just point out that your sign-off should follow mine
-> because you were the last to touch the patch. In this way, the
-> sign-off gives a kind of timestamp to who made the most-recent
-> changes (and that those changes have that person's sign-off,
-> and may not have been vetted by previous signers).
+> I wouldn't say "fix a few bugs" but instead "fix some compile-time
+> linting complaints when using DEVELOPER=1" to be clear that the
+> functionality hasn't changed but the code is cleaner.
 
-Thanks for pointing it out.  Also perhaps a single-liner attribution
-to clarify who did what, e.g.
-
-	Signed-off-by: Derrick
-	[ly: did this and that to derrick's code to adjust]
-	Signed-off-by: Lidong
-
-would be more helpful.
+Thanks both, for polishing and reviewing.
 
