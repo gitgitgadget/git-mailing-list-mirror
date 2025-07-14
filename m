@@ -1,65 +1,24 @@
-Received: from mail-yw1-f172.google.com (mail-yw1-f172.google.com [209.85.128.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bsmtp2.bon.at (bsmtp2.bon.at [213.33.87.16])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71ED8253954
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:51:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4103F23C4FF
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:52:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.16
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752511920; cv=none; b=XqxRZmB0oLRZWa3HeGDcJfc0RBjXly4neH/bWtW56QFK5Q5psWdZu8x8ah8q0jKLsY0GuUMpITgtwPeq+C0TpS6O2RelbI0REiWY8deK8zs5VW0p+l0kmPFWDpxnAcu6xONBIzUWVBkoRZ9/maAJ9SaFgxI39e+Ci57eHPqAors=
+	t=1752511957; cv=none; b=QAMKliwkqmz21UFSqmu6hFb9mzYY2DW67Tt8+8Ba3gexW7jxtE1lo9XYPFaPCNPU7JsWXmoNs8xklmZkTYAixazWPSdCWt4ys2UTtD5yRy2yvG5+lcksGR07Z6F7oIXBq9VbB/YnPh5/W6GJd9in8onVMgfUd3mTGUvMAFv3vUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752511920; c=relaxed/simple;
-	bh=ngwZxWjLDreir5yV6Tw3Rle1m8vhbUuedq0gbV1GrwU=;
+	s=arc-20240116; t=1752511957; c=relaxed/simple;
+	bh=iD8loS0Krnd/aQ+/7lMmgVcTD0oMLGRARoLw3d4hBm4=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JxqabiaEv0o0hzseskhI42Nf9ExBT/pWCItwNFXf4yYQJkUNQlvL5KyTl/l8Plr604RQcmezYAKZMhiaxCCX3bgzT2wIMPS5p7+foH8Xg4vVfusBXwZkoLZ0XnbA3uB7vDRqLQILUcR5yrPdS48cpHbnJr08TggaLBffazaIX/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VYiaBveW; arc=none smtp.client-ip=209.85.128.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VYiaBveW"
-Received: by mail-yw1-f172.google.com with SMTP id 00721157ae682-7180bb37846so10393637b3.3
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 09:51:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752511917; x=1753116717; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=ngwZxWjLDreir5yV6Tw3Rle1m8vhbUuedq0gbV1GrwU=;
-        b=VYiaBveWt8XcUFR2zik+tvmzAewVh19S7ZZCbD4qRIllpO24MdOIVHWS1bel0jcH7q
-         qaaOl8CH8UfIaJNSkScctBC8DHGBGd/C3qy6LpjEYaJwefbZp/BtJul4cJHS/o7TjW4i
-         72c0uLfgDPrTacPfrlvHY7CD9eUC9tfCj8GUSBD+7tKxwdhZya/d1g9J1kBvpkIL7gWH
-         yqyaAC3gohitIS7p1Zbhk9qeA/J2HJBfoR/NB35ekyvXhgmlzhhsK0OCfh2QPfAepqQW
-         78F2117JGwJm85go3zvhi35aSQoCKgsKnSMgW2pFSnbuih98hkJ1HB+vQVc6ryBI4o+f
-         nDfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752511917; x=1753116717;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ngwZxWjLDreir5yV6Tw3Rle1m8vhbUuedq0gbV1GrwU=;
-        b=KYDJQUmPsVaUSR4oyerE0kYONLK5VVq/6OPMmtSQQYfYezuFgFY8zbdiUL8QdqAZp6
-         7Ei80p1AruNLN+cUhWEXJiZYXuNs5vwpc0L4DkkDDlzlgiGGC9dy4M0r9QETIhTUSp6z
-         xbgy6obykZ6Aw2whmXOiiRz3OWHygfR5dnlCzY3AsSJ4WzHgoBUSDhECNMKS+R67dIuz
-         Q3JfJ6ZYwL/iA2Su8cvMFBnNnS4qwE0ZOEcY2KSU4ZvE1CfDMx+a3/J0k0k7fELFj5bC
-         Upf6itKwnq2VZ41oUD8xP6P9VGljAMgJw+BD9Q/S1uZeb+RSLdZ3JWxmxVjod0uNAy3C
-         +KxQ==
-X-Gm-Message-State: AOJu0YzJMnoeoToiX4h11xf6qqSR7KB863BqUnBt4E/ArEGaSEgi8UaU
-	vlpHEyBryd1B5++bhNkULtyi4f15MnG5/Fqig10sQU7yn0jNd+ZbA5vQ
-X-Gm-Gg: ASbGncsIYJeKKTaZsEbjsVoeLgDf9cke8P1S3HHnyL93cC5vn+OpLD+M5Bi6Qn11OGQ
-	IWeXEHQk71dnLeZISN4RjrFctjhvVnxKh3EVyuYLY3xPdxi1LlN5Ogbak5swu2bEgDCAvvW3Fqx
-	4Stp5J+BAFHLuF/7qu7nmwqgELRtXpWLBbVg8gO5xHtj7g4aIO6luWsudhxcH/IhUF9hUceRNiV
-	qGnNGvoqenbFZOvhlZenTEJlHDugd1hBTpqqqnX0qACiV/AtB+Ve0IjXNzBUHNdTVWs1kTjTdve
-	9Dv/Vf9rKNdcgTj1IEfopjxb3iZxV80kKWKyJc8arz+9GHEJ0+DzHDnX0Ert/dbiQXh1FVqfHUo
-	thGEd3+UaICgAoK/9qnbFg1uirUF2+viSIEMmPqHy8XxynuFP46cD35ReA2gmr78QOD1Qm3cVlQ
-	QqtXvYvE3UvA==
-X-Google-Smtp-Source: AGHT+IELmRDGU+rfZhmYvpxy68zxBut93ws8lw+VrVFcl9uSBvmogi3wiFHotOcwcLucQ8ZtFEnGoA==
-X-Received: by 2002:a05:690c:4913:b0:70f:8884:17af with SMTP id 00721157ae682-717d786eaf2mr225719577b3.6.1752511917256;
-        Mon, 14 Jul 2025 09:51:57 -0700 (PDT)
-Received: from [192.168.1.237] (70-237-88-18.lightspeed.rlghnc.sbcglobal.net. [70.237.88.18])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-717c5d51aa6sm20210837b3.1.2025.07.14.09.51.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 14 Jul 2025 09:51:56 -0700 (PDT)
-Message-ID: <30afce8c-c932-4c51-9a27-e63385608514@gmail.com>
-Date: Mon, 14 Jul 2025 12:51:56 -0400
+	 In-Reply-To:Content-Type; b=f8HfkuJPUqsn3Awuenatf/IEQPmpg5V796mo9RsYRsOq3kR9w4MyoS01Z8lwQy+ai4N8WpfQ2pp/Mx7CsYWs2diHWsioa7NgPx9+c/tDxpPT5NhVPSfvunHO5u5ODPynRMuvS917X/+fLs+0EKDVKLJfoAtw/fMPKLhQFBSwnrs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.16
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144220187.atnat0029.highway.webapn.at [89.144.220.187])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4bgpJv3PWyzRpLG;
+	Mon, 14 Jul 2025 18:52:31 +0200 (CEST)
+Message-ID: <878b4335-873c-4bc5-a7c1-581d3a71901e@kdbg.org>
+Date: Mon, 14 Jul 2025 18:52:30 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,36 +26,76 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 5/5] bloom: optimize multiple pathspec items in
- revision
-To: Lidong Yan <yldhome2d2@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com,
- Lidong Yan <502024330056@smail.nju.edu.cn>
-References: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
- <20250712095129.24642-1-yldhome2d2@gmail.com>
+Subject: Re: [PATCH v2] gitk: Add support of SHA256 repo
 Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250712095129.24642-1-yldhome2d2@gmail.com>
+To: Takashi Iwai <tiwai@suse.de>
+Cc: Denton Liu <liu.denton@gmail.com>, Eric Huber <echuber2@illinois.edu>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Avi Halachmi <avihpit@yahoo.com>, Christoph Sommer <sommer@cms-labs.org>,
+ Paul Mackerras <paulus@ozlabs.org>, Rostislav Krasny <rosti.bsd@gmail.com>,
+ git@vger.kernel.org
+References: <20250617055957.9794-1-tiwai@suse.de>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250617055957.9794-1-tiwai@suse.de>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 7/12/2025 5:51 AM, Lidong Yan wrote:
-> To enable optimize multiple pathspec items in revision traversal,
-> return 0 if all pathspec item is literal in forbid_bloom_filters().
-> Add for loops to initialize and check each pathspec item's bloom_keyvec
-> when optimization is possible.
+Am 17.06.25 um 07:59 schrieb Takashi Iwai:
+> This patch adds a basic support of SHA256 Git repository to Gitk, so
+> that Gitk can show and operate on both SHA1 and SHA256 repos
+> gracefully.  Since SHA256 has a longer ID length (64 char) than SHA1
+> (40 char), many field widths are adjusted to fit with it.
+> 
+> A caveat is that the configuration of auto selection length is shared
+> between SHA1 and SHA256 repos.  That is, once when this value is saved
+> and read, it's applied to both repo types, which may result in shorter
+> selection than the full SHA256 ID.  We may introduce another
+> individual config for sha256 (actually I did write in the first
+> version), but for simplicity, the common config is used as of writing
+> this.
+> 
+> Many lines still refer "sha1" although they may point to both SHA1 and
+> SHA256.  They are left untouched for making the changes simpler.
+> 
+> This patch is based on the early work by Rostislav Krasny:
+>   https://patchwork.kernel.org/project/git/patch/pull.979.git.1623687519832.gitgitgadget@gmail.com
+> I refreshed, revised and extended to the latest state.
+> 
+> Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> ---
+> 
+> v1: https://lore.kernel.org/20250320154136.23262-1-tiwai@suse.de
+> v1->v2:
+> - Fix other procs using fixed 40 length
+> - Don't use tabs
+> - Drop autosellensha256 config
+> - Some code simplification
+> - Fix patch description
 
-The patch itself is good.
+Thank you for the update. I'll queue this patch, but...
 
-> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> @@ -12491,6 +12513,17 @@ if {$tclencoding == {}} {
+>      puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
+>  }
+>  
+> +# Use object format as hash algorightm (either "sha1" or "sha256")
+> +set hashalgorithm [exec git rev-parse --show-object-format]
+> +if {$hashalgorithm eq "sha1"} {
+> +    set hashlength 40
+> +} elseif {$hashalgorithm eq "sha256"} {
+> +    set hashlength 64
+> +} else {
+> +    puts stderr "Unknown hash algorithm: $hashalgorithm"
+> +    exit 1
+> +}
+> +
+>  set gui_encoding [encoding system]
+>  catch {
+>      set enc [exec git config --get gui.encoding]
 
-Here, I'll just point out that your sign-off should follow mine
-because you were the last to touch the patch. In this way, the
-sign-off gives a kind of timestamp to who made the most-recent
-changes (and that those changes have that person's sign-off,
-and may not have been vetted by previous signers).
+... I'll move the setup of $hashlength after the gui_encoding setup that
+is visible in the context, so that the new code is not in the middle of
+the encoding section.
 
-Thanks,
--Stolee
+-- Hannes
 
