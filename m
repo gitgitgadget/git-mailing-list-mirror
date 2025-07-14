@@ -1,106 +1,78 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE6D267B01
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:42:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA1127470
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:46:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752511359; cv=none; b=gmjDvjTqpNyzVzd1d7Wx5fEkTsr+Wzp7zndp1X8T8OH/pszBJlGM4yrpJ3Wx+L4dnq8f9lrclP7bYwWZA+ksmt0fUa7r8j1T9TbHlu7qrj/ti0WrOMKIhgEOCymxxe6jSt42MnxfO3eazn3E7MgP7dsCm5w2hLvXqLfxXkQ20dg=
+	t=1752511577; cv=none; b=Dijn41mAwtdsmrorwoYfPAQLQRjSzVEREWzCPXMNV1QFu/hQpXlXL9FrcfiRmNpU4tyVDlfOXXBLOS/TOyRL1K7y6iqRlBDNBQEcvnhkFHtX2MwyVg62bIc8JABZt2CSN5tEkyz0MjwITBw/ww3JxzyxxzBc5GwU3IdWEuAhm5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752511359; c=relaxed/simple;
-	bh=0f+bWV8WVa8aquJyiPmMTyOfmnyrXGu/u+KGpYmszT4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=l0EsdHxTBABdrAAG9hrXh66wUUw0cqLmT6cpHG8izkiVxjYSkc6qTmVGFBirHaa1baXODjo34pKJjdcfZgwQTiRPWdvCR40mMyBCWoycVr8wx8XGWT2iPD4fVR7Y0r632CnMq9q3MDacbwHnnNmuAB01njXuzF0IB8dfSVBzx0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HAyMtj3I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ixAXaaRg; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HAyMtj3I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ixAXaaRg"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 68E55EC0486;
-	Mon, 14 Jul 2025 12:42:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 14 Jul 2025 12:42:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752511355; x=1752597755; bh=o9tbOp6eA8
-	h/dfIfLb/JKmvisWq7RE7nWs9IxgbdR8U=; b=HAyMtj3I9+6K1IxPFz6LX0QFj+
-	XTy1cSo1mL1atEDMZH6BHlpAwzWp2ks7RWjznxjr4AK6XxzRCaHN8ybNgNrG3fvb
-	/cWgkuiwUL/ON9Z9WS1IUQqocLEob30kvOIBj5rDL2C9zW9Z2Uxtawqg9YUMNWs0
-	oNwOECQ9euj/e2zCKwO1squFI9yI+r2ciO7+c9D2Bj1J7U5WMMqw6uuEl4q+RiRn
-	2tPaQzgxtV0MqOYB9AFatYqkDcxgoxx5hIHOlJvy5nr0U4B+d5wdxSY6rtHH3lnO
-	VSJgojTVD5X5IW/Rkve8ElRLMCX2PUcSN22KAyEXxC6BXaQDCgZXXTORDfhg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752511355; x=1752597755; bh=o9tbOp6eA8h/dfIfLb/JKmvisWq7RE7nWs9
-	IxgbdR8U=; b=ixAXaaRgi4MvEGhhHN8tUmJ3IsoVtyEtZlHhK5dhS43eJJwB0k2
-	L+1q+cY0uOGFmJ8BDQ+OBzmQ49wr53HzVZtlqhh4hJixC5pZET7UvAc1OXXVgNYE
-	OHkU4NSdjydqXAO1fICrt8la253pBmEVblpnue400sm5bK7NXERUMVagonQYUG1a
-	FhtfsfkkqPzNWWcQ/MXzcFntZpAZMsRhzwl6vU2J8YrlGrQgjmQr2PzsftKDJv2J
-	jTCXFk86XQXm/3TXyIbdoa6UmH4Wt0Kq9n2fe+FuysUbOiq4t9QIZE6OpaREOXkP
-	qcwPLJcFuav1OgeLXlSyK79Ojq2jrfbUFxQ==
-X-ME-Sender: <xms:ezN1aLUakOADCMYqk7U0xHXcjW_pkcpgADQprJR6QT8Y6CvueKDhNQ>
-    <xme:ezN1aBLZeZXHj5-Lzyi0p4PQckJjzZN7jSUTqkNTt9Fj6JZWgC77a748sOjdhnalI
-    oz5TeRx0PmJJC8DTw>
-X-ME-Received: <xmr:ezN1aN0GL2UMcuxWxkCw0JzecsPWsXt_hBtexeDJsMs4gsuXTzYH7-6HdcIMpnWQ2woom0GNOEoiWQ8hS6PNQEujj9lqsZqyRcuYXe8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdegiecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdrohhr
-    ghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ezN1aH5OoZbe3wwOanjkG69r1tRTRUic93t3tenP6qapi7O7m-m6CQ>
-    <xmx:ezN1aG__qAH_e8p0n1ufPkeYGJlZCatCAyf1yvnmRHM3zXnTbFRUZw>
-    <xmx:ezN1aOXXoLrf--sCfDBK1VuCM8LKh-gXWHd5TORRTbXd26EWa6BYxA>
-    <xmx:ezN1aJql-CPAmlzUbGl2ddLJffq7vhN7gsLAmnfrxMwxhhapt67Tnw>
-    <xmx:ezN1aFMSNFcUfcdWWc4EReROAViUnsguveR7OuDSry9x7ExgYN8bE5UA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 12:42:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
-  schwab@linux-m68k.org,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v4 4/4] for-each-ref: introduce a '--start-after' option
-In-Reply-To: <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
-	(Christian Couder's message of "Mon, 14 Jul 2025 18:04:21 +0200")
-References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
-	<20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com>
-	<CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
-Date: Mon, 14 Jul 2025 09:42:33 -0700
-Message-ID: <xmqqqzyiu3k6.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1752511577; c=relaxed/simple;
+	bh=T/o6ziwteOEVYMZQiG+YMtyCbo+AWmLMAIRkODLXCJM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lt19HE3y4TTNb9Ldk0OtJlPJOQA2dwpFFRI+2o5Dr5JV/YLxjQcMGlojpO1xWf9B0InBFl3q4wayzCvqfRs2VPJbF17eKEXSXuRe5Lq8D500OnJ0+PXpIv6P1EKtyWdnJXfsXw8beA+QMh0MObteEbkY3yY1e+6UM8afpmqA8pA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6fb514c8e18so5047646d6.0
+        for <git@vger.kernel.org>; Mon, 14 Jul 2025 09:46:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752511574; x=1753116374;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=T/o6ziwteOEVYMZQiG+YMtyCbo+AWmLMAIRkODLXCJM=;
+        b=w1pGSMU41RT3/QlR0ZhvYr+TKypNrzx9UFldnjwFeNBz7vtpB9u+M6iOUhB0+v5vKg
+         h5efsx+HhjsfmyjpkYE4u9TeH773S+NCSxfogRkWd6+OEl/T8JM/p4tQdZsl3+Tj6JtX
+         pZcq/mK64ADMCUAiCeL9GC2XtpAdxne/x2UxepkL9DPy94g+bSdHxEwpj4ewg5at4bJ1
+         B8IyVnXFwAf7iyxaeasQFGmMuYvIFdLkGXeRHPCMAwS5oVVTpx+g0oHJMcKaQoKGM/ir
+         Tc9Mi6jXLYj3El2ds3EC3ZASjhSPKw7nF+HXbLy151Nl5jL+r2vX99KAlTJjYIL0Ki+b
+         kXrw==
+X-Gm-Message-State: AOJu0YzEE6PbLP1HeygLGhVSLdqNgKx9w6ywHntDfoMY2iPwqvtSJypD
+	FmINMQ3uGYxKICh3/NgKC6F1O/JgVJG+VqrRlZucZBuHcjHucnC5NjeqBxfs83szXHwgZiPzJLV
+	vx6bArQG7toz8IBwQsSVs0qyqfmKvTFs=
+X-Gm-Gg: ASbGnctq8H84W+QOwSQEDXkm9AHnyy5he4SaNqy9oubvZXnVbWK89lgimxX+TMRXqmo
+	/nq5P+G2Agu9blp/bhjiUYsI7BPLzLnZoRHKKFnp6E0JTB2JMA3zIMOjN+9zOk1GbsFeJxVPZKz
+	aDhaKTzaYUtX7MUPfvARAI6UTOZ+yAzJ2YTqjjmGXgGjXhjzDgMOGPacKvvtt3W9i3m5qmOjoCM
+	PTo6UopfK1dKwX1V2afHBUT9LdoLGN7iCrtLmvZ
+X-Google-Smtp-Source: AGHT+IFHkyb0+aOKuRc9trnunsLnOIJm5E98Maj1jqDfUqbhusOh3LSv3MArE3jx7SqRfesUtSeAOeqzrIkzLJbHrxY=
+X-Received: by 2002:a05:620a:179f:b0:7e1:a4c7:a819 with SMTP id
+ af79cd13be357-7e1a4c7adadmr314711385a.11.1752511573744; Mon, 14 Jul 2025
+ 09:46:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1752499610.git.phillip.wood@dunelm.org.uk> <a0f9182aa20d0f956072a3d185a2d1288f1bd842.1752499610.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <a0f9182aa20d0f956072a3d185a2d1288f1bd842.1752499610.git.phillip.wood@dunelm.org.uk>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 14 Jul 2025 12:46:02 -0400
+X-Gm-Features: Ac12FXwNpMeLGeFtvxUKMBiYi_3lUovU_KNaZVkld0vZl0mb6P-SA0vfLbk555Q
+Message-ID: <CAPig+cS=tEO90WnATueFM8FumHcq9HkPrfa_JUCzeMkDaLsYdw@mail.gmail.com>
+Subject: Re: [PATCH 2/3] git-compat-util: convert string predicates to return bool
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Christian Couder <christian.couder@gmail.com> writes:
+On Mon, Jul 14, 2025 at 9:31=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
+> Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{,_mem}
+> to bool, 2023-12-16) a number of our sting predicates have been
 
->>         /*  Simple per-ref filtering */
->> -       if (!filter->kind)
->> +       if (!filter->kind) {
->>                 die("filter_refs: invalid type");
->> -       else {
->> +       } else {
+s/sting/string/
+
+> returning bool instead of int. Now we've declared that experiment
+> a success lets convert the return type the case independent
+
+s/lets/let's/
+/type/& of/
+
+> skip_iprefix() and skip_iprefix_mem() functions to match the return
+> type of their case dependent equivalents. Returning bool instead of
+> int makes it clear that these functions are predicates.
 >
-> Nit: the `else` could be removed altogether here, but maybe that
-> should be done in a preparatory patch.
-
-Good eyes.  Thanks for carefully reading it over.
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
