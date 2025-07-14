@@ -1,90 +1,86 @@
 Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9525672632
-	for <git@vger.kernel.org>; Mon, 14 Jul 2025 16:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C4E845945
+	for <git@vger.kernel.org>; Mon, 14 Jul 2025 17:01:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752512313; cv=none; b=m6LfXBrYMbyVLcbMc/MIsrL/TueQaG3KLD1xCyDxqOn0aKTvJ9j/iMAuAP6+JjRGPu8ShEBDytUlDd7tb96cvxEHA20mhICmnLQnksoofgeeaFIulsqlUOkhGEIKK8ZPi7uTdnybMmXAzD2AyJbY4fLxTZhcxRYb/yQiQfz+Q+Q=
+	t=1752512482; cv=none; b=dNF+w5bQe/EHDeSk6fpuDXcRlc2sS+2cS4v402NLO/D293iInnjUiOlV3ecOIU8QusHZ0s7HVFFUGFnBHIFf0AoXw2UdC6ABfZ2RUpw6/GV+Y8mxJIXYbOK+3bVttcz2Pp2itda6nRLnl8F+P/zU5mksuLT0yTHr3E1EVWJAoDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752512313; c=relaxed/simple;
-	bh=ozmLBg0hFzsL2MmgUxD9pzw3HxzplmwxGc2Wo5bk+A4=;
+	s=arc-20240116; t=1752512482; c=relaxed/simple;
+	bh=juy74xCceq1qL8d/pTXHHk4cXlBx4zOBI94DAeXjetc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uUJfojksIOhR80VXhigI6SqWNi392NWxJcKIed9CgLtxCiOkO0pAMRxvaCHAvj5THCEplqZJ6Pdw562SM77c8gdS2x3jQZ9jeSAch8ARAM8vj3njhE8GWyYAxq+VrqGNosfGbnr9U4fSUS3taguGEmmZPKdkRP9a/YGQUXRgDM8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iiibYz1G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aa6Us2Tm; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=GwsKkaQjcPt1IjDmPO3kdZybk/oI/lw+Sd4Zd5LzOg9QaNMMekon5toKBnxETjf/mgGY1J04iDKpMId0Co8B+2P+M66Vph85JLm+bTyvLEz6bvzuX9SLudqXtp/h4pd+z1scNNhQahT+VY0l6f1kmhk/QdwkHvXbFcDJNqXNxXI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CtIZQbNk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Lf2YEuRO; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iiibYz1G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aa6Us2Tm"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A10F214004E5;
-	Mon, 14 Jul 2025 12:58:30 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 14 Jul 2025 12:58:30 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CtIZQbNk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Lf2YEuRO"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F06151400191;
+	Mon, 14 Jul 2025 13:01:18 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 14 Jul 2025 13:01:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752512310;
-	 x=1752598710; bh=ftX+KAaT/Qya6yl5HLk/ZKDkC1SJQ1v3OjUxXN3Tt+M=; b=
-	iiibYz1GFcntCwa49d7Ihf7+N3jfXI5rWr0xdNnSHHnTERR50EWIAdk5uS7Sj8ZO
-	0l3ItutRg+eubvIijniU5HdBvvpa+eyHNn1rKBYxiUC90DGWnsan/LHBVaAchVGZ
-	ZHyGpN5/bVZeAmOkvQjiMebjkKvLkVRUfBg8RZ6qd/gmQ91xPhTQuur3TFJdxuAf
-	KpBZRJfH+sWg3sydMUEoBlOpPrn6iXLAbfaZjFJPN7ixyL8ZAKKpaBmgTzj5F47B
-	FhGq3nUtRotk4sI3dRL1G2C2TdSYX4Z6MrT9HQpSlAEV+A81wp2Oay4Xmsil9zqm
-	GFnNtb0ODmNn/lWjlSIcyA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752512478; x=1752598878; bh=/mboUPNHmM
+	8+xFoutzi/CdWLLj+GQutMCMgBJVoW1G4=; b=CtIZQbNk2lvpPaJgcQF0GufhDE
+	/ujSezBOYEOqICr93qWJ2xwJ+mmTm/+T2ksvxiG0psNPQylotbVsqh819j95/PSx
+	Zkbzn1k7ifQ3dpBa5ZQTzmwCcKMJEn7uh2c6lDZv93RrdHCcmlDsY9tajuY8y+ch
+	pbYC3jaSIJORYgDVHDSRba9fD+lDrtt0nAc4v20Dj94QVXgKAGGodLElSI5ArQTF
+	Dh48g5gFFPtHMG1Q5QnT1kXYndf/0Aa8EnBHvG2SnNtRJasROgU+ETQndp8njKUo
+	KK1I9PkDPWXTumPT0mDDk2YFC6agbrx9OsibCK6y2jpL0tDx3nm+G9+IsI9w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752512310; x=
-	1752598710; bh=ftX+KAaT/Qya6yl5HLk/ZKDkC1SJQ1v3OjUxXN3Tt+M=; b=A
-	a6Us2Tm0TnZXJ6tmwdGAD4Cz75qtRTvsuaf6o7GVF0ihWDxQ+3ie/SXPB4K0oTVZ
-	ItsJoZxg84mtv9MtKHOq1lWcnBPnaYH0lG2/LV/4vs3+yuG6igwl4Q5v7Nlwk+fe
-	l9qA36+PgKcA4dFkg3pFSZyc4O7XQKBdyaXKDYJb57f5GJjIWVYgWsIy5vP7Za6s
-	54Zt6HRuRcoQoQtXbdbkTbVAYpYafoxE+Pd6SSLOYob8dKxL+hGdS7e850Hm7pR3
-	JpckJLHcWGuhep/R2rIX3T8Bhi6/nvg8i108csLzPGGIozZUqZmcEoVMDD/aOiCN
-	g50hifDRbqKnMOGCBpXfA==
-X-ME-Sender: <xms:Njd1aC0QUxP4RLgwzEwPaGPvpQxXfuY-leKhsXiOrNAlivEj7Pn38Q>
-    <xme:Njd1aPpeTDihCAtfgWRcSWuMm2ElT1_JMriZmOC_PO8MFQqQ0Sv5h4lVy3Hh9Z1rU
-    gkxd7br4mxJk5KFMA>
-X-ME-Received: <xmr:Njd1aHcacckh5-EEpiyZE2yM19V90xGn-yF_fCERvMEr1i7QpVYrveOIeq838XcWQIiBXVk539SDIGPdj7O2NN3Xd69rjuCqcFDgASI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdeglecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752512478; x=1752598878; bh=/mboUPNHmM8+xFoutzi/CdWLLj+GQutMCMg
+	BJVoW1G4=; b=Lf2YEuROGhdqP1jjXi65z4rfWkS8MDg2pYslfSn8nPmaFzB1aK6
+	P3z5qXJSOZ8q7wA0BwX4Xlz6ac7DTtyqv6kk/3YH5f5dAMlY++vX61E5TYWjzP0l
+	gb9eAU58u6gZBeWjv+s+EQQsvIziGexa4sxUJxY/cmeG5Ruidb6oNV3Zn5ziKMY4
+	mynXQvzqr68dwwr0Q+ODOoQsh2Ua2+Z3O+bIsqkoGmLe/SWuSieYSYXF2ZchhtTd
+	iB6UH12aOSEL6tCIrrgkHTFmElvfyhdw9QSxuCnJAf6la3A2Yu226Y+OMvFr1f11
+	LKnXLt708Ou4i9AzBYBJOJoceOdJEUOsPwQ==
+X-ME-Sender: <xms:3Td1aCKXvmOeWhnC2-0zt3FBJpUXLNZ_q7QKufBxSs0MPVsfoszShA>
+    <xme:3Td1aIEtgNl7eT-0IQZK8Via8jvtvjs7I78etNYW8jQxrg9iWMb-iJ4JfvMSBsGyI
+    27bUIv8QYyr8U_KJg>
+X-ME-Received: <xmr:3Td1aFCH0oyTsPo0TtNck3BmjS5M8LKjYAzWethtO_YuXmeZBvW15eyziJPSLuYoApObi4GcsjLueDItwmhb_ay-X56jqhJn1iqdLPY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehvdehtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
-    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Njd1aGpk5KfaClqiSPcRr2G09ROieVze20QfqppwvJx7JEtk_olJ7w>
-    <xmx:Njd1aAFLxHpCO2i1Z7BOK4iCrAwMTjwton7dlz2OmDORL7N-D2jraw>
-    <xmx:Njd1aOvozSsAx9QAIA_mafQOYBg1S6M0ZrNjDAos_9qh9T0EIXJKnQ>
-    <xmx:Njd1aKU0wENIuy5JlNkLlq9aAZa5sO6-Kl1OUxe_JjOo0-Py2CPRjQ>
-    <xmx:Njd1aMEhGb_4ARf4LtF0f9mz_x0L2_AgD4274coHFsHVY3Bk4bLQkUDw>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
+    hopeihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephedtvddtvdegfeeftddtheeise
+    hsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
+    ohigrdgtohhm
+X-ME-Proxy: <xmx:3jd1aL_XuIGPeTHo9R9GGQvtteSGV09G5_ryzh_suE9FUQfqkWBeIA>
+    <xmx:3jd1aBDmircjHCOZqa7yNoX-aLhGTQnw-6KW-jdGoQb4SKdlD1tX0Q>
+    <xmx:3jd1aAQkDE4kaI-62zbfSOjN7sUU3BrjMg0HD2i2gblDFjRcfoaGdw>
+    <xmx:3jd1aIsMZ15E4C19Vwl3a_r8_Y3JKgK03KP8_7mEbloiHV8b9lGWQw>
+    <xmx:3jd1aC6BZDpAMLn_sFaTCER5wviDKVXJ9exU09MbwZm9H8hTQttaTbts>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 14 Jul 2025 12:58:30 -0400 (EDT)
+ 14 Jul 2025 13:01:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: [PATCH] meson: disable PCRE2 dependency by default
-In-Reply-To: <ymreouejava2acp3xpvrviffd3bd7cu3wwmi3fadzykkaaubim@25oyqvcfhrda>
-	("Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n=22's?= message of "Mon, 14 Jul
- 2025 09:46:29
-	-0700")
-References: <20250712172615.11364-1-carenas@gmail.com>
-	<aHKgu3Ew3Pk0PL2v@fruit.crustytoothpaste.net>
-	<CAPUEsphoFaS7CnxXs_PsMCtCrB7ByE+y+SxQGaxoovjAdH7UFQ@mail.gmail.com>
-	<xmqqikjuvlxc.fsf@gitster.g>
-	<ymreouejava2acp3xpvrviffd3bd7cu3wwmi3fadzykkaaubim@25oyqvcfhrda>
-Date: Mon, 14 Jul 2025 09:58:29 -0700
-Message-ID: <xmqqfreyu2tm.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Lidong Yan <yldhome2d2@gmail.com>,  git@vger.kernel.org,  Lidong Yan
+ <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH v6 5/5] bloom: optimize multiple pathspec items in revision
+In-Reply-To: <30afce8c-c932-4c51-9a27-e63385608514@gmail.com> (Derrick
+	Stolee's message of "Mon, 14 Jul 2025 12:51:56 -0400")
+References: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
+	<20250712095129.24642-1-yldhome2d2@gmail.com>
+	<30afce8c-c932-4c51-9a27-e63385608514@gmail.com>
+Date: Mon, 14 Jul 2025 10:01:16 -0700
+Message-ID: <xmqqbjpmu2oz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,35 +88,33 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> This part was more of a: let's assume that we enable PCRE2 by default
-> in the Makefile as well, what is the impact to the libification
-> efforts now that there is a chance that libgit will be linked (probably
-> statically if using meson) with libpcre2?
+> On 7/12/2025 5:51 AM, Lidong Yan wrote:
+>> To enable optimize multiple pathspec items in revision traversal,
+>> return 0 if all pathspec item is literal in forbid_bloom_filters().
+>> Add for loops to initialize and check each pathspec item's bloom_keyvec
+>> when optimization is possible.
 >
-> Since the plan you mentioned above is still dreamware, wouldn't it be
-> better to move all the pcre2 functions out of grep.c, export them back
-> to it through a semi private header and convert `git-grep` into a
-> standalone binary that might link with pcre2 as needed?
+> The patch itself is good.
+>
+>> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+>> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+>
+> Here, I'll just point out that your sign-off should follow mine
+> because you were the last to touch the patch. In this way, the
+> sign-off gives a kind of timestamp to who made the most-recent
+> changes (and that those changes have that person's sign-off,
+> and may not have been vetted by previous signers).
 
-The engineering effort that such a move (and encapsulation of
-"grep_pat" that may or may not have pcre enabled) would go quite a
-long way and brings us quite a lot close to that "dreamware", I
-suspect.  So it may not be a bad thing.
+Thanks for pointing it out.  Also perhaps a single-liner attribution
+to clarify who did what, e.g.
 
-But even if you move code out of grep.c to a new "abstracted regcomp
-and regexec that may or may not use pcre" source file, "git grep"
-would need to run with the code you move to the latter anyway, so
-unless your plan for libified "git grep" engine is to make the
-library user responsible for supplying their own "abstracted regcomp
-and regexec that may or may not use pcre" (and "git grep" brings in
-its own in that new file), I do not know it changes the picture all
-that much.
+	Signed-off-by: Derrick
+	[ly: did this and that to derrick's code to adjust]
+	Signed-off-by: Lidong
 
-Thanks.
-
+would be more helpful.
 
