@@ -1,51 +1,51 @@
 Received: from Chamillionaire.breakpoint.cc (Chamillionaire.breakpoint.cc [91.216.245.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC7032D3238
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:12:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 471F22BEFE6
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:12:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.245.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752606775; cv=none; b=oJaBsPHfqBsq/sUcsGEdWHIzAl1hrvzm3k5eCcXxo2CORV3StNnHBuIA6br2ymH79y0k8Q5uU+URF2MIYxmiZi4h1qTzwQbGOLqPh2EtXUrR8awTZynkilZGOMSINEHx7yB+s7d/MyykWZP+72/xx+4XkH5jWVuyUImddvHUYDs=
+	t=1752606776; cv=none; b=Rh9ycFmwvcr+SZoLHRkm+4he5LNe4mGYzc8ZV4JX1PlNPqXgo0b5bPgvv5jeO2zR4+w6lf/RLb5erFYbZgW6MxpkvpjMxzi5imTL2N/m+IHeL/5Rea3HJ6qyeovWSDwABtINxBqYV/nqg0l9us/Z371RfUCwPBbB0fcX4976I+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752606775; c=relaxed/simple;
-	bh=O5Rcmf8+Jk5zVqohJ8j3fT10cI/ADXjaMeXRZG3wxLE=;
+	s=arc-20240116; t=1752606776; c=relaxed/simple;
+	bh=jfZ+rR6zxsr6uRM5G0EbqffOfaQZLUxg3O8GLSXfvL8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V248z9YW2AxhoZ0A2qFa16oeqP034tBQtdhpCfjjXX+YnGo7+6yG4suRVGkFYQ23HpQNYy/JuUXpE8O2nOuP6kCMEOajwgxCkG5TGUP6M+R1HPmDR0hm5DoO2Z2j+eMnqyUz9G8LQrP2/pAr0OYvqspARWLOd8stQxizCEB8bOk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=Ns9e4Wwl; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=vzV9z8cj; arc=none smtp.client-ip=91.216.245.30
+	 MIME-Version; b=dj33fyPMsM/ahUECeqqjKdwILdTN6re8vp7+e6gn2/gu0qwHjwlmZ0MVoeqCkH9BPoGfCNBRZSI+cdsyUkls9eSdsSXiz6l46uWNAi+RrC/GEkw5YQS4wU1r5XxcoWP0hTmsT27n7CpYxR0iJABNNLukips/d/WTIwnRlGQsuPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=EM5pTdUx; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=RL6sDXoL; arc=none smtp.client-ip=91.216.245.30
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="Ns9e4Wwl";
-	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="vzV9z8cj"
+	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="EM5pTdUx";
+	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="RL6sDXoL"
 Received: by Chamillionaire.breakpoint.cc (Postfix, from userid 1000)
-	id 5E43660555; Tue, 15 Jul 2025 21:12:52 +0200 (CEST)
+	id 64A91618E9; Tue, 15 Jul 2025 21:12:52 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025; t=1752606772;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=C5NmuFKEQyPSgk6r99pOe2775e03feTOtJS9WkybCc4=;
-	b=Ns9e4WwlCAQsKQY8ThHTAGeCXdk30gal8AI4Yj1JC7KXi4F7xTGIGpbZh2n2VHbRfnV1hE
-	r1zbROhcJJ+EJhRDpSOu48Ho7ROEBmSesobYNK5qXlFxJlLL683N7wVLUpZKQ6d9KS4Cv8
-	wE3zHA+xKEDptlulseqA/86ZuqlctnSbP9Fi5QdwwB2wTmelo8LGhwNeH6JQ1B97tsVl4v
-	Xf6XhKWvcj43nRSvbcIRKoDzgwaLvKG04DPG2H95tqdCCLL4pM7zHRfwkAI0iP4TuB5WVe
-	GOOozg/2a/fxVzdZDEyUC+MWT3PV2Jv/xstLGoSjZrAhtESDjq1OYpjitTSzHg==
+	bh=xBnrtRwCqcLzRsrMdfrwkRhdRGVbrjL6/uCM4Il8oWs=;
+	b=EM5pTdUx05bCigZvwaxkl8LE4LAEXyi/mkVqt/tPra4oB4rX48k19s3NclsljzbBROX/ng
+	gwDo3donJ99vHiMdNUMGRK6dlEf2n3Qrzs6EPslLMKhidsrQWjuFNIqO0RuQhHnbAfv14z
+	cL0/q06TfZ0JuhNU8XSfguH9Ao4GoyIrtFvSF63a+3dHtQ9QzUa2P83fkPYXKIEyM+Hzvc
+	uROFjyZV2aBHFrAfuWBm61khYbnQHERgSg9nfNyM4VHd8ZKKC8MDlXgzPTkACTAcxHcr6x
+	qDigZX+G0FCR8CS3cW8cpjCLd5NRvo/kLXXvZuXKmX6sUzX60n1YJZlAS6RwsQ==
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=breakpoint.cc;
 	s=2025e; t=1752606772;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=C5NmuFKEQyPSgk6r99pOe2775e03feTOtJS9WkybCc4=;
-	b=vzV9z8cj6HUTh/AHyGRBGKwMlZ63eT5QUC6t7+d0ueLoaWHlcR0+fI73y4M9HAWl6CsS4A
-	nKX7bZaIKo0alHDg==
+	bh=xBnrtRwCqcLzRsrMdfrwkRhdRGVbrjL6/uCM4Il8oWs=;
+	b=RL6sDXoLxvJXGduNfO1dz5UiUXeFZrarRfbeMNf05hyiIHIciZMgPl6ovKxjyVJbh2I5xD
+	/NOfk+oEwrkBsJAA==
 From: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 To: git@vger.kernel.org
 Cc: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-Subject: [PATCH v3 4/5] bswap.h: Remove optimized x86 version of bswap32/64
-Date: Tue, 15 Jul 2025 21:12:29 +0200
-Message-ID: <20250715191230.12081-5-sebastian@breakpoint.cc>
+Subject: [PATCH v3 5/5] bswap.h: Provide a built-in based version of bswap32/64 if possible
+Date: Tue, 15 Jul 2025 21:12:30 +0200
+Message-ID: <20250715191230.12081-6-sebastian@breakpoint.cc>
 In-Reply-To: <20250715191230.12081-1-sebastian@breakpoint.cc>
 References: <20250715191230.12081-1-sebastian@breakpoint.cc>
 Precedence: bulk
@@ -56,92 +56,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 
-On x86 the bswap32/64 macro is implemented based on the x86 opcode which
-performs the required shifting in just one opcode.
-The other CPUs fallback to the generic shifting as implemented by
-default_swab32() and default_bswap64() if needed.
+The compiler is in general able to recognize the endian shift and
+replace it with an optimized opcode if possible. On certain
+architectures such as RiscV or MIPS the situation can get complicated.
+They don't provide an optimized opcode and masking the "higher" bits may
+required loading a constant which needs shifting. This causes the
+compiler to emit a lot of instructions for the operation.
 
-I've been looking at how good a compiler is at recognizing the default
-shift and emitting an optimized operation:
-- x86, arm64 msvc v19.20
-  default_swab32() optimized
-  default_bswap64() shifts
-  _byteswap_uint64() optimized
+The provided builtin directive on these architecture calls a function
+which does the operation instead of emitting the code for operation.
 
-- x86, arm64 msvc v19.37
-  default_swab32() optimized
-  default_bswap64() optimized
-  _byteswap_uint64() optimized
-
-- arm64, gcc-4.9.4: optimized
-- x86-64, gcc-4.4.7: shifts
-- x86-64, gcc-4.5.3: optimized
-- x86-64, clang-3.0: optimized
-
-Given that gcc-4.5 and clang-3.0 are fairly old, any recent compiler
-should recognize the shift.
-
-Remove the optimized x86 version and rely on the compiler.
+Bring back the change from commit 6547d1c9 (bswap.h: add support for
+built-in bswap functions, 2025-04-23). The bswap32/64 macro can now be
+defined unconditionally so it won't regress on big endian architectures.
 
 Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
 ---
- compat/bswap.h | 41 +----------------------------------------
- 1 file changed, 1 insertion(+), 40 deletions(-)
+ compat/bswap.h | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
 diff --git a/compat/bswap.h b/compat/bswap.h
-index aeef304f671f5..ed00f6d1d53f3 100644
+index ed00f6d1d53f3..28635ebc690e3 100644
 --- a/compat/bswap.h
 +++ b/compat/bswap.h
-@@ -35,46 +35,7 @@ static inline uint64_t default_bswap64(uint64_t val)
+@@ -32,6 +32,14 @@ static inline uint64_t default_bswap64(uint64_t val)
+ 		((val & (uint64_t)0xff00000000000000ULL) >> 56));
+ }
+=20
++/*
++ * __has_builtin is available since Clang 10 and GCC 10.
++ * Below is a fallback for older compilers.
++ */
++#ifndef __has_builtin
++# define __has_builtin(x) 0
++#endif
++
  #undef bswap32
  #undef bswap64
 =20
--#if defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__))
--
--#define bswap32 git_bswap32
--static inline uint32_t git_bswap32(uint32_t x)
--{
--	uint32_t result;
--	if (__builtin_constant_p(x))
--		result =3D default_swab32(x);
--	else
--		__asm__("bswap %0" : "=3Dr" (result) : "0" (x));
--	return result;
--}
--
--#define bswap64 git_bswap64
--#if defined(__x86_64__)
--static inline uint64_t git_bswap64(uint64_t x)
--{
--	uint64_t result;
--	if (__builtin_constant_p(x))
--		result =3D default_bswap64(x);
--	else
--		__asm__("bswap %q0" : "=3Dr" (result) : "0" (x));
--	return result;
--}
--#else
--static inline uint64_t git_bswap64(uint64_t x)
--{
--	union { uint64_t i64; uint32_t i32[2]; } tmp, result;
--	if (__builtin_constant_p(x))
--		result.i64 =3D default_bswap64(x);
--	else {
--		tmp.i64 =3D x;
--		result.i32[0] =3D git_bswap32(tmp.i32[1]);
--		result.i32[1] =3D git_bswap32(tmp.i32[0]);
--	}
--	return result.i64;
--}
--#endif
--
--#elif defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64) || defined=
-(_M_ARM64))
-+#if defined(_MSC_VER) && (defined(_M_IX86) || defined(_M_X64) || defined(_=
-M_ARM64))
+@@ -46,6 +54,11 @@ static inline uint64_t default_bswap64(uint64_t val)
+ #define GIT_BIG_ENDIAN 4321
+ #define GIT_BYTE_ORDER GIT_LITTLE_ENDIAN
 =20
- #include <stdlib.h>
++#elif __has_builtin(__builtin_bswap32) && __has_builtin(__builtin_bswap64)
++
++#define bswap32(x) __builtin_bswap32((x))
++#define bswap64(x) __builtin_bswap64((x))
++
+ #endif
 =20
+ #if defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && defined(__BIG_END=
+IAN)
 --=20
 2.50.0
 
