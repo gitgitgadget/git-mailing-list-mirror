@@ -1,187 +1,147 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02olkn2031.outbound.protection.outlook.com [40.92.43.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00E3024677B
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:25:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.48
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752603930; cv=none; b=utkoiDTqNtn7jyCK6TDqxvkQC7xTzocp0Hrn/V5m1SZJH9C7yowF+vjbx9rJa6Jb344Y6LYFylCud6pHOz4+2cCgS5yH7zJUQ6/Nd4KZFnFDiBajOVHkzybeByb5sAQgJzggQVGJh621Q0t2Hcvpan6yR3p3ZFIBp08cjU4v5xU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752603930; c=relaxed/simple;
-	bh=yiDuCoc1H530WhRibLCKHJJ3wk7UPQs9sVpaQby9vfk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aExMOnW1jk3UqhvAQ+7UQv9N+BXh6D5m/2H6ecBoqZeWcil7IzUI+Z79+NaCJRtFeoxgOAYWNb/QzuGQVUUP7wSAtHf1nn1PGbDBn4xoD5dkUX2PeUA6seKW2PQkAeBoTrP8VS7YxPZLv+iR4DbUkvwUL2Y9JOI5Kjo9HkeBPS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sy8tB+Zt; arc=none smtp.client-ip=209.85.161.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC6B224677B
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:25:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.92.43.31
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1752603949; cv=fail; b=HfKIjoEYKNe/ygh1D+cuaalz6KZwxqLDYdSEMk2MgzwVn6iYjaiEtSjQ3SqymDOfHDQ/SDPycj4PoKZrX8ogELJCcqbSenwSLiRu8AXFLrkCD/Uh5ogoWfZl9m28IAVIQwcYAn7urKjmdVEdnD7KHczDKnJIZs2PdDMQG7Y72Qk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1752603949; c=relaxed/simple;
+	bh=FLcTzSuxYPLphFuX6zdRDrYviP3vkI4nkHbQcl71cDM=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=oagQ/7ZDEafZlPvV4+0JHTQaRe7UcZwLi1uBt7lx1p2j40vac9rTy8M+Yb519nmFmAc+fYYIB51rTciG+CUuuNm4Z5JT9MBAAfzPEcwNIHXgB134A3b420bYUqE4hDfUpTpNth8NgYSqX8o30NHSqAB/sZbSt4Za8FIJBGgSxmw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=gCQk/gDW; arc=fail smtp.client-ip=40.92.43.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sy8tB+Zt"
-Received: by mail-oo1-f48.google.com with SMTP id 006d021491bc7-610cbca60cdso3083919eaf.0
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:25:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752603928; x=1753208728; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Pce7SH4EmBnxxSrpkRuFrQuLao3Mb+YqNEx/TshDFfU=;
-        b=Sy8tB+ZtK9PoRSyRHs49jfAOPBXADu+0PxQGMjqkIXOlGpIG0KQjXhqECSYNcpMmgr
-         wdkXuR4mPAxUZw4MfBVUCpLpLdJ6F6345Rv3C4Zxe1JWdKXgTQTviVqlNIQdQ1CR/TSj
-         Ln/yFt5rWcddCfwdrAQT6DRTw2ds35fqku0GlSXVNM+KiyCgKmQ3HSDBZ7F7xHmiF2Xq
-         zwAIy6TRg+T0/MsLNbFrzxb3swJPk1Vnwj3szaaCiPBRWXUTH6Ipfya26I2Xl69sdiCe
-         W3486czFRUa0dRjgbbsEV/sL42bYYNAdmqL4gwlYV5iP8cIqmFsCaLx6EQG4QnZa8ZMs
-         cSsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752603928; x=1753208728;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Pce7SH4EmBnxxSrpkRuFrQuLao3Mb+YqNEx/TshDFfU=;
-        b=ga4jUE3eRhkhb8N6fMDFEpOZfFe1eEDpowm2jU70NF62JkeTIUREAarB8wMcWMcdpS
-         zd7iT8FDG/uv38/47dPl27NXZSgj/gpCdQvdyz2BYEWJIkN/ZpJ9/Ayo5q2JPZZYGc3m
-         0lkM5mIJW16MMxOgIZ4zgs3suZcrPvcU2rLSfr2LT29K0s8SllkandbhwshnsCEVmaRS
-         DdamW42X6eRE3baGmdImeL2GNl95z1b9L1x7uZHqNe8Bdgz41JyE/73TtTk7t8v3GvwR
-         Rq8t84cv/b1r0t6doeHZ72BuZ4G38WXAkvQvod1bVNHWJIs9lHzh/Exln4UfVthwEkiS
-         4Dsg==
-X-Gm-Message-State: AOJu0YzZ4GDNsTiQpi8iY9CoxFyIh+FRW+4PVpkuevd+P49qTAuQ9J28
-	oIGaQSmz/EcaSWdzYFpmqLoPvU6HIp0KpyF/x/Flz0BBN3IgazmbHFAX
-X-Gm-Gg: ASbGncsqt4J6Scey4Gpl5ud87hjQVsw/ZneYBIotsez09k57NxBgbyQVKjD0N+h0ZKN
-	2MS+3bYot4OoZZFimTc+tXTZFi/yZTFVI1RB1RAl2bCGCY+/wh3HYFrjoWc6vWrZLscmkokOdRu
-	aL4/uY0RYh9tYh7DC+zehBfePumgqy+egBD0kIfHpD8Xn1wwmGIOjiLZyGMnZVmhWsBpwACbtkp
-	KJqjJH0g2QAdSZ5jYGfvbefJCuFIoHkZzw2TeFY+FHQEBGBDwFaN+GpLTGNBOF64IgtNfLiWnvi
-	nVIM096bpxC3SBgduwIDLPWLtv9A+31XRC805qtMipTt9v07YJXZjzMo1OdMnes5y6gYlP0cyPy
-	Afj5MyNGIaJqb9HQ=
-X-Google-Smtp-Source: AGHT+IHA4ZBzmZvsCI4HuXibV02n7adM1OTr1lP+c6Rx1fPPx53l6k5vsVX6+2hhrtkqxjSUZVMF1g==
-X-Received: by 2002:a05:6820:2004:b0:615:92de:5435 with SMTP id 006d021491bc7-6159fde0eb8mr373220eaf.2.1752603927677;
-        Tue, 15 Jul 2025 11:25:27 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73cf12a6340sm2339788a34.54.2025.07.15.11.25.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 11:25:27 -0700 (PDT)
-Date: Tue, 15 Jul 2025 13:19:45 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v4 1/4] repo: declare the repo command
-Message-ID: <4z7ho6hg347j425mzkgueywwptynk3fgj5mmmtkua4zbkprvui@taqrlenltxkb>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-2-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="gCQk/gDW"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vBVj6xYW7/MnCHIwajhO+Y8DgWe3QbrRkjndL+IVxkyMIQ+J4JYBTh6VrqIjYVNF0/icALo1RwGj1kwXlIhGKjgl0iQKpQJhtCAX7RX93uyQdA6I2MA9QHoPIc3wcJuXdo5p/zGABfvTsARny9LQX1D/8H+I92pCZLmrFfiji6NLm1iSaivhDP2n0NkiU6qhzDVRd5rmJuCz7be1iTEDj+Onx0gFz0Lzc7TOit/t9Yy+nnk4be4l6kJGSvfJsxOxVoXQ4WNIo11HqLrUs483mlQbi91GNXDnNXMjEGjT6kAmAV6cAK/jtk0ZoglBhIA5qAJYuACGO/TlKNarUSyi7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FLcTzSuxYPLphFuX6zdRDrYviP3vkI4nkHbQcl71cDM=;
+ b=DbRvTFwN9hDuclr0hXNkw4ghRfIXUxxEBCYDz+tohDK+0m5HheVOAdBQXUcgWEFNhVObltIL52YAjyFS6rZXe+qZge/TY2X4xrV36ywN0x01LinIcu4twPlJKig3Uv1W/ANaMYRHsm/eftLuh6JjQ5CztipiK3vEwr1Oy3s414A2A7aoEWz2/BAJn5FnmIWLE3ixVa7LBUifD8uzSfy3o+bQn4UsqRcYWMYhTdnyqn7WEIZfVQnFhlzYrASAgV+rkm72M7h3UI87UJwZenzQM7cespFx3RnQRSbXSF/0IA+ziU5zlfTi9l1kb4K8psrFr+iQQ/cJLMlxxKoLAYpOrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FLcTzSuxYPLphFuX6zdRDrYviP3vkI4nkHbQcl71cDM=;
+ b=gCQk/gDWL+TVg6Yceql9bSoyA7PklOSEiTvL/WQsdacyuSgZ2fOHILb3k9D04q73kBVbpExgH/XEwV1b05ZaTfbbvatiUamirkcgC6/F2TZXR/s/+dES+cxiFUz3J0vJNKw8sliLNMcErY6jRAnHhXe0AEWGDUYoruaM7pnQ6yyCWl6KX7Ty6Yzzjk8XiTW4JwQVc5z7wM4VhucLxZi0WkQvZuz8t6I+BWQhHDjpKElYbW3XVCL/E7ZRgXxYyAL4hg3NslKKGKa+tcN3ZDSQSr+nllrnXBQvV0bcZG+xQWoxpJ/GlraoIXlVVdGCt7YEpUl3EPq9Y2DzAl38bXdacg==
+Received: from SA0PR04MB7324.namprd04.prod.outlook.com (2603:10b6:806:ed::6)
+ by SA2PR04MB7740.namprd04.prod.outlook.com (2603:10b6:806:145::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8922.25; Tue, 15 Jul
+ 2025 18:25:46 +0000
+Received: from SA0PR04MB7324.namprd04.prod.outlook.com
+ ([fe80::f7d3:b390:e9c0:2b9a]) by SA0PR04MB7324.namprd04.prod.outlook.com
+ ([fe80::f7d3:b390:e9c0:2b9a%5]) with mapi id 15.20.8922.028; Tue, 15 Jul 2025
+ 18:25:46 +0000
+From: Isabella Young <Isabella.protechinsights@outlook.com>
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Fresh Leads from GSX 2025 Expo
+Thread-Topic: Fresh Leads from GSX 2025 Expo
+Thread-Index: Adv1DMizBEGsw7vMRvOjuIOhqgHQPQ==
+Date: Tue, 15 Jul 2025 18:25:45 +0000
+Message-ID:
+ <SA0PR04MB732458EC8EC12D66F0F5242B8D57A@SA0PR04MB7324.namprd04.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA0PR04MB7324:EE_|SA2PR04MB7740:EE_
+x-ms-office365-filtering-correlation-id: 51024ad7-d546-4765-74fd-08ddc3cd0407
+x-ms-exchange-slblob-mailprops:
+ bHQ38DpbEWAD47zqKFKNkWpsu4QAv0As3YuQzgc6uY4nBWIhu7gK13ov+UhxRKt3SJ1H92OPmsE9vczfzQs77+QzsOG37BQSiYFJaXgHI5F5PWgRAp5qN8Tjv/7RMHn3YjP+b3SKjkp3UfIgjZoEst79eOIXS0u+5C5Kw64wao4rR+W2Kv1ZXi3teX7dQ4fdV3llXzDCbFUNWcLz5YcNFPA2H4p3qdqmpWOl6iMO3g5Jfy2TULnQCMw8InQCg2v3+JW6L0qeVqqRZMuvrDIh0De+fNn9cdA8Px/k9crj7OROD5vBoAG1IaQywR0ZHn9BcRBJLHgYdMsJPaOxlqa64OcNDFn4ilSwd2zDYEatpbY8HwxsnMrgFJ0QcnwustCm2ztIGaKKVKZKZXPion+DoEqe/Z6UhkLdhb+4M25+STtk05GVOkcspCNlrJmafoj8hh3RD8BNZrQ+bSFOplRAgmWin6kU8D0w9kyLaV7KYl3PYt54Uig+GV3EoSWPcEsvq47F/QfKigNzUGMaSUJ+6SyyNG23JhRinsCl0dJmV3npPwYQpRtCcCt7Yze9Ni5hsWQ36OnAM1jzB+0MDndSOguyCsZY2dmLIOGMr1Nw0fTp4ltcsx1pBCgtqyStwxWUXD0D44tBWGTQ5I52SAqVMDGibECy2aNZVgLFWoSEdAnRb33a1PY6gQ==
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|15080799012|461199028|41001999006|39105399003|3412199025|51005399003|40105399003|440099028|102099032|19111999003;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?dh2wEcx0Wxz1cPBuDPRLi3K1PZWEvBHh0IXJNow74kWeD+ltwXJ4oHmX25?=
+ =?iso-8859-1?Q?ckUXoIkwIvO8HonWotDhuB0U+q4lE+jxp6PSI+iT9dJWr5k08/TtuSYeLj?=
+ =?iso-8859-1?Q?QCvufrkA1YzIZbSqDxkyyb+7Iq8qogd6Gpel+zq85PH4FW6FXIUkanXKEi?=
+ =?iso-8859-1?Q?rNgIBk5gQISd7braM/pTu55o7NKPriJgZI0ZK23Gf0kVp7PBVQb/Xu985x?=
+ =?iso-8859-1?Q?DzfQ/EBkrLxWzVLiix/VtDzFI3iGLN0lixUYlS3el/R7V64j+xFqAPi/S8?=
+ =?iso-8859-1?Q?PdxKocy+EaHqL/nIChLD39mr7oYa47y/25C6XjRHxabOEFBB+OUoUSfHUn?=
+ =?iso-8859-1?Q?RnIAsKZU5B8J88oL244DLbGQk84Jsu7A08iH7L/LypNuQ2da1HcTm3gCFC?=
+ =?iso-8859-1?Q?HusqmSVMusrGe7sCU7nzOTSRzGB225CO7tgVYzUD6ScmoOMjZihhFzOOMp?=
+ =?iso-8859-1?Q?v2XQUdU4ZlFnFXPtXvmnd6H0iL8xCU4dE+AyKPDtvC48Va0b/o9AM4FKrH?=
+ =?iso-8859-1?Q?k/X2IAiJ26GYNGYkKsIwp3/z9wxVBe6FQFu/1dQqJYDo8dfw8oyDpvaDQE?=
+ =?iso-8859-1?Q?3icFXS2vKlKLkB2C4k5yB7NeCm5ach4wjrpx+OPJWpAiqum1aFbyaRXd43?=
+ =?iso-8859-1?Q?5Yxky0oZpmGOowu+bkCW4upmEgvtHG5Q+qs1Ez01rLFXZJvW2l5pvyqNEX?=
+ =?iso-8859-1?Q?epei+Slrzzu4JwS0nEONrVfrDDUE+RRLBMMwH+fzKDO1bUuzKSmoi+SbSM?=
+ =?iso-8859-1?Q?QNJdotZ0qKoK96kdKZ9DfoQelkUWg5aeLxT6sMcDSeoZGDDEUoiN/uUwTR?=
+ =?iso-8859-1?Q?Mq5HuSI1iHBWmfr5qXlplf3a+Wqhizvw2m/J8klrNseHd6Jzwr1y4EZn5c?=
+ =?iso-8859-1?Q?somjtKM+yFlD1JFvwIzjSn5L533nVrl8rwfqcm7icboChVvdUuN+sg5n8P?=
+ =?iso-8859-1?Q?Zplm0g+c9mTFoXqCrVQzVHPvdOFWhPNZdZRYP6SbewAxIir8OBTg5A3euV?=
+ =?iso-8859-1?Q?CRXqpeLzknZVfkCVvygN1Vi4gMIadjcLrhz4waMmEDpCO2yiUZ4CUaSwYd?=
+ =?iso-8859-1?Q?uGCQVxORbepdP0noFGY9RfyjP0ZN0/vmIYbIAcUovZJ/4apCqrMoRNBkIa?=
+ =?iso-8859-1?Q?c2w4msKZAqAauO+TORNIiJ/0CSQ2mF/cd92HwdiBvUoxBpsnl4xADLXqxn?=
+ =?iso-8859-1?Q?BL0K1ngrXnqkAA=3D=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?uavG9Rz4A3/6D+Niorh2iHCAF97ySWBWZNDtxiHZMnRO8eMVT86CEd9Mv7?=
+ =?iso-8859-1?Q?A+twrqetDpRpkMoWAmPP8Hx4LsqJl+95ejzElwIu5qkH0q7i0ezQx9vIMI?=
+ =?iso-8859-1?Q?hDiWsqHmWaxC+Q/9Emxw/Nf5dA5XIOKgubc4t0EawiBvNihCc/BYcHoHWw?=
+ =?iso-8859-1?Q?Hi4t4dYBVgMGAmSzQ835c8epQ6Ovj+PfSIANsnEggMCrifTDC1pvpyjaV6?=
+ =?iso-8859-1?Q?PWYWlVw4JiI5kM4j/X9ZWIZ1HiuBMQqdfkzSq3J7m03qADvHdG6BYh9Sd/?=
+ =?iso-8859-1?Q?V4Ra/oV+5cgE9JlJ6lrifANC7ryhDEbteo5OX2P56wWyRGQUmt4E33CzRT?=
+ =?iso-8859-1?Q?OlGe2NnjchkfjcyENe487yFVIgwbEoZYMwnEYlGAwcnVI/rgXcIDbrXxXq?=
+ =?iso-8859-1?Q?WlC4h63mag5Pu/CP4jWZmEYrhgAbkyB1UAKZb12PbreVHB3ulhZdqr2SZC?=
+ =?iso-8859-1?Q?epm7nHw+hyL5oVSfBads1HZ2BHX9+xk14Psb7W2VIjzcuHhI/YkMetVIZL?=
+ =?iso-8859-1?Q?9kRiBmZ+3obdLsJn/SdQ4LTfPPQQf9i0yzD3IPeL84BZ8uUCsE8Ri/uOBI?=
+ =?iso-8859-1?Q?C4G1Psr8RuiuD9sd3oXlqdq9kTq9wMq9EMjzkQ8Pr5lrIRXIO6E1CoUxwf?=
+ =?iso-8859-1?Q?sfG+GP7d3njn3IxZJG6LwAilqYrwAgHFnzu1E2/hTOwonPPn7ekV5Mn6FD?=
+ =?iso-8859-1?Q?10DBgMlMoGhzuFDtF8JShxhCUi9igq91HPzXkjy/0o4ISp/E7RP4417XoR?=
+ =?iso-8859-1?Q?HRWUh20PHRKw0RltardiZ/D4R+3Rr2BfUAhjuulHc4zRcFPlRj1TWxv0H6?=
+ =?iso-8859-1?Q?oPhVGAJr1s7IJt1qMKS67MIZ4a4vVL63fdzSJcPgyixsK+VZ3cEOgwBq9F?=
+ =?iso-8859-1?Q?MeTvXswZUj5od5jbgHbBuRKDBKvi5VqcnwKshwoS09oofIuXZm333/5p6h?=
+ =?iso-8859-1?Q?zUHi8uS5TEm+TASv0dC+EyLur8M6191DGN4EAN4DOdYmrN4yB850esSLxZ?=
+ =?iso-8859-1?Q?yLY4wRsLJdHVyTwYP+kagTvC56NektFd8BCooZpkYC2snAum02WwTzKXAb?=
+ =?iso-8859-1?Q?DbNW+kTKQfmo1cYdW42BkvJ3BabTGDxnqI8U14ZLv2TPNJTrC9Kfy09Es8?=
+ =?iso-8859-1?Q?gIcfe9ILm1lTecjgf0gvOzPlCWacBj9dKub+1Ee643oMYFjy6kU+3RfwIH?=
+ =?iso-8859-1?Q?I8YLfukm893dQojXxRCVRCCIHv5Lmrpe2eQN07RLbfeMe800exKllxdi2S?=
+ =?iso-8859-1?Q?4q0PEoa0S2V/2xO919a5IHl2RVdDQOnwSzzIaVMNo+4KDh0ik+nuRAi9jy?=
+ =?iso-8859-1?Q?+EdZn2iSGbgfhfMWEBmjp63159uQ/uQws7IwRakXIf/tfOUg/xQwavqLzL?=
+ =?iso-8859-1?Q?9SXkctemlCQbRB61ZDZ4uKjz0RGTMYlg=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250714235231.10137-2-lucasseikioshiro@gmail.com>
+X-OriginatorOrg: outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA0PR04MB7324.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 51024ad7-d546-4765-74fd-08ddc3cd0407
+X-MS-Exchange-CrossTenant-originalarrivaltime: 15 Jul 2025 18:25:45.9415
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR04MB7740
 
-On 25/07/14 08:52PM, Lucas Seiki Oshiro wrote:
-> Currently, `git rev-parse` covers a wide range of functionality not
-> directly related to parsing revisions, as its name says. Over time,
-
-s/says/suggests/
-
-> many features like parsing datestrings, options, paths, and others
-> were added to it because there wasn't a more appropriated command
-
-s/appropriated/appropriate/
-
-> to place them.
-> 
-> Create a new Git command called `repo`. `git repo` will be the main
-> command for obtaining the information about a repository (such as
-> metadata and metrics), returning them in a machine readable format
-> following the syntax "field<LF>value<NUL>".
-> 
-> Also declare a subcommand for `repo` called `info`. `git repo info`
-> will bring the functionality of retrieving repository-related
-> information currently returned by `rev-parse`.
-> 
-> Also add entries for this new command in:
-> 
-> - the build files (Makefile, meson.build, Documentation/meson.build)
-> - builtin.h
-> - git.c
-> - .gitignore
-> - command-list.txt
-> - Documentation
-> 
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->  .gitignore                  |  1 +
->  Documentation/git-repo.adoc | 54 +++++++++++++++++++++++++++++++++++++
->  Documentation/meson.build   |  1 +
->  Makefile                    |  1 +
->  builtin.h                   |  1 +
->  builtin/repo.c              | 38 ++++++++++++++++++++++++++
->  command-list.txt            |  1 +
->  git.c                       |  1 +
->  meson.build                 |  1 +
->  9 files changed, 99 insertions(+)
->  create mode 100644 Documentation/git-repo.adoc
->  create mode 100644 builtin/repo.c
-> 
-> diff --git a/.gitignore b/.gitignore
-> index 04c444404e..1803023427 100644
-> --- a/.gitignore
-> +++ b/.gitignore
-> @@ -139,6 +139,7 @@
->  /git-repack
->  /git-replace
->  /git-replay
-> +/git-repo
->  /git-request-pull
->  /git-rerere
->  /git-reset
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> new file mode 100644
-> index 0000000000..6f8fe3f6ea
-> --- /dev/null
-> +++ b/Documentation/git-repo.adoc
-> @@ -0,0 +1,54 @@
-> +git-repo(1)
-> +===========
-> +
-> +NAME
-> +----
-> +git-repo - Retrieve information about a repository
-> +
-> +SYNOPSIS
-> +--------
-> +[synopsis]
-> +git repo info [<key>...]
-> +
-> +DESCRIPTION
-> +-----------
-> +Retrieve information about the current repository in a machine-readable format.
-> +
-> +`git repo` will be the primary tool to query repository-specific information,
-> +such as metadata that currently can also be done by calling `git rev-parse` (see
-> +linkgit:git-rev-parse[1]). `git repo` doesn't query information unrelated to the
-> +current repository or that is already retrieved by a specialized command, for
-> +example, `git config` (see linkgit:git-config[1]) or `git var` (see
-> +linkgit:git-var[1]).
-> +
-> +This command returns the retrieved data following a null-terminated format with
-> +this syntax:
-> ++
-> +----------------
-> +key1<LF>value1<NUL>
-> +key2<LF>value2<NUL>
-> +...
-> +----------------
-
-Being that this patch doesn't yet implement any output for the command,
-maybe should should hold off on specifying the format.
-
-In other commands, it is common to see a nul-terminated format toggled
-behind a `-z` flag. We may want to do something similar here as opposed
-to being the default.
-
--Justin
+Hi ,=20
+=A0
+Is the attendee list from GSX 2025 something you're interested in?=20
+=A0
+Expo Name: =A0Global Security Exchange (GSX) 2025=20
+Total Number of records: 17,000 records=20
+List includes: Company Name, Contact Name, Job Title, Mailing Address, Phon=
+e, Emails, etc.=20
+=A0
+Do you wish to buy these leads? Let me know, and I'll send the pricing info=
+rmation.=20
+=A0
+Anxious to receive your feedback=20
+=A0
+Regards
+Isabella
+Marketing Manager
+Pro Tech Insights.,
+=A0
+Please reply with REMOVE if you don't wish to receive further emails
