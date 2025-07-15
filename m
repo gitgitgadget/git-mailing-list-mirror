@@ -1,140 +1,117 @@
-Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765FD2BE656
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:52:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79B8288C9B
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:53:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752605543; cv=none; b=KZKtUIVoqTilDlXqlcMFu5vtugfEqskiZScnqZTazB/GuGL0xr/ZCue5ltbmic26w3gCKAqWGykgqmUKU625l1dkBQg8LDzZn3gux8rM92wNayuWBlt2XxK9/AmOv12+AflMixEQW46KBqDEUnwyxhDXaY2LOm6psVQe/d3/mQk=
+	t=1752605624; cv=none; b=lAkbhw0r2A0VyezcvXHQPKgsfIaE3pb2GGew/2RW38RIntAf1OWSI9LavQPcv1xzLT62XFE9afW9O+WBMBEFELu5W+k5QeQnm20LsRanjMb+Sq8gsgTyinLPo6/4bHeMzN6Nxt4HkXcXn2PKS4DWV2EmkrN/nhjIWqJ0k/Z3mrk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752605543; c=relaxed/simple;
-	bh=LrfDC4I0hlMEs33S/9XCqwWn34zBGlTqqPHcTsiD2I0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J4cj21ppfOb+MrI5p8gbuO6grA2lzJboUxbKX0iFg2R/H0imTyWWZI2Se7lE69HAp7v64Lg6RK0nytaS73yQtjcUlrQro+R2yPWZ0xKt1wJAkb1FcpQtra6lBqS70kjA9PIZv6IPbyF5ubmR2iYjyfI+O0p64OsOCZYsARr8ONM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CymoZT/B; arc=none smtp.client-ip=209.85.210.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752605624; c=relaxed/simple;
+	bh=nTzjsa+zQ+P/4YYNbi9dgdv+51EQtlkwu9Y2ydq2oYE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uciKJy4rx/R9ZOgclX3nde2NVLfPPJ3GtEsCIwVZ+dyX0QhvDDAKVYVDogVcY3o/BANjp9RSw/Zw/A8wp7bbmPoUdXNcUHJ207Z3Gu53goKD+ehhPYC6bAlyEBwbtp0t9PULO73fDkJ3tywzhFk5uBWhELVUxX851KE0DmFkX74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZcJtnk2t; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cAfCN6Bd; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CymoZT/B"
-Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-74af4af04fdso165134b3a.1
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752605542; x=1753210342; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cT0hW0PtF7A52mDrJuGrGU1Y6VMZUknhe+4iSxL0nLU=;
-        b=CymoZT/B1LU6k7DgGM/f52eGtuXuicnISeWL110bxbck5Ac7BzL5fLxAUimVR5O6Q/
-         vkZxuOMl1hNzZGp+VXuVZzGoRiUpJFfQGbqc59sb+ibzK2rb3R2npEeLfcFOeIuQ9iGv
-         1F41CtAKoJY/NhKGUtKP2b+0eYTM01d8K+xBqcc34KBWrkWTd6bqe/+A9wqSuaCFa1Py
-         u7NuZS5nw/4wQXNX4PidhwOfkagzmlpWhGJ0gd1HPXOJs0j5sMNgjNx0PfLnYrODePZ8
-         mOoI+b4+jT4WxCSmHJgIjxxEhRTxv9TLN7m3R0Qn5rK5My16q2+yXPe2y1TfYIasQ0rT
-         5O2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752605542; x=1753210342;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cT0hW0PtF7A52mDrJuGrGU1Y6VMZUknhe+4iSxL0nLU=;
-        b=IGiCeIURd57zKddRsugjxRV9GBvwbmjXHotDLT6m1kyVgxPY2mcqWMQkAJrDgv0z5U
-         kdMdUURt+JaIvm94VF4YeeJrzaJJiOHESwo3yP1Z9x+cHtVxYqZnyxh3EIZO/1h0HR+v
-         DZR94rvjLDtB6MjeMNyrUL6YSGHT73QDqlb9G6ELK9Q02kFRRg6QPC+jwVr5bMCML0tW
-         KV1xsD++5cgO1N6+km+iMkbZss0h/TltGqC0J80T9bE6tNwNZSyzmm1el4HAkyfBj0LR
-         koy6zikyZylzLBk5Eh7yGKzJxFGKPKa196ptj1hOjfrcoac0FHzDKUZOhhPhB1W+BbuW
-         ohAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVZHS3S2VUZE7xN8n8hA0yAiPfxh1hSwSvrHPXaa3e6NU4E64ZkXQYA4E4L8LAR6ihaOOc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXL7kNwaoXH5mRARRPRbxPn5EaI/eiUWRIJoZlI3mBUDSqeEnr
-	pH1RBZ3FlUpTT+bc9XIX9KjWqwQQFZsdgrGO1jDqZjf73RxwLx5VQF2i
-X-Gm-Gg: ASbGncsg7gKgv7Z7BX4ZDbjPydf7xR0Rnun2IcmywGKQE2NU6/ZKkEeitn3jRURm4CH
-	9bfKeyJElAZkDFkyOFqXI3AJGIQYQVZ7+wCimnM8fW/AawB8VE2eN7vj2zgYuxeSJi7yIgvp/W0
-	ni2Qz/DXHrYOoguqzI5hqNB0SB7DVvPB3e94/q/Uudr0vuL/CSbNMwW6l4qN/BGHbpKWUl9ItF3
-	XeDGFUZQCP/NA6lxeSe99iIFeB6p761uqKhaqC9dd7QIx638oSoyH8qbdTHeqQg9aHC4MWUFeZL
-	EFiu/eFI0WCBDN8x6ND52G352bIWcJu5BBSo/iaI3bn/sywynNIjUy9vKUU1QacGFNl5ms2ZQEx
-	1FmexJ6yGlaIrmPQ4mVh8zZp46qFmKxpwelQ=
-X-Google-Smtp-Source: AGHT+IF/x75zaBZ6ao1Q9QjvX2AD/T5JMuZ3+UJvVJj1/rYwkdzmmTTw+JYxAkVOwsuTLaYYNdrqOg==
-X-Received: by 2002:a05:6a21:112:b0:225:9ac1:7c6b with SMTP id adf61e73a8af0-2366f09f8c7mr8405038637.4.1752605541422;
-        Tue, 15 Jul 2025 11:52:21 -0700 (PDT)
-Received: from thinku.iitr.ac.in ([103.37.201.222])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe52c914sm12415806a12.7.2025.07.15.11.52.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 11:52:20 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: ayu.chandekar@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	phillip.wood123@gmail.com,
-	shyamthakkar001@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	gitster@pobox.com
-Subject: [GSOC PATCH 2/2] config: set comment_line_str to "#" when core.commentChar=auto
-Date: Wed, 16 Jul 2025 00:21:26 +0530
-Message-ID: <2a3c2d323bdb520a37a099b361be9ec5f2d5d46f.1752602474.git.ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1752602474.git.ayu.chandekar@gmail.com>
-References: <cover.1752602474.git.ayu.chandekar@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZcJtnk2t";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cAfCN6Bd"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8B84B7A0280;
+	Tue, 15 Jul 2025 14:53:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 15 Jul 2025 14:53:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752605621; x=1752692021; bh=G/h7m84qq+
+	I+Y+pDhvBuXHaollvwfqo4H/8M9298RcU=; b=ZcJtnk2tTA0XFFd1vT3H9GIBzw
+	lP1Uv6RbTsg0fGiLvnE1BF4TfL2/U50oMY2/mCk+Ie5u3UfqQmlObFh8Bxx0eXoU
+	eXFVSGRrXIEF9YKj5UubrbDDaVfkt+220pjV1WQgsD1tyfcFuzuXLu3kNawD9CYl
+	idpRGk3qtHU9b0deJvMBR5d6Y79nX/svU9RWsE39sfOA+z2jLCseNCnWpQMwKlCx
+	UxO4oKy812dMhVJz76ES382yPQwpvZHHBj4IqRGmVCl879Gm7N0BGyim4++aBPp2
+	voP823oqusYP8ZSFNO5wlgUEopCtq4dDreM/M74H0LHUSx1vRU1KQoj0wWig==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752605621; x=1752692021; bh=G/h7m84qq+I+Y+pDhvBuXHaollvwfqo4H/8
+	M9298RcU=; b=cAfCN6Bd2DAALmX6dkYHLAUnbBmhpGcEH2JP2tMVqAz64qmhLbL
+	Nw0agYDGR4JrOush1Qyd0shbRb4O2ojoTw6P+fu6oDGkK2f+YuIySOJkVnWdsbng
+	9rKcPKCQxu/CZSba8PzuQGmuowvDv2g5gn8LThI4dngO0euQKQAfQ16Le663V48Z
+	2GLhQA3iI+Figfqeezms12RzkDT04nVBw2or+6I+GQ4eY+FtgO/N8ZgO6Iu+uCOO
+	00a/iz0eE1MhWDn447eUttoOWHW73PUuEIzU7wynAy7XgLrFxOiGQyC/SsgsLIp6
+	Y7pszvLTf5dSNPy6SCZ6nNALK5lpJzkACPA==
+X-ME-Sender: <xms:tKN2aL7WvRwO-aEDGRfD5CwyZoTyQElLPGcqoQ9qFSPUIn84G7wtFA>
+    <xme:tKN2aEv3n86mxgbOqw7OY4HoZGrbE--Lpvt0LAOBV1W0XJzJQi1tVSmMIgHisG0H8
+    xCs4nvQCQOt__pMEQ>
+X-ME-Received: <xmr:tKN2aLgMuwfqujWiI8FG_nJVWAGbO_aHJxMZr6DYj0tRRvFf0lagjw916CmtmeplZs9pRht9JWVcdHpmsZqP4sHMxGyPYoXg-I6CAfw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheehlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtth
+    hopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhdrshdrrhesfi
+    gvsgdruggvpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghs
+    thgvrdhnvghtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:tKN2aPoVjBVGG4TfLpwN9RsIkf8d_9b8ZyZExe7_vocsvabsTOzVIw>
+    <xmx:tKN2aIvyRKXSnEr7vp2wSJ3AsSyojUVuKKeZjZ1af_BiX3vYK4-z4g>
+    <xmx:tKN2aCbl9AUzU8ri8qGMaD1jMZRTpcIFDRlUmbJOAK5tHIVHQWXMmA>
+    <xmx:tKN2aPbSFjfq-tONQcVEYmBa9EzZTMa5DrxKOqKRFuOhzAc2Bk-nSQ>
+    <xmx:taN2aNNrNHDQWI8y6jr-IBSwipdtPcxakN2B3th1Xzbpn6yYostNSQkD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 14:53:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org,
+  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe <l.s.r@web.de>,  "Brian M . Carlson"
+ <sandals@crustytoothpaste.net>,  Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/3] C99: declare bool experiment a success
+In-Reply-To: <CABPp-BHoTxT1UQtgy2bH=mc1re_LPngKX-50GPh_wbtMMZZpyQ@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 15 Jul 2025 10:19:27 -0700")
+References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
+	<cover.1752587571.git.phillip.wood@dunelm.org.uk>
+	<CABPp-BHoTxT1UQtgy2bH=mc1re_LPngKX-50GPh_wbtMMZZpyQ@mail.gmail.com>
+Date: Tue, 15 Jul 2025 11:53:39 -0700
+Message-ID: <xmqqtt3dgua4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-If conflict comments already use a comment character that isn't "#", and
-core.commentChar is set "auto", Git will ignore these lines during the
-scan using ignored_log_message_bytes() and pick a new comment character
-based on the rest of the message. The newly chosen character may be
-different from the one used in the conflict comments and therefore,
-these are no longer treated as comments and end up in the final commit
-message.
+Elijah Newren <newren@gmail.com> writes:
 
-For example, during a rebase if the user previously set
-core.commentChar=% and then encounters a conflict, conflict comments
-like "% Conflicts:" are generated. If the user subsequently sets
-core.commentChar=auto before running `rebase --continue`, Git parses the
-"auto" setting and begins scanning. It first uses the existing
-'comment_line_str' (which is '%') to detect and ignore conflict comments
-via ignored_log_message_bytes().
+>>          Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{,_mem}
+>>     -    to bool, 2023-12-16) a number of our sting predicates have been
+>>     -    returning bool instead of int. Now we've declared that experiment
+>>     -    a success lets convert the return type the case independent
+>>     +    to bool, 2023-12-16) a number of our string predicates have been
+>>     +    returning bool instead of int. Now that we've declared that experiment
+>>     +    a success, let's convert the return type of the case-independent
+>>          skip_iprefix() and skip_iprefix_mem() functions to match the return
+>>     -    type of their case dependent equivalents. Returning bool instead of
+>>     +    type of their case-dependent equivalents. Returning bool instead of
+>>          int makes it clear that these functions are predicates.
+>>
+>>          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>> 3:  7eaf8042061 = 3:  66968714739 strbuf: convert predicates to return bool
+>> --
+>> 2.49.0.897.gfad3eb7d210
+>
+> This version looks good to me, thanks!
 
-Then, Git scans the rest of the message (excluding conflict comments),
-sees that none of the remaining lines start with '#' and decides to set
-comment_line_str to '#'. Since the final commit character differs from
-the one used in the conflict comments, those lines are no longer
-considered comments and get included in the final commit message.
-
-Set 'comment_line_str' to '#' when core.commentChar is set to 'auto' to
-reset any previously set value.
-
-While this does not solve the issue of conflict comment inclusion and
-the user visible behaviour stays tha same, it standardizes the behaviour
-of the code by always resetting 'comment_line_str' to '#' when
-core.commentChar=auto is parsed.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
----
- config.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
-
-diff --git a/config.c b/config.c
-index eb60c293ab..bb75bdc65d 100644
---- a/config.c
-+++ b/config.c
-@@ -1537,9 +1537,11 @@ static int git_default_core_config(const char *var, const char *value,
- 	    !strcmp(var, "core.commentstring")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		else if (!strcasecmp(value, "auto"))
-+		else if (!strcasecmp(value, "auto")) {
- 			auto_comment_line_char = 1;
--		else if (value[0]) {
-+			FREE_AND_NULL(comment_line_str_to_free);
-+			comment_line_str = "#";
-+		} else if (value[0]) {
- 			if (strchr(value, '\n'))
- 				return error(_("%s cannot contain newline"), var);
- 			comment_line_str = value;
--- 
-2.49.0
-
+Thanks, looking good.
