@@ -1,62 +1,27 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB79F8248C
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 00:34:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2749A1BD9D3
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 01:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752539690; cv=none; b=Md9LEjL1GiBWLk4Hy8Z9xHWG8izlUkNNPC1ekWlVeHLWcOCD9E/Ig28Mo0JyH1J/NcrcUTExi4PkDRjiyFYDirdxGBzD1AgaP3g7hxoU8sl1I/UHw+ZZ0poUy4y1F4yd2x6xuuELY/MfzO99xpcHoBb/xte91B4+P0AELJ52kK0=
+	t=1752543303; cv=none; b=DhLqeq7Vo1uWnZ4tgbuR/m5sK8ublUHRzjc2JLs2AxhEHsRdM+AuLifabiN5Km6EoHn73Y/zJpPyzQYvhZ6SF5ENMqnHH1M/Pny61vWWUM1fzUwplZwdmv9kSeP2dLOHysnqVLJalsVhKg/hSDtJH/gKmOJWWv8bHTRBFkbrqz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752539690; c=relaxed/simple;
-	bh=flPv47bynEBSXqNt+pELijKDO60IfMMaUT+zf4XphKM=;
+	s=arc-20240116; t=1752543303; c=relaxed/simple;
+	bh=e8C+UUmeV31vgEl4fmA9scKuRWC0TBD7Thuwt5iA3zA=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=He3LvuPsdhZK7g+AnssJRbvAygg3IfmaLrKdh+RHa9tXRm4n6984oAHPzxkpy00Q/6D7UyUJugtgZjX5H4QA5h9OtK1j69D7CvRSLj491Xde8IStAGCiSotyZJD58PWq14w/reWLozGHY/3xa7unNp07Gng+/RTAZP9tVbosJew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lG0EOKsY; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lG0EOKsY"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-8815049d0a8so1999407241.2
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 17:34:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752539687; x=1753144487; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=flPv47bynEBSXqNt+pELijKDO60IfMMaUT+zf4XphKM=;
-        b=lG0EOKsYBmkASZcxLT+wOTHacZWI9ZKBANuWYdJegMfdVTnqUL2/m4dOh18t9h1HEG
-         ZeXMMf69ePE6isyj/k3LcPyQPiIopoJKON9nuub/ytts5yNvQhmW9o7kK0Dc+oYcMSpV
-         R8i0rW0D+HQwLSg5K6H7C3a6R58Qrg0kOy/nLT4TVyPZjp38HvSMXhq6cA5BuDML4F9A
-         jcF5j6LxoeO2LFYh96lL1XQaemFqJofpNgC5nadMulm0eRnm0AXOd6BdA7O5ZeIHjE/z
-         HFlu4Zynjh8zsjFrvvcCSikUUY6E6Pb3HWffIBoarmdFG47Uiv1xHhFIzTtOL3G36Ue1
-         R0IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752539687; x=1753144487;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=flPv47bynEBSXqNt+pELijKDO60IfMMaUT+zf4XphKM=;
-        b=AWJgPCKSgOmucAprIScu2d1doLQQQbhlD7qs6qsymqHNyT+xDB1zkZcjBTvqmQcPkf
-         BbAY9lY45y2G4cgspyqu+Iaf85RjoMx4awuIDT9wto1SnKPK+TJyTjJepRnJyKpzlUz4
-         G86gRzzYtDlrIoH0dFrtLapz+MZbWX2T/oZzHVRvnX/8m4oqZXrz7Kk9jEJWKk1m/YMr
-         Z5PBJ5BQJr0Iyy/R3mQAI0srKQxchx5b8NSrfnc6H/SCplB5cFo7ItLHWe5ou9FpGYYl
-         iafLDBcL/hIPD2zMYDazkiDJ6F0G2GUk3L20JCBRTuI6xCaeCrKEY0pMsQp3PJsY2nNK
-         Y9cQ==
-X-Gm-Message-State: AOJu0YwKReHllz5Gi40DppPREd1dp+3o6SZzIm9xAdmKEL4VZ2VXljPY
-	OrajiW1PHRI2pUhmDC9k8vpvN0C8YVdwsbBOykbv1f2uin+QGdJKhRbxAUdCVA==
-X-Gm-Gg: ASbGncut9SV1+G0N3IPnX7bk9+Ll2975HIx06j4mRHIdJyoOlrtEGLd4NeyZOXkiYBv
-	/P6XPFylAkdvun0nqW0vkBCfhmd8f/i3e+8nZcRhzf+0ado6gdS1iKgYQvs6YgQa5iOc8ickxuZ
-	2qHMXMYE+jc36jw+PBTBvHXG9Pf4sfmsArpa2rQ/EB5UQ2fOqMV50CEzY5zdp1KF11Wz351VMX3
-	LW4qUqIEiZfndp52I32bU4PXYaIxPXKGzN/xrA8FRU4c1BUsenS7O2IqrQx+DoKdK6yrQcWs23s
-	X1SoF1TbDHh+JRbu+CzhwYvC+ipUgdcj5VvZ6m0kSAElxdJJntOeoqvQEpMAb5P9Of8c4mIPt+v
-	ZGsQpC0HRzbjHqPmWQkBEphQ1B1l1v3HcHezge0NayD3rFYly
-X-Google-Smtp-Source: AGHT+IGzX2a/TBubeng9NOW5d+k8hhC2TJBXjc3yFSDyN95YVrXSeFcieNcu6yaNVMY7OJ5ESMm5fw==
-X-Received: by 2002:a67:e00b:0:10b0:4e5:9380:9c25 with SMTP id ada2fe7eead31-4f6423346d2mr6725934137.3.1752539687393;
-        Mon, 14 Jul 2025 17:34:47 -0700 (PDT)
-Received: from smtpclient.apple ([187.101.144.40])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-888ec246bd9sm1923577241.4.2025.07.14.17.34.45
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 14 Jul 2025 17:34:47 -0700 (PDT)
+	 Message-Id:References:To; b=TY8JLvbfJPAsDEFny0j/lK9tgSAuHRcVsDzTiCHkjq0LwboGw0fghh2Txlyq1ykM8BKKxIBAK0n/qTiDjo7yjZcYlIwxLgwc4/u0F67CVDRMAl2Bee5Js2L1VVJgpS3HQkQe81/sfJt5EOfkUmZBjU7f+zTQCetBhrAYpMhWHCA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=52.59.177.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpsz8t1752543266tb7a89455
+X-QQ-Originating-IP: 01Z0kYDomINnQ/lKdQqmuQ7u+NZ0zxbt0tbSulQK+lg=
+Received: from smtpclient.apple ( [171.116.160.7])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 15 Jul 2025 09:34:25 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 15382107353221853189
 Content-Type: text/plain;
 	charset=us-ascii
 Precedence: bulk
@@ -65,21 +30,63 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC] Blog: Machine-Readable Repository Information Query Tool
- (week 6)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-Date: Mon, 14 Jul 2025 21:34:32 -0300
-Cc: Karthik Nayak <karthik.188@gmail.com>,
- Patrick Steinhardt <ps@pks.im>
-Content-Transfer-Encoding: 7bit
-Message-Id: <9A4E7241-DC4C-4F0B-A70D-737819D911FA@gmail.com>
-References: <A203C3BB-AEC9-457E-87B8-189B81C579BF@gmail.com>
-To: git <git@vger.kernel.org>
+Subject: Re: [PATCH v6 0/5] bloom: enable bloom filter optimization for
+ multiple pathspec elements in revision traversal
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
+Date: Tue, 15 Jul 2025 09:34:14 +0800
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ toon@iotcl.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <B090DCBA-7306-4BA9-A5BA-DA81D1ABB29C@smail.nju.edu.cn>
+References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
+ <20250712093517.17907-1-yldhome2d2@gmail.com>
+ <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
+To: Derrick Stolee <stolee@gmail.com>
 X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: OBoFiaMdrvAdspzo1frR4NJW5vtFuAMG9L97C/2k8kLBeYSdmSoc6S4F
+	mLGn4k+3cGyjQW/l9jwhBqBaGvMvxEWum5UDXmX5R3dusAykUDnZ7b8tICN3GpR9Dzg68Y1
+	GCVFy4MsIpIBHowLeFsufLAYxrIOPf4vV1oz3wBaGBS8EMkpR1FsMa7XQR9coSJPfvHm7o3
+	7uBdNEOxGu6ttCBC2xiMcM6Q4bEV45MQEfoQ5jyn0V7b9g6iCE77/aazFIKu/t8TJq9oIqn
+	CGU2BHJ9WVWN3hzBDN76qPs6uD14GP79kzmzdLIMFW0s5Kl91wjscG07j/sR0d4MypLj/+h
+	0o8SjFPEy/6JkTjKuA0vJ+rILtZnXapekhIAbaRNsrXNxQeRKCul/eNkn7qy4JLtaM0EEUB
+	7ac7SwSZbUuFkTe9H0rdpcypRdZ3nlwEYPFc+BftfULkmok/M5Y1U8CvDJfrF58uQnPVJ7s
+	uvRdBcbvXj11e0BrcVOmlFSuv96KYmJs/DyD/hjz8BBCYCCAPZkR7unGeW0J3RB7J04Z5Vk
+	qcG7XAGafh8O3QEAzoZ6XjFcKYgJPyOTcD70auwqpe8gN1z9Yqc3xmlSO/1dVDiS4cltVoN
+	3qIuiZuuwgyEESVZS12AvdjtzT8OBem6bbth7pZm12s7qPz3gWWrYQ2mF3TM7N7xG7OBXK+
+	U+5YubKWwteE5nt+CrTkd3ZDKU0NzqQJy3naGJ2EFM5DBZE4tsjJXYKlcHN9InkxCpZCvf+
+	O0BFlX6dEaWLIGFl2gf6NL7vDqoWIrhPs8xEHoUdLW2/0q2ItE4FDc8PzTaFVhQYHPaxUGG
+	t9dY/QFuzZRYp3Jb2MywgmYgHvsPA+Oc+aFVt/IvnRsUElyWfFsP6AUPBDKyhF1Yuyhwf0x
+	dufvgJ8OTLYgiIWdNQ2JdyUtm9Woi6PWjiYCBWLWfGf06ZEHx/KFnyzQ+QxRMrJlbWwJCGO
+	YsSa8m2WN9wzyy3zyLhcDO4wrHgkrkdgB80VCok0oU8SYoQ==
+X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+X-QQ-RECHKSPAM: 0
 
-Hi!
+Derrick Stolee <stolee@gmail.com> wrote:
+>=20
+> On 7/12/2025 5:35 AM, Lidong Yan wrote:
+>=20
+>> The difference from v5 is:
+>>  - extract convert pathspec item to bloom_keyvec logic to
+>>    a separate function, which simplifies the =
+prepare_to_use_bloom_filter()
+>>    function.
+>>  - fix few bugs in v5.
+>=20
+> Thanks for making these changes. Including your fixed patch 5, this
+> version looks ready to me.
+>=20
+> I wouldn't say "fix a few bugs" but instead "fix some compile-time
+> linting complaints when using DEVELOPER=3D1" to be clear that the
+> functionality hasn't changed but the code is cleaner.
 
-Here's the 6th update on my GSoC blog:
+I just learned that `make DEVELOPER=3D1` treats warnings as errors.
+Since this is just a cover letter issue, I feel it might not be worth =
+rerolling
+the patch again.
 
-https://lucasoshiro.github.io/gsoc-en/#week-6-jul-8th--jul-13th
+Thanks,
+Lidong=
