@@ -1,121 +1,143 @@
-Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A75C8633F
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:42:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E04072615
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 20:43:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752608529; cv=none; b=Slks9IALgaJGSgX9yNbOYa37QwdHqRE1TYUDQY/yQ5THHYa3kB5kH1lqsqMBjDL/27PbvMvtzjN8LKH7E4co+euhgel0ecPC0+VbESPsylAgD9Pqo+GQ2v+UwW0JYIqML3BA2AQYIYWCNMUg8rimaEjfoEnqlSpqwyYqmmd1N84=
+	t=1752612226; cv=none; b=K6j6l7Nb++iVi6J42LwbBycAcSRCWgHmS+zv9kww8K7p75pVe/0BQgf15jkqGIp/fuqAyaXE4plb8J2i2rCJvzR+eNHSBMAHQSpUZRMQZOHNrSVxJS6R3J+4rjX03om7eU4ig73+nnhZCL0Twv1pKzlAGUb1dGn9+GuEsdCxJRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752608529; c=relaxed/simple;
-	bh=xyo6WDPXMH0keG33WwMCZCdVBelbfh+6IXFiCOTKYo0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ExyWEv9PNBIuaeHD0dKC9KJqOOYuuNI0/hf8/4v81Po9gjV8ruD6OdxUazVoYX1GRW8lR/zMn4awn1MmnN9ABczBm7pprij+/lxpIlYE7ne6KLq3wAcxSgIWGDqW01Zo8HR8oDyWxZhD8SriFPkAsNIZVQgh+WmMKlHIBO5gjiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=C+nWvxRm; arc=none smtp.client-ip=209.85.210.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752612226; c=relaxed/simple;
+	bh=h52OtZUSH/30veMimZp4SQ5VGD8BdZNSn2Ur1gKqBwk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gAAkjeiimI7l12pXQPuZPHcdJRYVcRKvuZl+StoNRHbFL1+SzBhrd42wK1lzTWJr4jFguAMVQHXo17y3Wrwj1w32W4b6Z+f/pSN23KinzoVtHZnJFWOSG7vODilLIeEt6FE1SDmoo5ihKSsRQ23+nbGOzx1jbR9uAzxFZVYErPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S4ASgfha; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JsgQzGbI; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="C+nWvxRm"
-Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-73e650f3c31so47086a34.3
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 12:42:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752608527; x=1753213327; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tm3H4aQ/J50ZWRWBm4Y4Gvy9p8GmwxhdSW1SF6AFrOw=;
-        b=C+nWvxRma3ex6iZoSK7DReLJvGQr4oDTt/tmLQtBjm2zg72CT7ZM3Adqd185sMlIiK
-         LdskqtdZtuZXXZOl7xP35IeC9RMWxIfXaSPx0rNW8oAMGm+NJ+QrzD0FFIbiF+OSJDzt
-         ySSqhbsEIwE7QFkN8VeB1Q60mu1tSzqdf4NNAL4Vs593+puyMmFXYHalsB2xPmPIkt/C
-         9Hu89eEXIjOBjELKMQLoTU8rfMoCZ+5DGAC6KiYP477sH2oWnRi/ohzczifNMwy2vHbu
-         EU52l5BDZjF/SZSmnzocB8GTezlk91gqkDRQt/oFJqowOYacT/NhRipjaQwNF0Ih/EHz
-         +3mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752608527; x=1753213327;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tm3H4aQ/J50ZWRWBm4Y4Gvy9p8GmwxhdSW1SF6AFrOw=;
-        b=cQNNUdtWY7yrR5x4+zfDTk6S/d8DmKCIo6jsRVbIqW4BHj6Sgywa7OtIFeKU7Q25Wu
-         AMvWto5XMbvhGfGHGHV20mmCqkmcwxV338qe3Lohph/VjOqUC130ee1zooLj2z1R52tP
-         5sSg9O9MJDsLZH4TNccIMKPe/Ha+/Lq3rT18uv2MaGgcP9qgKUtuHZbBIvNUf52cetsy
-         Xpl04utL2MuMwpc2BltMNLtkDoU7EUVFZWBTyMWZ/jcp07UgsIsr1pHAs0ap2cqe16vO
-         d2vMFhV+6y86eoR+9sm8eM0jLUwIixBy4+HRBNBtQQOP/cH3IF6T8Gv0+eKONsUxNbf+
-         2puw==
-X-Forwarded-Encrypted: i=1; AJvYcCWaIfuD0b+uQyOL6mwaR0hLlMKdy5D2A+YpCm7jxfG5vD7VU+2c7f+Qri1ovS5BlCjIJaU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwcNIFrVITVKeWdMcgBrmsrClVKu+XY/QF+LdYKqL17McyO5iRc
-	kBf8Y1ySNVMEMV7v6vokk2FBPNtMj6FJUYaplrpUTlpxHv3sTdf6a8QA
-X-Gm-Gg: ASbGncsyNE45gPa5PSVLsY55jFYuCFiBJUk7X2oEqhXTh/rBLeuTHPCOb0VMHOiFJ2W
-	2Ag29pVTEuYITZfGPq+hJGGD1VOWQ4IoAsGenky1QW7xqBu1v4urGJSrP+D1Vb2laV6truT5jdL
-	ugCWIUaY3txAh9DYbSzzfKk3KR8cX0+thvUtpe66UnAn4H2V/4/E4qE3oaGlx8VZUPJRREhlHO2
-	IL9EEmqr+uv7UgiHLMZb2OKO51aXN8gt50K+Lc99JBt2aCNaEIr2eyd/AwHc/yIqPxCCvrvqb6b
-	L+6Hs7JnIvLK5/Js51qQZhuDtBAdEi10SqodlRM82sMxb4x9v9tFc6sB5YWl1XqD75A9wYyxQz0
-	ZqlGuWjOXQ2p2dBQ=
-X-Google-Smtp-Source: AGHT+IGcWNWe612dWjSqjbDbicUCcWCq0NxGW5sEf/Fs/ZFwxPX2y4YxIKgpeJHe3iOQ3nFzlKMLhw==
-X-Received: by 2002:a05:6808:384d:b0:40a:5356:656d with SMTP id 5614622812f47-41ced99740fmr284493b6e.7.1752608526833;
-        Tue, 15 Jul 2025 12:42:06 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-41418c0b8a6sm2163025b6e.3.2025.07.15.12.42.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 12:42:06 -0700 (PDT)
-Date: Tue, 15 Jul 2025 14:36:24 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>, 
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com, 
-	gitster@pobox.com, phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v4 0/4] repo: add new command for retrieving
- repository info
-Message-ID: <o3hgyfke3tq3fjn7bl7iamq34k5kczp52phr2zvidlogcntk2z@dgts2mw2ius6>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <aHYuwlWlbkc600Ps@ugly>
- <aHZCfynoeMDRdN4X@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S4ASgfha";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JsgQzGbI"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 10D267A0276;
+	Tue, 15 Jul 2025 16:43:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 15 Jul 2025 16:43:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752612222;
+	 x=1752698622; bh=Iuvt+9i/0tmQzEHmrw/GuCD3Ii6XOI3xtQvA0H5NimI=; b=
+	S4ASgfha8FUy/FKstHEaYgRYgJHeKoPdw9ZWY+Q8TmRl+JdfmPF+QofNKH1fJ2nm
+	3r5SrrXUYZqDgzA8x3KhfyOIfbfKvcH8umcdEkcC4B3UFzSlBZ38xT8K+pLRsB90
+	fd7KhgQNWgJvDt1FlUiRrFNxMGj6QL6TITsFTCCefXcOFnef3YbKzd146kNZKmy2
+	VDGAYMV0ZInvf10bFGUc4NR2NWnZ1p/gj3VogGJYx8e8VpReZpuigwrOhZs/ao/B
+	J07F3lM59Z01h4E64ERXYT6VI8wyENgS/2xwI85OtcsauXl1IrjNdRWg7K2MDw4L
+	11apRh2Hkgsuly6mSTrFlQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752612222; x=
+	1752698622; bh=Iuvt+9i/0tmQzEHmrw/GuCD3Ii6XOI3xtQvA0H5NimI=; b=J
+	sgQzGbIMtCYWJ9MIz6wTRL9MfHHDS7nuHB2OHfpMR6E4vWEuT0MidDyqsEgOFjal
+	aG5lYZ0H5MrTOxEPfR5QUCH4S33CHhBuJmhe1b/nCFigGaoOtFsTotdUGmopq0os
+	2e0s6AI5JwhGzOxzcPS6FePEIcVT4M90Ummp5mCOpbjj7Gc/HnOLelNAReZjzLcJ
+	1H2Wo6zR8jmrxQWGmI5RS2kMIVETd4VFhzQ5SfNR9BPspiOXm/EPfk9lFNvve3fh
+	oW3ScvWP+5HFf2sO7PjpOLEHJ1ajIibtj9puqSdkbInE95YR0Mvh3lVaCONVgtBF
+	g7TU8ip/MGZ+g7HQUE70g==
+X-ME-Sender: <xms:fr12aIqV5ZZ3JfVT5NIdcYlbE6zBehOEwsZJTDpSbTOm1VD67hn33Q>
+    <xme:fr12aJO1PHnsG957-pKQxj8Y8HadLpx20sSOocSA6NnxxZimDUDs7BTcxjGSs35xc
+    zCMdsM8uy55eeJBLA>
+X-ME-Received: <xmr:fr12aJxvn-BBZVuJ-f3xqwSvfrtOmZp7XFVgOzIZmWpFhYDEBTBn-G_KZxY0pnN_Ow1t5PrpsdCkoRO4z4yzzLePd33lJwF4qGgx0Ow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheekvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
+    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
+    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhr
+    seifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:fr12aCvjObsp_dyDmqzxObsxI78KvP7kAMCym8I5STJjG0H_5ty1Ww>
+    <xmx:fr12aC6p-L2FxkFsk6dhiQjmerMG6QMFg-vgrSWZcS2J3QXpOmN-BA>
+    <xmx:fr12aBRwMq3bhgAMVPjz9jxXTiM7IYVGwDHLCDJeLjRW4tT9Vzt5bw>
+    <xmx:fr12aBqXyNRexkny91e1y4LjKthA5FmeTMdQU_EgBRtZtsAPSl7Omg>
+    <xmx:fr12aKbc4gqHqybL4KNjg1WUnM06TVpv4d6xviExfGKVz0--LRics22X>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 16:43:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 3/3] commit: use prio_queue_replace() in
+ pop_most_recent_commit()
+In-Reply-To: <aa89082f-34ab-4ec7-bdce-70f0a33815e6@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Tue, 15 Jul 2025 16:51:28 +0200")
+References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
+	<aa89082f-34ab-4ec7-bdce-70f0a33815e6@web.de>
+Date: Tue, 15 Jul 2025 13:43:40 -0700
+Message-ID: <xmqqh5zdgp6r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aHZCfynoeMDRdN4X@pks.im>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/07/15 01:58PM, Patrick Steinhardt wrote:
-> On Tue, Jul 15, 2025 at 12:34:42PM +0200, Oswald Buddenhagen wrote:
-> > On Mon, Jul 14, 2025 at 08:52:27PM -0300, Lucas Seiki Oshiro wrote:
-> > > - Renames the command to `repo` instead of `repo-info`. All the
-> > > functionality
-> > >  of `repo-info` will now be under `repo info`. The functionality of `survey`
-> > >  will be moved to another subcommand of `git repo`.
-> > > 
-> > this strikes me as a bad idea, given how established the `repo` tool is.
-> 
-> The `repo` tool wouldn't be executed as `git repo` though, would it? So
-> I'm not sure whether that really is relevant at all. On the other hand
-> though I do see that it might be confusing when you interact with the
-> `repo` tool on a daily basis.
-> 
-> > without much thinking and reading prior conversations, i'd go with "query",
-> > because it's a database-like metadata ... query.
-> > the obvious followup idea would then be "meta", but that suggests that it
-> > isn't only a read-only command, which i think it is supposed to remain?
-> 
-> "Query" is way too generic from my point of view, as it doesn't say
-> _what_ you query. "Meta" might be a bit better even though it still
-> loses the information that you act on the repository level, which is a
-> bit of a shame.
+René Scharfe <l.s.r@web.de> writes:
 
-Agreed, "query" sounds too open-ended. Since we are only targeting
-repository level data I think it would be confusing.
+> Optimize pop_most_recent_commit() by adding the first parent using the
+> more efficient prio_queue_peek() and prio_queue_replace() instead of
+> prio_queue_get() and prio_queue_put().
+>
+> On my machine this neutralizes the performance hit it took in Git's own
+> repository when we converted it to prio_queue two patches ago (git_pq):
 
-> We could of course adapt and call it git-repository(1) to avoid any
-> confusion with git-repo(1) and repo(1). It's not like this is a tool
-> that users would typically have to run daily outside of scripts, so I
-> don't think it hurts much to have a longer command name.
+Given that our history has more merges than other projects, and the
+_replace() optimization would help primarily single-strand-of-pearls
+(and the first parent of a merge), that result is very good.
 
-Being that git-repo(1) isn't really intended as a common user facing
-command, I wonder if there really would be much confusion with repo(1)
-anyway. Personally, I perfer the shorter name and think it's fine as-is,
-but it's not a big deal either way.
+> diff --git a/commit.c b/commit.c
+> index 0200759aaa..8244221b30 100644
+> --- a/commit.c
+> +++ b/commit.c
+> @@ -742,17 +742,24 @@ void commit_list_sort_by_date(struct commit_list **list)
+>  struct commit *pop_most_recent_commit(struct prio_queue *queue,
+>  				      unsigned int mark)
+>  {
+> -	struct commit *ret = prio_queue_get(queue);
+> +	struct commit *ret = prio_queue_peek(queue);
+> +	int delete_pending = 1;
 
--Justin
+Briefly I was puzzled by the name (I would have called first-parent
+since the logic was "we treat first parent specially by using
+replace instead of get/put"), but the variable signals "instead of
+get to remove the item from the queue, we just peeked, so we need to
+remove it later" with its name, which is understandable.
+
+>  	struct commit_list *parents = ret->parents;
+>  
+>  	while (parents) {
+>  		struct commit *commit = parents->item;
+>  		if (!repo_parse_commit(the_repository, commit) && !(commit->object.flags & mark)) {
+>  			commit->object.flags |= mark;
+> -			prio_queue_put(queue, commit);
+> +			if (delete_pending)
+> +				prio_queue_replace(queue, commit);
+> +			else
+> +				prio_queue_put(queue, commit);
+> +			delete_pending = 0;
+>  		}
+>  		parents = parents->next;
+>  	}
+> +	if (delete_pending)
+> +		prio_queue_get(queue);
+>  	return ret;
+>  }
