@@ -1,134 +1,103 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC4722F767
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:50:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BCF7261D
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752605419; cv=none; b=mN1Ua82wQYp0nwp98faEWzuNQ4CyklGiIbbMsFXaQK/v8CBYqu2VHbN8uPo56J2uU53uZw2/Mz4RkWu8PqwFqNigk6SCxJoAs8bCx0wnWgNqMvT+omyaYEFgQ5ilAVl4c26dHCwTohEnqs3VuhwV5H1KTCyQTxLM8goveFcCsbw=
+	t=1752605527; cv=none; b=kn13SlXcNtY+FpKnU5fdepgA86fsQAUPBzwylX5FTi9qY5giUC0xSV8z1IxFD49Ny9Z7zmstOhzqFzB8dSwBQRZgJ0+G+uizB0WTFi88PlVdW/8lVwl/vFMXDjFsemEi3izo9f73xxtEVPHVQi01pHzB05N4xH4xptcnETn1i/o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752605419; c=relaxed/simple;
-	bh=b1oldHm0f2Ewm0J0+8BTQhnyggESFcODoUz7oqYqaSg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hko5TEd3+6jL6lTQv5p/dME3G94oi1D6mpkm2/gUqIXIXAnMqxjoDQJiBtUCl7/+W+OMnIwm3er8/wyWxFL7QW06XNjLZBmzkHFL1QCJURt+bYrdzX7hN3GXzaMAkweGqRIHtho2CNYc5+H8gQaZ5SGWOdlFZKNSPYm7553SjCo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GY5AnWwa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iuJLP22g; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752605527; c=relaxed/simple;
+	bh=X4r7OCACYnB+dyfrHxfKIPlsckmdk0SoHyj2q5bamno=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=iHmSBQ3As34kL6xBahZxdLEctZw/TX3JxaTQK1BiaAeB5WNYwGWwVboIwJfP1bXJ6GBgZYQ9Kqfas6O2bJiu6BIV3KGhlJdHu4BquUKaFL1D8ojm6Q0CeF8h142mGdoK/9XpNmhX6MD+0+4yd/3iaYny7XC9KRWqOU6jZHyPKAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fWmzCCYs; arc=none smtp.client-ip=209.85.210.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GY5AnWwa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iuJLP22g"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E4B37A027B;
-	Tue, 15 Jul 2025 14:50:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 15 Jul 2025 14:50:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752605414; x=1752691814; bh=au2vRnl+d+
-	E+H2Pdz2Leo3KJFWo3OLG4YXItCI9lCqw=; b=GY5AnWwaHhXsMhoUMctMqetiGT
-	cES7Mh/7eZGEaEFCAFyvK2UUulZOUOd7Wwd8yxN8zUdD0UBNjfvWAJUMvrPRLaLO
-	VfOuALgY1GehGjRpEt+PFJJKKoHN0mPYVM8uXFBYdxZyYdUenow+nrb9azxVOUyq
-	tfyZdZVao38ikuOFRGaDGJPXRhDv1itAezc0vNcwi6Q5uGYrVBnvD6fNES+8XJzT
-	jsObeoIqI1qJvvprXrEQD/7SDfsCpwUvRYd6lAsbG/0oq8aJ9P94+DWaeWBZw9Rt
-	ALRYLZFCjN8/vutCEiIQ6cvPVzX8VmLf/bDMOgqAi85VRnM2sdAOj5cD7yEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752605414; x=1752691814; bh=au2vRnl+d+E+H2Pdz2Leo3KJFWo3OLG4YXI
-	tCI9lCqw=; b=iuJLP22gCJug295/VYQyn05Ufir+sZFBbR8Y6KNO2qmIebC6WTH
-	uGeoE8sRFoXOaZY1wFS0lV5gYPXyrdXU1a6CffdaDctxw0l3aowMKcPt/wDUJhyE
-	FwTXQ2Yb9tQq4uEyhVv7Ryf/QIWlQbeyx4aPmMCcK6g38tUQRzknb9HuYWBOU6RS
-	z8wY85T8N4EsCw5yapP8NKGub5+mVa8OdZvCcsoJETJQRu0HHhANWUdVuni8LLC3
-	4dx7830fHfUwkKGNoR2f3Jym48loEHvxMPIGjUFqIRlTIKTS8GsuHi8BkU87Kx5g
-	pFKeABenc4ugAh2vSPUpeDWJIMR7kXB2erw==
-X-ME-Sender: <xms:5aJ2aKUTgDL_-FRq4S_albdRZeZLA5oAphdzOj3b6fkpoDm57sVYWw>
-    <xme:5aJ2aCEuXWfeY7DjTcVp994_hxDRau1SDS8d3dAbgPXZQaIaFhavp_ptwVqlGMUu4
-    R4SdQg7P5nzAwEpHg>
-X-ME-Received: <xmr:5aJ2aE10K2R3PfYUm6oqnN7cfD42qpXqoTDIh-HTydzOuh1nFGeMGYxse5BXYhYl4lCVroT2rlim9D9J30o5L1i7Q3nUeqwuOoCZYWw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:5aJ2aMNvD-NFEwWd0U9tmjh_4uQ0sPtZ9jzGHdwRLDF0la7kv6Dtvw>
-    <xmx:5aJ2aL4hvLGOrDbL3o4umc-kSwUbYFG4vK7uEzNnQFzFtdElX_WgGA>
-    <xmx:5aJ2aO1ZzOjte9uqPQSq_kuEc-StUZibu54_0oY1W-lt51RmlcJ-yg>
-    <xmx:5aJ2aEx5uhuvODE_K-S6Z6ToAfRsyQ1J0mpprXSBX1460xxknzojtQ>
-    <xmx:5qJ2aPnieoZsi0CaOWQ9JX83tsMTYEGObnZy5Y0UnjRi-lm512Aup46r>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 14:50:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Ayush Chandekar
- <ayu.chandekar@gmail.com>
-Subject: Re: [PATCH 17/19] environment: move compression level into repo
- settings
-In-Reply-To: <f6479d6a-32a4-4a49-a75c-589978cb9a57@gmail.com> (Phillip Wood's
-	message of "Tue, 15 Jul 2025 16:51:32 +0100")
-References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
-	<20250709-pks-object-file-wo-the-repository-v1-17-62627b55707f@pks.im>
-	<32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com>
-	<xmqqbjpq1rs0.fsf@gitster.g> <aHY7LYHqVj-ECf_z@pks.im>
-	<f6479d6a-32a4-4a49-a75c-589978cb9a57@gmail.com>
-Date: Tue, 15 Jul 2025 11:50:11 -0700
-Message-ID: <xmqqy0spgufw.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWmzCCYs"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-75001b1bd76so2300989b3a.2
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:52:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752605525; x=1753210325; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qpLwk8zzGHFLqRAzsoBszn/0sSVoiZJUeECG6kvLk5w=;
+        b=fWmzCCYs0ZYx0jw3Nq13WzRoNJMiiC3GgO1gaJty3o4T9hTSHpwQXi8c2RPy2YdtyJ
+         wAdmKmtlQAAic/wisPb+XepNXmUHv2iA7DMDccHAzWk+AVaMzO93aPXMLERFfNDtICgi
+         ZJIqJqzAWfuG8Jh7zMMIZgbgANHibHsA3keo6EVRtOtUghu44N5wnuWCxH4yQcy5y79r
+         RZqfSz51DnG4ScOmvvgX8D1aqccG14BAvPW6rXvv6eYOe5/QL3JhvO1RSYV2HxhLYNGL
+         kHSxvkr+nGbTD5n+uO3DVILvdmIXCqgATh0kV9y3rgWoPgQvXbCCaTkEv8NVp9UpPUpJ
+         IokQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752605525; x=1753210325;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=qpLwk8zzGHFLqRAzsoBszn/0sSVoiZJUeECG6kvLk5w=;
+        b=D9ORLglnkcZGjIHLRej7DJFhR63TxXIxFdTWKcndM+PKT1q443BcFcdGAEZ4snn/fh
+         rrGLvOLIOXog4hOa7wvjBDiKNydDm91EyfFt3PBDffSxR+60vsABcArO0ojbCMmYVbi1
+         AL8PKk4VWAujMRLzZ7PTCTob9ZJerADtEGJNlM7CbHJjepRnUtZdq61pX+nURPYl7tcm
+         JYhLuQDTRIEFVJavDt6tZoN0CcM3rbPQrUKrlWA1GwFVGTHaVzEkzA0ME9CeMREP/JBM
+         ZWPUN6vqEvBjJTI5bX5rCzvg8mOB+9X1ezzOb6DmkGhn/HX9CfeXHpY6IHhHhXWXap49
+         Bd1A==
+X-Forwarded-Encrypted: i=1; AJvYcCUzlX9ExnOFeii9ktflPZB2f3F0uyjKS9LkwHnOZbjvkhY6sifCozGCjoIflzE3bP6w86Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCAv1JuGNAJQobdRXylPfe4iByyqO/+6UvdSBdEzLqcvlUEa6C
+	I/90ZVNbXsI5rmX4tlZ8+EpGaeJeD9ZhQN/9ugGd8Bq+atIDggT+wwZY
+X-Gm-Gg: ASbGnctbUtiy1P3UDjOnQmQLaqYSYLBFf1YBsq4uDqSgZq7RtcLqeZgDNrd7ZBJ6R+p
+	6vW3hCKSeGdCf0W9VaNa6jWTMw1eeXRV1Xl3AU30oLUhdpGpw19jT9clCTtCebAFGd7rJhkOlCC
+	U8oQjjUCotFfSqCGYykfES1RU1lwu3qBskWb4uWFRkPMR5beKer0AAHiJpo2m+/acQiC8UXQQkL
+	evT8lnI/csNWvsE8UVZp5K/ryIsITF61Wk91RqqF3Z1EmjTvztL9jxoaID4DjGETG12D4yktN6H
+	BWVg59HsZW6q9yGih0QNqq0mFGJ7a0UvkjM/Xv2WUcP4PzoCj221js7fMIB7kQpjmi+4NxrdjgT
+	IpK3fg6o5l68ZnF9Sj7YfIF2g8QFsw6MkiZg=
+X-Google-Smtp-Source: AGHT+IFyrPkNBRMl6kyb4hnSdi4t/5jppdQ54fESMoF2GN85olkyIenmYI7eiZaUg8ZCum/hGR+GjQ==
+X-Received: by 2002:a05:6a21:648d:b0:21f:ee3f:8ad5 with SMTP id adf61e73a8af0-237d7235caemr603306637.20.1752605524965;
+        Tue, 15 Jul 2025 11:52:04 -0700 (PDT)
+Received: from thinku.iitr.ac.in ([103.37.201.222])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3bbe52c914sm12415806a12.7.2025.07.15.11.52.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 11:52:04 -0700 (PDT)
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+To: ayu.chandekar@gmail.com
+Cc: christian.couder@gmail.com,
+	git@vger.kernel.org,
+	phillip.wood123@gmail.com,
+	shyamthakkar001@gmail.com,
+	kristofferhaugsbakk@fastmail.com,
+	gitster@pobox.com
+Subject: [GSOC PATCH 0/2] commit: improve behaviour of core.commentChar=auto for comments in commit messages
+Date: Wed, 16 Jul 2025 00:21:24 +0530
+Message-ID: <cover.1752602474.git.ayu.chandekar@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Hey everyone,
 
-> Indeed. My objection here was that we were delaying the parsing when
-> it wasn't delayed before. Is it feasible to call
-> prepare_repo_settings() in repo_config()? That would at least avoid
-> the problem that moving config settings into `struct repo_settings`
-> changes when the settings are parsed unless the command calls
-> prepare_repo_settings() at start up. As far as I remember `git config`
-> uses config_with_options() so that would not be adversely affected by
-> such a change.
+The aim of this patch series is to improve the behaviour of core.commentChar=auto by the following patches:
+1/2 - Fix a bug which reads comment character of the comments in commit message leading to change in the value of `comment_line_str` and thus resulting the comments in the final commit message.
+2/2 - Standardizes the behaviour of code by resetting the 'comment_line_str' to "#" when core.commentChar is set to auto. 
 
-Excellent point.
+Thanks to Junio, Phillip and Kristoffer for reviewing the patches and also Christian for the reviews and mentoring me.
 
->> My dream would be that all configuration were to be defined in one
->> central place. The configuration should be typed, there should be
->> verification for each value configured by the user.
->
-> Being able to verify config settings when they're set would be a great
-> improvement but we're a long way from being able to do that.
+Ayush Chandekar (2):
+  commit: avoid scanning trailing comments when 'core.commentChar' is
+    "auto"
+  config: set comment_line_str to "#" when core.commentChar=auto
 
-Yes, and there always are end-user or third-party defined keys that
-are not known to us, and we cannot tell if an unknown variable is
-such a end-user defined one or a typo.  I do not know if it is
-feasible to aim for that.
+ builtin/commit.c           |  6 +++++-
+ config.c                   |  6 ++++--
+ t/t3418-rebase-continue.sh | 13 +++++++++++++
+ 3 files changed, 22 insertions(+), 3 deletions(-)
 
->> But I very much feel like this is a pipe dream right now. We already
->> are
->> working on multiple fronts to modernize the code base, and I don't quite
->> feel like opening up _another_ large transformation right now.
->
-> I agree with this
+-- 
+2.49.0
 
-Agreed.
-
-> I agree addressing all the shortcomings you've outlined would require
-> a lot of refactoring. If we can find a way to avoid introducing
-> anymore shortcomings as we migrate away from global variables that
-> would be a good start.
-
-;-).
