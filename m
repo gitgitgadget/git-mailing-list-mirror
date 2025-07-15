@@ -1,141 +1,128 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9751285043
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212C0254AEC
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:57:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752605864; cv=none; b=eEDpfPM8JB5qkV5DjYTHBBmtiWK/6kC2+Z9Jt0KK/Z7TAbp+xy/NkGomD29+nXXCd37KCQC1uFClhmiDXN4H+kbPINGdoFYFLh/g7q+XyK8ttb/1vy/5d2UWFmddW1ZhzasNQCXEbgR+j5XLssuopiHHRGYNIXsAdFRhBy8XZos=
+	t=1752605879; cv=none; b=pIQjA80k0N9dqNK9YEYGHW5m58quTOp4Agdq+rCQ5qIWYdh2PPIWL0rjpxkkqsyAmAEa+5Aj/ZEpYJleef6ZDOHES8B2QAiVAhI5Nr+XVO+IU9St08qlDUFmQOPjzM6lCgO5nHpEuQfGcICSOf0MnxipGpGN6iucoyl5FkRQwBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752605864; c=relaxed/simple;
-	bh=LrfDC4I0hlMEs33S/9XCqwWn34zBGlTqqPHcTsiD2I0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HpZlFwpOnnU8Yqo6W9s142Iv93jPCZg+dmkSEVrOgipoLySmybTZQxlBolH/Uff9y7rOl7f8UFqxuAr/u2nLLC8b32oBRmmtCxdXUTl9R4YdXEByg7Zf4GPBnNQri5Eb0jh1DxsvgwLqXsz01omUBRIdkr5V3q4Wd9bcb9/gQQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJ/BnEoJ; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1752605879; c=relaxed/simple;
+	bh=EOQcYX/Vsp1m0NKzn8xnWhDCV7hXDmvdvNtHUKcDQho=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=RjymHT24sbsQdofnZJXJCl/Dn+MWi+JOPHCBpKWfK0BhlylmeDlPYZ0SUVrWKcW+SmFU0EsnweEYlheXZcvbOyCxK78545h+VbkUAzCcAHmqbdCTKKSan/0RhtVLMLmLEcyfPneMqN7qLBAHOP3eA2gh0Tg7eRJlR9/vDd/y4kE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hm+UhP3a; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJ/BnEoJ"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-747fba9f962so180425b3a.0
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:57:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm+UhP3a"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-455b00339c8so31530585e9.3
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:57:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752605861; x=1753210661; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cT0hW0PtF7A52mDrJuGrGU1Y6VMZUknhe+4iSxL0nLU=;
-        b=AJ/BnEoJCNFCbp9g3mMxkKUvD4aj/khmhAPhQngSBGuzDsbtquEdWTPNiqBqWyXtWA
-         7SJsk8hgIsnQV0JjruzmAJn0duHvqrWidOscxKr2CWeLu/ZsuqgHATf9E3x2tke3l3Oy
-         gqf9gZSlu2NMTppxtoxd5vb0bF0kJe+9/6EdugfnNF6ZTkzyihkuEP2uSWQrBWblO/VB
-         yHye7V/wR3xlQdWjU6gZB/x96Bo9lY9l7GEkMXIznzj6Iydj2SB61Czl9iivB7Os14Ke
-         mWVyTMKcO781c+VnQqIENr5ksNbEhmBHgg8tgECxbxHm3zDNqS/7khSNkjMDLueT3iB9
-         fSIg==
+        d=gmail.com; s=20230601; t=1752605876; x=1753210676; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Q/EpvfCgoSBoUKKJ8IZ4lF29Fxv4+p4Vmrrj212oiF8=;
+        b=hm+UhP3aeMPn4Bdsh1xOCNipkihuwlNA7UboFvnl4TVWIW6DVv6l/LdfYX1ijNBqJo
+         x5bsSm6TOYykQp+43TT0Y0ijPPKisu9UKpy1qUSuIKbCOK0y/I57WCqpj6htMrvv/jiI
+         UPSXV+PqwV9LwAd7DAxkb3jq63pKwppREAMFwrsHvFnQKOLonFg2naZALZRcDtAXMy2t
+         R33vB9lG+bQPqQqlotLVbEzowFMSJrhK8nSI+FS1NuE2RAm/lrGw6i3hqITIZraigUlx
+         ne1xpqChWlWra3g2KuAfu27dRcZY6wuYfaXG6/b2XealJFsMVcFkGZRogZKPe5ub/2bM
+         4F9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752605861; x=1753210661;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cT0hW0PtF7A52mDrJuGrGU1Y6VMZUknhe+4iSxL0nLU=;
-        b=Qih1C3ED/cvyOADjJ1muyvl49vqXgu8hJfbU8BsyNufqu38ReV1TNw1N104tJlTdD6
-         yFYRP6ZGeQl/2/uKZVcCA6yubR8pa5z1og03SJKE2EwA2ND4dyWMwmKGQjk7pNiT/G6Q
-         23cWs8Nzf+v2sWNUuzl8Po9MuLgGu1Sa6Z4J20jNPJUVrXaAIhPW9M165+V6tX1HENRY
-         UNQN8RRDptbKeWiBDeosftKuX/0B6+/Qc9vFaG+jI4pDKqnQpWNHM6p1hPM+mgbncWGq
-         f/ZhwC49vYMK2q373QKNBby9zlvMxUsmN03qkJ4MOYt8ZwbNDv4Fpj5GdxK+C8z4cxsB
-         GtWw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqfI8TB88SjR1uh01mECgPH7TzmQNnMfsAbFT7apqYJVNxrDTBft7Z3gf2qK55GhEAcoQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxWAKXdAL7+psUWn/Hz+axXSJlkhvFMcqTIs8LesPDRPp7sRrZ
-	4M4itd291vdkpkyQR9rWG7ySsyZn3dT4KQATkqae1c0vYqv1wKjDBUT9
-X-Gm-Gg: ASbGnctI7ALYpkneU++7ApvarbYHhOr4pxa+jrWIv2k2/L6iE2X/pu/8ho8nbwgK8Et
-	xZZsZJDqEmsF9WIbqgcQkAVv0VhXOwPSwtTJ9j4fjrrwpHEsghHlDXSFMfaTKKICMXa6/oweLj0
-	cqCO4TFe6jRjE1qInwJf2w8lw1XSIWh1dfInm7UtY6lZq0nDtrokIkbdkwfMSFITNTM9xcjthTr
-	yPKd0TmZspxRmR3E8SjKpwrW6Wkd27OGSAySwGp8Wo6TVdIV83CHriDH3mqFcAZFelVk6cBTuAF
-	bctDTQs9wKdEIq283kNZaB2/8DFvNT9lLJuhf0TcpMY1UpYPOR78a1TaGMeA56qghju+RyTQoTb
-	pi91KOXvq4GMK1wLmwy6PzbPOXrgDqiOZfVw=
-X-Google-Smtp-Source: AGHT+IGue2AyxLJK54+WThCNHkGc7F4tRusyhGGWbvJGFzr/+OHymXOWcjFwOOBSB7Cn8ucxX6BVDg==
-X-Received: by 2002:a05:6a00:138b:b0:742:ae7e:7da1 with SMTP id d2e1a72fcca58-756ef194453mr480714b3a.0.1752605860957;
-        Tue, 15 Jul 2025 11:57:40 -0700 (PDT)
-Received: from thinku.iitr.ac.in ([103.37.201.222])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74eb9f4aabdsm12317126b3a.124.2025.07.15.11.57.37
+        d=1e100.net; s=20230601; t=1752605876; x=1753210676;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Q/EpvfCgoSBoUKKJ8IZ4lF29Fxv4+p4Vmrrj212oiF8=;
+        b=c5nhuxOv1BXXE9A0IEBw2w40ZzgdU28CFghcYmzkZQAYq3aYgNX2+N+xaoRnNXZXwP
+         xefJzAkr1McxOnI4Wj6Rx9zgkhY5LTaWLnX03jzYyXD6nWHXdJ/ym1oYs05rkRh6q+eb
+         wKdYztyNVnuSDjfoKB/hWRklJPx+igasmH6GusPukVWDTw+WVm+nndH0U81F+7kFuyFY
+         vUizciaaRMnrAR2BVhL53TdD9QlFMmmL4Gk9pA3EDCtsArLGAg5JwhGk5pdgtSBlAwot
+         Hi/AyeJsAr2YFwVxbm2oU1eUBu47N9TRfIci/pLWNH3zjMoCPkxlFggF0bSQJ3kGBNpi
+         65Hw==
+X-Gm-Message-State: AOJu0YzvaECr1jeZa9n+icZRzUW6/tzIjWGMLNd2e8F43O0eGw9b6dKl
+	GQfpbtBQlGA1KPQ7OSsSWUeijRtyEZoVAGilYAbKPb36vmmIu8+bdWkUWbBtOA==
+X-Gm-Gg: ASbGncu7Ee+hV7U2Yei2GihTs81CjpBdAy9SgDzCO0vJgHtNACSaS9uHnQhuP7inr7L
+	NV9dScheQGm6sccqUMTC05tzkYZZSpsdgSDPmFR2OJtthvhWq6LKNm6uIOL/dwXxGLJknT/uR1O
+	cFrlgHRSfedjQ8Qm57usprVPHJeIoJyCtBuD1C7bwFo0WQhHt3G1/oclQ0UD3Woqer2oDp4uv2s
+	D2rd2vB1kVmdjqkQ1PYkTsCNnBrf5cAOC+5O4FBJTZJDerHFnLrSgMKj+jzLL7rHOnJ2ywyDetI
+	GUqzRPh+ep+VtKsUk/DF46cvifwOkp9uYy+4vz4T5HwRP+NgqkaC8+qMo//jRhxS30LO5DeFfLq
+	qR3zp5hMjzFAwdhhIPGl6NZM=
+X-Google-Smtp-Source: AGHT+IHRR3fIrcKZOURV4CMjN0TZNSiW80PlcaSoq5I+LX6TsMJASWWqPuT3CXgG6QCDB8XJWxaDEQ==
+X-Received: by 2002:a05:600c:1c0b:b0:456:1006:5401 with SMTP id 5b1f17b1804b1-4562e02fdfbmr552565e9.5.1752605875748;
+        Tue, 15 Jul 2025 11:57:55 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-456172f3ec6sm79764185e9.22.2025.07.15.11.57.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 11:57:40 -0700 (PDT)
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-To: ayu.chandekar@gmail.com
-Cc: christian.couder@gmail.com,
-	git@vger.kernel.org,
-	phillip.wood123@gmail.com,
-	shyamthakkar001@gmail.com,
-	kristofferhaugsbakk@fastmail.com,
-	gitster@pobox.com
-Subject: [GSOC PATCH v4 2/2] config: set comment_line_str to "#" when core.commentChar=auto
-Date: Wed, 16 Jul 2025 00:27:01 +0530
-Message-ID: <2a3c2d323bdb520a37a099b361be9ec5f2d5d46f.1752602474.git.ayu.chandekar@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <cover.1752602474.git.ayu.chandekar@gmail.com>
-References: <cover.1752602474.git.ayu.chandekar@gmail.com>
+        Tue, 15 Jul 2025 11:57:55 -0700 (PDT)
+Message-Id: <pull.2011.git.git.1752605874596.gitgitgadget@gmail.com>
+From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 15 Jul 2025 18:57:54 +0000
+Subject: [PATCH] test-lib: respect GIT_TEST_INSTALLED when querying default
+ hash
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Message-ID: <20250715185701.NuJpDo51I1_7scYqYWYccgJtxjasso8mQLPF5s8hxtw@z>
+To: git@vger.kernel.org
+Cc: Kyle Lippincott <spectral@google.com>,
+    Kyle Lippincott <spectral@google.com>
 
-If conflict comments already use a comment character that isn't "#", and
-core.commentChar is set "auto", Git will ignore these lines during the
-scan using ignored_log_message_bytes() and pick a new comment character
-based on the rest of the message. The newly chosen character may be
-different from the one used in the conflict comments and therefore,
-these are no longer treated as comments and end up in the final commit
-message.
+From: Kyle Lippincott <spectral@google.com>
 
-For example, during a rebase if the user previously set
-core.commentChar=% and then encounters a conflict, conflict comments
-like "% Conflicts:" are generated. If the user subsequently sets
-core.commentChar=auto before running `rebase --continue`, Git parses the
-"auto" setting and begins scanning. It first uses the existing
-'comment_line_str' (which is '%') to detect and ignore conflict comments
-via ignored_log_message_bytes().
+$GIT_TEST_INSTALLED can be set to use an "installed" git instead of the
+one from $GIT_BUILD_DIR. This is used by my company's internal test
+infrastructure, and not using $GIT_TEST_INSTALLED when querying the
+default hash meant that the tests were failing because the hash was
+effectively set to the empty string (since git didn't execute).
 
-Then, Git scans the rest of the message (excluding conflict comments),
-sees that none of the remaining lines start with '#' and decides to set
-comment_line_str to '#'. Since the final commit character differs from
-the one used in the conflict comments, those lines are no longer
-considered comments and get included in the final commit message.
+In the two places we attempt to detect/execute git itself prior to
+overriding everything and putting it in $PATH, use identical logic for
+identifying the git binary to execute. This also has the effect of
+including the $X suffix when querying the default hash, but that's not
+strictly necessary. You don't need to specify .exe when running a binary
+on Windows, just when testing whether it exists or not.
 
-Set 'comment_line_str' to '#' when core.commentChar is set to 'auto' to
-reset any previously set value.
-
-While this does not solve the issue of conflict comment inclusion and
-the user visible behaviour stays tha same, it standardizes the behaviour
-of the code by always resetting 'comment_line_str' to '#' when
-core.commentChar=auto is parsed.
-
-Mentored-by: Christian Couder <christian.couder@gmail.com>
-Mentored-by: Ghanshyam Thakkar <shyamthakkar001@gmail.com>
-Signed-off-by: Ayush Chandekar <ayu.chandekar@gmail.com>
+Signed-off-by: Kyle Lippincott <spectral@google.com>
 ---
- config.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+    test-lib: respect GIT_TEST_INSTALLED when querying default hash
 
-diff --git a/config.c b/config.c
-index eb60c293ab..bb75bdc65d 100644
---- a/config.c
-+++ b/config.c
-@@ -1537,9 +1537,11 @@ static int git_default_core_config(const char *var, const char *value,
- 	    !strcmp(var, "core.commentstring")) {
- 		if (!value)
- 			return config_error_nonbool(var);
--		else if (!strcasecmp(value, "auto"))
-+		else if (!strcasecmp(value, "auto")) {
- 			auto_comment_line_char = 1;
--		else if (value[0]) {
-+			FREE_AND_NULL(comment_line_str_to_free);
-+			comment_line_str = "#";
-+		} else if (value[0]) {
- 			if (strchr(value, '\n'))
- 				return error(_("%s cannot contain newline"), var);
- 			comment_line_str = value;
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2011%2Fspectral54%2Fdefault_hash_respect_git_test_installed-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2011/spectral54/default_hash_respect_git_test_installed-v1
+Pull-Request: https://github.com/git/git/pull/2011
+
+ t/test-lib.sh | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 6dc2022ee10..621cd31ae1d 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -134,7 +134,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ 
+ ################################################################
+ # It appears that people try to run tests without building...
+-"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
++GIT_BINARY="${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X"
++"$GIT_BINARY" >/dev/null
+ if test $? != 1
+ then
+ 	if test -n "$GIT_TEST_INSTALLED"
+@@ -536,7 +537,7 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
+ export EDITOR
+ 
+-GIT_TEST_BUILTIN_HASH=$("$GIT_BUILD_DIR/git" version --build-options | sed -ne 's/^default-hash: //p')
++GIT_TEST_BUILTIN_HASH=$("$GIT_BINARY" version --build-options | sed -ne 's/^default-hash: //p')
+ GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}"
+ export GIT_DEFAULT_HASH
+ GIT_DEFAULT_REF_FORMAT="${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
+
+base-commit: e9779f64349fbcc8d177d055208039877316e652
 -- 
-2.49.0
-
+gitgitgadget
