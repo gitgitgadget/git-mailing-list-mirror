@@ -1,164 +1,428 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D311547C9
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:28:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0DC1547C9
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:28:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752578893; cv=none; b=ciQ+shmThGqSjKA6O1nfO88bkSVfp+B5S0Xs7DD7VaonAFagpQ9EmxYtw6wtNme8JscFfjbqATaVQSmWvY8P7f5yppwOET870Hhs/MXcLXnAnNTvBNRJnDW81csNYyqjc/z5+oxymF1Xd9vlJAey25yKrm0QojEt452c/sXxz8U=
+	t=1752578914; cv=none; b=DFV8D55bGmXfaoykPOAI43QyFXtqXUyJtGqS+8GfsdHHHWlIgmSp5ntgE1dH7t91Uua9yQAcpTIZ6PeyzaVfyroZ1SsqsxAzXUhOg5sBGUiUeXAi+EvhsBHNG1xj90lHSSCo4MS+u4WzGb1b/54uO9Jo00S8DDGQtHZzktcBRxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752578893; c=relaxed/simple;
-	bh=TQY3Evo4q3dK7PjWAmAmvxDp4x7njSEi7OS7aT3kDJg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m48F1EdwPf2i7zFp5UvGviVtlBJlRckkbUDtF+VQXWTK16jmGVjlxvuDwfFnmFIyP25zZv4MHtMxCXgpIfHkds3AAXAKRev3lVApr+VjBqWFX3MNntMXYTN8fFlz12s1w5yVpBIiDNInZYN/7Zw/MrEnhUQJf6sg2qjSRqMQVjA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b4VVvGnW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AkOaB0ui; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1752578914; c=relaxed/simple;
+	bh=p5MEHjX5luWfAKFl0MLx41KUWAsdnuWsJpzSlnLg8ZM=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=ag6HnFsE4I68ia2gtB7C0/qdvy6AUEjNyya4McQJTtPlm6yjnpPMgaLdbmqp5vaiRqcBCQyRfZZhow+MfXhr0QcJuCjIMTyFLBZ6xMbEUsnfZBZ8U815Vy+bZyO2n3+GrQZN3iOOQyaRP5NRVxZiJyqgPUa3UoOPJN5q5rZBkbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IDASdDxV; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b4VVvGnW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AkOaB0ui"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0BE1F14002DC;
-	Tue, 15 Jul 2025 07:28:10 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 15 Jul 2025 07:28:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752578890; x=1752665290; bh=29LPKjaxLd
-	VR7iekx1sJ/j13Qerc/98CXVhCc2S7Nrk=; b=b4VVvGnW+2QM7mcYFVz2d7/wLu
-	O1CvQGb1vxpOo3f72DxsaOOd0Yhquco8VoPJRL7oeRu1uj83Jkn3vZfQZ89GkZFJ
-	jtFNyhnpszdQwouaxHfHpmbsQkDdAjKEitBgKnNDP4g8mfOPAe6LYAueMhD+oT+v
-	MzBSpViJhz83TsdOg4Vs4p8zqc1/wabGAN1zYKV58IDl6vIWPi740bupwOlIbmhk
-	p2RyvsNYy/ZV4ck94ZF+aeTsrRZTBgL3ig0ysGqt/4peVyVCDmXphcdMg4kHlGn+
-	y1IU6Sh51qPux8VWSDYhkiP6YaDOhODBvVdRRmzYBQyt4OhAD/cFQdpiIDPA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752578890; x=1752665290; bh=29LPKjaxLdVR7iekx1sJ/j13Qerc/98CXVh
-	Cc2S7Nrk=; b=AkOaB0uiQWwnKUQGYyxFqEr3nMU71iTRNCG7sDuhnNT69MVAM8k
-	9GIXObjuwPTm7wSqCavdTCEGpVVcI8zxXMRWWnvwqUIiwxK5dkfrIvrOfEewoCfH
-	wi125zGxYkpVj/EC3Yhu22ggQD/dPaPlYnaoWUHzTEpP1Ly8BrygersnFvv+nDq5
-	WvjlRnobXNS/LJyPa+8wLPakwqBvToECieJ13/JqHh59/kRcOhv4joGEt8l/ox39
-	mwXz5gtPLlP3XcxKxTJhJNldv8y6riibcx/R6mP4gCpSgRiz5xbGVVKttJEIDkzc
-	FGDLMHW64gq1D6qrQ4eZTVaLXlyd0sz68Gg==
-X-ME-Sender: <xms:STt2aISYAjjT5b1uZGDuX8Vd6OfbBTQGG6rIF0igcAVVfuTgjvDCXg>
-    <xme:STt2aAWWu6093ow6NcjPuO45K7RdIyxsM9iX2Du7yA0aX-TKTNu3SPK9uRNDnbuy_
-    x9F_bj8w9iHleFXgg>
-X-ME-Received: <xmr:STt2aCZsY_3NH31vOE1Rv3ejVMRyOi89V2_FwJF1TT94V4PkkP4Kr_kpZz05Dm46f1jSvqG6d_IBYjLLnRFlTH8YiFmbTrD-Lqkz66mKoxTX7w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeejtdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegrhihurdgthhgrnhgu
-    vghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:STt2aO1lyIphqqq92qLPWEruKfNShNEF8LzR7K1Krt8pyCyQdCoSug>
-    <xmx:STt2aMih-O2sZb0QLOLjeAmc8ResgSMkWeIv5m8xuCjI4QiT--5DWw>
-    <xmx:STt2aKalgdALiLWjuhODTdEVCl8890GSoARFlN0pELDxNrebvDroRA>
-    <xmx:STt2aESSOwaeDu016ACHw5E4sEvso8g3WBgU1I4NaTefVmEX9qvnAA>
-    <xmx:Sjt2aHAFvzVb-r73KqmFbEocQhib7VsZWa659jHOjswMiHYf5a_l-H1Q>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 07:28:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 13570223 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 11:28:07 +0000 (UTC)
-Date: Tue, 15 Jul 2025 13:27:58 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org,
-	Ayush Chandekar <ayu.chandekar@gmail.com>
-Subject: Re: [PATCH 17/19] environment: move compression level into repo
- settings
-Message-ID: <aHY7LYHqVj-ECf_z@pks.im>
-References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
- <20250709-pks-object-file-wo-the-repository-v1-17-62627b55707f@pks.im>
- <32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com>
- <xmqqbjpq1rs0.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IDASdDxV"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-607cc1a2bd8so8872355a12.2
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 04:28:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752578911; x=1753183711; darn=vger.kernel.org;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ha9LqsfimhLRymGFrx/4YchuuVGiBiAEf5Gdi2TtBEs=;
+        b=IDASdDxVUxR6zkf1nT+JXNa7OnhHL1RDSM59mNj/Bn0DVReGFjAqw/UGJMZX4AYvIy
+         r+lsqMmP1bkTTFznVeh0YjC4OIIYvtk2ar3c/vgPp8UqGjNkBzIZkrrA3CadtmRDcbwF
+         QoKbL9+GWtirjRgEdZ6lifyUbiaUhNViVFsCfYv16aGP0o/NXOBL7/uydeIoxvt08T3L
+         CnzLAu+7wHU6iqIQ/c8qNQa3radBT+oftK3RxNrwgfi5Xnfnm+TRrl1lrYEKSA9Knq8m
+         kU0427Aw4t3ielrRsosUdEVEhBxDybTpmmdoIE5TKc1YxsBY1jSBebYYWJGeE4mQggH7
+         gHyA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752578911; x=1753183711;
+        h=cc:to:references:in-reply-to:content-transfer-encoding:mime-version
+         :message-id:date:subject:from:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Ha9LqsfimhLRymGFrx/4YchuuVGiBiAEf5Gdi2TtBEs=;
+        b=uouFqMVpOOM1EaONs7zBAKocTZ3dvrtPfURp7njjTlblqUipUzJPLn6nefKZjIRf6G
+         A6cdXgBVWqMaSox3CE9DiUXIORnXNIuMaK+RGstGIyDiZ3B7WU54e/FUIEIjbKjtfk11
+         lSIgZTcWV10UZVx/IiOHJ6dYDbZMglF8mEnqJe/0CozYZk1Le6acGNVvdi8Q3IYEH7Dw
+         /9jQaSteu27NIUQpv5qIbe3zLUWwSJYSa5QgOf9HktatPKSZMYWE3t6AkXn5fqGOo5tb
+         ORWcZGjdzEGzzsT/v7OigL2fIPExD2sdgOa7OAkLX0eTsRjZY9gsL3BP5BjnMGEe7rT9
+         yUhg==
+X-Gm-Message-State: AOJu0YwoT/cj875TmM957t0FhVCnlM5mEIiniKp+0lhB3XCvFu+k8Xgs
+	F0KcO+tZZvcqHJys6RGckc76K76LTm0hWTE0qqojTh2xmzLi+H4OdwYT
+X-Gm-Gg: ASbGncuhMkcwTU+NZ+35LCDReuRuOUuaWVqjwbuazMzjGxxacEpmXCxRP8ecCbWdGr/
+	GvCF4C9EHHuYDAkfWIsqt/g1W6X8PDcgfl2FNB5rXNk8yguc8cuO5flaYqYEC/EgNKvcZsFpZ6V
+	BZ3jZxiQZOPuCJs4YcwYqUFH0W+GLicjnZcf9xGbftUDvNo9VsPcsEmBgDISwlJ64fiSKGl2bzG
+	3Ynb29QgCfakCC1J3jI1qYTuXOH5nb36P+F38ICXXsrBqEeQ6f3HMTXnmcK81uzXxdHU//anZ0+
+	Dv7Dww6zIANEt1v8J+0WbhLDUSi3OJhotNV0mClPUI6UJarkDS45fWJL3UUveabNocfFIZ0RbIu
+	5E6L8
+X-Google-Smtp-Source: AGHT+IFNfijdrCYy1K+0C5/UCzinKgrbJ6dgZ9iyVWL4UeTV70Lv32CGvyFuaubdjrM/zQ5Tsp07qA==
+X-Received: by 2002:a05:6402:34d5:b0:607:e83a:d698 with SMTP id 4fb4d7f45d1cf-611e760c177mr13969366a12.2.1752578910329;
+        Tue, 15 Jul 2025 04:28:30 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:624:7896:99ce:d9ca])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-611c976dc62sm7206596a12.59.2025.07.15.04.28.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 04:28:29 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via
+ '--start-after'
+Date: Tue, 15 Jul 2025 13:28:25 +0200
+Message-Id: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbjpq1rs0.fsf@gitster.g>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAFk7dmgC/43PTY7CMAwF4KugrDFyfhrCrOYeIxZO4rSRoEVpV
+ Q1CvfsEZlOxKctny9+TH2LkknkUX7uHKDznMQ99Dc1+J0JHfcuQY81CoWrQYgMaLbR5gjQUYAo
+ dFE5wozb3NNVbQE+O1InYGiuqcqv7/Ptq+DnX3OVxGsr9VTjL5/TfPqLctGcJCCYh8TGgdS59t
+ 1fKl0MYruJpz2rtmW1PVc+HyNJQiNHJd0+vPbft6eq5kDxJdOjZvHtm5ckP/jXV46g1aoqNd6e
+ 1tyzLH0HH366+AQAA
+X-Change-ID: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
+In-Reply-To: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+To: git@vger.kernel.org
+Cc: Karthik Nayak <karthik.188@gmail.com>, gitster@pobox.com, ps@pks.im, 
+ schwab@linux-m68k.org, phillip.wood123@gmail.com, 
+ Christian Couder <chriscool@tuxfamily.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=14266;
+ i=karthik.188@gmail.com; h=from:subject:message-id;
+ bh=p5MEHjX5luWfAKFl0MLx41KUWAsdnuWsJpzSlnLg8ZM=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGh2O1uv7rYthnWzOFSlMxw/HhckNle1SGYX1
+ DOMlPK4lobiLokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJodjtbAAoJED7VnySO
+ Rox/Q98L/0Gy6MfBIuRv93ieE8JxQWrpnmQ+SoWf1igiIFDC+GvobSQUW+0/aJuAYbdqgWDXZ08
+ YPQBXknJQ5262oDoYClOyyqcXMlOIfxwHlfGBU8+2u52IKneGmRbnk/pCFs1Aa+AV+Wxle/6vGu
+ RnrRxe/z0LHXETxxNG53jo11cfcHD7WuAIQxI1izxo5yXdpeqB+J4cTk70Nl6F4DHFVe+EVliYr
+ C+OOmFhWv6aok4Kn1y2no0Qp2XQalu9iieoaGlAIkabgq/XMXXhmHQJGhEqgxAd43Y2+F+Jif/T
+ qDUERyKdPbliYGGLY+lgQOYP9+j4NkltD9cOu9xJksrWhKE2gz41E7XWNY4t/2x3dg8DV+mXRvo
+ pW5aQkUg/0NTM7F9GULBwWHy47HhOa2NsGyJdSN6T+gyN2LyXjeeXV65a/UwDWTQBKuU1AhIxY3
+ v8YVub01lbLdVLFyIg/iIhGyXvf9cIW2kZvHZULVWK5JmdmoPiQMexwnHd5AmmjCRZh6XMA9m93
+ h0=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Fri, Jul 11, 2025 at 11:55:27AM -0700, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
-> > I do not think adding prepare_repo_settings() calls all over the place
-> > is a good way forward as it makes it very easy to introduce
-> > regressions like this. Our builtin commands parse the config at
-> > startup for good reasons if we're going to move settings out of
-> > git_default_core_config() we should ensure that they are still parsed
-> > at startup.
-> 
-> I think that is a good guideline that applies not just to this
-> series but to other topics that attempt to move globals to a member
-> in struct repository (or repository_settings)
+The `git-for-each-ref(1)` command is used to iterate over references
+present in a repository. In large repositories with millions of
+references, it would be optimal to paginate this output such that we
+can start iteration from a given reference. This would avoid having to
+iterate over all references from the beginning each time when paginating
+through results.
 
-So... the only real solution that I can think about right now is to
-start parsing the repository configuration whenever we instantiate any
-repository. E.g., something like the below patch. This has the effect
-that the repo settings would always be populated when we have a
-repository at hand. Consequently, we wouldn't need to clutter those
-`prepare_repo_settings()` calls everywhere anymore.
+This series adds a '--start-after' option in 'git-for-each-ref(1)'. When
+used, the reference iteration seeks to first reference following the
+marker alphabetically. When paging, it should be noted that references
+may be deleted, modified or added between invocations. Output will only
+yield those references which follow the marker lexicographically. If the
+marker does not exist, output begins from the first reference that would
+come after it alphabetically.
 
-But there is a big question: what do we do with invalid configuration
-then? Do we want to die immediately when we see such command? The answer
-is probably going to be a solid "sometimes":
+This enables efficient pagination workflows like:
+    git for-each-ref --count=100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-100
+    git for-each-ref --count=100 --start-after=refs/heads/branch-200
 
-  - Some commands must function even with an invalid configuration. At
-    the very least git-config(1) needs to handle this alright, as
-    otherwise it might be impossible to unset/change invalid
-    configuration. There may be other such examples.
+To add this functionality, we expose the `ref_iterator` outside the
+'refs/' namespace and modify the `ref_iterator_seek()` to actually seek
+to a given reference and only set the prefix when the `set_prefix` field
+is set.
 
-  - Not all configuration is equal. It may be perfectly fine to ignore
-    some configuration, but other configuration may very much be mission
-    critical. And whether or not configuration is important isn't really
-    something we can decide, as it will depend on the specific use case.
+On the reftable and packed backend, the changes are simple. But since
+the files backend uses 'ref-cache' for reference handling, the changes
+there are a little more involved, since we need to setup the right
+levels and the indexing.
 
-So I'm afraid that there just isn't a perfect solution here. Does it
-make sense to die due to a config key that isn't even used by a specific
-command? Maybe. And if not, which config keys _should_ make us die in
-case they are invalid?
+Initially I was also planning to cleanup all the `refs_for_each...()`
+functions in 'refs.h' by simply using the iterator, but this bloated the
+series. So I've left that for another day.
 
-The overall situation right now is a proper mess: we have config parsing
-cluttered everywhere, and the behaviour is just plain inconsistent. Some
-parsing is delayed, some isn't. Some is per-repo, some is last-one-wins.
-Some config keys will cause us to die in case they are misconfigured,
-some will just be ignored.
+Changes in v5:
+- Changes to the comments to refer to the flag
+  'REF_ITERATOR_SEEK_SET_PREFIX' instead of a variable used in older
+  versions. Also other small grammar fixes.
+- Added a commit to remove an unnecessary else clause.
+- Move seeking functionality within `for_each_fullref_in_pattern` to its
+  own function.
+- Fix incorrect naming in the tests.
+- Link to v4: https://lore.kernel.org/r/20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com
 
-So where do we want to end up?
+Changes in v4:
+- Patch 3/4: Move around the documentation for the flag and rename the
+  seek variable to refname.
+- Patch 4/4: Cleanup the commit message and also the documentation.
+- Link to v3: https://lore.kernel.org/r/20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com
 
-My dream would be that all configuration were to be defined in one
-central place. The configuration should be typed, there should be
-verification for each value configured by the user. All configuration
-gets parsed into a structure, and it can be parsed either via a
-repository (in which case we take into account its local config), or
-only via the global- and system-wide configuration. The whole config
-needs to be parsed at startup so that issues like the reported one don't
-happen where a subprocess that uses more config keys than the parent
-process dies because one of the extra keys is misconfigured.
+Changes in v3:
+- Change the working of the command to exclude the marker provided. With
+  this rename the flag to '--start-after'.
+- Extend the documentation to add a note about concurrent modifications
+  to the reference database.
+- Link to v2: https://lore.kernel.org/r/20250704-306-git-for-each-ref-pagination-v2-0-bcde14acdd81@gmail.com
 
-But I very much feel like this is a pipe dream right now. We already are
-working on multiple fronts to modernize the code base, and I don't quite
-feel like opening up _another_ large transformation right now.
+Changes in v2:
+- Modify 'ref_iterator_seek()' to take in flags instead of a
+  'set_prefix' variable. This improves readability, where users would
+  use the 'REF_ITERATOR_SEEK_SET_PREFIX' instead of simply passing '1'.
+- When the set prefix flag isn't usage, reset any previously set prefix.
+  This ensures that the internal prefix state is always reset whenever
+  we seek and unifies the behavior between 'ref_iterator_seek' and
+  'ref_iterator_begin'.
+- Don't allow '--skip-until' to be run with '--sort', since the seeking
+  always takes place before any sorting and this can be confusing.
+- Some styling fixes:
+  - Remove extra newline
+  - Skip braces around single lined if...else clause
+  - Add braces around 'if' clause
+  - Fix indentation
+- Link to v1: https://lore.kernel.org/git/20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com/
 
-So I don't quite know what to do while we're not there yet. Without this
-large refactoring, all approaches feel like they aren't a perfect fit to
-address the bigger issue.
+Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+---
+ Documentation/git-for-each-ref.adoc |  10 +-
+ builtin/for-each-ref.c              |   8 ++
+ ref-filter.c                        | 116 ++++++++++++++-------
+ ref-filter.h                        |   1 +
+ refs.c                              |   6 +-
+ refs.h                              | 155 ++++++++++++++++++++++++++++
+ refs/debug.c                        |   7 +-
+ refs/files-backend.c                |   7 +-
+ refs/iterator.c                     |  26 +++--
+ refs/packed-backend.c               |  17 ++--
+ refs/ref-cache.c                    |  99 ++++++++++++++----
+ refs/ref-cache.h                    |   7 --
+ refs/refs-internal.h                | 152 ++--------------------------
+ refs/reftable-backend.c             |  21 ++--
+ t/t6302-for-each-ref-filter.sh      | 194 ++++++++++++++++++++++++++++++++++++
+ 15 files changed, 583 insertions(+), 243 deletions(-)
 
-Patrick
+Karthik Nayak (5):
+      refs: expose `ref_iterator` via 'refs.h'
+      ref-cache: remove unused function 'find_ref_entry()'
+      refs: selectively set prefix in the seek functions
+      ref-filter: remove unnecessary else clause
+      for-each-ref: introduce a '--start-after' option
 
-dif
+Range-diff versus v4:
+
+1:  dde167f421 = 1:  f9c9a7fdd9 refs: expose `ref_iterator` via 'refs.h'
+2:  e392e93520 = 2:  83bee35517 ref-cache: remove unused function 'find_ref_entry()'
+3:  711ffcac00 ! 3:  3b6019a1e7 refs: selectively set prefix in the seek functions
+    @@ refs/refs-internal.h: void base_ref_iterator_init(struct ref_iterator *iter,
+      /*
+     - * Seek the iterator to the first reference matching the given prefix. Should
+     - * behave the same as if a new iterator was created with the same prefix.
+    -+ * Seek the iterator to the first matching reference. If set_prefix is set,
+    -+ * it would behave the same as if a new iterator was created with the same
+    -+ * prefix.
+    ++ * Seek the iterator to the first matching reference. If the
+    ++ * REF_ITERATOR_SEEK_SET_PREFIX flag is set, it would behave the same as if a
+    ++ * new iterator was created with the provided refname as prefix.
+       */
+      typedef int ref_iterator_seek_fn(struct ref_iterator *ref_iterator,
+     -				 const char *prefix);
+-:  ---------- > 4:  3f89eeef26 ref-filter: remove unnecessary else clause
+4:  3a0c89acbe ! 5:  7ee7d83cf0 for-each-ref: introduce a '--start-after' option
+    @@ ref-filter.c: static int filter_exclude_match(struct ref_filter *filter, const c
+     +	strbuf_release(&sb);
+     +	return ret;
+     +}
+    ++
+    ++static int for_each_fullref_with_seek(struct ref_filter *filter, each_ref_fn cb,
+    ++				       void *cb_data, unsigned int flags)
+    ++{
+    ++	struct ref_iterator *iter;
+    ++	int ret = 0;
+    ++
+    ++	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
+    ++				       NULL, 0, flags);
+    ++	if (filter->start_after)
+    ++		ret = start_ref_iterator_after(iter, filter->start_after);
+    ++
+    ++	if (ret)
+    ++		return ret;
+    ++
+    ++	return do_for_each_ref_iterator(iter, cb, cb_data);
+    ++}
+     +
+      /*
+       * This is the same as for_each_fullref_in(), but it tries to iterate
+       * only over the patterns we'll care about. Note that it _doesn't_ do a full
+     @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
+    - 				       each_ref_fn cb,
+    - 				       void *cb_data)
+      {
+    -+	struct ref_iterator *iter;
+    -+	int flags = 0, ret = 0;
+    -+
+      	if (filter->kind & FILTER_REFS_ROOT_REFS) {
+      		/* In this case, we want to print all refs including root refs. */
+     -		return refs_for_each_include_root_refs(get_main_ref_store(the_repository),
+     -						       cb, cb_data);
+    -+		flags |= DO_FOR_EACH_INCLUDE_ROOT_REFS;
+    -+		goto non_prefix_iter;
+    ++		return for_each_fullref_with_seek(filter, cb, cb_data,
+    ++						  DO_FOR_EACH_INCLUDE_ROOT_REFS);
+      	}
+      
+      	if (!filter->match_as_path) {
+    @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
+      		 */
+     -		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+     -						"", NULL, cb, cb_data);
+    -+		goto non_prefix_iter;
+    ++		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
+      	}
+      
+      	if (filter->ignore_case) {
+    @@ ref-filter.c: static int for_each_fullref_in_pattern(struct ref_filter *filter,
+      		 */
+     -		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+     -						"", NULL, cb, cb_data);
+    -+		goto non_prefix_iter;
+    ++		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
+      	}
+      
+      	if (!filter->name_patterns[0]) {
+      		/* no patterns; we have to look at everything */
+     -		return refs_for_each_fullref_in(get_main_ref_store(the_repository),
+     -						 "", filter->exclude.v, cb, cb_data);
+    -+		goto non_prefix_iter;
+    ++		return for_each_fullref_with_seek(filter, cb, cb_data, 0);
+      	}
+      
+      	return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_repository),
+    - 						 NULL, filter->name_patterns,
+    - 						 filter->exclude.v,
+    - 						 cb, cb_data);
+    -+
+    -+non_prefix_iter:
+    -+	iter = refs_ref_iterator_begin(get_main_ref_store(the_repository), "",
+    -+				       NULL, 0, flags);
+    -+	if (filter->start_after)
+    -+		ret = start_ref_iterator_after(iter, filter->start_after);
+    -+
+    -+	if (ret)
+    -+		return ret;
+    -+
+    -+	return do_for_each_ref_iterator(iter, cb, cb_data);
+    - }
+    +@@ ref-filter.c: void filter_is_base(struct repository *r,
+      
+    - /*
+    -@@ ref-filter.c: static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
+    - 	init_contains_cache(&filter->internal.no_contains_cache);
+    + static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref_fn fn, void *cb_data)
+    + {
+    ++	const char *prefix = NULL;
+    + 	int ret = 0;
+      
+    - 	/*  Simple per-ref filtering */
+    --	if (!filter->kind)
+    -+	if (!filter->kind) {
+    - 		die("filter_refs: invalid type");
+    --	else {
+    -+	} else {
+    -+		const char *prefix = NULL;
+    -+
+    - 		/*
+    - 		 * For common cases where we need only branches or remotes or tags,
+    - 		 * we only iterate through those refs. If a mix of refs is needed,
+    + 	filter->kind = type & FILTER_REFS_KIND_MASK;
+     @@ ref-filter.c: static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref
+    - 		 * of filter_ref_kind().
+    - 		 */
+    - 		if (filter->kind == FILTER_REFS_BRANCHES)
+    --			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    --						       "refs/heads/", NULL,
+    --						       fn, cb_data);
+    -+			prefix = "refs/heads/";
+    - 		else if (filter->kind == FILTER_REFS_REMOTES)
+    --			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    --						       "refs/remotes/", NULL,
+    --						       fn, cb_data);
+    -+			prefix = "refs/remotes/";
+    - 		else if (filter->kind == FILTER_REFS_TAGS)
+    --			ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    --						       "refs/tags/", NULL, fn,
+    --						       cb_data);
+    --		else if (filter->kind & FILTER_REFS_REGULAR)
+    -+			prefix = "refs/tags/";
+    + 	 * of filter_ref_kind().
+    + 	 */
+    + 	if (filter->kind == FILTER_REFS_BRANCHES)
+    +-		ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    +-					       "refs/heads/", NULL,
+    +-					       fn, cb_data);
+    ++		prefix = "refs/heads/";
+    + 	else if (filter->kind == FILTER_REFS_REMOTES)
+    +-		ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    +-					       "refs/remotes/", NULL,
+    +-					       fn, cb_data);
+    ++		prefix = "refs/remotes/";
+    + 	else if (filter->kind == FILTER_REFS_TAGS)
+    +-		ret = refs_for_each_fullref_in(get_main_ref_store(the_repository),
+    +-					       "refs/tags/", NULL, fn,
+    +-					       cb_data);
+    +-	else if (filter->kind & FILTER_REFS_REGULAR)
+    ++		prefix = "refs/tags/";
+     +
+    -+		if (prefix) {
+    -+			struct ref_iterator *iter;
+    ++	if (prefix) {
+    ++		struct ref_iterator *iter;
+     +
+    -+			iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+    -+						       "", NULL, 0, 0);
+    ++		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+    ++					       "", NULL, 0, 0);
+     +
+    -+			if (filter->start_after)
+    -+				ret = start_ref_iterator_after(iter, filter->start_after);
+    -+			else if (prefix)
+    -+				ret = ref_iterator_seek(iter, prefix, 1);
+    ++		if (filter->start_after)
+    ++			ret = start_ref_iterator_after(iter, filter->start_after);
+    ++		else if (prefix)
+    ++			ret = ref_iterator_seek(iter, prefix, 1);
+     +
+    -+			if (!ret)
+    -+				ret = do_for_each_ref_iterator(iter, fn, cb_data);
+    -+		} else if (filter->kind & FILTER_REFS_REGULAR) {
+    - 			ret = for_each_fullref_in_pattern(filter, fn, cb_data);
+    -+		}
+    ++		if (!ret)
+    ++			ret = do_for_each_ref_iterator(iter, fn, cb_data);
+    ++	} else if (filter->kind & FILTER_REFS_REGULAR) {
+    + 		ret = for_each_fullref_in_pattern(filter, fn, cb_data);
+    ++	}
+      
+    - 		/*
+    - 		 * When printing all ref types, HEAD is already included,
+    + 	/*
+    + 	 * When printing all ref types, HEAD is already included,
+     
+      ## ref-filter.h ##
+     @@ ref-filter.h: struct ref_array {
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --start-after=refs/lost >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/odd/ >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+    @@ t/t6302-for-each-ref-filter.sh: test_expect_success 'validate worktree atom' '
+     +	refs/tags/three
+     +	refs/tags/two
+     +	EOF
+    -+	git for-each-ref --format="%(refname)" --start-after=refs/odd/ >actual &&
+    ++	git for-each-ref --format="%(refname)" --start-after=refs/lost >actual &&
+     +	test_cmp expect actual
+     +'
+     +
+
+
+base-commit: cf6f63ea6bf35173e02e18bdc6a4ba41288acff9
+change-id: 20250605-306-git-for-each-ref-pagination-0ba8a29ae646
+
+Thanks
+- Karthik
+
