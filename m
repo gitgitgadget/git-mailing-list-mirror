@@ -1,83 +1,84 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D323A275103
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98C3274FDA
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:27:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752568021; cv=none; b=LvsihfR6szGjV4le6QzK51VhRzWhY3XSdizklRzxcfWZxpX1ji1opzuA0UEtYtW3zqbW1GzXukH2pDrOE8vqJZab7A7tUJWHp40yR3YYt3GlLlCS3ALSrhRmYYSJm/pao55pt4xEFJCwXL3hGF4hkcWcmnxnAvosqjQriU9Vgwg=
+	t=1752568027; cv=none; b=HZ6Vb7pFQ8E2LIl7/zMi5e6BqzCYf80eDwGiJ6q8wffwZZiKNg1KJuI8SbwGnP2JQHJsJcH/iQVp0PU1vJJdbeUZH4NKpqYvmAyg/CLtyO+WwdgaTtl0sfL8SG2rOZ5QsOHPYYB+9LmAZHM8rdSB8mVZHl72Ytf0kb58Rp8ydZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752568021; c=relaxed/simple;
-	bh=LyIISgghvCvkBWz+jfS+cCizi6Zfs4ndjU2i46qDoLs=;
+	s=arc-20240116; t=1752568027; c=relaxed/simple;
+	bh=miILtn1z3kVm80hCcrRCBUyh40kRIMPuC5PH3vZ/oR0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fcIGs81DGWktLopuaWFj+rbqr4XSTVZiwzeCm/yZM49jazUOSIv/xMMoMFGcjJfhv3ynj9js/bhtXqAH1kmBnHX+kxxOUz4tdjV6QYUPQ0rhHz5tDR8A+au/XgsZ5sOaji44F+K9okX8iFlCglvV02wMNBL/4c3I+sHNUheV4sg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=StyWnkXh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jdOM8mYG; arc=none smtp.client-ip=103.168.172.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=dUllq/K8BGVauMMDOoGg41f8jcSjGoi0sHLWHFptXZAwa9LeX8rIIpIDreAc0UKBuL6SVPnY2WPbGvWXxc4QfF9aa7hPpIiCkRe/EtXs0MQAIVoT6U0XMensEoXn475/MLsgQyVztHRQBlZ7UymiQw/+BYeZzDDzos+L8Q8AZEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=v1y4uPjO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XmMHkV8m; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="StyWnkXh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jdOM8mYG"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DC3D814002D9;
-	Tue, 15 Jul 2025 04:26:58 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="v1y4uPjO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XmMHkV8m"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F22C414001C1;
+	Tue, 15 Jul 2025 04:27:04 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Jul 2025 04:26:58 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 15 Jul 2025 04:27:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752568018; x=1752654418; bh=lQDwFmlAVh
-	enpb7I27mEejTRyrItwS7ccY3DnZAyw2s=; b=StyWnkXhfhc1o2TRZg9D3DoE08
-	/MvKNbWqqTpodhlSVbd9oIC8fh0FgwYEUMWYnF+K+rHmLxzLtqXvQTxGkcd9XeIP
-	QBXXgm9RMlGKeG3RvKaY86gh9A4kk5q+0jUStSCxFPyhv5iaUjNoMbk2LzW9Ov2C
-	Y6VcoqBkbaJRbOjdDSp8tI/4EbFKkuS6rCWAVQBAXk6NmGMMxlEynsQvft3Q8AyJ
-	1DdI5mDwdXwNYwubPtTVSdfqMP509R6GrFiKMEqbGpnF1aybUNcFK8qcuTSHj5UP
-	HtvpXEVs8KIsejL/DZn/w3F4kz5VFF9xk/gNwRXP8I0vDJxFYciyNpewjhFQ==
+	:subject:to:to; s=fm2; t=1752568024; x=1752654424; bh=dRnhqYyo7u
+	MjGgXXH5plwUX9PTuyeAuZzgxtUJ/3hXY=; b=v1y4uPjOGVdXOPfbLuiUMyDzVr
+	Y6pfzRB3iyK4yHXygnWjlAuO2qoATU0uZgOHTIEj60vatehsViFvynhD29TUBfrK
+	VHsyRV67rv94/uCQq3tq0cDddroCIIE/nBkkBKdksDyZ7XUfFnEk9ZE0dUgnIjI/
+	AFr/4DPffycBBXHNw+5o6rpGZu3WNZwHE/L+O1hKisV4RyLdYldkAns7J1ZcAazG
+	GbbWdOGaTxOh2tOY1u8pBOG8/rLXeftsaqS0fTI22jqLW2VNU+28GclQDQy5Qz3k
+	MYEVf/FADF8A5B5ylBuc0ICpQU/RUpfoyzCYzZ/O02RZG7M+VVLLVUVUfE7g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752568018; x=1752654418; bh=lQDwFmlAVhenpb7I27mEejTRyrItwS7ccY3
-	DnZAyw2s=; b=jdOM8mYG0AKqwUHpi/d2wpGyV2sJhew9k0PnzkBsu30Qi9gNkO5
-	9HVya3nW1kvk5PwLX/tszBUIbBdpoQHip1CcbURfvpLQF7e5ZuK/fFWbuBEl1190
-	+svt+LWf1wPU8d7c3fop0pBKcQREMwWnpabnxXgzHn93eZci0X6Wfm5KuBCNE3BH
-	PSAnJvCdRYcIouX8DJogHb7hmKAp7mC5LGTOn/zbGjsCSftb3trKVJiYVNrlDZyE
-	BTWEi6ppzGKumTaLYWE5loJQFP3g1O60kMG0i3k7FIaKShnXkAraIsOZVMdbVHfw
-	+NQzOsUxLhp9YtCPbphBwyK8TQlj0Mw1KDw==
-X-ME-Sender: <xms:0hB2aGnAMpjXNWR1NDX-6DsSHme96GPSgKZsSU_n7XzDIthxwMatIw>
-    <xme:0hB2aOA4jwnqm33973WWTHT68ntUJ-NdDqudwyfyWCRGl3hV8BCAxHhe6_lug_t1t
-    NnkYTlcK12lXdmnxw>
-X-ME-Received: <xmr:0hB2aGfAbpVDS152BlMFnLx3u4npSdliZBAL4RDU5OreEIAJzrMe5ZWkhG1Fj9kwNzFkxNPmqa_GtEVKpBw5IURUr8DYt_PB_IcaP-52tBS45g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeefgecutefuodetggdotefrod
+	1752568024; x=1752654424; bh=dRnhqYyo7uMjGgXXH5plwUX9PTuyeAuZzgx
+	tUJ/3hXY=; b=XmMHkV8mUwSzpJi/7XDYSmeKmDqXobnoS5m+rMu/dt53rUdSh4U
+	3G/SotSYJMhSXlA8gIfvdMMSi7MIArghhXDpB4tlKvE3hXQ4wCVXkrdAMyPNlAui
+	E3HKKp3Y+lx6ZkXkNKgPxiOMJT6DXVH5QmRxfm/9bQa0pEY2Ny0InuDTx5+XNGl/
+	yoqmk0pRleXq4GDUdSSn7ZJfgarabWo1mMft4qL3KfAFWrIIWUzeowhyqTzcGqoA
+	XVMso513d3015hpJqFGkUDHA4GcIY1rq1ZzwN1ISXgF+RwGfbwxe5aNQE4DjJoXE
+	qkMFdLCw2t+mcQSKEAZNcJnSRy5XFiJo0dg==
+X-ME-Sender: <xms:2BB2aDyRWYFra2BJ_fPHMPxc6hPguZZGHmx6YPiq8BQTWjW6kpqsgw>
+    <xme:2BB2aOjGbKtI2oDrSRYm3UoLZuBtUKw1nBWI3cartwb-FHqNIW9A0o2NVvDsvrsAH
+    R2eaQ8ZEZqZrZ5d6Q>
+X-ME-Received: <xmr:2BB2aGykry7mLPxEDnA6QLJfsQ63Dophisd4CxcMmOO_mpRJEojY04mdoG3dOT3nPu4e3kXKTxHzUcin6sC7CxtMDKX1WnNDNjD4HeDXY2H1QQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeefhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:0hB2aJLzvrvtrnQj-6FEX6DlxFFUcYjGpiAAy3TdBIjtbGTtCcdMsA>
-    <xmx:0hB2aJfMUkOZYIUs6yL3dLRrCCoyFcBO1lM5X1v_T1zIn9PWkxI9Ew>
-    <xmx:0hB2aA152XYo2WXTwHmVjk5LxhRhs0Ar0Kaa0uSHGljMh_9mpidvDA>
-    <xmx:0hB2aCgwKI0eAfvB0OKXjMAcjan7pWEjdYBnvCpsY1vhHzeDvdWHmQ>
-    <xmx:0hB2aM1ra1BkQaoS1GvIUvP0v8tqeB2keFqN04VOLobKkmwXhimQMTwb>
+    lhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvg
+    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomh
+X-ME-Proxy: <xmx:2BB2aJKFc1T0UA_sEGmboTuwv4Rig46PT6XSZ1fd2KIkO8Z0Mlcb_g>
+    <xmx:2BB2aFSMWohpfuBnuLXXwre6T4Lgc-WEyMnVUlK2gbVXkNVbYDfjGw>
+    <xmx:2BB2aJpB5At_Q88pc2d17374gXJW55VyVkr0_u2sd4nl1aHBf_Bl6Q>
+    <xmx:2BB2aCoLR4yZM0bFuAqqfoeyJXQ888eFv57JJ9AcoMuEq1PkhQQI3Q>
+    <xmx:2BB2aAq6oKi1b2MC75s0PsHSaTXm3r384EFE92g8nn4pSQP3pK6MbIb1>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 04:26:58 -0400 (EDT)
+ 15 Jul 2025 04:27:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7b50cf04 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 08:26:57 +0000 (UTC)
-Date: Tue, 15 Jul 2025 10:26:54 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e48dd0e4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 15 Jul 2025 08:27:03 +0000 (UTC)
+Date: Tue, 15 Jul 2025 10:27:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 3/8] midx: stop using linked list when closing MIDX
-Message-ID: <aHYQzmJfSe4XZX_e@pks.im>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH 4/8] midx: track whether we have loaded the MIDX
+Message-ID: <aHYQ1MzmSj82Vm-s@pks.im>
 References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250709-b4-pks-midx-via-odb-alternate-v1-3-f31150d21331@pks.im>
- <lb7rv7wkpdbekciz4astmtay3u2t7os56jvxpfa5x5vx6ao4vc@jvvnav6ybqzl>
+ <20250709-b4-pks-midx-via-odb-alternate-v1-4-f31150d21331@pks.im>
+ <kmprav735ntlgo3x47ptxyhqc6c5n7tyyub5c545gw2g4achng@sst72rcazce4>
+ <aHBMGBHaD/Yfx/uT@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,27 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <lb7rv7wkpdbekciz4astmtay3u2t7os56jvxpfa5x5vx6ao4vc@jvvnav6ybqzl>
+In-Reply-To: <aHBMGBHaD/Yfx/uT@nand.local>
 
-On Thu, Jul 10, 2025 at 04:31:24PM -0500, Justin Tobler wrote:
-> On 25/07/09 09:54AM, Patrick Steinhardt wrote:
-> > When calling `close_midx()` we not only close the multi-pack index for
-> > one object source, but instead we iterate through the whole linked list
-> > of MIDXs to close all of them. This linked list is about to go away in
-> > favor of using the new per-source pointer to its respective MIDX.
-> > 
-> > Refactor the function to iterate through sources instead.
+On Thu, Jul 10, 2025 at 07:26:16PM -0400, Taylor Blau wrote:
+> On Thu, Jul 10, 2025 at 05:16:12PM -0500, Justin Tobler wrote:
+> > Looking at `prepare_packed_git()`, it checks
+> > `r->objects->packed_git_initialized` to see if it has already been
+> > initialized. If the intent is to start calling `get_multi_pack_index()`
+> > for each source individually, doesn't `prepare_packed_git()` still only
+> > execute once regardless already?
 > 
-> The `close_midx()` function itself is not iterating though the sources.
-> Rather each of the callsites are now resposible to ensure `close_midx()`
-> is called separately for each source. It might be nice to clarify this a
-> bit in the message.
+> I was wondering the same thing. Perhaps that packed_git_initialized
+> field is going away sometime in the future and this is its logical
+> replacement (at least for MIDXs)?
 > 
-> I also noticed that there are several other existing `close_midx()`
-> callsites that we leave as-is. Each of these sites though looks like
-> they don't care about globally closing all MIDXs so they should be fine.
-> This might also we worth mentioning.
+> In either case, that would be worth clarifying. If it's not doing
+> anything (i.e., because we have no plans to get rid of
+> packed_git_initialized), then I agree that this patch could probably be
+> dropped, but I suspect that I don't have the full picture in my head yet.
+> 
+> > > Address this issue by introducing a new variable that tracks whether we
+> > > have tried to load multi-pack index of a given source.
+> >
+> > The contents of the patch look good, but I'm not entirely sure
+> > introducing a separate variable to track if the source has attempted to
+> > load a MIDX is useful.
+> 
+> Yup.
 
-Indeed. I'll add a note.
+Hm, true, you're both correct, I missed that we already have this guard.
+I'll drop the patch.
 
 Patrick
