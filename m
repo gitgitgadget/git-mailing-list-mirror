@@ -1,118 +1,137 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6277B2DC35D
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 12:09:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7602D77E4
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 12:20:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752581353; cv=none; b=hGXkNRYHFgyLLSWeOLPHEjI13KL7an3bjh+zfzLTC7cieP5oAaQCV8lAvxCBZbE/vz+8afTf6xHS/2SaH3KS5G0vynraD/yNZtUCiLEj1TQFsTBdM/VnXF9oGIxofGPPr1kfSKHaP7rlPtt8mZRZ/PeC3+EL+0vbSSbgg5rTNjM=
+	t=1752582041; cv=none; b=TrHpqO4QoqGGJLrzjpf62KsICBhcrZj96zST6B1l4xPXVTkKUr2mCf4sNvZynKpD2vbImnl9o1gaV+5RNwvB9kDfb3wDyogwW9G50Ju52Dnv5nJs3suNiln6+yX8/TFIawhdHLZei0keTduXArTCRx27huUkIA15BA8Ag1tqcJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752581353; c=relaxed/simple;
-	bh=QFn0v0wF6qqesiHTfTNm3qkpO/PJwlMBHEeyjEPxsJ0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=kvV3xd7VWnimMKTS68S13sKTGlxuf4XiBGJWO9/lM3wM87y0mReATQg28eXs/tNSps+x4OCLm2KSzstJgqJaOzG2HgSYyF3uLFTqJJc+HaXp3PPfPg6JX33uHMAQQ1woZ4pnXIjkbumwL6X+/t0GkfRAfPA3XXTkj4pjk7kiXEs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O/rQA620; arc=none smtp.client-ip=209.85.128.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752582041; c=relaxed/simple;
+	bh=YAu4lNmS7aDZ8JTFh2QmZ+keUF4UQdbUeFVnCyD3R/M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Iw9UYMFoXG1Z/QBRwsTYA57IIPeeK3SIt85WB2JgXdgBo26xHGGASLZYGmxRz1Fpz1o3RJAf5zXf75U6AK+jGX4UPgijQwVtqmWySfdRcjmv38ATzP35DVWfHBXYIR62ahPptU9ZicC7eDHDnOQk/GH5cTwVtx2JZYRQD6Tuw1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=Hh7lX03w; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O/rQA620"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-45629702e52so2390805e9.2
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 05:09:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752581349; x=1753186149; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DNRflczCvtCI7oaHj6+d9U1HGy+MPfdMsvfsym2AHd0=;
-        b=O/rQA620nrDVQjqrQTNOgB6e0cIzb+lzJXZOkv7y1ehr4NdVHTxDavrSuKzHgXlQGQ
-         K0Sz24n5xrGapaHkcB8dId0XTGAN6voTf+/c31R1ZkhZMsAqOLfRyYEaVKxBW3EW0Q0O
-         bmNjwLRUX+ZKi/mBjLzqWOcU18NHvWTzalMSZXyd90GJuVrKQoii+5rm9QZAjE3i3fg6
-         V7Pw6iIzh6vDLAxBp0BV00K56mMv0ZxhB7UMz8chKgrKi5UXoNNvze0VztC6EVCcCCo7
-         4Pt/69IpHN1aGCjh9qB9HxJsgKs8WcYI50dN6EKRdplXLYG+kQXF1iQX1Hx46XDpv4AW
-         FzRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752581349; x=1753186149;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DNRflczCvtCI7oaHj6+d9U1HGy+MPfdMsvfsym2AHd0=;
-        b=QsfBd6kwVo17A35UGDFDR7Hk4EMS260notfOdmS+OYnb6ben8Pzm5ZzIS8Lq8dJg3E
-         wv49rUCIqheYL2m+dcIvYt1+wZgOGM7ZkdIBJfQK5Y/tAfxV5bi18p4U3FkHiMA5XXO1
-         gAtilnnvHns5U7KBR0OHYUjtW+4igYEX9WBGlxLdqWd3eJV5fuC+Aa5C3Ng9K16SF0uJ
-         ArCYMNOlKIRxj5p4Nl59IZtt4zQ4CedDf2OabcFLMSRzrmLGyoOy8SsbfnpEWxb39SKk
-         cgwF8BuC2zDdnILPwLk8j9x5Mvv7u4Z/qxRtC3jHaOkvk5hENbHC/WJg93YufWl04H42
-         3/4w==
-X-Forwarded-Encrypted: i=1; AJvYcCXP+HaLQ5UTTYs823WUTQaAulVic7P3xrHAuzfxH+kCZlecjX/nlwjc8QDpouXeNWVHAz0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyJN0i1pM5aJisfMU8POFq6+F6zUx85HuzacM7DdOW75QKSuoti
-	62VBZMVUBn5onJncQ6WvFulxiKVrTN5PQjJ81oGCcubJw2VpY0xlMKCqlWhf0SNa85JHw2tELai
-	ZFOE8HBQ9qMN2tn+a+qKRW1pGF2E1Xz8=
-X-Gm-Gg: ASbGncufMHiSQF2gaqcflJOdvbTpGAjYWZJyOtF6PyF2/nRHzrjX5mmyFBoHeKWyC/p
-	nK/bHsJf6fGcMoj8Fwa3lcs0ysHYlmkK9NgVp1DPVRNNcFCptSBIAikkU+0wLfaLac7IL4KkiVt
-	sT4AC1JJxaJmRJ7pGsGXftBWb7ULj1IJ2Aj94RWiSEkmWU5xgVc+ziK+w+Yk2I1C/DUtc6YLoq0
-	Pq00OftdCu2HBPwW7P2Q/72P9nnSIf9N9n+Uho=
-X-Google-Smtp-Source: AGHT+IESfTqOAD1s4TJ9pTgNGGiP/hEm+Hy4hb0nXmpNhr+GbYWXRqMn19HY9f8pW9yTcMGd+xeZ+Wn5ewXoTC3zedg=
-X-Received: by 2002:a5d:64ec:0:b0:3b4:6577:eed5 with SMTP id
- ffacd0b85a97d-3b5f2db1739mr13108226f8f.12.1752581349468; Tue, 15 Jul 2025
- 05:09:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="Hh7lX03w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1752582031; x=1753186831;
+	i=oswald.buddenhagen@gmx.de;
+	bh=YAu4lNmS7aDZ8JTFh2QmZ+keUF4UQdbUeFVnCyD3R/M=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Hh7lX03wNFBWjoH2xH1zRd/OT5l91clQRAyOu9bLafAJ1MEMVElISTVabMNKFqMT
+	 hfp6l+p7YPz22fE8P4k2sal2OSoCV+ML033kIO2rHu7km6/KWuvIzp06A5WP6JbUl
+	 oWXVqWHLi7ZFm0UYa5yIMdt2KLuczuzQdJQecL1vnzF/4ca+6EwOGoE8m5h30oSm9
+	 kaGNN1h6YNpjsLaVGpX/8May043Zhd8YZ9XmJcpSQ/Le69vAqhrEDP4z80EV/ckSo
+	 ghlgPBKSbetUVxFa96am/7WewumrIrCsp8Np5smNj7vI6AP4KvZvXgnvnurRLg/uc
+	 buFxDP95eSg1ONL9jQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.109]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N3se2-1ukYb02vOy-00w9ck; Tue, 15
+ Jul 2025 14:20:30 +0200
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1ubee6-qYi-00; Tue, 15 Jul 2025 14:20:30 +0200
+Date: Tue, 15 Jul 2025 14:20:30 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
+	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com,
+	phillip.wood@dunelm.org.uk, jltobler@gmail.com
+Subject: Re: [GSoC RFC PATCH v4 0/4] repo: add new command for retrieving
+ repository info
+Message-ID: <aHZHjkb9Vc5Y_ta9@ugly>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250714235231.10137-1-lucasseikioshiro@gmail.com>
+ <aHYuwlWlbkc600Ps@ugly>
+ <aHZCfynoeMDRdN4X@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250713122341.17976-1-carenas@gmail.com> <20250713174807.32444-1-carenas@gmail.com>
- <2414b962-e843-4ac0-814f-bb4bc7aacda7@gentoo.org> <aHYVdMii_rP5-ywa@pks.im>
- <CAPUEspi2VJ5OYTFvsdZSn9_+rqN=x_o=Uwchw1fJeipvDF3LSw@mail.gmail.com> <aHYuS0OgW_mPE34d@pks.im>
-In-Reply-To: <aHYuS0OgW_mPE34d@pks.im>
-From: Carlo Arenas <carenas@gmail.com>
-Date: Tue, 15 Jul 2025 05:08:56 -0700
-X-Gm-Features: Ac12FXwMVO9tDP0iUU9eDu1L59loOe_fam0_Atm6ScxrNeHFdRa3Nbd3AvOcSh8
-Message-ID: <CAPUEsphA-XadsPU1mkdTQM7qjMKtZP8gJXWwZ8WmFutj8WS_rg@mail.gmail.com>
-Subject: Re: [PATCH v3] meson: disable PCRE2 dependency by default in macOS
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Eli Schwartz <eschwartz@gentoo.org>, git@vger.kernel.org, gitster@pobox.com, 
-	sandals@crustytoothpaste.net
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <aHZCfynoeMDRdN4X@pks.im>
+X-Provags-ID: V03:K1:Uepw3vfPbq6yvT9y9/0fOOq/isfIzJZfld/VWBDBjoPulVZHxdH
+ V/tfwHu9SUx8FkE4hsyaOVdzYcrx13I4knwGkaffZ04YZeNCE0E00jbNrgCgDm2Wgqee7sB
+ FTxdG6x9ZL2Xwy6XJIlJPNY7g7/ZV0lWSZfzs7c2qX+jWP5SQBqrFW5VlGhuKmXOrwfRkR6
+ W3mXAdSARB+PbtHxZnZqg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:0lY3n+/zYKs=;944ywHoIRH66WyXUxnmKv8O5gGL
+ 7KJRzP3XEo8THDKOw1G6NzMHGDIrV1O+y18Ex0Tc1Tx/mqM8CMgLN5WCyuPW0F1doCebEpJoE
+ nZ/sIHQIu0FwCU/Br+AQwL6dLePe6v/nw0U2Dc+RxsSR0R22PmVHgys1a1lE+cWpQJD0A8Bii
+ IsHv0yPeN5vHb7ZHq8253MfTPSMuyRtgo36NY1lqtbXilXycjtvCigMiZo+jRIK2EGfQbuxP7
+ W7aazNDtcKYKuy1LBLeZiaW8gYKhw/ilzG9AKJH+xsn1H+ZxpVCdiYk5QOqjPDtmc+F4+wdbL
+ y6zrmzBMqt0IYb1nzWDJp5bDX2+XsPWoFjWpMVc9pUvVuQhnqmjFdKU9GuXKuOWPElfElGUAc
+ 5CelFh+xsCbBap5Jnd1CpKjA7PIz9aNLrQnpDrdqrX2pw2ZmnMZV/6PPBbTsJbU2/cpvdmJ1/
+ kwPQMcnuavtgbEawmwE8Sm5Ow2XUUdd28reMw24S4NiR7EWBnJZkPhD1XANQsS0ZcT+l6gva7
+ uMl+AX2Cm+gSWX0IOxSbAQQCFeOanvI+YJtmhbMpVvy9VF34YwnDgsgk26ntOQ+4T82BqyR9V
+ Q/NNCt3f2EFWVFCTQihaI7VDKZ7cWoG2SyBwr2t8BbWia9xhIyL+5xcu0ZyaxFQY8A5txMM72
+ vnezyb8SHBLyZUqfKjArslBbkFRv3oUenXHvXaU0epxZg1UJr++gwrG2bp2I6hawCRwugKizl
+ WCw581/1gJW+ybgplwEVgDJksywOb29/FeYa2AcKBha1xPpnm2sSVHfB+jD5yN/wWohMS9Xys
+ xKfn5weybpWVLji21SEWNk9E1SsMCF+1r1HJyGL0Ard+sQJ1A72FSSqV04l5HAIxOfd4C0h0o
+ NAlh3J1ltkhCqKqRWaIBzPZi3n5vTtnuAl7gXSPR9OVPBYASEAVsKpj6xJFZB/H12lgnCX8vR
+ fjE9fZcf74j2vyZca9YJKfJKFWZ0jaxKcwpsMdxZWptWcqCeqgkAZFmIs1KhNexewX2nJLapo
+ sN9MnOSL5WJmEjQEMFzsaBWSO3HDQz6atze+eZo0RGL2uAgpWVMo1d8ScGHUmsr0tBvmCvAbY
+ pZ4gvnvGYE+IOsM2Ci/zDuvfIm7nRSgZYV1pGmPXFr6IwPbTROi46jTeJtIrMLyca/gmJVsQI
+ oXG6mXoZpFVqeaX6SlxmwWgoykhmP0QsnZEvXdAxrHOBItxLBAj5lQZ1R5TitdmJNx4XhzoDX
+ lzoS30gzcVguq4iJIV1jXJ0i9fjgToDAW+kz8YX0nrMR0lxTKD0GWGqRiDNG6WyPakHWL7+ew
+ x47/6GQYBHKGEZyw+mpiQCrxeXAeSPGZDjC436BScjJdCDK67EHBWKsMfA2qodw0uMkvBBbnf
+ IPzCHH0RjGvLKTcJZYjJLVDrRQZKe5i0UV0bBFx+4d8UMhhrGOtXjVuQOpzzYGofYOSW33mzc
+ M4MeHv7jvPSvzidWf6+Pvx8tFOisDgYdqTF4Y5V4IHQNbCn8TM9xYHD6ewiIwzwB4Wej3rQCs
+ IOYaFyipahk6lRn1fV0/2WjeKgfTBMJjGaXdP9mmSZ0f7O8xsfI6E8VE0QZRTtUeBBtye4YAY
+ jmsvL0UuxaNW0rF4SrTfl9fJjw26eY0oCWPVhbR1CMXqCbJf7C9CyS4iKqhIo6XyDFtW9nlDK
+ DhuqnswSB3CSxCt2zUYrRvE+0OoeYMRtXs1uP8S4HK7aac1zsIdA+DMHsYieXqlW3dOnUUCJf
+ sDP3c3zB9882AM5alikDrFxqjemjAFwjOQD0zSkc+Lpe2K3F4LKdjISYVIWjdPsf8Ir9aHMDB
+ zbwq+Z1m8enoKCvLqmra3J1O6YWfNY6Ll8xnLkSnkmk4zxdWRd/dWc/8CuEOKdNqgOV+5fpIF
+ qKYLEBoGgdSAR/87nfHPRn/K5bvw7GSQFVuMuJkS+rTwOpFft1Vp8resJsxqIO+7gwVzuxM5o
+ 5dg+QF/VcQel/GSXdEB//DrhxjzQPGp6GriR1zW5uuNvI8m76hg+cw3F1vYILMShm+5ZIDDgK
+ UD0hKlWTlEESI2Pm3F9F3KnCDfcRfrFNo2+KJ0Vu+yk5NUUIwyOx801voOvKfZgNHpG/BiuwK
+ iHn25v+79K5fyZOrxweMZf8XHRfXEWtiI6uhuisRD1vr6y/vQwv9GNPVADewfZ1WeFp0wrgol
+ Sa4zrKzPZ23PxjOycnXkkjGqG6nDGfHm8ci9zTKz5tvBokgoPT8i4KOacaooA4M5i5KZq3T7d
+ Op1UQnoge6hcrwxDjfVj9P7kjwUlhqZqTxWdP6RAqV6buHf0wlrbwaxCu99YcLbXJX5lTMeV7
+ auFVyapSM5dWncrXisYFas+kWZ2gWmAA6aBNbdnTlBe14NYtmslDv9fHs9OFPmXktV4VHHYH4
+ tXi/LRfUMZ2ZoBZnujY8unWmTpbYziglYaIgwvIm+Xb9OJQE6yPn38wViGuU0AV3q7NxGcwl8
+ 0JDk6o5WKdT57aUAJc+1Pr1VZH4ZFL8tHz7bxqtxjrIQCqNAxWQhoWz0CDpeFcV43nXgAlVNM
+ 9wQurb8Kc6LyNzp+nYwu314OJzPer2pFqsp6pNzzzTLEaK78d4PSOABLB8L4/yd6bomYN8uUd
+ 8npy2LVQgTIwjVW7MkzGM/EkpHid+66Vx+txb+VRlbkIL5LoZTCqn2PI/P8E26WX/oTFcIwOw
+ or8C7yt/z2KHNVYC2jXf7FXHXPyqkAa7g9DCU9GEQucQO26o08zfpznRx23wV/oBEGvryJrLI
+ iBSmoU3CDQBrsvb7MISYSoTafK+iKU4rGv+E3eYLrWGMONBpdpq4GVWZuXY+bpK91jBN9RYFn
+ lQsGA3z3we5APR6z8Oh9Fpknj+PkwoWE3KIDLhNpQsD6Btfcsk5cSh5OmQmBCkouwh/+DRSKo
+ FKx7PYhv4sUw6O3AO24Wyv0jOMdP7NUjpX1/3VYq2+DG8/GakTYHFTH4DsEM+Cjr/zCsM2Ah9
+ 8QFpXUV6NPdaLI1whPuO/3ADKlPBt23T0Adw0LVXTTpQUycJ2SMgUTKATxHfmL1WY6IlSIcr3
+ mSQ8PECnNg4SNR4qGaSBTZd26kpUl0JjV7U5f6/Q7Zr3GkB8U0+16fAh+vj6984dTvFVGRwAI
+ 1t5+QQFLUxy8Fn/X9i7P/x7BjdtJIG6jyoEE+yKOVRMx35jJq49EUvdNFK99Mq9bgs6MDwDa+
+ aljGmR3XOw1FQ4eIo7sk9PJ+H+TfxxC9eeLFHfqONNwjpxpzqqvI3GHZRbtII3GjH/OjsVQIh
+ hZ71cppqlRmDOVpsHqeY9Sk4p6S2c1UFYtsllZKO4I9W7wBa0fIAFlP/h6eDxR6KpEMmy/dUH
+ SD+vSNsHjVRteSISeNEqtBCpC6z2Ty/oeTGglrZZo/1bnfJ0vAbNIbCSfpmGPkLengeGvcyc7
+ hJgtyuUoS3yMNoupNG5twBzmtkCvsC9v4+Z55Mx9o38818dij69P0i3cGzofFI6evDVPX57rW
+ /Geef2I9k4E5Din2XIgFyni5C68XcO3i65VIrxs0lTq0fmlNG6fdDdUZYhxa1BgGFVmbZkkyJ
+ Iw==
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 15, 2025 at 3:32=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Tue, Jul 15, 2025 at 01:58:55PM +0200, Patrick Steinhardt wrote:
+>The `repo` tool wouldn't be executed as `git repo` though, would it? So
+>I'm not sure whether that really is relevant at all. On the other hand
+>though I do see that it might be confusing when you interact with the
+>`repo` tool on a daily basis.
 >
-> On Tue, Jul 15, 2025 at 01:56:44AM -0700, Carlo Arenas wrote:
-> > On Tue, Jul 15, 2025 at 1:46=E2=80=AFAM Patrick Steinhardt <ps@pks.im> =
-wrote:
-> > > On Mon, Jul 14, 2025 at 09:55:27PM -0400, Eli Schwartz wrote:
-> > > > On 7/13/25 1:48 PM, Carlo Marcelo Arenas B
-> > > > > diff --git a/meson_options.txt b/meson_options.txt
-> > > > > index e7f768df24..f63ff32556 100644
-> > > > > --- a/meson_options.txt
-> > > > > +++ b/meson_options.txt
-> > > > > @@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto'=
-,
-> > > > >    description: 'Build Git web interface. Requires Perl.')
-> > > > >  option('iconv', type: 'feature', value: 'auto',
-> > > > >    description: 'Support reencoding strings with different encodi=
-ngs.')
-> > > > > -option('pcre2', type: 'feature', value: 'enabled',
-> > > > > +option('pcre2', type: 'feature', value: 'auto',
-> > > >
-> > > > This part is fine. We shouldn't default-fail if it isn't found, whe=
-n we
-> > > > can't expect it to be universally available.
-> > >
-> > > Agreed. I guess tha only reason why I picked "enabled" here is becaus=
-e
-> > > we also got a wrapper in "subprojects/". But with this new workaround=
- in
-> > > place I agree that it is sensible to switch to "auto".
-> >
-> > AFAIK the "wrapper" fallback still kicks in when the feature is "auto"
+i don't think it would be a problem in actual use. i'm more concerned=20
+about people talking about it. really kinda a trademark thing.
+
+>"Query" is way too generic from my point of view, as it doesn't say
+>_what_ you query. "Meta" might be a bit better even though it still
+>loses the information that you act on the repository level, which is a
+>bit of a shame.
 >
-> It does, yes. But with 'auto' as default it means that we're free to
-> disable PCRE2 if we have detected a broken PCRE2 dependency.
-
-My bad, I was mistaken and indeed auto doesn't fallback to the wrap, so
-this will likely regress in windows if it is not invoked with `-Dpcre2=3Den=
-abled`
-
-Carlo
+by that logic, almost all git commands are too tersely named.
+but in practice, a sufficiently suggestive mnemonic is good enough. =20
+preferably a verb, because it's a command.
+the fact that it's now being made into a "multi-tool" also kinda=20
+preempts future collisions.
