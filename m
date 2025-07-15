@@ -1,141 +1,109 @@
-Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173BF26B76A
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 17:19:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CDD1FDA9E
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 17:39:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752599981; cv=none; b=D/8Tfx1dJcxURB7lXGZyYCw7XCIrnnhIEZQNR7qeBJ+fSN22Q+pY6ra8A7vLWfwgs9WS0mSnfgwMQrzCGWomhzmnD6HDzC2PFGdoSgJbUDJkoMJ6ohfSfVFIZEVIP5iYqZYoEqI8Wyb+tO0GukP0YbX8AtvNIvxnCDpT9uJDmEQ=
+	t=1752601154; cv=none; b=VRc9eWLD6ZlqxeR1lhIUgJFLwnrTLjpQxZAXfKu4S4hqV02n3OmN0fXvwuJGvJBr5fLB9lPIgtZN6ffUi3S38hkOngn2DQuthLID0BvhhYAwQiM7wCYFWSQKEAgWDQxZjWY7NEQW/3mOMQuKYHwDQaTvser5BkxluJjQEIMxJ+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752599981; c=relaxed/simple;
-	bh=c3t6Cu7stwDGMZFQCAAVWtOgFj1DjBXDK38GxWqmDv4=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SYoHPpJdDrkJYj3G6YWLcZ4xfHfBGcEeYiBlNaZw7WRgVz9L/IOiKj+y1ATogiWsAi6oQi6UrGc1zETxhpE3w6M/7gMsYTjEpU1fgcvPld7gDXrMwrPwDrVM7hQsBfZOUNok0MrqYI+yn9MBv0dZO4ux6/HhTdT29ldHQ2LOhI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U+4A7Eq9; arc=none smtp.client-ip=209.85.166.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752601154; c=relaxed/simple;
+	bh=G/eDE7JnVm/QPI8ywcZSobYLOe2Ha0kkrynKjNatLss=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=kUhaZEIDQkPb651ln31jafm34H0tIuFfDTlbkz1/PHFjqdKdpZsf5JpO2XqYMBnIv2xm17ipvfExn9aSBjZp4pCauWWIFjRoHETfX9rB1SyhU/hvkx+78OgdftVmulwsmaiOKtmSmeZc/NkE/vMfd5bd8ZrgFPGUTs9qKf5j25k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E7eLA51p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NZUSO6hu; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U+4A7Eq9"
-Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3ddda0a8ba2so42885575ab.0
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 10:19:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752599979; x=1753204779; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CXaMfScG3LGohqHTIPhow/RRW0gkS4DotZkv3auSecQ=;
-        b=U+4A7Eq9qitY1bCwib/3gxbcKP+fW3exgj5LBJ+Ekk1XWYujQST+x/7cXPHbF2dTeC
-         XxEOBs3hMyET90f1zW4FhMK67ndg5Y/nO8PVH+ALcNWAs/cfsMlaOyZXf7YbuxQm537c
-         uZ0C+7tSengFsFWXiBPyEJvfnTMdujiwL2htV7RsgQ3A5G/S+GV979BMOJIIgpuapFiG
-         CXosDCiL7q4Wrhuspfej+zCtwC9Rx3KDnCN/ahYKaHqjuUs2YqczoC41iKYRvuWgy1sE
-         Z8aYJP1sx11QY5cCGJOEa5POz4xpUPZpPBjG5VG95pa6vKtea94CHYkjJgdtRxC3LQN4
-         IC5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752599979; x=1753204779;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CXaMfScG3LGohqHTIPhow/RRW0gkS4DotZkv3auSecQ=;
-        b=YoZhre1Sryyw0auTj6kj4gSK+HIdPHKLBpNjRDrK349Hn3WCogtOcxk6iHRsjADsP1
-         m3DQ2A2S2qNUT+LSF+eA2hjVtIE+bVWRjCly6mz9VFcxoNKI04zTViEOp/ErnA8DN6G5
-         z3jq42vjP7bTMFuV8kWVWNu+M1Env6VxR4ZrtJbMaO8gEkoiVkILJXNJHmuVupeR4ypg
-         Nyd8z0iyGjT7bwmW8vWTOeKVw/UMys8V9d2dU4FmMfWwa/6MACQqe/SKdLd8Wt6FDaas
-         ZrIDIsSzZbBPAqmnopXybr5cHZVnmmN8VfNFy9odSgEcY1d2ZVqraJ1SbbZiw07p/Txy
-         mUWA==
-X-Gm-Message-State: AOJu0Yw5ycwHUKHHId7iVE5N3r/K+2eEv8uYUuhuwHwNtEc8WqQR6efi
-	r9Mp5lisO9Fat8IgfTAb2blFRVt6OKxhbUQB4OCt/llsfiAEgy6Llrj6AXqGxJwu63PqkGzzYSl
-	6jLgZJJFG99GEBXbiemLpPsABELMuDyo=
-X-Gm-Gg: ASbGncuNtB993aA4zIrn4esvUQWv1P4FAUB69kWQwH4+av6dvexrhHdAAMeOZC83UCV
-	7NOJqpaNR1qOTxrikNsXrVl1822C8PQxwWB3zWZ8irj0rwFDnWX6rIX8ehMZPHc3H3lJHrZOwie
-	r4+y4leOOIYhgSc+px1oMYuyD/e4W3pUx16lI8c6hmlThP+f/FdiITzee1Mw/B1hvjV+RhgxK8I
-	AhPTUbpOurBcPif6C6QmPRugISQ1DWtz/k3ceV1Vw==
-X-Google-Smtp-Source: AGHT+IEOznv0mqfIEAB59aIIVF+p9PU1KIT3OqNnwHhTT09r+Gu9jtYm+PzBfi+9Z+ROFfQ3kXxzR2BwIZPLVwEvoj0=
-X-Received: by 2002:a05:6e02:228c:b0:3df:3bdc:2e49 with SMTP id
- e9e14a558f8ab-3e279201acfmr36040625ab.12.1752599978877; Tue, 15 Jul 2025
- 10:19:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E7eLA51p";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NZUSO6hu"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 657FF1D00285;
+	Tue, 15 Jul 2025 13:39:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 15 Jul 2025 13:39:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752601150; x=1752687550; bh=fUuWBtdAIO
+	6c+5en0aTN/NHiZvn26EyMjgVJoVE2P38=; b=E7eLA51p2Iezk6tksPmq/8Q6tu
+	EXu0EXEQHGdfukrB1caHP+h12fzJcKnAf6CiSAjxUhFggnQIOir7BmWWAYsPTVbG
+	hIyrdA6J3UTD1zkT+btky09LbkhsmuI2UdIGiWNuLVL8XM8Jf/sZuwWggORhSuB8
+	9y4AIUEaDWoDPYzB4tnCvRZ2/q4PDM1Ha7t4G029OjC7v3GBqdUnnoc0JCjzy60l
+	3zEIRfQh7I2zhbmHLq4xmiIJA17VcyvUAeysSEQ4TOlORsnKodYoOmA2cJd696jq
+	GPknTgdrYReXnErJmR+ChxJ5R+Y9D6Wz4PAdXF5kPwJWk701ah15kckQCh6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752601150; x=1752687550; bh=fUuWBtdAIO6c+5en0aTN/NHiZvn26EyMjgV
+	JoVE2P38=; b=NZUSO6hun+wLHpLl7lfmo8fvQk4JO2gM1dD+HTLnPHrBmlmR6Y5
+	qwEWIGFKUi7qW+TaBP2+Oup9AN4I6ugVArLjdNbcezjUJWELOYGnCJZRf5uAYqa4
+	1ZVBoVcHDUfb+WKelaUyEAvBPkIXoq0ffme7axGzhi5xgPBhI54qlaEifAxoY4Zq
+	cK5J3F95JbvgeCX/hOPnNVwF3YuZiK2NhC8D4IXZFrF8Gj2Ks380ow6sEiJ4DDA8
+	7Kvz/jhTAOUPQ2l64PT8UaO8bHgUYCWFQpgMcJHuEMcYGGTbHm+VWLu9kQ7Kjv4x
+	iOse82aIxAIuJoUpP9pYJkbfU7i0pRKFliA==
+X-ME-Sender: <xms:PpJ2aMBCSz9RhTmEaxrrgo_BWSTGG09yC58hB4kiaFAfDiowuW4SyA>
+    <xme:PpJ2aBz0gc5N4tbp1awh1ucWTygeZ_3VYVIjXwTt7d7Bekd60K4OrnBMy9hr2HzxS
+    5-Ge9JWqLCWg8uy-Q>
+X-ME-Received: <xmr:PpJ2aJCbQOn3eaaXKLRBMDYib_ozraaFKVo6UckSto8HixzN0tZ4bedKqood-GunB250t-MNiOTKs1qyeETVWSobyAsYx14bPloYjIY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PpJ2aOYXZw9itJ-Fh6Vpr7AT6v1JQKNrb151W-5uG9oBOZ5Kr2isrQ>
+    <xmx:PpJ2aBhS97TQEG1hYXyolIWsDG8ZcPAhLcJz3_j66SmmR8Er4ytWJQ>
+    <xmx:PpJ2aA6OAi2fYqh3vIzyeRqQK7aeWcM7cF8P21SbwyEk6wXAUhJC1Q>
+    <xmx:PpJ2aI7QzfEb2kzURV3enp9Xom3WMdPS5EUnfDcDm_KYIigbn1Z2qQ>
+    <xmx:PpJ2aC-xE5Gx8dPo06lXR9O19hPh_l4QsyscIXJXN8taok4lj36W5EOv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 13:39:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #04; Mon, 14)
+In-Reply-To: <CAOLa=ZTtgQqMZLNL0jLfVMWaSgn7-APt_NYVpJTj4zz54kXH-A@mail.gmail.com>
+	(Karthik Nayak's message of "Tue, 15 Jul 2025 06:29:35 -0500")
+References: <xmqqa556sddb.fsf@gitster.g>
+	<CAOLa=ZTtgQqMZLNL0jLfVMWaSgn7-APt_NYVpJTj4zz54kXH-A@mail.gmail.com>
+Date: Tue, 15 Jul 2025 10:39:08 -0700
+Message-ID: <xmqqa555icar.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1752499610.git.phillip.wood@dunelm.org.uk> <cover.1752587571.git.phillip.wood@dunelm.org.uk>
-In-Reply-To: <cover.1752587571.git.phillip.wood@dunelm.org.uk>
-From: Elijah Newren <newren@gmail.com>
-Date: Tue, 15 Jul 2025 10:19:27 -0700
-X-Gm-Features: Ac12FXybBcOFHz2I6Gp3fKbGTVd_GNdQ1T6eHvXcHKjvIlDxTVAWFyib0ypSuvY
-Message-ID: <CABPp-BHoTxT1UQtgy2bH=mc1re_LPngKX-50GPh_wbtMMZZpyQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] C99: declare bool experiment a success
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	"Brian M . Carlson" <sandals@crustytoothpaste.net>, Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Jul 15, 2025 at 6:53=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->
-> We've had a test balloon for C99's bool type since 8277dbe987
-> (git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
-> 2023-12-16). As it has been over 18 months since this was added and
-> there have been no complaints let's declare it a success and convert
-> the return type our other string predicates to match.
->
-> Thank you to everyone who commented on V1, the only change here is
-> to fix the typos in the commit message for patch 2.
->
-> Base-Commit: a30f80fde927d70950b3b4d1820813480968fb0d
-> Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fuse-c9=
-9-bool%2Fv2
-> View-Changes-At: https://github.com/phillipwood/git/compare/a30f80fde...6=
-69687147
-> Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/use-c99-boo=
-l/v2
->
->
-> Phillip Wood (3):
->   CodingGuildlines: allow the use of bool
->   git-compat-util: convert string predicates to return bool
->   strbuf: convert predicates to return bool
->
->  Documentation/CodingGuidelines |  3 +++
->  git-compat-util.h              | 12 ++++++------
->  strbuf.c                       | 28 ++++++++++++++--------------
->  strbuf.h                       | 12 ++++++------
->  4 files changed, 29 insertions(+), 26 deletions(-)
->
-> Range-diff against v1:
-> 1:  352f80c49b7 =3D 1:  352f80c49b7 CodingGuildlines: allow the use of bo=
-ol
-> 2:  a0f9182aa20 ! 2:  0b2402e11cc git-compat-util: convert string predica=
-tes to return bool
->     @@ Commit message
->          git-compat-util: convert string predicates to return bool
->
->          Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{=
-,_mem}
->     -    to bool, 2023-12-16) a number of our sting predicates have been
->     -    returning bool instead of int. Now we've declared that experimen=
-t
->     -    a success lets convert the return type the case independent
->     +    to bool, 2023-12-16) a number of our string predicates have been
->     +    returning bool instead of int. Now that we've declared that expe=
-riment
->     +    a success, let's convert the return type of the case-independent
->          skip_iprefix() and skip_iprefix_mem() functions to match the ret=
-urn
->     -    type of their case dependent equivalents. Returning bool instead=
- of
->     +    type of their case-dependent equivalents. Returning bool instead=
- of
->          int makes it clear that these functions are predicates.
->
->          Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> 3:  7eaf8042061 =3D 3:  66968714739 strbuf: convert predicates to return =
-bool
-> --
-> 2.49.0.897.gfad3eb7d210
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-This version looks good to me, thanks!
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> * kn/for-each-ref-skip (2025-07-11) 4 commits
+>>  - for-each-ref: introduce a '--start-after' option
+>>  - refs: selectively set prefix in the seek functions
+>>  - ref-cache: remove unused function 'find_ref_entry()'
+>>  - refs: expose `ref_iterator` via 'refs.h'
+>>
+>>  "git for-each-ref" learns "--skip-until" option to help
+>>  applications that want to page its output.
+>>
+>>  Will merge to 'next'.
+>>  cf. <CAP8UFD06KKF0A0WjBSw77A7fKp_pGJGVyw-OPd8-X92h=RSF+w@mail.gmail.com>
+>>  source: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
+>>
+>
+> Christian left some comments, so I've pushed a new version here.
+
+Thanks, will take a look.
