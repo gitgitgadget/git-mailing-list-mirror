@@ -1,82 +1,83 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA3E9274FDB
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:26:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D323A275103
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:26:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752568016; cv=none; b=ZQEGe4H+a9vWv5ckYLqh6XhiuvTQjsgIGf7ohz2rLfrtXHY+07csQnWe9HRI1/es/JthEe4zIxHh+qHiStErmSas40WIcAU3VwxjY7g9uM2kEeZv5rkuo3uvt7gzy0L3SVXF8ud1s2PMT3oFnCyHR7QCCmH8Sf072SCefoZRRGg=
+	t=1752568021; cv=none; b=LvsihfR6szGjV4le6QzK51VhRzWhY3XSdizklRzxcfWZxpX1ji1opzuA0UEtYtW3zqbW1GzXukH2pDrOE8vqJZab7A7tUJWHp40yR3YYt3GlLlCS3ALSrhRmYYSJm/pao55pt4xEFJCwXL3hGF4hkcWcmnxnAvosqjQriU9Vgwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752568016; c=relaxed/simple;
-	bh=sQPTeOjbPU2CRzbGP52Z47YPXeMaoN+PkDPJ+dS0j/0=;
+	s=arc-20240116; t=1752568021; c=relaxed/simple;
+	bh=LyIISgghvCvkBWz+jfS+cCizi6Zfs4ndjU2i46qDoLs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JWgWi8g98NpK4E9JvPaAmnzFRNvrrEdNLXt1OyLR2861aqCC+fmxjwEq09lWgzM2ovywlpCRbUoTirPAaywCE7yrMkKkGqVnTqTbpqFl/oV5C8MvIuI6c1+04pHlRPo2fzsaxK1HUwQMWYex2seHF+dkoH8vp2JXW6sE3cr/SKM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KPgp6o6w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FDHuh2T+; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=fcIGs81DGWktLopuaWFj+rbqr4XSTVZiwzeCm/yZM49jazUOSIv/xMMoMFGcjJfhv3ynj9js/bhtXqAH1kmBnHX+kxxOUz4tdjV6QYUPQ0rhHz5tDR8A+au/XgsZ5sOaji44F+K9okX8iFlCglvV02wMNBL/4c3I+sHNUheV4sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=StyWnkXh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jdOM8mYG; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KPgp6o6w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FDHuh2T+"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="StyWnkXh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jdOM8mYG"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 05994EC03DA;
-	Tue, 15 Jul 2025 04:26:54 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id DC3D814002D9;
+	Tue, 15 Jul 2025 04:26:58 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Jul 2025 04:26:54 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 15 Jul 2025 04:26:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752568014; x=1752654414; bh=ew2OKeRt1I
-	IWaLQdPx8cRmMLMy6ZLBw02L2CzgqY2WI=; b=KPgp6o6w4wWSYV4oBAyl8ad3YN
-	H1VUmpB/zmRDaUReMHw+yr/Km175yUq8H7kVihksHkpVjqmvm+pexqQXEkUPsFFW
-	SaCF+cMNvrTxoMrNbwC73peZQLrfUkW8XU50NkbI26doZVORkCmFvQUXv2dfM//4
-	EQ0va1eqgprhCL3JGw4Bj8y8GscOKJNOSKl7secZVsgYX8a8pO3jHxUz38JjTY88
-	XrmsCSgfGMx6+4b0SE0UK0+whCVp1tEAWUu9i2Ym7bdXgPZZlM2CVltrOaP5YNjl
-	PFLvfKtbgvv7A8qRFkkv8CrX3joNGSm/Uq7/hR7UqR5koVT1OQzfGiw8C5Yg==
+	:subject:to:to; s=fm2; t=1752568018; x=1752654418; bh=lQDwFmlAVh
+	enpb7I27mEejTRyrItwS7ccY3DnZAyw2s=; b=StyWnkXhfhc1o2TRZg9D3DoE08
+	/MvKNbWqqTpodhlSVbd9oIC8fh0FgwYEUMWYnF+K+rHmLxzLtqXvQTxGkcd9XeIP
+	QBXXgm9RMlGKeG3RvKaY86gh9A4kk5q+0jUStSCxFPyhv5iaUjNoMbk2LzW9Ov2C
+	Y6VcoqBkbaJRbOjdDSp8tI/4EbFKkuS6rCWAVQBAXk6NmGMMxlEynsQvft3Q8AyJ
+	1DdI5mDwdXwNYwubPtTVSdfqMP509R6GrFiKMEqbGpnF1aybUNcFK8qcuTSHj5UP
+	HtvpXEVs8KIsejL/DZn/w3F4kz5VFF9xk/gNwRXP8I0vDJxFYciyNpewjhFQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752568014; x=1752654414; bh=ew2OKeRt1IIWaLQdPx8cRmMLMy6ZLBw02L2
-	CzgqY2WI=; b=FDHuh2T+JoUj5zw5ouatphA1TP++WXXZ0/hL6yKIiyu3bCgn7e5
-	63bZudsDc5h/b6I91/UzIc28319arjgZje9j7VtlIyhjis/hteAjKj/QzsNrpY7z
-	Swb3TclU6nZbFXiOImVGT6kfrLJKKndwPyQJvTS0uAN5k1/+K5g6BMmz470GGpO8
-	skVnKqvdjGFLM32rurghMIO/vFZwz/PMaUoOymlTrkksWfp6DliLpnGc2PBD3WWf
-	QrDYNGyJgQipp+rORRE7L9sKYdnBpgh0FPend5e1HT/KqB0cjZ9xCczoh3da22Wa
-	10KK1rHmGf/jUScawhcFkQa4yEEg17N5/2g==
-X-ME-Sender: <xms:zRB2aKyU6XBm_izcBstX7JaLdFXpAItyE25oK4Nv85fEZ331nEtn9A>
-    <xme:zRB2aGfL31kqRVE2JOkNniVRmCxuki9KBzP3LDoalRRxbgK_sr1oRJ_S31NKWq9B0
-    bcN0hufuiWE4SWbfw>
-X-ME-Received: <xmr:zRB2aOJt1lGdlkUdl3YBHgAx6u3j_YpcNNYAqxiZMDcXnYDgH2Yd8W-R1oqQ3EfymHo31bb_XgxaVZ34TKwB5OUU6gk7EMmN2Zpmjqru4HsISQ>
+	1752568018; x=1752654418; bh=lQDwFmlAVhenpb7I27mEejTRyrItwS7ccY3
+	DnZAyw2s=; b=jdOM8mYG0AKqwUHpi/d2wpGyV2sJhew9k0PnzkBsu30Qi9gNkO5
+	9HVya3nW1kvk5PwLX/tszBUIbBdpoQHip1CcbURfvpLQF7e5ZuK/fFWbuBEl1190
+	+svt+LWf1wPU8d7c3fop0pBKcQREMwWnpabnxXgzHn93eZci0X6Wfm5KuBCNE3BH
+	PSAnJvCdRYcIouX8DJogHb7hmKAp7mC5LGTOn/zbGjsCSftb3trKVJiYVNrlDZyE
+	BTWEi6ppzGKumTaLYWE5loJQFP3g1O60kMG0i3k7FIaKShnXkAraIsOZVMdbVHfw
+	+NQzOsUxLhp9YtCPbphBwyK8TQlj0Mw1KDw==
+X-ME-Sender: <xms:0hB2aGnAMpjXNWR1NDX-6DsSHme96GPSgKZsSU_n7XzDIthxwMatIw>
+    <xme:0hB2aOA4jwnqm33973WWTHT68ntUJ-NdDqudwyfyWCRGl3hV8BCAxHhe6_lug_t1t
+    NnkYTlcK12lXdmnxw>
+X-ME-Received: <xmr:0hB2aGfAbpVDS152BlMFnLx3u4npSdliZBAL4RDU5OreEIAJzrMe5ZWkhG1Fj9kwNzFkxNPmqa_GtEVKpBw5IURUr8DYt_PB_IcaP-52tBS45g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeefgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:zRB2aPFSJLGLoV-vM7_Xo2YkK4bIAltaCloyenx0zxgZsZ4kbrMOng>
-    <xmx:zRB2aArCvyCe5N0234sC-jEashLKViP01ZWBYDjOvzKUGRQYTizKkw>
-    <xmx:zRB2aARNx6Il-5VR_TolPmNjnExWefIET8SoENelo9JojRdksv5sUg>
-    <xmx:zRB2aFNaj4d_035lY5qW15-jw06xFA1zMT9Zgf0gNCN0Q-vqNrDp_w>
-    <xmx:zRB2aBPGZHQvSEJfOMz77QqMsc25j3a7grbdkEq6ScJrEeg2qyE4Ivzh>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedvnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:0hB2aJLzvrvtrnQj-6FEX6DlxFFUcYjGpiAAy3TdBIjtbGTtCcdMsA>
+    <xmx:0hB2aJfMUkOZYIUs6yL3dLRrCCoyFcBO1lM5X1v_T1zIn9PWkxI9Ew>
+    <xmx:0hB2aA152XYo2WXTwHmVjk5LxhRhs0Ar0Kaa0uSHGljMh_9mpidvDA>
+    <xmx:0hB2aCgwKI0eAfvB0OKXjMAcjan7pWEjdYBnvCpsY1vhHzeDvdWHmQ>
+    <xmx:0hB2aM1ra1BkQaoS1GvIUvP0v8tqeB2keFqN04VOLobKkmwXhimQMTwb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 04:26:53 -0400 (EDT)
+ 15 Jul 2025 04:26:58 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 067d2e81 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 08:26:52 +0000 (UTC)
-Date: Tue, 15 Jul 2025 10:26:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 7b50cf04 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 15 Jul 2025 08:26:57 +0000 (UTC)
+Date: Tue, 15 Jul 2025 10:26:54 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
+To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org
 Subject: Re: [PATCH 3/8] midx: stop using linked list when closing MIDX
-Message-ID: <aHYQyK0bu-RQcrHH@pks.im>
+Message-ID: <aHYQzmJfSe4XZX_e@pks.im>
 References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
  <20250709-b4-pks-midx-via-odb-alternate-v1-3-f31150d21331@pks.im>
- <aHBLUg7Y1cgf8i7k@nand.local>
+ <lb7rv7wkpdbekciz4astmtay3u2t7os56jvxpfa5x5vx6ao4vc@jvvnav6ybqzl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,52 +86,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aHBLUg7Y1cgf8i7k@nand.local>
+In-Reply-To: <lb7rv7wkpdbekciz4astmtay3u2t7os56jvxpfa5x5vx6ao4vc@jvvnav6ybqzl>
 
-On Thu, Jul 10, 2025 at 07:22:58PM -0400, Taylor Blau wrote:
-> On Wed, Jul 09, 2025 at 09:54:51AM +0200, Patrick Steinhardt wrote:
-> > diff --git a/midx.c b/midx.c
-> > index a91231bfcdf..416b3e8b54f 100644
-> > --- a/midx.c
-> > +++ b/midx.c
-> > @@ -835,11 +834,13 @@ void clear_midx_file(struct repository *r)
-> >
-> >  	get_midx_filename(r->hash_algo, &midx, r->objects->sources->path);
-> >
-> > -	if (r->objects && r->objects->multi_pack_index) {
-> > -		close_midx(r->objects->multi_pack_index);
-> > -		r->objects->multi_pack_index = NULL;
-> > -		for (struct odb_source *source = r->objects->sources; source; source = source->next)
-> > +	if (r->objects) {
-> > +		for (struct odb_source *source = r->objects->sources; source; source = source->next) {
-> > +			if (source->multi_pack_index)
-> > +				close_midx(source->multi_pack_index);
-> >  			source->multi_pack_index = NULL;
+On Thu, Jul 10, 2025 at 04:31:24PM -0500, Justin Tobler wrote:
+> On 25/07/09 09:54AM, Patrick Steinhardt wrote:
+> > When calling `close_midx()` we not only close the multi-pack index for
+> > one object source, but instead we iterate through the whole linked list
+> > of MIDXs to close all of them. This linked list is about to go away in
+> > favor of using the new per-source pointer to its respective MIDX.
+> > 
+> > Refactor the function to iterate through sources instead.
 > 
-> ...and then this line would NULL the now-free()'d memory out.
+> The `close_midx()` function itself is not iterating though the sources.
+> Rather each of the callsites are now resposible to ensure `close_midx()`
+> is called separately for each source. It might be nice to clarify this a
+> bit in the message.
 > 
-> But instead we are directly iterating through the sources and both
-> closing and NULL-ing out their respective MIDXs (if any).
-> 
-> As an aside: I know we do the C99-style for loop with declarations in
-> many places, but in this instance it seems to have produced an awfully
-> long line. I wonder if in this instance it would be better to write:
-> 
->     struct odb_source *source;
->     for (source = r->objects->sources; source; source = source->next) {
->         /* ... */
->     }
-> 
-> That's still a little lengthy, but it's fewer than 80 characters ;-).
+> I also noticed that there are several other existing `close_midx()`
+> callsites that we leave as-is. Each of these sites though looks like
+> they don't care about globally closing all MIDXs so they should be fine.
+> This might also we worth mentioning.
 
-Fair, can adapt.
-
-> > +		}
-> > +		r->objects->multi_pack_index = NULL;
-> 
-> Presumably this pointer will go away at some point in the future as
-> well?
-
-Yup, exactly, it's removed at the end of this series.
+Indeed. I'll add a note.
 
 Patrick
