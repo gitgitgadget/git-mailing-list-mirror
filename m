@@ -1,154 +1,112 @@
-Received: from Chamillionaire.breakpoint.cc (Chamillionaire.breakpoint.cc [91.216.245.30])
+Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02202E03F5
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:12:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.245.30
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E60F7464
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:19:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752606779; cv=none; b=Wp14o5JZveh1GZc0awpHmSTL3AmmxXonNOrrBcuZUASJCMntwcBhgAMOf5OVUoEYjdi9bkmS5+nFYaVFsw6MI8W95DCnh+/bwO9kFj2LpfYAm0ZHo7VrHXhtAwaFbFcBoECJnH2Nk1i2EtcXPDB07d0PxwRg6uFv6hPPSQfel+o=
+	t=1752607189; cv=none; b=I/k6p+6R1q1XyCR+wdgeij+NFZxTLi9eKWvD1qV4o7HkhMdr/9lluR2/jau9T+Dzjru0kZH9UJEe1wv3WA7hSmggmuDtgh9Ly3pJCtm11ysff/gMQc95LZWs0ikycZeJfoK3ksdIeOQlkuwMzdj7cy83t/D2bu/WeWzsVTJvPRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752606779; c=relaxed/simple;
-	bh=C7Evih/aqnGzmjt6zx9luszvb4rqiKx+Ii/93RaQAt4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CocdGBf+NJZHlA+wAggOQCG4FdZU4459AsXpIApY9VS0+bxeDJNNyBRpE4sEWJu+NP06jkEqh5EGSE774D+R1OoAArQByJVg8nbWON7rrxYP8Md2dv2opHyu4YM92d+QPeSutLR3Es0HYyF4+lKEPdjrbdgkd7FNj7bzjx/KD98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=G5YUYXWd; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=WknT3KKx; arc=none smtp.client-ip=91.216.245.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=breakpoint.cc
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="G5YUYXWd";
-	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="WknT3KKx"
-Received: by Chamillionaire.breakpoint.cc (Postfix, from userid 1000)
-	id 6C276618EB; Tue, 15 Jul 2025 21:12:52 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breakpoint.cc;
-	s=2025; t=1752606772;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8yTsTwPJLBTkEhz4EpzxjkV6EStVEkebAhswnM6CjgE=;
-	b=G5YUYXWdUZAyaqrYZeyg86kOGhgcAdU3rbExml1bVq9cmsTVElnX6ibitIHDv2OK0HDrWW
-	/mvbak4GWNAGXbbKoq7HAW8onWWGtbc0dLja1m7ksNK4Bwl7DzRLCL8Q3x2/dMNlBbsudt
-	EGhRJT3AaHrJSmXt3cCc+JhlMxAnWlyEDe5mg9qSh8D1vaPl33SexfD3TZwEokgl94kZLJ
-	/6pTuX9xwr/vhxUuXCNKRWZz2vILMgPIgvf1HT2qu0WI/rYJTv4VRHOIXRurK4ezqjM/Lh
-	ok+4XZRIQp7Q/3Jc42JDefFHtnO5sFSF1WiEAzfh76hwcIanM9L2C7ka+U9OsA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=breakpoint.cc;
-	s=2025e; t=1752606772;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=8yTsTwPJLBTkEhz4EpzxjkV6EStVEkebAhswnM6CjgE=;
-	b=WknT3KKxVP5CkzgNvJ1+xxs9AuXAJrMoh/sjYkMpsGSRtRAXFfD46ZeSwhYl0RYzdNyWXd
-	+r60sQ7qeaa7rJAw==
-From: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-To: git@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-Subject: [PATCH v3 3/5] bswap.h: Always overwrite ntohl/ ntohll macros
-Date: Tue, 15 Jul 2025 21:12:28 +0200
-Message-ID: <20250715191230.12081-4-sebastian@breakpoint.cc>
-In-Reply-To: <20250715191230.12081-1-sebastian@breakpoint.cc>
-References: <20250715191230.12081-1-sebastian@breakpoint.cc>
+	s=arc-20240116; t=1752607189; c=relaxed/simple;
+	bh=+RKQCs3I6JMuaHnNJjNIyXqUAFde6mDnntORP/NC/PM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tTF8EnoVr/x7okai7EcNqUDcaco6+46Fy1FPfyDkDy+KQ8Ig7j7sW0sromP9ViOTgOFOf9CbHey27wV7iU0L+9fc5ShbemynuPUa7H4Tncvz61hek/Y1/vcvou26RaCNzckKnmmDqce+BE6RgONIEH+1Q5l0am0oPtqxHd3OjCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.1.102] (089144220187.atnat0029.highway.webapn.at [89.144.220.187])
+	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4bhTXC011ZzRpKw;
+	Tue, 15 Jul 2025 21:19:38 +0200 (CEST)
+Message-ID: <c543a644-8e58-4601-8a79-247cd5e124c5@kdbg.org>
+Date: Tue, 15 Jul 2025 21:19:38 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] git-gui: Add support of SHA256 repo
+Content-Language: en-US
+To: Takashi Iwai <tiwai@suse.de>
+Cc: git@vger.kernel.org
+References: <20250703120430.17240-1-tiwai@suse.de>
+ <b78bad36-d4ae-4d91-a72a-c3446e10d34b@kdbg.org> <87ecuha66p.wl-tiwai@suse.de>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <87ecuha66p.wl-tiwai@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The ntohl and htonl macros are redefined because the provided macros were
-not always optimal. Sometimes it was a function call, sometimes it was a
-macro which did the shifting. Using the 'bswap' opcode on x86 provides
-probably better performance than performing the shifting.
-These macros are only overwritten on x86 if the "optimized" version is
-available.
+Am 15.07.25 um 16:18 schrieb Takashi Iwai:
+> On Mon, 14 Jul 2025 18:28:13 +0200,
+>> BTW, there is a case
+>>
+>>       if {[regexp {^[0-9a-f]{1,39}$} $head]}
+>>
+>> around line 3217 in git-gui.sh.
+> 
+> Obviously I didn't look for numbers less than 40 :)
+> I'll replace it, too.
+> 
+> But I don't understand why it matches up to only 39, not 40 in the
+> code above.
+> It seems trying to get the proper hash id if it's no full length id?
+> If so, the check should be rather like
+> 	if {![regexp {^[0-9a-f]{40}$} $head]}
+> ??  It makes the conversion a bit simpler.
 
-The ntohll and htonll macros are not available on every platform (at
-least glibc does not provide them) which means they need to be defined
-once the endianness of the system is determined.
+Obviously, the code wants to turn abbreviated hashes to full hashes.
+That can be skipped if it is already the full length. I haven't analyzed
+why this is needed or desirable.
 
-In order to get a more symmetrical setup, redfine the macros once the
-endianness of the system has been determined.
+>>> @@ -879,7 +881,7 @@ method _do_clone_full_end {ok} {
+>>>  		if {[file exists [gitdir FETCH_HEAD]]} {
+>>>  			set fd [open [gitdir FETCH_HEAD] r]
+>>>  			while {[gets $fd line] >= 0} {
+>>> -				if {[regexp "^(.{40})\t\t" $line line HEAD]} {
+>>> +				if {[regexp [string map "@@ $hashlength" "^(.{@@})\t\t"] $line line HEAD]} {
+>>>  					break
+>>>  				}
+>>>  			}
+>>
+>> The repository picker dialog runs before $hashlength is set. Therefore,
+>> at the time that this function is executed, $hashlength is not available.
+>>
+>> This procedure can depend on the file format, which is to have \t\t
+>> after the hash regardless of its length.
+> 
+> Oh that's bad.  I'll rewrite without the reference to $hashlength.
+> I guess we can simply replace the above with a range check {40,64}.
 
-Signed-off-by: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
----
- compat/bswap.h | 54 ++++++++++++++++++++++++--------------------------
- 1 file changed, 26 insertions(+), 28 deletions(-)
+Yes, let's do that.
 
-diff --git a/compat/bswap.h b/compat/bswap.h
-index fd604d9f7b74b..aeef304f671f5 100644
---- a/compat/bswap.h
-+++ b/compat/bswap.h
-@@ -87,27 +87,6 @@ static inline uint64_t git_bswap64(uint64_t x)
-=20
- #endif
-=20
--#if defined(bswap32)
--
--#undef ntohl
--#undef htonl
--#define ntohl(x) bswap32(x)
--#define htonl(x) bswap32(x)
--
--#endif
--
--#if defined(bswap64)
--
--#undef ntohll
--#undef htonll
--#define ntohll(x) bswap64(x)
--#define htonll(x) bswap64(x)
--
--#else
--
--#undef ntohll
--#undef htonll
--
- #if defined(__BYTE_ORDER) && defined(__LITTLE_ENDIAN) && defined(__BIG_END=
-IAN)
-=20
- # define GIT_BYTE_ORDER __BYTE_ORDER
-@@ -145,14 +124,33 @@ static inline uint64_t git_bswap64(uint64_t x)
-=20
- #endif
-=20
--#if GIT_BYTE_ORDER =3D=3D GIT_BIG_ENDIAN
--# define ntohll(n) (n)
--# define htonll(n) (n)
--#else
--# define ntohll(n) default_bswap64(n)
--# define htonll(n) default_bswap64(n)
--#endif
-+#undef ntohl
-+#undef htonl
-+#undef ntohll
-+#undef htonll
-=20
-+#if GIT_BYTE_ORDER =3D=3D GIT_BIG_ENDIAN
-+# define ntohl(x) (x)
-+# define htonl(x) (x)
-+# define ntohll(x) (x)
-+# define htonll(x) (x)
-+#else
-+
-+# if defined(bswap32)
-+#  define ntohl(x) bswap32(x)
-+#  define htonl(x) bswap32(x)
-+# else
-+#  define ntohl(x) default_swab32(x)
-+#  define htonl(x) default_swab32(x)
-+# endif
-+
-+# if defined(bswap64)
-+#  define ntohll(x) bswap64(x)
-+#  define htonll(x) bswap64(x)
-+# else
-+#  define ntohll(x) default_bswap64(x)
-+#  define htonll(x) default_bswap64(x)
-+# endif
- #endif
-=20
- static inline uint16_t get_be16(const void *ptr)
---=20
-2.50.0
+I had something like
+
+   set pos [string find \t\t $line]
+   if {pos > 0} {
+     set HEAD [string range $line 0 $pos]
+     break
+   }
+
+in mind.
+
+>>> @@ -986,7 +990,7 @@ method _readtree_wait {fd} {
+>>>  
+>>>  	# -- Run the post-checkout hook.
+>>>  	#
+>>> -	set fd_ph [githook_read post-checkout [string repeat 0 40] \
+>>> +	set fd_ph [githook_read post-checkout [string repeat 0 $hashlength] \
+>>
+>> Yet another case where $nullid can be used.
+> 
+> But it's also in repo picker code, so we don't have $nullid yet?
+> I'll rewrite somehow without $hashlength reference here, too.
+> (e.g. use the length of "git-rev-parse HEAD" output that is called
+> below)
+> 
+>>>  		[git rev-parse HEAD] 1]
+
+Good call, and good idea for a fix!
+
+-- Hannes
 
