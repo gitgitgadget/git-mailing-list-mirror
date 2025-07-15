@@ -1,95 +1,109 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB23926E71A
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 22:16:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC2A1C2DB2
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 22:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752617767; cv=none; b=hA0O1b7FUFIfakZpXO7d2kf/9VuE5/UkYwHW6brakJMoafYCCfC7a8PX0KkM2Mu3G45ljT14DRpQbFA1J2ljrm2KaZRcv8i4Npp76l/qPfY/9Bayg0XXIsBJJk/R9WFU9SipHq1d2opkT2YPIy57DbMMKqAGlSA08yehSXwSowc=
+	t=1752618982; cv=none; b=I3SA8TBAc399nsvjBQK/cncFG/y0Onuf1rgeC1N3e7skCrrAI6YmFnYVmlgbHRkaY6yGXs8bkZnfbDIYNSPY4RZs1OtiOILTGRsFlEB15MY30Cbsky9xfxXmh7yZI28Wm3pvzvQb8E35aNc5/QXXox0S0g0v+KDKdt0NJ7p82MA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752617767; c=relaxed/simple;
-	bh=OxkaHVVqggV5jxzmd0ASRz0uWc3PtZj6K65/jU0Hqss=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Ox8jD5X5cKxRet6qLvpkAfUfwYayRsmLBZj4SyNH+7M+4Ceco7AjCPSo47DElmkufYMadOVPIHMeBm0kLrZWn7WJUZ+5PBftDy2paMBwelUGQCwtmgcaQcvkFrNhOejXNihHPps3pY3G7WKrmWIcph/BVXFqG45CkVGCRDZkbbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IgIRvXU+; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752618982; c=relaxed/simple;
+	bh=Ij6a+uCLDfaPaEvrXL8xJhB+1Ppp3mfp0MF1PPK/Rh0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Qft4PRE0cVhS0koTm7S2Y4G1OuNQ38apVrxdC81VEcD9HJRp7BDIcfLWg4QrMchRlK6NCFHlzSrsjOcGMMaXt0dR84efqIl/LU3BrjiBAr+BPRKOircMegEcoOPq84uMuF/1VHBJ39vxDTxlfjQMzUFKWrPejm/+3emMzvn1muM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=y4I6Awyr; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgIRvXU+"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b34a8f69862so4966381a12.2
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 15:16:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752617765; x=1753222565; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=DdI6R7X2FT9Z57b4Nxtp9Ud9GbeDaOIwF5cotS03Ndw=;
-        b=IgIRvXU+vYcPJZdzDx6gWIJ57U1qfNPW07/l+qSoQ089oygAiR0kkDltDjHsh7ODFv
-         xcSOAC32gCdXK3xTDoDConTXU2mAo13bYMqwmKK+kkbYM/ZNy6gWvlq9Da2MNSfIXE23
-         B6fm7p3QqmW5VTo4EOzHxBdPzUy2qHIux9iVt1t5ZKRQVCswAwLSbrNqIilg7BPZMbKL
-         85QuwEXXg+JI+xm0w0GHucAPHSB7nR4NwazkK7byEaWev7diIJGh+h2ax8vyd1k3PtNP
-         70zQHWffdtcJsRU07dBDLH98dY73TkHF2AZRjn0FAvG7cQ4l+XdgjGdY+jweMjFUm2c2
-         WvVQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752617765; x=1753222565;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DdI6R7X2FT9Z57b4Nxtp9Ud9GbeDaOIwF5cotS03Ndw=;
-        b=BpyHKqTun0EVaL4njjn3EtWS2lYe/2HMIG8CFvFQqO5p3Br3F1G8HRjOju+/cb2uuX
-         3Qx9kMrRNdtI0V00kvTa6zBeYWvLS//6RqmHUN8h3oiHvlmDi1dEf+Gq9M2mAgXoxkrf
-         4zjVJK72LR/66JH8KLDe4sIP8BXbfY6lCCPVdFMBf60mZkoGRpLZYeFNByIk5r+ECNnK
-         DCA321XQSYsM1eB55aOey/Wt+Ym+bOTrGa/XB3jH6XLQU7f6ZnRFvqndtVJ0pMKMzltU
-         qyP2tZU1Avpfjo9iDuzLOlcclAibRNdZFW+MmaBoNh5fFwI5voO57V3RF+p6aOpvdgGp
-         e3xg==
-X-Forwarded-Encrypted: i=1; AJvYcCWCZ/mqGhwZQrGs9yqh9ZvOKiwcpAZLV+wbiZqYASDMtF+Qy0nGrXWOAgJscpeYa7go+aY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwjH/6LOpZsPr65JeTseHyJCNMFVNUTmrfBJkrdOKxW5WE3/jKh
-	77dNgqFTR9/lbjFqw+SYHUELx6ebOA7hdX/YC7zjtF63LTpgDcKg4/Ct/ZfcEQLWTXTvMhFHQLx
-	Wx/fPJayXWvItqr8SknKHjJbrr5MBYGA=
-X-Gm-Gg: ASbGncvpQQMaxkg/28GfT90gbNmRtmtC3UNhDhodTXXqtpHE98yC2/yUUXcWUnIlaPk
-	9+dzQg3WzQfnUbPFPulqeKl3ipXVKzo1FuhpipCEu+Q/wa0sp9FHvhmFoefbU7WJhdJBcjGy/SB
-	fMlKTlnWfNrw5U8NZUf2Vy/NggWOQlEdQ9xhiEhMWUErwVr4gLt382+EOmrd0NbSmcaPZ784KT1
-	ncXhhiO
-X-Google-Smtp-Source: AGHT+IE5500u4Z7v5XAXxNk2TiNf+BxXZ4xSIisKIw24HhtLRjsTqe9tdyMkm2RxTtFoX30rUNdYdMmzYCHWYnOvOZE=
-X-Received: by 2002:a17:90b:254d:b0:312:2bb:aa89 with SMTP id
- 98e67ed59e1d1-31c9f4c46c8mr340933a91.20.1752617764739; Tue, 15 Jul 2025
- 15:16:04 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="y4I6Awyr"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1752618979;
+	bh=Ij6a+uCLDfaPaEvrXL8xJhB+1Ppp3mfp0MF1PPK/Rh0=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=y4I6Awyrr/BJzZ7DDaK2qMkefpG+CUyE5hS433fvoc4x95PE9nDR7XSlUvdd1qnl4
+	 Me6nPCWv809pQG33YGo4VHrBeI3gXtBuVURYVK71bm6VTAqaQ0JkX5tMv93fxi4cGK
+	 +Fo6fl+5L4lnWmBWR7znjSgHij64c89WB95PAE6gUZWckQ4N2T+dokdh7eGR426twG
+	 d6lSmhoyN9TMM8J4TSIP4TmVHElUIL5B8rlELn2Q5SDDvJ1q2uv+MSBCVYL3Ti7eOL
+	 7BrNh4FlMT+h1EgoFLlXShSebSUsr3P3LSSwwY9ZsRUy7XfwXWqYKLPNEmoPI16ekl
+	 GakJsCAega0cA9a/yDgGrtp52qCc9YjD21vqA6B9ZNCRwEVz+0T6oyLIEGQ27i2olp
+	 R2km1P8jfnKVm2J5/HRRtFSmqoTM8CVp91qXT79NOWAJp7tADnmrcWhruAF1I9vcyL
+	 fh11Jr3+URcusyC9jZOtJVLWw7A6CpkAp2Xkeg39Hp6kjk2HbOL
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ef36:e137:e56a:1fad])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 722022006F;
+	Tue, 15 Jul 2025 22:36:19 +0000 (UTC)
+Date: Tue, 15 Jul 2025 22:36:18 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>,
+	git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 0/5] bswap.h: Rework ntohl handling
+Message-ID: <aHbX4hIKbjO6h1R5@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Andrzej Siewior <sebastian@breakpoint.cc>,
+	git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <20250715191230.12081-1-sebastian@breakpoint.cc>
+ <xmqqple1f7ge.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <cover.1752602474.git.ayu.chandekar@gmail.com> <2a3c2d323bdb520a37a099b361be9ec5f2d5d46f.1752602474.git.ayu.chandekar@gmail.com>
- <xmqq1pqhgnby.fsf@gitster.g>
-In-Reply-To: <xmqq1pqhgnby.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Wed, 16 Jul 2025 03:45:52 +0530
-X-Gm-Features: Ac12FXwCzK-NA2rmc8YbgwV_nHzRzx2TwtN1JnBjvK7qZoVFFPp-DMNN51PHTVU
-Message-ID: <CAE7as+aN+j4CteHUrr+R+CbZ=qi=mehYW2xQEG4ZcQYvXqJsaQ@mail.gmail.com>
-Subject: Re: [GSOC PATCH 2/2] config: set comment_line_str to "#" when core.commentChar=auto
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, phillip.wood123@gmail.com, 
-	shyamthakkar001@gmail.com, kristofferhaugsbakk@fastmail.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="dmyZbTbXs4N3V2a6"
+Content-Disposition: inline
+In-Reply-To: <xmqqple1f7ge.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--dmyZbTbXs4N3V2a6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Junio,
+On 2025-07-15 at 21:52:01, Junio C Hamano wrote:
+> Thanks for updating the proposed log messages with typofixes.  I
+> understand the patch text has no changes?
+>=20
+> Cc'ed those who gave comments on the previous round.  How does this
+> version look to you folks?
 
-On Wed, Jul 16, 2025 at 2:53=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-[snip]
->
-> This patch is exactly what Phillip suggested in
->
-> https://lore.kernel.org/git/9e96aaab-79a2-4632-94cd-d016d4a63b30@gmail.co=
-m/
->
-> isn't it?  Makes sense to me.
->
+This seems fine to me.
 
-Yes, you're right. I should add the suggested-by trailer for this patch.
+I might go a little farther and simply say that recognizing the pattern
+and emitting the most efficient code, whether that's a single
+instruction or an optimized pattern of instructions, is a
+quality-of-implementation issue in the compiler's peephole optimizer[0]
+and that we don't really need to use the builtin functions or provide
+special cases for MSVC still, but I realize that is not a very popular
+opinion and I think this series is fine without that.
 
-Thanks
-Ayush
+[0] Byte swapping, population count, and rotations are, in my view, the
+most frequently open-coded functions and thus every compiler with a
+peephole optimizer should recognize and handle them.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--dmyZbTbXs4N3V2a6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaHbX4QAKCRB8DEliiIei
+gRNVAP9Ny/6paBNzJNClXXUG/LlFU0jYYtmWYuSaCqbGWatPtwEAyBCP3es65IHK
+clmUaML6UlwTgOD6DC+ipTT55ArTmAU=
+=My01
+-----END PGP SIGNATURE-----
+
+--dmyZbTbXs4N3V2a6--
