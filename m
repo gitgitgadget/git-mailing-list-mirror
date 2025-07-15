@@ -1,182 +1,130 @@
-Received: from mail-ua1-f46.google.com (mail-ua1-f46.google.com [209.85.222.46])
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AC9238C06
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 09:49:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4F8A2D541B
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 09:49:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752572948; cv=none; b=Cvll9Pe+L3HplmCD8UWg2b7DXE2d/2fgPlSifftrjxW6yC9yBQgD0nTTmmyFmKYGeb33CIA/AZGQQvavErKVp6L93+f2/8qqwR8qdpXJmI/pA8sCkoQhECjGW3kFTEuRTObL/jLtdOIvXzOE0TISr/dIaxEKPJPo6+v75bJ32eE=
+	t=1752573001; cv=none; b=RYT2zmgz1gmT2q4q4rvpwHTx0wHwRhPfhAEDpEzP9H4uRMaYCT/pGFFH2RwU8AHVOJTXUhE2GtVg1t8g6IR5oDeA3et2Vg2gRyH9LquzWI4Zb2yKSEmgRed6kp93ETE8ukD8lObBgimiSbCIMn2hlBMuiIcArc+lI7NcoYb4jJs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752572948; c=relaxed/simple;
-	bh=wRuayQfqT7o+zQ5lF6MUWiwvCoW6Lm5Qv32kb+GXIgI=;
+	s=arc-20240116; t=1752573001; c=relaxed/simple;
+	bh=Y8duxS4teSaAF+wMGDwKkTWYhQn26bHF5Cr7a6YCcuU=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LtXNAC5y4Hvhobm0hyCdSIYgBiCraqFb5WCZO89GXFrLBcOdmXgKPN5PqD8KQChJZe+RaA1CZuKCkEGSe27h+fhXWLB7dIIY3fpSYMo5zjzIpsG7rdW2xk9DUaxRBbsjd4iSKZfpwKtMfuCZYskbVLj0ad0sSn8AhCFqfw1x9tY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UQ2S412U; arc=none smtp.client-ip=209.85.222.46
+	 To:Cc:Content-Type; b=RTDd69iCa5I5sIBG9/f4RwRywwkFj01XGGc3oL8LEzwfliNnO1id3K/WxxwnvNZZYEmzjI/J7icReL/b9I32rToMq5WTvwfmvXHdo9/gM0x6UbSstikf7jzy4EIQSXFWOZR7WMvROjd7WRYBOCqP0GLKy9Ac2icSaX3hLYT8ixY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lgkuIUFV; arc=none smtp.client-ip=209.85.221.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQ2S412U"
-Received: by mail-ua1-f46.google.com with SMTP id a1e0cc1a2514c-87f298f3508so1482702241.2
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 02:49:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lgkuIUFV"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-52b2290e28eso1380147e0c.3
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 02:49:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752572945; x=1753177745; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752572999; x=1753177799; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lo3P7cMU52PX633YJ7MYC7iOgz6hEY4fXM6xEhNXNgk=;
-        b=UQ2S412Ua14wUIWLp7MH1bpWNVMBma893qG395EJwqxb7poWoL74lNZxLt4FdTMf7R
-         SYJoDlhap6NPjQMjh402+MWkK+xqV0SnwXV/ZUNCNBn42XAaOOHhx4nIdTNU793WaOF1
-         5jJ1OTzBGyPTfRsH2tbzmu4fIuZVi2TREtKHvFUXzglmKjbYG6+BGE7CFWAmD3bJlQSH
-         JM10Qf0kzhtmmZ7ctspwjxcNBfxcxsAt5UsflabCyCVnIxzNXzxWHlq4MDtIu54o0CfU
-         8WZofdr/FLCnPqnfIOdis+Fj0qZifcnpCl54NuTz/vzKI9XAoIkX9C20rpIGz3PZawB4
-         TOGg==
+        bh=Wjr8yG+4m0P2ZbPBWNNYe2f+GAUfgxM2hlIbyFmgW4s=;
+        b=lgkuIUFVK5E5Fhw4JOPG7FD5bnCQLBuZfV4jwL2mBPSDPeuh1fbQpRCF6K9iTzu7dI
+         gvFMyR6wwni/f6EdI6qMVc3lcwdIGU7BXwwnkQEo1lKx0ZuPeKQpTmJm5C4fXm9bmlth
+         G6lPGz8LugfRYBagb54VGHIySNK82EpMxUv79MIi0C7gybsaaYh62glD/Cu4k3Kvs8us
+         N2fmS0i8tjpq0fPcS8Co4TWSE3ZamJPC7p6FOIIZMXy2fqPE31fRe75Zt3q/OgGdpfTR
+         xmPogTz/CZcPWvJWdq+Uc+QKgWC66h/XIQa/9setotqAEplhoFGddAEvXXwZ51XHADbb
+         /epg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752572945; x=1753177745;
+        d=1e100.net; s=20230601; t=1752572999; x=1753177799;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lo3P7cMU52PX633YJ7MYC7iOgz6hEY4fXM6xEhNXNgk=;
-        b=t+T9Xwz/dJNHpAZaBLDIy3pBZL+WfExq9Dh9y391KZz/KAcqNcLAc9ifDoCGslR7td
-         cIdWZWvSsbJUDLsxuQfeaAQpoACiNyIgbZ8rahk7eOmNSoi9xGGYsBf+rqPTM+Di82NV
-         0D2SdG9GsCZcCQKmXGsMZKEhEqcDGWoYRyumG3kxH/Lmo1rS1KHzEbNOayvlE0TRBdjl
-         XQUb+TEnFaoCCdpbm4wULyZvcsfJSabdaZh9cOo1I8Xagr8fQqziMeQd/UjzAD/6Tscn
-         JAEYitPTGEppOKVecmdgfO1T8WYK6uZ63ykvjSg3ccJ7I70k7sdxLStE0MtbQzagx18U
-         lcVQ==
-X-Gm-Message-State: AOJu0YyaoK8JXLwmfaJdsaBuij/pzdjiZXgd11kECP+BUBJ+jWoof0L1
-	46hlgM7CeDZDlydoIloo7w7uIUjxnBBQkp/9B1NV78DSLRs8POMJ6c9D8UUFd30LxZe8NOQtbYF
-	l/KAVKyttAcghQ+pcyyG+uFDTTQhmd4o=
-X-Gm-Gg: ASbGnctGPRW4JKBQz+q9wk4MYuWajzDPBD2AkeW5CMZAjm1WgWF1LRt4CtJ0w8ejxe5
-	01ZY9H7pZEz3Q9J5tUwCyh7kObEkV6XuY0qOoTifT4lwyr2bA5zO3W/pK0jGhBclHm94qaIizky
-	QX4YNEMFJOs21BJKrTGhnl0KBbggsGMM77TuLLosd3J962e7NxaNjE0tNKAYmQs5ny/6GSMNLgI
-	0bm6v6Zh+v6aYse47BkHbhhI7kGo9JgeeaciKml
-X-Google-Smtp-Source: AGHT+IEr//kGTergJZ92eIP9zypVuEDbnqOaq56gyaQ58pnppaYasLL5LBzw6iXJyee4Qavm0UuZ0IUi+napL4E6iyE=
-X-Received: by 2002:a05:6102:952:b0:4eb:3f3:bd17 with SMTP id
- ada2fe7eead31-4f641210b16mr10390366137.2.1752572945537; Tue, 15 Jul 2025
- 02:49:05 -0700 (PDT)
+        bh=Wjr8yG+4m0P2ZbPBWNNYe2f+GAUfgxM2hlIbyFmgW4s=;
+        b=UwK55u4f2kGZNn3ef5sqsMUlBUEhfpJtreqxJKimo49aREOgGIPHFuzcpo+cor+S56
+         BW2+SllNcYbX29BkSuLPQrU2XyqONl8RFMKnep5sv+JQWy81FLzesCehMRiVM0kmSFIy
+         Ax8tcgJoekYJ2UmV0NJwj9PpnblAPLAxR6Uw1X5jvhsnUXl+aWgnV42baYSWnYY+L9iJ
+         b0XjIWVJwmrj71HKKp+p3DPrUVh9P5qHSgCqixe2U9z/ab5KzdFO645g/IiNI4qwi78Z
+         bpmd7gkiFQJGNjgElc54H0VKjortmcaJbY2plhRib7Ocsp5Qh9rkSAyibUtt+BCtZaUp
+         jFFQ==
+X-Gm-Message-State: AOJu0YwFiFcflUEAraO48oH6k5jPgYBMAX5QpmaJiSFhiyLhtbxzyueO
+	YAuOqfXosJcU/NetUfXkYrb2q/iRFuCP75ePpWEHQY8Al+D7oyAhkANrfm5U0028awEOriGtWQe
+	aNmDS6Qtml2+/DCp165KfiFXL6d4t8/4=
+X-Gm-Gg: ASbGncvjGk6SRCB0rHkm/Fg9MVnIvlyiLnO31UUgkFe/o8/pB35FuoQmOdtwZMSNJTi
+	ef3HCvlcBztspN9b3+5zC6ppFsjeurYdQ5FdrHu9aUClJtI9zWO76SmvB4vd4cQYbYFC+zBPDYQ
+	Ib6LflXOH/aMYakWDuC4W5n0MF7F4PcmbMVoW24dBM8m5k4OI2A1zqVQqgF987FCk96AXYdIk+w
+	mIEG+EfK5vqntjCXG4dZ2O3plNHf3VBQ+kyPeF8
+X-Google-Smtp-Source: AGHT+IHnJe8SSzR7OfpSXpKWq9feTugNRvhuj86xukWu5GOMaeLZG/k5KjtjODaPHIecBVyH1gTi+EltDnM43IY/a94=
+X-Received: by 2002:a05:6102:549f:b0:4d7:11d1:c24e with SMTP id
+ ada2fe7eead31-4f6e2e8358fmr7971282137.21.1752572998609; Tue, 15 Jul 2025
+ 02:49:58 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 15 Jul 2025 18:49:03 +0900
+ HTTPREST; Tue, 15 Jul 2025 04:49:57 -0500
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 15 Jul 2025 18:49:03 +0900
+ HTTPREST; Tue, 15 Jul 2025 04:49:57 -0500
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqq8qkqvjnu.fsf@gitster.g>
-References: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
- <20250708-306-git-for-each-ref-pagination-v3-3-8cfba1080be4@gmail.com>
- <aG9hMP9gEFLhVgJL@pks.im> <xmqq8qkqvjnu.fsf@gitster.g>
+In-Reply-To: <xmqqms96u38z.fsf@gitster.g>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
+ <CAP8UFD0anB4dPDf99-w6dyZNNGuOKU-b30_k322D0EsWE0cKPQ@mail.gmail.com> <xmqqms96u38z.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 15 Jul 2025 18:49:03 +0900
-X-Gm-Features: Ac12FXwCwkLTIVvdg4CVONTyrLyt7fm17s3VfJNXUctabeUsu4Tt5wLOUb-ngVc
-Message-ID: <CAOLa=ZS6ASf1+nbUnCTeeH1Di=kgmhQUEQ5UXPZu051rfqx9Pw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] refs: selectively set prefix in the seek functions
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, schwab@linux-m68k.org, phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000dcb7570639f4af20"
+Date: Tue, 15 Jul 2025 04:49:57 -0500
+X-Gm-Features: Ac12FXwx3RlL4Gjy624DTeVgrZ4j7JEgBIerFv-K9Kqx2sQOeyUMOBshixMfa1o
+Message-ID: <CAOLa=ZRT70g90+e-Mhy_USaXqLpDVamRm5dXc-r_fF2PHPQyPw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] for-each-ref: introduce seeking functionality via '--start-after'
+To: Junio C Hamano <gitster@pobox.com>, Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, ps@pks.im, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="0000000000000692f00639f4b3e1"
 
---000000000000dcb7570639f4af20
+--0000000000000692f00639f4b3e1
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
+> Christian Couder <christian.couder@gmail.com> writes:
 >
->>> + * When the REF_ITERATOR_SEEK_SET_PREFIX flag is set, the iterator's prefix is
->>> + * updated to match the seek string, affecting all subsequent iterations. If
->>> + * not, the iterator seeks to the specified reference and clears any previously
->>> + * set prefix.
->>>   *
->>>   * Returns 0 on success, a negative error code otherwise.
->>>   */
->>> -int ref_iterator_seek(struct ref_iterator *ref_iterator,
->>> -		      const char *prefix);
->>> +int ref_iterator_seek(struct ref_iterator *ref_iterator, const char *seek,
->>> +		      unsigned int flags);
+>> On Fri, Jul 11, 2025 at 6:20=E2=80=AFPM Karthik Nayak <karthik.188@gmail=
+.com> wrote:
 >>
->> Another tiny nit: instead of calling the variable `seek` we can just
->> call it `refname`. That might give a bit more of a hint what you're
->> actually seeking for.
+>>> Initially I was also planning to cleanup all the `refs_for_each...()`
+>>> functions in 'refs.h' by simply using the iterator, but this bloated th=
+e
+>>> series. So I've left that for another day.
 >>
->> But other than that I'm happy with the new behaviour, where we are now
->> consistently either setting or resetting the prefix depending on whether
->> or not the caller set the flag.
+>> I wonder if there is a plan to add the '--start-after' option to `git
+>> branch` and `git tag` too?
 >
-> I am not sure.  The way the "prefix" is used, if I understand correctly, is
+> Good question.
 >
->  - it is set by iterator-begin, typically to the area to iterate
->    over (e.g. "refs/heads/" for iterating over branches) in the
->    for_each_ref_*() family of helpers, and internally we seek to
->    that area (skipping anything that come strictly before
->    "refs/heads/" for example).
+> "git for-each-ref" is for scripters, "git branch/tag" are for
+> humans.  And humans do not page (outside "more/less").
 >
->  - iterator-advance looks at it and decides we are done when the
->    iterator points beyond that prefix
->
+> So while it may be trivial to expose the feature to these Porcelain
+> commands, it is not obvious that it is a good idea worth cluttering
+> "git tag -h" output.
 
-That's right.
+Agreed, since the functionality is built into 'ref-filter', it should be
+easy to expand to these commands. But I don't see the need for it.
 
-> So if you are iterating inside "refs/heads/" hierarchy and seek to
-> "refs/heads/m", don't you still want to stop when you step outside
-> "refs/heads/" by keeping the original prefix, instead of unsetting
-> the prefix to empty?  A postimage of this patch for packed backend
-> (picked at random) reads like this:
->
->         static int packed_ref_iterator_seek(struct ref_iterator *ref_iterator,
->                                             const char *seek, unsigned int flags)
->         {
->                 struct packed_ref_iterator *iter =
->                         (struct packed_ref_iterator *)ref_iterator;
->                 const char *start;
->
->                 if (seek && *seek)
->                         start = find_reference_location(iter->snapshot, seek, 0);
->                 else
->                         start = iter->snapshot->start;
->
->                 /* Unset any previously set prefix */
->                 FREE_AND_NULL(iter->prefix);
->
->                 if (flags & REF_ITERATOR_SEEK_SET_PREFIX)
->                         iter->prefix = xstrdup_or_null(seek);
->
-> so after (true) seeking that does not have the SET_PREFIX flag on,
-> wouldn't our iterator-advance run through the end since it no longer
-> is aware of where to stop?
->
+Karthik
 
-That's also right and that is indeed the intention. We're trying to make
-the actions more intentional.
-
-So if a user sets a 'prefix' for the iterator, all previous state of the
-iterator is reset. So, the same function for seeking an iterator should
-also have the same side-effect of resetting the previous state.
-
-There could be a usecase where we add support for keeping the prefix,
-while also seeking the iterator. That would be an explicit change
-(perhaps with a corresponding flag?) that we'd have to build, add tests
-for and call out. Until then, we explicitly reset the state whenever a
-user calls 'ref_iterator_seek()', they can be sure that any previous
-state is reset.
-
-> Thanks.
-
---000000000000dcb7570639f4af20
+--0000000000000692f00639f4b3e1
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 740024c094565a0c_0.1
+X-Attachment-Id: 89b453ce8ec68dec_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oMkpBMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mN2hwQy8wZHR3bzk1dkJrcGhMOTJqbzVJaGZTdk5XOQpvZlZjU3ZCS2ZT
-eEM5TXhYb09yTGZwdmFENTJXUzNZeHFFSTVxaGVqN2NJOWRVdzkvbDI2T0t6b3pDWEVFbnZwCndL
-SndRdGZDZmo1Mko3M0pmd0pXNmx4cGVwYmZ3Y3lkeTUra014d0FaaFFtRHcydDlWY0JMQnFpalVx
-dWdtTzUKWjZId2RtU1Q2Q3Axc3htaWFvYnV2RGlienJsK1JWZG1adkFYZjBiQ0FJRFhPS1RZWkFq
-UFphTmFZOEs1UEMyeApBU3Y1TXBrVGM5aExsREUzeUVBVU1sY3BoU2tqN3Z6Z3JZMGlpaVNyOEFM
-YTZrMlRSTjIyZnJxRlRiSTdIT0hpCnl4SnVyZ3FtNW9SMk1hMEJ1UDBxL0hvaDZ5blk4bnR4QUo4
-bXlSbjlZMkJRWHZ5bEpLT2t3TzZPc3lvRlllWVgKRzVCS3piQ1lrM2xoQWpJalpJeWRZZ0FVSFhn
-Z3JMdVpvQTZreVFJWTBzQjJzVGQ5YTRBd2tzWnhZMGFiaXdoVwpZbndRazdqMGZianFsSUF3VXZO
-Y3VPUU9taTYrdVdZUTlTTkpoS2ZPM2llNVQrWG1HaEIzTytucFMrTndnSGNUCnVtSlFWdUJtTEp6
-dmc0ZFd5c0ZsV0FKdHdBR1QvSlMyTEVDWVBHND0KPVVUSEsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oMkpFUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMWJQQy8wUm9jNDZMclA1QzVYMTg1bFEwSGxCamZFYgpEc3lCZTFOck9P
+N09odHMxeUU0REEyWG9ody9FUjJJMEFXM1A4L01UMzBWR2IrUGp3SVpDRGJHSGhCSS9HUlhXCmVI
+WlNLTlBQK01oRVlGQ0R5aWIyZmJ5bnJsOFJHYVVheCtaczI4N29VT2xFR1A0dkF2dVlLeUxpQXFu
+V2VKaEoKMHBCNDVZZ3lUd0Z3VGljcDhnRC96dlNIRXdWdHJTZkh4YzZQL0JZNFJUakdVTW11TGYw
+UDM0MW1BZmhYZlJrQgp4emFQc1pwM1J4S2g5cjBYa3FIQ1U4dFRER1Nlc3VlcUhmbUpMVUJYMHdv
+b1ByUjZzRkRncW1oMnRabTVrN2pKCjFMUmNIZ053YzdlUFB5ZmM5RmpBc3dWbjdPWTV5R0tiMnEv
+MTAwbXluSHVpQ1lUaVcvaGZRYngxUjN5UVZMWjQKVU9yVk9VUnNLMEZwZ2lva2Q4ZmNqeUg2b0Ir
+bGFROTFsLys0aWRxdkFpVDgreXFmYjFYV2FVNVRLU25EOHlGSwo3OEVGb0QrK1g1cGRGcGtrQjht
+SVRxbWxVRXUxNEpOanBVUlFXMXlnVHBJcVJGTHNxTWJjd2hiSWU3RTFZWElTClRTM2xnUXVlNnEv
+b2FuME9hMzYvQk5JUHg3RFBVRXFYYUhObU84VT0KPTdud3oKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000dcb7570639f4af20--
+--0000000000000692f00639f4b3e1--
