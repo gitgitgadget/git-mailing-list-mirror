@@ -1,139 +1,263 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39DE273D82
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F85D22CBEC
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:42:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752568040; cv=none; b=dtrsBlLahifINDJNZ5+krnUuxeqqu9hRxYJ0KyIpxT5rdMXOHCbd936b1QACBujKvgynKTQ5ChoNUl/xQpVyL8AgqWIUYit1Q9r+1ctDFDcE6iuk3KWCRy3rpggAaXBtLl2ehyzO3swdPoaTMnWMCBdQum+OHx8ubcAECan4PTc=
+	t=1752568955; cv=none; b=U0En3UaiIwEaTk2ytwWGv0fz3VQK+nxRvvFj2wB1cSW/P666LMEfxHz94BTjRpWt/fPmstMDn2UVqTsf+0pxGHlSTBQT6esiriKo4iex5DiQu3ZJKd3Iyk3AJxk7kJaGT20FirkYKI7Uz3Q048F3pLQf5CIzcC1ALpc9viANytM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752568040; c=relaxed/simple;
-	bh=DNkv5TAzHar2mmuU5kGSAhwqgYHK7f6Z8GiXjWBk54I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=X82mbZgjMPmvlPn2CxQkZjb/giVKW3YcYEJWrlNIFzrZ6TDgHHk6Xa9PuB/xuY0ydRVXnMjo14/AYdeD1P9+M+RAcZqvQC/mqhJeuSFnJnNjZa6KDzTW+VcSZyjAe39+rpgoswxznf4duJwh4bBrounGPHc0jHF9rNuE1o+GK5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=y6luWZoz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P0otTGG8; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1752568955; c=relaxed/simple;
+	bh=BDXous5VpsLU5cSGXDjTQca0B2+e70RzOB3hS5BgXVU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=X0uNvpdzB3k9t1qrjo1Uk9GKjEb3yBKuYeX0DF8tAgt9AVms0pjwio5Qg2bXpnb5CqJ7jkgNvH4k6E7duW83vR4bxVkuXwfJnDTvMft2PgMks+tDNPbkacK2LU7PESiH8/WRK3YcNJvbTKXJX8x38hbrJ5l8H04xsMs2fJRhko4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i4ZneKQ+; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="y6luWZoz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P0otTGG8"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 01CDD1400246;
-	Tue, 15 Jul 2025 04:27:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Tue, 15 Jul 2025 04:27:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752568037; x=1752654437; bh=NmaDd3X8yw
-	DKgi11f3RW/BcWMe7lzHJ8PdUoSWRSD90=; b=y6luWZozJ4XPOj1OQPscHf+t/u
-	sRSKsdGdN5goDok8yL9fUzfB6b9xF7NdW8xteL/oYDcn4WkxRnv/PKQM/6nauYnh
-	JJ0cyAa1lyVogs2yZJhZSTtEigeukhSfnldjL8bbGUr3OUsP3xGPQGRTvr7WnE5R
-	qqEuVJ50WYjPbHaK2+XS/cC/ZXx52gdCYuhTPr7vjSVlqGeODhu75zuO/6lgyk3S
-	6cIu2z+vn+6JewR+gCNcLeZb/INk3Zx2+I4KCj6MBZEOV8k4/ZIU/EQxAjGR7Lrr
-	vcH9K3WrQZVsvt58UBElLfNH+ANKF/Wq6WaGxQRe34/GH1HWyZQiAGoHUc2Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752568037; x=1752654437; bh=NmaDd3X8ywDKgi11f3RW/BcWMe7lzHJ8PdU
-	oSWRSD90=; b=P0otTGG8BP+KgeTPfg6qmlaGLRhuMk9I835CPuBzz+DcUeojuOi
-	7JxRVTGBBwaV2SDUJajfgRkPV5ZuI3Zy61MH70CFEdJpwrVDhxwXvYlwX9C4sYh7
-	Ta9OFSh4xtr32EMBceNIiYGPKwij+iwcfuLgwF9fkTe1yZT64mYbMivJSGw9Irli
-	Rsdr3npMk6oJKYJAvRWmuW7Ln9MSNeCegbqtKWHRPkdk9JNQ1a5quBLWoLREucWw
-	L9WluFhU1rMpBGa2IQIEcxq/CzfutW7L0KogYnv4ZSZv1KV4QmedgNyaxigNp8jq
-	8g3kp17NKj3EmORWmZeU7vpnICyDekl+XxA==
-X-ME-Sender: <xms:5RB2aN9F7ZooPRInSvOhGYsyLbdH7j3ya-CcEpFPG01VU3AmLa7k8g>
-    <xme:5RB2aJedK9h8qJh9UWYF-wBgnVWeHxSs1gDxoyjm_mh3-4zpyiKrzj-82Uke6v-Jw
-    pahAWoE0UIBh30jSQ>
-X-ME-Received: <xmr:5RB2aOE-vd1fAtVV_AALQJKm52r7NxxTVgNkzjko7oinGYSgUSPq6uc93sZ7mIJ7_0bvlsrlXMrYaP1PIYbTqeluA-1AsnaoM2f6PEknxjJB6g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeefhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepvdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5RB2aPdsD5DZ0CVxDycf-jGJGomxquUemNkiyX6yHg_3ha0cnpLUWA>
-    <xmx:5RB2aAFZ_kUXWRxJqN4bSIfuR51CyRe1q_JarKTn6A4bXunTAEE9_g>
-    <xmx:5RB2aAWMXZ8I3ICS3knZCK6DBwoYkV45CF8xz-zPHM6ggC2bqOo3Jg>
-    <xmx:5RB2aPIpJ7_nGQxk_LAy7GR9uiNPpPlxi7_9xnB_OftN8um9FRHvNQ>
-    <xmx:5RB2aOoEFoejiyMykHfqT9RfvjaoMtj7TYm3ngHuFNcVsCqhX_fsBdY4>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 04:27:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 410a8c76 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 08:27:16 +0000 (UTC)
-Date: Tue, 15 Jul 2025 10:27:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/8] odb: track multi-pack-indices via their object
- sources
-Message-ID: <aHYQ4P-2brVDuewF@pks.im>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <xmqq34b5aumb.fsf@gitster.g>
- <aHBTsm6fUexaTKB4@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i4ZneKQ+"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-528ce9731dbso2065082e0c.0
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 01:42:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752568952; x=1753173752; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=pOai+fCDIQRFW5Fb8u3S60IHxS5SPInmNBxabKRNadI=;
+        b=i4ZneKQ+Ln8oHY156ZSgHuUZOmSyiKkzc9AFrD2Z6MAQL16eB5q9klvqYgQPgHPvph
+         Gv9v0QqdIknKx/ZkJ39/DckV1iHJLCC8AdHNL3up3UlXetRk6ajS1XP1gTmQZfSPVgPS
+         XETikrTQ9nrtaPgTQDf8NQfuYj7SVCfYrEd774rKbKgd+3hgn0TVV+55OPhAJYeK9nh1
+         xkmMojmQV9WKSV1Dz9PcYCYkOn8Ak41yx+uHuNHJ1M3lYxUDgXiY1pbwt2/j7jY7tj+C
+         UbVoBuF0cLDesJjfrbGrGDPXEKiphS5tA0IGidJao2bu/qz6JN12fbVnc8PMGOm9jf4I
+         Be6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752568952; x=1753173752;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=pOai+fCDIQRFW5Fb8u3S60IHxS5SPInmNBxabKRNadI=;
+        b=IV1ja0UMGg9O67hqUqN3nT2/i/rx/eRRVNKRqvKzVWXrK+nnLZK+S7MNooANrWCw34
+         isRHPdcy74ERFNdEAsUbzNf6WCHGT8U25UgIbgdxU8aY7M7g51IeTZ6Lg0rVqlhF9ROd
+         Rk0ScHnnRFX1y2LW01lYrvCQt5QSLh5lfOkgIU25lNwWl4pj7m6OnBjOuT0kAldxr53Q
+         i/MfG0BUK7xZprd6YU21ylbhojXTQXPAwY+9CVY9xlSsFOnz1VbgterkdSDX5uyPUUTR
+         VtrneoHX/at/i8yhKsQrKLZnsDhr+gN4zv3fo+5z1A5rAaLRd32p0QtImb93g6eUaIKN
+         7a6w==
+X-Gm-Message-State: AOJu0YwhBTSKGXL4qtp2Sb9WpO5ehKyrNT3w25P7jesAxRr94AxA9NsV
+	8Az+R3v0IlYES4pcH3TUIY+BwMU2d3uznDUPvPCOuzurfuXQWh/LUUlf9va0pagU3RxIBEHjRAX
+	sk7fjG1wosvK9KMlubiYWF0tuUctHjeE=
+X-Gm-Gg: ASbGncvcGx2XsuIInFlmIEVEH6l3foY4CCNj25gvOyBzau8LQqhUJRr+FyrVFcV8qPc
+	8kaaAYcmXtQ1QuPcIp8y1JAyw9pl+YqBrlmpDD9Y2ZIJihTMKLZQC6zS393PDvMkxXqJYHAHdhu
+	mqwPosGrD/TPQggfoBMtybTOowcC/4BaKlEnssXcto9kzeSl/ZaW+DK3Ncrh/PGMXPmdgjjcQCl
+	W5Wppun0tC2NcxBFs83eD+gHzpGCY6B5aqK8Nas8A==
+X-Google-Smtp-Source: AGHT+IF/pigCCS4U4YFb7tfIxpGCMOkU6Yq/GhN7ANK9oZBMjYKsHETEa3eTFhYODMfMkptwm+yyc/S1D+vB3WpnN1A=
+X-Received: by 2002:a05:6122:134f:b0:534:76cf:4900 with SMTP id
+ 71dfb90a1353d-535f47bfe49mr9780811e0c.6.1752568952379; Tue, 15 Jul 2025
+ 01:42:32 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 Jul 2025 01:42:31 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 15 Jul 2025 01:42:31 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
+References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
+ <20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com> <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aHBTsm6fUexaTKB4@nand.local>
+Date: Tue, 15 Jul 2025 01:42:31 -0700
+X-Gm-Features: Ac12FXyPOFybNupgCK0UOEpli7J5YkP4vje6oix4GNPQMsV7auQRe_pidgjIn2k
+Message-ID: <CAOLa=ZSyVh1cWZL=F8Gk-URh7p6GTnPpOpWjGwCbwYX=a+-TNQ@mail.gmail.com>
+Subject: Re: [PATCH v4 4/4] for-each-ref: introduce a '--start-after' option
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000da01f60639f3c11e"
 
-On Thu, Jul 10, 2025 at 07:58:42PM -0400, Taylor Blau wrote:
-> On Wed, Jul 09, 2025 at 03:04:44PM -0700, Junio C Hamano wrote:
-> > Patrick Steinhardt <ps@pks.im> writes:
-> >
-> > > This patch series thus refactors the codebase to stop tracking MIDX's
-> > > globally. Instead, they are being pushed down one level so that every
-> > > `struct odb_source` has an optional MIDX itself. This simplifies some of
-> > > our code and will make it easier in a future iteration to move the data
-> > > into a packfile-specific object source backend.
-> > >
-> > > This series is built on top of a30f80fde92 (The eighth batch,
-> > > 2025-07-08) with "ps/object-store" at 841a03b4046 (odb: rename
-> > > `read_object_with_reference()`, 2025-07-01) merged into it.
-> >
-> > You do not have to deal with it just yet, but FYI, another topic in
-> > flight has a commit that adds a few more callers to a function this
-> > topic renames away.  Namely, 5ee86c27 (repack: exclude cruft pack(s)
-> > from the MIDX where possible, 2025-06-23).
-> 
-> Yup, there are a handful of new get_local_multi_pack_index() calls in
-> that topic.
-> 
-> > If this topic needs to be rerolled after the other topic graduates
-> > to 'master', we may need to see this topic rebased on a newer
-> > 'master' with something like the attached patch squashed in, but
-> > because the other topic is at least a few more days away from
-> > 'next', and it might still need another final finishing touch
-> > iteration, let's keep these two topics independent from each other a
-> > bit longer, and let me deal with this trivial semantic conflict
-> > resolution, at least for now.
-> >
-> > Thanks.
-> >
-> > diff --git a/builtin/repack.c b/builtin/repack.c
-> > index a74b2ca7f3..21723866b9 100644
-> > --- a/builtin/repack.c
-> > +++ b/builtin/repack.c
-> 
-> Assuming that in these three cases that the first entry in
-> the_repository->objects->sources refers to the local object database,
-> then I agree with the proposed changes.
-> 
-> Thanks for flagging it :-).
+--000000000000da01f60639f3c11e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Indeed, thanks. As the topic has been merged to "next" by now I'll
-rebase my series on top of it.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Patrick
+> On Fri, Jul 11, 2025 at 6:21=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
+com> wrote:
+>
+>>  /*
+>>   * This is the same as for_each_fullref_in(), but it tries to iterate
+>>   * only over the patterns we'll care about. Note that it _doesn't_ do a=
+ full
+>> @@ -2692,10 +2710,13 @@ static int for_each_fullref_in_pattern(struct re=
+f_filter *filter,
+>>                                        each_ref_fn cb,
+>>                                        void *cb_data)
+>>  {
+>> +       struct ref_iterator *iter;
+>> +       int flags =3D 0, ret =3D 0;
+>> +
+>>         if (filter->kind & FILTER_REFS_ROOT_REFS) {
+>>                 /* In this case, we want to print all refs including roo=
+t refs. */
+>> -               return refs_for_each_include_root_refs(get_main_ref_stor=
+e(the_repository),
+>> -                                                      cb, cb_data);
+>> +               flags |=3D DO_FOR_EACH_INCLUDE_ROOT_REFS;
+>> +               goto non_prefix_iter;
+>>         }
+>>
+>>         if (!filter->match_as_path) {
+>> @@ -2704,8 +2725,7 @@ static int for_each_fullref_in_pattern(struct ref_=
+filter *filter,
+>>                  * prefixes like "refs/heads/" etc. are stripped off,
+>>                  * so we have to look at everything:
+>>                  */
+>> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
+epository),
+>> -                                               "", NULL, cb, cb_data);
+>> +               goto non_prefix_iter;
+>>         }
+>>
+>>         if (filter->ignore_case) {
+>> @@ -2714,20 +2734,29 @@ static int for_each_fullref_in_pattern(struct re=
+f_filter *filter,
+>>                  * so just return everything and let the caller
+>>                  * sort it out.
+>>                  */
+>> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
+epository),
+>> -                                               "", NULL, cb, cb_data);
+>> +               goto non_prefix_iter;
+>>         }
+>>
+>>         if (!filter->name_patterns[0]) {
+>>                 /* no patterns; we have to look at everything */
+>> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
+epository),
+>> -                                                "", filter->exclude.v, =
+cb, cb_data);
+>> +               goto non_prefix_iter;
+>>         }
+>>
+>>         return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_=
+repository),
+>>                                                  NULL, filter->name_patt=
+erns,
+>>                                                  filter->exclude.v,
+>>                                                  cb, cb_data);
+>> +
+>> +non_prefix_iter:
+>> +       iter =3D refs_ref_iterator_begin(get_main_ref_store(the_reposito=
+ry), "",
+>> +                                      NULL, 0, flags);
+>> +       if (filter->start_after)
+>> +               ret =3D start_ref_iterator_after(iter, filter->start_aft=
+er);
+>> +
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       return do_for_each_ref_iterator(iter, cb, cb_data);
+>>  }
+>
+> Nit: I wonder if what is under the 'non_prefix_iter' label could be in
+> a new function and instead of `goto non_prefix_iter` we could return
+> the result of the new function.
+>
+
+Yeah, that would work too. Let me do that and make it nicer! Thanks for
+the suggestion.
+
+>>  /*
+>> @@ -3197,9 +3226,11 @@ static int do_filter_refs(struct ref_filter *filt=
+er, unsigned int type, each_ref
+>>         init_contains_cache(&filter->internal.no_contains_cache);
+>>
+>>         /*  Simple per-ref filtering */
+>> -       if (!filter->kind)
+>> +       if (!filter->kind) {
+>>                 die("filter_refs: invalid type");
+>> -       else {
+>> +       } else {
+>
+> Nit: the `else` could be removed altogether here, but maybe that
+> should be done in a preparatory patch.
+>
+
+Indeed, since I plan to re-roll with the changes you've suggested, I
+will add this in too.
+
+>> +               const char *prefix =3D NULL;
+>> +
+>
+> [...]
+>
+>> +test_expect_success 'start after with specific directory and trailing s=
+lash' '
+>> +       cat >expect <<-\EOF &&
+>> +       refs/odd/spot
+>> +       refs/tags/annotated-tag
+>> +       refs/tags/doubly-annotated-tag
+>> +       refs/tags/doubly-signed-tag
+>> +       refs/tags/foo1.10
+>> +       refs/tags/foo1.3
+>> +       refs/tags/foo1.6
+>> +       refs/tags/four
+>> +       refs/tags/one
+>> +       refs/tags/signed-tag
+>> +       refs/tags/three
+>> +       refs/tags/two
+>> +       EOF
+>> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/lo=
+st >actual &&
+>
+> I don't see a trailing slash.
+>
+
+>> +       test_cmp expect actual
+>> +'
+>> +
+>> +test_expect_success 'start after, just behind a specific directory' '
+>> +       cat >expect <<-\EOF &&
+>> +       refs/odd/spot
+>> +       refs/tags/annotated-tag
+>> +       refs/tags/doubly-annotated-tag
+>> +       refs/tags/doubly-signed-tag
+>> +       refs/tags/foo1.10
+>> +       refs/tags/foo1.3
+>> +       refs/tags/foo1.6
+>> +       refs/tags/four
+>> +       refs/tags/one
+>> +       refs/tags/signed-tag
+>> +       refs/tags/three
+>> +       refs/tags/two
+>> +       EOF
+>> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/od=
+d/ >actual &&
+>
+> Here there is a trailing slash though.
+
+I think these tests would make more sense in the newer versions with the
+values swapped. Let me do that.
+
+Thanks Christian for the thorough review.
+
+--000000000000da01f60639f3c11e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 8a33d16d9ea80a03_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oMkZIWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1melVSREFDY0E4enFQSlRwZkRUZXppVFJPS2R4bVh2Zwo5QURQVko3QlVB
+ZFYza21FREowbE04V2I5UE5TbEdQTSt6SmZ3WjB2TmFGTGk1R29YanJBV25qZEMyZkJ5ZVFHCnYz
+akxPb0FPaUpYQjlMOGp5SEo3S0c0QVI4aHhucnU2QXhzRHdkTUFrTGZidnVrQmZVYkVvekVkb3dO
+aE9OVS8KcmZJMkVHd0J5RVRNUyt6R2hzbHphUVVJK05ZOG9mRTdyVGNqVzI3S2ZTaDdOVjNVRENa
+MVlhREIveFJBMTJNeAp6Zk05VDNiQXFLN2VndHM4b0RVdXNYYmZvZGdNaVFyTHAzQ1JjUHdsblNX
+eVdiTzZ5bXd4ZGJOMmFNTTJtK21SCnF4aVJqWE5rZys0Nyt4bGw4bFVWT05iWmN3Z3Z3bEhVRU9z
+Z3FQR0RaLytHcGFSNmNwdXhVUWI4SEt2SlFzSGwKNFFYd2NyK1dqOW9DbjA5RFhUcTJYSEcvWFFO
+cnNEUzlMWCtMeVdmbkdnZjFwazlXVFB1TDRtQ01zU0hJSEphcQpNTWxUTHFhR0ErMlFhbmZrcHpt
+T1l5VDVlTGtQQ2JYbXJXT0lLTEZGMVhDK09qV1h5azU3OHJaMlBoSGprcnVzCkJ3VGErcjZMZTIv
+TGtFUVp4VGZMMlVWQTh6MzM3REZmKzhZczBqQT0KPXBEU1MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000da01f60639f3c11e--
