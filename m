@@ -1,27 +1,27 @@
-Received: from smtpbgeu1.qq.com (smtpbgeu1.qq.com [52.59.177.22])
+Received: from smtpbgbr1.qq.com (smtpbgbr1.qq.com [54.207.19.206])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2749A1BD9D3
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 01:34:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.59.177.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F03819D093
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 01:38:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.19.206
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752543303; cv=none; b=DhLqeq7Vo1uWnZ4tgbuR/m5sK8ublUHRzjc2JLs2AxhEHsRdM+AuLifabiN5Km6EoHn73Y/zJpPyzQYvhZ6SF5ENMqnHH1M/Pny61vWWUM1fzUwplZwdmv9kSeP2dLOHysnqVLJalsVhKg/hSDtJH/gKmOJWWv8bHTRBFkbrqz4=
+	t=1752543497; cv=none; b=UfYNQGspsGK35aHq7hS5FXaIeyZMCpOB215YMSvJP/ZlM7EgOz2JC69l5h1RPKZt0idQiJ3Fi10oQxxrLt7nH/obh51zafrG11lQF7pKpj1wHzJD+DKJVNJ4AO+qnvweLEK4VB6wtevcDahTrpkbFJG0D9BBd8mJxubnSv9k+QM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752543303; c=relaxed/simple;
-	bh=e8C+UUmeV31vgEl4fmA9scKuRWC0TBD7Thuwt5iA3zA=;
+	s=arc-20240116; t=1752543497; c=relaxed/simple;
+	bh=AOb5/pKIEAee7xHJVbwF5YO/aSrFZyBuBCEtM6E4T1o=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=TY8JLvbfJPAsDEFny0j/lK9tgSAuHRcVsDzTiCHkjq0LwboGw0fghh2Txlyq1ykM8BKKxIBAK0n/qTiDjo7yjZcYlIwxLgwc4/u0F67CVDRMAl2Bee5Js2L1VVJgpS3HQkQe81/sfJt5EOfkUmZBjU7f+zTQCetBhrAYpMhWHCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=52.59.177.22
+	 Message-Id:References:To; b=Ewba8UBonDx0Y0zOPOu6qn8aA3jVbTTowbGSErNHXq+OouonAney6HGBtL3iL1cG4XBLEeyfrU0kKRCD1bsWLi50kFaH0dB4rpdLwpVASjARRN9XNaxRLxbz77xHDOrNpBGubQy51wlfQvRcBhSiPlMdV0XZRYrYQjL4vnRSB9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.207.19.206
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: zesmtpsz8t1752543266tb7a89455
-X-QQ-Originating-IP: 01Z0kYDomINnQ/lKdQqmuQ7u+NZ0zxbt0tbSulQK+lg=
+X-QQ-mid: esmtpsz19t1752543462tc10c163f
+X-QQ-Originating-IP: Y/oDzPHrNZzeB19MiZOwz9JUPpdJnQikjpL3eqyTzPY=
 Received: from smtpclient.apple ( [171.116.160.7])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Tue, 15 Jul 2025 09:34:25 +0800 (CST)
+	id ; Tue, 15 Jul 2025 09:37:40 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 15382107353221853189
+X-BIZMAIL-ID: 12221648550897008801
 Content-Type: text/plain;
 	charset=us-ascii
 Precedence: bulk
@@ -30,63 +30,71 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v6 0/5] bloom: enable bloom filter optimization for
- multiple pathspec elements in revision traversal
+Subject: Re: [PATCH v6 5/5] bloom: optimize multiple pathspec items in
+ revision
 From: Lidong Yan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
-Date: Tue, 15 Jul 2025 09:34:14 +0800
-Cc: git@vger.kernel.org,
- gitster@pobox.com,
- toon@iotcl.com
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B090DCBA-7306-4BA9-A5BA-DA81D1ABB29C@smail.nju.edu.cn>
-References: <20250710084829.2171855-1-502024330056@smail.nju.edu.cn>
- <20250712093517.17907-1-yldhome2d2@gmail.com>
- <0969e176-b9c7-464d-8e97-cf5cd4a06347@gmail.com>
-To: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqbjpmu2oz.fsf@gitster.g>
+Date: Tue, 15 Jul 2025 09:37:30 +0800
+Cc: Derrick Stolee <stolee@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: 7bit
+Message-Id: <55BF9B3C-F9B1-4ADB-9CBC-0D8EA45BA264@smail.nju.edu.cn>
+References: <A25E64EE-CABB-498D-8B34-27588B349FAC@gmail.com>
+ <20250712095129.24642-1-yldhome2d2@gmail.com>
+ <30afce8c-c932-4c51-9a27-e63385608514@gmail.com> <xmqqbjpmu2oz.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
 X-Mailer: Apple Mail (2.3826.600.51.1.1)
 X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: OBoFiaMdrvAdspzo1frR4NJW5vtFuAMG9L97C/2k8kLBeYSdmSoc6S4F
-	mLGn4k+3cGyjQW/l9jwhBqBaGvMvxEWum5UDXmX5R3dusAykUDnZ7b8tICN3GpR9Dzg68Y1
-	GCVFy4MsIpIBHowLeFsufLAYxrIOPf4vV1oz3wBaGBS8EMkpR1FsMa7XQR9coSJPfvHm7o3
-	7uBdNEOxGu6ttCBC2xiMcM6Q4bEV45MQEfoQ5jyn0V7b9g6iCE77/aazFIKu/t8TJq9oIqn
-	CGU2BHJ9WVWN3hzBDN76qPs6uD14GP79kzmzdLIMFW0s5Kl91wjscG07j/sR0d4MypLj/+h
-	0o8SjFPEy/6JkTjKuA0vJ+rILtZnXapekhIAbaRNsrXNxQeRKCul/eNkn7qy4JLtaM0EEUB
-	7ac7SwSZbUuFkTe9H0rdpcypRdZ3nlwEYPFc+BftfULkmok/M5Y1U8CvDJfrF58uQnPVJ7s
-	uvRdBcbvXj11e0BrcVOmlFSuv96KYmJs/DyD/hjz8BBCYCCAPZkR7unGeW0J3RB7J04Z5Vk
-	qcG7XAGafh8O3QEAzoZ6XjFcKYgJPyOTcD70auwqpe8gN1z9Yqc3xmlSO/1dVDiS4cltVoN
-	3qIuiZuuwgyEESVZS12AvdjtzT8OBem6bbth7pZm12s7qPz3gWWrYQ2mF3TM7N7xG7OBXK+
-	U+5YubKWwteE5nt+CrTkd3ZDKU0NzqQJy3naGJ2EFM5DBZE4tsjJXYKlcHN9InkxCpZCvf+
-	O0BFlX6dEaWLIGFl2gf6NL7vDqoWIrhPs8xEHoUdLW2/0q2ItE4FDc8PzTaFVhQYHPaxUGG
-	t9dY/QFuzZRYp3Jb2MywgmYgHvsPA+Oc+aFVt/IvnRsUElyWfFsP6AUPBDKyhF1Yuyhwf0x
-	dufvgJ8OTLYgiIWdNQ2JdyUtm9Woi6PWjiYCBWLWfGf06ZEHx/KFnyzQ+QxRMrJlbWwJCGO
-	YsSa8m2WN9wzyy3zyLhcDO4wrHgkrkdgB80VCok0oU8SYoQ==
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
+Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: MPI5HzS7e4/KPUETSAYWDh+I2G2Wi8+C/oD1ME9nQKgTNlDNsXexOlkt
+	L926nQioMFbs4B6LIbTIXBZbzm8PuhPwgQiW/3WU7czeAxZamOUo6GSkDE0wH4Bm4rFtkpx
+	qS4+BGjgG1fKkqYKiBoVI75OzcEcCYnmHomGmwEfoDZzXdRRh3wXCeqSYO9aC+Rvnuzig68
+	4sVbc5Y860fj9OcktPM1GZxeGsm77O4G+YL3Ghv2cDyXvypFEapJlNY/TwqP3Qdpg6Y2P48
+	3XMpcBUrYZMydVSUbh6pbPfZWwqq41/6OBYDGGw0f/WNI/M+XayU4GtH19c5RfttWISHbW+
+	NZ742197xk/NIRjSJNI4D/iHA+gqKCxlo6bQB3MSq9pTno2NbwprhgN0zRX4iRz++IGTCRp
+	SRCMrBkmpDyLW7cWBwjXhD4esR0N5tGRJg2gGqnSF4OXZXo4PSKsGzfMc6H1DGtH8RMWCMe
+	mp9XsmY9Iy3Kb5jvTcZftaoX4Ac+YQg8d7iSEajkk3BjJKWkrdXI/aYXTQPukbzxtVmXbX/
+	fK+42lAwFO+o5K9N/UOljyAmkYX+hYI/W3dOLQrOOyMi9CrpZdyZVvMtD8adnAy7fP9AgbP
+	tCXG9zlJUV8iwe2/K/nHnvMg0UgtyrudRiD+wBcfxRnE/FoUuO+RoVvwFdknn/GwrRntWUl
+	uX8DRm1JJLIa13DwR4h1gbK2nUhMPWl74vLrGAOVO1/jbzSj6hVL5bThfPo3GUDbaXwJUfK
+	cpRTh0454fdLODv7DsQCVQHS068NR/+TairybLRGCTre7VwvWKb72vZiJg4juGfjwjPf+Mz
+	k1GjB2iKYOPDgi8F18fzX7UyZUoSXbRyT6XOl81TNZ+/V/yb7PrVXYk1tLVmrKkV5ljHPlN
+	cuQnTfHvTgufAdKss9I09zj0GARA30527H45ri2FsxBDR4/TGQEX9um9ofxU48BQcb3dGcK
+	9czwkczq7KR19IucWE+4tDOqADUfFkLMQm0bdErXPGmfu18LTXCQNRiRxCLMpQ2SdM8jHff
+	F9ajPdUg==
+X-QQ-XMRINFO: Nq+8W0+stu50PRdwbJxPCL0=
 X-QQ-RECHKSPAM: 0
 
-Derrick Stolee <stolee@gmail.com> wrote:
->=20
-> On 7/12/2025 5:35 AM, Lidong Yan wrote:
->=20
->> The difference from v5 is:
->>  - extract convert pathspec item to bloom_keyvec logic to
->>    a separate function, which simplifies the =
-prepare_to_use_bloom_filter()
->>    function.
->>  - fix few bugs in v5.
->=20
-> Thanks for making these changes. Including your fixed patch 5, this
-> version looks ready to me.
->=20
-> I wouldn't say "fix a few bugs" but instead "fix some compile-time
-> linting complaints when using DEVELOPER=3D1" to be clear that the
-> functionality hasn't changed but the code is cleaner.
+Junio C Hamano <gitster@pobox.com> writes:
+> 
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>> On 7/12/2025 5:51 AM, Lidong Yan wrote:
+>>> To enable optimize multiple pathspec items in revision traversal,
+>>> return 0 if all pathspec item is literal in forbid_bloom_filters().
+>>> Add for loops to initialize and check each pathspec item's bloom_keyvec
+>>> when optimization is possible.
+>> 
+>> The patch itself is good.
+>> 
+>>> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+>>> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+>> 
+>> Here, I'll just point out that your sign-off should follow mine
+>> because you were the last to touch the patch. In this way, the
+>> sign-off gives a kind of timestamp to who made the most-recent
+>> changes (and that those changes have that person's sign-off,
+>> and may not have been vetted by previous signers).
+> 
+> Thanks for pointing it out.  Also perhaps a single-liner attribution
+> to clarify who did what, e.g.
+> 
+> Signed-off-by: Derrick
+> [ly: did this and that to derrick's code to adjust]
+> Signed-off-by: Lidong
 
-I just learned that `make DEVELOPER=3D1` treats warnings as errors.
-Since this is just a cover letter issue, I feel it might not be worth =
-rerolling
-the patch again.
+I will fix the order of the sign-offs, add the attributes, and resend
+PATCH v6 5/5.
 
 Thanks,
-Lidong=
+Lidong
