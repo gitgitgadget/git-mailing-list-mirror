@@ -1,146 +1,105 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F8C1DC9B8
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 21:39:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1555826AD9
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 21:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752615558; cv=none; b=MmOlbnrzjf1U2M7SKYXSTLvcMJMoOmPpytHdSr8tZZZwUh0lEIUYRb/UJ1tdxOYsKVt7p555h2V9hl4aoi4Ac4SEUm+Rzcj5cWPrviAuaa+t6mqg5i8RkHPcjo39+Yt326+JU/sa6nmxvX3rbBog96XFHCT3YqYHZ+Xdei7vHWI=
+	t=1752616096; cv=none; b=DFZvKWKU6EPPADthuQSpzPHsYyUvHVF/qwTR9NBkgpUVAlNoIBccZA3pNzZyUbev22GAeADuuCJuUWAGbQfVNgksbugFc/bNXlJITX9Be0VI4v+nYFFnRDiHKqzt8pGGxfAl1xs4hsSIQoslXKoO+gLxVuL/X8HlKPdRJZlatfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752615558; c=relaxed/simple;
-	bh=uiVIMqWH/FsBVMb18+583K9OsrRyvdVuSxDm92mAAmg=;
+	s=arc-20240116; t=1752616096; c=relaxed/simple;
+	bh=Vb68sUsAb3/Nezc9BflG1C+5QZ6rL52mfV1kT6uc/kU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RMoryP2NNelxh9kILlIOA372g+hD8qPtGrWeqVWkcgcQ5DTlbUk7cwf/Gd/1S2qkM3C9yRNPuzQzwprtBeTOC8sLHPxaLvKxkQSZDYOYqjY2VZRA4yUPVyYtY5U+f0ekF5kPTtEvgCTPZvzExAf1XXNG8x2+09PXYvP4HO5QFko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aq45URPT; arc=none smtp.client-ip=209.85.210.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=aEgRvk5C8sCa5mOdRqZHL38V75XhgLsp2PsEGhIOpEsTOru1Aq2rRANivSlKpCVpkEsiP5bOaeC/d7o3Fng0p0wostl4squcdFiwLmTUbXLjYrlq2G4BNA2pPYoWZ7wF5uoea/1DKE/ZDCe5Ch3Z8IgYRINTy34SFP4cl5JIwOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MGRWn7rj; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aq45URPT"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-73e5e3c6926so355476a34.0
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 14:39:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752615556; x=1753220356; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lm8x8mQ3cVdr3q1odfvGjLgQlt1jI+GDKfe8oPeO3n0=;
-        b=aq45URPTSSAAEfnO4Cl+fKHBTtYSo24Iqy6bZdtRuakoRQdAQgacPrC5sTzg+Q0/xr
-         89ynQzgpsBSGdFqG3ULeb+bU+q6u44NZNxoDgNN7nZugTSMJnzrmO/Ymg60niZY9sedW
-         1fjz1yngt35BumG9Ulx6NjZVMLYGfEAH2gvqvbgvrgQhACyNn8Ge513amh5l3bdu5K1Y
-         qnCmvRT+rGO44zAWvE4Y9OML3bZs19O4AhL6WfnfDeoGUDFHy6knOK8h2dailhmewUB2
-         n0pl2WM7EL0dpVxdhnCcpxH8XooA2VDulqbs+R0LCx9D2rTGzq7ppw0WPTMYM04AMvja
-         HhBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752615556; x=1753220356;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lm8x8mQ3cVdr3q1odfvGjLgQlt1jI+GDKfe8oPeO3n0=;
-        b=YrKpKpjXTI8H7NokSz+WvgAoynRXkLzi5Qxa3vv17Bihdw1K7AVMJcbZUl9fXqFkbc
-         RkS4OOTJPJl2NHL+AqBIUIFz1pgF/+ID4QVXmW3V+j4yKdw0bbNOJNBr+fxwVwLmM9Ym
-         P8qM9e0x0SrxFx2cEJLQzeY7aBSNFzpKkfPNKBF7ghOCi6bCqJXYp9F5lqrvlWrgXTFd
-         oaN2XYB4L06bsCBUEgA7bWT1hRcEgmjgUYqOWTpb3MNdai6b4F/gER95E5DpflDVxwZO
-         yyYm5P4Otg3j2RLd9Yu7cYyxsCEPXUpNiIU6Tgc1aewBYtDjypdaTbwpJ0ZBZ6zXaQBU
-         HEdQ==
-X-Gm-Message-State: AOJu0Yxx296qEHUELxxpM13SXh0st3ohFh+gxrJI9UNyOniOAHMyOZgd
-	B6D2d04XR1TdDWXn1il6mLNcIxcCM2CR5ZnEAzX3QynzKD1xur7hplDW
-X-Gm-Gg: ASbGncsBoCjvrL8eoGy2nsT4lUTohCMqoRvqefUswA0cFuZVI5tupMPY+pZOln3e0YV
-	rEl/F4XmMpjhFJbki9LhzCyAhkQWxh2NOItjBKvF7ULar07mV1i1XZJo3iwIFjRQy3CdvBhJgUT
-	VCFjl/3A45p+gD6i18t9bYYudw7YVNbbsevDDWXvbgjtXpTw8cS15zYs4XRfNpg7Ijv6HTK+ODA
-	Z0TJCIC2dx8Ml9K1YqSiznoMGSUu2/p/tVOZ1oAiuUGznE/hf6NvFF4aYdsO0lp4JJ1mRxR+RFK
-	nfFSLZSyif57/DZqAVei4RbeltwPCqLg4a3Z1WzsWx3JmpEhFa2qxgDysL4kmB3dySiJ098tEBf
-	OIpluPvL0cpGZil6RielyK+0Xsg==
-X-Google-Smtp-Source: AGHT+IE/kbZjTqQ2p8ZwmaGjLH0UVcPp4HcUbo1w78c/kiMDCfI4yd4eK8Nhto2XpV1E3sdkBX4BAQ==
-X-Received: by 2002:a05:6830:490b:b0:73e:54cb:1de5 with SMTP id 46e09a7af769-73e665f6e1cmr144733a34.28.1752615556091;
-        Tue, 15 Jul 2025 14:39:16 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73e5fc7c942sm521517a34.31.2025.07.15.14.39.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 14:39:15 -0700 (PDT)
-Date: Tue, 15 Jul 2025 16:33:33 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Kyle Lippincott via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Kyle Lippincott <spectral@google.com>
-Subject: Re: [PATCH] test-lib: respect GIT_TEST_INSTALLED when querying
- default hash
-Message-ID: <gszrut3ruxmzelqjaeqfx767njz77yaxiq7fvuktezaobv72g6@ehlzm3c4kydm>
-References: <pull.2011.git.git.1752605874596.gitgitgadget@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MGRWn7rj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1752616087;
+	bh=Vb68sUsAb3/Nezc9BflG1C+5QZ6rL52mfV1kT6uc/kU=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=MGRWn7rjsBD1l40Sr1iynHrPv0QfFKQWG7a3JkjGJWi0+zcy/EzHcPHyB6yw0LGgW
+	 ze1eO0hLTRLZrH+3cSSIB6Py5Di6MpVQEXzOh7YlOHNZ3vKJQ0hAgdyqPVkq2KYPGX
+	 Uqp1gtS7LsaYrHuj40pPZmFndJ6rqcElJYHTc7Uv6WD4DXByT+z+gZqyKH590/3/iA
+	 KeQC7ylZXCqYorczQDlCCIx5Ranyi+nzmJNj2dOEWdnLmOd/XjyR+o5Sq5b0A4FD0Z
+	 DTMt60NkIAVAIAH12LrFtcjwhTFHPfl/syioqvdESqbXwcl+rSu6En/bDHq+SOBNHn
+	 FejIvlQyMWwAmLKhl3y6dgHRAth+Ie3/0T0QRmvZ8gWDCcW9GODeOLguL3h9xcsSrt
+	 i3FPCvH3j0J1LDuFGc+r8RXAYeLAeQFCwuR4aalfqEytz3gg62zFoVOxvAArmIDg4i
+	 jvX2wxw+0JbVGJ9TCHYpV0X6MyqZAzgWXOTcT/ABGqMGHRm7Vub
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:ef36:e137:e56a:1fad])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3D8552006F;
+	Tue, 15 Jul 2025 21:48:07 +0000 (UTC)
+Date: Tue, 15 Jul 2025 21:48:05 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Elijah Newren <newren@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/3] C99: declare bool experiment a success
+Message-ID: <aHbMlUKNL2CAK_9I@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org,
+	=?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Elijah Newren <newren@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>
+References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
+ <cover.1752587571.git.phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jIT01QYm6wvp6vaR"
 Content-Disposition: inline
-In-Reply-To: <pull.2011.git.git.1752605874596.gitgitgadget@gmail.com>
+In-Reply-To: <cover.1752587571.git.phillip.wood@dunelm.org.uk>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On 25/07/15 06:57PM, Kyle Lippincott via GitGitGadget wrote:
-> From: Kyle Lippincott <spectral@google.com>
-> 
-> $GIT_TEST_INSTALLED can be set to use an "installed" git instead of the
-> one from $GIT_BUILD_DIR. This is used by my company's internal test
-> infrastructure, and not using $GIT_TEST_INSTALLED when querying the
-> default hash meant that the tests were failing because the hash was
-> effectively set to the empty string (since git didn't execute).
-> 
-> In the two places we attempt to detect/execute git itself prior to
-> overriding everything and putting it in $PATH, use identical logic for
-> identifying the git binary to execute. This also has the effect of
-> including the $X suffix when querying the default hash, but that's not
-> strictly necessary. You don't need to specify .exe when running a binary
-> on Windows, just when testing whether it exists or not.
 
-The second paragraph was a little difficult for me to parse, but I
-understand the change as the following:
+--jIT01QYm6wvp6vaR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-In c79bb70a2e (Enable SHA-256 by default in breaking changes mode,
-2025-07-01), when building Git with `WITH_BREAKING_CHANGES` defined, the
-default object hash format is changed from SHA1 to SHA256. To select the
-correct hash used by `GIT_TEST_BUILTIN_HASH` during testing,
-git-version(1) is executed with the `--build-options` flag to get the
-default hash the Git binary is built with.
+On 2025-07-15 at 13:52:49, Phillip Wood wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>=20
+> We've had a test balloon for C99's bool type since 8277dbe987
+> (git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
+> 2023-12-16). As it has been over 18 months since this was added and
+> there have been no complaints let's declare it a success and convert
+> the return type our other string predicates to match.
+>=20
+> Thank you to everyone who commented on V1, the only change here is
+> to fix the typos in the commit message for patch 2.
 
-When running the Git testsuite with `GIT_TEST_INSTALLED` set, the Git
-binary in `GIT_BUILD_DIR` is used to check for the default hash which is
-incorrect. Instead the binary at `GIT_TEST_INSTALLED` should be used.
+This series looked good to me.  I especially like the fact that we've
+made it easier for me to figure out whether starts_with and friends are
+booleans (that is, true if it starts with the value) or our standard
+zero/negative-one (that is, false if it starts with the value).
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-> Signed-off-by: Kyle Lippincott <spectral@google.com>
-> ---
->     test-lib: respect GIT_TEST_INSTALLED when querying default hash
-> 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2011%2Fspectral54%2Fdefault_hash_respect_git_test_installed-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2011/spectral54/default_hash_respect_git_test_installed-v1
-> Pull-Request: https://github.com/git/git/pull/2011
-> 
->  t/test-lib.sh | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
-> 
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index 6dc2022ee10..621cd31ae1d 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -134,7 +134,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
->  
->  ################################################################
->  # It appears that people try to run tests without building...
-> -"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
-> +GIT_BINARY="${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X"
-> +"$GIT_BINARY" >/dev/null
+--jIT01QYm6wvp6vaR
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Here we store the Git binary we should be testing with so we can use it
-later. Makes sense.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
 
->  if test $? != 1
->  then
->  	if test -n "$GIT_TEST_INSTALLED"
-> @@ -536,7 +537,7 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
->  export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
->  export EDITOR
->  
-> -GIT_TEST_BUILTIN_HASH=$("$GIT_BUILD_DIR/git" version --build-options | sed -ne 's/^default-hash: //p')
-> +GIT_TEST_BUILTIN_HASH=$("$GIT_BINARY" version --build-options | sed -ne 's/^default-hash: //p')
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaHbMlQAKCRB8DEliiIei
+gR79AP9MirrblivcD1pV8DpU8iBrTVBJj7/J6iqdsqig7P+haAD/QL1joPvAzaWO
+sxNVQg99pAaWrrWM17j9dwgeqoclegs=
+=JyB3
+-----END PGP SIGNATURE-----
 
-Now we use the correct binary to check the default hash depending on how
-the tests are executed. Looks good to me :)
-
--Justin
+--jIT01QYm6wvp6vaR--
