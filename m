@@ -1,87 +1,89 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994952459F7
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:35:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109B11EF391
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:48:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752597350; cv=none; b=MH2aHnTZcIkEVX0GhC6v9UUArMucpgFqLZcknaXo1UT+mEuCRFbw7FazZLsYTANPo4xEWVSC7NkLKO38W3t/gECzB8qCQv7MplRMlexjIdDNqEl4NxxpQGR5+F6IJmFOh7jbqvRKqfNK7go8Ja9ryUJgBfaTU7DBw88zMJJaMwU=
+	t=1752598111; cv=none; b=MLaWPud+ABlsjRasb4Ztd97ICgigXSmGF3Pf8DQEpyA0YCGGqvBk6+BAtpEIDFc+wGOPBkl3SdOqZ8nvRAF9HTKLhuK2eF4yyV1hYbAPm/fjeEOIewf2E4TCQxRdBNLP7+9cBh4KexElk8LrDLHfA52I/7T3dSdTxA7grc5vuxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752597350; c=relaxed/simple;
-	bh=hAdhH3mstw0GEWeaY+zqSg0OSIpeYkS7hhX+/oEb2LY=;
+	s=arc-20240116; t=1752598111; c=relaxed/simple;
+	bh=M5SD5ESv7mtgHBTbQ2FoYwwCbDCT8Qodsj8FUBujsTE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tvxZJ8Likn/doaIgIy6YkUOYBVH1hZGwMNVGARwwvMs3c4L1pVlzs9mR8UFDILtyARhQxQ+fHr+588xYYNnrDv1x79DYba4NejcBvv5g9jF6K/YhgO6+WUR3mTgQyu/QKfShlxFVqX5r9vqNSpIc+iokRcfbTOvmcCIF4bv7rWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jazu8eOg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wli1qKwH; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=Vg+CwOvyips3dfTnpCSqXUqGsybHvh+5HO8GY3eVNZ059i1qTyitXuAfc2xpjleIIsNg79yXF70uMkRbd+GZfRw83hkeFWauZRAIcJdeHGIsFB6z+r7A4qR2IdhbHLP0LMK4DADPoRE1Yo5wYf2k7sQKrSyruUSS2iY0SD4g+bU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A9+QXR9j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fQJjiSb8; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jazu8eOg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wli1qKwH"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5EF817A01E5;
-	Tue, 15 Jul 2025 12:35:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A9+QXR9j";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fQJjiSb8"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id C7F581D002C1;
+	Tue, 15 Jul 2025 12:48:27 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 15 Jul 2025 12:35:47 -0400
+  by phl-compute-10.internal (MEProxy); Tue, 15 Jul 2025 12:48:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752597347; x=1752683747; bh=uOlrJg3oJU
-	ssVRflylW4kNnNKaMHfFMgiX6e5t/atxE=; b=jazu8eOgRARFOlVEYGEMPvFHTb
-	yf2UXuKV9CaaL+R8aRSd7UzC5ujpSdGNopfR88pTc+ErMtbCOz3vwiOkfym0VgNg
-	kUpu26Oj2/XLfRQKS9hNdEjpduOM0g/1zhqYf15r6o1vwpeahjk2yGgvfVL0z+GD
-	IBm81gOqIY0uN2ApUTdtd0PWl1YBUmT2goFe5NhKWQP1UD3eSSn69r+4FhvCIC93
-	syECig8NBtm4FgDNUYhgwpBuxibN1IIWOTPU+kQRJB6Lj/yYk5fcYsQEUzwA/tBK
-	a31Q34qp1XIRfH9lzmRymU7xoybGjefYST682N9b8iAv7xvQi9aoGsm1vdwg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752598107;
+	 x=1752684507; bh=yWASWCp5Ba6IECJX2FBVtQmOhObMDDPIDxmEZBPQmzM=; b=
+	A9+QXR9jFNPrj4UbEXHE5hK2IcdKPlajs1WcQkXG2ZHRG9wB+jhMQD/Wqu33BAZD
+	MO4IKnaz8VGf/5iue6GTSNPK1s5vsN919Up272+4IuHgl7Rg/U+wNAKGb4y2dU8x
+	S+ptwVL2YR4X30KPdChLWhW9wn3Wxsgn6ysCfyjNqTkqHzCk37OEpIO/lvfCdWuG
+	nXvVZtkBZ/uLa+UWGdjEEkp6iCMSW0aU6wbWP3DZ8flO05iQx1BojdRe2GVyTG6A
+	FWUQvajx5Oi0HSPy5Yd4EiaivyhuSetsAsRy5qfz+RI5fmBa0ltZMYwuJArSV6fW
+	LWSVJeqX+lFljyEE4KWDcw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752597347; x=1752683747; bh=uOlrJg3oJUssVRflylW4kNnNKaMHfFMgiX6
-	e5t/atxE=; b=Wli1qKwH6IX7qEhlk3u6Mw6GhTI2iV0J9UoR4z4oifV/SAyte/+
-	TBp/XCBNLmqnG4i3CBuO8tdJ0je4oN96g8Q58gJjtq3chfHEkN3c6ItNdv5YB2Q1
-	tblKhKOwFjYi1qF+lhavLgYjN1pIUhzYDFtE2VPxbyJ07rGK/C/RY5PkX/iwhkxC
-	M7EEMeFQwFh8XyJX651Ce4/LrheeHT5R4N6EetL2HFFGz00sJOscuHTSYPrx/RiR
-	aql9N+VH9u67S81C6en6kSBskM79lzRP355GZoOSyh6qyTYAyQiy+8rBu3a2ECs/
-	FsY6309/NEC9W7lOwjQE+kD9Hu6WngpTsGA==
-X-ME-Sender: <xms:YoN2aKCWS8Ns34Ig4iDf7KOkArLeeqNiqT4Jy7mz1wsgA8PadESxQQ>
-    <xme:YoN2aM88xvTHzn-5yC5PJfjAQ0gMZ_0FS69thY1J5jl6556P12WaJzFnVyyyk4tHt
-    NhoZgTVXv6l4WR6SA>
-X-ME-Received: <xmr:YoN2aOBNy8fg6WuDg8nMZBQqCsQhSvvm8zX3TqfQa3AoM4zFQ-wqxCK7BSb0Ly5sTszCCMwlioorCxJGRyi5hvqzv-jj8RmLhVEG6d8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheefvdcutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752598107; x=
+	1752684507; bh=yWASWCp5Ba6IECJX2FBVtQmOhObMDDPIDxmEZBPQmzM=; b=f
+	QJjiSb8n7ZyN5mhuAGWeqoIRungk78+34a6KbavC1YcAAn3PvX5GtUzUGHZkdjLK
+	EHTsmZuCOO7vIvNjprgHIEXTIfxa1Q24d3uM6R6uXouz0jlFbtcMilvBTlqZdMXj
+	ROx6HGCp3lIcPOggTUXC2O6MryyRiEZh3BBpxPa+I+9j/KgxIINIhU5N0/L4aziL
+	CAsoTB4PmdJcWEm0SI2myd6MHpze9BAEHWDISWJrITTUWnO+LpOA/qRqKZ3FGWwV
+	lh3I2O6x4IjqTe8PhQMLOjvugusASJi45l9WquhcJme1D3zaAri7Pu7CFAzTjSuk
+	zqEucLrCcYeZN2oXl6/kA==
+X-ME-Sender: <xms:W4Z2aCONv1l6jj6SWKRrVKux5qihzmIhiJjg1T50oaLv4nBo297xPg>
+    <xme:W4Z2aJbkYw4y6l-3F_bnFUCuXpaqoDsSP42xfzLhFDo8eARtagKEN_I79ADdVy2kC
+    ONyTmJQ3nG6KWpq7w>
+X-ME-Received: <xmr:W4Z2aJuHHJKHCvKTlm9uHDfBQLza_LJaIxSylIwEzZN_vP-fs6SJiqQGI25vEDuvstpKXowUabnIb9GVWohJ5E7HAwW09fTSrSrQkzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheefhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
-    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Y4N2aJQ3fSp9rHps_kUqRNEkGw7-3XF4RzNvJr5ud2o1pmOWLP3hFA>
-    <xmx:Y4N2aNvA37oDNRv3f41NoqRLZU9zkKheMAyEKsltSpGdLZlEr68yWA>
-    <xmx:Y4N2aN1VdlryC98s14oYoe3Sf5zqDUOQmFhO9T0hAoQFY_2XrSgK3Q>
-    <xmx:Y4N2aGUhEaJGntD6ZBQ_-Kmc_1C2mO2VSAwxu2t41VvAO3YRJscVPQ>
-    <xmx:Y4N2aLiJhGcIXM_b-yRVueHx97XJI6POM_oq82QH9CiC0OFDp3kdZgxH>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffgkefhhfetieffteehleehtdfg
+    hedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgu
+    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:W4Z2aDPOVKtEFSEU57l_2d9quUZ7P1kjrLfCikXUQqA9tpngPvsR-Q>
+    <xmx:W4Z2aI68kQSIUeVEut7D_d_-EaWPB9uOljL5xjz5gt4t35ryMbDC8g>
+    <xmx:W4Z2aBRTZebHbhvRjMIKZf9iyI4oV-e51W6M_kie2Q6hwPlT8e_ZKQ>
+    <xmx:W4Z2aNBbBg-NaZaLHL9Iobyx7-FJ2se548UZntexAGWqit-_1fU5kQ>
+    <xmx:W4Z2aKs6yYU3J78pelNVjcULI0NhtCcQlujco-lCIDffhVYuz6fk1NcI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 12:35:46 -0400 (EDT)
+ 15 Jul 2025 12:48:26 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
-  schwab@linux-m68k.org,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v3 3/4] refs: selectively set prefix in the seek functions
-In-Reply-To: <CAOLa=ZS6ASf1+nbUnCTeeH1Di=kgmhQUEQ5UXPZu051rfqx9Pw@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 15 Jul 2025 18:49:03 +0900")
-References: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
-	<20250708-306-git-for-each-ref-pagination-v3-3-8cfba1080be4@gmail.com>
-	<aG9hMP9gEFLhVgJL@pks.im> <xmqq8qkqvjnu.fsf@gitster.g>
-	<CAOLa=ZS6ASf1+nbUnCTeeH1Di=kgmhQUEQ5UXPZu051rfqx9Pw@mail.gmail.com>
-Date: Tue, 15 Jul 2025 09:35:45 -0700
-Message-ID: <xmqqms95if8e.fsf@gitster.g>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,  ps@pks.im,
+  eschwartz@gentoo.org
+Subject: Re: [PATCH v4] meson: woraround broken system PCRE2 dependency in
+ macOS
+In-Reply-To: <20250715114407.37955-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 15 Jul 2025 04:44:07 -0700")
+References: <20250713174807.32444-1-carenas@gmail.com>
+	<20250715114407.37955-1-carenas@gmail.com>
+Date: Tue, 15 Jul 2025 09:48:23 -0700
+Message-ID: <xmqqikjtienc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +91,74 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
->> so after (true) seeking that does not have the SET_PREFIX flag on,
->> wouldn't our iterator-advance run through the end since it no longer
->> is aware of where to stop?
->>
+> macOS provides a PCRE2 library in base that is not usable and not
+> configured properly, as it installs a pkgconf module that
+> points to a non existent pcre2.h header in /usr/local/include.
 >
-> That's also right and that is indeed the intention. We're trying to make
-> the actions more intentional.
+> Detect that case and allow a fallback to a wrapped submodule
+> if the feature is enabled and that is possible, or print a
+> warning and disable the feature if the feature was set to "auto".
+> which is the new default.
 >
-> So if a user sets a 'prefix' for the iterator, all previous state of the
-> iterator is reset. So, the same function for seeking an iterator should
-> also have the same side-effect of resetting the previous state.
+> Suggested-by: Eli Schwartz <eschwartz@gentoo.org>
+> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> ---
 
-Perhaps we have different definition of "previous state" in mind?
-So let's imagine an iterator is walking over all branches (i.e. the
-prefix is set to refs/heads/, to allow it to stop once it steps
-outside refs/heads/ and moves over to refs/imerge).  It starts
-iterating and I see branches whose name sorts early in alphabetical
-order.  I tell it to seek to refs/heads/master and keep iterating.
+Thanks.  Will queue.
 
-Wouldn't it be a lot more natural if it still stops iterating after
-it finishes showing the last branch, iow, a ref in refs/heads/
-hierarchy?  In other words, I am not sure why ...
 
-> There could be a usecase where we add support for keeping the prefix,
-> while also seeking the iterator. That would be an explicit change
 
-... that is the optional and unimplemented feature, not the other
-way around.  Is it just the ease of implementation?
 
+>  meson.build       | 20 +++++++++++++++++++-
+>  meson_options.txt |  2 +-
+>  2 files changed, 20 insertions(+), 2 deletions(-)
+>
+> diff --git a/meson.build b/meson.build
+> index 596f5ac711..0e480e65cf 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1055,7 +1055,25 @@ else
+>    build_options_config.set('NO_ICONV', '1')
+>  endif
+>  
+> -pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
+> +pcre2_feature = get_option('pcre2')
+> +pcre2 = dependency('libpcre2-8', required: pcre2_feature, default_options: ['default_library=static', 'test=false'])
+> +if pcre2.found() and pcre2.type_name() != 'internal' and host_machine.system() == 'darwin'
+> +  # macOS installs a broken system package, double check
+> +  if not compiler.has_header('pcre2.h', dependencies: pcre2)
+> +    if pcre2_feature.enabled()
+> +      # Attempt to fallback
+> +      pcre2 = dependency('libpcre2-8', required: true, method: 'builtin', default_options: ['default_library=static', 'test=false'])
+> +      if not pcre2.found()
+> +        error('only a broken pcre2 install found and pcre2 is required')
+> +      endif
+> +    elif pcre2_feature.auto()
+> +      # Replace with not-found-dependency
+> +      pcre2 = dependency('', required: false)
+> +      warning('broken pcre2 install found, disabling pcre2 feature')
+> +    endif
+> +  endif
+> +endif
+> +
+>  if pcre2.found()
+>    libgit_dependencies += pcre2
+>    libgit_c_args += '-DUSE_LIBPCRE2'
+> diff --git a/meson_options.txt b/meson_options.txt
+> index e7f768df24..1668f260a1 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
+>    description: 'Build Git web interface. Requires Perl.')
+>  option('iconv', type: 'feature', value: 'auto',
+>    description: 'Support reencoding strings with different encodings.')
+> -option('pcre2', type: 'feature', value: 'enabled',
+> +option('pcre2', type: 'feature', value: 'auto',
+>    description: 'Support Perl-compatible regular expressions in e.g. git-grep(1).')
+>  option('perl', type: 'feature', value: 'auto',
+>    description: 'Build tools written in Perl.')
