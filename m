@@ -1,110 +1,87 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from Chamillionaire.breakpoint.cc (Chamillionaire.breakpoint.cc [91.216.245.30])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8A333E1
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7DB584D08
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:02:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.216.245.30
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752606044; cv=none; b=Yv/NRb/elxOW6oCSHQJqS+jxn+dE+FC9zzr7F89Y30zFKdQC7wKSoLESmFscTaiy+axrSsuWzFhXQKKqYTW1ve//3d/CJCv6a2YWlDfNVUlyiUArCreLcR2Ol/+w+hVtOdNfeYGzunlpiZNCZb+VqRfH3K+kr8voorrbYStg+Dc=
+	t=1752606161; cv=none; b=NRH2xEqz4hbTVd4NElNQOqT0mS/apr9+T9hoHOA7RNqzi8dpuijvjFR3aiKHyFeziqsfe5Uv8kdcExYx6rfc3K3qJN27iu+Mfqrywu7wd7wnVinxmxhKHX5Mgq4usM6GZQPAkwffhAM1zBpDnmluilxAIAN0D7Smwo0lug36TJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752606044; c=relaxed/simple;
-	bh=uY1Eo64mH3gCw7N9j0hzXtq1IuSuiRMB7zVdRE3rq/I=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GaUZ/kMu9wX9Ju9c8MGanvQnb+NcO5om56Dua8eU95qyOOUf292qoln9UZjAYFnmuB12vKXRvnHnyg8w4uke0hZ7JcmfgLGkzgU8+iuCIbqxkEZtDag0ZRbnupGqVZCrAsB5TP9HV/6eGqSzXzNulnUg/X/5XtSHK8PMNuFt7ZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hEfqzd0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fQLqMDXR; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752606161; c=relaxed/simple;
+	bh=xL0PERcv4dT70A5bySYROOkbcgvgOU6DeDm640foBMY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J0rwGXwK1khRUJc4AV3MBzCO7vw/oYfbgjFv0f8B+sPuB4kixpVvEPmccuwCS2GNrQ9nMotv6bufoznUJNdMCM5fluhPtn7qdjWQTOWH/Glk/2Wuqj4PkJO4CEaZocNGCuhbR+HhPbCYuDYd+o1MdzzjNvurV+TpO/pnxDTrl/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc; spf=pass smtp.mailfrom=breakpoint.cc; dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=IsCWh945; dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b=lR979G57; arc=none smtp.client-ip=91.216.245.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=breakpoint.cc
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=breakpoint.cc
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hEfqzd0i";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fQLqMDXR"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 81EFD1D002C5;
-	Tue, 15 Jul 2025 15:00:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Tue, 15 Jul 2025 15:00:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752606041; x=1752692441; bh=CJAK5uNTR0
-	uCug/aPKPvPoPmrYmjdXf3Jbf7XTbOC70=; b=hEfqzd0ivo5kGf01Zle/AkRU+t
-	lJaZpqaj58BNWkHvoNqppqc9OC0nXBaCGmQj/MRnyAhxCdqoSlRXXERmDEVE8Kpd
-	yygWFA+R0qNtVXUeuXD28wd6b3ak5653+8ozoqVCvicKrGrdrqPOC/M4APrE2qJa
-	xOiwcF9/3P7ubAJ4VRNtrRX2iD1TTCUBLUmaajTdAvY+S4f6Bnctlxoufa01QdN+
-	28tEUBWO6pVUpzWkSASweXe0JK0Ay+GrZ81tJJ4obeZvgAwXUIjiiM6e22YvXDIX
-	ZzR6XSGTebUDlMPQklxCM9S81P+nGiVPr+CWz2pFRdwrk9h/rlA6RohTTwRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752606041; x=1752692441; bh=CJAK5uNTR0uCug/aPKPvPoPmrYmjdXf3Jbf
-	7XTbOC70=; b=fQLqMDXR4JIxEgr5ETyytKPZ1eU+wyzxg3Gmd37Fw+IQ+1o1vN7
-	4xD3leZo039WGojKO8Azzv8qX4VQNz0ZY/rVweUsaOw2QYPb6ijLAb322RSljV5h
-	D0MIBSObxtQe0IkcS9ILTj0h5UxNxvYLhNiW1FOSqaQbvE21pPQ+gFoN0oahB3OR
-	EujW1hZaWsW0f2W+OpVgHYzEyXzrKxGc5wLi5WFrro+o4DEQmiH1ZKlXDR9ChlHo
-	nYwdtQuO4YrQFcDaazynaUCZ0zEgVI3ylopujjZxLD5SBXIV9rY/pSblsgshtfIZ
-	Nlv7DkHfx8zV69iQffm3wWfoZtQafNN5wNg==
-X-ME-Sender: <xms:WKV2aH_ztPcqm4ib5W-mm87Grdo5MV32Xr1KNDhJYR_WnwQQNVMGVA>
-    <xme:WKV2aBSjJ5E50nDADoUgNh33bQ_U5nxQONvHoe2XVL53B7U9DEch2z35jFxXV4R6K
-    qRmCnq-pvrjWKMacw>
-X-ME-Received: <xmr:WKV2aLfVg6dRmKLxRY_2EIAkHG00FjAoDvkjiNkfBsqBUlRYnPuHvtMYOuk1CNsagIUFGK-5pZLnO1IHTIW7_tnoQ2XHDAayVismF9c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeiudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrh
-    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
-    hstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepphhhihhllhhi
-    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghooh
-    hlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:WKV2aFA9jcMkw7xqg6naIo0so94Q84W8pQMduIi60rlG2ucnWLjIbg>
-    <xmx:WKV2aNlaRmCmijHcyhCbATXSU9OeDfqpmpouw9DAZRm4fL95jW13Cg>
-    <xmx:WKV2aAcAepUaZn--m278zyNp78RtiqWW1RBN2v8-Cykpx1OQoFCSaQ>
-    <xmx:WKV2aBRI1eelQ2_QYzL1yG_cMhUboXVHyp3DWqsitx1IrjyqAY0mhw>
-    <xmx:WaV2aMyE9uY-WJ9xZ6LrouL8ho75U7-k5RgKaL0AtNVyVyBqS-zPPbPQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 15:00:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
-  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality
- via '--start-after'
-In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
-	(Karthik Nayak's message of "Tue, 15 Jul 2025 13:28:25 +0200")
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
-	<20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
-Date: Tue, 15 Jul 2025 12:00:39 -0700
-Message-ID: <xmqqple1gtyg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="IsCWh945";
+	dkim=permerror (0-bit key) header.d=breakpoint.cc header.i=@breakpoint.cc header.b="lR979G57"
+Date: Tue, 15 Jul 2025 21:02:29 +0200
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=breakpoint.cc;
+	s=2025; t=1752606151;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CsXDNl6Q4NvuWFTQtcAHQcV7a27BbV1Bw6N/Nodrf5k=;
+	b=IsCWh9451ZLxmK1zN3zsRrssbxaPY5pNFlbwbokXITDEqbYZH/fKSyo7Bffs0ChYNhUPXF
+	PViQtg2cKSsUzSF9zcPq1IZaof69rTWR95N7IMvV5NDfdGrMYv0P1Ien46sO0HhbzCuFcy
+	2QSk36dUe298M+Tt24GOnmfApOijrOJGaOuDSNAF4eXhF820JE/BEkw6Y1agbdx4nH8YL1
+	7i6viJ7840tltLxtj2M2HOpol26CnAfFIx27G2/5HMIVFvSIE/PP5B8iTsSNsVNkGPAfLh
+	p5r4dQkRHFBgKybesN/zZKIbHgWecajm2KNjbSCZzt1NAR+nx7nowdbmK1clHA==
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=breakpoint.cc;
+	s=2025e; t=1752606151;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=CsXDNl6Q4NvuWFTQtcAHQcV7a27BbV1Bw6N/Nodrf5k=;
+	b=lR979G57wJ9cJSd4vcDVFRj7Cd/6TmuWvrR72yOVO6aJWL3rU9MWjKwwVpDXPWJA3vo6LK
+	OWHoVWMsdBupHiCg==
+From: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
+To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 5/6] bswap.h: Remove optimized x86 version of
+ bswap32/64
+Message-ID: <20250715190229.ed-A7kgh@breakpoint.cc>
+References: <20250611221444.1567638-1-sebastian@breakpoint.cc>
+ <20250611221444.1567638-6-sebastian@breakpoint.cc>
+ <e00dff7e-1920-45b6-85d2-49e6a1218882@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <e00dff7e-1920-45b6-85d2-49e6a1218882@app.fastmail.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+On 2025-06-26 17:55:43 [+0200], Kristoffer Haugsbakk wrote:
+> On Thu, Jun 12, 2025, at 00:14, Sebastian Andrzej Siewior wrote:
+> > On x86 the bswap32/64 macro is implemenated based on the x86 opcode wich
+> 
+> s/implemenated/implemented/
+> 
+> s/wich/which/
+> 
+> > performs the required shifting in just one opcode.
+> > The other CPUs fallback to the generic shifting as implemented by
+> > default_swab32() and default_bswap64() if needed.
+> >
+> > I've been looking at how good a compiler is at recognizing the default
+> > shift and emitting an optimized operation:
+> > - x86, arm64 msvc v19.20
+> >   default_swab32() optimized
+> >   default_bswap64() shifts
+> >   _byteswap_uint64() otimized
+> >
+> > - x86, arm64 msvc v19.37
+> >   default_swab32() optimized
+> >   default_bswap64() optimized
+> >   _byteswap_uint64() otimized
+> 
+> Is it supposed to say `otimized` twice?
 
-> Changes in v5:
-> - Changes to the comments to refer to the flag
->   'REF_ITERATOR_SEEK_SET_PREFIX' instead of a variable used in older
->   versions. Also other small grammar fixes.
-> - Added a commit to remove an unnecessary else clause.
-> - Move seeking functionality within `for_each_fullref_in_pattern` to its
->   own function.
-> - Fix incorrect naming in the tests.
-> - Link to v4: https://lore.kernel.org/r/20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com
+Nope. Fixed. Thank you.
 
-The two refactoring differences relative to the previous round do
-make the result more plesant to eyes.  Looking great.
-
-Will replace.  Thanks.
+Sebastian
