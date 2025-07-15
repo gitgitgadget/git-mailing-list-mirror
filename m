@@ -1,168 +1,181 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F48A231A55
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:46:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B862D12E4
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752569214; cv=none; b=qr5yY+QAzxH3c+1BfFRY4Q9mtXBOaUXAFGJQ+SXh9bkz4FgqCYst5/JHPvxUprO7HiK6ThDgtBHZ3wmjJ66yi136XAMnnZsYGKLhrOgsZSdmr+DV36TEe4HyhRihcOFVrfyVyIVihFKn8xn7wEKOGrspuurfAW37vPAar101PZk=
+	t=1752569647; cv=none; b=vEkBq9DX2KzEy9dDmes5F1iTyrTQirsb5bNmk/Wyzjm26H6SbHYBR+Vu/SJJWJFAH/vc8BnctpYDQL/iEPix5PU0ehDB3LUnqoyTI+hwChgzA4IRA9famCqr+rInI1o3XoGW/gd1C03k/lUCafkd5mVDiiN5z3oNU4wsQcVYFNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752569214; c=relaxed/simple;
-	bh=ikl+0kZ3OeAyfLcz5NQYQpIWxw3xjA6vxfEf2GQdHxA=;
+	s=arc-20240116; t=1752569647; c=relaxed/simple;
+	bh=1QGjR5Wna4VKuPvMdEkhmAXLOiM+e/J6Zdswfd0VGL0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AWip2qn3fGVejp4Peay08OqKrQSenXnrmUnEV6F9fiQDeRQy8exbIQhoU9LwRqZ2P4VZnHYHmuu9+D8BXii1wkmHMoR5DoSbrqhmFccEJ0wDWGR/0cZzdtOH1UM34voA7KX9l/MA3HOY2J0h+yzTF+ghgrC3PMx4OjyCCZpxsN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NQD/LoKP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mYFdH8H8; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=K1OkZui5AQ92Fc/3gvEuqyaPO2WQhvl7vBYstZl3rkBlzqNuKOFi1TO+7Xbd2paTRdZFEkKEJg+4TVt9SevVZwfk2I2RhD9x2auAgKdmMH++++hodky/dR4C9rY28kQy1/x9cobobC3Ht5zz/c4oq+PxQ2+l0/AL7J8azNWDOPw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=phIBFygd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=frhMG/Ir; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NQD/LoKP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mYFdH8H8"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5BD21EC0529;
-	Tue, 15 Jul 2025 04:46:51 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 15 Jul 2025 04:46:51 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="phIBFygd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="frhMG/Ir"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 044BA14001D4;
+	Tue, 15 Jul 2025 04:54:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Tue, 15 Jul 2025 04:54:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752569211;
-	 x=1752655611; bh=YDBIdvklWkxqk56d8Hojtc9ebSeySd/2EuL/2WvGeZQ=; b=
-	NQD/LoKP7DTURZb/Yc2Tcjl1d9bL6Vg1AT5+EnlZoQSQ+gkgA/k4Dy34iPG3hjEu
-	rJCYo7Itpw8of4WsIw3qxCh6SeRp3FE0RQ48FquHVHzyfgB8UW3NY0D98u3HoJRN
-	6RWS9lku9Ao/wNkTserEDk4cFy3LhR5nnna3AsiQOAV+47TkTwSrYziZao1ra8V8
-	o15j32Sag7AnvAXz2CWNDihALOkGx1ENF//QSJbXeCjWq0praD9pXDeFGtZ0zfFV
-	c/RJBY4rrYvZZhERPGavOVlh7cBsEHlp7znODRoT6KgeF7Ctk12+Evdj0RHild/2
-	JQ3oWRXhsjkOBkW88Cy5UQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1752569645; x=1752656045; bh=SzJHFzyFXW
+	VZgPEU6uvE0Eo/Qz8gSqi5HWxqpVWS0V4=; b=phIBFygd2QS2zhVakR9H1lPsmW
+	84Qprute5rOhZjQyWHfOP2oUTqbWQg/TjmRgoHB5K5kwge4f6R5f9Jq9fBMtyGrW
+	DZ14OLNiSE9qj1/8RwDLigFEKz8YRkMw0AqpHELExqH1jqJJMIIX4PcHrb44C2Jq
+	Vn3s0dzESavX+Xcu5zzeu7U77vKpF+YA2AA/pPJ2FgjDoKtjIX4AgqWoUEobTOdV
+	JcFmcziDRHV+F8Zdo3aDML6UlYJmkFPuxV2WM3i8GSUeRtXMAlyBjZdqGUsvhZcV
+	IwmohwdMLh5MlsZ//6cQ/b/YJPpi5GOpgtuRTw8E1fbYrmX5rwZV0+Itvu0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752569211; x=
-	1752655611; bh=YDBIdvklWkxqk56d8Hojtc9ebSeySd/2EuL/2WvGeZQ=; b=m
-	YFdH8H8fobU1p+6tvTwf1sHd95OdZr1EUUIdzrh0QaP3/k8Hf7Gaf4Q08SqLhxOC
-	kbNhNHSNu+iPUR0REdnA8t8xEUaa+R3mWZBbrqxNI/WqASUQpTSamMzrE7jYLPPg
-	Bov8qJb9sU62lS0wMNyrDXOlbIC/H+kdgllIS4jmM57KysvdsdlJz1EUddxs8N2Y
-	eSmQMzrwHM13tbgmNCmztb2R2uKvMpf8V5u/6p+Wch7N021tSi67Q+ivHGdV8Ovi
-	B/xXrzBUjKIcrmJ0xubE6U+8QVvvF5P8ZVwAHbE1EZG4PfcZKVdXS21EsgjiZ12g
-	kE/iSdch5MN+u42owHm/A==
-X-ME-Sender: <xms:ehV2aIXtNKAZLmFEIAsaK6YlFSvkx5Rel0R09LroIUr6RvnHHwVFIQ>
-    <xme:ehV2aIEynbPk-ssg9ARMFvQ9YrOd_Bwi7jOX47haWdbj_v4-75dqg4i9vYOWIwIlW
-    rgtXnFlFYMJU62WLQ>
-X-ME-Received: <xmr:ehV2aC2R26cIms_YqeD7oOyIHONR9j4J3n4lqb1d7BDsUO-3dwJVnfwipqdgV61mwdQq0DjCRaSFCP764UzecJec-1xWUVLJCtFq_FmYACiIWQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeeflecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752569645; x=1752656045; bh=SzJHFzyFXWVZgPEU6uvE0Eo/Qz8gSqi5HWx
+	qpVWS0V4=; b=frhMG/Irjkb3gsrZI1OXMBGslZ35BqDVdK/2C0TYog+xL7I7eUY
+	bdacReqcACJtScJbg5geNx42F5JizuHQBvDet1qLfmovbN76xi+ESEpQYPUz7q5A
+	C//0bpiRjsbFcFb812Y7AkD7Hwvumb1Tzd2bl0Vj6PhK5y1zKCMNGz1qlLnGXAM6
+	msdyVh+g9jdzJ0ST+vqCS+zj+wfyl4Mw6M+agVd06ZPXXBqXncKE4tEQsAR5+UCd
+	D2hiX8VEPtOmknKyT87Ny6FmxTACvlEgKfnKBOMeLTx2sojylwfq1kHgkpeyUU/O
+	KaCZEsc49Q+sD4ZnoyhGEYBPmprlMrwu5gw==
+X-ME-Sender: <xms:LBd2aAf0BVEi1qABD6GKdcFjalIy-XyngWWN2zOzmJUtjJfMnjPsNA>
+    <xme:LBd2aFc5uRV7-zat-R0TOjGwx2o4lB-TG5UWgxKZbKkWK9z6WKuxrhWuyX66koSv4
+    sTHoOdCnFEo8q0kmQ>
+X-ME-Received: <xmr:LBd2aK8XYOBUDYQGm7x3uRQn7HY7e9vExBdTTEbxUHypiS-u0rkIis2fHyRKiQHIb68bxHI6A0AsUUChUEJTC2KIOQ4zodCj712ddd6C9h7nVw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
-    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
-    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
-    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtth
-    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
-X-ME-Proxy: <xmx:exV2aCP7fM0y-JtRFOeRua-EGNh2wFkRZ6ID9clY5p9NsH6-h8oeCg>
-    <xmx:exV2aJ65GKr3lCUubE1oTQnpUYp09JzdFSvdBygzk9YFTadWq6zhHg>
-    <xmx:exV2aE1ELBupShhn5bjXeDCeImi9igAJc6RovedMYDqZ5Vx17P-nSQ>
-    <xmx:exV2aCyEows3GM5F5Nu15ABg05sAYNGhhIploX2NVKv7uvL86Rtsxg>
-    <xmx:exV2aMh51Cq758tXFj81joSf22bYrRTCrciX1fSNFUF_bcvF-GTPJRyn>
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:LBd2aBnL5t_Hcmcq0NyWne0AlwGF0Lc_UDdnUmYnaLD37MrLZLEcVw>
+    <xmx:LBd2aM9wWqMmn8j28dPHfLjtpUttDZzZ-PWpszgC0Lz0cdON-UpZtA>
+    <xmx:LBd2aPkLg71Vm_S4xXhrXxvch-rQDbDayuMUYiSwvheFTfRyV0i4jw>
+    <xmx:LBd2aJ2PSMh_CWwOQcYIUu2CU-VU3kUO77y1gMl3zdzS23M_Ztk2eg>
+    <xmx:LBd2aKEg-7bSYZvTVk_ADXoFLQ3jrtKaIFENbo_TSLabyQlJLHbRehGC>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 04:46:50 -0400 (EDT)
+ 15 Jul 2025 04:54:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f43a9029 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 08:46:47 +0000 (UTC)
-Date: Tue, 15 Jul 2025 10:46:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 141d9429 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 15 Jul 2025 08:54:02 +0000 (UTC)
+Date: Tue, 15 Jul 2025 10:53:59 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
-	git@vger.kernel.org, gitster@pobox.com,
-	sandals@crustytoothpaste.net
-Subject: Re: [PATCH v3] meson: disable PCRE2 dependency by default in macOS
-Message-ID: <aHYVdMii_rP5-ywa@pks.im>
-References: <20250713122341.17976-1-carenas@gmail.com>
- <20250713174807.32444-1-carenas@gmail.com>
- <2414b962-e843-4ac0-814f-bb4bc7aacda7@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH] strbuf: add compound literal test balloon
+Message-ID: <aHYXJ7EmRQE1P5xe@pks.im>
+References: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
+ <xmqqa556x2z4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <2414b962-e843-4ac0-814f-bb4bc7aacda7@gentoo.org>
+In-Reply-To: <xmqqa556x2z4.fsf@gitster.g>
 
-On Mon, Jul 14, 2025 at 09:55:27PM -0400, Eli Schwartz wrote:
-> On 7/13/25 1:48 PM, Carlo Marcelo Arenas Belón wrote:
-> > diff --git a/meson.build b/meson.build
-> > index 7fea4a34d6..e1475be6c8 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -1055,7 +1055,8 @@ else
-> >    build_options_config.set('NO_ICONV', '1')
-> >  endif
-> >  
-> > -pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
-> > +pcre2_feature = get_option('pcre2').disable_auto_if(host_machine.system() == 'darwin' and not get_option('macos_workaround_system_pcre2'))
-> > +pcre2 = dependency('libpcre2-8', required: pcre2_feature, default_options: ['default_library=static', 'test=false'])
-> >  if pcre2.found()
-> >    libgit_dependencies += pcre2
-> >    libgit_c_args += '-DUSE_LIBPCRE2'
+On Mon, Jul 14, 2025 at 07:26:55AM -0700, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
+> > From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> >
+> > A C99 compound literal creates an unnamed object whose value is given by
+> > an initializer list. This allows us to simplify code where we cannot use
+> > a designated initalizer because the values of some members of the object
+> > need to be calculated first. For example this code from builtin/rebase.c
+> >
+> > 	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+> > 	struct reset_head_opts ropts = { 0 };
+> > 	int ret;
+> >
+> > 	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+> > 		    opts->reflog_action,
+> > 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+> > 	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+> > 		    opts->reflog_action, opts->head_name);
+> > 	ropts.branch = opts->head_name;
+> > 	ropts.flags = RESET_HEAD_REFS_ONLY;
+> > 	ropts.branch_msg = branch_reflog.buf;
+> > 	ropts.head_msg = head_reflog.buf;
+> > 	ret = reset_head(the_repository, &ropts);
+> >
+> > can be be simplified to
+> >
+> > 	struct strbuf branch_reflog = STRBUF_INIT, head_reflog = STRBUF_INIT;
+> > 	int ret;
+> >
+> > 	strbuf_addf(&branch_reflog, "%s (finish): %s onto %s",
+> > 		    opts->reflog_action,
+> > 		    opts->head_name, oid_to_hex(&opts->onto->object.oid));
+> > 	strbuf_addf(&head_reflog, "%s (finish): returning to %s",
+> > 		    opts->reflog_action, opts->head_name);
+> >         ret = reset_head(the_repository, &(struct reset_head_opts) {
+> >                 .branch = opts->head_name,
+> >         	.flags = RESET_HEAD_REFS_ONLY,
+> >         	.branch_msg = branch_reflog.buf,
+> >         	.head_msg = head_reflog.buf,
+> >         });
+> >
+> > The result is more readable as one can see the value of each member
+> > of the object being passed to the function at the call site rather
+> > than building the object piecemeal in the preceding lines.
 > 
-> Instead of disable_auto_if, we should simply verify a working install.
+> Hmph, is it simpler, I have to wonder, in other words, I doubt you
+> simplified the code.
 > 
-> if pcre2.found() and pcre2.type_name() != 'internal' and
-> host_machine.system() == 'darwin'
->     # macOS installs a broken system package, double check
->     if not compiler.has_header('pcre2.h', dependencies: pcre2)
->         if get_option('pcre2').enabled()
->             error('broken pcre2 install found but pcre2 is required')
->         endif
->         # Replace with not-found-dependency
->         pcre2 = dependency('', required: false)
->         warning('broken pcre2 install found, disabling pcre2 feature')
+> One thing the above rewrite did is to make it clear to readers that
+> the struct instance is used just once and then immediately got
+> discarded.  As long as the object that gets passed this way does not
+> hold resources that need to be discarded itself (in other words,
+> does not require a call to reset_head_opts_release()), it makes the
+> code easier to follow.
+> 
+> But once the struct gains members that need to be released, I am not
+> sure if this construct does not make it harder to spot leaks.
+> Somebody who adds a member to _release() to the struct presumably
+> audits and find all places that need to call _release(), but among
+> them they find this place---now what?  They need to first convert it
+> to the old fashioned way and then call _release() after the
+> reset_head() call returns, I guess.
+> 
+> I am not arguing against all uses of literals---I am just
+> anticipating future fallouts of encouraging overuse of this pattern,
+> and preparing what we would say when somebody adds a new use to
+> inappropriate places.  Simple cases like the initialier should be
+> fine.
 
-Okay. So if the `pcre2` feature was explicitly enabled we error out and
-abort, otherwise we print a warning and disable it. This makes a lot of
-sense to me.
+We already have a two test balloons, both defined in
+"reftable/system.h":
 
->     endif
-> endif
-> 
-> if pcre2.found()
->     libgit_dependencies += pcre2
-> 
-> [...]
-> 
-> 
-> Please double-check my work, that this compiler.has_header() is
-> sufficient on your reproducer system to detect and disable the
-> non-working feature.
+    #define REFTABLE_FLOCK_INIT ((struct reftable_flock){ .fd = -1, })
 
-I think auto-detecting such broken PCRE2 libraries is indeed the best
-way forward, thanks!
+    #define REFTABLE_TMPFILE_INIT ((struct reftable_tmpfile) { .fd = -1, })
 
-> > diff --git a/meson_options.txt b/meson_options.txt
-> > index e7f768df24..f63ff32556 100644
-> > --- a/meson_options.txt
-> > +++ b/meson_options.txt
-> > @@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
-> >    description: 'Build Git web interface. Requires Perl.')
-> >  option('iconv', type: 'feature', value: 'auto',
-> >    description: 'Support reencoding strings with different encodings.')
-> > -option('pcre2', type: 'feature', value: 'enabled',
-> > +option('pcre2', type: 'feature', value: 'auto',
-> 
-> 
-> This part is fine. We shouldn't default-fail if it isn't found, when we
-> can't expect it to be universally available.
+Both of those are getting used in a way that'd break if those weren't
+properly supported in "reftable/stack.c":
 
-Agreed. I guess tha only reason why I picked "enabled" here is because
-we also got a wrapper in "subprojects/". But with this new workaround in
-place I agree that it is sensible to switch to "auto".
+	for (i = 0; i < last - first + 1; i++)
+		table_locks[i] = REFTABLE_FLOCK_INIT;
+
+	tab_file = REFTABLE_TMPFILE_INIT;
+
+Those are rather recent additions though, released with Git 2.50. I also
+totally missed that we didn't have any test balloons for this syntax.
+Should we maybe retroactively mark them as test balloons instead of
+converting and marking some new sites?
 
 Patrick
