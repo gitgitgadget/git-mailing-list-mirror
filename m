@@ -1,223 +1,265 @@
-Received: from mail-pj1-f66.google.com (mail-pj1-f66.google.com [209.85.216.66])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from a9-23.smtp-out.amazonses.com (a9-23.smtp-out.amazonses.com [54.240.9.23])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1BD92D0C65
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 02:56:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.66
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133446FBF
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 03:26:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.240.9.23
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752548212; cv=none; b=lAOSJbRdzgL9iqIcv8Fy0jRP8CQgKy0vRq3QBRd7nDh3u/d+8Csm/SiQOk1GegwjorJP4ZS+wR0fQNxnL8x4F3eq6s84maLQ8je1TJrtqX4oXGF7/HJptAC4Ut+mgZmY88soF81/cLYTz2O7/ZX/FejDWTBYicDEn0rwVy/ALxs=
+	t=1752550010; cv=none; b=k3IH2dsd0ZtMrKZp5XDoLDEvxWRAi+z+1kT5zC0/CPIox4RLkAJ5i3RBXMhRDuxB2o/Y/YqOtizbPPFAc6dTsnsdiRRcxV3GemfMCGxhf+sCavuwJw20Uyi1QC1UUhrWxcCBIAiI0ZwuS1FcQccCuawkJrtZ3S9iKVuW8/Nn8P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752548212; c=relaxed/simple;
-	bh=GJoPmaG39diO91EKEaL6DP3jmmPCrlFzhaKeF/O+Da4=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pFvl6cF9FZ9pRQ4fm9d5PKd5ouAMqA5i5PI8PCly2u6T1fnzYcQ283DkbKKpMB8+vmWn3E2cvDbRqTAA9XeNIc397D56AoeBSfIAeN15mBz9bI1IwXgxsZHyG4oeCWWgOUfi3Qo6gWpBGoLGkSjBU13ONXsQu5zpYoomvq7JMZY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I6zacERh; arc=none smtp.client-ip=209.85.216.66
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752550010; c=relaxed/simple;
+	bh=qoRvTszXFxF5olXabYPZC0/U6B0yC39FfUNHVh/Ayos=;
+	h=From:To:Subject:Message-ID:Date:MIME-Version:Content-Type; b=LdfxRdwC9zwgwudOP/F3nbMVnvaxpicc/nV+HwEpNnNfFMTIJzOQm0jbi5O59RZwZgBEX8B9VqnB0ewMkD3gI0PVgKDQr2a9GkvZxkMIIVLCuhioARUxrvysyFCKn0WWScq88YtN5lfdGHEofmeDvtNmZF6Te3NnZw35bAqc4YI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=looping.me; spf=pass smtp.mailfrom=send.looping.me; dkim=pass (1024-bit key) header.d=looping.me header.i=@looping.me header.b=0PIJRiuX; dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b=V77WC44y; arc=none smtp.client-ip=54.240.9.23
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=looping.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=send.looping.me
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I6zacERh"
-Received: by mail-pj1-f66.google.com with SMTP id 98e67ed59e1d1-3139027b825so3923036a91.0
-        for <git@vger.kernel.org>; Mon, 14 Jul 2025 19:56:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752548210; x=1753153010; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=SvUcAkK0oEUe8OHJDGNzc7FjnAclY0z0ObIzflBVg6E=;
-        b=I6zacERhYbEAaPVzeuSjtX5OxBGyxlm+m+3xr94Kdm1jT2bj2Vl4IANzHYcM4pdD7K
-         WRxxseE8uBH86fAWUrTogGNAQNnw3xXeFmYHc7ts3UViA/E6Lh9kAnFisQSLS96ORHrV
-         twEFZZycmTqoK85gQjByssP9gZHUG2Z98nrf8f1wEIGeY31tbZgtLDL3y67Mwrl2DQ/L
-         xmKxPOhl2j/94WoQ4PEprkln3HDRnoJotLnMKzPgvQAAsqi8ZxfbsxHfmJ3QZxeEHlTe
-         FSsTbTRXwphGJuvz6OBELclt20C0VYjwFYi7Ecdz19H0S7z25WTiWnEtAZo14h5L4D0n
-         MLUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752548210; x=1753153010;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SvUcAkK0oEUe8OHJDGNzc7FjnAclY0z0ObIzflBVg6E=;
-        b=Tj7nK1Be/AHVcKoEh1UOpTCTn4VOrtPlgRBOOvXA/UztHcDxY4ioGFKcAQPVZrUe4V
-         mTmSpQXD1wKuYXmsPv1FPaBvqlVoTiA6SgreaABeyIUHl/QlBYf9nifO1GCxleaQTMl8
-         HJihT1vjcDamMnLdc9QSIOy1tE8aWrtjZxWDnbtPaEDY5ecR3SEIG+NBRn9rbcPQckXx
-         Wc2oihgZmgnjGIzZ5Y/v65HXh66BfuTGsUmP/zKuA7/K+xy9o7sdOj5si0zVHXeJMOo/
-         jlWHBeXRmXP5tpg7PJoQvHnHpnV6unuRud73JAGyurBbj6oUbFREwnh1CtsewmGX517U
-         bdSg==
-X-Gm-Message-State: AOJu0YwR/L2ik00R0IrGtufA6AG8lwr+ML3tM7cx5uWQgtNPjTG9bk4E
-	SHxLj+F7EL69JDHKWFFwBo25UJssqDULup24vOCkehSwF6MOI5OKTq9Im6y9oxLVqJ102Q==
-X-Gm-Gg: ASbGncvlwuifE7ffl68ZojT3dyC9aNDdi4FW62Qm/G/H5vIO4hznqsgM9WYIgN+oedy
-	qD/PdVAbdXh2iNrJcA43+uKzY4TCq8Up87b41PjEaBEoFUXIyKFKu1iFnuqITwuojnTc3yK8nWl
-	QSZDMmu42G0D8BcjgsyEvF7AEyJE79R6hRnQ3vT3ifW3JRsWCZw07qjJ7fiYlgJxfbdizLB1wLC
-	0r+EAe9fWHbYtwUNXH7KiJDxXFaLMyAbpSGGAgNFXWxCS24v/XnHTSDQN+LyxGCEqMzCBaxVlvq
-	zRJjN/jGyzZenJ7C2Sq9oRlRI7OuVwuPDlve6MCrUgo/pItrHrXaWtx+Crsixjlpa9rhJ0ynJkl
-	/Lb78dN8zWnIYziN6RecL/b2UOkdID4xOL5JsxjwKX3EBe5FM1xPZfuipXSzR58InWLMXvax5Iq
-	aYCK/Hf/gHCZdl4H42xjWgHLvcB464wA==
-X-Google-Smtp-Source: AGHT+IH0fWoGQm7EQImpNtaHAdyAkX3Vr2KFPFVy8q7xJV2woML2X4B/RjF2Vi166VJvq42UV8Z/oQ==
-X-Received: by 2002:a17:90b:4c0b:b0:313:2e69:8002 with SMTP id 98e67ed59e1d1-31c4ccdb25amr22517673a91.20.1752548209780;
-        Mon, 14 Jul 2025 19:56:49 -0700 (PDT)
-Received: from localhost.localdomain (awork062176.netvigator.com. [203.198.28.176])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c3eb62caasm11562441a91.39.2025.07.14.19.56.45
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 14 Jul 2025 19:56:49 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-To: 502024330056@smail.nju.edu.cn
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	stolee@gmail.com,
-	Lidong Yan <yldhome2d2@gmail.com>
-Subject: [RESEND][PATCH v6 5/5] bloom: optimize multiple pathspec items in revision
-Date: Tue, 15 Jul 2025 10:56:22 +0800
-Message-Id: <20250715025622.98646-1-yldhome2d2@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <55BF9B3C-F9B1-4ADB-9CBC-0D8EA45BA264@smail.nju.edu.cn>
-References: <55BF9B3C-F9B1-4ADB-9CBC-0D8EA45BA264@smail.nju.edu.cn>
+	dkim=pass (1024-bit key) header.d=looping.me header.i=@looping.me header.b="0PIJRiuX";
+	dkim=pass (1024-bit key) header.d=amazonses.com header.i=@amazonses.com header.b="V77WC44y"
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=resend;
+	d=looping.me; t=1752550006;
+	h=From:To:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type;
+	bh=qoRvTszXFxF5olXabYPZC0/U6B0yC39FfUNHVh/Ayos=;
+	b=0PIJRiuXAOutGdEuoniWJyUB95C40F/6KX7pykXSJtvmeqypvYHEBeKu0PENzqeo
+	t9maHiqYnGKSvRQc9McocP4vkdSUV9qgmebIFFibbWo+U/OjZK9ph953zPEnrcbROO5
+	1DlqkRbuBKC5mb6YdTrgsAQJ/5RhT+oVT2DXmVZ8=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple;
+	s=6gbrjpgwjskckoa6a5zn6fwqkn67xbtw; d=amazonses.com; t=1752550006;
+	h=From:To:Subject:Message-ID:Content-Transfer-Encoding:Date:MIME-Version:Content-Type:Feedback-ID;
+	bh=qoRvTszXFxF5olXabYPZC0/U6B0yC39FfUNHVh/Ayos=;
+	b=V77WC44y20GY4DS2HzsLnjERQufKuiJGHzU3i9ZOOqhu+vE53iebF4fmRyV6b0WH
+	En1PtmQ0TWHPhwuEDwOxNWnpIboxg9U5A3lJ53M+iJMMtG+xWfFq7g4G1pZp/+ceal7
+	2f9PNfJi4USQZzo0O2rU9HlX61FV42I79Hek282E=
+X-Gm-Message-State:
+ AOJu0Yym3l0BNWJfMKuV5R50IbmIbBXg2Eh9/mqBCeNrgUO63m0a0JNt
+ Zb+qoBTaOequugHFYeViEsbdH5MyoLteDJvJzcu/WCOrzihsmUrw1VJ9v6C6/ZK5S/919zitLj6
+ CNL/y61Si1UkWpBE0XUp+bFnWtjXlTCo=
+X-Google-Smtp-Source:
+ AGHT+IFkfgtB9RlpRrYcKa7pxn2i2QOdSDQKA8fA5VhpbJT0K7cE7044dJR8XC9sh29/2T/eAxWpo+QpCQGAYHXsRYY=
+X-Received: by 2002:a05:651c:2120:b0:32b:7389:57c with SMTP id
+ 38308e7fff4ca-3308748a72fmr54681fa.12.1752550005142; Mon, 14 Jul 2025
+ 20:26:45 -0700 (PDT)
+X-Gmail-Original-Message-ID:
+ <CAL_3E041vyA_K36ptx1z2vxo-MQJ4Qx4vpiZ3U_GWaDi7f6XtQ@mail.gmail.com>
+X-Gm-Features:
+ Ac12FXy7zGekD6_VBE6AjlaWar5uP9m1ZtypRfK5ANXrakPrXDW-znaCK5fjbNI
+From: Bryan Lee <hi@looping.me>
+To: git@vger.kernel.org
+Subject: [BUG] git pull ignores pull.autostash=true configuration when used
+ with --git-dir and --work-tree flags on a bare repository
+Message-ID: <010001980c1ee007-2797fc86-fdf3-46e9-bec9-f8da2c9ebb8d-000000@email.amazonses.com>
+Content-Transfer-Encoding: quoted-printable
+Date: Tue, 15 Jul 2025 03:26:46 +0000
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Feedback-ID: ::1.us-east-1.epbACCJLarUaEI78XZoGREJ9LamRjxMH5pM2kZb64rA=:AmazonSES
+X-SES-Outgoing: 2025.07.15-54.240.9.23
 
-To enable optimize multiple pathspec items in revision traversal,
-return 0 if all pathspec item is literal in forbid_bloom_filters().
-Add for loops to initialize and check each pathspec item's bloom_keyvec
-when optimization is possible.
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Add new test cases in t/t4216-log-bloom.sh to ensure
- - consistent results between the optimization for multiple pathspec
-   items using bloom filter and the case without bloom filter
-   optimization.
- - does not use bloom filter if any pathspec item is not literal.
+I am using a bare Git repository to manage my dotfiles, following a
+common pattern where the Git directory is separate from the work tree.
+Here are the exact steps to reproduce the issue:
 
-With these optimizations, we get some improvements for multi-pathspec runs
-of 'git log'. First, in the Git repository we see these modest results:
+1. Create a bare =
+repository and set up the alias:
+   $ git init --bare $HOME/.dotfiles
+   Initialized empty Git repository in /Users/bryan/.dotfiles/
 
-Benchmark 1: old
- Time (mean ± σ):      73.1 ms ±   2.9 ms
- Range (min … max):    69.9 ms …  84.5 ms    42 runs
+   $ alias dot=3D'git --git-dir=3D$HOME/.dotfiles/ --work-tree=3D$HOME'
 
-Benchmark 2: new
- Time (mean ± σ):      55.1 ms ±   2.9 ms
- Range (min … max):    51.1 ms …  61.2 ms    52 runs
+2. Add a remote and create initial tracked file:
+   $ dot remote add origin=
+ git@github.com:username/dotfiles.git
 
-Summary
- 'new' ran
-   1.33 ± 0.09 times faster than 'old'
+   $ echo "# My dotfiles" > =
+$HOME/README.md
+   $ dot add $HOME/README.md
+   $ dot commit -m "Initial =
+commit"
+   [main (root-commit) abc1234] Initial commit
+    1 file changed, 1 insertion(+)
+    create mode 100644 README.md
 
-But in a larger repo, such as the LLVM project repo below, we get even
-better results:
+   $ dot push -u origin main
+   Branch 'main' set up to track remote branch=
+ 'main' from 'origin'.
 
-Benchmark 1: old
- Time (mean ± σ):      1.974 s ±  0.006 s
- Range (min … max):    1.960 s …  1.983 s    10 runs
+3. Set global Git configuration for automatic =
+rebasing and stashing:
+   $ git config --global pull.rebase true
+   $ git config --global pull.autostash true
 
-Benchmark 2: new
- Time (mean ± σ):     262.9 ms ±   2.4 ms
- Range (min … max):   257.7 ms … 266.2 ms    11 runs
+   Verify the configuration =
+is set:
+   $ git config --global pull.rebase
+   true
+   $ git config --global pull.autostash
+   true
 
-Summary
- 'new' ran
-   7.51 ± 0.07 times faster than 'old'
+4. Simulate a remote =
+change (on another machine or via GitHub web interface):
+   - Edit README.md on remote to add a line: "Updated from remote"
+   - This creates a divergence between local and remote
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
-[ly: rename convert_pathspec_to_filter() to convert_pathspec_to_bloom_keyvec()]
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
- revision.c           | 21 +++++++++++----------
- t/t4216-log-bloom.sh | 23 ++++++++++++++---------
- 2 files changed, 25 insertions(+), 19 deletions(-)
+5. Make local unstaged changes:
+   $ echo "Local change" >> $HOME/.zshrc
 
-diff --git a/revision.c b/revision.c
-index 1614c6ce0d..cf7198c0ea 100644
---- a/revision.c
-+++ b/revision.c
-@@ -675,12 +675,11 @@ static int forbid_bloom_filters(struct pathspec *spec)
- {
- 	if (spec->has_wildcard)
- 		return 1;
--	if (spec->nr > 1)
--		return 1;
- 	if (spec->magic & ~PATHSPEC_LITERAL)
- 		return 1;
--	if (spec->nr && (spec->items[0].magic & ~PATHSPEC_LITERAL))
--		return 1;
-+	for (size_t nr = 0; nr < spec->nr; nr++)
-+		if (spec->items[nr].magic & ~PATHSPEC_LITERAL)
-+			return 1;
- 
- 	return 0;
- }
-@@ -733,13 +732,15 @@ static void prepare_to_use_bloom_filter(struct rev_info *revs)
- 	if (!revs->pruning.pathspec.nr)
- 		return;
- 
--	revs->bloom_keyvecs_nr = 1;
--	CALLOC_ARRAY(revs->bloom_keyvecs, 1);
-+	revs->bloom_keyvecs_nr = revs->pruning.pathspec.nr;
-+	CALLOC_ARRAY(revs->bloom_keyvecs, revs->bloom_keyvecs_nr);
- 
--	if (convert_pathspec_to_bloom_keyvec(&revs->bloom_keyvecs[0],
--					     &revs->pruning.pathspec.items[0],
--					     revs->bloom_filter_settings))
--		goto fail;
-+	for (int i = 0; i < revs->pruning.pathspec.nr; i++) {
-+		if (convert_pathspec_to_bloom_keyvec(&revs->bloom_keyvecs[i],
-+						     &revs->pruning.pathspec.items[i],
-+						     revs->bloom_filter_settings))
-+			goto fail;
-+	}
- 
- 	if (trace2_is_enabled() && !bloom_filter_atexit_registered) {
- 		atexit(trace2_bloom_filter_statistics_atexit);
-diff --git a/t/t4216-log-bloom.sh b/t/t4216-log-bloom.sh
-index 8910d53cac..639868ac56 100755
---- a/t/t4216-log-bloom.sh
-+++ b/t/t4216-log-bloom.sh
-@@ -66,8 +66,9 @@ sane_unset GIT_TRACE2_CONFIG_PARAMS
- 
- setup () {
- 	rm -f "$TRASH_DIRECTORY/trace.perf" &&
--	git -c core.commitGraph=false log --pretty="format:%s" $1 >log_wo_bloom &&
--	GIT_TRACE2_PERF="$TRASH_DIRECTORY/trace.perf" git -c core.commitGraph=true log --pretty="format:%s" $1 >log_w_bloom
-+	eval git -c core.commitGraph=false log --pretty="format:%s" "$1" >log_wo_bloom &&
-+	eval "GIT_TRACE2_PERF=\"$TRASH_DIRECTORY/trace.perf\"" \
-+		git -c core.commitGraph=true log --pretty="format:%s" "$1" >log_w_bloom
- }
- 
- test_bloom_filters_used () {
-@@ -138,10 +139,6 @@ test_expect_success 'git log with --walk-reflogs does not use Bloom filters' '
- 	test_bloom_filters_not_used "--walk-reflogs -- A"
- '
- 
--test_expect_success 'git log -- multiple path specs does not use Bloom filters' '
--	test_bloom_filters_not_used "-- file4 A/file1"
--'
--
- test_expect_success 'git log -- "." pathspec at root does not use Bloom filters' '
- 	test_bloom_filters_not_used "-- ."
- '
-@@ -151,9 +148,17 @@ test_expect_success 'git log with wildcard that resolves to a single path uses B
- 	test_bloom_filters_used "-- *renamed"
- '
- 
--test_expect_success 'git log with wildcard that resolves to a multiple paths does not uses Bloom filters' '
--	test_bloom_filters_not_used "-- *" &&
--	test_bloom_filters_not_used "-- file*"
-+test_expect_success 'git log with multiple literal paths uses Bloom filter' '
-+	test_bloom_filters_used "-- file4 A/file1" &&
-+	test_bloom_filters_used "-- *" &&
-+	test_bloom_filters_used "-- file*"
-+'
-+
-+test_expect_success 'git log with path contains a wildcard does not use Bloom filter' '
-+	test_bloom_filters_not_used "-- file\*" &&
-+	test_bloom_filters_not_used "-- A/\* file4" &&
-+	test_bloom_filters_not_used "-- file4 A/\*" &&
-+	test_bloom_filters_not_used "-- * A/\*"
- '
- 
- test_expect_success 'setup - add commit-graph to the chain without Bloom filters' '
--- 
-2.39.5 (Apple Git-154)
+   Verify there are unstaged changes:
+   $ dot status
+   On branch main
+   Changes not staged for commit:
+     (use "git add <file>..." to update =
+what will be committed)
+     (use "git restore <file>..." to discard =
+changes in working directory)
+    modified:   .zshrc
 
+   no changes added to commit (use "git add" and/or "git commit -a")
+
+6. Attempt to pull the remote changes:
+   $ dot pull
+   error: cannot pull with rebase: You have unstaged changes.
+   error: Please commit or stash them.
+
+What did you expect to happen? =
+(Expected behavior)
+
+Since I have configured pull.autostash=3Dtrue globally=
+, I expected Git to:
+
+1. Automatically create a stash of my unstaged =
+changes (the modified
+.zshrc file)
+2. Pull the remote changes with rebase =
+(as configured by pull.rebase=3Dtrue)
+3. Apply the stash after the pull =
+completes successfully
+4. Show output similar to:
+   Created autostash: =
+abc2345
+   First, rewinding head to replay your work on top of it...
+   Fast-forwarded main to origin/main.
+   Applied autostash.
+
+This is the behavior I get when using Git in a regular (non-bare)
+repository with the same configuration.
+
+What happened instead? (Actual =
+behavior)
+
+Git immediately fails with an error message:
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+
+The command exits with status code 1 =
+and does not perform any stashing
+or pulling.
+
+What's different between =
+what you expected and what actually happened?
+
+The difference is that Git =
+is not honoring the pull.autostash=3Dtrue
+configuration when the repository=
+ is accessed using --git-dir and
+--work-tree flags. The autostash feature =
+is completely ignored, and
+Git behaves as if pull.autostash=3Dfalse.
+
+To confirm this is specific to the --git-dir/--work-tree usage
+pattern, I tested the following workarounds:
+
+1. Explicit --autostash flag =
+works:
+   $ dot pull --rebase --autostash
+   Created autostash: def3456
+   Current branch main is up to date.
+   Applied autostash.
+
+2. The same configuration works in a regular repository:
+   $ cd /tmp/test-repo
+   $ git init
+   $ git config pull.rebase true
+   $ git config pull.autostash true
+   $ echo "test" > file.txt
+   $ git add file.txt
+   $ git commit -m "test"
+   $ echo "change" >> file.=
+txt
+   $ git pull origin main  # This would autostash as expected
+
+Additional diagnostic information:
+
+1. The configuration is properly loaded=
+ by Git:
+   $ dot config --show-origin pull.autostash
+   file:/Users/bryan/.config/git/config true
+
+   $ dot config --show-origin=
+ pull.rebase
+   file:/Users/bryan/.config/git/config true
+
+2. Even setting the configuration directly in the bare repository doesn't =
+help:
+   $ dot config pull.autostash true
+   $ dot config pull.rebase true
+   $ cat $HOME/.dotfiles/config | grep -A2 "\[pull\]"
+   [pull]
+    rebase =3D true
+    autostash =3D true
+
+   $ dot pull
+   error: cannot pull with rebase: You have unstaged changes.
+   error: Please commit or stash them.
+
+3. Using -c flag to override =
+configuration inline also fails:
+   $ git --git-dir=3D$HOME/.dotfiles/ =
+--work-tree=3D$HOME -c
+pull.autostash=3Dtrue pull
+   error: cannot pull =
+with rebase: You have unstaged changes.
+   error: Please commit or stash =
+them.
+
+4. GIT_TRACE output shows the pull command is executed but autostash
+is not attempted:
+   $ GIT_TRACE=3D1 dot pull 2>&1 | head -5
+   11:09:57.474770 git.c:476               trace: built-in: git pull
+   error: cannot pull with rebase: You have unstaged changes.
+   error: Please commit or stash them.
+
+This appears to be a bug where the =
+autostash functionality is bypassed
+when Git is invoked with --git-dir and =
+--work-tree flags, possibly
+because the work tree context is not properly =
+established when the
+autostash check occurs.
+
+[System Info]
+git version:
+git version 2.50.1
+cpu: arm64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+feature: fsmonitor--daemon
+libcurl: 8.7.1
+zlib: 1.2.12
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+uname: Darwin 24.5.0 Darwin Kernel Version 24.5.0: Tue =
+Apr 22 19:54:29
+PDT 2025; root:xnu-11417.121.6~2/RELEASE_ARM64_T6030 arm64
+compiler info: clang: 17.0.0 (clang-1700.0.13.3)
+libc info: no libc =
+information available
+$SHELL (typically, interactive shell): /bin/zsh
