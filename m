@@ -1,263 +1,168 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F85D22CBEC
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:42:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F48A231A55
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 08:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752568955; cv=none; b=U0En3UaiIwEaTk2ytwWGv0fz3VQK+nxRvvFj2wB1cSW/P666LMEfxHz94BTjRpWt/fPmstMDn2UVqTsf+0pxGHlSTBQT6esiriKo4iex5DiQu3ZJKd3Iyk3AJxk7kJaGT20FirkYKI7Uz3Q048F3pLQf5CIzcC1ALpc9viANytM=
+	t=1752569214; cv=none; b=qr5yY+QAzxH3c+1BfFRY4Q9mtXBOaUXAFGJQ+SXh9bkz4FgqCYst5/JHPvxUprO7HiK6ThDgtBHZ3wmjJ66yi136XAMnnZsYGKLhrOgsZSdmr+DV36TEe4HyhRihcOFVrfyVyIVihFKn8xn7wEKOGrspuurfAW37vPAar101PZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752568955; c=relaxed/simple;
-	bh=BDXous5VpsLU5cSGXDjTQca0B2+e70RzOB3hS5BgXVU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=X0uNvpdzB3k9t1qrjo1Uk9GKjEb3yBKuYeX0DF8tAgt9AVms0pjwio5Qg2bXpnb5CqJ7jkgNvH4k6E7duW83vR4bxVkuXwfJnDTvMft2PgMks+tDNPbkacK2LU7PESiH8/WRK3YcNJvbTKXJX8x38hbrJ5l8H04xsMs2fJRhko4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i4ZneKQ+; arc=none smtp.client-ip=209.85.221.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752569214; c=relaxed/simple;
+	bh=ikl+0kZ3OeAyfLcz5NQYQpIWxw3xjA6vxfEf2GQdHxA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AWip2qn3fGVejp4Peay08OqKrQSenXnrmUnEV6F9fiQDeRQy8exbIQhoU9LwRqZ2P4VZnHYHmuu9+D8BXii1wkmHMoR5DoSbrqhmFccEJ0wDWGR/0cZzdtOH1UM34voA7KX9l/MA3HOY2J0h+yzTF+ghgrC3PMx4OjyCCZpxsN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NQD/LoKP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mYFdH8H8; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i4ZneKQ+"
-Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-528ce9731dbso2065082e0c.0
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 01:42:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752568952; x=1753173752; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=pOai+fCDIQRFW5Fb8u3S60IHxS5SPInmNBxabKRNadI=;
-        b=i4ZneKQ+Ln8oHY156ZSgHuUZOmSyiKkzc9AFrD2Z6MAQL16eB5q9klvqYgQPgHPvph
-         Gv9v0QqdIknKx/ZkJ39/DckV1iHJLCC8AdHNL3up3UlXetRk6ajS1XP1gTmQZfSPVgPS
-         XETikrTQ9nrtaPgTQDf8NQfuYj7SVCfYrEd774rKbKgd+3hgn0TVV+55OPhAJYeK9nh1
-         xkmMojmQV9WKSV1Dz9PcYCYkOn8Ak41yx+uHuNHJ1M3lYxUDgXiY1pbwt2/j7jY7tj+C
-         UbVoBuF0cLDesJjfrbGrGDPXEKiphS5tA0IGidJao2bu/qz6JN12fbVnc8PMGOm9jf4I
-         Be6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752568952; x=1753173752;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pOai+fCDIQRFW5Fb8u3S60IHxS5SPInmNBxabKRNadI=;
-        b=IV1ja0UMGg9O67hqUqN3nT2/i/rx/eRRVNKRqvKzVWXrK+nnLZK+S7MNooANrWCw34
-         isRHPdcy74ERFNdEAsUbzNf6WCHGT8U25UgIbgdxU8aY7M7g51IeTZ6Lg0rVqlhF9ROd
-         Rk0ScHnnRFX1y2LW01lYrvCQt5QSLh5lfOkgIU25lNwWl4pj7m6OnBjOuT0kAldxr53Q
-         i/MfG0BUK7xZprd6YU21ylbhojXTQXPAwY+9CVY9xlSsFOnz1VbgterkdSDX5uyPUUTR
-         VtrneoHX/at/i8yhKsQrKLZnsDhr+gN4zv3fo+5z1A5rAaLRd32p0QtImb93g6eUaIKN
-         7a6w==
-X-Gm-Message-State: AOJu0YwhBTSKGXL4qtp2Sb9WpO5ehKyrNT3w25P7jesAxRr94AxA9NsV
-	8Az+R3v0IlYES4pcH3TUIY+BwMU2d3uznDUPvPCOuzurfuXQWh/LUUlf9va0pagU3RxIBEHjRAX
-	sk7fjG1wosvK9KMlubiYWF0tuUctHjeE=
-X-Gm-Gg: ASbGncvcGx2XsuIInFlmIEVEH6l3foY4CCNj25gvOyBzau8LQqhUJRr+FyrVFcV8qPc
-	8kaaAYcmXtQ1QuPcIp8y1JAyw9pl+YqBrlmpDD9Y2ZIJihTMKLZQC6zS393PDvMkxXqJYHAHdhu
-	mqwPosGrD/TPQggfoBMtybTOowcC/4BaKlEnssXcto9kzeSl/ZaW+DK3Ncrh/PGMXPmdgjjcQCl
-	W5Wppun0tC2NcxBFs83eD+gHzpGCY6B5aqK8Nas8A==
-X-Google-Smtp-Source: AGHT+IF/pigCCS4U4YFb7tfIxpGCMOkU6Yq/GhN7ANK9oZBMjYKsHETEa3eTFhYODMfMkptwm+yyc/S1D+vB3WpnN1A=
-X-Received: by 2002:a05:6122:134f:b0:534:76cf:4900 with SMTP id
- 71dfb90a1353d-535f47bfe49mr9780811e0c.6.1752568952379; Tue, 15 Jul 2025
- 01:42:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 15 Jul 2025 01:42:31 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 15 Jul 2025 01:42:31 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
-References: <20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com>
- <20250711-306-git-for-each-ref-pagination-v4-4-ed3303ad5b89@gmail.com> <CAP8UFD1wRxZDCRC76VuuA8_rpNn__TQnL9RnNumCE33wAjSrMQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NQD/LoKP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mYFdH8H8"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5BD21EC0529;
+	Tue, 15 Jul 2025 04:46:51 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Tue, 15 Jul 2025 04:46:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752569211;
+	 x=1752655611; bh=YDBIdvklWkxqk56d8Hojtc9ebSeySd/2EuL/2WvGeZQ=; b=
+	NQD/LoKP7DTURZb/Yc2Tcjl1d9bL6Vg1AT5+EnlZoQSQ+gkgA/k4Dy34iPG3hjEu
+	rJCYo7Itpw8of4WsIw3qxCh6SeRp3FE0RQ48FquHVHzyfgB8UW3NY0D98u3HoJRN
+	6RWS9lku9Ao/wNkTserEDk4cFy3LhR5nnna3AsiQOAV+47TkTwSrYziZao1ra8V8
+	o15j32Sag7AnvAXz2CWNDihALOkGx1ENF//QSJbXeCjWq0praD9pXDeFGtZ0zfFV
+	c/RJBY4rrYvZZhERPGavOVlh7cBsEHlp7znODRoT6KgeF7Ctk12+Evdj0RHild/2
+	JQ3oWRXhsjkOBkW88Cy5UQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752569211; x=
+	1752655611; bh=YDBIdvklWkxqk56d8Hojtc9ebSeySd/2EuL/2WvGeZQ=; b=m
+	YFdH8H8fobU1p+6tvTwf1sHd95OdZr1EUUIdzrh0QaP3/k8Hf7Gaf4Q08SqLhxOC
+	kbNhNHSNu+iPUR0REdnA8t8xEUaa+R3mWZBbrqxNI/WqASUQpTSamMzrE7jYLPPg
+	Bov8qJb9sU62lS0wMNyrDXOlbIC/H+kdgllIS4jmM57KysvdsdlJz1EUddxs8N2Y
+	eSmQMzrwHM13tbgmNCmztb2R2uKvMpf8V5u/6p+Wch7N021tSi67Q+ivHGdV8Ovi
+	B/xXrzBUjKIcrmJ0xubE6U+8QVvvF5P8ZVwAHbE1EZG4PfcZKVdXS21EsgjiZ12g
+	kE/iSdch5MN+u42owHm/A==
+X-ME-Sender: <xms:ehV2aIXtNKAZLmFEIAsaK6YlFSvkx5Rel0R09LroIUr6RvnHHwVFIQ>
+    <xme:ehV2aIEynbPk-ssg9ARMFvQ9YrOd_Bwi7jOX47haWdbj_v4-75dqg4i9vYOWIwIlW
+    rgtXnFlFYMJU62WLQ>
+X-ME-Received: <xmr:ehV2aC2R26cIms_YqeD7oOyIHONR9j4J3n4lqb1d7BDsUO-3dwJVnfwipqdgV61mwdQq0DjCRaSFCP764UzecJec-1xWUVLJCtFq_FmYACiIWQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhmpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+X-ME-Proxy: <xmx:exV2aCP7fM0y-JtRFOeRua-EGNh2wFkRZ6ID9clY5p9NsH6-h8oeCg>
+    <xmx:exV2aJ65GKr3lCUubE1oTQnpUYp09JzdFSvdBygzk9YFTadWq6zhHg>
+    <xmx:exV2aE1ELBupShhn5bjXeDCeImi9igAJc6RovedMYDqZ5Vx17P-nSQ>
+    <xmx:exV2aCyEows3GM5F5Nu15ABg05sAYNGhhIploX2NVKv7uvL86Rtsxg>
+    <xmx:exV2aMh51Cq758tXFj81joSf22bYrRTCrciX1fSNFUF_bcvF-GTPJRyn>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 04:46:50 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f43a9029 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 15 Jul 2025 08:46:47 +0000 (UTC)
+Date: Tue, 15 Jul 2025 10:46:44 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	git@vger.kernel.org, gitster@pobox.com,
+	sandals@crustytoothpaste.net
+Subject: Re: [PATCH v3] meson: disable PCRE2 dependency by default in macOS
+Message-ID: <aHYVdMii_rP5-ywa@pks.im>
+References: <20250713122341.17976-1-carenas@gmail.com>
+ <20250713174807.32444-1-carenas@gmail.com>
+ <2414b962-e843-4ac0-814f-bb4bc7aacda7@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 15 Jul 2025 01:42:31 -0700
-X-Gm-Features: Ac12FXyPOFybNupgCK0UOEpli7J5YkP4vje6oix4GNPQMsV7auQRe_pidgjIn2k
-Message-ID: <CAOLa=ZSyVh1cWZL=F8Gk-URh7p6GTnPpOpWjGwCbwYX=a+-TNQ@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] for-each-ref: introduce a '--start-after' option
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, schwab@linux-m68k.org, 
-	phillip.wood123@gmail.com
-Content-Type: multipart/mixed; boundary="000000000000da01f60639f3c11e"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <2414b962-e843-4ac0-814f-bb4bc7aacda7@gentoo.org>
 
---000000000000da01f60639f3c11e
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Mon, Jul 14, 2025 at 09:55:27PM -0400, Eli Schwartz wrote:
+> On 7/13/25 1:48 PM, Carlo Marcelo Arenas Belón wrote:
+> > diff --git a/meson.build b/meson.build
+> > index 7fea4a34d6..e1475be6c8 100644
+> > --- a/meson.build
+> > +++ b/meson.build
+> > @@ -1055,7 +1055,8 @@ else
+> >    build_options_config.set('NO_ICONV', '1')
+> >  endif
+> >  
+> > -pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
+> > +pcre2_feature = get_option('pcre2').disable_auto_if(host_machine.system() == 'darwin' and not get_option('macos_workaround_system_pcre2'))
+> > +pcre2 = dependency('libpcre2-8', required: pcre2_feature, default_options: ['default_library=static', 'test=false'])
+> >  if pcre2.found()
+> >    libgit_dependencies += pcre2
+> >    libgit_c_args += '-DUSE_LIBPCRE2'
+> 
+> 
+> Instead of disable_auto_if, we should simply verify a working install.
+> 
+> if pcre2.found() and pcre2.type_name() != 'internal' and
+> host_machine.system() == 'darwin'
+>     # macOS installs a broken system package, double check
+>     if not compiler.has_header('pcre2.h', dependencies: pcre2)
+>         if get_option('pcre2').enabled()
+>             error('broken pcre2 install found but pcre2 is required')
+>         endif
+>         # Replace with not-found-dependency
+>         pcre2 = dependency('', required: false)
+>         warning('broken pcre2 install found, disabling pcre2 feature')
 
-Christian Couder <christian.couder@gmail.com> writes:
+Okay. So if the `pcre2` feature was explicitly enabled we error out and
+abort, otherwise we print a warning and disable it. This makes a lot of
+sense to me.
 
-> On Fri, Jul 11, 2025 at 6:21=E2=80=AFPM Karthik Nayak <karthik.188@gmail.=
-com> wrote:
->
->>  /*
->>   * This is the same as for_each_fullref_in(), but it tries to iterate
->>   * only over the patterns we'll care about. Note that it _doesn't_ do a=
- full
->> @@ -2692,10 +2710,13 @@ static int for_each_fullref_in_pattern(struct re=
-f_filter *filter,
->>                                        each_ref_fn cb,
->>                                        void *cb_data)
->>  {
->> +       struct ref_iterator *iter;
->> +       int flags =3D 0, ret =3D 0;
->> +
->>         if (filter->kind & FILTER_REFS_ROOT_REFS) {
->>                 /* In this case, we want to print all refs including roo=
-t refs. */
->> -               return refs_for_each_include_root_refs(get_main_ref_stor=
-e(the_repository),
->> -                                                      cb, cb_data);
->> +               flags |=3D DO_FOR_EACH_INCLUDE_ROOT_REFS;
->> +               goto non_prefix_iter;
->>         }
->>
->>         if (!filter->match_as_path) {
->> @@ -2704,8 +2725,7 @@ static int for_each_fullref_in_pattern(struct ref_=
-filter *filter,
->>                  * prefixes like "refs/heads/" etc. are stripped off,
->>                  * so we have to look at everything:
->>                  */
->> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
-epository),
->> -                                               "", NULL, cb, cb_data);
->> +               goto non_prefix_iter;
->>         }
->>
->>         if (filter->ignore_case) {
->> @@ -2714,20 +2734,29 @@ static int for_each_fullref_in_pattern(struct re=
-f_filter *filter,
->>                  * so just return everything and let the caller
->>                  * sort it out.
->>                  */
->> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
-epository),
->> -                                               "", NULL, cb, cb_data);
->> +               goto non_prefix_iter;
->>         }
->>
->>         if (!filter->name_patterns[0]) {
->>                 /* no patterns; we have to look at everything */
->> -               return refs_for_each_fullref_in(get_main_ref_store(the_r=
-epository),
->> -                                                "", filter->exclude.v, =
-cb, cb_data);
->> +               goto non_prefix_iter;
->>         }
->>
->>         return refs_for_each_fullref_in_prefixes(get_main_ref_store(the_=
-repository),
->>                                                  NULL, filter->name_patt=
-erns,
->>                                                  filter->exclude.v,
->>                                                  cb, cb_data);
->> +
->> +non_prefix_iter:
->> +       iter =3D refs_ref_iterator_begin(get_main_ref_store(the_reposito=
-ry), "",
->> +                                      NULL, 0, flags);
->> +       if (filter->start_after)
->> +               ret =3D start_ref_iterator_after(iter, filter->start_aft=
-er);
->> +
->> +       if (ret)
->> +               return ret;
->> +
->> +       return do_for_each_ref_iterator(iter, cb, cb_data);
->>  }
->
-> Nit: I wonder if what is under the 'non_prefix_iter' label could be in
-> a new function and instead of `goto non_prefix_iter` we could return
-> the result of the new function.
->
-
-Yeah, that would work too. Let me do that and make it nicer! Thanks for
-the suggestion.
-
->>  /*
->> @@ -3197,9 +3226,11 @@ static int do_filter_refs(struct ref_filter *filt=
-er, unsigned int type, each_ref
->>         init_contains_cache(&filter->internal.no_contains_cache);
->>
->>         /*  Simple per-ref filtering */
->> -       if (!filter->kind)
->> +       if (!filter->kind) {
->>                 die("filter_refs: invalid type");
->> -       else {
->> +       } else {
->
-> Nit: the `else` could be removed altogether here, but maybe that
-> should be done in a preparatory patch.
->
-
-Indeed, since I plan to re-roll with the changes you've suggested, I
-will add this in too.
-
->> +               const char *prefix =3D NULL;
->> +
->
+>     endif
+> endif
+> 
+> if pcre2.found()
+>     libgit_dependencies += pcre2
+> 
 > [...]
->
->> +test_expect_success 'start after with specific directory and trailing s=
-lash' '
->> +       cat >expect <<-\EOF &&
->> +       refs/odd/spot
->> +       refs/tags/annotated-tag
->> +       refs/tags/doubly-annotated-tag
->> +       refs/tags/doubly-signed-tag
->> +       refs/tags/foo1.10
->> +       refs/tags/foo1.3
->> +       refs/tags/foo1.6
->> +       refs/tags/four
->> +       refs/tags/one
->> +       refs/tags/signed-tag
->> +       refs/tags/three
->> +       refs/tags/two
->> +       EOF
->> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/lo=
-st >actual &&
->
-> I don't see a trailing slash.
->
+> 
+> 
+> Please double-check my work, that this compiler.has_header() is
+> sufficient on your reproducer system to detect and disable the
+> non-working feature.
 
->> +       test_cmp expect actual
->> +'
->> +
->> +test_expect_success 'start after, just behind a specific directory' '
->> +       cat >expect <<-\EOF &&
->> +       refs/odd/spot
->> +       refs/tags/annotated-tag
->> +       refs/tags/doubly-annotated-tag
->> +       refs/tags/doubly-signed-tag
->> +       refs/tags/foo1.10
->> +       refs/tags/foo1.3
->> +       refs/tags/foo1.6
->> +       refs/tags/four
->> +       refs/tags/one
->> +       refs/tags/signed-tag
->> +       refs/tags/three
->> +       refs/tags/two
->> +       EOF
->> +       git for-each-ref --format=3D"%(refname)" --start-after=3Drefs/od=
-d/ >actual &&
->
-> Here there is a trailing slash though.
+I think auto-detecting such broken PCRE2 libraries is indeed the best
+way forward, thanks!
 
-I think these tests would make more sense in the newer versions with the
-values swapped. Let me do that.
+> > diff --git a/meson_options.txt b/meson_options.txt
+> > index e7f768df24..f63ff32556 100644
+> > --- a/meson_options.txt
+> > +++ b/meson_options.txt
+> > @@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
+> >    description: 'Build Git web interface. Requires Perl.')
+> >  option('iconv', type: 'feature', value: 'auto',
+> >    description: 'Support reencoding strings with different encodings.')
+> > -option('pcre2', type: 'feature', value: 'enabled',
+> > +option('pcre2', type: 'feature', value: 'auto',
+> 
+> 
+> This part is fine. We shouldn't default-fail if it isn't found, when we
+> can't expect it to be universally available.
 
-Thanks Christian for the thorough review.
+Agreed. I guess tha only reason why I picked "enabled" here is because
+we also got a wrapper in "subprojects/". But with this new workaround in
+place I agree that it is sensible to switch to "auto".
 
---000000000000da01f60639f3c11e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8a33d16d9ea80a03_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oMkZIWVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1melVSREFDY0E4enFQSlRwZkRUZXppVFJPS2R4bVh2Zwo5QURQVko3QlVB
-ZFYza21FREowbE04V2I5UE5TbEdQTSt6SmZ3WjB2TmFGTGk1R29YanJBV25qZEMyZkJ5ZVFHCnYz
-akxPb0FPaUpYQjlMOGp5SEo3S0c0QVI4aHhucnU2QXhzRHdkTUFrTGZidnVrQmZVYkVvekVkb3dO
-aE9OVS8KcmZJMkVHd0J5RVRNUyt6R2hzbHphUVVJK05ZOG9mRTdyVGNqVzI3S2ZTaDdOVjNVRENa
-MVlhREIveFJBMTJNeAp6Zk05VDNiQXFLN2VndHM4b0RVdXNYYmZvZGdNaVFyTHAzQ1JjUHdsblNX
-eVdiTzZ5bXd4ZGJOMmFNTTJtK21SCnF4aVJqWE5rZys0Nyt4bGw4bFVWT05iWmN3Z3Z3bEhVRU9z
-Z3FQR0RaLytHcGFSNmNwdXhVUWI4SEt2SlFzSGwKNFFYd2NyK1dqOW9DbjA5RFhUcTJYSEcvWFFO
-cnNEUzlMWCtMeVdmbkdnZjFwazlXVFB1TDRtQ01zU0hJSEphcQpNTWxUTHFhR0ErMlFhbmZrcHpt
-T1l5VDVlTGtQQ2JYbXJXT0lLTEZGMVhDK09qV1h5azU3OHJaMlBoSGprcnVzCkJ3VGErcjZMZTIv
-TGtFUVp4VGZMMlVWQTh6MzM3REZmKzhZczBqQT0KPXBEU1MKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000da01f60639f3c11e--
+Patrick
