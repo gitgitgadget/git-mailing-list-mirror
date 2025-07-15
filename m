@@ -1,126 +1,127 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EC21DDC0F
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 22:05:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00180244675
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 22:09:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752617117; cv=none; b=YihXzKE41zFSJ/dlIou4bPQccNM6NeHm5fxG+c+yHuZB3dkNat04jM39/QICKteCJpuCv3aeZQPcHDMwrnV3+Pmc6AsBPSNnzMUqJ+6PgDknxzC80F1dSLhm9lZFv4FiPoyLFtSqGrdOgCKjUamFEcnWouAo/ACOuLGiKMQSS1M=
+	t=1752617356; cv=none; b=ZQSOrzfKkM+G5Vo/CUAVm0s7s1GS6OqeUAEtsny08EoHjBCDCwYYio0H5wxO+O4j0icdMY4csgdY5Je6djY8RpqNPzIvboFiOl/bpzi6crbP7YgttCZiKHQ9Ed1cJ+Ew/ud39uLAq0VERpux8XGfaFzzPTqwu/PhpstwnFJxKRA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752617117; c=relaxed/simple;
-	bh=JH/oVHdrZsIwuyhPsO3ngFaYD4p/xewsunp19U5y/bk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VpbvEe2KAKInpXKz+q3wMPJ5coFV9MW7M15s9EkXpsqQqHqitgo6hxoqVaWOLZsycaLVBOaipTQYhbTHAi322IcRE3L3DiR0ebs2e+uzAEBJzDg46KHPrvBhdpGB23qihxO2QY3ozrYy2t57t2Cq2hhV+MgAtSrQkC6a3GbJywk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJipNjy7; arc=none smtp.client-ip=209.85.167.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752617356; c=relaxed/simple;
+	bh=bljc8vhyfl71/RbRrQ+0e0NQ1HVIDiHXGlcmQ8fHUjM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DjCUfj5UGsfE8ALwPqDhIui2RavuSn4xfksFcAsEdeBcQmOSFlaXHJDnbEbM3xPUsQCbei11zoSh46lskSDMV3jGgqkpf2MC7MYPEav3XjnnhhARncgXWyfQBfblOoD/QHs8LA9pbfdKcp7tawyX+IBm9jmU/KYKkuhvgtB9brs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hClQzZY6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cYTO2b5w; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJipNjy7"
-Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-41baecbdd33so693965b6e.1
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 15:05:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752617114; x=1753221914; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Gy6fq/LdMKP28lXlnCzJmr3hnRdy/Xsoi40/7A/Rqd0=;
-        b=AJipNjy7y05JQL7HbpcopfEwABVAQTAY4PFVuLyM2hLmlmt0pT8jtHBta3ItiZiupc
-         FbC6elJs99qpGNOaArsqH/T8zZJ1KteUmgSF6z9mLgSr8K2H5yNnEHcW7mUDVJcPf6Cs
-         IUabAZv9LNcdIOszIE4uhenFP86tJ2625LZia9VsACBVhdCrVJCHE854Gr56Vbiomql7
-         7r7JLLEWh2ihm60a66bbcGESph6ieDA0h2BA0tCBu3I2WWvjWXsnNtOb11LM3sli0K2u
-         EOpMjlgAxUVginhvV0aC6Q9Fd4CiBtLxgg+YTr8W9t7vU8WyutdEaQe9WL0ZJlysy5zp
-         n9cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752617114; x=1753221914;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Gy6fq/LdMKP28lXlnCzJmr3hnRdy/Xsoi40/7A/Rqd0=;
-        b=NZCZY/K2Bmll4bCRrfaA494dhp+TLBTb3FREEtGD72KN7MZf0zRXpk85YNbkNyoVRR
-         G7O0VCyrFF6fElye/66JZx5Tbk3xjPvQRSVKxoCo1aPx/y8CkHZUGftASz+zKwJUGeiP
-         K4lu91FbOeaH5GpFJB88Nqrv3Emn+PMzqBCFsoqV57cHUGorYLbopv7Huj0epEOmMhRB
-         yq/s2s9h4ocO6KcvmLYkyc8PdA7kbVEc5tSGDWsCr1qgyz/KKW5ed0FKhjT7VOFVGTPr
-         /WiFxaWEn14ePKGciP63GHywsQ/7eaDFYkdRpMCn6q5F0a+DFHBggZLodY4Pdt6y91O1
-         jvIw==
-X-Gm-Message-State: AOJu0YyCk4Ce6iW3UmFkFWHUchMh7mBm5Vuz5XEvDwVAf2LO8U4nC+IC
-	lbP+RKHoibcRYuIi1vM7dHXa5QF2VvTDUEwWj7fuKnahNTFqWjgvT4BC
-X-Gm-Gg: ASbGnctXapPrYw34LMQHmmujBk3MI/1eBHgr5gHFugOrPdD3NG+vQl2eB2eD9MI8PA/
-	AgcKKZdKMS5tdp4ADaDsduPcWqwNzMyA4a5pT40WLkHdBidVNfSvGTzlUEaHWTaaAsczetK8l6y
-	CJ0VQOIxdpol2xOaS+UCUSYqQH8yzYBRclcnzZsVzevMCQjBq2uns6cwN3I6C4CWwm0HtD9Px/G
-	k4HTBn+hw/1Tkmyvb+boojLFtYnfzfjnZpL3ejBfLNDo+8it2BeKQeXpMwJY8HCOjM/r2raE//e
-	ziV719P91bwSYgrxpSLILHRB9wWatu/CNMgya+3Lelid04b/Wha/uSh4fKoIyEasN+SXDYyBR+0
-	ne7kOaC945cHqHAE=
-X-Google-Smtp-Source: AGHT+IEEnvCdKWRjHLVf2LUqotxK6ORTZg7B3b54hPZ4K4esZ7/B8WgFwVchEAAF0Uh3dtjODbJAdA==
-X-Received: by 2002:a05:6808:178f:b0:41c:e74b:1f16 with SMTP id 5614622812f47-41d049967d3mr309969b6e.19.1752617113944;
-        Tue, 15 Jul 2025 15:05:13 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-6159d720ca8sm345064eaf.12.2025.07.15.15.05.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 15:05:13 -0700 (PDT)
-Date: Tue, 15 Jul 2025 16:59:31 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/7] odb: track multi-pack-indices via their object
- sources
-Message-ID: <dhfzgevg4bpv42tmtjkhjdvfiy35qh5wcue4x3b7dwjjwju4q6@2kmwfyr5g3yj>
-References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
- <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hClQzZY6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cYTO2b5w"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8DB1D1D00270;
+	Tue, 15 Jul 2025 18:09:12 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 15 Jul 2025 18:09:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752617352; x=1752703752; bh=JPK5kURwzo
+	670uncV04onP5E+/xjMPjFi2dqsGkl37k=; b=hClQzZY6Mfc7Ep+9zIBHX4keC9
+	ybOZICC+SEYkDNBwsvVBxU5NJ1WNXD+DEr/3vW2+Io/js3LiDRJ80ZwRz8jxvosy
+	rFYS3DbWpEPBxOsRvODoOUdz9N7/k04Zumj7oQoKF0Awh6I5bBxghBl59sOIyS0w
+	+6qf4HsiPuhrVHv6cdcMZfek2ivKfD5WDTzOSk0NdtWIOIoBifH8VZzhHj0RcOOz
+	AMS19WRi4U8+KfACDlt8D4pJvIP7ELnxNBSpt5OF9oZbltDAkU1aFV56R8MWpbjr
+	Tye+oyVv8R1h0TaOLSLRAJ+CmElaI+SU5DRR6qOMLluc+N2U7Xou19K0212A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752617352; x=1752703752; bh=JPK5kURwzo670uncV04onP5E+/xjMPjFi2d
+	qsGkl37k=; b=cYTO2b5wvYPNoODRg6zxY+tNGedEDv7C8pxULZCl13KCmHnxseC
+	dDoehjAaBiX+HpmBn2+cbFb3zKRedCqcNoeDkUftei7D42FrBW1+zmuh8NyIlMvO
+	Hhg2+PwawkUe2svPbc8DeYEheqYipf5MvwQCzUO4o4ZB9RJoE2Uq2y/I+KkEfY9n
+	hg1V4ZAxKX+0RNAZ2fk+Jo1SDuetgfGPhTNBmAT5xbpbDq/0N4o3Y6g2OqUs+uCi
+	Z6MsxqOVZc3IeoCHfrgpJByrXmzX1yrsSawN2ZeJ/5m5SmneqOkjezm9fzlR8KCE
+	YfyRN+CvHck+TGT6HRdzfUaMjrcOQCFnS0w==
+X-ME-Sender: <xms:h9F2aBAYWXTYFDDOSXXKdrAjI4ycHV9cOQOFWoNOqwfbFy8EL0FS8g>
+    <xme:h9F2aDVzAuyXcQyLJEBSld6oo3SEcy3GWf-RmqE7fk25blJHVMeMD2U-nNE3O23ei
+    NwIEx8M1nZMtvdevQ>
+X-ME-Received: <xmr:h9F2aFoLti2rfaPQg8fwJEmEgqWXV4w05TWOA4gyJsMjT4_Zc8cV6ukAyX9mzSGLalAQFCK4qFASzDMzPCRwzLYXlWjEWC8GitdNqw4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheellecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdho
+    rhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheplhdrshdrrhesfigvsgdruggvpdhrtghpthhtohepnhgvfihrvghnsehgmhgr
+    ihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:h9F2aPQMiPuYmCPS09HgAwV3tBg4cAtF028g-rweC1paAur9vG-xQA>
+    <xmx:h9F2aP226Wthy0LYfUiPhTDiixWdzUqs6EqSMUPfO6BZ7jK9svluEg>
+    <xmx:h9F2aLD1spcXLIAQpmRrhqZy6aJydJFGY48t_WW4X2bTCWn3o_PrbQ>
+    <xmx:h9F2aLjZF_ME8NNYkvZwfzgzVWnXQGX-0FLn0EUpdDaTXXHrjSLQZQ>
+    <xmx:iNF2aG3s9lvzkovcgXL9wx89PLr5SheGCDFpYUiZPaTiqXEaR9LVo6Pu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 18:09:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org,
+  =?utf-8?Q?Ren=C3=A9?=
+ Scharfe <l.s.r@web.de>,  Elijah Newren <newren@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH v2 0/3] C99: declare bool experiment a success
+In-Reply-To: <aHbMlUKNL2CAK_9I@fruit.crustytoothpaste.net> (brian m. carlson's
+	message of "Tue, 15 Jul 2025 21:48:05 +0000")
+References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
+	<cover.1752587571.git.phillip.wood@dunelm.org.uk>
+	<aHbMlUKNL2CAK_9I@fruit.crustytoothpaste.net>
+Date: Tue, 15 Jul 2025 15:09:09 -0700
+Message-ID: <xmqqikjtf6nu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
+Content-Type: text/plain
 
-On 25/07/15 01:29PM, Patrick Steinhardt wrote:
-> Hi,
-> 
-> multi-pack-indices are tracked via `struct multi_pack_index`. This data
-> structure is stored inside `struct object_database`, which is the global
-> database that spans across all of the object sources
-> 
-> This layout causes two problems:
-> 
->   - Multi-pack indices aren't global to an object database, but instead
->     there can be one multi-pack index per object source. This creates a
->     mismatch between the on-disk layout and how things are organized in
->     the object database subsystems and makes some parts, like figuring
->     out whether an object source has an MIDX, quite awkward.
-> 
->   - Multi-pack indices are an implementation detail of how efficient
->     access for packfiles work. As such, they are neither relevant in the
->     context of loose objects, nor in a potential future where we have
->     pluggable backends.
-> 
-> This patch series thus refactors the codebase to stop tracking MIDX's
-> globally. Instead, they are being pushed down one level so that every
-> `struct odb_source` has an optional MIDX itself. This simplifies some of
-> our code and will make it easier in a future iteration to move the data
-> into a packfile-specific object source backend.
-> 
-> Changes in v2:
->   - Changed the base of this series. It is now built on top of
->     a30f80fde92 (The eighth batch, 2025-07-08) with "ps/object-store" at
->     841a03b4046 (odb: rename `read_object_with_reference()`, 2025-07-01)
->     and "tb/midx-avoid-cruft-packs" at 5ee86c273bf (repack: exclude
->     cruft pack(s) from the MIDX where possible, 2025-06-23) merged into
->     it.
->   - Re-explain the split between object databases and object sources
->     to help readers out a bit, given that this is a rather recent
->     change.
->   - Rename `struct odb_source::multi_pack_index` to `struct
->     odb_source::midx`.
->   - Fix some overly long lines when looping through the individual
->     sources.
->   - Drop the patch that guards re-loading MIDXs, as we already have the
->     guard via `packed_git_initialized`.
->   - Remove some while-at-it changes to make the diffs easier to read.
->   - Link to v1: https://lore.kernel.org/r/20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Thanks Patrick! From the range-diff, this version looks good to me :)
+> This series looked good to me.  I especially like the fact that we've
+> made it easier for me to figure out whether starts_with and friends are
+> booleans (that is, true if it starts with the value) or our standard
+> zero/negative-one (that is, false if it starts with the value).
 
--Justin
+Hmph, this is a tangent, I've never thought of it that way.
+
+The "0 is success and negative is failure" is exactly about success
+and failure.  We expect such a call to succeed most of the time and
+failure is a note-worthy event.
+
+Functions like starts_with() and friends, those that Lispers might
+name with q suffix, are quite different.  A predicate is asking "is
+it, or isn't it?" question and returning "false" from it does not
+imply a failure in any way.
+
+I wouldn't dream of making them return -1 for "failure", because
+starts_with(buf.buf, "#") that finds buf.buf does not begin with "#"
+is no way failing.
+
+Anyway, we may start rewriting our old-fashioned idiom to normalize
+a "true if non-zero" integers, i.e.
+
+	return !!some_true_if_non_zero_integer_variable;
+
+into 
+
+	return (bool)some_true_if_non_zero_integer_variable;
+
+perhaps ;-).
