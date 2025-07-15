@@ -1,127 +1,126 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C0221DE2DC
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 21:52:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EC21DDC0F
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 22:05:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752616327; cv=none; b=hFIpCdQGWYsjXQCApq9T4zejMUIRnMWh/T+f6x1c8ivimBcwFFTa8hIfgR1wy6venHWmYsMHEzWr5GOgPBkW1ZmXl2QUq9UWRGFqluCzwQ7i2jhwxcAzKFZLfzCVrZ6yGmRlKh2YlSr7xnJKxlepCU0aGtvvk5RdsoiPFurxAGE=
+	t=1752617117; cv=none; b=YihXzKE41zFSJ/dlIou4bPQccNM6NeHm5fxG+c+yHuZB3dkNat04jM39/QICKteCJpuCv3aeZQPcHDMwrnV3+Pmc6AsBPSNnzMUqJ+6PgDknxzC80F1dSLhm9lZFv4FiPoyLFtSqGrdOgCKjUamFEcnWouAo/ACOuLGiKMQSS1M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752616327; c=relaxed/simple;
-	bh=aeXfXprqU/IdGxcd5tt8FrJrV+BXIdFKp7isQMlJw7k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nmbjwwsCv17gQHKLtquynKRyH2xMt46+O+W9BoMc+XtM2CMnU3j7Hey3ewRryd6rRm2AdKLiuTyjvot7k6zZSzSxSWzqI/Kx+3GH80PrM0kBxqtFSostNmZdW3/kM6bh/Nr/rE3b5qBuSVwob8+dFnRJt8vRw8xaaJRNKTMvR/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FHmrCRz3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yh58slGL; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752617117; c=relaxed/simple;
+	bh=JH/oVHdrZsIwuyhPsO3ngFaYD4p/xewsunp19U5y/bk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VpbvEe2KAKInpXKz+q3wMPJ5coFV9MW7M15s9EkXpsqQqHqitgo6hxoqVaWOLZsycaLVBOaipTQYhbTHAi322IcRE3L3DiR0ebs2e+uzAEBJzDg46KHPrvBhdpGB23qihxO2QY3ozrYy2t57t2Cq2hhV+MgAtSrQkC6a3GbJywk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJipNjy7; arc=none smtp.client-ip=209.85.167.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FHmrCRz3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yh58slGL"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id CACFC7A00A3;
-	Tue, 15 Jul 2025 17:52:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 15 Jul 2025 17:52:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752616323;
-	 x=1752702723; bh=pdLIkHr/wQ//Tci9p3KveB8EuAOqgWaqbmSGJ7ziwe4=; b=
-	FHmrCRz3/YyWvO5KxklcQWk3CSA4T2x+SyrfAh0qYf0fclxwuGmQ+wBYI5JxsLcs
-	Zt3T2iLHi5lueWbyGtSm6r57z2U2JGvsjhddeGtHZfQmjelbl+kSkjKso1N2qwxU
-	rCvD2h++DsfU3P6J8NEHGG/cMQQ67WT40EU/7Zz5bHvKXG8vVIH1U3TNJoqBW0Fi
-	+jphocAVAtgcj3kkhAOTa8vveSe7R6N5GQsxDDD1Ak325SY0B5ojPDy0aZTJywQ+
-	KQmuZlVRvoUNmXQIyZnhHfoxtH8LHnWFTaER1xATM+UYi4tn4N49+PtEq/B564+M
-	hGB857x0OcQKf8x8ETjBig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752616323; x=
-	1752702723; bh=pdLIkHr/wQ//Tci9p3KveB8EuAOqgWaqbmSGJ7ziwe4=; b=Y
-	h58slGLzhP6eMc9cD1xIM4nHRmC0x/Icz2yzOGeqKaA+Lr01GONOiplQf5vs4L1e
-	eC82YAz/Fx2BB/ldBWiroQqBOu97SjQQMg/+1seDh+xtdiWXFJvWHJwj40DyuTvQ
-	qrdERT2Ei/uUt4bHMwKhx0N0Dfo9uUxH9AIS5nsC47vFpaS9RLu+8WMLyEXWRJab
-	i1c9tyFbA3+w2rNcLBRdc8l/90ay3kD9LPDboHdBU2ahXFNPi2vnOfxKWTmGOend
-	oEN8uUF4J7eFQYn6mEwR1Gxj6S284xm/NOclLl5qrurzYbPcerFGrtwn3gbYV33A
-	4J0tF3N5a+7ZAAD2P1//Q==
-X-ME-Sender: <xms:g812aBl-revL_D-QPnNwIfdwN827tIUe1EGKvMoHBzuCzQAUDbtYvg>
-    <xme:g812aFSB-G2DfnIcNyx9fTU_Qc7Nj0E4pUvUk5IT5pN-RZKRgHMoKLhAtQ3cezaL7
-    oxnlFwwcauZhaH21A>
-X-ME-Received: <xmr:g812aIH4XQx6SpRR2EJ8PI0Yi2tqlOu5DcsZ9xJfOjMhahM7wJ-RlRKiCiMkKbTFXPSpqakO3gQdE_G2zMtIa-CHc9PvvW_7-cAZ6Uk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheelhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhephfetvdejheduheegleehfeeivedtgeelfedvffdtvedtudffieekieeijedv
-    lefhnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpe
-    dtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsvg
-    gsrghsthhirghnsegsrhgvrghkphhoihhnthdrtggtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthi
-    htohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudes
-    ghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:g812aCGEqAz7O2MYGCG7GBOUlah_Unyv3f_KM0BJ2p8PmRlkfum3BQ>
-    <xmx:g812aOQGEsagQ9o63QMB-QeDq00xBhvTuphSoPSxH8sMKLAQ3pyGYw>
-    <xmx:g812aLI9Fqh_Cy7LfNfeOxQbRLi-vEOkGKNpnOh7VPTa3F0lchzrlA>
-    <xmx:g812aBY1zMdMviWTgRJjOuARQpQ3kH56Ai4PItv8aapkNKBpTORGjg>
-    <xmx:g812aBC29OiES3E6nzf8hVf5RdOpw9r0P-dGfS7S6Faj7btqwPCGH_34>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 17:52:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Sebastian Andrzej Siewior <sebastian@breakpoint.cc>
-Cc: git@vger.kernel.org,
-    brian m. carlson <sandals@crustytoothpaste.net>,
-    Collin Funk <collin.funk1@gmail.com>,
-    "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 0/5] bswap.h: Rework ntohl handling
-In-Reply-To: <20250715191230.12081-1-sebastian@breakpoint.cc> (Sebastian
-	Andrzej Siewior's message of "Tue, 15 Jul 2025 21:12:25 +0200")
-References: <20250715191230.12081-1-sebastian@breakpoint.cc>
-Date: Tue, 15 Jul 2025 14:52:01 -0700
-Message-ID: <xmqqple1f7ge.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJipNjy7"
+Received: by mail-oi1-f178.google.com with SMTP id 5614622812f47-41baecbdd33so693965b6e.1
+        for <git@vger.kernel.org>; Tue, 15 Jul 2025 15:05:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752617114; x=1753221914; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Gy6fq/LdMKP28lXlnCzJmr3hnRdy/Xsoi40/7A/Rqd0=;
+        b=AJipNjy7y05JQL7HbpcopfEwABVAQTAY4PFVuLyM2hLmlmt0pT8jtHBta3ItiZiupc
+         FbC6elJs99qpGNOaArsqH/T8zZJ1KteUmgSF6z9mLgSr8K2H5yNnEHcW7mUDVJcPf6Cs
+         IUabAZv9LNcdIOszIE4uhenFP86tJ2625LZia9VsACBVhdCrVJCHE854Gr56Vbiomql7
+         7r7JLLEWh2ihm60a66bbcGESph6ieDA0h2BA0tCBu3I2WWvjWXsnNtOb11LM3sli0K2u
+         EOpMjlgAxUVginhvV0aC6Q9Fd4CiBtLxgg+YTr8W9t7vU8WyutdEaQe9WL0ZJlysy5zp
+         n9cg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752617114; x=1753221914;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Gy6fq/LdMKP28lXlnCzJmr3hnRdy/Xsoi40/7A/Rqd0=;
+        b=NZCZY/K2Bmll4bCRrfaA494dhp+TLBTb3FREEtGD72KN7MZf0zRXpk85YNbkNyoVRR
+         G7O0VCyrFF6fElye/66JZx5Tbk3xjPvQRSVKxoCo1aPx/y8CkHZUGftASz+zKwJUGeiP
+         K4lu91FbOeaH5GpFJB88Nqrv3Emn+PMzqBCFsoqV57cHUGorYLbopv7Huj0epEOmMhRB
+         yq/s2s9h4ocO6KcvmLYkyc8PdA7kbVEc5tSGDWsCr1qgyz/KKW5ed0FKhjT7VOFVGTPr
+         /WiFxaWEn14ePKGciP63GHywsQ/7eaDFYkdRpMCn6q5F0a+DFHBggZLodY4Pdt6y91O1
+         jvIw==
+X-Gm-Message-State: AOJu0YyCk4Ce6iW3UmFkFWHUchMh7mBm5Vuz5XEvDwVAf2LO8U4nC+IC
+	lbP+RKHoibcRYuIi1vM7dHXa5QF2VvTDUEwWj7fuKnahNTFqWjgvT4BC
+X-Gm-Gg: ASbGnctXapPrYw34LMQHmmujBk3MI/1eBHgr5gHFugOrPdD3NG+vQl2eB2eD9MI8PA/
+	AgcKKZdKMS5tdp4ADaDsduPcWqwNzMyA4a5pT40WLkHdBidVNfSvGTzlUEaHWTaaAsczetK8l6y
+	CJ0VQOIxdpol2xOaS+UCUSYqQH8yzYBRclcnzZsVzevMCQjBq2uns6cwN3I6C4CWwm0HtD9Px/G
+	k4HTBn+hw/1Tkmyvb+boojLFtYnfzfjnZpL3ejBfLNDo+8it2BeKQeXpMwJY8HCOjM/r2raE//e
+	ziV719P91bwSYgrxpSLILHRB9wWatu/CNMgya+3Lelid04b/Wha/uSh4fKoIyEasN+SXDYyBR+0
+	ne7kOaC945cHqHAE=
+X-Google-Smtp-Source: AGHT+IEEnvCdKWRjHLVf2LUqotxK6ORTZg7B3b54hPZ4K4esZ7/B8WgFwVchEAAF0Uh3dtjODbJAdA==
+X-Received: by 2002:a05:6808:178f:b0:41c:e74b:1f16 with SMTP id 5614622812f47-41d049967d3mr309969b6e.19.1752617113944;
+        Tue, 15 Jul 2025 15:05:13 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-6159d720ca8sm345064eaf.12.2025.07.15.15.05.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Jul 2025 15:05:13 -0700 (PDT)
+Date: Tue, 15 Jul 2025 16:59:31 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 0/7] odb: track multi-pack-indices via their object
+ sources
+Message-ID: <dhfzgevg4bpv42tmtjkhjdvfiy35qh5wcue4x3b7dwjjwju4q6@2kmwfyr5g3yj>
+References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
+ <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
 
-Sebastian Andrzej Siewior <sebastian@breakpoint.cc> writes:
+On 25/07/15 01:29PM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> multi-pack-indices are tracked via `struct multi_pack_index`. This data
+> structure is stored inside `struct object_database`, which is the global
+> database that spans across all of the object sources
+> 
+> This layout causes two problems:
+> 
+>   - Multi-pack indices aren't global to an object database, but instead
+>     there can be one multi-pack index per object source. This creates a
+>     mismatch between the on-disk layout and how things are organized in
+>     the object database subsystems and makes some parts, like figuring
+>     out whether an object source has an MIDX, quite awkward.
+> 
+>   - Multi-pack indices are an implementation detail of how efficient
+>     access for packfiles work. As such, they are neither relevant in the
+>     context of loose objects, nor in a potential future where we have
+>     pluggable backends.
+> 
+> This patch series thus refactors the codebase to stop tracking MIDX's
+> globally. Instead, they are being pushed down one level so that every
+> `struct odb_source` has an optional MIDX itself. This simplifies some of
+> our code and will make it easier in a future iteration to move the data
+> into a packfile-specific object source backend.
+> 
+> Changes in v2:
+>   - Changed the base of this series. It is now built on top of
+>     a30f80fde92 (The eighth batch, 2025-07-08) with "ps/object-store" at
+>     841a03b4046 (odb: rename `read_object_with_reference()`, 2025-07-01)
+>     and "tb/midx-avoid-cruft-packs" at 5ee86c273bf (repack: exclude
+>     cruft pack(s) from the MIDX where possible, 2025-06-23) merged into
+>     it.
+>   - Re-explain the split between object databases and object sources
+>     to help readers out a bit, given that this is a rather recent
+>     change.
+>   - Rename `struct odb_source::multi_pack_index` to `struct
+>     odb_source::midx`.
+>   - Fix some overly long lines when looping through the individual
+>     sources.
+>   - Drop the patch that guards re-loading MIDXs, as we already have the
+>     guard via `packed_git_initialized`.
+>   - Remove some while-at-it changes to make the diffs easier to read.
+>   - Link to v1: https://lore.kernel.org/r/20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im
 
-> this series continues the rework of the bswap32/64()/ nothl() handling. 
->
-> I've been looking at recent compiler and they manage to recognize the
-> manual shifting and use an optimize opcode if available. The ntohl
-> version provided by glibc already provides an "optimized" version which
-> makes an optimisation in git almost not needed.
-> One of the motivation behind overwriting/ providing an optimized
-> version was to provide a macro instead of using a function call. One
-> libc that is still providing ntohl as a function call is musl.
->
-> While ntohl() is provided by the libc, the ntohll() is not. I found it
-> only on Windows provided by winsock.h.
->
-> I haven't touched the put/get_be*() macros. gcc & clang are both smart
-> enough to swap the content accordingly and perform a single store/ load.
-> Only the msvc seems to strugle here and performs multiple bytes stores/
-> loads and shifts.
->
-> v2…v3 https://lore.kernel.org/all/20250611221444.1567638-1-sebastian@breakpoint.cc/
->   - Fixed typos in the patch description
+Thanks Patrick! From the range-diff, this version looks good to me :)
 
-Thanks for updating the proposed log messages with typofixes.  I
-understand the patch text has no changes?
-
-Cc'ed those who gave comments on the previous round.  How does this
-version look to you folks?
-
-Thanks.
+-Justin
