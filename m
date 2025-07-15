@@ -1,53 +1,53 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00578231853
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:59:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6026B231853
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:59:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752580744; cv=none; b=c2QNbTyhdyl4NqcHYFpIJybnEBqKvemLrKYKw97GARMUZh0g2vFS5Q2Kb5badcruM4rn1SjOrwazFGwjK//wPr3q3OShGCJQyA485d2emLwvCIldSJDbR4ehf/+s6P9z9rlvkwjblXbdqPtkM6uQSUPzexTg73fO2Gwael8ICKE=
+	t=1752580749; cv=none; b=qJjYG3F09ulRedddEo+YjEvXYhKzOVtx/To4wkZe/uOIhio8Z1lf3krXLm06jh0U+HWnG1WpAP/gE971UnT44EQsEbJ1fkSuMY48Vz5E05lVSQso202gIvn65CWMoYtY4jLRvB26iy9tRhbHPk+bUb2L4g1asP8HajyRok4S6xs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752580744; c=relaxed/simple;
-	bh=EELItxI/5piA6c+36E0nseuGNj2dmaiVT6QeySz3gsE=;
+	s=arc-20240116; t=1752580749; c=relaxed/simple;
+	bh=RcBXrmr7O6OM2OxbROqEkiA8mmeWx2pb3pIxM+J6Poo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GtANsqnJ/2U5c342ttNoZH/H6KmHsYh1K7nPjFDYr8N0mueeosdLIxntX0zxwke1LYuX4WmKq7qYB4emRH1Q/oU+R65ikP1UaYqkTVF8vuktvkbOpzbaMtSXTnSwBswHJyeNz5N/Vmb3s5oTnlOkKmX44FKcPdSJhO9zNwE+GDc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qL1/sN8G; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ddKt27g/; arc=none smtp.client-ip=103.168.172.153
+	 Content-Type:Content-Disposition:In-Reply-To; b=XB5iMtz2tv5eJCdevdmAdLufql8jAy6/5G9rDk2vTQ3FLuh/4xC8l9KHOXAMGjsW9uZ0unqAwWQED47rTSvu7KQJ9dgQdlWEK6nGY9jHaUByYSa8ZjS3HsnpjP6n1lMNVemIBspxaieD1vpaTzxKsiLQkqE5uhswNDg8+KtN1as=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FFRQmsRO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WMGgKlOE; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qL1/sN8G";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ddKt27g/"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1385714002D2;
-	Tue, 15 Jul 2025 07:59:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FFRQmsRO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WMGgKlOE"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8580C14002E2;
+	Tue, 15 Jul 2025 07:59:06 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 15 Jul 2025 07:59:02 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 15 Jul 2025 07:59:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752580742; x=1752667142; bh=kavTupo2D0
-	cMiEFNJyTc6zG2YcAVEW1/TEf77LwqHgQ=; b=qL1/sN8GGrtm3bDSGpJYnbTIPA
-	cvrTEwA+CL85sKfHJ9MTp6uNuhSygE/sj4YmoChayhe8pdqAgak87PvQWxQdbbZ9
-	qHvNRzqoo9hh3msWMpYOAuZCEF1DHeps2TJ4Zx9jji8MADMa1a85Ha3sw/uIJhxY
-	7kYLymJ894oslGWhR44fe8qZ0x/macIjHUNMuoNu3UzvssoNQ9fTKGRoiroh6wyZ
-	bPb8lbvdILOLE4mcCpucpEdz2Fswyj9xO4HQSkOL4Hw23Uz32UdxJwLdyKueCXom
-	5cv3J22XAqvmqCo6PxacL2EbNO17CM8xFsZfo4Y2xbmEwyfOuPyihPL3O2tA==
+	:subject:to:to; s=fm2; t=1752580746; x=1752667146; bh=GMGcJ1CNoq
+	1LZqFIlQfPC0N2y4APR9vC3CwSyVZQAb4=; b=FFRQmsROCx78Snd/Tw9Eb7SOA4
+	xGERtquFsNbMYaV2HkN99sGmsnoxxrQBP0w/gt/zv2iid0qRxEMfkSaDGwZApH5m
+	A82pTCsy8vEHc/IR1/JTTN0zGCMQmsE5G1TpAW81gPDC03K60zE2uv3kuKSwPAhp
+	j78INci0H1ERb1B0tZRHkQFHMlkRd24UYXOtZGPV4WgcT/eAbHx1MlXt5nTj3pP+
+	naf2h7scQ+OQOzEpsp/lJv3Og3VT5x2iZ2qxJXNmqhUcMpkc01LMp6Z3CldeZFog
+	x7iBa/tZGDtwCTALi/eJNcIAd+4SOnmtQlC44YAtkwWO4S3UfVrpMTN0M06Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752580742; x=1752667142; bh=kavTupo2D0cMiEFNJyTc6zG2YcAVEW1/TEf
-	77LwqHgQ=; b=ddKt27g/Upx8Q8AB72CQR7xJSGGN4+KxLskShCA7mDDvSr86XYV
-	JBo+kcxTCO84i3kRDJ2fOdL51gX6dhF0z7JxxI6WxiprKC+ye5++SXhMzqUslnWI
-	NeIIiZjmZGXqdTvHzJfwMTl/CATwyA40ltshNOLVU7FGYONLkFqRTj4hwGkZyMKr
-	OyrZN0/nYLLH8BM6/XvEYOcz+5RHclEyevIi/ne8S7spqE3MAObIZVrFc1jAT5sx
-	zV1IQYIC3YxYluuidigg1j/PJM18BCtoZNvu/3liy9rdPIMK4lbNlxA8VK4UtZWF
-	fVqs4dMfzImMN593rOJ+KkOwrd9S34Ycydw==
-X-ME-Sender: <xms:hUJ2aJ3IVC0gGHnqWi-IKLt6U_Hs-IrVcRhrBPhUo0U_SKDS48OESA>
-    <xme:hUJ2aFQHUbgwmOmJ_taJOMFyfuGru6d9NdptOnwJkKCv_UjBs9aEulsF8sPp0PnLF
-    u02Ud8VSEd8e0TClQ>
-X-ME-Received: <xmr:hUJ2aKyUPcHji-x1z87C7NBiQV-mx5GqF4_aqkc46vmfOQDo2zgwiv82J_rfWrpmGJaLmU_GHkKtNpAvezom39plzqFuizQNvlBOs2JiWCDnag>
+	1752580746; x=1752667146; bh=GMGcJ1CNoq1LZqFIlQfPC0N2y4APR9vC3Cw
+	SyVZQAb4=; b=WMGgKlOExBhvdCrXN2XKYYFFF9bh89Xhkyok4O/GPMw/kTgWjBI
+	ShkJTYh+BvTVcc6H/m+sC5RxC9H/BOdypru/FSxB6Kelq7pVxzcgzvdyGJCUQE2I
+	h0q5d1kEH/39MkwrEhLkKcxZN5YScTvV04S7Id8jTs0PcEZwUpuMOsOv37trlZfL
+	NsV5Fks+gjoiom1WEgF8y9YbHXaMTiRkvJt8d8zS+FMGj8FLpmPTkXO/OGGXqfhw
+	UR/Np3savMSxIebHkKYYXuD4tPCfUoa9T/0mieYjPbMAB9M4RyTVZCOQh4fLuzNe
+	cfDKgRNx+L3rmvjCAXhCmlgyQ+yqHunEKXA==
+X-ME-Sender: <xms:ikJ2aLTOQIjHvvLcuwbrtgiY7_8zWNMNOAWNkI8MaGeu_Djz69jANw>
+    <xme:ikJ2aAmP8irEt95yhD9YQxEuYOvx2V1kxIjTkBp_vUhkb1tuO59VMt1thaC_tbn2X
+    iV06m_stkmXkDymyA>
+X-ME-Received: <xmr:ikJ2aJ5cYjJoYBmJ18zDT9Wx-mS2LpOOfrxN70-WLqEdS6FQ0wEO87cnSgOIxO4XHa7qOjau7fVQo8aXjZc7HeqB4orZOFa6xgzqpWHVT-ERYw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeejjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -55,37 +55,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehgeejjecutefuodetgg
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehj
-    lhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhsfigrlhgu
-    rdgsuhguuggvnhhhrghgvghnsehgmhigrdguvg
-X-ME-Proxy: <xmx:hUJ2aNAlHlRybMgZlbgjbZSKkGSMjaF99g2Pauhu2NJijwPggzWhVw>
-    <xmx:hUJ2aOHZQlXgisSmCmpWiS5MmDuxv-HpUz5PcIZLCBAvGs6BodpOPA>
-    <xmx:hUJ2aMO_wN21yISTZG1kVjDJCryL01nlTJHFPNNE7tab_eaBBSBjcQ>
-    <xmx:hUJ2aH6Nq4ZLT0f8tJNAfW-c0f7-TmfJKfG4YXIKjxwc74bcNOIMiw>
-    <xmx:hkJ2aPtUqQjxGl9tZLkotCpmYn28ZZo2J50K9_8uTnvYBn_l-lfCYiOD>
+    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehluhgtrghsshgvih
+    hkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghl
+    vgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ikJ2aOi-max6h6pn1fBwrccy2dGHDOWl7rAW1MITC124hQryNfemZw>
+    <xmx:ikJ2aOGzQ1upj4x9lQqdw7ryLeRWAO186VmOFknt_WuHc1wdQTKT7w>
+    <xmx:ikJ2aMR6aDTPcfaIR1t8961SodV0dwdy2Xh7wtHHj3jg7a1K8Zzs7w>
+    <xmx:ikJ2aDx7YcgsbLWm92HFZnSfR2qRzaEdqRZAZWqy_h-HKKb5yG2rsQ>
+    <xmx:ikJ2aDXGe-5xxIw6eJcBmGaBtA9b6XgZJkvoQHlhNKhRFdbPfS2S6C4I>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 07:59:00 -0400 (EDT)
+ 15 Jul 2025 07:59:05 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d82dbbdb (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 11:58:58 +0000 (UTC)
-Date: Tue, 15 Jul 2025 13:58:55 +0200
+	by mail (OpenSMTPD) with ESMTPSA id d71837a8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 15 Jul 2025 11:59:04 +0000 (UTC)
+Date: Tue, 15 Jul 2025 13:59:01 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
-	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com,
-	phillip.wood@dunelm.org.uk, jltobler@gmail.com
-Subject: Re: [GSoC RFC PATCH v4 0/4] repo: add new command for retrieving
- repository info
-Message-ID: <aHZCfynoeMDRdN4X@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com, ben.knoble@gmail.com,
+	gitster@pobox.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com
+Subject: Re: [GSoC RFC PATCH v4 1/4] repo: declare the repo command
+Message-ID: <aHZChXPTbk_X6xDK@pks.im>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
  <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <aHYuwlWlbkc600Ps@ugly>
+ <20250714235231.10137-2-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,35 +91,134 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aHYuwlWlbkc600Ps@ugly>
+In-Reply-To: <20250714235231.10137-2-lucasseikioshiro@gmail.com>
 
-On Tue, Jul 15, 2025 at 12:34:42PM +0200, Oswald Buddenhagen wrote:
-> On Mon, Jul 14, 2025 at 08:52:27PM -0300, Lucas Seiki Oshiro wrote:
-> > - Renames the command to `repo` instead of `repo-info`. All the
-> > functionality
-> >  of `repo-info` will now be under `repo info`. The functionality of `survey`
-> >  will be moved to another subcommand of `git repo`.
-> > 
-> this strikes me as a bad idea, given how established the `repo` tool is.
+On Mon, Jul 14, 2025 at 08:52:28PM -0300, Lucas Seiki Oshiro wrote:
+> Currently, `git rev-parse` covers a wide range of functionality not
+> directly related to parsing revisions, as its name says. Over time,
+> many features like parsing datestrings, options, paths, and others
+> were added to it because there wasn't a more appropriated command
+> to place them.
+> 
+> Create a new Git command called `repo`. `git repo` will be the main
+> command for obtaining the information about a repository (such as
+> metadata and metrics), returning them in a machine readable format
+> following the syntax "field<LF>value<NUL>".
+> 
+> Also declare a subcommand for `repo` called `info`. `git repo info`
+> will bring the functionality of retrieving repository-related
+> information currently returned by `rev-parse`.
+> 
+> Also add entries for this new command in:
+> 
+> - the build files (Makefile, meson.build, Documentation/meson.build)
+> - builtin.h
+> - git.c
+> - .gitignore
+> - command-list.txt
+> - Documentation
 
-The `repo` tool wouldn't be executed as `git repo` though, would it? So
-I'm not sure whether that really is relevant at all. On the other hand
-though I do see that it might be confusing when you interact with the
-`repo` tool on a daily basis.
+Nit: I don't really think it makes sense to have this bulleted list of
+files you have changed unless you provide more context. We basically
+already have a way more accurate version of this list 10 lines down in
+the diffstat.
 
-> without much thinking and reading prior conversations, i'd go with "query",
-> because it's a database-like metadata ... query.
-> the obvious followup idea would then be "meta", but that suggests that it
-> isn't only a read-only command, which i think it is supposed to remain?
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> new file mode 100644
+> index 0000000000..6f8fe3f6ea
+> --- /dev/null
+> +++ b/Documentation/git-repo.adoc
+> @@ -0,0 +1,54 @@
+> +git-repo(1)
+> +===========
+> +
+> +NAME
+> +----
+> +git-repo - Retrieve information about a repository
+> +
+> +SYNOPSIS
+> +--------
+> +[synopsis]
+> +git repo info [<key>...]
+> +
+> +DESCRIPTION
+> +-----------
+> +Retrieve information about the current repository in a machine-readable format.
+> +
+> +`git repo` will be the primary tool to query repository-specific information,
 
-"Query" is way too generic from my point of view, as it doesn't say
-_what_ you query. "Meta" might be a bit better even though it still
-loses the information that you act on the repository level, which is a
-bit of a shame.
+I think we should avoid making any promises how this command will evolve
+in the future. I'd rather state what it does right now than to say what
+it will eventually do.
 
-We could of course adapt and call it git-repository(1) to avoid any
-confusion with git-repo(1) and repo(1). It's not like this is a tool
-that users would typically have to run daily outside of scripts, so I
-don't think it hurts much to have a longer command name.
+> +such as metadata that currently can also be done by calling `git rev-parse` (see
+> +linkgit:git-rev-parse[1]). `git repo` doesn't query information unrelated to the
+> +current repository or that is already retrieved by a specialized command, for
+> +example, `git config` (see linkgit:git-config[1]) or `git var` (see
+> +linkgit:git-var[1]).
+> +
+> +This command returns the retrieved data following a null-terminated format with
+> +this syntax:
+> ++
+> +----------------
+> +key1<LF>value1<NUL>
+> +key2<LF>value2<NUL>
+> +...
+> +----------------
+> ++
+
+One of the things I wonder is whether we should by default adapt those
+tools to have human-readable format, e.g. in a way that it can be easily
+added to git-bugreport(1). This would teach script authors that want to
+use the command to use `git repo info --format=porcelain` right from the
+start to have a machine-parseable output, and it would allow us to
+iterate on the exact output format.
+
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> new file mode 100644
+> index 0000000000..a1787a3cc5
+> --- /dev/null
+> +++ b/builtin/repo.c
+> @@ -0,0 +1,38 @@
+> +#include "builtin.h"
+> +#include "parse-options.h"
+> +
+> +static int repo_info(int argc UNUSED,
+> +		     const char **argv UNUSED,
+> +		     const char *prefix UNUSED,
+> +		     struct repository *repo UNUSED)
+> +{
+> +	return 0;
+> +}
+> +
+> +int cmd_repo(int argc,
+> +	     const char **argv,
+> +	     const char *prefix,
+> +	     struct repository *repo)
+> +{
+> +	parse_opt_subcommand_fn *fn = NULL;
+> +	const char *const repo_usage[] = {
+> +		"git repo info",
+> +		NULL
+> +	};
+> +	struct option options[] = {
+> +		OPT_SUBCOMMAND("info", &fn, repo_info),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options, repo_usage, 0);
+> +
+> +	if (fn) {
+> +		return fn(argc, argv, prefix, repo);
+> +	} else {
+> +		if (argc) {
+> +			error(_("unknown subcommand: `%s'"), argv[0]);
+> +			usage_with_options(repo_usage, options);
+> +		}
+> +		return 1;
+
+I think we need to print an error `if (!argc)`, as well. Otherwise the
+user wouldn't know why `git repo` without any argumentsdoesn't do
+anything.
 
 Patrick
