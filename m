@@ -1,89 +1,91 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 109B11EF391
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B222186E2E
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:49:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752598111; cv=none; b=MLaWPud+ABlsjRasb4Ztd97ICgigXSmGF3Pf8DQEpyA0YCGGqvBk6+BAtpEIDFc+wGOPBkl3SdOqZ8nvRAF9HTKLhuK2eF4yyV1hYbAPm/fjeEOIewf2E4TCQxRdBNLP7+9cBh4KexElk8LrDLHfA52I/7T3dSdTxA7grc5vuxk=
+	t=1752598197; cv=none; b=E4X+TPkmu4mZgQCZ3txUBtr+YFQBIY46QUq5pXz0QidEFFkPMJNzCXqyoKYX0j6GXbMsIwxdb331md4Qvbn+uAxy98/iJlchBLytO/Oa1BI6HZ7qnupNwe6TU1AnZyafAGLE2wcOa0HPCIoWEh6ARdz5DgV06YgQa4gaiNBlupQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752598111; c=relaxed/simple;
-	bh=M5SD5ESv7mtgHBTbQ2FoYwwCbDCT8Qodsj8FUBujsTE=;
+	s=arc-20240116; t=1752598197; c=relaxed/simple;
+	bh=8aS9kwWrYxzbtRseM+9ybPLbiWOi7miDlonJ5wF4Ank=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vg+CwOvyips3dfTnpCSqXUqGsybHvh+5HO8GY3eVNZ059i1qTyitXuAfc2xpjleIIsNg79yXF70uMkRbd+GZfRw83hkeFWauZRAIcJdeHGIsFB6z+r7A4qR2IdhbHLP0LMK4DADPoRE1Yo5wYf2k7sQKrSyruUSS2iY0SD4g+bU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=A9+QXR9j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fQJjiSb8; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=Wvo1OFp0Mv0elRvdR7uZytcf07y0I33f7RiKLR6qGiM6hP/KdGpIY1UQ30/LpbXDPOnbxBTsP8ECnUxX4L+4Rfs5kNRc/G8wbRxk+MNkg5fms6RFVvhav9s+d0BrAdEDPBWz9lzeCuuGao1QQKyUqz0gqTWv5Dw0k064PkDgoRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WFbzrhrb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LKZcMWEb; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="A9+QXR9j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fQJjiSb8"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id C7F581D002C1;
-	Tue, 15 Jul 2025 12:48:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 15 Jul 2025 12:48:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WFbzrhrb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LKZcMWEb"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 648AB1D002A2;
+	Tue, 15 Jul 2025 12:49:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-07.internal (MEProxy); Tue, 15 Jul 2025 12:49:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1752598107;
-	 x=1752684507; bh=yWASWCp5Ba6IECJX2FBVtQmOhObMDDPIDxmEZBPQmzM=; b=
-	A9+QXR9jFNPrj4UbEXHE5hK2IcdKPlajs1WcQkXG2ZHRG9wB+jhMQD/Wqu33BAZD
-	MO4IKnaz8VGf/5iue6GTSNPK1s5vsN919Up272+4IuHgl7Rg/U+wNAKGb4y2dU8x
-	S+ptwVL2YR4X30KPdChLWhW9wn3Wxsgn6ysCfyjNqTkqHzCk37OEpIO/lvfCdWuG
-	nXvVZtkBZ/uLa+UWGdjEEkp6iCMSW0aU6wbWP3DZ8flO05iQx1BojdRe2GVyTG6A
-	FWUQvajx5Oi0HSPy5Yd4EiaivyhuSetsAsRy5qfz+RI5fmBa0ltZMYwuJArSV6fW
-	LWSVJeqX+lFljyEE4KWDcw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752598194; x=1752684594; bh=YjDOZYOdB6
+	WjGuGF/tJqmTbHzqBNc3a8MXOBOeRUg+k=; b=WFbzrhrbvSqMZhwlwNBxaFEYsr
+	XVWJjHtYWz8IQFKrzM38a+qaqi626X5tKcjsFPvztQA6Gk6E3YsdHUEIoO/yEQm+
+	oCixVLyDtnxeppkH+l/TxEjKuPc5EZYt1aZO2kKoUTosupi3PbsVE3783IezwSoB
+	6gSgM/jVPaKGd2B/elrHpi8PILjuWXAxM78e91aszIQet+4P18wlVfAODIQ0fPa4
+	2o2gLtIjUBWTBLQUSBUyx8gkH1BU7jr0ztnVqrpO/BfwgHwS1ZdxvslfpxQQG+8r
+	GeOWlBAmwi69n++xw0J3449zwUye5YLQFl3Fx+oP1PWsWEKuLcE2DMDOBrxg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752598107; x=
-	1752684507; bh=yWASWCp5Ba6IECJX2FBVtQmOhObMDDPIDxmEZBPQmzM=; b=f
-	QJjiSb8n7ZyN5mhuAGWeqoIRungk78+34a6KbavC1YcAAn3PvX5GtUzUGHZkdjLK
-	EHTsmZuCOO7vIvNjprgHIEXTIfxa1Q24d3uM6R6uXouz0jlFbtcMilvBTlqZdMXj
-	ROx6HGCp3lIcPOggTUXC2O6MryyRiEZh3BBpxPa+I+9j/KgxIINIhU5N0/L4aziL
-	CAsoTB4PmdJcWEm0SI2myd6MHpze9BAEHWDISWJrITTUWnO+LpOA/qRqKZ3FGWwV
-	lh3I2O6x4IjqTe8PhQMLOjvugusASJi45l9WquhcJme1D3zaAri7Pu7CFAzTjSuk
-	zqEucLrCcYeZN2oXl6/kA==
-X-ME-Sender: <xms:W4Z2aCONv1l6jj6SWKRrVKux5qihzmIhiJjg1T50oaLv4nBo297xPg>
-    <xme:W4Z2aJbkYw4y6l-3F_bnFUCuXpaqoDsSP42xfzLhFDo8eARtagKEN_I79ADdVy2kC
-    ONyTmJQ3nG6KWpq7w>
-X-ME-Received: <xmr:W4Z2aJuHHJKHCvKTlm9uHDfBQLza_LJaIxSylIwEzZN_vP-fs6SJiqQGI25vEDuvstpKXowUabnIb9GVWohJ5E7HAwW09fTSrSrQkzA>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752598194; x=1752684594; bh=YjDOZYOdB6WjGuGF/tJqmTbHzqBNc3a8MXO
+	BOeRUg+k=; b=LKZcMWEbuTAxXNhyLUpYqnb+/bwcowJ3l+47m7LQd4uNJGXQhIw
+	2lAtp3YE8MwJ6U90P2m6buQx5kYOzAqYUpnOYX8A7179O4bHvXOwneZ/MvDNPNF/
+	XJa+YBscawZLTtZDYyJsc7VvQalA+mmHCmQ1vwPvJpjrA4JGIL7l4jvad+9kgy4E
+	RgSTDXyYHoZcHwaqCa1nQFmlGhmSqJ6bnOdAGFcckubnGfRZCvX+gWVAkUTUD7yh
+	WmmGUraDKucQANPgCVRhjz++nXMcfwHfR+lAltzAiIzw4GNcNPoJ48zaIMqIv0lu
+	MRmyZDvxRxElAtSLMYpMK/Gb8v6kW+/utvw==
+X-ME-Sender: <xms:sYZ2aLa4A3gHnNvVa9ze_nm5y4A71mPbPeQGa0dfcOGMaVkPCepBYA>
+    <xme:sYZ2aFBZ0Q7nfls5Qt6wslSZMkM49_QHxqKGyvnV5T47ZMn5da2kGhZUbnTen4lO6
+    tUT-cc1OslJPBRJ2w>
+X-ME-Received: <xmr:sYZ2aD-dwixiZDerly6aqbhiBqq_dorDLia_FXtn2_X9uXGdPHfuCLUa0SSZjiYolS8sJ7OtQaYQq9CbCzVu7lu1vGL0n7Uk96b_55E>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheefhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffgkefhhfetieffteehleehtdfg
-    hedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrnhgu
-    rghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepphhsse
-    hpkhhsrdhimhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
-    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:W4Z2aDPOVKtEFSEU57l_2d9quUZ7P1kjrLfCikXUQqA9tpngPvsR-Q>
-    <xmx:W4Z2aI68kQSIUeVEut7D_d_-EaWPB9uOljL5xjz5gt4t35ryMbDC8g>
-    <xmx:W4Z2aBRTZebHbhvRjMIKZf9iyI4oV-e51W6M_kie2Q6hwPlT8e_ZKQ>
-    <xmx:W4Z2aNBbBg-NaZaLHL9Iobyx7-FJ2se548UZntexAGWqit-_1fU5kQ>
-    <xmx:W4Z2aKs6yYU3J78pelNVjcULI0NhtCcQlujco-lCIDffhVYuz6fk1NcI>
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehoshifrghlugdrsghuugguvghnhhgrghgvnhesghhmgi
+    druggvpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
+    lhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:sYZ2aBSKPklGpTZRisB9i63CuHDWaOj6X_Rd4JUer73XzRMTzM8LYQ>
+    <xmx:sYZ2aHWp6nlLLxBGV-UvbPaNDl7w_W5bKKmi6XK6QiLWFrNmd0cl-g>
+    <xmx:sYZ2aLR9q9556kImfj27oLdKj_qyVQuwxroenkJxLe_bnW7n24UVNw>
+    <xmx:sYZ2aP0-WQykjrMbOjvpqqwVm1QY3zU0qF1fWb9CwuhmrmfTfyQMQQ>
+    <xmx:soZ2aNDLHTcnVVbO7cwh0eaRR_HX1gvOi2NGqlJtjjM-5LeqnH0Bt1ea>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 12:48:26 -0400 (EDT)
+ 15 Jul 2025 12:49:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
-Cc: git@vger.kernel.org,  sandals@crustytoothpaste.net,  ps@pks.im,
-  eschwartz@gentoo.org
-Subject: Re: [PATCH v4] meson: woraround broken system PCRE2 dependency in
- macOS
-In-Reply-To: <20250715114407.37955-1-carenas@gmail.com> ("Carlo Marcelo
- Arenas
-	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Tue, 15 Jul 2025 04:44:07 -0700")
-References: <20250713174807.32444-1-carenas@gmail.com>
-	<20250715114407.37955-1-carenas@gmail.com>
-Date: Tue, 15 Jul 2025 09:48:23 -0700
-Message-ID: <xmqqikjtienc.fsf@gitster.g>
+To: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im,  karthik.188@gmail.com,  ben.knoble@gmail.com,
+  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
+Subject: Re: [GSoC RFC PATCH v4 0/4] repo: add new command for retrieving
+ repository info
+In-Reply-To: <aHYuwlWlbkc600Ps@ugly> (Oswald Buddenhagen's message of "Tue, 15
+	Jul 2025 12:34:42 +0200")
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+	<20250714235231.10137-1-lucasseikioshiro@gmail.com>
+	<aHYuwlWlbkc600Ps@ugly>
+Date: Tue, 15 Jul 2025 09:49:52 -0700
+Message-ID: <xmqqecuhiekv.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,74 +93,24 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+Oswald Buddenhagen <oswald.buddenhagen@gmx.de> writes:
 
-> macOS provides a PCRE2 library in base that is not usable and not
-> configured properly, as it installs a pkgconf module that
-> points to a non existent pcre2.h header in /usr/local/include.
+> On Mon, Jul 14, 2025 at 08:52:27PM -0300, Lucas Seiki Oshiro wrote:
+>> - Renames the command to `repo` instead of `repo-info`. All the
+>> functionality
+>>  of `repo-info` will now be under `repo info`. The functionality of `survey`
+>>  will be moved to another subcommand of `git repo`.
+>>
+> this strikes me as a bad idea, given how established the `repo` tool is.
 >
-> Detect that case and allow a fallback to a wrapped submodule
-> if the feature is enabled and that is possible, or print a
-> warning and disable the feature if the feature was set to "auto".
-> which is the new default.
->
-> Suggested-by: Eli Schwartz <eschwartz@gentoo.org>
-> Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
-> ---
+> without much thinking and reading prior conversations, i'd go with
+> "query", because it's a database-like metadata ... query.
+> the obvious followup idea would then be "meta", but that suggests that
+> it isn't only a read-only command, which i think it is supposed to
+> remain?
 
-Thanks.  Will queue.
-
-
-
-
->  meson.build       | 20 +++++++++++++++++++-
->  meson_options.txt |  2 +-
->  2 files changed, 20 insertions(+), 2 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index 596f5ac711..0e480e65cf 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1055,7 +1055,25 @@ else
->    build_options_config.set('NO_ICONV', '1')
->  endif
->  
-> -pcre2 = dependency('libpcre2-8', required: get_option('pcre2'), default_options: ['default_library=static', 'test=false'])
-> +pcre2_feature = get_option('pcre2')
-> +pcre2 = dependency('libpcre2-8', required: pcre2_feature, default_options: ['default_library=static', 'test=false'])
-> +if pcre2.found() and pcre2.type_name() != 'internal' and host_machine.system() == 'darwin'
-> +  # macOS installs a broken system package, double check
-> +  if not compiler.has_header('pcre2.h', dependencies: pcre2)
-> +    if pcre2_feature.enabled()
-> +      # Attempt to fallback
-> +      pcre2 = dependency('libpcre2-8', required: true, method: 'builtin', default_options: ['default_library=static', 'test=false'])
-> +      if not pcre2.found()
-> +        error('only a broken pcre2 install found and pcre2 is required')
-> +      endif
-> +    elif pcre2_feature.auto()
-> +      # Replace with not-found-dependency
-> +      pcre2 = dependency('', required: false)
-> +      warning('broken pcre2 install found, disabling pcre2 feature')
-> +    endif
-> +  endif
-> +endif
-> +
->  if pcre2.found()
->    libgit_dependencies += pcre2
->    libgit_c_args += '-DUSE_LIBPCRE2'
-> diff --git a/meson_options.txt b/meson_options.txt
-> index e7f768df24..1668f260a1 100644
-> --- a/meson_options.txt
-> +++ b/meson_options.txt
-> @@ -45,7 +45,7 @@ option('gitweb', type: 'feature', value: 'auto',
->    description: 'Build Git web interface. Requires Perl.')
->  option('iconv', type: 'feature', value: 'auto',
->    description: 'Support reencoding strings with different encodings.')
-> -option('pcre2', type: 'feature', value: 'enabled',
-> +option('pcre2', type: 'feature', value: 'auto',
->    description: 'Support Perl-compatible regular expressions in e.g. git-grep(1).')
->  option('perl', type: 'feature', value: 'auto',
->    description: 'Build tools written in Perl.')
+"git repository query"
+"git repository stat"
+...?
