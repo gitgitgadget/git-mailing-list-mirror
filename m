@@ -1,159 +1,124 @@
-Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24C5826CE1C
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:20:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E6EA15B54A
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:23:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752607252; cv=none; b=n99J9AyrMMNAWRQaK8s9gbwgqRUBrsQWsfBsLXpsH4MpL4bVUu/hjA+g6Q13I4yN5T8oU7gAoXPpz4K+Q/7CQiKNin/XrrCmBnrVNnOpZNDOXLNgBTltBNRv0e4cgQuNhQEVPtzt241w10PvzshI+o4Z67DEgYVXuRAbD/72FSc=
+	t=1752607427; cv=none; b=VAYDYXEpG8zm0F8CLNU5Ad92Fr5gx9xLgckfeAfuV6uhdl7rBdAw9iQDVsztCNZZt2FfLV6t8CjVqfq+kYSakG/0hTrNXyZ2sMDIHbjS3ltaoGPGmhps1lNJ+CVE4kTmBk8Fh6pnCLSOPWJKOVCfLjx/i4pt6KhRDGkUiGeSb/0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752607252; c=relaxed/simple;
-	bh=PWviarzZFuYp3o/yw6TafUd9r5gIUUfNs9PlVfSZ7Sc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TfFwPKTBShYgJCnrO6BA+cShMF3ybtpumviqoeeI9XeMRkJJGGIq7RCBRh4HKa8gjssxuQ8G8WQOXDQsWvzu3VOEh3rG4EDE1yD/pcym7eSCr9BzqIIeubxu3ZKe/f1gPHQUQz7d0RPAjGnNqhAARNW5yEdH/oxEmqBTj20nOxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCMMD1ei; arc=none smtp.client-ip=209.85.160.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752607427; c=relaxed/simple;
+	bh=v9VGud5r5EA4ZRCZ8qpDzpv5b2zfwDh+sDxWwOaljQ4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FkBcm+fwgkgsyv0ugOF0pHKxxZwr+N2EUvgQZOGq5akbioFkCZHUNwpzlQT4g41evhYj7mWYYwwavLi9tyfc5qb3uC+Viccr89D+XwBlZM2g1bs3gKtTvvDV4fRTJt5E1kKykiOz8rGfstwlR60s7Gdc4+6Us2R0yvsg/EUti4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q+N7eeFX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JjV4df+b; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCMMD1ei"
-Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-2f78ef10832so3571618fac.3
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 12:20:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752607250; x=1753212050; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=gTg3hCsUo/mEjGZYYpEtkhEKYvuBXXzFVA6nn16U5Lw=;
-        b=kCMMD1ei4qF7mBPi9MxQf1gft4KXalDgJbAwz4m8PV7sszvW8kQ+EmltCN5eYeyVlA
-         t99t0AxfaTwbKhKkE39x41FuT1z5s+AGAaKKNOXdV2WxWrB/GeiWI3IkbbP668ZaLS7K
-         l0fD74ReRLuVODmmWRyBFhQ9wV7pplJhYJf1KVumxTtmgUs/xs0pU6bYZ+u8cOHhmt0j
-         aGi6I/RP5dQ/sh0IQ+OO+zsW8FcliTH5JrmU4Jg9DsuERNjsAZts39FYN8PZbgVZ2eBy
-         bNO7mIjs0+vw6Z9pY/bmlv7pA2kBUh82t5XVUg4hE+rN3q4dJh9uMNcHUVSd9q66Mm7h
-         /64Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752607250; x=1753212050;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gTg3hCsUo/mEjGZYYpEtkhEKYvuBXXzFVA6nn16U5Lw=;
-        b=V1c18fPRQaGqioHEBMUSA3T3C5A8gaXW8PNMgdbewFr/9jRmGb3ntRKpzStCw1ymu8
-         slkbGfBtLOjZ6Jp4PFoKrwvcDyuQQ+ykHtsev79FBZohy1miuKkwlxwDrutVBG8Ubg8N
-         z8/TQjzhVeVcSYpCpNZ34zO6rjZ6PCVF3DPLeWkc7vZmYEXdEvC/mk5j9OP+dnT33myd
-         zPtVpwjCn9VdKBrWHIIE4HCChGtf/pFnMq6vKFYH4kAfSFNy/KQQsUA3ezfQk2pYzMBI
-         DBAJu5FrSSh9IbLGIVs775TtA8rvFSiVRBHNztWRk/4p+6LPh8tNRJF67h2p4u8qV8kt
-         p4Pg==
-X-Gm-Message-State: AOJu0Yzw9EmIm3EAh4vq7fHWf4vSBWCw3OGyS7JtNpxJXI6Wm2byxZi4
-	PrJ/uhjg+ev3delo1gYf6nzvOtMxWZPF3oztti6pMOXw0fowhEIy6QdeONpfmw==
-X-Gm-Gg: ASbGncsRRKu/tPqtASHwXWmoOIBXw5ioKr4KUj/PwnAOW6lCxyaEqOO095pWymSPZq0
-	TeQuqL4Iyq8H0J4LTIahyN82kiGeWUFzupz5UHxC+g/1II7vLFumzOoC+YM6gWvFNT/4cGPXZ8m
-	p0FILcVAGqBmLal8qyfatHYe3+JX8aBGT209yylhmEMo0yBz5lCmLAOISnVmW/mbpNiE6l1sF3m
-	losEM5oVLFxEKmIW+WFwxWxhVDzqMxB4YPe9lqjKYTiUgResGuVhQ2a5co30eEuSCqtIvc07m2Q
-	FU0yys7JzgRwZCJgjxd7nBgRBvBn5WG5hhh/RwxlL1miuguQeRrih5KRLmkPa0noqrZtr9vPhVu
-	ipJJTHBvVvsaTYbA=
-X-Google-Smtp-Source: AGHT+IHUwG0+kZfO/jsBayg3VBvpEOqOPMfMLGQNgZ806B/093m3EohZ4gXNVZ5UE3uLeTeoZWs5IQ==
-X-Received: by 2002:a05:6871:e3:b0:2ff:94a7:d275 with SMTP id 586e51a60fabf-2ffaf4df055mr595957fac.18.1752607249946;
-        Tue, 15 Jul 2025 12:20:49 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2ff11686ad2sm2779072fac.28.2025.07.15.12.20.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 12:20:49 -0700 (PDT)
-Date: Tue, 15 Jul 2025 14:15:07 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com, 
-	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v4 2/4] repo: add the field references.format
-Message-ID: <mgdervgp34m6ipfbodsfn7cztcl7gdeggzemfgivzvuyk7qtba@wdijebkuioxg>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-3-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q+N7eeFX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JjV4df+b"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 512F67A027B;
+	Tue, 15 Jul 2025 15:23:44 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 15 Jul 2025 15:23:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752607424;
+	 x=1752693824; bh=sCQrFu68kx+xEHpWYLGfSF0qD7SmkNzVMg3mMH0bWec=; b=
+	q+N7eeFXcFPNOD8RtoeWZzazkSVBAI1l5UF5gqwcVMpT3IfscUOPygCHD9U1CWOx
+	laiTaIs+5m1C91DSVOxIPQces8Qwx88n01AekuHXKoh1G+owmQZ/+8ENMkqmomzh
+	iv9mj/xBCxdFBGyDecivD+R+ZnSJt0zQRGEYD5p3Po5PEkjygISa+cLGymY6Xit7
+	a+utTQJCXQDEpFK2bA44gMUWNYVKr0A8EiQZGiQYFxt2e3pYYiRueKbGKuJ3U3aO
+	jD+BxOFcq3k6qSYrEJjJjk1evH6RWbW32pLRjupqJaWqxNEiy+4bj71fVhQ0SajU
+	2r1IK5KTbwyIiC+/jgEGfw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752607424; x=
+	1752693824; bh=sCQrFu68kx+xEHpWYLGfSF0qD7SmkNzVMg3mMH0bWec=; b=J
+	jV4df+bdAxKwvs29/XiDB3Lm5ZUuoXMeDPAV+yyg+8zdWyjx7h2H/igRZOazbkmT
+	hGmnHnerjSykSnG+fiabOGiFxHZA71jIu9RmcqhKDoMoj4cAOahJPSLhUZck2Ero
+	+w0fG92CqoyhVr5HolWepxlbcDZ8xTjBbtkKppnY81Pauvzuf2xNUyNsHEwCUwu0
+	nOvhm1da3TNhIZZ8u6qzHtd2jvsrZyvLCnEn32howffXMQX1MgYain1zQKKrlpvm
+	LxuMDPbpnHV1Rzqq1JIDkFNCi2OkO24QRBo3i+HxC6U5OJWBFBV1Ub1k1papeDGx
+	0NbT+r7AXaj+9+wvwnnhg==
+X-ME-Sender: <xms:v6p2aAcXhYcepxLlubj8umHPOSLJQHQZrs1TQSHMVqUMBKWZ2KWXYw>
+    <xme:v6p2aMwluQCxvVGgWh8M-UDFy-ETra3CtS4_ALw1tKt_ueiPr4TKro_ASs_R-e_tG
+    8DucCYb2ja-sD6hFQ>
+X-ME-Received: <xmr:v6p2aOFt-j8fvrS9-gh2KlnC4YqcuZr2Gm0nF5HfBpRX16FMAbYbUWZsJux8iWTtp0U6Rx0B7mx1SfFqwfsRseDmyvNvvfqRDS3sBJM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeiiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
+    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
+    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
+    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
+    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
+    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhr
+    seifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:v6p2aIwkBlNxZrtqzWbKN9w88xV5FGYvd5mq51rb5PbfiqKJX3Qj_g>
+    <xmx:wKp2aHulGUZLh029SYELnlkvebxXXBWvzoWVNV_5Ji_yY8EGyAuK9w>
+    <xmx:wKp2aN0K56IK4-Nj1M31z7T4ezAbt1xs898C-h_XQe_2UD7VTbN_vw>
+    <xmx:wKp2aK8UC7WROatX954ivzce_CO9XC6LE7-nZa-4s2AzcpLGgHDs5g>
+    <xmx:wKp2aPv3-4DTnC_mocxI7XQO6u_fzYphiYzJZjLhRqASKyjC22P_KPrP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 15:23:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH 1/3] commit: convert pop_most_recent_commit() to prio_queue
+In-Reply-To: <bfb0a65d-c9dd-47d9-a88d-9fec43538b0c@web.de> (=?utf-8?Q?=22R?=
+ =?utf-8?Q?en=C3=A9?= Scharfe"'s
+	message of "Tue, 15 Jul 2025 16:51:07 +0200")
+References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
+	<bfb0a65d-c9dd-47d9-a88d-9fec43538b0c@web.de>
+Date: Tue, 15 Jul 2025 12:23:42 -0700
+Message-ID: <xmqqldopgsw1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250714235231.10137-3-lucasseikioshiro@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 25/07/14 08:52PM, Lucas Seiki Oshiro wrote:
-> This commit is part of the series that introduce the new subcommand
+René Scharfe <l.s.r@web.de> writes:
 
-s/introduce/introduces/
+> pop_most_recent_commit() calls commit_list_insert_by_date(), which and
+> is itself called in a loop, which can lead to quadratic complexity.
+> Replace the commit_list with a prio_queue to ensure logarithmic worst
+> case complexity and convert all three users.
+>
+> Add a performance test that exercises one of them using a pathological
+> history that consists of 50% merges and 50% root commits to demonstrate
+> the speedup:
+>
+>    Test                          v2.50.1           HEAD
+>    ----------------------------------------------------------------------
+>    1501.2: rev-parse ':/65535'   2.48(2.47+0.00)   0.20(0.19+0.00) -91.9%
+>
+> Alas, sane histories don't benefit from the conversion much, and
+> traversing Git's own history takes a 1% performance hit on my machine:
 
-> git-repo-info.
-> 
-> The flag `--show-ref-format` from git-rev-parse is used for retrieving
-> the reference format (i.e. `files` or `reftable`). This way, it is
-> used for querying repository metadata, fitting in the purpose of
-> git-repo-info.
-> 
-> Then, add a new field `references.format` to the repo-info subcommand
-> containing that information.
-> 
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->  Documentation/git-repo.adoc |  4 ++
->  builtin/repo.c              | 92 +++++++++++++++++++++++++++++++++++--
->  t/meson.build               |  1 +
->  t/t1900-repo.sh             | 47 +++++++++++++++++++
->  4 files changed, 140 insertions(+), 4 deletions(-)
->  create mode 100755 t/t1900-repo.sh
-> 
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index 6f8fe3f6ea..b7af6f45a4 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -45,6 +45,10 @@ INFO KEYS
->  The set of data that `git repo` can return is grouped into the following
->  categories:
->  
-> +`references`::
-> +Reference-related data:
-> +* `format`: the reference storage format, either `files` or `reftable`.
-> +
->  SEE ALSO
->  --------
->  linkgit:git-rev-parse[1]
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index a1787a3cc5..dcda0d6d61 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -1,11 +1,95 @@
->  #include "builtin.h"
->  #include "parse-options.h"
-> +#include "strbuf.h"
-> +#include "refs.h"
->  
-> -static int repo_info(int argc UNUSED,
-> -		     const char **argv UNUSED,
-> +typedef void add_field_fn(struct strbuf *buf, struct repository *repo);
-> +
-> +struct field {
-> +	const char *key;
-> +	add_field_fn *add_field_callback;
-> +};
-> +
-> +static void add_string(struct strbuf *buf,
-> +		       const char *key, const char *value)
-> +{
-> +	strbuf_addf(buf, "%s\n%s%c", key, value, '\0');
-> +}
+;-)
 
-Any reason we add each key/value pair to a buffer instead of just
-printing it?
-
-Also, as mentioned in a comment for the previous patch, maybe we should
-support printing two output modes. For the default output, maybe a
-simple `<key>=<value>\n` where the any value containing special
-characters is quoted via `quote_c_style()`.
-
-A null-terminated output, such as the one proposed in this patch, could
-be enabled via a `-z` flag similar to how its done in other commands.
-
--Justin
+>    $ hyperfine -w3 -L git ./git_2.50.1,./git '{git} rev-parse :/^Initial.revision'
+>    Benchmark 1: ./git_2.50.1 rev-parse :/^Initial.revision
+>      Time (mean ± σ):      1.071 s ±  0.004 s    [User: 1.052 s, System: 0.017 s]
+>      Range (min … max):    1.067 s …  1.078 s    10 runs
+>
+>    Benchmark 2: ./git rev-parse :/^Initial.revision
+>      Time (mean ± σ):      1.079 s ±  0.003 s    [User: 1.060 s, System: 0.017 s]
+>      Range (min … max):    1.074 s …  1.083 s    10 runs
+>
+>    Summary
+>      ./git_2.50.1 rev-parse :/^Initial.revision ran
+>        1.01 ± 0.00 times faster than ./git rev-parse :/^Initial.revision
