@@ -1,128 +1,110 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212C0254AEC
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 18:57:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8A333E1
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 19:00:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752605879; cv=none; b=pIQjA80k0N9dqNK9YEYGHW5m58quTOp4Agdq+rCQ5qIWYdh2PPIWL0rjpxkkqsyAmAEa+5Aj/ZEpYJleef6ZDOHES8B2QAiVAhI5Nr+XVO+IU9St08qlDUFmQOPjzM6lCgO5nHpEuQfGcICSOf0MnxipGpGN6iucoyl5FkRQwBQ=
+	t=1752606044; cv=none; b=Yv/NRb/elxOW6oCSHQJqS+jxn+dE+FC9zzr7F89Y30zFKdQC7wKSoLESmFscTaiy+axrSsuWzFhXQKKqYTW1ve//3d/CJCv6a2YWlDfNVUlyiUArCreLcR2Ol/+w+hVtOdNfeYGzunlpiZNCZb+VqRfH3K+kr8voorrbYStg+Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752605879; c=relaxed/simple;
-	bh=EOQcYX/Vsp1m0NKzn8xnWhDCV7hXDmvdvNtHUKcDQho=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=RjymHT24sbsQdofnZJXJCl/Dn+MWi+JOPHCBpKWfK0BhlylmeDlPYZ0SUVrWKcW+SmFU0EsnweEYlheXZcvbOyCxK78545h+VbkUAzCcAHmqbdCTKKSan/0RhtVLMLmLEcyfPneMqN7qLBAHOP3eA2gh0Tg7eRJlR9/vDd/y4kE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hm+UhP3a; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752606044; c=relaxed/simple;
+	bh=uY1Eo64mH3gCw7N9j0hzXtq1IuSuiRMB7zVdRE3rq/I=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GaUZ/kMu9wX9Ju9c8MGanvQnb+NcO5om56Dua8eU95qyOOUf292qoln9UZjAYFnmuB12vKXRvnHnyg8w4uke0hZ7JcmfgLGkzgU8+iuCIbqxkEZtDag0ZRbnupGqVZCrAsB5TP9HV/6eGqSzXzNulnUg/X/5XtSHK8PMNuFt7ZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hEfqzd0i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fQLqMDXR; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hm+UhP3a"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-455b00339c8so31530585e9.3
-        for <git@vger.kernel.org>; Tue, 15 Jul 2025 11:57:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752605876; x=1753210676; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q/EpvfCgoSBoUKKJ8IZ4lF29Fxv4+p4Vmrrj212oiF8=;
-        b=hm+UhP3aeMPn4Bdsh1xOCNipkihuwlNA7UboFvnl4TVWIW6DVv6l/LdfYX1ijNBqJo
-         x5bsSm6TOYykQp+43TT0Y0ijPPKisu9UKpy1qUSuIKbCOK0y/I57WCqpj6htMrvv/jiI
-         UPSXV+PqwV9LwAd7DAxkb3jq63pKwppREAMFwrsHvFnQKOLonFg2naZALZRcDtAXMy2t
-         R33vB9lG+bQPqQqlotLVbEzowFMSJrhK8nSI+FS1NuE2RAm/lrGw6i3hqITIZraigUlx
-         ne1xpqChWlWra3g2KuAfu27dRcZY6wuYfaXG6/b2XealJFsMVcFkGZRogZKPe5ub/2bM
-         4F9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752605876; x=1753210676;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q/EpvfCgoSBoUKKJ8IZ4lF29Fxv4+p4Vmrrj212oiF8=;
-        b=c5nhuxOv1BXXE9A0IEBw2w40ZzgdU28CFghcYmzkZQAYq3aYgNX2+N+xaoRnNXZXwP
-         xefJzAkr1McxOnI4Wj6Rx9zgkhY5LTaWLnX03jzYyXD6nWHXdJ/ym1oYs05rkRh6q+eb
-         wKdYztyNVnuSDjfoKB/hWRklJPx+igasmH6GusPukVWDTw+WVm+nndH0U81F+7kFuyFY
-         vUizciaaRMnrAR2BVhL53TdD9QlFMmmL4Gk9pA3EDCtsArLGAg5JwhGk5pdgtSBlAwot
-         Hi/AyeJsAr2YFwVxbm2oU1eUBu47N9TRfIci/pLWNH3zjMoCPkxlFggF0bSQJ3kGBNpi
-         65Hw==
-X-Gm-Message-State: AOJu0YzvaECr1jeZa9n+icZRzUW6/tzIjWGMLNd2e8F43O0eGw9b6dKl
-	GQfpbtBQlGA1KPQ7OSsSWUeijRtyEZoVAGilYAbKPb36vmmIu8+bdWkUWbBtOA==
-X-Gm-Gg: ASbGncu7Ee+hV7U2Yei2GihTs81CjpBdAy9SgDzCO0vJgHtNACSaS9uHnQhuP7inr7L
-	NV9dScheQGm6sccqUMTC05tzkYZZSpsdgSDPmFR2OJtthvhWq6LKNm6uIOL/dwXxGLJknT/uR1O
-	cFrlgHRSfedjQ8Qm57usprVPHJeIoJyCtBuD1C7bwFo0WQhHt3G1/oclQ0UD3Woqer2oDp4uv2s
-	D2rd2vB1kVmdjqkQ1PYkTsCNnBrf5cAOC+5O4FBJTZJDerHFnLrSgMKj+jzLL7rHOnJ2ywyDetI
-	GUqzRPh+ep+VtKsUk/DF46cvifwOkp9uYy+4vz4T5HwRP+NgqkaC8+qMo//jRhxS30LO5DeFfLq
-	qR3zp5hMjzFAwdhhIPGl6NZM=
-X-Google-Smtp-Source: AGHT+IHRR3fIrcKZOURV4CMjN0TZNSiW80PlcaSoq5I+LX6TsMJASWWqPuT3CXgG6QCDB8XJWxaDEQ==
-X-Received: by 2002:a05:600c:1c0b:b0:456:1006:5401 with SMTP id 5b1f17b1804b1-4562e02fdfbmr552565e9.5.1752605875748;
-        Tue, 15 Jul 2025 11:57:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-456172f3ec6sm79764185e9.22.2025.07.15.11.57.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 15 Jul 2025 11:57:55 -0700 (PDT)
-Message-Id: <pull.2011.git.git.1752605874596.gitgitgadget@gmail.com>
-From: "Kyle Lippincott via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 15 Jul 2025 18:57:54 +0000
-Subject: [PATCH] test-lib: respect GIT_TEST_INSTALLED when querying default
- hash
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hEfqzd0i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fQLqMDXR"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 81EFD1D002C5;
+	Tue, 15 Jul 2025 15:00:41 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 15 Jul 2025 15:00:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752606041; x=1752692441; bh=CJAK5uNTR0
+	uCug/aPKPvPoPmrYmjdXf3Jbf7XTbOC70=; b=hEfqzd0ivo5kGf01Zle/AkRU+t
+	lJaZpqaj58BNWkHvoNqppqc9OC0nXBaCGmQj/MRnyAhxCdqoSlRXXERmDEVE8Kpd
+	yygWFA+R0qNtVXUeuXD28wd6b3ak5653+8ozoqVCvicKrGrdrqPOC/M4APrE2qJa
+	xOiwcF9/3P7ubAJ4VRNtrRX2iD1TTCUBLUmaajTdAvY+S4f6Bnctlxoufa01QdN+
+	28tEUBWO6pVUpzWkSASweXe0JK0Ay+GrZ81tJJ4obeZvgAwXUIjiiM6e22YvXDIX
+	ZzR6XSGTebUDlMPQklxCM9S81P+nGiVPr+CWz2pFRdwrk9h/rlA6RohTTwRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752606041; x=1752692441; bh=CJAK5uNTR0uCug/aPKPvPoPmrYmjdXf3Jbf
+	7XTbOC70=; b=fQLqMDXR4JIxEgr5ETyytKPZ1eU+wyzxg3Gmd37Fw+IQ+1o1vN7
+	4xD3leZo039WGojKO8Azzv8qX4VQNz0ZY/rVweUsaOw2QYPb6ijLAb322RSljV5h
+	D0MIBSObxtQe0IkcS9ILTj0h5UxNxvYLhNiW1FOSqaQbvE21pPQ+gFoN0oahB3OR
+	EujW1hZaWsW0f2W+OpVgHYzEyXzrKxGc5wLi5WFrro+o4DEQmiH1ZKlXDR9ChlHo
+	nYwdtQuO4YrQFcDaazynaUCZ0zEgVI3ylopujjZxLD5SBXIV9rY/pSblsgshtfIZ
+	Nlv7DkHfx8zV69iQffm3wWfoZtQafNN5wNg==
+X-ME-Sender: <xms:WKV2aH_ztPcqm4ib5W-mm87Grdo5MV32Xr1KNDhJYR_WnwQQNVMGVA>
+    <xme:WKV2aBSjJ5E50nDADoUgNh33bQ_U5nxQONvHoe2XVL53B7U9DEch2z35jFxXV4R6K
+    qRmCnq-pvrjWKMacw>
+X-ME-Received: <xmr:WKV2aLfVg6dRmKLxRY_2EIAkHG00FjAoDvkjiNkfBsqBUlRYnPuHvtMYOuk1CNsagIUFGK-5pZLnO1IHTIW7_tnoQ2XHDAayVismF9c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeiudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
+    hstghhfigrsgeslhhinhhugidqmheikehkrdhorhhgpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegthhhrihhstghooh
+    hlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:WKV2aFA9jcMkw7xqg6naIo0so94Q84W8pQMduIi60rlG2ucnWLjIbg>
+    <xmx:WKV2aNlaRmCmijHcyhCbATXSU9OeDfqpmpouw9DAZRm4fL95jW13Cg>
+    <xmx:WKV2aAcAepUaZn--m278zyNp78RtiqWW1RBN2v8-Cykpx1OQoFCSaQ>
+    <xmx:WKV2aBRI1eelQ2_QYzL1yG_cMhUboXVHyp3DWqsitx1IrjyqAY0mhw>
+    <xmx:WaV2aMyE9uY-WJ9xZ6LrouL8ho75U7-k5RgKaL0AtNVyVyBqS-zPPbPQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 15 Jul 2025 15:00:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
+  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality
+ via '--start-after'
+In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+	(Karthik Nayak's message of "Tue, 15 Jul 2025 13:28:25 +0200")
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+	<20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+Date: Tue, 15 Jul 2025 12:00:39 -0700
+Message-ID: <xmqqple1gtyg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Kyle Lippincott <spectral@google.com>,
-    Kyle Lippincott <spectral@google.com>
+Content-Type: text/plain
 
-From: Kyle Lippincott <spectral@google.com>
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-$GIT_TEST_INSTALLED can be set to use an "installed" git instead of the
-one from $GIT_BUILD_DIR. This is used by my company's internal test
-infrastructure, and not using $GIT_TEST_INSTALLED when querying the
-default hash meant that the tests were failing because the hash was
-effectively set to the empty string (since git didn't execute).
+> Changes in v5:
+> - Changes to the comments to refer to the flag
+>   'REF_ITERATOR_SEEK_SET_PREFIX' instead of a variable used in older
+>   versions. Also other small grammar fixes.
+> - Added a commit to remove an unnecessary else clause.
+> - Move seeking functionality within `for_each_fullref_in_pattern` to its
+>   own function.
+> - Fix incorrect naming in the tests.
+> - Link to v4: https://lore.kernel.org/r/20250711-306-git-for-each-ref-pagination-v4-0-ed3303ad5b89@gmail.com
 
-In the two places we attempt to detect/execute git itself prior to
-overriding everything and putting it in $PATH, use identical logic for
-identifying the git binary to execute. This also has the effect of
-including the $X suffix when querying the default hash, but that's not
-strictly necessary. You don't need to specify .exe when running a binary
-on Windows, just when testing whether it exists or not.
+The two refactoring differences relative to the previous round do
+make the result more plesant to eyes.  Looking great.
 
-Signed-off-by: Kyle Lippincott <spectral@google.com>
----
-    test-lib: respect GIT_TEST_INSTALLED when querying default hash
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-2011%2Fspectral54%2Fdefault_hash_respect_git_test_installed-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-2011/spectral54/default_hash_respect_git_test_installed-v1
-Pull-Request: https://github.com/git/git/pull/2011
-
- t/test-lib.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 6dc2022ee10..621cd31ae1d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -134,7 +134,8 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- 
- ################################################################
- # It appears that people try to run tests without building...
--"${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X" >/dev/null
-+GIT_BINARY="${GIT_TEST_INSTALLED:-$GIT_BUILD_DIR}/git$X"
-+"$GIT_BINARY" >/dev/null
- if test $? != 1
- then
- 	if test -n "$GIT_TEST_INSTALLED"
-@@ -536,7 +537,7 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
- export GIT_COMMITTER_DATE GIT_AUTHOR_DATE
- export EDITOR
- 
--GIT_TEST_BUILTIN_HASH=$("$GIT_BUILD_DIR/git" version --build-options | sed -ne 's/^default-hash: //p')
-+GIT_TEST_BUILTIN_HASH=$("$GIT_BINARY" version --build-options | sed -ne 's/^default-hash: //p')
- GIT_DEFAULT_HASH="${GIT_TEST_DEFAULT_HASH:-$GIT_TEST_BUILTIN_HASH}"
- export GIT_DEFAULT_HASH
- GIT_DEFAULT_REF_FORMAT="${GIT_TEST_DEFAULT_REF_FORMAT:-files}"
-
-base-commit: e9779f64349fbcc8d177d055208039877316e652
--- 
-gitgitgadget
+Will replace.  Thanks.
