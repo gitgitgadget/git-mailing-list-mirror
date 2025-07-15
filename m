@@ -1,130 +1,137 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B55D2517B9
-	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:12:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DBE11E531
+	for <git@vger.kernel.org>; Tue, 15 Jul 2025 16:24:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752595950; cv=none; b=DvSWezjZeElWLXawhGPdzv63JL3Kd4iWhv/JVEl0wBdAnlkHb3KAL6N+I0dWXWxzlUeWKuJkJ8rFovZRuAFV4Spb5lbq4thl43l9o/zd9vUvhYS8oilwnqiqbwykbMrt8/s8bGImrCG3DQnlCbuau6yKSMdI8waneTkWaIGTmG0=
+	t=1752596654; cv=none; b=rw08ec3WSDidt3RU3KNZiK3Ya7Omtl9ixpHZl2/ct14SLuWwVL+o0kFonErqjzQC8Z/4zD9MeT9L6yBR9GQz8RJZbX/5tNWGt7q1Rqc+I4fsqTbEeg61o9F1Q7Frm7Sm3yu//ITU/zsoPDWomtey1jr/YhbELY8QFKVUflfdaj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752595950; c=relaxed/simple;
-	bh=PEixJ9U1YAtV2hV8vue7Y6fJgLT7rRy3c8D8axVgp+0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HRz3DuD/OayKQ6KS0ZG4IDH3RE7M37a3T/0cyZPAR49yF+HvvsLjrEuhhzBM2POxUEgRNYEzIf1i48FZup8LSbWEsiwfNkwzhgpVtasod8H73C0mhw2i5TdrAXfAklrOWqOwlP+vOVg02q1dAOgKuyvuIRbSAFSfzqyVsDR3gYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eltELln3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NT5RF8cv; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1752596654; c=relaxed/simple;
+	bh=ceyx0RnjroOUz2N2YxVCzxUQ/pcIlwj2q2yiLUhQZU0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=OJlXYCcGvzgxzhTf5H8rtL65O9CoS89UULycuSvx+WJHbK2Noy5+PHD6Uau7FaQ3dhwfOyNJDG7+TE3OUjiRvYba5h77aK/NPAUAJfPiXKOWXZPOkb3CeXtdUunn6CRHpqw1CqceK6mHbyc5gHmQy2/6EkJC7nrpEzX4qriUQKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aWBekRpJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k5Lsnp9k; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eltELln3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NT5RF8cv"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F188F7A01B2;
-	Tue, 15 Jul 2025 12:12:25 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Tue, 15 Jul 2025 12:12:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aWBekRpJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k5Lsnp9k"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5B4A11D00278;
+	Tue, 15 Jul 2025 12:24:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 15 Jul 2025 12:24:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752595945; x=1752682345; bh=ksdBO9cZHf
-	xqYk5FEBhEA5a48JLAXVOajuZXtMHMcZg=; b=eltELln3hs2sNlHp4VoMmyujNT
-	QM8X/24OwlXbZle9xM2sQ1YKWBGXYXCjjXgOIPJPRPDCHy6WfoaRewC9agFYqt3M
-	utT9WMtTygEMVr3kRK4YEpL3AJCD05SU5VqXvE3Jd/TySqkr6kRYgH/joiiKhj3X
-	eeoHyEqGOSmXECkavu9kuRj+lEAlrGTB/n7ckZmv7gH0/V8i2M5Z/zj/FH6bdbqu
-	LO9n6AUL+kZ9rAppXt3OmjqIb7yzIPzotbxLSKvplMFOh1XvagQVSAf/++V83xKM
-	JziQ60WX2MrBFbf+leIu+YVH/vDB/i/nJuWw6U1o8pVmLTW5LqdpfrvOs/dw==
+	:subject:to:to; s=fm1; t=1752596650; x=1752683050; bh=qsIFSO1W0d
+	0+04EauyHbMVztH2gWZIIn0bi2Tz5fT1Q=; b=aWBekRpJeut1T+snbUFsBQKOni
+	RYHstjKaeCoeyja2nVTG3uZjsWyXoadeJeuZcje+JfGkHwIN28xSegD9wGiohgQP
+	dbhUi3TanG4Hpsthi2wfxHU4gVYJ4UZuc9QHSLvabHV/6JUoWAnAPDxVQu8Vrpcg
+	K1LQBjFFFQ573JBsui2t9KQxGlufhxdJ1jM6J8FGQXWGcrTwJklLZmF/raOv7FcZ
+	gtF4DJsfw2mqUCZCUmLR81YklR+RuzPv87qwqz6AHAMtw/3v1oi4YmEetE5V+ufZ
+	zhHMLsUc5T19eTzzYRLDdaib/SB5tnUHl/21CA5tHdWpLWOiFws80way0wRQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752595945; x=1752682345; bh=ksdBO9cZHfxqYk5FEBhEA5a48JLAXVOajuZ
-	XtMHMcZg=; b=NT5RF8cvI/+oztMKV23bgUvUgiAVE4r0B6F6jM12qqy7V5XwcCv
-	YXCxA+/cyYf/4AVaYGbKtQrXbFONubroB2zAXQdp2gXzr/aUczXKhO4gsJGC1ipL
-	mZ6hb2VHjmrN9CeV28Ik3TRd8tB6BcD4q80F2w7e5F0Du12Hx5rcJoZci+WfaoZ6
-	FPefH7TgYp7mOjjuW6mwCeZUNl76irVtCBPIZHYxERuoe/9MSxVkuvasZ5kHrH0K
-	H5sw6Dog8zohWAqsYIheZgVDtoSG0dg90SGaFcJDECgFPGPj63LxRYZjt/dWjMji
-	67oM8qOLng+R4rPwF4TDP7SvEMck9o44Z0w==
-X-ME-Sender: <xms:6X12aBsF3STmM0s1wQCKkQT8jSgPoUo9j2xJWYh4qHfUZVhu9OUJ2Q>
-    <xme:6X12aD6k1hDcoRrPmV-TmOhgcFZDc8C3U0eyRUaRBxR6ba0Uj6GFQFDizZUsiWNcZ
-    IySWauWj_9hYhApzA>
-X-ME-Received: <xmr:6X12aEXwsX6OTlwxRVnI6kXyhGOjgPQOTYwUQQid_D2puwKReRtTx3sIySXWS5Chg8exG8uczYXQgyI1RgR9D0JQtTnPQZYGwc09NEhlYz1CmQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehhedvjecutefuodetggdotefrod
+	1752596650; x=1752683050; bh=qsIFSO1W0d0+04EauyHbMVztH2gWZIIn0bi
+	2Tz5fT1Q=; b=k5Lsnp9kKshFOSQfe6dwt7i+ys8TOvdQeF5MNabT/v1MclpFGl1
+	RMJko5Xchq1AValKSnHxADqYFgbCtZ+HE1rdiRFhXqRGfN0sMeUwk0ktDne2ELQp
+	VHjJUFgckGVF1aNCJmS7WOCmuLznX5c4rgH3NwJ7nc8ySS4fCdHjJDG0IeItH+iP
+	yklomgkP3L56GCKj4EtGbkQgz6Jr4uarN07vxauSvX+Bf0o/joP77g0TgHArSnHq
+	HnFX/CrzXkM0+Xnx29PUg1chhv/2rBQhkFgxoi6uUCiSbelJ1QOkcNjhqT3nJVZ6
+	9LbXQg79cilEZq5iAod3zHsIgZvg6rdUEzw==
+X-ME-Sender: <xms:qoB2aDMr6hXED_dv4gec6g94azBScL0M8NIcoTi-ple3ysaN1k58jw>
+    <xme:qoB2aIhEcjKmRNYmxpq4_Cf7MVhcgRuB8mphByHm3rn2pLoRs68bzTRqaB-9lAPDO
+    b8AqkYwOBgecYk5wg>
+X-ME-Received: <xmr:qoB2aO1ruRpXpxExN5g8Cn4FktIfoqr4hOi5O1xP7WVrSoWuzfNowHG5q0nnzTPgXNYpoeH1SnxRPBJmoTaVlXUxIgWue7HGhdrHXP0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehheeftdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrih
-    hlrdgtohhm
-X-ME-Proxy: <xmx:6X12aN9eKK3dGv2Ep_bAERkWYzqzv3DZI6-1jP9VZIRsSUEgI70YUQ>
-    <xmx:6X12aImlLfI8sQ__ewZbgEkbYIEJ9NMcafJZdwTYUDOtYurRgy6mGg>
-    <xmx:6X12aDUkhytxFM4mgLQtlVH7OJEfgKoXx_wYyWbj1kHq_snV41rkpA>
-    <xmx:6X12aNEyj88HbT0EHnKC4X3GazlG8LlYatdWhIihjjxo34nxiMSB6A>
-    <xmx:6X12aLcSpP14lAsE0rPGWpyoZZIg9EO29vpbjL8vIKBR_HRVols1t6wf>
-Feedback-ID: i197146af:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllh
+    hiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:qoB2aKgXp6kWnn1GDYYTNC8AyR8l2LhNu7VRTWV7Z86I2FGNXvM60w>
+    <xmx:qoB2aGdQ3CgZSh7NwXTStv5dQNhIvjY5fx2Q0HWTmWtoBQyvkrAW1g>
+    <xmx:qoB2aFnZ6U6B-Tf-kW41ebT6GDdH8wVkh3GLm02j06b6KpH-z2Tw-Q>
+    <xmx:qoB2aHtnEFptf_0w44AAdDzwm7OtfaKnlrCadRKlRZOwUkvINrTb3g>
+    <xmx:qoB2aPfjgBDyRQQSxgTEew_gB6luutR9-SEvx0kxMprBWTo6amXyNfS6>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 15 Jul 2025 12:12:24 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6d7faf39 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 15 Jul 2025 16:12:22 +0000 (UTC)
-Date: Tue, 15 Jul 2025 18:12:18 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Ayush Chandekar <ayu.chandekar@gmail.com>
-Subject: Re: [PATCH 17/19] environment: move compression level into repo
- settings
-Message-ID: <aHZ94u-xULDDBb7C@pks.im>
-References: <20250709-pks-object-file-wo-the-repository-v1-0-62627b55707f@pks.im>
- <20250709-pks-object-file-wo-the-repository-v1-17-62627b55707f@pks.im>
- <32fceddc-c867-4a47-bde8-c873279edbc1@gmail.com>
- <xmqqbjpq1rs0.fsf@gitster.g>
- <aHY7LYHqVj-ECf_z@pks.im>
- <f6479d6a-32a4-4a49-a75c-589978cb9a57@gmail.com>
+ 15 Jul 2025 12:24:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] strbuf: add compound literal test balloon
+In-Reply-To: <aHYXJ7EmRQE1P5xe@pks.im> (Patrick Steinhardt's message of "Tue,
+	15 Jul 2025 10:53:59 +0200")
+References: <7ac55a5096c261b706f47ca239c381f71db2b67a.1752499653.git.phillip.wood@dunelm.org.uk>
+	<xmqqa556x2z4.fsf@gitster.g> <aHYXJ7EmRQE1P5xe@pks.im>
+Date: Tue, 15 Jul 2025 09:24:08 -0700
+Message-ID: <xmqqqzyhifrr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f6479d6a-32a4-4a49-a75c-589978cb9a57@gmail.com>
+Content-Type: text/plain
 
-On Tue, Jul 15, 2025 at 04:51:32PM +0100, Phillip Wood wrote:
-> On 15/07/2025 12:27, Patrick Steinhardt wrote:
-> > On Fri, Jul 11, 2025 at 11:55:27AM -0700, Junio C Hamano wrote:
-> > > Phillip Wood <phillip.wood123@gmail.com> writes:
-[snip]
-> >    - Not all configuration is equal. It may be perfectly fine to ignore
-> >      some configuration, but other configuration may very much be mission
-> >      critical. And whether or not configuration is important isn't really
-> >      something we can decide, as it will depend on the specific use case.
-> > 
-> > So I'm afraid that there just isn't a perfect solution here. Does it
-> > make sense to die due to a config key that isn't even used by a specific
-> > command? Maybe. And if not, which config keys _should_ make us die in
-> > case they are invalid?
-> > 
-> > The overall situation right now is a proper mess: we have config parsing
-> > cluttered everywhere, and the behaviour is just plain inconsistent. Some
-> > parsing is delayed, some isn't.
-> 
-> Indeed. My objection here was that we were delaying the parsing when it
-> wasn't delayed before. Is it feasible to call prepare_repo_settings() in
-> repo_config()? That would at least avoid the problem that moving config
-> settings into `struct repo_settings` changes when the settings are parsed
-> unless the command calls prepare_repo_settings() at start up. As far as I
-> remember `git config` uses config_with_options() so that would not be
-> adversely affected by such a change.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Hm, yeah, I think adding it to `repo_config()` might be a viable
-approach. I'll give it a try tomorrow and see what breaks :)
+> We already have a two test balloons, both defined in
+> "reftable/system.h":
+>
+>     #define REFTABLE_FLOCK_INIT ((struct reftable_flock){ .fd = -1, })
+>
+>     #define REFTABLE_TMPFILE_INIT ((struct reftable_tmpfile) { .fd = -1, })
+>
+> Both of those are getting used in a way that'd break if those weren't
+> properly supported in "reftable/stack.c":
+>
+> 	for (i = 0; i < last - first + 1; i++)
+> 		table_locks[i] = REFTABLE_FLOCK_INIT;
+>
+> 	tab_file = REFTABLE_TMPFILE_INIT;
+>
+> Those are rather recent additions though, released with Git 2.50. I also
+> totally missed that we didn't have any test balloons for this syntax.
+> Should we maybe retroactively mark them as test balloons instead of
+> converting and marking some new sites?
 
-Thanks!
+That sounds good.  I was wondering if it is easier to keep track of
+things to add a new section to the CodingGuildlines document,
+perhaps like this?
 
-Patrick
+ Documentation/CodingGuidelines | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git c/Documentation/CodingGuidelines w/Documentation/CodingGuidelines
+index 6350949f2e..dd3dbb9c57 100644
+--- c/Documentation/CodingGuidelines
++++ w/Documentation/CodingGuidelines
+@@ -298,6 +298,14 @@ For C programs:
+    . since late 2021 with 44ba10d6, we have had variables declared in
+      the for loop "for (int i = 0; i < 10; i++)".
+ 
++   C99 features we have test balloons for:
++
++   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
++     compound literal syntax, e.g., (struct foo){ .member = value };
++     our hope is that no platforms we care about have trouble using
++     them, and officially adopt its wider use in mid 2026.  Do not add
++     more use of the syntax until that happens.
++
+    New C99 features that we cannot use yet:
+ 
+    . %z and %zu as a printf() argument for a size_t (the %z being for
