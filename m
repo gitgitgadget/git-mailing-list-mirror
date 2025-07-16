@@ -1,109 +1,121 @@
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B60611A76BB
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 14:10:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2185218589
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 14:28:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752675026; cv=none; b=hPZ8h3WcdTPfhtNc3364bOg6ZyEwG2RGinUNpoBqj27fOinBbIwap4kbvB0YMLCStedr720Uy5WlGWUS1w9nYagSDMZedwf2stnOzBVMYFG1k0qwIS+kJSiMXnW5w9wYhZdBclk4XZC1hst/hW+z6Fbvj0RanIEojEJmnlDHIC0=
+	t=1752676092; cv=none; b=r6HGqAlQcrp866C/+H/kL8HoPmUQIfnaTPoCtWpGPwgfQpqYRHAirG7UMO8MCicIGtKzfZPwRiVR097zK2uJYnN3l5eupEvRuTf4aSUcvQ+c6L4GVvIsfZ19abKNjQMmVF3m9R5GHuX/37GyQGRRBuwOyO9cqfSeSc/IjsRM8nc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752675026; c=relaxed/simple;
-	bh=c0SbriQnLxTTlfGKnpZqKHZDZ0aM89D7mN2IyW4FUdE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rgSkVSj/e6UTc+4BfjnA28r9wRqrV0VEPEKuVp+RcbL237hg5pL5ZAreFu3dkAdZu6s7u4PJuGAvCMedAyUVcKDWFwqRUeSk8Dou1VvecONpRTWX7YM8QI9jxUl2hH6gh5UdMhBMQOMW9iVW6HABQJsG2rEGwyu6cisOj1PpyJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KjGiLcar; arc=none smtp.client-ip=209.85.160.48
+	s=arc-20240116; t=1752676092; c=relaxed/simple;
+	bh=DeyE+YqofeVpdg4Z0pjYAQzycOLYK7lwN7b0wtRtLg8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=bczeNVrCkeR/ens+G1vwCkIANR7Z5bZteqkzBJ6hIV6ECkArvxl1nmS5O3VADeXkSTW1/3VFVB79bAxJCW0GnMqQhIam3o0TI3q7v5wf0Ds3l8gd8Q2jw2lsuuXdMvBoAr3crSfX/MwCt3V3XERz+hXoSn+riAdqpEwDL/CBfeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Jgmk7D5n; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KjGiLcar"
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-2eb6c422828so701613fac.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 07:10:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Jgmk7D5n"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45610582d07so28732845e9.0
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 07:28:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752675024; x=1753279824; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=U6Ekw2xfWvOGPd7nq2NYdWj2538GO0NZNuw3ZLTJDdU=;
-        b=KjGiLcarZA3cmYV157arPi4X1u4tZS4lDUwr0IKoqe8EM/cuZjAiVjVC50UYo9ZR0P
-         VTNEAA/LsksmbU+Gkkyg2ZWxo/X+ib6mIawoQfsJlsqQadatT6ZTfcs2UPz5247SGkKW
-         DbBKHKhE01yfxWi9nBPJsyTYcIl5s9W/dpVTAZEzB6WdLZChYtPkLqznlEM8bYTn47+K
-         iiLwN27ja9kb06/6dnVeszK4EtxmTt8vwvt58rfZEFx3fwP1qSz2biy+W1veCTc7ZTjl
-         OtFx2/txkV5QTaWMUdtgml0tX48zMD3NCBfpx7rN47B4XVlw6oMffWV+P5vzb5olFfKh
-         DvLA==
+        d=gmail.com; s=20230601; t=1752676089; x=1753280889; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5Qln2eAroE8a+depFb5eerVzhDRIJoP3bd2yQDuS2g8=;
+        b=Jgmk7D5nfRzlGhTEXeLscFj1vAodnqpmlpQAYYHQiVXEIEFvrb2RXZk2vrP+nV9atC
+         4ysxEHcOizeqwLXnXDbN27nE4NLRvWmw5DZaGOzHJxySAVrR5yaTY9rpNB2lFO5i9e5Q
+         eGw2GbWMdoQuanVEJ8BoN67l0v8I8Bi2sb0EMBHNV8y2Lv/O4MYejei9YfxfiE/UcELV
+         puSlRf8eyVl13H+pBGsD8s0/EDDuJgKWYn17sxqmgx+ZTP9a9x4D/ZVdBd6YgFRy6Uh/
+         1TgIubj/3HbqZdvjR1JNaIxuiLlHNTs6JDJp3uPohWnOBN2S6SdbT5n87Y3dadpCz1EZ
+         /j8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752675024; x=1753279824;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=U6Ekw2xfWvOGPd7nq2NYdWj2538GO0NZNuw3ZLTJDdU=;
-        b=w5Hm5XsVWLbt/uUT6yUIWpuxhuhPso5CdVgbzJwZDu/e44Uoln6dUeNT2kzbVsrSut
-         57Q8TqLdZ0aUjaaEtn7MjQpoO+SR2/BMIJaxaRYcsK1D5F15FCDc33p/yr/ubYS4oVpJ
-         fiARREnJHBbBr6dP7eImKfrlEe5NNEp6Qry6iY4Fnly2VAIe9eIhLwYx1w3slDglGHFM
-         UGJLG462en1JEdcTM0gXr8hGawqv2SlbCKgxbYmBrMGRHZl9CIyeyUA7P8Udzqg4cah2
-         8LboSuA7bYjp2qhHYEYI0CJRQ6uQMbD0L8zkUsiqAQPrGiqIRP6Eu7gUVpBzDLgcCvsQ
-         EcSw==
-X-Forwarded-Encrypted: i=1; AJvYcCVqnJImu8sbFL1UK/CV11sdMcL2Isq0M8leMQUpjgawmyRjtA1WnNn59J8B2XOCGigV1mg=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8OfIRa/SyBeYQYp0GsS2MYHVY0n/3CclokgddEt/fDwjdiOLs
-	m6bhVT7UdsCWKqEJ6MZngO1/SrpQiyiB7Rfx6RXXyvzigFWICTVq1ioU7qYASEXu
-X-Gm-Gg: ASbGncsl8eCTksuCK4J18Teb+pRc4StDe6FNoMcCYYHxvrn4Me0lWWqtW7PA4feTzE4
-	N7kf8Huk7GcrPeR98QcKuxWj/PTt01srjt4k6sON/x88kRoOeALXLz3sywefXbpxwKF/qkja7sA
-	qWT1FSqpVC52xhePVjh3/dIUfxkszeZ/LvfHif0t+EEXwRU7mrLCSh8dv+br0B0DdvKdeaJDnhp
-	uCgkU/OiJNM4biHUAGpSTw/tOINAWiQzkzuOjwfjIz3NmRDJl+tXMYFp4DxDbwt3LrF0JpLR3d5
-	Hu1//PT0vlw2JsfzbPVHnZ6wgQKTitxvLxNMmuaR8glUmAAYVHgPl7A0N8NNna0VNppcgBfImmw
-	cf7lQ8fL8N9k7Pe24rv1qcOULnw==
-X-Google-Smtp-Source: AGHT+IEE8iakcob77m31ETXKEPk/MMfI5bQhYLHHHOrbWBHpdvgmhtHrVnRIScR7Ki9nVGnc5xAa9A==
-X-Received: by 2002:a05:6870:7d1b:b0:2eb:a2ef:901b with SMTP id 586e51a60fabf-2ffb0c58007mr2402286fac.14.1752675023796;
-        Wed, 16 Jul 2025 07:10:23 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2ff1123ad71sm3490708fac.14.2025.07.16.07.10.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 07:10:23 -0700 (PDT)
-Date: Wed, 16 Jul 2025 09:04:40 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org, 
-	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
-	phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v4 2/4] repo: add the field references.format
-Message-ID: <2v7b6mpufnn6cj7u7tactgu2ibggn4xpuezl2bsfjxv62afrsa@chfrii6vkrx3>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-3-lucasseikioshiro@gmail.com>
- <mgdervgp34m6ipfbodsfn7cztcl7gdeggzemfgivzvuyk7qtba@wdijebkuioxg>
- <aHc6y9FGFXjowkU1@pks.im>
+        d=1e100.net; s=20230601; t=1752676089; x=1753280889;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5Qln2eAroE8a+depFb5eerVzhDRIJoP3bd2yQDuS2g8=;
+        b=mcJ9fwsi0fplsPZzPW5mK9hP1gK73sChYAgnABc+IYeUMYqdRsYVC0Vw4Kzbs8fGs0
+         109xLMiyFvPJe/Pw3q4yTOMSvP3SSU0kFc0zh8mV9VYdHecMtoUiBVg9d+K41a3xJdA/
+         SvYxXjvvemQuAIbtL55uHrwGj5noI+l+G7vSWJneAa+tpyvTSNY+DlIKQtusH4PD+9Yd
+         ZhQlpYxqDQ6mr3p6pEdFUDnjcZsz36C2gHoLydvGUtL8eyTdF5DoHsJDOGkKeOTdPwYc
+         xPELOZip+9QOjhMvjkroKUrA5XGBM2XTBKZlbq9uEB2sRLIneDlDEQI3wXA7vNrodDVN
+         RUYw==
+X-Forwarded-Encrypted: i=1; AJvYcCUbDp12sV7jXhBkvGjdDcju7FiJmI3qddud0ngAVadLzZ6P9tNT+U3Ptqm4/OizCQaMHKA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxGUPnDhRBvFZhVWcIpCAXy+KsjgvoSd46FxH3j7c4mZhxNLakh
+	f0bdtITGEM0oCfL7npaZxfrciVVGmjIk3b24KapzxwuX3fj+vWMRP/AC
+X-Gm-Gg: ASbGncsL4aWfXqGS0wS77HLANnWQtBZuarqs6cd/USrkX5rULabCFDnHj+01Q3keped
+	gO8jT+p6Cvzn6jWYJ5fqn4IuvRyIwKy13bKDXcM3IBHspPUDA7extcREXZmmgkekATutyoXKC63
+	j90Wdk8Hea5uQ1UH60M2GwLmxy+1S3dBLj5E591xUlVqswS0ZtASb/kMO7HMlQ8E6WrFsprwIMW
+	RI7WCiLwL5HNaf1XSBGQ8PLQqFR/+3wAq+/1AHiNEzB3ejEzz5VbgsimDZRQHzhFdGxc8mBAPNh
+	kpekQknyA23DFBy/iQ2Hs1KR+UtjylJ/bBNbc3jevqvq7fhdsOMxnghdvDD34BD8G3uX38GIOfj
+	zWugtGFI35RcWbYeeLRYTTCZ7VI86CJunNWO504cvEm9fIJpv1YTYKrKOXaps29j0jdVCR1cnge
+	du4RoAo8l2wLY=
+X-Google-Smtp-Source: AGHT+IETIS3GQas1BT+p3pSHtQV2v1hmZwZ1xwwQJOV/U5TRW/o/yemUW+4Zg2ks/SwFki2Ll8abFQ==
+X-Received: by 2002:a5d:4d11:0:b0:3a4:dd02:f724 with SMTP id ffacd0b85a97d-3b60dd886b6mr2215001f8f.43.1752676088895;
+        Wed, 16 Jul 2025 07:28:08 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e14d12sm18216752f8f.70.2025.07.16.07.28.07
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 16 Jul 2025 07:28:08 -0700 (PDT)
+Message-ID: <51e75a0f-fc6c-452c-b1c3-2836d1508308@gmail.com>
+Date: Wed, 16 Jul 2025 15:28:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aHc6y9FGFXjowkU1@pks.im>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [GSOC PATCH v5 0/2] commit: improve behaviour of
+ core.commentChar=auto for comments in commit messages
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org,
+ shyamthakkar001@gmail.com, kristofferhaugsbakk@fastmail.com,
+ gitster@pobox.com
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+ <cover.1752665506.git.ayu.chandekar@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <cover.1752665506.git.ayu.chandekar@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On 25/07/16 07:38AM, Patrick Steinhardt wrote:
-> On Tue, Jul 15, 2025 at 02:15:07PM -0500, Justin Tobler wrote:
-> > Also, as mentioned in a comment for the previous patch, maybe we should
-> > support printing two output modes. For the default output, maybe a
-> > simple `<key>=<value>\n` where the any value containing special
-> > characters is quoted via `quote_c_style()`.
-> > 
-> > A null-terminated output, such as the one proposed in this patch, could
-> > be enabled via a `-z` flag similar to how its done in other commands.
+Hi Ayush
+
+On 16/07/2025 12:43, Ayush Chandekar wrote:
 > 
-> Agreed in general, but instead of using `-z` I wonder whether it would
-> make sense to use something like `--format=key-value` and `--format=nul`
-> instead. This gives us more room to introduce additional formats in the
-> future, like for example the JSON format that was scrapped for now.
+> Hey everyone,
+> 
+> The aim of this patch series is to improve the behaviour of core.commentChar=auto by the following patches:
+> 1/2 - Fix a bug which reads comment character of the comments in commit message leading to change in the value of `comment_line_str` and thus resulting the comments in the final commit message.
+> 2/2 - Standardizes the behaviour of code by resetting the 'comment_line_str' to "#" when 'core.commentChar' is set to "auto".
 
-If we already plan to support additional output formats, they I agree we
-should probably a `--format=<output-type>` flag from the start. I still
-think it would be nice to have a `-z` flag that is shorthand for
-`--format=nul` though as that is fairly common across other commands to
-have such an option.
+This version looks good to me, thanks for working on it.
 
-Out of curiousity, is there a reason we are interested in supporting a
-JSON output format in addition to what is already proposed? From an
-earlier conversation I had with Lucas, it didn't seem like there was any
-particular reason for JSON.
+Junio - shall I rebase 'pw/3.0-commentchar-auto-deprecation' on top of 
+this when I re-roll to avoid conflicts?
 
--Justin
+Thanks
+
+Phillip
+
+> Thanks to Junio, Phillip and Kristoffer for reviewing the patches and also Christian for the reviews and mentoring me.
+> 
+> The only difference between this version (v5) and the previous one is that I've added credit to Phillip for patch (2/2).
+> 
+> Ayush Chandekar (2):
+>    commit: avoid scanning trailing comments when 'core.commentChar' is
+>      "auto"
+>    config: set comment_line_str to "#" when core.commentChar=auto
+> 
+>   builtin/commit.c           |  6 +++++-
+>   config.c                   |  6 ++++--
+>   t/t3418-rebase-continue.sh | 13 +++++++++++++
+>   3 files changed, 22 insertions(+), 3 deletions(-)
+> 
+J
+
