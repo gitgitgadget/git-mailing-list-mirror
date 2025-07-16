@@ -1,82 +1,90 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BD328D8F8
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 21:07:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 928813BBC9
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 21:13:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752700080; cv=none; b=LdFy0tVVQoJDGO5ZhJyRR0GXwBIxIoH7yND7YdrY6ObX3sFT9j0Li8Zm28q1cHEe4ZfFQdxMv7nMRntQ4L4eV1QnxJBGY2RHckbw5QqDoHjd0AMhckPPJYtSpjQ8gMxtrYPPaiDEM/7xnPYMfHnRTWA1VlmyBP3U3Lcsqm5EDL4=
+	t=1752700405; cv=none; b=rHl6GA98AjenUKEuKlVTx10tAXzf64u9GYZrzjjbGb0IG38TzsbUB5jYRUydFtCS2nbOGcb6g0qh+FQ8xBiumHiSIErbljhPTk7pWPiwnH1psT7EB6GYOWF3IZdg3C9evIONQfCiJXLL2e1smDtcUH58rD9hVtebEHCusAqPYSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752700080; c=relaxed/simple;
-	bh=bDWIoP1Vm6HeBFA3oM0/isg0fE8fJ61FtayfqGDIloE=;
+	s=arc-20240116; t=1752700405; c=relaxed/simple;
+	bh=v7OvDx8d6q8E73hBRRDmZ78PTWB7mz2x7q801VbYGyw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kizah4TcrZEvAsPETE3G7BNQJvDw31Ej80GuOE5GfwM3xWcJj3b70LO9bJRcJAeLzT1a0Xf69C0pqK42tB3OAvct9p7+U8C3WH+rsddgq7s0gcSgPAh2CrC6+1uh6za9hQuTUPDi0LhG5iNI4+Sdqmcc89jEFmOgVh1U7U1WjU4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J6tTmgH3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kmarqg8o; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=s2pMs887w3/7+Z8P7rXcxgN6/7lBYrjDBq8Gz3WDw6HbnI4CBbpPrrMO2IhuQwW9Ax/+x5Oi3nmTOkMGY59i+EvBWXn9MWQa5frRbUKCl3tjFDnSM0fwLhxzVNeo6MG8Qguh3Xgx8sdR/usfNack6JL2HmU2VHecOEMjB+2RImw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Z3B4883K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PVruCiAB; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J6tTmgH3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kmarqg8o"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id D53591D00033;
-	Wed, 16 Jul 2025 17:07:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Z3B4883K";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PVruCiAB"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5E7917A0030;
+	Wed, 16 Jul 2025 17:13:22 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Wed, 16 Jul 2025 17:07:56 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 16 Jul 2025 17:13:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752700076; x=1752786476; bh=8IKry23lQS
-	ZqCzuiW2ud6gMgLMHw8XroubDabdMrAKM=; b=J6tTmgH3w1pEn+jLJC+6kAPgzR
-	miitJMNCg3phAmQL3YKBIL+wz/kw9YoBz3ytVlu5DLbem5bjRjzsc6iTtPZJod0z
-	i4MmgRhDGZbCoXMSdPZyJcSWdm/2Ulx8fjVhkMjpMUSu7Jf87+Uf9KQ8MibwL6Kf
-	xYGJ/KDeYBH9/yZdnMj0ChzZaRyJbShayzhbC8eR/G9R4NqnUCl18AECIjP6UR2D
-	lcrai4YYr7ecVbyLYNz+r/l7Br/sOkvN1D/zvOQQIsS4JvKu/Df/p0nFjkec9RqG
-	GFm3koeJSpKwOa2vaRAotP7kjVVz0ITmb4GZRN2sV09/y195Vw3WIPkFpBCA==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1752700402;
+	 x=1752786802; bh=HwuUFchckF1nf8DW2xS56k7ioN3P67z/qyByu7mnWjY=; b=
+	Z3B4883KLZJAa7B6gMneP/RbGkvPeSY3fwUIv/SfBMG+sqpLO3cHfrIO7I4o1sYP
+	mbLGSXHHI1Sn6RpqolJeLO0ObchuZUAc+dH/V60w3ek9lnDdU7kcXjP0/F2kd2JX
+	TzZpBksMrH8lMLy3Ph6UqJQWRuGhgVi2OIyWtjVcqhdslkPwakhWgr45Q1biwVy8
+	RHp/lvXF6cxfDlxPShYEHf9l2YaUE7n2up8n+0wAqWhVzDCkBEgu6M+0L2NIhO7K
+	s4J0n0DWZVxddwTkhIUPnXMgA2lYDkOK0TIljeidGNS0ko6FkzOTZFqkEJs2IgXD
+	3MzfqprtEq80zyT2Gzzf6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752700076; x=1752786476; bh=8IKry23lQSZqCzuiW2ud6gMgLMHw8XroubD
-	abdMrAKM=; b=Kmarqg8oUQUy975ugKh1+qvsARWE7PZVk2faodbx8TmVtVaAyEm
-	Q3Uw7mQCEtCMixckz1mILUIto7s9+sIZh1V8esCJBwCsKh4mu52PLeqQScq4ErM9
-	EbrqzMM3Nx2TJ0JxyD+mO5IwwivRZIzkN5iQUeOct8gSElIUZBIV+PLIESrB2X6A
-	5Uh8YncMQkSLiKl69JJ28ycNiIamLsTxDcmLEX0sIieqNvIYb6NlZWapmYJmK51O
-	vmZX3np+cG8m0jD1fzPTR8M4iA+TvhCSItNY6kgS/v65M12pL7GNM8ppVzgRYZYZ
-	jh13g3BpSeUf2C5GL07UrtVgmL4ZdBHhYMA==
-X-ME-Sender: <xms:rBR4aCiyix2R5bJN-zP1Pno0ZK010gJgotT8l6ssjc1Dfjk1u1eiVg>
-    <xme:rBR4aGTT6DeQ8mMSBX1Wk-zHTzWmow0nGrOy_VGeW07Y024sneQQN5vnJXMmnMvJ4
-    KGe1lV42sVq1PIuUQ>
-X-ME-Received: <xmr:rBR4aDhdCH15zYd4Vk54hqF8cYxuOKyP4kxYYXR0DXf7I5VRLs83NsjkJLHNiA99ROnUGjDkq4l2Clm4jHtWdfw42hMcgfpxScQnhLU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkeejhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752700402; x=
+	1752786802; bh=HwuUFchckF1nf8DW2xS56k7ioN3P67z/qyByu7mnWjY=; b=P
+	VruCiABzpFBHR4H54PNAzFXykoDEJYf+71h9q2g89038ldjn5N3s1srDDOOyB+lG
+	pJpWxAHnWh6f9dFXQZxFVrf2JJ7upcsX7wN4j48hRcxKxVjhsS17ZMokp+jGeFsV
+	ipwqBc12F5Q1FQszUKKDz0YvlkrFsuf7/RekrxngKYYUE90qwds6u81yleUeR3CA
+	KOJ3ITsEklMH5/0BZ6NCI9GD/qmcY8sEz5B/w63k3pKJgHDY1SLf/Lh/rAbFDDCt
+	gPmM8waWbMvxbJcQYuT3XtgIgH24dFcf/TsXtDXeJ4zof8GFoLGy4H0EkEAFluUM
+	qJqIlse5uDfN98nU7D0lA==
+X-ME-Sender: <xms:8RV4aCEsSh5gFnCueCWUpyjAijNVQRT3FnbgMxR2Ra2fEvBkqsMkrA>
+    <xme:8RV4aA5M6sDyOUNtC5CBgO8w3wWzmN_GGpT67nD9SA_pJSVlTqLADZ17HAKTF6fAp
+    S52tJHAi-54bkiMMg>
+X-ME-Received: <xmr:8RV4aClkrnNagB9egZtyFVQJKKXMogwlEY6liik5VbumpJC2Cu_vpB7aJlv808Gdhw9p_FzkE5YGctO0kdneXhME-0PjYR8S_9Uz1Ag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkeejiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:rBR4aG58UaphkeGan-Mq4nSa2CGoemh2xGK-jT2q_eIVha9Mzoh7cQ>
-    <xmx:rBR4aABQdt5XifcWBdPh5dHFFoKMZt0vyIn8oc_EILDFRlrfyiOhxg>
-    <xmx:rBR4aNYZEzKMes1BvV-6dwxWEUlXOsl-nvGjLCqakzG3UWxNCMRWzQ>
-    <xmx:rBR4aLYEz0NtcTJXIPP-DnG3qmmv90gWTMQx_-DzSbRlf25a710GnA>
-    <xmx:rBR4aF0gT_ePel-tKARGQUItNRFhe13OSHUDqGAcmFpwtbHtPp0ZHDKM>
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrsh
+    htvgdrnhgvthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgt
+    ohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:8RV4aNpPvhqlrAodmkWE--yuRP5XiAXPfjZL0hYyD5wmGensA0-T5g>
+    <xmx:8RV4aJs7C1rkZyTTniLAiZlAa-NLh0bdjbw978hJI3MqLGbBjxWgJw>
+    <xmx:8RV4aKH-Ez-LfpT7pW7FxDcr6av33TS7z4SQO8DNjmEVxIziQP_ghw>
+    <xmx:8RV4aKYLHbsob3Ize6hz2Zmg7otzOWaKIg4BIWXTnFamFmmQeL2DiQ>
+    <xmx:8hV4aNcNN9fL7vWE4omOpDfHtU8uUQ0MtjY28e_Mr9Gqou5bPB6NX95J>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Jul 2025 17:07:56 -0400 (EDT)
+ 16 Jul 2025 17:13:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH] ci: allow github-actions print test failures again
-In-Reply-To: <20241213-pks-meson-ci-v2-8-634affccc694@pks.im> (Patrick
-	Steinhardt's message of "Fri, 13 Dec 2024 11:41:23 +0100")
-References: <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
-	<20241213-pks-meson-ci-v2-8-634affccc694@pks.im>
-Date: Wed, 16 Jul 2025 14:07:54 -0700
-Message-ID: <xmqqa553alp1.fsf_-_@gitster.g>
+To: Carlo Marcelo Arenas =?utf-8?Q?Bel=C3=B3n?= <carenas@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  sandals@crustytoothpaste.net,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH v5] meson: work around broken system PCRE2 dependency in
+ macOS
+In-Reply-To: <20250716193000.44673-1-carenas@gmail.com> ("Carlo Marcelo
+ Arenas
+	=?utf-8?Q?Bel=C3=B3n=22's?= message of "Wed, 16 Jul 2025 12:30:00 -0700")
+References: <20250715114407.37955-1-carenas@gmail.com>
+	<20250716193000.44673-1-carenas@gmail.com>
+Date: Wed, 16 Jul 2025 14:13:20 -0700
+Message-ID: <xmqq34avalfz.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -84,35 +92,17 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-eab5dbab (ci: wire up Meson builds, 2024-12-13) added two instances
-of a very similar construct
+Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
 
-    FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts
+> macOS provides a PCRE2 library in base that is not usable and not
+> configured properly, as it installs a pkgconf module that
+> points to a non-existent pcre2.h header in /usr/local/include.
 
-one to ci/lib.sh and the other to ci/print-test-failures.sh
-Unfortunately, the latter had a typo causing shell to emit "Bad
-substitution".  Fix it.
+Thanks but unfortunately this came a bit too late after the previous
+round was merged to 'next' already.  If needed, could you make it
+incremental update on top?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- ci/print-test-failures.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-index dc910e5160..5545e77c13 100755
---- a/ci/print-test-failures.sh
-+++ b/ci/print-test-failures.sh
-@@ -41,7 +41,7 @@ do
- 		case "$CI_TYPE" in
- 		github-actions)
- 			mkdir -p failed-test-artifacts
--			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:t}/failed-test-artifacts" >>$GITHUB_ENV
-+			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts" >>$GITHUB_ENV
- 			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
- 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
- 			continue
--- 
-2.50.1-447-g6271d3ee0b
-
+Thanks.
