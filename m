@@ -1,186 +1,155 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 299D3219311
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 10:26:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74821219311
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 10:28:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752661618; cv=none; b=JJMfhoMYMwroB7ErhtsmXRA9luBIloaReEIPta8cOwpQbrArvt0qbdnJt0oZGlgAxXOI6YZeU5tWNOj5F81S1U2kstvDW+9X8NPgSE/gFepWB5zS+Ll56RHdmgXcrWboLLHLYrC24U61j/fsjuP+B9FyQIm/yMAwSDh+4DjtvhI=
+	t=1752661698; cv=none; b=mIJc++VP6WoieEi+iHbjsRQTcPojcPXfOzdgl4QbX3G514/b3fn/1d9a4h1tf4iNqZhK5GQ+/BSX4R4v83vejaSj5FzVqyy3VwhuHxWGNYaTKfc1y1eHVpRVOOcSREXTkka2V2xQm3iXGojwxGtrbF2NLMeBTvaQi8s5roBHt3A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752661618; c=relaxed/simple;
-	bh=ZnqH0llJnfwZpWhv2bQGfA3yvJUyO2vt/o06GSx271w=;
+	s=arc-20240116; t=1752661698; c=relaxed/simple;
+	bh=Ig4/9vmANy4Jefh50JcV/LabWNl+tLLapPAq2/MZavg=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RjiT6O74lQcej5krWmnvippye6j4joVcdNnpqFKtnvtDmlCw/JxfXtvJdD901UEEAS4H+pzf74sxPkzSPHScWhyBcC9lyujP54ar0jYSsaH/RTVq4fLiGazUNAufAhMeNpd6gJemaUjWpmbafmk5Hxc9hQ582ZhgawHfUAMeGkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eMITKX6C; arc=none smtp.client-ip=209.85.221.182
+	 To:Cc:Content-Type; b=lius10q+fF+eJ1T6rFW4FTcXBjAGVoX6QQvT/ghQRqzhCnliquT/UAsboFmt8JifLiqr10OeZMxdSJUuC7Y42ziIOjOptnKEmFRhRhAgBvYuxWERfMjpQ9y4rjSfAdq2TXo5Q1UnhfiBe6FejGyiezMDuhkQ8rYLwe6joIK5EMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A/WK6Cd0; arc=none smtp.client-ip=209.85.222.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eMITKX6C"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-5315acf37b6so2805281e0c.2
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 03:26:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A/WK6Cd0"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-87ecac3e17cso2543191241.3
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 03:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752661615; x=1753266415; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752661695; x=1753266495; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Imn/ME+vPLlk/peLIv6z3JA2xdYEtmJQkaV4TP8EAXQ=;
-        b=eMITKX6C0DHvT2L0kChrywh1mw/uDvvPJ/OFjW5ihWvkbH2uYkih1IHgmYBMYnKcrN
-         B7RylMlr89S0LuMufKm8Sv+ifzGn3jRM8d7ULPSkQmFv1EPLzEJc5Nwe9n0uUusq0pNK
-         bC4EeSW4u60jLZQQqO5KCvRynZFnRq37b1VKiyXvUdYNKRdGcv5hWPGjbsdPMt11h5F3
-         1lEu0p7J4Fon6yvU/9lPyMFxkf2Gp2hAahyCxQf2JPT708MVkBXlQPQXVLgU0kpmK6oN
-         CyvZuDsUXj2SAdjTlNt3Oqq3m0sMHXdAsa2pYU8Y0qGdP/XTnBLddCoA6H18sVRZZN7s
-         GO4A==
+        bh=Ccao800h+8sMGLNiRTyxctKPBOj3dq9mzRk8olzpVhA=;
+        b=A/WK6Cd0aYMQRcOCa02bXYj7oQpenHa/BGRZshrZg9ivc16s9BLIOjp9TH7WdOxaG/
+         2cH/4mBI3/Dm3Hf32q7xyHJw01HmIz+C/nNAb9aIt8xYwRtCCGVMn/gBtH2xWPi3X6o3
+         eRdIQQ/ZQPdgt8mV4z5jvFEPSlFCPsUs++P2FHn7qnLv+XpRqZadKQyK5HVfsDYQOvLQ
+         UWGg0SRGwC4GWmxMDdUvNb8cSqKb8HjqKiE0uZyNttBpquseTqviztdddOMK5Hvfd4m/
+         QBfkIynbwVDxo7RqlO5Sm2TUzsoguLcyB3AnoVvbV2ULQsv/56ey4EhB/lPkxpZC3gBp
+         ne+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752661615; x=1753266415;
+        d=1e100.net; s=20230601; t=1752661695; x=1753266495;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Imn/ME+vPLlk/peLIv6z3JA2xdYEtmJQkaV4TP8EAXQ=;
-        b=aXMx2hYPUYJEk9EEomOiep7xuQ+tjG7aNvOiJPW0ftbtIMgpKLIJPcbS7rlfbaHtnj
-         SyZIOycL5CY0s/9+ad39m7ROWdY6qQ3EDMSwPTRWoOn3F2syVW7/WO+klDpcKl6mKDPf
-         bmOQSA/MZnvjcrQLXgjP71osIWfqUr0arNdcBAWu17JwMUl52YvgC7Vw5WW0ejbtomc3
-         XFiuWS6bf1jOvX95Eh3BON1u0CfoYARtxDZfb//jr7+RjwWR0YP2CSpihiI/z+NjXN7y
-         MaJy4v38T0llIjYJUmXP30Wdyl3GcVFRjHBOhKgturZIojmc9lmqdWhKZ8P/PY+QYv/T
-         MtLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXov/O1Efxu2mTJ0BtRtpipj9f9lTdAV2CUvkg5+Oaz38QPg92vUtRyKFuvfWpxo0s8cms=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx9f0k3ndZlH7VHYzVmKhcpr3AGM97shm20vzZjUERi4WtiGa6a
-	4aUycwy6h/ivUJQPv5IIEBJyhRY8Ejd7XJS9yhBFUwAZ5Lc7ovC44aoed2MTJuhrori9/0FIHNp
-	GdkrB55Rp301Z7FkB1ZETEu0LugpQax4=
-X-Gm-Gg: ASbGnctfqpjKLBBlr5TP/I1DrwXit1aFk5IHYYxxmjSw5uxzcKDG6gE0853owXD+L0w
-	IoiymE/k1ZRd5SHna62xxqRe9I2B1cYO6pKNl2h5ys29eIYLIeQv/qzJxWyLuJKTkmW6xF09Fcm
-	G43tnN6L2TP21ypL6xPRNp23ChkeHGLGr6CLEIuIhWJK8hQHsLFWieK7Sy0qDKNwn2MzCqFfji3
-	Qo+b/iAr/t3tdpzrQk=
-X-Google-Smtp-Source: AGHT+IFJJiWF9eFr7QbtJlvwP7Zi3mLo3i3fdenOFCQhfW5KcvzRb7gyPjcAQNKi84ZS38MD9yXiwFUfsvgKvkM2gcs=
-X-Received: by 2002:a05:6122:1acc:b0:530:7ab8:49ab with SMTP id
- 71dfb90a1353d-5373fa6909amr801311e0c.0.1752661614940; Wed, 16 Jul 2025
- 03:26:54 -0700 (PDT)
+        bh=Ccao800h+8sMGLNiRTyxctKPBOj3dq9mzRk8olzpVhA=;
+        b=qPSwiKm2cOqrgauvD3NF65MDfPbtKTzDr/bDT8dJr57JwR2e1LMgp1fdwi2j65Te4F
+         3t3mKOvE52zbWG4C/vOkBKeXloYTcmN/w+8ghvExFTfa9SWvcSy5wkAUT4b4JtpSsji7
+         a7QnpdJ6/yzASVaR6N46Mja7SU2qGYvv01vcZ/AY8viIV8ZjTGB7oM9vxmfd4ggRr7jJ
+         SFnVICieF9PvXf9ZogTBEg8n7KYNq/Q/cmb0YynwmmAi0uoIHpTfLkkcrKj2XOzbTdsz
+         AyowJl2nL525mlOp+Fn66sEXPHOP79C2Anyzt2ylsx67JNAJ6FqSFyJHGvMSQX/ns4a0
+         zq1g==
+X-Forwarded-Encrypted: i=1; AJvYcCXO6ZHg6kvBIsJS4plw+XBqHeBxSZpCDcjb4ZQRzTqz8kYIja+PJLf5ZtOTr0oOZlvEDM0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaZyUOGvfavUdqC497rovd/dUIuhOGIMoR+gHv2AKREdouRoCd
+	JC9syHR9kpNbWRBLZ182kQH3iVKVud9DuLI4d1PfHjk5Fn9SmmqX2D3TK4eNaRvqa4il0T0JaXy
+	07WQiMLQoHlJtYG+uIt1U58cGoykdHdkKqTX6
+X-Gm-Gg: ASbGncvqUyODOF5IdB38W6NaB3I7FXvwK4zbdUYyX2y1MQRTYP48Zz2Al5oFa2xi1b3
+	7sN01JooqMnMju+9CxbjxpRlo6ZxHeN3kM71QLaIk46OXPn7StjtpwHH9w0Kt4/2Tn5jZLYgNWI
+	XOkFiEhFzZ/Gl+f83xEyWypEGyEpjAzO0blPRYPHL+Ktv0Bqi7SLtQ6CeTdqVbsSzhWpzhkuYQg
+	VvtKpM=
+X-Google-Smtp-Source: AGHT+IGQV2/jbw4BNEKC1n3nWi/X9w7eehzEOTOTD/UWS7antYeQd6RNuuOxI+/V/bG6v+ut0K0s68H40wH82qOxGkk=
+X-Received: by 2002:a05:6102:32d0:b0:4e1:48ee:6f36 with SMTP id
+ ada2fe7eead31-4f95f41a546mr683520137.19.1752661695310; Wed, 16 Jul 2025
+ 03:28:15 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 16 Jul 2025 03:26:53 -0700
+ HTTPREST; Wed, 16 Jul 2025 03:28:14 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 16 Jul 2025 03:26:53 -0700
+ HTTPREST; Wed, 16 Jul 2025 03:28:14 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <26c3f48ac6c150b438c7b2f442f55a3d17141345.1752658700.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <80e5cd3b9df80cbda58630cae20ff7ca44793d8f.1752658700.git.phillip.wood@dunelm.org.uk>
 References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
- <cover.1752658700.git.phillip.wood@dunelm.org.uk> <26c3f48ac6c150b438c7b2f442f55a3d17141345.1752658700.git.phillip.wood@dunelm.org.uk>
+ <cover.1752658700.git.phillip.wood@dunelm.org.uk> <80e5cd3b9df80cbda58630cae20ff7ca44793d8f.1752658700.git.phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 16 Jul 2025 03:26:53 -0700
-X-Gm-Features: Ac12FXynEIXdSyGC4jq6zUMQ2r02KxsNUK48LQ_eqK7maPr824LiIrvQI5LLIaU
-Message-ID: <CAOLa=ZRNjt720fGVnLNy60qGHUwHX1qQoAq=Z7ZLcde_hxTsvw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] git-compat-util: convert string predicates to
- return bool
+Date: Wed, 16 Jul 2025 03:28:14 -0700
+X-Gm-Features: Ac12FXyZczTHSPtj99iLUUJOAPOnKPv-wD0k07bu-og2AeCX0E0nTsZJzIPez1k
+Message-ID: <CAOLa=ZSXE8n883i8RxD2ovokNPYsxainzBdp4v7qeTuCfNo0mw@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] strbuf: convert predicates to return bool
 To: Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
 Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
 	"Brian M . Carlson" <sandals@crustytoothpaste.net>, Elijah Newren <newren@gmail.com>, 
 	Eric Sunshine <sunshine@sunshineco.com>, Jeff King <peff@peff.net>, 
 	Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: multipart/mixed; boundary="000000000000f882f1063a0954e1"
+Content-Type: multipart/mixed; boundary="000000000000c2f1db063a0959cc"
 
---000000000000f882f1063a0954e1
+--000000000000c2f1db063a0959cc
 Content-Type: text/plain; charset="UTF-8"
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
 > From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
-> Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{,_mem}
-> to bool, 2023-12-16) a number of our string predicates have been
-> returning bool instead of int. Now that we've declared that experiment
-> a success, let's convert the return type of the case-independent
-> skip_iprefix() and skip_iprefix_mem() functions to match the return
-> type of their case-dependent equivalents. Returning bool instead of
-> int makes it clear that these functions are predicates.
+> Now that the string predicates defined in git-compat-util.h all
+> return bool let's convert the return type of the string predicates
+> in strbuf.{c,h} to match them.
 >
 > Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 > ---
->  git-compat-util.h | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 5bd69ec0403..9408f463e31 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -897,35 +897,35 @@ static inline size_t xsize_t(off_t len)
->   * is done via tolower(), so it is strictly ASCII (no multi-byte characters or
->   * locale-specific conversions).
->   */
-> -static inline int skip_iprefix(const char *str, const char *prefix,
-> +static inline bool skip_iprefix(const char *str, const char *prefix,
->  			       const char **out)
->  {
->  	do {
->  		if (!*prefix) {
->  			*out = str;
-> -			return 1;
-> +			return true;
->  		}
->  	} while (tolower(*str++) == tolower(*prefix++));
-> -	return 0;
-> +	return false;
->  }
->
->  /*
->   * Like skip_prefix_mem, but compare case-insensitively. Note that the
->   * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
->   * characters or locale-specific conversions).
->   */
-> -static inline int skip_iprefix_mem(const char *buf, size_t len,
-> +static inline bool skip_iprefix_mem(const char *buf, size_t len,
->  				   const char *prefix,
->  				   const char **out, size_t *outlen)
+>  strbuf.c | 28 ++++++++++++++--------------
+>  strbuf.h | 12 ++++++------
+>  2 files changed, 20 insertions(+), 20 deletions(-)
 >
 
-Nit: clang-format complains that we should also format the arguments now
-that the first line's length changes
+Nit: same here as the previous patch
 
 $ ./ci/run-style-check.sh @~1
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 9408f463e3..e01abf6eb6 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -898,7 +898,7 @@ static inline size_t xsize_t(off_t len)
-  * locale-specific conversions).
-  */
- static inline bool skip_iprefix(const char *str, const char *prefix,
--			       const char **out)
-+				const char **out)
+diff --git a/strbuf.c b/strbuf.c
+index 6c3851a7f8..d9e040c13b 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -38,7 +38,7 @@ bool starts_with_mem(const char *str, size_t len,
+const char *prefix)
+ }
+
+ bool skip_to_optional_arg_default(const char *str, const char *prefix,
+-				 const char **arg, const char *def)
++				  const char **arg, const char *def)
  {
- 	do {
- 		if (!*prefix) {
-@@ -915,8 +915,8 @@ static inline bool skip_iprefix(const char *str,
-const char *prefix,
-  * characters or locale-specific conversions).
+ 	const char *p;
+
+diff --git a/strbuf.h b/strbuf.h
+index a580ac6084..d2ff9839a9 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -679,10 +679,10 @@ bool starts_with_mem(const char *str, size_t
+len, const char *prefix);
+  * skip_prefix(arg, "--key=", &arg) to parse such an option.
   */
- static inline bool skip_iprefix_mem(const char *buf, size_t len,
--				   const char *prefix,
--				   const char **out, size_t *outlen)
-+				    const char *prefix,
-+				    const char **out, size_t *outlen)
+ bool skip_to_optional_arg_default(const char *str, const char *prefix,
+-				 const char **arg, const char *def);
++				  const char **arg, const char *def);
+
+ static inline bool skip_to_optional_arg(const char *str, const char *prefix,
+-				       const char **arg)
++					const char **arg)
  {
- 	do {
- 		if (!*prefix) {
+ 	return skip_to_optional_arg_default(str, prefix, arg, "");
+ }
 
 [snip]
 
---000000000000f882f1063a0954e1
+--000000000000c2f1db063a0959cc
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: ec18c4313d712476_0.1
+X-Attachment-Id: 90747c63548224a9_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oM2Ztd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMzhyREFDYnVUeDZtWXUzUThwckpJQWo4cmVtdzVOQwpHQ3hNYmFPSUNq
-QjR2WExTL1B5bVpVbUlYWVVUSG9KdklzK3BwdGlEV01ORExXaGZZMTk1V2N3Q2gvRFBzTFU3ClhP
-WENGbGdpbUFpa2pMajRaWjVJOFArUVlVZHFMZWJkOXc2UXFrbUx0dy9IeHF5Q3Iwb3I3OUY2aW10
-SDBLZzkKTVZWSkFLTzlpR2FkUzhaeTZMODI3M1pyMmprTU5nQ1JHaGpEQm11SG8zSWU1Vjdya3Bo
-QnNBUURWMGo5bDJuUAp3dFF1RlFjaWFyV21LR1Q1WVplQjFoZEJKRU8wV1Q5WmJkQkFFN1NQTy95
-U0dDRG51OUNLVGNzZ2E5Rk02MGRBCmtkUnBnaGxpWVplTUVBUm80UE5iWFp4ZnhpeU1mc2U2aHlX
-ZFoyWlZQS0dQVWpsYjZOdnZjSlBuS3pvbXN4Um8KV0Y3aDhpQmpMR3JzTk1veU5KOERTZ1Yxbjlq
-ejJTNjZXZ3V6U21EbzdNZW9WQ29jd1REemtWSjcwTUtoTmVvaAp5VnJLdWpieWlBR1RVbHZuL0N4
-bXlXUDZCdjV5Qm1BUncvYXVTcVlPV2lCOU5RZWFOMXp3akZNZzVsM1hhUlViCjdPeGhIMXJxOXRB
-YkNxbG1zUmpzZ1A4Z09ISkUrUCtvblZ5NEdwRT0KPUhITnYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oM2Zyd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNE1WQy85ZWVCMDhZaEEwOXhKb1p5SU11SE84NGM3eQpmYkpvU0NYK1E1
+aXNCNDdGWjl3WWFPNXZsSEdvMVlLcENsOHB1dFE4Z0x1SmZEMGE2SkJkNjAwK28ycVJlZ0tECjV0
+cU4vN1I1eTdrZ2NUTDlnb3JQc1FvMnUvUTE3Ylgvbm9ZOS9icUJEa2h4b2RYUUVCSVNrcjdxVEFt
+bjVPbkoKOStTTVBadEJqa3l1ZkFzb1NJcThvbVVQWlMvRngzSGFEd0k2aHNuRDBVdlowRXlWM1F6
+VmhHamdmWVg5T0ZKVwpUd2xUNC9zUkxSZmYza0tZc0FpbExRbk5iL3RhS2NoZkF6dkEzeWdXeWtZ
+UDNTQWZwQUdqVk5FRzNyeHlZZ2ZoClpKYlByOWpPRWJqZjJQNEN4dnYwTWhvNGFVV0V5VDd4SXRt
+bGtrZjdmQnpVOVVOV3Zyb1d4ZVJSNWxzT2M3VFEKdjg2dDZDcjdmY0NYRG40L1VTaTY4bU9scE9H
+L0NKVEp2aGdjYURrZHZreHc5cS9kUUdEMms5Vzl3RThlNEdveApiRTFCeEZ5NTZ6eHBrL1JuOWhF
+ZzhHR25VV3VKV2pRQUVNWVVYbnl3a0ZGd3F4VjJvV0wzNDRmUmFwU3ByMUtnCnRTczNYbFcyeHNy
+SUhpTmhxMjdYc0RYbkxYUzd1akRLQzB4d1liQT0KPVJPWGwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000f882f1063a0954e1--
+--000000000000c2f1db063a0959cc--
