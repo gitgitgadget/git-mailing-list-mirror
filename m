@@ -1,60 +1,60 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44E632F50AC
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 15:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBCC02EF646
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 15:29:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752679745; cv=none; b=NQtE0NrX7QNMo++/qlghOa9yFBBVVw2lvqrCtGGIRhW6ZD8HOo5fQZvFbg32erHeOZzbJpYnFPgaVcPxtwV47JCbVkdrgzHjdyOQhdeIuBWkvsAfJ1zGlWPbNpKt0QdUG1czSzxxx7SVN5X6AVDj3DGTjUE5rQF6aTeSItPr2m8=
+	t=1752679799; cv=none; b=c9ttJdJOGODDiJ8AFtH/4W/CjEJvysBTmlBKHdmVO2Bn5+XXHymqbYY1kPjTmuzjfbZjFwzAeokblLam6AA4WDMdw81okTT4IdcPMy0vOu5ZWFtlPBBPhgCH7OEFrNfffuzgX2DxblGyuhGZRKeDmma/5eOI5QAu0d+yYEn+ViY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752679745; c=relaxed/simple;
-	bh=7QfGQewnv/iu78XbOXQr7BatsPUcbKz/IW52H3erTHo=;
+	s=arc-20240116; t=1752679799; c=relaxed/simple;
+	bh=x55SF5JJ5N+FsUghvQVJyyAYWRly+W6jUcNAUjym1c0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jMIyGhns7lDlTCOiAI8UrMH2fVd59zJ273anmN/vSWJf8NoDwa3DgoGO/UTcomZy+KXP4j7FJYEcaxfh1+g2ogrrrXmABtMLDS6M1CvIn459aUQ6C0LN9yDeUsYpO5sVPTXBCtrDb1JVsoM4J0fB/XD2pSbrKzr8GrIMKNfW8uk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AjhNw/v2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PW7BqYh4; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=dKh8DNLKhrFqM4VcSxEHqouuJlp2MUJACIKcQnMepIoprca21L5oA40zpXG0m2iw8bc4axLZOtRUWzHRyOBRUng8Vvm+2EAYvtOqA2enzfR8QrYfTnhcZD6606lh7/uQDXI/aTIIkyosmXlGTSmGDcrjFlV4u0mXJA5qlrjjWZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Mr93cPgi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Nhw6FpWA; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AjhNw/v2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PW7BqYh4"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 4534F1D000ED;
-	Wed, 16 Jul 2025 11:29:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 16 Jul 2025 11:29:02 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Mr93cPgi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Nhw6FpWA"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id D1BEF1D000FE;
+	Wed, 16 Jul 2025 11:29:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 16 Jul 2025 11:29:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752679742; x=1752766142; bh=qboY3K+1bx
-	fNYB3/ff664hYFoT+sAk3frxwK28ggLPE=; b=AjhNw/v2VjsuxAhpB4zpM6y9n6
-	Ra0Sp6WDt0VlTDSHaVauT2hMpBVgedU8ZQnrA8wQCg1NlUKYHgT+CqCH+u1EBgXJ
-	aJIbId96owq7rNQE6owSBH7nuZ2I9kPpsPLvDe1WfBe3gLe2tvBDpFowmHN14nTw
-	HDraq7yQjDXyznpWPJf3eUvlIeYtVxVhW38EoBZQB32vDLY+crBuWR1DV0QYbyBD
-	uQl4q6Wg69xsIuRG576LjD2myrT1L4/+yJhaPeM58TVZlgDeZ7eE2rxGNEFX1Nhn
-	Dqbo60alzpReTWBcpcRZSyEiuhONSIVP1ikSaPIvEO5s9cTQ3fUbNKxt8kUQ==
+	:subject:to:to; s=fm1; t=1752679796; x=1752766196; bh=vipzCeO7lA
+	nMmSyts/wTgI+waUHq0MGAQufzuxb15n4=; b=Mr93cPgiK9aONHN+RlQL/aUk2x
+	NJ7UK9ix5edCxRndUtdVYma6YrHluHUaN/J9lpDXtSpLXM+T1KIkduI3OwUlGB2B
+	ImS0gixFrq8XKL2vmmfMgp+wo6ejGVpRqL8rrREaDFpQA6WXq6vaoiCxDv39iQ0r
+	VsBsJSDcBZvRun0ZXrmRdSnEXGuE682+k1j7X35BQC72+AKWv2eDSjwfj073F6T+
+	SOeXquluTuHr8H2D7HWlc5v4r1yLjpZ47rGcVehlbF1XfTI6+5bvBflf03CfTlQp
+	3oUAzxgE5WKqF7erFkEayl5p1oMy5Mcvg5sJY9l/mRhj9p5uuikFCxMK41aA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752679742; x=1752766142; bh=qboY3K+1bxfNYB3/ff664hYFoT+sAk3frxw
-	K28ggLPE=; b=PW7BqYh4kQEPSlzC/iGeoQ8VePooEi7Zqm8To19WdpKNfE+i1xK
-	cJdE0iLru2m7AgsbcNP6IvXEUhXk60uSXpv8N7mBervobaUlV2xaM7YLLHTtToE2
-	oW+2xs9AAlDGbSk3EJvI1hqCT10PABHRkZ68si4uUj+n23TK3WnpTVTbq1u2SU4N
-	JeW+6/JrW1xvepSnekxtfTEE5DniQIgPHBsSwqQEmnpmzg7Jg1ploRAONiQXWCR0
-	vd6W7TGtoMuogyyXHKGDnwCJaVOUTTUeoBaaR31HZ/rFf9RwtlmTaeyjVm9Nv+u7
-	azMVapsy7E0+MX+ULk1n6CuQPeunOZ3oTfQ==
-X-ME-Sender: <xms:PcV3aJxjziggfupl6IVnKTnWc6T3knTJFRJQtMKhzqBI6AwSBJlcSw>
-    <xme:PcV3aG1tctQzEmG3PshHBddfQe5zOHD2P8f15b9SS457rjfEOFxnDzGFA86jXx6jd
-    nSqE1XnbDnD-3mUsQ>
-X-ME-Received: <xmr:PcV3aJzzMzgRs1ytFO78T_ZPHJmP-ht-Q-_84Sl9Iyn-uVxg45Fw379Z9Y5xIFnfl-BDtCJNtTgsPic819zdXFr68PR24Ir0tgILwSI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkedtiecutefuodetggdotefrod
+	1752679796; x=1752766196; bh=vipzCeO7lAnMmSyts/wTgI+waUHq0MGAQuf
+	zuxb15n4=; b=Nhw6FpWA5DqHP5c1SEYDN0DZHs7uxtzL7DSErm5r203RzoUFIdN
+	Oh2XzBwS+tNaxYATAUSq0R+x8l84sgP0DfuN9TlNDGC3qna9YpoCeSXl7S3CO2j8
+	bH9ApAjV/Gre9yVWOjMzRoXSjk0su0Ux4odPaM1PZUe3zgRPuVMIHoYTfGWTFpns
+	C19uXeB3L9X7Lx8/QHgamo1nMeQPxzGJKIYMyBNs0hSwtB8qkKUemMBzVqBweTV1
+	otDA/P5Sbsx2qbdkwczSJ8tldNQZfPN51cl1inACmz7EhnI+Nd8iF8ArBlMMjv0s
+	OcsdBBqz5lXkRfg60XHf08r2d9c7W9d4rnw==
+X-ME-Sender: <xms:dMV3aMARo_uGZOS-FX7Iv0NRh8CDyi0m2txLtVMvaj3K54tILJRBgw>
+    <xme:dMV3aMHqpG5fonDi1cqINilBKUG7bJVHdjyvMSkrOcOvPfQ2-f49otb874MyHNWoG
+    52-hpbakZ-F80XXaQ>
+X-ME-Received: <xmr:dMV3aGDIvJ3vBE6ihcLB5VN_ZgYDDPG-xvTLb44ea-4uWw3dEYuee8_Zb9fxSEKxUAPxqhont0UhBWISvDFovULzuke4chw-BWAJzW4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkedtjecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
     htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
     gtohhmpdhrtghpthhtoheprgihuhdrtghhrghnuggvkhgrrhesghhmrghilhdrtghomhdp
@@ -63,33 +63,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkedtiecutefuodetgg
     higrmhhthhgrkhhkrghrtddtudesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhish
     htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
     pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PsV3aNG1gb5laKN9-SJtl_cZuN-Z5vbh2MLX6xlbg6RuOS4fTh_jPA>
-    <xmx:PsV3aMaPjdM_UZGjOnDU3-pk0Try5CfmlP8TlsRRGlGhRcoKyWsyMA>
-    <xmx:PsV3aPB21PTGACYHnSTKIhzaZCtxQHw1mgx7yf_TZNErmhnvy3wDzg>
-    <xmx:PsV3aEk_-3Rxs5_0Bi_t-pcKzelpp2_-Cia_fM_hDS8JEcw4QT43lA>
-    <xmx:PsV3aFji_CbknYY1Wn9b7h6L0Sg7njY-sigS88fHYg5Uz4D9TsXFicET>
+X-ME-Proxy: <xmx:dMV3aEVlnAU0aVLodn5-J4rEGVoN7VpfwugkkfcptPy-qmqPa3lyZQ>
+    <xmx:dMV3aCp8fGqjrB7lPG6N77mJUyoLa_KZt2yFEyEUiGZYCg2D5TNyxw>
+    <xmx:dMV3aIT1IIXXQEwdzZd2t7WBVh3sRcXPLPzaRxFHMsc_9SiYOBgPYA>
+    <xmx:dMV3aE0ctqf0c-F0RVy1UAS61S5HxpAE0BWcaK-4yqadRR1ewLrtgg>
+    <xmx:dMV3aOzhTSGoTtyZT7mswZR4ScwntrJq-4cr-ESom3RJck5LTQm5oR1T>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Jul 2025 11:29:01 -0400 (EDT)
+ 16 Jul 2025 11:29:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Phillip Wood <phillip.wood123@gmail.com>
 Cc: Ayush Chandekar <ayu.chandekar@gmail.com>,  christian.couder@gmail.com,
   git@vger.kernel.org,  shyamthakkar001@gmail.com,
   kristofferhaugsbakk@fastmail.com
-Subject: Re: [GSOC PATCH 2/2] config: set comment_line_str to "#" when
- core.commentChar=auto
-In-Reply-To: <b16c6f79-c021-4068-9c95-09625ca058c7@gmail.com> (Phillip Wood's
-	message of "Wed, 16 Jul 2025 16:24:29 +0100")
-References: <cover.1752602474.git.ayu.chandekar@gmail.com>
-	<2a3c2d323bdb520a37a099b361be9ec5f2d5d46f.1752602474.git.ayu.chandekar@gmail.com>
-	<xmqq1pqhgnby.fsf@gitster.g>
-	<CAE7as+aN+j4CteHUrr+R+CbZ=qi=mehYW2xQEG4ZcQYvXqJsaQ@mail.gmail.com>
-	<xmqqcya1f2vr.fsf@gitster.g>
-	<CAE7as+YxajFO0FfMe2wYpT9okYQoevZAghDD29d7E0P82-A_Hw@mail.gmail.com>
-	<xmqq1pqgduvo.fsf@gitster.g>
-	<b16c6f79-c021-4068-9c95-09625ca058c7@gmail.com>
-Date: Wed, 16 Jul 2025 08:29:00 -0700
-Message-ID: <xmqqseiwcfyb.fsf@gitster.g>
+Subject: Re: [GSOC PATCH v5 0/2] commit: improve behaviour of
+ core.commentChar=auto for comments in commit messages
+In-Reply-To: <51e75a0f-fc6c-452c-b1c3-2836d1508308@gmail.com> (Phillip Wood's
+	message of "Wed, 16 Jul 2025 15:28:00 +0100")
+References: <20250626132233.414789-1-ayu.chandekar@gmail.com>
+	<cover.1752665506.git.ayu.chandekar@gmail.com>
+	<51e75a0f-fc6c-452c-b1c3-2836d1508308@gmail.com>
+Date: Wed, 16 Jul 2025 08:29:55 -0700
+Message-ID: <xmqqo6tkcfws.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -101,16 +96,11 @@ Content-Type: text/plain
 
 Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> On 16/07/2025 16:21, Junio C Hamano wrote:
->> Ayush Chandekar <ayu.chandekar@gmail.com> writes:
->> 
->>> Yeah, Phillip should actually get the primary credit for this patch
->>> and Suggested-by does not do enough justice.
->>> I will send a new version right away.
->> Thanks.  Don't forget to ask him to sign-off.
+> This version looks good to me, thanks for working on it.
 >
-> Here it is
->
-> Signed-off-by: <Phillip Wood phillip.wood@dunelm.org.uk>
+> Junio - shall I rebase 'pw/3.0-commentchar-auto-deprecation' on top of
+> this when I re-roll to avoid conflicts?
+
+Sounds sensible.  I can drop my merge-fix then.
 
 Thanks.
