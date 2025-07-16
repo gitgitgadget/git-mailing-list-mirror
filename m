@@ -1,62 +1,62 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F632F0C5F
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEA2F0E5E
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658765; cv=none; b=HDrChTgaws3pSt0l7X4Q+iWlcT4Ve7cVfC3FtA/SpqP+I1zSEj73LGoMO4yHWx/EpAzORrRrcv83jhQ4OUvbL3vHIrsgefO1XmqjR1RGeOEgT+AuBCWo+d3RO5OR+KMEyyyDRDhLthAVOCZ8z1Xi5+mw+2bs328F7b6lnWTb3XI=
+	t=1752658766; cv=none; b=q/GnauYY8eqAKSeDKeLtceW2M2fL5uY2Hsa0+P3jheWtoatYPWV0ugvKgwy8QTytU/JYgnWpLuGWmaaIzv2No1gDaP/WvBr9NCimw0ZJm7wllT78KYUKm2lAqefRXcsvrCrTz4N7aIJwC9can/S5do3kNk5d4O56H6ZWy62pfwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658765; c=relaxed/simple;
-	bh=a6KaXBTremdGWUtYAAD8ddJc7lr+xBd71GezDTs+zCs=;
+	s=arc-20240116; t=1752658766; c=relaxed/simple;
+	bh=gPmqIGUo4U4wyOXYaMkwsg5oKq9UaAtOnKmCxXnHIg8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YQowPaixBnhmAO1RucayU8MVZlTXHR0i1zoannOGDX5znuZpyt2Ulm2B5lfvUBrnvPuIDu8yul3NMUWkDeRdfGauMzqlk0lTbSNzMvpu+/iEm5HZuL9GQ4lJcHd9rdO4sGovQPwlUAhSe9jO05O77h8a+3F6895nwBX0cyGdhSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QE+smZF6; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version; b=SIyecVHbwPRAw75KTlMiN/DSKtD3ziohvsGKjIScv+JPQLDg3qbIZmJKwOTc1EX3jrZ4Ym8DM1iB39iCIb8QwmyHT0wSigVjuyZXO0zOqMTF5sPP4uBHtcxbV3fJpgZOu7x6uurPYUhBlZTRfg7MaYwem+35DdSD0bYdfL8tXvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BBc89MZP; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QE+smZF6"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a54690d369so5153825f8f.3
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BBc89MZP"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4560d176f97so39698305e9.0
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752658762; x=1753263562; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752658763; x=1753263563; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=RID4KGBlDrKiiaezDhkDFV6vZnEma+TKoXvlSeyv0EY=;
-        b=QE+smZF62tG31JuMsKZW+huHTgiqqaWiZqlparJIQQ0SQSZ+itxYW+joohdu92p8y4
-         IB872I5AyfZpOMD8qK2ZQYZy+XlEayi+twOLDfa93DEfhj7O/0hnWWO5c/FUglun5O5D
-         tRiApvCp5KqAKbgyXo0DuSeaXSZUWsTzCi5jpCZjx3mkL7hIMq4oOfvn0fH6WGIghU5N
-         Zu2YapnRxdwaJbFmBKAK9LSGLnNqpdn5iedeU0rwMoEFr3F8SfXJt5awBcUoXPf797uL
-         27KIgdd/ZIW8YOCA+ljovP/lVOH3IJH2AQ9AoSXU7KcgowdRjcjXlEgFm8ivYVJcAjjw
-         zVwQ==
+        bh=KhEQ4V8uoDws6tCkxlbwcINhCePrVBQISiUlPc3ULFI=;
+        b=BBc89MZPkznx+xSd7rm38HnJkFMVOxW+NVmYyxdu5a4tU0KGBi7sVR9M31ZsLfYwh8
+         4jIm5/cXoXeKe+AkDTWx0qrF5XhctkqksDiDgn0Nz8OvX4zY72lqH4fTGuq1HBbor8y8
+         ENDavZFe09vUR5+m4YnnIubsmisUaWm6zDa64sC1cn66P0QFdyIzPKZKxbybUcnK/VE/
+         +4PjStF5ApBsl1xtqY3WJxEMA0cbRPO1u6m8UigD29Qkqm0F2b/hqjknwdWqxvD6xsUz
+         XpzFntRociIUdS688dITOyJHbY5zQN5ZjF9jHezw2fMU3xgncWi+WFpKdhuaU0dX9D8E
+         a3sg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752658762; x=1753263562;
+        d=1e100.net; s=20230601; t=1752658763; x=1753263563;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RID4KGBlDrKiiaezDhkDFV6vZnEma+TKoXvlSeyv0EY=;
-        b=mxRQ4l2wL6oYOA0V1KrdnZOk11cpxZYb5KlPCVD6geDClDHrBgNAILRMO4kwK8TPfd
-         5WvP3UP8WYyA4+xA3A6nNpC4lYXaviY90n1P7v4ZvXrv/tITjalsizrlZ7GkZlz0usS1
-         iTHYas24hk8NZFY+Ns/gcy9qC/V/aVndivfgBs/dmub7ncFETISqCXYm4XQqXfpbXnOf
-         PD9+HWpr4dTnFNd5VjAYtfrgESEXNnG7YOPH8b2FXX9sX3o3KD5RhiHFMI3FShkCjOJl
-         kBFWeWNp6Cwe2Fc5tS8z91GRb67CaMdBO5SrrpJtpCfZbEraHI4L9H3atdxx3ohI1yoG
-         IgRw==
-X-Gm-Message-State: AOJu0YzBwadiWrgKiwrrjV/71EudgI8eSq7wxUUVxWopmitIbOARCGIY
-	xh9vh63XGZW0R8idy1SZZ92W9LeYrHUT1SmZoVACscmJAgEhdoNGwrlvyKA0Lg==
-X-Gm-Gg: ASbGnctFcRlkS8CuczyZXiclu8WaV0KRYU5jV+4VdLil7XaZu4qG1Z73F8KUl/GAA+n
-	GTGhFMVxTsYWOYGKMrW3Tm066wFJomWNdRoiPA2DkE6OV8YSOlLc+OkkpVprSWUb4Wfzj/bAJt2
-	mqAAHe6pxv1z5Wh5dI+HwCd6kHqNbzUpNTWTFBtl5ZncCbKkt1XfzCJhqfkxd43A7ZAsfP3nOGs
-	MGON2WUbh6suMnv3dRDx/IjEdYniqIeYg4YrX2If+23CGTRu7tksiy1YxegbMQMHANiDW5/xA9T
-	qOQ46OCy7w6HDaRqNQKP5LMcqrScz1QvY3t5MrxoJGItS0/AWTUJavO959DRYma9RNAllnsHpE/
-	4nWnS6JNjIMe/jmX08rQWkmiota4+EwfoNhZ4lFmcf9gE
-X-Google-Smtp-Source: AGHT+IG5MjEhaB2FdCnS8ddfMmKwwE112rFPyvm4HzK7h/PJgTstppeX0ULaov//9g0YvjgTfBnCEQ==
-X-Received: by 2002:a05:6000:2c08:b0:3a4:fbd9:58e6 with SMTP id ffacd0b85a97d-3b60e517ff8mr1345664f8f.50.1752658761463;
-        Wed, 16 Jul 2025 02:39:21 -0700 (PDT)
+        bh=KhEQ4V8uoDws6tCkxlbwcINhCePrVBQISiUlPc3ULFI=;
+        b=ltuqQw4Y7KfWGXxZkHhaJHiko/xjujcai8HsryWjsxVwQZ3BnvXLPCHIaX0GP3Uesi
+         fVcjyyd1Mt799s4bnjJmVVg1vCrUhMpN0e3HQNfecuQR6EsVTtueSsQtstY2xOBCUSyi
+         KxAueojv1S8SBfB4FZf0jvSqyw2DRhQhr1+YZdmX2MmwDJVcu2hzdlbY5+m9KD7V6pAX
+         5/9j6YklZz1uwUKAF1dRRb2BODNc0fBzJI/EsCwxS7c5X1H9swtDm7FVlYb7b+uZK9FU
+         p1iZ5t+sVSMhouFCDVKhYTGSpLAtuCpZYQ/juzWE5udxtULA8HgpXrut4KBJZ7gPrrSG
+         XEBQ==
+X-Gm-Message-State: AOJu0YyVs13+MKZGyOD+3CwiS8rM0E0vA1fG1Q52hdACRWPs/ZQPhKS1
+	IzOv88P5ihIGe4FfC5i9ebNA77BvLBSDUQf5zwfSUu0xzLB/PH1OD2Xevl9mDA==
+X-Gm-Gg: ASbGncuUg/3dTS2eb6UFN1723wkXlG+zVxPhRG/lqVNYK5LC9jS32c4bx+3UK5hpaMI
+	u3mTfcyqtC+UruCR+UkLObN2HJba/Np5WpAdcl7O07UgcvwK3HiktZdXudyTXwC7rjyilpZtVbO
+	3jQmcwkoPzVJWPfxM/ppcsAAsiH6cFjD2wpPwv99peO6JWGYEV5f7ab2OZseC1f6Qnuj7nGHmsa
+	cCkz6q+wVEVsdscHJdFwIQ2tXJwgLA+p8GznSyqVlQRoPpeUXd0inMVqrTb2KCINtrF5fxSFPQB
+	8P34dBNWN+dzU/jTEc9WIohOA/kG0WcrY6ft1POwxwoC5qWbwYe+o5U9GHM/relg9U3lbT5VSm7
+	9HuoEbAl8/2Bit5ywJbX1vpuxUaDJZjhlyLHdwi9WLw0K
+X-Google-Smtp-Source: AGHT+IGb8osNdIRv53H6ye/bxQAWmCV+Oo4UUSCoIFegE5jlO9EXpYda2B8wnh+9aEF7N6NCIO4itw==
+X-Received: by 2002:a05:600c:a00c:b0:455:de98:c504 with SMTP id 5b1f17b1804b1-4562e2bd5a8mr23904455e9.0.1752658762577;
+        Wed, 16 Jul 2025 02:39:22 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 02:39:21 -0700 (PDT)
+        Wed, 16 Jul 2025 02:39:22 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
@@ -65,9 +65,9 @@ Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 1/3] CodingGuidelines: allow the use of bool
-Date: Wed, 16 Jul 2025 10:38:28 +0100
-Message-ID: <3ff7ae61f45c87de5a5304b45809994bd862d945.1752658700.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 2/3] git-compat-util: convert string predicates to return bool
+Date: Wed, 16 Jul 2025 10:38:29 +0100
+Message-ID: <26c3f48ac6c150b438c7b2f442f55a3d17141345.1752658700.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1752658700.git.phillip.wood@dunelm.org.uk>
 References: <cover.1752499610.git.phillip.wood@dunelm.org.uk> <cover.1752658700.git.phillip.wood@dunelm.org.uk>
@@ -82,30 +82,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-We have had a test balloon for C99's bool type since 8277dbe987
-(git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
-2023-12-16). As we've had it over 18 months without any complaints
-let's declare it a success.
+Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{,_mem}
+to bool, 2023-12-16) a number of our string predicates have been
+returning bool instead of int. Now that we've declared that experiment
+a success, let's convert the return type of the case-independent
+skip_iprefix() and skip_iprefix_mem() functions to match the return
+type of their case-dependent equivalents. Returning bool instead of
+int makes it clear that these functions are predicates.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- Documentation/CodingGuidelines | 3 +++
- 1 file changed, 3 insertions(+)
+ git-compat-util.h | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-index 6350949f2ef..528b42d1dd1 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -298,6 +298,9 @@ For C programs:
-    . since late 2021 with 44ba10d6, we have had variables declared in
-      the for loop "for (int i = 0; i < 10; i++)".
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 5bd69ec0403..9408f463e31 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -897,35 +897,35 @@ static inline size_t xsize_t(off_t len)
+  * is done via tolower(), so it is strictly ASCII (no multi-byte characters or
+  * locale-specific conversions).
+  */
+-static inline int skip_iprefix(const char *str, const char *prefix,
++static inline bool skip_iprefix(const char *str, const char *prefix,
+ 			       const char **out)
+ {
+ 	do {
+ 		if (!*prefix) {
+ 			*out = str;
+-			return 1;
++			return true;
+ 		}
+ 	} while (tolower(*str++) == tolower(*prefix++));
+-	return 0;
++	return false;
+ }
  
-+   . since late 2023 with 8277dbe987 we have been using the bool type
-+     from <stdbool.h>.
-+
-    New C99 features that we cannot use yet:
+ /*
+  * Like skip_prefix_mem, but compare case-insensitively. Note that the
+  * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
+  * characters or locale-specific conversions).
+  */
+-static inline int skip_iprefix_mem(const char *buf, size_t len,
++static inline bool skip_iprefix_mem(const char *buf, size_t len,
+ 				   const char *prefix,
+ 				   const char **out, size_t *outlen)
+ {
+ 	do {
+ 		if (!*prefix) {
+ 			*out = buf;
+ 			*outlen = len;
+-			return 1;
++			return true;
+ 		}
+ 	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
+-	return 0;
++	return false;
+ }
  
-    . %z and %zu as a printf() argument for a size_t (the %z being for
+ static inline int strtoul_ui(char const *s, int base, unsigned int *result)
 -- 
 2.49.0.897.gfad3eb7d210
 
