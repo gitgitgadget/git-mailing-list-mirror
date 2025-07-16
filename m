@@ -1,75 +1,76 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6022EF66D
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F632F0C5F
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658764; cv=none; b=dam52ftAwILK8sPN/t0x3oJmZ8zoR+CCepL1cPW5Bbhjbe78NKYE0g/i++wA5MtnAgtaR4Wi8EWO40syb/6xPVxtP2MSkXqfr4ZSvJ2oUGK6T+CCLcSAxYfIl4yUaotTCd9aVUeib5Ec/XnAjG51GW3U075vfh8AOXQWElV4bYE=
+	t=1752658765; cv=none; b=HDrChTgaws3pSt0l7X4Q+iWlcT4Ve7cVfC3FtA/SpqP+I1zSEj73LGoMO4yHWx/EpAzORrRrcv83jhQ4OUvbL3vHIrsgefO1XmqjR1RGeOEgT+AuBCWo+d3RO5OR+KMEyyyDRDhLthAVOCZ8z1Xi5+mw+2bs328F7b6lnWTb3XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658764; c=relaxed/simple;
-	bh=4ygT7WsfIJd/H3IKbC4C8mM0S4gVdbhvBJM9ZN7E/oY=;
+	s=arc-20240116; t=1752658765; c=relaxed/simple;
+	bh=a6KaXBTremdGWUtYAAD8ddJc7lr+xBd71GezDTs+zCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=T5utYdMjxSOUSaMANCxM2/mCDgoSEJ49yhupAyxa8Gz7yjOTbqBMBr/EWb3qmDaZA1S4GKS8bMh25LyDedy8uwRtL8tj0HO73pLPqJsWmSMq0brk1Ub/OcNao6zXOvXL56C4OUwxtajfRNvmjYOqMfUt8USSZLcvQbTVlj1KGUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IHbdg6K5; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version; b=YQowPaixBnhmAO1RucayU8MVZlTXHR0i1zoannOGDX5znuZpyt2Ulm2B5lfvUBrnvPuIDu8yul3NMUWkDeRdfGauMzqlk0lTbSNzMvpu+/iEm5HZuL9GQ4lJcHd9rdO4sGovQPwlUAhSe9jO05O77h8a+3F6895nwBX0cyGdhSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QE+smZF6; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IHbdg6K5"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45618ddd62fso31651975e9.3
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QE+smZF6"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a54690d369so5153825f8f.3
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752658760; x=1753263560; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752658762; x=1753263562; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=wAfUe2Q1Ec4gkgeVGfeTIjcrHy3Nhoa101v+LnPIVIo=;
-        b=IHbdg6K5mf+5oapHe/3vX6GYYhmFdAWGSk9WbeJs8RnXqw4qTzMkIIKjoEYQhZNG38
-         RX0ClG/7sOiqLxKEbFnIFNO+bVP+3+R/ldP5uV2rpuMZl9J5j9sijgxNZxqolxR/YkV5
-         P/QDPa6MZTt98T07ykBqvedW9pwnRj95lAYUZUR4UqAVHbqLaum6NEYo4+skTPE4TONB
-         1xmY4VxkttfGKi6zSwlq06jn4Rjr1wCf2DdAmhCm3yEm48ZhbP8ea/I5R1Ng9kd/ZXIo
-         rTqeQMDP2D2p3feeNxaZA1vtdc71QVUp4qTlI7YCHZ8PPGtweLoVVAdjleTpDotrlrtO
-         U5wg==
+        bh=RID4KGBlDrKiiaezDhkDFV6vZnEma+TKoXvlSeyv0EY=;
+        b=QE+smZF62tG31JuMsKZW+huHTgiqqaWiZqlparJIQQ0SQSZ+itxYW+joohdu92p8y4
+         IB872I5AyfZpOMD8qK2ZQYZy+XlEayi+twOLDfa93DEfhj7O/0hnWWO5c/FUglun5O5D
+         tRiApvCp5KqAKbgyXo0DuSeaXSZUWsTzCi5jpCZjx3mkL7hIMq4oOfvn0fH6WGIghU5N
+         Zu2YapnRxdwaJbFmBKAK9LSGLnNqpdn5iedeU0rwMoEFr3F8SfXJt5awBcUoXPf797uL
+         27KIgdd/ZIW8YOCA+ljovP/lVOH3IJH2AQ9AoSXU7KcgowdRjcjXlEgFm8ivYVJcAjjw
+         zVwQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752658760; x=1753263560;
+        d=1e100.net; s=20230601; t=1752658762; x=1753263562;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=wAfUe2Q1Ec4gkgeVGfeTIjcrHy3Nhoa101v+LnPIVIo=;
-        b=VaaCuJKNrI8EOE6CEgDAkz6uu6oar/y35WtynFAKywXjGCoQpB2wC9ilA8eKFevj+R
-         lQ6+llngMXtuPOW79g73XZSOrGyZO1hdnhW19Ju/nUEUH656sYQjqMOjtp6dpwgVRlHY
-         Fz1TpE1izxNPmQTj8ZEvWmJQGblnos1PSf1k3jSRadGNbhp4jmoKbyyglaMuaRXFlxg6
-         3XjTIWd2Uamft6SK23y8pkMBjKE7ZF2hC4J6n853Q/vyOz0Y6TMu45V+UNaGm+CzTHVN
-         lBrx+oY8mvAQkUIduuEMgwEOHdgMtTgkkXxLFEUle/PgDeOF9MrYHUPmueW6BFza6PFT
-         oFhg==
-X-Gm-Message-State: AOJu0YzTJRabskJ6yYuVlAvvSpTpbiFpuySLsrEnYzyuBsOuRxR853wt
-	pMrupLT6LmZRVT23OetVbIkARe6HXXNCR5SE9owxeYW5ss0phdpMOckvoxE7gA==
-X-Gm-Gg: ASbGncu9YI86xjBU8ny7EZbt8mudrbxBj9fklOe6Z3mLAgJmtoi4ilrfBnfUvInhZdf
-	GE45Q1FasZ/VXMR0NG1pVL6efpxEeyrHEt89ayPYNqjh5A92CV/UkV460il+7oE7qH90DYUH/du
-	BiB5dWC6mW8FgWvDerTYcatFExAyzGNpuwubsCwbcpZgVJQDkakJGyscG1deyz7cfqEfrKxe/8D
-	trgaHdlorRS1k1cWACTdQ+G3huGGPS5Uhc5OH7v1FeZLxsEztJpwZBcaet/i39cnbYTfRSSV3Sb
-	kYCAzJ2HesebvjwUPZzgRkp1qiCi5b+Sx0RcJFemVceoDXXEapqPAbbULX24D5FqYjAIV8mh/UP
-	xwograDrhupNCPbfXYRFwmNKD9NiZvZjOZ4pLEgaHi1c4
-X-Google-Smtp-Source: AGHT+IE6r15JEioJmXmwdhHAjSWiZUYav/7oliGZLnusK5LxSF63D2K5SYQrFNEWBXW8hitkfiBaWw==
-X-Received: by 2002:a05:600c:c4a5:b0:456:e1f:4dc4 with SMTP id 5b1f17b1804b1-4562e390d79mr19954395e9.15.1752658760293;
-        Wed, 16 Jul 2025 02:39:20 -0700 (PDT)
+        bh=RID4KGBlDrKiiaezDhkDFV6vZnEma+TKoXvlSeyv0EY=;
+        b=mxRQ4l2wL6oYOA0V1KrdnZOk11cpxZYb5KlPCVD6geDClDHrBgNAILRMO4kwK8TPfd
+         5WvP3UP8WYyA4+xA3A6nNpC4lYXaviY90n1P7v4ZvXrv/tITjalsizrlZ7GkZlz0usS1
+         iTHYas24hk8NZFY+Ns/gcy9qC/V/aVndivfgBs/dmub7ncFETISqCXYm4XQqXfpbXnOf
+         PD9+HWpr4dTnFNd5VjAYtfrgESEXNnG7YOPH8b2FXX9sX3o3KD5RhiHFMI3FShkCjOJl
+         kBFWeWNp6Cwe2Fc5tS8z91GRb67CaMdBO5SrrpJtpCfZbEraHI4L9H3atdxx3ohI1yoG
+         IgRw==
+X-Gm-Message-State: AOJu0YzBwadiWrgKiwrrjV/71EudgI8eSq7wxUUVxWopmitIbOARCGIY
+	xh9vh63XGZW0R8idy1SZZ92W9LeYrHUT1SmZoVACscmJAgEhdoNGwrlvyKA0Lg==
+X-Gm-Gg: ASbGnctFcRlkS8CuczyZXiclu8WaV0KRYU5jV+4VdLil7XaZu4qG1Z73F8KUl/GAA+n
+	GTGhFMVxTsYWOYGKMrW3Tm066wFJomWNdRoiPA2DkE6OV8YSOlLc+OkkpVprSWUb4Wfzj/bAJt2
+	mqAAHe6pxv1z5Wh5dI+HwCd6kHqNbzUpNTWTFBtl5ZncCbKkt1XfzCJhqfkxd43A7ZAsfP3nOGs
+	MGON2WUbh6suMnv3dRDx/IjEdYniqIeYg4YrX2If+23CGTRu7tksiy1YxegbMQMHANiDW5/xA9T
+	qOQ46OCy7w6HDaRqNQKP5LMcqrScz1QvY3t5MrxoJGItS0/AWTUJavO959DRYma9RNAllnsHpE/
+	4nWnS6JNjIMe/jmX08rQWkmiota4+EwfoNhZ4lFmcf9gE
+X-Google-Smtp-Source: AGHT+IG5MjEhaB2FdCnS8ddfMmKwwE112rFPyvm4HzK7h/PJgTstppeX0ULaov//9g0YvjgTfBnCEQ==
+X-Received: by 2002:a05:6000:2c08:b0:3a4:fbd9:58e6 with SMTP id ffacd0b85a97d-3b60e517ff8mr1345664f8f.50.1752658761463;
+        Wed, 16 Jul 2025 02:39:21 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.19
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 02:39:19 -0700 (PDT)
+        Wed, 16 Jul 2025 02:39:21 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	"Brian M . Carlson" <sandals@crustytoothpaste.net>,
 	Elijah Newren <newren@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v3 0/3] C99: declare bool experiment a success
-Date: Wed, 16 Jul 2025 10:38:27 +0100
-Message-ID: <cover.1752658700.git.phillip.wood@dunelm.org.uk>
+	Jeff King <peff@peff.net>,
+	Phillip Wood <phillip.wood123@gmail.com>
+Subject: [PATCH v3 1/3] CodingGuidelines: allow the use of bool
+Date: Wed, 16 Jul 2025 10:38:28 +0100
+Message-ID: <3ff7ae61f45c87de5a5304b45809994bd862d945.1752658700.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
-In-Reply-To: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
-References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <cover.1752658700.git.phillip.wood@dunelm.org.uk>
+References: <cover.1752499610.git.phillip.wood@dunelm.org.uk> <cover.1752658700.git.phillip.wood@dunelm.org.uk>
 Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -81,45 +82,30 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-We've had a test balloon for C99's bool type since 8277dbe987
+We have had a test balloon for C99's bool type since 8277dbe987
 (git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
-2023-12-16). As it has been over 18 months since this was added and
-there have been no complaints let's declare it a success and convert
-the return type our other string predicates to match.
+2023-12-16). As we've had it over 18 months without any complaints
+let's declare it a success.
 
-Thanks to peff for spotting yet another typo - I've updated the commit
-message for patch 1 accordingly.
+Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+---
+ Documentation/CodingGuidelines | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Base-Commit: a30f80fde927d70950b3b4d1820813480968fb0d
-Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fuse-c99-bool%2Fv3
-View-Changes-At: https://github.com/phillipwood/git/compare/a30f80fde...80e5cd3b9
-Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/use-c99-bool/v3
-
-
-Phillip Wood (3):
-  CodingGuidelines: allow the use of bool
-  git-compat-util: convert string predicates to return bool
-  strbuf: convert predicates to return bool
-
- Documentation/CodingGuidelines |  3 +++
- git-compat-util.h              | 12 ++++++------
- strbuf.c                       | 28 ++++++++++++++--------------
- strbuf.h                       | 12 ++++++------
- 4 files changed, 29 insertions(+), 26 deletions(-)
-
-Range-diff against v2:
-1:  352f80c49b7 ! 1:  3ff7ae61f45 CodingGuildlines: allow the use of bool
-    @@ Metadata
-     Author: Phillip Wood <phillip.wood@dunelm.org.uk>
-     
-      ## Commit message ##
-    -    CodingGuildlines: allow the use of bool
-    +    CodingGuidelines: allow the use of bool
-     
-         We have had a test balloon for C99's bool type since 8277dbe987
-         (git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
-2:  0b2402e11cc = 2:  26c3f48ac6c git-compat-util: convert string predicates to return bool
-3:  66968714739 = 3:  80e5cd3b9df strbuf: convert predicates to return bool
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 6350949f2ef..528b42d1dd1 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -298,6 +298,9 @@ For C programs:
+    . since late 2021 with 44ba10d6, we have had variables declared in
+      the for loop "for (int i = 0; i < 10; i++)".
+ 
++   . since late 2023 with 8277dbe987 we have been using the bool type
++     from <stdbool.h>.
++
+    New C99 features that we cannot use yet:
+ 
+    . %z and %zu as a printf() argument for a size_t (the %z being for
 -- 
 2.49.0.897.gfad3eb7d210
 
