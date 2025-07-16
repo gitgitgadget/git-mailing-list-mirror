@@ -1,32 +1,32 @@
-Received: from out-181.mta0.migadu.com (out-181.mta0.migadu.com [91.218.175.181])
+Received: from out-189.mta0.migadu.com (out-189.mta0.migadu.com [91.218.175.189])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 077331C5D44
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 13:35:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D721C5D44
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 13:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.189
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752672956; cv=none; b=GllldX7Njl6m2QYnlsgIB0pi0LQOBu3G0L2SSk+fL4A4H5xl8CsFr0HyjEqoZ4ineY0tGw5fvXxt8bXVQa/yTjH5PLcFg4azBC4zwRg9gwepXkKd2OgBf7KOiv3nsaB41gLZVR4Z/tFTWhp2sIuKdyfAp+vkpqnv+gdpaVakyOA=
+	t=1752672960; cv=none; b=OIKtHSnM5EeHN5ZO9k9QmA1M7x3x+b5ownFVZr6AjTIPYzKYSa6aKEOW0bKb6t2UlhiRj7Poxpgl3/GMLdl/5NYV+cLlIMv8gDCKfH3djl9XaOkEjTOGuS7mSmcN/k/qRERiLErsEtMkqk/VRwpHLvuGhB+/1/qPc9j7qxRvaQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752672956; c=relaxed/simple;
-	bh=FchY31No+cCW4qOpCFnsXzRfVeBCBiHGqhdPOl7WAQo=;
+	s=arc-20240116; t=1752672960; c=relaxed/simple;
+	bh=r/xx90+P7Kz7xfVMwOauBbtTBw2WER4yk3I02EX46AA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EFl20DYSrtw9jOj92R9bnp8vssYfLy4OwD+r1+K/1hrnZrsTXUVVE6FrMJOIbPK0awY9ntVby1w2BhFBQ59pKstHF/TGph4bB08CAZarfODAV8pvELBUNr/4NHvUkdeFrGXOkKzQ21MA2ybgDNBPMemgkdruIBREV4Dg07Ub6n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=Pvls6sPE; arc=none smtp.client-ip=91.218.175.181
+	 MIME-Version; b=Z3M/h3zF6Lp9VjI+Yu87hsOuluG3vKWy5TKsZJFCMkfHYMc4E4TzLwN7H+oPa5l8REtJjuhl4G5TLOLTZ/+KwpHOKZdWEEw8XNtKbOAfq04WtP3nbjCDsHGTaB1e6xnKe/bsWks+GUaW4fXZH+Lq21jcPr9SfI2vU1XPqSEgU00=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=rE9B7Jt8; arc=none smtp.client-ip=91.218.175.189
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="Pvls6sPE"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="rE9B7Jt8"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1752672952;
+	t=1752672956;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=cBXuv/VNl0/0TWUOM/lqTrUlN3vXUBFRFRGaK8Zd46I=;
-	b=Pvls6sPEj5GvRZkssbke8h+cBnFYm7XPnNjED+LKiovJCme+nc4uBYS1lUWeLrTOCWHirl
-	UUlVSAjc128a/kxu45ROoQuTEU/OIUVy50yXPBBrp3TfbCWPEg/zxOQghUykME9MeSNfQd
-	QAJfOGRpTg5dQK7QaUNX9+qbPp0MiaY=
+	bh=ueVt6waNmleRCYe/Jun/HGLqf8cr+kuWk36Cx0aAkGY=;
+	b=rE9B7Jt8F8iv595cQs9uqGymzY+HgPOf0TeNA3WfjSaCinc34NwgM+977816W95CItsx0t
+	tVloDsNQJ+q1uImsaJTYr+iUegn32kk7tMpMSlbc4DtiOSMF071I4F8/2P8ghl3B5ir1g8
+	iYW9YdMzo2kq4/tOWDiGKO70rdtbqBk=
 From: Toon Claes <toon@iotcl.com>
 To: git@vger.kernel.org
 Cc: Toon Claes <toon@iotcl.com>,
@@ -34,9 +34,9 @@ Cc: Toon Claes <toon@iotcl.com>,
 	Derrick Stolee <stolee@gmail.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v5 3/6] last-modified: use Bloom filters when available
-Date: Wed, 16 Jul 2025 15:35:15 +0200
-Message-ID: <20250716133518.1788126-3-toon@iotcl.com>
+Subject: [PATCH v5 4/6] pretty: allow caller to disable indentation
+Date: Wed, 16 Jul 2025 15:35:16 +0200
+Message-ID: <20250716133518.1788126-4-toon@iotcl.com>
 In-Reply-To: <20250716133206.1787549-1-toon@iotcl.com>
 References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
 Precedence: bulk
@@ -48,137 +48,45 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
 
-Our 'git last-modified' performs a revision walk, and computes a diff at
-each point in the walk to figure out whether a given revision changed
-any of the paths it considers interesting.
+Most pretty formats indent the commit message with 4 spaces. Add field
+`no_indent` to `struct pretty_print_context` to suppress this
+indentation.
 
-When changed-path Bloom filters are available, we can avoid computing
-many such diffs. Before computing a diff, we first check if any of the
-remaining paths of interest were possibly changed at a given commit by
-consulting its Bloom filter. If any of them are, we are resigned to
-compute the diff.
+Signed-off-by: Toon Claes <toon@iotcl.com>
 
-If none of those queries returned "maybe", we know that the given commit
-doesn't contain any changed paths which are interesting to us. So, we
-can avoid computing it in this case.
+# Conflicts:
+#	pretty.h
 
-Comparing the perf test results on git.git:
-
-    Test                                        HEAD~             HEAD
-    ------------------------------------------------------------------------------------
-    8020.1: top-level last-modified             4.49(4.34+0.11)   2.22(2.05+0.09) -50.6%
-    8020.2: top-level recursive last-modified   5.64(5.45+0.11)   5.62(5.30+0.11) -0.4%
-    8020.3: subdir last-modified                0.11(0.06+0.04)   0.07(0.03+0.04) -36.4%
-
-Based-on-patch-by: Taylor Blau <me@ttaylorr.com>
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- builtin/last-modified.c | 45 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 45 insertions(+)
+ pretty.c | 2 +-
+ pretty.h | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/builtin/last-modified.c b/builtin/last-modified.c
-index 63993bc1c9..466df04fba 100644
---- a/builtin/last-modified.c
-+++ b/builtin/last-modified.c
-@@ -1,5 +1,7 @@
- #include "git-compat-util.h"
-+#include "bloom.h"
- #include "builtin.h"
-+#include "commit-graph.h"
- #include "commit.h"
- #include "config.h"
- #include "diff.h"
-@@ -17,6 +19,7 @@
- struct last_modified_entry {
- 	struct hashmap_entry hashent;
- 	struct object_id oid;
-+	struct bloom_key key;
- 	const char path[FLEX_ARRAY];
- };
-
-@@ -40,6 +43,12 @@ struct last_modified {
-
- static void last_modified_release(struct last_modified *lm)
+diff --git a/pretty.c b/pretty.c
+index 0bc8ad8a9a..9b1698417e 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -2286,7 +2286,7 @@ void pretty_print_commit(struct pretty_print_context *pp,
+ 			 struct strbuf *sb)
  {
-+	struct hashmap_iter iter;
-+	struct last_modified_entry *ent;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent)
-+		clear_bloom_key(&ent->key);
-+
- 	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
- 	release_revisions(&lm->rev);
- }
-@@ -67,6 +76,9 @@ static void add_path_from_diff(struct diff_queue_struct *q,
+ 	unsigned long beginning_of_body;
+-	int indent = 4;
++	int indent = pp->no_indent ? 0 : 4;
+ 	const char *msg;
+ 	const char *reencoded;
+ 	const char *encoding;
+diff --git a/pretty.h b/pretty.h
+index df267afe4a..5d25ae2320 100644
+--- a/pretty.h
++++ b/pretty.h
+@@ -50,6 +50,7 @@ struct pretty_print_context {
+ 	struct ident_split *from_ident;
+ 	unsigned encode_email_headers:1;
+ 	struct pretty_print_describe_status *describe_status;
++	int no_indent;
 
- 		FLEX_ALLOC_STR(ent, path, path);
- 		oidcpy(&ent->oid, &p->two->oid);
-+		if (lm->rev.bloom_filter_settings)
-+			fill_bloom_key(path, strlen(path), &ent->key,
-+				       lm->rev.bloom_filter_settings);
- 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
- 		hashmap_add(&lm->paths, &ent->hashent);
- 	}
-@@ -126,6 +138,7 @@ static void mark_path(const char *path, const struct object_id *oid,
- 		data->callback(path, data->commit, data->callback_data);
-
- 	hashmap_remove(data->paths, &ent->hashent, path);
-+	clear_bloom_key(&ent->key);
- 	free(ent);
- }
-
-@@ -169,6 +182,28 @@ static void last_modified_diff(struct diff_queue_struct *q,
- 	}
- }
-
-+
-+static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
-+{
-+	struct bloom_filter *filter;
-+	struct last_modified_entry *ent;
-+	struct hashmap_iter iter;
-+
-+	if (!lm->rev.bloom_filter_settings)
-+		return 1;
-+
-+	filter = get_bloom_filter(lm->rev.repo, origin);
-+	if (!filter)
-+		return 1;
-+
-+	hashmap_for_each_entry(&lm->paths, &iter, ent, hashent) {
-+		if (bloom_filter_contains(filter, &ent->key,
-+					  lm->rev.bloom_filter_settings))
-+			return 1;
-+	}
-+	return 0;
-+}
-+
- static int last_modified_run(struct last_modified *lm,
- 			     last_modified_callback cb, void *cbdata)
- {
-@@ -189,6 +224,9 @@ static int last_modified_run(struct last_modified *lm,
- 		if (!data.commit)
- 			break;
-
-+		if (!maybe_changed_path(lm, data.commit))
-+			continue;
-+
- 		if (data.commit->object.flags & BOUNDARY) {
- 			diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
- 				      &data.commit->object.oid, "",
-@@ -238,6 +276,13 @@ static int last_modified_init(struct last_modified *lm, struct repository *r,
- 		return argc;
- 	}
-
-+	/*
-+	 * We're not interested in generation numbers here,
-+	 * but calling this function to prepare the commit-graph.
-+	 */
-+	(void)generation_numbers_enabled(lm->rev.repo);
-+	lm->rev.bloom_filter_settings = get_bloom_filter_settings(lm->rev.repo);
-+
- 	if (populate_paths_from_revs(lm) < 0)
- 		return error(_("unable to setup last-modified"));
-
+ 	/*
+ 	 * Fields below here are manipulated internally by pp_* functions and
 --
 2.50.1.327.g047016eb4a
