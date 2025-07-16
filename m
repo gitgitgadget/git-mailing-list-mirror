@@ -1,88 +1,93 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4531264630
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 15:16:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF2DC28BA8D
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 15:21:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752678984; cv=none; b=tBglKP3XvNTCfHdcquXaV0GpAI3GfpHCV87YtvzsnmVNot3oCyiKTVSThlAnk80puTHULamO3VPXDc5UublbwwgLXrRzmSJtMpKilSPV4wIqrvThovJptZWEV6h8cjTGYEdI+DZb4K9NUC2MVkvvPhlkcShXeIgZTtIvstjymKQ=
+	t=1752679282; cv=none; b=JMCh9crqg7JXVDbsOXVTZM8q2Ls1iTykJGUoAXB60DVlH5Y64YtIN1dNbV5ZOf7B67l5LAlSJxApE3PAAiiW5DcvvCwpw86sfQp5pANCUdQwW4RpL7WTgAhr8Ii/zNrY3Qi/KD7myfPZviaG8csKE7gI7vuo6qkXeMyxqGKOeB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752678984; c=relaxed/simple;
-	bh=RwVqhZzI7/zGXtRonWpM8ffQlJKgwHpFQLi9e928GoY=;
+	s=arc-20240116; t=1752679282; c=relaxed/simple;
+	bh=13Bbi4aKjE0E0TSsvfU4Yaw8DrJeZQr8RGaYgx5I4IU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YsFotW5fisgZVNIEEhY69/Xay/WL8mW3Fq/w8Z41jwGUPbC/bmuOnisupdmuMvydncs7GQLgMNLTIs+vnakrLD90w40UgacQZTWH2pz24io3bkA8XG1DGfNs4Xr6f6IpUsZDO9EhQcbImptKnF9vHwll3jIjeqG4gtlhrTCqc1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=adKQ9EF+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j/3Le6wR; arc=none smtp.client-ip=202.12.124.152
+	 MIME-Version:Content-Type; b=C0Icy0jGmKdsNVaxGNCJJeP1lmMFqF6Z+WvRJ/A1dhGSaJ1O8xKNT3pjDSfoLNt/E2FLNrQ8L/Tg3dNQg3B2qqescYjfI1QQ55cqUTe6CGQGehJFxz3tj5jUmXo/+teut4ELDYnzPh1vBFxKWZrpywokWBGxXQa6IcKJgfvLjcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sicjl8tw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DiKatyXz; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="adKQ9EF+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j/3Le6wR"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id C4AD17A003E;
-	Wed, 16 Jul 2025 11:16:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sicjl8tw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DiKatyXz"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id BEFD31D00029;
+	Wed, 16 Jul 2025 11:21:17 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Wed, 16 Jul 2025 11:16:21 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 16 Jul 2025 11:21:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752678981; x=1752765381; bh=Zor6v9dcM2
-	UAwnVdVaxUGmLXS9OGKbK5ePgOo5UxZhM=; b=adKQ9EF+sTG1NIMm2poYS4Zr+f
-	mqUAjb0Tvb/q8YQit9nnZ1ZbT08OEJvH1s6ksG1x6K+2HPxLO86oX7BVcZt2JbBk
-	MkhICQEppRDm5bd94ChN0SP9oS89X/J+lVqjMeknEjv38N82+u3Y9G3mb2YiR4iW
-	zTBH2+4QR95VucTOXpZb8X4Ey9CZy1jSP/KrR3argvwv5uwIsdP7MnCXpIEbO1P1
-	LEwjQtscXm7reLoJfMmpGrT5wJcl//zNSwdnc3YA33TNlqg/vyQVj51xdq3dfP8A
-	lpBqxDDXeAQHtBNSMxmdyhihAzcaeDKR7LZ1cXwWx6qF19J6IcuarZFoJtow==
+	:subject:to:to; s=fm1; t=1752679277; x=1752765677; bh=SBQUXS0BiD
+	qmK91YEtkvo/6pUPmFBM7LCDzZhFd72Rs=; b=Sicjl8twHh7W3ck28MDARcTjLI
+	DZlpRT+oo5j5I9AGIFcXbfAyxGvIIS7uo/97UsJZUjo8FJhci2rudAiX0DS9ue8p
+	n0+Iln4RMQtVxU1uTHAAra3S3HAEuH48VgdKs8PNby1fLiVzhhaL+UeNbpus7F0Z
+	xwk9JQd3zTFM2FGURKE6g5+nrd7p57daIZLjcpe+C0cDxf+zyCGNuQKsplYtHNlL
+	Ist5E4DxayyJxMIzpz2u7qvM7bik5ExmweMVqcNrGBjnWJlMw6lcDFhPgWe3wv9H
+	zshIxtoM+7P9T9gAO1g/4Dq2jFC3EZq++TY19rPUH2vo2KBkZXPC9C3oxHuw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752678981; x=1752765381; bh=Zor6v9dcM2UAwnVdVaxUGmLXS9OGKbK5ePg
-	Oo5UxZhM=; b=j/3Le6wRHxh8W4s9wWVM9NzEsTUfDMZNT0zAcOia+y8hZgOoJHY
-	d8N4HV79C82q7g0MFnjRK1MzseL0/7Z0JXHsbLUQxg0DWeVVa4FbkfSFYIdBVFl9
-	bN4z4xiE+7/aBS8xoeDPcDBFegkxdfoKmBgkX26c0kAShaFEmyQQlfi1RS7vQnCa
-	EZrGwzlf7zioLRVYEUTiDvLMlRsn9GSZqfiEq+HUT03T84BgdWoK3gouCiwiU+Pw
-	sVbRrE0m69Y74PXBtf9yCM1peJt1SG7zrh31/XOYLOkqzjl98uM89MbLWyfyrffq
-	laQQ91W/EZKk68kYBA1316xsfcp/QjOmu/A==
-X-ME-Sender: <xms:RcJ3aFO9x2KzZ8Q2sKsA27YAYRpXXyl-Eyo4e88-Oy4ZF3KRDDLUug>
-    <xme:RcJ3aJdYSYtwtP4tXtEAwGlyITo0nGv1eye2mgwsRlZJV4nJP1lHGeKPs_i7Neljn
-    2SQIx_4R3u1c5X58g>
-X-ME-Received: <xmr:RcJ3aEUfHAbG3-iajzrdGM33oPjIXm4ZM0Vlm9C8fc6ZFxC2mf5JkXPP8SJ_jre1t9gBCkZhLpQQIISxoyPhD6Tfa_319wRc0dC_6SI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkedtgecutefuodetggdotefrod
+	1752679277; x=1752765677; bh=SBQUXS0BiDqmK91YEtkvo/6pUPmFBM7LCDz
+	ZhFd72Rs=; b=DiKatyXzJHhLUlyBjZCO1uxdygPh/NLYkdKK1/8eUdyaPNgbtCX
+	AvQ//fDOZXMv+1sPnvcCB6ZRPl6Cyf1PF45SPdqGdZVq91JNbZOhLC+/3knt+JAm
+	e0EQWWJ0+X4oHuRWqttcYHV9Rjl0rSiYghLoHe64mJeRWcbVHZFFvJHU03ZpPBD8
+	i4Xs9LRPeGeWng6QDXIhIsBH+s3HtlIqcfKGtWWQDIBtruKhJ46m/FiouNVLKAkw
+	9eQ9XikZo5S6OmD7oABiL0UIEOX3DxWfxWswAz/znhR6/ogWkrDVPy/aJXj/lJZ2
+	IJpBLQTKQ/aTSD3nmHVhdVbI+9aedMK0ndQ==
+X-ME-Sender: <xms:bcN3aE7lxymRmZjh0-_tGKhZdEo8Dcbq9ujMXk3z3TJJnA-H51qq9Q>
+    <xme:bcN3aDeSTFU_aYphBmNjs0rArap9ALfbVuAHFNmLoe8D6QP5gp7paIouTpykZVn0T
+    oGLdoaFn7k0gUFxRg>
+X-ME-Received: <xmr:bcN3aJ4ZWyivu1nRYR7BGvJ_2wdN16Epy7HIdtwzbt4RRtYVqPJwn1li8dMx_bDAoiGKvzPOWIRuNvQQJQ6pkz04Nb9Z3_-eNcyPY6U>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkedtiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhephffgteeivedtjeduueevvdehtefhff
-    eukeevudehveehueejudeuffeuvddtleeinecuffhomhgrihhnpegruhhtohhsthgrshhh
-    rdhsohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgep
-    shhmthhpohhuthdprhgtphhtthhopehjiehtsehkuggsghdrohhrghdprhgtphhtthhope
-    ihlhguhhhomhgvvdguvdesghhmrghilhdrtghomhdprhgtphhtthhopehhiheslhhoohhp
-    ihhnghdrmhgvpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:RcJ3aBioqYvkDUmgzYxB5c6n9P314SUcPcjQjZfBF5LxMzXXFV3sYw>
-    <xmx:RcJ3aD9qmwDLEk1mSrypRiZmH0qFCaP9PW7NC3-rmKMzgvO8R1lKBw>
-    <xmx:RcJ3aDYYJm9IXvv1fzDzxpA2R4mif4pcHSJuLXusJBUf1F8KVSI_7w>
-    <xmx:RcJ3aK0thPvTe4gk9mwB97zOK5b5aoW0fPitMHxXGtcbKoAPgqOHyw>
-    <xmx:RcJ3aB7GK4lUYnjHBoIdq42izFuVZvtaoHRpg0Qt1CaoxT32SqQ_lzsA>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhh
+    higrmhhthhgrkhhkrghrtddtudesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhish
+    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bcN3aKuwKvGDGNDYjxK_73hEs0nQ66BPlhj1EgvR6Inp24peXul50A>
+    <xmx:bcN3aJg62IMckFVO60PHSH20Lan4RMtVKONyD5EzyE6GsJQbFTRn5Q>
+    <xmx:bcN3aFrer6_0zJLZ8ebmN1cxuIM2YB3AZ7fTG84q2DuYgZsgJ303-w>
+    <xmx:bcN3aGuDB2Wesj7wJesziFbjOt0xT4rL8QDyv1t8CmENpbZboOetzw>
+    <xmx:bcN3aELysSH2bsITj4brWl1wt1CZed8JN-jwNIggmXCIkenORg-nBWgH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Jul 2025 11:16:20 -0400 (EDT)
+ 16 Jul 2025 11:21:17 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Lidong Yan <yldhome2d2@gmail.com>,  Bryan Lee <hi@looping.me>,
-  git@vger.kernel.org
-Subject: Re: [BUG] git pull ignores pull.autostash=true configuration when
- used with --git-dir and --work-tree flags on a bare repository
-In-Reply-To: <26cef1b9-1f17-447e-b647-3d32a3984997@kdbg.org> (Johannes Sixt's
-	message of "Wed, 16 Jul 2025 07:55:34 +0200")
-References: <010001980c90be66-2401a0b0-5c86-4135-90e2-c325852ef168-000000@email.amazonses.com>
-	<1AD9A170-8E17-411D-A13B-EA7780CF4D39@gmail.com>
-	<xmqqa555gp1i.fsf@gitster.g>
-	<6AEC3113-D687-42E0-B6D0-DF62FA1A9A8B@gmail.com>
-	<26cef1b9-1f17-447e-b647-3d32a3984997@kdbg.org>
-Date: Wed, 16 Jul 2025 08:16:19 -0700
-Message-ID: <xmqq5xfsdv3w.fsf@gitster.g>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,
+  phillip.wood123@gmail.com,  shyamthakkar001@gmail.com,
+  kristofferhaugsbakk@fastmail.com
+Subject: Re: [GSOC PATCH 2/2] config: set comment_line_str to "#" when
+ core.commentChar=auto
+In-Reply-To: <CAE7as+YxajFO0FfMe2wYpT9okYQoevZAghDD29d7E0P82-A_Hw@mail.gmail.com>
+	(Ayush Chandekar's message of "Wed, 16 Jul 2025 16:34:36 +0530")
+References: <cover.1752602474.git.ayu.chandekar@gmail.com>
+	<2a3c2d323bdb520a37a099b361be9ec5f2d5d46f.1752602474.git.ayu.chandekar@gmail.com>
+	<xmqq1pqhgnby.fsf@gitster.g>
+	<CAE7as+aN+j4CteHUrr+R+CbZ=qi=mehYW2xQEG4ZcQYvXqJsaQ@mail.gmail.com>
+	<xmqqcya1f2vr.fsf@gitster.g>
+	<CAE7as+YxajFO0FfMe2wYpT9okYQoevZAghDD29d7E0P82-A_Hw@mail.gmail.com>
+Date: Wed, 16 Jul 2025 08:21:15 -0700
+Message-ID: <xmqq1pqgduvo.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,49 +97,11 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 
-> Instead of this complexity, it is most likely a lot easier to fix the
-> origin of the misconception that `pull.autostash` is the correct
-> configuration. After all, it isn't even mentioned in the git-config nor
-> the git-pull man page.
+> Yeah, Phillip should actually get the primary credit for this patch
+> and Suggested-by does not do enough justice.
+> I will send a new version right away.
 
-git_pull_config() does pay attention to "rebase.autostash".  
-
-Either it is a bug for the code to do so, or it is a bug that the
-documentation does not talk about it.  
-
-The reason why I think "git pull" that pays attention to
-rebase.autostash is a bug is because the user is more likely to be
-much more familiar with both branches involved and more likely to be
-prepared to deal with conflicts potentially created by autostashing
-behaviour when making a private merge or rebase of local branches,
-than when pulling from other repositories.  So those who show
-willingness to accept the responsibility of having to resolve
-conflicts that arise when popping autostashed changes by setting
-rebase.autostash may not want to be cavalier to the same degree when
-running "git pull".  git_pull_config() that pays attention to
-"rebase.autostash" breaks that expectation.
-
-There is another curiosity.  git_pull_config() does not pay
-attention to "merge.autostash", which seems inconsistent.
-
-If I did not have any existing users, I would actually vote to teach
-git_pull_config() stop paying attention to "rebase.autostash", but
-we do not live in an ideal world.  Perhaps rectify this at Git 3.0?
-
-We could give a convenience feature in the opposite direction as
-well.
-
-It is not inconceivable for the git_pull_config() function to
-pretend as if rebase.autostash (when pull.rebase is true) or
-merge.autostash (otherwise) is set to true when pull.autostash is
-set to true.  It would have prevented this discussion thread from
-happening.
-
-I personally think that such an arrangement is backwards, though,
-for the same reason why I think git_pull_config() should not pay
-attention to "rebase.autostash".  So I am not sure if a new
-"pull.autostash" variable is such a good idea to begin with.
-
+Thanks.  Don't forget to ask him to sign-off.
 
