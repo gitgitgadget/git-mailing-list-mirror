@@ -1,62 +1,62 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83CEA2F0E5E
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01892F1FEA
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:39:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658766; cv=none; b=q/GnauYY8eqAKSeDKeLtceW2M2fL5uY2Hsa0+P3jheWtoatYPWV0ugvKgwy8QTytU/JYgnWpLuGWmaaIzv2No1gDaP/WvBr9NCimw0ZJm7wllT78KYUKm2lAqefRXcsvrCrTz4N7aIJwC9can/S5do3kNk5d4O56H6ZWy62pfwc=
+	t=1752658767; cv=none; b=lnrvR6oiFDWX4DYUwZuK3+kQWRrIjS7dy9bbsX5iJfnIibm46y/b+FYJJV47KieJ1FKXFDHRAhCm+9xNtl6Gx35ULzmMEw9KR9dn52nxhzPv1ykHYa70SUQMVx1Ek5QCMNaw9e0HxQKYguGYQjwZAUZxgrJFH71fu9kl7l/YokY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658766; c=relaxed/simple;
-	bh=gPmqIGUo4U4wyOXYaMkwsg5oKq9UaAtOnKmCxXnHIg8=;
+	s=arc-20240116; t=1752658767; c=relaxed/simple;
+	bh=VbLbGvm+PB3unTX3rlisYturvfB+j3opxessMsEPko4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SIyecVHbwPRAw75KTlMiN/DSKtD3ziohvsGKjIScv+JPQLDg3qbIZmJKwOTc1EX3jrZ4Ym8DM1iB39iCIb8QwmyHT0wSigVjuyZXO0zOqMTF5sPP4uBHtcxbV3fJpgZOu7x6uurPYUhBlZTRfg7MaYwem+35DdSD0bYdfL8tXvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BBc89MZP; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version; b=vGR5u/in0kG5XJC81mhebRKkLmOfOWIhCB1x+Qiupg//giCfyqzSVSltrE4DPwFJhZdUrlK/xVu+1uhPTbsq74dojqL09ynzWQlYOhqraGGE82H1rWuXzSwUAUaA01a5RI9yctyUsshXqcyUawVHKDYW1ndZpLhtXXcM1BAG7ZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kNPKOnec; arc=none smtp.client-ip=209.85.128.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BBc89MZP"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-4560d176f97so39698305e9.0
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNPKOnec"
+Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-455b002833bso17175335e9.0
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 02:39:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752658763; x=1753263563; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752658764; x=1753263564; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=KhEQ4V8uoDws6tCkxlbwcINhCePrVBQISiUlPc3ULFI=;
-        b=BBc89MZPkznx+xSd7rm38HnJkFMVOxW+NVmYyxdu5a4tU0KGBi7sVR9M31ZsLfYwh8
-         4jIm5/cXoXeKe+AkDTWx0qrF5XhctkqksDiDgn0Nz8OvX4zY72lqH4fTGuq1HBbor8y8
-         ENDavZFe09vUR5+m4YnnIubsmisUaWm6zDa64sC1cn66P0QFdyIzPKZKxbybUcnK/VE/
-         +4PjStF5ApBsl1xtqY3WJxEMA0cbRPO1u6m8UigD29Qkqm0F2b/hqjknwdWqxvD6xsUz
-         XpzFntRociIUdS688dITOyJHbY5zQN5ZjF9jHezw2fMU3xgncWi+WFpKdhuaU0dX9D8E
-         a3sg==
+        bh=le2QGaGzo0bSe4kbwhr/jCVyaZqfv5a/FTodEzgsr1o=;
+        b=kNPKOnec/azZ7CgIoRwdngfhpDUCZ+yhF5Dlm0ntefiv0ahYHcryfH7kJop6uKsvIR
+         8u13AkBi+431fMyOhI6h0qje/W+Nw8SxZ7wKV04SvkEoI9zjEI1L2iIEWkKGtNKNaUEP
+         hV7jsv77UPez+3HhN8/Q8CgR0azNR/hxAOM0lmQNZMZB/QystXK+mBipO8oEoldPKISe
+         S8gHpxrt1yZFY6KxGeJkSXHdDO7dOoET3xzm6M5VRiqzlkc/H39SQJQ5eBlQmVGhdFkn
+         AqJwSI1L5xeHoyeIYEkSCxBU3VYqgzFt039+turJbtCypxe828IgQyjIT/MytJQvgfRj
+         7OBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752658763; x=1753263563;
+        d=1e100.net; s=20230601; t=1752658764; x=1753263564;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=KhEQ4V8uoDws6tCkxlbwcINhCePrVBQISiUlPc3ULFI=;
-        b=ltuqQw4Y7KfWGXxZkHhaJHiko/xjujcai8HsryWjsxVwQZ3BnvXLPCHIaX0GP3Uesi
-         fVcjyyd1Mt799s4bnjJmVVg1vCrUhMpN0e3HQNfecuQR6EsVTtueSsQtstY2xOBCUSyi
-         KxAueojv1S8SBfB4FZf0jvSqyw2DRhQhr1+YZdmX2MmwDJVcu2hzdlbY5+m9KD7V6pAX
-         5/9j6YklZz1uwUKAF1dRRb2BODNc0fBzJI/EsCwxS7c5X1H9swtDm7FVlYb7b+uZK9FU
-         p1iZ5t+sVSMhouFCDVKhYTGSpLAtuCpZYQ/juzWE5udxtULA8HgpXrut4KBJZ7gPrrSG
-         XEBQ==
-X-Gm-Message-State: AOJu0YyVs13+MKZGyOD+3CwiS8rM0E0vA1fG1Q52hdACRWPs/ZQPhKS1
-	IzOv88P5ihIGe4FfC5i9ebNA77BvLBSDUQf5zwfSUu0xzLB/PH1OD2Xevl9mDA==
-X-Gm-Gg: ASbGncuUg/3dTS2eb6UFN1723wkXlG+zVxPhRG/lqVNYK5LC9jS32c4bx+3UK5hpaMI
-	u3mTfcyqtC+UruCR+UkLObN2HJba/Np5WpAdcl7O07UgcvwK3HiktZdXudyTXwC7rjyilpZtVbO
-	3jQmcwkoPzVJWPfxM/ppcsAAsiH6cFjD2wpPwv99peO6JWGYEV5f7ab2OZseC1f6Qnuj7nGHmsa
-	cCkz6q+wVEVsdscHJdFwIQ2tXJwgLA+p8GznSyqVlQRoPpeUXd0inMVqrTb2KCINtrF5fxSFPQB
-	8P34dBNWN+dzU/jTEc9WIohOA/kG0WcrY6ft1POwxwoC5qWbwYe+o5U9GHM/relg9U3lbT5VSm7
-	9HuoEbAl8/2Bit5ywJbX1vpuxUaDJZjhlyLHdwi9WLw0K
-X-Google-Smtp-Source: AGHT+IGb8osNdIRv53H6ye/bxQAWmCV+Oo4UUSCoIFegE5jlO9EXpYda2B8wnh+9aEF7N6NCIO4itw==
-X-Received: by 2002:a05:600c:a00c:b0:455:de98:c504 with SMTP id 5b1f17b1804b1-4562e2bd5a8mr23904455e9.0.1752658762577;
-        Wed, 16 Jul 2025 02:39:22 -0700 (PDT)
+        bh=le2QGaGzo0bSe4kbwhr/jCVyaZqfv5a/FTodEzgsr1o=;
+        b=sMHYX+cAKoN/mwh5EEhzTiC17ImtrvZZzzEAZPE7aHLNFQ/6ZXCVm0kW8I2MRx4myh
+         +xFDtVleR2NUU1XT5H6rMFnz1TtcFwC3y9Qppsrds+YlgFmwSyhzS9JdfFurXG5NWPbT
+         +zAvXUOG+Ym0ej+UHRf+N0nBqMYmvI84kzvXirRYM9doSyaN/id46WZwmkJti5eVh+wk
+         cmd8GCB+eK4LN4cJPiCab/nyCQqwAL8sg88H7Z1MGByAGTOn9LyPoptS2sf0mVwKB/gM
+         lUBbG+CIIrAcQSAXunch7bX7Nu1w9vYDxtna2XDBUhT5/hJOvHiVpcALwTFR3YdUVDts
+         v7GA==
+X-Gm-Message-State: AOJu0Yy8RgmgiuHh7YOQ86ftxpRjHcnb6yKS/Dqy2oP1mMxbABD8hl7B
+	R0v5eGeMcFrsjPuyHPxdJCWZx+H0P0pzPitSEKsgZ/ypDZK5ZicgdwXsNaizAw==
+X-Gm-Gg: ASbGncvm0XUhOeOGqx3NwzxxZTP1LdskByoam8h3hRIByQHdC5pRbdeOikb9h9QzBCs
+	zl1zPsMUsHKZntv9gZSHYozDQhHbUPAgITK/U3C87K7IarVVu4JDNcnuzaWzdfpnyGJ01V/COBl
+	hOgp+eq6UU4nCOpO2OMOpHuq98bMglHmSTsXhJP0dHX6T/b/oV008G6CShphQPAb+U5U1Pi7jry
+	zU4/ctGReOJanSyVfWpNRFc11Qmfa/t1CgQnl/jA8mlvA22Y1ZkI87EirAtz0BpkA1MjS4L5L1b
+	gUaUCZgD8JEjp43by0PIeuDPXbpLasZIQgLuA3oAqpnibOhNxIredtdysLCxGB+xNst8Mh1X7jc
+	5EOSdI5Y8xF8jR5CSzHPbp5jpH+1Kz7fIV2ZV8ARJSBSm
+X-Google-Smtp-Source: AGHT+IEv5I5RdCHnH9c276hkCiaosgfp1S3gR1rOxc8y2Yw9Z+eUQNlMKlnmT+VldzkXl6rHdjPnXQ==
+X-Received: by 2002:a05:600c:820f:b0:43c:ec0a:ddfd with SMTP id 5b1f17b1804b1-4562ed57638mr16088235e9.6.1752658763607;
+        Wed, 16 Jul 2025 02:39:23 -0700 (PDT)
 Received: from localhost.localdomain ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.21
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e802ae4sm15592015e9.13.2025.07.16.02.39.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 02:39:22 -0700 (PDT)
+        Wed, 16 Jul 2025 02:39:23 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
@@ -65,9 +65,9 @@ Cc: =?UTF-8?q?Ren=C3=A9=20Scharfe?= <l.s.r@web.de>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v3 2/3] git-compat-util: convert string predicates to return bool
-Date: Wed, 16 Jul 2025 10:38:29 +0100
-Message-ID: <26c3f48ac6c150b438c7b2f442f55a3d17141345.1752658700.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v3 3/3] strbuf: convert predicates to return bool
+Date: Wed, 16 Jul 2025 10:38:30 +0100
+Message-ID: <80e5cd3b9df80cbda58630cae20ff7ca44793d8f.1752658700.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1752658700.git.phillip.wood@dunelm.org.uk>
 References: <cover.1752499610.git.phillip.wood@dunelm.org.uk> <cover.1752658700.git.phillip.wood@dunelm.org.uk>
@@ -82,65 +82,127 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Since 8277dbe987 (git-compat-util: convert skip_{prefix,suffix}{,_mem}
-to bool, 2023-12-16) a number of our string predicates have been
-returning bool instead of int. Now that we've declared that experiment
-a success, let's convert the return type of the case-independent
-skip_iprefix() and skip_iprefix_mem() functions to match the return
-type of their case-dependent equivalents. Returning bool instead of
-int makes it clear that these functions are predicates.
+Now that the string predicates defined in git-compat-util.h all
+return bool let's convert the return type of the string predicates
+in strbuf.{c,h} to match them.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- git-compat-util.h | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ strbuf.c | 28 ++++++++++++++--------------
+ strbuf.h | 12 ++++++------
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 5bd69ec0403..9408f463e31 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -897,35 +897,35 @@ static inline size_t xsize_t(off_t len)
-  * is done via tolower(), so it is strictly ASCII (no multi-byte characters or
-  * locale-specific conversions).
-  */
--static inline int skip_iprefix(const char *str, const char *prefix,
-+static inline bool skip_iprefix(const char *str, const char *prefix,
- 			       const char **out)
+diff --git a/strbuf.c b/strbuf.c
+index f30fdc69843..6c3851a7f84 100644
+--- a/strbuf.c
++++ b/strbuf.c
+@@ -8,55 +8,55 @@
+ #include "utf8.h"
+ #include "date.h"
+ 
+-int starts_with(const char *str, const char *prefix)
++bool starts_with(const char *str, const char *prefix)
  {
- 	do {
- 		if (!*prefix) {
- 			*out = str;
+ 	for (; ; str++, prefix++)
+ 		if (!*prefix)
 -			return 1;
 +			return true;
- 		}
- 	} while (tolower(*str++) == tolower(*prefix++));
--	return 0;
-+	return false;
+ 		else if (*str != *prefix)
+-			return 0;
++			return false;
+ }
+ 
+-int istarts_with(const char *str, const char *prefix)
++bool istarts_with(const char *str, const char *prefix)
+ {
+ 	for (; ; str++, prefix++)
+ 		if (!*prefix)
+-			return 1;
++			return true;
+ 		else if (tolower(*str) != tolower(*prefix))
+-			return 0;
++			return false;
+ }
+ 
+-int starts_with_mem(const char *str, size_t len, const char *prefix)
++bool starts_with_mem(const char *str, size_t len, const char *prefix)
+ {
+ 	const char *end = str + len;
+ 	for (; ; str++, prefix++) {
+ 		if (!*prefix)
+-			return 1;
++			return true;
+ 		else if (str == end || *str != *prefix)
+-			return 0;
++			return false;
+ 	}
+ }
+ 
+-int skip_to_optional_arg_default(const char *str, const char *prefix,
++bool skip_to_optional_arg_default(const char *str, const char *prefix,
+ 				 const char **arg, const char *def)
+ {
+ 	const char *p;
+ 
+ 	if (!skip_prefix(str, prefix, &p))
+-		return 0;
++		return false;
+ 
+ 	if (!*p) {
+ 		if (arg)
+ 			*arg = def;
+-		return 1;
++		return true;
+ 	}
+ 
+ 	if (*p != '=')
+-		return 0;
++		return false;
+ 
+ 	if (arg)
+ 		*arg = p + 1;
+-	return 1;
++	return true;
  }
  
  /*
-  * Like skip_prefix_mem, but compare case-insensitively. Note that the
-  * comparison is done via tolower(), so it is strictly ASCII (no multi-byte
-  * characters or locale-specific conversions).
+diff --git a/strbuf.h b/strbuf.h
+index 6362777c0a0..a580ac6084b 100644
+--- a/strbuf.h
++++ b/strbuf.h
+@@ -660,9 +660,9 @@ char *xstrvfmt(const char *fmt, va_list ap);
+ __attribute__((format (printf, 1, 2)))
+ char *xstrfmt(const char *fmt, ...);
+ 
+-int starts_with(const char *str, const char *prefix);
+-int istarts_with(const char *str, const char *prefix);
+-int starts_with_mem(const char *str, size_t len, const char *prefix);
++bool starts_with(const char *str, const char *prefix);
++bool istarts_with(const char *str, const char *prefix);
++bool starts_with_mem(const char *str, size_t len, const char *prefix);
+ 
+ /*
+  * If the string "str" is the same as the string in "prefix", then the "arg"
+@@ -678,16 +678,16 @@ int starts_with_mem(const char *str, size_t len, const char *prefix);
+  * can be used instead of !strcmp(arg, "--key") and then
+  * skip_prefix(arg, "--key=", &arg) to parse such an option.
   */
--static inline int skip_iprefix_mem(const char *buf, size_t len,
-+static inline bool skip_iprefix_mem(const char *buf, size_t len,
- 				   const char *prefix,
- 				   const char **out, size_t *outlen)
+-int skip_to_optional_arg_default(const char *str, const char *prefix,
++bool skip_to_optional_arg_default(const char *str, const char *prefix,
+ 				 const char **arg, const char *def);
+ 
+-static inline int skip_to_optional_arg(const char *str, const char *prefix,
++static inline bool skip_to_optional_arg(const char *str, const char *prefix,
+ 				       const char **arg)
  {
- 	do {
- 		if (!*prefix) {
- 			*out = buf;
- 			*outlen = len;
--			return 1;
-+			return true;
- 		}
- 	} while (len-- > 0 && tolower(*buf++) == tolower(*prefix++));
--	return 0;
-+	return false;
+ 	return skip_to_optional_arg_default(str, prefix, arg, "");
  }
  
- static inline int strtoul_ui(char const *s, int base, unsigned int *result)
+-static inline int ends_with(const char *str, const char *suffix)
++static inline bool ends_with(const char *str, const char *suffix)
+ {
+ 	size_t len;
+ 	return strip_suffix(str, suffix, &len);
 -- 
 2.49.0.897.gfad3eb7d210
 
