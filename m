@@ -1,89 +1,82 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184601EF0B9
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 20:33:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BD328D8F8
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 21:07:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752698017; cv=none; b=TenWQZ83sl1q6DKTtGG4Q4KygntjLYNLfDgfK2G+BCDnL6Vl/BHal1DohjzC+8I1cYQKbPYMkJ+/D0D8XRotFV8hmfDQHPeNj5ytuEh8Y/NKDQs24XoUvkgf9ZHzf2StNR1bd5TlGiItWfsShtgHi23A4CuMJUSC6LfGOb1TuaU=
+	t=1752700080; cv=none; b=LdFy0tVVQoJDGO5ZhJyRR0GXwBIxIoH7yND7YdrY6ObX3sFT9j0Li8Zm28q1cHEe4ZfFQdxMv7nMRntQ4L4eV1QnxJBGY2RHckbw5QqDoHjd0AMhckPPJYtSpjQ8gMxtrYPPaiDEM/7xnPYMfHnRTWA1VlmyBP3U3Lcsqm5EDL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752698017; c=relaxed/simple;
-	bh=HRVVUfJOE0zvsVLvLoKQZSiA8g/wMScTNoCjZmwXwUI=;
+	s=arc-20240116; t=1752700080; c=relaxed/simple;
+	bh=bDWIoP1Vm6HeBFA3oM0/isg0fE8fJ61FtayfqGDIloE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=W07tSCSI1IKLvhcvcFWPH7xjNjpo70jJZmpHB7mIbtURJiiAeJ4iL4IfWFDuzwUQJzq/H98+mOPRvCCBTdVBigGUAG0N4qj+EqRSzYkXVvjWymFH3m/kcJOm4djIBtj7lYfH8WQi4KJMZOSmjiSnByGEEfUJv6Wgnn+f5/aZyk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=luzoS7MO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C+ybNIvi; arc=none smtp.client-ip=202.12.124.150
+	 MIME-Version:Content-Type; b=kizah4TcrZEvAsPETE3G7BNQJvDw31Ej80GuOE5GfwM3xWcJj3b70LO9bJRcJAeLzT1a0Xf69C0pqK42tB3OAvct9p7+U8C3WH+rsddgq7s0gcSgPAh2CrC6+1uh6za9hQuTUPDi0LhG5iNI4+Sdqmcc89jEFmOgVh1U7U1WjU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J6tTmgH3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kmarqg8o; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="luzoS7MO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C+ybNIvi"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J6tTmgH3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kmarqg8o"
 Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 033C41D000A3;
-	Wed, 16 Jul 2025 16:33:32 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Wed, 16 Jul 2025 16:33:33 -0400
+	by mailfout.stl.internal (Postfix) with ESMTP id D53591D00033;
+	Wed, 16 Jul 2025 17:07:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Wed, 16 Jul 2025 17:07:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752698012; x=1752784412; bh=dID6cMZ18t
-	9TYCX/DrOsFPsf1aCU6ul9YtVMNeri9Ms=; b=luzoS7MOp7d1PE03+gMk+zpmCn
-	TbBoefgIQi0qrurV8JYnXGQXsRxttJInpzdJJ1dZ3JW3Au8nQoZ/gmTDhrSakje1
-	ZtvbF2xeycsjkPDscUlViTeo83X4LTaCOflJnRIMQ+GiIzNKT6uZzrJWbJ+TQOO0
-	HTXC04W0tzbUaruBThdisKSugus1EFh3lmHa3pASKX+2gLiYo/zbwb6vrgg9B/mb
-	3fsPvj83gkWWm//wshgrOzz/EntbvW9O24cIL1rzDUpTeMwbLdFhf3SOeXlRjXMV
-	4uEi+fzbbKW35hZxA+Mxf1hrjXk4i3yd7L9bnHL5CURQCL4buk79BpPBS0Pg==
+	:subject:to:to; s=fm1; t=1752700076; x=1752786476; bh=8IKry23lQS
+	ZqCzuiW2ud6gMgLMHw8XroubDabdMrAKM=; b=J6tTmgH3w1pEn+jLJC+6kAPgzR
+	miitJMNCg3phAmQL3YKBIL+wz/kw9YoBz3ytVlu5DLbem5bjRjzsc6iTtPZJod0z
+	i4MmgRhDGZbCoXMSdPZyJcSWdm/2Ulx8fjVhkMjpMUSu7Jf87+Uf9KQ8MibwL6Kf
+	xYGJ/KDeYBH9/yZdnMj0ChzZaRyJbShayzhbC8eR/G9R4NqnUCl18AECIjP6UR2D
+	lcrai4YYr7ecVbyLYNz+r/l7Br/sOkvN1D/zvOQQIsS4JvKu/Df/p0nFjkec9RqG
+	GFm3koeJSpKwOa2vaRAotP7kjVVz0ITmb4GZRN2sV09/y195Vw3WIPkFpBCA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752698012; x=1752784412; bh=dID6cMZ18t9TYCX/DrOsFPsf1aCU6ul9YtV
-	MNeri9Ms=; b=C+ybNIvi2EkgPQX4t61KY99gHqq0nxSsem9eXR2wz7hTIt9Zksy
-	gnezfUaaSwOywe9RHAIWNvGU3Bx0AJ7xqcP8kTU2PLrycGxYhhQumrs+Xu9oWEPF
-	RXLAvDvr+O+NDFDxe/R/VzN+PXsdSRyuyr/+4QVEbAhCt4C/ajAf0V/U3FCP/f9g
-	15PndfYHulv2iGfIRVCIeK3FdjPpLrwGw5BkI/GHlAUpChnLnWBLjvdUKj8UpoPX
-	HjuF0dvZHrWBd9qPiM/uFUgAl8HM8QM0GSMWVOTNS8yTr9Xpv/26N1Fk8qEKjHS2
-	pz38KivA02MGp7EJSucy6Dmr8pDIqFU5iCA==
-X-ME-Sender: <xms:mwx4aC_GGs2yCokpSOoao-S1U6dJoZO5BMWdz3sN3InT5BLSrthrUg>
-    <xme:mwx4aH4qBwDzalANdnRwB76LKkwRbvoJGJ_6YKXmq6Hy1Bfi1m4Jbh0HW1aMpnYNh
-    Tzsd6rRWmxt9_Krfg>
-X-ME-Received: <xmr:mwx4aI5JGsRES4gnCaZBma7nt2VMH-cxiOj2ZspMFjPUmp77Rj8oYluQfBodr5BAEMnzcrUqs5GyAe6VRPFEYCU3LxN8CR7sakMwV0k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkeeikecutefuodetggdotefrod
+	1752700076; x=1752786476; bh=8IKry23lQSZqCzuiW2ud6gMgLMHw8XroubD
+	abdMrAKM=; b=Kmarqg8oUQUy975ugKh1+qvsARWE7PZVk2faodbx8TmVtVaAyEm
+	Q3Uw7mQCEtCMixckz1mILUIto7s9+sIZh1V8esCJBwCsKh4mu52PLeqQScq4ErM9
+	EbrqzMM3Nx2TJ0JxyD+mO5IwwivRZIzkN5iQUeOct8gSElIUZBIV+PLIESrB2X6A
+	5Uh8YncMQkSLiKl69JJ28ycNiIamLsTxDcmLEX0sIieqNvIYb6NlZWapmYJmK51O
+	vmZX3np+cG8m0jD1fzPTR8M4iA+TvhCSItNY6kgS/v65M12pL7GNM8ppVzgRYZYZ
+	jh13g3BpSeUf2C5GL07UrtVgmL4ZdBHhYMA==
+X-ME-Sender: <xms:rBR4aCiyix2R5bJN-zP1Pno0ZK010gJgotT8l6ssjc1Dfjk1u1eiVg>
+    <xme:rBR4aGTT6DeQ8mMSBX1Wk-zHTzWmow0nGrOy_VGeW07Y024sneQQN5vnJXMmnMvJ4
+    KGe1lV42sVq1PIuUQ>
+X-ME-Received: <xmr:rBR4aDhdCH15zYd4Vk54hqF8cYxuOKyP4kxYYXR0DXf7I5VRLs83NsjkJLHNiA99ROnUGjDkq4l2Clm4jHtWdfw42hMcgfpxScQnhLU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehkeejhecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeegkeevtdeiveekteejteehtedvtdehtddvvedvffffgeeftdevieeifefgveeu
-    vdenucffohhmrghinheprhgvphhordgtfienucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehluhgtrghssh
-    gvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdr
-    khhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihooh
-    guseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:nAx4aAo28pJQf_pcBR0YG-tZA1C8lUAJvpM3F8jEDI0SrAgMrpVo4Q>
-    <xmx:nAx4aJPemd3Vxmm70ftRbVWyx5fMa93oF1AqPJYJzUHMS_IRlUirnQ>
-    <xmx:nAx4aI2rHcn-8VNTvQwdP9a0m1lzCNobIL2Tzhvf0H9Cbd8Hqj00iQ>
-    <xmx:nAx4aIBuS8PHjiJnMT3_bBaXo6Ak5lrhq0rAsQjD7q9ph5smynpPeA>
-    <xmx:nAx4aEpU6bkAchEVH2_4C_GpNWSQnHS5Yh0ihjHFtBDeMFJRuURyYoV_>
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:rBR4aG58UaphkeGan-Mq4nSa2CGoemh2xGK-jT2q_eIVha9Mzoh7cQ>
+    <xmx:rBR4aABQdt5XifcWBdPh5dHFFoKMZt0vyIn8oc_EILDFRlrfyiOhxg>
+    <xmx:rBR4aNYZEzKMes1BvV-6dwxWEUlXOsl-nvGjLCqakzG3UWxNCMRWzQ>
+    <xmx:rBR4aLYEz0NtcTJXIPP-DnG3qmmv90gWTMQx_-DzSbRlf25a710GnA>
+    <xmx:rBR4aF0gT_ePel-tKARGQUItNRFhe13OSHUDqGAcmFpwtbHtPp0ZHDKM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 16 Jul 2025 16:33:31 -0400 (EDT)
+ 16 Jul 2025 17:07:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  karthik.188@gmail.com,
-  ben.knoble@gmail.com,  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
-Subject: Re: [GSoC RFC PATCH v4 0/4] repo: add new command for retrieving
- repository info
-In-Reply-To: <xmqq7c07c2fu.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	16 Jul 2025 13:20:53 -0700")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250714235231.10137-1-lucasseikioshiro@gmail.com>
-	<xmqq7c07c2fu.fsf@gitster.g>
-Date: Wed, 16 Jul 2025 13:33:30 -0700
-Message-ID: <xmqqjz47anad.fsf@gitster.g>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH] ci: allow github-actions print test failures again
+In-Reply-To: <20241213-pks-meson-ci-v2-8-634affccc694@pks.im> (Patrick
+	Steinhardt's message of "Fri, 13 Dec 2024 11:41:23 +0100")
+References: <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
+	<20241213-pks-meson-ci-v2-8-634affccc694@pks.im>
+Date: Wed, 16 Jul 2025 14:07:54 -0700
+Message-ID: <xmqqa553alp1.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,156 +86,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+eab5dbab (ci: wire up Meson builds, 2024-12-13) added two instances
+of a very similar construct
 
-> The below is from 
->
->     $ git clang-format --diff $(git merge-base master HEAD) -- builtin/repo.c
->
-> I removed some obviously bad suggestions but many were improvements.
->
-> I'll follow this message up as if I were reviewing what clang-format
-> produced.
->
-> Thanks.
->
->
->  builtin/repo.c | 47 ++++++++++++++++++++---------------------------
->  1 file changed, 20 insertions(+), 27 deletions(-)
->
-> diff --git c/builtin/repo.c w/builtin/repo.c
-> index d75417a48b..e8cf465da6 100644
-> --- c/builtin/repo.c
-> +++ w/builtin/repo.c
-> @@ -14,27 +14,23 @@ struct field {
->  	add_field_fn *add_field_callback;
->  };
->  
-> -static void add_string(struct strbuf *buf,
-> -		       const char *key, const char *value)
-> +static void add_string(struct strbuf *buf, const char *key, const char *value)
->  {
->  	strbuf_addf(buf, "%s\n%s%c", key, value, '\0');
->  }
->  
-> -static void add_bool(struct strbuf *buf,
-> -		     const char *key, const int value)
-> +static void add_bool(struct strbuf *buf, const char *key, const int value)
->  {
->  	const char *output_value = value ? "true" : "false";
->  	strbuf_addf(buf, "%s\n%s%c", key, output_value, '\0');
->  }
->  
-> -static void add_references_format(struct strbuf *buf,
-> -				  struct repository *repo)
-> +static void add_references_format(struct strbuf *buf, struct repository *repo)
->  {
->  	add_string(buf, "references.format",
->  		   ref_storage_format_to_name(repo->ref_storage_format));
->  }
+    FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts
 
-If the parameter list fits on a single line not just helps readers
-of a code who reads from top to bottom, but those who run "grep" for
-the function name.
+one to ci/lib.sh and the other to ci/print-test-failures.sh
+Unfortunately, the latter had a typo causing shell to emit "Bad
+substitution".  Fix it.
 
->  
-> -
->  static void add_layout_bare(struct strbuf *buf, struct repository *repo UNUSED)
->  {
->  	add_bool(buf, "layout.bare", is_bare_repository());
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ ci/print-test-failures.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-No reason to give double-blank between these two functions; it is
-not like add_string/bool/references/format are closer together than
-this add_layout_bare
+diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
+index dc910e5160..5545e77c13 100755
+--- a/ci/print-test-failures.sh
++++ b/ci/print-test-failures.sh
+@@ -41,7 +41,7 @@ do
+ 		case "$CI_TYPE" in
+ 		github-actions)
+ 			mkdir -p failed-test-artifacts
+-			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:t}/failed-test-artifacts" >>$GITHUB_ENV
++			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts" >>$GITHUB_ENV
+ 			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
+ 			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
+ 			continue
+-- 
+2.50.1-447-g6271d3ee0b
 
-> @@ -45,11 +41,11 @@ static void add_layout_shallow(struct strbuf *buf, struct repository *repo)
->  	add_bool(buf, "layout.shallow", is_repository_shallow(repo));
->  }
->  
-> -// repo_info_fields keys should be in lexicographical order
-> +/* repo_info_fields keys should be in lexicographical order */
-
-We don't do // comments
-
->  static const struct field repo_info_fields[] = {
-> -	{"layout.bare", add_layout_bare},
-> -	{"layout.shallow", add_layout_shallow},
-> -	{"references.format", add_references_format},
-> +	{ "layout.bare", add_layout_bare },
-> +	{ "layout.shallow", add_layout_shallow },
-> +	{ "references.format", add_references_format },
->  };
-
-Spaces are used inside {braces} like the above.
-
->  static int repo_info_fields_cmp(const void *va, const void *vb)
-> @@ -60,12 +56,13 @@ static int repo_info_fields_cmp(const void *va, const void *vb)
->  	return strcmp(a->key, b->key);
->  }
->  
-> -static add_field_fn *get_append_callback(const char *key) {
-> -	const struct field search_key = {key, NULL};
-> -	const struct field *found = bsearch(&search_key, repo_info_fields,
-> -					    ARRAY_SIZE(repo_info_fields),
-> -					    sizeof(struct field),
-> -					    repo_info_fields_cmp);
-> +static add_field_fn *get_append_callback(const char *key)
-> +{
-
-"{" opening and "}" closing braces around a function body sit on
-their own line alone without anybody else.  This is unlike the
-multi-statement blocks in control structures (e.g. opening brace for
-the block executed when condition holds in "if (cond) {" comes after
-the closing parenthesis ")" for the condition after a SP on the same
-line).
-
-> +	const struct field search_key = { key, NULL };
-
-Use of spaces inside brace pair again.
-
-> +	const struct field *found =
-> +		bsearch(&search_key, repo_info_fields,
-> +			ARRAY_SIZE(repo_info_fields), sizeof(struct field),
-> +			repo_info_fields_cmp);
->  	return found ? found->add_field_callback : NULL;
->  }
->  
-> @@ -77,7 +74,8 @@ static int qsort_strcmp(const void *va, const void *vb)
->  	return strcmp(a, b);
->  }
->  
-> -static void print_fields(int argc, const char **argv, struct repository *repo) {
-> +static void print_fields(int argc, const char **argv, struct repository *repo)
-> +{
-
-Ditto.
-
->  	const char *last = "";
->  	struct strbuf buf;
->  	strbuf_init(&buf, 256);
-> @@ -107,19 +105,14 @@ static void print_fields(int argc, const char **argv, struct repository *repo) {
->  	strbuf_release(&buf);
->  }
->  
-> -static int repo_info(int argc,
-> -		     const char **argv,
-> -		     const char *prefix UNUSED,
-> +static int repo_info(int argc, const char **argv, const char *prefix UNUSED,
->  		     struct repository *repo)
->  {
-> -
-> -	print_fields(argc - 1 , argv + 1, repo);
-
-Extra SP before ",".
-
-> +	print_fields(argc - 1, argv + 1, repo);
->  	return 0;
->  }
->  
-> -int cmd_repo(int argc,
-> -	     const char **argv,
-> -	     const char *prefix,
-> +int cmd_repo(int argc, const char **argv, const char *prefix,
->  	     struct repository *repo)
->  {
->  	parse_opt_subcommand_fn *fn = NULL;
