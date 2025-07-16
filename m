@@ -1,41 +1,41 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
+Received: from mout.web.de (mout.web.de [212.227.15.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2DD2F1987
-	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:38:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9BEC2F1987
+	for <git@vger.kernel.org>; Wed, 16 Jul 2025 09:38:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752658736; cv=none; b=Xl1Bp9bnUZSMq9lycoNjbGA+ZfYQfirBZXk2nPqXrH020ynckreaKyhi7BWXXXVss8jKm/+LKdgfsgUqDggQPHtw0JhGOsBci3bPOuFodfgM36mYQ/m8HPA8AAyoxYwnEj1ah6qB9z/O1QuriBhxOxN2bsX5qI5f6/mPvUVqvKQ=
+	t=1752658739; cv=none; b=eDLfsRgxg+uF9CXXFUuVgo8SkAqXJcfx5HXjrCX2QBUJGoHMLmrQesVaED+fc7MfULdi/STs3ZN/FSaXGU/Hm1nMk9ZsPSc2FJa4+gPGOuVU60RiuMZWKY0dDe+24IgRGx4vYVgHyKjpgj5LfUgbHv7Q7SaIXA1IYeiyFJKjxtw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752658736; c=relaxed/simple;
-	bh=cM2+zr28SjxZGyv76q3ZMbgo/qWERPF4TlXpBbTW8xc=;
+	s=arc-20240116; t=1752658739; c=relaxed/simple;
+	bh=n0eTdpoZUuwjPorimo6lAo+FvshyT9Sc5XATYAi+KRA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cp6IC56LT+YvL91iks7Dx9wzji66HmUegpdTKipzjnmZyBb2gKSU7YjIX1PI1pnz5ztvkCXA4PPuOQKT46Zl7uQdsXgSVXJFamB1ZBpqsA7OxN5ZH4+25rzzs4jUSb2DPhcsykgnZM2dwtyx5uZhkFEzwTqTYxIVEugMOaSWIj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=RUT6JYDp; arc=none smtp.client-ip=212.227.15.3
+	 In-Reply-To:Content-Type; b=EYoiC1VONjUMeDrrXZpF++lFfj2Jonc2Txi5HzeO2ta3k1OBAXkmyO0jkfSbi00lF2wIC+v5VOuxmQxHQhMsub8KL9m1dkNLxtrpqDiQjxFXvEqND6AmC1nqYsj8Ff/SwNeSpNUWxnbsftPv+59kiQJ0Itnv+jrcBNFyL2khAXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=SAK5VCXT; arc=none smtp.client-ip=212.227.15.14
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="RUT6JYDp"
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="SAK5VCXT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1752658720; x=1753263520; i=l.s.r@web.de;
-	bh=UYDyNoKK8HT0KN0nI8/P5R8F4pY2GxpR27GRQbMkx1M=;
+	s=s29768273; t=1752658726; x=1753263526; i=l.s.r@web.de;
+	bh=WmOKhVktwG7HjmY3c6RuIVedGYUjYY+dUe1V6U949t0=;
 	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
 	 References:From:In-Reply-To:Content-Type:
 	 Content-Transfer-Encoding:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=RUT6JYDp0NZPE8B4UbMAGCkGzC3KSdEM0n94MX29eK5G8DwFRueGmoLOwfUjSi6U
-	 DfAhSjiO1bYTrXUnmKsXhrF+7KL+bEsfGogKqAYgp+NcxN8ZfKrDnRhR+45oroKbp
-	 QAihQnbSGuaTqr+ejm/4pNM2fZ6IWYWuq84zM48srzj+UQE5HPi97a7rZOZ07JmJq
-	 TKQ/MSIu0D/fN4Ra9svokFKsXVd1fL4qFvLk2/O2ueOZNU8pPgxW4tJsZFAPe54qh
-	 iquR21MjKMqWxggPDqYih9WjVEHKE+FZrQyWXwFaEcgvGiqEENttfqq7KU7XTYH3l
-	 SZZSJgwybbfOQ3P6Sg==
+	b=SAK5VCXTpLGRCAYa3pBwlNgHrd8CQXRUIDXGsrHrFkZ9GW9YYHXtf8wDzixuhF7X
+	 lwFEUJ47ol0oyjI4dYligBd8Rxpd7vPSB0HINIjYhwIloZy91NVqFkd6LesaGnCB0
+	 ZEkpii3shuBRxD84U8aQwonBypg3Xc4esvX0XnH2Qm6l9dTM5ihrqVwJQBXQDnCW4
+	 4x5T80/xQwJZP7hMRIBsJgfwoasq5oy1X1M4ZDU/TkjfpdmiHXjnWh+1mDAn/4aqE
+	 unkAxpfp7AxnjiDj3IJcuFIPG4xPV1tBDC2Mt06kS7WufPv50kTjUoKzUBQA8o6/y
+	 WJjyqYa21zBWwQEzOQ==
 X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
 Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MOm0x-1uGB1r1Tax-00S0Iy; Wed, 16
- Jul 2025 11:38:40 +0200
-Message-ID: <5a25d830-0825-4b28-8763-2be342d2b6a3@web.de>
-Date: Wed, 16 Jul 2025 11:38:39 +0200
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MbkSI-1vBsBE0u6w-00nVEH; Wed, 16
+ Jul 2025 11:38:46 +0200
+Message-ID: <2cec288f-e632-431d-aba0-e98798b833ad@web.de>
+Date: Wed, 16 Jul 2025 11:38:46 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -43,120 +43,124 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] commit: convert pop_most_recent_commit() to
- prio_queue
-To: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 3/3] commit: use prio_queue_replace() in
+ pop_most_recent_commit()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
 References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
- <xmqqv7ntdmlx.fsf@gitster.g>
- <20250716051533.GD1396022@coredump.intra.peff.net>
+ <aa89082f-34ab-4ec7-bdce-70f0a33815e6@web.de> <xmqqh5zdgp6r.fsf@gitster.g>
 Content-Language: en-US
 From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <20250716051533.GD1396022@coredump.intra.peff.net>
+In-Reply-To: <xmqqh5zdgp6r.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:xneEFshuggWVboofUDZ/Y/TxRd+IyYP50Tslros1qQ2PwAqPz74
- KTcRNFZBuMkojhzgy/QB52u99aeXeAjlG4WH9ce6p43y1wRSFTgYCaGaioPqnMZEaBiYCmo
- B2QgzX2rHBoSRh48YUDTsR7VGcxgCrA4WOx81QSjEL0NM/2V3F5NoO6XIM3j2vr5dXy9ggd
- lJCCj1Cnow1mLz5UEbO6A==
+X-Provags-ID: V03:K1:hP6Zg6ljkfB4NFel8tY2Jd8JOHZVz3/UGzdmyEwq8WEYFFWWN+m
+ pAD5Zy9uk+F86VsFf3cO+wMyPM4C5+BfsVXr20YNybh6AgiQe5KKKByMHoEGIByZ3VhevxM
+ q5zx/7+64U1+y+I6FZHf1L+xzOWviFT1TkL0M42vgNb+TKzPfwPOrxRV9FAmV0TGbcatbET
+ g0gu/fqAzzgRH5BsOO6hg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:sQhppj56O2A=;DZeC2iXoTqpiJpDY7Aetz9XwDZx
- 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
- 6Dt8jZOaSIQqkKNywJK5RK/Zk1nf4vgI=
+UI-OutboundReport: notjunk:1;M01:P0:5d2oiOIYKGM=;UyHRvcPRr15Dc6UiBDI1XPZHsFY
+ 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
 
-On 7/16/25 7:15 AM, Jeff King wrote:
-> On Tue, Jul 15, 2025 at 05:07:38PM -0700, Junio C Hamano wrote:
+On 7/15/25 10:43 PM, Junio C Hamano wrote:
+> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
 >=20
->> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->>
->>> Use prio_queue to improve worst-case performance at the cost of slight=
-ly
->>> worse best-case performance.  Then add and use prio_queue_replace() to
->>> recover that loss.
->>
->> Would change in the tiebreaking behaviour (aka sort stability) also
->> a cost of this change, as this swaps use of sorted linearly linked
->> list with priority queue?
+>> diff --git a/commit.c b/commit.c
+>> index 0200759aaa..8244221b30 100644
+>> --- a/commit.c
+>> +++ b/commit.c
+>> @@ -742,17 +742,24 @@ void commit_list_sort_by_date(struct commit_list =
+**list)
+>>  struct commit *pop_most_recent_commit(struct prio_queue *queue,
+>>  				      unsigned int mark)
+>>  {
+>> -	struct commit *ret =3D prio_queue_get(queue);
+>> +	struct commit *ret =3D prio_queue_peek(queue);
+>> +	int delete_pending =3D 1;
 >=20
-> The prio_queue uses insertion order as a tie-breaker for stability (with
-> earlier entries coming first). For building the initial queue from the
-> list, I think that is obviously fine (we feed them in sorted order,
-> which the prio queue will retain). For inserting while we walk the list,
-> we'll produce the same results as long as the original code always
-> inserted new entries after existing ones (in the case of a tie on commit
-> date, that is).
->=20
-> And I think that is the case, since commit_list_insert_by_date() does
-> this:
->=20
->           while ((p =3D *pp) !=3D NULL) {
->                   if (p->item->date < item->date) {
->                           break;
->                   }
->                   pp =3D &p->next;
->           }
->           return commit_list_insert(item, pp);
->=20
-> So we only insert once we have found an item in the list _after_ us,
-> retaining the same order.
->=20
-> But hopefully somebody can double check my logic, as it is quite
-> possible I got something reversed above. ;)
-Yes, commit_list_insert_by_date() is stable, as it inserts commits after
-ones with the same date.  Items are popped from the top, so this ensures
-FIFO behavior for commits with the same date.
+> Briefly I was puzzled by the name (I would have called first-parent
+> since the logic was "we treat first parent specially by using
+> replace instead of get/put"), but the variable signals "instead of
+> get to remove the item from the queue, we just peeked, so we need to
+> remove it later" with its name, which is understandable.
 
-prio_queue ensures stability using an ID and favors lower ones, so it
-provides the same order.
+Indeed, we're just interested in the removal part of prio_queue_get()
+here, as we have done the cheap half (the peeking) already.  We don't
+have a prio_queue_delete().  Adding one would perhaps add some clarity
+here, but also widen the interface and probably not bring much of a
+performance gain.
 
-We should add unit tests for that, no?
+So perhaps calling the variable get_pending like the prio_queue_get()
+that we end up invoking would reduce the initial puzzlement?
 
-Ren=C3=A9
+>=20
+>>  	struct commit_list *parents =3D ret->parents;
+>> =20
+>>  	while (parents) {
+>>  		struct commit *commit =3D parents->item;
+>>  		if (!repo_parse_commit(the_repository, commit) && !(commit->object.f=
+lags & mark)) {
+>>  			commit->object.flags |=3D mark;
+>> -			prio_queue_put(queue, commit);
+>> +			if (delete_pending)
+>> +				prio_queue_replace(queue, commit);
+>> +			else
+>> +				prio_queue_put(queue, commit);
+>> +			delete_pending =3D 0;
+>>  		}
+>>  		parents =3D parents->next;
+>>  	}
+>> +	if (delete_pending)
+>> +		prio_queue_get(queue);
+>>  	return ret;
+>>  }
 
