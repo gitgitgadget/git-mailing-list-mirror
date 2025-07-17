@@ -1,113 +1,211 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A91DC1EA7C9
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CAA115A85A
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:31:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752765679; cv=none; b=DHVgz4jU1O1JZxO+WAWDcfbRmMY2iJZdPEzMLjFsmgKXeJbspALxWHWM2tDHdKZ2AhsWpMmXZNqmqyCUCdY32uG4jn+m7ttBSecr/7nWM47NdxupCuFQtTbDSp+GhRCx16dwQL/5eb/W0yq/DVWY98SDFq/WJnFKlKLUsC3G2es=
+	t=1752766299; cv=none; b=ExcJE6KwDcV+sq8a0Sdxad9NlmYbnlEShS/KteuLfmw0/jZzefAfkIYIx/+isGzrTNAqZzWT2g6wKh/kW4fzuvXRX6h4vA2ZVg2lpFQH4miKj7gWNJwvYTumy1znFTwhcrzT4kevE5uED9IcLKPBQB/56k/q1znwqik2CIx7Arg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752765679; c=relaxed/simple;
-	bh=FpTBfck0kziHzgypFF4edW/7vxfAIZhcnTfw61IrqeU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UKKuWimxvadL+3oihQ0EEMCpK9OQJTX2XhBlxwRMt9HX/oj2BTtsRU7iflGtsrWnmiKJbwXmkcH3R70/ZRiuTd9wowHBDmSddkKaz1qeFj/lUkHZ/BF/Ngjlcd+nvkANs3F++cPMAk9i60f7wxZ41NbBZzyb/A9Ch/Oh9mPDUoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OHT6AHaF; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752766299; c=relaxed/simple;
+	bh=6Y2eix9pz2ys52K3zRLC9AWAH5+eN6vC3+zlXObByCI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Xs4Su73s8U02JPU7O7Mg1UtR9959LkZxBkoFtE4ZsS1cKd1wZRiaFY2UZ7zB5PXP1Li19oo2gSiLweZCgUqFdZ3V78vPYPCXqG88vD2iYpuooi0o+HGp8RUp0joWRXW6fCazwOyLXeebA9N+voEu7Spof9ujBsEIj85poeC46nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=a0Bf8HVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MnbfMdJe; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OHT6AHaF"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a52874d593so849402f8f.0
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 08:21:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752765676; x=1753370476; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=jHKvXL9xnaOkwbvlqGJbGNOg7sXpqPxOyvNU7vMCois=;
-        b=OHT6AHaFyui/iVNO1WtZ+cdIbi7lRrla1ZaaTXWDWX/gbuDmzWeBhEHaf1jhS7nSeB
-         +haC54Kydob9dTCXZ6VkrGeVDlIeNx09LggNP+JHu4f4Izz4NQgNPY8KsQKS51kxbZA6
-         rQzT2s9OOPQkXUlMoexzzy/O4zQFmN9JqvGO+NQ8uYD3N4+hoapXKtA7nN9pDEp/jgQ6
-         2u/dU8OdbIa5PJoeYkceU2HbYGyi9R8XgmNIL9K3SvRJRW/LEuMx4dC1bqWN2leJaK09
-         5RzFhEy2lF23e9BJOs0XD0PLuC26nzOd36MS97ddVScbR2ph7Y7QhcsNM69aEW7i55Tn
-         T2Zw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752765676; x=1753370476;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jHKvXL9xnaOkwbvlqGJbGNOg7sXpqPxOyvNU7vMCois=;
-        b=EEVULpFDwojd9QcbnOJF//pjLoLWXpdLd+Djy79FT8SRxaaxKb6spRyYfS0Gw6gyE8
-         7nUnIuaEhrChPN2JdnPU+WppurqmB0L3joMuGV3C91yK1qr+x261NG/MiUSaRnm78fq3
-         okNEXyi0S8RKc7EoD0AOIc+xo0H7CYEN4jQ7xvuXMzMVd9vBhhXC/PN7PSEjGrO1/r8f
-         pp6ys8kqbs7igVwA+uqMaG9Xqq3GKpj37xtSiDNi50W/eT55RuO225Gf8LUfMhicaMFE
-         fN29WPSbky2Binlznq+GSBA6yppV5/rZfP2Nx7fehromlxBWtvHZFBJebzDpigaPQDb8
-         m0mg==
-X-Forwarded-Encrypted: i=1; AJvYcCVKFhRIw0gVppirZcaruwvgk9+qAw9d3ieGeCH4eSi0/cESPtb3C8cVRBVpnc6gvK+zYvg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxJg8LCpl2QQErTqss8fo5bJAXoaiu4XjAshqW7JdfENWmM3unR
-	HlmYpoNG9P7o9wl3/o/XjbZ0eLYEs4jClLa7u80o3lqppT8/LPt653ub
-X-Gm-Gg: ASbGncumhRq4u6RoUzFzF/brU1MxJexZXeih2IhRUuW6slqi2ofIu8+ohUBUGbZtx0E
-	Pn6CoEQUN8LNf6yfbgTpwvIQqiWVdLQxp5eFFbVLcWXEZjOoe6zgiar+qP1Wb2I4HLs3F2Hsg6H
-	G10J62B1UiGeaaZB43XeLulKeYB+gnom/I9CamfpSKWvZ8GCJxB9Xm+ML2tPUD+pV21Q5P79qQO
-	20vkS4fasVQuz+nkczIfoLssTQc1nn48TVPxBJoHWuO5LYxJDm3UKYBA2DIVA/U31G+sJDSOlTu
-	dikRvqc6zsI9NESu+2jWeLAaU/8IpT0vSFvDjlCSUuGsn3Xx/FZUzVrvryaTqZ3eBxc+EM+So3e
-	d+BERE+M1Y6KLwpaQqS+INw5hOtGwkikGdVoShPRwRoEIn0n6LzSKLpxWveJX6YBmlaScpBbruZ
-	Jy
-X-Google-Smtp-Source: AGHT+IEAUWsnTytlWJc1Dxpxywc8fzjKMvuEnQ+kN9u/GWaehCuKC/J2iX3PfaZ3CykGYTmBCQRk4w==
-X-Received: by 2002:a05:6000:2309:b0:3a4:dfa9:ce28 with SMTP id ffacd0b85a97d-3b60e4be284mr6151814f8f.5.1752765675790;
-        Thu, 17 Jul 2025 08:21:15 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45634f85767sm25566055e9.24.2025.07.17.08.21.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 17 Jul 2025 08:21:15 -0700 (PDT)
-Message-ID: <3e799a41-fa68-4d22-8e8e-930fcab807f8@gmail.com>
-Date: Thu, 17 Jul 2025 16:21:12 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="a0Bf8HVR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MnbfMdJe"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F24877A00F7;
+	Thu, 17 Jul 2025 11:31:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Thu, 17 Jul 2025 11:31:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752766295; x=1752852695; bh=rNzfIscjCQ
+	PqQqRKFX1PoTui2Q4PX+MJ92MDpKwkWs8=; b=a0Bf8HVRszw9LIqvC/3n5foR8p
+	DWoKNi5JjcIpbOPSteEF395WM1cdcMSg8lMdoUjfvfPqN9JzdDFxFRXXexaszXJN
+	3QpTsh+kHfs2RW15m/g8cgbGWBAsl2MKH1h/UeME0vmogiqtYamDEgiLUYMt++r7
+	pVMjHB8/bmM7VRtL1sr7gqIhUEKWJEn+chGXIfcHVDKY2Kzxi05LvaRqafvnuJYk
+	jeSrzn74Z/kBbmNhvPTcAFZHv0hOuwNDH9xbcpqRzN0OqTCLFVR071hjCszbDssn
+	oclQcPna9lFFpGVRco/miEQVprzmCYIoEItRlZLkZ0totSMhbDD8qUZezRwg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752766295; x=1752852695; bh=rNzfIscjCQPqQqRKFX1PoTui2Q4PX+MJ92M
+	DpKwkWs8=; b=MnbfMdJePyvwpryjR5w0zDmh7ajGedTpBcM08Q8LIDFDnV5GiCi
+	BGVFusnkCzSnagyi9uLnTyr+3NrZ39ivmgahK/1JKB9QYMNWFfPITMbycG9m6pHu
+	5PixPyHuKyzzOGyXeLGFv5eHFOX/a1ZkbKFBrphjTVazUGsXaZq/j/DIQD9Bm62h
+	LX2xt2k6YjqwEhXsZMWq6TI4gqQIJfem8PydV/25EU89N+h+YKsM+t86p6tyW9TN
+	CJrNviRqiRksBIbIYJsQ3XKq/XNLcPIHDEu322e0Z/E4DEay+rOCexMRwAHBhHgs
+	s/uZdg/eygl2SFRKfmvixnKAQTijU/hzleQ==
+X-ME-Sender: <xms:Vxd5aLK6UjPmFNIqPnS5xzWHjG50fwEcJLUF3d92KbxGqKc9eGtUTg>
+    <xme:Vxd5aMtFUZGxaIatfqtJFIbCmgROYqNDnsoRXfQJE6AqT-suNE6NlfR6gatQ6rvrd
+    dSXMmSB4YyixNtk3A>
+X-ME-Received: <xmr:Vxd5aKKHItRjmWMJgd6-8fr4Xs3JSWB6TuuhbzcKmVdKLO_4FxOclQeOgQzjP4_g7zdBx8RbW5Vf0LJ3IKrPY-hG95soff8dblHY-pU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdelhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Vxd5aF8gnCWuTJlJobqRdeYUL4Dan31fBpOL73AIxYWaigZG0p6kvg>
+    <xmx:Vxd5aDyCcNSomqP83-W8TD913CeE_hqtaU_xfKOB4VigRIOsxJ711w>
+    <xmx:Vxd5aC63ExSiPpDPPwwz180sHiGEUEMcTYeXQbIxE7vzNI1zfySNwQ>
+    <xmx:Vxd5aK9NyZO7RID-BZk2PxZj9Om1L092wVbYsbajc3kPmXZOzAyeag>
+    <xmx:Vxd5aMMZ6u0rJrHXYAcQS2wOiO1eZVKEXN5k5QUAknDKanG1AofG7L5p>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Jul 2025 11:31:34 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
+  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 5/5] for-each-ref: introduce a '--start-after' option
+In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-5-852d5a2f56e1@gmail.com>
+	(Karthik Nayak's message of "Tue, 15 Jul 2025 13:28:30 +0200")
+References: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+	<20250715-306-git-for-each-ref-pagination-v5-5-852d5a2f56e1@gmail.com>
+Date: Thu, 17 Jul 2025 08:31:33 -0700
+Message-ID: <xmqqikjq7s16.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 0/3] C99: declare bool experiment a success
-To: Karthik Nayak <karthik.188@gmail.com>,
- Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>,
- "Brian M . Carlson" <sandals@crustytoothpaste.net>,
- Elijah Newren <newren@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
- Jeff King <peff@peff.net>
-References: <cover.1752499610.git.phillip.wood@dunelm.org.uk>
- <cover.1752658700.git.phillip.wood@dunelm.org.uk>
- <CAOLa=ZSk5O0sQRN5Yf+i6Jh2Dk_pafQhLYNY5eBp_S5y-HoC3w@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAOLa=ZSk5O0sQRN5Yf+i6Jh2Dk_pafQhLYNY5eBp_S5y-HoC3w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Karthik
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-On 16/07/2025 11:29, Karthik Nayak wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> We've had a test balloon for C99's bool type since 8277dbe987
->> (git-compat-util: convert skip_{prefix,suffix}{,_mem} to bool,
->> 2023-12-16). As it has been over 18 months since this was added and
->> there have been no complaints let's declare it a success and convert
->> the return type our other string predicates to match.
->>
-> 
-> Neat, I didn't even know we were running such an experiment. Thanks for
-> getting around to it, I think the patches look great, added some
-> complaints from 'clang-format', feel free to ignore.
+> The `git-for-each-ref(1)` command is used to iterate over references
+> present in a repository. In large repositories with millions of
+> references, it would be optimal to paginate this output such that we
+> can start iteration from a given reference. This would avoid having to
+> iterate over all references from the beginning each time when paginating
+> through results.
+>
+> The previous commit added 'seek' functionality to the reference
+> backends. Utilize this and expose a '--start-after' option in
+> 'git-for-each-ref(1)'. When used, the reference iteration seeks to the
+> lexicographically next reference and iterates from there onward.
+>
+> This enables efficient pagination workflows, where the calling script
+> can remember the last provided reference and use that as the starting
+> point for the next set of references:
+>     git for-each-ref --count=100
+>     git for-each-ref --count=100 --start-after=refs/heads/branch-100
+>     git for-each-ref --count=100 --start-after=refs/heads/branch-200
+>
+> Since the reference iterators only allow seeking to a specified marker
+> via the `ref_iterator_seek()`, we introduce a helper function
+> `start_ref_iterator_after()`, which seeks to next reference by simply
+> adding (char) 1 to the marker.
+>
+> We must note that pagination always continues from the provided marker,
+> as such any concurrent reference updates lexicographically behind the
+> marker will not be output. Document the same.
+>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  Documentation/git-for-each-ref.adoc |  10 +-
+>  builtin/for-each-ref.c              |   8 ++
+>  ref-filter.c                        |  78 +++++++++++----
+>  ref-filter.h                        |   1 +
+>  t/t6302-for-each-ref-filter.sh      | 194 ++++++++++++++++++++++++++++++++++++
+>  5 files changed, 272 insertions(+), 19 deletions(-)
+>
+> diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
+> index 5ef89fc0fe..ae61ba642a 100644
+> --- a/Documentation/git-for-each-ref.adoc
+> +++ b/Documentation/git-for-each-ref.adoc
+> @@ -14,7 +14,7 @@ SYNOPSIS
+>  		   [--points-at=<object>]
+>  		   [--merged[=<object>]] [--no-merged[=<object>]]
+>  		   [--contains[=<object>]] [--no-contains[=<object>]]
+> -		   [--exclude=<pattern> ...]
+> +		   [--exclude=<pattern> ...] [--start-after=<marker>]
 
-Thanks for taking a look. I would have fixed the formatting but this is 
-in next already so I'll leave it as it is if that's ok with you.
+Not a problem this patch introduces, but as I noticed it, let me
+leave a #leftoverbits comment here (it is OK to have a preliminary
+clean-up patch).
 
-Thanks
+ * "--exclude=<pattern>" should be enclosed inside a pair of
+   (parentheses), just like the way how [(--sort=<key>)...] is
+   shown.
 
-Phillip
+ * [--stdin | <pattern>...] should be moved to the end.  There is no
+   reason to require "--stdin" to be the end of dashed options, but
+   the <pattern>... must be, as they are positional, not dashed.
 
+> +--start-after=<marker>::
+> +    Allows paginating the output by skipping references up to and including the
+> +    specified marker. When paging, it should be noted that references may be
+> +    deleted, modified or added between invocations. Output will only yield those
+> +    references which follow the marker lexicographically. Output begins from the
+> +    first reference that would come after the marker alphabetically. Cannot be
+> +    used with general pattern matching or custom sort options.
+
+It is unclear what "general" in "general pattern matching" refers
+to.
+
+    Cannot be used with `--sort=<key>` or `--stdin` options, or
+    the _<pattern>_ argument(s) to limit the refs.
+
+or something, perhaps?  It is curious how `--exclude=<pattern>`
+interacts with the feature.  Presumably the exclusion is done so
+late in the output phase that it does not have any effect?  It does
+not have to be mentioned in this documentation if that is the case
+as it is a mere implementation detail.  
+
+    Side note.  The limitation that sorting and name_patterns cannot
+    be used with the feature also comes from implementation
+    (i.e. the name_patterns optimization will compete with this
+    feature to take advantage of the "prefix" thing in an
+    incompatible way), so while the reason does not have to be
+    stated in the end-user facing documentation, the effect needs
+    documenting.
+
+> @@ -3189,6 +3221,7 @@ void filter_is_base(struct repository *r,
+>  
+>  static int do_filter_refs(struct ref_filter *filter, unsigned int type, each_ref_fn fn, void *cb_data)
+>  {
+> +	const char *prefix = NULL;
+> ...
+> +
+> +	if (prefix) {
+> +		struct ref_iterator *iter;
+> +
+> +		iter = refs_ref_iterator_begin(get_main_ref_store(the_repository),
+> +					       "", NULL, 0, 0);
+> +
+> +		if (filter->start_after)
+
+The start_after of the filter comes from "--start-after=<mark>".
+Can it be true with non-NULL prefix at this point?  Unless you add
+support for the option to "git branch/tag", it would not happen, I
+guess.
+
+More importantly, when you do add support to "git branch/tag", the
+code need to be updated to keep the original prefix while seeking
+the cursor to the specified <mark>, instead of clearing it.
+
+> +			ret = start_ref_iterator_after(iter, filter->start_after);
+> +		else if (prefix)
+> +			ret = ref_iterator_seek(iter, prefix, 1);
+
+We have "REF_ITERATOR_SEEK_SET_PREFIX" for that "1"?
