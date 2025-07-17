@@ -1,69 +1,68 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59ACF3597A
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 01:34:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1941A288
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 01:34:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752716062; cv=none; b=ptLBlysoxqVxbTxVfSPL0i8JaMlWHMaxg2/zAW8taQSaLIGq1cfbJNtpKLO57YW8u3Asrt/DSJuc2QzLDyUyhwmxx/TinwwEEgDuibcTvB1TPM0n01gZuaGwBm8eMwNh2EBSMgmtblwwsZ8i46sbxSy2VpNtf0xaESXmYSiwFaY=
+	t=1752716062; cv=none; b=raI19k86oYSYmRHVYMLl9OAFbXGDu0fr9ywFdOD2aCkzvduCb3HDrB33wjpszYMTXcJG1/S14q8nHPJYxs651pUGtR8Z07D9XaDaCbwtviFgCiDmrZvPKI0obEpD9VwQi5yRhGQ8k8qJV8WqOClexp/w743j/MUgEaXFb4r+0eQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1752716062; c=relaxed/simple;
-	bh=m3FAGLF5IfzXii5K5wjH5lpxj5mUGR/Aoy3Wf7snpHo=;
+	bh=tQzZT666hzuMlH/9P44lDKKYCiB3L8kGXa9IDqNQzTc=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kPWScSHfvnOD09lJjs44+wnysqbSvzZikJf8TOtKnLSx4GU+tpngwiK+KK+p9YtlsuNmg9CJAd+Umh5E7/947fPRmxxfyr+xpcD5b6u04UFieVPZihq7tVKP6ISXX1ej7vO2OI+2WUc9YVeNy7RaTWyoPb4+7+oRZ/GQcJFlJ0g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QayJmTF/; arc=none smtp.client-ip=209.85.128.52
+	 MIME-Version:To:Cc; b=uIQZNyfRKZQ3MpLDcY3684V5qFT4rF7MAvlEna3t0OCrRm0efw82mHPq9XwAfQfhFhNK/4gJLuVDFDUDS+FcJe9Pd5LTvx1vLg3bnseycCxbu6evm5sLVlV7CPRLptTE8aIFZ3QNS97hre2iJ3fPx9T/ACPHu8s2jFDxwPuH0bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YWxPHZbe; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QayJmTF/"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so3965945e9.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 18:34:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YWxPHZbe"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-451dbe494d6so3965805e9.1
+        for <git@vger.kernel.org>; Wed, 16 Jul 2025 18:34:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752716058; x=1753320858; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752716056; x=1753320856; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=xERS5LtG/DRgjARpU13WM6IwkfMb0R0UDtJrmDoRJs0=;
-        b=QayJmTF/7fMW0zRplkb/Cdem+I+eKlYHMFPrRxn9LdqUP8DT6y3/nytefoOW/18fiB
-         ZAxMtoj5/yOJMaaZ9AEJ2sIYZdjGDswMdwCmnnOEp+cnovrWTH5/0/Fjr/Lqtzmn48Ol
-         v2h4JNciTt3Wydm7Xz7au0ELDsMgkGoeAl0szRknMTjovTyhKv3bA2nsJdGXOCTpMoVO
-         SdLzTA9ePllWSUeb5bjKcjmZVOTdgqYknkLsa9dTVMWsxHLJP/xtc3/118sz6jIIPqao
-         e/IyhpsLNVLN/BrMaMDKPKSDnwh9Dm9XKAj8d79/7+BYXcYqAMPn5iDhUzCw3SBS4gqE
-         7XdQ==
+        bh=k94AtGYOCeMCLW1d6kkWnXaBaR2aPSReFcMk3Yvlapw=;
+        b=YWxPHZbeJOICxPSv32v1BDpFbTER3w3xrIrCHx/JekO68oPv1XOaw7wnFsu0QuS4FH
+         8IpTjiNHEiszdjMNJBSs7rNo0UZ84CF8cYgR3Yp1S9EzRVwZgGK77SV98ncBxREDY9Yc
+         D6xHGOhTV/VLC7sx9WHcbT5UXU44JqsHmXeLH6nT1kCk8srdCXHgP6nz51AxT/IU4inW
+         47qvWPSVV2CNAlb2/822dSIML1ZPlhCSuUtRYTbw0MxTLTHPKFewIze+AxO7wMrzOQ22
+         YJ7h6psnwknWhxgyfieltjOSuLIxBj/6DnGMmQRAM2XCal7yVkNkHlT8FGsFq3eS62Q0
+         d92Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752716058; x=1753320858;
+        d=1e100.net; s=20230601; t=1752716056; x=1753320856;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xERS5LtG/DRgjARpU13WM6IwkfMb0R0UDtJrmDoRJs0=;
-        b=IbdQ90NX0RLuZ4AT7GGN40RqrnnvVoNMEJCC/1KN4lb55oemUaN0Dh9rBeZqNTokLY
-         FSpWc4rQ2KFLrCbpXXAbkOTe4jXM/EKDZm8/9ErIdqNAPK45rsbbnkcVcHtan6dCctDU
-         Urz6IPJ+A8tvKoOfLSD2Gvr6NO1w88JNf2NHuTga5EuM32PxpF1/is1FTKm4sJ1TPfV/
-         Lp8h697Zsaf0CDWlJyQ3lY2PPhP82hyG9S/WJWaI2f/dytlOKGzwWMtC/a+JmWMkLNnZ
-         e2iKBI0qvMGzhyPyyg/nOSxjqyaQktSp2GV/7qypM0XsCwdXggIyaMumQEJGeruO+x9o
-         IOIA==
-X-Gm-Message-State: AOJu0YxKrKNpZA/R7J9gJj7/eKfUED9D5QsoZa7PWbaSmYqZH1zBnOF3
-	hr37vC5V4b75HZwuX1gNZ9gmjcuWVZ6ep/j4+hFf/YzsY+bu3DteAIFwsQo9lA==
-X-Gm-Gg: ASbGnct8wAaStzddtgp0LLLwTPVUJNN64kVY9x0FiX6Da4sTIAgpXzBe1noH1VTknCa
-	T7ioidjQkYpo/QUKkGqVb6rNq2kD4bgBcWpQ12zWutJfnalL0U4E0DX+cB1kUvas0fVNbdo0T+j
-	lzGIqXTesYtxXIzXdMBMUk4VsMbWUESp36WBtBAA/z5Da9JIqElFUlJOYkfzv34s8s8FHdtRJwI
-	BsDOXGF/kYyq8zP2E8AgKSbXNkO8lIv2DMd6glucHQXnrlgTWxzMEZ0xhjRoNQPXpYL/BY2uxJq
-	xYFWXNX557/jx7QHzRVnapCU8TPc1O6z6OtXIZsHBgOhCQ7x4esdpNQ8pl90CIY1L68put5jnhS
-	Z20oO0X+Q66dPvs7wquCpSvZH8JsW4xM7MQ==
-X-Google-Smtp-Source: AGHT+IE9cHh7s77weeUs2h/qlvtMkcEA2FXioFsd5uVNgCMhApKPvfdi87ZUliXN5EkDKXiVZPUeUw==
-X-Received: by 2002:a05:600c:4709:b0:456:1560:7c63 with SMTP id 5b1f17b1804b1-4562e379f80mr46357175e9.3.1752716057882;
-        Wed, 16 Jul 2025 18:34:17 -0700 (PDT)
+        bh=k94AtGYOCeMCLW1d6kkWnXaBaR2aPSReFcMk3Yvlapw=;
+        b=b8Eljf3IRqpwhIDZNXpRhv1D2yGAhrFMyJXX7DyVdZq3wqftyvQZ0BbOzXjwW2Fzc2
+         DnzCjLjK6xpMUv/8CtIYxzvg5vklgq/oeS+xWiIX596GISryV9+V/+Ct73ejLO7zlZiN
+         /dgA1cR6RZ0CxS4WuupcvLpi994GeHue1GBp/AH5y5Zcd2cAJrV2fRJLBPxPAWZRM4me
+         5fZBywlgcEFXMcGy1v6z5rU/mGet1CQvzO8xZH7skiKRxIjKEAqWZUfAHN3MjJ4jQqs8
+         LG7IzZ7gVX334CB5B7ZQi0HBvcmNoBFnKGlmCJh41wc3yOIaLJnrHz2jRJSk+V6Xwiiu
+         VHBw==
+X-Gm-Message-State: AOJu0Yx2XV3BSAGMZbn+gTzZeS3pgziZTN6jHapU0uTC7SltO5UGT+5i
+	atwvJlFgIlZzVnZlSdSY5zU6nCRNrtfmMkZxNevAbQ+NcEGMnGS5sRC44TN3jg==
+X-Gm-Gg: ASbGncsZMTV6lEXz1o3aW2mV/OuZmrSzXEDwHbHu1nJ3Sf2jp51S7Ir99EGwtUU5VZU
+	jpX7ZZ3cuQMtABEQ2wjT4cJoC3t0B02j61IKPYstScqF18LOqK7T25+IsDZmlDEMz/P23ueI/GQ
+	N/QDH5+z11E0gkJpV58HG4LHVXx3MICho5onTna1Re2UuEf27XBTYvjBNBvG2ZzGiPHjU15njJY
+	4Iy80b2NeGyxRzYHzMXiaqBFEKG25GJFan8CIVIyhq6o9b4bfKPNPO0p1fR46M8oiovrHC8uYGJ
+	+N/hSFxgFNkVF2flbgavr4r0kTL7/B7svrtNWhrcgjFMViMRvKUzR5OtSZ4GnDkG4ddcS1Ir88p
+	GJqq2wgEsk7bMr178bqT6pVI=
+X-Google-Smtp-Source: AGHT+IEFXMfceFpNM+azx2apKL2NVdQR90d7EBCnYO25chS8Sr2yKZhZMALw1lI1h14MgBF7s+BKNw==
+X-Received: by 2002:a05:6000:4284:b0:3b4:9721:2b1c with SMTP id ffacd0b85a97d-3b60e4c9134mr3007383f8f.6.1752716056214;
+        Wed, 16 Jul 2025 18:34:16 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e0d587sm19035227f8f.46.2025.07.16.18.34.17
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8e14ce6sm19523870f8f.68.2025.07.16.18.34.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 18:34:17 -0700 (PDT)
-Message-Id: <7e8f7c2d6c8c740d42bc6d157fa491b558b9ff6a.1752716054.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+        Wed, 16 Jul 2025 18:34:15 -0700 (PDT)
+Message-Id: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
 References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
-	<pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 17 Jul 2025 01:34:08 +0000
-Subject: [PATCH v2 2/8] sparse-checkout: add basics of 'clean' command
+Date: Thu, 17 Jul 2025 01:34:06 +0000
+Subject: [PATCH v2 0/8] sparse-checkout: add 'clean' command
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,227 +76,390 @@ To: git@vger.kernel.org
 Cc: gitster@pobox.com,
     newren@gmail.com,
     Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
     Derrick Stolee <stolee@gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+NEW: This series is based on 2c5b5565981 (environment: remove the global
+variable 'sparse_expect_files_outside_of_patterns', 2025-07-01) to build
+upon those cleanups in builtin/sparse-checkout.c.
 
-When users change their sparse-checkout definitions to add new
-directories and remove old ones, there may be a few reasons why
-directories no longer in scope remain (ignored or excluded files still
-exist, Windows handles are still open, etc.). When these files still
-exist, the sparse index feature notices that a tracked, but sparse,
-directory still exists on disk and thus the index expands. This causes a
-performance hit _and_ the advice printed isn't very helpful. Using 'git
-clean' isn't enough (generally '-dfx' may be needed) but also this may
-not be sufficient.
+When using cone-mode sparse-checkout, users specify which tracked
+directories they want (recursively) and any directory not part of the parent
+paths for those directories are considered "out of scope". When changing
+sparse-checkouts, there are a variety of reasons why these "out of scope"
+directories could remain, including:
 
-Add a new subcommand to 'git sparse-checkout' that removes these
-tracked-but-sparse directories. This necessarily removes all files
-contained within, including tracked and untracked files. Of particular
-importance are ignored and excluded files which would normally be
-ignored even by 'git clean -f' unless the '-x' or '-X' option is
-provided. This is the most extreme method for doing this, but it works
-when the sparse-checkout is in cone mode and is expected to rescope
-based on directories, not files.
+ * The user has .gitignore or .git/info/exclude files that tell Git to not
+   remove files of a certain type.
+ * Some filesystem blocker prevented the removal of a tracked file. This is
+   usually more of an issue on Windows where a read handle will block file
+   deletion.
 
-The current implementation always deletes these sparse directories
-without warning. This is unacceptable for a released version, but those
-features will be added in changes coming immediately after this one.
+Typically, this would not mean too much for the user experience. A few extra
+filesystem checks might be required to satisfy git status commands, but the
+scope of the performance hit is relative to how many cruft files are left
+over in this situation.
 
-Note that untracked directories within the sparse-checkout remain.
-Further, directories that contain staged changes or files in merge
-conflict states are not deleted. This is a detail that is partly hidden
-by the implementation which relies on collapsing the index to a sparse
-index in-memory and only deleting directories that are listed as sparse
-in the index.
+However, when using the sparse index, these tracked sparse directories cause
+significant performance issues. When noticing that the index contains a
+sparse directory but that directory exists on disk, Git needs to expand that
+sparse directory to determine which files are tracked or untracked. The
+current mechanism expands the entire index to a full one, an expensive
+operation that scales with the total number of paths at HEAD and not just
+the number of cruft files left over.
 
-If a staged change exists, then that entry is not stored as a sparse
-tree entry and thus remains on-disk until committed or reset.
+Advice was added in 9479a31d603 (advice: warn when sparse index expands,
+2024-07-08) to help users determine that they were in this state. However,
+the advice doesn't actually recommend helpful ways to get out of this state.
+Recommending "git clean" on its own is incomplete, as typically users
+actually need 'git clean -dfx' to clear out the ignored or excluded files.
+Even then, they may need 'git sparse-checkout reapply' afterwards to clear
+the sparse directories.
 
-There are some interesting cases around merge conflict resolution, but
-that will be carefully analyzed in the future.
+The advice was successful in helping to alert users to the problem, which is
+how I got wind of many of these cases for how users get into this state.
+It's now time to give them a tool that helps them out of this state.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- Documentation/git-sparse-checkout.adoc | 11 ++++-
- builtin/sparse-checkout.c              | 64 +++++++++++++++++++++++++-
- t/t1091-sparse-checkout-builtin.sh     | 38 +++++++++++++++
- 3 files changed, 111 insertions(+), 2 deletions(-)
+This series adds a new 'git sparse-checkout clean' command that currently
+only works for cone-mode sparse-checkouts. The only thing it does is
+collapse the index to a sparse index (as much as possible) and make sure
+that any sparse directories are removed. These directories are listed to
+stdout.
 
-diff --git a/Documentation/git-sparse-checkout.adoc b/Documentation/git-sparse-checkout.adoc
-index 529a8edd9c1e..6db88f00781d 100644
---- a/Documentation/git-sparse-checkout.adoc
-+++ b/Documentation/git-sparse-checkout.adoc
-@@ -9,7 +9,7 @@ git-sparse-checkout - Reduce your working tree to a subset of tracked files
- SYNOPSIS
- --------
- [verse]
--'git sparse-checkout' (init | list | set | add | reapply | disable | check-rules) [<options>]
-+'git sparse-checkout' (init | list | set | add | reapply | disable | check-rules | clean) [<options>]
- 
- 
- DESCRIPTION
-@@ -111,6 +111,15 @@ flags, with the same meaning as the flags from the `set` command, in order
- to change which sparsity mode you are using without needing to also respecify
- all sparsity paths.
- 
-+'clean'::
-+	Remove all files in tracked directories that are outside of the
-+	sparse-checkout definition. This subcommand requires cone-mode
-+	sparse-checkout to be sure that we know which directories are
-+	both tracked and all contained paths are not in the sparse-checkout.
-+	This command can be used to be sure the sparse index works
-+	efficiently, though it does not require enabling the sparse index
-+  feature via the `index.sparse=true` configuration.
-+
- 'disable'::
- 	Disable the `core.sparseCheckout` config setting, and restore the
- 	working directory to include all files.
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index 61714bf80be0..6fe6ec718fe3 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -2,6 +2,7 @@
- #define DISABLE_SIGN_COMPARE_WARNINGS
- 
- #include "builtin.h"
-+#include "abspath.h"
- #include "config.h"
- #include "dir.h"
- #include "environment.h"
-@@ -23,7 +24,7 @@
- static const char *empty_base = "";
- 
- static char const * const builtin_sparse_checkout_usage[] = {
--	N_("git sparse-checkout (init | list | set | add | reapply | disable | check-rules) [<options>]"),
-+	N_("git sparse-checkout (init | list | set | add | reapply | disable | check-rules | clean) [<options>]"),
- 	NULL
- };
- 
-@@ -924,6 +925,66 @@ static int sparse_checkout_reapply(int argc, const char **argv,
- 	return update_working_directory(repo, NULL);
- }
- 
-+static char const * const builtin_sparse_checkout_clean_usage[] = {
-+	"git sparse-checkout clean [-n|--dry-run]",
-+	NULL
-+};
-+
-+static const char *msg_remove = N_("Removing %s\n");
-+
-+static int sparse_checkout_clean(int argc, const char **argv,
-+				   const char *prefix,
-+				   struct repository *repo)
-+{
-+	struct strbuf full_path = STRBUF_INIT;
-+	const char *msg = msg_remove;
-+	size_t worktree_len;
-+
-+	struct option builtin_sparse_checkout_clean_options[] = {
-+		OPT_END(),
-+	};
-+
-+	setup_work_tree();
-+	if (!repo->settings.sparse_checkout)
-+		die(_("must be in a sparse-checkout to clean directories"));
-+	if (!repo->settings.sparse_checkout_cone)
-+		die(_("must be in a cone-mode sparse-checkout to clean directories"));
-+
-+	argc = parse_options(argc, argv, prefix,
-+			     builtin_sparse_checkout_clean_options,
-+			     builtin_sparse_checkout_clean_usage, 0);
-+
-+	if (repo_read_index(repo) < 0)
-+		die(_("failed to read index"));
-+
-+	if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY) ||
-+	    repo->index->sparse_index == INDEX_EXPANDED)
-+		die(_("failed to convert index to a sparse index; resolve merge conflicts and try again"));
-+
-+	strbuf_addstr(&full_path, repo->worktree);
-+	strbuf_addch(&full_path, '/');
-+	worktree_len = full_path.len;
-+
-+	for (size_t i = 0; i < repo->index->cache_nr; i++) {
-+		struct cache_entry *ce = repo->index->cache[i];
-+		if (!S_ISSPARSEDIR(ce->ce_mode))
-+			continue;
-+		strbuf_setlen(&full_path, worktree_len);
-+		strbuf_add(&full_path, ce->name, ce->ce_namelen);
-+
-+		if (!is_directory(full_path.buf))
-+			continue;
-+
-+		printf(msg, ce->name);
-+
-+		if (remove_dir_recursively(&full_path, 0))
-+			warning_errno(_("failed to remove '%s'"), ce->name);
-+	}
-+
-+	strbuf_release(&full_path);
-+	return 0;
-+}
-+
- static char const * const builtin_sparse_checkout_disable_usage[] = {
- 	"git sparse-checkout disable",
- 	NULL
-@@ -1079,6 +1140,7 @@ int cmd_sparse_checkout(int argc,
- 		OPT_SUBCOMMAND("set", &fn, sparse_checkout_set),
- 		OPT_SUBCOMMAND("add", &fn, sparse_checkout_add),
- 		OPT_SUBCOMMAND("reapply", &fn, sparse_checkout_reapply),
-+		OPT_SUBCOMMAND("clean", &fn, sparse_checkout_clean),
- 		OPT_SUBCOMMAND("disable", &fn, sparse_checkout_disable),
- 		OPT_SUBCOMMAND("check-rules", &fn, sparse_checkout_check_rules),
- 		OPT_END(),
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index ab3a105ffff2..a48eedf766d2 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -1050,5 +1050,43 @@ test_expect_success 'check-rules null termination' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'clean' '
-+	git -C repo sparse-checkout set --cone deep/deeper1 &&
-+	mkdir repo/deep/deeper2 repo/folder1 &&
-+	touch repo/deep/deeper2/file &&
-+	touch repo/folder1/file &&
-+
-+	cat >expect <<-\EOF &&
-+	Removing deep/deeper2/
-+	Removing folder1/
-+	EOF
-+
-+	git -C repo sparse-checkout clean >out &&
-+	test_cmp expect out &&
-+
-+	test_path_is_missing repo/deep/deeper2 &&
-+	test_path_is_missing repo/folder1
-+'
-+
-+test_expect_success 'clean with staged sparse change' '
-+	git -C repo sparse-checkout set --cone deep/deeper1 &&
-+	mkdir repo/deep/deeper2 repo/folder1 repo/folder2 &&
-+	touch repo/deep/deeper2/file &&
-+	touch repo/folder1/file &&
-+	echo dirty >repo/folder2/a &&
-+
-+	git -C repo add --sparse folder1/file &&
-+
-+	# deletes deep/deeper2/ but leaves folder1/ and folder2/
-+	cat >expect <<-\EOF &&
-+	Removing deep/deeper2/
-+	EOF
-+
-+	git -C repo sparse-checkout clean >out &&
-+	test_cmp expect out &&
-+
-+	test_path_is_missing repo/deep/deeper2 &&
-+	test_path_exists repo/folder1
-+'
- 
- test_done
+This command uses the same '--force' and '--dry-run' options as 'git clean',
+with integrations with the 'clean.requireForce' config option. There are
+some concerns that this isn't an obvious way to work with the 'git clean'
+command, but I thought we should be consistent here. I did change the error
+message to point users to the necessary options.
+
+This option would be preferred to something like 'git clean -dfx' since it
+does not clear the excluded files that are still within the sparse-checkout.
+Instead, it performs the exact filesystem operations required to refresh the
+sparse index performance back to what is expected.
+
+I spent a few weeks debating with myself about whether or not this was the
+right interface, so please suggest alternatives if you have better ideas.
+Among my rejected ideas include:
+
+ * 'git sparse-checkout reapply -f -x' or similar augmentations of
+   'reapply'.
+ * 'git clean --sparse' to focus the clean operation on things outside of
+   the sparse-checkout.
+
+
+Updates in V2
+=============
+
+ * This series is based on 2c5b5565981 (environment: remove the global
+   variable 'sparse_expect_files_outside_of_patterns', 2025-07-01) to build
+   upon those cleanups in builtin/sparse-checkout.c.
+ * The --force and --dry-run options match 'git clean'.
+ * A --verbose option is added. It does not link to the index for
+   tracked/untracked/ignored/excluded or clean/modified/staged/conflicted
+   status, but instead gives the full list for information.
+ * To support the --verbose option, a new for_each_file_in_dir() method is
+   added to dir.h.
+ * Tests are added to demonstrate the behavior when a sparse directory has a
+   merge conflict (fails with an explanation). When adding the test based on
+   the previous version's functionality, I realized that the behavior is
+   sometimes less effective than git sparse-checkout reapply even after a
+   sparse file is committed. To demonstrate this change, the full test is
+   created on its own and then a code change is added with the impact on the
+   test.
+
+Thanks, -Stolee
+
+Derrick Stolee (8):
+  sparse-checkout: remove use of the_repository
+  sparse-checkout: add basics of 'clean' command
+  sparse-checkout: match some 'clean' behavior
+  dir: add generic "walk all files" helper
+  sparse-checkout: add --verbose option to 'clean'
+  sparse-index: point users to new 'clean' action
+  t: expand tests around sparse merges and clean
+  sparse-checkout: make 'clean' clear more files
+
+ Documentation/git-sparse-checkout.adoc |  25 ++-
+ builtin/sparse-checkout.c              | 230 ++++++++++++++++++-------
+ dir.c                                  |  28 +++
+ dir.h                                  |  14 ++
+ sparse-index.c                         |   3 +-
+ t/t1091-sparse-checkout-builtin.sh     | 130 ++++++++++++++
+ unpack-trees.c                         |   2 +-
+ 7 files changed, 371 insertions(+), 61 deletions(-)
+
+
+base-commit: 2c5b556598191ae64159dc998dc8f0917d412808
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1941%2Fderrickstolee%2Fgit-sparse-checkout-clean-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1941/derrickstolee/git-sparse-checkout-clean-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1941
+
+Range-diff vs v1:
+
+ 1:  3cdc44a9e8c ! 1:  92d0cd41a41 sparse-checkout: remove use of the_repository
+     @@ builtin/sparse-checkout.c: static enum sparse_checkout_mode update_cone_mode(int
+       	int mode, record_mode;
+       
+      @@ builtin/sparse-checkout.c: static int update_modes(int *cone_mode, int *sparse_index)
+     - 	record_mode = (*cone_mode != -1) || !core_apply_sparse_checkout;
+     + 	record_mode = (*cone_mode != -1) || !the_repository->settings.sparse_checkout;
+       
+       	mode = update_cone_mode(cone_mode);
+      -	if (record_mode && set_config(mode))
+     @@ builtin/sparse-checkout.c: static void add_patterns_literal(int argc, const char
+       {
+       	int result;
+      @@ builtin/sparse-checkout.c: static int modify_pattern_list(struct strvec *args, int use_stdin,
+     + 		break;
+       	}
+       
+     - 	if (!core_apply_sparse_checkout) {
+     +-	if (!the_repository->settings.sparse_checkout) {
+      -		set_config(MODE_ALL_PATTERNS);
+     +-		the_repository->settings.sparse_checkout = 1;
+     ++	if (!repo->settings.sparse_checkout) {
+      +		set_config(repo, MODE_ALL_PATTERNS);
+     - 		core_apply_sparse_checkout = 1;
+     ++		repo->settings.sparse_checkout = 1;
+       		changed_config = 1;
+       	}
+       
+     @@ builtin/sparse-checkout.c: static struct sparse_checkout_add_opts {
+       	static struct option builtin_sparse_checkout_add_options[] = {
+       		OPT_BOOL_F(0, "skip-checks", &add_opts.skip_checks,
+      @@ builtin/sparse-checkout.c: static int sparse_checkout_add(int argc, const char **argv, const char *prefix,
+     - 	if (!core_apply_sparse_checkout)
+     + 	if (!the_repository->settings.sparse_checkout)
+       		die(_("no sparse-checkout to add to"));
+       
+      -	repo_read_index(the_repository);
+     @@ builtin/sparse-checkout.c: static int sparse_checkout_disable(int argc, const ch
+       
+       	add_pattern("/*", empty_base, 0, &pl, 0);
+       
+     --	prepare_repo_settings(the_repository);
+      -	the_repository->settings.sparse_index = 0;
+     -+	prepare_repo_settings(repo);
+      +	repo->settings.sparse_index = 0;
+       
+      -	if (update_working_directory(&pl))
+ 2:  49418e8ec8a ! 2:  7e8f7c2d6c8 sparse-checkout: add 'clean' command
+     @@ Metadata
+      Author: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Commit message ##
+     -    sparse-checkout: add 'clean' command
+     +    sparse-checkout: add basics of 'clean' command
+      
+          When users change their sparse-checkout definitions to add new
+          directories and remove old ones, there may be a few reasons why
+     @@ Commit message
+          not be sufficient.
+      
+          Add a new subcommand to 'git sparse-checkout' that removes these
+     -    tracked-but-sparse directories, including any excluded or ignored files
+     -    underneath. This is the most extreme method for doing this, but it works
+     +    tracked-but-sparse directories. This necessarily removes all files
+     +    contained within, including tracked and untracked files. Of particular
+     +    importance are ignored and excluded files which would normally be
+     +    ignored even by 'git clean -f' unless the '-x' or '-X' option is
+     +    provided. This is the most extreme method for doing this, but it works
+          when the sparse-checkout is in cone mode and is expected to rescope
+          based on directories, not files.
+      
+     -    Be sure to add a --dry-run option so users can predict what will be
+     -    deleted. In general, output the directories that are being removed so
+     -    users can know what was removed.
+     +    The current implementation always deletes these sparse directories
+     +    without warning. This is unacceptable for a released version, but those
+     +    features will be added in changes coming immediately after this one.
+      
+     -    Note that untracked directories remain. Further, directories that
+     -    contain staged changes are not deleted. This is a detail that is partly
+     -    hidden by the implementation which relies on collapsing the index to a
+     -    sparse index in-memory and only deleting directories that are listed as
+     -    sparse in the index. If a staged change exists, then that entry is not
+     -    stored as a sparse tree entry and thus remains on-disk until committed
+     -    or reset.
+     +    Note that untracked directories within the sparse-checkout remain.
+     +    Further, directories that contain staged changes or files in merge
+     +    conflict states are not deleted. This is a detail that is partly hidden
+     +    by the implementation which relies on collapsing the index to a sparse
+     +    index in-memory and only deleting directories that are listed as sparse
+     +    in the index.
+     +
+     +    If a staged change exists, then that entry is not stored as a sparse
+     +    tree entry and thus remains on-disk until committed or reset.
+     +
+     +    There are some interesting cases around merge conflict resolution, but
+     +    that will be carefully analyzed in the future.
+      
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+     @@ Documentation/git-sparse-checkout.adoc: flags, with the same meaning as the flag
+      +	sparse-checkout to be sure that we know which directories are
+      +	both tracked and all contained paths are not in the sparse-checkout.
+      +	This command can be used to be sure the sparse index works
+     -+	efficiently.
+     -++
+     -+The `clean` command can also take the `--dry-run` (`-n`) option to list
+     -+the directories it would remove without performing any filesystem changes.
+     ++	efficiently, though it does not require enabling the sparse index
+     ++  feature via the `index.sparse=true` configuration.
+      +
+       'disable'::
+       	Disable the `core.sparseCheckout` config setting, and restore the
+       	working directory to include all files.
+      
+       ## builtin/sparse-checkout.c ##
+     +@@
+     + #define DISABLE_SIGN_COMPARE_WARNINGS
+     + 
+     + #include "builtin.h"
+     ++#include "abspath.h"
+     + #include "config.h"
+     + #include "dir.h"
+     + #include "environment.h"
+      @@
+       static const char *empty_base = "";
+       
+     @@ builtin/sparse-checkout.c: static int sparse_checkout_reapply(int argc, const ch
+      +	NULL
+      +};
+      +
+     -+static struct sparse_checkout_clean_opts {
+     -+	int dry_run;
+     -+} clean_opts;
+     ++static const char *msg_remove = N_("Removing %s\n");
+      +
+      +static int sparse_checkout_clean(int argc, const char **argv,
+      +				   const char *prefix,
+      +				   struct repository *repo)
+      +{
+      +	struct strbuf full_path = STRBUF_INIT;
+     ++	const char *msg = msg_remove;
+      +	size_t worktree_len;
+     -+	static struct option builtin_sparse_checkout_clean_options[] = {
+     -+		OPT_BOOL('n', "dry-run", &clean_opts.dry_run,
+     -+			 N_("list the directories that would be removed without making filesystem changes")),
+     ++
+     ++	struct option builtin_sparse_checkout_clean_options[] = {
+      +		OPT_END(),
+      +	};
+      +
+      +	setup_work_tree();
+     -+	if (!core_apply_sparse_checkout)
+     ++	if (!repo->settings.sparse_checkout)
+      +		die(_("must be in a sparse-checkout to clean directories"));
+     -+	if (!core_sparse_checkout_cone)
+     ++	if (!repo->settings.sparse_checkout_cone)
+      +		die(_("must be in a cone-mode sparse-checkout to clean directories"));
+      +
+      +	argc = parse_options(argc, argv, prefix,
+     @@ builtin/sparse-checkout.c: static int sparse_checkout_reapply(int argc, const ch
+      +	if (repo_read_index(repo) < 0)
+      +		die(_("failed to read index"));
+      +
+     -+	if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY))
+     -+		die(_("failed to convert index to a sparse index"));
+     ++	if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY) ||
+     ++	    repo->index->sparse_index == INDEX_EXPANDED)
+     ++		die(_("failed to convert index to a sparse index; resolve merge conflicts and try again"));
+      +
+      +	strbuf_addstr(&full_path, repo->worktree);
+      +	strbuf_addch(&full_path, '/');
+      +	worktree_len = full_path.len;
+      +
+      +	for (size_t i = 0; i < repo->index->cache_nr; i++) {
+     -+		DIR* dir;
+      +		struct cache_entry *ce = repo->index->cache[i];
+      +		if (!S_ISSPARSEDIR(ce->ce_mode))
+      +			continue;
+      +		strbuf_setlen(&full_path, worktree_len);
+      +		strbuf_add(&full_path, ce->name, ce->ce_namelen);
+      +
+     -+		dir = opendir(full_path.buf);
+     -+		if (!dir)
+     -+			continue;
+     -+		else if (ENOENT != errno) {
+     -+			warning_errno(_("failed to check for existence of '%s'"), ce->name);
+     ++		if (!is_directory(full_path.buf))
+      +			continue;
+     -+		}
+      +
+     -+		closedir(dir);
+     ++		printf(msg, ce->name);
+      +
+     -+		printf("%s\n", ce->name);
+     -+		if (!clean_opts.dry_run) {
+     -+			if (remove_dir_recursively(&full_path, 0))
+     -+				warning_errno(_("failed to remove '%s'"), ce->name);
+     -+		}
+     ++		if (remove_dir_recursively(&full_path, 0))
+     ++			warning_errno(_("failed to remove '%s'"), ce->name);
+      +	}
+      +
+      +	strbuf_release(&full_path);
+     @@ t/t1091-sparse-checkout-builtin.sh: test_expect_success 'check-rules null termin
+      +	touch repo/folder1/file &&
+      +
+      +	cat >expect <<-\EOF &&
+     -+	deep/deeper2/
+     -+	folder1/
+     ++	Removing deep/deeper2/
+     ++	Removing folder1/
+      +	EOF
+      +
+     -+	git -C repo sparse-checkout clean --dry-run >out &&
+     -+	test_cmp expect out &&
+     -+
+     -+	test_path_exists repo/deep/deeper2 &&
+     -+	test_path_exists repo/folder1 &&
+     -+
+      +	git -C repo sparse-checkout clean >out &&
+      +	test_cmp expect out &&
+      +
+     -+	! test_path_exists repo/deep/deeper2 &&
+     -+	! test_path_exists repo/folder1
+     ++	test_path_is_missing repo/deep/deeper2 &&
+     ++	test_path_is_missing repo/folder1
+      +'
+      +
+      +test_expect_success 'clean with staged sparse change' '
+      +	git -C repo sparse-checkout set --cone deep/deeper1 &&
+     -+	mkdir repo/deep/deeper2 repo/folder1 &&
+     ++	mkdir repo/deep/deeper2 repo/folder1 repo/folder2 &&
+      +	touch repo/deep/deeper2/file &&
+      +	touch repo/folder1/file &&
+     ++	echo dirty >repo/folder2/a &&
+      +
+      +	git -C repo add --sparse folder1/file &&
+      +
+     ++	# deletes deep/deeper2/ but leaves folder1/ and folder2/
+      +	cat >expect <<-\EOF &&
+     -+	deep/deeper2/
+     ++	Removing deep/deeper2/
+      +	EOF
+      +
+     -+	git -C repo sparse-checkout clean --dry-run >out &&
+     -+	test_cmp expect out &&
+     -+
+     -+	test_path_exists repo/deep/deeper2 &&
+     -+	test_path_exists repo/folder1 &&
+     -+
+      +	git -C repo sparse-checkout clean >out &&
+      +	test_cmp expect out &&
+      +
+     -+	! test_path_exists repo/deep/deeper2 &&
+     ++	test_path_is_missing repo/deep/deeper2 &&
+      +	test_path_exists repo/folder1
+      +'
+       
+ -:  ----------- > 3:  221f3e5fb0c sparse-checkout: match some 'clean' behavior
+ -:  ----------- > 4:  fd9a20a3922 dir: add generic "walk all files" helper
+ -:  ----------- > 5:  f464bb5ed6b sparse-checkout: add --verbose option to 'clean'
+ 3:  80d7a7641da = 6:  d6dbc0b5ca9 sparse-index: point users to new 'clean' action
+ -:  ----------- > 7:  0b1a2895b90 t: expand tests around sparse merges and clean
+ -:  ----------- > 8:  82c24ce5198 sparse-checkout: make 'clean' clear more files
+
 -- 
 gitgitgadget
-
