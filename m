@@ -1,74 +1,72 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB1D9192598
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:39:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296912264CD
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:41:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752791980; cv=none; b=t8t/4jRA38lvfT+r+hoqQXNzLfvJ5pBOHYuwvzxnV3+2gL8+x2yICaRWkLD45PiW1dXTrVpxO2RSaG0Et+qGciLx/2V145/wa/WvCFOoZ3olUm0zQpDmmdKZdCL7he5h8etKv9GnfFrPzjg8xwAcqDH5i83TWd+3DQcwpLDfdUA=
+	t=1752792090; cv=none; b=biBHdacxKfjIp+qKK02dmCvfbxbfu1szw/0rUJ8rqRf3lA1fITdfJGxXVOyNhVJtfarbidxW6rh06lfP+l9d3l+eYD8LkHF2LXEgIpwxH+Ytu/bVCRRClXN0/Vup5s2RSIVEccy0lDSm3dxwHbtlG/aZmBV/6zI0x8X+xe/XWpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752791980; c=relaxed/simple;
-	bh=OHfZBviiEHLwUK0DXF+Ob3SL5z1i5OgOatpT3oe43YE=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DdhMKBlKg5LUoFsewFgMohG9cAANpkjn7ipcY4hDUkFn598ozQ9lUIffFaiVrWRrKLup5y0Cbmp2MET/KwEVyjzw0+hl2zeEFhP/EAHDRWWyr+2XmIY+Cdp0Hxg0A31RrTSPtjzTMrpXUYwRS9bGxQlfiMN7bZ3upgqJQzPCDn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=ALn5BzPs; arc=none smtp.client-ip=209.85.219.174
+	s=arc-20240116; t=1752792090; c=relaxed/simple;
+	bh=sk/Zt471+ym9/x8eBNSZZb3Hnw6IxapYUkujCbKgG8Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DCH8I84lMYGLMSYfLimipBd0gTpRf/pXF5P5zZ02ozm6tGaGfM3uPDGk3ecRtFCT6NOyk2/CftZoAc//WMCWKJYboSAo/15Q9Fkst4vLz0+Lv51im6awRVmXOLA93e6z3rErZHobhvoGVxgqI0knrWfBw6xVVITF3ntMA0/Dvu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=DUbOH8fD; arc=none smtp.client-ip=209.85.128.176
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="ALn5BzPs"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e8d70c65abcso950564276.0
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:39:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="DUbOH8fD"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-70e5e6ab7b8so13110257b3.1
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:41:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752791975; x=1753396775; darn=vger.kernel.org;
+        d=ttaylorr.com; s=google; t=1752792088; x=1753396888; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OHfZBviiEHLwUK0DXF+Ob3SL5z1i5OgOatpT3oe43YE=;
-        b=ALn5BzPsf3All2PTCKCS8FkYFpRQROSNyVqMLJHq8zDFns7mEj5AcodFrJGYGQEOrN
-         DUlPff4eu7aeb1EslkR6xXe6XIBENHFuAki6f8I/Frf6dVlrgofPTRBxNESCKuoqo67a
-         7M0k1kl9mXh++PfG2n8jHZkxoFvWiW9JH8D5YfH/jvfoWd0hcGe9KymxhFHFnkiA/LPr
-         AJy04eQjj8eErqqvcRosGGH6uuZvXSxXLuDTLPhk9rY4U6iVQmSDb8rASd2SEWZWXqoX
-         1cnIvx6F974zeF0WJbg/bV1MYgEdAAAFixiWfV1jXp7Z9hpdNk6XqFIPsgfWhkPm4KYj
-         BqyA==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=t0elUAPTQH+9B6sbnpbsuBjqOMvovMQHR8uLsU1QUhs=;
+        b=DUbOH8fDjaQnYef67El7CZdtkWalBOAWUtJPAYXj58WB5YKk2Xw/rQ18SHMF6w3Y8x
+         lYshQyRtgkbrXFkuVwDj05dP6vOo4v17LclRK4TSrVYPUSq3GwoJkG4WsSO7S+YNV6z8
+         zWsHFLIdi5xfv9zRYzEVxx0eOcAKPBIx1uvrrAG72BNa0N2EFG8xXQWERfAnjzW/KLUX
+         EmAH1kvHfetVmOx9hwL9gJLsSyONE1LMgVuH8SWSAwXlgnmWDOHQwDfL4CWtifN3ZYZr
+         D0EIxX4LRRXMY+E+ZzvE/CdkvxwSdCAGmwmdAovjG+hXoPJ00bJfIrArq//6lR9Uq0Us
+         Tb0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752791975; x=1753396775;
+        d=1e100.net; s=20230601; t=1752792088; x=1753396888;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OHfZBviiEHLwUK0DXF+Ob3SL5z1i5OgOatpT3oe43YE=;
-        b=ffDbw81g4TPs+9vHHkrtXdHASH/rM+quOpGp2eKZr0pvlHSI7T+Zbe9akqcBZY0gVJ
-         AmWHBybxvhW6lw5irqPW+6kaQMPjb0DeP950MNVeBmPLzNHqbvVMevz4Y/jfhKDG6j8t
-         2pS8SDLYncoJWB1R1W4sZJkbC1+R//qUFp+F/0ZlzSqdRYM0CDM4DpJyZzECGLTasAvN
-         iJ1CGV7+5pLFeycaWdLsxQ8R6qromDUY7rLHrSbBxcFlXAgAqEZK0ZrLxjumvKohlAPf
-         n2GV6g7vJ1B2k2xsBKd4QuqRp+FXKbYOCHxkmxyaGxZLz0O0kYxRFwAR0H1/HuUs92UV
-         xQ7w==
-X-Forwarded-Encrypted: i=1; AJvYcCVX9GQtMEpHyGyowhfwlBNp5fIcvkokgTCuz33+Pd+xyomWb5cjx9rvdhy9QUYs/kkZyow=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxWTE7wednqT21iZnuXxRabY6rdLyl2VHjlBmkaolN26yklthJy
-	TmU7bl5otF2Emd2TBReYZGELwK8uWAzw6AcAyumKzIcwUmMYcIPY9pcVIBSGAfP2wfZmKMeWts3
-	GDKAL2Q0=
-X-Gm-Gg: ASbGnctyVQunZseEFERNhoTDzAQOnCvw8m6ea5f2zBlpnHRL/OefhaYXQSWmtiLAqkC
-	6ci9PZFgpZ/4kfIVH26wttcXqYWx5iduMIHGVQ0OO2hTxvY6eJEUxLZQkkztOQHuNrXr8dlhCGv
-	sl3+FA3PrZNVjYJtnwBUQp4PY8JSiaTlB7IPf2AUBdyJsyF7qC+wGsch2IRDUZA2/nmz0CjTSYG
-	je5/lywG5gexmPX8lAJAUGYtGuR7PW36B7rZ9n2vRbU1vjinP0cldrqHx+12v3Z+Gljo8NufTot
-	btvhKZv/ejDdJldLZNLIUeFpb7a6nUYzExPrGP3ahSn3DgQtEmv7s/0OvrO3+VuyPTsPmWzth2F
-	qDTD45ZnUZC7sXiMX7yfIRVFpGpz4I7btcZUo1cC7RJzt4Z6HNYvojCfWNA93l0Kjw1YDtg==
-X-Google-Smtp-Source: AGHT+IEvIL4CxbuCDDJQP/UzesbmM04awFHqwwHAv14aGz/bzPLScC0Pb9NXUqI1QzE4W0qwsDjWaA==
-X-Received: by 2002:a05:690c:64c3:b0:70f:88e2:c4ae with SMTP id 00721157ae682-7183517be47mr133761337b3.37.1752791975511;
-        Thu, 17 Jul 2025 15:39:35 -0700 (PDT)
+        bh=t0elUAPTQH+9B6sbnpbsuBjqOMvovMQHR8uLsU1QUhs=;
+        b=iRloDxxX6PXTio0QBVVYF8PJEetnDbH0rzlQwoGyiM03twHXCql5pgD4EQ/XU1B9UN
+         TCMHgYQp+6ML2RBST9ttSoEXo/ci4YsE4Zv5iOnlhLG7mtlRbsWdgPOCjPM/cNRpvXLY
+         VaFM+7fx6OH54SizDdbZqsCB69e+9dWsAxchR+C8MRH+1k8jof3OFeQt7ZQvWciNNS/n
+         TD1ft/dZdxyRaHf35pz6AP2bF0kIoDLcNp0NZZh4RGhhHiubRCSvl8wwEAG/8Nc62Vin
+         67RbaWTQY+JCK1TgV7YlhHqF+qk3Gl8wyfmGYOo938JANlNOUMMBlS6CO1lY30dFevg0
+         IXSQ==
+X-Gm-Message-State: AOJu0YwrAUVu7ZhtNpSUeOyigbOPFOa+IIDE8qZgCHbRrAZJA2d7Gb0b
+	/wis7kBQK2lhY06RWeTrUCsPmndwUhqipf+VSzf2PQi6tZPZQhpZ/s07IN02ctZL134=
+X-Gm-Gg: ASbGncv4Dn/rUsQZCTrNBohm7na6/yUGr3a1na6q4dcelvlhHu+i+31RwWNxMw8Yh/Q
+	rYKT02jv4HnmL+pXWAI6VfYkS5hE7oEFG6N3lyUKcH4SiuKIvwuOowHkYvgCR4i+0+XkrYBiCuA
+	KNExi8ONFTVLtZwD9xSI9mz/EnkzCdAqndU5qQ2ESDzA9RkChDE++2qFNkIvFISHzC7w9q2bHDO
+	VhRoX21YPNDmdYEya0PbmFNT9xUcNZbKB4QCFrCKV7jsF5QiUpF3LOpZzozElbQSWeKRbWKzDNz
+	Rl/gkGSUYmg+HWMvuAdkH+LhDg+f469o6hKJwaeWtPaRsukkk2/HuIHJMnvnJGHhAexEkHExSjL
+	6dDGHq5kUsLqve7qCX2u+/plY9uquprTge/I4AJe8MuIrH3iA+6QFGn9Nsv0bHHA+MxyvUFHGVm
+	XEvVEc
+X-Google-Smtp-Source: AGHT+IFYI3Hgom0qPZGN1i9ab9zHil8MF692oJ5v9CEXEUfU8LWRDZILJr5bOyPvAxxCVNBGoysUJQ==
+X-Received: by 2002:a05:690c:650e:b0:6f9:7a3c:1fe with SMTP id 00721157ae682-7183516df3dmr120581507b3.23.1752792087936;
+        Thu, 17 Jul 2025 15:41:27 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7195313d34asm453057b3.32.2025.07.17.15.39.35
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-719532c7bbdsm431627b3.60.2025.07.17.15.41.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jul 2025 15:39:35 -0700 (PDT)
-Date: Thu, 17 Jul 2025 18:39:33 -0400
+        Thu, 17 Jul 2025 15:41:27 -0700 (PDT)
+Date: Thu, 17 Jul 2025 18:41:25 -0400
 From: Taylor Blau <me@ttaylorr.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 1/7] xdiff: introduce rust
-Message-ID: <aHl7pRs9pgUTXKQk@nand.local>
+Subject: Re: [PATCH 2/7] xdiff/xprepare: remove superfluous forward
+ declarations
+Message-ID: <aHl8FebhIEd5+kah@nand.local>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <2a1f4be13dfbdee21811b7a4907f99042c791c2d.1752784344.git.gitgitgadget@gmail.com>
- <aHlrg7pbFqi2qNWH@fruit.crustytoothpaste.net>
+ <b0b744b9acf5299d323d56cbcc01411a228c1fc8.1752784344.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,20 +75,16 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aHlrg7pbFqi2qNWH@fruit.crustytoothpaste.net>
+In-Reply-To: <b0b744b9acf5299d323d56cbcc01411a228c1fc8.1752784344.git.gitgitgadget@gmail.com>
 
-On Thu, Jul 17, 2025 at 09:30:43PM +0000, brian m. carlson wrote:
-> In addition, as I mentioned downthread, because our intention is to
-> support the Debian stable toolchain for a year after the new stable
-> release, unless we are exceptionally careful about dependencies, we may
-> end up with a case where distros need to use older dependencies patched
-> for security but other users may want to update the versions to newer
-> dependencies with security fixes but that do not work on our pinned Rust
-> version.
+On Thu, Jul 17, 2025 at 08:32:19PM +0000, Ezekiel Newren via GitGitGadget wrote:
+> ---
+>  xdiff/xprepare.c | 116 ++++++++++++++++++++---------------------------
+>  1 file changed, 50 insertions(+), 66 deletions(-)
 
-...or Debian users who have an older version of the toolchain installed
-and got an unfriendly "cannot parse 'version = 4'" error when trying to
-build with this patch series applied locally ;-).
+Makes sense. Reviewing with "--color-moved" makes it straightforward to
+see that the contents of xdl_prepare_env() were not modified by this
+patch.
 
 Thanks,
 Taylor
