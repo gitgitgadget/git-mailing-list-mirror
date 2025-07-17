@@ -1,31 +1,31 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43551EF092
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:09:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33612A94F
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:16:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752790174; cv=none; b=MduwmDnclMwVdgJ/dQ47wJvgowdmB3+oL3OW0AyAwW/cb5bqaMESY+2J/fLL6rnsCnA2aJ8fEvh//CuspFXnGaJGjHqt2dIu1lsMJd8ZCNDhnPFM4kWGEF6Vzs9WsNYKXc/GZS7QnibNcrxgfBhUnDv2s0n+GSIAUtT67D7sBbw=
+	t=1752790585; cv=none; b=QO3PkEixLSixW1uPCc9GXxQEL5Nu0mFrIdMZgRYgv/hVmwTHgwZ2NUlYLEPiYXvPvHLlNHqc2Ma+y+3SMEklUg04+l/Ia6VpvPu04y050QrNIVb5ArYfgrmUaG0uqlSOaCYo3sDxZTwYWXZ0CiB3NE4fUf9Po8UktRbL0Ep++ZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752790174; c=relaxed/simple;
-	bh=pw6Ruu3bbbdwCsbkFSSib4BNFuvP1Ee370nG6a9ZGfY=;
+	s=arc-20240116; t=1752790585; c=relaxed/simple;
+	bh=6s3DGEq35BWAgYu7v52fKCDPkN89Szh2hvUJD0w0Dic=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=emBzN5CnPuVGKmd6B2BGjnwlfGqOrKD6iSJaQQi1BXh9u601+4FF2qnXMcBdtSEZrqZt6ik41IBhaA6SaYAxhZx4KHjZq1Ak2WaEXKFJj9oeApBp1D6Md3DuAyxZ2qJNTktL8XRQ+nLH0zvFNb8gDtPMRzuvhSjgPImkWssKLL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=J4c4fCRh; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q91ERErvK1cGCMZt/3zBREujICBVppqzIC8zSl1tQSr5YvbAX+WI5yQkfad6xzMfVwMhDNq3HrFVnBwJAd6O1eXaoMOt47PGThKkz/RVvzWyICyPSsQQQmlcwTMeFtb0RfTbZ1wE3DD1jaT4u4xYKrZtg5UcpMTv3WTjNbLcc24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GpMlscVr; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="J4c4fCRh"
-Received: (qmail 15050 invoked by uid 109); 17 Jul 2025 22:09:31 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=pw6Ruu3bbbdwCsbkFSSib4BNFuvP1Ee370nG6a9ZGfY=; b=J4c4fCRhxrn3NEv7W5SZEHb86l/RZXYt1qT0NHkuGQJibKep0KS8HEac+0TIYnpk3AqVFnMqcfRYbUBThR+zMRybyR2CiJriMzbE2X3skcgiIziT7AEafQ63fCdeTzdy8Nq2mjmhezTEv4Aq8Qdo9DVMumD59UMjT7HtEaE342z6DDqCUcvEZU+NEK7OdFcABMTewi2HEVAc7XpYZCjVpW7115Q/FrNeWVKKxIJ0TXBxvFJpFoI+hAwYGQSjDk8GZMUkU9LjN4i0dpg+rvFhjWtN6abGCpmz78u7kEtmktIspmDhU72BEAN4rjKYDZHO+Et5CgI3C1DcOJYFdubm7g==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GpMlscVr"
+Received: (qmail 15099 invoked by uid 109); 17 Jul 2025 22:16:22 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6s3DGEq35BWAgYu7v52fKCDPkN89Szh2hvUJD0w0Dic=; b=GpMlscVr2rbXX6gy023nGsZ3iDcLFFWJYugAUQwK3YfhpXscI5LjfMVGr1h/dg+9b2xzXgv70t1axNyKSq3uZTygsMWx3/UOEISuu59wZBfdNCtnhPLf0WO0dy+lDHkgXjkep7pfkZ/nIOBvs5fmAF2KSiChyvMXn6epPTBrBTANFzxnL4Kc1pX8v53b49mIIZXBz6W8b1R8LBrPR5vrEHastVfM6Vf3+5v3fhMtHhrqi2qQlUBNPV49WvrziC3CXpr8sQ6QStevPwzLdlD9EzaF+BsVNn/hj/6QvLeLyMGqRULivHD7MFUxEoAL5Yd/n2o5fomNDzt/yLuecJmcKQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Jul 2025 22:09:31 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Jul 2025 22:16:22 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 11909 invoked by uid 111); 17 Jul 2025 22:09:32 -0000
+Received: (qmail 12029 invoked by uid 111); 17 Jul 2025 22:16:22 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Jul 2025 18:09:32 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 17 Jul 2025 18:16:22 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 17 Jul 2025 18:09:29 -0400
+Date: Thu, 17 Jul 2025 18:16:20 -0400
 From: Jeff King <peff@peff.net>
 To: Kyle Lippincott <spectral@google.com>
 Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>,
@@ -34,7 +34,7 @@ Cc: Karthik Nayak <karthik.188@gmail.com>, Patrick Steinhardt <ps@pks.im>,
 	Christian Couder <chriscool@tuxfamily.org>
 Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via
  '--start-after'
-Message-ID: <20250717220929.GB2244266@coredump.intra.peff.net>
+Message-ID: <20250717221620.GA2782307@coredump.intra.peff.net>
 References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
  <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
  <xmqqple1gtyg.fsf@gitster.g>
@@ -43,6 +43,7 @@ References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.co
  <CAO_smVgdaOxiD_494qA+VxkmxNd6c=XqJDcCE2weCTknWfmkkA@mail.gmail.com>
  <CAOLa=ZQPOP0DkK9L5XLmA_uzH7jWwX-ti8AgaEcAF2Mon=w0BA@mail.gmail.com>
  <CAO_smVj4e0XOQyQr5sDyMZ8WPvqcBe2Y33DFHrED7C=VJnm4eg@mail.gmail.com>
+ <20250717220929.GB2244266@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -51,84 +52,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAO_smVj4e0XOQyQr5sDyMZ8WPvqcBe2Y33DFHrED7C=VJnm4eg@mail.gmail.com>
+In-Reply-To: <20250717220929.GB2244266@coredump.intra.peff.net>
 
-On Thu, Jul 17, 2025 at 12:35:58PM -0700, Kyle Lippincott wrote:
+On Thu, Jul 17, 2025 at 06:09:29PM -0400, Jeff King wrote:
 
-> > ==3275333==WARNING: MemorySanitizer: use-of-uninitialized-value
-> >     #0 0x557bd886f4bb in git_mkstemps_mode ../wrapper.c:487:27
-> >     #1 0x557bd886fb55 in git_mkstemp_mode ../wrapper.c:509:9
-> >     #2 0x557bd8100d1a in create_tmpfile ../object-file.c:736:7
-> >     #3 0x557bd80f1630 in start_loose_object_common ../object-file.c:781:7
-> >     #4 0x557bd80f5203 in write_loose_object ../object-file.c:881:7
-> >     #5 0x557bd80f4875 in write_object_file_flags ../object-file.c:1086:6
-> >     #6 0x557bd80f9f65 in write_object_file ../object-file.h:181:9
-> >     #7 0x557bd8101eb8 in index_mem ../object-file.c:1177:9
-> >     #8 0x557bd80f8bd5 in index_core ../object-file.c:1247:10
-> >     #9 0x557bd80f731d in index_fd ../object-file.c:1274:9
-> >     #10 0x557bd80f95e4 in index_path ../object-file.c:1295:7
-> >     #11 0x557bd831132d in add_to_index ../read-cache.c:771:7
-> >     #12 0x557bd8313cb1 in add_file_to_index ../read-cache.c:804:9
-> >     #13 0x557bd73f892c in add_files ../builtin/add.c:355:7
-> >     #14 0x557bd73f4752 in cmd_add ../builtin/add.c:578:18
-> >     #15 0x557bd7a38b6f in run_builtin ../git.c:480:11
-> >     #16 0x557bd7a31d54 in handle_builtin ../git.c:746:9
-> >     #17 0x557bd7a36644 in run_argv ../git.c:813:4
-> >     #18 0x557bd7a30e09 in cmd_main ../git.c:953:19
-> >     #19 0x557bd7a3ca01 in main ../common-main.c:9:11
-> >     #20 0x7f7e3f02a4d7 in __libc_start_call_main
-> > (/nix/store/g2jzxk3s7cnkhh8yq55l4fbvf639zy37-glibc-2.40-66/lib/libc.so.6+0x2a4d7)
-> > (BuildId: f117ee0f586dfa828cbdd08e37393c8f04f6480a)
-> >     #21 0x7f7e3f02a59a in __libc_start_main@GLIBC_2.2.5
-> > (/nix/store/g2jzxk3s7cnkhh8yq55l4fbvf639zy37-glibc-2.40-66/lib/libc.so.6+0x2a59a)
-> > (BuildId: f117ee0f586dfa828cbdd08e37393c8f04f6480a)
-> >     #22 0x557bd7352b34 in _start (git+0x5db34)
-> >
-> > Possibly something we need to look into cleaning up.
+> Probably:
 > 
-> I also saw those msan issues when trying `make
-> CFLAGS=-fsanitize=memory CC=clang`, but not with Google's internal
-> msan build. I don't know which variable in wrapper.c:487 it's
-> complaining about - you'd think it'd be `letters`, but if it's `v`,
-> then that potentially comes from OpenSSL or some other library, and
-> that library would also need to be built with msan (which is why it's
-> such a pain to get msan builds working - EVERY library needs to be
-> built with memory sanitizer).
+> diff --git a/wrapper.c b/wrapper.c
+> index 2f00d2ac87..6a4c1c1c29 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -482,6 +482,8 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
+>  		if (csprng_bytes(&v, sizeof(v), 0) < 0)
+>  			return error_errno("unable to get random bytes for temporary file");
+>  
+> +		msan_unpoison(&v, sizeof(v));
+> +
+>  		/* Fill in the random bits. */
+>  		for (i = 0; i < num_x; i++) {
+>  			filename_template[i] = letters[v % num_letters];
+> 
+> 
+> on top of that would fix the problem you guys are seeing. I don't know
+> if that path leads to insanity, though. Using MSan-enabled libraries is
+> probably a better direction (should increase accuracy, and we don't have
+> to carry these manual annotations around).
 
-Yeah, presumably it is "v" from csprng_bytes(). If there are only a few
-such spots, we can manually "unpoison" memory coming from libraries. On
-my system, I didn't hit the case shown above but do have trouble with
-bytes coming back from zlib.
+Hmm, probably insanity. Just for fun I tried to run the whole suite, but
+got this doozy:
 
-Applying this ancient patch:
-
-  https://lore.kernel.org/git/20171004101932.pai6wzcv2eohsicr@sigill.intra.peff.net/
-
-and building with "make SANITIZE=memory CC=clang" let me run t6302 to
-completion, modulo the bug that started this thread (and which I
-confirmed goes away both with MSan and valgrind with the fix Karthik
-posted).
-
-Probably:
-
-diff --git a/wrapper.c b/wrapper.c
-index 2f00d2ac87..6a4c1c1c29 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -482,6 +482,8 @@ int git_mkstemps_mode(char *pattern, int suffix_len, int mode)
- 		if (csprng_bytes(&v, sizeof(v), 0) < 0)
- 			return error_errno("unable to get random bytes for temporary file");
- 
-+		msan_unpoison(&v, sizeof(v));
-+
- 		/* Fill in the random bits. */
- 		for (i = 0; i < num_x; i++) {
- 			filename_template[i] = letters[v % num_letters];
+  Uninitialized bytes in fopen64 at offset 0 inside [0x7020000109c0, 25)
+  ==2568195==WARNING: MemorySanitizer: use-of-uninitialized-value
+      #0 0x7f90fe14fa46 in BIO_new_file (/lib/x86_64-linux-gnu/libcrypto.so.3+0x14fa46) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #1 0x7f90fe1a659c  (/lib/x86_64-linux-gnu/libcrypto.so.3+0x1a659c) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #2 0x7f90fe1a8453 in CONF_modules_load_file_ex (/lib/x86_64-linux-gnu/libcrypto.so.3+0x1a8453) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #3 0x7f90fe1a8807  (/lib/x86_64-linux-gnu/libcrypto.so.3+0x1a8807) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #4 0x7f90fe27274e  (/lib/x86_64-linux-gnu/libcrypto.so.3+0x27274e) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #5 0x7f90fea01bc6 in __pthread_once_slow nptl/pthread_once.c:116:7
+      #6 0x7f90fea01c38 in __pthread_once nptl/pthread_once.c:143:12
+      #7 0x7f90fe287f3c in CRYPTO_THREAD_run_once (/lib/x86_64-linux-gnu/libcrypto.so.3+0x287f3c) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #8 0x7f90fe272fd9 in OPENSSL_init_crypto (/lib/x86_64-linux-gnu/libcrypto.so.3+0x272fd9) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4)
+      #9 0x7f90fe78a6d7 in OPENSSL_init_ssl (/lib/x86_64-linux-gnu/libssl.so.3+0x396d7) (BuildId: a0d77cb273378dec1d74a115ac1c9e40306e675d)
+      #10 0x7f90fee2a503  (/lib/x86_64-linux-gnu/libcurl.so.4+0x9e503) (BuildId: 61ee7a8d1799c0e6c38a99b4d739e0c90391a05f)
+      #11 0x7f90fedc2e42  (/lib/x86_64-linux-gnu/libcurl.so.4+0x36e42) (BuildId: 61ee7a8d1799c0e6c38a99b4d739e0c90391a05f)
+      #12 0x7f90fedc33c9 in curl_global_init (/lib/x86_64-linux-gnu/libcurl.so.4+0x373c9) (BuildId: 61ee7a8d1799c0e6c38a99b4d739e0c90391a05f)
+      #13 0x55fbbe211623 in http_init http.c:1347:6
+      #14 0x55fbbe1f5b98 in cmd_main remote-curl.c:1583:2
+      #15 0x55fbbe244571 in main common-main.c:9:11
+      #16 0x7f90fe993ca7 in __libc_start_call_main csu/../sysdeps/nptl/libc_start_call_main.h:58:16
+      #17 0x7f90fe993d64 in __libc_start_main csu/../csu/libc-start.c:360:3
+      #18 0x55fbbe15bb60 in _start (git-remote-http+0x43b60) (BuildId: dfc63b9261f6d575776d30b4e048b235389a7b20)
+  
+  SUMMARY: MemorySanitizer: use-of-uninitialized-value (/lib/x86_64-linux-gnu/libcrypto.so.3+0x14fa46) (BuildId: 07a8321bad67632b52b47ad026125c79b7ebaab4) in BIO_new_file
 
 
-on top of that would fix the problem you guys are seeing. I don't know
-if that path leads to insanity, though. Using MSan-enabled libraries is
-probably a better direction (should increase accuracy, and we don't have
-to carry these manual annotations around).
+So MSan complaining about stuff deep within curl/openssl, and AFAICT not
+something we could influence or annotate as OK.
 
 -Peff
