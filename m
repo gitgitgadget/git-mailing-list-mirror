@@ -1,55 +1,55 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397902BD015
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 10:50:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1239E2BD038
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 10:50:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752749408; cv=none; b=eSvsbniLjZFCPdZ4SYh7U9U1bUUkTa4y9+ryOiypATVXvmzZhDEsWVPslGchWG9e+mYDlsc6ToR+aaaBb/QWyuYcMtP2rDCcer9ly/7vWdUabbr50CR3QBlL02w+xKwMy2S/Yod0Ds20qPferTzlau/ZU98mDIt9Uh+T1QqyE1E=
+	t=1752749410; cv=none; b=C1TBz7dtLHN2DUEtH4qmLnA7imroccqRmrAp8RbOt3FehffvYwn1pehWnOwLLnoqDdRfbAmXu3gA0DjH8YbJ+IPUXhht5wp5QYCdMd7VWUqaKRV99x9/HF2oX20XVrUB9rIr6+SGwU+QNoVAST7rQKQxwBxhmK0yY/Bi6KJsnIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752749408; c=relaxed/simple;
-	bh=DQcXYBrY9v9UofQRszE5iogUmk6DTgD3dLOcAuXmxEs=;
+	s=arc-20240116; t=1752749410; c=relaxed/simple;
+	bh=OcnJkQIYNYrWpZtlNbnpYYRNT7vPw7RKpSkp1Xt3aoU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KAl4JAlJhCYIAvaj6V/KyVCC3VnZ3pCofqB+uxiRp3J+7aOtfHC0s/cmdFAvDdGtXbDRXTPQBYPGoc0sne3+bVmq8MAZn8GToNE6nMRfzSwQmcMm9PplCIfLKGFb9osZ1Y3BAzVTcEv+Hrrhwn1OagMhtNXH7YAOag0QjPbhy3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kLulWz6g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CEW2WCUv; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=I4/8e9LR1tpub5Ztvrou7rKtg4eYqkkbUiVImMUE66HCmvEx/6NC7QEFFAen/6KoQHELUYReCbyIMCbYfIj18VUbXK9O4mkxp07nUBxUA6UpK/79oTNc4SmpcEKZDUUB5fmm6OP4MZ4UCmc/NKSZRrHAdnkPu2tOhaki5ttQqN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AMfQ0zxC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Zkd+s+KX; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kLulWz6g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CEW2WCUv"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AMfQ0zxC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Zkd+s+KX"
 Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3F4761D00182
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:05 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 3BCA41D00166
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:08 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 06:50:05 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 06:50:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752749405;
-	 x=1752835805; bh=zOEjj4EYWSRrzQVHPul5ps7maBelQc1sCVCjmGPD1JE=; b=
-	kLulWz6gz3DMfEWc4GD7ecpH+8j9n4G5xhvTMR7KlaueUUVu1V1n+v76tivQXmm9
-	ICADQY3zWKRcUtab+xaliMO/CrqtWTI32HHVDPWLNokyig0ojwxkmwgf1yOr/5cM
-	5PGPhwaT7Dov1rviWCxswplCQq8bCtAofBx0Fhylm3xCReggFTilfiwYAwI3wKCW
-	Ln1f9CZFX7nYf9Y7kE8TWykMhOy6QcXwUaoMHHk8ou1VsDDLFJbD26mi/x6fKwvb
-	6p21GBMcc+pcGBvptxZgUH3doOL+YeDExO90JUM7k1ps09pWOBsYKhvtAaFX0u9F
-	V7oApIqpnSQgunGuznqDfA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752749408;
+	 x=1752835808; bh=GTOGf+PgwqwFAscCQVx3jQSDj20yp3MA/qBpFKElO48=; b=
+	AMfQ0zxCokyCi0dOMm3OfrDCpVqqyAg/elen3otptspP3VfT63xDdHTiG25IBupL
+	Uns4rI4fZ3BO21uzcYIjwtiCFrLAW71ovYpQREQ12J53iqz4fiHvguuBHkxtNYRh
+	+UMQf3sJUIu+RIOhXgEY0BtDj74ecm9xdkjQgSA9LZ9OA4nkgEsah6fge71uAjHY
+	V4fIUCO+CBQDkBOaV97mC55IrkMciHOG6GYcroS3faNzYJlS9Ex5xoDPaWlL6DIm
+	vZHJKjjIi1UqbPk/yI6opC0HvQg7H4+5UEbmc0by+RAnMliJVb/i8vyp6jHD7W8P
+	+L4wrg1ucXVwpwtnWuHUTQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752749405; x=
-	1752835805; bh=zOEjj4EYWSRrzQVHPul5ps7maBelQc1sCVCjmGPD1JE=; b=C
-	EW2WCUvyDmyYE2xUYGG+1FnF9X/gA4ya2gjSzCxYezVUmqsYReILW5zP+vyoq0Sw
-	J8+ecMGBtmKx8G7I/mNdcQSwn6bk5ocS7/gcuqCTGpMaoSLyHytTipBNRbhW9VUf
-	PKaB0986gn6Fq/jKVZIxI83bCZMVRX32kSXCWvwp65bsWv4IdypMukh12Xd8sRJf
-	jcWzsLf9WoCq4MoQQXAz7jfTcuQrXb1/yA4v2bRuJqoIFTL/EbwaSAyYDcJqI6Jp
-	oGG1FupN+/9M7lp9iyMWMug/3et0GS0cV820RavIKlymGmJSP0v8DR3sg0R7qGAB
-	qe0WFbtDLWxsIBTmdHaDQ==
-X-ME-Sender: <xms:XNV4aOt5MqYwXUxWHxrt5kinW86Ku5h72OP7uViZXGZRrKxD-1LADg>
-    <xme:XNV4aFd2zcdnYEKrT7QZlafGOYOSnFeBT3ofYyJRFnuIfVtER4FTrxF2CwbP3GjIO
-    ZKO4C0hBzb57qaANg>
-X-ME-Received: <xmr:XNV4aDIOd50FmBCvN8eqiHjcfOhPXNuTbSzwzv0nHfFnWAJT7bfiDz4IXLnub1bDdFOepox8fu7LnqgjJM324KAbKd7cDrl53zddNXtJGm33>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752749408; x=
+	1752835808; bh=GTOGf+PgwqwFAscCQVx3jQSDj20yp3MA/qBpFKElO48=; b=Z
+	kd+s+KXEFKlC0CP1kGxkCTzwerSaOFBpX3/NAeIFpwQcG1SHbrV+zzFLx7oJGCd/
+	0Jx+JDVV33AlsrfM8jS8bV9MkPBGMt77BAWxZYmR4qW94W8LvR+FeowNO97UjUaz
+	pbR366GOuIEUw0UnQIdKXF9yZkU5TeiNCVct1JL+7ZY1NXOAOCcs0drmRtWvcH0r
+	JPqjp0AzhMrv3NzFd2hJhV305k5ac1TwbKawUcy2PQuTX04DmVBRh/UZCk2OVHla
+	WEpNx2Tyi0uL8ngtEICCrCbsoBsy/5+/c7sbAtoYTum+kV1vIBv+3o+Rt2duAay7
+	DAlLI9n+h090vwTp9Zp3g==
+X-ME-Sender: <xms:X9V4aJAi_XJXyywafvT1BjSAuV2f6VT0e3RXThYOQvyP3ObtYML4bQ>
+    <xme:X9V4aJiCt5sGalwm_n0SHYPSMwJVLBldljfgyymKHWxt-hF7_k-VkPFVrTiZIp8ri
+    mREat2mA2Y22H42mQ>
+X-ME-Received: <xmr:X9V4aN-rDMn2oMIR_kADzD7QKoKEDItJaPnQoy79f7IAd2Nig9P03WYtk_JoI-PUvEkzvit_bx4yQOG1rFXFtSGM3BmzBg9aRS0zdwxsq97g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdefkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdefkecutefuodetgg
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:XNV4aLbsrhVMtXdeJS3NKvDqcqACYZ83Hca_gIz4AxPjz0ZJeBcUfw>
-    <xmx:XNV4aGs6mTFb9aq5la5Z2e6VI-SxT9wU742gnZz9HeEO4vSyIRJ7IA>
-    <xmx:XNV4aAsLXXwClNbBfzH3L9jL2G7OVT96UB6HfGWB1T_FbHW_E-e2VQ>
-    <xmx:XNV4aDc1QRxTzQwQwvqev6exwMuIt2gwu853xxll0zUujl18I2B-OQ>
-    <xmx:XdV4aCWr5jMEmC5BeaGeZSGMwQ-YSDLw6-nwotfCaJJCFydGqxNJUhfR>
+X-ME-Proxy: <xmx:X9V4aF99iHEOeQyT2h7V4jWTYU9VNISxqUiWgs5pMfruVIerRHtDlQ>
+    <xmx:X9V4aGCo_6612Kj4_RNKknWz8S6nhGx_HORBIrr_tivQ3Fp5I7mjyg>
+    <xmx:X9V4aFz6n7vEwJuAbX_0oJLq49k_lNWoS5mg7JKb_1qr6NQpSW3Udw>
+    <xmx:X9V4aLTgbwtf6RqnWjolMTwZ7HFp3M7eg3WxuwHykHBwegZ4jnos-Q>
+    <xmx:YNV4aA642SWS-wOtDve2Y-xX2cTaytFP5laigz-JdpOfFhuaD3yEbc9M>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:04 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:07 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8f95a70f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 645bfac0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 17 Jul 2025 10:50:03 +0000 (UTC)
+	Thu, 17 Jul 2025 10:50:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 17 Jul 2025 12:49:31 +0200
-Subject: [PATCH 11/21] config: drop `git_config_get_bool()` wrapper
+Date: Thu, 17 Jul 2025 12:49:32 +0200
+Subject: [PATCH 12/21] config: drop `git_config_set_in_file()` wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-pks-config-wo-the-repository-v1-11-d888e4a17de1@pks.im>
+Message-Id: <20250717-pks-config-wo-the-repository-v1-12-d888e4a17de1@pks.im>
 References: <20250717-pks-config-wo-the-repository-v1-0-d888e4a17de1@pks.im>
 In-Reply-To: <20250717-pks-config-wo-the-repository-v1-0-d888e4a17de1@pks.im>
 To: git@vger.kernel.org
@@ -97,9 +97,9 @@ takes in a repository as parameter, and the intent was that we'll
 eventually remove those wrappers to make the dependency on the global
 repository variable explicit at the callsite.
 
-Follow through with that intent and remove `git_config_get_bool()`. All
-callsites are adjusted so that they use
-`repo_config_get_bool(the_repository, ...)` instead. While some
+Follow through with that intent and remove `git_config_set_in_file()`.
+All callsites are adjusted so that they use
+`repo_config_set_in_file(the_repository, ...)` instead. While some
 callsites might already have a repository available, this mechanical
 conversion is the exact same as the current situation and thus cannot
 cause any regression. Those sites should eventually be cleaned up in a
@@ -107,382 +107,73 @@ later patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- archive.c                          | 2 +-
- builtin/am.c                       | 8 ++++----
- builtin/checkout.c                 | 2 +-
- builtin/clone.c                    | 2 +-
- builtin/credential-cache--daemon.c | 2 +-
- builtin/gc.c                       | 6 +++---
- builtin/grep.c                     | 2 +-
- builtin/rebase.c                   | 2 +-
- compat/precompose_utf8.c           | 2 +-
- config.h                           | 5 -----
- daemon.c                           | 2 +-
- fetch-pack.c                       | 8 ++++----
- http-backend.c                     | 4 ++--
- merge-ort.c                        | 2 +-
- promisor-remote.c                  | 4 ++--
- read-cache.c                       | 4 ++--
- rerere.c                           | 4 ++--
- run-command.c                      | 6 +++---
- setup.c                            | 2 +-
- t/helper/test-config.c             | 2 +-
- transport.c                        | 2 +-
- 21 files changed, 34 insertions(+), 39 deletions(-)
+ builtin/submodule--helper.c | 10 +++++-----
+ config.h                    |  6 ------
+ dir.c                       |  4 ++--
+ 3 files changed, 7 insertions(+), 13 deletions(-)
 
-diff --git a/archive.c b/archive.c
-index 2dd306a07a7..310672b479a 100644
---- a/archive.c
-+++ b/archive.c
-@@ -760,7 +760,7 @@ int write_archive(int argc, const char **argv, const char *prefix,
- 	const char **argv_copy;
- 	int rc;
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index d2ab31835b5..0be737ac4ff 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1810,12 +1810,12 @@ static int clone_submodule(const struct module_clone_data *clone_data,
+ 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
+ 	repo_config_get_string(the_repository, "submodule.alternateLocation", &sm_alternate);
+ 	if (sm_alternate)
+-		git_config_set_in_file(p, "submodule.alternateLocation",
+-				       sm_alternate);
++		repo_config_set_in_file(the_repository, p, "submodule.alternateLocation",
++					sm_alternate);
+ 	repo_config_get_string(the_repository, "submodule.alternateErrorStrategy", &error_strategy);
+ 	if (error_strategy)
+-		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
+-				       error_strategy);
++		repo_config_set_in_file(the_repository, p, "submodule.alternateErrorStrategy",
++					error_strategy);
  
--	git_config_get_bool("uploadarchive.allowunreachable", &remote_allow_unreachable);
-+	repo_config_get_bool(the_repository, "uploadarchive.allowunreachable", &remote_allow_unreachable);
- 	repo_config(the_repository, git_default_config, NULL);
+ 	free(sm_alternate);
+ 	free(error_strategy);
+@@ -2522,7 +2522,7 @@ static int ensure_core_worktree(const char *path)
+ 		abs_path = absolute_pathdup(path);
+ 		rel_path = relative_path(abs_path, subrepo.gitdir, &sb);
  
- 	describe_status.max_invocations = 1;
-diff --git a/builtin/am.c b/builtin/am.c
-index a7e7cf1465a..6073d64ae97 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -162,18 +162,18 @@ static void am_state_init(struct am_state *state)
+-		git_config_set_in_file(cfg_file, "core.worktree", rel_path);
++		repo_config_set_in_file(the_repository, cfg_file, "core.worktree", rel_path);
  
- 	state->prec = 4;
- 
--	git_config_get_bool("am.threeway", &state->threeway);
-+	repo_config_get_bool(the_repository, "am.threeway", &state->threeway);
- 
- 	state->utf8 = 1;
- 
--	git_config_get_bool("am.messageid", &state->message_id);
-+	repo_config_get_bool(the_repository, "am.messageid", &state->message_id);
- 
- 	state->scissors = SCISSORS_UNSET;
- 	state->quoted_cr = quoted_cr_unset;
- 
- 	strvec_init(&state->git_apply_opts);
- 
--	if (!git_config_get_bool("commit.gpgsign", &gpgsign))
-+	if (!repo_config_get_bool(the_repository, "commit.gpgsign", &gpgsign))
- 		state->sign_commit = gpgsign ? "" : NULL;
- }
- 
-@@ -965,7 +965,7 @@ static int split_mail(struct am_state *state, enum patch_format patch_format,
- {
- 	if (keep_cr < 0) {
- 		keep_cr = 0;
--		git_config_get_bool("am.keepcr", &keep_cr);
-+		repo_config_get_bool(the_repository, "am.keepcr", &keep_cr);
- 	}
- 
- 	switch (patch_format) {
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 948ff7bdda7..37efde59898 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -291,7 +291,7 @@ static int checkout_merged(int pos, const struct checkout *state,
- 	read_mmblob(&ours, &threeway[1]);
- 	read_mmblob(&theirs, &threeway[2]);
- 
--	git_config_get_bool("merge.renormalize", &renormalize);
-+	repo_config_get_bool(the_repository, "merge.renormalize", &renormalize);
- 	ll_opts.renormalize = renormalize;
- 	ll_opts.conflict_style = conflict_style;
- 	merge_status = ll_merge(&result_buf, path, &ancestor, "base",
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 3c6d8529b6c..34eea11db4d 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -1150,7 +1150,7 @@ int cmd_clone(int argc,
- 			strbuf_reset(&sb);
- 		}
- 
--		if (!git_config_get_bool("submodule.stickyRecursiveClone", &val) &&
-+		if (!repo_config_get_bool(the_repository, "submodule.stickyRecursiveClone", &val) &&
- 		    val)
- 			string_list_append(&option_config, "submodule.recurse=true");
- 
-diff --git a/builtin/credential-cache--daemon.c b/builtin/credential-cache--daemon.c
-index 5065ff4660b..65cc619bec2 100644
---- a/builtin/credential-cache--daemon.c
-+++ b/builtin/credential-cache--daemon.c
-@@ -307,7 +307,7 @@ int cmd_credential_cache_daemon(int argc,
- 		OPT_END()
- 	};
- 
--	git_config_get_bool("credentialcache.ignoresighup", &ignore_sighup);
-+	repo_config_get_bool(the_repository, "credentialcache.ignoresighup", &ignore_sighup);
- 
- 	argc = parse_options(argc, argv, prefix, options, usage, 0);
- 	socket_path = argv[0];
-diff --git a/builtin/gc.c b/builtin/gc.c
-index d15daf59625..fa62e4f2627 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -193,8 +193,8 @@ static void gc_config(struct gc_config *cfg)
- 	repo_config_get_int(the_repository, "gc.aggressivedepth", &cfg->aggressive_depth);
- 	repo_config_get_int(the_repository, "gc.auto", &cfg->gc_auto_threshold);
- 	repo_config_get_int(the_repository, "gc.autopacklimit", &cfg->gc_auto_pack_limit);
--	git_config_get_bool("gc.autodetach", &cfg->detach_auto);
--	git_config_get_bool("gc.cruftpacks", &cfg->cruft_packs);
-+	repo_config_get_bool(the_repository, "gc.autodetach", &cfg->detach_auto);
-+	repo_config_get_bool(the_repository, "gc.cruftpacks", &cfg->cruft_packs);
- 	repo_config_get_ulong(the_repository, "gc.maxcruftsize", &cfg->max_cruft_size);
- 
- 	if (!repo_config_get_expiry(the_repository, "gc.pruneexpire", &owned)) {
-@@ -1779,7 +1779,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
- 		strbuf_reset(&config_name);
- 		strbuf_addf(&config_name, "maintenance.%s.enabled",
- 			    tasks[i].name);
--		if (!git_config_get_bool(config_name.buf, &config_value))
-+		if (!repo_config_get_bool(the_repository, config_name.buf, &config_value))
- 			strategy.tasks[i].enabled = config_value;
- 		if (!strategy.tasks[i].enabled)
- 			continue;
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 7982dda9a3b..8fcb69dbf2c 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1058,7 +1058,7 @@ int cmd_grep(int argc,
- 
- 	if (use_index && !startup_info->have_repository) {
- 		int fallback = 0;
--		git_config_get_bool("grep.fallbacktonoindex", &fallback);
-+		repo_config_get_bool(the_repository, "grep.fallbacktonoindex", &fallback);
- 		if (fallback)
- 			use_index = 0;
- 		else
-diff --git a/builtin/rebase.c b/builtin/rebase.c
-index 0c3daa4b814..72a52bdfb98 100644
---- a/builtin/rebase.c
-+++ b/builtin/rebase.c
-@@ -340,7 +340,7 @@ static int run_sequencer_rebase(struct rebase_options *opts)
- 	unsigned flags = 0;
- 	int abbreviate_commands = 0, ret = 0;
- 
--	git_config_get_bool("rebase.abbreviatecommands", &abbreviate_commands);
-+	repo_config_get_bool(the_repository, "rebase.abbreviatecommands", &abbreviate_commands);
- 
- 	flags |= opts->keep_empty ? TODO_LIST_KEEP_EMPTY : 0;
- 	flags |= abbreviate_commands ? TODO_LIST_ABBREVIATE_CMDS : 0;
-diff --git a/compat/precompose_utf8.c b/compat/precompose_utf8.c
-index 12e38e0ea3c..3985ed108eb 100644
---- a/compat/precompose_utf8.c
-+++ b/compat/precompose_utf8.c
-@@ -75,7 +75,7 @@ const char *precompose_string_if_needed(const char *in)
- 		iconv_t ic_prec;
- 		char *out;
- 		if (precomposed_unicode < 0)
--			git_config_get_bool("core.precomposeunicode", &precomposed_unicode);
-+			repo_config_get_bool(the_repository, "core.precomposeunicode", &precomposed_unicode);
- 		if (precomposed_unicode != 1)
- 			return in;
- 		ic_prec = iconv_open(repo_encoding, path_encoding);
+ 		free(cfg_file);
+ 		free(abs_path);
 diff --git a/config.h b/config.h
-index e22c07a4488..c9f582c7c55 100644
+index c9f582c7c55..b4f79d4d4cc 100644
 --- a/config.h
 +++ b/config.h
-@@ -719,11 +719,6 @@ NORETURN void git_die_config_linenr(const char *key, const char *filename, int l
- int lookup_config(const char **mapping, int nr_mapping, const char *var);
- 
- # ifdef USE_THE_REPOSITORY_VARIABLE
--static inline int git_config_get_bool(const char *key, int *dest)
--{
--	return repo_config_get_bool(the_repository, key, dest);
--}
--
- static inline int git_config_get_bool_or_int(const char *key, int *is_bool, int *dest)
- {
- 	return repo_config_get_bool_or_int(the_repository, key, is_bool, dest);
-diff --git a/daemon.c b/daemon.c
-index 61cd50f7200..cb209235557 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -402,7 +402,7 @@ static int run_service(const char *dir, struct daemon_service *service,
- 
- 	if (service->overridable) {
- 		strbuf_addf(&var, "daemon.%s", service->config_name);
--		git_config_get_bool(var.buf, &enabled);
-+		repo_config_get_bool(the_repository, var.buf, &enabled);
- 		strbuf_release(&var);
- 	}
- 	if (!enabled) {
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 1f184efb3c9..94b1436c5c2 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1903,10 +1903,10 @@ static void fetch_pack_config(void)
- {
- 	repo_config_get_int(the_repository, "fetch.unpacklimit", &fetch_unpack_limit);
- 	repo_config_get_int(the_repository, "transfer.unpacklimit", &transfer_unpack_limit);
--	git_config_get_bool("repack.usedeltabaseoffset", &prefer_ofs_delta);
--	git_config_get_bool("fetch.fsckobjects", &fetch_fsck_objects);
--	git_config_get_bool("transfer.fsckobjects", &transfer_fsck_objects);
--	git_config_get_bool("transfer.advertisesid", &advertise_sid);
-+	repo_config_get_bool(the_repository, "repack.usedeltabaseoffset", &prefer_ofs_delta);
-+	repo_config_get_bool(the_repository, "fetch.fsckobjects", &fetch_fsck_objects);
-+	repo_config_get_bool(the_repository, "transfer.fsckobjects", &transfer_fsck_objects);
-+	repo_config_get_bool(the_repository, "transfer.advertisesid", &advertise_sid);
- 	if (!uri_protocols.nr) {
- 		char *str;
- 
-diff --git a/http-backend.c b/http-backend.c
-index 3d5d5a84646..d5dfe762bb5 100644
---- a/http-backend.c
-+++ b/http-backend.c
-@@ -246,13 +246,13 @@ static void http_config(void)
- 	int i, value = 0;
- 	struct strbuf var = STRBUF_INIT;
- 
--	git_config_get_bool("http.getanyfile", &getanyfile);
-+	repo_config_get_bool(the_repository, "http.getanyfile", &getanyfile);
- 	repo_config_get_ulong(the_repository, "http.maxrequestbuffer", &max_request_buffer);
- 
- 	for (i = 0; i < ARRAY_SIZE(rpc_service); i++) {
- 		struct rpc_service *svc = &rpc_service[i];
- 		strbuf_addf(&var, "http.%s", svc->config_name);
--		if (!git_config_get_bool(var.buf, &value))
-+		if (!repo_config_get_bool(the_repository, var.buf, &value))
- 			svc->enabled = value;
- 		strbuf_reset(&var);
- 	}
-diff --git a/merge-ort.c b/merge-ort.c
-index 45fd41f8dfd..86896ff11b0 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -5356,7 +5356,7 @@ static void merge_recursive_config(struct merge_options *opt, int ui)
- 	repo_config_get_int(the_repository, "merge.verbosity", &opt->verbosity);
- 	repo_config_get_int(the_repository, "diff.renamelimit", &opt->rename_limit);
- 	repo_config_get_int(the_repository, "merge.renamelimit", &opt->rename_limit);
--	git_config_get_bool("merge.renormalize", &renormalize);
-+	repo_config_get_bool(the_repository, "merge.renormalize", &renormalize);
- 	opt->renormalize = renormalize;
- 	if (!repo_config_get_string(the_repository, "diff.renames", &value)) {
- 		opt->detect_renames = git_config_rename("diff.renames", value);
-diff --git a/promisor-remote.c b/promisor-remote.c
-index a9c877d9cfa..08b0da89622 100644
---- a/promisor-remote.c
-+++ b/promisor-remote.c
-@@ -46,7 +46,7 @@ static int fetch_objects(struct repository *repo,
- 		     "fetch", remote_name, "--no-tags",
- 		     "--no-write-fetch-head", "--recurse-submodules=no",
- 		     "--filter=blob:none", "--stdin", NULL);
--	if (!git_config_get_bool("promisor.quiet", &quiet) && quiet)
-+	if (!repo_config_get_bool(the_repository, "promisor.quiet", &quiet) && quiet)
- 		strvec_push(&child.args, "--quiet");
- 	if (start_command(&child))
- 		die(_("promisor-remote: unable to fork off fetch subprocess"));
-@@ -343,7 +343,7 @@ char *promisor_remote_info(struct repository *repo)
- 	struct strvec names = STRVEC_INIT;
- 	struct strvec urls = STRVEC_INIT;
- 
--	git_config_get_bool("promisor.advertise", &advertise_promisors);
-+	repo_config_get_bool(the_repository, "promisor.advertise", &advertise_promisors);
- 
- 	if (!advertise_promisors)
- 		return NULL;
-diff --git a/read-cache.c b/read-cache.c
-index 5cf41b81f1f..4fdde758d1b 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -2755,7 +2755,7 @@ static int record_eoie(void)
- {
- 	int val;
- 
--	if (!git_config_get_bool("index.recordendofindexentries", &val))
-+	if (!repo_config_get_bool(the_repository, "index.recordendofindexentries", &val))
- 		return val;
- 
- 	/*
-@@ -2770,7 +2770,7 @@ static int record_ieot(void)
- {
- 	int val;
- 
--	if (!git_config_get_bool("index.recordoffsettable", &val))
-+	if (!repo_config_get_bool(the_repository, "index.recordoffsettable", &val))
- 		return val;
- 
- 	/*
-diff --git a/rerere.c b/rerere.c
-index 1ac2075144c..c7c3e535ce5 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -877,8 +877,8 @@ static int do_plain_rerere(struct repository *r,
- 
- static void git_rerere_config(void)
- {
--	git_config_get_bool("rerere.enabled", &rerere_enabled);
--	git_config_get_bool("rerere.autoupdate", &rerere_autoupdate);
-+	repo_config_get_bool(the_repository, "rerere.enabled", &rerere_enabled);
-+	repo_config_get_bool(the_repository, "rerere.autoupdate", &rerere_autoupdate);
- 	repo_config(the_repository, git_default_config, NULL);
+@@ -734,12 +734,6 @@ static inline int git_config_get_pathname(const char *key, char **dest)
+ 	return repo_config_get_pathname(the_repository, key, dest);
  }
  
-diff --git a/run-command.c b/run-command.c
-index 8833b233678..ed9575bd6a8 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1817,7 +1817,7 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
+-static inline void git_config_set_in_file(const char *config_filename,
+-					  const char *key, const char *value)
+-{
+-	repo_config_set_in_file(the_repository, config_filename, key, value);
+-}
+-
+ static inline int git_config_set_gently(const char *key, const char *value)
  {
- 	int enabled, auto_detach;
+ 	return repo_config_set_gently(the_repository, key, value);
+diff --git a/dir.c b/dir.c
+index 02873f59ea6..dfb4d40103f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -4091,8 +4091,8 @@ void connect_work_tree_and_git_dir(const char *work_tree_,
+ 	write_file(gitfile_sb.buf, "gitdir: %s",
+ 		   relative_path(git_dir, work_tree, &rel_path));
+ 	/* Update core.worktree setting */
+-	git_config_set_in_file(cfg_sb.buf, "core.worktree",
+-			       relative_path(work_tree, git_dir, &rel_path));
++	repo_config_set_in_file(the_repository, cfg_sb.buf, "core.worktree",
++				relative_path(work_tree, git_dir, &rel_path));
  
--	if (!git_config_get_bool("maintenance.auto", &enabled) &&
-+	if (!repo_config_get_bool(the_repository, "maintenance.auto", &enabled) &&
- 	    !enabled)
- 		return 0;
- 
-@@ -1826,8 +1826,8 @@ int prepare_auto_maintenance(int quiet, struct child_process *maint)
- 	 * honoring `gc.autoDetach`. This is somewhat weird, but required to
- 	 * retain behaviour from when we used to run git-gc(1) here.
- 	 */
--	if (git_config_get_bool("maintenance.autodetach", &auto_detach) &&
--	    git_config_get_bool("gc.autodetach", &auto_detach))
-+	if (repo_config_get_bool(the_repository, "maintenance.autodetach", &auto_detach) &&
-+	    repo_config_get_bool(the_repository, "gc.autodetach", &auto_detach))
- 		auto_detach = 1;
- 
- 	maint->git_cmd = 1;
-diff --git a/setup.c b/setup.c
-index 9661c5d5d5d..a06bb921b3a 100644
---- a/setup.c
-+++ b/setup.c
-@@ -1877,7 +1877,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
- 	 * the core.precomposeunicode configuration, this
- 	 * has to happen after the above block that finds
- 	 * out where the repository is, i.e. a preparation
--	 * for calling git_config_get_bool().
-+	 * for calling repo_config_get_bool().
- 	 */
- 	if (prefix) {
- 		prefix = precompose_string_if_needed(prefix);
-diff --git a/t/helper/test-config.c b/t/helper/test-config.c
-index ce1e3330516..9f8cca7c48c 100644
---- a/t/helper/test-config.c
-+++ b/t/helper/test-config.c
-@@ -163,7 +163,7 @@ int cmd__config(int argc, const char **argv)
- 			goto exit1;
- 		}
- 	} else if (argc == 3 && !strcmp(argv[1], "get_bool")) {
--		if (!git_config_get_bool(argv[2], &val)) {
-+		if (!repo_config_get_bool(the_repository, argv[2], &val)) {
- 			printf("%d\n", val);
- 			goto exit0;
- 		} else {
-diff --git a/transport.c b/transport.c
-index 89e6297ce22..e305d6bd228 100644
---- a/transport.c
-+++ b/transport.c
-@@ -1602,7 +1602,7 @@ int transport_get_remote_bundle_uri(struct transport *transport)
- 	 * Don't request bundle-uri from the server unless configured to
- 	 * do so by the transfer.bundleURI=true config option.
- 	 */
--	if (git_config_get_bool("transfer.bundleuri", &value) || !value)
-+	if (repo_config_get_bool(the_repository, "transfer.bundleuri", &value) || !value)
- 		return 0;
- 
- 	if (!transport->bundles->baseURI)
+ 	strbuf_release(&gitfile_sb);
+ 	strbuf_release(&cfg_sb);
 
 -- 
 2.50.1.465.gcb3da1c9e6.dirty
