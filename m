@@ -1,146 +1,139 @@
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71C4C2459DA
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 23:29:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48FA51FCFF8
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 23:37:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752795001; cv=none; b=qST041bpj/Ji+QKabeMfAN8pmESZmg20yIm5fcqZ8AonopCyUMMyN3HSLOhAY94guVANKvCD+RJl5IWg+pjmw4lEQfNQjpw4ZZuVasgFlR6cJTAsfunWhIRLkMcr11Kaf8MxVHXiCnwow9iFtF+PIt5MXcziB8AjhkIeOQ7kukk=
+	t=1752795460; cv=none; b=oPW7FjBoB/Zav0OHHc6T4Tcf09bZE5aP71zwopWTFB28kkaIq3AMM155RiLMxByA5e6Y7Tt1kRvO9MPf7pqbNruMrY0d9v2v/Qyt50qvL5xJnNvdfn6MIzJTqtycwTz+/MVqIr/WyUDPx8+jOXDUxez8k3e9mdPgRy0WRwrlP8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752795001; c=relaxed/simple;
-	bh=AfQ7B9v05efPHHkVR9jLBozYGEfwJDl43UADgpS70gE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZcD8TnPWBnVloYGkZbGiZuYl6elhNtsPYxdf3LeWcApef4788PXf/sWr+3Ix2cXX/9+9amJtbmBOqdnjbmBH8mVEnhp75woH3eFrudSKfLNFdd1ShAKWLwrmze9auGOA2t2m08GLYst8g8/AC3HDd/RyJUwAbTkKUZXOn8T5Pho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=c7TDxVW4; arc=none smtp.client-ip=209.85.219.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752795460; c=relaxed/simple;
+	bh=b6aPce0L6FUr9bc0eJPLAqSGgo9Ip2NkJPklUgcbJAM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=j2mI4iT41HdNEOMt5e83HGGIQZpXh/vz9wefbEp2rCAEroqIpf14wil2rmeebEQCodaRNPe5XiYUKv2IeYZ5zOONv7x0WVenoHS5FBeBHbR5RaKpeAsi883hdHJ+l8S/NyyvPJRVlqlZT0F6JjKrzAEMmgLSWhmLvhlVSlD3l30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kpR4bbsw; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="c7TDxVW4"
-Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e8bcbe46cf1so1520582276.2
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:29:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kpR4bbsw"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3e28bf4a350so8565085ab.1
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:37:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752794998; x=1753399798; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=QlRvxOnt78FhDYC60nRJ0Lqbe3wVnYpQazQJPDzij20=;
-        b=c7TDxVW4xOT+eOdMAlW6UOAEwmVz+mnmqFD6mZ0u/fM/hklVXXoFNutw/cJZgA6Vlx
-         R/5EHIcIrVf4fRGGeVNi9nw1mhhTtsdsWYdReHadkA+Dylern18ALcgIwl4Uf+i2j42J
-         x1sRrwa/LmHHW7zvbcVrQZs7ZzLvPdqIAvLLTiRNtKpNOa6qe1wNYqV+7hEN0h0wY9TD
-         fYreQ7pmlIkJVjvRkkZHA5HAl90MR7msF7sAY4gaav76xX86ggMEa5blt7KkqPIcx5/V
-         vCFulWGD963+LbRN/YTzJty8lc/WIZuFMzfttlV0mUEWTULGDkr1nZB9n6sR7Px9FmOM
-         RFfw==
+        d=gmail.com; s=20230601; t=1752795457; x=1753400257; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DKR9TQ0ub9BFz3uStaEWhfxGGB1t2apEGEbC9M/SAP4=;
+        b=kpR4bbswRGEDf57C/3IeffQse0F8pS1gOPte6gmwreXreUXg86qJYf3eKmLIvNM/8F
+         81DeQG8TtHLqkkGOeZW+lTy1W0uHvpf95nLo+Ek/AjS1qsVrRHcQ0krQg5xvhE6s8Vo4
+         JQvYgIhidudCuHokuuDuceVjpwB+eBnch36tC5Jel72HCxnNozifzA8TKPkKniknymeu
+         q9lDgq9hZftbZDPALZjF6TnPnmgXM+8aZjpKzkq2P3MhvNri+U7nr8JAi52tCxlvTPsk
+         WL+xrM13zIHgU/u1ld+TwEmhKKn+YSiOw43ZSwzQATjfnv19WOKctvBBZu58FSBWpEtY
+         QBtg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752794998; x=1753399798;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=QlRvxOnt78FhDYC60nRJ0Lqbe3wVnYpQazQJPDzij20=;
-        b=Z+XeLOum0IBUSq3rL0U2th3QdQYSIc3o5Ra5qjBIzHb96s1CVMM98/c8m9y2Hi2wvX
-         kxCuJmoqOXsaAGSlw9iRiMCbEt8A4AR5L2Gc/apz38rRs2l0XCkM6SGVbuvqV2KqmJfP
-         7hmazQWdI7X5Amj48ZixdM/qDQKrLm2xTh5f+fVAZ1FvD0YnxQcfAnlmsToZi0PASEEm
-         n/J06xSYuYtaqIQ11rQ3rAy5JH4OuWDrlMiRyevMvnEx9onbV0q0HxdIdiy5wl91hkZ5
-         8RiWlryIAsT6T7oQfC23oH/bRqryuD8QBLwRdRq/VEaiCGMc8sz4xPLgmOwPJyDj8kxo
-         ZJ2w==
-X-Gm-Message-State: AOJu0YwbDvnwtJX6jwUYaVAU2luiW+kB6mp2jhuwDA0+HaechtXhoffS
-	R4CWx3OhwbDI46KF/MnKO8vQrFgwXW2CHpl30imLwj521l73ayBjkFVm5dZDX7efaAA=
-X-Gm-Gg: ASbGncvcY/q8sT7vebMVu6PA6sIX6Qdr5X/Nzx6nzu7rMh+ww1sBN+vS6UWqkN85KjQ
-	OmbVo7jo03Bonu/AfHVXb0G67fXf87FVr5ySgQdMzHg9EIZMq319IRrcYVZEg1b1AY3bhqAaXND
-	kRoClOjdJS9VXJ+7mxdyuX34JI65yU33ncRXt0ezAnXs2vdGRojsn6iLvQTrjAdMopKQ0XB8exI
-	cJvv9W1wcCO4/nn+ROy8vK6t8eANNQrnbzd6fZo3Dwpi88W5q/d/kPSAOJ2texInvbq6vInqved
-	eOlNPrSnUTP+e8gL6UdvpVVfvJclWB6Ue+JcRmmUX7cm01nlklthdCIGhWpHv9+H9f6RrK1F2Rr
-	DIJVM2iulP1YMPAZiYP4NjFyCChPU0DM+cGAv5HU+Aw3rkhVnlQos1zv76D2h2rlemqjbRg==
-X-Google-Smtp-Source: AGHT+IF28q8LjdOyUPkZ+K5u4txbdG6eBEN9AiOjcTgaLQsS7m+9rkdjX0AvkWyCuWmXG+DBSyBLaA==
-X-Received: by 2002:a05:6902:158d:b0:e8b:bd93:5194 with SMTP id 3f1490d57ef6-e8bc27a9d52mr10152511276.49.1752794998303;
-        Thu, 17 Jul 2025 16:29:58 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e8d7cc0b1cesm41978276.3.2025.07.17.16.29.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jul 2025 16:29:57 -0700 (PDT)
-Date: Thu, 17 Jul 2025 19:29:51 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 6/7] xdiff: conditionally use Rust's implementation of
- xxhash
-Message-ID: <aHmHb99q/if6KTTw@nand.local>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1752795457; x=1753400257;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DKR9TQ0ub9BFz3uStaEWhfxGGB1t2apEGEbC9M/SAP4=;
+        b=lOHn1x3e89p2/e6TWhvm+TNCqd84idSl1XwahX9nrJlBFj5QaYS2SSMXIY0YrihqRM
+         ATBzN7lC4Xzcd8ZXonSfwM+MtJN7Ac6cnSX/SHGtmvqEXjPqShPVMEhfAXo3sGJw1F2L
+         IXJDTj3sd2mf4ANITDOilr4PGG0zKF2iUa5MgWWz1mPedPQbPAcMQ2hGPLD8Gof3J2EN
+         DJiVOZXvkTQoCxctiHHlufPK5pFMwqt4G4sIFrDS3mczrIuAJWATviT4vdj5Avc3q0ww
+         TL6ZUMpmgcxXBHirWkz7Ow+ieW5UbBi+HYFFBYUWN1wb3gamhlMJV636etSIwazHMi8r
+         Bk0A==
+X-Forwarded-Encrypted: i=1; AJvYcCVhzzVfSRvB/Q5sHWNYF1Kz+ZxrsfXADYb9+5ztkZTs0ffGKz/KOK3XJvhJERsCwQUmQjQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw7WQsNjQBipnk3ECOX8nXjUkyinvGTsE8y6f1K2AfNI8A0+rB9
+	/c/3y/NlhepA/0zGYgMQxFQGG3geYtAquVubWPhHIBW5Y99iGuhGQ+wKf/ZaIf3SXHKfsJhKMHE
+	ZWOhbBiPnq6jtaCPyyXJTDvUpM+19BVw=
+X-Gm-Gg: ASbGncuoKc+lz6h3KGDkWwqbYLEAABvkvriTYwg4UuJEw1XE7wHY5kDP882gW+ff/9U
+	2AEQkZlMrlWKu6RZOXtebRO2GrggoEsf77t8jID1WgwTjDpS29B6Pnu8QnKJmmlFgB8/nF5CK7O
+	x86u5MHM45X2i7rt+XI9elKNPl65cqOwYjtNfgL0QpRQOR+kM1Qgy7BIwji04Y4tFw59oLxwDqP
+	4sVpA78jZ3J3iKCN0edL/RCZwhgBXJPy04Lgmn0
+X-Google-Smtp-Source: AGHT+IEUUZ527369i+0mZEFJA8yjp6vErx+1qll3aJkfDU+o+crQMzww9ZXs730h74z+IYljRoQmqSZ/8vPAYseb9vM=
+X-Received: by 2002:a05:6e02:3307:b0:3dd:d18a:2d71 with SMTP id
+ e9e14a558f8ab-3e297331733mr6476435ab.2.1752795457033; Thu, 17 Jul 2025
+ 16:37:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
+ <aHl9YLc823uWwgIp@nand.local> <aHmDiqsBsDJJ6m8C@fruit.crustytoothpaste.net>
+In-Reply-To: <aHmDiqsBsDJJ6m8C@fruit.crustytoothpaste.net>
+From: Elijah Newren <newren@gmail.com>
+Date: Thu, 17 Jul 2025 16:37:24 -0700
+X-Gm-Features: Ac12FXxPKH9v0ds7kUwH89anM6t-sGKH3p4yAwKO5ekbSaJQA5qW6K_9V9Ok9V0
+Message-ID: <CABPp-BFqruHDF5He=iqrUe9sYJ3XdXBcthY8i_eKMXS9tAa0oA@mail.gmail.com>
+Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Taylor Blau <me@ttaylorr.com>, 
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>, Ezekiel Newren <ezekielnewren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, Jul 17, 2025 at 08:32:23PM +0000, Ezekiel Newren via GitGitGadget wrote:
->     // desktop
->     // CPU: 8-core Intel Core i7-9700 (-MCP-) speed/min/max: 800/800/4700 MHz
->     $ hyperfine --warmup 3 -L exe $BASE/build_release/git,$BASE/build_v2.49.0/git '{exe} log --oneline --shortstat v6.8..v6.9 >/dev/null'
->     Benchmark 1: /home/steamuser/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null
->       Time (mean ± σ):      6.823 s ±  0.020 s    [User: 6.624 s, System: 0.180 s]
->       Range (min … max):    6.801 s …  6.858 s    10 runs
+On Thu, Jul 17, 2025 at 4:13=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
 >
->     Benchmark 2: /home/steamuser/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
->       Time (mean ± σ):      8.151 s ±  0.024 s    [User: 7.928 s, System: 0.198 s]
->       Range (min … max):    8.105 s …  8.184 s    10 runs
+> On 2025-07-17 at 22:46:56, Taylor Blau wrote:
+> > On Thu, Jul 17, 2025 at 08:32:21PM +0000, Ezekiel Newren via GitGitGadg=
+et wrote:
+> > > From: Ezekiel Newren <ezekielnewren@gmail.com>
+> > >
+> > > A few commits ago, we added definitions for Rust primitive types,
+> > > to facilitate interoperability between C and Rust. Switch a
+> > > few variables to use these types. Which, for now, will
+> > > require adding some casts.
+> >
+> > Hmm, interesting. I am not super familiar with how people typically
+> > handle interoperability between C and Rust, but having to change types
+> > on the C side to make it work with Rust is a bit surprising to me.
+> >
+> > I would have expected that the Rust side would have declared its types
+> > using libc::c_int, libc::size_t, and so on. I think I have a vague
+> > preference towards putting the burden of casting on the Rust side, but,
+> > again, I am not super familiar with how transitions like these are
+> > typically approached.
 >
->     Summary
->       /home/steamuser/dev/git/build_release/git log --oneline --shortstat v6.8..v6.9 >/dev/null ran
->         1.19 ± 0.01 times faster than /home/steamuser/dev/git/build_v2.49.0/git log --oneline --shortstat v6.8..v6.9 >/dev/null
-
-Very cool!
-
-> Signed-off-by: Ezekiel Newren <ezekielnewren@gmail.com>
-> ---
->  rust/Cargo.lock       |  7 +++++++
->  rust/xdiff/Cargo.toml |  1 +
->  rust/xdiff/src/lib.rs |  7 +++++++
->  xdiff/xprepare.c      | 19 +++++++++++++++++--
->  4 files changed, 32 insertions(+), 2 deletions(-)
-
-This patch is delightfully simple. Thank you for carefully preparing the
-previous five patches to make this one as tiny as it is.
-
-> @@ -175,14 +178,26 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
+> Rust normally handles byte strings as slices or vectors of u8 (that is,
+> C's uint8_t).  C handles them as char, which may or may not be unsigned,
+> as we all know, which leads to some "entertaining" problems from time to
+> time.
 >
->  	xdl_parse_lines(mf, narec, xdf);
+> Also, in general, Rust doesn't offer generic system-specific types, such
+> as `long`, except for C FFI.  This is actually a strong benefit, since
+> it means we're not inclined to write `unsigned long` and then wonder why
+> things are broken on Windows: instead, we write either `usize` (the
+> equivalent of `size_t`) or `u64` (for things like file sizes).  This is
+> much more ingrained than it is in Go, which has a tendency to use `int`
+> (Rust's `isize`) a lot and much less often specific types.
 >
-> +	if ((xpp->flags & XDF_WHITESPACE_FLAGS) == 0) {
+> If we're going to move this code entirely into Rust, then it makes sense
+> to cast temporarily, and I'm fine doing that in C, since it's C that has
+> the weird system-dependent behaviour (arbitrary decisions on the
+> signedness of char).  That actually allows us to have more confidence in
+> the safety and maintainability of the Rust code since it is less system
+> dependent and leave the suspect pieces in C.  It may also, interestingly
+> enough, also allow us to easily get rid of the weird 2 GB limit on diffs
+> due to the unpleasant dependency on `int` in the xdiff code, which I
+> would absolutely love to see.
+>
+> However, I'm not dead set against casting in Rust if that's what
+> everyone else wants instead.
 
-It may be worth adding a comment here to explain why we aren't using
-xdl_hash_record() when xpp->flags lacks XDF_WHITESPACE_FLAGS.
+In general, I too would prefer to do the casting on the C side; after
+all, part of the reason for Rust is the language safety, which we
+compromise if we force it into using ambiguously sized variables.
 
-(As a meta-note for reviewing this series, there are a handful of style
-nits that I haven't mentioned, e.g., if (... == 0) instead of if (!...).
-But since the xdiff code doesn't match the project's style conventions,
-I have avoided mentioning it in my review.)
+However, I think it might be somewhat case-dependent...
 
-> +		for (usize i = 0; i < (usize) xdf->nrec; i++) {
-> +			xrecord_t *rec = xdf->recs[i];
-> +			rec->ha = xxh3_64(rec->ptr, rec->size);
-> +		}
-> +	} else {
-> +		for (usize i = 0; i < (usize) xdf->nrec; i++) {
-> +			xrecord_t *rec = xdf->recs[i];
-> +			char const* dump = (char const*) rec->ptr;
-> +			rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
-> +		}
-> +	}
-> +
->  	for (usize i = 0; i < (usize) xdf->nrec; i++) {
->  		xrecord_t *rec = xdf->recs[i];
-> -		char const* dump = (char const*) rec->ptr;
-> -		rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
->  		xdl_classify_record(pass, cf, rec);
-
-I am curious why you are calling xdl_classify_record() here as a
-post-processing step rather than inline with the hash calculation above.
-
-Thanks,
-Taylor
+Here, we have C calling into APIs that will be defined and implemented
+in Rust.  Further along the road of adopting Rust in more places, we
+may have future cases where we have Rust calling into APIs defined and
+implemented in C.  I'm wondering if in such a world the rule of thumb
+that makes the most sense would be to have a
+caller-must-cast-as-necessary guideline, rather than specifying the
+casting side by language.
