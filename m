@@ -1,227 +1,105 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2CEE1FDE01
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 01:34:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F5E258A
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 01:54:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752716067; cv=none; b=I01Ytsr1t77ECyjhLKf2+DDtAfMn0TGqAvkxPXYpagIMG98x0j+Dc+NHmnVULzz0KwUqv0PbhddzBuZdJilTe9ef4Lh1GrRBeUYHIEhCnQfM01uxpgbU0Vr1R4ZIw4mVfdGrRdRtReZNUzzN/vRcv3YCjD6mRNVsywij24olmcw=
+	t=1752717249; cv=none; b=TQepHPig1vzCQbvaI8GZVexHho2B354HsWfDqm2U5K8s3rSHKCwVrC6WdJJP/Kg5BavjzlLucVyinIQ9Bo+42evt/Z5vv3/OOwRelL6V7omD/g1BI80lN5mia16tIynlWn6lyVcK5Fcwhegs9d4sjnV88fCWxTBEgQGZNjk2ZEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752716067; c=relaxed/simple;
-	bh=+7xFYWfreG/MuFJVS9FZ8TPpdGM8KS8BMzcfcMSCGaU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=SbIV+NsEMlw2xuF+5jRswzt57QbopEOicmMxxFb0vECoiOJkIz1+6JoeAS/xKo5cUfkBzSBmLPxxFACfdwsgSjX/v3Vlo4QBM98JranHKlZXgf65JrqBJa2yDCcnHvuufivhEAV8kjHHcXetMaSK2YyPNUYTnpKVKL79wMbErYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Pbm75BEp; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752717249; c=relaxed/simple;
+	bh=HRLfVIvBr72tWmPGWtX+bFsn5MUffpiQGvSK/lqCqJc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u50ia7dsM4ZsKJ9P/XR9ZIbNKUNbwVn1xJhEgrjOdMAkGt+oeHa0j+Hbt+Wu3yc8GkR6ZXqpibrv0eGLAlPkVjis76Y8jN6PYa6fL+9DIpnUysz/otbeW7+OO9QapASL0DtG1B4sYN5p5W+k4dHmFa38kpLLXCOde9Db9+b+8X0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GEWj7X60; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Pbm75BEp"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3ab112dea41so224423f8f.1
-        for <git@vger.kernel.org>; Wed, 16 Jul 2025 18:34:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752716064; x=1753320864; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=xQZ/jafN9HGyNDQKMyZqkxbvNJEb7Wb4jy3LyL5q1h0=;
-        b=Pbm75BEpbeICeFT7AG3VsCjFgtEckVNIJBoB5iHiAH9sHmfPrZB2RQAVfJ+2g1Womh
-         n2phwa7Zjw5aL8x6OWHHY2t1z22/muZqGDhUjzLkgsErw4VIoq39XzkNHx1CddC2FQIE
-         GCHCdVHL+JlbZzRWPrU7t6iW71/xNXPIBCQKGJfLAWMDbqKoKa4tMhq6srjNbbuKhL8Y
-         RVYql70mIiAXmUnU3oOCJrL0twqO8UWDY5aitaA0xA/AI1QdNmNBTRZjp2C7yOnrpea8
-         bkDQIXKQPUHan3tu9cYLLOOInTNxQCwj3J9HxZBW99YGCSyt6LKhlYNOAjIxcCangY0K
-         +Efw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752716064; x=1753320864;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xQZ/jafN9HGyNDQKMyZqkxbvNJEb7Wb4jy3LyL5q1h0=;
-        b=IGKnZkbm/6q6iyUlg31efgivTO/6YgHnAKbHSP0e4HJEG2P8yTVToirIJN/cEZUlZD
-         itZ5xYd89N10u5nNxV120f44cv599t63yjtddtiNuo24rwY027EPluGHq7CCf8uEBp3/
-         Un+UCY9V4RyN772kOI0lcnnEQbzynMn4ElarJLz+2BBd2W+Ft+qbQKLmL5b8TeDVVAMN
-         YNWDgWXwTFicXEaMm/VStlIpWQ7ZNHEH6xcZG+Bi3L9iP6x4faBj59GhfafyG6UalMAi
-         84+84GpGrTIPDxQhmTVsXx8ep3GlDsoayyeU0ZzctVZA9s/hmi7LJpzVZXHx9nBHRqIV
-         q/Kw==
-X-Gm-Message-State: AOJu0YxbPnxijGsiqgRO1+Uqcf6zQovFOhvA/iIpg9ydsBZBC10wQa6T
-	ItAH+YSMVAjgHTZuYbRZiw43IKWXoQTO03Ev3hESG31JW+vwuekCWmbp0KRWyg==
-X-Gm-Gg: ASbGncukRKUcrkIfSamUBTjD84dMYz0NTSOhpIsAqnrPfbaacDKoOthkqjzZ9rh7UfG
-	Zh9ilqmde6Lb4yh++I54SqaQPTJPZUFRinp1k9r8HCFbbVplGglD4+J8f+gVRoGmK5UEuyq1jO8
-	9RHJ5ogcX/YMBxWGOgiHW1kAdSceVIsRbMT5aLMApElJGvyDoMVWlcfu3nxPFplvAZz3VfNA6k4
-	Ju7KopJINRrQBMgtWILTSIAIUCVgCy/qApy9fBQf7djeCyPQNMowID/MYfyDRSJRaUvtfXahdBR
-	NxfXSQViGCbrIHOn4iLLpcCqL0kgNijwpCncMowzkf5KzPYAg7zT/kzMNjF5BgFob9GQQNm2ZRV
-	q/evDquWmAm9d3gx5whjmCBY=
-X-Google-Smtp-Source: AGHT+IE/m7k5CScs5r0cYc4+Irnaq8KAPYRVnOWtkehXGnZOQIUXXASlRYTI8fCHa/2vJ9+8T0NIEw==
-X-Received: by 2002:a05:6000:2304:b0:3b3:9c75:bb0e with SMTP id ffacd0b85a97d-3b60dd64b7bmr4313272f8f.11.1752716063790;
-        Wed, 16 Jul 2025 18:34:23 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b5e8dc229asm19265849f8f.35.2025.07.16.18.34.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Jul 2025 18:34:23 -0700 (PDT)
-Message-Id: <82c24ce51980d85e1a53e746b462397e6e6c908a.1752716054.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
-References: <pull.1941.git.1751973594.gitgitgadget@gmail.com>
-	<pull.1941.v2.git.1752716054.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 17 Jul 2025 01:34:14 +0000
-Subject: [PATCH v2 8/8] sparse-checkout: make 'clean' clear more files
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GEWj7X60"
+Received: (qmail 8968 invoked by uid 109); 17 Jul 2025 01:54:05 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HRLfVIvBr72tWmPGWtX+bFsn5MUffpiQGvSK/lqCqJc=; b=GEWj7X60V2lcPEKzt72D+5P6Q17Ktfs3no29nhycWFDL43CMth1a3OwhNQ2RtORxVQ/i2R/41neIfRhZX5biNMzK/H0jnOfsh9sFNpTt2jX3qFd7S7Do+BStP/l7vQAAIifRWsKy03+3kn/jtR6z0Q64xNV9ZD0APmWnic+5oMxFyxlAylILrDtqJEgYfZQ+C3I2FjCbCxJdxhodkVK/Q3bHLEkBkt/jbC/hUIziJ+YFd1PsVZ98039DuGU1inASU/A0JT3i+kLKvdZID89oBuh/1f0xLkWCy0y4uS8BuI8u0dwIb9Jk/ncoZ9U6Nbdm0wVmk0zeZ4nujy1AODwh0w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Jul 2025 01:54:05 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 28468 invoked by uid 111); 17 Jul 2025 01:54:06 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Jul 2025 21:54:06 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 16 Jul 2025 21:54:02 -0400
+From: Jeff King <peff@peff.net>
+To: Kyle Lippincott <spectral@google.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	ps@pks.im, schwab@linux-m68k.org, phillip.wood123@gmail.com,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via
+ '--start-after'
+Message-ID: <20250717015402.GA2127425@coredump.intra.peff.net>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+ <xmqqple1gtyg.fsf@gitster.g>
+ <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    newren@gmail.com,
-    Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
 
-From: Derrick Stolee <stolee@gmail.com>
+On Wed, Jul 16, 2025 at 06:19:32PM -0700, Kyle Lippincott wrote:
 
-The 'git sparse-checkout clean' command is designed to be a one-command
-way to get the worktree in a state such that a sparse index would
-operate efficiently. The previous change demonstrated that files outside
-the sparse-checkout that were committed due to a merge conflict would
-persist despite attempts to run 'git sparse-checkout clean' and instead
-a 'git sparse-checkout reapply' would be required.
+> Unfortunately I can't provide great instructions for reproducing this
+> locally, because it relies on our internal build stack (which uses
+> blaze). Getting MemorySanitizer running can be quite annoying, though
+> you might not have any issues if this test doesn't invoke any third
+> party libraries (like zlib).
+> 
+> I need to sign off for the night soon, but if this isn't sufficient
+> enough information to identify what's happening here, I can try to dig
+> deeper tomorrow. This run was executed on an import of upstream commit
+> 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc (Junio's merge of this
+> series)
 
-Instead of requiring users to run both commands, update 'clean' to be
-more ruthless about tracked sparse directories. The key here is to make
-sure that the SKIP_WORKTREE bit is removed from more paths in the index
-using update_sparsity() before compressing the index to a sparse one
-in-memory.
+valgrind can often find the same issues as MSan without as much headache
+to get it running (the downside is that it is _way_ slower). And indeed:
 
-The tricky part here is that update_sparsity() was previously assuming
-that it would be in 'update' mode and would change the worktree as it
-made changes. However, we do not want to make these worktree changes at
-this point, instead relying on our later logic (that integrates with
---dry-run and --verbose options) to perform those steps.
+  git checkout 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc &&
+  make &&
+  (cd t && ./t6302-for-each-ref-filter.sh --valgrind-only=48)
 
-One side-effect here is that we also clear out staged files that exist
-in the worktree, but they would also appear in the verbose output as
-part of the dry run.
+yields:
 
-The final test in t1091 demonstrates that we no longer need the
-'reapply' subcommand for merge resolutions. It also fixes an earlier
-case where 'git add --sparse' clears the SKIP_WORKTREE bit and avoids a
-directory deletion.
+  ==2177572== Conditional jump or move depends on uninitialised value(s)
+  ==2177572==    at 0x3BC380: cache_ref_iterator_advance (ref-cache.c:409)
+  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
+  ==2177572==    by 0x3B6CC3: merge_ref_iterator_advance (iterator.c:179)
+  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
+  ==2177572==    by 0x3A9770: files_ref_iterator_advance (files-backend.c:902)
+  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
+  ==2177572==    by 0x3B7457: do_for_each_ref_iterator (iterator.c:478)
+  ==2177572==    by 0x399B43: for_each_fullref_with_seek (ref-filter.c:2718)
+  ==2177572==    by 0x399C09: for_each_fullref_in_pattern (ref-filter.c:2756)
+  ==2177572==    by 0x39B031: do_filter_refs (ref-filter.c:3263)
+  ==2177572==    by 0x39B2B7: filter_and_format_refs (ref-filter.c:3364)
+  ==2177572==    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:115)
+  ==2177572==  Uninitialised value was created by a heap allocation
+  ==2177572==    at 0x484BDD0: realloc (vg_replace_malloc.c:1801)
+  ==2177572==    by 0x44E941: xrealloc (wrapper.c:140)
+  ==2177572==    by 0x3BCAD9: cache_ref_iterator_begin (ref-cache.c:580)
+  ==2177572==    by 0x3A988A: files_ref_iterator_begin (files-backend.c:995)
+  ==2177572==    by 0x3A295E: refs_ref_iterator_begin (refs.c:1776)
+  ==2177572==    by 0x399AF6: for_each_fullref_with_seek (ref-filter.c:2710)
+  ==2177572==    by 0x399C09: for_each_fullref_in_pattern (ref-filter.c:2756)
+  ==2177572==    by 0x39B031: do_filter_refs (ref-filter.c:3263)
+  ==2177572==    by 0x39B2B7: filter_and_format_refs (ref-filter.c:3364)
+  ==2177572==    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:115)
+  ==2177572==    by 0x128C90: run_builtin (git.c:480)
+  ==2177572==    by 0x1290EB: handle_builtin (git.c:746)
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- builtin/sparse-checkout.c          |  8 ++++++++
- t/t1091-sparse-checkout-builtin.sh | 24 +++++++++++++++++-------
- unpack-trees.c                     |  2 +-
- 3 files changed, 26 insertions(+), 8 deletions(-)
+Bisecting doesn't tell us much, though (the first commit that introduces
+the test shows the problem). I didn't dig further than that.
 
-diff --git a/builtin/sparse-checkout.c b/builtin/sparse-checkout.c
-index f38a0809c098..1d1d5208a3ba 100644
---- a/builtin/sparse-checkout.c
-+++ b/builtin/sparse-checkout.c
-@@ -962,6 +962,7 @@ static int sparse_checkout_clean(int argc, const char **argv,
- 	size_t worktree_len;
- 	int force = 0, dry_run = 0, verbose = 0;
- 	int require_force = 1;
-+	struct unpack_trees_options o = { 0 };
- 
- 	struct option builtin_sparse_checkout_clean_options[] = {
- 		OPT__DRY_RUN(&dry_run, N_("dry run")),
-@@ -990,6 +991,13 @@ static int sparse_checkout_clean(int argc, const char **argv,
- 	if (repo_read_index(repo) < 0)
- 		die(_("failed to read index"));
- 
-+	o.verbose_update = verbose;
-+	o.update = 0; /* skip modifying the worktree here. */
-+	o.head_idx = -1;
-+	o.src_index = o.dst_index = repo->index;
-+	if (update_sparsity(&o, NULL))
-+		warning(_("failed to reapply sparse-checkout patterns"));
-+
- 	if (convert_to_sparse(repo->index, SPARSE_INDEX_MEMORY_ONLY) ||
- 	    repo->index->sparse_index == INDEX_EXPANDED)
- 		die(_("failed to convert index to a sparse index; resolve merge conflicts and try again"));
-diff --git a/t/t1091-sparse-checkout-builtin.sh b/t/t1091-sparse-checkout-builtin.sh
-index 116ad7c9a20e..4b9078d90a61 100755
---- a/t/t1091-sparse-checkout-builtin.sh
-+++ b/t/t1091-sparse-checkout-builtin.sh
-@@ -1104,6 +1104,7 @@ test_expect_success 'clean with staged sparse change' '
- 
- 	cat >expect <<-\EOF &&
- 	Would remove deep/deeper2/
-+	Would remove folder1/
- 	EOF
- 
- 	git -C repo sparse-checkout clean --dry-run >out &&
-@@ -1115,6 +1116,7 @@ test_expect_success 'clean with staged sparse change' '
- 	# deletes deep/deeper2/ but leaves folder1/ and folder2/
- 	cat >expect <<-\EOF &&
- 	Removing deep/deeper2/
-+	Removing folder1/
- 	EOF
- 
- 	# The previous test case checked the -f option, so
-@@ -1124,7 +1126,7 @@ test_expect_success 'clean with staged sparse change' '
- 	test_cmp expect out &&
- 
- 	test_path_is_missing repo/deep/deeper2 &&
--	test_path_exists repo/folder1 &&
-+	test_path_is_missing repo/folder1 &&
- 	test_path_exists repo/folder2
- '
- 
-@@ -1147,7 +1149,11 @@ test_expect_success 'sparse-checkout operations with merge conflicts' '
- 		git commit -a -m "left" &&
- 
- 		git checkout -b merge &&
--		git sparse-checkout set deep/deeper1 &&
-+
-+		touch deep/deeper2/extra &&
-+		git sparse-checkout set deep/deeper1 2>err &&
-+		grep "contains untracked files" err &&
-+		test_path_exists deep/deeper2/extra &&
- 
- 		test_must_fail git merge -m "will-conflict" right &&
- 
-@@ -1159,15 +1165,19 @@ test_expect_success 'sparse-checkout operations with merge conflicts' '
- 		git merge --continue &&
- 
- 		test_path_exists folder1/even/more/dirs/file &&
-+		test_path_exists deep/deeper2/extra &&
-+
-+		cat >expect <<-\EOF &&
-+		Removing deep/deeper2/
-+		Removing folder1/
-+		EOF
- 
- 		# clean does not remove the file, because the
- 		# SKIP_WORKTREE bit was not cleared by the merge command.
- 		git sparse-checkout clean -f >out &&
--		test_line_count = 0 out &&
--		test_path_exists folder1/even/more/dirs/file &&
--
--		git sparse-checkout reapply &&
--		test_path_is_missing folder1
-+		test_cmp expect out &&
-+		test_path_is_missing folder1 &&
-+		test_path_is_missing deep/deeper2
- 	)
- '
- 
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 0e9813bddf04..b8814af1b07c 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -2138,7 +2138,7 @@ enum update_sparsity_result update_sparsity(struct unpack_trees_options *o,
- 	index_state_init(&o->internal.result, o->src_index->repo);
- 
- 	/* Sanity checks */
--	if (!o->update || o->index_only || o->skip_sparse_checkout)
-+	if (o->index_only || o->skip_sparse_checkout)
- 		BUG("update_sparsity() is for reflecting sparsity patterns in working directory");
- 	if (o->src_index != o->dst_index || o->fn)
- 		BUG("update_sparsity() called wrong");
--- 
-gitgitgadget
+-Peff
