@@ -1,62 +1,62 @@
-Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A77258CE5
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 07:50:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722A2264D5
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 07:50:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752738633; cv=none; b=L459rG/L6ypIn7/Kl9tqiCxBerHTtprIpJgsjXKdWn6qKgyfjredCiPdv971CiFEWpgVgc4H9K05hdZ2dy+00UzMTyg1ESv5fB8DueTpAINkeOiYgIgLNMt8fux6oYRvUjTHMilcdbZBImSMshMvJ7S4u53IJSpm2DT/o9WZS6I=
+	t=1752738642; cv=none; b=pVyNrDIkqKwBuELEsDcpmSb/NuhRey9M79sY0XahIAWKMvBTOVEdndNT8EHLtPYYy9NF+FfLZl65Me+zgezULWjhfixrLkSLpfJLuOXAzD2gMmL6OnEar7A7k8Tn53cRIZ/7kQSdbNR3B4q0NxTFO7jkw5CqnFijCJlcKtVnHzM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752738633; c=relaxed/simple;
-	bh=AkUoKfHYB4VJKJCjMPjPekoU7/YGQjiqqtgooaqAoGQ=;
+	s=arc-20240116; t=1752738642; c=relaxed/simple;
+	bh=r3L9Moi7TayMlnCHXjeAr/aieB2wNM2erkqaqqCXnfo=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=YjuDF06edQrG4RtRSlyWEr/JH5gwhdgJDjkNvfWHhe/trR0lhjWU5B8Uw6L1F4vzECD6G2oCozFnevmitu84KbhBFNNtx/v4tHIQeTZIy8JTukDS9u0XlUNuKETBiP0wwat2QazY9JMiA1dl9hxD6X65KyxAysFEwjE+0PJVXQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RyfUJ+xg; arc=none smtp.client-ip=209.85.216.46
+	 MIME-Version; b=QwTAjfiXFFa2fqizK3BBVmmCCs26nU/Iri/RtrFNE+t2Qypl5iWlvDuOb2kAcv8+0ZalvPABS/w4l7ho+tBiYFu3x5Kb3aQvYYjDJC/8eRBBXYkkWSyh/zBeoy8HKXQahpKgIq84e4twOV04n/DOLZiHs3eXmdaOCzJYoL7hquc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IEu1UwrG; arc=none smtp.client-ip=209.85.215.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RyfUJ+xg"
-Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-3137c20213cso717357a91.3
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 00:50:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IEu1UwrG"
+Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b26f7d2c1f1so580642a12.0
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 00:50:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752738631; x=1753343431; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752738636; x=1753343436; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F6bh9lr+ztevwIUK3PdoO9O6SeQ0v3AUhZ21ELbWFSc=;
-        b=RyfUJ+xgF0VnxTTlXV+6f+LmoEch+3IuJqAOhvJf+0MFm+A15euIdw/5pT0N8ErhOb
-         LyCIkDPdkQfAA3+EDc+l0u7AfsZ/0CAdtWLzou3D6IUsnG7jKvxyPYltzghrwOKTN+Ts
-         laCWPjKHK5OCw+cpE16ZsJTyW802lqGPtvqsTcrXYtx5GdfgCrLGXB+YjcQ422N3ylmn
-         6nlaEvx3KHKxu22nbUjC8CRunkCFCfSzL8tNpCMDZiM2Vlu/Efe8RS5fMFtLNhbwxYc7
-         8FoLxQekZpdEwnBxrIu3mazDd8Tmm8m7UbrE7Rf4mmZyiBjAGavn4JCP74gfjTZPtzz0
-         8ORQ==
+        bh=Bf/vkd0df0dN7O92+eqIqN1VcL9wjLLNCusifow8TeM=;
+        b=IEu1UwrGq4rYD8itF2jsZgpLXrf39BXlk/gdA8EL/23PMQedRyZz0691/bCZ0cmRd6
+         iirrGBCWY/bGNuJRJDSmj3l8pbMTVKuP5Z6QCLDyGPDmxf63a1qgASFwe+rPDvCB8VEF
+         akaahmcWBlHTBche0HXOPAtybkWHpgnVqOzTVPtlZG5Woz0SrRHT1X2atr0p4ESnaxY+
+         En6F+9svHV7Qu5KqZQwCnLq4MuTLD16sTatkEohf676TXyovH5/AK6zIh+lsn1chnqhH
+         7Ccljz4GNHIpUBSWHIuezy4O0wkmmICmGL0PBPPZCvtpp+n+yY8DIw0c0OrPY9OqIo/N
+         Zczg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752738631; x=1753343431;
+        d=1e100.net; s=20230601; t=1752738636; x=1753343436;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=F6bh9lr+ztevwIUK3PdoO9O6SeQ0v3AUhZ21ELbWFSc=;
-        b=CoGLQnfMmM2eWqTGp0nkgnFwViUpBdlOrhvyyAffSdDugIV2tSXHOkfzgi3RSpr5Vk
-         vzzL3T7yHlubl3f7kuzluOYK+9sm3alj9AxElM3nn59kAocT7QqiPnd673N2E+HgCF7V
-         //VPffuy/ZF1nA+rO1vaZ2ogyDMQqotLOkX40lozR7/uoevLFLd8L336nBpmZ5IrIkWC
-         lSXXMzuk/2zwgbYIln0vfY2rlu4FC4I2s7M5yJXn760F9bZMXZ6f6TmSBDSfdHOoZpxY
-         D/3d8TWgtXTNlQHfXBYXW83Qro1VzBhoW4/d4toUbeSELMkTslwj8POc30jmH9dhRIKL
-         Q8pg==
-X-Gm-Message-State: AOJu0Yz+ztregD2M6++hi6fhc0/ROQaxxsuoegAdJaiLmnjGcVw04mRw
-	D7z13my2QfvVvYc3495AsxsjPX6+wXZwDJkMfm+RMqoQltELp67vheRdlK2wYw==
-X-Gm-Gg: ASbGnctQ/QLRru+qywwUqH1s3xdGxzE7b86A3i4420/M/OP7QhCmO/SLiTq2zOtLpXP
-	RGVq7GdDKsKEUreTtV5BNkVtO8pB5HS9sPxgu8MsEu9rMNEQYVVF+yZdglN4G+U1y6gAsn5D6Qo
-	C3flqFF10O/mWE1VCKwBSwzSiuBW6LaLCsSzsApPmdhZGdR1AR+LHTMo9waGgMbBfM8bDnffKQB
-	qIHhNO0wMpo4kJ1CqBmq6YedNEUYi7wUAs1zHuT7rvGsE1B8TSkKQEiFHidNRDNPOlB4B1spz2N
-	bRlS6M2ZZF83XUE0W+WIJYESNQBcE0mzwhwjGvEGgQraolobn0dPvJc2+TzIS18m9vVTwmHlyUB
-	ZDNso64xlxlGA5J4/CMc=
-X-Google-Smtp-Source: AGHT+IGi8sbfD64zgUX1gOvFmpQPCivSPN6O3vWu1Kfmwy2PnBmT0gTMEW1WVRihnCD0JVthkClUig==
-X-Received: by 2002:a17:90b:3b4e:b0:313:f83a:e473 with SMTP id 98e67ed59e1d1-31c9f4124e8mr7945677a91.15.1752738630638;
-        Thu, 17 Jul 2025 00:50:30 -0700 (PDT)
+        bh=Bf/vkd0df0dN7O92+eqIqN1VcL9wjLLNCusifow8TeM=;
+        b=UhxjUhboIIFWu4Lu3pyh6crmWuZc64ghX9Wd3GwXqKbJv5tQYnPJ2zzjm1eCxtbLtO
+         7V1I1qgtyff7RIeEMctjM8HjEFSzZXTuXzGGmFM+WcehCcPPRWq0UPoXWgjgdOY4gysk
+         XGcK8lSOhvJyH0f8uQO5o5rUZhqlYLNnFkjHW9GupkKMtQ2BUBkuro6CIse1m9EadJzE
+         xFu3rrjaWB4l+NrLVtJMXv5ObeOwgHtda/TQVljsSleNKF65+zNlgwdfcoArfPRnMux0
+         2DKVBFMsrD14jNHLLOIIfQTnwI3km80ib3R0FyI5F3btHHpEFeZM3Z1TzX2jj0yULHg+
+         tgTg==
+X-Gm-Message-State: AOJu0YzmXbBFwBqfDU10p2okuDs5VWH5EoilyfXrkNtrixBAST0fQnCt
+	6uAzifl6opnrjBsEut74Md+wKorVojz9Xz+Pyo21AZ6hoC1DsAwu1IOJB762wg==
+X-Gm-Gg: ASbGncuyNrtOPR+MQA74YHBK1ZTfYP/KdX1mqxanpPifrKtrgknrigEj11sfle/Gcyl
+	uYkithE95+xBS3ryn0Onm+NRoCQdYdRo6aDUGONpQrQO7l1tGNYPTNuYJWxPKUSzPi0Qng2mGmk
+	57M2j6xUIV16wIhuJiGUEpVA08uNgj7b/nzEPZsTKskRNZ2rI30btIjimbyOjYZutZ957v0YgKH
+	ouM8FmpnF4sc/xyxUIXEVXQ/CVUesUtQh+JmQliGtHiUpl1YobERwQvqKnrCbS5yS0KUs61khXE
+	Ho7lL019Y77OSFdBrjoHZeTZQVVACgpxomCkONLf3mCDXIjs/og9XKGSBsXKKujimkNiyzp3hoK
+	IObDXqqiWy5Lcsz6DxgE=
+X-Google-Smtp-Source: AGHT+IGLJspm3AFGXZ7n8+BJU1klP2s/NVtusPFdXafi1UYhFF0HztNMVR5qT5fhZWE/8D26FW2Q5g==
+X-Received: by 2002:a17:90b:514d:b0:312:1d2d:18e2 with SMTP id 98e67ed59e1d1-31c9f45e299mr8769651a91.20.1752738635037;
+        Thu, 17 Jul 2025 00:50:35 -0700 (PDT)
 Received: from meet.. ([103.176.11.198])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c9f1e6a68sm2877518a91.19.2025.07.17.00.50.27
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31c9f1e6a68sm2877518a91.19.2025.07.17.00.50.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jul 2025 00:50:30 -0700 (PDT)
+        Thu, 17 Jul 2025 00:50:34 -0700 (PDT)
 From: Meet Soni <meetsoni3017@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
@@ -64,11 +64,12 @@ Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	gitster@pobox.com,
 	Meet Soni <meetsoni3017@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Victoria Dye <vdye@github.com>
-Subject: [GSoC][RFC PATCH v2 1/2] builtin/refs: add list subcommand
-Date: Thu, 17 Jul 2025 13:20:08 +0530
-Message-Id: <20250717075009.26262-2-meetsoni3017@gmail.com>
+	Taylor Blau <me@ttaylorr.com>,
+	Jeff King <peff@peff.net>,
+	Kousik Sanagavarapu <five231003@gmail.com>
+Subject: [GSoC][RFC PATCH v2 2/2] t: add test for git refs list subcommand
+Date: Thu, 17 Jul 2025 13:20:09 +0530
+Message-Id: <20250717075009.26262-3-meetsoni3017@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250717075009.26262-1-meetsoni3017@gmail.com>
 References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
@@ -81,382 +82,1117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Git's reference management is distributed across multiple commands. As
-part of an ongoing effort to consolidate and modernize reference
-handling, introduce a `list` subcommand under the `git refs` umbrella as
-a replacement for `git for-each-ref`.
+Adapt `t/t6300-for-each-ref.sh` to invoke ${GIT_REFS_LIST_CMD},
+defaulting to `for-each-ref` if the variable is unset.
 
-Implement `cmd_refs_list` as a thin wrapper around `cmd_for_each_ref`
-instead of duplicating its logic. Forward all arguments to the existing
-function to ensure behavior is identical.
-
-Add documentation for the new command. To keep the documentation DRY and
-consistent with `git-for-each-ref(1)`, refactor the shared command
-options into a standalone file. Use the AsciiDoc `include::` macro to
-embed these options in both man pages.
-
-This prevents duplication in both code and documentation, ensuring that
-`refs list` benefits from any future fixes to the underlying
-`for-each-ref` machinery and its shared documentation.
+Add `t/t1461-refs-list.sh` to test git refs list by setting
+`GIT_REFS_LIST_CMD` to `refs list` and sourcing
+`t/t6300-for-each-ref.sh`
 
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Mentored-by: shejialuo <shejialuo@gmail.com>
 Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
 ---
- Documentation/git-for-each-ref.adoc  | 80 +---------------------------
- Documentation/git-refs.adoc          | 16 ++++++
- Documentation/refs-list-options.adoc | 80 ++++++++++++++++++++++++++++
- builtin/for-each-ref.c               | 24 +++++++--
- builtin/refs.c                       | 35 ++++++++++++
- 5 files changed, 152 insertions(+), 83 deletions(-)
- create mode 100644 Documentation/refs-list-options.adoc
+ t/meson.build           |   1 +
+ t/t1461-refs-list.sh    |   8 +
+ t/t6300-for-each-ref.sh | 333 ++++++++++++++++++++--------------------
+ 3 files changed, 179 insertions(+), 163 deletions(-)
+ create mode 100755 t/t1461-refs-list.sh
 
-diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
-index 5ef89fc0fe..f7bbc1902a 100644
---- a/Documentation/git-for-each-ref.adoc
-+++ b/Documentation/git-for-each-ref.adoc
-@@ -28,85 +28,7 @@ host language allowing their direct evaluation in that language.
- 
- OPTIONS
- -------
--<pattern>...::
--	If one or more patterns are given, only refs are shown that
--	match against at least one pattern, either using fnmatch(3) or
--	literally, in the latter case matching completely or from the
--	beginning up to a slash.
--
----stdin::
--	If `--stdin` is supplied, then the list of patterns is read from
--	standard input instead of from the argument list.
--
----count=<count>::
--	By default the command shows all refs that match
--	`<pattern>`.  This option makes it stop after showing
--	that many refs.
--
----sort=<key>::
--	A field name to sort on.  Prefix `-` to sort in
--	descending order of the value.  When unspecified,
--	`refname` is used.  You may use the --sort=<key> option
--	multiple times, in which case the last key becomes the primary
--	key.
--
----format=<format>::
--	A string that interpolates `%(fieldname)` from a ref being shown and
--	the object it points at. In addition, the string literal `%%`
--	renders as `%` and `%xx` - where `xx` are hex digits - renders as
--	the character with hex code `xx`. For example, `%00` interpolates to
--	`\0` (NUL), `%09` to `\t` (TAB), and `%0a` to `\n` (LF).
--+
--When unspecified, `<format>` defaults to `%(objectname) SPC %(objecttype)
--TAB %(refname)`.
--
----color[=<when>]::
--	Respect any colors specified in the `--format` option. The
--	`<when>` field must be one of `always`, `never`, or `auto` (if
--	`<when>` is absent, behave as if `always` was given).
--
----shell::
----perl::
----python::
----tcl::
--	If given, strings that substitute `%(fieldname)`
--	placeholders are quoted as string literals suitable for
--	the specified host language.  This is meant to produce
--	a scriptlet that can directly be `eval`ed.
--
----points-at=<object>::
--	Only list refs which points at the given object.
--
----merged[=<object>]::
--	Only list refs whose tips are reachable from the
--	specified commit (HEAD if not specified).
--
----no-merged[=<object>]::
--	Only list refs whose tips are not reachable from the
--	specified commit (HEAD if not specified).
--
----contains[=<object>]::
--	Only list refs which contain the specified commit (HEAD if not
--	specified).
--
----no-contains[=<object>]::
--	Only list refs which don't contain the specified commit (HEAD
--	if not specified).
--
----ignore-case::
--	Sorting and filtering refs are case insensitive.
--
----omit-empty::
--	Do not print a newline after formatted refs where the format expands
--	to the empty string.
--
----exclude=<pattern>::
--	If one or more patterns are given, only refs which do not match
--	any excluded pattern(s) are shown. Matching is done using the
--	same rules as `<pattern>` above.
--
----include-root-refs::
--	List root refs (HEAD and pseudorefs) apart from regular refs.
-+include::refs-list-options.adoc[]
- 
- FIELD NAMES
- -----------
-diff --git a/Documentation/git-refs.adoc b/Documentation/git-refs.adoc
-index 4d6dc994f9..ded90f435b 100644
---- a/Documentation/git-refs.adoc
-+++ b/Documentation/git-refs.adoc
-@@ -11,6 +11,13 @@ SYNOPSIS
- [synopsis]
- git refs migrate --ref-format=<format> [--no-reflog] [--dry-run]
- git refs verify [--strict] [--verbose]
-+git refs list [--count=<count>] [--shell|--perl|--python|--tcl]
-+	      [(--sort=<key>)...] [--format=<format>]
-+	      [--include-root-refs] [ --stdin | <pattern>... ]
-+	      [--points-at=<object>]
-+	      [--merged[=<object>]] [--no-merged[=<object>]]
-+	      [--contains[=<object>]] [--no-contains[=<object>]]
-+	      [--exclude=<pattern> ...]
- 
- DESCRIPTION
- -----------
-@@ -26,6 +33,11 @@ migrate::
- verify::
- 	Verify reference database consistency.
- 
-+list::
-+	List references in the repository with support for filtering,
-+	formatting, and sorting. This subcommand is an alias for
-+	linkgit:git-for-each-ref[1] and offers identical functionality.
-+
- OPTIONS
- -------
- 
-@@ -57,6 +69,10 @@ The following options are specific to 'git refs verify':
- --verbose::
- 	When verifying the reference database consistency, be chatty.
- 
-+The following options are specific to 'git refs list':
-+
-+include::refs-list-options.adoc[]
-+
- KNOWN LIMITATIONS
- -----------------
- 
-diff --git a/Documentation/refs-list-options.adoc b/Documentation/refs-list-options.adoc
-new file mode 100644
-index 0000000000..9d6557cdb9
+diff --git a/t/meson.build b/t/meson.build
+index 50e89e764a..c959c039d0 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -224,6 +224,7 @@ integration_tests = [
+   't1450-fsck.sh',
+   't1451-fsck-buffer.sh',
+   't1460-refs-migrate.sh',
++  't1461-refs-list.sh',
+   't1500-rev-parse.sh',
+   't1501-work-tree.sh',
+   't1502-rev-parse-parseopt.sh',
+diff --git a/t/t1461-refs-list.sh b/t/t1461-refs-list.sh
+new file mode 100755
+index 0000000000..9def7b2e5b
 --- /dev/null
-+++ b/Documentation/refs-list-options.adoc
-@@ -0,0 +1,80 @@
-+// Shared options for for-each-ref and refs list
-+<pattern>...::
-+	If one or more patterns are given, only refs are shown that
-+	match against at least one pattern, either using fnmatch(3) or
-+	literally, in the latter case matching completely or from the
-+	beginning up to a slash.
++++ b/t/t1461-refs-list.sh
+@@ -0,0 +1,8 @@
++#!/bin/sh
 +
-+--stdin::
-+	If `--stdin` is supplied, then the list of patterns is read from
-+	standard input instead of from the argument list.
++test_description='git refs list tests'
 +
-+--count=<count>::
-+	By default the command shows all refs that match
-+	`<pattern>`.  This option makes it stop after showing
-+	that many refs.
++. ./test-lib.sh
 +
-+--sort=<key>::
-+	A field name to sort on.  Prefix `-` to sort in
-+	descending order of the value.  When unspecified,
-+	`refname` is used.  You may use the --sort=<key> option
-+	multiple times, in which case the last key becomes the primary
-+	key.
-+
-+--format=<format>::
-+	A string that interpolates `%(fieldname)` from a ref being shown and
-+	the object it points at. In addition, the string literal `%%`
-+	renders as `%` and `%xx` - where `xx` are hex digits - renders as
-+	the character with hex code `xx`. For example, `%00` interpolates to
-+	`\0` (NUL), `%09` to `\t` (TAB), and `%0a` to `\n` (LF).
-++
-+When unspecified, `<format>` defaults to `%(objectname) SPC %(objecttype)
-+TAB %(refname)`.
-+
-+--color[=<when>]::
-+	Respect any colors specified in the `--format` option. The
-+	`<when>` field must be one of `always`, `never`, or `auto` (if
-+	`<when>` is absent, behave as if `always` was given).
-+
-+--shell::
-+--perl::
-+--python::
-+--tcl::
-+	If given, strings that substitute `%(fieldname)`
-+	placeholders are quoted as string literals suitable for
-+	the specified host language.  This is meant to produce
-+	a scriptlet that can directly be `eval`ed.
-+
-+--points-at=<object>::
-+	Only list refs which points at the given object.
-+
-+--merged[=<object>]::
-+	Only list refs whose tips are reachable from the
-+	specified commit (HEAD if not specified).
-+
-+--no-merged[=<object>]::
-+	Only list refs whose tips are not reachable from the
-+	specified commit (HEAD if not specified).
-+
-+--contains[=<object>]::
-+	Only list refs which contain the specified commit (HEAD if not
-+	specified).
-+
-+--no-contains[=<object>]::
-+	Only list refs which don't contain the specified commit (HEAD
-+	if not specified).
-+
-+--ignore-case::
-+	Sorting and filtering refs are case insensitive.
-+
-+--omit-empty::
-+	Do not print a newline after formatted refs where the format expands
-+	to the empty string.
-+
-+--exclude=<pattern>::
-+	If one or more patterns are given, only refs which do not match
-+	any excluded pattern(s) are shown. Matching is done using the
-+	same rules as `<pattern>` above.
-+
-+--include-root-refs::
-+	List root refs (HEAD and pseudorefs) apart from regular refs.
-diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-index 3d2207ec77..d7d8279049 100644
---- a/builtin/for-each-ref.c
-+++ b/builtin/for-each-ref.c
-@@ -16,11 +16,27 @@ static char const * const for_each_ref_usage[] = {
- 	NULL
- };
++GIT_REFS_LIST_CMD='refs list'
++. "$TEST_DIRECTORY"/t6300-for-each-ref.sh
+diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
+index ce9af79ab1..74a030371c 100755
+--- a/t/t6300-for-each-ref.sh
++++ b/t/t6300-for-each-ref.sh
+@@ -5,7 +5,9 @@
  
-+#define REFS_LIST_USAGE \
-+	N_("git refs list [--count=<count>] [--shell|--perl|--python|--tcl]\n" \
-+	   "              [(--sort=<key>)...] [--format=<format>]\n" \
-+	   "              [--include-root-refs] [ --stdin | <pattern>... ]\n" \
-+	   "              [--points-at=<object>]\n" \
-+	   "              [--merged[=<object>]] [--no-merged[=<object>]]\n" \
-+	   "              [--contains[=<object>]] [--no-contains[=<object>]]\n" \
-+	   "              [--exclude=<pattern> ...]")
-+
-+static char const * const refs_list_usage[] = {
-+	REFS_LIST_USAGE,
-+	NULL
-+};
-+
- int cmd_for_each_ref(int argc,
- 		     const char **argv,
- 		     const char *prefix,
- 		     struct repository *repo)
- {
-+	int cmd_is_refs_list = !strcmp(argv[0], "refs list");
-+	const char *const *opt_usage = cmd_is_refs_list ? refs_list_usage : for_each_ref_usage;
- 	struct ref_sorting *sorting;
- 	struct string_list sorting_options = STRING_LIST_INIT_DUP;
- 	int icase = 0, include_root_refs = 0, from_stdin = 0;
-@@ -67,17 +83,17 @@ int cmd_for_each_ref(int argc,
- 	/* Set default (refname) sorting */
- 	string_list_append(&sorting_options, "refname");
+ test_description='for-each-ref test'
  
--	parse_options(argc, argv, prefix, opts, for_each_ref_usage, 0);
-+	parse_options(argc, argv, prefix, opts, opt_usage, 0);
- 	if (format.array_opts.max_count < 0) {
- 		error("invalid --count argument: `%d'", format.array_opts.max_count);
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(opt_usage, opts);
- 	}
- 	if (HAS_MULTI_BITS(format.quote_style)) {
- 		error("more than one quoting style?");
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(opt_usage, opts);
- 	}
- 	if (verify_ref_format(&format))
--		usage_with_options(for_each_ref_usage, opts);
-+		usage_with_options(opt_usage, opts);
- 
- 	sorting = ref_sorting_options(&sorting_options);
- 	ref_sorting_set_sort_flags_all(sorting, REF_SORTING_ICASE, icase);
-diff --git a/builtin/refs.c b/builtin/refs.c
-index 998d2a2c1c..41e29d1b5f 100644
---- a/builtin/refs.c
-+++ b/builtin/refs.c
-@@ -3,6 +3,7 @@
- #include "config.h"
- #include "fsck.h"
- #include "parse-options.h"
-+#include "ref-filter.h"
- #include "refs.h"
- #include "strbuf.h"
- #include "worktree.h"
-@@ -13,6 +14,15 @@
- #define REFS_VERIFY_USAGE \
- 	N_("git refs verify [--strict] [--verbose]")
- 
-+#define REFS_LIST_USAGE \
-+	N_("git refs list [--count=<count>] [--shell|--perl|--python|--tcl]\n" \
-+	   "              [(--sort=<key>)...] [--format=<format>]\n" \
-+	   "              [--include-root-refs] [ --stdin | <pattern>... ]\n" \
-+	   "              [--points-at=<object>]\n" \
-+	   "              [--merged[=<object>]] [--no-merged[=<object>]]\n" \
-+	   "              [--contains[=<object>]] [--no-contains[=<object>]]\n" \
-+	   "              [--exclude=<pattern> ...]")
+-. ./test-lib.sh
++. "${TEST_DIRECTORY:-.}/test-lib.sh"
 +
- static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
- 			    struct repository *repo UNUSED)
- {
-@@ -101,6 +111,29 @@ static int cmd_refs_verify(int argc, const char **argv, const char *prefix,
- 	return ret;
++GIT_REFS_LIST_CMD=${GIT_REFS_LIST_CMD:-for-each-ref}
+ GNUPGHOME_NOT_USED=$GNUPGHOME
+ . "$TEST_DIRECTORY"/lib-gpg.sh
+ . "$TEST_DIRECTORY"/lib-terminal.sh
+@@ -61,7 +63,7 @@ test_atom () {
+ 
+ 	printf '%s\n' "$3" >expected
+ 	$test_do $PREREQ "basic atom: $ref $format" '
+-		git for-each-ref --format="%($format)" "$ref" >actual &&
++		git ${GIT_REFS_LIST_CMD} --format="%($format)" "$ref" >actual &&
+ 		sanitize_pgp <actual >actual.clean &&
+ 		test_cmp expected actual.clean
+ 	'
+@@ -88,7 +90,7 @@ test_atom () {
+ 			esac &&
+ 			# Leave $expect unquoted to lose possible leading whitespaces
+ 			echo $expect >expected &&
+-			git for-each-ref --format="%(contents:size)" "$ref" >actual &&
++			git ${GIT_REFS_LIST_CMD} --format="%(contents:size)" "$ref" >actual &&
+ 			test_cmp expected actual
+ 		'
+ 	fi
+@@ -281,7 +283,7 @@ test_atom tag HEAD ' '
+ 
+ test_expect_success 'basic atom: refs/tags/testtag *raw' '
+ 	git cat-file commit refs/tags/testtag^{} >expected &&
+-	git for-each-ref --format="%(*raw)" refs/tags/testtag >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(*raw)" refs/tags/testtag >actual &&
+ 	sanitize_pgp <expected >expected.clean &&
+ 	echo >>expected.clean &&
+ 	sanitize_pgp <actual >actual.clean &&
+@@ -289,40 +291,45 @@ test_expect_success 'basic atom: refs/tags/testtag *raw' '
+ '
+ 
+ test_expect_success 'Check invalid atoms names are errors' '
+-	test_must_fail git for-each-ref --format="%(INVALID)" refs/heads
+-'
+-
+-test_expect_success 'for-each-ref does not crash with -h' '
+-	test_expect_code 129 git for-each-ref -h >usage &&
+-	test_grep "[Uu]sage: git for-each-ref " usage &&
+-	test_expect_code 129 nongit git for-each-ref -h >usage &&
+-	test_grep "[Uu]sage: git for-each-ref " usage
+-'
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(INVALID)" refs/heads
++'
++
++if test "$GIT_REFS_LIST_CMD" = "refs list"
++then
++	say "Skipping -h crash test for git refs list"
++else
++	test_expect_success "${GIT_REFS_LIST_CMD} does not crash with -h" '
++		test_expect_code 129 git ${GIT_REFS_LIST_CMD} -h >usage &&
++		test_grep "[Uu]sage: git for-each-ref " usage &&
++		test_expect_code 129 nongit git ${GIT_REFS_LIST_CMD} -h >usage &&
++		test_grep "[Uu]sage: git for-each-ref " usage
++	'
++fi
+ 
+ test_expect_success 'Check format specifiers are ignored in naming date atoms' '
+-	git for-each-ref --format="%(authordate)" refs/heads &&
+-	git for-each-ref --format="%(authordate:default) %(authordate)" refs/heads &&
+-	git for-each-ref --format="%(authordate) %(authordate:default)" refs/heads &&
+-	git for-each-ref --format="%(authordate:default) %(authordate:default)" refs/heads
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:default) %(authordate)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate) %(authordate:default)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:default) %(authordate:default)" refs/heads
+ '
+ 
+ test_expect_success 'Check valid format specifiers for date fields' '
+-	git for-each-ref --format="%(authordate:default)" refs/heads &&
+-	git for-each-ref --format="%(authordate:relative)" refs/heads &&
+-	git for-each-ref --format="%(authordate:short)" refs/heads &&
+-	git for-each-ref --format="%(authordate:local)" refs/heads &&
+-	git for-each-ref --format="%(authordate:iso8601)" refs/heads &&
+-	git for-each-ref --format="%(authordate:rfc2822)" refs/heads
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:default)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:relative)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:short)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:local)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:iso8601)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:rfc2822)" refs/heads
+ '
+ 
+ test_expect_success 'Check invalid format specifiers are errors' '
+-	test_must_fail git for-each-ref --format="%(authordate:INVALID)" refs/heads
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(authordate:INVALID)" refs/heads
+ '
+ 
+ test_expect_success 'arguments to %(objectname:short=) must be positive integers' '
+-	test_must_fail git for-each-ref --format="%(objectname:short=0)" &&
+-	test_must_fail git for-each-ref --format="%(objectname:short=-1)" &&
+-	test_must_fail git for-each-ref --format="%(objectname:short=foo)"
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(objectname:short=0)" &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(objectname:short=-1)" &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(objectname:short=foo)"
+ '
+ 
+ test_bad_atom () {
+@@ -337,7 +344,7 @@ test_bad_atom () {
+ 
+ 	printf '%s\n' "$3" >expect
+ 	$test_do $PREREQ "err basic atom: $ref $format" '
+-		test_must_fail git for-each-ref \
++		test_must_fail git ${GIT_REFS_LIST_CMD} \
+ 			--format="%($format)" "$ref" 2>error &&
+ 		test_cmp expect error
+ 	'
+@@ -395,10 +402,10 @@ test_date () {
+ 	'refs/tags/testtag' '$tagger_date'
+ 	EOF
+ 	(
+-		git for-each-ref --shell \
++		git ${GIT_REFS_LIST_CMD} --shell \
+ 			--format="%(refname) %(committerdate${f:+:$f}) %(authordate${f:+:$f})" \
+ 			refs/heads &&
+-		git for-each-ref --shell \
++		git ${GIT_REFS_LIST_CMD} --shell \
+ 			--format="%(refname) %(taggerdate${f:+:$f})" \
+ 			refs/tags
+ 	) >actual &&
+@@ -429,16 +436,16 @@ test_expect_success 'Check format "default-local" date fields output' '
+ # doesn't exit in error
+ test_expect_success 'Check format "relative" date fields output' '
+ 	f=relative &&
+-	(git for-each-ref --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
+-	git for-each-ref --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual
++	(git ${GIT_REFS_LIST_CMD} --shell --format="%(refname) %(committerdate:$f) %(authordate:$f)" refs/heads &&
++	git ${GIT_REFS_LIST_CMD} --shell --format="%(refname) %(taggerdate:$f)" refs/tags) >actual
+ '
+ 
+ # We just check that this is the same as "relative" for now.
+ test_expect_success 'Check format "relative-local" date fields output' '
+ 	test_date relative-local \
+-		"$(git for-each-ref --format="%(committerdate:relative)" refs/heads)" \
+-		"$(git for-each-ref --format="%(authordate:relative)" refs/heads)" \
+-		"$(git for-each-ref --format="%(taggerdate:relative)" refs/tags)"
++		"$(git ${GIT_REFS_LIST_CMD} --format="%(committerdate:relative)" refs/heads)" \
++		"$(git ${GIT_REFS_LIST_CMD} --format="%(authordate:relative)" refs/heads)" \
++		"$(git ${GIT_REFS_LIST_CMD} --format="%(taggerdate:relative)" refs/tags)"
+ '
+ 
+ test_expect_success 'Check format "short" date fields output' '
+@@ -488,7 +495,7 @@ test_expect_success 'Check format "raw-local" date fields output' '
+ 
+ test_expect_success 'Check format of strftime date fields' '
+ 	echo "my date is 2006-07-04" >expected &&
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 	  --format="%(authordate:format:my date is %Y-%m-%d)" \
+ 	  refs/heads >actual &&
+ 	test_cmp expected actual
+@@ -496,7 +503,7 @@ test_expect_success 'Check format of strftime date fields' '
+ 
+ test_expect_success 'Check format of strftime-local date fields' '
+ 	echo "my date is 2006-07-03" >expected &&
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 	  --format="%(authordate:format-local:my date is %Y-%m-%d)" \
+ 	  refs/heads >actual &&
+ 	test_cmp expected actual
+@@ -504,11 +511,11 @@ test_expect_success 'Check format of strftime-local date fields' '
+ 
+ test_expect_success 'exercise strftime with odd fields' '
+ 	echo >expected &&
+-	git for-each-ref --format="%(authordate:format:)" refs/heads >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:format:)" refs/heads >actual &&
+ 	test_cmp expected actual &&
+ 	long="long format -- $ZERO_OID$ZERO_OID$ZERO_OID$ZERO_OID$ZERO_OID$ZERO_OID$ZERO_OID" &&
+ 	echo $long >expected &&
+-	git for-each-ref --format="%(authordate:format:$long)" refs/heads >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(authordate:format:$long)" refs/heads >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -519,7 +526,7 @@ refs/tags/testtag
+ EOF
+ 
+ test_expect_success 'Verify ascending sort' '
+-	git for-each-ref --format="%(refname)" --sort=refname >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --sort=refname >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -531,13 +538,13 @@ refs/heads/main
+ EOF
+ 
+ test_expect_success 'Verify descending sort' '
+-	git for-each-ref --format="%(refname)" --sort=-refname >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --sort=-refname >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'Give help even with invalid sort atoms' '
+-	test_expect_code 129 git for-each-ref --sort=bogus -h >actual 2>&1 &&
+-	grep "^usage: git for-each-ref" actual
++	test_expect_code 129 git ${GIT_REFS_LIST_CMD} --sort=bogus -h >actual 2>&1 &&
++	grep "^usage: git ${GIT_REFS_LIST_CMD}" actual
+ '
+ 
+ cat >expected <<\EOF
+@@ -548,7 +555,7 @@ EOF
+ test_expect_success 'exercise patterns with prefixes' '
+ 	git tag testtag-2 &&
+ 	test_when_finished "git tag -d testtag-2" &&
+-	git for-each-ref --format="%(refname)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		refs/tags/testtag refs/tags/testtag-2 >actual &&
+ 	test_cmp expected actual
+ '
+@@ -561,7 +568,7 @@ EOF
+ test_expect_success 'exercise glob patterns with prefixes' '
+ 	git tag testtag-2 &&
+ 	test_when_finished "git tag -d testtag-2" &&
+-	git for-each-ref --format="%(refname)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		refs/tags/testtag "refs/tags/testtag-*" >actual &&
+ 	test_cmp expected actual
+ '
+@@ -578,7 +585,7 @@ test_expect_success 'exercise patterns with prefix exclusions' '
+ 		git tag "$tag" || return 1
+ 	done &&
+ 	test_when_finished "git tag -d foo/one foo/two foo/three bar baz" &&
+-	git for-each-ref --format="%(refname)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		refs/tags/ --exclude=refs/tags/foo >actual &&
+ 	test_cmp expected actual
+ '
+@@ -596,7 +603,7 @@ test_expect_success 'exercise patterns with pattern exclusions' '
+ 		git tag "$tag" || return 1
+ 	done &&
+ 	test_when_finished "git tag -d foo/one foo/two foo/three bar baz" &&
+-	git for-each-ref --format="%(refname)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		refs/tags/ --exclude="refs/tags/foo/t*" >actual &&
+ 	test_cmp expected actual
+ '
+@@ -608,17 +615,17 @@ cat >expected <<\EOF
+ EOF
+ 
+ test_expect_success 'Quoting style: shell' '
+-	git for-each-ref --shell --format="%(refname)" >actual &&
++	git ${GIT_REFS_LIST_CMD} --shell --format="%(refname)" >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'Quoting style: perl' '
+-	git for-each-ref --perl --format="%(refname)" >actual &&
++	git ${GIT_REFS_LIST_CMD} --perl --format="%(refname)" >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'Quoting style: python' '
+-	git for-each-ref --python --format="%(refname)" >actual &&
++	git ${GIT_REFS_LIST_CMD} --python --format="%(refname)" >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -629,13 +636,13 @@ cat >expected <<\EOF
+ EOF
+ 
+ test_expect_success 'Quoting style: tcl' '
+-	git for-each-ref --tcl --format="%(refname)" >actual &&
++	git ${GIT_REFS_LIST_CMD} --tcl --format="%(refname)" >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ for i in "--perl --shell" "-s --python" "--python --tcl" "--tcl --perl"; do
+ 	test_expect_success "more than one quoting style: $i" "
+-		test_must_fail git for-each-ref $i 2>err &&
++		test_must_fail git ${GIT_REFS_LIST_CMD} $i 2>err &&
+ 		grep '^error: more than one quoting style' err
+ 	"
+ done
+@@ -659,8 +666,8 @@ test_atom head push:track '[behind 1]'
+ test_atom head push:trackshort '<'
+ 
+ test_expect_success 'Check that :track[short] cannot be used with other atoms' '
+-	test_must_fail git for-each-ref --format="%(refname:track)" 2>/dev/null &&
+-	test_must_fail git for-each-ref --format="%(refname:trackshort)" 2>/dev/null
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(refname:track)" 2>/dev/null &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(refname:trackshort)" 2>/dev/null
+ '
+ 
+ test_expect_success 'Check that :track[short] works when upstream is invalid' '
+@@ -670,14 +677,14 @@ test_expect_success 'Check that :track[short] works when upstream is invalid' '
+ 	EOF
+ 	test_when_finished "git config branch.main.merge refs/heads/main" &&
+ 	git config branch.main.merge refs/heads/does-not-exist &&
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(upstream:track)$LF%(upstream:trackshort)" \
+ 		refs/heads >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success 'Check for invalid refname format' '
+-	test_must_fail git for-each-ref --format="%(refname:INVALID)"
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(refname:INVALID)"
+ '
+ 
+ test_expect_success 'set up color tests' '
+@@ -694,24 +701,24 @@ test_expect_success 'set up color tests' '
+ '
+ 
+ test_expect_success TTY '%(color) shows color with a tty' '
+-	test_terminal git for-each-ref --format="$color_format" >actual.raw &&
++	test_terminal git ${GIT_REFS_LIST_CMD} --format="$color_format" >actual.raw &&
+ 	test_decode_color <actual.raw >actual &&
+ 	test_cmp expected.color actual
+ '
+ 
+ test_expect_success '%(color) does not show color without tty' '
+-	TERM=vt100 git for-each-ref --format="$color_format" >actual &&
++	TERM=vt100 git ${GIT_REFS_LIST_CMD} --format="$color_format" >actual &&
+ 	test_cmp expected.bare actual
+ '
+ 
+ test_expect_success '--color can override tty check' '
+-	git for-each-ref --color --format="$color_format" >actual.raw &&
++	git ${GIT_REFS_LIST_CMD} --color --format="$color_format" >actual.raw &&
+ 	test_decode_color <actual.raw >actual &&
+ 	test_cmp expected.color actual
+ '
+ 
+ test_expect_success 'color.ui=always does not override tty check' '
+-	git -c color.ui=always for-each-ref --format="$color_format" >actual &&
++	git -c color.ui=always ${GIT_REFS_LIST_CMD} --format="$color_format" >actual &&
+ 	test_cmp expected.bare actual
+ '
+ 
+@@ -732,7 +739,7 @@ test_expect_success 'describe atom vs git describe' '
+ 	(
+ 		cd describe-repo &&
+ 
+-		git for-each-ref --format="%(objectname)" \
++		git ${GIT_REFS_LIST_CMD} --format="%(objectname)" \
+ 			refs/tags/ >obj &&
+ 		while read hash
+ 		do
+@@ -747,7 +754,7 @@ test_expect_success 'describe atom vs git describe' '
+ 		test_path_exists expect-contains-good &&
+ 		test_path_exists expect-contains-bad &&
+ 
+-		git for-each-ref --format="%(objectname) %(describe)" \
++		git ${GIT_REFS_LIST_CMD} --format="%(objectname) %(describe)" \
+ 			refs/tags/ >actual 2>err &&
+ 		test_cmp expect actual &&
+ 		test_must_be_empty err
+@@ -758,7 +765,7 @@ test_expect_success 'describe:tags vs describe --tags' '
+ 	(
+ 		cd describe-repo &&
+ 		git describe --tags >expect &&
+-		git for-each-ref --format="%(describe:tags)" \
++		git ${GIT_REFS_LIST_CMD} --format="%(describe:tags)" \
+ 				refs/heads/master >actual &&
+ 		test_cmp expect actual
+ 	)
+@@ -772,7 +779,7 @@ test_expect_success 'describe:abbrev=... vs describe --abbrev=...' '
+ 		#	  recent tag reachable from it
+ 		test_commit --no-tag file &&
+ 		git describe --abbrev=14 >expect &&
+-		git for-each-ref --format="%(describe:abbrev=14)" \
++		git ${GIT_REFS_LIST_CMD} --format="%(describe:abbrev=14)" \
+ 			refs/heads/master >actual &&
+ 		test_cmp expect actual &&
+ 
+@@ -784,7 +791,7 @@ test_expect_success 'describe:abbrev=... vs describe --abbrev=...' '
+ 		#	  the name of the tag
+ 		git tag -a -m tagged tagname &&
+ 		git describe --abbrev=14 >expect &&
+-		git for-each-ref --format="%(describe:abbrev=14)" \
++		git ${GIT_REFS_LIST_CMD} --format="%(describe:abbrev=14)" \
+ 			refs/heads/master >actual &&
+ 		test_cmp expect actual &&
+ 		test tagname = $(cat actual)
+@@ -796,7 +803,7 @@ test_expect_success 'describe:match=... vs describe --match ...' '
+ 		cd describe-repo &&
+ 		git tag -a -m "tag foo" tag-foo &&
+ 		git describe --match "*-foo" >expect &&
+-		git for-each-ref --format="%(describe:match="*-foo")" \
++		git ${GIT_REFS_LIST_CMD} --format="%(describe:match="*-foo")" \
+ 			refs/heads/master >actual &&
+ 		test_cmp expect actual
+ 	)
+@@ -807,7 +814,7 @@ test_expect_success 'describe:exclude:... vs describe --exclude ...' '
+ 		cd describe-repo &&
+ 		git tag -a -m "tag bar" tag-bar &&
+ 		git describe --exclude "*-bar" >expect &&
+-		git for-each-ref --format="%(describe:exclude="*-bar")" \
++		git ${GIT_REFS_LIST_CMD} --format="%(describe:exclude="*-bar")" \
+ 			refs/heads/master >actual &&
+ 		test_cmp expect actual
+ 	)
+@@ -824,7 +831,7 @@ test_expect_success 'deref with describe atom' '
+ 
+ 		tagtwo
+ 		EOF
+-		git for-each-ref --format="%(*describe)" >actual &&
++		git ${GIT_REFS_LIST_CMD} --format="%(*describe)" >actual &&
+ 		test_cmp expect actual
+ 	)
+ '
+@@ -837,7 +844,7 @@ test_expect_success 'err on bad describe atom arg' '
+ 		cat >expect <<-\EOF &&
+ 		fatal: unrecognized %(describe) argument: baz
+ 		EOF
+-		test_must_fail git for-each-ref --format="%(describe:baz)" \
++		test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(describe:baz)" \
+ 			refs/heads/master 2>actual &&
+ 		test_cmp expect actual &&
+ 
+@@ -846,7 +853,7 @@ test_expect_success 'err on bad describe atom arg' '
+ 		cat >expect <<-\EOF &&
+ 		fatal: unrecognized %(describe) argument: qux=1,abbrev=14
+ 		EOF
+-		test_must_fail git for-each-ref \
++		test_must_fail git ${GIT_REFS_LIST_CMD} \
+ 			--format="%(describe:tags,qux=1,abbrev=14)" \
+ 			ref/heads/master 2>actual &&
+ 		test_cmp expect actual
+@@ -866,7 +873,7 @@ test_expect_success 'Check ambiguous head and tag refs (strict)' '
+ 	git commit -m "Branch" &&
+ 	setdate_and_increment &&
+ 	git tag -m "Tagging at $datestamp" main &&
+-	git for-each-ref --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
++	git ${GIT_REFS_LIST_CMD} --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -877,7 +884,7 @@ EOF
+ 
+ test_expect_success 'Check ambiguous head and tag refs (loose)' '
+ 	git config --bool core.warnambiguousrefs false &&
+-	git for-each-ref --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
++	git ${GIT_REFS_LIST_CMD} --format "%(refname:short)" refs/heads/main refs/tags/main >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -890,7 +897,7 @@ test_expect_success 'Check ambiguous head and tag refs II (loose)' '
+ 	git checkout main &&
+ 	git tag ambiguous testtag^0 &&
+ 	git branch ambiguous testtag^0 &&
+-	git for-each-ref --format "%(refname:short)" refs/heads/ambiguous refs/tags/ambiguous >actual &&
++	git ${GIT_REFS_LIST_CMD} --format "%(refname:short)" refs/heads/ambiguous refs/tags/ambiguous >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -923,7 +930,7 @@ test_expect_success 'an unusual tag with an incomplete line' '
+ 	bogo=$(git cat-file tag bogo) &&
+ 	bogo=$(printf "%s" "$bogo" | git mktag) &&
+ 	git tag -f bogo "$bogo" &&
+-	git for-each-ref --format "%(body)" refs/tags/bogo
++	git ${GIT_REFS_LIST_CMD} --format "%(body)" refs/tags/bogo
+ 
+ '
+ 
+@@ -1000,7 +1007,7 @@ test_atom refs/tags/signed-empty contents "$sig"
+ 
+ test_expect_success GPG 'basic atom: refs/tags/signed-empty raw' '
+ 	git cat-file tag refs/tags/signed-empty >expected &&
+-	git for-each-ref --format="%(raw)" refs/tags/signed-empty >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw)" refs/tags/signed-empty >actual &&
+ 	sanitize_pgp <expected >expected.clean &&
+ 	echo >>expected.clean &&
+ 	sanitize_pgp <actual >actual.clean &&
+@@ -1018,7 +1025,7 @@ $sig"
+ 
+ test_expect_success GPG 'basic atom: refs/tags/signed-short raw' '
+ 	git cat-file tag refs/tags/signed-short >expected &&
+-	git for-each-ref --format="%(raw)" refs/tags/signed-short >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw)" refs/tags/signed-short >actual &&
+ 	sanitize_pgp <expected >expected.clean &&
+ 	echo >>expected.clean &&
+ 	sanitize_pgp <actual >actual.clean &&
+@@ -1040,7 +1047,7 @@ $sig"
+ 
+ test_expect_success GPG 'basic atom: refs/tags/signed-long raw' '
+ 	git cat-file tag refs/tags/signed-long >expected &&
+-	git for-each-ref --format="%(raw)" refs/tags/signed-long >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw)" refs/tags/signed-long >actual &&
+ 	sanitize_pgp <expected >expected.clean &&
+ 	echo >>expected.clean &&
+ 	sanitize_pgp <actual >actual.clean &&
+@@ -1062,10 +1069,10 @@ test_atom refs/mytrees/first contents ""
+ test_expect_success 'basic atom: refs/mytrees/first raw' '
+ 	git cat-file tree refs/mytrees/first >expected &&
+ 	echo >>expected &&
+-	git for-each-ref --format="%(raw)" refs/mytrees/first >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw)" refs/mytrees/first >actual &&
+ 	test_cmp expected actual &&
+ 	git cat-file -s refs/mytrees/first >expected &&
+-	git for-each-ref --format="%(raw:size)" refs/mytrees/first >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw:size)" refs/mytrees/first >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1079,10 +1086,10 @@ test_atom refs/myblobs/first contents ""
+ test_expect_success 'basic atom: refs/myblobs/first raw' '
+ 	git cat-file blob refs/myblobs/first >expected &&
+ 	echo >>expected &&
+-	git for-each-ref --format="%(raw)" refs/myblobs/first >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw)" refs/myblobs/first >actual &&
+ 	test_cmp expected actual &&
+ 	git cat-file -s refs/myblobs/first >expected &&
+-	git for-each-ref --format="%(raw:size)" refs/myblobs/first >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw:size)" refs/myblobs/first >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1127,7 +1134,7 @@ test_expect_success 'Verify sorts with raw' '
+ 	refs/myblobs/blob4
+ 	refs/heads/main
+ 	EOF
+-	git for-each-ref --format="%(refname)" --sort=raw \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --sort=raw \
+ 		refs/heads/main refs/myblobs/ refs/mytrees/first >actual &&
+ 	test_cmp expected actual
+ '
+@@ -1146,7 +1153,7 @@ test_expect_success 'Verify sorts with raw:size' '
+ 	refs/mytrees/first
+ 	refs/heads/main
+ 	EOF
+-	git for-each-ref --format="%(refname)" --sort=raw:size \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --sort=raw:size \
+ 		refs/heads/main refs/myblobs/ refs/mytrees/first >actual &&
+ 	test_cmp expected actual
+ '
+@@ -1166,7 +1173,7 @@ test_expect_success 'validate raw atom with %(if:equals)' '
+ 	not equals
+ 	not equals
+ 	EOF
+-	git for-each-ref --format="%(if:equals=abc)%(raw)%(then)%(refname)%(else)not equals%(end)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(if:equals=abc)%(raw)%(then)%(refname)%(else)not equals%(end)" \
+ 		refs/myblobs/ refs/heads/ >actual &&
+ 	test_cmp expected actual
+ '
+@@ -1186,7 +1193,7 @@ test_expect_success 'validate raw atom with %(if:notequals)' '
+ 	refs/myblobs/blob8
+ 	refs/myblobs/first
+ 	EOF
+-	git for-each-ref --format="%(if:notequals=abc)%(raw)%(then)%(refname)%(else)equals%(end)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(if:notequals=abc)%(raw)%(then)%(refname)%(else)equals%(end)" \
+ 		refs/myblobs/ refs/heads/ >actual &&
+ 	test_cmp expected actual
+ '
+@@ -1203,55 +1210,55 @@ test_expect_success 'empty raw refs with %(if)' '
+ 	refs/myblobs/blob8 empty
+ 	refs/myblobs/first not empty
+ 	EOF
+-	git for-each-ref --format="%(refname) %(if)%(raw)%(then)not empty%(else)empty%(end)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname) %(if)%(raw)%(then)not empty%(else)empty%(end)" \
+ 		refs/myblobs/ >actual &&
+ 	test_cmp expected actual
+ '
+ 
+ test_expect_success '%(raw) with --python must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --python
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(raw)" --python
+ '
+ 
+ test_expect_success '%(raw) with --tcl must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --tcl
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(raw)" --tcl
+ '
+ 
+ test_expect_success PERL_TEST_HELPERS '%(raw) with --perl' '
+-	git for-each-ref --format="\$name= %(raw);
++	git ${GIT_REFS_LIST_CMD} --format="\$name= %(raw);
+ print \"\$name\"" refs/myblobs/blob1 --perl | perl >actual &&
+ 	cmp blob1 actual &&
+-	git for-each-ref --format="\$name= %(raw);
++	git ${GIT_REFS_LIST_CMD} --format="\$name= %(raw);
+ print \"\$name\"" refs/myblobs/blob3 --perl | perl >actual &&
+ 	cmp blob3 actual &&
+-	git for-each-ref --format="\$name= %(raw);
++	git ${GIT_REFS_LIST_CMD} --format="\$name= %(raw);
+ print \"\$name\"" refs/myblobs/blob8 --perl | perl >actual &&
+ 	cmp blob8 actual &&
+-	git for-each-ref --format="\$name= %(raw);
++	git ${GIT_REFS_LIST_CMD} --format="\$name= %(raw);
+ print \"\$name\"" refs/myblobs/first --perl | perl >actual &&
+ 	cmp one actual &&
+ 	git cat-file tree refs/mytrees/first > expected &&
+-	git for-each-ref --format="\$name= %(raw);
++	git ${GIT_REFS_LIST_CMD} --format="\$name= %(raw);
+ print \"\$name\"" refs/mytrees/first --perl | perl >actual &&
+ 	cmp expected actual
+ '
+ 
+ test_expect_success '%(raw) with --shell must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --shell
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(raw)" --shell
+ '
+ 
+ test_expect_success '%(raw) with --shell and --sort=raw must fail' '
+-	test_must_fail git for-each-ref --format="%(raw)" --sort=raw --shell
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(raw)" --sort=raw --shell
+ '
+ 
+ test_expect_success '%(raw:size) with --shell' '
+-	git for-each-ref --format="%(raw:size)" | sed "s/^/$SQ/;s/$/$SQ/" >expect &&
+-	git for-each-ref --format="%(raw:size)" --shell >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw:size)" | sed "s/^/$SQ/;s/$/$SQ/" >expect &&
++	git ${GIT_REFS_LIST_CMD} --format="%(raw:size)" --shell >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'for-each-ref --format compare with cat-file --batch' '
++test_expect_success "${GIT_REFS_LIST_CMD} --format compare with cat-file --batch" '
+ 	git rev-parse refs/mytrees/first | git cat-file --batch >expected &&
+-	git for-each-ref --format="%(objectname) %(objecttype) %(objectsize)
++	git ${GIT_REFS_LIST_CMD} --format="%(objectname) %(objecttype) %(objectsize)
+ %(raw)" refs/mytrees/first >actual &&
+ 	test_cmp expected actual
+ '
+@@ -1262,7 +1269,7 @@ test_expect_success 'verify sorts with contents:size' '
+ 	refs/heads/newtag
+ 	refs/heads/ambiguous
+ 	EOF
+-	git for-each-ref --format="%(refname)" \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		--sort=contents:size refs/heads/ >actual &&
+ 	test_cmp expect actual
+ '
+@@ -1294,7 +1301,7 @@ test_expect_success 'Verify sort with multiple keys' '
+ 	200000 <user2@example.com> refs/tags/multi-ref2-200000-user2
+ 	200000 <user2@example.com> refs/tags/multi-ref1-200000-user2
+ 	EOF
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(taggerdate:unix) %(taggeremail) %(refname)" \
+ 		--sort=-refname \
+ 		--sort=taggeremail \
+@@ -1314,7 +1321,7 @@ test_expect_success 'equivalent sorts fall back on refname' '
+ 	200000 <user1@example.com> refs/tags/multi-ref2-200000-user1
+ 	200000 <user2@example.com> refs/tags/multi-ref2-200000-user2
+ 	EOF
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(taggerdate:unix) %(taggeremail) %(refname)" \
+ 		--sort=taggerdate \
+ 		"refs/tags/multi-*" >actual &&
+@@ -1332,7 +1339,7 @@ test_expect_success '--no-sort cancels the previous sort keys' '
+ 	200000 <user1@example.com> refs/tags/multi-ref2-200000-user1
+ 	200000 <user2@example.com> refs/tags/multi-ref2-200000-user2
+ 	EOF
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(taggerdate:unix) %(taggeremail) %(refname)" \
+ 		--sort=-refname \
+ 		--sort=taggeremail \
+@@ -1356,7 +1363,7 @@ test_expect_success '--no-sort without subsequent --sort prints expected refs' '
+ 
+ 	# Sort the results with `sort` for a consistent comparison against
+ 	# expected
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(refname)" \
+ 		--no-sort \
+ 		"refs/tags/multi-*" | sort >actual &&
+@@ -1387,7 +1394,7 @@ test_expect_success 'sort by date defaults to full timestamp' '
+ 	1707341660 refs/tags/custom-dates-1
+ 	EOF
+ 
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(creatordate:unix) %(refname)" \
+ 		--sort=creatordate \
+ 		"refs/tags/custom-dates-*" >actual &&
+@@ -1402,7 +1409,7 @@ test_expect_success 'sort by custom date format' '
+ 	21:34:20 refs/tags/custom-dates-1
+ 	EOF
+ 
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(creatordate:format:%H:%M:%S) %(refname)" \
+ 		--sort="creatordate:format:%H:%M:%S" \
+ 		"refs/tags/custom-dates-*" >actual &&
+@@ -1411,10 +1418,10 @@ test_expect_success 'sort by custom date format' '
+ 
+ test_expect_success 'do not dereference NULL upon %(HEAD) on unborn branch' '
+ 	test_when_finished "git checkout main" &&
+-	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
+ 	sed -e "s/^\* /  /" actual >expect &&
+ 	git checkout --orphan orphaned-branch &&
+-	git for-each-ref --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(HEAD) %(refname:short)" refs/heads/ >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1451,9 +1458,9 @@ test_trailer_option () {
+ 	title=$1 option=$2
+ 	cat >expect
+ 	test_expect_success $prereq "$title" '
+-		git for-each-ref --format="%($option)" refs/heads/main >actual &&
++		git ${GIT_REFS_LIST_CMD} --format="%($option)" refs/heads/main >actual &&
+ 		test_cmp expect actual &&
+-		git for-each-ref --format="%(contents:$option)" refs/heads/main >actual &&
++		git ${GIT_REFS_LIST_CMD} --format="%(contents:$option)" refs/heads/main >actual &&
+ 		test_cmp expect actual
+ 	'
  }
+@@ -1583,7 +1590,7 @@ test_expect_success 'multiple %(trailers) use their own options' '
+ 	EOF
+ 	t1="%(trailers:key=one,key_value_separator=W,separator=X)" &&
+ 	t2="%(trailers:key=two,key_value_separator=Y,separator=Z)" &&
+-	git for-each-ref --format="$t1%0a$t2" refs/tags/tag-with-trailers >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="$t1%0a$t2" refs/tags/tag-with-trailers >actual &&
+ 	cat >expect <<-\EOF &&
+ 	oneWfooXoneWbar
+ 	twoYbazZtwoYqux
+@@ -1596,9 +1603,9 @@ test_failing_trailer_option () {
+ 	cat >expect
+ 	test_expect_success "$title" '
+ 		# error message cannot be checked under i18n
+-		test_must_fail git for-each-ref --format="%($option)" refs/heads/main 2>actual &&
++		test_must_fail git ${GIT_REFS_LIST_CMD} --format="%($option)" refs/heads/main 2>actual &&
+ 		test_cmp expect actual &&
+-		test_must_fail git for-each-ref --format="%(contents:$option)" refs/heads/main 2>actual &&
++		test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(contents:$option)" refs/heads/main 2>actual &&
+ 		test_cmp expect actual
+ 	'
+ }
+@@ -1617,14 +1624,14 @@ test_expect_success 'if arguments, %(contents:trailers) shows error if colon is
+ 	cat >expect <<-EOF &&
+ 	fatal: unrecognized %(contents) argument: trailersonly
+ 	EOF
+-	test_must_fail git for-each-ref --format="%(contents:trailersonly)" 2>actual &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(contents:trailersonly)" 2>actual &&
+ 	test_cmp expect actual
+ '
  
-+static int cmd_refs_list(int argc, const char **argv, const char *prefix,
-+		  struct repository *repo)
-+{
-+	struct strvec args = STRVEC_INIT;
-+	const char **args_copy;
-+	int ret;
-+
-+	strvec_push(&args, "refs list");
-+
-+	for (int i = 1; i < argc; i++)
-+		strvec_push(&args, argv[i]);
-+
-+	CALLOC_ARRAY(args_copy, args.nr + 1);
-+	COPY_ARRAY(args_copy, args.v, args.nr);
-+
-+	ret = cmd_for_each_ref(args.nr, args_copy, prefix, repo);
-+
-+	strvec_clear(&args);
-+	free(args_copy);
-+
-+	return ret;
-+}
-+
- int cmd_refs(int argc,
- 	     const char **argv,
- 	     const char *prefix,
-@@ -109,12 +142,14 @@ int cmd_refs(int argc,
- 	const char * const refs_usage[] = {
- 		REFS_MIGRATE_USAGE,
- 		REFS_VERIFY_USAGE,
-+		REFS_LIST_USAGE,
- 		NULL,
- 	};
- 	parse_opt_subcommand_fn *fn = NULL;
- 	struct option opts[] = {
- 		OPT_SUBCOMMAND("migrate", &fn, cmd_refs_migrate),
- 		OPT_SUBCOMMAND("verify", &fn, cmd_refs_verify),
-+		OPT_SUBCOMMAND("list", &fn, cmd_refs_list),
- 		OPT_END(),
- 	};
+ test_expect_success 'basic atom: head contents:trailers' '
+-	git for-each-ref --format="%(contents:trailers)" refs/heads/main >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(contents:trailers)" refs/heads/main >actual &&
+ 	sanitize_pgp <actual >actual.clean &&
+-	# git for-each-ref ends with a blank line
++	# git ${GIT_REFS_LIST_CMD} ends with a blank line
+ 	cat >expect <<-EOF &&
+ 	$(cat trailers)
  
+@@ -1633,23 +1640,23 @@ test_expect_success 'basic atom: head contents:trailers' '
+ '
+ 
+ test_expect_success 'basic atom: rest must fail' '
+-	test_must_fail git for-each-ref --format="%(rest)" refs/heads/main
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(rest)" refs/heads/main
+ '
+ 
+ test_expect_success 'HEAD atom does not take arguments' '
+-	test_must_fail git for-each-ref --format="%(HEAD:foo)" 2>err &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(HEAD:foo)" 2>err &&
+ 	echo "fatal: %(HEAD) does not take arguments" >expect &&
+ 	test_cmp expect err
+ '
+ 
+ test_expect_success 'subject atom rejects unknown arguments' '
+-	test_must_fail git for-each-ref --format="%(subject:foo)" 2>err &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(subject:foo)" 2>err &&
+ 	echo "fatal: unrecognized %(subject) argument: foo" >expect &&
+ 	test_cmp expect err
+ '
+ 
+ test_expect_success 'refname atom rejects unknown arguments' '
+-	test_must_fail git for-each-ref --format="%(refname:foo)" 2>err &&
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(refname:foo)" 2>err &&
+ 	echo "fatal: unrecognized %(refname) argument: foo" >expect &&
+ 	test_cmp expect err
+ '
+@@ -1673,7 +1680,7 @@ test_expect_success 'trailer parsing not fooled by --- line' '
+ 		echo "trailer: right" &&
+ 		echo
+ 	} >expect &&
+-	git for-each-ref --format="%(trailers)" refs/heads/main >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(trailers)" refs/heads/main >actual &&
+ 	test_cmp expect actual
+ '
+ 
+@@ -1686,7 +1693,7 @@ refs/heads/main
+ EOF
+ 
+ test_expect_success 'Verify usage of %(symref) atom' '
+-	git for-each-ref --format="%(symref)" refs/heads/sym >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref)" refs/heads/sym >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1695,7 +1702,7 @@ heads/main
+ EOF
+ 
+ test_expect_success 'Verify usage of %(symref:short) atom' '
+-	git for-each-ref --format="%(symref:short)" refs/heads/sym >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:short)" refs/heads/sym >actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1705,12 +1712,12 @@ heads/main
+ EOF
+ 
+ test_expect_success 'Verify usage of %(symref:lstrip) atom' '
+-	git for-each-ref --format="%(symref:lstrip=2)" refs/heads/sym > actual &&
+-	git for-each-ref --format="%(symref:lstrip=-2)" refs/heads/sym >> actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:lstrip=2)" refs/heads/sym > actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:lstrip=-2)" refs/heads/sym >> actual &&
+ 	test_cmp expected actual &&
+ 
+-	git for-each-ref --format="%(symref:strip=2)" refs/heads/sym > actual &&
+-	git for-each-ref --format="%(symref:strip=-2)" refs/heads/sym >> actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:strip=2)" refs/heads/sym > actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:strip=-2)" refs/heads/sym >> actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1720,8 +1727,8 @@ refs/heads
+ EOF
+ 
+ test_expect_success 'Verify usage of %(symref:rstrip) atom' '
+-	git for-each-ref --format="%(symref:rstrip=2)" refs/heads/sym > actual &&
+-	git for-each-ref --format="%(symref:rstrip=-2)" refs/heads/sym >> actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:rstrip=2)" refs/heads/sym > actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(symref:rstrip=-2)" refs/heads/sym >> actual &&
+ 	test_cmp expected actual
+ '
+ 
+@@ -1745,38 +1752,38 @@ test_expect_success ':remotename and :remoteref' '
+ 			"%(push:remoteref)=refs/heads/pushed/main"
+ 		do
+ 			echo "${pair#*=}" >expect &&
+-			git for-each-ref --format="${pair%=*}" \
++			git ${GIT_REFS_LIST_CMD} --format="${pair%=*}" \
+ 				refs/heads/main >actual &&
+ 			test_cmp expect actual || exit 1
+ 		done &&
+ 		git branch push-simple &&
+ 		git config branch.push-simple.pushRemote from &&
+-		actual="$(git for-each-ref \
++		actual="$(git ${GIT_REFS_LIST_CMD} \
+ 			--format="%(push:remotename),%(push:remoteref)" \
+ 			refs/heads/push-simple)" &&
+ 		test from, = "$actual"
+ 	)
+ '
+ 
+-test_expect_success 'for-each-ref --ignore-case ignores case' '
+-	git for-each-ref --format="%(refname)" refs/heads/MAIN >actual &&
++test_expect_success "${GIT_REFS_LIST_CMD} --ignore-case ignores case" '
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" refs/heads/MAIN >actual &&
+ 	test_must_be_empty actual &&
+ 
+ 	echo refs/heads/main >expect &&
+-	git for-each-ref --format="%(refname)" --ignore-case \
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --ignore-case \
+ 		refs/heads/MAIN >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'for-each-ref --omit-empty works' '
+-	git for-each-ref --format="%(refname)" >actual &&
++test_expect_success "${GIT_REFS_LIST_CMD} --omit-empty works" '
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" >actual &&
+ 	test_line_count -gt 1 actual &&
+-	git for-each-ref --format="%(if:equals=refs/heads/main)%(refname)%(then)%(refname)%(end)" --omit-empty >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(if:equals=refs/heads/main)%(refname)%(then)%(refname)%(end)" --omit-empty >actual &&
+ 	echo refs/heads/main >expect &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'for-each-ref --ignore-case works on multiple sort keys' '
++test_expect_success "${GIT_REFS_LIST_CMD} --ignore-case works on multiple sort keys" '
+ 	# name refs numerically to avoid case-insensitive filesystem conflicts
+ 	nr=0 &&
+ 	for email in a A b B
+@@ -1789,7 +1796,7 @@ test_expect_success 'for-each-ref --ignore-case works on multiple sort keys' '
+ 			return 1
+ 		done
+ 	done &&
+-	git for-each-ref --ignore-case \
++	git ${GIT_REFS_LIST_CMD} --ignore-case \
+ 		--format="%(taggeremail) %(subject) %(refname)" \
+ 		--sort=refname \
+ 		--sort=subject \
+@@ -1816,13 +1823,13 @@ test_expect_success 'for-each-ref --ignore-case works on multiple sort keys' '
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'for-each-ref reports broken tags' '
++test_expect_success "${GIT_REFS_LIST_CMD} reports broken tags" '
+ 	git tag -m "good tag" broken-tag-good HEAD &&
+ 	git cat-file tag broken-tag-good >good &&
+ 	sed s/commit/blob/ <good >bad &&
+ 	bad=$(git hash-object -w -t tag bad) &&
+ 	git update-ref refs/tags/broken-tag-bad $bad &&
+-	test_must_fail git for-each-ref --format="%(*objectname)" \
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(*objectname)" \
+ 		refs/tags/broken-tag-*
+ '
+ 
+@@ -1884,21 +1891,21 @@ test_expect_success 'set up tag with signature and trailers' '
+ # use "separator=" here to suppress the terminating newline
+ test_atom refs/tags/fake-sig-trailer trailers:separator= 'My-Trailer: foo'
+ 
+-test_expect_success 'git for-each-ref --stdin: empty' '
++test_expect_success "git ${GIT_REFS_LIST_CMD} --stdin: empty" '
+ 	>in &&
+-	git for-each-ref --format="%(refname)" --stdin <in >actual &&
+-	git for-each-ref --format="%(refname)" >expect &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --stdin <in >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" >expect &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'git for-each-ref --stdin: fails if extra args' '
++test_expect_success "git ${GIT_REFS_LIST_CMD} --stdin: fails if extra args" '
+ 	>in &&
+-	test_must_fail git for-each-ref --format="%(refname)" \
++	test_must_fail git ${GIT_REFS_LIST_CMD} --format="%(refname)" \
+ 		--stdin refs/heads/extra <in 2>err &&
+ 	grep "unknown arguments supplied with --stdin" err
+ '
+ 
+-test_expect_success 'git for-each-ref --stdin: matches' '
++test_expect_success "git ${GIT_REFS_LIST_CMD} --stdin: matches" '
+ 	cat >in <<-EOF &&
+ 	refs/tags/multi*
+ 	refs/heads/amb*
+@@ -1917,24 +1924,24 @@ test_expect_success 'git for-each-ref --stdin: matches' '
+ 	refs/tags/multiline
+ 	EOF
+ 
+-	git for-each-ref --format="%(refname)" --stdin <in >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --stdin <in >actual &&
+ 	test_cmp expect actual
+ '
+ 
+-test_expect_success 'git for-each-ref with non-existing refs' '
++test_expect_success "git ${GIT_REFS_LIST_CMD} with non-existing refs" '
+ 	cat >in <<-EOF &&
+ 	refs/heads/this-ref-does-not-exist
+ 	refs/tags/bogus
+ 	EOF
+ 
+-	git for-each-ref --format="%(refname)" --stdin <in >actual &&
++	git ${GIT_REFS_LIST_CMD} --format="%(refname)" --stdin <in >actual &&
+ 	test_must_be_empty actual &&
+ 
+-	xargs git for-each-ref --format="%(refname)" <in >actual &&
++	xargs git ${GIT_REFS_LIST_CMD} --format="%(refname)" <in >actual &&
+ 	test_must_be_empty actual
+ '
+ 
+-test_expect_success 'git for-each-ref with nested tags' '
++test_expect_success "git ${GIT_REFS_LIST_CMD} with nested tags" '
+ 	git tag -am "Normal tag" nested/base HEAD &&
+ 	git tag -am "Nested tag" nested/nest1 refs/tags/nested/base &&
+ 	git tag -am "Double nested tag" nested/nest2 refs/tags/nested/nest1 &&
+@@ -1950,14 +1957,14 @@ test_expect_success 'git for-each-ref with nested tags' '
+ 	refs/tags/nested/nest2 $nest2_tag_oid tag $head_oid commit
+ 	EOF
+ 
+-	git for-each-ref \
++	git ${GIT_REFS_LIST_CMD} \
+ 		--format="%(refname) %(objectname) %(objecttype) %(*objectname) %(*objecttype)" \
+ 		refs/tags/nested/ >actual &&
+ 	test_cmp expect actual
+ '
+ 
+ test_expect_success 'is-base atom with non-commits' '
+-	git for-each-ref --format="%(is-base:HEAD) %(refname)" >out 2>err &&
++	git ${GIT_REFS_LIST_CMD} --format="%(is-base:HEAD) %(refname)" >out 2>err &&
+ 	grep "(HEAD) refs/heads/main" out &&
+ 
+ 	test_line_count = 2 err &&
+@@ -2034,7 +2041,7 @@ test_expect_success GPGSSH 'setup for signature atom using ssh' '
+ test_expect_success GPG2 'bare signature atom' '
+ 	git verify-commit first-signed 2>expect &&
+ 	echo  >>expect &&
+-	git for-each-ref refs/tags/first-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/first-signed \
+ 		--format="%(signature)" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2048,7 +2055,7 @@ test_expect_success GPG 'show good signature with custom format' '
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
+ 	EOF
+-	git for-each-ref refs/tags/first-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/first-signed \
+ 		--format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2063,7 +2070,7 @@ test_expect_success GPGSSH 'show good signature with custom format with ssh' '
+ 
+ 	EOF
+ 	sed "s|FINGERPRINT|$FINGERPRINT|g" expect.tmpl >expect &&
+-	git for-each-ref refs/tags/eighth-signed-ssh \
++	git ${GIT_REFS_LIST_CMD} refs/tags/eighth-signed-ssh \
+ 		--format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2082,7 +2089,7 @@ test_expect_success GPG 'signature atom with grade option and bad signature' '
+ 
+ 
+ 	EOF
+-	git for-each-ref refs/tags/third-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/third-signed \
+ 		--format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2095,7 +2102,7 @@ test_expect_success GPG 'show untrusted signature with custom format' '
+ 	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
+ 	D4BE22311AD3131E5EDA29A461092E85B7227189
+ 	EOF
+-	git for-each-ref refs/tags/fourth-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/fourth-signed \
+ 		--format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2108,7 +2115,7 @@ test_expect_success GPG 'show untrusted signature with undefined trust level' '
+ 	F8364A59E07FFE9F4D63005A65A0EEA02E30CAD7
+ 	D4BE22311AD3131E5EDA29A461092E85B7227189
+ 	EOF
+-	git for-each-ref refs/tags/fourth-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/fourth-signed \
+ 		--format="$TRUSTLEVEL_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2121,7 +2128,7 @@ test_expect_success GPG 'show untrusted signature with ultimate trust level' '
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
+ 	73D758744BE721698EC54E8713B6F51ECDDE430D
+ 	EOF
+-	git for-each-ref refs/tags/sixth-signed \
++	git ${GIT_REFS_LIST_CMD} refs/tags/sixth-signed \
+ 		--format="$TRUSTLEVEL_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2134,7 +2141,7 @@ test_expect_success GPG 'show unknown signature with custom format' '
+ 
+ 
+ 	EOF
+-	GNUPGHOME="$GNUPGHOME_NOT_USED" git for-each-ref \
++	GNUPGHOME="$GNUPGHOME_NOT_USED" git ${GIT_REFS_LIST_CMD} \
+ 		refs/tags/sixth-signed --format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
+@@ -2147,7 +2154,7 @@ test_expect_success GPG 'show lack of signature with custom format' '
+ 
+ 
+ 	EOF
+-	git for-each-ref refs/tags/seventh-unsigned \
++	git ${GIT_REFS_LIST_CMD} refs/tags/seventh-unsigned \
+ 		--format="$GRADE_FORMAT" >actual &&
+ 	test_cmp expect actual
+ '
 -- 
 2.34.1
 
