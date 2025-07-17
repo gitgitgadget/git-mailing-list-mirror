@@ -1,148 +1,234 @@
-Received: from mout.web.de (mout.web.de [212.227.15.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E71E27AC41
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 08:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382A927FB34
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 09:01:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752740562; cv=none; b=XU13705MlaCuZr1pwuBgcqQcjWOUiPAfupGjSbG7DN/g5CfD+N3Gh9Pj++nIoCifRkJAMAMRvy91e42vAlSLwWP/LwH7uJtPqiHAePuC5vqrk5KVs320NfCcsNWwWhmZXXcHTxHkEqnVjk+fw4a1xLHapzBZuTIG8sboJJG2tIA=
+	t=1752742869; cv=none; b=oqMNDst8ojS9NX+rWmAZiPJHOiEcdNt4CEjGxmGuR4NYfR2oZGIvtHx/LB1NfHCfilKD1R9hXPuQb4mJitr0UdIebQtcPUY8yzU5UaQSzNxvSc3u+hUr5gW8orbg5rbSAimjoBJCQWtCNOgRZs4eraYCavtBE7S5fBl2hJeD42w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752740562; c=relaxed/simple;
-	bh=4U6KoNF1O+yoNy1AeXFt5w8RxqO1kiLOZfc+zixnCsM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=cfMPVTXZw6fyblPdlfW1lzxhUCkRz4dGylhdvp2py+SdsTYNakoIOe9ygCQdOg8czFw2JXMPAQDgE1cFO9WNhaD2bCwI3OnrjfU9BLREO2N5edzOq8HmsPQPo6POu7xgRR+rw5SKtPlbN7A0kzcfIUdwrUSdY+fqRB88UAjLuZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=q5ONr37X; arc=none smtp.client-ip=212.227.15.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1752742869; c=relaxed/simple;
+	bh=RoNM+ywKTNQSwjdR/QSIkpWmG5EdF84JzNXqwBDNI/c=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=PX3lYJiWfuYtqOk660vbLyaf5roTkshWrr8DmDv/q8CjHmZcSjTMabfJE4Ymf+TC4flsw5f6EGBw3ieJ7IsupwQ7xRCRmVc5P/5mJUkRyxDKP2xgGTDi4e2KeJXMxOgfOQAXPvO+9Oi5oID9YpB+vtG5/MJWYKwdVSG5NCSVXkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZBMLw4ve; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="q5ONr37X"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1752740552; x=1753345352; i=l.s.r@web.de;
-	bh=F4O0jGvzVgPqs+IIIWBkuydnQdXYxwrbWdTYZ7hbLuA=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=q5ONr37XqDXuKnAO1SPUDN17a3rNDdYa0UypTp6VbVQ8mKsJW/Jq7tO3mMcg2dlX
-	 QAZ04cgjfx9v9taqFkaqrampo9U4fHPKzmMK6rCldfaxo8qjIKmlNlZWqo+gcQDo3
-	 V0v5/DnF+tJK3hRTpb1FxblrDBAB9Ft0VBw5iqmpR2xCHti4UmACNayTTqnYCiI7e
-	 0KA0L7HXEwuRqgiomFMlABRcT5RjaZGyON+9AhQ7SL44hykjpLc082+qnU4V/C2fD
-	 LHHLqfx23JJJkBstJwURFFK8XNnVFgBdVWbEQrtJqp1otpP2bUc6raY1uA7XnV8op
-	 qJfbhQyEmB26XDHkbg==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.28.103]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1M6HKG-1uViBT31PU-00Br9k; Thu, 17
- Jul 2025 10:22:31 +0200
-Message-ID: <1404fe4a-9b7f-4a7f-905c-e36b2ca45858@web.de>
-Date: Thu, 17 Jul 2025 10:22:31 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZBMLw4ve"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-87ecac3e17cso344459241.3
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 02:01:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752742867; x=1753347667; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=leH6XQeH5f1Brg9YSHaV1zzP1Ph0XetAkBKGcemtEmA=;
+        b=ZBMLw4veEVqHfGezKR82F3lzGoXNS+5L3OCkmwEBglStAX1GFqYs4j67lY3G0Anj1U
+         ytvKqTozjXFhOM/ySK4RxRnQQxpewlkm4y2y1CE4gFiNDlTgVl9VY5j/25O1YiDp8hpf
+         8LbjvkwVKJlmEhxyULdyPhIGUeF1chG4ObtrclTW0M2zDoWKGPx3+E2oVc7q/2Ui3zWT
+         morRGgtw+9PGqmd9TuhsPJcWfrnJq8NrIJsRXTfWhrzPXHrdMiURzvWUzaIa2nby4I4z
+         FvmtksawANUOdUq2qVBUnrJH9iJAdy0L0z6nFSll7yelqxCLUrKFa4/8k7U/RXTDwqrI
+         VMqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752742867; x=1753347667;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=leH6XQeH5f1Brg9YSHaV1zzP1Ph0XetAkBKGcemtEmA=;
+        b=KW1bJtU80Q/HP5HT7BdfxXrTLKskWjP6kKRdnNbNDFA5G+rq8MxccktDjn0rlpWMnP
+         6wwUNycbh8HZ9tHuOSWAegcJNRpu8cRsHSwPyA59X/3Jh/Vd8FIHmQ5YEysU7e6A68gT
+         ossFi+pKRLBV24qGlt5dbQ8S8bsQQOUwUHANxZ1VVWjBgfrwL+dSkiDrDSug35/3ECeK
+         +Aa/b3+b6cvvexROW0/rox71sacpDtRQHOBCSekL1XJOW6xZyI7IfXaDKjK6PG+GZUXq
+         +KI4ZK4kxX8B3TgQLKZIahlkn655kWyw9fvwxnWQ4Ass/H2O7kUkzUWVgPz7BtQst/8V
+         NA9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWgEvCvtSm0oSY9KQFChBTzEuycrFO/fqs0yBJNP5AdpYQNl9qWlmc1XGZ4BpQ+skPHTHA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwkXXLHHJJD//bOFsIYLw8TLigB5e1YYYNSmNljeDOXwtpDojxL
+	FaLI4eMxzVlF8JbnzPmjRU7To8Z3j87tlHtg3byDk/oWCIhCjAtLpuZyEDFK2HKZgkh1O3SEgmU
+	G6p4pCHWvTaU2fXwGqoU1Bh9nKgYiLt0gsdCg
+X-Gm-Gg: ASbGnctvoNhuITKS3R5K+A6TtkMBXy5F8axTvuIkuih19ZZjGQV01l/W8lZ22qIpUtE
+	z8hfkb4BtydDvuNJcJv70Qwp39iG0nRN31xWh9cgILHl0C+8bXqyMRHtx5at9yvKfRly1FvkjtS
+	J+Bkp3leYGrnlUw7tFz0YRzX2QUlGWPkmUnOcAZKBN7Q3foRGd76pUMlokDZgVTMX/neLdY4qg4
+	8Ghiwch1bu97GrY
+X-Google-Smtp-Source: AGHT+IHHxcsim0+Mxe12sX6afqlvK9Q5TLvBp0ASIWp6uwwht0TjdDN2mbwncSUP8V8Dcf1nq7W5srN+0I8lKAfQPh4=
+X-Received: by 2002:a05:6102:32d0:b0:4e1:48ee:6f36 with SMTP id
+ ada2fe7eead31-4f95f41a546mr2737155137.19.1752742866744; Thu, 17 Jul 2025
+ 02:01:06 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 17 Jul 2025 02:01:05 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 17 Jul 2025 02:01:05 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqfrevc3b6.fsf@gitster.g>
+References: <20250708-306-git-for-each-ref-pagination-v3-0-8cfba1080be4@gmail.com>
+ <20250708-306-git-for-each-ref-pagination-v3-3-8cfba1080be4@gmail.com>
+ <aG9hMP9gEFLhVgJL@pks.im> <xmqq8qkqvjnu.fsf@gitster.g> <CAOLa=ZS6ASf1+nbUnCTeeH1Di=kgmhQUEQ5UXPZu051rfqx9Pw@mail.gmail.com>
+ <xmqqms95if8e.fsf@gitster.g> <CAOLa=ZTc2_g3+8MM8whW+eZAj-+36HNsnUFDoLgnN42ytFLwAw@mail.gmail.com>
+ <xmqqfrevc3b6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] commit: convert pop_most_recent_commit() to
- prio_queue
+Date: Thu, 17 Jul 2025 02:01:05 -0700
+X-Gm-Features: Ac12FXx2A9Xoh-Cp5JUoi2stjiOin9FMdHsmq2J5fvEhAVonLna91qJAouUU3Lk
+Message-ID: <CAOLa=ZSKsdGDERNS_1hJrBMn0muSOJ46SZz2bn8OHZndJ2Hu3g@mail.gmail.com>
+Subject: Re: [PATCH v3 3/4] refs: selectively set prefix in the seek functions
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Git List <git@vger.kernel.org>, Jeff King <peff@peff.net>
-References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
- <bfb0a65d-c9dd-47d9-a88d-9fec43538b0c@web.de> <xmqqtt3b93ls.fsf@gitster.g>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <xmqqtt3b93ls.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:tgBQ+BEqpS8k3yhNTwKWpYUaMTy8j88/HMIQ8ydMZDp/eEyMeEo
- bEspOKFMKt0aiVmi0q1BgUQJeWVtWmGbGVxyZA5LcBzGNfMUMgZuYsNsK3bzE+oGzIYRTp1
- qLdvt1OXwgx/ZNfY5nYGzAix7KhBmXaWson5RY6If1tV4df6q/Th6d2iPtjeoolySHf6QYA
- OBz632O321RsvrZy2dDyA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:Kb/WlnFWmyU=;QkYvsT2CYe9NJgLy2UW3Sv0wh/S
- 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
- UwSPKjwo+ntRCA=
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com
+Content-Type: multipart/mixed; boundary="000000000000f48f7f063a1c3f0c"
 
-On 7/17/25 12:23 AM, Junio C Hamano wrote:
-> Ren=C3=A9 Scharfe <l.s.r@web.de> writes:
->=20
->>  t/perf/p1501-rev-parse-oneline.sh | 55 +++++++++++++++++++++++++++++++
->>  create mode 100755 t/perf/p1501-rev-parse-oneline.sh
->=20
-> This unfortunately calls for something like.
->=20
-> Tonight's integration cycle I have this on top of your series
-> in 'seen'.
->=20
-> Subject: [PATCH] fixup! commit: convert pop_most_recent_commit() to prio=
-_queue
->=20
->  t/meson.build | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/t/meson.build b/t/meson.build
-> index d052fc3e23..b39f6d008d 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -1117,6 +1117,7 @@ benchmarks =3D [
->    'perf/p1450-fsck.sh',
->    'perf/p1451-fsck-skip-list.sh',
->    'perf/p1500-graph-walks.sh',
-> +  'perf/p1501-rev-parse-oneline.sh',
->    'perf/p2000-sparse-operations.sh',
->    'perf/p3400-rebase.sh',
->    'perf/p3404-rebase-interactive.sh',
+--000000000000f48f7f063a1c3f0c
+Content-Type: text/plain; charset="UTF-8"
 
-Oh, OK, thanks.  Will include it in v2.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Ren=C3=A9
+> Karthik Nayak <karthik.188@gmail.com> writes:
+>
+>> Let's say a user is iterating with a prefix set to 'refs/heads/', this
+>> would iterate over all the refs with that prefix. But mid-way the user
+>> realizes that they only care about 'refs/heads/feature/' prefix and they
+>> ask the iterator to set that as the prefix.
+>>
+>> In such a situation, the iterator seeks to 'refs/heads/feature/' and
+>> will only yield references with that prefix. In short, the previous
+>> prefix state was reset.
+>
+> Yes, even though I wouldn't call such an operation "seek", "Ah, I do
+> not need the entire refs/heads/ walked, only refs/heads/feature/ is
+> enough" is an operation mode that makes sense.
+>
+> But not for paging, though.
+>
+> If your web application is showing all branches, one pageful at a
+> time, and the first page ended at refs/heads/feature/something and
+> you ended up "seeking" to refs/heads/feature/ to start the second
+> page, you do not want your second page to end when the iteration
+> goes out of refs/heads/feature/ hierarchy, no?
+>
 
+Yup and this (we show all references beyond the seek) is the current
+implementation. I was talking about the internal implementation of
+'refs_iteration_seek()' which is the function used for seek and setting
+the prefix.
+
+To clarify, this is the current implementation:
+
+$ git for-each-ref
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/bar
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/feature/x
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/feature/y
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/foo
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/goo/x
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/goo/y
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/heads/master
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/tags/tagged/2
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/tags/tagged/3
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/tags/v1
+6f4b58c4968eb82277cf5b1cf8775117e5b83de0 commit	refs/tags/v2
+
+$ git for-each-ref --format="%(refname)" --start-after=refs/heads/goo
+refs/heads/goo/x
+refs/heads/goo/y
+refs/heads/master
+refs/tags/tagged/2
+refs/tags/tagged/3
+refs/tags/v1
+refs/tags/v2
+
+$ git for-each-ref --format="%(refname)" --start-after=refs/heads/master
+refs/tags/tagged/2
+refs/tags/tagged/3
+refs/tags/v1
+refs/tags/v2
+
+$ git for-each-ref --format="%(refname)" --start-after=refs/heads/goo/x
+refs/heads/goo/y
+refs/heads/master
+refs/tags/tagged/2
+refs/tags/tagged/3
+refs/tags/v1
+refs/tags/v2
+
+$ git for-each-ref --format="%(refname)" refs/heads/feature
+refs/heads/feature/x
+refs/heads/feature/y
+
+You can see we list all references beyond the seek.
+
+> It seems to me that the root cause of the confusion is because
+> prefix, which is to let iteration finish way before the data runs
+> out (instead finish when the iteration steps out of a given
+> subhierarchy denoted by the prefix), is somehow abused as the
+> current position of the cursor.  Shouldn't they be two separate
+> concepts?  The cursor needs to fall within the prefix while the
+> iterator is active, so they are not two totally independent things,
+> but prefix is pretty much static while the cursor position is very
+> dynamic.
+>
+
+The prefix setup in 'ref_iteration_seek' does two things, let's consider
+prefix: 'refs/heads/feature'
+1. It sets the cursor to seek to 'refs/heads/feature'
+2. It also sets the internal prefix matching to 'refs/heads/feature'
+
+In Contrast seeking via 'ref_iteration_seek' only sets the cursor to
+'refs/heads/feature'.
+
+To make this simpler, we've changed 'ref_iteration_seek' to do:
+1. seek the cursor to the requested reference
+2. Set prefix if the REF_ITERATOR_SEEK_SET_PREFIX is set, and unset the
+prefix otherwise.
+
+The state reset I was talking about in my previous emails refers to step
+#2 here, where when no 'REF_ITERATOR_SEEK_SET_PREFIX' is set, we remove
+any previous prefix set.
+
+>> This series did start out that way around, so ease of implementation
+>> isn't it. It was more of a side-effect of not clearing state.
+>
+> I am even more worried about usability and correctness aspect of
+> what was described here now.  After seeking to refs/heads/feature/,
+> do we continue to iterate and step out of refs/heads/feature/
+> hierarchy or can we cut off a particular page that started with a
+> ref within refs/heads/feature/ subhierarchy when we exhaust refs in
+> refs/heads/feature/ and have to wait for getting asked for the next
+> page before we show refs/heads/gsomething that is outside
+> refs/heads/feature/ and sorts after?  The "I reset to iterate over
+> refs/heads/feature/ because the entire refs/heads/ is not what I
+> care about" example makes me worried about this.
+>
+> Thanks.
+
+I think we're crossing paths and talking different things. I hope the
+examples above clarify things. The current implementation doesn't
+support '--start-after' and prefix setting at the same time:
+
+$ git for-each-ref --format="%(refname)"
+--start-after=refs/heads/master refs/heads
+fatal: cannot use --start-after with patterns
+
+Happy to clarify if this doesn't make sense.
+
+Thanks
+
+--000000000000f48f7f063a1c3f0c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 7e464c5d3cbeb575_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oNHU4OFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWtOQy93TEdHZDJUaTRvSmtiUWtxTHRnS3FMOXlyTQpESnhSK2wrOGpR
+RWlnbGFCNFp4Q0pxTWhhNjNyMWZoVmNzelVvZWlUcEh5NFRZRVhJZTF1YlY4Q3dUSWdtclBEClpo
+ZzgwVVNqSDdYVmVPZHFmOUlvb0pDR1d0NmtUSXhGcnhGclNReWVmK1gwWTJXOVFlcjVxRmI4TDVj
+SVBTY1EKUUJmQ0Y2U1FUc0RnUU1lSzJXQUlXc0tTd1R1aXlLRXRiSkt2aGYwWmh1V0JmWUJXZGxM
+dDRuRVZXUkRQYXZQYwpRUjBZWkRDVEphbllCTmpjRko0Yk0vSXFOdDNQdm80eTg3OERWSFpxT0lu
+aTdoVVp3akZ5R2VqOTZlSVNxWm9TCmZhaEJCUC9vOGd1K1o5TytKQ2J5RFp3UDRwMTE1eGZVa2h5
+VjR2emJDbTBzN0NPQnVzR2htbG5JNFUxbWkzcU4KRkhPZTNXcllxTURSU1ZNSmcwRHVyQXdhMURD
+bys0NTVvMUcyUUdrd1J4cFYwZmZFbURXbEplaUxOemdDblpDegpOVCt3MzF6djJjRjlIMEJxZklN
+UTlwNkRwV0hnQ1Q0NFZkK0cyVWdaL3BpdDE3RlhwWE5aSmFHSDF6d2R1aDhlCjZBb2RzeDdQMURh
+RWlHU1ErTmFoZVBITDFMenprS3l0MFpUT0EwND0KPW9aaFIKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000f48f7f063a1c3f0c--
