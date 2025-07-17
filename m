@@ -1,176 +1,131 @@
-Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CB98194A60
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 19:49:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BB82AEF5
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 20:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752781776; cv=none; b=aqW5qm5JCUa3CDAd9QDP9cx27uOz5PXGuNPQ6qELsesqOJrHoiWepO1l99W1zmMPppFQ2NkB1VlkeQW7jd7HZgFehZ9D9AJdd9Q2WLMHqUp4VjI0yEPnSizEj1qedgPcwecRw16ecekoeggVT/pZ8YCfBqUulCMTjS0eT3G+BKE=
+	t=1752784336; cv=none; b=u2reQDRDbr+pNfg3yMeBoW1DCpyXprwBN/DtwpG1ybmSFSm0b5ZHu6XoVPr5qDSX9xvlAWyIC9pt1J+aOCsNvlU5+AN8owiA7f0Q27c9ZpyFH6B0Qoom6oPUyYzAjoqNuoAKew7FlTPJ14z/lWKkT8Bxi+lYupaMNLtOcZw6REs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752781776; c=relaxed/simple;
-	bh=Myk1QhzAnhwtncqbdinGDjcFMdelnJp9AaA2c896W7Y=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gS+3qBXb2el07IHhv6IxwJDitcwelthfKipKE1dg+e//+FHKL53hSODiY3z3p0ntGb04BfNYSvWf04qXFkCTiWucRq4w2bVMyspQckNUx62pyo1fddjyciY7pyGifB5Lv0VDz6atWpmvtNEznD2XtdSw/ACHm9lvuOHRJW7zV4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LgQvQxjF; arc=none smtp.client-ip=209.85.221.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752784336; c=relaxed/simple;
+	bh=PJ2I8j5dqSanxlraPlHGChPXuPNnF9RDERw4OA5FkFY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mRKog/Jukayy6c+qHBD6GAGtRL0jlAS259B62aaGgUsfX4M8ao3is/W9MG/tZP3SS82p7yvSnOtxx2XQdkG+YKGhEga4zBvGjB5O3bTcHLumvHtF0K4cNqkyS9haczajCqNidzoa91I8goL/rL8NqBOF/lkucNGb1cnCBrjSW7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gtuxd/qx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ktSExygj; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LgQvQxjF"
-Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-531426c7143so671576e0c.0
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 12:49:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752781774; x=1753386574; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8OG6Xvsj4MJLo368+QrvzZJ0VjJuRcgVbOJ0HiCv3/w=;
-        b=LgQvQxjFd4eMP5FhTQZsJAAnY1bd5jgKJDlsctQ4I/qs51iOEOGXdj2qAgTvWwAhlM
-         FEEtmT2FTm595G/7iWyU9KmzTB5qTwfldWCzoOYBQZDwqzjlCHtoaSakBJWr8pzoBSQe
-         aIia4TT8vneyavyz/0ZGmF6iHDgwnbt/KOrOte5SZCQX2QC0YijVF6ypxaszzAtgw0QO
-         g9L0vMgJADogeswXJ0avImWCI5n81ruf0sjyEyUIMWXuNaQChOqEZicvm3NT34bjHxAD
-         fNhQXAPhcL6i7FoR/Kq0P1Gi27EHzVl72IyJsne75GHYlw8guOi9zlATWjGJGwKomcIh
-         fn+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752781774; x=1753386574;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=8OG6Xvsj4MJLo368+QrvzZJ0VjJuRcgVbOJ0HiCv3/w=;
-        b=vAOWmnYCJ8dvFhEfqk1JhXoLTn92vD0svGjpnlBthTMcy8/HayVFcL47k9TEiC8mB8
-         RMmaU+NVsghTRk4GvHnl5W3JrCHK1ZtwuDGhaA5ADYiJujymCNqs9ZdcOkbhFoHEomnD
-         SgjoEyCl5ajnv/h5IaB14kunBmVKEEp5SBDb71hH7pbnzXlCfodYTAJBC5A6KAP5rAEy
-         j6j/gNvByt8AXn7gni6Fm/E+wSrFwwFcOVKs3AfUSm0FKmE61DGSm+4OO/Zrh+35vcMR
-         XGKsH5mS/rxKlR+AmqoATZaA4LqpA4q09KKueGDQVkKHqS9n/iJN9wY7GHsHSrZDiUX6
-         jQag==
-X-Gm-Message-State: AOJu0Yzs1lthhTj9c7kz2AH0R9mBrrhRGTGmeKMhzbxKt9QFCDVb2Zw9
-	HhkpJpNNd/GY7tYdSiQFf6Ud9yKmyWjcAm6WtqTBICbiq44khyEBj4dhqwrurV5xfo9ag+MRcwg
-	s5qEQ11AfbSp5OkCIISk3nLQORhYVAec=
-X-Gm-Gg: ASbGncsRaEN1VV2vlDNVuSJrr9jDtK4BmQCmFDta+3o5wR3b3kWe7kE77aH7S3VzqEz
-	XVT+jlULdfXYe1k+5TyAjwH4rPmQinBBb0XZBfBk2YUoUrngBi65ZQhNpVPfz1Ab0NQV4QYUoUN
-	FXe4CDDMiHTrLFl33TSYK9USgUyIDUSTvYeRnNMfSVKe3S1yKunAYe7FsSvpIe0VvWNf3JZTPjZ
-	y5NKFJ7QAo2JbH3/ryxCK4s38XFmTEyncRl+yzN
-X-Google-Smtp-Source: AGHT+IEzpnL64elDT5E/cOU6S6d3+9iMtG6hlss0fXUJo0jIq+qiQfWPgvx+/yi5+mmcFFuQu1PXRoo8mUahNEUb9GA=
-X-Received: by 2002:a05:6102:f82:b0:4e2:beb9:191 with SMTP id
- ada2fe7eead31-4f95f41795bmr4756979137.20.1752781774066; Thu, 17 Jul 2025
- 12:49:34 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Jul 2025 12:49:33 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 17 Jul 2025 12:49:33 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250717020905.GA2193264@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gtuxd/qx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ktSExygj"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D4E0D7A00BF;
+	Thu, 17 Jul 2025 16:32:12 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 16:32:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752784332; x=1752870732; bh=m6vC6O4Wen
+	+xQcIE7EVqWJs+Po+YO8y2/9zbd6hFgGE=; b=gtuxd/qx34vvhXSDBELH8LGoKd
+	qhkYhIWx4oAsx2E/7rDUfhnu7YyxHYffKhtMUW72S1kTKmq8lbVUaOnKd08wm6KO
+	VgsZ4VDcLPlSF46G/NSk7IKI+QVsknzKs/24R+hpelSm7/FSQD7yY1DpUQEi674T
+	dEp9jd6z2rZ/L0ZmkQme4RxFsTanEgtOODGDWRediAfyoo0/1Wl3KMxYZIzAMOd7
+	7aLEk1sCfH44Vl/oUMkTWSTnHJDv169AARItbeXN01rheFbL2YvP3PpdfJvgubzx
+	5xFbuPFWoLVLC7dBVb6vl9LNPlI5ybqZCkB48bCVy9gTXgeGIMbAZ7nU8pwQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752784332; x=1752870732; bh=m6vC6O4Wen+xQcIE7EVqWJs+Po+YO8y2/9z
+	bd6hFgGE=; b=ktSExygjCF0wro1qjRwnGUaFoOOMvdB4Bx6geb7Vm2d6Rni8nSp
+	rnUd7oJ515aB9sdIH5tBlld8Cj+iNwr5aFOey0RxZTqhrUOHewop3OE16idaY5Pm
+	wCNPrdD2IlRPhQDZhTt0JNvZE8XfXIWg42dOIa3ayPESNQ/UAEAVL4oaBxPq4NMy
+	accm2xneK/KNvYtbHvHIe5jeeUcRXge8rn6QvjkuZipYlS8/A86w7MYODt6TtDcs
+	z/ET5Qc5GM7NxMIhQ/MPp9kloSNSWc7tRYzBv2fauMiwKJ6UyKpKQuNww2V8gwaQ
+	Cg++OAwGSiVizVweNubVDBZUmAnW+gfc9iQ==
+X-ME-Sender: <xms:zF15aHpGn1XaGYbPODo26uOENhZDURd5dClg_ESuQ83-NTIgzXVJ1Q>
+    <xme:zF15aPN53j2ZRDj8BNmtcCbo_7400gYogrKY6hDJblFC4-Mj-SddFw_Fdje-rgB9p
+    bZgg1iGXB_2ZH-yaA>
+X-ME-Received: <xmr:zF15aKqs_e2Mmfsn9txv-dJTWjN8-2UJl3j-Zl_YThRUqVBMTX95eLXnljcjoITQ8a-g2wqu4tlRcDWU-d03daER5I1-LKEwAtQXDGY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeiudehhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zF15aMcUkB6mReZYsjwusbMsos8rJDL8Q_-MkOOIiw1aR-ejJ3mR0Q>
+    <xmx:zF15aIQCxYGv2ZN2NBfaSbluTRc4yuNAeP_I2b9kL1dsTYnCe1yVYg>
+    <xmx:zF15aNYFr37k-ZDsXakZ2oFuWfaLFaNIrNISbr_i7TjRexgLWw82rg>
+    <xmx:zF15aDe7dLPwXqwQazsboATJeKp0gTiFIp00uA1vAS30PmF6qM-z6A>
+    <xmx:zF15aOtDCfVyzVmrLJbVZu1isuyDSw7fCqhb3rnxvjvmQ_sWbngnBjMO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Jul 2025 16:32:11 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
+  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 2/5] ref-cache: remove unused function
+ 'find_ref_entry()'
+In-Reply-To: <CAOLa=ZRqLgdnUz4Eeof0qdD_RkBYOKOT4oOoXEb0P386KQ0g8w@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 17 Jul 2025 12:31:07 -0700")
 References: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
- <20250715-306-git-for-each-ref-pagination-v5-3-852d5a2f56e1@gmail.com> <20250717020905.GA2193264@coredump.intra.peff.net>
+	<20250715-306-git-for-each-ref-pagination-v5-2-852d5a2f56e1@gmail.com>
+	<xmqqtt3a7u08.fsf@gitster.g>
+	<CAOLa=ZRqLgdnUz4Eeof0qdD_RkBYOKOT4oOoXEb0P386KQ0g8w@mail.gmail.com>
+Date: Thu, 17 Jul 2025 13:32:10 -0700
+Message-ID: <xmqqldom5zjp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 17 Jul 2025 12:49:33 -0700
-X-Gm-Features: Ac12FXx3TdV7jlHlXLqC_bIsq5R_xTm92tCvevKYRouaHZc5z0IAKjhgxcvhXP0
-Message-ID: <CAOLa=ZTdUsv-6jVhPSwEW5dYr3vEh2bLT5ECRZZ1ot3MGAYhBg@mail.gmail.com>
-Subject: Re: [PATCH v5 3/5] refs: selectively set prefix in the seek functions
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im, schwab@linux-m68k.org, 
-	phillip.wood123@gmail.com, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="000000000000033403063a254fa7"
+Content-Type: text/plain
 
---000000000000033403063a254fa7
-Content-Type: text/plain; charset="UTF-8"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Jeff King <peff@peff.net> writes:
-
-> On Tue, Jul 15, 2025 at 01:28:28PM +0200, Karthik Nayak wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 >
->> +static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
->> +				   const char *refname, unsigned int flags)
->> [...]
->> +		do {
->> +			int len, idx;
->> +			int cmp = 0;
->> +
->> +			sort_ref_dir(dir);
->> +
->> +			slash = strchr(slash, '/');
->> +			len = slash ? slash - refname : (int)strlen(refname);
+>> Karthik Nayak <karthik.188@gmail.com> writes:
+>>
+>>> The 'find_ref_entry' function is no longer used, so remove it.
+>>
+>> If my spelunking is correct, ba1c052f (ref_store: implement
+>> `refs_peel_ref()` generically, 2017-09-25) is the commit that
+>> removed the last caller of it.  Which may be worth noting here.
+>>
 >
-> I was looking at this code due to a nearby thread and noticed this funny
-> cast to int. I guess you added it to silence -Wsign-compare, but Why are
-> we not using a size_t in the first place?
+> Indeed, I could also verify this by running
 >
+> $ git log -S find_ref_entry --oneline
+> 2c90b85801 ref-cache: remove unused function 'find_ref_entry()'
+> ba1c052fa6 ref_store: implement `refs_peel_ref()` generically
+> 9939b33d6a packed-backend: rip out some now-unused code
+> ....
+>
+> And looking at `ba1c052fa6`. I should've done this before. But thanks
+> for the digging!
+>
+> I plan to address a few comments on this version, but I also see that
+> you've merged it to master. Should I raise followups for noteworthy
+> changes or a new version?
 
-That's an oversight from my side.
+You mean it is now in 'next'?  Yes, please give incremental patches.
+Finding some more gotchas even after v5 is a sign that they are
+tricky enough that deserve separate explanation from the main part
+of the series.  And I think the msan one Kyle and Peff found is also
+tricky enough that evaded reviewers' eyes.
 
-> This kind of conversion can sometimes have security implications because
-> a very large "refname" would cause "len" to become negative (i.e., if
-> it's between 2GB and 4GB).
->
+Thanks.
 
-Indeed, I didn't think of that.
-
-> In this particular case it ends up cast back to a size_t via strncmp:
->
->> +			for (idx = 0; idx < dir->nr; idx++) {
->> +				cmp = strncmp(refname, dir->entries[idx]->name, len);
->> +				if (cmp <= 0)
->> +					break;
->> +			}
->
-> so we get the original value back. We'd still get truncation for a
-> refname value over 4GB, which would presumably give us a slightly wrong
-> answer. But I don't think we'd ever look outside the array.
->
-> Such sizes are probably unlikely if we are feeding filesystem paths. But
-> we probably should not set a bad example, and just do;
->
-
-Agreed.
-
-> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> index 1d95b56d40..3949d145e8 100644
-> --- a/refs/ref-cache.c
-> +++ b/refs/ref-cache.c
-> @@ -498,13 +498,14 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
->  		 * indexing to each level as needed.
->  		 */
->  		do {
-> -			int len, idx;
-> +			size_t len;
-> +			int idx;
->  			int cmp = 0;
->
->  			sort_ref_dir(dir);
->
->  			slash = strchr(slash, '/');
-> -			len = slash ? slash - refname : (int)strlen(refname);
-> +			len = slash ? slash - refname : strlen(refname);
->
->  			for (idx = 0; idx < dir->nr; idx++) {
->  				cmp = strncmp(refname, dir->entries[idx]->name, len);
->
-> -Peff
-
-Thanks, I think we have to typecast `slash - refname` to size_t, but
-this is the right way to do it. Thanks for the review!
-
-Karthik
-
---000000000000033403063a254fa7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 95f5795029fb4b5_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oNVU4c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md005Qy85ZFYwVXBKNVBMN3ZXd0M2aldCZ3dCdXJJLwo2M0hINllNejFN
-OHZKWWE0Q0VobXBzOVpZZVdoaXlZRzY3OUwzazhyYk1WeDdGOENmZDRObXlRYU5SYlBVOU9HCnhs
-R0JLSmgxNlFtTmJNWEQ5RTczNkMrdTBDNmZSRDdtWjU4NWZtVk5GV3Nzb2wxSmZqUDV0ZnZhRmZM
-OStVRWUKaVJNUDBhdnhId1puWkYvdkRoRlVuWkRyaW9PczlTWHhZZk9yajVXSFNabUtTOXc2TEVZ
-S01KOCtnVUxlYXArcgpPZHpKL0tQNGFXT1VQTmZJS0g3TTdMVTVCdEJxOW5ZQWNMVmV2TVkvSjVa
-WFRzd3MwZXAxcjErZHpmU1pMTDBvCklYcTVJaE1DV2tFNFd1WmtFNGtJRENoU3ZBMkh0ZFBOUTl2
-U1MrNjRQVWRpK281dG1HNk16eTRwZjY1cmNGVzgKNUZvNFRsYTl3SGdnTXdYTGNidzJ4SFFZL3Nm
-WCtqOXpUcHh0blNraWh0bkNVRHo3Tk5hUlBlUnNKSFgzdHJILwoycHlCamMvT0FjMGk3aURKd1Zx
-THlRNXNZdUxnSDQ5VW5zTWtZOGZvSU16Nk51YytLUUhtSGNrNnFtTnl0dFBXCmZ0U2NYR29vNFV4
-WFlMaDh6QVV0Z3BsdFB5M2Q2eDY5aHFlQmtnbz0KPVR2U2kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000033403063a254fa7--
