@@ -1,137 +1,149 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38B62FCFC1
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 17:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF321E47C5
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 17:27:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752773188; cv=none; b=XHYBT62sqAoQMAiIk+CojBb5goXGVFPSBfFgJs32kZEkj653uA+AS4T7+Ozw6eQtNUyCmizWJVVtj+RLXC5bHhayMDx4KzJKQQJdoVswL6nF2v+ma9hP98HjAoH3KHXPNHEBj4uaV/QT7CUTjZNBWUgaew6ZrVMdPFBdndevYzI=
+	t=1752773276; cv=none; b=rW0srT4HWlmA9gQ+ndtID2ZB38m41tfI1iooXMUlA3UbOHUi4zKYIptkURlWwBtYbHIrK45x76yqazkvKfC4+ARL/Dwhj6635/HGKfqoffuEOBxDigu76zWNK9gvLVXEHf4m5KixbilmHO71BDsSXeovfpOXy8ZWeix8YdZYiuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752773188; c=relaxed/simple;
-	bh=bmoWiI1bfSEdXqtPWABE7PZ0rj4q9vWS961zSfwhQ8w=;
+	s=arc-20240116; t=1752773276; c=relaxed/simple;
+	bh=UybVUtvTXMRe5NkGsEsBeQmsKTGFRKIX4hQukCEQ6OY=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=qUoI+rgrknYgrZjgoORmxMHqYrR8UWEDbnoBeUYaduerZCel8J5cqA826MOTLcB7K/vTTpW9WFEUYrnLGbGcrCZjaMq7ZxQnZuahxfFy6s0bKlc6/2g4XnDuPxRvWBkRIZtQRwTp5pYQHePZRQNEFJt1ceK6RAweqOAEaGdmGmg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=gflSxghK; arc=none smtp.client-ip=212.227.17.21
+	 MIME-Version:Content-Type; b=ILmt5F4cuStDdsHb/BXyzunbeo7DayBbkXXfFqo7OYbrVbk1ZfXQZofau4HsOnc+xbo3j8/6h4Xr8wA3j4/xogzYFhjRxS/M4lbw72oASbtj4gq1OrpVF17Is7/LvOrSMNOpUKZmwL24S3LnVuvd3SZIk9Vhxo4tnsFfJF5FVZQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rKr9LH5/; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="gflSxghK"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rKr9LH5/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1752773183; x=1753377983;
+	s=s31663417; t=1752773272; x=1753378072;
 	i=johannes.schindelin@gmx.de;
-	bh=voofGvjTo2vhfOVknGdjcJ/4EyXtcjT3hdZWLAi2+Ck=;
+	bh=vdKXmR7dE91i62RMYMsdWpBuCNIJwAq0w5GhdXtAPgo=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=gflSxghKnUzhMTqc8Riqa2yhEzKmivd7hVPA6YSOA0HkW2zpyEuoHLc43W1FX+NK
-	 GLC5TLIgoGAudmnJIKmD/ibsej0MmAnVd5VDRjflBueTEqerbE99dN1HKPLQ8lRPm
-	 h1bEIapRZIOnYIoEIN6k97G4RwDpidKfgvabz19zIlY7y2YInX0CezvRqafasr+K7
-	 uKdujdV894oT55GPklrOINSJ2wVu62A2Ai4wtu5Ppz3fzgRnv4rW8MzJpBDnZHP5w
-	 nIBLMh1c5XXDjZwFWIZjnEvKeGCtR94HBMtEJimqMjS9bKIsEWjTDeX1n4MhCMGSV
-	 H0P+r0m33El+nBv4pg==
+	b=rKr9LH5/zb6ovwvMDhmXOvn5VrouguvWAZvCDWnmtVACJhI4tW1M6P7KGCD0V7Ae
+	 HgSFkVtLCes/dNu5WIEhUFjTgLn27g0FCEmBl4CudD3DNMezwIxDRirOGZhb1vLCy
+	 +wkgbBuusXUvUaiy3O0pz0FgfVemtIfPmQiR4CZYJ5/ncDN36Rq0hwOmM7qUZjjKC
+	 j/VoqmbRSLa5uTNOYvgPKuBBmqoJ7ze57fi2haEsPrW6/9bhxpR2TjO3ugFKAZ5Z0
+	 Z1dZA3tsizBeeN/Vw7FI5XRMCDhRpzj6/ajB1gWJqaq1hBSAyPN746n/b65q1Dc8Y
+	 ieVlgIZtmk2hCGpbwQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9yc-1uLTUC4814-00QGgS; Thu, 17
- Jul 2025 19:26:23 +0200
-Date: Thu, 17 Jul 2025 19:26:21 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MmlTC-1v4bt82Cxy-00oL53; Thu, 17
+ Jul 2025 19:27:52 +0200
+Date: Thu, 17 Jul 2025 19:27:50 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Fabio Frumento <frumento.fabio@gmail.com>
 cc: git@vger.kernel.org
 Subject: Re: Git bash 2.50.0(2) not working on windows 11 PRO 64bit
-In-Reply-To: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com>
-Message-ID: <572ec2d0-b587-9cf1-7643-1a0f3e59c268@gmx.de>
-References: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com>
+In-Reply-To: <572ec2d0-b587-9cf1-7643-1a0f3e59c268@gmx.de>
+Message-ID: <af2ab4ad-51d0-7b88-a0aa-6063e3857d4b@gmx.de>
+References: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com> <572ec2d0-b587-9cf1-7643-1a0f3e59c268@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-113415867-1752773183=:9311"
-X-Provags-ID: V03:K1:VRtMAM7Wh58rbT80cRPsb7aqBAxS6n6I3WW+4qxGOkOfP4sc/mh
- ya7nossqCgmfAWUQ3zQfpdKDAap/WDxR0yyattN3ULUF/18F4zUFQdbtNZNIAaHrxS0CwEf
- kO4XGcAVOmSC+5Ru79CtndvrFifnIvXFrXz1DjDUSQrq0UIGw0jDlDJBZun/R8uOIiC/MGZ
- 6yx83D1ClHVzxhgUvJ6vg==
+Content-Type: multipart/mixed; boundary="8323328-828717416-1752773272=:9311"
+X-Provags-ID: V03:K1:z4vS8iqcoBPjmtfKVMvgQmb/AdNXCgiANcpF+3RQZ3xoa8ojtmf
+ 7xKq1zOuLcu4FV9DDnycjXOcmblUH5jIEKwvcA4QYZleVroiM0jKvMajZve/2/FaRUa6J8K
+ 5+bSSm0zQOBMBy7lxuCUJ7eNXHA6Xhb1FjLxQyAkp8PNULEtvmwLOLqUXeG+bsX9Qz9YMA+
+ VzPyFhxgKwUkdl0cWRHiw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PKf7KjbhLr0=;ksLaf/c6ON8FOZmAqC6HsVCWFC/
- Fi48nY3vJr0nX+GWFtU6I54dvqm/i6k8I21IdpoTcLlvfHMbD3kkuYBUSLIk2QCH54Z4GwjD5
- qEU9WDNnrgQ3HzeLxDQQdNFTenPfPbtkFTQ4pvxaW4Oc/9VWjrNqNVHYBupQrBCOVJF5P7Yhg
- 3Y7zGHoOhTNRftfUCihxMaFo+V/BFapN8WZr3FRU9Nwt0gEmWWfO8XzDfk9cGvpIBsPtrNLKK
- xDg1DfHRncXYGYaJP1teaQ2wDvpK4KH7ZcGSkXNJPe47meknZmbqVObm2rv+mrgA/CvyLNKAi
- zFGygMRfvRtfpCF0V3RyUh1Fvdjm4vGKxn+xOQfgVGKoL3J804XJ2hq627lEdi0SMvlOAKvpG
- Kt0FncmCDs7aI1ebDtsgQhVWld/JnycnzRGVzfdDV3tl0t3nG32+auHqn4kVupgStOokxdCHT
- i1QVlJcol2tlNtcvvX4ejH/KsfUyqMqDuEJfCk9tw+WKq39I2lRFJsusoQtvvDaX+s/gEGdnr
- imAKtXHO6slBorAVM4mM7I76a5zFXq5yCg+mdRnVj8UPtVrDhOwoA4hBivwfPLIR+BiHt4c3m
- jiQWBebkTjGj1FvLEZPasjiNV5htqHQRq7iu8LrF54Hh/0zvUfPc1yNIQYcm6Md3KKzzfGkL6
- dDUlbE/Vi0F4YiWCRaeMuwGe137/UZ8pPuW+GsV+6Pmy2mjL1P1ONiWneB34LhQTooqavKc4v
- L+PE9o1DKs1jEJGWQqeH54KJv6wRgnWArp1LxQWxDmTrE0+fAaX6wI3g4p9k3nLa4ct3nuM0r
- sXaX37Lk2RRLVGjQOFSxYNwgiKwpAMCDtuEUSwW5H89977qrGqB71KgdSoBacJIWjMrnZnsZ0
- BbM5ijDBzcJDSEiRAi3iis3JjgagyELDp1iJH9c+0Jk035+h0/fGbhYXcn5fos60BXy4BiH4q
- VA+nnWUzPtIWCK3PtLRvGBhl8HtYl6eNGuHe0YHssNsiXJwL3HF18u/4xhiS7VHtGZvPxzkXS
- bFtVxjDOGnmlFTVpGA7d8WxKbbsWTdbUimHd2snTOVg6I6btsMU9G3UtLp3ljrsvupwiac9g1
- dXTB0+9Grx4U/3Yj7a5JEtBmSy0EFbYL2hZdu5XY8c36pxiMUGjobTYlSKuPupH+OYPWD3w+a
- +VkmkxOGXtyNElqw1LRZgH/NgtaHwq/Gfs8ZKAiMOnP/XtLm2xnDO3/GJBBamn2DRZQb5BJiO
- NP2lJb6NQ18wJs8B3RZl7siwef4eme+XRHBz91jfo+3h/p6/WyMqSRRu2lBcqXlGDOuEiokbT
- wIXuT/e71dBaz4go+7Dxdy449KfRxK7sm8K+XqxajilG+ltIPG4SAN1Pd047TbdCANvud/PrL
- wCW0F2VxpU1wyEE/zdII59jIkdze0e902Erh89BxQDxDhBMMt9a+U38CWdsuTnLXev54EHVdZ
- ydyd59niFl8pU3VC3X7CJszAsmEUbzfp+Yu67K+AQmxS4pcwuHg9rFsSPcli/WA7W2UIINA+H
- O6AE+OhlhcLV/aMPzY18whHe0QCWlb3PbzrfNdfP59RyDO3bsfW4HXU/iuBHpRqwg8atoCL06
- I8RjsbUoogV6qWt6RThPj2/YUluXGla10w8qowZGqAjMIooHpRJMMB4u725ZeOqBa3lmvliKR
- h6QSSeVR1i2wjbip5EddFdLOioBMpnCy21tOaShCv4uWOlRRcehmej2gZ32liA7kvG5BeQbfd
- 3vte2n6iIqMdMvm6PFySJkc7Fyqvz1sTNTxoH6EwvcJ1jhuZhL34/IYDN7jdlLXnZk7USESUD
- JIrr/EN4dfZ79J9ktxwtYzDkTrzrT8DKIkVr/w0rXqiyAxbVeAv7XNwsvCocAFRxf6j1tNCvS
- rP8ux/R4OqLIFKxp8ilO95j31oX88VhwP50dZ759Iq+hUEr8aOakrhl0K6iuE5npJY11jXvo8
- EMPVJUfC/P8Kn2Hza1Kbc3J3RhnB/vJIpiaxQtsoQ9kPort1000o/unr+7YTLqdCu6mvBhR48
- +KeCfi7Cos63qW0//51w2dZSBmseAAyfx1obPXCy+foDz7eXFtxSxIsdghW6pH337xlCHQSVq
- ckkt4desng0ShAGtQlWkJd38uockfDPD1rHcmRQQn8DONr6rmtfnVZJZv6bn4kCvmz9VYHWM9
- C0DzMvKBYddXIRGMBI297qh/PDDalajJ8aX9Y/tm3WgObzAjO+utEX9vkcsLpw/9LtSVU88ls
- koxRXkD+pJJ0/VDw3jt+I86oZ9OS3VmbFlaf5j+UCiX8GhId3cifP+tlT3jMdIyYhyhZ2rCoe
- UF++kaFIr7gW2o54JaM5U4ESblG6vDAlQa57hi7xe74ae5AiwKLtY/Mbu1aQKtX9414saTmqc
- RifrNQL+DOrk9jENd3J5AwWG0uqAbTjxWq9EiS2UlcLQmM8Woq7ZJ8jBBYmuowY7jbxHMWWen
- +JPupVLmLCDz7vIDcXfo17VYupp3c+srxWdjXnLDMYMq/ksAVzD7CBdqWTCZMrUtxSTowgsb4
- whX2hduspBtArLH8T6WNvAYFcG6bMX2XOqBM3wi7t7ERGpeckMOdMNYZR/cFrFuprDSpzrO7a
- 9q3Squ3/eeaLeqipmbIeBgMlT8wKPxZXqLgIMvi6ToDbmE64OGWM3SovhnKVG9zC2GBcY/9/3
- Cxb+TosrOwhRSGnuWAF/ctUXy9lfYv9imAfdSjecuhTspUmy91gUbY8bcE4ypSlinz2eDBi9c
- TskFb/XmmpMI0wzQev3/geEwNZ54QT7Dot8SkTV0M/tacxkzSUQ6QAWItwdnFOT0iK54NOyji
- toU13/2hzTTNzCuz1R5r+ZUe8LuuDa3VJ1iN33NVk5EMroD0e5OuTLmwTthNmeCz5qKSwvp7A
- D1D9i+puENq4urZomE7e2IUQF3tBLG0XGD+PhiHYluv5HqD5D64vvRzMLstiMSf7th/CFVEwK
- tmL9U2lnZaWh7rB8fIhJLaxVJ9tomHKvyvDxJC887kTkcMyPqIJzbTY4eD6FBZs2rTanrg1Hm
- MLdZJLwnMimuvddJOjv3mvHAk8fwZFwzYEXcG6m9i1VzBLsMQ7NklpU+kc74gs63/ujmZp3f4
- I6rzmyeLymmtjlBExbCBbBfY/lUQAnx9I2FkeSalv8xFWR4siELf67QrILI45M0ymrWFkkBRX
- QNnGBmmN/13GlFVLUwB3yUhDHuhzNxbVXQ2Y87/Jjuy6knb78i5R+yD+5ziyb1X/tmGW1cLV5
- UxSs+EcQ/U8GfqHasCwG8ttRbnuMRRRszmsx2+A9Ymgguzz47FDd3s6IjiJY+K/r96dDuKUDt
- RiDUb8OX/34OAW2SEfBuhBiGFJeY790be1Hh5Ya7PdWR/DHD7/wes3/lzfkce9VaGXgd/Y/jj
- KRYJ203RzUy1CaL3Pe12bVyTwxRwU5Sy10gDF4Hx1DYR/D/QZgRoJtok+MSNZEeeyVS/6PhBV
- Kwh/rcpC7HHEvcgmhgYg6Fq11f//xwqD+ymlsbD7ZhQob7N34cicFxloNgI/CoQajdjZ3oQL6
- 1pRRH6wUuqDVqkT/uBrhAo+fAYXYvQxNBY4El14fPtEPVSQIqvGj7Wt0CSNhfmve1fkmlZaYm
- ZvdiVTUDr2p0hYSIyHm2QFkdalIfxkMGyKq
+UI-OutboundReport: notjunk:1;M01:P0:NUYaddq5z9U=;d026Ek9BbGWDmHmarb4hgQvP19/
+ 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
 
   This message is in MIME format.  The first part should be readable text,
   while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-113415867-1752773183=:9311
+--8323328-828717416-1752773272=:9311
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
 
 Hi Fabio,
 
-On Mon, 7 Jul 2025, Fabio Frumento wrote:
+On Thu, 17 Jul 2025, Johannes Schindelin wrote:
 
-> After upgrading from 2.49 to 2.50 git bash won=E2=80=99t start anymore, =
-a prompt
-> window shortly appears and close immediately, downgrading to 2.49 solve
-> the issue
+> On Mon, 7 Jul 2025, Fabio Frumento wrote:
 >=20
-> So 2.50 don=E2=80=99t work on windows 11 Pro=20
+> > After upgrading from 2.49 to 2.50 git bash won=E2=80=99t start anymore=
+, a prompt
+> > window shortly appears and close immediately, downgrading to 2.49 solv=
+e
+> > the issue
+> >=20
+> > So 2.50 don=E2=80=99t work on windows 11 Pro=20
+>=20
+> Maybe v2.50.1 does?
+>=20
+> If not, please run `& "C:\Program Files\Git\bin\bash.exe" -li` and see
 
-Maybe v2.50.1 does?
+I meant to add "in a PowerShell session" here, but forgot...
 
-If not, please run `& "C:\Program Files\Git\bin\bash.exe" -li` and see
-whether that reproduces the error (in which case the terminal window won't
-close immediately, giving you ample time to copy/paste the error message).
-
-Ciao,
+Sorry about that,
 Johannes
 
---8323328-113415867-1752773183=:9311--
+> whether that reproduces the error (in which case the terminal window won=
+'t
+> close immediately, giving you ample time to copy/paste the error message=
+).
+>=20
+> Ciao,
+> Johannes
+
+--8323328-828717416-1752773272=:9311--
