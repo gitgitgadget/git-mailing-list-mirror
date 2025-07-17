@@ -1,82 +1,82 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49F4020E31B
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 04:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCA1820E715
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 04:57:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752728243; cv=none; b=X8iRFu4huuhkXPf2+JQ3a0O90uZGHqc/JAIvRQXVWE3CJe2dH8H4ptBA/6qkTmdxzYBldOSkD6hJo+MxcUzH6CsvQZG2nQS5q7OJmQ5fYZrXSLdOuadq6rI86XrL9JPW3cWLyEIDOjWGc09NtJrWLVrfQWBf2bWUV07XTQHd1Q4=
+	t=1752728246; cv=none; b=qX3+0iyQYcGZC0QEUhw0NcDOntpcnXKWRLsnY3xbyBzjAW9rlgURwo2LMBtbZ3qZ/DFZRBKCprjWr3ZvIi2ndkoGsvpnwTt3o+ort8Nzbpb5RoJfdTqArGe1daxGUCLMG9Z8vLDmpBzuxV0uXFL6RUlxQs7FbC0uTNbNJYQBOqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752728243; c=relaxed/simple;
-	bh=eKoz7Kps//iEGeI+iFxfLz/VM84RSahfBucwgshjR3Q=;
+	s=arc-20240116; t=1752728246; c=relaxed/simple;
+	bh=m8yuKAweHzTQTQp3HUL863oEdh9/RqIlf4zVnoGSTec=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=gj8gwyIsJjPIdQQo22t/WEDApQ5Eg0QWlHDSm0U2+zmUu/NLXSWfqrFWwHgG+TX0kJ6M8lhCgcP6BUy6aQDmLDu/Zu3GKu78pD4t9DiwEh9cyq4naJ46xZ9vOV7maNNz/4tkCl7lzKh6Yua+zPKzyyXk1BtCil0q6j/ba+ozO0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=xRhXMA5w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fDApsXDs; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=WkHG5tepYVnD9EmuX/lDr7q6zMBh6kSobarDdIjqu44IIzF3S6umYU6/C/3SAxa0t9e6o3q+m2tgoJMJTJhdZn67P1GfudomxVUnBaNXNwQ5pXcx9k8cZlgAHviGeRALRG2G0OxfAYhQgPWFqg1BcnbcgMQsKzKjj/dj7lI9K9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZfUit9ld; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F6LyBjnT; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="xRhXMA5w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fDApsXDs"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZfUit9ld";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F6LyBjnT"
 Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8D0DB1D001A1;
-	Thu, 17 Jul 2025 00:57:21 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 1A21A1D001A5;
+	Thu, 17 Jul 2025 00:57:24 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 00:57:21 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 00:57:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752728241;
-	 x=1752814641; bh=qSoJZqoJ7Ut83ZwL2d5KpOuYi06f8xQ8IZ2WZF3ECE8=; b=
-	xRhXMA5w0FgD1c76MSN8T0mIAWqqPsu6iIWCPJPJvkhD4WqFdy6VaO4fMNpxM9nW
-	Ia5Hl4WkOEuFdJv5j7cSMtV4IfOsUoo//Uv5veAZIMCbevUZvgWTTS8O43Sm/bGE
-	2DFXncaw4L0GIoa0e6wRSi4XYoRDNNXIM5AdCFFSpRQiYrZfswO6bgjHIqZ+0alt
-	TIFH8axJlFY6E/4acwbtN5AtyJ+w6e30T0Ll122C17eYtjCS0BdFi691eN7SFtmH
-	Js3LDB16saPB32mpwwJkEmrV3BfdPMcfUAhCqrHMkTTE2ssR2QTawE5Vgm9DPrwv
-	XTLg5YdY+8Lay8Xr4eYfNQ==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752728243;
+	 x=1752814643; bh=LkOHbvh35N2bKD9DH5V4d4hqI8uXIiLwwA+MdRQH2z4=; b=
+	ZfUit9ldg1cURlHosWmF2L+3K/eOAVXbUPOg0QC4p3E3wordB62LqAeifq2gWaii
+	7vfVfNjyHuFa83UX6IKyCgK1R9kjFndv6A8RIywymigJ3lE/lRap0Uem5JQmZa/1
+	ZhRZDLV4vIvz/T5/AOnhwETkM0kmgig0Z6KEUrY92ghm5TWugvlC1vNhoITv/BJF
+	wc88nd4nxm+bKRohRTM+77k7zxDncWbJAVDFZS4w8Wd0okFbjQtZxjcXk7cI3HeW
+	NTPfnhxszhFXtlOVtvo6us2GxcVAhuo0FBVEep0YcKHdOJYI33hzHNrLD5u3VTy1
+	DqQ9IogQX9L0Q+MktCJm5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752728241; x=
-	1752814641; bh=qSoJZqoJ7Ut83ZwL2d5KpOuYi06f8xQ8IZ2WZF3ECE8=; b=f
-	DApsXDsDrwLgRWwTNz1wH+NCekm+vd2T3J8gwr4q74GNlKR+X2eRaS9eMy62M5eU
-	MLQbr44NrhC8pu6y13WpSZZRvIaiPCobFRN1912bXrKGBhtULsriJYIX0aXYB9MG
-	Vd8YyHeYXOymvW0kdZv+faYlXNRGc9eeK7XJW2ms9lYJiMI6VHzIRKKrK0zrrbBp
-	3WsMUkcoPptOQ3ayECxxEXXLPXRIaNDTXcu8clH9chbmB7fFvpISld4Hh6fC9Ndi
-	+nHuCCe63RMVeYa0WFNk52QfQr9jQwhJCh7YjwAxI81INYFynhH7y43BdCR3wYCe
-	K+2I18P9ad/XxzOmgro8w==
-X-ME-Sender: <xms:sYJ4aNGBrV__-dxzyy56dGgIjHQN0N8VTM5yjEamoup9uGFa9zLKkg>
-    <xme:sYJ4aN2eQC10S_ca00fYaIktSz3FhySHwwZuMcrBjAlrrEyIaEIzsaisg8zZFQAnb
-    kcCDVlP0DRbBvu0lA>
-X-ME-Received: <xmr:sYJ4aFlcm_KQ_0D3oLCgo_IHkr7dfn09UupmkbTgReAQ3pUuq8w0rCmnebRW-QDVej8MHalyGV7bwkUA2z7nBxRwPWPr4s4Aif5bIKfnRj6k>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752728243; x=
+	1752814643; bh=LkOHbvh35N2bKD9DH5V4d4hqI8uXIiLwwA+MdRQH2z4=; b=F
+	6LyBjnTpXoZawZDzRPZoAs6tYsKqem1pFwssbGwot6M96qhKg12Kqe4rQwXlfYYC
+	cPxvAVeVLlSBkxMCAtKbceLNovA66qq8Nkrese196m73Z4jrFu05PNVuitwaXNn0
+	By3sbL6/zTpLvdSiyb+QCvkHVSUQHWA2mH6tfxwVjD7f5ZKkow40EFdZm6iwxZ0X
+	kJfn4Lg0vaO/zpd/MJWwnyg+2ISHsYP6gsx2S1WudLXXq8vMKRYbgGbIVqzeGzi9
+	LHpdzxzvEjwu+LYPfYpU+98Ic4l2ThBSh3ab7G9ZjuJSDntbtyBkKMSpV18A6d4N
+	C58u39UnHkOwfyRWm2fvA==
+X-ME-Sender: <xms:s4J4aLzeEvQG-gbBMHJNTACJnYb0pggCiqdOe_TUO8zFFVmrEIXKow>
+    <xme:s4J4aOxQiOCnq63nVJilTM9hMA0SaEUCOp2DsIbukiAUPOC5P3hDKxI_dm-2hwJJe
+    KjxGAbhsJLN_WJ58Q>
+X-ME-Received: <xmr:s4J4aLym79mINMtyDjbcVPhYNEqtZQ94O6Ps0QWW0VbrAnhM98TKPgoKpuWdWOHoFW4tqF2CNnXgQuYzc-wGdXG-ug__CqdjDFfzr_ce5jtU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehleeilecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhope
-    htohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtph
+    ohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
     htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:sYJ4aN8EQGYsdESsKus3hIp2CHCt6gPhUxZj5-2LrRwSHu4rxMg-Dg>
-    <xmx:sYJ4aKrGMvGc-hGRYyPVGovPN7DgyDyXS6pPspDqdHxdAqpRwozd1A>
-    <xmx:sYJ4aGmaDDj8afd2sjYzIn0rQu4awMFFBO_VB9F_-y_YOwXpPz6x-w>
-    <xmx:sYJ4aBhWVY5JNxeqJHxA9BPXzvdtNYp6DOcBLtYX4A9FSHbmy0_xjQ>
-    <xmx:sYJ4aMSp_XAf5FXQB4sQYHb8xA6hfjvhM8FEb8N7NHbUomdu4t2IQQao>
+X-ME-Proxy: <xmx:s4J4aAajPA2qBX5RsS8fyLGh9FzsGDDfh_MEt-1rsyohywFkP_Hqrw>
+    <xmx:s4J4aEUnzZ6WgxWg2VdUoSHc_m_2BEwY9QdvwRGi9PrWS4XAlIIUrg>
+    <xmx:s4J4aGj-dk6T_c65QAlNbHgFm_I5Z3IirZF-a13wA5wHoL5MDeHMfQ>
+    <xmx:s4J4aKsDjQC1pXPckaUIv8SPavficeZVNYGgUxrc7qRhca54ctD6eg>
+    <xmx:s4J4aPt5hSw51nG4VUW0z_IrwnQhvvJ8_SwrZZyfOEyuhg1YGVxHy78y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Jul 2025 00:57:20 -0400 (EDT)
+ 17 Jul 2025 00:57:22 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e1447ccd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 17 Jul 2025 04:57:19 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8e7b5cbf (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 17 Jul 2025 04:57:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 17 Jul 2025 06:56:40 +0200
-Subject: [PATCH v2 14/16] object-file: get rid of `the_repository` in
- `read_loose_object()`
+Date: Thu, 17 Jul 2025 06:56:41 +0200
+Subject: [PATCH v2 15/16] object-file: get rid of `the_repository` in
+ `force_object_loose()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-pks-object-file-wo-the-repository-v2-14-36d2cd6c700e@pks.im>
+Message-Id: <20250717-pks-object-file-wo-the-repository-v2-15-36d2cd6c700e@pks.im>
 References: <20250717-pks-object-file-wo-the-repository-v2-0-36d2cd6c700e@pks.im>
 In-Reply-To: <20250717-pks-object-file-wo-the-repository-v2-0-36d2cd6c700e@pks.im>
 To: git@vger.kernel.org
@@ -94,85 +94,99 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-The function `read_loose_object()` takes a path to an object file and
-tries to parse it. As such, the function does not depend on any specific
-object database but instead acts as an ODB-independent way to read a
-specific file. As such, all it needs as input is a repository so that we
-can derive repo settings and the hash algorithm.
+The function `force_object_loose()` forces an object to become a loose
+object in case it only exists in its packed form. To do so it implicitly
+relies on `the_repository`.
 
-That repository isn't passed in as a parameter though, as we implicitly
-depend on the global `the_repository`. Refactor the function so that we
-pass in the repository as a parameter.
+Refactor the function by passing a `struct odb_source` as parameter.
+While the check whether any such loose object exists already acts on the
+whole object database, writing the loose object happens in one specific
+source.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/fsck.c | 2 +-
- object-file.c  | 9 +++++----
- object-file.h  | 3 ++-
- 3 files changed, 8 insertions(+), 6 deletions(-)
+ builtin/pack-objects.c |  3 ++-
+ object-file.c          | 18 +++++++++---------
+ object-file.h          |  3 ++-
+ 3 files changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index f0854ce5d84..e9112d884f0 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -633,7 +633,7 @@ static int fsck_loose(const struct object_id *oid, const char *path,
- 	oi.sizep = &size;
- 	oi.typep = &type;
- 
--	if (read_loose_object(path, oid, &real_oid, &contents, &oi) < 0) {
-+	if (read_loose_object(the_repository, path, oid, &real_oid, &contents, &oi) < 0) {
- 		if (contents && !oideq(&real_oid, oid))
- 			err = error(_("%s: hash-path mismatch, found at: %s"),
- 				    oid_to_hex(&real_oid), path);
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 9e85293730b..7ff79d6b376 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -4411,7 +4411,8 @@ static void loosen_unused_packed_objects(void)
+ 			if (!packlist_find(&to_pack, &oid) &&
+ 			    !has_sha1_pack_kept_or_nonlocal(&oid) &&
+ 			    !loosened_object_can_be_discarded(&oid, p->mtime)) {
+-				if (force_object_loose(&oid, p->mtime))
++				if (force_object_loose(the_repository->objects->sources,
++						       &oid, p->mtime))
+ 					die(_("unable to force loose object"));
+ 				loosened_objects_nr++;
+ 			}
 diff --git a/object-file.c b/object-file.c
-index b894379d22c..f7c07acadc9 100644
+index f7c07acadc9..e9152d9e04c 100644
 --- a/object-file.c
 +++ b/object-file.c
-@@ -1535,7 +1535,8 @@ static int check_stream_oid(git_zstream *stream,
+@@ -1077,10 +1077,10 @@ int write_object_file(struct odb_source *source,
  	return 0;
  }
  
--int read_loose_object(const char *path,
-+int read_loose_object(struct repository *repo,
-+		      const char *path,
- 		      const struct object_id *expected_oid,
- 		      struct object_id *real_oid,
- 		      void **contents,
-@@ -1574,9 +1575,9 @@ int read_loose_object(const char *path,
- 	}
+-int force_object_loose(const struct object_id *oid, time_t mtime)
++int force_object_loose(struct odb_source *source,
++		       const struct object_id *oid, time_t mtime)
+ {
+-	struct repository *repo = the_repository;
+-	const struct git_hash_algo *compat = repo->compat_hash_algo;
++	const struct git_hash_algo *compat = source->odb->repo->compat_hash_algo;
+ 	void *buf;
+ 	unsigned long len;
+ 	struct object_info oi = OBJECT_INFO_INIT;
+@@ -1090,24 +1090,24 @@ int force_object_loose(const struct object_id *oid, time_t mtime)
+ 	int hdrlen;
+ 	int ret;
  
- 	if (*oi->typep == OBJ_BLOB &&
--	    *size > repo_settings_get_big_file_threshold(the_repository)) {
-+	    *size > repo_settings_get_big_file_threshold(repo)) {
- 		if (check_stream_oid(&stream, hdr, *size, path, expected_oid,
--				     the_repository->hash_algo) < 0)
-+				     repo->hash_algo) < 0)
- 			goto out_inflate;
- 	} else {
- 		*contents = unpack_loose_rest(&stream, hdr, *size, expected_oid);
-@@ -1584,7 +1585,7 @@ int read_loose_object(const char *path,
- 			error(_("unable to unpack contents of %s"), path);
- 			goto out_inflate;
- 		}
--		hash_object_file(the_repository->hash_algo,
-+		hash_object_file(repo->hash_algo,
- 				 *contents, *size,
- 				 *oi->typep, real_oid);
- 		if (!oideq(expected_oid, real_oid))
+-	for (struct odb_source *source = repo->objects->sources; source; source = source->next)
+-		if (has_loose_object(source, oid))
++	for (struct odb_source *s = source->odb->sources; s; s = s->next)
++		if (has_loose_object(s, oid))
+ 			return 0;
+ 
+ 	oi.typep = &type;
+ 	oi.sizep = &len;
+ 	oi.contentp = &buf;
+-	if (odb_read_object_info_extended(the_repository->objects, oid, &oi, 0))
++	if (odb_read_object_info_extended(source->odb, oid, &oi, 0))
+ 		return error(_("cannot read object for %s"), oid_to_hex(oid));
+ 	if (compat) {
+-		if (repo_oid_to_algop(repo, oid, compat, &compat_oid))
++		if (repo_oid_to_algop(source->odb->repo, oid, compat, &compat_oid))
+ 			return error(_("cannot map object %s to %s"),
+ 				     oid_to_hex(oid), compat->name);
+ 	}
+ 	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
+-	ret = write_loose_object(repo->objects->sources, oid, hdr, hdrlen, buf, len, mtime, 0);
++	ret = write_loose_object(source, oid, hdr, hdrlen, buf, len, mtime, 0);
+ 	if (!ret && compat)
+-		ret = repo_add_loose_object_map(the_repository->objects->sources, oid, &compat_oid);
++		ret = repo_add_loose_object_map(source, oid, &compat_oid);
+ 	free(buf);
+ 
+ 	return ret;
 diff --git a/object-file.h b/object-file.h
-index 1b1ab95423d..52f7979267d 100644
+index 52f7979267d..15d97630d3b 100644
 --- a/object-file.h
 +++ b/object-file.h
-@@ -210,7 +210,8 @@ int check_and_freshen_file(const char *fn, int freshen);
-  *
-  * Returns 0 on success, negative on error (details may be written to stderr).
-  */
--int read_loose_object(const char *path,
-+int read_loose_object(struct repository *repo,
-+		      const char *path,
- 		      const struct object_id *expected_oid,
- 		      struct object_id *real_oid,
- 		      void **contents,
+@@ -161,7 +161,8 @@ int stream_loose_object(struct odb_source *source,
+ 			struct input_stream *in_stream, size_t len,
+ 			struct object_id *oid);
+ 
+-int force_object_loose(const struct object_id *oid, time_t mtime);
++int force_object_loose(struct odb_source *source,
++		       const struct object_id *oid, time_t mtime);
+ 
+ /**
+  * With in-core object data in "buf", rehash it to make sure the
 
 -- 
 2.50.1.465.gcb3da1c9e6.dirty
