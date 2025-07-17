@@ -1,122 +1,109 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22AC4A11
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 04:43:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D583D1C5D72
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 04:44:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752727421; cv=none; b=Tc5IMNfWDhK+uXAfqiI3E3R+POW8cPQkgDL7QHYjBEiEe2bCU5QF3tTmigQVpKTKqvUMUcle5LcHKecBqQktOJOcE3gNYdwi0dEsfbAfJ4Q7CojweXHPTs1oAEeD0WNqksPGP4RQKkojVCDfH9n7uBfgytdx6SiN0alal5w0fZQ=
+	t=1752727447; cv=none; b=L71koaOPtK2qNd3m0iC26XjM+L90ph5dc3Ix6w50IZ6jHEhzZ8Ft3JFIO7KGLK8O3wrBUBsSspEBRdDoRKLcgagogl8EOUu4wohsQnJlxRF1Ych9BWoFuSnIyGsYclnelW4biNy8yotCSzXegpMsW7i+3DMyoYxgq/ELaMc2uHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752727421; c=relaxed/simple;
-	bh=iY6IyRBXLQcaiLL8xIsVFwSRGN73VPfpw6kXUyRAU34=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PSePu7Fi6IuJTg957OXaez2MTXJKiegEGAzC1y2iiALjsq41TBDhhws+GZRaP4l1ZBmUB8lS9B+tPq5NBCBUxp3EQqsgiVMrPRpWuNmp003VaXRn4uwBYjGwKx1UnMKdbuyCKtnTbGo5d3P4ShEJpPd9Y0f0I/8FEQN1HbLPLM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ti4Y4wQC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nBcgd+7J; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1752727447; c=relaxed/simple;
+	bh=H6QA21V+ksFdAsP3Rlx5wCoC8S3/CmtftfTMJKBw6uc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lzTpAwiP/vM4cQJ7Pomqu+kEz6Ivmpt+eyUt87YyFiDQ416G/OI7DTr6nayNqhOg/AKzTVactQ4L6ukysqN/SH++ClcpWCmBK/aTdahY07XbaTlSuYnPcsFLI5h00Hb9onVDpp3WkGnrbvzgEqLPShQUSWCVVdMPI4OU4Xqblb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QARpP/o2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ubswfuoy; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ti4Y4wQC";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nBcgd+7J"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B1D977A0170;
-	Thu, 17 Jul 2025 00:43:37 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Thu, 17 Jul 2025 00:43:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QARpP/o2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ubswfuoy"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id CE09E1D00162;
+	Thu, 17 Jul 2025 00:44:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 17 Jul 2025 00:44:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752727417; x=1752813817; bh=Mg63si056L
-	x0F5fN77VzsypO/KlfrCQA2lAlWU2IiRg=; b=Ti4Y4wQCVFKad/KrbDJyiefz4V
-	V0tq9H1gBVdJg+G23IPLK3o9gOcUKKrA+dOml1Dj7wBMriiFNZNLLYD0uMmU7DNT
-	rEaSIMqANz8xcm/U6vIy0m/PXtceogUmomlXhvwH5/kSp5sFvjfHcsSNjesYqRt2
-	r7KUHjtXpDVvGaWA9FAdn6LX8NJFqh1kR3Uh/qg77rXwouc2AMZVjOXHnKmRsedH
-	XidUIkAWNlD+6NN/PkN6UnNWILXdOoa3DSAVMEPE7P3txWEdQMV6fLvhHe9rkDSh
-	bthNtd8DGpmHx8J2D2CvNL4bHUWxDyPE+O3lystjd+DBD9l4RIMW3lt1pPEg==
+	:subject:to:to; s=fm1; t=1752727444; x=1752813844; bh=cW5WVfIX6V
+	Y3wpNGySN6Q80//sp9TvOGBaWEDyzTGq0=; b=QARpP/o2kuTpwITNFEFl+fe4AB
+	lJxOUm+b9UeBvfNTtYxv6zabqfogLfiRi4RAdlam2iWh+oMUISiF9PZH9JqswXMB
+	mlV5FGtvUZiNtxzUErNCb3+X9b1L753wEvXVmGRXDpv8PNiPE+mU9qVt/aI7PYC4
+	AaLfwLJMvQvb8U081gd27JPGjRB8/CofuaiTcONwVSNxV8bup74gVH/cnS8Z6yMD
+	JrHVxeQjEzRiHcVwTXq3Kl5KvZe5LbnR0Z7Ky/cpucsJh5Bg0h7hRntjSm90g3eB
+	tfLsqGqRWtr76Xr8d4QCvM0wMmazgsWv/emaex7tE6mJfEY9HkYC/DiMfCmA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752727417; x=1752813817; bh=Mg63si056Lx0F5fN77VzsypO/KlfrCQA2lA
-	lWU2IiRg=; b=nBcgd+7JgxietOVvzYF9JTCA8iibJrDg95V9p92XFwYM3xdDTxI
-	ZUxd68MVVogSkoVOaBXgRpRyYvxz34ErYQ0oLD5tAw9PNHmzQuDoi+sP46fwegU3
-	Yqx7FORmwCbG41AWA3Lq9eEtBAdu3sMJwn6o5s6kTnIQWIhl+iqtn/dVhlqKMgXX
-	6lI2cQ4eqbdw17YXvdPixnntxD9wHD/NmYLGWvTgBhfJ+FjI1dX1h9EJrAZ2sSmb
-	r9qIU52DTmlUOW2pJiHhCGaNS8QWTyR4rB1ftXJ64KrESkAmMMvDH7UGt2aEwIuH
-	GOzgZ8kZsW4u6C34wQDNmhEhGQa/6emPwKA==
-X-ME-Sender: <xms:eX94aFO4-NX4eoxYhZ2-ZHHO0cSZ1MDtZ_aeoXOOUlcXysALikSYpg>
-    <xme:eX94aIIDTqsdPlFnwKJ3I0o6V5IzCibrG_qCoMF1SZS6rdKvRtQWmtV8VofinuRsq
-    SsXtr_lvcAKuKN6Pg>
-X-ME-Received: <xmr:eX94aGGTECdkyJWJxWnnKju7OHfSjIqEggtxWl_emvMhB6bJm7y1aWjEoDVdpK7umtE31RRsChgY1z9fVGQ8Ywypg_VxzezCM6JwlxSo4ON0>
+	1752727444; x=1752813844; bh=cW5WVfIX6VY3wpNGySN6Q80//sp9TvOGBaW
+	EDyzTGq0=; b=UbswfuoyZ1tv64BaF0BYGjisHBgFXen2C0ZZkEut/5yfnqEY28D
+	Ilk5IrD3GkDbR08hj0QImmiith5GMvmTMaonWQBZao5+EKnlAc1yB4R7sEeNfagf
+	KGRFjrZ6GcIwHsVKbxCiWGE+ywq5wnNtd5u/i+b28SAVI1NCl3i4giBDKa2rW4WU
+	nejl1Msm4I25uDJlR/gJmow+Czd5M1j5nyzQNhq7ea3MLU4Qk4WRmMdjnKdfoR2W
+	lUh/EyibmXUVio/tEz2wRjKHAnpMXyJPz3yYKrZCyQf8t4ZojO5lodr/hco7PCqK
+	dZdQsHP+gMXBqogtHak9NiovJuFoc3nbSlQ==
+X-ME-Sender: <xms:lH94aGoqZgqzOuwy51KzU8-Era9OkxwlxVLCB1-1sNxiaGxj-VoHfg>
+    <xme:lH94aN-6QCHIqEsIFOlaekW2qzrOvlLm0z0doBVu5qhSreHmxVIRly8JQvU4cHQwg
+    wNrpuQdmv-VgjW6Dw>
+X-ME-Received: <xmr:lH94aCe6fV7LyY4HhA0sxc11RbQLtc2wYe_uUd7a-Ru2YlD3AZbULKSS-ZGxJMmPYRJf5gvfmxCXoX6-T58lnVRjpph17u-fBk18okk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdehleeiiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
-    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
-    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhoug
-    gvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:eX94aARkqmvkOq1SmFfRxiRFFQOGUEj9DSe7K_xYb_ofnP8sIAyiqQ>
-    <xmx:eX94aCEZsDZHh1uoLLkil1puarI5P1cIpHHnO3uSynUVAmsDtmZRFQ>
-    <xmx:eX94aM8LjyM39kwO5q79qnhb-0u5Ul7itk6L53zLpX9wP_EbIQtzAA>
-    <xmx:eX94aML4Kb8mWhgncRTyqPIvoqxdixnwO_M2KUYh7QAl3pzPkIM7IA>
-    <xmx:eX94aHxZQ3GwmFfdqLCORvnep29s_0PV68EdnMFPq9Vusnp_QnTB0UbP>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtoh
+    hmpdhrtghpthhtohephihlughhohhmvgdvugdvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehhiheslhhooh
+    hpihhnghdrmhgvpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lH94aHJr6y0ujSTkyEmXACQPZfgYZkTdbsE5yQKW0wNd0y3xb0_QlA>
+    <xmx:lH94aCii5QZnG_MRmn4Bzbixu8QU-0F_ZIf5SGl9_u6MmJiUbAhLYQ>
+    <xmx:lH94aFT_I2tSj90ki7noe097tURkRUJR55oPqL7QCtUoPHBYIMihXQ>
+    <xmx:lH94aMUKbRr79k_T9lirxGO9cWQtnuPollRfCmB7AxpjgbOGF9pqDg>
+    <xmx:lH94aHupVURCpN1FeOitfzJC-Adc0pMz61sdkglsndjsrOI569lZ76FT>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Jul 2025 00:43:36 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0adc2e29 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 17 Jul 2025 04:43:34 +0000 (UTC)
-Date: Thu, 17 Jul 2025 06:43:31 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] ci: allow github-actions print test failures again
-Message-ID: <aHh_c3KDGC9oQIzQ@pks.im>
-References: <20241213-pks-meson-ci-v2-0-634affccc694@pks.im>
- <20241213-pks-meson-ci-v2-8-634affccc694@pks.im>
- <xmqqa553alp1.fsf_-_@gitster.g>
+ 17 Jul 2025 00:44:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Lidong Yan <yldhome2d2@gmail.com>,  git@vger.kernel.org,  hi@looping.me,
+  j6t@kdbg.org
+Subject: Re: [PATCH] pull: add pull.autoStash config option
+In-Reply-To: <CAPig+cTQ017qGK_Qx04+R_0rCXEOirW+oLEjeaDoCFJiQbnsGw@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 16 Jul 2025 23:27:57 -0400")
+References: <xmqq5xfsdv3w.fsf@gitster.g>
+	<20250717030732.75106-1-yldhome2d2@gmail.com>
+	<CAPig+cTQ017qGK_Qx04+R_0rCXEOirW+oLEjeaDoCFJiQbnsGw@mail.gmail.com>
+Date: Wed, 16 Jul 2025 21:44:02 -0700
+Message-ID: <xmqqfrev8m0d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa553alp1.fsf_-_@gitster.g>
+Content-Type: text/plain
 
-On Wed, Jul 16, 2025 at 02:07:54PM -0700, Junio C Hamano wrote:
-> eab5dbab (ci: wire up Meson builds, 2024-12-13) added two instances
-> of a very similar construct
-> 
->     FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts
-> 
-> one to ci/lib.sh and the other to ci/print-test-failures.sh
-> Unfortunately, the latter had a typo causing shell to emit "Bad
-> substitution".  Fix it.
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  ci/print-test-failures.sh | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/ci/print-test-failures.sh b/ci/print-test-failures.sh
-> index dc910e5160..5545e77c13 100755
-> --- a/ci/print-test-failures.sh
-> +++ b/ci/print-test-failures.sh
-> @@ -41,7 +41,7 @@ do
->  		case "$CI_TYPE" in
->  		github-actions)
->  			mkdir -p failed-test-artifacts
-> -			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:t}/failed-test-artifacts" >>$GITHUB_ENV
-> +			echo "FAILED_TEST_ARTIFACTS=${TEST_OUTPUT_DIRECTORY:-t}/failed-test-artifacts" >>$GITHUB_ENV
->  			cp "${TEST_EXIT%.exit}.out" failed-test-artifacts/
->  			tar czf failed-test-artifacts/"$test_name".trash.tar.gz "$trash_dir"
->  			continue
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Oh, indeed. Thanks for catching the mistake, the patch looks obviously
-good to me.
+>>                 if (opt_autostash == -1)
+>> -                       opt_autostash = config_autostash;
+>> +                       opt_autostash = config_pull_autostash == -1 ? config_rebase_autostash : config_pull_autostash;
+>
+> You may want to wrap this over-long line. Perhaps:
+>
+>     opt_autostash = config_pull_autostash == -1 ?
+>         config_rebase_autostash : config_pull_autostash;
 
-Patrick
+Alternatively
+
+	opt_autostash = (config_pull_autostash == -1
+			 ? config_rebase_autostash
+			 : config_pull_autostash);
+
