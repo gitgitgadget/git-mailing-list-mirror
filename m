@@ -1,105 +1,252 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436BA2FCFFB
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:58:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6C72FCFFC
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 17:08:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752771540; cv=none; b=BWco6cbEYRHoSP0uKtGTlQj6N5PtLMY0RTrrwKLBNbE/mIASTx1HNKGGy8ld5ygs3dGipotqZWTY5JMSw7/I5rTsn97QbsF5hn7mlnF1nGXBZ4yk3McbxUTyjqHsyBecP8QTM/bnCxGMH1T43WRPhQpRdnKJqdKkl4it4jT74xE=
+	t=1752772114; cv=none; b=hAVR0zov6sF79/h0ThIE3q3wAj8uf0Y93haPaytZ7ogr+Y1j3HMysnkdXxt/vlPbNKpnPZWzhyLGdfGFgi5HQazb7fzksSDhk6kNjT50/wQc01/G9Io5vXw9Y7vLPkQmE9Onj9xwQYyEjk3VQJKjb+w0rqdNaRz+x/AKE/MbXIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752771540; c=relaxed/simple;
-	bh=stN3NfQCgHPNG1aKLpRKaO6qpi3lC4J3LEDuZo6WCA4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EV+1lfDG9TqksUo5wmUFzRNH6zGQ0J5pyUTnAguwhutKM/bW+PB/mKzBrioVn2dI6E/Ef2vvIvX3xYK2BCZ94+s5Bw3P2VFb92ExTzbE5pSmREfy5cI33hJQDL3cZpzv5Vj7Hss94na6xBpQhE52EuGLhwfXcMz8J/nDgN7OrSE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZgclzyYo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=drmbrn3G; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752772114; c=relaxed/simple;
+	bh=eA670UfNBekWsCBHjbvrmxqZCmMM/1nZFriCN1kMNc4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=n6J9Yt2TNr8uvFBMhIWMIid30Gx1b4hwkInWl3QL06f40MPjhMdz4zvecUJAuwhifn7+8aGIkactlZph5P7hb8eiheJyGgUdXabYKVvqsCmf/ktOKMPUmqBiRmZGgfW5b1dWPX3O0J52dCr85rUL7G2QcmZss7LDUA05moyUk/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=ie2LxbY1; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZgclzyYo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="drmbrn3G"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D12E7A018F;
-	Thu, 17 Jul 2025 12:58:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 17 Jul 2025 12:58:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752771537; x=1752857937; bh=a6MghT4kUD
-	1mMg1COufxfHgorOuYmJxgoGl1uK9k4bw=; b=ZgclzyYo6cFuORvxkO8V6x/+vO
-	z0HG2rOKxLIFDOMoI+I7/TculPzISwduq60c3VT4RyB/yuWorT4xmhMEyY6MXnjV
-	be03fY5BqpIPMNnbaA5EtkqXOFwmvbiICmO6RCmxino9mZ8GiXTIuNPNbuS5toKA
-	MA8GEiShTDQHwFqJUeiPo8mcijilw8PNXmHTpkmKTDR5tVhlMd1kC4hS4fq/ZmhG
-	6gDOU04XcsOsvxqsttZhEIuPLJOWZ+95Jl22fbGwDDZnOQd+Rq/3+mzPCdsx4jB9
-	62Rnuv07ZKbCylJPyqhusBRPIbgyNrEDWnIO+6kUqWKzCqXYH96NOMPzkEqQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752771537; x=1752857937; bh=a6MghT4kUD1mMg1COufxfHgorOuYmJxgoGl
-	1uK9k4bw=; b=drmbrn3GKtRQ0TWFNOvPNFzOhdotPB3Rp9fDBeyJ0cxnJO1OWtP
-	9UZJQjGr2K1kd+3zvyPjZTkILCUOckh0wm5w3ej34OxHbn0B35Mp/0zaBOP2CVns
-	EUmXqIB/GknwuROP/CPL2h7iUqXDgXQM8Xlkw6x3+gl5A3OPb+Gd0LxdKIINDGsx
-	pYSdCKUWSPDe4r97xUSfYqfjSbkhNlbkVtaQo+JerCzuGVgtxw1W6cytbffaY2yz
-	u4y0f7YI/kxJOcxAZxqw5uarxSnFAp+zpxchZpo+/qJ3Tjbqkg4bF0dILtQt9k48
-	1J4jR8+pxkB8J35fhaQbrPu7Q3Gf1cWH85g==
-X-ME-Sender: <xms:0St5aA78DKlvDpakQM5zhpp90SIOXGGMm74YB2hUEEhwfHp8safNxA>
-    <xme:0St5aFLuYVo42lmmutDB94Gzlqq6CmxLQbFMesNXCJ9euy_cihPK96siyL_OEF5lw
-    ATVQ3Zn7wgPvoAvBA>
-X-ME-Received: <xmr:0St5aI6oMjD-Iy3-e8GNUr0wBQ8igwkscfIdztWrY-CNMJiR4TfeYK6-HCVl2MfdynS-ZTNfxyA-Xt4Wy-rXKFbOv8uwoslqZf6uPKw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeiudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttd
-    ehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:0St5aAzUSvqRV3mcwJQSPrhzGsuP29Eriei6q5nPCy-1IUkrqb_NRg>
-    <xmx:0St5aEaSALqZZ12TPjVtuatU4y9s8efHjuyIAgj6_uZALD51UH_wUg>
-    <xmx:0St5aKQ1BLDD8cV3farFbL-P0FV12_-tqQhQVHp4jTgzmsZqXCxlrw>
-    <xmx:0St5aGzvWsh2sWuZfrFJ2gLikyHQch0dXThX2SPV-spzXvox8C751Q>
-    <xmx:0St5aFy93jmK9cGhnwUgEnqisjIR-RzV0mXH60RSEeeRSlxr38V8CAGf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Jul 2025 12:58:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v8 2/2] submodule: skip redundant active entries when
- pattern covers path
-In-Reply-To: <20250608032705.11990-3-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sun, 8 Jun 2025 08:57:05 +0530")
-References: <CA+rGoLdTT3kdELUyHdZLWyy8e6AbfRU7kDFcVUdCmVtDi11hMw@mail.gmail.com>
-	<20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com>
-	<20250608032705.11990-3-jayatheerthkulkarni2005@gmail.com>
-Date: Thu, 17 Jul 2025 09:58:55 -0700
-Message-ID: <xmqqa5527nzk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="ie2LxbY1"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6fada2dd785so12812786d6.2
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 10:08:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1752772111; x=1753376911; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7SDBHLWLxk0kugaMdjaE1xi1rp8JROoFIZKqleb2r64=;
+        b=ie2LxbY1nh1keuyWmWz/692v4H1FexZEuIhLoDF3GOrSDAIan2OQkqCoaFzO43Gtfr
+         AtECIG61xyuceShVUUhusB9mQM5swmMjpcFRTtfZJPYqQv1h7GgNEDjCZ87gtK3H/EYY
+         Vryw1cRa9OBkHVeTwpprh3RRmtIlhWBirtXXVFFyTXwUmRhcAjuMMIdgsD8XAw7LT4k2
+         uLnoNOxh0FVJxGuFIDdHQZWw29yzkQsYxIrMhIWTa6JzrGgrDyI7uxvFy3qeSTO0cXJr
+         AQDzxns1X+mhWm3+E4Qje23rQ+R9KlaE0PFGlNMfS3sw5674WLKORa/Yic3tj5lQWZHy
+         Qg5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752772111; x=1753376911;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7SDBHLWLxk0kugaMdjaE1xi1rp8JROoFIZKqleb2r64=;
+        b=ghvitPosovaT0j8XJ9MShMNx8vOJrCqCVKyUUtW/JO6u9p6IrxuGcXOlYMpIxJowhX
+         3fyXuvuhk/Q5QqXpJxkbHF6EA1TDiV/OjIOzcNa9kg0ubnXM5VKoDkKHGIX/k/uEr4Uz
+         4vtg8RoNDWkizi+mW7zXMBcU88cnjvswcAdWj26hzdp9vs/7EDERD/llHhCUazsrYlec
+         j51wTqdFqMDJxuPF26hnF5MbcsTVlkPCPwZfGP3zRa/HegbVj5siJVhBcVJXketk4bwc
+         qtN7sh4V7Y+umWbWgG51oK2DDflsFiEX0hRmbGLudtQ3rQlSIEP167YHA5+CvDCZyjIy
+         8T3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXC0ABEOhV79TcNlsVM9b3E+gTXVGqgYkoUnSece4ZCCSVevjyQQxEHRn7Uf6epPkJsnF8=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz/wq8bZ8DU3sqTC7AI6TVGD4iGzED4st+mPAj8J4du65ibyM+o
+	/pt/MIHn2H/Yxc4wUrbtEEikyq8/oUvk+zNcL7lincHhAywNxbiR9UXpeXKmfewBbMkNWzY9UOb
+	vG3nOWYroZJDRepLMt5W5eEuAn3JEg8gAzvE5bU2O
+X-Gm-Gg: ASbGnctYxXKpLwDFTvRNe5MVpo792vxvswb3SmnsLHWZ0+sdQc8HuDwvxLOhKH+WGF3
+	b33q5lKDPOljQGeg4zH86PkwRYItJfQNBagQYeftyzgTdPDKIJKlV7ffvB9REXyg5BTMwBaB9pj
+	sQzGVznp+i/cXwJ66iaz5Go/VClLpAXTKzFM+Fqy+ubo281iARgO4XkR/8o5sw73rGEbIWG2I8f
+	6npLyQi17vCUuhIDJv2OlLdTE1+VP+NFXMN/dM14PjAUrAT
+X-Google-Smtp-Source: AGHT+IGNu0QxQuurT9ALSA2NMxKOVtAMXs3u+maMcRuoPQ/Hsm2pJF3qUwNkvCnId9vwtDrfpJxYSRgJf8e079hIA+o=
+X-Received: by 2002:a05:6214:d41:b0:704:9596:b894 with SMTP id
+ 6a1803df08f44-704f6afbd25mr132683496d6.13.1752772111035; Thu, 17 Jul 2025
+ 10:08:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+ <xmqqple1gtyg.fsf@gitster.g> <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
+ <20250717015402.GA2127425@coredump.intra.peff.net>
+In-Reply-To: <20250717015402.GA2127425@coredump.intra.peff.net>
+From: Kyle Lippincott <spectral@google.com>
+Date: Thu, 17 Jul 2025 10:08:18 -0700
+X-Gm-Features: Ac12FXynksuJJWO_-gsAIQ93fk86z8xxselbJCGA0ARcYXP1-_Z9J3K4etr3i1M
+Message-ID: <CAO_smVgdaOxiD_494qA+VxkmxNd6c=XqJDcCE2weCTknWfmkkA@mail.gmail.com>
+Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via '--start-after'
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, 
+	ps@pks.im, schwab@linux-m68k.org, phillip.wood123@gmail.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+On Wed, Jul 16, 2025 at 6:54=E2=80=AFPM Jeff King <peff@peff.net> wrote:
+>
+> On Wed, Jul 16, 2025 at 06:19:32PM -0700, Kyle Lippincott wrote:
+>
+> > Unfortunately I can't provide great instructions for reproducing this
+> > locally, because it relies on our internal build stack (which uses
+> > blaze). Getting MemorySanitizer running can be quite annoying, though
+> > you might not have any issues if this test doesn't invoke any third
+> > party libraries (like zlib).
+> >
+> > I need to sign off for the night soon, but if this isn't sufficient
+> > enough information to identify what's happening here, I can try to dig
+> > deeper tomorrow. This run was executed on an import of upstream commit
+> > 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc (Junio's merge of this
+> > series)
+>
+> valgrind can often find the same issues as MSan without as much headache
+> to get it running (the downside is that it is _way_ slower). And indeed:
+>
+>   git checkout 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc &&
+>   make &&
+>   (cd t && ./t6302-for-each-ref-filter.sh --valgrind-only=3D48)
+>
+> yields:
+>
+>   =3D=3D2177572=3D=3D Conditional jump or move depends on uninitialised v=
+alue(s)
+>   =3D=3D2177572=3D=3D    at 0x3BC380: cache_ref_iterator_advance (ref-cac=
+he.c:409)
+>   =3D=3D2177572=3D=3D    by 0x3B69D7: ref_iterator_advance (iterator.c:15=
+)
+>   =3D=3D2177572=3D=3D    by 0x3B6CC3: merge_ref_iterator_advance (iterato=
+r.c:179)
+>   =3D=3D2177572=3D=3D    by 0x3B69D7: ref_iterator_advance (iterator.c:15=
+)
+>   =3D=3D2177572=3D=3D    by 0x3A9770: files_ref_iterator_advance (files-b=
+ackend.c:902)
+>   =3D=3D2177572=3D=3D    by 0x3B69D7: ref_iterator_advance (iterator.c:15=
+)
+>   =3D=3D2177572=3D=3D    by 0x3B7457: do_for_each_ref_iterator (iterator.=
+c:478)
+>   =3D=3D2177572=3D=3D    by 0x399B43: for_each_fullref_with_seek (ref-fil=
+ter.c:2718)
+>   =3D=3D2177572=3D=3D    by 0x399C09: for_each_fullref_in_pattern (ref-fi=
+lter.c:2756)
+>   =3D=3D2177572=3D=3D    by 0x39B031: do_filter_refs (ref-filter.c:3263)
+>   =3D=3D2177572=3D=3D    by 0x39B2B7: filter_and_format_refs (ref-filter.=
+c:3364)
+>   =3D=3D2177572=3D=3D    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:11=
+5)
+>   =3D=3D2177572=3D=3D  Uninitialised value was created by a heap allocati=
+on
+>   =3D=3D2177572=3D=3D    at 0x484BDD0: realloc (vg_replace_malloc.c:1801)
+>   =3D=3D2177572=3D=3D    by 0x44E941: xrealloc (wrapper.c:140)
+>   =3D=3D2177572=3D=3D    by 0x3BCAD9: cache_ref_iterator_begin (ref-cache=
+.c:580)
+>   =3D=3D2177572=3D=3D    by 0x3A988A: files_ref_iterator_begin (files-bac=
+kend.c:995)
+>   =3D=3D2177572=3D=3D    by 0x3A295E: refs_ref_iterator_begin (refs.c:177=
+6)
+>   =3D=3D2177572=3D=3D    by 0x399AF6: for_each_fullref_with_seek (ref-fil=
+ter.c:2710)
+>   =3D=3D2177572=3D=3D    by 0x399C09: for_each_fullref_in_pattern (ref-fi=
+lter.c:2756)
+>   =3D=3D2177572=3D=3D    by 0x39B031: do_filter_refs (ref-filter.c:3263)
+>   =3D=3D2177572=3D=3D    by 0x39B2B7: filter_and_format_refs (ref-filter.=
+c:3364)
+>   =3D=3D2177572=3D=3D    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:11=
+5)
+>   =3D=3D2177572=3D=3D    by 0x128C90: run_builtin (git.c:480)
+>   =3D=3D2177572=3D=3D    by 0x1290EB: handle_builtin (git.c:746)
+>
+> Bisecting doesn't tell us much, though (the first commit that introduces
+> the test shows the problem). I didn't dig further than that.
+>
+> -Peff
 
-> +		if (!matched) { /* no pattern matched -> force-enable */
-> + 			key = xstrfmt("submodule.%s.active", add_data->sm_name);
-> + 			git_config_set_gently(key, "true");
-> + 			free(key);
-> + 		}
+Thanks for that, that helped me a bit too as it provides more
+information than I was getting out of MemorySanitizer (I suspect
+MemorySanitizer was producing the information it just wasn't going to
+stderr or something, or maybe I was missing a flag to get it to report
+more). I'm not sure what the right fix would be; my guess is that the
+fix would be to modify the places where we set levels_nr and
+initialize the other fields in level to also set it to prefix_state
+(around lines 488 and 527 in ref-cache.c); and indeed setting the
+prefix_state to PREFIX_CONTAINS_DIR (the 0 value of the enum) makes
+the test pass even under valgrind. Unfortunately without a much more
+in-depth knowledge of the code and the enum values I can't
+definitively state that those are the correct values. I can say that
+setting it to PREFIX_WITHIN_DIR causes both additional valgrind
+failures and test failures even without valgrind, but setting it to
+PREFIX_EXCLUDES_DIR doesn't seem to be a problem. I also moved the
+`if` around like 409 into the following if, because that was the only
+time entry_prefix_state was used, I'd been thinking that maybe it
+needed the check for entry->flag & REF_DIR prior to referencing
+level->prefix_state, but that didn't resolve it on its own.
 
-Somehow these lines begin with SP and then HT.  If you are going to
-send an updated version, please make sure to fix the whitespace
-issues around here.
+I don't mind if anyone else picks up this fix and runs with it, but
+I'm not comfortable sending this patch myself because I don't have
+enough knowledge of this are of the code to know if it's right, just
+that it fixes the issue we encountered, and I'm extremely overloaded
+right now and can't get that knowledge nor see the patch through to
+the end.
 
-In the meantime, I'll tweak the version I have in 'seen'.
 
-Thanks.
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 1d95b56d40..24feb33fcb 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -391,7 +391,6 @@ static int cache_ref_iterator_advance(struct
+ref_iterator *ref_iterator)
+                        &iter->levels[iter->levels_nr - 1];
+                struct ref_dir *dir =3D level->dir;
+                struct ref_entry *entry;
+-               enum prefix_state entry_prefix_state;
+
+                if (level->index =3D=3D -1)
+                        sort_ref_dir(dir);
+@@ -406,16 +405,17 @@ static int cache_ref_iterator_advance(struct
+ref_iterator *ref_iterator)
+
+                entry =3D dir->entries[level->index];
+
+-               if (level->prefix_state =3D=3D PREFIX_WITHIN_DIR) {
+-                       entry_prefix_state =3D
+overlaps_prefix(entry->name, iter->prefix);
+-                       if (entry_prefix_state =3D=3D PREFIX_EXCLUDES_DIR |=
+|
+-                           (entry_prefix_state =3D=3D PREFIX_WITHIN_DIR
+&& !(entry->flag & REF_DIR)))
+-                               continue;
+-               } else {
+-                       entry_prefix_state =3D level->prefix_state;
+-               }
+-
+                if (entry->flag & REF_DIR) {
++                       enum prefix_state entry_prefix_state;
++                       if (level->prefix_state =3D=3D PREFIX_WITHIN_DIR) {
++                               entry_prefix_state =3D
+overlaps_prefix(entry->name, iter->prefix);
++                               if (entry_prefix_state =3D=3D PREFIX_EXCLUD=
+ES_DIR ||
++                                   (entry_prefix_state =3D=3D
+PREFIX_WITHIN_DIR && !(entry->flag & REF_DIR)))
++                                       continue;
++                       } else {
++                               entry_prefix_state =3D level->prefix_state;
++                       }
++
+                        /* push down a level */
+                        ALLOC_GROW(iter->levels, iter->levels_nr + 1,
+                                   iter->levels_alloc);
+@@ -489,6 +489,7 @@ static int cache_ref_iterator_seek(struct
+ref_iterator *ref_iterator,
+                level =3D &iter->levels[0];
+                level->index =3D -1;
+                level->dir =3D dir;
++               level->prefix_state =3D PREFIX_EXCLUDES_DIR;      //
+FIXME: PROBABLY NOT CORRECT
+
+                /* Unset any previously set prefix */
+                FREE_AND_NULL(iter->prefix);
+@@ -527,6 +528,7 @@ static int cache_ref_iterator_seek(struct
+ref_iterator *ref_iterator,
+                                level =3D &iter->levels[iter->levels_nr++];
+                                level->dir =3D dir;
+                                level->index =3D -1;
++                               level->prefix_state =3D
+PREFIX_EXCLUDES_DIR;      // FIXME: PROBABLY NOT CORRECT
+                        } else {
+                                /* reduce the index so the leaf node
+is iterated over */
+                                if (cmp <=3D 0 && !slash)
