@@ -1,267 +1,127 @@
 Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE2529B8DD
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB811F30CC
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:45:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752770364; cv=none; b=hYQcfIKvBM2Z15Q6De/eJXKHYeiI7TWGCSBYpGYpwrzkNItTKHPA7GT5z6sStg25NEkvc39p1ljLzPyO/HcTS182qylSF7WeYkPxNTc4OPCUMprXOTHWUaqicqiwST812JD47WJCuGtZuyGZAhBMIv1QWK11+R5EbWv9CQcxbCg=
+	t=1752770715; cv=none; b=qEeyR2m26bAAxiA5SaBspQMX8i0I0gH9XHW8nxoWBhrwCFVqMxOBI0/3OlsLrhCfUQrXNW8idKSz7slkg1KoaoY+QdBHLtVsQIrR3dCZheWdVPSxDboHQC3IPHm5rojHd6IXNri37mr9mpeyCYhQL1z18Emx3VPwf+V9/NZ8Euk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752770364; c=relaxed/simple;
-	bh=MzQ3BBSZ92//6bOUkSBTnPQ0BkqoeS5hJDZucRpfKGw=;
+	s=arc-20240116; t=1752770715; c=relaxed/simple;
+	bh=IzKfVjltfctfg/kfVleu12Z3TevnZB7z1vQU3es3BrA=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=eSbcR3sJBwtNuX8tWmELT0OJ38VhDAqbAXEgtuVKX249dTEzFnIFPqVgsnzgfytjCyYZ7gn5bFRDrce5dxR4FNMfJWwkzMcqGLAQ/jnOhYLdIJjYtnxvFSFwUOjOplM5KLl4R9w8SFTca4mnwk3NmLV2G6yQxI83wJcMTMThrFo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=tjScgsc0; arc=none smtp.client-ip=212.227.15.18
+	 MIME-Version:Content-Type; b=WPE6JiAsG3sO3fjznqbymB2tBT0yQHmzWGTYEfeHejodJVX1TiJnx45sV88IqMismdafWoRaEY1A6YQ0uZBAzdcts7rdzRJW66KMHuS2kg2HD/AqiEJXWzI/qNEikoFJK6IguU3dMmi4o88cjFKFnUMrqvQYvji+bbW6gWbbPts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=czvcshlT; arc=none smtp.client-ip=212.227.15.18
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="tjScgsc0"
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="czvcshlT"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1752770359; x=1753375159;
+	s=s31663417; t=1752770711; x=1753375511;
 	i=johannes.schindelin@gmx.de;
-	bh=z8E3JUNTSJWjnuEhSP5FQTTykaZo6W9uBbgX38+v1yU=;
+	bh=IzKfVjltfctfg/kfVleu12Z3TevnZB7z1vQU3es3BrA=;
 	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
 	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
 	 content-type:date:from:message-id:mime-version:reply-to:subject:
 	 to;
-	b=tjScgsc05MPq7cBUBaEClClxQI+YUxI40e7OffWi0gHBPfiJshHEfI1OSQ6FH2IT
-	 FBETD/5U9RB/o0qbgyTaH9RxKFZ4burk4LdEFiKe0IFl16cC2gBLU1/6gmbsQg/Ep
-	 Q2UMiMJinggu+AbKLjFh2giTKEP07KPO5bH5Krpnuwkv/0uzGaeCvpWrJxZ5cAa5G
-	 P6MFWlp20LefroyEEaBKaye2GBDL5HmyopJt38+HdpjMrmXWhhWccqPD50WtZzYpJ
-	 +N16kQfHdSrjseNU8TNAGkmu4KNOQm6mo5kVlmaCcKcA+Gfidgf+zhyWY2Glfh18n
-	 Ap7aIj4903nEtM6bGQ==
+	b=czvcshlT50LPLCcUul20CFfrfqjaIMbXP8mRnR1ku/qwecsBLHWOP0dAP8DE4cMb
+	 d6cwWWuGbrVyrXRkaSI1tQVjUf0BspFwoPmsIupaO7luWKnQGVQJMI+NvL6n6r4im
+	 AQWXHria2vZqMO/ruKYnKls1TFJKGnX/HuEXe3vjZQV9A1OFxmZt/m8SfdA1a3PqC
+	 HB7UyFmYvSB73mdeijTiF5zzcC4TDiQ3FgHlynewJTgSxsu1vNOON7Ikcegnvbqv+
+	 DgZrazSGd6byoE1tTF058sjQPq4Hg1rC5GjTeRan+8i9hfS0t9KYAmjUeAoro0kHW
+	 Hq3dj1ekaVB5kS2Iag==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1v6Io70Mwu-00jAyn; Thu, 17
- Jul 2025 18:39:19 +0200
-Date: Thu, 17 Jul 2025 18:39:17 +0200 (CEST)
+Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MF3DW-1uN1Oo3ntw-003CuP; Thu, 17
+ Jul 2025 18:45:10 +0200
+Date: Thu, 17 Jul 2025 18:45:09 +0200 (CEST)
 From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio Luan Pereira <junioluanutfrma@gmail.com>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 cc: git@vger.kernel.org
-Subject: Re: Error on using git update-git-for-windows
-In-Reply-To: <CA+7SsOeYhzBSTXt0V21ghqdzKBkT49GxZZU0k0MavmNrriv8pw@mail.gmail.com>
-Message-ID: <6c3ac456-ff03-6c74-ba86-967e258685a1@gmx.de>
-References: <CA+7SsOdTiAocj7ZTV=OVw0tyKJxZ-H+m5S8soPfFy6zW=1ddzg@mail.gmail.com> <ceb84ea7-6359-63c4-e02b-418d9d313b06@gmx.de> <CA+7SsOd9jtjQT+zg8XttA-bfONG2Jpkg4uBTTdys87e_jEX1pw@mail.gmail.com> <01e30386-028a-b115-6550-57d598ba93df@gmx.de>
- <CA+7SsOeYhzBSTXt0V21ghqdzKBkT49GxZZU0k0MavmNrriv8pw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Initialize a few uninitialized variables
+In-Reply-To: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
+Message-ID: <819d0360-5e99-b2ac-5bc3-50bf9bf95662@gmx.de>
+References: <pull.1888.git.1743079429.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-1217877951-1752770359=:5381"
-X-Provags-ID: V03:K1:2eqOAwF3Mcy0e7RVwEW/qyj6Pi8wHEKY/31yqB2kssLMUeG8ncx
- IiyvhaBPWyzvghozrV4fXsyP7Cmo1xIivL3sJHqLogY6pRNQf+KNDMTNa1tl0/Q8ydb7PGa
- XNwahckhm8A+HYQHaaupDnw7oR/ZzOMe7Byhu9v7q3hntHwIBzPQ/2NHo+oG5jdopKJXM+Z
- Mz4DqkMyJjtwNdhAGvs+A==
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UCKBh6Ha4jbuuADu9zQhoBcICZydSrwzUdkWcReVG+VOqDbBBj9
+ 3paANVT9BsgpalBiU1Ympk7nvuEhAbcAB6H4MYdhcF+8tEAVAaYPmOglQEAs0+uv1SRzYvt
+ lxoNOM0XR1lxDS9X9fVcJpzbDM7+Hnd+ABSejQCEleABMOsq1PBwYJup7AEGw/XrBHU6wv/
+ khJgHuResRSIHNhMGIcuA==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:btMo9PgTmS0=;x+P7PylWIFR9NM1nrzXO5UPjkO/
- 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
- OLIL6bKO4xBktwFfWnG2YAleGU
+UI-OutboundReport: notjunk:1;M01:P0:eKPDy1pfV0Q=;LHaNRh7nItZT/bf2anxHpwAI9EQ
+ lQw/hPRwc/5fgjqypmltOvFcih0T9UBwFfs6koSrUm/OuNdEK7IpO4tgimJIODpCQAOvPjLr/
+ 47p59lTs9mZk3kMX8jdwd9m7RWUBpIwYtgw/s24V3I+WeeqtHHsV+ZRJvgg1sA5fg1AnEMhHZ
+ fIe5TdIuDAGHaxWTmpg0pb2VktS/2mXDtQy8bOYsYexyfJ02Chc6/5glogJ7d2DiAEXe3NE0m
+ 9b4NN0DhXdfAybjMJCYaX1cJp9y2r8P+FMKCWoYG1RpVL8yVFBsOJ7rbTNJ5DmZXfSxJeCjfC
+ qA6s4TEO/xl6HqwYZQJ2kypeWNIPSojdX6g/561lDVUzAekmsl66xmfTnQxxSlo41RycOxCZc
+ TR4+EfzDApcmllVIBBAX7frTKRpGTDPPPS/p1pleyllRAB/6X0g+ghS9hb8Cqv5D+EhEtkq2W
+ weIkYbfQA6MRTb/7Gdhg/gTVtifNu8jw76QKOifv8pyuOpaTE9aDl0cfiIBH9D3Axh6sZhHNJ
+ M2vcPuwO2uzS8TVjP7Kao/k7nV5/zcjD5U3YgbBq0FRsLy1Vo2zc+GrigDAzwcbxY3egXI118
+ 44optCD4Cu3fWixfg+/wLUXLKybnEYhG6hnzzInH5lFPSRxGg8/LzgntfG4V+iaJE18qoRGjB
+ sNBrRDNX629Lw+fiB0eoGpTQzEnsr+p/FHRR/kNbHAqCClNiLfjE7xL9DNb4Uae2aAocGrJR9
+ 7+ICSUaM2T8GZFiXq2KAmdZyNUTD0DKih8Fn4zbQJAeDPYZek5MtMVEzA3mKT4NYbedjjy1oC
+ fkNb2VxvMfCC/NJJyMDNVHBf8wyFKpkmDqrrViFrbqLCNOSPZKyY8gijQ9PiM4+7HYmebK+1a
+ BV0ZZEW5Q7Oft4XgHdRLWZB9jY2l1ua1bH1vW2g5dudxxJiFFQuY5Lps9uJqFpVIFMm6diN75
+ b8Yu1tBpJGbIkf2ySvlRkVm1exiB7dSAn1bLBm337yN5YwedKWoXXD+tuCN/nssiqvjcSUxxY
+ hTY1oVOQ42OjYay4vdk9F8g7d8CRssq2bVPEyBuD5Jeqi8nlupV34ZvUrhPl51tJw5UgDS2Wm
+ AQ6WDrzJ4xelQsfigbs3ZwP2KNWnCokhdZdEEw77oOPwWuduYxPw9iuBCbF6p8Aw3Hg5TRtW2
+ Tmvrroyhao5bfwxf7mcK8I6S06q+OwDzMrxf1RQRuJxVhUKhGrCZNzv91BMkknj16juRQjmQW
+ jK0I+iGk8KkfLyumK5AYALy+ckeMFmyI6SuIbeyTpg/w/wejg/GaFqAAueXVirvANLWTb8ARr
+ wpG1kj5JBXiTZ5aAb9+O1ID5/MN3WDNyWmh2tTHTjeEd5EDwcLidoh7vnbmioqCS/HabBEH+g
+ pp/IyZLVIRO0tP+QZMq+sd+2WyZRmnA70abop4gYtHcftpdgEM/7Tv5qbyyy4yWlvvt3wGumG
+ X9T0XGv9VvGeNc3nPbP3ljIwgz2Sgt3h6N844C6KsWzckng+nNf/D5ylQRkZldiCVsCSiJQWI
+ wAqNFCDok4D310yFGYgW7n+1WsS1OI6lMJZK3lgtZ7Sw+uv68yOFTj3/xG4olFeeIZxVjOzaB
+ E1NqcBdicjYlnADHMKjv4iPsquuk3EgXII7uKGjV3N5BAkHnejfAXR+tvz67az5hkRclq0AGP
+ n3eqV2hc5YogSCr3pgoWiwbRUY2YID/1xwnz4oQVx3z0VtshkxWfxqmcL1tVbCrFQZETDy29x
+ 8iJchUEUdouQh+La/thEh181w6qGC8AzSiMikTEIqQy3PY32LJlgLBzVbzXLnCRP4vP+14cRg
+ kXq3q6UorRMaSJ9TBZM9iTfgiavzF/y0JK8y6QT1ugkfX/HwVe++Bw4fR9OCh5aP+/we3KZ7m
+ EmK1GMClaKoChzbWEJPzRlTZApLEjRm5arbRR68qzgmMMwQzPQO6x4S+d1p355qBEA2cSeKgI
+ QrMqE2tESCwnDncJZGBAm5nyag1ZpztQinZb+Y8X7HLF3Imeahrfu4kBTAUdzbpgtEguc6H/h
+ tESFodPHFOH4of3XlBtM2cm6X7At1K42WrJUqREl2mOUerCTWXeKhplwMurt8DmzL87P7ZhR+
+ vJ0JTfmqag2ggdY7+FwSTpgDXXqOVZgLh6ITMO0DEHla3FTcyCQfiM8Nd7riEoKOljalbTMsu
+ 9r2jxrT3YygkbwcWULV2atFejDUeE0E47/jkjQ/lbaYRlyLI/h60rt1X0BBHNMHPDpQhOuGZD
+ TbawNhqBWDRZw1SA26FXgdt1yNnbRkbJBe+QsPiLp+T4Rf6neN1DSaB1beV9WA+KAmKszXzZh
+ kEW74K7f1GtdZAbvghGVyZcYusJ7n2JyBETwXBhPJv/SdzX0clRZZuF0Bde08xdFgbo9YMsvp
+ b5nco17ABDXeidlgW8N+5cfXrhN050hGrZ8IvFLkALi7ICc+08TsBEiCiJRQ768ozddxF9PDd
+ 5vGUDTYX0QHTytSCBG9BYdB+9cDpQwGIWugKPBxfEE4UZg4n8IoiXLJngWsrL4sFxwA96D18z
+ Q+FdpzZqBA7XLB919hBM0Nymb6QEuQty25TGiVxBGk+EsYU4XFvUv+vBPaRV8IW4h3d1cV+ie
+ Fmx4wFfUOYal7hSphanLauWaY6Utagjz3dgDKhMLIDHy97S2LiCQDF1UvkoPzlSE4xKDPrZEC
+ HheueeV2oGmvslD5Rub/QC/H9/SFz3lIZG0EjC0yJyNP8eXNypY/0KH6VPCdU1vmrzQ6Im75P
+ XfSIxJKz6cwtrUG35pNh7RyRQliyFDSP5YkY6GFxa49kqQ9vjoQpqU6bgZ6Ig/0OG4DFYb2Mg
+ 9TUAwpqj2gjCGaUkd0pYF9msT8VUPDj28Nr+fGxpjrGuoeHqD7KTOobIXP93KVO//GECEXelL
+ MCOjNyZWvXLiQqLiFVAoGaRBF54XczvpTQ/1w/0zC1DcBBYjXX/Kwn3oihEep3J9vGpQDMaYf
+ QHcad3uk7mgWyKy7fc6VMWsfyD62q0i3xzFLVZ2ShfYThUfkFjCqHQgAEE8W6KL9uSHl16+xS
+ CcyxL/bULxo7k9XfvCVE+fV1SN45yaYN5kW8wKsIUJYAxCykEPnBabpdm2tklqZBdOoMyGbrB
+ C/GATT6Q1fq1Y2UgNabGs7Ydxlg68JEPoOI8O83yNjmv0YBq25ptvTJ89u1uIhNGCnAJu5POi
+ IzQRZoPkyaRoK2mivnnyQPyXcXNWdr1dttAofWXzNO23Heyhlp/YJEZAbQpktZJPtpt8IDS2x
+ WOgE7Vew+NfcJWwkSxkEX0jhrVBqwwUVl2dliIVkeC3+JG+DaucJHmHCbMyL+/g+kG6pKyenr
+ X8qmpkQNvSZEef2Wx/b17vu3R9hPk/M94nOMnksRnk5Z2Y2Ucd9F9Diil89EFY1BRWiBQMDXM
+ 5IcBhguysJqnWxLgzciAn22EbNpmek7kiZ9WLiUp+OQDjTCOHVahkvbOndqi1To8o06HZclkT
+ mdhepWT1Rabrl5TUKs9/dU+b3YGQcKQ+cYyIkfZ/AMQ9IaVa1P3tnSoseyiUY7BbwxWAe7zLY
+ Jf5o1BOoaidYnaFaCm+eoaFxdqhi1DLyCxWCOMHRbs/i
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Hi,
 
---8323328-1217877951-1752770359=:5381
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Thu, 27 Mar 2025, Johannes Schindelin via GitGitGadget wrote:
 
-Hi Juan,
+> When I ran CodeQL on Git's source code, it said that that variables might be
+> uninitialized in a few places.
 
-Yes, the 'Curl option' is set, but that does not affect the `curl.exe`
-program... That will always use "WinSSL" (which means: Secure Channel),
-i.e. not OpenSSL. The reason is that Git for Windows needs to use a nasty
-hack to avoid depending on OpenSSL (which I want to limit to
-`git-remote-https.exe`), for full details see:
-https://github.com/git-for-windows/git/pull/4410
+For the record, I am abandoning my efforts to upstream this. I was never
+interested in the actual changes, I was interested in getting CodeQL to
+run on Git's code base without reporting false positives, so that I could
+compare the quality of the reports against Coverity's. Therefore, I was
+not really prepared to polish these patches as if they were something
+important: They are not, and I cannot justify spending any more time on
+these patches. I will carry them as-are in microsoft/git, under the label
+'uninitialized-variables', as long as they apply without major merge
+conflict headaches.
 
 Ciao,
 Johannes
-
-On Mon, 28 Apr 2025, Junio Luan Pereira wrote:
-
-> Hello
-> The "Curl option" is set to "WinSSL", but the problem persists even
-> when it is switched to "OpenSSL". To confirm this, I reinstalled Git
-> using the Windows executable file (without uninstalling it first) and
-> restarted my laptop. Now the content of  "C:\Program
-> Files\Git\etc\install-options.txt" is as follows:
->=20
-> Editor Option: Nano
-> Custom Editor Path:
-> Default Branch Option:
-> Path Option: Cmd
-> SSH Option: OpenSSH
-> Tortoise Option: false
-> CURL Option: OpenSSL
-> CRLF Option: CRLFAlways
-> Bash Terminal Option: MinTTY
-> Git Pull Behavior Option: Merge
-> Use Credential Manager: Enabled
-> Performance Tweaks FSCache: Enabled
-> Enable Symlinks: Disabled
-> Enable FSMonitor: Disabled
->=20
-> Yet, the issues remained unchanged.
->=20
-> If this information is helpful to you, my current cURL version is
->=20
-> $ curl --version
-> curl 8.12.1 (x86_64-w64-mingw32) libcurl/8.12.1 Schannel zlib/1.3.1
-> brotli/1.1.0 zstd/1.5.7 libidn2/2.3.7 libpsl/0.21.5 libssh2/1.11.1
-> Release-Date: 2025-02-13
-> Protocols: dict file ftp ftps gopher gophers http https imap imaps
-> ipfs ipns ldap ldaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps
-> telnet tftp ws wss
-> Features: alt-svc AsynchDNS brotli HSTS HTTPS-proxy IDN IPv6 Kerberos
-> Largefile libz NTLM PSL SPNEGO SSL SSPI threadsafe UnixSockets zstd
->=20
-> This is why I was unable to use a cURL binary without Schannel.
->=20
-> Sincerely
->=20
->=20
-> Em seg., 28 de abr. de 2025 =C3=A0s 08:22, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> escreveu:
-> >
-> > Hi Junio,
-> >
-> > On Fri, 25 Apr 2025, Junio Luan Pereira wrote:
-> >
-> > > I discovered that the problem lies in the schannel feature of the cu=
-rl
-> > > binary. More specifically, the problem is not in the curl itself, bu=
-t
-> > > in the feature "Safe Web" from Norton Antivirus in my PC that, in so=
-me
-> > > way, blocks any attempt of curl to access sites with a public key
-> > > validated by "Let's Encrypt". Turning off the Safe Web makes
-> > > everything work properly.
-> >
-> > Interesting.
-> >
-> > One last question: do you have OpenSSL or Secure Channel configured as
-> > your default HTTPS backend? You should be able to see this information=
- in
-> > C:\Program Files\Git\etc\install-options.txt, under the key "CURL opti=
-on":
-> > If it is "WinSSL", you chose Secure Channel, otherwise it is OpenSSL.
-> >
-> > Ciao,
-> > Johannes
-> >
-> > >
-> > > I am no expert, but an AI I used suggested that replacing the curl
-> > > executable by one without the schannel feature would solve the
-> > > problem, but I was unable to do this.
-> > >
-> > > Based on this, I believe this issue can be considered solved.
-> > >
-> > > Sincerely
-> > >
-> > > Em qui., 24 de abr. de 2025 =C3=A0s 10:05, Johannes Schindelin
-> > > <Johannes.Schindelin@gmx.de> escreveu:
-> > > >
-> > > > Hi Junio,
-> > > >
-> > > > On Wed, 9 Apr 2025, Junio Luan Pereira wrote:
-> > > >
-> > > > > I am using git-for-windows on a windows 11 laptop with the Brazi=
-lian
-> > > > > Portuguese language.
-> > > > >
-> > > > > Recently, an error occur every time I execute the git
-> > > > > update-git-for-windows in the following way:
-> > > > >
-> > > > > $ git update-git-for-windows
-> > > > > curl: (35) schannel: next InitializeSecurityContext failed:
-> > > > > CRYPT_E_NO_REVOCATION_CHECK (0x80092012) - A fun=EF=BF=BD=EF=BF=
-=BDo de revoga=EF=BF=BD=EF=BF=BDo n=EF=BF=BDo
-> > > > > p=EF=BF=BDde verificar a revoga=EF=BF=BD=EF=BF=BDo do certificad=
-o.
-> > > >
-> > > > This command is implemented as a Unix shell script:
-> > > >
-> > > > https://github.com/git-for-windows/build-extra/blob/HEAD/git-extra=
-/git-update-git-for-windows
-> > > >
-> > > > Could you edit (in elevated mode!) the file at
-> > > > `C:\Program Files\Git\mingw64\bin\git-update-git-for-windows` and =
-add the
-> > > > `--ssl-revoke-best-effort` option (for a full explanation, see
-> > > > https://curl.se/docs/manpage.html#--ssl-revoke-best-effort) to the=
- two
-> > > > `curl` invocations in that script, and then try it again?
-> > > >
-> > > > Thank you,
-> > > > Johannes
-> > > >
-> > > > >
-> > > > > Reinstalling completely the program apparently does not work.
-> > > > >
-> > > > > Is this some kind of bug on git-for-windows? Was it reported? Sh=
-ould
-> > > > > it be reported?
-> > > > >
-> > > > > PS: I have no knowledge of programming, developing or debugging =
-git.
-> > > > > Ask me in case more information is needed.
-> > > > >
-> > > > > Sincerely
-> > > > >
-> > > > >
-> > >
->=20
->=20
-
---8323328-1217877951-1752770359=:5381--
