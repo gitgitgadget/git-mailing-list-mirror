@@ -1,80 +1,80 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F482BE024
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 10:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004C029ACE5
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 10:50:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752749422; cv=none; b=BkDWoLmkxvknhez0akWDD8kKWDLWztltWBOxXJs2KAEXAcoPx7uXeu2/X4BLLWxZx/Qjp+gAlfmgM0hV6l6GdmMFeBlqgtoGttv4ZGYvIV/3ucX66GbIb23HNk86yOLjwzd5yupPylwNuBItdPGxfGRX9UURuDfZGXXqjJuXU6Y=
+	t=1752749423; cv=none; b=ZYEhY6FlONaprTlDxjQSDO1hxAG6tfS7yBuYQX61OklfOP9IWDKZUnKtqPQETJBQtOXudj/kd8rqzgCdVX/TpwDFBx8bpddA2LX0A+S4Jo/Ox0wK5u+cKnwr848jGERHXiLfNKn6cLYz8WlNiHTq0yy+8oSwbU8in+2lgXRmarY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752749422; c=relaxed/simple;
-	bh=Get17BNZWZM/gu3/E4k2dCCEtci5SEL7NKR5SORB+yA=;
+	s=arc-20240116; t=1752749423; c=relaxed/simple;
+	bh=6yKu2rbDC+ypcli3THZ4vJNNoePzSZH/wl0GvmbNkkc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jc19G1+gUjRhzcXPk34Z/DLkqEfkjIKMlNcF/wOezkjc6InAoEvvt6JFNyiMBcDY85qxRpKHbiY2uzkrmKjsKeMfucrF5nBRpT+dyOmjSmfwOOOL/MlmH+lKkTve51GSV5gt04+nkFx/jPh46Y60V/kO2PwtJDv9yjTMGOWx6HU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wjWvcPUZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a+noz7KV; arc=none smtp.client-ip=202.12.124.156
+	 In-Reply-To:To:Cc; b=AH4aTcrUOtgSQ+7L3jkLg2BzpjPBLbFKm18TGcbwYmwD7SpMKSh+RnY9bzjgXLIN0z7vE0d/3NJ51FlffWLEVYwa63YZmq9rWKdegqU7YvFwNpka75AyYqopB36vZdEsSkhKrG88+yC1Xw/G5ikPHTxDsaHz+02bnaTLdRlT8NQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vCEwoX4i; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KMYGqHiS; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wjWvcPUZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a+noz7KV"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 27D177A0223
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:18 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vCEwoX4i";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KMYGqHiS"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B4A87A0200
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:21 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 06:50:18 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 17 Jul 2025 06:50:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1752749418;
-	 x=1752835818; bh=i7QVxMZf+6f4W0doryktNx1wyHlryb97N5frStdlg8w=; b=
-	wjWvcPUZx9jNGqsYteRSbyJ53ad2/N84KBRVj9omwdDlkju0uwX3Hkwhy7NjQMde
-	k1EqzC3foGNvONR8j3BM8AyqQOzGhGujK6OQqgYcuCsz4pNncxl334428PGbt6TB
-	Kr5sOMObAXKZfo6nyHFdVE9P17C9Z55N3uXQdPsQ3OdABAtoGOXyOs3LDpAdUlwQ
-	1+ZisMuToDu0bYW5s8Bw/URIkpfqsc67V+DW2VaovgNOQLUCdJqHxFUqzZi/FgBA
-	h4yGGUHUFf6oOqGzkxRfp1I9roLEWrWI/OpMAUghvVB/uWAdnunkIUyu2yRqi7vu
-	mW1kwoeAafL+1/Ia82HX4g==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1752749420;
+	 x=1752835820; bh=ASmoTdCW8LrnqDJamJ8MpEwfqkCO2L6gbUoqq/81tu0=; b=
+	vCEwoX4iEAePZjhtSo8M9cj695+bxi5+deUQnFQoRGMP7d6ro69+rvTFtvr2ZPXB
+	0TlOhA6Cvf76AcKSXiQ7hXA42NNd/E8R8XfSgqcuptnel3tliAZ0y/tVmYWYkmDG
+	o6M83/jHPbRYc4Z23+tXkfcE4gzAOB2sdHrh2No+ezwPfwE7fm1YdbxsO/n98QFU
+	rl/6pHGXUMe/ardDtgHvcI2aMbHHwncOmh90ZKrP1sGfiRgafn71gbj87zwBkis0
+	d2bHKQ72BuER6UzqLMwbK7vfz0m4lx0X+kPw2KOAUXJmnu83KqsSMcf9ZMFFDVGd
+	YUb5wp63d2qV8A6mKrEG+g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752749418; x=
-	1752835818; bh=i7QVxMZf+6f4W0doryktNx1wyHlryb97N5frStdlg8w=; b=a
-	+noz7KVOP92gcxlnC1+xY/FSUsEFInhfTEgZwA7XEN61dh5TJKpquikkpT5MGH7l
-	dUcrOwVCCefvfPBNs8WXCwN6SFx6nPum3dIBV9947lhsdI/yr7PZvU9MOuFQry3d
-	AZdldgNa1wXTYb5G+FW9u6V4jTieHWOSo8PaS2F9fnyeBPlAe9CWfZLflMGlBdqC
-	Lb/ZK11xeInlQrDYHwK2AN/M8AGxJlYIdHP3CGFwxIH8UM/hFT/Efdtgk1Z20qW3
-	HhS9ra+WQ+1al2glCPWVXIweg89ViY/KwwO6aDnA8gKkqFkq1ElbUFJMjj+CM5+0
-	zdurOibeBn1FChw8wVNDA==
-X-ME-Sender: <xms:adV4aAfmP0vtB5zHy-UYisyWuTNhGwhLvI8nRiVHY9LAKPtY0_KlhQ>
-    <xme:adV4aEOmdQ_dWn0ESen0uE87iUVR_JewrghYbCdgf6daSoyIH-niQ3ln9a6X1qfdu
-    XlyzqZDCi6vgAf4dQ>
-X-ME-Received: <xmr:adV4aK59sRDunH1m9yRdibmVeFx2PxU0FxCzvK3Q7wvU9sB6QwfJufbVQcMofH3XPZ7s1la_lmTH1H2weorwakyiQDsL1AkdLUSKG8ihgHdG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdefkecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752749420; x=
+	1752835820; bh=ASmoTdCW8LrnqDJamJ8MpEwfqkCO2L6gbUoqq/81tu0=; b=K
+	MYGqHiSBicdhyTcZyxVaUxpQCDlTDocpdPQdtA+PnAbioC1Do40H3jDyv3HvMkoR
+	po8KVJTHKqGgSeqpZ02a8Pc8DYFN/oVhItfQ1MRK6/bYtxWbPtHMxi16xYG2PQuM
+	DCAJ/u4CUBuC4I4O81FMJCG+caXnnk1R6l/3LFBHj41rgYB16BV0l71T31A+RcmO
+	eWMIbklxdcM3T2rxE3uNfSDq8j+S62nAK+3I/cz2Ega9KYML2s5XDS8KMo/Cblxd
+	4rAyMW3e/Nie4bP9vNs3JN6iHdFhy+gd9GjV7sAYJPzEhxfCtjsZDi6sJryWQYHS
+	2qfkrJz06CkGXBopjCFZw==
+X-ME-Sender: <xms:bNV4aDsj7c66toTR8HOSaHKDEYEkxty8_xeGTYjhnkrfo-0LrFkEoA>
+    <xme:bNV4aGdtJUmYM2qGAGiFkTHRVqF7Wb7z6Dl8EWzrgSbgfYdCpGbDOB0vTsk5NUFuH
+    LJvqgdKS3cBP3-MAw>
+X-ME-Received: <xmr:bNV4aAKgo1oojDa1RI8eAtcQSDpvVUO1juQdULkvqtcEUIX7NwKVc8et823DJMFNnbUnQbYmnhJug579vBC1rgSDcJUizsQie82IiGNa3hPa>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdeflecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertd
     ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
     shdrihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelte
-    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgr
+    ekudehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgr
     mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupdhmoh
     guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
     rhhg
-X-ME-Proxy: <xmx:adV4aILMCfSZwR7_1QjDvDX0LtcXg4a0xnZO9S4qpCdEAhHh_idv5Q>
-    <xmx:adV4aEfMa7sLTRWCdD9EopFeNhuwIx-PxJcaWFdgIAysisfVwZIbuQ>
-    <xmx:adV4aLfN4Jiq-eKeX_UqY9THl554BM_U_UrrQww2toryXaG1j-fr8g>
-    <xmx:adV4aHOg0T8C2E0HUirXpLpKQaYd5NtQ6kTYWJWOG2FzarfAVlUQmw>
-    <xmx:adV4aPEVKUdv-j6MY7gl8-KEZQhRemhwjHpqUuXTAYu1fGiUqWGQvn3s>
+X-ME-Proxy: <xmx:bNV4aEbiaXikDeMWbafHQdzN58Z3tH-CxqhtEreNrYSdQvIvM8BWkg>
+    <xmx:bNV4aLsok3RHq0wl2Uf3ybsrvLTE-4RwH_8qsqv5phmeX2fWr05IBQ>
+    <xmx:bNV4aBtjo5580dT_V19Pz0w-_lrb2OKoT0sQnpYAiOkVZJi_3_UROA>
+    <xmx:bNV4aAcUE_YAj_jN1dEEh_VJQRRs9PmbNNGP1cpEvoBYrUJp69DvHQ>
+    <xmx:bNV4aLUkigCly1uH-FxzNzpxMVZV6pNtL23WJ5JcEH0HTxRRTecmXAKN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:17 -0400 (EDT)
+ <git@vger.kernel.org>; Thu, 17 Jul 2025 06:50:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 55d4c612 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id f1332973 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Thu, 17 Jul 2025 10:50:16 +0000 (UTC)
+	Thu, 17 Jul 2025 10:50:19 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Thu, 17 Jul 2025 12:49:35 +0200
-Subject: [PATCH 15/21] config: drop `git_config_set_in_file_gently()`
- wrapper
+Date: Thu, 17 Jul 2025 12:49:36 +0200
+Subject: [PATCH 16/21] config: drop
+ `git_config_set_multivar_in_file_gently()` wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +83,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250717-pks-config-wo-the-repository-v1-15-d888e4a17de1@pks.im>
+Message-Id: <20250717-pks-config-wo-the-repository-v1-16-d888e4a17de1@pks.im>
 References: <20250717-pks-config-wo-the-repository-v1-0-d888e4a17de1@pks.im>
 In-Reply-To: <20250717-pks-config-wo-the-repository-v1-0-d888e4a17de1@pks.im>
 To: git@vger.kernel.org
@@ -99,8 +99,9 @@ eventually remove those wrappers to make the dependency on the global
 repository variable explicit at the callsite.
 
 Follow through with that intent and remove
-`git_config_set_in_file_gently()`. All callsites are adjusted so that
-they use `repo_config_set_in_file_gently(the_repository, ...)` instead.
+`git_config_set_multivar_in_file_gently()`. All callsites are adjusted
+so that they use
+`repo_config_set_multivar_in_file_gently(the_repository, ...)` instead.
 While some callsites might already have a repository available, this
 mechanical conversion is the exact same as the current situation and
 thus cannot cause any regression. Those sites should eventually be
@@ -108,229 +109,177 @@ cleaned up in a later patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/config.c            | 14 +++++++-------
- builtin/submodule--helper.c |  2 +-
- builtin/worktree.c          |  4 ++--
- config.h                    | 10 ----------
- sequencer.c                 | 28 ++++++++++++++--------------
- submodule-config.c          |  2 +-
- submodule.c                 |  2 +-
- worktree.c                  |  4 ++--
- 8 files changed, 28 insertions(+), 38 deletions(-)
+ builtin/config.c   | 44 ++++++++++++++++++++++----------------------
+ builtin/gc.c       |  4 ++--
+ builtin/worktree.c |  2 +-
+ config.h           | 12 ------------
+ sequencer.c        |  2 +-
+ 5 files changed, 26 insertions(+), 38 deletions(-)
 
 diff --git a/builtin/config.c b/builtin/config.c
-index af5d79eadc0..f7e718c6702 100644
+index f7e718c6702..59fb113b073 100644
 --- a/builtin/config.c
 +++ b/builtin/config.c
-@@ -970,8 +970,8 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
- 							     argv[0], value, value_pattern,
- 							     comment, flags);
- 	} else {
--		ret = git_config_set_in_file_gently(location_opts.source.file,
--						    argv[0], comment, value);
-+		ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file,
-+						     argv[0], comment, value);
- 		if (ret == CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
-@@ -1014,8 +1014,8 @@ static int cmd_config_unset(int argc, const char **argv, const char *prefix,
- 							     argv[0], NULL, value_pattern,
- 							     NULL, flags);
- 	else
--		ret = git_config_set_in_file_gently(location_opts.source.file, argv[0],
--						    NULL, NULL);
-+		ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file, argv[0],
-+						     NULL, NULL);
+@@ -966,9 +966,9 @@ static int cmd_config_set(int argc, const char **argv, const char *prefix,
+ 	value = normalize_value(argv[0], argv[1], type, &default_kvi);
  
- 	location_options_release(&location_opts);
- 	return ret;
-@@ -1296,7 +1296,7 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern) {
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], value, value_pattern,
+-							     comment, flags);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], value, value_pattern,
++							      comment, flags);
+ 	} else {
+ 		ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file,
+ 						     argv[0], comment, value);
+@@ -1010,9 +1010,9 @@ static int cmd_config_unset(int argc, const char **argv, const char *prefix,
+ 	check_write(&location_opts.source);
+ 
+ 	if ((flags & CONFIG_FLAGS_MULTI_REPLACE) || value_pattern)
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], NULL, value_pattern,
+-							     NULL, flags);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], NULL, value_pattern,
++							      NULL, flags);
+ 	else
+ 		ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file, argv[0],
+ 						     NULL, NULL);
+@@ -1305,26 +1305,26 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		check_write(&location_opts.source);
+ 		check_argc(argc, 2, 3);
+ 		value = normalize_value(argv[0], argv[1], display_opts.type, &default_kvi);
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], value, argv[2],
+-							     comment, flags);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], value, argv[2],
++							      comment, flags);
+ 	}
+ 	else if (actions == ACTION_ADD) {
  		check_write(&location_opts.source);
  		check_argc(argc, 2, 2);
  		value = normalize_value(argv[0], argv[1], display_opts.type, &default_kvi);
--		ret = git_config_set_in_file_gently(location_opts.source.file, argv[0], comment, value);
-+		ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file, argv[0], comment, value);
- 		if (ret == CONFIG_NOTHING_SET)
- 			error(_("cannot overwrite multiple values with a single value\n"
- 			"       Use a regexp, --add or --replace-all to change %s."), argv[0]);
-@@ -1354,8 +1354,8 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
- 								     argv[0], NULL, argv[1],
- 								     NULL, flags);
- 		else
--			ret = git_config_set_in_file_gently(location_opts.source.file,
--							    argv[0], NULL, NULL);
-+			ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file,
-+							     argv[0], NULL, NULL);
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], value,
+-							     CONFIG_REGEX_NONE,
+-							     comment, flags);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], value,
++							      CONFIG_REGEX_NONE,
++							      comment, flags);
  	}
+ 	else if (actions == ACTION_REPLACE_ALL) {
+ 		check_write(&location_opts.source);
+ 		check_argc(argc, 2, 3);
+ 		value = normalize_value(argv[0], argv[1], display_opts.type, &default_kvi);
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], value, argv[2],
+-							     comment, flags | CONFIG_FLAGS_MULTI_REPLACE);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], value, argv[2],
++							      comment, flags | CONFIG_FLAGS_MULTI_REPLACE);
+ 	}
+ 	else if (actions == ACTION_GET) {
+ 		check_argc(argc, 1, 2);
+@@ -1350,9 +1350,9 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
+ 		check_write(&location_opts.source);
+ 		check_argc(argc, 1, 2);
+ 		if (argc == 2)
+-			ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-								     argv[0], NULL, argv[1],
+-								     NULL, flags);
++			ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++								      argv[0], NULL, argv[1],
++								      NULL, flags);
+ 		else
+ 			ret = repo_config_set_in_file_gently(the_repository, location_opts.source.file,
+ 							     argv[0], NULL, NULL);
+@@ -1360,9 +1360,9 @@ static int cmd_config_actions(int argc, const char **argv, const char *prefix)
  	else if (actions == ACTION_UNSET_ALL) {
  		check_write(&location_opts.source);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 710a2a2004e..28f34f7bc18 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1280,7 +1280,7 @@ static void sync_submodule(const char *path, const char *prefix,
- 	submodule_to_gitdir(the_repository, &sb, path);
- 	strbuf_addstr(&sb, "/config");
- 
--	if (git_config_set_in_file_gently(sb.buf, remote_key, NULL, sub_origin_url))
-+	if (repo_config_set_in_file_gently(the_repository, sb.buf, remote_key, NULL, sub_origin_url))
- 		die(_("failed to update remote for submodule '%s'"),
- 		      path);
- 
+ 		check_argc(argc, 1, 2);
+-		ret = git_config_set_multivar_in_file_gently(location_opts.source.file,
+-							     argv[0], NULL, argv[1],
+-							     NULL, flags | CONFIG_FLAGS_MULTI_REPLACE);
++		ret = repo_config_set_multivar_in_file_gently(the_repository, location_opts.source.file,
++							      argv[0], NULL, argv[1],
++							      NULL, flags | CONFIG_FLAGS_MULTI_REPLACE);
+ 	}
+ 	else if (actions == ACTION_RENAME_SECTION) {
+ 		check_write(&location_opts.source);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index c0fe4e73087..183798f0dc9 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1938,7 +1938,7 @@ static int maintenance_register(int argc, const char **argv, const char *prefix,
+ 		}
+ 		if (!config_file)
+ 			die(_("$HOME not set"));
+-		rc = git_config_set_multivar_in_file_gently(
++		rc = repo_config_set_multivar_in_file_gently(the_repository,
+ 			config_file, "maintenance.repo", maintpath,
+ 			CONFIG_REGEX_NONE, NULL, 0);
+ 		free(global_config_file);
+@@ -2007,7 +2007,7 @@ static int maintenance_unregister(int argc, const char **argv, const char *prefi
+ 		}
+ 		if (!config_file)
+ 			die(_("$HOME not set"));
+-		rc = git_config_set_multivar_in_file_gently(
++		rc = repo_config_set_multivar_in_file_gently(the_repository,
+ 			config_file, key, NULL, maintpath, NULL,
+ 			CONFIG_FLAGS_MULTI_REPLACE | CONFIG_FLAGS_FIXED_VALUE);
+ 		free(global_config_file);
 diff --git a/builtin/worktree.c b/builtin/worktree.c
-index b1306248dec..fd517c82c44 100644
+index fd517c82c44..812774a5ca9 100644
 --- a/builtin/worktree.c
 +++ b/builtin/worktree.c
-@@ -384,8 +384,8 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
+@@ -379,7 +379,7 @@ static void copy_filtered_worktree_config(const char *worktree_git_dir)
+ 
+ 		if (!git_configset_get_bool(&cs, "core.bare", &bare) &&
+ 			bare &&
+-			git_config_set_multivar_in_file_gently(
++			repo_config_set_multivar_in_file_gently(the_repository,
+ 				to_file, "core.bare", NULL, "true", NULL, 0))
  			error(_("failed to unset '%s' in '%s'"),
  				"core.bare", to_file);
- 		if (!git_configset_get(&cs, "core.worktree") &&
--			git_config_set_in_file_gently(to_file,
--							"core.worktree", NULL, NULL))
-+			repo_config_set_in_file_gently(the_repository, to_file,
-+						       "core.worktree", NULL, NULL))
- 			error(_("failed to unset '%s' in '%s'"),
- 				"core.worktree", to_file);
- 
 diff --git a/config.h b/config.h
-index 43d06c279e3..4e658e47f0a 100644
+index 4e658e47f0a..e69592ada15 100644
 --- a/config.h
 +++ b/config.h
-@@ -734,16 +734,6 @@ static inline int git_config_get_pathname(const char *key, char **dest)
+@@ -734,18 +734,6 @@ static inline int git_config_get_pathname(const char *key, char **dest)
  	return repo_config_get_pathname(the_repository, key, dest);
  }
  
--static inline int git_config_set_in_file_gently(
+-static inline int git_config_set_multivar_in_file_gently(
 -	const char *config_filename,
--	const char *key,
+-	const char *key, const char *value,
+-	const char *value_pattern,
 -	const char *comment,
--	const char *value)
+-	unsigned flags)
 -{
--	return repo_config_set_in_file_gently(the_repository, config_filename,
--					      key, comment, value);
+-	return repo_config_set_multivar_in_file_gently(the_repository, config_filename,
+-						       key, value, value_pattern,
+-						       comment, flags);
 -}
 -
- static inline int git_config_set_multivar_in_file_gently(
+ static inline void git_config_set_multivar_in_file(
  	const char *config_filename,
- 	const char *key, const char *value,
+ 	const char *key,
 diff --git a/sequencer.c b/sequencer.c
-index f8d9bb69df8..8acb699f4f2 100644
+index 8acb699f4f2..aaf2e4df64e 100644
 --- a/sequencer.c
 +++ b/sequencer.c
-@@ -3650,57 +3650,57 @@ static int save_opts(struct replay_opts *opts)
- 	int res = 0;
- 
- 	if (opts->no_commit)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.no-commit", NULL, "true");
- 	if (opts->edit >= 0)
--		res |= git_config_set_in_file_gently(opts_file, "options.edit", NULL,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file, "options.edit", NULL,
- 						     opts->edit ? "true" : "false");
- 	if (opts->allow_empty)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.allow-empty", NULL, "true");
- 	if (opts->allow_empty_message)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 				"options.allow-empty-message", NULL, "true");
- 	if (opts->drop_redundant_commits)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 				"options.drop-redundant-commits", NULL, "true");
- 	if (opts->keep_redundant_commits)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 				"options.keep-redundant-commits", NULL, "true");
- 	if (opts->signoff)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.signoff", NULL, "true");
- 	if (opts->record_origin)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.record-origin", NULL, "true");
- 	if (opts->allow_ff)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.allow-ff", NULL, "true");
- 	if (opts->mainline) {
- 		struct strbuf buf = STRBUF_INIT;
- 		strbuf_addf(&buf, "%d", opts->mainline);
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.mainline", NULL, buf.buf);
- 		strbuf_release(&buf);
- 	}
- 	if (opts->strategy)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 					"options.strategy", NULL, opts->strategy);
- 	if (opts->gpg_sign)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
+@@ -3690,7 +3690,7 @@ static int save_opts(struct replay_opts *opts)
+ 		res |= repo_config_set_in_file_gently(the_repository, opts_file,
  					"options.gpg-sign", NULL, opts->gpg_sign);
  	for (size_t i = 0; i < opts->xopts.nr; i++)
- 		res |= git_config_set_multivar_in_file_gently(opts_file,
+-		res |= git_config_set_multivar_in_file_gently(opts_file,
++		res |= repo_config_set_multivar_in_file_gently(the_repository, opts_file,
  				"options.strategy-option",
  				opts->xopts.v[i], "^$", NULL, 0);
  	if (opts->allow_rerere_auto)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 				"options.allow-rerere-auto", NULL,
- 				opts->allow_rerere_auto == RERERE_AUTOUPDATE ?
- 				"true" : "false");
- 
- 	if (opts->explicit_cleanup)
--		res |= git_config_set_in_file_gently(opts_file,
-+		res |= repo_config_set_in_file_gently(the_repository, opts_file,
- 				"options.default-msg-cleanup", NULL,
- 				describe_cleanup_mode(opts->default_msg_cleanup));
- 	return res;
-diff --git a/submodule-config.c b/submodule-config.c
-index 70324da3830..1f19fe20774 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -983,7 +983,7 @@ int config_set_in_gitmodules_file_gently(const char *key, const char *value)
- {
- 	int ret;
- 
--	ret = git_config_set_in_file_gently(GITMODULES_FILE, key, NULL, value);
-+	ret = repo_config_set_in_file_gently(the_repository, GITMODULES_FILE, key, NULL, value);
- 	if (ret < 0)
- 		/* Maybe the user already did that, don't error out here */
- 		warning(_("Could not update .gitmodules entry %s"), key);
-diff --git a/submodule.c b/submodule.c
-index f8373a9ea7d..fff3c755703 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -2058,7 +2058,7 @@ void submodule_unset_core_worktree(const struct submodule *sub)
- 	submodule_name_to_gitdir(&config_path, the_repository, sub->name);
- 	strbuf_addstr(&config_path, "/config");
- 
--	if (git_config_set_in_file_gently(config_path.buf, "core.worktree", NULL, NULL))
-+	if (repo_config_set_in_file_gently(the_repository, config_path.buf, "core.worktree", NULL, NULL))
- 		warning(_("Could not unset core.worktree setting in submodule '%s'"),
- 			  sub->path);
- 
-diff --git a/worktree.c b/worktree.c
-index 981a2713374..a2a5f51f29f 100644
---- a/worktree.c
-+++ b/worktree.c
-@@ -991,9 +991,9 @@ int should_prune_worktree(const char *id, struct strbuf *reason, char **wtpath,
- static int move_config_setting(const char *key, const char *value,
- 			       const char *from_file, const char *to_file)
- {
--	if (git_config_set_in_file_gently(to_file, key, NULL, value))
-+	if (repo_config_set_in_file_gently(the_repository, to_file, key, NULL, value))
- 		return error(_("unable to set %s in '%s'"), key, to_file);
--	if (git_config_set_in_file_gently(from_file, key, NULL, NULL))
-+	if (repo_config_set_in_file_gently(the_repository, from_file, key, NULL, NULL))
- 		return error(_("unable to unset %s in '%s'"), key, from_file);
- 	return 0;
- }
 
 -- 
 2.50.1.465.gcb3da1c9e6.dirty
