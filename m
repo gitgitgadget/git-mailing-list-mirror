@@ -1,147 +1,150 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B261298CBB
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 13:03:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06B3E35963
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 14:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752757406; cv=none; b=DDBI7ybC8IqS3gEFBL9KxPgkhWJzhQxZVWb2LjG079ztzNniRq7xqVMMazDTfTjnN603dvOjQMhFZkCXOyZy545TyNWuo//IRScZceM7UTtfvWLVYix6opzeY1DCLSbIbt9d7HGrv6sTIrlrN0vofc/P8ZiCIDT58peoxhvTj1c=
+	t=1752763741; cv=none; b=JQJylb/g3AEAqjxWXGCxGGKLIlexCayXaf0HmwJkXwy46K9nxsXnoOfsp1WdauJvLbnoH/g/dw6FK4Vfl3qxLHI0F+tJHkxUTYPR+ndXn+wkigZ+XlPgaWRpQt681rqB2KwFbGzGjYgpE8caG6b/CZ6/UtJVvTeKY4TTY9HDCKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752757406; c=relaxed/simple;
-	bh=yCoRwdr0ke+SsRQ/lYHEDiHuz3m2N1ivJeN6kUUMAuA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q4GH6H3vAl/1hVD1yw+4MTYFvtUBMk8nK3fYbRljguad43sH7lnlGjLDJBO8ZIsWjmWBKpmINfPdUb/A4bq3h/fFzCHBNJ8y4VHILPZ6KvOEoDWy6NJtqglD2WSZ5kmGJTrYtxGN2w/315Z98jA9+YYZkz0jWwOJb5AJtrBG6nU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZVedQqk+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yi04ziqk; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1752763741; c=relaxed/simple;
+	bh=wQzzZ8bVHzB+ldOA74C0jyxgcSib3ynJu9JNkjzM/w0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=fniX5ZdkVMRo1roO3rXSvW9w92TE65fRAAmD6PKxcmrMfVdZJT9Kazizr0QXsLeGzVX7XWRGBr36A9MwyIvEF8onO84uLo1KFbfzGydK/pECN3uMYWa/va9l445eSLIUwc7mfXkFfV68khgeWArqScDbFipOC7P0y/AVee0fBYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kZMzwLIr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FYEekKMz; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZVedQqk+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yi04ziqk"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3F4311400129;
-	Thu, 17 Jul 2025 09:03:23 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Thu, 17 Jul 2025 09:03:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kZMzwLIr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FYEekKMz"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id DDFFD1D001C3;
+	Thu, 17 Jul 2025 10:48:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 17 Jul 2025 10:48:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1752757403; x=1752843803; bh=8zgaIDfyZ/
-	rSttl6bIQBQowWuAVK8fu0sG8Mj9LfVfs=; b=ZVedQqk+1RSA3RgxdL8yJmjfc2
-	XF/1UL7TQezzuK0ldFTpmVPUvqPgklpGbcDt3MGV9S+sNbFGjGgOrz9LXl/VNYUp
-	15XPNQG1Pmh8xn6ydEU4GYfurEfrNxds0QS1kWr0ncW/K2ji69lFKZDzHs7ijPyS
-	bDgpS32ZQJfijMJVOGIS/HI1LJwd9RoFR+4NMkRSUpw1urXvlMYWN+vU/XsW3DBD
-	Z8nidKJOgKP1nHVLthWY5VIVW/n/bQSndOiy1cPgOxqUGj/hzKPpcf3Xcb45x5T4
-	S7BJW8s6sJCgjQ81VglwCF3OZRHhYNKjwE8uFw4f+HDJYqNebz0B2vw0+ZiQ==
+	:subject:to:to; s=fm1; t=1752763737; x=1752850137; bh=xajx138VXr
+	0t4TC+yTVTN2ETEQvUsaV54ql0XJlhCoE=; b=kZMzwLIrdDR1cENzJFrsub1Xbx
+	Bz8YDeJmf+T8To99ZaxdUnhhuTUHN9Md2esWUZ8oAUc/7OU4E0DlUyKlcZVbwnWp
+	cJxjyxctparnIetluqVjWmxU9JeWkmzG4BmYIfrRP7hLvL0Rw1jbyAcz0Cedeqze
+	/GOLdCfPBAv82aYoCVHdofSGnwMW1wAGrdMeWcDHnL3M4W/2O/QzXuk6AF6k2Dxt
+	mjyJvCyIkmiXm7+t1T9vy7LZtsECmxiv1IV2P4dpUP4ZVTRPj7KtQSSMrVa9FVZQ
+	Vu3U2/VuC0lSX61v01B8eVhTXXzBw6+I0Z7B9ni98+6uA9tjooCRqS3aThEg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752757403; x=1752843803; bh=8zgaIDfyZ/rSttl6bIQBQowWuAVK8fu0sG8
-	Mj9LfVfs=; b=Yi04ziqkb3RHkyzPrLFLzPxaayu+pPiWqPYM1UXfGYfm8av+oI6
-	IiWNFXTnkbDRmr9LJJxAWDTxB2WJbwt+Exm8KdKQOtgUCyVEDjQXBIHzsbPqaH9J
-	VyytcA88Ckj221C8GWUUnCnyA8nMYX/WySn2nrjg4Sh9ggCLVdHZk/kH1U2f77qV
-	h5G4+pxrfLoVVzYuGq5C8inRyRUK4flafRXQXLb3Fh0J/gHTIKxLzBot7t/sG08h
-	6a5C3SeEZL0CPBT/CzZf+9dB4aewV8wz+HmbT4ofK9Tsw4GeAB/5y3i1XlsGSFJm
-	pZ3XAaTqlcGF9I/8ErWaz1G6J+fw0n17CTQ==
-X-ME-Sender: <xms:mvR4aPA0Opr3tPEeAMybB1MihhtD5sXEsPKsTioMwEjk_aQQrLyaQg>
-    <xme:mvR4aJX-TCsXzgqK9Lf5JEnEg9xHV-AHM4jzX8kaIBTiuFbrqVRyl4vwBVJKINrHT
-    1SDavUM5DsanTMZDw>
-X-ME-Received: <xmr:mvR4aDqjK9bjTc7wZcSIpZ3WIeIm2HxSA43dHwoklTkPEbjDQ4YVtO94zi9_m06jjA1NTsunBUDLbjytG1VeRJ4po3TKEiyghoavbuESbPEY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdeihecutefuodetggdotefrod
+	1752763737; x=1752850137; bh=xajx138VXr0t4TC+yTVTN2ETEQvUsaV54ql
+	0XJlhCoE=; b=FYEekKMz7snrWrJyDCowhWFNkK0SseDQWL5w+AcSxo54hfP+/3D
+	dMDVhZ0jN3Iwn2yK7dsukyyVov+Cp5QxJ5fySwRM8Ia+pI8jYAcGvyr2sZNvBsC3
+	pq8YlwYUwIr+F4ge+q7Yj5hlHkm98w/SWZuw1btsfgqdfGpxxAjyBRg/M5QGnDm5
+	AoOHfYz7VhLD6SYSEUSwhVtCop5vOI2SOILX0WU6C0xSX8OneitwFKs9UkQbiETK
+	TJIqq1T4R0ohwb3DhkJ4NrXETtbn6/Z3W5BBApWH+Nx6wYaL9wIT/kL4SHSs/QkH
+	UCIqMSNMskf1er/3F2jmtvSf76YUm7CFNXw==
+X-ME-Sender: <xms:WQ15aL7kZh25ncXRCBW3W1uJcya8rDeOIysCCh8kYpk4WFeqnJv99A>
+    <xme:WQ15aBmHKShHc-MeqezCy66VVZwENSFgesbRtRAJW-Gfwuut44rQ390tHMEOyGk-9
+    w21VY055UaoE83pKw>
+X-ME-Received: <xmr:WQ15aArQz-lqsGZUX4yVbIk9M11iHou27u95Rll7qBSjKWMHPnIDz-CqC3G7dza15iAppF2OxYiJzZpYrGR538XnfsgWzjjRI4LmJGU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeitdekiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehk
-    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhhlthhosghlvg
-    hrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:mvR4aFT3jJ4a9DlAGBX_NKk7r-ff2vPE0C8tYYkBnYU-gOpCcHd7wA>
-    <xmx:mvR4aN3BE5Co6_Vjnc9_ByYGzZIFPv8-pwPNg-jJiojldvmasfVIag>
-    <xmx:mvR4aBDX3gkOyq9nuFbAXf_yNYnNgggoyp-qTSTr297_74HTIlj4gg>
-    <xmx:mvR4aJgPwwC3b844J_I95NaANcCjEbXLsATr55sttXfxU7mMMR-4lg>
-    <xmx:m_R4aEF9wzs-g8saaUtgbqw-rzh32FhgnZXhczaDHDPZHpJrT5JGOrW->
-Feedback-ID: i197146af:Fastmail
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:WQ15aAvw6QngC3vs2ou0bBCBcWkwL3JbQwuQ2TEUX8-y8U6jnDTc0g>
+    <xmx:WQ15aFFyQ66cMUsYxr-V2uIb8e-LL0yAHNpyo9E5kPS7-LuJ9cy_TQ>
+    <xmx:WQ15aJZtgfodk7lOvE1tdspgSR5qyTaRKiFGT4rEhoZAy_nz3puw_A>
+    <xmx:WQ15aNUqZZ-J88U-94B-SKc7ifcwRjrsRnDGm147RdieN3cqscW-sA>
+    <xmx:WQ15aKga-mHIsMmiZ6lBEMA9cF1F0Z4yJyEdCy03LeUcczmaDHpxhZRp>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 17 Jul 2025 09:03:21 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ab25372d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 17 Jul 2025 13:03:19 +0000 (UTC)
-Date: Thu, 17 Jul 2025 15:03:16 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org,
-	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [GSoC RFC PATCH v4 2/4] repo: add the field references.format
-Message-ID: <aHj0lF5Kbirzv3pZ@pks.im>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-1-lucasseikioshiro@gmail.com>
- <20250714235231.10137-3-lucasseikioshiro@gmail.com>
- <mgdervgp34m6ipfbodsfn7cztcl7gdeggzemfgivzvuyk7qtba@wdijebkuioxg>
- <aHc6y9FGFXjowkU1@pks.im>
- <2v7b6mpufnn6cj7u7tactgu2ibggn4xpuezl2bsfjxv62afrsa@chfrii6vkrx3>
+ 17 Jul 2025 10:48:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
+  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v5 2/5] ref-cache: remove unused function
+ 'find_ref_entry()'
+In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-2-852d5a2f56e1@gmail.com>
+	(Karthik Nayak's message of "Tue, 15 Jul 2025 13:28:27 +0200")
+References: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+	<20250715-306-git-for-each-ref-pagination-v5-2-852d5a2f56e1@gmail.com>
+Date: Thu, 17 Jul 2025 07:48:55 -0700
+Message-ID: <xmqqtt3a7u08.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2v7b6mpufnn6cj7u7tactgu2ibggn4xpuezl2bsfjxv62afrsa@chfrii6vkrx3>
+Content-Type: text/plain
 
-On Wed, Jul 16, 2025 at 09:04:40AM -0500, Justin Tobler wrote:
-> On 25/07/16 07:38AM, Patrick Steinhardt wrote:
-> > On Tue, Jul 15, 2025 at 02:15:07PM -0500, Justin Tobler wrote:
-> > > Also, as mentioned in a comment for the previous patch, maybe we should
-> > > support printing two output modes. For the default output, maybe a
-> > > simple `<key>=<value>\n` where the any value containing special
-> > > characters is quoted via `quote_c_style()`.
-> > > 
-> > > A null-terminated output, such as the one proposed in this patch, could
-> > > be enabled via a `-z` flag similar to how its done in other commands.
-> > 
-> > Agreed in general, but instead of using `-z` I wonder whether it would
-> > make sense to use something like `--format=key-value` and `--format=nul`
-> > instead. This gives us more room to introduce additional formats in the
-> > future, like for example the JSON format that was scrapped for now.
-> 
-> If we already plan to support additional output formats, they I agree we
-> should probably a `--format=<output-type>` flag from the start. I still
-> think it would be nice to have a `-z` flag that is shorthand for
-> `--format=nul` though as that is fairly common across other commands to
-> have such an option.
-> 
-> Out of curiousity, is there a reason we are interested in supporting a
-> JSON output format in addition to what is already proposed? From an
-> earlier conversation I had with Lucas, it didn't seem like there was any
-> particular reason for JSON.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-I don't care much about the JSON output format. What I do care about is
-to have a default format that we are free to iterate on, especially in
-the context of `git repo size`. If we ever want to have output that is
-as user friendly as git-sizer(1)'s we need to have that freedom.
+> The 'find_ref_entry' function is no longer used, so remove it.
 
-From my perspective that necessitates two things:
+If my spelunking is correct, ba1c052f (ref_store: implement
+`refs_peel_ref()` generically, 2017-09-25) is the commit that
+removed the last caller of it.  Which may be worth noting here.
 
-  - That we are able to change formats with a proper `--format=` flag.
-    `-z` alone doesn't fit that bill, as we are already talking about
-    there formats: user friendly, key-value pairs, and key-value pairs
-    with NUL termination.
-
-    That being said I'm not opposed to also have `-z` as an alias as
-    long as we also have `--format=`.
-
-  - That the _default_ format is the user friendly format that we can
-    iterate on, at least for `git repo size`. Otherwise we have already
-    failed on our mission to supply a user-friendly alternative to
-    git-sizer(1).
-
-Patrick
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>  refs/ref-cache.c | 14 --------------
+>  refs/ref-cache.h |  7 -------
+>  2 files changed, 21 deletions(-)
+>
+> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+> index c1f1bab1d5..8aaffa8c6b 100644
+> --- a/refs/ref-cache.c
+> +++ b/refs/ref-cache.c
+> @@ -194,20 +194,6 @@ static struct ref_dir *find_containing_dir(struct ref_dir *dir,
+>  	return dir;
+>  }
+>  
+> -struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname)
+> -{
+> -	int entry_index;
+> -	struct ref_entry *entry;
+> -	dir = find_containing_dir(dir, refname);
+> -	if (!dir)
+> -		return NULL;
+> -	entry_index = search_ref_dir(dir, refname, strlen(refname));
+> -	if (entry_index == -1)
+> -		return NULL;
+> -	entry = dir->entries[entry_index];
+> -	return (entry->flag & REF_DIR) ? NULL : entry;
+> -}
+> -
+>  /*
+>   * Emit a warning and return true iff ref1 and ref2 have the same name
+>   * and the same oid. Die if they have the same name but different
+> diff --git a/refs/ref-cache.h b/refs/ref-cache.h
+> index 5f04e518c3..f635d2d824 100644
+> --- a/refs/ref-cache.h
+> +++ b/refs/ref-cache.h
+> @@ -201,13 +201,6 @@ void free_ref_cache(struct ref_cache *cache);
+>   */
+>  void add_entry_to_dir(struct ref_dir *dir, struct ref_entry *entry);
+>  
+> -/*
+> - * Find the value entry with the given name in dir, sorting ref_dirs
+> - * and recursing into subdirectories as necessary.  If the name is not
+> - * found or it corresponds to a directory entry, return NULL.
+> - */
+> -struct ref_entry *find_ref_entry(struct ref_dir *dir, const char *refname);
+> -
+>  /*
+>   * Start iterating over references in `cache`. If `prefix` is
+>   * specified, only include references whose names start with that
