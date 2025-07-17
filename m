@@ -1,44 +1,40 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F5E258A
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 01:54:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48758383
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 02:09:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752717249; cv=none; b=TQepHPig1vzCQbvaI8GZVexHho2B354HsWfDqm2U5K8s3rSHKCwVrC6WdJJP/Kg5BavjzlLucVyinIQ9Bo+42evt/Z5vv3/OOwRelL6V7omD/g1BI80lN5mia16tIynlWn6lyVcK5Fcwhegs9d4sjnV88fCWxTBEgQGZNjk2ZEI=
+	t=1752718149; cv=none; b=KgdUXgx2iVv1Est+urc8NyxW1ZlJnqolUypLq2fXJMMNgWE2VXKS6J/gDpch0qxKmscQla6qLzR1Lv1qjOuVP6I/+oDr/pr+2GkdPJTT7g1rIdnBHzoWpxOOoMVBzgdvKJldVi7ydKnf+SGEWYy3nJZF+IJB9wTzVGA0O6ZjkcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752717249; c=relaxed/simple;
-	bh=HRLfVIvBr72tWmPGWtX+bFsn5MUffpiQGvSK/lqCqJc=;
+	s=arc-20240116; t=1752718149; c=relaxed/simple;
+	bh=2XwOJDeVyEraZhaUVtzojKoPOTqLlvj3PBdCDubgfH4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u50ia7dsM4ZsKJ9P/XR9ZIbNKUNbwVn1xJhEgrjOdMAkGt+oeHa0j+Hbt+Wu3yc8GkR6ZXqpibrv0eGLAlPkVjis76Y8jN6PYa6fL+9DIpnUysz/otbeW7+OO9QapASL0DtG1B4sYN5p5W+k4dHmFa38kpLLXCOde9Db9+b+8X0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=GEWj7X60; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=pzeyVZsnldC2UcMXN7DZBP5nDUgS906GMnIEmavQ5c+4guQdSEi0nWGWpan08bzoGHJq5L34gFXTPscHsGeZwm4wDa+a0oGwgxSnlQaQOZFhZ5uCl4AtLy0IdSat42ZS0jmESSvJSzn0IgYfSgmUBo7rdVU7ghrXfZr9biNlbCQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=JV19J/rM; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="GEWj7X60"
-Received: (qmail 8968 invoked by uid 109); 17 Jul 2025 01:54:05 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=HRLfVIvBr72tWmPGWtX+bFsn5MUffpiQGvSK/lqCqJc=; b=GEWj7X60V2lcPEKzt72D+5P6Q17Ktfs3no29nhycWFDL43CMth1a3OwhNQ2RtORxVQ/i2R/41neIfRhZX5biNMzK/H0jnOfsh9sFNpTt2jX3qFd7S7Do+BStP/l7vQAAIifRWsKy03+3kn/jtR6z0Q64xNV9ZD0APmWnic+5oMxFyxlAylILrDtqJEgYfZQ+C3I2FjCbCxJdxhodkVK/Q3bHLEkBkt/jbC/hUIziJ+YFd1PsVZ98039DuGU1inASU/A0JT3i+kLKvdZID89oBuh/1f0xLkWCy0y4uS8BuI8u0dwIb9Jk/ncoZ9U6Nbdm0wVmk0zeZ4nujy1AODwh0w==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="JV19J/rM"
+Received: (qmail 9179 invoked by uid 109); 17 Jul 2025 02:09:06 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=2XwOJDeVyEraZhaUVtzojKoPOTqLlvj3PBdCDubgfH4=; b=JV19J/rML4KP61b3j+gtfgl/n0Dl6dOS5w8R7C94cvkDYEgq+cDC69kfd6wErmDA9pD2lqpJDpXUviUF7jul3fOsTKYR/loDrBZ4et9RpHNDVkpLZb1i1jtC9NBrIvZ8woU7n4QcakMK/bPZ1Q7KxwLoYHSln5C1hgOEcCwEEY8AWsvoQONMw3rYp/CrF3NVQn2BNReDJLIxIjzG8fdPkZn860sm1IdADhkSv05tSnqIqsVd3JSsrCUsVA/RFHJFvllG8RNx1R3u9ATGmrE21loaB12ngOHg2SyAWxl/IYSKbEEUoIFKPAYSJyUcV2PzZLRpstLSNEr4qMaJahlo3Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Jul 2025 01:54:05 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 17 Jul 2025 02:09:06 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28468 invoked by uid 111); 17 Jul 2025 01:54:06 -0000
+Received: (qmail 28700 invoked by uid 111); 17 Jul 2025 02:09:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Jul 2025 21:54:06 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 16 Jul 2025 22:09:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 16 Jul 2025 21:54:02 -0400
+Date: Wed, 16 Jul 2025 22:09:05 -0400
 From: Jeff King <peff@peff.net>
-To: Kyle Lippincott <spectral@google.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	ps@pks.im, schwab@linux-m68k.org, phillip.wood123@gmail.com,
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, ps@pks.im,
+	schwab@linux-m68k.org, phillip.wood123@gmail.com,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via
- '--start-after'
-Message-ID: <20250717015402.GA2127425@coredump.intra.peff.net>
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
- <xmqqple1gtyg.fsf@gitster.g>
- <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
+Subject: Re: [PATCH v5 3/5] refs: selectively set prefix in the seek functions
+Message-ID: <20250717020905.GA2193264@coredump.intra.peff.net>
+References: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+ <20250715-306-git-for-each-ref-pagination-v5-3-852d5a2f56e1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -47,59 +43,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
+In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-3-852d5a2f56e1@gmail.com>
 
-On Wed, Jul 16, 2025 at 06:19:32PM -0700, Kyle Lippincott wrote:
+On Tue, Jul 15, 2025 at 01:28:28PM +0200, Karthik Nayak wrote:
 
-> Unfortunately I can't provide great instructions for reproducing this
-> locally, because it relies on our internal build stack (which uses
-> blaze). Getting MemorySanitizer running can be quite annoying, though
-> you might not have any issues if this test doesn't invoke any third
-> party libraries (like zlib).
-> 
-> I need to sign off for the night soon, but if this isn't sufficient
-> enough information to identify what's happening here, I can try to dig
-> deeper tomorrow. This run was executed on an import of upstream commit
-> 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc (Junio's merge of this
-> series)
+> +static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+> +				   const char *refname, unsigned int flags)
+> [...]
+> +		do {
+> +			int len, idx;
+> +			int cmp = 0;
+> +
+> +			sort_ref_dir(dir);
+> +
+> +			slash = strchr(slash, '/');
+> +			len = slash ? slash - refname : (int)strlen(refname);
 
-valgrind can often find the same issues as MSan without as much headache
-to get it running (the downside is that it is _way_ slower). And indeed:
+I was looking at this code due to a nearby thread and noticed this funny
+cast to int. I guess you added it to silence -Wsign-compare, but Why are
+we not using a size_t in the first place?
 
-  git checkout 4ea3c74afd42a503b3e0d60e1fec33bc0431e7bc &&
-  make &&
-  (cd t && ./t6302-for-each-ref-filter.sh --valgrind-only=48)
+This kind of conversion can sometimes have security implications because
+a very large "refname" would cause "len" to become negative (i.e., if
+it's between 2GB and 4GB).
 
-yields:
+In this particular case it ends up cast back to a size_t via strncmp:
 
-  ==2177572== Conditional jump or move depends on uninitialised value(s)
-  ==2177572==    at 0x3BC380: cache_ref_iterator_advance (ref-cache.c:409)
-  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
-  ==2177572==    by 0x3B6CC3: merge_ref_iterator_advance (iterator.c:179)
-  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
-  ==2177572==    by 0x3A9770: files_ref_iterator_advance (files-backend.c:902)
-  ==2177572==    by 0x3B69D7: ref_iterator_advance (iterator.c:15)
-  ==2177572==    by 0x3B7457: do_for_each_ref_iterator (iterator.c:478)
-  ==2177572==    by 0x399B43: for_each_fullref_with_seek (ref-filter.c:2718)
-  ==2177572==    by 0x399C09: for_each_fullref_in_pattern (ref-filter.c:2756)
-  ==2177572==    by 0x39B031: do_filter_refs (ref-filter.c:3263)
-  ==2177572==    by 0x39B2B7: filter_and_format_refs (ref-filter.c:3364)
-  ==2177572==    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:115)
-  ==2177572==  Uninitialised value was created by a heap allocation
-  ==2177572==    at 0x484BDD0: realloc (vg_replace_malloc.c:1801)
-  ==2177572==    by 0x44E941: xrealloc (wrapper.c:140)
-  ==2177572==    by 0x3BCAD9: cache_ref_iterator_begin (ref-cache.c:580)
-  ==2177572==    by 0x3A988A: files_ref_iterator_begin (files-backend.c:995)
-  ==2177572==    by 0x3A295E: refs_ref_iterator_begin (refs.c:1776)
-  ==2177572==    by 0x399AF6: for_each_fullref_with_seek (ref-filter.c:2710)
-  ==2177572==    by 0x399C09: for_each_fullref_in_pattern (ref-filter.c:2756)
-  ==2177572==    by 0x39B031: do_filter_refs (ref-filter.c:3263)
-  ==2177572==    by 0x39B2B7: filter_and_format_refs (ref-filter.c:3364)
-  ==2177572==    by 0x18C1D2: cmd_for_each_ref (for-each-ref.c:115)
-  ==2177572==    by 0x128C90: run_builtin (git.c:480)
-  ==2177572==    by 0x1290EB: handle_builtin (git.c:746)
+> +			for (idx = 0; idx < dir->nr; idx++) {
+> +				cmp = strncmp(refname, dir->entries[idx]->name, len);
+> +				if (cmp <= 0)
+> +					break;
+> +			}
 
-Bisecting doesn't tell us much, though (the first commit that introduces
-the test shows the problem). I didn't dig further than that.
+so we get the original value back. We'd still get truncation for a
+refname value over 4GB, which would presumably give us a slightly wrong
+answer. But I don't think we'd ever look outside the array.
+
+Such sizes are probably unlikely if we are feeding filesystem paths. But
+we probably should not set a bad example, and just do;
+
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 1d95b56d40..3949d145e8 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -498,13 +498,14 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 		 * indexing to each level as needed.
+ 		 */
+ 		do {
+-			int len, idx;
++			size_t len;
++			int idx;
+ 			int cmp = 0;
+ 
+ 			sort_ref_dir(dir);
+ 
+ 			slash = strchr(slash, '/');
+-			len = slash ? slash - refname : (int)strlen(refname);
++			len = slash ? slash - refname : strlen(refname);
+ 
+ 			for (idx = 0; idx < dir->nr; idx++) {
+ 				cmp = strncmp(refname, dir->entries[idx]->name, len);
 
 -Peff
