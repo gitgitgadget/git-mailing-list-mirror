@@ -1,146 +1,132 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659F6A94F
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:25:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCA8192598
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:37:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752791128; cv=none; b=pyw2YpIF16PSqDz4A3/dgDa7VylkQ++cCAa5mx9iHRI65x55dDP2K8vcd3GV+Z80irUVqg9zvdh9ajIceUCkPh2e8bfmHQe1eyPP/V2bW/1W8/SFptOWBL3JB7LrPBSn9PXqNsyiY7ONh8P/aeQU/vaDE8/eJ/MYCOfhrKAJx7w=
+	t=1752791844; cv=none; b=pIDAw/ihi/eIivKvbYTkRrNq/Quqlz68hihPZNgA+SInhLTO1v8jvNisWEpmwcoJ30PRQ7P2uj21KsO0v0HmrWGp8Cj2G/cMTYkYwsO7YVq3KJsCnWJSgJBTiCByzXV/wgAYD2fOnygaPGcTNWXptMcDGZCDkE1/DcLU2k4s4tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752791128; c=relaxed/simple;
-	bh=lMgY2FvNJS8+8MwXZDBJsxCzMH7skDEeo6PaNjgGbEo=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kw2s27umVhy4FlmcKr9tA19roNYXeuRnfi6er6rO/JltBaPigCvh6LtcHgtNxS28OfBxoe0p56/qMJeVN5eg77xknmdRMFUEU5WzmFaaQ44lCTABVh5dfpKporFs7TW03XZqHo/HXC4s2YuRB78MCI8pVzwwllclTU89wWoPSwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=IBLI1rEt; arc=none smtp.client-ip=209.85.128.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1752791844; c=relaxed/simple;
+	bh=WAm4o77jq7WAb8OaQjTmtWQHbkZ4ZvLwL+qkfVVl5Qk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ni+zU7zTzE8p9ctNKszGSn9wsZKmkVcxm/dcU4FpXVp7dePB7SOf1L2HlkCSyRA5k5N6FilejW2RxnHKJHhUQ1a1ppHujL2Ll40abEMl6eCo84DE1WvEwscjHg1by1et2HwijG1zI8hG9hWmKGVxa5rRCUf9ualfTMR10D3ySTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PrduCVqx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iJIGHlWU; arc=none smtp.client-ip=202.12.124.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="IBLI1rEt"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-70a57a8ffc3so14173477b3.0
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:25:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr.com; s=google; t=1752791125; x=1753395925; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=+u1V+VDBQs8e8VDODKYBP+pRgLDSC2tKYM3d6UF0YmA=;
-        b=IBLI1rEtyvpYiGCiYAzrUA5fTiptC3612ufhJT1Gr/x+9rHVzKJBXTwBNmhrnM/WC8
-         ZBLcuKhPymQfzFjnQa8B5nJn44dMaUnwh3h4KobnbdBlj6j5/y84da+XNQVdJCzjGjGo
-         VSZJZGQiI3z2hqSHTH1Iq5DCFeFE1KeiPLyqhKNSeqec53vRdZ0ABoJsyLsTh5NEAAMz
-         7KR7MCh/lPaY0q2wa8auWN1AVv5Bs7SwM78sY9Bx+Jp6NjQZYcfa8/apac8Yhjco55Zw
-         9e/1R7NEor3Om4SQc+7I9jK/2+9LT1XliCc+6otMGk80SgM4m9niVKJdYgn7P2KiuxKq
-         ml0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752791125; x=1753395925;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+u1V+VDBQs8e8VDODKYBP+pRgLDSC2tKYM3d6UF0YmA=;
-        b=E9g4oML5AhGv66eL8Qa5PGzmXJ985F1qL0q3FrVGAi/yu4iTlMUWRiKkdhKm0MogkA
-         TfCLP7GKSWsVvG9g1WVDk7TfMnSOdaMiFJLyp9WBvCTVqH5DVhf6Ic+RuC+1icXgRIDb
-         X4sOvNM1ip37y9jD+XZCIGYo7CaaQ0Vv9u9pHx8gfctZROzCLMeIn7fB5MeHTNHPZirQ
-         iQ5ZVkrQ3BNEsxS8DG9m7lukxHBtmt51vYWtn+FZWSwSw6UyhL/S6FArWE2nCmwzPb7k
-         +Ht8ruMc4PV0jJSjR5xTaxawvds621bohLoUB3AgEjOCNyekG3yQQrm7MTaVmPwavojm
-         bQbQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUcABYocCHn4aYibJuZOrCmRNeDaW7N2MNXxB49PF5kLuTp642siBv8H9IpMgw7YbWrsbw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyC51khzRS0mQgWBWiH1THEiHEfgXfjJtK+GBP+zsfacCvJQa+O
-	E6O8NA4O3tgLjvggtHNAhbdJIynFOo1S0Kwf0vQCHn7DQLqDnQeUOkQXx253NNrBJcU=
-X-Gm-Gg: ASbGncty00XIxggVsqFg9mv2zlfSvaJQVBNw3FF+K/9V2rZCmwPLi8C9zfJpP0eDc/9
-	mjuqhfpa4jEE3k/ouieQz/qmV3C+fAKkC3mrzBZKOd2bjWbLG4972liEVlppT3OoADgFzky1aj7
-	vSed5BwhT8IJrI/L00yzthPaM/dvNxVtUuDLPRMoomcnsXTgcGJzDK9OFUumnxDRzR5EeOok1wI
-	5YlqCaP4C2eB596AcaXdkQ98QZr5RbOVJNGBL5y5D3bJcoFyRAbBhTnGj4HEZlaWUDMHI2H1fAv
-	gvbxZXTQsdbtRLJpL31KFENbt/fqmL6xis6RduufpFb1SkgSm0JVBIYbzFe9C4m+9RMMhlnJDk0
-	d7Ln9zyUwaklwnl7mcpEKSduGNGXyPAMbI2/xpmT66M3xRFfdY7/5jepQ3RRLIL+4jRvzcw==
-X-Google-Smtp-Source: AGHT+IHo1qshvT7LrGxenkbKmVNvA8zaEsi7USjblOU86Yq/fmsfJ+yZaRZManBwHuafl9iq8DYrEg==
-X-Received: by 2002:a05:690c:3707:b0:711:9770:161f with SMTP id 00721157ae682-719521605abmr7702267b3.2.1752791125093;
-        Thu, 17 Jul 2025 15:25:25 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-71953141cc5sm401797b3.38.2025.07.17.15.25.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 17 Jul 2025 15:25:24 -0700 (PDT)
-Date: Thu, 17 Jul 2025 18:25:23 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-Message-ID: <aHl4U98BBvpA5eKF@nand.local>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <aHlwZPbiKnakMN75@fruit.crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PrduCVqx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iJIGHlWU"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5CAB81D0006E;
+	Thu, 17 Jul 2025 18:37:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 18:37:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752791841; x=1752878241; bh=XQ1Qj8HHZ3
+	firkw6zEU1dxcHcSph6GHCFFN5E0l8jRU=; b=PrduCVqxOnD96kkpTevWCJ3X95
+	BoGcvLpi/0qld7BnfCD60+jBAvnRUEJfLAugwIXuPmyE+Wa4UoJL36C4jcc8btb4
+	M57R2e2BPsTApeW5487hFzJwzRRS//s++R0DYUaYLnsCSiVaotd/wfx9uSbip0V5
+	oFXsK+dsyAnQVr1pmSErqsxWZjJ0T8Gg8B/ooTGzvMe10bkID1NhW7ocPUiwQ7mw
+	qqFgj0ir2sRKzdbtfCnxVh5+6cvglism7leRv9iavtyOv3nfcoYccXdcXDaqyTsO
+	EVE3uxdzrd7nkNxaUo6bjan0xgWXUciDgP+3CxPtjuBefnD4WsvD6eAgUXfQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752791841; x=1752878241; bh=XQ1Qj8HHZ3firkw6zEU1dxcHcSph6GHCFFN
+	5E0l8jRU=; b=iJIGHlWU8w2lAAT4ZxiYHOLOO82hGEmaBck3FBSwNd6ho1QqdMC
+	05qV461UyLc97pKvrLemJKBPbwdUsSU4H7G8+T9jSAz3ruIwyuS98aTy3tkJ6duV
+	KM7gteRRoEkli2AV8kONe1PpfA7GSl9JGCBnGMxdxrFRfzxq4m7NLC514fG89EP3
+	ZczP2/L86RYUBUAhichOOwyNDwLyMdSj3eFtgptd8w8uJykzc02g/y9gH63yU9ax
+	oW7cLZulDpG5o0cXFsGrXIVJNi7nQp39d4SOpqKgyYNszCj8soJbSKseaWst+XfA
+	SOL3HSO9jc9pPQuLt8JxxaibQDMNmMCkVww==
+X-ME-Sender: <xms:IHt5aMEiI_Q5lYB96VglIP0N1caJL9z_9k7Mebz7zv2wP2XE2WXRZQ>
+    <xme:IHt5aNyM3jTu4NfMbyOXcXI44lc7UAjljqejoLsThIeGZduLqQcfjp2CsOhfb9FvM
+    vUHpMbAIbME2zVn7w>
+X-ME-Received: <xmr:IHt5aGkRDfwgmTZ_OW6SbrE1hteUL7ji_9h9E4OVn8DZTYhgVkEfntCWATyaa3IWYPuic4uFGINYPlKlZJ6o8vI4juOPylj9FCylFe8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeiudektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhf
+    vghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhtoh
+    hlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:IHt5aOmOdpBjYWL-GiG5F02bEtV5pKZpsyCHQKYeHbwlx2lkf9Kylg>
+    <xmx:IHt5aAxO3GJV0EGCXsZs65j42tuEC_97L8ZQrDrOqR8B82I1Mg1z5A>
+    <xmx:IHt5aLp5BG-6Y18x-3ir8YwFRrueEI0_5alTVmT5d-FKb9dM5qO9Hw>
+    <xmx:IHt5aH70isytKDvpHD9Ol-mKcv6MsEfRYi8VKH_kcl3c7NL9leLgVw>
+    <xmx:IXt5aIbznpDI2V7v3r3C5Ln8cWfcZ4I_KL9evjlBuTd-Pcnic64F7snq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Jul 2025 18:37:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Derrick Stolee <stolee@gmail.com>,
+  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH v5 5/6] last-modified: support --extended format
+In-Reply-To: <20250716133518.1788126-5-toon@iotcl.com> (Toon Claes's message
+	of "Wed, 16 Jul 2025 15:35:17 +0200")
+References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
+	<20250716133518.1788126-5-toon@iotcl.com>
+Date: Thu, 17 Jul 2025 15:37:18 -0700
+Message-ID: <xmqqseiu4f6p.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aHlwZPbiKnakMN75@fruit.crustytoothpaste.net>
+Content-Type: text/plain
 
-On Thu, Jul 17, 2025 at 09:51:32PM +0000, brian m. carlson wrote:
-> On 2025-07-17 at 20:32:17, Ezekiel Newren via GitGitGadget wrote:
-> > This series accelerates xdiff by 5-19%.
+Toon Claes <toon@iotcl.com> writes:
+
+> diff --git a/t/t8020-last-modified.sh b/t/t8020-last-modified.sh
+> index 05c113a1f8..008ea708ab 100755
+> --- a/t/t8020-last-modified.sh
+> +++ b/t/t8020-last-modified.sh
+> @@ -48,6 +48,28 @@ test_expect_success 'last-modified non-recursive' '
+>  	EOF
+>  '
 >
-> That's great.
->
-> > It also introduces Rust as a hard dependency.
->
-> I think that's fine.  We already discussed doing this at the last
-> Contributor Summit in Berlin and everyone was in favour.  While we did
-> not have every contributor represented, I think that unanimity of the
-> contributors present is a compelling enough reason.
+> +test_expect_success 'last-modified extended output' '
+> +	check_last_modified --extended <<-\EOF
+> +	path a
+> +	commit 3
+> +	tree e9a947598482012e54c9c5d3635d5b526b43a6a4
+> +	parent 2
+> +	author A U Thor <author@example.com> 1112912113 -0700
+> +	committer C O Mitter <committer@example.com> 1112912113 -0700
+> +
+> +	    3
+> +
+> +	path file
+> +	commit 1
+> +	tree f27c6ae26adb8396d3861976ba268f87ad8afa0b
+> +	author A U Thor <author@example.com> 1112911993 -0700
+> +	committer C O Mitter <committer@example.com> 1112911993 -0700
+> +
+> +	    1
+> +
+> +	EOF
+> +'
 
-I agree. I don't think that there is ever going to be a "perfect" time
-to introduce a hard dependency on Rust, and I don't think that should
-hold the project back from adopting it.
+Hmph.  This hardcoding of everything does not look easy to maintain.
 
-I am far from a Rust expert, but I think that a more modern, memory-safe
-language will attract newer contributors who may have a fresher
-perspective on the project, and I think that's a good thing.
+Besides, the test will fail rather miserably when run with SHA-256
+hash (e.g., post Git 3.0 where the "git init" command by default
+will give you a repository with new hash).
 
-The alternative, of course, is to continue to use C and not take any
-dependency on Rust. I think there is a middle-ground in there somewhere
-to be able to build with (e.g.) "make" or "make RUST=1", but I would
-really like to see the project take a firmer stance here.
-
-I worry that having build support for both "with Rust" and "C only" will
-create a headache not just at the build system level, but also in the
-code itself. Having a patchwork of features, optimizations, or bug fixes
-that either are or aren't supported depending on whether Rust support
-was specified at build-time seems like a worst-of-all-worlds outcome.
-
-> I realize that that means that we will lose support for some platforms.
-> I ultimately think that it's up to the porters and maintainers for a
-> platform to maintain appropriate toolchains on that platform and that,
-> while we should be cognizant of the requirements for adding new
-> platforms or architectures, that shouldn't prevent the inclusion of
-> important new tools like memory-safe languages.
-
-Agreed. Of course, I think we would all like Git to be able to build and
-run on as many platforms as is reasonably possible. But we cannot
-support all platforms for all time. It is also not the Git project's
-responsibility to ensure that every platform is Rust-friendly.
-
-Hopefully the platforms that we currently support but won't after this
-patch series have niche enough workloads that they do not need the
-absolute latest-and-greatest Git release at all times.
-
-> I would like to see a change to our platform policy and a policy on Rust
-> before we merge this.  I know your series adds support for 1.87, but
-> because distros don't run the latest toolchain, we had discussed in the
-> past targeting Debian stable's version plus an additional year after the
-> new release.  This means we'll support a Rust version for three years,
-> which is a reasonable amount of time for a toolchain and allows distros
-> to easily backport security fixes.
->
-> If you would like, you are welcome to use my proposed policy as a basis
-> for this, or I can send that out as a separate document if you don't
-> want to write one or revise mine.
-
-Yeah, I think that this is the most interesting part of the discussion
-here. I am not knowledgeable enough about Rust's release cadence and
-platform compatibility to have an opinion here. But I trust brian's
-judgement ;-).
-
-Thanks,
-Taylor
+It looks somewhat inconsistent that tree is shown with its object
+name, but commit is not.
