@@ -1,153 +1,111 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6FEB1547CC
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:45:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D001547CC
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 22:46:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752792308; cv=none; b=qEeT9Sj3A4qtFCXhi76FmB++SPKSifpKRtqt2OXT50XFLe1LPkddDuv+ILzkCcLKUMr8ti/5gTCdmQR4xenUC4coR1dLKsCX9n0eIPIb6wlVb3bKcJ7YqY5zNgxM3CYjr5kcFvQWCPMBBG+Xn1HCAyVcyTE0YhC4/op0WlyPwCc=
+	t=1752792420; cv=none; b=g+Phi6leFbNgKMj7Ehm9+MQYVc4huNezYs7GZ3aSwzrKubD7Ijo94M/F99zrXxWS6MYg9IcolaVLzp2Eo7C6qOEx9RrpXcPjtG3Bp1sSHzAcabJYTy9w+7UqSHL0R0AiTnArbL9ViSQIRqcQxtiPnV+ebIpXzOD0qBGQwe/ZgG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752792308; c=relaxed/simple;
-	bh=X1WLJ5lEKDMISKuk0eoEaOv3fwgrzdhPaLXnjp1mE64=;
+	s=arc-20240116; t=1752792420; c=relaxed/simple;
+	bh=Cemw2fJ2YG89xYlKUc52/7bDCpVMoRWSZn/aknOgtuE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kXWbJva0tjvqHrqhBwoQMsUmDDTrOFd1E51MQOZam4odl9HG1FEsVJmxUhYeqG/Nf65KvjmA9G2YBUKr/PtCNK9ALJbyNtJhNsu2tlXL9AhRMxwwOvaH3bbImSnaRAJHbp3f2++ugAqR0IDIyWhjIm04i/sRb22UMR38+28OoXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lqUH+nt2; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=pZNiSOJfm3hpO9paTZxclZnCNYFoHQcHShOdaiKrzLPSPIXWPyet5hY58vdQlMpf4+xLEXc3I2Tk7ZPgpmFBVVjKUiLF4+5bqXOB2pQrp5CvWN1T+dexWqWNJUeBX9tc1ba+YVNQpFvWt/DkRZ0/3Ik7GQArUY1OKc5hInKjKNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b=mfOCgH7K; arc=none smtp.client-ip=209.85.219.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lqUH+nt2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1752792304;
-	bh=X1WLJ5lEKDMISKuk0eoEaOv3fwgrzdhPaLXnjp1mE64=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=lqUH+nt2WOn1AghZartCEETdHBD5kunkxA3D/kdAnUGsvnd0HM6IrmVq8e+iCdGBs
-	 lixKxiLoALm/X6tLJ33Mdfl5VgY9WjESsaSbQ0X2JIQx7Dmf+O8TOcgX4t7AINKJk/
-	 OLeqJ+qJxpZu0CkuzRsrb88khr9AJrmzUVVnq83DnFuwYa20KuG554+H8i1WhxS1zR
-	 wFxkAIzLsTN+o6PofIziVbM+wEAhNcujalNmkB+xPf4uXfPznE41XWJQP0cOJ5k+HE
-	 cGEbjzifGBvC97UsDBfRkRrFZHSZHQENU3okdq6C9x4Uj+VckycTRltSpLZP2tWUtH
-	 WunE6a7JzYaeLte4e1aDYk54t1BabZvH0iPgY91xsaYSaZh3p0rMdU/RhzujLkcaQ7
-	 H+InNOid0IANE6BwXr+TNwMjzELOzsTLhocobrm1cPqnUYy7Z3hw1E0O0XJ2X6OVbj
-	 VJ4rEKU0jZmwDUjJVIfQptbWuqsmWqVmRZ2gV0p1bS2rzwGvadE
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:c351:2fb1:6e4f:b4fb])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 6D7D62007E;
-	Thu, 17 Jul 2025 22:45:04 +0000 (UTC)
-Date: Thu, 17 Jul 2025 22:45:03 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: "Harrison, Latasha" <HarrisonL@hcfl.gov>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Security Questionnaires =?utf-8?Q?for_?=
- =?utf-8?Q?Software_Installation_?= =?utf-8?B?4oCT?= Hillsborough County
- Public Libraries
-Message-ID: <aHl87-stEOn_AxIy@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	"Harrison, Latasha" <HarrisonL@hcfl.gov>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-References: <DM8PR09MB65497709DE3054423B2FFDFFD556A@DM8PR09MB6549.namprd09.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr.com header.i=@ttaylorr.com header.b="mfOCgH7K"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e8bc13221eeso1594153276.3
+        for <git@vger.kernel.org>; Thu, 17 Jul 2025 15:46:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr.com; s=google; t=1752792418; x=1753397218; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=EMFfOvbkvIc0BLtEw3RlXWBpehuL4t6K7tcVEfs7gtA=;
+        b=mfOCgH7KFujGY+cQ11glZo4Jl+q4/NhHfbT/5kZw7imGiwSbNPoM3Rp6Kn0j3NjYp2
+         yG1LsA6Ri9AOi5mj7MlPWk2UoWV3jCFMcpMKYaJv9QRRV5chtzKQDEUx7DH8xle4TNlG
+         QK8g1VpAdE6EeEoB8Mt32LNCqte127TrlhNrzZTmOhuayGb6knz/y+eb8k2mgZb1ZTkJ
+         bHZanyvxoKPIQm/YpmbPXAS/yrJqfOkocdLAYV8DTRvRYr6hA/rm6svIYQPamiP+Mlkw
+         JsmghId4VgO9IQBGQWUz6LvXirJsGz/A5ger7hZoNHHKyp3SAHedIQ4EfHplQBzZIA83
+         cDWQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752792418; x=1753397218;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EMFfOvbkvIc0BLtEw3RlXWBpehuL4t6K7tcVEfs7gtA=;
+        b=KlzbORbmpTn/iqI7vaVR0hvYqd4vV6Mh1UikAOKtWn5iIBuLgMEhYmwCwRXjeh2Hqd
+         2LyLlAsm4w4YigYzJEnLcepotuLCq7NcTZsqQYs5+Ku4CNLALuZi4INlF3FE88Yfod7/
+         57hxruUT9MZLOrS/dPgEVm1JCmK3dIFA02/JQw5f7tyPgLBBeofCRP3ym0qG5eblUpUF
+         dn5IRhjKLajtbw/UOkyzC0dr//KaRpOY2XQWNegRBqXACE5G85P1egObOfJwqGmtKSf+
+         YCfPmNDJ07BApBduENO6qmkkanwNOKLn0/FhjP72oSkhb/s5ibm1uE4TMGW5k7CAG654
+         WImA==
+X-Gm-Message-State: AOJu0YwOj2k3BYgzixHUJQxodF6bStUemN11T5JWxC6pvOtHOd9g2P9w
+	1Pyb3TNrzW/58FVPdLYaZPM17E31fD7HfbmIF11J6R8RsoiPA5InqqhrKQa5ksoMyWE7HRFOuDY
+	udiETgyI=
+X-Gm-Gg: ASbGncsMhw+0/Z0zmNxIJZdzBAyYmexml6aD9J943+avzoX0ZlG5nfaPU5bTePG8fuO
+	PGxs/qycxDEZ96ztic6l4K4hq/Gc8NBv9zINi0Xn1ItPsqT3QmiCHfok+Kr0p8aAuDn5Sc4Ey+F
+	8Yv3/GDG/Y6oO7dAJxJdZlYCWx9O6ylZcedH8gn/4I9iqFkJexQfXmWUlzg3Q3RMuLC2jQqQVhG
+	6EEDxV5fUO6UZBi9m7V4T3Lltz0XYkz3qJbKch2M8WXuI6Wk28C80Noo4lWqjisOy5DL2QKIFr/
+	i0UM+sgCfwELYf9zeFOaFwY5cS24K5q6E/tqjthFcSMfyuzhcFUC0/iAp+Y9UAIsvavjeIMaQeF
+	DNbog5O0FUXzXEyoDSdKq/nfRoD1NNmvwVulYb5lCxakONZbgrmG8J/9XAwaQ9P4kW8HWEA==
+X-Google-Smtp-Source: AGHT+IGzmC4YTKNSJdBuGzFKOWnSaTJEujFHEXnjglfi+G6NVc36PlSRuWEXQUOLGRxbmnn7wDH9fQ==
+X-Received: by 2002:a05:690c:dd4:b0:712:7c60:4cd9 with SMTP id 00721157ae682-718a97cf09emr77305737b3.28.1752792417792;
+        Thu, 17 Jul 2025 15:46:57 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-7195335e895sm436677b3.105.2025.07.17.15.46.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 17 Jul 2025 15:46:57 -0700 (PDT)
+Date: Thu, 17 Jul 2025 18:46:56 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
+Message-ID: <aHl9YLc823uWwgIp@nand.local>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="OGdEatw8qQAdV0p4"
-Content-Disposition: inline
-In-Reply-To: <DM8PR09MB65497709DE3054423B2FFDFFD556A@DM8PR09MB6549.namprd09.prod.outlook.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---OGdEatw8qQAdV0p4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
 
-On 2025-07-16 at 16:57:59, Harrison, Latasha wrote:
-> Hello,
+On Thu, Jul 17, 2025 at 08:32:21PM +0000, Ezekiel Newren via GitGitGadget wrote:
+> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>
+> A few commits ago, we added definitions for Rust primitive types,
+> to facilitate interoperability between C and Rust. Switch a
+> few variables to use these types. Which, for now, will
+> require adding some casts.
 
-Hi,
+Hmm, interesting. I am not super familiar with how people typically
+handle interoperability between C and Rust, but having to change types
+on the C side to make it work with Rust is a bit surprising to me.
 
-> I hope this message finds you well. My name is Latasha Harrison, and I=E2=
-=80=99m a Project Manager with Hillsborough County Public Libraries.
-> We are planning to install your software on select staff computers, and a=
-s part of our standard procedure, our IT department requires completion of =
-two brief documents: a Cybersecurity Questionnaire and software questions. =
-I can attach both forms for your review. If there's a specific team member =
-who handles these requests, please let me know, or feel free to forward thi=
-s directly to them. We appreciate your help in supporting our security comp=
-liance process and look forward to moving ahead with the installation. Let =
-me know if you have any questions.=C2=A0
+I would have expected that the Rust side would have declared its types
+using libc::c_int, libc::size_t, and so on. I think I have a vague
+preference towards putting the burden of casting on the Rust side, but,
+again, I am not super familiar with how transitions like these are
+typically approached.
 
-I'm certainly glad to hear that you'd like to use Git, especially for a
-public library[0].  However, we are an open source project and many of
-our contributors are volunteers. The Git project is legally part of the
-Software Freedom Conservancy, a nonprofit that provides a legal
-framework for our project, but no paid staff to respond to inquiries on
-behalf of the project.
+> ---
+>  xdiff/xdiffi.c    |  8 ++++----
+>  xdiff/xemit.c     |  2 +-
+>  xdiff/xmerge.c    | 14 +++++++-------
+>  xdiff/xpatience.c |  2 +-
+>  xdiff/xprepare.c  |  6 +++---
+>  xdiff/xtypes.h    |  6 +++---
+>  xdiff/xutils.c    |  4 ++--
+>  7 files changed, 21 insertions(+), 21 deletions(-)
 
-It's generally considered impolite to ask contributors to open source
-projects to fill out paperwork, since this paperwork is different for
-every company, it doesn't really benefit us or the project in any way to
-do so, and it would take so much time that we wouldn't have any time to
-do anything else like write code or maintain the project.  Instead, we
-ask that you take on that responsibility since it's your organization
-that has this policy.  As I mentioned above, there are no team members
-or other people that the project pays to work on it or answer inquiries,
-although some companies do employ paid staff to contribute to Git (but
-not to address paperwork matters).
+The rest of the patch looks good to me, assuming that the burden of
+casting is placed on the C side.
 
-Note that the Git project doesn't ship anything but source code.  If
-you're installing a compiled version, that probably comes from somewhere
-else.  On Windows, that's usually the Git for Windows project; on macOS,
-it's Apple or something like Homebrew; and on Linux, it's usually the
-Linux distro itself.  If you have a contract with Apple or a Linux
-distro (such as Ubuntu), they might be willing to fill out that
-paperwork, but in general, the other distributors, like most other open
-source projects, will not want to do so.  I am very certain that the Git
-for Windows maintainer in particular will not appreciate such a request,
-since they are very busy and have lots of pieces to maintain as part of
-Git for Windows[0].  However, if your version of Git is distributed by
-your OS vendor, you may not need this paperwork at all since it comes
-directly from them, depending on your policies.
-
-Hopefully your IT department will understand that we can't fill out
-these documents, since it applies to almost all open source software
-(which is something that IT staff should be familiar with in this day
-and age).  I will note that we've had other government organizations
-that have asked for similar things and we've given them a similar
-response, so hopefully that's helpful.  I'll note that Git is in use in
-a variety of governmental agencies across the world[1], all without the
-need for us to fill out any questionnaires.
-
-Best of luck in your rollout of Git.
-
-[0] I'm a huge fan of libraries and started programming at six years old
-based on books from the local library.
-[1] Including, among others:
-
-18F, a (former) U.S. government agency (https://github.com/18F/18f.gsa.gov)
-The Government of Canada (https://github.com/canada-ca)
-Various agencies of the European Union (such as https://github.com/eea
-and https://github.com/eurostat)
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---OGdEatw8qQAdV0p4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHQEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaHl87gAKCRB8DEliiIei
-gfxaAQDNSBil0O8QyPFsfhTNCd6HAZ2Y30JD5RB+ga23nAE9bwD43AVHxGoc5mXa
-1Y33Vp50jFPKCqjjNqiEG96ZR4NeBA==
-=PPww
------END PGP SIGNATURE-----
-
---OGdEatw8qQAdV0p4--
+Thanks,
+Taylor
