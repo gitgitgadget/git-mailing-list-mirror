@@ -1,164 +1,267 @@
-Received: from out-171.mta0.migadu.com (out-171.mta0.migadu.com [91.218.175.171])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FD32FCE0D
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:31:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEE2529B8DD
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752769903; cv=none; b=a3W6UoHlNAe6T/R/GCuqBfQPKLRMq7avuPfy2oJ/cUak0vupav7q1HbE5BXI3AAqlr2YeN/G3WAMSJL8yR65lq+V4P0J4IR4livO4PcA+UBh+UP0RQbVAmjXlPygkDX0rv3Y5o69idA7tu8ynPe+qniGD8G4TupnayFXDAGbvsM=
+	t=1752770364; cv=none; b=hYQcfIKvBM2Z15Q6De/eJXKHYeiI7TWGCSBYpGYpwrzkNItTKHPA7GT5z6sStg25NEkvc39p1ljLzPyO/HcTS182qylSF7WeYkPxNTc4OPCUMprXOTHWUaqicqiwST812JD47WJCuGtZuyGZAhBMIv1QWK11+R5EbWv9CQcxbCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752769903; c=relaxed/simple;
-	bh=HMYEmOoeiWiN+kGdUQkTcCAZNJZxUN4fhJVJw4x5VEg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Nx9W7fzkZft4tVMzE+4oEfMyzyo5I4Th6pPe05zTu9XK5/dABMT14KGtqN/b5Q1exQoiWAkEvcPJjnIYmlNvJ+HqgJRQgGaJiRBA1EnOf53G23jzokZYkSNZkDcIMU0dkX0ZdU2Rqr6p0cyKWWcHXKR0GE6UdxwVXO/6VJz4Scw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=C+H03ECP; arc=none smtp.client-ip=91.218.175.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
+	s=arc-20240116; t=1752770364; c=relaxed/simple;
+	bh=MzQ3BBSZ92//6bOUkSBTnPQ0BkqoeS5hJDZucRpfKGw=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=eSbcR3sJBwtNuX8tWmELT0OJ38VhDAqbAXEgtuVKX249dTEzFnIFPqVgsnzgfytjCyYZ7gn5bFRDrce5dxR4FNMfJWwkzMcqGLAQ/jnOhYLdIJjYtnxvFSFwUOjOplM5KLl4R9w8SFTca4mnwk3NmLV2G6yQxI83wJcMTMThrFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=tjScgsc0; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="C+H03ECP"
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1752769897;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=d4KyCDQteUq7UwNXN6CCjBjWhgOrnkdSltkFewiKw04=;
-	b=C+H03ECPGW+9LhVVtKHPEhZqx0MC34U+o6QldVNLpZtgCb9qIc1DzoFIBKne7tuT2v70LO
-	hk8OOAhVqQgjSlGe1s3tVaHQpk1STGgJr+SpCUG1SD2wmnVV2shJLVp98C+6GPda4Wzw4j
-	0mxXPMOsC9ttF0DHtMyNIb7WRclIzqE=
-From: Toon Claes <toon@iotcl.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Derrick Stolee <stolee@gmail.com>,
- Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH v5 5/6] last-modified: support --extended format
-In-Reply-To: <xmqqldooazig.fsf@gitster.g>
-References: <20250630-toon-new-blame-tree-v3-0-3516025dc3bc@iotcl.com>
- <20250716133518.1788126-5-toon@iotcl.com> <xmqqldooazig.fsf@gitster.g>
-Date: Thu, 17 Jul 2025 18:31:28 +0200
-Message-ID: <87v7nqixsv.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="tjScgsc0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1752770359; x=1753375159;
+	i=johannes.schindelin@gmx.de;
+	bh=z8E3JUNTSJWjnuEhSP5FQTTykaZo6W9uBbgX38+v1yU=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=tjScgsc05MPq7cBUBaEClClxQI+YUxI40e7OffWi0gHBPfiJshHEfI1OSQ6FH2IT
+	 FBETD/5U9RB/o0qbgyTaH9RxKFZ4burk4LdEFiKe0IFl16cC2gBLU1/6gmbsQg/Ep
+	 Q2UMiMJinggu+AbKLjFh2giTKEP07KPO5bH5Krpnuwkv/0uzGaeCvpWrJxZ5cAa5G
+	 P6MFWlp20LefroyEEaBKaye2GBDL5HmyopJt38+HdpjMrmXWhhWccqPD50WtZzYpJ
+	 +N16kQfHdSrjseNU8TNAGkmu4KNOQm6mo5kVlmaCcKcA+Gfidgf+zhyWY2Glfh18n
+	 Ap7aIj4903nEtM6bGQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MgesQ-1v6Io70Mwu-00jAyn; Thu, 17
+ Jul 2025 18:39:19 +0200
+Date: Thu, 17 Jul 2025 18:39:17 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio Luan Pereira <junioluanutfrma@gmail.com>
+cc: git@vger.kernel.org
+Subject: Re: Error on using git update-git-for-windows
+In-Reply-To: <CA+7SsOeYhzBSTXt0V21ghqdzKBkT49GxZZU0k0MavmNrriv8pw@mail.gmail.com>
+Message-ID: <6c3ac456-ff03-6c74-ba86-967e258685a1@gmx.de>
+References: <CA+7SsOdTiAocj7ZTV=OVw0tyKJxZ-H+m5S8soPfFy6zW=1ddzg@mail.gmail.com> <ceb84ea7-6359-63c4-e02b-418d9d313b06@gmx.de> <CA+7SsOd9jtjQT+zg8XttA-bfONG2Jpkg4uBTTdys87e_jEX1pw@mail.gmail.com> <01e30386-028a-b115-6550-57d598ba93df@gmx.de>
+ <CA+7SsOeYhzBSTXt0V21ghqdzKBkT49GxZZU0k0MavmNrriv8pw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Migadu-Flow: FLOW_OUT
+Content-Type: multipart/mixed; boundary="8323328-1217877951-1752770359=:5381"
+X-Provags-ID: V03:K1:2eqOAwF3Mcy0e7RVwEW/qyj6Pi8wHEKY/31yqB2kssLMUeG8ncx
+ IiyvhaBPWyzvghozrV4fXsyP7Cmo1xIivL3sJHqLogY6pRNQf+KNDMTNa1tl0/Q8ydb7PGa
+ XNwahckhm8A+HYQHaaupDnw7oR/ZzOMe7Byhu9v7q3hntHwIBzPQ/2NHo+oG5jdopKJXM+Z
+ Mz4DqkMyJjtwNdhAGvs+A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:btMo9PgTmS0=;x+P7PylWIFR9NM1nrzXO5UPjkO/
+ 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
+ OLIL6bKO4xBktwFfWnG2YAleGU
 
-Junio C Hamano <gitster@pobox.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Toon Claes <toon@iotcl.com> writes:
->
->> +OUTPUT
->> +------
->> +
->> +The default format prints for each path:
->> +
->> +	<oid> TAB <path> LF
->> +
->> +When the commit is at boundary, it's prefixed with a caret `^`.
->> +
->> +Or when option `-z` is given:
->> +
->> +	<oid> TAB <path> NUL
->> +
->> +When `--extended` is provided, the output will be in the format:
->> +
->> +	path SP <path> LF
->> +	commit SP <oid> LF
->> +	tree SP <tree> LF
->> +	parent SP <parent> LF
->> +	author SP <author> LF
->> +	    <message>
->> +
->> +Each line of the commit message is indented with four spaces.
->> +
->> +Unless together with `--extended` option `-z` is given, then the output is:
->
-> "If" would probably have been more readable.
->
-> I can see why you wrote "Unless" here, i.e.
->
->     We indent by four spaces.
->     Unless you use "-z" and "--extended" together, that is.
->
-> but I do not think it is a good idea to use such a construct here.
-> The reason why I do not think you want to phrase it that way is
-> because the next block that illustrates what happens when "-z" and
-> "--extended" are used together has more differences than just a mere
-> "is the message indented?" single bit.  Unlike "--extended" without
-> "-z" that uniformly use LF as inter-item separator, some items are
-> NUL terminated while others are LF terminated.
->
->> +	path SP <path> NUL
->> +	commit SP <oid> LF
->> +	tree SP <tree> LF
->> +	parent SP <parent> LF
->> +	author SP <author> LF
->> +	<message>
->> +
->> +In this situation the commit message is not indented.
->> +
->> +A path containing SP or special characters is enclosed in double-quotes in the C
->> +style as needed, unless option `-z` is provided.
->
-> Another thing I find the above output description somewhat lacking
-> is that, while it is clear how each output entry ends when
-> "--extended" is not given (i.e. it shows what terminates each output
-> entry.  The output is one entry per path and either LF or NUL
-> terminates an entry), the description of "--extended", with or
-> without "-z" is silent about how the reader program is expected to
-> notice when the message ends.
->
-> Without "-z" and indented, the end of the <message> part if either
-> EOF or any unindented line, whichever comes earlier, I presume?
+--8323328-1217877951-1752770359=:5381
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-That's the idea.
+Hi Juan,
 
-> I
-> am planning to teach pretty_print_commit() to stop indenting an
-> empty line by 4 spaces, by the way---non-"-z" format needs to be
-> designed to withstand such a change.
+Yes, the 'Curl option' is set, but that does not affect the `curl.exe`
+program... That will always use "WinSSL" (which means: Secure Channel),
+i.e. not OpenSSL. The reason is that Git for Windows needs to use a nasty
+hack to avoid depending on OpenSSL (which I want to limit to
+`git-remote-https.exe`), for full details see:
+https://github.com/git-for-windows/git/pull/4410
 
-It kind of is. A new entry should start with "path " (no leading space).
+Ciao,
+Johannes
 
-> How would this extended format gain more fields in the future?  A
-> free-text <message> has to be at the end?  What if we later need to
-> add another free-text thing (e.g., notes ttached to the commit that
-> is responsible for that latest state of the path)?
+On Mon, 28 Apr 2025, Junio Luan Pereira wrote:
 
-Ahha, you mean a future field that's multi-line? I assume we'd indent
-those lines, but I agree it would make parsing harder.
+> Hello
+> The "Curl option" is set to "WinSSL", but the problem persists even
+> when it is switched to "OpenSSL". To confirm this, I reinstalled Git
+> using the Windows executable file (without uninstalling it first) and
+> restarted my laptop. Now the content of  "C:\Program
+> Files\Git\etc\install-options.txt" is as follows:
+>=20
+> Editor Option: Nano
+> Custom Editor Path:
+> Default Branch Option:
+> Path Option: Cmd
+> SSH Option: OpenSSH
+> Tortoise Option: false
+> CURL Option: OpenSSL
+> CRLF Option: CRLFAlways
+> Bash Terminal Option: MinTTY
+> Git Pull Behavior Option: Merge
+> Use Credential Manager: Enabled
+> Performance Tweaks FSCache: Enabled
+> Enable Symlinks: Disabled
+> Enable FSMonitor: Disabled
+>=20
+> Yet, the issues remained unchanged.
+>=20
+> If this information is helpful to you, my current cURL version is
+>=20
+> $ curl --version
+> curl 8.12.1 (x86_64-w64-mingw32) libcurl/8.12.1 Schannel zlib/1.3.1
+> brotli/1.1.0 zstd/1.5.7 libidn2/2.3.7 libpsl/0.21.5 libssh2/1.11.1
+> Release-Date: 2025-02-13
+> Protocols: dict file ftp ftps gopher gophers http https imap imaps
+> ipfs ipns ldap ldaps mqtt pop3 pop3s rtsp scp sftp smb smbs smtp smtps
+> telnet tftp ws wss
+> Features: alt-svc AsynchDNS brotli HSTS HTTPS-proxy IDN IPv6 Kerberos
+> Largefile libz NTLM PSL SPNEGO SSL SSPI threadsafe UnixSockets zstd
+>=20
+> This is why I was unable to use a cURL binary without Schannel.
+>=20
+> Sincerely
+>=20
+>=20
+> Em seg., 28 de abr. de 2025 =C3=A0s 08:22, Johannes Schindelin
+> <Johannes.Schindelin@gmx.de> escreveu:
+> >
+> > Hi Junio,
+> >
+> > On Fri, 25 Apr 2025, Junio Luan Pereira wrote:
+> >
+> > > I discovered that the problem lies in the schannel feature of the cu=
+rl
+> > > binary. More specifically, the problem is not in the curl itself, bu=
+t
+> > > in the feature "Safe Web" from Norton Antivirus in my PC that, in so=
+me
+> > > way, blocks any attempt of curl to access sites with a public key
+> > > validated by "Let's Encrypt". Turning off the Safe Web makes
+> > > everything work properly.
+> >
+> > Interesting.
+> >
+> > One last question: do you have OpenSSL or Secure Channel configured as
+> > your default HTTPS backend? You should be able to see this information=
+ in
+> > C:\Program Files\Git\etc\install-options.txt, under the key "CURL opti=
+on":
+> > If it is "WinSSL", you chose Secure Channel, otherwise it is OpenSSL.
+> >
+> > Ciao,
+> > Johannes
+> >
+> > >
+> > > I am no expert, but an AI I used suggested that replacing the curl
+> > > executable by one without the schannel feature would solve the
+> > > problem, but I was unable to do this.
+> > >
+> > > Based on this, I believe this issue can be considered solved.
+> > >
+> > > Sincerely
+> > >
+> > > Em qui., 24 de abr. de 2025 =C3=A0s 10:05, Johannes Schindelin
+> > > <Johannes.Schindelin@gmx.de> escreveu:
+> > > >
+> > > > Hi Junio,
+> > > >
+> > > > On Wed, 9 Apr 2025, Junio Luan Pereira wrote:
+> > > >
+> > > > > I am using git-for-windows on a windows 11 laptop with the Brazi=
+lian
+> > > > > Portuguese language.
+> > > > >
+> > > > > Recently, an error occur every time I execute the git
+> > > > > update-git-for-windows in the following way:
+> > > > >
+> > > > > $ git update-git-for-windows
+> > > > > curl: (35) schannel: next InitializeSecurityContext failed:
+> > > > > CRYPT_E_NO_REVOCATION_CHECK (0x80092012) - A fun=EF=BF=BD=EF=BF=
+=BDo de revoga=EF=BF=BD=EF=BF=BDo n=EF=BF=BDo
+> > > > > p=EF=BF=BDde verificar a revoga=EF=BF=BD=EF=BF=BDo do certificad=
+o.
+> > > >
+> > > > This command is implemented as a Unix shell script:
+> > > >
+> > > > https://github.com/git-for-windows/build-extra/blob/HEAD/git-extra=
+/git-update-git-for-windows
+> > > >
+> > > > Could you edit (in elevated mode!) the file at
+> > > > `C:\Program Files\Git\mingw64\bin\git-update-git-for-windows` and =
+add the
+> > > > `--ssl-revoke-best-effort` option (for a full explanation, see
+> > > > https://curl.se/docs/manpage.html#--ssl-revoke-best-effort) to the=
+ two
+> > > > `curl` invocations in that script, and then try it again?
+> > > >
+> > > > Thank you,
+> > > > Johannes
+> > > >
+> > > > >
+> > > > > Reinstalling completely the program apparently does not work.
+> > > > >
+> > > > > Is this some kind of bug on git-for-windows? Was it reported? Sh=
+ould
+> > > > > it be reported?
+> > > > >
+> > > > > PS: I have no knowledge of programming, developing or debugging =
+git.
+> > > > > Ask me in case more information is needed.
+> > > > >
+> > > > > Sincerely
+> > > > >
+> > > > >
+> > >
+>=20
+>=20
 
-> I suspect that
-> you'd want an explicit tag (perhaps "message SP <message>") so that
-> the log message does not have to be anything special among others.
-
-The idea was to have the output compatible with the git-cat-file(1)
-output. That would then no longe be the case. That's also why you see
-mixed use of NUL and LF delimited fields in "-z" mode.
-
-> In any case, the above considerations need to be documented.
-
-Yeah, that's worth elaborating on.
-
-> With "-z", a message body can begin with "path ", so you'd need to
-> arrange some terminator (like NUL) after the message body anyway.
-
-That should be the case, but it seems I missed that in the docs.
-
-> Unless your format is "we tell about one path and then always exit",
-> that is, but that is probably not what we want.
->
-> Thanks.
-
-Thanks for this feedback. I've submitted this patch on top mainly to
-gather some feedback, and this is really valuable. I think in the next
-version of this series I'm gonna leave out this patch because there are
-too many loose ends, and I think in our product we can easily integrate
-git-last-modified(1) if it only supports the single-line output format.
-
--- 
-Cheers,
-Toon
+--8323328-1217877951-1752770359=:5381--
