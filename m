@@ -1,101 +1,105 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CE02BE039
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:48:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436BA2FCFFB
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 16:58:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752770906; cv=none; b=ZUgCJhExm9Fw2ssgmGoJZEBnIGP7+cr+heOUhNA3K+iq9Oxk8Wb8CBcnPyzp/WAVlydonyF/hLH6q8YeL2qPaXdMthXVSbw+THSBbcegff+r/oWZCJUOP7zIt9fuajtmD7KNnTM/0nnsDEMUcEzSCkQmduwdMc+0ZeK2Xhw3jiw=
+	t=1752771540; cv=none; b=BWco6cbEYRHoSP0uKtGTlQj6N5PtLMY0RTrrwKLBNbE/mIASTx1HNKGGy8ld5ygs3dGipotqZWTY5JMSw7/I5rTsn97QbsF5hn7mlnF1nGXBZ4yk3McbxUTyjqHsyBecP8QTM/bnCxGMH1T43WRPhQpRdnKJqdKkl4it4jT74xE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752770906; c=relaxed/simple;
-	bh=I/U+wvVuyPVijqFbmAmrFsud5GD9ca///V7f2vql6ss=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=pIb2Bit0yrrDwCF/I2jLT+Sw12rUhGbG+YmYveBtBCRLzPOy4C7myweTFRRNNJZlweSoJagyuS8SnxZjLR59wsyNgH6rYU/Bm0wOI7n8rfNQQzivBB6P/ZSTcEK6MNaNRz4W1VO6+DPHhqlXmkn1Q/srrDm+aeOH+0py0NYSFaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6fd5f08f2e6so2845076d6.0
-        for <git@vger.kernel.org>; Thu, 17 Jul 2025 09:48:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752770903; x=1753375703;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fzTSR1qGIsdstVYiWJ0P5ILmqn5RNivoljNyQDfFWzk=;
-        b=l+Ply5aJLTEJpbmq952kHdBouJyCzFdQpEGoQEFns1lPxs+pU25imBqbsC68IQrlDW
-         exuqOdEhbeHN2G74UoyKadZz0EWPQOic1N9zmGHaSzytmzqd3Y2TNMwqPa6vi2Ewp8DI
-         EkJ8JvLUn8vqPq/pamZvfwRzoo3Fk858M5FzdpNTzc8ghSkNoc7XK+Qvp5wzvo9jyjO7
-         XtBf4W0pz/Oe5BW2CvTvlhV1R2VMWKXUb4vP1fn5FQIetDoBwhRCIQKzMlkVEhS/3ZMh
-         qnldHsBLhAvfbYV98tN3qIp+aaE9UaXex89L1XEGPUTLGxvCNCOUvIgAPznnXIji342i
-         fH8g==
-X-Gm-Message-State: AOJu0Ywx/OvK7jMGXrkHh395Ow/5LS9UuYenxN5+uwO9n5QB4uHZ1f0y
-	j8VL4OM/VBPsb23LYd+IwMy3jA6kOfRqer/3NJjwJyKkrXWb8zGWOpgbPxY0xfqczfN8oSqBJkj
-	6oV3b8O3Nw6FKf0FUWcM9M5x8kqLY99Q=
-X-Gm-Gg: ASbGncteZhn8tq302/GELr5M4pRhuI4OUnNTeyrd9lF7eWo9QvnHtH2KR0JhnDzw7rJ
-	G8Aa7EJ6sOVy4el4Ycx17Uvt7Lz7RCp0/1lK421t1NgPzuM0hh+vHojoPMSFBKTvq7ASFWTsyG0
-	WEopT6kNWigSSuRj102fv4FkUy/kMl0R74lY8Jz5MPvUm5OeH2n3zmC1B5SuT2UTXQOCAPLT0oe
-	FEVbbWqqe83GBexjxTwXJLqHmgJDl3fl+U6PbV+
-X-Google-Smtp-Source: AGHT+IGFg7gbvIhpJi/b8p73drmMOjyGxK0ch+MvwBdVtvFZm80Ng1Z0g4qGFcojyCdIebh2qkeyjXngBF8X836uj+0=
-X-Received: by 2002:a05:622a:1cc9:b0:4ab:6a11:9eb2 with SMTP id
- d75a77b69052e-4ab90cb3c4dmr48999841cf.12.1752770903097; Thu, 17 Jul 2025
- 09:48:23 -0700 (PDT)
+	s=arc-20240116; t=1752771540; c=relaxed/simple;
+	bh=stN3NfQCgHPNG1aKLpRKaO6qpi3lC4J3LEDuZo6WCA4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EV+1lfDG9TqksUo5wmUFzRNH6zGQ0J5pyUTnAguwhutKM/bW+PB/mKzBrioVn2dI6E/Ef2vvIvX3xYK2BCZ94+s5Bw3P2VFb92ExTzbE5pSmREfy5cI33hJQDL3cZpzv5Vj7Hss94na6xBpQhE52EuGLhwfXcMz8J/nDgN7OrSE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZgclzyYo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=drmbrn3G; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZgclzyYo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="drmbrn3G"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5D12E7A018F;
+	Thu, 17 Jul 2025 12:58:57 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 17 Jul 2025 12:58:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752771537; x=1752857937; bh=a6MghT4kUD
+	1mMg1COufxfHgorOuYmJxgoGl1uK9k4bw=; b=ZgclzyYo6cFuORvxkO8V6x/+vO
+	z0HG2rOKxLIFDOMoI+I7/TculPzISwduq60c3VT4RyB/yuWorT4xmhMEyY6MXnjV
+	be03fY5BqpIPMNnbaA5EtkqXOFwmvbiICmO6RCmxino9mZ8GiXTIuNPNbuS5toKA
+	MA8GEiShTDQHwFqJUeiPo8mcijilw8PNXmHTpkmKTDR5tVhlMd1kC4hS4fq/ZmhG
+	6gDOU04XcsOsvxqsttZhEIuPLJOWZ+95Jl22fbGwDDZnOQd+Rq/3+mzPCdsx4jB9
+	62Rnuv07ZKbCylJPyqhusBRPIbgyNrEDWnIO+6kUqWKzCqXYH96NOMPzkEqQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752771537; x=1752857937; bh=a6MghT4kUD1mMg1COufxfHgorOuYmJxgoGl
+	1uK9k4bw=; b=drmbrn3GKtRQ0TWFNOvPNFzOhdotPB3Rp9fDBeyJ0cxnJO1OWtP
+	9UZJQjGr2K1kd+3zvyPjZTkILCUOckh0wm5w3ej34OxHbn0B35Mp/0zaBOP2CVns
+	EUmXqIB/GknwuROP/CPL2h7iUqXDgXQM8Xlkw6x3+gl5A3OPb+Gd0LxdKIINDGsx
+	pYSdCKUWSPDe4r97xUSfYqfjSbkhNlbkVtaQo+JerCzuGVgtxw1W6cytbffaY2yz
+	u4y0f7YI/kxJOcxAZxqw5uarxSnFAp+zpxchZpo+/qJ3Tjbqkg4bF0dILtQt9k48
+	1J4jR8+pxkB8J35fhaQbrPu7Q3Gf1cWH85g==
+X-ME-Sender: <xms:0St5aA78DKlvDpakQM5zhpp90SIOXGGMm74YB2hUEEhwfHp8safNxA>
+    <xme:0St5aFLuYVo42lmmutDB94Gzlqq6CmxLQbFMesNXCJ9euy_cihPK96siyL_OEF5lw
+    ATVQ3Zn7wgPvoAvBA>
+X-ME-Received: <xmr:0St5aI6oMjD-Iy3-e8GNUr0wBQ8igwkscfIdztWrY-CNMJiR4TfeYK6-HCVl2MfdynS-ZTNfxyA-Xt4Wy-rXKFbOv8uwoslqZf6uPKw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeiudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttd
+    ehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0St5aAzUSvqRV3mcwJQSPrhzGsuP29Eriei6q5nPCy-1IUkrqb_NRg>
+    <xmx:0St5aEaSALqZZ12TPjVtuatU4y9s8efHjuyIAgj6_uZALD51UH_wUg>
+    <xmx:0St5aKQ1BLDD8cV3farFbL-P0FV12_-tqQhQVHp4jTgzmsZqXCxlrw>
+    <xmx:0St5aGzvWsh2sWuZfrFJ2gLikyHQch0dXThX2SPV-spzXvox8C751Q>
+    <xmx:0St5aFy93jmK9cGhnwUgEnqisjIR-RzV0mXH60RSEeeRSlxr38V8CAGf>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Jul 2025 12:58:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v8 2/2] submodule: skip redundant active entries when
+ pattern covers path
+In-Reply-To: <20250608032705.11990-3-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Sun, 8 Jun 2025 08:57:05 +0530")
+References: <CA+rGoLdTT3kdELUyHdZLWyy8e6AbfRU7kDFcVUdCmVtDi11hMw@mail.gmail.com>
+	<20250608032705.11990-1-jayatheerthkulkarni2005@gmail.com>
+	<20250608032705.11990-3-jayatheerthkulkarni2005@gmail.com>
+Date: Thu, 17 Jul 2025 09:58:55 -0700
+Message-ID: <xmqqa5527nzk.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
- <20250717075009.26262-1-meetsoni3017@gmail.com> <20250717075009.26262-2-meetsoni3017@gmail.com>
-In-Reply-To: <20250717075009.26262-2-meetsoni3017@gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 17 Jul 2025 12:48:12 -0400
-X-Gm-Features: Ac12FXybbTWEn4Wa2lLMJ8Q6Hp2BCjfvcxQ3JwUEBgqgQb1VhJ2WwZGtjB06Z4M
-Message-ID: <CAPig+cQgeqz9bNQSFRvTmoyFgqAwEKSV=KpK18DSP7FA-4GDPw@mail.gmail.com>
-Subject: Re: [GSoC][RFC PATCH v2 1/2] builtin/refs: add list subcommand
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, karthik.188@gmail.com, 
-	gitster@pobox.com, Christian Couder <chriscool@tuxfamily.org>, Victoria Dye <vdye@github.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jul 17, 2025 at 3:50=E2=80=AFAM Meet Soni <meetsoni3017@gmail.com> =
-wrote:
-> Git's reference management is distributed across multiple commands. As
-> part of an ongoing effort to consolidate and modernize reference
-> handling, introduce a `list` subcommand under the `git refs` umbrella as
-> a replacement for `git for-each-ref`.
->
-> Implement `cmd_refs_list` as a thin wrapper around `cmd_for_each_ref`
-> instead of duplicating its logic. Forward all arguments to the existing
-> function to ensure behavior is identical.
->
-> Add documentation for the new command. To keep the documentation DRY and
-> consistent with `git-for-each-ref(1)`, refactor the shared command
-> options into a standalone file. Use the AsciiDoc `include::` macro to
-> embed these options in both man pages.
->
-> This prevents duplication in both code and documentation, ensuring that
-> `refs list` benefits from any future fixes to the underlying
-> `for-each-ref` machinery and its shared documentation.
->
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Mentored-by: shejialuo <shejialuo@gmail.com>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Signed-off-by: Meet Soni <meetsoni3017@gmail.com>
-> ---
-> diff --git a/Documentation/refs-list-options.adoc b/Documentation/refs-li=
-st-options.adoc
-> @@ -0,0 +1,80 @@
-> +// Shared options for for-each-ref and refs list
-> +<pattern>...::
-> +       If one or more patterns are given, only refs are shown that
-> +       match against at least one pattern, either using fnmatch(3) or
-> +       literally, in the latter case matching completely or from the
-> +       beginning up to a slash.
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-Nit: We probably don't want the "// Shared options for..." comment. If
-someone needs to know which commands share this documentation, a
-suitable "grep" invocation will provide the same information but will
-be correct at that point in time, whereas a comment like this one can
-become stale over time.
+> +		if (!matched) { /* no pattern matched -> force-enable */
+> + 			key = xstrfmt("submodule.%s.active", add_data->sm_name);
+> + 			git_config_set_gently(key, "true");
+> + 			free(key);
+> + 		}
+
+Somehow these lines begin with SP and then HT.  If you are going to
+send an updated version, please make sure to fix the whitespace
+issues around here.
+
+In the meantime, I'll tweak the version I have in 'seen'.
+
+Thanks.
