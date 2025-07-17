@@ -1,149 +1,131 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AF321E47C5
-	for <git@vger.kernel.org>; Thu, 17 Jul 2025 17:27:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203184594A
+	for <git@vger.kernel.org>; Thu, 17 Jul 2025 17:28:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752773276; cv=none; b=rW0srT4HWlmA9gQ+ndtID2ZB38m41tfI1iooXMUlA3UbOHUi4zKYIptkURlWwBtYbHIrK45x76yqazkvKfC4+ARL/Dwhj6635/HGKfqoffuEOBxDigu76zWNK9gvLVXEHf4m5KixbilmHO71BDsSXeovfpOXy8ZWeix8YdZYiuQ=
+	t=1752773328; cv=none; b=OFyDNC7J8oOE150/r2RljllA6+cE1rVjXR8iptB7MX89QX/yRwKioPe82AeDzPFHJavJKZk5BptlWGVxQITu/CvputgiteHKSITzcoVBb29RINkcrH7twoeEId7QWJUzkRhZCinCjb7F9tYQReEEVodLySr41pc2r2QBjPyrsnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752773276; c=relaxed/simple;
-	bh=UybVUtvTXMRe5NkGsEsBeQmsKTGFRKIX4hQukCEQ6OY=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=ILmt5F4cuStDdsHb/BXyzunbeo7DayBbkXXfFqo7OYbrVbk1ZfXQZofau4HsOnc+xbo3j8/6h4Xr8wA3j4/xogzYFhjRxS/M4lbw72oASbtj4gq1OrpVF17Is7/LvOrSMNOpUKZmwL24S3LnVuvd3SZIk9Vhxo4tnsFfJF5FVZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=rKr9LH5/; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1752773328; c=relaxed/simple;
+	bh=9R3sjWUbWJngdxL25eugNBgwQj1oloH2pJsFpLPD/0c=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=S7zeip+YvdmQw4NJMlmnS+Xct+eIP88Xi2kyQ7QyOOY1fGV4SLCyCUO0Erh8FSXu8G4L3S4oqYa3Oylwer6C/Qh5UPrM7ZNoqIyWL15zGOrKWfUh+ZuYHg2bop9L6wl0OeiYxISv3CsLPul/QToAWT94AaI7KdRryVmS7qjKKNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kJ4TtYc2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=d/y3ayxO; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="rKr9LH5/"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1752773272; x=1753378072;
-	i=johannes.schindelin@gmx.de;
-	bh=vdKXmR7dE91i62RMYMsdWpBuCNIJwAq0w5GhdXtAPgo=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=rKr9LH5/zb6ovwvMDhmXOvn5VrouguvWAZvCDWnmtVACJhI4tW1M6P7KGCD0V7Ae
-	 HgSFkVtLCes/dNu5WIEhUFjTgLn27g0FCEmBl4CudD3DNMezwIxDRirOGZhb1vLCy
-	 +wkgbBuusXUvUaiy3O0pz0FgfVemtIfPmQiR4CZYJ5/ncDN36Rq0hwOmM7qUZjjKC
-	 j/VoqmbRSLa5uTNOYvgPKuBBmqoJ7ze57fi2haEsPrW6/9bhxpR2TjO3ugFKAZ5Z0
-	 Z1dZA3tsizBeeN/Vw7FI5XRMCDhRpzj6/ajB1gWJqaq1hBSAyPN746n/b65q1Dc8Y
-	 ieVlgIZtmk2hCGpbwQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MmlTC-1v4bt82Cxy-00oL53; Thu, 17
- Jul 2025 19:27:52 +0200
-Date: Thu, 17 Jul 2025 19:27:50 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Fabio Frumento <frumento.fabio@gmail.com>
-cc: git@vger.kernel.org
-Subject: Re: Git bash 2.50.0(2) not working on windows 11 PRO 64bit
-In-Reply-To: <572ec2d0-b587-9cf1-7643-1a0f3e59c268@gmx.de>
-Message-ID: <af2ab4ad-51d0-7b88-a0aa-6063e3857d4b@gmx.de>
-References: <C4F62B0F-1729-437B-B9C0-0FEA74B307E0@gmail.com> <572ec2d0-b587-9cf1-7643-1a0f3e59c268@gmx.de>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kJ4TtYc2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="d/y3ayxO"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 17A4C7A0188;
+	Thu, 17 Jul 2025 13:28:45 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 17 Jul 2025 13:28:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1752773324; x=1752859724; bh=SUAB+zh9tQ
+	gWR7G2MEzCsXl1HaPQnWcHKWf7bFoRbTE=; b=kJ4TtYc2GYJIw0IIa9eovq9qT/
+	o+68J62QhL7FeVkHddueppsbMXx5tboDpGaTwGyDZb1/I8byB8m3DZkLu6g8bu0s
+	5gPyCo/xTVq7vRWaS7Ce9MTDS1pw+/bJt/m5d7u+LlguYejFWf7HiW6OcwQeDw3i
+	V9nWPaeehJXnnQbGe4/S0h5Uw2IN9j1KjP/hjwwfJbN4+H66tYgV20jT5rJloleu
+	s9x0jJnZcSP72Dj3q94QSHpuk9WEmLph18dy0DMIWDAnohFNuM8ktJEwBrbd5lvM
+	bsjBQQa3mnECBH011N8LssZTpfePZiG4k9anNuxnbmkzGiLdLRoBhE6vYvfg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1752773324; x=1752859724; bh=SUAB+zh9tQgWR7G2MEzCsXl1HaPQnWcHKWf
+	7bFoRbTE=; b=d/y3ayxOIhx5ZRqTSaks+m4kWr4HFtxLr8TZrvnNAp9HH9FMMhx
+	eA3CjnxlnXK/o/WvxX3vvfm3rFcTVmN4lPSkfwL3FKNHm3AVkV0bjaT7BGJbwePC
+	TcxX34sb0jA7Iv7+L1UiQ81kRCtvIm5VTX4dIpzOTLtwuNCZYnp/VJpCeLGcQcwq
+	Gg2lq5AoD2GcPh5aKF53nsRwjUxWl1YQC14dqTuh3l2n8Uc3XmHXvPqkwhuWu4bT
+	cpZsr/scbJJa0jKal4a1dqcra2VUKc5wAH1cGonbds1g8j74HChp0aZ3E6Yv1AVQ
+	stnbCMzX3jUgOUBRrI70fffvpVZmWr0vbYw==
+X-ME-Sender: <xms:zDJ5aFJ1mOR0N6-Ndkw5vZn8_uGQYhAEb6Q0m_G2Hdo5OooJEnDVoQ>
+    <xme:zDJ5aJn6rNoFmSsyWMCuZIigi7iJ-iX6ibFRz-2tdBFMYuctLc8wCiBcRQI7mPkPi
+    Yxb0vIWkaDBEiNRNw>
+X-ME-Received: <xmr:zDJ5aOKYxRsVo_KYqePX6ZBz8ltKTXYZIfUfL1_djll_9Q3fUngVK_U8lFwYUh-S-wh-o5Hgjd6Mk5APB38ROtzbt-Jl1kWRHAoO1CY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeiuddukecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmh
+    igrdguvgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsh
+    htrhdrfihrihhtvgesghhmrghilhdrtghomhdprhgtphhtthhopehlvghvrhgrihhphhhi
+    lhhiphhpvggslhgrihhnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:zDJ5aG7zSq1ZX3hXHh1GXJn_SjNPV29agfqGyDVgmZQTwaFeiCCK_w>
+    <xmx:zDJ5aK2YNnxjoDh-Iu0F7X63916As3f1QMHLRSprRknk9NWXQIL7Mw>
+    <xmx:zDJ5aEfm7sN6f1FSzJSTosw2Y0KjS3I66S71RfVzA8K-uJkMm5exaw>
+    <xmx:zDJ5aIfa3elnE2Y1lac2Gc8zrK-KG3Q54EwdMdowNYaEKhGdHaBcQw>
+    <xmx:zDJ5aIrUp88HTlhTp7mW5aJwdIWyCy84TSyOU1X5NvNeKIfQr4nexhlH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 17 Jul 2025 13:28:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Timur Sultanaev via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Timur Sultanaev <str.write@gmail.com>,  Philippe
+ Blain <levraiphilippeblain@gmail.com>
+Subject: Re: [PATCH] docs: correct mistakes in git-merge
+In-Reply-To: <6518dd3b-ca05-1ce8-e700-81167cd2e88e@gmx.de> (Johannes
+	Schindelin's message of "Thu, 17 Jul 2025 19:12:55 +0200 (CEST)")
+References: <pull.1940.git.1751737158670.gitgitgadget@gmail.com>
+	<6518dd3b-ca05-1ce8-e700-81167cd2e88e@gmx.de>
+Date: Thu, 17 Jul 2025 10:28:43 -0700
+Message-ID: <xmqq1pqe7mlw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-828717416-1752773272=:9311"
-X-Provags-ID: V03:K1:z4vS8iqcoBPjmtfKVMvgQmb/AdNXCgiANcpF+3RQZ3xoa8ojtmf
- 7xKq1zOuLcu4FV9DDnycjXOcmblUH5jIEKwvcA4QYZleVroiM0jKvMajZve/2/FaRUa6J8K
- 5+bSSm0zQOBMBy7lxuCUJ7eNXHA6Xhb1FjLxQyAkp8PNULEtvmwLOLqUXeG+bsX9Qz9YMA+
- VzPyFhxgKwUkdl0cWRHiw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NUYaddq5z9U=;d026Ek9BbGWDmHmarb4hgQvP19/
- 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
+Content-Type: text/plain
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
---8323328-828717416-1752773272=:9311
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+>> Additionally diagrams on the page are adjusted
+>> to use spaces instead of tabs, so that they align
+>> regardless of tab size. This is in line with
+>> diagrams on other git documentation pages.
+>
+> To be precise, you could add to the commit message that the faulty
+> description was introduced in 0c514d576685 (git-merge.txt: mention
+> 'ORIG_HEAD' in the Description, 2023-01-10). (I Cc:ed Philippe Blain who
+> authored that patch.)
+> ...
+>>  ------------
+>> -	  A---B---C topic
+>> -	 /
+>> +          A---B---C topic
+>> +         /
+>
+> ... while correcting the description seemed fairly straight-forward, this
+> white-space change appears to tread on more delicate territory. It might
+> deserve its own patch
+> ...
+>> @@ -38,11 +38,11 @@ Then `git merge topic` will replay the changes made on the
+>>  its current commit (`C`) on top of `master`, and record the result
+>>  in a new commit along with the names of the two parent commits and
+>>  a log message from the user describing the changes. Before the operation,
+>> -`ORIG_HEAD` is set to the tip of the current branch (`C`).
+>> +`ORIG_HEAD` is set to the tip of the current branch (`G`).
+>
+> This is obviously a good fix.
 
-Hi Fabio,
+All comments are good ones for contributors to keep in mind for
+their next attempt.
 
-On Thu, 17 Jul 2025, Johannes Schindelin wrote:
+For this particular one, which is already in 'master', there is no
+point in polishing and resending the patch, though ;-)
 
-> On Mon, 7 Jul 2025, Fabio Frumento wrote:
->=20
-> > After upgrading from 2.49 to 2.50 git bash won=E2=80=99t start anymore=
-, a prompt
-> > window shortly appears and close immediately, downgrading to 2.49 solv=
-e
-> > the issue
-> >=20
-> > So 2.50 don=E2=80=99t work on windows 11 Pro=20
->=20
-> Maybe v2.50.1 does?
->=20
-> If not, please run `& "C:\Program Files\Git\bin\bash.exe" -li` and see
-
-I meant to add "in a PowerShell session" here, but forgot...
-
-Sorry about that,
-Johannes
-
-> whether that reproduces the error (in which case the terminal window won=
-'t
-> close immediately, giving you ample time to copy/paste the error message=
-).
->=20
-> Ciao,
-> Johannes
-
---8323328-828717416-1752773272=:9311--
+Thanks.
