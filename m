@@ -1,147 +1,107 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F98C21FF36
-	for <git@vger.kernel.org>; Fri, 18 Jul 2025 21:25:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB4B721C9F4
+	for <git@vger.kernel.org>; Fri, 18 Jul 2025 21:56:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752873912; cv=none; b=IZN7xrcoFA9hbGcp2656PxynNLVp5nZCkmp3blSq7vmtzkmA1rQYrGjUsI9dV+3GKKNHgiXE9Hk9glEUZn8UsVsio+wJSZtP21m7wkyutZCrF4+9l2zpSCfu9JoF+VahTSQVyDwOPMBQChB0x/6J4oGbmQeN3MfQj1eMsaD08FA=
+	t=1752875797; cv=none; b=G3vpuazciu8r4GcQKGPJ1Fhyy3GU9i0EIFyLj/kJnppf8CQj5zFHEWPBd2F3WaqNAAY6VJ7TfbzV8aYMyeytk9insBmOmvXm0uhtsVoWCgAzbC5SbmC0EcwsxpVGHNwUfWN7cQ9Zpcd/6ep3UaQKDOVj96VlYUYCiubLgQRSwUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752873912; c=relaxed/simple;
-	bh=aKr+vsdDCV55pkGAk73iogdEmMATx4coHgNdY/7egcU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oE85qTNtF8AgkIpQA7sbaH0PGB75cMxIkMzu2BO1BD8tVXU4csVCnFRdO+YC2eBrQDeJd7jn3LLBnKskWN3hhOaoVYOJg7UNxIFc6zqE5S/PoqRRVyOo/OW5seWVBuURsIqMOKerSqPGYaw+8m6TCAr9mVTPbot4gYPQThv5WCk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 0475633BF08;
-	Fri, 18 Jul 2025 21:25:05 +0000 (UTC)
-Message-ID: <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
-Date: Fri, 18 Jul 2025 17:25:01 -0400
+	s=arc-20240116; t=1752875797; c=relaxed/simple;
+	bh=ueApP0y0KkjiAk146UQzDOyKKZDHSZeQkUR9qCnbMG4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=bD8zSzrmios3PF8OAkP+SUoQPiJyFX0hxdYWWUZIGnsLbGhCoSb3mnrsxcNXUPEH8ow7lGNok3G6sTHIK2ISGceN78BEx3aFSjLcttdsXOjipBhOcA86dXs/YlFJUALy+9QMYvQQvr8w3QIFmsOHlG8zNukrsyK9okMFg4Bd37A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PoiBBel9; arc=none smtp.client-ip=209.85.167.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PoiBBel9"
+Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-55502821bd2so3201367e87.2
+        for <git@vger.kernel.org>; Fri, 18 Jul 2025 14:56:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752875794; x=1753480594; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=oEm8rB+7LKrKv4QgWvjLEfbruI4IoHrX1Ikgoh5DnJA=;
+        b=PoiBBel99mzw8SatyGhmCl+rAX4fc0caD6jiTkFLGzWcacSSN5shuAmvXpbOrsIsKH
+         y44oEe8b46v+jnX3ptu5WIcdpIrXkLvtYjQvPCCKDFjYcBEEbI5cbnHk2D3pdf72NHFP
+         /j+ULBi5IJ23sPuYa0CK144Z4lu76r4riXqK2GYhsbRCv8GeJCfS3t0uz4A2ywgq0D97
+         D1nS6efXRirNS3cKS6uT03Mg28JC+5chBbH33N63URDQplmHPWPqsZ7Gzvb9tCi1nCwa
+         XKLsjXDBBu9w/loILBfc/4b36KURNWXg3NSejfNPfh/iKQnX8cbM2azc0qR5oFQYpMzY
+         2kcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752875794; x=1753480594;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=oEm8rB+7LKrKv4QgWvjLEfbruI4IoHrX1Ikgoh5DnJA=;
+        b=YHK9Gdbujhy6NBCoLQUZiTOsufRofN3nyrvm206XREPzqqx+odxONY/UEsZT7t6vAY
+         O9Ar1AhMc4DL3+Rbb3cS/zhQWgiD4uDw6xftpPnywmHchTXVZ1JV3BjoDte5Eitl0+zJ
+         W3g/CbKsuiDmiEKhFUwoNTQtw6LcCkU4KXBBf1h1upTtI0JIMQRgHWCLXlaUivggL7oQ
+         CDDMimTsbKMKudJXFxdpnqUw+KmsvyiXmUfRx0yetfTrifGl4TvtDmXZohMbPd0GZmJy
+         2E+HvwwlXIazq45dWZBb1ANEYPQ0k4ODM8tbXYYZhFtSuiyOrtEbDcipaR/KAg9fv5fM
+         1QVw==
+X-Forwarded-Encrypted: i=1; AJvYcCVVSdFzZf6M+Qx9ISWMxoDqCYRllM2rGjiRfpZOngEaAmnNTBhmHNZf/PxiDj401voT3aE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzojXCfLAURWqNMNCFYYmcJKRa+MqUTGNlRfchYFvBPR4jNDB8r
+	u/ezfv4QyRvHnkOLaGtftPn+QItKm8umkkDBN7IhCuJpN7nqkb39VAIqrfTBTDu76LxsNKoT2xU
+	ffP8S5vIgciL0vHTlMXBoqKm11pj4bC49eQ==
+X-Gm-Gg: ASbGncvBJFZc6EE2IOvY+gcrKpfJzXzm/eIm3mP8c0gp27a8w9L/01T662Rbz+wxMAy
+	T+Xow8bvWR5SVkqgBharolUPQUpGamBMw+8pzJF7qOC665VOdqUr/QmBmtuTIpUN2Qid3idQVoJ
+	69T3wZDaCc2PATkLfr61LruNrQw+yciF1EAKHGF0N1UtIV//JmiUV1lTIq1Q4YwO/j4xdqKReMO
+	lmpadum
+X-Google-Smtp-Source: AGHT+IEiB6U6PMJ75kY5xThYCm+f2Sh9QGqVDdX+FxMTOjaPB3/kUtwO4qvfZXBfKwWbv3IZi9w08MTUs9dEM5T5t9Q=
+X-Received: by 2002:a05:6512:12cc:b0:554:e7f2:d759 with SMTP id
+ 2adb3069b0e04-55a23f35d41mr3877008e87.28.1752875793638; Fri, 18 Jul 2025
+ 14:56:33 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com> <xmqqjz454l96.fsf@gitster.g>
+In-Reply-To: <xmqqjz454l96.fsf@gitster.g>
+From: Ezekiel Newren <ezekielnewren@gmail.com>
+Date: Fri, 18 Jul 2025 15:56:22 -0600
+X-Gm-Features: Ac12FXwN8GLW9vwZuTjkFgRukgvHPnoVfmC9IIYO8NdvnPxHdHROgqSfZmwWFBc
+Message-ID: <CAH=ZcbCVVOMEFmWp1JEDNRWGE2+F3zQ5jT48JhD_2ycR2kOv3Q@mail.gmail.com>
 Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-To: Phillip Wood <phillip.wood123@gmail.com>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Ezekiel Newren
- <ezekielnewren@gmail.com>, Edward Thomson <ethomson@edwardthomson.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------C6U5U50Hy0RmrWxbhSXUydHt"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------C6U5U50Hy0RmrWxbhSXUydHt
-Content-Type: multipart/mixed; boundary="------------DBn3vPkyOxPT3v2TvHFqV7Ad";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Phillip Wood <phillip.wood123@gmail.com>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>, Ezekiel Newren
- <ezekielnewren@gmail.com>, Edward Thomson <ethomson@edwardthomson.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>
-Message-ID: <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
-In-Reply-To: <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
-
---------------DBn3vPkyOxPT3v2TvHFqV7Ad
-Content-Type: text/plain; charset=UTF-8
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 7/18/25 9:34 AM, Phillip Wood wrote:
-> Hi Ezekiel
->=20
-> Thanks for working on this
->=20
-> On 17/07/2025 21:32, Ezekiel Newren via GitGitGadget wrote:
+On Fri, Jul 18, 2025 at 8:38=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->> So...
->>
->> This obviously raises the question of whether we are ready to accept a=
+> "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>
+> > This series accelerates xdiff by 5-19%.
+>
+> ;-)
+>
+> Do we know how much of that can be attributed to the hash algorithm
+> difference, and how much for languages?
 
->> hard
->> dependency on Rust. Previous discussions on the mailing list and at Gi=
-t
->> Merge 2024 have not answered that question. If not now, will we be
->> willing
->> to accept such a hard dependency later? And what route do we want to
->> take to
->> get there?
->=20
-> As far as git goes I think introducing a hard dependency on rust is
-> fine. It is widely supported, the only issue I'm aware of is the lack o=
-f
-> support on NonStop and I don't think it is reasonable for such a
-> minority platform to hold the rest of the project to ransom. There is a=
+This is difficult to answer because xdl_hash_record() hashes the
+string as it determines its length. Xxhash uses simd instructions, so
+all data must be contiguous and processed as blocks rather than byte
+by byte. The components cannot be directly compared due to the nature
+of processing differences.
 
-> question about the other users of the xdiff code though. libgit2 carrie=
-s
-> a copy as do other projects like neovim. I've cc'd the libgit2
-> maintainer and posted a link to this thread in neovim github [1]
+> The earlier parts of the series to trim unused code and refactor
+> look to me that they are good changes regardless of whether we
+> introduce a different hash algorithm, and/or we use an
+> implementation of that different hash algorithm written in Rust.
+> IOW, even if neither of these two happens, I would think that the
+> earlier parts are independently good pieces.
+>
+> Thanks for starting this effort.  And thanks Elijah for helping.
+>
+> And in case nobody has said this yet, welcome to the Git development
+> community.
 
-
-A hard dependency on rust for Gentoo amd64 would potentially require
-building https://github.com/thepowersgang/mrustc followed by building 13
-and counting versions of rustc in order to get to the latest version.
-What is the minimum supported version in this series, by the way?
-
-bin packages for rust do exist but not everyone wants to use non-distro
-provided binaries, sometimes for auditability reasons.
-
-
-For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end of
-life and staying forever on 2.50, perhaps) of Git. There is no rust
-compiler there.
-
-Even s390 support for rust is limited to a precompiled version not
-everyone is willing to use.
-
-GCC-rs will probably fix this general issue.
-
---=20
-Eli Schwartz
-
---------------DBn3vPkyOxPT3v2TvHFqV7Ad--
-
---------------C6U5U50Hy0RmrWxbhSXUydHt
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaHq7rgUDAAAAAAAKCRCEp9ErcA0vVzdS
-AQDO3MJHmceh8VVFIoBDGRIcBoFXJa0Y7m2mcjpItCcPYQD/fVdRCNPswayCpovVEN9TPFi4j5dT
-6Iqk32JVvgh0DQg=
-=McrO
------END PGP SIGNATURE-----
-
---------------C6U5U50Hy0RmrWxbhSXUydHt--
+Thanks to you and everyone else for your review comments. I'm going to
+need time to investigate and respond.
