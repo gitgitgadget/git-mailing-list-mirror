@@ -1,134 +1,99 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749A32E49BC
-	for <git@vger.kernel.org>; Fri, 18 Jul 2025 19:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F24A01E9905
+	for <git@vger.kernel.org>; Fri, 18 Jul 2025 19:13:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752865241; cv=none; b=Ps+MSAPhjGF3tt98gp4MOcTLbq37d+5EbJpy5br3k9tBP0/YwZN/7XWo/ocIAGOZ1LLWDNJCnMhF3yTtGG4gWfzju1qCmx3XEY9co2IOj7zTCancJEK8NaQzr7N60FFUzYGAwdkksDwa4GyRAhAPg1SRTZYKj8J0A4iAjCaY/Qc=
+	t=1752866026; cv=none; b=FVIZl63yGAW39W9EqSqcPu4tdTPe34+Xyag5ANUWaUuEWrwjbrS/FQUwQ0ifKHmbQUBJtphbrEQR/sFfpOR9sYD2UDfV2MPG492vtOQ0DpSwb/sdCt63UNaWdiG0CVRCZEjmSzwyX6i0hryz9qtBLFJskFTHfxck5sjfU9ZobnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752865241; c=relaxed/simple;
-	bh=dT3s9FHgh5w/0s82KPpyrcW7TM4DFxJslu+y0nFcMPA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=swuHT1fDdxB2o0/uquNOYcNQfCbgdmprck2H8FDkbCQcLIHMp+Fi0EmLUWoCE/DzRqYwa2rgee8Cl40sQ1BNPLssVLbc9J5SJoKIYh6+TglBMHwClK0WFFD8aHckNoRZTNErQKT0XVvig8oYjEoqdVsZdouSt0+EPf0/ovWha8o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s5Me0YtH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QatKvkFw; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752866026; c=relaxed/simple;
+	bh=8a2Fy8IxRHH9tHGHBctSiCRr8m84Em2CoOt9RcB/Spw=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=SquOwstDTjq8xLlW/w2jAy4S39bWbKU1IAB4tT2AEGNmOd6nFJPGZLTbRGbcQ8wRVg9s7GZDPiigimq5LiXD0FN/4bx8roBwhwQd65hNcGN9Qr3qA+QCL2Fgh2YRDqaY8xU3CBc26h8j736ToM3xBdeseFkByyTos0LFbPw51YE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WpM+c7DG; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s5Me0YtH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QatKvkFw"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A0BF7A0140;
-	Fri, 18 Jul 2025 15:00:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 18 Jul 2025 15:00:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752865238; x=1752951638; bh=0A/cJHC43i
-	MCPQ5GlW1kYeSJU60ccDL1CQq2khDbst4=; b=s5Me0YtH2m9KS35Ep0RkUTqmOZ
-	AkQmWW8fLm/cDpw+OjT3qwN0NsblYwunrTPeJJXn8nyaJucWE9EsHk5xr0kvrAl3
-	xM+0m/0YmMojk6b3lvz9niU33bTB1EHnZGbHxzeLCZRAn+MCyVn0KOGSnzIDSL7L
-	qBM1NxAFUTuS4ZD3eYamR6fK0u+wAWtJnSCdLasu7PDvBndlSwnL426vTb8XgPUG
-	VxQkLb38yvdabpmh22jC+rdwo9xCF6N627SIy6JiccbXdtKgdJG143sNxPvXhIlL
-	5GlR0by7obuzqsrnNygjd77QWowyqzUTvjWEtZtF6SgzI42F4GgpyEObulTw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752865238; x=1752951638; bh=0A/cJHC43iMCPQ5GlW1kYeSJU60ccDL1CQq
-	2khDbst4=; b=QatKvkFwtZYr1xdnZRTYzycd6gQaMBMBuP25B/SU+r3YH6m3w0f
-	Hs1R4++2u2gPbTy0fBzpEwqis6CLZRorW6fRtwNef67ByDu+43fH7hezfkTdJkDW
-	F1HNsb1StOz7ie2ke+osMOtBDYZVigu6f7xpKXrZwulgwwQfRKIusiuXke2XuG5R
-	U5eckMpESZ3quyYwvCS+C2D0rLEAMTgzFU2ZiOY7OvwFc6CgHG+P0hGkXBSWAiV5
-	aQ4O/DLjtyIP5LyLJWBU3b8+ZgSQUZMtbJVcPx5N2X7O8s85a6CE5GxRp+ApUZbE
-	1lzCc4VgKVXGWm39EQxqMDg0CCBEHfslNHw==
-X-ME-Sender: <xms:1pl6aHKWU9O_AGolgxzgrJ79-HCH-Y-sFLv6YPt5dsIFppcQtfRruQ>
-    <xme:1pl6aGoN7EOPaj5OlipVvDUkNU04l28OFouecA55G0_F5-Yt15HtNEA2Ot6s_m8Lp
-    DXKuOhuaQIptyWMtg>
-X-ME-Received: <xmr:1pl6aGIc6M6s93_zl6vkVhF5a6cCgKFvn5j4v4FM9TBr3pdDG5z8fiWctuF9GMh47bK0KZhnCTWt8E90k9-36nO2WPHfUsyVb4MJEeQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeigedvhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    nhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvgiivghkihgvlhhnvgifrh
-    gvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:1pl6aLTewf1fVF_rmHI8zuteXNFb8N95lEguU6xRF7o8DGLoq55Pkg>
-    <xmx:1pl6aFvkjaO1nJhjEsY6i5LNoT0Tz-NamcTg2Sf4jZqcrCgb85UgdQ>
-    <xmx:1pl6aMZEseL8s6C3qnKUbeDieIS47k0Lp3BNcjKXGe7XiigTLhiIfA>
-    <xmx:1pl6aLFtPdtBiRHjx2mY0EwfGgCe-nwYadd0zLTc3EIp49eKbHa58g>
-    <xmx:1pl6aCoJYgco9MH69fAVFLoB_WE0-vegC9Jc7UMkZv1hutCrUYrgCbXE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Jul 2025 15:00:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Ezekiel Newren
- <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 6/7] xdiff: conditionally use Rust's implementation of
- xxhash
-In-Reply-To: <5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
-	(Ezekiel Newren via GitGitGadget's message of "Thu, 17 Jul 2025
-	20:32:23 +0000")
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
-	<5a959c9bdad79cf972b95dcf4324135dd7c94dac.1752784344.git.gitgitgadget@gmail.com>
-Date: Fri, 18 Jul 2025 12:00:36 -0700
-Message-ID: <xmqqzfd12ujv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WpM+c7DG"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-884f22f9c90so1016211241.0
+        for <git@vger.kernel.org>; Fri, 18 Jul 2025 12:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752866024; x=1753470824; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8a2Fy8IxRHH9tHGHBctSiCRr8m84Em2CoOt9RcB/Spw=;
+        b=WpM+c7DGLar3YCZihbFQesMCs7Ld3vIFHdBttiSxcdQVLF8eiWotOF37jRfIV0kCxF
+         OSvFB4ZLzl8Z8I0G7ASbTmb3OaMtR9d98OmqRXZcpw5cPZwRZ3GgMJZq0VNKmC3ssqlf
+         bstOYI20zFpyzBrW6VK0LKg+cV+RGfMbgzrJEwcqkWQ1G+4rUJQTcspvckqliZ8EyMsh
+         umRDGh7/kq4WQPkBTc/diIjfMH6Wnm24MBNq8R6CuRUfKKNNTMwgA+hrMMyiQTWL4vC8
+         rCeRoqthNofgXrDg3CPgL8HjoLeLw04BoI3O5z2abHjdkwW1ZvRKwpmG70jl9bxKPJEh
+         QhLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752866024; x=1753470824;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8a2Fy8IxRHH9tHGHBctSiCRr8m84Em2CoOt9RcB/Spw=;
+        b=AP/edmttH59klsD26MJVbtL9GdRftHO0EmujwxA0UXPsA8iasQkNg0ZOiqlOuMODiX
+         OaPPPBK/whq6e5OzNdPO3aW/DPMa0GJZ7NlpVSZepp69Gi0x1LpG+jBPvjHt6zd+IMLp
+         gHMduv8ZnXhcpyS1r1OCbAoazcbUXSBIY7zsUez1Uil6jw9oFgON+J8mLYCPyB5aTIYx
+         KVDFD07oWezUbrYO0cNfHxpVphAnHoS9YsmJAgWtvzflPphL11+XOVEoghR6alrj3LRQ
+         ie1EeVy45RJCcha0VwBhk++LzVTE0iW0+Eq7d2G6u6SuhmnPeEfDtF4DWtsIi4meqAxI
+         VjLg==
+X-Gm-Message-State: AOJu0YxD2s7VkLuESzL8r7WLUJrwzJCvAjmzxj4wEKJ3TY73mxbTvyyg
+	38OSxEZYikPZS5NXPQ1Fz+P+ozbGKCzYAGxQX4hPTSvZiLP49sqSpnHD
+X-Gm-Gg: ASbGncsQxFQOqHp8XxhJ/EKmLb9A0hf9/wmKesVIdiucrdATZ1sU6HD8WM0x05AlNep
+	rLSk811ajTSklL4eT9bliE65iuprE0WOPWpvuBQO2ik++9eFpTuMcs6Zn+ugEycvSfolwlfsSIR
+	kf/ReDUa4wQXBikFrt62UQW3kwHWkib0NBVeECFqdMNM+eBkQ0J/yVUbtbuzWmoc1c+FwFE+m4A
+	ysQKt4tz4DFgEG+31OGWidNVEJ+7oL3QiPZz31151yBdodIs81ODwshk2Z6wbHCTy9ZIQHcQQbJ
+	IBIEAMRkvKrOOZEDiB7+k/vLh3EK29seMHDZZSmhcfs0/EnaqW524J+arrO1f9OxueeRubbtMVR
+	BeXj6s3EoJiftl/B9Xl2Roy/48ZqadZOQ07rWy11oiANJ3wIO
+X-Google-Smtp-Source: AGHT+IHqBEJ/taOV6PjMrAOlHbvXywznm1/Mfgi3qWomGBHJBQcDdRfb72dTfmPoXHmbYFrK+D4X1g==
+X-Received: by 2002:a05:6122:88a:b0:531:2906:752b with SMTP id 71dfb90a1353d-5373fcb7fdcmr6973728e0c.6.1752866023902;
+        Fri, 18 Jul 2025 12:13:43 -0700 (PDT)
+Received: from smtpclient.apple ([179.113.63.169])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-5376ca72df6sm375436e0c.0.2025.07.18.12.13.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jul 2025 12:13:43 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [GSoC RFC PATCH v4 2/4] repo: add the field references.format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aHZCipKCPIu8mPly@pks.im>
+Date: Fri, 18 Jul 2025 16:13:29 -0300
+Cc: git@vger.kernel.org,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk,
+ jltobler@gmail.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <A5D456FD-C8C3-4087-8C08-E931BD254390@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250714235231.10137-1-lucasseikioshiro@gmail.com>
+ <20250714235231.10137-3-lucasseikioshiro@gmail.com> <aHZCipKCPIu8mPly@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-"Ezekiel Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> +extern u64 xxh3_64(u8 const* ptr, usize size);
-> +
-> +
->  static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_t const *xpp,
->  			   xdlclassifier_t *cf, xdfile_t *xdf) {
->  	unsigned long *ha;
-> @@ -175,14 +178,26 @@ static int xdl_prepare_ctx(unsigned int pass, mmfile_t *mf, long narec, xpparam_
->  
->  	xdl_parse_lines(mf, narec, xdf);
->  
-> +	if ((xpp->flags & XDF_WHITESPACE_FLAGS) == 0) {
-> +		for (usize i = 0; i < (usize) xdf->nrec; i++) {
-> +			xrecord_t *rec = xdf->recs[i];
-> +			rec->ha = xxh3_64(rec->ptr, rec->size);
-> +		}
-> +	} else {
-> +		for (usize i = 0; i < (usize) xdf->nrec; i++) {
-> +			xrecord_t *rec = xdf->recs[i];
-> +			char const* dump = (char const*) rec->ptr;
-> +			rec->ha = xdl_hash_record(&dump, (char const*) (rec->ptr + rec->size), xpp->flags);
-> +		}
-> +	}
+> Is there any reason why the callback appends to a buffer instead of
+> printing the data immediately?
 
-As a technology demonstration and proof of concept patch, this is
-very nice, but to be upstreamed for real, we'd want a variant of
-xxhash that can work with the contents with whitespace squashed to
-be usable with various whitespace ignoring modes of operation.  When
-that happens, and when the result turns out to be more performant,
-we can lose the xdl_hash_record() and require only the xxhash, which
-would be great.
+Even though I answered you about that in our meeting, I'll answer you
+again only to make it transparent for the other reviewers.
 
-And that variant of xxhash that understands whitespace squashing can
-of course be written in Rust as a part of this effort when the
-series loses its RFC status.  At the same time, those who want to
-use our xdiff code in third-party software (like libgit2 and vim)
-may want to reimplement it in C in their copy.
+My idea was to build the output string and if something goes wrong
+(e.g. the user requested a invalid key after some valid keys), the
+process would exit without any output.
 
-Thanks.
-
+After our meeting, we agreed that this wouldn't be so important and it
+would be better making the code simpler by just printing the key-value
+pairs.
