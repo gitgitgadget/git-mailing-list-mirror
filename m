@@ -1,135 +1,144 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2587207A0C
-	for <git@vger.kernel.org>; Fri, 18 Jul 2025 23:31:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454EFA923
+	for <git@vger.kernel.org>; Fri, 18 Jul 2025 23:58:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752881502; cv=none; b=ICE/vqh/eUuRpfcneAPMSWdvJlGh8+T7tEvMXg2uTiRiTD4pICvhGwBjWlpB0W/nTVeQFMUqKU4wmA73ndsqPmsPq2RvO4lT22dkNogNo2NxQMTTeYHY6WpKwEfEhldYAIqH8PJnBzEXssfjBIHTG/ueB6IRwZ2YVpfGH3+0EDs=
+	t=1752883089; cv=none; b=PkVuq7+1cjl/onGUhWYPWVo+tqokfKP4eSvy5PTtIwWctNckvku6yVUpJ98L/S2xpgtoVBYatoAS/ZY+ZYJJ9KkxwoP0Fmy7VfyJLWkc/0OjPMAEnytOtjPYEk7ypthU6uvQ7tIXwBSv9ey6LVnGIpOF2hvwLB/T6G+ZK0lb0zI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752881502; c=relaxed/simple;
-	bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UqHdFZwPGmPd6P4yPyjSiMM5ijqjI4+jb7uFDCqVqK/BiUIZDpxvIzVmI2oJ+JovImWcgd/e+cF6IxyWg54ufiWL2uR0r6F2SyhxaqJKQAFONrArt12pOyIhxiLToxPMlS2P6Zb1E4jR16OXNrH1DGQKm2TUXJ+plq0ZF2HXYpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCd30Cj9; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1752883089; c=relaxed/simple;
+	bh=sgQ2xY+5aErXdd7QXU9Wc+t0wrHBrGhZqNSXjesW9U4=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=db+/HOePtbLQ88MCxsbpeMJhX+cF49oqyEDM5vswon5tB+1QVZrMmlulh7sne7tW2Be8MK8PRTYcShPNLfmhw3ckB8sUV20SW9AtGHKxK3BWY/7kCDFBqWdzfs3pNvIV75L8Ja9uRXHVy8GR9lTYg3QF0gSUx080vVZlTUl2fdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AjhpbzB3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P01MNH9P; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCd30Cj9"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-23636167b30so24495355ad.1
-        for <git@vger.kernel.org>; Fri, 18 Jul 2025 16:31:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752881500; x=1753486300; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
-        b=kCd30Cj9uBJQSFWeGfCCbww/HiYGMDQUr7kOIxeZwo/JKLKfjj7hnThalZiHynMfwQ
-         onm+29nnagBbpEy2gMebSMVemAG+WnufkBmB89hUl8DIKxbySuhmTlYLXz95UEISbH1r
-         3I996HF/APV4wmRh6o1VpI6e35M1wYDgYbhHDDvsaXEd2Q0PSPd2Dm1fQX03TS50YWJZ
-         BEc7EwB+v3R+2Ci9kmqRXLgYfPdn/nGY/gf7ISWlGSkKDQG8dvLsI5U+HOB7PgUXdZZY
-         nd6PmY7DF2XH5t1PkIFd+r512vOarzkGLoFG3P3pE81nVVbxD3z0ui8itEkCqy5USYZs
-         F8Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752881500; x=1753486300;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
-        b=j6F6h1i6A62HQujS3plxfmL0sYEsWKMIefiYG1oU9Kf66as0Sgu7a+NaV8eh0a2CjN
-         WroerMKAREHgwF5dLHM9k89e4tyU7VUH9YEePHZpfGN29dqNTkd2BlFzbaWptgW3cRyO
-         lep7/FCUCWb1cWhEgPleo4Iro8MbAK58NnvyhLjxjRfnQS5WGlIoXDPfJ7cpNOIE9YGF
-         zWtZnr/AkZut4O+sDdxEvfwvNVWVeqO/zRaQCNtP3NUhwZtRdwUa6m1AEUwrKzuH0/tb
-         jdRvWBkIsewdSBG/6fu+IjZF9clP8UiDGggn1fkv6jwY6AfKMeg8JzYprVBH5SLcZ61s
-         LgnQ==
-X-Gm-Message-State: AOJu0YzhvuYZ1toqlPfUiq6oqV77PkE2pZR/VuGubGmXiRKU8nah4BAj
-	SqdpT3m0kAXHXVFQBbzsE9LFwTwnX/cSL9kziTYT2NrUNvsIwsZCP/t2s8mvbW0OMa+SrDVDZPS
-	dm/JAtT+SBHaITIbMOFAHlmfR7s1nk6o=
-X-Gm-Gg: ASbGnctoBM+QRRmnrIUkpp/d1am/34Wpl4gCaP6Msx7ZVQ61EBeTqvyB86cVEyeV+b6
-	RjYyV9RdbrL5y/OX8zaac/ZpRAoo/339WH/0GgeX9davTYomH91hKXYjF0x7eaH6DdKpgBIzMme
-	FgB9jCGju7tlOYFLEh4gJdjFUFDddD5eAzoSiRhOcCR72rB1ZFoPzOW6grJP3gVGhu0DHSKUh+V
-	Q+9lyf5rSIWGvVn9Oo=
-X-Google-Smtp-Source: AGHT+IFg6kYNyTfw1WYChZ01aO82cLXO398qEKRvqTjJCYbyeIY4bTdQkVQ06+dEtk4kOFAv2M9cx8DeQWtqQXHcHtQ=
-X-Received: by 2002:a17:903:8c5:b0:235:e1d6:f98b with SMTP id
- d9443c01a7336-23e256c98e3mr182846585ad.22.1752881499822; Fri, 18 Jul 2025
- 16:31:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AjhpbzB3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P01MNH9P"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CDDB7A00CF;
+	Fri, 18 Jul 2025 19:58:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 18 Jul 2025 19:58:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
+	 t=1752883085; x=1752969485; bh=INDcrm+Q3IDlXn1fmQAnZioMOpHabOGs
+	c54+S7UzAt0=; b=AjhpbzB3HzO5GsT38QJZN6hmHxHfAsDFJQSyoR2D6JOQQE6u
+	YNrrn1PBrzw3/cq0ILHKb2rf9TEeY8rGGJm3eVzYFhH6dI+w0fWkgod7ifWQvaVi
+	idCFf7i2E+yGTowkTDWAbWhTInn4urKFtL7xMpfnDnJLD/sJ872PQQu3DIWw0q3T
+	KSSYas+FnrZG/or6owNgfhXEWGJgba4ji+gbnWuhjGZsbQYVZwhR3Mw1yBtpBjrH
+	hyf4EW354Op7fb4sZD7R9DLVrhqpvB0tCTOdKj56YIQISJ+dgyXpTjPo+eNENhZ9
+	9tb07YCuptGCkQo9Z4LcEupOvZLxOivrvmzcWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1752883085; x=
+	1752969485; bh=INDcrm+Q3IDlXn1fmQAnZioMOpHabOGsc54+S7UzAt0=; b=P
+	01MNH9P/T+tsjvj1ghHHTgS9cg+AHjqoaN6wij5GL7Qd4vpgkSLLeqAYmziNq9DO
+	kE0uO4qm28Q4JdMjAqZICdyDLX/qASnrjlK09+fhGiASUdkI28EHAaZwVDY+99vn
+	ad+A9i3LRv3F3rQ0OGbc1Pm4MrdvNZbfVfcS+E6n4tU2FgKcPOlFL9A7+83YPi6W
+	HsJDshmIRCBRUVliSjywT4cISxfGV4H6BkI6BfNqJTayQGZ4dVcQ1Fk7FeKWJDy9
+	AzsHcVETqFatuP5ZWQUKFEj1y7I5SbTm03kOOc3BC0qSsVJ8KDYAc8O9ACk6Bxrt
+	Yy0u5vNJCJVivMzJ3wQug==
+X-ME-Sender: <xms:jd96aJWRJpTTLK-YFEhWRWCxKk5tcGyMp39jscT7iYF8zUmGn1nMIA>
+    <xme:jd96aJzQ3FpUl9_vtRA508ncJoYJ0sx5NlL83jW4IvMtiETbs6Mp4I3rcx2gd1FG2
+    DqU1eR3sWC4oWEuXQ>
+X-ME-Received: <xmr:jd96aHNDG9PoOtE6e7-j-3wML7o-356PNvb4ezgHlwT_z13opKBnwVGXWOuoSF4xIedVtBesokIyiaGH4zb3RyuITK2NGmPR1AfL6Tg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeigeekgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecunecujfgurhephffvufffkfgfgggtsehttdertddtredtne
+    cuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohig
+    rdgtohhmqeenucggtffrrghtthgvrhhnpeeigfeigefghfdtleevheeujeelkeehtdettd
+    egffeuteelgfduueeikeevfefhkeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsth
+    gvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jd96aK6H_zIDESIuQEfysAWceprQESk5uyLTJto6eYCVIdzzPJvaQA>
+    <xmx:jd96aIMEs-BPesMF_6itm-ei_F_2gXP3hYEsJ09pT0hp6Miv6OgWWw>
+    <xmx:jd96aIlQnyACWMoNwOyJOpnIZm28ioY8sH3kog6RzlPK6MluhzOYzg>
+    <xmx:jd96aPRXTsSbk6CaMOT0x0P9MFljB-gq2Q3XisTgb8nA4ZuOVUppCA>
+    <xmx:jd96aL77cBF-PcA75Y4e7_fumuLqv_duF-xIzIKKnM9FKbx0zJoKdLRo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 18 Jul 2025 19:58:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH] rev-list: make "struct rev_list_info" static to the only user
+Date: Fri, 18 Jul 2025 16:58:03 -0700
+Message-ID: <xmqqa551127o.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
-In-Reply-To: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sat, 19 Jul 2025 05:01:28 +0530
-X-Gm-Features: Ac12FXx-vpVwe1TTMepaOPaHFtp85JHea8jEnKKPSiihhxmSWG6ih94UYzcc75Y
-Message-ID: <CAE7as+Zf=ASEpz0YgAsMys3akbztFr+Z31jY6S2QXux3mxNBjg@mail.gmail.com>
-Subject: Re: A Question from a Hopeful Future Contributor
-To: Eric Frederickson <ericfrederickson68@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Eric,
+The structure has nothing to do with what "git bisect" does; as
+nobody other than "git rev-list" implementation uses it, move it
+as a private data type to builtin/rev-list.c
 
-On Sat, Jul 19, 2025 at 3:58=E2=80=AFAM Eric Frederickson
-<ericfrederickson68@gmail.com> wrote:
->
-> Hello everyone,
->
-> I hope that this message finds you well! I'm a software developer and pas=
-sionate
-> git user, and I'd like to try my hand at contributing to the project. I'm
-> sending this message in order to ask Junio and the team if there's anythi=
-ng that
-> would be particularly useful / appropriate for me to start looking into o=
-n that
-> front. (Reading through the last few "What's cooking" messages, I didn't =
-see
-> anything that jumped out at me as needing a new contributor, which is why=
- I'm
-> asking in a separate message instead of replying to one of those.)
->
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ * https://lore.kernel.org/git/xmqq1qdptffk.fsf@gitster.g/ had this
+   #leftoverbits tangent.
 
-Welcome!
+ bisect.h           |  8 --------
+ builtin/rev-list.c | 10 +++++++++-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-It's nice to see you excited about contributing to Git. To clear
-things up, there isn't any team defined as such for Git, however ,
-there are people working on it as volunteers or are employed by a
-company (eg: GitHub, GitLab, etc) to work on Git.
+diff --git a/bisect.h b/bisect.h
+index 944439bfac..8621460f93 100644
+--- a/bisect.h
++++ b/bisect.h
+@@ -27,14 +27,6 @@ struct commit_list *filter_skipped(struct commit_list *list,
+ #define FIND_BISECTION_ALL			(1u<<0)
+ #define FIND_BISECTION_FIRST_PARENT_ONLY	(1u<<1)
+ 
+-struct rev_list_info {
+-	struct rev_info *revs;
+-	int flags;
+-	int show_timestamp;
+-	int hdr_termination;
+-	const char *header_prefix;
+-};
+-
+ /*
+  * enum bisect_error represents the following return codes:
+  * BISECT_OK: success code. Internally, it means that next
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index 0984b607bf..0a89f4cbf7 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -28,6 +28,14 @@
+ #include "quote.h"
+ #include "strbuf.h"
+ 
++struct rev_list_info {
++	struct rev_info *revs;
++	int flags;
++	int show_timestamp;
++	int hdr_termination;
++	const char *header_prefix;
++};
++
+ static const char rev_list_usage[] =
+ "git rev-list [<options>] <commit>... [--] [<path>...]\n"
+ "\n"
+@@ -652,7 +660,7 @@ int cmd_rev_list(int argc,
+ 	 */
+ 	/*
+ 	 * NEEDSWORK: These loops that attempt to find presence of
+-	 * options without understanding that the options they are
++	 * options without understanding the options they are
+ 	 * skipping are broken (e.g., it would not know "--grep
+ 	 * --exclude-promisor-objects" is not triggering
+ 	 * "--exclude-promisor-objects" option).  We really need
+-- 
+2.50.1-446-g8227aac02a
 
-If you want to know more about Git development and contribution
-process, you can check it out here: [1]
-
-> (Some notes on my skills: working on docs or tests is always a favorite f=
-or me,
-> so things in those areas would be a great time. Also comfortable with low=
--level
-> code, and any kind of scripting. Note too that academic background center=
-s
-> around programming language design and parsing related stuff, so I've got=
- some
-> fluency in those areas that I could hopefully apply well to the project i=
-f ever
-> needed.)
->
-
-Git has something called as a 'microproject'[2], which is a small and
-a relatively simple patch meant to help new contributors get familiar
-with the project. While microprojects are often done by students
-applying for mentorship programs, they're a great way to get your
-hands on Git development. They help you understand the codebase, and
-the development and contribution workflow.
-
-And as you mentioned that you like working on documentation or tests,
-you'll find that most of the microproject ideas are based on these.
-
-That said, you're more than encouraged to scratch your own itch as Junio sa=
-id.
-
-Thanks,
-Ayush:)
-
-[1]: https://git.github.io/Hacking-Git/
-[2]: https://git.github.io/General-Microproject-Information/
