@@ -1,118 +1,135 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E75A923
-	for <git@vger.kernel.org>; Fri, 18 Jul 2025 23:15:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2587207A0C
+	for <git@vger.kernel.org>; Fri, 18 Jul 2025 23:31:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752880562; cv=none; b=ei4b/DJyzar4HwalEkPLu3lztUsVnZXWj60XiASpIwM2nwZdgiqjLKHgSFyhcK3VPbcqhkUoV5N4U7pkc7z0cK+2y9ReI4vP/78hN1G8bXANrl+WQhGZJjogsXkRS8uQ+JkSv4twAeNQpQDo/pWaa5cKI/+5N1cVk7Pygbbm6x4=
+	t=1752881502; cv=none; b=ICE/vqh/eUuRpfcneAPMSWdvJlGh8+T7tEvMXg2uTiRiTD4pICvhGwBjWlpB0W/nTVeQFMUqKU4wmA73ndsqPmsPq2RvO4lT22dkNogNo2NxQMTTeYHY6WpKwEfEhldYAIqH8PJnBzEXssfjBIHTG/ueB6IRwZ2YVpfGH3+0EDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752880562; c=relaxed/simple;
-	bh=+pV32n90Vc+4phxNmhdlMA2tUNA466eqjMC0ygupZjY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LOX9WpJ0EzSIzf7kFk/Na6e9ah2dmmZxWYLkbrU0ZDMA/y+onKTz+B/E+cLCcY0VcMHIuBNKPIJC2nCSb7wijLM3233jFUG3Shh/MAP00aTvzSqcirRNqKRN5NN8l7rqo9wazCWi3ovAsbGY3zmADcLyu6ZG91FxrHqHstt9D1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nVvTiLyF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nSKEPKod; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1752881502; c=relaxed/simple;
+	bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=UqHdFZwPGmPd6P4yPyjSiMM5ijqjI4+jb7uFDCqVqK/BiUIZDpxvIzVmI2oJ+JovImWcgd/e+cF6IxyWg54ufiWL2uR0r6F2SyhxaqJKQAFONrArt12pOyIhxiLToxPMlS2P6Zb1E4jR16OXNrH1DGQKm2TUXJ+plq0ZF2HXYpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kCd30Cj9; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nVvTiLyF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nSKEPKod"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id BF5D51D0010E;
-	Fri, 18 Jul 2025 19:15:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 18 Jul 2025 19:15:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1752880558; x=1752966958; bh=5GdSUyjqqR
-	tzRBdVTH4pHznhAKdj3X9oVH5fLGkd7WA=; b=nVvTiLyFymglyQRDWrOxoEamZL
-	t8krBiP68rfDcsA+LYV+Nccr1JDI0241pdOGTvx2UqXS1sO5ONLbG+DypmWq+hbn
-	jXYfJNpp4a+v6O6RUxm+igSgEpfxggBXhPoPDodIUeDu4wqepQlRLdIDWXpF8e8o
-	UWVsTUkAU6whNZKRRG1+GCUHUUyJGeDkW/G+pCLDTXptW+tG8+wL1/XQvMMKiO5f
-	9DBnWZryRGxBFZTT3RipCaYWIqs8M20+p3W9AgBqBuSSog8Ye7GL6nMVFd8hMt4o
-	SGJOaWWt4u4z4tzY8AwWHUiAQqQFq1dcB/paE4LVhb1HaASfKNsTosNeXYEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1752880558; x=1752966958; bh=5GdSUyjqqRtzRBdVTH4pHznhAKdj3X9oVH5
-	fLGkd7WA=; b=nSKEPKod9y4T6yZ8B0Aaqu6xowG/h43Niu8LYEdK4PDl/EmgpP3
-	DNmM6pAefslIsrb5x8QA1nilwoSNJelZwckCNaLs3q+BLSURXrqwd2Ax4hIvSBBb
-	mj3Ios7nPOBB/euUkTljCaw9AGJdk9SSlSK3NnlfxG1sIrIfqpck+FIDVVYsLhRy
-	z8rThfyx1kDxMyYKTKTdpXKYrHZ6ocbbiR0alaiqLI6X0gd3HV+3xQSSdqXV/znv
-	ps3ESDl3N9JUBlImngabVesK6Dzt29rBTDNaZFJanhJOgr4QEcfcsGpcAlKQ5sTm
-	KsR0RsJ0S7lFrXTaHjXeQ0d6RYcnirc0mcQ==
-X-ME-Sender: <xms:rtV6aHPGVkdS3GWep_0RgOfMSYMK5EjlatvAZKyP1lMfDJhKnd0Cjw>
-    <xme:rtV6aFPZvzaaOoJUQJRENYo3eNvwKFt1O9ASjzCG1HftvfRc8BsMt5PEzz4CS7GzG
-    qDqSEkPYEOQQG5Nog>
-X-ME-Received: <xmr:rtV6aPudPug0_AiDHTDdouuldkvVZrtiUYiJrtbzSI8h5NNSNI_SF3BCLyjLZoG3z9HLmghlR2zwPe7HRcnrvuJ9vHdtMruIcYnXqno>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdeigeejhecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
-    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
-    nhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghrih
-    gtfhhrvgguvghrihgtkhhsohhnieeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:rtV6aHVBXtyBJGhRCpr2FwmFkaI-Gg1rqnYEnhUQLIDMPblZUjGLHQ>
-    <xmx:rtV6aPt9XlvEcCjdABwbqMk4kJJRC6_yXbQ90yTJkJmg0Kkzw3nRGw>
-    <xmx:rtV6aLUvogfXPyMKCRlc-N1XE3TFHt4GOyMHqygqxNYur62TAUKFug>
-    <xmx:rtV6aKmu9UqfROENNDL34YZfS2h8smEnkPLYtngPCwtT0I0a3z7BGA>
-    <xmx:rtV6aJ0TD9E5PggpDftshO1tzUG0LZTrjuB85NaFXywC4byAzKDwSGn5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Jul 2025 19:15:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Frederickson <ericfrederickson68@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: A Question from a Hopeful Future Contributor
-In-Reply-To: <87y0slp23s.fsf@arch.mail-host-address-is-not-set> (Eric
-	Frederickson's message of "Fri, 18 Jul 2025 18:26:31 -0400")
-References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
-Date: Fri, 18 Jul 2025 16:15:56 -0700
-Message-ID: <xmqqecud145v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kCd30Cj9"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-23636167b30so24495355ad.1
+        for <git@vger.kernel.org>; Fri, 18 Jul 2025 16:31:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752881500; x=1753486300; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
+        b=kCd30Cj9uBJQSFWeGfCCbww/HiYGMDQUr7kOIxeZwo/JKLKfjj7hnThalZiHynMfwQ
+         onm+29nnagBbpEy2gMebSMVemAG+WnufkBmB89hUl8DIKxbySuhmTlYLXz95UEISbH1r
+         3I996HF/APV4wmRh6o1VpI6e35M1wYDgYbhHDDvsaXEd2Q0PSPd2Dm1fQX03TS50YWJZ
+         BEc7EwB+v3R+2Ci9kmqRXLgYfPdn/nGY/gf7ISWlGSkKDQG8dvLsI5U+HOB7PgUXdZZY
+         nd6PmY7DF2XH5t1PkIFd+r512vOarzkGLoFG3P3pE81nVVbxD3z0ui8itEkCqy5USYZs
+         F8Aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752881500; x=1753486300;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sfbag0bDZQ+x/YdC2lvrOL7SooQARHdzrajPOrf/MnQ=;
+        b=j6F6h1i6A62HQujS3plxfmL0sYEsWKMIefiYG1oU9Kf66as0Sgu7a+NaV8eh0a2CjN
+         WroerMKAREHgwF5dLHM9k89e4tyU7VUH9YEePHZpfGN29dqNTkd2BlFzbaWptgW3cRyO
+         lep7/FCUCWb1cWhEgPleo4Iro8MbAK58NnvyhLjxjRfnQS5WGlIoXDPfJ7cpNOIE9YGF
+         zWtZnr/AkZut4O+sDdxEvfwvNVWVeqO/zRaQCNtP3NUhwZtRdwUa6m1AEUwrKzuH0/tb
+         jdRvWBkIsewdSBG/6fu+IjZF9clP8UiDGggn1fkv6jwY6AfKMeg8JzYprVBH5SLcZ61s
+         LgnQ==
+X-Gm-Message-State: AOJu0YzhvuYZ1toqlPfUiq6oqV77PkE2pZR/VuGubGmXiRKU8nah4BAj
+	SqdpT3m0kAXHXVFQBbzsE9LFwTwnX/cSL9kziTYT2NrUNvsIwsZCP/t2s8mvbW0OMa+SrDVDZPS
+	dm/JAtT+SBHaITIbMOFAHlmfR7s1nk6o=
+X-Gm-Gg: ASbGnctoBM+QRRmnrIUkpp/d1am/34Wpl4gCaP6Msx7ZVQ61EBeTqvyB86cVEyeV+b6
+	RjYyV9RdbrL5y/OX8zaac/ZpRAoo/339WH/0GgeX9davTYomH91hKXYjF0x7eaH6DdKpgBIzMme
+	FgB9jCGju7tlOYFLEh4gJdjFUFDddD5eAzoSiRhOcCR72rB1ZFoPzOW6grJP3gVGhu0DHSKUh+V
+	Q+9lyf5rSIWGvVn9Oo=
+X-Google-Smtp-Source: AGHT+IFg6kYNyTfw1WYChZ01aO82cLXO398qEKRvqTjJCYbyeIY4bTdQkVQ06+dEtk4kOFAv2M9cx8DeQWtqQXHcHtQ=
+X-Received: by 2002:a17:903:8c5:b0:235:e1d6:f98b with SMTP id
+ d9443c01a7336-23e256c98e3mr182846585ad.22.1752881499822; Fri, 18 Jul 2025
+ 16:31:39 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+In-Reply-To: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Sat, 19 Jul 2025 05:01:28 +0530
+X-Gm-Features: Ac12FXx-vpVwe1TTMepaOPaHFtp85JHea8jEnKKPSiihhxmSWG6ih94UYzcc75Y
+Message-ID: <CAE7as+Zf=ASEpz0YgAsMys3akbztFr+Z31jY6S2QXux3mxNBjg@mail.gmail.com>
+Subject: Re: A Question from a Hopeful Future Contributor
+To: Eric Frederickson <ericfrederickson68@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Frederickson <ericfrederickson68@gmail.com> writes:
+Hi Eric,
 
-> Looking through the repo for a place to find todo items, I naturally stumbled
-> upon the TODO file in the origin/todo branch,...
-
-Please disregard that file (I should remove it from the repository,
-too).  It is not curated at all, and the last update to it is more
-than 13 years ago.
-
->> * "git status" on intent-to-add index entries (say "I" in the first
->>   column instead of "A" for short status, add "(needs 'git add')" at the
->>   end of "new file: $path " in long status).
+On Sat, Jul 19, 2025 at 3:58=E2=80=AFAM Eric Frederickson
+<ericfrederickson68@gmail.com> wrote:
 >
-> I am interpreting this todo message as meaning that the following behavior
-> should be implemented:
+> Hello everyone,
+>
+> I hope that this message finds you well! I'm a software developer and pas=
+sionate
+> git user, and I'd like to try my hand at contributing to the project. I'm
+> sending this message in order to ask Junio and the team if there's anythi=
+ng that
+> would be particularly useful / appropriate for me to start looking into o=
+n that
+> front. (Reading through the last few "What's cooking" messages, I didn't =
+see
+> anything that jumped out at me as needing a new contributor, which is why=
+ I'm
+> asking in a separate message instead of replying to one of those.)
+>
 
-I think that was done long time ago.  The entry may have been a wish-item
-in April 2011, but not anymore.
+Welcome!
 
-Sorry for wasting your time.  A better sources of inspiration might
-come from list archive searches for the past 3 year or so.
+It's nice to see you excited about contributing to Git. To clear
+things up, there isn't any team defined as such for Git, however ,
+there are people working on it as volunteers or are employed by a
+company (eg: GitHub, GitLab, etc) to work on Git.
 
-https://lore.kernel.org/git/?q=%22%23leftoverbit%22+d%3A20220718..
+If you want to know more about Git development and contribution
+process, you can check it out here: [1]
 
-But even then, many itches have already been scratched.
+> (Some notes on my skills: working on docs or tests is always a favorite f=
+or me,
+> so things in those areas would be a great time. Also comfortable with low=
+-level
+> code, and any kind of scripting. Note too that academic background center=
+s
+> around programming language design and parsing related stuff, so I've got=
+ some
+> fluency in those areas that I could hopefully apply well to the project i=
+f ever
+> needed.)
+>
 
-As is often said, in open source, the easiest is to start scratching
-your own itch ;-)
+Git has something called as a 'microproject'[2], which is a small and
+a relatively simple patch meant to help new contributors get familiar
+with the project. While microprojects are often done by students
+applying for mentorship programs, they're a great way to get your
+hands on Git development. They help you understand the codebase, and
+the development and contribution workflow.
 
-Thanks.
+And as you mentioned that you like working on documentation or tests,
+you'll find that most of the microproject ideas are based on these.
+
+That said, you're more than encouraged to scratch your own itch as Junio sa=
+id.
+
+Thanks,
+Ayush:)
+
+[1]: https://git.github.io/Hacking-Git/
+[2]: https://git.github.io/General-Microproject-Information/
