@@ -1,69 +1,69 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C127A1E7C10
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 12:28:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50D92820A3
+	for <git@vger.kernel.org>; Sat, 19 Jul 2025 12:28:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752928121; cv=none; b=Ff0s5jh+DfDDKF+4OYJYgobGjP4BuY09YoPrWnejZEFllTS1QMMRoDJLlvnm/Jce0yakM3Zby82U845TwSzmUYOmqh6svq9JjY01+DuH9/VxnVdpflapC1JzSr0HVVtqUmzYqxBmbmfK7OORTyubtW2sc9OjruRoJJMyLTblFZE=
+	t=1752928122; cv=none; b=o88MCveDDtoi8DSUsHkJebAE4SpvSsqg7256mro4yb866EIwmPkJsFgRnWlXuIwxDnhDlmo6HuwI/+p885+R6G3KBe1Ap+T1GvFSAcEfijl9aVemCz1XPsCEEMKGS7YK8nrXTe7sabxo2cU0+ON4iwmz3HvA6fZzFucVQpVbm98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752928121; c=relaxed/simple;
-	bh=2ExSVu7VDjeK2DmOHAb5SzLkHps9OQmoJSCzGOPUmb0=;
+	s=arc-20240116; t=1752928122; c=relaxed/simple;
+	bh=45ofwvnwk50907+wETcfc/2hp1z+eGxo+PTfas79YCE=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=NhlhWGH3NQ9gY/V+g+0XYrXK892pGpG7yxDdKxjdwdGkVREGjt+Lcf9LkIKMLuKI2f5i563iMcTwjQ10EHG4QnTrRNdN1DURPJ5KY5k7kobeB3FXefQzMDvtc39/9WYXhrA4E38B7MjYLANiaBpF5tUmGPqqBejxxfCfsV8DJIw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kK2LPbMj; arc=none smtp.client-ip=209.85.128.41
+	 MIME-Version:To:Cc; b=IeKG4nzpOdOEejf0rHnlLCaAxJzPTOzwY+aRuNa9dPVD2JiLxvyEopMPIDyuCA4kWLrITLcun2CkVp9brdv7okRQmn4zRRwxbbnxsMlCHFCvoJns3ngpRm2k2vd94h3Cy7CWMKq2fQR72RfsyGHB+hQF2MxlmtarSP8R9YVZJFo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XE6A9Qy4; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kK2LPbMj"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-454f428038eso24136605e9.2
-        for <git@vger.kernel.org>; Sat, 19 Jul 2025 05:28:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XE6A9Qy4"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-45611a6a706so15179665e9.1
+        for <git@vger.kernel.org>; Sat, 19 Jul 2025 05:28:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752928118; x=1753532918; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1752928119; x=1753532919; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5Yk8Dd0F5Rku8hhBmi11OTSXnI6VQo1v9qpGzLMsS34=;
-        b=kK2LPbMjrxlPte5AS43iocuZMk8LFr+C8Lwd7pSJK6mS7+OPps4cIlA0xF5BTQTaU0
-         YnLHfnAw+N9+6zLCpCGT8IH26YqIZpA0nxlb7lBkTgbZGwEnbfOP3dmBLCgH0whVinbi
-         K7bMJB+5UDQLoNy5qOUKBYf7nDRqYbdsU6HBXPT08RRw54jcnAperKzh9WrRxNU1r3j1
-         LsPvtoGIPjhT/0mn3gMKQ/+K/yLHrwsiy3YC5aaNVCzibEa8BGuAFe1rMfgJFdICD8le
-         gmYK4kiLMGDHba2ScC+C/kfZtDTeomdp2CUPq3TqgKH9zle4bQXqdD3vdkErsYdzJREH
-         So3Q==
+        bh=o8qZUliQvrnRYGAbhBuwZFPVoqKM0b635OK05jn3sYM=;
+        b=XE6A9Qy4d2hBSHlXhNHapdRr6ONOXZLaNa6IuJEwpsjm4azza9ekOEwheiDBRAmP2F
+         ta5FMpCmY9G+itUXEv5FGGmnBkdAGyqM/Mf+oqbBstSUd+qpFbjMwJ9rbEe0Fg5sNucy
+         O3RNB90m3VVeewvsI6HsmE4F0/OTZ8s6Wd9BZbHg5RQuY2FqOveB7f0yuKBYINXsE/4L
+         mke7svI1gN6N7Dt3LkZGgAny5jVcxdyDtHowhtkR80saZOUy8nLB3rEKUaN17G30MIMo
+         FjO6BaL4ucV5z0nydQlepWDWXZCjtAmTM4SolVwAmpjMKaG2H1jVcN3m1k9NWZzm04NY
+         eY1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752928118; x=1753532918;
+        d=1e100.net; s=20230601; t=1752928119; x=1753532919;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5Yk8Dd0F5Rku8hhBmi11OTSXnI6VQo1v9qpGzLMsS34=;
-        b=aEkAtZPw/S0G0yLqI+DSLxvL+bPhuyYpvPosrN2EYzftidkgDnXwG1qe1IsJ8lDnMX
-         o2Px/lbGQpEu3+HaALr/fKLmcSkUkTw34iLzeFpkA5zfUUlDA5cUxH8Uf8bE2s+lnN2J
-         7lUwjUs1YRuh9l1zMUpuThxyPFyu4BJrLu1tzET7cOwnmbpGymjKKRpwnH8fbv2G4Pxm
-         9MdA7oyRUktb7RTN08Hj8jcYubfMIGpSFwvhSpMx0DyJyRXs0mDjeCE4SBgTcvrT6DWH
-         CrdT2S9SboLtJbFgs/6DpdOjYvjWAlo+veDzJFZ9a4/slTul8CbT4/hEiWe+5kBRQg/y
-         tMCg==
-X-Gm-Message-State: AOJu0YxYIwZSH53+ySQ0u3NkM+lagLDFxTrdujRyHWFajjYhpN1OcWFx
-	sKrQBYoD+myHPczYenEbA7TH2DVkYKnneu+MlFAxpqPJGUI0BGAmzMB+ewDjfg==
-X-Gm-Gg: ASbGncvYDa+sKkl1aw4FPrvWqWfTUaPShqc0dt6SVjpU/YL7OMZyqLkwW5KdqjevxvR
-	vb4LUrdu+o9zjigzWTsWbjSTnBQNd+frtCCilUQ4oAXh6yGjksgTGP3NM5NR/jvof66DZ/9R69j
-	XNxLEFiaVWYQLyM0IySe633FvwswiCalpI9GHnYirbMpW7OyARFalTWCyJI7jadt+ahAa5bMYml
-	FArAdxcx/C9lduWklsWpZEM6NQZeczieM91/7p9MCmtL8fhmjogTlEis6UJv6VScrhTQUoOBw23
-	w4ln9sU2Vze1SuGe6Z9VAAkE+XyEuu1xWsGv8T+teijBVYnsPuQM4rbWkKbNiaeaG6lZ0AGMHfl
-	eQ9sXlIDvhYfPOjm/ZAqvQII=
-X-Google-Smtp-Source: AGHT+IEE13faAQTdyc7/jHJzlaMuKYa3c5L/pRXYIRku3aRnLnrOSU8SpBW3GQxHujCrU3To2IwDog==
-X-Received: by 2002:a05:6000:1a85:b0:3a5:2ec5:35a9 with SMTP id ffacd0b85a97d-3b60e4be76amr12533110f8f.3.1752928117336;
-        Sat, 19 Jul 2025 05:28:37 -0700 (PDT)
+        bh=o8qZUliQvrnRYGAbhBuwZFPVoqKM0b635OK05jn3sYM=;
+        b=NfQQWQOdIlviArFHCseKgXaBUvkJA9X6ONqVTW2Lm6D1UNWl7lojS7z2eRZEEyZigG
+         HRbsUqxbUwEAXrElQLhKyyf/4Gms/qHo4Ov6UBs+bg7PpHrXdRA13RviWwqzYggh2hya
+         bE0YPVPRyn4FB1HyTJdf+OJ3fyQywwyASj1Q9Vky8I/mNHr03k6phnT4UVLJ3FQN25HD
+         gOgDIbJNujsSmOSFOt2ePD38C3bRkZ2yHPxvpAghGKYVO+K2Qwa9CYsJjt90V6cwPxA2
+         Mu3gO/Y/KfheNayM5d7ScyZvqi5b2hak4gQdlo0ptjqZ9b5ycr0mH7ptSgjdJDbIrxYe
+         yN5g==
+X-Gm-Message-State: AOJu0YwcWJVp40pZkoaEhKAniNEqHlOWjD2mp64Tpoxw6RRKhNtm/fKs
+	nlDNVdAjGX7uqv43hEehHf+tJ800OzU+6djIdoYlHlhB5VZLKZnNaBdLMjatvw==
+X-Gm-Gg: ASbGncuqN8APMrns5ml8qW6YeGVzeq+DgqTIfnV/U0b0t9tUP2AW1iW6XO0kJBkacg+
+	/np2gxTgyo1ugmTODBwMYxEZU6w5RpTuyr32uY0vWN85pgHZUrsuTlOg1p5m19flrHsKQxlAf5b
+	PZzw5Z7f8w33CiPVbraSoyRzHjDZ07+xeUs3vQczMyeURLxuJ6bcgoGTjdDhsP+lXja4du1TUVD
+	ut/8AyzbTFI1U38bZPqtJ2yXaOTVtTFh8/hZbw42eK/Qkss0UMo+iOtAp3cpmHFNiKYRrctK+QK
+	hayxGFLGHfYK0U9p5cxvxd6MXfxgyYDFZRMDE8IjjN38d9oFvtd9z6LSir5HDcst9JdaSI3q6R0
+	/4uxTfhu2RTo3g3QiJHQq4AU=
+X-Google-Smtp-Source: AGHT+IGMmwPtFtQ4YuKpW9Gya83gqazC5GpfY3PvbeIhAB4qHuZDNNYg01UUHXxb41cr3iGO6064+g==
+X-Received: by 2002:a05:600c:a316:b0:456:2066:5747 with SMTP id 5b1f17b1804b1-4562e3411b3mr133409245e9.10.1752928118238;
+        Sat, 19 Jul 2025 05:28:38 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca24219sm4488427f8f.15.2025.07.19.05.28.36
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4563b740e55sm45670965e9.17.2025.07.19.05.28.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Jul 2025 05:28:36 -0700 (PDT)
-Message-Id: <feace2d3676a03d720e9c85b7842f47446e9462e.1752928113.git.gitgitgadget@gmail.com>
+        Sat, 19 Jul 2025 05:28:37 -0700 (PDT)
+Message-Id: <994029d66029e0eb1b93a6675e4df9c5c6fb76f9.1752928113.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1915.v4.git.1752928113.gitgitgadget@gmail.com>
 References: <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
 	<pull.1915.v4.git.1752928113.gitgitgadget@gmail.com>
 From: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 19 Jul 2025 12:28:31 +0000
-Subject: [PATCH v4 2/4] t: use test_config in t4055
+Date: Sat, 19 Jul 2025 12:28:32 +0000
+Subject: [PATCH v4 3/4] add-patch: respect diff.context configuration
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -83,72 +83,121 @@ Cc: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
 
 From: Leon Michalak <leonmichalak6@gmail.com>
 
-Use the modern "test_config" test utility instead of manual"git config"
-as the former provides clean up on test completion.
+Various builtins that use add-patch infrastructure do not respect
+the user's diff.context and diff.interHunkContext file configurations.
 
-This is a prerequisite to the commits that follow which add to this test
-file.
+The user may be used to seeing their diffs with customized context size,
+but not in the patches "git add -p" shows them to pick from.
+
+Teach add-patch infrastructure to read these configuration variables and
+pass their values when spawning the underlying plumbing commands as
+their command line option.
 
 Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
 ---
- t/t4055-diff-context.sh | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ add-interactive.c          |  9 +++++++++
+ add-interactive.h          |  1 +
+ add-patch.c                |  9 ++++++---
+ t/t3701-add-interactive.sh | 22 ++++++++++++++++++++++
+ 4 files changed, 38 insertions(+), 3 deletions(-)
 
-diff --git a/t/t4055-diff-context.sh b/t/t4055-diff-context.sh
-index c66f966a3ab3..1384a8195705 100755
---- a/t/t4055-diff-context.sh
-+++ b/t/t4055-diff-context.sh
-@@ -47,43 +47,43 @@ test_expect_success 'the default number of context lines is 3' '
- test_expect_success 'diff.context honored by "log"' '
- 	git log -1 -p >output &&
- 	test_grep ! firstline output &&
--	git config diff.context 8 &&
-+	test_config diff.context 8 &&
- 	git log -1 -p >output &&
- 	test_grep "^ firstline" output
+diff --git a/add-interactive.c b/add-interactive.c
+index 97ff35b6f12a..eb3d0d3ada84 100644
+--- a/add-interactive.c
++++ b/add-interactive.c
+@@ -41,6 +41,8 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	const char *value;
+ 
+ 	s->r = r;
++	s->context = -1;
++	s->interhunkcontext = -1;
+ 
+ 	if (repo_config_get_value(r, "color.interactive", &value))
+ 		s->use_color = -1;
+@@ -78,6 +80,13 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+ 	repo_config_get_string(r, "diff.algorithm",
+ 			       &s->interactive_diff_algorithm);
+ 
++	if (!repo_config_get_int(r, "diff.context", &s->context))
++		if (s->context < 0)
++			die(_("%s cannot be negative"), "diff.context");
++	if (!repo_config_get_int(r, "diff.interHunkContext", &s->interhunkcontext))
++		if (s->interhunkcontext < 0)
++			die(_("%s cannot be negative"), "diff.interHunkContext");
++
+ 	repo_config_get_bool(r, "interactive.singlekey", &s->use_single_key);
+ 	if (s->use_single_key)
+ 		setbuf(stdin, NULL);
+diff --git a/add-interactive.h b/add-interactive.h
+index 693f125e8e4b..c63f35b14be8 100644
+--- a/add-interactive.h
++++ b/add-interactive.h
+@@ -18,6 +18,7 @@ struct add_i_state {
+ 
+ 	int use_single_key;
+ 	char *interactive_diff_filter, *interactive_diff_algorithm;
++	int context, interhunkcontext;
+ };
+ 
+ void init_add_i_state(struct add_i_state *s, struct repository *r);
+diff --git a/add-patch.c b/add-patch.c
+index 95c67d8c80c4..b0125b51ba45 100644
+--- a/add-patch.c
++++ b/add-patch.c
+@@ -414,7 +414,6 @@ static int normalize_marker(const char *p)
+ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ {
+ 	struct strvec args = STRVEC_INIT;
+-	const char *diff_algorithm = s->s.interactive_diff_algorithm;
+ 	struct strbuf *plain = &s->plain, *colored = NULL;
+ 	struct child_process cp = CHILD_PROCESS_INIT;
+ 	char *p, *pend, *colored_p = NULL, *colored_pend = NULL, marker = '\0';
+@@ -424,8 +423,12 @@ static int parse_diff(struct add_p_state *s, const struct pathspec *ps)
+ 	int res;
+ 
+ 	strvec_pushv(&args, s->mode->diff_cmd);
+-	if (diff_algorithm)
+-		strvec_pushf(&args, "--diff-algorithm=%s", diff_algorithm);
++	if (s->s.context != -1)
++		strvec_pushf(&args, "--unified=%i", s->s.context);
++	if (s->s.interhunkcontext != -1)
++		strvec_pushf(&args, "--inter-hunk-context=%i", s->s.interhunkcontext);
++	if (s->s.interactive_diff_algorithm)
++		strvec_pushf(&args, "--diff-algorithm=%s", s->s.interactive_diff_algorithm);
+ 	if (s->revision) {
+ 		struct object_id oid;
+ 		strvec_push(&args,
+diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+index b088ee141ff4..18dc329ea1f6 100755
+--- a/t/t3701-add-interactive.sh
++++ b/t/t3701-add-interactive.sh
+@@ -1230,4 +1230,26 @@ test_expect_success 'hunk splitting works with diff.suppressBlankEmpty' '
+ 	test_cmp expect actual
  '
  
- test_expect_success 'The -U option overrides diff.context' '
--	git config diff.context 8 &&
-+	test_config diff.context 8 &&
- 	git log -U4 -1 >output &&
- 	test_grep ! "^ firstline" output
- '
- 
- test_expect_success 'diff.context honored by "diff"' '
--	git config diff.context 8 &&
-+	test_config diff.context 8 &&
- 	git diff >output &&
- 	test_grep "^ firstline" output
- '
- 
- test_expect_success 'plumbing not affected' '
--	git config diff.context 8 &&
-+	test_config diff.context 8 &&
- 	git diff-files -p >output &&
- 	test_grep ! "^ firstline" output
- '
- 
- test_expect_success 'non-integer config parsing' '
--	git config diff.context no &&
-+	test_config diff.context no &&
- 	test_must_fail git diff 2>output &&
- 	test_grep "bad numeric config value" output
- '
- 
- test_expect_success 'negative integer config parsing' '
--	git config diff.context -1 &&
++test_expect_success 'add -p respects diff.context' '
++	test_write_lines a b c d e f g h i j k l m >file &&
++	git add file &&
++	test_write_lines a b c d e f G h i j k l m >file &&
++	echo y | git -c diff.context=5 add -p >actual &&
++	test_grep "@@ -2,11 +2,11 @@" actual
++'
++
++test_expect_success 'add -p respects diff.interHunkContext' '
++	test_write_lines a b c d e f g h i j k l m n o p q r s >file &&
++	git add file &&
++	test_write_lines a b c d E f g i i j k l m N o p q r s >file &&
++	echo y | git -c diff.interhunkcontext=2 add -p >actual &&
++	test_grep "@@ -2,16 +2,16 @@" actual
++'
++
++test_expect_success 'add -p rejects negative diff.context' '
 +	test_config diff.context -1 &&
- 	test_must_fail git diff 2>output &&
- 	test_grep "bad config variable" output
- '
- 
- test_expect_success '-U0 is valid, so is diff.context=0' '
--	git config diff.context 0 &&
-+	test_config diff.context 0 &&
- 	git diff >output &&
- 	test_grep "^-ADDED" output &&
- 	test_grep "^+MODIFIED" output
++	test_must_fail git add -p 2>output &&
++	test_grep "diff.context cannot be negative" output
++'
++
+ test_done
 -- 
 gitgitgadget
 
