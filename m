@@ -1,131 +1,119 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f51.google.com (mail-ua1-f51.google.com [209.85.222.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30511AAC9
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 21:54:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8AC1FBC8E
+	for <git@vger.kernel.org>; Sat, 19 Jul 2025 22:06:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752962047; cv=none; b=jhJVpBix+QCkq8d0wbTmJiut/2SBYBxvKYvCTKFbo8ViFNJlatC4Lmk7QN19vscvHho7rHbLkaZmagCLeegDYUjp9EKvASW1uwmeRU0zxjQ7tbycdlL5mtDCa1RT4098SssHQ4wLKFHX87NUpJLhLiDb53xl6nLGNxl53OdyicY=
+	t=1752962806; cv=none; b=LIx9AZQf1gDZ4cM1GnC2YdX6/QRgC1CQdzlz6G5WWU36S0VIhyP0cP//I30xpLFZPdAjA8xUaeDge7l2AP6bzmIDkp60KrL8JhaueMTI1DQNiUrWrH198s51lfgX9c/eGkoYYUlUh97VGHgMEANWY/rYj+uJmr5Xv9sXWk6OTfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752962047; c=relaxed/simple;
-	bh=X4gG1Hr55KQIem9gyoN+nl6IbiCOKpf20CHjgv+fHvs=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=DJ7DZfrihJlRV8JI7MI9gFdR3roRarrDfBJR69hCJ/cQ7MLG5u+CZhk0ZwEmEb5Rb4wK/rdQGGgiOwbqWpK/iVykSZFtSNJIR7Nfs9OwuBux4WtGeLkGlWs0K2/t220AGfyIovlL9cs1lTSn5w7zdDK60m/89/uA+SL72r2eH2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=dUlwRVUB; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1752962806; c=relaxed/simple;
+	bh=lZaHU3B76sfs9FG4oJwHXwryGTDZZEIFIclSkj5wvPI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=umnlw7VHO/6RLhLNpNFiBN11ofKSIcce4N+uEtkdA7C1rVWW7X64dWLBdsmuSDKGxQPMHj/m4r7Gz+MmmpvZ44XDaeSOuH5T/6+qPxL5Gef9RPq61cfr8aJnLOtnSjZeQomuRcy21PO9kZfCl4H1dBPkDs7V6rVXl5lfgmpoqX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S2IEI5ar; arc=none smtp.client-ip=209.85.222.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="dUlwRVUB"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1752962042; x=1753566842;
-	i=johannes.schindelin@gmx.de;
-	bh=QWITDTAUWll0TfDPk5HHYhIvdge/BwZQN1kcFTkdYI4=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=dUlwRVUBBZYviFFQKHO63PQvQuTHp7111Vw7IgycDeCy3sOx/I0UgFoctv/78jVw
-	 iGHlhMTjb+5+ENKj8nhOSWn0WfhSCCS9sAKV/xpMN1KNF19dXdtjaQVyC/YnWMQSI
-	 B1E3nSbgYuuTeOMAxhggR0lPqsB7Y9U+1QvXD0qozXI+54cg96JJnBDAYT7rbAE7F
-	 Y+hWiVAKRcaWqJJBWUu38n1aHF1ajjLeofcDbZOp/6mfY9jqQLxljhqbNM7Aw1S+O
-	 mChTqXkRJ2h3YbCu+2+LTNauddLBB3oAq+puAu9zi5IITWzxvCAG3SaigSap5Zons
-	 d63lUrQxsr/iAMemmg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([213.196.212.246]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJE6F-1uKLhq3ndj-00P18B; Sat, 19
- Jul 2025 23:54:01 +0200
-Date: Sat, 19 Jul 2025 23:54:00 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>
-cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>, 
-    Ezekiel Newren <ezekielnewren@gmail.com>, 
-    Ezekiel Newren <ezekielnewren@gmail.com>
-Subject: Re: [PATCH 7/7] github_workflows: install rust
-In-Reply-To: <0de0867ab44f316911bd34b9ceddbc8606e938f2.1752784344.git.gitgitgadget@gmail.com>
-Message-ID: <835beb3f-cc31-16cc-ea2f-55d70f700cfe@gmx.de>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com> <0de0867ab44f316911bd34b9ceddbc8606e938f2.1752784344.git.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S2IEI5ar"
+Received: by mail-ua1-f51.google.com with SMTP id a1e0cc1a2514c-886c8de5d90so1775005241.0
+        for <git@vger.kernel.org>; Sat, 19 Jul 2025 15:06:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752962804; x=1753567604; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lZaHU3B76sfs9FG4oJwHXwryGTDZZEIFIclSkj5wvPI=;
+        b=S2IEI5arqw0Hx899Pz0sNPIq8tnYAWFHh8i//Om+G4hAD+FEpTG6DikDpROwHuK/cG
+         WBEwBstABtsiAJUflnlvXCHFNfRfnib/YIdz9jRKb5Fa2jnGvTT3qb4P/IuHdaAjbebS
+         K2zQrlo7qKeMK7U8UjWfJlz4kq38SaL2armgAdF1R8go6MsDCccnmt+XQ0qezd812cWF
+         gZ3acgR5jt7tyjmJ3rokU6O4EyNkV/nRstwPPd5qrprrhfIV1VODndSnNTAaGuu/7wLd
+         qePy+Zi3DHoMx8AL62hGRAHxmcEGSc6uTaS81IcGy6Hsw8T4V7gR1MyNWUocrZ7Us1ER
+         eS2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752962804; x=1753567604;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lZaHU3B76sfs9FG4oJwHXwryGTDZZEIFIclSkj5wvPI=;
+        b=urvLS3/LSOYPWLl2LlKJoocozWUhGGoBUB4d74J4LDfpTiD48ZZfkL+thWIHn5Z6uO
+         IuUtLND+7G4mg7L18dEjkV7oGdE21vc75AI6/n6y7x4eaATwEmVYNEbydjFLTGCV7Psg
+         lf6aGDpqvtPhf5/A+1/u5FcHmNTZBwJTPkxp5MaZqyjD6q1tWvNigD47P07n6jlHUCZ1
+         cjJ+hz7vKzxgfZXqvypdlsKyGqIx1y6T/R/e+Hy/Ws3shC4WmoRoc+cbEN7xBGqxEaDo
+         ACZb6jgxmjtwhl0/eG6DhU+qUp4ks1OQuzPQdSSuDXYtPQDiT6CKCwQKTvifIllL839v
+         HPFg==
+X-Gm-Message-State: AOJu0YwvTsTJTa30fyRxSex+m22ZfXIYcgynfRnZ5spjf1725e72J+2g
+	nqXeVWVEQ5TIUdVqdQ8e40iTTkQxA0rIimHb+FMS4r5CcYLad/Q/Z8iGQChv5Q==
+X-Gm-Gg: ASbGncusTH/DOrcrZlv8DuOKy71SfAsPn/QqbtVNrD2K8aczJg70CDHm7RmGZ31qd/L
+	xtYRGtoi/K+emHaMnUv4DlsceD3/iYebcUNOLqOyDLhHhZP2XEP2v1+JGaxLpmjO0XFAkSELe/L
+	LpDBFaLFEHDVf6gGTW42Dwc7eBmPzuK4KJ3pJ9OheCUg0iCZeTGTD1vKwkuwtofrPawDq/0yYGC
+	yJ4PZ1chXGBcxP6AlB8vVrHfrRZdpzLXqMrfrFfUM3uJtZPJN+dV1zcpbjR/kGzUJPJv70H1X8g
+	PJEj2mzPql3SDEqtp4N2A05+WG5CgNecRX+K10rL6yDM4c6EfjRDA2F+ljSUxpIOwdgvWU6f1tV
+	MRXRFAxjEC4jet7wxrcbdJHEcCZNpVGjAHMALt2+T1oOgCIWR
+X-Google-Smtp-Source: AGHT+IFhxRka7tm1gokR+bJC7F7NH7I5v1mBYY+pOVPT4prrv0kNDM0t3M3mj7kMVRDV14awuNUYxw==
+X-Received: by 2002:a05:6122:1806:b0:526:7f3:16e0 with SMTP id 71dfb90a1353d-5373fbb6674mr7657645e0c.1.1752962803630;
+        Sat, 19 Jul 2025 15:06:43 -0700 (PDT)
+Received: from smtpclient.apple ([179.113.63.169])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-537650880b7sm1664852e0c.31.2025.07.19.15.06.41
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sat, 19 Jul 2025 15:06:43 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OJTDOVx81laFFsLXaTknFimCCPsZDGgI4JLYdqvlCkpIvi8vXPH
- 8gsGkSyKnV8ynZaO40goj065nP8zJdciQKsw3BNG2PCQJi+uDfkwPCD4KacsqGLg/pWP2a7
- siZi+7TXrDEfcjCgpvrVmulRHBdwQuF1TiRSajrmLWaZvrbo58TaIJEnuD+z2ZReTvPKNlk
- 3JqEDYaNnH+jfxevEoTXA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:KwX9uxf5rJk=;Se5ZfCRvAc8u0zuZTLYYdKDFsKD
- 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
- tx20E=
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: A Question from a Hopeful Future Contributor
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+Date: Sat, 19 Jul 2025 19:06:29 -0300
+Cc: git@vger.kernel.org,
+ Junio C Hamano <gitster@pobox.com>,
+ Ayush Chandekar <ayu.chandekar@gmail.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <77CAB8BB-ECA5-46FD-A72D-CD59D96B584C@gmail.com>
+References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+To: Eric Frederickson <ericfrederickson68@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Hi Ezekiel,
 
-On Thu, 17 Jul 2025, Ezekiel Newren via GitGitGadget wrote:
+> Hello everyone,
+>=20
+> I hope that this message finds you well! I'm a software developer and =
+passionate
+> git user, and I'd like to try my hand at contributing to the project.
 
-> +if [ "$dir_git_root" != "$dir_build" ]; then
-> +  src=$dir_rust/target/$rust_target/$libfile
-> +  if [ ! -f $src ]; then
-> +    echo >&2 "::error:: cannot find path of static library"
-> +    exit 5
-> +  fi
+Hi!
 
-As I found out the hard way, this error message could be more helpful if
-it specified a couple of those variables that play into the failure (or
-all of them).
+The suggestions from Ayush are really helpful. In the last few months I =
+helped
+some people (a friend and some students from my university) to join the =
+Git
+community and to send their first patches.
 
-Would you mind changing the error message accordingly?
+I would start with the microproject. Some of them are really easy, but =
+you'll
+get familiar with the contribution process (i.e. sending patches, code
+conventions, commit conventions, etc).
 
-Thank you,
-Johannes
+After that, follow the tutorials for creating a new command =
+(MyFirstContribution,
+MyFirstObjectWalk). Perhaps you'll find something outdated in them and =
+that's=20
+another good opportunity to send another patch!
+
+Another good reference is "First steps contributing to Git" [1]. It =
+covers
+everything that you need to know and to do to get started.
+
+If you aren't familiar with the core concepts of Git (objects, index, =
+references,
+etc), read the chapter "Git Internals" from Pro Git [2].
+
+I hope it helps you!
+
+[1] https://matheustavares.dev/posts/first-steps-contributing-to-git
+[2] https://git-scm.com/book/en/v2/Git-Internals-Plumbing-and-Porcelain
+
