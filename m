@@ -1,127 +1,167 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B499881E
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 15:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF574C97
+	for <git@vger.kernel.org>; Sat, 19 Jul 2025 19:57:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752939093; cv=none; b=V20O6SgJY8zPFmDzC5cq1p+9IMLRgzZYKg7i2uCmr9aC3LWHbE2n2U1I3x6Om3w29NOCINd/1rJl6jwaIVN6/4gMnEyUqXyl8xGvLPiDLTu36gF/LZxU5G5xQqlTnyyuWW1HosHAu9/mQN7RLTVNq6o4TiV1SMD0f7F99+gPXtA=
+	t=1752955037; cv=none; b=pQBuW+KMlng6e98sBI5qV2SCkPv+BzhCJN4zwYxkB+swUPZoOFuhd+GdGPlqfWLjbz9VuMi3Rer82CAhf+xLcRrZenb2ABMPe3cvofYYQ+MkQ3sxmGxPugpT8eX9JcdsRsqwc6MdyaRl1i5+sROpoLcqd1YRjXC9rSgbrwG7mV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752939093; c=relaxed/simple;
-	bh=oY3AwOR/JWM+NhduzteM0IagZa+UzEggMyn2ze8xXik=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KKyHP2yG7MD7wOeor2sbQIqZSCmHhu8pLRa96/ZgxsTYBE7kIGchFgvEPNs7GvhIT8vftFr4VMvQztB+NRLPZ88cbdzp188Wzkax1b8Oo4q19XKvyFw8E+mdwOOP8wQF6tftN2WmgcHu+8kLg2baagwhbV2VEF+1TS1bCrcpaFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhRUcG5/; arc=none smtp.client-ip=209.85.214.176
+	s=arc-20240116; t=1752955037; c=relaxed/simple;
+	bh=M9wPOUaxo4oh4cddP0H8iNboLTG+ToqJ4j3LG1Q7Ogg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rgsmeou0BQLJBgRKjre0YaKUoSOOQ1AQOCoWlNzQlT6M/Nl5IjlRgHFqEw4Ny5TLXkne5hJR8WRawG/t6LJvP1J+j12anxcAIsaK6vQRiS4KKVvLDSmdLJBrsabATe3/CjYazNmUIYncowxXbuZFk8WZXjyiR+ttlW76rTQk4HQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lcUt8l1n; arc=none smtp.client-ip=209.85.128.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhRUcG5/"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-23e210ebd5dso29576145ad.1
-        for <git@vger.kernel.org>; Sat, 19 Jul 2025 08:31:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lcUt8l1n"
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-713fba639f3so26598307b3.1
+        for <git@vger.kernel.org>; Sat, 19 Jul 2025 12:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752939091; x=1753543891; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=oY3AwOR/JWM+NhduzteM0IagZa+UzEggMyn2ze8xXik=;
-        b=RhRUcG5/K7Zp9v9TuEgLSORm0sIHwuI7SBa980XGzB8JkGQixkHOVO27PfMmFY7ZJ/
-         wA+jJwGwjsx0lJwNNTnmfVWRIuVhACcORNhzpAjbpBek66ZLEBC7TakcKlX5bv/PbCHk
-         B1aVbfvmeUH8TTtoGQNSofCSZN41lh2JaBcHDmaKYOGQZD3ykxs91KZIZONSrK92cfUt
-         QPREIiNmnlpmh/zY7vKFhRRQB6wIkxIXC6D2EIwOChMU04X6r6JLPMQ/2bmbaJ8GWtmc
-         /fqEOmv3r6CxEKRbQLP0d5eGHo17eUh+Hsu21HXHjy0MmsBkwSt71IlpV9jSdefx8pTY
-         8eHw==
+        d=gmail.com; s=20230601; t=1752955034; x=1753559834; darn=vger.kernel.org;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UGG2rSwpsBg1tfyOe1ddbzk8FKW1m3sTqtoBr7o4DeE=;
+        b=lcUt8l1nQypjlZVapI8Li926/ReuyAFTMeLTNXMCDXyOmyVXO7vOSj42niOpFByoQK
+         wg+qeyBbwcSR53Iw1pTCPhJ+mkCEGwy8WAy9eqqI04unnBYUUMxmIHzDbURJjZeMY8CS
+         ClHiD7lKgOAcKRqZRrBOLKb/t8GTVlV8exNdUtgjqlKSg4u/ge2pQ4BhgYrj/XP7rO1h
+         nZ6YqIjuFQDCLtAJiNubyzB530REV5W56s4DCqz4wUvsjJjNjB0hQL/K0o+cXvd7HUWG
+         FzTqD5q2cHd3H2Awwe71Bl+z+mqcoWmDTfClh6DNsjuLyFYz2gXmUL2OTYkX8Mnd09sq
+         dr6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752939091; x=1753543891;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=oY3AwOR/JWM+NhduzteM0IagZa+UzEggMyn2ze8xXik=;
-        b=d4lAcWgidoX+kFYKMSAoVU1nz0tZnBuxIaxNggW/3y83/Ea560QVPD9zkhnlSU449i
-         VjQyKKoMFK4N8vut2yzRZk3vix7Hml+UnX0XBt3+Je9dliBD98jrvetnj+sO232uTtD8
-         18oInE9lGzFE7qtXZWCBgSVInwech6tA+jGPIY5PzypSHGejnuWXqOeWAzeBmozzRnIr
-         1VTFrW9LooITJ7l+gp/tzbO6f6Or6EHR6+au2lb8cjX2IRirEVlp8EVFMuWt34T0Qcvb
-         seqRWk/oTd0W8wLho0uNsoK07ghmm7rxUdkOI0ySNn84d1bwl0MaOdThrEJq0AnpaFMd
-         klTQ==
-X-Gm-Message-State: AOJu0YxxCIf7gLZg7UfMidJD25FVpY/Y9Q62Na1n/RwQUEEOlBeoEilu
-	xantLa7OMeecUl8Gwe/DgXoVDyXa+0rqWo3Bc8YrSPLgo089mTVnCx1t8rUJERwPABnk1wMz/E+
-	r8fXEiqB7bNxsEHVJ7+bweehBt4C+tUKc4gaF
-X-Gm-Gg: ASbGnctKrGfb1ZfbRYbIKAsRelfalLnffaS8zQoSMXTSX1Qb03qWBxgsOFRsCXUpk4l
-	P7LmvF9bJICm99/CgTuRt+JUP6W3lTj3ZOfNm4p9CQS5FyQsZNTOJzL2IR6ru+xavuD/h6i7k7f
-	8i19ahAVzSsmNmdiNCsbJjT0wrgeWUMLM7/3fI17EHrzt9OfkNHNEorViQQxoDfJFPbx91M3Ndv
-	LBNShvN
-X-Google-Smtp-Source: AGHT+IEdq4Qf3847uIWi5Lexizr2jkudt6jVn0vxIXycZY/jNBEFinpNX+x3uCq3GWGFIusXyfaHrxp5ZlJ+hb8at94=
-X-Received: by 2002:a17:903:acf:b0:234:24a8:bee9 with SMTP id
- d9443c01a7336-23e38f1f85dmr111213665ad.4.1752939091159; Sat, 19 Jul 2025
- 08:31:31 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1752955034; x=1753559834;
+        h=mime-version:message-id:date:references:in-reply-to:subject:cc:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UGG2rSwpsBg1tfyOe1ddbzk8FKW1m3sTqtoBr7o4DeE=;
+        b=lLZy+y694ZzUzRY1x44BvPHGIL4YxY0c2JcKZuXDC3Wr3Q4/kBycSqV20P3URjapQM
+         /gPJPXpa+NL954sE+5VjI6CQYzjk4OqSMCAwNIxGkuz33gRQ2B4eTbAlBNRRkMvu+q95
+         c5ET8yEk0V5F/eXpka3HPgVQI2n1EeLT9ge+qxQ8mw+xlwC84EY2f9ljT8xE5fYqWff3
+         JtMJh0GzL5QbcEXRU9mF/OYHgSQu+cQA7C4zyYI3lRVM6Z5rCip5lYo1SFB02sZrT/NB
+         ZtidnwVPlWxACnaDQvTf9kzlAoCmJVb+M5yzgtXkztkW1KGrqjql26KJJAe8i4MbjaRv
+         Chsw==
+X-Gm-Message-State: AOJu0YxlA0SqxcqGHmlk3S9Rr40+jI27ZreJ6Fskf1EoAcvNlZw6eiQ9
+	ony0Gfe5yPulHCMlLUgumOnuhXVa/rdj9ZB+/5mH8VkEjvfope037Zwq+ew8JICM
+X-Gm-Gg: ASbGncvh3MPdIW1M+dV4WVUjVy4bEdG38/xMwjcpAipuWOJsA/FZ+C5fGDvFlXp37Hh
+	wcc8F5uFRm62WqOc57P0XBXxUyqrtZlYl438RpYaq4rEi0cz3ZFGrK0RgVZi+zYzRUtTa6qLel2
+	KfJ8pzvNN6ye8K2TALohsCuNUJBwxZf7u7nJ49yb9JBgvVuafbK3+rgTJ1yiauppc6oHA9l0OlJ
+	wMzxnTXwSD+g9EWJXQ358FWmph72bIUrTecCVOgEZdmp3bXmHAaPWNhB0IGrNG0v/3+m8TXKJnG
+	YTrWnF5IlzfE5wJviJl+10G6K16IYftwIhznOwc23m4Iv1r2LvMPxJBdigqUWs5v+ZNU/4Jtmac
+	GmHjHUmBnP++tfxW9qTUEY8Wj
+X-Google-Smtp-Source: AGHT+IHMkzbf9+1FEaHHtTUuqpLWZtu5TEgBGElrFJQy0GIAwlTs94qVp++IwKbGWYhWfeu4v1mBwQ==
+X-Received: by 2002:a05:690c:d84:b0:6fb:b1dd:a00d with SMTP id 00721157ae682-718a97cf4d2mr143412677b3.30.1752955034088;
+        Sat, 19 Jul 2025 12:57:14 -0700 (PDT)
+Received: from localhost ([2600:1702:5e40:2a30::38])
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e8d7ce934a3sm1298432276.53.2025.07.19.12.57.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 19 Jul 2025 12:57:13 -0700 (PDT)
+From: Eric Frederickson <ericfrederickson68@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Ayush Chandekar <ayu.chandekar@gmail.com>
+Subject: Re: A Question from a Hopeful Future Contributor
+In-Reply-To: <xmqqecud145v.fsf@gitster.g>
+References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+ <xmqqecud145v.fsf@gitster.g>
+Date: Sat, 19 Jul 2025 15:57:12 -0400
+Message-ID: <87a550osx3.fsf@arch.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Begad Habib <begadhabib989@gmail.com>
-Date: Sat, 19 Jul 2025 18:31:19 +0300
-X-Gm-Features: Ac12FXxxx8Kzh-Ty6RhbXWR9N0NdwWI3fb_ZBysNqHvSBG0QPwHn0J1VhRkSoY4
-Message-ID: <CACy3CeRjyGb-T=hJURJbXXcR+_KtCsRsMzyw0EvusCZOpWb4Xw@mail.gmail.com>
-Subject: Possible git bisect behavior issue when skipping commits
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Git developers,
+Junio C Hamano <gitster@pobox.com> writes:
 
-I've been analyzing the behavior of `git bisect` when dealing with
-skipped commits and noticed what might be an unexpected result. I
-wanted to share a minimal reproduction to understand whether this is
-intended behavior.
+> Eric Frederickson <ericfrederickson68@gmail.com> writes:
+>
+>> Looking through the repo for a place to find todo items, I naturally stumbled
+>> upon the TODO file in the origin/todo branch,...
+>
+> Please disregard that file (I should remove it from the repository,
+> too).  It is not curated at all, and the last update to it is more
+> than 13 years ago.
+
+I see -- sorry for the noise on that.
+
+(Funnily enough, I had checked blame of those lines to (try to) make sure that
+they were at least semi-recent, and took a glance at the commit that shipped
+them, which I saw was dated from April. Somehow, I had assumed that "April"
+meant "April of this year" and forgot to check the actual year... it was, as
+you're indicating, from April 2011. (*facepalm*))
+
+> Sorry for wasting your time.
+
+The mistake was all mine. Lesson learned!
+
+> A better sources of inspiration might
+> come from list archive searches for the past 3 year or so.
+>
+> https://lore.kernel.org/git/?q=%22%23leftoverbit%22+d%3A20220718..
+>
+> But even then, many itches have already been scratched.
+
+I've been enjoying looking through these "leftoverbits", and may take some up
+soon.
+
+> As is often said, in open source, the easiest is to start scratching
+> your own itch ;-)
+
+Indeed! And I have 2 things to bring up on that subject, which are also in reply to
+Ayush's suggestions about trying out a micro-project:
+
+Firstly, I was reading through git-bisect.adoc (on master, 90c0775e97) and
+noticed a small error on line 146 (the entire paragraph, lines 146-148, is given
+for context):
+
+> To use "old" and "new" instead of "good" and bad, you must run `git
+> bisect start` without commits as argument and then run the following
+> commands to add the commits:
+
+It seems that the word "bad" should be quoted there, resulting in this revised
+version:
+
+> To use "old" and "new" instead of "good" and "bad", you must run `git
+> bisect start` without commits as argument and then run the following
+> commands to add the commits:
+
+Writing here to ask if a tiny fix like this would be a good thing to submit as a
+first patch. (This feels like it would be an embarrassingly small patch, but you
+have said prior [1] that "it is rare that anything is too trivial as a
+microproject material", so perhaps I'm in-bounds here :)).
+
+Secondly, and more substantially, there's an itch I'm thinking about trying to
+scratch, which involves teaching git-diff some options which can enable it to
+give more useful outputs when diffing binary files, and, moreover, to diff them
+"natively" without converting them to line-oriented plaintext first (as that
+behavior is already covered by use of the "textconv" config option).
+
+I'm imagining a way for users to pass some information to git-diff which
+specifies a concept of "logical lines", similar in concept to the "--word-diff"
+option, but where what's parsed as a "word" / "line" / delimiter can be
+specified by the user. A feature like this could enable users to have git do
+things like diff an image file pixel by pixel, or diff an audio file second by
+second ("second" meaning "1 real-time second in playback"), all without doing
+any batch conversions. (Note that I'm not intending to denigrate the very useful
+"textconv" option and its associated workflow; just proposing another way of
+trying to work towards a similar ideal.)
+
+This itch comes from my use of git repositories to manage audio files that I
+publish on my website, and being unsatisfied with the "Binary files differ"
+message while also not having anything available as a "textconv" worker program.
+I feel like there's a lot of "potential energy" in these kinds of use-cases for
+git to provide ways of (re)viewing changes to these files to users who work with
+updating binary data.
+
+Writing here to ask if pursuing this line of thought would be a good idea. I've
+intentionally been light on concrete detail here, because I'm still working
+things out myself and don't want to waste anyone's time with details that aren't
+worth reading through. Something as simple as a "Yay" or "Nay" on this idea is
+all I'd need to know if I'm walking a useful path here.
+
+Thank you, and best wishes,
 --
-## Environment
-- Git version: 2.43.0
-- OS: Ubuntu 22.04
----
-
-Steps to Reproduce
-
-```mkdir bisect-bug-test && cd bisect-bug-test
-git init
-
-# Commit 1 =E2=80=93 good
-echo "good" > file.txt
-git add file.txt
-git commit -m "Commit 1 - good"
-
-# Commit 2 =E2=80=93 skipped
-echo "middle" > file.txt
-git add file.txt
-git commit -m "Commit 2 - middle"
-
-# Commit 3 =E2=80=93 bad
-echo "bad" > file.txt
-git add file.txt
-git commit -m "Commit 3 - bad"
-
-# Start bisect
-git bisect start
-git bisect bad
-git bisect good HEAD~2
-git bisect skip HEAD~1
-
-
-Observed Output
-
-There are only 'skip'ped commits left to test.
-The first bad commit could be any of:
-<commit 1>
-<commit 2>
-We cannot bisect more!
-
-This output is a bit confusing, since the bad commit was already
-identified (HEAD, i.e., Commit 3), and the middle one was explicitly
-skipped. Including the good commit (Commit 1) in the potential bad
-list could mislead users into thinking it might be faulty.
-
-Question
-
-Is this the expected behavior for skipped commits? Or could the output
-be more accurate by excluding commits already marked as good?
-
-Thanks for your time and the amazing work you all do on Git =F0=9F=99=8F
-Best regards
+Eric Frederickson
+ericfrederickson68@gmail.com
+https://emfred.com
