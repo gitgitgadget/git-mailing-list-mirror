@@ -1,131 +1,355 @@
-Received: from cloudsdale.the-delta.net.eu.org (cloudsdale.the-delta.net.eu.org [138.201.117.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f194.google.com (mail-pl1-f194.google.com [209.85.214.194])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF84D7082F
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 00:55:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.201.117.120
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02C3629D0D
+	for <git@vger.kernel.org>; Sat, 19 Jul 2025 03:14:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.194
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752886528; cv=none; b=Hfj6oTxbWkKHI14tyG4kiWuIJBZ+W7e25HsesWVU3NnbpAqv0UFxL/+UyVd0gyJyGY49IVF31MHrwKSOgAs6lIsXaCa9BeHMXLIco160vdY0B2a0McvnXt1rFDwO21f2F9NeiDnAcN8L0cdLj3j9p4kCVGDZFc3KcOgmP+naHS0=
+	t=1752894896; cv=none; b=uazkm3tyAaFqrpmXmw8Tz4J2rWvr88+iEwd5zGZVxyXTObpFOCseI8Yo6UK9og2nJDtUmLZ2aje9chd8duEvbFnf6I+nIQZqbfibuq1Y2ybJb2I98Y/qazZpqssftmkghMmtnuCyHZNN1P3DeSzpgJ6wP1qHz7E62re9o9vkOHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752886528; c=relaxed/simple;
-	bh=OH9O/eyS+aF0OoktfScakf3xOMYuDF9wu92HyUuk7cg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NthMfRlsVaPWn4hAhVO9z3TyezGipiQnSaTzPsSvWJNOwONpqDyAruX99hCUZ+YMyhqJXzpI9DjwkYPx+UV/UtuPDVu1gFeEnX+o+7D0tYkV3NwtDxeI81cTVhQuO/M7NnlPUB3Cmm3mJDsUwWx50f/UjLk4QiQ+VGuF1ptF1/g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me; spf=pass smtp.mailfrom=hacktivis.me; arc=none smtp.client-ip=138.201.117.120
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hacktivis.me
-Received: 
-	by cloudsdale.the-delta.net.eu.org (OpenSMTPD) with ESMTP id 9796f7f6;
-	Sat, 19 Jul 2025 00:48:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=hacktivis.me; h=date
-	:from:to:cc:message-id:references:mime-version:content-type
-	:in-reply-to; s=20241213_132553; bh=OH9O/eyS+aF0OoktfScakf3xOMYu
-	DF9wu92HyUuk7cg=; b=nqiLOwcmcGnnAMpaMLKPnTKleHV7CFIp1rcLnXbNqMYs
-	4uDuPZjgE8LyXxXwC7v/g7ukxfA2dnucd+O/O5Y5725GOmfgq2eXp9UVPdtE16s4
-	HCVyuOvTSPBnlEj3hbLp6qeJrQtNeykqr63vAKnFyaJyyVR7FpzfB9fO+cpoKyX7
-	u5BSUu6Wf3y9Hxrc5R8MKF5FfpB4JltkHe+Hj+sZJ89RJYkMsxXCZhOWOhkdfCn4
-	/5SZ1/LnXFotAizkb7cm+3sjtnZOrGCqzCRVL4mM8fKdmXECdEk0q3JVUucFBf9E
-	tsN6BwGZr+2pFMuBsx8osi3nj7uTkx+sxRZN8Ijen7t+xqEOkY7ZBPAyVVyHW4oO
-	15iqMPuTczoIicPcT5VmPCWfA+hSMMIJ7a0IWwfOc85T62qQIFXhH9OU4lW9darL
-	JfjxCcjh0UktiMYABii69VGV7uNZDV9N9BJ7sXUaAXndK34zvbj4slbpRq9jwB5c
-	JxJYUiJBPgQ9S9FFVzrNuq6NzJfUfoRFFzans+qfV48Kh/JWBqMonQ6aYxPA7lpm
-	zA8KkVkvJTaMUuy6O/p3Vps4uP3tobNvejGRh3FUF27RTcZ7uLfYEqD/0V7LsmyL
-	myqtWlP8IZHfgxknxqmxw6HrsH3Z/h9saJtTXepXugDe1dr7tPNhMpQzSyfOW7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=hacktivis.me; h=date:from:to
-	:cc:message-id:references:mime-version:content-type:in-reply-to;
-	 q=dns; s=20241213_132553; b=dbTJ4/BuyQbBNP66xOsZSs5136mlFabudNC
-	9PNQ0pCTdal8PlNYz4eV8b29aw7whVUSTdG73oePhtLHjZKkM/aImv6t4dw00yAf
-	bQgAwywkU12uAnMuuGOYugpfkv22QZ5QSW3t1zS1Mk4xApUe/E1zx5bm8KTlxZ+X
-	pg9HyqexlINSsDaluXa68nCeA7jglKyB8JYPp2ZSxzMmAIi0oe+Z4/lKXqoRsbMv
-	qDz82OguV6wchVHcH5EA5eyV8sFTjt3lsrH4AucNb0mekWgJ/aybgBaeksWrzWAq
-	5/QfOUU/eVXxzJXfZ8ZAEPL2NgIspCxJXtdAZanOFkZQiITHdbUGl4xPI8jA9eDf
-	10x3iLq0fZnsfsgQ45OvItEAg78ojHF6nxluBSrouv1Hqttm1TzixaV4hENvzQ47
-	vWd3ZkUDbUP5CEgCNO1xSXeplxgWVinxs7X0KKmj5ySLbCXSsh8nXvLUlO3QSpVp
-	OVXg9ay3YlcUKTWtvyC5SOgXgjvUcIfft6aKNNX8bzKuge3kgfYBOnyumJQoxMMR
-	djKFcxkYfgrNSVtNlDhc89cKfSg26odhtmVZ2PFzawuWCldCl+A3fltpxI6o1cpo
-	4X1S5UcZ6Rn4giPgdDgAF29k8safEBedEfBJAVATWbu1Fo16TwRlsW51xLtMZMG0
-	FrGCgYTU=
-Received: from localhost (cloudsdale.the-delta.net.eu.org [local])
-	by cloudsdale.the-delta.net.eu.org (OpenSMTPD) with ESMTPA id b491dd39;
-	Sat, 19 Jul 2025 00:48:39 +0000 (UTC)
-Date: Sat, 19 Jul 2025 02:48:39 +0200
-From: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
-	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>,
-	Edward Thomson <ethomson@edwardthomson.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-Message-ID: <aHrrZyrDw_CYmFQF@cloudsdale.the-delta.net.eu.org>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
- <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
+	s=arc-20240116; t=1752894896; c=relaxed/simple;
+	bh=YdyktknVEHlI+rdAABAxAIVsjKyT5oY9JJythZRQo44=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=i7pecNPt+ftaLkOdH6LIcO2DWx5OBgQqxwgEzCSipMiShAS3H6PuDiTvS6tuYyUENIKs+0C7JjyYYbJu2i/TOJZOJJoIKnsE7Lnsn6wceBUTJHB8oWObXqS1L+slNo7LYUIqHxcDITynue3u8dd0FUJGBinTQGX6sSEamfSbhy0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fWP487Rg; arc=none smtp.client-ip=209.85.214.194
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fWP487Rg"
+Received: by mail-pl1-f194.google.com with SMTP id d9443c01a7336-23c703c471dso40665915ad.0
+        for <git@vger.kernel.org>; Fri, 18 Jul 2025 20:14:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1752894894; x=1753499694; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=DSE0yQ54moRyESUsyXc9vwGB89QY8d8lTjmDARwpfxU=;
+        b=fWP487RgbncLXXj6etzEwMCwnhlQNr3lFg8qU9jUILyekXAFbtBCinDk043JHH+BL5
+         6c5uDoRIPnuTdeptpUYWLgBiLxV0aIJS+kmCNkoS4JhXP7wL7HpSg2/flKlr7oTbz5x7
+         drdVtIXNlIIzcOk9c35aSDl0HWtV1qpSfru0ZCq4hzbjNn1zPjPBei0ycrlVirMkcTq8
+         Ifrxb8vpxsO1GyKRDLbJ8z/Md27ntB+1dRVUeP8rZRJQiTmfk5ty8U9ilGsLiaKKjArJ
+         KloDjvO4oAWycRQ1xnRdJZnTaxicrGOCD741jepyVyJzJo9f/bXg1JXj6HsZSd/uvtBH
+         Cu1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1752894894; x=1753499694;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DSE0yQ54moRyESUsyXc9vwGB89QY8d8lTjmDARwpfxU=;
+        b=CNMebyMHrEKNpmGidiUbdjC2y+P+fo0lbSohXH0nM/ZDG0mN3XzwGIJ5Wd7mEWXIwr
+         H3CE1z4rQIyYPtG+eQC7d3cLGgGblVtP0U5p03KFzQLSSe+8Gm+4CaiI1UXmzmNbL9Wt
+         tuQffCqAcnkET3i/b/nsKmZeHQxeH5W6DQ8j70TrAzS6UmDc9zAV0HEUQueqTiYL0LwZ
+         jIo6FMWzsIGfTkHWnVPCu1NHH8ekN8YnUPijkAP/EHHD6/M4rEJm3P0Phblf++Wkdr6K
+         NF2i3oHQsuxH30353JZ9pBs2LmP5ew0LvgFRKERYyEOZJnd1mHrpXvpFK0nDpKP9affp
+         Ty1A==
+X-Gm-Message-State: AOJu0YxJPN8QYtMZcyx3X5drhORW/pBvxll3KzB0EQgt9+Kt63Nz0/Yq
+	pnKZe+I2iGzOlivLCQjvKQZKsFWPAeO1SSIoQfI4YscjGrUh+ZKkqOxZn00m0frY
+X-Gm-Gg: ASbGncvfWizPDmqq/awdLjJzQb90rbqMjPLPEpK5h+01IXu1CR+wljZsrlZo/w8xutl
+	bpK5Lw4cTQLeWg9Bf3BMdKDeX9yy+k1q0AODfQjKsMit8Tp/B4DU7JOzM2Y2Y0O+ETXVMYHZl9D
+	6MriKIckCDy10nXdGShfiQmAkVevKkgv7qmviWDZ0AZC3fszto8h4L9SsucivYdYHNFOjfrNIGr
+	tEpQ2fjX4verH2unK6+J5ISAMZw/4qWNvtOz1orV5JIY8GC5EwNVLI4r/iQmA3U2U6DkrO3pMwG
+	ZDvDccFWHzNQfG24qA0Tj1bUyqEx8ZF/eodtdWlCE7NdItv2G4fl94E28k4UdwHFeFRNYl4avrY
+	5dAzpXD//nEIV41DJqk9mVDB9u1ISdwYta5mQTSpz9UOax804mW5Hje7bHBaG657S/ZFrCkt8+Y
+	7AxFasiJUGz2mW8ZOV72spQw==
+X-Google-Smtp-Source: AGHT+IEAweehLr2haWQmTnULdQz63ybecZvIIrD6d5Cb/ee2kP3FjlK+xhMj5SPbngrUfBHHmfMQXw==
+X-Received: by 2002:a17:902:d4c1:b0:234:595d:a58e with SMTP id d9443c01a7336-23e38fb11efmr91391925ad.25.1752894894132;
+        Fri, 18 Jul 2025 20:14:54 -0700 (PDT)
+Received: from smtpclient.apple (awork062012.netvigator.com. [203.198.28.12])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b5e2d6fsm20669395ad.20.2025.07.18.20.14.52
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 18 Jul 2025 20:14:53 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH] pull: add pull.autoStash config option
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <xmqqjz45172n.fsf@gitster.g>
+Date: Sat, 19 Jul 2025 11:14:48 +0800
+Cc: git@vger.kernel.org,
+ hi@looping.me,
+ j6t@kdbg.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3CABAF88-B343-4996-B968-3736FC24917B@gmail.com>
+References: <20250717030732.75106-1-yldhome2d2@gmail.com>
+ <20250718035221.2293-1-yldhome2d2@gmail.com> <xmqqjz45172n.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-[2025-07-18 17:25:01-0400] Eli Schwartz:
->On 7/18/25 9:34 AM, Phillip Wood wrote:
->> Hi Ezekiel
->>
->> Thanks for working on this
->>
->> On 17/07/2025 21:32, Ezekiel Newren via GitGitGadget wrote:
->>
->>> So...
->>>
->>> This obviously raises the question of whether we are ready to accept a
->>> hard
->>> dependency on Rust. Previous discussions on the mailing list and at Git
->>> Merge 2024 have not answered that question. If not now, will we be
->>> willing
->>> to accept such a hard dependency later? And what route do we want to
->>> take to
->>> get there?
->>
->> As far as git goes I think introducing a hard dependency on rust is
->> fine. It is widely supported, the only issue I'm aware of is the lack of
->> support on NonStop and I don't think it is reasonable for such a
->> minority platform to hold the rest of the project to ransom. There is a
->> question about the other users of the xdiff code though. libgit2 carries
->> a copy as do other projects like neovim. I've cc'd the libgit2
->> maintainer and posted a link to this thread in neovim github [1]
->
->
->A hard dependency on rust for Gentoo amd64 would potentially require
->building https://github.com/thepowersgang/mrustc followed by building 13
->and counting versions of rustc in order to get to the latest version.
->What is the minimum supported version in this series, by the way?
->
->bin packages for rust do exist but not everyone wants to use non-distro
->provided binaries, sometimes for auditability reasons.
->
->
->For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end of
->life and staying forever on 2.50, perhaps) of Git. There is no rust
->compiler there.
->
->Even s390 support for rust is limited to a precompiled version not
->everyone is willing to use.
+Junio C Hamano <gitster@pobox.com> writes:
+>=20
+> Lidong Yan <yldhome2d2@gmail.com> writes:
+>=20
+>> Git uses `rebase.autostash` or `merge.autostash` to determine whether =
+a
+>> dirty worktree is allowed during pull. However, this behavior is not
+>> clearly documented, making it difficult for users to discover how to
+>> enable autostash, or causing them to unknowingly enable it. Add new
+>> config option `pull.autostash` along with its documentation and test
+>> cases.
+>>=20
+>> `pull.autostash` provides the same functionality as =
+`rebase.autostash`
+>> and `merge.autostash`, but overrides them when set. If =
+`pull.autostash`
+>> is not set, it falls back to `rebase.autostash` or `merge.autostash`,
+>> depending on the value of `pull.rebase`.
+>=20
+> Very well reasoned and described.
+>=20
+>> diff --git a/Documentation/config/pull.adoc =
+b/Documentation/config/pull.adoc
+>> index 9349e09261..3aa1e67923 100644
+>> --- a/Documentation/config/pull.adoc
+>> +++ b/Documentation/config/pull.adoc
+>> @@ -13,6 +13,17 @@ pull.rebase::
+>> of merging the default branch from the default remote when "git
+>> pull" is run. See "branch.<name>.rebase" for setting this on a
+>> per-branch basis.
+>> +
+>> +pull.autoStash::
+>> + When true, Git will automatically perform a `git stash` before the
+>> + operation and then restore the local changes with `git stash pop`
+>> + after the pull is complete. This means that you can run pull on a
+>> + dirty worktree. If `pull.autostash` is set, it takes precedence =
+over
+>> + `rebase.autostash` and `merge.autostash`. If `pull.autostash` is =
+not
+>> + set, it falls back to `rebase.autostash` or `merge.autostash`,
+>> + depending on the value of `pull.rebase`. This option can be
+>> + overridden by the `--no-autostash` and `--autostash` options of
+>> + linkgit:git-pull[1]. Defaults to false.
+>> +
+>> When `merges` (or just 'm'), pass the `--rebase-merges` option to =
+'git rebase'
+>> so that the local merge commits are included in the rebase (see
+>=20
+> The new text is inserted at a wrong spot.  This "+\nWhen `merges`"
+> is a continuation of the text that describes `pull.rebase`.  If that
+> is set to `true`, one thing happens.  If that is set to `merges`,
+> something else happens.
+>=20
+> Insert the text for `pull.autoStash` immediately before the
+> description of the `pull.octopus` configuration variable.
+>=20
+> As to the text itself, "you can run pull on a dirty worktree" may
+> not be what you want to say here, for a few reasons.
+>=20
+> * (pedantic) Even without the configuration variable set, you can
+>   run "git pull" in a dirty working tree; it just will refuse to do
+>   any damage until you stash the local changes away yourself.
+>=20
+> * If your "git pull" merges, it would work even in a dirty working
+>   tree as long as your local change doesn't overlap with what the
+>   merge would bring in.  This is quite useful for a maintainer with
+>   "upcoming" change to GIT-VERSION-GEN always updated locally in
+>   the working tree and not having to worry about pulling from
+>   contributors and submaintainers who won't usually be touching
+>   that file, for example.
+>=20
+> * Not limited to this instance, when you have to say "(This|It)
+>   means <<B>>" immediately after making a statement <<A>, I would
+>   like us to think if we can just say <<B>> without saying <<A> at
+>   all.  In this case, it is not so, which makes me suspect that
+>   perhaps we do not even want to say <<B>>, as it may not mean
+>   <<B>> after all.
+>=20
+> Here is my attempt.
+>=20
+>    When set to true, automatically create a temporary stash entry
+>    to record the local changes before the operation begins, and
+>    restore them after the operation completes.  When your "git
+>    pull" rebases (instead of merges), this may be convenient, since
+>    unlike merging pull that tolerates local changes that do not
+>    interfere with the merge, rebasing pull refuses to work with any
+>    local changes.
+> +
+> If `pull.autostash` is set (either to true or false),
+> `merge.autostash` and `rebase.autostash` are ignored.  If
+> `pull.autostash` is not set at all, depending on the value of
+> `pull.rebase`, `merge.autostash` or `rebase.autostash` is used
+> instead.  Can be overridden by the `--[no-]autostash` command line
+> option.
+>=20
+>> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+>> index 63c9a8f04b..134da2185c 100755
+>> --- a/t/t5520-pull.sh
+>> +++ b/t/t5520-pull.sh
+>> @@ -472,6 +472,96 @@ test_expect_success 'pull --no-autostash & =
+merge.autostash unset' '
+>> test_pull_autostash_fail --no-autostash --no-rebase
+>> '
+>>=20
+>> +test_expect_success 'pull succeeds with dirty working directory and =
+pull.autostash set' '
+>> + test_config pull.autostash true &&
+>> + test_pull_autostash 1 --rebase &&
+>> + test_pull_autostash 2 --no-rebase
+>> +'
+>=20
+> Most trivial case.  No command line override.
+>=20
+>> +test_expect_success 'pull --autostash & pull.autostash=3Dtrue' '
+>> + test_config pull.autostash true &&
+>> + test_pull_autostash 1 --autostash --rebase &&
+>> + test_pull_autostash 2 --autostash --no-rebase
+>> +'
+>=20
+> Command line override specifies the same behaviour as the
+> configuration, so we cannot learn much from this test.  It still
+> should keep working, so the test is worth having [*], but I wonder
+> if makes sense to combine the above two into one test, i.e. set the
+> configuration variable to true once, and then try --rebase and
+> --no-rebase with and without --autostash (four combinations).
+>=20
+>    [*] In this review, unless I explicitly say "this test is wrong
+>    and expects an incorrect result", they are not wrong, even
+>    though what they test may not be as interesting as others, and I
+>    am not suggesting its removal.  This is one of these tests.
+>=20
+>> +test_expect_success 'pull --autostash & pull.autostash=3Dfalse' '
+>> + test_config pull.autostash false &&
+>> + test_pull_autostash 1 --autostash --rebase &&
+>> + test_pull_autostash 2 --autostash --no-rebase
+>> +'
+>=20
+> Configuration should be overridden by the command line option, which
+> is a good thing to test.
+>=20
+>> +test_expect_success 'pull --autostash & pull.autostash unset' '
+>> + test_unconfig pull.autostash &&
+>> + test_pull_autostash 1 --autostash --rebase &&
+>> + test_pull_autostash 2 --autostash --no-rebase
+>> +'
+>=20
+> Another most trivial case.  Shouldn't we already have an existing
+> test for this, back from the days before pull.autostash got
+> introduced, since the command line option has been there all along?
+>=20
+>> +test_expect_success 'pull --no-autostash & pull.autostash=3Dtrue' '
+>> + test_config pull.autostash true &&
+>> + test_pull_autostash_fail --no-autostash --rebase &&
+>> + test_pull_autostash_fail --no-autostash --no-rebase
+>> +'
+>=20
+> Configuration overridden by the option, opposite of what we saw
+> earlier, which is another good thing to test.
+>=20
+>> +test_expect_success 'pull --no-autostash & pull.autostash=3Dfalse' '
+>> + test_config pull.autostash false &&
+>> + test_pull_autostash_fail --no-autostash --rebase &&
+>> + test_pull_autostash_fail --no-autostash --no-rebase
+>> +'
+>=20
+> Uninteresting test that does not tell us much; we cannot tell which
+> between the configuration and the command line option caused us not
+> to auto stash with this test.
+>=20
+> Two cases that may be worth adding to this test immediately after
+> setting pull.autostash to false are:
+>=20
+> test_pull_autostash_fail --rebase &&
+> test_pull_autostash_fail --no-rebase &&
+>=20
+>> +test_expect_success 'pull --no-autostash & pull.autostash unset' '
+>> + test_unconfig pull.autostash &&
+>> + test_pull_autostash_fail --no-autostash --rebase &&
+>> + test_pull_autostash_fail --no-autostash --no-rebase
+>> +'
+>=20
+> Another uninteresting case that probably should be already covered
+> by existing test, since this tests "what happens when autostash is
+> explicitly declined from the command line when there is no
+> configuration variable to intervene?".
+>=20
+>> +test_expect_success 'pull.autostash=3Dtrue & rebase.autostash=3Dtrue' =
+'
+>> + test_config pull.autostash true &&
+>> + test_config rebase.autostash true &&
+>> + test_pull_autostash 1 --rebase
+>> +'
+>=20
+> OK.  Perhaps make sure "--no-autostash --rebase" would fail while at
+> it in the same test?
+>=20
+>> +test_expect_success 'pull.autostash=3Dtrue & rebase.autostash=3Dfalse'=
+ '
+>> + test_config pull.autostash true &&
+>> + test_config rebase.autostash false &&
+>> + test_pull_autostash 1 --rebase
+>> +'
+>=20
+> This is more interesting than the previous one, as we make sure that
+> pull.* trumps rebase.* with this test.  Perhaps throw --no-autostash
+> specified on the command line into the mix?
+>=20
+>> +test_expect_success 'pull.autostash=3Dfalse & rebase.autostash=3Dtrue'=
+ '
+>> + test_config pull.autostash false &&
+>> + test_config rebase.autostash true &&
+>> + test_pull_autostash_fail --rebase
+>> +'
+>=20
+> Another good one.  It might be intereseting to test --no-rebase and
+> make sure it also fails?  I dunno.
+>=20
+>> +test_expect_success 'pull.autostash=3Dfalse & =
+rebase.autostash=3Dfalse' '
+>> + test_config pull.autostash false &&
+>> + test_config rebase.autostash false &&
+>> + test_pull_autostash_fail --rebase
+>> +'
+>=20
+> Not as interesting as others.
+>=20
+>> +test_expect_success 'pull.autostash=3Dtrue & merge.autostash=3Dtrue' =
+'
+>> + test_config pull.autostash true &&
+>> + test_config merge.autostash true &&
+>> + test_pull_autostash 2 --no-rebase
+>> +'
+>=20
+> Not as interesting as others.  Throw --no-autostash given on the
+> command line into the mix as well?
+>=20
+>> +test_expect_success 'pull.autostash=3Dtrue & merge.autostash=3Dfalse' =
+'
+>> + test_config pull.autostash true &&
+>> + test_config merge.autostash false &&
+>> + test_pull_autostash 2 --no-rebase
+>> +'
+>=20
+> OK.  pull.*=3Dtrue trumps merge.*=3Dfalse.  We test the other way =
+around
+> next.  Good.
+>=20
+>> +test_expect_success 'pull.autostash=3Dfalse & merge.autostash=3Dtrue' =
+'
+>> + test_config pull.autostash false &&
+>> + test_config merge.autostash true &&
+>> + test_pull_autostash_fail --no-rebase
+>> +'
+>> +
+>> +test_expect_success 'pull.autostash=3Dfalse & merge.autostash=3Dfalse'=
+ '
+>> + test_config pull.autostash false &&
+>> + test_config merge.autostash false &&
+>> + test_pull_autostash_fail --no-rebase
+>> +'
+>=20
+> Not very interesting.  Throw anothre that gives --autostash from the
+> command line in the mix, perhaps?
+>=20
+>> test_expect_success 'pull.rebase' '
+>> git reset --hard before-rebase &&
+>> test_config pull.rebase true &&
 
-Also in other distro concerns, if it trickles down to libgit2,
-extra care should be taken to avoid creating circular dependencies
-due to cargo depending on libgit2 (via git2 crate).
 
-For example with making sure it can reasonably be built via meson's
-Rust support rather than through cargo.
+Thank you very much for your thorough review. I will reorganize the
+documentation and test cases in v2.
 
->
->GCC-rs will probably fix this general issue.
->
->-- 
->Eli Schwartz
+- Lidong=
