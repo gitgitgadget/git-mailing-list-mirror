@@ -1,124 +1,131 @@
-Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloudsdale.the-delta.net.eu.org (cloudsdale.the-delta.net.eu.org [138.201.117.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E92823DE
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 00:32:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF84D7082F
+	for <git@vger.kernel.org>; Sat, 19 Jul 2025 00:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=138.201.117.120
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752885134; cv=none; b=UM63P8ps8QBbcZ+HauBQxEfR2L7ywL/Q4Oq8iYpuKBjxVydE4iRIWZnbx1LntH5RfZhKIxXTT6yI2/RDpexia8ukkTjfmUd0K9PKk+/+ll/akWhD2EPdBgwpRK0wL2OYL3hzS8QiXWE+LAO/Pi91C8/rAbUXL+oBX2mkc5RMcV8=
+	t=1752886528; cv=none; b=Hfj6oTxbWkKHI14tyG4kiWuIJBZ+W7e25HsesWVU3NnbpAqv0UFxL/+UyVd0gyJyGY49IVF31MHrwKSOgAs6lIsXaCa9BeHMXLIco160vdY0B2a0McvnXt1rFDwO21f2F9NeiDnAcN8L0cdLj3j9p4kCVGDZFc3KcOgmP+naHS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752885134; c=relaxed/simple;
-	bh=lEtVkDEhFw4J+BQeCqhmtjvsm4Noo9ndh5tpcoYL96Q=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MhtLQtBa54JCwf5BSykXvHgWWgcdhTkvv8tyM1/tzehyiRxkM5uxk8gDmrhnD0sqXonv8eW1rimaYMIAwKdYjbTE1eNExDlRLCRP7nyftGvDSORhlyPIPmY2VUuLWYUYiN45NPHz5Aoq9neky8VmtnW9js/8C2YVW95M6//VsEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g1Q+3yU8; arc=none smtp.client-ip=209.85.166.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g1Q+3yU8"
-Received: by mail-il1-f171.google.com with SMTP id e9e14a558f8ab-3e293a3b426so14236005ab.1
-        for <git@vger.kernel.org>; Fri, 18 Jul 2025 17:32:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1752885132; x=1753489932; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XyrqjjuNGkHbuhEr2i9cvq1aUgcX5tufdd7EvXPEPQ4=;
-        b=g1Q+3yU8bMXIFHu8dA8O41Ohkqd9A4tt8H1SomIDweQ8zKEFRHkrbdu8SyFiL478hd
-         Ovqa2FUTQNIqzeIbCEyFBTWIzwa2lqfLeYisdI521pVupKN2s7I4xSKO+0RkGDHpM7F5
-         o2OnIyJ16b0yqO2gGBg8wt58Xo4Vv+uBzxeYDxP4qd2++21DfVq4mDPdm+47DMqzyE2R
-         mhYoODH/HVEFlJvz6Txn4l/vnLiTtijGdRw8HFxf3xrMMO23apoyxiNGlFx2rL9gcwAb
-         8RbFHXi8TuBCigDJJ31veUFygy4+pBpRTdFr2FqoLwYJe06cMDoIPrLVYU69cLy6a8lM
-         zt/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1752885132; x=1753489932;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XyrqjjuNGkHbuhEr2i9cvq1aUgcX5tufdd7EvXPEPQ4=;
-        b=ijLoTTmu3LO4uMz8G4m+QuhCP/+QfUf/Zw2zXdb/0qHY+TtDHFLWnckncqR8cCrcp9
-         1sQOiVJU9T7+AiW0fbaAV+HYu9qxp7okDZT32E4qOuXLh9NsgTRRzEYKRMDGDZ25NUbx
-         XkhRwWZrNGSZ+I2renZMaX6eLw9q6AAs174tbGHjicEJrBpU4dEWG2sQpAUlJdJ0U9/Y
-         xd1maPN6CJa6oeDY5eCXUtNQek5TWUAgSciOZbBzQ8gZ+hkEEn9tU3Qx2rl0iL+b2rnX
-         Wf/HmSlzty2E6HzCgwn2O9DDgE2p50LqMrZeWThIatudkSgO/vSJOl3XQMjN14+7ZjNU
-         7KZw==
-X-Forwarded-Encrypted: i=1; AJvYcCUfIlxTu6DdL/XwF0Oc+foL2Pay4idRJoZqqsRsC2nGC8Kxu9GNdwO0fjODWVl4BEJlc5Y=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw5BHmB/2whXTIFjt85QiITRBe59eWVgkc9Nl1NmAG1oST4YR4B
-	ulcLerm8iWLTWHDzy3GobP6fyQ9LVBCAxDaHe1WVwXNq4w8xexNAn7Rw9PkOqet1a9KSXgsaQRw
-	dCGw730vfr8yMPPqNhHxaYStFshHGyO2Tbw==
-X-Gm-Gg: ASbGncsRRSixDwr1GxQIGyRB1zkhu2RgKR8WBluLZCD5B9HnzH+BPqtdfonal9Ykuk4
-	AtXvhezJwxruT0qKhEM/H1K12UYChfO9nqxA2x/4WWCHuMRT9mkwmJhvQAxS8kLO5XjUdfGYNNR
-	CGWcjPw3zIsESbRSdTQAJU46RoJzsjphXVEAKSC8i4PL3uZpboJ0YV3JvGh8plKimwMvkTiVxkQ
-	ZnnAM/WU8HUKpG3RNxo/JB71yudeiS+m0PmE821
-X-Google-Smtp-Source: AGHT+IFNAX6I5nEDIxCFG+Q9fQGC6MSDIy7fesW45na+xybh0T8EEQhFQB7yl0HXoEl27qsHKt4VEfAiPHhwvVlRoIE=
-X-Received: by 2002:a92:c24e:0:b0:3e2:a2c2:3fc8 with SMTP id
- e9e14a558f8ab-3e2a2c242camr981945ab.12.1752885131920; Fri, 18 Jul 2025
- 17:32:11 -0700 (PDT)
+	s=arc-20240116; t=1752886528; c=relaxed/simple;
+	bh=OH9O/eyS+aF0OoktfScakf3xOMYuDF9wu92HyUuk7cg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=NthMfRlsVaPWn4hAhVO9z3TyezGipiQnSaTzPsSvWJNOwONpqDyAruX99hCUZ+YMyhqJXzpI9DjwkYPx+UV/UtuPDVu1gFeEnX+o+7D0tYkV3NwtDxeI81cTVhQuO/M7NnlPUB3Cmm3mJDsUwWx50f/UjLk4QiQ+VGuF1ptF1/g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me; spf=pass smtp.mailfrom=hacktivis.me; arc=none smtp.client-ip=138.201.117.120
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hacktivis.me
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hacktivis.me
+Received: 
+	by cloudsdale.the-delta.net.eu.org (OpenSMTPD) with ESMTP id 9796f7f6;
+	Sat, 19 Jul 2025 00:48:39 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=hacktivis.me; h=date
+	:from:to:cc:message-id:references:mime-version:content-type
+	:in-reply-to; s=20241213_132553; bh=OH9O/eyS+aF0OoktfScakf3xOMYu
+	DF9wu92HyUuk7cg=; b=nqiLOwcmcGnnAMpaMLKPnTKleHV7CFIp1rcLnXbNqMYs
+	4uDuPZjgE8LyXxXwC7v/g7ukxfA2dnucd+O/O5Y5725GOmfgq2eXp9UVPdtE16s4
+	HCVyuOvTSPBnlEj3hbLp6qeJrQtNeykqr63vAKnFyaJyyVR7FpzfB9fO+cpoKyX7
+	u5BSUu6Wf3y9Hxrc5R8MKF5FfpB4JltkHe+Hj+sZJ89RJYkMsxXCZhOWOhkdfCn4
+	/5SZ1/LnXFotAizkb7cm+3sjtnZOrGCqzCRVL4mM8fKdmXECdEk0q3JVUucFBf9E
+	tsN6BwGZr+2pFMuBsx8osi3nj7uTkx+sxRZN8Ijen7t+xqEOkY7ZBPAyVVyHW4oO
+	15iqMPuTczoIicPcT5VmPCWfA+hSMMIJ7a0IWwfOc85T62qQIFXhH9OU4lW9darL
+	JfjxCcjh0UktiMYABii69VGV7uNZDV9N9BJ7sXUaAXndK34zvbj4slbpRq9jwB5c
+	JxJYUiJBPgQ9S9FFVzrNuq6NzJfUfoRFFzans+qfV48Kh/JWBqMonQ6aYxPA7lpm
+	zA8KkVkvJTaMUuy6O/p3Vps4uP3tobNvejGRh3FUF27RTcZ7uLfYEqD/0V7LsmyL
+	myqtWlP8IZHfgxknxqmxw6HrsH3Z/h9saJtTXepXugDe1dr7tPNhMpQzSyfOW7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=hacktivis.me; h=date:from:to
+	:cc:message-id:references:mime-version:content-type:in-reply-to;
+	 q=dns; s=20241213_132553; b=dbTJ4/BuyQbBNP66xOsZSs5136mlFabudNC
+	9PNQ0pCTdal8PlNYz4eV8b29aw7whVUSTdG73oePhtLHjZKkM/aImv6t4dw00yAf
+	bQgAwywkU12uAnMuuGOYugpfkv22QZ5QSW3t1zS1Mk4xApUe/E1zx5bm8KTlxZ+X
+	pg9HyqexlINSsDaluXa68nCeA7jglKyB8JYPp2ZSxzMmAIi0oe+Z4/lKXqoRsbMv
+	qDz82OguV6wchVHcH5EA5eyV8sFTjt3lsrH4AucNb0mekWgJ/aybgBaeksWrzWAq
+	5/QfOUU/eVXxzJXfZ8ZAEPL2NgIspCxJXtdAZanOFkZQiITHdbUGl4xPI8jA9eDf
+	10x3iLq0fZnsfsgQ45OvItEAg78ojHF6nxluBSrouv1Hqttm1TzixaV4hENvzQ47
+	vWd3ZkUDbUP5CEgCNO1xSXeplxgWVinxs7X0KKmj5ySLbCXSsh8nXvLUlO3QSpVp
+	OVXg9ay3YlcUKTWtvyC5SOgXgjvUcIfft6aKNNX8bzKuge3kgfYBOnyumJQoxMMR
+	djKFcxkYfgrNSVtNlDhc89cKfSg26odhtmVZ2PFzawuWCldCl+A3fltpxI6o1cpo
+	4X1S5UcZ6Rn4giPgdDgAF29k8safEBedEfBJAVATWbu1Fo16TwRlsW51xLtMZMG0
+	FrGCgYTU=
+Received: from localhost (cloudsdale.the-delta.net.eu.org [local])
+	by cloudsdale.the-delta.net.eu.org (OpenSMTPD) with ESMTPA id b491dd39;
+	Sat, 19 Jul 2025 00:48:39 +0000 (UTC)
+Date: Sat, 19 Jul 2025 02:48:39 +0200
+From: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
+Message-ID: <aHrrZyrDw_CYmFQF@cloudsdale.the-delta.net.eu.org>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
+ <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <aHoSjbV2nMZkBn5l@256bit.org> <xmqqcy9x4g8n.fsf@gitster.g>
-In-Reply-To: <xmqqcy9x4g8n.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Fri, 18 Jul 2025 17:32:00 -0700
-X-Gm-Features: Ac12FXzYuIYspfQR0k_xahLYsrikpRAGouQPA0GKpxbWzFBFIM_EwFRdQe9XOHk
-Message-ID: <CABPp-BHH1gYrv66k1dmeE7+W2jPfcOCxEH4orKOFpze-kBcEQA@mail.gmail.com>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Christian Brabandt <cb@256bit.org>, Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Ezekiel Newren <ezekielnewren@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
 
-On Fri, Jul 18, 2025 at 9:26=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+[2025-07-18 17:25:01-0400] Eli Schwartz:
+>On 7/18/25 9:34 AM, Phillip Wood wrote:
+>> Hi Ezekiel
+>>
+>> Thanks for working on this
+>>
+>> On 17/07/2025 21:32, Ezekiel Newren via GitGitGadget wrote:
+>>
+>>> So...
+>>>
+>>> This obviously raises the question of whether we are ready to accept a
+>>> hard
+>>> dependency on Rust. Previous discussions on the mailing list and at Git
+>>> Merge 2024 have not answered that question. If not now, will we be
+>>> willing
+>>> to accept such a hard dependency later? And what route do we want to
+>>> take to
+>>> get there?
+>>
+>> As far as git goes I think introducing a hard dependency on rust is
+>> fine. It is widely supported, the only issue I'm aware of is the lack of
+>> support on NonStop and I don't think it is reasonable for such a
+>> minority platform to hold the rest of the project to ransom. There is a
+>> question about the other users of the xdiff code though. libgit2 carries
+>> a copy as do other projects like neovim. I've cc'd the libgit2
+>> maintainer and posted a link to this thread in neovim github [1]
 >
-> Christian Brabandt <cb@256bit.org> writes:
 >
-[...]
-> > Just a quick heads-up: We (as in Vim/Neovim) have been using gits xdiff
-> > library for use in Vim and Neovim.
-> >
-> > Is the plan to get rid of xdiffs C source completely and replace it by =
-a
-> > Rust implementation?
+>A hard dependency on rust for Gentoo amd64 would potentially require
+>building https://github.com/thepowersgang/mrustc followed by building 13
+>and counting versions of rustc in order to get to the latest version.
+>What is the minimum supported version in this series, by the way?
 >
-> As far as I know, there is no such plan that is widely agreed upon
-> (yet).
-
-Yeah, Ezekiel just barely notified the community of his efforts
-yesterday with this patch series.  :-)
-
-> The discussion starter thread you are looking at only introduces a
-> new code path that uses a different line hash function written in
-> Rust when whitespace munging search is not enabled, and everything
-> else still is written in C, but since it is just a discussion
-> starter so far.
+>bin packages for rust do exist but not everyone wants to use non-distro
+>provided binaries, sometimes for auditability reasons.
 >
-> I would personally have liked the effort to start with xmerge code,
-> not xdiff machinery, for various reasons, but that may be just me
-> ;-)
+>
+>For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end of
+>life and staying forever on 2.50, perhaps) of Git. There is no rust
+>compiler there.
+>
+>Even s390 support for rust is limited to a precompiled version not
+>everyone is willing to use.
 
-We have both xdiff/xmerge.[ch] and xdiff/{xdiff.h,xdiffi.[ch]}.  When
-you say "xdiff", I suspect that you're referring to the files within
-the directory rather than to the whole directory, yes?
+Also in other distro concerns, if it trickles down to libgit2,
+extra care should be taken to avoid creating circular dependencies
+due to cargo depending on libgit2 (via git2 crate).
 
-I actually pointed Ezekiel at xhistogram to start (and thought he
-might only do that file), then he backed up to xprepare, and then he
-continued from there on to other bits of xdiff/, including xmerge.
-Different parts are at different stages of conversion and testing.
-He's not just transliterating but also trying to both clean up the
-code and look for performance improvements (and it's sometimes hard to
-do both; he's hit a few maintainability vs. performance tradeoffs and
-those will likely result in some questions on the list at some point).
-It's been a long slog, especially given how arcane xdiff sometimes
-feels.  Anyway, along the way, he recognized the DJB2a hash --
-something I certainly wouldn't have recognized or even thought to
-investigate.  It led him to this optimization, which I thought was a
-really good find, and it seemed like it'd make for a good initial
-series to send to the list to get a feel for what people thought about
-possibly Rustifying xdiff/.
+For example with making sure it can reasonably be built via meson's
+Rust support rather than through cargo.
+
+>
+>GCC-rs will probably fix this general issue.
+>
+>-- 
+>Eli Schwartz
