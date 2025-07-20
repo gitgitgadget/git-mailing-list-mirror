@@ -1,412 +1,114 @@
-Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24465539A
-	for <git@vger.kernel.org>; Sun, 20 Jul 2025 12:43:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394CA1C6FF4
+	for <git@vger.kernel.org>; Sun, 20 Jul 2025 19:52:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753015439; cv=none; b=AHEeEFLGyGZ5mJYCQlkDdh6Wl7hIleVSkvhbs3vTZgzdU07hU7EXuEUf7aY4WeofUnXlAYfhm2CpKZZbsofv5UG8K0H4HFJmSKLKaAlNe5pv7pT6z7yfYRGkmCILjLKrjEIUAufpC56cBCWthHhGZtF8y3IrJoI2yEda6967JCk=
+	t=1753041127; cv=none; b=hC3yZVqqXRk3CluHJCCAdLU73NHnbfPPH8aP/oTLtGmJuvcPEpCYC9dCOUKHyEdl3Rf1bUzJ7HCyyWtxsNgBgFUoLJ0Zf4xso7fLcYMz8R8TNN1wGTTb3NnQbrrZ1PfutJIydqM3o6TrVX/EDpwRa79FrB61Zgda1h/1RsCzM7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753015439; c=relaxed/simple;
-	bh=i3OVsxWyXNGR3ogLB6NayN62UgE8rGDLYKMc785Y3xw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=S6iRarZw850zwXiLKNvD/KWjNKNjKV3X+P35VPsUKJTP+PBO+4NtTYpUrscH9cnyi27KYCS8k31TZ20WE8qf0x6w6724WtYvJK3rp6JMMnjIzn6VJRG+qQn3cigaojJNQcXlwQ+pCCRA23Zsou/GBkjQHeF09bOtxIuPPKCeDoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mq5/NfDM; arc=none smtp.client-ip=209.85.210.193
+	s=arc-20240116; t=1753041127; c=relaxed/simple;
+	bh=Rwjm/uJ6YZSFOKwyNwCsaIvTXeKlg6ZbBmxU04Wznvs=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=pAx7/qyPUG0OXisl37nbfnShtYZbfdP3Pm5S/DV9sl06wZyYsCLLiHhZxh7u98NvMxrQlTK5Fc+eYClxaD1g4s7B4ZSevlvooBo2G5JAW+pLLtjcGiv0dNAfUEhqySBWjJVmpORSxnsGw36o34aPi3k3+cCCnMSwfxgyYdz95W0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O1sN32wo; arc=none smtp.client-ip=209.85.222.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mq5/NfDM"
-Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-74b50c71b0aso1851709b3a.0
-        for <git@vger.kernel.org>; Sun, 20 Jul 2025 05:43:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O1sN32wo"
+Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-88173565536so5341098241.0
+        for <git@vger.kernel.org>; Sun, 20 Jul 2025 12:52:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753015437; x=1753620237; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1753041125; x=1753645925; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=p2TkfjleP2pe0/e3EArEggIdS17MtLcj0VEtMZN0Xkg=;
-        b=mq5/NfDMS7g+hmcX+BuZHn2LUH8RghghPOtLGzMMnGURQEOtTKtotrTMd0I9Oz9EQF
-         Whu3MH6WyY+63y32Gt7Pk+e32fzn3sGu0miGBBbjanbml/yO07eDNC5qp9MqeINzbKhG
-         ZB0saySgU66HOx9ORWSbCeJVpXmkzwkBt5Un9k3+j5GEDRi44Gdw8TI0tipliYs1p7HV
-         bQZxkFIUDXFeMIYzRm8W9tbPU8BfJlqceUCZuXyrTTxKCGViqFU+PyeHTutQ12JNpLT8
-         i2u29CCIsrVJrX9sTZ+pbWuuB3q5vWJTm5QwVFWjLIyWUAFH6ma9S/hkE3vDcfvqzumK
-         kUEQ==
+        bh=Rwjm/uJ6YZSFOKwyNwCsaIvTXeKlg6ZbBmxU04Wznvs=;
+        b=O1sN32woaSaK9N/8HLBpTpAWXtXV+o4X2ueSgm4OcafjVqxgQlWByvGslkGnn0/6T3
+         u7IwLbRlfr4iXZaCb2EgjSJA1y375mf5aN7bseU3tKEBRv0xSTmcgLeUIcmfU3X456lg
+         6tRI1uhmcb5Hs5yLI7ew7iksPcmqO+Qq3eFvQGt/XHPnOtrmD9mLwdL49tGFWTsOw6Lh
+         N2X9rNjAJFn4dK3cJaDrjRM1lzFfyucw3EyP6m8xwK9tVtZO76zJD4amyW6KizgV12ir
+         r3UTJNi/NeFhm3CTz5jB2O8MqcSZWmNgA65bO9qJ8wfNPvMa/L4f8lwY+VjS9c1BN9J6
+         Dczw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753015437; x=1753620237;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1753041125; x=1753645925;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=p2TkfjleP2pe0/e3EArEggIdS17MtLcj0VEtMZN0Xkg=;
-        b=CEAWCn6r334NnfJ5TdivUGlKbPVqIRNmrw6yC5WH4Yk/8Sqahfeb6E5e14bqPZy+20
-         HFZorsMUoxaTGM9Sk52opGDA9daRiLGJUOHZ9QKtLLIPZIm4q9bNFgttKYXkETF0jmas
-         uBQSxjXhQE4LndsAtusaWmOURulMQwlBjdaJ2hSutwGKVRWLujKgzUy7IVf+zfP7Wwtf
-         6C2uzBU8HfsrMvo0h/hRbfqC60axef4gJ7mJmUqsLzrjiCZ/J7AojAlC0BIuW0HtwLdG
-         jI/NCd5V+Y/uCKHuxz+nVZYctAS6VoBOqnmsIiN8C8RUDUpBoA5VrapYqCYOxauP/pM9
-         0bnQ==
-X-Gm-Message-State: AOJu0Yy24qKHS65DOQ74f5N1Fr/ytXF4aVCTN2ACPg9oHL9CCnAdF8ge
-	JWmzhqpJw7LcUSzGm3Qez2/Xu1is32cF2E2VXed+ynFJcdvJ5Lv6I3Zs
-X-Gm-Gg: ASbGncv7IApaYLm7SHFZMPhhH8w3vn1hdRaO4NRYodw68JBPaEFJVMPvPcRU3HvOjW4
-	z1WKmwTwNR9d3mUVVIfk7Vb90Iil50N9Q53bcuRcQgvcqu9YghcUsszkuzOQJfuTBlnDGhZpxxP
-	bif2UwQU/3z400/qAo1o/D+gHlH3jUJ8EFuDA1jBndeTtnkwxKth81bLYYyADCWGjuU4uMw/q2e
-	4hyFrABoS7WcY4ukDhwPPSWiNPGGTO2UQFroMXnHtuyKJTSmE1/5OuLEZV5r0EvegYQhNHjLogb
-	8z4g3SbZhoyC1yMge27As2WACCGNoS4euydXZ94V+9lOuuVxpZDKFg7rSTtHCfTAoZXw+Ivvq5Z
-	hrZn9q9UUw6SWu+nN3IrzyBUyD+Y+W+7GhIp6Cs0S64nyOaPlgq2GweJOc3Rm4kj+LDJlTCpkAP
-	LIbe5wNE6r/Ai1hgmirRN4xDcEIBM5Jw==
-X-Google-Smtp-Source: AGHT+IFGhZf/UhwpI9xVWTWBlyyWkbj4PpthAnOzN8X2SkQOrfFsT8C5oLqGJpg7xQcKKA8K3GNZeg==
-X-Received: by 2002:a05:6a20:3948:b0:233:c703:d4bf with SMTP id adf61e73a8af0-23812c45eadmr24052173637.19.1753015436989;
-        Sun, 20 Jul 2025 05:43:56 -0700 (PDT)
-Received: from localhost.localdomain (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f2ff99ef4sm3781930a12.61.2025.07.20.05.43.53
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 20 Jul 2025 05:43:56 -0700 (PDT)
-From: Lidong Yan <yldhome2d2@gmail.com>
-To: yldhome2d2@gmail.com
-Cc: git@vger.kernel.org,
-	gitster@pobox.com,
-	hi@looping.me,
-	j6t@kdbg.org,
-	sunshine@sunshineco.com
-Subject: [PATCH v2] pull: add pull.autoStash config option
-Date: Sun, 20 Jul 2025 20:43:34 +0800
-Message-Id: <20250720124334.12045-1-yldhome2d2@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250718035221.2293-1-yldhome2d2@gmail.com>
-References: <20250718035221.2293-1-yldhome2d2@gmail.com>
+        bh=Rwjm/uJ6YZSFOKwyNwCsaIvTXeKlg6ZbBmxU04Wznvs=;
+        b=qgjw0CKFPasgjXmOpzsS8xZ5h+mrMzOzz7TqqLW/iF65R0mXxDCV/lh3Rjfrd0icv5
+         wac0wMz4wcd506Z3qQdrcG64w3+OIrdsNdeaIla0OaNhj6xL6Bix7uSrn1xc2f/oJoBQ
+         /6cTk3mv0LrSjY+cXfY3c96KweSuwfAZU2l0jh5cV0KF8c79lCxMWjq9LaY2kU5caDkl
+         0yhu0Y/IF1hWiMgsTPfyDx54fBj5XroI6wiPs+Pj65133Kg3sGhCdSRzyANPz8itsIhd
+         0XVLF/ZYcE5+pF2+ttGso+HFwtMmtll60/jXgRVfH9OnYFKJ/ABEN1lBu5iGiQr/kfWF
+         pNsA==
+X-Gm-Message-State: AOJu0YxD4sqkkewYn2bk5CgZg8/2mkcpkHe0MgD/sRU66GgGOdr596W6
+	cME/Gra/c+nKWM9Ipwk5RlPFZGjoZFJFTIvfWAjJR75d5s0Fbk9O41hO
+X-Gm-Gg: ASbGncuPj0ai63NrrRbArJSzOp4T6v4Re65VQAseab0BIf7v2bhWd/G2MYYB8mnhmEJ
+	HBgToEfJQNjcBnMCVCYqKvQCFux1YMo0yUsgrGL1203WKRyCYRQr8PXCqx7wUTO0HjQZfA+pUWN
+	lNGkycEY76FLfZdkqCIHOpUnQYfV7yYqXEUg9JPXKDkKhIpcpYC/eKulkLq0Zdt6Vd3QtV0AmJH
+	iXO5EIJ0mBf/wrNoLEuuDvNgLpo1BA2AcFsRW07IySnvkQs+hyn2UYJtVDjXWAtzGqz5itmQUhO
+	RIwLBJn8MF98uXD2lSrjL4wDgtIJF7PnPaGO+pVEs9CDiJFu5plCwuUtjTLkwmtGRdlUUnWfaND
+	KfqEKjyMkiPokS15a3Jsr0msPvQ2j8XklaF6fv25A3vKfAe1S
+X-Google-Smtp-Source: AGHT+IFY9xH83GylCLCqa+i5gqjVzlmk846NdxzXHnFJwjsF6hKrsL6t8PYFsQZqdn+GUGDDwOJPbg==
+X-Received: by 2002:a05:6122:2051:b0:535:c816:74eb with SMTP id 71dfb90a1353d-537607edf44mr3676208e0c.1.1753041125023;
+        Sun, 20 Jul 2025 12:52:05 -0700 (PDT)
+Received: from smtpclient.apple ([179.113.63.169])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-88b0ad87c37sm2310154241.22.2025.07.20.12.52.02
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Sun, 20 Jul 2025 12:52:04 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [GSoC RFC PATCH v4 1/4] repo: declare the repo command
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aHZChXPTbk_X6xDK@pks.im>
+Date: Sun, 20 Jul 2025 16:51:49 -0300
+Cc: git@vger.kernel.org,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk,
+ jltobler@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <34671B47-21FF-464E-A811-32759D077A96@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250714235231.10137-1-lucasseikioshiro@gmail.com>
+ <20250714235231.10137-2-lucasseikioshiro@gmail.com> <aHZChXPTbk_X6xDK@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Git uses `rebase.autostash` or `merge.autostash` to determine whether a
-dirty worktree is allowed during pull. However, this behavior is not
-clearly documented, making it difficult for users to discover how to
-enable autostash, or causing them to unknowingly enable it. Add new
-config option `pull.autostash` along with its documentation and test
-cases.
 
-`pull.autostash` provides the same functionality as `rebase.autostash`
-and `merge.autostash`, but overrides them when set. If `pull.autostash`
-is not set, it falls back to `rebase.autostash` or `merge.autostash`,
-depending on the value of `pull.rebase`.
+>> + argc =3D parse_options(argc, argv, prefix, options, repo_usage, 0);
+>> +
+>> + if (fn) {
+>> + return fn(argc, argv, prefix, repo);
+>> + } else {
+>> + if (argc) {
+>> + error(_("unknown subcommand: `%s'"), argv[0]);
+>> + usage_with_options(repo_usage, options);
+>> + }
+>> + return 1;
+>=20
+> I think we need to print an error `if (!argc)`, as well. Otherwise the
+> user wouldn't know why `git repo` without any argumentsdoesn't do
+> anything.
 
-Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
----
-Range-diff against v1:
-1:  5b7d10d7e9 ! 1:  51a7c66783 pull: add pull.autoStash config option
-    @@ Commit message
-         Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
-     
-      ## Documentation/config/pull.adoc ##
-    -@@ Documentation/config/pull.adoc: pull.rebase::
-    - 	of merging the default branch from the default remote when "git
-    - 	pull" is run. See "branch.<name>.rebase" for setting this on a
-    - 	per-branch basis.
-    -+
-    +@@ Documentation/config/pull.adoc: pull.octopus::
-    + 	The default merge strategy to use when pulling multiple branches
-    + 	at once.
-    + 
-     +pull.autoStash::
-    -+	When true, Git will automatically perform a `git stash` before the
-    -+	operation and then restore the local changes with `git stash pop`
-    -+	after the pull is complete. This means that you can run pull on a
-    -+	dirty worktree. If `pull.autostash` is set, it takes precedence over
-    -+	`rebase.autostash` and `merge.autostash`. If `pull.autostash` is not
-    -+	set, it falls back to `rebase.autostash` or `merge.autostash`,
-    -+	depending on the value of `pull.rebase`. This option can be
-    -+	overridden by the `--no-autostash` and `--autostash` options of
-    -+	linkgit:git-pull[1]. Defaults to false.
-    - +
-    - When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
-    - so that the local merge commits are included in the rebase (see
-    ++	When set to true, automatically create a temporary stash entry
-    ++	to record the local changes before the operation begins, and
-    ++	restore them after the operation completes.  When your "git
-    ++	pull" rebases (instead of merges), this may be convenient, since
-    ++	unlike merging pull that tolerates local changes that do not
-    ++	interfere with the merge, rebasing pull refuses to work with any
-    ++	local changes.
-    +++
-    ++If `pull.autostash` is set (either to true or false),
-    ++`merge.autostash` and `rebase.autostash` are ignored.  If
-    ++`pull.autostash` is not set at all, depending on the value of
-    ++`pull.rebase`, `merge.autostash` or `rebase.autostash` is used
-    ++instead.  Can be overridden by the `--[no-]autostash` command line
-    ++option.
-    ++
-    + pull.twohead::
-    + 	The default merge strategy to use when pulling a single branch.
-     
-      ## builtin/pull.c ##
-     @@ builtin/pull.c: static char *opt_ff;
-    @@ t/t5520-pull.sh: test_expect_success 'pull --no-autostash & merge.autostash unse
-      	test_pull_autostash_fail --no-autostash --no-rebase
-      '
-      
-    -+test_expect_success 'pull succeeds with dirty working directory and pull.autostash set' '
-    ++test_expect_success 'pull succeeds with dirty working directory and pull.autostash=true' '
-     +	test_config pull.autostash true &&
-     +	test_pull_autostash 1 --rebase &&
-    -+	test_pull_autostash 2 --no-rebase
-    -+'
-    -+
-    -+test_expect_success 'pull --autostash & pull.autostash=true' '
-    -+	test_config pull.autostash true &&
-    ++	test_pull_autostash 2 --no-rebase &&
-     +	test_pull_autostash 1 --autostash --rebase &&
-     +	test_pull_autostash 2 --autostash --no-rebase
-     +'
-     +
-    -+test_expect_success 'pull --autostash & pull.autostash=false' '
-    ++test_expect_success 'pull fails with dirty working directory and pull.autostash=false' '
-     +	test_config pull.autostash false &&
-    -+	test_pull_autostash 1 --autostash --rebase &&
-    -+	test_pull_autostash 2 --autostash --no-rebase
-    -+'
-    -+
-    -+test_expect_success 'pull --autostash & pull.autostash unset' '
-    -+	test_unconfig pull.autostash &&
-    -+	test_pull_autostash 1 --autostash --rebase &&
-    -+	test_pull_autostash 2 --autostash --no-rebase
-    -+'
-    -+
-    -+test_expect_success 'pull --no-autostash & pull.autostash=true' '
-    -+	test_config pull.autostash true &&
-    ++	test_pull_autostash_fail --rebase &&
-    ++	test_pull_autostash_fail --no-rebase &&
-     +	test_pull_autostash_fail --no-autostash --rebase &&
-     +	test_pull_autostash_fail --no-autostash --no-rebase
-     +'
-     +
-    -+test_expect_success 'pull --no-autostash & pull.autostash=false' '
-    ++test_expect_success 'pull --autostash overrides pull.autostash=false' '
-     +	test_config pull.autostash false &&
-    -+	test_pull_autostash_fail --no-autostash --rebase &&
-    -+	test_pull_autostash_fail --no-autostash --no-rebase
-    ++	test_pull_autostash 1 --autostash --rebase &&
-    ++	test_pull_autostash 2 --autostash --no-rebase
-     +'
-     +
-    -+test_expect_success 'pull --no-autostash & pull.autostash unset' '
-    -+	test_unconfig pull.autostash &&
-    ++test_expect_success 'pull --no-autostash overrides pull.autostash=true' '
-    ++	test_config pull.autostash true &&
-     +	test_pull_autostash_fail --no-autostash --rebase &&
-     +	test_pull_autostash_fail --no-autostash --no-rebase
-     +'
-     +
-    -+test_expect_success 'pull.autostash=true & rebase.autostash=true' '
-    ++test_expect_success 'pull.autostash=true overrides rebase.autostash' '
-     +	test_config pull.autostash true &&
-     +	test_config rebase.autostash true &&
-    -+	test_pull_autostash 1 --rebase
-    -+'
-    -+
-    -+test_expect_success 'pull.autostash=true & rebase.autostash=false' '
-    -+	test_config pull.autostash true &&
-    ++	test_pull_autostash 1 --rebase &&
-     +	test_config rebase.autostash false &&
-     +	test_pull_autostash 1 --rebase
-     +'
-     +
-    -+test_expect_success 'pull.autostash=false & rebase.autostash=true' '
-    ++test_expect_success 'pull.autostash=false overrides rebase.autostash' '
-     +	test_config pull.autostash false &&
-     +	test_config rebase.autostash true &&
-    -+	test_pull_autostash_fail --rebase
-    -+'
-    -+
-    -+test_expect_success 'pull.autostash=false & rebase.autostash=false' '
-    -+	test_config pull.autostash false &&
-    ++	test_pull_autostash_fail --rebase &&
-     +	test_config rebase.autostash false &&
-     +	test_pull_autostash_fail --rebase
-     +'
-     +
-    -+test_expect_success 'pull.autostash=true & merge.autostash=true' '
-    ++test_expect_success 'pull.autostash=true overrides merge.autostash' '
-     +	test_config pull.autostash true &&
-     +	test_config merge.autostash true &&
-    -+	test_pull_autostash 2 --no-rebase
-    -+'
-    -+
-    -+test_expect_success 'pull.autostash=true & merge.autostash=false' '
-    -+	test_config pull.autostash true &&
-    ++	test_pull_autostash 2 --no-rebase &&
-     +	test_config merge.autostash false &&
-     +	test_pull_autostash 2 --no-rebase
-     +'
-     +
-    -+test_expect_success 'pull.autostash=false & merge.autostash=true' '
-    ++test_expect_success 'pull.autostash=false overrides merge.autostash' '
-     +	test_config pull.autostash false &&
-     +	test_config merge.autostash true &&
-    -+	test_pull_autostash_fail --no-rebase
-    -+'
-    -+
-    -+test_expect_success 'pull.autostash=false & merge.autostash=false' '
-    -+	test_config pull.autostash false &&
-    ++	test_pull_autostash_fail --no-rebase &&
-     +	test_config merge.autostash false &&
-     +	test_pull_autostash_fail --no-rebase
-     +'
+Actually, it already does it! The subcommand parsing introduced in =
+fa83cc834d
+(parse-options: add support for parsing subcommands, 2022-08-19) =
+displays
+"error: need a subcommand" and the command usage when no subcommand is =
+provided.
 
- Documentation/config/pull.adoc | 16 +++++++++
- builtin/pull.c                 | 20 ++++++++++--
- t/t5520-pull.sh                | 60 ++++++++++++++++++++++++++++++++++
- 3 files changed, 93 insertions(+), 3 deletions(-)
+Actually, this whole if-else can be removed. When an invalid command is
+provided, the execution is aborted in parse_options, so it's safe to =
+assume that
+fn is a valid function.
 
-diff --git a/Documentation/config/pull.adoc b/Documentation/config/pull.adoc
-index 9349e09261..125c930f72 100644
---- a/Documentation/config/pull.adoc
-+++ b/Documentation/config/pull.adoc
-@@ -29,5 +29,21 @@ pull.octopus::
- 	The default merge strategy to use when pulling multiple branches
- 	at once.
- 
-+pull.autoStash::
-+	When set to true, automatically create a temporary stash entry
-+	to record the local changes before the operation begins, and
-+	restore them after the operation completes.  When your "git
-+	pull" rebases (instead of merges), this may be convenient, since
-+	unlike merging pull that tolerates local changes that do not
-+	interfere with the merge, rebasing pull refuses to work with any
-+	local changes.
-++
-+If `pull.autostash` is set (either to true or false),
-+`merge.autostash` and `rebase.autostash` are ignored.  If
-+`pull.autostash` is not set at all, depending on the value of
-+`pull.rebase`, `merge.autostash` or `rebase.autostash` is used
-+instead.  Can be overridden by the `--[no-]autostash` command line
-+option.
-+
- pull.twohead::
- 	The default merge strategy to use when pulling a single branch.
-diff --git a/builtin/pull.c b/builtin/pull.c
-index c593f324fe..2a6c2e4a37 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -90,7 +90,8 @@ static char *opt_ff;
- static const char *opt_verify_signatures;
- static const char *opt_verify;
- static int opt_autostash = -1;
--static int config_autostash;
-+static int config_rebase_autostash;
-+static int config_pull_autostash = -1;
- static int check_trust_level = 1;
- static struct strvec opt_strategies = STRVEC_INIT;
- static struct strvec opt_strategy_opts = STRVEC_INIT;
-@@ -367,7 +368,18 @@ static int git_pull_config(const char *var, const char *value,
- 			   const struct config_context *ctx, void *cb)
- {
- 	if (!strcmp(var, "rebase.autostash")) {
--		config_autostash = git_config_bool(var, value);
-+		/*
-+		 * run_rebase() also reads this option. The reason we handle it here is
-+		 * that when pull.rebase is true, a fast-forward may occur without
-+		 * invoking run_rebase(). We need to ensure that autostash is set even
-+		 * in the fast-forward case.
-+		 *
-+		 * run_merge() handles merge.autostash, so we don't handle it here.
-+		 */
-+		config_rebase_autostash = git_config_bool(var, value);
-+		return 0;
-+	} else if (!strcmp(var, "pull.autostash")) {
-+		config_pull_autostash = git_config_bool(var, value);
- 		return 0;
- 	} else if (!strcmp(var, "submodule.recurse")) {
- 		recurse_submodules = git_config_bool(var, value) ?
-@@ -1006,6 +1018,8 @@ int cmd_pull(int argc,
- 	}
- 
- 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
-+	if (opt_autostash == -1)
-+		opt_autostash = config_pull_autostash;
- 
- 	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
- 		recurse_submodules = recurse_submodules_cli;
-@@ -1052,7 +1066,7 @@ int cmd_pull(int argc,
- 
- 	if (opt_rebase) {
- 		if (opt_autostash == -1)
--			opt_autostash = config_autostash;
-+			opt_autostash = config_rebase_autostash;
- 
- 		if (is_null_oid(&orig_head) && !is_index_unborn(the_repository->index))
- 			die(_("Updating an unborn branch with changes added to the index."));
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 63c9a8f04b..0e0019347e 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -472,6 +472,66 @@ test_expect_success 'pull --no-autostash & merge.autostash unset' '
- 	test_pull_autostash_fail --no-autostash --no-rebase
- '
- 
-+test_expect_success 'pull succeeds with dirty working directory and pull.autostash=true' '
-+	test_config pull.autostash true &&
-+	test_pull_autostash 1 --rebase &&
-+	test_pull_autostash 2 --no-rebase &&
-+	test_pull_autostash 1 --autostash --rebase &&
-+	test_pull_autostash 2 --autostash --no-rebase
-+'
-+
-+test_expect_success 'pull fails with dirty working directory and pull.autostash=false' '
-+	test_config pull.autostash false &&
-+	test_pull_autostash_fail --rebase &&
-+	test_pull_autostash_fail --no-rebase &&
-+	test_pull_autostash_fail --no-autostash --rebase &&
-+	test_pull_autostash_fail --no-autostash --no-rebase
-+'
-+
-+test_expect_success 'pull --autostash overrides pull.autostash=false' '
-+	test_config pull.autostash false &&
-+	test_pull_autostash 1 --autostash --rebase &&
-+	test_pull_autostash 2 --autostash --no-rebase
-+'
-+
-+test_expect_success 'pull --no-autostash overrides pull.autostash=true' '
-+	test_config pull.autostash true &&
-+	test_pull_autostash_fail --no-autostash --rebase &&
-+	test_pull_autostash_fail --no-autostash --no-rebase
-+'
-+
-+test_expect_success 'pull.autostash=true overrides rebase.autostash' '
-+	test_config pull.autostash true &&
-+	test_config rebase.autostash true &&
-+	test_pull_autostash 1 --rebase &&
-+	test_config rebase.autostash false &&
-+	test_pull_autostash 1 --rebase
-+'
-+
-+test_expect_success 'pull.autostash=false overrides rebase.autostash' '
-+	test_config pull.autostash false &&
-+	test_config rebase.autostash true &&
-+	test_pull_autostash_fail --rebase &&
-+	test_config rebase.autostash false &&
-+	test_pull_autostash_fail --rebase
-+'
-+
-+test_expect_success 'pull.autostash=true overrides merge.autostash' '
-+	test_config pull.autostash true &&
-+	test_config merge.autostash true &&
-+	test_pull_autostash 2 --no-rebase &&
-+	test_config merge.autostash false &&
-+	test_pull_autostash 2 --no-rebase
-+'
-+
-+test_expect_success 'pull.autostash=false overrides merge.autostash' '
-+	test_config pull.autostash false &&
-+	test_config merge.autostash true &&
-+	test_pull_autostash_fail --no-rebase &&
-+	test_config merge.autostash false &&
-+	test_pull_autostash_fail --no-rebase
-+'
-+
- test_expect_success 'pull.rebase' '
- 	git reset --hard before-rebase &&
- 	test_config pull.rebase true &&
--- 
-2.39.5 (Apple Git-154)
-
+I'll change that.=
