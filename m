@@ -1,141 +1,68 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6128D1E3772
-	for <git@vger.kernel.org>; Sat, 19 Jul 2025 22:16:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EB615A8
+	for <git@vger.kernel.org>; Sun, 20 Jul 2025 00:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1752963403; cv=none; b=K5HVVJzg4yNVHEDSWln9NclHg9Te7CZTF6as8qq4J0MEpz5TnQQznTLGrlPLWuQ6SoNzz/TleA1C6JUD+XwLeymXCJ2rcCJvRisBh5lgSWc/oC3vE/d7DwF3tv3vEiGhLPrwoFWbWcTz3cghlpeAjfbkWzAwjXCCWvIk0KnvGU0=
+	t=1752969850; cv=none; b=cCAC+0dH7z4OZCyFYwLcSiKry/PRUqFWzohm4TIcBDuaW+0yrXRSkLZBUwjCIhECLl96T5o9uzOR96O1ruBMntCMPlUQ1fB75Ww5nez53z4UbI1tQPaXnQz+0xnrQNLUURyzctGhYxb17+htB1PA2NDLLuIBYl954oU4mxcJb5I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1752963403; c=relaxed/simple;
-	bh=lIMlryyJZi1potddQelesrTDkXbLWRFPFKsv4U7ns3c=;
+	s=arc-20240116; t=1752969850; c=relaxed/simple;
+	bh=N7SZwZJlMz0hcc9vR2pI1TN/SUdPIngF22Hx/RySXEI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gBT6U1P4FEQMf5IR6Lq2nXvqv4yBjbvy/W6mlfeyUHgg01/DQH8UkWj2+FbSQrE7MbEFjoEDmaSHCj9A7VlfDLysr8gnlzOdQBGsWiPJLkntT6wRExa0tGtqOsWuT2o0GmEWuAZrUp11kmX8IGd8YPZwuK2ivEf8yfDfVSZkHSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Ewe2N257; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Xybn/pRcRzrAuclngAeDIpQKbtEQFRJIy8lFPYxpchaaT4WnHK5tIC+N8HhcxF7LfKBkr6SuL6XUy6jQvYe3G3GMD88N3UlCMcvEUOjaFtOsz5PBoUE/TPnfs+XIGYm5oeoUJFHhrE3cBKBUkhyOph/VfjKkiXZMN55MR3ObviY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CY285dhO; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Ewe2N257"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1752963394;
-	bh=lIMlryyJZi1potddQelesrTDkXbLWRFPFKsv4U7ns3c=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=Ewe2N257Aoe3ctXTwA7xKZedK5HUVb2bFUtpHXiQw2CuNMJRmKoMluHY+ACdm4K3L
-	 ghasO7NV+DZLeV514CLN+s62V2KwDQ26BTIBBZjFItu/L8QSFmSjpzihSSbchW/YbM
-	 TlWVO1YoYEiNWESMysYLMLadif19rcIngrLe+Yz1dPM0v9Dug6Sc44B+tc2sb65d8K
-	 L06ZJdYEMuzN1jaxUzT+KS54+i2TeH/1koMe4KEvh3i8CRoSHlYfs6rY4SJnByzZKm
-	 CVMBXuYukJ6WyRAL6KHclQJHL2HqRnfsDjtAbG+/LvOxv1XHo0zSI3ko1dv7gf7fVe
-	 Lxl/4kYe0tnKrrvPtv922KRmi6Benw2XB8Wl1DSDnM2sE63SzACjyssRt6jPgPO33L
-	 eu6DpPBdzGe497Pb1na43LTEMMNuXZwJhcHhPs/Oj5ikuPRy8rn1lBxFc6Dz+Z62rk
-	 kEXO8T6wv2r+bOmAM/f5NDnMcf/Vq8aqjOni25nBpY2tpjvRXlQ
-Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:cbf1:866b:6e23:73a5])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0D6B52007A;
-	Sat, 19 Jul 2025 22:16:34 +0000 (UTC)
-Date: Sat, 19 Jul 2025 22:16:32 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Eric Frederickson <ericfrederickson68@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: A Question from a Hopeful Future Contributor
-Message-ID: <aHwZQFtMS2fk5FID@fruit.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Eric Frederickson <ericfrederickson68@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CY285dhO"
+Received: (qmail 3028 invoked by uid 109); 20 Jul 2025 00:04:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=N7SZwZJlMz0hcc9vR2pI1TN/SUdPIngF22Hx/RySXEI=; b=CY285dhO7MDSViOnpI4NcBGLerX7hrZJxVvTny1fWnYKZwHBYNNcqgY7LBq3+q4iQPXodcDaCwPa48lsiNu3feX9W8fKlRlXQli9C8wTO18R1GCRQBAF3KA8PECgjluRQwCseXEAGtYBV0xOeFMuvJk4nu2CksRA8N+vCJ0A006lberJFgFKm96ireKRZES93mXqLX/wsWtaKENDiUGuxc+3a+55FQf/JqjhhBLiMEOkwRb1IGjZswnOZhYvFsLFz31eq1UR7NF4kVV6xFgu3lws7D2WM3r4aSeoyavyzKqtYXS0TgbxDZYzBx1NqADrpiS0WOcEKxz46CfrRsGe4Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 20 Jul 2025 00:04:06 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 17048 invoked by uid 111); 20 Jul 2025 00:04:02 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 19 Jul 2025 20:04:02 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 19 Jul 2025 20:03:59 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>
+Cc: Git List <git@vger.kernel.org>
+Subject: Re: [PATCH 1/3] commit: convert pop_most_recent_commit() to
+ prio_queue
+Message-ID: <20250720000359.GA743449@coredump.intra.peff.net>
+References: <bc079b3c-a472-4f5d-95ca-390f9de25196@web.de>
+ <bfb0a65d-c9dd-47d9-a88d-9fec43538b0c@web.de>
+ <20250716050540.GB1396022@coredump.intra.peff.net>
+ <b0950e32-b4fa-4aff-8b5c-58c734b880b2@web.de>
+ <20250719065558.GD705356@coredump.intra.peff.net>
+ <37f34e15-f44f-4b8a-b684-bda27a977775@web.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Yu6LxLmg72csLTc4"
-Content-Disposition: inline
-In-Reply-To: <87y0slp23s.fsf@arch.mail-host-address-is-not-set>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---Yu6LxLmg72csLTc4
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <37f34e15-f44f-4b8a-b684-bda27a977775@web.de>
 
-On 2025-07-18 at 22:26:31, Eric Frederickson wrote:
-> Hello everyone,
+On Sat, Jul 19, 2025 at 01:15:28PM +0200, René Scharfe wrote:
 
-Hi,
+> > Hmm, I would have thought prio_queue had less memory overhead. You're
+> > spending one pointer per entry in a packed array, versus list nodes. But
+> > it's true that it doesn't shrink as items are removed (though that is
+> > something we _could_ implement).
+> 
+> If we just count the net data then a commit_list item has two pointers
+> and a prio_queue_entry has a pointer and an ID for stability.  That's a
+> tie.  ALLOC_GROW overallocates by ca. 50%, so that's 25% more on
+> average for the prio_queue.  No idea what overhead malloc() needs per
+> allocation, but I guess it's enough to tilt the scale back against
+> commit_lists.
 
-> I hope that this message finds you well! I'm a software developer and pas=
-sionate
-> git user, and I'd like to try my hand at contributing to the project. I'm
-> sending this message in order to ask Junio and the team if there's anythi=
-ng that
-> would be particularly useful / appropriate for me to start looking into o=
-n that
-> front. (Reading through the last few "What's cooking" messages, I didn't =
-see
-> anything that jumped out at me as needing a new contributor, which is why=
- I'm
-> asking in a separate message instead of replying to one of those.)
+Oh right, I totally forgot about the extra counter.
 
-It's great to hear that you want to contribute.
-
-> (Some notes on my skills: working on docs or tests is always a favorite f=
-or me,
-> so things in those areas would be a great time. Also comfortable with low=
--level
-> code, and any kind of scripting. Note too that academic background centers
-> around programming language design and parsing related stuff, so I've got=
- some
-> fluency in those areas that I could hopefully apply well to the project i=
-f ever
-> needed.)
-
-We have a Git FAQ because I answered questions on Stack Overflow and got
-tired of answering the same question again and again, so if you want to
-add any common problems there, that's of course welcome.  (Now, to be
-clear, people did not stop asking those questions, but I had prepared
-text and a link to provide to them, and then people _knew_ that we had a
-FAQ and could refer to it.)  If there's anything that you think is
-poorly documented and colleagues or people online have trouble with, we
-would absolutely love for that documentation to be improved.
-
-One thing I did to get started some years ago is to grep through the
-codebase for TODO statements and to pick something that seemed simple
-enough to do, and then send a patch.
-
-If there are small functions that you think would benefit from unit
-tests, we now have the framework for that that we lacked until recently.
-
-If you see things in the tests marked test_expect_failure, then that
-means that's a TODO test: it should pass, but it presently does not, and
-that can sometimes be a source of good things to work on.  Some of those
-things are kind of big (especially a lot of the submodule TODOs), but
-sometimes they're small and approachable.
-
-Hopefully one of these options bears fruit for you, and please don't get
-discouraged if you wander into something that ends up being very
-complicated at first.  We have lots of those in our codebase and with
-time, you'll also feel more confident in tackling those.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---Yu6LxLmg72csLTc4
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.4.7 (GNU/Linux)
-
-iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaHwZQAAKCRB8DEliiIei
-gSvMAP47+8F90VM+5NGgm3W52PONiy3Tlk9s581oEQwTqtzltAD9ESfZ3Nc+ENpv
-vrOpAdciwaoX5Itd/TkwJc1ABDNSqw0=
-=v+rq
------END PGP SIGNATURE-----
-
---Yu6LxLmg72csLTc4--
+-Peff
