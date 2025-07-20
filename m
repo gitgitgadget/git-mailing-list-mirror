@@ -1,247 +1,412 @@
-Received: from DB3PR0202CU003.outbound.protection.outlook.com (mail-northeuropeazolkn19010004.outbound.protection.outlook.com [52.103.32.4])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f193.google.com (mail-pf1-f193.google.com [209.85.210.193])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397C81DDA2D
-	for <git@vger.kernel.org>; Sun, 20 Jul 2025 12:41:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.32.4
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753015319; cv=fail; b=N3s+GmSFWCGaKs+Dk8XZ0QI9Up6hCkfnVsxSmGEhyAWTZF+Eb+/NrU3fuZzZLrFSCAfr1i9nJFYZlSxGm0z7irNFfFnko4RwvqeACSWw6vmcFdRmGbnEbmq7vRInj8Lt4a4yTzFZd9tmyW9uWTTumsxAAJ+qSN+ZHSDo5V9IFQM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753015319; c=relaxed/simple;
-	bh=nkHhkCedBXXQ/R+rDs9tejMIQ8hvwJFDW+f0KDhERSk=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=q4ksj5lL5zhIWF7rKnLBcahEx2/cMCDxeMKjQ2cJ8r+wGewAAoO1Is8zeYuXRYo/MLNN1iHXwPHyzzH1nyUwgaqbaWbSX1Y2NNzYQbzWw6rt8c/7aKOB2mz+P9B1KcCpCQigCSiiOUGdL3rm+RVT2dv5hAUZBHiKMKwRY/buvsg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=SP33hSuU; arc=fail smtp.client-ip=52.103.32.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24465539A
+	for <git@vger.kernel.org>; Sun, 20 Jul 2025 12:43:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.193
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753015439; cv=none; b=AHEeEFLGyGZ5mJYCQlkDdh6Wl7hIleVSkvhbs3vTZgzdU07hU7EXuEUf7aY4WeofUnXlAYfhm2CpKZZbsofv5UG8K0H4HFJmSKLKaAlNe5pv7pT6z7yfYRGkmCILjLKrjEIUAufpC56cBCWthHhGZtF8y3IrJoI2yEda6967JCk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753015439; c=relaxed/simple;
+	bh=i3OVsxWyXNGR3ogLB6NayN62UgE8rGDLYKMc785Y3xw=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=S6iRarZw850zwXiLKNvD/KWjNKNjKV3X+P35VPsUKJTP+PBO+4NtTYpUrscH9cnyi27KYCS8k31TZ20WE8qf0x6w6724WtYvJK3rp6JMMnjIzn6VJRG+qQn3cigaojJNQcXlwQ+pCCRA23Zsou/GBkjQHeF09bOtxIuPPKCeDoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mq5/NfDM; arc=none smtp.client-ip=209.85.210.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="SP33hSuU"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=lz5jBiDwl0QOnz8YhzWT7lUGVWvtzbn43WyxZndorqN2RZ1deRQhrCXXr0M6zvBDaOnVJdla8ISkxhtoqBklvd8PyvKAg0+ECKG/24eEKyJArsw2D/aUyqy0rRA1+BMqlI471eHocZ67e2ABraYXar3zaqP2m/CE1OvAZAdEV3hQ9w2eMaqE5BPw7EhmvVBBBxm+DwMzPYuvAEk+fWLFVJL9TD+srkEF5DeiLWeQ6OKNUl4EjyyWiOHv/YeShpEjSYIRqREyvcxiGrJA45ps+3prneD4shdSlyMIHPlcNZRWcxUSsw5iyTVlm8PsrZ/duqRaUGWNA3eg1vhtt/eW5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nkHhkCedBXXQ/R+rDs9tejMIQ8hvwJFDW+f0KDhERSk=;
- b=WRzTm7jA2OKxFBQ93CdFCcJlob5BXOxg2sqZbTDlZPs5DyPdoL9Nq3pwMJjvjsFrSM30yIH3RHGmkYhDMrHv/NeJzdjFSFSMPJgpc4xLtoI1A19WSrcYa56jtADZ4mWSVmg0qAo+0pZCgrVeElrjDh8Ly1V9LR8EDf+1ChDLFxXwiTkNyZAt7TqZkyBCivF5pQBR1oedKE8oJ8G633KUvsvcbBulLwYhKXFklrpuQYcBK6RmGTz/bnztszw8Dxy5ByTAJBNyiV/iv/febXGpAKf50AVk8EEYlJDgvsbBaZItHOtchx4/+ivD5Cjcvt5AoM5DfgIn8xR9+N0DEin3Gw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=nkHhkCedBXXQ/R+rDs9tejMIQ8hvwJFDW+f0KDhERSk=;
- b=SP33hSuUqneKn5BCl1UdeTxAHrhNSK5mIwdFVmhRX2Dcz3Dtx/E/R+HjPoZMh6AfizMfuZ4S/H4VygYJUQQOYGw2vKDJQfwJfZfeqNoZro/uQHB1g+CIyBSzE1b8rbywHJmeLXmq+ib/iZfdPuCbvS2DKGlor5t/PDx7GQKw9Ol8K1gKVdkPpDh1tlcMTDNFRTNBx3oeBRRgMs38qWxOJSirrtkOYMjv+U92Edvoiuji/7dEXiNzMolxm2yzsaTnyiUwVya5vx4mdEdIbqjlLBYFXaUuZs2VhSdjsL8BedWdfqGu7vjLNGYHtdcCOuBqGFYHiGptE9OiqgbWugkW6Q==
-Received: from VI1PR02MB4271.eurprd02.prod.outlook.com (2603:10a6:803:82::29)
- by DB9PR02MB9874.eurprd02.prod.outlook.com (2603:10a6:10:454::21) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.28; Sun, 20 Jul
- 2025 12:41:54 +0000
-Received: from VI1PR02MB4271.eurprd02.prod.outlook.com
- ([fe80::473a:177d:640e:c07f]) by VI1PR02MB4271.eurprd02.prod.outlook.com
- ([fe80::473a:177d:640e:c07f%3]) with mapi id 15.20.8901.021; Sun, 20 Jul 2025
- 12:41:54 +0000
-From: Skybuck Flying <skybuck2000@hotmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Discussion: Future-Proofing Git for Massive AI Parallelism
-Thread-Topic: Discussion: Future-Proofing Git for Massive AI Parallelism
-Thread-Index: AQHb+XNlVSr7t5kXDkyrjhZY1EgLbw==
-Date: Sun, 20 Jul 2025 12:41:53 +0000
-Message-ID:
- <VI1PR02MB4271E311313F60FB07359BB0B352A@VI1PR02MB4271.eurprd02.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: VI1PR02MB4271:EE_|DB9PR02MB9874:EE_
-x-ms-office365-filtering-correlation-id: c17a203d-645b-4c9e-aeac-08ddc78ace82
-x-microsoft-antispam:
- BCL:0;ARA:14566002|461199028|15080799012|15030799006|41001999006|19061999003|40105399003|3412199025|440099028|26104999006|102099032;
-x-microsoft-antispam-message-info:
- =?Windows-1252?Q?dHRzvuuaYYY8FCNUIP63iT4o2jPUjiv+yYM8VoobgrwXOjoI7tQNNOtn?=
- =?Windows-1252?Q?QV7Vic4Pw3h7PfD4833pswfFrQWTzVK2h9wXc3a+xz1aFkDurF7v9TVQ?=
- =?Windows-1252?Q?8pFRAOS9iuFo+twt3olGUMnKXMbxmRUWsiLrB34pRyTMaRPdI5o6kQSD?=
- =?Windows-1252?Q?8atjgj+A1QQG19mjTZ/oyNo6rSkIOLoZptYNpTx1VJmb/gHdtUpPj5kt?=
- =?Windows-1252?Q?1KqsRF1hyYR0rn6h3AJcfYBldgDyTTeTehpZvHy4d1Vea2ffLXQXckxp?=
- =?Windows-1252?Q?7eo7dqP8TCiMXDpkFJIZrS9Q1cfS/2skd9AUx2D3+w40JKEvj78C8uW8?=
- =?Windows-1252?Q?DyzYy1Yjjxo+eWkvj78M11+OJPkSUtTfXR1x+g555naocQeMl0e4Bvlo?=
- =?Windows-1252?Q?dDOceIhhGh5nH2lwkCwFJwF+E/X6URYDavWm+hhO7f8/+fTBuR3T8LkN?=
- =?Windows-1252?Q?u8l72BIKZ/PvtemQ/iyVO7L6jUcN7M56CTL+L/Uu2ICoBx3xnAU2JDx0?=
- =?Windows-1252?Q?Oq0SCGNtR2DJJAH4jWHzrhnQuVfjcslZ4Rne61XLf1EXvq5da3Dp7SYz?=
- =?Windows-1252?Q?jxoHyc3XyHnRRopkw+DuQLv80LgbFe9138j2dMWhYUOf4nlgfKQ53GSk?=
- =?Windows-1252?Q?CWOiOYfmOjUP86zlu4n3JVZqLoua+wUs9+k5/lEupVVAAEOTIWnDa3Sz?=
- =?Windows-1252?Q?GpjH7n0F99LbWu23F1DQbc4tcPX69N2X1fRqt9mLVg45REMVgbZB+SAq?=
- =?Windows-1252?Q?mDz78T0yYP6UTPc2SyKTaguoPAycd2pbcVcrx1SaXsqNBUqRLFS8wMrF?=
- =?Windows-1252?Q?lfDehHN+TbHHdUy/0H3ka7GrLwujuqmpK10CDD9AhnvWraXNHG6K7NmS?=
- =?Windows-1252?Q?cy6UT0F4DH8MnrgyIeS+oXtpM6ZDX1LqnamQoLEJISmso47Uxr+RGbmP?=
- =?Windows-1252?Q?ZV5XgnbltE7pPBccrVsvEg4rMkYPoI0SYgjJ1K6t6wgHkmymsk0DJksR?=
- =?Windows-1252?Q?9B7ckAOa1gyg0ACP5F/rrxyGigO4go9FA/nQbUxpVKdB+z2BDy2K5UY8?=
- =?Windows-1252?Q?oAQf2RzHgyvSUr9FqILV/Xq3moLjloFItaHFHUwpj3DF9tTZWuzgKrjt?=
- =?Windows-1252?Q?iUaC+IaasZTcNGB3WTsAfjYTbWhQ4jVbMKVIXD+NeNSEDtQFYT2GoSxJ?=
- =?Windows-1252?Q?HWia32TuuJjBXDgGmaxab8MCzCG2KHZACr9Z5Aa9vJhgkElK5+JFrg?=
- =?Windows-1252?Q?=3D=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?Windows-1252?Q?Y/P2UA6p3PQo5saiNlcAssEXemny3MZ+gKZ1YY+ezzrNs6Hsg9UTPDoY?=
- =?Windows-1252?Q?0JuwCYqYX/roKr/fdOzbOPQwIDkQKMT/IV/jr0DXwGALSsdZROI+T7CA?=
- =?Windows-1252?Q?p8oAGPdA61noKtfcjWu0hIc4aQZBmnsI3hrNBvfLvZiOyQfiGEn17uBp?=
- =?Windows-1252?Q?W1Xfpw/dDwiuaC2RGl9eFEjUMJSwBzaagAqcmZYx36KPIlmytsGK11DQ?=
- =?Windows-1252?Q?HLI2DN3705O6aeM9NYwTdIK34kuaELrwSkZimCVgJbyrV9F3xYt/9CP6?=
- =?Windows-1252?Q?TFIsK6RqJNo7jFK0ZkkYeQ7qojn4d6HDrOVNstM18Rbjoz1URaSu46Q7?=
- =?Windows-1252?Q?5FgnoCWdLPm0TbbvLc/CDQvi2sSB+wTAivDbY+shHXi0v9K7id4cghWh?=
- =?Windows-1252?Q?gUtk7NS2qiufP0fTv8bH+ehk+IPaHPIPWnIykWAw8ztVGzpYtfOHqh0m?=
- =?Windows-1252?Q?PflrCXnvn0lMWB62RMlxHYJzuaclss5a6JFXgNEKBrpYCwR8ftITcLPI?=
- =?Windows-1252?Q?OF4I8H293u+GTrlLmn62HcdI/vRmdeH7NG6kDZkw1v9y5uSARHUf19Io?=
- =?Windows-1252?Q?LRDcjJFzOQi2dwN185J/6duuNvrZgyy4vo5bUQubZ/CKvEA+xsHS/+vn?=
- =?Windows-1252?Q?aYY0LDgRCgnH/yCS7SYdQtvdbb8lPnaCPj7O+OsInNcvy7XUeSGfabcv?=
- =?Windows-1252?Q?AxyRyWtUUsGwQ/QWXMOeOGdUsg7PbEMPGTT2r+3g4RgxtsS80pO6/s86?=
- =?Windows-1252?Q?VTr+Kv3mfzSbguVqivCWpgeth1wSJwZyJts/OnzOdxvy/+Fm7xnk9HLZ?=
- =?Windows-1252?Q?TZSrf0i0OBlgoSv2wLD822+na+NYd1MgkFlF4/zmftVuDLuR3KkJx44W?=
- =?Windows-1252?Q?daT7Hmw4NOOX/wfMkrpTaE6WZIbVM+wcXNeB8NOXveIlyE7LgnQKFn6F?=
- =?Windows-1252?Q?INvXGZ+vFdaDiq//2EDoifX+E9h288jun0IzDR4sWBHsR5bsNGW5TnJl?=
- =?Windows-1252?Q?xulMJDMdoQMNjvVzCs/XDIQgTzeIOg44d6FtK34JRjHj7oAAr+SfLKAy?=
- =?Windows-1252?Q?FuZE/slPb7zlfAoqSgtQE710zR/cqJrD8APMdrLSy3AiVOUy+3tuKDva?=
- =?Windows-1252?Q?gRYhhYMuG/6/6wgBfGFbh6czMfQ8kna6yZ5rKia0GwsN/BL5QP5jJC4l?=
- =?Windows-1252?Q?pG/yxkGBWgiAOUKYyL+OhkhXAcn5AbxEqe9nTHzzVCn5jPVqcDPpAEqL?=
- =?Windows-1252?Q?ih+uMHMfw9S8yE3C7tsppok/miMDCs48vtQTXAVUozabNmZCCEWyPpJN?=
- =?Windows-1252?Q?7Fcxai1ROqKQt9KdUX7BxigekQ3oHQAsNZfUvlZwcWxP6tO05G8g+gO7?=
- =?Windows-1252?Q?WxN9xV9hPR4SlefnPfeC3XTD9JcOJl7Bzsc=3D?=
-Content-Type: text/plain; charset="Windows-1252"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mq5/NfDM"
+Received: by mail-pf1-f193.google.com with SMTP id d2e1a72fcca58-74b50c71b0aso1851709b3a.0
+        for <git@vger.kernel.org>; Sun, 20 Jul 2025 05:43:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753015437; x=1753620237; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=p2TkfjleP2pe0/e3EArEggIdS17MtLcj0VEtMZN0Xkg=;
+        b=mq5/NfDMS7g+hmcX+BuZHn2LUH8RghghPOtLGzMMnGURQEOtTKtotrTMd0I9Oz9EQF
+         Whu3MH6WyY+63y32Gt7Pk+e32fzn3sGu0miGBBbjanbml/yO07eDNC5qp9MqeINzbKhG
+         ZB0saySgU66HOx9ORWSbCeJVpXmkzwkBt5Un9k3+j5GEDRi44Gdw8TI0tipliYs1p7HV
+         bQZxkFIUDXFeMIYzRm8W9tbPU8BfJlqceUCZuXyrTTxKCGViqFU+PyeHTutQ12JNpLT8
+         i2u29CCIsrVJrX9sTZ+pbWuuB3q5vWJTm5QwVFWjLIyWUAFH6ma9S/hkE3vDcfvqzumK
+         kUEQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753015437; x=1753620237;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=p2TkfjleP2pe0/e3EArEggIdS17MtLcj0VEtMZN0Xkg=;
+        b=CEAWCn6r334NnfJ5TdivUGlKbPVqIRNmrw6yC5WH4Yk/8Sqahfeb6E5e14bqPZy+20
+         HFZorsMUoxaTGM9Sk52opGDA9daRiLGJUOHZ9QKtLLIPZIm4q9bNFgttKYXkETF0jmas
+         uBQSxjXhQE4LndsAtusaWmOURulMQwlBjdaJ2hSutwGKVRWLujKgzUy7IVf+zfP7Wwtf
+         6C2uzBU8HfsrMvo0h/hRbfqC60axef4gJ7mJmUqsLzrjiCZ/J7AojAlC0BIuW0HtwLdG
+         jI/NCd5V+Y/uCKHuxz+nVZYctAS6VoBOqnmsIiN8C8RUDUpBoA5VrapYqCYOxauP/pM9
+         0bnQ==
+X-Gm-Message-State: AOJu0Yy24qKHS65DOQ74f5N1Fr/ytXF4aVCTN2ACPg9oHL9CCnAdF8ge
+	JWmzhqpJw7LcUSzGm3Qez2/Xu1is32cF2E2VXed+ynFJcdvJ5Lv6I3Zs
+X-Gm-Gg: ASbGncv7IApaYLm7SHFZMPhhH8w3vn1hdRaO4NRYodw68JBPaEFJVMPvPcRU3HvOjW4
+	z1WKmwTwNR9d3mUVVIfk7Vb90Iil50N9Q53bcuRcQgvcqu9YghcUsszkuzOQJfuTBlnDGhZpxxP
+	bif2UwQU/3z400/qAo1o/D+gHlH3jUJ8EFuDA1jBndeTtnkwxKth81bLYYyADCWGjuU4uMw/q2e
+	4hyFrABoS7WcY4ukDhwPPSWiNPGGTO2UQFroMXnHtuyKJTSmE1/5OuLEZV5r0EvegYQhNHjLogb
+	8z4g3SbZhoyC1yMge27As2WACCGNoS4euydXZ94V+9lOuuVxpZDKFg7rSTtHCfTAoZXw+Ivvq5Z
+	hrZn9q9UUw6SWu+nN3IrzyBUyD+Y+W+7GhIp6Cs0S64nyOaPlgq2GweJOc3Rm4kj+LDJlTCpkAP
+	LIbe5wNE6r/Ai1hgmirRN4xDcEIBM5Jw==
+X-Google-Smtp-Source: AGHT+IFGhZf/UhwpI9xVWTWBlyyWkbj4PpthAnOzN8X2SkQOrfFsT8C5oLqGJpg7xQcKKA8K3GNZeg==
+X-Received: by 2002:a05:6a20:3948:b0:233:c703:d4bf with SMTP id adf61e73a8af0-23812c45eadmr24052173637.19.1753015436989;
+        Sun, 20 Jul 2025 05:43:56 -0700 (PDT)
+Received: from localhost.localdomain (awork062145.netvigator.com. [203.198.28.145])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f2ff99ef4sm3781930a12.61.2025.07.20.05.43.53
+        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+        Sun, 20 Jul 2025 05:43:56 -0700 (PDT)
+From: Lidong Yan <yldhome2d2@gmail.com>
+To: yldhome2d2@gmail.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	hi@looping.me,
+	j6t@kdbg.org,
+	sunshine@sunshineco.com
+Subject: [PATCH v2] pull: add pull.autoStash config option
+Date: Sun, 20 Jul 2025 20:43:34 +0800
+Message-Id: <20250720124334.12045-1-yldhome2d2@gmail.com>
+X-Mailer: git-send-email 2.39.5 (Apple Git-154)
+In-Reply-To: <20250718035221.2293-1-yldhome2d2@gmail.com>
+References: <20250718035221.2293-1-yldhome2d2@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: VI1PR02MB4271.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: c17a203d-645b-4c9e-aeac-08ddc78ace82
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2025 12:41:54.0021
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR02MB9874
+Content-Transfer-Encoding: 8bit
 
-Dear Git Community,=0A=
-=0A=
-I=92d like to spark a conversation about the evolving demands on version co=
-ntrol systems in the age of AI -=0A=
-specifically, massive parallel processing and collaboration among swarms of=
- autonomous AI agents.=0A=
-=0A=
-Git=92s architecture is rock solid for human developers, but when scaled to=
- the synthetic masses, some limitations start to bite.=0A=
-=0A=
-Challenges We=92re Facing:=0A=
-=0A=
-- Human-Centric Workflows:=0A=
-=A0 Commits, branches, merges=97great for humans. But when thousands of AI =
-agents try to play ball,=0A=
-=A0 Git feels like it=92s hosting a developer convention inside a phone boo=
-th.=0A=
-=A0=0A=
-- Large Binary Assets:=0A=
-=A0 AI projects sling around multi-gigabyte models and datasets like frisbe=
-es. Git LFS helps, but it=92s struggling in the big leagues.=0A=
-=A0=0A=
-- Conflict Resolution at Scale:=0A=
-=A0 With thousands of agents updating stuff 24/7, merge conflicts become a =
-cosmic horror. Human-driven resolution? Not scalable.=0A=
-=A0=0A=
-- Authentication Overload:=0A=
-=A0 Static credentials and manual account setups don't scale when every AI =
-agent needs dynamic, role-based access.=0A=
-=0A=
-- Semantic Blindness:=0A=
-=A0 Git tracks text, not meaning. AI changes like hyperparameters or archit=
-ecture tweaks need smarter, semantic versioning.=0A=
-=A0=0A=
-Potential Paths Forward:=0A=
-=0A=
-Short-Term:=0A=
-=0A=
-Supercharge Git via smart tooling:=0A=
-=0A=
-- Tighten integration with MLOps systems like DVC, MLflow, LakeFS:=0A=
-=0A=
-=A0 =A0 These tools specialize in handling the chaotic realities of AI deve=
-lopment=97massive datasets, frequent experiments, and ever-evolving model v=
-ersions.=0A=
-=A0 =A0 By deeply integrating Git with them, we can:=0A=
---- Offload Large File Management: Let DVC or LakeFS handle model binaries =
-and datasets with scalable storage backends, while Git focuses on code.=0A=
---- Track Experiments Natively: MLflow records hyperparameters, metrics, an=
-d artifacts=97linking them directly to Git commits provides rich reproducib=
-ility.=0A=
---- Enable Smarter Merges: AI-native tools can inform merge decisions based=
- on model performance metrics or semantic changes, not just line-by-line di=
-ffs.=0A=
---- Facilitate Parallel Agent Workflows: These platforms already support mu=
-lti-run and multi-agent tracking. Git can lean on them to orchestrate agent=
- commits=0A=
-=A0 =A0 without bottlenecks.=0A=
---- Unify Dev & Ops Pipelines: A tighter link between version control and o=
-perational tools helps automate everything from data prep to deployment.=0A=
---- If Git becomes more than just a file versioning tool and evolves into a=
- smart orchestration layer, integrating these systems could turn it into th=
-e=0A=
-=A0 =A0 central nervous system of AI development.=0A=
-=0A=
-- Create orchestration layers for automated agent commits and batching:=0A=
-=0A=
-=A0 =A0 When thousands of AI agents are making changes simultaneously=97whe=
-ther to code, models, or config files=97it=92s chaos unless there=92s a sys=
-tem coordinating=0A=
-=A0 =A0 those contributions. Orchestration layers act like traffic controll=
-ers, guiding when, how, and what agents commit.=0A=
-=0A=
-=A0 =A0 What These Layers Would Do:=0A=
---- Batch Commits: Instead of every agent making atomic commits constantly =
-(leading to performance overload and conflict central), the system groups r=
-elated=0A=
-=A0 =A0 changes together and pushes them as unified commits.=0A=
---- Schedule and Prioritize: Not all agents are equal. Some are more critic=
-al or trusted. An orchestration layer can schedule their commits based on p=
-riority,=0A=
-=A0 =A0 timing, or dependencies.=0A=
---- Conflict Mitigation: Before committing, the system checks for overlaps =
-and intelligently merges or staggers updates to reduce merge hell.=0A=
---- Audit and Rollback: It can log which agent did what, allowing transpare=
-ncy and reversibility if something breaks.=0A=
---- Meta-Agent Oversight: You could even create supervisor AI agents whose =
-job is to monitor and optimize commit behavior across the fleet.=0A=
-=0A=
-=A0 =A0 Why It's Important:=0A=
---- Without orchestration, it's like 10,000 bots trying to edit a document =
-at once. Git wasn't built for that kind of speed or concurrency.=0A=
---- This layer turns AI collaboration into a harmonized symphony, instead o=
-f a noisy code stampede.=0A=
-=0A=
-If Git had built-in support for this kind of orchestration=97or if a wrappe=
-r system implemented it=97you could revolutionize how synthetic intelligenc=
-e collaborates at scale.=0A=
-Want to brainstorm what these meta-agents or orchestration rules would look=
- like?=0A=
-I=92m loaded with ideas.=0A=
-=0A=
-- Improve tracking/versioning of AI-native assets: configs, metrics, logs=
-=0A=
-=0A=
-Long-Term: Consider an =93AI-Native=94 versioning system=0A=
-- Semantic conflict resolution powered by AI=0A=
-- Native support for large models and datasets=0A=
-- Dynamic permissions for AI agents without static user accounts=0A=
-- Graph-based, event-driven change tracking beyond linear commit history=0A=
-=0A=
-Let=92s explore what=92s possible. Whether it=92s evolving Git or drafting =
-a next-gen system, your expertise could help shape how AI collaborates at s=
-cale.=0A=
-=0A=
-Thanks for reading=97and yes, no rogue AI has committed rm -rf /=85 yet.=0A=
-=0A=
-Sincerely,=0A=
-=A0 Skybuck Flying=
+Git uses `rebase.autostash` or `merge.autostash` to determine whether a
+dirty worktree is allowed during pull. However, this behavior is not
+clearly documented, making it difficult for users to discover how to
+enable autostash, or causing them to unknowingly enable it. Add new
+config option `pull.autostash` along with its documentation and test
+cases.
+
+`pull.autostash` provides the same functionality as `rebase.autostash`
+and `merge.autostash`, but overrides them when set. If `pull.autostash`
+is not set, it falls back to `rebase.autostash` or `merge.autostash`,
+depending on the value of `pull.rebase`.
+
+Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+---
+Range-diff against v1:
+1:  5b7d10d7e9 ! 1:  51a7c66783 pull: add pull.autoStash config option
+    @@ Commit message
+         Signed-off-by: Lidong Yan <yldhome2d2@gmail.com>
+     
+      ## Documentation/config/pull.adoc ##
+    -@@ Documentation/config/pull.adoc: pull.rebase::
+    - 	of merging the default branch from the default remote when "git
+    - 	pull" is run. See "branch.<name>.rebase" for setting this on a
+    - 	per-branch basis.
+    -+
+    +@@ Documentation/config/pull.adoc: pull.octopus::
+    + 	The default merge strategy to use when pulling multiple branches
+    + 	at once.
+    + 
+     +pull.autoStash::
+    -+	When true, Git will automatically perform a `git stash` before the
+    -+	operation and then restore the local changes with `git stash pop`
+    -+	after the pull is complete. This means that you can run pull on a
+    -+	dirty worktree. If `pull.autostash` is set, it takes precedence over
+    -+	`rebase.autostash` and `merge.autostash`. If `pull.autostash` is not
+    -+	set, it falls back to `rebase.autostash` or `merge.autostash`,
+    -+	depending on the value of `pull.rebase`. This option can be
+    -+	overridden by the `--no-autostash` and `--autostash` options of
+    -+	linkgit:git-pull[1]. Defaults to false.
+    - +
+    - When `merges` (or just 'm'), pass the `--rebase-merges` option to 'git rebase'
+    - so that the local merge commits are included in the rebase (see
+    ++	When set to true, automatically create a temporary stash entry
+    ++	to record the local changes before the operation begins, and
+    ++	restore them after the operation completes.  When your "git
+    ++	pull" rebases (instead of merges), this may be convenient, since
+    ++	unlike merging pull that tolerates local changes that do not
+    ++	interfere with the merge, rebasing pull refuses to work with any
+    ++	local changes.
+    +++
+    ++If `pull.autostash` is set (either to true or false),
+    ++`merge.autostash` and `rebase.autostash` are ignored.  If
+    ++`pull.autostash` is not set at all, depending on the value of
+    ++`pull.rebase`, `merge.autostash` or `rebase.autostash` is used
+    ++instead.  Can be overridden by the `--[no-]autostash` command line
+    ++option.
+    ++
+    + pull.twohead::
+    + 	The default merge strategy to use when pulling a single branch.
+     
+      ## builtin/pull.c ##
+     @@ builtin/pull.c: static char *opt_ff;
+    @@ t/t5520-pull.sh: test_expect_success 'pull --no-autostash & merge.autostash unse
+      	test_pull_autostash_fail --no-autostash --no-rebase
+      '
+      
+    -+test_expect_success 'pull succeeds with dirty working directory and pull.autostash set' '
+    ++test_expect_success 'pull succeeds with dirty working directory and pull.autostash=true' '
+     +	test_config pull.autostash true &&
+     +	test_pull_autostash 1 --rebase &&
+    -+	test_pull_autostash 2 --no-rebase
+    -+'
+    -+
+    -+test_expect_success 'pull --autostash & pull.autostash=true' '
+    -+	test_config pull.autostash true &&
+    ++	test_pull_autostash 2 --no-rebase &&
+     +	test_pull_autostash 1 --autostash --rebase &&
+     +	test_pull_autostash 2 --autostash --no-rebase
+     +'
+     +
+    -+test_expect_success 'pull --autostash & pull.autostash=false' '
+    ++test_expect_success 'pull fails with dirty working directory and pull.autostash=false' '
+     +	test_config pull.autostash false &&
+    -+	test_pull_autostash 1 --autostash --rebase &&
+    -+	test_pull_autostash 2 --autostash --no-rebase
+    -+'
+    -+
+    -+test_expect_success 'pull --autostash & pull.autostash unset' '
+    -+	test_unconfig pull.autostash &&
+    -+	test_pull_autostash 1 --autostash --rebase &&
+    -+	test_pull_autostash 2 --autostash --no-rebase
+    -+'
+    -+
+    -+test_expect_success 'pull --no-autostash & pull.autostash=true' '
+    -+	test_config pull.autostash true &&
+    ++	test_pull_autostash_fail --rebase &&
+    ++	test_pull_autostash_fail --no-rebase &&
+     +	test_pull_autostash_fail --no-autostash --rebase &&
+     +	test_pull_autostash_fail --no-autostash --no-rebase
+     +'
+     +
+    -+test_expect_success 'pull --no-autostash & pull.autostash=false' '
+    ++test_expect_success 'pull --autostash overrides pull.autostash=false' '
+     +	test_config pull.autostash false &&
+    -+	test_pull_autostash_fail --no-autostash --rebase &&
+    -+	test_pull_autostash_fail --no-autostash --no-rebase
+    ++	test_pull_autostash 1 --autostash --rebase &&
+    ++	test_pull_autostash 2 --autostash --no-rebase
+     +'
+     +
+    -+test_expect_success 'pull --no-autostash & pull.autostash unset' '
+    -+	test_unconfig pull.autostash &&
+    ++test_expect_success 'pull --no-autostash overrides pull.autostash=true' '
+    ++	test_config pull.autostash true &&
+     +	test_pull_autostash_fail --no-autostash --rebase &&
+     +	test_pull_autostash_fail --no-autostash --no-rebase
+     +'
+     +
+    -+test_expect_success 'pull.autostash=true & rebase.autostash=true' '
+    ++test_expect_success 'pull.autostash=true overrides rebase.autostash' '
+     +	test_config pull.autostash true &&
+     +	test_config rebase.autostash true &&
+    -+	test_pull_autostash 1 --rebase
+    -+'
+    -+
+    -+test_expect_success 'pull.autostash=true & rebase.autostash=false' '
+    -+	test_config pull.autostash true &&
+    ++	test_pull_autostash 1 --rebase &&
+     +	test_config rebase.autostash false &&
+     +	test_pull_autostash 1 --rebase
+     +'
+     +
+    -+test_expect_success 'pull.autostash=false & rebase.autostash=true' '
+    ++test_expect_success 'pull.autostash=false overrides rebase.autostash' '
+     +	test_config pull.autostash false &&
+     +	test_config rebase.autostash true &&
+    -+	test_pull_autostash_fail --rebase
+    -+'
+    -+
+    -+test_expect_success 'pull.autostash=false & rebase.autostash=false' '
+    -+	test_config pull.autostash false &&
+    ++	test_pull_autostash_fail --rebase &&
+     +	test_config rebase.autostash false &&
+     +	test_pull_autostash_fail --rebase
+     +'
+     +
+    -+test_expect_success 'pull.autostash=true & merge.autostash=true' '
+    ++test_expect_success 'pull.autostash=true overrides merge.autostash' '
+     +	test_config pull.autostash true &&
+     +	test_config merge.autostash true &&
+    -+	test_pull_autostash 2 --no-rebase
+    -+'
+    -+
+    -+test_expect_success 'pull.autostash=true & merge.autostash=false' '
+    -+	test_config pull.autostash true &&
+    ++	test_pull_autostash 2 --no-rebase &&
+     +	test_config merge.autostash false &&
+     +	test_pull_autostash 2 --no-rebase
+     +'
+     +
+    -+test_expect_success 'pull.autostash=false & merge.autostash=true' '
+    ++test_expect_success 'pull.autostash=false overrides merge.autostash' '
+     +	test_config pull.autostash false &&
+     +	test_config merge.autostash true &&
+    -+	test_pull_autostash_fail --no-rebase
+    -+'
+    -+
+    -+test_expect_success 'pull.autostash=false & merge.autostash=false' '
+    -+	test_config pull.autostash false &&
+    ++	test_pull_autostash_fail --no-rebase &&
+     +	test_config merge.autostash false &&
+     +	test_pull_autostash_fail --no-rebase
+     +'
+
+ Documentation/config/pull.adoc | 16 +++++++++
+ builtin/pull.c                 | 20 ++++++++++--
+ t/t5520-pull.sh                | 60 ++++++++++++++++++++++++++++++++++
+ 3 files changed, 93 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/config/pull.adoc b/Documentation/config/pull.adoc
+index 9349e09261..125c930f72 100644
+--- a/Documentation/config/pull.adoc
++++ b/Documentation/config/pull.adoc
+@@ -29,5 +29,21 @@ pull.octopus::
+ 	The default merge strategy to use when pulling multiple branches
+ 	at once.
+ 
++pull.autoStash::
++	When set to true, automatically create a temporary stash entry
++	to record the local changes before the operation begins, and
++	restore them after the operation completes.  When your "git
++	pull" rebases (instead of merges), this may be convenient, since
++	unlike merging pull that tolerates local changes that do not
++	interfere with the merge, rebasing pull refuses to work with any
++	local changes.
+++
++If `pull.autostash` is set (either to true or false),
++`merge.autostash` and `rebase.autostash` are ignored.  If
++`pull.autostash` is not set at all, depending on the value of
++`pull.rebase`, `merge.autostash` or `rebase.autostash` is used
++instead.  Can be overridden by the `--[no-]autostash` command line
++option.
++
+ pull.twohead::
+ 	The default merge strategy to use when pulling a single branch.
+diff --git a/builtin/pull.c b/builtin/pull.c
+index c593f324fe..2a6c2e4a37 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -90,7 +90,8 @@ static char *opt_ff;
+ static const char *opt_verify_signatures;
+ static const char *opt_verify;
+ static int opt_autostash = -1;
+-static int config_autostash;
++static int config_rebase_autostash;
++static int config_pull_autostash = -1;
+ static int check_trust_level = 1;
+ static struct strvec opt_strategies = STRVEC_INIT;
+ static struct strvec opt_strategy_opts = STRVEC_INIT;
+@@ -367,7 +368,18 @@ static int git_pull_config(const char *var, const char *value,
+ 			   const struct config_context *ctx, void *cb)
+ {
+ 	if (!strcmp(var, "rebase.autostash")) {
+-		config_autostash = git_config_bool(var, value);
++		/*
++		 * run_rebase() also reads this option. The reason we handle it here is
++		 * that when pull.rebase is true, a fast-forward may occur without
++		 * invoking run_rebase(). We need to ensure that autostash is set even
++		 * in the fast-forward case.
++		 *
++		 * run_merge() handles merge.autostash, so we don't handle it here.
++		 */
++		config_rebase_autostash = git_config_bool(var, value);
++		return 0;
++	} else if (!strcmp(var, "pull.autostash")) {
++		config_pull_autostash = git_config_bool(var, value);
+ 		return 0;
+ 	} else if (!strcmp(var, "submodule.recurse")) {
+ 		recurse_submodules = git_config_bool(var, value) ?
+@@ -1006,6 +1018,8 @@ int cmd_pull(int argc,
+ 	}
+ 
+ 	argc = parse_options(argc, argv, prefix, pull_options, pull_usage, 0);
++	if (opt_autostash == -1)
++		opt_autostash = config_pull_autostash;
+ 
+ 	if (recurse_submodules_cli != RECURSE_SUBMODULES_DEFAULT)
+ 		recurse_submodules = recurse_submodules_cli;
+@@ -1052,7 +1066,7 @@ int cmd_pull(int argc,
+ 
+ 	if (opt_rebase) {
+ 		if (opt_autostash == -1)
+-			opt_autostash = config_autostash;
++			opt_autostash = config_rebase_autostash;
+ 
+ 		if (is_null_oid(&orig_head) && !is_index_unborn(the_repository->index))
+ 			die(_("Updating an unborn branch with changes added to the index."));
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 63c9a8f04b..0e0019347e 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -472,6 +472,66 @@ test_expect_success 'pull --no-autostash & merge.autostash unset' '
+ 	test_pull_autostash_fail --no-autostash --no-rebase
+ '
+ 
++test_expect_success 'pull succeeds with dirty working directory and pull.autostash=true' '
++	test_config pull.autostash true &&
++	test_pull_autostash 1 --rebase &&
++	test_pull_autostash 2 --no-rebase &&
++	test_pull_autostash 1 --autostash --rebase &&
++	test_pull_autostash 2 --autostash --no-rebase
++'
++
++test_expect_success 'pull fails with dirty working directory and pull.autostash=false' '
++	test_config pull.autostash false &&
++	test_pull_autostash_fail --rebase &&
++	test_pull_autostash_fail --no-rebase &&
++	test_pull_autostash_fail --no-autostash --rebase &&
++	test_pull_autostash_fail --no-autostash --no-rebase
++'
++
++test_expect_success 'pull --autostash overrides pull.autostash=false' '
++	test_config pull.autostash false &&
++	test_pull_autostash 1 --autostash --rebase &&
++	test_pull_autostash 2 --autostash --no-rebase
++'
++
++test_expect_success 'pull --no-autostash overrides pull.autostash=true' '
++	test_config pull.autostash true &&
++	test_pull_autostash_fail --no-autostash --rebase &&
++	test_pull_autostash_fail --no-autostash --no-rebase
++'
++
++test_expect_success 'pull.autostash=true overrides rebase.autostash' '
++	test_config pull.autostash true &&
++	test_config rebase.autostash true &&
++	test_pull_autostash 1 --rebase &&
++	test_config rebase.autostash false &&
++	test_pull_autostash 1 --rebase
++'
++
++test_expect_success 'pull.autostash=false overrides rebase.autostash' '
++	test_config pull.autostash false &&
++	test_config rebase.autostash true &&
++	test_pull_autostash_fail --rebase &&
++	test_config rebase.autostash false &&
++	test_pull_autostash_fail --rebase
++'
++
++test_expect_success 'pull.autostash=true overrides merge.autostash' '
++	test_config pull.autostash true &&
++	test_config merge.autostash true &&
++	test_pull_autostash 2 --no-rebase &&
++	test_config merge.autostash false &&
++	test_pull_autostash 2 --no-rebase
++'
++
++test_expect_success 'pull.autostash=false overrides merge.autostash' '
++	test_config pull.autostash false &&
++	test_config merge.autostash true &&
++	test_pull_autostash_fail --no-rebase &&
++	test_config merge.autostash false &&
++	test_pull_autostash_fail --no-rebase
++'
++
+ test_expect_success 'pull.rebase' '
+ 	git reset --hard before-rebase &&
+ 	test_config pull.rebase true &&
+-- 
+2.39.5 (Apple Git-154)
+
