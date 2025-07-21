@@ -1,154 +1,92 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABF71BD035
-	for <git@vger.kernel.org>; Mon, 21 Jul 2025 20:18:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D11C19CC28
+	for <git@vger.kernel.org>; Mon, 21 Jul 2025 20:34:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753129133; cv=none; b=UJvrY41HkiPAePbzAShJNNBIdyRNR+Ty/lQ1ZadNh4AYvlbjiJLbStRw8X5aUNgE3M+XGceaU+HIstrAhz+tFoRlz0iOF1KpjIFsOw2+iumqF9O/joohNCTtAM6ewKo6UtgiBlOUF//DAFvlZO0OuvPXOS5QRnZbKPP7p+KnX2Q=
+	t=1753130089; cv=none; b=MlDhzfhlsURLxcoYdHWbY+oCcpW35pLsnuiHYwHG07xVy/YJXMv6SBPl+qgcyozXvRCKIcIyuT+LBwkX/egnwi4dRxC93LM7sgBVxhNUBT3NDQFdNGJv5zARsVVtwEPgZ32i38GbicnXKHHYNc5kfUGQwLXg9RAekthH8Rs9WJ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753129133; c=relaxed/simple;
-	bh=ZVWk3WMSJgNzR5SRVJA62UwSczyhJarsYkPzdCAFWTs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=keLw+xMBt2ofsryq8qFFWBKZJ5mcEC/uH2gHq35sNrXvDp7l+PDvclgdAdWFsLTyGiRByLIYdMWSSENuPwEym4jZrOgOLrYAMijY50kS/Wf+RG4UkK8VEk//teaEQvqJV9vJm1N7DEqkTHRKeAW4b5Ky3u1M7J0EIetF+Q4vqhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pHNOJBnp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZtrqN5o; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753130089; c=relaxed/simple;
+	bh=Wr4OgQ88k2303NzjU6W7w/xAxH1Yd8xmgtRNBBykTMg=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=PYIsn8Dl3i/uZjKpqyo5MFspt/6zBGDiWxgA9GIAOAPbhGkT3WBy578syLz93xQ9xQpM/AjqRlBSZUS0q2IPZzXlHGlZd7piDGck4chM8S8jQW6mfxvADpmgDGlygIp6Jjjoq7HT+ULC/Z7MdAjtSLVQp2O2x/HFw+E5RGKFK04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d1gnivdK; arc=none smtp.client-ip=209.85.218.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pHNOJBnp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZtrqN5o"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id A84DA1D000E9;
-	Mon, 21 Jul 2025 16:18:49 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Mon, 21 Jul 2025 16:18:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753129129; x=1753215529; bh=o3pYTsbD1X
-	ObyNQu/RkAV5fLDc+twSPzjF4zfun1fpk=; b=pHNOJBnpcaA1wEg58nKq4ADd/t
-	+eYiKsXNWIdbUo60P3inUECGlN3qWTj5zYehAukaXQV11cwlIlN3wzapHCO/ha3C
-	min0ptcZNCxXeKKmgjlDXORC2epXO2BwcKRudapoCyzvZEMmLqnS8XPIV4UtQGuU
-	BrI85sbP1CMu1VFpCOFkgKheCw+GVpoBv3C2FyqKSnO9o2jX7b3BkEyGy3GkQW1C
-	C8i4FJeTslQwGwGl6/bM8GJySeF1HqETsOi8bqTeRz/wsFnRNImV0UvmzkxzMUr1
-	KzdMvKilThF0SCQpBI2Yoohmf1kS/K4FQh8ioe5csTrZ48ESP2Bi4zYZk+2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753129129; x=1753215529; bh=o3pYTsbD1XObyNQu/RkAV5fLDc+twSPzjF4
-	zfun1fpk=; b=hZtrqN5oSBhzNEpx6E7H4kEYRJrwtABk//esxJ2oriDTB3/VPCd
-	cB9WN/aJtoE73i3zOIx6rn7qdgbKRN4P/INpPVxByGtqKj2DRIoEIFzS/ul4YHuO
-	EgjsdtfiipOgRm/hMZ9gd4ePHsrmWhdflAJnL3Ui5NbZ63rC9A6nEdYiT2YuFFJZ
-	kriCzc9Ow6WSq/2OQn0qhP1KQaQmDEaY+fmY1tQ4KxI72JPVs4nHlF0qh2Bja2Zj
-	i+UBs8AOy1RM0xG+IEF1UN2dPO54M2qo+eMB4gcob9Mo8CU4WB1KJGxbVxhO9gaL
-	JeCMMTaZwkbc29+AzeDvjQER5OWLSULZYOg==
-X-ME-Sender: <xms:qaB-aOAu-5d0pILh-T82Q839OEGHfctfHwB4BaESCpffafV_JLV77w>
-    <xme:qaB-aFYKrl-4zN1HMVYLbXSNZy-3zgyErxedIBzcraqGgPPhKFce-S9MaGZ7LAP6e
-    xAEgnPNX5aAsB-KTg>
-X-ME-Received: <xmr:qaB-aBVgOEO82p7nmhpKFVL-hzD2RaZgRJlmIktsDvPr-Aj77yhne7gl46R79cUwx23HVnaIMRGDtrgco6hD17YqwY6lkzvgmBnyfpg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejfedtudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
-    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
-    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
-    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhi
-    lhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:qaB-aMP2L5DP-msRRLbmIMtY_oRJkpT14A64j0lKNSOFw3ZBg2gHZQ>
-    <xmx:qaB-aDb5hCMIX6yNlv0Xuju9iyWuwXjzxdNUndlwVlTwti1GdX4qeA>
-    <xmx:qaB-aD-cU_KQg7A979MSWN3GHd-Y2FJZ428uuMBs7e7LHuvF3rOcsQ>
-    <xmx:qaB-aMQH2m-nE1TfDuV0fF4NbNPNb6eTZHLxX8OYNUJKjcTebucrhg>
-    <xmx:qaB-aHIp7Y7pS81lEiMLesis_O3BQ-mkFq6AnNJZSJ9J2WeF8HW9v3L_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Jul 2025 16:18:48 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
- <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
- <jltobler@gmail.com>,  Jean-Noel Avila <jn.avila@free.fr>,  Christian
- Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v6 5/5] promisor-remote: use string constants for 'name'
- and 'url' too
-In-Reply-To: <20250721141056.2283349-6-christian.couder@gmail.com> (Christian
-	Couder's message of "Mon, 21 Jul 2025 16:10:23 +0200")
-References: <20250625125055.1375596-1-christian.couder@gmail.com>
-	<20250721141056.2283349-1-christian.couder@gmail.com>
-	<20250721141056.2283349-6-christian.couder@gmail.com>
-Date: Mon, 21 Jul 2025 13:18:46 -0700
-Message-ID: <xmqqldohxpp5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d1gnivdK"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ae708b0e83eso849894666b.2
+        for <git@vger.kernel.org>; Mon, 21 Jul 2025 13:34:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753130086; x=1753734886; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=Wr4OgQ88k2303NzjU6W7w/xAxH1Yd8xmgtRNBBykTMg=;
+        b=d1gnivdKQJWF1F5SjlGg7LD1tYq6q+alT3GdOuCln1Kh6Vf4nw6uvY/toC1JqsN10b
+         oa382L+wrW05o4/IhQQpDa4N7Gn9tneIWeZ0QelKeWzVfLvpC0rZp76sclTsUnFU5XVL
+         q70PZuVZDbppDUmXiz8IPrfRimOpJ1eyWBhbLbHHxbLYPzoDvfWHLNMwOosOWe+kMv+q
+         RHJa6fo1XX/yj6WqHHl37yqUlrWn1L3AkUBb2LGrWtyCcK6T/8nOCwWdJY6TbFORW6qM
+         L3DzggPoEGiN96GXFWsTDCxuFdw46y/g55IV3cIIFdRvQT4CXYHIGWYJV1pSQkI7wVpg
+         L16Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753130086; x=1753734886;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Wr4OgQ88k2303NzjU6W7w/xAxH1Yd8xmgtRNBBykTMg=;
+        b=NxC+XLweo3vaVduD9OHHUXGg4lbzA7n1S86lTT75ISarBAbyA3l5BFlMhoPvweGvlO
+         t21ywn9p4VBxZIpl8aCKvMMKRLhS+BQarMPKI1hmSbuoLNvlsRvhz9KsG6OMYHAj70w6
+         rijWVN6NFMd5o6Yuu/1w1YqGV8+zzuMJC2fMQ4lw3Uw2u30sDHJKjgeMtkGTaOI6/mw/
+         Mybv/jDMXkT8CpZKQl3qFX8R4DcrrjsqiFV544QA6ym1fRx/882fEyzULd5Lqo+INiLI
+         rX3op0r8qzRKG32ND4aeMaqPKTegzJimmSSth4tXKQZZlPRbTC5mZF10dtO65KS0RCy6
+         WzMA==
+X-Gm-Message-State: AOJu0Yxk8EGqu1NEpDqYh4c2XdAB53AwpB8OvvngfW0VqVknd/veQpZ0
+	nRNir5KiVyQ42+lkdWgwKV+iCJvnICwEZUXssUCa4gOQX5i5kVIFDpNnBJrqiTgUOZYXHucLr3l
+	FFUMovwf4eGFNIHkP5J3y/qcF/ogrEyrzVB5rt/0=
+X-Gm-Gg: ASbGncsXZGz81JuQTKpIIjZxYsiaGdc9Ydfq8h9fXZ7tf6WxaXJ6O0rlxT9ehYhnvoo
+	YSum4+5zTiSV1M3q1xFKDXE8Gy96EVYlLxigrwGblHHkZFa74qMKyGtNpX09c41Ny6y3d4tMPLt
+	QTIEMlzOjGqniFjP2+lwclR+kkvMEzHHNncMrmeH94pQI1NSYBf6qR0239vI67ADdBnoVDRxr/6
+	KuLeo0=
+X-Google-Smtp-Source: AGHT+IGZHR88CaYyEjwr3FdMF3oy/4ZTMOrCmH267PuyGYhQrwCU4Xy2IzvRNNhNusOKCyOnKmy2N+zuUFkeu+YXZpc=
+X-Received: by 2002:a17:907:3c8c:b0:ae3:5212:c906 with SMTP id
+ a640c23a62f3a-ae9cdd83460mr2324276566b.10.1753130085493; Mon, 21 Jul 2025
+ 13:34:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+From: James Gao <thehighmountain25@gmail.com>
+Date: Mon, 21 Jul 2025 16:34:35 -0400
+X-Gm-Features: Ac12FXy8Tb1V4XC6bks88ziexw41HVcsEv3J2rq6aYW4G6WCC3bOO0G_UNC6FvU
+Message-ID: <CA+=FFpNPLEYsajBZqhxhnD3-642t=qQribO+oNDF5-3hhuxDnA@mail.gmail.com>
+Subject: Bug report: latest (2.50.1) x64 version of Git for Windows
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Christian Couder <christian.couder@gmail.com> writes:
+Hi!
 
-> A previous commit started to define `promisor_field_filter` and
-> `promisor_field_token`, and used them instead of the
-> "partialCloneFilter" and "token" string literals.
->
-> Let's do the same for "name" and "url" to avoid repeating them
-> several times and for consistency with the other fields.
->
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  promisor-remote.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
+I just installed my system, and downloaded latest (2.50.1) x64 version
+of Git for Windows and installed it.
 
-Makes the code much cleaner.  Nice.
+I am on Windows 11 Pro, 10.0.22631.
+Git CLI is not getting permission to the folders.
+For example, I cannot run git init - error: couldn't set 'HEAD'
+I cannot git pull or clone or git add
 
-> diff --git a/promisor-remote.c b/promisor-remote.c
-> index 501cb92391..2f86c68397 100644
-> --- a/promisor-remote.c
-> +++ b/promisor-remote.c
-> @@ -314,6 +314,12 @@ static int allow_unsanitized(char ch)
->  	return ch > 32 && ch < 127;
->  }
->  
-> +/*
-> + * All the fields used in "promisor-remote" protocol capability,
-> + * including the mandatory "name" and "url" ones.
-> + */
-> +static const char promisor_field_name[] = "name";
-> +static const char promisor_field_url[] = "url";
->  static const char promisor_field_filter[] = "partialCloneFilter";
->  static const char promisor_field_token[] = "token";
->  
-> @@ -520,9 +526,9 @@ char *promisor_remote_info(struct repository *repo)
->  		if (item != config_info.items)
->  			strbuf_addch(&sb, ';');
->  
-> -		strbuf_addstr(&sb, "name=");
-> +		strbuf_addf(&sb, "%s=", promisor_field_name);
->  		strbuf_addstr_urlencode(&sb, p->name, allow_unsanitized);
-> -		strbuf_addstr(&sb, ",url=");
-> +		strbuf_addf(&sb, ",%s=", promisor_field_url);
->  		strbuf_addstr_urlencode(&sb, p->url, allow_unsanitized);
->  
->  		if (p->filter) {
-> @@ -663,9 +669,9 @@ static struct promisor_info *parse_one_advertised_remote(struct strbuf *remote_i
->  		*p = '\0';
->  		value = url_percent_decode(p + 1);
->  
-> -		if (!strcmp(elem, "name"))
-> +		if (!strcmp(elem, promisor_field_name))
->  			info->name = value;
-> -		else if (!strcmp(elem, "url"))
-> +		else if (!strcmp(elem, promisor_field_url))
->  			info->url = value;
->  		else if (!strcasecmp(elem, promisor_field_filter))
->  			info->filter = value;
+It returns me similar errors:
+error: unable to write file
+.git/objects/36/dd1796da4dcbb2f53005b64afeef698cfaf510: Permission
+denied
+error: src/helpers/schedule.ts: failed to insert into database
+error: unable to index file 'src/helpers/schedule.ts'
+
+I have tried every single help articles and blogs, nothing is working.
+
+I tried running git bash as Administrator, still not working.
+
+I am planning to download older versions, but it would be great to get
+it fixed for lts.
+
+Best
+James
