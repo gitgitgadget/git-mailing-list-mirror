@@ -1,140 +1,154 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776BCEAC6
-	for <git@vger.kernel.org>; Mon, 21 Jul 2025 19:57:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BABF71BD035
+	for <git@vger.kernel.org>; Mon, 21 Jul 2025 20:18:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753127864; cv=none; b=dMVC6iL6hdnMZUxEtckBg0yihx9hYru4XOMnD7bM1080tj9wIo6EWpXRLIpVyXxDNEGmGhOvJUwcCuBtdV22ClfZzOczcyq2wiGmHpvOskguikovKhkrxDTAdVReaK21aHlAKLBJeAvHYXjYCM/jJjiI0dxx8s182sRRLR9N9m8=
+	t=1753129133; cv=none; b=UJvrY41HkiPAePbzAShJNNBIdyRNR+Ty/lQ1ZadNh4AYvlbjiJLbStRw8X5aUNgE3M+XGceaU+HIstrAhz+tFoRlz0iOF1KpjIFsOw2+iumqF9O/joohNCTtAM6ewKo6UtgiBlOUF//DAFvlZO0OuvPXOS5QRnZbKPP7p+KnX2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753127864; c=relaxed/simple;
-	bh=0TjSIkBEjinE6lR9OUICzLz0eM+rJ/0DF9VAl+6Vyx4=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=mWhjdmqLfitpu774oLY1vG0fD9Ca+B5us2yUKlrK/wpy3uwMnguZsUAdPySu7q+s8uYVsQrrDO9ryEu8QNggT+jIELqAmOM/XlhbLhZs8cJYLhmDwzeuJp5w/E/4qgVBDSUQL6FalNU5Cm7QnN7D8WwVl3s5BYiYIinGT1Otfic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=rodney.bates@gmx.com header.b=A1omKirr; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+	s=arc-20240116; t=1753129133; c=relaxed/simple;
+	bh=ZVWk3WMSJgNzR5SRVJA62UwSczyhJarsYkPzdCAFWTs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=keLw+xMBt2ofsryq8qFFWBKZJ5mcEC/uH2gHq35sNrXvDp7l+PDvclgdAdWFsLTyGiRByLIYdMWSSENuPwEym4jZrOgOLrYAMijY50kS/Wf+RG4UkK8VEk//teaEQvqJV9vJm1N7DEqkTHRKeAW4b5Ky3u1M7J0EIetF+Q4vqhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pHNOJBnp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hZtrqN5o; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=rodney.bates@gmx.com header.b="A1omKirr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1753127859; x=1753732659; i=rodney.bates@gmx.com;
-	bh=0TjSIkBEjinE6lR9OUICzLz0eM+rJ/0DF9VAl+6Vyx4=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Reply-To:To:From:
-	 Subject:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=A1omKirrwD8Rl1Tww4ENoIldHCuB+7z+6osVMz3l70NmGmzmR3/0/sQHmoHShW+z
-	 9kNF94Sw9WUR89O5C/79TO4/Zs63e692wbUc4TGeDh+KmQG3I3/7DIy1qclwRmEad
-	 nyaJWhnMH3TpWTOA7qoKIg8IrOQihnxMOynVgi4yDseDdEtpcBtF/9zdObdGFDTEO
-	 2ZQORZoYO0mYnN/Losc3AFBw4+4+TIC6wLsBPeb5mFcw9JtE7ZIdWcsssAvD5kqhz
-	 gdiafgxvdws0MWDMkjqZe+2U6fuvTEaMHFpBYm/7rc1W7KoSErmves57uzsuqr9Tq
-	 KBcpzpPEPd09nyKJCw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [10.0.0.17] ([104.36.91.60]) by mail.gmx.net (mrgmx105
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1MQ5vc-1uHzwB0FbU-00LLD4 for
- <git@vger.kernel.org>; Mon, 21 Jul 2025 21:57:39 +0200
-Message-ID: <aafa3de8-5774-4a18-86dc-37493228b044@gmx.com>
-Date: Mon, 21 Jul 2025 14:57:37 -0500
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pHNOJBnp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hZtrqN5o"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id A84DA1D000E9;
+	Mon, 21 Jul 2025 16:18:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 21 Jul 2025 16:18:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753129129; x=1753215529; bh=o3pYTsbD1X
+	ObyNQu/RkAV5fLDc+twSPzjF4zfun1fpk=; b=pHNOJBnpcaA1wEg58nKq4ADd/t
+	+eYiKsXNWIdbUo60P3inUECGlN3qWTj5zYehAukaXQV11cwlIlN3wzapHCO/ha3C
+	min0ptcZNCxXeKKmgjlDXORC2epXO2BwcKRudapoCyzvZEMmLqnS8XPIV4UtQGuU
+	BrI85sbP1CMu1VFpCOFkgKheCw+GVpoBv3C2FyqKSnO9o2jX7b3BkEyGy3GkQW1C
+	C8i4FJeTslQwGwGl6/bM8GJySeF1HqETsOi8bqTeRz/wsFnRNImV0UvmzkxzMUr1
+	KzdMvKilThF0SCQpBI2Yoohmf1kS/K4FQh8ioe5csTrZ48ESP2Bi4zYZk+2g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753129129; x=1753215529; bh=o3pYTsbD1XObyNQu/RkAV5fLDc+twSPzjF4
+	zfun1fpk=; b=hZtrqN5oSBhzNEpx6E7H4kEYRJrwtABk//esxJ2oriDTB3/VPCd
+	cB9WN/aJtoE73i3zOIx6rn7qdgbKRN4P/INpPVxByGtqKj2DRIoEIFzS/ul4YHuO
+	EgjsdtfiipOgRm/hMZ9gd4ePHsrmWhdflAJnL3Ui5NbZ63rC9A6nEdYiT2YuFFJZ
+	kriCzc9Ow6WSq/2OQn0qhP1KQaQmDEaY+fmY1tQ4KxI72JPVs4nHlF0qh2Bja2Zj
+	i+UBs8AOy1RM0xG+IEF1UN2dPO54M2qo+eMB4gcob9Mo8CU4WB1KJGxbVxhO9gaL
+	JeCMMTaZwkbc29+AzeDvjQER5OWLSULZYOg==
+X-ME-Sender: <xms:qaB-aOAu-5d0pILh-T82Q839OEGHfctfHwB4BaESCpffafV_JLV77w>
+    <xme:qaB-aFYKrl-4zN1HMVYLbXSNZy-3zgyErxedIBzcraqGgPPhKFce-S9MaGZ7LAP6e
+    xAEgnPNX5aAsB-KTg>
+X-ME-Received: <xmr:qaB-aBVgOEO82p7nmhpKFVL-hzD2RaZgRJlmIktsDvPr-Aj77yhne7gl46R79cUwx23HVnaIMRGDtrgco6hD17YqwY6lkzvgmBnyfpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejfedtudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtoh
+    hmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehjnhdrrghvih
+    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhi
+    lhihrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:qaB-aMP2L5DP-msRRLbmIMtY_oRJkpT14A64j0lKNSOFw3ZBg2gHZQ>
+    <xmx:qaB-aDb5hCMIX6yNlv0Xuju9iyWuwXjzxdNUndlwVlTwti1GdX4qeA>
+    <xmx:qaB-aD-cU_KQg7A979MSWN3GHd-Y2FJZ428uuMBs7e7LHuvF3rOcsQ>
+    <xmx:qaB-aMQH2m-nE1TfDuV0fF4NbNPNb6eTZHLxX8OYNUJKjcTebucrhg>
+    <xmx:qaB-aHIp7Y7pS81lEiMLesis_O3BQ-mkFq6AnNJZSJ9J2WeF8HW9v3L_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 21 Jul 2025 16:18:48 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Taylor Blau
+ <me@ttaylorr.com>,  Karthik Nayak <karthik.188@gmail.com>,  Justin Tobler
+ <jltobler@gmail.com>,  Jean-Noel Avila <jn.avila@free.fr>,  Christian
+ Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v6 5/5] promisor-remote: use string constants for 'name'
+ and 'url' too
+In-Reply-To: <20250721141056.2283349-6-christian.couder@gmail.com> (Christian
+	Couder's message of "Mon, 21 Jul 2025 16:10:23 +0200")
+References: <20250625125055.1375596-1-christian.couder@gmail.com>
+	<20250721141056.2283349-1-christian.couder@gmail.com>
+	<20250721141056.2283349-6-christian.couder@gmail.com>
+Date: Mon, 21 Jul 2025 13:18:46 -0700
+Message-ID: <xmqqldohxpp5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: Rodney Bates <rodney.m.bates@acm.org>
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Rodney Bates <rodney.bates@gmx.com>
-Subject: Contradictory git help rebase
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
-X-Provags-ID: V03:K1:d6we4IZvL8/AzOOhiquDjn0FkIF3DOK+CZ5RmTxC7+iwtWho+S1
- rbX5TnVWhNfDfbpJ7mnoeT+Nb3km938Co9yJkf+oq2Sgc6d4JMCcOzax8SgRTNwEbseu7/g
- t1INRl/4sn0Laro+NPMpyB5s6eb4bxSzFTzP7KLM1gXrw1pYvJlVCTXs8+ePFlHlvykjZri
- jiuzmnMYGvcI0J3EJqmpA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:lGqsYRbCgQE=;K3mKuAKrYfHImbe7PnseNcv0rKP
- 3ku4IbWoqQjcQGdsyq8/1onmueUzo198bD2rPSByCQhjOSsVbVKEjW6WvFre2k6RcHCoGgwYP
- MKfPCmogKH6VzJLfkiDdZvB2KybB8/jTsjKcT6cp78FsQfKW475XELjCyryt4bqrd6tXV0Yv8
- +1J5fiQEMxLA7tQszzBXxH4TmQXDPpVv9PlqSuUr/cbYSEWmPkfClIMXHSEmMxycQg/E+gml0
- 5dJMsFuJ1Daoyy3T9/gJK7bCjOzgEKLKwy4kMfEvCmMNvbdBoL6WsmfbuPZEazbCdu+hDUTa4
- OQJT4K623kKygN+/43v3dJzwJ9YAge3inY0jXWesnSXeum5yXriKDUti6lVlydFB0GiE/xwFE
- BQU5oNDvH6DQwZhPg3aSaMAMCtgBHXYJ8P7dQ4nfD38zqX4xScirzaplxXf5YAOjOihWUMq3Y
- +rk66kVCiCSBsxj78LbBgNMIR61M3yPKm46CcbbTIlgW3iBkFAXF0AjTAlrjJLUpJecsOY9fu
- QuW0MuayC9I2D0NN6U1yEUC0xMDivHCPc6O4JanNHY59Beib1qyH+OjkzhQmA0jhe6qWU9xfo
- xLJs9WaPghUjEyUKH0HzBuI8LzXa55mZ3dVFp1hPv3Qlro4WKaY+ad8NAtH5rc4TEJHFE5KZN
- Pq1GNN+3cXwtKp/GpDcCJ1CBk/O8MStkbiTAadGaNOnZldHwKpw3JUfKPuEoTNB6tigcHrM2r
- j9hMIyhRrrpFSWgRBTwsHymfwiznCM4/WYmMEFyNBshGOSwPN5KLoJAuPWETkFopQTOvf7Uiw
- TLpLVAnd22h+Qd70ghvx+ylW2AVu8OSuAHi8H/2A7W2+/Mith9nEAW9ESPYmd8FJitwV0Ibjn
- 5hrYVIufchIhvIztjLNH/EniBZIzJtOVE+wgd573i6+2waDiu3hEWMbMNXhHJKNqWgu/1vSsq
- 6mW5EZQBqv/ga6w8PG4h5HLJg8FIUGEet8d6lvCxrk1uN3Tp9MSGjZhQj6RKhZBXOuQDUGG/c
- nyQlf8D0HlzzHRu4G8aiSc7JPcvhqiy/lFJwhBCgd2A6k32c65c5pJFxyo6viWz5cvq1iJi6x
- mshORLTRoDw6xD/ZcrMoLDRLBZhQ3J4S2flYhxZX0Tw36YAvFa6TKz4azG7VODR7G/fFd7hzs
- ZZwCRdDWMgJEVw4FjaujOJorJCdMfcEl6w3rlwGKmU1s7H5tATKCIg2uGfF/dZaE7UijPrEvC
- D/9y3puevHpDV5ZPNOem0D5mDAow0QtaMKacFxRCRGI5DkaITGgiWxvGt3Y13OAFCeuA3op3+
- deDFwh3YuYiyo98qW0MDgCJAIKi7rX+jfyQkDa3wgMYEJVSx7zdzMGD4yv9vX7XSpWRW1bHyN
- CwM8+PJWWm7ylGftKWU2nsfSXrH2Ag5sFtuYrALE68TPXZkYgLJXGHeKNvFQnZZn3EqzT0a/9
- ewcytXXX+JcNYrz3yE1J3o6FbM6jEBM+kiq7Tm2T/2jRxgxj1g8an/oP36oAuUVf1Grc66zP3
- dIO0baaEUHDns9nPfVwFTJPyiYexJoCE/n5apBZTJrUOQdL4v3+xGFXhSlLWpJEtqnUUn90t3
- aPslVFXkj56Qzls7JqlYr85BuAlA0uVOUqay6BjtXniR5DPXcP/KqUzcmXTQR/42yzl0iZj5N
- LHapKd5ugz41ly7HB4bbvvsIjA5w2yl6+8FaoGF87dWuWp29FYLfSPvPfyVlPOhZshgqObAZg
- FW64xubiyvbdWepCuYfsHkoHVWlOWbWTZvaqVvDLBukHQ1cvHkTqM5lPG6whoJspkdY0WqBon
- 3Rr31+jIYp/KOOx8BbY8e049yvdQWH4Zqd7ztOkAb/3NktZLfNQs/dzPN+ltWpIQ8DISNtdHU
- mt6gyn8xZPgE5yf8l8ZN6xePSBiqo3ww6iegT5G/dKk1GJ0hB/dWc8/H0uYkhjmF3U6NZzJBr
- 4bVLfQR0ftOHn3DteRVoU9q0vMfKRC1wDmSXuYLuY/+A+Ej2dQDOZUCxPNpYem6IDD9ilOGBX
- q0AJVhNC4bFByHJ83SH/3oBZGv+14U5cXkAah23q7kqdeBKWOb5WZDKWU5VihVRU9GG0gQ1YB
- fL+mAga2bhafelW54T4F3q4ChK9Y91jbvGIxSYwKYmXFh1FORu288oZBIuKPk+mexn7YAgqQp
- m1g7LH8sBrH+wtaiNPoKOJpxoJWBpKK7DsR3F/5PtNrsVu20ngK21AaklyX/JjwgawWXifAFT
- Pypl3hljbO+PdXmVxVSnU+TIb2KDyqjiGPrmrjM+b/LczVMRNcgP7ABbQN8VRHQTPJ24r17xf
- wiRlteYjmnZrO3QWPijzunV7gsyy0iUIQgEyw/Ca63SumMJc8TkwP+Z7uRyblrKIBP7lq6sSb
- pDGyT/u8TovgCjfDRRZySbXBidV6dA3z2NC+I8DGPWvdOzeHPsWCEjQ8t2eWbhQscNm9kOOyY
- x9uFOPK0VQAHR0kTmB8wEuKIBrKk26faPs+t/P53yPSu6sOIOiqqxUkTLBggavywIujWhIom7
- MXa5DuWVEORwmlTGNobqmgwkMdDm0qhqUm698TVdUcobITeujVMvct1qvJZZEX96Y3apL2CuX
- XKG+Dk4pO56yqgxUf7cTZQm1wF8LwyRbItCjXk45NtSRyHKix3fqPCOtVJTHnMrZrExc0aaqX
- wsmGj20wO9mgEQQlAkuNEskp3/Y4gJZdlBxSe5nkCnOA6PTFnJzkTM8dNICaZZCtIm7MOxeos
- +wPr+GrVazLGBPZLYyHeMVrvUoiRakDBrrSFsjR3GZLsxyqeZd7Ak4h/WqUs+V2e9Z3J/Vd7L
- GvrgYQbEQ4X6MYJMAVylN4tPT+i7snWcYd1FNF3LAnPcmHYgjZpP+BUCFsN2IqOOdbJCaUW3n
- S8MkUaJf8Ptb4K3UKkaPlqN36gbz2Qus8Mj1TTU/fgl7Qcs2pGWqvRRmAczZk9QSBea8xx3GW
- HcpoKK4O2BZjqE5go/RqM7bWfbXzHg1sd04PSwb0RMRCZ2HRlA1AxmK0zaCmtaDrQcMNMPSHg
- xy30TmmqZW6b9JIwc6wQP9+RfBCbqGqHYwrv2M9aAYxXCEuX4xHyxXAgFnlRrhMHe4UkTdciJ
- fboXJ2/H8lNMOvn55NIXFkW50cF2u8ETpcM/T8/w1dFFDgc4jMy8HJYDY9I4nBuvmusuxlAvL
- lXaY8s4Q1L25WxL4g1Yhb9GKRy3vO1afPB5C/GsauLtTNvj6Uqwp16XDvgenBq7nMAgZz6jPh
- ZX/d7FI/HVrY5xXodJ1UAqMmCOC73Wx5FwU1YoCPKyX0m2Qdym7KuioeJZQkp9S9Z+Ga90sdP
- 2VT+h6YUYxkRTLmi9sw9jAybNx8wPJMBKYynQObHGppYLCzx9Ih7LOL4+ktg02lq+jaV6kjvq
- 4DCB5AcKJ5bm9I982BJg==
+Content-Type: text/plain
 
-VGhlIHRleHQgYW5kIGFuIGV4YW1wbGUgaW4gdGhlIG91dHB1dCBvZiBnaXQgaGVscCByZWJhc2Ug
-c2VlbSB0byBjb250cmFkaWN0IGFib3V0DQp3aGljaCBicmFuY2ggZ2V0cyBjaGFuZ2VkIGJ5IGdp
-dCByZWJhc2UgbWFzdGVyIHRvcGljLsKgIEhlcmUgaXMgYW4gZWRpdGVkIHZlcnNpb24NCm9mIHRo
-ZSBvdXRwdXQsIHdpdGggaXJyZWxldmFudCBzdHVmZiBvbWl0dGVkIGFuZCByZWxhdGlvbnNoaXBz
-IG1hZGUgc3BlY2lmaWMuDQoNCk5BTUUNCiDCoMKgwqDCoMKgwqAgZ2l0LXJlYmFzZSAtIFJlYXBw
-bHkgY29tbWl0cyBvbiB0b3Agb2YgYW5vdGhlciBiYXNlIHRpcA0KDQpTWU5PUFNJUw0KIMKgwqDC
-oMKgwqDCoCBnaXQgcmViYXNlDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oCBbPHVwc3RyZWFtPiBbPGJyYW5jaD5dXQ0KDQpJbiB0aGUgZXhhbXBsZSBjb21tYW5kIGJlbG93
-LCA8dXBzdHJlYW0+IGlzIG1hc3RlciBhbmQgPGJyYW5jaD4gaXMgdG9waWMuDQoNCg0KIMKgwqDC
-oMKgwqDCoCBJZiA8YnJhbmNoPiBpcyBzcGVjaWZpZWQsIGdpdCByZWJhc2Ugd2lsbCBwZXJmb3Jt
-IGFuIGF1dG9tYXRpYyBnaXQgc3dpdGNoIDxicmFuY2g+IGJlZm9yZSBkb2luZyBhbnl0aGluZyBl
-bHNlLg0KIMKgwqDCoMKgwqDCoCBPdGhlcndpc2UgaXQgcmVtYWlucyBvbiB0aGUgY3VycmVudCBi
-cmFuY2guDQoNCkN1cnJlbnQgYnJhbmNoIGlzIG5vdyA8YnJhbmNoPj10b3BpYy4NCg0KIMKgwqDC
-oMKgwqDCoCBJZiA8dXBzdHJlYW0+IGlzIG5vdCBzcGVjaWZpZWQgLi4uIChpcnJlbGV2YW50KQ0K
-DQoNCiDCoMKgwqDCoMKgwqAgQWxsIGNoYW5nZXMgbWFkZSBieSBjb21taXRzIGluIHRoZSBjdXJy
-ZW50IGJyYW5jaCAoPXRvcGljKSBidXQgdGhhdCBhcmUgbm90IGluIDw9dXBzdHJlYW0+IChtYXN0
-ZXIpIGFyZSBzYXZlZCB0byBhIHRlbXBvcmFyeSBhcmVhLg0KDQogwqDCoMKgwqDCoMKgIFRoZSBj
-dXJyZW50IGJyYW5jaCBpcyByZXNldCB0byA8dXBzdHJlYW0+LA0KDQpDdXJyZW50IGJyYW5jaCBp
-cyBub3cgPHVwc3RyZWFtPj1tYXN0ZXIuDQoNCiDCoMKgwqDCoMKgwqAgVGhlIGNvbW1pdHMgdGhh
-dCB3ZXJlIHByZXZpb3VzbHkgc2F2ZWQgaW50byB0aGUgdGVtcG9yYXJ5IGFyZWEgYXJlIHRoZW4g
-cmVhcHBsaWVkIHRvIHRoZSBjdXJyZW50IGJyYW5jaCAobWFzdGVyKSwgb25lIGJ5DQogwqDCoMKg
-wqDCoMKgIG9uZSwgaW4gb3JkZXIuDQoNCkkuZS4sIG1hc3RlciBpcyBjaGFuZ2VkLCB0b3BpYyBp
-cyBub3QuDQoNCg0KIMKgwqDCoMKgwqDCoCBBc3N1bWUgdGhlIGZvbGxvd2luZyBoaXN0b3J5IGV4
-aXN0cyBhbmQgdGhlIGN1cnJlbnQgYnJhbmNoIGlzICJ0b3BpYyI6DQoNCiDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIEEtLS1CLS0tQyB0b3BpYw0KIMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIC8NCiDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIEQtLS1FLS0tRi0tLUcgbWFzdGVyDQoNCiDCoMKgwqDCoMKgwqAgRnJvbSB0aGlzIHBvaW50
-LCB0aGUgcmVzdWx0IG9mIGVpdGhlciBvZiB0aGUgZm9sbG93aW5nIGNvbW1hbmRzOg0KDQoNCiDC
-oMKgwqDCoMKgwqDCoMKgwqDCoCBnaXQgcmViYXNlIG1hc3RlciB0b3BpYw0KDQogwqDCoMKgwqDC
-oMKgIHdvdWxkIGJlOg0KDQogwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqAgQSctLUInLS1DJyB0b3BpYw0KIMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAvDQogwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoCBELS0tRS0tLUYtLS1HIG1hc3Rlcg0KDQpCdXQgdGhpcyBkaWFncmFtIHNob3dz
-IHRvcGljIGNoYW5nZWQsIG1hc3RlciBub3QuDQoNCg==
+Christian Couder <christian.couder@gmail.com> writes:
+
+> A previous commit started to define `promisor_field_filter` and
+> `promisor_field_token`, and used them instead of the
+> "partialCloneFilter" and "token" string literals.
+>
+> Let's do the same for "name" and "url" to avoid repeating them
+> several times and for consistency with the other fields.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  promisor-remote.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+
+Makes the code much cleaner.  Nice.
+
+> diff --git a/promisor-remote.c b/promisor-remote.c
+> index 501cb92391..2f86c68397 100644
+> --- a/promisor-remote.c
+> +++ b/promisor-remote.c
+> @@ -314,6 +314,12 @@ static int allow_unsanitized(char ch)
+>  	return ch > 32 && ch < 127;
+>  }
+>  
+> +/*
+> + * All the fields used in "promisor-remote" protocol capability,
+> + * including the mandatory "name" and "url" ones.
+> + */
+> +static const char promisor_field_name[] = "name";
+> +static const char promisor_field_url[] = "url";
+>  static const char promisor_field_filter[] = "partialCloneFilter";
+>  static const char promisor_field_token[] = "token";
+>  
+> @@ -520,9 +526,9 @@ char *promisor_remote_info(struct repository *repo)
+>  		if (item != config_info.items)
+>  			strbuf_addch(&sb, ';');
+>  
+> -		strbuf_addstr(&sb, "name=");
+> +		strbuf_addf(&sb, "%s=", promisor_field_name);
+>  		strbuf_addstr_urlencode(&sb, p->name, allow_unsanitized);
+> -		strbuf_addstr(&sb, ",url=");
+> +		strbuf_addf(&sb, ",%s=", promisor_field_url);
+>  		strbuf_addstr_urlencode(&sb, p->url, allow_unsanitized);
+>  
+>  		if (p->filter) {
+> @@ -663,9 +669,9 @@ static struct promisor_info *parse_one_advertised_remote(struct strbuf *remote_i
+>  		*p = '\0';
+>  		value = url_percent_decode(p + 1);
+>  
+> -		if (!strcmp(elem, "name"))
+> +		if (!strcmp(elem, promisor_field_name))
+>  			info->name = value;
+> -		else if (!strcmp(elem, "url"))
+> +		else if (!strcmp(elem, promisor_field_url))
+>  			info->url = value;
+>  		else if (!strcasecmp(elem, promisor_field_filter))
+>  			info->filter = value;
