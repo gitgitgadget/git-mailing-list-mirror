@@ -1,63 +1,63 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CC4F2DA742
-	for <git@vger.kernel.org>; Mon, 21 Jul 2025 14:11:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785922D8DCA
+	for <git@vger.kernel.org>; Mon, 21 Jul 2025 14:11:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753107076; cv=none; b=pp2NWfsOjkC5RI5e/wgRfEPSEMN+BHjK97opcktVtQ86EstKs3YBUcj9/TK5a3zpuvMDiSmDtOPHfWtHEqENcrKJWKYM3vwr21XPemEsb2I34FlrkOobTO9RXLWAjexEb19C7WBt4H1zuWVnBVBm1pY0yScbv0wUX3t7EZB32OI=
+	t=1753107077; cv=none; b=LAZ4S6Q68PoC7GTCtTlDg67IJFwBSQCFMu3zoJYej0/vdWTLxawKzTTFvAADFFXuFz7IapMg0r7THsjqvqC9ZugBqzmPXap9rKeJ6S/s+6Ex4hrUk5cMzkoaIfXbvw5K+kO5ODcEZJEmSKVYY4R+z+coa1U+232nzvcamWKwvQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753107076; c=relaxed/simple;
-	bh=agxkhXFcT3oE6Q/O/oBUW6US431cO4z4C8r0cIbUbBo=;
+	s=arc-20240116; t=1753107077; c=relaxed/simple;
+	bh=/TZsPcYPyPV2AsE5VPvUexsTZ7LwyoSL3kTzKf4HRAE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gEcQuZjHq1ktjVpVC17FqLbdzIw9ijWjYzbc8DI0iYOPvvso88QPSOwMViTsNGgFf5vGxSSWIDxHhxKCX4R7kuJXlQ7jKDe63myIpxrfTqkrbop32UFS1veudgwYBmM6laY+6zNxLFcP4fcgZXv92ZR0491nSoRvqDI2n/rbmr0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PVl3DSMd; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version; b=d+yl/nZjoOM/59izoH1SgsHZy8SWq2IXe8+I9t63LnxWPNcUIwPq2ZHhM8AeHKjNrhUQUIWVDWAUkddcvEriP4pkc0b2lELuYHxFQ9ZDp39OXvHqz++JHQSZzOGFDYWhXHKUpWDuXDq6zTmp7T+v0mbiVWeCmEmWJ4tN9P2AfU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QI3eRWsw; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PVl3DSMd"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45629702e52so18845035e9.2
-        for <git@vger.kernel.org>; Mon, 21 Jul 2025 07:11:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QI3eRWsw"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-451d41e1ad1so30599065e9.1
+        for <git@vger.kernel.org>; Mon, 21 Jul 2025 07:11:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753107072; x=1753711872; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753107073; x=1753711873; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OFGao59YqhLDmpnZClt+VB+wqeOjPl7HdW74h5WMmX4=;
-        b=PVl3DSMdoXki4onR0Ru0oT3AHqywjLhiSAgSSGjK+P7eIASxijuT/XQ65VZs3uNj/y
-         5/oDn0o//DffPwybpyoL6sINqIXGN6xclKQLuGSLcz0v4VNo/ek+K6SzTaCjarTPsYST
-         96wGD1TtaZcWfwWzvGlWpm1dF9r8THDsjDVV+K3/i1ajlp1t7ybvl+hhtAWAxe15+ziO
-         4n/SKhzCKPLzLThxBddYzSq2BYPWL8IzQUJVN8YgB1fWylNUZdE1vZkBpOqQGmWzBbEd
-         pvG4ndpEWzv2JJ2jgVpNbc8mULvv+zyaxZBjz1/nOUwqpf0NfbidkPI9+Aio6qpG2TL2
-         sqWg==
+        bh=0ynT6VD2KZk3dFrb4oXqgfAAAzjAskvgs9L8ntFLMsg=;
+        b=QI3eRWswS6PTP8UTv0PbQoGll8ZuRwy09RV85lm8V8ySJ0HlngczhIjY545ZZutqiu
+         nZqHObYlLKz2K1dcs4zrUxyNmr7Agwbt6Rj7xeWKvmo4caGzzeJdkcc6BTYmWd1V3y7d
+         Sm3Ux9E6LuS1/6wuA8igJhFaQ65/nldeK7e/TvOz4D1X6QK8+aH2+n8U77IKh3YK10Oy
+         kbTH3jiWS1C8XaA8dO+9tbmFm77g1FgECt3eiRHO0EnYG+LS49sDiQue0UogOmqK/Fgz
+         ah7AYE7NR9+eCdBdih8qyryLsoScew+xgHF/VJ44RRSSr49vpxJoSe/3RM9RTRaR7QWC
+         rQ5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753107072; x=1753711872;
+        d=1e100.net; s=20230601; t=1753107073; x=1753711873;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OFGao59YqhLDmpnZClt+VB+wqeOjPl7HdW74h5WMmX4=;
-        b=NSm70jMMY/ixEcjfEaVO4iwDzdgwa+/9t/DvHjDggm3AwaerzdOQB6sGuPjLuWBqHw
-         N/OaE3c45vlD6SKSp+HsOs73tHAJa02J1mIq3xcujO1d74Yuu3OjYTubZ1MAXL+HNHPH
-         M/NXzcdd7rHmgNFzUGD0mAouoh3Kgwt2Lb6qiwCaKQfO0zBiuBhjA6ATgRBPL1E3OTq6
-         rfW3NnjmuaI+WGuJG0K8cOF9kGO3CMeh4RaisMaFgz7Xe4YPSn85u5YWIg8rIRVE31dA
-         KtIaRQ1s1WRbJJpq3w3gfzDShi++ZcrXade6BsWDNPruZiFtMzb8dBxQJ9st6B4fRYNq
-         XEEA==
-X-Gm-Message-State: AOJu0YwWpedZ3kYrKgxnNHSroRK1sUImgOj/6EEZqzcORhlZrzyVr9oH
-	jKq99VxH/3BXMLranfnn/zgF1P7RJbtAcFiq1oLIxq/eLWSIryhCUehBEkW1WA==
-X-Gm-Gg: ASbGncuRNYYO1Sj0HHlhjGKV7X3HwfGB6HswN6D71oAUkgNRjmL2P3NNryQI6m6svUK
-	0CjHGfztOfuCIWHaxBnv3TfWtRKwoTut1Msm0zsa6JuZixXbZqFfulLfMYYwz99yvuOJUjg2lmL
-	Rc2rTYJGFFV9Sa1f0ja3EdUQCqY4LtV+ecq+8MOFBJ2f4Pm990pUeTOIJPi74XXCzLqY4/KpePb
-	/4rwZHH1/MBmrCJkBb7/Pju2ukxkJu5ZR8k7bzkmRm4MGBEB8oXyGZB4xoFtRrm4IW5w+z6st9u
-	uv6GyJS6Ddz6Rxjwe8uunmfLFnJdXnhGARTjZMBBwsP4BDaDx1XKC2TYiytNwFEi5pjPAL9cIPr
-	xpQjyv80Lj/kx17B75XlmpC0BtkFtImrSt/MlM0JVSeak2A5Ys64ZTzgAfruZU/rFnG4KnzeHQb
-	PUDt9V+smTwD8LuuU=
-X-Google-Smtp-Source: AGHT+IGmDQwqNKwAOo6HKVznXFB9snZi0xsDxC6GdrDlEQz+eY/EGm0WSNvA8RlwBkcfITLvl6g+Pw==
-X-Received: by 2002:a05:600c:3b15:b0:43c:eeee:b713 with SMTP id 5b1f17b1804b1-4562e36c7b1mr170420185e9.20.1753107071234;
-        Mon, 21 Jul 2025 07:11:11 -0700 (PDT)
+        bh=0ynT6VD2KZk3dFrb4oXqgfAAAzjAskvgs9L8ntFLMsg=;
+        b=UbGptqdCIWtGsfLJAkocdZB9s2mbLfBw19HUiD/9ZeXNR9/kgBYZQedTVfdn9e2mUE
+         Z+IZbSbX2pEWuOwjWxQiEXDyEIsG0GR+4n3mWSWMQVMaXm9w/lSFA8Ju4DA1H2cJREvg
+         M2BqngVzXzUJklbbl7Grs8HAPxsLzWfP8HU95Z1hGoTaKBWDtoZ+47sT0qZDazUWYWaD
+         IIk5FMBIHeT6KKBZQheZ+pgqNJPwy0A22arwHPpfVH3Z/TArvpOItEMBrVjp+pnvox6e
+         hMBCpbKGSZoTq/wQeWrF8ly5nuQfJahEJOl63c3w49ZSuWtqgC6o+gNmbbdSo0+D15gr
+         SXWQ==
+X-Gm-Message-State: AOJu0YxjRceVI1gst+WuMlXZo5G3U3/IoMi9Z7Uo7Db983u3kNucGksk
+	AJOW2PxIZNyepAv26Bo8PSrKWNi99prJl+D5fuOAmMXjYuoa3GUfITXNPCUxwQ==
+X-Gm-Gg: ASbGncsXa7RDh1Ki4U1CDECKezqPtMPl6UrWMIKolbSxaVwQlWK0wJKOttcuP9k8i9T
+	ciTz53KNEJYtUll7MNOi+UT/tUfC87ckwBzPnBZyEy0G/Im0aiJmubVXWRDOYHzv/ljUvJFCecX
+	rg7SblM/3q17OC+ZpdQ4Bi62BkuWhoQtfjWBS8NqwYQy7tYuY0XMWA/4HjPFHlC58R2iD/mOUgk
+	CTgl32/nhx/vQm8aIQVX+JgjN6sZQ6xZsl+lRqwhtaoi1FBpfnmIxSmfKG0fz66Q9puxv++KwaU
+	aNpDHEp+Y0G9UTuMXbX6xgLIZZJr7lZRlgfe3Hw77ETU4Al2ZZpvBKndwkDN2srt7wlzGN13c38
+	kr2bBcXFqUcDi59i2yzsLo2SN0LhoFrli5BLOdQzXupTvO/fnsJJ8XFfo17ThhVMwpL1HlVIhI6
+	55sMe+
+X-Google-Smtp-Source: AGHT+IF/IAjpQSTGNMNW3BwRzohVc/mrLODnRXGEdnKgm01qHJJ/+jR577n6BHhd5ylz+nYidmsFZQ==
+X-Received: by 2002:a5d:5d10:0:b0:3b3:a6c2:1a10 with SMTP id ffacd0b85a97d-3b60dd641d0mr19505574f8f.12.1753107072542;
+        Mon, 21 Jul 2025 07:11:12 -0700 (PDT)
 Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e7f2e68sm160885585e9.1.2025.07.21.07.11.10
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4562e7f2e68sm160885585e9.1.2025.07.21.07.11.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Jul 2025 07:11:10 -0700 (PDT)
+        Mon, 21 Jul 2025 07:11:11 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -66,333 +66,262 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Karthik Nayak <karthik.188@gmail.com>,
 	Justin Tobler <jltobler@gmail.com>,
 	Jean-Noel Avila <jn.avila@free.fr>,
-	Christian Couder <christian.couder@gmail.com>
-Subject: [PATCH v6 0/5] Make the "promisor-remote" capability support more fields
-Date: Mon, 21 Jul 2025 16:10:18 +0200
-Message-ID: <20250721141056.2283349-1-christian.couder@gmail.com>
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH v6 1/5] promisor-remote: refactor to get rid of 'struct strvec'
+Date: Mon, 21 Jul 2025 16:10:19 +0200
+Message-ID: <20250721141056.2283349-2-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.50.1.324.gc7d7c83534
-In-Reply-To: <20250625125055.1375596-1-christian.couder@gmail.com>
+In-Reply-To: <20250721141056.2283349-1-christian.couder@gmail.com>
 References: <20250625125055.1375596-1-christian.couder@gmail.com>
+ <20250721141056.2283349-1-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The "promisor-remote" capability can only be used to pass the names
-and URLs of the promisor remotes from the server to the client. After
-that the client can use this information to decide if it accepts the
-remotes or not.
+In a following commit, we will use the new 'promisor-remote' protocol
+capability introduced by d460267613 (Add 'promisor-remote' capability
+to protocol v2, 2025-02-18) to pass and process more information
+about promisor remotes than just their name and url.
 
-It would be nice if the server could pass more fields about its
-remotes and if the client could use that additional information to
-decide about the remotes by comparing it with its local information
-about the remotes.
+For that purpose, we will need to store information about other
+fields, especially information that might or might not be available
+for different promisor remotes. Unfortunately using 'struct strvec',
+as we currently do, to store information about the promisor remotes
+with one 'struct strvec' for each field like "name" or "url" does not
+scale easily in that case. We would need one 'struct strvec' for each
+new field, and then we would have to pass all these 'struct strvec'
+around.
 
-This patch series implements this by adding the "promisor.sendFields"
-on the server side and the "promisor.checkFields" on the client side.
+Let's refactor this and introduce a new 'struct promisor_info'.
 
-For example, if "promisor.sendFields" is set to "partialCloneFilter",
-and the server has the remote "foo" configured like this:
+It will only store promisor remote information in its members. For now
+it has only a 'name' member for the promisor remote name and an 'url'
+member for its URL. We will use a 'struct string_list' to store the
+instances of 'struct promisor_info'. For each 'item' in the
+string_list, 'item->string' will point to the promisor remote name and
+'item->util' will point to the corresponding 'struct promisor_info'
+instance.
 
-[remote "foo"]
-        url = file:///tmp/foo.git
-	partialCloneFilter = blob:none
+Explicit members are used within 'struct promisor_info' for type
+safety and clarity regarding the specific information being handled,
+rather than a generic key-value store. We want to specify and document
+each field and its content, so adding new members to the struct as
+more fields are supported is fine.
 
-then "name=foo,url=file:///tmp/foo.git,partialCloneFilter=blob:none"
-will be sent by the server for this remote.
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
+ promisor-remote.c | 107 ++++++++++++++++++++++++++++------------------
+ 1 file changed, 66 insertions(+), 41 deletions(-)
 
-All the information passed through the "promisor-remote" capability is
-still only used to decide if the remotes are accepted or not. The
-client doesn't store it and doesn't use it for any other purpose.
-
-Note that the filter mechanism already exists for a long time and this
-series doesn't change how it works. For example, it has already been
-possible for a long time to have different repos using the same
-promisor remote with different filters. See the existing partial clone
-documentation (like "Documentation/technical/partial-clone.adoc") for
-more information on partial clone.
-
-The fields that can be passed are limited to "partialCloneFilter" and
-"token".
-
-On the technical side, we get rid of 'struct strvec' and we use
-'struct promisor_info' to store the data and 'struct string_list' to
-store the 'struct promisor_info' instances instead.
-
-This work is part of the "LOP" effort documented in:
-
-  Documentation/technical/large-object-promisors.adoc
-
-See that doc for more information on the broader context.
-
-Changes since v5
-----------------
-
-Thanks to Patrick, Junio, Karthik, Jean-Noël and Justin for their
-comments on the previous versions.
-
-There are a number of changes compared to v5 but they are mostly on
-the documentation and commit messages.
-
-  - In patch 1/5 ("promisor-remote: refactor to get rid of 'struct
-    strvec'"), we don't check p->url and BUG() if it's NULL anymore.
-
-  - In patch 2/5 ("promisor-remote: allow a server to advertise more
-    fields") the commit message has been improved. Especially there
-    are now explanations about what we call fields and field names.
-
-  - In patch 2/5 there are the following changes to the documentation:
-
-    - use of "will" has been reduced,
-
-    - "`partialCloneFilter`::" and "`token`::" are used to describe
-      these field names,
-
-    - "<field-name>" is used instead of "<field name>",
-
-    - the length of the underline to the "promisor-remote=<pr-info>"
-      title has been adjusted
-
-    - the BNF definition of "pr-info" has been improved,
-
-    - it's stated that a given field name should not appear more than
-      once for each promisor remote,
-
-    - the BNF definition of "pr-names" has been improved.
-
-  - In patch 4/5 ("promisor-remote: allow a client to check fields")
-    the use of "will" has alse been reduced.
-
-CI tests
---------
-
-They have all passed, see:
-
-https://github.com/chriscool/git/actions/runs/16417265102
-
-Range diff compared to v5
--------------------------
-
-1:  3700939f67 ! 1:  87a6ba5c48 promisor-remote: refactor to get rid of 'struct strvec'
-    @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
-      	}
-      
-     -	if (!strcmp(urls->v[i], remote_url))
-    -+	if (!p->url)
-    -+		BUG("bad config_info (URL is NULL) for remote '%s'",
-    -+		    remote_name);
-    -+
-     +	if (!strcmp(p->url, remote_url))
-      		return 1;
-      
-2:  f546756705 ! 2:  0543a42858 promisor-remote: allow a server to advertise more fields
-    @@ Commit message
-         and "url" information from a server to a client in the form
-         "name=<remote_name>,url=<remote_url>".
-     
-    -    Let's make it possible to pass more information by introducing a new
-    -    "promisor.sendFields" configuration variable. This variable should
-    -    contain a comma or space separated list of field names that will be
-    -    looked up in the configuration of the remote on the server to find the
-    -    values that will be passed to the client.
-    +    To allow clients to make more informed decisions about which promisor
-    +    remotes they accept, let's make it possible to pass more information
-    +    by introducing a new "promisor.sendFields" configuration variable.
-     
-    -    Only a set of predefined fields are allowed. The only fields in this
-    -    set are "partialCloneFilter" and "token". The "partialCloneFilter"
-    -    field specifies the filter definition used by the promisor remote,
-    -    and the "token" field can provide an authentication credential for
-    -    accessing it.
-    +    On the server side, information about a remote `foo` is stored in
-    +    configuration variables named `remote.foo.<variable-name>`. To make
-    +    it clearer and simpler, we use `field` and `field name` like this:
-    +
-    +      * `field name` refers to the <variable-name> part of such a
-    +        configuration variable, and
-    +
-    +      * `field` refers to both the `field name` and the value of such a
-    +        configuration variable.
-    +
-    +    The "promisor.sendFields" configuration variable should contain a
-    +    comma or space separated list of field names that will be looked up
-    +    in the configuration of the remote on the server to find the values
-    +    that will be passed to the client.
-    +
-    +    Only a set of predefined field names are allowed. The only field
-    +    names in this set are "partialCloneFilter" and "token". The
-    +    "partialCloneFilter" field name specifies the filter definition used
-    +    by the promisor remote, and the "token" field name can provide an
-    +    authentication credential for accessing it.
-     
-         For example, if "promisor.sendFields" is set to "partialCloneFilter",
-    -    and the server has the "remote.<name>.partialCloneFilter" config
-    -    variable set to a value for a remote, then that value will be passed
-    -    in the form "partialCloneFilter=<value>" after the "name" and "url"
-    -    fields.
-    +    and the server has the "remote.foo.partialCloneFilter" config
-    +    variable set to a value, then that value will be passed in the
-    +    "partialCloneFilter" field in the form "partialCloneFilter=<value>"
-    +    after the "name" and "url" fields.
-     
-         A following commit will allow the client to use the information to
-         decide if it accepts the remote or not. For now the client doesn't do
-    @@ Documentation/config/promisor.adoc: promisor.advertise::
-      
-     +promisor.sendFields::
-     +	A comma or space separated list of additional remote related
-    -+	field names. A server will send these field names and the
-    ++	field names. A server sends these field names and the
-     +	associated field values from its configuration when
-     +	advertising its promisor remotes using the "promisor-remote"
-     +	capability, see linkgit:gitprotocol-v2[5]. Currently, only the
-     +	"partialCloneFilter" and "token" field names are supported.
-     ++
-    -+* "partialCloneFilter": contains the partial clone filter
-    -+  used for the remote.
-    ++`partialCloneFilter`:: contains the partial clone filter
-    ++used for the remote.
-     ++
-    -+* "token": contains an authentication token for the remote.
-    ++`token`:: contains an authentication token for the remote.
-     ++
-     +When a field name is part of this list and a corresponding
-    -+"remote.foo.<field name>" config variable is set on the server to a
-    -+non-empty value, then the field name and value will be sent when
-    ++"remote.foo.<field-name>" config variable is set on the server to a
-    ++non-empty value, then the field name and value are sent when
-     +advertising the promisor remote "foo".
-     ++
-     +This list has no effect unless the "promisor.advertise" config
-    @@ Documentation/gitprotocol-v2.adoc: retrieving the header from a bundle at the in
-      headers of that bundle or bundles.
-      
-     -promisor-remote=<pr-infos>
-    +-~~~~~~~~~~~~~~~~~~~~~~~~~~
-     +promisor-remote=<pr-info>
-    - ~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ++~~~~~~~~~~~~~~~~~~~~~~~~~
-      
-      The server may advertise some promisor remotes it is using or knows
-      about to a client which may want to use them as its promisor remotes,
-    @@ Documentation/gitprotocol-v2.adoc: retrieving the header from a bundle at the in
-      form:
-      
-     -	pr-infos = pr-info | pr-infos ";" pr-info
-    -+	pr-info = pr-fields | pr-info ";" pr-info
-    ++	pr-info = pr-fields | pr-info ";" pr-fields
-      
-     -	pr-info = "name=" pr-name | "name=" pr-name "," "url=" pr-url
-    -+	pr-fields = field-name "=" field-value | pr-fields "," pr-fields
-    ++	pr-fields = pr-field | pr-fields "," pr-field
-      
-     -where `pr-name` is the urlencoded name of a promisor remote, and
-     -`pr-url` the urlencoded URL of that promisor remote.
-    -+where all the `field-name` and `field-value` in a given `pr-fields`
-    -+are field names and values related to a single promisor remote.
-    ++	pr-field = field-name "=" field-value
-      
-     -In this case, if the client decides to use one or more promisor
-     -remotes the server advertised, it can reply with
-     -"promisor-remote=<pr-names>" where <pr-names> should be of the form:
-    ++where all the `field-name` and `field-value` in a given `pr-fields`
-    ++are field names and values related to a single promisor remote. A
-    ++given `field-name` MUST NOT appear more than once in given
-    ++`pr-fields`.
-    ++
-     +The server MUST advertise at least the "name" and "url" field names
-     +along with the associated field values, which are the name of a valid
-     +remote and its URL, in each `pr-fields`. The "name" and "url" fields
-     +MUST appear first in each pr-fields, in that order.
-    - 
-    --	pr-names = pr-name | pr-names ";" pr-name
-    ++
-     +After these mandatory fields, the server MAY advertise the following
-     +optional fields in any order:
-     +
-    -+- "partialCloneFilter": The filter specification used by the remote.
-    ++`partialCloneFilter`:: The filter specification used by the remote.
-     +Clients can use this to determine if the remote's filtering strategy
-     +is compatible with their needs (e.g., checking if both use "blob:none").
-     +It corresponds to the "remote.<name>.partialCloneFilter" config setting.
-     +
-    -+- "token": An authentication token that clients can use when
-    ++`token`:: An authentication token that clients can use when
-     +connecting to the remote. It corresponds to the "remote.<name>.token"
-     +config setting.
-     +
-    @@ Documentation/gitprotocol-v2.adoc: retrieving the header from a bundle at the in
-     +If the client decides to use one or more promisor remotes the server
-     +advertised, it can reply with "promisor-remote=<pr-names>" where
-     +<pr-names> should be of the form:
-    -+
-    -+	pr-names = pr-name | pr-names ";" pr-names
-    + 
-    + 	pr-names = pr-name | pr-names ";" pr-name
-      
-      where `pr-name` is the urlencoded name of a promisor remote the server
-      advertised and the client accepts.
-3:  3ac73b14eb = 3:  d566719807 promisor-remote: refactor how we parse advertised fields
-4:  b75577eff2 ! 4:  d2a13eabc0 promisor-remote: allow a client to check fields
-    @@ Documentation/config/promisor.adoc: promisor.acceptFromServer::
-     +
-     +promisor.checkFields::
-     +	A comma or space separated list of additional remote related
-    -+	field names. A client will check if the values of these fields
-    ++	field names. A client checks if the values of these fields
-     +	transmitted by a server correspond to the values of these
-     +	fields in its own configuration before accepting a promisor
-     +	remote. Currently, "partialCloneFilter" and "token" are the
-    @@ Documentation/config/promisor.adoc: promisor.acceptFromServer::
-     +   match the value advertised by the server for the "token" field.
-     ++
-     +If any of these conditions is not met for any field name listed in
-    -+`promisor.checkFields`, the advertised remote "foo" will be rejected.
-    ++`promisor.checkFields`, the advertised remote "foo" is rejected.
-     ++
-     +For the "partialCloneFilter" field, this allows the client to ensure
-     +that the server's filter matches what it expects locally, preventing
-    @@ Documentation/config/promisor.adoc: promisor.acceptFromServer::
-     ++
-     +The field names and values should be passed by the server through the
-     +"promisor-remote" capability by using the `promisor.sendFields` config
-    -+variable. The fields will be checked only if the
-    ++variable. The fields are checked only if the
-     +`promisor.acceptFromServer` config variable is not set to "None". If
-    -+set to "None", this config variable will have no effect. See
-    ++set to "None", this config variable has no effect. See
-     +linkgit:gitprotocol-v2[5].
-     
-      ## promisor-remote.c ##
-    @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
-      	if (accept != ACCEPT_KNOWN_URL)
-      		BUG("Unhandled 'enum accept_promisor' value '%d'", accept);
-     @@ promisor-remote.c: static int should_accept_remote(enum accept_promisor accept,
-    - 		    remote_name);
-    + 	}
-      
-      	if (!strcmp(p->url, remote_url))
-     -		return 1;
-5:  149b275087 = 5:  c7d7c83534 promisor-remote: use string constants for 'name' and 'url' too
-
-
-Christian Couder (5):
-  promisor-remote: refactor to get rid of 'struct strvec'
-  promisor-remote: allow a server to advertise more fields
-  promisor-remote: refactor how we parse advertised fields
-  promisor-remote: allow a client to check fields
-  promisor-remote: use string constants for 'name' and 'url' too
-
- Documentation/config/promisor.adoc    |  62 ++++
- Documentation/gitprotocol-v2.adoc     |  63 ++--
- promisor-remote.c                     | 397 +++++++++++++++++++++-----
- t/t5710-promisor-remote-capability.sh |  65 +++++
- 4 files changed, 499 insertions(+), 88 deletions(-)
-
+diff --git a/promisor-remote.c b/promisor-remote.c
+index be6f82d12f..0213b8768f 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -314,9 +314,35 @@ static int allow_unsanitized(char ch)
+ 	return ch > 32 && ch < 127;
+ }
+ 
+-static void promisor_info_vecs(struct repository *repo,
+-			       struct strvec *names,
+-			       struct strvec *urls)
++/*
++ * Struct for promisor remotes involved in the "promisor-remote"
++ * protocol capability.
++ *
++ * Except for "name", each <member> in this struct and its <value>
++ * should correspond (either on the client side or on the server side)
++ * to a "remote.<name>.<member>" config variable set to <value> where
++ * "<name>" is a promisor remote name.
++ */
++struct promisor_info {
++	const char *name;
++	const char *url;
++};
++
++static void promisor_info_list_clear(struct string_list *list)
++{
++	for (size_t i = 0; i < list->nr; i++) {
++		struct promisor_info *p = list->items[i].util;
++		free((char *)p->name);
++		free((char *)p->url);
++	}
++	string_list_clear(list, 1);
++}
++
++/*
++ * Populate 'list' with promisor remote information from the config.
++ * The 'util' pointer of each list item will hold a 'struct promisor_info'.
++ */
++static void promisor_config_info_list(struct repository *repo, struct string_list *list)
+ {
+ 	struct promisor_remote *r;
+ 
+@@ -328,8 +354,14 @@ static void promisor_info_vecs(struct repository *repo,
+ 
+ 		/* Only add remotes with a non empty URL */
+ 		if (!git_config_get_string_tmp(url_key, &url) && *url) {
+-			strvec_push(names, r->name);
+-			strvec_push(urls, url);
++			struct promisor_info *new_info = xcalloc(1, sizeof(*new_info));
++			struct string_list_item *item;
++
++			new_info->name = xstrdup(r->name);
++			new_info->url = xstrdup(url);
++
++			item = string_list_append(list, new_info->name);
++			item->util = new_info;
+ 		}
+ 
+ 		free(url_key);
+@@ -340,47 +372,36 @@ char *promisor_remote_info(struct repository *repo)
+ {
+ 	struct strbuf sb = STRBUF_INIT;
+ 	int advertise_promisors = 0;
+-	struct strvec names = STRVEC_INIT;
+-	struct strvec urls = STRVEC_INIT;
++	struct string_list config_info = STRING_LIST_INIT_NODUP;
++	struct string_list_item *item;
+ 
+ 	git_config_get_bool("promisor.advertise", &advertise_promisors);
+ 
+ 	if (!advertise_promisors)
+ 		return NULL;
+ 
+-	promisor_info_vecs(repo, &names, &urls);
++	promisor_config_info_list(repo, &config_info);
+ 
+-	if (!names.nr)
++	if (!config_info.nr)
+ 		return NULL;
+ 
+-	for (size_t i = 0; i < names.nr; i++) {
+-		if (i)
++	for_each_string_list_item(item, &config_info) {
++		struct promisor_info *p = item->util;
++
++		if (item != config_info.items)
+ 			strbuf_addch(&sb, ';');
++
+ 		strbuf_addstr(&sb, "name=");
+-		strbuf_addstr_urlencode(&sb, names.v[i], allow_unsanitized);
++		strbuf_addstr_urlencode(&sb, p->name, allow_unsanitized);
+ 		strbuf_addstr(&sb, ",url=");
+-		strbuf_addstr_urlencode(&sb, urls.v[i], allow_unsanitized);
++		strbuf_addstr_urlencode(&sb, p->url, allow_unsanitized);
+ 	}
+ 
+-	strvec_clear(&names);
+-	strvec_clear(&urls);
++	promisor_info_list_clear(&config_info);
+ 
+ 	return strbuf_detach(&sb, NULL);
+ }
+ 
+-/*
+- * Find first index of 'nicks' where there is 'nick'. 'nick' is
+- * compared case sensitively to the strings in 'nicks'. If not found
+- * 'nicks->nr' is returned.
+- */
+-static size_t remote_nick_find(struct strvec *nicks, const char *nick)
+-{
+-	for (size_t i = 0; i < nicks->nr; i++)
+-		if (!strcmp(nicks->v[i], nick))
+-			return i;
+-	return nicks->nr;
+-}
+-
+ enum accept_promisor {
+ 	ACCEPT_NONE = 0,
+ 	ACCEPT_KNOWN_URL,
+@@ -390,19 +411,23 @@ enum accept_promisor {
+ 
+ static int should_accept_remote(enum accept_promisor accept,
+ 				const char *remote_name, const char *remote_url,
+-				struct strvec *names, struct strvec *urls)
++				struct string_list *config_info)
+ {
+-	size_t i;
++	struct promisor_info *p;
++	struct string_list_item *item;
+ 
+ 	if (accept == ACCEPT_ALL)
+ 		return 1;
+ 
+-	i = remote_nick_find(names, remote_name);
++	/* Get config info for that promisor remote */
++	item = string_list_lookup(config_info, remote_name);
+ 
+-	if (i >= names->nr)
++	if (!item)
+ 		/* We don't know about that remote */
+ 		return 0;
+ 
++	p = item->util;
++
+ 	if (accept == ACCEPT_KNOWN_NAME)
+ 		return 1;
+ 
+@@ -414,11 +439,11 @@ static int should_accept_remote(enum accept_promisor accept,
+ 		return 0;
+ 	}
+ 
+-	if (!strcmp(urls->v[i], remote_url))
++	if (!strcmp(p->url, remote_url))
+ 		return 1;
+ 
+ 	warning(_("known remote named '%s' but with URL '%s' instead of '%s'"),
+-		remote_name, urls->v[i], remote_url);
++		remote_name, p->url, remote_url);
+ 
+ 	return 0;
+ }
+@@ -430,8 +455,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 	struct strbuf **remotes;
+ 	const char *accept_str;
+ 	enum accept_promisor accept = ACCEPT_NONE;
+-	struct strvec names = STRVEC_INIT;
+-	struct strvec urls = STRVEC_INIT;
++	struct string_list config_info = STRING_LIST_INIT_NODUP;
+ 
+ 	if (!git_config_get_string_tmp("promisor.acceptfromserver", &accept_str)) {
+ 		if (!*accept_str || !strcasecmp("None", accept_str))
+@@ -450,8 +474,10 @@ static void filter_promisor_remote(struct repository *repo,
+ 	if (accept == ACCEPT_NONE)
+ 		return;
+ 
+-	if (accept != ACCEPT_ALL)
+-		promisor_info_vecs(repo, &names, &urls);
++	if (accept != ACCEPT_ALL) {
++		promisor_config_info_list(repo, &config_info);
++		string_list_sort(&config_info);
++	}
+ 
+ 	/* Parse remote info received */
+ 
+@@ -482,7 +508,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 		if (remote_url)
+ 			decoded_url = url_percent_decode(remote_url);
+ 
+-		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, &names, &urls))
++		if (decoded_name && should_accept_remote(accept, decoded_name, decoded_url, &config_info))
+ 			strvec_push(accepted, decoded_name);
+ 
+ 		strbuf_list_free(elems);
+@@ -490,8 +516,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 		free(decoded_url);
+ 	}
+ 
+-	strvec_clear(&names);
+-	strvec_clear(&urls);
++	promisor_info_list_clear(&config_info);
+ 	strbuf_list_free(remotes);
+ }
+ 
 -- 
 2.50.1.324.gc7d7c83534
 
