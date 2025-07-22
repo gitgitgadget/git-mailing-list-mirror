@@ -1,133 +1,149 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B6E2E3716
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 04:54:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A61E1754B
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 05:09:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753160101; cv=none; b=lc61c+xx9F1bPHKxF3EHSUDNihWPRx9Xa3JlodYgzhQ45tBDUkjtdcfSiRd/z1k1QhyeOgfX7CTlf30H9G6BKtmYxWfeNQ+Sulwvi9XZMdUvs0NFclVXNpdlFKuh48hpMrPjgB221DYWE1nP5KVwLhVVIApvSRCOAi9JIIwHsdY=
+	t=1753160948; cv=none; b=dg6FzqVrs0DUxEoF59VUZ47+/uhL0T619mBHaJPoZ5dVYgVDTzYEJhPi6h6lEbjV7fKCSiHhXYi+WdbmC+WjgYjvhBAJRC2sXejAv/5iYDBcrGUwAKOgGVwKM2xS1PCyR44UmVe5CMTJtHfyZpwLP1tL5dgzLomWpaENYaZBlMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753160101; c=relaxed/simple;
-	bh=6d6zv1WJYyGMUykL2vlsHqNZpUsV1TSUAKywhe26thE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fvXBJziL6cBtboC77pIbYicDbA/GEytp29PiO6eEYb4Cqt+qnI6Xw5x+qBSfk1YW2wCUF0OhJs1JLqewGWUOAXd2dmBJiJHoepQwGo5R35cpw0Oli3zhlRdNzYEwnMTj1eijt3kTmDH7C4rzDpSnzXVM4LWrXjPtG35hsUUHC2k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=c4yawvOr; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1753160948; c=relaxed/simple;
+	bh=5Rj5ZT14K+BlKaxeArr/RP49Rf7zY3dxDoDgvlxxohA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rOhlG7vGIcdFYzR405c0qK/B2n4sTs1VL6Ss0gHYFlquEyT393bIuQQwi4ll60Makl3l8R1Ydc3DwVNFNun3lvSunnlNFrl3skHGp4Z3qTL2Oz6uDR1eH2vbICQ59o9Qf+wDXzU7hgzcrYHCQ1hXkVPBjUvlp35jvNV3fU9lAWI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aq7INQIF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bqp1qxXD; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="c4yawvOr"
-Received: (qmail 25607 invoked by uid 109); 22 Jul 2025 04:54:58 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=6d6zv1WJYyGMUykL2vlsHqNZpUsV1TSUAKywhe26thE=; b=c4yawvOrxaD6LDpiYXVQKSSn+ujRcKk/J6zUgcLbxY8c2GoR82sdq7PfClpe7odrs3iq+r3OrDK4tHd7X+vFiS5BWPgSMsISZB8OrEfGIykGej5ojwu8wMh3kXSyp0zZ3ipu7aCAOqTHhyrb1ZmndAlAsAxz+V+AbpQEztd26gZIxtb9PnXiVqxiIfE2fhIlwA5hUapOkKUu6M27Mwm9JK9trSATuIjs+UfMOOQH7me6/nl4Zwyat6IkyCaJ9WLfw/AEUZHfRId9PHoOg9Hge+uOJhItaJbSpYVvWmXcjNtpb5MCY0N4j4M6PejHXrEKBF7kzkeWA+c5kALUqnTt+Q==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Jul 2025 04:54:58 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 24040 invoked by uid 111); 22 Jul 2025 04:55:01 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Jul 2025 00:55:01 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 22 Jul 2025 00:54:56 -0400
-From: Jeff King <peff@peff.net>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3] reflog: close leak of reflog expire entry
-Message-ID: <20250722045456.GA824456@coredump.intra.peff.net>
-References: <20250721-jk-fix-leak-reflog-expire-config-v3-1-c488b0586e80@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aq7INQIF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bqp1qxXD"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C5EF1400141;
+	Tue, 22 Jul 2025 01:09:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Tue, 22 Jul 2025 01:09:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753160944; x=1753247344; bh=whhjaZgFAo
+	yTO0lZnlvQfuQgDklDQlINkEKjCyLPXmI=; b=aq7INQIF8oKcdC5uQdLBAS3BrC
+	Iu0ao5VpTbOhNz9gi2dTq5IEFv6aBT2PTLXGq9rAomwa2Ljx8UmX/wjjfj0QdLMo
+	2HW4XtVi7CgrVWmnGdDJf14N9uMd4qFQCfm/b0vex2560DukiG43wja5al7vEq2r
+	6w+v72m4IEvFBs8/+BI4/W99SY6iemGUIXe8PU4ueEhNwJVlTsvx+meoC5UkOWfJ
+	n/s1boDRuqs1cMt1I9/3/Z6wAcnF4tcZh7DIVzeySRyaRpJYTz0IrbnR80zvSevi
+	dmWkCnyS0jnDVzwMbDD9BZJSdUajuMUFRScNyH1+3ZfWmYZRRzh3D27ntr7g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753160944; x=1753247344; bh=whhjaZgFAoyTO0lZnlvQfuQgDklDQlINkEK
+	jCyLPXmI=; b=Bqp1qxXDtrIkFYiBe5HcYf+gvTmIDcs6rEWUadVFLzcA6TmYQSU
+	mrDy/1yYZZCOK/cGtjXN1bHOScmbj9o1KhuGC8fpChRZkpmMtIMifcp3yGS3neow
+	aZfha6trTuZfi93yzGNUqePJbM7ADltRFlZdhgix7yjg0x5bouSZbpSBL6Q+MLGg
+	8JRnDX8GItcEMs9WXMisDg7ml09zAAvxXWo+vyz3dwpt7zFPZrNptHlMziLyoHeM
+	31rVVZqIu2pBPhloDySN+vgwGOIWUvg75jkGY//nA5bpUjRxO8V7aGzOE7ZUPKDv
+	6ZyqvYOTAEZy4e9wNPdLhuU7hIsOS0me7Yw==
+X-ME-Sender: <xms:7xx_aPPfpSNT4Y7j4hbsT7OLTuTcn1zKC_cEFoET412huxp4kXyTqQ>
+    <xme:7xx_aHiIHE75uHHXKq2tn65opVzVJEjM3pDXK3Hl49UAXahRiuHXNxygdSHCBjsPC
+    W9JxSM0X3LVW8p0og>
+X-ME-Received: <xmr:7xx_aEtZEVIcjP3PGEp5UY-Hm_wZbJ6cQhYUW4vtQtmXbgpro8Lqyh-kl5hEHo1GTCTM00d974wO9tC7K13x8JFyVgbeO7IdZFsrHM0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejgedtjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
+    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7xx_aFQ7dSodr0pycVNJDc1X6h3U2hJbNpPHWFk-J9I03Eb20FDEyA>
+    <xmx:7xx_aI0a9UJQGGA-qa3fSnxEor3dV9K3F4rnH46yKsU0os5ZApA6Vw>
+    <xmx:7xx_aKtXDexwDrJCvqusiuWrnhLKqdy_2ds2qoGYRB9QVhOm3mBOAQ>
+    <xmx:7xx_aOjwfiityCJqFhpgpkSgxXAMU8ApMz-XHbqeD67jH_JDt_a-9g>
+    <xmx:8Bx_aFogpI9dwvZ_z8LQYZPQZf4xJg82bUePl4CtwnEgQ5L9w15bnOWB>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Jul 2025 01:09:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2] send-email: add ability to send a copy of sent
+ emails to an IMAP folder
+In-Reply-To: <PN3PR01MB95976A7BE0F9A54E836FA2F5B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 22 Jul 2025 09:07:26 +0530")
+References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
+	<87a890182591c9c21061e85834fc99a766252611.1753092192.git.gargaditya08@live.com>
+	<xmqqpldtxsp7.fsf@gitster.g>
+	<PN3PR01MB95976A7BE0F9A54E836FA2F5B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 21 Jul 2025 22:09:01 -0700
+Message-ID: <xmqq4iv4x15e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250721-jk-fix-leak-reflog-expire-config-v3-1-c488b0586e80@gmail.com>
+Content-Type: text/plain
 
-On Mon, Jul 21, 2025 at 04:39:37PM -0700, Jacob Keller wrote:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> Changes in v3:
-> - Remove the incorrect call in reflog_expiry_cleanup()
-> - Add a call in reflog_expire_condition()
-> - Link to v2: https://lore.kernel.org/r/20250709-jk-fix-leak-reflog-expire-config-v2-1-f9af934be8c1@gmail.com
+> Or maybe you mean, ONLY send via imap and don't use SMTP? Like
+> this users can use their email clients to send emails?
 
-This looks correct to me except...
+Exactly.  You sold this feature as "have send-email send the
+message, and keep an extra copy you sent in your Sent imap folder".
 
-> diff --git a/builtin/gc.c b/builtin/gc.c
-> index 845876ff0286..37f543736599 100644
-> --- a/builtin/gc.c
-> +++ b/builtin/gc.c
-> @@ -346,6 +346,7 @@ static int reflog_expire_condition(struct gc_config *cfg UNUSED)
->  				 count_reflog_entries, &data);
->  
->  	reflog_expiry_cleanup(&data.policy);
-> +	reflog_clear_expire_config(&data.policy);
->  	return data.count >= data.limit;
->  }
->  
+I pointed out that "have send-email do everything it would normally
+do before it talks to MSA or talk SMTP to send messages out, and
+instead drive imap-send to store these messages in a folder like
+imap-send users have used the program so far---as the user will send
+the messages out of their draft folder as was traditionally done by
+any imap-send users, send-email will *not* send anything out itself"
+as a possible different way send-email may want to use imap-send.
 
-This needs to pass &data.policy.opts, no?
+These are two very different use cases.  We could organize things
+this way:
 
-I think we might also want this test on top (or I'd be happy to see it
-squashed in). It shows off your fix when built with SANITIZE=leak, and
-also catches the bug that v2 of your patch had.
+ A1. When imap-folder is specified, that IMAP folder will get an extra
+     copy, in addition to what send-email sends out;
 
--Peff
+ A2. When yet another new option, --send-email-no-send, is
+     specified, send-email would not send any messages out.  Even
+     when this option is in effect, if --imap-folder is specified,
+     that IMAP folder will get an extra copy, in addition to what
+     send-email would send out (which is nothing).
 
--- >8 --
-Subject: [PATCH] t1410: add test of gc.<pattern>.reflogExpire config
+Or alternatively, we can have two very different operation modes
+that both involve imap-send:
 
-We have long supported the ability to set reflog expiration config for
-individual, going back to 3cb22b8efe (Per-ref reflog expiry
-configuration, 2008-06-15). But we have never had any tests.
+ B1. When --imap-sent-folder is specified, that IMAP folder will get
+     an extra copy, in addition to what send-email sent out via its
+     usual route (like by invoking MSA or talking SMTP)
 
-Let's add a very basic one that checks that we apply the config
-correctly to a subset of refs (and not elsewhere). This also
-triggers the leaky code fixed by the previous commit.
+ B2. When --imap-outgo-folder is specified, that IMAP folder will
+     get the outgo copy, later to be sent by the user (just like a
+     user of imap-send would usually use), and send-email would not
+     send out anything by its usual route.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t1410-reflog.sh | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+I thought the latter would be easier to explain to end-users, which
+is why "sent" or "fcc" or something like that should be in the name
+of the option when operating in the mode the patch implements.
 
-diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-index 42b501f163..362e90d7d6 100755
---- a/t/t1410-reflog.sh
-+++ b/t/t1410-reflog.sh
-@@ -320,6 +320,34 @@ test_expect_success 'git reflog expire unknown reference' '
- 	test_grep "error: reflog could not be found: ${SQ}does-not-exist${SQ}" stderr
- '
- 
-+test_expect_success 'expire with pattern config' '
-+	# Split refs/heads/ into two roots so we can apply config to each. Make
-+	# two branches per root to verify that config is applied correctly
-+	# multiple times.
-+	git branch root1/branch1 &&
-+	git branch root1/branch2 &&
-+	git branch root2/branch1 &&
-+	git branch root2/branch2 &&
-+
-+	test_config "gc.reflogexpire" "never" &&
-+	test_config "gc.refs/heads/root2/*.reflogExpire" "now" &&
-+	git reflog expire \
-+		root1/branch1 root1/branch2 \
-+		root2/branch1 root2/branch2 &&
-+
-+	cat >expect <<-\EOF &&
-+	root1/branch1@{0}
-+	root1/branch2@{0}
-+	EOF
-+	git log -g --branches="root*" --format=%gD >actual.raw &&
-+	# The sole reflog entry of each branch points to the same commit, so
-+	# the order in which they are shown is nondeterministic. We just care
-+	# about the what was expired (and what was not), so sort to get a known
-+	# order.
-+	sort <actual.raw >actual.sorted &&
-+	test_cmp expect actual.sorted
-+'
-+
- test_expect_success 'checkout should not delete log for packed ref' '
- 	test $(git reflog main | wc -l) = 4 &&
- 	git branch foo &&
--- 
-2.50.1.589.g6e88b11be3
+This brings up a yet another possibility.  Invoking imap-send can be
+a new third way send-email uses to send out the messages, in addition
+to existing (1) invoking a local "/usr/lib/sendmail" program, or (2)
+talking SMTP to smarthost.  That would be very easy to explain the
+operating mode B2 to users of send-email or users of imap-send, but
+it would be a bit awkward to find where B1 conceptually fits.
 
