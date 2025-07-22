@@ -1,45 +1,45 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 371BA2576
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 19:10:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2EC27A92B
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 19:10:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753211423; cv=none; b=E/01BkJrXKEgaTSCCyitx6zgiVHP410w/8hoKtnfNiZgOtqpL4Su8drsVFCITj6w94LhEcZbJK3nHONDmKcNxY1usoFCmFtdANc/w10XL2UjykhuNzbSvljV0iTmx6217in3PHhDdkeOBVDb6rsnovJM9DCnaAtp9kQ3hk2m3eg=
+	t=1753211434; cv=none; b=u69pvbECOc+hLJj5solBvkE203P0LhCy7onQHYs0GF21OS1StiuPjZ0yC21l3SosmlJu+9C4FHOLs8iI+0CBVvZMh+LyU8GPzMpYhGpZV1GkpPcW3prppis2Ad8JL9f/zHomWWv3T5y6ao8eN6U8KljU46CJ+VPMvEU0SZ6iSb4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753211423; c=relaxed/simple;
-	bh=X0UqhqQ7VCNlqf5L2q+0wSJX7lrXfASW1uBjEg28li4=;
+	s=arc-20240116; t=1753211434; c=relaxed/simple;
+	bh=RpgpYDtReYMGRp0AMIUa+/akzKVUTtAlFXCs98542wc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Sw9RrN0DbEVPJG6KsqzzPTSTkVxhCeboaN9Rg+10lbFWIeqsN4d6yr5JU5tn+0oN/0YmZhP63HXE29xCkPycbeENQMtjZd1x1Pj+oTnFFiU/B8Sr3BwBHYY/0JapI3iMgL45WjS7ILV3Wros7Sv+BQzI/9btqwetolpxdwBlZ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.at; spf=pass smtp.mailfrom=gmx.at; dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b=iiZxerjB; arc=none smtp.client-ip=212.227.17.20
+	 MIME-Version:Content-Type; b=NkdDarnVj7gMWPGUYMg3GMeQjAnwh3ngJWexPokPRCXUjFNH1XyVBNbcvg7iCqDZuIE68BCN64GpNGYALnrtTq0BxSMvgjmJVUPscsPREVTGyeWL8TD8SoWtc/a+XXN1zDhHJ8abKdQ5wCHe3K/D2bxMeA1qEbojxgLQv5vuiwc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.at; spf=pass smtp.mailfrom=gmx.at; dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b=ZjpmVWUC; arc=none smtp.client-ip=212.227.17.21
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.at
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.at
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b="iiZxerjB"
+	dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b="ZjpmVWUC"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.at;
-	s=s31663417; t=1753211419; x=1753816219;
+	s=s31663417; t=1753211429; x=1753816229;
 	i=jonas.brandstoetter@gmx.at;
-	bh=rEPmSsIHlhE3m35W+D5x9eKeXnRCMagHUkcBTgSo8G0=;
+	bh=diZB47j6+FessrcrBh4q5jGX6KdoxlMTPxERDYyoSwA=;
 	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
 	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
 	 content-transfer-encoding:content-type:date:from:message-id:
 	 mime-version:reply-to:subject:to;
-	b=iiZxerjBLnLWrVpUwkJb5yc4Ocs8dSLaV8v7WFo99J3636X8zfOl3zPIKMTkDSBf
-	 gUAHUMZQ8cg6ufKGQLZzPZLInbS8OM+Aggd4a18v0ypBuIV/YaURJKSTvqv0OpQqY
-	 w8r91ukknR9zCs1EPvwV5kJ9yN1VBUnwDi9PoKrb4gBlz/n9L/DjU1FCamFLF7dX3
-	 2sTvleskdtNyjTzWwNBZgjBWM/ytT7TmlEl8l3RId7nPQwghLg1dYo8qBNxti4A7P
-	 pJF/HBk9Q+AkF3jJy3g5WwXIi3FAflID+5GvfH16XI3jumX/GLwnKnwcySoUIXOqi
-	 PDrGgctWEX0uSYLfyA==
+	b=ZjpmVWUCHrV+nJGsk6U1EUMjcdd6PXWiyJREGNGrSL+GUiu8bh9bPLsnyKsXrqbm
+	 rxrmIUkXuSaalvW8r76b2K29QZaCguQuAp0VrPyId2ngQYgdFcDcpWfDG2UOIThHc
+	 6YB6YqtUYukvE2NaxcL+toOq4u8svDI8MWl9kTaxlPdUHQWCro93IB7myIIcGQURB
+	 Ah4nIu3OiyUxOj3aJbSkiySm3byaU8g/kgJR0m83vb01V9+MNP2F8Jxz24y1lqf3u
+	 YcO3aegwNYWMWOLD1wI8+FSWCSXyJnWuw05JheH+bpiKAXdWCf5puwFOF5ToYYYGN
+	 LeTOzObBgAYoJoXlKg==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
 Received: from fedora.fritz.box ([185.89.163.201]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1M3UV8-1udk983ukM-005QIw; Tue, 22
- Jul 2025 21:10:19 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wpt-1ukOF42ZIH-016HbZ; Tue, 22
+ Jul 2025 21:10:29 +0200
 From: =?UTF-8?q?Jonas=20Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>
 To: git@vger.kernel.org
 Cc: =?UTF-8?q?Jonas=20Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>
-Subject: [PATCH v2 1/2] gpg-interface: expand gpg.program as a path
-Date: Tue, 22 Jul 2025 21:09:21 +0200
-Message-ID: <20250722190922.51183-2-jonas.brandstoetter@gmx.at>
+Subject: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
+Date: Tue, 22 Jul 2025 21:09:22 +0200
+Message-ID: <20250722190922.51183-3-jonas.brandstoetter@gmx.at>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
 References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
@@ -51,98 +51,94 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:+IeSprSHBPU2rKUiRQh8rCtiDPer2vMnteMOgN5HNzZGWXL8Xp7
- BcwKmU/7SWHUfkoW3ryyzvxriYcPqDSXdp7DoCodSs1QaWo+1uO4c4BMlM1XcueBzfVPzqB
- 0t9ZUmCAgDBIA3hSilsZOFayiGUs4CLtu0zQS3LCJX3bxY+ldBxASoBUFPa390lwMN7yKG2
- Tkk+mRzYkjhTG62nsweog==
+X-Provags-ID: V03:K1:w/ApEPbb6RSi3RYlPf5+Ru1NWYdeIimi/V89HT/uwWkAq2ppgVg
+ yip9tFv3ogQpPa+T07tLE+Tn/N8ikMncnu7qihiYrPJsM+9ixtDlrd0LLFkNeRutfls5xHq
+ q7vlGGnzAgM059oRu1Oq+RWHqHyNB5F1sPz3ygeOCmdmN6orRu8faT34dOUxJgBKY3IsXWA
+ Dsnct2wxZqM9zzH6PdnYw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:H8xwNI7kdKM=;ztedWnpPF0AZnL8Jb0G10LcgJ2j
- 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
- FN0BvXe3OLsy9aNkP0qA==
+UI-OutboundReport: notjunk:1;M01:P0:oyzm0e/JlxE=;w8IYurU+iFr2QAjYAJ5L45MAlqT
+ ES349bMpMzQ5/i8U22J7464ckTR2CmPHCegXj2RPtk4yMnYqoPqiuk7Pa7GDoJ/70k305lNEH
+ nlw/JyzcVhX/+B6vr2Ft9erTXTKvwiIL1Z7t7LDNZ2Ga9kyvPJf+/iJeZkQQPWLR7J0YXCEIs
+ VC9z/fP5kMs1e0HworfHh//jtAdxRv42Bx29SqYPOg8IsfeKVIvWOk6bQbRlx/O8mny1eysnw
+ nNv49pbfWZ891R7+HJSw/y/oK0AheOWu0PuZTIhY7hd1DFzE8JlDKVFYccOd97FfOX9jbMqki
+ jexyF7Y8HtUhqDZFCmD9xY8gYlz26MoIQ9vJmDQONMs1Lu28q5H8qQrlUoGLGvAuPqztqglUw
+ rvMj6CgcDkAXc9xF2DLbEPJ1aYgw4dKcCGGjs2AVM/8eghOlrB5nLvmDYlss7ywXhgH0nA8Fr
+ Gk6/5ElLv9jL26PtVaYvmF7AkSA9boyZ51FEW+kkoNpoGa8FjRSrJDYT1xnymZm/TBoMkFC0y
+ yxuMZcmAhfGRe4ltVKs7Ejl5uyoLCd9jQBrMuBT04QXBQKqoO/5zrqVfCOhgj4jt7nWw1fQAM
+ 0l1OJ/UG8ZlL0EEJxWgYAo6qMGz7wSJHcfveEJdKHikfug/ttsdkZMXKP+ShYKbNZt0RzMODU
+ VgBqVQo3qtLVVfXlyKQHYx6z4+/8OFIOoZzV5JOedTFM2SX1BPkdSst7ZZV5jH5jef3i0lCYb
+ s38gdh/VvVLZVUYnDED0wbAysF8I7fjgImRljI1SJOQIRLAdKrIL0KjqpiqLYSszMpfpWBWY9
+ LZ2OeUG9ef30pmWxIrjHSG8q4N4tCeq6h0o4rtHcbnPE7W/Q/CpIEKetvfOjr0d/YuN+B68hP
+ s11gvrdEtheXM845bk63IME/S3tm2GjScXVKxxenV30SxsTp9SeJ5KTOqYrc71hNr/5KjOqzB
+ xCyIvBQlIahVgM/Re/sQZJlHDkgTdYhypEk87xlt6fB2aGrN4J++l27VX3xRH/0B7mJ0SILgH
+ Jn5ZuO14YbxmkAHUVg9tfTp36hxQ+QiamWda0KDDr6o2/vbQFWGiMJ5K/nBhjX1tnBZikIqho
+ sb2ZEyEA6ZmW2861A5q6Q4mc904GFlqVjqdGqmgjYqD+sB1y0I+tu3301anOGGtE4le5y9a4v
+ QLvGmkuWNFyBh5sTcEH/qFwxjEjV+zFftBFUGQ/Bc0mk1ZXzc2ubu/B31mmTD7jiJNLZTWLtr
+ 23VRnYOdrbw6HbR42pRF1yvK4Je085U5srH/cPUsVjzlUxZeU7n0xr4rB0qbArVQXwPN5wVCx
+ B68LsPQwMAMNPJIyfQsOKeYR5s7gqMjtKL+VeIGYiyT4iz5xF6SXAEXlO1TduHkqU0L/CnrQY
+ g19yJB0KBUnKYCEXgMiZ1wmhvj15i2DAIvFkv4MbT1pzSJkEX6UQqI3F2ZUn1J/rJaUoff4a4
+ Oae8M+iHpDatZg3x2Po+HV4YS2fnE+XXIGhMjRnLvTATG6ujESEg/eWjule4/fjS1YfX48taS
+ NpoZCoyKdlRJ4GCL2wQ2qk1vUYbLyfTzBrq861qWbyXxVRar0baOi0JZKDMs9FkdMcTzgrM0h
+ 9BLrMgEtInD+EjCSc/7F6LIuodp1CogY6Dh7u4dzdVtZmpJieNqTUhfMPUCiiCCITP3GpkyIS
+ RTTwU+2s+H4wyUqXakR6V+lMx4lTMaqmPUCRE1Y+0JpuvL0tWbAM4mMHYMFQUL+sxO8cjuvmu
+ J+3IilIYeN+HZ434gwFq1Wi1LVnlrrQALaBdbe8NNRfYU+aNsmlUeB8plMDFlcqeXIjqtiUvu
+ 1+83aDSgCsPA+z7max7py59nyEmUP3PJV0Q6msiH6CW4vWZMC0a1m9iHKR9zHOMK3daIfJPbo
+ YjucqFzyOyfM4jElw+10+1bz0mlzIueQlbOFBCp/WxjwUy6c055StoQZ3z8mHI1WGy07BgEJn
+ 9cQhs1r5KYKDMdBkSGNBWG1jYPEPgGYH24zep/Ojl/uLekPxcIn4gOO+7C8Z8gfqmDDiYr7OG
+ 25G5j9JR3k3wxi/U7qX7FgE90rZX/bv16ol4Eu575ryCVAADVbM8gXVaaxPlBQJ4OjBlaSZJo
+ 9e423fm+EfB+x+M/vupyO62/KOPu9oqX6jwlEbwg8AT/48il4T1dcw6HjJGwTVqftGrE/3F33
+ EyhwbEMDTdO+SgeJuHlJMnz+FFciY1832PPICU8HZzH78VtM4i+tRmGrlyM8aQFecX7X3R+4P
+ Tx4KAXCC3rtCtzUbIRvxad/dUW/RlIHWBI5OeTd5NZEZ7ezHlvJKht5tsW37cF3ow3tlvMt3l
+ 7Q2gdFEyfZHhEjqB8k7lDMHbJKZR+ajt1S1mMvGqtanGXHpJfUAh0d17645PVhNhuhNLwMaIR
+ qGL1ie332ytvhvwAaBiMr/yIVRc07aCR4KXJhpQ9O5Q3gb5sYExqgMRxTpjepGYnVhvac3dil
+ 2K7QwOqYXt6Mg3Fu0jBQbWOcnxRAEX3Tjw1l5tLV1nlLXYLX+cfe5/hWkbzd9I6EqssxH+6ED
+ 1ne6qRQRQhXa4nuQy/kyBpPTkoQuSMEApiddsea+YfuW+E7S8wjGlcsw5O21WRydF/9sHUwZi
+ ia+D17gOj5N43eB8F3W9TfIwnHz73QhRXL/fhSlqjaWV32uRFwjAXFRvMDtzgfW6xDSs15tW6
+ DNgJbvD8ZFoshMQWRmUcapotdSjLWAzutNlPmWFYoJw2pv+1Cr2IwsgmGTEOXJZHUzhTRv4SC
+ Z0R3Yu9Tfp+BSOojYIuUA7iM7iQrQbFN6kjiv7KY3JyrzN8fBltOZyuttytgFDI/AdWZ+6oNd
+ W3+rvX+UNDOZrcJZsqsgpllePqumO+yg1mtmE/f/bSNoKEgmvF12s3O3y1Lm06TrXdyRwyRpv
+ 1JW0q4wdvUdQJe7QamP2Zs635zIXn6P7x2r53N8+g32Wu7tBH9+Vn7gWH+GV0jnvS8sS35pS2
+ c1+ylv7HXqE95ETW4W/wrKTVdffJiaf5I4AwM7STj15xDRdmLO6tzB0GcO359tMeNVANVAjgo
+ DQal1hV4cj/Yxll8sdkm+tUqvE/h3V+QFhQvz12e0vVhtZUJws3j/L54IHRgVt1azOFCQ5Zao
+ Muz1VH0x3SqtaPE1rJWZAElJLDopsSMLBPKoPPRFAqRay0AEJQPtD8Kf7DZ1EiW1gzIVsuVdA
+ efZwqe2xO6csL3MV21DuaGR3ELdp5NXahrfJZ5PiTXJeOeGBi8p7ynnyUuVADPKjG/l45Pk6F
+ hGkILdnnSXB0dsmDL03gpiQ159dqvoY5na8r1nBOEvcDm5c9ucvlnzWkkjpGbFrDhdNeCv0Mr
+ JC8gPN8hPEq2grKMPZpriFkK3qQ61K0EgYHUaoEeSgMtjw5z2+YNhkTU1H0UD2AxrbFBYrNqo
+ TLBhpD2paLyMISDHvNZw==
 
-This allows using a custom gpg program under the user's home directory
-by specifying a path starting with '~'
-
-[gpg]
-        program =3D "~/.local/bin/mygpg"
+These cases cover scenarios where `gpg.program` is set as a program in
+`$PATH` or as a path relative to the user's home directory.
 
 Signed-off-by: Jonas Brandst=C3=B6tter <jonas.brandstoetter@gmx.at>
 =2D--
- Documentation/config/gpg.adoc | 2 +-
- gpg-interface.c               | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ t/t7510-signed-commit.sh | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/config/gpg.adoc b/Documentation/config/gpg.adoc
-index 5cf32b179d..240e46c050 100644
-=2D-- a/Documentation/config/gpg.adoc
-+++ b/Documentation/config/gpg.adoc
-@@ -1,5 +1,5 @@
- gpg.program::
--	Use this custom program instead of "`gpg`" found on `$PATH` when
-+	Pathname of the program to use instead of "`gpg`" when
- 	making or verifying a PGP signature. The program must support the
- 	same command-line interface as GPG, namely, to verify a detached
- 	signature, "`gpg --verify $signature - <$file`" is run, and the
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 0896458de5..3dfbc45385 100644
-=2D-- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -783,7 +783,7 @@ static int git_gpg_config(const char *var, const char =
-*value,
+diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
+index 39677e859a..95d2ebe277 100755
+=2D-- a/t/t7510-signed-commit.sh
++++ b/t/t7510-signed-commit.sh
+@@ -449,7 +449,17 @@ test_expect_success 'custom `gpg.program`' '
 =20
- 	if (fmtname) {
- 		fmt =3D get_format_by_name(fmtname);
--		return git_config_string((char **) &fmt->program, var, value);
-+		return git_config_pathname((char **) &fmt->program, var, value);
- 	}
+ 	test_must_fail env LET_GPG_PROGRAM_FAIL=3D1 \
+ 	git commit -S --allow-empty -m must-fail 2>err &&
+-	grep zOMG err
++	grep zOMG err &&
++
++	# `gpg.program` starts with `~`, the path should be interpreted to be re=
+lative to `$HOME`
++	test_config gpg.program "~/fake-gpg" &&
++	env HOME=3D"$(pwd)" \
++	git commit -S --allow-empty -m signed-commit &&
++
++	# `gpg.program` does not specify an absolute path, it should find a prog=
+ram in `$PATH`
++	test_config gpg.program "fake-gpg" &&
++	env PATH=3D"$(pwd):$PATH" \
++	git commit -S --allow-empty -m signed-commit
+ '
 =20
- 	return 0;
+ test_done
 =2D-=20
 2.50.1
 
