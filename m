@@ -1,67 +1,71 @@
-Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF8C27E06C
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 17:41:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7B7281341
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 17:41:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753206078; cv=none; b=c5tVq0UVZn/b5bjUK6U+ewsiJdj2BZI98kIDX2YRAGaL3FPbaITkbkg6AcQPH24v0MQUvafVe5YS22RA6y09G2d+tX8r+aD7oULJGbWsVg/TF0WaArQWzS+aC4V3hi1YEXViUnoCI04nAs5PBM2SUY9iwaILylxXPo+rMGrH4VA=
+	t=1753206081; cv=none; b=ccKoGrGJg9mD97Wug1tMkaALktWOR73McfNpSwL+ISBZE0Xm0GJqM1F2N6S3sUtTVwpRiH+dyYFWbo7921OCI0MV8dngSGxgtRLkdp4PrPS/evPMTw43j5RfxtJzGDK9Iepk6HCRcw0SniJlvys5t4GxFnwy3r5cO+MnXuAWdVo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753206078; c=relaxed/simple;
-	bh=QHyOxeBI3LwetSNgHPk2mF/thqKUdYrS8x6hTyWyPgg=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=XQvP9xQZDP8MhHaZ+ZBJY1lHUDqt7nhC1Enr78IlgUQ2l6pdRyRimCZ4CSn6HwZw9CHUF01De95U4Vspsh2FedFlzunYtETHomUXOhgJcLhdqwIFve4t9lqzWdS8uJyxWnZXhSfjY26aKWcgZGGLae0pQB7I+UvUn1daYKaKxxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJ5VGPWD; arc=none smtp.client-ip=209.85.216.47
+	s=arc-20240116; t=1753206081; c=relaxed/simple;
+	bh=sk0U82/3FavnFIrHJyV/o9nX3WL1xxy2dUr+aRpZzag=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=p5ijcId08focvJC1KCHiLLZAbBoxPx3f5UjDZWzmqnoTB2MDOuFRp7RJa1en/gnfYP41vW7sDLplqOh0TDfqgSO6hM4xj+EEuCPeCTvlyVR6JrHeEnO4RpDGtgKFoPGQadSn+bb/QeMTsywyzmpZgK5ooTUz9N2aqqKSc1uQ4bQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PY8DC1FJ; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJ5VGPWD"
-Received: by mail-pj1-f47.google.com with SMTP id 98e67ed59e1d1-3122368d7c4so4926086a91.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 10:41:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PY8DC1FJ"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-7fd35b301bdso6126202a12.2
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 10:41:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753206075; x=1753810875; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=uywAOdvk7cyDvwtoPRI4QTFJJ5uMwa7KN8jBdCoSidE=;
-        b=ZJ5VGPWDi7eUK76EruReSAksP8o5xZhQNLImCluE6GKOzWjx97X+VN8mZBnIefUHo3
-         wXn25J3rMcizbm8VNn1eziHATHdECpn8tCJsnht1WvnwzW0gkXCpq/UnGT+vU9lbT+32
-         iEvxunkV7D3a41/yZbE30vYOG1LiWMZLvjc4QoYMQSmPJ7vIuWWclI+Xq7XINuVRlwRi
-         kZKXQNGTxSwbssGLz/O53jf+M/m99ui4o/cFV2mFs3Ef0epkQp09/14OSAcZejMFbWhG
-         AfrSA31HBq/K2dBu9cdHQAEn9lbjg/rhfo4HU+QI9XoobhVxMJIxgT3irHsuqY7Kh34k
-         XwEA==
+        d=gmail.com; s=20230601; t=1753206078; x=1753810878; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yZfdG28L4t2BMprclNeK4kINg4VjJmW7A5DUE2OqEws=;
+        b=PY8DC1FJsrxkxZU2nWVrtixqjbJNDe9k11scNIU6QwI7FaDFVY5fr9PX1T2bLZDLN6
+         MVaoxJDtA+ss9qs/j9uxhhkX9lh6D9FO66/CCgDCMs5l5hwuWJrcjGTlT4khVf8M9A+a
+         ApuGKg6+aYpJrb35sCzhjCI3178Ac07FgirZdpAxxb0zwJW9jNXWA2DzxYkHNy1W0vlI
+         B1tAoZpyolBOT3tZcXcZ9YpZkw99zNGbU4GQd5Xq7UT+XxWmsrrekmyc13MQa2q/mxAj
+         sK3eyvGz2tH3KLQgCbKOm5cEbYZrRWG5FV4MARgs1PKj6DA7mYOEjh3lazgiDpS6autP
+         yg1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753206075; x=1753810875;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=uywAOdvk7cyDvwtoPRI4QTFJJ5uMwa7KN8jBdCoSidE=;
-        b=b9QmbRD7tb7MXCEnWodQdjEIOnwldoSZ4w2GA7YbMZiSjHZwo1njt7pWTSVJZoCFGU
-         ICVPIkco4Cu2LA2mKwKe3/QKF3Ri0jevvvcBHVKnmSwBejDzDxsR97KPt0VjAQA3nQsn
-         /UOgDY/dX47NLHdfc015MFrg0N54sjt8N6Qz8FegCGX0yWQxU7EeWAdD8oFv7ozv3Fun
-         MidyR9PvwPnE/zAvOko6c/OWBq9DAsqmlxfej7JAv3hIj5NktGnmOyZ9DBsWPMBHgczM
-         Mo0ALWnr/OngK2xS48e+KdX5CRAtT6U2jqJDqvzWOpEkTPylioi7rZRigwrxK7qSx5zh
-         iOeg==
-X-Gm-Message-State: AOJu0YyeTQRwR2TQm/lGk+Pyy9h3aLU+ZYOZE0/gOvKBtbAAGrJ6NaNV
-	6uagDdQtftAZrSxHZVoCahinf0bfo5MuN4hzbuqwWvHhSnB9Z+kWvt+uFcjXBg==
-X-Gm-Gg: ASbGncsFv0zJbYJRt5lxMh8ooe1N/r7NRYie3ZZssdt2N8lKfgtmlwP2H7OltDPDLhO
-	bVf1FOxtmwFLJcp/xdiNajSByRhub1sG3D+HbpwBejASNxNo8dk8QvbfnIMlZNnIzRK70/sVsi4
-	QzpJJFAXMR1IPqP8/Y/XYTFMytk7McLNLfe54ewnqXm09h4wHkuMxmY6xL6cA9zzj5CT0MzpyK4
-	GiP/06UsVn+VobtXP8eCa7RKkgAft5u0v8/NUwrlA5aOhG2mbyyd2hM6F6mS1RKbwS6prfghRg/
-	v4IhNsA9Ol7mwRJ2JZwXUS0Cfv+hXNagE6pTXA+Zc6yMbiWv/BhsfZLgOv4Ks6srjcEZEaN++0V
-	J1oi++1nEHLWge67dmi3zLCLNI+eTOHxpTQ==
-X-Google-Smtp-Source: AGHT+IGPRNxICRyK1o2M4EVIj0VEXtnROhRH0Xl7ZjNXfDfG175Hz/VnPPHIgZWa7cPZv1Ln+lbqMA==
-X-Received: by 2002:a17:90b:3809:b0:2fe:e9c6:689e with SMTP id 98e67ed59e1d1-31e50768ab4mr216689a91.8.1753206074910;
-        Tue, 22 Jul 2025 10:41:14 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753206078; x=1753810878;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=yZfdG28L4t2BMprclNeK4kINg4VjJmW7A5DUE2OqEws=;
+        b=QpGbAZ/bVTP1UgMNQMIcZIMYFN2NsgFzRB03ICVxONd8+PEwdRFLed0/y12vvqa99x
+         pG2+zvdgRXqLD4wOahyxG+MUo6QFCxDOvWiEaXcLm/WjEpetYGDAl0g9Px7et+elIRod
+         0eR3JwItkPMt+weZ6c8F7fJw1Xc9Q+OgBfz+F7tA+3pGZ8KeTigkNNBk2dyhRelDxGKE
+         u86qfgwpNLPeA6zBRZ0hmHbaFrETCx54nREWuIf6DGXBq8h44djvcBBvbXs+nXOSSDAl
+         6Y80H1IIe9lvwi4Y2NkGEXxZbd3qh9BHp/kiKcsjqwzZblH67GIyBJ56ifsQCIHqpWTH
+         /42A==
+X-Gm-Message-State: AOJu0YwOYLvI4cml3hibX8H+Xd+T4QRj6ykm3aoo1eKT8v/A6dKevy13
+	ntPNP2bwgudPi6vtMXUrWPEJ0QQQvbLV8RsWtu9qKJ1I6A9jrcdL7s21fCqdiA==
+X-Gm-Gg: ASbGncsbPdr+nyg+OK3BvYABJVHy8dtXIZBB0qd6rVrtSaXY7WrjyfxCTdfPHwgCHmh
+	3jA2KU02SMkHnGY7/cMEKG4tvPyuJWdtHiu9B+HB5H4QzSAqgZ1sVOOWDTv6IW3KupBXWWjwEEK
+	E0naeIFuQSkr9e04+2OOze65zfyz9aLjH2gBanXojLwz7V+K+Z5TB9IWKDEeKuw0+uDGxSWyj7z
+	sP4nPrmdMe319VlaY3a84kePPb5BDR9VP1mtp4yECaJ57Xe40U6ZEmGRvrlEFM354weeHMHw7Eh
+	Ifr6h5EKzGr91Z8BkQ1vEuHRy6veNjPzzOaI3GwtPCZFQuAbHSMMSCFsr4HaAXK7nHI7a+MbT0y
+	JAIAYuZTmozHchCJU8qxVNyXXtLjBZSQMug==
+X-Google-Smtp-Source: AGHT+IFX3rPvd+otigDwqJotsCOy/4JHYeSSitEzktYSkMWHFTqEclBqYqbDVX9pOJS8elhI/+Rlxg==
+X-Received: by 2002:a17:90b:4c49:b0:312:ea46:3e66 with SMTP id 98e67ed59e1d1-31e507b3b85mr195462a91.21.1753206077801;
+        Tue, 22 Jul 2025 10:41:17 -0700 (PDT)
 Received: from localhost.localdomain ([211.37.148.227])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e40f31bedsm932293a91.2.2025.07.22.10.41.13
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e40f31bedsm932293a91.2.2025.07.22.10.41.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 10:41:14 -0700 (PDT)
+        Tue, 22 Jul 2025 10:41:17 -0700 (PDT)
 From: Hoyoung Lee <lhywkd22@gmail.com>
 To: git@vger.kernel.org
 Cc: Hoyoung Lee <lhywkd22@gmail.com>
-Subject: [PATCH v3 0/2] fix resource leaks in test helpers
-Date: Tue, 22 Jul 2025 17:41:00 +0000
-Message-Id: <20250722174102.1876197-1-lhywkd22@gmail.com>
+Subject: [PATCH v3 1/2] t/helper/test-truncate: close file descriptor after truncation
+Date: Tue, 22 Jul 2025 17:41:01 +0000
+Message-Id: <20250722174102.1876197-2-lhywkd22@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250722174102.1876197-1-lhywkd22@gmail.com>
+References: <20250722174102.1876197-1-lhywkd22@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,19 +74,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Thanks for the detailed and thoughtful reviews. Your comments helped me better understand how resource cleanup should be handled, especially when dealing with early program termination.
+Fix a resource leak where the file descriptor was not closed after
+truncating a file in t/helper/test-truncate.c.
 
-I especially appreciate your in-depth explanation regarding the difference between true resource leaks and stack-unwinding cases. The example you gave was very insightful, and it clarified how automated tools and reviewers should assess whether a resource is truly leaked. Thank you for taking the time to provide such a clear and instructive explanation.
-
-Hoyoung Lee (2):
-  t/helper/test-truncate: close file descriptor after truncation
-  t/helper/test-delta: fix possible resource leak and ensure safe
-    cleanup
-
- t/helper/test-delta.c    | 9 +++++----
+Signed-off-by: Hoyoung Lee <lhywkd22@gmail.com>
+---
  t/helper/test-truncate.c | 3 +++
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ 1 file changed, 3 insertions(+)
 
+diff --git a/t/helper/test-truncate.c b/t/helper/test-truncate.c
+index 3931deaec7..104bc36cc0 100644
+--- a/t/helper/test-truncate.c
++++ b/t/helper/test-truncate.c
+@@ -21,5 +21,8 @@ int cmd__truncate(int argc, const char **argv)
+ 
+ 	if (ftruncate(fd, (off_t) sz) < 0)
+ 		die_errno("failed to truncate file");
++	
++	close(fd);
++
+ 	return 0;
+ }
 -- 
 2.34.1
 
