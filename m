@@ -1,84 +1,94 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5FF3B19A
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 13:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9904D242D71
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 13:24:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753190297; cv=none; b=S/0dU6JtrVP32AxxZomTt9zUzANOr6Q80a4UmE3NXtcyX7zWx4IIPaJ8Vd0kWzjDarET1Tn1hImVuDDangNnHzKFr0YNk4gPqr8pNctLKW+Dxx4PMG9s/tk+Btz32IuLG+U2bw2qyYclw/lE7L/6TdJs650Vaz8H1mnzYqbW6rA=
+	t=1753190650; cv=none; b=lI+FF0s3W3z+P/o0Z9FvcT2IbzmAIgKCR9e1FT0GfgrJA3IghmZfvXxok3Mq+prsvoKM0d94kzJDldi6gMbIO0nWmpHy7tWpVfoUmN0VPtuyw6uQl+ejt5nf7rN3AMQiCVReDYBhu5B/Qb/KQhn17CRMrSpDxIhDe5Ydd/dhBaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753190297; c=relaxed/simple;
-	bh=aIoIznOH7YIb+Yx1GGEMw0+b/TqZcXCgMgRC+soq92s=;
+	s=arc-20240116; t=1753190650; c=relaxed/simple;
+	bh=3BvUTrvJRrKZ2TMbN/K92X+bpCznaGmpuBhROZ3HJ+Y=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a9B2E+xfnsQ8zYZ7APr4mCC+BcnAMm1peUMik4Ro/dImFBxCYBQ7KR0bxs7e86uSnPAY9sGjVOmBbfciQMvGgx1ucZIQQ2GTRN35UkI95ot8TM9aSDxm11e34Z8jUgtDa1KcLlkipkHqxZesZJRR8P4PVXrLHkDk7qaoWm5wUwg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lo6NQLN4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Mh98vUSF; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=PHlWuMgeRTpvd2KiQY9l98CpDK8vWjU3dE+Wn0XtShSfOv5NG8Yedx+2Da5wvJPaLvgSq4mJSso55mc5x/CkNdMDB32Ajl6ZVdyLef5UhOCGXyNO+sZ87b3O0n52ePSGFs33xa1KzK2tJf+1VQLuRXowGO0AhwCtIP0rFwAIM1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U5LzWp5+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jBefmIS4; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lo6NQLN4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Mh98vUSF"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id D5BACEC0327;
-	Tue, 22 Jul 2025 09:18:13 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U5LzWp5+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jBefmIS4"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id B5C7AEC0358;
+	Tue, 22 Jul 2025 09:24:07 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 22 Jul 2025 09:18:13 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 22 Jul 2025 09:24:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1753190293;
-	 x=1753276693; bh=Mkw4u1bHGUuT2dqq1obcXj56uZZUULU0LaYjKZdUg/Q=; b=
-	lo6NQLN4kxWCPQo9Lbtu2slt2o2F6HtWxSTMUCFfzMdeaQP6CQ+0bjwp6xDFxFHK
-	gYM8yrhv9yuc/ASK5id+ax8uCv+3ZbVKZ2rHi0/6EBiqv30T6Fgo2ZaXiqKCREKB
-	QwPhfc4vzG1ls4pAcIMuHFc9dKpKHA7EzOJp3AZj/NGH4ugqUAK1PxUG3Z55KYN1
-	+RX9XoFY5/AJSwFbUHmI4mKyYjE7X2Qg5lxQDh5GV5H3bBI+DLVveh0VWk5bd2iA
-	FsxgRu2Qn7PHiAYJ/BZ3pxWYfGoialKoo4adQ3K8LLD+4aL9Ud0S/B9Ey1XNBjr3
-	5/pc8lVpMOgP97R3Rw94Bw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753190647; x=1753277047; bh=3BvUTrvJRr
+	KZ2TMbN/K92X+bpCznaGmpuBhROZ3HJ+Y=; b=U5LzWp5+ToDWaLI6od7VOcRV8f
+	kk75oYweQoqj3nooe39s3i+O17fMuOySSjZSt15SINJTN1Ub+WC5sZPIEiR8iy4G
+	9SzUN8NHC88SWLsmmjA6eQlufhrV6kQhe9e0587WDM6Vfx+WkgFK3O0/7t+N5p8g
+	MGA+lIkQ/MP8PKexTq87hCI82Oh5p+ttu76W8ZhIzHyJ4b+cgQChPb3cnXmA7fSc
+	+s78g9GI867DqhxrKmk98nRQN+MsVILQGSwmtxxc5e0zULZ/NOO72Br16xJMuKsi
+	FW+QkIB3bDxPMmGLXcC1+ggdENVDTiIHK/RvpPQcpGaz4OntCzmHF6YbEd5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753190293; x=
-	1753276693; bh=Mkw4u1bHGUuT2dqq1obcXj56uZZUULU0LaYjKZdUg/Q=; b=M
-	h98vUSFtymxLzTHaTT5bMQWB8DOd15Y3ReGk2WEwn42Oq/ncHht6TlXg4re8EjvT
-	HM+Ku0Xzz5zs7zEBl3oqft2BpoXungHbr1z1dMdGyBtpFr3USoDwauWPpeXep8ma
-	bZtH2b4Z1WV4IgRrw7KyKIF2i+2hm7wUI1Ecd6U65zR/2gXsq265mWgJBM6IhkRD
-	1fTFdOtuFK2/DQn8wJgP6DeVLGt6YRJIZJ0+50FvwvAQ32t15dDr/gGFBU/kkU2Z
-	iX4XwEA6fowBIG94q5qhABCkH/UX5lFh4UddPX2QstWsu0R5XwzS68PvgqqjJObR
-	LYzxo54P6fwNuQ9uyIMsA==
-X-ME-Sender: <xms:lY9_aMDx6msbgs7KoIwInkHRb7JXGHIrhnVRK4L-0p1bZvJE1YwMMA>
-    <xme:lY9_aBx3uZnWV8ePwZk2W0FY888Zy6YXDBgLlyqcZkPpRCMKBLXnSDFdtqFUu_R8u
-    8TV_flPxZEA5Uaqmg>
-X-ME-Received: <xmr:lY9_aJBilRMOXk4CUXXa9ngDyRHwsjo9lg0SReMwXBax8h1bSMnMbVkDYHaNk1tWLiLnbkyI8r1Yq8Tljmw9yr_QE5k29Du_fCX4xeM>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753190647; x=1753277047; bh=3BvUTrvJRrKZ2TMbN/K92X+bpCznaGmpuBh
+	ROZ3HJ+Y=; b=jBefmIS4hdSTdCQWPi5VWoA1Y13PrUMo4VhFm93tjCmOD0Ri09v
+	IORf32rYab8Zgh2PRkVm16BH8LX8owy9PyNm2dAu6sNIjtpQSUG4nTfQLQQVnqIY
+	Mw9DpP2e94EavccQs0YecU3zm6DNgs6gyLdkqqCWhlsPhBWyZdHVg4+Hbr/A+93p
+	/5uNUFS/9b76vJWzFFvdI9MLR8vhOk1/dfQPArmTxA8Fh7HjKBxqbJpJf8UNxPSC
+	JYUN+duAbR9cn+q4H7YtRN/aro7kuzikgZDhzYVCBHhcEC6j5Pdwt92/x+O2dh83
+	XE+l5LOXsidc4382QEvS/hTe8T+/A6aKjRw==
+X-ME-Sender: <xms:95B_aJ1VKAJMuePmt5Z8vcgcv7umRB9h16XltuBVgPlMRwLtbUCAGA>
+    <xme:95B_aNpdFya8quNAy2O_b6cE-pmzEJQp-OLkS1qrYy-ZlWKtcEBLzsH_uFUjIF4yf
+    9SwrZXmzYz3GKsGgA>
+X-ME-Received: <xmr:95B_aAVA7FVCnNiYmQ7kBclekFzPAKbQSUC29mN2I6ul4-ahdslt35ge4NORg49-r-i4oNLSE90CGQXCsTS69umuxOSVfQTV4rORvZA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejhedttdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekofdttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnhepkefgtdeuvdejfffgheeufeeugefhtdejhffgkefhhfetieffteehleehtdfg
-    hedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfh
-    grshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
-    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:lY9_aObSSbSTiOKMUl8qbh4UHQQl6ZV5_UJMgU-9HdxM1GFjkVWabA>
-    <xmx:lY9_aBjxggHdJrrfi9JDQw62YEywG6HcDR__aHFefeVofv6p_-33-Q>
-    <xmx:lY9_aA5BT8mkl_GLA46FlACiImPb5ELirOpYt1bixMy5YIv2K_LeVQ>
-    <xmx:lY9_aI4HSGtXMWy8Ye_Z_zOIhhHRV8VdzmAAqHa_0Fz6Ews3i9eI9A>
-    <xmx:lY9_aBUAlE-esJv2qZyfUIdOg0E9_7NViTlORGRYwxGp2Kr3YouoVWl_>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
+    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:95B_aIaUbHnomb7vItS8Ypgxs-H_rHb0QU2gXds9Y1uTMPVSFgIX-A>
+    <xmx:95B_aNcAgbKqL2PKWMrKcGvGI-EIM3jDfdofdowGNBN4g7nFr2np2w>
+    <xmx:95B_aC3hvJN_-denusAMMii9ql39lyjmAv1Npcet2QlO47IeupaQMA>
+    <xmx:95B_aEJJn8M4TH272W1k9O4cI7TbAiLf6SmKhd5gmKXx1ow7RyjI8w>
+    <xmx:95B_aBLODbc9AN02tKad0A8oJctfee7GP4Th5acCzKDKCqhwMCdldJil>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 09:18:13 -0400 (EDT)
+ 22 Jul 2025 09:24:07 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] rev-list: update a NEEDSWORK comment
-In-Reply-To: <1599cd31-436c-4ac7-bbef-be7dfbff00a3@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 22 Jul 2025 10:41:02 +0200")
-References: <xmqqa551127o.fsf@gitster.g> <xmqqecu9w4a5.fsf@gitster.g>
-	<1599cd31-436c-4ac7-bbef-be7dfbff00a3@app.fastmail.com>
-Date: Tue, 22 Jul 2025 06:18:11 -0700
-Message-ID: <xmqqzfcwuzxo.fsf@gitster.g>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
+  "brian m. carlson" <sandals@crustytoothpaste.net>
+Subject: Re: [PATCH v2] send-email: add ability to send a copy of sent
+ emails to an IMAP folder
+In-Reply-To: <PN3PR01MB9597B8D3D84D9F7660F15E94B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 22 Jul 2025 11:44:28 +0530")
+References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
+	<87a890182591c9c21061e85834fc99a766252611.1753092192.git.gargaditya08@live.com>
+	<xmqqpldtxsp7.fsf@gitster.g>
+	<PN3PR01MB95976A7BE0F9A54E836FA2F5B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<xmqq4iv4x15e.fsf@gitster.g>
+	<PN3PR01MB9597B8D3D84D9F7660F15E94B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 22 Jul 2025 06:24:05 -0700
+Message-ID: <xmqqtt34uznu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -86,17 +96,20 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> On Tue, Jul 22, 2025, at 00:46, Junio C Hamano wrote:
->> The comment was poorly phrased and it wasn't clear what it wanted to
->> say.  Strongly discourage this broken pattern to be copied and
->> pasted to other code paths.
->
-> Why “was”?  Shouldn’t it be “The comment is poorly phrased ... so
-> [change it]”.  According to SubmittingPatches, “present-tense”.
+> I'll rename it to imap-sent-folder, but the name looks more like
+> it is only for "Sent" folder, and no other folder can be used. For
+> example I like to keep a copy of the emails I send to git mailing
+> list in a seperate 'git' folder in my mailbox. I can set the
+> folder name as git, and thus have a copy saved there. What do you
+> think about that?
 
-True.  Thanks for spotting.
+Sorry, I am puzzled.
+
+The reason why the option "--imap-sent-folder=<you-name-that-thing>"
+takes a value, and not a "--[no-]imap-keep-copy-in-the-Sent-folder"
+Boolean, is exactly because you want to give whatever name you want
+it to use, so I am not sure why you are even asking that question.
