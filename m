@@ -1,54 +1,54 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D849285C8E
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 20:54:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2A7285CB8
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 21:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753217680; cv=none; b=uhvFf9UlIQqSxJrIQkqVpl02gn54jmFJ26ttFeJr5vUSsGkTyKFCFkPVplFKeAM6u7LkwwMixDaMsjQmxKaylF4XRK6WHqyoysDOqZaXYekcu9hPsEF7DUuEuseYb8v/z4acnV3nw+Tw+TwPrXmRLLTlecPUCvVR1fCEw0YOa48=
+	t=1753218015; cv=none; b=Ik5wRdAwMiwGwdchkWkSVcrTIUXjaedkynn4iYPm0C70UQrv/nBfVmx4aFUgoITyTXa00UdHKXgLCkNN61afv43i+h5Tgo/7Wzdhv7yPI51CjCyPG1fvqko6i+3auQ2q83ozmzKP22DPakxzi1kWydAzLx3cMGl9csvuzp9wcUk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753217680; c=relaxed/simple;
-	bh=znlpE7I5szTV9cvJh8ilpjGSPUndMgSGzCYn41Ni1qQ=;
+	s=arc-20240116; t=1753218015; c=relaxed/simple;
+	bh=LMLlnY7ux/r0bLj5Mj7Wxun6t5nX6YProshPfAHWHAU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TYWyR3wJAgaLaZlbBJEU11r6zFIawGhB6jrbE2MRFTrNZjLeZgl0HqHRM6GzEmVk0OWoYMZeoq0aMbsgX8/H/Y8zwLgBTd9V9BLZboUBOR69DtNO7daYpoox3to74xkVQfaJ+2Xn8zbrFHXkm1YtSALX4s4abC6AxUh0PvM42Jg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HyYtXlhU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LjEHiF+9; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=Jn1s/biQ2UtjZZogu+ZeKAqAI+RK33BpNMowv+vm9nIqKRYLPcOIfDoS51Ya/jDPxwDa1XBoNwOkdgMsxePs626gtkhqb90+cDeY6u0fnVR8L4E7sPRFVe/Xv02pIcDKqsL88JhbESVkWEmMnQMPRZNqjxMhJ7vqTml48Mvk0S4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OKGk0XcK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jQuS0RQs; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HyYtXlhU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LjEHiF+9"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 428DF1400590;
-	Tue, 22 Jul 2025 16:54:36 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OKGk0XcK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jQuS0RQs"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id ED7EAEC0569;
+	Tue, 22 Jul 2025 17:00:11 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Tue, 22 Jul 2025 16:54:36 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 22 Jul 2025 17:00:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753217676; x=1753304076; bh=hQenRZjjyP
-	r56Z01WHvoi4gKws1EKqIrO9jtGzXXfwI=; b=HyYtXlhUkSzmnSS8EOs+W7UzW7
-	QDkamJej/Cjzuae5eKxh+SaMfMcKM16LiSOCR8p1tTXEZtR2lUCUACPkbklbCYLx
-	ffKwT+QmlMa4h2jekC58nlGNP1UljthnScUd1Ho4e6Ll18I8wmn84s1y0ogHQT8T
-	XDM0p99qxIjp9kD6DlO/lmuyBGwSLSCgzQzQeJbwtaNoigDh+t/s8FEqofI/poVI
-	rHX7QxaG18TCnmD4pCU86SN2Dr1naLhYgV/zin+DII5lbVY94csK3P0xLFQgMxtM
-	dzcyueLWj/xjf8kEKvDd5yxwK6XTPHFt6UwE/nh2mJxaxVYZhNKCFIEfnvsg==
+	:subject:to:to; s=fm1; t=1753218011; x=1753304411; bh=3QDLlxHc6X
+	ShmblxiEtM5oaJteMCSQji7y5dnZtP7jk=; b=OKGk0XcKggnWyq0AK+ORJx0Ztt
+	F2sCuugiZTndU8OPcvo/IvhNMeWE2bdBByu/fhsFFGCUgkx4dP/f0k4SbPxYlu1K
+	+7fNF98ufSR7ME5q3CG/8QEXdKgQ0ieIUyv+PpZ0xyobxjVyzExf7WtMZc3WBhd+
+	EcykpH+RrHqQvRDzKIT1Z+EfREngtDsHpl1B8Z4W32QpgRFqjxrSM0kDiznEssa6
+	ofMHGgZq+VWiwONVzkn04HHJDuT4WrIb9BfMgH4mMZWnk9OhoUXnAOowyp4TEV1w
+	v57wE4CdxeQN0libpNATtYkGkELDRV6x3YT7AWos+tJ9anQ1tRZKH0ts+ybw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753217676; x=1753304076; bh=hQenRZjjyPr56Z01WHvoi4gKws1EKqIrO9j
-	tGzXXfwI=; b=LjEHiF+9Njl4u7Sjuon6O/Wh3bMG51SaS3BgQUtHvCevI6g5vpj
-	j26z0pJQf7pO5tGq8V48PdIboZ6bzesZmeSkd5okcic7RDWbIfzR9lUTM5ytyMdg
-	io7fKXKPCedKsXW6xj3MLotOzBYTVrS16Tgm7BRPALYENz4XuCiJVCPiaCabeH0R
-	fN+EVj3B/WXmvJFz0e+DatH3dyNkoneJai50VKYm8e9VzfbQuPlOsZ+x+OO8PjPO
-	B8hHQXmMGvKNZFum+N2fDAxys/ym97YtYZssmASvHqoW/KmUm1PFUomyTTbX8/DZ
-	+CIQY1wb69PydZZtD56pv9xNpAZzSTneinQ==
-X-ME-Sender: <xms:jPp_aI8GJHYHwDrALbTBY6X03guTdoBlBlYUoJL8KEU4hZzL3XnTtA>
-    <xme:jPp_aLRS-SYXaGcauGRVVXsP0WKuuOii-rqrO3KFFKeo3VkpoP0XeF8HiPXpyvLOu
-    2AIhwYmTN00Uvwntw>
-X-ME-Received: <xmr:jPp_aKn8hcdoYF31_ALHZWPdJFVJJpEIZ4hDMqMrxFNlSnAWSHqrAFT6-m44j0zLcVWyPyRLZpbXp_LlvVnljIr4r6xooitv7HHigwM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheeludcutefuodetggdotefrod
+	1753218011; x=1753304411; bh=3QDLlxHc6XShmblxiEtM5oaJteMCSQji7y5
+	dnZtP7jk=; b=jQuS0RQsoPvsBHvvrf45jjUVEreXesjORzDzKePdCZOlMdBbsV+
+	b9TMgd4j+UxUP0QADNYYIbo/3+DBlbEkNiaL3pMgtdHET2/+FMp3FwZ3ZuaKKrtr
+	+gi37nEvPT61rvw3RG4AxkZp2J0rfE0ZwONakcZwZj3m5g/1YLOQDT0kr1P+HfEp
+	TE0YEH85lfTQ9DwlsGtrAhmTMTBAfk/XcRu6njN5tvRb4vrgfawCh6A7M7Fr3G9t
+	eR4OnaJSTO7WSfWJ8rZex4RAFXssxchwYFYCniLtdBaW+OSie4ISEZpnesLi1Slb
+	7CYMIJNJ1Pa6x7WPoKosDuLmgKsCL7M2aJg==
+X-ME-Sender: <xms:2_t_aJEFQrA0r09bGV4Kq7qc3J8i848vwIGtlimsx40ibyvVhVFEaA>
+    <xme:2_t_aI6ysqqoK2rXrA8a-UCVbAHAhSWfxJ8ymML-eSzSMmMV4ZBhUEXdTafme3nzS
+    2jzyhNw6y_MNntrlg>
+X-ME-Received: <xmr:2_t_aHuoidIyw3jlPxFKRQuAaofu11OwEC4pTjxtWV8EwFhn3JlcfGxZhz0DVpbAPzCFMA5sko7QjamDpx-eBXMJ1RzsZY5QPMDHWhU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
@@ -59,25 +59,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheeludcutefuodetgg
     thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
     htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
     khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:jPp_aLSfGXzK5qMrWYyOVHVNlof8M0cIL0swJMSABQaGfQ87v60a1Q>
-    <xmx:jPp_aIMF63wu4oJqfCYluEkSRxLHHc8qp0mWvtEexEUIsIctFZNMkA>
-    <xmx:jPp_aEUetI1rhCkhT2h3uyQP1zVBw2w2-a9T38tn-7e2M62Lr1jHLw>
-    <xmx:jPp_aPfHqwENpnF4BUz5-01iMJVo0Q8C-jULeHQHGcmJmkh9U1VWbg>
-    <xmx:jPp_aLM3JwYog78PKhYF2rC1ParVbkdK8vIGYoJP8U7qDcKehlmjFjJI>
+X-ME-Proxy: <xmx:2_t_aB50oPpXU2J3jjOm-07eTXXXynf8lLALS9Mn0CGwB-5fhCmYNQ>
+    <xmx:2_t_aKWy4jxaD9i7y55jz4R1XzSB98UfmUCC9wbdiXny9pMO9lyYzg>
+    <xmx:2_t_aL9hDedmdnMwQOcThpo7HsUy6R7v07B2ADndbOD0eJ7pKj7vLA>
+    <xmx:2_t_aOkexT-rI6YX6VcHSwmCwEAexw6492fZkAI0i1TvUowwsWIo3A>
+    <xmx:2_t_aAUe9yZEkZwG9VSJyLi9mIh1XqjXCiLku2jOqlpbbtMmGFs8UcJq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 16:54:35 -0400 (EDT)
+ 22 Jul 2025 17:00:11 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Justin Tobler <jltobler@gmail.com>
 Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 1/2] builtin: remove merge short flag for switch and
- restore
-In-Reply-To: <20250722180818.1043014-2-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 22 Jul 2025 13:08:17 -0500")
+Subject: Re: [PATCH 2/2] builtin: unmark git-switch and git-restore as
+ experimental
+In-Reply-To: <20250722180818.1043014-3-jltobler@gmail.com> (Justin Tobler's
+	message of "Tue, 22 Jul 2025 13:08:18 -0500")
 References: <20250722180818.1043014-1-jltobler@gmail.com>
-	<20250722180818.1043014-2-jltobler@gmail.com>
-Date: Tue, 22 Jul 2025 13:54:34 -0700
-Message-ID: <xmqq1pq8rlo5.fsf@gitster.g>
+	<20250722180818.1043014-3-jltobler@gmail.com>
+Date: Tue, 22 Jul 2025 14:00:10 -0700
+Message-ID: <xmqqv7nkq6ud.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,43 +89,54 @@ Content-Type: text/plain
 
 Justin Tobler <jltobler@gmail.com> writes:
 
-> Both git-switch(1) and git-restore(1) inherit some common options from
-> git-checkout(1). One such option is the `--merge` flag and its
-> accompanying short flag `-m`.
->
-> In previous discussion[1] around removing the experimental marker for
-> git-switch(1), it has been suggested that this short flag could instead
-> be used for an option similar to `--move` from git-branch(1). Such a
-> feature is not yet implemented for this command, but reserving a short
-> flag for an uncommon option is unnecessary and hinders potential future
-> extension.
->
-> While these commands are still marked as experimental, remove the `-m`
-> flag from both git-switch(1) and git-restore(1) and update the
-> documentation accordingly.
+> In 4e43b7ff (Declare both git-switch and git-restore experimental,
+> 2019-04-25), the newly introduced git-switch(1) and git-restore(1)
+> commands were marked as experimental. This was done to provide time to
+> make breaking changes to the interface. It has now been over six years
+> since these commands were implemented and there has not been much change
+> that would warrant these commands remaining experimental.
 
-Surely the whole point of marking the commands as experimental is to
-allow us to make a change like this one.
+Remove "and there has not been ..." and everything after this point,
+and replace it with something like
 
-I doubt that this particular one is a sensible change, though.
+    but there hasn't been much change.  In the meantime, these
+    commands being experimental has become an old news.  People have
+    become so grown to rely on how these commands work, it is no
+    longer feasible for us to now make breaking changes to them.
 
-"git checkout -m <another-branch>" is one of the most frequently
-used operation in my daily workflow, and having to type "git switch
---merge" (not having to learn to do so) would be a major annoyance.
+    Let's mark them no longer experimental.
 
-> The `--conflict` flag is also now defined
-> explicitly for each command as to remain alongside its related `--merge`
-> companion.
+or something like that, perhaps.
 
-I doubt this is a wise move.  Unless we are planning to make the
-option diverge across these three commands, that is.
+> diff --git a/Documentation/git-restore.adoc b/Documentation/git-restore.adoc
+> index 96de9bb5ed7..903e8c4618a 100644
+> --- a/Documentation/git-restore.adoc
+> +++ b/Documentation/git-restore.adoc
+> @@ -28,8 +28,6 @@ otherwise from the index. Use `--source` to restore from a different commit.
+>  See "Reset, restore and revert" in linkgit:git[1] for the differences
+>  between the three commands.
+>  
+> -THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> -
+>  OPTIONS
+>  -------
+>  `-s <tree>`::
+> diff --git a/Documentation/git-switch.adoc b/Documentation/git-switch.adoc
+> index 7b24450f841..1d46010292d 100644
+> --- a/Documentation/git-switch.adoc
+> +++ b/Documentation/git-switch.adoc
+> @@ -29,8 +29,6 @@ Switching branches does not require a clean index and working tree
+>  however if the operation leads to loss of local changes, unless told
+>  otherwise with `--discard-changes` or `--merge`.
+>  
+> -THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> -
+>  OPTIONS
+>  -------
+>  _<branch>_::
 
-The main logic that implements the "move to a different branch,
-while merging local changes into the new base" does use these two
-things together in the same code path (in merge_working_tree()).
-The same for "check out a single path out to the working tree",
-which does use these two things together in the same code path (in
-checkout_merged()).  I actually think keeping it in the common part
-would help the readers of the code even more---by making it clear
-that these three commands parse the option exactly the same way.
+I think these two changes are OK.  I personally do not think [1/2]
+is a great idea.  At least I am not convinced myself not yet.
 
+And if [1/2] were a good idea, then we probably should apply it, and
+then wait for another 5 years before proceeding to this [2/2] patch.
