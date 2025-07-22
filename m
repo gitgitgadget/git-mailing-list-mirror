@@ -1,84 +1,94 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49E427F177
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 17:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606F86AA7
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 17:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753204163; cv=none; b=ae20lHeKSFv0lnsNNM7h5hIlGmFDE/AJr5VWnP2q4TUeb9uejEVqiPwr8/1lIZrN23tswi+supfWcrctnUzaKe6fIg/5IYziQwcFBbBobiwpM3kBhThtrAdhLdWqv9B8tk8lal9L4NTnYFLJt8HBjfk8ESMGy985N3/skLUljrM=
+	t=1753204840; cv=none; b=h8T4D8Fe2vLnUe+OLfIcY7jqKAo+nLWX4wTEItjbvji+OaLSuScod/o0l8y2Ig+KUD0e1qTqaI9dB1q3I62fnUGZZmV8nHN7crSmDVI6NMGI5BfnU5mg9WftDAtgPQb3We4TQ9NQrMJ2QGvZGKl15ShMy46/SaLyJPmvV8dnl2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753204163; c=relaxed/simple;
-	bh=JfJpTG1gQLA5cAAQzTas8C1+kid/xBNH5vF38qE+kww=;
+	s=arc-20240116; t=1753204840; c=relaxed/simple;
+	bh=9fBTmkaE6fQvFxWWTmpjC3E1ezJ7a+Qk4wHu6AewbTg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nWMCn2RmU88ij9/AQylvEahhDwvY4IPUi05zUAdw1htnlULSRk792c6aew1REROLBZFsTWBGbgrXnVbfsfZ2LSxmlBSnauWObjwoapTnYPY72n92wcwF9XAM/6sLVf3bDuMkIMpa2uQeZLB6OGfu67aT60CVu8p45o8FeX8gxc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UQkNj4xq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jTXyDwQE; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=m1vBhSGaInkBMr047U7r6ik6CrNUNZbbGYUSkJs7vIYJXwgFI9NoVC3BrF8vbF0eEJbSDoitGcEqniqeowEHqdF7+o+8I0wEl6/1533jVs8xq2KpegeePFqSBnwXhILOaisqJA4FtwR2bXBWo47SABTBpBt9PA3Mm9eqwYtJ5BE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iOFx5r6D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Qi+e54NN; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UQkNj4xq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jTXyDwQE"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D4A2C140035A;
-	Tue, 22 Jul 2025 13:09:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Jul 2025 13:09:20 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iOFx5r6D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Qi+e54NN"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5ADE7EC0431;
+	Tue, 22 Jul 2025 13:20:37 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Tue, 22 Jul 2025 13:20:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753204160; x=1753290560; bh=DxciZDkUoy
-	M+nV1mLB17ou55GWsv90Kos4LDN0N5P/U=; b=UQkNj4xqsDOlRHVijh2yFCxKQN
-	hm9y2eJ3RsRAph8xafOEgagLN1PCPWNJwkZZ9WWjzBMpXkw5ZSKgRs+Sz54YsdYV
-	0Oqm18sLtg7Yg6+7buO739bPgScM+/9k4Lcw7j3orEJUkJPMBOwkx16pbo2qhM7J
-	Ux4ITw/T4+m1K8MQUUeTzL+ZSU3N1MWc2Q10RvocX6lBgkDrjKhjNIol7mCWemoe
-	rCqREfhGgBIWaxqhuY7Y7/NDsg4sWcZiGSGS/CQaZt4xXkzXjjK1szK+rvPvhJf8
-	3iGqxhNtswTwE/SYg6qJrCaV4IV6AWouPUuix49btte5ENnOF0s/oDaFnIiw==
+	:subject:to:to; s=fm1; t=1753204837; x=1753291237; bh=8GYHhVf7rE
+	Wv+QsWKAGg3N7AeEa4zDKCYrZdwwfjlfc=; b=iOFx5r6Df/LbMAgg1IWem5/909
+	4DDoahCmfZCOqgkCAtnozgdJJ+q+n3FUuhs8wTXPuKPgbuxfTXEcSuwubpPPDILZ
+	LYr3OLuEYS4t6BR046uxhqESKo+6hQkAzjkpV3zi5UrkaKL4+rAGQAAV3fYWz58a
+	jseuj0Om8tyYp+jg82c0L7Zawp5gnF9CE0UIXQbvMeqEeMqCHXYxcdMeoDx8akeD
+	wCPVpdRPZh2ND1c+UCx9zUFyZc5maFKl59o+L2iKLnWNLDrTDeQ6OjFsEad9D4V7
+	0WXv/h3II1Ezdy3gXHEyY7gS399J0VAxxjd7rZ216OgBE7uKGcUzGRgPOPAQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753204160; x=1753290560; bh=DxciZDkUoyM+nV1mLB17ou55GWsv90Kos4L
-	DN0N5P/U=; b=jTXyDwQEKRHrrLlnMpODi+9gsYXtsTz32CQfG66nFWACQrmqWYM
-	UFVrvW3tnYQ5cJ5UujlLKyCBDkVriQCVi3N3yQUsskIEP0TnaDbdsCDde1hdlMfq
-	fxtrrRROpQJMSOvNSjtHOZK0/ohmpsQ/X3tK305FZUxPW4X+c0TkuBoXbpu/ygOA
-	mtP7ugvRYi3kptCUOy7w+HfcO2jOjvlTzfOkDA00qkTMhHflGAkxTmX5lYyP1Znb
-	37v0mrjvg+aumoJBGBVhJIPXAG08nKqo4ZdytMbPdmnnxyIJz5aC1WkrJkS2wooa
-	bTVI55wktgMdHCF9OcPoN0oagZwvZd5dx2Q==
-X-ME-Sender: <xms:wMV_aHYyvNphc8EyUj33Hh-7Wo_iALkYoNUb9DQMIU_KK5VoHfno3w>
-    <xme:wMV_aO3aAlmD9gJLXL4IEKZZoK03uztwytjsCjNVGIfpIBvo1B3wVU1Kv-xAYzYWb
-    y-hyxNxozXcsvsHWw>
-X-ME-Received: <xmr:wMV_aKaUUbNi-wgaQwfJewHWh20wSyu0wI7w3nnG_uaL4SzM6CxlIfRMDlvjS3XYvvApdQZpuPBuEoxfob55agITjwgGZROw2_qshbQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheegiecutefuodetggdotefrod
+	1753204837; x=1753291237; bh=8GYHhVf7rEWv+QsWKAGg3N7AeEa4zDKCYrZ
+	dwwfjlfc=; b=Qi+e54NNyyRBk+W58Jt6KdAOojTIygmEuvKVNidltPqrJ2UEzu0
+	wqneNyh2QUwoWBdwqnnpvexwOc7UJy+kKTCSnoEvTw8WQdt3HXU5LWmS8OddqAEC
+	Da/dD4IzYupHj1i9JmrwOsOvNfRW/gk2QhUsMPzKkZctUK+vL+ViXS3UM5LsIl3I
+	EXSQr8pMKYcEFXwn8/Dja/O8mYomF1mHOocC1OYEPgaJhKvRuoYzs4MWNamCiiWJ
+	T+Y1d5k8W6gy/Geo0u1V7nDcck0+6iIAVwSL7ISfrfJ0MyLdVa44bYLyDV46N4lp
+	iNehlawKI1mI1rWSZ2JDl1Wx0EGCMhpqEBg==
+X-ME-Sender: <xms:Zch_aJvyDnsH-cKX-UD8ijBOzkS6gOeb3P8qDmUXNTZDbvOW0X7qIA>
+    <xme:Zch_aMerIVkUsLiyaaTw0hFfbInOjxGSLYajBXzmX8hU1Sjuf9hMHM4EkU3XjIT_3
+    -d04Q9Wc0CxqQTVWA>
+X-ME-Received: <xmr:Zch_aDZ8XUko5SH7HC5hCI4_2_tt2Rg3fCIHzr_e9dza-G-3fOogfjaT1Eoe49zo41mVXW9BdQzu4L0PPEUK5qeG9Jp36qJo_uy007Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheegkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgepudenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhishhtshes
-    jhgruggvrdhfhihipdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehsvggsrghsthhirghnrdhthhhivghlsehitghlohhuugdrtghomhdp
-    rhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehjohhshh
-    esjhhoshhhthhrihhplhgvthhtrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:wMV_aOI9xwiVu586hQrvJrSHaMVdJfi0OAr_2CDOJTwiHxgs6vU5jw>
-    <xmx:wMV_aBGE9lXQBRww7zmINvvFxK9saDxn9UWwmwbEcVPbQW2JNV0iyA>
-    <xmx:wMV_aNv3UaBM_ACijuzTSAF38SMUoxZq6CPvGcKP1Zx0D5bEGybVCA>
-    <xmx:wMV_aItOR07b0IF9YfFEkHjh9mYNABn2980M10oYjknt5IxjBLX1Sg>
-    <xmx:wMV_aPz9VsjaA_dvTmrlf290c0gyIZ89bzoARFSl97g8iTwbZ0iFec7B>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrh
+    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphht
+    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoheptg
+    hhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheplhgv
+    ohhnmhhitghhrghlrghkieesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Zch_aOZk5nCyQin6uDpdUxA4QOghzIt1aKsBb6w4n2_tniXLl4wUaA>
+    <xmx:Zch_aILqigsWV1D6wDgDh_UXF_2pV1pjjwnpiuOFB1rglnPgcWx1hQ>
+    <xmx:Zch_aKuFYtciHPoVQ5uBDTvoVf8827Hpv6hCi41zLZawlftTz4-_WA>
+    <xmx:Zch_aMVgzEMQbKN7Gl6BeSBuynf6ef8AGd2WHhu6g-P7uZOrviUpuQ>
+    <xmx:Zch_aFjwHJO9RRs6ItZAm-zstPgQZICJiBVcrZGcT-BNB8tyqZH73iLM>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 13:09:20 -0400 (EDT)
+ 22 Jul 2025 13:20:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jade Lovelace <lists@jade.fyi>
-Cc: git@vger.kernel.org,  sebastian.thiel@icloud.com,  newren@gmail.com,
-  josh@joshtriplett.org
-Subject: Re: Precious files and the .jj directory
-In-Reply-To: <CAFA9we_yDs9SPL2pJU_WiUz8CqvQ8ZPHwXBfTzHHbt-QGV34qA@mail.gmail.com>
-	(Jade Lovelace's message of "Tue, 22 Jul 2025 00:31:11 -0700")
-References: <CAFA9we_yDs9SPL2pJU_WiUz8CqvQ8ZPHwXBfTzHHbt-QGV34qA@mail.gmail.com>
-Date: Tue, 22 Jul 2025 10:09:19 -0700
-Message-ID: <xmqqzfcwrw3k.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
+  Leon Michalak <leonmichalak6@gmail.com>
+Subject: Re: [PATCH v4 0/4] Better support for customising context lines in
+ --patch commands
+In-Reply-To: <49703ba5-5f2a-4e91-b9c7-5500720d5d3d@gmail.com> (Phillip Wood's
+	message of "Tue, 22 Jul 2025 17:05:37 +0100")
+References: <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
+	<pull.1915.v4.git.1752928113.gitgitgadget@gmail.com>
+	<xmqqfrepzdxd.fsf@gitster.g>
+	<49703ba5-5f2a-4e91-b9c7-5500720d5d3d@gmail.com>
+Date: Tue, 22 Jul 2025 10:20:35 -0700
+Message-ID: <xmqqv7nkrvks.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,42 +98,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jade Lovelace <lists@jade.fyi> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> I'm aware of the many discussions about precious files [1] [2] [3],
-> but I wanted to highlight a particularly pernicious category of
-> precious files that are really hard to do the right thing about with
-> Git: namely, other version control systems. In particular, as I
-> learned in [4], `git clean -ixd` will of course list `.jj` to delete
-> and delete it if you have it in gitignore. But yet having it untracked
-> results in it possibly accidentally getting added and also clutters up
-> `git status`.
+>> All of the above looked reasonably well done.  Will replace.
+>> Unless there are objections, let me mark the topic for 'next'
+>> soonish.
+>
+> I think we want to sort out the test changes in patch 4. Previously we
+> discussed centralizing the option parsing in that patch as well but we
+> can always do that as a follow up later.
 
-Yes, that is a very concise summary of what happens if you do not
-support "ignored but precious" as a class of files distinct from
-"ignored and expendable".  Git only supports the latter and we wish
-we had also the former is where we are, after "many discussions" you
-have read.
-
-> It's my understanding that git has more file deletion edge cases of
-> gitignored files than of untracked ones so the latter is theoretically
-> safer. Is that correct?
-
-Sorry, but I am not sure what apples and oranges you are comparing.
-
-You list a thing in the .gitignore file or the .git/info/exclude
-file (collectively known as "exclude mechanism") and the thing
-becomes "ignored an dexpendable".  Your "add" will warn when you try
-to add it, because it is ignored.  Your "checkout", "merge", etc.,
-will happily overwrite such a path when it needs to be removed to
-make room, because it is expendable.
-
-You do not tell about a thing to the exclude mechanism, and the
-thing is "untracked, not ignored".  Your "add" will happily add such
-a path, because it is not ignored.  Your "checkout" and others will
-play safer and more careful, avoid removing it, stop operation that
-needs to remove the path in order to continue, because it is not
-expendable.
-
-The only solution would be to add proper support for ignored but
-precious, I would think.
+Yeah, the tests can probably use a bit more polish before we can
+move forward.  Thanks for carefully reading them over.
