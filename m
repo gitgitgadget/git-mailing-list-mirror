@@ -1,142 +1,118 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF2A7285CB8
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 21:00:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39E8E285C8B
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 21:22:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753218015; cv=none; b=Ik5wRdAwMiwGwdchkWkSVcrTIUXjaedkynn4iYPm0C70UQrv/nBfVmx4aFUgoITyTXa00UdHKXgLCkNN61afv43i+h5Tgo/7Wzdhv7yPI51CjCyPG1fvqko6i+3auQ2q83ozmzKP22DPakxzi1kWydAzLx3cMGl9csvuzp9wcUk=
+	t=1753219339; cv=none; b=fOXIpSaPgBaBCwqDB6E0bwhC2UwXIcCv6+x9mKVHHCtZwGzt61PlYFUCbnVjcpynK/M6iX5ublbFtcMMvuBaQTuZJalCVpbcv3LzABW6YqUjlZ3HPDoZwwCTKD6AkvOIyEN/i4DNxj7WAAyKTr6+zDnwOx9YdFynTmfsnCiEwBA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753218015; c=relaxed/simple;
-	bh=LMLlnY7ux/r0bLj5Mj7Wxun6t5nX6YProshPfAHWHAU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Jn1s/biQ2UtjZZogu+ZeKAqAI+RK33BpNMowv+vm9nIqKRYLPcOIfDoS51Ya/jDPxwDa1XBoNwOkdgMsxePs626gtkhqb90+cDeY6u0fnVR8L4E7sPRFVe/Xv02pIcDKqsL88JhbESVkWEmMnQMPRZNqjxMhJ7vqTml48Mvk0S4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OKGk0XcK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jQuS0RQs; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753219339; c=relaxed/simple;
+	bh=KZ55bHDqHNUFWUY2SmNavjkYI3lWiOzzRgpPHVq8LoE=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ciIjeXOK0SsOmltdcRh09OG6VbYOzJ4vfzI+viZh863l02k1j5hwi8gJIMKUg15Ju7TgZ8wovVjROki0Im9PHEOVqO9bw+4SIu04ed3cR2B7ed8IX6ED2DyUmE/ZzdAaJALkP5paESZTlEwQdRTJzxUFMhOScAXKHXRm7xn7PwA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=On5lj0lM; arc=none smtp.client-ip=209.85.160.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OKGk0XcK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jQuS0RQs"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id ED7EAEC0569;
-	Tue, 22 Jul 2025 17:00:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 22 Jul 2025 17:00:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753218011; x=1753304411; bh=3QDLlxHc6X
-	ShmblxiEtM5oaJteMCSQji7y5dnZtP7jk=; b=OKGk0XcKggnWyq0AK+ORJx0Ztt
-	F2sCuugiZTndU8OPcvo/IvhNMeWE2bdBByu/fhsFFGCUgkx4dP/f0k4SbPxYlu1K
-	+7fNF98ufSR7ME5q3CG/8QEXdKgQ0ieIUyv+PpZ0xyobxjVyzExf7WtMZc3WBhd+
-	EcykpH+RrHqQvRDzKIT1Z+EfREngtDsHpl1B8Z4W32QpgRFqjxrSM0kDiznEssa6
-	ofMHGgZq+VWiwONVzkn04HHJDuT4WrIb9BfMgH4mMZWnk9OhoUXnAOowyp4TEV1w
-	v57wE4CdxeQN0libpNATtYkGkELDRV6x3YT7AWos+tJ9anQ1tRZKH0ts+ybw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753218011; x=1753304411; bh=3QDLlxHc6XShmblxiEtM5oaJteMCSQji7y5
-	dnZtP7jk=; b=jQuS0RQsoPvsBHvvrf45jjUVEreXesjORzDzKePdCZOlMdBbsV+
-	b9TMgd4j+UxUP0QADNYYIbo/3+DBlbEkNiaL3pMgtdHET2/+FMp3FwZ3ZuaKKrtr
-	+gi37nEvPT61rvw3RG4AxkZp2J0rfE0ZwONakcZwZj3m5g/1YLOQDT0kr1P+HfEp
-	TE0YEH85lfTQ9DwlsGtrAhmTMTBAfk/XcRu6njN5tvRb4vrgfawCh6A7M7Fr3G9t
-	eR4OnaJSTO7WSfWJ8rZex4RAFXssxchwYFYCniLtdBaW+OSie4ISEZpnesLi1Slb
-	7CYMIJNJ1Pa6x7WPoKosDuLmgKsCL7M2aJg==
-X-ME-Sender: <xms:2_t_aJEFQrA0r09bGV4Kq7qc3J8i848vwIGtlimsx40ibyvVhVFEaA>
-    <xme:2_t_aI6ysqqoK2rXrA8a-UCVbAHAhSWfxJ8ymML-eSzSMmMV4ZBhUEXdTafme3nzS
-    2jzyhNw6y_MNntrlg>
-X-ME-Received: <xmr:2_t_aHuoidIyw3jlPxFKRQuAaofu11OwEC4pTjxtWV8EwFhn3JlcfGxZhz0DVpbAPzCFMA5sko7QjamDpx-eBXMJ1RzsZY5QPMDHWhU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheelvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtph
-    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2_t_aB50oPpXU2J3jjOm-07eTXXXynf8lLALS9Mn0CGwB-5fhCmYNQ>
-    <xmx:2_t_aKWy4jxaD9i7y55jz4R1XzSB98UfmUCC9wbdiXny9pMO9lyYzg>
-    <xmx:2_t_aL9hDedmdnMwQOcThpo7HsUy6R7v07B2ADndbOD0eJ7pKj7vLA>
-    <xmx:2_t_aOkexT-rI6YX6VcHSwmCwEAexw6492fZkAI0i1TvUowwsWIo3A>
-    <xmx:2_t_aAUe9yZEkZwG9VSJyLi9mIh1XqjXCiLku2jOqlpbbtMmGFs8UcJq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 17:00:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im
-Subject: Re: [PATCH 2/2] builtin: unmark git-switch and git-restore as
- experimental
-In-Reply-To: <20250722180818.1043014-3-jltobler@gmail.com> (Justin Tobler's
-	message of "Tue, 22 Jul 2025 13:08:18 -0500")
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="On5lj0lM"
+Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-301704710a9so2354250fac.3
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 14:22:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753219337; x=1753824137; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cdxOvJWZy4oI20K5yi7DLtrHL/QY6BIMsoOuEdsJdG8=;
+        b=On5lj0lMmhERNJtAItAH4VCg/3GgBGUQdgdH5+THDmSar/7yG53O3BYltyoM2nPhyi
+         2Q4e79PeAHI46DTm7ghp+vEU4CLOS2hSwPuN7axSWVtwQvThdUVFHQQErbxuTDzxlIgl
+         3r2V68Q1ROOhS2UNEhfxBjva93FYCN++acSBltcUY0vMjnGwxehVJSFQkXdr/DxwX804
+         xvCuBZOGiYPHsrqHzhTaZPjVN3Ze+WdD1+pa4E03JQnqyALICDmvQYK3WV8CQMIrfPHW
+         lPTgxjUAcq2+L4FPW6APxKANL6+a571z8eO0NcgZw9r3gTOf5mTHWuiChfWiszELans6
+         eIig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753219337; x=1753824137;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cdxOvJWZy4oI20K5yi7DLtrHL/QY6BIMsoOuEdsJdG8=;
+        b=ppqiaBp/WaBQGKWUr2JE9YU2QhcQtdvxbYWiyvGCNdcSGktACccLxKHG6dTgg44cJS
+         EGAJEyYXGtcxFbVb8OF0xoDINyZpVuBouQFNtqkIvZOT3TJb2POWIQGqfG/+yT72cmDF
+         KpJJtt+POqU41+1P/d79g6LlISa2s8EknY7BKHqy3tCOHlFprh5spPbEiUp6YIqF07oA
+         Y7YVEZUCGdsf38gHhx8yQ8NY63jfQcaIKL2/Yya5U+RqWG5IrEZc9cbRc7ZPZ8xtPxZo
+         FkVzKrLP36p5V8UWYQAViNIo9wAOtytYHdJ8IFFQJXaRwQhGrGryV6TzpUI12aB2me5s
+         7BMQ==
+X-Gm-Message-State: AOJu0YwxxJJ/aEnqwOxPFLW9b7FMXrM4HlwmlG+CEy0LsmBJ7C1ueeHJ
+	mPGS7+5mOGtIdfYkDZ4uFBvKGTVWNN8dZUgouUDWINmDJ/bI3oFytoXrMVtmHQ==
+X-Gm-Gg: ASbGncvxRzmUah5+wmzh3j3+w9xrng5X/OUU1b1HELxu5JAzj6IWl4MNscgUKuxYSkc
+	/K6yRG2zmnDHIB1KUe+qS1+ZxWOiO++ouAowmJ74l86f9O/P/RWrjT6q56If1im+58SMgkVeVLv
+	CTTZe1O3YTSnmlWAthy74VMBJY4SxyV2rlO075cKT6jxqzERUgLkbVBlKj9fFerdZS/luvH0dF8
+	osVMcUQZUenwsyLPneEQBl1IDS9CrdblrcCOFiSU87Q10sBIaIHhDs3uba9wrJn2f3Tezp6IsGu
+	SPfxO79YTf/9PPZTeb/5Fl+YP4nCxgP5VMeJGqXiKAVxcfWQyhUZT4J5+BR8Mzyw/tGmVlm3Eyu
+	zKWyIRl6LgUj/9bw=
+X-Google-Smtp-Source: AGHT+IHkw/6gvF6po6CUk/zdFNp+24AMbkLy/YQLraP2gO23WwbmJk1+YPrbv2TQSfVDX2vg5iMIPw==
+X-Received: by 2002:a05:6871:810a:b0:2ff:9776:1231 with SMTP id 586e51a60fabf-306c6f69828mr376395fac.1.1753219336961;
+        Tue, 22 Jul 2025 14:22:16 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-30101cd81b0sm4726238fac.16.2025.07.22.14.22.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 14:22:16 -0700 (PDT)
+Date: Tue, 22 Jul 2025 16:16:27 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im
+Subject: Re: [PATCH 1/2] builtin: remove merge short flag for switch and
+ restore
+Message-ID: <hjvkryax5gq7im6m6jnlczykfctntnqf73xicbrfehe2j2c3rt@62m3urrkecg7>
 References: <20250722180818.1043014-1-jltobler@gmail.com>
-	<20250722180818.1043014-3-jltobler@gmail.com>
-Date: Tue, 22 Jul 2025 14:00:10 -0700
-Message-ID: <xmqqv7nkq6ud.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250722180818.1043014-2-jltobler@gmail.com>
+ <xmqq1pq8rlo5.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq1pq8rlo5.fsf@gitster.g>
 
-Justin Tobler <jltobler@gmail.com> writes:
+On 25/07/22 01:54PM, Junio C Hamano wrote:
+> Justin Tobler <jltobler@gmail.com> writes:
+> I doubt that this particular one is a sensible change, though.
+> 
+> "git checkout -m <another-branch>" is one of the most frequently
+> used operation in my daily workflow, and having to type "git switch
+> --merge" (not having to learn to do so) would be a major annoyance.
 
-> In 4e43b7ff (Declare both git-switch and git-restore experimental,
-> 2019-04-25), the newly introduced git-switch(1) and git-restore(1)
-> commands were marked as experimental. This was done to provide time to
-> make breaking changes to the interface. It has now been over six years
-> since these commands were implemented and there has not been much change
-> that would warrant these commands remaining experimental.
+In general, I think it is best to reserve short flags for relavitely
+common operations. That way, if a new super useful option were to be
+introduced that we want a short flag for, there is a better chance a
+good flag choice will be available.
 
-Remove "and there has not been ..." and everything after this point,
-and replace it with something like
+That being said, I incorrectly assumed `--merge` was an uncommon option.
+If there are workflows that make frequent use of this option, we should
+drop this patch and keep the short flag available.
 
-    but there hasn't been much change.  In the meantime, these
-    commands being experimental has become an old news.  People have
-    become so grown to rely on how these commands work, it is no
-    longer feasible for us to now make breaking changes to them.
+> > The `--conflict` flag is also now defined
+> > explicitly for each command as to remain alongside its related `--merge`
+> > companion.
+> 
+> I doubt this is a wise move.  Unless we are planning to make the
+> option diverge across these three commands, that is.
+> 
+> The main logic that implements the "move to a different branch,
+> while merging local changes into the new base" does use these two
+> things together in the same code path (in merge_working_tree()).
+> The same for "check out a single path out to the working tree",
+> which does use these two things together in the same code path (in
+> checkout_merged()).  I actually think keeping it in the common part
+> would help the readers of the code even more---by making it clear
+> that these three commands parse the option exactly the same way.
 
-    Let's mark them no longer experimental.
+That's fair. If we do want to keep this patch, we could still keep it as
+part of `builtin/checkout.c:add_common_options()`, but add an argument
+to toggle short flag usage. This way it is at least clear to readers of
+the code that it is same option.
 
-or something like that, perhaps.
-
-> diff --git a/Documentation/git-restore.adoc b/Documentation/git-restore.adoc
-> index 96de9bb5ed7..903e8c4618a 100644
-> --- a/Documentation/git-restore.adoc
-> +++ b/Documentation/git-restore.adoc
-> @@ -28,8 +28,6 @@ otherwise from the index. Use `--source` to restore from a different commit.
->  See "Reset, restore and revert" in linkgit:git[1] for the differences
->  between the three commands.
->  
-> -THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> -
->  OPTIONS
->  -------
->  `-s <tree>`::
-> diff --git a/Documentation/git-switch.adoc b/Documentation/git-switch.adoc
-> index 7b24450f841..1d46010292d 100644
-> --- a/Documentation/git-switch.adoc
-> +++ b/Documentation/git-switch.adoc
-> @@ -29,8 +29,6 @@ Switching branches does not require a clean index and working tree
->  however if the operation leads to loss of local changes, unless told
->  otherwise with `--discard-changes` or `--merge`.
->  
-> -THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
-> -
->  OPTIONS
->  -------
->  _<branch>_::
-
-I think these two changes are OK.  I personally do not think [1/2]
-is a great idea.  At least I am not convinced myself not yet.
-
-And if [1/2] were a good idea, then we probably should apply it, and
-then wait for another 5 years before proceeding to this [2/2] patch.
+Thanks,
+-Justin
