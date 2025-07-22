@@ -1,237 +1,173 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44D182D3EF6
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 09:17:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE14B1DE2B5
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 09:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753175824; cv=none; b=eb2pWXzN9mmBLDxQPHVOWDnx1ynDEwKaZk9IPj/Mb3bIJGNcayDPdvbTPj32xRhMzY7WCuiR4X8+63jKGHQ0lilEO+jdgGWatezffkNcCyGVUt5/TfDIqsjNpcpm7wTB+5V1+cMj+obEUZXA1Mg6fsaijtqFIdTjWFrx2NORRsU=
+	t=1753175873; cv=none; b=hW6TwdH59ce2EmgR0zxWrhpyBIA4QCC99AYm28MUrfk4QVW/KxBt/5Cor+B75P/4R6rD+mANQQpDzziRd/91eb1Rni2wHLP/R+5KOulTk1SryPJrR2sqw9MkR56aeuOX7jQSizQ5iTlMzfcmaQ3Di8fd7agpcSJmvbzNUTfwhv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753175824; c=relaxed/simple;
-	bh=pZObfft8xvH3UhqdKt9doPSpiuSOpOWM1DUKkE4io3Q=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tB4ZDxw40qpd9MNQuc88jysCU0A+pPLiZ5d+ymCqpcPthKeXchyh6sm1sKmsbPvSYho/6t61NzoA75Anf4hmx1N0SJ4iI+j4aMYfAPrEpTF3YROe/IjX9IzIRqyT9CuFIZbyZIppTj8bfTGU+czMYj97jsBhkXuBM0r27jGAWjw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ORHrHhOI; arc=none smtp.client-ip=209.85.217.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753175873; c=relaxed/simple;
+	bh=rijwRUiJyjEX4hcfG3dSJ5G2UEUqv7VuepRVtQIyAQc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Ekm9YuYQzkJOqph4Ouhopg53AglgnxXJzjC2i+KiJZTO4eVdMOFwQha3+4ic86fgUzBEhAbCcPPlL8Sn0Y85+hpVYGyYfxIGsWyQ/XsaOjL4OtUGSn2uCXwLRu6nMl46L4wdHgEC143GquEfKGG4OAyf3tre/u1nSyiizOzPTU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UL3YnhjZ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORHrHhOI"
-Received: by mail-vs1-f49.google.com with SMTP id ada2fe7eead31-4e8135adfccso424348137.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 02:17:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753175821; x=1753780621; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z6xduS3DdBI+I47sA/cLOIofiGoJE6VgK+kjyQdNlM4=;
-        b=ORHrHhOIJsnL7c0MIXu6kr0WhVriWL53sSzJdKv/ZNYHLbZywYV6y8d1XRtz8pQgry
-         FCbTG87jNO8BHv+Kzw0evfIbJCfiJMv6EaRgNfg2x3mKmMBNtgbcu9B34eSlUe+EA1qF
-         a41+RoLv44XCDptOa0rj5KdC4ztUpG5O6VmqXJ+pdkgyPWThh4PWj/vk61cn3iPZ4248
-         oHAHgPZ6xGNWOoOwFV6Eee5wR1kNUHoCTbHMEk9H/lVmk1EfmF4pRpFOifgX4d83eLAQ
-         ZSvj8pCYadzNlS5/uOLTo872/E3ZDU+5T66GVYE0tT+7n/jIHBMDKXOGcbMRw/ewCjs8
-         ZV0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753175821; x=1753780621;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Z6xduS3DdBI+I47sA/cLOIofiGoJE6VgK+kjyQdNlM4=;
-        b=bY0cvnk551Jd6igpvyTaqfn0kenuUEuV1daf/LTlYeX2i1R+s0vNftMMLD3tXLOdZa
-         KzaESHZt44w0ajHLT9qCgF8JxsJ/I/Cr+dJxiqLv4ZcHybszXFn2yd2epsHqFDRCdE9t
-         P65uML8Hw+yg75gWK0sBVPcPspxpTududPRdnoIOZ6ppNy6ujiBqbgEVQoDuGkBkAGxB
-         hBsAIxuBosOZoxAM27BbPMK0TqdvB9KEtOhfJsceCX3RveEEyFQFj1KgyqC25rrqwJkY
-         8j7rc8RPfbO8Q8EAG12Qt+0JC9Kqq4IChhrcvQuShpqJklXxd+QlVrKiRESbILgwOL3O
-         jxQA==
-X-Forwarded-Encrypted: i=1; AJvYcCX9qNyJb/aTNwOLZg/8oU6EEWS/EqroJ0GqjmSw+qnKNUNwTL8PAXcrdOiDPj7lQVD/zBA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzGBlbRGe3lIpz1bY8ILMddOekeY1dPfw6zS3vv9aCBh4+7ZuQQ
-	SSb4t0VH08AUxJw5wKOQRqTV9bVGw+CLHc5pG8McwEJmaYR/U0fJ8mDFd2PT6oe49/4C+Wo7OkF
-	tUFVNzZD9eINLmPMw1IHjN1uK7lIGBa0=
-X-Gm-Gg: ASbGnctwDCJGrFX5aWe1LjBmiMLQudTgO11HL05B+oG8nwQYc4JuZZ2Fe5M76r+/Zgu
-	01nIW62DksE8zQagewY0RNh2SEjmJ7lcKQk3LuzPtvnpFnS222KQJc8EpDjrF75ymiMjF9bg3TC
-	csNI1OOhp8xjbrUntvt6KH/K0PVi9XuhZg3CzmWTMiAbz77ktiqAx0VXvVhj9GOCn8HK6DAPy9Y
-	NLMOQ==
-X-Google-Smtp-Source: AGHT+IF0Q47zZlubJYUHbYRd4EGfD2zHCzogUiOgjPU0TdWofkQGTqWkryif6fBJzM1uB4IP2O4oRYD4/sg0f+QWDtQ=
-X-Received: by 2002:a05:6102:6497:20b0:4f9:a927:d9f8 with SMTP id
- ada2fe7eead31-4f9a927e926mr5106875137.8.1753175820961; Tue, 22 Jul 2025
- 02:17:00 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Jul 2025 09:16:59 +0000
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 22 Jul 2025 09:16:59 +0000
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250722002835.33428-3-lucasseikioshiro@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250722002835.33428-1-lucasseikioshiro@gmail.com> <20250722002835.33428-3-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UL3YnhjZ"
+Received: (qmail 27101 invoked by uid 109); 22 Jul 2025 09:17:50 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=rijwRUiJyjEX4hcfG3dSJ5G2UEUqv7VuepRVtQIyAQc=; b=UL3YnhjZ5K0DnYPTNEapmgjeaMUaIO3G5mgoKfRRdC1n7elZ4G2nWRhywceIEWb7TsWFadzc4YQZOhsHMT1EdlqdSl0io4V03YUwuZvzvE3MGnQZFT/qZdXUSPAW8en7zrF9cQ1nDCp8zJ9q2Zf9rz/clv9llhkl9Smg6040kTyI7SNuYbfSVck/I1SWDF0ieAiUj4emv5yyFSEWAoLvCW2pWCF0Pc+cWdDdcO8Dq5sTgSERhWAv7UpsjJTl0hjfp8zSHHuS3Gx4opMIZ/rvyrFlT6vM8FZ7IHHkvacPho0Tlia+Ke8fR6/+ocxZSEQM98mTdx+HM7nOjAecpsFkgQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Jul 2025 09:17:50 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 27191 invoked by uid 111); 22 Jul 2025 09:17:55 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Jul 2025 05:17:55 -0400
+Authentication-Results: peff.net; auth=none
+Date: Tue, 22 Jul 2025 05:17:49 -0400
+From: Jeff King <peff@peff.net>
+To: =?utf-8?B?0JTQuNC70Y/QvSDQn9Cw0LvQsNGD0LfQvtCy?= <dilyan.palauzov@aegee.org>
+Cc: Jonathan Tan <jonathantanmy@google.com>, git@vger.kernel.org
+Subject: Re: git treeless-clone + wait =?utf-8?Q?+_?=
+ =?utf-8?B?cHVsbCDihpIgcHJvYmxlbSwgYWdhaW4gcHVsbCDihpI=?= OK
+Message-ID: <20250722091749.GA864077@coredump.intra.peff.net>
+References: <e7a2fdff63d9a90ef4dc1341fa642fff5197b64a.camel@aegee.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 22 Jul 2025 09:16:59 +0000
-X-Gm-Features: Ac12FXzvneURMu0Zfa9olcMnjy0eSRUqqdaxrzt2NqYbITZimy_-CT0F6a8vNR4
-Message-ID: <CAOLa=ZT12oLjXc_UPVgD6Vut7tgvQS5=8qzxaxG09UTw_w8sJA@mail.gmail.com>
-Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: oswald.buddenhagen@gmx.de, ps@pks.im, ben.knoble@gmail.com, 
-	gitster@pobox.com, phillip.wood@dunelm.org.uk, jltobler@gmail.com
-Content-Type: multipart/mixed; boundary="00000000000009a5cb063a810ef9"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <e7a2fdff63d9a90ef4dc1341fa642fff5197b64a.camel@aegee.org>
 
---00000000000009a5cb063a810ef9
-Content-Type: text/plain; charset="UTF-8"
+[+cc Jonathan Tan]
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+On Tue, Jul 01, 2025 at 12:24:05PM +0300, Дилян Палаузов wrote:
 
-> This commit is part of the series that introduces the new subcommand
-> git-repo-info.
->
-> The flag `--show-ref-format` from git-rev-parse is used for retrieving
-> the reference format (i.e. `files` or `reftable`). This way, it is
-> used for querying repository metadata, fitting in the purpose of
-> git-repo-info.
->
-> Then, add a new field `references.format` to the repo-info subcommand
-> containing that information.
->
+> the problem is that when I do a treeless or blobless clone and some
+> time later git pull, git prints many, many lines that it tries to
+> fetch data, then I interrupt with Ctrl+C, then do git pull again and
+> then it completes.  However I never tried to precisely document this
+> until now:
+> 
+> On 26 June 2025 I do
+> 
+> $ git clone --filter=tree:0 https://github.com/git/git.git
+> …
+> $ git show --oneline
+> cf6f63ea6 (HEAD -> master, origin/master, origin/HEAD) The fourth batch
+> 
+> 
+> Today I do 
+> 
+> $ git pull
+> From https://github.com/git/git
+>    cf6f63ea6..83014dc05  master     -> origin/master
+>    74e6fc65d..83e99ddf4  next       -> origin/next
+>  + bc3287e71...a842a7780 seen       -> origin/seen  (forced update)
+>    fefffbb31..7af8e2e03  todo       -> origin/todo
+> fatal: You are attempting to fetch cf6f63ea6bf35173e02e18bdc6a4ba41288acff9, which is in the commit graph file but not in the object database.
+> This is probably due to repo corruption.
+> If you are attempting to repair this repo corruption by refetching the missing object, use 'git fetch --refetch' with the missing object.
+> fatal: could not fetch 5e66731277a4d791043dc51e2804dc0b496c523b from promisor remote
 
-Nit: I don't think we need the 'Then, ' here, perhaps 'Add ...'.
+I took a look at this a few weeks ago and came up with a reproducible
+recipe:
 
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Helped-by: Justin Tobler <jltobler@gmail.com>
-> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-> Mentored-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-> ---
->  Documentation/git-repo.adoc |  4 ++
->  builtin/repo.c              | 75 ++++++++++++++++++++++++++++++++++++-
->  t/meson.build               |  1 +
->  t/t1900-repo.sh             | 50 +++++++++++++++++++++++++
->  4 files changed, 128 insertions(+), 2 deletions(-)
->  create mode 100755 t/t1900-repo.sh
->
-> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-> index caee7d8aef..cf8483ec49 100644
-> --- a/Documentation/git-repo.adoc
-> +++ b/Documentation/git-repo.adoc
-> @@ -29,6 +29,10 @@ INFO KEYS
->  The set of data that `git repo` can return is grouped into the following
->  categories:
->
-> +`references`::
-> +Reference-related data:
-> +* `format`: the reference storage format
-> +
->  SEE ALSO
->  --------
->  linkgit:git-rev-parse[1]
-> diff --git a/builtin/repo.c b/builtin/repo.c
-> index d4f01e35e2..5beae0f781 100644
-> --- a/builtin/repo.c
-> +++ b/builtin/repo.c
-> @@ -1,12 +1,83 @@
->  #include "builtin.h"
->  #include "parse-options.h"
-> +#include "refs.h"
->
-> -static int repo_info(int argc UNUSED, const char **argv UNUSED,
-> -		     const char *prefix UNUSED, struct repository *repo UNUSED)
-> +typedef const char *get_value_fn(struct repository *repo);
-> +
-> +struct field {
-> +	const char *key;
-> +	get_value_fn *add_field_callback;
-> +};
-> +
+  git init repo
+  cd repo
 
-Shouldn't 'add_field_callback' be renamed, now that we don't add a field
-but rather return a value?
+  url=https://github.com/git/git.git
+  git fetch --filter=tree:0 $url cf6f63ea6bf35173e02e18bdc6a4ba41288acff9:refs/heads/foo
+  git checkout foo
+  git commit-graph write --reachable
+  git fetch $url
 
-> +static const char *get_references_format(struct repository *repo)
-> +{
-> +	return ref_storage_format_to_name(repo->ref_storage_format);
-> +}
-> +
-> +/* repo_info_fields keys should be in lexicographical order */
-> +static const struct field repo_info_fields[] = {
-> +	{ "references.format", get_references_format },
-> +};
-> +
-> +static int repo_info_fields_cmp(const void *va, const void *vb)
-> +{
-> +	const struct field *a = va;
-> +	const struct field *b = vb;
-> +
-> +	return strcmp(a->key, b->key);
-> +}
-> +
-> +static get_value_fn *get_value_callback(const char *key)
->  {
+That final fetch ends up spawning a seemingly endless (though I suspect
+actually finite) series of child fetches. Looking at the callstack, it's
+coming from fetch_submodules(), which wants to do tree diffs in the
+fetched history looking for changed submodules. But of course we don't
+have those trees, so we fault them in one by one.
 
-Nit: A callback generally is a function provided by when a 'fn A' calls
-'fn B', providing a 'fn C' which 'fn A' provides.
+Which certainly seems non-ideal. But what is more interesting is that
+while doing so, we eventually hit that same fatal error:
 
-Here perhaps we can simply rename this to 'get_value_fn_for_key' or
-something?
+  fatal: You are attempting to fetch cf6f63ea6bf35173e02e18bdc6a4ba41288acff9, which is in the commit graph file but not in the object database.
 
-> +	const struct field search_key = { key, NULL };
-> +	const struct field *found = bsearch(&search_key, repo_info_fields,
-> +					    ARRAY_SIZE(repo_info_fields),
-> +					    sizeof(struct field),
-> +					    repo_info_fields_cmp);
-> +	return found ? found->add_field_callback : NULL;
-> +}
-> +
-> +static int qsort_strcmp(const void *va, const void *vb)
-> +{
-> +	const char *a = *(const char **)va;
-> +	const char *b = *(const char **)vb;
-> +
-> +	return strcmp(a, b);
-> +}
-> +
-> +static int print_fields(int argc, const char **argv, struct repository *repo)
-> +{
-> +	const char *last = "";
-> +
-> +	QSORT(argv, argc, qsort_strcmp);
-> +
-> +	for (int i = 0; i < argc; i++) {
-> +		get_value_fn *callback;
-> +		const char *key = argv[i];
-> +		const char *value;
-> +
-> +		if (!strcmp(key, last))
-> +			continue;
-> +
-> +		callback = get_value_callback(key);
-> +
-> +		if (!callback)
-> +			return error("key %s not found", key);
-> +
-> +		value = callback(repo);
-> +		printf("%s=%s\n", key, value);
+I tried swapping out $url for a local copy of the repo (to stop
+hammering poor GitHub's servers). But it doesn't seem to reproduce. That
+plus the apparently-random time of failure makes me think it's a race
+condition.
 
-I like this a lot, since we can simply modify this in the future for
-different formats. Nice!
+And there is something interesting happening in the background here:
+each of those sub-fetches may kick off an asynchronous "git maintenance"
+run. Which will find something useful to do because we're building up a
+big pile of packs. So it eventually tries to repack.
 
-[snip]
+And so it seems our race is that fetch sees the commit in the commit
+graph but sometimes _not_ the actual packfile (because it got repacked).
+Usually we'd try to re-scan the packfiles for exactly this case. But the
+caller in deref_without_lazy_fetch() does not do so. It calls
+has_object() without any flags, avoiding the re-scan, like this:
 
---00000000000009a5cb063a810ef9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f3e88452fb558d94_0.1
+          commit = lookup_commit_in_graph(the_repository, oid);
+          if (commit) {
+                  if (mark_tags_complete_and_check_obj_db) {
+                          if (!odb_has_object(the_repository->objects, oid, 0))
+                                  die_in_commit_graph_only(oid);
+                  }
+                  return commit;
+          }
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1oL1Z3Z1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMExkQy8wUzZqYU9zVVdWWlJjcG9KQmtZUXoxMUp6OQpkaVFIVDRTQUxX
-elZKYW82MTRQUGQrUUlTSTRiNzQ4b1U3Nk5OZnA0RjlmRHNjc3JFUGVHUlRXcHhXTlpZMUpyCm9i
-N0JVM3V3WUoya1VncDI4aER6NE94RDhxNDhKZ3IxVWRoQWZnbWdtM0txV081VUR5czFDSm9DS3kx
-SDNvWEEKOTZIM2xEdDZ5cnNic292UnVIQ0VNTzBmUitqd0FTYWZHUUVaa2Y3blZacGhxVVpZcDhO
-Mkt0d0R0YjIyVHVKcApyN1lzSS9PQ3dqQVpkaUppN0xiZTF0aVlwNHdaajA4Y3NxVVdPRFBXNVNi
-N2JQRnYyWGVweXZkRkxmQy9LTC9MClB1R1dBcld0dlpuTzlsOXZYK2M2K0pvMEZaTjVIUGczSnZX
-bmY2UDExdWx6NFM2K3BLUGZIN3FvRm52em12YjQKZWRUWDRBRGl3QmFwenQyWnFLVFUreEkyQ3hQ
-VDdIOHJNdmtTSDJFSnlDaVhkamdvdklBakUrWnllY0IydXdBSgpLeWN4OTNvN2xIaWVESzkxLzUw
-RGIxT2xNdmFpU3VXbEZ1KzFZZ1NhcFlKbkN5OHBFcjM1eHRPb2E5VUF1eFdkCm1CTnRsSVJSY09s
-bUVQWHBJbUtQMjlPSXZZS1hIYmxNRDJ4d1Q2OD0KPWR0OHMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000009a5cb063a810ef9--
+This is due to 5d4cc78f72 (fetch-pack: die if in commit graph but not
+obj db, 2024-11-05). I'm not sure I fully understand all of the details
+of that commit, so I don't have a solution. Maybe it should be passing
+HAS_OBJECT_RECHECK_PACKED?
+
+Normally I'd worry about performance, since fetch is often asking about
+objects we don't expect to have (and that re-scan is expensive and
+normally just confirms that no, we don't have the object). But in this
+case we'll only hit this check if we called lookup_commit_in_graph().
+Which implies we _do_ expect to have it (or it's a weird state where the
+graph file is stale). So maybe it would be OK to use that flag in this
+call?
+
+
+I don't think this race is strictly limited to using filters. It's just
+that it's a convenient way to start a big string of fetches that will
+race with repacks.
+
+Whether or not fetch should avoid kicking off that big string of
+fetches, I don't know. Passing --no-recurse-submodules obviously dulls
+the pain. Perhaps the default behavior ought to be different in a
+tree-less repo. Or maybe those tree diffs should be done with
+lazy-fetching turned off (there is no point in recursing for a version
+of a submodule whose parent tree we don't even have!). But I think
+that's all orthogonal to the race.
+
+Hmm. So I actually was just intending to write up my notes from a few
+weeks ago. But I think I may have talked myself into the idea that this
+patch is the right fix:
+
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 5e74235fc0..7288e2d251 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -142,7 +142,8 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+ 	commit = lookup_commit_in_graph(the_repository, oid);
+ 	if (commit) {
+ 		if (mark_tags_complete_and_check_obj_db) {
+-			if (!odb_has_object(the_repository->objects, oid, 0))
++			if (!odb_has_object(the_repository->objects, oid,
++					    HAS_OBJECT_RECHECK_PACKED))
+ 				die_in_commit_graph_only(oid);
+ 		}
+ 		return commit;
+
+I'd like to hear what Jonathan Tan thinks, though.
+
+-Peff
