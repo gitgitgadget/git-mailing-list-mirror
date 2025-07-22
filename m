@@ -1,99 +1,136 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3300A21CFF6
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 08:41:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970442D46A3
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 08:44:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753173686; cv=none; b=tcjqwgBM20Cy4qvuMzGTzjQiLjqzN8z8dLDjlKAtIhFH4Jqb348QpZoRXZdBMUlO/WvbmcjP03ZCOGeix4jm/jkgU8Hgj9jps9cv7DEPdFWTn1ZKhNLFlf5u3TpZ/umlRcOPzVLPwR5JdBuUvY2Ap9sBaMOfUYUcWyyxeVrpOcs=
+	t=1753173885; cv=none; b=c5TdCR8Td9z2GpnY8+WRQl5W8qP/WychLZqMp1NT1iBcV3ZMTjqjeCeWMB6TFk7Ldm0C1Mh9vg+zwCn9r9hHbGF+nNs2+1fN7Lk0yPU4mP4g8naKtsozpYgz97c/hsH2Ii6ZArmU8clXN+csT/NqAduY3QzIEJpv5OZLmDPWPrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753173686; c=relaxed/simple;
-	bh=40PPSotJQnwI2H+0IGlQMYmXI7Oto1LjomxrL9GOtjY=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=k4iuh93IR72hp37BAKkBv6huE/PlFAWZT72w+LTRzdRzyPXm0+gdyZfl7ka7k50iAJSaIr0/0AGwWZiN1ozVOsFxrMMWWzgd0cozP8FR8Gr2EXbPFmYIIBuILWA6R5mOmq3mSLqeGgNbY4Sb4/7BKg8YHqzLRg6bxI/V9IpfYaM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=fHIrRYYm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VK66WyeG; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1753173885; c=relaxed/simple;
+	bh=oQfy4YyZEV/uiwfyCOnQ43T7GXKtXjPJR1uwU6SCjMg=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OL2TiyvBwt5x0zM7xsD2LAIq8k8rpII1HLXawWEJ9MqZy9ncE4cnCpp6tRqphniXxaGZ7pyElzCqdpj3J9RXmDrZXeAkzmNTdLn5h8KJyoKf4joFgKu267FwOP8wO9TY7HhfXKiOFzPw4AyEeJS3K7V9vkqv47g+71VK7Gxs5lE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KM16TAlC; arc=none smtp.client-ip=209.85.221.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="fHIrRYYm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VK66WyeG"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 486C31400079;
-	Tue, 22 Jul 2025 04:41:23 -0400 (EDT)
-Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-09.internal (MEProxy); Tue, 22 Jul 2025 04:41:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753173683;
-	 x=1753260083; bh=gz6HCUrCYynOR+knaDwa0d9V5hNEfIpECflTeXgZFeo=; b=
-	fHIrRYYmn9hIjvmVIOkKEnqCE85hFxpfMF3NnumEntInCE2CHg1l0PSJvc0GSg8A
-	HTtowWLJZvh59LQqXm1PryUxcfAM7UGj0WQXoShOHxjlJVAe1W/1XFuPJ8xlY7Vm
-	9S6HgVEBeC+DFtb4ejnva1u9fpDauedAttnXNqEaIIMTXzQ8PIGDi4FPt8eKq+Rb
-	EKlkVasoH6JYbJHmd8Zfy+L+bwje982Znm4HUj7Ej0Udg89CTkosnKDUrZA9hLdp
-	IoKla5gJAcfNxNVh9W0U4W3xeSodwvaDJKgDp4gk2H+X+Ut59ospqwj2dIovnsR5
-	RvqfQkhaWmVUetwqsDQK5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1753173683; x=1753260083; bh=g
-	z6HCUrCYynOR+knaDwa0d9V5hNEfIpECflTeXgZFeo=; b=VK66WyeGsDN3G0gu9
-	rzmcJ6xFSoCXkI/cNV28xg1NvfhN36JT5r+fRrCmgyAxjqLzEjUDDrHD+uDRivmQ
-	rgM3/TQ1CwhYAF2qGh+Oj9HRCIYlaX4Jnfw3B+c3U6ZZKTNoJPGgHsh8xNFmg8an
-	OwFAXvRr8t7KKPPrY42Xcb1LIJysELdqlhnOMBiW8KOq4fQNMDuJrXHUifYJcK8C
-	VHgBTLrPj4qpblQP9LAd9ABDtXhTNEvJPs8c9QAK0YUoMzhr41TjzOgzQG1MHEo+
-	f0pt8yOamfH8nYwGoNX6tmj4hvcZA0emL6+p2vDZFMshaAa7dp8kjh94fz+BDSsn
-	ea2+w==
-X-ME-Sender: <xms:s05_aD8KDUVV6DGA4IYCE7VdodBi6uh6GZvS-d5gkYCIUS7N8lm-yrU>
-    <xme:s05_aPsSzHkMmwTkOGTgE8zf3dDpYwe4GRhlLh-AhVnh2SUtd17YF8LPSWmzQK3nl
-    fuCLbQbqzMlhG1WAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejgeeghecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepofggfffhvffkjghfufgtgfesthhqredtre
-    dtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtf
-    frrghtthgvrhhnpedtgfffteetudelhfefkeehtefggeefjeevieekfeefieekkefhveei
-    ledtkefgueenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhg
-X-ME-Proxy: <xmx:s05_aEB9XZKcYpTxwFndVDnNHnoENEULnwUIz0SkneZOLv32MwfHtw>
-    <xmx:s05_aPdRHDENoLDymQ3sL5DzoEGk-Dwkup64n0rXPdXvpXM9kwjj0g>
-    <xmx:s05_aJi7_rk8VkVCJGoZjpibbt30iIqKJzTlZERYky2mmpXyjLTMzg>
-    <xmx:s05_aHoital2wYWeyQthSc2FMy7p2MJ8fs7xUBjFEg8TaLwoY1pUeQ>
-    <xmx:s05_aBAhU3h3dT3I07at5hKZG_ohY3hMih37OPij4uAljIL2CC4Cdo1U>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 10413186006D; Tue, 22 Jul 2025 04:41:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KM16TAlC"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-5346b405d1aso2551965e0c.2
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 01:44:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753173882; x=1753778682; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FDlt32OeG19CBJnks5fx8Hq46Zv3urRM9pNZJJ8Ce9k=;
+        b=KM16TAlCcrHB0PF3zIgbBfgxe9T4OKpr8moSBMaZiQw6+BHT8a5e4Z2oEnSDnH8dH1
+         AHyMgG6NNiTDjUQo4aysshP0/nXdfUCKglPylUbfqlQulyFlGOAHUaYulo68pxeQoRA2
+         a93AN2I6trdmm53LbdqBJIFBOVvuD8dfVQdpqgPFlOeQQD2a8N2cCGS/jA6iw6UjF9j0
+         BxgRZKUHw/K9G5cDQSP8CR25ma2RJIXyfNjb3vAovsMPV2dVYOwPakQPdUVGFiTg+O80
+         eCrAa8pd7AZLkQUjj1ocXs7n45LCJHXiXmQhNO5+89AkaYdUYG26RUF/aURZ03vsd9tf
+         9lFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753173882; x=1753778682;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=FDlt32OeG19CBJnks5fx8Hq46Zv3urRM9pNZJJ8Ce9k=;
+        b=mZ2I2KyYrS6FaUPz/imxO4+hrRu2SgIkY/LmDyI0rjXwmmTQeGoVejG9paAonUGMT+
+         68+c/oCJE+2xPFXfLJU2SXjsCjwveXQBvakJEjcJR0346DAOv6tb4Gysk0Gd4gwp+SS/
+         kFN96+MfIZIJGuLkysY6rFqzzbMN8VMSpXNmvrGG/4rEBCH1FstCa1lTce5vht/fNXhk
+         71hP4IdtMOAhLLCnA7Btc29Dq7+hYHkcRzS9kf0SW2+nHte0AA/8bPnY8vm8hd0tSezv
+         wrf8vrTlNnZ27CktFwWZrHuqDSu++mAHIbSz7h8qfkKAFg4bI7s8ZI2Y2gz3ilD94GtQ
+         koNQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWC7MHCs/WPSuEBQy96Y04F1Wx28SHdJ4QjsiBlinPf5fdPiegqN0cv7ScTQNBY6FlDQXk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXjoWqRkEe5Az18pSiWQRskHjmnSsJ9IbBfCFaQZdNIwdvMD+o
+	0MRPvKmolshpv8drb7FLNlFJHpooUiS8EM0vwunPdIc93LOZKuXBcKF/cmF3USxtYxbVdqr6YRk
+	ww0xPnsmpQtYTvEHej+mB2nbR2e9L/tM=
+X-Gm-Gg: ASbGnctgsJgqwmbLEcnUYBwXz/PudrXZ9BSs8YbleYzJtw/OpZJADKixgW8qkbgpD0O
+	sZfNZlBVJxdRXV5iFMxl3fXou4Olf3V+0V1F3o4N/XVAT6Zk69A8BjY8p6SLg+8C5psDX7m7wRM
+	GAknZORm7bcW4n2J9l6UTxdno4rwM7cdlAc7VJkN392nFimMShHpQdr9i+x0WPmaKVBqR3BwKGf
+	ZpqGMC5l3FxgDXo
+X-Google-Smtp-Source: AGHT+IEHdiSobpcAjBhQPTFW+A2F9wfl5YfPI3MI6ufPGtoLGY+QzPpT1kbQYLkHhG7/COC2MT6CIRYEHXBvw/TTP/M=
+X-Received: by 2002:a05:6122:3bc4:b0:535:caf8:1198 with SMTP id
+ 71dfb90a1353d-5373fbb3fe9mr11450058e0c.2.1753173882342; Tue, 22 Jul 2025
+ 01:44:42 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Jul 2025 08:44:41 +0000
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Jul 2025 08:44:41 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250721212221.GA818305@coredump.intra.peff.net>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+ <xmqqple1gtyg.fsf@gitster.g> <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
+ <20250717015402.GA2127425@coredump.intra.peff.net> <CAO_smVgdaOxiD_494qA+VxkmxNd6c=XqJDcCE2weCTknWfmkkA@mail.gmail.com>
+ <CAOLa=ZQPOP0DkK9L5XLmA_uzH7jWwX-ti8AgaEcAF2Mon=w0BA@mail.gmail.com>
+ <CAO_smVj4e0XOQyQr5sDyMZ8WPvqcBe2Y33DFHrED7C=VJnm4eg@mail.gmail.com>
+ <20250717220929.GB2244266@coredump.intra.peff.net> <CAOLa=ZR==xihNsZcNkFPtqb1JbC+EbMHtgF-RUzdwOQp55+MOw@mail.gmail.com>
+ <20250721212221.GA818305@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Tdc58e48706e0a2cf
-Date: Tue, 22 Jul 2025 10:41:02 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, git@vger.kernel.org
-Message-Id: <1599cd31-436c-4ac7-bbef-be7dfbff00a3@app.fastmail.com>
-In-Reply-To: <xmqqecu9w4a5.fsf@gitster.g>
-References: <xmqqa551127o.fsf@gitster.g> <xmqqecu9w4a5.fsf@gitster.g>
-Subject: Re: [PATCH] rev-list: update a NEEDSWORK comment
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Date: Tue, 22 Jul 2025 08:44:41 +0000
+X-Gm-Features: Ac12FXyRah8qgy3e9bGDL4xqMs1AEUTfUaIWLRvuZhqvkOMrqRdPH1R5RyIY77E
+Message-ID: <CAOLa=ZTE_Hmnz5EMxAk94rSsvvT7+O9PrroLTbjPW_oe6AzCVw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/5] for-each-ref: introduce seeking functionality via '--start-after'
+To: Jeff King <peff@peff.net>
+Cc: Kyle Lippincott <spectral@google.com>, Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>, 
+	git@vger.kernel.org, schwab@linux-m68k.org, phillip.wood123@gmail.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000007cbf4b063a809a1c"
 
-On Tue, Jul 22, 2025, at 00:46, Junio C Hamano wrote:
-> The comment was poorly phrased and it wasn't clear what it wanted to
-> say.  Strongly discourage this broken pattern to be copied and
-> pasted to other code paths.
+--0000000000007cbf4b063a809a1c
+Content-Type: text/plain; charset="UTF-8"
 
-Why =E2=80=9Cwas=E2=80=9D?  Shouldn=E2=80=99t it be =E2=80=9CThe comment=
- is poorly phrased ... so
-[change it]=E2=80=9D.  According to SubmittingPatches, =E2=80=9Cpresent-=
-tense=E2=80=9D.
+Jeff King <peff@peff.net> writes:
 
-/nitpick
+> On Mon, Jul 21, 2025 at 02:27:45PM +0000, Karthik Nayak wrote:
+>
+>> > Applying this ancient patch:
+>> >
+>> >   https://lore.kernel.org/git/20171004101932.pai6wzcv2eohsicr@sigill.intra.peff.net/
+>> >
+>> > and building with "make SANITIZE=memory CC=clang" let me run t6302 to
+>> > completion, modulo the bug that started this thread (and which I
+>> > confirmed goes away both with MSan and valgrind with the fix Karthik
+>> > posted).
+>> [...]
+>>
+>> I wonder if an alternate is to use '-fsanitize-ignorelist', since the
+>> MemorySanitizer is supposed to work with that too [1].
+>
+> I think you could do that, but it isn't quite what we want: it is
+> annotating the access of those (false-positive) "uninitialized" bytes.
+> So you have to mark every spot that touches bytes that come from zlib,
+> which in Git is a lot of places. And so the patch linked above was an
+> attempt to silence all of those with a single line: marking the bytes
+> coming out of zlib as OK.
+>
+
+That makes sense, thanks for explaining.
+
+> -Peff
+
+--0000000000007cbf4b063a809a1c
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1edb72c3bb441a11_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1oL1QzY1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL29nQy85SURiTldkNHJlbHFQRFRMaTdPcHA5Y25oRgpncWtaSXhpank1
+V0l3TFJBMGxsRStYTlhubXpXK200bHgwakRHNWl4MC9DMTV4M0lVRmpRTGM3V01uQ0dvenhlCmtl
+WHhaZGpSbmNleUt1U2xUbjAzTUVrRzZwcENFeUhuN3BwUnRBbHk1Wm5qMzZhekFvTi9GNEVmNm1M
+WllLMlIKTEptaVVsQmpFdStLMkNCdUIweHpHZU9HcFpxZjVaZW8zMWZIOWFHM0lOWE1oMU80bHZ4
+dHRvTzlEK29vQm84egpHZFpPeHdPRUdWdmRveW50QXdRZlMySGFJc1Z2bmQ4Yzh6OFIwQi8rZnVJ
+bmZLNDRxTjhjalBFeWNpTUVScGNkCmVkVmxGVGhnNmE1YUZQNG9PTVRhU3kyRzV2ZnBLc0NVYldw
+aDJRZVNtVTd1Y2xlY204c1k3Nktpdk9sUThJZFMKYmt1akZKdW43dnBwQzJqNE9veHM5S3FYK0JS
+TEs1OGljc082UG5mM1hrZE51TUZENUlTY0RwTW9GUGVIZEVWNgo2ZjV6WDdiTzhaVFBDRmIxNUJF
+SGNKK1lWekNtaWNwMHN5RmhnOG4xRFZiMEwwRlBWVUliK3UxSUNXMTNvSzF4CmgwSUJoZGJ4Tmh4
+YldpUU1XVFlKUk9OOGRadlg3NUlqK29aSFljVT0KPWh2NjkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000007cbf4b063a809a1c--
