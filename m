@@ -1,77 +1,133 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AACD26056D
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 18:05:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B84526A0FD
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 18:15:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753207533; cv=none; b=LOL2EpNAGmxrUCCzGs/2wUpysrxnoBJ15OEO6s/C9Wjqtu+CC8MmtvxLXcwiWvFZs7Hpz5hwwEcnXoER5+2ySR7nEMKrBvvDgzyMdtISKqbmxmO1PTjtUkvCu4tIabW0FUfdF1/j+WLMlc7tv1d3DtmfE/BudH8QP4QPsvgdces=
+	t=1753208127; cv=none; b=j8QzLDgMaSicWJmafGhIslmXjqApZV9lRC7m7yH225pGc09EinckrffNX7s3GsPltqrL/Sa+jgfhIMhS/7eryBYUbq/qeFOmW/zvsF22rcfD36Tvzw7d0wEpoofmcwIXxrqrmsVHC10Tww7vZetwftwKGIyuy/fcNAncp7vHMao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753207533; c=relaxed/simple;
-	bh=QSyVViiJRJRmWmn//BwBpK4u8pj9a20mik5XmegjObI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=U8+TXMPHrYT4GmNBTDJyol2g8YuRvJ1znSYWNgBypmR+jy5V7kL2K5y1MIdqh0wKGllorag/k6HL9i/8Tbxg/H2g3SIo96A6dUGp02pi1ufYgotDiGBZk29SgDPJV0sEuiAqzkg/fpj+d0fNdy7onywK3L0ovwTxui6o4ir8LXc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KkpQSFPE; arc=none smtp.client-ip=209.85.167.42
+	s=arc-20240116; t=1753208127; c=relaxed/simple;
+	bh=MCZKhVjboFHFmztZUoeWuSc0liZBVtlnkVK/Vtdokps=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=ZXOrKIKwF+NTL2n9809LtlwCZ8oBV1rq2qV5X6gK4MhJeahucoSu9RDgHQzuOupo+MUE4djGXAMLQP/sDkX/29hQTpUFAoODaLFptvp+HeylE0DEmiTYdpiJ7WeFtpcI5w8K9NPihq500ajoyVZJrPDrEjki89sqMYdqVjEm9ao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NMc93ilA; arc=none smtp.client-ip=209.85.210.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KkpQSFPE"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-553d2eb03a0so132665e87.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 11:05:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NMc93ilA"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-73e82d2ec21so2627532a34.2
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 11:15:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753207530; x=1753812330; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=QSyVViiJRJRmWmn//BwBpK4u8pj9a20mik5XmegjObI=;
-        b=KkpQSFPEA3nVr39vt4oBux4qIRlZY5O8sW3E+vcfsZbF8pkjcNiiXv4SNjMUD1YeuJ
-         487VfOwcClZG7Fe9x9d3cZjuyuPiXRyg82uoCHYhuBAVSTh8KxnSJG2QyDITBebAV4wJ
-         aTY0Sd7mxqHHbkgmeTwwv6itaTfaF8IYtsxCFIILHL5ptvmQ8apry2Vorl1uF1st6EZy
-         5HXRLC/Tsw4NizRxrkE9g/19CilcNkqUyEOtPFmH29sG7p21Q6r920N0Ca2BZXU0eT5Y
-         DbYaoWXjaA3ApV336To3asCitUw+RB+gHnPcEt39g5+rIvZG7iXQ1hIQdVDqiPLGT1ml
-         OOmw==
+        d=gmail.com; s=20230601; t=1753208125; x=1753812925; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=4iknFmv4SLo79ha/Bp9hNrGhHCog2tui0VwiSi1L+rM=;
+        b=NMc93ilALWpae7Mgx/vfM27J2ZnD/pSMYsHSJsPGN4Cszz78N32WYozFrq12YMkn0i
+         WaB3Wx+WxDlruoh4Mud+Od9TUa2RTXQ1pPCcDxxe33BuQ8guYP+msD+cFdvYdszUU9Wi
+         R5CpmPgvrwhfdgje8o5TDKjiOP5bnUrdcNvPPgIkxvvlqI0ovr55PyGB6OiXLnhceKJH
+         iPqI56AAF7XWBtmJjAEXQtLXLRuUV3zkOiauoRak+dTy8EkJLchvYHEbqq5pPEo7vUv5
+         s5Pnf7aeKgQ4nNzCXdkwo2QOwKgAXEvhMbsbknTrEWGsN2z5tn+2+nV1z6ZqK28dPFZB
+         3iig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753207530; x=1753812330;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1753208125; x=1753812925;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=QSyVViiJRJRmWmn//BwBpK4u8pj9a20mik5XmegjObI=;
-        b=lci6VazhRTqpP5N8VKE5kjfLocOJ5gL5IR5/B1adot1j9j0XknKhx9433AlvEAvAvY
-         ZplMUqNJihscdm7+4gbqSPMl6/hkG17MqnCy6rndQg8Ms/qmZ7D1bM/RvF1gxWg1X5A9
-         vYtvWcK9JPV5iHBrTzP2iI28PbrzFAqfNNiqrG4lZLbvNMKkpoh+aLVjS0+tM+b58aS9
-         aw5clBZeZNLe5y6Fl6CHrV6IaLA+nCAGJlhvi9KLqmSS0/KI4BICK3UnVEm+EsgxF6s7
-         shtdWqNWI9rj1U8lzXA/UXdw0GsJWZg+C6iQ3vXtXTswmW5wF3YM1IMLlR9/TmpKH6u/
-         3IWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW9rE9pq0I2arHkeMgzOeqgFZzaSd1k3fczN4L4XXDGcnqKOXXniL4/RqZbYcpHNFZXFb0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yxg23xksyAiTNHasw0clx+KDtupVUElyvlBldBJDsWKgyl6haxP
-	OW6PPEBwyVqz1f6wAnUGAVtJAifgehGGYgy94ns/ukNLsmJsyLJnQQGcLLrMWoFJkslxBoWBRNa
-	GvqfHV5fXacmH7tuZDdlTACj35w1PjL4=
-X-Gm-Gg: ASbGncuy6ky8u9p3F5i3VdmUKvK2j/SB4QZpkvB6d6USw18Q6031RHhvSXK0NRy3gKp
-	5WCZG1HqYLKWTbeAiYTumrmuA5cWWWQ0uBrZVbCrgiog1nsFQ1XYs7B3hGu6Ms3E//Zzfdwlo5F
-	etKT+RpnuNVBFI/d/H4T2Q1CcFNNLgQdMjj+Z5SVNUB9d3IKPnQ7IiS06kcAwbACGJiDdp9ujIz
-	VTSa315hK0s7+iTU/vh4pugXwl8skUHy+zwhz7z0A==
-X-Google-Smtp-Source: AGHT+IHkzN9Vc+ETmwemK14Gv37tirv5WkrnHkeo6Ht9GWEOtNG+p4uipCM0dUIQaPPcqMHDDE4tmTwup2vkcA8y86U=
-X-Received: by 2002:a05:6512:b09:b0:553:2375:c6e8 with SMTP id
- 2adb3069b0e04-55a48e960dbmr1779964e87.1.1753207530013; Tue, 22 Jul 2025
- 11:05:30 -0700 (PDT)
+        bh=4iknFmv4SLo79ha/Bp9hNrGhHCog2tui0VwiSi1L+rM=;
+        b=PQP13FKEVLfCyFe3qvt5PWkl53toJEfI7DEEgjA9TbgpJPPv8WiFg4hJ/XSqcYOeVR
+         TBQAxqvJjC/vQul++FCgphtJp8zW52UGmYWTKIRD8X6ydu4YPBjppS8qDgUmZyHqigeP
+         npM0n7pPtPRePa9c26MtpoSEruM/TNgB6EbH6swbIGXjHFPVsFjaS5eytxfUz4410/nH
+         EesU9Q39ct+KE4TpTMOQPkQs6RfTq1RjsDlUuqUjzAdeEms59nINZhTXU+nTnWpvdF+X
+         iTJTUQdJahrsk5z631Jt76snXTArPLei8XbbZph5IcFRTWoxVaeB6gR+zsu1Tajyxs9v
+         6gxA==
+X-Gm-Message-State: AOJu0YwNf54IiwvAyaPlV8wCzuaDQUBGtjK+onOunFlN4UQQbMOAOKUN
+	MsJCXLDEfWAgea9jyv9EtkFCDkVLZU4CjlWhVVFKnUzqz9E4xo3uo2udh99xEQ==
+X-Gm-Gg: ASbGncsK8/JSeBDb9pxW/YAsdq2dRYAWh/unx3sprmtl5kBWrPdYwBHM2XwvkZYBvHv
+	XI6WXzKYky0x0A/8sUyNkPuyxWOcyp37NgtSKwRnbi5E+kMd5X+oU+yxjgBqZw575EaExISYeur
+	e3fZLsl0A7O9g9SZ/bsXN8cWgqENDW/OayO5uItifGIqh1nS96WUGoj5JwpK0ZXS8sqO2n6WUl5
+	3ySn0kZGEOC2EQeKaM62EMPGmrV7cnGOUFaEXMMu87FQN6w9Hlrxzrm/F5Rl9Ib1bZk4ot6gEMS
+	rPeYpbOpXRAb0uMM0DLiNS37kthaKWKVfMokwBsMocyFmuxBKgsb722Zqe8sYKotTcnSO3oYsgl
+	k3sWyuDX1mQDcy5wBLiVD1LFTGKXYkw==
+X-Google-Smtp-Source: AGHT+IFnLibXWCYbwgrEkaUkZmcJjawA3m2k7N1iZmpl1MogyfZzX1dxfIJwBFC1P3tlzcLx94My1A==
+X-Received: by 2002:a05:6808:e8b:b0:40a:fb27:9e8d with SMTP id 5614622812f47-426c47e8352mr211040b6e.15.1753208124041;
+        Tue, 22 Jul 2025 11:15:24 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-41fd498c218sm2914153b6e.29.2025.07.22.11.15.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 11:15:23 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH 0/2] builtin: unmark git-switch and git-restore as experimental
+Date: Tue, 22 Jul 2025 13:08:16 -0500
+Message-ID: <20250722180818.1043014-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.50.1.214.ga30f80fde9
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1915.v3.git.1751128486.gitgitgadget@gmail.com>
- <pull.1915.v4.git.1752928113.gitgitgadget@gmail.com> <2774b930406819ea60f522e0e0741e4046ee01ee.1752928113.git.gitgitgadget@gmail.com>
- <076bb5e9-e8c4-466d-b8dd-bc84bba708b2@gmail.com> <CAP9jKjExau58dP+=MJXiKWvCcOaBmhB-yta0x76s7b0XWqBQxw@mail.gmail.com>
-In-Reply-To: <CAP9jKjExau58dP+=MJXiKWvCcOaBmhB-yta0x76s7b0XWqBQxw@mail.gmail.com>
-From: Leon Michalak <leonmichalak6@gmail.com>
-Date: Tue, 22 Jul 2025 19:05:19 +0100
-X-Gm-Features: Ac12FXxGIfaLGdrWSlu-r-mYQ68gdae50fjTbHtqaDhOMT0hX2KfTdVRA7lZC_U
-Message-ID: <CAP9jKjE3FT4c-0gphCmo2yDmMPni-d3vOhcJXUb1PPm=p5_GMA@mail.gmail.com>
-Subject: Re: [PATCH v4 4/4] add-patch: add diff.context command line overrides
-To: phillip.wood@dunelm.org.uk
-Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Eric Sunshine <sunshine@sunshineco.com>, 
-	Christian Couder <christian.couder@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-Apologies for the top-posting above, this is not my regular workflow!
+Greetings,
+
+In 4e43b7ff (Declare both git-switch and git-restore experimental,
+2019-04-25), the newly introduced git-switch(1) and git-restore(1)
+commands were marked as experimental. This was done to provide time to
+make breaking changes to the interface. It has now been over six years
+since these commands were implemented and, over this time, there has not
+been much change that would warrant these commands being labeled as
+experimental.
+
+There was a patch submitted[1] about a year ago also with the intent to
+remove the experimental marker for these commands, but fizzled out
+seemingly due to uncertainty around whether past discussions around
+git-switch(1) had been resolved. Digging through some of these
+conversations[2], a point of concern for git-switch(1) was around some of
+the chosen short flags for git-switch(1), namely the `-c` flag for
+creating a branch and the `-m` flag for merging local modifications into
+the target branch via a three-way merge. The idea was that maybe these
+short flags should instead be reserved for other not yet implemented
+options in the future.
+
+At this point, it seems rather difficult to justify changing
+`-c/--create` to something different as it has been that way for a long
+time and is used frequently. Also I'm not entirely convinced switching
+to something like `-n/--new` is much better as it would run into a
+similar issue of taking the short flag commonly used for the `--dry-run`
+option. As for the `-m/--merge` flag, I don't think there is much harm
+in dropping the short flag for what I presume to be a relatively
+uncommon option. Outside of these explicitly brought up concerns though,
+I have not found anything that would require a breaking change to
+git-switch(1).
+
+By removing the experimental marker, we help clarify the stability and
+maturity of these commands. It will also make it easier for users to
+adopt and recommend, as the experimental label has been a point of
+hesitation for some. For new users, git-switch(1) and git-restore(1) do
+help avoid some confusion that comes with the one-command-do-all
+git-checkout(1) so helping to further promote their use should be
+beneficial.
+
+Thanks,
+-Justin
+
+[1]: <20240220092957.1296283-2-matttbe@kernel.org>
+[2]: <877dkdwgfe.fsf@evledraar.gmail.com>
+
+Justin Tobler (2):
+  builtin: remove merge short flag for switch and restore
+  builtin: unmark git-switch and git-restore as experimental
+
+ Documentation/git-restore.adoc |  3 ---
+ Documentation/git-switch.adoc  |  3 ---
+ builtin/checkout.c             | 24 ++++++++++++++++--------
+ 3 files changed, 16 insertions(+), 14 deletions(-)
+
+
+base-commit: 3f2a94875d2f41fe4758a439f68d8b73cfb19d0f
+-- 
+2.50.1.214.ga30f80fde9
+
