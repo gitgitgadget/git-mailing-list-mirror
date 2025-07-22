@@ -1,74 +1,83 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11D938FA6
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 22:08:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC36C2882AD
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 22:09:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753222122; cv=none; b=SpKrbhSXdKKqoJhZMXctAQMQoYZUGRRhffnMUcqADKFXSDVl/tfxBXN1szD5+ByObEESi4D9trqAcSlRktPeYzaspqUpkloXneMs44dt2k0ds2WUjQYWqB4RB0SkOMCVJvnVSSr64gk8PoIuSY7ByMSXFZsY2oywYaYG/OwMojQ=
+	t=1753222162; cv=none; b=UXvHnGJ5tgsZbm98wsjrlYF+j1XFwukxb8QC5w2DTMuPIEIEl+AH0gYUO74mIM+Nxi2mvtT0NA5ksej7E1t1HtvvaLJAiUlUCtFg0wjWSZS0W9JHhdUz9a8IoF2q+xxljlVJC49Ud8aVaYXHygUTJUPS1ZzSLY7SDYBklctsdFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753222122; c=relaxed/simple;
-	bh=9VSjNv1ZvgpFGdSIh119gFXNUD7j5TidcDRdffzNfI0=;
+	s=arc-20240116; t=1753222162; c=relaxed/simple;
+	bh=modi0a3DcZbmrkmYe6L81RSoIp+/Ir4DcqEfBi8EiB4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=f+dS9F66tMV6hvx3jm3EJ/EoVE2hGfgDXWSL5mopIOcU4GlJ1ogK/FcF769gnRIqIQ7yJvqbFV1M4SexVfldAm3k729nEcidvpa4wq4lJ4TIH303u7s+YEA0D1DcVVf7+azsXiLy92JtsXsAM69RDbqfP01t5G90DQnz9mysKKA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XbYArLyQ; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=r+/lKOAUfjD+N38CCngmP3NXDcTCIESBQKYRjuBp9ASg2XRMIC3b368WDhwlaGZrYm/KETGEmaUO7UUe7iqHDXdCljNXHd9KhqJ/rj3C902pJmr+5kDCXXNLqyImpdGJgmjKBCUvslD8hgj/MI3X0xSuBFuvG7WFTk23jjUzUIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WDrkCliU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W3SJYEtL; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XbYArLyQ"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-748f5a4a423so3809328b3a.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:08:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753222120; x=1753826920; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RoXjpaUM7N+9ZPHC3IOllXZpwYSkP2+0d/KXSKV6Gbk=;
-        b=XbYArLyQ2o8t2SPSPLbcatJhF7Zy+1Wf668EoTIPiX9a/FUc4M6INUFynsyqzG3vOu
-         O0alo+O8JHZBbHViqsYXtplYrbfdQKgA+Lg23+Chjly3pSHX/CAhUnMdcJXwZlEbOGBS
-         HCvl2BzOxuiEqwha46Cgy/i2FgJ2hViVV0j89yHYIYIGCdtJwyhH7IMrLlv9KqkQTzYG
-         ZnM6+I+4wLcTaOSUSTo9dGZMidTRLqgTlpPZvdIwa6jqLlveKPOGqaTikVMrBR6xfqjb
-         kjevLn/IkIn1WL+uDP6AgeK8TlcXOSY3wdrvh82Q00WsKE9jzw8RcDo9u6mNPHXiKyBx
-         DMYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753222120; x=1753826920;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RoXjpaUM7N+9ZPHC3IOllXZpwYSkP2+0d/KXSKV6Gbk=;
-        b=bpe/2wkxRxjOb8E8zmvY/vB2HbrRsrzuUhkj9Fn+A2d554ApRcLw3NGrovOWN1F5u7
-         DeMPQhuauorhsNVbVL5o+0iLgIkZNVEbhLfnIw0kLT1MZWAx02VNqMmbEkrvNWBz9zFL
-         YNa+eXmqvHN+0gvkmUjzGiCuXfjMpJmXyGIMkcMaA6xb2vo6Q+ztvvT3jy83nBaPxw9s
-         za792M7z9e125hrCPvgXhoFAdMIQiMLFnOUoyovygODcCzf+pEajL3zbN+bY0JLcHCXk
-         qxx0iup6Ovu+EEItV3OezkRzZhm46lY30eKSUwcXgfiHIMWFOoN9K57Lbo9hA0HtC7aC
-         M3PQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUWrSIjJQSbMDpiDLoJTM9CktboyXgNLI5k7r6QdIenJc6RVb7eRHXm0TnFoLvEKyLClVk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzX/sygG3RVU1C7m5S9IY4Da5LWMJgV1rfQXySoE5XCd1zNtu9q
-	fqp+XpsdiqA0dbCOebI63aNC2gqeNloFjG37jvcgzkMPfADNRR8+uvbQ
-X-Gm-Gg: ASbGncubDb3J/vVbegIYetaAuJ4pKu/1IHKrm/6qDc4s47WDtgUBsNhYHibidTCEOlU
-	M03+ReqG8dHN0fYyR85ZHyaHl+UVWOnbKhGJ+JtIKo/ZDXv0PvBPh32aTCCFEPYAH/KmgLu+nul
-	cy9SXlJaGCuXQkQoWS+AjEvJG4SRM+aHRTmIL1hFb7aJoLo34FGvf8RMi7BLLOpUhH7TgFAUjs8
-	xWCdWNSouhDoounJygAFWRPeKaJGPTTCOXKs4m9x8peV8r+0eFO6JYzAK8H9seZEAXiI+Hpuams
-	/DDrFMAVyqQjmWDmF7iOkFymw3B4lJx3PEcKFnNk6V9VFi05cbtquMVxwhmLXjtkY6RFqvaS1I2
-	53Ae+2qJIXpciXQ==
-X-Google-Smtp-Source: AGHT+IGMC9b2Hu7NNOKd0cX71IhmEcFJy4hbr3xARexwxyltXUwMfvsKArfCkznaqWH7OU3vmGwLSw==
-X-Received: by 2002:a17:902:e892:b0:234:b41e:378f with SMTP id d9443c01a7336-23f9814e994mr8163825ad.15.1753222120120;
-        Tue, 22 Jul 2025 15:08:40 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::69a9])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6d85d2sm82860345ad.168.2025.07.22.15.08.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Jul 2025 15:08:39 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Sam James <sam@gentoo.org>
-Cc: Elijah Newren <newren@gmail.com>,  me@ttaylorr.com,
-  ezekielnewren@gmail.com,  git@vger.kernel.org,  gitgitgadget@gmail.com,
-  sandals@crustytoothpaste.net,  Eli Schwartz <eschwartz@gentoo.org>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-In-Reply-To: <87o6tbevql.fsf@gentoo.org>
-References: <aHl4U98BBvpA5eKF@nand.local> <87seiofc0x.fsf@gentoo.org>
-	<CABPp-BEf2O12jx-wN5ig941SyoL=X2OJkQY26bac=8+v+jx8ZQ@mail.gmail.com>
-	<87o6tbevql.fsf@gentoo.org>
-Date: Tue, 22 Jul 2025 15:08:38 -0700
-Message-ID: <871pq7yj2x.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WDrkCliU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W3SJYEtL"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C492814005F5;
+	Tue, 22 Jul 2025 18:09:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 22 Jul 2025 18:09:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753222159; x=1753308559; bh=rO8HJ6pJV3
+	5sT+aVa7UzF/bDSUSvsKf91ZVTb1xXZrg=; b=WDrkCliUMWuyC3IJQHoCmiXaKZ
+	twkS5oJHff7d9smKD0UiiAN14E3JkOx3r7wwT8SQGqMnvarsafZ09B8FLcS5MTAx
+	G2i5tWsBOv9nDySH6HFBbZBVPZnB2rB/rLy8uxSUpGkob9cnTjVE/hxt+7xMHmpw
+	x3URRTuLGGZs9Wnl7aazSxEGZPsqPIzfFK6tHbOaSn9/ERAQh/IsIanFZf2JzTsl
+	NwMO2rtAlCkPfCesfXetz1I8UJB/Q4iye9ZZmyaFUa3Mcu4iOBhBCyH7uoxq2eaT
+	DsQ9/y2F1BvSbwEU38/udAJKvgbY3Ry0qES5X3TizJi9xcbx4gKCW9PxM9OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753222159; x=1753308559; bh=rO8HJ6pJV35sT+aVa7UzF/bDSUSvsKf91ZV
+	Tb1xXZrg=; b=W3SJYEtLAQxu1kvPF8/vbXpKAytNBptUZkte6CMEfehB9pmYk3e
+	hCRi95xha+bsJrSIMApcKcOoypjm4eEz4qZgW7vI2//sqcJzQhzm5ZVEVDrcedTH
+	Bbtr75Rom/tH2ZNG8SlCB/9Xf9CL45YTXLTDGy2XJhhPPEajEHe7XcrqD2JTM50D
+	c4hp82OgvLcaX4mELa2dGiGA1JI0PadHqU151zcPBpzz2ugJtK4K5BnxMHTfl0GP
+	uTM1OHwCzQrspwksoqwrhdliujKxijW8yS1g1O53fWPrFpItKEhYqPaERiBRayRt
+	r1e+KoBtP5JEOmPAYfiFtlgK6mHu8mMStvQ==
+X-ME-Sender: <xms:DwyAaPudboH8FAElKDAtLfoklUjKUgVcuSaUMX9wgj0thLyNXTBBzg>
+    <xme:DwyAaLDTVjm9Hpjte2YKVlPCJttMM24eI2VddR4nEj6nMlE-XP33ZHZdo_lJqhSa9
+    YX753uDK8vMvE6OYQ>
+X-ME-Received: <xmr:DwyAaPVPiAtDNstOuP386DlDyf-Roq1rRCaTOqHuXXBUkec0W1LnBKHsB_nir9fRjJbayuIZwV_DkaBTvXq8AX9Kh208dQmT-VSCaw8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejiedtiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DwyAaBBf_TmZjATDUCGizWm3knAMRLf06L9eKnlmArYz3BA2EjisKw>
+    <xmx:DwyAaK8noCXi1YK-l0nk9afAy9HqiR7lnyjHy_Blw0ItWSp9MD39_A>
+    <xmx:DwyAaAEzF8hT-kcxUscizCVFK-DVN3xZwedV9IPWl2x3kh9a2inL0g>
+    <xmx:DwyAaAOEzAcFBzUqn-yFzPD8LCIqP9AgcccbfCJipbXUBooCRs1aIQ>
+    <xmx:DwyAaP8hSgoBXaaAWngciXwLiN9nB0NXacacwHkOfF90DKuwDpzy0hN0>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Jul 2025 18:09:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 8/8] refs: fix invalid old object IDs when migrating
+ reflogs
+In-Reply-To: <20250722-pks-reflog-append-v1-8-183e5949de16@pks.im> (Patrick
+	Steinhardt's message of "Tue, 22 Jul 2025 13:20:57 +0200")
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
+	<20250722-pks-reflog-append-v1-8-183e5949de16@pks.im>
+Date: Tue, 22 Jul 2025 15:09:17 -0700
+Message-ID: <xmqqfrenri7m.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,23 +87,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Sam James <sam@gentoo.org> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> Further, I'd like to comment a bit on the support of our users from
->> another angle.  We're also responsible for security for our users
->
-> Supply-chain issues become more of a problem with Rust if we end up
-> making heavy use of crates. A policy moderating their use is something
-> we should talk about.
+> +print_all_reflog_entries () {
+> +	repo=$1 &&
+> +	test-tool -C "$repo" ref-store main for-each-reflog >reflogs &&
+> +	cat reflogs | while read reflog
+> +	do
+> +		echo "REFLOG: $reflog" &&
+> +		test-tool -C "$repo" ref-store main for-each-reflog-ent "$reflog" ||
+> +		return 1
+> +	done
 
-+1. I find it a bit worrying when I see 500+ dependencies (mostly
-transitive) being downloaded when running 'cargo build'.
+Let's not cat a single file into a pipe.  What is on the downstream
+side of such a pipe is always prepared to read from its standard
+input.  I.e.
 
-Not saying we should go to the extreme of Not Invented Here syndrome
-[1], since easy use of packages via 'cargo' is a major reason why people
-enjoy Rust. But we should consider whether they provide enough value to
-be included.
+	test-tool ... >reflogs &&
+	while read reflog
+	do
+		...
+	done <reflogs
 
-Collin
-
-[1] https://en.wikipedia.org/wiki/Not_invented_here
