@@ -1,158 +1,116 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8EA02576
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 16:38:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7207627877F
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 17:08:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753202322; cv=none; b=FbxoGEsC1vm+PG0biBaaO7f2aqHTRQIl5cL2IvQEnjqgeR/H+zMdoOcraXBfppnVmbCLSRT/f7ZgR6cpB5JjYdzRkcCLpuhkIQtUsa607y2EZ3clh9S9FSh1T23V74vyY7+7xu2qfE1Aa5OvqIAgAI5S74dWYRxMndwZcg9BMmI=
+	t=1753204085; cv=none; b=Gr6Wga/daW6y+wGUnCuj0+by/LDME1EI+CsaAaWlX6sXCJN14EB98uKMpOW85TCNyr/spfAg+IgysxF2cYxxYqnukxW+exHAs/oGAbQkih77ki5XSXTvqp4x/EfYzXP07iV+c8ssYGqwU+ZB4ezFCpsWbuPGyr5r2yGLBdE5N0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753202322; c=relaxed/simple;
-	bh=DcGEbyrpPlH3Q+B5o5EgTLC/jaMIHiLuis6dMdVxoys=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=WM0U7tDpfZ+2i7YuJgJqVx8EbdA1caWCnRF40oX4oOqjD7DTcSn1R8xcJbavQhnKGjRehmpvYLIyQnyRcE+hxJGih2AfNdguFSDyj6hlz2MRh9LdqG3djQVslOSiHhUPDXyzoaYym5bsUkpAAZAf0DDu0T2oK+fXW5Bz+9t4qA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=A2rYovtg; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753204085; c=relaxed/simple;
+	bh=xWH9Bw0tWx1kBBsE06ePSl/5qZmGPl1W5HgfcwXxuTI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=O2vb4jOyo1VaPwYv6rHzmQC2noi7fnt0Gx8Bcu4jlhBFmNs+MPTP6K3+geHekROeiM7z0mLoWoaDJRLQxekkQnOdbRoOyUDKV8SFuwPjJE8RIPJz8MmO0irOld1ogWxgLe+aCPaEsiHepVIZIL+lI4ne7z1YDBOyCDoQgj9LT7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WaEzTGTa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BpzzPXpz; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="A2rYovtg"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ae9be1697easo10833966b.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 09:38:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753202319; x=1753807119; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/KwptIIKaI/vp+sKmPtRFlojmfwFzF4FuxEoNiAQTTw=;
-        b=A2rYovtgjeXa5sMGvdsRE4gi1Fju2bHDa+8KaPMhtK9579KUxfP4fGEMDVmTP9jiPF
-         udtpPgESn1K8x96OWaWvwSHPMDQYp41tYyAd8TjVaUdVKuYMASetI4E/TCnILqagBsMd
-         0WwZ/3NANJjvGwZCeRHnSdLK7JdU6kD6NMfFoV+sJAvI3G7tyv0DPnnc0hFUXz/y0cfh
-         yrN13KHk5gghN0v7qdAHqzl4NqxzhvzeDBlRHdrLbEMkTD3QHAL2BQVkSAEjkaNm7I3F
-         s4zrjKltb1XwCWFQjsIxNExPa3WUYoLzsd1zY9mrDZq+LwIvbS68DHbQAaQAl6VDf+vn
-         qX9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753202319; x=1753807119;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/KwptIIKaI/vp+sKmPtRFlojmfwFzF4FuxEoNiAQTTw=;
-        b=E8KjyDEpBJuqYq8NFl1yqvx4Fd1y/F+oiOTCDf/UCn5X8fjW21jE+uMaTv9K7XtmVJ
-         BAEXIzFEtc4aVtJrIrgXtjISR2iCCldbOKSOmNNGaxxq7IqIYNCgkezc9Szf1lknTAnO
-         oXXFQc4Hji8fZdzLe6n9UKlan8i8LG0bO6bcXTiOiZj5xEkfXxaF74RH2d5KnweScXHM
-         mVvN9XGt28N8j9arFPWMUyeLvkf19H9rBKskIgmSn7e6p7LKUPPD8cl84dYsbvnaVAgi
-         XfW6BwrGmlqhCr8PkZ8sWPwHPN/V1EAiLlEqlYnP62xtJXddiKAxa103jkPCoY2vPw8I
-         FWQw==
-X-Gm-Message-State: AOJu0YwTfZ/Gxm80ZGrtRYcVP+KOmc+rRUnlPqFaghJc1yfNtrv0UmBn
-	j9sRfNQwyJMWp+DQagJ4pgfpZSO4AqfKtXhfa5Rc0L902CONyrCngeFUNlRPI8d9Tr60siM/hJM
-	aQquTdEMZIGKOVx1gDS6yLkvvl2G1R6w1aHhcFsw=
-X-Gm-Gg: ASbGncvwmXmMqgaRA53px2wftZ/t/Ks994uYItl/g2Me6hvpVTfb7TpluYzjiGG5KWG
-	z3z2w3aSVWN94rrUmtdubFhFVzCMzQn3QeAUTuccSCYtjf7Zz1Ayx1JJUOVb7qd07w0zd8Uxep4
-	L32wlTCoN/nDgbAjoB4M4vrNubuc961pm0+7LEHNAv+7hjNTpTjiQRbITp+03bQTEdcAG03ycqc
-	0NSQI4=
-X-Google-Smtp-Source: AGHT+IH666amZyR8sz+uJk7QmZNWUooj0gtlTcMcCDEcBOeuaKBEf6pvwe6949ORnt8Zl7wtOibYBmCfwm7oxrxvG5k=
-X-Received: by 2002:a17:906:fe44:b0:ae0:c1c4:645 with SMTP id
- a640c23a62f3a-af154e33d9amr369419066b.21.1753202318838; Tue, 22 Jul 2025
- 09:38:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WaEzTGTa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BpzzPXpz"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 791951400377;
+	Tue, 22 Jul 2025 13:08:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 22 Jul 2025 13:08:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753204082; x=1753290482; bh=8jjI2oSfrM
+	HN+kyCTgoDaPu8ih1si3wIR4Z97daOGoQ=; b=WaEzTGTaHJIe5Dc2ynrCr+CL/w
+	UIKFqMRLGujmqOOHF3w980i/I0LbSgO2FbSGH1QjnS662QeGFSj/SjACll5D1KMP
+	+Ccd+xnpL7DKjYVehfn7L4Gj2w+veWKYOkIZT5zu5iVlfUV351Twgp1uWJM+ObVN
+	oAmFEo9Vut28jpEiJmAs4EBSP+tIpCeFpi79kZLKJuN85ezzUPXO5vv/pSl6x+0C
+	xB0IGGbncznNSHoHQuMqQssU/XDm9n2tu3s9Ifh/v5h34Uni/ghiC97lJXKeGqrq
+	FlzmI4KkrXj+SPN0lMPM+gkpy2i6AaS9D/l5PKZx1Ces3G2BwJKv+E7pQOeg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753204082; x=1753290482; bh=8jjI2oSfrMHN+kyCTgoDaPu8ih1si3wIR4Z
+	97daOGoQ=; b=BpzzPXpzmUxZxry8h5Bo8ui6y7Plzj38Qfydg0Wt9Bil4slJakn
+	xRiuUUO2DlnFI8BfRzWqAUsTCcq92XQM9TygVpXO2CXUkoN66tplXVT8X1lDEofP
+	7VdEKgwO+2AJX+nZKGrCpUecUKh67Uki8E6WehfVCFYX9n3E/5mMaXnALPBtS7am
+	5kuH2yoLipn/2NBzwzTmsYeFX9mntBMaBTQfZ0yAtC4OmYs9SkburIWntccFeRAb
+	/ge/QwgetO1w/P5gBIRo40vo0QsHzL5xsnk/meA6LNnIiJrieInabcPgj46L+Xgr
+	vqSsPqvSuT9kyO5FR07AjBJierjbxIUCVcA==
+X-ME-Sender: <xms:ccV_aD1o85Y3M0KayfCUasep0xC0INdPNbR6FpmGU__7lYAzXwxZLQ>
+    <xme:ccV_aMo9cGEKoQXCf16hb5y-18EMh6MgHlszsvP0p4OIVDcQNXc3ojM60mefYWxkK
+    Tc4dtLpuOAE11VFxg>
+X-ME-Received: <xmr:ccV_aAfZpU-2BmeuoYdx3YxWqQ5pHZaTz_2tlOtT8r5sHovD3zIQfYdFRhwRZDcWMhZX-lKJ2Mu40u5CY9lBSPLmcfFb1XfLcLJ-xxA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheegiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohephhgrnhihrg
+    hnghdrthhonhihsegshihtvggurghntggvrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:ccV_aLrnTrzPT8qDkJeD2kH0sXaiR19h9U4QulqwbNJ2uWbJ2zoNjw>
+    <xmx:csV_aBEU2EsVhkrVis_HGTM9m-upyObikaWwPX4TgJLpmDQGzwYy1A>
+    <xmx:csV_aLvknjKHiPrnbmFNou2vvepMvypjBor5fakx7PTQJhBuEaNdkg>
+    <xmx:csV_aDVMuHDGBJvhM9vrnuHTH5lKbNqU326uQS1twGSKQsdXGRfvKA>
+    <xmx:csV_aNDhK1OR6W_SLmPAVO_CdENkvnN6TGttkaywFN7ENELin1WZoh5C>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Jul 2025 13:08:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Han Young <hanyang.tony@bytedance.com>,  git@vger.kernel.org
+Subject: Re: [PATCH] blame: only parse detailed commit info if needed
+In-Reply-To: <aH-dGhHm2xuY4yT3@pks.im> (Patrick Steinhardt's message of "Tue,
+	22 Jul 2025 16:15:54 +0200")
+References: <20250722114220.87570-1-hanyang.tony@bytedance.com>
+	<aH-dGhHm2xuY4yT3@pks.im>
+Date: Tue, 22 Jul 2025 10:08:00 -0700
+Message-ID: <xmqq5xfktaq7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CA+=FFpNPLEYsajBZqhxhnD3-642t=qQribO+oNDF5-3hhuxDnA@mail.gmail.com>
- <865894a2-ed71-5a03-a708-585cbb591ce7@gmx.de>
-In-Reply-To: <865894a2-ed71-5a03-a708-585cbb591ce7@gmx.de>
-From: James Gao <thehighmountain25@gmail.com>
-Date: Tue, 22 Jul 2025 12:38:29 -0400
-X-Gm-Features: Ac12FXwPNI6nw-xoztx-LdzGJEh3j66kJr96V-C0DW4dMJiKMdp6Lq01lxeWpxo
-Message-ID: <CA+=FFpP-_TkD0O4iOjL3EEHBKnxxqGOfChR6pestqt6kjkMQoQ@mail.gmail.com>
-Subject: Re: Bug report: latest (2.50.1) x64 version of Git for Windows
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi Johannes
+Patrick Steinhardt <ps@pks.im> writes:
 
-Yes,  https://github.com/git-for-windows/git/issues/5737 is mine.
-The clone is already-existing on my drive - background story is, I
-reinstalled OS, and tried to set up my development env again.
+> On Tue, Jul 22, 2025 at 07:42:20PM +0800, Han Young wrote:
+>> In commit cee7f245d (git-pickaxe: blame rewritten., 2006-10-19),
+>> The function get_commit_info can terminate commit parsing early if only
+>> the author information is needed. This ability is not used by callers
+>> who do not require detailed commit information. Stop requesting detailed
+>> commit information for these callers.
+>
+> Okay. I think there's two important pieces of information missing here:
+>
+>   - What does this buy us? I guess the answer is performance, but it
+>     would be sure to quantify in which scenarios and how much of a
+>     speedup this buys us.
+>
+>   - Any reasoning why those two callers don't need the information.
+>     Reviewers can try to piece it together manually, but it would be
+>     nice to hold their hand and lead them through the change.
 
-Repo is in a normal hard drive (not cloud, not onedrive, just in my
-local computer).
+Good questions to ask.  
 
-That is the all error message I got.
+If the answer to the first question is "well, not really?", then
+another thing to consider would be if we want to remove that
+short-cut as conditionally grabbing only just some pieces of
+information without getting others is not helping.
 
-lts is actually LTS (Long Term Support). Term might be misleading, I
-sometimes use LTS to be latest lol.
-
-I am sorry I was not able to use git-snapshots, I downloaded
-Git-2.24.1.2-64-bit and it worked OK.
-I might be able to reinstall the newest one, and reproduce, but I am
-quite afraid to do so, as my 20+ local git environment is at stake
-haha.
-
-Except that, I am happy to help you handle the issue.
-
-Thanks!
-James
-
-On Tue, Jul 22, 2025 at 5:47=E2=80=AFAM Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
->
-> Hi James,
->
-> On Mon, 21 Jul 2025, James Gao wrote:
->
-> > I just installed my system, and downloaded latest (2.50.1) x64 version
-> > of Git for Windows and installed it.
-> >
-> > I am on Windows 11 Pro, 10.0.22631.
-> > Git CLI is not getting permission to the folders.
-> > For example, I cannot run git init - error: couldn't set 'HEAD'
->
-> Is this the full error message?
->
-> > I cannot git pull or clone or git add
-> >
-> > It returns me similar errors:
-> > error: unable to write file
-> > .git/objects/36/dd1796da4dcbb2f53005b64afeef698cfaf510: Permission
-> > denied
-> > error: src/helpers/schedule.ts: failed to insert into database
-> > error: unable to index file 'src/helpers/schedule.ts'
->
-> This suggests that you somehow have successfully created a clone... how?
->
-> > I tried running git bash as Administrator, still not working.
->
-> That is interesting, suggesting that the "Permission denied" error messag=
-e
-> is misleading and that the error is not actually due to missing write
-> permissions.
->
-> Can you say more about your setup? Are you trying to clone onto a network
-> drive, for example?
->
-> > I am planning to download older versions, but it would be great to get
-> > it fixed for lts.
->
-> I don't know what you mean with "for lts", but yes, it would be great to
-> get it fixed.
->
-> By the way, before you download any older version, do make sure to try th=
-e
-> latest snapshot from https://gitforwindows.org/git-snapshots/.
->
-> Ciao,
-> Johannes
->
-> P.S.: I assume that https://github.com/git-for-windows/git/issues/5737 is
-> also you?
-
-
-
---=20
-James Gao - Big Dreamer, Fervent Developer, Forever Voyager
-
-LinkedIn | GitHub | Gmail | Phone
+Thanks.
