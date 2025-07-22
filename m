@@ -1,144 +1,229 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2EC27A92B
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 19:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA7FD80C02
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 19:31:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753211434; cv=none; b=u69pvbECOc+hLJj5solBvkE203P0LhCy7onQHYs0GF21OS1StiuPjZ0yC21l3SosmlJu+9C4FHOLs8iI+0CBVvZMh+LyU8GPzMpYhGpZV1GkpPcW3prppis2Ad8JL9f/zHomWWv3T5y6ao8eN6U8KljU46CJ+VPMvEU0SZ6iSb4=
+	t=1753212699; cv=none; b=tFa7V0AhhDRVhzJ5x4fKWU9rmIhMyN1FAO5KWSwrQp1Hy9cTbirPKM3cnhsPmjLZfcldw/NnVbghDbu4VMtURsPIk1l1dqZ704Q0SxXTaE4iCSoNFOsBTPJFB3WmQ1GFw4vTT9tbfBzKTZi3DGcKNBshh+BRDAtx0EwuOl42aQM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753211434; c=relaxed/simple;
-	bh=RpgpYDtReYMGRp0AMIUa+/akzKVUTtAlFXCs98542wc=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=NkdDarnVj7gMWPGUYMg3GMeQjAnwh3ngJWexPokPRCXUjFNH1XyVBNbcvg7iCqDZuIE68BCN64GpNGYALnrtTq0BxSMvgjmJVUPscsPREVTGyeWL8TD8SoWtc/a+XXN1zDhHJ8abKdQ5wCHe3K/D2bxMeA1qEbojxgLQv5vuiwc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.at; spf=pass smtp.mailfrom=gmx.at; dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b=ZjpmVWUC; arc=none smtp.client-ip=212.227.17.21
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.at
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.at
+	s=arc-20240116; t=1753212699; c=relaxed/simple;
+	bh=s6RxSozvyfCXrd7XtN5bvp6S0WH9Q0GrlqtzafAlRZU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=lDCdDYej4gm738vibTRKIOS9PSI6d3pj5+R43z9Ifg5VNnu3PjK3o7bD1BukquFmmWAwekEqkB9k32Dh2uOgNcPqYmHmzdmuDWjObkuqndSvkzDm9pjXyQ+mhcOC//d29LabV9BmvpCwXbJaFyQzsXEFksjqTiIq68QtfcGxBdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dMJCvGuR; arc=none smtp.client-ip=209.85.210.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.at header.i=jonas.brandstoetter@gmx.at header.b="ZjpmVWUC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.at;
-	s=s31663417; t=1753211429; x=1753816229;
-	i=jonas.brandstoetter@gmx.at;
-	bh=diZB47j6+FessrcrBh4q5jGX6KdoxlMTPxERDYyoSwA=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=ZjpmVWUCHrV+nJGsk6U1EUMjcdd6PXWiyJREGNGrSL+GUiu8bh9bPLsnyKsXrqbm
-	 rxrmIUkXuSaalvW8r76b2K29QZaCguQuAp0VrPyId2ngQYgdFcDcpWfDG2UOIThHc
-	 6YB6YqtUYukvE2NaxcL+toOq4u8svDI8MWl9kTaxlPdUHQWCro93IB7myIIcGQURB
-	 Ah4nIu3OiyUxOj3aJbSkiySm3byaU8g/kgJR0m83vb01V9+MNP2F8Jxz24y1lqf3u
-	 YcO3aegwNYWMWOLD1wI8+FSWCSXyJnWuw05JheH+bpiKAXdWCf5puwFOF5ToYYYGN
-	 LeTOzObBgAYoJoXlKg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from fedora.fritz.box ([185.89.163.201]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N1wpt-1ukOF42ZIH-016HbZ; Tue, 22
- Jul 2025 21:10:29 +0200
-From: =?UTF-8?q?Jonas=20Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?Jonas=20Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>
-Subject: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
-Date: Tue, 22 Jul 2025 21:09:22 +0200
-Message-ID: <20250722190922.51183-3-jonas.brandstoetter@gmx.at>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
-References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dMJCvGuR"
+Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-73e5792cb9dso1830624a34.2
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 12:31:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753212694; x=1753817494; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=BCOXWCsq7YxM20X03TDJiz26qa2xYgJjqeaSzYe7QCM=;
+        b=dMJCvGuRYOf8XIbTtLSC4HP4l3LwaupLY5NxgjRdDeHPm2iHsfYceJkETunXK+tPmd
+         jXX+y7RcfmXtRL7YZr1T2dOE93Yk/7Ozist9vzUJP0aPePtXM1tGEaasu2HZR5csC3SB
+         RUFyYIwme0ctir7NxV5o+qmIJf+Pao615Rhw4WcwKoHf9NK5kMw8ZxJ88o+5fkH7XF7e
+         smJe4UHNN70B4muPplkY85PVlz/Vv0Z4XpgNt7GczzalARKzIB7MY6T812hWHKPzFAan
+         mE4+ExCV0jyN7CDi1NBU7ZdYrnHAlidDMB3+MvM2gRGvoC1hfj099iROhume85oVN1bj
+         oyPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753212694; x=1753817494;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BCOXWCsq7YxM20X03TDJiz26qa2xYgJjqeaSzYe7QCM=;
+        b=r4BNRbe9JnXRvaZUX3vJ1gcCbGrca3veCqgN8TBpNf+p3dqilk8ob+50AAktO1UdvL
+         U+RRDFfTAwxY5LvEwQsXurLyAr/xm+2tvJhT8Mu/M7Jt6YGoB7KnEW2uuhYIpb+Iz7bP
+         vkoK4FdZ22xypYKxxblRKExeB7LP3Qs8tnza5LJBVckgBEFri/N7nFL/GxWbAbXiSK/C
+         jMV0ymUAakrTdMKidGo4YD2YF9IG16kevcoSATHzrSr/4GLwbZ7PD7TIFzeKlDkbZ+0o
+         +R1Jv46UcaEmzKr6NWCu9khvHSXUl4FjJIPOkK742UdQRLU1tEgcUsSr76no/wUaaD0r
+         WB5Q==
+X-Gm-Message-State: AOJu0YxGsj+w1n1P/S/6QFIcUbb4nreBMoDQuEH1vRsSROUyyc1ibzKk
+	VL1AHDppL4tgeeQKYzhik26SmEzpzABYV4ASnlWm4OQQvSbV4QtXPxdR
+X-Gm-Gg: ASbGncsAgM75OlS0keKAK5ePxrohFiHEH3fAxq/AntJo5h+TMuIF8maXCo1h7eECI46
+	c3CNrVHm1a7+Bvg2yDNGiMxNIkL3SF8n75QwvZxGPn/yZXnFGj91do1gJ3f7rFlEZNEOYjj1iNG
+	KDIUdBqjA4OD7xXMggW/6XNw7xYy3ceYXuZUz6H7WEPDzwKsg0JOXafwHy6cz1oTs7otiCY61Lz
+	PuZ8QtHx+AuKiHJvng1qPvwg5Fqt5SZ53SMHPM3+nDSkTxo3jYUHzZZuxDBrNVSgoXN458cc9Za
+	6I2WUlvoVw+HmG1GcPelWPNgAOEjwZn8vKMPSi3GWxESkF2I6ed48eawymhnO7l5gv8JQTBNKnk
+	9MqIQ+D4/yz31TK4=
+X-Google-Smtp-Source: AGHT+IE8Su0AlmF2v0x3+zM6q23yqMxLb02rMHebpODCbznlH9g9mWG2Yp9IL0V45kt7UM68YuO56Q==
+X-Received: by 2002:a05:6830:348e:b0:73e:b9a3:699f with SMTP id 46e09a7af769-74080520e87mr314905a34.6.1753212694343;
+        Tue, 22 Jul 2025 12:31:34 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-73e836262e5sm3747306a34.19.2025.07.22.12.31.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 12:31:33 -0700 (PDT)
+Date: Tue, 22 Jul 2025 14:25:45 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im, 
+	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
+	phillip.wood@dunelm.org.uk
+Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
+Message-ID: <ldomqfgzts2fs3zuzuyfpsp4jsuec7a6ooisztqx6pe2373jzx@mqzh62weo2jm>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-3-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:w/ApEPbb6RSi3RYlPf5+Ru1NWYdeIimi/V89HT/uwWkAq2ppgVg
- yip9tFv3ogQpPa+T07tLE+Tn/N8ikMncnu7qihiYrPJsM+9ixtDlrd0LLFkNeRutfls5xHq
- q7vlGGnzAgM059oRu1Oq+RWHqHyNB5F1sPz3ygeOCmdmN6orRu8faT34dOUxJgBKY3IsXWA
- Dsnct2wxZqM9zzH6PdnYw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:oyzm0e/JlxE=;w8IYurU+iFr2QAjYAJ5L45MAlqT
- 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
- TLBhpD2paLyMISDHvNZw==
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250722002835.33428-3-lucasseikioshiro@gmail.com>
 
-These cases cover scenarios where `gpg.program` is set as a program in
-`$PATH` or as a path relative to the user's home directory.
+On 25/07/21 09:28PM, Lucas Seiki Oshiro wrote:
+> This commit is part of the series that introduces the new subcommand
+> git-repo-info.
+> 
+> The flag `--show-ref-format` from git-rev-parse is used for retrieving
+> the reference format (i.e. `files` or `reftable`). This way, it is
+> used for querying repository metadata, fitting in the purpose of
+> git-repo-info.
+> 
+> Then, add a new field `references.format` to the repo-info subcommand
+> containing that information.
+> 
+> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Helped-by: Justin Tobler <jltobler@gmail.com>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
+> Mentored-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+>  Documentation/git-repo.adoc |  4 ++
+>  builtin/repo.c              | 75 ++++++++++++++++++++++++++++++++++++-
+>  t/meson.build               |  1 +
+>  t/t1900-repo.sh             | 50 +++++++++++++++++++++++++
+>  4 files changed, 128 insertions(+), 2 deletions(-)
+>  create mode 100755 t/t1900-repo.sh
+> 
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> index caee7d8aef..cf8483ec49 100644
+> --- a/Documentation/git-repo.adoc
+> +++ b/Documentation/git-repo.adoc
+> @@ -29,6 +29,10 @@ INFO KEYS
+>  The set of data that `git repo` can return is grouped into the following
+>  categories:
+>  
+> +`references`::
+> +Reference-related data:
+> +* `format`: the reference storage format
+> +
+>  SEE ALSO
+>  --------
+>  linkgit:git-rev-parse[1]
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index d4f01e35e2..5beae0f781 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -1,12 +1,83 @@
+>  #include "builtin.h"
+>  #include "parse-options.h"
+> +#include "refs.h"
+>  
+> -static int repo_info(int argc UNUSED, const char **argv UNUSED,
+> -		     const char *prefix UNUSED, struct repository *repo UNUSED)
+> +typedef const char *get_value_fn(struct repository *repo);
+> +
+> +struct field {
+> +	const char *key;
+> +	get_value_fn *add_field_callback;
+> +};
+> +
+> +static const char *get_references_format(struct repository *repo)
+> +{
+> +	return ref_storage_format_to_name(repo->ref_storage_format);
+> +}
+> +
+> +/* repo_info_fields keys should be in lexicographical order */
+> +static const struct field repo_info_fields[] = {
+> +	{ "references.format", get_references_format },
+> +};
 
-Signed-off-by: Jonas Brandst=C3=B6tter <jonas.brandstoetter@gmx.at>
-=2D--
- t/t7510-signed-commit.sh | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+Ok, so each key has a corresponding callback that is used to get its
+value. This works fine when we have one operation/callback per key, but
+I could see this being a bit inflexible in cases where performing a
+single operation could be expected to generate multiple keys worth of
+information at a time.
 
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 39677e859a..95d2ebe277 100755
-=2D-- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -449,7 +449,17 @@ test_expect_success 'custom `gpg.program`' '
-=20
- 	test_must_fail env LET_GPG_PROGRAM_FAIL=3D1 \
- 	git commit -S --allow-empty -m must-fail 2>err &&
--	grep zOMG err
-+	grep zOMG err &&
-+
-+	# `gpg.program` starts with `~`, the path should be interpreted to be re=
-lative to `$HOME`
-+	test_config gpg.program "~/fake-gpg" &&
-+	env HOME=3D"$(pwd)" \
-+	git commit -S --allow-empty -m signed-commit &&
-+
-+	# `gpg.program` does not specify an absolute path, it should find a prog=
-ram in `$PATH`
-+	test_config gpg.program "fake-gpg" &&
-+	env PATH=3D"$(pwd):$PATH" \
-+	git commit -S --allow-empty -m signed-commit
- '
-=20
- test_done
-=2D-=20
-2.50.1
+I certainly see this being the case with git-repo-stats where, for
+example, interating over references will produce multiple keyvalues
+indicating the number of branches, tags, remotes, etc. But, maybe for
+git-repo-info this will not be as much of a concern?
 
+> +
+> +static int repo_info_fields_cmp(const void *va, const void *vb)
+> +{
+> +	const struct field *a = va;
+> +	const struct field *b = vb;
+> +
+> +	return strcmp(a->key, b->key);
+> +}
+> +
+> +static get_value_fn *get_value_callback(const char *key)
+>  {
+> +	const struct field search_key = { key, NULL };
+> +	const struct field *found = bsearch(&search_key, repo_info_fields,
+> +					    ARRAY_SIZE(repo_info_fields),
+> +					    sizeof(struct field),
+> +					    repo_info_fields_cmp);
+> +	return found ? found->add_field_callback : NULL;
+> +}
+> +
+> +static int qsort_strcmp(const void *va, const void *vb)
+> +{
+> +	const char *a = *(const char **)va;
+> +	const char *b = *(const char **)vb;
+> +
+> +	return strcmp(a, b);
+> +}
+> +
+> +static int print_fields(int argc, const char **argv, struct repository *repo)
+> +{
+> +	const char *last = "";
+> +
+> +	QSORT(argv, argc, qsort_strcmp);
+> +
+> +	for (int i = 0; i < argc; i++) {
+> +		get_value_fn *callback;
+> +		const char *key = argv[i];
+> +		const char *value;
+> +
+> +		if (!strcmp(key, last))
+> +			continue;
+> +
+> +		callback = get_value_callback(key);
+> +
+> +		if (!callback)
+> +			return error("key %s not found", key);
+> +
+> +		value = callback(repo);
+> +		printf("%s=%s\n", key, value);
+> +		last = key;
+> +	}
+
+If the user does not input any keys, we simply do nothing. I do wonder
+if this is really the best default behavior. Maybe instead we should
+error out? Or maybe treat it as though all keys were requested?
+
+-Justin
+
+> +
+>  	return 0;
+>  }
+>  
+> +static int repo_info(int argc, const char **argv, const char *prefix UNUSED,
+> +		     struct repository *repo)
+> +{
+> +	return print_fields(argc - 1, argv + 1, repo);
+> +}
+> +
+>  int cmd_repo(int argc, const char **argv, const char *prefix,
+>  	     struct repository *repo)
+>  {
