@@ -1,187 +1,165 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFE42EB5CC
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:14:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEF725A2C7
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753197272; cv=none; b=GFMQ8oVmLq1JRJfTG+W+CcFd4u/BRpcjs2F/+JSj69CHbuCG5+VVQwP4GxuTA2S+kBe0suyo8Jzhr0rD/uFAGUbmtWm8L5SbwM3C6Y8babsuPRshv74KiBME7nwcrh8VqkWh4yR0xjnF29yXiuPl/h2Ay4SjJ39a7o2Q3qTEePg=
+	t=1753197586; cv=none; b=kZE+D8S4K/jfON6jSwlTf3paWo51aZB0GmYgl5onQQLhRF7/T9C6d+wOK4zqZ5JpSdvrtWQ2nEK87qD/sFs0Ktc6p9M1MiuWyKsAkOMbDtzfWpNptUcagtYp61YoqwkvtvMzH1zanc7D7+VKybN+BE+lPM5FUU8jNK46Ee2iYNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753197272; c=relaxed/simple;
-	bh=wV7W8iG0umpLLGLBcOTZk++Dp32iJVPUS41jACsHDgU=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=kumEVlNpE1iNYadm4l/RR6x9RiKmHjCu4H7lgg4Me4O2f53NFxWSlnAuWmk9dIuZgv5vwO5uy09qf2+ZNoAx0ch5Dz1QmIl3yLSbqo43t31KsjWvqVxh9qtkuLgZN2GTXnkk7S2AzB8KH9R+5rO217aUxaw8SZ0Om1XfJH83mrQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id C0BC6340E0F;
-	Tue, 22 Jul 2025 15:14:25 +0000 (UTC)
-Message-ID: <4bb0e99a-0c0d-49e4-82f8-02443a7f6783@gentoo.org>
-Date: Tue, 22 Jul 2025 11:14:21 -0400
+	s=arc-20240116; t=1753197586; c=relaxed/simple;
+	bh=CHmZnGpMrriU+fV0Wym9LBCHNO839AbdgxCfHa+6QnM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VC5Uc4VQMPZul4MXP9mfRPDZ2lRzGUAhQG2ptqXJJ3m9jV5bVHta2OxjWwfAiyQilow6SVkSdtggQheTaPv14t9ssl/t9CkaEReu419rrEvApvzv4nVrytJ1vAEEfqb6HPpWuChdDRlmdC6JTy/n4SprYvr2acwkRcrPCCts7hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASOz5ENv; arc=none smtp.client-ip=209.85.166.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASOz5ENv"
+Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3e28bf4a350so29526875ab.1
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 08:19:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753197584; x=1753802384; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=kqSQdl5IiIxr1mxk1BlzrNlSglQb08bhF3ESql5HZqI=;
+        b=ASOz5ENvSLVSPS1YY6wmipc6DRWK/j2m0JDTRmBmin2mj26dvD0pB7gC8KJinyVbGN
+         ixO4HTpSraKioGD77Jwg6ufipQX5E6IOmhCKRksAyI8buD28WHEGCTsZG/kwXPdY1IQF
+         Aop4qvPw5hS5zEKGuoyOUX+2t/6q7accfIZEpOu8Ohnj/qicuqpAhtwMflapr/viz8JD
+         rkFiyjYppV2kA+K9YiGO8PPW08jqaQPBLibYxd5n0lIihgEhjdARIGGHDGpABItx4Xdr
+         otsg5VMaVt0Hk/g+xRZDMtpDtWQKFRrOSeN3+wFemc7sWXcqNIUR2q43ympiYpEAYtY4
+         Rzkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753197584; x=1753802384;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=kqSQdl5IiIxr1mxk1BlzrNlSglQb08bhF3ESql5HZqI=;
+        b=aRIN7CWoUBbuJIQbv06E+y4xUTU84OAzP+mVErgQmdne8n8JOm8+/CVVbJM/6FMjjo
+         rl8K1wzQoGVyo2cfeCEoRNhPG1i9JCh17MoimHWqaqq8pNLdBFs++eHtdIDuZN9GCUYF
+         cNLOpGKsTJi2GnpW8FmsnA01mLfAXG0f91uZKgVwPK1CuW2hWt6sWBvqWZ5JaY5/PFgy
+         usIbYjBc7Mg2gKvvX+Nt1tTsd1+hlgM+GLbE3zshnYB+t+N14LBhwlebhDHQX7HMkE55
+         djLSQauvhLGSLqPoY/y0uFR7mvk0kDP9wR7/5F7aFgax7tmal1s0x5WernJUZYJ7VFnl
+         pNXg==
+X-Gm-Message-State: AOJu0YzOg2a9PltKqJeaitDth1uO05YTRpKzhj7biIP57z+YAzWZ9ihT
+	v2SiRAC7bkGxakYtxJRikiM8lahximwjOtA/rUy/eb25ht1nrB/r2mn+4SR1BSJhEn7BkGjzG60
+	CV3worlIF8F2hxNYAXSzrs7eWxd0GLjdz5w==
+X-Gm-Gg: ASbGncsgm9tAKs91srZqyr7KPD2ho6qaj4b6Deg94koX/fjzrNcgPFqNsfqB69MJrXZ
+	ZdhFxD2n3aDaEzaRhZdd8q00dXmE01XOY/NWuR3Pe14FXyhF4lLBDGpzLBNKvcP/e9EUkyZfpvv
+	bNtwunwPFLebEepCxEOgAax9TyIklty6xRcs9hYa+CzMFoKCpcHPuzkkUHwpg1Ve/hKuQeNLI6c
+	5z0NEkM2Dhl7ydv8pKHK25GpkKXTeHZ7BETO3FKswK0vignPSo=
+X-Google-Smtp-Source: AGHT+IF/q/+dSpA/B+f+oMMBYO7AiXs9wnoXXIk66WrgBch5faZAiC3nfAd44MBjluEXT2/Ic3D7rL+cQgGr62ZwoF8=
+X-Received: by 2002:a05:6e02:188d:b0:3e2:9f44:11ac with SMTP id
+ e9e14a558f8ab-3e29f441654mr186106775ab.3.1753197583506; Tue, 22 Jul 2025
+ 08:19:43 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Edward Thomson <ethomson@edwardthomson.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
- <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org> <aH-fDEX7gdpALJ6w@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aH-fDEX7gdpALJ6w@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------8VQT0HM4N7QAqzuzCDq7AGkx"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------8VQT0HM4N7QAqzuzCDq7AGkx
-Content-Type: multipart/mixed; boundary="------------zMc0f2ucVXMXI6IqRIDxCIum";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
- Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
- Ezekiel Newren <ezekielnewren@gmail.com>,
- Edward Thomson <ethomson@edwardthomson.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- Taylor Blau <me@ttaylorr.com>
-Message-ID: <4bb0e99a-0c0d-49e4-82f8-02443a7f6783@gentoo.org>
-Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
- <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org> <aH-fDEX7gdpALJ6w@pks.im>
-In-Reply-To: <aH-fDEX7gdpALJ6w@pks.im>
-
---------------zMc0f2ucVXMXI6IqRIDxCIum
-Content-Type: text/plain; charset=UTF-8
+References: <CAFA9we_yDs9SPL2pJU_WiUz8CqvQ8ZPHwXBfTzHHbt-QGV34qA@mail.gmail.com>
+In-Reply-To: <CAFA9we_yDs9SPL2pJU_WiUz8CqvQ8ZPHwXBfTzHHbt-QGV34qA@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Tue, 22 Jul 2025 08:19:32 -0700
+X-Gm-Features: Ac12FXzPwXUUxejC9qpKoNqAMf2uaMGzyZIYx4ShAOM1rIyEB8r-y8kBeH3Sh2g
+Message-ID: <CABPp-BH-bVrX+w7ZtQie_kJ4vaD9subtqsAG5+WHYCmG408xNw@mail.gmail.com>
+Subject: Re: Precious files and the .jj directory
+To: Jade Lovelace <lists@jade.fyi>
+Cc: git@vger.kernel.org, sebastian.thiel@icloud.com, josh@joshtriplett.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On 7/22/25 10:24 AM, Patrick Steinhardt wrote:
-> On Fri, Jul 18, 2025 at 05:25:01PM -0400, Eli Schwartz wrote:
+On Tue, Jul 22, 2025 at 12:31=E2=80=AFAM Jade Lovelace <lists@jade.fyi> wro=
+te:
+>
+> I'm aware of the many discussions about precious files [1] [2] [3],
+> but I wanted to highlight a particularly pernicious category of
+> precious files that are really hard to do the right thing about with
+> Git: namely, other version control systems. In particular, as I
+> learned in [4], `git clean -ixd` will of course list `.jj` to delete
+> and delete it if you have it in gitignore. But yet having it untracked
+> results in it possibly accidentally getting added and also clutters up
+> `git status`.
+>
+> It's my understanding that git has more file deletion edge cases of
+> gitignored files than of untracked ones so the latter is theoretically
+> safer. Is that correct?
 
->> For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end o=
-f
->> life and staying forever on 2.50, perhaps) of Git. There is no rust
->> compiler there.
->>
->> Even s390 support for rust is limited to a precompiled version not
->> everyone is willing to use.
->>
->> GCC-rs will probably fix this general issue.
->=20
-> Hm. It would be nice to assemble a list of common or semi-common
-> distributions that do not have proper support for Rust for all or at
-> least some platforms. Should we maybe consider reaching out to other
-> distros (e.g. Debian, Fedora, BSDs) before we commit to any change that=
+I'm not sure what you mean here.  What I can say is that ignored files
+are treated as expendable; thus, for example, if another branch has a
+file with the same name as an ignored file and you try to switch to
+that branch, git will silently remove the ignored file in the way and
+replace it with the file from the other branch.  However, I wouldn't
+consider that an edge case.  I'd consider edge cases to be e.g. `git
+stash` is implemented via forking a number of other git commands, and
+one of those wasn't careful to avoid deleting files when our intention
+was to avoid deleting them.  But, in the case of ignored files,
+removing files in the way of the operation is not accidental; it's
+documented as intended whenever that ignored file is in the way.
 
-> has an outsized impact on the larger ecosystem?
->=20
-> I would really love to start adopting Rust, and if it's only going to b=
-e
-> architectures that are extremely niche I'm probably fine with that. But=
+Untracked files are generally not treated as expendable, meaning we do
+not intend to delete them.  The main caveat is that you can request
+they be removed as needed by specifying a forcing flag (e.g. git
+checkout --force, or git reset --hard) for git to delete those.  There
+are a few edge cases, where commands invoke subcommands that might not
+have been careful about flags they specify, resulting in the files
+being deleted when they shouldn't be.  Most of these cases were fixed
+a few years ago, though I documented a few extra cases.  Link [6] from
+your Link [1] will lead you to those.
 
-> if there are many small systems that are impacted by such a change we
-> might have to reconsider.
->=20
-> Meh :/
+The precious file proposal is about splitting ignored files into two
+categories -- trashable (what all ignored files currently fall under),
+and precious (ignored but not expendable).  Until someone pushes that
+effort, you have to decide whether it's more important to you that the
+files aren't deleted (in which case I'd leave them as untracked) or
+that they don't show up in `git status` and that you don't
+accidentally add them when you're not careful about which files you
+are adding (in which case you can mark them as ignored).
 
+>
+> [1]: https://lore.kernel.org/git/pull.1627.git.1703643931314.gitgitgadget=
+@gmail.com/
+> [2]: https://lore.kernel.org/git/871s7r4wuv.fsf@evledraar.gmail.com/
+> [3]: https://lore.kernel.org/git/7v4oepaup7.fsf@alter.siamese.dyndns.org/
+> [4]: https://maddie.wtf/posts/2025-07-21-jujutsu-for-busy-devs
+>
+> The part about these that is especially pernicious is that git does
+> the right thing to `.git`, there are not that many of *these*
+> particular file patterns, and they generally merit the same treatment
+> as .git as deleting them results in somewhere between frustrating and
+> catastrophic loss of work.
 
-To elaborate a bit w.r.t. Gentooo.
+I can see that'd be pretty bad.  This probably arises in practice when
+folks collectively put the files in all three categories, right?  In
+other words, they start off as untracked, but someone accidentally
+commits them (making them be tracked in some commits or branches), and
+someone else decides to ignore them, and then when the person who
+ignored these files tries to switch branches or bisect or rebase to or
+on top of the other developer's accidental commit, then their files
+are nuked.
 
-Gentoo Prefix-on-macOS and Prefix-on-Solaris don't support rust either.
-I think at least macOS is reasonably popular. Obviously Rust supports
-macOS, and the Prefix maintainer would like it to work but hasn't been
-able to -- no idea why. Arguably you can tell these users "install a
-better OS so you can use git".
+If the files had only been in the combination of {untracked, ignored}
+or {untracked, tracked} then you'd likely be fine.  You'd also be fine
+if they were always ignored from the beginning, since that'd cause
+everyone to be unlikely to commit them and make them be tracked.  It's
+only when you end up with files that are both tracked in some commits
+and ignored by some developers that you significantly risk running
+into problems.
 
-musl has lots of issues with rust, and is disabled for Gentoo musl
-editions on arm (not arm64), ppc, i686, m68k, mips. Arguably you can
-tell these users "musl sucks, why are you using it, use glibc like a
-sensible person".
+Or am I missing some case where this comes up?  Is one of the edge
+cases for the handling of untracked files biting you?
 
-i486 is entirely disabled due to mandatory sse2. Hopefully those users
-are rare even compared to i686 users. ;)
+> The one other example of one I've seen
+> other than .jj is .sl, though that's only colocated with git if you
+> are up to serious shimming shenanigans with broken tools (nix flakes
+> etc) as AFAIK it is not supposed to be used colocated normally.
+>
+> Should these be special cased somehow? Should they be simply caught by
+> the precious-files work when it eventually gets done?
 
-s390 only works on s390x
-
-sparc 64ul works, but 32ul does not.
-
-riscv rv64gc works, rv32imac does not.
-
-A general trend here is 32-bit issues.
-
-
-For alpha/hppa, no references at all -- not even tier 3 support -- on
-https://doc.rust-lang.org/beta/rustc/platform-support.html, and Gentoo
-doesn't support LLVM there either. ;) In general, porting rustc to a new
-arch means *first* porting LLVM, and then after that, *also* porting
-rustc, so who's going to try the latter before the former? ;)
-
-Hence the interest in GCC-rs, which already has a backend supporting all
-this for C/C++/Fortran plus interest by users of these arches in a
-portable rust compiler.
-
-If rust is added and doesn't have a fallback C impl, all this becomes a
-relevant topic for consideration. (I don't have strong opinions on
-optional rust.)
-
-
-=2E..
-
-
-See
-
-$ git clone https://github.com/gentoo/gentoo && cd gentoo
-$ git grep --name-only features/wd40 profiles/| grep -v 17.0
-
-
-(wd40 is the inheritance tree for disabling all features in any package
-that rely on a rust compiler. See README at
-https://github.com/gentoo/gentoo/tree/master/profiles/features/wd40 for
-details)
-
---=20
-Eli Schwartz
-
---------------zMc0f2ucVXMXI6IqRIDxCIum--
-
---------------8VQT0HM4N7QAqzuzCDq7AGkx
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaH+qzgUDAAAAAAAKCRCEp9ErcA0vV8Sp
-AP9+xtlub7zwE/WE5nJlPylhTVelAyT2HGbXa+o7Sscz0gD/V7rLqtUnET3WSha6u/jBf1fTVZia
-SKHmLSur+EUIUgw=
-=Vz8t
------END PGP SIGNATURE-----
-
---------------8VQT0HM4N7QAqzuzCDq7AGkx--
+I'd rather avoid the special-casing and instead have it be solved by
+implementing precious files.  It is an interesting case where it gives
+more motivation to the need for precious files; thanks for passing it
+along.
