@@ -1,128 +1,118 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58390266B67
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DC0125F975
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753197710; cv=none; b=LGiqJfh1OZngtMhWvF3eE46l9Xqxw0X23SMpKHt+awPrvWJDqAMiQ60MVNKab2DJwrNcLjmM2y56ihR3+IIVyRCnTD8XUerhIKD9Lu66GKa7PnoQEvoS7ZUKyH2gClMi8ntr6qLYvG/t5BevjcuKliT1cjJ3RuS+7IfsDWQIjxk=
+	t=1753197796; cv=none; b=IYhn1w4Rs8upA+hyqSfCfW3qEU/YQ2U8GPb5RtA+etxudxy2qN9D8Zbf8zQ4ok6y/c+bALC6dCwRpVfgLYamUC5UvhMlHsgqRhmb7uBwGLcyJlUXNHqzNKf7LTFl3iIH/KQtlm7APDXCH96FGhg9Vlb2vk/ApTDoaAy/tQ1fRfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753197710; c=relaxed/simple;
-	bh=LkTOYaTs+fxSBiznhf4o5DfudU1Zh9KQmjU0CrdjSEg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BEQGPPBy2HuQoKKB0SSRAImV+mhmVt+rL0YWcBCX1ybwXKCa3SL8aAVZIFQrofEEJyKFhKiSOtWbCwu6+9fRKAFqLdlce+Df5DMY+hjtGsjLo2h4PnbJGSRuixRXZdNejCSNurUHaRNQKqaFrAqJSwvh9M7jjKP8rf5VX+Q38Tk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r9u5hccg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BfpKcv9z; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753197796; c=relaxed/simple;
+	bh=BoHa9RYFONDeHjkhXIUtS91tQY50sSf3oPkGwc/fQHI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=nTw5ToXwmEZsy3PxE31Yjsksh9YX7J/H8UqhQX8FhQCriFpy+bLZyEF3pY7tTBRyUjulBirfLk4l3YZDJJiX3n1WLZIayNR6zaHeZY8qoNwsPizfiLH0gCxssyt837YK3JXSNfTpGKk7tMhd2I2mUzasho7Huaa80B5aGd4JccA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gqkTpdvx; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r9u5hccg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BfpKcv9z"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 611DC14000A7;
-	Tue, 22 Jul 2025 11:21:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Jul 2025 11:21:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753197707; x=1753284107; bh=xOZcp72q7S
-	FMu93pzlklPtQV/IAtVQ00Dx+qKwejOkw=; b=r9u5hccgknVSVLntQnP8aZZZwd
-	t75n41veFq9hEcnQkKlNZBRJA2fuLHcZyiuWaLw9OZmt1tMp+6TxjFJX+/zpmv7C
-	GCOso7b33d8Wfu9du+dUvqZUWxEsF9GlC9Reo7JDJLZT2V5mq87Z5J7sm+Mw7Mn4
-	jXFVYK1G9qqdeHR1Qhzze6z6BTADVovhWKYrHBjMVTZa5jbKF3ZZvV5pxFazwImb
-	6Methn4aJl2g8S7pJ4lHZsaw57OVif/v0NNHiWuW9IwOye9ir4nGQtm4pjBW+uC4
-	b+y4f6y7VwVK8LOh7ccgcIdw7TAVWrBeIwAMH/luGzov25o/qeZUgStZfebg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753197707; x=1753284107; bh=xOZcp72q7SFMu93pzlklPtQV/IAtVQ00Dx+
-	qKwejOkw=; b=BfpKcv9zK8Hctm+4h1QwXWPUYaEtpLIGyUgCuRgK8BFgzXvezUd
-	p8zEVsWts9qVLvOh9jc4c688WOFv7erackiVXdPvGzK0BIOfiKa5UV9TRJze44HR
-	1hdCUoTTKY2j2XE061M83MHvM92m8hojllrwWnhLhDt/oqqo3TeRupPjR3ReIanM
-	CtLwGOb3P6JBrOG/w7SY2w7tTgLfKYFyaFqrjXGKjbp4H274C01i/usCGvTx7mgt
-	I4+Bvp0z/GfWHrEcCI6Pip6M7pZGrxXfEdahkjbek0eqUhoCTrqdrXQqKwm4LLjU
-	qT3iaxU6Izz1vssNpFX5BAm/4f1VkdQTHSA==
-X-ME-Sender: <xms:iqx_aKZcBEC8FSlExcJe7Luaoo-UAvuyGY7jsL9A2PSOItzIAEdDHw>
-    <xme:iqx_aIDGoAvh6PAf1KG_nWayUZ6c5q8OpKm8hiGrUdameU-FADMK5ynG4GJgK1uG7
-    9LnJ18aKGy9Mlwnig>
-X-ME-Received: <xmr:iqx_aK86bXWaI9I-RHhBxQ_Vr7vLhlIRQPTZszDY820HFtDsDYUx5LgraimjFL2lAwOyTs6irKxQ_5_B-rQwiFONyXnB9ISWBh10Ecc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejhedvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehosh
-    ifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepphhssehp
-    khhsrdhimhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
-    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:iqx_aMQylsaUoewlNYbFOL4mlFX2PG6NsbzOMS1R1PQFMsyzGNNcPA>
-    <xmx:iqx_aGWcC7zTtLe064PQpOE9t8zOocF7KYUKtxHePzCARlGJMY9i_Q>
-    <xmx:iqx_aOSNNraw7c3KxZuAJqXoeKHf5sj9d9s1cXLql6OFWjDxney6fg>
-    <xmx:iqx_aG1DWk8UkvguOwfZUb-MNWxgeIDuMGn3cUTVJ_yoINELzfkNeA>
-    <xmx:i6x_aDbaSTcM1sJemgf00LHJKF9dXGphihOI0T8xl1p32ISvthqSfbv9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 11:21:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
-  oswald.buddenhagen@gmx.de,  ps@pks.im,  ben.knoble@gmail.com,
-  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
-Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
-In-Reply-To: <CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 22 Jul 2025 09:03:25 +0000")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250722002835.33428-1-lucasseikioshiro@gmail.com>
-	<20250722002835.33428-2-lucasseikioshiro@gmail.com>
-	<CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
-Date: Tue, 22 Jul 2025 08:21:45 -0700
-Message-ID: <xmqqtt34tfna.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gqkTpdvx"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3b49ffbb31bso3653382f8f.3
+        for <git@vger.kernel.org>; Tue, 22 Jul 2025 08:23:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753197793; x=1753802593; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5fuM/OjH6/TLxJ6Yo/2GAwsqrfCBmYG8Qwpq2SFiaXw=;
+        b=gqkTpdvxxqeuqTliCfBf454FqCz+XMoqBoLdK3M9z8csiJu5tnE1nLR3mhF1sMMTaM
+         IsBsLW89K7sjr4Z9jIwnsXtx5D1iL4AffjuO2U526JQa9l3ePwUHqYtZG/g1Lmmy6eCg
+         sXJxmHJP4TxNelMzg48YDhPN+MZVymqhEv3ADceLzgjoAB34s76Dw4D9TrzPtmQjh9nW
+         7RnoxaHb4eGJ7Qrxa6mOplu7PSj7a47MAdoXX2Ubx6H3Lib03aimIU9o8Dfq797JkyUT
+         ClllTzKB67I6iGveqZSsfJ+Rs3IAeylOOw0zuD7g37Vxj3yW3fTuYTAE/gwYkhzrxpMC
+         J6KQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753197793; x=1753802593;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5fuM/OjH6/TLxJ6Yo/2GAwsqrfCBmYG8Qwpq2SFiaXw=;
+        b=JiwGFfjmbRbvlCRFVtBkhgf0Tu+hlDW2XopA/or87WRJDpKhFwCqGNcaKdBuzxX3K6
+         yjTNiYQIr4B22G/ljLY1+oG8zoFlLaSdKq35BTKPdGhe1iL0VTpKywLEi7YZiNfDA2i0
+         wrijpRafL5QY5Y8HR1nzeyJB8lA1Ou1w9rAYZuyP6yo8Fhe6K5xA3JptwdsvJ2cW6Nqk
+         UU5Pr84YOgA6YKo9jGC2vdM6u2rMd7tbPclsfqhq/W224Ld1ox4irq9LPdDKwDNshf+Y
+         4Ik9eVOO4IuFdiIoEb19ZFi1PVywBFZo50rHRIRgZGysZ6TRXbL0Y8KIXJ153XR2nRaa
+         mRSA==
+X-Gm-Message-State: AOJu0YztKM4ndmOlKXAxbUaIS6Akdgf49FE88Z1t4NbKcqT0Vz4C79QP
+	D0adJ6Xt82ikU5fTVBX6oUYR4VQr8R+evdEeKylZKwboMSMS9fRYXqqvHpF0pQ==
+X-Gm-Gg: ASbGncsRbyXGVTVr4cbvedCicH4ePRSvHomYBlCufXpsAB9I0k4MCqI4vPHtoWlZ3Yo
+	Aty4rnEicW3+jVAmqPhyj8N2BKN61bCet2EkESx7pwvSynVPoz/odUAajtO4A3NeLjFSOP9YadX
+	L7bG8+r6jbu2OHJ8i6BBzzjv5nFuyBFFxsEEBOUnqla81/e7uIKjpsh1ofldv68es5S1osyOhvi
+	zBiUEquc4fUuBw5sQFq4KY7fghHC9HaIIM9ZnWEoDmDf76BIqnEMM8iuoaVq6CqZ5HDGQBS/YbY
+	Ihmd9PvJ8uhPgHr1APgyh4W34q7Uwt//28FoJbAja6eQ2pf/dmaOCj53YIV4gOOOIkH1DBFWfW2
+	10vDmtgHy2+j7jre38eleo68=
+X-Google-Smtp-Source: AGHT+IFeVkKxJVuvr+VB75fNpsrHiTuOGopXwAXMAh9/lDv7OkyRb+tzDl5fZoQP1MuFPqQp+uPKhQ==
+X-Received: by 2002:a05:6000:25f6:b0:3a3:63d3:369a with SMTP id ffacd0b85a97d-3b613e77736mr17754441f8f.25.1753197792568;
+        Tue, 22 Jul 2025 08:23:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca2548fsm13836589f8f.7.2025.07.22.08.23.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Jul 2025 08:23:12 -0700 (PDT)
+Message-Id: <pull.1943.git.1753197791.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 22 Jul 2025 15:23:05 +0000
+Subject: [PATCH 0/6] Fix various rename corner cases
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+At GitHub, we've got a real-world repository that has been triggering
+failures of the form:
 
-> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
->
->> Currently, `git rev-parse` covers a wide range of functionality not
->> directly related to parsing revisions, as its name suggests. Over time,
->> many features like parsing datestrings, options, paths, and others
->> were added to it because there wasn't a more appropriate command
->> to place them.
->>
->> Create a new Git command called `repo`. `git repo` will be the main
->> command for obtaining the information about a repository (such as
->> metadata and metrics), returning them in a machine readable format
->> following the syntax "field<LF>value<NUL>".
->>
->
-> Doesn't the latter sentence only apply to 'git repo info'? Other
-> sub-commands may not follow the field<LF>value<NUL> syntax, no?
+git: merge-ort.c:3007: process_renames: Assertion `newinfo && !newinfo->merged.clean' failed.
 
-True.
 
-I also wonder who it helps to use <LF> as a field separator.  Once
-we require consumers to properly handle <NUL>, it does not make it
-easier to write such a consumer script if the format uses <LF>
-there, does it?  Besides, wouldn't it possible that field may have
-to contain any end-user specified key, including <LF>?  If so, we'd
-need to have some quoting/unquoting mechanism in the syntax anyway,
-so the behefit of using <NUL> to simplify the parser would already
-be lost.
+Digging in, this particular corner case requires multiple things to trigger:
+(1) a rename/delete of one file, and (2) a directory rename modifying an
+unrelated rename such that this unrelated rename's target becomes the source
+of the rename/delete from (1).
 
-Thanks.
+Unfortunately, looking around, it's not the only bug in the area. Plus, some
+of our testcases in tangential situations were not checked closely enough or
+were weird or buggy in various ways. Adding to the challenge was the fact
+that the relevant renames optimization was sometimes triggering making
+renames look like delete-and-add, and overlooking this meant I sometimes
+wasn't triggering what I thought I was triggering.
+
+The combination of challenges sometimes made me think my fixes were breaking
+things when sometimes I was just unaware of other bugs. I went in circles a
+few times and took a rather non-linear path to finding and fixing these
+issues. While I think I've turned it into a nice linear progression of
+patches, I might be a bit too deep in the mud and it might not be as linear
+or clear as I think. Let me know and I'll try to clarify anything needed.
+
+Elijah Newren (6):
+  merge-ort: update comments to modern testfile location
+  merge-ort: drop unnecessary temporary in check_for_directory_rename()
+  t6423: document two bugs with rename-to-self testcases
+  t6423: fix missed staging of file in testcases 12i,12j,12k
+  merge-ort: fix incorrect file handling
+  merge-ort: fix directory rename on top of source of other
+    rename/delete
+
+ merge-ort.c                         |  41 ++-
+ t/t6423-merge-rename-directories.sh | 520 +++++++++++++++++++++++++++-
+ 2 files changed, 534 insertions(+), 27 deletions(-)
+
+
+base-commit: 16bd9f20a403117f2e0d9bcda6c6e621d3763e77
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1943%2Fnewren%2Ffix-rename-corner-cases-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1943/newren/fix-rename-corner-cases-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1943
+-- 
+gitgitgadget
