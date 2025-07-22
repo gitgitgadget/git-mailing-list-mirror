@@ -1,116 +1,187 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7CF2EBB9E
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 14:53:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CFE42EB5CC
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 15:14:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753196021; cv=none; b=ZFiWmPDuFhqNf+s4h8bRGm912vpCSV38oMMaNATIm1udjRerTaCSH4stjZL29U8oirorclpOi6iRnxwokkaCD6ooyrdyadeq0Oa28HfOvzuzwjN0kxxdctHDtltTJ82dusj4SPMngBzq/QOnHT95F4OVTnDH396xW21q0GmnGtM=
+	t=1753197272; cv=none; b=GFMQ8oVmLq1JRJfTG+W+CcFd4u/BRpcjs2F/+JSj69CHbuCG5+VVQwP4GxuTA2S+kBe0suyo8Jzhr0rD/uFAGUbmtWm8L5SbwM3C6Y8babsuPRshv74KiBME7nwcrh8VqkWh4yR0xjnF29yXiuPl/h2Ay4SjJ39a7o2Q3qTEePg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753196021; c=relaxed/simple;
-	bh=s9xHGxJcOHsrzvhFhYdDwgY11F0/kHbhJC/16SL7hKg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pOiT2UVpRtbqIuMePUi/K1ptUaxAARW5wUjU0RIED49aHTVAALAfBWQMh60YQxYFRgymbmngqOOjcnTc/N+tVblblyf803/v/oAE3yTUfTa+au74jCAWPiFxk+AL6VazsGYqykXaLmQHP2aZyCaPOVbUhb1NKdhuJyHcKHcw6L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=myzjt76q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nDi991t1; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="myzjt76q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nDi991t1"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 01A23140023E;
-	Tue, 22 Jul 2025 10:53:39 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Tue, 22 Jul 2025 10:53:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753196018; x=1753282418; bh=N7tNVILg3h
-	0TkNRDAZNn93ztNeRTbt8ip/ydd8MIBcM=; b=myzjt76q2FFFLQyOW6OSGp8OTE
-	qebjz9q0xLt+eHZTIFeHP60oFv4yDHZSS4WztEqzXFmzbabxHRKMKRMswLBfP0z3
-	HfW+RXxf/jHDniGwVao30rChpfCsx3yDz+qWe2APdl4EZqYwLLK0szxreBCFd5Vy
-	Iqbk17ZV8r6MkU26CAZYdXB99or1PFS+k3E7FJh3KJeztaIgu1D0T9pW8+EpcfQx
-	Ko943fZay57lA/VhFgTj/08MnNrCttPxm8Tp4v2i35Mx0gP6r49oWaQHxxKDcxhg
-	Pr7GYqVSA1AbALZSmbm1YdiaobwbXewRdn5st76ILAmcxhnjh1AGmGz1ynCQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753196018; x=1753282418; bh=N7tNVILg3h0TkNRDAZNn93ztNeRTbt8ip/y
-	dd8MIBcM=; b=nDi991t1iR+7lsisU0/EsCQVuRkjNQC1RXFR5YfiWXOyF7ZyDuU
-	HRkQFWXklepspIB8XDILAmQJf6a+F/g7Yyxb8uhK0CrS6wXPJivKw27ipm6020cc
-	pTshMV61ZEAogixH7ssqz/XKM3w4UWQusbNfpH363Z7YrTR/JfPl/mRo+AXaarXn
-	ZvfYjRx2WLkQLJNugRXWKfa+iyj53+VDsNXTDtPOdRkq3FCAgdVJZUj/+hYOYDTe
-	qSm6w1NpcKy+tqf7WkV9a5gNnB5QJlaH8oRI2ZfW09lo++dcN3cKh9beoeAMVFWX
-	ra+FqQjY0NOnSIafIntYhl1yuL1YNAzX0qw==
-X-ME-Sender: <xms:8qV_aBddJJ-B8170vQ3jjO0DGRArqpWlijY-vS0tfDgJ5g_VMVLjYA>
-    <xme:8qV_aJxaPJ9X29vxrDdovWLjPKpuztRhVLtVy2dcQJ9zk2GGM0fHSA1K-QejWioYQ
-    LfyKd7_rW5lP9dx6g>
-X-ME-Received: <xmr:8qV_aHHKCq8W4HehldjafZIYEflBb9SSu0_uFOwqmwZ53MaunJkcJJkbKIyq--FgCMlDSMD6lhZUKwMpIyMzET3FN21-7Co0XmgMgGo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejhedukecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehp
-    vghffhdrnhgvthdprhgtphhtthhopehlhhihfihkugdvvdesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:8qV_aNzt5oQM9EqGRTjRNleKS2NQAbt0tFQbIgSlwsHo0quUEa85lQ>
-    <xmx:8qV_aIs8bW3t5wtsc7e_XjVKNmH3QGj4vbW7AG078FL0a5yqgrGgJQ>
-    <xmx:8qV_aK289p0G0ST051-EsETps0jWpTdEe95SAd4kZLjB48c5GnY0wA>
-    <xmx:8qV_aD-qOgBY3mYT-xx-N2eLe-HwnGe1avh9xtDdw58ABmBjvm0MpQ>
-    <xmx:8qV_aHNoUAyXzaGN9btubg5mIkcUyKsU0oS8zywB_1fGwOgYzQD6tMs0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 10:53:38 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Hoyoung Lee <lhywkd22@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] t/helper/test-delta: close fd if fstat() fails
- after second open()
-In-Reply-To: <20250722082643.GD862006@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 22 Jul 2025 04:26:43 -0400")
-References: <20250722081219.1086866-1-lhywkd22@gmail.com>
-	<20250722081219.1086866-5-lhywkd22@gmail.com>
-	<20250722082557.GC862006@coredump.intra.peff.net>
-	<20250722082643.GD862006@coredump.intra.peff.net>
-Date: Tue, 22 Jul 2025 07:53:37 -0700
-Message-ID: <xmqq34aouvim.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1753197272; c=relaxed/simple;
+	bh=wV7W8iG0umpLLGLBcOTZk++Dp32iJVPUS41jACsHDgU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=kumEVlNpE1iNYadm4l/RR6x9RiKmHjCu4H7lgg4Me4O2f53NFxWSlnAuWmk9dIuZgv5vwO5uy09qf2+ZNoAx0ch5Dz1QmIl3yLSbqo43t31KsjWvqVxh9qtkuLgZN2GTXnkk7S2AzB8KH9R+5rO217aUxaw8SZ0Om1XfJH83mrQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C0BC6340E0F;
+	Tue, 22 Jul 2025 15:14:25 +0000 (UTC)
+Message-ID: <4bb0e99a-0c0d-49e4-82f8-02443a7f6783@gentoo.org>
+Date: Tue, 22 Jul 2025 11:14:21 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+ Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Edward Thomson <ethomson@edwardthomson.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Taylor Blau <me@ttaylorr.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
+ <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org> <aH-fDEX7gdpALJ6w@pks.im>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <aH-fDEX7gdpALJ6w@pks.im>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------8VQT0HM4N7QAqzuzCDq7AGkx"
 
-Jeff King <peff@peff.net> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------8VQT0HM4N7QAqzuzCDq7AGkx
+Content-Type: multipart/mixed; boundary="------------zMc0f2ucVXMXI6IqRIDxCIum";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,
+ Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ Ezekiel Newren <ezekielnewren@gmail.com>,
+ Edward Thomson <ethomson@edwardthomson.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Taylor Blau <me@ttaylorr.com>
+Message-ID: <4bb0e99a-0c0d-49e4-82f8-02443a7f6783@gentoo.org>
+Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
+ <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org> <aH-fDEX7gdpALJ6w@pks.im>
+In-Reply-To: <aH-fDEX7gdpALJ6w@pks.im>
 
-> On Tue, Jul 22, 2025 at 04:25:57AM -0400, Jeff King wrote:
->
->> >  	int output_fd = xopen(output_file, O_CREAT | O_WRONLY | O_TRUNC, 0666);
->> >  	if (output_fd != 1) {
->> > -		if (dup2(output_fd, 1) < 0)
->> > +		if (dup2(output_fd, 1) < 0) {
->> >  			close(output_fd);
->> >  			die_errno(_("could not redirect output"));
->> > +		}
->> >  		else
->> >  			close(output_fd);
->> >  	}
->> 
->> Ah, I guess you found the problem from patch 3. But it should have been
->> squashed in there, not to this patch. (But as I said there, I think we
->> should just drop patch 3 entirely).
->
-> Er, sorry, I meant patch 2. Counting is hard.
+--------------zMc0f2ucVXMXI6IqRIDxCIum
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-;-)
+On 7/22/25 10:24 AM, Patrick Steinhardt wrote:
+> On Fri, Jul 18, 2025 at 05:25:01PM -0400, Eli Schwartz wrote:
 
-Thanks for taking a look on these patches before I wake up, so I
-didn't have to ;-)
+>> For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end o=
+f
+>> life and staying forever on 2.50, perhaps) of Git. There is no rust
+>> compiler there.
+>>
+>> Even s390 support for rust is limited to a precompiled version not
+>> everyone is willing to use.
+>>
+>> GCC-rs will probably fix this general issue.
+>=20
+> Hm. It would be nice to assemble a list of common or semi-common
+> distributions that do not have proper support for Rust for all or at
+> least some platforms. Should we maybe consider reaching out to other
+> distros (e.g. Debian, Fedora, BSDs) before we commit to any change that=
+
+> has an outsized impact on the larger ecosystem?
+>=20
+> I would really love to start adopting Rust, and if it's only going to b=
+e
+> architectures that are extremely niche I'm probably fine with that. But=
+
+> if there are many small systems that are impacted by such a change we
+> might have to reconsider.
+>=20
+> Meh :/
+
+
+To elaborate a bit w.r.t. Gentooo.
+
+Gentoo Prefix-on-macOS and Prefix-on-Solaris don't support rust either.
+I think at least macOS is reasonably popular. Obviously Rust supports
+macOS, and the Prefix maintainer would like it to work but hasn't been
+able to -- no idea why. Arguably you can tell these users "install a
+better OS so you can use git".
+
+musl has lots of issues with rust, and is disabled for Gentoo musl
+editions on arm (not arm64), ppc, i686, m68k, mips. Arguably you can
+tell these users "musl sucks, why are you using it, use glibc like a
+sensible person".
+
+i486 is entirely disabled due to mandatory sse2. Hopefully those users
+are rare even compared to i686 users. ;)
+
+s390 only works on s390x
+
+sparc 64ul works, but 32ul does not.
+
+riscv rv64gc works, rv32imac does not.
+
+A general trend here is 32-bit issues.
+
+
+For alpha/hppa, no references at all -- not even tier 3 support -- on
+https://doc.rust-lang.org/beta/rustc/platform-support.html, and Gentoo
+doesn't support LLVM there either. ;) In general, porting rustc to a new
+arch means *first* porting LLVM, and then after that, *also* porting
+rustc, so who's going to try the latter before the former? ;)
+
+Hence the interest in GCC-rs, which already has a backend supporting all
+this for C/C++/Fortran plus interest by users of these arches in a
+portable rust compiler.
+
+If rust is added and doesn't have a fallback C impl, all this becomes a
+relevant topic for consideration. (I don't have strong opinions on
+optional rust.)
+
+
+=2E..
+
+
+See
+
+$ git clone https://github.com/gentoo/gentoo && cd gentoo
+$ git grep --name-only features/wd40 profiles/| grep -v 17.0
+
+
+(wd40 is the inheritance tree for disabling all features in any package
+that rely on a rust compiler. See README at
+https://github.com/gentoo/gentoo/tree/master/profiles/features/wd40 for
+details)
+
+--=20
+Eli Schwartz
+
+--------------zMc0f2ucVXMXI6IqRIDxCIum--
+
+--------------8VQT0HM4N7QAqzuzCDq7AGkx
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaH+qzgUDAAAAAAAKCRCEp9ErcA0vV8Sp
+AP9+xtlub7zwE/WE5nJlPylhTVelAyT2HGbXa+o7Sscz0gD/V7rLqtUnET3WSha6u/jBf1fTVZia
+SKHmLSur+EUIUgw=
+=Vz8t
+-----END PGP SIGNATURE-----
+
+--------------8VQT0HM4N7QAqzuzCDq7AGkx--
