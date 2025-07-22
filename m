@@ -1,155 +1,108 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C3A32
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 14:09:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77AFF2EA16D
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 14:16:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753193366; cv=none; b=dCLm0j6scxgNslTS4otwv00oxAs5ekJDrfJynl7EW8p+ow2cKScA7TK2xoYsDjf/oYEwUnS12EOG/D63RTGnB/jgPMOQAApWouVNKe/nJ0B0tZouSCtb9YOHdChmB20l9u1ZziUbZ6RKuQB2CBw7f3LQr2GeG4ygbj9EAWnTGV0=
+	t=1753193764; cv=none; b=Rn5pCYZrT7KVGQhOOi3HkK4XT93WcG0MFXNkJSGvvCmLfeiZmNjk6ZfCiZbRZpJtwN8usmRq85vZBSEP08t+OlCVJvI3yjOxctY+R/7kATXb8JnVmhq026l9kdioOJFC8Tc2GQAIOaGAjgZfP2nHehedMtR6Gl0SbVm5MJqCRm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753193366; c=relaxed/simple;
-	bh=8OXfWVvhmEQBAFZNP334gkGucq0Y8AV3woIwSLcX3tc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BXtm2qfYMni5TDq/4jQK41mf0QSrqVbwgiqLcW7XjqxdL/8fCweVrt9CxPnZH4fZwCW2uBMwXKsBhtXGYATfLA3KawMCqLAVezWymbdad0ldAtM9O4XP6V/tm/q460JdRc/iQMDU9kket4llGRnhZoEDYumh5OmIZTke2gC2Qsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GeRm7P9g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cfBfE9+l; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753193764; c=relaxed/simple;
+	bh=0FxoWPi3gj9Tqtl9I2ClDFEgO6ZnrgQp28csmc0a8n0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=H7QHqUITtPnCVncECmpXeOBc7AziWSoODdDHdaazL0zIzz4n5lSRLm0+bgLrjlCTS5Pqfs6qfceSoyFnDYriygP54GJbQVKoVrk+x4BtgUQHLhYW1X+Jz36S88QLxJ8R3XSYFvslHMXJks/Kg01YPfUqouJdvBFrNPqWJVf73Bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WHLKY3Bz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GJ0xRNsA; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GeRm7P9g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cfBfE9+l"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 16F8214000E7;
-	Tue, 22 Jul 2025 10:09:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 22 Jul 2025 10:09:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WHLKY3Bz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GJ0xRNsA"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 77F90EC01CB;
+	Tue, 22 Jul 2025 10:16:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 22 Jul 2025 10:16:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753193363; x=1753279763; bh=Q6CfzyJWHj
-	dVhPu4n1BXoEheZP+L0WwCxqHftz4OYXc=; b=GeRm7P9gU+eSk0HWyayYiOXUyg
-	hcskRo+xHwN8Qk+QW2HgRSOJgb8Hy7+pXTsa8gllLz9VsmONcThOkKrrwjUKy25B
-	GXFYwqiRqdar+ATBEoEbdFiygeMmhAC0Q4kF2i7ofT4BSD/4yv12DEy9GkCkl58j
-	kieTwMAfTPNTa2vyRNWlc8/S6Vq9LFivVCip1CnGOGvhtDIIiYl30E4Vd3zysJlJ
-	jNetez2m3P3rEWn0gEfM7onFOAzP4RXV7BlOMFBCd7kbVyt9rLd3lSc6r/KLWKsB
-	6VD/+TmUtiXf58I23MaS9plN4QPdNfZgYCmv+QqvKKi69Wa9uNJ2qqZf3N7A==
+	:subject:to:to; s=fm2; t=1753193761; x=1753280161; bh=4U8NRa6axb
+	Z0GEji3IXzuQCIGUCh1wbhwuPHu5bPYqY=; b=WHLKY3BzDSn2FiR5ZpYlh6yont
+	QPS4nU1xLN87ZYbyosFh5WsJ98tVKs4CzJxW2QZt1dEZj7KFJJQaQmxeWcnEvi19
+	bgA1L5LsGasb2Apx2tyRl7N3DUVi+FhT8EedmIOTyvpdo8w4kqYJX7qnwNS0nZvG
+	snB4cuKjg7y86n01SzSyq4E04GEj6J7wiWW5IjDWBeprgnmt7lDwDDywytX//Te2
+	rvsHxOp3GzQW2503NlvYbEWmcrRGHM6073Jfgy+YKCqTOonuNC0J2cSu3RB0FoI0
+	ivrybUtu3ngJcLwugFFq8IAY92/yfIFJ+gKToqUQ1EBCyyHoRtFmHeiZcVsg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753193363; x=1753279763; bh=Q6CfzyJWHjdVhPu4n1BXoEheZP+L0WwCxqH
-	ftz4OYXc=; b=cfBfE9+lPQvmnGGOBJx4yVQIn4XqbKGwclb8Ya9He2utUMC7Ykn
-	0CagHPUPogw/mCcxD3q8GrpNsod+rTtrFtbk/IfYaQCfaYLi8wBwLScxj92T/0KK
-	yPDMW0oitYRA70cbf+JhmmewSND3iI+ULcuJjs2MXKF9USIBDZHya0NjEUayIZ9p
-	u9XGRAINXGEs8bvLX8O9raZ13w630ruEuSP7r4PsYul3Kr0VWwsl1l0MfscYQw4a
-	xGSuuVaxm08+2PXEbiilKNQ6NCnuiaUwfZI9z18HTUvHmZbV1rIZIByQpFr3yM6S
-	s3SJ35nqFuJJjuqKoPq0i3Jxop6PWgBpXqA==
-X-ME-Sender: <xms:kpt_aP-mVwYbz1l7fyC8s5cVfR5vRudfo5b5y98sHqp3ba2SzsKZbQ>
-    <xme:kpt_aHPHgSvLRg4ZdHBPTSo5U-hkHqYuEtdFv7_xn1GJjuLE4tRd2bsnpC394nRBu
-    79Vd_psAaiVVjMowQ>
-X-ME-Received: <xmr:kpt_aDdoGD3-3ka68ujajERmicHwYNKILj6GS_lYPSTaUqJ8mJmimaslYJRmxhS-9dy-sUhxiiFDRC1g8jLM7NwpPsJ3DRtn16o2XGA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejhedutdcutefuodetggdotefrod
+	1753193761; x=1753280161; bh=4U8NRa6axbZ0GEji3IXzuQCIGUCh1wbhwuP
+	Hu5bPYqY=; b=GJ0xRNsAFrbOlPGMVcRBA9JP6pTvMoOP769myNsmBIoy8ZNxWgN
+	wEuvX938EphAFuHijSj+Utv8PJg79KG+RoTN8G82oUh83NIEiXzNiMp33uMqjsB2
+	HSchiddmrWSAUiEV9wtqGmBQVd8QklI8/vyP6E5IFVjzJLq/UQZ9qrJwSGLjDEAM
+	qgXPtZrmVwocehbGu5bfmVVPEo9briba2rfDfWoTEp2IW/vyg2L2tcDBFno797Js
+	D0Qgoyx1/U8GdcxlTz6tVUg9GfSJKUk5b98UGGkiwA+1NvAmcNPAM0LC4vkFXTS7
+	lZowtrEvmbI34sq/9CcJdpl6Q0+RkkldMrQ==
+X-ME-Sender: <xms:IJ1_aGMn71i8cLEVdO_SWTAMPoeMdnqk25EwMxWjY0xr1AEgXzjJog>
+    <xme:IJ1_aIO_-Bg8hR-z0kz8TU-DrM0KaSnnYdnskAS2koM02sdLrHwdQTnc6bBYKrqkx
+    YL_d3gYhbCqFzw7Mw>
+X-ME-Received: <xmr:IJ1_aGvAhy0DMsu5sL4nF2f-ZzVDmK7Bd_fUHBkmze1gQyBW_y0ozNJi7y0wZ5ss73wQ9mn-uZa-FDN4z4SAXRYDf19iejkYfTPHmH9Rkg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejheduudcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjh
-    grtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kpt_aGWGz-p7M-sHuxkyQ1YqPIaoUfqixgZIjENiD9HQF3SrtOD70A>
-    <xmx:kpt_aLhQM-xA4TBX6hIiGjTU0dzOrKcdmHYPbPf2LGbbugIikL26Hg>
-    <xmx:kpt_aF_2N_w3I4VlkQ_i3nizObnyeesHmuUDGsgvt6SIaPBONDI7_w>
-    <xmx:kpt_aNaBMiR2xjMuQx09Ab0n1oP_SHjJMAKpL7VDSWmXOTsKs-Og0g>
-    <xmx:k5t_aFxo4DCmNiu2Ijta2rQtWpZ2SxNskN6ofxp6KTQxTTY7G6oLkSGK>
-Feedback-ID: if26b431b:Fastmail
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohephhgrnhihrghnghdrthhonhihsegshihtvggu
+    rghntggvrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:IJ1_aCWLsvD2KxjgjGnrL15Xm1D3_AfdLtuMjRiIgekE3C3WnZLqXQ>
+    <xmx:IJ1_aOv9tUtRDbCTpXaTQeMCxx_uTNLJnQzu-f-JgQuzdpawzbN6fw>
+    <xmx:IJ1_aOVIFQvBc0LFedTz6vkCXzn_EdM9FAvZEbPdfb5-GYeB_E82dg>
+    <xmx:IJ1_aBmI2AN9oGNe5GVGSyu9a_5kdcU29tFI6Q4l1RgnvqwdIFJBmg>
+    <xmx:IZ1_aOW5sBMegxHAfcA3jjrx8Cfu3_CerQsJ9hHvnL9hdczf62I3IhgS>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 10:09:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org,  Jacob
- Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3] reflog: close leak of reflog expire entry
-In-Reply-To: <20250722045456.GA824456@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 22 Jul 2025 00:54:56 -0400")
-References: <20250721-jk-fix-leak-reflog-expire-config-v3-1-c488b0586e80@gmail.com>
-	<20250722045456.GA824456@coredump.intra.peff.net>
-Date: Tue, 22 Jul 2025 07:09:20 -0700
-Message-ID: <xmqqms8wuxkf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 22 Jul 2025 10:15:59 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 49abdc99 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Jul 2025 14:15:58 +0000 (UTC)
+Date: Tue, 22 Jul 2025 16:15:54 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Han Young <hanyang.tony@bytedance.com>
+Cc: git@vger.kernel.org, gitster@pobox.com
+Subject: Re: [PATCH] blame: only parse detailed commit info if needed
+Message-ID: <aH-dGhHm2xuY4yT3@pks.im>
+References: <20250722114220.87570-1-hanyang.tony@bytedance.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250722114220.87570-1-hanyang.tony@bytedance.com>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Jul 22, 2025 at 07:42:20PM +0800, Han Young wrote:
+> In commit cee7f245d (git-pickaxe: blame rewritten., 2006-10-19),
+> The function get_commit_info can terminate commit parsing early if only
+> the author information is needed. This ability is not used by callers
+> who do not require detailed commit information. Stop requesting detailed
+> commit information for these callers.
 
-> Subject: [PATCH] t1410: add test of gc.<pattern>.reflogExpire config
->
-> We have long supported the ability to set reflog expiration config for
-> individual, going back to 3cb22b8efe (Per-ref reflog expiry
-> configuration, 2008-06-15). But we have never had any tests.
+Okay. I think there's two important pieces of information missing here:
 
-Yikes.  I completely forgot adding that feature, but it seems I also
-forgot to add tests when I added it.  My bad.
+  - What does this buy us? I guess the answer is performance, but it
+    would be sure to quantify in which scenarios and how much of a
+    speedup this buys us.
 
-"individual" -> "individual refs" or something?  I was confused
-after my initial read, which sounded as if we are talking about
-allowing individual users to set the configuration variable ;-)
+  - Any reasoning why those two callers don't need the information.
+    Reviewers can try to piece it together manually, but it would be
+    nice to hold their hand and lead them through the change.
 
-> Let's add a very basic one that checks that we apply the config
-> correctly to a subset of refs (and not elsewhere). This also
-> triggers the leaky code fixed by the previous commit.
+Thanks!
 
-Thanks.
-
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  t/t1410-reflog.sh | 28 ++++++++++++++++++++++++++++
->  1 file changed, 28 insertions(+)
->
-> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
-> index 42b501f163..362e90d7d6 100755
-> --- a/t/t1410-reflog.sh
-> +++ b/t/t1410-reflog.sh
-> @@ -320,6 +320,34 @@ test_expect_success 'git reflog expire unknown reference' '
->  	test_grep "error: reflog could not be found: ${SQ}does-not-exist${SQ}" stderr
->  '
->  
-> +test_expect_success 'expire with pattern config' '
-> +	# Split refs/heads/ into two roots so we can apply config to each. Make
-> +	# two branches per root to verify that config is applied correctly
-> +	# multiple times.
-> +	git branch root1/branch1 &&
-> +	git branch root1/branch2 &&
-> +	git branch root2/branch1 &&
-> +	git branch root2/branch2 &&
-> +
-> +	test_config "gc.reflogexpire" "never" &&
-> +	test_config "gc.refs/heads/root2/*.reflogExpire" "now" &&
-> +	git reflog expire \
-> +		root1/branch1 root1/branch2 \
-> +		root2/branch1 root2/branch2 &&
-> +
-> +	cat >expect <<-\EOF &&
-> +	root1/branch1@{0}
-> +	root1/branch2@{0}
-> +	EOF
-> +	git log -g --branches="root*" --format=%gD >actual.raw &&
-> +	# The sole reflog entry of each branch points to the same commit, so
-> +	# the order in which they are shown is nondeterministic. We just care
-> +	# about the what was expired (and what was not), so sort to get a known
-> +	# order.
-> +	sort <actual.raw >actual.sorted &&
-> +	test_cmp expect actual.sorted
-> +'
-> +
->  test_expect_success 'checkout should not delete log for packed ref' '
->  	test $(git reflog main | wc -l) = 4 &&
->  	git branch foo &&
+Patrick
