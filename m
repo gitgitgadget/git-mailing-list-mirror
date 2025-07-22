@@ -1,168 +1,155 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011027.outbound.protection.outlook.com [52.103.68.27])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01FD2C08B6
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 13:26:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.27
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753190794; cv=fail; b=gT0UnIvDrrN217mmapXKw0yY2HtfgIQBsdydNKsXNUfezNkoD91KhdhpJDZUWD/r4XcRl0QJ+yMZY4sMyT+yLVd6g2rGPGm3AswCITnlbcKLmqE+WZtEZh8cQc8qTcFC408sateF6ERoj2zAYooRz1JL8gTl3rUxVtnfdarPa/k=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753190794; c=relaxed/simple;
-	bh=SBm67IJxs02ri8jmaV4Dw7SN30eZZCsqnFdzWIz7yik=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:Message-ID:
-	 Content-Type:MIME-Version; b=QQF3i8hCnstqiH2rNzvDvoQzu9YjJQJQ2rVl/6jAwP2NVQC32zKKxlUoLW1Rwg2GttL2xPs3SOZ4mlUivM0lncNDi/i2yt3mDfF9CEUl4/so7pMf2JyevRRE+YgHxxGV9+aIiqhqmlNV09cS/KByXcsiwKqwCa8OVlg1XvPwZOQ=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=OfdtF3Qe; arc=fail smtp.client-ip=52.103.68.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 102C3A32
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 14:09:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753193366; cv=none; b=dCLm0j6scxgNslTS4otwv00oxAs5ekJDrfJynl7EW8p+ow2cKScA7TK2xoYsDjf/oYEwUnS12EOG/D63RTGnB/jgPMOQAApWouVNKe/nJ0B0tZouSCtb9YOHdChmB20l9u1ZziUbZ6RKuQB2CBw7f3LQr2GeG4ygbj9EAWnTGV0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753193366; c=relaxed/simple;
+	bh=8OXfWVvhmEQBAFZNP334gkGucq0Y8AV3woIwSLcX3tc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BXtm2qfYMni5TDq/4jQK41mf0QSrqVbwgiqLcW7XjqxdL/8fCweVrt9CxPnZH4fZwCW2uBMwXKsBhtXGYATfLA3KawMCqLAVezWymbdad0ldAtM9O4XP6V/tm/q460JdRc/iQMDU9kket4llGRnhZoEDYumh5OmIZTke2gC2Qsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GeRm7P9g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cfBfE9+l; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="OfdtF3Qe"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=voufVzt+nIeHQKoDkJwbEssttPqb+ObPo1kteat54zbhXkn5nflRYRsqg9WeFodBkwi66ePpV3cWXOJWbt+DH0vmEwffhZc6Kk5Tgvdi6swk2dUiB4hzbk9L2ABwtv1GsThWuW4/ltiOQbeWzHNQt8OJN9V36ug07ezga2btAxYX6EfhpreDpKryiq3+FgPo//9lhQGhddHzwaiFeWXtoHKbWtaDN6wP9AirqhgpQoAhq1EZ+7tOfe+BbYesgMAEYVuQkPhTE1KAEPQzf4ZKCcJ0zvf/YMuTmYxjOV6ni9KyO/OJpHqE/pqsEzkUqlRmnRfhoUbsZCCBbCziXJoHIQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SBm67IJxs02ri8jmaV4Dw7SN30eZZCsqnFdzWIz7yik=;
- b=DE8PZV+mGA5tVo9e5j08/iFvqoE3IJ5Vv624ADtAmtYv2fKkYHYGFSkx2d0q1bIC0LtaQJpV0X9+I1OMLZ3eOQnpzSRM03ds3xlyfIVO3pf0BTvy0MwqOC/KWKB234Y51JBuRUdsK0tf/FXKnKrAa2TQfq33uIoDeUlERdeTPSincS2ohq3PIBPKqcQ3PZftNT2qz/You34iOKE0IvzeKRrc+m4s+a944dqkuy7r0pq2UFPdcEW1BpUW8o3bm2XCeMmrnrsDQ5THYVAol4fnKaaNE2VDie8obOYrYtojg5ge+WdMY9b88CnWnc8eaHdniZPyyLYn3YEz219LgpbGyA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SBm67IJxs02ri8jmaV4Dw7SN30eZZCsqnFdzWIz7yik=;
- b=OfdtF3QeUT2JtnZ7932jxjZ6vzSRf6aIF9tA+QVtKoTg8JOYR3k/UA8uM6hulk426Qs3ynpaFDUL/Nv5uc77eDV2Q3YaAIq6St72Kx49QQbs8TPyx5+A8fVdL3DXjC99Z5T0+IbKfzmzzMbQhfKoNo5MNgOs8KEaQxF95li7+kBhaHCTudDH9k4oNM+65P8sWgRf9ao9ENext/7zTgIIDsTFlUiG52/ENgdRy8RZ+FAMR6rE9/yhbITgrpymOFaAdo0qq0/3zCQoJngWqw7t3ZUysJ35AmXgPHFuzuclUvO07wnOP/4PIqGx7R8ht4Q0s55R2N5mZmt22yesoYwN3w==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN3PPF3AC99FB25.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c04:1::1a) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Tue, 22 Jul
- 2025 13:26:27 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%7]) with mapi id 15.20.8943.029; Tue, 22 Jul 2025
- 13:26:26 +0000
-Date: Tue, 22 Jul 2025 18:56:21 +0530
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>,
- Eric Sunshine <sunshine@sunshineco.com>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- Ben Knoble <ben.knoble@gmail.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2=5D_send-email=3A_add_ability_to_s?=
- =?US-ASCII?Q?end_a_copy_of_sent_emails_to_an_IMAP_folder?=
-User-Agent: Thunderbird for Android
-In-Reply-To: <xmqqtt34uznu.fsf@gitster.g>
-References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com> <87a890182591c9c21061e85834fc99a766252611.1753092192.git.gargaditya08@live.com> <xmqqpldtxsp7.fsf@gitster.g> <PN3PR01MB95976A7BE0F9A54E836FA2F5B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <xmqq4iv4x15e.fsf@gitster.g> <PN3PR01MB9597B8D3D84D9F7660F15E94B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM> <xmqqtt34uznu.fsf@gitster.g>
-Message-ID:
- <PN3PR01MB9597E6071DC91F5256930AF1B85CA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: MA5PR01CA0025.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:178::13) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <B926600C-3B04-47F9-BEF6-BE310792F394@live.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GeRm7P9g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cfBfE9+l"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 16F8214000E7;
+	Tue, 22 Jul 2025 10:09:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 22 Jul 2025 10:09:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753193363; x=1753279763; bh=Q6CfzyJWHj
+	dVhPu4n1BXoEheZP+L0WwCxqHftz4OYXc=; b=GeRm7P9gU+eSk0HWyayYiOXUyg
+	hcskRo+xHwN8Qk+QW2HgRSOJgb8Hy7+pXTsa8gllLz9VsmONcThOkKrrwjUKy25B
+	GXFYwqiRqdar+ATBEoEbdFiygeMmhAC0Q4kF2i7ofT4BSD/4yv12DEy9GkCkl58j
+	kieTwMAfTPNTa2vyRNWlc8/S6Vq9LFivVCip1CnGOGvhtDIIiYl30E4Vd3zysJlJ
+	jNetez2m3P3rEWn0gEfM7onFOAzP4RXV7BlOMFBCd7kbVyt9rLd3lSc6r/KLWKsB
+	6VD/+TmUtiXf58I23MaS9plN4QPdNfZgYCmv+QqvKKi69Wa9uNJ2qqZf3N7A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753193363; x=1753279763; bh=Q6CfzyJWHjdVhPu4n1BXoEheZP+L0WwCxqH
+	ftz4OYXc=; b=cfBfE9+lPQvmnGGOBJx4yVQIn4XqbKGwclb8Ya9He2utUMC7Ykn
+	0CagHPUPogw/mCcxD3q8GrpNsod+rTtrFtbk/IfYaQCfaYLi8wBwLScxj92T/0KK
+	yPDMW0oitYRA70cbf+JhmmewSND3iI+ULcuJjs2MXKF9USIBDZHya0NjEUayIZ9p
+	u9XGRAINXGEs8bvLX8O9raZ13w630ruEuSP7r4PsYul3Kr0VWwsl1l0MfscYQw4a
+	xGSuuVaxm08+2PXEbiilKNQ6NCnuiaUwfZI9z18HTUvHmZbV1rIZIByQpFr3yM6S
+	s3SJ35nqFuJJjuqKoPq0i3Jxop6PWgBpXqA==
+X-ME-Sender: <xms:kpt_aP-mVwYbz1l7fyC8s5cVfR5vRudfo5b5y98sHqp3ba2SzsKZbQ>
+    <xme:kpt_aHPHgSvLRg4ZdHBPTSo5U-hkHqYuEtdFv7_xn1GJjuLE4tRd2bsnpC394nRBu
+    79Vd_psAaiVVjMowQ>
+X-ME-Received: <xmr:kpt_aDdoGD3-3ka68ujajERmicHwYNKILj6GS_lYPSTaUqJ8mJmimaslYJRmxhS-9dy-sUhxiiFDRC1g8jLM7NwpPsJ3DRtn16o2XGA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejhedutdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjh
+    grtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:kpt_aGWGz-p7M-sHuxkyQ1YqPIaoUfqixgZIjENiD9HQF3SrtOD70A>
+    <xmx:kpt_aLhQM-xA4TBX6hIiGjTU0dzOrKcdmHYPbPf2LGbbugIikL26Hg>
+    <xmx:kpt_aF_2N_w3I4VlkQ_i3nizObnyeesHmuUDGsgvt6SIaPBONDI7_w>
+    <xmx:kpt_aNaBMiR2xjMuQx09Ab0n1oP_SHjJMAKpL7VDSWmXOTsKs-Og0g>
+    <xmx:k5t_aFxo4DCmNiu2Ijta2rQtWpZ2SxNskN6ofxp6KTQxTTY7G6oLkSGK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Jul 2025 10:09:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org,  Jacob
+ Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v3] reflog: close leak of reflog expire entry
+In-Reply-To: <20250722045456.GA824456@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 22 Jul 2025 00:54:56 -0400")
+References: <20250721-jk-fix-leak-reflog-expire-config-v3-1-c488b0586e80@gmail.com>
+	<20250722045456.GA824456@coredump.intra.peff.net>
+Date: Tue, 22 Jul 2025 07:09:20 -0700
+Message-ID: <xmqqms8wuxkf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PPF3AC99FB25:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8c8ae318-bad1-4b4c-6247-08ddc9235c0d
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|6090799003|5072599009|15080799012|440099028|40105399003|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?c294OSs2elU1emx2bzIxZHlPcGVlcThrTEdWN2tYNnZFZWxDWUl4MmVXdnhL?=
- =?utf-8?B?TnVjRWdyb2xBK3czR0VLTTAxallJWDRtZmh3Q3o4Nm1kVlRnRnFHbUptQmcv?=
- =?utf-8?B?YW1hYlYwa2pOdmNndE1ic280Y3B3UGFLSDI3eTd1S1l4dktxRVljbjFLL3hn?=
- =?utf-8?B?aFRzRzdJTjE0V2lYckh3WDdGY3ZBd2tMRnd5WWxWTDFNeG1VMUhoeSs1MXFs?=
- =?utf-8?B?MXRFd1d1ZkVpNVN6V3I4RnBHMllkMENiWCt3SEFoZ210RVRTVHhvSFFGWnNE?=
- =?utf-8?B?ajBxcEE5MGJXWVQxVjcxdUhtMEVRZjNqN2tuemlTTHdab0JWcFV0WU9xaEZo?=
- =?utf-8?B?V2RTRjg2b0FJQ0plRmpISFFQVGxrUXdsZEozb1F2SzlHdmFNRlVjRS9odHZE?=
- =?utf-8?B?UlNBMTVhcVV3Uk5PZmZyWHVYYWoxNE85UktKSVg5cVQ5MzZrZ3Z0WHdoZWlZ?=
- =?utf-8?B?YkVETGVZa3Mxckt6aE1vbENhUHpQWWs4RWZHT2ZLNEhmTldDZmlackZLcUM1?=
- =?utf-8?B?Rjl5SGxVMmdIak15OU41ZGd0eXo1M2V4SHZmVUxyak5yY29XZjVGQlFpRjJQ?=
- =?utf-8?B?eHhDVmI5M0RJdjI1OWdWUEJ6MXB4L3FQT2doaWpDTGYvR1JnS3RwdEdmOXBt?=
- =?utf-8?B?U2JPT0JlcjFnTkgzc3BsVmFNaThNZUxEbTQxK003dGk2dHBMck1GZG0ycUFE?=
- =?utf-8?B?OW9Cb1g5WjQrejFWWEJ3ZHRUNkw0K1BLUFFYYjFFVTRCWitWODZadWhzZlFE?=
- =?utf-8?B?MFpDeHlYbmpTY1RuSVlNUjlQSU1PS2M2OC9sclpUdEwvR1NvQlkwMm1BRmhO?=
- =?utf-8?B?SVFKUk1UNmd5SjdHbi9oRGdlV3J2WjBHNW1rZlY4UTVPVUc1MEk5bU14VnZJ?=
- =?utf-8?B?OWJwTUx5RUZNdzh3dkhEZGkxWmw3SWdad2UvN1BhcGdnRVUzS3ZWR2FOUWh3?=
- =?utf-8?B?VzV6NEpYQU1hZWZYTWErLzloUnd6R09EK1pWN1ljZTlBdC9GTk5jVllyWnUw?=
- =?utf-8?B?U0VaQ2RTQllWMlZJaC9PRnVtS2hXWDZzYlhzZ3BZZGdRdGZLTTRpNmtlQ2VC?=
- =?utf-8?B?K091RlR4NWtjWkdSaUdpT0YzZlVzRWE0MXJqaUszL29DR0U1Q1N2bUlhYVcw?=
- =?utf-8?B?KzBKY3F2dG5idTR6OEVXb2xWU2tBTXlMVnlkb2FUeVhTWCs3RE5ZUk1HVGI2?=
- =?utf-8?B?QURPRDk2SVIxcVhPRzEzd3hUV01rZ3JiZTlNbXp2RG1yY1IrTDUyRUJrQVFh?=
- =?utf-8?B?RzQzVUxNazhpNyt4RERsWXBtVFVLR3BHK09SRWt1Y0Q5TWhsZjNYNnBsTkJ3?=
- =?utf-8?B?NUxxQWhWM0hReWVLSGgvbnRFZ0FXaEZwMkhpeUdxYWFzR3dtNnY4c3RjS3Q3?=
- =?utf-8?B?K3pORElqVGt4Y3JObjEzSEIwbjY1dWJvNHJaeHhLc2NsZjcxdmRiaXVyM0pz?=
- =?utf-8?B?RnEzRDBJTzA4OEVxd24yWVRuNDdTcGRvVzZaNi9BPT0=?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dHhLeTV0aDZUZmQ0U1VuQmZBSG5lTmJFaVJ6OWpSdjdiNitXc2xMUmM3cWVs?=
- =?utf-8?B?RGFtdmQwTFJHSGpoQ2xqODBiSUpWQkV2MlplY1FRbmp4TTJOU2IxWDhIL0wr?=
- =?utf-8?B?RUVCMFdKRGxoaHJiNVdqSzFHK3M0dUFnbHNYcmloYlVVZWVuWDRlMGtPRWtD?=
- =?utf-8?B?R1dpdE9jL0lCY05yVWQ1QVNodkdJNjFmS1VEb21lYVcrWVY0eUh2UlV3SU84?=
- =?utf-8?B?VGVJZjNZTWwvSjdUT1pWTjF5ZWxRM2pmc21IaTYrQTg3U1hvWWxwbHE2Z3Jr?=
- =?utf-8?B?dkFzc1dlOUZlZ3YrS00wMHZjbjlVQklxekZtallhSWdhUmNRU0U0Zm04Qy9w?=
- =?utf-8?B?dzVnVENTUDRNVk4zMUg5SHFZTlZzNUdXT0Z0Mm5oTEQ1MUxKSlhhZmpieTdR?=
- =?utf-8?B?WDk4MFVRa1MybGNJZkRGelRZQ0l6RmhEWFNwUlIxYndaUGR3a0N6bFNjRVQ4?=
- =?utf-8?B?TGVwZk85eXByd0ZLQUFoSVpyTWluUE5TU0NQQ2hUNXNtMmRKOTVoeWF3NHlT?=
- =?utf-8?B?VDdpT0ZIdXNtTzd1RUFjTk1hakJzWGk0L2UvY2NaNXFJVHE2cWx5cmQ2U0dL?=
- =?utf-8?B?S0R5cFNmZzQrZEJtQjl6dGMxelpYMDNaT0l0ak1PRnJTeXlHQkMzdlU5dFFv?=
- =?utf-8?B?OHo2bVB0SzFtUHJjU282U2hQRHUycjFqWkpSb3V6TGROTmR3djNuOGF4VEFH?=
- =?utf-8?B?TVZzWkMrWGVINm5vd1ZXWE5zUGw0WXo2QzJ1RStEN3RuUnZONzdkNXBkcytO?=
- =?utf-8?B?QlAwOGtzdmFXRkZ6b2x1RkNQWCtEMHZyNGNsVSt1STFmU2tYSnhmL0lNV3JH?=
- =?utf-8?B?UGtaN1MyOEU2aFNTeDd2anh6K2owb216RUQzVkxtdzB1RjZORmFhWVF6QTF3?=
- =?utf-8?B?VHhSdmZxSVpQdVFqQ2JrNHllYS96am5RdHF6NmNuMi96S3FkQzhLQmd4a2RS?=
- =?utf-8?B?Z2hXZ3NXcVJESDBRTURlRUQ5VDdGRFlLcEMySlJCTHhzSUxxS1FDbmwyMTZs?=
- =?utf-8?B?VUcvd013bXNUblhtN2o2ZFFNQ2V4WVJ1MW44L1pVOGFFRmsrMDg4RThpTlE0?=
- =?utf-8?B?YWpMNTF3bmRjWUhBalZKcFJjd2lXVUZiYmJ6azlKcnBhRkdIamNNTjBHTlFr?=
- =?utf-8?B?RkFPQ3BUZjVFOE8za1ZWYXJITnYybUE4UTlpZXpKRXdpcnBiTVE3ZHhYQjRm?=
- =?utf-8?B?SGJFMWtGQXZzYjBhQWR1bk1nQUxCQUxvQzBUaktUSTJzU3JOMk9oUll3UEFx?=
- =?utf-8?B?Q1dTdjZrMGp2TUgxWThOdGFMTXhha1ZHNjdGamJsRyttM3ZCbm9IWFd1V1F3?=
- =?utf-8?B?b3VXQkZmMHJKL0U3V050QUtqaWx0MXZqeWIzUUdaTzVsRmVBcFlFSDJUcnRn?=
- =?utf-8?B?TnRmaENiTllqM3NoK1hsaXowZTlUTytoZDUzRlJsSE15cFlPZUdpWUpKL0hG?=
- =?utf-8?B?VzFma3FIQ3BTbGltUTZEVFlRTnJHQ3d6alFmZFArSmlyOTFPSzF3TkcxOFVT?=
- =?utf-8?B?VlJMNE5BZ0lVeGhxa1FYMkZvMlg4R2JRRzljTjcwTGw3WEtsdlAxaUdJOVRw?=
- =?utf-8?B?Ukx4bGwrYVp6Z3NwN1Z2MjFkSWM5MFdxV0ZKOGhzVkhERDBSMGdJUXJKZGhU?=
- =?utf-8?B?c1R5bE9sUlVER1JIc1VNY3JhTlNrSHA2bEhnWGRwdDYvRlZnTHpITGtBbS9O?=
- =?utf-8?B?cGY3UFQ4dHplejhsYXNJekpSUEZscVprVmhCQk9VMWdxTGNtR1RHbVUyWUxS?=
- =?utf-8?Q?IyDTxlfzM9PBjSJsmc=3D?=
-X-OriginatorOrg: sct-15-20-8769-5-msonline-outlook-acae4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c8ae318-bad1-4b4c-6247-08ddc9235c0d
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Jul 2025 13:26:26.6844
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PPF3AC99FB25
+Content-Type: text/plain
 
+Jeff King <peff@peff.net> writes:
 
-
-On 22 July 2025 6:54:05=E2=80=AFpm IST, Junio C Hamano <gitster@pobox.com> =
-wrote:
->Aditya Garg <gargaditya08@live.com> writes:
+> Subject: [PATCH] t1410: add test of gc.<pattern>.reflogExpire config
 >
->> I'll rename it to imap-sent-folder, but the name looks more like
->> it is only for "Sent" folder, and no other folder can be used. For
->> example I like to keep a copy of the emails I send to git mailing
->> list in a seperate 'git' folder in my mailbox. I can set the
->> folder name as git, and thus have a copy saved there. What do you
->> think about that?
->
->Sorry, I am puzzled.
->
->The reason why the option "--imap-sent-folder=3D<you-name-that-thing>"
->takes a value, and not a "--[no-]imap-keep-copy-in-the-Sent-folder"
->Boolean, is exactly because you want to give whatever name you want
->it to use, so I am not sure why you are even asking that question.
+> We have long supported the ability to set reflog expiration config for
+> individual, going back to 3cb22b8efe (Per-ref reflog expiry
+> configuration, 2008-06-15). But we have never had any tests.
 
-I asked that question because --imap-sent-folder gives user an intuition to=
- type in the name of the Sent folder rather than any folder. Anyways, I am =
-fine with any name.
+Yikes.  I completely forgot adding that feature, but it seems I also
+forgot to add tests when I added it.  My bad.
+
+"individual" -> "individual refs" or something?  I was confused
+after my initial read, which sounded as if we are talking about
+allowing individual users to set the configuration variable ;-)
+
+> Let's add a very basic one that checks that we apply the config
+> correctly to a subset of refs (and not elsewhere). This also
+> triggers the leaky code fixed by the previous commit.
+
+Thanks.
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/t1410-reflog.sh | 28 ++++++++++++++++++++++++++++
+>  1 file changed, 28 insertions(+)
+>
+> diff --git a/t/t1410-reflog.sh b/t/t1410-reflog.sh
+> index 42b501f163..362e90d7d6 100755
+> --- a/t/t1410-reflog.sh
+> +++ b/t/t1410-reflog.sh
+> @@ -320,6 +320,34 @@ test_expect_success 'git reflog expire unknown reference' '
+>  	test_grep "error: reflog could not be found: ${SQ}does-not-exist${SQ}" stderr
+>  '
+>  
+> +test_expect_success 'expire with pattern config' '
+> +	# Split refs/heads/ into two roots so we can apply config to each. Make
+> +	# two branches per root to verify that config is applied correctly
+> +	# multiple times.
+> +	git branch root1/branch1 &&
+> +	git branch root1/branch2 &&
+> +	git branch root2/branch1 &&
+> +	git branch root2/branch2 &&
+> +
+> +	test_config "gc.reflogexpire" "never" &&
+> +	test_config "gc.refs/heads/root2/*.reflogExpire" "now" &&
+> +	git reflog expire \
+> +		root1/branch1 root1/branch2 \
+> +		root2/branch1 root2/branch2 &&
+> +
+> +	cat >expect <<-\EOF &&
+> +	root1/branch1@{0}
+> +	root1/branch2@{0}
+> +	EOF
+> +	git log -g --branches="root*" --format=%gD >actual.raw &&
+> +	# The sole reflog entry of each branch points to the same commit, so
+> +	# the order in which they are shown is nondeterministic. We just care
+> +	# about the what was expired (and what was not), so sort to get a known
+> +	# order.
+> +	sort <actual.raw >actual.sorted &&
+> +	test_cmp expect actual.sorted
+> +'
+> +
+>  test_expect_success 'checkout should not delete log for packed ref' '
+>  	test $(git reflog main | wc -l) = 4 &&
+>  	git branch foo &&
