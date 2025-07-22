@@ -1,90 +1,97 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ED6F2DE6F4
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 12:21:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BB52E88BF
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 12:21:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753186885; cv=none; b=CnFbjrNTnxcXx+x0qbGTGTXvTXBu9c4TqGR3D0czIeGq2jqntCSOcUYzV/kCkMBBIeFaLFxqWSyydYnCAcFvpV7Iw4LmWkmCYK0hTvwnxVgqV+UEOe0cj9IbweTrQ1xgRO88LX/Cw7+QHWJ3RijCnzrN/57dJ2HARid8l0UrOjI=
+	t=1753186893; cv=none; b=q4pl8GUr/UH//3DvxBvY01CU8sPmgtRN99DsCPN2MyE+8ddUni2ZUZNIjF36RpRnLhCT//ZSHiVf8/cEJMJFd69+2Di7rpIkWjmluCm5Vz+FGtSW2e/sUBfurMGbCmuiEV63BUV/GDoQzyjpe/oIsEu23S9Z++ZiYaFkFuIk5F4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753186885; c=relaxed/simple;
-	bh=zQnTAxCh6qEp2IS3D+dV3x0kBfHzwJk9xF5a4CgmHdg=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=OfP/Qt4qPjC4HSiHmQECZwQUz5qKB6M8oXj6Q43Rm3Y4ANjv66a+OrMi47VSepVi2pLpS+BgJ68VrsxcvPdkb65DOgO1ZttVnOt9d0Q04GNmXa78ooJjGlhGlJQCSSq4UTFl824owycJsY+GpzbrNsAba6VaCHXTW+VUxy/kU9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TNWOtnRo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mZwS7MwD; arc=none smtp.client-ip=103.168.172.151
+	s=arc-20240116; t=1753186893; c=relaxed/simple;
+	bh=A9halASLsTZJ62xV6JwEsn5KRqKsbQMIic/3mPFtpPM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mCd4XSIuXRUpB7RtLYQnFojbNb/H4wv4mdF5PWLrerWotb4KVZEnjjpJInLY+x+PsYwc+Ko+5yN5L2dqKFgfS9j/an1v49xIoBd/AwuMG9cOPI3uH+60mt+czdeDiqm4r+NHoYUi4PsLyyLwChGsK3Ar1N1oVa6RoZSDNMGQrus=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tt0UOi/X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OFfxOrWi; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TNWOtnRo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mZwS7MwD"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 995F4EC0302;
-	Tue, 22 Jul 2025 08:21:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tt0UOi/X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OFfxOrWi"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C547EC02D7;
+	Tue, 22 Jul 2025 08:21:30 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Jul 2025 08:21:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+  by phl-compute-05.internal (MEProxy); Tue, 22 Jul 2025 08:21:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753186882; x=1753273282; bh=loviDwx+qM
-	5h18+DHx4v3CTvYVKB60IoAuMuN0S1vsA=; b=TNWOtnRop3Z9bsJF1KS0gPhN1T
-	OAe0SZjrPQUWCalRvPgkrC9n62E6vAlBwXq/rrgaFRFHrY2ZHMh3wMQ59neANLab
-	ked1ZO1gGLLQghFekUgvhgyD0SLWQVrEKyXyauyYIh02ilWwZSbjqdK3aOoBoAgv
-	F+jLuazvXEeUt34CzZIYyXn/ZeEWmXB14//ZYokD2HuuPGF5bkk+KzJmxBEzyhrV
-	7ox90229wuf2WsYKjI+U0XGS2TXxCQSbSlLAetgnByUUrlkyeJ5oJO2oieq8fycN
-	8vYyGNGYlGBFQsnUd+oQWvlDLCroTjMkF6dVDt4X3qqNgYn138e9VvjWHP1w==
+	:subject:to:to; s=fm2; t=1753186890; x=1753273290; bh=23FOFedSb7
+	+BrN4cyaZUChAp847klcbl1ilRlOXV0BU=; b=tt0UOi/XdcL72UrDEdLxw4hFfd
+	ZKZzb8lxtKhuEr9fTK6zGm4Vm5xWriHpoqdHDxGDTk/yr6VrZoSlQlXT1c9LXVeB
+	gHdHjyD2agApaZJU78u7fpzDamlCrpJvesZGX7l7X2Zkb7gEKL/WqYUT2hGRW10j
+	Qm29NeDfilj+oUdrFqaU+cmaVj65WumvnUumThqC6q/xxnFGNLcMV3jIvZGuDrSv
+	D1h6yx7Nl0gwDEKrizfYbP0cV8dUHc6ZstXWbNAltM3iwjYmLhUDdCZeqJCw4IUo
+	nIjWMgiKHkjngFFQA+/i3FqGdl2JLq8AsUEIR8PDLkJRVcvjjRUIKCrCq/mg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753186882; x=1753273282; bh=loviDwx+qM5h18+DHx4v3CTvYVKB60IoAuM
-	uN0S1vsA=; b=mZwS7MwDHb4uhkuqPE/iboNF6Suh78n4Kinq0uI09LL1fdyw5FT
-	mqZqYa3eRG8AoMOtIjbnT1kbhsonj6cNOnudajA2KCyXzgg+b7BF47Jfh6on3beu
-	J+iBJyuS6UK9w5dR4QIn/pngznsLt4LvLeKkWRUAOJm/D23peZrBUsjMNxjJ7bFR
-	8C5gfEsBoZ2LvseMCxwjiZVXmfmrH1pZd6Tu+wNK02m6GrLiPRAXvuq3wcSZseyl
-	1IzNIS/5yipkVQbnEqGqFS+2iTeZNm/eOfyDewwtNmXSgIIjHRXoNDFwSsma74vY
-	AvsA2BOEe5wTrWm05/48KIEQlat/IJPGeKw==
-X-ME-Sender: <xms:QoJ_aDfTaADHp5PzKuer7KgTzvZfwdqHVhetQtAau8UxWrROB60bRg>
-    <xme:QoJ_aBqz3Av724xaSGnBWi3n5ZGcKMFXQRcBlS3viCdZUWFf_4OxFoJ_UoXH8hDrP
-    ISls2Z0RaJwTPwDig>
-X-ME-Received: <xmr:QoJ_aM8Nx-F39Odjwom4xIk4vler_2UrdfdVTqKJGV5apt51M3SJ7xAVQw18PJY0l2UGlgbYLFHEDSEP5h5bQQAnKh8r6_KoO5z8aOTuRg>
+	1753186890; x=1753273290; bh=23FOFedSb7+BrN4cyaZUChAp847klcbl1il
+	RlOXV0BU=; b=OFfxOrWiMbcHpSbjkW6b+rdYG978IW+hcSQxQWeWqBglhndhgLd
+	byij2nQAo9vCVe2mRMj6pRYdmmJ+C+OhQRRWrfzG5XgOo72zndpf6EdB2g6CeGEG
+	cWkBdackqkQM+4oOlEkhb4NiukuyHe/g/y539XZhmkAYUL81afMxN0yvqwy74kgF
+	NISMTwLVxbKiWR4Fwlsw8Oud24Nh+OkAEg7Uo13IyQAwDCGocpqjDqXMMLJ3/1xx
+	HgfWt88NnejCD0U9sa0mUlm7IxSVt0Gp5XoxcM69UHbm7o3LrkzwGu5aHObbJiQy
+	jgNwleuEaO7j7ohZ1jtsu0QMCGdEqvgKsng==
+X-ME-Sender: <xms:SYJ_aMcJntJJ77EKp1eWZHZfM-t_dCV-YZVXyiEqNd2VCJmsyRyF4A>
+    <xme:SYJ_aJ4sLbNcJIjqa7-6htcyNQ58qiik4rrYr1Al-sPrID9jnbMQWH5sIlirTgkwn
+    8R8KZ28wgmQJgSLTg>
+X-ME-Received: <xmr:SYJ_aJ_0bjYuG61Mls84PoOsM79MzMnazZ82r_ehlaEyvIoO_TvnMCfyPENAPdl5y1L6989p-fYmGDfA4kaA8JYs2EfcgUvnoWQpLEC6Mg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejgeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcu
-    ufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhephe
-    ekfeefgeegvdegvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrd
-    himhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    shgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoh
-    epghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepmhgvseht
-    thgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepvgiivghkihgvlhhnvgifrhgvnhesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:QoJ_aFeqcpudl-NQANWAzG6EEQeAL3FyILbov2GFkV_JbMEb6ZODKg>
-    <xmx:QoJ_aOLPQD6ccrX5EiCAOp5XOpzaQU0uJhpjEWL97KDgaZsJ1Sf-UA>
-    <xmx:QoJ_aNgFvmppVk9Jw7xMihQzc7MogbK9andsTGCorSnmQldXuluawg>
-    <xmx:QoJ_aESRFt4ETxZwY23QaSgFPy0HO58fNdYvUqTCr0Is4fIL9XFFyw>
-    <xmx:QoJ_aKzg-pGGFhVwNSzqzZL3v0h3_y7S4nPNYzcL3IvwzReLzm7V1rwM>
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    fhiefgvdffvddtuefhlefgleehgfefveeuteffudfgheetgfevlefhueeuveeuvdenucff
+    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepuddt
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepvghthhhomhhsohhnsegvugifrghrughthhhomhhsohhn
+    rdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtg
+    homhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphht
+    thhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopegtoh
+    hnthgrtghtsehhrggtkhhtihhvihhsrdhmvgdprhgtphhtthhopehsrghnuggrlhhssegt
+    rhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehmvgesthhtrgihlh
+    horhhrrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:SYJ_aLHZtp077J8AbmkdmENpvMz_uC2ddNItkklDEQzTbFlBkR9p7w>
+    <xmx:SYJ_aOUtnnQVwTn6SwcfiE-6k2VLGvqDfFRRCDugiBp6kaHhFla-FA>
+    <xmx:SYJ_aH-xcT21p7jMprvVe6rkisfwOYiZqumrlUhUjCHUCakYaCe99A>
+    <xmx:SYJ_aL69ZtShlvyv-UVUrOMVW8QfzrehVJzK_1pRuT2cUOkZoGO2cg>
+    <xmx:SoJ_aKNLZOCMvROT6iLLqesG2wKRHMTHz7_facmIgBOFQrDeUWgmB46I>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 08:21:21 -0400 (EDT)
+ 22 Jul 2025 08:21:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 44c226ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Jul 2025 12:21:19 +0000 (UTC)
-Date: Tue, 22 Jul 2025 14:21:11 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 76135ac8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Jul 2025 12:21:27 +0000 (UTC)
+Date: Tue, 22 Jul 2025 14:21:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Taylor Blau <me@ttaylorr.com>,
+To: "Haelwenn (lanodan) Monnier" <contact@hacktivis.me>
+Cc: Eli Schwartz <eschwartz@gentoo.org>,
+	Phillip Wood <phillip.wood123@gmail.com>,
 	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Ezekiel Newren <ezekielnewren@gmail.com>
+	Ezekiel Newren <ezekielnewren@gmail.com>,
+	Edward Thomson <ethomson@edwardthomson.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Taylor Blau <me@ttaylorr.com>
 Subject: Re: [PATCH 0/7] RFC: Accelerate xdiff and begin its rustification
-Message-ID: <aH-CN0RYFmpm7fMt@pks.im>
+Message-ID: <aH-CROwg57Juo9mH@pks.im>
 References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
- <aHlwZPbiKnakMN75@fruit.crustytoothpaste.net>
- <aHl4U98BBvpA5eKF@nand.local>
- <aHmVXDOiKzfKU8nb@fruit.crustytoothpaste.net>
+ <f439958d-64ce-417f-8175-720f69387d48@gmail.com>
+ <79c1b3ab-af2e-4c93-b033-349221d82ad9@gentoo.org>
+ <aHrrZyrDw_CYmFQF@cloudsdale.the-delta.net.eu.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,64 +100,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aHmVXDOiKzfKU8nb@fruit.crustytoothpaste.net>
+In-Reply-To: <aHrrZyrDw_CYmFQF@cloudsdale.the-delta.net.eu.org>
 
-On Fri, Jul 18, 2025 at 12:29:16AM +0000, brian m. carlson wrote:
-> On 2025-07-17 at 22:25:23, Taylor Blau wrote:
-> > I agree. I don't think that there is ever going to be a "perfect" time
-> > to introduce a hard dependency on Rust, and I don't think that should
-> > hold the project back from adopting it.
+On Sat, Jul 19, 2025 at 02:48:39AM +0200, Haelwenn (lanodan) Monnier wrote:
+> [2025-07-18 17:25:01-0400] Eli Schwartz:
+> > On 7/18/25 9:34 AM, Phillip Wood wrote:
+> > > Hi Ezekiel
+> > > 
+> > > Thanks for working on this
+> > > 
+> > > On 17/07/2025 21:32, Ezekiel Newren via GitGitGadget wrote:
+> > > 
+> > > > So...
+> > > > 
+> > > > This obviously raises the question of whether we are ready to accept a
+> > > > hard
+> > > > dependency on Rust. Previous discussions on the mailing list and at Git
+> > > > Merge 2024 have not answered that question. If not now, will we be
+> > > > willing
+> > > > to accept such a hard dependency later? And what route do we want to
+> > > > take to
+> > > > get there?
+> > > 
+> > > As far as git goes I think introducing a hard dependency on rust is
+> > > fine. It is widely supported, the only issue I'm aware of is the lack of
+> > > support on NonStop and I don't think it is reasonable for such a
+> > > minority platform to hold the rest of the project to ransom. There is a
+> > > question about the other users of the xdiff code though. libgit2 carries
+> > > a copy as do other projects like neovim. I've cc'd the libgit2
+> > > maintainer and posted a link to this thread in neovim github [1]
 > > 
-> > I am far from a Rust expert, but I think that a more modern, memory-safe
-> > language will attract newer contributors who may have a fresher
-> > perspective on the project, and I think that's a good thing.
-> 
-> Yes, I think that's true.  Rust is by far the most admired programming
-> language to work with, according to the 2024 Stack Overflow Developer
-> Survey.  We will likely attract new contributors who find C intimidating
-> or a bit of a hassle[0] but are excited about working on Rust,
-> especially in a project as compelling as Git[1].
-
-I am also aligned with allowing Rust into Git. I think the ecosystem has
-kind of settled on Rust as the next system-level programming language,
-and it does have good interop with C.
-
-I think with the ongoing efforts to reduce our reliance on global state
-we should eventually be able to encapsulate more and more of our
-subsystems. And once they are neatly encapsulated we would be able to
-swap out their respective implementation and plug in a Rust replacement.
-
-Good candidates are for example the reftable library, as I've already
-proposed in the past.
-
-> > The alternative, of course, is to continue to use C and not take any
-> > dependency on Rust. I think there is a middle-ground in there somewhere
-> > to be able to build with (e.g.) "make" or "make RUST=1", but I would
-> > really like to see the project take a firmer stance here.
 > > 
-> > I worry that having build support for both "with Rust" and "C only" will
-> > create a headache not just at the build system level, but also in the
-> > code itself. Having a patchwork of features, optimizations, or bug fixes
-> > that either are or aren't supported depending on whether Rust support
-> > was specified at build-time seems like a worst-of-all-worlds outcome.
+> > A hard dependency on rust for Gentoo amd64 would potentially require
+> > building https://github.com/thepowersgang/mrustc followed by building 13
+> > and counting versions of rustc in order to get to the latest version.
+> > What is the minimum supported version in this series, by the way?
+> > 
+> > bin packages for rust do exist but not everyone wants to use non-distro
+> > provided binaries, sometimes for auditability reasons.
+> > 
+> > 
+> > For Gentoo HPPA, Alpha, m68k it will simply mean the removal (or end of
+> > life and staying forever on 2.50, perhaps) of Git. There is no rust
+> > compiler there.
+> > 
+> > Even s390 support for rust is limited to a precompiled version not
+> > everyone is willing to use.
 > 
-> I definitely agree.  I already find it terribly inconvenient when I end
-> up when `git grep` doesn't support `-P` and I imagine that having lots
-> of features that weren't available would be bothersome.
+> Also in other distro concerns, if it trickles down to libgit2,
+> extra care should be taken to avoid creating circular dependencies
+> due to cargo depending on libgit2 (via git2 crate).
 > 
-> I also think that using a combination of C and Rust will end up with us
-> still writing a lot of unsafe Rust code to interoperate with C.  If we
-> want to reap the benefits in terms of memory and thread safety[2], we'll
-> be better off sticking with just Rust.
-> 
-> I will also say that while it may be more challenging to compile Git at
-> first on Windows, as we move more towards an all-Rust codebase, Git may
-> end up being easier to maintain there as we depend more on the standard
-> library.
+> For example with making sure it can reasonably be built via meson's
+> Rust support rather than through cargo.
 
-Fully agreed. I've said so at the last contributors summit, but I think
-it would become awfully unmaintainable if we retain two implementations
-of every subsystem that we convert to Rust. If we decide to use Rust I
-would strongly advocate for going all-in.
+I think it's unlikely that this eventually trickles down into libgit2.
+The bundled versions of xdiff have already diverged for a long time, and
+unfortunately libgit2 is mostly in maintenance mode nowadays. So I guess
+that this change here just means that things will diverge even further
+in the future, which is probably okay-ish. After all, the whole xdiff
+library didn't really evolve in a fast pace over the last years.
+
+That being said, there is an xdiff fork located at [1] that libgit2
+maintains nowadays. So if the Rust dependency ever became a problem for
+any of the downstream users I think we could simply redirect them to
+that fork and make it the canonical upstream for C-only xdiff.
 
 Patrick
+
+[1]: https://github.com/libgit2/xdiff
