@@ -1,101 +1,105 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DCB115530C
-	for <git@vger.kernel.org>; Tue, 22 Jul 2025 23:35:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9216288C06
+	for <git@vger.kernel.org>; Tue, 22 Jul 2025 23:52:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753227342; cv=none; b=YGRgVgndqSbMUhImh4J7gRt7vOevqZaO1G3o6K9Mu8Kxd7rtLMkHT6NyQm8xpGJpO0+lTYoCfujvUy9itALGrYrEIvdIMCKWE9eeK4YplVDyGSZ/tEhlt5rGNsnPK4VQX9gB4GDiQ4xsGiFi+0eUamOg66Bm5L9kipOMNqJnwwk=
+	t=1753228367; cv=none; b=tLtzzSerpxh8zdY3Sun4L0h5AhKo2YaJ9kR/10FBddX8BWlVvOVzc8ogvN+unU9l+GnGnMn92vXfoELXfeqKmNCFtp1uWEHBQL8JAdgonFl8G7BSCUkRy2x1klkBz3fcd+uizujw1VqLXdIkMfMCBhAhQmsbU0g8hV6zpnuqEG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753227342; c=relaxed/simple;
-	bh=CPzfmhENCNRPp7GZOiHr4rgnb4ao3jSxlb/SX7LfJak=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tTIiI6aW+/fjTw9zroCk+5vnLLBgUDu5GPv9ckkrBxO1BFZkv+/+gybCPeRds3VxbByFCDteVXdCBLamWLz8RgZZ0l6qX8xwcMnYEI/dZth8VxG4Drk0kQUa7VX7WlDaDrlHS4riKvl+33hKPBk6Gnhn5yXeicKPAxNRiI5CjpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BCkiqLeS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cWj0RJQM; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753228367; c=relaxed/simple;
+	bh=Zc8MgHe6QBdwnRyd6DJsWvni1K/jzi+7jOEzs1Lx/Gs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Rjqv69Jb7fpJLAWzHZL0or9ZP4S8Qx75f0X3liN5B31Lw6xjlALluKN6s9eBSM75E8+AY/deaCxg7dVsNgevzTeFKcyldDU5Acize/E2zlXQuXnTSO/NzTc3+XYu0sFiH1MGgJ2FsLnIQSp30z2uYOlq5WWZ76yjSf9RS+bCgps=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=JHcJdh51; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BCkiqLeS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cWj0RJQM"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9B101EC00EA;
-	Tue, 22 Jul 2025 19:35:39 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Jul 2025 19:35:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753227339; x=1753313739; bh=CPzfmhENCN
-	RPp7GZOiHr4rgnb4ao3jSxlb/SX7LfJak=; b=BCkiqLeSoj5Lt+xf6aWMoLcVmk
-	LMiKY34blkJiy4TsIJgXvuYdcsGyTaSt3becLnnu0k0D/87T4oKxib4NxmLDNp91
-	4WdV4LoGncWdfUB8cqsmiwt6W8C1bHhknffWILnkNet9dGdmV4fkk+TVcDskbcNo
-	1Hu7x1GdB8GGKNfSNiBF4bGR8fS1KQOurLqiP8ksMP9t6OZZrqm27m7RlvifGMDv
-	ffIm82IIwPTtHBM7HvwGDobeWD3Nfqda751EhXyDEqp06sPVrSqlpEwfkCvtCRVF
-	ToXehpsJcPeN0o7mpRvaujsIK9v515GN4ohn+uuaiNHN18wWhcGBVQv21sFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753227339; x=1753313739; bh=CPzfmhENCNRPp7GZOiHr4rgnb4ao3jSxlb/
-	SX7LfJak=; b=cWj0RJQMq+BwzG9galjSslUtZU8hb7XjxQbC4NKH7z78iZ8aWQk
-	xUZDSngiQCkXdipwjNElt2ancP18Cl+1/TOMi2j6pXfbBbFb9Zuy386Isv3hMNyL
-	TW9DHIyEf9tf40bM32gH2pKByWaqFz+5VBpn8snNXKYKvm9V64vAny7fBd/JFMtz
-	yphMzfbRPrF5G2aIiw6Bt2WM1mPGpSKt9z+2CEnBUP98NPW0r5LxvxKxvDtP4M8V
-	PG0VeBegt6lnXpNWQ6R5/OV5l98wSFVH/STOMDnsAIsy7VBxeV92H5YgLeTz6CpG
-	x6HIPXRVDZFI8HZULt/jqzhiMohvC1i/+Jg==
-X-ME-Sender: <xms:SyCAaMhfHXDuy-9GU0fAV0TxsZ3rEK4P5gF9fuq2OSzrRq6KTPerag>
-    <xme:SyCAaAgLAoDcPkwDvKeb374l5OTK-Y_C5GndP3H4ls-Cp8r71o96ztcz9YgJdGrcE
-    nGXLoh13BCLOHnnRA>
-X-ME-Received: <xmr:SyCAaKgMyfc0UWscU9hW5pODBfa4rY9h9Gmb8qsD9IfMw563FPFfQny693jsXCYnBSGAu1JjtmRulhnC0H0m8gAqTrGQRfD9HbkvNBM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejiedvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtg
-    homhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvghllhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SyCAaIIQ77HnjR8LBy9Obt51Ue27F46W46Pq1E8C0C-OkIVJcIk6Tg>
-    <xmx:SyCAaBEtc4N8zLsTgTdUCa61nha_m33-6vdvkRGSaFT2UcPsv0ZWSA>
-    <xmx:SyCAaES-bBKoxrWE_EtsFRLhZeGBQKQs2EDN3pzLQ5B05n9SmhMBVA>
-    <xmx:SyCAaFdcX-FJ5QyIrAc0O-z9VPumVMB2AG2uAFzjQJHEulilh2MSAw>
-    <xmx:SyCAaPmpKuh1m9OwvHvdQN9k4Jw9eUMGT_UnCv6CpflDWjEbSgVb3q7y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Jul 2025 19:35:39 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: Jeff King <peff@peff.net>,  <git@vger.kernel.org>,  Jacob Keller
- <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3] reflog: close leak of reflog expire entry
-In-Reply-To: <72f13c54-d5c7-4366-bba2-b641d9e2b0c7@intel.com> (Jacob Keller's
-	message of "Tue, 22 Jul 2025 16:22:35 -0700")
-References: <20250721-jk-fix-leak-reflog-expire-config-v3-1-c488b0586e80@gmail.com>
-	<20250722045456.GA824456@coredump.intra.peff.net>
-	<fd14c857-63a8-41e7-8361-bc816d4a47c4@intel.com>
-	<xmqq5xfjrew1.fsf@gitster.g>
-	<72f13c54-d5c7-4366-bba2-b641d9e2b0c7@intel.com>
-Date: Tue, 22 Jul 2025 16:35:37 -0700
-Message-ID: <xmqq1pq7re7q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="JHcJdh51"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1753228363;
+	bh=Zc8MgHe6QBdwnRyd6DJsWvni1K/jzi+7jOEzs1Lx/Gs=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=JHcJdh51AWZ/80zMfHLocLIFY8OF2rBJk2Me6mugGo0WY0iT7/aVxjzVowdJG5cSw
+	 2OvIylu9tdMoG7XSRBTVn3cxO9Ty7gPWDZR1zh1y3YWePzyf2T949vQEIWe6dqqo2h
+	 Kw9DWPmHSUM5xVTq5fbeKtgHErdNFXiUdLi379C6Ub0VNbpD8xMnKbwIso9AOd/4LP
+	 1otgFABJ6V5Y13hmtQt7DjV9Cj+JEOf62ZckBHAH5oRSzoHR5YW8BBmIKHDmsagjRE
+	 aj6cbxYNP/pVAyV9xRI0LfkmmqR7ooF1Z3s+zRENMun71iKjvGXyFi52a+GOOExPw7
+	 RYEVYVnW1cKdHCr0yPoatLogFtyThvJ3bqKVVcjdifvvTZBtZP7OJJcIM4Z/50PjMl
+	 APW7LtcMSfcgF/hTM9jYVhWAkwQceP2CsPVzezsYBx0paxpdpe++gVrCLRFdP2DokD
+	 IPFbild5t1rfxVo9tJnNLJ7svjW0P/c5LJWj7mofS/MhloKWluq
+Received: from fruit.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:e00e:6194:ba6a:22b1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 616EF20079;
+	Tue, 22 Jul 2025 23:52:43 +0000 (UTC)
+Date: Tue, 22 Jul 2025 23:52:42 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Mike Hommey <mh@glandium.org>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+Subject: Re: [PATCH 1/7] xdiff: introduce rust
+Message-ID: <aIAkSiPeDy5MLe4N@fruit.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Mike Hommey <mh@glandium.org>,
+	Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Ezekiel Newren <ezekielnewren@gmail.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <2a1f4be13dfbdee21811b7a4907f99042c791c2d.1752784344.git.gitgitgadget@gmail.com>
+ <aHlrg7pbFqi2qNWH@fruit.crustytoothpaste.net>
+ <20250722220233.7rdako7zjwyjqlmv@glandium.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="DKkN+zoV4qFXBTv7"
+Content-Disposition: inline
+In-Reply-To: <20250722220233.7rdako7zjwyjqlmv@glandium.org>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> I am about to send a v4 that squashes Peff's work in and adds a
-> Co-developed-by tag. I think that makes the most sense.
+--DKkN+zoV4qFXBTv7
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-That's fine, except that we do not usually use the phrase
-"Co-developed-by" around here X-<.
+On 2025-07-22 at 22:02:33, Mike Hommey wrote:
+> On Thu, Jul 17, 2025 at 09:30:43PM +0000, brian m. carlson wrote:
+> > I would prefer that we not check in Cargo.lock in Git.  Part of the
+> > reason is that it changes across versions and so building with a
+> > different version of the toolchain can update the file.
+>=20
+> That actually doesn't happen unless the file needs to be updated for
+> some reason, like Cargo.toml having new dependencies or `cargo update`
+> being run.
 
+I've actually seen several cases in my local Rust development where
+Cargo wants to update the file despite it not being necessary and
+`--locked` simply refusing to work without good cause.  Perhaps those
+cases have been fixed, but it has happened in older versions.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--DKkN+zoV4qFXBTv7
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.4.7 (GNU/Linux)
+
+iHUEABYKAB0WIQQILOaKnbxl+4PRw5F8DEliiIeigQUCaIAkSQAKCRB8DEliiIei
+gQvkAP0Qm4LoVgS5UJQD5rfhFasb3wPvKEvJLRT0d1vEZVb0ZAD9HMioFK6g3yIN
+hRXkpFZm2qhP9vVpfvaSBAJrQtpIGgc=
+=pl2t
+-----END PGP SIGNATURE-----
+
+--DKkN+zoV4qFXBTv7--
