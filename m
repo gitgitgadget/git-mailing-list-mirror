@@ -1,131 +1,165 @@
-Received: from mail-pf1-f195.google.com (mail-pf1-f195.google.com [209.85.210.195])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D06AF27817A
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 08:00:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.195
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CED1617E4
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 08:06:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753257656; cv=none; b=CGWcfNkJW+cD1CJdQEsUtuAEV1P/0G6xMI3bPifgsDHx2AVizcdEjUzds/tNGtHBM8BYE1K+ONAkOupazqeZP2PzKAlsSzeZvW8YSGeEm0Ik0Y9s1Ya3MgmHo7LZlJOmJLVNbmoV0XWUQECJD4UZr/B7fZ4ehcgkK7BtPaYWGgo=
+	t=1753258003; cv=none; b=LR2dD/q4UMgdXIhCYootbowPS0kUUdXazI3UoyXzedpfoZBsTTGefS3i1tx6zU18hKAi4zKa9Lner3OPxoD8XqT6W78+OcDullA8l04ZY1oFcrCTZyHvkp6jJd2OrvhSjR2z2GzOmIRpFV/qg14AQ+d0S1JFFK5uStk3xB5ZvkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753257656; c=relaxed/simple;
-	bh=GH/2vY9LJhAA7US95BD5UWxFWJt+b1pl3MypanRM2HU=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=remrc7MhenMjp71uz11kbhI9LdY2yKEXNEE8wdusHSrLi2ZJwmtWn98fMYGp7+hFRWpEQ2QL57HU58lusrl5MB1ht5RVn4Tv5sT/SEOH+hM50eHG8UeBuTJxlhr2FRyxtF+emUtfUAj6fVhONyc4TglnKFM00XjAlL0traJOI1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EGPcaztm; arc=none smtp.client-ip=209.85.210.195
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753258003; c=relaxed/simple;
+	bh=OUlo8puVhqgIhT3HBXv++EcH40q+/v54PG7jlXqWRj4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J3JH20lV8TpaFZ3xoyrOql/OXILWMhc0FMcp1bLlboQ3pVTuLHaOXCTkc7eKJuP9GvCbiM4RJxq62s6rdY0kVCSVJwIcjRV8xb5yX0MZ494awwlk3MCP99v/SwDgSSwGiQjC3c6DAhohw29uAJpfU8+fMkTJKU1HnR8tnyQiUvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=DTTBh08z; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EGPcaztm"
-Received: by mail-pf1-f195.google.com with SMTP id d2e1a72fcca58-748e378ba4fso7435707b3a.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 01:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753257654; x=1753862454; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=GH/2vY9LJhAA7US95BD5UWxFWJt+b1pl3MypanRM2HU=;
-        b=EGPcaztmcvaHwhdFxrumMmzyFUt9rphBhuzG1iExYMKs9eiqSy05R7FUhbpeHAxl3z
-         fDobuSr0759GR27WGj7cEX8nbGxTeez+6L0NzjXcrn58w5zNNg0uPkMCTAS4IgyH6ePv
-         6nUdu6Vlow9UVHrmE7TuECDUw6i98dXSV9q7rGQJJ3Tord8GaT3VDTRnATwlFYNBBG60
-         soUgOcYg+Bo5oFHnpal3eK2BjIiVzyKMtgXsZ1Z4eBkUGLA6PNheF/Gp3qkdLsKOdria
-         1j+L7jMLgMPi7nRUVdoi1uV9CPThXwmeZGDYhNGMaB5esAwD8LnohJGtFUzBMTvqZeur
-         vF3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753257654; x=1753862454;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GH/2vY9LJhAA7US95BD5UWxFWJt+b1pl3MypanRM2HU=;
-        b=g1mSNrFhD07LsZG0z4jAZqqyy2A1ddGBkd1KWYQfx/XHoQI+301h3qxdSLpRpZ0N2S
-         NitAnPWlWkaLSOoQKzOOp79yJkSLYZZbDObaxNlCQ2H7lYm6RGxXGgiVnaKg1KmSJZXQ
-         hQwJNiG1UM2BkoN2drsFtocKtbhSpk7iJkq7lhdFeg++RGdJ+rycrge3hd5o/rVesmqc
-         nHRu4TBjURQ/yuBcC/Hlz2aRS5KGkMwk6AZh64r9pCLk+iWiNem0yVVSHx2XVfPoTYPe
-         +6/6XvnJdwsHcDb6vdhRFZWyfdzhWyHUpLpDkmMf//tZAGO8n/xFJOywVumbgOuA64YO
-         9DYw==
-X-Gm-Message-State: AOJu0YxyQSio6d0NJ7qH2J0Y1FJG0yjPOHGAvTa9CElmB5A1Tma+6BZ3
-	mpCjWiv4wmG+0iSd6bslnd181zZkVEEZFqanOGa6a0kSozFN5yaztOxtb2CKExA8U0U=
-X-Gm-Gg: ASbGncsFn0yGz6oT+K+lK4zradzx8LZMEUcHdtxDWGs3UecCzgVSPoTvEHqHSwAdbld
-	RAtO6IqzzOv9APobzm3bOpW7bcbJkwIGo765sCSyd1Zr6lW5lHNsFVUdvKlT4jhNriwqbumGcJ6
-	Ok8iS8kP3Xj6QTx+V683LvVzcKGRt2O8S91G+AEGCc+0M7bSW4kGmh+MoJTLFDm3C1zga4+63hD
-	BstndsGd1Gv2HneEDtDl2hN0Wnm7DtSb64XAykOLad8RSoIvQLVY8Um1ECKrGuETglL1UiHvHxk
-	BdUA7jkVtBNUVrXiuG9kgNq9dLIkDtK3DVC1AD04vZGUsHZ8a78duBR82IMQu9Yic3wSEWiMWdY
-	Nb6QaOrfabcRtq/Q3aOR70teMTssAEENcW5fqDxy5T6O8TnyBIBrEmv/K0D9JCtLt5z2sgmqjHc
-	bPDHciw/44vu49CsY8hEaIS/w=
-X-Google-Smtp-Source: AGHT+IFvL7JkQPc4mgm5gpsgz0vqiOHTGy3+dQgNmPwRo5A/w2PuzUal0BJxYjP+rymQBWUQVYo4Cw==
-X-Received: by 2002:a05:6a00:1491:b0:748:f406:b09 with SMTP id d2e1a72fcca58-760367de539mr3354364b3a.23.1753257653783;
-        Wed, 23 Jul 2025 01:00:53 -0700 (PDT)
-Received: from smtpclient.apple (awork062145.netvigator.com. [203.198.28.145])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-759cbd67ed2sm8957857b3a.135.2025.07.23.01.00.51
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jul 2025 01:00:53 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="DTTBh08z"
+Received: (qmail 4485 invoked by uid 109); 23 Jul 2025 08:06:40 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OUlo8puVhqgIhT3HBXv++EcH40q+/v54PG7jlXqWRj4=; b=DTTBh08zzXbFIW7bAqjDop3DDKJmrmUyBzz1hTqvcnmQCEmgiZv36VqE6Rf4vgkOT5gNKBOEzIZaGYdqmxGcBp+N1FaRgncV44VOp+RGZTpcoFjjgX6bwP/nkyatJqy7BK9riSuyYC3zJXkn86ONCzuUGKeSAZT0bf9efZPvlbaOXRbtbCT+ZJCfZatJ6dLSOKDSueMnLWpr89ZG3hjKQjstLC093oh5qNEJS/V16Lje85IfwM6B7NYRyWk3Xa8QXQqiSgHncb1s5nBM4B3xcK1Lr/sJ/UD97uyIxSy1z+4oG14SpiGGKIIPPz89dMN61H6nRZzYQH33dZi1WxwOcQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Jul 2025 08:06:40 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13180 invoked by uid 111); 23 Jul 2025 08:06:45 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Jul 2025 04:06:45 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 23 Jul 2025 04:06:39 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Hoyoung Lee <lhywkd22@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
+ and ensure safe cleanup
+Message-ID: <20250723080639.GA570920@coredump.intra.peff.net>
+References: <20250722174102.1876197-1-lhywkd22@gmail.com>
+ <20250722174102.1876197-3-lhywkd22@gmail.com>
+ <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
+ <20250723075513.GA570540@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: git-diff: --ignore-matching-lines has no effect on the output
- when --name-only is used
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <87a54v8nmz.fsf@arnes.space>
-Date: Wed, 23 Jul 2025 16:00:43 +0800
-Cc: git@vger.kernel.org,
- =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <12095AC3-BC38-48DB-95B4-394F9F7DE054@gmail.com>
-References: <87a54v8nmz.fsf@arnes.space>
-To: hi@arnes.space
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250723075513.GA570540@coredump.intra.peff.net>
 
-hi@arnes.space writes:
->=20
-> I discovered that diff output is not filtered when the `--name-only`
-> flag is given, it always lists all affected files. Is this a known =
-bug?
-> I could not find anything in the documentation.
->=20
-> Perhaps related, `--ignore-matching-lines` is ignored by my external
-> diff helper difftastic[1]. I'm not sure if this is an upstream issue, =
-or
-> if the way external diff helpers are implemented is related to this at =
-all.
+On Wed, Jul 23, 2025 at 03:55:13AM -0400, Jeff King wrote:
 
-The `=E2=80=94ignore-matching-lines` options is introduced in =
-296d4a94e72
-(Micha=C5=82 K=C4=99pie=C5=84 2020-10-20 08:48:09 +0200 5803) Since the =
-Git documentation
-doesn't specify how git diff --ignore-matching-lines=3D<regex>
-is supposed to behave when used with --name-only, I'm not sure whether
-this is a bug. However, I'm confident that this is not an issue with =
-your diff tool.
-The reason is that git diff uses the built-in diffcore_std() to filter =
-out diff file pairs
-that shouldn't be output. However, in the latest Git source code, =
-diffcore_std()
-does not filter file pairs based on ignore_regex.
+> I dunno. We are reaching diminishing returns spending brainpower on a
+> function that is meant to be somewhat quick-and-dirty.
 
-It appears that ignore_regex only takes effect when using the built-in =
-diff (builtin_diff).
-I'm not entirely certain about this, but if that's the case, then =
-regardless of whether
-your external diff tool supports --ignore-matching-lines or not, this =
-option is likely
-to have no effect when using an external diff.
+OK, I clearly could not resist spending more brainpower on it. If we are
+doing quick-and-dirty, why not just die()? The end result is the same,
+but per my argument in the earlier iteration of the series, that means
+we do not have to worry about cleaning up at all.
 
->=20
-> The behavior can be observed in git 2.49.0 using `git diff =
---no-ext-diff
-> --name-only --ignore-matching-lines`.
->=20
-> Best,
-> Arne
->=20
-> [1]: https://difftastic.wilfred.me.uk/
+Like:
 
-Cool diff tool
+ t/helper/test-delta.c | 49 ++++++++++++-----------------------
+ 1 file changed, 16 insertions(+), 33 deletions(-)
 
-Thanks,
-Lidong
+diff --git a/t/helper/test-delta.c b/t/helper/test-delta.c
+index 6bc787a474..769b68839d 100644
+--- a/t/helper/test-delta.c
++++ b/t/helper/test-delta.c
+@@ -21,39 +21,28 @@ int cmd__delta(int argc, const char **argv)
+ 	struct stat st;
+ 	void *from_buf = NULL, *data_buf = NULL, *out_buf = NULL;
+ 	unsigned long from_size, data_size, out_size;
+-	int ret = 1;
+ 
+ 	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
+ 		fprintf(stderr, "usage: %s\n", usage_str);
+ 		return 1;
+ 	}
+ 
+-	fd = open(argv[2], O_RDONLY);
+-	if (fd < 0 || fstat(fd, &st)) {
+-		perror(argv[2]);
+-		return 1;
+-	}
++	fd = xopen(argv[2], O_RDONLY);
++	if (fstat(fd, &st) < 0)
++		die_errno("fstat(%s)", argv[2]);
+ 	from_size = st.st_size;
+ 	from_buf = xmalloc(from_size);
+-	if (read_in_full(fd, from_buf, from_size) < 0) {
+-		perror(argv[2]);
+-		close(fd);
+-		goto cleanup;
+-	}
++	if (read_in_full(fd, from_buf, from_size) < 0)
++		die_errno("read(%s)", argv[2]);
+ 	close(fd);
+ 
+-	fd = open(argv[3], O_RDONLY);
+-	if (fd < 0 || fstat(fd, &st)) {
+-		perror(argv[3]);
+-		goto cleanup;
+-	}
++	fd = xopen(argv[3], O_RDONLY);
++	if (fstat(fd, &st) < 0)
++		die_errno("fstat(%s)", argv[3]);
+ 	data_size = st.st_size;
+ 	data_buf = xmalloc(data_size);
+-	if (read_in_full(fd, data_buf, data_size) < 0) {
+-		perror(argv[3]);
+-		close(fd);
+-		goto cleanup;
+-	}
++	if (read_in_full(fd, data_buf, data_size) < 0)
++		die_errno("read(%s)", argv[3]);
+ 	close(fd);
+ 
+ 	if (argv[1][1] == 'd')
+@@ -64,22 +53,16 @@ int cmd__delta(int argc, const char **argv)
+ 		out_buf = patch_delta(from_buf, from_size,
+ 				      data_buf, data_size,
+ 				      &out_size);
+-	if (!out_buf) {
+-		fprintf(stderr, "delta operation failed (returned NULL)\n");
+-		goto cleanup;
+-	}
++	if (!out_buf)
++		die("delta operation failed (returned NULL)");
+ 
+-	fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
+-	if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
+-		perror(argv[4]);
+-		goto cleanup;
+-	}
++	fd = xopen(argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
++	if (write_in_full(fd, out_buf, out_size) < 0)
++		die_errno("write(%s)", argv[4]);
+ 
+-	ret = 0;
+-cleanup:
+ 	free(from_buf);
+ 	free(data_buf);
+ 	free(out_buf);
+ 
+-	return ret;
++	return 0;
+ }
 
+
+I'd guess that one could probably go even further by replacing the bare
+pointers with strbufs. And then you could use strbuf_read_file().
+
+Incidentally that would also fix two minor bugs I noticed:
+
+  - passing st.st_size directly to xmalloc() is wrong, because of
+    truncation from off_t to size_t. This should use the xsize_t helper.
+    This is even a potential security vulnerability, but probably not
+    important in a test helper.
+
+  - likewise read_in_full() might return a non-negative value smaller
+    than the requested size (if the file racily changes and we get an
+    early EOF). But we only check whether we got a negative error value.
+    So we may read fewer bytes than expected and feed uninitialized
+    garbage to the delta code.
+
+-Peff
