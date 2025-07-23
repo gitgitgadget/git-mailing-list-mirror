@@ -1,134 +1,117 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D40CE2F4A
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 05:17:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6985918991E
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 05:28:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753247875; cv=none; b=SUTX8z4KBUl3h4ZxLOOJu4esZ0uqcZcnqktn/OtPwN3jRU5ZUdo9Q8rGqwqf+o2t601U7cRI7Gbgj382hXqnmJqIbzca7iUDXavxp0BJJdW/kMqj6WrNPhnSh2uaYLe+HPqomfHxN2qy1lhso4q0L0vWxbJe0BQEcBcyBOChUE8=
+	t=1753248494; cv=none; b=KC0cE5QXDL+Rw/xbGzgajKxg7/U6PzNOAf35XTsxlNMci1uUFJdhdT7bH4Ievng6E2anNqrJeMdhpCQ4ks5K/MhxY1AsPtQ+F8zNbYCFuzz6xp1VjPB7MQ4akblxWnQmtKmM7kEU2V8+vZts2xhLgJZcBKbLpkFhSJpc5nqKTg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753247875; c=relaxed/simple;
-	bh=UMXGXJiUh0Edp2PeTj1UU2WAyjaji0B4cl8Tm4SeEr0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rsEc/vNfB0NxKCWslub9rYnfr9COK7hZFfq1Dw4QRE6tn0D5uD2Nm/fhOWWOt0V5Zi2t7logVb0H3TYI2n8j7uEB4AnaffQc6VZ89d2YLd5im8hTfS7THw0qQNIkifL/3A6jAAcFVeOgEK8q1rYWYj4pEiW93BWu9ZJY9kZRA3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SzpCp4UX; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753248494; c=relaxed/simple;
+	bh=sJD14RYcKDQNgY6+hiorqde8AuISxq+acDarQxLQLXQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=FxdwvJUvioj5HdoOTww60lIu2wskZ91ueUm4dk29Eq3/Ub/QSk2bpfbEgI2ZxHtA5IyuCvQ1syX1ckPjspFa4WlMyLZWwPdG++fdWN9pxSUjQbeuIhHYzHB/29WMsGGabPlZUbeCHqS+1WljF2dvm8tdapsUZ6vut25PiYlSA30=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=llt/WCDx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M1Z6QVSl; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SzpCp4UX"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-23dea2e01e4so76347235ad.1
-        for <git@vger.kernel.org>; Tue, 22 Jul 2025 22:17:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753247873; x=1753852673; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=1Yfo9g6PtQjBtacTWKS7nZOjgyG64SQCtX3r9z0oHKU=;
-        b=SzpCp4UX50CJqAxYbjVlwunm5TsR0vwQmFYqBfKPDhg9GcPFt/DYFiJIbULHxVhHqF
-         Eb2522qDTO4jqCvPU1tJPY0IHpe0jSaq/F2yL80EPI1F2HdmTtF9Jj+wB8qdzAN8iKzp
-         DCeaZ/wuUUiuyi2fF0itU5k2AHH0w5lSTAWkPKiz3qXX+EPWiEonrlMiQnChJbnSNkBQ
-         c2B2liWYE2CSxsqgDmDpU1G5rw2M5iiWAmEYGlySBsxl0InlYj1D69uXumec2xlWu0Dr
-         vM0y/IO3PCx7yEA86MtJDkYUo9RCd6HcAFEJNHVAxEhIaXCELPt7QQ7RAjVhk7hdrPgZ
-         FSLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753247873; x=1753852673;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=1Yfo9g6PtQjBtacTWKS7nZOjgyG64SQCtX3r9z0oHKU=;
-        b=p3TEsHpifx10jDAOmJ1rjoOB7dYrAfJ5X0QAwXS+PJSDH24+UklBVUkph/e8/4tdG6
-         HJlbaC62DAURJgNGq7VK8bsVSCUeJS6bBNbjH45+aRV6ITlCjQwqNFaZmQ1rLUD1+EJk
-         xzj/CIYl07FsflnIlPbcHKTDKoKWrOCarjpKKkDLys/Gz+KT2ub3LDAnkS042a/0nY5n
-         Wco95ggo6Lmum9BstIXs0h/TZnb9qPxipS7okW1h1mK+HxJOVtyZXggMLbK549/jYKpM
-         mw/WovZtjcwATTLFi0mPjsJxWC7jOQtfIK7YI4WuTDxnKTW2teE02l2/bcLhxMGy3k/j
-         6alg==
-X-Gm-Message-State: AOJu0YyJ85PY/waBm/3A4+0IlzMD50LeursUE1wgh6oKx9maW1eqtICe
-	5zxdPYy8g6HsKJkPn5q2x15m8iW8VBz4Bm/UwLQqi9fTo903Uiq3e58MWE76I4yw6vMdYxlDLC/
-	JgdI3vw1Fx9trLZIq+OzLifZKuFDXWZA=
-X-Gm-Gg: ASbGnct/RHUIuxswmQ76Fhw9xim98hbFevD7cPy8DMqN3ol5m0LFUF0Ml6wJbqOXpPP
-	zzfKVVZ00USK7VeHXMxTRUNYThuX9zta2Xd3gMwChbxU4NMWIgB68oFsiChjy8X4DnMZlfcaOJk
-	AuduTOtIlwb+U0i+AlRFbH67HmLO3BSAhfyeu4kRpGPqQV5RtgnI4DlUdXhQpAeKHpIufc5CCws
-	KRPAMYu
-X-Google-Smtp-Source: AGHT+IHOClOc7JFot78xb9XoNuN65S1DzorA9wjx/78RnL4I+S/3BjWkO0BUH7T+RzpflL+9NSSmjPgjquo8nwHx+W0=
-X-Received: by 2002:a17:903:1b46:b0:234:f200:51a1 with SMTP id
- d9443c01a7336-23f981328b8mr22942895ad.9.1753247872982; Tue, 22 Jul 2025
- 22:17:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="llt/WCDx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M1Z6QVSl"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 558F91D00103;
+	Wed, 23 Jul 2025 01:28:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Wed, 23 Jul 2025 01:28:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753248491; x=1753334891; bh=yn5oqwmqvV
+	O7uwJyYnmYwFewRQ7phICwL38LWl0/WIk=; b=llt/WCDxx7gFc71nh3pR3M8XU0
+	Uhl0brTdWBv84chXnLIavcafLoNqJaOjm/ND4cfxyuCD8KpaaceaEPbpPPhLinCN
+	W3hxKo5WmlmYsxkULBrtrPGyvp+wNjCV60t5eDTo/HaLgDTv5M4UrlD6lr/T8d89
+	rs/5Oj0KUKyKMZdvCBhVWr55lPkK830kuNxHu22qIb7q2JNel1erJqS4gtKZASbt
+	uCnDYiTyumVSr0F8uXuQbYk1+/eU3n8f3lvvgfvoZdjHQBdiTVRLYYHqTiuwuWJP
+	cWFT0qyV89FzkOhiZynYSrNEuiqsxAZKc/xysLkKcR36fegfHONwWbjRuLiQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753248491; x=1753334891; bh=yn5oqwmqvVO7uwJyYnmYwFewRQ7phICwL38
+	LWl0/WIk=; b=M1Z6QVSl8wc262flQLyCxMirA7hZoe0NhMEu5fES1/1ZWlI/lBU
+	DOFvxewduWgyj9E/L4Tv4IsF7rsjLMKHXt7VfRQmWWyxYAPd+C/wzMRWg20RH5Za
+	7eDWf33uYlvo5WETMmbfKjz8hUXJMtfuDnbELZilJOeQyICVXHNvzhyIvaP6GVe7
+	NDm6+jYmRJ8FLG+jMTp/atzLyUX21D8Tb5HEcUb2xjhJ2reIOufIybZtLaGcPYcA
+	Vi8FOtb5qU6gspOca2q11mfUCKpccFLXyuN6A7Y4CAuryvTQh1KACvMqysIkkdjJ
+	Utw7dETkEz120xdpSXCRNI6ASZFATMowvDw==
+X-ME-Sender: <xms:6nKAaLe7GYV5hyiRyOA7JrnzAzZLstHBeQXtP1Dt4jgN1zKFDpm3KQ>
+    <xme:6nKAaBZNmL0lQil-dQbQX0qph0t0ll_OOxD3PqmwRzTdS0JrO1pzO-dWTIx3pIwqW
+    0YvXpRHw_q_ytb_bw>
+X-ME-Received: <xmr:6nKAaGXfPNvY_2eS8iAxXBXeryRo4-nH1I2WvpPqaSlNk12iArBgTk-MOz8lsYvoJ8uOs2KI95DgqLbgddJuBP_A-jOBN5mxF2d5U_7Q1li7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejieelgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhinhhfvghngh
+    drfigrnhhgrdgtnhesfihinhgurhhivhgvrhdrtghomh
+X-ME-Proxy: <xmx:6nKAaLhZgnpaMvGc0hS4BrvheGkCd3KSYjd54967eK0IWvnwZS5moQ>
+    <xmx:6nKAaMVuUynYmqfPkEphpiE-Y5TXvXX8qIDPj8GpaE3Z-423VZo-QQ>
+    <xmx:6nKAaKPaO126Xv0VpDEbvg1aoH3Asy4MtJo3hKo56fm5B7LYFWbfxA>
+    <xmx:6nKAaAaBABPgEzXDu3_tO0YliFhvJHeFZTHBLWAAiDioxfr7iVdKLg>
+    <xmx:63KAaM0aIlCMRzTNRx-covjiMysXcV-ImBb_O6Nwn-Tg8mnzFku7G0Of>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Jul 2025 01:28:10 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f8192055 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 23 Jul 2025 05:28:08 +0000 (UTC)
+Date: Wed, 23 Jul 2025 07:27:59 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "Wang, Jinfeng (CN)" <jinfeng.wang.cn@windriver.com>
+Cc: git@vger.kernel.org
+Subject: Re: warning: ignoring unknown core.fsync component 'true'
+Message-ID: <aIBy3xH2eZsCZYiY@pks.im>
+References: <209ecbf7-0d53-4674-bb7b-3ca084edb761@windriver.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250627074934.1761897-1-meetsoni3017@gmail.com>
- <20250717075009.26262-1-meetsoni3017@gmail.com> <20250717075009.26262-3-meetsoni3017@gmail.com>
- <xmqqbjpi5y6w.fsf@gitster.g>
-In-Reply-To: <xmqqbjpi5y6w.fsf@gitster.g>
-From: Meet Soni <meetsoni3017@gmail.com>
-Date: Wed, 23 Jul 2025 10:47:41 +0530
-X-Gm-Features: Ac12FXw2Tj4HvPQz43ig7MRSeSWZfefGfHB5EHkpPWAVSjw_6Vg2N0p8dpIGMjw
-Message-ID: <CAPhwyn0wLrTy0MnNYdQvoVPXUz0PyXDB0MBsDHnDR_zgA8mZmg@mail.gmail.com>
-Subject: Re: [GSoC][RFC PATCH v2 2/2] t: add test for git refs list subcommand
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, shejialuo@gmail.com, karthik.188@gmail.com, 
-	Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, 
-	Kousik Sanagavarapu <five231003@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <209ecbf7-0d53-4674-bb7b-3ca084edb761@windriver.com>
 
-On Fri, 18 Jul 2025 at 02:31, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Meet Soni <meetsoni3017@gmail.com> writes:
->
-> > +. ./test-lib.sh
-> > +
-> > +GIT_REFS_LIST_CMD='refs list'
-> > +. "$TEST_DIRECTORY"/t6300-for-each-ref.sh
-> > ...
-> > -     git for-each-ref refs/tags/fourth-signed \
-> > +     git ${GIT_REFS_LIST_CMD} refs/tags/fourth-signed \
->
-> I know where your bias comes from ;-) but if this were
->
-> > -     git for-each-ref refs/tags/fourth-signed \
-> > +     $git_for_each_ref refs/tags/fourth-signed \
->
-> it would have been easier to read the resulting test, as
-> t6300-for-each-ref is and has been primarily about "git
-> for-each-ref" command, and the new test script that overrides
->
->     git_for_each_ref="git refs list"
->
-> before including t6300 would be a good demonstration that the new
-> "git ref list" command can stand in as its replacement.
->
-> > +GIT_REFS_LIST_CMD='refs list'
-> > +. "$TEST_DIRECTORY"/t6300-for-each-ref.sh
-> > diff --git a/t/t6300-for-each-ref.sh b/t/t6300-for-each-ref.sh
-> > index ce9af79ab1..74a030371c 100755
-> > --- a/t/t6300-for-each-ref.sh
-> > +++ b/t/t6300-for-each-ref.sh
-> > @@ -5,7 +5,9 @@
-> >
-> >  test_description='for-each-ref test'
-> >
-> > -. ./test-lib.sh
-> > +. "${TEST_DIRECTORY:-.}/test-lib.sh"
->
-> This is probably wrong.
->
-> Nobody promises that including test-lib.sh is and will forever be
-> idempotent.  While this patch may not give t6300 a serious
-> regression right now, I am not sure what future subtle breakage we
-> are looking at for t1461.
->
-> Probably this should model itself after how 8752d11d (git-blame: Use
-> the same tests for git-blame as for git-annotate, 2006-03-05) moved
-> a lot from existing t8001 to annotate-tests and so that they can be
-> shared with new t8002.
->
-> Thanks.
+Hi Jinfeng,
 
-Apologies for the delayed response, I was away last week.
+On Wed, Jul 23, 2025 at 11:07:37AM +0800, Wang, Jinfeng (CN) wrote:
+> For a specific git repo, when I clone or fetch the repo, I encounters the
+> warning
+> 
+> remote: warning: ignoring unknown core.fsync component 'true'
+> remote: Enumerating objects: 41, done.
+> remote: Total 41 (delta 0), reused 0 (delta 0), pack-reused 41
+> Unpacking objects: 100% (41/41), 37.51 MiB | 10.91 MiB/s, done.
+> 
+> But after clone the repo, I didn't see core.fsync in my .git/config. And
+> there isn't anything relates core.fsync.
 
-Thanks for the review. The suggestions for the test suite make sense.
-I'll refactor it accordingly and send out a v3.
+The problem doesn't exist on the client-side, but rather on the remote
+as indicated by the "remote: " prefix. So there's nothing you can do on
+the client-side to address the problem, you'll have to reach out to the
+admin of that repository and tell them that the repository uses an
+invalid value for "core.fsync".
 
-Thanks.
+> I also tried git with different version (2.25.1 and 2.34.1) to clone the
+> repo, both will show this warning. What configuration causes this warning?
+
+It's "core.fsync" indeed, but not on your side. The config does not take
+a boolean, but rather a list of components that should use fsync. I
+guess the admin wanted to just fsync everything, but in that case you
+don't want "core.fsync=true" but "core.fsync=all".
+
+Patrick
