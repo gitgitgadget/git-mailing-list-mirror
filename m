@@ -1,84 +1,170 @@
-Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212181F582F
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 16:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A3A2E36EB
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 16:44:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753288654; cv=none; b=nndhC+4GhHHFhilbXz2abj9j93gf/UgjIujcraMRMiJ8pvYAIa5w6kEMWYiR8Tx6nJy4A5gqDU8YEIxJKidi7Fp7EayArF6/8jo45c6jTatKO/xsERCpLArsNeykgEGNyLYLmszV3/hEUOIA/6891GlpgIOvawSkTxK5DglUzis=
+	t=1753289098; cv=none; b=Qj75sG2X3d/omOhS8Nxu5VrUkvQFW63RPN6yVqoUkdlt3Lb32FxSzGcqCO/CK4MmUzG1VkWy+AaeGIkUJt5WE6dSVdH8HVd7n+1Xa/6+mKxtZj39R1YXZ/etN+8G3nnzhFIMoesu5/tfgBUXW8rKZ+VPbrSux0cVFc0i6cPGPes=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753288654; c=relaxed/simple;
-	bh=e905i+kZoahaRPAOLEemIOMf4QcfI5ke67tdxm9nKVs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=TLlkyBtddCQx7QiYVXibzOWxHGlphocQ2XoRXoL7RZKKe+GzDXVB4BpkAB3VfFsVFehXdFDkVKuyQjJY8OiYxv73awkMilkoMFjpU4X7KQJlMgPDwoqBSJzuvfjmQNSDEt0uK5PENM3gE1gDSbN+/8Mn1sfn9PDnfBvQaxHVIA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-702bb5e3d4dso60726d6.2
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 09:37:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753288651; x=1753893451;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e905i+kZoahaRPAOLEemIOMf4QcfI5ke67tdxm9nKVs=;
-        b=ovqeszBkYyg6lRhm7wxAsG/5ldkSJB51dUwwI1maJb0pwis57boPu8SGrCrIq57L4I
-         bd8OUPdAhwJlxIMbfkiAUBhMlpuwcIC21A1fdUnSyDWtKFxrFI3BI0tDVFvZcQel5JVv
-         4gJ8DXFfLXlQ4x8EPQ5m5KyHjf4gK9tNs2RSI12C4dUBjmh+T1zUbQ24K/PPGFzwMyXX
-         leU8e3IobwlLljR5SQOjxXERqbtPAk+jxSX7GBihF+5MOYEfrEFoEJZchpN7DlmNOjy7
-         9pHr8GaNdd8uWeU4rj5kBes+2nIoqk92+7M+USTDb/MsQCK5MQVgkiZRUh7ased2QwXC
-         aBHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUx82gYh9Pt2rrgFtaCd29IyY1UWt30EpNfRM/ZClcV8QaxwTtf2apepp2+gw9ggaji65s=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2dfyFHZXObWZXQRLT9bzvOuY/WFTBbxOlfsdTdeTZZ/mjo1UI
-	D/5BBA/NkFymXfemIho9LVyuVlkwEoD6zJbpCeU4c/p7OGgGQSXDZNzP0HcY2qOnNuHtQaJw0Oo
-	F59i/qWcw4cTHxsPPCFCL29ZydsXau/5GaA==
-X-Gm-Gg: ASbGncuVbvsohdlQaeWzSVfCmv5pK3YvUz6VHvMAzMdxoJiUxovyFp8b/wl9svm2Kon
-	R4MkYknMfWn8TUzUt0BArmXfCFOT9EMtBA9OYdWcsF+x76YuQyqQic5CIlgNhHNCB/ipeFmH1gw
-	q1gytplubZ/Oy3DiD5dj9TiEcF3g02kff6NaVprsucQ/mUhyzZJMnGordHxZeA2LaUeEbW90VgD
-	1xt8g==
-X-Google-Smtp-Source: AGHT+IHRs5o4/UIR6HPvnRq2LX27aQcKLG7GXHrRXo0ZPANWlWw33PckpWHQAUh0Y3jZYp1xZRAiAPWgR7ASs/S2Fjc=
-X-Received: by 2002:a05:6214:29cb:b0:6fd:75e1:16e0 with SMTP id
- 6a1803df08f44-7070047e231mr22419656d6.2.1753288650818; Wed, 23 Jul 2025
- 09:37:30 -0700 (PDT)
+	s=arc-20240116; t=1753289098; c=relaxed/simple;
+	bh=cSYST3eipjlj40flOxGOrMqbd35iKx0n/86bgAK1lXQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mhXKiMedv9HLRNShorx0sHaXXMrcVupK5lr7FAB02opxeYg+nrj+SE1wlv7KUsS5I5TzHfvUQVLAaO489Jj8YovTezeNVEXmz3p9HSnBl8M3Ml8H2/odXilmssrW5rENy6k+rJopUSa7gjVCd/swGDXfH1Cr4S+Ul1DAFyKqLl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZDXyV5Pd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gVa+h+/U; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZDXyV5Pd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gVa+h+/U"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0F229140011F;
+	Wed, 23 Jul 2025 12:44:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Wed, 23 Jul 2025 12:44:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1753289095;
+	 x=1753375495; bh=e1UAmO/BUNWFTGFPLOiSkXky7HcU+llFzITkY3iINtw=; b=
+	ZDXyV5PdJR/iTUBnEB8LR4jXtYN/Oe3hvUvuikzlcXNtny4zBr4zBsuNvMsA8Gz6
+	EBI/UGbbLbLC+BLEHgUXd1+zhcb4ZjvcdUo0U7k/445v90UhARsZi/6jIAcVsAxs
+	0wttB0mL/Fk0if8OYxWAlrBjNEUOxAr1cXuSTiYCudTO8makRfUfwIRZO4BXEmzG
+	PLYwoysb39EKgYKRz0/2IxduFHBGDiK4Fi1N/UNaMyLWPM8jFKdeerYWNhaZ3xv7
+	M4Q4jLR7XUhZ+vtsuxB0w/FbgREG0Yg/fV64ADPqw3Oh1K5rvevVo5d8hLD3JBWO
+	lt7HZeTKkfOgsqq/5O/oHQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753289095; x=
+	1753375495; bh=e1UAmO/BUNWFTGFPLOiSkXky7HcU+llFzITkY3iINtw=; b=g
+	Va+h+/U2GF8wEcmE7aEgKhgdhyJHIYVhhcHAHbFnDAoa0VJKT9e0vvWpbitYCiw/
+	SfzOyqtFu1xYpIfqjq3xwaze8cyiUdfygiWD+/rhAYRfebKg+2VkMd43IrD3GzBi
+	9AwmC4FJ/eK8KVbSpC4XxGbqOzxOESkkBO2u+f1NunSQ9iVt3o/rxjXG4tDGQRI7
+	kSKYWTYk+t+0lzk6quvgrtxe9XUjSq8rLGnEfWAzfyi+xMpw9m6DYx2YBuqmmQ6d
+	1u+5F4ROiBj1KosQIGX/HAnLx3i4jzZyd2bBkFek9WgjPCAaShPSz2IDTe1zJ262
+	IWFhv0T0qaxCq/yojwyPw==
+X-ME-Sender: <xms:hhGBaHz93qa3ONjlGzQQHgAZwo8FfSARXJfkXmK0MtjScwLJsxH1pA>
+    <xme:hhGBaJ1j6Qij2jx5PP4-YKAt9Pv14AnPGXeyRD2iVccGQDRwKq2oY3RLNv44PSSBv
+    yonf2vKLupD24Vi-Q>
+X-ME-Received: <xmr:hhGBaN6Fuk4nTYEwhQ4H8iWPeglVEIGaFoIaGLyF_eR8zhjOg_mUiQuaYCQh5IhgfW61qleN1GhNWEU8gEDytusQJioEDQwIOCQ3lj8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkedvkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
+    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
+    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehs
+    mhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtg
+    homhdprhgtphhtthhopehlhhihfihkugdvvdesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:hhGBaEWpmbPMK1Q9EyYqOYcCByElf73lqpDi_7F2PQ2iDXB9vbaYVA>
+    <xmx:hhGBaEBes7Yq5EmMN08WwNCNDlC6EHZjATmH_IP-6r2vG_Lbs7AX3w>
+    <xmx:hhGBaL6099ugZUoUL2dmS-wLAooJwtkuHUnstmtu0yLZD9M7NM_alg>
+    <xmx:hhGBaHyPL7MuNv0iewwt8PTnLl7bGGcVzPbzw1ZyzIdNjNcS9RWIkA>
+    <xmx:hxGBaDAcvMc23SsOIOf8bNG0j_HOEtH4fT0DkzaSHmSDRf8BvnvOwoqY>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Jul 2025 12:44:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Hoyoung Lee <lhywkd22@gmail.com>,  git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
+ and ensure safe cleanup
+In-Reply-To: <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
+	(Eric Sunshine's message of "Wed, 23 Jul 2025 03:28:05 -0400")
+References: <20250722174102.1876197-1-lhywkd22@gmail.com>
+	<20250722174102.1876197-3-lhywkd22@gmail.com>
+	<CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
+Date: Wed, 23 Jul 2025 09:44:53 -0700
+Message-ID: <xmqq5xfiq2ka.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250722174102.1876197-1-lhywkd22@gmail.com> <20250722174102.1876197-3-lhywkd22@gmail.com>
- <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
- <20250723075513.GA570540@coredump.intra.peff.net> <CAPig+cQ2p3muA0-8O_u-rOW0uVGQ_ZE7hcz-7qq8M1U+PdvtpQ@mail.gmail.com>
- <20250723084624.GA580010@coredump.intra.peff.net>
-In-Reply-To: <20250723084624.GA580010@coredump.intra.peff.net>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 23 Jul 2025 12:37:16 -0400
-X-Gm-Features: Ac12FXxXAVMCSIvg1wYjTH973gyvfjhQjpvORDGBBRksL7h3y2vgefnKnZ01jFg
-Message-ID: <CAPig+cSzYPaBGZ_muhxwcNy4xWaMF5Uc0+SN7ygnS4wNaGxEKQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
- and ensure safe cleanup
-To: Jeff King <peff@peff.net>
-Cc: Hoyoung Lee <lhywkd22@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Jul 23, 2025 at 4:46=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> On Wed, Jul 23, 2025 at 04:11:26AM -0400, Eric Sunshine wrote:
-> > For completeness, I'll mention that I even had the thought that
-> > another "fix" would be to tear out all the cleanup code entirely since
-> > we _know_ that this function will be exiting immediately and the OS
-> > will clean up any dangling resources.
->
-> The reason we have the "cleanup" label at all is because of the memory
-> leaks. And there the issue is that we build the test helpers with the
-> same compiler settings as the rest of the code, so SANITIZE=3Dleak will
-> complain. So I think that is a non-starter.
->
-> But if you just meant leaking descriptors, sure, I don't think any tools
-> complain about that. ;)
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-At the time the momentary (but not really serious) thought flashed
-through my brain, I probably was imagining dropping all of the cleanup
-code; I almost certainly wasn't thinking about the SANITIZE=3Dleak case.
-But immediately upon seeing your idea to use die(), I recognized it
-(and liked it) as a superior version of my half-baked thought.
+> On Tue, Jul 22, 2025 at 1:41 PM Hoyoung Lee <lhywkd22@gmail.com> wrote:
+>> Initialize `fd` to -1 and unify all `open()`-related `close()` calls
+>> under a single cleanup label. This prevents undefined behavior when
+>> `fd` is used without initialization in error paths.
+>
+> It's not clear what this means. As far as I can tell, the original
+> code never used an uninitialized `fd` in error paths.
+>
+>> The cleanup logic now safely avoids calling `close()` on invalid
+>> descriptors and ensures consistent resource management.
+>
+> Again, it's not clear what this means. Although your previous version
+> of this patch did add a call to close() with an invalid descriptor,
+> the original code did not do so. So, the above statement seems to be
+> misleading.
+
+Great to see that good guidance is offered to new folks.  Yes, it is
+a great thing to keep in mind to describe the latest iteration for
+readers who haven't even seen the previous iterations.
+
+> Those issues aside, the patch itself has problems, some minor, such as
+> making the code a bit confusing or misleading, and some major, such as
+> calling close() on an already closed descriptor.
+
+>>   data_size = st.st_size;
+>>   data_buf = xmalloc(data_size);
+>>   if (read_in_full(fd, data_buf, data_size) < 0) {
+>>     perror(argv[3]);
+>>     goto cleanup;
+>>   }
+>>   close(fd);
+>
+> The descriptor is closed manually (again) because a subsequent open()
+> call is going to reuse the variable. However...
+>
+>>   if (argv[1][1] == 'd')
+>>     out_buf = diff_delta(from_buf, from_size,
+>>              data_buf, data_size,
+>>              &out_size, 0);
+>>   else
+>>     out_buf = patch_delta(from_buf, from_size,
+>>               data_buf, data_size,
+>>               &out_size);
+>>   if (!out_buf) {
+>>     fprintf(stderr, "delta operation failed (returned NULL)\n");
+>>     goto cleanup;
+>>   }
+>
+> ...although `fd` was closed, it still holds the previously-open
+> non-negative file descriptor, which means that this `goto cleanup`...
+
+Good eyes.
+
+>>   fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
+>>   if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
+>>     perror(argv[4]);
+>>     goto cleanup;
+>>   }
+>>
+>>   ret = 0;
+>> cleanup:
+>>   free(from_buf);
+>>   free(data_buf);
+>>   free(out_buf);
+>>
+>>   if (fd >= 0)
+>>     close(fd);
+>
+> ...will arrive here and the condition will evaluate to "true",
+> resulting in the already-closed descriptor being closed again.
+
+Very clear description.
+
+Thanks for your review.
