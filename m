@@ -1,214 +1,139 @@
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com [209.85.161.41])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4885225779
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 18:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DC351F03C5
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 18:26:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753294812; cv=none; b=ROVCACe6YfDJe7lHmPujjiPgWJazP0gYbwWIPEiZT5cQIPVQPyqZKv3XHVkLpRiN79ucv3aM2Re2w3k+52gA5efQE/Djrq3HKMIrZpbSKkHc6iiMf9C7+fsjEAapOlMX5YK3TodyF2zWjcVEwTkIqEHAc/7gyu1uLw48Gkfy5Ds=
+	t=1753295190; cv=none; b=u72meeKApW3iaBaY6Gr5ZT6rHYQO8hIui8Yk6zUBDxD6sNN3K/Ljw7gdlvpNBb1FR5f8Fipi1dJ+zN6rq+FDivorYHOpTF5SuHcLH4eyfEdxL+vY5uW/Lw5KJoRJ1h3k9ZKLb9XxZj/juNsGBD3H+V/eD/p+vMqA9FYcvSloBaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753294812; c=relaxed/simple;
-	bh=LSY+azS26PmtxS3obg2Rikb35BEvrrmISwz/jOzeLAw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hAEeWCv8bMPzSpvCKFJKaP//2/tkC//9cRJYayjvCjxV1/a8O52wckOhxZztViJSQFDMLxxFTxoAA1mJWWY3Ka8+VbZ/+INqX4I8IvtWaqPUO2uBBaCebbw3kHoSXr5nDruVZBSIBFQpvi3TowwOP2giTVVegnKQ7sHNuzVV3Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VbVSsO8+; arc=none smtp.client-ip=209.85.161.41
+	s=arc-20240116; t=1753295190; c=relaxed/simple;
+	bh=dD+kJ8vxIB+HLmq/2FKKoxAulM5NUgE6lL5BY7KGhBU=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=QYrZNnNcFoNtsrw1dsOghSzmGCs2T89ErszmooRZS4TJ2o01GbEbj0NrYh8Dd/Ay4zva313wCe4pnzaW71Qv6OBeQ53Lf4TIuQ83y6x3IIlPumuQ25uX9jHveqEV7MBRHV/mrWyFI/QpoO98hBfq0H6HkiXb2xh4IcSE+9LlXME=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uv2Xy81R; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VbVSsO8+"
-Received: by mail-oo1-f41.google.com with SMTP id 006d021491bc7-615a4b504b2so62663eaf.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 11:20:10 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uv2Xy81R"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-23dc5bcf49eso1460795ad.2
+        for <git@vger.kernel.org>; Wed, 23 Jul 2025 11:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753294810; x=1753899610; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wGHYdxH7O6k7ZcLl03CRJ7nsXGzsEJLfjRuMTVs+9jc=;
-        b=VbVSsO8+2FlXJ2V5Abaz8rC7b1l6dHCjifLBREmtRHGCG5/w4idlyIDylDsVc9VcEX
-         vjbXZgHUu2zi8txuRUr6FXnN5MjZaufEM5k51N5wK/fag/rP4mRQCPj/BvOgZ0tyy1OM
-         CVPDMcvug6SPA82H/WQu3kBPzdtza62kxEzvwHgRG9IpGKGkKZ0vr2/oAAhruKbLqlSh
-         Ni16lFutg9eIWGMbxQrUqqW+34TvIyRsX9xFU5aeziI48Ke13a6aCKah2N3FPreSW0Zo
-         M7HLAAbJhEtB8GweuXHZu9C7/4NCY7SNeW/bDSD0QESCSlzH4wkJcANR3tqg4k/n2J69
-         kp3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753294810; x=1753899610;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1753295189; x=1753899989; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wGHYdxH7O6k7ZcLl03CRJ7nsXGzsEJLfjRuMTVs+9jc=;
-        b=Dg+g1wNBSz4gcpGh1/rj6mbriBCVSlM+z+TjQc5kNYgo8WxP06ZAywWC2xMko8AHUa
-         DVyP56mA99RLu1OtxaAZjT7uDCyfrKmvw43/0FN6N1qLRnswtzSJ+lCQX0aXUm3BQaXX
-         Qzg87j1xpX4dNBhzP1GbQ5/ya6tJctSxVrlYd/SkISCFzCat24mJDBpUeU+0Qp06p0GL
-         IUw36ywmyye80KrNI4tf6dIWvrfkl/t48Je0Cpklh3FxdgFkst+GvGrxXYoYHOq5cJ/h
-         TUIgL2w7fLisD0u1DeUAUi6F5tTLQ1zQodzMRLaGvUEbrCJa3TGltiq1FS3JOGhqWwv1
-         gJhQ==
-X-Gm-Message-State: AOJu0YzXQmhZKLzxQ1uKho5kqoe41BGIcI4J8waYG6wqiVcktsVQG1MX
-	OW2/ScSXivGQD/VyclMORkaNJGHsYAb+lg80+QySJCkJLVR9wLh+TGnO
-X-Gm-Gg: ASbGncujKk90kY5hcrOnebP8PE3NN7Ayf3ZbQj8wsFzxT73X+6O/sFHuBnzoR72grZH
-	DjKuUkqjZOGGW6L9rlZipe/wPYTXWGX/Kr9v9MnoutpdNR9odK+2fwzO+t7L47nP9fqdg4qug+f
-	bUTBRwySCb2+WPLaceCL7+Z98XPyGWdVxGnvuZVJkuGDu+UAI5gh++tZm2YKlVYi6WnpruTHSN0
-	JchOZdp2EoIj372qQdr7XAphEk7EfdLEUNP0IIxrhOuDAGS2Jy0cX2dn1wARI61CUFdnz9Hd0HX
-	SprEC0N3J3NF+81l6dji+UU+cbqzyynQyIeVzQUXzyzZ3edm+ZWqAePOWbCHoR6GXtfkyA7gcNQ
-	jEibWZ6vDI5p0mR0=
-X-Google-Smtp-Source: AGHT+IHdJ11xn9+cfI2Rp7ai4svt7lJzGiZwUTbbWzLS6Itzp1cHl+5KSmu2plAxD8IGi7K/1hVGDQ==
-X-Received: by 2002:a05:6870:61ca:b0:2c2:30e9:b15f with SMTP id 586e51a60fabf-306c72006bfmr2774527fac.20.1753294809558;
-        Wed, 23 Jul 2025 11:20:09 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-30104256720sm5163895fac.33.2025.07.23.11.20.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 11:20:09 -0700 (PDT)
-Date: Wed, 23 Jul 2025 13:14:19 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 2/8] builtin/reflog: improve grouping of subcommands
-Message-ID: <32gvkjmjz6otqwpaxafmz5xuznowhn4iwcdyn52qhbvzohyih4@oeimg3xvqj5u>
-References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
- <20250722-pks-reflog-append-v1-2-183e5949de16@pks.im>
+        bh=dD+kJ8vxIB+HLmq/2FKKoxAulM5NUgE6lL5BY7KGhBU=;
+        b=Uv2Xy81R1WCm9Y2iXMXAM+Nt/GL3sR4rLuZSKTEHUbO+4bN6n78UiJ/+odexmTqIXG
+         g7ROkZZm2Y4my+acalVDisPUWmdDOUMj3NChjZnR+bArpLDJBaBpdXGssUzDSRMHmWEn
+         y6AeQgchkpQdXZ0l9usk+MTQJBGMMVqZ47Kp03guwqq5XImsC0RmZ5P1KcqtKLsX5OIB
+         1JlizTSsNEExlBrKHUs8rLD6yf+JalTRwgZkQrUlhfwTpkeDBmzaCbOitQwP8jiQZG1J
+         a4krp4fXRyliUN76rjPTFHFZ7UA6Ql33O+BCTwdo2wAxnVDiTh7XXq3kbw8DOt0MjwC7
+         uvww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753295189; x=1753899989;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dD+kJ8vxIB+HLmq/2FKKoxAulM5NUgE6lL5BY7KGhBU=;
+        b=QS+sBiFVItL4MWFq2dXLcf34uU1RzF3OTw1YIt6miBjl/0yHOb12GK6kHvGTeqXm0p
+         SNU495PhkClsswelbKw4FBkpmBr4b4GOlMhiONbf2oZaPKrqcK3PkJM3PLT4JGLDEoNa
+         xorc+oA+AJcf1CKgyFCi86r547LyrdMthuDojxFERvV/I6OuCyEsxyIWcYcRpBABxnqk
+         z5MEjuED1hu+VDE7Tno/fO8zvtzHHjm2dpjiIsozZ1P1ScXGbqqJCCLcSKD4ArgFvCjz
+         G7p853+o/dMYcIq3DLyf8LXRDC0nszmN12ULrZTtNUCHAwfHM6GnwdrQdAB0FpbljjU8
+         K7ig==
+X-Gm-Message-State: AOJu0YzXv46rJS3lHq+0ErAABdyeg5MkmhYScc2kdj2IW1Y8g1Z5kDVf
+	RSuy4jStGxJsCXprBNG6DcINvFvph39GNisf/2k0XBxEM/Jx4whs+qaFL97+KuDe
+X-Gm-Gg: ASbGncvcY0JgjBLLEl4JN9pts1X4SVGmITXVVytMmcWedrI+hFG8o/25YCG8JxCOZNo
+	b6m5KdzRIIhY4Gg9Lq7WKm2fUptUuEqqabWu+5vkdFdG11i6xTLaDkKA/IwhGunvtM6P3dFMq5O
+	OudvycTxgJoT4t9qbCNmTFCyWJB4IJRvxhsBN3wfHeDPTdaJP8r+Xqua9dM+h7ADj/Y1ZHB+CTd
+	gBsSKFK6V9dYiMdqjXa1fk8//iWaV4hq22YdiDUAjzMoMKJ8EBcgDUtOeqmZB3v14dikbBLEoq8
+	ZkIbomnqRR24rhcLPXock7pLGymLb5WvZCMNbkUh+/mCiVYQtB1yw69LGXuJ0S8RZJK98StOhNH
+	J/5OhAITbGFxiKEnl7ZAsOEnL5e2/tNHgBmrAZWh1KHTp+Uem9uVc7bKHS5iqCQ==
+X-Google-Smtp-Source: AGHT+IHYNtwqMnYINzDhtU0stAf+oV7wR7XYYcghmmFagExuPejQAILy1w69wOgsU+Az8eQWBPSTOg==
+X-Received: by 2002:a17:903:fab:b0:235:779:edfe with SMTP id d9443c01a7336-23f981b4139mr62808965ad.43.1753295188591;
+        Wed, 23 Jul 2025 11:26:28 -0700 (PDT)
+Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6eef9csm101299445ad.182.2025.07.23.11.26.26
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 23 Jul 2025 11:26:28 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250722-pks-reflog-append-v1-2-183e5949de16@pks.im>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <ldomqfgzts2fs3zuzuyfpsp4jsuec7a6ooisztqx6pe2373jzx@mqzh62weo2jm>
+Date: Wed, 23 Jul 2025 15:26:14 -0300
+Cc: git@vger.kernel.org,
+ oswald.buddenhagen@gmx.de,
+ ps@pks.im,
+ karthik.188@gmail.com,
+ ben.knoble@gmail.com,
+ gitster@pobox.com,
+ phillip.wood@dunelm.org.uk
+Content-Transfer-Encoding: 7bit
+Message-Id: <B2B2D8E4-DD78-4ACB-921D-A8747A0AB0CF@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-3-lucasseikioshiro@gmail.com>
+ <ldomqfgzts2fs3zuzuyfpsp4jsuec7a6ooisztqx6pe2373jzx@mqzh62weo2jm>
+To: Justin Tobler <jltobler@gmail.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-On 25/07/22 01:20PM, Patrick Steinhardt wrote:
-> The way subcommands of git-reflog(1) are layed out does not make any
 
-s/layed/laid/
+> Ok, so each key has a corresponding callback that is used to get its
+> value. This works fine when we have one operation/callback per key, but
+> I could see this being a bit inflexible in cases where performing a
+> single operation could be expected to generate multiple keys worth of
+> information at a time.
 
-> immediate sense. Reorder them such that read-only subcommands precede
-> writing commands for a bit more structure.
-> 
-> Furthermore, move the "expire" subcommand last. This prepares for a
-> subsequent change where we are about to introduce a new "write" command
-> to append reflog entries. Like this, the writing subcommands are ordered
-> such that those affecting a single reflog come before those spanning
-> across all reflogs.
-> 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  Documentation/git-reflog.adoc |  8 ++++----
->  builtin/reflog.c              | 38 +++++++++++++++++++-------------------
->  2 files changed, 23 insertions(+), 23 deletions(-)
-> 
-> diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
-> index 707a9b39edb..6ae13e772b8 100644
-> --- a/Documentation/git-reflog.adoc
-> +++ b/Documentation/git-reflog.adoc
-> @@ -11,13 +11,13 @@ SYNOPSIS
->  [synopsis]
->  git reflog [show] [<log-options>] [<ref>]
->  git reflog list
-> -git reflog expire [--expire=<time>] [--expire-unreachable=<time>]
-> -	[--rewrite] [--updateref] [--stale-fix]
-> -	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
-> +git reflog exists <ref>
->  git reflog delete [--rewrite] [--updateref]
->  	[--dry-run | -n] [--verbose] <ref>@{<specifier>}...
->  git reflog drop [--all [--single-worktree] | <refs>...]
-> -git reflog exists <ref>
-> +git reflog expire [--expire=<time>] [--expire-unreachable=<time>]
-> +	[--rewrite] [--updateref] [--stale-fix]
-> +	[--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]
->  
->  DESCRIPTION
->  -----------
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index 3acaf3e32c2..b00b3f9edc9 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -17,21 +17,21 @@
->  #define BUILTIN_REFLOG_LIST_USAGE \
->  	N_("git reflog list")
->  
-> -#define BUILTIN_REFLOG_EXPIRE_USAGE \
-> -	N_("git reflog expire [--expire=<time>] [--expire-unreachable=<time>]\n" \
-> -	   "                  [--rewrite] [--updateref] [--stale-fix]\n" \
-> -	   "                  [--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]")
-> +#define BUILTIN_REFLOG_EXISTS_USAGE \
-> +	N_("git reflog exists <ref>")
->  
->  #define BUILTIN_REFLOG_DELETE_USAGE \
->  	N_("git reflog delete [--rewrite] [--updateref]\n" \
->  	   "                  [--dry-run | -n] [--verbose] <ref>@{<specifier>}...")
->  
-> -#define BUILTIN_REFLOG_EXISTS_USAGE \
-> -	N_("git reflog exists <ref>")
-> -
->  #define BUILTIN_REFLOG_DROP_USAGE \
->  	N_("git reflog drop [--all [--single-worktree] | <refs>...]")
->  
-> +#define BUILTIN_REFLOG_EXPIRE_USAGE \
-> +	N_("git reflog expire [--expire=<time>] [--expire-unreachable=<time>]\n" \
-> +	   "                  [--rewrite] [--updateref] [--stale-fix]\n" \
-> +	   "                  [--dry-run | -n] [--verbose] [--all [--single-worktree] | <refs>...]")
-> +
->  static const char *const reflog_show_usage[] = {
->  	BUILTIN_REFLOG_SHOW_USAGE,
->  	NULL,
-> @@ -42,9 +42,9 @@ static const char *const reflog_list_usage[] = {
->  	NULL,
->  };
->  
-> -static const char *const reflog_expire_usage[] = {
-> -	BUILTIN_REFLOG_EXPIRE_USAGE,
-> -	NULL
-> +static const char *const reflog_exists_usage[] = {
-> +	BUILTIN_REFLOG_EXISTS_USAGE,
-> +	NULL,
->  };
->  
->  static const char *const reflog_delete_usage[] = {
-> @@ -52,23 +52,23 @@ static const char *const reflog_delete_usage[] = {
->  	NULL
->  };
->  
-> -static const char *const reflog_exists_usage[] = {
-> -	BUILTIN_REFLOG_EXISTS_USAGE,
-> -	NULL,
-> -};
-> -
->  static const char *const reflog_drop_usage[] = {
->  	BUILTIN_REFLOG_DROP_USAGE,
->  	NULL,
->  };
->  
-> +static const char *const reflog_expire_usage[] = {
-> +	BUILTIN_REFLOG_EXPIRE_USAGE,
-> +	NULL
-> +};
-> +
->  static const char *const reflog_usage[] = {
->  	BUILTIN_REFLOG_SHOW_USAGE,
->  	BUILTIN_REFLOG_LIST_USAGE,
-> -	BUILTIN_REFLOG_EXPIRE_USAGE,
-> +	BUILTIN_REFLOG_EXISTS_USAGE,
->  	BUILTIN_REFLOG_DELETE_USAGE,
->  	BUILTIN_REFLOG_DROP_USAGE,
-> -	BUILTIN_REFLOG_EXISTS_USAGE,
-> +	BUILTIN_REFLOG_EXPIRE_USAGE,
->  	NULL
->  };
->  
-> @@ -404,10 +404,10 @@ int cmd_reflog(int argc,
->  	struct option options[] = {
->  		OPT_SUBCOMMAND("show", &fn, cmd_reflog_show),
->  		OPT_SUBCOMMAND("list", &fn, cmd_reflog_list),
-> -		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
-> -		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
->  		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
-> +		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
->  		OPT_SUBCOMMAND("drop", &fn, cmd_reflog_drop),
-> +		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
->  		OPT_END()
->  	};
+For git-repo-info it wouldn't be a problem, as we return one value per
+requested key.
 
-Structing the subcommands order in such a manner seems sensible, but I'm
-not sure the pattern will be recognized by others that may add
-subcommands in the future. Maybe we could leave a comment that mentions
-the order?
+However, I plan to add a feature in the future for requesting a group
+of fields. For example:
 
--Justin
+$ git repo info layout
+layout.bare=true
+layout.shallow=false
+
+which, of course, is not what exactly you mean :-). But it is a similar
+problem of requesting one key and getting several key-value pairs.
+
+> I certainly see this being the case with git-repo-stats where, for
+> example, interating over references will produce multiple keyvalues
+> indicating the number of branches, tags, remotes, etc. But, maybe for
+> git-repo-info this will not be as much of a concern?
+
+For git-repo-info it isn't, at least by the planned set of values.
+However, given that I have plans to add the previous feature, I can
+try to make it flexible for doing things like:
+
+$ git repo stats object.count
+object.count.blob=123
+object.count.tree=456
+object.count.commit=789
+
+So you can use the same code for outputting git-repo-stats data. By
+now, I plan to finish the basic functionality (i.e. finishing this
+"skeleton" and adding the rest of the proposed fields), then I'll
+think about this feature.
+
+I think the current solution is simple enough to being refactored to
+support this kind of thing in the future.
+
+> If the user does not input any keys, we simply do nothing. I do wonder
+> if this is really the best default behavior.
+
+In previous versions it returned all the available fields. There was a
+`--allow-empty` flag that allowed to request no field.
+
+After the discussion in [1] we agreed that it would be better to return
+nothing by default and add a `--all` flag for returning all the fields
+(or a default set of fields).
+
