@@ -1,127 +1,84 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+Received: from mail-qv1-f53.google.com (mail-qv1-f53.google.com [209.85.219.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF6672626
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 16:29:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212181F582F
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 16:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753288143; cv=none; b=Y9Q5PeTKYHAgmOWIZlmh8HqWndnW9bRcTeTNw3oHIb96KZPkvdBikFMIhmty2mD1XRHA2WIKczfX4p9DlgLVR3nBQiffsTXUW1lI2bP0HCQ0pdwG6KN5lb+zuz/LkKEsJnZJezrF/QCBxe3bH2e4jKO2eF/W235wFzKA08dN35A=
+	t=1753288654; cv=none; b=nndhC+4GhHHFhilbXz2abj9j93gf/UgjIujcraMRMiJ8pvYAIa5w6kEMWYiR8Tx6nJy4A5gqDU8YEIxJKidi7Fp7EayArF6/8jo45c6jTatKO/xsERCpLArsNeykgEGNyLYLmszV3/hEUOIA/6891GlpgIOvawSkTxK5DglUzis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753288143; c=relaxed/simple;
-	bh=8f77/Kiy2ECu56MbdFwuMsOVSBrh2jdxp42YqL6Ugmc=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=pIUDmp5r2OLBCDC4sUlNDNE+Itp9/y+SS0N6bYcvUg27BAlFHKzg4GBSM3dXZcE2iiEt3t0NqOU9jWLFGAuIvkPSBw27y/euAt7sIy/4FexEgGaFYMhKDr8Au5J3HQTKv5qJcUjsGgn8mKy0HsjQ6F/68v5et9+jsf+HLgvzMTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BN60iR4W; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1753288654; c=relaxed/simple;
+	bh=e905i+kZoahaRPAOLEemIOMf4QcfI5ke67tdxm9nKVs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=TLlkyBtddCQx7QiYVXibzOWxHGlphocQ2XoRXoL7RZKKe+GzDXVB4BpkAB3VfFsVFehXdFDkVKuyQjJY8OiYxv73awkMilkoMFjpU4X7KQJlMgPDwoqBSJzuvfjmQNSDEt0uK5PENM3gE1gDSbN+/8Mn1sfn9PDnfBvQaxHVIA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BN60iR4W"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-23602481460so162875ad.0
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 09:29:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753288141; x=1753892941; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8f77/Kiy2ECu56MbdFwuMsOVSBrh2jdxp42YqL6Ugmc=;
-        b=BN60iR4Wp3fK9inHWr4WPtYN1HqKy/ixRovokAlcnERHxZL6BN5AqcTucOxtI7LexD
-         TTZShoWSjJF/D5mvIBhGT9LHnxiH+JdB5qUa1wn0kQqYW7xTfeyBSC4s06btgo+RWqpp
-         XTW8lJC+ZivO6jsjROTej9YLh8upt68Rt1IN4/DCU5HMLKrtxnpebKi/rI81sJ1fiVyP
-         hDeb8nTiJ0mT1yf7G9YVgIDAOaSeqLawpvKZa0l+lqCOnUeQo08DNNFSe5zLQBfNq9bQ
-         FkmYfQZ423oIINOp1spkTJSEB6Qgr4uvCfkVnSr3EZF1jEVxcTA5O0VCoZ9NenKXeFKj
-         NYvQ==
+Received: by mail-qv1-f53.google.com with SMTP id 6a1803df08f44-702bb5e3d4dso60726d6.2
+        for <git@vger.kernel.org>; Wed, 23 Jul 2025 09:37:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753288141; x=1753892941;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1753288651; x=1753893451;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8f77/Kiy2ECu56MbdFwuMsOVSBrh2jdxp42YqL6Ugmc=;
-        b=RtFFzOSJWNdFFsN4xOVbccdS3rMkTWviChc5HFb38cnFgPKbWsKiQnpOL4IDqB011g
-         RNB+xopOjHZfbl8AFg9P+5K5GktsGRNXiN0ioGx7lwKNU1LUbT7Ht6GIzHSwgifjjg5o
-         e8iZ2i/Ihwr0mzQhUfyAp7DVuxZz8g79z8SqKi/2U1JLA9/S2rjZVp7w3YsVVU54ne5k
-         bmxMlPuwCg2AMz9ZkK+m0hnYCN3Eja+N6HllBvYiXOsoN9ITtHewezVdk70h2wIE7ZKq
-         4zMiwZh7lVwHb0oENz4W/fv0OecFj+86xSSOpWhoYGFK8Wq2f8qptg6y7q93TEivr9jx
-         Q2Ig==
-X-Forwarded-Encrypted: i=1; AJvYcCVg1scWRBhoazQ17k4rFJKP6pzJYuP6m2FWVRPyU4OIZj8qdkQyJcIJwY48FwHzu/LyaW0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxSRwMeQV/1AgjdW6mXMIvn9zbTtm/+jEkFPSWo6MneMjwjdji4
-	Hb+HgxwhYTXbGFGn+wGl3EPiJTdbNj47g1dKjTUIqvggQzN/nX5hro3p
-X-Gm-Gg: ASbGnct4D3itXaYXUXFhO+6S+Xp0dbJ+nEqAN70b+FX3Bdd8VuRJkUp3k6CnLFXva2S
-	cBtvWSRC3vhFRbOKcbWmipurAcUHYyqp21Rczj9osfYgUc7BqCg9uvgYxbuiI1AE1AUwt1LYytd
-	aQa9vQu1Mn03y9Rfa/xThOMjep5PnYnJ99CN/xl+OVfAc2+gj89BrqvzFoZhP/RH09v2NZub2Tr
-	uGu2DzwZg3A/claTCT+PSE7d7uI6zHdSqBQaRbB3bakshcsWTE2h9NN2j41MgutfJ4Kt3XRn1IU
-	mL/TYQM9DQYlU/lisUYFBUZ72EuYy6mgqwUkp+/MPVEmYzHi4N1PvvYcPbOe2NaH+ZaZU0TrcBE
-	ZROMVf9F6FeE1B5tdmVf+CNQd+vPWIPuuFFNaS1RfOJBsVsiagkYRNX/f3CFMjQ==
-X-Google-Smtp-Source: AGHT+IFGhJQ2V2+DzOLyHhI/sSiunbcWDOYd4Flv2lz79C0LCfmCWyzY8ZC+xu2AAMUUmQ/E6v9MMw==
-X-Received: by 2002:a17:902:ef0f:b0:236:9726:7264 with SMTP id d9443c01a7336-23f98161fb3mr49893115ad.5.1753288141330;
-        Wed, 23 Jul 2025 09:29:01 -0700 (PDT)
-Received: from smtpclient.apple (nat.ime.usp.br. [143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23e3b6b48e5sm99608955ad.101.2025.07.23.09.28.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jul 2025 09:29:00 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=e905i+kZoahaRPAOLEemIOMf4QcfI5ke67tdxm9nKVs=;
+        b=ovqeszBkYyg6lRhm7wxAsG/5ldkSJB51dUwwI1maJb0pwis57boPu8SGrCrIq57L4I
+         bd8OUPdAhwJlxIMbfkiAUBhMlpuwcIC21A1fdUnSyDWtKFxrFI3BI0tDVFvZcQel5JVv
+         4gJ8DXFfLXlQ4x8EPQ5m5KyHjf4gK9tNs2RSI12C4dUBjmh+T1zUbQ24K/PPGFzwMyXX
+         leU8e3IobwlLljR5SQOjxXERqbtPAk+jxSX7GBihF+5MOYEfrEFoEJZchpN7DlmNOjy7
+         9pHr8GaNdd8uWeU4rj5kBes+2nIoqk92+7M+USTDb/MsQCK5MQVgkiZRUh7ased2QwXC
+         aBHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUx82gYh9Pt2rrgFtaCd29IyY1UWt30EpNfRM/ZClcV8QaxwTtf2apepp2+gw9ggaji65s=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx2dfyFHZXObWZXQRLT9bzvOuY/WFTBbxOlfsdTdeTZZ/mjo1UI
+	D/5BBA/NkFymXfemIho9LVyuVlkwEoD6zJbpCeU4c/p7OGgGQSXDZNzP0HcY2qOnNuHtQaJw0Oo
+	F59i/qWcw4cTHxsPPCFCL29ZydsXau/5GaA==
+X-Gm-Gg: ASbGncuVbvsohdlQaeWzSVfCmv5pK3YvUz6VHvMAzMdxoJiUxovyFp8b/wl9svm2Kon
+	R4MkYknMfWn8TUzUt0BArmXfCFOT9EMtBA9OYdWcsF+x76YuQyqQic5CIlgNhHNCB/ipeFmH1gw
+	q1gytplubZ/Oy3DiD5dj9TiEcF3g02kff6NaVprsucQ/mUhyzZJMnGordHxZeA2LaUeEbW90VgD
+	1xt8g==
+X-Google-Smtp-Source: AGHT+IHRs5o4/UIR6HPvnRq2LX27aQcKLG7GXHrRXo0ZPANWlWw33PckpWHQAUh0Y3jZYp1xZRAiAPWgR7ASs/S2Fjc=
+X-Received: by 2002:a05:6214:29cb:b0:6fd:75e1:16e0 with SMTP id
+ 6a1803df08f44-7070047e231mr22419656d6.2.1753288650818; Wed, 23 Jul 2025
+ 09:37:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <xmqqtt34tfna.fsf@gitster.g>
-Date: Wed, 23 Jul 2025 13:28:47 -0300
-Cc: Karthik Nayak <karthik.188@gmail.com>,
- git@vger.kernel.org,
- oswald.buddenhagen@gmx.de,
- ps@pks.im,
- ben.knoble@gmail.com,
- phillip.wood@dunelm.org.uk,
- jltobler@gmail.com
+MIME-Version: 1.0
+References: <20250722174102.1876197-1-lhywkd22@gmail.com> <20250722174102.1876197-3-lhywkd22@gmail.com>
+ <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
+ <20250723075513.GA570540@coredump.intra.peff.net> <CAPig+cQ2p3muA0-8O_u-rOW0uVGQ_ZE7hcz-7qq8M1U+PdvtpQ@mail.gmail.com>
+ <20250723084624.GA580010@coredump.intra.peff.net>
+In-Reply-To: <20250723084624.GA580010@coredump.intra.peff.net>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Wed, 23 Jul 2025 12:37:16 -0400
+X-Gm-Features: Ac12FXxXAVMCSIvg1wYjTH973gyvfjhQjpvORDGBBRksL7h3y2vgefnKnZ01jFg
+Message-ID: <CAPig+cSzYPaBGZ_muhxwcNy4xWaMF5Uc0+SN7ygnS4wNaGxEKQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
+ and ensure safe cleanup
+To: Jeff King <peff@peff.net>
+Cc: Hoyoung Lee <lhywkd22@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <ABD6739A-EBE1-4228-BDAA-600104726808@gmail.com>
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250722002835.33428-1-lucasseikioshiro@gmail.com>
- <20250722002835.33428-2-lucasseikioshiro@gmail.com>
- <CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
- <xmqqtt34tfna.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
+On Wed, Jul 23, 2025 at 4:46=E2=80=AFAM Jeff King <peff@peff.net> wrote:
+> On Wed, Jul 23, 2025 at 04:11:26AM -0400, Eric Sunshine wrote:
+> > For completeness, I'll mention that I even had the thought that
+> > another "fix" would be to tear out all the cleanup code entirely since
+> > we _know_ that this function will be exiting immediately and the OS
+> > will clean up any dangling resources.
+>
+> The reason we have the "cleanup" label at all is because of the memory
+> leaks. And there the issue is that we build the test helpers with the
+> same compiler settings as the rest of the code, so SANITIZE=3Dleak will
+> complain. So I think that is a non-starter.
+>
+> But if you just meant leaking descriptors, sure, I don't think any tools
+> complain about that. ;)
 
-> I also wonder who it helps to use <LF> as a field separator.
-
-Do you mean the <LF> between the field and the value? If so, it was the
-format suggested by Phillip [1]. I accepted the suggestion because:
-
-1. It's easy to be parsed
-2. It's easy to write (then I could drop the json_write stuff)
-3. It's already used by an existing command (git-config)
-
-> Once we require consumers to properly handle <NUL>, it does not make
-> it easier to write such a consumer script if the format uses <LF>
-> there, does it?
-
-Not much... Since the keys contain only letters and dots, any other
-character would work here, but I wanted to be consistent with
-something that already exists.
-
-However, to the best of my knowledge, we have several null-terminated
-commands (git ls-files -z, git status -z, git ls-tree -z, etc), but
-few commands that use LF as a key-value separator (I only remember
-git config -z).
-
-> Besides, wouldn't it possible that field may have to contain any
-> end-user specified key, including <LF>?
-
-In `repo info`, no. This way, it's safe to parse everything before
-the first <LF> as the key and everything between <LF> and <NUL> as
-the value.
-
-The value may contain a <LF>, however, the first <LF> would still
-be the separator.
-
-Thanks!
-
-[1] =
-https://lore.kernel.org/git/223c7cbd-610e-49e2-90e2-5914cbc0f1d7@gmail.com=
-/=
+At the time the momentary (but not really serious) thought flashed
+through my brain, I probably was imagining dropping all of the cleanup
+code; I almost certainly wasn't thinking about the SANITIZE=3Dleak case.
+But immediately upon seeing your idea to use die(), I recognized it
+(and liked it) as a superior version of my half-baked thought.
