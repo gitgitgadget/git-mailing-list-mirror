@@ -1,177 +1,80 @@
-Received: from mail-qv1-f44.google.com (mail-qv1-f44.google.com [209.85.219.44])
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C063A26C393
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:28:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5432F191493
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:40:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753255700; cv=none; b=gJul1T+MrHVTJ5n4gTHKUc0/2GUJ7dYbF9G/hw0iyqj7LEvziZGZDhXUeGCO03HPZzAtWz1kavkKK2ZCc8P0NmzXAsXcUXzWBfUbF+xB7bKV4eOUEtrvYuEP6WJQXBlBHKGfi32y5+lMk2kuEfqamY/+w+dXer9NQ75M1qHiecA=
+	t=1753256451; cv=none; b=MoYMCJES0lElTotu5HWT1dqd2k6ihZ5see9Fytb9nVkrAfSFSZEMWUTwHSokKqN+UreBX4bphnAwBOjRyVYWxyYSzfs3QF6ZWT3EsbJRB9fzY5GbZlvB7ITSDCstsQkJ722MMm8qk7n7B9sl04MQMZMStB2zHr/IC1ksWsBKNO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753255700; c=relaxed/simple;
-	bh=KdRO04Qg+Kqabn2K8gz9Qfdw5eQmXBfG+B8X7QwlFt0=;
+	s=arc-20240116; t=1753256451; c=relaxed/simple;
+	bh=DNF1/EtiHa3GleIMU9VXFif2eW0I/YyiNEjE/0fDX4c=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=F3eCnK91+Z2sQFaUlgrIOTfjEp3KZtqERoT0ub6uhbhoHmHZoTrczdDoBbpT8q1O/9zVRarmN3NlLo+r1sl1ySIMNAw0+IirbL9tEr8iyDqF7mIcV3qaJsc3+uUggX6RbMl7kFVlR1oNpdaU7MMbACUeD9lQjl2obk0t8iaMcfM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.44
+	 To:Cc:Content-Type; b=hGZcpL775WGc9+16qQQmGZ1bnSwpEu0bRh6KU4VuFJ3h+CS08tSVHEkIxv4GyolQU2jToLrPJ5R+XLmoe7hkafXcJrven7ldt1cwbKSO3DuPSXyLxqSDi0AS3xfDc3ovTLGwiddudPf9KhbrMAcrwLXaaGRhw7QGZyLA2+kL5hI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f44.google.com with SMTP id 6a1803df08f44-6fb1ded3afeso14119996d6.3
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 00:28:18 -0700 (PDT)
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6fb0ac80aaaso1164816d6.3
+        for <git@vger.kernel.org>; Wed, 23 Jul 2025 00:40:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753255697; x=1753860497;
+        d=1e100.net; s=20230601; t=1753256448; x=1753861248;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PFmy2afBzROPwexzsp1sdNX0H1hUV2J0tvM6U2sKZoE=;
-        b=p60+ygnpcpmQ5pMeOK0noweKwJybX7CNMozmE2bzvkZtQmrS/EmA1j2eGjYjYJWwA+
-         GgeyHHRff4l4TWG6ApjNCqCee9jTGVxF/fWKUls5Vy+UfGN6J51HmeCtHF7HB/vW9WxK
-         SDmE4HEPpNb4XXNNozqP6quJPJTFS3+vv+5dCVWvpEEWpnyi4od4d0U5uSKL4w5CV4/W
-         VDux/OilyjjPLh33CtSZMY9RCGOv4uGsTMHe17J/NQhP2j1ixVKvFs+sd0zMDOTD/gZA
-         2prXB9YKvMZ3A4XXqD8YLuO3N62oUnG3sjwHvoem1cZnOco0v8QaM0LKzi7qJHL4qfmj
-         cIDA==
-X-Gm-Message-State: AOJu0YyaowP/DiuSOBv6I4liAvDFYFDjZ/+N9HgKWQV+LX6quEqrbFeZ
-	CkBmje42W/85kqHB6EriRey5S2G+gaXNIARKVkJT6xiwlzkF/KZLzeeWvgiC0AgNDfinqsC197O
-	ZB/WZho316kPlEiAiLRvghYqM5OIDUfvyAKkN
-X-Gm-Gg: ASbGnct6u/1M4DbTyxgDrMq0TEUFuzpAtiRJnuXfjV81hqvaE6h80F2UT+VsM4qifFl
-	cT03k4NE1wIlT1kBT35VwFEIdxP8E/gXZkWcHF87ZcHOPwbynUg6+Z+NIk42Za7goZt2YBhk3WW
-	VfGRKZUUo75bKDoaYaP+mxPMgAcfNmkl7Phnf1yBPQXfiqP1O375sBXhOFR7KW/wqiWg8MPtXw2
-	UQsocprcO690tRi/wtw6ghl9em+TK5CTDrG5CbMQhpMFs26PA==
-X-Google-Smtp-Source: AGHT+IGAfxImdcXFpcYRCwpi7j9EmFOKOKn1iQvl0npBjkACOg4lIjNflw1LVq5NNdh+cetr/heAGpTGfiDXAZag5UE=
-X-Received: by 2002:a05:6214:d08:b0:702:c124:8370 with SMTP id
- 6a1803df08f44-707004b981dmr11683176d6.2.1753255697402; Wed, 23 Jul 2025
- 00:28:17 -0700 (PDT)
+        bh=VCdaPNTttqeK/2vSzENHeVcxL+6r6pQK5o/4b1XQXaA=;
+        b=X7E7JZMwyX07vycjl7GCf+S6ulQkj3/mewTXJcUf5AQfi97RafeCGBmxLuWP2Sg/l6
+         DL60bnmFBEBn2uCQKFqgInpw0WceltZy+2Ki3Sf8D0+cuMZGjdXQPQ2xXedMeEy5MMaA
+         jGIh29ykez/r3lCmaFqPagoVGIalEv9WCbAifVKkxCnq3UItCJIJbJDE9bI/QFo0uvFq
+         Aq2opiovQbw2DZR9K0dmHkQoK01MTuI6UkUIyUMUpWKF0M2ykjjDIhbN6DFrwBvtKgDT
+         KfYx7LHLEYrmOta3VDFTLdKIQ+mpHJDFiaLMc9J5xJvkFTP06zjT8HTXHgymzv4hZd1w
+         tEbg==
+X-Gm-Message-State: AOJu0Yywb0vURt+Q+/5/eVinfFu4wKhn4TETTAna0gqBNHA3RfOHO3Sn
+	umxngTDCt4vk6Bmc3/pmFkd+S+QkxKLkGC8B+kVejkXJD+h7w4iMDwJQPUHYOpX0OjZXGpsZ0Nc
+	wkQNvCWunbZ0DnpLYhLrWxemPJ6/dx2E=
+X-Gm-Gg: ASbGncvM45/RIx5w4qxCCy66x6SORnn7ELGKBQLUYXul6+ChZmood1IQL7/fEoxad8m
+	3ifrghVp4sZSUAWVArbzHdgjHXBqjqu/4GrxbAUlD19Ij4n/w9UGlFj5eubBF6iS4gT52bDPdbV
+	OJjNZWwSmEm5lFX+n8tMgX0UsSaAeE70aztp8es7+bZTljLCLmFJBhZHISNOKEWEUhGbEtDdZh+
+	vCV2Phsn109g/9w77mecQOK+AmD4aaT74aGJqc=
+X-Google-Smtp-Source: AGHT+IHegR004Ej6RghBKIMZvmeSq03uvkWf6/m5i7IJNqXgN4CqbvMaz/YlsMWobryfrYbbVFSDsoHZctpc6jVhmJc=
+X-Received: by 2002:a05:6214:1c46:b0:702:c2b5:67e9 with SMTP id
+ 6a1803df08f44-70700212da2mr10918116d6.0.1753256448167; Wed, 23 Jul 2025
+ 00:40:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250722174102.1876197-1-lhywkd22@gmail.com> <20250722174102.1876197-3-lhywkd22@gmail.com>
-In-Reply-To: <20250722174102.1876197-3-lhywkd22@gmail.com>
+References: <xmqqwm7zpxzc.fsf@gitster.g>
+In-Reply-To: <xmqqwm7zpxzc.fsf@gitster.g>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 23 Jul 2025 03:28:05 -0400
-X-Gm-Features: Ac12FXzD0q3W5PS2S-DTgP_3PoFG9HB2Q_TXX8cXe0NxZtcUALGM2J3mMSwMA-s
-Message-ID: <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
- and ensure safe cleanup
-To: Hoyoung Lee <lhywkd22@gmail.com>
+Date: Wed, 23 Jul 2025 03:40:37 -0400
+X-Gm-Features: Ac12FXz5YWAr4sypUmBkDnfBK69AWnJWg7Fep2jabF1gr3pJLTU8Hj0cHU3iir4
+Message-ID: <CAPig+cS_h8sC_hEp3zfsUOdP6aFOBucpOsa5TDGwoArHL85Wpg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (Jul 2025, #06; Tue, 22)
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 22, 2025 at 1:41=E2=80=AFPM Hoyoung Lee <lhywkd22@gmail.com> wr=
-ote:
-> Initialize `fd` to -1 and unify all `open()`-related `close()` calls
-> under a single cleanup label. This prevents undefined behavior when
-> `fd` is used without initialization in error paths.
-
-It's not clear what this means. As far as I can tell, the original
-code never used an uninitialized `fd` in error paths.
-
-> The cleanup logic now safely avoids calling `close()` on invalid
-> descriptors and ensures consistent resource management.
-
-Again, it's not clear what this means. Although your previous version
-of this patch did add a call to close() with an invalid descriptor,
-the original code did not do so. So, the above statement seems to be
-misleading.
-
-Those issues aside, the patch itself has problems, some minor, such as
-making the code a bit confusing or misleading, and some major, such as
-calling close() on an already closed descriptor.
-
-Unfortunately, there are enough important context lines missing from
-the patch itself that, instead of directly reviewing the patch
-directly, I'm going to review the code following the application of
-your patch...
-
->   int fd =3D -1;
-
-This new initialization (-1) is useless because...
-
->   if (argc !=3D 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
->     fprintf(stderr, "usage: %s\n", usage_str);
->     return 1;
->   }
+On Tue, Jul 22, 2025 at 8:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> * hl/test-helper-fd-close (2025-07-22) 2 commits
+>  - t/helper/test-delta: fix possible resource leak and ensure safe cleanu=
+p
+>  - t/helper/test-truncate: close file descriptor after truncation
 >
->   fd =3D open(argv[2], O_RDONLY);
-
-...the very first time `fd` is mentioned (aside from the declaration)
-is here where it is unconditionally assigned a value. Thus, the -1
-initialization is wasted (and potentially confusing for readers).
-
->   if (fd < 0 || fstat(fd, &st)) {
->     perror(argv[2]);
->     goto cleanup;
->   }
-
-Okay, no problem here. The `if (fd >=3D 0) close(fd)` you added to the
-"cleanup" action handles both the cases here when `fd` might be
-negative after the open() call or a valid descriptor.
-
->   from_size =3D st.st_size;
->   from_buf =3D xmalloc(from_size);
->   if (read_in_full(fd, from_buf, from_size) < 0) {
->     perror(argv[2]);
->     goto cleanup;
->   }
->   close(fd);
-
-Here `fd` is closed manually which is good because...
-
->   fd =3D open(argv[3], O_RDONLY);
-
-...this code immediately assigns it a new value.
-
->   if (fd < 0 || fstat(fd, &st)) {
->     perror(argv[3]);
->     goto cleanup;
->   }
-
-Okay for the same reason mentioned above.
-
->   data_size =3D st.st_size;
->   data_buf =3D xmalloc(data_size);
->   if (read_in_full(fd, data_buf, data_size) < 0) {
->     perror(argv[3]);
->     goto cleanup;
->   }
->   close(fd);
-
-The descriptor is closed manually (again) because a subsequent open()
-call is going to reuse the variable. However...
-
->   if (argv[1][1] =3D=3D 'd')
->     out_buf =3D diff_delta(from_buf, from_size,
->              data_buf, data_size,
->              &out_size, 0);
->   else
->     out_buf =3D patch_delta(from_buf, from_size,
->               data_buf, data_size,
->               &out_size);
->   if (!out_buf) {
->     fprintf(stderr, "delta operation failed (returned NULL)\n");
->     goto cleanup;
->   }
-
-...although `fd` was closed, it still holds the previously-open
-non-negative file descriptor, which means that this `goto cleanup`...
-
->   fd =3D open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
->   if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
->     perror(argv[4]);
->     goto cleanup;
->   }
+>  A few file descriptors left unclosed upon program completion in a
+>  few test helper programs are now closed.
 >
->   ret =3D 0;
-> cleanup:
->   free(from_buf);
->   free(data_buf);
->   free(out_buf);
->
->   if (fd >=3D 0)
->     close(fd);
+>  Comments?
+>  source: <20250722174102.1876197-1-lhywkd22@gmail.com>
 
-...will arrive here and the condition will evaluate to "true",
-resulting in the already-closed descriptor being closed again.
+I left comments[*] on patch [2/2]. Although the intention of the
+change seems reasonable (patching holes in the existing "cleanup" of
+`fd`), I have concerns that the commit message is misleading, and
+(more importantly) that the patch itself is flawed. As such, I think a
+reroll is warranted.
 
->   return ret;
+[*]: https://lore.kernel.org/git/CAPig+cR-r=3DCeEaSTeWsX00MLCSRJUUVXMUWS6Ui=
+-HQcR_qMGJA@mail.gmail.com/
