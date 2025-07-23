@@ -1,78 +1,76 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D473F22D4E9
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 17:55:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341C722CBE6
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 17:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753293342; cv=none; b=gjemYmAWTryj0i5xPrdAs7X8E08f2CyfgbmRDHrg4BjuxgrfbkGnPOJ/kPIDu9d5/cA0wT+oZQ5e85OA5s3WJ8ivoljoxx6G35WEgJrMoHFe8npfPtBKe7CZSDYNnZ63Mjo0YbOuKG1pzRTu3rGdVUiRzh9o0WCPsMyOH3jHq5o=
+	t=1753293383; cv=none; b=k5un8uBTShyBCLzyb9l6qRbe32Q+IHNu3vWS2RrkKziVLkIcKrVUo3hK9BMT9IUQfxBAKnNk3+j97Ug6D/Y+d3+9FgXDOnV3QjvgHxFCZ7OuCqP7NpU5byAyHbyHNCzi/Xso5KI6FBCTr1UXoHqdOwrZP7KnIyqMt/tlFsLE6Z4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753293342; c=relaxed/simple;
-	bh=eoIdBonu++T4KmSsqspr03BNnOWXm998rOS5LGihYm0=;
+	s=arc-20240116; t=1753293383; c=relaxed/simple;
+	bh=qcOZIvTQHY9gXVSKfQ2zgbTN2ad1PRjfkbKchoY8apU=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MKxr2NGazS3j9KRtEjGTVYHoYZgOmhzZ0A3o/pVrkues4QuDT5dnCFJdo8dOl4iCKVjV/LIDm2rjRWpEgRb8wEnRbsM/XnXfbiBPDiTTxsO+FdHa3MmyrtN+8M6crI4NFKJsT+fGyr+9rcLTgPA/Fd8Q95hdbw/D5KqhHHmRRSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iA/iKViN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AZ53rwqq; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=smayqp1oJLTV1rhqtzpQVlB+jr0mkzNTTAvNsqX2RLYa4xXD5h1w0DW2Scl8mdj77m6X0fxQOA0KMLzxqFnZ+WkQUBEh2rnZZTHhIsC8NXB/APLrt0Kzwp4Ett91wkE3tgWw4gkZPNIxiTMJ+xQioIRJVtKNiB2HrUh2xP4klrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EQD3wJzD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mlgi1vBj; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iA/iKViN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AZ53rwqq"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0CC88EC0300;
-	Wed, 23 Jul 2025 13:55:40 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 23 Jul 2025 13:55:40 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EQD3wJzD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mlgi1vBj"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6DF6B1400108;
+	Wed, 23 Jul 2025 13:56:21 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-04.internal (MEProxy); Wed, 23 Jul 2025 13:56:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1753293340;
-	 x=1753379740; bh=fjebCa5bbMl7ougALg368zriZg9SB4REwoukVcbJ9y4=; b=
-	iA/iKViN1YXmVFIaPlcRd7fU0AESRjR90qQ0GwSeu4pgAxHlTLzqWcavLnbgl0/q
-	+VWMilv4FUtHMdKnr3eM/XksmUP72aqbLU1sMBIFzZ66U/MkZbzRZcxufnC48V8O
-	Wb6vg3JMtVUfOE2OTFTd+VjjTmoujGqMThaYh5a8f+CYe225tMNJk2MFA19ioKmD
-	FsGHiFMSu6rbFQiPz05DALIZa1aRMAMZachHqX11iPuBPE2ac/u3FrO0Fp0iKW4P
-	lSw28uuioLaDznvZhw0O7UVjqrv3mro8yDUCnUO8yczQJE2NHLhk0e4bM267sP/j
-	kAX71l2jjhXY4LNMKjixiA==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753293381; x=1753379781; bh=qcOZIvTQHY
+	9gXVSKfQ2zgbTN2ad1PRjfkbKchoY8apU=; b=EQD3wJzD3itGHbXnYxHPTiofsc
+	vTyK1n58rlF2jF/69lwob9Ar93YmVYFtB9hRwd5ty1rGaYmg21jsgBkdl6zeSK7f
+	71oWw/g2X/OZTqcWLi5jOm1XQ47ddhqBE1RUDJ7xMIxGHsihOAMheUgoK86+TXjY
+	+VOK8Ao7+9BHVKqb2Jmgj358+iVL6mfQvxLycsyZZEBDj/LLDMJ1g1D8IqU/mJ+1
+	Fmn24HD98Ryiwf7Xjro2HUD/DJqFQJyQ5KVWV7nzSdCu8htpF+YyDJlOicB1pHIC
+	MlEHM1yGiFooKwygPYplNOQIAd7obOJCDDJ+iUB8GfP1yiLWB8DROninODhg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753293340; x=
-	1753379740; bh=fjebCa5bbMl7ougALg368zriZg9SB4REwoukVcbJ9y4=; b=A
-	Z53rwqq2XG/RGLLWSa9dZ09WZCRvLPgxyQ4rarURIXD9P2NiUC1SvtI/P0SQ8MQf
-	cyXdtKkclk4hQubsGmennGqxD2PS9bOwBH4oSVdorPBaeVxGcAOJDhZ1y3QNPe6/
-	wUeSNON6cuMVy1AvZy1XCY80X3UiW9BqoRDTF2FrtVWEW3dm1aZ3cwHIfUvdZCQa
-	7oz/IIMiq/IR/nFeZU0tvtFy9dcvUzYV9GpgMVKrjE3RZWmxLzfTZJ7zXOVtq6cR
-	d15g7wDSLqhN/pPDSDblSZ81OGASo0FOzLmsDu5ft0uao6ZESi0SQ8x4cnLhaXJV
-	Ccf/p1ehi2x9UVHgEfVrQ==
-X-ME-Sender: <xms:GyKBaNu6ikeof9ucw3Oe1jNptz7kKuh6aioVa1k5_Vzsg2zlJDOqQA>
-    <xme:GyKBaHK_hdQ12fyWbPP3-b5Bewt9bCpttesyG4SLe5KUpJVkubVhTUa6VCQkDGDF8
-    eJ6WLmwlXJIslVdPQ>
-X-ME-Received: <xmr:GyKBaO_Dv0dgLnotw9UvRAtIoD5nl5-Qttka13vHzuPSiamU8jeilT7L6GLevZzkDs4nTwunIyFx0CySKyqpeYT5tO_K_hCwVe2HVzc>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753293381; x=1753379781; bh=qcOZIvTQHY9gXVSKfQ2zgbTN2ad1PRjfkbK
+	choY8apU=; b=mlgi1vBjExHc6g1VxylLmVlmatIwrJ4cW2640G4ZwoJHWp367x0
+	Evf44O9ojpJwPwevW/Ka4SzaSiUqzChzu5mxZSNejuUrzv3vIL/LWR37XeYbkw/5
+	ZYmm7L278D5XEUgH9ILeRGIzxWrFD4DdCxGiWdxd795X68Pbx6wIVwBk8xzsNqaK
+	LtiHSnZle11IxAPpnsxaga65KGkJaWqTFZif44V7pBeo3zdPXxB1UEWQdJUSqBBL
+	LKtl4+4UujMAwv+0rr7KNlcxNzENyqRvyawhn3M94giN7hv5Ry5rZ2ECoGLKMeVj
+	qlZ6KO1pC5swmiuZhkNS8uRz6hor7C6Ukbg==
+X-ME-Sender: <xms:RSKBaKFi9p0_xxNuLGtxLp5qIXaXiXd1AJ_uj86W9kW7AL_KZ52YtQ>
+    <xme:RSKBaI6ANBSVN9vudApzwRXlu43zdP7lxg3nqTeUWncvnrmr67vTjuTkNXVifOblI
+    DzivZC1a6HHOy-r-w>
+X-ME-Received: <xmr:RSKBaKm-cfu0pHFJ_sdp7m9ahEooQddua1NjVDN_sHUCu7rfmsj3WT0-G14O8Yt6rB2hIRzkvsW5zHjsvDfdDwf7e4b5MqomjcFsLVU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeegvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
-    shhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehkrhhish
-    htohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthho
-    pegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlh
-    hssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:GyKBaIyGUAufCbCt8yD8aUvJjuHjXcpLEzwARvDJo-BUBaGmMWG3LA>
-    <xmx:GyKBaD5tFQ9qib3AL3VgVnmGwfWc0FVHZFgeNTtUpfeKIrxdFI80IQ>
-    <xmx:GyKBaH8y1rOaMVJlGEAKPFZxM7Z3iNg7Vh4vOiklfxgukHcW3p_cXQ>
-    <xmx:GyKBaApYMkYxb6yKo01rZ01HdRKX96FPwkwjCWOaW4xbfCMlxFSQgQ>
-    <xmx:HCKBaMGcWwJ3u0pz2Uz-VAeAE0tWZIhvTOo5meFULTTzChBvABibpuB->
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhhrihhsth
+    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
+    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:RSKBaFrYOtom7EEB9GqeFn0IhQPAwG8oMoDqs3jeaJNaksqF6BysZg>
+    <xmx:RSKBaBtatJrugZgm2Kza5czohQjzOSswQQq6n4_64vr-9eBw5IE4uw>
+    <xmx:RSKBaCH7fNZCULDZcAHywsmeosP8ZYDa0RWUEoNzGAhKLZ7AHRuANw>
+    <xmx:RSKBaCaOq0v8QLl8oB90pdQeFfQt3NZpwOI321zvZuKdw0nr99ebaw>
+    <xmx:RSKBaMbDTekEQfON3UFYwwUuKzADEpLbfEBX_dqPwGaYCH4ZMvHRXorI>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Jul 2025 13:55:39 -0400 (EDT)
+ 23 Jul 2025 13:56:20 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Aditya Garg <gargaditya08@live.com>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
@@ -81,13 +79,14 @@ Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
   brian m carlson <sandals@crustytoothpaste.net>
 Subject: Re: [PATCH] imap-send: add option to mark sent messages as read or
  unread
-In-Reply-To: <PN3PR01MB95970E44092A27F47AF25CF8B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Wed, 23 Jul 2025 17:33:36 +0000")
+In-Reply-To: <PN3PR01MB9597A88A3CFCF9EC84ECCCC3B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Wed, 23 Jul 2025 17:35:49 +0000")
 References: <7108764f437a25079c95a25c227eb79f9f4aee6a.1753273554.git.gargaditya08@live.com>
 	<xmqqecu6om3t.fsf@gitster.g>
 	<PN3PR01MB95970E44092A27F47AF25CF8B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 23 Jul 2025 10:55:38 -0700
-Message-ID: <xmqqtt32n65h.fsf@gitster.g>
+	<PN3PR01MB9597A88A3CFCF9EC84ECCCC3B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 23 Jul 2025 10:56:19 -0700
+Message-ID: <xmqqpldqn64c.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,31 +94,11 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
 Aditya Garg <gargaditya08@live.com> writes:
 
->> On 23 Jul 2025, at 10:55 PM, Junio C Hamano <gitster@pobox.com> wrote:
->> 
->> ﻿Aditya Garg <gargaditya08@live.com> writes:
->> 
->>> +imap.markAsRead::
->>> +    Choose whether to mark the sent message as read or not.
->> 
->> Is this something user typically want to use a single setting,
->> or would it often be per invocation?  Especially with the new
->> invoker in send-email, wouldn't it become more like "if I use
->> imap-send to stuff things in my outgoing folder, they shouldn't be
->> marked as read, but fcc copies send-email stuffs via imap-send
->> should be marked as read" or something like that?
->
-> So whenever the user changes the folder, he can change this option too?
+> For send-email integration, maybe add another option over there as well?
 
-I am not sure what you mean.  If it is primarily per invocation, we
-do not want a new configuration variable.  A new feature should be
-introduced behind a command line option (disabled by default) first,
-and then if it proves useful enough to wide audience, a configuration
-is added for enhanced usability.  Adding a new configuration variable
-at the same time an option is introduced smelled more like a spinal
-reflection than a well thought out design.
+No, let's scrap this step, as it requires way too new version of
+cURL.
