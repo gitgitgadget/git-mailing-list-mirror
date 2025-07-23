@@ -1,125 +1,118 @@
-Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35B8B233D9E
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 20:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86FB126CE07
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 21:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753303013; cv=none; b=mv4V1wglOP4WiuEwE8W6zC301EbtR2AEPg0vFE9xHK3lrga5CnQ3jhXpDiGEJeL+fp0gBJOSWA302PtZ6d8Qrfh434u9WFjH/ku3YrWCaHbUwC1TMeO521Flz/zP89ekdbhVSa3RVb7gj4AnONRPnl8T3rdaHEFZxBjS452QKLs=
+	t=1753305734; cv=none; b=DYG6gYgwlIL/dLMPpSrthZuzl6p4CaHqdAsKBSmKkQITmdEKtpf8WEpdiuS2W2SfbDZPjdgWLFptACNfEmV2fipJSt+crf/0BuRjBhZ4SETOEOehOob97WJpMpgYb29cKdXYz55mTGgdf6PDzfJyozzv678GgH7Xn4ASy8kZYXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753303013; c=relaxed/simple;
-	bh=W9hl5LWjRZv9Jbx/hhef0VtN/4dmCyrcw/gfKWtgqEk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WIJhajdQpGT7Q3MtP6P8sE8usX3/8cDlTmV4pJxbEdH2yFbN6UMq9twXRP5TVlJVfvERpgX2BbuInCBMiagLPl26NRfbPbQz6Df1RZzInfvV3OR6ZKqfAykk2FXKaEnJH5W8AlxwDazMQ20+q9DorDFu7zHUzZVPVqTxijPXJh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DdTKYE4a; arc=none smtp.client-ip=209.85.160.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753305734; c=relaxed/simple;
+	bh=XqUfU03Tpq/FV3pA7g/u+MNbNk6QIcF92cIuIvIK0uQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YPs7KrAp7Q9mUtypK2RP2IFMUZVc65rY2L6pVCUazcAQYepqfdxuWNybnhhZwUlmnTzA3tiWYpWy2sak4+ES8isCnlEy2Ut9SBlBw4xXvFAiBe/met+oBMjucm3xMN6ZFEsroijB2mRQ/8h2HclGPpwFm9uo3JhmdP5MX/p1Zl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mY+PUZiX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e7nhtiit; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DdTKYE4a"
-Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-301fb587dfeso176800fac.3
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 13:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753303011; x=1753907811; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=AXKyUq9m/IuUtBz1Zny9lT/YWeDWlgh+EFMZNgXKy4Y=;
-        b=DdTKYE4adnhWKbWvZXERv9DzdNeNSnvdj6P+2LYDgsOrNSqZrKHbNg27ewNs6fU+tT
-         9jk0yAk7EXIjalzqe69v4zAchshyvYjm0Qyc2NgapY8UCYr6a4Hs1LdU3LhlI7FRk32M
-         6dwhO5I6sNyN1GjB7JpJiEoTxktp0uTQZ002zmcQwKaJNyITgBU1BbBiUs025fKcOaqw
-         z3E1TTxSHwQjojydbukASthwXq+nxGSrR7NTQz5oyCl+S4WC78QlUXuG2hTxNonLmK3t
-         m4hv8ihRk3e9IZOpubf4tlAm68tm5w/qV89GZUEj0sG5dlBpEDk8I9le8sUSBRAiJ3tB
-         AJlA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753303011; x=1753907811;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=AXKyUq9m/IuUtBz1Zny9lT/YWeDWlgh+EFMZNgXKy4Y=;
-        b=ZG8lT0KaubXeim//peDDpxO58+UKMoknEP157jDlUpkL/RVXLUn9CRpZhB9fgebk44
-         LHO7a3qv0APEXpo1wNUxQiD7GBhO/0rcTeXY8e7SEErMBxVa+s51UWdky+Sg0ddy9Ycv
-         Tx6xfXlwI2OrdiItZ5h8mX8P0Fn5Z0jJmAP3YMGH4ddhScfb5CLZqGCFuQKRXW4ltVEj
-         9OOe5/jDRRlS5shh6S9Iv/FvONnyd3aKbwGGwq1ty194LGAsyqlPO0tMudAIUoMbLgWd
-         Vhywtx00XsVXL3tueYZrNj2He/n+OJKdIhHstVbL6mClUl2fvf30nN1c5OgajhkCBFDn
-         9BJQ==
-X-Gm-Message-State: AOJu0Yx0XGE+Iqm8lY21vOcVXbumrPB1FMwwIvxnpNj4hgm0CaFYh14h
-	oP2anjqOU5ErKBS3sulDTkYTZvQA03fejpdQYDOqLZfDvMSEGrq0sULo
-X-Gm-Gg: ASbGncvp5pc3t93NohGVDHt8tVVwcKvjC9BZ6msb5MAk197eqwHjPtsGYSWii1orCmW
-	y32bbHESdT3mf52ADMUZ1L2yAkz1cf/aBYk1Cur1IjYKS7r9hHo2uX0KwZCZnlBUK71HgWlravo
-	SixwSEcxAUsuCQ8pprYhGIeAR94uSILYa1n/WDfItJIOEvy73/9sa9RbxRJiXnHwzjpiTHIDecH
-	N+POnZzSk4827ArwHEeudZkLsnWQu8jLVnVtgAYRJFRiUrTIVdhTofkis3PydNptG6ejdgPgeeA
-	u7gEW8aoE+9lkL8bUP09GpqkkX420mthp2bU33Q2qj8d5RSCdbzy5IOn7vub4nftyx2tFzwgg3O
-	ySMTVxQQERjPE+K0=
-X-Google-Smtp-Source: AGHT+IG7RghCz3V6OwaDc0Ou40ahdIrXdIu1cqxHBiuFz7kmI6OIXCf+EOcSPQGaZiajIraO2bhrLQ==
-X-Received: by 2002:a05:6870:d24b:b0:2d5:4d2d:9525 with SMTP id 586e51a60fabf-306c6eb6eb6mr3129511fac.8.1753303011297;
-        Wed, 23 Jul 2025 13:36:51 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-306e1ec042esm40715fac.23.2025.07.23.13.36.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 23 Jul 2025 13:36:50 -0700 (PDT)
-Date: Wed, 23 Jul 2025 15:31:01 -0500
-From: Justin Tobler <jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mY+PUZiX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e7nhtiit"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A58DE1401452;
+	Wed, 23 Jul 2025 17:22:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Jul 2025 17:22:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753305730; x=1753392130; bh=KiDBVXueXh
+	Ex20eoT/c4ptDBgujbLhKIdGNsPyq1jJs=; b=mY+PUZiXvd7h9iEb7CTWwopMAE
+	gzVWLr0zqZTLIPNZdE4L9yft3WEGvy+fbBnUCWGKAwVZbXNiVL4VVhqnI4q8rsT+
+	tj/LGtleLNqqgW20cJZ9Y8Om+b/S/jeHsklnj3KJAbfWfp1nGqQPsb6odn0RvhVu
+	3EAY58JMaFYj0pu5v+UyScdq5LjtFre+fhT8mjS7ytIN+2FnrEhZWCrXTCd84787
+	7jqlVBGwJ5MjEYS7rSy4KRT75KWOvExJfq7blorgH6VaFqjTUqGmhY5zAmLWV+kS
+	MzP5gf6+4T+V6qixSPAW7fwK934FDec6euWLiF7LkRi+xFEMmAObDvmFRnUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753305730; x=1753392130; bh=KiDBVXueXhEx20eoT/c4ptDBgujbLhKIdGN
+	sPyq1jJs=; b=e7nhtiitpEzUz2l6sGmDM/U22gxU8DEgXyTFqpxkb0laXD5UKkU
+	PxzAOkDclgzg8thIZReb1U6DYNGzNFleAWCmcLIgEqpGv63is6JCmez0vVcmCF7X
+	4B9F+fXCHpVhfGOaPAPTRVVMGUV2wMWqxvJ0slJZuXOvyvolo/a6LBwi5dDUVMtP
+	0XiNzBYzFQQcvkN70CW3rCjPOhgD3Dy+Do2lJLdedscwU56z44tMoNrIAjZYpdkp
+	hfrlDauoU3DNiJFf+HWVYvvtH6bcKSYrjAEHsJiBrNVx/yBQdMpg2Govqy9S2orV
+	up4LFQHh6ZXkjGZMSoNWRk2DjVbWLrIVDXQ==
+X-ME-Sender: <xms:glKBaGWW5ZyBJc-cBB95XUKIFXoEiz__Ejuc2hYt6Tz7wP7UQ7rzWg>
+    <xme:glKBaOFZDvFxNx29qfSJJUnPLb1N0q8xynhSLrsVQPMgezt9dwYnE95P5iFlVwmTY
+    -NDG9THaCz-yy_UZA>
+X-ME-Received: <xmr:glKBaA2V6QYHA9GL7AazahISh6ZDpFQjBhIIS5HPsN9lVy3PKbWkvHEeLpkZ4hVD-OAR5sFLMAISRBKW-ouNmI5QauWYVQ5c_MZ4JDI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeekgecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdtudfgledtjeel
+    udenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhsse
+    hpkhhsrdhimhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
+    tghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehjlhhtohgslh
+    gvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:glKBaIPhb7BtIX1q1rhEMXGypjukgWK_Rigjx03Dk1Hsylr4hNXuoQ>
+    <xmx:glKBaH4Q_yZ-JY225WFtGLC6AkmPqPbCZ0zuHG-1dg6epxzKxbw9LA>
+    <xmx:glKBaK2BzJGv4mGVJG1vclNhPKOtm5T3NDgltzehPyx_QEl1SgaaYw>
+    <xmx:glKBaAzmgVleJImjviCDWHhO79teQI_ubEFAce0RMrl_AdCM8FkzSw>
+    <xmx:glKBaGI6UCpryfpHyDVvjhOltbr_FaGDFnjPQViUAQN63_-swMBZAISv>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Jul 2025 17:22:10 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH 7/8] refs: stop unsetting REF_HAVE_OLD for log-only
- updates
-Message-ID: <j52ugdtik25i6dqgqafchvy5an3o7qbdfeavtqg6bcr2ouxvyv@qwtqzf7xk4hi>
-References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
- <20250722-pks-reflog-append-v1-7-183e5949de16@pks.im>
+Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>,  Justin Tobler
+ <jltobler@gmail.com>
+Subject: Re: [PATCH v2 0/7] odb: track multi-pack-indices via their object
+ sources
+In-Reply-To: <20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
+	(Patrick Steinhardt's message of "Tue, 15 Jul 2025 13:29:17 +0200")
+References: <20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im>
+	<20250715-b4-pks-midx-via-odb-alternate-v2-0-b0ca0b4b516e@pks.im>
+Date: Wed, 23 Jul 2025 14:22:08 -0700
+Message-ID: <xmqqa54umwlb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250722-pks-reflog-append-v1-7-183e5949de16@pks.im>
+Content-Type: text/plain
 
-On 25/07/22 01:20PM, Patrick Steinhardt wrote:
-> The `REF_HAVE_OLD` flag indicates whether a given ref update has its old
-> object ID set. If so, the value of that field is used to verify whteher
+Patrick Steinhardt <ps@pks.im> writes:
 
-s/whteher/whether/
+> Changes in v2:
+>   - Changed the base of this series. It is now built on top of
+>     a30f80fde92 (The eighth batch, 2025-07-08) with "ps/object-store" at
+>     841a03b4046 (odb: rename `read_object_with_reference()`, 2025-07-01)
+>     and "tb/midx-avoid-cruft-packs" at 5ee86c273bf (repack: exclude
+>     cruft pack(s) from the MIDX where possible, 2025-06-23) merged into
+>     it.
+>   - Re-explain the split between object databases and object sources
+>     to help readers out a bit, given that this is a rather recent
+>     change.
+>   - Rename `struct odb_source::multi_pack_index` to `struct
+>     odb_source::midx`.
+>   - Fix some overly long lines when looping through the individual
+>     sources.
+>   - Drop the patch that guards re-loading MIDXs, as we already have the
+>     guard via `packed_git_initialized`.
+>   - Remove some while-at-it changes to make the diffs easier to read.
+>   - Link to v1: https://lore.kernel.org/r/20250709-b4-pks-midx-via-odb-alternate-v1-0-f31150d21331@pks.im
 
-> the current state of the reference matches this expected state. It is
-> thus an important part of mitigating races with a concurrent process
-> that updates the same set of references.
-> 
-> When writing reflogs though we explicitly unset that flag. This is a
-> sensible thing to do: the old state of reflog entry updates may not
-> necessarily match the current on-disk state of its accompanying ref, but
-> it's only intended to signal what old object ID we want to write into
-> the new reflog entry. For example when migrating refs we end up writing
-> many reflog entries for a single reference, and most likely those reflog
-> entries will have many different old object IDs.
-> 
-> But unsetting this flag also removes a useful signal, namely that the
-> caller _did_ provide an old object ID for a given reflog entry. This
-> signal is useful to determine whether we have to resolve the refname
-> manually to figure out the current state, or whether we should just go
-> with what the caller has provided.
-> 
-> This actually causes real issues when migrating reflogs, as we don't
-> know to actually use the caller-provided old object ID when writing
-> those entries. Instead, reflog entries simply end up with the all-zero
-> object ID.
+Shall we mark the topic for 'next' now?
 
-Ok, if I'm understanding this correctly, the `REF_HAVE_OLD` flag is also
-required to actually record a provided old OID in the reflog entry. If it
-is not set, a NUL OID is recorded instead.
+We haven't seen any comments on this iteration.
 
-> Stop unsetting the flag so that we can use it as this described signal,
-> which we'll do in a subsequent commit. Skip checking the old object ID
-> for log-only updates so that we don't expect it to match the current
-> on-disk state.
-
-Just to clarify, when migrating reflogs, are these operations always
-marked with `REF_LOG_ONLY`? The comment for that flag states:
-
-  Used as a flag in ref_update::flags when we want to log a ref
-  update but not actually perform it.  This is used when a symbolic ref
-  update is split up.                                           
-
-I might be misunderstanding this though.
-
--Justin
+Thanks.
