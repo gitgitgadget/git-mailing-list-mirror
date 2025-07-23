@@ -1,247 +1,270 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010002.outbound.protection.outlook.com [52.103.67.2])
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010012.outbound.protection.outlook.com [52.103.68.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4461C287271
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 10:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2335210F4A
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 12:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753266881; cv=fail; b=CfxJo93fLv2z0ZOAk8yrW4XNPxzbM9cTZc7x13ubby0hOcgQwFqnuVFQt13IvJm/XoV2li1qoJtqoRHF/5t+HL7A+vHJ1Z7PKDYz7E/kpitsU8GjwW6msXXL8dckQnDxBNdEaFLDmgjXHrGAGIvFiGgBTlvF0wqJZp+PEMkky0I=
+	t=1753273758; cv=fail; b=BbiDO1LUOcgwPhg4WIlphcQTasiANAOEAodBMNABv6pmb8izNJ05dC+yIkxSwZlX+xK1l0i/F9ej386xHqgDRR8cthAvv5YhhG+J44CVCyNu11jkNIHH88TbdbtK+iCsKOfk4NMgzft0snFA3cImELTtkdYqHD/H9UtefLwK70A=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753266881; c=relaxed/simple;
-	bh=eizufZ0k7AhSVpAml1EuuKu4MF+ECYfYGFN3RC+XSSs=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=oYm++UdhRtSqBKOhi5SD5YM70BU9W6TRuQTXtQe90CtOx+cY9rAinB6ya3loXhHFuf5aiF7fBzLyx3wrj5xd5Wfua7uoPg/ujovZH8MnBvSpqtGz/o8xW/R/VSyNcZgq6H6h+J89TgEecYKRR7BX5I8JM2LSSVQHZ1SKI2pchrY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=O1K4dm6P; arc=fail smtp.client-ip=52.103.67.2
+	s=arc-20240116; t=1753273758; c=relaxed/simple;
+	bh=Jr/FJLDNxcJfoKvne+xoUGR18rfawxFK1SdkwxXQVwo=;
+	h=From:To:CC:Subject:Date:Message-ID:Content-Type:MIME-Version; b=WFPJwm7Za4ENBty8jGScKp8l5vwcw7KuvXPiW6jCC1pyuQH32ZnxTL8o5sr4maYY52XgUub2pnOZEvImc8BD88EB4nJDgV1KqaErtuDKUQaGUJrYxXNyRnptnVX3JwYBmXtil2X7BeR2NcijmLTQZexZZvq2iYlOopiiWFxouT0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=pWkZuyGg; arc=fail smtp.client-ip=52.103.68.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="O1K4dm6P"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="pWkZuyGg"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ymqh9I0ooA9B0p7iIYEmCp0r7x9yxlSfsdwE8BFR0ReUl1PJtOETxfBYX/ZaOk7e/Q0zaD//yBaMgHbhxaFCU8Y1LSxbAXsCddYlu902E8ebyceFqNqLLTHUmp7IY82n702WEuKpazZtU0RXs/E0GdDvRORLSBd6P3jf2MOc35Qz2RqeZ1sIDDUEeLW1umRR1JwzgmmO3NEsM2VBjaguz9AD9qqB29rwX61DfU+7+5KakSmBaOz09R/9+7bfN5vgoHMMzxI0GOfB6fqjX/eLjOQRtb4loSjYAnJlV3baUKCeHlolXXlvSEyhpw7zqjLeNxfCAh7nvppX2ZvVMiSTZA==
+ b=ATnwC1bHRENKkNB6EgjSXt06PXLabtRu0Q6eL0ACUQftpMEfDnF2IJ1fF31R3bZ/tL2H7RjhTZ84K9GxoPsyoqHx5qWEfaZ4/nTCJpmd61LX3TOxPNfFv2Ht/y4awCmiaojUQev9mVsmvbLwC1fdAnHIEla0dZyY9W7lkdkeoBake8cL+NqEmfFSYdwZxAzuRAzQws7pvW1AjagjSCl6BsITszcmciveQ8FLOgiO+YIOlGyHlPe/9PjGUmiD21jG8ZDF/yUKX6J01y7MwSkdsGCNdG8dkuHfzZwwLpUUnZDMcxzX4DAeKZvoZ7ZNblDYlcNPhxbzFYImatHzqXEc2w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0kZ6fSAuD2ajVdPntXxTiz1or2zD8Dhg0EH79OCXFBE=;
- b=LSyMWgFEaBVTsIlpX5f1EddXfmSBIvGKehcq7EhSBCEnCvry92j2g14aU/wPlp44+RtASVoZcVJPdUvNmTj/8EkrheXOue+o4IqSmoPjjq6DdBpuyLa+qTfa3/SrLaayViQBlFpLeAoL9yQWgMeNSNkGZvN0U3fzuCQKff9ypZ2y9sZQDCH8j39Hv2NPULB1RlC6Gk0Xmbs9L/Wtfmp7vJbrelqaHYAzfLr4tA0pQdhZ4mcd6chatX4yQ9vXbFESnCUcX6ejWnQQ8fFOx0OOtdmbGSD2YxWP8xz5qtN3IXoHRQCiDt9roA1BnooUpjzvTbj3wHzjG0++uPoU6Hykiw==
+ bh=GlKSBYYrh8AgXrmj87m+9MSTmJdFyPMYDMvq1wOMT48=;
+ b=Nyio9aJqIhF7xOjXpiqhd2t1kPI7Fs9FF3fIXnrT3Rzvr4tQ26wzbROPfeLbNeMPrALT1k0otGfNXy8az4odd973nlMQHqgYUL0T0ZVwyC7bqsSywDOfNA4gqlQUs8U41SV1uxgLESlt98TOWbVuXORScJcOQZa4/h5ezCm77jPs+oBSTPkcCPcjqpXI8wf4nphokLyTCF12tgvGx6Acm1U4SVIYyVplbjFjwMFantZZB8PpVxRPBcDzsbk0P2aXhTctKKk72EjvEKUwBpa7Eag7hBseZBB5xc55VmIMrUb/yDZunGmadhfKwIjYJYlLenX/9gCm5KMsLNZs21gaxg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0kZ6fSAuD2ajVdPntXxTiz1or2zD8Dhg0EH79OCXFBE=;
- b=O1K4dm6PrcCZZtvGIzoMa6t6HO435yjF/NktNn6+0/uzTWYp+84da4g9duaw2uEDAGBW4R0uXgceptor1tQJTKGZSWGLVllr7/CQQyDQfrXu/rRmE3YrC/SwghNI+wQccKV0CY+nBiK/XUAeZTtOJXfpokOWsTS4guhZq0VfFp7u15aCS5dFqbpLt/zTZ40nlROigRAxEyAFGRbiqEBuz6ggNba8PJ9un16sFkghSiMAADbmTsnKQxsFpUd971YOMaJDbRsxqKXLhF0qv76ouMp2b1SMKTGs92OiJ/jGPmMihYEitA2Q08mjBC1gOjPjPaqULKIayKBm/cDUkHfLAA==
+ bh=GlKSBYYrh8AgXrmj87m+9MSTmJdFyPMYDMvq1wOMT48=;
+ b=pWkZuyGgMwVZyTUnSYI4szVltTg9f8jk0S2lXcYTh8wm0b2tmJRBxmscZXmv2ApkOmJUuydJhqyHCZIg0+GqcH+SbULPPRklVwBzaGrpLE0LDGIZHNxyXSTg+JpuBJmly+qfBFDYNgmEZ6sT0YSBqJ8OdWSpP2nQmeKo1xTTPhmVbxl/Dl7+tFR2qP8uxycPa+o192jcTTh+x0o9ylihqYWk0qMPChDm6zx1NK23+jlwyn1gwilVKZh8cu4rocFCOI8bSLB0iGSt2oLTlKVx8jAb9EM9gPMIrukF3jDHTDUQ5hkiq7TVglEzoQXEGmdhUnZG5rnNfs50MooCgCPyJQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN3PR01MB7838.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:9c::11) with
+ by PN3PR01MB10269.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1e6::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.21; Wed, 23 Jul
- 2025 10:34:28 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8943.30; Wed, 23 Jul
+ 2025 12:29:10 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%7]) with mapi id 15.20.8943.029; Wed, 23 Jul 2025
- 10:34:28 +0000
+ 12:29:10 +0000
 From: Aditya Garg <gargaditya08@live.com>
-To: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-	Ben Knoble <ben.knoble@gmail.com>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>
-Subject: [PATCH v4 2/2] send-email: enable copying emails to IMAP folder without actually sending them
-Date: Wed, 23 Jul 2025 16:03:51 +0530
+To: "git@vger.kernel.org" <git@vger.kernel.org>, Junio C Hamano
+	<gitster@pobox.com>
+CC: Eric Sunshine <sunshine@sunshineco.com>, Kristoffer Haugsbakk
+	<kristofferhaugsbakk@fastmail.com>, Ben Knoble <ben.knoble@gmail.com>, "brian
+ m . carlson" <sandals@crustytoothpaste.net>
+Subject: [PATCH] imap-send: add option to mark sent messages as read or unread
+Thread-Topic: [PATCH] imap-send: add option to mark sent messages as read or
+ unread
+Thread-Index: AQHb+81kOsb3aqbVj0WTwu91w6cBzA==
+Date: Wed, 23 Jul 2025 12:29:10 +0000
 Message-ID:
- <PN3PR01MB95972CAE853F4079F0F62F0AB85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.50.1.320.g2ad311502d
-In-Reply-To: <PN3PR01MB9597EC4C5DF97943587AEEB4B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References: <08528f201acc1038ebc5861321395d17516094fd.1753003385.git.gargaditya08@live.com>
- <PN3PR01MB9597EC4C5DF97943587AEEB4B85FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: MA0PR01CA0070.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:a01:ad::15) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <20250723103351.17560-3-gargaditya08@live.com>
+ <7108764f437a25079c95a25c227eb79f9f4aee6a.1753273554.git.gargaditya08@live.com>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PN3PR01MB10269:EE_
+x-ms-office365-filtering-correlation-id: ee11211e-d023-49c4-ef47-08ddc9e486c9
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|41001999006|19110799012|38102599003|15080799012|461199028|8062599012|8060799015|3412199025|40105399003|440099028|12091999003|102099032;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?WTjOm7htMHr4dEN+0L6QU72iR7fdJNdbN8Op5I7ANjcXQ7IcnWRZBIMarA?=
+ =?iso-8859-1?Q?VcLi4tNBXWpou2Z+adht8NXVBHSFKp9RNOmxk3A5/3xmtH9rSfA/og19UG?=
+ =?iso-8859-1?Q?wl1hXgLLpCt7VRQ34HT5KlKFG6GNzXriGVD/vXTt/WVc2FEEPGhsCZ8XOc?=
+ =?iso-8859-1?Q?urmxtsi1l493uuSbZj8tPuSpgPRPqJl8L/Ep/VyKyezNgLvOErYa6CjH1I?=
+ =?iso-8859-1?Q?D7JqVEeFdN1bRmSWqpJc1D/7DIrB2uRvQMh3Oxxz/d0rS0LW+A/CfU1wGI?=
+ =?iso-8859-1?Q?CFzWHWbTcwY00+IiAkv53Aao2EQMc1frlBFY5/AGpFZDLrKhQYdLcQXYDo?=
+ =?iso-8859-1?Q?khyO/Gb1PZnltvHDpDq++cyz3slc/li3D4o8uNZU9/hmXZH0/oJRu5rcOp?=
+ =?iso-8859-1?Q?QPKEORAJLd9READWPi+SV2Gtr+bMq6cKj1JGoNaKA5yQiDC0hsHIVZClNS?=
+ =?iso-8859-1?Q?t9LS4Iu93XqJ1AZPILJ4RfUONb+EUzkMLotgw7tMb6iUIT3tG9qD7VyHF0?=
+ =?iso-8859-1?Q?FbYRJzHJjRLEBwAoILdKb47p2VRAdGoukRSJ84CUmTSjIQpJOgtk9B4l3e?=
+ =?iso-8859-1?Q?byn49V7ZOvPTj6Fiy/INGHCdp4aKhEcer9ZFjYUyuLHvKjjguaunacrPtt?=
+ =?iso-8859-1?Q?vVv2Ec0chNY+qX2ABRd9ZYfIjgSxgdRXMH9+1DCSzMnCh0nCg2yW0Dz0Hb?=
+ =?iso-8859-1?Q?/ER1Kq2dioB1C52oOq5wOC3wJDzqxjLvNO0mP2Ci5cXGx2qF1w/GFMZdcA?=
+ =?iso-8859-1?Q?wQThJtf93XcmpPxxHVW0UXtWL6ElWpxP17RorppqB6r4Brhfmi0EAY7zPQ?=
+ =?iso-8859-1?Q?GONAQjRD/vt3IThcLbnHdFZPr3Mp5kD2M0AHtqeIL0kzju/lnE/EI1wziG?=
+ =?iso-8859-1?Q?6NiqmGLsWKyKPeB9XZcfE9qKOgXYtLnM+2JNVUjJ/mnelwe7mzttq9XZhL?=
+ =?iso-8859-1?Q?ZBnI2ANOv3FBYmME97bGkBHLvJoYkyKzSUborkFcsDUEPdUHF7DNruahSC?=
+ =?iso-8859-1?Q?/fMCP6r7vDXQnTTyHX39enjwZRcgdcMcMDDpOJmt4xPvWesgMIUOYSl2rH?=
+ =?iso-8859-1?Q?q685/gmdiuYF22RwuaIOXpTFMHZascbfYSym/lbWmQAGmdo23YZoMKQ3y6?=
+ =?iso-8859-1?Q?5g5kzmYP/H9i+2FNwl7LSlUqKdVy3ULkPo/A0R7WWXcg0SKUjMWsQo1hAQ?=
+ =?iso-8859-1?Q?pKf0nfUw4jgPWtNj+XGBcU4EV9fNz389kp+sccuGOP2N1LXmjcFbIO5P4r?=
+ =?iso-8859-1?Q?IhCAZHfKtEEX3UisEMrg=3D=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?0uz5akKPn6S7j/+7dVY6XqXAs6+fM/kB6HqnSPY5ZJtWoGcTnIBSCyN8eO?=
+ =?iso-8859-1?Q?4x0tMEVk3Qc+wLtruA5n9VSbp6DknrXMN95Qf1zVZajOP/PNOWShyrsHvE?=
+ =?iso-8859-1?Q?rEVrFygwS8/OwGtXkcUrKspxPYa5n3iTOON75RuWlG32P3FtTiUXdnFEUZ?=
+ =?iso-8859-1?Q?YEI8nvvffrz4Vgf0+LaehJ3iUM4lnfu7eqaktdv5v5FobqkJIp3G3eCbTD?=
+ =?iso-8859-1?Q?K4JscpdBN5BsKqPzNMCPEa5r3eOhcN8WDsDeZX7u6sMf0LMfhorMnhuByd?=
+ =?iso-8859-1?Q?7dWEcnMgVR1c3/ur/GivbvWWkmT1oLkWQwvWE4b2nfQD74r3YkFtoL/Mt4?=
+ =?iso-8859-1?Q?+ny3QAs290XkMmDJ2I2Lzs7gWpFUtnafWe2JCd05j9WviR9Erl9cH/OpOC?=
+ =?iso-8859-1?Q?miHi6MYGBwCWfrAoF7RfL09EWNY3HMWXQb5rJy6C8m91sZnRi+j2J4z7lF?=
+ =?iso-8859-1?Q?i2cVcurPI9Z4cprRLrBPrGl2cCCvzHpEiDbYoCGAD9gjxgqGRrCJD6llEq?=
+ =?iso-8859-1?Q?KLGIfL1NxsBQTqzeaZU4MFL7rnQ0OGsjEyDP8gGuTaMWdyPyTlF0lax1p+?=
+ =?iso-8859-1?Q?e+XNHP3Xh6VX6oHfYjswzl0O98eg1OoKOthX+KryTwUpqj4vr4xuMM28KF?=
+ =?iso-8859-1?Q?FcMTLRDpL57FV1WvHueT5S/hKfACwXWZcEftjb9csDL2z8dS9g/Vu4tCL2?=
+ =?iso-8859-1?Q?QNs8YUXa9NX6PfJgLnVm7xlYkH3duImrNeXiyDMj2e8SKJ+9gwqqcUS3J6?=
+ =?iso-8859-1?Q?yt+Paku6uCID/OKHv45TVpu0vwmEGsJaZ+ct/CrGdoLd/6s+ORdrIlj52K?=
+ =?iso-8859-1?Q?94pD0qylqS2qqjBX20PoSFpLtomjoaysvwF5l1TF1MYNtkm0GvF99gtAZy?=
+ =?iso-8859-1?Q?CcWpA6HGxEVYNzaw4cXOUkhqjNf58WKhWNomosnlb864/JD90Nb6CP9Llj?=
+ =?iso-8859-1?Q?+Z8FiLlgvqkaGNKdpdBdkCqOxlCt3F3+ldlsEuVOIY1DSTBmgnv/xFrg8o?=
+ =?iso-8859-1?Q?eI9wnE+sWb8gDTyK5hEIlPjz3awaO8NjYzhA1+0jppvY7QciW8W5kGL2sW?=
+ =?iso-8859-1?Q?c68UKYu0sVBHWBmHUUDIOuVdam/eDSDWn+wIsIT+pWRsP/EdeXacDbLrXc?=
+ =?iso-8859-1?Q?sE/zFfNbHN/QALOI5QqaiffS/ArrOl6qh2Ylz+yoy66kO4rZepmrP8EmXD?=
+ =?iso-8859-1?Q?yuE56M+Gh8ix53m8P5rZypXFMgvT3qa69aXpkzRhXi1L/WyxnmLdKggP9g?=
+ =?iso-8859-1?Q?m/MPSBWLyFF27dudOgLDa6KPbgoFas+rVv09i0dNc=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB7838:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2fbddaba-d31d-4f84-8ecc-08ddc9d48028
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|461199028|8060799015|15080799012|19110799012|40105399003|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?5FsLSEUflZqxWBY5i/Wv05+7TLEjWCg7I4mfytLzQaR168zbXYLGy/sKP7o6?=
- =?us-ascii?Q?ROi3ys9gorPCHUpZVkEHK8qRDyvyIDVd/9pXk8SBC8YZJZFaEAyF2D8V3uLK?=
- =?us-ascii?Q?b/leDaGKm8DAFEcv7ojBfWYSA/nj4F5QGUwzDRt5l9JZ3wUla/wYigNYauuh?=
- =?us-ascii?Q?0ebFnsXeC7jgsOjOOIFFhoILQotPz6JZOb3fD1bI85OGxOMTpPMIE6lA7pBy?=
- =?us-ascii?Q?2m+vLgWX6GMoccPRTjLBcLEml+rP4eq4fVCwslCpSCXAy4cVxb7+L+rmesZ/?=
- =?us-ascii?Q?aIHy3ymDdFIbVQX2LrvUHxGGwz2pKGonUBGUeXOL+d1yvR0NUpiTGGOZC0fa?=
- =?us-ascii?Q?0L8rWErLoJCFzB8jjMEVAZYL7nd070OqmqDB2DHVbgXy6z58GHwdMuQYsI11?=
- =?us-ascii?Q?PY4kjNc+U7LoVwrMitZTc5hyj06h0p1KnIemIKAlRtduycuHmg+ruDB7GxxF?=
- =?us-ascii?Q?He++wSqBs7KsbxajX+dbuOrlJxNvQyd7mfVbvOlR4b5JSK6fgCEZpbX5ugef?=
- =?us-ascii?Q?3tuUPDxp4sc0cLDURsb/tnLvRsCk/alNriPbhuklJSgUVr90EKEEN1hxCC5N?=
- =?us-ascii?Q?ILeWKNbxrhkUuDJZ0J9SUjU4Dtr1dZzMRYQrLvgBG4ijhw1VIefi3fzvtVUz?=
- =?us-ascii?Q?UoNOQEHOcK/lWpyTFc4wgYTpS95OxYK1b7f/I/EnwkZ67bLsIiWUzs0ZK5E8?=
- =?us-ascii?Q?wU+yKVRbBdCmrRJHr1jIchgkzT3idQmmNz/8Z52PvHMRhArUmv0BpAvtQ3Nm?=
- =?us-ascii?Q?Rpom8NhRBZlV3znWmEG8TsVaX0N0kTXhNimHsHUde82+GqHUxSSgfTXYaFwL?=
- =?us-ascii?Q?05pl2LBSZtQwS/Ivl6c/LsLsp6viSNiPfLWWmqSUsKnWPQjgprUS1zaAogM5?=
- =?us-ascii?Q?dC9JYFPEvPaeeJkTQs/ujBCD2/ZEq8K1FBkYRcGYFC5iGX3nk62so/brvruU?=
- =?us-ascii?Q?J8hyob6kYoD4evNQ6W9iOSpHoucsvWi3YtgrrSgMs9ou3H/cn5/BdAUw2mmg?=
- =?us-ascii?Q?NpdAs3ClZhtAy+dxX8Ev4MPwabbCgM1W/1CQnpgsQ7pT51rwhCHst0nIQMh4?=
- =?us-ascii?Q?c2+Sh8QCMVmFCRJcha9sr0nDYpMl9x/2WRc71UydX+Z7zKfMW1TnSck074x1?=
- =?us-ascii?Q?Z/GN2eqrd25s?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?ddxCWV1b8N25tnACJM8gFYRspvNPJiGqaZ5L8w5RBnoAJNJNvod02ZhLljmr?=
- =?us-ascii?Q?ul4coCHHUsr2NwkkWG/fCN8dRWuE+ceUcGJ6lcYz0Erx5aYeoZHQz3mYe0ce?=
- =?us-ascii?Q?uO4JA1CYSespLcQ8mwgOHyljck0j97JvLMZKOEJK1CRS1RxStfWrogPKYCP2?=
- =?us-ascii?Q?5TuhK2kDCp3iZzLDCKtXOJ3oEZNHaYZJG5xUk467w50XmIEgSahumJmN5AR4?=
- =?us-ascii?Q?ld+x6sUr8GXNcoZy45xFhp/rDW5xbgepdvR5Xe7c3y5gy6jN685JvMD3RIA6?=
- =?us-ascii?Q?q+XacfTRO9/zQINa+8xpdaZfyxZ2e2uQJ7ieNTgXy+LQa+SC8tJFZ72+0YGs?=
- =?us-ascii?Q?bTLTS07p0TQKmAv6xSpBaeXmI99BZPoeByQ6N/CyU81DG40bi3Y00MfzJqXj?=
- =?us-ascii?Q?wiEJ49XlFqBQ0l3J6ViX4gY9A3aoRPEmHYmoBC4MQcUQPcmdUi1odL8hJFqy?=
- =?us-ascii?Q?xn+IN2uaeBOAKvWL0LRMDACBLN8g03OPJEpYUugdtwZ+Tn2dwhelieCSRjR+?=
- =?us-ascii?Q?1sNrhnhxM1caorOOJ4y4eOF3Bp/KQwS1ZLHpBxnIZ1dT72aN4m2N1cdLZ9pP?=
- =?us-ascii?Q?KGGAEq+/CrGmOaoHvEGl+6zruhc1gzP4/puMFkW9BmcTGFbJsDv5h4Ib2poy?=
- =?us-ascii?Q?SbfCbrIZzfJjKBXxwtPhaXTJPQu+Sn7cHHaHy37oJN/G8yB1f6PgltZ++G70?=
- =?us-ascii?Q?XMuu3GU7ltrH4qpWgtWczRGovzZ7ApRkJdJcanxAar65CD9l3hWgCeQhu+r8?=
- =?us-ascii?Q?8I45FTvTOBcQaLn5HQfrq7SmaBpM4dsVuKrTrD320D1pP/rKY282n0FHRpDV?=
- =?us-ascii?Q?+KHCs3EqpUM7zxd/B9/M5P7ThViHXUbiJT3K3wHPvLqaLv+Be0GxbAmCssyK?=
- =?us-ascii?Q?RaFc2M7WfA4FdUhCpkZO6uW4nHoQDOhsjPyNRfnzFTk3bC+d2w/vVqCG9tZU?=
- =?us-ascii?Q?n3oKluzBzqEhjeVLRxg20Witqu63aqeGvOLzK8sXC6nWHJ1Qopc1uxx8krkK?=
- =?us-ascii?Q?vtLQI4tzYi4XJ6gRhzILUBscVshzKDCrQb7FGlw3VXplqoUglEq8SRW+VZon?=
- =?us-ascii?Q?Aisuv0gYH3B+7/H9DlcvNe7OiruoSEvuvgDWlOAKBKB9K9Fpfbror0Y4J34O?=
- =?us-ascii?Q?dGqfv2hQKsZqTDxPa5zoeh/ucNlRDFqvqviEt3QJj+jX9jbJ6yQ/J/bXW6H9?=
- =?us-ascii?Q?uzSbrpCUQy4wWXaP7kcxFotqsssLlgjCBJ5hiyebnbjZPt+qpTFlztBZEtIn?=
- =?us-ascii?Q?KF3esOmdckiunjlc15MlJ8RSUlifh5fOnFrmjua8EPFRxGV0icIr78bIuroK?=
- =?us-ascii?Q?VbtEQ6oQlT7J9tb7NItf6UNw?=
 X-OriginatorOrg: sct-15-20-8880-26-msonline-outlook-ce67c.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2fbddaba-d31d-4f84-8ecc-08ddc9d48028
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Jul 2025 10:34:28.0246
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: ee11211e-d023-49c4-ef47-08ddc9e486c9
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jul 2025 12:29:10.7440
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB7838
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB10269
 
-`git imap-send` was built on the idea of copying emails to an IMAP folder
-like drafts, and sending them later using an email client. Currently
-the only way to do it is by piping output of `git format-patch` to IMAP
-send.
+The current behaviour of `git imap-send` is to mark sent messages as read
+if curl is used, and unread if OpenSSL is used.
 
-Add another way to do it by using `git send-email` with the
-`--use-imap-only` or `sendmail.useImapOnly` option. This allows users to
-use the advanced features of `git send-email` like tweaking Cc: list
-programmatically, compose the cover letter, etc. and then send the well
-formatted emails to an IMAP folder using `git imap-send`.
+Fix this inconsistency by marking the message as read by default in both
+cases. Also introduce `--[no-]mark-as-read` and `imap.markAsRead` option
+to allow users to change this behaviour.
 
-While at it, use `` instead of '' for --smtp-encryption ssl in help
-section of `git send-email`.
+While at it, also clarify that `imap.folder` will be used if --folder is
+not specified.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- Documentation/config/sendemail.adoc |  1 +
- Documentation/git-send-email.adoc   | 13 +++++++++++++
- git-send-email.perl                 |  9 ++++++++-
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ Documentation/config/imap.adoc   |  4 ++++
+ Documentation/git-imap-send.adoc | 10 +++++++++-
+ imap-send.c                      | 18 ++++++++++++++++--
+ 3 files changed, 29 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/config/sendemail.adoc b/Documentation/config/sendemail.adoc
-index dd2dbc87a0..90164c734d 100644
---- a/Documentation/config/sendemail.adoc
-+++ b/Documentation/config/sendemail.adoc
-@@ -89,6 +89,7 @@ sendemail.smtpServerPort::
- sendemail.smtpServerOption::
- sendemail.smtpUser::
- sendemail.imapSentFolder::
-+sendemail.useImapOnly::
- sendemail.thread::
- sendemail.transferEncoding::
- sendemail.validate::
-diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
-index d1c41a0dbd..88e183b489 100644
---- a/Documentation/git-send-email.adoc
-+++ b/Documentation/git-send-email.adoc
-@@ -311,6 +311,19 @@ must be used for each option.
- This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
- for instructions.
- 
-+--[no-]use-imap-only::
-+	If this is set, all emails will only be copied to the IMAP folder specified
-+	with `--imap-sent-folder` or `sendemail.imapSentFolder` and will not be sent
-+	to the recipients. Useful if you just want to create a draft of the emails
-+	and use another email client to send them.
-+	If disabled with `--no-use-imap-only`, the emails will be sent like usual.
-+	Disabled by default, but the `sendemail.useImapOnly` configuration
-+	variable can be used to enable it.
+diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.ado=
+c
+index 4682a6bd03..afae49391c 100644
+--- a/Documentation/config/imap.adoc
++++ b/Documentation/config/imap.adoc
+@@ -45,3 +45,7 @@ imap.authMethod::
+ 	option, the only supported methods are `PLAIN`, `CRAM-MD5`, `OAUTHBEARER`
+ 	and `XOAUTH2`. If this is not set then `git imap-send` uses the basic IMA=
+P
+ 	plaintext `LOGIN` command.
 +
-++
-+This feature requires setting up `git imap-send`. See linkgit:git-imap-send[1]
-+for instructions.
++imap.markAsRead::
++	Choose whether to mark the sent message as read or not.
++	Default is `true`.
+diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send=
+.adoc
+index 17147f93c3..3976c128c7 100644
+--- a/Documentation/git-imap-send.adoc
++++ b/Documentation/git-imap-send.adoc
+@@ -9,7 +9,7 @@ git-imap-send - Send a collection of patches from stdin to =
+an IMAP folder
+ SYNOPSIS
+ --------
+ [verse]
+-'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
++'git imap-send' [-v] [-q] [--[no-]curl] [--[no-]mark-as-read] [(--folder|-=
+f) <folder>]
+ 'git imap-send' --list
+=20
+=20
+@@ -44,6 +44,8 @@ OPTIONS
+ --folder=3D<folder>::
+ 	Specify the folder in which the emails have to saved.
+ 	For example: `--folder=3D[Gmail]/Drafts` or `-f INBOX/Drafts`.
++	If not specified, the folder assigned using `imap.folder`
++	will be used.
+=20
+ --curl::
+ 	Use libcurl to communicate with the IMAP server, unless tunneling
+@@ -58,6 +60,12 @@ OPTIONS
+ --list::
+ 	Run the IMAP LIST command to output a list of all the folders present.
+=20
++--[no-]mark-as-read::
++	Choose whether to mark the sent message as read or not.
++	`--mark-as-read` will mark the message as read, and `--no-mark-as-read`
++	will mark it as unread. If not specified, the default behaviour will
++	be decided by the value of `imap.markAsRead`.
 +
- --batch-size=<num>::
- 	Some email servers (e.g. 'smtp.163.com') limit the number of emails to be
- 	sent per session (connection) and this will lead to a failure when
-diff --git a/git-send-email.perl b/git-send-email.perl
-index b3cc237baa..96504e7be1 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -62,7 +62,7 @@ sub usage {
-     --smtp-user             <str>  * Username for SMTP-AUTH.
-     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
-     --smtp-encryption       <str>  * tls or ssl; anything else disables.
--    --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
-+    --smtp-ssl                     * Deprecated. Use `--smtp-encryption ssl`.
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
-                                      Pass an empty string to disable certificate
-                                      verification.
-@@ -75,6 +75,8 @@ sub usage {
-     --smtp-debug            <0|1>  * Disable, enable Net::SMTP debug.
-     --imap-sent-folder      <str>  * IMAP folder where a copy of the emails should be sent.
-                                      Make sure `git imap-send` is set up to use this feature.
-+    --[no-]use-imap-only           * Only copy emails to the IMAP folder specified by
-+                                     `--imap-sent-folder` instead of actually sending them.
- 
-     --batch-size            <int>  * send max <int> message per connection.
-     --relogin-delay         <int>  * delay <int> seconds between two successive login.
-@@ -296,6 +298,7 @@ sub do_edit {
- my $target_xfer_encoding = 'auto';
- my $forbid_sendmail_variables = 1;
- my $outlook_id_fix = 'auto';
-+my $use_imap_only = 0;
- 
- my %config_bool_settings = (
-     "thread" => \$thread,
-@@ -312,6 +315,7 @@ sub do_edit {
-     "forbidsendmailvariables" => \$forbid_sendmail_variables,
-     "mailmap" => \$mailmap,
-     "outlookidfix" => \$outlook_id_fix,
-+    "useimaponly" => \$use_imap_only,
- );
- 
- my %config_settings = (
-@@ -532,6 +536,7 @@ sub config_regexp {
- 		    "smtp-auth=s" => \$smtp_auth,
- 		    "no-smtp-auth" => sub {$smtp_auth = 'none'},
- 		    "imap-sent-folder=s" => \$imap_sent_folder,
-+		    "use-imap-only!" => \$use_imap_only,
- 		    "annotate!" => \$annotate,
- 		    "compose" => \$compose,
- 		    "quiet" => \$quiet,
-@@ -1683,6 +1688,8 @@ sub send_message {
- 
- 	if ($dry_run) {
- 		# We don't want to send the email.
-+	} elsif ($use_imap_only) {
-+		die __("The destination IMAP folder is not properly defined.") if !defined $imap_sent_folder;
- 	} elsif (defined $sendmail_cmd || file_name_is_absolute($smtp_server)) {
- 		my $pid = open my $sm, '|-';
- 		defined $pid or die $!;
--- 
+ CONFIGURATION
+ -------------
+=20
+diff --git a/imap-send.c b/imap-send.c
+index 44de0c5a77..a242119164 100644
+--- a/imap-send.c
++++ b/imap-send.c
+@@ -47,11 +47,12 @@
+=20
+ static int verbosity;
+ static int list_folders;
++static int mark_seen =3D 1;
+ static int use_curl =3D USE_CURL_DEFAULT;
+ static char *opt_folder;
+=20
+ static char const * const imap_send_usage[] =3D {
+-	N_("git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbo=
+x>"),
++	N_("git imap-send [-v] [-q] [--[no-]curl] [--[no-]mark-as-read] [(--folde=
+r|-f) <folder>] < <mbox>"),
+ 	"git imap-send --list",
+ 	NULL
+ };
+@@ -61,6 +62,7 @@ static struct option imap_send_options[] =3D {
+ 	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP =
+server"),
+ 	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder=
+"),
+ 	OPT_BOOL(0, "list", &list_folders, "list all folders on the IMAP server")=
+,
++	OPT_BOOL(0, "mark-as-read", &mark_seen, "mark messages as read after send=
+ing"),
+ 	OPT_END()
+ };
+=20
+@@ -1402,7 +1404,11 @@ static int imap_store_msg(struct imap_store *ctx, st=
+ruct strbuf *msg)
+=20
+ 	box =3D ctx->name;
+ 	prefix =3D !strcmp(box, "INBOX") ? "" : ctx->prefix;
+-	ret =3D imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
++	if (mark_seen) {
++		ret =3D imap_exec_m(ctx, &cb, "APPEND \"%s%s\" (\\Seen) ", prefix, box);
++	} else {
++		ret =3D imap_exec_m(ctx, &cb, "APPEND \"%s%s\" ", prefix, box);
++	}
+ 	imap->caps =3D imap->rcaps;
+ 	if (ret !=3D DRV_OK)
+ 		return ret;
+@@ -1513,6 +1519,8 @@ static int git_imap_config(const char *var, const cha=
+r *val,
+ 		cfg->ssl_verify =3D git_config_bool(var, val);
+ 	} else if (!strcmp("imap.preformattedhtml", var)) {
+ 		cfg->use_html =3D git_config_bool(var, val);
++	} else if (!strcmp("imap.markasread", var)) {
++		mark_seen =3D git_config_bool(var, val);
+ 	} else if (!strcmp("imap.folder", var)) {
+ 		FREE_AND_NULL(cfg->folder);
+ 		return git_config_string(&cfg->folder, var, val);
+@@ -1702,6 +1710,12 @@ static int curl_append_msgs_to_imap(struct imap_serv=
+er_conf *server,
+ 	curl_easy_setopt(curl, CURLOPT_READFUNCTION, fread_buffer);
+ 	curl_easy_setopt(curl, CURLOPT_UPLOAD, 1L);
+=20
++	if (mark_seen) {
++		curl_easy_setopt(curl, CURLOPT_UPLOAD_FLAGS, CURLULFLAG_SEEN);
++	} else {
++		curl_easy_setopt(curl, CURLOPT_UPLOAD_FLAGS, 0L);
++	}
++
+ 	curl_easy_setopt(curl, CURLOPT_READDATA, &msgbuf);
+=20
+ 	fprintf(stderr, "Sending %d message%s to %s folder...\n",
+--=20
 2.50.1.320.g2ad311502d
 
