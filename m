@@ -1,85 +1,91 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D724235047
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 21:34:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77FC1DFCB
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 21:51:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753306481; cv=none; b=LPnuvhPMDoWVPEpcpaiboGcqcnwzYGYaGuOrvbhOr4M+HPeQNEBAFK7shj/p9p1tbAdNsTIy50e6m+9kebLptRwnUTau+zMjIQWtYgVrVPRcZPTCMxHucHIcINmelRDPtpY9cqXy/ZVMcT5DEBm0QPB+3o6xDafK86ioSwqTjD8=
+	t=1753307515; cv=none; b=DvSQi5MyrEopb/6Zq0Jj71MaPaKY/sN3hmbZWQAiFGQLPUpS5Wwvp4d61JjN6rNaaDU+uqFBzeavIBAAZyBCqt7KBXXGekhgLflDy2Bzjv7ldU5+lblmxzug2l7uPsS+NCv0DBQvj8BgNpsRzM5ruhNteLmw60HSOiyqAi51QbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753306481; c=relaxed/simple;
-	bh=ty1NCEcw69TNwRFkxHIGE7q2FUnq2hXpinXQBNzdVHE=;
+	s=arc-20240116; t=1753307515; c=relaxed/simple;
+	bh=1xgFIb5zV5rp/4x99wluHe2WuO74oDSDbBFQLw07E/4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VDYa+Z6TPxnoTLG8MFeLfXVLWQu8EEkynRYvfqe8wh7qstiNRFesyiJmUIbh26vjffwIC4KTVfvSXnZ8k6MjGjb4t/oF/WTUa5f3lpWxRvcJz+XU3x8n43jawnj5gmDydbzmlpKuhH4kOByP3KmZk7zqhLweSp8vpjzLOYSPVUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KN6g+u9B; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L7yRbwDt; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=RTBbtFRdHC5FknL5REmO0WRK1GB7BL6BERf7NybSWMwT+sj/8bYSlay/4LFWpKMl6YhikUInQuEYu1Z72wiaCY+E78HqK42IiFKPbnS48jFvF6dVKnXAI/a4VihJMBSHYztUjapibGU9FzGE0bn3/gNGur3AZoI+jJx+NZ0bQK8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VLDPddYV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jpWKD8Ne; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KN6g+u9B";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L7yRbwDt"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 73511EC1698;
-	Wed, 23 Jul 2025 17:34:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 23 Jul 2025 17:34:38 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VLDPddYV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jpWKD8Ne"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 048A51401EF0;
+	Wed, 23 Jul 2025 17:51:53 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 23 Jul 2025 17:51:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1753306478;
-	 x=1753392878; bh=OJFgo121/vl0eo8e6RYCyms8K/ERglfYwSdm1LRLOfk=; b=
-	KN6g+u9Bvuw4BEZloL+J0QPw8D4cWBssgK4YiN0DfVmenf7TkAZg6x190LZKPdFt
-	eYAtTXl19MBHw6okBpjoXLppfH/V8s1ZmIRBEsJ6XQKo08vgX0BHNEsiNtlm8ZHe
-	x62Mfzar3n9a+HBqya7fRN+L5M3NbkUVNB69p2VDfX2rLSHQv6yW/3KhMzQZBXsk
-	8Yz6JsOOmJ+56BX+/evrO/dEs4EHI3pBHmLh9kLW331xUUx2U9HOa/+5bOiXk9Kv
-	x9iNdl94B2Jq7i7iOGuCQQfCfP2SMur1L4ci+yjlUtfbVUux1tTG2rHQ+/Kbyawj
-	pxz4FyZpIBYH+MvvgeBNAQ==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753307513; x=1753393913; bh=veOicXcMbR
+	l7k8WAObpJYSnk4hq+6L0YlEm1FIUjG90=; b=VLDPddYV3V9KPG4PvpKt5sjJzP
+	3Yob7N/a+tGtX60Cq3I2mmizzxscnP3fVM0MYI+m2S5gQy7nN8t/MlNBX8tg/bOT
+	0CkITF8xBoShCVdxndLgsRHd1fswfJJ9gpz6yQJxvye5mVHq+5Ru40W3EGk/V34u
+	FTc05ogD+FmfVgig3kkMiY/FmHEXyJY9ebpAyQy6NV6uwIsNHScb7XPRUBaID5me
+	33QDkTez6fLQyj1tVOz9HaIoNMxV23UUGTV1/xMSznx0PppwzH2cXEJKTg/UF6MG
+	MCZGpg/7wISqnpPrrSyqwwfS/kir22y2OFdqrR125ek9qDKzmSaEKNGZx/cw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753306478; x=
-	1753392878; bh=OJFgo121/vl0eo8e6RYCyms8K/ERglfYwSdm1LRLOfk=; b=L
-	7yRbwDtWlLZOuZnxo+g8Y3VbjrpO+KcLT+BkTlFTbHBExnCYNKaIaGK3fmd8jbIX
-	X33e0mRTRn8F8gxI29EO15TWf82oVWAz6s0Bj3t/KrZNQB5lFJ4/L7XpcbRAvaBR
-	DlQo1j+0gtYmLv555jOiG5PS/V+cl2m4Ik4/7W0fG1YQv9IeOz2uPXUmQaOVmi0v
-	PB9xz2hpr4IGQ9mIBFt0VjJFoQO5OTK5FORwwHwaGq2G1vSHIKfaJZV3cQAlvBZd
-	URb1AXtAAzIu6CQRQ7ZUOfjUKVRe3Ad0mNnT5tfFYrfQHfg3Ff/vsv1e6627mtis
-	mkDU5IbKLrhWTEf4mXR6Q==
-X-ME-Sender: <xms:blWBaPJLw3uJhr_NfQyqyB980uLlLc2cEy0LZ3aIzn9MAs1P26BEzQ>
-    <xme:blWBaNvPZHXbXfVLDXEtBZgRKhW8mNplTA4eAiKsWEe86WqmhVz9jTjrysRBXbU2c
-    VeBjLxqscHMMMOXbA>
-X-ME-Received: <xmr:blWBaERQr-83WOunJ38erSXWHboKgtQVa8_eNmeR7dMoxoHHsE0_KeY6Fm3IXJjztCk83__moq7KxudgDe8yRjTSHeeSV0TwqD6ieuc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeekjecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753307513; x=1753393913; bh=veOicXcMbRl7k8WAObpJYSnk4hq+6L0YlEm
+	1FIUjG90=; b=jpWKD8NeEl7tVDA+gawZKjyyPj8YdAYd6/D8c6TkfKR7lPv9PGb
+	seuqnQvRRmdvjn5HRQAdIxnXIozW2nFbc7h/cHe+Jen/0t6O28UuqpH+S/SLFv4+
+	+P1ij4Pv/LLn0mPdk+CLOcKy8Zp/5zAREQa9lsYQ3Tgsh2Cw7UjSdkIxCl+/QA8H
+	kvCo2fBboLfGLndTssDNuFqRYmYBUUXZOoqCBKjxIbZaaQFDfu/LKWtPWaVYYDhN
+	bTaiAdmxSbLLGxTyyut4l1m/TXP9zahIiKRO1RlMUd/xKo3FnF952XvvbDIKjcks
+	AqnotGErrqkYalXE62DgbOlQC3XMdEC71xw==
+X-ME-Sender: <xms:eFmBaO4RC6B4mWwx5DNbiTdp_hG7MOgo-28hjFPHz8GWN0JADNkbOQ>
+    <xme:eFmBaExLWImBJhyD3Qr_A7upKO6Mfuhejjs1TsDHYARx3j4hHLq2SBGLlHQtvkCxP
+    3XmxfGK8zzahDhFxQ>
+X-ME-Received: <xmr:eFmBaNMM2y2fKTSMrpegYBgrPWXzObxkPkFuZxRk5mG8yt5XmP2fKcmF_EywllQ68oGELkFo1uh_DY7wmXg4CVqbsBlw2DRb0SddqRQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeeklecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertd
-    dtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehp
-    ohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevle
-    fgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsg
-    gprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehohihsthif
-    rgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
-    horhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:blWBaLN6szMX0HKDHk5bDMW0HI7WJwtQOcVuG01AWrxQxmaWY4JuKg>
-    <xmx:blWBaBZeQunIf0KSdN2xNDEu5l5Xdgkkdb5h2_x1C4uwTqgrSMI_sQ>
-    <xmx:blWBaNzm_EmizvtgqZIqo2dR-sk-Z4s2yhl_oDY9jIKAXYhB-RUMoA>
-    <xmx:blWBaELaFG7oz-30RJ1Qd22B0Id7IRJpUdAVPRP78Q48psdRjXkK9A>
-    <xmx:blWBaA77Z5U2H5p3q9AHOvBkMyeLJQPAQESe9SNO7blwOnt2VBbwkUxF>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:eFmBaKk3zqEFWs7qCZTN0VYRpwcaXPhaipNJZTdgUVG0L6dlgLCJ6Q>
+    <xmx:eFmBaCQ_PRoCKjZJfzHmCSrjdEzi2mOqnexB8J1f7fyG-sezY4oUWw>
+    <xmx:eFmBaJU2BWl1m2cvgYq0wEc6UmHvSxqBq0aYZAH2HEZvB-Z5LclHEw>
+    <xmx:eFmBaGICamX3Mgvqf_yg6GD7Wn7bxxpe-Bah0H1Kh52BRSSNmN2PTw>
+    <xmx:eFmBaF3hRxSpiTXMXM_CnbKDM9QJRUAJ6dckBFS27DvGjmhWSGGsNXyd>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Jul 2025 17:34:37 -0400 (EDT)
+ 23 Jul 2025 17:51:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?=C3=98ystein?= Walle <oystwa@gmail.com>
-Cc: git@vger.kernel.org,  phillip.wood123@gmail.com
-Subject: Re: [PATCH v2] rebase: write script before initializing state
-In-Reply-To: <20250711203615.9982-1-oystwa@gmail.com> (=?utf-8?Q?=22=C3=98?=
- =?utf-8?Q?ystein?= Walle"'s
-	message of "Fri, 11 Jul 2025 22:36:15 +0200")
-References: <xmqqfrf6qkyy.fsf@gitster.g>
-	<20250711203615.9982-1-oystwa@gmail.com>
-Date: Wed, 23 Jul 2025 14:34:36 -0700
-Message-ID: <xmqq1pq6mw0j.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,
+    schwab@linux-m68k.org,  phillip.wood123@gmail.com,
+    Christian Couder <chriscool@tuxfamily.org>,
+    Kyle Lippincott <spectral@google.com>,
+    Jeff King <peff@peff.net>
+Subject: [PATCH] ref-iterator-seek: correctly initialize the prefix_state
+ for a new level
+In-Reply-To: <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+	(Karthik Nayak's message of "Tue, 15 Jul 2025 13:28:25 +0200")
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+	<20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+Date: Wed, 23 Jul 2025 14:51:50 -0700
+Message-ID: <xmqqldoelgnd.fsf_-_@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,50 +93,46 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Øystein Walle <oystwa@gmail.com> writes:
+When cache_ref_iterator_seek() "jumps" to a middle of the sorted ref
+list, it forgets to set the .prefix_state member of the new
+(i.e. deeper) level it just initialized.  This later causes
+cache_ref_iterator_advance() to look at this uninitialized member
+to base its decision on what to do next.
 
-> If rebase.instructionFormat is invalid the repository is left in a
-> strange state when the interactive rebase fails. `git status` outputs
-> both the same as it would have in the normal case *and* something
-> related to the interactive rebase:
->
->     $ git -c rebase.instructionFormat=blah rebase -i
->     fatal: invalid --pretty format: blah
->     $ git status
->     On branch master
->     Your branch is ahead of 'upstream/master' by 1 commit.
->       (use "git push" to publish your local commits)
->
->     git-rebase-todo is missing.
->     No commands done.
->     No commands remaining.
->     You are currently editing a commit while rebasing branch 'master' on '8db3019401'.
->       (use "git commit --amend" to amend the current commit)
->       (use "git rebase --continue" once you are satisfied with your changes)
->
-> get_commit_format() calls die() on failure so we cannot handle the error
-> gracefully. By attempting to write the rebase script before initializing
-> the state this bad state can be avoided.
->
-> Signed-off-by: Øystein Walle <oystwa@gmail.com>
-> ---
-> So sorry for the delay. I saw that the signoff was missing, then saw
-> Phillip's review, decided to think about it and then life happened in
-> the mean time...
->
-> This patch is identical to the first one except it has the missing
-> signoff and a few typos in the commit message corrected. Phillip's
-> suggestions are noted and appreciated but unfortunately I am unable to
-> work on the at the moment. And I do think my patch is at least an
-> improvement albeit perhaps less thorough than it could have been.
+Kyle Lippincott [*] and Jeff King noticed this with MSAN and
+Valgrind, and Karthik Nayak as the original author located exactly
+where the missing initialization is.
 
-I am sweeping my backlog and noticed that nobody chimed in to help
-improving this topic.  As I already said, this would not least be
-moving a step in the right direction, so I am planning to mark it
-for 'next', but thought that I should check first before doing so,
-in case you are back on the topic and cooking a new iteration.
+[*] <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
 
-Thanks.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ refs/ref-cache.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+ * I had this as "fixup!" on top of your topic for quite a while and
+   forgot to ask you to send in an official fix.  As Kyle's
+   discovery was after the topic hit 'next' (understandable, as
+   their internal edition of Git is based on 'next'), we need a
+   separate fix on top.
+
+   To prepare for merging down the whole thing to 'master', I wrote
+   the proposed log message to help expedite the process.  Comments?
+
+diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+index 1d95b56d40..ceef3a2008 100644
+--- a/refs/ref-cache.c
++++ b/refs/ref-cache.c
+@@ -527,6 +527,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+ 				level = &iter->levels[iter->levels_nr++];
+ 				level->dir = dir;
+ 				level->index = -1;
++				level->prefix_state = PREFIX_CONTAINS_DIR;
+ 			} else {
+ 				/* reduce the index so the leaf node is iterated over */
+ 				if (cmp <= 0 && !slash)
+-- 
+2.50.1-521-gf11ee0bd80
+
