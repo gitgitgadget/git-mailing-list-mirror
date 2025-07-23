@@ -1,79 +1,79 @@
 Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D191D2F532D
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:08:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D02E22F4305
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:08:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753279735; cv=none; b=ozuNSqS3KclEg5B3ubHkqEMRjKzd6sOEgPY6c/iHBggJl8Eu3Vrj/4X4K0pDTyZdGAH3lTAETWatlZJYztsMlYbKl8euE0QJKAZgsnPMSmnlh6xRJlA3/rtOx6QsYVasFiXwEigmkHHih41BVLQP1rVjGMybv9SC1OOBkpGZcGA=
+	t=1753279738; cv=none; b=Dgpr3KYewi7H/r48iYN7Ks8M/LOqnOdkHSQ16aPlZkbZnfumC9Xd2LZuCX30es/DXN9G+VAZmNGxf+/RzX/ntZ6uMspMILaW64ELL3ZwDpqCZuGAseGLloSXgkt0J8SEtWMSU8eJhYmZFZRP8rEaKIAdEblpaFJ4FN/s9eWNo5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753279735; c=relaxed/simple;
-	bh=n88kIfPSHLrG7L9VpPKU8Xe7SZs7A7Ubawskj0Qf8eY=;
+	s=arc-20240116; t=1753279738; c=relaxed/simple;
+	bh=P+j0GA7NMXTXtt7ETcEFZ1w5W6X5BTczx7Rer5c7a78=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=GwRkBG65j23lDpah8gBkSLL2OppgATx+e2jGic+pPpoG6StcL2L8M6yOOvSXWmTIzus2hSJdgknbsZygbzBF/2jgrHE82X2BJYOwfsUXNba6NFrbJ8b5sNgvq16fzRsPHt4j1AgY8jGF6QeVAck1xBjYhuqKbWzyiwNaMIQPsvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rO04+30V; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V4u5tVKF; arc=none smtp.client-ip=103.168.172.147
+	 In-Reply-To:To:Cc; b=Yi5uzCW8YUpxyUia6SsM5m6Sh2bXig3g3EJ2uyA2YE5mkCYO9JWTEUOEvw4TS/ZM0YMnzhMUIocbuB5TL73SQzuyQMKEnr8YQ1yzC/wA3OnmSWlgAWveKXubdi02Sgt+DYIH01NpIa2dLeFKxwJBUd3swcKkrD/VV+iium9xZks=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ive99B3D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mrzE8+C7; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rO04+30V";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V4u5tVKF"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id F206AEC19D2;
-	Wed, 23 Jul 2025 10:08:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ive99B3D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mrzE8+C7"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id DEDA5EC19D2;
+	Wed, 23 Jul 2025 10:08:55 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Wed, 23 Jul 2025 10:08:51 -0400
+  by phl-compute-10.internal (MEProxy); Wed, 23 Jul 2025 10:08:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753279731;
-	 x=1753366131; bh=HFQkwgbyqbBk9mSaNi2VPyzEtJh+Wq3V8fhqmE6cVEk=; b=
-	rO04+30VNVKvDNT5Rx5hkicMbVvW6GM28Ku9EN48W0cHMAwz8v7mlw33W05iBRmA
-	qNpS9id/2PoAD59IRo01vNzDE154pbOTH2Iz/nqHc+BeWeEe20R/J9OhsLuvJuO2
-	DhTgp+FVMsQIm6Mgzdx4SdmJSD3JxPtVZPsLi8091586al2ZBpuW+0T53PPxGSNq
-	A+K6bww/PVjO9DS6F2M8iWPdO3fcxy4C+w5UzA1+4q1sFWCAOVrLHdvFfuKwHT0D
-	MesjGhSrG9SyT8wN0kU/3IxB8P8/5rfYX5R/Pjx2n76RgrL0CyUT4Zl1ohtqqWPa
-	8jEsF05DLx3woHYpoJAI8A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753279735;
+	 x=1753366135; bh=WfpArXrXncyJ0DNtcZF8gwN2HCx8UzLS32y5F+VjmfM=; b=
+	ive99B3Dh+wKtB+QVYQB1lk0TGL4MzYammZ2hjYgFRWDKl4K8SIMoOT9Zh0SYmuy
+	RTOfIcPK8HHhmVOxs/5wwAKXTZWV+2C42SShNbzvynncd/AZzyo65D8+Z1YgQrf9
+	YTeM8sMjITnf7UV9QUselmRptX7xjqD+G2m0ETFBhyQqaKBB1FxjePYkDuMloPpH
+	VrwfhQIBJZNjQ5C22UViw97XtGQU1wI9qbYl7uVN/ReiEMz/pe36YhNWnCXRghwa
+	F02hIgqB6NBZdRIK+7S+vwHwvb4bDp5Uw/OJW7SloWANzK98kfaYwUg3jWfp2p+S
+	zUOIaYJAWJ1oWoryA6VNKQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753279731; x=
-	1753366131; bh=HFQkwgbyqbBk9mSaNi2VPyzEtJh+Wq3V8fhqmE6cVEk=; b=V
-	4u5tVKF4Pu7gwx1/eT/9fl5oW7fIyWkhgiQSs7nOla4KGsOzLqwQScquoNfCRrpM
-	beu3z7R+bmGmmlRNecXL2p10CHkzFH6NHZjzt8yU4+VHPBW07gz8IT+OVA07NQcL
-	xsP9B2e/oqOG9ZZHe3+dLTsVXZ16AJXGV05uTMWRjjXFnIln58iCQYgCve/uT0Yp
-	s5mBoGFTyBwSjGpCHn1tQTgEk/J3fdR9dDCY/avEldfm4eKazbMJLjWthzBl1IeS
-	M4ubMNlTBuqDsiHS0UFiY415/uiBPe/xiftHEZF3iApEvWIHLAcWzCZD8+C+ZaUz
-	dRS7fBBsvBl61PxzM8AGQ==
-X-ME-Sender: <xms:8-yAaKDM5IAH3QPBAl2hFCgy-sCrvbgjubE6sFTul_WHZOS6-Gg3Kw>
-    <xme:8-yAaEvWCwlGa1E4-ciQ56wAvErhOswo5YDq0GdfY6y-YNmoRNxasE_Q-o9YHlf9C
-    v2dWm88Xdc5_z1WbA>
-X-ME-Received: <xmr:8-yAaPbojztv2g4qBxbpUZK8jsVEPuf0Xqsn6a2P-SJPBoUYAp-UoDljI7bl3lYKBHTsuocHEinVor0Ghao-17oV9n5Yx9Ucryp1cmTQSC04>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejjeeljecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753279735; x=
+	1753366135; bh=WfpArXrXncyJ0DNtcZF8gwN2HCx8UzLS32y5F+VjmfM=; b=m
+	rzE8+C7soFil41n419OrM51ohjzImQWOI2tKso7uWORvSEzRCBYTrRMhkqF9il/V
+	rMyOYXnSPrRloEFlPVO6pgSSZE2Lfzmj0o5EsIp+8n5OoRtdFE7ejXTzzSuZZcDi
+	pBAulwoPZur8TYv/EsZJs6rjuFcnDzTOGMM6OYtiWEPdNmNNb4ksI9VBjLuV0HfP
+	Zfl28fWCX+fEpOWp+HTmoNS6VxmozSg/znKItVyOrB4FY7nn0ecaV5UCkQred/Uv
+	iQzSBvS4yKBWAwI1rODgG2Kcf6o9b0lXXqIxRld3GWMKKSKXlu8Dp9ZiHw9//FSh
+	uXa/VTPzCHmw1P0/foEwA==
+X-ME-Sender: <xms:9-yAaB-8g-nyRp4X6cBMVT6Fuh3MGKkDgSh21z-o5nC3LTrQMG33lA>
+    <xme:9-yAaF7p90qvV1Z_Q5_3H66nTFBNj0sAa7sT6h3BmXDB_4ZH8vOJdGOXwUeNU-e3m
+    qU_3_-QCr0gja2i-Q>
+X-ME-Received: <xmr:9-yAaA0au3U_SKPFP7f9Qp-0gp7z2xlLUI4FYKodH7qfXyZUDiqDt5XhbNmUW-R8PpWagWiXN1IVQ7iZnyb3x7L8zeS2ptzotcAHOnYeqBrQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejjeelkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
     ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlih
     hprdifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:8-yAaHWyIaiD-c211yFOLhUEXmqrxn_iHO_bh9MdJgGSXFCQVRFFeQ>
-    <xmx:8-yAaD4FInSD8SQY3nHuO6qXo4MlutB8pENtFglDspjf7U1yrkQ5lA>
-    <xmx:8-yAaCii7ndD-aDdE5KT8_Qu_P6QnCRqzlOlBMeS43N-oozfRBebUg>
-    <xmx:8-yAaKfy_FSFHehQlc51nGCUApTpQeRdeO0RcNOPtJGaSGkUZ8lAVg>
-    <xmx:8-yAaHQjqbVB9pXlGYpolDbsDnV5RRmPCG53n-mIubnmyrDq_VUhmri4>
+X-ME-Proxy: <xmx:9-yAaEBD1G0gpL8C52b776C9jUofORump50IpalruBHzFfjF0ppIfw>
+    <xmx:9-yAaK0NZJR8SheEQrmFj7jp6tvKuHRc5RI97n5-A0J8al82Glm6rA>
+    <xmx:9-yAaGvz84-6rivt5aHpSOgjZ2rJOyogjOwwh0kM6rVP-QAxYjt9rw>
+    <xmx:9-yAaC6-Blri7JUNUcO_sWQJgrfPZNoJj5FOT9e7ijIEWFO8-q_L5w>
+    <xmx:9-yAaOOyAsY1ZJHYDtGLCXWefnA1OP_JwixEchqpAdwIQ_6DlikUwIY6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Jul 2025 10:08:51 -0400 (EDT)
+ 23 Jul 2025 10:08:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id eaae977e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 23 Jul 2025 14:08:51 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 6329be6e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 23 Jul 2025 14:08:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 23 Jul 2025 16:08:28 +0200
-Subject: [PATCH v2 07/21] config: drop `git_config_get_string()` wrapper
+Date: Wed, 23 Jul 2025 16:08:29 +0200
+Subject: [PATCH v2 08/21] config: drop `git_config_get_string()` wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250723-pks-config-wo-the-repository-v2-7-1502d60d3867@pks.im>
+Message-Id: <20250723-pks-config-wo-the-repository-v2-8-1502d60d3867@pks.im>
 References: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
 In-Reply-To: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
 To: git@vger.kernel.org
@@ -107,278 +107,255 @@ later patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c                     |  4 ++--
- branch.c                    |  2 +-
- builtin/gc.c                |  4 ++--
- builtin/log.c               |  2 +-
- builtin/notes.c             |  2 +-
- builtin/submodule--helper.c | 12 ++++++------
- config.h                    |  5 -----
- fetch-pack.c                |  2 +-
- merge-ort.c                 |  8 ++++----
- scalar.c                    |  4 ++--
- sequencer.c                 |  2 +-
- transport.c                 |  8 ++++----
- 12 files changed, 25 insertions(+), 30 deletions(-)
+ builtin/fetch.c             | 2 +-
+ builtin/gc.c                | 4 ++--
+ builtin/remote.c            | 2 +-
+ builtin/submodule--helper.c | 4 ++--
+ checkout.c                  | 2 +-
+ config.h                    | 5 -----
+ connect.c                   | 4 ++--
+ editor.c                    | 2 +-
+ help.c                      | 2 +-
+ promisor-remote.c           | 4 ++--
+ protocol.c                  | 2 +-
+ remote.c                    | 2 +-
+ sideband.c                  | 6 +++---
+ t/helper/test-config.c      | 2 +-
+ 14 files changed, 19 insertions(+), 24 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index d2381a157c0..45eb790d133 100644
---- a/apply.c
-+++ b/apply.c
-@@ -48,8 +48,8 @@ struct gitdiff_data {
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index ea447c453d1..52eae4b972d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2508,7 +2508,7 @@ int cmd_fetch(int argc,
+ 	if (!max_jobs)
+ 		max_jobs = online_cpus();
  
- static void git_apply_config(void)
- {
--	git_config_get_string("apply.whitespace", &apply_default_whitespace);
--	git_config_get_string("apply.ignorewhitespace", &apply_default_ignorewhitespace);
-+	repo_config_get_string(the_repository, "apply.whitespace", &apply_default_whitespace);
-+	repo_config_get_string(the_repository, "apply.ignorewhitespace", &apply_default_ignorewhitespace);
- 	repo_config(the_repository, git_xmerge_config, NULL);
- }
+-	if (!git_config_get_string_tmp("fetch.bundleuri", &bundle_uri) &&
++	if (!repo_config_get_string_tmp(the_repository, "fetch.bundleuri", &bundle_uri) &&
+ 	    fetch_bundle_uri(the_repository, bundle_uri, NULL))
+ 		warning(_("failed to fetch bundles from '%s'"), bundle_uri);
  
-diff --git a/branch.c b/branch.c
-index 93f5b4e8dd9..b4811671fc7 100644
---- a/branch.c
-+++ b/branch.c
-@@ -355,7 +355,7 @@ int read_branch_desc(struct strbuf *buf, const char *branch_name)
- 	char *v = NULL;
- 	struct strbuf name = STRBUF_INIT;
- 	strbuf_addf(&name, "branch.%s.description", branch_name);
--	if (git_config_get_string(name.buf, &v)) {
-+	if (repo_config_get_string(the_repository, name.buf, &v)) {
- 		strbuf_release(&name);
- 		return -1;
- 	}
 diff --git a/builtin/gc.c b/builtin/gc.c
-index f395cc57a15..d8f7a1858cb 100644
+index d8f7a1858cb..a2b8fbc9f3d 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -218,12 +218,12 @@ static void gc_config(struct gc_config *cfg)
- 	if (!git_config_get_ulong("core.deltabasecachelimit", &ulongval))
- 		cfg->delta_base_cache_limit = ulongval;
+@@ -1765,7 +1765,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
+ 	if (opts->schedule) {
+ 		strategy = none_strategy;
  
--	if (!git_config_get_string("gc.repackfilter", &owned)) {
-+	if (!repo_config_get_string(the_repository, "gc.repackfilter", &owned)) {
- 		free(cfg->repack_filter);
- 		cfg->repack_filter = owned;
- 	}
+-		if (!git_config_get_string_tmp("maintenance.strategy", &config_str)) {
++		if (!repo_config_get_string_tmp(the_repository, "maintenance.strategy", &config_str)) {
+ 			if (!strcasecmp(config_str, "incremental"))
+ 				strategy = incremental_strategy;
+ 		}
+@@ -1788,7 +1788,7 @@ static void initialize_task_config(struct maintenance_run_opts *opts,
+ 			strbuf_reset(&config_name);
+ 			strbuf_addf(&config_name, "maintenance.%s.schedule",
+ 				    tasks[i].name);
+-			if (!git_config_get_string_tmp(config_name.buf, &config_str))
++			if (!repo_config_get_string_tmp(the_repository, config_name.buf, &config_str))
+ 				strategy.tasks[i].schedule = parse_schedule(config_str);
+ 			if (strategy.tasks[i].schedule < opts->schedule)
+ 				continue;
+diff --git a/builtin/remote.c b/builtin/remote.c
+index ebd70bea3a1..826b2dcfd04 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -1268,7 +1268,7 @@ static int get_one_entry(struct remote *remote, void *priv)
  
--	if (!git_config_get_string("gc.repackfilterto", &owned)) {
-+	if (!repo_config_get_string(the_repository, "gc.repackfilterto", &owned)) {
- 		free(cfg->repack_filter_to);
- 		cfg->repack_filter_to = owned;
- 	}
-diff --git a/builtin/log.c b/builtin/log.c
-index b512f12e805..a9969ad00a0 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -235,7 +235,7 @@ static void set_default_decoration_filter(struct decoration_filter *decoration_f
- 	 * since the command-line takes precedent.
- 	 */
- 	if (use_default_decoration_filter &&
--	    !git_config_get_string("log.initialdecorationset", &value) &&
-+	    !repo_config_get_string(the_repository, "log.initialdecorationset", &value) &&
- 	    !strcmp("all", value))
- 		use_default_decoration_filter = 0;
- 	free(value);
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 17004cdb10e..d2252cf5346 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -873,7 +873,7 @@ static int git_config_get_notes_strategy(const char *key,
- {
- 	char *value;
+ 		strbuf_addf(&promisor_config, "remote.%s.partialclonefilter", remote->name);
+ 		strbuf_addf(&remote_info_buf, "%s (fetch)", remote->url.v[0]);
+-		if (!git_config_get_string_tmp(promisor_config.buf, &partial_clone_filter))
++		if (!repo_config_get_string_tmp(the_repository, promisor_config.buf, &partial_clone_filter))
+ 			strbuf_addf(&remote_info_buf, " [%s]", partial_clone_filter);
  
--	if (git_config_get_string(key, &value))
-+	if (repo_config_get_string(the_repository, key, &value))
- 		return 1;
- 	if (parse_notes_merge_strategy(value, strategy))
- 		git_die_config(the_repository, key, _("unknown notes merge strategy %s"), value);
+ 		strbuf_release(&promisor_config);
 diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 6bcc741a6ac..18aa69f0cae 100644
+index 18aa69f0cae..d2ab31835b5 100644
 --- a/builtin/submodule--helper.c
 +++ b/builtin/submodule--helper.c
-@@ -53,7 +53,7 @@ static char *resolve_relative_url(const char *rel_url, const char *up_path, int
- 	struct strbuf remotesb = STRBUF_INIT;
+@@ -496,7 +496,7 @@ static void init_submodule(const char *path, const char *prefix,
  
- 	strbuf_addf(&remotesb, "remote.%s.url", remote);
--	if (git_config_get_string(remotesb.buf, &remoteurl)) {
-+	if (repo_config_get_string(the_repository, remotesb.buf, &remoteurl)) {
- 		if (!quiet)
- 			warning(_("could not look up configuration '%s'. "
- 				  "Assuming this repository is its own "
-@@ -468,7 +468,7 @@ static void init_submodule(const char *path, const char *prefix,
- 	 * .gitmodules, so look it up directly.
- 	 */
- 	strbuf_addf(&sb, "submodule.%s.url", sub->name);
--	if (git_config_get_string(sb.buf, &url)) {
-+	if (repo_config_get_string(the_repository, sb.buf, &url)) {
- 		if (!sub->url)
- 			die(_("No url found for submodule path '%s' in .gitmodules"),
- 				displaypath);
-@@ -1623,11 +1623,11 @@ static void prepare_possible_alternates(const char *sm_name,
- 	char *sm_alternate = NULL, *error_strategy = NULL;
- 	struct submodule_alternate_setup sas = SUBMODULE_ALTERNATE_SETUP_INIT;
+ 	/* Copy "update" setting when it is not set yet */
+ 	strbuf_addf(&sb, "submodule.%s.update", sub->name);
+-	if (git_config_get_string_tmp(sb.buf, &upd) &&
++	if (repo_config_get_string_tmp(the_repository, sb.buf, &upd) &&
+ 	    sub->update_strategy.type != SM_UPDATE_UNSPECIFIED) {
+ 		if (sub->update_strategy.type == SM_UPDATE_COMMAND) {
+ 			fprintf(stderr, _("warning: command update mode suggested for submodule '%s'\n"),
+@@ -1034,7 +1034,7 @@ static void prepare_submodule_summary(struct summary_cb *info,
  
--	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-+	repo_config_get_string(the_repository, "submodule.alternateLocation", &sm_alternate);
- 	if (!sm_alternate)
- 		return;
- 
--	git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
-+	repo_config_get_string(the_repository, "submodule.alternateErrorStrategy", &error_strategy);
- 
- 	if (!error_strategy)
- 		error_strategy = xstrdup("die");
-@@ -1808,11 +1808,11 @@ static int clone_submodule(const struct module_clone_data *clone_data,
- 		die(_("could not get submodule directory for '%s'"), clone_data_path);
- 
- 	/* setup alternateLocation and alternateErrorStrategy in the cloned submodule if needed */
--	git_config_get_string("submodule.alternateLocation", &sm_alternate);
-+	repo_config_get_string(the_repository, "submodule.alternateLocation", &sm_alternate);
- 	if (sm_alternate)
- 		git_config_set_in_file(p, "submodule.alternateLocation",
- 				       sm_alternate);
--	git_config_get_string("submodule.alternateErrorStrategy", &error_strategy);
-+	repo_config_get_string(the_repository, "submodule.alternateErrorStrategy", &error_strategy);
- 	if (error_strategy)
- 		git_config_set_in_file(p, "submodule.alternateErrorStrategy",
- 				       error_strategy);
+ 			config_key = xstrfmt("submodule.%s.ignore",
+ 					     sub->name);
+-			if (!git_config_get_string_tmp(config_key, &value))
++			if (!repo_config_get_string_tmp(the_repository, config_key, &value))
+ 				ignore_all = !strcmp(value, "all");
+ 			else if (sub->ignore)
+ 				ignore_all = !strcmp(sub->ignore, "all");
+diff --git a/checkout.c b/checkout.c
+index 0b1cf8b40b7..1588b116eed 100644
+--- a/checkout.c
++++ b/checkout.c
+@@ -52,7 +52,7 @@ char *unique_tracking_name(const char *name, struct object_id *oid,
+ {
+ 	struct tracking_name_data cb_data = TRACKING_NAME_DATA_INIT;
+ 	const char *default_remote = NULL;
+-	if (!git_config_get_string_tmp("checkout.defaultremote", &default_remote))
++	if (!repo_config_get_string_tmp(the_repository, "checkout.defaultremote", &default_remote))
+ 		cb_data.default_remote = default_remote;
+ 	cb_data.src_ref = xstrfmt("refs/heads/%s", name);
+ 	cb_data.dst_oid = oid;
 diff --git a/config.h b/config.h
-index f6635e48c23..8887ebf62ea 100644
+index 8887ebf62ea..89739bee9b0 100644
 --- a/config.h
 +++ b/config.h
 @@ -719,11 +719,6 @@ NORETURN void git_die_config_linenr(const char *key, const char *filename, int l
  int lookup_config(const char **mapping, int nr_mapping, const char *var);
  
  # ifdef USE_THE_REPOSITORY_VARIABLE
--static inline int git_config_get_string(const char *key, char **dest)
+-static inline int git_config_get_string_tmp(const char *key, const char **dest)
 -{
--	return repo_config_get_string(the_repository, key, dest);
+-	return repo_config_get_string_tmp(the_repository, key, dest);
 -}
 -
- static inline int git_config_get_string_tmp(const char *key, const char **dest)
+ static inline int git_config_get_int(const char *key, int *dest)
  {
- 	return repo_config_get_string_tmp(the_repository, key, dest);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 11344206f73..04768087879 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -1910,7 +1910,7 @@ static void fetch_pack_config(void)
- 	if (!uri_protocols.nr) {
- 		char *str;
+ 	return repo_config_get_int(the_repository, key, dest);
+diff --git a/connect.c b/connect.c
+index 4b1dc65e5ce..34cac24d54c 100644
+--- a/connect.c
++++ b/connect.c
+@@ -1154,7 +1154,7 @@ static const char *get_ssh_command(void)
+ 	if ((ssh = getenv("GIT_SSH_COMMAND")))
+ 		return ssh;
  
--		if (!git_config_get_string("fetch.uriprotocols", &str) && str) {
-+		if (!repo_config_get_string(the_repository, "fetch.uriprotocols", &str) && str) {
- 			string_list_split(&uri_protocols, str, ',', -1);
- 			free(str);
+-	if (!git_config_get_string_tmp("core.sshcommand", &ssh))
++	if (!repo_config_get_string_tmp(the_repository, "core.sshcommand", &ssh))
+ 		return ssh;
+ 
+ 	return NULL;
+@@ -1173,7 +1173,7 @@ static void override_ssh_variant(enum ssh_variant *ssh_variant)
+ {
+ 	const char *variant = getenv("GIT_SSH_VARIANT");
+ 
+-	if (!variant && git_config_get_string_tmp("ssh.variant", &variant))
++	if (!variant && repo_config_get_string_tmp(the_repository, "ssh.variant", &variant))
+ 		return;
+ 
+ 	if (!strcmp(variant, "auto"))
+diff --git a/editor.c b/editor.c
+index b79d97b0e72..fd174e6a034 100644
+--- a/editor.c
++++ b/editor.c
+@@ -50,7 +50,7 @@ const char *git_sequence_editor(void)
+ 	const char *editor = getenv("GIT_SEQUENCE_EDITOR");
+ 
+ 	if (!editor)
+-		git_config_get_string_tmp("sequence.editor", &editor);
++		repo_config_get_string_tmp(the_repository, "sequence.editor", &editor);
+ 	if (!editor)
+ 		editor = git_editor();
+ 
+diff --git a/help.c b/help.c
+index db62cda4442..bb20498cfd0 100644
+--- a/help.c
++++ b/help.c
+@@ -417,7 +417,7 @@ void list_cmds_by_config(struct string_list *list)
+ {
+ 	const char *cmd_list;
+ 
+-	if (git_config_get_string_tmp("completion.commands", &cmd_list))
++	if (repo_config_get_string_tmp(the_repository, "completion.commands", &cmd_list))
+ 		return;
+ 
+ 	string_list_sort(list);
+diff --git a/promisor-remote.c b/promisor-remote.c
+index be6f82d12f8..a9c877d9cfa 100644
+--- a/promisor-remote.c
++++ b/promisor-remote.c
+@@ -327,7 +327,7 @@ static void promisor_info_vecs(struct repository *repo,
+ 		char *url_key = xstrfmt("remote.%s.url", r->name);
+ 
+ 		/* Only add remotes with a non empty URL */
+-		if (!git_config_get_string_tmp(url_key, &url) && *url) {
++		if (!repo_config_get_string_tmp(the_repository, url_key, &url) && *url) {
+ 			strvec_push(names, r->name);
+ 			strvec_push(urls, url);
  		}
-diff --git a/merge-ort.c b/merge-ort.c
-index 49aa37a8f23..29789579c9b 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -5358,15 +5358,15 @@ static void merge_recursive_config(struct merge_options *opt, int ui)
- 	git_config_get_int("merge.renamelimit", &opt->rename_limit);
- 	git_config_get_bool("merge.renormalize", &renormalize);
- 	opt->renormalize = renormalize;
--	if (!git_config_get_string("diff.renames", &value)) {
-+	if (!repo_config_get_string(the_repository, "diff.renames", &value)) {
- 		opt->detect_renames = git_config_rename("diff.renames", value);
- 		free(value);
+@@ -433,7 +433,7 @@ static void filter_promisor_remote(struct repository *repo,
+ 	struct strvec names = STRVEC_INIT;
+ 	struct strvec urls = STRVEC_INIT;
+ 
+-	if (!git_config_get_string_tmp("promisor.acceptfromserver", &accept_str)) {
++	if (!repo_config_get_string_tmp(the_repository, "promisor.acceptfromserver", &accept_str)) {
+ 		if (!*accept_str || !strcasecmp("None", accept_str))
+ 			accept = ACCEPT_NONE;
+ 		else if (!strcasecmp("KnownUrl", accept_str))
+diff --git a/protocol.c b/protocol.c
+index bae7226ff40..65f66217021 100644
+--- a/protocol.c
++++ b/protocol.c
+@@ -24,7 +24,7 @@ enum protocol_version get_protocol_version_config(void)
+ 	const char *git_test_k = "GIT_TEST_PROTOCOL_VERSION";
+ 	const char *git_test_v;
+ 
+-	if (!git_config_get_string_tmp("protocol.version", &value)) {
++	if (!repo_config_get_string_tmp(the_repository, "protocol.version", &value)) {
+ 		enum protocol_version version = parse_protocol_version(value);
+ 
+ 		if (version == protocol_unknown_version)
+diff --git a/remote.c b/remote.c
+index e965f022f12..88f991795b2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -734,7 +734,7 @@ static void validate_remote_url(struct remote *remote)
+ 	struct strbuf redacted = STRBUF_INIT;
+ 	int warn_not_die;
+ 
+-	if (git_config_get_string_tmp("transfer.credentialsinurl", &value))
++	if (repo_config_get_string_tmp(the_repository, "transfer.credentialsinurl", &value))
+ 		return;
+ 
+ 	if (!strcmp("warn", value))
+diff --git a/sideband.c b/sideband.c
+index 251e9615ed0..8f15b98a654 100644
+--- a/sideband.c
++++ b/sideband.c
+@@ -39,9 +39,9 @@ static int use_sideband_colors(void)
+ 	if (use_sideband_colors_cached >= 0)
+ 		return use_sideband_colors_cached;
+ 
+-	if (!git_config_get_string_tmp(key, &value))
++	if (!repo_config_get_string_tmp(the_repository, key, &value))
+ 		use_sideband_colors_cached = git_config_colorbool(key, value);
+-	else if (!git_config_get_string_tmp("color.ui", &value))
++	else if (!repo_config_get_string_tmp(the_repository, "color.ui", &value))
+ 		use_sideband_colors_cached = git_config_colorbool("color.ui", value);
+ 	else
+ 		use_sideband_colors_cached = GIT_COLOR_AUTO;
+@@ -49,7 +49,7 @@ static int use_sideband_colors(void)
+ 	for (i = 0; i < ARRAY_SIZE(keywords); i++) {
+ 		strbuf_reset(&sb);
+ 		strbuf_addf(&sb, "%s.%s", key, keywords[i].keyword);
+-		if (git_config_get_string_tmp(sb.buf, &value))
++		if (repo_config_get_string_tmp(the_repository, sb.buf, &value))
+ 			continue;
+ 		color_parse(value, keywords[i].color);
  	}
--	if (!git_config_get_string("merge.renames", &value)) {
-+	if (!repo_config_get_string(the_repository, "merge.renames", &value)) {
- 		opt->detect_renames = git_config_rename("merge.renames", value);
- 		free(value);
- 	}
--	if (!git_config_get_string("merge.directoryrenames", &value)) {
-+	if (!repo_config_get_string(the_repository, "merge.directoryrenames", &value)) {
- 		int boolval = git_parse_maybe_bool(value);
- 		if (0 <= boolval) {
- 			opt->detect_directory_renames = boolval ?
-@@ -5379,7 +5379,7 @@ static void merge_recursive_config(struct merge_options *opt, int ui)
- 		free(value);
- 	}
- 	if (ui) {
--		if (!git_config_get_string("diff.algorithm", &value)) {
-+		if (!repo_config_get_string(the_repository, "diff.algorithm", &value)) {
- 			long diff_algorithm = parse_algorithm_value(value);
- 			if (diff_algorithm < 0)
- 				die(_("unknown value for config '%s': %s"), "diff.algorithm", value);
-diff --git a/scalar.c b/scalar.c
-index 2aaff5aa109..07f855c9913 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -101,7 +101,7 @@ static int set_scalar_config(const struct scalar_config *config, int reconfigure
- 	int res;
- 
- 	if ((reconfigure && config->overwrite_on_reconfigure) ||
--	    git_config_get_string(config->key, &value)) {
-+	    repo_config_get_string(the_repository, config->key, &value)) {
- 		trace2_data_string("scalar", the_repository, config->key, "created");
- 		res = git_config_set_gently(config->key, config->value);
- 	} else {
-@@ -193,7 +193,7 @@ static int set_recommended_config(int reconfigure)
- 	 * The `log.excludeDecoration` setting is special because it allows
- 	 * for multiple values.
- 	 */
--	if (git_config_get_string("log.excludeDecoration", &value)) {
-+	if (repo_config_get_string(the_repository, "log.excludeDecoration", &value)) {
- 		trace2_data_string("scalar", the_repository,
- 				   "log.excludeDecoration", "created");
- 		if (git_config_set_multivar_gently("log.excludeDecoration",
-diff --git a/sequencer.c b/sequencer.c
-index df207f33e07..f3bada39b40 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -6089,7 +6089,7 @@ int sequencer_make_script(struct repository *r, struct strbuf *out, int argc,
- 	revs.topo_order = 1;
- 
- 	revs.pretty_given = 1;
--	git_config_get_string("rebase.instructionFormat", &format);
-+	repo_config_get_string(the_repository, "rebase.instructionFormat", &format);
- 	if (!format || !*format) {
- 		free(format);
- 		format = xstrdup("# %s");
-diff --git a/transport.c b/transport.c
-index a246afd09fa..89e6297ce22 100644
---- a/transport.c
-+++ b/transport.c
-@@ -54,14 +54,14 @@ static int transport_color_config(void)
- 		return 0;
- 	initialized = 1;
- 
--	if (!git_config_get_string(key, &value))
-+	if (!repo_config_get_string(the_repository, key, &value))
- 		transport_use_color = git_config_colorbool(key, value);
- 
- 	if (!want_color_stderr(transport_use_color))
- 		return 0;
- 
- 	for (size_t i = 0; i < ARRAY_SIZE(keys); i++)
--		if (!git_config_get_string(keys[i], &value)) {
-+		if (!repo_config_get_string(the_repository, keys[i], &value)) {
- 			if (!value)
- 				return config_error_nonbool(keys[i]);
- 			if (color_parse(value, transport_colors[i]) < 0)
-@@ -1078,7 +1078,7 @@ static enum protocol_allow_config get_protocol_config(const char *type)
- 	char *value;
- 
- 	/* first check the per-protocol config */
--	if (!git_config_get_string(key, &value)) {
-+	if (!repo_config_get_string(the_repository, key, &value)) {
- 		enum protocol_allow_config ret =
- 			parse_protocol_config(key, value);
- 		free(key);
-@@ -1088,7 +1088,7 @@ static enum protocol_allow_config get_protocol_config(const char *type)
- 	free(key);
- 
- 	/* if defined, fallback to user-defined default for unknown protocols */
--	if (!git_config_get_string("protocol.allow", &value)) {
-+	if (!repo_config_get_string(the_repository, "protocol.allow", &value)) {
- 		enum protocol_allow_config ret =
- 			parse_protocol_config("protocol.allow", value);
- 		free(value);
+diff --git a/t/helper/test-config.c b/t/helper/test-config.c
+index 1953ab846e4..30e70f1a6c2 100644
+--- a/t/helper/test-config.c
++++ b/t/helper/test-config.c
+@@ -171,7 +171,7 @@ int cmd__config(int argc, const char **argv)
+ 			goto exit1;
+ 		}
+ 	} else if (argc == 3 && !strcmp(argv[1], "get_string")) {
+-		if (!git_config_get_string_tmp(argv[2], &v)) {
++		if (!repo_config_get_string_tmp(the_repository, argv[2], &v)) {
+ 			printf("%s\n", v);
+ 			goto exit0;
+ 		} else {
 
 -- 
 2.50.1.552.g942d659e1b.dirty
