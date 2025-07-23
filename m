@@ -1,66 +1,65 @@
-Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5EF5289373
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:48:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A6B2FD58F
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:54:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753282122; cv=none; b=O73pa4lqmeoka08tfiEXtoyPOYdhU8hz7Dp+lTBx1sWjpGuabmVdxtPlyTg7jVe27Q4oOJhmV0+ZLAcM/mcewVWqKFfVe6MJWmMgbp2d9jxV/Bhka8IkSkIAbjQAfmv4KG24+3RZILh2rBrc2vT619++ayS+cc45v7Q9Y7EEICY=
+	t=1753282459; cv=none; b=rVBfzDt5CNJChj7JVcdWvzHZ2FaUvnhbiz5I12aMMxx/mYGQUYbLkN5Mpp38NedVfc0GhUD1b9CBlj//8ne1RlT9VXQCcm7wTceNFpWP1k5mOelmLvxZ6wrYZdVCkalHwGm+GRYs8cjF99OLXLDxd8uWzd6P4amlq0uY5XKnGTE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753282122; c=relaxed/simple;
-	bh=XpKezBaAl/Wsf0ZmLDfy6bv0iFy1qvwHnw3Yf1RmbA0=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:References:
-	 In-Reply-To:Content-Type; b=ReZ4K89v8U0cHrm/OmROQMzs84SEYM9FsGvagHGvXIm1F94UytKn5KhcqdNBoAbgEDhloWHO0cEfSD3HkjtID55PI3VOiz4YV/QcKGvhOmhQuRTuCrdds5EoHrI7aAw98AlqyYtF3iVHSj6a5hPIBakDJxs48bRfwC9a/f6+1ws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J510gNbZ; arc=none smtp.client-ip=209.85.128.52
+	s=arc-20240116; t=1753282459; c=relaxed/simple;
+	bh=NliTRiS65uuSnv7mxdxjp1JHEqi04oG/Jb8GkHd3l+o=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iCQlahJbl2QNUglJZDnLhFEblpYFL6F5H8DMV0mTC94sf/OR1xxcR4natfsOtoJTxHO1yPO6JwbLbHUn20lOVN+IYN8EQOxasKGDBWNza3Su9blzv/vBSyc+dY/wTla9/FctPgfhGITIl/Wo91eF52ubJhzR35HZ/qiBdV8Ey58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lNJnBHPK; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J510gNbZ"
-Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-45619d70c72so9478815e9.0
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:48:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lNJnBHPK"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-4560cdf235cso34342425e9.1
+        for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753282119; x=1753886919; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753282433; x=1753887233; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=9xjPdA9ES60a3FC4kdQX4VlWX9Jzq2MtQbdFItutWZ8=;
-        b=J510gNbZoRawLF5RwMQy6Ud93y3DSPpoJc91Jotky5j+V8uCs2qi3sD+0pOl5XQ48x
-         qX/y+9O6OwXZrcyFFVBSslptHcQoZ+BXlYZ2yOqPlcYkRN18TEH3mmxOj7Y8dTqMZtcp
-         UWu4S9yv8lallaak0o/7RhfUn2RMjKLYWQiKygKSXIwYA2xfwz/qFxf26I8wUI6Vaj74
-         WjYN9Lr60YFS900nfvmKLyVjCr6pjnjKmNLSuPfqvca9CsXW/if+/qF7FtXoT/nTBDw6
-         NcOBbY8MvlXM9R0TON5I8uJUsYynC3bdWVbHnzShFKyfpjW/0KHUNF1tAUCxvR0l62hW
-         r0Nw==
+        bh=jvzEKExQI70Gf01aNM3mUirGcHB7glEEqpefvq8KJmU=;
+        b=lNJnBHPKWwcj3FOIj9WqzniTHZZEFFIOjsukQaOWKToSOkGcYP7jXSTvTCEVwTVHsq
+         asChxAw8SjSV92PmQtk1bL+X7jqzxLaYmSOyHItiMEd5K0GdfClPhvyfdol8OBcBTgpC
+         2u9IxvPgnbHvdVjZBgGxeG2p64fT9Jw1w1MWr2vXwltnRsd0uJVuSYUFDHIpshXGMK29
+         dF2mniIKQkbAuDf68h7vmebunWppIw+jfdOQXiR2nCW8Fpy211bhN8oJpBGpcU3KSlSA
+         kFmWu6ij44pkDLfwoKOE+I3chO/eKUaAXEz506v7Y7JcYVv5+aU9tmFsCghbDHJd54iy
+         JoYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753282119; x=1753886919;
+        d=1e100.net; s=20230601; t=1753282433; x=1753887233;
         h=content-transfer-encoding:in-reply-to:content-language:references
-         :to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=9xjPdA9ES60a3FC4kdQX4VlWX9Jzq2MtQbdFItutWZ8=;
-        b=kSfX8mrCk3qhMqC34R1Sm26rQglF7CmztXGwrtOSWEwf9CozYM+MDTnxb0iaN3rLkm
-         WWSyqL1paZBz4HciszvW1J/wpexVAS7A15egxsdhivzCfrTJ+xER6p3RZsYQR3HqGTrw
-         fP5Ffj5RHrPpHpHiyyMGFPaX8fEpIvaobgH1VrulDfMrXJVll1NgyfZ145fXS258PMcv
-         zci1t2eWkyX7yy9v98AzuUqQJ75YLYjcwkFzTovj8ouxjhpw/960mdOMc4KheRc6nafE
-         TljTvuLB4fuOKbP4zSKTjw9iFUKGr+BrP61YvcDc9jbB0xNshMRE5s5BrhsF3J5+QbKR
-         CIfQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWOOez4S3gOwiXraUtz70RjCOczfBVGBcVtfsZJWRMRDBnAvL5xCQkERZQFAZEdpv7DRQ4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwBtXLKNNqaOfU7xU3lLV0ucRMJwGYvTEJm9Rpp7f++ZNa6j5Yb
-	kGvQLzVPnEQMMR7713dbDe/mz2AnFUwgmsHIZFTSi2n28rAVPaQtqM79S5E/tg==
-X-Gm-Gg: ASbGnctTUz8QgqRmToOv59z6wv6jfoJ4IPdQK8ROh+3b1xdr0g/9+4P8gD4p/+LiwXW
-	GZrIH7YBmJo6RG/MJ3cP8JpOVGHGeA1x4E0jPUILuluvUxLB6W5W+YIpb+DiSeGn36HTtev9HMg
-	+INtqNx3fypjRyMoaLTWEdNNMFYkNN79vkhmrqjmuys9Qdw6CKBdH2/eV5fScdDfGNT7lSnRokY
-	x24W5w3YdhiOAb+9kDQ7cRTD172FIHxrdBAoDF0YNXHXMQqtT3HWEe/JE6zKt4Bw2+hUJx7cHif
-	SzPLpVBeFVrjkPh7CK+INPb5duH6sstY9OuqE4oYaE1RT/xBvCNy5ENnN2Yn9wV0mFlVPD56Umd
-	88m51NwTXPcg07ytZwTOQ7Vvp3n26PA82M6kBfVprD25oR16vTdzEtLkSu78tYlKwRL9zUUhI2K
-	zd
-X-Google-Smtp-Source: AGHT+IETmM2/rvhAmoxJbZw6Cl7t+xxM5RDxZ821OjAbErX2nR/1eoSKO7SSRVDyL0WMT/5Cfo/bkw==
-X-Received: by 2002:a05:6000:2dc3:b0:3a5:270e:7d3 with SMTP id ffacd0b85a97d-3b7634e664fmr5880314f8f.13.1753282118381;
-        Wed, 23 Jul 2025 07:48:38 -0700 (PDT)
+        bh=jvzEKExQI70Gf01aNM3mUirGcHB7glEEqpefvq8KJmU=;
+        b=KEEmQrClXwz8vXoDb49u/kjoy2rDHae5OOz4pq0OV4d49q4IqdVWxOrWTKVxHlDcJx
+         6bikmZhPjTVrRID0hkx98ENqTK8QVnPR6x1GgWsTa5bfKv1VCR1rYkO6UvV9fH05w5Oq
+         +oifU0RcLv8R078GoMkUkxTXaD9MlbRtxLsjL28lqlfCt6PgxvQVM/6WaaufKgvW17at
+         U61sx6KLzBt7MFVtaE5Cs0uhpPwx5rXfG5fnUtPPW0193oxMlCRdDGuaPvBAsgqCymY3
+         WuKsW1RwIOYR/RaNMpTtcnAMHQ3RCsrudX35Y5RfQMA6wi0gcUJh1GjTehZch8iVYY1b
+         CbTw==
+X-Gm-Message-State: AOJu0YxUv+UKh2NNr/r6EHtRaTmQ2Sh5PoyYxoPZ6VYlP3DOpWm5giky
+	iY6ZaGdcXtwfIgUyWHMPTznb5ZyWj9HZ4eVSK/p4Y8Vdt0sHiaoy4apR
+X-Gm-Gg: ASbGncuUpebLw6JJw+ZuKbGxb9ix33PJI7jjFqbqK/LmeUEanlUB9zX/sMoAqNUn5WB
+	aoDthdSbKwTF939FoqCI8fbEqibS0FHE/5aiACgSJ1ku1ghi5IXasAPXbf1StCfbZSe1Pa+rgcU
+	LM2wtZvEpqutJ/cFx9LpjiLpaYH7/gmKry1wltxSVY9W+9Th0YcHkPc7irQuIj0TMqXxOn0jvPx
+	yF80iFmyYAlSKUfq/oCttZ9Lsg7ckRZmyVU1VaBnfp4vVa3ps32JQhUeHexCR/wEf54a1FkbfOS
+	Jfd4bpRxFCVRTONbLXuI2B95LXbCC6QKI5WqpB+gfTEEjlxqjknyW0v5CefVprxWmER0U6Og0ij
+	6Wnfv5nUKE6HegPgCFWAG4cuAZ51nQX95ChCJxqt9zPXJdE/Vj6ETR+IvyQ8C5sZSmqBSNDFwOc
+	GI
+X-Google-Smtp-Source: AGHT+IH5lbJEzNPbWgFK0mx+P3+jJ7arq0vpSmt7LJsUzcJPAXLfSay9u0F1CFIAAsQm+j2jeru5fw==
+X-Received: by 2002:a05:6000:25c3:b0:3a6:d145:e2cc with SMTP id ffacd0b85a97d-3b768ec798amr3167404f8f.15.1753282432441;
+        Wed, 23 Jul 2025 07:53:52 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b61ca319c0sm16588866f8f.40.2025.07.23.07.48.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-45869182e99sm26277015e9.4.2025.07.23.07.53.51
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Jul 2025 07:48:37 -0700 (PDT)
-Message-ID: <4ea2b50c-7277-432b-bcb6-912a0cbcb261@gmail.com>
-Date: Wed, 23 Jul 2025 15:48:37 +0100
+        Wed, 23 Jul 2025 07:53:51 -0700 (PDT)
+Message-ID: <7d6ad7cb-e25a-41de-9588-6a3c1b0717e8@gmail.com>
+Date: Wed, 23 Jul 2025 15:53:50 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,132 +69,133 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 21/21] config: fix sign comparison warnings
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
- <20250723-pks-config-wo-the-repository-v2-21-1502d60d3867@pks.im>
+Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
+To: Justin Tobler <jltobler@gmail.com>,
+ Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im,
+ karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com,
+ phillip.wood@dunelm.org.uk
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-3-lucasseikioshiro@gmail.com>
+ <ldomqfgzts2fs3zuzuyfpsp4jsuec7a6ooisztqx6pe2373jzx@mqzh62weo2jm>
 Content-Language: en-US
-In-Reply-To: <20250723-pks-config-wo-the-repository-v2-21-1502d60d3867@pks.im>
+In-Reply-To: <ldomqfgzts2fs3zuzuyfpsp4jsuec7a6ooisztqx6pe2373jzx@mqzh62weo2jm>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 23/07/2025 15:08, Patrick Steinhardt wrote:
-> There are a couple of -Wsign-compare warnings in "config.c":
+On 22/07/2025 20:25, Justin Tobler wrote:
+> On 25/07/21 09:28PM, Lucas Seiki Oshiro wrote:
 > 
->    - `prepare_include_condition_pattern()` is returns a signed integer,
->      where it either returns a negative error code or the index of the
->      last dir separator in a path. That index will always be a
->      non-negative number, but we cannot just change the return type to a
->      `size_t` due to it being re-used as error code. This is fixed by
->      splitting up concerns: the return value is only used as error code,
->      and the prefix is now returned via an out-pointer. This fixes a sign
->      comparison warning when comparing `text.len < prefix`,
+>> +typedef const char *get_value_fn(struct repository *repo);
+>> +
+>> +struct field {
+>> +	const char *key;
+>> +	get_value_fn *add_field_callback;
+>> +};
+>> +
+>> +static const char *get_references_format(struct repository *repo)
+>> +{
+>> +	return ref_storage_format_to_name(repo->ref_storage_format);
+>> +}
+>> +
+>> +/* repo_info_fields keys should be in lexicographical order */
+>> +static const struct field repo_info_fields[] = {
+>> +	{ "references.format", get_references_format },
+>> +};
 > 
+> Ok, so each key has a corresponding callback that is used to get its
+> value. This works fine when we have one operation/callback per key, but
+> I could see this being a bit inflexible in cases where performing a
+> single operation could be expected to generate multiple keys worth of
+> information at a time.
+> 
+> I certainly see this being the case with git-repo-stats where, for
+> example, interating over references will produce multiple keyvalues
+> indicating the number of branches, tags, remotes, etc. But, maybe for
+> git-repo-info this will not be as much of a concern?
 
-Sounds good, let's see how the caller is affected ...
+I think the fact that git_value_fn returns 'const char*' is a concern as 
+it means we cannot return an allocated string. It would be better to 
+pass a 'struct strbuf' to the callback and write the value to that 
+instead. That way a callback can create the value piecemeal if needed 
+and we don't have to worry about whether we should be free()ing the 
+returned string.
 
-> @@ -239,7 +240,8 @@ static int include_by_gitdir(const struct key_value_info *kvi,
->   {
->   	struct strbuf text = STRBUF_INIT;
->   	struct strbuf pattern = STRBUF_INIT;
-> -	int ret = 0, prefix;
-> +	size_t prefix;
-> +	int ret = 0;
->   	const char *git_dir;
->   	int already_tried_absolute = 0;
->   
-> @@ -250,12 +252,11 @@ static int include_by_gitdir(const struct key_value_info *kvi,
->   
->   	strbuf_realpath(&text, git_dir, 1);
->   	strbuf_add(&pattern, cond, cond_len);
-> -	prefix = prepare_include_condition_pattern(kvi, &pattern);
-> -
-> -again:
-> -	if (prefix < 0)
-> +	ret = prepare_include_condition_pattern(kvi, &pattern, &prefix);
-> +	if (ret < 0)
->   		goto done;
->   
-> +again:
-prefix is not modified below this point so moving the label down below 
-the error check is safe.
+An alternative approach would be to pass a function pointer to the 
+callback which it then calls with the key and value to produce the output.
 
-This looks good, thanks
+Thanks
 
 Phillip
-
->   	if (prefix > 0) {
->   		/*
->   		 * perform literal matching on the prefix part so that
-> @@ -724,7 +725,6 @@ int git_config_from_parameters(config_fn_t fn, void *data)
->   	if (env) {
->   		unsigned long count;
->   		char *endp;
-> -		int i;
->   
->   		count = strtoul(env, &endp, 10);
->   		if (*endp) {
-> @@ -736,10 +736,10 @@ int git_config_from_parameters(config_fn_t fn, void *data)
->   			goto out;
->   		}
->   
-> -		for (i = 0; i < count; i++) {
-> +		for (unsigned long i = 0; i < count; i++) {
->   			const char *key, *value;
->   
-> -			strbuf_addf(&envvar, "GIT_CONFIG_KEY_%d", i);
-> +			strbuf_addf(&envvar, "GIT_CONFIG_KEY_%lu", i);
->   			key = getenv_safe(&to_free, envvar.buf);
->   			if (!key) {
->   				ret = error(_("missing config key %s"), envvar.buf);
-> @@ -747,7 +747,7 @@ int git_config_from_parameters(config_fn_t fn, void *data)
->   			}
->   			strbuf_reset(&envvar);
->   
-> -			strbuf_addf(&envvar, "GIT_CONFIG_VALUE_%d", i);
-> +			strbuf_addf(&envvar, "GIT_CONFIG_VALUE_%lu", i);
->   			value = getenv_safe(&to_free, envvar.buf);
->   			if (!value) {
->   				ret = error(_("missing config value %s"), envvar.buf);
-> @@ -1614,13 +1614,13 @@ int config_with_options(config_fn_t fn, void *data,
->   
->   static void configset_iter(struct config_set *set, config_fn_t fn, void *data)
->   {
-> -	int i, value_index;
-> +	int value_index;
->   	struct string_list *values;
->   	struct config_set_element *entry;
->   	struct configset_list *list = &set->list;
->   	struct config_context ctx = CONFIG_CONTEXT_INIT;
->   
-> -	for (i = 0; i < list->nr; i++) {
-> +	for (size_t i = 0; i < list->nr; i++) {
->   		entry = list->items[i].e;
->   		value_index = list->items[i].value_index;
->   		values = &entry->value_list;
-> @@ -2470,10 +2470,11 @@ static ssize_t write_pair(int fd, const char *key, const char *value,
->    */
->   static void maybe_remove_section(struct config_store_data *store,
->   				 size_t *begin_offset, size_t *end_offset,
-> -				 int *seen_ptr)
-> +				 unsigned *seen_ptr)
->   {
->   	size_t begin;
-> -	int i, seen, section_seen = 0;
-> +	int section_seen = 0;
-> +	unsigned int i, seen;
->   
->   	/*
->   	 * First, ensure that this is the first key, and that there are no
-> @@ -2716,7 +2717,8 @@ int repo_config_set_multivar_in_file_gently(struct repository *r,
->   	} else {
->   		struct stat st;
->   		size_t copy_begin, copy_end;
-> -		int i, new_line = 0;
-> +		unsigned i;
-> +		int new_line = 0;
->   		struct config_options opts;
->   
->   		if (!value_pattern)
+>> +
+>> +static int repo_info_fields_cmp(const void *va, const void *vb)
+>> +{
+>> +	const struct field *a = va;
+>> +	const struct field *b = vb;
+>> +
+>> +	return strcmp(a->key, b->key);
+>> +}
+>> +
+>> +static get_value_fn *get_value_callback(const char *key)
+>>   {
+>> +	const struct field search_key = { key, NULL };
+>> +	const struct field *found = bsearch(&search_key, repo_info_fields,
+>> +					    ARRAY_SIZE(repo_info_fields),
+>> +					    sizeof(struct field),
+>> +					    repo_info_fields_cmp);
+>> +	return found ? found->add_field_callback : NULL;
+>> +}
+>> +
+>> +static int qsort_strcmp(const void *va, const void *vb)
+>> +{
+>> +	const char *a = *(const char **)va;
+>> +	const char *b = *(const char **)vb;
+>> +
+>> +	return strcmp(a, b);
+>> +}
+>> +
+>> +static int print_fields(int argc, const char **argv, struct repository *repo)
+>> +{
+>> +	const char *last = "";
+>> +
+>> +	QSORT(argv, argc, qsort_strcmp);
+>> +
+>> +	for (int i = 0; i < argc; i++) {
+>> +		get_value_fn *callback;
+>> +		const char *key = argv[i];
+>> +		const char *value;
+>> +
+>> +		if (!strcmp(key, last))
+>> +			continue;
+>> +
+>> +		callback = get_value_callback(key);
+>> +
+>> +		if (!callback)
+>> +			return error("key %s not found", key);
+>> +
+>> +		value = callback(repo);
+>> +		printf("%s=%s\n", key, value);
+>> +		last = key;
+>> +	}
 > 
+> If the user does not input any keys, we simply do nothing. I do wonder
+> if this is really the best default behavior. Maybe instead we should
+> error out? Or maybe treat it as though all keys were requested?
+> 
+> -Justin
+> 
+>> +
+>>   	return 0;
+>>   }
+>>   
+>> +static int repo_info(int argc, const char **argv, const char *prefix UNUSED,
+>> +		     struct repository *repo)
+>> +{
+>> +	return print_fields(argc - 1, argv + 1, repo);
+>> +}
+>> +
+>>   int cmd_repo(int argc, const char **argv, const char *prefix,
+>>   	     struct repository *repo)
+>>   {
 
