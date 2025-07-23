@@ -1,89 +1,93 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8076221714
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 17:46:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECEA21F3FF8
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 17:48:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753292772; cv=none; b=gHcOA/tv2eLn1eBAboOWqc/QcRvekpV0FEXrGbIb//7ziGu4tR95e6nBmFX3PKQuNXoPYk2jXNI8H/UldYdBn+KAvgy91BrykHpQ4OW8y2Rh35hm32KFS/NZC0ZR7iGKZ4Tg3z4J48xSfZ/kIfAWxTRSxJdHizcX9+kbe3y5XoE=
+	t=1753292923; cv=none; b=JDIf/QEn8bqrRb+CDXTCxFOFwu4mRXTwqVa4trvM/fP2Ks+3xBcIGGSbrAVVBmPO9luGfx+k632wtKjvenvKfNoUjjqhc4uxechwh1pE61ptInI/sRmJA2fkNF5+aMozcSX74387caOO3AvGa8DpOIVYRIzVBXvMx9JaqEd8H8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753292772; c=relaxed/simple;
-	bh=E/f5PQJORCc6tjhCh6DMyyyVL6cBldFEuRbVQy972Jk=;
+	s=arc-20240116; t=1753292923; c=relaxed/simple;
+	bh=bHYPgDR75bGi48DSxBdL/LBEkpLV0tX3bvSwVFafVb4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=vA9iVfnMR1Pr8G0AfR7ILuIPG0IJHpxJuahtNbNIp/hkmu4AmOT5KwIvs6s1sOTcqXvGcYij43YyEChHEn5aCSaIGBjrlB8EfXFwbyiIyQyVZUy50moQGEH0YuAKqhaE7K2xtssG6rckYb/udvo1qPjX/OIcLQa89lCA2wLq37U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TjrzQnyd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z8lwG35l; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=T/BAi0z+3G32wPD2lu+B7i5mj/U5hX7m5bsNltgLcL1I53kCBO8gzLYCUQ+MEbUFiLDVE5IT+9o+ajWyqV6ghIseEgHoE8Hg6F0kupA3o8IxVL0Pw+hPh2zkbUQp3Zp399C49vJRMdTvZi0/aXUyz5ZwxLQR78g6LwY2llHHy2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=X4JrKiiC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hS48sFjQ; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TjrzQnyd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z8lwG35l"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D2A3414001B3;
-	Wed, 23 Jul 2025 13:46:05 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Wed, 23 Jul 2025 13:46:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="X4JrKiiC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hS48sFjQ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0C8B2EC0295;
+	Wed, 23 Jul 2025 13:48:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Jul 2025 13:48:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753292765; x=1753379165; bh=E/f5PQJORC
-	c6tjhCh6DMyyyVL6cBldFEuRbVQy972Jk=; b=TjrzQnydvBd3RD7HEChSKizdjj
-	0NC6MHOSEcJB01k9ghCBzqnDh6/DFobt+utQaOAAJTyCifHY1s1BTMu0HQ+Yja4y
-	NSflw/ph0avO/SwPf5xv6aAcmIUCzuxfJHJMHEgHMtR3Hk3cgrQRaq4FCux/Fn7j
-	yKeGkUu3nmdz6JSa/qXis58FMOJ1paq8plfcUsSR32z7AxGyA5RnEfIx7aXNYIdJ
-	zhyQM2GBsv7K5ibNoTTadBOu8OeHruoX2fIzGVds4TalOt1xKQdSuUTCVeAkiDzg
-	mF4HjkjDLEIr1xRcRTdGyYDPR0KUVj6Rz05YxphF+ktwEi+jkBk09aFc3orA==
+	:subject:to:to; s=fm1; t=1753292921; x=1753379321; bh=1bxfhcTWkM
+	7vaEnWSbmaWtCIezioemMnAYdg/XsSolc=; b=X4JrKiiCZOl8532cUJ9EzhNWkU
+	bvwcB9jXrQb5qt8cxBDOxvw5omWe6wzUaSjGBlXq4wzV5y4wJ90J4cYJTD6mcPOd
+	bAR4PYno4SbEC1zcJ1xdiDCn4EroZ/sn9thpvoh013EvHa5gT3WLUBEwv8HpLOWE
+	LXnO3WjikeuRqIEzSmoCk0eF7IBDxYCtaFXf4ZXanQiYlsja9Tud/IUsZvbyMwrK
+	dOURL3GkdFZZBbxU/5uhmN5GS9J4fbbQRF6J9vEL/UzkUtq/O1SIWgB+1p7TRc1V
+	6I5K5WTxgsYnWFt3jPmnTbPhO6TbYoJHEH/N87ClAV8IAXb7/c5upzhLrBiA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753292765; x=1753379165; bh=E/f5PQJORCc6tjhCh6DMyyyVL6cBldFEuRb
-	VQy972Jk=; b=Z8lwG35lFHytyHLzztb0c5Bmc0ogPbi4rkXNGxKdfr0aF6GPGZB
-	aHnIdsB/yxoraZfdkkUX/qJbOv0/XU5+DOA/6qxO2EtIJf9/z5eOf4TaiglfXXR8
-	6vzsTle/LA7nbI9IKcCnactjPOvWr5ogsFUtKAesnyk+l73PU6/9mdMVnP+3Dp8J
-	EQH3KGRtFWJ55UjmUkBJ+Gxl72X5SXdJ6DrbbMco90bdAKIBGmV4Q5O2BqYd5PVU
-	n8CJWTXHC/ShaSv4qhqHptx1NOwG5XZEQHsutBBo75uhaZsxDMjH0o93mZPOEHNr
-	rDLXKOaGyLW4ZjLceG0wP0vj0OOHJeHhkfA==
-X-ME-Sender: <xms:3R-BaCfiqnxhH_9dFw2e2rYUxK_nTJqw65nEnlYiK-544yIe6xEnUg>
-    <xme:3R-BaJwwKdUB1iVLOxCUjyyTSL-0Z2eDVtPzMKUK8elCyW-hu_bTMEBcWaDmX-osa
-    nhdnXu_iCebNLV77Q>
-X-ME-Received: <xmr:3R-BaJ9ItWrZZwMAiuOfiipthu15gvliN58JcbXPouC9Ph5JmY4kxjxnw8VAgoBhzVD1xqp1o9T41oceeuDQmmDc5pEfBBOl2vn8uHA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeegudcutefuodetggdotefrod
+	1753292921; x=1753379321; bh=1bxfhcTWkM7vaEnWSbmaWtCIezioemMnAYd
+	g/XsSolc=; b=hS48sFjQWiWaJTnKoVfK9CsTQdC9A6JsiA1Uilt8o2Gjgz6yBnH
+	EbZb52f0kciNK8/P/AUBHwaL1+fmqbdaoewQzTpkEzMDwxMhCkLRmAY+PKpF/jsF
+	W/epLPNb3Qn5QwH1bF9pXLRSt04XApAkaSOvW5m5hwvuvfirjxOjimNt1F21jWJ4
+	fgxCNs9Jqt/M1GqTzLbncMlYbKqNY+Kbr7X2qBS2p9RrGdmlPHHjkHKdYfSYLnnG
+	GSQllO4D42iCmyJ+ehpDn4KtMVu2tkxxJbwP9Eh2hop72z8/tMyYrGkEr6UVDulV
+	urKg1YRJlROxaXjbARcAJTT/RrlYG9rxg0g==
+X-ME-Sender: <xms:eCCBaA5_WTeVi2q8yQUrfkQoUFgovyuzP4CxxosVsmvOsIooKqaciw>
+    <xme:eCCBaMjcqb8ei2yzxnslYdG_yzbiu1zx9blI_igWHXC-5z3Nk0lb4-zdHnvQstyiC
+    wInlMc7EfEozfzeDg>
+X-ME-Received: <xmr:eCCBaFdnsEFU7nknWFHn1y_oJzJq3fM8WFxhRmiUOWR0EpwjdH1W-tyxIrES2tiFksc4z0YZ2ADeU2pKpyHut-aCKhdriOmKvVfEXK4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeegtdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
-    uhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhhrihhsth
-    hofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohep
-    sggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:3R-BaBiat2p5me6YKJNks4pYNVuv8Eu2LnG4Krtk64lh2mibu3pJMw>
-    <xmx:3R-BaAGMC5Vd9Dr2hmY4wSdDU4MwLY2w2-_Xw0OO4N1LzOifq4PVsQ>
-    <xmx:3R-BaA_eeThxDi8wWUAD-4skvlZYBKz_cBP-ndb6kGGP8E7IIZbhxA>
-    <xmx:3R-BaHwBos-8lSl4v4Ses-wRT_-lf2-Ye0xC-r98m2cschLTgcuRww>
-    <xmx:3R-BaFSwt_T2df2ouSG00G6Hm6ZLzuueNRkpOIvmg_73I41xobZCoVos>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehluhgtrghsshgvihhkihhoshhhihhrohesghhmrghilh
+    drtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehosh
+    ifrghlugdrsghuugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:eCCBaEwmL_Sk39DYK1LSvWg8h0BtohPf4lHNI8OAsWLnXIn-btilsQ>
+    <xmx:eCCBaE19VwJBgmvpRvZcBGbuIgZRZf2lVDcRp2g7XSQSLUwqlpLmlg>
+    <xmx:eCCBaKzAdVa01llbsYR6h0P150Is075UlyMq6p4s30KGvpkymnGNqQ>
+    <xmx:eCCBaJWSQpJGHwzHuovwQzJAtcTZnLBIEMDufY1jJGU1zLAoAz5Utw>
+    <xmx:eSCBaKiMk66qq1UUN5X4BbilxmR3LMjYj5CVAm95H-l6shjrkg8Ga_J9>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Jul 2025 13:46:05 -0400 (EDT)
+ 23 Jul 2025 13:48:39 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Ben Knoble <ben.knoble@gmail.com>,
-  brian m carlson <sandals@crustytoothpaste.net>
-Subject: Re: [PATCH] imap-send: add option to mark sent messages as read or
- unread
-In-Reply-To: <PN0PR01MB95888028E0BD985DA07B9C60B85FA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Wed, 23 Jul 2025 15:45:25 +0000")
-References: <PN0PR01MB95888028E0BD985DA07B9C60B85FA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 23 Jul 2025 10:46:03 -0700
-Message-ID: <xmqq7bzyol5w.fsf@gitster.g>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  oswald.buddenhagen@gmx.de,  ps@pks.im,  ben.knoble@gmail.com,
+  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
+Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
+In-Reply-To: <ABD6739A-EBE1-4228-BDAA-600104726808@gmail.com> (Lucas Seiki
+	Oshiro's message of "Wed, 23 Jul 2025 13:28:47 -0300")
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+	<20250722002835.33428-1-lucasseikioshiro@gmail.com>
+	<20250722002835.33428-2-lucasseikioshiro@gmail.com>
+	<CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
+	<xmqqtt34tfna.fsf@gitster.g>
+	<ABD6739A-EBE1-4228-BDAA-600104726808@gmail.com>
+Date: Wed, 23 Jul 2025 10:48:38 -0700
+Message-ID: <xmqq34amol1l.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,16 +97,17 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aditya Garg <gargaditya08@live.com> writes:
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-> The GitHub actions workflows are failing because CURLOPT_UPLOAD_FLAGS were introduced in v8.13.0 of libcurl, which is just 3 months old, and the CI has an older version.
+>> Besides, wouldn't it possible that field may have to contain any
+>> end-user specified key, including <LF>?
 >
-> Not sure if version checks are needed here or not.
+> In `repo info`, no. This way, it's safe to parse everything before
+> the first <LF> as the key and everything between <LF> and <NUL> as
+> the value.
 
-Hold onto the patch, without sending it to me or to the list, until
-we raise the requirement for libcURL again perhaps in a few years,
-at which time we may consider adpoting this feature.
+OK.  Even "git config" punts there by restricting the subsection
+part of the configuration variable name by forbidding LF and NUL in
+it ;-)  So, I guess we are OK here.
 
-I do not think we want more conditional compilation.
-
-Thanks.
+Thanks for thinking it through.
