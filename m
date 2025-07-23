@@ -1,130 +1,162 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC51926D4CD
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 21:57:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A88272E67
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 22:14:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753307865; cv=none; b=hWR99PSOMF/d0FZr4Po0Rb8GLl3ua03pE2OGFoBn3u2dy/jQvl33tLZoG6jGfhSbrpaz1HVjxF/Ds3ocq+gWTX55ySsNk2BXo1/rlwbhMP34hJiTN8s/6rFauvFzqhHyYbCPguLU/T38hVzO57xlW72Ic2qoJpoPHjjnWRYyG6U=
+	t=1753308852; cv=none; b=D2o6nZleOtuXlgSRpJ0gzvd+pBlanCbrJjwqDh2luz9UaHrffPF9/g1FZJeIYLVBmynPymIhbvTfvp0jM7Qj1GFVCKwrn1H3xDgtuBquZe2bEXSana8ejcNGHGu8SpX7vmsNP2rslKsuV2EN8CoyaWg0RuGaPSilcio69uMD8RA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753307865; c=relaxed/simple;
-	bh=hI7Vilt35bv/QPUnkUVKMsru2UOyPfamNnKH6/9sAYk=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ehGtcvMt/wnv+vxwfL0/uEBeViFA/p0gQlQXUDVca/2asnnOJvJj3Q9gxe7sekBNt6JOCk9IEiS0T57IKsAX3xPklST1uOW8kpwSTQ4s+1CEKn1JOFyVj7tl2vr0LmUHw/PQOEJGVlGFNu3R63PfuB5+q9VEaWAclc9Mag0sh2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=fHwfRxkk; arc=none smtp.client-ip=209.85.160.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1753308852; c=relaxed/simple;
+	bh=a8/ET3S+GbRjFa6H7jcMsgjkeD1lvagE/7nccVnPJPA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AhEecDAqHTbJgyL13LvUcHURCCByHzrPqqSdeQHz7EKWPYz+fWTuevM32+pbPP6uum4/QMH6u/MlHTNab3nddW8w79srR1MhTcicZoKHTWHkfDd8QzKQ9wIh6kshSrDhcxEpTCYE3QOCcPZvuqpIg35kSk28C33moFjeSCmEk9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IqHBrr5X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZGGYk0yo; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="fHwfRxkk"
-Received: by mail-qt1-f171.google.com with SMTP id d75a77b69052e-4ab6416496dso5549801cf.1
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:57:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1753307862; x=1753912662; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=elh9s+o4+VWHCaYYXGOwo1Ja01QwMehEYHjNqlOLxYk=;
-        b=fHwfRxkk33gbmjjY+JhKQg48O7ITOv3F1OKEaBypM9dqZX8Ph2M8DGtknRlb6sQt1A
-         yHc7M3hS89BYCKQJfRq8/gqJ8GWbDb7kv7pqIsHBBmhAMHq5Cka4QgPNI0U3FPZaC+pm
-         jLhc1kkWNYgLveVyUUSAFFkJb7GlJzbM2yTJLgsThJ4E0DiLENywtRf2dGbbQPO2YiP9
-         IRwJajxnv+hmLiPx6fVlXUrWM1L5XdMLfllcxHWMjf2klDTLIyT3mVY5AJaNdOYVsVcm
-         q6LSDFs03zF5APDM418u6lzz1zIWjrYy696zZ7d5e+FVLjvBh6AYrGe4qYiNDXhbaZfE
-         yRIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753307862; x=1753912662;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=elh9s+o4+VWHCaYYXGOwo1Ja01QwMehEYHjNqlOLxYk=;
-        b=VnsgTWujPq7wSywM5scp2MhBuJQ0JBDWiOpJrAX/6/Dtr9Po6c0YFgAEuAqVaOWDQg
-         SWRmFuqkHHBbDgTyMh82S6nHGgmii4mQB478oHhztW91fWRpdugJni0kV2xyDACxtwtC
-         7eSVcBlXJMjVwJkD/cvhlAD2yKV22SBSbf7i2ICN62c7z9smagcLUAf1ugt4EKErVXUx
-         wc9A7aTHvAVccc1ziPZNLXbHzP187AWOuTEnbnZU62r74DiYR5fEkpSX0NSRkk/PBk7F
-         TCZa1obigs9d5wwnbav/Bd9Jp9pDXgM34ucg0GcyiWmsC76tjmmZGEgP4PAcpKf5DzVN
-         vGwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWs3DMOTEs+BpDp5HKD6zKDeJPjLZ1XN2Vb5aLvPdMqK9wQ2xlN11bBDYmfDsLAc74Ue5U=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzXZ1pv9NPZmgb80XkxqngKt+QsRKXby7PzlAt/qYd5MyOeoq3p
-	GOlZlBCN1DxZTkDUrAwzrW1ZL7rEHXBvUiKlLNw4ovMFz7d/PqgiQ/X4Eou/z78ljUg7SLjYKNU
-	2bBoz5kHj5Yaa7AyWReJfHEflHDXqgbNvRI/ydeMQ
-X-Gm-Gg: ASbGnctFo912OM6MiKAK0BEzD6lbcmWc2IyVlWXT70SXUW7bMWgMMKRQsEyAa9JV5jR
-	jbCvgxw02fOMxoqqnMKx62oBNo7jpuNTvAEzlLLUeFH9s3zSJj5LzYFGbs/VwoLEgdXTJTaGcKW
-	CDZhYbC6C/j60LSrI/F8sexCOGX+BTNPWi2Ao8oHkOQlpsTvZ01WXEFDKoxJv+c0xZhaijyeNrX
-	FSU6jkrCWRIsWIinF0p5wykCd4BANL82V4skA==
-X-Google-Smtp-Source: AGHT+IFOMe7gXqwQ120DD3yfCG0LxgyDsUqI8l2jfNPA+H49z6Z3aJRSFweZi0S4XOvEdNdllNfIbLu1fotyaEO9uE4=
-X-Received: by 2002:a05:622a:8c:b0:4a6:f492:674f with SMTP id
- d75a77b69052e-4ae6df70adcmr64958831cf.41.1753307862333; Wed, 23 Jul 2025
- 14:57:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IqHBrr5X";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZGGYk0yo"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B9A414023CA;
+	Wed, 23 Jul 2025 18:14:09 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Wed, 23 Jul 2025 18:14:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753308849; x=1753395249; bh=5oUKNh8tph
+	G0vfGgM9AT39hYsFyLtDdIEN8AZ8GK0Tg=; b=IqHBrr5XvXapBHJWMQP/KP0YzD
+	dymvLaTrETg/evcztQrmaDglo8krkexgu/JbrQTK1Y26xRDeFvclqkcyT6cJoaqF
+	/b3QyN0+iuuX3fEaQABmXEKmkeWWS2k/JjqSrlm06MHwJsMb3NKLxIT3BG/l9aM7
+	W2DK20S2LXT/KDzHbG5N+8D64wk2JgZI70HCvvLhjQh9Jh9tjtLkTEu4PuWh00Iy
+	wfsnFZfjXg3VPcHbpRPlalPL4JOtdS2kENFV92Z4pJbadOhze2MVuwmT/fsaBqxt
+	tYrQMl2OItUVL7Dd59Gpzli2dTsYoWZpktVCFg709bpDLyQxq6NBcbdnzCNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753308849; x=1753395249; bh=5oUKNh8tphG0vfGgM9AT39hYsFyLtDdIEN8
+	AZ8GK0Tg=; b=ZGGYk0yoRvyL4/JkQGBGWkQLBhdh4W69unOwTzBT8qECWKZ1s4x
+	f5Ap2vFkxqvRCaKYhLl+LzgKiDmrfGmbKfQNA6yV9bGUHZzSABCb6m43JPTloi+F
+	zsreKacTj9qwZ6hWREKpGbKj3oAbRVgcb9nyM+dYE68sU64LIqk9IUEwqxZiOPCS
+	0UhQQEUY7ECbH/Vzil0GktmiaX//+s6bbpk9zm6sLdrDPs1aAeJJg/ou3DYoBJ3Q
+	9Ezbzg6iNSLlI5lWgCxARRy4pU0NcmfFYAiLZDzcoYJ7DbTtccabvW0GTvrIpFRr
+	oOuaMKajonESS3njuFCZxxyQaQ+6NF5qHQw==
+X-ME-Sender: <xms:sV6BaCoTFoRJVexa8wQqDGOI5Hk3fXG608sPA9cnpzNN0cg-nolb7A>
+    <xme:sV6BaNmi4rxjtyUz5nP6GuzDGtFL5SdCdjVgtQZAHvEHJOnzXz9_5-szJuxF0-GV1
+    4ryZG6h3XVrB4cZqQ>
+X-ME-Received: <xmr:sV6BaC1qw80q8zzC_xK65lSiMHn_fcuszTKQAWdKqm-tF_7bl2U9L7IuIfrJ3euGHFUj24bCPGoEBqmkhANKMb0UHdvoFSMiFRKe7rc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejkeelfecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hshhihrghmthhhrghkkhgrrhdttddusehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhh
+    ihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehpshesph
+    hkshdrihhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:sV6BaKQxUz12MY_4YElD7za5qRwMc9ibtnm6GujZr1DayAcVosR0Tg>
+    <xmx:sV6BaLx47bZs1ZOmJZK_pmZPP0ECiuEluDCdheL0pUKhXmyqfl4GSg>
+    <xmx:sV6BaKCgqBW4Bbcc9KQr3RgVv_oUkIKE2nC7DIsNubij7Ez7HG6H5w>
+    <xmx:sV6BaHEEUL9QjI-7sAJ9SeLo-HE8iBm2pvRgUf9V6SUftXlBgJ00KA>
+    <xmx:sV6BaGge7V76xXHL0uAZpkPINDxuxgWgpoFTcRQ8a1vaWjRkZ425VMo4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Jul 2025 18:14:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ayush Chandekar <ayu.chandekar@gmail.com>
+Cc: christian.couder@gmail.com,  git@vger.kernel.org,
+  shyamthakkar001@gmail.com,  phillip.wood123@gmail.com,  ps@pks.im,
+  ben.knoble@gmail.com
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+In-Reply-To: <cover.1752882401.git.ayu.chandekar@gmail.com> (Ayush Chandekar's
+	message of "Sat, 19 Jul 2025 05:41:25 +0530")
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+	<cover.1752882401.git.ayu.chandekar@gmail.com>
+Date: Wed, 23 Jul 2025 15:14:07 -0700
+Message-ID: <xmqqcy9qlfm8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
- <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com> <xmqqldoelgnd.fsf_-_@gitster.g>
-In-Reply-To: <xmqqldoelgnd.fsf_-_@gitster.g>
-From: Kyle Lippincott <spectral@google.com>
-Date: Wed, 23 Jul 2025 14:57:29 -0700
-X-Gm-Features: Ac12FXwIex6T_Wn9cV0paTPj5jQmkilXOv8LOMR6mR8wNOq0DIr1XThRBi65Vvw
-Message-ID: <CAO_smVjUyOit66LaseHd=0dt6KgnTrCHbrO+oWU1L5Wd1z8Y7A@mail.gmail.com>
-Subject: Re: [PATCH] ref-iterator-seek: correctly initialize the prefix_state
- for a new level
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org, ps@pks.im, 
-	schwab@linux-m68k.org, phillip.wood123@gmail.com, 
-	Christian Couder <chriscool@tuxfamily.org>, Jeff King <peff@peff.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, Jul 23, 2025 at 2:51=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> When cache_ref_iterator_seek() "jumps" to a middle of the sorted ref
-> list, it forgets to set the .prefix_state member of the new
-> (i.e. deeper) level it just initialized.  This later causes
-> cache_ref_iterator_advance() to look at this uninitialized member
-> to base its decision on what to do next.
->
-> Kyle Lippincott [*] and Jeff King noticed this with MSAN and
-> Valgrind, and Karthik Nayak as the original author located exactly
-> where the missing initialization is.
->
-> [*] <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=3DMDbnZKvkwN2=3DkN2RRw@mail.gmail.c=
-om>
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 
-Looks good to me, thanks!
-
-> ---
->  refs/ref-cache.c | 1 +
->  1 file changed, 1 insertion(+)
+> This patch series aims to remove global variables related to
+> sparse-checkout from the global scope and to remove the definition
+> '#define USE_THE_REPOSITORY_VARIABLE' from a few files.
 >
->  * I had this as "fixup!" on top of your topic for quite a while and
->    forgot to ask you to send in an official fix.  As Kyle's
->    discovery was after the topic hit 'next' (understandable, as
->    their internal edition of Git is based on 'next'), we need a
->    separate fix on top.
+> It contains three patches:
 >
->    To prepare for merging down the whole thing to 'master', I wrote
->    the proposed log message to help expedite the process.  Comments?
+> 1 - Remove the global variable 'core_apply_sparse_checkout' and
+> move its setting to the 'struct repo_settings'. Also remove the
+> definition '#define USE_THE_REPOSITORY_VARIABLE' from
+> "builtin/backfill.c".
 >
-> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> index 1d95b56d40..ceef3a2008 100644
-> --- a/refs/ref-cache.c
-> +++ b/refs/ref-cache.c
-> @@ -527,6 +527,7 @@ static int cache_ref_iterator_seek(struct ref_iterato=
-r *ref_iterator,
->                                 level =3D &iter->levels[iter->levels_nr++=
-];
->                                 level->dir =3D dir;
->                                 level->index =3D -1;
-> +                               level->prefix_state =3D PREFIX_CONTAINS_D=
-IR;
->                         } else {
->                                 /* reduce the index so the leaf node is i=
-terated over */
->                                 if (cmp <=3D 0 && !slash)
+> 2 - Remove the global variable 'core_sparse_checkout_cone' and
+> move its setting to the 'struct repo_settings'.
+>
+> 3 - Remove the global variable
+> 'sparse_expect_files_outside_of_patterns` and move its setting to
+> 'struct repo_settings'. Also remove the definition '#define
+> USE_THE_REPOSITORY_VARIABLE' from "sparse-index.c"
 > --
-> 2.50.1-521-gf11ee0bd80
+> Discussions since v5:
 >
+> * For 1/3 and 2/3, Junio told me that it was concerning to put so
+>   many calls to `prepare_repo_settings()` so I tried to minimize the
+>   calls and made sure that there's no useless calling.
+
+I didn't mean that the number of places is the problem.  What I
+found troubling was that this is not done in any central place, so
+it is hard to notice even if some random cmd_foo() failed to call
+the function before doing its real work.  For example, shouldn't we
+be able to, at least for built-in commands that have RUN_SETUP bit
+set, centrally call prepare_repo_settings() somewhere late in
+git.c:run_builtin() after we figure out what should be in
+the_repository?  Now historically, setting up a repository may never
+have involved opening and parsing tons of configuration files, so
+such a change may be incurring extra overhead we did not have to
+pay, so it needs a lot more thought than just trying to minimize the
+number of calls, but some performance measurement.
+
+> * For 3/3, Phillip told me that it broke user-facing as it will be
+>   parsed quite late in the callchain and might throw an error mid
+>   operation which we do not want.
+
+So has the behaviour change caused by 3/3 been resolved?
+
+A meta-level comment and a half.
+
+ * Please do not use "-- " (that is a line that has dash dash and a
+   single space and nothing else on it) lightly.  It is called
+   signature line and often MUA pays attention to it when responding
+   to a message with such a line by omitting everything after it
+   (which is supposed to be your "who I am" advertisement) when
+   quoting the original.  Since you had one before the "discussions
+   since v5" section and the range-diff, I had to manually resurrect
+   the part after the signature line while composing this message.
+
+ * This throws everything in repo_settings, but these settings are
+   inherently per repository and they are meaningful only when you
+   are working with a repository.  What makes us choose to make them
+   new members in the repo_settings structure, not direct members in
+   the repository structure?
+
+   Not an objection and not a suggestion to move them out of the
+   repo_settings and to the repository proper.  Just wanted to hear
+   the reasoning behind it (and have the rationale clearly
+   documented, preferrably in the proposed log messages).
