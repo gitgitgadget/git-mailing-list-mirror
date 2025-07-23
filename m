@@ -1,80 +1,101 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5432F191493
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:40:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E75226C39F
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 07:55:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753256451; cv=none; b=MoYMCJES0lElTotu5HWT1dqd2k6ihZ5see9Fytb9nVkrAfSFSZEMWUTwHSokKqN+UreBX4bphnAwBOjRyVYWxyYSzfs3QF6ZWT3EsbJRB9fzY5GbZlvB7ITSDCstsQkJ722MMm8qk7n7B9sl04MQMZMStB2zHr/IC1ksWsBKNO4=
+	t=1753257320; cv=none; b=LrZJ4isIxjj93AUVpBM5XqPVaWbxhLwe4q4rfKFaDthAzUDuID8KX1grcqkBhbFoTAS31PaUsl6drdl8shBDPX90mKvnIQy49CwjseNjFBqFqAU1lNmAHSF56wtlnCixlBPPXWf37Rltcz4Ybdvhrf2M2EAl5br7AHjlSzUzbOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753256451; c=relaxed/simple;
-	bh=DNF1/EtiHa3GleIMU9VXFif2eW0I/YyiNEjE/0fDX4c=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hGZcpL775WGc9+16qQQmGZ1bnSwpEu0bRh6KU4VuFJ3h+CS08tSVHEkIxv4GyolQU2jToLrPJ5R+XLmoe7hkafXcJrven7ldt1cwbKSO3DuPSXyLxqSDi0AS3xfDc3ovTLGwiddudPf9KhbrMAcrwLXaaGRhw7QGZyLA2+kL5hI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6fb0ac80aaaso1164816d6.3
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 00:40:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753256448; x=1753861248;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VCdaPNTttqeK/2vSzENHeVcxL+6r6pQK5o/4b1XQXaA=;
-        b=X7E7JZMwyX07vycjl7GCf+S6ulQkj3/mewTXJcUf5AQfi97RafeCGBmxLuWP2Sg/l6
-         DL60bnmFBEBn2uCQKFqgInpw0WceltZy+2Ki3Sf8D0+cuMZGjdXQPQ2xXedMeEy5MMaA
-         jGIh29ykez/r3lCmaFqPagoVGIalEv9WCbAifVKkxCnq3UItCJIJbJDE9bI/QFo0uvFq
-         Aq2opiovQbw2DZR9K0dmHkQoK01MTuI6UkUIyUMUpWKF0M2ykjjDIhbN6DFrwBvtKgDT
-         KfYx7LHLEYrmOta3VDFTLdKIQ+mpHJDFiaLMc9J5xJvkFTP06zjT8HTXHgymzv4hZd1w
-         tEbg==
-X-Gm-Message-State: AOJu0Yywb0vURt+Q+/5/eVinfFu4wKhn4TETTAna0gqBNHA3RfOHO3Sn
-	umxngTDCt4vk6Bmc3/pmFkd+S+QkxKLkGC8B+kVejkXJD+h7w4iMDwJQPUHYOpX0OjZXGpsZ0Nc
-	wkQNvCWunbZ0DnpLYhLrWxemPJ6/dx2E=
-X-Gm-Gg: ASbGncvM45/RIx5w4qxCCy66x6SORnn7ELGKBQLUYXul6+ChZmood1IQL7/fEoxad8m
-	3ifrghVp4sZSUAWVArbzHdgjHXBqjqu/4GrxbAUlD19Ij4n/w9UGlFj5eubBF6iS4gT52bDPdbV
-	OJjNZWwSmEm5lFX+n8tMgX0UsSaAeE70aztp8es7+bZTljLCLmFJBhZHISNOKEWEUhGbEtDdZh+
-	vCV2Phsn109g/9w77mecQOK+AmD4aaT74aGJqc=
-X-Google-Smtp-Source: AGHT+IHegR004Ej6RghBKIMZvmeSq03uvkWf6/m5i7IJNqXgN4CqbvMaz/YlsMWobryfrYbbVFSDsoHZctpc6jVhmJc=
-X-Received: by 2002:a05:6214:1c46:b0:702:c2b5:67e9 with SMTP id
- 6a1803df08f44-70700212da2mr10918116d6.0.1753256448167; Wed, 23 Jul 2025
- 00:40:48 -0700 (PDT)
+	s=arc-20240116; t=1753257320; c=relaxed/simple;
+	bh=LY0jMDCAhGrQScdldt63WFhBlwruxAoRdxVKq0ybZc8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Yf8BoQqY99jOEbdxisjkVN8x72uRHfqFELvNprhb01UGW/wnaS5zSxC99tOQ4EmKzbn7QFWZtLeOspP67o/xsuzY9168clSD8eo/98o37siSPSIlLaGjwETRC0GJ96TC63Cu6zhpCA5soXJNueOIJgWN9kyii/Ops+lT56pul6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=haJ3GcPw; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="haJ3GcPw"
+Received: (qmail 4279 invoked by uid 109); 23 Jul 2025 07:55:15 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=LY0jMDCAhGrQScdldt63WFhBlwruxAoRdxVKq0ybZc8=; b=haJ3GcPw4ObaDDdcV71NIbIFBu7xXeHG9H/ZLUO+NKVJp0tm7HgoDOxMBGO6MR9+CVeCnAyudJ122cFwGmy+E7jjeGyfTp9MzU0KHSypCxO06MTTgWFokWRwy6S4uTe8hO47gGP155k6s3lwEQDDdsXnpofb9NfRVSWoCC35H4n6UFV6YtoIHrJ3gySJvLDh6QT5Q0z6Uzs9ZXMrjowQKwAm+bFq6CiN1QjG9etTO+4lXV3mQd4AOhw6U0j7FE+qYnDV6gKvw9mTbHxBtgAEVmfyR3FIuqar4IFmvMnn/CW8HiXpPHBUZVtCNNW1oLc1sVyuSktmajey5vjEZNfzmw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 23 Jul 2025 07:55:15 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 13025 invoked by uid 111); 23 Jul 2025 07:55:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 23 Jul 2025 03:55:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Wed, 23 Jul 2025 03:55:13 -0400
+From: Jeff King <peff@peff.net>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Hoyoung Lee <lhywkd22@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 2/2] t/helper/test-delta: fix possible resource leak
+ and ensure safe cleanup
+Message-ID: <20250723075513.GA570540@coredump.intra.peff.net>
+References: <20250722174102.1876197-1-lhywkd22@gmail.com>
+ <20250722174102.1876197-3-lhywkd22@gmail.com>
+ <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqwm7zpxzc.fsf@gitster.g>
-In-Reply-To: <xmqqwm7zpxzc.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Wed, 23 Jul 2025 03:40:37 -0400
-X-Gm-Features: Ac12FXz5YWAr4sypUmBkDnfBK69AWnJWg7Fep2jabF1gr3pJLTU8Hj0cHU3iir4
-Message-ID: <CAPig+cS_h8sC_hEp3zfsUOdP6aFOBucpOsa5TDGwoArHL85Wpg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2025, #06; Tue, 22)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAPig+cR-r=CeEaSTeWsX00MLCSRJUUVXMUWS6Ui-HQcR_qMGJA@mail.gmail.com>
 
-On Tue, Jul 22, 2025 at 8:11=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> * hl/test-helper-fd-close (2025-07-22) 2 commits
->  - t/helper/test-delta: fix possible resource leak and ensure safe cleanu=
-p
->  - t/helper/test-truncate: close file descriptor after truncation
->
->  A few file descriptors left unclosed upon program completion in a
->  few test helper programs are now closed.
->
->  Comments?
->  source: <20250722174102.1876197-1-lhywkd22@gmail.com>
+On Wed, Jul 23, 2025 at 03:28:05AM -0400, Eric Sunshine wrote:
 
-I left comments[*] on patch [2/2]. Although the intention of the
-change seems reasonable (patching holes in the existing "cleanup" of
-`fd`), I have concerns that the commit message is misleading, and
-(more importantly) that the patch itself is flawed. As such, I think a
-reroll is warranted.
+> >   close(fd);
+> 
+> The descriptor is closed manually (again) because a subsequent open()
+> call is going to reuse the variable. However...
+> 
+> >   if (argv[1][1] == 'd')
+> >     out_buf = diff_delta(from_buf, from_size,
+> >              data_buf, data_size,
+> >              &out_size, 0);
+> >   else
+> >     out_buf = patch_delta(from_buf, from_size,
+> >               data_buf, data_size,
+> >               &out_size);
+> >   if (!out_buf) {
+> >     fprintf(stderr, "delta operation failed (returned NULL)\n");
+> >     goto cleanup;
+> >   }
+> 
+> ...although `fd` was closed, it still holds the previously-open
+> non-negative file descriptor, which means that this `goto cleanup`...
 
-[*]: https://lore.kernel.org/git/CAPig+cR-r=3DCeEaSTeWsX00MLCSRJUUVXMUWS6Ui=
--HQcR_qMGJA@mail.gmail.com/
+Oof, good catch. This iteration of the patch was based on my suggestion,
+but I didn't notice the jump to cleanup between that close/open pair.
+
+I wonder if it would be more clear written as:
+
+  int from_fd = -1;
+  int data_fd = -1;
+  int out_fd = -1;
+
+  ...
+  from_fd = open(...);
+  if (...errors...)
+	goto cleanup;
+  close(from_fd);
+  from_fd = -1;
+
+  [...same for other fds...]
+
+cleanup:
+
+  if (from_fd >= 0)
+	close(from_fd);
+  [etc]
+
+You could even drop that first close() in the happy path entirely, if
+you don't mind holding all three descriptors open at once.
+
+I dunno. We are reaching diminishing returns spending brainpower on a
+function that is meant to be somewhat quick-and-dirty.
+
+-Peff
