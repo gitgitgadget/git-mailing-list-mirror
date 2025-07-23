@@ -1,80 +1,79 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74DD2F5082
-	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:09:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D172A2F6F82
+	for <git@vger.kernel.org>; Wed, 23 Jul 2025 14:09:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753279766; cv=none; b=NmgFgkL9kh+t10IwgnFkcWrWw/nF55mazq1XaorLt2Y3DmJC40Rz1e2cFlurdQDxh80K0xjey+2IddSw+mjqqO2OYp7EtXhM23UrU0EpoCZH6CATFaAb2SYvIGFDwrnvp7dOQcQyDCThW/yM9eInNdhDnE6jvE1x48rQvhL5JcY=
+	t=1753279769; cv=none; b=i90bovs9MvGAsvrImr+B/RGZSKa+/xbUq5uh2bOZ6kCX/ODKlw8+GDkAdoUfaMR1x43qirORMaBDHzhelMG0AH2hO+7tTgmxOfrEsWSRJH7ygV4osLri2LMMu3uHbR9doNHvpuNkQjK26i0HzNpHGT+V6ijJUgrP/ec1gFKSn1E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753279766; c=relaxed/simple;
-	bh=PBKQ7KKudZF0DbotrJNb3sBiRueJt0iRxZ/ftestew0=;
+	s=arc-20240116; t=1753279769; c=relaxed/simple;
+	bh=L+aQeQckZOO79RJDry1xjg6vDAabpoD0s5niSLLnx/s=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PxBy+0UWKFWswSWyBjB5sVacqpO2ylBI/Zc0pBB2U7E1e3Ow/HeJWhwe4ljnVhEiBSsHEdBOUSALvw4W14+wJqPfz6S2myt1GWDjq3iuE9TLWzhZ4YtTh2+bvK4C5Ak7Nyc71m1pcZz3kNvad6mHKDWOK1NQloY8qRyCNXPto/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SVpXbsNR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ns/4P3Od; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=S9zIArEgNEdAHcDuwIFPaBzUbmvU1HE11hX+pIuQV+P7DrEWkIuxiH2rwydGWu9nb8fnWpVmjV+qv4KHLVxldTzTZn/98mWUoUoOj/ticBGpnC2xEK6STYqPhRYntisqYFLik/qKHitdWG8XoxfVAxyL7PAfng9wN5yHW2lFg8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ED+jn79d; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Ig+EYnUJ; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SVpXbsNR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ns/4P3Od"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 08E48140208F;
-	Wed, 23 Jul 2025 10:09:24 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ED+jn79d";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Ig+EYnUJ"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id DDA87EC189E;
+	Wed, 23 Jul 2025 10:09:26 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Wed, 23 Jul 2025 10:09:24 -0400
+  by phl-compute-06.internal (MEProxy); Wed, 23 Jul 2025 10:09:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1753279764;
-	 x=1753366164; bh=Kqyxb1NXKmuO8v9Jbe9ft4rUuhfJl289rHLKy0ZF1Ik=; b=
-	SVpXbsNRX0dzzi1vjRDo6VJP2tkX47ivsGxj9azfKO9glSnPmYpnp1IW8SAbl0iM
-	UVeWAoawarAxs/mv1XD+aPqSW6vztJQy2+oXcwxl1fd3ZR4qexAN11ZuKNBG5n5P
-	IokkhAMA+gg0HHxRTbtX8autV3AR/9ESgB5cNmJaihYWK9qZ9sUPFU6s+mTH5WP7
-	5K9BVFEYmrXzMkhPME+eJHrX0/IlVt7X9UOiikE/jx8jRj5K5vBoSfloTZwRVhRI
-	NccRvakMuQK9l61EObFjChl9KBJldjRpi6mX4YVLuNVkt4dfeSETUiUw2KlLj8+D
-	TUWZ440I9zLhg4y0E1v5Vg==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753279766;
+	 x=1753366166; bh=DtSzKojoe+XI0KshOJ8Qb15aQtaQodCVO/cEXfBIqik=; b=
+	ED+jn79dxooIVupTMH3p/dNslop1ZPFvnMGTAA3l3yD5R8w47qAZ+46jUhR59gpw
+	Rw3f6iS1KZeiEm574mvwVOvPMmZng77UVGqkX3nle3w/pIBwl6nyZUmR1cmsA9Jz
+	AXLLL7kP7Q3Ij0VyKeeXTON6zkSbclSwOcF/YB6mamDkG/Lq06befsYuEUELJ8Kt
+	CuWGNHgCJRMM4Dqi6KypvSKOXSFd9uEtw4m3HUhwCv6N06ctOpoxxDE5x5iuktvJ
+	tjjXsb/d7QFxKrr5wTWXKMfXKMmBFTd0rCVNTWlYQjG/zI8Pi8+wHMQ6i/WWI4h2
+	Gntm6qwlVgbFR1t0ESLijw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753279764; x=
-	1753366164; bh=Kqyxb1NXKmuO8v9Jbe9ft4rUuhfJl289rHLKy0ZF1Ik=; b=N
-	s/4P3Odn8ZwzJx/8GANtsxRbs5d7o9fVhhs+i3Ob01hhmBZuRRUliK/hAGHltfy3
-	90Y04kmqI+urvsEXT+t4ZxZOs7zyPIzyJmr7vSuTkk0EVIz8D95zm2n8bkCnHAki
-	jJ4dFbBOcEV54O/HWRpA6ySe82VDxy+s5kYo41lWaobukAaMptuRjV32JEYqvYF9
-	i/FAi/2PQ4FBkDVMR42aGkpf+6h+jizY/nBgS7dB2vznJxCIpeU/6BAZKT69yLpQ
-	FrOuLc22v64fwuOCoJ8+5aR/tGTkCO8PQte3R/nB9AD+bgKftEjriGW5oDFykekH
-	wahobAbbA54YwChPy4GzA==
-X-ME-Sender: <xms:E-2AaHABAhMMestelDXZLtnRYVPwPLO8Dd25JH6f7ylUQgpXXT6U6g>
-    <xme:E-2AaNsyrowCz7QfveudHVZ3iKJ2JAHnb4j6K9TUQS09w8_HRbjqHdE4dnlVuwudX
-    ndmc0VTygEiFq7fyw>
-X-ME-Received: <xmr:E-2AaEaymluyFfN03rHDEynDeb2lO0Gu0QjspMFzJKITeyHaCbsyc68YEc6b4nISXyU1Z3JPCfGrPlhgXjvLMP2Kbq3peeKZopuw66a3K91t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejjeelkecutefuodetggdotefrod
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753279766; x=
+	1753366166; bh=DtSzKojoe+XI0KshOJ8Qb15aQtaQodCVO/cEXfBIqik=; b=I
+	g+EYnUJrc87yjMOZAXGoq4gC9QO5J8THZJ3X5HtsoFj4zHbOAKtNzmOmAVgTOLjG
+	NMxYTp9367K8ks/r/DGBImYPZu0RT0/npQsYuvwb+lq5EdPcZHaM7lcArQdsdF3R
+	IBdZGmqDJ+3lIksWAPnnwrUcJx8BBNA3Tb9BAEK9OyJ054DSq4bjYt1gPSn5Sayg
+	4qCCi/0M0O5YigrVMALI56U3ZtS3CcMzCw1mLY/jOs6MXGwkU8B1BAfn0gQ4vsMO
+	IatfERQ8qZpCuV5X7qRFZD5jOxrpsb2xIL630nFfcFCfE4kz5BFqQHKLgVyzuPL8
+	SgzfYPlh66LQwdi1v1gpQ==
+X-ME-Sender: <xms:Fu2AaBAE6v-3cBLHrJuq0bg8VGhO9-ABWI-uUHwUhaCHsdeIA8k04Q>
+    <xme:Fu2AaPsQUwlio04dcaSm7zEyrfxQWCgNbOPQe9lIeML8pppHr3Bus1C-vP4kZno5b
+    eo1xhHvwQ2a8t456g>
+X-ME-Received: <xmr:Fu2AaOYF3hJWVh6SFE6Z3ckEQOQZzSDuGS6fc87GzlFUu_u8j-MOPl8SW6E5hNvLZEpOhsNCmOddObObUJfsvLU0sCoOFueN6jQ95pDvalN->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejjeeljecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhfffugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgt
     khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
     epffeuiedujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecu
-    vehluhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
     hsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
     ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlih
     hprdifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:E-2AaIVJV_Mf6KF4y6lZ1BJmo0uxTsywD_Db7rukc0BAd-lhAlp9LA>
-    <xmx:E-2AaA63a8Jc9tk9IJCR0JT5It935urn8DefwUWW0Xkk8T4Y0ZueVQ>
-    <xmx:E-2AaLg30E4-e_l-IHCsmaWOxts2eBfA7J-4d91fYXxGWTwIwHcOkw>
-    <xmx:E-2AaPcAKUC5uLQFs351GrW1W8SYWcLcaAPQwbIKg8EhcCCjfsGdTw>
-    <xmx:E-2AaEQlQYIlXgxLW-1aItT3z-rgi1Q5GwAL6267PqaDVjHFYLf6x5i1>
+X-ME-Proxy: <xmx:Fu2AaKWko0_rFScT-guE1k9AJRR-uW-xOonl1Thz7wpUHMszNSlBJw>
+    <xmx:Fu2AaK5DTWpJVHOTPjwLnlNXJ-TPfwv62DMKAgrL-4nk08g6aScMlA>
+    <xmx:Fu2AaNjXsNGZcbA0t5fhuzEVphCijtCSJ5WHJ_RIhR4aXKJLrrFO3Q>
+    <xmx:Fu2AaJfuKScmM87M6e2_hvMSig-Co8EgsY-SHHdkDl8RuqoqzUfFZw>
+    <xmx:Fu2AaORRkGNI9UWnJRPwHbA-W2zlXeMQ2K8IqQvrXdJMUJzGPH8tq4jp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Jul 2025 10:09:23 -0400 (EDT)
+ 23 Jul 2025 10:09:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 02147255 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 23 Jul 2025 14:09:22 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 88b6aaaf (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 23 Jul 2025 14:09:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 23 Jul 2025 16:08:38 +0200
-Subject: [PATCH v2 17/21] config: drop `git_config_get_multivar_gently()`
- wrapper
+Date: Wed, 23 Jul 2025 16:08:39 +0200
+Subject: [PATCH v2 18/21] config: drop `git_config_set_multivar()` wrapper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,7 +82,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250723-pks-config-wo-the-repository-v2-17-1502d60d3867@pks.im>
+Message-Id: <20250723-pks-config-wo-the-repository-v2-18-1502d60d3867@pks.im>
 References: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
 In-Reply-To: <20250723-pks-config-wo-the-repository-v2-0-1502d60d3867@pks.im>
 To: git@vger.kernel.org
@@ -98,111 +97,143 @@ takes in a repository as parameter, and the intent was that we'll
 eventually remove those wrappers to make the dependency on the global
 repository variable explicit at the callsite.
 
-Follow through with that intent and remove
-`git_config_get_multivar_gently()`. All callsites are adjusted so that
-they use `repo_config_get_multivar_gently(the_repository, ...)` instead.
-While some callsites might already have a repository available, this
-mechanical conversion is the exact same as the current situation and
-thus cannot cause any regression. Those sites should eventually be
-cleaned up in a later patch series.
+Follow through with that intent and remove `git_config_set_multivar()`.
+All callsites are adjusted so that they use
+`repo_config_set_multivar(the_repository, ...)` instead. While some
+callsites might already have a repository available, this mechanical
+conversion is the exact same as the current situation and thus cannot
+cause any regression. Those sites should eventually be cleaned up in a
+later patch series.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- branch.c         | 2 +-
- builtin/clone.c  | 8 ++++----
- builtin/remote.c | 4 ++--
- config.h         | 7 -------
- scalar.c         | 6 +++---
- 5 files changed, 10 insertions(+), 17 deletions(-)
+ builtin/branch.c |  4 ++--
+ builtin/clone.c  |  2 +-
+ builtin/remote.c | 20 ++++++++++----------
+ config.h         |  7 -------
+ 4 files changed, 13 insertions(+), 20 deletions(-)
 
-diff --git a/branch.c b/branch.c
-index 3dc237adf6c..26be3583471 100644
---- a/branch.c
-+++ b/branch.c
-@@ -130,7 +130,7 @@ static int install_branch_config_multiple_remotes(int flag, const char *local,
- 	if (repo_config_set_gently(the_repository, key.buf, NULL) < 0)
- 		goto out_err;
- 	for_each_string_list_item(item, remotes)
--		if (git_config_set_multivar_gently(key.buf, item->string, CONFIG_REGEX_NONE, 0) < 0)
-+		if (repo_config_set_multivar_gently(the_repository, key.buf, item->string, CONFIG_REGEX_NONE, 0) < 0)
- 			goto out_err;
+diff --git a/builtin/branch.c b/builtin/branch.c
+index 5de0691d18d..fa5ced452e5 100644
+--- a/builtin/branch.c
++++ b/builtin/branch.c
+@@ -987,10 +987,10 @@ int cmd_branch(int argc,
  
- 	if (rebasing) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "branch.%s.remote", branch->name);
+-		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
++		repo_config_set_multivar(the_repository, buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "branch.%s.merge", branch->name);
+-		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
++		repo_config_set_multivar(the_repository, buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_release(&buf);
+ 	} else if (!noncreate_actions && argc > 0 && argc <= 2) {
+ 		const char *branch_name = argv[0];
 diff --git a/builtin/clone.c b/builtin/clone.c
-index f025a8f19e0..183297787cb 100644
+index 183297787cb..c990f398ef6 100644
 --- a/builtin/clone.c
 +++ b/builtin/clone.c
-@@ -762,16 +762,16 @@ static int write_one_config(const char *key, const char *value,
- {
- 	/*
- 	 * give git_clone_config a chance to write config values back to the
--	 * environment, since git_config_set_multivar_gently only deals with
-+	 * environment, since repo_config_set_multivar_gently only deals with
- 	 * config-file writes
- 	 */
- 	int apply_failed = git_clone_config(key, value, ctx, data);
- 	if (apply_failed)
- 		return apply_failed;
+@@ -822,7 +822,7 @@ static void write_refspec_config(const char *src_ref_prefix,
+ 		/* Configure the remote */
+ 		if (value.len) {
+ 			strbuf_addf(&key, "remote.%s.fetch", remote_name);
+-			git_config_set_multivar(key.buf, value.buf, "^$", 0);
++			repo_config_set_multivar(the_repository, key.buf, value.buf, "^$", 0);
+ 			strbuf_reset(&key);
  
--	return git_config_set_multivar_gently(key,
--					      value ? value : "true",
--					      CONFIG_REGEX_NONE, 0);
-+	return repo_config_set_multivar_gently(the_repository, key,
-+					       value ? value : "true",
-+					       CONFIG_REGEX_NONE, 0);
- }
- 
- static void write_config(struct string_list *config)
+ 			if (option_mirror) {
 diff --git a/builtin/remote.c b/builtin/remote.c
-index 827639e0398..dd340a33259 100644
+index dd340a33259..4c63a8bb576 100644
 --- a/builtin/remote.c
 +++ b/builtin/remote.c
-@@ -1633,8 +1633,8 @@ static int update(int argc, const char **argv, const char *prefix,
- 
- static int remove_all_fetch_refspecs(const char *key)
- {
--	return git_config_set_multivar_gently(key, NULL, NULL,
--					      CONFIG_FLAGS_MULTI_REPLACE);
-+	return repo_config_set_multivar_gently(the_repository, key, NULL, NULL,
-+					       CONFIG_FLAGS_MULTI_REPLACE);
+@@ -132,7 +132,7 @@ static void add_branch(const char *key, const char *branchname,
+ 	else
+ 		strbuf_addf(tmp, "refs/heads/%s:refs/remotes/%s/%s",
+ 				branchname, remotename, branchname);
+-	git_config_set_multivar(key, tmp->buf, "^$", 0);
++	repo_config_set_multivar(the_repository, key, tmp->buf, "^$", 0);
  }
  
- static void add_branches(struct remote *remote, const char **branches,
+ static const char mirror_advice[] =
+@@ -634,15 +634,15 @@ static int migrate_file(struct remote *remote)
+ 
+ 	strbuf_addf(&buf, "remote.%s.url", remote->name);
+ 	for (i = 0; i < remote->url.nr; i++)
+-		git_config_set_multivar(buf.buf, remote->url.v[i], "^$", 0);
++		repo_config_set_multivar(the_repository, buf.buf, remote->url.v[i], "^$", 0);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.push", remote->name);
+ 	for (i = 0; i < remote->push.nr; i++)
+-		git_config_set_multivar(buf.buf, remote->push.items[i].raw, "^$", 0);
++		repo_config_set_multivar(the_repository, buf.buf, remote->push.items[i].raw, "^$", 0);
+ 	strbuf_reset(&buf);
+ 	strbuf_addf(&buf, "remote.%s.fetch", remote->name);
+ 	for (i = 0; i < remote->fetch.nr; i++)
+-		git_config_set_multivar(buf.buf, remote->fetch.items[i].raw, "^$", 0);
++		repo_config_set_multivar(the_repository, buf.buf, remote->fetch.items[i].raw, "^$", 0);
+ #ifndef WITH_BREAKING_CHANGES
+ 	if (remote->origin == REMOTE_REMOTES)
+ 		unlink_or_warn(repo_git_path_replace(the_repository, &buf,
+@@ -771,7 +771,7 @@ static int mv(int argc, const char **argv, const char *prefix,
+ 	if (oldremote->fetch.nr) {
+ 		strbuf_reset(&buf);
+ 		strbuf_addf(&buf, "remote.%s.fetch", rename.new_name);
+-		git_config_set_multivar(buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
++		repo_config_set_multivar(the_repository, buf.buf, NULL, NULL, CONFIG_FLAGS_MULTI_REPLACE);
+ 		strbuf_addf(&old_remote_context, ":refs/remotes/%s/", rename.old_name);
+ 		for (i = 0; i < oldremote->fetch.nr; i++) {
+ 			char *ptr;
+@@ -791,7 +791,7 @@ static int mv(int argc, const char **argv, const char *prefix,
+ 					  "\tPlease update the configuration manually if necessary."),
+ 					buf2.buf);
+ 
+-			git_config_set_multivar(buf.buf, buf2.buf, "^$", 0);
++			repo_config_set_multivar(the_repository, buf.buf, buf2.buf, "^$", 0);
+ 		}
+ 	}
+ 
+@@ -1790,7 +1790,7 @@ static int set_url(int argc, const char **argv, const char *prefix,
+ 	/* Special cases that add new entry. */
+ 	if ((!oldurl && !delete_mode) || add_mode) {
+ 		if (add_mode)
+-			git_config_set_multivar(name_buf.buf, newurl,
++			repo_config_set_multivar(the_repository, name_buf.buf, newurl,
+ 						       "^$", 0);
+ 		else
+ 			repo_config_set(the_repository, name_buf.buf, newurl);
+@@ -1814,10 +1814,10 @@ static int set_url(int argc, const char **argv, const char *prefix,
+ 	regfree(&old_regex);
+ 
+ 	if (!delete_mode)
+-		git_config_set_multivar(name_buf.buf, newurl, oldurl, 0);
++		repo_config_set_multivar(the_repository, name_buf.buf, newurl, oldurl, 0);
+ 	else
+-		git_config_set_multivar(name_buf.buf, NULL, oldurl,
+-					CONFIG_FLAGS_MULTI_REPLACE);
++		repo_config_set_multivar(the_repository, name_buf.buf, NULL, oldurl,
++					 CONFIG_FLAGS_MULTI_REPLACE);
+ out:
+ 	strbuf_release(&name_buf);
+ 	return 0;
 diff --git a/config.h b/config.h
-index e69592ada15..a90b814292c 100644
+index a90b814292c..61774f17db3 100644
 --- a/config.h
 +++ b/config.h
-@@ -745,13 +745,6 @@ static inline void git_config_set_multivar_in_file(
+@@ -744,13 +744,6 @@ static inline void git_config_set_multivar_in_file(
+ 	repo_config_set_multivar_in_file(the_repository, config_filename,
  					 key, value, value_pattern, flags);
  }
- 
--static inline int git_config_set_multivar_gently(const char *key, const char *value,
--				   const char *value_pattern, unsigned flags)
--{
--	return repo_config_set_multivar_gently(the_repository, key, value,
--					       value_pattern, flags);
--}
 -
- static inline void git_config_set_multivar(const char *key, const char *value,
- 			     const char *value_pattern, unsigned flags)
- {
-diff --git a/scalar.c b/scalar.c
-index c09c5ca194e..4a373c133d8 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -196,9 +196,9 @@ static int set_recommended_config(int reconfigure)
- 	if (repo_config_get_string(the_repository, "log.excludeDecoration", &value)) {
- 		trace2_data_string("scalar", the_repository,
- 				   "log.excludeDecoration", "created");
--		if (git_config_set_multivar_gently("log.excludeDecoration",
--						   "refs/prefetch/*",
--						   CONFIG_REGEX_NONE, 0))
-+		if (repo_config_set_multivar_gently(the_repository, "log.excludeDecoration",
-+						    "refs/prefetch/*",
-+						    CONFIG_REGEX_NONE, 0))
- 			return error(_("could not configure "
- 				       "log.excludeDecoration"));
- 	} else {
+-static inline void git_config_set_multivar(const char *key, const char *value,
+-			     const char *value_pattern, unsigned flags)
+-{
+-	repo_config_set_multivar(the_repository, key, value,
+-				 value_pattern, flags);
+-}
+ # endif /* USE_THE_REPOSITORY_VARIABLE */
+ 
+ #endif /* CONFIG_H */
 
 -- 
 2.50.1.552.g942d659e1b.dirty
