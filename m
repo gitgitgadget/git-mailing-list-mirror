@@ -1,108 +1,135 @@
-Received: from mail-pl1-f194.google.com (mail-pl1-f194.google.com [209.85.214.194])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6865D482FF
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 03:39:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.194
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9720D8F4A
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 05:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753328349; cv=none; b=Qy3if6wGoxcDPFbGUYTzcr76B2fOLrJTJSsY1hgTnSWIPH+9PmwDKgftOiGj1IJGwVa/EFnYo5AWEJYiFjco2CQZlpAe5q/5LIRLKOuE0u7AQ0xlsAtgD49qJNrqz7MPk3oZAZF5a7+Ayf3/0hIDEkJbeuPL2S7ghPk4vfKU/oA=
+	t=1753334925; cv=none; b=Oem0ThjIx1m6cAQSAkwH5ZlYr5/KVz6kQtnqaXIIUCDt2y/lbcIgDE911cE68vqNS46KjKi7X6MYyNAgQaRlxPn+fJK6mxzxR082YHQ4IM1G5hsTh0JSbPREnuil2+LIGgKPuHFhl9sgss9vgscaFvfDSbIAbU6RAXXMPGSrLjY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753328349; c=relaxed/simple;
-	bh=1JRSs/PSD2npfyXTV3ixquQ5ep1ClY2uhBXaeUzCG1c=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=A8+ErghUvDFshO+75cePfTGGQ9lzpPZRNCQ72RURP6AQjvRl8YKNOoIeL/tKROit5bSo7M6fTyoA3hE82wG0kkq0KSjebeEuc+vwuEPo+Yat9cUAchMstSlqh9SDcsMcPCrQM/hb1HIeL3Fp3poIKVikX7o6q/Lg11Ij2Abelh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=N67o6xQl; arc=none smtp.client-ip=209.85.214.194
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753334925; c=relaxed/simple;
+	bh=lcYaw9L2eQ2dCC74MkgwNNEH0MuWMgyXdEicmFZLQDk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eakJgeLwrYG5xRnYyAikPgH3Fa0+t/Z6fqRjyjtJ2r6/RFfwLV6F1km+fQryoGjHOrADyQRKK4rIHtNPuvD/iY9fDwMzl/8UiPnfv40xShmsae4ROGX+1HO4XMky6fwYtOo4Y7XV02Xxt0PtB7Nt8vRLm1/zYyQOnbeRe+Hf+2k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=v2Qorbe4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QHNOsXIM; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="N67o6xQl"
-Received: by mail-pl1-f194.google.com with SMTP id d9443c01a7336-234b440afa7so5232965ad.0
-        for <git@vger.kernel.org>; Wed, 23 Jul 2025 20:39:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753328348; x=1753933148; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1JRSs/PSD2npfyXTV3ixquQ5ep1ClY2uhBXaeUzCG1c=;
-        b=N67o6xQlwTQMeNDPSz1GY0aUhPeGwKUks7YOtw9ZI+7FJZU2wDVVKvlH3+SMgT0EH+
-         VbCyCXX/ieBmPU/GMGztq0GT+6QICS7HNzyonB7g2ngvWnOamRdNkcv+lIHSfIS1EcwL
-         eeR/0rj8dPliKMLRuOxhtt15+Zr1TMeIXBvhUdAXqY7ouLPBLhjhkHjSPcAO5ZMwpWN9
-         G9B5dYEUYEOf3H7HCq2KqTdi/lrdhSWhmOw3UCxqQL+XY8ihSmQQOrvH0Cl9B0QKGW1J
-         ssjf8c1J30suc8QHmCb/T1k67AscX/S3e9aGLk8L5Io98gsbMtfwxMPryWXOC5YeKOsD
-         5Olg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753328348; x=1753933148;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1JRSs/PSD2npfyXTV3ixquQ5ep1ClY2uhBXaeUzCG1c=;
-        b=UrYEb2BaLM5Nzn12Q2h5tXNIiImRtOGAQL2eZ18nSQqzuUKpXHYW7gYtIIiFb8kWP6
-         1p+c9f6ug7XVATjOsKLFjl6nkHagoIhwiGRaJTz4a67SD2fowrnpNaYhqKjs4EMkdcA4
-         eCQZAUjW1pGC0kO4m3k11lKQchb1dIF3bgowzJipkT/pUTs50Y6peLVlWndOvw+r95rI
-         a/8EotAN2S0Wr1Vhtrt5FsA0y9roWonJoLPbpTp8p0CIBpaLM6BCJnieTfkGYCwIUH1j
-         tCBhXqleshqv9K0Eo9fMtDkC9yHIqZV7lCpUT8rEATDcW6fzwMFloQGCTNVv8T1Nli0t
-         7NLQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWooQEVkMW2exANk/xacLTkdTG79Q85V4x5TSs6Obr0ySKRdqtkGyaT1Z/MP00gvxfCZdU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwZKJLbfjXazCgEPSvcpLCz/y/QwYVfaLnz/om4YJ0+4oG4ASt+
-	fqP7Hh1M0krskSvm9WcQW6jSQMGkzlYIwqkj0Yq0joinO7yhJ+D6y8nt
-X-Gm-Gg: ASbGncsBfp7cegnOfH/CT+lybHtOm+f67r3qAyIrPtB3YASvCqIcO4xRIAv4lG2fNbx
-	jZcLlVn4R2BHPuyZ2eAKkBFhu9RxKqql7NnvGFqcHyfNbeFRcm3O8MptB7Lo2QegizgnIpBDt/T
-	lSt46uF85BEhzuCsg2XdNnsua74QIFmQKzT1z0kNgzm6IV0PS8UJyx3bXH94sokIOS6UH5lSeyH
-	KNvfitVCIm0IO4XJJ2hzDEu0mALCY9rpI2/CYxt8JAoEkzNZhzUMlAWujL/XflPJTaHqsjukaiF
-	nILgKoKqFVSmVPV3KsL6vmpIOzuh15Eik0lS/2kraaDgK90hLxjeUHtUaG0jAHI9ZApnNOo+Bnq
-	DHNkNxVeL/zUzzeyQrAuY5nupKS0KguPYJTZiFqSl/YIj0n+k3KFcZcIYpeued2g8ira6XIMj3A
-	PHFYKOPJE9LRPwyZahPzLDGb8=
-X-Google-Smtp-Source: AGHT+IF5YBVdBz44iNl++uAa2jmgfjU6VZBDFqRCo2IUjco59OcJ1bMrFA0fjkpZ59uJ6OVcwZ909g==
-X-Received: by 2002:a17:902:f688:b0:220:c164:6ee1 with SMTP id d9443c01a7336-23f981936cemr83996275ad.32.1753328347624;
-        Wed, 23 Jul 2025 20:39:07 -0700 (PDT)
-Received: from smtpclient.apple (awork062199.netvigator.com. [203.198.28.199])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-31e66390fffsm206454a91.34.2025.07.23.20.39.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 23 Jul 2025 20:39:07 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="v2Qorbe4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QHNOsXIM"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 790DC7A0E3C;
+	Thu, 24 Jul 2025 01:28:41 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Thu, 24 Jul 2025 01:28:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753334921;
+	 x=1753421321; bh=H4c5VPGMBA68P5QJZWZhXk6RGhpovJEt0duvFikhx1o=; b=
+	v2Qorbe4he1zNqPSM5rY+bbjG/1CjKdhUgtecbG6sVzreKK3WPuS2ow7kgjzxWai
+	lNmkBJ6pfJx8ygKJYJXqWxnJXCRod2I3v/p4l9roNVqXIagSpLBauqudcqZRxzE7
+	I7ULiwjVjNN6fA914sMJhNi2TnCCDe+SMo5InOwGTOpdNhwfi7ZCcAg5rYvvtDx/
+	0PojAyYGsO8z+vmU3r19VrmjiUxMpPdJbaM5TUx9G67dLne/3j/7coUMY13Tj52F
+	mCud9LqLVGap0GxYqNeeqd+6DOIry7/Rl7vKNkyVt5tpNuBciTr18+EOf+rL6E2U
+	URTSTXLtZ4KniIxYeZd9uw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753334921; x=
+	1753421321; bh=H4c5VPGMBA68P5QJZWZhXk6RGhpovJEt0duvFikhx1o=; b=Q
+	HNOsXIM8RfSm4LoDxkMYhL9ClMd2Yj3svbUti37ad5hQaovb5cPPWAp+qAqnuwqN
+	4UovPtqJYknQl2iDvmuYprDY7KBl7OHSAYMm9moB+WAnl+AMONubiVG5iLS9Sdti
+	/lZxwu7ETBNIF42nsUcDhrV8DHdDgMNaY/RVlmIaD5hXf/DY+C4UyQxtTiGwaZzD
+	xg6X8FKYmV9jbSUbwuK9sAdOVc7nhS5kcqxiVb9YigEWaRu+ZC2CQKEmWHQWoHxW
+	66tqqC18thWHNz2FUOavkb2vCzWNrPrbDuYvq/oS5AMgt8ZgSIYh8/kOcimYqpfl
+	L4QTF6Rqeqo6KJwfNpzYQ==
+X-ME-Sender: <xms:iMSBaPFGCQAfNxb7EZMEX-oInnfqSSiNV--Nm7vQzy9e4c7n73EFCQ>
+    <xme:iMSBaEwVnwZ52D52VeLpcXVl-OaHx_4xjWpvJIL2yHJLOHqWEVDIVUSU6zXcKW0Z7
+    AKizpfPUlX1TWgqSg>
+X-ME-Received: <xmr:iMSBaBnJ2yzSvjvVETaoTpIQe6h3Qievf3M6Gj0141VrrfJ_RLnVNv7ZTpeo8mApdVF4-I5m9VsvFqJDhq5iD5-kSfFRXLPkFfMLFRaXglU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejleekudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgt
+    khcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnh
+    epvdefjeeitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkh
+    hsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpth
+    htoheptggrrhgvnhgrshesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghr
+    thiisehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:iMSBaNnkwgc2GE2a31I7rMxvrxJbcDjdMo6PFRVeWgtciW1OjQiTnQ>
+    <xmx:iMSBaDyF0hwEltrIg2mKJmxqmq3cYfCpgeTNV9PLCQ_dVXhPJLcbug>
+    <xmx:iMSBaCoZr1KD-u2v0tEB2xYO2Lm74gBHXPEGXx-iLCFqySVOaw3u1A>
+    <xmx:iMSBaC53ryKQMMFPtMhNc2tNhhy3gd-ezqMmt3qCxbID_PcvqtX1NA>
+    <xmx:icSBaGks76rhDry1bVPze96Gly7lqqycgsC7HE640fr-CWuVB-Gf2RJj>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Jul 2025 01:28:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8ad1da0c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 24 Jul 2025 05:28:37 +0000 (UTC)
+Date: Thu, 24 Jul 2025 07:28:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	git@vger.kernel.org, sandals@crustytoothpaste.net,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH v6] meson: work around broken system PCRE2 dependency in
+ macOS
+Message-ID: <aIHENdrLu7vtShov@pks.im>
+References: <20250716193000.44673-1-carenas@gmail.com>
+ <20250718170225.6063-1-carenas@gmail.com>
+ <xmqq8qkelfgo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: git-diff: --ignore-matching-lines has no effect on the output
- when --name-only is used
-From: Lidong Yan <yldhome2d2@gmail.com>
-In-Reply-To: <CAPig+cR7M1VL=9PQ1+xsj58=EPi0jR8oTdTnkGmMAD4gXeOnKw@mail.gmail.com>
-Date: Thu, 24 Jul 2025 11:38:54 +0800
-Cc: Junio C Hamano <gitster@pobox.com>,
- hi@arnes.space,
- git@vger.kernel.org,
- =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <8EE6292C-E03B-4E1B-B8D9-2352531034DF@gmail.com>
-References: <87a54v8nmz.fsf@arnes.space>
- <12095AC3-BC38-48DB-95B4-394F9F7DE054@gmail.com> <xmqqqzy6omul.fsf@gitster.g>
- <23DF2497-D379-4EAD-9271-D01D7D8F3E8B@gmail.com>
- <CAPig+cR7M1VL=9PQ1+xsj58=EPi0jR8oTdTnkGmMAD4gXeOnKw@mail.gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqq8qkelfgo.fsf@gitster.g>
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
->=20
-> On Wed, Jul 23, 2025 at 9:56=E2=80=AFPM Lidong Yan =
-<yldhome2d2@gmail.com> wrote:
->> Junio C Hamano <gitster@pobox.com> write:
->>> Lidong Yan <yldhome2d2@gmail.com> writes:
->>>> The `=E2=80=94ignore-matching-lines` options is introduced in =
-296d4a94e72
->>>> (Micha=C5=82 K=C4=99pie=C5=84 2020-10-20 08:48:09 +0200 5803) Since =
-the Git documentation
->>>=20
->>> WTH is that reference format?
->>=20
->> Sorry. I should use `git log --format=3D"%h (%s, %ad)" --date=3Dshort =
--n 1 296d4a`.
->=20
-> Simpler: git log --format=3Dreference -n1 296d4a
->=20
+On Wed, Jul 23, 2025 at 03:17:27PM -0700, Junio C Hamano wrote:
+> Carlo Marcelo Arenas Belón <carenas@gmail.com> writes:
+> 
+> > macOS provides a PCRE2 library in base that is not usable and not
+> > configured properly, as it installs a pkgconf module that
+> > points to a non-existent pcre2.h header in /usr/local/include.
+> >
+> > Detect that case and if the feature is enabled, try to fallback
+> > to a wrapped subproject through an anonymous dependency, aborting
+> > with an error if that is not possible.
+> >
+> > Change the feature to "auto" and print a warning and disable it
+> > if a broken dependency was detected, but to keep consistency
+> > with the cmake build system used on Windows, add a special rule
+> > to re-enable the pcre2 feature by default there.
+> >
+> > Helped-by: Eric Sunshine <sunshine@sunshineco.com>
+> > Suggested-by: Eli Schwartz <eschwartz@gentoo.org>
+> > Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
+> > ---
+> >  meson.build       | 28 +++++++++++++++++++++++++++-
+> >  meson_options.txt |  2 +-
+> >  2 files changed, 28 insertions(+), 2 deletions(-)
+> 
+> The thread went silent after this iteration.
+> 
+> I _think_ it incorporates all the good suggestions offered during
+> the discussion on the previous iterations, but is everybody happy
+> with this version?  If so, let me mark the topic for 'next'.
+> 
+> Thanks, all.
 
-Got it, thanks very much.
-Lidong=
+I think this version is fine. Thanks!
+
+Patrick
