@@ -1,83 +1,84 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE9B2E36FD
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 22:30:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 107F223BCE4
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 22:33:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753396231; cv=none; b=Vyp09PT9qzDSY+lRbUL8Wr7R88qIGf2Jg2RqXFLq+KUy2RJnVGFYK+kC0tamhYmH9YuCATen36MxwGfOthOcGyhUH3LGhOZpnIqkU1l+f+0WAgwpd05JGMbMMn7vkK8Or4ycTVdCRNYXzaN9Dse+TTPHaMlrCLaKkn7yfEhK6UE=
+	t=1753396385; cv=none; b=YaIVPkg4sdU1i2OIIocr4nhm1G92sc25+1pAYzt3/AXZSAAPHqIMeTMCOjW9PSDa4o48Q0dX5nSTJhVQDEOKzUy9Rv4RJXxRZCWrtZSHY0d1zKM+XdWoCvclR9wWoPj0oONpTlGNI20Rfa9KbNYdlJCScuVySihBJXNHE80Uv5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753396231; c=relaxed/simple;
-	bh=OK5J2mSa71aYALBwxG5U79noFzUXqe2wxGgbyh6GWpQ=;
+	s=arc-20240116; t=1753396385; c=relaxed/simple;
+	bh=WeO7V5rQs5OEB4RpppCUdAam0TY2sjW+4q3WEpNqZF0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=civMH9jfp+ntnd9hHd65/w+sCWxLvKw/BM+IaEC1nFtroKnZajM/nS8ULLBxmDKjLDUFcuq2cdyHFoWhS2MeiDCGbBrClxKU+ezB9BivgW3HvyGGPFBkjKE36I5ggAWpsJx6m0KF584Eesz8Sr3GZFEPQgZG0rjIbKXfD124ybk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F3UCwFvi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8N3r6fv; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=SUJJd7UpblxNHiX2ThwRq0aiahtqpVGLwRBGKQszkgDyWipz83uqx0tyUccf66K5fdyoaOOsmd5pXWs8Y9mp6XjFCTlF/UV9+t89ZDor9+DQ/WaRd3ple8CCN5zgsyaQSmWNkwMyfzeUbiqv5PeHlCJxHVfcfAtReasBUcLksow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IIHzLXMb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Dn+Poaga; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F3UCwFvi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8N3r6fv"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 961F3EC0228;
-	Thu, 24 Jul 2025 18:30:27 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Jul 2025 18:30:27 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IIHzLXMb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Dn+Poaga"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 33DCC1400033;
+	Thu, 24 Jul 2025 18:33:02 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 24 Jul 2025 18:33:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753396227; x=1753482627; bh=iJy/XRaswO
-	ltV8YsAQ99nfODPKzFYOer0L6DPomIlAk=; b=F3UCwFvioRQrNbvM/3oQtWS5Ag
-	uJZ6ffxkHNb/hTK8wxx1ETpn4ypmastYkf+hk2EfU9V2fFKd8eKHgYFj19o1zOD2
-	fKZKHozOHH9+OEaIDJbeBflJTiMkFk/JA5T4dJ+aVszzi0wXBpn12ymPB2nPFjeG
-	7GLS2AqWTrNx+4V13qBOEZuoe6gcUBfJaNuLPLF8bNi5kmzfHHWU/XW/M/SVleAb
-	MlIIawMCtZ2AX8U0Zh2n7hwne9POV+IiWaQDNP30Bj/BZBUIS00uJxmOUU082Exa
-	QKPZwrEfjxlY6vilK3UDohvwbiT8oGuJ3qEy88WcJdsEoSG1QkjoDnuilB1Q==
+	:subject:to:to; s=fm1; t=1753396382; x=1753482782; bh=WeO7V5rQs5
+	OEB4RpppCUdAam0TY2sjW+4q3WEpNqZF0=; b=IIHzLXMb2H3BimlRGHsFug8KTj
+	+sQ/d3MDiYVKv5GbcahuDCmbBRzw11wW14jG4b8ayJf22gevf/a7Cp6t9L/Z26/N
+	jWVDAunw/JZ3o/dliceemSCrBPXJjnMP/Ot0twIJtQNleZBakUeKfSi1Vpmmu4Hp
+	Dthni36L0f84gWQwWhS6APERi8eK3jQiP8woKKeydq2NxZioHDQ1sZsEYmTNjFjz
+	9By3y7qEzo9HXswbVORHNMwal3zfoUDpfva1mSmqeenjNzL/jd0XfoZzdwIOSoMP
+	412l+Mp7KcOW99T1zez6X34Xd5HA3XfxO6qkvaDTOMBsxcASOzyG2S+dnthQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753396227; x=1753482627; bh=iJy/XRaswOltV8YsAQ99nfODPKzFYOer0L6
-	DPomIlAk=; b=I8N3r6fvpOqn0diaaDj7WUw0aFSuowYP/FV5mx6mqDmht5+2Y5M
-	kylgCM4kb74tlPEu0rU+72EMv3akZWYRXZ1AREUVGHrUDlGs6jl4wURzOyMZRK8Z
-	yA28ur4Rrc2718CzWXTaO0JbTxVOsQ6AWstOzmpVsIaNemkOq99jrYWd7op0HFEV
-	7pxRjrYoOZPUqDF6JSE35FLwxYG/31jnl6K8zIbykEW6+eajHJIkjPMqBsi47B05
-	wuu+Kdsx1i7dfc5gEfQgSWw40TteGLujMdWK+fFpLicBAxW2WDn8CldAszay1KBm
-	14wxzdTWEHt02k+Y9mItkv1MnJwQE82K81A==
-X-ME-Sender: <xms:A7SCaGqozp0NFq0n4OriJBdJDY4eZrsaD29NguXAdQb0dVuLvfWMjw>
-    <xme:A7SCaAKEF6005lSExY-r-8T2uYBu-2M0PwDKPT--mcPjCdPOU9OV7mY0plN04FFR4
-    cO0fHLw60xRHCdkGw>
-X-ME-Received: <xmr:A7SCaBorFsc7WYON_MuNAwtziNJ7CVedOyymbEV-KYTgo4stZmgpE2n5ZjbBte4E86Zo9Lnt05_DYQAQu_Gulv76JT6RtPvW8j4dcTM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudekhecutefuodetggdotefrod
+	1753396382; x=1753482782; bh=WeO7V5rQs5OEB4RpppCUdAam0TY2sjW+4q3
+	WEpNqZF0=; b=Dn+PoagaTMr5OXaH4Akw3pt+cyFxFRbHinHomycTdYwfhOjaFck
+	cWVaI3vE8LVd6pC2WrQtdpI97a8QCnE9QumQg7ejo0B5Js1nLTJpoD7Ylq65cet5
+	H2cBmldok+9IaxdR7rbuBonysp+BQa3hbc2VUjWfeOMUcXff+9opArHdNJ7A29us
+	jnnotEJqSeig7zKe44LnIK2OxIQxiA1EoRZTQTu2x6RVBqI8cYlCrYY4xaQTxtd1
+	vRVsds0dwoWi79yUCpFeQA0014ZVHBhbC2eXkiFb+umis0zkpua4K3SgT6BApC3m
+	6hQWU61YEh4Zem/eGRH19dOMdqTgQRujf8g==
+X-ME-Sender: <xms:nrSCaGUF01XC-leqJVtLlmswNn4wUcOmwaIHNbwjB_YoQMdziE42cA>
+    <xme:nrSCaF0STOVWyDECpVfzX8l1Js5cTzcCYw-M1BlehWh0EPllik3SzMgBNqHLiE-TS
+    n0b-Ty94UZKBu36ig>
+X-ME-Received: <xmr:nrSCaD3jaXZE9iT9r1FlKKoVW4P8k2vSz4jTy55mgQYiZfhbVvNH1QSk5G8823kSTs-B8qEwLshDfzgoeS3Ic_ExGyw-7Z4z-gTD45c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudekiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
-    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
-    phgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
-    drnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:A7SCaAxzNyyf3dEx3TbGpdH1-b-PSOh0dFrUNIGEjpgvI3sNXW1qow>
-    <xmx:A7SCaNMdBSCSAKQRZ5aJQ0OQIcB09QQ76jW7dYymdjGPVCX3IqAw2Q>
-    <xmx:A7SCaN6Mtgl3eN1wkEfkeN6H5QHlNf98ZYS46839lfjHXtTZds1HRQ>
-    <xmx:A7SCaOmvYn1vtorn-X99EmrFIiMTvrfBnT2HoXK7vA4ct3W0P1RSuA>
-    <xmx:A7SCaPp00fkxxg07dagL21zleSU9wcZrZcJS6SUdmJ2GQ9Q43Z8PviLx>
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:nrSCaI8K3Fkgo_09oztLWV_wa5KFSVBgB4ZyVC_9lgGLi3TIrdHrNw>
+    <xmx:nrSCaA16krzDFV1N8joZlDQSyI03ilAQaMwzLSGtZLuS8aTGQND28A>
+    <xmx:nrSCaF-v1BvrXYq4Fko7j3mxBKiJ2DaqTdIsV6QOxgyX-PF9K2QyTQ>
+    <xmx:nrSCaAvG4F8VCU9p_wwQ2msaVPyJHbr6-8HYhof2rXtscGrhQ3BBcg>
+    <xmx:nrSCaCc9b-CwyDFPkj_0X36ZarzXUgrxsOQi40uCk9nObdJ-qtJ9OXYp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 18:30:27 -0400 (EDT)
+ 24 Jul 2025 18:33:01 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  spectral@google.com,  peff@peff.net
-Subject: Re: [PATCH] ref-cache: set prefix_state when seeking
-In-Reply-To: <20250724221136.693120-1-karthik.188@gmail.com> (Karthik Nayak's
-	message of "Fri, 25 Jul 2025 00:11:36 +0200")
-References: <xmqqbjp9ikvk.fsf@gitster.g>
-	<20250724221136.693120-1-karthik.188@gmail.com>
-Date: Thu, 24 Jul 2025 15:30:25 -0700
-Message-ID: <xmqqseilxlvi.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/5] for-each-ref: fix documentation argument ordering
+In-Reply-To: <CAOLa=ZRvyBK9vVz4+OhLUgAyktdVTb44VC=e8KQNB6BszJ0ixA@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 25 Jul 2025 00:14:06 +0200")
+References: <20250724-kn-small-cleanups-v1-0-0c70f591de3e@gmail.com>
+	<20250724-kn-small-cleanups-v1-2-0c70f591de3e@gmail.com>
+	<xmqqy0sdh529.fsf@gitster.g>
+	<CAOLa=ZRvyBK9vVz4+OhLUgAyktdVTb44VC=e8KQNB6BszJ0ixA@mail.gmail.com>
+Date: Thu, 24 Jul 2025 15:32:59 -0700
+Message-ID: <xmqqo6t9xlr8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,54 +90,7 @@ Content-Type: text/plain
 
 Karthik Nayak <karthik.188@gmail.com> writes:
 
-> In 090eb5336c (refs: selectively set prefix in the seek functions,
-> 2025-07-15) we separated the seeking functionality of reference
-> iterators from the functionality to set prefix to an iterator. This
-> allows users of ref iterators to seek to a particular reference to
-> provide pagination support.
->
-> The files-backend, uses the ref-cache iterator to iterate over loose
-> refs. The iterator tracks directories and entries already processed via
-> a stack of levels. Each level corresponds to a directory under the files
-> backend. New levels are added to the stack, and when all entries from a
-> level is yielded, the corresponding level is popped from the stack.
->
-> To accommodate seeking, we need to populate and traverse the levels to
-> stop the requested seek marker at the appropriate level and its entry
-> index. Each level also contains a 'prefix_state' which is used for
-> prefix matching, this allows the iterator to skip levels/entries which
-> don't match a prefix. The default value of 'prefix_state' is
-> PREFIX_CONTAINS_DIR, which yields all entries within a level. When
-> purely seeking without prefix matching, we want to yield all entries.
-> The commit however, skips setting the value explicitly. This causes the
-> MemorySanitizer to issue a 'use-of-uninitialized-value' error when
-> running 't/t6302-for-each-ref-filter'.
->
-> Set the value explicitly to avoid to fix the issue.
->
-> Reported-by: Kyle Lippincott <spectral@google.com>
-> Helped-by: Kyle Lippincott <spectral@google.com>
-> Helped-by: Jeff King <peff@peff.net>
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->
-> Here is my version of the same patch!
+> Indeed, I blotched it up somehow. Will add it locally and wait a ~day
+> before sending in a new version.
 
-Thanks!
-
->
->  refs/ref-cache.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
-> index 1d95b56d40..ceef3a2008 100644
-> --- a/refs/ref-cache.c
-> +++ b/refs/ref-cache.c
-> @@ -527,6 +527,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
->  				level = &iter->levels[iter->levels_nr++];
->  				level->dir = dir;
->  				level->index = -1;
-> +				level->prefix_state = PREFIX_CONTAINS_DIR;
->  			} else {
->  				/* reduce the index so the leaf node is iterated over */
->  				if (cmp <= 0 && !slash)
+Hopefully no need, as I've tweaked a bit locally while queuing.
