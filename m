@@ -1,140 +1,103 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F069B1DF244
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:07:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C720A1DD0D4
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:20:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753373222; cv=none; b=Y0CwyAUHw4IMTM6Rp1HMZIrt3p+njwumkl+asJSAGcsdba4J7myRZlhA6VOtCFW3z4pOAFzE8ZA+XgzNBzEF9o24Yf1Ggqd5cn6oSFCnxGvOCHEYZ7xVI2CIAh3uoE0VcrhRbwUvqyPJNUpBpZ0wVucl5OQP4PmzfM7RkbE18U4=
+	t=1753374040; cv=none; b=CJIsAMSVAmRQV74gwDKlcWzRCf5IQlTBh1kngacO4xoAr6Jo016/g6A2F7Hg670iBq/HLr02tAr1ECXOC6nqtAwWN7qRpKgknHE3mEp1uDRGw5eFKgcSu0Nd2KfYRcUy4+TOgSI1gt0WH9ATliVh9ZPxLsKGx+/FfJ0BgXUDl5g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753373222; c=relaxed/simple;
-	bh=28v6E94NW/wJnIQn3i11MJw+QwFx3iztaKkZfvL3FEY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NBEKr1TsIDdMK/EXbJ9nrHkxAReSiSx9xUi8tJ6pFKGS6SmQzz4CVijcl/LBAfjlqYyUi99Adyat2jE4wct1IVz01a3bd18KSvVZOQp24kmz3Cy3j30y7NlAwE/5U9sHf9dzkgn/xXfq6Y+7FwIT/FB/c2Q0IU3ujnD/kpI6aKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mh/2G62x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WC8Tni9t; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753374040; c=relaxed/simple;
+	bh=aQstDmq9GobvhElUgG4nLVTF6uLpFZ2qkfbjRzffp0g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=b59ddsiIXPLHo94cekDMPrkCPr2RM2SpaA864ZxlnV3ciGTJ4YHP16dge28q8CWHLiq3QY6OzuktXLLTMHD4g+g/fufhWfoGoLAmAncBdzsW8hj0lf8+9xJ7kWQyZ1b+pHFP3WOwWopcXleXkOreitL2FGDHGWxNSyvKgg3dINY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQr1k4cZ; arc=none smtp.client-ip=209.85.208.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mh/2G62x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WC8Tni9t"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id B1FBE1D0054A;
-	Thu, 24 Jul 2025 12:06:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 24 Jul 2025 12:06:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753373219; x=1753459619; bh=9pBFlREGZS
-	eUHl5OZPzn1wDeTtXv4A7ycmhVCMQ/DZg=; b=mh/2G62xcdRwEwNGWMzrA3sgNC
-	vRRB2gybyDs+SePOUjBnS9gkqkK9v+RvyyEnKT+ronpp4zlj3u6xA+P0+KevAYRw
-	PJE5Nimvp6vT8LG4UsmhGvmqnYpvHjcNGm4KnW5WCXJVTZuU20Ae/et2ALrRiqh8
-	lwE9KSYjthH/csGcrqksvLyr3xzNEkRx2GKVidq6wvf5h5wnmEyfIW8bxnZppksW
-	CH5eo3g8SDxM6Tx2YA00kiDDbP0+AdQ9ZfgYQX/0H867eaj7OQiuUbEQjbN5UCzG
-	9uRRqxlqCHtUBCa0iXTFzcTGLt3Ywii5WwPQAM/UTCmna7DNvUp/0h5wWYNg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753373219; x=1753459619; bh=9pBFlREGZSeUHl5OZPzn1wDeTtXv4A7ycmh
-	VCMQ/DZg=; b=WC8Tni9tdcq/kgx7NDc9Jixql8oVefDeMV6BMGeJg/bjk5QSV5n
-	jH+4UvooxYTO00fn0cvnhFGOwWFH4kbNB/17j2uhUs3MmQTYvgP7Ct4anlWXH5pj
-	3V3qkeI/4wGsNpYxbZOheP/7Qxizc3vVRaAwiSJeFLEJpShf6gDjluH8kf5OmwHE
-	dUfRLVt1MGMw7crN8bZUNtEL10tXL3o2XMBEntU5/wZ/gDJjO95mOB2Z55b2mk35
-	Bbid+7UXTxwbTaZf8OsMTVgUGS7ZOagtrGhugexasDpJjAg0qUwakD8mupkQJFf4
-	RI19cBhMbB4l656ftdYkdWo5z1/lCoXuYKw==
-X-ME-Sender: <xms:I1qCaJ6YM_5f6Ln_hWfYs5VRWC9o2Z6DtTrkER7KKSBQ6DYfQ0NWtg>
-    <xme:I1qCaBgfPs5EIG1f-igLIziGjh4IQfwibg9uE8Fu8BK4vKsIWZbi7KEgwE-8EGDb9
-    eakGviCEHTzj0LmOQ>
-X-ME-Received: <xmr:I1qCaGeDJCzDm1Z6kB0zj5Bc-eO1Apmlz2uxwfUyaJ-GBevHSjJahxEebCA_rQBmSYt-xCUY68jfXbLLgrcsXHjXSaFF1bma39Y0c_o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekuddtlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthh
-    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehluhgtrghsshgvihhkihho
-    shhhihhrohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtohepohhsfigrlhgurdgsuhguuggvnhhhrghgvghnsehg
-    mhigrdguvgdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
-    phhtthhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:I1qCaBx5ldfLKRINeFopVejor5Y2jBQJLPKCh1okGKOcbt4Ho8as1A>
-    <xmx:I1qCaN2fD3uGvgIWXLPwFN7xK2k8s5Sv5J8FiZ3zqKy08aRwFZsBFQ>
-    <xmx:I1qCaPzXqei2cFFW2Bzd96GxEJhesAcXXIGc_Wtv6lKjgPzrs3ZRaQ>
-    <xmx:I1qCaKVfIn3_WIky7quWIBPSJbCT714WdUbRLoV7sQXlfHPTE2KNuA>
-    <xmx:I1qCaI49nSlSrXnRT2lrgFEFSIdr9U7AwK1qQJJju78-1Ko1pT7rF5HX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 12:06:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  Lucas Seiki Oshiro
- <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
-  oswald.buddenhagen@gmx.de,  ben.knoble@gmail.com,
-  phillip.wood@dunelm.org.uk,  jltobler@gmail.com
-Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
-In-Reply-To: <aIHRCz_qswp7RgSy@pks.im> (Patrick Steinhardt's message of "Thu,
-	24 Jul 2025 08:22:03 +0200")
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
-	<20250722002835.33428-1-lucasseikioshiro@gmail.com>
-	<20250722002835.33428-2-lucasseikioshiro@gmail.com>
-	<CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
-	<xmqqtt34tfna.fsf@gitster.g> <aIHRCz_qswp7RgSy@pks.im>
-Date: Thu, 24 Jul 2025 09:06:57 -0700
-Message-ID: <xmqqwm7xindq.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQr1k4cZ"
+Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-61360453fa3so1873888a12.0
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 09:20:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753374037; x=1753978837; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=b/nwc8vqZYY7hHLYrGWI/UGQpM77MNCvKWKaeYedhVQ=;
+        b=nQr1k4cZn43JpCN8Bw80oK/Enmm4y3Wik0F2q2jkvfAO+Muu/rmNjxdrToHjSXAuos
+         pcZhHsaN6bIWh0yuMoR6oBfRb/2lpQ/wWFxuGB34ycjRGmOZti5jM2oKpXaCc8cWOPJa
+         5FSNe3tLBBgdE/154diAOnWTW+JFP6eksriXa4wg9S2RCK3N5X0DTmlIpML0gGgO2IaM
+         8fluVZAZzwvZD0RJlFl7PpF/3MKP+lTR+9IamgN+uLPHiUFbGPeT2nrL5yZzS2eF+rVb
+         XPKC5BF5B8384pa7hOvxREzT49P/RjHOxFGEiHfleD6xrqyRjO7f4QaYa9+ipbaf7HiW
+         DUJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753374037; x=1753978837;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=b/nwc8vqZYY7hHLYrGWI/UGQpM77MNCvKWKaeYedhVQ=;
+        b=nDNBGa2/nKlWuuQD4EXbIk/JFwUCPzmwLIdEbLtdeK2Sg58HyAU4pxJWkgDRm6ngI2
+         Va+O4VYPE3xaooI/HcSQXFyBRIuchHsblGLcC/g6+LO9XmZ0ch+5PBCMw269jCFAdZK/
+         kZNXG6aVg3oe1vVSkhr0fpxhiFaGrJROCloZOZDfY+AWsYdoVKHWR80Ge/Z+j72m+Qeb
+         sWwFgHziRV17iSylSIESsR1lW9/IQZLypBDXSnZwQXNWWhCrCpWnqrLnPGFlh1QpncIY
+         rST8Nhc4jlr5mI9HBmxRGHPknNx5/pOUx3sW3x4McYyjs7eADjYXm3xRAC4oASb2kZPU
+         9ANw==
+X-Gm-Message-State: AOJu0YwHPesVYlw0FTHBarhv1w2KBUTYVlc3Ax3E/sKoW7R1BSDgfeA2
+	qwQDGK9ErojBNe3FdTf8ctsGg/4SFUPbmGvRfynDyM+kIMNCqKIS2hEB
+X-Gm-Gg: ASbGncua4FpAhXL4a1kGV4D0ktpNA7PcpD3LWLuJ+MuJTKcOeL/eVA0jhMr9IsUddrD
+	fFmCa44imf33/9xNByD82Fp7bAGPmIouPQXNEjf23QGHzCCXgU51Es/4kLpG5Icfn/6zysudtQe
+	4JdbxHnY6Jj8FwFPQEVzQETVR5QFJDvL4wbJ3J0Th0el4Paxa0wR7qBuHRfPnhAkTt92enSo3B8
+	7PPHWmLy4vLL48p1YrMF6rsuM3RdG56+t6lHdedugn6KbyeAjJmhoLfIe5S/z3CU8JIRFhmonPD
+	e1GfVTnNnIEbpVSrMdOkTCQuUIIWBI96A622saFFiTdtdJv9WyfC238ncqiubciMcZzrR0iM41w
+	SwCrBt/EvCKKvtjUsGOe/QXsmPQX3eNA8O4tD2kGEj0Syar/mr4Ilhb4=
+X-Google-Smtp-Source: AGHT+IEyRcWG1EElHz4lQniio20WH0+Vr+HFTVsjOevcEbdDe6q8LcwNzLMHG9uyC1tyXoJlm/PaRg==
+X-Received: by 2002:a17:907:7204:b0:aec:56e3:ce0b with SMTP id a640c23a62f3a-af2f6c0ae3amr869976366b.19.1753374036634;
+        Thu, 24 Jul 2025 09:20:36 -0700 (PDT)
+Received: from localhost (92-249-246-243.pool.digikabel.hu. [92.249.246.243])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47c496250sm133711566b.13.2025.07.24.09.20.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jul 2025 09:20:36 -0700 (PDT)
+Date: Thu, 24 Jul 2025 18:20:24 +0200
+From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH 4/8] builtin/reflog: implement subcommand to write new
+ entries
+Message-ID: <aIJdSCPEHoiWWxrP@szeder.dev>
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
+ <20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Tue, Jul 22, 2025 at 01:20:53PM +0200, Patrick Steinhardt wrote:
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index b00b3f9edc9..d0374295620 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -3,6 +3,8 @@
+>  #include "builtin.h"
+>  #include "config.h"
+>  #include "gettext.h"
+> +#include "hex.h"
+> +#include "odb.h"
 
->> True.
->> 
->> I also wonder who it helps to use <LF> as a field separator.  Once
->> we require consumers to properly handle <NUL>, it does not make it
->> easier to write such a consumer script if the format uses <LF>
->> there, does it?  Besides, wouldn't it possible that field may have
->> to contain any end-user specified key, including <LF>?  If so, we'd
->> need to have some quoting/unquoting mechanism in the syntax anyway,
->> so the behefit of using <NUL> to simplify the parser would already
->> be lost.
->
-> Scripts should always use NUL, true. But sometimes a user may want to
-> inspect these key-value pairs, as well, just to double check a certain
-> property of the repository, or to figure out how a certain property
-> looks like while writing a script that parses the same key-value but
-> NUL-separated pairs. Using NUL bytes would be a bit of a pain in that
-> situation.
+This series is queued on top of v2.50.0, which doesn't have 'odb.h'
+yet.
 
-True.  I do not think the discussion so far had much focus on
-helping human users doing ad-hoc inspection, and NUL can be annoying
-for such use cases (even though tr is your friend).
+      CC builtin/reflog.o
+  builtin/reflog.c:7:10: fatal error: odb.h: No such file or directory
+      7 | #include "odb.h"
+        |          ^~~~~~~
+  compilation terminated.
+  make: *** [Makefile:2821: builtin/reflog.o] Error 1
 
-> I'm not really too sure whether we need to bother with quoting. The
-> LF-separated output shouldn't ever be used in a script, so I don't mind
-> too much whether it always works. But I guess it wouldn't be hard either
-> to just have something like:
->
->     if (uses_newline)
->         quote_c_style(...);
->
-> So with that in mind it's probably better to just do the right thing.
-
-The right thing being...?  Use <LF> as a record separator to avoid
-forcing <NUL> on possible human readers, and adopt quoting in a rare
-case where <LF>s or <NUL>s need to be in the payload?  Or something
-else?
-
-Thanks.
-
+>  #include "revision.h"
+>  #include "reachable.h"
+>  #include "wildmatch.h"
