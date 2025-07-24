@@ -1,220 +1,227 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5734A24678A
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 09:33:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA69D23B62B
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 09:41:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753349627; cv=none; b=PNYhOMN65j/wauMzPFyS8ZMv35qHZWIXNEbDdNCcDCCwIWwthKcXSfx/DmMYST9KRiZdOTynMHiwOC6xwFibcK3t/I+k6A32oxVRnPQLgoWsKjPR0c829dqAheZRPfkfjKz4qWt0QdrA6B/j7bmhDvdgLQqdoV6WJ88VNSwNEzM=
+	t=1753350113; cv=none; b=B6aJCDL3GNlUZBO6ym3cg1X4QjOb66V8G6jflIosb4BM4kVE4wN6DOMl7xoW5z8YQTT+ZcHpyL6PWltuBgRHcm44Bxj7/Wkj5kXquVQmiFX3s6O1BICDBFxUjhcuTWJIQWXYeOplntB9PSyTL90X1bIsyplpBuCoW721xU6JQSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753349627; c=relaxed/simple;
-	bh=M9C/YSO7ItwcAi9/M1qXMRp0rrn1edz10C+yvDoJjY8=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type; b=Wa/Lal2WM2HMnn69JjuIInsKwAdCv4v00eALjy6yU3+ESg3TxCyTsdsUSmWN0jPp5MggAtXe1EdXj8s1A5RiVFrJhrCOMilwlBN6GgN5MT5tIKphZuwhDvSOKsPvbx+4pUWYQRtkzE5whtrJkB4ywiGAWfzfH3vBN03XUZm44Pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IcpwUrlO; arc=none smtp.client-ip=209.85.210.182
+	s=arc-20240116; t=1753350113; c=relaxed/simple;
+	bh=vV+Ab+Ez+VPoZE7aiKxhleLIypHJovmCKXtiQAwx5BU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=DTnA6f1LoDWBX8wZ3YcMHyw8Eu93gdJk9gnInb74TGi/sm+ZVNanuXRNwXHFKxPys4sDhTXrAfN4HcByiaFAVvY3gkatzkOytBgxkMhBteLLOkOHKUOkitVV0wEZV3R3Fsz1TMSUc8vxi99B2xH/twcI5LrUCc4IZGyThyVZ1ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DiGaF3W2; arc=none smtp.client-ip=209.85.221.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IcpwUrlO"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-75ab31c426dso691386b3a.3
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 02:33:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DiGaF3W2"
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-5379498da7eso1183502e0c.1
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 02:41:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753349624; x=1753954424; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=eyi/lMsmB5YlXfzk2g4UBiNnVvgRhpw4HHAI9d6f8OA=;
-        b=IcpwUrlOQ9pV56XFYl92hl+x3MYdRulpPRcdMlO7AZQM3dNR8uDNhVFo0unHlStotS
-         gp4eI76URM+SX62M2N7lAA1egzNzxYm7eZUsa717Gc+uotkygx3FW08NEHqmxayrp3SC
-         F7FbuPlC0avaGa5EF1KHw5aOgCwSN64NIsLjcNp4rRRTV1pR7uKkQmZ1Wwooo8U5tkQo
-         2LR07VneVgsEzyqBBzRe7K5DXYqtBh2bK/333YrraK5pM6I1KCYERYHCZTT2U2bFTDTR
-         dCbQxX477iAb5sAVbUixO8hW4D/cKc+hVdHkjw1daS0mR9Y5KCSDrNCZXF+udRMEq6Bv
-         My/A==
+        d=gmail.com; s=20230601; t=1753350110; x=1753954910; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=U1Fgql3Ttij6rIqPo9WcUDKe7CalG7esj5y8dNT8NwE=;
+        b=DiGaF3W2vHBhMBomWeXUfDEobKaxvfO2tx10bWQAuycbq19aaDyGyxM8OR4r+Yr6rx
+         Bne7DjF8hgwRTjRt4Tj76J7BPgvNcL4ccpI9MoPJxcRNmdDUqQklMx48755m06cYmOF/
+         kecF8qw2224cxV7N+fhnxH3DTA0WO8wYHKsTYBk0Y1QAtO0LTHsTNbV+dDMWz0oaDEZg
+         snwYS72iid4+g6vFDK7MNv5tZMJbtaYVUpONDL/Z9GIm5vM0LLvoEt47rcVp/Wd0o+sm
+         I8D9G8wxzz7Pm1j4z+6l7YVM9IqA15+eTS7GEJqiH3NdPgDNrxKa0piwbogVCIN5l+Xj
+         y8ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753349624; x=1753954424;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eyi/lMsmB5YlXfzk2g4UBiNnVvgRhpw4HHAI9d6f8OA=;
-        b=Mc6qS3cHcX4ROF0Hwf2l0thqIVqQycfYVNp2LZzfZV7VpZtZ6hiqbI9o3TDaTk5r3h
-         7Pgz1yGXcum/qLGTI4II2HMggf7E+E9IBguas+PFGCvzlAefjM2YRMu7CVd4zf+5ROGj
-         3EsLejByj4L98X8m7x7vizWd4P0ocb6QelyU3Ml+wdx6+3J/9mmOi/Oju2zJ8py8NWaD
-         Nf6vrAwM2Uyirswk4szFksZfmWQQLT2/bRnDCXHmVc0uxcujSDtNQb4qdGJ+JMBqCdvz
-         XL8pXWwIHY60+JjxNv7UPGbSWZIjBcl6Et5MALUb+6hNajsjUHOIOP/bVvsRL634Vki1
-         sCTw==
-X-Gm-Message-State: AOJu0Ywy8gRBD9ntbM2ZDQPbHg2yeywXjHkrlOi5zNkl6ZbNNn5bsJLS
-	RLwDBCMgjBiwCqVsN1TutIQBEZdW3nf/yAKl/uVvDnIcpBdGNp4rnNEmF+qwbg==
-X-Gm-Gg: ASbGncsm6K22cibyGziDOgdzOShB+/T7TqAEdh2nrqU2IGl9ab1/Dp+QZDPe+5oAB+Y
-	f2XzmfuQ8CeD5yx9NxzN1u2pTVwlYiguDmx04iUdLkF+j+cCcvkNHZ9rhMUB3ltuyz890mu6zJx
-	uFYSqWs8xyj+V9690QO8Ci6XWW0LZs5DXY3uvfCKJzENgg8fgPbdm5Si9pw05/pdkJApX8FdXnW
-	xQ/4MXKr4W/XB5CKc/LlSUCKWrmDVtSsxyvfhUomFs6f/Il/qgx78lmkD39xMfOjLVZcZPaX4Lo
-	Xgfwm1uubZ+Nv0/GPwxuRF1T31bpKTG/CyJE9OJ1BGCEjrUmPH+YmDMftQRcHFriEV8SI9630Pd
-	kTykW1DOcp5Y0043kMBRzytlkow3oYPd1/Q==
-X-Google-Smtp-Source: AGHT+IFUguo4qcba/kwU/LiVfbr25PQx0tiMu3PG597Qo3d9lrxAVny/i5uTX6fArTPDIRitk0giqQ==
-X-Received: by 2002:a05:6a20:7285:b0:215:e60b:3bcf with SMTP id adf61e73a8af0-23d491bf04dmr9573343637.30.1753349624064;
-        Thu, 24 Jul 2025 02:33:44 -0700 (PDT)
-Received: from localhost.localdomain ([211.37.148.227])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f6c07f7c1sm1025319a12.13.2025.07.24.02.33.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 02:33:43 -0700 (PDT)
-From: Hoyoung Lee <lhywkd22@gmail.com>
-To: git@vger.kernel.org
-Cc: Hoyoung Lee <lhywkd22@gmail.com>
-Subject: [PATCH v4 1/1] test-delta: simplify delta helper with strbuf and better cleanup
-Date: Thu, 24 Jul 2025 09:33:27 +0000
-Message-Id: <20250724093327.2261615-1-lhywkd22@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1753350110; x=1753954910;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=U1Fgql3Ttij6rIqPo9WcUDKe7CalG7esj5y8dNT8NwE=;
+        b=CzMV+RFJ1BRA36Hh+BxS1NXF5GCwiu5HWl8tsPJbvPiI5XlHX2GKd/Q1MLxy7Vmqd6
+         zGT1joPZdtCSkArHn70LWg4hBWBL02IpewNKysQTs7trbATQHW8TEHbiSMy699vsb/cg
+         eu0qPbNHuQlyEynFj9hDtyrREFGr1R4f4MibT9LUKs8I2mbfj7uih4ANzFaXcKK/vd10
+         e+IPXY7DbrsrlqhpXzx7SSHPfDp3f3XSxeNZ6yS0Mq5VZkhWIVLtAm2poR0ZMxkx4KSv
+         OjQLaulXZwhgjmRnyZVFnTW9EWRkDzF9/wSeYQ51eRIwoH0gMjAa4/OXRPjqJckHz0H3
+         AAIA==
+X-Forwarded-Encrypted: i=1; AJvYcCXHV7O5Ep3RBiXpEU1omyAp1x+lYC/z5alCoP28x7STuom5lDJaKoofUjC0wFqPFjogsk0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBscnew14qFSeHkrJmtWTFZNIM3gO8YGIBp3Yeex9TGpNyugLz
+	9TruyGFPwJ/ltS04R0bhqM1O5CavPa4xj2IPQ2+S7M4RokPzd6g7ecf4uqrXSk+wW4R7F2Gc7Wn
+	HxYCEm7alcu75SX1Gnfe5/qjIOnrf2q2/j47X
+X-Gm-Gg: ASbGncsSMSRoc6Kd3pS0lqymurAtxmU6N/+bPDf9BkHF86CO36mXOnI4KkaIgh31xSn
+	GKXFNDR24pRB7728ybGOIAlJwp61HGmCNnKQAvAXmK3GRUiYOxoJ1feiutlItpTa6E/ziAJFysW
+	+rAIl4S79sQfRScNOlU3Orp9FkIcKmgTaILpDnHHQwL4gxs6C3VAp+YZfN1HgSOjp793w49/H6J
+	IDGPA==
+X-Google-Smtp-Source: AGHT+IF7rqrPm47Os10go1omFrRPeSnmA/+7k3/2gpi+fL9PX8xEtHGLeflCYxOAneU9dQps8XyFtpVUwM5H8EOufQw=
+X-Received: by 2002:a05:6122:458d:b0:530:7e05:2029 with SMTP id
+ 71dfb90a1353d-5385500d234mr344726e0c.6.1753350110411; Thu, 24 Jul 2025
+ 02:41:50 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 24 Jul 2025 04:41:49 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 24 Jul 2025 04:41:49 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250722-pks-reflog-append-v1-6-183e5949de16@pks.im>
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im> <20250722-pks-reflog-append-v1-6-183e5949de16@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Thu, 24 Jul 2025 04:41:49 -0500
+X-Gm-Features: Ac12FXyprv_AhWpz0oUeVpdnqTJ9ZcKWvazzdyBQIF5OgTYlVtGmg_RrOpUumrw
+Message-ID: <CAOLa=ZRQj+-WShOn8vQL_fnrPy12n3KB1jrarmJ8Mvz8DnQ-Fg@mail.gmail.com>
+Subject: Re: [PATCH 6/8] refs: fix identity for migrated reflogs
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000007f9a8a063aa9a27e"
 
-Refactor the `test-tool delta` implementation to improve clarity and robustness:
+--0000000000007f9a8a063aa9a27e
+Content-Type: text/plain; charset="UTF-8"
 
-- Replace raw pointer/length buffer handling with `strbuf` for `from` and `data` inputs.
-  This simplifies the code and avoids potential issues such as:
-  - off_t to size_t truncation when allocating large buffers
-  - reading fewer bytes than expected without notice
+Patrick Steinhardt <ps@pks.im> writes:
 
-- Add an explicit `close(fd)` after writing the output file to avoid leaking file descriptors
-  and to properly detect and report close() errors.
+> When migrating reflog entries between different storage formats we must
+> reconstruct the identity of reflog entries. This is done by passing the
+> committer passed to the `migrate_one_reflog_entry()` callback function
+> to `fmt_ident()`.
+>
+> This results in an invalid identity though: `fmt_ident()` expects the
+> caller to provide both name and mail of the author, but we pass the full
+> identity as mail. This leads to an identity like:
+>
+>     pks <Patrick Steinhardt ps@pks.im>
+>
+> Fix the bug by splitting the identity line first. This allows us to
+> extract both the name and mail so that we can pass them to `fmt_ident()`
+> separately.
+>
 
-- Use `die()`/`die_errno()` consistently to handle all failure paths, simplifying error handling.
+Well explained.
 
-This change not only cleans up the code but also improves safety and sets a better example
-for writing robust file-handling logic.
+> This commit does not yet add any tests as there is another bug in the
+> reflog migration that will be fixed in a subsequent commit. Once that
+> bug is fixed we'll make the reflog verification in t1450 stricter, and
+> that will catch both this bug here and the other bug.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  refs.c | 21 ++++++++++++++++++---
+>  1 file changed, 18 insertions(+), 3 deletions(-)
+>
+> diff --git a/refs.c b/refs.c
+> index 188989e4113..64544300dc3 100644
+> --- a/refs.c
+> +++ b/refs.c
+> @@ -2945,7 +2945,7 @@ struct migration_data {
+>  	struct ref_store *old_refs;
+>  	struct ref_transaction *transaction;
+>  	struct strbuf *errbuf;
+> -	struct strbuf sb;
+> +	struct strbuf sb, name, mail;
+>  };
+>
+>  static int migrate_one_ref(const char *refname, const char *referent UNUSED, const struct object_id *oid,
+> @@ -2984,7 +2984,7 @@ struct reflog_migration_data {
+>  	struct ref_store *old_refs;
+>  	struct ref_transaction *transaction;
+>  	struct strbuf *errbuf;
+> -	struct strbuf *sb;
+> +	struct strbuf *sb, *name, *mail;
+>  };
+>
+>  static int migrate_one_reflog_entry(struct object_id *old_oid,
+> @@ -2994,13 +2994,22 @@ static int migrate_one_reflog_entry(struct object_id *old_oid,
+>  				    const char *msg, void *cb_data)
+>  {
+>  	struct reflog_migration_data *data = cb_data;
+> +	struct ident_split ident;
+>  	const char *date;
+>  	int ret;
+>
+> +	if (split_ident_line(&ident, committer, strlen(committer)) < 0)
+> +		return -1;
+> +
+> +	strbuf_reset(data->name);
+> +	strbuf_add(data->name, ident.name_begin, ident.name_end - ident.name_begin);
+> +	strbuf_reset(data->mail);
+> +	strbuf_add(data->mail, ident.mail_begin, ident.mail_end - ident.mail_begin);
+> +
+>  	date = show_date(timestamp, tz, DATE_MODE(NORMAL));
+>  	strbuf_reset(data->sb);
+>  	/* committer contains name and email */
 
-Signed-off-by: Hoyoung Lee <lhywkd22@gmail.com>
----
+Nit: This comment is now stale
 
-Thank you very much for your detailed and thoughtful feedback.
+> -	strbuf_addstr(data->sb, fmt_ident("", committer, WANT_BLANK_IDENT, date, 0));
+> +	strbuf_addstr(data->sb, fmt_ident(data->name->buf, data->mail->buf, WANT_BLANK_IDENT, date, 0));
+>
 
-I've taken your suggestions seriously and reflected them fully in the updated patch.
-Switching to strbuf_read_file() not only simplified the code but also helped me better understand subtle bugs related to buffer allocation and file reading. In particular, I learned a lot about the risks of integer truncation between off_t and size_t, as well as the importance of handling early EOF conditions correctly.
+I was a bit stuck on why we use `WANT_BLANK_IDENT`, since we explicitly
+(since we do a split_ident() and that would error out if there is no
+name/email) pass the 'name' and the 'email' here as non-null values. So
+this seems to be the only option for the enum:
 
-Also, your note on leaking file descriptors and the explanation around why we should avoid combining write_in_full() and close() in a single if condition was incredibly insightful. It deepened my understanding of how seemingly small patterns can lead to subtle bugs or bad practices, even in short-lived test helpers.
+enum want_ident {
+	WANT_BLANK_IDENT,
+	WANT_AUTHOR_IDENT,
+	WANT_COMMITTER_IDENT
+};
 
-I sincerely appreciate your time and guidance — it helped me not only improve the patch but also grow as a contributor.
+Since we don't want to extract author or committer information. However,
+in fmt_ident() we only use the 'want_ident' value, when either 'name' or
+'email' is not set. I found this a bit confusing, perhaps a simple
+change of name from 'whose_ident' to 'fallback_ident' would be much more
+easier to read and understand. Anyways, this is not for your patch.
 
- t/helper/test-delta.c | 95 +++++++++++++++----------------------------
- 1 file changed, 33 insertions(+), 62 deletions(-)
+>  	ret = ref_transaction_update_reflog(data->transaction, data->refname,
+>  					    new_oid, old_oid, data->sb->buf,
+> @@ -3017,6 +3026,8 @@ static int migrate_one_reflog(const char *refname, void *cb_data)
+>  		.transaction = migration_data->transaction,
+>  		.errbuf = migration_data->errbuf,
+>  		.sb = &migration_data->sb,
+> +		.name = &migration_data->name,
+> +		.mail = &migration_data->mail,
+>  	};
+>
+>  	return refs_for_each_reflog_ent(migration_data->old_refs, refname,
+> @@ -3115,6 +3126,8 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+>  	struct strbuf new_gitdir = STRBUF_INIT;
+>  	struct migration_data data = {
+>  		.sb = STRBUF_INIT,
+> +		.name = STRBUF_INIT,
+> +		.mail = STRBUF_INIT,
+>  	};
+>  	int did_migrate_refs = 0;
+>  	int ret;
+> @@ -3290,6 +3303,8 @@ int repo_migrate_ref_storage_format(struct repository *repo,
+>  	ref_transaction_free(transaction);
+>  	strbuf_release(&new_gitdir);
+>  	strbuf_release(&data.sb);
+> +	strbuf_release(&data.name);
+> +	strbuf_release(&data.mail);
+>  	return ret;
+>  }
+>
+>
+> --
+> 2.50.1.465.gcb3da1c9e6.dirty
 
-diff --git a/t/helper/test-delta.c b/t/helper/test-delta.c
-index f5811e96ad..1c4322b7c0 100644
---- a/t/helper/test-delta.c
-+++ b/t/helper/test-delta.c
-@@ -11,76 +11,47 @@
- #include "test-tool.h"
- #include "git-compat-util.h"
- #include "delta.h"
-+#include "strbuf.h"
- 
- static const char usage_str[] =
- 	"test-tool delta (-d|-p) <from_file> <data_file> <out_file>";
- 
- int cmd__delta(int argc, const char **argv)
- {
--	int fd = -1;
--	struct stat st;
--	void *from_buf = NULL, *data_buf = NULL, *out_buf = NULL;
--	unsigned long from_size, data_size, out_size;
--	int ret = 1;
-+	int fd;
-+        struct strbuf from = STRBUF_INIT, data = STRBUF_INIT;
-+        char *out_buf;
-+        unsigned long out_size;
- 
--	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
--		fprintf(stderr, "usage: %s\n", usage_str);
--		return 1;
--	}
-+	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p")))
-+                usage(usage_str);
- 
--	fd = open(argv[2], O_RDONLY);
--	if (fd < 0 || fstat(fd, &st)) {
--		perror(argv[2]);
--		goto cleanup;
--	}
--	from_size = st.st_size;
--	from_buf = xmalloc(from_size);
--	if (read_in_full(fd, from_buf, from_size) < 0) {
--		perror(argv[2]);
--		goto cleanup;
--	}
--	close(fd);
--
--	fd = open(argv[3], O_RDONLY);
--	if (fd < 0 || fstat(fd, &st)) {
--		perror(argv[3]);
--		goto cleanup;
--	}
--	data_size = st.st_size;
--	data_buf = xmalloc(data_size);
--	if (read_in_full(fd, data_buf, data_size) < 0) {
--		perror(argv[3]);
--		goto cleanup;
--	}
--	close(fd);
-+	if (strbuf_read_file(&from, argv[2], 0) < 0)
-+                die_errno("unable to read '%s'", argv[2]);
-+        if (strbuf_read_file(&data, argv[3], 0) < 0)
-+                die_errno("unable to read '%s'", argv[3]);
- 
- 	if (argv[1][1] == 'd')
--		out_buf = diff_delta(from_buf, from_size,
--				     data_buf, data_size,
--				     &out_size, 0);
--	else
--		out_buf = patch_delta(from_buf, from_size,
--				      data_buf, data_size,
--				      &out_size);
--	if (!out_buf) {
--		fprintf(stderr, "delta operation failed (returned NULL)\n");
--		goto cleanup;
--	}
--
--	fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
--	if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
--		perror(argv[4]);
--		goto cleanup;
--	}
--
--	ret = 0;
--cleanup:
--	free(from_buf);
--	free(data_buf);
--	free(out_buf);
--
--	if (fd >= 0)
--		close(fd);
--
--	return ret;
-+                out_buf = diff_delta(from.buf, from.len,
-+                                     data.buf, data.len,
-+                                     &out_size, 0);
-+        else
-+                out_buf = patch_delta(from.buf, from.len,
-+                                      data.buf, data.len,
-+                                      &out_size);
-+
-+	if (!out_buf)
-+                die("delta operation failed (returned NULL)");
-+
-+	fd = xopen(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-+        if (write_in_full(fd, out_buf, out_size) < 0)
-+                die_errno("write(%s)", argv[4]);
-+        if (close(fd) < 0)
-+                die_errno("close(%s)", argv[4]);
-+
-+	strbuf_release(&from);
-+        strbuf_release(&data);
-+        free(out_buf);
-+
-+        return 0;
- }
--- 
-2.34.1
+The patch look good. Thanks
 
+--0000000000007f9a8a063aa9a27e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: ab24b6666ecd1ad4_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pQi85c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMDNtQy85NWVZL1RYMTRLZjhydkhKcmdTRGlHbW9tdAoxRzdSVUYxMEpY
+Mk14MEFjc2hPbzJ1SEsrWnpTK0pXekJqNk5rMmtUNWVwOEVvc3FuZmZIUGdhOGdZN29KVWQ4CnlD
+eHZnU3M2MFVubzBVcXlsaGY0UE5Ya1N3b1JvN3o0VG53eDJrbFNCQVF5RHlLcjhaUDZHT0lSbG5X
+KzBMNFIKdm9FbjVwbCsxTThRQjVtalk0UkZ1ZFlTalo0RFFMNDk0UUVvOXlWdVU0VkcyOVMxSXBh
+VUN6alAxbElhT2FZbgp3U3hoanZ0ZGtKMTNCckFoR05UT2laSDFXNExjc21KZVdlOHNITk5TZ3Qy
+dGNqOVJwQlBod0gyKzFKWFBTekxLCmQ5ci9pTitJMFhoTFlsaHBWdHBKS0JyUEVwVFNYYnNLa3hl
+aHdpRVkzV1lnQ05ZWjIrVTgwc1k2cU1jWW1sRHIKdkxKa25BdE1qYUl3bjdJL1ZQeDRKeXJlMTQ4
+NHNqNTh4WGxQY0g1NTQxUCtoM3pNV1EzWE5wRy9IZ1NlUjVORwovUkY2THFWT3phRUdnUkI2K0Jp
+NFg5S3cyam45a3pWcysxekZobXRSRFN0RzZVRDVqVHVYeGRTUXNQTWhkYmwrCnBWdlJLZklQUVdC
+NmtLREtlMlZlNlhjZzYrMDZaaGVEc09VbVp4UT0KPVFNb2cKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000007f9a8a063aa9a27e--
