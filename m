@@ -1,93 +1,146 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A709149C41
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 18:49:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A5A223716
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 20:53:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753382993; cv=none; b=dtXnwym6JrKZ7JPEapNeTfaWcbvckYCSFc5k8U8Tlqn4kv81K7DGv39CbhYLeGePExtBRB81Ul+BJtDsGyBCu/NJyDR75pW1bgT3hziViIie9JCm0FbnXpX/AQ4uwO5BNGhyT6NcB/F/SChVoib629D290yAd+BnP3QYk+nVNpo=
+	t=1753390437; cv=none; b=rridb3emRMMqURYHlvMzWgHXCRW682f6W/4e9CMCX2yZnebpag3PCPvurPKTOv3snwUvZkhzRu9e+t9KHZ0Nd+UltCmGmbA5DSi2DhLHVyUy4lv3SJONCNprB4TlEhbh/7VgV0ycuh1vz09dHGT+LgiKZJxq106oqgc4fuvbids=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753382993; c=relaxed/simple;
-	bh=81IQkZ6rb3iirtM/h3mKlBbpSh3SfPNCUKh0/hJLThQ=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=GsQFzfvWZ0e+gUr3jlJTBQNtBtjg6SLGQBafpOC0jP1K1NUvkiKJ+z55hAQXGQmo8vi5e2Cf8BGP2ULCGgZnwvmqRQtg4rs2MxVgnU659crIhGgFGJKJvRjOwyKeMPJxLOlaXpuD+k4PJLC0oK44yOJfH4ln5texVkhGCZ20Dsg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m6mRH+oq; arc=none smtp.client-ip=209.85.210.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753390437; c=relaxed/simple;
+	bh=kuPrzkXxCDAnhxa8KlyzEm8QEychnP4jQARRb1LZOGM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HsX36j6X4srOm+zNNsOb9AW+9NBLLwol/mbmAQWOhr1TE20cT+zjx2p5Gm7IAKCGs/ZswdxYIcrFM1a+FXiQeKpddfz1269JfRc5FPjDpYaaRYTval3P/iaB6e1RyMXv9xyWy4jWPA/Jihj8KkS0eHnVo6Zfh8EpWJGolehPFnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dkJ3Kt7E; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NkzhGBbG; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m6mRH+oq"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-74924255af4so1252096b3a.1
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 11:49:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753382992; x=1753987792; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=2W56Y08BwUkgALHsuNjnomkvLJWkDEFIoOzKqSAiR5I=;
-        b=m6mRH+oq4v8iLyX8Nwnns015b2/LRWIyfDRFlMZDawQMetBOQOMA/edQh/aCmWnKge
-         u7my7yeyhyrF3yRQ8onPWn8s0gHQzjjfhCEoW231m6a/rY5nJXgRljvoUV2iSFFcS13f
-         txfIDthJzVoSRlU4zF+192m9Q8Bm9nU0pWEnIyLU/ir84aPgb0tHlDCTiq3DoANrYm2b
-         2zVF5TIGqj/LFdqvFSrkQ84SL6iUADe78Syyl7adb4mVPBlGh5KxycwWR/Sm/lL8KzPW
-         zbLDnQyUqShbRrEaWN/Tqy5oP0M5Bb6vNWtx6yQmjniVy9EcL4R8gcfCvTgNfjh1Zs9Y
-         Km8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753382992; x=1753987792;
-        h=content-transfer-encoding:subject:from:to:content-language
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2W56Y08BwUkgALHsuNjnomkvLJWkDEFIoOzKqSAiR5I=;
-        b=X3uVx05ah5+wswfMqo/pLi0zcaWo9EuKOOoiV3Ganf2lbP+pFItRLSKGlRHpFLQJBo
-         AxByDJLOmiIBuVtFfdF9NvX700bUuIz3xcWHgcA87UseCHbHEeTQVco49+vsTmXsA3Op
-         XVC8ewLVlNAAthebvmjjrgrIrpiOA8gBEmltSkJ+MfV/MCxtl/LyD/CDIRAH+InfFU3I
-         zMDovI2GWDeBd9hzxL38uOP6OVqKkBJ24VP81xrZGcol3+7KFLeKAkiKvpO07P1iIVSI
-         js6NyyV1puZ5RKQBduqTRjC0C3v5hXiREzATkw7YIF448OS7DFr8bobuXTVInl3J54bg
-         j+OA==
-X-Gm-Message-State: AOJu0YxBiPgqZUq/cM9eldD6doJyAHV33YERS8QnoCGua977hdlQ9Nzm
-	uV7NgCE4fDGjwQBIfcaKytkG0zxLyqIC3EBF1eA/IAVTP3AiP3eFEbRuTe3u0RlLwGA=
-X-Gm-Gg: ASbGnctKxGmkHrq9KiVm5j7zWfgLe/jbityt40vilc7SKZj8tDtI8bQdlnqWML4eZtH
-	oUm2BYibv0d4VbSPvWbNU0RmuhmU3MEl6FUtgb7CMnqY2UqRgTbZFDUCw+Bf2okc1UdI99AARUm
-	k/9ZD/fny5Xwf8sBB6paber87dHxHAjCnF/ssGYiNU6FBfpw64yv57SYweZ1HGpXC6tn5dEYxmm
-	QQEqHMvSSvYtqt3L9W0X/+pRerevtnSreTwtz0+4/KbgVt+4ILbrFRLjrFpx5+YxOb/5TIxtyNW
-	0ZYLNbidz8Y57s0xobdmMNA7sZhbU3TPW9DRQFDx/UDoGhIGhL60inC20mp984txLGYxV8OhlAb
-	3i3Gd8aFhXHQzHN20DN701Fuuip9/D/FbGoXZrpS8r4LdlRz9yj1rpyMkrn8U5Drw8mhSBp8=
-X-Google-Smtp-Source: AGHT+IEeuFAbqFOzmCYwzn/ZcCDVeBGE+tlUq5QJbCwWrOHntrqK1kNvxziBikGGh/XCQV/xbLbEgA==
-X-Received: by 2002:a05:6a00:3cc4:b0:740:b5f9:287b with SMTP id d2e1a72fcca58-76034afcf04mr10699246b3a.1.1753382991742;
-        Thu, 24 Jul 2025 11:49:51 -0700 (PDT)
-Received: from ?IPV6:2600:100f:b06e:4b24:ceea:93ef:4772:f302? ([2600:100f:b06e:4b24:ceea:93ef:4772:f302])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-761adb7bbd5sm2222134b3a.9.2025.07.24.11.49.51
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 11:49:51 -0700 (PDT)
-Message-ID: <f4b40536-346f-45a1-84ee-99b1200c022b@gmail.com>
-Date: Thu, 24 Jul 2025 10:49:50 -0800
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dkJ3Kt7E";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NkzhGBbG"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id A9A25EC01C1;
+	Thu, 24 Jul 2025 16:53:53 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 24 Jul 2025 16:53:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753390433; x=1753476833; bh=ZJ5rFZSZUh
+	9KC/w4jcWVPndrC+UQ7I6rbv6gKEnqkG0=; b=dkJ3Kt7E0xAsZHnVfDcvjuVpAn
+	G4G+3eEcBLG6iXEmRoBZ1zBXptyx6PhZbZM469UF/TqaV8NHjuhnHIXSNEfGCOK4
+	ldz4Ro3wi4MYuktbIZezhN1dNplgmS17Ks5hX0r5gAD1CmtF/Avk33DBM9QFawjG
+	cN2Ecrx+0z+HUqOdUV74/8M2rTBABm9IOZ7e0R6Va89Qm/Nx1l0mjaP/ecjuzMvy
+	q6UcpN0lb7Vqb+8B6o58PvyuHieuiF9xMgM2Y5tKTl+kS+nhPE0xV6NXf4Jwerly
+	KBPkdgUaMFeaIvry+ALCQujHQ2jcXOwMbzuy+DW9JnDcBNMQpjM7vyzSQdRg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753390433; x=1753476833; bh=ZJ5rFZSZUh9KC/w4jcWVPndrC+UQ7I6rbv6
+	gKEnqkG0=; b=NkzhGBbGiRvZaJEGyBYuBT6SsvCdlSUKWqpUuTgtmKkUjpfnhKQ
+	r8MCcqJ2uU2sD44dBP6oQLPSNk2HUP8vWgATYQDGwtSPQ52wmiTo//UL3u4hm0F3
+	pn3ySCthW0IqKKTjv+mrO/eFHygrk+gtQA39po2J3yN+dD+mBimtKDnDUxzFaRjW
+	drdCQaeC+YbtF91B1pRw78QsHUNsyM8N1jRGVbOW0p7dlvgJxTD0DwD4YI44d1f+
+	Yiyn71csx5H5FIfAEEYh13qBKn4Ijs/h5aBwFZ/BaN27vuVSvmtvGb034QD4O7DG
+	tqrYzjox0Ap05NWTsr4C43mKd2ZdnF+6cUA==
+X-ME-Sender: <xms:YZ2CaMME83CcMwpeGRKcpahhGDBgnvZIDxyjlavaRssY4ySTVzRQeA>
+    <xme:YZ2CaGNBAiB790WYpBDgS9UHRQRY9dnnZekcD6hlhihC5PEH2tL5sP44L5Eynd9j7
+    krcAyschbxehGtPOQ>
+X-ME-Received: <xmr:YZ2CaMtMw7F6WmnSvuVxmYPJpDa4iowBLaUgy3E6sAxN6FGkegROxTP4wsh43l4ytQDQ8KyfuOpZvmMS_o0LHVYuSVOTjGMcFZt6bqY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudeihecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttd
+    ehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:YZ2CaAWQq2b9TJHfxjKIZG7cvndo7hkUc2szDSrcuHJffCCVKCMo-Q>
+    <xmx:YZ2CaEtRnv-JnY4MENJTA7tDRdUeTyRfSazLuL_q45kPPvgairs1hw>
+    <xmx:YZ2CaMUIaXxsXnm1Ce4YTDE9Ddy-PkAY7xGtrrUIzD8gZFZIpHwe8w>
+    <xmx:YZ2CaHl6ZKVthyFam5U872PQTzwXdNB2nllMSD1O1TmkqogY3cIDYg>
+    <xmx:YZ2CaK0vTmzVVaBWMlGg8C94TXETpND6REwcVlmX3xU-unymDaXnUNO9>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Jul 2025 16:53:53 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 1/2] submodule: prevent overwriting .gitmodules on path
+ reuse
+In-Reply-To: <20250724152418.45226-2-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Thu, 24 Jul 2025 20:54:17 +0530")
+References: <20250724152418.45226-1-jayatheerthkulkarni2005@gmail.com>
+	<20250724152418.45226-2-jayatheerthkulkarni2005@gmail.com>
+Date: Thu, 24 Jul 2025 13:53:51 -0700
+Message-ID: <xmqqjz3xz4ww.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org
-From: Daniil Iaitskov <dyaitskov@gmail.com>
-Subject: [ANN] git-phoenix - repository recovery tool
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Git List,
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-I would like to share a tool for recovery an unpublished Git repository 
-after accidental removal or file system failure. VCS usually implies 
-backup feature auto of the box, but due to Git decentralized nature and 
-developer's laziness source code sometimes can be lost. Recently I 
-accidentally deleted all projects, including a few unpulished POCs, 
-after infamous rm -rf * typo. Work on them has been interrupted for 
-quite awhile and rewriting them from scratch recalling all the hack 
-intricacies would be terribly boring. So I decided to invest my dev time 
-in a more creative way.
+> Adding a submodule at a path that previously hosted
+> another submodule (e.g., 'child') reuses the submodule
+> name derived from the path. If the original submodule
+> was only moved (e.g., to 'child_old') and not renamed,
+> this silently overwrites its configuration in .gitmodules.
+>
+> This behavior loses user configuration and causes
+> confusion when the original submodule is expected
+> to remain intact. It assumes that the path-derived
+> name is always safe to reuse, even though the name
+> might still be in use elsewhere in the repository.
+>
+> Teach module_add() to check if the computed submodule
+> name already exists in the repository's submodule config,
+> and if so, refuse the operation unless the user explicitly
+> renames the submodule or uses the --force option,
+> which will automatically generate a unique name by
+> appending a number (e.g., child1).
+>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
 
-https://github.com/yaitskov/git-phoenix/
+Very well described.
 
+> +	existing = submodule_from_name(the_repository,
+> +					null_oid(the_hash_algo),
+> +					add_data.sm_name);
+> +	
+> +	if (existing && strcmp(existing->path, add_data.sm_path)) {
+> +		if (!force) {
+> +			die(_("submodule name '%s' already used for path '%s'"),
+> +			add_data.sm_name, existing->path);
 
-Best regards,
+I'll locally fix this funny indentation; not a reason to require an
+update.
 
-Daniil Iaitskov
+> +		}
+> +		/* --force: build <name><n> until unique */
+> +		for (i = 1; ; i++) {
+
+I think you can narrow the scope of "i" to this loop alone.  I'll
+locally do so (and if anything breaks, which I doubt); not a reason
+to require an update.
+
+> + ...
+> +		# Now adding a *new* repo at the old name must fail
+> +		git init ../child2-origin &&
+> +		git -C ../child2-origin commit --allow-empty -m init &&
+> +		test_must_fail git submodule add ../child2-origin child
+
+Shouldn't we also check what this failed command tell the end-user?  E.g.
+
+	test_must_fail git submodule add ../child2-origin child	2>err &&
+	test_grep "alreayd used for" err
+
