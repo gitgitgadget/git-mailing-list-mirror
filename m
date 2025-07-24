@@ -1,92 +1,94 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1544A20487E
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 05:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0C0190664
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 06:22:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753336710; cv=none; b=QX2wxyywrEw4ixdfPllAG4rzaC7xjukn3xgwl8yGHHuCtWWuTMsaK6bbrvFuP0xqlNyMOMWNv433YQWKiP3NmK0QiOblccVNtN1/XQHUh8VbEkyQfQi5FG8/aqQ3HyKtJ3i3TdheLIs1H3wFnL8tzEF/MqSPvBXBc7JiNbnCNe8=
+	t=1753338134; cv=none; b=TtJpe4SYMid+xlsgaR09E/9XSt9DYaF0kc8ue2tv6VfqeFA7I6bnTTlcbYZMNP9RitQsmaszRl1dly2HTHuffH+XFDpYQcQ1TtWV2FMfTDvz9lxusS8duytH6dortiakxjYHpCTLDio7ME7OLYu4mIzF3zwYtfghQNNXm1TDWC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753336710; c=relaxed/simple;
-	bh=38crzr6xcy/I+hIWBb42da71gA3LMuMfn9C7UJ0cvik=;
+	s=arc-20240116; t=1753338134; c=relaxed/simple;
+	bh=ZlozVtxpyttdReG7xvQs+MWphqlnK03R0H9KcBJf1ik=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gHhmZgoarcKldTrJA6ic85serRSKfAhDLDZw1+FlMx8mm/YEyy1i1bQ7LcFeKzBWXxG9kGGJt9VzwMR9NqsFn0d6bZ/AiUvMddpESeF/JyCwVNtzCZMXNa6ViwB85fhW/R/o9QSNQoeRJ9BVRQGFxRxOmBhp/xRfvApSJaOYHYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mjTVPKYE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J2uEF975; arc=none smtp.client-ip=202.12.124.155
+	 Content-Type:Content-Disposition:In-Reply-To; b=LcqWkQFhB76Z9IZv5AB47y40ARqh2etOR6p2GGwyJRTeQVvY/hJ88OIKlKgrPAtcJpQ/O7yw2qbiP8SA1K7YyNo2YznSBsjQykLxqeavZYUts6tudWPlAnDmc1ggYEnNYj+zJl1HZyK0jtBrgwkSa5yh84f/CIp+6l3X2X0jf40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fo1K2pNH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EX7UhtsW; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mjTVPKYE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J2uEF975"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B9517A0E2B;
-	Thu, 24 Jul 2025 01:58:27 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-10.internal (MEProxy); Thu, 24 Jul 2025 01:58:27 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fo1K2pNH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EX7UhtsW"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D303F7A0046;
+	Thu, 24 Jul 2025 02:22:10 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 24 Jul 2025 02:22:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753336706; x=1753423106; bh=rQKiTzNl15
-	tO1YlzFp4trYMtzwx772+giwRiDfRawS0=; b=mjTVPKYEK9sDU4W5+fqOlHeV17
-	5w7pzD3UCnBG0dguKZGidtZH8GUCGU9EoJUadthjqgjRTEzbpTaq7le7O/Ga/yG+
-	JW8PfCwnQhmnNm4Z3d8ObKHHE7ZSVoOfWR8d05CEzdqPdun3ZKy4+ShSw0ulGNSb
-	fhr1J5NDPzpqOyb6mBOadD+eBXywb+BIrIP0RYN1GaxJR9W64+G4nFnI/vGTOHdQ
-	Y6jjZ+jRKOr3VaWxqyLjzOlDQ6jNfL7/f9RGALpgpsZo2r5IkWYTeXkY7PyTvNkV
-	dDs4ofkjL9QtGCmnRR4mpm5PMI7LOAur6mkxxqvnSJTn4B9YWLb36YRsl6Mg==
+	:subject:to:to; s=fm2; t=1753338130; x=1753424530; bh=UiIEK5tp7J
+	EJBZ5bhpAtVW5rOK0JkdHPQrW9V1lSxrQ=; b=fo1K2pNH1+UPMPSCfbAdl0pJFq
+	iZHC2oybh6oWEZj665Z32IUfAsKw/2QdulXAxIPJ3phXHW2dyNsSm2gHUNuSocgM
+	BuyBQuSJ0HYfhPSJwD73ls6ZJu2025+4DGCb5WwFzrQNSk5vHMkIerp0YjUthFmy
+	j0LvUshaS0QqyEPisQsZd3Nug0tg4daO7DjM4SHyOXNvtjewvyQTMmMBQppJr6V4
+	q60dJ7T6MWurMpk3rRhe+dT9pDBc1a66GQc0Dm+4P4ahWfa7ypdPa0uI5TbxzqKd
+	RVAePsnaHVw/UCT0fEPeauFUJOR9hdjEewZPKLX9cxaWzhYNlOOm9im4F1kQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753336706; x=1753423106; bh=rQKiTzNl15tO1YlzFp4trYMtzwx772+giwR
-	iDfRawS0=; b=J2uEF975KV6AzazZmMZ5fn3W3W8fUhcVu/SzHSTpHLWhgTzqsCW
-	cBao/CMVGzU1CblM+/qdvzzhv2GXGigY09y49FLEgeQB4E/r5j2Agg8Vi5cPr5h1
-	rbry5uqdJyV6YJ6zcXsbXwoOkD0NNTrVmlojVyfQu0/+plDfsc2s6Pj2E5g/fkW5
-	ys22kFbrVREUX3zSm3AOll+ng3B0t58nBJdfFNX+t9WjUYa+y7UHmJFZazLU4jUB
-	l++C53/TAL0yyZ+6wEry9lr9kKNzUgX6mCDcDniSJN5K32pi+5Tr5d09K+i+JJxR
-	CJ8rxaPJ4RHMD7PuMJ2T9mVQd2wObinbWYg==
-X-ME-Sender: <xms:gsuBaL1JZ5Znngvp7ZwKuy8PQBiHKWCx76Z8vKf73hothLm9u6owew>
-    <xme:gsuBaG8IlD2c_l-mobnElhrS3Ijf-nu3sdiM1pAi2LmGLDJxc4bQOmXMyG86vhuhK
-    LeWl6yKoBfJW0pA9Q>
-X-ME-Received: <xmr:gsuBaLoGfE1E6CCQDFyqphDsHR9CGi_g11Fql16Hp13508LbaZWygIHe50uZa3Iol4vqIbKjE_6ihCq5xzQ7FgkuelnnyYWcWd-22Lu-ClU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejleekjecutefuodetggdotefrod
+	1753338130; x=1753424530; bh=UiIEK5tp7JEJBZ5bhpAtVW5rOK0JkdHPQrW
+	9V1lSxrQ=; b=EX7UhtsWzn9luVQzJLnDFNwszEwD5FItWlEfi9Ywoeg+Dlusgfh
+	iLihYOdujvsoRTi+eIM7pc5to/4tNX1KTYXGcQjscODftVPlClDQvicdqrQIdbrK
+	Hs6/3a+iAxL7ld3lsdLydXzch27SwFVOTvk1wyJBnllEBkCMCEGI9l7HgD8hU3Pe
+	RVV7cUPRCRmBIm6gObEDwN4aH0uGr6v33tb855AXlNX5nhv7qjF6tIJeq7+aHj3b
+	spq/+ojHp6StKTwOhU4qrGGDRhcRKnw3H8s2D8vmjUOSocIlb4JsW/sSx+lnliym
+	FwLD6U4o2oGrZBRDrqw9Yzfc8x61fgnLRZg==
+X-ME-Sender: <xms:EtGBaKGwIOkIFQ5j_o0pS-Wi8STnUEukUkCBHFVOPyK_qH1nTS-gfw>
+    <xme:EtGBaAhpRjxV9wmeZ1wgK4XXzdXD0Ryon4_Imhd6hymIlkl4LdT-x_XJswwHb3ec0
+    n95kG8SEYvSWkRgIg>
+X-ME-Received: <xmr:EtGBaFDmb5Cp4EPGGXXPRKh2LYwfBVaTzGjPvx-BOchdyITcCW4yHRMgQIPvkPNuKNnLdA8akTzY8HpNYMpisG28faFa4MnpJ7K5l7P_fig>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejleelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
     ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
     evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehvugihvgesghhithhhuhgsrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
-    hogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepmhgvvghtshhonhhifedtudejsehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthht
-    rgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtg
-    homhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhr
-    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomh
-X-ME-Proxy: <xmx:gsuBaAQp0mwI4yLN70tcJyarUPng7_AmZX6MfBdneSpb8r3Ujc7nbA>
-    <xmx:gsuBaOPEpn8qjnaAHVvLc6q9QC2JUvbQDZKChwJJhLI-GYMo5XwDJQ>
-    <xmx:gsuBaOjCMFNuPRdiwwJi_JAFW-tEqPqY22aNnQ2SUPjSNxnAW1Vrgw>
-    <xmx:gsuBaLlTi5DHupqoMkoNXAJRQbbUYnttbwd9H7zOHVl4cU_YepezXg>
-    <xmx:gsuBaNsXyutW8fphDdiXFaUqBVECOpAz5oKS1-sexCNaoqSLw8WEfxSM>
+    drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
+    hjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehoshifrghlugdrsghu
+    ugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtoheplhhutggrshhsvghikhhioh
+    hshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
+    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:EtGBaKRAFD1RXisW4ZmcYSORLLHuJX4GcZ84CjXRY93bT4E43nOmow>
+    <xmx:EtGBaCW-ljVijBXtKwNa_PaAdBFk4Sg4ykW0bNp-FomIRNaLSsKd2Q>
+    <xmx:EtGBaLcIPifwFa2OkmoruFsrkX_cHzYIiYzCrRvMWT7i5dgzB48dmQ>
+    <xmx:EtGBaGLVfjnzm7TDxOQ5YNRBYDOlwwq1WEkUOo0IK5jnuvHtd5K6fw>
+    <xmx:EtGBaB-uSzxaQzS6s1OKBoS8UxO2US3Rf5YtnPn9ecI_rDlFsjNGeW5P>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 01:58:25 -0400 (EDT)
+ 24 Jul 2025 02:22:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3aa0e44e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 24 Jul 2025 05:58:23 +0000 (UTC)
-Date: Thu, 24 Jul 2025 07:58:14 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 45ac8f59 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 24 Jul 2025 06:22:06 +0000 (UTC)
+Date: Thu, 24 Jul 2025 08:22:03 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Meet Soni <meetsoni3017@gmail.com>
-Cc: git@vger.kernel.org, shejialuo@gmail.com, karthik.188@gmail.com,
-	gitster@pobox.com, sunshine@sunshineco.com,
-	Taylor Blau <me@ttaylorr.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Victoria Dye <vdye@github.com>
-Subject: Re: [GSoC][RFC PATCH v3 1/3] builtin/refs: add list subcommand
-Message-ID: <aIHLdkhdVNy72Yf-@pks.im>
-References: <20250717075009.26262-1-meetsoni3017@gmail.com>
- <20250723064313.29866-1-meetsoni3017@gmail.com>
- <20250723064313.29866-2-meetsoni3017@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>,
+	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
+	git@vger.kernel.org, oswald.buddenhagen@gmx.de,
+	ben.knoble@gmail.com, phillip.wood@dunelm.org.uk,
+	jltobler@gmail.com
+Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
+Message-ID: <aIHRCz_qswp7RgSy@pks.im>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-1-lucasseikioshiro@gmail.com>
+ <20250722002835.33428-2-lucasseikioshiro@gmail.com>
+ <CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
+ <xmqqtt34tfna.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,86 +97,54 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250723064313.29866-2-meetsoni3017@gmail.com>
+In-Reply-To: <xmqqtt34tfna.fsf@gitster.g>
 
-On Wed, Jul 23, 2025 at 12:13:11PM +0530, Meet Soni wrote:
-> diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
-> index 5ef89fc0fe..f7bbc1902a 100644
-> --- a/Documentation/git-for-each-ref.adoc
-> +++ b/Documentation/git-for-each-ref.adoc
+On Tue, Jul 22, 2025 at 08:21:45AM -0700, Junio C Hamano wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
+> 
+> > Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+> >
+> >> Currently, `git rev-parse` covers a wide range of functionality not
+> >> directly related to parsing revisions, as its name suggests. Over time,
+> >> many features like parsing datestrings, options, paths, and others
+> >> were added to it because there wasn't a more appropriate command
+> >> to place them.
+> >>
+> >> Create a new Git command called `repo`. `git repo` will be the main
+> >> command for obtaining the information about a repository (such as
+> >> metadata and metrics), returning them in a machine readable format
+> >> following the syntax "field<LF>value<NUL>".
+> >>
+> >
+> > Doesn't the latter sentence only apply to 'git repo info'? Other
+> > sub-commands may not follow the field<LF>value<NUL> syntax, no?
+> 
+> True.
+> 
+> I also wonder who it helps to use <LF> as a field separator.  Once
+> we require consumers to properly handle <NUL>, it does not make it
+> easier to write such a consumer script if the format uses <LF>
+> there, does it?  Besides, wouldn't it possible that field may have
+> to contain any end-user specified key, including <LF>?  If so, we'd
+> need to have some quoting/unquoting mechanism in the syntax anyway,
+> so the behefit of using <NUL> to simplify the parser would already
+> be lost.
 
-Tiny nit, not worth a reroll by itself: it would have been nice to move
-the extraction of the common options from our docs into a separate,
-preparatory commit.
+Scripts should always use NUL, true. But sometimes a user may want to
+inspect these key-value pairs, as well, just to double check a certain
+property of the repository, or to figure out how a certain property
+looks like while writing a script that parses the same key-value but
+NUL-separated pairs. Using NUL bytes would be a bit of a pain in that
+situation.
 
-> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
-> index 3d2207ec77..d7d8279049 100644
-> --- a/builtin/for-each-ref.c
-> +++ b/builtin/for-each-ref.c
-> @@ -16,11 +16,27 @@ static char const * const for_each_ref_usage[] = {
->  	NULL
->  };
->  
-> +#define REFS_LIST_USAGE \
-> +	N_("git refs list [--count=<count>] [--shell|--perl|--python|--tcl]\n" \
-> +	   "              [(--sort=<key>)...] [--format=<format>]\n" \
-> +	   "              [--include-root-refs] [ --stdin | <pattern>... ]\n" \
-> +	   "              [--points-at=<object>]\n" \
-> +	   "              [--merged[=<object>]] [--no-merged[=<object>]]\n" \
-> +	   "              [--contains[=<object>]] [--no-contains[=<object>]]\n" \
-> +	   "              [--exclude=<pattern> ...]")
-> +
-> +static char const * const refs_list_usage[] = {
-> +	REFS_LIST_USAGE,
-> +	NULL
-> +};
+I'm not really too sure whether we need to bother with quoting. The
+LF-separated output shouldn't ever be used in a script, so I don't mind
+too much whether it always works. But I guess it wouldn't be hard either
+to just have something like:
 
-Shouldn't the usage strings for git-for-each-ref(1) and git-refs-list(1)
-be the same, except for the command name?
+    if (uses_newline)
+        quote_c_style(...);
 
->  int cmd_for_each_ref(int argc,
->  		     const char **argv,
->  		     const char *prefix,
->  		     struct repository *repo)
->  {
-> +	int cmd_is_refs_list = !strcmp(argv[0], "refs list");
-> +	const char *const *opt_usage = cmd_is_refs_list ? refs_list_usage : for_each_ref_usage;
->  	struct ref_sorting *sorting;
->  	struct string_list sorting_options = STRING_LIST_INIT_DUP;
->  	int icase = 0, include_root_refs = 0, from_stdin = 0;
+So with that in mind it's probably better to just do the right thing.
 
-This follows the same pattern we have in "builtin/blame.c". It's not
-exactly pretty that git-for-each-ref(1) is aware of git-refs(1) now, but
-I think it's the pragmatic thing to do.
-
-> diff --git a/builtin/refs.c b/builtin/refs.c
-> index 998d2a2c1c..41e29d1b5f 100644
-> --- a/builtin/refs.c
-> +++ b/builtin/refs.c
-> @@ -13,6 +14,15 @@
->  #define REFS_VERIFY_USAGE \
->  	N_("git refs verify [--strict] [--verbose]")
->  
-> +#define REFS_LIST_USAGE \
-> +	N_("git refs list [--count=<count>] [--shell|--perl|--python|--tcl]\n" \
-> +	   "              [(--sort=<key>)...] [--format=<format>]\n" \
-> +	   "              [--include-root-refs] [ --stdin | <pattern>... ]\n" \
-> +	   "              [--points-at=<object>]\n" \
-> +	   "              [--merged[=<object>]] [--no-merged[=<object>]]\n" \
-> +	   "              [--contains[=<object>]] [--no-contains[=<object>]]\n" \
-> +	   "              [--exclude=<pattern> ...]")
-> +
->  static int cmd_refs_migrate(int argc, const char **argv, const char *prefix,
->  			    struct repository *repo UNUSED)
->  {
-
-Hm, this one is a bit unfortunate though, as it feels like it's just a
-matter of time before the two `REFS_LIST_USAGE` defines drift apart.
-Might be worth it to move them to a shared place.
-
-Alternatively, we could pull out the logic of `cmd_for_each_ref()` into
-a separate function that also receives the usage array. Not sure whether
-that is worth the hassle though.
-
-Another alternative would be to just say `git refs list [<options>]`.
-This here 
+Patrick
