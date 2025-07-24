@@ -1,103 +1,145 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C720A1DD0D4
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:20:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317B061FFE
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:23:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753374040; cv=none; b=CJIsAMSVAmRQV74gwDKlcWzRCf5IQlTBh1kngacO4xoAr6Jo016/g6A2F7Hg670iBq/HLr02tAr1ECXOC6nqtAwWN7qRpKgknHE3mEp1uDRGw5eFKgcSu0Nd2KfYRcUy4+TOgSI1gt0WH9ATliVh9ZPxLsKGx+/FfJ0BgXUDl5g=
+	t=1753374231; cv=none; b=C6qmMpdunAF003QYrifhZsAgo4665dO8CWbwOd2Dte0FVhEw0a7wt2qEckkYXqtZVz9kD4hybLxsWqGODJ8VRwdC7qAZzwoxsRuwDdpLfwW8fQHpu3ttD4TlA++LHufELOcLG14iDDHZzCSML1LNNFBdh26q3S3XiaZlDc1aLp8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753374040; c=relaxed/simple;
-	bh=aQstDmq9GobvhElUgG4nLVTF6uLpFZ2qkfbjRzffp0g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b59ddsiIXPLHo94cekDMPrkCPr2RM2SpaA864ZxlnV3ciGTJ4YHP16dge28q8CWHLiq3QY6OzuktXLLTMHD4g+g/fufhWfoGoLAmAncBdzsW8hj0lf8+9xJ7kWQyZ1b+pHFP3WOwWopcXleXkOreitL2FGDHGWxNSyvKgg3dINY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQr1k4cZ; arc=none smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753374231; c=relaxed/simple;
+	bh=jc7LxVt+sC713R/Ly/lijbvCg4wFIBsVuQoRnNwDwi4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jGGJYFRNUsuDYCvt/bOtkGv4FtGI4vZElUph20WhB1nbJLvDPoGGEklH57yYVF+en0SK2nAyprvq6YZattu3NegxGREwyrn1o1rNnPFWLRZYvxhko+nAi4YFdacdfrQgIefl2JUQWhAaXpxVMjuOL2L1GBKiw12XuOosfGo4OeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=olXEpxYc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cYHdyGzz; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQr1k4cZ"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-61360453fa3so1873888a12.0
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 09:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753374037; x=1753978837; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=b/nwc8vqZYY7hHLYrGWI/UGQpM77MNCvKWKaeYedhVQ=;
-        b=nQr1k4cZn43JpCN8Bw80oK/Enmm4y3Wik0F2q2jkvfAO+Muu/rmNjxdrToHjSXAuos
-         pcZhHsaN6bIWh0yuMoR6oBfRb/2lpQ/wWFxuGB34ycjRGmOZti5jM2oKpXaCc8cWOPJa
-         5FSNe3tLBBgdE/154diAOnWTW+JFP6eksriXa4wg9S2RCK3N5X0DTmlIpML0gGgO2IaM
-         8fluVZAZzwvZD0RJlFl7PpF/3MKP+lTR+9IamgN+uLPHiUFbGPeT2nrL5yZzS2eF+rVb
-         XPKC5BF5B8384pa7hOvxREzT49P/RjHOxFGEiHfleD6xrqyRjO7f4QaYa9+ipbaf7HiW
-         DUJA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753374037; x=1753978837;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=b/nwc8vqZYY7hHLYrGWI/UGQpM77MNCvKWKaeYedhVQ=;
-        b=nDNBGa2/nKlWuuQD4EXbIk/JFwUCPzmwLIdEbLtdeK2Sg58HyAU4pxJWkgDRm6ngI2
-         Va+O4VYPE3xaooI/HcSQXFyBRIuchHsblGLcC/g6+LO9XmZ0ch+5PBCMw269jCFAdZK/
-         kZNXG6aVg3oe1vVSkhr0fpxhiFaGrJROCloZOZDfY+AWsYdoVKHWR80Ge/Z+j72m+Qeb
-         sWwFgHziRV17iSylSIESsR1lW9/IQZLypBDXSnZwQXNWWhCrCpWnqrLnPGFlh1QpncIY
-         rST8Nhc4jlr5mI9HBmxRGHPknNx5/pOUx3sW3x4McYyjs7eADjYXm3xRAC4oASb2kZPU
-         9ANw==
-X-Gm-Message-State: AOJu0YwHPesVYlw0FTHBarhv1w2KBUTYVlc3Ax3E/sKoW7R1BSDgfeA2
-	qwQDGK9ErojBNe3FdTf8ctsGg/4SFUPbmGvRfynDyM+kIMNCqKIS2hEB
-X-Gm-Gg: ASbGncua4FpAhXL4a1kGV4D0ktpNA7PcpD3LWLuJ+MuJTKcOeL/eVA0jhMr9IsUddrD
-	fFmCa44imf33/9xNByD82Fp7bAGPmIouPQXNEjf23QGHzCCXgU51Es/4kLpG5Icfn/6zysudtQe
-	4JdbxHnY6Jj8FwFPQEVzQETVR5QFJDvL4wbJ3J0Th0el4Paxa0wR7qBuHRfPnhAkTt92enSo3B8
-	7PPHWmLy4vLL48p1YrMF6rsuM3RdG56+t6lHdedugn6KbyeAjJmhoLfIe5S/z3CU8JIRFhmonPD
-	e1GfVTnNnIEbpVSrMdOkTCQuUIIWBI96A622saFFiTdtdJv9WyfC238ncqiubciMcZzrR0iM41w
-	SwCrBt/EvCKKvtjUsGOe/QXsmPQX3eNA8O4tD2kGEj0Syar/mr4Ilhb4=
-X-Google-Smtp-Source: AGHT+IEyRcWG1EElHz4lQniio20WH0+Vr+HFTVsjOevcEbdDe6q8LcwNzLMHG9uyC1tyXoJlm/PaRg==
-X-Received: by 2002:a17:907:7204:b0:aec:56e3:ce0b with SMTP id a640c23a62f3a-af2f6c0ae3amr869976366b.19.1753374036634;
-        Thu, 24 Jul 2025 09:20:36 -0700 (PDT)
-Received: from localhost (92-249-246-243.pool.digikabel.hu. [92.249.246.243])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-af47c496250sm133711566b.13.2025.07.24.09.20.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 09:20:36 -0700 (PDT)
-Date: Thu, 24 Jul 2025 18:20:24 +0200
-From: SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 4/8] builtin/reflog: implement subcommand to write new
- entries
-Message-ID: <aIJdSCPEHoiWWxrP@szeder.dev>
-References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
- <20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="olXEpxYc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cYHdyGzz"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 090E51D0001C;
+	Thu, 24 Jul 2025 12:23:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Thu, 24 Jul 2025 12:23:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753374227; x=1753460627; bh=UbqLYg0smb
+	I30nI5V7HT5xxNT/D+6B7B4ED0/Ae98Vc=; b=olXEpxYc9kliJzqSPJOGxLy4Ox
+	lfpk4IjRkz4LMOC4q54PjU9HSQ4ZmoPYb9+Ou0pQPxh4beLyHz0V7q4jVb3hOIPX
+	YBzx69lypyLSNe7cRC/fquwqaJyWJTgXM6wW0v8HeuS6JWtuZX/i21T/8Y+wD6yu
+	q/aG59EAT01k6chbqk9ioBqjjp0T5GHXpTcovRCJQJdzCqGLaAgDrkV19jtUUx51
+	LhZyDLP/Yj2P7CY9eZiPyvAKpkwqIOpZm+AG5dCMPxgwafUYmFYws+J3uo9SPS7n
+	035KWQvMPf1dfH9wJlqtokvaEVGRyRolSnK41t4D0t6ufZ7rs30PupVrDH4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753374227; x=1753460627; bh=UbqLYg0smbI30nI5V7HT5xxNT/D+6B7B4ED
+	0/Ae98Vc=; b=cYHdyGzzlnKnVelMiGFkthvf56veaiii2/HoTzkLywfbXyCbz1X
+	/1VpT76WgPRjb+e7uz+L8Fz5RXP+JGkBZZIT+bZg/GlTDX+jIYMI91IZmwsshho7
+	we6FNVWKNCiTURzpMFfssCR18XV5M3hqNDFEz9SWQJQ5obmB3FPWArfTKLYW+exs
+	aSCf3j2kl5jybZxeiV9FHOLS5CU53hqKcrDsLzMuPo1J2vRwWnYDhw3u0DEemFmI
+	Bo8YZYM5q0RbnIDYJ3k1BC1kdUjXAPKzZ6lyvhm8Aw9gfBLDdzQZ02SBF6SDGvtJ
+	llL+bzxb/+Q8LSL6ASWzC+/bbvi6yUNz4LA==
+X-ME-Sender: <xms:E16CaEOX_g3tCQ4utuLsxGj9Cj7gBRqlnGRn6Kyk5DWnMdvXuIRrmQ>
+    <xme:E16CaFin-qrrvifIAkUCURykkGM8VHOg2wGseNbOIq4MvYMPqdCmUVWNeLgTkAdz0
+    V1KeG382P6Z0XJ1ng>
+X-ME-Received: <xmr:E16CaH1eUm0W0UBRM6QyfkETdJd2mapXX_-Kehuwyu1uVQo__0MWaiR3CTdl4C10AX0S-asHJcyYEP_UPDwzj0gzPz_K-4sEgtjPLLI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudduvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:E16CaPi-c7vDL_g4Bo58nLRdV_ljAeJ9Sd5KxDvmJZN9okSz_N-qFw>
+    <xmx:E16CaHdtETk5PfeJ77GehXtE7bBVLslQY6a7Dr1L4i3lJJ7Or1t3GQ>
+    <xmx:E16CaCmZY5iTG1La0xV6RMAkrgfqDX3hEEqsTu3nT12NZyJejR2OLw>
+    <xmx:E16CaAvz-ziHGXJ1WjwUnDCkI8Emzzuo2Nxn40_g_CY7jLMv4qC9GA>
+    <xmx:E16CaIeqPJQbE4B0gKMdm2W1XMhlqf6wuUxonEii0Eb1Q5CRQuI9Yhkj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Jul 2025 12:23:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH] CodingGuidelines: document test balloons in flight
+In-Reply-To: <f954683b-b0be-4608-814d-23993316fcc2@gmail.com> (Phillip Wood's
+	message of "Thu, 24 Jul 2025 15:26:33 +0100")
+References: <xmqqldoen5v3.fsf@gitster.g> <xmqqecu6n1pt.fsf@gitster.g>
+	<f954683b-b0be-4608-814d-23993316fcc2@gmail.com>
+Date: Thu, 24 Jul 2025 09:23:46 -0700
+Message-ID: <xmqqseilimlp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
+Content-Type: text/plain
 
-On Tue, Jul 22, 2025 at 01:20:53PM +0200, Patrick Steinhardt wrote:
-> diff --git a/builtin/reflog.c b/builtin/reflog.c
-> index b00b3f9edc9..d0374295620 100644
-> --- a/builtin/reflog.c
-> +++ b/builtin/reflog.c
-> @@ -3,6 +3,8 @@
->  #include "builtin.h"
->  #include "config.h"
->  #include "gettext.h"
-> +#include "hex.h"
-> +#include "odb.h"
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-This series is queued on top of v2.50.0, which doesn't have 'odb.h'
-yet.
+> Hi Junio
+>
+> On 23/07/2025 20:31, Junio C Hamano wrote:
+>> Due to portability concerns, we do not blindly say "It is in [[this
+>> standard]], so we will make liberal use of it" for many features,
+>> and use of C99 language features follow this same principle.  When
+>> we contemplate adopting a language feature that we haven't used in
+>> our codebase, we typically first raise a test balloon, which
+>>   - is a piece of code that exercises the language feature we are
+>>     trying to see if it is OK to adopt
+>>   - is in a small section of code that we know everybody who cares
+>>     about having a working Git must be compiling
+>>   - is in a fairly stable part of the code, to allow reverting it
+>>     easily if some platforms do not understand it yet.
+>> After a few years, with no breakage report from the community, we'd
+>> declare that the feature is now safe to use in our codebase.  Before
+>> that, we forbid the use of the language construct except for the
+>> designated test balloon code site.
+>> The CodingGuidelines document lists these selected features that we
+>> already have determined that they are safe, and also those features
+>> that we know some platforms had trouble with.
+>> Let's also start listing ongoing test balloons and expected timeline
+>> for adoption.
+>> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> I'm not sure what I've done to deserve that - it was Patrick that
+> pointed out the test balloon already existed. The patch and the commit
+> message look good to me.
 
-      CC builtin/reflog.o
-  builtin/reflog.c:7:10: fatal error: odb.h: No such file or directory
-      7 | #include "odb.h"
-        |          ^~~~~~~
-  compilation terminated.
-  make: *** [Makefile:2821: builtin/reflog.o] Error 1
+Let me assign equal credit to Patrick.  Thanks.
 
->  #include "revision.h"
->  #include "reachable.h"
->  #include "wildmatch.h"
+>> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+>> ---
+>>   Documentation/CodingGuidelines | 8 ++++++++
+>>   1 file changed, 8 insertions(+)
+>> diff --git a/Documentation/CodingGuidelines
+>> b/Documentation/CodingGuidelines
+>> index c1046abfb7..0776d15a95 100644
+>> --- a/Documentation/CodingGuidelines
+>> +++ b/Documentation/CodingGuidelines
+>> @@ -298,6 +298,14 @@ For C programs:
+>>      . since late 2021 with 44ba10d6, we have had variables declared in
+>>        the for loop "for (int i = 0; i < 10; i++)".
+>>   +   C99 features we have test balloons for:
+>> +
+>> +   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
+>> +     compound literal syntax, e.g., (struct foo){ .member = value };
+>> +     our hope is that no platforms we care about have trouble using
+>> +     them, and officially adopt its wider use in mid 2026.  Do not add
+>> +     more use of the syntax until that happens.
+>> +
+>>      New C99 features that we cannot use yet:
+>>        . %z and %zu as a printf() argument for a size_t (the %z
+>> being for
