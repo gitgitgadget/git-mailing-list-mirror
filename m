@@ -1,218 +1,181 @@
-Received: from mx0b-0064b401.pphosted.com (mx0b-0064b401.pphosted.com [205.220.178.238])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 324702517AF
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 08:08:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=205.220.178.238
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753344513; cv=fail; b=bmT15u7zTxA8aXpQg5Tipib3fe/i9RyBeR1bxGaFuKI3PeoTuRCHQW2z1bbDnnNNodK+ZZDK1kU1MIWI/WGv/GeM92tMG0FPtZVL5oxgmS17QgWr9Y/BFHrGas0rgCLJbJ+YXhjZJdf6WE21X8cnhV1W6bLjqeNDaVdhRHDaewQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753344513; c=relaxed/simple;
-	bh=ntqkwiMknvKWLbNrs0WSHMk2zLrpPgzBPt+GfgIzeZ0=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=N0AolqJxAfERvYyjHqqI00CXWqgzBIdnzmjxw6n1XUVrmxYezjmKGuQbxH6rNqnUyPp99azJORoMXzvvM7JAr9hlEk8XmoSHFVUPsE6ngUS2WoJVGLAf6abwfWGXk5Ft2edqji00f910/Lq5p1EpLWeyg/ZfQC7zpuHSh8WyZss=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com; spf=pass smtp.mailfrom=windriver.com; arc=fail smtp.client-ip=205.220.178.238
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=windriver.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=windriver.com
-Received: from pps.filterd (m0250812.ppops.net [127.0.0.1])
-	by mx0a-0064b401.pphosted.com (8.18.1.8/8.18.1.8) with ESMTP id 56O7Ncd7450387;
-	Thu, 24 Jul 2025 08:08:22 GMT
-Received: from nam02-sn1-obe.outbound.protection.outlook.com (mail-sn1nam02on2077.outbound.protection.outlook.com [40.107.96.77])
-	by mx0a-0064b401.pphosted.com (PPS) with ESMTPS id 483duq054e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 24 Jul 2025 08:08:21 +0000 (GMT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eNtNLII46yS0mbCdP3pSgTdxHktx2URT7tUf682dvSH6lZSEs8kdod1Zcbiik3tW9oKjWoCbNHffUTWMO1K+n8ig2M8RD6rF05pjfxS2SETnm4l9fs/aLuFrvhQEHyiwjEfO24pcuOLt9YEALpIRmygpQJNG4bKjA4632lEAWHXfkwNl3KXtxdRJhojjs73RIYk2nNUFry9S5X56fAcdo3TrVILKvpNupS99reTbk35HpnuMfOOHkhLddAHczMisibTWJ1ViFG5fmi6FgkvfQfpWOCyfZN2riFkQ6ccyGD8xkPUlA5xnVZq7vyzgMoQOAjUfa5uCiyw7bgdbdR9BEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ntqkwiMknvKWLbNrs0WSHMk2zLrpPgzBPt+GfgIzeZ0=;
- b=frzlN+T0V/z4NPnLSrjLgNDeUKdFiXr2D+8WAdUO973KobNAB6IfomC75rBvDqBHibmCJkMbt0Ewvxyt+fu5HJXAbDtM6GeRICg5GB8EFA08CAFvc/k+yDX0H6CiqHrWkcAyUAgREYkMsUJOyrYfETDfsXqKOYm/vcFJgPMYK7k7u8o+G3z9qz3zC4Vn6FSPV82MAqK0SWKdf5563v0VzZeA7eegY0Oe4xLcJ8NGRmqYSQvQdpLYrEUS+punxAwI8VAZuFRT0sN1qACQJDCEYFQd5w22dpp2/F72pVMVBNPiLLusJXYcKhZRgEOeDfsSpjSmaShImxaSzbaDki3eEQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=windriver.com; dmarc=pass action=none
- header.from=windriver.com; dkim=pass header.d=windriver.com; arc=none
-Received: from DM4PR11MB5533.namprd11.prod.outlook.com (2603:10b6:5:38a::7) by
- SJ0PR11MB5055.namprd11.prod.outlook.com (2603:10b6:a03:2d9::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.21; Thu, 24 Jul
- 2025 08:08:19 +0000
-Received: from DM4PR11MB5533.namprd11.prod.outlook.com
- ([fe80::8ce3:74f6:33ca:3dfd]) by DM4PR11MB5533.namprd11.prod.outlook.com
- ([fe80::8ce3:74f6:33ca:3dfd%3]) with mapi id 15.20.8943.028; Thu, 24 Jul 2025
- 08:08:18 +0000
-Message-ID: <c2dcded3-a317-4065-a26c-3cb12a860eba@windriver.com>
-Date: Thu, 24 Jul 2025 16:08:12 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: warning: ignoring unknown core.fsync component 'true'
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <209ecbf7-0d53-4674-bb7b-3ca084edb761@windriver.com>
- <aIBy3xH2eZsCZYiY@pks.im>
-Content-Language: en-US
-From: "Wang, Jinfeng (CN)" <jinfeng.wang.cn@windriver.com>
-In-Reply-To: <aIBy3xH2eZsCZYiY@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SEWP216CA0149.KORP216.PROD.OUTLOOK.COM
- (2603:1096:101:2be::19) To DM4PR11MB5533.namprd11.prod.outlook.com
- (2603:10b6:5:38a::7)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B512741D6
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 08:12:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.44
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1753344745; cv=none; b=f+dDxgV/BnVcDKKOoeshVs+9UKgwZN/dHbO1l+8UrNSo86Nw7WNJ3nILzA5agsRn3ia0bCOo2o99mWoVrCphE3tVUb6H2k/E91Zctjy7OSG6XYnPgYvlGzoellTLGBPE1YPOm++i1SsqopsJszUFFDrDYFMnxjoQnRv4/+mfZIg=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1753344745; c=relaxed/simple;
+	bh=YCKu45V9/UBTxah4jtfByy04kTlQsDT4XldrfU4MtgY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=njAQ9ZVOSY5qxxqwMX0QWPDXl165SpjWaPDUDvCjJnh052951ukVLNjNS3aFUCe0t49buh+0F/gKaRF+ZRtkAkpsD90LGu3XfAIoYeHOLfPpMf/huIaWY2F9PYR1OmOX79KKTSBEnvY7qbXPGnQL0eWcItJGk0rIqPeQcxVwEqU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a+F/X+iw; arc=none smtp.client-ip=209.85.222.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+F/X+iw"
+Received: by mail-ua1-f44.google.com with SMTP id a1e0cc1a2514c-87ed3b792a2so143558241.3
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 01:12:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753344743; x=1753949543; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=UfgvoKGRRv6f6lrP68LWqeYz7WYx9A2H2v1MuJXLRa4=;
+        b=a+F/X+iws3OvSCC/vasF4/DsjEd55pyLpG/mkDI41+zBTWafyEt8D8Ye7miZ2IwjL+
+         brEbyz11fToFuWf/RF3KLSLTvnvt6fzjZ9cDSJ1bTOV5XVTFdfwOXr0rNLH1m7kxITHF
+         etV6CoY0V6DVmyIeEbQdzySG2hnl8mH7o7QjOsiCfLLvd2EOBDnRP8MbpAzFIhq8PxsT
+         dmhEjGw1BEI/TuhGZGWBzDg7ib+eZawcjgEdwrCW2RcO7FzXcWRW+KNGWtC7Txl2SD8g
+         GDpbEtFfxBd8G5QzGgIOb9S78GtcRE5WLCn2LMzblETKJzoBCAmx0SMshRezftwztTHJ
+         sr5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753344743; x=1753949543;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=UfgvoKGRRv6f6lrP68LWqeYz7WYx9A2H2v1MuJXLRa4=;
+        b=QwBNZFk1O2fkzNlTJAVGpVjTeScU1EhPdUEsZ3nEde1XE99Ka0MYkUzWBpJ4i+Oxb3
+         cAcNQfYc6E4a5eP6Dvmr0ThsQzWDIdbOs7LAysYRdtRLWKejZsDi0wo+/IMJkR+aXXZN
+         iWAuLVGWY+tlOtv1hlmTknxNmRscL0l6SNmHfE1OcsICCugXUNAUeS4fGiFLwwVh7pGl
+         ybylGnvGh/HTaI5n1aeRsEDVr+nGSpg6kXJPzzCuq5n3wctHCBUpLFTqlZ1krZyjuQvA
+         aHT7G6fTqLzeNdAquHEgovmzVmxk6FTowx2rXR215f+9HMT0nfL62A7T0GZ0s6ZdzzGL
+         DsXA==
+X-Gm-Message-State: AOJu0YwznkZPwuBpJFYHSN1tuWHV6RYlTehv3mmW+EQDjbM2jPadbzI8
+	I3I3taDdHjNj1TpfA1ywYdzHi0G9CVuWjSdMv3bIkcd1j/E0krczSBtifz/QaRyOUiwQ7s59OTO
+	Zp2hb6S5/fiMdBgLVRhvEihCrrIW6btY=
+X-Gm-Gg: ASbGnctvZ5aKMTdVPu76TZkWMSwS/xz3SpVA5xAgEhM56y6k+qTfmxecNLOpzfIM6AK
+	bK9zTB0hlWWd5iehKY0Jr9mr1MEOgIks8Jb3dLGkw4x3dmh7gFC9Cr9TO/5djURONQkTLpXDM8O
+	ve+3ueYHSMljDk0TOWTbq4X28X6hxqn04b9rrEBaDZ2zy+ePwFxANdqm6iqAoSvOoqQxBBm2n/u
+	D1ZtA==
+X-Google-Smtp-Source: AGHT+IECOsxr9Ohi5yPEgymHhHERMykKWl/feWy2a+TyJgr+l+ES/T+Xfa8dVLTkit17gLkBKHTf+uw6xlTn8g10yDM=
+X-Received: by 2002:a05:6102:2d09:b0:4da:fc9d:f0c with SMTP id
+ ada2fe7eead31-4fa15082578mr2985710137.12.1753344742993; Thu, 24 Jul 2025
+ 01:12:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 24 Jul 2025 04:12:21 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 24 Jul 2025 04:12:21 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqldoelgnd.fsf_-_@gitster.g>
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+ <20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com> <xmqqldoelgnd.fsf_-_@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR11MB5533:EE_|SJ0PR11MB5055:EE_
-X-MS-Office365-Filtering-Correlation-Id: a3e5017a-accc-43a7-f348-08ddca893fbf
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?NU1uTk5wZjJDOWh6WXg0QnBCdm4vOTRmeHlMN2ozZGJQY1JMeEk4WFRiNGpF?=
- =?utf-8?B?OXZwK0Z1eEVPSHJjeC83bTFZeEMxL1ZnZEpxOWw4Rjd5U0grMXRQV0crZFNV?=
- =?utf-8?B?b2ZxTWY5K3JMUUduN3UvZnFwaTZqNDl6TU5uRm5RYm5xTGVVOGxnS3RZT1lt?=
- =?utf-8?B?ak51S0ZQTk1sS1VDemJGNDlrdU5tVDdsVThOazJndVBZYk40SDNFT3A0WFNp?=
- =?utf-8?B?OWhpUkJhclZDb1ZtV052V3picE1sZG5iSmlTbFdiVjI5Z1piaW4xTlB3YUVJ?=
- =?utf-8?B?NHM1aXdCaWlsdld4MUxuL2hucGR0ZzAxNm1OcncrWjMzVmVOKzJBRjcyQzYy?=
- =?utf-8?B?VERneS9tVG9IQlE4NHdKdFd5eXE3dExTT05IKzA2d05uU0FDSUJFcTdHNk41?=
- =?utf-8?B?SVNDWitSWjVCMmpKS0lkVk9BY3BzTWhGQXlYeXR2dVJyaE5OMXpGN0xOODhN?=
- =?utf-8?B?bzZ1a1lTMUhVWXg0UUFtNTNMaCtLbU1ZMis3T05UUC9jZmVJQ2dmd1VKK1da?=
- =?utf-8?B?akQ1b1BMaDcrMTlCWlc1azZGQWlDUUNnbVQ4bFprQ0hZR3dkM0ZyTnI1SEp4?=
- =?utf-8?B?Y0p1Z2c1NHNYZG9sRDcrWHNxZmt4dUl0NUVjM05Oeml5T01HYzBwYTdyN0Jx?=
- =?utf-8?B?aWU0YUM2VmFVQi9CS2VVdUhKd2FtSmRpK204N2FucUhuQk82a1IyL0JiMGlX?=
- =?utf-8?B?OXY1K2hBRVUvbDJDVUQ0cUdRcmZyL2F1VmR2U2RXdXYzRDRUQlBGUm5Rd1dR?=
- =?utf-8?B?cmRBS1N5eUZQdmN4MnR1cm9Rd210WVZaK01oQzlLTjBOR09rSEdxemZMNWda?=
- =?utf-8?B?Q2FBZXpZZ3UzYjZsNDRFYXhuZTRzRExlcEpoUnAyNFJYVS9HQy8ydzIzS1Va?=
- =?utf-8?B?Yng4UlVuVkpkeWZNT1NNTXppUkJUWXA3UlBxeWFGRVFmazF0cTROL0ZVZXZn?=
- =?utf-8?B?aCtXS0UzQW90ZWUxMmU3aWc5SzlObGU5T3hsK3FIek9UWkVIcDZyZ1FDVkpj?=
- =?utf-8?B?cmlnOHlSZDF5QlJ3akc1OWtNV2Y4TndnNk9IUlNZTERTSWxvUFhkQ3NqdW5I?=
- =?utf-8?B?c0RBUmVCd210OXJka2k5TXBxVTlCV3I1cTJWcWZSdjhCOHhrb0hhYVRYQVYy?=
- =?utf-8?B?ZWozTkEzUEpqZGlKSkN2M1IvdGI0RE4wNlFxT0Y4ZHJmenJ6NFFBVll6L1dY?=
- =?utf-8?B?SkhIZVRJQ3VNaVl1RzhiUlBaUUV6UkdZMXdjRFNnTDg1SEZkZG9IeWs4ckJP?=
- =?utf-8?B?aldaUWVXTzR4NFZpTDhsVWt2akFyWFRIQ2tBU3ZRN3UybWhMMlp4VVpPOGYz?=
- =?utf-8?B?Zk1Xd3BPMk1NRkhqSUplNDQ2MS9STi9panNWSGRWckQzSGVmeEoxRUhWL1BH?=
- =?utf-8?B?K09GTHF1SGRMeVFxOU1NRkRPN09hLzJUMjl4cUUyNW9HcDNuZ2ZCdlpOT3Ni?=
- =?utf-8?B?NEFkYVNaWUhYbXJSUFBmMS9XbTRWaXJteHVieHBtcE9iZDZaZ1p4RHJHa2h2?=
- =?utf-8?B?a1poWDM3cU15MkhaajFVOVdUNVRhQVF2aXc5anBTY0hobkZ4SXJBUVlJSHUw?=
- =?utf-8?B?cUNDNGF1N1FmemZLbDhhanJFalk2RVA0NlNSVXJKdzRSaHB4b2t5UC9lbVNH?=
- =?utf-8?B?bG1WTnNWL1dXWFdzYUhkOFp6NHpTWUZmY1RwWllybThkM1FFZ0RjM0pmK29U?=
- =?utf-8?B?dlVWRUwwMy9oTkwrb2ZZYUxRWkRCdU9RYUhmVVFHazczZlFldTN2NCtYRXZ2?=
- =?utf-8?B?dGR1S2dlcFByYzFJNGRkWGtwS0V4eC9PMFcyZndZOW9SVEhjajEzYTJoZVdo?=
- =?utf-8?B?Mk5YSVpYSWZYcERFck5LeEVScWxqa2doSC9zUzczejcySmw2QTk2cDlhYnhx?=
- =?utf-8?B?REcxT2J5OEY4QlVMdXUybTYzN1hCWEY4c2tBVEZvK0VTOHc9PQ==?=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB5533.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?VHlDZGNVUnBXOHk1QUlFbExic0hSRmhDMGMrTGtnR3hXTXYvOTkwd002VnZl?=
- =?utf-8?B?cGZkSVoySHNRTzRaeHNHYmZqWENUTVJGQ291N2Q4Tm5aVTdPSWxzdk9sTTB2?=
- =?utf-8?B?K25wRE5IL0ROck1QRzU5dEV5S3pQemQydW1uYmpJNmVUaXJIeG9lblMwTGhZ?=
- =?utf-8?B?Y3cyYmN1aUloRVAxSkhpdXlldWN1eW80c001L285NHhnMDU3RVdybHNzTHlo?=
- =?utf-8?B?cERMbm5OUE1GUU1DL2RCMlp2VzdLUjlKZzkrSncwSXM5ZFlaUHh5R2FMYndV?=
- =?utf-8?B?Y2hlU2tZQjdsaWpyYUJ6OVV0dHB4ZXhxTEJvRHlhcFVVZ2NlUVhhNDBlMWVm?=
- =?utf-8?B?ZW5aeCsxenJHZXJFSHJlTUlpblBJZHQ4S0F1OWRwd244NkdBb1dvYXEzbGxh?=
- =?utf-8?B?SzZuN3BuK2VhYU8rNS94bVVXaXNNRjlmZ1hLQndad21jWFRBNVRxL3RNaXpi?=
- =?utf-8?B?RGlXVFNJQ1p6UWl1SjNNdHlkaFBMdGdzT1BGeG9VMWdQRDRSZVhkSnVsQTJU?=
- =?utf-8?B?ZjdHcDdIY09ZeGgrUkhXbThqY1RzeHljUkZ0MUY1NUpsUlNIZXVFcXVkbFFU?=
- =?utf-8?B?OUZib0x3UmFhak1JNllqa1ZIaUMyNitKZDJmNGxTbXRNa2doaTRQK2QzVTFj?=
- =?utf-8?B?aWhIL1JNaG9ieDJpM0FLbThrK1cwT3NGWVoydHJSVFB3SmNwZ2FtbEo0STdO?=
- =?utf-8?B?Sy9WZlZ2Vmd6bFlVcXBEQWI1N0FDS0tmSjhnb0twdVlTelRzSCswSmJGSXJV?=
- =?utf-8?B?TlZFdWVheDM5VkljcW5lbHc0QVZpWlNiZTN0ajZIMklSWS93dUU2bWJ2eCtD?=
- =?utf-8?B?bHlxYW9mNW1sRUtFcFoyOHEzRzRNZUg3Q01ESVZGUFI5MDEvajFTK1psa3RM?=
- =?utf-8?B?RDlzeWk2b0t2ZE5tOWxWNlpGWHpCR2tJNlk2L0YxdTBWUGtHU3FCVUxtV0dV?=
- =?utf-8?B?MXUxK2NIVjRzZUFCaEJPc2RMWnh0SGwrbnJTQk9Ebi9zZWdjbUdZcG03aWs2?=
- =?utf-8?B?cTFYeE5ISnNteGhZNE9jdmw1WHoxckFXdUtiZ2VXWGZwejg4V2x5UVhPeEhk?=
- =?utf-8?B?VlB6UnJvcUJiYjJ4a3dVWGZQQmxTRkQwMnhyZWszUllYZENXWjArUVJhWWpw?=
- =?utf-8?B?azN5ZlVRT3dSdWk2TUdLdSt3ZDJianZJWUJVRUR1c3dHblVJY1pqYUlpOVR3?=
- =?utf-8?B?VENsTWtjeXJqcjRGRUU3aDl1emtQSkhVWmNpK1MyZWt2aHMyQ1p0Mjg1Rlgv?=
- =?utf-8?B?ZW1OZ2RmbTExS3dBZXlSWVQrR3RzS0NxY2dvTUg3bHZzaDh4TDVIbjdvVVNo?=
- =?utf-8?B?by90VG5UY2pVU1QyQndBS0JDRWg0bGNFMVhTQmptZjNjWG5SZnlOTHZSWHd4?=
- =?utf-8?B?amFLWWxYY3grTWhFeG4wcHNlQmthWDA5a2kzeHZLN3NEOVMxZWtvdU9ESXY4?=
- =?utf-8?B?MWVOQUc1TWtpNkp4K1BOajQzakIzajdLcW1JbDZkd2Y2Mjh4aVlTeStBZlhv?=
- =?utf-8?B?WWxWSzlldktLVDl3UG1Hc0ZpLzdaMVZxdWVLM3gxc1hCUCthb0ZYUGVweUs1?=
- =?utf-8?B?T2MrbDRkbDRCcWNOcXFIR0tsMXRkVVVJakNVUkptSlI2d3N2RnhFOU51cXI4?=
- =?utf-8?B?eVRMQ213VGhJbzNLQWJDMDhWZnhtbUNKWDgybXZNMlRVc1RsZ0pEOXFkMnhK?=
- =?utf-8?B?QVkzSzNVSE1DQ280Z2ZHY3F4bzZVdWczL1hKZEVSOFFWV21qWUxEdllUako1?=
- =?utf-8?B?TDFxZEQrd0JmdWQvQXdSaGR5L1RucjByWmpBUE8rZVR4d3FwdEhoMjVsVU9D?=
- =?utf-8?B?eG9nY2U5ZFJueUlxa3djckFwTjkvWEFuTWxtU1JXbGFpa3JVS291YW5remdr?=
- =?utf-8?B?a3VhUGZ1SlU3Rk1KVWxrZEYxdmFycjNwRzUzYXV2Njlsb1psTGE0M0xKaUdx?=
- =?utf-8?B?UklTWm1oQXVzRmd6SjBGT1lTajFueUJhQ2x4V0FVcDRDMG9naDB3a21YREwy?=
- =?utf-8?B?bkI1Nm5oUEs5dmlTaXVmSU1FdnN4Z09PMWZzNks3OVlKc1Yyd05tZUdpTU50?=
- =?utf-8?B?bGNOdDRKRE81NS9JbWpDWm0vSWRPNVlCNW8xZ2drU3dlVnlMUmQ2d2RpbVR0?=
- =?utf-8?B?NDNLekFCTE5zb3kxZDYxdU91Z2EwSmhaQUhqaHNuYWhyY256VzVUbEcyRVVB?=
- =?utf-8?B?SGc9PQ==?=
-X-OriginatorOrg: windriver.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a3e5017a-accc-43a7-f348-08ddca893fbf
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB5533.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Jul 2025 08:08:18.8204
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 8ddb2873-a1ad-4a18-ae4e-4644631433be
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4Ti0s+cJCnHaJF82lf8XKF0uKObNhByUgFvY0t0sb/+HDi63c8WMamPCF+ZyVtwliIPJgRCb7R0gQQiB8M9QtpoKNyMn/YvkD43h218htpQ=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5055
-X-Authority-Analysis: v=2.4 cv=f/tIBPyM c=1 sm=1 tr=0 ts=6881e9f5 cx=c_pps
- a=ct44O7CZgj5oH0XY3SFooQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=Wb1JkmetP80A:10 a=x1LY-hpAslPs3y2KQ3oA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: xpICgB9odhY5mZ2ZXUXaCLYJvw1N64rF
-X-Proofpoint-ORIG-GUID: xpICgB9odhY5mZ2ZXUXaCLYJvw1N64rF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNzI0MDA1OCBTYWx0ZWRfXxL3GcltDVCVy
- 3jCN/iBsSw7M5YEMDdlGLx/Wvf6JE1yvChPgMzIuucyXyEYhvZkGfc3djX+EkYTw00pfO9sufOw
- W6qHaPt27nJiFD4Ets9HEpobDODEq7WZinttiOIJEPNlOXMnHS3J6rNXGDQhkm+zIBfVqW0c3eK
- RFrq3Khg3/D7DprVYCOVzMPO82og6x9eSqYQgpUVaVGD9itqwbpfMOprhosMJGWjj3u59R38deB
- z9zoU1jKuTwCMRkGzQ3KXK6pMoR/JK7KHLNWfDZwb3KhgbECrpTquS+M+N5cFcHFYh8riBQJPIL
- kkk/M3g8ewvnBKWbMVOEOldSx5kSSWo3LgMPN0Y/mu81UqGxpqMPQypQiVWlt/78VuWz8A0tXuX
- W52fgLvA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.1.9,FMLib:17.12.80.40
- definitions=2025-07-24_01,2025-07-23_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 phishscore=0 bulkscore=0 adultscore=0 priorityscore=1501
- clxscore=1011 spamscore=0 malwarescore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2507210000 definitions=main-2507240025
+Date: Thu, 24 Jul 2025 04:12:21 -0400
+X-Gm-Features: Ac12FXw2v2VITOgqu3imxfjR-fgPogxGjWHqbR2k5MGAs2lkeWkwBeqU0FSzXZY
+Message-ID: <CAOLa=ZRr4fpF0E8EM3nL37aSYzcHyCNnv5HzBzisM4C0UQUx8Q@mail.gmail.com>
+Subject: Re: [PATCH] ref-iterator-seek: correctly initialize the prefix_state
+ for a new level
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, schwab@linux-m68k.org, 
+	phillip.wood123@gmail.com, Christian Couder <chriscool@tuxfamily.org>, 
+	Kyle Lippincott <spectral@google.com>, Jeff King <peff@peff.net>
+Content-Type: multipart/mixed; boundary="00000000000093529f063aa862dc"
 
-Hi Patrick,
+--00000000000093529f063aa862dc
+Content-Type: text/plain; charset="UTF-8"
 
-Thanks.
+Junio C Hamano <gitster@pobox.com> writes:
 
-On 7/23/2025 1:27 PM, Patrick Steinhardt wrote:
-> CAUTION: This email comes from a non Wind River email account!
-> Do not click links or open attachments unless you recognize the sender and know the content is safe.
+> When cache_ref_iterator_seek() "jumps" to a middle of the sorted ref
+> list, it forgets to set the .prefix_state member of the new
+> (i.e. deeper) level it just initialized.  This later causes
+> cache_ref_iterator_advance() to look at this uninitialized member
+> to base its decision on what to do next.
 >
-> Hi Jinfeng,
->
-> On Wed, Jul 23, 2025 at 11:07:37AM +0800, Wang, Jinfeng (CN) wrote:
->> For a specific git repo, when I clone or fetch the repo, I encounters the
->> warning
->>
->> remote: warning: ignoring unknown core.fsync component 'true'
->> remote: Enumerating objects: 41, done.
->> remote: Total 41 (delta 0), reused 0 (delta 0), pack-reused 41
->> Unpacking objects: 100% (41/41), 37.51 MiB | 10.91 MiB/s, done.
->>
->> But after clone the repo, I didn't see core.fsync in my .git/config. And
->> there isn't anything relates core.fsync.
-> The problem doesn't exist on the client-side, but rather on the remote
-> as indicated by the "remote: " prefix. So there's nothing you can do on
-> the client-side to address the problem, you'll have to reach out to the
-> admin of that repository and tell them that the repository uses an
-> invalid value for "core.fsync".
->
->> I also tried git with different version (2.25.1 and 2.34.1) to clone the
->> repo, both will show this warning. What configuration causes this warning?
-> It's "core.fsync" indeed, but not on your side. The config does not take
-> a boolean, but rather a list of components that should use fsync. I
-> guess the admin wanted to just fsync everything, but in that case you
-> don't want "core.fsync=true" but "core.fsync=all".
->
-> Patrick
 
-Regards,
+I think the explanation is correct. For reference I had some more
+details in my local patch, but this is totally okay.
 
-Jinfeng
+  ref-cache: set prefix_state when seeking
 
+  In 090eb5336c (refs: selectively set prefix in the seek functions,
+  2025-07-15) we separated the seeking functionality of reference
+  iterators from the functionality to set prefix to an iterator. This
+  allows users of ref iterators to seek to a particular reference to
+  provide pagination support.
+
+  The files-backend, uses the ref-cache iterator to iterate over loose
+  refs. The iterator tracks directories and entries already processed via
+  a stack of levels. Each level corresponds to a directory under the files
+  backend. New levels are added to the stack, and when all entries from a
+  level is yielded, the corresponding level is popped from the stack.
+
+  To accommodate seeking, we need to populate and traverse the levels to
+  stop the requested seek marker at the appropriate level and its entry
+  index. Each level also contains a 'prefix_state' which is used for
+  prefix matching, this allows the iterator to skip levels/entries which
+  don't match a prefix. The default value of 'prefix_state' is
+  PREFIX_CONTAINS_DIR, which yields all entries within a level. When
+  purely seeking without prefix matching, we want to yield all entries.
+  The commit however, skips setting the value explicitly. This causes the
+  MemorySanitizer to issue a 'use-of-uninitialized-value' error when
+  running 't/t6302-for-each-ref-filter'.
+
+  Set the value explicitly to avoid to fix the issue.
+
+> Kyle Lippincott [*] and Jeff King noticed this with MSAN and
+> Valgrind, and Karthik Nayak as the original author located exactly
+> where the missing initialization is.
+>
+> [*] <CAO_smVg9TDakUnubepjPGmLyOzW6n8Z=MDbnZKvkwN2=kN2RRw@mail.gmail.com>
+>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  refs/ref-cache.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+>  * I had this as "fixup!" on top of your topic for quite a while and
+>    forgot to ask you to send in an official fix.  As Kyle's
+>    discovery was after the topic hit 'next' (understandable, as
+>    their internal edition of Git is based on 'next'), we need a
+>    separate fix on top.
+>
+>    To prepare for merging down the whole thing to 'master', I wrote
+>    the proposed log message to help expedite the process.  Comments?
+>
+
+I had a set of patches locally, I just didn't get around to sending it.
+Will send the others, omitting this. Thanks for doing it!
+
+> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+> index 1d95b56d40..ceef3a2008 100644
+> --- a/refs/ref-cache.c
+> +++ b/refs/ref-cache.c
+> @@ -527,6 +527,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+>  				level = &iter->levels[iter->levels_nr++];
+>  				level->dir = dir;
+>  				level->index = -1;
+> +				level->prefix_state = PREFIX_CONTAINS_DIR;
+>  			} else {
+>  				/* reduce the index so the leaf node is iterated over */
+>  				if (cmp <= 0 && !slash)
+> --
+> 2.50.1-521-gf11ee0bd80
+
+The patch looks good.
+
+--00000000000093529f063aa862dc
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 87a4282952135e33_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1pQjZ1RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNkRtQy9zRW5kNDhCU3E0NXdUc1c1UG9tQWQxZm8vaApBcEtNWFJSSWh2
+dUM5cXlsbHRUWmgzSjdDZno4bGk2NEFxcW1lK3ZmcjZabUpuaG0vWCtJZngxeDV1dHBDaXZBCndn
+TXhFNDZNaUtUR2RoRlNhN2VndllPTkJUUzFrUjdZOEIva3liMWRaMENSVW5IcmJMYnZPOXIrWGlW
+VllnbFMKaVRWQ20vOGZkbWMvQWtXdldTYVBGdlVnUG5jeTF6ZGpEV3U3NzkrTW5HSmF3UGNnQVZT
+K3pYbmUyWXdvMGUwMwpJYnBhRXBDcUFWNDhaUE5wWmZpcG5XRnFSbTNQdnpxVWRvTnFGOUNDbE5P
+bzJrRSs5eXZ3ZFUrOUFZQjBkenhUCnpqak9JZWRiV0ZNclIvN2g4SUFOOUQrNExUM1lYWDY1SGhB
+MFd6NUxUSGNZeDZYdFNVYUllNDd2N2Q1UlNTYWwKTk1hYUkzR3hCMzcrOXVpZjlBTi92K1lBMDZO
+WENTK1lLWFljMlNzTVU3RDRjc0xOY0p3ajhkaUVYZWNrbk1wMgp3ZzROZ1ZkNWFRaytPemNjbU9J
+bWMvNUIxb1ZibWdJNm5PYlF6V2dFajF3VEVNY01GL3p2a2VZUWZHa2k1ZVIrCmhyYndrTWM2K0o4
+VmRnSTk3VmZFL1lublpCb05waFZuZ0FEcmJuND0KPUcyV1kKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000093529f063aa862dc--
