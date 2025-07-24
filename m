@@ -1,146 +1,199 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3FD928CF5E
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 14:26:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10382E11C9
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 14:29:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753367198; cv=none; b=ZUhlk7GGVrYA0A27s4ZSMvH0icx2SJvJNyyTO6ZwdQo8sJCYRHGFBRzoEc5cwFaAEhKWoxgnaUi8Pldj+kgAG4eIXXweWH8mc1x5xexx/Sy4VvGIOYc37Sa/5xV5GUtNSHV6MUJPF09an/hW7rghLvjvySfrt4dhP0WfVXs+OEc=
+	t=1753367391; cv=none; b=WDhRvfKfMdg6aKhWvHezcU6G7glg/F37RW6m/WcE5IQBr98CP+vQ14ZLYQYppFf7T5Uws2qbPZzzGZH6STNsxGhR8eus0i7E4mtyCWyvmiJMOxsQNtWVqx9mfpuTVnWSxozJK5ujZ3RYoCUfcC2Q5sviKZFdT0QGa05/crdmM1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753367198; c=relaxed/simple;
-	bh=D+VXgGXJTdRGosiC4dpjdAjkatz/Z3rsuMgF/owMkmk=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=F0yeZ/OQHIyeOTsex/XI5jsOxZ2ZLrlJcwfRNMY6QCGZu6AdX9TBqVjOG9CiLdiVceI1p8Z2nu5XYyix+9txpakaUi+PRT6dJtIeyyQunD+hcsYmO82NDF5l7iry8vdVnrn1ONt/j1eGIlmFowYpAyRYQKunDTbizqW80HFpR+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S0OzYzAr; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1753367391; c=relaxed/simple;
+	bh=biEbPdDpVJIoq7mJY4zxclaog6/ombpS5qkEl9yopeU=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=En6V5wSw579gmKJqJXWazv1uv3kPS0WBXs7MH19hxX9HJHI1QeXA1cM3fUJYUxlFpYmkQtqbrtzlEJEH/sB86FFSYgcFBio93NvxF7E9vcyDwq95Ug6XTtPxpKCT5MglkH3gtYNAwAmo1oYjI97fgGruzSZIXu1HuPDJIkEiKvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KWu0FWJ6; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S0OzYzAr"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-451d7b50815so7115995e9.2
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 07:26:36 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KWu0FWJ6"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-45634205adaso5310405e9.2
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 07:29:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753367195; x=1753971995; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=eeNJ9U5Hg5HaUfqDPBmUKZk9NoSwqzllIVES+wcPjaE=;
-        b=S0OzYzAr9R5sKIfgOHdXApmuGmnH/nEyH3HoqxZx7obDvopcC4qt4B6UelnvekD4ei
-         emQdCxH3ShmPx51A8EC6+n4t9qv5Kn7LA0l1LZ9SzTzRYLFM8HzSveBpxGMIc3mK4viI
-         VDqxYhrwkf4D00AJwnIR+wouuQyLQohf7lDSI0CAK+lQRoJHevcoE00IpSNNyMGHyMTy
-         7a8tbrONGIQ1dPquvISOKCAqNU3PII50pvh8HNvfXgY5ItdouPRTU7BwQd1TVKe6lvdQ
-         DjSxbzGEiDdaEOYhXYSvArF2sAxSGY3rF7gAUi+SeRXTNagdpZhHiy8b4fcme/bVxL7T
-         yz8w==
+        d=gmail.com; s=20230601; t=1753367388; x=1753972188; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=aKa2i3WUYSg3yTWevXCe/4jDvllqbyLR0qjgE6rHZm4=;
+        b=KWu0FWJ6/xa4bw2+xI//IufSW6Xl9ZWZiNV+PTT/Na5LMFfFRtQtwt2cKAwqAtg685
+         PCFP/ugWnY7muOcDLjh/AlcQhZQWJr480Nx22PYdHT8abhCrx2emkQEvR/oQ9cKTOlwc
+         n4MwFMvw3F90sp7ySWrHx8/7b5kx4K03mg7k2n+C/WLDuEWKtWbia+TCOmgVod3/EkFN
+         YTDmSXF9SYKIioymxPXTRnXmW2WlfjQi4NHnd/zd3d2En1NyQR4mu7A59Ck71DZ0dXeU
+         igyo6Skmswxl1ykWFXDEua0TG0Y9sUUFiUjU6BOYnJ+nAt8TmDDDsVbQLCnjC2Un/lRG
+         7R9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753367195; x=1753971995;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=eeNJ9U5Hg5HaUfqDPBmUKZk9NoSwqzllIVES+wcPjaE=;
-        b=F5lDbTqDSedyZUHiFuZm2d5LRK87JASW4qhdzXwSrdbXbnKEvJfBJv5qMNGQjV7aGv
-         XQ/fK1ictK5vpGwCmXCJlYeghL3jtRBu0nea4gVuPdzI6kC/nRSiVg9SkUASIZRV7pTL
-         uy/uA3aBENR+Am2tOMcCK01gFihafrKng+mFCGM0zmxaBCpkB+HyUwKWL3mftwvGI2WJ
-         I/fEJvcTev8DCnSvFaXODMuNRiyGPbcQsDSHDCDfOXfagVY6Bv/NYNKXd3oB/UuK/y7h
-         X31RoXQ3IJDFyYyUVjPOt7iWBwWQbWFYXxyjWm4XRgszEegHvxcfMxtLDXByCSKRfu+u
-         FyWA==
-X-Forwarded-Encrypted: i=1; AJvYcCVqYCE68eV4f74vL0mZR4cFZsH2YvC/9mqrDgHGfasvqnU/KX3gqcQ1RbkYPmURNCjRCsc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxI8f/jmk0KW+0JNi/97IJQTJI6bofUI9RcfPY0AKW34cGE32un
-	hF5Yam8cJWqdkAfxl1QsR01ZMlAAzi4YX/Y9RLOqWEYFSZxvt+gim866
-X-Gm-Gg: ASbGncvFOfq/ig2/CLnkiJNJik+dkuijykijya+v+MqQxf5nCkNEQHvsAm3eKDlChdp
-	E6HLes8NuwZN2iNDsBuAwvW5dakMq9DCETmAiI+xjyI1n5SibV7ufse7CK9oOXyjsQ4qmsk8DVr
-	TpDTBgY9s2pM+qJp9teZT7SfFE2OUqVUboaQj7CzgLOhAs5LE+BMGNTzfVEAkNLH3++SFvYyeA7
-	KX3TYpiiR/XWzqzG+tqUcVClbNGWLuJJvIzrUzYJY5gwA7Lc/6PJ3wozLIqR5NgAPMPzA2RpVgD
-	dTBndTnS4p/aZuVCfdfHz9fQxut76QdBKnOYMzfC9agrR+noJR1FPM1gPVbmVASoPBWlL4iTl4c
-	ezEqP9zx86mA1G0VOnW7MydXeEse8GalR5oZt0zEurtRX6DHQ5eQAE1YGKiOmOj0xkSVx9lw9OD
-	Ryr7mf9j8m8Jg=
-X-Google-Smtp-Source: AGHT+IFhZOWjIE90IhxYz2qcoN0M9JOsP5U7hM/bfGnxK8fcNIDJN3Zij6UGYOCU6cpP/c8U1nIW/w==
-X-Received: by 2002:a05:6000:26ca:b0:3b6:1ed:9ad2 with SMTP id ffacd0b85a97d-3b768f03086mr5301043f8f.42.1753367194784;
-        Thu, 24 Jul 2025 07:26:34 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcc2b8asm2383501f8f.74.2025.07.24.07.26.34
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Jul 2025 07:26:34 -0700 (PDT)
-Message-ID: <f954683b-b0be-4608-814d-23993316fcc2@gmail.com>
-Date: Thu, 24 Jul 2025 15:26:33 +0100
+        d=1e100.net; s=20230601; t=1753367388; x=1753972188;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aKa2i3WUYSg3yTWevXCe/4jDvllqbyLR0qjgE6rHZm4=;
+        b=BZrSEY3YAH273zyy4E0Yt692YyQBtdP9o6uH5yFI4tGn0HGkpvybAIlmWdO+PR0jQP
+         0aS52x4rcQBvz1du9sEnS/8sfuX3fEMXlk/vaFNulgVmLF6GJclawCBidrd6avGuZwn8
+         r+vIvVDRi4h7jlTGMO359lljtY/WQyJ73yEjYn5l5ZOB/21vNvjhKEdwSpi6R+SjjxYv
+         +mFwef1jTKm2hreRu5qLu7KSAas7kSJ0D+zCZsYSY9asdxGlhkaSjgL/y32Gj2aDpZPd
+         b/hK+prHm5CimyKYLLcyG2K/oEtNuUbBFHVjKYJW1URuurxMWSklokCXZVISr1FYI31H
+         oHlQ==
+X-Gm-Message-State: AOJu0Yz5OEgqNdnz74MtSrC7PsjOhSDyajMpTcB/VG/OJ46ho7Dntbnc
+	toLNFOA9BNbZGaE/6IiDFPCoQAUc+8ugEFSOVIrIJLqMh0nqxtfO5h4n9zYDyRzUPhIZuA==
+X-Gm-Gg: ASbGncuM6/9+GlQ0l/bTcMdF1bq4JTiYEl5XTiOv8jJDx9ckxod3EvUWnOdeeihqgI7
+	f7qCbgjufTlNDJpQ77uD/VH5rkBKWDxz72vfAEf/PPndLkWFTnzvuaQ3wBUstb8eolso+WlQI8R
+	SdO4Lpp81BdLncHKi5Bs5PpCD1bWb8K7rASQ+xTlFf8vee0CRDwrG4wnmpKn0JJsLkcvWNFZyBe
+	cskUMMW9VT3M61Z+ZETpG3GsrWGGMAFH9XrCYDHLEWNQEO0dvvNaSH+sde3KleM+hVKGscEnJ5+
+	GRQvhEGKKTtM8cPHzUZi4ZCnlFfX7GpOyRsWXPZVaFrSj3qdkGT0ezALikPpKCMrGA5l5pI7yiO
+	MMoXp5EQmgrPw8Znt
+X-Google-Smtp-Source: AGHT+IHxJPrvb6gjzmJBdSvMIky4kOVCnJntBtADxWNmIB13nDxH6ZCcd46fjVdlk5QTxlu+dFMriA==
+X-Received: by 2002:a05:600c:1d22:b0:43c:fe5e:f03b with SMTP id 5b1f17b1804b1-45872668487mr4083215e9.30.1753367387613;
+        Thu, 24 Jul 2025 07:29:47 -0700 (PDT)
+Received: from localhost.localdomain ([105.113.77.100])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4586ec63d29sm22792135e9.1.2025.07.24.07.29.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Jul 2025 07:29:47 -0700 (PDT)
+From: Seyi Kufoiji <kuforiji98@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	phillip.wood@dunelm.org.uk,
+	Seyi Kufoiji <kuforiji98@gmail.com>
+Subject: [PATCH v5 00/10] t/unit-tests: convert unit-tests to use clar
+Date: Thu, 24 Jul 2025 15:28:27 +0100
+Message-ID: <20250724142837.67149-1-kuforiji98@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250605140644.239199-1-kuforiji98@gmail.com>
+References: <20250605140644.239199-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] CodingGuidelines: document test balloons in flight
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-References: <xmqqldoen5v3.fsf@gitster.g> <xmqqecu6n1pt.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqecu6n1pt.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Junio
+Hello,
 
-On 23/07/2025 20:31, Junio C Hamano wrote:
-> Due to portability concerns, we do not blindly say "It is in [[this
-> standard]], so we will make liberal use of it" for many features,
-> and use of C99 language features follow this same principle.  When
-> we contemplate adopting a language feature that we haven't used in
-> our codebase, we typically first raise a test balloon, which
-> 
->   - is a piece of code that exercises the language feature we are
->     trying to see if it is OK to adopt
-> 
->   - is in a small section of code that we know everybody who cares
->     about having a working Git must be compiling
-> 
->   - is in a fairly stable part of the code, to allow reverting it
->     easily if some platforms do not understand it yet.
-> 
-> After a few years, with no breakage report from the community, we'd
-> declare that the feature is now safe to use in our codebase.  Before
-> that, we forbid the use of the language construct except for the
-> designated test balloon code site.
-> 
-> The CodingGuidelines document lists these selected features that we
-> already have determined that they are safe, and also those features
-> that we know some platforms had trouble with.
-> 
-> Let's also start listing ongoing test balloons and expected timeline
-> for adoption.
-> 
-> Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+This patch series marks the final batch of our existing unit test files
+transitioned to the Clar testing framework. It covers all the
+reftable-related test files, and is part of our ongoing effort to
+standardize our testing framework to enhance its maintainability.
 
-I'm not sure what I've done to deserve that - it was Patrick that 
-pointed out the test balloon already existed. The patch and the commit 
-message look good to me.
+Changes in v5:
+ - some code refactoring and cleanup based on review.
 
 Thanks
+Seyi
 
-Phillip
+Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->   Documentation/CodingGuidelines | 8 ++++++++
->   1 file changed, 8 insertions(+)
-> 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index c1046abfb7..0776d15a95 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -298,6 +298,14 @@ For C programs:
->      . since late 2021 with 44ba10d6, we have had variables declared in
->        the for loop "for (int i = 0; i < 10; i++)".
->   
-> +   C99 features we have test balloons for:
-> +
-> +   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
-> +     compound literal syntax, e.g., (struct foo){ .member = value };
-> +     our hope is that no platforms we care about have trouble using
-> +     them, and officially adopt its wider use in mid 2026.  Do not add
-> +     more use of the syntax until that happens.
-> +
->      New C99 features that we cannot use yet:
->   
->      . %z and %zu as a printf() argument for a size_t (the %z being for
+Seyi Kuforiji (10):
+  t/unit-tests: implement clar specific reftable test helper functions
+  t/unit-tests: convert reftable basics test to use clar test framework
+  t/unit-tests: convert reftable block test to use clar
+  t/unit-tests: convert reftable merged test to use clar
+  t/unit-tests: convert reftable pq test to use clar
+  t/unit-tests: convert reftable table test to use clar
+  t/unit-tests: convert reftable readwrite test to use clar
+  t/unit-tests: convert reftable record test to use clar
+  t/unit-tests: convert reftable stack test to use clar
+  t/unit-tests: finalize migration of reftable-related tests
+
+ Makefile                                      |  20 +-
+ t/Makefile                                    |   1 -
+ t/meson.build                                 |  42 +-
+ t/unit-tests/lib-reftable.c                   |  35 +-
+ t/unit-tests/lib-reftable.h                   |  15 +-
+ t/unit-tests/t-reftable-basics.c              | 219 -----
+ t/unit-tests/u-reftable-basics.c              | 227 +++++
+ ...{t-reftable-block.c => u-reftable-block.c} | 164 ++--
+ ...-reftable-merged.c => u-reftable-merged.c} | 160 ++--
+ .../{t-reftable-pq.c => u-reftable-pq.c}      |  59 +-
+ ...ble-readwrite.c => u-reftable-readwrite.c} | 403 ++++-----
+ ...-reftable-record.c => u-reftable-record.c} | 250 +++---
+ ...{t-reftable-stack.c => u-reftable-stack.c} | 780 ++++++++----------
+ ...{t-reftable-table.c => u-reftable-table.c} |  73 +-
+ 14 files changed, 1117 insertions(+), 1331 deletions(-)
+ delete mode 100644 t/unit-tests/t-reftable-basics.c
+ create mode 100644 t/unit-tests/u-reftable-basics.c
+ rename t/unit-tests/{t-reftable-block.c => u-reftable-block.c} (74%)
+ rename t/unit-tests/{t-reftable-merged.c => u-reftable-merged.c} (77%)
+ rename t/unit-tests/{t-reftable-pq.c => u-reftable-pq.c} (64%)
+ rename t/unit-tests/{t-reftable-readwrite.c => u-reftable-readwrite.c} (68%)
+ rename t/unit-tests/{t-reftable-record.c => u-reftable-record.c} (62%)
+ rename t/unit-tests/{t-reftable-stack.c => u-reftable-stack.c} (59%)
+ rename t/unit-tests/{t-reftable-table.c => u-reftable-table.c} (75%)
+
+Range-diff against v4:
+ -:  ---------- >  1:  4a04557ae3 t/unit-tests: implement clar specific reftable test helper functions
+ -:  ---------- >  2:  2c576ddd11 t/unit-tests: convert reftable basics test to use clar test framework
+ -:  ---------- >  3:  04d54fef89 t/unit-tests: convert reftable block test to use clar
+ -:  ---------- >  4:  06eba27f8e t/unit-tests: convert reftable merged test to use clar
+ -:  ---------- >  5:  eaa8b8d636 t/unit-tests: convert reftable pq test to use clar
+ 1:  7c159bd2fe !  6:  cf8b0471fd t/unit-tests: convert reftable table test to use clar
+    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
+      UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+    -@@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+    - 	$(OBJCOPY) --localize-hidden $^ $@
+    - 
+    - contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+    --	$(AR) $(ARFLAGS) $@ $^
+    -+	$(AR) $(ARFLAGS) $@ $^
+    - \ No newline at end of file
+     
+      ## t/meson.build ##
+     @@ t/meson.build: clar_test_suites = [
+ 2:  3ae3b2cf9c =  7:  cbe70c5c23 t/unit-tests: convert reftable readwrite test to use clar
+ 3:  d4303eb913 !  8:  38e2198eac t/unit-tests: convert reftable record test to use clar
+    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+     
+      ## t/meson.build ##
+    +@@ t/meson.build: clar_test_suites = [
+    +   'unit-tests/u-reftable-merged.c',
+    +   'unit-tests/u-reftable-pq.c',
+    +   'unit-tests/u-reftable-readwrite.c',
+    ++  'unit-tests/u-reftable-record.c',
+    +   'unit-tests/u-reftable-table.c',
+    +   'unit-tests/u-reftable-tree.c',
+    +   'unit-tests/u-strbuf.c',
+     @@ t/meson.build: clar_unit_tests = executable('unit-tests',
+      test('unit-tests', clar_unit_tests)
+      
+ 4:  df582f6e2c !  9:  8de9dbbd3b t/unit-tests: convert reftable stack test to use clar
+    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+     
+      ## t/meson.build ##
+     @@ t/meson.build: clar_test_suites = [
+    -   'unit-tests/u-reftable-merged.c',
+        'unit-tests/u-reftable-pq.c',
+        'unit-tests/u-reftable-readwrite.c',
+    -+  'unit-tests/u-reftable-record.c',
+    +   'unit-tests/u-reftable-record.c',
+     +  'unit-tests/u-reftable-stack.c',
+        'unit-tests/u-reftable-table.c',
+        'unit-tests/u-reftable-tree.c',
+ 5:  9340e7ce88 ! 10:  a69c3370ee t/unit-tests: finalize migration of reftable-related tests
+    @@ Makefile: CLAR_TEST_SUITES += u-urlmatch-normalization
+      
+      # xdiff and reftable libs may in turn depend on what is in libgit.a
+      GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+    -@@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+    - 	$(OBJCOPY) --localize-hidden $^ $@
+    - 
+    - contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+    --	$(AR) $(ARFLAGS) $@ $^
+    - \ No newline at end of file
+    -+	$(AR) $(ARFLAGS) $@ $^
+     
+      ## t/Makefile ##
+     @@ t/Makefile: check-meson:
+-- 
+2.43.0
 
