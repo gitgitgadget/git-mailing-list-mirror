@@ -1,83 +1,86 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C436816D4EF
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:39:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BAD1FA178
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:45:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753375164; cv=none; b=IPIpuB+NPwUjdo+rKNK74S3gncrp71CSBy5UIp2f/IiJuqcSa/K00BBIQByu0vc6XJyCahcPsc+HUL2usC1dl9ReNfdPOTkLiHhGW7PCNPDrBpV82jPV2r0ley8rOfpJiSFhGg7KXiAxcPCAW0mryXIDX+NGjY5Sv7qBCgqJc0U=
+	t=1753375512; cv=none; b=EOU82HPD+qBvIi1ImdIqv85+63hxYS46G/qNvcFHDKJwZ82/UZE2lzMmrQtvGk5YHFEGbh3cN4HDHt6+uVooo0JsYfE3tXo6+EQbgWfbKTJNh+SuqeL1zpk208bE9RdFgKWpKwplUCssjaRPz5MVmPz1Ev2DZ6bkVUw0Uwexlqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753375164; c=relaxed/simple;
-	bh=N3smNhZadYih1w1qOR8d4UrcS6r6RVojrcCvi80ztuc=;
+	s=arc-20240116; t=1753375512; c=relaxed/simple;
+	bh=NnZeIFS7DPbmhdvg7QWlbtPp5DtPp9y7Z1KtY7NAn3g=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Py4j+FSVR775sV6wD248Fkl/i4i1ichklibCuG32ssBQMqPuQQybIwG2u9P97T2GsyDT7r2IvW1znZ7MSaxzNhl5uyb2PVeOFzevUytvKuUVOfPoQ1yRvJ5w/ClN0wS3OdHhbdhWEuDYk1I/u262JM1MlDqqWz9rHEDpKPIdepg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=r+Skpnbn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TVPQeZO/; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=nrhQdS8WCudYlbAfqo/9LXS4FOMTLo0FbdMllpK+jpmqfgRu0/8ALlExIWTv57ZaIhcjRk5UzP1LH1961ExdbsD9pTMwa1EuaaLngLjAtfMMefBZZ2vsG56kVzj6BZbCMnIoA2Rixgzh1Bj8YKXxiuipqXR3Pq11sT000mcVZQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GoF+q9xu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oIJRbCdB; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="r+Skpnbn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TVPQeZO/"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id D70111D0013C;
-	Thu, 24 Jul 2025 12:39:21 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GoF+q9xu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oIJRbCdB"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0EDB27A0385;
+	Thu, 24 Jul 2025 12:45:10 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Jul 2025 12:39:21 -0400
+  by phl-compute-12.internal (MEProxy); Thu, 24 Jul 2025 12:45:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753375161; x=1753461561; bh=/4lS9ZVhwe
-	u8lVHL4owCYzb1gSQcmBaAM1/APmBW3YY=; b=r+Skpnbn988PTQ5EOgOhNC7ep+
-	ei2yUQvBI0rdTHXMdLf1Z/tXYwm0rq6GM+8rM/oCDUB/LEGzrfELOMglQXdBWV0T
-	UnUWqFWTfPORqzF2Wsu4opbezNSqxQuuAWlZWC2JDHrB6PyNfikRPPE+ub7pnh8d
-	aghLHx4BCKmXNsMewLaLz/t/Br6bdRg0cnLrIFg7Xt63kGAEFnE9B9VnDM8cc/yW
-	jw8M8IiwF/nR0mC1s8XApJiZNFiRGmRvX1niJZ+0TfueFV2bs2YAkHg2+liYfbWJ
-	Q3TjoNrzj5usI9t7vEj8NTHt0jlhHY7SHCcLcDT925XTsByaNopFgjmMUzWw==
+	:subject:to:to; s=fm1; t=1753375509; x=1753461909; bh=NiRfHN3r3X
+	rnhrNCL+VCr14GYGdC3VzxWi1MDal+1O4=; b=GoF+q9xuaDYvqvSvVonNNwmjf1
+	4qP96IJRrp8d4x4XlkV0zjfUSlcleVQe+YHKUMKu9/vC9H1YZ/mvjhn2FaADDxf1
+	yhhk6YXf5pjcfz6WAllXAWBj3uXkYiBgtUB11qNSFHdt3RG8zYgvm+OjzNHW90IF
+	smpuVBaezwhCFpIemVu1jzU4VvMa4y6zMjr95uPA21Z6HwM5zIrV/zX4dxyOTxiX
+	gcfN7403NIgqhs9XNXZUGYbiWbR/VFBE+AQYeQqvWHkSMFJ/eUr3Zz0VBe9ynOxS
+	lz72TUyCijD+FRlWpKgtIz6hVV/bKr1bB8xjx7Zk3t3F0wO6sYSke9zep4Lw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753375161; x=1753461561; bh=/4lS9ZVhweu8lVHL4owCYzb1gSQcmBaAM1/
-	APmBW3YY=; b=TVPQeZO/TGtocdDT1ek+A1sU6SqjvImdCvKeUK77jcWywOqZzLu
-	Hvx2F/1qQJzJmjOZcQiCg80VL7YbR3Wkjwq945Cp7FZI+LreeNHVsRuZH4Nxp05P
-	5x3dAnXOtJFqChCFgYXzs7vgI0UXcR++CUeYQonhcWjIRquoA1I6cxtA3fWB0cLI
-	2/cJ07EjSTe2u+6djt5nzWa8V4PEQmCP+856ivTjXCDw7nQvQpkl+uTXb+NKMhIS
-	IxqB00tYA5cA3HXp2BXaZsBHYIAt87voChd8lSBvvSg0so2gCN9dFd5WM1QX+GWs
-	4lWXjSfVkyC5AxH5v8xCPS5eslKFLUcj39g==
-X-ME-Sender: <xms:uWGCaFtgrb1BMzOsD1i1T__H_kGAPSCvawO-KXl_S9gPIMqEpaFIiA>
-    <xme:uWGCaJDWMbOnCD3GPptbbLbZ_90ppydC7EIzMSNjgu1-guHB9qP9gcdqVbDwbxd2-
-    lON-xhmwAZLOS2h3g>
-X-ME-Received: <xmr:uWGCaFXJ3ZgKY6iZl6dU2eGetinq6Lqvs03GvORXpQXL7cZh3csKGIBM_d4M5ltSDFjcvdGLxGY_qQjo7Nbzk6iJVvFqaJFuAHIM2wk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudduhecutefuodetggdotefrod
+	1753375509; x=1753461909; bh=NiRfHN3r3XrnhrNCL+VCr14GYGdC3VzxWi1
+	MDal+1O4=; b=oIJRbCdBtY/VwZQtNCn8oxpQYD9TFZoRBXYAmnXcj9mzLK8qBav
+	yBr4+BMarS3dG+l1uVALiTM3iekd/19IpV7LulyFRwn1TNQ7i+zY4KLPaTJybcUG
+	1+f5rA9TcCnzRndF3QYGHzcO/bvB/PZupGj/Fr4D6/4TTByjFhP2X9q3KiUkCf29
+	GcDrLAb/s6H7cIo7auW7ysEoZBgOWAup7WXaHpMxORcPxIDEUMFDEfm1zkOixzz7
+	ko+TfKJW8PjZc+AXzphljERuej8LyPiuYO6T1vNW65NpyehY8x0DZjLY7Z3LaMEf
+	rfbXO22CgF2yy8lkp03RO52bzHbp27FsgHg==
+X-ME-Sender: <xms:FWOCaKuXHXFypscJaunFKL6eEJVzjmSk46WN58-LQm4Nuymgj5YfMw>
+    <xme:FWOCaK_Ik34Hh77jvcqCX8oywoyQem4VfyufxWXEvRQQMnni5IEYG5hKTrVFimj63
+    rnjrJ-qxJDrzlEG6g>
+X-ME-Received: <xmr:FWOCaMPWLvR346EQkspQlviBWsqIHt_xV2laff1hInGrX8goNUKrUqsVm9LeU49B6DVa1KGQwjHOhsN8GEI8Eb374JZ0zLn9-SO4mAs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudduiecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougdu
-    vdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:uWGCaPBM7lZhCiOdev-_70ier-u7P-NJWAwGw7Am2UHlsv6W-WCmJQ>
-    <xmx:uWGCaA-wbHgjGE_tZHXLh3bbfkRA9NOKmbTWHDadwLqxbJzEBd4Znw>
-    <xmx:uWGCaOGDM8RF4EBZB8oP6eFA1qnGvkxkY8kOe_vzDVS2bC5bq45oWQ>
-    <xmx:uWGCaGMzBJ9XjNpI94A2jQRB5qaTNWqf0kUrdgdaqGcETUQzc37NEA>
-    <xmx:uWGCaF8TUXb0rIUBSzWjQjDnCTKI-T-gs3W72hyVDSreAXCRoLgDNo-n>
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhlthhosg
+    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FWOCaAFgvlf2UoXIYPx8rNJBzMEhCcGKMWBZOq7T_8weuYckHmtBNQ>
+    <xmx:FWOCaCQgOMkayB9Rz_dxlgS5UZOQDTEYJ9loAbUC1RPdACphkv65tw>
+    <xmx:FWOCaFtPL0lOYD3OjCnmT2XHvrw8TEstLam_A59RoKo31ONh4Qwkxg>
+    <xmx:FWOCaCLNxbMSbaoJeJHjML16GSo0R2Zv_dK-YsavT4Z0iuTFaeqk1Q>
+    <xmx:FWOCaLdMIz4C1vZcy21wUJxhhpa076Pszn0y-YdMa6fCU3Ly5vvir9lx>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 12:39:21 -0400 (EDT)
+ 24 Jul 2025 12:45:09 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: document test balloons in flight
-In-Reply-To: <aIHY-PXYYzE8JULj@pks.im> (Patrick Steinhardt's message of "Thu,
-	24 Jul 2025 08:55:52 +0200")
-References: <xmqqldoen5v3.fsf@gitster.g> <xmqqecu6n1pt.fsf@gitster.g>
-	<aIHY-PXYYzE8JULj@pks.im>
-Date: Thu, 24 Jul 2025 09:39:19 -0700
-Message-ID: <xmqqms8tilvs.fsf@gitster.g>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  Karthik Nayak
+ <karthik.188@gmail.com>
+Subject: Re: [PATCH 2/8] builtin/reflog: improve grouping of subcommands
+In-Reply-To: <aIHj4NWr3M5lXLtD@pks.im> (Patrick Steinhardt's message of "Thu,
+	24 Jul 2025 09:42:24 +0200")
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
+	<20250722-pks-reflog-append-v1-2-183e5949de16@pks.im>
+	<32gvkjmjz6otqwpaxafmz5xuznowhn4iwcdyn52qhbvzohyih4@oeimg3xvqj5u>
+	<aIHj4NWr3M5lXLtD@pks.im>
+Date: Thu, 24 Jul 2025 09:45:08 -0700
+Message-ID: <xmqqikjhilm3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,36 +92,35 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> On Wed, Jul 23, 2025 at 12:31:26PM -0700, Junio C Hamano wrote:
->> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->> index c1046abfb7..0776d15a95 100644
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -298,6 +298,14 @@ For C programs:
->>     . since late 2021 with 44ba10d6, we have had variables declared in
->>       the for loop "for (int i = 0; i < 10; i++)".
->>  
->> +   C99 features we have test balloons for:
->> +
->> +   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
->> +     compound literal syntax, e.g., (struct foo){ .member = value };
->> +     our hope is that no platforms we care about have trouble using
->> +     them, and officially adopt its wider use in mid 2026.  Do not add
->> +     more use of the syntax until that happens.
+> On Wed, Jul 23, 2025 at 01:14:19PM -0500, Justin Tobler wrote:
+>> > @@ -404,10 +404,10 @@ int cmd_reflog(int argc,
+>> >  	struct option options[] = {
+>> >  		OPT_SUBCOMMAND("show", &fn, cmd_reflog_show),
+>> >  		OPT_SUBCOMMAND("list", &fn, cmd_reflog_list),
+>> > -		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
+>> > -		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
+>> >  		OPT_SUBCOMMAND("exists", &fn, cmd_reflog_exists),
+>> > +		OPT_SUBCOMMAND("delete", &fn, cmd_reflog_delete),
+>> >  		OPT_SUBCOMMAND("drop", &fn, cmd_reflog_drop),
+>> > +		OPT_SUBCOMMAND("expire", &fn, cmd_reflog_expire),
+>> >  		OPT_END()
+>> >  	};
+>> 
+>> Structing the subcommands order in such a manner seems sensible, but I'm
+>> not sure the pattern will be recognized by others that may add
+>> subcommands in the future. Maybe we could leave a comment that mentions
+>> the order?
 >
-> Nice. I like that we now have an explicit deadline for people to
-> complain about this feature not being supported on their platform.
+> Hm, dunno. I feel like it's subjective where to add a command anyway, so
+> I'm not sure that a comment would be allt hat helpful.
 
-I do not think the firm deadline has much practical effect.  Test
-balloons are designed to be placed in a stable and non-optional part
-of the codebase that is exercised by everybody, so even if your
-update cycle from your upstream is once a year, you'd have four or
-five major releases to try building and noticing that your platform
-is unhappy about them.
+I'd agree on both counts.  The only pattern I can see myself is to
+have read-only operations first and then read-write operations, but
+even there, the choice of "is it read-only?" as an axis feels very
+much arbitrary (another obvious one is to list from the everyday 
+use to less often used to finally only administrative ones).
 
-So the only effect it would have is to smoke out truly slow platform
-maintainers; if their users are happy enough with such slow upgrade,
-they have lived and they can live with versions of Git that are
-years stale that we no longer care about.
-
-
+If the read-write operations are ordered by severity, I would place
+expire (affects only stale entries) between delete (affects one
+entry in a reflog) and drop (deletes the whole thing).  But that
+again is fairly arbitrary.
