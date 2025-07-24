@@ -1,138 +1,142 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E13AE2367D3
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 22:14:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE9B2E36FD
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 22:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753395249; cv=none; b=uiKTmJUpL+rdCdSAwdWKjJuSJCOFibb4HxDhlnDOTtkyKSYIuNz/aVwOExGF/+HRXrud5Z3Ifh7jCVw6oohex76X6bOggh5ymJxsVIC1BUx3sPFNK8CduHcm0C+kGRePuKfmUxrGRWB9/u1+6LZLe05UzGBL8khuwHPbQ/TPXig=
+	t=1753396231; cv=none; b=Vyp09PT9qzDSY+lRbUL8Wr7R88qIGf2Jg2RqXFLq+KUy2RJnVGFYK+kC0tamhYmH9YuCATen36MxwGfOthOcGyhUH3LGhOZpnIqkU1l+f+0WAgwpd05JGMbMMn7vkK8Or4ycTVdCRNYXzaN9Dse+TTPHaMlrCLaKkn7yfEhK6UE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753395249; c=relaxed/simple;
-	bh=aEvXErt8CwSN9llc/yHRGWX8jAyKLOZFSEukCHhXmLQ=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lfffooA48X9nlKv23DIJNFqvauOMP2HMcv+MM/HiJSYhuwt8BRIvZs84Ym+FQ0dSOHx83xPRjUGNU8qET1NPPjvYtp5g0YLmqZnob9z2gNwvmh0P7s8RCtTui/I3EdP4/U3sm7zszbwBYkJHVTesUTUL4XTcGD+avtJ5dPuB8KQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JBNT0b6I; arc=none smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753396231; c=relaxed/simple;
+	bh=OK5J2mSa71aYALBwxG5U79noFzUXqe2wxGgbyh6GWpQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=civMH9jfp+ntnd9hHd65/w+sCWxLvKw/BM+IaEC1nFtroKnZajM/nS8ULLBxmDKjLDUFcuq2cdyHFoWhS2MeiDCGbBrClxKU+ezB9BivgW3HvyGGPFBkjKE36I5ggAWpsJx6m0KF584Eesz8Sr3GZFEPQgZG0rjIbKXfD124ybk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F3UCwFvi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=I8N3r6fv; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JBNT0b6I"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4e80d19c7ebso1003822137.3
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 15:14:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753395247; x=1754000047; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=lGP0CyJxPjxnBZqSuvDpEsJWtqiJuZhX+QdYp4eoEgY=;
-        b=JBNT0b6IUVk574S0cfHiZ1xVSN1S7UCXrhQad4mqhBNLhWmgSgiV3HSW7cwP6QY5pM
-         D5d1oQnOOJxbKH8o8QuFHPi4JOz/ZXIQsZr9/e3wBazQptba3ZzeZTDT2y2zqAKQBcLa
-         VhUB7rVn0sHeSSXiOu1Gze/dO85M7etB4uxDsPuQXVBu9utqT3Rx8mpZScY4OmViFles
-         31G0X+RKWuzH+GwEF2UwnBN+YcZXdA4G+qVD+rN8/4gqZ3ylh3Sc2N8D1is0Ipjd2HTv
-         StostSxOeTBCnPxGUSGqWiFQ6VO8HKua8IzSc/4nOVI1pt3BtEHW/o8lSOFdHGqlkvLS
-         VEmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753395247; x=1754000047;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lGP0CyJxPjxnBZqSuvDpEsJWtqiJuZhX+QdYp4eoEgY=;
-        b=DFwcR1JdZuHGmqzjK1fEQubpqbr/+yH5V0cTOpU3R9pPrcUwIWTiR3LmAKtSCQSyG9
-         8ofT58GLXozDeAj1yYC4ognZBTIo97gmY/mH4ycF7rr0dG4kcfbigxYndDmP4ST2K3uD
-         A7FVsR/+NQTdixU0ICSWmjIJ/L2Yj9dKzeP73Ih1Kl+UtAOBlpo6aZGNp/5GB9ERasRm
-         A1xpRsLJZybsyywdyo24OMZTDOBoPHGeK60UOSQ4yXn2WBlhoNKE0kObYEp0Coyn93u3
-         fQJToP2FMb1RT+JcCanSPWbA52JeuJ0P8L3ObXokULjXcpXCrttK3kv8g0bOQ5qVYq1J
-         mmiQ==
-X-Gm-Message-State: AOJu0YxbnGcHPU7mMzbEp1E2keDlMmz/0EjnkNrE3PfCWuO3dIR9aWjW
-	vvi1MRMuU5d4JnqoGtivlYUpFd3hPv6xQZZPU1VHBZpbm1FuDp6GBfvQDB4w+dXFaEIKAJjATRO
-	QJrnrDDUPX3AvRvQk08hSTOK1YKdlvOc=
-X-Gm-Gg: ASbGnctu4zyN88I7K4kzDxN3QaQzRPe1D/l9W1N65NMF8UjY8QjQCXdqNScY2FvTdqL
-	KxWRPKNQLglziUwBKGaeeyVrqAhG7k8GIASPMtBZgXcbP1JlIslGL4ZASpDaLTJAXKC2l604NxS
-	Qh1Xn3u1r2TnIUCkuMr134S4eHzieu4eY5V1bQrViuAVXDdzqzaumSL25dlVB0BRkE8fY8kURAH
-	k8FGURQEmKeKrlNBI+I4oeTVuS5FHe+nK8uUXbHOh6vDYFQ6XkY
-X-Google-Smtp-Source: AGHT+IGH0AOg1BkL3zoIY7TLcqxbDU2YNcQyLww5ie/yikiR0Rv5Gn6y+Oxdey2BAutGE1nkxpneTk5oX9nd1YjW4Xg=
-X-Received: by 2002:a05:6102:e10:b0:4e4:f503:6675 with SMTP id
- ada2fe7eead31-4fa15195167mr4760531137.18.1753395246659; Thu, 24 Jul 2025
- 15:14:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Jul 2025 00:14:06 +0200
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 25 Jul 2025 00:14:06 +0200
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqy0sdh529.fsf@gitster.g>
-References: <20250724-kn-small-cleanups-v1-0-0c70f591de3e@gmail.com>
- <20250724-kn-small-cleanups-v1-2-0c70f591de3e@gmail.com> <xmqqy0sdh529.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F3UCwFvi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="I8N3r6fv"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 961F3EC0228;
+	Thu, 24 Jul 2025 18:30:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 24 Jul 2025 18:30:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753396227; x=1753482627; bh=iJy/XRaswO
+	ltV8YsAQ99nfODPKzFYOer0L6DPomIlAk=; b=F3UCwFvioRQrNbvM/3oQtWS5Ag
+	uJZ6ffxkHNb/hTK8wxx1ETpn4ypmastYkf+hk2EfU9V2fFKd8eKHgYFj19o1zOD2
+	fKZKHozOHH9+OEaIDJbeBflJTiMkFk/JA5T4dJ+aVszzi0wXBpn12ymPB2nPFjeG
+	7GLS2AqWTrNx+4V13qBOEZuoe6gcUBfJaNuLPLF8bNi5kmzfHHWU/XW/M/SVleAb
+	MlIIawMCtZ2AX8U0Zh2n7hwne9POV+IiWaQDNP30Bj/BZBUIS00uJxmOUU082Exa
+	QKPZwrEfjxlY6vilK3UDohvwbiT8oGuJ3qEy88WcJdsEoSG1QkjoDnuilB1Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753396227; x=1753482627; bh=iJy/XRaswOltV8YsAQ99nfODPKzFYOer0L6
+	DPomIlAk=; b=I8N3r6fvpOqn0diaaDj7WUw0aFSuowYP/FV5mx6mqDmht5+2Y5M
+	kylgCM4kb74tlPEu0rU+72EMv3akZWYRXZ1AREUVGHrUDlGs6jl4wURzOyMZRK8Z
+	yA28ur4Rrc2718CzWXTaO0JbTxVOsQ6AWstOzmpVsIaNemkOq99jrYWd7op0HFEV
+	7pxRjrYoOZPUqDF6JSE35FLwxYG/31jnl6K8zIbykEW6+eajHJIkjPMqBsi47B05
+	wuu+Kdsx1i7dfc5gEfQgSWw40TteGLujMdWK+fFpLicBAxW2WDn8CldAszay1KBm
+	14wxzdTWEHt02k+Y9mItkv1MnJwQE82K81A==
+X-ME-Sender: <xms:A7SCaGqozp0NFq0n4OriJBdJDY4eZrsaD29NguXAdQb0dVuLvfWMjw>
+    <xme:A7SCaAKEF6005lSExY-r-8T2uYBu-2M0PwDKPT--mcPjCdPOU9OV7mY0plN04FFR4
+    cO0fHLw60xRHCdkGw>
+X-ME-Received: <xmr:A7SCaBorFsc7WYON_MuNAwtziNJ7CVedOyymbEV-KYTgo4stZmgpE2n5ZjbBte4E86Zo9Lnt05_DYQAQu_Gulv76JT6RtPvW8j4dcTM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudekhecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeikeeufefhtedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileff
+    udenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
+    phgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffh
+    drnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:A7SCaAxzNyyf3dEx3TbGpdH1-b-PSOh0dFrUNIGEjpgvI3sNXW1qow>
+    <xmx:A7SCaNMdBSCSAKQRZ5aJQ0OQIcB09QQ76jW7dYymdjGPVCX3IqAw2Q>
+    <xmx:A7SCaN6Mtgl3eN1wkEfkeN6H5QHlNf98ZYS46839lfjHXtTZds1HRQ>
+    <xmx:A7SCaOmvYn1vtorn-X99EmrFIiMTvrfBnT2HoXK7vA4ct3W0P1RSuA>
+    <xmx:A7SCaPp00fkxxg07dagL21zleSU9wcZrZcJS6SUdmJ2GQ9Q43Z8PviLx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Jul 2025 18:30:27 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  spectral@google.com,  peff@peff.net
+Subject: Re: [PATCH] ref-cache: set prefix_state when seeking
+In-Reply-To: <20250724221136.693120-1-karthik.188@gmail.com> (Karthik Nayak's
+	message of "Fri, 25 Jul 2025 00:11:36 +0200")
+References: <xmqqbjp9ikvk.fsf@gitster.g>
+	<20250724221136.693120-1-karthik.188@gmail.com>
+Date: Thu, 24 Jul 2025 15:30:25 -0700
+Message-ID: <xmqqseilxlvi.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 25 Jul 2025 00:14:06 +0200
-X-Gm-Features: Ac12FXyFzKjFvzQElgiT4Zk2DHDJN0iSRzXu5SjuAfIs8Qdl5ith0g0piUUp-eI
-Message-ID: <CAOLa=ZRvyBK9vVz4+OhLUgAyktdVTb44VC=e8KQNB6BszJ0ixA@mail.gmail.com>
-Subject: Re: [PATCH 2/5] for-each-ref: fix documentation argument ordering
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000d418a7063ab42461"
+Content-Type: text/plain
 
---000000000000d418a7063ab42461
-Content-Type: text/plain; charset="UTF-8"
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Karthik Nayak <karthik.188@gmail.com> writes:
+> In 090eb5336c (refs: selectively set prefix in the seek functions,
+> 2025-07-15) we separated the seeking functionality of reference
+> iterators from the functionality to set prefix to an iterator. This
+> allows users of ref iterators to seek to a particular reference to
+> provide pagination support.
 >
->> Improve the 'git-for-each-ref(1)' documentation with two corrections:
->>
->> 1. Add parentheses around `--exclude=<pattern>` to indicate this option
->>    can be repeated as a complete unit.
->>
->> 2. Move `--stdin | <pattern> ...` to the end, after all flags, since
->>    `<pattern>` is a positional argument that should appear last in the
->>    argument list.
->>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  Documentation/git-for-each-ref.adoc | 6 +++---
->>  1 file changed, 3 insertions(+), 3 deletions(-)
->>
->> diff --git a/Documentation/git-for-each-ref.adoc b/Documentation/git-for-each-ref.adoc
->> index ae61ba642a..a170de4209 100644
->> --- a/Documentation/git-for-each-ref.adoc
->> +++ b/Documentation/git-for-each-ref.adoc
->> @@ -10,11 +10,11 @@ SYNOPSIS
->>  [verse]
->>  'git for-each-ref' [--count=<count>] [--shell|--perl|--python|--tcl]
->>  		   [(--sort=<key>)...] [--format=<format>]
->> -		   [--include-root-refs] [ --stdin | <pattern>... ]
->> -		   [--points-at=<object>]
->> +		   [--include-root-refs] [--points-at=<object>]
->>  		   [--merged[=<object>]] [--no-merged[=<object>]]
->>  		   [--contains[=<object>]] [--no-contains[=<object>]]
->> -		   [--exclude=<pattern> ...] [--start-after=<marker>]
->> +		   [(--exclude=<pattern>)...] [--start-after=<marker>]
->> +           [ --stdin | <pattern>... ]
+> The files-backend, uses the ref-cache iterator to iterate over loose
+> refs. The iterator tracks directories and entries already processed via
+> a stack of levels. Each level corresponds to a directory under the files
+> backend. New levels are added to the stack, and when all entries from a
+> level is yielded, the corresponding level is popped from the stack.
 >
-> Shouldn't the last line align with the others?
+> To accommodate seeking, we need to populate and traverse the levels to
+> stop the requested seek marker at the appropriate level and its entry
+> index. Each level also contains a 'prefix_state' which is used for
+> prefix matching, this allows the iterator to skip levels/entries which
+> don't match a prefix. The default value of 'prefix_state' is
+> PREFIX_CONTAINS_DIR, which yields all entries within a level. When
+> purely seeking without prefix matching, we want to yield all entries.
+> The commit however, skips setting the value explicitly. This causes the
+> MemorySanitizer to issue a 'use-of-uninitialized-value' error when
+> running 't/t6302-for-each-ref-filter'.
+>
+> Set the value explicitly to avoid to fix the issue.
+>
+> Reported-by: Kyle Lippincott <spectral@google.com>
+> Helped-by: Kyle Lippincott <spectral@google.com>
+> Helped-by: Jeff King <peff@peff.net>
+> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+> ---
+>
+> Here is my version of the same patch!
 
-Indeed, I blotched it up somehow. Will add it locally and wait a ~day
-before sending in a new version.
+Thanks!
 
---000000000000d418a7063ab42461
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: be69d2d29ddf2ed_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1pQ3NDd1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meE02Qy85azNYTVZkdTlrSTVXZVJVS3h3cVcyd3RuUwpzWW5xUnlOSWlt
-eFN1UldCbjdYWXYrbnZweGl3V1YvV0Z5a1RpdHNrWDRKRFpaQWtvL1pVcFNCODN2ZFFDWGJ0CjNj
-eFZ0TGdMcHNLeGcvQzRjbDJONmNyZHdnT1lIRWFuMWxvTWhINDlaYXF4TkpxTG8xc2oyRGYzOXJ0
-SSt6aG0KU3ZJTTEvd282eWRrcVlXbis5b1FGMzhGWFJsWjRDZ1hyS29yVFAwNjBVbGNBUnBDRStn
-VGYrTlIyR2ZWSmk2YgpvOC9rS1RwQmd1WHkzN0pFRDlKUnMwNmJJOXBPVHlYK3JUWEg2Q0hrSm4r
-N0ptVDdPQlkzVjQ1VnVFM1RTRmx2CklDdnRQbDByNGJFRk1hQXZWb2JxUUtWcU5CVWtwUVNlWkdl
-Q3ZyOWt2akpvUXpLbW1mVFl6d2RKV3kzTVZUMXcKTEF2OU40VDRIOFVGRUF0dFlid0cwdjNOQTkr
-bTk2aVR2U2YwMUxwTzJFUk1EOHNuNlpRSmgyZzVJa0p5Qkh6WQovRW9yMzN4WFgxeFJLTVZzaE54
-RFVFUStQWSthcmkrQmIwL1prSjF6ZkdXcTFGdkNjaVY4OGJTRnJWUWx1U3Z6CktUU0lGaVBGczd6
-WnB1cXY1a09HMzlnQWNSU2ZpYXg3U1YzcTJ2TT0KPW5hdWQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000d418a7063ab42461--
+>
+>  refs/ref-cache.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/refs/ref-cache.c b/refs/ref-cache.c
+> index 1d95b56d40..ceef3a2008 100644
+> --- a/refs/ref-cache.c
+> +++ b/refs/ref-cache.c
+> @@ -527,6 +527,7 @@ static int cache_ref_iterator_seek(struct ref_iterator *ref_iterator,
+>  				level = &iter->levels[iter->levels_nr++];
+>  				level->dir = dir;
+>  				level->index = -1;
+> +				level->prefix_state = PREFIX_CONTAINS_DIR;
+>  			} else {
+>  				/* reduce the index so the leaf node is iterated over */
+>  				if (cmp <= 0 && !slash)
