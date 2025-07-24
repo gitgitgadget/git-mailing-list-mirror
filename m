@@ -1,84 +1,84 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD1E26B95A
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 11:35:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1B2274665
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 11:58:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753356948; cv=none; b=cZ92qwGQopXvwJUzvduqhMVzWnn3VZnPgzGDUYZ77X3yTHBk1nDDD3b9gnUwD+MBJDZPQ/lVelJBuukfwGNjTMbkWGcI54vxOK0GGk3T4AdDGROC9hKfi492Bz4Oixuqte39ec5Y/R2AgNYAjRAu28ggju6M2l6zMNIEi9Zq+Aw=
+	t=1753358327; cv=none; b=nLiYoURiwiT09GlNJaJguWH+eRbPXs5zihfdkESFglCGO+rij9T3aLbytfYPpdzImwn8GZHOj/+ZNkiX4XRg4AC455IcNsFPC0CIf51nCViqNgMmK+UBFvv5ouRxoLuWUKzklOtzCAGBwGEjfxAKul1M2ieWCeULRthJIDguSp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753356948; c=relaxed/simple;
-	bh=DfMb7amshUtM5RpATJCbLG7yKjKkL1UJ6zG7QDTQd3w=;
+	s=arc-20240116; t=1753358327; c=relaxed/simple;
+	bh=jbvVGxV5Fke6vWUGphrLyvVzj3vksYRcJxVFb604x1w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=b0JSOnOZExXF/bHgvwC7FQmytVrvCmHQ840IHt+enqCoiMvDh5Ke7ECBt7SSqNGCg+Y3Zhg2IdKF1TLrhlWTBbd1ecDdNaPBx9RHWITXkdq/TLZhAxiG5v4DX2ZBdfvQIG0LnhSdnZNk+/qUEbMIV50ILaKGIBl8L/cDIXl5H28=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t/lsWgcb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VWuw9kr6; arc=none smtp.client-ip=202.12.124.159
+	 Content-Type:Content-Disposition:In-Reply-To; b=gICa9F1V7LP6BAZ8cTYm1rkqDI4+IqRrD1oUdoYdCMhYXEmk9PoYvCGi8evsQtX1D+qMso1zNNLC0r8GOvDIV/ZQarpxCf6Qb28keBih526oabciLfZZecIQ2a9UFeIJrgw3mWx2g3kzAvAIVXcxqbX9/mIb4BNE/yvsIkBUFY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QBfoE6yZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S+JH37kd; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t/lsWgcb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VWuw9kr6"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4ECF67A0135;
-	Thu, 24 Jul 2025 07:35:45 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Thu, 24 Jul 2025 07:35:45 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QBfoE6yZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S+JH37kd"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id D81701D0013C;
+	Thu, 24 Jul 2025 07:58:43 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Thu, 24 Jul 2025 07:58:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753356945; x=1753443345; bh=Uupzg6peYh
-	OKUg9wpz3fQtKypT5LiSMWKnuA9afUHso=; b=t/lsWgcbZVpx25GJi5zqGlQ3xc
-	IMy710KQbrLDo8jCddxGcshz0sUDjkXSIw/YXYAF6wfARdctRjAC8jjW/5wow+2J
-	oRgZZ0IsVtjgUhu7wVyNZjklFvK6erOqV0kFvNIw86jup3Y94C20RCEA8416QlKD
-	zLwcAI7mddfS6TbUDRgFLiRFIRXghnuypj0Gi3HMUimI3FAKQdUj7Axh91M0ki2K
-	QAdOGFohdARsykRz7BRYEqMH6pJQ6M0vntA+fdjYZ2e/OUfiVqiNr7fMckkrx+VO
-	vZJzKrhiJnzuPgQt5VKELHstpbpyemDiGfXCzUcBk0gvZUEmaNyNA+Q0YjJA==
+	:subject:to:to; s=fm2; t=1753358323; x=1753444723; bh=1MpxJk3a3Q
+	L4qAnKQ7MxpBQirOCamSwHPJct14KGVEw=; b=QBfoE6yZqdrS1ARVD0UoNYW1Hc
+	dG2cK2yalzj2bvRbiyZSBlkpzKNqmAuE7mRuqNIfT6MLIAq9XTlX5YcJ3bRSGRtc
+	MIWosd/AprpU+et/zXSXGJr1wH60RyGU8n6WuuixCHX2CwJ4U9mhsY7wFBLaC+Y4
+	F9ADt56ER3/BxEyEgp3CtmA6un8Eaq9cWAlnNoC2UKCJnR27prFb59Y8Ha3MSjpi
+	eJMnD0NxHfAoDVGkH2v8Dg3dvu+Nq1FtXfVALpJaVvTQWvKLw+n/F7klYr5lAZic
+	AiAAIJOMkc4AE0Q0yYrJN6nRI6pH51gcZqMgktXiiTQl3yIqnNn7w7USoqdg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753356945; x=1753443345; bh=Uupzg6peYhOKUg9wpz3fQtKypT5LiSMWKnu
-	A9afUHso=; b=VWuw9kr6GUr6KpBIvgl8xDmkTSA7IAf52Jug5WyGzPVZY0LQHiV
-	XFJuDpZ1tYsW4ONky73+JZqX09Pr39qxwHNw+hYFMU5jZgAJmH4zixGOMUXBYkFM
-	qJ1hK9yO9kBzd0trRkp2i43QTfGySNEuUqGysev0In3OjViGAA/tbjW8CJhJm8ni
-	C73dzOzqh+p8lrBqlMT7b/YApJY2zSCKLf08uASS45+npya45fqLWXc40oxaZXjG
-	2xUMiawJeyzBvcq0aYgQoIOyt2OV5WyCRvusbu2dsqX5IP9J3wPX4N0BfV4aoN+w
-	H+DaJZJ4QtOHV7wh2zlC/2jACHigCMppcFA==
-X-ME-Sender: <xms:kRqCaAcA-duJEoFWBRy_YAb0Lbk1_oGWS8EDUqEHIdN96-YhhLKIbA>
-    <xme:kRqCaCZDyKvF4DP7X4BoHI20hv_IgywyiLIkAsRV-uAS_Pr7Y5TvWJ4lo8r2WsGxM
-    mbci5wlnoy2gXBntQ>
-X-ME-Received: <xmr:kRqCaDUEexMvgwpqrxjldDi_2uZSHYmPSVAgF5BknAPCMIv8wa094VqTkXwA5HNou_lLd1V_w05FnIrvW4JRtlGG3d0y1lSmCfTf1BjQyTs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdektdehhecutefuodetggdotefrod
+	1753358323; x=1753444723; bh=1MpxJk3a3QL4qAnKQ7MxpBQirOCamSwHPJc
+	t14KGVEw=; b=S+JH37kd0Ksg2kRHrM6cPRhu8rbHIVIrbrMavNFpNDyqPLAuNKH
+	kUaOECQC4A90al5Ejv37yPFUwRBW4an2duJna07JKiGCWUe1zsgfh3JJ1pll4ArE
+	RsdxM4nC2UZn6DxHrQ0I7WuyQvmAEvzVRpY/DPVNMzycbWiBDOimeuBUcAb/5R0P
+	8uQucewFKq7xxOj/cXHIsUstX51hAZ42qjbvfGcDSgbxWkKI8KdH5cVrfFnQgqC6
+	zlObOYt7QW3linmURrV8pvMKSjMuOqwadMQYvLCWpDaSeTC49ijNU34xJ+/wVFsZ
+	TQNMyLhqHTdF3tJ6i+yoAIM4LSCdRW0S0zA==
+X-ME-Sender: <xms:8x-CaHaZsSiGFQzyCjcYRfLuSRHDRNuI-Z9_xN8XfM2XjOOdlFHpcA>
+    <xme:8x-CaJpjxOQJFfPFu41drk8T8_a5RAT-OOpiecNpK1HrKzV7ZPE_cbQIiqOFzDOQO
+    EaTikPiIR3D9h7bEg>
+X-ME-Received: <xmr:8x-CaDZI3R_GVK1cDrLLrI13n6rq52VToh87HObkX3vO4EqBFfJPMssHc1ukYgFKqKw20-Iw9VjJrzqGPSIgKbC4efLN_YLlLQR6NgNmjSk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdektdehlecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghk
-    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
-    evkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
-    drihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:kRqCaEjmypER3-zpcUtbqWs7l7R6VdU5-eoEuGMazeKmJkSH4RgTXw>
-    <xmx:kRqCaBWoQLZy8g8ubAFcpi-9XDHyES3cZGGtEM2JdKyYWoNvjqmP5A>
-    <xmx:kRqCaLMhe7WPtGRYVETwpHwuTN0ggBkxN6ITSwB2DEh8QXDHrswVIw>
-    <xmx:kRqCaNYiiuIbA-2F9hwX_Fk3YK1izYsIVsisaXubWfCFnU5GenwGQQ>
-    <xmx:kRqCaEv1Y0LyFUz2k85zFAYct9uzQ8v2f81Xr5H710Vv1Etum3WvdZsq>
+    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
+    dtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhs
+    rdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhe
+    fgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
+    thhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:8x-CaJS-QTAg8QFCZw53z6tV9FxBjdcHWLLWCf991S-rp9zJyScRXw>
+    <xmx:8x-CaC6eOLAmtvOiX7mEczz8MJBiBi0Azce2QdOFLlxHvy0KnSVLyA>
+    <xmx:8x-CaGy3cwpB9nGUP3R_a398TUav2oLI5jVLaKaPQzvENDdRm9isLQ>
+    <xmx:8x-CaJThzox3fMIB7GbR25_8JhDaqjxBvX0LZq-OBmWqLCGOE_jRGg>
+    <xmx:8x-CaHRMRlzZmvZxmNuoF9Gf0jSGuHIIth7bjbNjgNW2ActKvgS3ncEz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 07:35:44 -0400 (EDT)
+ 24 Jul 2025 07:58:42 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b770ab5f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 24 Jul 2025 11:35:42 +0000 (UTC)
-Date: Thu, 24 Jul 2025 13:35:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f637708c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 24 Jul 2025 11:58:41 +0000 (UTC)
+Date: Thu, 24 Jul 2025 13:58:37 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 7/8] refs: stop unsetting REF_HAVE_OLD for log-only
- updates
-Message-ID: <aIIahlqPJSn_ZVYl@pks.im>
-References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
- <20250722-pks-reflog-append-v1-7-183e5949de16@pks.im>
- <CAOLa=ZTRGyypAMcevy2+CMbKQWe5PFqZrv9m5mOeaOAJSDV4kg@mail.gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: Han Jiang <jhcarl0814@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: `git remote rename` does not work when
+ `refs/remotes/server/HEAD` is unborn (when right after `git remote add -m`)
+Message-ID: <aIIf7S5iPspktxdw@pks.im>
+References: <CANrWfmQWa=RJnm7d3C7ogRX6Tth2eeuGwvwrNmzS2gr+eP0OpA@mail.gmail.com>
+ <20250724104536.GA1316505@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,48 +87,122 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZTRGyypAMcevy2+CMbKQWe5PFqZrv9m5mOeaOAJSDV4kg@mail.gmail.com>
+In-Reply-To: <20250724104536.GA1316505@coredump.intra.peff.net>
 
-On Thu, Jul 24, 2025 at 03:21:30AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On Thu, Jul 24, 2025 at 06:45:36AM -0400, Jeff King wrote:
+> On Thu, Jul 24, 2025 at 09:59:45PM +1200, Han Jiang wrote:
 > 
-> > diff --git a/refs.c b/refs.c
-> > index 64544300dc3..c78d5be6e20 100644
-> > --- a/refs.c
-> > +++ b/refs.c
-> > @@ -3310,7 +3305,7 @@ int repo_migrate_ref_storage_format(struct repository *repo,
-> >
-> >  int ref_update_expects_existing_old_ref(struct ref_update *update)
+> > What did you expect to happen? (Expected behavior)
+> > 
+> > `git symbolic-ref 'refs/remotes/server/HEAD'` outputs
+> > "refs/remotes/server/master";
+> > `git symbolic-ref 'refs/remotes/server2/HEAD'` outputs
+> > "refs/remotes/server2/master".
+> > 
+> > What happened instead? (Actual behavior)
+> > 
+> > `git symbolic-ref 'refs/remotes/server/HEAD'` outputs
+> > "refs/remotes/server/master";
+> > `git symbolic-ref 'refs/remotes/server2/HEAD'` outputs "fatal: ref
+> > refs/remotes/server2/HEAD is not a symbolic ref".
+> > `git symbolic-ref 'refs/remotes/server/HEAD'` outputs
+> > "refs/remotes/server/master".
 > 
-> Nit: Wonder if we should update the comment for the function to reflect
-> how this works with reflog only entries.
+> Thanks for the report. I can reproduce the issue easily here. Probably a
+> simpler reproduction is just:
+> 
+>   git init
+>   git remote add -m whatever server1 /does/not/need/to/exist
+>   git remote rename server1 server2
+>   git symbolic-ref refs/remotes/server2/HEAD
+> 
+> The problem is that the branch-renaming code in git-remote is not
+> prepared to handle symrefs that don't resolve. This seems to make it
+> work:
+> 
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 5dd6cbbaee..478ea3a80c 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -630,7 +630,9 @@ static int read_remote_branches(const char *refname, const char *referent UNUSED
+>  	if (starts_with(refname, buf.buf)) {
+>  		item = string_list_append(rename->remote_branches, refname);
+>  		symref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> -						 refname, RESOLVE_REF_READING,
+> +						 refname,
+> +						 RESOLVE_REF_READING |
+> +						 RESOLVE_REF_NO_RECURSE,
+>  						 NULL, &flag);
+>  		if (symref && (flag & REF_ISSYMREF)) {
+>  			item->util = xstrdup(symref);
+> @@ -835,8 +837,8 @@ static int mv(int argc, const char **argv, const char *prefix,
+>  	 * First remove symrefs, then rename the rest, finally create
+>  	 * the new symrefs.
+>  	 */
+> -	refs_for_each_ref(get_main_ref_store(the_repository),
+> -			  read_remote_branches, &rename);
+> +	refs_for_each_rawref(get_main_ref_store(the_repository),
+> +			     read_remote_branches, &rename);
+>  	if (show_progress) {
+>  		/*
+>  		 * Count symrefs twice, since "renaming" them is done by
+> 
+> That is, we need two fixes:
+> 
+>   1. When iterating over the refs, we need to cover _all_ refs, not just
+>      those that fully resolve (there's a related bug here: we'll
+>      silently ignore an actual broken or corrupt ref, whereas I think
+>      the right thing would probably be to try copying it and then
+>      complain loudly if we don't have the object).
+> 
+>   2. When resolving each one, we shouldn't recurse. We're doing a
+>      shallow copy, not a deep one.
+> 
+> Reading this code, though, I can't help but think that the recent "git
+> refs migrate" command had to deal with all of these problems. I wonder
+> if we could reuse its code. +cc pks for wisdom.
 
-Yeah, let's.
+I'm not sure whether we can easily reuse the code -- the use case is
+quite different, as the migration works across two totally independent
+refdbs. So all refs are recreated 1:1, without any renaming involved.
 
-> >  {
-> > -	return (update->flags & REF_HAVE_OLD) &&
-> > +	return (update->flags & (REF_HAVE_OLD | REF_LOG_ONLY)) == REF_HAVE_OLD &&
-> >  		(!is_null_oid(&update->old_oid) || update->old_target);
-> >  }
-> >
-> 
-> Okay this is check now says, if this is a reflog only entry, we don't
-> expect the reference to exist.
-> 
-> Nit: I wonder if can make this a bit more readable, perhaps:
-> 
->   int ref_update_expects_existing_old_ref(struct ref_update *update)
->   {
->       /* reflog only entries may not match on-disk status of a reference */
->       if (update->flags & REF_LOG_ONLY)
->           return 0;
-> 
->       return (update->flags & REF_HAVE_OLD &&
->           (!is_null_oid(&update->old_oid) || update->old_target);
->   }
-> 
-> I'm okay with the current version too.
+But it certainly seems to me like this whole logic could use quite some
+love:
 
-I think yours reads more straight-forward though.
+  - We create N+M*2 separate ref transactions, where N is the number of
+    direct remote refs we need to migrate and M is the number of
+    symbolic refs. This is bad with the "reftable" backend, but given
+    that the N transactions are all renames that have to delete the old
+    ref it's even quadratic in the worst case for the "files" backend
+    because we may have to rewrite the packed-refs file for each such
+    transaction.
+
+  - It is way too brittle, as the update isn't even pretending to be
+    atomic. We first delete everything, and then we recreate it. So if
+    any of these updates fails we'll be left in an in-between state.
+
+  - We shouldn't have to even call `refs_resolve_ref_unsafe()` at all,
+    as the `read_remote_branches()` nowadays gets the referent as
+    parameter.
+
+To demonstrate:
+
+     $ git init --ref-format=files repo
+    Initialized empty Git repository in /tmp/repo/.git/
+     $ cd repo/
+     /tmp/repo:HEAD $ git commit --allow-empty -m initial
+    [main (root-commit) 00c2622] x
+     $ git remote add origin /dev/null
+     /tmp/repo:main $ for i in $(seq 100000); do printf "create refs/remotes/origin/branch-%d HEAD\n" $i; done | git update-ref --stdin
+     /tmp/repo:main $ git pack-refs --all
+     /tmp/repo:main $ time git remote rename origin renamed
+    Renaming remote references:   0% (2216/100000)
+
+I stopped after a minute -- this will take hours to complete.
+
+So I think we should adapt this logic to use a single transaction.
+There's one catch, as refs_rename_ref()` also migrates any reflogs that
+exist. But with the recent infra that Karthik has added we can now also
+migrate reflogs, so that's all doable.
 
 Patrick
