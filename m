@@ -1,74 +1,91 @@
-Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244522E92A8
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 16:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC76422083
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 17:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753376120; cv=none; b=BYbQ1VWGZSCXgsUCE31z9UHcRKYHbD7Ng62pnm3pieukFrOIoQ5VM4cyL22bZJPZQygBqGr7kLYDt0ltWi5p+VpUbJ+bwRkV0tKY4VdOx0w6D22nUojExKBh1x/QgMMaii+ttO/DrhM720EA37r+WXmRk3U4yNAUIksDa1Wr0Fg=
+	t=1753376469; cv=none; b=oF8DYbptCaZNHH1jxfpgMbLE7eem6BIqrqGEC/K+TBGyvq59eCTwS0DZWP05jeuzea3ndHq2mTm95/6rVRTJaisb/E+IaH57ceZNpbM4ctkARIscHr8/LPfimVy3OhHCJeCma8wc4aIteG7bDBWrfRvjEdeQvzjMYIdTVEupxrc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753376120; c=relaxed/simple;
-	bh=e4BIfn7XC2JrfM++lC7I89lUSke0HPzOabsrDVRgiwE=;
+	s=arc-20240116; t=1753376469; c=relaxed/simple;
+	bh=saafg8xRxwZfRCcci/ojnEnpWC7Z8O+GmzxpcoJQOxQ=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L506OU6E0PLwREHipP/aqhhUe+OgWNH5ER94T28K6DE7gYCRBGNkTZIEILErSdyN1b/3W9goFdI5raATim+vN5K8wla6HF+E/6V7qtv69asufKohecaJNS4md69GUG328j5g/4SQyb8dwtMmiR/Y65LtwDtZeNqCR7zztTTYq5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YBYFnglI; arc=none smtp.client-ip=209.85.214.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 MIME-Version:Content-Type; b=LGbGDq91FbCpf5V+3oZsT3lyjXcmIH40TjtzR8DOHAY3bwkDnd7ugn627jiw/MWt5oOcNlTGQqqgg2Aj6hheu265AGKeueXWVUPRr4dwyd1LOmT1bpEA2p/ZoYWqEHFId+rU11E/8DHFbbAty1PO4ClleZ/Q2SJjhVPXHWrwL0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gpwR6NoU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i8mxg5Um; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YBYFnglI"
-Received: by mail-pl1-f182.google.com with SMTP id d9443c01a7336-235ea292956so11333135ad.1
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 09:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753376117; x=1753980917; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=VyVI+gx7araKVk8obJg6ix2Qe5N0ikZxZ3mxaMmmqt8=;
-        b=YBYFnglIAZMGJmd3PwNyLSjAg0fcIcof/DYJ5NtWeyEsmgFPKVPx6g2z/7Q8Gq6z5h
-         WmS3EL3dxsLp3Nu1erMWFht7vq66UMAO0UcT9tD/ksAZcr/lT7U4d6t5861hQlK59+ZY
-         g8vsn1T2Cv7jolQxGTZInzQkV5fMHAN9Ud7hdI7GX0PMpa6dbEjkctlSkPb8QPnjuPTp
-         2ghmy8CF49/kn9Kv+4LGDwC6204jCHK1x2v595+nn53h0p0yqktDj5Cf51KnSbOPo6+r
-         SeldJtzl0WXMqMaXLTEv2qgBFgTDdRljQjLaoDu3c1r7Bu7XUpwL/pvE3ZXWhJAKiigE
-         dYdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753376117; x=1753980917;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VyVI+gx7araKVk8obJg6ix2Qe5N0ikZxZ3mxaMmmqt8=;
-        b=dNuirpVQPhAT5HQxtFQqpzH042df0TWBg+FUAyb61D1LwnlYqt54aioW9CxYKqqe/A
-         9Rt8obus0K9XWW7L7nrhuBkTf9BGxEqfqa2QZqzU4Xr5EiBOQznww+pa17JzXaQIuMEg
-         AEHEdF3RCafucmIIYnNBhmsnEl9zy7RW9BjRNEJgc7AVs/Doco419U5n10L2ojeVaGVb
-         mNK+N21NgTbPr+2gOMbQkM5nJNSyT3m6x1e88UlsI9lfzdxbaR8cvJgqiL+bIdExE/53
-         fcJw5ebDpDMXc/mnoC0D1epYdhkKoD6n5bada4q9kd8BDkUO3InYjoJI/sg/EBl3o5SB
-         wgQg==
-X-Forwarded-Encrypted: i=1; AJvYcCUiUoiQJSMnZFGZXPWIZ0DWXN5EQeFr9Ri/aWoL7HkBG+WLmk5ixZRZyIMWi28+xAd8YAM=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwWMrv8VF5FPsVKcdf3VrEoOP2eL+Ry1a3k7J9HOAhMa/ObNklv
-	4sGXsVETkv6yKqgjftKci5FPaE80HvZFbKjgRTQreuzzjMjwQhz2PbSy
-X-Gm-Gg: ASbGncvLSL95iqJaK8BbHwHvUdMmGFXmZ6z7MQKnbmtdcHfjSROpyPU6smFn5j9dTgQ
-	U7VfEXQT8nZae942Fij6GHKymxXyn6sSmSf/UKGFkDGDqVu2q5MtQ8+yRV7ohjxkQ6zsI1jvXVO
-	6DCyYjcna80X+L784DEw0gYganL0IodVCATxDvkyuOeYR/nv1s5GP9ogGP4zc5oGuSE6r42hw/t
-	2jELI3QJF1PPdYszGyxxuxEBVawXi7js3oc7GEvzZwvW+y/Bhm7MR4+7rHpefMc+8C7ZOTmsRtZ
-	+y1xJSpM59e2Pv+molk3avTcaZwoAuMDrxaGJO/ftVV08aWzwGBVxdLIF2a0XkFVdOvXRbPKAiv
-	bgfG6oq+gSuWKUYwqBqR3tdHlC3/cGIuJ4CDk5C17aX4E8pYjI+wJuUZ521jrS3iQtH0+rfC2iJ
-	k=
-X-Google-Smtp-Source: AGHT+IEiJNKMU8vuC1YuOuaNF6nVv6baTTjNyoMEGKIvLA0o5Sk2030vMmj/9h0sOc1QGRSUpzR2Eg==
-X-Received: by 2002:a17:903:2f92:b0:235:ef87:bd50 with SMTP id d9443c01a7336-23f981d23d8mr131500505ad.45.1753376117462;
-        Thu, 24 Jul 2025 09:55:17 -0700 (PDT)
-Received: from XTHCYRY1WD-Collin-Funk (redis-162.tisch.gvad.net. [207.135.66.162])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23fa475f38csm19849685ad.32.2025.07.24.09.55.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 09:55:16 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: document test balloons in flight
-In-Reply-To: <xmqqms8tilvs.fsf@gitster.g> (Junio C. Hamano's message of "Thu,
-	24 Jul 2025 09:39:19 -0700")
-References: <xmqqldoen5v3.fsf@gitster.g> <xmqqecu6n1pt.fsf@gitster.g>
-	<aIHY-PXYYzE8JULj@pks.im> <xmqqms8tilvs.fsf@gitster.g>
-Date: Thu, 24 Jul 2025 09:55:16 -0700
-Message-ID: <m1seily1e3.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gpwR6NoU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i8mxg5Um"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id ABEAD7A0A4C;
+	Thu, 24 Jul 2025 13:01:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 24 Jul 2025 13:01:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753376466; x=1753462866; bh=U6rk6J2io/
+	Y33X2IKrjt/1Ko/xrrH5h7RlSkF6A7ZXM=; b=gpwR6NoUyrkzcTwOPivfmUhgAJ
+	+8Rym6gWG3j/L0q8KSkhXcNszWsCBiH6yWCVnShY28ZXf+n/SAPuL00ziH3U9L0i
+	at2qU5LVm57fHfvLrtffL042aTig2jEa/Tll6K+VqSNZXnKdFDi5BbEH3ZzVjYIP
+	kIHFuVce06KaxwZOyeygysAXljYd7srHdYxwi6zzYPZyEDlWe6u9oS2DAaA7/TVP
+	ubnhHtoooa+segMIuLfNeosV7/OvD0JJwi7t8l5TO4H+UywT4Dy+1Aa+aBfHUhc1
+	kTi5gVuyYRkbuaNnLUalQA3JamYlAlMlc1RWm/+yUTLJyM0WHgqKlhSnVMVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753376466; x=1753462866; bh=U6rk6J2io/Y33X2IKrjt/1Ko/xrrH5h7RlS
+	kF6A7ZXM=; b=i8mxg5Umjriyapo1rWcZt5Om6cREkpkPjLh9xPtw7ea4tZaDwGS
+	arPPcgsa4HEz5K6dn8MBVksukCHhrF7egsRyMWsOG7ot9gF7BN98QR+J385UC6x/
+	o6qhIfGunEy990qOwEt2awqBO9UwWWMsg/wAvhRCRzx+oU94Xg9Rc10H7qaAEXTM
+	bA9VjTdoHC4bfe2DF+XOvwfHYLLRn4Z5d4DnB9sD1J78HjlK3x9hMDP1IwKSIGvK
+	iNZftT00HcIgRFEMktgB8LFT31V5+CgfpxWSxtnFChTwIEHkHSYzX/yBP6RlzW1O
+	3HQJgZqCWBsdfNnlgl/hl5xnc+CMVXOpsBA==
+X-ME-Sender: <xms:0WaCaO8KYdvevSlr_WpQCNBv-OmnWS4zaW71PiZcBmR7WS3YbWkshQ>
+    <xme:0WaCaLk2lnWShLb3gx-YqkmEHkprVKdDY4JRy4F3RxdOFE4qEcYc265FcjIj9EjH5
+    WIL4v5E44s8G0I5vA>
+X-ME-Received: <xmr:0WaCaDw4OPQZCqOTa2G5ASEkNyEo93WGj3_ahGzDe44GvLpQSP-772AgRGyeSB4KwyNwcRSoka7ewdUEImZoyQNRPZ5DA6R66zUlfMc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekuddvtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehp
+    shesphhkshdrihhmpdhrtghpthhtohepshgthhifrggssehlihhnuhigqdhmieekkhdroh
+    hrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtph
+    htthhopehsphgvtghtrhgrlhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0WaCaF4JRt8BRRHMa2YVOOt9lhzNEizWOrZJqIjeK_ALABLiUt4ufw>
+    <xmx:0WaCaDUnhjXFJnweGmlJt3IM9iyg1A78jVX2eU9xhwpc9SaotdE63w>
+    <xmx:0WaCaNJLOzXwMVvbjsSGNF7Rior6p8-0ABA_jjTlTcfE-RPY7i3m7A>
+    <xmx:0WaCaFvbwWkH0yOym1MJbzxncO2Q2A-DsVHnTGM6IpjHUYDHw6tKpA>
+    <xmx:0maCaMo2LuB6m9oAy-0OpUjDfjCGczMhb_c4suUQGFPqALC7e1PY5TC3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Jul 2025 13:01:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  schwab@linux-m68k.org,
+  phillip.wood123@gmail.com,  Christian Couder <chriscool@tuxfamily.org>,
+  Kyle Lippincott <spectral@google.com>,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] ref-iterator-seek: correctly initialize the
+ prefix_state for a new level
+In-Reply-To: <CAOLa=ZRr4fpF0E8EM3nL37aSYzcHyCNnv5HzBzisM4C0UQUx8Q@mail.gmail.com>
+	(Karthik Nayak's message of "Thu, 24 Jul 2025 04:12:21 -0400")
+References: <20250701-306-git-for-each-ref-pagination-v1-0-4f0ae7c0688f@gmail.com>
+	<20250715-306-git-for-each-ref-pagination-v5-0-852d5a2f56e1@gmail.com>
+	<xmqqldoelgnd.fsf_-_@gitster.g>
+	<CAOLa=ZRr4fpF0E8EM3nL37aSYzcHyCNnv5HzBzisM4C0UQUx8Q@mail.gmail.com>
+Date: Thu, 24 Jul 2025 10:01:03 -0700
+Message-ID: <xmqqbjp9ikvk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -78,47 +95,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Junio C Hamano <gitster@pobox.com> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> Patrick Steinhardt <ps@pks.im> writes:
->
->> On Wed, Jul 23, 2025 at 12:31:26PM -0700, Junio C Hamano wrote:
->>> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
->>> index c1046abfb7..0776d15a95 100644
->>> --- a/Documentation/CodingGuidelines
->>> +++ b/Documentation/CodingGuidelines
->>> @@ -298,6 +298,14 @@ For C programs:
->>>     . since late 2021 with 44ba10d6, we have had variables declared in
->>>       the for loop "for (int i = 0; i < 10; i++)".
->>>  
->>> +   C99 features we have test balloons for:
->>> +
->>> +   . since late 2024 with v2.48.0-rc0~20, we have test balloons for
->>> +     compound literal syntax, e.g., (struct foo){ .member = value };
->>> +     our hope is that no platforms we care about have trouble using
->>> +     them, and officially adopt its wider use in mid 2026.  Do not add
->>> +     more use of the syntax until that happens.
+>>  * I had this as "fixup!" on top of your topic for quite a while and
+>>    forgot to ask you to send in an official fix.  As Kyle's
+>>    discovery was after the topic hit 'next' (understandable, as
+>>    their internal edition of Git is based on 'next'), we need a
+>>    separate fix on top.
 >>
->> Nice. I like that we now have an explicit deadline for people to
->> complain about this feature not being supported on their platform.
+>>    To prepare for merging down the whole thing to 'master', I wrote
+>>    the proposed log message to help expedite the process.  Comments?
+>>
 >
-> I do not think the firm deadline has much practical effect.  Test
-> balloons are designed to be placed in a stable and non-optional part
-> of the codebase that is exercised by everybody, so even if your
-> update cycle from your upstream is once a year, you'd have four or
-> five major releases to try building and noticing that your platform
-> is unhappy about them.
->
-> So the only effect it would have is to smoke out truly slow platform
-> maintainers; if their users are happy enough with such slow upgrade,
-> they have lived and they can live with versions of Git that are
-> years stale that we no longer care about.
+> I had a set of patches locally, I just didn't get around to sending it.
+> Will send the others, omitting this. Thanks for doing it!
 
+I do not mind discarding what I sent out at all.  I actually prefer
+if it came from you.
 
-For what it is worth, Gnulib and threfore Coreutils, among others, began
-using compound literals in 2017 and it seems to have not caused any
-problems [1]. Even 'pcc' supports them.
-
-Collin
-
-[1] https://github.com/coreutils/gnulib/commit/3a8af1e38bc026a9efb3b47c4686e4e54b633436
+Thanks.
