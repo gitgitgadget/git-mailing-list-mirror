@@ -1,53 +1,53 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0C0190664
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 06:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122B5190664
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 06:22:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753338134; cv=none; b=TtJpe4SYMid+xlsgaR09E/9XSt9DYaF0kc8ue2tv6VfqeFA7I6bnTTlcbYZMNP9RitQsmaszRl1dly2HTHuffH+XFDpYQcQ1TtWV2FMfTDvz9lxusS8duytH6dortiakxjYHpCTLDio7ME7OLYu4mIzF3zwYtfghQNNXm1TDWC8=
+	t=1753338137; cv=none; b=GwPY/4O5J0RFegvgUTTX56SPBDqDcTiqGXtmECaUXujuo9dItryBQwVJFJiRbRMiXhJJFxuKVY3d+r3D5d7TCVvzcWrrxrygwTMhNtkX+MDGjW3iDpda1Giv2+e8Kev5LSpF6z/mhTGUU6//y/cg0kEtXqtrENNNSw7DGDMtgMs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753338134; c=relaxed/simple;
-	bh=ZlozVtxpyttdReG7xvQs+MWphqlnK03R0H9KcBJf1ik=;
+	s=arc-20240116; t=1753338137; c=relaxed/simple;
+	bh=Ggy7TqxxOBbAtqk+C/K/9g2c/aZUI97rok8g9P7hC5s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LcqWkQFhB76Z9IZv5AB47y40ARqh2etOR6p2GGwyJRTeQVvY/hJ88OIKlKgrPAtcJpQ/O7yw2qbiP8SA1K7YyNo2YznSBsjQykLxqeavZYUts6tudWPlAnDmc1ggYEnNYj+zJl1HZyK0jtBrgwkSa5yh84f/CIp+6l3X2X0jf40=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fo1K2pNH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EX7UhtsW; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=WXksdW7NsWX/1+7g98EKtaE9uFn8Ffg7/5l5/0pD7+y3IeuJmLLRIS6BzCo2SmA8qe6kgMHuxpWPeCk7j+o7ZWKNg2D6tPyKr3WGnBUdXLpu8ZF3Z3WvRXxKZnVwMYTTqDhGGygUyB5nU0hBhdZ+MXGgCCTCot78m8DHBcMSye8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vbMIgpnH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Sz6kUsFA; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fo1K2pNH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EX7UhtsW"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D303F7A0046;
-	Thu, 24 Jul 2025 02:22:10 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vbMIgpnH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Sz6kUsFA"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DB95D7A0046;
+	Thu, 24 Jul 2025 02:22:14 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Thu, 24 Jul 2025 02:22:11 -0400
+  by phl-compute-04.internal (MEProxy); Thu, 24 Jul 2025 02:22:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753338130; x=1753424530; bh=UiIEK5tp7J
-	EJBZ5bhpAtVW5rOK0JkdHPQrW9V1lSxrQ=; b=fo1K2pNH1+UPMPSCfbAdl0pJFq
-	iZHC2oybh6oWEZj665Z32IUfAsKw/2QdulXAxIPJ3phXHW2dyNsSm2gHUNuSocgM
-	BuyBQuSJ0HYfhPSJwD73ls6ZJu2025+4DGCb5WwFzrQNSk5vHMkIerp0YjUthFmy
-	j0LvUshaS0QqyEPisQsZd3Nug0tg4daO7DjM4SHyOXNvtjewvyQTMmMBQppJr6V4
-	q60dJ7T6MWurMpk3rRhe+dT9pDBc1a66GQc0Dm+4P4ahWfa7ypdPa0uI5TbxzqKd
-	RVAePsnaHVw/UCT0fEPeauFUJOR9hdjEewZPKLX9cxaWzhYNlOOm9im4F1kQ==
+	:subject:to:to; s=fm2; t=1753338134; x=1753424534; bh=aOo3faFkVD
+	B7uX9XlEiEZMlcisk9wwTy3nS1sgVraeg=; b=vbMIgpnHKqIUiwiICBRRb8rFrV
+	1PZ8oUgld9SPQQcTu4Q9umHO1oz7XAKfF1pGRv4hRRsCSlTfV7waPI/kdY6DuxNU
+	5cfSh74L5iLVwg2gM/sqWHhlS02pCEaAgJIRaZMkN8/LUCVJ/WWJ+BdzqsIMNo4+
+	87FbXF3uX5c78yVUXKdp6oR6i/5P0vz2Cn7bx9ig02AQ0ITDuwLYjTE5uM8WrZP2
+	M+mX3NYxlP0lu2hon20PPXQ0gm8EzkkZNtKog8cP2tx+yqJchGpi0ioZV7rC53f9
+	auSNvpXhFUxidLdTtW8QVXImTGjqkxPv3Vn8w9IEdweJSpL0obvreCXH0o5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753338130; x=1753424530; bh=UiIEK5tp7JEJBZ5bhpAtVW5rOK0JkdHPQrW
-	9V1lSxrQ=; b=EX7UhtsWzn9luVQzJLnDFNwszEwD5FItWlEfi9Ywoeg+Dlusgfh
-	iLihYOdujvsoRTi+eIM7pc5to/4tNX1KTYXGcQjscODftVPlClDQvicdqrQIdbrK
-	Hs6/3a+iAxL7ld3lsdLydXzch27SwFVOTvk1wyJBnllEBkCMCEGI9l7HgD8hU3Pe
-	RVV7cUPRCRmBIm6gObEDwN4aH0uGr6v33tb855AXlNX5nhv7qjF6tIJeq7+aHj3b
-	spq/+ojHp6StKTwOhU4qrGGDRhcRKnw3H8s2D8vmjUOSocIlb4JsW/sSx+lnliym
-	FwLD6U4o2oGrZBRDrqw9Yzfc8x61fgnLRZg==
-X-ME-Sender: <xms:EtGBaKGwIOkIFQ5j_o0pS-Wi8STnUEukUkCBHFVOPyK_qH1nTS-gfw>
-    <xme:EtGBaAhpRjxV9wmeZ1wgK4XXzdXD0Ryon4_Imhd6hymIlkl4LdT-x_XJswwHb3ec0
-    n95kG8SEYvSWkRgIg>
-X-ME-Received: <xmr:EtGBaFDmb5Cp4EPGGXXPRKh2LYwfBVaTzGjPvx-BOchdyITcCW4yHRMgQIPvkPNuKNnLdA8akTzY8HpNYMpisG28faFa4MnpJ7K5l7P_fig>
+	1753338134; x=1753424534; bh=aOo3faFkVDB7uX9XlEiEZMlcisk9wwTy3nS
+	1sgVraeg=; b=Sz6kUsFA6pADr/0Z7OsAca8PJ3ScX0sGK1uiJAZA3ERTY/ZZoUF
+	9FfTh4krqwCM8hUbtwmPrrlg2RHc5wGuFLgoqRWOQbeSmVkYtyEYpOeq3vn29kbq
+	VV2gfFUxtGjsOLP/qTrhFBAlU2/0C2mtI23XmOdm1NkLrqaHCkn0iprz39CKVfZV
+	T3jaek6J+MGV0cSHOM2z/qmN2ODUtQNxMX6v6JvbXDGySyoRNhPOC7IBMDlAqf87
+	8HP5/oyUNX7PhC+hweP5PHpRx+tRa3OrLp3j2TtZEqLZJSiQkjAmCu20ul54YLT+
+	HCLW+YXSxnslt0UJnGBMruF38WMPmw++q9w==
+X-ME-Sender: <xms:FtGBaJEh0dPxiDJipEiOPLUJziStLQEIL_HieTnPIMwu0vgl_T6P6A>
+    <xme:FtGBaDgfHuxlJA5fxtZAxZqZAXHwoYba1tta2bwh4mNhj1elofQhJxJ1j5gNNjmZP
+    5S_oEjHX8tgLflQOw>
+X-ME-Received: <xmr:FtGBaMCYN9FmpSwMIez4ytDXOi2OwGH_WfVCY3HHTlKC7RfbyUX5g-uFmb-iqGzzSUptZPEABIFJ5zv62dq8O_j41r3QZGAZCIYn2JEFdBo>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejleelvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
@@ -57,38 +57,34 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdejleelvdcutefuodetgg
     lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
     drihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
     pehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhope
-    hjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehoshifrghlugdrsghu
-    ugguvghnhhgrghgvnhesghhmgidruggvpdhrtghpthhtoheplhhutggrshhsvghikhhioh
-    hshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:EtGBaKRAFD1RXisW4ZmcYSORLLHuJX4GcZ84CjXRY93bT4E43nOmow>
-    <xmx:EtGBaCW-ljVijBXtKwNa_PaAdBFk4Sg4ykW0bNp-FomIRNaLSsKd2Q>
-    <xmx:EtGBaLcIPifwFa2OkmoruFsrkX_cHzYIiYzCrRvMWT7i5dgzB48dmQ>
-    <xmx:EtGBaGLVfjnzm7TDxOQ5YNRBYDOlwwq1WEkUOo0IK5jnuvHtd5K6fw>
-    <xmx:EtGBaB-uSzxaQzS6s1OKBoS8UxO2US3Rf5YtnPn9ecI_rDlFsjNGeW5P>
+    hkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepohhsfigrlh
+    gurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehluhgtrghsshgv
+    ihhkihhoshhhihhrohesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:FtGBaFTaq9vpItZr7Vr04b3r2ormTWpstBBSwqY72Oa5JeMoibwfbQ>
+    <xmx:FtGBaBVOdz6WatnFsA5mHjWiHo1b_sZKHfYA4HGTq7dc4tBX9yARIA>
+    <xmx:FtGBaOfxbIHuQCDgffsf42oaR304nBGmZEY12Mxpw584RPM-Gsh73g>
+    <xmx:FtGBaNI-OV33lxsW8APocPZGANX3Vznwj8dfUV4Cqi4pFe0pQLI5qQ>
+    <xmx:FtGBaI8is-pe_kgroiMVdFp_XxLVoRveqttwrWXNKKcT8T6svdeOEMvt>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 02:22:08 -0400 (EDT)
+ 24 Jul 2025 02:22:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 45ac8f59 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 24 Jul 2025 06:22:06 +0000 (UTC)
-Date: Thu, 24 Jul 2025 08:22:03 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f14cd8d6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 24 Jul 2025 06:22:12 +0000 (UTC)
+Date: Thu, 24 Jul 2025 08:22:09 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,
-	git@vger.kernel.org, oswald.buddenhagen@gmx.de,
-	ben.knoble@gmail.com, phillip.wood@dunelm.org.uk,
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, karthik.188@gmail.com,
+	ben.knoble@gmail.com, gitster@pobox.com, phillip.wood@dunelm.org.uk,
 	jltobler@gmail.com
-Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
-Message-ID: <aIHRCz_qswp7RgSy@pks.im>
+Subject: Re: [GSoC PATCH v5 2/5] repo: add the field references.format
+Message-ID: <aIHRETKuPM6gGErZ@pks.im>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
  <20250722002835.33428-1-lucasseikioshiro@gmail.com>
- <20250722002835.33428-2-lucasseikioshiro@gmail.com>
- <CAOLa=ZREo19jCj3i+XkRM15AzaAV9ZLOvt42pTiUFmcZpCyS5g@mail.gmail.com>
- <xmqqtt34tfna.fsf@gitster.g>
+ <20250722002835.33428-3-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -97,54 +93,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqtt34tfna.fsf@gitster.g>
+In-Reply-To: <20250722002835.33428-3-lucasseikioshiro@gmail.com>
 
-On Tue, Jul 22, 2025 at 08:21:45AM -0700, Junio C Hamano wrote:
-> Karthik Nayak <karthik.188@gmail.com> writes:
-> 
-> > Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
-> >
-> >> Currently, `git rev-parse` covers a wide range of functionality not
-> >> directly related to parsing revisions, as its name suggests. Over time,
-> >> many features like parsing datestrings, options, paths, and others
-> >> were added to it because there wasn't a more appropriate command
-> >> to place them.
-> >>
-> >> Create a new Git command called `repo`. `git repo` will be the main
-> >> command for obtaining the information about a repository (such as
-> >> metadata and metrics), returning them in a machine readable format
-> >> following the syntax "field<LF>value<NUL>".
-> >>
-> >
-> > Doesn't the latter sentence only apply to 'git repo info'? Other
-> > sub-commands may not follow the field<LF>value<NUL> syntax, no?
-> 
-> True.
-> 
-> I also wonder who it helps to use <LF> as a field separator.  Once
-> we require consumers to properly handle <NUL>, it does not make it
-> easier to write such a consumer script if the format uses <LF>
-> there, does it?  Besides, wouldn't it possible that field may have
-> to contain any end-user specified key, including <LF>?  If so, we'd
-> need to have some quoting/unquoting mechanism in the syntax anyway,
-> so the behefit of using <NUL> to simplify the parser would already
-> be lost.
+On Mon, Jul 21, 2025 at 09:28:32PM -0300, Lucas Seiki Oshiro wrote:
+> diff --git a/builtin/repo.c b/builtin/repo.c
+> index d4f01e35e2..5beae0f781 100644
+> --- a/builtin/repo.c
+> +++ b/builtin/repo.c
+> @@ -1,12 +1,83 @@
+>  #include "builtin.h"
+>  #include "parse-options.h"
+> +#include "refs.h"
+>  
+> -static int repo_info(int argc UNUSED, const char **argv UNUSED,
+> -		     const char *prefix UNUSED, struct repository *repo UNUSED)
+> +typedef const char *get_value_fn(struct repository *repo);
+> +
+> +struct field {
+> +	const char *key;
+> +	get_value_fn *add_field_callback;
+> +};
+> +
+> +static const char *get_references_format(struct repository *repo)
+> +{
+> +	return ref_storage_format_to_name(repo->ref_storage_format);
+> +}
+> +
+> +/* repo_info_fields keys should be in lexicographical order */
+> +static const struct field repo_info_fields[] = {
+> +	{ "references.format", get_references_format },
+> +};
 
-Scripts should always use NUL, true. But sometimes a user may want to
-inspect these key-value pairs, as well, just to double check a certain
-property of the repository, or to figure out how a certain property
-looks like while writing a script that parses the same key-value but
-NUL-separated pairs. Using NUL bytes would be a bit of a pain in that
-situation.
+One problem that we'll eventually face is that we want to add a callback
+that needs to return an allocated string. With the current design we
+cannot really handle that without creating amemory leak. So I guess it
+would make more sense if the callback thus received a pointer to a
+strbuf that it is expected to print its value to.
 
-I'm not really too sure whether we need to bother with quoting. The
-LF-separated output shouldn't ever be used in a script, so I don't mind
-too much whether it always works. But I guess it wouldn't be hard either
-to just have something like:
+Also, we should be able to return errors. While that's not needed right
+now, it may be in the future. So how about:
 
-    if (uses_newline)
-        quote_c_style(...);
+	typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
 
-So with that in mind it's probably better to just do the right thing.
+	static int get_references_format(struct repository *repo,
+					 struct strbuf *buf)
+	{
+		strbuf_addstr(buf, ref_storage_format_to_name(repo->ref_storage_format));
+		return 0;
+	}
+
+> +static int repo_info_fields_cmp(const void *va, const void *vb)
+> +{
+> +	const struct field *a = va;
+> +	const struct field *b = vb;
+> +
+> +	return strcmp(a->key, b->key);
+> +}
+> +
+> +static get_value_fn *get_value_callback(const char *key)
+>  {
+> +	const struct field search_key = { key, NULL };
+> +	const struct field *found = bsearch(&search_key, repo_info_fields,
+> +					    ARRAY_SIZE(repo_info_fields),
+> +					    sizeof(struct field),
+
+Nit: let's rather use `sizeof(*repo_info_fields)`. Makes it more
+trivially correct without having to double check whether
+`repo_info_fields` actually is a `struct field`..
 
 Patrick
