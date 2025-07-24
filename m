@@ -1,81 +1,87 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B72962192F4
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 18:09:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74291F3B83
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 18:38:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753380600; cv=none; b=ipS2IPhkCfAIlGXhm3MPk2DSDNx10px6WzI8T+TTOIEATm2ZVwML7w6HioxjRUVroAtBGIadeUqt/OFRCbGv6Gxr28SdzQJ/VIS11CffFHeYFgGFLrI/zOHDQJGMRUcyFPG2crmpsiaN579t74FWqY99wK39rlPIWcKOpyfXH/c=
+	t=1753382323; cv=none; b=TLpxgx7m7OvPhZHKIhmULgnPJGe3MJsQX87yH9cKgKOqYAmI9dCrXeyv4rqKuhEkzMh+xht2TUQd00PwfmQosFVUXVZiLsW3vyP6ZQAA+tTSQKWcOVfmNwOsY1QHeQ50VBHvY9g/crqys4fktN+57WdrMQhQof+JKZead+mdEYs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753380600; c=relaxed/simple;
-	bh=UYvG8lX4yAdsYNq9VYLwa+EQSApDkGcWnX5+3trF2qg=;
+	s=arc-20240116; t=1753382323; c=relaxed/simple;
+	bh=vft1T02vHnWf7Nx3Ng6tTo6QvupJ04YOej81TP6Lpoo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Oc9GPgoPQxUEw9ZBOc75Ft0BYz8sWIMnj39MnrPQ4afnhNjJ+ORqpK/M6RXzwintdJhK0KCgJIb2PgiW8ojSVkzSeYd20T8EllctX7rZplPlws++RmjZIAjV7LZpNb6rkRLQJEoqnVvrzzP/juduk/TRzdL4G2e/LQ9FYsY1W+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s45cl/Yt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iHiT2TXx; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=ggIU6TYXSt1OCCGnaaMkIBGRgRh5LndK9FyOuQY25yPbSgfuMJnuiGEF6aOGcZtnqelD2UkJQcK0ZlmL8IC2UROtMze7YNkcx+mLJfvQ8++Mf/AuNKlDHXR8m1+gjWMHrJ8n0ESpg+Mh07ojPvWQYkYOyc10as9JSMXW96go7P8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZO2nqrxr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T+xOA9eq; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s45cl/Yt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iHiT2TXx"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A5DC114000EA;
-	Thu, 24 Jul 2025 14:09:57 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZO2nqrxr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T+xOA9eq"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id BE1C0EC00FA;
+	Thu, 24 Jul 2025 14:38:37 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 24 Jul 2025 14:09:57 -0400
+  by phl-compute-01.internal (MEProxy); Thu, 24 Jul 2025 14:38:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753380597; x=1753466997; bh=Qc+qsQGqyX
-	FoXHo6Hab2xysa0MgtETfh+khX9EksmtU=; b=s45cl/YtxgTXx9Y7UFrBbLnnbP
-	G3RypS2iWIIAb5MztF/Tg3+I2Gc5z+L2AOlBi0FRRckbGu9J9LXKMM9RWmvdNh22
-	CaUb+Bdk5nV5JDbEI4wZLXOzgMQKKNXs8bLhhpkNv1Y0Hfmjmc+ZcTmZGJuk5jP8
-	W0hbSeDyB+BdCcTM33n9MBEu72PqEsKY2J2MY9bm2+FV+L27X2WX+lnPKGjowvr6
-	ZlGfmiOTmZuJvlUlrrAqfMZH0KWsIkRRaHx/A7M1jD1B0L+nuPzNY8jUd4y08djW
-	c8laGtwlIJTK5LiS59n4lIMVfMGxkqSxWWblRVaPXBRyTbvTgMOIs+pYHj5Q==
+	:subject:to:to; s=fm1; t=1753382317; x=1753468717; bh=aisyCxWVlJ
+	aRNQnfMosX9juwXKVIQ4IC13xtFIUVevU=; b=ZO2nqrxrkCJvxf6UHV9+zFpBdX
+	UJtJ50Th14XTQ75QsXVurYLgV1bkJqwVxG641OVDUaLNTvZRL0wfMmcd9aSLlHpf
+	/2fy93+OPJWurP8F2QNSXwiZbRJ4Zxd9DrQWun6NPS65IGWwYswkUhcxArKTsKQn
+	5ob/upW2GqQTKmFFhEFLaDev2FNdFinTmHbp8wttdXra0NjkkurILSz9MHGDCw84
+	7InR83lffunjkxY2iFfvXtAc6HTxGdgMtBxObkbMm8ZNVyTIxb/cP9wjTNYAWh5h
+	X2ofDjAaJawhTCoPOvHiDN8SHSi8ToxFha3+BiTCuL63jx6ysioIjD8z2eAg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753380597; x=1753466997; bh=Qc+qsQGqyXFoXHo6Hab2xysa0MgtETfh+kh
-	X9EksmtU=; b=iHiT2TXxMwFFNxvbeDXAgAaa5LO/Xu/lfWa1spJmw8NHRNM8bKU
-	6G0YAKN8U1TpWRjtfBnedIsfLZ614U9YN1xTnBXKBMWyaZj06CbkvS1otb8iAo3t
-	o6dr0Vi1B2UEz4QWzz/wuAk9zf9F6dl3siL7bKBS+OkcRz1NvUqyASdKB98Ll6fh
-	fCaHJnc0xbRE1ltYD6tuiDZZOd+GGD6Lt1cuZPZGy+ZDGSx1jC7s74jIulDFBtHM
-	YqJcRje9cZzKEM9LAOuY87blNOT4m5I+cO3i5ViiyjJhK5D5LCdZ30M4OxMlT2fo
-	1ip1cbf7+HFAtZp6G6uSKNiPI0hsGJ/YlTA==
-X-ME-Sender: <xms:9XaCaO3CcedCzEmonB07IfZkDwaI0tyt_Q3CLt4vnmZ6Ak_v5LecQg>
-    <xme:9XaCaEX1ii0PfFSOM3zgUeMvn2qLj1YHnxOl6o8dwxRVZt7c7IuHZ2A_b0IphAXwo
-    M8uiKmFcybrCkqBGg>
-X-ME-Received: <xmr:9XaCaAXw7BZefBUMC37KHt_18TiSI-kGjrv2ibNt8MZp_KHukwYTCnIXNneIou_WU38VK-D5Snunmi90O13ePAVjaFza8O13NqqHNrE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudeffecutefuodetggdotefrod
+	1753382317; x=1753468717; bh=aisyCxWVlJaRNQnfMosX9juwXKVIQ4IC13x
+	tFIUVevU=; b=T+xOA9eqbwXHHAO/PjTWYV8/dipXuOcQev3AQcsXsH37xV0JhM5
+	zCKssUqFO2M4E3MZFs4uRGOT+rS/lVVBVH1Mp0zqxh6MY5zDV5iY9WMGSkLeLnDZ
+	G+XPiuT3JdgQDjakULSrCs6Y++PIipQwmELOV3yU7Soieud4cxEfHdT8SsUl6QgQ
+	fbfFBX4pppEPkUoD9/qIb8Ue+e0lCDKoj2UcOhGvx60JNlsGHywwMzZSfXChNwX5
+	KtUjv5nPptNI2CEAOA7ZQtVVDiWQ5Ymh/lefx2Ubv36GKB/DyVxTDv/uKqIaoR8z
+	sGnOZZ3I1hlUK8p6wi7dDrWOeS51SzaJk8Q==
+X-ME-Sender: <xms:rX2CaCGFyMxoV5lAuad-znsMs3W6uaxBWQAXKbkfa9UhEsgSurSKhg>
+    <xme:rX2CaO3nelRmdh0FnPtHe00v3bdbWlvzgP3zL4Yc2K1d8kIEiVGP2xjvReB6kitap
+    nyeiYWjUbiAcPLOBA>
+X-ME-Received: <xmr:rX2CaCnY0D5xla8_KJh5GOunVW1n-zEwbgvS1gbueAVpfgbi2O_U1fkU_L9M5b7nWEAVOz3-O2tQYwPrZJTIYmLkEKBtpZ7MjaetmGc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudeflecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttd
-    ertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphho
-    sghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevff
-    eufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspg
-    hrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhhhhiifkhgu
-    vddvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9XaCaLcrhKfD04UVZFXkT_3t5S4QZ5Br2w_9kaVdxL68TPqAIvHbVg>
-    <xmx:9XaCaBWI0hu0uwrhO95KntQQsoboRUQx91EG5xddKDZp3tfzkgm4vg>
-    <xmx:9XaCaMfYFRaM9I-9Z7hIWsFwvLh8o-2vNuWcpmyHw6xlYoh8UlLiRw>
-    <xmx:9XaCaFPXstSrGAJiQv9a8QijyNooletZOf2zA9zPjwjEdHBZzoxwFQ>
-    <xmx:9XaCaA_SJ9NLjBYYkr5rFaoiZZhUCsaJvg-cYgvVSiXAfdgp0h2owpyM>
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:rX2CaG-cAmrzjHY1PIvRc8zqsHQLMsW87kX7D3wAq4X5GY_TLHz4IQ>
+    <xmx:rX2CaPqu-PcsVo4S4s3WyJfeoNNre0xicAUGOjvTuEDzegQsnKInXQ>
+    <xmx:rX2CaHlkyHJZXXKeybRIHwvzaWiQH-RZXp962ukAx67vdqy6-DwF1A>
+    <xmx:rX2CaOi-lG6xYdd7H8-CuRq8pTb1MMh1jMnzrfX7qiuJuggiRrvjhg>
+    <xmx:rX2CaPz844QiwquMCYHAsLrDbOqaWEuk5SFhbERVIxEfTVJ-lPnazKEN>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 14:09:57 -0400 (EDT)
+ 24 Jul 2025 14:38:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Hoyoung Lee <lhywkd22@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v4 1/1] test-delta: simplify delta helper with strbuf
- and better cleanup
-In-Reply-To: <20250724093327.2261615-1-lhywkd22@gmail.com> (Hoyoung Lee's
-	message of "Thu, 24 Jul 2025 09:33:27 +0000")
-References: <20250724093327.2261615-1-lhywkd22@gmail.com>
-Date: Thu, 24 Jul 2025 11:09:55 -0700
-Message-ID: <xmqqjz3xh34c.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Jeff King <peff@peff.net>,  Han Jiang <jhcarl0814@gmail.com>,  Git
+ Mailing List <git@vger.kernel.org>
+Subject: Re: `git remote rename` does not work when
+ `refs/remotes/server/HEAD` is unborn (when right after `git remote add
+ -m`)
+In-Reply-To: <aIIvHxR8wXLTCgMW@pks.im> (Patrick Steinhardt's message of "Thu,
+	24 Jul 2025 15:03:27 +0200")
+References: <CANrWfmQWa=RJnm7d3C7ogRX6Tth2eeuGwvwrNmzS2gr+eP0OpA@mail.gmail.com>
+	<20250724104536.GA1316505@coredump.intra.peff.net>
+	<aIIf7S5iPspktxdw@pks.im> <aIIvHxR8wXLTCgMW@pks.im>
+Date: Thu, 24 Jul 2025 11:38:35 -0700
+Message-ID: <xmqqbjp9h1sk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,136 +91,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hoyoung Lee <lhywkd22@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> diff --git a/t/helper/test-delta.c b/t/helper/test-delta.c
-> index f5811e96ad..1c4322b7c0 100644
-> --- a/t/helper/test-delta.c
-> +++ b/t/helper/test-delta.c
-> @@ -11,76 +11,47 @@
->  #include "test-tool.h"
->  #include "git-compat-util.h"
->  #include "delta.h"
-> +#include "strbuf.h"
->  
->  static const char usage_str[] =
->  	"test-tool delta (-d|-p) <from_file> <data_file> <out_file>";
->  
->  int cmd__delta(int argc, const char **argv)
+> I've quickly hacked something together now, see the work-in-progress
+> patch below. The patch does not yet handle reflogs, but that isn't too
+> hard to implement.
+>
+> And these changes indeed speed up things by quite a lot: instead of
+> hours it now takes 7 seconds :) I'll polish this patch series and will
+> likely send it in tomorrow.
+
+Nice.  Not just the "oops, we shouldn't assume symrefs always point
+at an existing ref" fix, performance fix comes at the same time ;-)
+
+> diff --git a/builtin/remote.c b/builtin/remote.c
+> index 5dd6cbbaeed..072a70e6b45 100644
+> --- a/builtin/remote.c
+> +++ b/builtin/remote.c
+> @@ -612,36 +612,53 @@ static int add_branch_for_removal(const char *refname,
+>  struct rename_info {
+>  	const char *old_name;
+>  	const char *new_name;
+> -	struct string_list *remote_branches;
+>  	uint32_t symrefs_nr;
+> +	struct ref_transaction *transaction;
+> +	struct strbuf *err;
+>  };
+
+OK, as a place to hook the transaction into, rename_info is a
+convenient place, as it already is passed around throughout the
+relevant code paths.
+
+> -static int read_remote_branches(const char *refname, const char *referent UNUSED,
+> -				const struct object_id *oid UNUSED,
+> -				int flags UNUSED, void *cb_data)
+> +static int queue_one_rename(const char *refname, const char *referent,
+> +			    const struct object_id *oid,
+> +			    int flags, void *cb_data)
 >  {
-> -	int fd = -1;
-> -	struct stat st;
-> -	void *from_buf = NULL, *data_buf = NULL, *out_buf = NULL;
-> -	unsigned long from_size, data_size, out_size;
-> -	int ret = 1;
-> +	int fd;
-> +        struct strbuf from = STRBUF_INIT, data = STRBUF_INIT;
-> +        char *out_buf;
-> +        unsigned long out_size;
-
-Mixed indentation.  Make sure you indent with tabs, with tab-width
-set to 8.  Not limited to the above code block.
-
-> -	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
-> -		fprintf(stderr, "usage: %s\n", usage_str);
-> -		return 1;
-> -	}
-> +	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p")))
-> +                usage(usage_str);
-
-Nice.
-
-> -	fd = open(argv[2], O_RDONLY);
-> -	if (fd < 0 || fstat(fd, &st)) {
-> -		perror(argv[2]);
-> -		goto cleanup;
-> -	}
-> -	from_size = st.st_size;
-> -	from_buf = xmalloc(from_size);
-> -	if (read_in_full(fd, from_buf, from_size) < 0) {
-> -		perror(argv[2]);
-> -		goto cleanup;
-> -	}
-> -	close(fd);
+> +	struct strbuf new_refname = STRBUF_INIT, new_referent = STRBUF_INIT;
+>  	struct rename_info *rename = cb_data;
+> -	struct strbuf buf = STRBUF_INIT;
+> -	struct string_list_item *item;
+> -	int flag;
+> -	const char *symref;
 > -
-> -	fd = open(argv[3], O_RDONLY);
-> -	if (fd < 0 || fstat(fd, &st)) {
-> -		perror(argv[3]);
-> -		goto cleanup;
-> -	}
-> -	data_size = st.st_size;
-> -	data_buf = xmalloc(data_size);
-> -	if (read_in_full(fd, data_buf, data_size) < 0) {
-> -		perror(argv[3]);
-> -		goto cleanup;
-> -	}
-> -	close(fd);
-> +	if (strbuf_read_file(&from, argv[2], 0) < 0)
-> +                die_errno("unable to read '%s'", argv[2]);
-> +        if (strbuf_read_file(&data, argv[3], 0) < 0)
-> +                die_errno("unable to read '%s'", argv[3]);
-
-OK.  from_buf/from_size has become strbuf from; data_buf/data_size
-has become strbuf data.  Very straight-forward and understandable.
-
->  	if (argv[1][1] == 'd')
-> -		out_buf = diff_delta(from_buf, from_size,
-> -				     data_buf, data_size,
-> -				     &out_size, 0);
-> -	else
-> -		out_buf = patch_delta(from_buf, from_size,
-> -				      data_buf, data_size,
-> -				      &out_size);
-> -	if (!out_buf) {
-> -		fprintf(stderr, "delta operation failed (returned NULL)\n");
-> -		goto cleanup;
-> -	}
-> -
-> -	fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
-> -	if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
-> -		perror(argv[4]);
-> -		goto cleanup;
-> -	}
-> -
-> -	ret = 0;
-> -cleanup:
-> -	free(from_buf);
-> -	free(data_buf);
-> -	free(out_buf);
-> -
-> -	if (fd >= 0)
-> -		close(fd);
-> -
-> -	return ret;
-> +                out_buf = diff_delta(from.buf, from.len,
-> +                                     data.buf, data.len,
-> +                                     &out_size, 0);
-> +        else
-> +                out_buf = patch_delta(from.buf, from.len,
-> +                                      data.buf, data.len,
-> +                                      &out_size);
-
-OK, quite straight-forward again.
-
-> +	if (!out_buf)
-> +                die("delta operation failed (returned NULL)");
-
-Nice again.
-
-> +	fd = xopen(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-> +        if (write_in_full(fd, out_buf, out_size) < 0)
-> +                die_errno("write(%s)", argv[4]);
-> +        if (close(fd) < 0)
-> +                die_errno("close(%s)", argv[4]);
+> -	strbuf_addf(&buf, "refs/remotes/%s/", rename->old_name);
+> -	if (starts_with(refname, buf.buf)) {
+> -		item = string_list_append(rename->remote_branches, refname);
+> -		symref = refs_resolve_ref_unsafe(get_main_ref_store(the_repository),
+> -						 refname, RESOLVE_REF_READING,
+> -						 NULL, &flag);
+> -		if (symref && (flag & REF_ISSYMREF)) {
+> -			item->util = xstrdup(symref);
+> -			rename->symrefs_nr++;
+> -		} else {
+> -			item->util = NULL;
+> -		}
+> +	int error;
 > +
-> +	strbuf_release(&from);
-> +        strbuf_release(&data);
-> +        free(out_buf);
+> +	strbuf_addf(&new_refname, "refs/remotes/%s/", rename->old_name);
+> +	if (!starts_with(refname, new_refname.buf)) {
+> +		error = 0;
+> +		goto out;
+>  	}
+> -	strbuf_release(&buf);
+>  
+> -	return 0;
+> +	if (flags & REF_ISSYMREF) {
+> +		strbuf_addstr(&new_referent, referent);
+> +		strbuf_splice(&new_referent, strlen("refs/remotes/"), strlen(rename->old_name),
+> +			      rename->new_name, strlen(rename->new_name));
+> +		oid = NULL;
+> +	}
 > +
-> +        return 0;
+> +	error = ref_transaction_delete(rename->transaction, refname,
+> +				       oid, referent, REF_NO_DEREF, NULL, rename->err);
+
+Remove old ...
+
+> +	if (error < 0)
+> +		goto out;
+> +
+> +	strbuf_reset(&new_refname);
+> +	strbuf_addstr(&new_refname, refname);
+> +	strbuf_splice(&new_refname, strlen("refs/remotes/"), strlen(rename->old_name),
+> +		      rename->new_name, strlen(rename->new_name));
+> +
+> +	error = ref_transaction_update(rename->transaction, new_refname.buf, oid,
+> +				       null_oid(the_hash_algo), (flags & REF_ISSYMREF) ? new_referent.buf : NULL, NULL,
+> +				       REF_SKIP_CREATE_REFLOG | REF_NO_DEREF | REF_SKIP_OID_VERIFICATION,
+> +				       NULL, rename->err);
+
+... and create new.  Would we be hit with the same "while renaming A
+to A/B, there is a D/F conflict which the ref transaction does not
+handle by itself" issue we saw recently here?
+
+> +	rename.transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+> +							 0, &err);
+> +	if (!rename.transaction)
+> +		goto out;
+>  
+> +	result = refs_for_each_rawref(get_main_ref_store(the_repository),
+> +				      queue_one_rename, &rename);
+> +	if (result < 0)
+> +		die(_("renaming references failed: %s"), rename.err->buf);
+>  
+> +	result = ref_transaction_commit(rename.transaction, &err);
+> +	if (result < 0)
+> +		die(_("committing renamed references failed: %s"), rename.err->buf);
+>  
+>  	handle_push_default(rename.old_name, rename.new_name);
+>  
+>  out:
+> -	string_list_clear(&remote_branches, 1);
+> +	ref_transaction_free(rename.transaction);
+
+Very nice.
+
+>  	strbuf_release(&old_remote_context);
+>  	strbuf_release(&buf);
+>  	strbuf_release(&buf2);
+> -	strbuf_release(&buf3);
+> +	strbuf_release(&err);
+>  	return result;
 >  }
-
-OK.  Except for the whitespace breakage, I didn't spot anything
-glaringly wrong in the patch.  Looking good.
-
-Thanks.
+>  
