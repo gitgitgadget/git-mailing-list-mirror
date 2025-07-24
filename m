@@ -1,89 +1,84 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32161494C3
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 21:10:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1F3B661
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 21:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753391436; cv=none; b=AcrNf89qQLG6+RQ4E1PAJTITZRisnHhf6nbsiHVRHoBWHGj11TX/MH8bReCqNeHZ0Kv5EtrnIl5Uu7ftt3dNDggGwHiuyKWjbeAtcS3AefjX2wY8Z/iHQQk0/ju8xx+YLceEjyMqJ/WuEANaF2h7cq41uUKKrkznZe5Q/sF9+oU=
+	t=1753392084; cv=none; b=RazMwKR8/XHl74t5VBkipzFxnf4c4DUdYXBF4N8I3G2CzIxWHsfOkqAUARdkTNSJaGlh3W0+Bd8K0q4SPImA3svE9K8abFF23FwBR6mYJCHGz/Kr0b2fhx5yPh89qQwHfaboHuvW27AgR4tYYTVV6D0hA/4Zs2XzfojWiiEoPH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753391436; c=relaxed/simple;
-	bh=N4jfyE49cunsoKTWSaQ08UgQjqbfr/r3dfWyStmA8u0=;
+	s=arc-20240116; t=1753392084; c=relaxed/simple;
+	bh=aqs112uXKOtrGxzy4zxPePQ/Z19aLL8FUYR+ibopJJ8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PVyQFYscgBNLtkx4FWnALM/GVmShfv0zssWhb57pgR0zvIGisXRUUVVf4SyEEOF9Igo2VE9ccONedEC4fcRqrY3jxdbmSyaMuCEFk2Yt69Ko6dPToNK+d5IQhiih+88bPzYSlSvTNJe1Z3y01OHYTSo7BpmKGgrW3dL8e16234A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iHnN/ZCe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QD973/sk; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=N/SkN+bA3WZyPdRp2cqnK4gGLa4HuY1v4teb9xmWGtOpIZxP56+id0B2nsVrErxhFivCX0eT57Z4S0ayc+Gr0aTbrskTmsgWb7LlCMXW+trADCs7ebIRWHO75zOUjEHTMMcBwEbDxY/oI8e2clMBYAnfh8qTaaoIOqhEDdT1ALM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=l8U0P6F0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q5pj7yoa; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iHnN/ZCe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QD973/sk"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 95CA2EC02F2;
-	Thu, 24 Jul 2025 17:10:33 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Thu, 24 Jul 2025 17:10:33 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="l8U0P6F0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q5pj7yoa"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0B134EC020A;
+	Thu, 24 Jul 2025 17:21:22 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 24 Jul 2025 17:21:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1753391433;
-	 x=1753477833; bh=dFo2vrtepf6UT8mSuuQm6d5I54k2wcbWkcxVy9qrxaQ=; b=
-	iHnN/ZCe4cU2Cm4w1kyas8l9uXwaZxAvHy5+CSN/ZN7a2EtWkULQe9Iwia6EHpFl
-	52cu4iPT/yE9bmq424nyM/QO3cE4ZzCczCtH89UEioJj+lXE+iZDo24EUvWS8BKG
-	PI00rE7o6Qkq2HAw1WGQIOGVNx6IkR+bkwuTsdX3wBhkdnqjh3NIl3pLOm63pn+T
-	QsFZQ/rro1m06xHLf9lsLNQH/9yae3X3taCQAeYpRVxmz400IfuxRIbxt/ZhiiAh
-	divI3uE8TUBuC4r0HCMZG+rZJE/vU9MY387lIiVhDhAsOD2peAR5q3gJkV0qPwxv
-	DEPPnaC7xxT3upeUdyZ6Gw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753392082; x=1753478482; bh=ovoIVjFiff
+	tR1fsQzFrg80YLNn9mH3N8Lgaw31XJqt8=; b=l8U0P6F0CcMWPetncqZOJYxhac
+	lOFr2ANn1JbumoT75MxOD8x82MuR5q218bEcMKOn8x2HlD8H0D4Fo9WNfjgEt80O
+	qV8qvM7r7jPN4N+lwm8VElku1ZXfC9JdO2sUXVLNgb1KElEa4tMUhweGiJMP7JnS
+	pwRQiMxBrOa2cbDoxGoEicFZF+PlCwJbnLwokJ0/+J8iJkNSsRk3FTfURt6N0SfV
+	+f+xvKQlmbT3zZ4+ffLJklkmeX5viM9cNB67HhYLjqN2VcH9rwU5IVe8ExYVVkRg
+	t+p60DKD/Fk8kIJCzNq+nGbZvvd5QeEq5YTKWFtk//9shlDxVkzD1u511N0A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1753391433; x=
-	1753477833; bh=dFo2vrtepf6UT8mSuuQm6d5I54k2wcbWkcxVy9qrxaQ=; b=Q
-	D973/skytwWbaCHoC2AKr7lCpnUqb4Po1vr2f8YVln/YbbEU167RB993UzZ4tcHY
-	Yb1lfAasDSitasdiIqNmsrc02YlsRt0Fwmtu9cDczugAa8mZWmJ/2DYetXRxwSuh
-	kXoIv4wNGlXHcl8Mw1ciesRAxsRWpX+PyK+netucGFfu6T846jOMCQoRlCLnKdy/
-	RFLrIliLQSAw1d/3gDbeMDbe9Wt+DfnYlE2p5KVMHrVpSr8AsUgAXOSAKklOYXSW
-	TdJlTEBmY0xppLV/7+181pTr832ffUIomO6AWfNyWDN9RTe52czBntW+zB4V4pN6
-	dO4I+Kt8cB8zU9brgELdQ==
-X-ME-Sender: <xms:SaGCaBf0Fc0tPzUkzZD9Iv8VP_XVTVDfqBmObbInE0S9Ygx_srWGvg>
-    <xme:SaGCaKsq7KUnXCTIR9KX6iYVNJilIotxLv40sSiq3efrcQl92YaXNx8DXaSHWf89o
-    MptVt-PIte0efKKOA>
-X-ME-Received: <xmr:SaGCaA_3KPk8AMRBEh37hOZHBwkJB4G-wEpxAWeIonRhexrZSLrQooH-oq-0t6Bl5oBN3NsBuxr6jhaPyYPZfNtguqZ1AZP2rJqNrvY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudeilecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753392082; x=1753478482; bh=ovoIVjFifftR1fsQzFrg80YLNn9mH3N8Lga
+	w31XJqt8=; b=Q5pj7yoaNw8p5V/K38gvU4Chiy71Cq20cY57991pvCaUIV40BQC
+	nreou7CkeDih5YvoGdBlEAAD93zAZGt7vyRADMRgyoef18vBh144LveCXKHmXHC+
+	uyDryweiSGiUuDXgQpWH0P75hWu7IUTrfQkdr7mmRKah757/6rqqlzvzywQMiU2L
+	7zfnrf0QC9Ekr/eXApD7SGPRWnm9YtdSXkeT0vD6TPHP6ZgS8zQhUqQ24z1go+DM
+	uSYXUpXnZzmO5VZpelfeXXdDAv+qKsKcaio20m2iys8nE/JfFWY/JBpFxcncZZBk
+	FsbrIYjoFplORMeoxRSzVOzMgBpDhqZXLHA==
+X-ME-Sender: <xms:0aOCaBJFsVGFAYTEm76zlIoM6h9BhObHrwbohDygZonCmZLRUSg2Fg>
+    <xme:0aOCaAadnokSLx-dzv6Smkr_9e9R9o3hSKSPlihODDWXuak9Cs2iA40-DI7wxiYaN
+    iR-AqMRsyaUTm_6aA>
+X-ME-Received: <xmr:0aOCaDLD7vfDsWs-V4yRkSoezl5J8i-cJ3zSUtmqUmWHVfr8mBBYMfaFARcV7az6YzM_yBnAy1_74ggjhb_xgxdNrVOTAmqYRbQk2pc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekudejvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
-    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
-    htvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveef
-    tdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepgh
-    hithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehs
-    mhhtphhouhhtpdhrtghpthhtohepshiivgguvghrrdguvghvsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehk
-    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SaGCaF1oUt3TbRloPgQs3uKwkx7948Lmb7dRzJPRxs9Y-4e2axSvdg>
-    <xmx:SaGCaFBXkiUWJox0vHlpZZ5T-rIisY_-qQJzZthbnr7BF5BLSlBJJQ>
-    <xmx:SaGCaBdVuq3DkKryme_OuMW7wTRBzY2lOHX-NZsE29KSl3Nmy2-cUQ>
-    <xmx:SaGCaC4mbrtTbzdstd5UDwJb7T6dnUmGb-ZNtzeMVeGw2jnr3JaxQw>
-    <xmx:SaGCaBPgFog0QFM_P3twYtsjv-ofcMCJAmG5yS-lWgmwVspJtpkwfok4>
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeeufeeluddvkeekgfeftdejhefgtdevhfduheejkedtjeelkeegkedtieeiudff
+    feenucffohhmrghinhepshhusghmohguuhhlvgdrrggtthhivhgvnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:0aOCaOCDgczqnKxtZVHHnV1i7e2s8_wlZqROAUKUbi23F7WX75pOfg>
+    <xmx:0aOCaIrnsUykLTnuNhSNJhT8MPSHWrrxR8A4m-6Xf0aMcoLfQeIzxw>
+    <xmx:0aOCaJib0Ar5KSg7Ir2UgticsqUqZ6qQ213VtQS24AOBec27xP3GPQ>
+    <xmx:0aOCaFCQ66n0l1cjjcxiaBmi07krkwPXniExMb0MzBeduJ2AchDWyg>
+    <xmx:0qOCaFH3QIeetuiDLAnV5p_noJprL7CUBO2fFXi2LUW523_mJ3DRfSnp>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Jul 2025 17:10:32 -0400 (EDT)
+ 24 Jul 2025 17:21:21 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>
-Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>,  Patrick
- Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 4/8] builtin/reflog: implement subcommand to write new
- entries
-In-Reply-To: <aIJdSCPEHoiWWxrP@szeder.dev> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Thu,
-	24 Jul 2025 18:20:24 +0200")
-References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
-	<20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
-	<aIJdSCPEHoiWWxrP@szeder.dev>
-Date: Thu, 24 Jul 2025 14:10:31 -0700
-Message-ID: <xmqqa54tz454.fsf@gitster.g>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/2] submodule: skip redundant active entries when
+ pattern covers path
+In-Reply-To: <20250724152418.45226-3-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Thu, 24 Jul 2025 20:54:18 +0530")
+References: <20250724152418.45226-1-jayatheerthkulkarni2005@gmail.com>
+	<20250724152418.45226-3-jayatheerthkulkarni2005@gmail.com>
+Date: Thu, 24 Jul 2025 14:21:20 -0700
+Message-ID: <xmqq1pq5z3n3.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,32 +86,40 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-SZEDER Gábor <szeder.dev@gmail.com> writes:
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-> On Tue, Jul 22, 2025 at 01:20:53PM +0200, Patrick Steinhardt wrote:
->> diff --git a/builtin/reflog.c b/builtin/reflog.c
->> index b00b3f9edc9..d0374295620 100644
->> --- a/builtin/reflog.c
->> +++ b/builtin/reflog.c
->> @@ -3,6 +3,8 @@
->>  #include "builtin.h"
->>  #include "config.h"
->>  #include "gettext.h"
->> +#include "hex.h"
->> +#include "odb.h"
->
-> This series is queued on top of v2.50.0, which doesn't have 'odb.h'
-> yet.
+> @@ -3308,6 +3310,9 @@ static void configure_added_submodule(struct add_data *add_data)
+>  	struct child_process add_submod = CHILD_PROCESS_INIT;
+>  	struct child_process add_gitmodules = CHILD_PROCESS_INIT;
+>  
+> +	const struct string_list *values;
+> +	size_t i;
+> +	int matched = 0;
+>  	key = xstrfmt("submodule.%s.url", add_data->sm_name);
+>  	git_config_set_gently(key, add_data->realrepo);
+>  	free(key);
 
-Thanks for checking.
+The blank line should be between the end of block of decls
+(i.e. "int matched = 0") and the first statement (i.e. "key =
+xstrfmt(...)"), not there.  You probably do not need "i" in such a
+wide scope; just use
 
-Yet this is a topic to fix breakages that happened even before 2.50;
-"git refs migrate" started migrating reflogs in 2.48, which had one
-fix on top in 2.49.  For a non-security bugfix we typically do not
-address anything older than the latest release's maintenance track,
-so a series that would fix on top of 2.50 would have been more
-appropriate.
+	for (size_t i = 0; i < values->nr; i++)
 
+in the only loop that uses it.
+
+> @@ -3349,20 +3354,28 @@ static void configure_added_submodule(struct add_data *add_data)
+>  	 * is_submodule_active(), since that function needs to find
+>  	 * out the value of "submodule.active" again anyway.
+>  	 */
+> -	if (!git_config_get("submodule.active")) {
+> +	if (git_config_get("submodule.active") || /* key absent */
+> +	    git_config_get_string_multi("submodule.active", &values)) {
+
+Hmph, do we need two calls here, or would a single call to
+get_string_multi() sufficient to learn what we want here?  When
+there is no such key, the function may fail (or succeed and leave
+values->nr == 0), and either way, we can tell that there is no such
+key, right?
