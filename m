@@ -1,74 +1,75 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC9E2D5C97
-	for <git@vger.kernel.org>; Thu, 24 Jul 2025 13:29:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1EE92D781F
+	for <git@vger.kernel.org>; Thu, 24 Jul 2025 13:29:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753363756; cv=none; b=MnK02/aW+Ea/XK3jKye+riDrYU+AbaZ2egdEr92JcWVBVZ/CSmKFBu7wkiwuieP1jCFgnUjXC732OMFgf97W0m+M2nFIXWnJGl/eSAhK+R1X6Trl1JM/82j2FiXwD16xQ/Ly7ozVZWu8MPPtTMWcQdgdWhymK5RJ0trzwNaj9vc=
+	t=1753363780; cv=none; b=f+ss9HlRG2ktICzksRIIeMkk33s6tf7htkdyoE6E/bRIkeAXT7sal0EFizVBd1w1x0yHyTapynFubC30UplV+MJqBw7C5tGSh0AdpVbJzAqDSqQAM2dxSp8kaAGPg/vGO+JtTw9zveYzF8E69DlQMil2y2vlyR5QrQGmf6xXgQQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753363756; c=relaxed/simple;
-	bh=gE74YBs9lmAr/oovHiCyW1CnmrM0rn3U6HIdWCaXegY=;
+	s=arc-20240116; t=1753363780; c=relaxed/simple;
+	bh=oW3RqlcqcB9icQrzQh4rntm+1oFuHXkx48fiE5PQ4Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ttedqvd+DsKnpG7b1yxwZYcjRr3YKxrXd88hIOdjEWN6N6g8gW/ScyQRJ8gYdJ0o2coqVegvNvxs2Q3IlbqI/y72qc3t4Gkw323yYxcqMsVaaxJ/q7sf+PEKt5JtR8ISQNWxgiFM1HCcNwiQo1LahRVzpuf8rOCGQzbrFMJHO0A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iJp5Rax8; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version; b=JfP2dHPRDudwGfPYFb1IwRk4Yhlx63szxaRjwK0qbFwItsveiiryNrOC+JGUJnAfjtqQZ3Q65GR6R1AYOU3Q8LlWG0EpMG3nfPtA2NckE3vQzt+uKzG2hnXpeCSanf9V8eKllnqLGosN2xs06NVlzfTieuvE2WvB/5KV2Br3aWM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TuH+0RsW; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iJp5Rax8"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4561514c7f0so9905765e9.0
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 06:29:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TuH+0RsW"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-45610582d07so6866035e9.0
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 06:29:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753363753; x=1753968553; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753363777; x=1753968577; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=pnXvikVRSZniywRTsAC9fF3KTrBfdAOcZB01E5y5ecY=;
-        b=iJp5Rax8+Gv8f38d7LjQs0qUh72CYV7h6f5bybLpZ+26nk57hXnpG6zO1m/g6mi9Nh
-         73kEP0XMopsHiWp498j2T4SRKT6BgAjb/68OI8Bq7CK6Jnnh4elicXKUjaRoWVstuLo6
-         5jSYEPPx2XK5G86Kyi/8L0Sm6WBfYnftLm0mL+gi/O1JKqFTmwkH1aTa0iVPrZbqmfl3
-         0bieAdXIrzMLDXlfwNiE76Is/KHapQa3rpiEFw1IsIlx2yn5S0Y3JDHe9qsIVadvbrl6
-         7vU8h9BBJtBav4PSypkIe/CrnLuMbD0/QO0+kdduY5KeouVCZKAgFgFa5MjYfiaeBwtW
-         C4UQ==
+        bh=sDrB5odjQusAZnaGW/rVHsjHgaOFf5Iee8e4WTlnh7o=;
+        b=TuH+0RsWlged1meNElj2ZrBzMryct2/0n8mMfoifMky9jAFIMHSBV07PBKNz+ePkHN
+         mjgGJdXm6h6j5tG4qEKdkn0KxAZ9Onnr8qJW5idmWmsI9xNh4MzoBCTYJidDkeWYLsSo
+         iRJNwSqQhbNAb/iw1r/bXzaVTM54F58TDyY3Jskl4Or1av3IdqEZmPiPFEU6aCAZ778w
+         HM/9Y5n5z3aRkIbF1RbFPMGekk4tWh8UxCJsDeVr/knEUITvMImI879mjxAff7uJuJv2
+         fyfZWj8lvBVeNmeJeN1DShisTxG7PFRHYwP00Dxc5sRuyIcdXNeeomJ/6YBPUvk06psI
+         1ItQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753363753; x=1753968553;
+        d=1e100.net; s=20230601; t=1753363777; x=1753968577;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=pnXvikVRSZniywRTsAC9fF3KTrBfdAOcZB01E5y5ecY=;
-        b=bNLLSUfiWqkA2QKfilauvkg3WinKq6dVbhnI+cPUerutD2Pqmu4wEIXPWvkU8QmozU
-         tR8Beq0QEn/F8fct2eTv6Of/qcc1gYGMkNtcKR+AIuhBlkd7x9Cz0VQxAEPZVFYNtGbK
-         4ZI9fj9OAyPmgXZS+JYqc+zJwlFSvJCV36EdZttpBtSzgWe/RJ9q5GyI89UevTNZPDSz
-         pz97tSEIQiOhMXwIhuCk9MECH2xpyjb8jAtEvtpX4SXg4j0pmH0zB9siNWIxTQB97yKy
-         1OkcpzakM5gxff2V879/W4zgSLScPJpeebThVo3wRPwZI+EdFIa/+WYLmpzLaa4CgwJ2
-         7dZg==
-X-Gm-Message-State: AOJu0YwyfbrqI8NeDKTjbdhaV22XjcOndMjKGkr5gYwNXl3ILgq3jWnf
-	voc6SaivUEwNc7fUkqDjNobWaZEOQq/24Dcfa6ZOKpW1QNsWPTooDd4kjoIri/TK5HXOT+Lw
-X-Gm-Gg: ASbGnct+QB8apxsNGrBgflBkpp+k3jFEvQZDWoIqdufTHx3SFWe98PemPF2VQM9K6WU
-	5j6REgpSJgObQPOQyH/VMRK7T1E3JMmGG/LxFIlyOeymaiDiP8eqMlWPH6/0urzPj8y3YszSXdb
-	hIwa2j0l8ABD5FXuLuE36xvoRfmWi85XsLBIuRCL/15/XEdMdds/kXI5wj8oOnvmYaSNwez1MJc
-	0Kj+TvQx0ngAOKRruBB77YF/Myk8gubECj66BBU7B4wDXDUpqFvG/KbC50OR73ZZ3+Z6DjyoZ4B
-	WG8a4y/Fo+06LQZgJ9wrLB0iiQPYytHohwKdub4lZf6iFeqOzlS2YcNahExDO8hEeEUnlhz3e9i
-	wqovD+OY5vmjYhimo
-X-Google-Smtp-Source: AGHT+IH8z3jBAY3q3FvEHxVEV32FpZcU7SwOSB0466eWX1x+0HxcYnuiwQsaI7RvsQm1ttEoMQIN3g==
-X-Received: by 2002:a05:600c:529a:b0:456:1dd9:943 with SMTP id 5b1f17b1804b1-45868c7525cmr72034425e9.3.1753363752490;
-        Thu, 24 Jul 2025 06:29:12 -0700 (PDT)
+        bh=sDrB5odjQusAZnaGW/rVHsjHgaOFf5Iee8e4WTlnh7o=;
+        b=paGf9AFDxE14UtIFfGphNxFAsdkyusrkK1YtI3/CV9A1xw48BAGLyzo1KbrvCRAYZV
+         XARfSSZzCEcPTSfT61Y0/g6M8TqdL6QKe8pmVT0/obwnUINGeYj7I6g3cWiz43awOVi1
+         k58pr6Mb6DmHXaMOB6zNpsDnuQZjiNeyhN4Em5CGmodTIv/2mw9otDVVt3L5Yn/NVwoa
+         e46E0TQIGtOWsnY92aCoNB4MpJq4QrRCHqDzzOnl3kUz8z7I6QXxsgTXu/Uf4NIE2WQS
+         UkAFrysliEFTHtElxrUj4eo465YCx3AGx+fFXkX6qonPFnWart/3ZgpthbLBSGW/oRl0
+         9TXA==
+X-Gm-Message-State: AOJu0YxbnGBTMrynQE4YQrRsgQbJKhL0hDRsIdWjgQXguPJijaJiRUDF
+	tVmqdEjzibARWZJIsvNj9UyS21jGIldLrRCump1gdG0uWIWVTTKFZvve0WZL8iMlonCZ/iML
+X-Gm-Gg: ASbGncuxkxOlPC9az/tLBWCNL+J+DPcgOoncMUIHkUD8vqLIlwtdJt9/+rp7PN9mKD1
+	vemxvp2q5P6/3WQOduxa4cBvbNxa9FkvWkAbNwd7/ZV6kQF1TAi/u5SPsgd3U81dLf9EWzEX0T+
+	YZEPqtLdBkO3GprjrfQLHaErMr25/yhnjzcKMMlcY8FiAlwGe/oWctmDlKlwtAUQUcpM0uLdIdK
+	0bnhYP1dfFkRCfmFJKngh8pLEEiORgIRDXzlO2/Z/CcwM79xvPicsgbkP0EXxlfc4+lPo57JYI2
+	s5tOd81LqGQy1t3fQJVSUuHNQLXvorIYWtpYWve0XMLzgdLc4EcnJ9xkSQ9tV5fib0JYksjegmS
+	aQ+DH1LNOHPlPoDOt
+X-Google-Smtp-Source: AGHT+IFRrIWuzbLh98Igr+pUHApIUDxe7NokANwRZ4GwEt92bIAg5FecaQ8Bk6+D3PuG6JbRLqBOMQ==
+X-Received: by 2002:a05:600c:820a:b0:453:6424:48a2 with SMTP id 5b1f17b1804b1-45868c8da8dmr74404795e9.10.1753363776281;
+        Thu, 24 Jul 2025 06:29:36 -0700 (PDT)
 Received: from localhost.localdomain ([105.113.77.100])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcad7fdsm2232182f8f.43.2025.07.24.06.29.09
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcad7fdsm2232182f8f.43.2025.07.24.06.29.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 06:29:12 -0700 (PDT)
+        Thu, 24 Jul 2025 06:29:35 -0700 (PDT)
 From: Seyi Kufoiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
-	Seyi Kufoiji <ibed@apolop2p.com>,
-	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v5 0/5] t/unit-tests: convert unit-tests to use clar
-Date: Thu, 24 Jul 2025 14:28:08 +0100
-Message-ID: <20250724132813.59627-1-kuforiji98@gmail.com>
+	Seyi Kuforiji <kuforiji98@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v5 1/5] t/unit-tests: convert reftable table test to use clar
+Date: Thu, 24 Jul 2025 14:28:09 +0100
+Message-ID: <20250724132813.59627-2-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250605140644.239199-1-kuforiji98@gmail.com>
+In-Reply-To: <20250724132813.59627-1-kuforiji98@gmail.com>
 References: <20250605140644.239199-1-kuforiji98@gmail.com>
+ <20250724132813.59627-1-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,114 +78,262 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Seyi Kufoiji <ibed@apolop2p.com>
+From: Seyi Kuforiji <kuforiji98@gmail.com>
 
-Hello,
-
-This patch series marks the final batch of our existing unit test files
-transitioned to the Clar testing framework. It covers all the
-reftable-related test files, and is part of our ongoing effort to
-standardize our testing framework to enhance its maintainability.
-
-Changes in v5:
- - some code refactoring and cleanup based on review.
-
-Thanks
-Seyi
+Adapt reftable table test file to use clar by using clar assertions
+where necessary.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-
-Seyi Kuforiji (5):
-  t/unit-tests: convert reftable table test to use clar
-  t/unit-tests: convert reftable readwrite test to use clar
-  t/unit-tests: convert reftable record test to use clar
-  t/unit-tests: convert reftable stack test to use clar
-  t/unit-tests: finalize migration of reftable-related tests
-
- Makefile                                      |  13 +-
- t/Makefile                                    |   1 -
- t/meson.build                                 |  34 +-
- t/unit-tests/lib-reftable-clar.c              | 101 ---
- t/unit-tests/lib-reftable-clar.h              |  20 -
- t/unit-tests/lib-reftable.c                   |  35 +-
- t/unit-tests/lib-reftable.h                   |  15 +-
- t/unit-tests/u-reftable-basics.c              |   2 +-
- t/unit-tests/u-reftable-block.c               |   2 +-
- t/unit-tests/u-reftable-merged.c              |   2 +-
- t/unit-tests/u-reftable-pq.c                  |   2 +-
- ...ble-readwrite.c => u-reftable-readwrite.c} | 403 ++++-----
- ...-reftable-record.c => u-reftable-record.c} | 250 +++---
- ...{t-reftable-stack.c => u-reftable-stack.c} | 780 ++++++++----------
- ...{t-reftable-table.c => u-reftable-table.c} |  73 +-
- 15 files changed, 711 insertions(+), 1022 deletions(-)
- delete mode 100644 t/unit-tests/lib-reftable-clar.c
- delete mode 100644 t/unit-tests/lib-reftable-clar.h
- rename t/unit-tests/{t-reftable-readwrite.c => u-reftable-readwrite.c} (68%)
- rename t/unit-tests/{t-reftable-record.c => u-reftable-record.c} (62%)
- rename t/unit-tests/{t-reftable-stack.c => u-reftable-stack.c} (59%)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Makefile                                      |  4 +-
+ t/meson.build                                 |  5 +-
+ ...{t-reftable-table.c => u-reftable-table.c} | 75 +++++++++----------
+ 3 files changed, 39 insertions(+), 45 deletions(-)
  rename t/unit-tests/{t-reftable-table.c => u-reftable-table.c} (75%)
 
-Range-diff against v4:
-1:  cf8b0471fd ! 1:  7c159bd2fe t/unit-tests: convert reftable table test to use clar
-    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
-      UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
-      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
-    +@@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
-    + 	$(OBJCOPY) --localize-hidden $^ $@
-    + 
-    + contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
-    +-	$(AR) $(ARFLAGS) $@ $^
-    ++	$(AR) $(ARFLAGS) $@ $^
-    + \ No newline at end of file
-     
-      ## t/meson.build ##
-     @@ t/meson.build: clar_test_suites = [
-2:  cbe70c5c23 = 2:  3ae3b2cf9c t/unit-tests: convert reftable readwrite test to use clar
-3:  38e2198eac ! 3:  d4303eb913 t/unit-tests: convert reftable record test to use clar
-    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-      UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-     
-      ## t/meson.build ##
-    -@@ t/meson.build: clar_test_suites = [
-    -   'unit-tests/u-reftable-merged.c',
-    -   'unit-tests/u-reftable-pq.c',
-    -   'unit-tests/u-reftable-readwrite.c',
-    -+  'unit-tests/u-reftable-record.c',
-    -   'unit-tests/u-reftable-table.c',
-    -   'unit-tests/u-reftable-tree.c',
-    -   'unit-tests/u-strbuf.c',
-     @@ t/meson.build: clar_unit_tests = executable('unit-tests',
-      test('unit-tests', clar_unit_tests)
-      
-4:  8de9dbbd3b ! 4:  df582f6e2c t/unit-tests: convert reftable stack test to use clar
-    @@ Makefile: CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-     
-      ## t/meson.build ##
-     @@ t/meson.build: clar_test_suites = [
-    +   'unit-tests/u-reftable-merged.c',
-        'unit-tests/u-reftable-pq.c',
-        'unit-tests/u-reftable-readwrite.c',
-    -   'unit-tests/u-reftable-record.c',
-    ++  'unit-tests/u-reftable-record.c',
-     +  'unit-tests/u-reftable-stack.c',
-        'unit-tests/u-reftable-table.c',
-        'unit-tests/u-reftable-tree.c',
-5:  a69c3370ee ! 5:  9340e7ce88 t/unit-tests: finalize migration of reftable-related tests
-    @@ Makefile: CLAR_TEST_SUITES += u-urlmatch-normalization
-      
-      # xdiff and reftable libs may in turn depend on what is in libgit.a
-      GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
-    +@@ Makefile: $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
-    + 	$(OBJCOPY) --localize-hidden $^ $@
-    + 
-    + contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
-    +-	$(AR) $(ARFLAGS) $@ $^
-    + \ No newline at end of file
-    ++	$(AR) $(ARFLAGS) $@ $^
-     
-      ## t/Makefile ##
-     @@ t/Makefile: check-meson:
+diff --git a/Makefile b/Makefile
+index 3cccc73073..0227fdb3e1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1368,6 +1368,7 @@ CLAR_TEST_SUITES += u-reftable-basics
+ CLAR_TEST_SUITES += u-reftable-block
+ CLAR_TEST_SUITES += u-reftable-merged
+ CLAR_TEST_SUITES += u-reftable-pq
++CLAR_TEST_SUITES += u-reftable-table
+ CLAR_TEST_SUITES += u-reftable-tree
+ CLAR_TEST_SUITES += u-strbuf
+ CLAR_TEST_SUITES += u-strcmp-offset
+@@ -1384,7 +1385,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
+ UNIT_TEST_PROGRAMS += t-reftable-readwrite
+ UNIT_TEST_PROGRAMS += t-reftable-record
+ UNIT_TEST_PROGRAMS += t-reftable-stack
+-UNIT_TEST_PROGRAMS += t-reftable-table
+ UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
+ UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+@@ -3972,4 +3972,4 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+ 	$(OBJCOPY) --localize-hidden $^ $@
+ 
+ contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+-	$(AR) $(ARFLAGS) $@ $^
++	$(AR) $(ARFLAGS) $@ $^
+\ No newline at end of file
+diff --git a/t/meson.build b/t/meson.build
+index ac4394b7a2..46d3a8580b 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -12,6 +12,7 @@ clar_test_suites = [
+   'unit-tests/u-reftable-block.c',
+   'unit-tests/u-reftable-merged.c',
+   'unit-tests/u-reftable-pq.c',
++  'unit-tests/u-reftable-table.c',
+   'unit-tests/u-reftable-tree.c',
+   'unit-tests/u-strbuf.c',
+   'unit-tests/u-strcmp-offset.c',
+@@ -59,11 +60,9 @@ clar_unit_tests = executable('unit-tests',
+ test('unit-tests', clar_unit_tests)
+ 
+ unit_test_programs = [
+-  'unit-tests/t-reftable-reader.c',
+   'unit-tests/t-reftable-readwrite.c',
+   'unit-tests/t-reftable-record.c',
+   'unit-tests/t-reftable-stack.c',
+-  'unit-tests/t-reftable-table.c',
+ ]
+ 
+ foreach unit_test_program : unit_test_programs
+@@ -1233,4 +1232,4 @@ if perl.found() and time.found()
+       timeout: 0,
+     )
+   endforeach
+-endif
++endif
+\ No newline at end of file
+diff --git a/t/unit-tests/t-reftable-table.c b/t/unit-tests/u-reftable-table.c
+similarity index 75%
+rename from t/unit-tests/t-reftable-table.c
+rename to t/unit-tests/u-reftable-table.c
+index 7e1eb533d0..839107d8a4 100644
+--- a/t/unit-tests/t-reftable-table.c
++++ b/t/unit-tests/u-reftable-table.c
+@@ -1,12 +1,12 @@
+-#include "test-lib.h"
+-#include "lib-reftable.h"
++#include "unit-test.h"
++#include "lib-reftable-clar.h"
+ #include "reftable/blocksource.h"
+ #include "reftable/constants.h"
+ #include "reftable/iter.h"
+ #include "reftable/table.h"
+ #include "strbuf.h"
+ 
+-static int t_table_seek_once(void)
++void test_reftable_table__seek_once(void)
+ {
+ 	struct reftable_ref_record records[] = {
+ 		{
+@@ -22,32 +22,32 @@ static int t_table_seek_once(void)
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	int ret;
+ 
+-	t_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
++	cl_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
+ 	block_source_from_buf(&source, &buf);
+ 
+ 	ret = reftable_table_new(&table, &source, "name");
+-	check(!ret);
++	cl_assert(!ret);
+ 
+ 	reftable_table_init_ref_iterator(table, &it);
+ 	ret = reftable_iterator_seek_ref(&it, "");
+-	check(!ret);
++	cl_assert(!ret);
+ 	ret = reftable_iterator_next_ref(&it, &ref);
+-	check(!ret);
++	cl_assert(!ret);
+ 
+-	ret = reftable_ref_record_equal(&ref, &records[0], REFTABLE_HASH_SIZE_SHA1);
+-	check_int(ret, ==, 1);
++	ret = reftable_ref_record_equal(&ref, &records[0],
++					REFTABLE_HASH_SIZE_SHA1);
++	cl_assert_equal_i(ret, 1);
+ 
+ 	ret = reftable_iterator_next_ref(&it, &ref);
+-	check_int(ret, ==, 1);
++	cl_assert_equal_i(ret, 1);
+ 
+ 	reftable_ref_record_release(&ref);
+ 	reftable_iterator_destroy(&it);
+ 	reftable_table_decref(table);
+ 	reftable_buf_release(&buf);
+-	return 0;
+ }
+ 
+-static int t_table_reseek(void)
++void test_reftable_table__reseek(void)
+ {
+ 	struct reftable_ref_record records[] = {
+ 		{
+@@ -63,35 +63,35 @@ static int t_table_reseek(void)
+ 	struct reftable_buf buf = REFTABLE_BUF_INIT;
+ 	int ret;
+ 
+-	t_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records), NULL, 0, NULL);
++	cl_reftable_write_to_buf(&buf, records, ARRAY_SIZE(records),
++				 NULL, 0, NULL);
+ 	block_source_from_buf(&source, &buf);
+ 
+ 	ret = reftable_table_new(&table, &source, "name");
+-	check(!ret);
++	cl_assert(!ret);
+ 
+ 	reftable_table_init_ref_iterator(table, &it);
+ 
+ 	for (size_t i = 0; i < 5; i++) {
+ 		ret = reftable_iterator_seek_ref(&it, "");
+-		check(!ret);
++		cl_assert(!ret);
+ 		ret = reftable_iterator_next_ref(&it, &ref);
+-		check(!ret);
++		cl_assert(!ret);
+ 
+ 		ret = reftable_ref_record_equal(&ref, &records[0], REFTABLE_HASH_SIZE_SHA1);
+-		check_int(ret, ==, 1);
++		cl_assert_equal_i(ret, 1);
+ 
+ 		ret = reftable_iterator_next_ref(&it, &ref);
+-		check_int(ret, ==, 1);
++		cl_assert_equal_i(ret, 1);
+ 	}
+ 
+ 	reftable_ref_record_release(&ref);
+ 	reftable_iterator_destroy(&it);
+ 	reftable_table_decref(table);
+ 	reftable_buf_release(&buf);
+-	return 0;
+ }
+ 
+-static int t_table_block_iterator(void)
++void test_reftable_table__block_iterator(void)
+ {
+ 	struct reftable_block_source source = { 0 };
+ 	struct reftable_table_iterator it = { 0 };
+@@ -147,14 +147,14 @@ static int t_table_block_iterator(void)
+ 					     (uintmax_t) i);
+ 	}
+ 
+-	t_reftable_write_to_buf(&buf, records, nrecords, NULL, 0, NULL);
++	cl_reftable_write_to_buf(&buf, records, nrecords, NULL, 0, NULL);
+ 	block_source_from_buf(&source, &buf);
+ 
+ 	ret = reftable_table_new(&table, &source, "name");
+-	check(!ret);
++	cl_assert(!ret);
+ 
+ 	ret = reftable_table_iterator_init(&it, table);
+-	check(!ret);
++	cl_assert(!ret);
+ 
+ 	for (size_t i = 0; i < ARRAY_SIZE(expected_blocks); i++) {
+ 		struct reftable_iterator record_it = { 0 };
+@@ -163,22 +163,26 @@ static int t_table_block_iterator(void)
+ 		};
+ 
+ 		ret = reftable_table_iterator_next(&it, &block);
+-		check(!ret);
++		cl_assert(!ret);
+ 
+-		check_int(block->block_type, ==, expected_blocks[i].block_type);
+-		check_int(block->header_off, ==, expected_blocks[i].header_off);
+-		check_int(block->restart_count, ==, expected_blocks[i].restart_count);
++		cl_assert_equal_i(block->block_type,
++				  expected_blocks[i].block_type);
++		cl_assert_equal_i(block->header_off,
++				  expected_blocks[i].header_off);
++		cl_assert_equal_i(block->restart_count,
++				  expected_blocks[i].restart_count);
+ 
+ 		ret = reftable_block_init_iterator(block, &record_it);
+-		check(!ret);
++		cl_assert(!ret);
+ 
+ 		for (size_t j = 0; ; j++) {
+ 			ret = iterator_next(&record_it, &record);
+ 			if (ret > 0) {
+-				check_int(j, ==, expected_blocks[i].record_count);
++				cl_assert_equal_i(j,
++						  expected_blocks[i].record_count);
+ 				break;
+ 			}
+-			check(!ret);
++			cl_assert(!ret);
+ 		}
+ 
+ 		reftable_iterator_destroy(&record_it);
+@@ -186,7 +190,7 @@ static int t_table_block_iterator(void)
+ 	}
+ 
+ 	ret = reftable_table_iterator_next(&it, &block);
+-	check_int(ret, ==, 1);
++	cl_assert_equal_i(ret, 1);
+ 
+ 	for (size_t i = 0; i < nrecords; i++)
+ 		reftable_free(records[i].refname);
+@@ -194,13 +198,4 @@ static int t_table_block_iterator(void)
+ 	reftable_table_decref(table);
+ 	reftable_buf_release(&buf);
+ 	reftable_free(records);
+-	return 0;
+-}
+-
+-int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
+-{
+-	TEST(t_table_seek_once(), "table can seek once");
+-	TEST(t_table_reseek(), "table can reseek multiple times");
+-	TEST(t_table_block_iterator(), "table can iterate through blocks");
+-	return test_done();
+ }
 -- 
 2.43.0
 
