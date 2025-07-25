@@ -1,178 +1,171 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 006222EF9D6
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 17:28:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A487A23CEF9
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 17:56:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753464512; cv=none; b=o4l8Dscs+5LysTAMyQY/zrOCYi5G2AiKmD1AMOyxe/F4jXFT/g2IaXQJzwR5Bi8S4KFQIFvh0WzZk+TXxpQJkNdGWxiJjZT1i6los9ZLjhifHg/jDNx3XxIQLKegei5GDm99/q99r7ubu41M1aUmLxKwtfTxZcVqPlfFsVl78sk=
+	t=1753466204; cv=none; b=JFCpdY7uLksafsYZmuI4FJv7zIWOWvxb3Kx+gx6VFBisEBZkAhVXhBxli8uyNz2744tvaDAYAdjm/lBOgUtvJhi8CrPAZt/XyUCMkTWtSI8PKq82Y8VrJ+lsxTup5sTb1bI0YMFOM6GFS0wxIrvgS5O+A04kbU6cX+42Pi5hQM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753464512; c=relaxed/simple;
-	bh=Kt/pUCZ9z1qXK6M+kmQ01eaPuRD8FUnY3sZRHFXXF54=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=qXbSYnjmdL7oet2flWwmXzi/Skzv5htSfkh0iAUO0rQO1oM2gNeAvzpk4Vc2PsEPW7bPq5ExXN3gbXFAktuX6HM9y/hzCoqIYA5G20+ml3tg37IH6SBc5vbDs61d7iVXRDYEkJIWFHtln7F2J10Bq6DRLod2HiJDxtjtjgxznQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ardvdZBZ; arc=none smtp.client-ip=209.85.219.175
+	s=arc-20240116; t=1753466204; c=relaxed/simple;
+	bh=tSoXqLgUWKEPlcPGrGGG5vnVlOMJ3/7uHvBmF5jK5S0=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Content-Type; b=QHr+/kFQiCeWYwkoZd+5odRFP98ybWLWZFQkxtIEaczlMRLBrCkpCBCWqkni/UQDYyrmdv/ZjKOi8TBcw0NM3ku61aK4OGgwoatsAUyhcDOJHOHEZvtUQh5vMENwAX6NIvFaEO6qo+QBQg4Wq5it1V2DnhEizEIHsYKx1H2ftAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iEi5zxmy; arc=none smtp.client-ip=209.85.218.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ardvdZBZ"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e8defed8130so638306276.1
-        for <git@vger.kernel.org>; Fri, 25 Jul 2025 10:28:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iEi5zxmy"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae0ccfd5ca5so322211766b.3
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 10:56:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753464509; x=1754069309; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Q0X3P4A0qxUUmI0riumOh6Gkj0SvFfFdsn/Bv/fTkz8=;
-        b=ardvdZBZVQMKKxec5SoayBQiQTzwwyCglYeKaAEcsQVnR0yjjd61qjRRx2RWXx9rN6
-         RtpINvHJc3+618iqH2Rr9g41JNOO7StqIaLfvBpyfE7UY47EP/Us+bDRZ+CHAbi3Okc+
-         8nGvtR9/QYClhRoCDzuaP9uawkabgwBr3jPl/iy8vQG51xBb+ot4HUwgrC6CYp6e8bt7
-         GuYIWtK/1tkY9hpw1xGl4yRBsMB3DkUkdBWRkO19kp8h6oSEYDf9sYStOPcJsLX+EjUZ
-         DaAGJ38LuM0P8g0BWDboxeqI6zCht53fpahk4KCI+W62FGBUb+OI0d5szXww8eHOm/kS
-         n1Kw==
+        d=gmail.com; s=20230601; t=1753466201; x=1754071001; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5Q8615+D1UCadk6QdEIlPmexwjvn4TmVGpZC3GE/aDw=;
+        b=iEi5zxmyD3mtrLbj0ttk8NA/tMqK3HKCfyOGqPbgG6lUyIvraKlq1eGyQvPJI3WTLJ
+         Hf+1w9z/85e9wMcf99dKdcS9ujm6pExgomTJrYfQyfMXNZDxgNlRMZPK/0SmcPgHvhB3
+         /44lR16D+PNLnl9ziNeAKecY3uz1+mq9cUxzoCxBaNtKhJGGGp8e7STYwFo9KaPk+Oyf
+         ozbkADXxW2WX2deiSNRN9CWxjtiaRF6a8IlMLSOcMV7Vx9AjZJES3QW0NtX37Ojz9dbw
+         MiREaJXXl+zk3gc27nH03mivvjUeoHf3VkssBav9JnCVkaM5VyGem8tG0gMi7NeVI9gY
+         BjQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753464509; x=1754069309;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1753466201; x=1754071001;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q0X3P4A0qxUUmI0riumOh6Gkj0SvFfFdsn/Bv/fTkz8=;
-        b=EZOKcn+f3ALLva1xpRdQB0PYa1NzPe41cHsR09fW/Q97L6I0vTegSmgKInq0S79KSn
-         TEZzyeHs5s0Ht0+0oISwE4dev0m9i1SvRsLtRXL8ezt772WslNpaRmTvXcBp4jmPEtGf
-         BuPxuW/Fnr0msYea2CNNhdsL3wy/oeLIjh+oXwLfS9nvjIKVNIi3hp9XPSClDuVRrPRc
-         A2zCaq/j0wjtSfkUjV+65eofPb1E4mcw0AhJ+yz2DmYD6xTJ2SjeQjOiCteAbx3HQ3sK
-         kI3RKjIkwnrCCQZQpNDFQ4NC/RGgSEniIEpy97uWtD3JP0tFF3O9d0B7FK/IWgSkr/OI
-         PJNw==
-X-Gm-Message-State: AOJu0YwdXc0iCIWduKkBVZbvD/Q3yuUc+8w/gaozpLSV2JxKkvY9+EHd
-	0LUYhxX5TOKppqrMcOtOIm9nHVgE1QHIGPHA0jg4i9DloXtNCK37DuEsECYgZg==
-X-Gm-Gg: ASbGnctCWLbduVI8GM6SmTgdUBmCDD4cZjrkpE0p2jyYyWPn+0tMMm9oQGiQSx3CaFI
-	7W9E7bTHybNUIX6AWMNmRrkoQcYJQwBkltzuadKUb7GhahuHkHy9RYe7KN9IjMV47BaRqjoGAK3
-	z9pqkGJAS1cBJMzYbiCSdA0t/QYv1fgqmCFWoMWDGVWwMOuWa7DxmpjARuE7NKpnOom44rTyxbY
-	bhUwwUE38PQoGmkY6uBU4mTKdlbrhZOfb3wtFhpnQdBdZOJBUaCCEFGVXkd0nAZVS/YjWtwMNSa
-	FiWeI+5qVVv4WlgQxh5PDf2ASmWUBFydjUmSAzpDlbkg+FXaO/vCNv9o//VXOMw1dQ57msKRFPD
-	PoGXxYI/I014xc4GXsiLMbj21MgMnJ0ESnWzlOhLViSx4ybddthA=
-X-Google-Smtp-Source: AGHT+IGDLJB5BD+ngiIqnpOUBfe/9CvTnucBQjPWNKXPUTeNsJJTcfE/gO7bjiVnX8SZ2kZr6tKabg==
-X-Received: by 2002:a05:6902:4892:b0:e8d:87da:2112 with SMTP id 3f1490d57ef6-e8df127f475mr3030167276.41.1753464509313;
-        Fri, 25 Jul 2025 10:28:29 -0700 (PDT)
-Received: from smtpclient.apple ([2600:1004:b011:9b14:6c53:8307:d185:2565])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e8df871e8efsm129792276.46.2025.07.25.10.28.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Jul 2025 10:28:28 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        bh=5Q8615+D1UCadk6QdEIlPmexwjvn4TmVGpZC3GE/aDw=;
+        b=vy9WNem6skrFV5xrx/ao7f1ucdbdSfVNgJWBWwvZ+RAbPFnsb1Nizrv0GaQUHS1OoD
+         kauBm1sHhYQiAGC1SJg+2ey7Zh/AdsGRX5SvSjI6i7TzTCqklawGmojiuzFPxK36JZ04
+         fTbvh8DBJPl3v4fMbA0NybkQ4yqsOVrVjNyXkkMriFXX9yCOdm3bn/EGtiICrbsX/J93
+         FhtDAsrcN1aAmoOTyEj4J4fQ23VzcQC650/pZ6poCjv+UNBYFHIeKSXdqG+gWIDozfXK
+         EGIig5OfJ1f9WJSt8geYLAAN4tsFzccfdGUD5OdZYz1KWeO3R4s3V3yPS2LknVX6WZSh
+         l1fg==
+X-Forwarded-Encrypted: i=1; AJvYcCW6b4ILZ17EUd2cd7/loV3BGW+tixGCO07UlvhVoOXddAxY4XJlDASbYiRpYRqzcaKNJ4U=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywv3qDtFIQunX0U144QLjiYkxfHTnztGtI8bMcRlDBAcUX25+Ry
+	oAH4t8jV4uKh9TBdX6psg0EgYjh0i6TVMJtu386cV4MHnHMc9sD4Cf1/PIKii6Vzhu5FJSjSceb
+	KXQTXaclliMtPjpBlexnHdLTFYHtrHJM=
+X-Gm-Gg: ASbGncuClMPakL+JqGg2NkJ2N/A87RkoaXFA5MlMQALrrzg52Nz1P8iBGd4WUjkLfpD
+	755rAgGmODzIyKWUEUfQP9LlaJ/JAu8HtHQi42tu+Vo9FwIIyLRLTiuSZUNvy0CS3vt3aRHDYus
+	PCoIeaZt/GnLIm2saI3YF1qeLpk86n9t+PSZmKFY+gmKJfKKHi1UAXn1r932o52ZrZrdgVoXv6P
+	xPqMywoc4SYbJw/68oQhgJxMUI=
+X-Google-Smtp-Source: AGHT+IGGX6ErYQw4HVgJivm1avLXySPemOFt0oF3olxCouopw4sqsIiy0X0v/9SJcFoRI+0he46DAImCb1Su4HGYqEk=
+X-Received: by 2002:a17:907:96a2:b0:ae3:f16e:4863 with SMTP id
+ a640c23a62f3a-af61c2aeb94mr336831466b.1.1753466200465; Fri, 25 Jul 2025
+ 10:56:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH v8 1/2] submodule: prevent overwriting .gitmodules entry on path reuse
-Date: Fri, 25 Jul 2025 13:28:17 -0400
-Message-Id: <E4F5EF8F-4146-46BA-A498-8493706238A7@gmail.com>
-References: <CA+rGoLfi9=h0Z86QZ2Y_HQqd+ugrMgkBzLaNSwivvkcDwmT=rg@mail.gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com
-In-Reply-To: <CA+rGoLfi9=h0Z86QZ2Y_HQqd+ugrMgkBzLaNSwivvkcDwmT=rg@mail.gmail.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+References: <CAFb3DeA9TwRnieajpa5S88ioc=65bUWh55mvDYz3CBp-xUcB3A@mail.gmail.com>
+ <aIK-YVZWWAjHiIxE@fruit.crustytoothpaste.net>
+In-Reply-To: <aIK-YVZWWAjHiIxE@fruit.crustytoothpaste.net>
+From: Tim Cederquist <timcederquist@gmail.com>
+Date: Fri, 25 Jul 2025 13:56:29 -0400
+X-Gm-Features: Ac12FXxxAjvT-26gx-qiC9StVjzCKeNZDqqjUv0Cb1jbBRhBzBR6cRaQjSj28C8
+Message-ID: <CAFb3DeD34EO3sYjinCzHVb8odO5+k13HNQ6m7Ru5KOCFP-nSGg@mail.gmail.com>
+Subject: Re: git clone fsync error on FSx Ontap
+To: "brian m. carlson" <sandals@crustytoothpaste.net>, Tim Cederquist <timcederquist@gmail.com>, 
+	git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+Hi brian,
+Thank you for your quick feedback! I was not thinking of the immutable
+file aspect, that's new for me and makes sense. Your feedback enabled
+us to press the storage team and we are discovering we had a single
+nic ontap that works and a dual nic ontap storage that doesn't, so it
+appears your assessment of it being a storage failure is right on the
+money.
 
-> Le 20 juil. 2025 =C3=A0 08:25, JAYATHEERTH K <jayatheerthkulkarni2005@gmai=
-l.com> a =C3=A9crit :
->=20
-> =EF=BB=BFOn Wed, Jul 9, 2025 at 8:20=E2=80=AFAM D. Ben Knoble <ben.knoble@=
-gmail.com> wrote:
->>=20
->>> On Sat, Jun 7, 2025 at 11:28=E2=80=AFPM K Jayatheerth
->>> <jayatheerthkulkarni2005@gmail.com> wrote:
->>>=20
->>> Adding a submodule at a path that previously hosted another submodule
->>> (e.g., 'child') reuses the submodule name derived from the path. If the
->>> original submodule was only moved (e.g., to 'child_old') and not renamed=
-,
->>> this silently overwrites its configuration in .gitmodules.
->>>=20
->>> This behavior loses user configuration and causes confusion when the
->>> original submodule is expected to remain intact. It assumes that the
->>> path-derived name is always safe to reuse, even though the name might
->>> still be in use elsewhere in the repository.
->>>=20
->>> Teach `module_add()` to check if the computed submodule name already
->>> exists in the repository's submodule config, and if so, refuse the
->>> operation unless the user explicitly renames or uses force to auto incre=
-ment.
->>=20
->> I had to read the patch to figure out what "auto increment"
->> meant=E2=80=94perhaps some accompanying docs in `git help submodule`?
->>=20
->>>=20
->>> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
->>> ---
->>> builtin/submodule--helper.c | 28 ++++++++++++++++++++++++++++
->>> t/t7400-submodule-basic.sh  | 23 +++++++++++++++++++++++
->>> 2 files changed, 51 insertions(+)
->>>=20
->>> diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
->>> index 53da2116dd..9f6df833f0 100644
->>> --- a/builtin/submodule--helper.c
->>> +++ b/builtin/submodule--helper.c
->>> @@ -3444,6 +3444,10 @@ static int module_add(int argc, const char **argv=
-, const char *prefix,
->>>        struct add_data add_data =3D ADD_DATA_INIT;
->>>        const char *ref_storage_format =3D NULL;
->>>        char *to_free =3D NULL;
->>> +       const struct submodule *existing;
->>> +       struct strbuf buf =3D STRBUF_INIT;
->>> +       int i;
->>> +       char *sm_name_to_free =3D NULL;
->>>        struct option options[] =3D {
->>>                OPT_STRING('b', "branch", &add_data.branch, N_("branch"),=
+Thank you again for your detailed response. It was very helpful!
+Tim
 
->>>                           N_("branch of repository to add as submodule")=
-),
->>> @@ -3546,6 +3550,29 @@ static int module_add(int argc, const char **argv=
-, const char *prefix,
->>>        if(!add_data.sm_name)
->>>                add_data.sm_name =3D add_data.sm_path;
->>>=20
->>> +       existing =3D submodule_from_name(the_repository,
->>> +                                       null_oid(the_hash_algo),
->>> +                                       add_data.sm_name);
->>> +
->>> +       if (existing && strcmp(existing->path, add_data.sm_path)) {
->>> +               if (!force) {
->>> +                       die(_("submodule name '%s' already used for path=
- '%s'"),
->>> +                       add_data.sm_name, existing->path);
->>> +               }
->>> +
->>> +               /* --force: build <name><n> until unique */
->>> +               for (i =3D 1; ; i++) {
->>> +                       strbuf_reset(&buf);
->>> +                       strbuf_addf(&buf, "%s%d", add_data.sm_name, i);
->>> +                       if (!submodule_from_name(the_repository,
->>> +                                               null_oid(the_hash_algo),=
-
->>> +                                               buf.buf)) {
->>> +                               break;
->>> +                       }
->>> +               }
->>=20
->> This isn't typically what I'd expect --force to do, personally, though
->> in this case it allows me to proceed with an operation that wasn't
->> allowed otherwise.
->>=20
->> Still, I wonder if a user might be confused by "I said 'child' and got
->> 'child2'?"
->>=20
->=20
->=20
-> Ok so while fixing the previous versions of my submissions
-> I got stumped at this, I found child<incremented val> to be intuitive
-> at that time
-> but I can see why it may not be intuitive too, I mean I could just
-> remove the previous child and add
-> the current data as the new child because that feels intuitive for force.
-> If that is something which is in the interest I could send the new
-> patches as soon as possible.
-
-That sounds more like a typical forceful operation to me.=
+On Thu, Jul 24, 2025 at 7:14=E2=80=AFPM brian m. carlson
+<sandals@crustytoothpaste.net> wrote:
+>
+> On 2025-07-24 at 21:49:41, Tim Cederquist wrote:
+> > What did you expect to happen? (Expected behavior)
+> >   git clone https://github.com/githubtraining/hellogitworld.git
+> >   Command should have cloned a public repository the NFS hosted home fo=
+lder
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > Cloning into 'hellogitworld'...
+> > remote: Enumerating objects: 306, done.
+> > remote: Counting objects: 100% (32/32), done.
+> > remote: Compressing objects: 100% (13/13), done.
+> > remote: Total 306 (delta 22), reused 19 (delta 19), pack-reused 274 (fr=
+om 1)
+> > Receiving objects: 100% (306/306), 95.63 KiB | 1.84 MiB/s, done.
+> > Resolving deltas: 100% (70/70), done.
+> > fatal: fsync error on
+> > '/mnt/home/tcederquist/hellogitworld/.git/objects/pack/tmp_idx_gpahXY':
+> > Permission denied
+>
+> This is definitely a bug in your NFS server.  EACCES is only a code you
+> should see before you have a file descriptor.  Once you have a file
+> descriptor (e.g., open(2) succeeded), the proper status code if it is
+> not suitable for your purpose is EBADF.  (For instance, if you attempt
+> to write(2) to a file open only for reading.)
+>
+> However, fsync(2) should never return EBADF or EACCES on a file open for
+> writing.
+>
+> > fatal: fetch-pack: invalid index-pack output
+> >
+> > What's different between what you expected and what actually happened?
+> >   fsync error - permission denied
+> >
+> > Anything else you want to add:
+> >   From Ontap storage host sectrace events command, it indicates the
+> > failure is due to the user not having 'Append' permissions to the file
+> > and generated the fsync error.
+> >   Running an strace on the git clone command shows the process runs
+> > "openat" with 444 file permission but with O_RDWR flag.
+> >   Ontap creates the file with 444 (read only) posix permission
+> >   git continues on to write() into the read only file - ontap rejects
+> > it and fails the command due to read only status of the file
+>
+> Yup, this is explicitly allowed by POSIX.
+>
+> >   I've tested with linux "instruction" command to set permission and
+> > copy a file in a similar fashion:
+> >     strace -f -o trace_install install -m 444 src.txt test/a/test4.txt
+> >     This command opens the file handle 600, writes into it, and then
+> > chmods to 444 << not using 444 to start the file as git clone is
+> > trying to do.
+> >   Additionally, I've added an inherited non-intrinsic permission to
+> > the user of A:FD:tcederquist@domain:wa << this appends the required
+> > write + append attribute and the FD means it is inherited by all files
+> > and not overridden by posix permissions. This is not a solution but a
+> > testable method. With this permission added, the git clone works as
+> > expected.
+> >   Suggestion is to use 600 on the openat/fopen for the pack index file
+> > instead of 444. This is how 'install' sets up the file. However, I
+> > don't know if this was an attempt at a cross platform mutex? I cannot
+> > imagine any other reason why 444 would have been used for a file that
+> > would have content written after opening with read only permissions.
+>
+> The goal is to create a file which has permissions honoured by the umask
+> but is not at all writable.  There is no reason to write to a pack file
+> or loose object once it's written: the file is immutable until it's no
+> longer useful, at which point it's removed (which does not require write
+> permission on the file).  POSIX requires that the restrictions set by
+> the file mode be ignored when determining whether the file is open for
+> writing, so your NFS server is not following the POSIX spec correctly.
+>
+> Note this is possible to do correctly over NFS, and many servers do so,
+> but there are also unfortunately a large number of servers which do not
+> honour the POSIX standard correctly.  In addition, this problem not only
+> affects Git, but a wide variety of other software as well, including zsh
+> and Emacs, as well as every other Git implementation I'm aware of, so us
+> trying to work around it would still leave you with a server that didn't
+> work properly with lots of software.
+> --
+> brian m. carlson (they/them)
+> Toronto, Ontario, CA
