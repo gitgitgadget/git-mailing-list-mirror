@@ -1,109 +1,146 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B38B77111
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 15:20:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE7D17A2F6
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 15:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753456861; cv=none; b=O01QFC66fVQ25dZizBOTd4Iy3i+5frEc6vAilLmGm+beXP7nuLTf35CHbGboE3XKtavM0PM5jdlfenqgn5fm/EI+xVXyiOyt7h/yHT2sjfZugRj3ULivap/XAWdd41pELLvDtFwTokAGwA3L2HDHZTZ920RvxjVEh0LvHymI/fg=
+	t=1753457165; cv=none; b=mtNYRrZHnFqXk4vBVz5w1+dMR2CheZXtDhxy0koeJZYmiXGP6e9y8Jew2MOLB9zB+f51V00w3FJxn4zPMCHaZ9pBsGev68zPZb5FBq7LWdJib9m6tnRxdpQXK2huPk3PZ5IE6NXZxCRa4SmBbBy1nSTXLmFjg7gF1DWbse8GDjE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753456861; c=relaxed/simple;
-	bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jrUZCyBKnl6zS8lOUrcZNTReCzuSKrU3ldHcCcDj4eh0qWMToKnAgm0I/2sFZx0c/GeJbnLxV/2c03Hkpi1sXlbUfQiqM9cVfA7Cd1QH8Pj80wEMfHyQN8RLJ1HiYFsCb8P2JCx7MMWmWA5o/Zjbviy7w26RTgS5bDclMbEyvaU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhCqasZ4; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753457165; c=relaxed/simple;
+	bh=mQOM/ugynMPbKSbMn6u6137cxF5DEYUKPUfxpbF4da4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=as2c9Nyyd66lsJQljI9cOxq4szkqi1AkWyOIA1wYVY1zRtLBOaNlfFb7/ynwH+Wi8+ofBLm0czktVrwLEgVhlISEtoi/a2o6yrVEzkrgezNgbPGARLqz2C2Ww48ELeYGp9lfVcVuLqejOcGawNlEmeYqf0Ms1E9GufbJwFdv2rM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jekbt7ms; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ngUG/sNJ; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhCqasZ4"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a510432236so1664979f8f.0
-        for <git@vger.kernel.org>; Fri, 25 Jul 2025 08:20:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753456858; x=1754061658; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
-        b=XhCqasZ4bcnt5oXmBp7VOIBMrOSGEJWGr6B1lE0kUq8TI6fnv6pnRtWLioOsQU2ine
-         jJZewUbsW9kI9BErYQeWUhjDzZTvf1tcqWxW2FJqMjgWC8dmzWLMb76cUDz0imZgX9Z/
-         mNfN/okhIW/NHkFYLRRpVInFj7HyvaGQnYMRse0CEE+QHHtyMimnnl0+IynCVFsXXYjh
-         nfACdqD36iAyUqgsd1PM5el2xvhg3yrrlV9+iqNRwJsz/6Mg5U2gkJwhGzXdLOgx4YAG
-         PcQGy/QGZPUfH6XrUhq8HQGMUZWoIj+cFDDJZ7v2q7YPXY9X1WLTxDJOznVvZt/iPSVI
-         ICGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753456858; x=1754061658;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
-        b=CUEqf1PIcPztHFSO688vUzWLvx1Sx69G1CNoUtlzHpCBelIdoDrNR7F2Z896ayBI3A
-         +0ao0UyaAMn+PaWz2xJaz7IT7zJgVq6hPDvU0TXp7ewopliX9lH6Fnu541uFzHR8Qngg
-         F2nw9pZ4rsJd1UDgE3IjYmeQNKQXqZymB314wjGltxae1kHc299bEbwTq8bpZ14/v7lJ
-         bFrn8kljGp9+gFRY42VqthQtk/ZQJ5CdmN9e+WhT5VWh+PBTQqq7zz5HSrrt2WJbUycU
-         HMY7Q379eQKB2B9tbcGf5v/fCF0zflyYSpOvRAXSxZLfNVxFCLLS6pYj5kfAoDoZ/Xz1
-         866w==
-X-Forwarded-Encrypted: i=1; AJvYcCXYdCaN9LOPSZnHv4XwoYEJRwWp/ufNZuS214qismTaDnIVqpmrWsdcX+CrVEnVwCoWHFA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YynUpvg0tBovm1eQZOIvTbKbIv4QzzkiFSQAaAtAt0FLcxDox1L
-	s4153A9OzjiGDAHnwfQF3IS3RG1MrUKskyyG55G5sCJTXdi/twOdkjxoacGZZH9+LZ01gTrgKjY
-	t0gnMO4Xy4femOK/dFyD+afKR1DwGUWs=
-X-Gm-Gg: ASbGncv+IwSZT0tj0/+9/rxO26TgGp2L9GhVOWv2RznFQysDpM27clat4Hb15c1Msoh
-	KKLFfXhi2hJLxyQjmtoIEkyuboHP3NCcBV3I0dWICoz7jAvDj35HjzTPe6LmHSjYZoaPouGpUtq
-	Elf7FVjGCx6Q1vg1nRUNAS68VNVSZNzAt6Kvad6FzmeYsFoOVGQx6E77cjJleEqNo2nNqzg1ZQi
-	xuo86Yp
-X-Google-Smtp-Source: AGHT+IFlYjF0XoZ6YjDdGmioWJWXbujED3VQ6LNjCkPxQu7LgY+wIZ3Qa0bmUz0L1oKNKVSXApdy0xye0zOciDFd8qA=
-X-Received: by 2002:a5d:5d89:0:b0:3a4:f8e9:cef2 with SMTP id
- ffacd0b85a97d-3b776667125mr1910403f8f.36.1753456857992; Fri, 25 Jul 2025
- 08:20:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jekbt7ms";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ngUG/sNJ"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6A32AEC2010;
+	Fri, 25 Jul 2025 11:24:51 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 25 Jul 2025 11:24:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753457091; x=1753543491; bh=Z7TmnXMwgr
+	OkafEjfawPxg02DcAeesesgVUrMWlWbnU=; b=Jekbt7msKAFcH4TaOhDea1enUQ
+	TOnfl0KovsWU3GbxGV+47aIfgig/BgR9p8fMW+QG8HZNlb/SsqCD18F3/KW3evXg
+	kb6p0DVWZnODH5D01GptLH88R5pUSa4V9cVzsZdoDBCl/vRmHkwDlF1z91z46hoY
+	wAMRYcjW9mOHgaIoXunoFQ+i3Z1dSB1HLHJ8NPlZBysJQhtkFKw8GHYF+3swVYLk
+	qKixeII4Yw9F/kLOAQ18DD2KBvk//iELHKuWmwX4IigkT7vpftc+pKxd0Dt81Xd7
+	9eTfEl+MqutwA+xxxUNn/yCaX4fgOkga3vv0JVaFNZ9jN39wmOMcJoRodTpw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753457091; x=1753543491; bh=Z7TmnXMwgrOkafEjfawPxg02DcAeesesgVU
+	rMWlWbnU=; b=ngUG/sNJV9LQK/MWPWRmqvSqzU8IYpYrQkx3W2sIynEU/CWX/Ly
+	WjzLsP8vSxAA4ckKyunR0BUCgaPPsBD2X/X6QIhZzjmdCACAMFfORaCg7ia++Wha
+	2OIkS0PVutn9lzjfV90BRrMT32/w2D6a5zUJVO/bPxYpOXFMvs6XGwL9nBAcCFWW
+	OyxwKZM74b/y5Pwt+Yd8Ae/+B+9urcRG74wYae3Fv4XThair6r3QvVJEK23081bT
+	sBzo7dJ0keEaHOkaqZ9dMejG+M0ZWr7KJf5TD6CJCY0fRfi1lL11YSj4sc9bBJ/J
+	aAOkDDBWZty19K/vpv+xIR4BhpACPJ8/XyA==
+X-ME-Sender: <xms:wqGDaL0knd2tXkWScr15gv2G4qaqKbse-LuChrdFv2Wo6vTIBdvIgA>
+    <xme:wqGDaN5G25Z6JjfVMIfCIeMXRuoUcrV6JAsB4i6XKzaORl1FDiK-Rdx4KHL8XmFQ7
+    ZPuBn6mzIDuF59RaA>
+X-ME-Received: <xmr:wqGDaE8A_me40v7jb7enAcCoGHreNMr_UZLcYb0W_ZXFnFMSTQmgs_FVNwouf3Jmgyxjwipw2qcjp9NacVWbm_dizLHjb9hgbMMsopA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekfeekkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeehhfekfeekieevleevkeevkeekleegvddvlefguefhhffggfeiffejvdeivdfg
+    geenucffohhmrghinhepshgvqhhuvghntggvrhdrtgifnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
+    mhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegtrghm
+    rdhsthgvfhhfvghnleegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
+    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
+    hlihhnsehgmhigrdguvgdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhn
+    rghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:wqGDaEV3G7oSssXdjjChoWWWwyI2Bg4PFWWLD6CV2XFHIurEJRRwZg>
+    <xmx:wqGDaHrB3kInqqY2nklSomcrfWUygJiz1Vz7AaS0TfQkZQmbDYz_mg>
+    <xmx:wqGDaOm6sFb6ZShLcitxhL6EQgo01V1Qb1U3a0_aa_aCcwYomVpnow>
+    <xmx:wqGDaP0I4oIr8VDDP5jK6hik1iaCW7G5jDxKX3mRURGxnKUPZvklcQ>
+    <xmx:w6GDaDCciGnedG32IHpAoc9FUdAaN_2zU5mwwMXuFjD-RKSBL78oOuTu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Jul 2025 11:24:50 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Cameron Steffen <cam.steffen94@gmail.com>,  git@vger.kernel.org,
+  Phillip Wood <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: Show skipped commit message after rebase conflict?
+In-Reply-To: <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com> (Phillip Wood's
+	message of "Fri, 25 Jul 2025 15:02:22 +0100")
+References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
+	<xmqqwm7xxn4a.fsf@gitster.g>
+	<184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
+Date: Fri, 25 Jul 2025 08:24:49 -0700
+Message-ID: <xmqqbjp847jy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
- <xmqqwm7xxn4a.fsf@gitster.g> <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
- <CAAVFnN=q5nCD3K1jppVcq7qB9P5WX0M070jqR_rey2hzBt0ERA@mail.gmail.com> <xmqq5xfg5o5j.fsf@gitster.g>
-In-Reply-To: <xmqq5xfg5o5j.fsf@gitster.g>
-From: Cameron Steffen <cam.steffen94@gmail.com>
-Date: Fri, 25 Jul 2025 10:20:45 -0500
-X-Gm-Features: Ac12FXynXP-EhSFLTW6eA2O7bgbvIpoNLB8J77YHH046bUxcGWbWx0tYY0_w_o8
-Message-ID: <CAAVFnN=S-bu1FNafyyH797AeBxUu+8vk5yJ5xaxCUBkBZin_6w@mail.gmail.com>
-Subject: Re: Show skipped commit message after rebase conflict?
-To: Junio C Hamano <gitster@pobox.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-> But only if we can positively tell the reason why there is no change
-relative to the parent commit _is_ because the commit we are
-currently picking has already been applied, that is.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-I thought we merely would need to see that there are no staged changes
-to be committed, and there is a currently-picking commit that will now
-be skipped? I don't need to know whether the commit was already
-applied. I just want to know that the commit in the rebase plan is not
-being committed.
+> probably a good place to issue such a message but we'd want to check
+> whether rebase_path_message() exists before printing the message. I
 
-On Fri, Jul 25, 2025 at 9:40=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
+Ah, such a test intuitively feels correct.  We are not creating a
+commit, yet, we have message from the iteration being polished to
+use when we do create one, which is about to be lost.  The user
+deserves to be notified of the lossage.
+
+> think we could also read REBASE_HEAD to find out which commit we're
+> skipping if we wanted to make the message a bit more informative.
 >
-> Cameron Steffen <cam.steffen94@gmail.com> writes:
+> It would mean that "rebase --skip" also prints this warning but I
+> think that is sensible if we're doing it for "rebase --continue" after
+> removing all the uncommitted changes from the worktree.
+
+Would --skip even pass this spot in the code by calling
+commit_staged_changes()?
+
+I am not intimately familiar with the way how the sequencer code is
+organized, and am navigating largely by guesses on names of
+functions and variables (iow, I didn't check).
+
+Thanks.
+
 >
-> > There is already a message that prints in the case where a commit is
-> > automatically skipped if the changes are already applied.
-> >
-> >> warning: skipped previously applied commit <hash>
-> >
-> > Potentially we could use the very same message.
+> Thanks
 >
-> Yes, that sounds like going in the right direction.
+> Phillip
 >
-> But only if we can positively tell the reason why there is no change
-> relative to the parent commit _is_ because the commit we are
-> currently picking has already been applied, that is.
->
-> I am not sure how you determine that, especially after giving
-> control back the end user upon conflict.
->
-> Thanks.
+>> I'll pick a few people from
+>>      git shortlog --since=2.years --no-merges sequencer.c
+>> based on their contribution to the file (not counting the internal
+>> implementation changes) and Cc them to see if they have ideas.
+>> Thanks.
+>>   sequencer.c | 2 ++
+>>   1 file changed, 2 insertions(+)
+>> diff --git c/sequencer.c w/sequencer.c
+>> index 67e4310edc..677d6105dd 100644
+>> --- c/sequencer.c
+>> +++ w/sequencer.c
+>> @@ -5369,6 +5369,8 @@ static int commit_staged_changes(struct repository *r,
+>>   			goto out;
+>>   		}
+>>   +		warning(_("omitting a step that has become empty"));
+>> +
+>>   		if (!final_fixup) {
+>>   			ret = 0;
+>>   			goto out;
+>> 
