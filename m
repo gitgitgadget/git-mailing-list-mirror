@@ -1,102 +1,127 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E2CB23D2A8
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 18:12:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEF113D994
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 18:40:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753467178; cv=none; b=ZLKkzNZ3XVoXaha3QsyTx6Yt0kSB2fbSlK3e2SCXwXz2339VSMBSTaZFHypJ6OnUskbaAh0T0Ue46ECvV9k4iTh9co0v8Hs0bucIES92t3mTk1HAIwlSdXEUsBPma972oVO72ehDFG3S1o1450xKjTxmRNN0okIiOieHpIrAs3o=
+	t=1753468861; cv=none; b=AykKWWaUkGfz3KywzVvbbg5lYmQvhcMfMpuR4kkbOQU34b5Qbn4K0Grvi0wzxc1OwZn6o7CDE5H8XY8nf5zUl+CIaPKhj1Ni+MdyeJn2uFgHU+PwYMK968dMJ4eYzMeWGW3mjwbNJEoqEpFbEb6JO3UysPWNpLdNAKqJDTILyG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753467178; c=relaxed/simple;
-	bh=n07FLYuU22yxS6BVsjh4nZQooJkO7IeFZeamsWs75dI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gxb93NAQOERbIIwDIisxndDrrHrYxeESFFdXqVkZH7ezATmI9f9eEFsqBjgPRcmeMuvPuUMiNGyW7fdXZZcxegdkVdlJT5Evd9UoYqNMtVIKzswkNWEmpLNbsLPVbFoh+wu0iNlCnDh1eKP6JGHUR7PgEL9hkh15ocPfxt3fVSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Tidx49J5; arc=none smtp.client-ip=209.85.218.54
+	s=arc-20240116; t=1753468861; c=relaxed/simple;
+	bh=XVnSOFGwjGr9tnomtun7QbC0cD3VEPWgain4lGVnzAU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jukb6pTr6MvbrNa4Qtb2te5KqDlXrJhBx4M4UInIDcYSyRSLxCSg+P1BJ4rMygoLxB0/jKgt0mq16aAyVu3ZmrRg98VBVFS28jR5fBxJ66zaOy5AiGgJOsJczeCr/2GqWWqEFq4Sr3a6mteXdkDesg73n+fZYiD2coZJF1THXMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m1wRws6W; arc=none smtp.client-ip=209.85.214.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Tidx49J5"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ae0bde4d5c9so437783166b.3
-        for <git@vger.kernel.org>; Fri, 25 Jul 2025 11:12:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m1wRws6W"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-235d6de331fso31119735ad.3
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 11:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753467175; x=1754071975; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n07FLYuU22yxS6BVsjh4nZQooJkO7IeFZeamsWs75dI=;
-        b=Tidx49J5TuuvpXUEb3dSK9UDbmnerZXRmVIhpYRHZQrb3Z5Z7+kCVxdErT7WSaCLRK
-         XjdR0Usyh7Fvm9FoNhSuWAdlUiJn5Y6v7fzJDdF+pTwuSUqt4KVLmUlNkj6EDIRtkewT
-         MbbWAzT8f/gZ2OBgiwx1XXyOuZ9yw1FJzJN8NZ3c2VfWKk5296LOWyWnmwRbBtCnuHtZ
-         ok/JuC3hJpu/c2YpnFHcPeNpBNhijTMEMztflKU2KYQxy0RCdrNcyGmCzdh5Be0f6/HU
-         mmowERAfuwMJIgzS+s8mQn//8GwP8bS6/2mVcXPZK+hbAA9iUqr3F6Jh4zfsZJGyH3Nc
-         bTBA==
+        d=gmail.com; s=20230601; t=1753468859; x=1754073659; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yHEA8sProScSz2yi37YQMLSMz5gb3VztI+jEjCgkxDw=;
+        b=m1wRws6WeVZTmFrQko20xxtd8VTT2f1U5Nok0Ml24r6j9VRUejJ5bR9wdW6twtnbx3
+         vgngN8CW2Lo4ecKNDlvhVa2HHrJnVmo4EkLY97RtSPyXuhwU7bQPXT0gDd+vseLwCQEP
+         alTNef/2nqBMjtSNPOwz4tWuZzDESAWLCCC5DhZ/G5s/uvhnFPk1GOrtbu0jFZUQUisy
+         leBW9T8lpI0Wsi109N/UjfNeNbWcMX3xR3V/cRtjebAPv1VU7p7cEWOtEwkOf0ISkPtu
+         LUxFFhWsYgDmiuMU6CxpKEzPz76kkBHsIb4lRbmH2dAgeAxBwuKcw+jDiABWIQTDoUDa
+         dgaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753467175; x=1754071975;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n07FLYuU22yxS6BVsjh4nZQooJkO7IeFZeamsWs75dI=;
-        b=AY23Z5VXAxvzKpeK4h3k3jX3CDxgEb82fhvuuiwdtwyjomsi6gHaxOcfNpV5lnGhn5
-         RAFdxuMfEM8ld1nFwTreYn/k6VbtKpjutaKxKITKEBvYfvR5ZoK4oHNt6zGOAQ4jF6Em
-         VURXOelpolXl0U3yS2lzOIuBa1x/oVvD4B7HAOmOmOQt01i4JXYjFA60n3Wcczqagnut
-         fVCwganjEn9kESkOgQJRKnUjvL8UQmcaN5jPt1ANOjssEVccVTbENeWdn6w2SaGxFsya
-         ZXRpiut6ZMXFAhLPDDbwznBHiW3OHMDrWkJjpcgOCYhU44ysYwFeGUjITqUQpGRMtxwj
-         oTzA==
-X-Gm-Message-State: AOJu0YxuKvdB0K2NbDyJL6Un4ACu4Mn3w6Y3Pm2UJhpcvMiGG4xB7S1x
-	f0q0rCKomDTWKoaxpWCuVVvnxsdR8jkk8hnEOWD8U/WDy/0jBJlOicTognesHKJvODNyQokKfIF
-	fSpKGd1SRlua+/mHGaiwA8tdy1W0UGLY=
-X-Gm-Gg: ASbGncvpxhF4e2zqUjpy4vSftgAGeOsR7bhlN+FA+4/mpLssoDPJ5IP342B6YojImFH
-	sxhuwE2wlvF04XKzFqrt27du/30ok3kddpe0eZ6sImICdBeW/W14bRiVEkhERbyK+/5EGAHDPwa
-	2RfJ1a1uFwUsQYIPVFWPnAqV/M8KJZy7oGjTfsbG6iQWP2AqtqkB7mM3qOg+w9gtqbDPPgV/XaZ
-	w8gzXQoJg==
-X-Google-Smtp-Source: AGHT+IGOf/vcfh14ztwQdkVLJM3mjyqzH4arSL4O1jd9QEWIucTYY6fKBxWnMscqZ7C7v0KzaY9G+Os6tIRwD9iidcI=
-X-Received: by 2002:a17:907:e84b:b0:ae3:b2b7:7f2f with SMTP id
- a640c23a62f3a-af619414091mr384748666b.40.1753467175039; Fri, 25 Jul 2025
- 11:12:55 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753468859; x=1754073659;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yHEA8sProScSz2yi37YQMLSMz5gb3VztI+jEjCgkxDw=;
+        b=VpTh4Jf6EjenmXH3yBc1eXtvI87jnBpq78W0XESdPsMgJfj4hBsViv1gecsrtHJQQ8
+         ouMRr11XFau2tN0YCwcXNdbuLOuZcgk/vGKaOWZ+jKl06PzC/ABCyaokG4xQXQkFeuWD
+         GJR/OvDheSqhJfEW5MH7yhL+xcKsmMtziHWebKqpxDEEEQoo8v4lHoc63s7ZJSMYD6fa
+         xaN20NouRUk/QZQISBfsp9x370HqIG0pp/hjOffBaE/YtwhWeVRrl3MGYHSlutqtBzdK
+         eFTL+09e1omqyIR0T5bjNsT2T90gWIu0t+qIcE5JEdOBeabWd8EDrOl5NIoTBO66UlXH
+         XlHw==
+X-Gm-Message-State: AOJu0YwE5jVqAP3Smc8YWdbRCcqPUHX6yx2KqSgC9sYaIK3AU97rJccW
+	4n+3GR7yulkAFnjJit30nax6pa3K9G2CkS63d3eNYwlP345F0hjXwlNt
+X-Gm-Gg: ASbGnctnL9aBKD60m+3fjqIsRlHl6mFDToK6BeMA7pxzjR/znyv4hRAC+vJUkV2P5wR
+	QAcdpeOo7um9DWq6Kt4Muu4WMZhOnKYiSsc4bF8mcj4h0Dt3bXMVZEsvOq9l/SBBohCyPrge/t5
+	19p4TwbspoXaRVAtVhAGDwkbXMh07XVDk3+nJp8gIWusK7dOvS0MVvbvSeCKODUOqK4XYoHIwNi
+	/CHkh/U5BgPGEZsMuJKdZYhz5W6Cg/gdVsXb+QuMOpGZTdcNt83kTNhANXHI7ZcIvZyASPOdGR2
+	7X96CL/DyooCF/+HJ2rSwoDL9/9U6lyK3IAzRY0OVdB4FszX7IWrs4eMDdqM2oOeSSIPI5OnEN/
+	IhktPJ6QJID2sCeXclfWuBJBM02Dt/frvokXrA0BHnHb+XVq72AIcgv0Ei+XLf4vTLVgQVsywed
+	eUNfKYTw==
+X-Google-Smtp-Source: AGHT+IFtD3h33+DrWmlbUCbMLAxcfw62yesPM0lC2p7dmZcO49Fz7/77k1H5hyMQ01zF0xm9Al8oww==
+X-Received: by 2002:a17:902:ef46:b0:234:de0a:b36e with SMTP id d9443c01a7336-23fb3134d42mr51135815ad.49.1753468858851;
+        Fri, 25 Jul 2025 11:40:58 -0700 (PDT)
+Received: from ?IPV6:2600:100f:b06e:4b24:4ee2:75fd:4616:2822? ([2600:100f:b06e:4b24:4ee2:75fd:4616:2822])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23fbe4fcc5csm2443325ad.80.2025.07.25.11.40.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jul 2025 11:40:58 -0700 (PDT)
+Message-ID: <fe5d1d5e-15fe-4d00-96c4-d5a4a3b568c5@gmail.com>
+Date: Fri, 25 Jul 2025 10:40:56 -0800
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <f4b40536-346f-45a1-84ee-99b1200c022b@gmail.com>
-In-Reply-To: <f4b40536-346f-45a1-84ee-99b1200c022b@gmail.com>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 25 Jul 2025 20:12:43 +0200
-X-Gm-Features: Ac12FXwB7rN3-4AZaPXY4sB5sWL0FLDELJA8ZJ6QnuIl9vexsVWW1wys1z38qlg
-Message-ID: <CAP8UFD10KuuM8Xu5YDxDf+rzN5r0TxgOw=do94dPO51hOCyE1w@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [ANN] git-phoenix - repository recovery tool
-To: Daniil Iaitskov <dyaitskov@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <f4b40536-346f-45a1-84ee-99b1200c022b@gmail.com>
+ <CAP8UFD10KuuM8Xu5YDxDf+rzN5r0TxgOw=do94dPO51hOCyE1w@mail.gmail.com>
+Content-Language: en-US
+From: Daniil Iaitskov <dyaitskov@gmail.com>
+In-Reply-To: <CAP8UFD10KuuM8Xu5YDxDf+rzN5r0TxgOw=do94dPO51hOCyE1w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi Daniil,
 
-On Thu, Jul 24, 2025 at 8:49=E2=80=AFPM Daniil Iaitskov <dyaitskov@gmail.co=
-m> wrote:
->
-> Hi Git List,
->
-> I would like to share a tool for recovery an unpublished Git repository
-> after accidental removal or file system failure. VCS usually implies
-> backup feature auto of the box, but due to Git decentralized nature and
-> developer's laziness source code sometimes can be lost. Recently I
-> accidentally deleted all projects, including a few unpulished POCs,
-> after infamous rm -rf * typo. Work on them has been interrupted for
-> quite awhile and rewriting them from scratch recalling all the hack
-> intricacies would be terribly boring. So I decided to invest my dev time
-> in a more creative way.
->
-> https://github.com/yaitskov/git-phoenix/
 
-Thanks for creating it. It doesn't seem to have a license, which might
-prevent some of us from using it, though.
+On 7/25/25 10:12, Christian Couder wrote:
+> Hi Daniil,
+> 
+> On Thu, Jul 24, 2025 at 8:49 PM Daniil Iaitskov <dyaitskov@gmail.com> wrote:
+>>
+>> Hi Git List,
+>>
+>> I would like to share a tool for recovery an unpublished Git repository
+>> after accidental removal or file system failure. VCS usually implies
+>> backup feature auto of the box, but due to Git decentralized nature and
+>> developer's laziness source code sometimes can be lost. Recently I
+>> accidentally deleted all projects, including a few unpulished POCs,
+>> after infamous rm -rf * typo. Work on them has been interrupted for
+>> quite awhile and rewriting them from scratch recalling all the hack
+>> intricacies would be terribly boring. So I decided to invest my dev time
+>> in a more creative way.
+>>
+>> https://github.com/yaitskov/git-phoenix/
+> 
+> Thanks for creating it. It doesn't seem to have a license, which might
+> prevent some of us from using it, though.
 
-Anyway for now there is the following pull request to talk about it in
-the next Git Rev News edition:
+License is specified in project file (BSD3):
+https://github.com/yaitskov/git-phoenix/blob/9a88c55fd45f28d4e1865df3ac746b409474eaf7/git-phoenix.cabal#L135
 
-https://github.com/git/git.github.io/pull/790
+The tool is also published on hackage under BSD3:
+https://hackage.haskell.org/package/git-phoenix-0.0.2
 
-Best,
-Christian.
+I don't see much difference between open source licenses and picked BSD3 
+just because it is popular here.
+
+What license would like to see?
+
+> 
+> Anyway for now there is the following pull request to talk about it in
+> the next Git Rev News edition:
+> 
+> https://github.com/git/git.github.io/pull/790
+> 
+> Best,
+> Christian.
+
+Best regards,
+Daniil Iaitskov
+
