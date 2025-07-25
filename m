@@ -1,59 +1,60 @@
-Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazolkn19011038.outbound.protection.outlook.com [52.103.39.38])
+Received: from AM0PR83CU005.outbound.protection.outlook.com (mail-westeuropeazolkn19010023.outbound.protection.outlook.com [52.103.33.23])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB594254854
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 19:24:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.39.38
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1568A258CD7
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 20:21:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.33.23
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753471469; cv=fail; b=f5hzTPUV0hdvxTMxKTYfGhvi4VawjmiNsQWgIRW1d5QK23BQLJ+ZQf3inHLmJCJrkehmLG+lDjMjCzbnIaGgCLQ8yzLI2mIRqWVmN57Yy9w9b2DHqy+GA7s1/AzklENwgiwTI8jwUcnIpxe8Tcjy37z1ZoY1Fdg/b0rVQ+pYuKw=
+	t=1753474892; cv=fail; b=hWZ6T/edNpzDPq1GlmSYDutQEfZmwNGvJIqXfCoYIkrSdd4lI3ffJoOWyNvlEawYsTboJHOq5FRX54P5qSVzDkUEpPFr4axC8zmxFbdRAIoVkT1UQl9t/y4y4/FVnjR4zseldeCMkVbD4/dv6e9S6PuWL9nHwz2Z3NhyjJ0YAv4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753471469; c=relaxed/simple;
-	bh=Ex73KrZN6FZZHHrFFcX/E2/jvpOjjVSPYYEwkXOOGm4=;
+	s=arc-20240116; t=1753474892; c=relaxed/simple;
+	bh=Twp/EZBr/n9JAWyk6Pbr000Sp8VnPz9icE/m8McGKNw=;
 	h=From:To:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=QXYMQpRjOEHlgsrX6LbZclHbJ1TB7B/MlRCQyzXJ/LvxEs9lL2556NPlLgPugtkA0qJhKSJpn2ost6EefcJUtyexG0FK63JCAcW7rI49dG32QGLr+xu/FZPfg66gcj1lmKpr/F0yV6R/yp59Hwz6AdHgMpHia+cWJrRnq7QGh2M=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=mCkLiSIk; arc=fail smtp.client-ip=52.103.39.38
+	 Content-Type:MIME-Version; b=fVRdXupTcYLfB7uVHrj1nVyWbqYICgN/WKEacKuwAYeRkxUbJxCKdj3nyx5v39x4JWq+SFpY1TVIOloLsRObHYnsqJ4GyAK9u2XaMdyyF2WY9NGaS27cI/1pkp/AMlmitdDVv6amTEgxGo0NfM3ab/NOjD3klPR2vgrL17BG0uc=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com; spf=pass smtp.mailfrom=hotmail.com; dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b=F66qeOmP; arc=fail smtp.client-ip=52.103.33.23
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=hotmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=hotmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="mCkLiSIk"
+	dkim=pass (2048-bit key) header.d=hotmail.com header.i=@hotmail.com header.b="F66qeOmP"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=GBbahhJwoumATIum2/UHOluWWb9OeqznkUNNPpB4/LdBDPp1Ni8uP9zSgP+ilAeLl5grxh26KdcgArx9O8mjLCASbyM1qU9nF0ulsBiMsMUWft6eLMX1wtwDLEpLbsrKgVUjPpghS/d+q9wGDsCjndOvBW/TTIcBaOYDF5i5cWj0K5g0UFNoWLullddWqLE1gYh4ibCtUQo2MgCrdOhqLJKjrmlTH/s3CMb2BzUxQOUZvzJcclQJ7JJrDeKupG/5qcLkHXJ/x3sF6bbXEbiFiNPAeqQmutN9Q1UDwA44A/m7Y5bv+CiJiTvaHcvSvedivG4LK0iHEi9Ooo0/YKABqg==
+ b=crzGJ/1lXSi2fVbSmCNb3VWpSd8ogGRQGqwM+F5x/OYPgl8xPBd8zkq/SxgE1rvOpTBh/lk9DdznBF6vTpq3pc+XyQPLAms5i1Qga+2RFMUs4GQ2r9ybY+G2ygjonHfFxsKF7EIPaQVWVBIbJN/yoQXWw9CmogBe8/VAbcHiWht8TAHuR47l5E1tU60XJgfhsXAv1xNm6tORXRV2VD0ZHKnnOLhFg4S1lB9YKie7eLfZHvHTbIpV6Ti5FNKs9fB8J9CqQCWehY4eCyg9St0EID7V+/wcQSbV17a8CFsCE49SS3pLYHGfPyw6sL2Q+nk7xxhJk/Lwe7KJ8E2L7MvFKA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Ex73KrZN6FZZHHrFFcX/E2/jvpOjjVSPYYEwkXOOGm4=;
- b=b3o2b5/g/6SFfkjesZDgb3oRJCbqFS88F20tR2GcPvlKUjMj7fjYkHwxlAkuFdTG/JV0k2hOHsp0/ZPz8FV6AVh4KKNFlHdPkjV4S+lw5vDzd8fz22CoKjSAcMhgLey+uQunwnc9s3WcFBJqS1Gd92Z75NavrkHBbMxcuWlP4V0hmIPL2Io6gs29ADaGgBgLFEwYMukKQG7TPRJQffrBPIVZsSvIAiTA6yoM3VWREx9682c9Ak01buiv/gprgsX2EotZYLR1YcP8EjCfJNOC4a4iwUy7WQCAFc5I1QBpnVRu0D2d25C5X+MDvl+Idy2hnZ22LaxX5U9RAexCKA9VIw==
+ bh=Twp/EZBr/n9JAWyk6Pbr000Sp8VnPz9icE/m8McGKNw=;
+ b=arsLnhkdYwZS5P846U4lJMhCHUJmszXQ57J1YvkxkjW+2kvJqcs9XNIBGNTgBN/NoPLyw4EdYD13NchykVOt7jf+U9PRXsYd9dqDaX5SQLx55jHimfupwb/QllIGEGVyqGL+NYjRz+fHEuQV7EHKpuxLLRKsLV1+V+R4Rs/LS8rs0+/+ITEsuROMTeGGjNmA3CXAJvmm5HDuQt7GvYOxuL+a4fbsX8s1WgE2OtUl0hpr+URFJeIIZOKBubpNGY7S7nNIzseMzkBwWECQbHsneK8XW8yJnBQehxty9j6PczoA8hsIS74WyX6WYidjOJRyxyyOVhtOCYps8jSf76uDYQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Ex73KrZN6FZZHHrFFcX/E2/jvpOjjVSPYYEwkXOOGm4=;
- b=mCkLiSIkYLFUGzV+lZgx/O0thrqcNg9qqVp66fRjndem1i/m+V7rAHdyq07bDQKfF7omLtljHl3w4HLvquZLq2j5bRPxg30UuDAvikvMxHlozdauoOOCxF2rEKI4hC5W52ArMeKXi43HAXHp/GX/vNyRIP1mdXeQ1pDGifVXlIll7o3X80+u25+hXBvPhjXdSTiFHQcm7CDWaOLf0e+KLTN5oT+82W7n6j2nd6x8sMoaVfN9b9uFuP05m9BmJHDvOPRT1CoNlme2QO4QzoBlX9ry0R/eVKGzPlOaDfi2LYwHS84nvfRpeufVpx30ArTPl3VP6pgEeDXoJ2quz+f2Dw==
+ bh=Twp/EZBr/n9JAWyk6Pbr000Sp8VnPz9icE/m8McGKNw=;
+ b=F66qeOmPvNSDASZT2KLFzjQBqSC1ZHwDzutfVFNaMItY4ZqDt/ayiC75hf2GwsxD5NRg0izXBnWFAyLw4vaKKGg1HqjGlCK0Kt2pUyYbOOm8RJW4qTdRovMjjS+BWo5pQpvGaZafxPPJm6yyAVcKAhMAK85algp/DfptX675KPQXAK3fNnaRbQZIaqQW1RcdMuMCLIeS3BNKZ4LwDFsKe3nd0z6byHCQlPhmaMsGofJzuJHGKG2+jM3sG1eJOrHl377bEic1lKbQYCUSjF+ckgGzpYBHbENKb1HiSVk/sjT80xSCbAbfmVqoZf36gwxcQbj4vNQpNJLZKE80B3NRUA==
 Received: from DB7PR02MB4265.eurprd02.prod.outlook.com (2603:10a6:10:43::19)
- by PR3PR02MB6106.eurprd02.prod.outlook.com (2603:10a6:102:67::8) with
+ by AS8PR02MB7319.eurprd02.prod.outlook.com (2603:10a6:20b:3b1::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8964.23; Fri, 25 Jul
- 2025 19:24:23 +0000
+ 2025 20:21:27 +0000
 Received: from DB7PR02MB4265.eurprd02.prod.outlook.com
  ([fe80::1f5b:401:f731:6dcf]) by DB7PR02MB4265.eurprd02.prod.outlook.com
  ([fe80::1f5b:401:f731:6dcf%6]) with mapi id 15.20.8880.029; Fri, 25 Jul 2025
- 19:24:23 +0000
+ 20:21:27 +0000
 From: Skybuck Flying <skybuck2000@hotmail.com>
 To: "git@vger.kernel.org" <git@vger.kernel.org>
 Subject: Re: [RFC] Proposed Git Workflow for Permanent History, Explicit
  Branch Status, and Developer Continuity
 Thread-Topic: [RFC] Proposed Git Workflow for Permanent History, Explicit
  Branch Status, and Developer Continuity
-Thread-Index: AQHb/ZTl8dId++xSS0i6YSC3HkqUyLRDMWgSgAAGKoY=
-Date: Fri, 25 Jul 2025 19:24:23 +0000
+Thread-Index: AQHb/ZTl8dId++xSS0i6YSC3HkqUyLRDMWgSgAAGKoaAAAux2A==
+Date: Fri, 25 Jul 2025 20:21:27 +0000
 Message-ID:
- <DB7PR02MB4265CDBD131FB755B0799B2FB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
+ <DB7PR02MB42655790BB6E1EF589B7D173B359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
 References:
  <DB7PR02MB4265BF28A39C7BD3DB097E1CB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
  <DB7PR02MB4265499C1103242CB482B407B359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
+ <DB7PR02MB4265CDBD131FB755B0799B2FB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
 In-Reply-To:
- <DB7PR02MB4265499C1103242CB482B407B359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
+ <DB7PR02MB4265CDBD131FB755B0799B2FB359A@DB7PR02MB4265.eurprd02.prod.outlook.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach:
@@ -61,61 +62,76 @@ X-MS-TNEF-Correlator:
 msip_labels:
 x-ms-exchange-messagesentrepresentingtype: 1
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DB7PR02MB4265:EE_|PR3PR02MB6106:EE_
-x-ms-office365-filtering-correlation-id: d9fc9425-26bd-4246-a682-08ddcbb0dcc4
+x-ms-traffictypediagnostic: DB7PR02MB4265:EE_|AS8PR02MB7319:EE_
+x-ms-office365-filtering-correlation-id: 5a0d8691-1316-45d7-be42-08ddcbb8d590
 x-microsoft-antispam:
- BCL:0;ARA:14566002|19110799012|8062599012|8060799015|15030799006|15080799012|41001999006|461199028|56899033|13041999003|440099028|40105399003|3412199025|12091999003|102099032|26104999006;
+ BCL:0;ARA:14566002|19110799012|461199028|8060799015|15030799006|15080799012|8062599012|13041999003|40105399003|4302099013|3412199025|440099028|26104999006|19111999003|12091999003|10035399007|102099032|1602099012|56899033;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?ZN5CIdr6xwBWRWfuXxogr+iMYQMUeVfaE0GARaosyVxl7+oWx9iRJPoZr2?=
- =?iso-8859-1?Q?WZhYTitMX1YpGZHnHrhJlB6Pxhf1cu9b3qIhIcAyLEUiTtZO3xN1OICWvw?=
- =?iso-8859-1?Q?PqCwGVcuxyJvTdVL6XLRU1awMP6ACY7NxcGkumAkUXB0RdF7M55TU18xYC?=
- =?iso-8859-1?Q?XTHsn+wZitPzxXwKztCv+zqJE2SN/uRFM0cevUnQAj3kHzR0jSTqOeTbdE?=
- =?iso-8859-1?Q?+xSUJD2B7ZeYQne7wi9JBTItwMBDvxYtAYzPemLXsdMKrQbaeEtQIBPmQx?=
- =?iso-8859-1?Q?mve4SVFDKw6d01CeVc7vHblaF/RnfA7LKbjIVtIBInFXHx9vojWv/eH03E?=
- =?iso-8859-1?Q?t9T8KuQihMz2lvxxUdRs5TpH/xCFFGLwdMlPeG+X5d4zVSFVjZIC2mY1QN?=
- =?iso-8859-1?Q?ttUZW9J9WR6nmJrxBvnPPryjxiYBjigINl9O6JdzXapaKPIWGXF1+Zz+ox?=
- =?iso-8859-1?Q?J9lzu3pCv464nirWtIi2JwATewRlMRo54zZOdLYKewJAxYV+z/m1EDIr4F?=
- =?iso-8859-1?Q?EVCwKpkrf5G+dTZc1uNcva7NL57CLY6+QO5rwxPiD+hr88BrdDLx0znm0o?=
- =?iso-8859-1?Q?f4pRU/IuIijNnmD6Os+ocbkEFK4Gn7FZMeBeluR2ywp8HRklreSiLFCEI5?=
- =?iso-8859-1?Q?Go2pUDKbs8u1PraJu2qO3rM8yjequbksfPDnsKyn+3XBaI6ABB2GymsT5M?=
- =?iso-8859-1?Q?sLF9+2EbvVbs6cMkrFWWivpbH3OnZMsyErusunYO2RErz525OMoHQlaDNO?=
- =?iso-8859-1?Q?4fIBwi5aYhPUkUsm9Ev1I39MCI7NEYd8g7hheciEy7Ih85jV2UCqGTK+oU?=
- =?iso-8859-1?Q?nu3ZlHwzCmnG8dvwqvAFwQLjUiCt7cZ4Hnvwswkvp1QKjcnc9BqlKt0AAM?=
- =?iso-8859-1?Q?ZEy/Ia3h/8cXWlR1IYf5PfFw09M4/XF+ePLQafY0lSMiFC8E9JnPYgz0tZ?=
- =?iso-8859-1?Q?OB0+2u2V8syUJ01z4G/7OidDhqHC7RNEHv3WhOUqKtjNdl88NLnLa6R1xw?=
- =?iso-8859-1?Q?YQ/DHA9SgA1ygHGUVNB5GdL1yuIvVxPxU5MW+Svd+C0tmzafY1QwV0xAAX?=
- =?iso-8859-1?Q?WiZon5RF7rL7nH2qevay6X6JgD09avJMPERx7B2ErRMmIH5lKPId8VxOKC?=
- =?iso-8859-1?Q?75QV6zSAzeEQXbwtT5PwAMR9KkFNV76p6IDtVwT0KWly5PZk1xRntX7AB9?=
- =?iso-8859-1?Q?KJSCczlzc58o75qdbf+0AraicmLEjHyW4Bt7sKihDB+NJt9K4JgxYHyLdR?=
- =?iso-8859-1?Q?BOIpLntBGhUg1J648K1P3NziIwCEn8IQi5DLSD5jYuAbVTVNh3ecWNsx2b?=
- =?iso-8859-1?Q?iwUPuOH/czMEJhUI0iV26V83eA=3D=3D?=
+ =?utf-8?B?aEQ1WlA5WjBRR2pHRWhRMkJoLzlqekNqSEQ1MkJ4Z0REcU14SEg4U2ovZ0hw?=
+ =?utf-8?B?bjF0VEZFQkdyOS8rWnhZUU11RFN0WEt4Qnk1L29iVU1EQzBVMi9iSDFYUEpW?=
+ =?utf-8?B?V2NOMWlhVnRidldXRTNpMEhOVXloWWZCc0RBNldoelQrNzhwUUNUOGdXWHV6?=
+ =?utf-8?B?VzErU09TZUdrVUFhNWpDcjRIbTJ1c3drTUVCSW5UMkhjZFFNcGlzU3JDYlQ1?=
+ =?utf-8?B?ZkU4VmpudFZFSytkT0dOeTFtMUFXbGErem4ySUNYLzMyaGZLKzZKQ3pNVWg3?=
+ =?utf-8?B?WmRVRElCUmE1YjF6TFRQNlFhZ1FDazNLem9Fd3MzbC9ia0RTNDBOQjdXM1Zj?=
+ =?utf-8?B?SHNBTnpudXRpYXo2MU1LVnlQTUUwZkJabzlvWkdoRlIza2xPUkJwTWNBN0Fa?=
+ =?utf-8?B?d2o0Qk9aU3p2OUx4Nkp0U293eUNEOVJRZDNwaVF6NUkyTXFMRW9PVC8raFp2?=
+ =?utf-8?B?ODhlQVJsbVRmaU1qRE9tRXJaY1YrRWdYbnhSRzRGY3hadlpDTFhSSkY3dFhX?=
+ =?utf-8?B?cWJJRXFvMnY1Rlp0emJoRVZUWHc3TXlJMTFJelpUVVoremo1RDRHQ3NSQUNV?=
+ =?utf-8?B?MlpNU3g1c3hiNnRLZUxiNXc3MWNNdnRPRXkrWmJuNXJvSmQwRlhsREgwZkU5?=
+ =?utf-8?B?cVViTUY1UW1iRkdhdW5GOXlmeDB1ZmFGQThySlhpVG1KRGRzSWpZSDdmcjhj?=
+ =?utf-8?B?SDZuNkxOdkhpSHMvTzM4eUtKZElZRmRBN21SM21jNnJDZDN2NWIrK0Z3Q3k3?=
+ =?utf-8?B?cTBqQVhZenFGTXJqbzJSZFNzVFFieFVOQVVLS2dtbUlQVFM5R1NtaXVycXBz?=
+ =?utf-8?B?YmVLNWNmMVo5VGpnek1DcWdpRWROUGJ4bFFQT0VWZEhQQ0xIdTZJRVIrd2ZY?=
+ =?utf-8?B?djV0N2hYU0FhS0FSeUhNRU9weDg2MEJ1RHRVS0tLdVE4K01EalZublhNKy9n?=
+ =?utf-8?B?RUxvRHJ0eVcwY2cvTlRtUm8vY3VCcmlsb2VWYkVnSkc2bzJkbm5VbkxwL3B4?=
+ =?utf-8?B?cWwydmFpK1dLcHhIb3NKeDNmTHVlby9RcDdJMlJWdnRFK1M3a1c0WW4wci94?=
+ =?utf-8?B?T1RicTUyWmRSVEpvWUd6OVZXSzd5OVFETitWS1UydlA5OUFnUzk0VFJUaG9C?=
+ =?utf-8?B?akU0Y1NManZFNEZwcG94NTZ5NVlnNGpwYVVRZzF6L3BrTnh2SjU5Yk5Ld0xC?=
+ =?utf-8?B?K213NnkvRm9yUExRYnJ6MFprTC8xT1J5c2JwY3UwYlR3aGdyWUd5QlRRblFV?=
+ =?utf-8?B?T3FsdVZuWDVkTHA1eVVHVWhVeWoyQm9XZUJLVXhZRVhqcFNCaFJCVnVsZkFP?=
+ =?utf-8?B?NGppeVQ3SFRoa3ZJMHpRdzdCbGhQZkV4N3lIb0hMbWlldWY5dmlia204MHhL?=
+ =?utf-8?B?Y0lNSmxqQnprZGtCNktVcTdIQ1lQYnR0b05lOHNMUG5hNG1LR1ZBbDU3cTE1?=
+ =?utf-8?B?MHZHZHg2aDl1MHZHRy9xeVFrZmhtOC9vQ2dKUzNaYnFIbTdYcW4xRUZQNU4x?=
+ =?utf-8?B?UXh5NVZEYmk3Lzh1b29rbVV4U3VnUERJODhaa2I3VkhIVlF1N2ovYU1rR1lM?=
+ =?utf-8?B?QTRheDl3SW1Kalk2ZjdFd2xUVXMxZVVjamhOejk2WWw5eUtJZGllcUo3SHlr?=
+ =?utf-8?B?THprMXdKMDU5SXd6WG9QU0ZwVkRsZkhCNHlsYjhzenR4QUF4MFVxSHFEZkFY?=
+ =?utf-8?B?eEIrRk8xcFRRUE15aDdjZGROZ2l2OTNtL1R1elpSYmdYeGNaTm9EOG9nMXh2?=
+ =?utf-8?B?eEFFMVBGV1pSUHlYVm5lMVRrUUJtU2dvSzFvc3VlVmtkS0JqVnVEVElnZkNE?=
+ =?utf-8?B?MXdiblVyVkF6LzhKMXN0Zz09?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?LVmoKBUzQsjSlHy3zE1ONvBS1grtlMBZvGMBwRsGi+MCyAJX3tjFQN5ynK?=
- =?iso-8859-1?Q?WZZ1wrbRbrZjsQQbU1/nP+ZiPYQtKfXsuGvicFZf+v9xx9E9UBSeK1O2FS?=
- =?iso-8859-1?Q?PctfTmN1rb5VwPGRcqdreoTZi6DH2TaC05Q87zTUQtQAHWtq8ZQYWNROUJ?=
- =?iso-8859-1?Q?qGv+TmIJIO9IdcqpfE/c6V/yKoJaWzGyrI/SEKWCEU4Z7r9V5PuywxQxmd?=
- =?iso-8859-1?Q?XmskFy0cn8/Qt4+yWJT8cSRegk7k1R5TF+SpxdWiu6xpFHiW2oMLa+n/KK?=
- =?iso-8859-1?Q?0Jnep+FmLuF78DsDc1d651xbKTQQu73hbCvUYfHxYXBMlJ9MJdD2g3wd5F?=
- =?iso-8859-1?Q?jk4c0QjBJLxEt4rgSR9VJ1Ah5hluDBBZB9jHbVIDoFaO4ejq2szluM3074?=
- =?iso-8859-1?Q?RvxPnYq3pVGTESaoN4jayFE1cfsRJPRyYNymtDuI4Pwdlw+h6wN3h2el4E?=
- =?iso-8859-1?Q?HToUf8gTNeg5gJHFmVifc5kZbc1akzCtNTsknGsyDZrbcmYRzz20KLM1JB?=
- =?iso-8859-1?Q?dR188V/yXIyyF8uPJx45Mmufg2eZoyzef8LzFRxP8ZB+NYFI7Av/FHj1Lg?=
- =?iso-8859-1?Q?zJfAwoGmOA912fa1K0r7k7WSZRxSGf2jDLk90lSoG6/hDtQGfLfnXSvgrh?=
- =?iso-8859-1?Q?vuHMhKwnplby8bpZfKX/f0XSKA3WetahEVDeehf20lA//+qeY6Wpv4Ii/4?=
- =?iso-8859-1?Q?wvTkKUs/APg5Jr9B9L4BJy9smwF+aCkhHPQ4APmaVGn3a/C6WPmbXZClKv?=
- =?iso-8859-1?Q?488mBOJCU2qi1w9qKZBnSQHdeJdyWfuB1B4hyQqxSWWlrRlzwQjRZ0N9CI?=
- =?iso-8859-1?Q?1zsEZXr8Ip3q0m2EijMG6dR02Q4LytTTeM2a5s2IjKFUrmxMeJquWKb/mB?=
- =?iso-8859-1?Q?mbZBXSQyIINYhBMDqSlOYcF1ZKJIF4Lt+fpeIPh0hg2BF6n9tgGyqNgI7K?=
- =?iso-8859-1?Q?qsc6n4eeBFUg6pjgxhPRQCgtuFcgXjvES6tayAK3bS4OZMYTO0AqdjBek9?=
- =?iso-8859-1?Q?QD7QGzkvcbhB9klHxNz2xA0Vh3t8v00JVfcxUPQTn5Mb7io8j/GWWitRS5?=
- =?iso-8859-1?Q?FlnLkJeqSXd+Lkkh7wvoVZ2pP3S2Robx51PZMeqez/Z6Tg67IbycWHk5JD?=
- =?iso-8859-1?Q?klZ08hFw81NUL03wH8ETWrI0/uR6u/+iI/+yPu335ngIApoE3mao4dVWa9?=
- =?iso-8859-1?Q?wN1IIsrwSFxJsi+7RV+nIgHe5sGkbQhxIoG7Ww3N0lXKpDV0EC0Mtg60XQ?=
- =?iso-8859-1?Q?04nPObB7upudIMz5sNx7BxRGMpdKD0HYi6qlUXdY0tbv1BYgJjQajvV6nC?=
- =?iso-8859-1?Q?64l81yaRD1TecYXlxtLYf5ywDGaowiMaQS3qxrJnFWYh99g=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ =?utf-8?B?Rm82OW83dTJmU2liVy9YYTMxTmRnelIyN2dOeHNxM241endWYWVrQTFybTUx?=
+ =?utf-8?B?Tm9ESzNKc29zMnNIcjBCMXVlLzAxcVE0b2NsMVU4Nkl0NVV3TnlYc0Z6bS9D?=
+ =?utf-8?B?RUF5bDgwYXNSMkNFY3VkZkJqTVJpRmhFSXlwNTFCYjNqbHEvWlFwZVdkUUkz?=
+ =?utf-8?B?clBsSWJ5TFBLTnVMSlYvNGI3NFZlNmNrQ093dmsxeXY2bC9tWm5iOW9GNHRB?=
+ =?utf-8?B?VDVjRTZ4UE9JcllPNmVRamFxZVlwZW9xMDBTeWwzMkdPNGVQdnRuVU5Kb2Fw?=
+ =?utf-8?B?ZUhVT00xMGR5Y0hCdU11WnlYODNkN0MvNUxUYnhYNjlwUGs4TmFpb2ZVZC8w?=
+ =?utf-8?B?cittazlsUjVnZGIvZWZWbEc0U0srcHVBbk9lYWNVTnpSUFlWWk1MS1QrN0pr?=
+ =?utf-8?B?L2x3KzNYdmdqZDN6Ky8zY1lJalhQZndVMFpKMllsWEt4RDczU0tVSUhSRTR4?=
+ =?utf-8?B?aVo4bGtmMXdmK00rWUgyVXd2WEt3dmtGbTdoc0g1WTVydW5rcDlTYWZWNmIw?=
+ =?utf-8?B?SFBuMGVYSGNoVVRYWGd1aDR2UmRjTFlGQzErTVZqUnVxVnUxOTVtNlpnKzdN?=
+ =?utf-8?B?bWVjNCs0ZkFkdGNZVWlZbk1jU1BaVzQ0UGtvSG5sN25GYnJ5Vy9hcHQwaXht?=
+ =?utf-8?B?NThDc3lmT1M2c1pXYjhoaCtnMmlNZHBJRWFNSHcyL05uUEhOZ2JHUHZFdWhz?=
+ =?utf-8?B?Vk9VWHk5c0R4dS84VVlXZlNDNXJnWUptejdsWWhKTlZDTmVibnNtMHNjVWlD?=
+ =?utf-8?B?dU5Ba2xnR3RaQ2FNR0k3ZUJoV0g3ajFRbHhsNG5OVy8yMk93QXQ2aHd0VHNY?=
+ =?utf-8?B?Q0lmQyttV25lU2l1N0FnSDk4RndjekJ5UlhJWk12MHlTb01wbUlnSldVbFgx?=
+ =?utf-8?B?ZFp6ZEFJZStQNFBodlVMRUxrWnBlQzNQVk9qSlBGeUNRN1FnRVVnck9SdDBW?=
+ =?utf-8?B?TjAwWSsxU1Z4QlB1RGY2MkljalZ2ek4wVnJvT1JtQ2tPdkRsN1Rvdy9ESTUw?=
+ =?utf-8?B?NGZoOHIrMU9heEFZN3BMcGhNcTlOUjZTeml0d29Ka1V4RkIzMmJBN1h6UC9u?=
+ =?utf-8?B?MWY3di9LSm4za3pXak9tVlFrYjFYVjJXSnRMTkNnVTU4VWx6LzM1OWNCZHMv?=
+ =?utf-8?B?L0pUNDFVcU9iVDVJaFJGU3J3NVdJYk51L2RmVmtSbnd2bUVpZUNFUHJnUlRN?=
+ =?utf-8?B?S2hnUnQ0SHQvUFdSRDVoandveTRoSEkvNWUyTEJ4MVBTYUlVRlZocVlnNi9O?=
+ =?utf-8?B?MFN5blRqMjJyREh2Y2dielNweEhoWVBrWldZS0dPNExGVkRzSjhYMXg2QzVz?=
+ =?utf-8?B?TW5YalNNRmpIbkxvZlovZ3d3T00zWm55dXFsbVgxNDdxRGh3NHhSRitCajNs?=
+ =?utf-8?B?WUlwRjBjMjRuSHQzWEt0akZRL2IzenNBckkzSVZxTXZFMER4QUgrUitqNWEr?=
+ =?utf-8?B?N2FhdklKVjN3c3piNVNlZHZZREhPKzFpbGhxMVRrQ0Jvb1FLVVRLUEphU2tP?=
+ =?utf-8?B?Tmw5WDJOOHVzYUZxNEg5ckNEV3JCM0dGVk9pbXlEYVpIZWkrRFJSaEM3MSt3?=
+ =?utf-8?B?K0FNUS95T1FZWmN4Tmhrb3Yrbk94ZzhtYjJVb2JEM2g1YUpydUUyRGdLYk4w?=
+ =?utf-8?B?U2dtbzlhc3F4aWF3NDNIZVBxbXdFRFpMSFo2aTlBc2ErZUtZNVRFMVBRTmxu?=
+ =?utf-8?B?T3NNRHJmUXZ0K0lNVWtsRjB6ZGVWMnRXaGNzYStNYThNQUxoWVVDTnNjbUxx?=
+ =?utf-8?Q?WroeXEK8rInVr/dpag=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -126,848 +142,312 @@ X-OriginatorOrg: sct-15-20-8534-20-msonline-outlook-5faa0.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: DB7PR02MB4265.eurprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: d9fc9425-26bd-4246-a682-08ddcbb0dcc4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jul 2025 19:24:23.4436
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5a0d8691-1316-45d7-be42-08ddcbb8d590
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Jul 2025 20:21:27.3767
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PR3PR02MB6106
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR02MB7319
 
-Unfortunately my development, thinking, testing time for today has well sur=
-passed it's time.=0A=
-(Also this is a re-post of this message, the original one was not sent in p=
-lain-text mode, (html) probably leading to a mailing-list rejection, so I r=
-e-send it in plain-text mode to make sure it gets through, sorry in advance=
- for any potential duplicates but if all is well it shouldn't be a duplicat=
-e ;))=0A=
-=0A=
-But I would be unsatisfactory if no scripts were provided to at least have =
-some starting point.=0A=
-=0A=
-So I present to you scripts developed by Gemini Flash 2.5 for git bash.=0A=
-=0A=
-These scripts are untested, but perhaps I will test them tomorrow further, =
-or perhaps others can test these and refine these.=0A=
-=0A=
-Below is also an explanation of how to store and use these scripts.=0A=
-=0A=
-(I am quite busy, so I make no promises on any follows ups, or additional r=
-efinements, but I do my best to provide at least something to go on and for=
- inspiration/ideas)=0A=
-=0A=
-(Also I feel somewhat out of place in the linux/unix/bash world so perhaps =
-better if somebody else carries over the stick so to speak ;))=0A=
-(Another idea is to re-fine/bug fix them via gemini 2.5 pro, which is a str=
-onger AI).=0A=
-=0A=
-Here are the Bash scripts for your custom Git commands, ready for developer=
-s to use.=0A=
-=0A=
-These scripts are designed to be standalone executables. Save each block of=
- code into a file with the specified name (e.g., `git-new-contribution`), t=
-hen make them executable (`chmod +x <filename>`). Place these files in a di=
-rectory that is part of your system's `PATH` environment variable (e.g., `~=
-/bin/` on Linux, or a custom directory you add to PATH for Git Bash on Wind=
-ows).=0A=
-=0A=
-Git will automatically recognize these as subcommands (e.g., `git new-contr=
-ibution`).=0A=
-=0A=
------=0A=
-=0A=
-### 1\. `git-new-contribution`=0A=
-=0A=
-This script fetches the latest `master`, determines the next sequential con=
-tribution number for your user prefix, creates the new branch, pushes it, a=
-nd marks it as active.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-new-contribution=0A=
-# Purpose: To initiate a brand new development effort from the latest maste=
-r.=0A=
-# Usage: git new-contribution <UserPrefix> <Description/Goal...>=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ] || [ -z "$2" ]; then=0A=
-=A0 echo "Usage: git new-contribution <UserPrefix> \"<Description/Goal...>\=
-"" >&2=0A=
-=A0 echo "Example: git new-contribution Skybuck \"Implement user authentica=
-tion\"" >&2=0A=
-=A0 exit 1=0A=
-fi=0A=
-=0A=
-USER_PREFIX=3D"$1"=0A=
-DESCRIPTION_RAW=3D"$2"=0A=
-=0A=
-# Slugify description: lowercase, replace spaces with hyphens, remove non-a=
-lphanumeric except hyphens=0A=
-DESCRIPTION_SLUGIFIED=3D$(echo "$DESCRIPTION_RAW" | tr '[:upper:]' '[:lower=
-:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-+|-+$//g' | head -c 50) # Tru=
-ncate to avoid very long names=0A=
-=0A=
-if [ -z "$DESCRIPTION_SLUGIFIED" ]; then=0A=
-=A0 =A0 echo "Error: Description cannot be empty or result in an empty slug=
-." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# --- Core Logic ---=0A=
-=0A=
-# 1. Fetch latest master and checkout=0A=
-echo "Fetching latest master and switching to it..."=0A=
-git checkout master || { echo "Error: Failed to checkout master." >&2; exit=
- 1; }=0A=
-git pull origin master || { echo "Error: Failed to pull latest master." >&2=
-; exit 1; }=0A=
-=0A=
-# 2. Determine next contribution number=0A=
-# Look at all branches, local and remote, that match the pattern for this u=
-ser prefix.=0A=
-# Sort numerically and take the last one, then increment.=0A=
-LAST_NUM=3D$(git for-each-ref --format=3D'%(refname:short)' refs/{heads,rem=
-otes/origin}/"${USER_PREFIX}Contribution"* 2>/dev/null | \=0A=
-=A0 =A0 =A0 =A0 =A0 =A0grep -E "^${USER_PREFIX}Contribution[0-9]{3}-" | \=
-=0A=
-=A0 =A0 =A0 =A0 =A0 =A0sed -E "s/^${USER_PREFIX}Contribution([0-9]{3})-.*$/=
-\\1/" | \=0A=
-=A0 =A0 =A0 =A0 =A0 =A0sort -n | tail -1)=0A=
-=0A=
-NEXT_NUM=3D1=0A=
-if [ -n "$LAST_NUM" ]; then=0A=
-=A0 =A0 NEXT_NUM=3D$((10#$LAST_NUM + 1)) # Use 10# to force base 10 for saf=
-ety=0A=
-fi=0A=
-=0A=
-# Format to three digits (e.g., 001, 010, 100)=0A=
-FORMATTED_NEXT_NUM=3D$(printf "%03d" "$NEXT_NUM")=0A=
-=0A=
-NEW_BRANCH_NAME=3D"${USER_PREFIX}Contribution${FORMATTED_NEXT_NUM}-${DESCRI=
-PTION_SLUGIFIED}"=0A=
-=0A=
-# Check if branch already exists locally or remotely (highly unlikely given=
- numbering, but for safety)=0A=
-if git show-ref --quiet --verify "refs/heads/$NEW_BRANCH_NAME" || git show-=
-ref --quiet --verify "refs/remotes/origin/$NEW_BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: Branch '$NEW_BRANCH_NAME' already exists. This should =
-not happen with sequential numbering." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-echo "Creating new branch: '$NEW_BRANCH_NAME' from master..."=0A=
-git checkout -b "$NEW_BRANCH_NAME" master || { echo "Error: Failed to creat=
-e local branch." >&2; exit 1; }=0A=
-git push -u origin "$NEW_BRANCH_NAME" || { echo "Error: Failed to push new =
-branch to origin." >&2; exit 1; }=0A=
-=0A=
-echo "---"=0A=
-echo "Calling git set-active to mark as active..."=0A=
-# Call git-set-active directly. Ensure git-set-active is in PATH or alias s=
-etup.=0A=
-"$(dirname "$0")/git-set-active" "$NEW_BRANCH_NAME" || { echo "Warning: Fai=
-led to set branch as active. Please run 'git set-active $NEW_BRANCH_NAME' m=
-anually." >&2; }=0A=
-=0A=
-echo ""=0A=
-echo "Successfully created and activated new contribution branch:"=0A=
-echo "-> **$NEW_BRANCH_NAME**"=0A=
-echo "You are now on this branch. Start coding!"=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 2\. `git-set-active`=0A=
-=0A=
-This script explicitly marks an existing contribution branch as currently a=
-ctive or in progress by creating an `active/<branchname>` tag and removing =
-any `merged/` or `rejected/` tags.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-set-active=0A=
-# Purpose: To explicitly mark an existing contribution branch as currently =
-active.=0A=
-# Usage: git set-active <branchname>=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ]; then=0A=
-=A0 =A0 echo "Usage: git set-active <branchname>" >&2=0A=
-=A0 =A0 echo "Example: git set-active SkybuckContribution001-ImplementLogin=
-" >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-BRANCH_NAME=3D"$1"=0A=
-ACTIVE_TAG=3D"active/$BRANCH_NAME"=0A=
-=0A=
-# Check if the branch exists locally or remotely=0A=
-if ! git show-ref --quiet --verify "refs/heads/$BRANCH_NAME" && ! git show-=
-ref --quiet --verify "refs/remotes/origin/$BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: Branch '$BRANCH_NAME' does not exist locally or remote=
-ly." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Get the latest commit hash of the branch. Prioritize remote if local isn'=
-t up to date.=0A=
-BRANCH_HASH=3D$(git rev-parse "refs/remotes/origin/$BRANCH_NAME^{commit}" 2=
->/dev/null || git rev-parse "refs/heads/$BRANCH_NAME^{commit}" 2>/dev/null)=
-=0A=
-if [ -z "$BRANCH_HASH" ]; then=0A=
-=A0 =A0 echo "Error: Could not determine commit hash for branch '$BRANCH_NA=
-ME'." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Delete existing merged/rejected tags (if any) to ensure only 'active' is =
-present for status=0A=
-for STATUS_TAG_PREFIX in "merged" "rejected"; do=0A=
-=A0 =A0 if git show-ref --quiet --verify "refs/tags/${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME"; then=0A=
-=A0 =A0 =A0 =A0 echo "Removing existing remote tag: ${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME..."=0A=
-=A0 =A0 =A0 =A0 git push origin --delete "${STATUS_TAG_PREFIX}/$BRANCH_NAME=
-" || { echo "Warning: Failed to delete old remote tag ${STATUS_TAG_PREFIX}/=
-$BRANCH_NAME." >&2; }=0A=
-=A0 =A0 fi=0A=
-done=0A=
-=0A=
-# Create and push the active tag=0A=
-echo "Creating and pushing active tag: '$ACTIVE_TAG' for branch '$BRANCH_NA=
-ME'..."=0A=
-git tag -f "$ACTIVE_TAG" "$BRANCH_HASH" || { echo "Error: Failed to create =
-local tag '$ACTIVE_TAG'." >&2; exit 1; }=0A=
-git push -f origin "$ACTIVE_TAG" || { echo "Error: Failed to push tag '$ACT=
-IVE_TAG' to origin." >&2; exit 1; }=0A=
-=0A=
-echo ""=0A=
-echo "Branch **$BRANCH_NAME** successfully marked as **ACTIVE**."=0A=
-echo "You can view active branches with: **git tag --list 'active/*'**"=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 3\. `git-set-merged`=0A=
-=0A=
-This script marks a contribution branch as successfully merged into `master=
-` by creating a `merged/<branchname>` tag and removing any `active/` or `re=
-jected/` tags.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-set-merged=0A=
-# Purpose: To mark a contribution branch as successfully merged into master=
-.=0A=
-# Usage: git set-merged <branchname>=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ]; then=0A=
-=A0 =A0 echo "Usage: git set-merged <branchname>" >&2=0A=
-=A0 =A0 echo "Example: git set-merged SkybuckContribution001-MyFeature" >&2=
-=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-BRANCH_NAME=3D"$1"=0A=
-MERGED_TAG=3D"merged/$BRANCH_NAME"=0A=
-=0A=
-# Check if the branch exists locally or remotely=0A=
-if ! git show-ref --quiet --verify "refs/heads/$BRANCH_NAME" && ! git show-=
-ref --quiet --verify "refs/remotes/origin/$BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: Branch '$BRANCH_NAME' does not exist locally or remote=
-ly." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Get the latest commit hash of the branch. Prioritize remote.=0A=
-BRANCH_HASH=3D$(git rev-parse "refs/remotes/origin/$BRANCH_NAME^{commit}" 2=
->/dev/null || git rev-parse "refs/heads/$BRANCH_NAME^{commit}" 2>/dev/null)=
-=0A=
-if [ -z "$BRANCH_HASH" ]; then=0A=
-=A0 =A0 echo "Error: Could not determine commit hash for branch '$BRANCH_NA=
-ME'." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Remove active/rejected tags if they exist=0A=
-for STATUS_TAG_PREFIX in "active" "rejected"; do=0A=
-=A0 =A0 if git show-ref --quiet --verify "refs/tags/${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME"; then=0A=
-=A0 =A0 =A0 =A0 echo "Removing existing remote tag: ${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME..."=0A=
-=A0 =A0 =A0 =A0 git push origin --delete "${STATUS_TAG_PREFIX}/$BRANCH_NAME=
-" || { echo "Warning: Failed to delete old remote tag ${STATUS_TAG_PREFIX}/=
-$BRANCH_NAME." >&2; }=0A=
-=A0 =A0 fi=0A=
-done=0A=
-=0A=
-# Create and push the merged tag=0A=
-echo "Creating and pushing merged tag: '$MERGED_TAG' for branch '$BRANCH_NA=
-ME'..."=0A=
-git tag -f "$MERGED_TAG" "$BRANCH_HASH" || { echo "Error: Failed to create =
-local tag '$MERGED_TAG'." >&2; exit 1; }=0A=
-git push -f origin "$MERGED_TAG" || { echo "Error: Failed to push tag '$MER=
-GED_TAG' to origin." >&2; exit 1; }=0A=
-=0A=
-echo ""=0A=
-echo "Branch **$BRANCH_NAME** successfully marked as **MERGED**."=0A=
-echo "It remains in your repository history."=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 4\. `git-set-rejected`=0A=
-=0A=
-This script marks a contribution branch as not being integrated into `maste=
-r` by creating a `rejected/<branchname>` tag and removing any `active/` or =
-`merged/` tags.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-set-rejected=0A=
-# Purpose: To mark a contribution branch as not being integrated into maste=
-r.=0A=
-# Usage: git set-rejected <branchname>=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ]; then=0A=
-=A0 =A0 echo "Usage: git set-rejected <branchname>" >&2=0A=
-=A0 =A0 echo "Example: git set-rejected AI0001Contribution002-ExperimentalA=
-lgorithm" >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-BRANCH_NAME=3D"$1"=0A=
-REJECTED_TAG=3D"rejected/$BRANCH_NAME"=0A=
-=0A=
-# Check if the branch exists locally or remotely=0A=
-if ! git show-ref --quiet --verify "refs/heads/$BRANCH_NAME" && ! git show-=
-ref --quiet --verify "refs/remotes/origin/$BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: Branch '$BRANCH_NAME' does not exist locally or remote=
-ly." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Get the latest commit hash of the branch. Prioritize remote.=0A=
-BRANCH_HASH=3D$(git rev-parse "refs/remotes/origin/$BRANCH_NAME^{commit}" 2=
->/dev/null || git rev-parse "refs/heads/$BRANCH_NAME^{commit}" 2>/dev/null)=
-=0A=
-if [ -z "$BRANCH_HASH" ]; then=0A=
-=A0 =A0 echo "Error: Could not determine commit hash for branch '$BRANCH_NA=
-ME'." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Remove active/merged tags if they exist=0A=
-for STATUS_TAG_PREFIX in "active" "merged"; do=0A=
-=A0 =A0 if git show-ref --quiet --verify "refs/tags/${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME"; then=0A=
-=A0 =A0 =A0 =A0 echo "Removing existing remote tag: ${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME..."=0A=
-=A0 =A0 =A0 =A0 git push origin --delete "${STATUS_TAG_PREFIX}/$BRANCH_NAME=
-" || { echo "Warning: Failed to delete old remote tag ${STATUS_TAG_PREFIX}/=
-$BRANCH_NAME." >&2; }=0A=
-=A0 =A0 fi=0A=
-done=0A=
-=0A=
-# Create and push the rejected tag=0A=
-echo "Creating and pushing rejected tag: '$REJECTED_TAG' for branch '$BRANC=
-H_NAME'..."=0A=
-git tag -f "$REJECTED_TAG" "$BRANCH_HASH" || { echo "Error: Failed to creat=
-e local tag '$REJECTED_TAG'." >&2; exit 1; }=0A=
-git push -f origin "$REJECTED_TAG" || { echo "Error: Failed to push tag '$R=
-EJECTED_TAG' to origin." >&2; exit 1; }=0A=
-=0A=
-echo ""=0A=
-echo "Branch **$BRANCH_NAME** successfully marked as **REJECTED**."=0A=
-echo "It remains in your repository history for reference."=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 5\. `git-set-revive`=0A=
-=0A=
-This script "re-activates" an *existing* contribution branch that was previ=
-ously marked as `merged` or `rejected`. It removes the old status tag and r=
-e-applies the `active/` tag.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-set-revive=0A=
-# Purpose: To re-activate an EXISTING contribution branch that was previous=
-ly merged or rejected.=0A=
-# Usage: git set-revive <branchname>=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ]; then=0A=
-=A0 =A0 echo "Usage: git set-revive <branchname>" >&2=0A=
-=A0 =A0 echo "Example: git set-revive SkybuckContribution005-BugfixRethink"=
- >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-BRANCH_NAME=3D"$1"=0A=
-=0A=
-# Check if the branch exists locally or remotely=0A=
-if ! git show-ref --quiet --verify "refs/heads/$BRANCH_NAME" && ! git show-=
-ref --quiet --verify "refs/remotes/origin/$BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: Branch '$BRANCH_NAME' does not exist locally or remote=
-ly." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Check if it currently has a merged or rejected tag=0A=
-HAS_MERGED_TAG=3D$(git ls-remote --tags origin "merged/$BRANCH_NAME")=0A=
-HAS_REJECTED_TAG=3D$(git ls-remote --tags origin "rejected/$BRANCH_NAME")=
-=0A=
-=0A=
-if [ -z "$HAS_MERGED_TAG" ] && [ -z "$HAS_REJECTED_TAG" ]; then=0A=
-=A0 =A0 echo "Error: Branch '$BRANCH_NAME' is not currently marked as 'merg=
-ed/' or 'rejected/'. Cannot revive." >&2=0A=
-=A0 =A0 echo "If it's active, use 'git set-active' to refresh its tag." >&2=
-=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-echo "Attempting to revive branch '$BRANCH_NAME'..."=0A=
-=0A=
-# Remove old status tags=0A=
-for STATUS_TAG_PREFIX in "merged" "rejected"; do=0A=
-=A0 =A0 if git show-ref --quiet --verify "refs/tags/${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME"; then=0A=
-=A0 =A0 =A0 =A0 echo "Removing existing remote tag: ${STATUS_TAG_PREFIX}/$B=
-RANCH_NAME..."=0A=
-=A0 =A0 =A0 =A0 git push origin --delete "${STATUS_TAG_PREFIX}/$BRANCH_NAME=
-" || { echo "Warning: Failed to delete old remote tag ${STATUS_TAG_PREFIX}/=
-$BRANCH_NAME." >&2; }=0A=
-=A0 =A0 fi=0A=
-done=0A=
-=0A=
-# Call git-set-active to apply the active tag=0A=
-echo "---"=0A=
-echo "Calling git set-active to mark as active..."=0A=
-"$(dirname "$0")/git-set-active" "$BRANCH_NAME" || { echo "Error: Failed to=
- set branch as active during revival. Please run 'git set-active $BRANCH_NA=
-ME' manually." >&2; exit 1; }=0A=
-=0A=
-echo ""=0A=
-echo "Branch **$BRANCH_NAME** successfully **REVIVED** and marked as **ACTI=
-VE**."=0A=
-echo "Remember, this branch's history has NOT been rebased onto master."=0A=
-echo "You are now on this branch if you were already there. To switch: **gi=
-t checkout $BRANCH_NAME**"=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 6\. `git-back-to`=0A=
-=0A=
-This script creates a *new* development branch starting at a specified hist=
-orical tag/commit.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-back-to=0A=
-# Purpose: To create a NEW development branch from any specific historical =
-point (a tag).=0A=
-# Usage: git back-to <tagname_of_old_commit> "<new_branch_description>"=0A=
-=0A=
-# --- Input Validation ---=0A=
-if [ -z "$1" ] || [ -z "$2" ]; then=0A=
-=A0 =A0 echo "Usage: git back-to <tagname_of_old_commit> \"<new_branch_desc=
-ription>\"" >&2=0A=
-=A0 =A0 echo "Example: git back-to merged/AI0001Contribution007-OldAPIDesig=
-n \"Re-evaluate V1 API for performance\"" >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-OLD_TAG_NAME=3D"$1"=0A=
-NEW_BRANCH_DESCRIPTION_RAW=3D"$2"=0A=
-=0A=
-# --- Configuration ---=0A=
-# Get UserPrefix from git config, default to sanitized user.name=0A=
-USER_PREFIX=3D$(git config user.contributionPrefix)=0A=
-if [ -z "$USER_PREFIX" ]; then=0A=
-=A0 =A0 USER_PREFIX=3D$(git config user.name | tr -cd '[:alnum:]' | head -c=
- 10) # Sanitize and truncate=0A=
-=A0 =A0 if [ -z "$USER_PREFIX" ]; then=0A=
-=A0 =A0 =A0 =A0 echo "Error: Git user.name or user.contributionPrefix not s=
-et." >&2=0A=
-=A0 =A0 =A0 =A0 echo "Please configure them: git config --global user.name =
-\"Your Name\"" >&2=0A=
-=A0 =A0 =A0 =A0 echo "Or: git config --global user.contributionPrefix \"You=
-rPrefix\"" >&2=0A=
-=A0 =A0 =A0 =A0 exit 1=0A=
-=A0 =A0 fi=0A=
-fi=0A=
-=0A=
-# Slugify description=0A=
-NEW_BRANCH_DESCRIPTION_SLUGIFIED=3D$(echo "$NEW_BRANCH_DESCRIPTION_RAW" | t=
-r '[:upper:]' '[:lower:]' | sed -E 's/[^a-z0-9]+/-/g' | sed -E 's/^-+|-+$//=
-g' | head -c 50)=0A=
-=0A=
-if [ -z "$NEW_BRANCH_DESCRIPTION_SLUGIFIED" ]; then=0A=
-=A0 =A0 echo "Error: New branch description cannot be empty or result in an=
- empty slug." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# Check if tag exists=0A=
-if ! git show-ref --quiet --verify "refs/tags/$OLD_TAG_NAME" && ! git ls-re=
-mote --tags origin "refs/tags/$OLD_TAG_NAME"; then=0A=
-=A0 =A0 echo "Error: Tag '$OLD_TAG_NAME' does not exist locally or remotely=
-. Please ensure it's fetched." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# 2. Determine next contribution number for the new branch=0A=
-LAST_NUM=3D$(git for-each-ref --format=3D'%(refname:short)' refs/{heads,rem=
-otes/origin}/"${USER_PREFIX}Contribution"* 2>/dev/null | \=0A=
-=A0 =A0 =A0 =A0 =A0 =A0grep -E "^${USER_PREFIX}Contribution[0-9]{3}-" | \=
-=0A=
-=A0 =A0 =A0 =A0 =A0 =A0sed -E "s/^${USER_PREFIX}Contribution([0-9]{3})-.*$/=
-\\1/" | \=0A=
-=A0 =A0 =A0 =A0 =A0 =A0sort -n | tail -1)=0A=
-=0A=
-NEXT_NUM=3D1=0A=
-if [ -n "$LAST_NUM" ]; then=0A=
-=A0 =A0 NEXT_NUM=3D$((10#$LAST_NUM + 1))=0A=
-fi=0A=
-=0A=
-FORMATTED_NEXT_NUM=3D$(printf "%03d" "$NEXT_NUM")=0A=
-=0A=
-NEW_BRANCH_NAME=3D"${USER_PREFIX}Contribution${FORMATTED_NEXT_NUM}-${NEW_BR=
-ANCH_DESCRIPTION_SLUGIFIED}"=0A=
-=0A=
-# Check if branch already exists locally or remotely=0A=
-if git show-ref --quiet --verify "refs/heads/$NEW_BRANCH_NAME" || git show-=
-ref --quiet --verify "refs/remotes/origin/$NEW_BRANCH_NAME"; then=0A=
-=A0 =A0 echo "Error: New branch name '$NEW_BRANCH_NAME' already exists. Thi=
-s should not happen with sequential numbering." >&2=0A=
-=A0 =A0 exit 1=0A=
-fi=0A=
-=0A=
-# 3. Create new local branch from tag=0A=
-echo "Creating new branch '**$NEW_BRANCH_NAME**' from historical tag '**$OL=
-D_TAG_NAME**'..."=0A=
-git checkout -b "$NEW_BRANCH_NAME" "$OLD_TAG_NAME" || { echo "Error: Failed=
- to create local branch '$NEW_BRANCH_NAME' from tag '$OLD_TAG_NAME'." >&2; =
-exit 1; }=0A=
-=0A=
-# 4. Push new branch to remote=0A=
-echo "Pushing new branch '**$NEW_BRANCH_NAME**' to remote origin..."=0A=
-git push -u origin "$NEW_BRANCH_NAME" || { echo "Error: Failed to push new =
-branch to origin." >&2; exit 1; }=0A=
-=0A=
-echo "---"=0A=
-# 5. Call git-set-active=0A=
-echo "Calling git set-active to mark as active..."=0A=
-"$(dirname "$0")/git-set-active" "$NEW_BRANCH_NAME" || { echo "Warning: Fai=
-led to set branch as active. Please run 'git set-active $NEW_BRANCH_NAME' m=
-anually." >&2; }=0A=
-=0A=
-echo ""=0A=
-echo "Successfully created and activated new branch from historical tag:"=
-=0A=
-echo "-> Branch **$NEW_BRANCH_NAME** is based on **$OLD_TAG_NAME**."=0A=
-echo "You are now on this branch. If you wish to bring it up to master, use=
- **git the-future**."=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
------=0A=
-=0A=
-### 7\. `git-the-future`=0A=
-=0A=
-This script rebases the current branch onto the latest `master`, guiding th=
-e user through conflict resolution.=0A=
-=0A=
-```bash=0A=
-#!/bin/bash=0A=
-=0A=
-# Script: git-the-future=0A=
-# Purpose: To initiate the rebasing of the current active branch onto the l=
-atest master branch.=0A=
-# Usage: git the-future=0A=
-=0A=
-# --- Core Logic ---=0A=
-=0A=
-CURRENT_BRANCH=3D$(git rev-parse --abbrev-ref HEAD)=0A=
-=0A=
-# Validate user is on a branch and not master=0A=
-if [ "$CURRENT_BRANCH" =3D "HEAD" ] || [ "$CURRENT_BRANCH" =3D "" ]; then=
-=0A=
-=A0 echo "Error: You are not on a branch (detached HEAD). Please checkout a=
- branch first." >&2=0A=
-=A0 exit 1=0A=
-fi=0A=
-=0A=
-if [ "$CURRENT_BRANCH" =3D "master" ]; then=0A=
-=A0 echo "Error: Cannot run 'git the-future' on the master branch." >&2=0A=
-=A0 echo "This command is designed to rebase a feature branch onto master."=
- >&2=0A=
-=A0 exit 1=0A=
-fi=0A=
-=0A=
-echo "Preparing to rebase current branch '**${CURRENT_BRANCH}**' onto the l=
-atest **master**."=0A=
-=0A=
-# Update local master=0A=
-echo "Updating local master branch..."=0A=
-git checkout master || { echo "Error: Could not checkout master." >&2; exit=
- 1; }=0A=
-git pull origin master || { echo "Error: Could not pull origin master. Plea=
-se resolve manually or try again." >&2; exit 1; }=0A=
-=0A=
-# Checkout original branch=0A=
-git checkout "$CURRENT_BRANCH" || { echo "Error: Could not checkout origina=
-l branch ${CURRENT_BRANCH}." >&2; exit 1; }=0A=
-=0A=
-echo ""=0A=
-echo "Starting rebase of **${CURRENT_BRANCH}** onto **master**..."=0A=
-echo "---"=0A=
-git rebase master=0A=
-=0A=
-REBASE_STATUS=3D$? # Capture the exit status of the rebase command=0A=
-=0A=
-if [ $REBASE_STATUS -eq 0 ]; then=0A=
-=A0 echo "---"=0A=
-=A0 echo "Rebase completed successfully!"=0A=
-=A0 echo "Your branch **${CURRENT_BRANCH}** is now rebased on top of the la=
-test **master**."=0A=
-=A0 echo "To update the remote branch, you will likely need to force push (=
-use --force-with-lease for safety):"=0A=
-=A0 echo " =A0**git push --force-with-lease origin ${CURRENT_BRANCH}**"=0A=
-elif [ $REBASE_STATUS -eq 1 ]; then=0A=
-=A0 echo "---"=0A=
-=A0 echo "Rebase paused due to conflicts!" >&2=0A=
-=A0 echo "Please resolve the conflicts manually in your files." >&2=0A=
-=A0 echo "After resolving, use these commands:" >&2=0A=
-=A0 echo " =A0**git add .**" >&2=0A=
-=A0 echo " =A0**git rebase --continue**" >&2=0A=
-=A0 echo "If you wish to abort the rebase:" >&2=0A=
-=A0 echo " =A0**git rebase --abort**" >&2=0A=
-=A0 exit 1 # Indicate failure due to conflicts=0A=
-else=0A=
-=A0 echo "---"=0A=
-=A0 echo "Rebase failed for an unexpected reason (exit code $REBASE_STATUS)=
-." >&2=0A=
-=A0 echo "Please investigate the git output above." >&2=0A=
-=A0 exit 1=0A=
-fi=0A=
-=0A=
-exit 0=0A=
-```=0A=
-=0A=
-=0A=
-How do I store and use/test these scripts ?=0A=
-=0A=
-That's an excellent and crucial question\! Having the scripts is one thing,=
- but knowing how to set them up and test them is key to making your workflo=
-w a reality.=0A=
-=0A=
-Here's a step-by-step guide on how to store, use, and test these scripts on=
- both Linux and Windows (using Git Bash).=0A=
-=0A=
------=0A=
-=0A=
-## Storing, Using, and Testing Your Git Workflow Scripts=0A=
-=0A=
-These scripts are written in Bash, so they will work natively on Linux and =
-within the Git Bash environment on Windows. They will **not** work directly=
- in Windows Command Prompt (CMD) or PowerShell.=0A=
-=0A=
-### Step 1: Create a Dedicated Directory for Your Scripts=0A=
-=0A=
-It's best practice to keep your custom scripts organized in a dedicated dir=
-ectory.=0A=
-=0A=
-=A0 * **Choose a location:** A common choice is `~/bin` (a `bin` folder in =
-your home directory) or you can create a new one like `~/git-commands`. Let=
-'s use `~/git-commands` for this guide.=0A=
-=A0 * **Create the directory:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 mkdir -p ~/git-commands=0A=
-=A0 =A0 ```=0A=
-=A0 =A0 (The `-p` flag ensures that if `~` doesn't have a directory named `=
-git-commands`, it will create it.)=0A=
-=0A=
-### Step 2: Save Each Script to Its Own File=0A=
-=0A=
-For each of the 7 scripts I provided (e.g., `git-new-contribution`, `git-se=
-t-active`, etc.):=0A=
-=0A=
-1. =A0**Open a text editor:** Use a plain text editor (like VS Code, Notepa=
-d++, Sublime Text, Vim, Nano, Gedit, etc.).=0A=
-2. =A0**Copy the entire script content:** Copy the full Bash script code fo=
-r one command.=0A=
-3. =A0**Paste into the editor.**=0A=
-4. =A0**Save the file:** Save the file into your `~/git-commands` directory=
-.=0A=
-=A0 =A0 =A0 * **Crucially, name the file exactly as specified:**=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-new-contribution`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-set-active`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-set-merged`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-set-rejected`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-set-revive`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-back-to`=0A=
-=A0 =A0 =A0 =A0 =A0 * `git-the-future`=0A=
-=A0 =A0 =A0 * **Do NOT add a `.sh` extension** (e.g., don't save as `git-ne=
-w-contribution.sh`). Git expects the executable to be named `git-yourcomman=
-d`.=0A=
-=0A=
-Repeat this for all 7 scripts.=0A=
-=0A=
-### Step 3: Make the Scripts Executable=0A=
-=0A=
-For your operating system to run these files as programs, you need to set t=
-heir executable permission.=0A=
-=0A=
-=A0 * **Open your terminal (Bash on Linux, Git Bash on Windows).**=0A=
-=A0 * **Navigate to your scripts directory:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 cd ~/git-commands=0A=
-=A0 =A0 ```=0A=
-=A0 * **Make all scripts executable:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 chmod +x git-*=0A=
-=A0 =A0 ```=0A=
-=A0 =A0 (This command makes all files starting with `git-` in the current d=
-irectory executable.)=0A=
-=0A=
-### Step 4: Add the Scripts Directory to Your System's PATH=0A=
-=0A=
-Your shell needs to know where to find these custom `git-` commands. You do=
- this by adding your `~/git-commands` directory to your `PATH` environment =
-variable.=0A=
-=0A=
-=A0 * **Open your terminal (Bash on Linux, Git Bash on Windows).**=0A=
-=A0 * **Edit your shell's configuration file:**=0A=
-=A0 =A0 =A0 * **Linux (Bash):** `nano ~/.bashrc` or `vim ~/.bashrc`=0A=
-=A0 =A0 =A0 * **Linux (Zsh):** `nano ~/.zshrc` or `vim ~/.zshrc`=0A=
-=A0 =A0 =A0 * **Windows (Git Bash):** `nano ~/.bashrc` or `nano ~/.profile`=
- (either works, `.bashrc` is common)=0A=
-=A0 * **Add the following line to the end of the file:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 export PATH=3D"$PATH:$HOME/git-commands"=0A=
-=A0 =A0 ```=0A=
-=A0 * **Save and close the file.**=0A=
-=A0 * **Apply the changes:**=0A=
-=A0 =A0 =A0 * **For the current session:** Run `source ~/.bashrc` (or `sour=
-ce ~/.zshrc` / `source ~/.profile`).=0A=
-=A0 =A0 =A0 * **For future sessions:** Close and reopen your terminal.=0A=
-=0A=
-### Step 5: Configure Git User Details (If Not Already Done)=0A=
-=0A=
-Your scripts rely on your Git user name and email, and specifically a `user=
-.contributionPrefix`.=0A=
-=0A=
-=A0 * **Set your global Git user name and email:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 git config --global user.name "Your Name"=0A=
-=A0 =A0 git config --global user.email "your.email@example.com"=0A=
-=A0 =A0 ```=0A=
-=A0 * **Set your custom contribution prefix:**=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 git config --global user.contributionPrefix "Skybuck" # Or "AI0001"=
-, "JohnDoe", etc.=0A=
-=A0 =A0 ```=0A=
-=A0 =A0 (The scripts will fall back to a sanitized version of `user.name` i=
-f `user.contributionPrefix` isn't set, but setting it explicitly is cleaner=
-.)=0A=
-=0A=
-### Step 6: Test Your Commands\!=0A=
-=0A=
-Now you can test your custom workflow commands.=0A=
-=0A=
-=A0 * **Navigate to an existing Git repository** where you want to test, or=
- create a new one:=0A=
-=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 mkdir my-test-repo=0A=
-=A0 =A0 cd my-test-repo=0A=
-=A0 =A0 git init=0A=
-=A0 =A0 touch README.md=0A=
-=A0 =A0 git add README.md=0A=
-=A0 =A0 git commit -m "Initial commit"=0A=
-=A0 =A0 # Create a remote for testing (e.g., on GitHub, GitLab, or a local =
-bare repo)=0A=
-=A0 =A0 # git remote add origin <your_remote_repo_url>=0A=
-=A0 =A0 # git push -u origin master=0A=
-=A0 =A0 ```=0A=
-=0A=
-=A0 * **Test `git new-contribution`:**=0A=
-=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 git new-contribution Skybuck "My first test feature"=0A=
-=A0 =A0 ```=0A=
-=0A=
-=A0 =A0 You should see output indicating branch creation, pushing, and acti=
-vation.=0A=
-=0A=
-=A0 =A0 =A0 * Verify: `git branch -a` (you should see your new branch) and =
-`git tag --list 'active/*'` (you should see `active/SkybuckContribution001-=
-My-first-test-feature`).=0A=
-=0A=
-=A0 * **Test `git set-merged` (after some commits on the new branch, and id=
-eally merging into master):**=0A=
-=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 # (Make some commits on SkybuckContribution001-My-first-test-featur=
-e)=0A=
-=A0 =A0 # (Simulate merging into master - e.g., git checkout master && git =
-merge SkybuckContribution001-My-first-test-feature)=0A=
-=A0 =A0 git set-merged SkybuckContribution001-My-first-test-feature=0A=
-=A0 =A0 ```=0A=
-=0A=
-=A0 =A0 =A0 * Verify: `git tag --list 'active/*'` (should no longer show it=
-) and `git tag --list 'merged/*'` (should now show `merged/SkybuckContribut=
-ion001-My-first-test-feature`).=0A=
-=0A=
-=A0 * **Test `git back-to` and `git the-future`:**=0A=
-=0A=
-=A0 =A0 ```bash=0A=
-=A0 =A0 # Assuming SkybuckContribution001-My-first-test-feature was merged =
-and tagged=0A=
-=A0 =A0 git back-to merged/SkybuckContribution001-My-first-test-feature "Te=
-sting revival and rebase"=0A=
-=A0 =A0 # This creates a new branch (e.g., SkybuckContribution002-Testing-r=
-evival-and-rebase)=0A=
-=A0 =A0 # You will be on this new branch.=0A=
-=0A=
-=A0 =A0 # Make a small change on this new branch=0A=
-=A0 =A0 echo "New line for revival" >> test.txt=0A=
-=A0 =A0 git add test.txt=0A=
-=A0 =A0 git commit -m "Added line to revived branch"=0A=
-=0A=
-=A0 =A0 # Now, try to bring it up to master=0A=
-=A0 =A0 git the-future=0A=
-=A0 =A0 # Follow any instructions if conflicts occur.=0A=
-=A0 =A0 # After successful rebase, push: git push --force-with-lease origin=
- SkybuckContribution002-Testing-revival-and-rebase=0A=
-=A0 =A0 ```=0A=
-=0A=
-By following these steps, you'll have your custom Git workflow up and runni=
-ng, ready for your extensive testing\!=0A=
-=0A=
-Bye,=0A=
-=A0 Skybuck Flying=0A=
-skybuck2000@hotmail.com=0A=
+SGVsbG8sIEdpdC1DdXJpb3VzIFBlb3BsZSDwn5mCCgpNeSBmaW5hbCBjb250cmlidXRpb24gdG8g
+dGhpcyB0b3BpYywgYXQgbGVhc3QgZm9yIHRvZGF5LgoKSSBhc2tlZCBHb29nbGUncyBHZW1pbmkg
+Rmxhc2ggMi41IGhvdyB0byB1dGlsaXplIHRoaXMgd29ya2Zsb3cgZm9yIDEgY29vcmRpbmF0b3Ig
+QUkgYW5kIDEyIHdvcmtlciBBSS7CoAoKKEN1cnJlbnRseSBJIGFtIGV4cGVyaW1lbnRpbmcgd2l0
+aCBHb29nbGUncyBwb3dlcmZ1bGwgR2VtaW5pIEFQSSBhbmQgR2VtaW5pIENMSSArIEdpdGVhICsg
+UG9zdEdyZVNRTCArIChvcHRpb25hbGx5IE1haWxFbmFibGUpIHRvIHJ1biAxIGNvb3JkaW5hdGUg
+QUkgYW5kIDEyIHdvcmtlciBBSSBpbiBwYXJhbGxlbCB0byBjb252ZXJ0IGEgR08gKGdvbGFuZykg
+cHJvamVjdCB0byBEZWxwaGkgKERlbHBoaS9wYXNjYWwpLiBUaGUgY29kZSBpcyBmcm9tIFZpdGVM
+YWJzIHZpdGUgYmxvY2tjaGFpbi4gSSB3b3VsZCBsaWtlIHRvIGFuYWx5emUvdW5kZXJzdGFuZC9l
+dmFsdWF0ZSBib3RoIHByb2plY3RzLCB0aGUgY29udmVyc2lvbiBhdHRlbXB0IGFuZCB0aGUgYmxv
+Y2tjaGFpbiBpdHNlbGYsIGZvciB0aGUgYmxvY2tjaGFpbiBmb3IgbWUgaXQncyBlYXNpZXIgdG8g
+dW5kZXJzdGFuZCBEZWxwaGkgY29kZSwgYW5kIGl0IGZyZWVzIG1lIGZyb20gaGF2aW5nIHRvIGxl
+YXJuIEdPIGNvZGUgYW5kIEkgZG9uJ3QgcXVpdGUgbGlrZSBpdCdzIHN5bnRheCBhbmQgbm9uLW9i
+amVjdCBvcmllbnRhdGlvbiBhZnRlciBkb2luZyBhdCBsZWFzdCAzMCB5ZWFycyBvZiBPYmplY3Qg
+UGFzY2FsL1R1cmJvIFBhc2NhbC9EZWxwaCwgSSBob3BlIHlvdSB1bmRlcnN0YW5kIDspIEkgYWxz
+byBkcmVhbSBvZiBleHRlbmRpbmcgdGhpcyBwcm9qZWN0IGJleW9uZCBpdCdzIGN1cnJlbnQgY2Fw
+YWJpbGl0aWVzIG9yIGEgbGVhc3QgYnJpbmcgYmFjayBzb21lIHdhbGxldC9ndWkgZnVuY3Rpb25h
+bGl0eSBhbmQgZXNwZWNpYWxseSBhIGRpc3RyaWJ1dGVkIGV4Y2hhbmdlLCB3aGljaCB1bmZvcnR1
+bmF0ZWx5IHdlbnQgZG93biwgYWxzbyB0byBtYWtlIG15IHZpdGUgY29pbnMgdmFsdWFibGUgYWdh
+aW4gb3Igc3RhcnQgYSBkZXJpdmF0ZSBibG9ja2NoYWluIGFuZCBzdGFydCBuZXcuKQoKQW55d2F5
+IHRoaXMgc29mdHdhcmUgc2V0dXAgYWxsb3dzIGdpdCB0byBydW4gaW4gcGFyYWxsZWwgb24gYSBz
+aW5nbGUgV2luZG93cyAxMSBtYWNoaW5lLgoKVGhlIGZ1bGwgaGFyZHdhcmUgc3BlY2lmaWNhdGlv
+biBmb3IgdGhpcyBzeXN0ZW0vbWFjaGluZSBpcyBoZXJlIGluIGNhc2UgaW50ZXJlc3RlZDoKaHR0
+cHM6Ly93d3cuc2t5YnVjay5vcmcvSGFyZHdhcmUvU3VwZXJQQzIwMjMvU2t5YnVjaydzJTIwU3Vw
+ZXJQQyUyMGZvciUyMDIwMjMlMjBkZXNpZ24lMjB2ZXJzaW9uJTIwMTElMjBmaW5hbC50eHQKClRo
+aXMgaXMgYSB2ZXJ5IHBvd2VyZnVsbCBhbmQgaGlnaCBxdWFsaXR5IG1hY2hpbmUvUEMuIFVuZm9y
+dHVuYXRlbHkgdGhlIFdpbmRvd3MgMTEgR1VJIChHcmFwaGljYWwgVXNlciBJbnRlcmZhY2VzKSBs
+ZWF2ZXMgbXVjaCB0byBiZSBkZXNpcmVkLiBUaGUgbmljZSB0aGluZyB0aG91Z2ggaXMgdGhhdCBN
+aWNyb3NvZnQgV2luZG93cyAxMSBzZWVtcyB0byBhbG1vc3QgcnVuIGFueXRoaW5nIHRoYXQgSSB0
+aHJvdyBhdCBpdC4gVW5mb3J0dW5hdGVseSBNaWNyb3NvZnQgVmlzdWFsIFN0dWRpbyAyMDIyIGFz
+IHVzdWFsIGlzIHRoZSBleGNlcHRpb24gTE9MICh0aG91Z2ggbWF5YmUganVzdCBnaXRodWIgc3Bl
+Y2lmaWMgcHJvamVjdCBzb3VyY2UgY29kZSBidWdzIHdoZW4gbmVlZGluZyB0byBidWlsZCBmcm9t
+IHNvdXJjZSA/IGhtbW0pLgoKQW55d2F5IEdlbWluaSBpcyBhbiBpbmNyZWRpYmx5IHBvd2VyZnVs
+bCBBcnRpZmljaWFsIEludGVsbGlnZW5jZS4gUnVubmluZyAxMyBwcm9jZXNzZXMgaXMgYmFyZWx5
+IHNjcmF0Y2hpbmcgdGhlIGNhcGFiaWxpdGllcyBvZiB0aGlzIGxvY2FsIFBDLiBJbnRlcmVzdGlu
+Z2x5IGVub3VnaCB0aGlzIGNvbWJpbmVzIGl0IHdpdGggdGhlIHBvd2VyIG9mIEdvb2dsZSdzIERh
+dGEgQ2VudGVyIGFuZCB0aHVzIGl0IGNvbnNlcnZlcyBsb2dpYyBlbmVyZ3kgYW5kIGR1c3QgYWNj
+dW1pbGF0aW9uIGFuZCBvdmVyaGVhdCByaXNrcy4KQmVzdCBvZiBhbGwsIEdlbWluaSBBUEkvR2Vt
+aW5pIENMSSBpcyBjb21wbGV0ZWx5IGZyZWUsIGFuZCAxMiBHZW1pbmkgQVBJIGtleXMgY2FuIGJl
+IGFjcXVpcmVkIGZvciBhIHNpbmdsZSBnb29nbGUgYWNjb3VudC4gQXMgZmFyIGFzIEkga25vdyBH
+b29nbGUgYWxsb3dzIDIgYWNjb3VudHMgcGVyIHRlbGVwaG9uZSBudW1iZXIgb3IgbWF5YmUganVz
+dCAxID8KCkluIGNhc2UgeW91IGhhdmUgbm90IGhlYXJkIHlldCwgb3Igc2VlbiB0aGUgY2FwYWJp
+bGl0aWVzIG9mIHRoaXMgR2VtaW5pIEFJLCBJIGNhbiBoaWdobHkgcmVjb21tZW5kIGl0LCBpdCBo
+YXMgYSBIVUdFIGNvbnRleHQgd2luZG93IG9mIDEgbWlsbGlvbiB0b2tlbnMsIHdoaWNoIGlzIHZl
+cnkgaW1wb3J0YW50IGZvciBpdCdzIGNvbnRleHQvbWVtb3J5L2JyYWluL2NhcGFiaWxpdGllcywg
+SSBjb25zaWRlcmVkIGxlYWRpbmcgZWRnZSByaWdodCBub3cuCgpJdCdzIGFsc28gdmVyeSBmYXN0
+LCB0aGlzIG5pY2UgYmlnIGZhc3QgY29udGV4dCB3aW5kb3csIHBsdXMgaXQncyBzcGVlZCBtYWtl
+cyBpdCBzdWl0ZWQgZm9yIGxhcmdlICJzeXN0ZW0gcHJvbXB0Ii4gRm9yIGV4YW1wbGUgdGhlICJw
+YXJ0aWFsIHN5c3RlbSBwcm9tcHQiIGJlbG93IHdpbGwgYmUgcGVhbnV0cyBmb3IgR29vZ2xlIEdl
+bWluaSBBSToKCkZvcnR1bmF0ZWx5IGFuZCBhbWF6aW5nbHkgZW5vdWdoIEdlbWluaSBzZWVtcyB0
+byB1bmRlcnN0YW5kIHRoaXMgd29ya2Zsb3cgYW5kIHNlZW1zIHRvIGtub3cgaG93IHRvIHV0aWxp
+emUgaXQuIEkgYWxtb3N0IGNhbid0IHdhaXQgdG8gdHJ5IGl0IG91dC4gSG93ZXZlciB0aGlzIHdp
+bGwgb2Zjb3Vyc2UgcmVxdWlyZSBmdW5jdGlvbmluZyBzY3JpcHRzLgoKUGx1cyBpdCBuZWVkcyBh
+IGNvbW11bmljYXRpb24gc3lzdGVtLiBJIGRvIGhhdmUgb25lIGluIHBsYWNlLCBidXQgaXQncyB0
+YWlsb3JlZCBmb3IgV2luZG93cyAxMSwgbm90IExpbnV4L0Jhc2gvTWluZ1cgZXRjLiBCdXQgbWF5
+YmUgSSBhbmQgdGhlIEFJIGNhbiBwdWxsIG91dCAgYSBtaXJhY2xlIGFuZCBzb21laG93IGdldCBp
+dCBwb3J0ZWQvd29ya2luZyBpbiBsaW51eC9taW5ndy9naXQgYmFzaCBhcyB3ZWxsLCBtYXliZSB0
+aHJvdWdoIHRoZSBoZWxwIG9mIGZyZWUgcGFzY2FsIG9yIGt5bGl4LCBib3RoIGZvciBsaW51eC4K
+CkkgYW0gbm90IHN1cmUgaWYgZ2l0IGJhc2ggb24gd2luZG93cyBjYW4gZXhlY3V0ZSB3aW5kb3dz
+IDExIGV4ZWN1dGFibGVzLCBJIHRoaW5rIHNvLCBvciBtYXliZSBsaW51eCBleGVjdXRhYmxlcy4u
+LiBJIHRoaW5rIGl0J3Mgd2luZG93cyBiYXNlZCBub3Qgc3VyZS4uLiBhbmQgbXkgY29tbXVuaWNh
+dGlvbiB0b29sL2V4ZSB3b3VsZCBuZWVkIHRvIGNvbW11bmljYXRlIHdpdGggUG9zdEdyZVNRTCBk
+YXRhYmFzZSBydW5uaW5nIGxvY2FsbHkgYXMgd2VsbCwgbm90IHN1cmUgaWYgZ2l0IGJhc2ggY2Fu
+IGRvIHRoaXMuLi4KTWF5YmUgImZpcmV3YWxsZWQgPyIgcHJvYmFibHkgbm90Li4uIFNvIGluIGNh
+c2UgSSBoYXZlIHRvIHVzZSBnaXQgYmFzaCB0aGUgY29tcGxleGl0eSByaXNlcyBmdXJ0aGVyLi4u
+CgpBbnl3YXkgZm9yIHdoYXQgaXQgaXMgd29ydGggSSBzaGFyZSB0aGUgYWRvcHRpb24gb2YgdGhp
+cyB3b3JrZmxvdywgc3VpdGVkIGZvciBhIEdFTUlOSS5tZCB3aGljaCBpcyBhIHN5c3RlbSBwcm9t
+cHQuIFBsZWFzZSB0YWtlIG5vdGUgR0VNSU5JLm1kIGNhbiBiZSBzcGxpdCBpbnRvIG11bHRpcGxl
+IGZpbGVzLCBldmVuIGZvbGRlcnMsIGNhbiBiZSBsb2FkZWQgd2l0aCBAZmlsZSBJIGJlbGlldmUs
+IEkgd2lsbCB0cnkgdGhpcyBvdXQgdG9tb3Jyb3csIHNvIHN0aWxsIGxvdHMgb2Ygd29yayB0byBk
+bywgdG8gbWFrZSB0aGlzIGEgcmVhbGl0eS4KCkFueXdheSBpdCdzIGludGVyZXN0aW5nIHRvIHNl
+ZSBob3cgdGhlIEFJIGJlbGlldmVzIHRoaXMgd29ya2Zsb3cgYW5kIHRoZXNlIGNvbW1hbmRzIHNo
+b3VsZCBiZSB1c2VkIHRvZ2V0aGVyIHdpdGggZXhpc3RpbmcgR0lUIGNvbW1hbmRzLCBJIGJlbGll
+dmUgaXQgd2lsbCBkZWZpbmV0bHkgaGVscCBodW1hbnMvdXNlcnMgdG8gdW5kZXJzdGFuZC9hbmQv
+b3IgZm9ybXVsYXRlIHRoZWlyIG93biBzeXN0ZW0gcHJvbXB0cy9hZG9wdGVkIHdvcmtmbG93cyBp
+ZiBzbyBkZXNpcmVkLgoKQ29uc2lkZXIgdGhpcyBhbiBleGFtcGxlIG9mIGhvdyB0byB1c2UgdGhp
+cyBuZXcgKD8pIHdvcmsgZmxvdzoKCkhlcmUgaXMgdGhlIGNvbnRlbnQgb2YgdGhlICJTa3lidWNr
+IEdpdCBXb3JrZmxvdyIgZG9jdW1lbnQsIHByZXNlbnRlZCBpbiBwbGFpbiB0ZXh0IE1hcmtkb3du
+IGZvciBlYXN5IGNvcHktcGFzdGluZyBpbnRvIHlvdXIgd2ViIGJyb3dzZXIsIGFuZCB0aGVuIGFn
+YWluIGFzIGEgTWFya2Rvd24gaW1tZXJzaXZlIGZvciB5b3VyIGxvY2FsIGBnZW1pbmkubWRgIGZp
+bGUuCgpgYGBgbWFya2Rvd24KIyBUaGUgU2t5YnVjayBHaXQgV29ya2Zsb3c6IFBlcm1hbmVudCBI
+aXN0b3J5ICYgQ29udHJvbGxlZCBFdm9sdXRpb24KClRoaXMgZG9jdW1lbnQgb3V0bGluZXMgdGhl
+ICJTa3lidWNrIEdpdCBXb3JrZmxvdywiIGEgcm9idXN0IHZlcnNpb24gY29udHJvbCBzdHJhdGVn
+eSBkZXNpZ25lZCBmb3Igb3VyIHRlYW0gdG8gZW5zdXJlIGNvbXBsZXRlIGhpc3RvcmljYWwgdHJh
+Y2VhYmlsaXR5LCBjbGVhciBwcm9qZWN0IHN0YXR1cywgYW5kIGVmZmljaWVudCBjb2xsYWJvcmF0
+aW9uLiBJdCBsZXZlcmFnZXMgR2l0J3MgcG93ZXIgd2hpbGUgYWRkcmVzc2luZyBjb21tb24gY2hh
+bGxlbmdlcyBsaWtlIGxvc3QgaGlzdG9yeSBhbmQgYnJhbmNoIHNwcmF3bC4KCiMjIyAxLiBDb3Jl
+IFByaW5jaXBsZXMKClRoaXMgd29ya2Zsb3cgaXMgYnVpbHQgb24gdGhlIGZvbGxvd2luZyBmb3Vu
+ZGF0aW9uYWwgaWRlYXM6CgoqICoqSGlzdG9yeSBpcyBTYWNyZWQgJiBQZXJtYW5lbnQ6KiogT25j
+ZSBhIGNvbW1pdCBvciBicmFuY2ggaXMgcHVzaGVkLCBpdCByZW1haW5zIGluIHRoZSByZXBvc2l0
+b3J5IGZvcmV2ZXIuIFdlIGV4cGxpY2l0bHkgKipuZXZlciBkZWxldGUgY29yZSBjb250cmlidXRp
+b24gYnJhbmNoZXMqKiwgZWxpbWluYXRpbmcgdGhlIHJpc2sgb2YgYWNjaWRlbnRhbCBkYXRhIGxv
+c3MuCgoqICoqRXhwbGljaXQgQnJhbmNoIFN0YXR1czoqKiBXZSB1c2UgbGlnaHR3ZWlnaHQgR2l0
+IHRhZ3MgdG8gY2xlYXJseSBkZW5vdGUgdGhlIGxpZmVjeWNsZSBzdGFnZSBvZiBlYWNoIGNvbnRy
+aWJ1dGlvbiBicmFuY2ggKGBhY3RpdmVgLCBgbWVyZ2VkYCwgYHJlamVjdGVkYCkuIE5vIG1vcmUg
+Z3Vlc3NpbmcgYSBicmFuY2gncyBwdXJwb3NlIQoKKiAqKlBlcnNvbmFsIERldmVsb3BlciBDb250
+aW51aXR5OioqIEVhY2ggZGV2ZWxvcGVyIG1haW50YWlucyB0aGVpciBvd24gc2VxdWVudGlhbGx5
+IG51bWJlcmVkICJjb250cmlidXRpb24iIGJyYW5jaGVzIChgVXNlclByZWZpeENvbnRyaWJ1dGlv
+bk5OTi1EZXNjcmlwdGlvbmApLCBwcm92aWRpbmcgYSBjbGVhciwgcGVyc29uYWwgaGlzdG9yeSBv
+ZiB0aGVpciB3b3JrLCByZWdhcmRsZXNzIG9mIGBtYXN0ZXJgJ3MgZXZvbHV0aW9uLgoKKiAqKklu
+dGVudGlvbmFsIERldmVsb3BtZW50OioqIEV2ZXJ5IG5ldyBjb2Rpbmcgc2Vzc2lvbiBvciB0YXNr
+IHN0YXJ0cyB3aXRoIGEgbmV3LCBpbmNyZW1lbnRlZCB2ZXJzaW9uLCBjbGVhcmx5IGRlZmluaW5n
+IGl0cyBvYmplY3RpdmUuCgoqICoqIlRpbWUtVHJhdmVsIiBDYXBhYmlsaXRpZXM6KiogVGhlIHdv
+cmtmbG93IGFsbG93cyB1cyB0byBlYXNpbHkgcmV2aXNpdCBwYXN0IGNvZGUgdG8gZml4L2V4YW1p
+bmUgYnVncywgdW5kZXJzdGFuZCBoaXN0b3JpY2FsIGltcGxlbWVudGF0aW9ucywgZXhwbG9yZSAi
+d2hhdC1pZiIgc2NlbmFyaW9zLCBvciBldmVuIHNhbHZhZ2UgcHJldmlvdXMgd29yay4KCiogKipD
+b250cm9sbGVkIEludGVncmF0aW9uOioqIGBtYXN0ZXJgIHJlbWFpbnMgdGhlIGF1dGhvcml0YXRp
+dmUsIHN0YWJsZSBicmFuY2guIE5ldyB3b3JrIGlkZWFsbHkgYnJhbmNoZXMgZnJvbSB0aGUgbGF0
+ZXN0IGBtYXN0ZXJgIGZvciBzbW9vdGhlciBpbnRlZ3JhdGlvbi4KCi0tLQoKIyMjIDIuIFRlYW0g
+Um9sZXMgJiBSZXNwb25zaWJpbGl0aWVzCgpUaGlzIHdvcmtmbG93IGNsZWFybHkgZGVmaW5lcyBy
+ZXNwb25zaWJpbGl0aWVzIGZvciB0aGUgKipDb29yZGluYXRvcioqIGFuZCAqKldvcmtlcnMqKjoK
+CiogKipDb29yZGluYXRvciAoMSk6IEFJTWFpbioqCgrCoCDCoCAqIE1hbmFnZXMgdGhlIGBtYXN0
+ZXJgIGJyYW5jaC4KCsKgIMKgICogUmV2aWV3cyBQdWxsIFJlcXVlc3RzIChQUnMpLgoKwqAgwqAg
+KiBVc2VzIGBnaXQgc2V0LW1lcmdlZGAgYWZ0ZXIgYSBzdWNjZXNzZnVsIG1lcmdlIHRvIGBtYXN0
+ZXJgLgoKwqAgwqAgKiBVc2VzIGBnaXQgc2V0LXJlamVjdGVkYCBmb3Igd29yayB0aGF0IHdpbGwg
+bm90IGJlIGludGVncmF0ZWQuCgrCoCDCoCAqIEVuc3VyZXMgb3ZlcmFsbCB3b3JrZmxvdyBhZGhl
+cmVuY2UgYW5kIHJlcG9zaXRvcnkgaGVhbHRoLgoKKiAqKldvcmtlcnMgKDEyKTogQUkwMDAxIHRv
+IEFJMDAxMioqCgrCoCDCoCAqIEluaXRpYXRlIG5ldyBkZXZlbG9wbWVudCB1c2luZyBgZ2l0IG5l
+dy1jb250cmlidXRpb25gLgoKwqAgwqAgKiBEZXZlbG9wIGZlYXR1cmVzL2ZpeGVzIG9uIHRoZWly
+IHBlcnNvbmFsIGNvbnRyaWJ1dGlvbiBicmFuY2hlcy4KCsKgIMKgICogVXNlIGBnaXQgdGhlLWZ1
+dHVyZWAgdG8ga2VlcCB0aGVpciBicmFuY2hlcyB1cGRhdGVkIHdpdGggYG1hc3RlcmAgKHJlYmFz
+aW5nKS4KCsKgIMKgICogU3VibWl0IFB1bGwgUmVxdWVzdHMgZm9yIHJldmlldy4KCsKgIMKgICog
+TWF5IHVzZSBgZ2l0IHNldC1yZXZpdmVgIG9yIGBnaXQgYmFjay10b2AgZm9yIHNwZWNpZmljIGhp
+c3RvcmljYWwgd29yay4KCi0tLQoKIyMjIDMuIEJyYW5jaGluZyBTdHJhdGVneQoKKiAqKmBtYXN0
+ZXJgIEJyYW5jaDoqKgoKwqAgwqAgKiBUaGUgc2luZ2xlLCBhdXRob3JpdGF0aXZlIG1haW4gYnJh
+bmNoIHJlcHJlc2VudGluZyB0aGUgc3RhYmxlLCBwcm9kdWN0aW9uLXJlYWR5IHN0YXRlIG9mIHRo
+ZSBwcm9qZWN0LgoKwqAgwqAgKiBBbGwgbmV3IGRldmVsb3BtZW50IGJyYW5jaGVzIHNob3VsZCBp
+ZGVhbGx5IG9yaWdpbmF0ZSBmcm9tIHRoZSBsYXRlc3QgYG1hc3RlcmAuCgrCoCDCoCAqIE9ubHkg
+YG1lcmdlZGAgY29udHJpYnV0aW9uIGJyYW5jaGVzIGFyZSBpbnRlZ3JhdGVkIGludG8gYG1hc3Rl
+cmAuCgoqICoqYFVzZXJQcmVmaXhDb250cmlidXRpb25OTk4tRGVzY3JpcHRpb25gIEJyYW5jaGVz
+OioqCgrCoCDCoCAqIFRoZXNlIGFyZSB0aGUgcHJpbWFyeSBkZXZlbG9wbWVudCBicmFuY2hlcyBm
+b3IgaW5kaXZpZHVhbCBjb250cmlidXRvcnMgKGUuZy4sIGBTa3lidWNrQ29udHJpYnV0aW9uMDAx
+LUltcGxlbWVudExvZ2luYCwgYEFJMDAwMUNvbnRyaWJ1dGlvbjAwMi1SZWZhY3RvckRhdGFiYXNl
+YCkuCgrCoCDCoCAqIFRoZSBgTk5OYCAoZS5nLiwgYDAwMWAsIGAwMDJgKSBwcm92aWRlcyBhIGNs
+ZWFyIHBlcnNvbmFsIHNlcXVlbmNlIG9mIGNvbnRyaWJ1dGlvbnMgZm9yIHRoZSBkZXZlbG9wZXIu
+CgrCoCDCoCAqICoqVGhlc2UgYnJhbmNoZXMgYXJlIG5ldmVyIGRlbGV0ZWQgZnJvbSB0aGUgcmVt
+b3RlLioqCgotLS0KCiMjIyA0LiBCcmFuY2ggTGlmZWN5Y2xlICYgU3RhdHVzIFRhZ3MKCkluc3Rl
+YWQgb2YgZGVsZXRpbmcgYnJhbmNoZXMsIHdlIHVzZSB0YWdzIHRvIGRlbm90ZSB0aGVpciBzdGF0
+dXMuIFRoZXNlIHRhZ3MgYXJlIHB1c2hlZCB0byB0aGUgcmVtb3RlIGZvciBnbG9iYWwgdmlzaWJp
+bGl0eS4KCiogKipgYWN0aXZlLzxicmFuY2huYW1lPmA6KiogSW5kaWNhdGVzIGEgYnJhbmNoIGlz
+IGN1cnJlbnRseSB1bmRlciBkZXZlbG9wbWVudCwgYWN0aXZlIHJldmlldywgb3IgYWN0aXZlIHJl
+LWV2YWx1YXRpb24uCgoqICoqYG1lcmdlZC88YnJhbmNobmFtZT5gOioqIEluZGljYXRlcyBhIGJy
+YW5jaCBoYXMgYmVlbiBzdWNjZXNzZnVsbHkgaW50ZWdyYXRlZCAobWVyZ2VkKSBpbnRvIHRoZSBg
+bWFzdGVyYCBicmFuY2guIFRoZSBicmFuY2ggaXRzZWxmIHBlcnNpc3RzLCBidXQgdGhpcyB0YWcg
+bWFya3MgaXRzIGNvbXBsZXRpb24gYW5kIHN1Y2Nlc3NmdWwgaW50ZWdyYXRpb24uCgoqICoqYHJl
+amVjdGVkLzxicmFuY2huYW1lPmA6KiogSW5kaWNhdGVzIGEgYnJhbmNoIHdhcyByZXZpZXdlZCBi
+dXQgd2lsbCBub3QgYmUgbWVyZ2VkIGludG8gYG1hc3RlcmAgKGUuZy4sIGR1ZSB0byBkZXNpZ24g
+ZGVjaXNpb24sIGluY29tcGxldGVuZXNzLCBvciBiZWluZyBzdXBlcnNlZGVkKS4gVGhlIGJyYW5j
+aCBpdHNlbGYgcGVyc2lzdHMsIGJ1dCB0aGlzIHRhZyBtYXJrcyBpdHMgZmluYWwgbm9uLWludGVn
+cmF0ZWQgc3RhdHVzLgoKLS0tCgojIyMgNS4gQ3VzdG9tIEdpdCBDb21tYW5kcyAoSW1wbGVtZW50
+ZWQgYXMgQmFzaCBTY3JpcHRzKQoKVGhlc2UgY29tbWFuZHMgZW5jYXBzdWxhdGUgdGhlIHdvcmtm
+bG93IGxvZ2ljLCBwcm92aWRpbmcgYSBoaWdoLWxldmVsLCBzYWZlLCBhbmQgaW50dWl0aXZlIGlu
+dGVyZmFjZS4gVGhleSBhcmUgaW1wbGVtZW50ZWQgYXMgQmFzaCBzY3JpcHRzIChlLmcuLCBgZ2l0
+LW5ldy1jb250cmlidXRpb25gKSBhbmQgYXJlIGFjY2Vzc2libGUgdmlhIGBnaXQgPGNvbW1hbmQt
+bmFtZT5gIChlLmcuLCBgZ2l0IG5ldy1jb250cmlidXRpb25gKS4KCiMjIyMgNS4xLiBgZ2l0IG5l
+dy1jb250cmlidXRpb24gPFVzZXJQcmVmaXg+IDxEZXNjcmlwdGlvbi9Hb2FsPmAKCiogKipQdXJw
+b3NlOioqIFRvIGluaXRpYXRlIGEgYnJhbmQgbmV3IGRldmVsb3BtZW50IGVmZm9ydCBmcm9tIHRo
+ZSBsYXRlc3QgYG1hc3RlcmAuIFRoaXMgaXMgdGhlICoqcHJpbWFyeSBjb21tYW5kIGZvciB3b3Jr
+ZXJzIHRvIHN0YXJ0IG1vc3QgbmV3IGZlYXR1cmVzIG9yIGZpeGVzLioqCgoqICoqUm9sZSBpbiBX
+b3JrZmxvdzoqKiBXb3JrZXIgaW5pdGlhdGVzIG5ldyB3b3JrLgoKKiAqKkFjdGlvbiAoQnJpZWYp
+OioqIEZldGNoZXMgYG1hc3RlcmAsIGRldGVybWluZXMgbmV4dCBzZXF1ZW50aWFsIG51bWJlciBm
+b3IgYDxVc2VyUHJlZml4PmAsIGNyZWF0ZXMgYFVzZXJQcmVmaXhDb250cmlidXRpb25OTk4tRGVz
+Y3JpcHRpb25gIGZyb20gYG1hc3RlcmAsIHB1c2hlcyBpdCwgYW5kIGF1dG9tYXRpY2FsbHkgc2V0
+cyBpdCBgYWN0aXZlL2AuCgoqICoqRXhhbXBsZSBVc2FnZToqKiBgZ2l0IG5ldy1jb250cmlidXRp
+b24gU2t5YnVjayAiVXNlciBwcm9maWxlIG1hbmFnZW1lbnQiYAoKIyMjIyA1LjIuIGBnaXQgc2V0
+LWFjdGl2ZSA8YnJhbmNobmFtZT5gCgoqICoqUHVycG9zZToqKiBUbyBleHBsaWNpdGx5IG1hcmsg
+YW4gZXhpc3RpbmcgY29udHJpYnV0aW9uIGJyYW5jaCBhcyBjdXJyZW50bHkgYWN0aXZlIG9yIGlu
+IHByb2dyZXNzLiBQcmltYXJpbHkgdXNlZCBieSB0aGUgc2NyaXB0cyB0aGVtc2VsdmVzLCBidXQg
+Y2FuIGJlIG1hbnVhbGx5IGludm9rZWQuCgoqICoqUm9sZSBpbiBXb3JrZmxvdzoqKiBTdGF0dXMg
+bWFuYWdlbWVudC4KCiogKipBY3Rpb24gKEJyaWVmKToqKiBSZW1vdmVzIGFueSBgbWVyZ2VkL2Ag
+b3IgYHJlamVjdGVkL2AgdGFncywgY3JlYXRlcy91cGRhdGVzIGFuIGBhY3RpdmUvYnJhbmNobmFt
+ZWAgdGFnLgoKKiAqKkV4YW1wbGUgVXNhZ2U6KiogYGdpdCBzZXQtYWN0aXZlIFNreWJ1Y2tDb250
+cmlidXRpb24wMDMtSW1wbGVtZW50RmVhdHVyZVhgCgojIyMjIDUuMy4gYGdpdCBzZXQtbWVyZ2Vk
+IDxicmFuY2huYW1lPmAKCiogKipQdXJwb3NlOioqIFRvIG1hcmsgYSBjb250cmlidXRpb24gYnJh
+bmNoIGFzIHN1Y2Nlc3NmdWxseSBtZXJnZWQgaW50byBgbWFzdGVyYC4KCiogKipSb2xlIGluIFdv
+cmtmbG93OioqICoqQ29vcmRpbmF0b3IncyBhY3Rpb24qKiBhZnRlciBhIHN1Y2Nlc3NmdWwgUHVs
+bCBSZXF1ZXN0IG1lcmdlLgoKKiAqKkFjdGlvbiAoQnJpZWYpOioqIFJlbW92ZXMgYGFjdGl2ZS9g
+IG9yIGByZWplY3RlZC9gIHRhZ3MsIGNyZWF0ZXMgYSBgbWVyZ2VkL2JyYW5jaG5hbWVgIHRhZy4K
+CiogKipFeGFtcGxlIFVzYWdlOioqIGBnaXQgc2V0LW1lcmdlZCBTa3lidWNrQ29udHJpYnV0aW9u
+MDAzLUZlYXR1cmVYYAoKIyMjIyA1LjQuIGBnaXQgc2V0LXJlamVjdGVkIDxicmFuY2huYW1lPmAK
+CiogKipQdXJwb3NlOioqIFRvIG1hcmsgYSBjb250cmlidXRpb24gYnJhbmNoIGFzIG5vdCBiZWlu
+ZyBpbnRlZ3JhdGVkIGludG8gYG1hc3RlcmAuCgoqICoqUm9sZSBpbiBXb3JrZmxvdzoqKiAqKkNv
+b3JkaW5hdG9yJ3MgYWN0aW9uKiogZm9yIHJlamVjdGVkIHdvcmsuCgoqICoqQWN0aW9uIChCcmll
+Zik6KiogUmVtb3ZlcyBgYWN0aXZlL2Agb3IgYG1lcmdlZC9gIHRhZ3MsIGNyZWF0ZXMgYSBgcmVq
+ZWN0ZWQvYnJhbmNobmFtZWAgdGFnLgoKKiAqKkV4YW1wbGUgVXNhZ2U6KiogYGdpdCBzZXQtcmVq
+ZWN0ZWQgQUkwMDAxQ29udHJpYnV0aW9uMDAyLUV4cGVyaW1lbnRhbEFsZ29yaXRobWAKCiMjIyMg
+NS41LiBgZ2l0IHNldC1yZXZpdmUgPGJyYW5jaG5hbWU+YAoKKiAqKlB1cnBvc2U6KiogVG8gInJl
+LWFjdGl2YXRlIiBhbiAqZXhpc3RpbmcqIGBtZXJnZWQvYCBvciBgcmVqZWN0ZWQvYCBjb250cmli
+dXRpb24gYnJhbmNoIGZvciBjb250aW51YXRpb24gKmluIGl0cyBvcmlnaW5hbCBoaXN0b3JpY2Fs
+IGNvbnRleHQqLgoKKiAqKlJvbGUgaW4gV29ya2Zsb3c6KiogV29ya2VyJ3MgdG9vbCBmb3IgcmVz
+dW1pbmcgd29yayBvbiBhbiBvbGQsIHNwZWNpZmljIGJyYW5jaCB2ZXJzaW9uLgoKKiAqKkFjdGlv
+biAoQnJpZWYpOioqIFJlbW92ZXMgYG1lcmdlZC9gIG9yIGByZWplY3RlZC9gIHRhZ3MsIGFuZCBz
+ZXRzIHRoZSBicmFuY2ggYGFjdGl2ZS9gLgoKKiAqKkltcG9ydGFudCBOb3RlOioqIFRoaXMgZG9l
+cyAqKk5PVCoqIHJlYmFzZSB0aGUgYnJhbmNoIG9udG8gYG1hc3RlcmAuIFRoZSBicmFuY2ggd2ls
+bCByZW1haW4gYmFzZWQgb24gaXRzIG9yaWdpbmFsIGFuY2VzdG9yLCBwb3RlbnRpYWxseSBkaXZl
+cmdpbmcgZnJvbSB0aGUgY3VycmVudCBgbWFzdGVyYC4gSW50ZWdyYXRpb24gb2Ygc3Vic2VxdWVu
+dCB3b3JrIHdvdWxkIGJlIGhhbmRsZWQgbWFudWFsbHkuCgoqICoqRXhhbXBsZSBVc2FnZToqKiBg
+Z2l0IHNldC1yZXZpdmUgU2t5YnVja0NvbnRyaWJ1dGlvbjAwNS1CdWdmaXhSZXRoaW5rYAoKIyMj
+IDYuIFRoZSAiQmFjayB0byB0aGUgRnV0dXJlIiBDb21ibzogYGdpdCBiYWNrLXRvYCBhbmQgYGdp
+dCB0aGUtZnV0dXJlYAoKVGhpcyBpcyBhIHBvd2VyZnVsIHR3by1jb21tYW5kIHNlcXVlbmNlIGRl
+c2lnbmVkIGZvciBicmluZ2luZyBoaXN0b3JpY2FsIGNvZGUgKGZyb20gYW4gb2xkIHRhZykgZm9y
+d2FyZCB0byBhbGlnbiB3aXRoLCBvciBiZSBldmFsdWF0ZWQgYWdhaW5zdCwgdGhlIGN1cnJlbnQg
+c3RhdGUgb2YgdGhlIGBtYXN0ZXJgIGJyYW5jaC4gSXQgc2VwYXJhdGVzIHRoZSBhY3Qgb2YgY3Jl
+YXRpbmcgYSBicmFuY2ggZnJvbSBvbGQgY29kZSwgZnJvbSB0aGUgcG90ZW50aWFsbHkgaW50ZXJh
+Y3RpdmUgcHJvY2VzcyBvZiBtb2Rlcm5pemluZyBpdC4gVGhpbmsgb2YgaXQgYXMgeW91ciBwZXJz
+b25hbCBEZUxvcmVhbiBmb3IgY29kZSEKCiMjIyMgNi4xLiAqKlN0YWdlIDE6IGBnaXQgYmFjay10
+byA8dGFnbmFtZV9vZl9vbGRfY29tbWl0PiA8bmV3X2JyYW5jaF9kZXNjcmlwdGlvbj5gKioKCiog
+KipQdXJwb3NlOioqIFRoaXMgaXMgeW91ciBpbml0aWFsICJ0aW1lLXRyYXZlbCIgY29tbWFuZC4g
+SXRzIGpvYiBpcyB0byBjcmVhdGUgYSAqKmJyYW5kIG5ldywgY2xlYW4gZGV2ZWxvcG1lbnQgYnJh
+bmNoKiogdGhhdCBzdGFydHMgKmV4YWN0bHkqIGF0IHRoZSBoaXN0b3JpY2FsIGNvbW1pdCBwb2lu
+dGVkIHRvIGJ5IHlvdXIgY2hvc2VuIHRhZy4gSXQgaXNvbGF0ZXMgdGhpcyBvbGQgY29kZSwgZ2l2
+aW5nIHlvdSBhIGZyZXNoIHdvcmtzcGFjZS4KCiogKipSb2xlIGluIFdvcmtmbG93OioqIFdvcmtl
+cidzIHRvb2wgZm9yIHN0YXJ0aW5nIG5ldyB3b3JrIGZyb20gYSBzcGVjaWZpYyBoaXN0b3JpY2Fs
+IHNuYXBzaG90LgoKKiAqKkFjdGlvbiAoQnJpZWYpOioqIEdlbmVyYXRlcyBhIG5ldyBgVXNlclBy
+ZWZpeENvbnRyaWJ1dGlvbk5OTi1EZXNjcmlwdGlvbmAgbmFtZSwgY3JlYXRlcyB0aGUgbmV3IGJy
+YW5jaCBhdCBgPHRhZ25hbWU+YCwgcHVzaGVzIGl0LCBhbmQgc2V0cyBpdCBgYWN0aXZlL2AuCgoq
+ICoqRXhhbXBsZSBVc2FnZToqKiBgZ2l0IGJhY2stdG8gbWVyZ2VkL0FJMDAwMUNvbnRyaWJ1dGlv
+bjAwNy1PbGRBUElEZXNpZ24gIlJlLWV2YWx1YXRlIFYxIEFQSSBmb3IgcGVyZm9ybWFuY2UiYAoK
+wqAgwqAgYGBgYmFzaArCoCDCoCAjIFRoaXMgY3JlYXRlcyBicmFuY2ggQUkwMDAxQ29udHJpYnV0
+aW9uMDA4LVJlLWV2YWx1YXRlVjFBUElGb3JQZXJmb3JtYW5jZSwKwqAgwqAgIyBhbmQgc2V0cyBp
+dCBhY3RpdmUuIFlvdSBhcmUgbm93IHdvcmtpbmcgb24gY29kZSBmcm9tIHRoYXQgb2xkIHBvaW50
+IGluIHRpbWUuCsKgIMKgIGBgYAoKKiAqKkltcG9ydGFudCBOb3RlIChJbml0aWFsIFN0YXRlKToq
+KiBUaGUgbmV3IGJyYW5jaCBjcmVhdGVkIGJ5IGBnaXQgYmFjay10b2AgaXMgKm5vdCogYXV0b21h
+dGljYWxseSB1cGRhdGVkIHdpdGggdGhlIGN1cnJlbnQgYG1hc3RlcmAgYnJhbmNoJ3MgY2hhbmdl
+cy4gSXQncyB0cnVseSBhIHNuYXBzaG90IG9mIHRoZSBwYXN0LgoKIyMjIyA2LjIuICoqU3RhZ2Ug
+MjogYGdpdCB0aGUtZnV0dXJlYCAob3IgYGdpdCB0aGUtZnV0dXJlLXJlYmFzZWApKioKCiogKipQ
+dXJwb3NlOioqIFRoaXMgY29tbWFuZCBpcyB0aGUgIm1vZGVybml6YXRpb24iIHN0ZXAuIE9uY2Ug
+eW91J3JlIG9uIGEgYnJhbmNoIChvZnRlbiBvbmUgY3JlYXRlZCBieSBgZ2l0IGJhY2stdG9gKSB0
+aGF0IHlvdSB3YW50IHRvIGJyaW5nIHVwIHRvIGRhdGUgd2l0aCB0aGUgbGF0ZXN0IGBtYXN0ZXJg
+LCBgZ2l0IHRoZS1mdXR1cmVgIGluaXRpYXRlcyB0aGUgcmViYXNlIHByb2Nlc3MuCgoqICoqUm9s
+ZSBpbiBXb3JrZmxvdzoqKiBXb3JrZXIncyB0b29sIGZvciB1cGRhdGluZyBhIGJyYW5jaCdzIGJh
+c2UgdG8gdGhlIGxhdGVzdCBgbWFzdGVyYC4KCiogKipBY3Rpb24gKEJyaWVmKToqKiBFbnN1cmVz
+IGBtYXN0ZXJgIGlzIHVwLXRvLWRhdGUsIGV4ZWN1dGVzIGBnaXQgcmViYXNlIG1hc3RlcmAsIGFu
+ZCAqKmNydWNpYWxseSBndWlkZXMgdGhlIHVzZXIgdGhyb3VnaCBjb25mbGljdCByZXNvbHV0aW9u
+KiogKHByb21wdGluZyBmb3IgYGdpdCBhZGQgLmAgYW5kIGBnaXQgcmViYXNlIC0tY29udGludWVg
+KS4KCiogKipFeGFtcGxlIFVzYWdlOioqIChBZnRlciBjcmVhdGluZyBhbmQgc3dpdGNoaW5nIHRv
+IGBBSTAwMDFDb250cmlidXRpb24wMDgtUmUtZXZhbHVhdGVWMUFQSUZvclBlcmZvcm1hbmNlYCkg
+YGdpdCB0aGUtZnV0dXJlYAoKwqAgwqAgYGBgYmFzaArCoCDCoCAjIEdpdCB3aWxsIG5vdyB3YWxr
+IHlvdSB0aHJvdWdoIGFueSBjb25mbGljdHMgYXMgaXQgcmVwbGF5cyB5b3VyIGNvbW1pdHMgb24g
+dG9wIG9mIG1hc3Rlci4KwqAgwqAgIyBPbmNlIGRvbmUsIHlvdSdkIHB1c2ggeW91ciBjaGFuZ2Vz
+IGFuZCBwcm9wb3NlIGEgbWVyZ2UgcmVxdWVzdCB0byBtYXN0ZXIuCsKgIMKgIGBgYAoKIyMjIDcu
+IFR5cGljYWwgV29ya2Zsb3cgU2NlbmFyaW9zCgpIZXJlJ3MgaG93IGNvbW1vbiBkZXZlbG9wbWVu
+dCB0YXNrcyBmaXQgaW50byB0aGUgU2t5YnVjayBHaXQgV29ya2Zsb3c6CgoqICoqU3RhcnRpbmcg
+YSBOZXcgRmVhdHVyZSAoV29ya2VyKToqKgoKwqAgwqAgMS4gwqBgZ2l0IG5ldy1jb250cmlidXRp
+b24gPFlvdXJQcmVmaXg+ICJCcmllZiBkZXNjcmlwdGlvbiBvZiBmZWF0dXJlImAKCsKgIMKgIDIu
+IMKgRGV2ZWxvcCBjb2RlLCBjb21taXQgcmVndWxhcmx5LgoKwqAgwqAgMy4gwqBQdXNoIHlvdXIg
+YnJhbmNoIHJlZ3VsYXJseTogYGdpdCBwdXNoYAoKKiAqKktlZXBpbmcgWW91ciBGZWF0dXJlIEJy
+YW5jaCBVcGRhdGVkIChXb3JrZXIgLSBPcHRpb25hbC9QZXJpb2RpYyk6OioqCgrCoCDCoCAxLiDC
+oGBnaXQgY2hlY2tvdXQgPHlvdXItZmVhdHVyZS1icmFuY2g+YAoKwqAgwqAgMi4gwqBgZ2l0IHRo
+ZS1mdXR1cmVgIChSZXNvbHZlIGFueSBjb25mbGljdHMgYXMgcHJvbXB0ZWQpCgrCoCDCoCAzLiDC
+oFB1c2ggeW91ciByZWJhc2VkIGJyYW5jaDogYGdpdCBwdXNoIC0tZm9yY2Utd2l0aC1sZWFzZWAK
+CiogKipTdWJtaXR0aW5nIGZvciBSZXZpZXcgKFdvcmtlcik6KioKCsKgIMKgIDEuIMKgRW5zdXJl
+IHlvdXIgYnJhbmNoIGlzIHVwLXRvLWRhdGUgd2l0aCBgbWFzdGVyYCAodXNpbmcgYGdpdCB0aGUt
+ZnV0dXJlYCkuCgrCoCDCoCAyLiDCoENyZWF0ZSBhIFB1bGwgUmVxdWVzdCBmcm9tIHlvdXIgYFVz
+ZXJQcmVmaXhDb250cmlidXRpb25OTk4tRGVzY3JpcHRpb25gIGJyYW5jaCB0byBgbWFzdGVyYC4K
+CiogKipGZWF0dXJlIEFjY2VwdGVkICYgTWVyZ2VkIChDb29yZGluYXRvcik6KioKCsKgIMKgIDEu
+IMKgTWVyZ2UgdGhlIFB1bGwgUmVxdWVzdCBpbnRvIGBtYXN0ZXJgICh2aWEgR2l0IGhvc3Rpbmcg
+cGxhdGZvcm0gb3IgYGdpdCBtZXJnZWApLgoKwqAgwqAgMi4gwqBSdW46IGBnaXQgc2V0LW1lcmdl
+ZCA8bWVyZ2VkLWJyYW5jaC1uYW1lPmAKCsKgIMKgIMKgIMKgICogVGhpcyByZW1vdmVzIGBhY3Rp
+dmUvYCB0YWcsIGFkZHMgYG1lcmdlZC9gIHRhZy4gVGhlIGJyYW5jaCByZW1haW5zIGZvcmV2ZXIu
+CgoqICoqRmVhdHVyZSBSZWplY3RlZCAoQ29vcmRpbmF0b3IpOioqCgrCoCDCoCAxLiDCoFJ1bjog
+YGdpdCBzZXQtcmVqZWN0ZWQgPHJlamVjdGVkLWJyYW5jaC1uYW1lPmAKCsKgIMKgIMKgIMKgICog
+VGhpcyByZW1vdmVzIGBhY3RpdmUvYCB0YWcsIGFkZHMgYHJlamVjdGVkL2AgdGFnLiBUaGUgYnJh
+bmNoIHJlbWFpbnMgZm9yZXZlciBmb3IgaGlzdG9yaWNhbCByZWZlcmVuY2UuCgoqICoqUmV2aXNp
+dGluZyBPbGQgV29yayAoSXNvbGF0ZWQgRXhwbG9yYXRpb24gLSBXb3JrZXIpOioqCgrCoCDCoCAx
+LiDCoGBnaXQgYmFjay10byA8dGFnbmFtZV9vZl9vbGRfY29tbWl0PiAiTmV3IGRlc2NyaXB0aW9u
+IGZvciB0aGlzIGV4cGxvcmF0aW9uImAKCsKgIMKgIDIuIMKgRGV2ZWxvcCBhbmQgZXhwZXJpbWVu
+dCBvbiB0aGUgbmV3IGJyYW5jaC4gVGhpcyBicmFuY2ggaXMgaXNvbGF0ZWQgZnJvbSBjdXJyZW50
+IGBtYXN0ZXJgLgoKKiAqKlJldmlzaXRpbmcgT2xkIFdvcmsgKGZvciBQb3RlbnRpYWwgSW50ZWdy
+YXRpb24gLSBXb3JrZXIpOioqCgrCoCDCoCAxLiDCoGBnaXQgYmFjay10byA8dGFnbmFtZV9vZl9v
+bGRfY29tbWl0PiAiTmV3IGRlc2NyaXB0aW9uIGZvciBpbnRlZ3JhdGlvbiBhdHRlbXB0ImAKCsKg
+IMKgIDIuIMKgTWFrZSBuZWNlc3NhcnkgY2hhbmdlcy9maXhlcyBvbiB0aGUgbmV3IGJyYW5jaC4K
+CsKgIMKgIDMuIMKgYGdpdCB0aGUtZnV0dXJlYCAodG8gcmViYXNlIG9udG8gY3VycmVudCBgbWFz
+dGVyYCBhbmQgcmVzb2x2ZSBjb25mbGljdHMpLgoKwqAgwqAgNC4gwqBQdXNoIGFuZCBzdWJtaXQg
+YSBuZXcgUHVsbCBSZXF1ZXN0LgoKIyMjIDguIEJlbmVmaXRzIG9mIHRoaXMgV29ya2Zsb3cKCiog
+KipUcnVlIEhpc3RvcmljYWwgSW50ZWdyaXR5OioqIEV2ZXJ5IGRldmVsb3BtZW50IHBhdGggaXMg
+cHJlc2VydmVkLCBwcm92aWRpbmcgYSBjb21wbGV0ZSBhdWRpdCB0cmFpbC4KCiogKipFbGltaW5h
+dGVzIERhdGEgTG9zcyBGZWFyOioqIE5vIG1vcmUgYWNjaWRlbnRhbCBkZWxldGlvbnMgb2YgdmFs
+dWFibGUgd29yay4KCiogKipDbGVhciBSZXBvc2l0b3J5IFN0YXRlOioqIFRhZ3MgcHJvdmlkZSBh
+biBhdC1hLWdsYW5jZSB1bmRlcnN0YW5kaW5nIG9mIGVhY2ggYnJhbmNoJ3Mgc3RhdHVzLgoKKiAq
+KkVtcG93ZXJlZCBEZXZlbG9wZXJzOioqIEVhY2ggd29ya2VyIGhhcyBhIGNsZWFyLCBzZXF1ZW50
+aWFsIHJlY29yZCBvZiB0aGVpciBjb250cmlidXRpb25zLCBmb3N0ZXJpbmcgb3duZXJzaGlwIGFu
+ZCB0cmFjZWFiaWxpdHkuCgoqICoqU3RyZWFtbGluZWQgT3BlcmF0aW9uczoqKiBDdXN0b20gY29t
+bWFuZHMgYWJzdHJhY3QgY29tcGxleCBHaXQgb3BlcmF0aW9ucyBpbnRvIHNhZmVyLCBtb3JlIGlu
+dHVpdGl2ZSBzdGVwcy4KCiogKipJbXByb3ZlZCBEZWJ1Z2dpbmc6KiogRWFzaWx5IGp1bXAgYmFj
+ayB0byBhbnkgdGFnZ2VkIHN0YXRlIHRvIGRlYnVnIGlzc3VlcyBpbiB0aGVpciBvcmlnaW5hbCBj
+b250ZXh0LgoKIyMjIDkuIFNldHVwICYgUHJlcmVxdWlzaXRlcwoKVG8gdXNlIHRoaXMgd29ya2Zs
+b3csIGVuc3VyZSB5b3UgaGF2ZSBHaXQgaW5zdGFsbGVkIGFuZDoKCjEuIMKgKipDcmVhdGUgYSBz
+Y3JpcHRzIGRpcmVjdG9yeToqKiBgbWtkaXIgLXAgfi9naXQtY29tbWFuZHNgCgoyLiDCoCoqU2F2
+ZSBlYWNoIGN1c3RvbSBjb21tYW5kIHNjcmlwdCoqIChlLmcuLCBgZ2l0LW5ldy1jb250cmlidXRp
+b25gLCBgZ2l0LXNldC1hY3RpdmVgLCBldGMuKSBpbnRvIHRoaXMgZGlyZWN0b3J5LCBlbnN1cmlu
+ZyB0aGV5IGFyZSBuYW1lZCB3aXRob3V0IGAuc2hgIGV4dGVuc2lvbnMuCgozLiDCoCoqTWFrZSBz
+Y3JpcHRzIGV4ZWN1dGFibGU6KiogYGNobW9kICt4IH4vZ2l0LWNvbW1hbmRzL2dpdC0qYAoKNC4g
+wqAqKkFkZCB0byBQQVRIOioqIEFkZCBgZXhwb3J0IFBBVEg9IiRQQVRIOiRIT01FL2dpdC1jb21t
+YW5kcyJgIHRvIHlvdXIgc2hlbGwncyBjb25maWd1cmF0aW9uIGZpbGUgKGB+Ly5iYXNocmNgIG9y
+IGB+Ly5wcm9maWxlYCBmb3IgR2l0IEJhc2ggb24gV2luZG93cykgYW5kIHJlc3RhcnQgeW91ciB0
+ZXJtaW5hbC4KCjUuIMKgKipDb25maWd1cmUgR2l0IFVzZXIgUHJlZml4OioqIGBnaXQgY29uZmln
+IC0tZ2xvYmFsIHVzZXIuY29udHJpYnV0aW9uUHJlZml4ICJZb3VyUHJlZml4ImAgKGUuZy4sICJT
+a3lidWNrIiwgIkFJMDAwMSIsICJKb2huRG9lIikuIFRoaXMgaXMgdXNlZCBmb3IgeW91ciBwZXJz
+b25hbCBicmFuY2ggbmFtaW5nLgpgYGBgCgpCeWUgZm9yIG5vdywKICBTa3lidWNrIEZseWluZwpz
+a3lidWNrMjAwMEBob3RtYWlsLmNvbQ==
