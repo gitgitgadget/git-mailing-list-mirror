@@ -1,98 +1,121 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E27B1F61C
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 05:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36EEA1DEFDD
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 05:36:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753420393; cv=none; b=cmbVxVZQkAYGmhTKfGP6cg35k9xWA7bcVdGkDvF+YyhrANtYNgBCHvIHe/iXwkQNdnHvNsUtBJ8tLCYc3MKDrFu/oM2y4JiUvlzPjTYwpm7VI4m4J8jV5sqSuQSTY6KpKxEIO6BR/dBV+TanDNBlIgswW4GbvckiZ8vA/oWOa9g=
+	t=1753421782; cv=none; b=PUsB2ghHUWUKGgPVNA8cWtxspVRKkiSR34oLCilGtcDJgUsk+bnS8kYlR99yuxeyXJ9F+XmUlFQytQEIV3cB/xzxb3m3xPKTeJ4cmVHvBAfzfb5FINCVlSzLY4m9/INTYbl0EefORbOSQ4JT2pFkJjvVQPQEbCmGkgAhqi6is3k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753420393; c=relaxed/simple;
-	bh=FiHE/GN9yF2vczhvCcJcwuzZ3rKaVsFC4LqDoIcfpN8=;
+	s=arc-20240116; t=1753421782; c=relaxed/simple;
+	bh=VRPpG9OM7TT3poU3SvINzWozrVdnEj3yCLrpINBgrKI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mOLs/O0AOw81vtR5caCGaRuwvU4KeX6qPo/FJR0/LKQ47DLXtwjxV5ai+eE2ywv4H5nK0VfbFyC2WBcIe8Hg3dQ/HhERBtS9+pBFU4see1uXsnMdOr3hWrgGtV3APRnEcXCYOXIYoxbUhS2l7VP5C2FriBG8NqPDqGFQkzlqkXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gx/ai/DV; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=IqSURdpT7LSdodd/EBtjNPBYqjgjZu592G6OhIgE64pqWC1HARG7BAZ7E8oMRVwncKs9nKVyKhyc7OoJvCoaKFDnoVsruO0PB4xoU1TlQd8xhWg6trFylIQQJfrqrL0e7H/GZ9ElMBHGOZ7kvAzO/M6b+n2pcopubkj4WxAmhso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=W5KZvjiJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lLlqRHAS; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gx/ai/DV"
-Received: (qmail 23755 invoked by uid 109); 25 Jul 2025 05:13:10 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=FiHE/GN9yF2vczhvCcJcwuzZ3rKaVsFC4LqDoIcfpN8=; b=Gx/ai/DV3PNJckkPJIziBVu89hz7Rc0pOcjt481TkZSQzD5wT0rmkXxgNjsAEFvIXA+sADuiGAQk6h0aP7jeziAqGjiZRvLWzwnj2W4My1aj9Yu5NS5emdBICVMEGb/odNkqfJO0z3e6l3brD1S2f/eUlR3FhAOZrQVzx+L5f774j/XwoxZTc11K5VDPRZ1hC8INb5Q3tI6LL9nXjLBABaGqcbCi9t4wljndtyFMe3HQ6M4wBV7sudxeLlH1Loocdh13B3a91Jb1aFYELe7YCErX8tAc+XKJFeg9fpTSZE66rp+Qx8KgiPncXksNLJKqCN/uXcthN3pRm4CFI9nsZw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Jul 2025 05:13:10 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 15971 invoked by uid 111); 25 Jul 2025 05:13:14 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Jul 2025 01:13:14 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 25 Jul 2025 01:13:09 -0400
-From: Jeff King <peff@peff.net>
-To: Jonas =?utf-8?Q?Brandst=C3=B6tter?= <jonas.brandstoetter@gmx.at>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] t7510: add test cases for non-absolute gpg program
-Message-ID: <20250725051309.GA3003751@coredump.intra.peff.net>
-References: <20250711232348.460804-1-jonas.brandstoetter@gmx.at>
- <20250722190922.51183-3-jonas.brandstoetter@gmx.at>
- <20250725043043.GA3002998@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="W5KZvjiJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lLlqRHAS"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3673DEC0221;
+	Fri, 25 Jul 2025 01:36:19 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Fri, 25 Jul 2025 01:36:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753421779; x=1753508179; bh=T9wgZE950A
+	gCrguE3nO+0AEZs7+MK2gg9oCywKpNCd0=; b=W5KZvjiJXQZMwlb4vSmlPnb79T
+	CSyR6DxN8+TM0EoR3A1xhQnGbOZNIdQRInoNA7UsMSDW22FlkqrqkFkP9h9rmW6x
+	HcQ6jtbycm7bQlm6T4R6TgrBXlKz8AHj9VoXNro/zYsFlcZZH67qMeDUuadQmTgX
+	5eae8JgW/hXw7DJZajP9qgSzK+r41j2lI49n2v0onn4MTkaGDn1+ShNdWLUnAiB8
+	FWWGSKPU+jeycYA9Z2JCAshg2vXJNKrt3wHWPs9J+xO4HJJXX453Z79zHxfgOam4
+	X9TnnMiXo8kY2bvc5TnyDJc/qheFrvsFkJmloSVB2iErtM3eXp8RB9+QX/WQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753421779; x=1753508179; bh=T9wgZE950AgCrguE3nO+0AEZs7+MK2gg9oC
+	ywKpNCd0=; b=lLlqRHASqvIuKFw5PI3xJKx9RFuEOYkyPvw9Lze3egaB6i7JZiN
+	KnxCvOtyAE4AzVnUoM+AbJo0W6JatmAN7oUUsSalXY41OYKpEPypI0QPhqeryrOK
+	xd8tDWX4tBdViKor8AwGiz4alRpRjGW5mNnAruqR6/XGEvQh/dBAj2sFudUIDDPd
+	TixU/XSJ6h1PN2zeAmP07TDC4CSbXZv11chjqEDIsDqO2khRQGIcqcjcgeUrM5LG
+	uflekqhUS1t5pG2T6BIBAofX0WgDBWPSnDDKTmER+n7bGz5kZkvfzhY+8u6SVKhX
+	2Zq3CkGlKJh+At6BvMHXvMRhCa9U34LqSGg==
+X-ME-Sender: <xms:0heDaHmwu01r8T5f6Yyk2gXmiVoXH5imVeL-IJkEUQYqAcCB7JJS-Q>
+    <xme:0heDaOHhgIshlNPvcngeJEhk_fNT264UeJM80HK-LmweMJIFL3DGiSnTevr6_JNGF
+    AGmho1RIq9EyI3x0A>
+X-ME-Received: <xmr:0heDaHHWBnM9JX1a_NZD6IbCIePgYa2DmMhJbWPdRo-EwVCatElxNbvPsaiiQLIiQdMoi8__jG9hxa1iz-uZ95DA0UrAaWaip_o7-rrcxb5t>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekvdejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpeffhffvvefukfhfgggtuggjsehttdortddttddvnecuhfhrohhmpefrrghtrhhitghk
+    ucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpe
+    ejtddtgeffkedujeejgeduhefghedtgfdtieduleeulefgueetheeludegueeuveenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhksh
+    drihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthho
+    pehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnse
+    hiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    gh
+X-ME-Proxy: <xmx:0heDaLNPIDdVhP4lkRN1UxBCctcwYK8Yv5PE3NIP_EMEiT6NFiw7sw>
+    <xmx:0heDaGFC8j3741L6vdpNRSFFTj-lEL9njjfd83T9ibcwnb_9x_C1aQ>
+    <xmx:0heDaCNzCMXPs5OpCC2f1iOXkjHxQ1OIEXVy1oejxBtHCG6CHGw7vg>
+    <xmx:0heDaH84fV0Zz4WnhZnVGzYzPkT9TgM08e1PaHTDvP2SAPX-VFPBLg>
+    <xmx:0xeDaKsZ7YCATW1mWW7Pwq3SnkzeDiQ3Kky5MzOej0JzBnTUCHdvmEhr>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Jul 2025 01:36:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id b7c5524d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 25 Jul 2025 05:36:16 +0000 (UTC)
+Date: Fri, 25 Jul 2025 07:36:13 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 4/8] builtin/reflog: implement subcommand to write new
+ entries
+Message-ID: <aIMXzRESLwUVMNuD@pks.im>
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
+ <20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
+ <87o6t9kaua.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250725043043.GA3002998@coredump.intra.peff.net>
+In-Reply-To: <87o6t9kaua.fsf@iotcl.com>
 
-On Fri, Jul 25, 2025 at 12:30:43AM -0400, Jeff King wrote:
+On Thu, Jul 24, 2025 at 02:54:53PM +0200, Toon Claes wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > diff --git a/Documentation/git-reflog.adoc b/Documentation/git-reflog.adoc
+> > index 6ae13e772b8..798dbc0a00a 100644
+> > --- a/Documentation/git-reflog.adoc
+> > +++ b/Documentation/git-reflog.adoc
+> > @@ -392,6 +403,59 @@ static int cmd_reflog_drop(int argc, const char **argv, const char *prefix,
+> >  	return ret;
+> >  }
+> >  
+> > +static int cmd_reflog_write(int argc, const char **argv, const char *prefix,
+> > +			    struct repository *repo)
+> > +{
+> > +	const struct option options[] = {
+> > +		OPT_END()
+> > +	};
+> > +	struct object_id old_oid, new_oid;
+> > +	struct strbuf err = STRBUF_INIT;
+> > +	struct ref_transaction *tx;
+> > +	const char *ref, *message;
+> > +	int ret;
+> > +
+> > +	argc = parse_options(argc, argv, prefix, options, reflog_drop_usage, 0);
+> 
+> Wrong usage string here: s/reflog_drop_usage/reflog_write_usage/.
 
-> This second test seems to fail on Windows. E.g., in this CI job:
-> [...]
-> Should it be "/d/a/git/git/..." instead of "D:/a/git/git/..."? Which we
-> could get by using $PWD, I think.
+Good catch, fixed now.
 
-Yeah, that is it. I found a commit with some prior art, and here is the
-passing CI result:
-
-  https://github.com/peff/git/actions/runs/16513873854
-
-> The earlier one using $HOME uses D:/, but this one is different because
-> colons are meaningful separators in $PATH.
-
-I do wonder if that one needs to set $HOME at all. The test harness
-already points $HOME to the trash directory. But maybe it has value to
-document the expectation.
-
-Anyway, here is the fix as a patch on top of jb/t7510-gpg-program-path.
-I am also happy for it to be squashed in, since I think the topic is not
-yet in 'next'.
-
--- >8 --
-Subject: [PATCH] t7510: use $PWD instead of $(pwd) inside PATH
-
-On Windows, $(pwd) will give us a Windows-style path like "D:/foo".
-Putting that into $PATH confuses anybody parsing that variable, since
-colon is a separator character in $PATH. Instead, we should use the
-Unix-style value we get from $PWD ("/d/foo").
-
-This is similar to the cases fixed by 71dd50472d (t0021, t5615: use $PWD
-instead of $(pwd) in PATH-like shell variables, 2016-11-11).
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/t7510-signed-commit.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/t7510-signed-commit.sh b/t/t7510-signed-commit.sh
-index 95d2ebe277..1201c85ba6 100755
---- a/t/t7510-signed-commit.sh
-+++ b/t/t7510-signed-commit.sh
-@@ -458,7 +458,7 @@ test_expect_success 'custom `gpg.program`' '
- 
- 	# `gpg.program` does not specify an absolute path, it should find a program in `$PATH`
- 	test_config gpg.program "fake-gpg" &&
--	env PATH="$(pwd):$PATH" \
-+	env PATH="$PWD:$PATH" \
- 	git commit -S --allow-empty -m signed-commit
- '
- 
+Patrick
