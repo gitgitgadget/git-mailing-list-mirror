@@ -1,146 +1,427 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE7D17A2F6
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 15:26:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC58D2EE61C
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 16:06:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753457165; cv=none; b=mtNYRrZHnFqXk4vBVz5w1+dMR2CheZXtDhxy0koeJZYmiXGP6e9y8Jew2MOLB9zB+f51V00w3FJxn4zPMCHaZ9pBsGev68zPZb5FBq7LWdJib9m6tnRxdpQXK2huPk3PZ5IE6NXZxCRa4SmBbBy1nSTXLmFjg7gF1DWbse8GDjE=
+	t=1753459564; cv=none; b=nsOshHuN/YAQPRIFnEye18dyzAjRTthALQ9ME7hLcQnqi+CPJ+c+QlQ2kbscYaiTTlsCikR0mG0w4AFFgD3pFzxPgkE5s4aXZGn4tf/cKkxJ7nxBa9j67zPRj2P+x9aSkbB3AaehQW+eXXDUr506YN6mhtu8BFzrYhES91PO5P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753457165; c=relaxed/simple;
-	bh=mQOM/ugynMPbKSbMn6u6137cxF5DEYUKPUfxpbF4da4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=as2c9Nyyd66lsJQljI9cOxq4szkqi1AkWyOIA1wYVY1zRtLBOaNlfFb7/ynwH+Wi8+ofBLm0czktVrwLEgVhlISEtoi/a2o6yrVEzkrgezNgbPGARLqz2C2Ww48ELeYGp9lfVcVuLqejOcGawNlEmeYqf0Ms1E9GufbJwFdv2rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jekbt7ms; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ngUG/sNJ; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753459564; c=relaxed/simple;
+	bh=Dy31fJy2Sf2UzxptRJWX5gbAlEzAwtC25j0C2sWHW88=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=YM7aalNjqtUf89DuA+jRN1R3I099Rp/bzP3oyKHGyzjPZ12wh8t+PeYkldluIYRMjoDZZsBOJ3RQ94kqtJs+5HaRPbSpNPvMmMjXyDfiEZ7r9Xg3zfNW9gzg8FmbXopVxo/ZbZ//MmiYoT06TBFzZnsrapPCwpxWy2FZGmMAL24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X8wfwFRk; arc=none smtp.client-ip=209.85.221.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jekbt7ms";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ngUG/sNJ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6A32AEC2010;
-	Fri, 25 Jul 2025 11:24:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 25 Jul 2025 11:24:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753457091; x=1753543491; bh=Z7TmnXMwgr
-	OkafEjfawPxg02DcAeesesgVUrMWlWbnU=; b=Jekbt7msKAFcH4TaOhDea1enUQ
-	TOnfl0KovsWU3GbxGV+47aIfgig/BgR9p8fMW+QG8HZNlb/SsqCD18F3/KW3evXg
-	kb6p0DVWZnODH5D01GptLH88R5pUSa4V9cVzsZdoDBCl/vRmHkwDlF1z91z46hoY
-	wAMRYcjW9mOHgaIoXunoFQ+i3Z1dSB1HLHJ8NPlZBysJQhtkFKw8GHYF+3swVYLk
-	qKixeII4Yw9F/kLOAQ18DD2KBvk//iELHKuWmwX4IigkT7vpftc+pKxd0Dt81Xd7
-	9eTfEl+MqutwA+xxxUNn/yCaX4fgOkga3vv0JVaFNZ9jN39wmOMcJoRodTpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753457091; x=1753543491; bh=Z7TmnXMwgrOkafEjfawPxg02DcAeesesgVU
-	rMWlWbnU=; b=ngUG/sNJV9LQK/MWPWRmqvSqzU8IYpYrQkx3W2sIynEU/CWX/Ly
-	WjzLsP8vSxAA4ckKyunR0BUCgaPPsBD2X/X6QIhZzjmdCACAMFfORaCg7ia++Wha
-	2OIkS0PVutn9lzjfV90BRrMT32/w2D6a5zUJVO/bPxYpOXFMvs6XGwL9nBAcCFWW
-	OyxwKZM74b/y5Pwt+Yd8Ae/+B+9urcRG74wYae3Fv4XThair6r3QvVJEK23081bT
-	sBzo7dJ0keEaHOkaqZ9dMejG+M0ZWr7KJf5TD6CJCY0fRfi1lL11YSj4sc9bBJ/J
-	aAOkDDBWZty19K/vpv+xIR4BhpACPJ8/XyA==
-X-ME-Sender: <xms:wqGDaL0knd2tXkWScr15gv2G4qaqKbse-LuChrdFv2Wo6vTIBdvIgA>
-    <xme:wqGDaN5G25Z6JjfVMIfCIeMXRuoUcrV6JAsB4i6XKzaORl1FDiK-Rdx4KHL8XmFQ7
-    ZPuBn6mzIDuF59RaA>
-X-ME-Received: <xmr:wqGDaE8A_me40v7jb7enAcCoGHreNMr_UZLcYb0W_ZXFnFMSTQmgs_FVNwouf3Jmgyxjwipw2qcjp9NacVWbm_dizLHjb9hgbMMsopA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekfeekkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeehhfekfeekieevleevkeevkeekleegvddvlefguefhhffggfeiffejvdeivdfg
-    geenucffohhmrghinhepshgvqhhuvghntggvrhdrtgifnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtgho
-    mhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepph
-    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegtrghm
-    rdhsthgvfhhfvghnleegsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougesughu
-    nhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvg
-    hlihhnsehgmhigrdguvgdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhn
-    rghmvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:wqGDaEV3G7oSssXdjjChoWWWwyI2Bg4PFWWLD6CV2XFHIurEJRRwZg>
-    <xmx:wqGDaHrB3kInqqY2nklSomcrfWUygJiz1Vz7AaS0TfQkZQmbDYz_mg>
-    <xmx:wqGDaOm6sFb6ZShLcitxhL6EQgo01V1Qb1U3a0_aa_aCcwYomVpnow>
-    <xmx:wqGDaP0I4oIr8VDDP5jK6hik1iaCW7G5jDxKX3mRURGxnKUPZvklcQ>
-    <xmx:w6GDaDCciGnedG32IHpAoc9FUdAaN_2zU5mwwMXuFjD-RKSBL78oOuTu>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Jul 2025 11:24:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Cameron Steffen <cam.steffen94@gmail.com>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood@dunelm.org.uk>,  Johannes Schindelin
- <Johannes.Schindelin@gmx.de>,  Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: Re: Show skipped commit message after rebase conflict?
-In-Reply-To: <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com> (Phillip Wood's
-	message of "Fri, 25 Jul 2025 15:02:22 +0100")
-References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
-	<xmqqwm7xxn4a.fsf@gitster.g>
-	<184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
-Date: Fri, 25 Jul 2025 08:24:49 -0700
-Message-ID: <xmqqbjp847jy.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X8wfwFRk"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a528243636so1483026f8f.3
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 09:06:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753459560; x=1754064360; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=tztyGDYsM0jteuR55BHhRCNoSGKrs6h321qr6J7NZyU=;
+        b=X8wfwFRke6qxB4L9CSxlRQQ6KQiSB2Ah6oyLx65tv95do0qcoVka87kjcnzKP3zjux
+         CpiWWVot6rzZdEF+bcKCL/daFXvMpzCuAauZwM9WWw1YWU6IpMNWiN2GoHvqFJZdwTv8
+         KZWclL//bCEJHsBoSoJ2I700ZRNw+7qi/yrBm0H8g7A1o8IXK4pTxZ6OEMS8FmyfmhP0
+         jbtwYOU046XsYOjwHEUtG3gCR93mCOiUIFPzbuZ7q2iEoSDZSnvDbpb7pFJfCaAcwx8Q
+         I3gUlpofZQ7aVqM15l82kthQuyfneWrgEZjBP0PsdoJ+VNZSpuC73iEIqeXzGdOI1g7O
+         ddHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753459560; x=1754064360;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tztyGDYsM0jteuR55BHhRCNoSGKrs6h321qr6J7NZyU=;
+        b=nudHZjf0pXDiQ+/hF/60Y+Y94UjxPo8NTeZVMtPAs1N7pif/U3p3bi3VtKuIqG6r5E
+         oXUO93xAQQuy8vQKYqu/AakuedEcrN9KME8vBMl/7GPuspgemIYOUa6f557Iam39YFDW
+         +aOzn9qakEAOiuIHKLeCtmgq/s6b4oohKxNJw9L+lOnEeceteeLmKT10v6ud6Ol24G34
+         yNttSWMu6IR/eIUeM6a2W/XwH31ubv+fx3irPBPJey5S2XsE++lupOFBTOlxK1mU/F5Y
+         amNx51G559vAZYmiLxC1IHPPp4aA8SKXEJv2kpMh8jPtX6T+FZAHBJc0H7QZj7geGL8N
+         SVJQ==
+X-Gm-Message-State: AOJu0YzEwPlmp/eJS+szUNn9Ps7DaCEXL1qFdgu9CB4Da2AJ801a+fgQ
+	bB/0a0biZR7+cYlGxNB5cGysAuEWnjl76CyJMtNfZH/ms44UnhibwKg2Y0bMfg==
+X-Gm-Gg: ASbGnctS2gtvItdNuJVw7CAisjUENmoQbZ8SBBQTsH/HTyQubGZdwYLvXa2l11/18Zp
+	tUvQXcuqvzlvd6+NOhAjSIp2D7iyYMjbw95OOrMweq6wcWgjuXJKFwmjty+PUuiizFDgsQdyXZH
+	6SPBWD4FfLNxN7cFJ7UEiJ/2g9ctWZCgKIajnw8xHD3V45wSemRK78Nw9u5LSqWzkZqR2ESy00Q
+	HU+aqUXIpcyb96QNFqSEaawR0PFLVCCrWTqvMsK40HBXw8q0ofHU45iZzmE0Lw2i3C1pMWTi+Yi
+	gZoMfuxN7h3SUV7IpPsxdh3z62L+ysvEY4JYnhzEZeYrpRFaJOFMePCVcOVMoctIwXztaegEMH1
+	Qob7F9EXcpYhtOL5TByx7q38+WYB9wHm30GR1CoHoLTHyHAwGsBruhTQa6rjbn+AmCz5Oa64rVh
+	Nilsd2
+X-Google-Smtp-Source: AGHT+IHvUo/uC99BptUC/drRlBmMj952/V5Rfd5GmrgOI4spdV2M8BpVsozd3ImJLAWZTdf9JFQAlQ==
+X-Received: by 2002:a05:6000:4382:b0:3a5:7991:ff6 with SMTP id ffacd0b85a97d-3b7765e5a6bmr2633279f8f.1.1753459559938;
+        Fri, 25 Jul 2025 09:05:59 -0700 (PDT)
+Received: from christian--20230123--2G7D3 (176-138-135-207.abo.bbox.fr. [176.138.135.207])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778f03436sm272756f8f.51.2025.07.25.09.05.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Jul 2025 09:05:59 -0700 (PDT)
+From: Christian Couder <christian.couder@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Elijah Newren <newren@gmail.com>,
+	Jeff King <peff@peff.net>,
+	"brian m . carlson" <sandals@crustytoothpaste.net>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <christian.couder@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: [PATCH] t9350: redirect input to only fast-import
+Date: Fri, 25 Jul 2025 18:05:36 +0200
+Message-ID: <20250725160536.2909011-1-christian.couder@gmail.com>
+X-Mailer: git-send-email 2.50.1.439.g97e14d99f6
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+A number of tests in "t9350-fast-export.sh" are using sub-shells to
+redirect content to a number of commands instead of only
+`git fast-import`.
 
-> probably a good place to issue such a message but we'd want to check
-> whether rebase_path_message() exists before printing the message. I
+This is confusing and possibly error-prone, so let's change those tests
+so that no sub-shell is used and the content goes only to
+`git fast-import`.
 
-Ah, such a test intuitively feels correct.  We are not creating a
-commit, yet, we have message from the iteration being polished to
-use when we do create one, which is about to be lost.  The user
-deserves to be notified of the lossage.
+Reported-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+---
 
-> think we could also read REBASE_HEAD to find out which commit we're
-> skipping if we wanted to make the message a bit more informative.
->
-> It would mean that "rebase --skip" also prints this warning but I
-> think that is sensible if we're doing it for "rebase --continue" after
-> removing all the uncommitted changes from the worktree.
+This addresses some leftover work discussed in:
 
-Would --skip even pass this spot in the code by calling
-commit_staged_changes()?
+https://lore.kernel.org/git/CABPp-BHM5afgiUf7GsTPWmrf_tm6mWnvHWMKiZPxApJzN-U8gg@mail.gmail.com/
 
-I am not intimately familiar with the way how the sequencer code is
-organized, and am navigating largely by guesses on names of
-functions and variables (iow, I didn't check).
 
-Thanks.
+t/t9350-fast-export.sh | 215 +++++++++++++++++------------------------
+ 1 file changed, 91 insertions(+), 124 deletions(-)
 
->
-> Thanks
->
-> Phillip
->
->> I'll pick a few people from
->>      git shortlog --since=2.years --no-merges sequencer.c
->> based on their contribution to the file (not counting the internal
->> implementation changes) and Cc them to see if they have ideas.
->> Thanks.
->>   sequencer.c | 2 ++
->>   1 file changed, 2 insertions(+)
->> diff --git c/sequencer.c w/sequencer.c
->> index 67e4310edc..677d6105dd 100644
->> --- c/sequencer.c
->> +++ w/sequencer.c
->> @@ -5369,6 +5369,8 @@ static int commit_staged_changes(struct repository *r,
->>   			goto out;
->>   		}
->>   +		warning(_("omitting a step that has become empty"));
->> +
->>   		if (!final_fixup) {
->>   			ret = 0;
->>   			goto out;
->> 
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 46700dbc40..8f85c69d62 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -48,12 +48,11 @@ test_expect_success 'fast-export | fast-import' '
+ 	mkdir new &&
+ 	git --git-dir=new/.git init &&
+ 	git fast-export --all >actual &&
+-	(cd new &&
+-	 git fast-import &&
+-	 test $MAIN = $(git rev-parse --verify refs/heads/main) &&
+-	 test $REIN = $(git rev-parse --verify refs/tags/rein) &&
+-	 test $WER = $(git rev-parse --verify refs/heads/wer) &&
+-	 test $MUSS = $(git rev-parse --verify refs/tags/muss)) <actual
++	git -C new fast-import <actual &&
++	test $MAIN = $(git -C new rev-parse --verify refs/heads/main) &&
++	test $REIN = $(git -C new rev-parse --verify refs/tags/rein) &&
++	test $WER = $(git -C new rev-parse --verify refs/heads/wer) &&
++	test $MUSS = $(git -C new rev-parse --verify refs/tags/muss)
+ 
+ '
+ 
+@@ -87,13 +86,11 @@ test_expect_success 'fast-export --mark-tags ^muss^{commit} muss' '
+ test_expect_success 'fast-export main~2..main' '
+ 
+ 	git fast-export main~2..main >actual &&
+-	sed "s/main/partial/" actual |
+-		(cd new &&
+-		 git fast-import &&
+-		 test $MAIN != $(git rev-parse --verify refs/heads/partial) &&
+-		 git diff --exit-code main partial &&
+-		 git diff --exit-code main^ partial^ &&
+-		 test_must_fail git rev-parse partial~2)
++	sed "s/main/partial/" actual | git -C new fast-import &&
++	test $MAIN != $(git -C new rev-parse --verify refs/heads/partial) &&
++	git -C new diff --exit-code main partial &&
++	git -C new diff --exit-code main^ partial^ &&
++	test_must_fail git -C new rev-parse partial~2
+ 
+ '
+ 
+@@ -102,10 +99,8 @@ test_expect_success 'fast-export --reference-excluded-parents main~2..main' '
+ 	git fast-export --reference-excluded-parents main~2..main >actual &&
+ 	grep commit.refs/heads/main actual >commit-count &&
+ 	test_line_count = 2 commit-count &&
+-	sed "s/main/rewrite/" actual |
+-		(cd new &&
+-		 git fast-import &&
+-		 test $MAIN = $(git rev-parse --verify refs/heads/rewrite))
++	sed "s/main/rewrite/" actual | git -C new fast-import &&
++	test $MAIN = $(git -C new rev-parse --verify refs/heads/rewrite)
+ '
+ 
+ test_expect_success 'fast-export --show-original-ids' '
+@@ -133,20 +128,19 @@ test_expect_success ICONV 'reencoding iso-8859-7' '
+ 	echo rosten >file &&
+ 	git commit -s -F "$TEST_DIRECTORY/t9350/simple-iso-8859-7-commit-message.txt" file &&
+ 	git fast-export --reencode=yes wer^..wer >iso-8859-7.fi &&
+-	sed "s/wer/i18n/" iso-8859-7.fi |
+-		(cd new &&
+-		 git fast-import &&
+-		 # The commit object, if not re-encoded, would be 200 bytes plus hash.
+-		 # Removing the "encoding iso-8859-7\n" header drops 20 bytes.
+-		 # Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
+-		 # to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
+-		 # the expected size.
+-		 test $(($(test_oid hexsz) + 181)) -eq "$(git cat-file -s i18n)" &&
+-		 # ...and for the expected translation of bytes.
+-		 git cat-file commit i18n >actual &&
+-		 grep $(printf "\317\200") actual &&
+-		 # Also make sure the commit does not have the "encoding" header
+-		 ! grep ^encoding actual)
++	sed "s/wer/i18n/" iso-8859-7.fi | git -C new fast-import &&
++
++	# The commit object, if not re-encoded, would be 200 bytes plus hash.
++	# Removing the "encoding iso-8859-7\n" header drops 20 bytes.
++	# Re-encoding the Pi character from \xF0 (\360) in iso-8859-7
++	# to \xCF\x80 (\317\200) in UTF-8 adds a byte.  Check for
++	# the expected size.
++	test $(($(test_oid hexsz) + 181)) -eq "$(git -C new cat-file -s i18n)" &&
++	# ...and for the expected translation of bytes.
++	git -C new cat-file commit i18n >actual &&
++	grep $(printf "\317\200") actual &&
++	# Also make sure the commit does not have the "encoding" header
++	! grep ^encoding actual
+ '
+ 
+ test_expect_success 'aborting on iso-8859-7' '
+@@ -165,20 +159,19 @@ test_expect_success 'preserving iso-8859-7' '
+ 	echo rosten >file &&
+ 	git commit -s -F "$TEST_DIRECTORY/t9350/simple-iso-8859-7-commit-message.txt" file &&
+ 	git fast-export --reencode=no wer^..wer >iso-8859-7.fi &&
+-	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi |
+-		(cd new &&
+-		 git fast-import &&
+-		 # The commit object, if not re-encoded, is 200 bytes plus hash.
+-		 # Removing the "encoding iso-8859-7\n" header would drops 20
+-		 # bytes.  Re-encoding the Pi character from \xF0 (\360) in
+-		 # iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
+-		 # Check for the expected size...
+-		 test $(($(test_oid hexsz) + 200)) -eq "$(git cat-file -s i18n-no-recoding)" &&
+-		 # ...as well as the expected byte.
+-		 git cat-file commit i18n-no-recoding >actual &&
+-		 grep $(printf "\360") actual &&
+-		 # Also make sure the commit has the "encoding" header
+-		 grep ^encoding actual)
++	sed "s/wer/i18n-no-recoding/" iso-8859-7.fi | git -C new fast-import &&
++
++	# The commit object, if not re-encoded, is 200 bytes plus hash.
++	# Removing the "encoding iso-8859-7\n" header would drops 20
++	# bytes.  Re-encoding the Pi character from \xF0 (\360) in
++	# iso-8859-7 to \xCF\x80 (\317\200) in UTF-8 adds a byte.
++	# Check for the expected size...
++	test $(($(test_oid hexsz) + 200)) -eq "$(git -C new cat-file -s i18n-no-recoding)" &&
++	# ...as well as the expected byte.
++	git -C new cat-file commit i18n-no-recoding >actual &&
++	grep $(printf "\360") actual &&
++	# Also make sure the commit has the "encoding" header
++	grep ^encoding actual
+ '
+ 
+ test_expect_success 'encoding preserved if reencoding fails' '
+@@ -188,18 +181,17 @@ test_expect_success 'encoding preserved if reencoding fails' '
+ 	echo rosten >file &&
+ 	git commit -s -F "$TEST_DIRECTORY/t9350/broken-iso-8859-7-commit-message.txt" file &&
+ 	git fast-export --reencode=yes wer^..wer >iso-8859-7.fi &&
+-	sed "s/wer/i18n-invalid/" iso-8859-7.fi |
+-		(cd new &&
+-		 git fast-import &&
+-		 git cat-file commit i18n-invalid >actual &&
+-		 # Make sure the commit still has the encoding header
+-		 grep ^encoding actual &&
+-		 # Verify that the commit has the expected size; i.e.
+-		 # that no bytes were re-encoded to a different encoding.
+-		 test $(($(test_oid hexsz) + 212)) -eq "$(git cat-file -s i18n-invalid)" &&
+-		 # ...and check for the original special bytes
+-		 grep $(printf "\360") actual &&
+-		 grep $(printf "\377") actual)
++	sed "s/wer/i18n-invalid/" iso-8859-7.fi | git -C new fast-import &&
++	git -C new cat-file commit i18n-invalid >actual &&
++
++	# Make sure the commit still has the encoding header
++	grep ^encoding actual &&
++	# Verify that the commit has the expected size; i.e.
++	# that no bytes were re-encoded to a different encoding.
++	test $(($(test_oid hexsz) + 212)) -eq "$(git -C new cat-file -s i18n-invalid)" &&
++	# ...and check for the original special bytes
++	grep $(printf "\360") actual &&
++	grep $(printf "\377") actual
+ '
+ 
+ test_expect_success 'import/export-marks' '
+@@ -316,12 +308,9 @@ test_expect_success GPG 'signed-commits=verbatim' '
+ 	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
+ 	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+ 	grep "encoding ISO-8859-1" output &&
+-	(
+-		cd new &&
+-		git fast-import &&
+-		STRIPPED=$(git rev-parse --verify refs/heads/commit-signing) &&
+-		test $COMMIT_SIGNING = $STRIPPED
+-	) <output
++	git -C new fast-import <output &&
++	STRIPPED=$(git -C new rev-parse --verify refs/heads/commit-signing) &&
++	test $COMMIT_SIGNING = $STRIPPED
+ 
+ '
+ 
+@@ -331,12 +320,9 @@ test_expect_success GPG 'signed-commits=warn-verbatim' '
+ 	test_grep -E "^gpgsig $GIT_DEFAULT_HASH openpgp" output &&
+ 	grep "encoding ISO-8859-1" output &&
+ 	test -s err &&
+-	(
+-		cd new &&
+-		git fast-import &&
+-		STRIPPED=$(git rev-parse --verify refs/heads/commit-signing) &&
+-		test $COMMIT_SIGNING = $STRIPPED
+-	) <output
++	git -C new fast-import <output &&
++	STRIPPED=$(git -C new rev-parse --verify refs/heads/commit-signing) &&
++	test $COMMIT_SIGNING = $STRIPPED
+ 
+ '
+ 
+@@ -345,12 +331,9 @@ test_expect_success GPG 'signed-commits=strip' '
+ 	git fast-export --signed-commits=strip --reencode=no commit-signing >output &&
+ 	! grep ^gpgsig output &&
+ 	grep "^encoding ISO-8859-1" output &&
+-	sed "s/commit-signing/commit-strip-signing/" output | (
+-		cd new &&
+-		git fast-import &&
+-		STRIPPED=$(git rev-parse --verify refs/heads/commit-strip-signing) &&
+-		test $COMMIT_SIGNING != $STRIPPED
+-	)
++	sed "s/commit-signing/commit-strip-signing/" output | git -C new fast-import &&
++	STRIPPED=$(git -C new rev-parse --verify refs/heads/commit-strip-signing) &&
++	test $COMMIT_SIGNING != $STRIPPED
+ 
+ '
+ 
+@@ -360,12 +343,9 @@ test_expect_success GPG 'signed-commits=warn-strip' '
+ 	! grep ^gpgsig output &&
+ 	grep "^encoding ISO-8859-1" output &&
+ 	test -s err &&
+-	sed "s/commit-signing/commit-strip-signing/" output | (
+-		cd new &&
+-		git fast-import &&
+-		STRIPPED=$(git rev-parse --verify refs/heads/commit-strip-signing) &&
+-		test $COMMIT_SIGNING != $STRIPPED
+-	)
++	sed "s/commit-signing/commit-strip-signing/" output | git -C new fast-import &&
++	STRIPPED=$(git -C new rev-parse --verify refs/heads/commit-strip-signing) &&
++	test $COMMIT_SIGNING != $STRIPPED
+ 
+ '
+ 
+@@ -386,14 +366,11 @@ test_expect_success GPGSM 'round-trip X.509 signed commit' '
+ 
+ 	git fast-export --signed-commits=verbatim x509-signing >output &&
+ 	test_grep -E "^gpgsig $GIT_DEFAULT_HASH x509" output &&
+-	(
+-		cd new &&
+-		git fast-import &&
+-		git cat-file commit refs/heads/x509-signing >actual &&
+-		grep "^gpgsig" actual &&
+-		IMPORTED=$(git rev-parse refs/heads/x509-signing) &&
+-		test $X509_COMMIT = $IMPORTED
+-	) <output
++	git -C new fast-import <output &&
++	git -C new cat-file commit refs/heads/x509-signing >actual &&
++	grep "^gpgsig" actual &&
++	IMPORTED=$(git -C new rev-parse refs/heads/x509-signing) &&
++	test $X509_COMMIT = $IMPORTED
+ 
+ '
+ 
+@@ -414,14 +391,11 @@ test_expect_success GPGSSH 'round-trip SSH signed commit' '
+ 
+ 	git fast-export --signed-commits=verbatim ssh-signing >output &&
+ 	test_grep -E "^gpgsig $GIT_DEFAULT_HASH ssh" output &&
+-	(
+-		cd new &&
+-		git fast-import &&
+-		git cat-file commit refs/heads/ssh-signing >actual &&
+-		grep "^gpgsig" actual &&
+-		IMPORTED=$(git rev-parse refs/heads/ssh-signing) &&
+-		test $SSH_COMMIT = $IMPORTED
+-	) <output
++	git -C new fast-import <output &&
++	git -C new cat-file commit refs/heads/ssh-signing >actual &&
++	grep "^gpgsig" actual &&
++	IMPORTED=$(git -C new rev-parse refs/heads/ssh-signing) &&
++	test $SSH_COMMIT = $IMPORTED
+ 
+ '
+ 
+@@ -461,14 +435,13 @@ test_expect_success 'submodule fast-export | fast-import' '
+ 	mkdir new &&
+ 	git --git-dir=new/.git init &&
+ 	git fast-export --signed-tags=strip --all >actual &&
+-	(cd new &&
+-	 git fast-import &&
+-	 test "$SUBENT1" = "$(git ls-tree refs/heads/main^ sub)" &&
+-	 test "$SUBENT2" = "$(git ls-tree refs/heads/main sub)" &&
+-	 git checkout main &&
+-	 git submodule init &&
+-	 git submodule update &&
+-	 cmp sub/file ../sub/file) <actual
++	git -C new fast-import <actual &&
++	test "$SUBENT1" = "$(git -C new ls-tree refs/heads/main^ sub)" &&
++	test "$SUBENT2" = "$(git -C new ls-tree refs/heads/main sub)" &&
++	git -C new checkout main &&
++	git -C new submodule init &&
++	git -C new submodule update &&
++	cmp new/sub/file sub/file
+ 
+ '
+ 
+@@ -510,10 +483,8 @@ test_expect_success 'fast-export -C -C | fast-import' '
+ 	git --git-dir=new/.git init &&
+ 	git fast-export -C -C --signed-tags=strip --all > output &&
+ 	grep "^C file2 file4\$" output &&
+-	cat output |
+-	(cd new &&
+-	 git fast-import &&
+-	 test $ENTRY = $(git rev-parse --verify refs/heads/copy))
++	git -C new fast-import <output &&
++	test $ENTRY = $(git -C new rev-parse --verify refs/heads/copy)
+ 
+ '
+ 
+@@ -986,21 +957,17 @@ test_expect_success GPG 'export and import of doubly signed commit' '
+ 	git -C explicit-sha256 fast-export --signed-commits=verbatim dual-signed >output &&
+ 	test_grep -E "^gpgsig sha1 openpgp" output &&
+ 	test_grep -E "^gpgsig sha256 openpgp" output &&
+-
+-	(
+-		cd new &&
+-		git fast-import &&
+-		git cat-file commit refs/heads/dual-signed >actual &&
+-		test_grep -E "^gpgsig " actual &&
+-		test_grep -E "^gpgsig-sha256 " actual &&
+-		IMPORTED=$(git rev-parse refs/heads/dual-signed) &&
+-		if test "$GIT_DEFAULT_HASH" = "sha1"
+-		then
+-			test $SHA1_B = $IMPORTED
+-		else
+-			test $SHA256_B = $IMPORTED
+-		fi
+-	) <output
++	git -C new fast-import <output &&
++	git -C new cat-file commit refs/heads/dual-signed >actual &&
++	test_grep -E "^gpgsig " actual &&
++	test_grep -E "^gpgsig-sha256 " actual &&
++	IMPORTED=$(git -C new rev-parse refs/heads/dual-signed) &&
++	if test "$GIT_DEFAULT_HASH" = "sha1"
++	then
++		test $SHA1_B = $IMPORTED
++	else
++		test $SHA256_B = $IMPORTED
++	fi
+ '
+ 
+ test_done
+-- 
+2.50.1.439.g97e14d99f6
+
