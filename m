@@ -1,188 +1,106 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f195.google.com (mail-pl1-f195.google.com [209.85.214.195])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA151C5489
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 06:10:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36FD239E62
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 06:47:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.195
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753423854; cv=none; b=eoVgxLIqwo6xIqcxfJ+tNl6ey8oLXxzUnN4t7idyNymKBAYIoBx1D6l4jUJmMuCVFgpombqM9GMI22jAYDz841YFqMrNI8Ubh+oXAFLJ7hEshtLaH3n5jRyovfruwrXFkXDC80NBbpyhlOrOkqEZwRcq64nj6hHbW8/esYbkUS0=
+	t=1753426029; cv=none; b=K0NNGWVj9KcMYeT4I4EzSiirBumVN8c+WJefin4OWwKWMfcWSRg5OZVxKrY8XQqamN1Y2VPucOlRxLJLm7flTMkfaEBFWF1q3l6+DwU3SWi5/6OmmGHklJS2pAR+Ejr/GFc2dzRM7Z6hbILNiG4vETZQoCuFDgL3kXlwqqDgzuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753423854; c=relaxed/simple;
-	bh=Ilx7tV92Vut/OUr4lu/aUlLu/9Ty0iH2AQ0kn3Au5t0=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b2AQwj9wlYaLMS/79A2SSxZofTOq/jZNiQhTC+mmvHaYlftDRqSd17+L+oCyoYgMKOoihSXVmydk+0ANyCd+nrrh7RujR0aKP1ArOrs6U2AyIJ5Wa042RYpakUJifjhEZyQnebK95+hFxad5BwsWUFfcpaa5kCl86gnqODovOk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MNoYwyfl; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1753426029; c=relaxed/simple;
+	bh=ql8Xj2jan4Mb4vD45TUI9pu6Y+7wKLCF469cANkQy6w=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=Jzxd5GVSREosb47rtMW+VMgQ4jwfH5kW5XAhMjkJzS/LUvrGHSaYHM5GNQPbzR7MiinRsY9t0pfVBFwVhdIBicFoiSXJKDLqY/y5WTrVLrIcTEFvjn1rMwu6/Rbp63flwoaLsWv5UlhaV0c9hkZGsK3R3xbwzUxaXiKtuT7by2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SdX+p6bL; arc=none smtp.client-ip=209.85.214.195
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MNoYwyfl"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-235d6de331fso22239785ad.3
-        for <git@vger.kernel.org>; Thu, 24 Jul 2025 23:10:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SdX+p6bL"
+Received: by mail-pl1-f195.google.com with SMTP id d9443c01a7336-23f8d27eeeaso16959355ad.2
+        for <git@vger.kernel.org>; Thu, 24 Jul 2025 23:47:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753423852; x=1754028652; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WG1JJiWEvEfxJWM2z84xsNhsesQP63IZIzqtSM7BKu0=;
-        b=MNoYwyflW8lb1VAIYdmBpWMtScoM0UvH5BfBIDuFqej2EGcAFyYF3iI7Kcr16PFDaT
-         CL0kSuhBqg6rmfxCx1ktFk9ROjPNfRfcVQQp170RMfHHrMRVXZ9S97MVSbmRmd2h0bHO
-         z2W4jkxYOz+mznC+TNHFiVj++fSfjVrEqY/ba/QZKmz245tS0MSvlv/DJ6vlmAcB8EBF
-         Ulao9aqC1ebrc17V6Ko6vfbzAJllfsdEGKhu3Tr26w5bJu4dg76AqwsLuba5y9cK6cUD
-         eQ27cTETSVk/Xyu4xFWvl0CY9vGaurtkLNrOcWaMCA6zq2Xyic84Qbi0fC8rO7g8pxLd
-         LjWg==
+        d=gmail.com; s=20230601; t=1753426027; x=1754030827; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bY1OWNaxnLwqWthvs38mNlICmczAnzN1Hq4dB3xYDys=;
+        b=SdX+p6bLZMI/bp3pLQgdrfmoko4vEzbmG6rNEHNmShJ2/8nIcQdMX96PjT/7ztXiMi
+         0K3QEXbA8ATdcHwEfGdxrpQEOUPItlTQkEDPwFmLkz8klfl9NMayldc+9MH5nPXkbK7A
+         5gNzvjWA5q6ZH/LqL7Fr7/vk5qoUa11/hOKz/kNr49foILnvm7yxtnsroTax/AVxebD6
+         6itBntCIGjs9MwnXfyrihR4FhSPk+rtZtnUCAGcvvhd9HFIT85qaEgl3m+J20exTFNh4
+         cWxXCZbn7sUCfrqwlfe1NY8Qjl9Vh8mu3Q3b0UxxNT7jkwHEdIxJgSKGc8ObzAjvYd+m
+         Te+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753423852; x=1754028652;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WG1JJiWEvEfxJWM2z84xsNhsesQP63IZIzqtSM7BKu0=;
-        b=ttYpZ/LYQ/ASYxWkSWVXTVYbs9zA/TTKTyDhbZP8Bihqg43/Fs5EmN6SQv6QJyyFim
-         n6t6vu5nwUJDgBsbrwsDmMheDP1d8nw3aJqsOjqw2IsEmbC+rK8oiGswawyLJJ/VBqui
-         diZxmNT5EOW63ue/dD4CbLf2IWjRBHx6Ku0oXgCDK7kLY6I64LrIKPnHPBVuaxXE47ZA
-         9RmCaF9LCZvjGbPiRefHqwsly5rdTX4h4c5kAudUD0qbNgI/k9kJ+MYCKC/QYoZCCMI+
-         cfG7/uEI4Z/LglOJrJIE4oVhcXoeoX6UZtrOTexQeqHIiLbifgQqv/NvVMH8xyr0taLW
-         6X4Q==
-X-Gm-Message-State: AOJu0Yx8cZywZ6bas9FMMOnKqGcKBJIUGH/IsEIsnR/JXM9UR5C7b/Mc
-	dF8bYxjaxoT7xoFijIOpDJTyXoe2ThjvrhchIad4I9hr0ziZi7H32ZJdO8UNqg==
-X-Gm-Gg: ASbGncvIvRuayr+JzPOG3uXou+jb7Jsn9Q6+2B85I6e4mzuaC2u90S2bHuhDuy50Nkn
-	jnJkjuxdI4Q21bfB/FPufF00OlGDL6euprcCIjWrTXlujk6z576850tuUM3stTUN6fdoYcmRCAm
-	EJNVEyaNCfY1QTXgNMFJdStm7gLGxjSy3gngukHDo9ZQqW8zB0yRWTmecLa8o9dIKE1Fg3WfLnr
-	8UJjFV987ZxyRCj9Bf/+jtpWZ1pXK0F7IxyM3zLMzNq/HC+PJiGMzNMUV03Efgg8lJd8UuUYqtP
-	Id3iMP5Lch6XVsw+164/yWbTRxL5Xh/tKz4zLIKY1w14SvHahfl6Yh+TPHb+04J0pKwgOPwKhQh
-	Ueuyixp0Y5pjwZ3K71LsMF3VuFsfpcDrYiQ==
-X-Google-Smtp-Source: AGHT+IHoFpEkuSR4MdfHf0Q9PCVtiDkODWfHJcNh7jxfrbescB4sJ8no1sz57qwdNSqEMmR+FsIHmQ==
-X-Received: by 2002:a17:902:d58f:b0:235:be0:db53 with SMTP id d9443c01a7336-23fb313a91bmr11610885ad.51.1753423851779;
-        Thu, 24 Jul 2025 23:10:51 -0700 (PDT)
-Received: from localhost.localdomain ([211.37.148.227])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23fa476c147sm29121385ad.46.2025.07.24.23.10.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Jul 2025 23:10:51 -0700 (PDT)
-From: Hoyoung Lee <lhywkd22@gmail.com>
-To: git@vger.kernel.org
-Cc: Hoyoung Lee <lhywkd22@gmail.com>
-Subject: [PATCH v6 1/1] test-delta: Replaced space-based indentation with tabs to follow Git coding style.
-Date: Fri, 25 Jul 2025 06:10:38 +0000
-Message-Id: <20250725061038.3130912-1-lhywkd22@gmail.com>
-X-Mailer: git-send-email 2.34.1
+        d=1e100.net; s=20230601; t=1753426027; x=1754030827;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bY1OWNaxnLwqWthvs38mNlICmczAnzN1Hq4dB3xYDys=;
+        b=kq0lPq9deKkyPfgjim7NRqXPt+5/B0UTLpEG+1YU4hz4aK+GnzfeckAqQgdNIByMYI
+         xKt2u6qeVc5XJJfw4Va1U6P+7nwuwfi6/XS59NXKtXJ7R9mTepp8H4dJGnicJ3XqmdW2
+         ttQQ/4hXbNpZnpX+U5KwwHhiwI+iY7tbzCpVMxnKsKM0OHJwJAzuDZKqUch/VHueVqIz
+         tSDCmXWlBVKZTuic1GgXOfpVR/+x0o6lsnvCt2pHd1tNvTKFNYRT12cq4WZ3G2O06WVc
+         qzew8eGgvvBE3wS1jZZv306qZPhHsxZD7107dqeRI6RtMILwqQ0QARiN4daZPwjKlrE5
+         r5rA==
+X-Forwarded-Encrypted: i=1; AJvYcCVz4wvcEjq5e6eJO02sqBMISGwGyBQDFfL8VJkRL2hKiBF7aWw8QHz2q31LrCXgOX3RNs8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyywiaM3jlxZHBxXP0/4U0x2WyZLeACzY8b3cLXoXHM8wgKj7QE
+	T1f8Eh6Y53BTLOHxAtsSPi8TQLJcrzM9mNvsRTk3UHJzSzuHqILkKOCx
+X-Gm-Gg: ASbGncu296vCCcem+oXlh0Svpc35/JDO45o2/nz2ccVvk5J55gfIpdvbXCuZokWbYen
+	8Qu1DG0GWV6jOGlEXSjbZaSvquKVmxSDXJCZJaBrMbbedcH8cil3hr+YATZqhEdekWAesNR/Gs5
+	HklZ/GejVUn/f/5vm8QzGv10Not0HOZcH7K5+UWE0WmeeEpV5WP6Qwokmoa9YJpjohcSJprXv3X
+	cjE55HyL2XURGRGquav+Ht20KfHZDZRRaV0fRaJ4eyl4O+36LpAXpdLvL44eXkr4B7sOxTuLrOl
+	pc/O2185xE1ST8+W7CjS9a+3CXcUapQzfN0UxzZT2MutA3Z75XxOfl+CJJ14k0dwx2p/4c3xy11
+	lyvp5PMD9ZdRdL6XxstuEBJ3dTKyM2Vv0VyhGz/ABVioBR2pq2IdNSTV8aJIBZ2mFhwy3LcI+01
+	bqh6SSZULPiAm6FpbYY3GvLoc=
+X-Google-Smtp-Source: AGHT+IHFv5Ka2j/pNgNOY4RMIecMY2JeQqYvpoKQrl261z5yNtE7EBbLhtSzO7VKDhp1ApKjAG5mFw==
+X-Received: by 2002:a17:902:d58c:b0:234:d292:be83 with SMTP id d9443c01a7336-23fb309b7e0mr14458255ad.10.1753426026942;
+        Thu, 24 Jul 2025 23:47:06 -0700 (PDT)
+Received: from smtpclient.apple (awork062155.netvigator.com. [203.198.28.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23fa4785f54sm30021765ad.77.2025.07.24.23.47.03
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 24 Jul 2025 23:47:06 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: git-diff: --ignore-matching-lines has no effect on the output
+ when --name-only is used
+From: Lidong Yan <yldhome2d2@gmail.com>
+In-Reply-To: <87v7ngstc8.fsf@arnes.space>
+Date: Fri, 25 Jul 2025 14:46:51 +0800
+Cc: Junio C Hamano <gitster@pobox.com>,
+ git@vger.kernel.org,
+ =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?= <michal@isc.org>
+Content-Transfer-Encoding: 7bit
+Message-Id: <6A35A7CF-966B-4EC7-B575-86E6CCB68D03@gmail.com>
+References: <87a54v8nmz.fsf@arnes.space>
+ <12095AC3-BC38-48DB-95B4-394F9F7DE054@gmail.com> <xmqqqzy6omul.fsf@gitster.g>
+ <87v7ngstc8.fsf@arnes.space>
+To: hi@arnes.space
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-Replaced space-based indentation with tabs to follow Git coding style.
-No functional changes.
+hi@arnes.space writes:
+> 
+>> it does not make sense for the answer to be different depending on the
+>> presense of -w or --ignore-matching options.
+> 
+> does it really not? i thought of `--name-only` as changing the
+> formatting of the output, as doing something similar to this:
+> 
+> git diff --no-ext-diff ... | grep -P "^(---|\+\+\+)" | cut -d/ -f2- | uniq
 
-Signed-off-by: Hoyoung Lee <lhywkd22@gmail.com>
----
- t/helper/test-delta.c | 78 ++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 53 deletions(-)
+Git computes a SHA value for each file, so when using --name-only to
+check which files have changed, it only needs to compare the SHA values.
+There's no need to generate and then filter the full diff content.
 
-diff --git a/t/helper/test-delta.c b/t/helper/test-delta.c
-index 6bc787a474..4977ee4eaf 100644
---- a/t/helper/test-delta.c
-+++ b/t/helper/test-delta.c
-@@ -11,6 +11,7 @@
- #include "test-tool.h"
- #include "git-compat-util.h"
- #include "delta.h"
-+#include "strbuf.h"
- 
- static const char usage_str[] =
- 	"test-tool delta (-d|-p) <from_file> <data_file> <out_file>";
-@@ -18,68 +19,39 @@ static const char usage_str[] =
- int cmd__delta(int argc, const char **argv)
- {
- 	int fd;
--	struct stat st;
--	void *from_buf = NULL, *data_buf = NULL, *out_buf = NULL;
--	unsigned long from_size, data_size, out_size;
--	int ret = 1;
-+	struct strbuf from = STRBUF_INIT, data = STRBUF_INIT;
-+	char *out_buf;
-+	unsigned long out_size;
- 
--	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p"))) {
--		fprintf(stderr, "usage: %s\n", usage_str);
--		return 1;
--	}
-+	if (argc != 5 || (strcmp(argv[1], "-d") && strcmp(argv[1], "-p")))
-+        	usage(usage_str);
- 
--	fd = open(argv[2], O_RDONLY);
--	if (fd < 0 || fstat(fd, &st)) {
--		perror(argv[2]);
--		return 1;
--	}
--	from_size = st.st_size;
--	from_buf = xmalloc(from_size);
--	if (read_in_full(fd, from_buf, from_size) < 0) {
--		perror(argv[2]);
--		close(fd);
--		goto cleanup;
--	}
--	close(fd);
--
--	fd = open(argv[3], O_RDONLY);
--	if (fd < 0 || fstat(fd, &st)) {
--		perror(argv[3]);
--		goto cleanup;
--	}
--	data_size = st.st_size;
--	data_buf = xmalloc(data_size);
--	if (read_in_full(fd, data_buf, data_size) < 0) {
--		perror(argv[3]);
--		close(fd);
--		goto cleanup;
--	}
--	close(fd);
-+	if (strbuf_read_file(&from, argv[2], 0) < 0)
-+        	die_errno("unable to read '%s'", argv[2]);
-+	if (strbuf_read_file(&data, argv[3], 0) < 0)
-+        	die_errno("unable to read '%s'", argv[3]);
- 
- 	if (argv[1][1] == 'd')
--		out_buf = diff_delta(from_buf, from_size,
--				     data_buf, data_size,
-+        	out_buf = diff_delta(from.buf, from.len,
-+				     data.buf, data.len,
- 				     &out_size, 0);
- 	else
--		out_buf = patch_delta(from_buf, from_size,
--				      data_buf, data_size,
-+        	out_buf = patch_delta(from.buf, from.len,
-+				      data.buf, data.len,
- 				      &out_size);
--	if (!out_buf) {
--		fprintf(stderr, "delta operation failed (returned NULL)\n");
--		goto cleanup;
--	}
- 
--	fd = open (argv[4], O_WRONLY|O_CREAT|O_TRUNC, 0666);
--	if (fd < 0 || write_in_full(fd, out_buf, out_size) < 0) {
--		perror(argv[4]);
--		goto cleanup;
--	}
-+	if (!out_buf)
-+        	die("delta operation failed (returned NULL)");
-+
-+	fd = xopen(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0666);
-+	if (write_in_full(fd, out_buf, out_size) < 0)
-+        	die_errno("write(%s)", argv[4]);
-+	if (close(fd) < 0)
-+        	die_errno("close(%s)", argv[4]);
- 
--	ret = 0;
--cleanup:
--	free(from_buf);
--	free(data_buf);
-+	strbuf_release(&from);
-+	strbuf_release(&data);
- 	free(out_buf);
- 
--	return ret;
-+	return 0;
- }
--- 
-2.34.1
+Of course, the implementation of git diff is more complex, but I hope you
+can roughly understand that --name-only usually doesn't need the actual
+diff content.
+
+Thanks,
+Lidong
 
