@@ -1,149 +1,144 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E40229E0F8
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 11:36:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76B6810FD
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 14:02:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753443374; cv=none; b=spulIEIE0u9MmB5KKsUgn3upMiUxjxQWUJ1+McrSII4svFxQjRJGDVBoYa9SAHzrnOkjWR6dkZogstxjXnzWSiv39tHV8toBKSSUoOcXTkqrfifP84u5XhbX6FGfCAsy1irJXCWI8hMFAEc2NN3JQPTXn9SCoylZ+tQyu/NhgKc=
+	t=1753452148; cv=none; b=tFTyw1VkWVoiIGGqCm4YD3yVcKCYXPtzgAmF7GpL8y4RnVraQaDf2m7gd6O3AuYEpqC4NH7HbJ0cAb8CNMgGxT3B+NsxJKHnxa0YxfE5Cclcqude/o2A63YpxpclJ+W1RS6qRndG/DSH0vOy4AD4SVrD+gCVmTHzuCNuKejxrxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753443374; c=relaxed/simple;
-	bh=no7gd7VIxZFuE4YjNf35VXmBswrFUzw4LHgQGDyQdS0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=kXE5zmXPdAhidL1A/Pc9A7f2YPD4ga6UkpW85RllQk/nJ/Nl9QU7lUqwU+rcdcgB+HjZMfsavOjwEH0Q/RJsYHOtXGu9e6sbGgIgBKD+VhkaHCsL1CMO57Pe/XdVd2W6Om/XckUbwIi6tbA0050mWqMF4rg+2PyRdBtk3CD9MW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=W6ulk8Fh; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1753452148; c=relaxed/simple;
+	bh=urFG3M9rUjsN4oBzONcSXmu/8OENRW8laEkxAwsCPWU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=Ed+9BpKunRNtauf/L/eyvATBkXIBXqSXxOn1DGH2RUV7EXxbzISgTX3GANfxa2GgPJATTp3HXwFCVtTlOJxHLUONNbcrLF7JS7sNNzadKIHTi8KDooIjGVtjGAbNeXuvfEm8gK/kv8Q1TgiDRcSV/CZncCYHtHT1c2Fo3zPBlIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AlA2arar; arc=none smtp.client-ip=209.85.221.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="W6ulk8Fh"
-Received: (qmail 26297 invoked by uid 109); 25 Jul 2025 11:36:11 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=no7gd7VIxZFuE4YjNf35VXmBswrFUzw4LHgQGDyQdS0=; b=W6ulk8Fh0wJxnONHPo4nIWMDEynw4O9FvnB/RZtSOAVA65TL04xmPgsIbHOJIJMdmDyYlLDVWKkNDZakFWRYgmK1NOIm5PztOFjjSaINltjXMcGx16S84uIKoemitwDnAGd3T76KCcaTRVa5iKCHVckvekaFDWlhcJtNFfuXCEvZZJLENMRS/MKQd4kVRnk7eJx3BDRDI0VJJzbbJa3z8SMajxz5BT348w3MUpHqIiU+ZE+PgBTboUlafjM5uYVoUSvP+feJwZ0QtmRG4F2cGxZF2qXhrJ+6uHGPIiUD91UY4ViifBNlzJh4T4yhGrDKo7fYN8+bGHcgXKa9jrxRYA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 25 Jul 2025 11:36:11 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 21819 invoked by uid 111); 25 Jul 2025 11:36:10 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 25 Jul 2025 07:36:10 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 25 Jul 2025 07:36:10 -0400
-From: Jeff King <peff@peff.net>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>,
-	Justin Tobler <jltobler@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder.dev@gmail.com>,
-	Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v2 7/8] refs: stop unsetting REF_HAVE_OLD for log-only
- updates
-Message-ID: <20250725113610.GA3015361@coredump.intra.peff.net>
-References: <20250725-pks-reflog-append-v2-0-e4e7cbe3f578@pks.im>
- <20250725-pks-reflog-append-v2-7-e4e7cbe3f578@pks.im>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AlA2arar"
+Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-3a4f72cba73so1974997f8f.1
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 07:02:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753452145; x=1754056945; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=cc0kcslrfZYTVGTYvSsSmOChttgtoOw/UUKCfRTLZLs=;
+        b=AlA2ararj4tb8Wvq8MI/Cm9bk0A7BzkjXPgdIB1s6uYqJRzHkyUeH2s/hAnHavXmws
+         JyFCcJ6fCtna9OXPRSqxoJZN4/2WAdO+/2nr7J+xdb/FDptvhGHTTWXMQAaBgF6Z6h8X
+         k/KeMSHMRdP7nDLttHS+O94pTWU4DQ/gXPfMIFNXVA4zdDpgmhv0gnFXrRg/L1VbRcWq
+         oyj4/OHEz6B2JdtZLPLEaH1OfNzgFLolwgtjVMu79KwJSX4xO0kn1Wd+qcwiT3bge7QG
+         wAVRwc3w1mO4FDdZosyTTWPjYBwVCv2bZE1s8SzIr9iCXJi2bWIvwfTvevQauJ/PC4TE
+         GMzg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753452145; x=1754056945;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=cc0kcslrfZYTVGTYvSsSmOChttgtoOw/UUKCfRTLZLs=;
+        b=g0+PUf852NdEmLkqgBgxiY/7cmQsJWCpmIMVNdh6/mJdSpjw8DTedJRKCTEPXsUKeP
+         olahNFW703PLYPf9iK659uO/hSombZyUQrVCr/h8UF6pRQ1oUhP9BoEEIOzWnTZ2AFTm
+         WzFWPu2NshXunne2jVsVkIfCM5tcvSBR2upThl7qJN3V/QALmvlUqTA8HXujeRcJBmuO
+         MzCbKYF0/fvWt5f2e7mx06N/BjAGd8NvHBHmVekI/Q8WTRC3/fhk+qairE8Q+m/4quUu
+         VkiSOEEbQ1DWlNQzupHJUGSbAjHJcRG/o22IU/R4aR+AsRsdOI52b1W6U0/5rBsLpEx6
+         pJ9w==
+X-Gm-Message-State: AOJu0YyaCYt8+Lg0eqCGJAQkYou4XJoWJ7dRVNd6SXNLBCyESM+XiW9B
+	NDKw7h7T+JhCrSA0/r78f1DryjuKsM4IhsRhKXPUHNI50p64UBsPcrRD
+X-Gm-Gg: ASbGncvCRa4NQhMRhCQlS2YVlSQA6D+elNZ2b2xVt1rXREdLfMwBUmvtHjMVdSnUy2m
+	tJCowO/KtwUwNANRX+5e8dz/8u8jihN+sZgvArgX8KuCKfa6MoqhrY3MT6ZvpdlZEVFw10QUV8X
+	W7ZAD70jQUNoFYxDZPRj1uWv6cI2yIOXA4Kp4BsVa3pkdPfPVC4zR31nbu+AiiGZqA8Nh6xn50Q
+	AmGGp/iIGYvYhphucwOD0y1+XT6c+yhuklJMcb3RgXTjM/Cix+hPr6nI3tIgwY8mm2hc1Dg2N53
+	nUKsDRgaLJD7zZ3pfvYW9TBxJKbDulzcz3oJPS1AhdOJxyUVosQVDHRF0ok8MPMm8sXIlmKcNaQ
+	69+Z0vROCZgN203Fmf8SJBhvA0CmwxyWmu8kHyZ8X5NZHO09vE7CTK3Xk/ByFCjmCGJePr2/f+h
+	Jc
+X-Google-Smtp-Source: AGHT+IHphnCJhksJyqWvyJsvrXmYbLfi9r/xzvlad3ELnJf0D3xDksqImqJOBLEE/BfyIb9JtN9rMw==
+X-Received: by 2002:adf:f54c:0:b0:3a4:f7e7:3630 with SMTP id ffacd0b85a97d-3b77663994bmr1742099f8f.15.1753452144191;
+        Fri, 25 Jul 2025 07:02:24 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b76fcc3922sm5196707f8f.79.2025.07.25.07.02.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 25 Jul 2025 07:02:23 -0700 (PDT)
+Message-ID: <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
+Date: Fri, 25 Jul 2025 15:02:22 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250725-pks-reflog-append-v2-7-e4e7cbe3f578@pks.im>
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: Show skipped commit message after rebase conflict?
+To: Junio C Hamano <gitster@pobox.com>,
+ Cameron Steffen <cam.steffen94@gmail.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
+ <xmqqwm7xxn4a.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqwm7xxn4a.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Jul 25, 2025 at 08:58:29AM +0200, Patrick Steinhardt wrote:
-
-> The `REF_HAVE_OLD` flag indicates whether a given ref update has its old
-> object ID set. If so, the value of that field is used to verify whether
-> the current state of the reference matches this expected state. It is
-> thus an important part of mitigating races with a concurrent process
-> that updates the same set of references.
+On 24/07/2025 23:03, Junio C Hamano wrote:
+> Cameron Steffen <cam.steffen94@gmail.com> writes:
 > 
-> When writing reflogs though we explicitly unset that flag. This is a
-> sensible thing to do: the old state of reflog entry updates may not
-> necessarily match the current on-disk state of its accompanying ref, but
-> it's only intended to signal what old object ID we want to write into
-> the new reflog entry. For example when migrating refs we end up writing
-> many reflog entries for a single reference, and most likely those reflog
-> entries will have many different old object IDs.
+>> Sometimes I run into a conflict in a rebase and I end up resolving the
+>> conflict by removing all the changes. Then when I run `git rebase
+>> --continue`, the current commit is skipped and the rebase continues
+>> normally. Would it be possible to emit a message showing that the
+>> commit was skipped in this case? It isn't very obvious to me in my
+>> workflow that that is what occurred.
 > 
-> But unsetting this flag also removes a useful signal, namely that the
-> caller _did_ provide an old object ID for a given reflog entry. This
-> signal will become useful in a subsequent commit, where we add a new
-> flag that tells the transaction to use the provided old and new object
-> IDs to write a reflog entry. The `REF_HAVE_OLD` flag is then used as a
-> signal to verify that the caller really did provide an old object ID.
+> I do not know what level of verbosity is needed to grab attention by
+> the end user, but something like this might be a good starting
+> point?
 > 
-> Stop unsetting the flag so that we can use it as this described signal
-> in a subsequent commit. Skip checking the old object ID for log-only
-> updates so that we don't expect it to match the current on-disk state.
+> Totally untested, and there may be implications (like, control
+> passes this point in different situations where the messages is not
+> warranted).
 
-I like this direction, but I happened to be working in this area
-yesterday[1] and noticed something interesting. You're effectively
-replacing this removal of the HAVE_OLD flag when split a symref update:
+I haven't tested it but I suspect this prints the warning when 
+continuing after a "break" command or a failed "exec" command. That is 
+probably a good place to issue such a message but we'd want to check 
+whether rebase_path_message() exists before printing the message. I 
+think we could also read REBASE_HEAD to find out which commit we're 
+skipping if we wanted to make the message a bit more informative.
 
-> diff --git a/refs/files-backend.c b/refs/files-backend.c
-> index bf6f89b1d19..8b42fe18901 100644
-> --- a/refs/files-backend.c
-> +++ b/refs/files-backend.c
-> @@ -2493,7 +2493,6 @@ static enum ref_transaction_error split_symref_update(struct ref_update *update,
->  	 * done when new_update is processed.
->  	 */
->  	update->flags |= REF_LOG_ONLY | REF_NO_DEREF;
-> -	update->flags &= ~REF_HAVE_OLD;
->  
->  	return 0;
->  }
+It would mean that "rebase --skip" also prints this warning but I think 
+that is sensible if we're doing it for "rebase --continue" after 
+removing all the uncommitted changes from the worktree.
 
-and then later we get the same logic by checking for LOG_ONLY:
+Thanks
 
-> @@ -2508,8 +2507,9 @@ static enum ref_transaction_error check_old_oid(struct ref_update *update,
->  						struct object_id *oid,
->  						struct strbuf *err)
->  {
-> -	if (!(update->flags & REF_HAVE_OLD) ||
-> -		   oideq(oid, &update->old_oid))
-> +	if (update->flags & REF_LOG_ONLY ||
-> +	    !(update->flags & REF_HAVE_OLD) ||
-> +	    oideq(oid, &update->old_oid))
->  		return 0;
->  
->  	if (is_null_oid(&update->old_oid)) {
+Phillip
 
-Which make sense to me. But the weird thing I noticed is that when we do
-something similar for split_head_update(), we don't strip REF_HAVE_OLD!
+> I'll pick a few people from
+> 
+>      git shortlog --since=2.years --no-merges sequencer.c
+> 
+> based on their contribution to the file (not counting the internal
+> implementation changes) and Cc them to see if they have ideas.
+> 
+> Thanks.
+> 
+>   sequencer.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git c/sequencer.c w/sequencer.c
+> index 67e4310edc..677d6105dd 100644
+> --- c/sequencer.c
+> +++ w/sequencer.c
+> @@ -5369,6 +5369,8 @@ static int commit_staged_changes(struct repository *r,
+>   			goto out;
+>   		}
+>   
+> +		warning(_("omitting a step that has become empty"));
+> +
+>   		if (!final_fixup) {
+>   			ret = 0;
+>   			goto out;
+> 
 
-(For those not familiar with that function, it notices when we are
-updating refs/heads/foo that is pointed-to by HEAD, and then adds an
-extra HEAD reflog update to the transaction).
-
-So as I understand it, right now we are doing an extra check_old_oid()
-on that log-only HEAD update, and after your patch we would stop doing
-so.
-
-Which I _think_ is the right thing to do, but it made me wonder if the
-transaction were ever non-atomic. That is, could we split off a log-only
-update that succeeds, even though the old-oid check for the actual
-ref fails?
-
-Historically, I'd guess the answer is mostly "no", because the point of
-ref transactions is to be all-or-nothing, and to do the locking and
-old-oid checking before writing out any updates. But I also think I saw
-some discussion of non-atomic transactions recently. I didn't really
-follow it, but is this a potential problem?
-
--Peff
-
-[1] If you are wondering what work: it is the fact that at least with
-    the files backend, we will happily overwrite a dangling symref even
-    when the caller asked us to make sure this is a creation event. That
-    is easy to fix, but I was surprised that some HEAD updates failed
-    after doing so. The problem is that the reflog update for HEAD did
-    not clear the HAVE_OLD flag, and my solution was to do so (just like
-    split_symref_update() does). But as your topic here shows, that will
-    probably result in broken reflogs. And we should be checking for
-    LOG_ONLY in check_old_oid, as you're doing here (which would also
-    fix my problem).
-
-    But that also makes me wonder: should ref_update_check_old_target()
-    also be checking LOG_ONLY now in your patch? I guess not, as it does
-    not use HAVE_OLD at all (that is just about the oid). We get the
-    equivalent behavior in the split-off log-only transaction item
-    because we just do not set "old_target" in the split-off item.
