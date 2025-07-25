@@ -1,147 +1,134 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BCD24418D
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 14:14:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95F11C6FE1
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 14:35:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753452891; cv=none; b=d5IQU1glBPTlNqosAyoICRYvTW6R4k72sPNlXYQ+eeDcDqIK126EZRq8Hq70qj9eDIn+qqIGjOd3E+JjiY1arP+mP/OVp2SI/Psi/Xkk91PcIMAbe/PvZzYKK87twZtTw6GWhK79yqEQ38bKyZpAYQeBO0hjJfbIEbvG085H7Z8=
+	t=1753454111; cv=none; b=LDE0W9nM8hhnRINYOcFrzaHR4rsok1CK+e9YN7FkKLOZVxLzt1kqlPZngghI8SXWRjQkuuE0FTQ2wXmTG/oINrsfZCzZO+E/gyeP08HjWJZxkT+rQ8L8xL6nGd6sybqnbTbwselkzC9L+2ClkkhOjBJ0TlfUdKej2LZ2WOjyj0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753452891; c=relaxed/simple;
-	bh=Od51u5yrTYDFiJGHrdxcskf81LeJOIOVKEGaPMdvfWs=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=luFeAoemJ3qxFwMyOQC/CUhyVLvOTdE2T8tulVxYbZjqbdvv0EmJPao4HNEKZsDBzBuOa8RIS19zGVHvxvv3AOBRALD6hhkPyqUhj8HM9kcadm1TVmulW90ZWUotESU61fwKXA0gGMD2KQ+hTaQp8bz18fSOXrZzkiHLgCfDZP0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mcOtXc47; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753454111; c=relaxed/simple;
+	bh=gG93spxzSWaRWqwBXTa+gsaXIUmD0XK2dQxpqcY1HB4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M69shtFlu8PnFAG78ju+zJS0uPWJ35J2PbyrKCXfxyuiBRRj65Fa9LVbTYbIaIqZbmwoyR7V9jtBgqdsSAZZ+EChy3R9kDv5K/+37vHUM8hFzpmCecRJhpY6X4zqFeEIUmkcHUJx1EUgTShDNQCE8XYIV2o7eQzHI5GjguT3hLA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=q30sbz4L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ilIvGuP5; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mcOtXc47"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a4e742dc97so1852958f8f.0
-        for <git@vger.kernel.org>; Fri, 25 Jul 2025 07:14:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753452888; x=1754057688; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=n99Ze38sslU8aP+yyEp2ZiC8WxGt2qSrbU4Nzh//qhs=;
-        b=mcOtXc47MgN8wzJJO3lXlg00+fBAzQnd4coUCT+8NukqteiYDxc+BId0RorEfszasb
-         NxRMev1vCqFKyZGwSJpltMKIF09GMIaMyi1bbyx7jUe8ei//P3AiauNIs0i/64RGNJ8I
-         da2LtP0N48dC0hpjAU4AspkVwtUxFH86cZyTT7SBw57WnOFIqmwuul23Kqa+PDRQzOHm
-         Lf136e2O785hrb+Tzuw54ZKEUC8X/shbFWHREC1af7SrKVs9PBAaX34Qs1zLdT1Oznqt
-         WhM08Hilh6n2ODmx7llC71QkMLk/gNaFC/m2xc2t5EDQaZ04ilXwo5rR0MgPtDWcBhhG
-         v4MA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753452888; x=1754057688;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=n99Ze38sslU8aP+yyEp2ZiC8WxGt2qSrbU4Nzh//qhs=;
-        b=mqElaFWDKa4PbUd3BvAYMOp7UYB3ct+HGipWGpLSLje/HStwupxwniOqWUSHmn8pZj
-         9xZvNR5iXx0CcVY9HJMETaSkZxtwU8Ug4Tiy7aJYuH/r2+w6U6vCg/eMUcltxzBbgYOb
-         JmB1cfKEWFZLoL9SlCl2KDZsjWhZ5LS0NBK+Vnh2ZIerplW6N4fX98l9yY1IIOtYz/J3
-         B8D0jxw5X0PsZlCpgqtSgo7bCaBbGaCaihlBOl+jesMohMLM6VgMR2LAFCfP3fspXz1Y
-         Z90mHAlwUpX2Ny28fUMcxJW7CWPBOhng0jbyraRp38iKa8dgym0X8XHnK1egQNyFH7Re
-         VjFQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWD3B5f7IfppxCcp1zL0avC8zWBkRX3jaQq2HCnfCES1h5Ic9lihvGhMswLimik/tBZBmc=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwolrlLExSMj+DHQHtpU608ptku+Lw4xxLwmgLPTN8pFXfocqWq
-	c90Zug5v23n3xlfMhM+6G50PgClyAMfz3q0yGf1o4RaNHIsBGCF1hwa7YBMHTrrbDjbcM8FCXIN
-	iq5FKACU04B23qYPZMxb1s/5XuguDD7Q=
-X-Gm-Gg: ASbGncu56KxL/RLMrjhKVc8NwuTUdkaRPhsm+YA7P36Byxwg3JWAzYlNx/YcGWbVmXq
-	+nsO1notQCfNyszXpO+Zn42/v1smCatFAlsclGZejrbQq3PF97atFyNe6aBNF4DGp03WA1PqpQB
-	iWXRxmHqVFblRa7r4DmWyKrCHnBJ6NKjakKg7pJXS7g1gb40i5ldAYK3LDAv104nhiZ/7HEZMQU
-	e/9EvBc
-X-Google-Smtp-Source: AGHT+IH7mFVlyf46cFrP9JhGtqPEO3cByhz2oZgldqhkyHxiZvbxSgDHpcqQSYXSt1hF8fp64qeQ496Za7IOKa8N24Y=
-X-Received: by 2002:a05:6000:2889:b0:3b6:1360:e456 with SMTP id
- ffacd0b85a97d-3b77665fd07mr2183543f8f.22.1753452887833; Fri, 25 Jul 2025
- 07:14:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="q30sbz4L";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ilIvGuP5"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D40BB140050A;
+	Fri, 25 Jul 2025 10:35:07 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 25 Jul 2025 10:35:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1753454107; x=1753540507; bh=Eg6JBbl2FH
+	S9+sinjdYur0gR/34xo1BmY89+mz25AwQ=; b=q30sbz4L0KHvpLY70mb2Ixfsjg
+	8v/QQNGR5/7UuyJyIIz3u6Khc3P5y1oYxfBfy7EskWLXNRQYH1Y1GQZVzZ7hsYjA
+	LPu0LD/QrPi6FM52MdmlivsU1WlA28O3J/mls+vCOXE6eCpfrmzV3SAyoeLyLMhM
+	GmlYf6s86Nfbla/5RZSLQMa7FdfuynK/vX2NLgJIlBZidDKU2sa8yhbgEPrVRHnE
+	4qCV02N5WJZX46lT85TK4+CW0BgwsSSGxaftP0dgTPapqch80lzP43IQmP4i2vDi
+	Hpzp+7mbg7IXhQOK6toiWA8jxztXvT98nZ4zmt/9KMqJ9bjZVXpp/bp6u2iQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1753454107; x=1753540507; bh=Eg6JBbl2FHS9+sinjdYur0gR/34xo1BmY89
+	+mz25AwQ=; b=ilIvGuP5Crrq1hrPcOu3jde4WyGvtfSI+LQ7IY6VmtUX1pPwzYz
+	2CoJU66ox8898SNIgdMm6A0Wzd7KJOqF44C+ZAMvfvVu8C/55IsTXC0ObqMWeUG1
+	49PfL8klkoTe0x0+buadnOkgLX7w18k6+EN6EwPmIXte0rdAYs29EiEv1GN9p/+8
+	T3+U/G97N+Ab0PLFGJO3GBJd19ltM+3gQ81i0MKeiP6OICDxUQW1lQ+JqG8VTXz0
+	jxyFvrys+Qw3jwrN0NnxptORahU7zICwz/V8y2/qPgyISjQEEe/Rx0vPyp759qMi
+	EpJftIYP2pRO2M2idwZ94y5KhSWl1ZGLpTw==
+X-ME-Sender: <xms:G5aDaJ6u369o7v3kbt7RqytXnqZgaCDh_L1SqWE4847HdFVGqAp9Hg>
+    <xme:G5aDaCbg2XlyOfZ_p0oF9De78UpG2BUqxy00Pq0raetp03mJWw9fUYJFHyB87gA5k
+    kDsWAniKw5ENtVHYg>
+X-ME-Received: <xmr:G5aDaG6-z73EeTJBLfgPI_PHsL0YWus5c_8AFprhjUCe8b-zFgW-ogE4yA-Rwl95fNiwQ02gAJNwBsfkWytfi2EH7CJGNpDLDSZ9g4g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekfeejlecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshiivgguvg
+    hrrdguvghvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:G5aDaNClCJ2MZ0gjJl2aewxroeHxr58B-fLIpVOArfYAmF-f02qlBQ>
+    <xmx:G5aDaEfTY-F4sf9Z5TmznunBLA_QKzYxrSoXbCR86EjPhDsVZlU9qw>
+    <xmx:G5aDaEIHAFXVLW0PuADUGnA4Qnjo91i5RT5m9CRFLNtC_wszBRHRWQ>
+    <xmx:G5aDaH2k0Ruc4hLJzK5CjXZuZdGCM70NecMOjxglBspYnnZBVZvnvA>
+    <xmx:G5aDaEZLogcC6_3RQ0rmhAD2XC692KJ66A9CzOdoIoYQ_PvFHYLqxY7c>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Jul 2025 10:35:07 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder.dev@gmail.com>,
+  git@vger.kernel.org,  Karthik
+ Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH 4/8] builtin/reflog: implement subcommand to write new
+ entries
+In-Reply-To: <aIMX1nHa5E5Hn95g@pks.im> (Patrick Steinhardt's message of "Fri,
+	25 Jul 2025 07:36:22 +0200")
+References: <20250722-pks-reflog-append-v1-0-183e5949de16@pks.im>
+	<20250722-pks-reflog-append-v1-4-183e5949de16@pks.im>
+	<aIJdSCPEHoiWWxrP@szeder.dev> <xmqqa54tz454.fsf@gitster.g>
+	<aIMX1nHa5E5Hn95g@pks.im>
+Date: Fri, 25 Jul 2025 07:35:05 -0700
+Message-ID: <xmqqjz3w5ofa.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
- <xmqqwm7xxn4a.fsf@gitster.g> <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
-In-Reply-To: <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
-From: Cameron Steffen <cam.steffen94@gmail.com>
-Date: Fri, 25 Jul 2025 09:14:36 -0500
-X-Gm-Features: Ac12FXzUtWBoiUuKLv7H0Xc-M5RcOtow_3hZtMDFKQoZLgwS4jWfvNw6pq8TmSQ
-Message-ID: <CAAVFnN=q5nCD3K1jppVcq7qB9P5WX0M070jqR_rey2hzBt0ERA@mail.gmail.com>
-Subject: Re: Show skipped commit message after rebase conflict?
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Kristoffer Haugsbakk <code@khaugsbakk.name>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-There is already a message that prints in the case where a commit is
-automatically skipped if the changes are already applied.
+Patrick Steinhardt <ps@pks.im> writes:
 
-> warning: skipped previously applied commit <hash>
+> Sure, I can rebase this on top of v2.50.1. It would then of course
+> require some smallish fixes when merged to `seen`. The below patch is
+> what is required to make it work with the v2.50 track.
+>
+> Patrick
 
-Potentially we could use the very same message.
+Thanks.
 
-On Fri, Jul 25, 2025 at 9:02=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
-.com> wrote:
->
-> On 24/07/2025 23:03, Junio C Hamano wrote:
-> > Cameron Steffen <cam.steffen94@gmail.com> writes:
-> >
-> >> Sometimes I run into a conflict in a rebase and I end up resolving the
-> >> conflict by removing all the changes. Then when I run `git rebase
-> >> --continue`, the current commit is skipped and the rebase continues
-> >> normally. Would it be possible to emit a message showing that the
-> >> commit was skipped in this case? It isn't very obvious to me in my
-> >> workflow that that is what occurred.
-> >
-> > I do not know what level of verbosity is needed to grab attention by
-> > the end user, but something like this might be a good starting
-> > point?
-> >
-> > Totally untested, and there may be implications (like, control
-> > passes this point in different situations where the messages is not
-> > warranted).
->
-> I haven't tested it but I suspect this prints the warning when
-> continuing after a "break" command or a failed "exec" command. That is
-> probably a good place to issue such a message but we'd want to check
-> whether rebase_path_message() exists before printing the message. I
-> think we could also read REBASE_HEAD to find out which commit we're
-> skipping if we wanted to make the message a bit more informative.
->
-> It would mean that "rebase --skip" also prints this warning but I think
-> that is sensible if we're doing it for "rebase --continue" after
-> removing all the uncommitted changes from the worktree.
->
-> Thanks
->
-> Phillip
->
-> > I'll pick a few people from
-> >
-> >      git shortlog --since=3D2.years --no-merges sequencer.c
-> >
-> > based on their contribution to the file (not counting the internal
-> > implementation changes) and Cc them to see if they have ideas.
-> >
-> > Thanks.
-> >
-> >   sequencer.c | 2 ++
-> >   1 file changed, 2 insertions(+)
-> >
-> > diff --git c/sequencer.c w/sequencer.c
-> > index 67e4310edc..677d6105dd 100644
-> > --- c/sequencer.c
-> > +++ w/sequencer.c
-> > @@ -5369,6 +5369,8 @@ static int commit_staged_changes(struct repositor=
-y *r,
-> >                       goto out;
-> >               }
-> >
-> > +             warning(_("omitting a step that has become empty"));
-> > +
-> >               if (!final_fixup) {
-> >                       ret =3D 0;
-> >                       goto out;
-> >
->
+
+> diff --git a/builtin/reflog.c b/builtin/reflog.c
+> index bc7e7f5e442..d3f0009cb0e 100644
+> --- a/builtin/reflog.c
+> +++ b/builtin/reflog.c
+> @@ -4,7 +4,7 @@
+>  #include "config.h"
+>  #include "gettext.h"
+>  #include "hex.h"
+> -#include "odb.h"
+> +#include "object-store.h"
+>  #include "revision.h"
+>  #include "reachable.h"
+>  #include "wildmatch.h"
+> @@ -426,13 +426,13 @@ static int cmd_reflog_write(int argc, const char **argv, const char *prefix,
+>  	ret = get_oid_hex_algop(argv[1], &old_oid, repo->hash_algo);
+>  	if (ret)
+>  		die(_("invalid old object ID: '%s'"), argv[1]);
+> -	if (!is_null_oid(&old_oid) && !odb_has_object(repo->objects, &old_oid, 0))
+> +	if (!is_null_oid(&old_oid) && !has_object(the_repository, &old_oid, 0))
+>  		die(_("old object '%s' does not exist"), argv[1]);
+>  
+>  	ret = get_oid_hex_algop(argv[2], &new_oid, repo->hash_algo);
+>  	if (ret)
+>  		die(_("invalid new object ID: '%s'"), argv[2]);
+> -	if (!is_null_oid(&new_oid) && !odb_has_object(repo->objects, &new_oid, 0))
+> +	if (!is_null_oid(&new_oid) && !has_object(the_repository, &new_oid, 0))
+>  		die(_("new object '%s' does not exist"), argv[2]);
+>  
+>  	message = argv[3];
