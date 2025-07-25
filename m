@@ -1,107 +1,123 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB7E2BB17
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 16:11:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=78.32.30.218
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810D12BB17
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 16:11:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753459875; cv=none; b=h48W5mkNWZZKtZAF76J2jcCLrCF04pYIWGXFQYrekk2ldKGOp4FMXjG+nQSIGIduqBAxhxPLyi7d6eyMfdtQk8ovtYQ01Vr5LpMwX3cBNoRdOGMsDyU9wrj43ghmixs6AriI/IZKuXjMuu6Z94rdAKT8OmGo6ohuvHoU5ciSvKI=
+	t=1753459917; cv=none; b=V6NHpfX/mIuZuYVq1ww4AvHLu6BSyHD43EhSLQV954Zw4p/eTKftU23Dg32AFRJvayx3lhOBp0uZMrBFsIiM0biMQcl0vD/wHc4JBrHmWkF8kIxHP09EnJXnfKvHPktLZz0oTtcptuHTZd/FeigpABAUadSvlR2GYfBBbimUUyE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753459875; c=relaxed/simple;
-	bh=bNi+K1XdTjgSvtF67TJgRE8oTd3hnOJtPIP9UPIpr7M=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=J9uw6DcGcoGCzxhj6aDJFcmAED9pIHXqHiBBgn2iovc1/QbJ9cLCh21Z5qoWgQxlAHpowlpyAxAbHjQ3XZytvVSsW0tke4HJuSjDkpZwxw8v0bO7kk+f1qtbIWgIE2UjRdgPge9JAH4E7cmHP63XCFYcZKFybww30Q2VcbgCL9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk; spf=none smtp.mailfrom=armlinux.org.uk; dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b=lxpodOxx; arc=none smtp.client-ip=78.32.30.218
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=armlinux.org.uk
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=armlinux.org.uk
+	s=arc-20240116; t=1753459917; c=relaxed/simple;
+	bh=VZWuxahGlgj/T6cP7kLQwptUF0yrFAOGclgRXrZo/Lk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=FbyA7pbAX+5r5HUE7pza0YMjlPFcpzDVT/g+rsmsXScVZHVhV3plN9AbgtGdg7yb7ur70lCMuWkcIknSbBJplCB9mtmWYezZjUFyKqEYSnL7osCxZCjUw2UA8da579PjHyGTkTPI+K609Zpb27AuyW47UuC4WHVNl/nBdVMEjL4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P9dQ2l7R; arc=none smtp.client-ip=209.85.208.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.b="lxpodOxx"
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:Content-Type:MIME-Version:
-	Message-ID:Subject:To:From:Date:Reply-To:Cc:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=6h7TLbcHZtGebz/ov0Owp25CydAjX8Xrl8vKD8G+vVg=; b=lxpodOxxKz7j0Vhk8iOLZUvClP
-	h0mVRoJUzpu6aHANFlvq9UkhAag3tvJ5nrnQ7MH0q14/w7Fn8fa7VLGFHZjKy/fpI7wPMS8nRy7oy
-	UffFIYEtvBG4lh3IK4xar5CAIsexEA41oYM/J3lD/W49VXqL8sHg0IOK3iu6wOCFlCj9lO5nDEkjU
-	NKpf65O8gGI4LfmWx/SFKk3PFkNWz83mNX3bgu4Fkxf0eKhOUM7jyqxjO8kz6bqOLzzdxRLpHcX+n
-	lpurbsnqcMwN0pe7zZZMPIxTDjIxspgcXxKEU6wgFBTBJKLPBXMNIRR2DexEOFle5iYyNPAHZgogR
-	an2N0Opg==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:41446)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1ufL0i-00050V-0R
-	for git@vger.kernel.org;
-	Fri, 25 Jul 2025 17:11:04 +0100
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.96)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1ufL0h-0001u2-0D
-	for git@vger.kernel.org;
-	Fri, 25 Jul 2025 17:11:03 +0100
-Date: Fri, 25 Jul 2025 17:11:02 +0100
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: git@vger.kernel.org
-Subject: [BUG?] git-daemon 2.49.0 in F40 no longer exports user directories
-Message-ID: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P9dQ2l7R"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-60c9d8a169bso3800376a12.1
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 09:11:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753459914; x=1754064714; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WbILZX7uhXF3KNgk9saOgoZGBldZZVIrO5qVtC+Q/k8=;
+        b=P9dQ2l7Ra8Z1+a9vtxa1HmM155TEj0DvLi73xRp004Qw1g8I8kkGodBKJiP1lJXWqT
+         XYCFS9NGa0e0W0G3NW/FbYR598PBFzVB0qllJUU8WUMczlcgbxnwKmu0/HdtseK74+eL
+         PC1w9JUCD9dn20hzn6Dw/gA+1o6inT921KTBE5rWw7yuZZIACFBbgKvFx0waSNEIVSEb
+         7ix7s6kLmXpnRYq4dTc4/gzmRlqD8d10S+fmHwVCqintlSbrK3ojLy94XV1960dUBoO+
+         uc4eXgwoMn2N2wBXFmV5Olvje7w/TA+YbHiUXoO4skfLtBK3khsoekQdmXT5ZWn12s3N
+         0Aaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753459914; x=1754064714;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WbILZX7uhXF3KNgk9saOgoZGBldZZVIrO5qVtC+Q/k8=;
+        b=K2TAGanWvqupFgfy+HD9OfhUQ7kVk8uw4zkfW01u/CtN/cisbLxiqcooD8FaEroAwq
+         QG2Vm1638rqYdljuYgeuWuolW6dJcvXkE7R/VOcI/VSAINSH/cxSzdugXt4t6QQzbOEm
+         aNyeG0ZYqXLcWTq5WfzEJ+v+5vP9fNbafE/7rQSQTACg0QeaMaVgUq7k/OZRaDuWp2m3
+         zm75Ep+3VR0h2hMDuA7Xx42oRIFJ8vrmv2PjA/VZd2RRNRSdqeAWIjwXT3YPqI7htHQp
+         /v6RrO62E3X8d1o3SdHA2Ol8l9rlZaus9bDMTrJHpik6NnSavmnUZkczGp3ZsDo/dtl6
+         qJ1w==
+X-Forwarded-Encrypted: i=1; AJvYcCXAE4OhvgbB+Fgb/XtGEBee22JnwylDswcp51ycZ5ti4Im3Z6+BGHXfOEH0gKZv3jYyMQk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyxz2Qwyy2GQVCc5BAnHmxjVBWvvldx+MorV3DaGZvRZ/pVV5QW
+	aevPxgPL+SynUkExicqoDBTW7IzaEsjcouxBH87ho7r0YcriTFjn9c6KMsemqRkLi0d0k9H1p+n
+	l9IA+DJo1On/ZUM+F7vtII6eOEkYxlj8=
+X-Gm-Gg: ASbGnctkTSrI1TPQUVXRlEHz0zwJJ/O/bpY+Q8V23gT913sQbd0iFf1AuJpQNtLRulW
+	OB9cYDJ7UI0vs4fZViIUTTlFm/4WizP1NKNQZfiybJXl0yEtS9vG5a5vtlI3yR05ZtfSg+86WhY
+	fk6fm+7+5nUUe1VYycrBcvLkLfJfnD7XkpzQWy64TVD38nFsdpNKOFfYS5xgPLDA38qEiQOjtmq
+	Gv6NT0h/g==
+X-Google-Smtp-Source: AGHT+IEoegn4ZS/uRvuwn3C8aPRKe5Dgle3ZU938I9W372PvZ6odlBHNG7F4EqJrh10UmsGsJPU3gmMOPkhtLYgZA3Q=
+X-Received: by 2002:a17:907:7b8b:b0:ad8:a935:b8e8 with SMTP id
+ a640c23a62f3a-af61c2aeebamr286360266b.5.1753459913215; Fri, 25 Jul 2025
+ 09:11:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+References: <20250708091738.4072857-1-christian.couder@gmail.com>
+ <20250709141253.623563-1-christian.couder@gmail.com> <CABPp-BHM5afgiUf7GsTPWmrf_tm6mWnvHWMKiZPxApJzN-U8gg@mail.gmail.com>
+ <xmqqikjulb5d.fsf@gitster.g>
+In-Reply-To: <xmqqikjulb5d.fsf@gitster.g>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 25 Jul 2025 18:11:41 +0200
+X-Gm-Features: Ac12FXxp_GCnTLXq3gKYilSXHyJWxL_n1omGy8j1_57DCGb8Ky-vMWv9Vzo8FAI
+Message-ID: <CAP8UFD37JWpWoyMfpP1i6454ib14Jbg33=J=KgVBF54xp-d4hg@mail.gmail.com>
+Subject: Re: [PATCH v6] fast-(import|export): improve on commit signature
+ output format
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
+	Jeff King <peff@peff.net>, "brian m . carlson" <sandals@crustytoothpaste.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Mon, Jul 14, 2025 at 11:23=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
+ wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Overall, the patch looks great now.  There's just one little nit-pick
+> > left; I'm still not a fan of tests of the form
+> >
+> >   (
+> >     cd dir &&
+> >     git fast-import
+> >     ...lots of other commands...
+> >   ) <output
+> >
+> > because I think the "<output" should really be moved to the "git
+> > fast-import" line since it's only meant to be used there.
+> >
+> > This series adds 2 such tests.  You did point out in the discussion on
+> > v5 that the testsuite already uses this idiom and you wanted to match
+> > existing style.  (Though there were only 2 tests previously that used
+> > it, and you already modified both as part of this patch.)
+> >
+> > However...we've been through enough rounds and this is really just a
+> > nit-pick; I can submit a follow-on patch later to clean up the four
+> > tests and see if others agree with me that this is an eyesore, or if
+> > I'm just weird.
+>
+> FWIW, I think it makes sense to ensure that the "output" is consumed
+> only by the intended command.  And "there are already two cases"
+> would not work very well as an excuse to add two more to make the
+> codebase even worse.
 
-While I've been away on holiday over the last three weeks, my co-admin
-updated ZenIV to Fedora 40, and now I find that git-daemon no longer
-exports my "public_git" directory. My attempts at debugging this have
-failed - I tried adding strace to the git@.service but I get nothing.
-This is a regression.
+I have just sent the following patch to fix all the instances of this
+in t9350-fast-export.sh:
 
-Having spent quite a while trying to get to the bottom of this and
-failing, I'm reaching out for some help - especially given the
-proximity of the kernel merge window opening this weekend.
+https://lore.kernel.org/git/20250725160536.2909011-1-christian.couder@gmail=
+.com/
 
-The log indicates:
+> > I think it's good to merge down.
+>
+> OK.  As long as somebody promises that the result will be cleaned up
+> soon later, I am OK with that.
 
-Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] Extended attribute "host": git.armlinux.org.uk
-Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] Extended attribute "protocol": version=2
-Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] Request upload-pack for '~rmk/linux-arm.git/'
-Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] userpath <public_git>, request <~rmk/linux-arm.git/>, namlen 4, restlen 15, slash </linux-arm.git/>
-Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] '~rmk/public_git/linux-arm.git': not in directory list
-
-It seems to detect that it's a user path, and adds the "public_git"
---user-path to it, but it seems to fail to translate ~rmk into
-/home/rmk.
-
-/etc/gitconfig contains:
-
-[safe]
-        directory = /var/lib/git/git.armlinux.org.uk/*
-        directory = /home/rmk/public_git/*
-
-and /lib/systemd/system/git@.service contains:
-
-[Unit]
-Description=Git Repositories Server Daemon
-Documentation=man:git-daemon(1)
-
-[Service]
-User=nobody
-ExecStart=-/usr/libexec/git-core/git-daemon --base-path=/var/lib/git --export-all \
-          --user-path=public_git --inetd --log-destination=stderr --verbose
-StandardInput=socket
-StandardError=journal
-
-Any ideas what is necessary to fix it?
-
-Thanks.
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Thanks both for reviewing the previous patch.
