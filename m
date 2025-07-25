@@ -1,134 +1,109 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E7417A2F6
-	for <git@vger.kernel.org>; Fri, 25 Jul 2025 15:20:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B38B77111
+	for <git@vger.kernel.org>; Fri, 25 Jul 2025 15:20:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753456847; cv=none; b=dWMHSflkwE0tnko9zugVWqXsbUvpyxdii2Op6QsmfvGUC3ar4QJX7nMNyvaNaAyYKyBBLVhm4DIyjff2lRVYVrV9XeHY0UdUIz41bbV/w5b06ZFnKrWcjGSyqjohyJ98Ik+B3Pu+kDtVEopVvUGE33xMxkbFYVNTzEU4Vzur+5M=
+	t=1753456861; cv=none; b=O01QFC66fVQ25dZizBOTd4Iy3i+5frEc6vAilLmGm+beXP7nuLTf35CHbGboE3XKtavM0PM5jdlfenqgn5fm/EI+xVXyiOyt7h/yHT2sjfZugRj3ULivap/XAWdd41pELLvDtFwTokAGwA3L2HDHZTZ920RvxjVEh0LvHymI/fg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753456847; c=relaxed/simple;
-	bh=FIWpi28YHye0WeHIlg1aTsx7Tscee1GC8EH7FRDe1Z8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sJ9Y6LudGMmrwlxCOOLfN8dJm04PYrAxbA+OWToYc/OMem4w0g9/AjpmRjw+QCsSJm0SpAkFOvNTAtEwyileAbmS7t7slLp4EylA+3v5Mcnd5U0yNgZg1aK6RiFTQrXKbKposP2S9gcdg64ObYcaKUJDtuI0kYedGgn0Yi1k0yQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fyTsbDNe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=klW8gAo8; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753456861; c=relaxed/simple;
+	bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jrUZCyBKnl6zS8lOUrcZNTReCzuSKrU3ldHcCcDj4eh0qWMToKnAgm0I/2sFZx0c/GeJbnLxV/2c03Hkpi1sXlbUfQiqM9cVfA7Cd1QH8Pj80wEMfHyQN8RLJ1HiYFsCb8P2JCx7MMWmWA5o/Zjbviy7w26RTgS5bDclMbEyvaU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhCqasZ4; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fyTsbDNe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="klW8gAo8"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0D045140054C;
-	Fri, 25 Jul 2025 11:20:45 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Fri, 25 Jul 2025 11:20:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1753456845; x=1753543245; bh=z2TJepsxUD
-	yTD9NBUHM249BVUXrqg8ZYJ5e38NfkC1Y=; b=fyTsbDNejA7PWOKoWs/RfEFdaf
-	lCTT5IIylTp8saXT9FgoNWkOzkw4vXzZDPHCyHsm0dYeS17wIaKufm/VTuLnOyYk
-	MYc6V/leyc1W7C5MMe+LTkg6jawzJGOiyC9QkB5ZCqQYnpy4fFQwZmnTiltiowuy
-	cJHiCB/FssGcxx3JbJwp+NN2roCxnDVeXPWrjoX8l7Q/S3+Kmwgkvn63W/DrP02t
-	h2u7VBwTuT1heJbmhFRZnYCKwdbHeEjGQF0q1h2BY3QD2GFc6fGhlfZYnCL62cHU
-	itLGIIE0a5r96ubFxDriyK2nAw8y+KpciBoLiqABmpI72kcEK7UA8+60f0HA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1753456845; x=1753543245; bh=z2TJepsxUDyTD9NBUHM249BVUXrqg8ZYJ5e
-	38NfkC1Y=; b=klW8gAo8hxU5ChR10EqxZOQZz9i4qNEcKQfpDPFANruBmDbh7NI
-	1ifmyvOsX8zoJJx8tM4xDLp0nxEW6ZPnSgp9PYEIjP3NucYneWZvi+lOMEwxVuTh
-	QW5prTqWU5Gu+Cmyl9FebwKawQz2TAYuDSltNJoUTeEFE8BVVZyp/4oEJdZDdwqk
-	eQeXMcxecPL1NQ+xaduwN1fPWxfKFWEZd6HIJF4zSVYIm6X0S5qZzNB+rjAa4xQr
-	M1OUpVS+wwzXrxMcUN3SyrsaMiswIiOJg+9Usg1huMY93AV3zYYE7NqlaPdfa4tr
-	VVX+MuB6GYTSH2hLXRWg5ihR/7e+ap0cWJg==
-X-ME-Sender: <xms:zKCDaJuEW5uq9f5jF6XqaHeqGwLgghCuRXG98kLtWkOuwW2YRgis7w>
-    <xme:zKCDaK4SwlCnIeLMhDM1pIk9k0w_qa1KPp46CQdCJjmB-QnaeC2QuQLh6569ni2Xx
-    LhfENWDLkQ_ZJlb7Q>
-X-ME-Received: <xmr:zKCDaNO3v7-ra-uuMZaR9V1u63YnRTT-1MaeSN643p68B76hOwsI6a4jANRJjre9MOBpk5_wMVlHuGlIb4QyimTeODE3XMZIjP73wWo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekfeekkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohephh
-    hisegrrhhnvghsrdhsphgrtggvpdhrtghpthhtohephihlughhohhmvgdvugdvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehmihgthhgrlhesihhstgdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zKCDaAumwroYpzYNjyTkCq3jGwwCq3BQFNVZYW1AHPPvxKrs0tIRqA>
-    <xmx:zKCDaIazYpGvzbQHgdhOYM9YKGCYabQurXyRjpPJhCrB4fWK2WMwwg>
-    <xmx:zKCDaKxK4VXSCPb5ukjR-I6vKvh-DHcJdLVlUIOTYtcDiC4Jh75Wjw>
-    <xmx:zKCDaIhXYfcZlh30mAV-t8AntuCPecJ01b3aV-UuhFbvAz-rFebqhw>
-    <xmx:zaCDaExYvLlO40vhgcFd333BfLYQCI3TTpuRmcfsVV6vDqY2co4vhfYq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Jul 2025 11:20:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: hi@arnes.space,  Lidong Yan <yldhome2d2@gmail.com>,
-  git@vger.kernel.org,  =?utf-8?B?TWljaGHFgiBLxJlwaWXFhA==?=
- <michal@isc.org>
-Subject: Re: git-diff: --ignore-matching-lines has no effect on the output
- when --name-only is used
-In-Reply-To: <20250725111139.GB3014187@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 25 Jul 2025 07:11:39 -0400")
-References: <87a54v8nmz.fsf@arnes.space>
-	<12095AC3-BC38-48DB-95B4-394F9F7DE054@gmail.com>
-	<xmqqqzy6omul.fsf@gitster.g> <87v7ngstc8.fsf@arnes.space>
-	<6A35A7CF-966B-4EC7-B575-86E6CCB68D03@gmail.com>
-	<87ldocsnew.fsf@arnes.space>
-	<20250725111139.GB3014187@coredump.intra.peff.net>
-Date: Fri, 25 Jul 2025 08:20:42 -0700
-Message-ID: <xmqqikjg47qt.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhCqasZ4"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a510432236so1664979f8f.0
+        for <git@vger.kernel.org>; Fri, 25 Jul 2025 08:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753456858; x=1754061658; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
+        b=XhCqasZ4bcnt5oXmBp7VOIBMrOSGEJWGr6B1lE0kUq8TI6fnv6pnRtWLioOsQU2ine
+         jJZewUbsW9kI9BErYQeWUhjDzZTvf1tcqWxW2FJqMjgWC8dmzWLMb76cUDz0imZgX9Z/
+         mNfN/okhIW/NHkFYLRRpVInFj7HyvaGQnYMRse0CEE+QHHtyMimnnl0+IynCVFsXXYjh
+         nfACdqD36iAyUqgsd1PM5el2xvhg3yrrlV9+iqNRwJsz/6Mg5U2gkJwhGzXdLOgx4YAG
+         PcQGy/QGZPUfH6XrUhq8HQGMUZWoIj+cFDDJZ7v2q7YPXY9X1WLTxDJOznVvZt/iPSVI
+         ICGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753456858; x=1754061658;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/FK5eqMSZm6w3eqNWmM2UcB7684AJw/bAYC9BjZWruM=;
+        b=CUEqf1PIcPztHFSO688vUzWLvx1Sx69G1CNoUtlzHpCBelIdoDrNR7F2Z896ayBI3A
+         +0ao0UyaAMn+PaWz2xJaz7IT7zJgVq6hPDvU0TXp7ewopliX9lH6Fnu541uFzHR8Qngg
+         F2nw9pZ4rsJd1UDgE3IjYmeQNKQXqZymB314wjGltxae1kHc299bEbwTq8bpZ14/v7lJ
+         bFrn8kljGp9+gFRY42VqthQtk/ZQJ5CdmN9e+WhT5VWh+PBTQqq7zz5HSrrt2WJbUycU
+         HMY7Q379eQKB2B9tbcGf5v/fCF0zflyYSpOvRAXSxZLfNVxFCLLS6pYj5kfAoDoZ/Xz1
+         866w==
+X-Forwarded-Encrypted: i=1; AJvYcCXYdCaN9LOPSZnHv4XwoYEJRwWp/ufNZuS214qismTaDnIVqpmrWsdcX+CrVEnVwCoWHFA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YynUpvg0tBovm1eQZOIvTbKbIv4QzzkiFSQAaAtAt0FLcxDox1L
+	s4153A9OzjiGDAHnwfQF3IS3RG1MrUKskyyG55G5sCJTXdi/twOdkjxoacGZZH9+LZ01gTrgKjY
+	t0gnMO4Xy4femOK/dFyD+afKR1DwGUWs=
+X-Gm-Gg: ASbGncv+IwSZT0tj0/+9/rxO26TgGp2L9GhVOWv2RznFQysDpM27clat4Hb15c1Msoh
+	KKLFfXhi2hJLxyQjmtoIEkyuboHP3NCcBV3I0dWICoz7jAvDj35HjzTPe6LmHSjYZoaPouGpUtq
+	Elf7FVjGCx6Q1vg1nRUNAS68VNVSZNzAt6Kvad6FzmeYsFoOVGQx6E77cjJleEqNo2nNqzg1ZQi
+	xuo86Yp
+X-Google-Smtp-Source: AGHT+IFlYjF0XoZ6YjDdGmioWJWXbujED3VQ6LNjCkPxQu7LgY+wIZ3Qa0bmUz0L1oKNKVSXApdy0xye0zOciDFd8qA=
+X-Received: by 2002:a5d:5d89:0:b0:3a4:f8e9:cef2 with SMTP id
+ ffacd0b85a97d-3b776667125mr1910403f8f.36.1753456857992; Fri, 25 Jul 2025
+ 08:20:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
+ <xmqqwm7xxn4a.fsf@gitster.g> <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
+ <CAAVFnN=q5nCD3K1jppVcq7qB9P5WX0M070jqR_rey2hzBt0ERA@mail.gmail.com> <xmqq5xfg5o5j.fsf@gitster.g>
+In-Reply-To: <xmqq5xfg5o5j.fsf@gitster.g>
+From: Cameron Steffen <cam.steffen94@gmail.com>
+Date: Fri, 25 Jul 2025 10:20:45 -0500
+X-Gm-Features: Ac12FXynXP-EhSFLTW6eA2O7bgbvIpoNLB8J77YHH046bUxcGWbWx0tYY0_w_o8
+Message-ID: <CAAVFnN=S-bu1FNafyyH797AeBxUu+8vk5yJ5xaxCUBkBZin_6w@mail.gmail.com>
+Subject: Re: Show skipped commit message after rebase conflict?
+To: Junio C Hamano <gitster@pobox.com>
+Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
+> But only if we can positively tell the reason why there is no change
+relative to the parent commit _is_ because the commit we are
+currently picking has already been applied, that is.
 
-> I think Junio's response earlier in the thread discusses this, and how
-> we already respect "-w" for "--quiet".
+I thought we merely would need to see that there are no staged changes
+to be committed, and there is a currently-picking commit that will now
+be skipped? I don't need to know whether the commit was already
+applied. I just want to know that the commit in the rebase plan is not
+being committed.
+
+On Fri, Jul 25, 2025 at 9:40=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> I'm not sure I agree with this part that he wrote, though:
+> Cameron Steffen <cam.steffen94@gmail.com> writes:
 >
->> It is just --raw, --name-only, --name-status, and --checkdiff output
->> formats that deliberately ignore content based ignore mechanisms.
-
-Ah, from the end of that non-sentence, something like "[these
-formats] haven't been adjusted to the new world view".  The new
-world view was described with things like "-w vs --quiet" that
-changed the semantics over time.
-
-> I can see how it gets weird when you ask for --raw, but ...
-
-The "--raw" output should never change its behaviour (as that
-designed to be machine readable, and the reader is expected to make
-good use of the object names by grabbing the contents of the
-blob---instead of learning a single bit "are they different?").
-"--checkdiff" is about detecting malformatted code, and omitting the
-path from output only because it is a patch that does nothing other
-than making the indentation worse (hence with -w, diff will say "ah,
-no non-whitespace chagne") does not make sense, do practically
-"--name-status" and "--name-only" are the only things that could be
-updated.
-
-> I do wonder if changing it at this point would somehow break somebody's
-> workflow or have unexpected fallout, though.
-
-That is certainly a concern.
-
-I won't be touching the code for this change myself, but I can help
-reviewing if somebody writes a proposed change.
-
-Thanks.
+> > There is already a message that prints in the case where a commit is
+> > automatically skipped if the changes are already applied.
+> >
+> >> warning: skipped previously applied commit <hash>
+> >
+> > Potentially we could use the very same message.
+>
+> Yes, that sounds like going in the right direction.
+>
+> But only if we can positively tell the reason why there is no change
+> relative to the parent commit _is_ because the commit we are
+> currently picking has already been applied, that is.
+>
+> I am not sure how you determine that, especially after giving
+> control back the end user upon conflict.
+>
+> Thanks.
