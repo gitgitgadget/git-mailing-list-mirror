@@ -1,68 +1,176 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42542E371D
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:00:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53455199EAD
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:51:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753513256; cv=none; b=P+TLIb351sX6M98EJ2y2k4QdMd9u/gcVp+F7x8HE9dMLgZknNKYIFMWxJTp2hGPYKpS9AmhM621hKQA+/d43g6x+hR/60AGqNZCUkEEmT3zNEwivSafqtTyu94vppPdFW0xB6W/uM5ZsFkFhQcAlvicS+U2bf7yQ7OtOXvMoue8=
+	t=1753516308; cv=none; b=gqblzaA8g9Tv8/2+8IL0aTiodPkTcPdWvjQ/e58cb+ZaUr6UqKRJ75MK5H0OtUJ13J6gCaPXXvitovmxsfe1FZ49H7RyQ1bIHqN2XA9G+JEu82HRaa/y4Qr07VpZ8WVkkunJy2jKns1fGSHmae+/9fj7GJNvVY4JJgMCLL8OgHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753513256; c=relaxed/simple;
-	bh=fcgAh2acypgeKO7thUA4y/VTD3KIgY/HxP8qv3FXGzg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ejGbbCitSh9F6utX2Q2m0wbC6yxFt9S4pyhauDws01V41YXYqNj+c0bEBms648GwzXOTWXHTOP+B9AC2cNX7l3ARRZKYwzwCgppMEPfii3mrUA02+Sevo18vSJGX+TvhWx0RwXrITJLLpxGN641GtmlwRtbMa61lwydyvc5EiAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp3.bon.at (unknown [192.168.181.108])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4bpwcZ3SH1z7QVGM
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 09:00:46 +0200 (CEST)
-Received: from [192.168.1.102] (089144220187.atnat0029.highway.webapn.at [89.144.220.187])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4bpwcN08SxzRnmF;
-	Sat, 26 Jul 2025 09:00:35 +0200 (CEST)
-Message-ID: <553bd772-a92c-4782-a7aa-3092b3aa0494@kdbg.org>
-Date: Sat, 26 Jul 2025 09:00:35 +0200
+	s=arc-20240116; t=1753516308; c=relaxed/simple;
+	bh=qBlwE7SEPvJRutph5Q2V1Dhf/uNQd78zYWh2TqB8TGI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q6yzK1BJmaTV/DLVL9SL7sOUOevY6o4+xDwFM6oeNgKUKX64rIpP3/o9IRz+MCb8ykPzhbAQ+SWwGZCv5SWh6uKEpA9rJjjkKLpD4IxXOdU3nzL+VXRf2eLvV/IQ/4LJ0FHBD9n/kuW1WdrWTZB+y4ERxrisOGD9CgQAgcTqP94=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VN3um8X/; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VN3um8X/"
+Received: (qmail 2078 invoked by uid 109); 26 Jul 2025 07:51:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qBlwE7SEPvJRutph5Q2V1Dhf/uNQd78zYWh2TqB8TGI=; b=VN3um8X/dQi7ejEBNIShVwZ+mfyi7QzBXodeAEb7GqeW0FmVzeWoBW3+TXrcE2skkimk8PRRXermnoLQl09YiNwXLcIEAM3IlldPsfvs85N516IhUKs3lnjwwTb2FJfKholAEEATY068hIK+jc74eTZhcJFIi8lOyCxzfbMFPD/MIcVgQPC2ITmF0rruUeyAi3IpaVE+qJ1ZEqvRnchBRCwBQgEWp8Ay15L70JI0aRDunvUd9MmSGXEX5V7f/rTMcixm1vq/qVWhq2CRdLfuHm0cDilMv5LfQAhQuxEZnb9Hc7sw1QYIhCkZGxvGe+yGneSmOJ+jBd2DJtBF7jPJDg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 26 Jul 2025 07:51:38 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6914 invoked by uid 111); 26 Jul 2025 07:51:41 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 26 Jul 2025 03:51:41 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 26 Jul 2025 03:51:36 -0400
+From: Jeff King <peff@peff.net>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG?] git-daemon 2.49.0 in F40 no longer exports user
+ directories
+Message-ID: <20250726075136.GA3032762@coredump.intra.peff.net>
+References: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Show skipped commit message after rebase conflict?
-To: Cameron Steffen <cam.steffen94@gmail.com>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org,
- Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Junio C Hamano <gitster@pobox.com>
-References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
- <xmqqwm7xxn4a.fsf@gitster.g> <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
- <CAAVFnN=q5nCD3K1jppVcq7qB9P5WX0M070jqR_rey2hzBt0ERA@mail.gmail.com>
- <xmqq5xfg5o5j.fsf@gitster.g>
- <CAAVFnN=S-bu1FNafyyH797AeBxUu+8vk5yJ5xaxCUBkBZin_6w@mail.gmail.com>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <CAAVFnN=S-bu1FNafyyH797AeBxUu+8vk5yJ5xaxCUBkBZin_6w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
 
-Am 25.07.25 um 17:20 schrieb Cameron Steffen:
->> But only if we can positively tell the reason why there is no change
->> relative to the parent commit _is_ because the commit we are
->> currently picking has already been applied, that is.
+On Fri, Jul 25, 2025 at 05:11:02PM +0100, Russell King (Oracle) wrote:
+
+> While I've been away on holiday over the last three weeks, my co-admin
+> updated ZenIV to Fedora 40, and now I find that git-daemon no longer
+> exports my "public_git" directory. My attempts at debugging this have
+> failed - I tried adding strace to the git@.service but I get nothing.
+> This is a regression.
+
+I'm not aware of anything changing here recently, and ~user expansion
+does seem to work for me. E.g. using v2.49.0 and running:
+
+  git daemon --base-path=/tmp/foo --export-all --user-path=public_git \
+	--verbose --log-destination=stderr
+
+and then running:
+
+  mkdir ~peff/public_git
+  git init --bare ~peff/public_git/repo.git
+  git -C ~peff/public_git/repo.git --work-tree=. commit --allow-empty -m foo
+
+  git ls-remote git://localhost/~peff/repo.git
+
+works. I get a similar log message to you here:
+
+> Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] userpath <public_git>, request <~rmk/linux-arm.git/>, namlen 4, restlen 15, slash </linux-arm.git/>
+
+That is, even though we print ~peff (or ~rmk), I think we still look for
+repos in /home/peff. E.g., if I strace and substitute "none.git" (to
+make the trace smaller, since we won't find a repo), I see it looking
+at:
+
+  
+  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git/.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
+  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
+  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git.git/.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
+  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
+
+If you strace, do you see similar stat calls?
+
+
+But of course I don't get this log line:
+
+> Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] '~rmk/public_git/linux-arm.git': not in directory list
+
+which isn't too surprising since things succeed for me. But the "not in
+directory list" part is interesting. If we could not find the repo on
+disk, we get something more like:
+
+  '~peff/public_git/none.git' does not appear to be a git repository
+
+Looking through daemon.c:path_ok(), if we see the user-path expansion
+but not "does not appear to be a git repository", then we're getting
+hung up on this code:
+
+          if ( ok_paths && *ok_paths ) {
+                  const char **pp;
+                  int pathlen = strlen(path);
+  
+                  /* The validation is done on the paths after enter_repo
+                   * appends optional {.git,.git/.git} and friends, but
+                   * it does not use getcwd().  So if your /pub is
+                   * a symlink to /mnt/pub, you can include /pub and
+                   * do not have to say /mnt/pub.
+                   * Do not say /pub/.
+                   */
+                  for ( pp = ok_paths ; *pp ; pp++ ) {
+                          int len = strlen(*pp);
+                          if (len <= pathlen &&
+                              !memcmp(*pp, path, len) &&
+                              (path[len] == '\0' ||
+                               (!strict_paths && path[len] == '/')))
+                                  return path;
+                  }
+          }
+          else {
+                  /* be backwards compatible */
+                  if (!strict_paths)
+                          return path;
+          }
+
+My command line does not set --strict-paths, and neither does yours. So
+presumably you are stuck on the ok_paths. But those come from non-option
+paths on the git-daemon command line. My invocation does not pass any,
+and from what you wrote here:
+
+> and /lib/systemd/system/git@.service contains:
 > 
-> I thought we merely would need to see that there are no staged changes
-> to be committed, and there is a currently-picking commit that will now
-> be skipped? I don't need to know whether the commit was already
-> applied. I just want to know that the commit in the rebase plan is not
-> being committed.
+> [Unit]
+> Description=Git Repositories Server Daemon
+> Documentation=man:git-daemon(1)
+> 
+> [Service]
+> User=nobody
+> ExecStart=-/usr/libexec/git-core/git-daemon --base-path=/var/lib/git --export-all \
+>           --user-path=public_git --inetd --log-destination=stderr --verbose
+> StandardInput=socket
+> StandardError=journal
 
-How would rebase know what I did while I had control? I could have fixed
-the conflicts and committed manually. I could have reset to a different
-commit. I could have split the change into two commits. I could have
-removed the changes. I could have made additional changes. Possibilities
-are unlimited. Saying something like "commit 123abc is now empty" or "is
-skipped" would be incorrect most of the time in my workflow.
+neither do you. Is it possible that when invoking git-daemon, systemd is
+adding more arguments? Can you check with systemd logs or via strace (or
+maybe even ps, though I guess the process is short-lived in inetd mode)?
 
--- Hannes
+I'm not very familiar with systemd, but IIRC @-services are just
+templates that expect an argument. And in this case the argument is
+filled in when the git.socket service runs the git@ unit for a single
+connection. But I think that argument is only expanded by a
+%-placeholder, not shoved onto the ExecStart line.
 
+So I dunno. I am just guessing at the systemd connection.  But it seems
+like somehow an extra argument is ending up in your git-daemon
+invocation.
+
+-Peff
+
+PS My invocation above is obviously not running in --inetd mode like
+   yours is, but I don't think that's the culprit. If I put this into
+   /tmp/proxy:
+
+     #!/bin/sh
+     exec git daemon --base-path=/tmp/foo --export-all --inetd \
+	--user-path=public_git --log-destination=stderr --verbose
+
+  and then invoke it directly:
+
+    git -c core.gitproxy=/tmp/proxy ls-remote git://localhost/~peff/repo.git
+
+  it works the same.
+
+  I also tried taking the FC40 git@.service and git.socket files and
+  sticking them in my systemd setup, and it also seems to work. So I am
+  all out of guesses.
