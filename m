@@ -1,117 +1,126 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3AC1C84C6
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 15:00:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620F01172A
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 15:16:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753542020; cv=none; b=PENV+pTKO1HO9G05RAhaPBtYbS+T4QwTz9vw3ZKh2OvcmAPMHVcDGRDd3qCHELaXNwy95m9KCyPu2DHxjnFzSdnNG8hE/Y9tuwPdUHCzQ2ZLzV20/XmJo5jH2mxrfIVtgJbjMft7HGK5rvICWssVOBnV45h1LrQlmDX24VgucXQ=
+	t=1753542975; cv=none; b=YifzwoAUx235jLzpEqDrG3r67OyNauIk9EQ2upjhZJpmOuWz36mdPkolPGM06YZBAQNdSKqSaYcVfYWugcHcKQK3X0fu0creJtw9srrVPk2vPaHfx6BgFxFR44Dj4HtelXjcNHS2WCm3dL9k8UU6bkqQ1rEt2EgU6aig3OqMMTo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753542020; c=relaxed/simple;
-	bh=6IuP9102kBXZPvHwyZr5S2GC3jVDefZyde0NeDaQerQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=B/LUZho8iTm2V3enIcHet58+gTyzxOWUW9hNj3BmmLubJUchEHf01OSsV7Fzob8cnI0bKEKeNK0t1kzrFo8CdBcxnFZchv4p52UYIWcLQm7TQamNj0AIB0L9Wb5mtz4b9qN8REMMiX3+agg8gt5mATjgY9GU8h8Fb8PayQGThqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KA46gUXu; arc=none smtp.client-ip=209.85.221.47
+	s=arc-20240116; t=1753542975; c=relaxed/simple;
+	bh=BYFJsWTr15TmsgKdizh0mKwOE1fVsxmecJNp0MwHK6k=;
+	h=From:Content-Disposition:Content-Type:MIME-Version:Date:To:
+	 Subject:Message-Id; b=rjPPdmCH/FR1GFrgO81CRNXg5uuF2uwHevlzLoIvwFwvnSmCvxP9JH8nSsZykyF2BniA4XlKs6R5pKwM42V/vejug3IVulESxK0aL8GMYik3ursAJiaoWDckNjdwzgIm5/KUtvhQpp+4MURWmdZ9nRVcQ5dZhY/ts100Rm63Cis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UHyEpn/Z; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KA46gUXu"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a510432236so2145988f8f.0
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 08:00:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UHyEpn/Z"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a4f379662cso2147125f8f.0
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 08:16:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753542016; x=1754146816; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6IuP9102kBXZPvHwyZr5S2GC3jVDefZyde0NeDaQerQ=;
-        b=KA46gUXuQ2hERFowGYfJtlHLNkJi8uasXv93sF8SGNhaO2R8O8YE0WiE/UIALEOoVE
-         5zszQp9uDS1bCCK40tSua7gFw6ujBrVmqApNCcYO+NjyQQ/zV4DD94Bw+fQIe0KVDkkk
-         Atz5KAFMv78fLraqJiDgPZzQHRzP4JIC+SKY+tTXBEXvx7nyLaWwNYCnYBEFbWVtBToN
-         FqLSydgq2rtg8EcNc5q4iK2Lbq8ZmSFNjAME/5fH2kdpftr+d7dZ3iyWw5/OLMzlwpVQ
-         kizDUGBd6ol1IdnsoytMMaMNqoWolQ8ZZh7t/M5t3gMsKleqGDLcTu5TZmY+/LEH1aB6
-         BRlA==
+        d=gmail.com; s=20230601; t=1753542971; x=1754147771; darn=vger.kernel.org;
+        h=message-id:subject:to:date:mime-version:content-transfer-encoding
+         :content-disposition:from:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BYFJsWTr15TmsgKdizh0mKwOE1fVsxmecJNp0MwHK6k=;
+        b=UHyEpn/ZCkT+GUgtCm01aSWbdnMr4zPPu4PVWpVnC/tR+D3+yvXbTAlF5SmcYkWkO7
+         ZF+eCbZRa3JKiRamXbSeNHcNRw044JVfUL0TDZczsmuBLKDu6bJSv/GBp76MzT7p6xKP
+         TyNBoYI94C5rPifGS5ye3iglQSwaD3G+xdSsSurKWF98xE4M3Uyxg5PFoygqDnF+nsZ0
+         Tr5gYudbhfRHWZZhe/9JYVs53nsAy2cHMHNrYXh6NM8MVmk31/4Pg/rgca5W0sPcs2Cz
+         SDChFZqcXzbjOGrEYvbDUJg1vO1KoFuuXqJdmSkNOrD9CN37aIAHOPoaybVAyzuN70rr
+         S5sQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753542016; x=1754146816;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6IuP9102kBXZPvHwyZr5S2GC3jVDefZyde0NeDaQerQ=;
-        b=v9VdyMH7zqSdfUWgbkt64iXLXUEnptXCpPVjkP+CQtStDCp3/ox8lKqXpgQFaILsbm
-         d4H6j4S4LCmLeIXarN1d6+Y+Zl1jKJXwuTLclWtHEVQqaE42d1ADwVppE7r1LDbwaNFR
-         M6jbJ07wCFpSBqUY2htU5LfKrsdbeVkZXZLWA/o4n7iu24xJq8+bS7WnqsVhXM4fl3EN
-         UpLL6XMw5SJ87EYVY5GfDQWtzK8hjBDvP9BlD6kLUzDzjQdd0BsBzbGK8ul7VCkPyYDb
-         GTmksJtSfEKoJFf6wZyZNhffjRohoPlytrDBN0duPlazec4pNtIVoQn0B3YCD85fNbxX
-         oANg==
-X-Forwarded-Encrypted: i=1; AJvYcCXfj6j1k3Js6T/YVC4LFK74GZT3MNxzzmMiK7SiiJ4q2EpUU5b4AdHb/Fj1daazKf55l5w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx2j3aQ/9gOxfOOjxoPVpgxBkaMuqldILfNUZvI2GsL37d2z+27
-	9JgIWBVnEw9SEvGUOX+m/MaXb0vXlBtqkEyTxilBthRibyE3/moPNwleluZmQfbZjEMD9bO78y5
-	EFeEMKjKRGWNaLmmZsps67KVkfGS/7HM=
-X-Gm-Gg: ASbGncuxhG1JlwBjDPjAMq1HXG8Z5lMsOYopLYxBGsJINbtncS3S6M1BR8Rccmaar2v
-	dBUIvKOKTYS0+2PBeTmnFQGWzDpT+vlxKGkPuTHKRfDphLcYvPYjqyMwVQ4cGMJI9EjBfhH4XP0
-	dfAi1A3Mgcvig712HIaQkBLrievev/stLJs6urCnIr4QsSLBqrEsLbPw0ViIPSWNGXzEoZn1UBM
-	NeziTQpanwdJUQooSo=
-X-Google-Smtp-Source: AGHT+IHjuVnkDOKbl1+E+Ibpy2Z8iCgprKNMPevElvxdtrH8uLj8rSrJjNck7yH99+njm9pzbMmPMPzNxyrjVLNufrk=
-X-Received: by 2002:a05:6000:2410:b0:3b7:75dd:f378 with SMTP id
- ffacd0b85a97d-3b7765ece16mr4724387f8f.10.1753542015849; Sat, 26 Jul 2025
- 08:00:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1753542971; x=1754147771;
+        h=message-id:subject:to:date:mime-version:content-transfer-encoding
+         :content-disposition:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=BYFJsWTr15TmsgKdizh0mKwOE1fVsxmecJNp0MwHK6k=;
+        b=Bk1TzUvEr3I3DtN5WSaMNWEWSQxgDpqzhTuUsBPq69m3lCDYW5DbDseVeBmI72r52G
+         C92LroDqo2rl4AVjnt0KqePhWKYHhWjICsBmZn1KFQc5+t0rqUGjyMp3KCVIUmXZNEk5
+         aSLiPzKzOkkKr+tP+EQi4a5gTTwctl25hzdcfvF6DomuIjKPQI1oleC8Oq6790iuacIx
+         uYIsKzBIUdCbONTx9X/khQREOJj+xSE0P870dwQW3QpitdxzXIRaX0J4YkwcaPL966Ic
+         9nmgJVNEjjA48BFSv1dO8BDfwffdS6sFebCoYVQ6WiCMkXXFP3cuMiD65M9ND0LzMf+1
+         94fw==
+X-Gm-Message-State: AOJu0YwOu1wcrhOtwNG/MZoumbxROn+0+xujJSZvEQZWJcyx+OpkJQg0
+	qHj/9hFMJz5SfCIZrebpd+Y7Uqv89gDkAsg70/DXiPJURZ5sHdsrazMYg2fHvw==
+X-Gm-Gg: ASbGncuQ0ZgZMaQ58HSMFgdYGKFsNyuyiSJ1fKWaVnzl7Riu0XmZDpz0zaMSSImhufe
+	QYdh6JCmZJ8+XakPV3RbCMFV1fFHWtdm2ZBYGdAcvYy2a84udNDl75z7URhXi7iYUXjbf6HBzyR
+	mJ/jp7lx6THQO0JTGmDYT9NpznBCdjeOCpMWwghpznastDyxUHHdh3keAYcYb7zyR1FcjeZPuBu
+	nLekD/UVmfB5cGLqXLai2t6O1Gj52LMo2B5rX/kB34U8LO728jZc5P/8f9ux8rTLEHAo3RannFJ
+	HU18WJv7hUUTGOmKRVLlB9Jq/r2RXNtYtbS7XNycYhWDLi2oY6MV1jb0bmPuASWQqmJ4cR7x4n1
+	GE6mRbAn/BZpbgpwIl101+JhlMeDCY78f9au9sO6Uy/OyFEGS8fxKSUew0tRgSaCUL35ZH9ME
+X-Google-Smtp-Source: AGHT+IGrMsKi62MigUIIg+9sZa/JQRRy3LQttBcRGzsgoiHUA88M5U5PKTJNeSwXqFi7/Md+tJwRPA==
+X-Received: by 2002:a05:6000:4023:b0:3a5:27ba:479c with SMTP id ffacd0b85a97d-3b77676ed39mr4110356f8f.43.1753542971362;
+        Sat, 26 Jul 2025 08:16:11 -0700 (PDT)
+Received: from localhost (92-184-97-145.mobile.fr.orangecustomers.net. [92.184.97.145])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b778eba0e6sm3096433f8f.25.2025.07.26.08.16.09
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Jul 2025 08:16:10 -0700 (PDT)
+From: Victor Duprez <duprezvictor4@gmail.com>
+X-Google-Original-From: Victor Duprez <duprezvictkr4@gmail.com>
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAVFnNkdgXuUk6ziu5FkB=sAHzEOyiynQpQJFox_p_ZL9VGRfg@mail.gmail.com>
- <xmqqwm7xxn4a.fsf@gitster.g> <184ec60f-9431-43c1-bce3-405bb6b7f959@gmail.com>
- <CAAVFnN=q5nCD3K1jppVcq7qB9P5WX0M070jqR_rey2hzBt0ERA@mail.gmail.com>
- <xmqq5xfg5o5j.fsf@gitster.g> <CAAVFnN=S-bu1FNafyyH797AeBxUu+8vk5yJ5xaxCUBkBZin_6w@mail.gmail.com>
- <553bd772-a92c-4782-a7aa-3092b3aa0494@kdbg.org>
-In-Reply-To: <553bd772-a92c-4782-a7aa-3092b3aa0494@kdbg.org>
-From: Cameron Steffen <cam.steffen94@gmail.com>
-Date: Sat, 26 Jul 2025 10:00:04 -0500
-X-Gm-Features: Ac12FXw9IYH9e-i7ETlCfLRnV_yjQBkOYJ3WPbjrGrda7L2IMOO-BvfcjtnGe6I
-Message-ID: <CAAVFnNk5YO7J_M8JoOiTMUBRsHQyXLtRPrwT=xSeovQMgT=+ew@mail.gmail.com>
-Subject: Re: Show skipped commit message after rebase conflict?
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: phillip.wood@dunelm.org.uk, git@vger.kernel.org, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
-	Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Date: Sat, 26 Jul 2025 17:16:07 +0200
+To: git@vger.kernel.org
+Subject: [RFC] git-secure: add explicit authentication before push or clone
+X-Mailer: smtp-cli 3.10, see http://smtp-cli.logix.cz
+Message-Id: <1753542967-670581@smtp-cli>
 
-> I could have fixed the conflicts and committed manually.
+Subject: [RFC] git-secure: add explicit authentication before push or clone
+To: git@vger.kernel.org
+From: Victor Duprez <duprezvictor4@gmail.com>
 
-I believe we can detect any case where you ran `git commit`. I just
-know that when you run git commit in that case the commit message is
-_not_ auto populated from the pending commit. So git seems to be aware
-if you did any commit that "replaces" the pending commit. So I think
-that addresses most of the cases you mentioned. As long as the first
-`git commit` after pausing from conflicts is non-empty, we can say the
-pending commit is not "skipped".
+Hello Git community,
 
-> I could have reset to a different commit.
+I would like to propose a new Git feature: a command called git-secure that=
+ prompts the user for authentication before executing sensitive Git operati=
+ons such as git push or git clone.
 
-I think it would be okay to emit the message if you hard reset and continue=
-.
+Motivation:
 
-On Sat, Jul 26, 2025 at 2:00=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
->
-> Am 25.07.25 um 17:20 schrieb Cameron Steffen:
-> >> But only if we can positively tell the reason why there is no change
-> >> relative to the parent commit _is_ because the commit we are
-> >> currently picking has already been applied, that is.
-> >
-> > I thought we merely would need to see that there are no staged changes
-> > to be committed, and there is a currently-picking commit that will now
-> > be skipped? I don't need to know whether the commit was already
-> > applied. I just want to know that the commit in the rebase plan is not
-> > being committed.
->
-> How would rebase know what I did while I had control? I could have fixed
-> the conflicts and committed manually. I could have reset to a different
-> commit. I could have split the change into two commits. I could have
-> removed the changes. I could have made additional changes. Possibilities
-> are unlimited. Saying something like "commit 123abc is now empty" or "is
-> skipped" would be incorrect most of the time in my workflow.
->
-> -- Hannes
->
+Today, Git operations like push or clone can be executed as long as credent=
+ials (tokens or SSH keys) are available in the environment. While this is e=
+fficient, it presents some security risks:
+
+- Users may inadvertently push changes without noticing.
+- Machines may store tokens or SSH keys in accessible locations.
+- In the case of theft or shared systems, these credentials could be silent=
+ly misused.
+
+Proposal:
+
+Introduce a git-secure command (or option) that prompts the user interactiv=
+ely for either:
+
+- A GitHub personal access token
+- A simple password generated by a secure third-party password manager (opt=
+ionally linked via API)
+
+This token or password would be used only once, then securely discarded fro=
+m memory and disk. It would provide an optional extra layer of control and =
+security over Git operations, especially when working in untrusted environm=
+ents.
+
+Prototype:
+
+A working prototype script is available here:
+https://github.com/VictorNafs/git-secure-hub
+
+Example usage:
+
+$ ./git-secure.sh
+Enter your GitHub token or generated password:
+GitHub username:
+Operation (push/clone):
+
+Thank you for your time and feedback.
+
