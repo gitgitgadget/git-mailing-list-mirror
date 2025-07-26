@@ -1,122 +1,138 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3545C2E370C
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:21:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B1219B3EC
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:22:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753539684; cv=none; b=SeokD2xcOokWiS6knrNRYOhFjG1odTc6y93Eb9qQf1Hcb9xA9xI5mXy4UbEW5fCpqKho2vw3mw9U5IeYGoVylxM6w/QtwgOYngo1TE7LyrvAfjvanBLyxS8DumleC+C9vieryxexXGdcr9LIkfx0N0a8pvNXouw2ZwFLkD/3flA=
+	t=1753539773; cv=none; b=q6MZxhwzBWHQyP8rA7kRw/ntX+FNiTWgj4XAKeXNAFUEnegdq2IzWtncSZrq+uVoVhpaYh9NAoJgCvYGc0yEoXoS7AADE9JZH6wbgleEZE7RX5JX68KcRaoa9deBpaGlvv95knjN3Z+p047AnQkUrlfVmb1XNk+Z0RYZ0keCG80=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753539684; c=relaxed/simple;
-	bh=Anz1O+qrkO//BnfTM8vnTI8h160dAvzKWUJl3lBp4FQ=;
+	s=arc-20240116; t=1753539773; c=relaxed/simple;
+	bh=6kOP46wjNj+oTwKEnTKs1WY3AzXQXtso0EKNO7IpC2Y=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=amJiWy4K4vsYMYoSkHDuhuZOZ+cXee2p1cEMvdAeH9JnhbNtvNWwmU4GbE7uG9cLsoFYLLv0ewAoKtl5m6DoM3JRb9rVTDmX5cXmd/K5QdNs6to5AhKsGWcsGOzJH48dGiHPrcU4LEEBtWnCzWpngNG7e24YhSTl8PoXEWkMnzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rq1n4eii; arc=none smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=P5g4Z3i/5vsAF8eSmzxq1bBZ2ippbGxjVZrGUyjjGHdQe131nXq65kxSknGRJGLwAjb7TwqCS+hBsPLfcfvzkIWmtK1uGVYfuYt6kkojk3yCcUHzmpudmc2HyNN/1NRvAvWnIp3MXQG1rGqYB5src8oJfNDs5OdXNQDjbdPmsbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a5h2Y0oQ; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rq1n4eii"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae36dc91dc7so492160766b.2
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:21:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a5h2Y0oQ"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-612a338aed8so4825434a12.1
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:22:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753539681; x=1754144481; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753539770; x=1754144570; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EjBmc9WgYNf22Im2ieljCKPFXhMTz92OEsSFTy0+MOk=;
-        b=Rq1n4eiiGL4zIyb/fbou48MZpkIfTjuX4iur1z6uhyHMMtJ6563usbjXHOHLr6KcQ0
-         LvXuv6Pg9dps3q9TZ4ugz022UVAz+rbfS1vLbC3Ml+bxtBVX+jjplj2bpZsUSkoNoIlZ
-         wHw8kknpPNWV1psLmprVixCsj8VmqwHTNy/ecjdrFiJGC63urTmhq0/bpBW5xzwGqPrb
-         kI01Cpeligl7/HVzJD9JTfQMDFsMuGyUHSEcDaRorWsYjywbX5bHFWQTluyzUs9TQSaU
-         KUasMSY0f1SXCwOi1E8HxtJ8hk1NqOuNPjzxO4hZ4hd8K7B0zFjaA29ExChGAruRADU5
-         unDQ==
+        bh=MlE2zgD95Aun2hldfDd2G/IJtxOMO+5oVK6luPo+gpM=;
+        b=a5h2Y0oQrjF06WZ22I8wUVG+V1L8+rV0TYqaVI0I82qAjhEmRVzfJVb3f7kPkbVh5m
+         4/MxB1GVYk2cNpFXtsR4txyRO00a2QI2vt1S5/IWYXJGsP1Ql0jTtbhnYDG6o15AXfI8
+         /YYzOQIlSQZN+CDMtBJxiD+erlR0uMp84g+U+GfcrdtA0yIudxXpv3YNoFUJ20e/TRi9
+         n7G2YoBi9fquzdMCZrbcab++1Pdsp5ynKavd3JKGeUWLqGpI1wZ7XU5hFIiFR8VmXKe7
+         uhO23iXW4yOLtVXBeM+lXHbyN9d+M0CboRaTLV3tF8LypWR5E/ze6aadauXjy5zhqUXx
+         TEIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753539681; x=1754144481;
+        d=1e100.net; s=20230601; t=1753539770; x=1754144570;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EjBmc9WgYNf22Im2ieljCKPFXhMTz92OEsSFTy0+MOk=;
-        b=gc+WkUXUKtnQgCoStnYBM3ktIlCvWMl5wL7fsf0u5cJRT5awFUozotZ1Il4a6OmjIg
-         CNh6DoNN8fVyWGVn8PtRx7udYd0dPa/A8Vc2/nee0AToobu8K/nthvR89wCTXhIwRQS0
-         Ghhj3UUs0pYLiJkClSz2hIJHRXBoazqWql8FpiAYhoSGLcgVvqhDF+gew1+s1PIyJGtj
-         b90zMoIou1TonLMHge+VfSHIqW5sokJzBdEzjxySu4dHRTNR4+G28WXLTd3BgSF08aW5
-         CuWU43AM06tNtCf7Urn4PAUcciGvZhPy4P6LBBB+eXR4O1an9BkKyM5qxMMznKzHa2zV
-         cBAw==
-X-Forwarded-Encrypted: i=1; AJvYcCUcWdrLMLXkS55fzQjWA9bcJ6YIHrnzwaX72CB1octTKdPm2kcBL/A8ZGmqvZjlD7sW0eo=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUboTlfQtvBxGllVLi5HPn0wJdDKIbyJbGtYpEhaUIjgbkRg1J
-	fNZrTTdlWr4hJv5VFb0/PpWf6wjKEqi8EVum+msFRxpYW91q+7dRMlbt3lf//b2/lrvTQCi8SAu
-	YBkVMkC2UtOBboQUKCv1DQTj7Ceu6Bj+ZAHFe0zU=
-X-Gm-Gg: ASbGncvwuj/oiPaqnMU43x2foK1FbpCYevcL4X6US2I8bmj9ATlkJLYWYU2SxzPjOyy
-	UD09zLmu8V2DqAKXiGY+R0Qn9rQsUmClHwxpcKx8QR+QmuHCF2G/DQLEWwuNV7URyhH/aENmw21
-	x7uFBTUfczX1+SapyqxhlhCCmIdj8KJT1nlVeeBr0Ut6UY3iSF5KoIGq+sktHm4uGX8QU+G0egZ
-	3Ho3jNtwjrRshA/zRcfpb0m0kc19RbhBuu5p60fnw==
-X-Google-Smtp-Source: AGHT+IFS+7JgFP40MLOIj9G7eli78UxDxy0W1kcpi7etoHDGMXUsHZZH02gORYVK2crFQVqqJZJk5c2EsOHKJmUEx8I=
-X-Received: by 2002:a17:907:c0e:b0:ae3:4f99:a5aa with SMTP id
- a640c23a62f3a-af61c2aebabmr711272966b.4.1753539681450; Sat, 26 Jul 2025
- 07:21:21 -0700 (PDT)
+        bh=MlE2zgD95Aun2hldfDd2G/IJtxOMO+5oVK6luPo+gpM=;
+        b=NVpHTcfNenDb5uYFIFpEa80+PjIdt3Jb/BTI74siuDmU07+A6MpsBNlBXH9HzGI5LZ
+         TWzJdRisrYz4Oc5pR0OKaQGe5kXEe4enPnTp28iCU+ej8O75eie2hQhEPBg+GT43xcvw
+         880laCtLnXlLeAfrurnhmv+9YaExI6vSf+mq/HQ4iZxR5Apo+mBUP8NBnuw5s1Whflgk
+         eTnrRGjZWsdvNEIlF82TNWnCEZTvYl3i724RTnU//NFOIFcQ6PGer8/Ze1FjFtCk9/YO
+         a4JYJ1okmVkam+UdPTK/BpSZd+Xsz6fYJzarqw2f87tIsyjYvb2pziNF2Na/R7qwn6YC
+         5HFw==
+X-Forwarded-Encrypted: i=1; AJvYcCVpb7C4js/v22X3xkrIrGPV0DXTgl74917ojeZWAf9yFg5BjqVWQybYFSIzNsvoHlbmSA0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwQEsWv2X1ZJ2Nj6MRxNBLBHJTcXgN4iD3DG7MQe2thww8DSk/S
+	rb9V8z/xo6617X9ti3caHw2XPCChtLAPbu76xD3W5D2/omVAUIWNVlFyVfHN0P3aJjqhj0EzK6M
+	12ASr3932eYTH4xg2RUqZg7krLpwoxgw4WlzA
+X-Gm-Gg: ASbGncvW2YjuQVQ1S/bnhKlFZqpXHcxz/czZDsF08pivDWP6XvJxW44JT2Ug8yLmg1l
+	+JwtYhzn3Yj4DLVadsTTRnrHvQBxq91eQ7ohj/VB3MUC+DD7mKDTEoRbxAA9qsQvVEVm6HvP3oY
+	8HegWhiwaSHXR2FTPS3GmAZfm8PczZJBcgS+D4dbx1fMwCaFvOqm4CsRXgtTllYMlLXxRVi/qyF
+	fuAQvzkVX5QlVwGy1j6vai+fFFkDoz203LkqeA2+w==
+X-Google-Smtp-Source: AGHT+IFFPAIXvZ0gMsGAqW5YLWcCw6E6elEHtaZvJdg836prT33Acz9qreKFrTshiysUAoWD4P5FeklGhNMTSvdex2E=
+X-Received: by 2002:a17:907:7e9d:b0:ae6:b006:1be with SMTP id
+ a640c23a62f3a-af61740d575mr642359866b.5.1753539769985; Sat, 26 Jul 2025
+ 07:22:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set> <xmqqecud145v.fsf@gitster.g>
-In-Reply-To: <xmqqecud145v.fsf@gitster.g>
+References: <1c3a0463-36ee-4a2d-92e0-fac9c0bf77da@arm.com> <a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
+ <xmqqqzy33k1j.fsf@gitster.g> <20250726081254.GA3042329@coredump.intra.peff.net>
+ <CALnO6CA2qSYePJzqXjdW6c2zC4KQJSKzsCFCzc9si0OJ8E_ohw@mail.gmail.com>
+In-Reply-To: <CALnO6CA2qSYePJzqXjdW6c2zC4KQJSKzsCFCzc9si0OJ8E_ohw@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 26 Jul 2025 10:21:10 -0400
-X-Gm-Features: Ac12FXz-indoUlTL2bmH6dVoJpUtrbORsvM2l8PWJu9UC_V3QRLJppkVOocBfR4
-Message-ID: <CALnO6CC+Tn5xFYcHwH-M7kLNt2+gut7Okx7fCuWRdOsQHoDWFw@mail.gmail.com>
-Subject: Re: A Question from a Hopeful Future Contributor
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Eric Frederickson <ericfrederickson68@gmail.com>, git@vger.kernel.org
+Date: Sat, 26 Jul 2025 10:22:38 -0400
+X-Gm-Features: Ac12FXzbLT3lwWefzwEb5_QQ1zAuyMWHHs7l-CBGL-b14cLKcOdJqI8Bv1jwsdo
+Message-ID: <CALnO6CCcYfzHUif=qQHxODnj_kGvGrYYV==4gJKWwxcKS+2JBA@mail.gmail.com>
+Subject: Re: [PATCH] git: show alias info only with lone -h
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Kevin Brodsky <kevin.brodsky@arm.com>, git@vger.kernel.org, 
+	Rasmus Villemoes <ravi@prevas.dk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Jul 18, 2025 at 7:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Sat, Jul 26, 2025 at 9:12=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
+> wrote:
 >
-> Eric Frederickson <ericfrederickson68@gmail.com> writes:
+> I have a few (unsent) patches I've been working on that touch the help
+> mechanism, so I have some thoughts below.
 >
-> > Looking through the repo for a place to find todo items, I naturally st=
-umbled
-> > upon the TODO file in the origin/todo branch,...
->
-> Please disregard that file (I should remove it from the repository,
-> too).  It is not curated at all, and the last update to it is more
-> than 13 years ago.
->
-> >> * "git status" on intent-to-add index entries (say "I" in the first
-> >>   column instead of "A" for short status, add "(needs 'git add')" at t=
-he
-> >>   end of "new file: $path " in long status).
+> On Sat, Jul 26, 2025 at 4:13=E2=80=AFAM Jeff King <peff@peff.net> wrote:
 > >
-> > I am interpreting this todo message as meaning that the following behav=
-ior
-> > should be implemented:
+> > On Fri, Jul 25, 2025 at 04:52:40PM -0700, Junio C Hamano wrote:
+> >
+> > > When it redirects to our commands, it is less risky as we aim to
+> > > make all our commands honor a single "-h" via t0450.
+> > >
+> > >    $ git -c alias.c=3Dcheckout c -h
+> > >    'c' is aliased to 'checkout'
+> > >    usage: git checkout [<options>] <branch>
+> > >       or: git checkout [<options>] [<branch>] -- <file>...
+> > >
+> > >        -b <branch>           create and checkout a new branch
+> > >        -B <branch>           create/reset and checkout a branch
+> > >    ...
+> > >        --pathspec-from-file <file>
+> > >                              read pathspec from file
+> > >        --pathspec-file-nul   with --pathspec-from-file, pathspec elem=
+ents are separated with NUL character
+> > >
+> > > But then, it may not be such a good idea to pay attention to "do we
+> > > have extra '-h'?" when alias expands to our commands, e.g.
+> >
+> > Another interesting case: even for our own commands, the alias itself
+> > may add extra arguments, which confuses things further. So:
+> >
+> >   $ git -c alias.gi=3D'grep --cached' gi -h
+> >   'gi' is aliased to 'grep --cached'
+> >   fatal: no pattern given
+> >
+> > runs git-grep, but even though the user said only "-h" the alias added
+> > another option which prevents the help-mode from activating.
+> >
+> > In this case it is not too harmful, but you can come up with
+> > pathological cases where it actually runs a real command:
+> >
+> >   git -c alias.grep-for-foo=3D'grep -e foo' grep-for-foo -h
+> >
+> > which runs a real grep.
+> >
+> > I guess one way to deal with it would be if the user runs "foo -h", and
+> > alias.foo is "bar --other arguments", then we run just "bar -h",
+> > dropping the extra arguments provided by the alias.
 >
-> I think that was done long time ago.  The entry may have been a wish-item
-> in April 2011, but not anymore.
+> This is intriguing: it would mean that an alias is not purely a
+> textual replacement? That's true for ! aliases today, but other than
+> shelling out it's pretty close.
 
-At least in 2.48.1 and in git version 2.50.0.rc0.48.g74dbe4346c, this
-behavior isn't present. So I wouldn't call it "done"=E2=80=94maybe there wa=
-s a
-discussion that it shouldn't be done, though? I didn't search the
-list.
-
->
-> Sorry for wasting your time.  A better sources of inspiration might
-> come from list archive searches for the past 3 year or so.
->
-> https://lore.kernel.org/git/?q=3D%22%23leftoverbit%22+d%3A20220718..
->
-> But even then, many itches have already been scratched.
->
-> As is often said, in open source, the easiest is to start scratching
-> your own itch ;-)
->
-> Thanks.
->
-
+One other thing I've just remembered: "git help alias" shows the alias
+information without running it. So I don't know if special-casing "-h"
+adds much?
 
 --=20
 D. Ben Knoble
