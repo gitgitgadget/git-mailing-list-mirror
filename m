@@ -1,105 +1,106 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65D628FD
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 21:57:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E3B288A8
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 23:15:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753567062; cv=none; b=EG6UOkJTUPYmXbolv0ANqaMuDLOUbLky4p25vM1ZPB96OvZuLOpCbdDhi2ZkM9U3ItZQXDkaK5wNl352ynXV0VSnU61uHOw2jS9j+xy/slDluNYHzGDbi9OiNxEi/75tVx9oT0eQVOmEM9KAq2HznIQUsnlf4MFyACis5FflzBE=
+	t=1753571724; cv=none; b=TzXhO/jrepjEgytOc2cj625o5+i35fk1QGmAP4BmycleA9ZCYD4+i6LbuSnLzGkBDB0JPODOZyGaK3jtrYz4yWCi3BvAYtopUjtZKjJfBZe7fRp+LY7z47wesYVwJTNIYrIM7g6mcfNX5LXj6bzI7+Scjq9S70h2iTUtCXIn2Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753567062; c=relaxed/simple;
-	bh=VYDAozAMwitPP1K1whBxE+EVOholUkgMTOpaL47M9JM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=opFhhfC+HLCTd+1nwu8vfPkZrIeDCD5xjSv90AZiDplyzoXyU4RPQpJ3WllOD1f9yOhx0IZyUtEEPur+ssScUN+ARSUtazfzPei7R02d2PxzgTTIuFLjUCWNLjw0CQ9GBmmW1ttaDIqvcE1ImizjyxwlmLU6hJxita0O+OvVdac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EStUKdJe; arc=none smtp.client-ip=209.85.217.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753571724; c=relaxed/simple;
+	bh=tU3DWAGQRz5CafXoeX0EnZHqxpolSWKS7wetwSFhEAM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=BSeCSQLq86UHrzvdeCStvOPKSJbbkkLwg+uANvI+SlR+AdA3VXQfGBA6VnvzyiJidL6jDMN1eCMIiGxs1Ji0oCMv4GTIzGLBYOgVfpcq7Xg8+PgT7CiYD9p1eVnPjh2fH9SJllpOHAa4KToCD52BcXmlv4wAYffQdKeAeLYiUyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Tay4LSP1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UAc5ZIby; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EStUKdJe"
-Received: by mail-vs1-f53.google.com with SMTP id ada2fe7eead31-4efbfe9c7a5so2767799137.0
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:57:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753567059; x=1754171859; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Cm7s6iCFsNSYD0vA+IkqQSrjvobyxfoWidC6Sz77J1o=;
-        b=EStUKdJeQ/MEyjDN0zoDHmqtEyJaFdW1lIONISj4OHGjjhrHjrn6x8K17MnaYu6sHb
-         mefdCf7bIkm83bKf+Ru8MYbu0DQoXUSUxYD9PlreXOxylQrUWJUFjmnM0MbgXGwZY0ES
-         +GR1K7KWygF/i7Aw07oY6NV40/XHHqvfLWCI0uuvGLxLVeTO5Dil4BLY+RfUUxFxwm4n
-         TAH9rKiDdTJSwsE89ysbhMaMSRPsAl6YdpwhvCoQ2Uv5QPv4ieP962AHk5/0loRLfSk+
-         LAF7jW5FKlN++uJid5MkRxi1vcR9oHldpa7t4FRd4ulR2P5So1Z3cPMYeKc1sj2TAKAJ
-         qzXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753567059; x=1754171859;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Cm7s6iCFsNSYD0vA+IkqQSrjvobyxfoWidC6Sz77J1o=;
-        b=CWkk9rlSIBgjfIJxFz3FBYNd8DHKpg1bm+Fhb4vtiUYjpWxxI7K8Mj+Hvp0xPJx+Re
-         Pz3R30Dgq+7l6kWQs5pcM+EKHENLnIN+JtUt7mRsz8cat+YY8psG4KETTTfzoL1k6G5j
-         sVwgN5PJd3LvjbPx8gAaYVebEHGAxp9wV62fmujUgRhgjlNOY9uYUMzuGabvbar7k4X7
-         1zALMoH+UxVEvbjjrlqx7w3E7Z+tMvXJ7bFSpW4fttY5hBb1cSUXe9UK2W9n+XAw4eM0
-         Wo3epQ2TBRd7mYQeTgkNM/UpBmzIO3X9TFESBFMU7PEhVbcqHyYU07yMst1fTCd+IX8m
-         Uplw==
-X-Gm-Message-State: AOJu0YxMZQ0//7hqaljB4Cl6d3ptMKiBLK8+anFTPp0kXcthpNAo9cUW
-	L1c+AkwgINvR1KG/Az8bU+vZfQhnGWSy3w7Qzm7FkWGqomyub35yKBK/QDWzb/+TsMo5nQJdsOW
-	s01yM0x/3W5ENbYPA/fGdHZAmiPQsl5w=
-X-Gm-Gg: ASbGncvEEsOLD/4xc/NhmFPRCKdb0yIoYx8cP2mgJPipz4b64WMoPaWYyBrn0d6KHjR
-	6VH6L0QoEds/NigJ1TyhVbx+bvcI7alZfd+jalQiL47cptjT+ZLY6rfqXcLEt0ZdG9jEcU/jGRC
-	/3ejlj8xvPbV9qrxq8X+WerJRuLsprnGnYpIE7WL7EPDDnXmbrt6RTwJzYjn1COa+M03kQiNxT3
-	6NVK3I=
-X-Google-Smtp-Source: AGHT+IGib7I1evcgSX8uFfbqG4CurA+WWITSb3tbEP2gPua0Tm2dOrmtQpNE6gQS/tyfzjCLcVpwAeSEtiV8/z+UBnc=
-X-Received: by 2002:a05:6102:4407:b0:4e2:e5ec:fa09 with SMTP id
- ada2fe7eead31-4fa3ee2ff4cmr2858545137.6.1753567059551; Sat, 26 Jul 2025
- 14:57:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Tay4LSP1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UAc5ZIby"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E45C214000FD;
+	Sat, 26 Jul 2025 19:15:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Sat, 26 Jul 2025 19:15:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753571720; x=1753658120; bh=tU3DWAGQRz
+	5CafXoeX0EnZHqxpolSWKS7wetwSFhEAM=; b=Tay4LSP1pDDFCmrrZrBC2lcKkp
+	TYmyXJ1yhoo/18cD6A6RII+zucj9KsRKNfSzOkbq7D+C4tvY43w6zvUnl9NNZUYo
+	Qsr+jcz1uC5MHDtSu0BNPFlmRmYgrMXan35H0trNwQ7MlJeVTgatJh5YrxG5Q/EU
+	HKCXRK6c6A3Czf5sPKfJMBg1LB8zJQe9u5xr/cmUPlW4GBnJ3djztUFCL5VclOh1
+	51vr/LkjXZG2Chl2iGbc+vSJ1tTMdvUdRI9+CVqFqeWKQ8ZFtGEOqbB+qjg9LVIc
+	UwDI8rWgWctvS1E1GBzmDDMAqEkypIw+UZrRGIo5lQp9Dkid3e3nAnH0n+sQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753571720; x=1753658120; bh=tU3DWAGQRz5CafXoeX0EnZHqxpolSWKS7we
+	twSFhEAM=; b=UAc5ZIbyJCx9Q28WEU6yPU9Y75fiJi7c2WXfCubmTRhFLpaOnwR
+	BAmNCOhI2lLYd0u1MAvUf53JgqUqlyD9W39DbyVKQuMImWnBd1XWY8t3hWfbEYrn
+	g6S9tPx9PiFiVbSuyMDNBIm63vShk/JEyIo8lW3bGl/9GhqjdTtCaSLSoJKLtHqF
+	AlRPZ9tt7AiwTd7pQJPye1yr13/luLVrcWotCo/gRGwYxziZadiLysQxBNyD+SQK
+	Az7W6zn8xj6Tlr0dLOj9ymzm0U20+gIOcwB8c2rjHyF+N6/HeDl7T/45f2q9fk6V
+	xdmBtTgJu5HseKgaYikpp5jjLe1bqq+umDg==
+X-ME-Sender: <xms:iGGFaA-a_At1YUzYHyidbn1GvILlIUXb_q11OgEOgFTwfhK5B-E7HA>
+    <xme:iGGFaGTuDgAspnFxe-rx1He8Eun7ybl6JRV7vzOw-kyJfdRiqACcJzWhXNgX7POG-
+    303Qrf1qOv4Zr1WdA>
+X-ME-Received: <xmr:iGGFaMfGaHvM6fSOmso2b29Zlx9_skBwkzaS7mM2u0iavPV5nkahoe0F1mcinl4ynzQNMXpsiJrW0Yst_EF1S83eYkv5FHBwO3lahk0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekjeejtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopegrhihurdgthhgrnhguvghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepoh
+    hsfigrlhgurdgsuhguuggvnhhhrghgvghnsehgmhigrdguvgdprhgtphhtthhopehmvges
+    thhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:iGGFaCBBXMfuObRnecj9fsfjDJYXVG_Vv4j7yUU4v8JfIe2nOO543Q>
+    <xmx:iGGFaGnal-Dob0p-dMoE32CDkczpI-1yHFv2atZZ8cH77cO2EXia0g>
+    <xmx:iGGFaFewiOkaAfjebYoSIKMiiE9FFoK4QBK08rdrIQUMvsnL8Adh-g>
+    <xmx:iGGFaCQ6Ps4vjrBoHwV8xKvda4X8rDACUa1VVjCerR2q3pc5QHFOfQ>
+    <xmx:iGGFaOCd9obGCVU-B-E99BQk0sne-N2hk2-ca3fgzHLITZxyFB_jQSl->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 26 Jul 2025 19:15:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org,  Ayush Chandekar <ayu.chandekar@gmail.com>,  Oswald
+ Buddenhagen <oswald.buddenhagen@gmx.de>,  Taylor Blau <me@ttaylorr.com>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH 0/2] breaking-changes: deprecate support for
+ core.commentChar=auto
+In-Reply-To: <b811a0dc-fb49-4f66-a9ae-89a45d7ff104@gmail.com> (Phillip Wood's
+	message of "Fri, 11 Jul 2025 16:09:17 +0100")
+References: <cover.1751983009.git.phillip.wood@dunelm.org.uk>
+	<xmqqjz4iv7mt.fsf@gitster.g>
+	<f679151a-c843-44d4-9e28-27112d26f30c@gmail.com>
+	<xmqqfrf5nxnq.fsf@gitster.g>
+	<b811a0dc-fb49-4f66-a9ae-89a45d7ff104@gmail.com>
+Date: Sat, 26 Jul 2025 16:15:18 -0700
+Message-ID: <xmqqh5yy1r3t.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250726165320.4039-1-ben.knoble+github@gmail.com> <20250726165320.4039-2-ben.knoble+github@gmail.com>
-In-Reply-To: <20250726165320.4039-2-ben.knoble+github@gmail.com>
-From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sun, 27 Jul 2025 03:27:28 +0530
-X-Gm-Features: Ac12FXz9wZHifW8MFQtENqhqI8g4IgDZwsosdBtmr8dOKZyycE5Q6TMNFPc42CI
-Message-ID: <CAPSxiM83fpNXsfBrtG4xpRt=yYaU7e0OFkAHK8dkLGpF7jtDxg@mail.gmail.com>
-Subject: Re: [PATCH 1/4] t1517: fixup for ua/t1517-short-help-tests
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
-	Taylor Blau <me@ttaylorr.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-> - fix known breakages that actually work
-> - fix new t5200 test
-Thanks for fixing this, I do not have to send the update version.
->
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
->
-> I expect this and other fixes to get squashed into the upstream branch, but I'm
-> including it here so it's easy to create a clean build.
->
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
->         difftool--helper | filter-branch | fsck-objects | get-tar-commit-id | \
->         http-backend | http-fetch | http-push | init-db | instaweb.sh | \
->         merge-octopus | merge-one-file | merge-resolve | mergetool | \
-> -       mktag | p4 | p4.py | pickaxe | quiltimport | remote-ftp | remote-ftps | \
-> -       remote-http | remote-https | replay | request-pull | send-email | \
-> +       mktag | p4 | p4.py | pickaxe | remote-ftp | remote-ftps | \
-> +       remote-http | remote-https | replay | send-email | \
-Thanks
->         sh-i18n--envsubst | shell | show | stage | submodule | svn | \
->         upload-archive--writer | upload-pack | web--browse | whatchanged)
->                 expect_outcome=expect_failure ;;
-> @@ -125,7 +125,6 @@
+> I'm leaning towards dying to avoid any nasty surprises when the commit
+> message contains lines beginning with '#'.
+>
+> I'll try and re-roll next week
 
->
->  test_expect_success 'update-server-info does not crash with -h' '
->         test_expect_code 129 git update-server-info -h >usage &&
-> -       test_grep "[Uu]sage: git update-server-info " usage &&
-> +       test_grep "[Uu]sage: git update-server-info " usage
->  '
-Looks good to me.
-Thanks.
->
+What's the current state of this effort?
