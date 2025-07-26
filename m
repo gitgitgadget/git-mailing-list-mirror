@@ -1,90 +1,92 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
+Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A6D421CA10
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 21:28:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842B621A424
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 21:51:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753565283; cv=none; b=kULFV6TrifpYmrd/0yFBXGLI6ZjKdPzKEJNj778iHp1AchvNwC7ftCvqtrAe6R+wkRmpv4DPcqKYxxstKvY/ENKfug1yvWA6fPyngyoJj0JBB71Q4OeWYVL3nsb2SA23eGZw5oG+zkuAVLybKGLu1PR2V+lz3Msdb/DRRNaRUjw=
+	t=1753566680; cv=none; b=oFTAXa4WGGQ17vbfiaSEihPQh8hZrkdAvjCMYVg6jW2EVrEy78Gr+SHE5oguPPksrgquKE1XCVQsEQjW0dDEMvJLl4hZRZlyV95v4XFBFzH58YK5akqX1nUeVejjrKk8Ce6UyvUI9yx3suJyO7p0w4Qa+i5LCFXW1KPchs/4tgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753565283; c=relaxed/simple;
-	bh=M2U4dbADczyopMlTbK/oTkHC8u2UmarcZUwcEw8qPcM=;
+	s=arc-20240116; t=1753566680; c=relaxed/simple;
+	bh=NHDaxn0QdbREMaVltEijFfuLoJIf7UvOAUfLYFEx0Gk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XPCYSPiQ3iu8qrgUn9FYGVx/AyQXNKJVNBEUC+mdhnlJfvluB2pTm2fnIoV+Rs+8n6F2XnQrvelZezMuUyCmnQqQLH7my9pMtwYteLKdGm3nrWSAApThzu0uztEo3EdFumCfxHQyBXhOMuyVhifgh4F/Srq5zr+p1k1qDFoaNPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NWEQvU8E; arc=none smtp.client-ip=209.85.217.48
+	 To:Cc:Content-Type; b=Xul5q9moZwLQMUrct2ogrWFElt/6ITRPhy2verqEBPE+Wu2kBY2eazuwJtdKb8TOVr7/FN9ohN/1gCyglT3fPEjtzZyNKOCmz0qKwEqpXOm2IQXrgFDecKu3QKtrnhpH6RdR2wvCipStl/UptS1L5gYd3XX89s+8dIkUuSsbuBQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WgPmFq2e; arc=none smtp.client-ip=209.85.217.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NWEQvU8E"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4e9a1090360so840808137.2
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:28:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WgPmFq2e"
+Received: by mail-vs1-f54.google.com with SMTP id ada2fe7eead31-4e9c689d538so780720137.0
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:51:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753565281; x=1754170081; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753566677; x=1754171477; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YBJIxxmO/DZfqmy+GChC7OuI6wBwmP2oq2Nchc7m1K0=;
-        b=NWEQvU8EX+poI1pIVyzYIdFo4fSPc8tCzGb/GsCz5Wnu5dD3Ag5ZcbIi+xoId+QXoi
-         gLwpO0qcjn8CkI+MrxwTrZi4SAmDUjsRe6/RERToVNaCefyU030hYxsjuj2fnY1N/rrp
-         ag5dGqJxKCDG/zj0TP0ojOLO6MEfCOSnsKyyaBOJzbdQTeMjVT+bFpOev+jz02+KQQwC
-         G7FqzY2r7fkHHqro/K+rQThh0FfKSK2PWblZOS9qONenfitPMOP+HGzclPL/cUH1oSZQ
-         qNBGMuOxnqBc5NLGqPjPA1dW34N1n/oJji3fMLkl6SgqU/dnaxjzHLtwSJ8640TIXETl
-         yk4w==
+        bh=uXC4rHJGvutbxHJzRMxUwFAriS1dLdSVo4M/vDJ56jI=;
+        b=WgPmFq2ehRKZZV/+oPON59y8LFIC/gQStC7C7ZDt75E0EDwfj1yVT2UPPlqoIq2u4E
+         MJqbe8zQmyOFsuccuTDP5b8zzmhB0hh98dGXSxZqlz0RaaA8eoy+Av36o28+BJg0h51f
+         kcjQx/AoUTcrUrWkx048fzxQOsh+mz7lHHHa0B/EHr0INbkoGhvkeaosLbgEe+7deg34
+         lk9vEC+pKdhASuP7HEFKpAZH28Y952BxDTwHAXRUQo+PqC9QogHNFLuR1eYCArtmu8t3
+         FWUxNFzIIBHYYDLUuh63iytEW7J1an7f7PSTYeTy951zTLb9H6OuKhuN3NItpevdFVOn
+         WMMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753565281; x=1754170081;
+        d=1e100.net; s=20230601; t=1753566677; x=1754171477;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YBJIxxmO/DZfqmy+GChC7OuI6wBwmP2oq2Nchc7m1K0=;
-        b=bOCTg2sRvkJ2ddPat3wsgEzAVQ0A3JwzMoWv0hqg3Ij0y7onUwATM/ULcaOZRciySM
-         DbrwRwZMzkv4QXAEcRww2rQHqlhcD0td3q4hdpNiqUHtF/a+/8LG/pNoaZjoH0PJU+iy
-         nBwhmWackuQkJl7sR5HJtUGP2siDU/dBdEglrmXFTJtEBuvfvuvmHh2f9txi7+9Ny8a8
-         nPM7RTV53koASyMJsgMOw8RL2UenDMd8J95Of7+C/7kkEr2H9aMaYe2OKvCk4s1OwB3W
-         rwiyZs5wyOXMNwrHF0d4S6JLYwtFzMbi+orbPqmfFz4adGgo8Hx5PvD+gyS1RT4klvEV
-         u88g==
-X-Gm-Message-State: AOJu0YxEVag4yHJ4bmGhjwkn2WVwpr0xyV093YCTtQ1vDBVsaxTie2kr
-	lD/uNclUmTkragmMIBNlWZdlY29JGasMHZCVUCM2g4+TdfcxyPzoQO47MQh1H67tUA/pp17B1ec
-	cjHRMHFpi9meApkXo6FR1gRurb31+75M=
-X-Gm-Gg: ASbGncsIDEjopWR/GwcvguqLr7W3jQrrPwewff7uiLBgBIjL6BKGmjbUgQv+JcxOraO
-	rNDyxn+B/qY+SwmApoz3475Tilu38F3U46D1WBd3wB32oPP3edC8/sRKQXIUUQj+vQ0oPCpicLq
-	3NypBq43RfAyY0KMP08SIcLXTyCS2t/WQTew1LWQ/3jY0ZTNRic1r7VwkwH9xo/NdKmYWKRfLjS
-	3wGsMk=
-X-Google-Smtp-Source: AGHT+IHKwxMqWMdUxDhaxYnSLalmliluKjgO01InB4Rr676aHiEDGwkRO1bh7Ggl60ihb+o1WadJ52rhgultKVh3N/A=
-X-Received: by 2002:a05:6102:4189:b0:4e7:e5b2:f651 with SMTP id
- ada2fe7eead31-4fa3f8c6b7fmr2906657137.0.1753565281056; Sat, 26 Jul 2025
- 14:28:01 -0700 (PDT)
+        bh=uXC4rHJGvutbxHJzRMxUwFAriS1dLdSVo4M/vDJ56jI=;
+        b=MYYFRhevp+fv6bOygip0hwTMg6trB/i+tbwAR4vk/FEUfeFNjDRxrzKDGcS+i5h7Vw
+         8hOs0tnCc9tSWiGTM49g2w3kLlmJzs5za5yyzDyLrbvhxP20ns6SrAsQQqhPsBpAG2Tg
+         dIrNi/lXWoQ4PMs2fzAsIgF4wYIYjhiU7v0//hwAN+0MUAi9dpkQHDNqUDjNvf8GUt4b
+         g//Pg4s/YCHDp6+XJe77iyQMaXv0A4oh5Olu0NYbt57ZogjYLAKpvI6btFCEkZ9QX6H2
+         sGZZoNGiS0M7sbAwglV9SJF/JehioffB6RjJ4snHKP+toi10MWuWCHBt/t00T+3n6DhH
+         V56Q==
+X-Gm-Message-State: AOJu0YyOb/hvfL7aY3clyW5UYmcZtb4vfp175T0HL9Vx2yWxSzWgl32F
+	U92MBsKGt/T9RVXtPbSY7r4Gz0NgWXuIKhWzTiJ4FecyITyMjHAcffWBgM+7qVkL6CTppSAwfYS
+	WnJJdwNHQc2d5kZMblH4vnHqWc4KDhf84jBX+Ow8=
+X-Gm-Gg: ASbGncsZOj9lx6AUWp82XBwCSLUilRhJyIj3MFCRtlHwfkSS7kKUFF/JAGDDQ8spj+Q
+	5EEETU8b8tH9jIjJQzBKyNeB4qoOl9MWZJiv1VqkqGATz0j6YrWytKDFVaKb+nA/NLePTLq8mKR
+	I+Pgtzlu+OuG/I8HnxruQKuoaCH+yETPvEguRwUhHpG8dNlvnaVh8e2PGLW+td/oAff3JuepliU
+	HQJ7rwMSeFSvpXv7A==
+X-Google-Smtp-Source: AGHT+IG1bWhB4l+SmVzYXv9KBZpniwGjU4ds+G5jwWeAGJsJ/ssmojcgREneQSoUds+2fXPm3dwI4TG78KRyR5P8irk=
+X-Received: by 2002:a05:6102:358d:b0:4eb:f8aa:9c36 with SMTP id
+ ada2fe7eead31-4fa3fa5950dmr2144110137.4.1753566677459; Sat, 26 Jul 2025
+ 14:51:17 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq34alik2g.fsf@gitster.g> <CAPSxiM9Udi2PxpT7f8DdLn1ihny2gW_H=ieLjV25sEFYSdAjMQ@mail.gmail.com>
- <xmqqldoa26dt.fsf@gitster.g>
-In-Reply-To: <xmqqldoa26dt.fsf@gitster.g>
+References: <xmqqcya63cqx.fsf@gitster.g> <20250721115519.140361-1-usmanakinyemi202@gmail.com>
+ <20250721115519.140361-2-usmanakinyemi202@gmail.com> <CALnO6CCFXfPDZKzx1SBufwzkBJchZr0XYigo_8AQ_U=MuJa7xg@mail.gmail.com>
+In-Reply-To: <CALnO6CCFXfPDZKzx1SBufwzkBJchZr0XYigo_8AQ_U=MuJa7xg@mail.gmail.com>
 From: Usman Akinyemi <usmanakinyemi202@gmail.com>
-Date: Sun, 27 Jul 2025 02:57:50 +0530
-X-Gm-Features: Ac12FXxNTpBe5_YIz9ee3ae_dJzO25PqKWY_6uS8qRPbvEbojlWmTZsGA7YZmuc
-Message-ID: <CAPSxiM-kFKM9s8fbPajGhNDdz8WbbNUnjGw+DiRFtkO3vL2aNg@mail.gmail.com>
-Subject: Re: What's cooking in git.git (Jul 2025, #07; Thu, 24)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+Date: Sun, 27 Jul 2025 03:21:06 +0530
+X-Gm-Features: Ac12FXwf1_98EVzTfdJ8Pr66VXOMBiwGZJMmhVT0kYQLp99n6DJXm6fNeRNE2DU
+Message-ID: <CAPSxiM_sP7MG5SDLe-_-FULhqmW10M=8Ssu3PMoZD8=rS6CkAA@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a repository
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org, 
+	christian.couder@gmail.com, me@ttaylorr.com, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
 
+> > +for cmd in $(git --list-cmds=main)
+> > +do
+> > +       cmd=${cmd%.*} # strip .sh, .perl, etc.
+> > +       case "$cmd" in
+> > +       archimport | cvsexportcommit | cvsimport | cvsserver | daemon | \
+> > +       difftool--helper | filter-branch | fsck-objects | get-tar-commit-id | \
+> > +       http-backend | http-fetch | http-push | init-db | instaweb.sh | \
+> > +       merge-octopus | merge-one-file | merge-resolve | mergetool | \
+> > +       mktag | p4 | p4.py | pickaxe | quiltimport | remote-ftp | remote-ftps | \
+> > +       remote-http | remote-https | replay | request-pull | send-email | \
+> > +       sh-i18n--envsubst | shell | show | stage | submodule | svn | \
+> > +       upload-archive--writer | upload-pack | web--browse | whatchanged)
 >
-> Administrivia.  NEVER QUOTE SO MANY LINES from the original if your
-> response has nothing to say about them.  Remove the part you are not
-> commenting on and leave only the relevant parts that you are about
-> to respond, and then say your thing.
+> Sorry, one more thing: I spot-checked a few of these, and it seems the
+> main issue that causes failures is the exit code; they seem to work
+> with "-h" outside a repo. Out of scope for this series, but something
+> worth tidying up as #leftoverbits ?
 >
-Thank you very much for the info.
-> >> * ua/t1517-short-help-tests (2025-07-21) 2 commits
-> >>  . t5200: move `update-server-info -h` test from t1517
-> >>  . t/t1517: automate `git subcmd -h` tests outside a repository
-> >>
-
->
-> Also do not leave the original that you are not going to refer to
-> after you finish saying what you wanted to say.
-Noted and thanks.
->
-> >> * kn/for-each-ref-skip (2025-07-23) 6 commits
+You meant the exit code of 129 right ?
