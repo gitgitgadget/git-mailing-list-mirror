@@ -1,189 +1,122 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B966E285CAC
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 13:53:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3545C2E370C
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:21:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753538012; cv=none; b=iygk2JyfI7lwYGoUjbjeJe8vQDrrvTFajCDrG7meCcCkhpk2eL0dHDHikXI5cu56JTUCsEg4pHQL2rK1d8nMZH/54r2TzFXollyNw4Nj9dLKCsqxBaxZWvMEZu6uUd1RT9cYgSfGUzFI6EdnTdkNTAfE2FKPF2vk+kyV/u81s8U=
+	t=1753539684; cv=none; b=SeokD2xcOokWiS6knrNRYOhFjG1odTc6y93Eb9qQf1Hcb9xA9xI5mXy4UbEW5fCpqKho2vw3mw9U5IeYGoVylxM6w/QtwgOYngo1TE7LyrvAfjvanBLyxS8DumleC+C9vieryxexXGdcr9LIkfx0N0a8pvNXouw2ZwFLkD/3flA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753538012; c=relaxed/simple;
-	bh=4ajj3vJytPVDAFKK39Yc3WlWeK5ZZiI7qxsnaQFzXIg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=osmYu9A/TD4n7eezMHc6y7uIviEcReQd1o7Hz2rFsBDsmWB0B/Lsrxi/GgCokPm7t3ooQ4bvTGR1CcdnwSZBgDAqOrqI1oUl4FP6n3lfTxnp1550dOwpr/Wjl/kGSc+RFD0MiCJT9YGMe6fGcFVoaQFFdjd+4/ef4EQGuamGG+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QSvQLwau; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jJTBGNXm; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753539684; c=relaxed/simple;
+	bh=Anz1O+qrkO//BnfTM8vnTI8h160dAvzKWUJl3lBp4FQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=amJiWy4K4vsYMYoSkHDuhuZOZ+cXee2p1cEMvdAeH9JnhbNtvNWwmU4GbE7uG9cLsoFYLLv0ewAoKtl5m6DoM3JRb9rVTDmX5cXmd/K5QdNs6to5AhKsGWcsGOzJH48dGiHPrcU4LEEBtWnCzWpngNG7e24YhSTl8PoXEWkMnzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Rq1n4eii; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QSvQLwau";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jJTBGNXm"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id BA704EC00D1;
-	Sat, 26 Jul 2025 09:53:29 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Sat, 26 Jul 2025 09:53:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753538009; x=1753624409; bh=QUtcRjOw0S
-	5+Ukg1soLLYYtJMWPWJdxxDd1+ZZaK4EE=; b=QSvQLwaumgD4Oh+sIYP4L+R3F4
-	btg+OUaxCIe7kG0Bft+vg3OYDVg0Dhgdh0+H4FpSzFPeXfk0OS6A9h6J0sxDygc8
-	Fi4kQD3LEHnbiFtuPRDoXhiOykJqLUHj6bJoy6sMmM6XMvnWTKeh8xkK+ts5ED6L
-	wASXolsYcKZCEz8FdIt6hGhWqJ4D1bdtKjRbUNd6Oo5FFSZhwC0nAYouahwtRaG2
-	Cqq+RaNUij8D7ky0fOrcXojXA3/wm2HkebzfdRDuVcASrFqbkY9pwMJ302ZFfnhl
-	nJQ1xYBuna1FVDoEYJp/PLzzjWRqQ86cm89HVSGZ26MD7JnVQtYDBKBm2BdA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753538009; x=1753624409; bh=QUtcRjOw0S5+Ukg1soLLYYtJMWPWJdxxDd1
-	+ZZaK4EE=; b=jJTBGNXm2bWO9fE+q2amg401mTXwkLu1OEhBgjV1o5KG0Azspim
-	cXOoCzYzC3e4NeX3w34/BjnVE3jVKWVgyCbu406vMMDPRs2apxLc0K3xZoJu19tO
-	W4II/9Z4taipjDvMTG1l2QhB7R1k9dkAJOD7tjcc5gFlSe+iT1MNFo45ZybecaYc
-	V/HQGd9LBeSTldpxx9aP0e8ZINJtHuLmFNNKBHVbfpJuf9I5mp6coIXgjdB3RK+p
-	tomnyd4CnPt9BKKYG1XqeAsdOl2ucmcMvL886FQtaTHSrG81c5cvia1LB9JUgvCk
-	yFPS1fGKTepBMiZs8HPMNg3MSPLz8673Z6w==
-X-ME-Sender: <xms:2d2EaJLgi33O4rcaJVlWAZOzzop2rr9A4pg9qFkBYsNlZtG7KwTU_w>
-    <xme:2d2EaMBFSy1nN2UfN9MURINWkLi1lYuqIYl1QPFeufL-lr15NTkkUav-aODzd-HBm
-    HwoBubwlRQMBPjQPw>
-X-ME-Received: <xmr:2d2EaOqzSMEzQkUAQxQoLetbKQXNxn9kaY1t_EO4HxREfNYFZ3IsiDjFS03xZTBMYx8cRchJsnsLRH7myDO_1kGyVoAzLQy41jH0JuP82ONH96jcCGoU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekieehkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttd
-    dtvdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceothhmiiesphhosghogidr
-    tghomheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfegtefhvdffheefheeule
-    ehieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgspghrtghpthhtohepfe
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdp
-    rhgtphhtthhopehlihhnuhigsegrrhhmlhhinhhugidrohhrghdruhhkpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:2d2EaHjgI9OCJbJMfDMPbqzWyUT9zypsKAmrvj4_N2P5ojYHKXEm-g>
-    <xmx:2d2EaLAjwYOSkwG32JLj6yTfifqbUzNpqZWkvjeRg-KFOQLkvD8Mcg>
-    <xmx:2d2EaMFfdpNRDS9rTnR1-X_dQSi8xzSEu7GcixfuXDnHRj5xTkB7sg>
-    <xmx:2d2EaDI5eqDQ_TWodKOpa3qaI_3ldWEw2qxMQMVBQL5w6I9uQSGfnA>
-    <xmx:2d2EaLAdLRvij40sG8KN9LyBFXU0Zhz7WMfmI1bs3eT_QzHCcAbYMkuY>
-Feedback-ID: ia13843cf:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 26 Jul 2025 09:53:29 -0400 (EDT)
-Date: Sat, 26 Jul 2025 09:53:27 -0400
-From: Todd Zullinger <tmz@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "Russell King (Oracle)" <linux@armlinux.org.uk>, git@vger.kernel.org
-Subject: Re: [BUG?] git-daemon 2.49.0 in F40 no longer exports user
- directories
-Message-ID: <aITd13mTx8t1dQbO@teonanacatl.net>
-References: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
- <20250726075136.GA3032762@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Rq1n4eii"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ae36dc91dc7so492160766b.2
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:21:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753539681; x=1754144481; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EjBmc9WgYNf22Im2ieljCKPFXhMTz92OEsSFTy0+MOk=;
+        b=Rq1n4eiiGL4zIyb/fbou48MZpkIfTjuX4iur1z6uhyHMMtJ6563usbjXHOHLr6KcQ0
+         LvXuv6Pg9dps3q9TZ4ugz022UVAz+rbfS1vLbC3Ml+bxtBVX+jjplj2bpZsUSkoNoIlZ
+         wHw8kknpPNWV1psLmprVixCsj8VmqwHTNy/ecjdrFiJGC63urTmhq0/bpBW5xzwGqPrb
+         kI01Cpeligl7/HVzJD9JTfQMDFsMuGyUHSEcDaRorWsYjywbX5bHFWQTluyzUs9TQSaU
+         KUasMSY0f1SXCwOi1E8HxtJ8hk1NqOuNPjzxO4hZ4hd8K7B0zFjaA29ExChGAruRADU5
+         unDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753539681; x=1754144481;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EjBmc9WgYNf22Im2ieljCKPFXhMTz92OEsSFTy0+MOk=;
+        b=gc+WkUXUKtnQgCoStnYBM3ktIlCvWMl5wL7fsf0u5cJRT5awFUozotZ1Il4a6OmjIg
+         CNh6DoNN8fVyWGVn8PtRx7udYd0dPa/A8Vc2/nee0AToobu8K/nthvR89wCTXhIwRQS0
+         Ghhj3UUs0pYLiJkClSz2hIJHRXBoazqWql8FpiAYhoSGLcgVvqhDF+gew1+s1PIyJGtj
+         b90zMoIou1TonLMHge+VfSHIqW5sokJzBdEzjxySu4dHRTNR4+G28WXLTd3BgSF08aW5
+         CuWU43AM06tNtCf7Urn4PAUcciGvZhPy4P6LBBB+eXR4O1an9BkKyM5qxMMznKzHa2zV
+         cBAw==
+X-Forwarded-Encrypted: i=1; AJvYcCUcWdrLMLXkS55fzQjWA9bcJ6YIHrnzwaX72CB1octTKdPm2kcBL/A8ZGmqvZjlD7sW0eo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzUboTlfQtvBxGllVLi5HPn0wJdDKIbyJbGtYpEhaUIjgbkRg1J
+	fNZrTTdlWr4hJv5VFb0/PpWf6wjKEqi8EVum+msFRxpYW91q+7dRMlbt3lf//b2/lrvTQCi8SAu
+	YBkVMkC2UtOBboQUKCv1DQTj7Ceu6Bj+ZAHFe0zU=
+X-Gm-Gg: ASbGncvwuj/oiPaqnMU43x2foK1FbpCYevcL4X6US2I8bmj9ATlkJLYWYU2SxzPjOyy
+	UD09zLmu8V2DqAKXiGY+R0Qn9rQsUmClHwxpcKx8QR+QmuHCF2G/DQLEWwuNV7URyhH/aENmw21
+	x7uFBTUfczX1+SapyqxhlhCCmIdj8KJT1nlVeeBr0Ut6UY3iSF5KoIGq+sktHm4uGX8QU+G0egZ
+	3Ho3jNtwjrRshA/zRcfpb0m0kc19RbhBuu5p60fnw==
+X-Google-Smtp-Source: AGHT+IFS+7JgFP40MLOIj9G7eli78UxDxy0W1kcpi7etoHDGMXUsHZZH02gORYVK2crFQVqqJZJk5c2EsOHKJmUEx8I=
+X-Received: by 2002:a17:907:c0e:b0:ae3:4f99:a5aa with SMTP id
+ a640c23a62f3a-af61c2aebabmr711272966b.4.1753539681450; Sat, 26 Jul 2025
+ 07:21:21 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250726075136.GA3032762@coredump.intra.peff.net>
+References: <87y0slp23s.fsf@arch.mail-host-address-is-not-set> <xmqqecud145v.fsf@gitster.g>
+In-Reply-To: <xmqqecud145v.fsf@gitster.g>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Sat, 26 Jul 2025 10:21:10 -0400
+X-Gm-Features: Ac12FXz-indoUlTL2bmH6dVoJpUtrbORsvM2l8PWJu9UC_V3QRLJppkVOocBfR4
+Message-ID: <CALnO6CC+Tn5xFYcHwH-M7kLNt2+gut7Okx7fCuWRdOsQHoDWFw@mail.gmail.com>
+Subject: Re: A Question from a Hopeful Future Contributor
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Eric Frederickson <ericfrederickson68@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King wrote:
-> On Fri, Jul 25, 2025 at 05:11:02PM +0100, Russell King (Oracle) wrote:
-> 
->> While I've been away on holiday over the last three weeks, my co-admin
->> updated ZenIV to Fedora 40, and now I find that git-daemon no longer
+On Fri, Jul 18, 2025 at 7:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Eric Frederickson <ericfrederickson68@gmail.com> writes:
+>
+> > Looking through the repo for a place to find todo items, I naturally st=
+umbled
+> > upon the TODO file in the origin/todo branch,...
+>
+> Please disregard that file (I should remove it from the repository,
+> too).  It is not curated at all, and the last update to it is more
+> than 13 years ago.
+>
+> >> * "git status" on intent-to-add index entries (say "I" in the first
+> >>   column instead of "A" for short status, add "(needs 'git add')" at t=
+he
+> >>   end of "new file: $path " in long status).
+> >
+> > I am interpreting this todo message as meaning that the following behav=
+ior
+> > should be implemented:
+>
+> I think that was done long time ago.  The entry may have been a wish-item
+> in April 2011, but not anymore.
 
-While this isn't relevant to the issue, it seems worth
-noting that Fedora 40 went EOL a couple of months ago, so it
-no longer receives any security updates.  That's not ideal
-if this system is not entirely internal. :)
+At least in 2.48.1 and in git version 2.50.0.rc0.48.g74dbe4346c, this
+behavior isn't present. So I wouldn't call it "done"=E2=80=94maybe there wa=
+s a
+discussion that it shouldn't be done, though? I didn't search the
+list.
 
->> exports my "public_git" directory. My attempts at debugging this have
->> failed - I tried adding strace to the git@.service but I get nothing.
->> This is a regression.
-> 
-> I'm not aware of anything changing here recently, and ~user expansion
-> does seem to work for me. E.g. using v2.49.0 and running:
-> 
->   git daemon --base-path=/tmp/foo --export-all --user-path=public_git \
-> 	--verbose --log-destination=stderr
-> 
-> and then running:
-> 
->   mkdir ~peff/public_git
->   git init --bare ~peff/public_git/repo.git
->   git -C ~peff/public_git/repo.git --work-tree=. commit --allow-empty -m foo
-> 
->   git ls-remote git://localhost/~peff/repo.git
-> 
-> works. I get a similar log message to you here:
+>
+> Sorry for wasting your time.  A better sources of inspiration might
+> come from list archive searches for the past 3 year or so.
+>
+> https://lore.kernel.org/git/?q=3D%22%23leftoverbit%22+d%3A20220718..
+>
+> But even then, many itches have already been scratched.
+>
+> As is often said, in open source, the easiest is to start scratching
+> your own itch ;-)
+>
+> Thanks.
+>
 
-I was curious, so I took Peff's recipe and gave it a try. 
 
-    sudo dnf -y install git-daemon
-    sudo systemctl enable --now git.socket
-    mkdir ~/public_git
-    git init --bare ~/public_git/repo.git
-    git -C ~/public_git/repo.git --work-tree=. commit --allow-empty -m foo
-    sudo git config --system --add safe.directory ~/public_git/\*
-    git ls-remote git://localhost/~test/repo.git
-
-And that fails as it does for Russell.  I suspected SELinux,
-which is enabled by default on Fedora.  With luck, you have
-not already ruled that out.
-
-Two things were needed with respect to SELinux and one other
-for basic permissions.
-
-First, ensure the permissions on the home directory allow
-access by others, as git-daemon will be running as nobody.
-By default ~/ isn't searchable by others.  (This isn't
-likely the trouble in your case, but only because you'd
-probably changed it well before the OS upgrade.)
-
-    # ensure ~ is searchable; git-daemon runs as nobody
-    chmod -c o=x ~
-
-The permissions on ~/public_git and the subdirectories were
-already okay, but if you set a strict umask, it might be
-worth ensuring they're okay (also unlikely for you as this
-worked before an upgrade).
-
-Then ensure the SELinux context type is correct.  It should
-be git_user_content_t.  You can add -n to the restorecon
-call to see what it would change.
-
-    # The -F isn't strictly required, I just like setting
-    # the user, role, range portion as well as the type.
-    restorecon -FRv ~/public_git/
-
-This is close, but still not enough as SELinux doesn't allow
-git-daemon to search user home directories by default.
-There is a boolean to enable that so you don't have to
-create any custom policy.  But for reference, audit2allow
-tells you just that:
-
-    $ sudo ausearch -ts recent -m AVC | audit2allow
-    [... needless blank lines elided ...]
-    #============= git_system_t ==============
-
-    #!!!! This avc can be allowed using the boolean 'git_system_enable_homedirs'
-    allow git_system_t user_home_dir_t:dir search;
-
-Enable the boolean:
-
-    sudo setsebool -P git_system_enable_homedirs=1
-
-And `git ls-remote git://localhost/~test/repo.git` now
-returns successfully.  It's empty in this case, but I cloned
-a repo with content into ~/public_git and confirmed it
-worked as expected.
-
-With luck, it's SELinux biting you (or, less likely) a
-permission on ~ or ~/public_git and this will help.
-
-It does seem like the git-daemon package in Fedora could use
-a README-SELinux.md which explains this stuff, like the cgit
-package.  That might have helped you or others in getting
-started.
-
--- 
-Todd
+--=20
+D. Ben Knoble
