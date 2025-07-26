@@ -1,138 +1,158 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B1219B3EC
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:22:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7349241103
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 14:34:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753539773; cv=none; b=q6MZxhwzBWHQyP8rA7kRw/ntX+FNiTWgj4XAKeXNAFUEnegdq2IzWtncSZrq+uVoVhpaYh9NAoJgCvYGc0yEoXoS7AADE9JZH6wbgleEZE7RX5JX68KcRaoa9deBpaGlvv95knjN3Z+p047AnQkUrlfVmb1XNk+Z0RYZ0keCG80=
+	t=1753540492; cv=none; b=GOqbp8o8xD55Pg+neHy1UDV5CcjW/jyvBr9h6/s9NJOdS8ZYlt6rNLQn5u+1yMaOhov4GOr2YeVaDr//M2V0XjF31TuOIefz6bz833ZChJfVSG4k8RCsRVrFf5JC7P7XLF9OD6if+tgm/IR9iRGvLYEgNvCKrArUAmRJ0kTyXfY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753539773; c=relaxed/simple;
-	bh=6kOP46wjNj+oTwKEnTKs1WY3AzXQXtso0EKNO7IpC2Y=;
+	s=arc-20240116; t=1753540492; c=relaxed/simple;
+	bh=QDOGlPzuWJDVuopbf27qpiRnDIcOhFGzzqkdkFF99dk=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=P5g4Z3i/5vsAF8eSmzxq1bBZ2ippbGxjVZrGUyjjGHdQe131nXq65kxSknGRJGLwAjb7TwqCS+hBsPLfcfvzkIWmtK1uGVYfuYt6kkojk3yCcUHzmpudmc2HyNN/1NRvAvWnIp3MXQG1rGqYB5src8oJfNDs5OdXNQDjbdPmsbI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a5h2Y0oQ; arc=none smtp.client-ip=209.85.208.42
+	 To:Cc:Content-Type; b=VLwX0HoklJsIe/7sjTbZdPnTJ+/0oMo6FqbpZude4YiMm52g9rkrg2HiBGP6voN+MFvaNduoxEeXu5diggm4PP6FVLKRyc9t7L/dnXHXuSQR2pJF1RNvH/LXTH0mcTAG5V6cM6CrfxXdH6h3TrJ2WLxMhU64qPctJaQ5+9/r8zM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Q7LDkBRt; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a5h2Y0oQ"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-612a338aed8so4825434a12.1
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:22:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Q7LDkBRt"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-607ec30df2bso5730020a12.1
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:34:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753539770; x=1754144570; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753540489; x=1754145289; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MlE2zgD95Aun2hldfDd2G/IJtxOMO+5oVK6luPo+gpM=;
-        b=a5h2Y0oQrjF06WZ22I8wUVG+V1L8+rV0TYqaVI0I82qAjhEmRVzfJVb3f7kPkbVh5m
-         4/MxB1GVYk2cNpFXtsR4txyRO00a2QI2vt1S5/IWYXJGsP1Ql0jTtbhnYDG6o15AXfI8
-         /YYzOQIlSQZN+CDMtBJxiD+erlR0uMp84g+U+GfcrdtA0yIudxXpv3YNoFUJ20e/TRi9
-         n7G2YoBi9fquzdMCZrbcab++1Pdsp5ynKavd3JKGeUWLqGpI1wZ7XU5hFIiFR8VmXKe7
-         uhO23iXW4yOLtVXBeM+lXHbyN9d+M0CboRaTLV3tF8LypWR5E/ze6aadauXjy5zhqUXx
-         TEIA==
+        bh=54cUlqJUZWE6OowFmMwnD5/bO0XpzOJZnUgHPdKoTFM=;
+        b=Q7LDkBRt2Pb4CvUI0zIBvNTqYSs26kOeJSZCOIybgqXsMpwljPTNBBY+y81lnR0Vs/
+         Pr2jjXeRq6PvYydINfSV4Is3pFiMnTgAFXaeqr9oBHgZafJzU5TVK09cLRgjHuTmai8c
+         SG8j+J7i0mgSPdNiL7Sv9DrLQTPyJXiHd/w6mVnT2GpS8GIwnqYprtUHtH+jnQrKyHeK
+         ovw4jlul+45UpsEYGzHVOMxc8GJWOCfJUajQRCvcKLR0N4GOAil447Pj5hS2HSqaVZwo
+         o77HIvYXAr5ITU+oVBzB0ceSQG9zD7/rwHXD/EPTV2xNDY+vUpPcRrnfmTHtK7PBCVIb
+         1ztQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753539770; x=1754144570;
+        d=1e100.net; s=20230601; t=1753540489; x=1754145289;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=MlE2zgD95Aun2hldfDd2G/IJtxOMO+5oVK6luPo+gpM=;
-        b=NVpHTcfNenDb5uYFIFpEa80+PjIdt3Jb/BTI74siuDmU07+A6MpsBNlBXH9HzGI5LZ
-         TWzJdRisrYz4Oc5pR0OKaQGe5kXEe4enPnTp28iCU+ej8O75eie2hQhEPBg+GT43xcvw
-         880laCtLnXlLeAfrurnhmv+9YaExI6vSf+mq/HQ4iZxR5Apo+mBUP8NBnuw5s1Whflgk
-         eTnrRGjZWsdvNEIlF82TNWnCEZTvYl3i724RTnU//NFOIFcQ6PGer8/Ze1FjFtCk9/YO
-         a4JYJ1okmVkam+UdPTK/BpSZd+Xsz6fYJzarqw2f87tIsyjYvb2pziNF2Na/R7qwn6YC
-         5HFw==
-X-Forwarded-Encrypted: i=1; AJvYcCVpb7C4js/v22X3xkrIrGPV0DXTgl74917ojeZWAf9yFg5BjqVWQybYFSIzNsvoHlbmSA0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwQEsWv2X1ZJ2Nj6MRxNBLBHJTcXgN4iD3DG7MQe2thww8DSk/S
-	rb9V8z/xo6617X9ti3caHw2XPCChtLAPbu76xD3W5D2/omVAUIWNVlFyVfHN0P3aJjqhj0EzK6M
-	12ASr3932eYTH4xg2RUqZg7krLpwoxgw4WlzA
-X-Gm-Gg: ASbGncvW2YjuQVQ1S/bnhKlFZqpXHcxz/czZDsF08pivDWP6XvJxW44JT2Ug8yLmg1l
-	+JwtYhzn3Yj4DLVadsTTRnrHvQBxq91eQ7ohj/VB3MUC+DD7mKDTEoRbxAA9qsQvVEVm6HvP3oY
-	8HegWhiwaSHXR2FTPS3GmAZfm8PczZJBcgS+D4dbx1fMwCaFvOqm4CsRXgtTllYMlLXxRVi/qyF
-	fuAQvzkVX5QlVwGy1j6vai+fFFkDoz203LkqeA2+w==
-X-Google-Smtp-Source: AGHT+IFFPAIXvZ0gMsGAqW5YLWcCw6E6elEHtaZvJdg836prT33Acz9qreKFrTshiysUAoWD4P5FeklGhNMTSvdex2E=
-X-Received: by 2002:a17:907:7e9d:b0:ae6:b006:1be with SMTP id
- a640c23a62f3a-af61740d575mr642359866b.5.1753539769985; Sat, 26 Jul 2025
- 07:22:49 -0700 (PDT)
+        bh=54cUlqJUZWE6OowFmMwnD5/bO0XpzOJZnUgHPdKoTFM=;
+        b=AZ3XUcQ+3/kXH+rXzMXX5X9V2kcQhzEJqbUN7DZZgc6hK+vH2SRE0WX2DbWrGTYlSJ
+         CFkYA+47Jm61g+ktUZzbCEZJxUJVVQRmUxr1lw5bMCFp01QeRYgSTMw+KNKpeTSDfrYR
+         cD+9OvpntAy4lLKFTIeL/jmUyXFu0feoHT249snvcCGwE18VWixz+NK5Jju0lOox/T7k
+         jD70VvaIKI/G6laEAn27nd+w3mvdUtdJ46wScM5nUHzNMQSk2VOmmMQu6qqno0xLiVFh
+         FwOauFJtBFabU9d4dRZsZWhAbqnET9tJCByRmK/BVWe0CVoEq1wz7PTxoy71tPH2RC2O
+         1SAw==
+X-Gm-Message-State: AOJu0YzLW5O8P70SjJEZcI22TDi8Y49AwVVKZar8CdO9mFVL4FY88vAR
+	QPvuzM1kC4rbbOkDLhfKe0wHPALfGhRZ93QLc0VbNtOXXFNQ0iWtnih9nX8X6My/jYYU3waz+Bj
+	QKc9VlmffCJmp1mZa3HmUzm3NP+9ssZra7wJM
+X-Gm-Gg: ASbGnctQWWa6KwibzYOIf7KpTP6D5gBtzAkSOi4vUiNVpTyr4mfu+i7qug+UCrsCb7b
+	kUUVhX6YldRvwXXAWD8/aRNiYQLrgn7F3kHwUvKr3cipiBpaXB5q380PWvdqEfUrUuQqhEUhiSK
+	7EbrbbywdgGo1y1y0og52uQXGE/6rCSDbyDnQXRGDKqr4Et7qCvJlyCTQ8DGauXc4dzqwULFmpN
+	VkyTVk9VRWx0meXG18CIdXC2+MBBI9wYIUFgThM8g==
+X-Google-Smtp-Source: AGHT+IFhTNh1xLqe3EoYGytJ8vvPLzdNbpYUqzN+0mZqJHrQcA2zThUTr/GtU+6O0Gf1y1KOJwssxJmcA0SyCzQjFPE=
+X-Received: by 2002:a17:907:7ea5:b0:ae0:da2d:1a53 with SMTP id
+ a640c23a62f3a-af619415d4cmr707859266b.42.1753540488978; Sat, 26 Jul 2025
+ 07:34:48 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <1c3a0463-36ee-4a2d-92e0-fac9c0bf77da@arm.com> <a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
- <xmqqqzy33k1j.fsf@gitster.g> <20250726081254.GA3042329@coredump.intra.peff.net>
- <CALnO6CA2qSYePJzqXjdW6c2zC4KQJSKzsCFCzc9si0OJ8E_ohw@mail.gmail.com>
-In-Reply-To: <CALnO6CA2qSYePJzqXjdW6c2zC4KQJSKzsCFCzc9si0OJ8E_ohw@mail.gmail.com>
+References: <xmqqcya63cqx.fsf@gitster.g> <20250721115519.140361-1-usmanakinyemi202@gmail.com>
+ <20250721115519.140361-2-usmanakinyemi202@gmail.com>
+In-Reply-To: <20250721115519.140361-2-usmanakinyemi202@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 26 Jul 2025 10:22:38 -0400
-X-Gm-Features: Ac12FXzbLT3lwWefzwEb5_QQ1zAuyMWHHs7l-CBGL-b14cLKcOdJqI8Bv1jwsdo
-Message-ID: <CALnO6CCcYfzHUif=qQHxODnj_kGvGrYYV==4gJKWwxcKS+2JBA@mail.gmail.com>
-Subject: Re: [PATCH] git: show alias info only with lone -h
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
-	Kevin Brodsky <kevin.brodsky@arm.com>, git@vger.kernel.org, 
-	Rasmus Villemoes <ravi@prevas.dk>
+Date: Sat, 26 Jul 2025 10:34:37 -0400
+X-Gm-Features: Ac12FXyRVQ3_ypFCDP9TSEJTRRNNXIgAuZsUBsyTxQbHf5kAy79qgoPSs-riK3A
+Message-ID: <CALnO6CCN0HUXJVYmvAJO3EoQQZzHVjE0P=g+AUc9c5Ti0Rcm2w@mail.gmail.com>
+Subject: Re: [PATCH v4 1/2] t/t1517: automate `git subcmd -h` tests outside a repository
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, chriscool@tuxfamily.org, 
+	christian.couder@gmail.com, me@ttaylorr.com, ps@pks.im
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jul 26, 2025 at 9:12=E2=80=AFAM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
+On Mon, Jul 21, 2025 at 7:55=E2=80=AFAM Usman Akinyemi
+<usmanakinyemi202@gmail.com> wrote:
 >
-> I have a few (unsent) patches I've been working on that touch the help
-> mechanism, so I have some thoughts below.
+> Replace manual `-h` tests with a loop over all subcommands using
+> `git --list-cmds=3Dmain`. This ensures consistent coverage of `-h`
+> behavior outside a repo and future-proofs the test by covering
+> new commands automatically.
 >
-> On Sat, Jul 26, 2025 at 4:13=E2=80=AFAM Jeff King <peff@peff.net> wrote:
-> >
-> > On Fri, Jul 25, 2025 at 04:52:40PM -0700, Junio C Hamano wrote:
-> >
-> > > When it redirects to our commands, it is less risky as we aim to
-> > > make all our commands honor a single "-h" via t0450.
-> > >
-> > >    $ git -c alias.c=3Dcheckout c -h
-> > >    'c' is aliased to 'checkout'
-> > >    usage: git checkout [<options>] <branch>
-> > >       or: git checkout [<options>] [<branch>] -- <file>...
-> > >
-> > >        -b <branch>           create and checkout a new branch
-> > >        -B <branch>           create/reset and checkout a branch
-> > >    ...
-> > >        --pathspec-from-file <file>
-> > >                              read pathspec from file
-> > >        --pathspec-file-nul   with --pathspec-from-file, pathspec elem=
-ents are separated with NUL character
-> > >
-> > > But then, it may not be such a good idea to pay attention to "do we
-> > > have extra '-h'?" when alias expands to our commands, e.g.
-> >
-> > Another interesting case: even for our own commands, the alias itself
-> > may add extra arguments, which confuses things further. So:
-> >
-> >   $ git -c alias.gi=3D'grep --cached' gi -h
-> >   'gi' is aliased to 'grep --cached'
-> >   fatal: no pattern given
-> >
-> > runs git-grep, but even though the user said only "-h" the alias added
-> > another option which prevents the help-mode from activating.
-> >
-> > In this case it is not too harmful, but you can come up with
-> > pathological cases where it actually runs a real command:
-> >
-> >   git -c alias.grep-for-foo=3D'grep -e foo' grep-for-foo -h
-> >
-> > which runs a real grep.
-> >
-> > I guess one way to deal with it would be if the user runs "foo -h", and
-> > alias.foo is "bar --other arguments", then we run just "bar -h",
-> > dropping the extra arguments provided by the alias.
+> Known exceptions are skipped or marked as expected failures.
 >
-> This is intriguing: it would mean that an alias is not purely a
-> textual replacement? That's true for ! aliases today, but other than
-> shelling out it's pretty close.
+> Suggested-by: Patrick Steinhardt <ps@pks.im>
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Usman Akinyemi <usmanakinyemi202@gmail.com>
+> ---
+>  t/t1517-outside-repo.sh | 25 +++++++++++++++++++++++--
+>  1 file changed, 23 insertions(+), 2 deletions(-)
+>
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index 6824581317..9fcebb7d94 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -110,8 +110,29 @@ test_expect_success LIBCURL 'remote-http outside rep=
+ository' '
+>  test_expect_success 'update-server-info does not crash with -h' '
+>         test_expect_code 129 git update-server-info -h >usage &&
+>         test_grep "[Uu]sage: git update-server-info " usage &&
+> -       test_expect_code 129 nongit git update-server-info -h >usage &&
+> -       test_grep "[Uu]sage: git update-server-info " usage
+>  '
+>
+> +for cmd in $(git --list-cmds=3Dmain)
+> +do
+> +       cmd=3D${cmd%.*} # strip .sh, .perl, etc.
+> +       case "$cmd" in
+> +       archimport | cvsexportcommit | cvsimport | cvsserver | daemon | \
+> +       difftool--helper | filter-branch | fsck-objects | get-tar-commit-=
+id | \
+> +       http-backend | http-fetch | http-push | init-db | instaweb.sh | \
+> +       merge-octopus | merge-one-file | merge-resolve | mergetool | \
+> +       mktag | p4 | p4.py | pickaxe | quiltimport | remote-ftp | remote-=
+ftps | \
 
-One other thing I've just remembered: "git help alias" shows the alias
-information without running it. So I don't know if special-casing "-h"
-adds much?
+Hm=E2=80=94if we strip the suffix with ${cmd%.*}, do we need a p4.py patter=
+n
+too? Actually, at first I wondered why we need to strip the suffix at
+all. My local Git produces only unsuffixed commands. But
+bin-wrappers/git produces both p4 and p4.py; request-pull and
+request-pull.sh; and several others. So I think stripping is probably
+right, just drop the .py pattern.
+
+> +       remote-http | remote-https | replay | request-pull | send-email |=
+ \
+> +       sh-i18n--envsubst | shell | show | stage | submodule | svn | \
+> +       upload-archive--writer | upload-pack | web--browse | whatchanged)
+> +               expect_outcome=3Dexpect_failure ;;
+> +       *)
+> +               expect_outcome=3Dexpect_success ;;
+> +       esac
+> +       test_$expect_outcome "'git $cmd -h' outside a repository" '
+> +               test_expect_code 129 nongit git $cmd -h >usage &&
+> +               echo "Hello" &&
+
+Woops! While basing some work on this branch, I spotted this "echo"=E2=80=
+=94I
+assume it's leftover and didn't mean to be included here? Will drop
+locally for my own work.
+
+> +               test_grep "[Uu]sage: git $cmd " usage
+> +       '
+> +done
+> +
+>  test_done
+> --
+> 2.50.0
+>
+>
+
+Last thing: outside the patch context, there's a test for prune that
+should probably get tweaked like the update-server-info test.
+
 
 --=20
 D. Ben Knoble
