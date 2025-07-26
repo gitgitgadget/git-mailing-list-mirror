@@ -1,107 +1,164 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F3A7259C
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 23:15:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C558422DA1C
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 23:55:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753571725; cv=none; b=sVZzob6QqRRj/l85JCY1mCZ+z41ueppRFmbIpUvEjIx9Y7LbjFXtTjZXEjKb/+Gc2RbCMPzs/FkOTnLsKo+pDHErVXb/fnMjz5QAu//01bcCbJ+tWNx2j+VEHmJWrfes/FLKLpHMqCG+lC4H5eljBMHLxNzfIv0J0Rbj4ROjU28=
+	t=1753574143; cv=none; b=eBTwkqlbr0V6nITxAxIRv+/d26R2JnWPhHaTY1DRxU+bZCHkZZpEGDT6swd/F6frVWMzw62S9r3dW0PTioaEviZ8W6Xhjey7MlXCb+qDyOGUddwJN4PkA3BkLgkucHgNitwIEWUPEewBNaC6F90e8oyR3MABqMdusyo9E5b/zjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753571725; c=relaxed/simple;
-	bh=izqJp9/er5oq1CjDdtZRm32Y7MoPryQOD0QPPwwsAZ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bc7an04XCJVXVIIt2MjoSzg/QJ3IIEY6xF/TbezOUvmkeM8ExrPeP4ctaSrQpzJKvr9J45XCWnYlrCZPZTxvA+8bfdJpFoyjWr+uJv5nYyE9kW6jWx2Pd8obmqxlYb5Pn3a4ZcsBL+/HTerf6TXxS+07vjvNAoOn568E6GH2Yjo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IOf2WaCD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Rvrt7uA9; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1753574143; c=relaxed/simple;
+	bh=Z+6SnDIE7qRMzCS69oVqYLLdiB50TkyVEdkQ7DAuypc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=eCGelce5GdWUog/bMHP5ofWVHedbbjtjcL6L7FXONh8/eYS+YgG4l1IcYwnaAspyapkofc8O4J6c5WKa/OLVIgIsKcJB/Un9nspywpgc1uNKB/grGHOMZra70rJq31rGYU2sTtwZEivt5+jmDjKIYKYYKcDT1vGfKpg1j/pfn9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bfwJ50CZ; arc=none smtp.client-ip=209.85.216.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IOf2WaCD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Rvrt7uA9"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9A80214000F0;
-	Sat, 26 Jul 2025 19:15:22 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-07.internal (MEProxy); Sat, 26 Jul 2025 19:15:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753571722; x=1753658122; bh=4T+zAtjBbF
-	PvEcF1OpVZoZdYJeH2IL4tUVGhHFTHp9U=; b=IOf2WaCDM5qVCaq2UFuHECUFZY
-	Ks69l89RH8d30RMxLgbHQbhUZ64J4r5/YHHoyASScP7rI3xMcniXhrETCVprXjfY
-	eHz5z+qJY7UkUV9qjO1K4YWY1OLCcZW6404UNfHfe3ciaVcinGN5qeKvD9j18HN4
-	mEIcp/adCtwad0WOiVBZtsYVkDjGXpL1EGQ6KNRnKtcWlnb/gGFN/vMg/6BfGUcJ
-	RHOh2KIIcBgorS82ue8GBQ5xCvHHxyq5ntFQXGHdtAwVLqYzTamr1vCU15HfkTKa
-	WkDrHmvuNrzGZZ6FOfcOSw//MjsU6I3BMpK8wk/hXvb7A192nEIvR/URWeKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753571722; x=1753658122; bh=4T+zAtjBbFPvEcF1OpVZoZdYJeH2IL4tUVG
-	hHFTHp9U=; b=Rvrt7uA91DBjXiXfwbnp6hYLv7bVCnm2ZYDVbPH6etu/vvGtq+d
-	9RyLrtONOgEwV+xHX70htv2l4ZZNAufU8klkUY3dKcPi/eQeQwan4RbpSfY2+/iP
-	sUL9z+ARjjK5GW8ZvALfdVz3ONYiUxAlrhK5FkBdr5eP7qQEl/uZ4NHpXCa7BuCq
-	jet/E00Bi59E15L4nWwlSHe5ql/XDecyQhqk8Vsi1m+szwBV4FQs+IDMt8d+YXbw
-	BVQeYkGVSMylwCIlsRds9QHHgCKTDeCHiRuGtdCpWcs7HYYKOu3+orXsknJs0xQM
-	itvWjWfc56Rh+MGcGVxHO3t6yWlEDFE0OFQ==
-X-ME-Sender: <xms:imGFaHfHWCnCcQ798qK8nKDiHIcTau5piFuD4LJGGMljLCPMbYrbVA>
-    <xme:imGFaItqyBTnZ_LdXTURYS-8kIoi9Hdj8oqW0u0FbDyDSkKReCe3mehHgT6HzHHs4
-    yYITc8JDLcXNR4i1A>
-X-ME-Received: <xmr:imGFaG9p0zDWVUviGZv6zwov_2hsvnktAy-6GBZIdAPEpmiYi68wTGf84QoVv0LeQukcwpeW-LPtnw2KgGOnnxeGKKHmn0T7047aCK8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekjeejudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
-    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
-    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
-    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:imGFaD1bJ2QyAX883eQdpNhEUtZzf9q5w7T_HZA_0KFp-Bf4HtSKqg>
-    <xmx:imGFaLAA8waLj3YpQinx5tAp6Xe53xytGbu1ZqKyTcuQ8DCLc3ppcg>
-    <xmx:imGFaPeyjuDmT_L-cOf39b3A6KsXVTppL3J6Nai6ozqcylSHjCTGeg>
-    <xmx:imGFaI5esfb4WaTC68c7WxJA8EiexsAMLescMxpegG4KjJkQu5ELkA>
-    <xmx:imGFaPMqpJB-CYwHIp26FLVk-RMz_Gk7lyA6oRy58gCAJ0Y-hge549fR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 26 Jul 2025 19:15:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: document test balloons in flight
-In-Reply-To: <m1seily1e3.fsf@gmail.com> (Collin Funk's message of "Thu, 24 Jul
-	2025 09:55:16 -0700")
-References: <xmqqldoen5v3.fsf@gitster.g> <xmqqecu6n1pt.fsf@gitster.g>
-	<aIHY-PXYYzE8JULj@pks.im> <xmqqms8tilvs.fsf@gitster.g>
-	<m1seily1e3.fsf@gmail.com>
-Date: Sat, 26 Jul 2025 16:15:21 -0700
-Message-ID: <xmqqcy9m1r3q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bfwJ50CZ"
+Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-31ec651c2a1so103743a91.0
+        for <git@vger.kernel.org>; Sat, 26 Jul 2025 16:55:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1753574141; x=1754178941; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=JO3Ff5pMaTiUORUNR/ymq2y9tzeJiWutx6ns5fFZfII=;
+        b=bfwJ50CZeeZBziYPyJN3tzHIG7zp0ChJzMEUMhB5CkvLlcM25oRluOVcoQf8i6jJeD
+         Q7uRNfrufMPo0f4i+DHE58mbL25W/S+SbWlYerf1voXcnlK77cDzjyQfPeWdfpUPW/2z
+         npjDLzr+vDBA8Kyzwtd7UymYHgRdKjMZheQr73dSXvuUcUDmo+0Olao4efFZzGHrfuGk
+         wb0jWyz2fa/tlooQJE36mAsBBFl2hLfrGksf/6Ye6V2+jDK3uEjLSXRI1wFitJiN32CL
+         GlkRiJRUvI9H7vEynQnZYZ65UsCyx4V+HJFq14mMBI8F6/k4dVG39cFyUpmbR/l+BQXW
+         qoIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1753574141; x=1754178941;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JO3Ff5pMaTiUORUNR/ymq2y9tzeJiWutx6ns5fFZfII=;
+        b=PQhV0wOm1f3m16dIDryY7X+JCQhY/W0nq8sfF+yRmp7cdWs65UPnX5OZexl8Uej45s
+         nZMSLGLmwu0HEi8wiuGlpCEVVa7VOnt0Kv2+vPDVHa5SVLrWxG6Qk36zFpggeyHVFZnm
+         PolSn2hh+/dBpX6ntCgwnxy1PWL1Zio6hurJSES5Z0du8GuhwM38fpGalxLSmtN79+rf
+         cD3CwuJ6y1iJ+kwhP3FMxWy6Oqhiw98Uitzl/Nji413cU27KCNbxwVVHJbfnK+O70hNk
+         lIbAgKXmgZ2N28pHdmrPO2UC3W1njYMxcslw56TE1VvLQk+V5/agQ2bN5a1UCYFdMk10
+         g6VA==
+X-Forwarded-Encrypted: i=1; AJvYcCUzEK4YcRh2cCzf4M6gMrC+tdnoOchnArBGpTA3p8B0em9AZgYgUs8S8AKTArqKuZn5oBc=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx14IaqBYvpP8EIlqQfO371uDNX6TMM5lnaFOIS+2GpUpYjBPA7
+	bbLAAibpGUJacgHfxRJRUjeyKwK9QiI1AJW7/EMC2imAdSdq8TLUD61sJDnje3NDMX0HVM/Oc2r
+	4SN2yVibJbqkGwGn8KYITfNeBFIR4rpc=
+X-Gm-Gg: ASbGncucAzOG6kuyFP+FbljO9D7qdBPS748iFh/PHC8etbzkGIHMbis/vW50d2/GfsU
+	0xmIle9L5W0x5O19TRq8iBf3Tw06r9loeRIkXIyj3wGEZFvWxqqHCdv/r+4oF+IvBkhGHFhgrkm
+	OjgoGacLu/WDtFkdY99JWKjO/94F3qNZRxsnaxygAnJppa1NIMh5V7SuXaDzNQKYh4XCaFgObZd
+	NO24oAc
+X-Google-Smtp-Source: AGHT+IErq5io+Nr6T0U8UBzmizGJ+rUay3bkD+gJeKm21IVy6xn1uODyA+m47w+JgYTIIvaFlw62Y0k6qWm6OPuSTZ4=
+X-Received: by 2002:a17:90a:c886:b0:31e:4492:af48 with SMTP id
+ 98e67ed59e1d1-31e77a227e6mr10305405a91.28.1753574140865; Sat, 26 Jul 2025
+ 16:55:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
+ <cover.1752882401.git.ayu.chandekar@gmail.com> <xmqqcy9qlfm8.fsf@gitster.g>
+In-Reply-To: <xmqqcy9qlfm8.fsf@gitster.g>
+From: Ayush Chandekar <ayu.chandekar@gmail.com>
+Date: Sun, 27 Jul 2025 05:25:29 +0530
+X-Gm-Features: Ac12FXxGejoQ9hZQIP-fiKDoe-rNaX0-t16RzmiUl3bHHo22zTK08gWL4hAXPtc
+Message-ID: <CAE7as+b2rSiXziZE0a3BdvPZ5h2961vOUX=zgvnjgvwPKbCHyg@mail.gmail.com>
+Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
+ global variables
+To: Junio C Hamano <gitster@pobox.com>
+Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
+	phillip.wood123@gmail.com, ps@pks.im, ben.knoble@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Collin Funk <collin.funk1@gmail.com> writes:
-
->> So the only effect it would have is to smoke out truly slow platform
->> maintainers; if their users are happy enough with such slow upgrade,
->> they have lived and they can live with versions of Git that are
->> years stale that we no longer care about.
+On Thu, Jul 24, 2025 at 3:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
+> Ayush Chandekar <ayu.chandekar@gmail.com> writes:
 >
-> For what it is worth, Gnulib and threfore Coreutils, among others, began
-> using compound literals in 2017 and it seems to have not caused any
-> problems [1]. Even 'pcc' supports them.
+> >
+> > * For 1/3 and 2/3, Junio told me that it was concerning to put so
+> >   many calls to `prepare_repo_settings()` so I tried to minimize the
+> >   calls and made sure that there's no useless calling.
+>
+> I didn't mean that the number of places is the problem.  What I
+> found troubling was that this is not done in any central place, so
+> it is hard to notice even if some random cmd_foo() failed to call
+> the function before doing its real work.  For example, shouldn't we
+> be able to, at least for built-in commands that have RUN_SETUP bit
+> set, centrally call prepare_repo_settings() somewhere late in
+> git.c:run_builtin() after we figure out what should be in
+> the_repository?  Now historically, setting up a repository may never
+> have involved opening and parsing tons of configuration files, so
+> such a change may be incurring extra overhead we did not have to
+> pay, so it needs a lot more thought than just trying to minimize the
+> number of calls, but some performance measurement.
+>
 
-Thanks.  Our worry however includes platforms outside the Open
-Source and/or Free Software ecosystem, which would not be helped
-very much.
+I was quite stumped as I don't know what the perfect solution for this
+would be. I get your point that we have calls to the function all over
+the place and would take some toll on the performance as well. As you
+said that we can probably call the function in git.c:run_builtin() or
+we can have a call to it in config.c:repo_config() so that just as the
+other settings, we will have our repo_settings parsed, which were once
+parsed through the same function(repo_config() or git_config()) and
+since all the cmd_*() functions have a call to this, we will also be
+able to call prepare_repo_settings() there itself.
 
+> > * For 3/3, Phillip told me that it broke user-facing as it will be
+> >   parsed quite late in the callchain and might throw an error mid
+> >   operation which we do not want.
+>
+> So has the behaviour change caused by 3/3 been resolved?
+
+Well, I am not parsing it at that place. But, I am relying on an
+already existing call to prepre_repo_settings() before the function
+using the setting is called repository.c:repo_read_index(). I tried to
+narrow down to a cmd_foo() function so that I can shift a call to the
+prepare_repo_settings() from repo_read_index() to it, but this
+function is widely called and cannot be narrowed down so I had to
+settle with it. I'm afraid the issue still isn't completely resolved
+
+>
+> A meta-level comment and a half.
+>
+>  * Please do not use "-- " (that is a line that has dash dash and a
+>    single space and nothing else on it) lightly.  It is called
+>    signature line and often MUA pays attention to it when responding
+>    to a message with such a line by omitting everything after it
+>    (which is supposed to be your "who I am" advertisement) when
+>    quoting the original.  Since you had one before the "discussions
+>    since v5" section and the range-diff, I had to manually resurrect
+>    the part after the signature line while composing this message.
+>
+
+I am sorry for that. I will keep that in mind from next time.
+
+>  * This throws everything in repo_settings, but these settings are
+>    inherently per repository and they are meaningful only when you
+>    are working with a repository.  What makes us choose to make them
+>    new members in the repo_settings structure, not direct members in
+>    the repository structure?
+>
+>    Not an objection and not a suggestion to move them out of the
+>    repo_settings and to the repository proper.  Just wanted to hear
+>    the reasoning behind it (and have the rationale clearly
+>    documented, preferrably in the proposed log messages).
+
+Yeah, so what I thought was that if it is a "core.foo" setting, I
+would club it with other core.* settings in the struct repo_settings.
+But other config settings like in the previous patch series,
+"extensions.preciousObjects" or also in this series, the
+"sparse.expectfilesoutsideofpatterns", I would put them in some local
+context or if they're tied to a repository, I would store them in the
+repository struct itself. But, as other "core.sparse_*" variables are
+stored in the repo_settings, I thought it was better to store the
+"sparse.expectfilesoutsideofpatterns" along with them rather than
+storing it in the repository.
+
+Thanks
+Ayush
