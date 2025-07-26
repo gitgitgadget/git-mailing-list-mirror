@@ -1,170 +1,140 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40DC285CBD
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 16:54:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E08451EFF9B
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 17:45:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753548850; cv=none; b=NcaWfVNB0BioMWo/AUbKmkYUPiUhy5cgLWAMbYWHCSEq2jpOQfPEctKDNpyCOA4VniByJGwrwvi6blhYDMNyJ/9OlDwK2K4DZqfoNQjg49i1e6eZbRCZX6AuXhXC0+1zRkKiz74bvzVt0S9//iotedmIhwN77ya0YRI1oEc+Bxw=
+	t=1753551924; cv=none; b=cpLnHHnPCJFoifbDTq2voA+uxoGEFuPF2vo1N/fgjwlTp31j/jBvVQpchuR2u6QD2Z2pSweYk9J0k9PNgee8ngbZ/cwum+sFfyq2tv8cR8Tbt5tRlxbn2mesKS/1IzBDbxGnzlkHIPG/LwY+xU6Yz0Y49lRM2MGZqv8q1F7b3pw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753548850; c=relaxed/simple;
-	bh=lv2iHd9lcQmeb+5hc9Hp8zVMGHHZL1et9OlEbcSaf5g=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C2+qX507sQwktLWct+tR79h72VtbaQjDY8DH0sWPKv5sJiDqIyrGUw4vSAQ8y5xusW5jfVHem9lGoG9qrpLogGtIvnrFsok58YEpmqAErVYjG2+ilGuZSM+G1m/B7uEKSeP9o86h00MiJQGvnaNoVudII2A/Hmr8Xiq4/a+NnCE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PKJRocnk; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753551924; c=relaxed/simple;
+	bh=W7K3k8afU3D9u3+Z97JC+o93WIK4VjOLec8vSBXzPJc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=NeeygeyNr+wNkZhoF/20K+5yECAwScWGRpEiNmtjTorDRP5arO9nT3N9iHPiZLz6wdhY7oycULCK0oRqTGWM1TqpQCjuqOf1RwBIwypDenhvbnU5eMgQliYeAIRDE8/zwUTyI2bl9IPgz1oXRCn1BpVl4hzSunQfUuP7i8kdJC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Q/N8oecp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BxchwkP8; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PKJRocnk"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-71967cd1072so30721167b3.3
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 09:54:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753548848; x=1754153648; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=+daLiMi8qZvN00kjackOeAVIYQTwuRxc6icuJJnd7wI=;
-        b=PKJRocnkIMQpdINEv7YEFpLNTrmqkr06Hxu0EGD56UBQJpZCR19hvho/AFkiMTAXkU
-         JxrQzLL5xr+sDRSSy6il+YfILDCPfY+5/OIxa+oNXBVHSTe+9MyYRGcuMZ5GPWKAr/SC
-         KdZ7vNahGW5Hpq54+JlQFxUwq9iqn/N8zSvgE4EIGUnLbQhRDFHjyxXgLYwPL2KAmzRu
-         f3vbeDYLywNLQPWX4vfl5iHZ9s++w8z8RCyq7X+AtOKY82ov6nP34ODBd7VDnEJSJwS9
-         I/pn85+tH0DkKqqdjWThoz3G3CHapUMEnuPrACBxXs+uM6AFL3UCHxQUPfxyhgQuqSxw
-         PQTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753548848; x=1754153648;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=+daLiMi8qZvN00kjackOeAVIYQTwuRxc6icuJJnd7wI=;
-        b=ei1zn88t5M5DsLP1zgIrcEh11z7RSfvVzq3sEn5vj72eJ9aJlODHX9tPF5kMfihByk
-         07a7zEtEvovfkgWoePInsZs8O51oNLy82PqOSZ+VrS5Rzmq2oteV//3IIRIOb8otod56
-         sp3MfZaiz2zez91vDlIex8V+59l69bhyeYaapO8nZujJlGBcpJGmc9OKneih/C4/nyRK
-         gWWaEhhUDj91MrhAdq1k7YPA6Pc+u9MZsJVuauVtSAqv/AvO0Zi5rLMfBSjjwxSg9L0m
-         UnbmipyiX0fR84Fge6GdH3qLprMoqzmwXhr+v5LrHl9f7bZt8iZ6ec71DGx7FpvgvD7M
-         6ovw==
-X-Gm-Message-State: AOJu0YzULrmRB22zWbKHUuAz3os5Od17KwjayIrDGH6x9P0PWy2vJg1J
-	oK13PgyxEn7ci9Tz0iYQ+I47+o/PzedK56j+6XYP5+OfUdWo3cOmlCAPAjWrx7/T
-X-Gm-Gg: ASbGncvweaMy5DIKavYjMBGT1LkFshQZamerC31u4Oz5EmbKhaIlNAZYC+Q81tTyQfx
-	gyTftUvgok4YZpTmy3LlwMfR5MLjPswrf9nFQY37i9RcfgVb1V4VpFQG2Q+YS4RAwlMvuzbSD9q
-	Mckb/8M5F8gyE6fOSrBwG31i6lSOnFSobvFx6iyifSk6Ob2h2cbyq6hRvXd67j4UYUI45cmxlQQ
-	mIaDKF4ogdR8hWdEpkqK/CdNXzYumFvfiaQKdFey4Pz+plNOVfWorOLjluLKqFJk0calrRj+YmZ
-	4DAC+VmvXodG5alX6zF/vQK2UNXBb6Oh3nQCrv3EJ7WxkrIR+5tIUa1TwcGdDKkvmdJWtitf0Mw
-	rlaVHK1SK9JmJ6zC1jgDgXFAqPS2fmk+dLZX0sOShR2lixFdh05hc+PcQFzu4Ck6QPrHDLqtP
-X-Google-Smtp-Source: AGHT+IE5GG2UAFxv09+YRGughdKAKa1RWfcAeyRg1fiLyZ6dL4Y5f3ZnG9TehqqDjkqyDZW9SzFaxA==
-X-Received: by 2002:a05:690c:6901:b0:6fb:b8a1:d3bb with SMTP id 00721157ae682-719e32cfab6mr85127617b3.17.1753548847670;
-        Sat, 26 Jul 2025 09:54:07 -0700 (PDT)
-Received: from localhost.localdomain ([2605:a601:90a8:8b00:2412:fdcb:5dca:324c])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-719f2152de0sm4964067b3.2.2025.07.26.09.54.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Jul 2025 09:54:07 -0700 (PDT)
-Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-To: git@vger.kernel.org
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Elijah Newren <newren@gmail.com>,
-	Lessley Dennington <lessleydennington@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 4/4] builtins: show help on "-h"/"--help-all" with more than 2 arguments left
-Date: Sat, 26 Jul 2025 12:53:14 -0400
-Message-ID: <20250726165320.4039-5-ben.knoble+github@gmail.com>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20250726165320.4039-1-ben.knoble+github@gmail.com>
-References: <20250726165320.4039-1-ben.knoble+github@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Q/N8oecp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BxchwkP8"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id E9A291D000E5;
+	Sat, 26 Jul 2025 13:45:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sat, 26 Jul 2025 13:45:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1753551920;
+	 x=1753638320; bh=CXxn2V620ScvEBO5rcaD4CHKvtU9Pc6NqwfvmmsVBn0=; b=
+	Q/N8oecpCrfr8Got33zltQ6QCAEk9LKSE8HMxOoya2cTXsiEwz+E/1yOk4SU2RIM
+	hYFzo7yjXMv774zsjMK6SyWTtrGVoyOfpEYhjgo0GkhpyJglUhabQdDArNRNzDpl
+	Twm+Zf9dw0bOb8u3ydr2kfxuxx2Z8MWa+jh5BZ9Bq/KJWGW1FXz1YNzGWMjMtYSf
+	mhHvISD/Qjn11MTWdy+gGrXcru7G8VgUAEe/8Dq3uDoDRChrBwPGFBP7zCushP8+
+	vacpPFGKSXVXSqoa7JpoE63UqEmwE2eZkRiRHiHl2qTtbWSKAqXHUBytLG92JBO9
+	DppAO45eHzwslRIkEy0EOA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753551920; x=
+	1753638320; bh=CXxn2V620ScvEBO5rcaD4CHKvtU9Pc6NqwfvmmsVBn0=; b=B
+	xchwkP81pikSg7v6ZlgQLb6MAlh+8JIK24os7EtFYatviY4jCYuHS1jon3h/noWb
+	CyRhaoWi1bxLYhqxSdBo9IEac1YAswG0R2uw9afvmiqFD7o/Y9dom/zEiFXWnjBY
+	0d/8UilOQzAZ1WD4VDyL6Bh/U5jyMz9Vc10YrOIE+qYP37cTWDomFqOXRQINJDFl
+	yV1BEjXiOttfnH33OvI9IMA/QIp3HwPSM2BEF3/oImSI51/dzYt4m2FxktEIdl/+
+	IU3yx1LMeM6keSF2uQSbTjlgSI1Ppa8XL4YJBhAkqspnwNXSCd7oX1oLiix7GumS
+	9yINISRvngKeGzZ61JkWw==
+X-ME-Sender: <xms:MBSFaDt6yhEmqU6x3rRmuxdZnb2rN35WS1zcT6pANt5TuJ_Y4rXsKA>
+    <xme:MBSFaHsV6YkPNhHJxmQl3xCrxzYEpgJtAXHmT-ESi7J89m017sdK7RsLXrymUVpFf
+    YdCjexlVZLwNlFI4g>
+X-ME-Received: <xmr:MBSFaAMruYFHF-XIaqQOo_ga02QN5TSIPxgCgLljS_vHTn6iBRkHYA50k9cK_ICqQzsAikgFVyn7_eT5NHcsXo2cVRN9FkUmy5QqqA4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekjedthecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcu
+    vecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrth
+    htvghrnhepueefteeufeefvdfgudetjeffhefhuefhkeffhfeiffdtgeejffehuedvgfej
+    ieehnecuffhomhgrihhnpehthhhinhhgrdhurgdpshgrhidrkhhnnecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:MBSFaN19oUM_lID0WtsBih839rTHM9rshg623zJZal1_5wSsHE61vA>
+    <xmx:MBSFaEOmJJtKOAV4lqVGF-qSj3MaN3nyfBsm_dXW1hWVJZd5xdGmmg>
+    <xmx:MBSFaF0Gksl2UqLYuhhINxPliSEgrLtEpOO7ZDZou7SZEtGJrH_j8g>
+    <xmx:MBSFaDEEz-voKEkVcsjMyVAdcOZfgFiWU66rLPmT0TZ6effsrvJ3iQ>
+    <xmx:MBSFaMURZhhaj_MQjFOa1n47tehrInBSsCncTGIMK4Fhfn08616kFm-i>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 26 Jul 2025 13:45:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Usman Akinyemi <usmanakinyemi202@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #07; Thu, 24)
+In-Reply-To: <CAPSxiM9Udi2PxpT7f8DdLn1ihny2gW_H=ieLjV25sEFYSdAjMQ@mail.gmail.com>
+	(Usman Akinyemi's message of "Sat, 26 Jul 2025 07:33:31 +0530")
+References: <xmqq34alik2g.fsf@gitster.g>
+	<CAPSxiM9Udi2PxpT7f8DdLn1ihny2gW_H=ieLjV25sEFYSdAjMQ@mail.gmail.com>
+Date: Sat, 26 Jul 2025 10:45:18 -0700
+Message-ID: <xmqqldoa26dt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-When asking for short help on a previous command, the user may use their
-shell history to recall a command like
+Usman Akinyemi <usmanakinyemi202@gmail.com> writes:
 
-    git rebase new-base
+> On Thu, Jul 24, 2025 at 10:48 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>...
 
-Then inserting "-h" after "rebase" doesn't yield the help; make it so.
+Administrivia.  NEVER QUOTE SO MANY LINES from the original if your
+response has nothing to say about them.  Remove the part you are not
+commenting on and leave only the relevant parts that you are about
+to respond, and then say your thing.
 
-Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
----
+>> * ua/t1517-short-help-tests (2025-07-21) 2 commits
+>>  . t5200: move `update-server-info -h` test from t1517
+>>  . t/t1517: automate `git subcmd -h` tests outside a repository
+>>
+>>  Test shuffling.
+>>
+>>  Seems to introduce a few "todo passed" when merged to 'seen'.
+> Hi Junio,
+>
+> Is there something that needs to be done here ?
+>
+> Also, some tests still have both the `git subcmd -h` test outside and
+> inside together
+> and the first patch of this series already tests for all the outside repo.
+>
+> Should I send them as an update version with this patch or wait till
+> this gets integrated ?
 
-Notes:
-    I reviewed the following results
-    
-        git grep '[^[:alpha:]-]-h' 'Documentation/**adoc' ':(exclude)Documentation/RelNotes'
-    
-    The 2 commands that accept "-h" to mean other things are git-grep(1) and
-    git-ls-remote(1).
-    
-    - "git grep -h 123" gives results sans filenames, while a lone "-h"
-      gives help. Behavior is unchanged from 2.48.1 (my local install).
-    - "git ls-remote -h" gives help; "git ls-remote -h origin" lists heads.
-      Behavior is unchanged from 2.48.1.
-    
-    But I'd welcome a more thorough check to make sure I didn't overlook
-    things. This is probably the most controversial patch, and if it's
-    dropped, that would be alright (though it is helpful for me to reduce
-    typing).
+As I wrote, with this merged to 'seen', we see "todo passed" in the
+test result.  You'd want to dig to the root cause of the issue and
+update the patches if needed.
 
- builtin/merge-recursive.c | 2 +-
- git.c                     | 2 +-
- parse-options.c           | 2 +-
- usage.c                   | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+> Thank you
+>
+>>  source: <20250721115519.140361-1-usmanakinyemi202@gmail.com>
+>>
+>>
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 17aa4db37a..c433d26bdf 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -38,7 +38,7 @@ int cmd_merge_recursive(int argc,
- 	if (argv[0] && ends_with(argv[0], "-subtree"))
- 		o.subtree_shift = "";
- 
--	if (argc == 2 && (!strcmp(argv[1], "-h") ||
-+	if (argc >= 2 && (!strcmp(argv[1], "-h") ||
- 			  !strcmp(argv[1], "--help-all"))) {
- 		struct strbuf msg = STRBUF_INIT;
- 		strbuf_addf(&msg, builtin_merge_recursive_usage, argv[0]);
-diff --git a/git.c b/git.c
-index 40d3df1b76..7fe4e15e2d 100644
---- a/git.c
-+++ b/git.c
-@@ -445,7 +445,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
- 	const char *prefix;
- 	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
- 
--	help = argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help-all"));
-+	help = argc >= 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help-all"));
- 	if (help && (run_setup & RUN_SETUP))
- 		/* demote to GENTLY to allow 'git cmd -h' outside repo */
- 		run_setup = RUN_SETUP_GENTLY;
-diff --git a/parse-options.c b/parse-options.c
-index e3ed42f709..b9a31c261c 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -1464,7 +1464,7 @@ void show_usage_with_options_if_asked(int ac, const char **av,
- 				      const char * const *usagestr,
- 				      const struct option *opts)
- {
--	if (ac == 2) {
-+	if (ac >= 2) {
- 		if (!strcmp(av[1], "-h")) {
- 			usage_with_options_internal(NULL, usagestr, opts, style_normal, to_out);
- 			exit(129);
-diff --git a/usage.c b/usage.c
-index 4c245ba0cb..244e8d37ed 100644
---- a/usage.c
-+++ b/usage.c
-@@ -192,7 +192,7 @@ static void show_usage_if_asked_helper(const char *err, ...)
- 
- void show_usage_if_asked(int ac, const char **av, const char *err)
- {
--	if (ac == 2 && (!strcmp(av[1], "-h") ||
-+	if (ac >= 2 && (!strcmp(av[1], "-h") ||
- 			!strcmp(av[1], "--help-all")))
- 		show_usage_if_asked_helper(err);
- }
--- 
-2.48.1
+Also do not leave the original that you are not going to refer to
+after you finish saying what you wanted to say.
+
+>> * kn/for-each-ref-skip (2025-07-23) 6 commits
+>>  - ref-iterator-seek: correctly initialize the prefix_state for a new level
+>>... 
+
+Thanks.
 
