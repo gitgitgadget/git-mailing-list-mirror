@@ -1,38 +1,41 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53455199EAD
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 07:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25213184E
+	for <git@vger.kernel.org>; Sat, 26 Jul 2025 08:12:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753516308; cv=none; b=gqblzaA8g9Tv8/2+8IL0aTiodPkTcPdWvjQ/e58cb+ZaUr6UqKRJ75MK5H0OtUJ13J6gCaPXXvitovmxsfe1FZ49H7RyQ1bIHqN2XA9G+JEu82HRaa/y4Qr07VpZ8WVkkunJy2jKns1fGSHmae+/9fj7GJNvVY4JJgMCLL8OgHQ=
+	t=1753517578; cv=none; b=sLnOTr5BQqDUCm7lZ2EbVE1uIGHtIyhlEQzEmMGTtSvcqSoL8coLzSYjv6pwJ0EMs0AdVfH83Z2gbcDEz1dJJTxvHHm/r3LsSfruhNKinQ+7Dr+VFybj06XixWZu2ghb9iNjFE6bvsRahs7Fpu6s4lclBw9Syal49uslX5JcBvQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753516308; c=relaxed/simple;
-	bh=qBlwE7SEPvJRutph5Q2V1Dhf/uNQd78zYWh2TqB8TGI=;
+	s=arc-20240116; t=1753517578; c=relaxed/simple;
+	bh=o10TJE7mTZUjFez1Sl7h3MQkHbivPypUh7IePaCmwHU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Q6yzK1BJmaTV/DLVL9SL7sOUOevY6o4+xDwFM6oeNgKUKX64rIpP3/o9IRz+MCb8ykPzhbAQ+SWwGZCv5SWh6uKEpA9rJjjkKLpD4IxXOdU3nzL+VXRf2eLvV/IQ/4LJ0FHBD9n/kuW1WdrWTZB+y4ERxrisOGD9CgQAgcTqP94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=VN3um8X/; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=qfYA9UEjayfAeYQd++pfc5kzRBXHKTQLLuFPv5CAF5JorMNwpGTk2YRENcisu5F+R7a9YMIUJlM4PDETmYysdNF4e6Js+emogwhaB9HtOSGvR5GRXfS6MSRNqc4C8xLMQu6AJtrgzQld8t2w/uxemmCxSHkVw+UjVWSKMRc7qWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=a+2vgb8k; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="VN3um8X/"
-Received: (qmail 2078 invoked by uid 109); 26 Jul 2025 07:51:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qBlwE7SEPvJRutph5Q2V1Dhf/uNQd78zYWh2TqB8TGI=; b=VN3um8X/dQi7ejEBNIShVwZ+mfyi7QzBXodeAEb7GqeW0FmVzeWoBW3+TXrcE2skkimk8PRRXermnoLQl09YiNwXLcIEAM3IlldPsfvs85N516IhUKs3lnjwwTb2FJfKholAEEATY068hIK+jc74eTZhcJFIi8lOyCxzfbMFPD/MIcVgQPC2ITmF0rruUeyAi3IpaVE+qJ1ZEqvRnchBRCwBQgEWp8Ay15L70JI0aRDunvUd9MmSGXEX5V7f/rTMcixm1vq/qVWhq2CRdLfuHm0cDilMv5LfQAhQuxEZnb9Hc7sw1QYIhCkZGxvGe+yGneSmOJ+jBd2DJtBF7jPJDg==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="a+2vgb8k"
+Received: (qmail 2500 invoked by uid 109); 26 Jul 2025 08:12:55 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:content-transfer-encoding:in-reply-to; s=20240930; bh=o10TJE7mTZUjFez1Sl7h3MQkHbivPypUh7IePaCmwHU=; b=a+2vgb8kea+4AEvcXJGHVr+7asJcLFGwiWxh+tQ4CFMafi1r4ZFOUzMyjj9/1Mg68MGdifR6ggpYd005l+S7K/4FEUD30b95bLQ6nCJbWU6blq2S8eBYTj0iU0gpTKwM4/y3dWqDdMlNvMzO1KSmbAX7L9BbMEQJLmkzC5irgqQGs/BFODYBK9YUAUU3j7pkrcUJgkwjiPUHCNv++KD1hNLo6bKhztLW1//Gbw8QuFKPLwgNmpYCzZrzERwFnmM1WA1+MtuS7X1tN49npQCxi1+G3sPh5kd9PGOB/AKyVBjYZulTef5AQ/vyCPG32+fO/VsXu+gyR/kWO1GA1DFR6Q==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 26 Jul 2025 07:51:38 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 26 Jul 2025 08:12:55 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 6914 invoked by uid 111); 26 Jul 2025 07:51:41 -0000
+Received: (qmail 7178 invoked by uid 111); 26 Jul 2025 08:12:59 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 26 Jul 2025 03:51:41 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 26 Jul 2025 04:12:59 -0400
 Authentication-Results: peff.net; auth=none
-Date: Sat, 26 Jul 2025 03:51:36 -0400
+Date: Sat, 26 Jul 2025 04:12:54 -0400
 From: Jeff King <peff@peff.net>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
-Cc: git@vger.kernel.org
-Subject: Re: [BUG?] git-daemon 2.49.0 in F40 no longer exports user
- directories
-Message-ID: <20250726075136.GA3032762@coredump.intra.peff.net>
-References: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?UmVuw6k=?= Scharfe <l.s.r@web.de>,
+	Kevin Brodsky <kevin.brodsky@arm.com>, git@vger.kernel.org,
+	Rasmus Villemoes <ravi@prevas.dk>
+Subject: Re: [PATCH] git: show alias info only with lone -h
+Message-ID: <20250726081254.GA3042329@coredump.intra.peff.net>
+References: <1c3a0463-36ee-4a2d-92e0-fac9c0bf77da@arm.com>
+ <a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
+ <xmqqqzy33k1j.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -41,136 +44,88 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aIOslkzu-x8K9o_C@shell.armlinux.org.uk>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <xmqqqzy33k1j.fsf@gitster.g>
 
-On Fri, Jul 25, 2025 at 05:11:02PM +0100, Russell King (Oracle) wrote:
+On Fri, Jul 25, 2025 at 04:52:40PM -0700, Junio C Hamano wrote:
 
-> While I've been away on holiday over the last three weeks, my co-admin
-> updated ZenIV to Fedora 40, and now I find that git-daemon no longer
-> exports my "public_git" directory. My attempts at debugging this have
-> failed - I tried adding strace to the git@.service but I get nothing.
-> This is a regression.
-
-I'm not aware of anything changing here recently, and ~user expansion
-does seem to work for me. E.g. using v2.49.0 and running:
-
-  git daemon --base-path=/tmp/foo --export-all --user-path=public_git \
-	--verbose --log-destination=stderr
-
-and then running:
-
-  mkdir ~peff/public_git
-  git init --bare ~peff/public_git/repo.git
-  git -C ~peff/public_git/repo.git --work-tree=. commit --allow-empty -m foo
-
-  git ls-remote git://localhost/~peff/repo.git
-
-works. I get a similar log message to you here:
-
-> Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] userpath <public_git>, request <~rmk/linux-arm.git/>, namlen 4, restlen 15, slash </linux-arm.git/>
-
-That is, even though we print ~peff (or ~rmk), I think we still look for
-repos in /home/peff. E.g., if I strace and substitute "none.git" (to
-make the trace smaller, since we won't find a repo), I see it looking
-at:
-
-  
-  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git/.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
-  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
-  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git.git/.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
-  newfstatat(AT_FDCWD, "/home/peff/public_git/none.git.git", 0x7ffc1cf9c8d0, 0) = -1 ENOENT (No such file or directory)
-
-If you strace, do you see similar stat calls?
-
-
-But of course I don't get this log line:
-
-> Jul 25 16:56:55 ZenIV git-daemon[4046439]: [4046439] '~rmk/public_git/linux-arm.git': not in directory list
-
-which isn't too surprising since things succeed for me. But the "not in
-directory list" part is interesting. If we could not find the repo on
-disk, we get something more like:
-
-  '~peff/public_git/none.git' does not appear to be a git repository
-
-Looking through daemon.c:path_ok(), if we see the user-path expansion
-but not "does not appear to be a git repository", then we're getting
-hung up on this code:
-
-          if ( ok_paths && *ok_paths ) {
-                  const char **pp;
-                  int pathlen = strlen(path);
-  
-                  /* The validation is done on the paths after enter_repo
-                   * appends optional {.git,.git/.git} and friends, but
-                   * it does not use getcwd().  So if your /pub is
-                   * a symlink to /mnt/pub, you can include /pub and
-                   * do not have to say /mnt/pub.
-                   * Do not say /pub/.
-                   */
-                  for ( pp = ok_paths ; *pp ; pp++ ) {
-                          int len = strlen(*pp);
-                          if (len <= pathlen &&
-                              !memcmp(*pp, path, len) &&
-                              (path[len] == '\0' ||
-                               (!strict_paths && path[len] == '/')))
-                                  return path;
-                  }
-          }
-          else {
-                  /* be backwards compatible */
-                  if (!strict_paths)
-                          return path;
-          }
-
-My command line does not set --strict-paths, and neither does yours. So
-presumably you are stuck on the ok_paths. But those come from non-option
-paths on the git-daemon command line. My invocation does not pass any,
-and from what you wrote here:
-
-> and /lib/systemd/system/git@.service contains:
+> When it redirects to our commands, it is less risky as we aim to
+> make all our commands honor a single "-h" via t0450.
 > 
-> [Unit]
-> Description=Git Repositories Server Daemon
-> Documentation=man:git-daemon(1)
+>    $ git -c alias.c=checkout c -h
+>    'c' is aliased to 'checkout'
+>    usage: git checkout [<options>] <branch>
+>       or: git checkout [<options>] [<branch>] -- <file>...
 > 
-> [Service]
-> User=nobody
-> ExecStart=-/usr/libexec/git-core/git-daemon --base-path=/var/lib/git --export-all \
->           --user-path=public_git --inetd --log-destination=stderr --verbose
-> StandardInput=socket
-> StandardError=journal
+>        -b <branch>           create and checkout a new branch
+>        -B <branch>           create/reset and checkout a branch
+>    ...
+>        --pathspec-from-file <file>
+>                              read pathspec from file
+>        --pathspec-file-nul   with --pathspec-from-file, pathspec elements are separated with NUL character
+> 
+> But then, it may not be such a good idea to pay attention to "do we
+> have extra '-h'?" when alias expands to our commands, e.g.
 
-neither do you. Is it possible that when invoking git-daemon, systemd is
-adding more arguments? Can you check with systemd logs or via strace (or
-maybe even ps, though I guess the process is short-lived in inetd mode)?
+Another interesting case: even for our own commands, the alias itself
+may add extra arguments, which confuses things further. So:
 
-I'm not very familiar with systemd, but IIRC @-services are just
-templates that expect an argument. And in this case the argument is
-filled in when the git.socket service runs the git@ unit for a single
-connection. But I think that argument is only expanded by a
-%-placeholder, not shoved onto the ExecStart line.
+  $ git -c alias.gi='grep --cached' gi -h
+  'gi' is aliased to 'grep --cached'
+  fatal: no pattern given
 
-So I dunno. I am just guessing at the systemd connection.  But it seems
-like somehow an extra argument is ending up in your git-daemon
-invocation.
+runs git-grep, but even though the user said only "-h" the alias added
+another option which prevents the help-mode from activating.
+
+In this case it is not too harmful, but you can come up with
+pathological cases where it actually runs a real command:
+
+  git -c alias.grep-for-foo='grep -e foo' grep-for-foo -h
+
+which runs a real grep.
+
+I guess one way to deal with it would be if the user runs "foo -h", and
+alias.foo is "bar --other arguments", then we run just "bar -h",
+dropping the extra arguments provided by the alias.
+
+(Another fun corner case: not all git-foo are our commands. But maybe it
+is enough to say "if you make a third-party git-foo it should probably
+respect bare -h as an option").
+
+>    $ git -c alias.c=checkout c -h main
+>    usage: git checkout [<options>] <branch>
+>       or: git checkout [<options>] [<branch>] -- <file>...
+> 
+>        -b <branch>           create and checkout a new branch
+>        -B <branch>           create/reset and checkout a branch
+>    ...
+>        --pathspec-from-file <file>
+>                              read pathspec from file
+>        --pathspec-file-nul   with --pathspec-from-file, pathspec elements are separated with NUL character
+> 
+> We get the same short-help, without what alias expansion caused this
+> mess, and without any indication that we lost 'main' on the command
+> line.
+
+Yeah, that is the flip side of René's patch. Right now we overly guess
+that "-h" means help. And after the patch, we'd sometimes under-guess
+that it meant help, even for commands which treat it as such. I think
+that may be the lesser of two evils, though; if you are asking for help
+then "git c -h" is the most-strict way to do it.
+
+So IMHO the patch under discussion is a strict improvement, even though
+it leaves many other questionable cases unsolved. I'd also be happy if
+on top we did:
+
+  1. When alias.foo="bar --options", turn "git foo -h" into "git bar
+     -h", dropping "--options".
+
+  2. When alias.foo="!bar", report only the alias and do not run "bar"
+     at all. The collateral damage here would be:
+
+        !git bar $(some_shell_magic_we_need)
+
+     but IMHO that is not all that bad. If we report the alias content,
+     the user can probably figure out which "git help" to run next.
 
 -Peff
-
-PS My invocation above is obviously not running in --inetd mode like
-   yours is, but I don't think that's the culprit. If I put this into
-   /tmp/proxy:
-
-     #!/bin/sh
-     exec git daemon --base-path=/tmp/foo --export-all --inetd \
-	--user-path=public_git --log-destination=stderr --verbose
-
-  and then invoke it directly:
-
-    git -c core.gitproxy=/tmp/proxy ls-remote git://localhost/~peff/repo.git
-
-  it works the same.
-
-  I also tried taking the FC40 git@.service and git.socket files and
-  sticking them in my systemd setup, and it also seems to work. So I am
-  all out of guesses.
