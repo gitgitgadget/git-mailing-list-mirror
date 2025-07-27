@@ -1,44 +1,44 @@
-Received: from mail-qv1-f41.google.com (mail-qv1-f41.google.com [209.85.219.41])
+Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6233F374C4
-	for <git@vger.kernel.org>; Sun, 27 Jul 2025 21:45:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CCC86338
+	for <git@vger.kernel.org>; Sun, 27 Jul 2025 22:02:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753652760; cv=none; b=Zy7iHWDgYpbE12kIg+SHELoatqf+W8ZLeIYtP6H4McXR87ueKTfHlDzFRY9npHq4UroREWGP7CRp1Tq9azUWWf7ewUx407V7L3nteUE2NL2dKOUVeNkgNfbkQHQR3DmDhl6mAOLTqtDCDTvSHFlyrWYOcqCVjJPX3taEbrLn838=
+	t=1753653743; cv=none; b=tC7iLiYwg6EFmy0af5w+9JQQGMVioOZaXAvXXBgMUChHP+0xrCZsjU+pxldbAyRl3RLx/L92vp50iHQG9e8tRDMRKy/1Bs8yne3kJDG3x4qY1M82fFcAlfTWMnuaKNAHt4k1hpzjipfkPOPt89TLWQuyu8iRO6QDy7NK0I9YR2Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753652760; c=relaxed/simple;
-	bh=clDQMtIy88+1i4s9eu8vLQuhZeDfgKGD8JEYTeSLIWE=;
+	s=arc-20240116; t=1753653743; c=relaxed/simple;
+	bh=1RgYqEmKBIte1vYna1p1L8po5yK3h6YOrto0Bh9Sx5M=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CRYWYUPmLeLo6SrdmVrrS1bZnuGett0VwBejDyYXcy17cXXF+Yq6E3UAHs0bJo39H3d2PobqIt7WUnapnSDSCnsZ4ZSXpjaKgGZqOEqQMbJBbhHzmfMsLf0vhsnr7QYgeIVOkAGay7icxzIP4lbCSvAaE7V4g8QslZbk3B51AcQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.41
+	 To:Cc:Content-Type; b=nsmBxnQCsL5rPMS2IE5SV7Pykc6mq+LZMpy5GxLp+ZlVMkHhvRmylHOolaj1PhLYyLIbgX0a/xtACE+g5EiJH9YcMbG6QapePUAMqorodq0VAeuup6yHhVGrGDT6NjZKORYXtmpSIOrzlNAKiF4NTvpkeaMhomZNtb0t6YAVTk8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f41.google.com with SMTP id 6a1803df08f44-70742520205so1413266d6.2
-        for <git@vger.kernel.org>; Sun, 27 Jul 2025 14:45:58 -0700 (PDT)
+Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6facebcd4f0so5362506d6.0
+        for <git@vger.kernel.org>; Sun, 27 Jul 2025 15:02:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753652757; x=1754257557;
+        d=1e100.net; s=20230601; t=1753653740; x=1754258540;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zWfLX/NArU9v0HikdQ1ynMuF+SND48jeaEmz/Lm0Fd4=;
-        b=STHOkUSea3Zpbu5fPOiceTUtHJlIRNFXclzJymNJXmTCJKDFOxF+gvPEMasYZsz1Iv
-         CblHvKjJ7xuYqhHt5TWWijLNcqgEAk77HjBdULJ3G56TDv6vB57qkePgjqgzAhd2gdMC
-         3ZKrCGKyjYlyem/L7bYA/Afdv0/hO0lb7k0d8C6a7DDnMjNnEtnZ8Za5Q+LKNTh32JCF
-         4cxhacqCj9FWs1gOKCqh7XJf4T/WNfnyb9Sq2SV8qOsVrom39qp78KQHZL8p8HZ67WuF
-         YZm274Tf/qttmXjPPlXljt86sCNpvwyH3a1OFqrfWS/w+dFl5ZsIh7Irwrey1VaRge2N
-         4/OA==
-X-Gm-Message-State: AOJu0YxJwYxAnrNm/6OkhhB6vIUQTfHxNLH8wPkfuHikLKNtAIQJtkub
-	CIjz/2RAUzJIN9bLcCX4RUbbW+2d+PQ4OM7iBd1kcuk/ridXAWcrpOf7HskZxtU8Uxk97eEu8Hj
-	ljgmnhgOO5sYdPFKOx/ARScIpZi3qVks=
-X-Gm-Gg: ASbGncuNDd2Z1UHQGd+E+o7pUaET7xbh0z373g08/Zvie+W5SNj0npjQx6OullIda/5
-	gxkx579DgXU+oqYCqcTnfMdMG0qs0oKIF+tcc9UuhMp07LhfWFWBqRlhseoXOMvpPHcZBzRw16t
-	DhZESLzqfuOBG9ptcmNJbh9IcennJ5+xvB6Ve7M+vzQ8wx1vMihRojQOjdIslcFTJ0ldjJexCVC
-	HyXRc0eRpT1sFTbdY5HPg1KC93fn/D18omSntLJ
-X-Google-Smtp-Source: AGHT+IFCI8fdJd5++JsQlrmS+nUoCnqjEVjJlbBsFXsSIgAqUxX8rbZT3rvrv0h72z7UFBmkLSCLYbVyvnjotf4rYL4=
+        bh=zTut3Lnr4HBw0gVFaoyp/8g3wwUVl2Pag6rwEbsjUCU=;
+        b=Fy0TGDEIM/xDFY7PM0HLfDVCwm9EsekhqEZD8bpZYbpxpRyhRturN2dIN+ViNh1JcE
+         5VqpI30oom7WtJ8ZdwiinP28dLE2iL7I0bH/li2yjRcv5mZydUTxx+L004Kmwsbu/SVe
+         jX+UK5XaDlGrowcUeGLOkaAyMMN3X3cUNLM6saZFT7q0ulbGbQIh2V/bUrofSG50XTDB
+         tHCtuxcl+Jc8/l9AzwEsYcN75htWreGyziLqm4r+KttmIl850AVimpba3u7MMAxqNQjK
+         aw//f0McoX3jhIqH2lf4bYnuYkZ3N0dObbDLF7G2lBsTQsP6yVOn5AtrAp+A8bfZbjuD
+         4Okw==
+X-Gm-Message-State: AOJu0YzUMBjg3LnKCP4jwJr42IgQD1YTr2lOH4YkXByRveCNwEcoDWeM
+	k++ST0N7bNSkrefsIzC1O/LBx8SVK7qH9L4rVp8FH2y9J9l97KMJXIHCmxJijoyItX63ZLMtU4H
+	HkC1EHxMGIF/n/JKsHNT1IvhDdAQlIAI=
+X-Gm-Gg: ASbGncslYsmJF7fPH4PhTKWGXSaVwQVCixMLR1jA1lOQ5xyti1lSloICc9JmNyaALr1
+	ca1aB6dioWtqBXsScTOQglIt+jCQRMzsaio7j/IpoxrpbrQdTQnOv6WwzS7YfK+tR0JWBblrQgA
+	JXhm33XAr2a0IQcjj2XZvXmJbgiflGNzQrpwjWElLST6mOfC9rQEz9sAWrs3iHJdaoumFEqgvsv
+	GdyNHxCElnvHlHDUT/VGAyxXPz3pQYErQU2r+Rc
+X-Google-Smtp-Source: AGHT+IE4CsbQJFbs6IkDJD/nkveNNkXw8/RZyM+PxTjeVIFw+t0WaoB0g20ftN3boXYKbJhmVYoFht2GnMBtwHbyqPA=
 X-Received: by 2002:a05:6214:4114:b0:707:6f5:7f99 with SMTP id
- 6a1803df08f44-707205ae447mr56455206d6.6.1753652757169; Sun, 27 Jul 2025
- 14:45:57 -0700 (PDT)
+ 6a1803df08f44-707205ae447mr56655506d6.6.1753653740539; Sun, 27 Jul 2025
+ 15:02:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -46,13 +46,13 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
- <20250727175110.84770-1-lucasseikioshiro@gmail.com> <20250727175110.84770-5-lucasseikioshiro@gmail.com>
-In-Reply-To: <20250727175110.84770-5-lucasseikioshiro@gmail.com>
+ <20250727175110.84770-1-lucasseikioshiro@gmail.com> <20250727175110.84770-6-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250727175110.84770-6-lucasseikioshiro@gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 27 Jul 2025 17:45:46 -0400
-X-Gm-Features: Ac12FXyh3TPf0q-xuLSyekKbxOeb-vV9qBP9BWIrgXYtI05M5ALlSRZCeBJA9NI
-Message-ID: <CAPig+cRyRZma-b4wdPrhHnRrOh8AESDV-Bt1oxZgncddfEqv4w@mail.gmail.com>
-Subject: Re: [GSoC PATCH v5 4/5] repo: add field layout.shallow
+Date: Sun, 27 Jul 2025 18:02:09 -0400
+X-Gm-Features: Ac12FXx-9mmIf3dKTIMS4v7G0_eTTt--gE0qmBVVFXvB6EiLCg1w0uVUL4OGCSI
+Message-ID: <CAPig+cQn7c5+k06yHOD2jxYTGnny7is=fbo4tOw26eD+4zX-Jw@mail.gmail.com>
+Subject: Re: [GSoC PATCH v5 5/5] repo: add the --format flag
 To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im, 
 	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
@@ -60,93 +60,71 @@ Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im,
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Jul 27, 2025 at 1:52=E2=80=AFPM Lucas Seiki Oshiro
+On Sun, Jul 27, 2025 at 2:02=E2=80=AFPM Lucas Seiki Oshiro
 <lucasseikioshiro@gmail.com> wrote:
-> This commit is part of the series that introduces the new subcommand
-> git-repo-info.
->
-> The flag `--is-shallow-repository` from git-rev-parse is used for
-> retrieving whether the repository is shallow. This way, it is used for
-> querying repository metadata, fitting in the purpose of git-repo-info.
->
-> Then, add a new field `layout.shallow` to the git-repo-info subcommand
-> containing that information.
+> Add the --format flag to git-repo-info. By using this flag, the users
+> can choose the format for obtaining the data they requested.
+> [...]
+> - keyvalue, where the retrieved data is printed one per line, using =3D
+>   for delimiting the key and the value. This is the default format,
+>   targeted for end users.
+> - nul, where the retrieved data is separated by null characters, using
+>   the newline character for delimiting the key and the value. This
+>   format is targeted for being read by machines.
 >
 > Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 > ---
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> @@ -18,10 +18,21 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE=
+.
+> +`info [--format=3D<format>] [<key>...]`::
+> ++
+> +The output format can be chosen through the flag `--format`. Two formats=
+ are
+> +supported:
+> ++
+> +* `keyvalue`: output key-value pairs one per line using the `=3D` charac=
+ter as
+> +the delimiter between the key and the value. This is the default.
+> +
+> +* `nul`: similar to `keyvalue`, but using a newline character as the del=
+imiter
+> +between the key and the value and using a null character after each valu=
+e.
+> +This format is better suited for being parsed by another applications th=
+an
+> +`keyvalue`.
+
+s/another/other/
+
+I haven't been following the discussion around this series, but don't
+we also usually provide a `-z` short option? Should that be added for
+consistency with other commands and to avoid surprising users, or is
+it too early to commit to that?
+
 > diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-> @@ -42,6 +42,20 @@ test_repo_info 'bare repository =3D false is retrieved=
- correctly' '
-> +test_repo_info 'shallow repository =3D true is retrieved correctly' '
-> +       git init remote &&
-> +       cd remote &&
-> +       echo x >x &&
-> +       git add x &&
-> +       git commit -m x &&
-> +       cd .. &&
-> +       git clone --depth 1 "file://$PWD/remote" repo &&
-> +       rm -rf remote
-> +       ' 'layout.shallow' 'true'
+> @@ -20,11 +20,20 @@ test_repo_info () {
+> +       test_expect_success "null-terminated: $label" '
+> +               test_when_finished "rm -rf repo" &&
+> +               eval "$init_command" &&
+> +               echo "$expected_value" | lf_to_nul >expected &&
 
-If a command fails between the `cd remote` and the `cd ..`, then the
-test will abort while the working directory is still "remote", and
-every subsequent test will then run in the wrong directory (because
-the tests are not isolated from one another in that way). So, the rule
-is: never use `cd` outside of a subshell. Therefore, you want to do
-something like this:
+Simpler:
 
-    git init remote &&
-    (
-        cd remote &&
-        echo x >x &&
-        git add x &&
-        git commit -m x
-    )
-    git clone --depth 1 "file://$PWD/remote" repo &&
-    rm -rf remote
+    printf "$expected_value\0" >expected &&
 
-Alternatively, you could avoid `cd` entirely:
+> +               git -C repo repo info --format=3Dnul "$key" >output &&
+> +               tail -n 1 output >actual &&
+> +               test_cmp expected actual
+> +       '
 
-    git init remote &&
-    echo x >remote/x &&
-    git -C remote add x &&
-    git -C remote commit -m x &&
-    git clone --depth 1 "file://$PWD/remote" repo &&
-    rm -rf remote
+How confident are we that `tail -n 1 output >actual` is going to
+perform as expected across platforms and versions of those platforms?
+It feels awfully fragile to me. Why slice and dice the output anyhow
+rather than merely crafting the correct expected output in the first
+place and comparing that directly against the actual output? In other
+words, something like this:
 
-The choice is subjective, though I find that I can spot the secondary
-repository more easily in the first example.
-
-As I noted in my review of an earlier patch in this series, we don't
-usually clean up just for the sake of cleaning up since doing so makes
-it more difficult to diagnose a failed test and slows down the test
-suite, so you could probably also drop the `rm -rf remote.
-
-> @@ -60,4 +74,11 @@ test_expect_success "only one value is returned if the=
- same key is requested twi
-> +test_expect_success 'output is returned correctly when two keys are requ=
-ested' '
-
-I think this test could have been added in the previous patch (and
-it's where I was expecting to find it).
-
-> +       test_when_finished "rm -f expect" &&
-> +       printf "layout.bare=3Dfalse\nlayout.shallow=3Dfalse\n" >expect &&
-
-This could be made a bit easier to read either like this:
-
-    test_write_lines layout.bare=3Dfalse layout.shallow=3Dfalse >expect &&
-
-or like this:
-
-    cat >expect <<-\EOF
-    layout.bare=3Dfalse
-    layout.shallow=3Dfalse
-    EOF
-
-It's subjective, but I find the latter example to be more obvious at a glan=
-ce.
-
-> +       git repo info layout.shallow layout.bare >actual &&
-> +       test_cmp expect actual
-> +'
+    printf "$key\n$expected_value\0" >expect &&
+    git -C repo repo info --format=3Dnul "$key" >actual &&
+    test_cmp_bin expect actual
