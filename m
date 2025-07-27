@@ -1,164 +1,99 @@
-Received: from mail-pj1-f54.google.com (mail-pj1-f54.google.com [209.85.216.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C558422DA1C
-	for <git@vger.kernel.org>; Sat, 26 Jul 2025 23:55:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F698BEC
+	for <git@vger.kernel.org>; Sun, 27 Jul 2025 00:00:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753574143; cv=none; b=eBTwkqlbr0V6nITxAxIRv+/d26R2JnWPhHaTY1DRxU+bZCHkZZpEGDT6swd/F6frVWMzw62S9r3dW0PTioaEviZ8W6Xhjey7MlXCb+qDyOGUddwJN4PkA3BkLgkucHgNitwIEWUPEewBNaC6F90e8oyR3MABqMdusyo9E5b/zjU=
+	t=1753574446; cv=none; b=Vsin7kArbdvo5yC6TryWBDFVgHLdoOBe5FF4kedpZ2IsvgUe1Dc6p3fS/yBqCfIpuRVrHK5RP96w6C01SSLOIV3tjFDjit3E7mTivfwTL7dXEiJ2HyyY+ufgvW7H8hQnSxL/0ouyzTXVY3OIT0cnBaFnGyTZHQseM7fToMxni6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753574143; c=relaxed/simple;
-	bh=Z+6SnDIE7qRMzCS69oVqYLLdiB50TkyVEdkQ7DAuypc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eCGelce5GdWUog/bMHP5ofWVHedbbjtjcL6L7FXONh8/eYS+YgG4l1IcYwnaAspyapkofc8O4J6c5WKa/OLVIgIsKcJB/Un9nspywpgc1uNKB/grGHOMZra70rJq31rGYU2sTtwZEivt5+jmDjKIYKYYKcDT1vGfKpg1j/pfn9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bfwJ50CZ; arc=none smtp.client-ip=209.85.216.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1753574446; c=relaxed/simple;
+	bh=7LJ3JoMWSD8CFpZd2dK6hAw0+ZwcMomM++Dq2YIOF8E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ObnM5KQWQPIB/2Ann85y//W5PXi/m8D+7Lzm0Tk2++gISFBUmzRcWfxj+ZMHg2fCA59TXNCy9ZvamRzDaPi4L9mqSJ33E+k37OBA1bJn2E1ybrFoiGw+H7ZAUBLaKF1ToPhrB+n6aV0RUctnTPbjl0SdrNvwzediHySlxQ0ugFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=haRLVLQK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BtEEZAhP; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bfwJ50CZ"
-Received: by mail-pj1-f54.google.com with SMTP id 98e67ed59e1d1-31ec651c2a1so103743a91.0
-        for <git@vger.kernel.org>; Sat, 26 Jul 2025 16:55:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753574141; x=1754178941; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JO3Ff5pMaTiUORUNR/ymq2y9tzeJiWutx6ns5fFZfII=;
-        b=bfwJ50CZeeZBziYPyJN3tzHIG7zp0ChJzMEUMhB5CkvLlcM25oRluOVcoQf8i6jJeD
-         Q7uRNfrufMPo0f4i+DHE58mbL25W/S+SbWlYerf1voXcnlK77cDzjyQfPeWdfpUPW/2z
-         npjDLzr+vDBA8Kyzwtd7UymYHgRdKjMZheQr73dSXvuUcUDmo+0Olao4efFZzGHrfuGk
-         wb0jWyz2fa/tlooQJE36mAsBBFl2hLfrGksf/6Ye6V2+jDK3uEjLSXRI1wFitJiN32CL
-         GlkRiJRUvI9H7vEynQnZYZ65UsCyx4V+HJFq14mMBI8F6/k4dVG39cFyUpmbR/l+BQXW
-         qoIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753574141; x=1754178941;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=JO3Ff5pMaTiUORUNR/ymq2y9tzeJiWutx6ns5fFZfII=;
-        b=PQhV0wOm1f3m16dIDryY7X+JCQhY/W0nq8sfF+yRmp7cdWs65UPnX5OZexl8Uej45s
-         nZMSLGLmwu0HEi8wiuGlpCEVVa7VOnt0Kv2+vPDVHa5SVLrWxG6Qk36zFpggeyHVFZnm
-         PolSn2hh+/dBpX6ntCgwnxy1PWL1Zio6hurJSES5Z0du8GuhwM38fpGalxLSmtN79+rf
-         cD3CwuJ6y1iJ+kwhP3FMxWy6Oqhiw98Uitzl/Nji413cU27KCNbxwVVHJbfnK+O70hNk
-         lIbAgKXmgZ2N28pHdmrPO2UC3W1njYMxcslw56TE1VvLQk+V5/agQ2bN5a1UCYFdMk10
-         g6VA==
-X-Forwarded-Encrypted: i=1; AJvYcCUzEK4YcRh2cCzf4M6gMrC+tdnoOchnArBGpTA3p8B0em9AZgYgUs8S8AKTArqKuZn5oBc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx14IaqBYvpP8EIlqQfO371uDNX6TMM5lnaFOIS+2GpUpYjBPA7
-	bbLAAibpGUJacgHfxRJRUjeyKwK9QiI1AJW7/EMC2imAdSdq8TLUD61sJDnje3NDMX0HVM/Oc2r
-	4SN2yVibJbqkGwGn8KYITfNeBFIR4rpc=
-X-Gm-Gg: ASbGncucAzOG6kuyFP+FbljO9D7qdBPS748iFh/PHC8etbzkGIHMbis/vW50d2/GfsU
-	0xmIle9L5W0x5O19TRq8iBf3Tw06r9loeRIkXIyj3wGEZFvWxqqHCdv/r+4oF+IvBkhGHFhgrkm
-	OjgoGacLu/WDtFkdY99JWKjO/94F3qNZRxsnaxygAnJppa1NIMh5V7SuXaDzNQKYh4XCaFgObZd
-	NO24oAc
-X-Google-Smtp-Source: AGHT+IErq5io+Nr6T0U8UBzmizGJ+rUay3bkD+gJeKm21IVy6xn1uODyA+m47w+JgYTIIvaFlw62Y0k6qWm6OPuSTZ4=
-X-Received: by 2002:a17:90a:c886:b0:31e:4492:af48 with SMTP id
- 98e67ed59e1d1-31e77a227e6mr10305405a91.28.1753574140865; Sat, 26 Jul 2025
- 16:55:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="haRLVLQK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BtEEZAhP"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0D7291D00CE5;
+	Sat, 26 Jul 2025 20:00:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Sat, 26 Jul 2025 20:00:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753574442; x=1753660842; bh=7LJ3JoMWSD
+	8CFpZd2dK6hAw0+ZwcMomM++Dq2YIOF8E=; b=haRLVLQK2OgYxOh4pJCieM/bvw
+	A65mGXyNE4G6VAAgLvS99tklpGagXaaRbwT83n1ohkBjKsuul/gVxA4GWUmMJn+8
+	cubzQWNzdc71I5+Q78psjxF3FiJVoEPc0f6tK/hgcb3XHpP9fsa1PzCcyH/IfYZ6
+	V190xebBXmuSliS8lA71YhNjfirAPI54ODAOV4CnwZEBZVHz/wE5AUvIkZKDYfiy
+	QGBbI0NTVxrUKc5tl/AMGPaC5iqkGdNfIscTaOAWH4lKGK7LlXlJPqBKVgHxEOdx
+	uctzfmxft7zSmpDVJDMv0Y/nTUiBEZNzbe0l8spqbrzMg7CLXDHY5sq3IB3w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753574442; x=1753660842; bh=7LJ3JoMWSD8CFpZd2dK6hAw0+ZwcMomM++D
+	q2YIOF8E=; b=BtEEZAhPu1GwzZXKWdjAsxVd3xCchFItFdLRF0r0aa8sFgrJL7f
+	06MIqU2Z+UglS0XReh7J4TIpV1KxSUpBNrndINFiBX5TAu0oARqYu+wg7kjUcJQT
+	LZMPN44CzpjnHNg4HLL23uPLgnJ3mqyCPfcDAx6JxA79uys2IgI/aHS/KwVTQX1I
+	f7m2KooxwYybAM+XI+GYDGUr6LDZtvqP7t/mQ1bBsKrmxJZABQUUWUFKukVhTzo3
+	csuPOVsyWjFrqYXKVhHddUaF+VZY92mrkKIp7pyvDhINaL61TjN9R1uVSU43MlTw
+	WZQfRSpNusV4dsjbr/fN+2YRAGppinqKHzA==
+X-ME-Sender: <xms:KmyFaKgZdapEtVJ7TmLVM3SR2vB9acXfLLH4AicyNwQNSYatry_1PQ>
+    <xme:KmyFaFnqso1OznYAN3KA_yyKkvhMh3NtoGtBDwa_Xpy1IQPO-hKhudSTSzoInL6b_
+    IEwgQ1dJlUB-MsVWQ>
+X-ME-Received: <xmr:KmyFaOrL5SSKsdTT85fTQieW7IlLayn25uFmaeYAXI-AMbuP5tG8MVqB_qlohpVmpredzyNEWZ00dryL9pzZDuy5dwSUBlVjB5xHBxU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdekjeektdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtghomhdprh
+    gtphhtthhopehushhmrghnrghkihhnhigvmhhivddtvdesghhmrghilhdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:KmyFaGFEBcBf1pv8cqzr-MAWMyC14UEzDW0G2cs97cohf19PC4E-0w>
+    <xmx:KmyFaCyRr_PqQrUY4f60LmVXkN5xcpGtTr1dUaz9ETXQxEZ0I1CeIg>
+    <xmx:KmyFaDprqQIKq54LhT1s5jFblNRxSXZlIx4JIk3CJqlxcTfEkmoBiw>
+    <xmx:KmyFaEiqHZlLIS1Bkh5s5gJceFJ5Z_Yno8RWMe61gtBw2vwm4pIRag>
+    <xmx:KmyFaDRCybHTRoTGZkXalnz18X7x3GN7Lz0W587JSxRuAbnjCeAEb1OP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 26 Jul 2025 20:00:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: Usman Akinyemi <usmanakinyemi202@gmail.com>,  git@vger.kernel.org
+Subject: Re: What's cooking in git.git (Jul 2025, #07; Thu, 24)
+In-Reply-To: <CALnO6CD58LMgGgxGF1DRheeFe-E9zRwAKG=-qsUO=kDB-gTdeg@mail.gmail.com>
+	(D. Ben Knoble's message of "Sat, 26 Jul 2025 09:00:26 -0400")
+References: <xmqq34alik2g.fsf@gitster.g>
+	<CAPSxiM9Udi2PxpT7f8DdLn1ihny2gW_H=ieLjV25sEFYSdAjMQ@mail.gmail.com>
+	<CALnO6CD58LMgGgxGF1DRheeFe-E9zRwAKG=-qsUO=kDB-gTdeg@mail.gmail.com>
+Date: Sat, 26 Jul 2025 17:00:40 -0700
+Message-ID: <xmqq5xfe1p07.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250603131806.14915-1-ayu.chandekar@gmail.com>
- <cover.1752882401.git.ayu.chandekar@gmail.com> <xmqqcy9qlfm8.fsf@gitster.g>
-In-Reply-To: <xmqqcy9qlfm8.fsf@gitster.g>
-From: Ayush Chandekar <ayu.chandekar@gmail.com>
-Date: Sun, 27 Jul 2025 05:25:29 +0530
-X-Gm-Features: Ac12FXxGejoQ9hZQIP-fiKDoe-rNaX0-t16RzmiUl3bHHo22zTK08gWL4hAXPtc
-Message-ID: <CAE7as+b2rSiXziZE0a3BdvPZ5h2961vOUX=zgvnjgvwPKbCHyg@mail.gmail.com>
-Subject: Re: [GSOC PATCH v6 0/3] environment: remove sparse-checkout related
- global variables
-To: Junio C Hamano <gitster@pobox.com>
-Cc: christian.couder@gmail.com, git@vger.kernel.org, shyamthakkar001@gmail.com, 
-	phillip.wood123@gmail.com, ps@pks.im, ben.knoble@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Thu, Jul 24, 2025 at 3:44=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Ayush Chandekar <ayu.chandekar@gmail.com> writes:
->
-> >
-> > * For 1/3 and 2/3, Junio told me that it was concerning to put so
-> >   many calls to `prepare_repo_settings()` so I tried to minimize the
-> >   calls and made sure that there's no useless calling.
->
-> I didn't mean that the number of places is the problem.  What I
-> found troubling was that this is not done in any central place, so
-> it is hard to notice even if some random cmd_foo() failed to call
-> the function before doing its real work.  For example, shouldn't we
-> be able to, at least for built-in commands that have RUN_SETUP bit
-> set, centrally call prepare_repo_settings() somewhere late in
-> git.c:run_builtin() after we figure out what should be in
-> the_repository?  Now historically, setting up a repository may never
-> have involved opening and parsing tons of configuration files, so
-> such a change may be incurring extra overhead we did not have to
-> pay, so it needs a lot more thought than just trying to minimize the
-> number of calls, but some performance measurement.
->
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-I was quite stumped as I don't know what the perfect solution for this
-would be. I get your point that we have calls to the function all over
-the place and would take some toll on the performance as well. As you
-said that we can probably call the function in git.c:run_builtin() or
-we can have a call to it in config.c:repo_config() so that just as the
-other settings, we will have our repo_settings parsed, which were once
-parsed through the same function(repo_config() or git_config()) and
-since all the cmd_*() functions have a call to this, we will also be
-able to call prepare_repo_settings() there itself.
-
-> > * For 3/3, Phillip told me that it broke user-facing as it will be
-> >   parsed quite late in the callchain and might throw an error mid
-> >   operation which we do not want.
+>> Is there something that needs to be done here ?
 >
-> So has the behaviour change caused by 3/3 been resolved?
+> I would interpret "introduce a few 'todo passed' when merged to
+> 'seen'" to mean that a few test_expect_failure's are now passing and
+> need updating.
 
-Well, I am not parsing it at that place. But, I am relying on an
-already existing call to prepre_repo_settings() before the function
-using the setting is called repository.c:repo_read_index(). I tried to
-narrow down to a cmd_foo() function so that I can shift a call to the
-prepare_repo_settings() from repo_read_index() to it, but this
-function is widely called and cannot be narrowed down so I had to
-settle with it. I'm afraid the issue still isn't completely resolved
-
->
-> A meta-level comment and a half.
->
->  * Please do not use "-- " (that is a line that has dash dash and a
->    single space and nothing else on it) lightly.  It is called
->    signature line and often MUA pays attention to it when responding
->    to a message with such a line by omitting everything after it
->    (which is supposed to be your "who I am" advertisement) when
->    quoting the original.  Since you had one before the "discussions
->    since v5" section and the range-diff, I had to manually resurrect
->    the part after the signature line while composing this message.
->
-
-I am sorry for that. I will keep that in mind from next time.
-
->  * This throws everything in repo_settings, but these settings are
->    inherently per repository and they are meaningful only when you
->    are working with a repository.  What makes us choose to make them
->    new members in the repo_settings structure, not direct members in
->    the repository structure?
->
->    Not an objection and not a suggestion to move them out of the
->    repo_settings and to the repository proper.  Just wanted to hear
->    the reasoning behind it (and have the rationale clearly
->    documented, preferrably in the proposed log messages).
-
-Yeah, so what I thought was that if it is a "core.foo" setting, I
-would club it with other core.* settings in the struct repo_settings.
-But other config settings like in the previous patch series,
-"extensions.preciousObjects" or also in this series, the
-"sparse.expectfilesoutsideofpatterns", I would put them in some local
-context or if they're tied to a repository, I would store them in the
-repository struct itself. But, as other "core.sparse_*" variables are
-stored in the repo_settings, I thought it was better to store the
-"sparse.expectfilesoutsideofpatterns" along with them rather than
-storing it in the repository.
-
-Thanks
-Ayush
+Thanks for helping.
