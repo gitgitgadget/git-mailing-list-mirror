@@ -1,58 +1,58 @@
-Received: from mail-qk1-f179.google.com (mail-qk1-f179.google.com [209.85.222.179])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B7221ADB9
-	for <git@vger.kernel.org>; Sun, 27 Jul 2025 20:12:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 640629463
+	for <git@vger.kernel.org>; Sun, 27 Jul 2025 20:20:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753647133; cv=none; b=KRlre/2deuPx3J3I18MVcrufAjd6ZUkk8EI/exBpU39Q0LM7F5UcpjvPeaLqtO5dDvAl7o1qTa/V5Gu+VD2amU7UMUfM15R+4GknaJZnJA8VUpp50wBusCO6dz3zqrgXjCDQNKgVB8NijpzKcbT+W6gOLY88Q5jZoYQe6vS9b2U=
+	t=1753647645; cv=none; b=BUHS8YWmlV/AF/jNmtxbB7B3Utt9ux4b1psPXAha0x6bNDJjXjiFJBRONwWDIJ/F09FpLiHdrgUpHG6KHOn1Xufcsk9BeMDxDsa2IdUCMiJdAgIa8OQWRLdSQhS7jbgI6mM4/jMlVrm1JgfW02ZslUHOtrfSjR7fHET4CurZkbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753647133; c=relaxed/simple;
-	bh=xZggO8zvNKOKKfvuEAFyf/hfus3q/Tl1QE2vzYca/rU=;
+	s=arc-20240116; t=1753647645; c=relaxed/simple;
+	bh=lSJDWBnUjrupPlj/j+9vvigc8nst0tayBVmIv2IQnic=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=f5zPQ4uWs6f8KJLzMZFSoXaylsMJu4CadSZm/Vd4r2z4wJQr3Ov5kMlN7G8fJBijB80/8pNvOwTH5qOo32XTNwa/dXclb89u9nhVHSQbNEpJ7GrYkl+V0yRNOZ9icpBjRAN7Vxr7gBj4/CZGPLtgqkeNNM5PY+pO2IXI1MBdAzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.179
+	 To:Cc:Content-Type; b=GziKsg/Wjt6g7Mwp23KWur4kVA9BLo6ZUZAk/xj6EktD66C7gfoRyNcc4Ejk9M5AFEDZNggnrrikIvwRnijTI0wk/Qi0Qw4ymLYQ3Q36FXoPhN5KX2PU/kURT9BAyEL/qS+7AuZFLSHwpMOwst5RU8WrkSfQ2Cx3zUJsnKqsDFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f179.google.com with SMTP id af79cd13be357-7e33010556eso5755685a.0
-        for <git@vger.kernel.org>; Sun, 27 Jul 2025 13:12:09 -0700 (PDT)
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-7073a1933adso1176266d6.0
+        for <git@vger.kernel.org>; Sun, 27 Jul 2025 13:20:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753647129; x=1754251929;
+        d=1e100.net; s=20230601; t=1753647642; x=1754252442;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=xZggO8zvNKOKKfvuEAFyf/hfus3q/Tl1QE2vzYca/rU=;
-        b=Fz00aW2G4Upuu+IRXgUT8k+MO0L6OZo/fhxbspv+qd2dcQss/R4ITJP5AcYKvTphdy
-         hDIYAhizsvMDvGZSrvygjfhuOvtsWcscL5X5h0mKEyQrKmCU9Vry+VoGmn0+NeILnmYa
-         iAWV0QMWJe0+0jmIdQ731HHVulB+NlD58N2SwE9qXJRsTywi71Xoudkfu1LXXySrUufu
-         lzkLSRQ2qApW5pCSLgiBuUIX+doi3b+qJDcxoU18amPprFRn+NGeGNvqTbZWCr2p1qz3
-         eO9hbY02IC1Rw3D6bL/qUOiT3wo/Ayx37Ng2xa2J91p0Ea46Lo4b8S3ghxj5mtJXEGq4
-         PlDA==
-X-Gm-Message-State: AOJu0YwngVQ0BW4unkNs0KeWQ46hFQp4LES6J4YwyaWBqXD8pK2sbNRL
-	h1jbJmTSE0V6m92fxAVe42YzedNE6BDA/zTVrdzdB9kZ976/fMqf4g7hP/WekVlbDhjFY4XUMUW
-	11vUi5DrFF7pXbAc9NUrFqFpPvD1VxN0=
-X-Gm-Gg: ASbGncvankqTFlsOq2A33OmA+k8jg8EU6DEE41EYJv4JQxVZYUMd+NvP8ebaeAvKkuF
-	2gwCCdqqXYMRg0n92J4zRVtEkiyMplcGILQ+Guon3enHNr02qwm0Opl3wjmuBKp655Z3Oea0SYc
-	vz+EnlNKSmYpkJPYd6djXGMLBSbtE+h02218YoIJ2YzJTT2Os/t2GUdNZpZ+p4fLJIoD4sAMsld
-	YaoFKR/qygH+q/t1OsYbp2Hq0nTX1Fg4C01J4QZ
-X-Google-Smtp-Source: AGHT+IEsXwtTP3bYQTluc5dGVoysDXLWAk0xAR+UKNAOMyUpNb8I36GgJQqUBiL9E2yCjApn34gekaCo+9HJicPUDnw=
-X-Received: by 2002:a05:620a:1910:b0:7e6:2404:552 with SMTP id
- af79cd13be357-7e63bf907f7mr467147385a.8.1753647128724; Sun, 27 Jul 2025
- 13:12:08 -0700 (PDT)
+        bh=WWnasflBaPqgJ7GzrocfoVCVDi7kwnkuD3vuappNE7I=;
+        b=esAJQf0gKWRweuaaisssq189qqhihRqdscDTNrs6iyjsSxufyoVFMTm50zr1P0tAlC
+         nSIC6ibmaZ2ySwnO++4V+usNHZrPqc1rXWdQhdRYUkmQPsnu43tq++zLT8doyaxU/7Ba
+         OLMxKvGl9c97iNzcaVLdMlyZoKHGdvh6++LXIog+meupXKZ0FOJeSNtJsWjFrdqY8YY1
+         EkTdojPLHTwerE76FoiM1jRcdzUovZ/q587UFl7wA3qrS4lFoXUn1acBfsaIf3A+5QoV
+         BUPbPgvt3UXkVfIUG9BdKI7QXaBHWesq2e57WW1YslhA2B7WpbSNhljhPn487z56RjrF
+         ovUw==
+X-Gm-Message-State: AOJu0YzXwCoerA1S2mBiFfVElEjcOTVTxIleHK5P+1hb6mebonPiqE2W
+	5go+MipSMNfvvmJQN71OuocL0GHp35ikXHw08EioRCKSjl0mcYsrs7Rn5Hnu/pVXRsGLLjOoqdp
+	0e+5vT6ppe1yryK8Q+w3n8G+kuKz8OPs=
+X-Gm-Gg: ASbGncvysz99/3F5F/A/8wFfPme23bDI8lJuaV5ivAgyeeSXs4Do/oHO8q4tmf1Z+KQ
+	DcydS0MiSYW9l2robVAnFfELld1OLLtNZsr0uMzZqu6X49+IF7iGXABN0wNqyc9/ZWGZGXuYzHW
+	TjPG1H98d/lGtqeqpDO1AJRRd2nfHV0Dk5FiSNdgFaY1hAMRBUzCOh6QxYmRpF8YY5K2BDKNsco
+	fmEBJB+cGoHuxYx+QURrTF/ceKpH0+DkyECYN+d
+X-Google-Smtp-Source: AGHT+IG6Bi5mxzADqSQqhy+Vz3ZYGS3mjC9+neFaf1X3MXDCjsCXiGvhMu0qYjlN3F53DIs9UtCsG14JssS5mP/vMr4=
+X-Received: by 2002:a05:6214:4a51:b0:707:4020:8631 with SMTP id
+ 6a1803df08f44-7074020c508mr12802766d6.5.1753647642212; Sun, 27 Jul 2025
+ 13:20:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250610152117.14826-1-lucasseikioshiro@gmail.com> <20250727175110.84770-1-lucasseikioshiro@gmail.com>
-In-Reply-To: <20250727175110.84770-1-lucasseikioshiro@gmail.com>
+References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
+ <20250727175110.84770-1-lucasseikioshiro@gmail.com> <20250727175110.84770-2-lucasseikioshiro@gmail.com>
+In-Reply-To: <20250727175110.84770-2-lucasseikioshiro@gmail.com>
 From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Sun, 27 Jul 2025 16:11:57 -0400
-X-Gm-Features: Ac12FXwfLal8Ll8opOnrxHf5gQR5ooU-ILY_eaqC6nWd0w1d0c8Ut4rIfOL_Fzg
-Message-ID: <CAPig+cSBj+kSmzKUarNPQt4qk5p9vjHFGFrJVYmT6TrWHACcEg@mail.gmail.com>
-Subject: Re: [GSoC PATCH v5 0/5] repo: add new command for retrieving
- repository info
+Date: Sun, 27 Jul 2025 16:20:31 -0400
+X-Gm-Features: Ac12FXyKr84RqsNm27Re54ON1iE6JHiHoFfSXfVePivlIiz-dqruABt4tjXSgDc
+Message-ID: <CAPig+cRwv1xOoiXRBo0tECXPKV=BrHo_aHcD6Wy+mOUv4OvuJA@mail.gmail.com>
+Subject: Re: [GSoC PATCH v5 1/5] repo: declare the repo command
 To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 Cc: git@vger.kernel.org, oswald.buddenhagen@gmx.de, ps@pks.im, 
 	karthik.188@gmail.com, ben.knoble@gmail.com, gitster@pobox.com, 
@@ -62,23 +62,50 @@ Content-Transfer-Encoding: quoted-printable
 
 On Sun, Jul 27, 2025 at 1:51=E2=80=AFPM Lucas Seiki Oshiro
 <lucasseikioshiro@gmail.com> wrote:
-> This v6 contains small fixes pointed in v5.
+> Currently, `git rev-parse` covers a wide range of functionality not
+> directly related to parsing revisions, as its name suggests. Over time,
+> many features like parsing datestrings, options, paths, and others
+> were added to it because there wasn't a more appropriate command
+> to place them.
 >
-> In v5, Patrick and Junio were discussing about quoting the values in the
-> key=3Dvalue format using `quote_c_style` [1]. Given that it wouldn't affe=
-ct
-> this patchset and it's a simple change that can be done later, I didn't
-> change it and I'll leave for further discussion when I start to deal
-> with paths.
+> Create a new Git command called `repo`. `git repo` will be the main
+> command for obtaining the information about a repository (such as
+> metadata and metrics).
+>
+> Also declare a subcommand for `repo` called `info`. `git repo info`
+> will bring the functionality of retrieving repository-related
+> information currently returned by `rev-parse`.
+>
+> Add the required tests, documentation and build changes to enable
+> usage of this subcommand.
 
-The counterargument to this stance is that if you employ
-`quote_c_style` from the onset and document it, then if a future
-version of Git does start outputting values containing "funny"
-characters for properties which previously did not emit such values
-(this isn't limited to paths), then consumers who heeded the
-documentation won't find their tooling breaking suddenly. Tooling may
-break for consumers who did not heed the documentation, but that will
-be due to their own shortsightedness, not due to the Git project
-failing to care about compatibility between versions. For this reason,
-I'm of the opinion that `quote_c_style` should be used and documented
-even at this very early stage.
+This talks about adding tests, however...
+
+> Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+> ---
+>  .gitignore                  |  1 +
+>  Documentation/git-repo.adoc | 38 +++++++++++++++++++++++++++++++++++++
+>  Documentation/meson.build   |  1 +
+>  Makefile                    |  1 +
+>  builtin.h                   |  1 +
+>  builtin/repo.c              | 26 +++++++++++++++++++++++++
+>  command-list.txt            |  1 +
+>  git.c                       |  1 +
+>  meson.build                 |  1 +
+>  9 files changed, 71 insertions(+)
+
+...no tests are added.
+
+> diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
+> @@ -0,0 +1,38 @@
+> +DESCRIPTION
+> +-----------
+> +This command retrieve repository level information.
+
+s/retrieve/retrieves/
+
+I'm a native English speaker, but I wonder if, rather than "repository
+level", it would be more friendly to non-native speakers to instead
+say:
+
+    Retrieve information about the repository.
