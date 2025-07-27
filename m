@@ -1,63 +1,63 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D18BD22173A
-	for <git@vger.kernel.org>; Sun, 27 Jul 2025 17:51:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6E022173A
+	for <git@vger.kernel.org>; Sun, 27 Jul 2025 17:52:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753638718; cv=none; b=jE2mne8drv8iK4uBfdpREQO/AfIP+FokJopT8CZDHsz9qRPftSLf9XBjiSDS7D6bBnOVEzjXoHEcUIASDlxEd5TEprhJ5SPY6qsybMfWgMzabvvci1D123tdeQ1m6D/NzNy9TUOdwjpQarJES0J2lPhZ3jK9/bLPsaLuB6Hk4Ho=
+	t=1753638722; cv=none; b=YcpTbSDVSbuarKLDFkHqbsP/cM1RhW2GdlYNjeBuwf7VqSvcm3qtJeDmvFMcNZ2R7IAxKjaRw3BgFpPEsVTdYkmxmEGx9rVHnUXWnQ9P6KN6R5DxU2ytcZCHI+CWJbP+42+rFZRSsqkOZVhkKEIAYQgp7TFbuwRyRLxlZzA0vo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753638718; c=relaxed/simple;
-	bh=S5EFswtb18LFA8pyb68iu2rXgr2n7xo2ReJn7mPSXIM=;
+	s=arc-20240116; t=1753638722; c=relaxed/simple;
+	bh=9JWNO42lG7li/xCEXZnSFFa07Q3dECvQuWeGcK7cLPs=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=m7mYaAzZbYelqsvZxGtVP/tGMZGDcC0X7SC6FMnGRskz5Z9sAWFlGjV9pjJhD4+/jnSxK9FNz9YvjgIakjtyvkdU0qlip7TuNPV1H5GRMqkzFhwSGybFxuJcb7ZpJjbdk9j1Mfly0kIt3qEYF5FTlnx/NjmZ+0qpFP2mqQsTm+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OBPJq/4r; arc=none smtp.client-ip=209.85.216.42
+	 MIME-Version; b=u3oR9Oi68w1EAe9jGEuLw0jNYIkhKGKdakkerSDafLjOY/Qom3zjVv+ALqEnKVuXrb3nQxUQ4OY34+YdG0XyBmVDkY619q3PV7PaW1O6EzLJW+4L9a1az9dJ4jfDvTXd2wQ/55Urj/tzwAL0bQYzclF147qmQqhtRF3kTQU2yFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WqfDbx41; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OBPJq/4r"
-Received: by mail-pj1-f42.google.com with SMTP id 98e67ed59e1d1-31329098ae8so3110511a91.1
-        for <git@vger.kernel.org>; Sun, 27 Jul 2025 10:51:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WqfDbx41"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b3220c39cffso3783520a12.0
+        for <git@vger.kernel.org>; Sun, 27 Jul 2025 10:52:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753638716; x=1754243516; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1753638720; x=1754243520; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5JxNEn1W0Z1rjlXPA8dg55mkCO3GSZztfHw3Lb3XosM=;
-        b=OBPJq/4rcGRUSAPAbRk+a5S9CE0CbMeMREgwN4hN+NbsRKDYL9YAIeNF4TZqbpZZEe
-         B7i+JjiB+9qLH9axwWF2biI3DGjOPzvMqkYA0ryPrwAYHgF6qJ/TC0qjXcJljSCGjr/u
-         DR2e44JiwitilSMy/BCsXrP8/hVO6w0L5yYVLKYzCFMV2ypo4Jqg143iI6mm/WA+Sj8d
-         vf1iWSIat4ZpbkLpdssJtDg9DmH9zrjoiY3AWmcldBAcIiUBZ8H+rI5UtfnaHZmAscy2
-         XQNZ9lI4G8z0DxGJNhDnJIp2YDQ7OTA/S7jDiS27ZGNK8v88CJZdvymNsVnstgsseE+S
-         aD5Q==
+        bh=e3n9eNgh8J7eQJ1lJx1zX+r3zodCyozuOr2ADhFMA1I=;
+        b=WqfDbx41TxKjmTpU+HUCS4L8kLHEYli62YtUCoJWzdGdp846JLn6IJpoXLumTdydEp
+         BolonExSJSrZO5Q1ZsWFgK9Cu794ejbmz7Csjd3EXSDqMKvbZbWDYsqq6ooxcokwz2CN
+         nCGLEH0R+nnGGgUQsoxbGn30xv6HPOTlcbr6uPK9l11ibFpt8aglQNkzC1t+4xVOlm39
+         Fc7Jw0EVJK42Sl22BOGDMUAAPsUPsfd057MZyzCz5PhlHrVY7tW5giZzt9wVXgiFt6MU
+         jfIGQTN5qWZk+UXzOXIyiVrNvYGfr2BU8y97fz7RxyvaorGor+RdR2DUtTUqUqSTsTiM
+         N4sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753638716; x=1754243516;
+        d=1e100.net; s=20230601; t=1753638720; x=1754243520;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5JxNEn1W0Z1rjlXPA8dg55mkCO3GSZztfHw3Lb3XosM=;
-        b=NAYXfPzGTkIZHRGu2SoB5G+STrhkhrVfN4t3gnNUw3u1xtamOR9/SaX22vMeLAlOn3
-         tsXQ5ZtFpWrXX785DEmrJWlYrw5vLDlRqzyyrfbk0wD/HG9AyOvKIkEYpSb6+/vCZMTw
-         PIDbngaL5/YfYH4ETnot+LX4xtagT3TEFjkNtvOnv1Mqxk4tYiSQzLsXHBILKZ9w+YOf
-         YOK7Fh/Ztw1LCp7w7+33SgplKm2h1R8TibGo81PRRh+iUZTcQpFqlH64INkKyzI3/TC6
-         /Wk6XDSp6SXYCJkEXwMDOaqFplf/y2dqDAa/oxOM+1kOUnxA04Lw7Tl4HJFoIOJ96XQK
-         X3AQ==
-X-Gm-Message-State: AOJu0YzFje1GPjw3abLGR6H0no+RCgfNIETH1JvYhOSkwSwYK6NVLgVU
-	KsubvM448UqYZa6vESBQMmZNChOQmrD5eQnsm62+pGvb84gHw3De1VVnM/I8rA==
-X-Gm-Gg: ASbGnctjqZTPch0cAcQU7aDxtIvkpWmWuuNupWRHzURpBUadsWe8uD+gcTY78+rWd51
-	eAcVUhKbTo6bs2ZQlAJg1cooF4xuNbshvyzK4ebBSTFybiFeehc4DzVJg1odVfac+qseJ5FbZpt
-	x1enF88NcrJEGUpZv/a5QR9Yq8MIX+fstSrqDHgsabPvz2lqeVtbLoihIzVAG9bJXvDPutrQlHj
-	wkUvGSRWA4O/R1M3vA4mdCPK58y66GHZ9WigJxDq5yflES5sx60LaTOQGXrVPgvm7ndNAYhUhwV
-	96CWSDovkFh3eFqaWYUyb5VaUhBz3WTMU81Qledw/OjSi2mHf6jJ0WklfflKitJM5FIxX2BwdgB
-	E3yGyimBvAUTyhYC4wUF+8+obeeoupPP6e8GMWxn907EyiO8krf43zDNGQPG/Jsb0cPXyhhAeEm
-	+m+AQcdrPkovoKJzGubzjGmQ==
-X-Google-Smtp-Source: AGHT+IHU4mhtqfyqDvlKpphjhsyIrFo8vVtPDtdWte6c2tX71+y7QeAcn6OCTq0+saO1qmJ737893w==
-X-Received: by 2002:a17:90b:5251:b0:31e:a48c:25ef with SMTP id 98e67ed59e1d1-31ea48c2809mr5835134a91.10.1753638715860;
-        Sun, 27 Jul 2025 10:51:55 -0700 (PDT)
+        bh=e3n9eNgh8J7eQJ1lJx1zX+r3zodCyozuOr2ADhFMA1I=;
+        b=U/J24WKj15OPN3AXADm/NamdjCbQ47mmQAVMzcmiCdGRJciVfvIjKWhl3uDQKUT+99
+         f3WDGrJdH7j7ZxvjHAQKD/CYgr7OScO6QNIjhJkXEc9RmDzOULWVjgqb61Y9RoxvODT2
+         EqJfy/ZOxfzGVW15Ec5+Jzmf6jrTUFCnyF0vWANLwLR0Tps2Xv4es4ef36ONPqMC+i5L
+         jeDftV4KN+53Rgey+KCYnFZJYu8J0p0IvFDA9M67VdVaQIDyf5rnddVf4jMUfz818Rma
+         HzZiLpfOlVsKqU/A0mhgcnr68GPMd6LS9EvTaMazDuMjDE3Nmiwhc27HEm4sj9A6bHd2
+         4hHA==
+X-Gm-Message-State: AOJu0YxeUq9+frTDaIrzT7uKOS3adGSu+12qwtnYZjuygDjHjagmaanW
+	Ks6EJzzEM2fzz+v3VA3MRqPBJxiKPysE1G7UgDRqA93K79k6yjtBnKpjh5d2yg==
+X-Gm-Gg: ASbGncsOrL55je6Bc+KeNT2H8NPIVhU6iQsSq4DzVisp6NIfp8Syk7LbmFJnNqtKLbj
+	q8Dc9cblVg3yAuU6fLPl6c5sCxv+Cqrpc7gzDTlR3c2Cvd931FT7uUZo6fC7Vfjf9SmUIafS1Y8
+	BdweutsLthFRyJ/uYQvEls1PC1QWQV0fH+JZwbwk+LItyh/kLqM7/FTBwGo5xT0+Dkwusrb/4QY
+	nDOX4JXwuFeBoVG+fGupYUhl1S4orT1sexJqiwzr7vV0pi4/murSOZGCBanCeP9X+sLi9DJ8a1c
+	zZBoWFZEhzuYugho1wLOHVzXkYNfMiQeTwdr8yaQZ6k72BaDYI0Kk5GSADcFPMRmWwiSb/SnFm1
+	XL+vqEkQ3d9ZMCNDcaINsU2eqM4U+xQSOCG3ia8yWR5aDGed2lj7leDm2lZAu37dcdZsBiBa+bi
+	CYi4FdkdvAIwg=
+X-Google-Smtp-Source: AGHT+IHRD9jndc10rrKMDKNoa/97PuILXkhPT3byg0xG9+vSM27O2SL8pVk9TzAsX+djgamGShczRg==
+X-Received: by 2002:a05:6a21:6da8:b0:218:59b:b2f4 with SMTP id adf61e73a8af0-23d704297a2mr13758185637.42.1753638720013;
+        Sun, 27 Jul 2025 10:52:00 -0700 (PDT)
 Received: from localhost.localdomain (201-1-210-243.dsl.telesp.net.br. [201.1.210.243])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f58bec0sm3392488a12.17.2025.07.27.10.51.52
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f58bec0sm3392488a12.17.2025.07.27.10.51.56
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 27 Jul 2025 10:51:55 -0700 (PDT)
+        Sun, 27 Jul 2025 10:51:59 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: oswald.buddenhagen@gmx.de,
@@ -69,9 +69,9 @@ Cc: oswald.buddenhagen@gmx.de,
 	jltobler@gmail.com,
 	jn.avila@free.fr,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v5 4/5] repo: add field layout.shallow
-Date: Sun, 27 Jul 2025 14:51:09 -0300
-Message-Id: <20250727175110.84770-5-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v5 5/5] repo: add the --format flag
+Date: Sun, 27 Jul 2025 14:51:10 -0300
+Message-Id: <20250727175110.84770-6-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250727175110.84770-1-lucasseikioshiro@gmail.com>
 References: <20250610152117.14826-1-lucasseikioshiro@gmail.com>
@@ -84,15 +84,22 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-This commit is part of the series that introduces the new subcommand
-git-repo-info.
+Add the --format flag to git-repo-info. By using this flag, the users
+can choose the format for obtaining the data they requested.
 
-The flag `--is-shallow-repository` from git-rev-parse is used for
-retrieving whether the repository is shallow. This way, it is used for
-querying repository metadata, fitting in the purpose of git-repo-info.
+Given that this command can be used for generating input for other
+applications and for being read by end users, it requires at least two
+formats: one for being read by humans and other for being read by
+machines. Some other Git commands also have two output formats, notably
+git-config which was the inspiration for the two formats that were
+chosen here:
 
-Then, add a new field `layout.shallow` to the git-repo-info subcommand
-containing that information.
+- keyvalue, where the retrieved data is printed one per line, using =
+  for delimiting the key and the value. This is the default format,
+  targeted for end users.
+- nul, where the retrieved data is separated by null characters, using
+  the newline character for delimiting the key and the value. This
+  format is targeted for being read by machines.
 
 Helped-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 Helped-by: Junio C Hamano <gitster@pobox.com>
@@ -101,91 +108,159 @@ Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 Mentored-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- Documentation/git-repo.adoc |  1 +
- builtin/repo.c              |  9 +++++++++
- t/t1900-repo.sh             | 21 +++++++++++++++++++++
- 3 files changed, 31 insertions(+)
+ Documentation/git-repo.adoc | 13 +++++++++-
+ builtin/repo.c              | 49 ++++++++++++++++++++++++++++++++++---
+ t/t1900-repo.sh             | 20 +++++++++++++--
+ 3 files changed, 75 insertions(+), 7 deletions(-)
 
 diff --git a/Documentation/git-repo.adoc b/Documentation/git-repo.adoc
-index d52f4666be..3f920b619f 100644
+index 3f920b619f..6cc3ff581c 100644
 --- a/Documentation/git-repo.adoc
 +++ b/Documentation/git-repo.adoc
-@@ -36,6 +36,7 @@ Reference-related data:
- `layout`::
- Information about the how the current repository is represented:
- * `bare`: `true` if this is a bare repository, otherwise `false`.
-+* `shallow`: `true` if this is a shallow repository, otherwise `false`.
+@@ -18,10 +18,21 @@ THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
  
- SEE ALSO
+ COMMANDS
  --------
+-`info [<key>...]`::
++`info [--format=<format>] [<key>...]`::
+ 	Retrieve metadata-related information about the current repository. Only
+ 	the requested data will be returned based on their keys (see "INFO KEYS"
+ 	section below).
+++
++The output format can be chosen through the flag `--format`. Two formats are
++supported:
+++
++* `keyvalue`: output key-value pairs one per line using the `=` character as
++the delimiter between the key and the value. This is the default.
++
++* `nul`: similar to `keyvalue`, but using a newline character as the delimiter
++between the key and the value and using a null character after each value.
++This format is better suited for being parsed by another applications than
++`keyvalue`.
+ 
+ INFO KEYS
+ ---------
 diff --git a/builtin/repo.c b/builtin/repo.c
-index 2aba6a39c7..37fb1803f6 100644
+index 37fb1803f6..a293d32b92 100644
 --- a/builtin/repo.c
 +++ b/builtin/repo.c
-@@ -5,6 +5,7 @@
- #include "parse-options.h"
- #include "refs.h"
- #include "strbuf.h"
-+#include "shallow.h"
+@@ -9,6 +9,11 @@
  
  typedef int get_value_fn(struct repository *repo, struct strbuf *buf);
  
-@@ -20,6 +21,13 @@ static int get_layout_bare(struct repository *repo UNUSED, struct strbuf *buf)
++enum output_format {
++	FORMAT_KEYVALUE,
++	FORMAT_NUL_TERMINATED,
++};
++
+ struct field {
+ 	const char *key;
+ 	get_value_fn *get_value;
+@@ -68,9 +73,24 @@ static int qsort_strcmp(const void *va, const void *vb)
+ 	return strcmp(a, b);
+ }
+ 
+-static int print_fields(int argc, const char **argv, struct repository *repo)
++static int print_fields(int argc, const char **argv,
++			struct repository *repo,
++			enum output_format format)
+ {
+ 	const char *last = "";
++	char kv_sep;
++	char field_sep;
++
++	switch (format) {
++	case FORMAT_KEYVALUE:
++		kv_sep = '=';
++		field_sep = '\n';
++		break;
++	case FORMAT_NUL_TERMINATED:
++		kv_sep = '\n';
++		field_sep = '\0';
++		break;
++	}
+ 
+ 	QSORT(argv, argc, qsort_strcmp);
+ 
+@@ -91,7 +111,7 @@ static int print_fields(int argc, const char **argv, struct repository *repo)
+ 		}
+ 
+ 		get_value(repo, &value);
+-		printf("%s=%s\n", key, value.buf);
++		printf("%s%c%s%c", key, kv_sep, value.buf, field_sep);
+ 		last = key;
+ 		strbuf_release(&value);
+ 	}
+@@ -99,10 +119,31 @@ static int print_fields(int argc, const char **argv, struct repository *repo)
  	return 0;
  }
  
-+static int get_layout_shallow(struct repository *repo, struct strbuf *buf)
-+{
-+	strbuf_addstr(buf,
-+		      is_repository_shallow(repo) ? "true" : "false");
-+	return 0;
-+}
-+
- static int get_references_format(struct repository *repo, struct strbuf *buf)
+-static int repo_info(int argc, const char **argv, const char *prefix UNUSED,
++static int repo_info(int argc, const char **argv, const char *prefix,
+ 		     struct repository *repo)
  {
- 	strbuf_addstr(buf,
-@@ -30,6 +38,7 @@ static int get_references_format(struct repository *repo, struct strbuf *buf)
- /* repo_info_fields keys should be in lexicographical order */
- static const struct field repo_info_fields[] = {
- 	{ "layout.bare", get_layout_bare },
-+	{ "layout.shallow", get_layout_shallow },
- 	{ "references.format", get_references_format },
- };
+-	return print_fields(argc - 1, argv + 1, repo);
++	const char *format_str = "keyvalue";
++	enum output_format format;
++	const char *const repo_info_usage[] = {
++		"git repo info [<key>...]",
++		NULL
++	};
++	struct option options[] = {
++		OPT_STRING(0, "format", &format_str, N_("format"),
++			   N_("output format")),
++		OPT_END()
++	};
++
++	argc = parse_options(argc, argv, prefix, options, repo_info_usage, 0);
++
++	if (!strcmp(format_str, "keyvalue"))
++		format = FORMAT_KEYVALUE;
++	else if (!strcmp(format_str, "nul"))
++		format = FORMAT_NUL_TERMINATED;
++	else
++		die(_("invalid format '%s'"), format_str);
++
++	return print_fields(argc, argv, repo, format);
+ }
  
+ int cmd_repo(int argc, const char **argv, const char *prefix,
 diff --git a/t/t1900-repo.sh b/t/t1900-repo.sh
-index 7304629cb2..0bdbf6911e 100755
+index 0bdbf6911e..94a98c52f6 100755
 --- a/t/t1900-repo.sh
 +++ b/t/t1900-repo.sh
-@@ -42,6 +42,20 @@ test_repo_info 'bare repository = false is retrieved correctly' '
- test_repo_info 'bare repository = true is retrieved correctly' '
- 	git init --bare repo' 'layout.bare' 'true'
+@@ -20,11 +20,20 @@ test_repo_info () {
+ 	key=$3
+ 	expected_value=$4
  
-+test_repo_info 'shallow repository = false is retrieved correctly' '
-+	git init repo' 'layout.shallow' 'false'
+-	test_expect_success "$label" '
++	test_expect_success "null-terminated: $label" '
++		test_when_finished "rm -rf repo" &&
++		eval "$init_command" &&
++		echo "$expected_value" | lf_to_nul >expected &&
++		git -C repo repo info --format=nul "$key" >output &&
++		tail -n 1 output >actual &&
++		test_cmp expected actual
++	'
 +
-+test_repo_info 'shallow repository = true is retrieved correctly' '
-+	git init remote &&
-+	cd remote &&
-+	echo x >x &&
-+	git add x &&
-+	git commit -m x &&
-+	cd .. &&
-+	git clone --depth 1 "file://$PWD/remote" repo &&
-+	rm -rf remote
-+	' 'layout.shallow' 'true'
-+
- test_expect_success 'git-repo-info aborts if an invalid key is requested' '
- 	test_when_finished "rm -rf expected err" &&
- 	echo "error: key '\'foo\'' not found" >expected &&
-@@ -60,4 +74,11 @@ test_expect_success "only one value is returned if the same key is requested twi
-         test_cmp expected_value actual_value
++	test_expect_success "key-value: $label" '
+ 		test_when_finished "rm -rf repo" &&
+ 		eval "$init_command" &&
+ 		echo "$expected_value" >expected &&
+-		git -C repo repo info "$key" >output &&
++		git -C repo repo info --format=keyvalue "$key" >output &&
+ 		cut -d "=" -f 2 <output >actual &&
+ 		test_cmp expected actual
+ 	'
+@@ -81,4 +90,11 @@ test_expect_success 'output is returned correctly when two keys are requested' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'output is returned correctly when two keys are requested' '
-+	test_when_finished "rm -f expect" &&
-+	printf "layout.bare=false\nlayout.shallow=false\n" >expect &&
-+	git repo info layout.shallow layout.bare >actual &&
-+	test_cmp expect actual
++test_expect_success 'git-repo-info aborts when requesting an invalid format' '
++	test_when_finished "rm -f err expected" &&
++	echo "fatal: invalid format '\'foo\''" >expected &&
++	test_must_fail git repo info --format=foo 2>err &&
++	test_cmp expected err
 +'
 +
  test_done
