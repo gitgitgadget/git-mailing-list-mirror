@@ -1,124 +1,134 @@
-Received: from mail-ot1-f49.google.com (mail-ot1-f49.google.com [209.85.210.49])
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974CE13AF2
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 19:48:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D090218585
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 19:52:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753732121; cv=none; b=GrjGB3Q1TOJTsmeMhECGso0/n2HIHI5pVO8CGQR/ncRtuHBcVgRI6aUTF+y7LABH5NUoeFepsQMHekvSsWnavEz5mwAhanjfugt96fhsXIsPm3/+/5/S93g96el/Q4fevl1oPD3Stag6vntG2d2rtP2iVK3lQIveRvpsPaQrHc4=
+	t=1753732374; cv=none; b=BOCrwchAbUjT4tg/t2vRYvgQdo1eV6/X1NxdNFteVNp7q3D2XQ00zNAuhRt1emqHbiDQuIo2B4K3o+5vJI3yuvga5h0WooR4RE5xhcRGd8zRh9JFV0Zg8CsYiZwhX0I6v4AxBgoFkgQbuSPMbO2+oeKw+huy0FwpUzyAiR+MXxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753732121; c=relaxed/simple;
-	bh=rsqra6uAPLcXvkquxlVwMZRicVNeJ5lrlrLZVGXYbXw=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+ENdlenQB6KqxUKqX5q1ZhN5WV/nXx8NRCwCxAReUxB3brYajNdgUgJqi3q5GSCnolrS1hxixoFi03Jbf3+OJV9zDmD3fGM4X2diJ82aA0wWy30pckU78+5Q7VyCkDXJsJ7dZDaJcHUDvCYx81ZAHStOkZadq/Be/POZjhwq6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=icTbGuiP; arc=none smtp.client-ip=209.85.210.49
+	s=arc-20240116; t=1753732374; c=relaxed/simple;
+	bh=PN9Ho6ek/vCm7W2cNjFvTuyt6jiXAEe3I/P4+BgocTc=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=TOZIBiny3G7d1SvOFN6AR9qG9SO81ssY6A0StLxeKXUHuDRY3q/dyep83dsYUbdgdHiKqAYGBBIyziNBT3dL96hWnR6w8GlCWYIFZIMpnBxMUrtnhmsAY67YYK5VFGtPkD8kd8mr2PxrnZ+2ri6KbcYGOPuYa9o6hDO8wBYVx/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kNx82293; arc=none smtp.client-ip=209.85.221.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="icTbGuiP"
-Received: by mail-ot1-f49.google.com with SMTP id 46e09a7af769-73e5e3c6a37so2910413a34.0
-        for <git@vger.kernel.org>; Mon, 28 Jul 2025 12:48:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kNx82293"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3b78127c5d1so1421537f8f.3
+        for <git@vger.kernel.org>; Mon, 28 Jul 2025 12:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1753732117; x=1754336917; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XG8rW9skXn6larGMzAXjDFJCyIZyRbga7hNjIaD2/NM=;
-        b=icTbGuiPsIr8K+1ZiggA+Ewb2/sxwfR2Q/AG1sPzT7/8dF6yrUhoje3mCpW1o3sqM8
-         qtyMPWeegZSlYqUToRBwohi+W8z+DwEBV3jgESpzT49cWWi2WPMg/seM4uxbKCimBfn8
-         nPO6dAOFKvusaKYo6SeSE3ihFZszz58Sa2EUvkZoBgJZCheKnRTGJlyyXtmuHQLl+S/Q
-         6MrV+SSnXSp+cUOuqsTWa+D8NAQNciBxosVTO1x6FHSJ0qQqxiVa4jBbkQcFUksBTdNL
-         +e9vyRqX/4wBSYohxGOSjogHPPyY9aFTzgty/XNPllO7ZkmeX7tMKSo0WdNVkpxMrI9e
-         7W+w==
+        d=gmail.com; s=20230601; t=1753732371; x=1754337171; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=jsnanya5fYN2lRnRtihLPbt4asQUYHm/WKnwnE+JRpM=;
+        b=kNx822933n+C5VBsYDY6IXs3t3LNcAhH5pfbs/2DCCsEqKdh7NpCIOwhzgc66DVJqd
+         EdvwDO3I/MsPz9MtJMW7LDeMrlhYg5yo2eN6RxJDNGfOWrlf5Iy+dYZINAcx1ywpTrB8
+         Lp40eGC/ykZKJHDNy8ozrvDlyOXUbi9pcxV4syiEgycdBvsFFwTykgrV2GmmSyh52TcF
+         a8/xu6wI+VY70xkQL7uRCTeksufMEQONDh1k7INm1r5wBzdwQw4ZeGyNZy1U38j2zdbm
+         xBo6I3SHNtBpSbW4uHVkO+0FBYPQ7hWpRBYPzSJqK7kZzqg82fqJp7x6ACMY7Ea8o1dB
+         KqaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753732117; x=1754336917;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XG8rW9skXn6larGMzAXjDFJCyIZyRbga7hNjIaD2/NM=;
-        b=kQ3sDgKjVTP7Aq9tVjKjDCIk2S4WlM2FG8UZ6J3wfxlwam9Q+H11oaM5IdjJM+ndyl
-         ySvxUIGpLhxUCK+erJSlCH3rk52EqlReqJWpA3GhedDVuYgjFJPfAOcxuvjF895qGZmS
-         QhnrhTVNnwygOGJToUS6arGL3plaONpS/SxKyqTkz8LBeY68PXJeKKCHTKoRbfSqCV2b
-         9xp92tuB5VyMWBtG9XwNb86TmsT8r6U7cmEH+YZz8OYKULWRX7wgGh36S8QFctAHy0ms
-         jlqSZ9ifqJw6wqOpi8YZHnPnxeIlNeEeEoKCDfr4lHjLngPVvTWohffvbm9rDursf3y+
-         POrw==
-X-Gm-Message-State: AOJu0YxRnA4dLQX/hb8Ri+kT578Xgd7NJED9vqB9mVYHIaE2J3Uk7TMc
-	XsqLkZ2W0oraudyUn9nrkXotFHg/uylz+xXgGaZVSPJRYeamCABksRpw69kZVg==
-X-Gm-Gg: ASbGncudQaoYPnLQslj1LPDk9QwKFOKEoPSHzqrIMcsKsPPId/0SupKgUsKONU454Mj
-	Vg8R5n8dzgXqm4Hi7WAn1AYuzLPHkjoPQF/+Wf1tvo2zKS4ENzdx2JmWWPhNKtyBJHPBHi9GYrQ
-	uYzLvixe6b8I8N780W8lJe6TDQYVSQGlzvP5mTYv3IiqxhI3zYFH2eYJ/P4ryWVCzRdpMTH4FeJ
-	PCX92D2ns4QdtNiAp+D/TGwUrLK0ZtL8L5PtQJHpqO+wpIi4662NSHiZO5g+gi2Hwen0ZFRM8ff
-	qdGvxZXhgT5dStzVRQS9N/D+vTLxQKAUK9RIL2rE/e2U7QZDrtBIwphvMtWLpAZlRlXjfWyGfQf
-	4obJrf1Wzbjd1XCnOmUxolm8cekAw2QnDGew8Cj3L
-X-Google-Smtp-Source: AGHT+IF14w3BOBYJzQ6MSrjfqFy5OR87dr8O/QzNB0B/QHcN3fn7XK9ndurM4fcBBJfC1kjHzkUy4Q==
-X-Received: by 2002:a05:6830:25c1:b0:73b:1efa:5f6b with SMTP id 46e09a7af769-7413de94ab9mr8455273a34.14.1753732117124;
-        Mon, 28 Jul 2025 12:48:37 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-74147f4c6c8sm1198119a34.4.2025.07.28.12.48.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Jul 2025 12:48:36 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	gitster@pobox.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH] builtin: unmark git-switch and git-restore as experimental
-Date: Mon, 28 Jul 2025 14:42:18 -0500
-Message-ID: <20250728194218.2379432-1-jltobler@gmail.com>
-X-Mailer: git-send-email 2.50.1.214.ga30f80fde9
-In-Reply-To: <20250722180818.1043014-1-jltobler@gmail.com>
-References: <20250722180818.1043014-1-jltobler@gmail.com>
+        d=1e100.net; s=20230601; t=1753732371; x=1754337171;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=jsnanya5fYN2lRnRtihLPbt4asQUYHm/WKnwnE+JRpM=;
+        b=gNf7gL7KsH0y8oKbaWH5GrkVd9Vn+beRAhVJ7LZyeI1XyPTojKMxhpiJK9XU9oc7DK
+         hEHGnoEz7JavJwqfo8WABCw1vAFywKqtCqLD5QHv8IfdwLKu/Kk/ya1pji4KyxA39Pjm
+         +7+BvAYiwljK7WUNfvwjp3Vc3vWsCcZoK6Tm3FmLwIGCjAmAviz0swHdKV9WrfbwPTcS
+         oskq9fvdRNjCViIx4jbGVZv7HGTPUJCUWn0fBj3VlFDWYuxtR8cFzotyTRI3yBA1wHE/
+         yGse6Xu7m+CSu9YrSKlXbMOgZUg9oxuts1KCakk2HfBS3XoZnBvmlz/EXPfxovRl/gh4
+         M2aw==
+X-Forwarded-Encrypted: i=1; AJvYcCX0bRyrY74LHaSXUQZc+e9dx1Rbeq4odOkCNPQodE9sGlSdSMydTAu+ygWV5ReHKFhKaVY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy0+85EYmVJdcVyXi/Xa+gnf8p782oKbPRTVQRArUsN045XSzIA
+	hOTvolwaRsUahKfRcp6IYfnjrhJQ8KN4cRktcEYxHGz7XN5E0Fivn5Fa
+X-Gm-Gg: ASbGnctj8AOLcMZ0qJDva+T7db4PJc18nlyxhtF6zcXpT/JR88gccJBuNU1lEQ1k1X5
+	mUNJeZTgt1RLKte8Od7GaO9J5ZRtNXna1k40ewVN3S3661FfSLcqItTWjhnIJA7GcrzGMLJieMn
+	ekq3weYTEUgclDEMFUASu9FSF6N4W2GgU2cTSgEXTdCpWRP2cVhJxWMRlfYrJZyKSOHLpdKIKNw
+	BwcaLwKlOtKhvDBPqmRt88DuiKX0CTCeu5cgBaDqpRNqo/JnJFnULbGgtgaaEWeJPnhOtSAi7JH
+	OZCTRWWkGgD1p3LjvmiCZ0zRnEY4cR0MLRE7iJO3MEEYnBoSIKmG4XaBxbHN2X0xxHXOj+YFb+y
+	29Xdg4n1TwEWUCkqg4OHxo8oua1hHJdft3lH1PnV2qITc1lGztZ8WTM80+4ssxZ85QTxD1FEnDa
+	2E
+X-Google-Smtp-Source: AGHT+IH3AcFyYHkM7Pw6QlvUDK8RrSzSyScUwqVPQk8DndKbJVB6S/zc0+ND+AmEooh4SSqB0G4xeQ==
+X-Received: by 2002:a05:6000:2585:b0:3b6:1a5a:a64f with SMTP id ffacd0b85a97d-3b7765ede34mr10420083f8f.17.1753732371335;
+        Mon, 28 Jul 2025 12:52:51 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c? ([2a0a:ef40:7a5:4701:8cee:45ed:2bd5:e17c])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3b78cf1f571sm1278687f8f.22.2025.07.28.12.52.50
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Jul 2025 12:52:50 -0700 (PDT)
+Message-ID: <a765cde9-0fad-414a-996f-2ec162d1e4f3@gmail.com>
+Date: Mon, 28 Jul 2025 20:52:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 4/7] xdiff: make fields of xrecord_t Rust friendly
+To: Ezekiel Newren <ezekielnewren@gmail.com>
+Cc: Ezekiel Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+ "brian m. carlson" <sandals@crustytoothpaste.net>,
+ Taylor Blau <me@ttaylorr.com>
+References: <pull.1980.git.git.1752784344.gitgitgadget@gmail.com>
+ <6df9f50a8f4ca29b2c3ba1e39982b6d516146bb3.1752784344.git.gitgitgadget@gmail.com>
+ <91f6352f-abc4-4e99-938b-6a56aba2faed@gmail.com>
+ <CAH=ZcbCnEpBokM9rxmmkeM9GT948n7+RipXODHLfPssuwJuVCw@mail.gmail.com>
+Content-Language: en-US
+In-Reply-To: <CAH=ZcbCnEpBokM9rxmmkeM9GT948n7+RipXODHLfPssuwJuVCw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-In 4e43b7ff (Declare both git-switch and git-restore experimental,
-2019-04-25), the newly introduced git-switch(1) and git-restore(1)
-commands were marked as experimental. This was done to provide time to
-make breaking changes to the interface. It has now been over six years
-since these commands were implemented and there hasn't been much change.
-Consequently, users have grown to rely on how these commands work and it
-is no longer feasible to make any breaking changes.
+On 28/07/2025 20:34, Ezekiel Newren wrote:
+> On Fri, Jul 18, 2025 at 7:35 AM Phillip Wood <phillip.wood123@gmail.com> wrote:
+>> On 17/07/2025 21:32, Ezekiel Newren via GitGitGadget wrote:
+>>> From: Ezekiel Newren <ezekielnewren@gmail.com>
+>>>
+>>> A few commits ago, we added definitions for Rust primitive types,
+>>> to facilitate interoperability between C and Rust. Switch a
+>>> few variables to use these types. Which, for now, will
+>>> require adding some casts.
+>>
+>> How necessary is it to change char' to 'u8' so long as the rust and C
+>> sides both use a type that is the same size? Also what's the advantage
+>> of using these typedefs rather than the normal C types like unit8_t ?
+> 
+> Rust defines char as 32 bits. C treats char as signed 8 bits. What git
+> really means by char* is treat everything like a byte string, and u8
+> is how raw bytes are handled in Rust.
 
-Let's remove the experimental label for git-switch(1) and
-git-restore(1).
+Right - we need to use u8 on the rust side but I'm trying to understand 
+why we need to change the type on the C side and why do we need typedefs 
+like usize and u32 on the C side when we already have size_t and uint32_t?
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-restore.adoc | 2 --
- Documentation/git-switch.adoc  | 2 --
- 2 files changed, 4 deletions(-)
+Thanks
 
-diff --git a/Documentation/git-restore.adoc b/Documentation/git-restore.adoc
-index 877b7772e66..3763a7f4f43 100644
---- a/Documentation/git-restore.adoc
-+++ b/Documentation/git-restore.adoc
-@@ -28,8 +28,6 @@ otherwise from the index. Use `--source` to restore from a different commit.
- See "Reset, restore and revert" in linkgit:git[1] for the differences
- between the three commands.
- 
--THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
--
- OPTIONS
- -------
- `-s <tree>`::
-diff --git a/Documentation/git-switch.adoc b/Documentation/git-switch.adoc
-index 9f62abf9e2b..87707e92652 100644
---- a/Documentation/git-switch.adoc
-+++ b/Documentation/git-switch.adoc
-@@ -29,8 +29,6 @@ Switching branches does not require a clean index and working tree
- however if the operation leads to loss of local changes, unless told
- otherwise with `--discard-changes` or `--merge`.
- 
--THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
--
- OPTIONS
- -------
- _<branch>_::
--- 
-2.50.1.214.ga30f80fde9
+Phillip
+
+>>> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+>>> index 5a96e36dfbea..3b364c61f671 100644
+>>> --- a/xdiff/xdiffi.c
+>>> +++ b/xdiff/xdiffi.c
+>>> @@ -418,7 +418,7 @@ static int get_indent(xrecord_t *rec)
+>>>        long i;
+>>>        int ret = 0;
+>>>
+>>> -     for (i = 0; i < rec->size; i++) {
+>>> +     for (i = 0; i < (long) rec->size; i++) {
+>>
+>> i is a loop counter and array index so we can lose this cast by
+>> changeing i to size_t
+> 
+> Ok, but I'm going to change the type of i to usize and stuff it inside
+> the loop i.e. for (usize i = 0; ...
+> 
+>> Thanks
+>>
+>> Phillip
 
