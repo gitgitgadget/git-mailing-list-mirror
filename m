@@ -1,69 +1,69 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBD11E492
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 03:25:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24C21EA7C4
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 03:55:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753673125; cv=none; b=Ffp14+4Asb6khc91HKI7rb/Xo2y2rGNm8IHslXHhLV4oCmTQlR+GCQs9rmWZA/XuYOCTSnibLm3qb2bMkVLq7edbQW+Ubx71jjB2kPrywkn0pwiu8XMdelYKhHucVN3aUhttxev8YswGa767IFWD5jnl/UfZQy+r3gONgEnAa1o=
+	t=1753674958; cv=none; b=EkEBcXOk+9SuSMebWvZ9Ngordl3jxEGdNIXdMJnWBJmQrGpXfqMNJ1mKPyj3LVj0NpeeiITx8lqyW2dxikOUokvVfvbt89SG+vs6dBgzHeo/gau3JyR0Ak/ua178frMT2wa4qLXkMKT23MjFqjt1cFJotIAsFqW4cTtUA3LO+4E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753673125; c=relaxed/simple;
-	bh=hqQDW3GVfMOH1nIoA1uK5c5cOueCuN7ox5dLtI4/MDY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=DGEso+MSjicOTsWb7fvQg1SDqpsfo+ef7OK3aoZWR5ry5vmQp9ETfKkj2IwCpGdiLc0PErXPifZRkcvq94uXA9UtZUASbxT8nQdniwUgtspw0yIp4CuuNgohPkNsvB0W4yTSrJhuiigjfkz+2oPGOQj0ndbK/dKBGzh7J3KCVVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=IA9P3gs3; arc=none smtp.client-ip=209.85.215.181
+	s=arc-20240116; t=1753674958; c=relaxed/simple;
+	bh=CSJU5AmxadcTPinSFGkowaqUpIzec8Szicj7ItF7fqo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=UviLjl8ByXt7xKrZPm0RbYdySEKaTa5LP6Fnc5JuBTi91kgc6FMa0PSZu9L9zjNcI5ynipqvEB4yM2orziARkQdbcT4OvXHeoKxqOZt7vq201io+3ehuAynylewxKAOnREh6/Rc/s5W3ONSp/ZnsUxpWdeXvUjGj1zeuC3RTZ6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=eUsRid5W; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="IA9P3gs3"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-b271f3ae786so3150999a12.3
-        for <git@vger.kernel.org>; Sun, 27 Jul 2025 20:25:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="eUsRid5W"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-74af4af04fdso3600875b3a.1
+        for <git@vger.kernel.org>; Sun, 27 Jul 2025 20:55:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1753673123; x=1754277923; darn=vger.kernel.org;
+        d=bytedance.com; s=google; t=1753674955; x=1754279755; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=qO4znpJvCKOD4H2CWtHJqDCWdJDYG+elyi2/gIQGzuM=;
-        b=IA9P3gs38w8IT9roNHsZrQhibFbl3st6BK+yE68m5xE8BO5gU6CFfJHID0eE6jRXCl
-         7+t7zsjhXxr+Bpx4uZa16Pgrr0JSNC7k/DtnEbI6JegybzeAgH3emBht0aki5DkKMBDG
-         0DQt7umdqUcaLES0pHp1kPFYe+Cs20qdWD6gGQpqEpLsIBKyo3kWcES47RBx85tyusZ/
-         jenXekk91nix9zVtV6a5Nt6yD89itIac8MQtoSmvO9In19FDRNdtN5vraewHUAqEJ7xb
-         e47FVqiVjrN1L546THxTESdLf0ROuEXhfBTQr3SmRJhXv6HbwnbMtOgoGoW2pMcNowmc
-         vfaQ==
+        bh=vtoerjetN+E9agNOBbuM2wVnLsERSyf0trXfAn29kbM=;
+        b=eUsRid5WXFozOcDIW+zI/xHCrcMxG8jwCyg/kqcslIPvnMGkGH5ktBSN29J8mzGXsQ
+         YxNqJq7nfG8GLvHIeYrCcRiW/XVHa9VHIJTyJGlYoIgaV+Iv5zEAdIXNceW7j8hZP2eg
+         qFbwlUZbhzqaB3hsY1f5D+7b65SK6iiYcq/tVsX5OUEUX5Nd8q8//7UEvEc+rEMC6+kY
+         xqSPRCQ9HTMn6ycxYIRiFxfpGJk7dLHZxzNkD/OlFn8pB2zHCVz9Bw4wK+N1oRRAYxAj
+         o2bPmz6PlENSdUnNAm1mMUWccbfmHnRuPGL6QLTNIq0BKKDTWwezYBa01SP/ul99Oknz
+         yOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1753673123; x=1754277923;
+        d=1e100.net; s=20230601; t=1753674955; x=1754279755;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qO4znpJvCKOD4H2CWtHJqDCWdJDYG+elyi2/gIQGzuM=;
-        b=TJnJ42So4cMVTkCqrhzDbwWKCh1H+K3Dt+DDZZ6ogiJ8KB+8EYNOf1MgPHCEd3Exmy
-         y9ug/wTs1T+qcyyVyUYli+MZujDYwWaorzrk0f0OdPQBUU467PIg9sORqJtAgcu2CgOZ
-         QLILRN9PLtyq0cpEV36JyRYUjWT1QsBUgikS41aOffy5AsJJOUqgpHE+1G33k5a0X1YB
-         EHP8H/EADOQ90DCnnUkabeGDO8pmfne5v3/RovpT2UMdZiUwcnDkkffjYeKEmxmaG15D
-         TVEq0XT+L45vsiqF/OCMcQZ9l7LcpORWEp+tNqhOOpIBVM2fg2i0fLYnsyz61sMSXXqN
-         uarw==
-X-Gm-Message-State: AOJu0YzILds/h0K4BoW3LOJfGw/66ZHeWL8ilQvsHmZhbvIK6ZG/fAhn
-	4dxsLsxf+AlKBkYzoXdAKChz1h4VA4FJV7aJN6XTiVLwFrpna6QuLLJk6lyGcWw3xLEBzLXkx0c
-	Q07+F
-X-Gm-Gg: ASbGncv6dsMfi3B0mqojMZR1HqqESd7gZePObftUB8JV2AOTwVjCm40IrFfYfI2C+gM
-	xWQjPzB4leOD7WQbloC9sVS3Y2ziw71gvkMr757UD2Q27uTfBu0xQllzZ1qK3nQSwhHcq8iztPX
-	E8awflCKgb8ObKwCaxsHznF0zuKON5mj+Ufq4nL0A4nXlKeI/p+SxN3bFnFHEp4JTdHMIVuQjku
-	nRg0uNStT8aDtXXEzLuJ3tj91q7pGxsyx8FW9J0jFnAxPPFwCbARfuweNcu494/cwL8Tir2P2ok
-	O1rIyBTJMwc9OkzwToI5nWUjQrT91z7z+C4A4naSMzZwfN0tdWK4z4NbBmT4ONegKN8gaMTIclv
-	HtHsL8i2p00i6IYFALH3dA1d6vIIPMckyAU5A4gh9jhfsAgS419z3ZWnMU8hG
-X-Google-Smtp-Source: AGHT+IHjFaoJnI8VGwUx0hIcpgJRko+5YMEjcOOsaHKRNKtqgaqGtvmJ5bzZ9us3ZjOZNYoMO+SnUg==
-X-Received: by 2002:a05:6a20:1590:b0:233:d31d:25d9 with SMTP id adf61e73a8af0-23d7017bf64mr16597263637.21.1753673122645;
-        Sun, 27 Jul 2025 20:25:22 -0700 (PDT)
-Received: from LTY2K703JV.bytedance.net ([203.208.167.150])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7640b2dccc8sm4307399b3a.101.2025.07.27.20.25.20
+        bh=vtoerjetN+E9agNOBbuM2wVnLsERSyf0trXfAn29kbM=;
+        b=F0PWsCLGCovodJRbyh5gNHeoowfrnhnxjw8+AOVp8wGcQPZNCyenr5y5BVPXnwSPfl
+         aRaXnMvvvzSEVZJxciVHYfBiCSl09H961g24VdHkAtlwbUNkmiG/g7hyGuh1nVyaq37c
+         BueWN2cKzQLgwQ0E3/eQokbMAVP5NWiMbcnZBNIxkwtPL+evPAn+ydB27GwAHOt+9TmC
+         +MjDA9Nx1+c1Agtg+Dg6AO6VCTOJyqAcGF0cHquA7c0/mBRFXKWmzccfLKeg7uLrHho7
+         jshxOknvFC/E1tNrjBata9HYO6vT8e4dM0iCwTDKGfiDcUo1L42FHqcGyoBHUgqh2l1j
+         lGUg==
+X-Gm-Message-State: AOJu0YxrhOnS8tahhdGgl6ZlCGneP/1NMrcmiZAR97doaaJnvD4Nhkb+
+	PCbBONbrV30/NXJOkOV7PZsBr7EjEkaPZ/3J1pdIfALW2af0uUCrQEQJTQJl1waA30DdOPGTR4R
+	AJxvR
+X-Gm-Gg: ASbGnctV/sCD88cLAk9k9PUooMg2vZQakRoVzpXrK0rQG0rmEjlpuHm0mHXY7Sf4pkM
+	3qX+gpx+rcqkMYWxIpCRIvwwOUJZ6h+TtTPKZ2xUUzQRGQ6AszNCehno/efHv7SiHm7NHeF1p/H
+	10U58wFeDBaN55seJhZRzyRt4z7aWGdZCRn7qeDIR0YXPUxnggHtFyAM/Yrw5EjtKyGUwkEXEl/
+	mN9XBx2yN5eHKN0tyk98aeFjW3dFrsj+Ayl984ymf0pA38JOUzhUkZP6gNQSJAWTNz+euqxdWea
+	A6HiJWC2LCkcV/V3186d2fQAq5IaOQNPf3k8ht1VcxLe4gpiq47RTkB/AingzG//rF48SOw2m1y
+	2XF8sTd/9lDWQgBT2behb//7oHqxpu5EycP++/NxAHtTtJTTCFZciBgnalXXo
+X-Google-Smtp-Source: AGHT+IGceku70iVsqcBMzz9LUPDKvMnLNKqZGe0eZk5NDfD0i21cBJ0TaojDGZlarXLCZvwMVO5f5A==
+X-Received: by 2002:a05:6a20:7d9f:b0:238:abe:6363 with SMTP id adf61e73a8af0-23d5b705b80mr25812996637.14.1753674955479;
+        Sun, 27 Jul 2025 20:55:55 -0700 (PDT)
+Received: from LTY2K703JV.bytedance.net ([203.208.167.149])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b3f7f6af84fsm3792195a12.50.2025.07.27.20.55.53
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 27 Jul 2025 20:25:21 -0700 (PDT)
+        Sun, 27 Jul 2025 20:55:54 -0700 (PDT)
 From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	ps@pks.im,
 	Han Young <hanyang.tony@bytedance.com>
 Subject: [PATCH] blame: remove parameter detailed in get_commit_info()
-Date: Mon, 28 Jul 2025 11:25:15 +0800
-Message-ID: <20250728032515.74742-1-hanyang.tony@bytedance.com>
+Date: Mon, 28 Jul 2025 11:55:48 +0800
+Message-ID: <20250728035548.94277-1-hanyang.tony@bytedance.com>
 X-Mailer: git-send-email 2.50.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -72,6 +72,11 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+
+The get_commit_info() function accepts a parameter that can be used to
+stop the commit parsing early.
+However, none of the callers use this feature, and testing proved that
+the performance gain of stopping parsing early is negligible.
 
 Signed-off-by: Han Young <hanyang.tony@bytedance.com>
 ---
