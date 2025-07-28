@@ -1,88 +1,89 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B869E275B18
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 15:26:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61BC98F6E
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 15:33:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753716400; cv=none; b=SrVRWT2gFnPKiAgHP4ZxjSXHgMZzxScx81LC9FUKW4KaP31KVtfmOq4Ixr85B88ioD5s8z+nsWy2NKZF1poDTzFxFNJm8drbUj6bSmpM4AA9twnaq9jdZy8jucIFSQcAdX+dylmTpxOf2m9V0R1JiS4E+w/RMU+oNgZqCL+TpiM=
+	t=1753716840; cv=none; b=mg+f7PUdHBAeXV9xGgWS4z8L49mojvwojt6u8tkonU86s3O3qhRUgXU6OohR0wAMMeHLCmmikMSe6UJOKKk5wRWjP7UoxT/XKkKUDuB2qrq9NIf/MC/O5RI664uX++NkBWOgrlytxi4d3FSbkvjIyHHlwaY2pp8DEUQmDFeC00k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753716400; c=relaxed/simple;
-	bh=owea9jCcF15gjt0GIPV1dUepYHX4lvXLK0UvwzaqtF8=;
+	s=arc-20240116; t=1753716840; c=relaxed/simple;
+	bh=uKc8NUCJGaaDzfKVGd84zBV+a/ytfiU0gDiC17NE4SA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=p935WM+wLYh5aT+m8yhUfEH0IsHaqtkxuHxmqtm+tDC2b5jazRzB9Pg7o97Tq7BWz0r9dXEQ8z1GEEfvATG5EmJDjbdhUVhSVgKQH4buMTNGYWFtpltdG9LRvouJyvkh7BPtIBrpN4aghyYpc1ZBUHKQyBqybZRyGbChXSECgdw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C/eyfaLH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XMwYT9c3; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=Y++64GDVqL9KCmE4sb/qU30TerRFGFzLqPDhOiASutbiyG6C3/QMXeAwIdS1DWVPEuveyEZOqKJ1YepbMKPYzWNmauYluYgNwIgahb1QkYseQg6LhUXAkoJKnlD0TLAA54HpgbRyLaFu+kj4HmjnBjXbdkCAY9m0vhoahQRcxIU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BL9iET84; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=esLpsh4j; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C/eyfaLH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XMwYT9c3"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id DA5D2140022A;
-	Mon, 28 Jul 2025 11:26:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Jul 2025 11:26:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BL9iET84";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="esLpsh4j"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7DA18EC11A0;
+	Mon, 28 Jul 2025 11:33:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-12.internal (MEProxy); Mon, 28 Jul 2025 11:33:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1753716397; x=1753802797; bh=bFRl8P5At6
-	0PzP3nQfZLDDYcvzEm7qIVjsEy0uFLTgI=; b=C/eyfaLH6wPHd0bt0gStyon4Sl
-	VkBomnInq23cRn+reaqj2FMyXN/qVijaShkdcfoeO7qeamKV3s8nnFFGJ92SoZCA
-	siHL1R+UFwskO1PKf8MrvSRe9otGRqCm2xgbWu7IEE7mre2Z2b1AHyXu881bZEES
-	9PV5CNwlvUAi4r6D3ZJ6KPlXfZGLpe/TRBYLB+JC/nMU/K7nYZQPw66AOOuORggU
-	/y9W5flwDHlHD2OqPtwRa+Q7SNew3rQjIi1FwFkWWKtv6oyuS1Cd4yhoEpy4HVnH
-	xLbTlMU+yHmkGy8VvlOHgBTmnNsOwRPj6tZAQKpcM8+frIjl1ykoeYUevHpQ==
+	:subject:to:to; s=fm2; t=1753716837; x=1753803237; bh=MojqmXwRYg
+	YZfIVYnOzmasQRYZvZiEmaM+kzTD0Os2k=; b=BL9iET848fwzzTKncvvVFAev3Y
+	uowH7UQOdDoWGKWcRU+OrMr7HuPDGF7xVVbWXB00kxy/7pfXWVpguG/0eYdXo50Z
+	p6dw/0CV1N66qWMMa2GpyRdYtnpsw8RRpPGFBQRbtDeIvpXDH+wD/EjhdigSDzoV
+	/ZWam8veQAoL/K036SewUr1D2goo74dYVuiGIxkg9zFTVkG3OYs1TttgsyCPiErL
+	U0Z5YL64X+xjHKTZrfP85zYSVbofw/kl3/RmsZHZwhJCxPjxT0NqcSpubEylpsHs
+	a/aQOPkvrG4i1hD9NNd2s3BKLOiS4jqCSRJXKhasQPsG0okOQMjBuxUDXrYw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1753716397; x=1753802797; bh=bFRl8P5At60PzP3nQfZLDDYcvzEm7qIVjsE
-	y0uFLTgI=; b=XMwYT9c3zeu4U8gMnedmxZIBjSFjxoSjWM7hYPDdLU2Pze+OwEM
-	WhDZMz3DcQrSDL4U8eUxyuVoLaowpztAoUR64n1/KrfN4vaTARVDyGz5/rF1aKFu
-	4w4Td8athfRO9aLGd7Qfjh1DtxjrVo9WUFW7eprtH7Hcu6ftYTM/hLcFMPKmyQx+
-	ZHqQXw0UfW5fCvITzOnCQzjXRmMtseViG+D4Z/eJfWVdR+vhDZEcbRPbqqPF5R2Q
-	/r6RmUkDk0o1t6YXSofvG4m5IXXhH3pO0p7Ql5zeOSciK52TdbZfh9Q2FWm+QG+c
-	gP9SisrG68nIaO1Bx4u5R9k4M/cff6cN8SA==
-X-ME-Sender: <xms:rZaHaItVFKSnnlSydEep95AIn-rRRNNWqGA5LWFtjTWAjM06h288zw>
-    <xme:rZaHaN6oatCMV4oduq8YZ6k1opIol_JUddYQzPraHTStYawg-2WrVz5M-aXprLFLB
-    QQSA85VwBsJOlPJXw>
-X-ME-Received: <xmr:rZaHaEPKtqWx76som0j_0XOfNQj9XRBEgUkGnbbSe4gSxW0a1gk3AzQeRNd8Ha7e6xXBuki_-0HxqM3vTp_t75PscI6d6r1EOS3LIGM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdehfecutefuodetggdotefrod
+	1753716837; x=1753803237; bh=MojqmXwRYgYZfIVYnOzmasQRYZvZiEmaM+k
+	zTD0Os2k=; b=esLpsh4juuSgDJbyF8d3nHfbS7sRQgpwcgvvPn2zFiaVRADMuf9
+	w7kz0OMu9RaNAXHRpaRT+Khscxwkqoo3jdsLXQBc/rbx5mnlAjy1gQV0UjGGFj0n
+	6K9PiMsBgqWSebSH2GjPDfuzMCfuUGmztx4EI5cP7ZkUEdYHKI3Nvtsf6K7RvYpm
+	ZXQxuk/i2lYCOuB4pRJbdm++/UplZlauKK3Oglx6uJwR5c7mNMSphImYtDO7AdkO
+	9Hc8BDAMnUZx9BK9WzGb+0ftvNvT/H5LS945z1QwT9zaRG554gWRhrxXiS+b/HcT
+	0Z/7pEJO6GlBHm4EMF51oG0iFAmcOmawTOw==
+X-ME-Sender: <xms:ZZiHaKJLadi7HF69ODVS7HE_AZBysrkHKGwafpIS7F6d8nf0o_mRUQ>
+    <xme:ZZiHaPF9rYcDXooVTNImp4AjYfTvosP7Dc6tyUKqyx1bH_7y5bGURir9HJA4WCH_4
+    LO4tY7OtBND3LFZAQ>
+X-ME-Received: <xmr:ZZiHaGVDGjH6N0vZPb2wfRsaiBM8hLlwKg0dJv2oqqm58JyrCBo0L0Q1z32p5t0RLiSr3MgLW_sAadANI9DuTwncWAgx9fqfBvfaP_M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdehgecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
     ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
     hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
     ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
     gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
     ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
-    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhm
     thhpohhuthdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrih
     hlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
-    phhtthhopehlrdhsrdhrseifvggsrdguvgdprhgtphhtthhopegrjhhrhhhunhhtsehgoh
-    hoghhlvgdrtghomhdprhgtphhtthhopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rZaHaLsfxr4yFZPr3u-Dm2h71sBY1PCYqG5Gace_57MwfqHI29A0wg>
-    <xmx:rZaHaHajcTQosAtDYEoXDC5M6LVRiWXBnTMB0Q6G6skfYEFUkEbvXQ>
-    <xmx:rZaHaNwTD4BDWChPiVNoXGhSCkni-2jF2aMnakUXIM-9ZzfWahsqfA>
-    <xmx:rZaHaPgg4ScWXGZ1IrBEGSW5fYgR2COOsFWOZ0Puc4XRPkJzlt_xpA>
-    <xmx:rZaHaNJf1XuPwqyTP_kPMTWCwPLg9qtwu6fP8RAF-HcYC2XAYlh0AH-Z>
+    phhtthhopehlvghsshhlvgihuggvnhhnihhnghhtohhnsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopegrhihurdgthhgrnhgu
+    vghkrghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepuhhsmhgrnhgrkhhinhihvghmihdvtddvsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ZZiHaHz-FWCbjdMqzpPGC1vnj44GAvpgafv0uHIshQUiYNCD3OkKHg>
+    <xmx:ZZiHaLTACK-6lsSNI5l-VyyfJKOlIcer9caTlmwryVoILbfdxW1DWA>
+    <xmx:ZZiHaDgVj6Sgecmk_S4LrWnLqXN9GsU-g3BDHi0QyV5QtU35cazLzw>
+    <xmx:ZZiHaCk5UPBf-ulkixFOYkDye1kpZyCmmiWs1Eq5NmbLC7-_Q5eteA>
+    <xmx:ZZiHaKe1oijDeLpquz_M26DdW6BqSFdeYmQm5ke2yIJl9aYBYswqP__T>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jul 2025 11:26:37 -0400 (EDT)
+ 28 Jul 2025 11:33:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
-  Andrzej Hunt
- <ajrhunt@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH 2/4] parse-options: name flags passed to
- usage_with_options_internal
-In-Reply-To: <20250726165320.4039-3-ben.knoble+github@gmail.com> (D. Ben
-	Knoble's message of "Sat, 26 Jul 2025 12:53:12 -0400")
+Cc: git@vger.kernel.org,  Lessley Dennington <lessleydennington@gmail.com>,
+  Jeff King <peff@peff.net>,  Ayush Chandekar <ayu.chandekar@gmail.com>,
+  Elijah Newren <newren@gmail.com>,  Usman Akinyemi
+ <usmanakinyemi202@gmail.com>
+Subject: Re: [PATCH 3/4] builtin: also setup gently for --help-all
+In-Reply-To: <20250726165320.4039-4-ben.knoble+github@gmail.com> (D. Ben
+	Knoble's message of "Sat, 26 Jul 2025 12:53:13 -0400")
 References: <20250726165320.4039-1-ben.knoble+github@gmail.com>
-	<20250726165320.4039-3-ben.knoble+github@gmail.com>
-Date: Mon, 28 Jul 2025 08:26:36 -0700
-Message-ID: <xmqqjz3sxro3.fsf@gitster.g>
+	<20250726165320.4039-4-ben.knoble+github@gmail.com>
+Date: Mon, 28 Jul 2025 08:33:55 -0700
+Message-ID: <xmqqcy9kxrbw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,135 +95,123 @@ Content-Type: text/plain
 
 "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-> When reading or editing calls to usage_with_options_internal, it is
-> difficult to tell what trailing "0, 0", "0, 1", "1, 0" arguments mean
-> (NB there is never a "1, 1" case).
->
-> Give the flags readable names to improve call-sites.
+>     I originally considered leaving out the changes to
+>     show_usage_with_options_if_asked and relying on the parse-options API to
+>     do the right thing. Unfortunately, most commands can't make it all the
+>     way to parse-options when setting up gently, and trying to parse options
+>     without a repo creates myriad dependency problems (like: we might read
+>     config after parsing CLI options, so we have to make sure the parsed
+>     options overrride config).
+>     
+>     Some usage.c callers, like check-ref-format, probably deserve to be
+>     ported to parse-options at this point.
 
-It is a good idea to explicitly say that this step introduces no
-change in behaviour, and only changes the way how these 0/1 are
-spelled.
+It is unclear what you mean by all of the above, but hopefully it
+would become clear as we read the code changes.
 
-> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> ---
->  parse-options.c | 32 ++++++++++++++++++++++----------
->  1 file changed, 22 insertions(+), 10 deletions(-)
->
+>     I opted not to do anything too invasive with merge-recursive (like a
+>     prepatory "migrate to newer usage APIs") since I think it's going the
+>     way of the dodo?
+
+I think this is fine.
+
+> diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
+> index 03b5100cfa..17aa4db37a 100644
+> --- a/builtin/merge-recursive.c
+> +++ b/builtin/merge-recursive.c
+> @@ -38,7 +38,8 @@ int cmd_merge_recursive(int argc,
+>  	if (argv[0] && ends_with(argv[0], "-subtree"))
+>  		o.subtree_shift = "";
+>  
+> -	if (argc == 2 && !strcmp(argv[1], "-h")) {
+> +	if (argc == 2 && (!strcmp(argv[1], "-h") ||
+> +			  !strcmp(argv[1], "--help-all"))) {
+>  		struct strbuf msg = STRBUF_INIT;
+>  		strbuf_addf(&msg, builtin_merge_recursive_usage, argv[0]);
+>  		show_usage_if_asked(argc, argv, msg.buf);
+
+;-)
+
+> diff --git a/git.c b/git.c
+> index 07a5fe39fb..40d3df1b76 100644
+> --- a/git.c
+> +++ b/git.c
+> @@ -445,7 +445,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv, struct
+>  	const char *prefix;
+>  	int run_setup = (p->option & (RUN_SETUP | RUN_SETUP_GENTLY));
+>  
+> -	help = argc == 2 && !strcmp(argv[1], "-h");
+> +	help = argc == 2 && (!strcmp(argv[1], "-h") || !strcmp(argv[1], "--help-all"));
+>  	if (help && (run_setup & RUN_SETUP))
+>  		/* demote to GENTLY to allow 'git cmd -h' outside repo */
+>  		run_setup = RUN_SETUP_GENTLY;
+
+OK.  That's obvious and straight-forward.  Behave as closely as the
+case when "-h" is given, and let the lower-layer deal with the
+differences between "-h" and "--help-all".
+
 > diff --git a/parse-options.c b/parse-options.c
-> index 5224203ffe..c3222cc9bb 100644
+> index c3222cc9bb..e3ed42f709 100644
 > --- a/parse-options.c
 > +++ b/parse-options.c
-> @@ -953,10 +953,21 @@ static void free_preprocessed_options(struct option *options)
->  	free(options);
->  }
->  
-> +enum usage_style {
-> +	style_normal = 0,
-> +	style_full = 1,
-> +};
-> +
-> +enum usage_output {
-> +	to_out = 0,
-> +	to_err = 1,
-> +};
-
-These are very much internal implementation detail, so I am not sure
-if this churn is a good thing, though.
-
-For example, it ought to be sufficient, for the purpose of improved
-readability, to instead doing this
-
->  static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t *,
->  							 const char * const *,
->  							 const struct option *,
-> -							 int, int);
-> +							 enum usage_style,
-> +							 enum usage_output);
-
-just do
-
-		int full_usage,
-		int usage_to_stderr);
-
-here.  Dropping the parameter names in the function prototype is
-allowed, and we encourage to do so in our codebase but _only_ when
-the meaning of each parameter is obvious from their type.  The first
-3 parameters we see above are of distinct types and except for the
-second one being the usage string given to the users, they should be
-obvious.  But the last two unnamed integers are not obvious and they
-should have been spelled out---otherwise a developer who is adding
-a new callsite cannot work from the prototype alone and has to go to
-the implementation to figure out what to pass.
-
-Adding two enums for this is a bit overkill, but is OK here locally.
-
-
-> @@ -1088,7 +1099,7 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
->  		}
->  
->  		if (internal_help && !strcmp(arg + 2, "help-all"))
-> -			return usage_with_options_internal(ctx, usagestr, options, 1, 0);
-> +			return usage_with_options_internal(ctx, usagestr, options, style_full, to_out);
-
-But this is not an improvement as-is.  Wrap long lines or the result
-is even harder to read.
-
-> @@ -1278,10 +1289,11 @@ static const struct option *find_option_by_long_name(const struct option *opts,
->  static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t *ctx,
->  							 const char * const *usagestr,
->  							 const struct option *opts,
-> -							 int full, int err)
-> +							 enum usage_style help_style,
-> +							 enum usage_output to_where)
+> @@ -1464,9 +1464,14 @@ void show_usage_with_options_if_asked(int ac, const char **av,
+>  				      const char * const *usagestr,
+>  				      const struct option *opts)
 >  {
->  	const struct option *all_opts = opts;
-
-> -	FILE *outfile = err ? stderr : stdout;
-> +	FILE *outfile = to_where == to_err ? stderr : stdout;
-
-This one ...
-
-
-> @@ -1327,7 +1339,7 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
-> -	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
-> +	if (to_where != to_err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
->  		fprintf(outfile, "cat <<\\EOF\n");
-
-... and this one become markedly harder to read.  I think the
-primary reason is because unlike the original, the parameter names
-are not biased.  "If we are doing full usage, do this" is far easier
-to grok than "If the "style" we are told to use is the "style_full",
-then do this", but use of "enum" inherently is about not making the
-variables and parameters of that enum type unbiased.
-
-> @@ -1373,7 +1385,7 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
->  				fprintf(outfile, "%s\n", _(opts->help));
->  			continue;
->  		}
-> -		if (!full && (opts->flags & PARSE_OPT_HIDDEN))
-> +		if (help_style != style_full && (opts->flags & PARSE_OPT_HIDDEN))
->  			continue;
-
-Ditto.
-
->  		if (need_newline) {
-> @@ -1435,7 +1447,7 @@ static enum parse_opt_result usage_with_options_internal(struct parse_opt_ctx_t
+> -	if (ac == 2 && !strcmp(av[1], "-h")) {
+> -		usage_with_options_internal(NULL, usagestr, opts, style_normal, to_out);
+> -		exit(129);
+> +	if (ac == 2) {
+> +		if (!strcmp(av[1], "-h")) {
+> +			usage_with_options_internal(NULL, usagestr, opts, style_normal, to_out);
+> +			exit(129);
+> +		} else if (!strcmp(av[1], "--help-all")) {
+> +			usage_with_options_internal(NULL, usagestr, opts, style_full, to_out);
+> +			exit(129);
+> +		}
 >  	}
->  	fputc('\n', outfile);
+>  }
+
+Again, that is obvious and straight-forward.
+
+> diff --git a/t/t1517-outside-repo.sh b/t/t1517-outside-repo.sh
+> index e235ecccde..b26a03d8a0 100755
+> --- a/t/t1517-outside-repo.sh
+> +++ b/t/t1517-outside-repo.sh
+> @@ -127,6 +127,10 @@
+>  		test_expect_code 129 nongit git $cmd -h >usage &&
+>  		test_grep "[Uu]sage: git $cmd " usage
+>  	'
+> +	test_$expect_outcome "'git $cmd --help-all' outside a repository" '
+> +		test_expect_code 129 nongit git $cmd --help-all >usage &&
+> +		test_grep "[Uu]sage: git $cmd " usage
+> +	'
+>  done
 >  
-> -	if (!err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
-> +	if (to_where != to_err && ctx && ctx->flags & PARSE_OPT_SHELL_EVAL)
->  		fputs("EOF\n", outfile);
+>  test_expect_success 'prune does not crash with -h' '
+> diff --git a/usage.c b/usage.c
+> index 81913236a4..4c245ba0cb 100644
+> --- a/usage.c
+> +++ b/usage.c
+> @@ -192,7 +192,8 @@ static void show_usage_if_asked_helper(const char *err, ...)
+>  
+>  void show_usage_if_asked(int ac, const char **av, const char *err)
+>  {
+> -	if (ac == 2 && !strcmp(av[1], "-h"))
+> +	if (ac == 2 && (!strcmp(av[1], "-h") ||
+> +			!strcmp(av[1], "--help-all")))
+>  		show_usage_if_asked_helper(err);
+>  }
 
-Ditto.
+This looks good.
 
-One way to reduce this churn is to do
+I don't understand your "I originally considered leaving out ..." at
+all.  We are special casing a lone "-h" here already because we know
+this is where we should stop without exercising unnecessary code
+because we may not even have repo!=NULL and that is the reason why
+this function exists in the first place.  It is obvious to me that
+we need the same special casing for "--help-all".
 
-	int err = (to_where == to_stderr);
-	int full = (help_style == style_full);
-
-at the very beginning of the function.  Then you do not have to
-change the body of the function harder to read at all.
+In other words, I think all the above changes are good.
 
 Thanks.
