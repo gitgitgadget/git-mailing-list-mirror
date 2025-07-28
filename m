@@ -1,215 +1,154 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ABFB266584
-	for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:09:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C634343147
+	for <git@vger.kernel.org>; Mon, 28 Jul 2025 13:43:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1753708152; cv=none; b=g+frcYwzwP8RK+jqhIytJegWVC4UV9Mcg7kt97mk8s3zMtieaLnUBsHrzm/owNmtsTr61P+zSdSqIpM9ozWo4v2sqREEIxqM6TCkHzS65yu6qtSi0R3ScrK6TnvE5se98Ka46rrP0hLsm5kD2ncjMbClkrYOh8BoZRqOX7tOVSw=
+	t=1753710202; cv=none; b=Z1ZJHFO8GPAzYjGzUciI18etHY/3J6bKtzncQMSwgpb/2FmieE9DG7XJ4w9E4EVXGIwIqKqEpIjQIWHKJoF1mxQhiAQWel/gZiLJz/xkH4YGsXAveDUNLH+2HY+3zbRW5uapS38bsEfijYq8Q+lD7dAfS1/o732FtW1BVGPiFM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1753708152; c=relaxed/simple;
-	bh=6lBDNqzU9IYHMujtkcBD1NMsjuOBX6+KeOSi6dPraYk=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=O9pJHErvClozx3r1FVs8xO0cACqOpv3kMVzItJ/RujtobLJr/g3BkQLHKmZP1yHDRFKTXHWkjJbNw0pEV3Aorw3dYbGBuGaLuFBw77VP+Ysf02FzV/kCAnvDM7l1kH7e+Uozigj2PSn3HyiTx9rM9TUtm3hTm2EYnWtfYENP0pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kCRM0u7h; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KcQHOkph; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1753710202; c=relaxed/simple;
+	bh=GDd0uzuQQbd9JHExj+TNJ+f31qXZeAGiYs5bZOidkVs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WqUa6hAj1alSDaT5P9Io28olE+trRnMo8Xzyt9mb5tTjYdcUn1g6KlxOOFOBcT1JQoEJ0f+La1SNWeDbLRnl3g3uqp88Ga1Tngms0s5fjcFCk/ZElAv9jwEfpYVU+64caMcJdmAm/ijGT6ZY86FYkJbCTjPo5ogzT5gUiEsRVd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=G7XDVhTv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W7F9sC4V; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kCRM0u7h";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KcQHOkph"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 92DDDEC0090;
-	Mon, 28 Jul 2025 09:09:09 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Jul 2025 09:09:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1753708149;
-	 x=1753794549; bh=8VQLfGxIMzTaXhCqF3ku1pixL53MAWRkxgTF4dFTY60=; b=
-	kCRM0u7h2ft5FCznQos5WftBNubvpwcpE0/KvZ/8fDdIuNlmN5QYnp67Vbl6MFIz
-	UC0CJPXFbBsHAiuE7DWPbVaC4W3lYl9l7fKCjN9nsvD/vlRzR5PJOKPL1n8yegA7
-	8jTE7MN7wfRn+5YWHPCneTmWmztQcP0YrRKWBSu11vMedvxqLVRsfoCBU33BfuOq
-	2fpoHLb+44TLlig644QbJ2IbGhKcG5qbrJzSLdcw5iF326izFuhJ3++ONzF7t0ue
-	0R89zDfrkzzTNsMlWlOyiDPQdwt/mx1atJijlhOiuUmxurnszCx/kKBloQJl1iM2
-	eiWkw8C8KQXpcy0n56XYVA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="G7XDVhTv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W7F9sC4V"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BD4A314000E7;
+	Mon, 28 Jul 2025 09:43:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Mon, 28 Jul 2025 09:43:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1753710198; x=1753796598; bh=cwqUtUeosO
+	2v+p+xD1dJBJb5chDXnJktYf+fX7OEdZY=; b=G7XDVhTvmiik32BFwrw7R8RsjD
+	zCZsv+2hHUrw6dryS6+l9vk23bAMInOUETDqlw9xqL6xrz8fOFRFb7N3YtYyZa04
+	vd+EakGJsnIZTfd/HYzjlx0e8v2eJQNYRtJmd3feLx26AqpQXloDBhhJdl1L2Ppr
+	bKZdq4cpcpfitYuRfXZZ+8TJbVWzbz+tOv/ttMQMndb4VS9GkTWNqhlVbnq1NHOQ
+	knpBP3/llhki7CrANNx2LUaN8TmqfVXCqQM1b3dyVzJB3uNBmAHSdKwSP0AgqIVU
+	D9PIy7YEBSzYtQGsbGRe3kdgcls3Qs+tyeUjzEXLv36h/NCp2BEPgICpuepA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1753708149; x=
-	1753794549; bh=8VQLfGxIMzTaXhCqF3ku1pixL53MAWRkxgTF4dFTY60=; b=K
-	cQHOkphQpGMa+Jyl+dH+TLOvPbJJ+/oL7f5sB5Gggq/xM91McQnCLvirvLIq8nzI
-	QXaonZy6ZwrFEv1HNJB0dBseMGMiJQY+b4zb2wk175UxI+41Z/0mi94jH1zan8jA
-	2cVzs8AOrVBmij/9rTIT7lt/BN/lz9xIwWe+EAijq96nTt/PmfKa1+u5w2Y8OD4c
-	4nImMbYgTI4Tgns+yzWPfKG7/9y793MsT7gEJrhAK9BMqWcv+9L55XKuli2qvmT6
-	LxTrgTNs3igzFWnm1gaobtWRii1PVoOT+KaU6pgnhsMPBaUsuIn/KlBIPRGL/U9+
-	rL1f0qpYcVHacEG5Hnw8A==
-X-ME-Sender: <xms:dXaHaJmjGlGBc4D6Cz5TIE7vWjKQehKnpZnRx5aIgru6-CPwXsaxzQ>
-    <xme:dXaHaPYrSWQxMij-32E3b6-R99hUID3tsngKXqxDKrRHWFLs5ut9lLjRX0FbatUwd
-    sFg7Z60KdN-A9OfWw>
-X-ME-Received: <xmr:dXaHaMPJjiT9CX2u6Kz--Z3lhuSusb0Jt1dYnlMBuJLoFSwDxlg8kM2mrdYEsjrSIHY46vQDgwTCkO_vFGmeeyEKOxI25LjsV1Y-_lCA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvddvhecutefuodetggdotefrod
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1753710198; x=1753796598; bh=cwqUtUeosO2v+p+xD1dJBJb5chDXnJktYf+
+	fX7OEdZY=; b=W7F9sC4VgnQE4KPZ+ivzxRh6uZHQN+WYZN9ghREWe7V4XqbYCFM
+	auBk7fUnzxknyRAT60oR/91StBU7q6ZnGsNOKhh644T31qJpXhcIBrL1coLPS8oH
+	kqPLgumbBgjRiQYlU/9Sayjblhz/x7umTOPiwMXwvSgvqtV+E9OYlHHAbkWo04kg
+	8YROEvu9Qs4OSpLtn85VLlYYxy0K7jLjTNKHSrGpH43Qkjnt4EMpAe/tsx6ElSjf
+	A6wNfX+V8/tafIJc5vdZuE3LJnQQ+IaRCsA1FfQJwtO6HsPZBnTuS81PkvldvItI
+	0knmNltE9w1JksL0sozJqwG97nvS/i+MmkA==
+X-ME-Sender: <xms:dn6HaMd9i7YJdrED1cI8GQuHz9qelX7HecEmPud2wJukooQBJMZZGQ>
+    <xme:dn6HaGqynNoe0Tas2xPuDeMHvCMrTgbH1R73VWbezMF8WTzRC6pYS3fqbABudkfgZ
+    OupwkBsjG3KjweL-A>
+X-ME-Received: <xmr:dn6HaN-iqCYUaKw5XgOQNnLgUX7usDZaYfPbP4p8UQrE6NGYoesHZ5wxDaf-mU3sKCueH2darH6e5ggkJQWnWBDXyN51jhwnle6rZfI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtdefgdelvdefvdcutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecunecujfgurhephfffufggtgfgkfhfjgfvvefosehtkeertd
-    ertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhk
-    shdrihhmqeenucggtffrrghtthgvrhhnpeefhfeugeelheefjeektdffhedvhfdvteefgf
-    dtudffudevveetgeeuuedtkefhgeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehjhhgtrghrlhdtkedugeesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgv
-    fhhfrdhnvght
-X-ME-Proxy: <xmx:dXaHaMZPFqE0AuWk5oFyWljWRzYeA8V4K1S8l0kvpUjT81HGoVoPSQ>
-    <xmx:dXaHaC0pSi_nIloXJrPDFknh7ABNJPoCBir0C71Fh7qMIBp0v8YfHA>
-    <xmx:dXaHaKcJ-Ub9kdw9-a8-FdMusqoZZE4q-f2tE-Xqq5pH5i_B8jJnvw>
-    <xmx:dXaHaLEM1snLmOedUUiFf4vJ7jqkn9Dgn3c_wEhKwM0XsflYlA55dA>
-    <xmx:dXaHaIWq0lsRDJNT8k-KamD28OSOQaAp6xs1L6VqTIsOXiCGQInsG70U>
-Feedback-ID: i197146af:Fastmail
+    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
+    hrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucev
+    ucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtth
+    gvrhhnpeefveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieeg
+    ieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhm
+    thhpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplh
+    drshdrrhesfigvsgdruggvpdhrtghpthhtohepkhgvvhhinhdrsghrohgushhkhiesrghr
+    mhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
+    hpthhtoheprhgrvhhisehprhgvvhgrshdrughkpdhrtghpthhtohepghhithhsthgvrhes
+    phhosghogidrtghomh
+X-ME-Proxy: <xmx:dn6HaCeCK-ZgFiAaFWpHDj3Mtbmf0WHH0oP8R7r4_4FyTYoCC3Sk2Q>
+    <xmx:dn6HaHKTmXQG1QuhBfbfP60eOpk9VG-1vn5bADEQ91ZfiAGuDp6k1g>
+    <xmx:dn6HaCiq_HZFi3dr10g44B3zBcEWB84pxeet4ap6ETXOc2e12T8qxQ>
+    <xmx:dn6HaFRnIjaxsV-yZRc6eJiVIkYmDsnKKF-khQt_7wZWh3CLAlo7uw>
+    <xmx:dn6HaCi2fuxdvdf_yNuqd1aC8gkqZhx9OVlBV0T9cYjohXTCy0jhgo8A>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Jul 2025 09:09:08 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c8a36dac (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 28 Jul 2025 13:09:08 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 28 Jul 2025 15:08:48 +0200
-Subject: [PATCH 4/4] builtin/remote: only iterate through refs that are to
- be renamed
+ 28 Jul 2025 09:43:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,  Kevin Brodsky
+ <kevin.brodsky@arm.com>,
+  git@vger.kernel.org,  Rasmus Villemoes <ravi@prevas.dk>
+Subject: Re: [PATCH] git: show alias info only with lone -h
+In-Reply-To: <20250726081254.GA3042329@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 26 Jul 2025 04:12:54 -0400")
+References: <1c3a0463-36ee-4a2d-92e0-fac9c0bf77da@arm.com>
+	<a35dc2bf-015c-472d-9528-6763f7aac180@web.de>
+	<xmqqqzy33k1j.fsf@gitster.g>
+	<20250726081254.GA3042329@coredump.intra.peff.net>
+Date: Mon, 28 Jul 2025 06:43:16 -0700
+Message-ID: <xmqqfregzb0r.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20250728-pks-remote-rename-improvements-v1-4-f654f2b5c5ae@pks.im>
-References: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
-In-Reply-To: <20250728-pks-remote-rename-improvements-v1-0-f654f2b5c5ae@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, 
- Han Jiang <jhcarl0814@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain
 
-When renaming a remote we also need to rename all references
-accordingly. But while we only need to rename references that are
-contained in the "refs/remotes/$OLDNAME/" namespace, we end up using
-`refs_for_each_rawref()` that iterates through _all_ references. We know
-to exit early in the callback in case we see an irrelevant reference,
-but ultimately this is still a waste of compute as we knowingly iterate
-through references that we won't ever care about.
+Jeff King <peff@peff.net> writes:
 
-Improve this by introducing `refs_for_each_rawref_in()`, which knows to
-only iterate through (potentially broken) references in a given prefix.
+> Another interesting case: even for our own commands, the alias itself
+> may add extra arguments, which confuses things further. So:
+>
+>   $ git -c alias.gi='grep --cached' gi -h
+>   'gi' is aliased to 'grep --cached'
+>   fatal: no pattern given
+>
+> runs git-grep, but even though the user said only "-h" the alias added
+> another option which prevents the help-mode from activating.
+>
+> In this case it is not too harmful, but you can come up with
+> pathological cases where it actually runs a real command:
+>
+>   git -c alias.grep-for-foo='grep -e foo' grep-for-foo -h
+>
+> which runs a real grep.
 
-The following benchmark renames a remote with a single reference in a
-repository that has 100k unrelated references. This shows a sizeable
-improvement with the "files" backend:
+Yes, that is an excellent point to further argue that we should fix
+the help-alias case to stop there after describing the alias.  The
+user can choose to do "git grep -h" and look for "--cached" after
+learning that their 'git gi' is a shorthand for 'git grep --cached",
+but we shouldn't be doing so.
 
-    Benchmark 1: rename remote (refformat = files, revision = HEAD~)
-      Time (mean ± σ):      42.6 ms ±   0.9 ms    [User: 29.1 ms, System: 8.4 ms]
-      Range (min … max):    40.1 ms …  43.3 ms    10 runs
+> I guess one way to deal with it would be if the user runs "foo -h", and
+> alias.foo is "bar --other arguments", then we run just "bar -h",
+> dropping the extra arguments provided by the alias.
 
-    Benchmark 2: rename remote (refformat = files, revision = HEAD)
-      Time (mean ± σ):      31.7 ms ±   4.0 ms    [User: 19.6 ms, System: 6.9 ms]
-      Range (min … max):    27.1 ms …  36.0 ms    10 runs
+It is much simpler and saner to just stop after giving the alias
+expansion, isn't it?  Nobody can get hurt if we did so; doing
+anything else would be driving us into further corner cases that
+would either confuse or harm the users.
 
-    Summary
-      rename remote (refformat = files, revision = HEAD) ran
-        1.35 ± 0.17 times faster than rename remote (refformat = files, revision = HEAD~)
+> So IMHO the patch under discussion is a strict improvement, even though
+> it leaves many other questionable cases unsolved.
 
-The "reftable" backend shows roughly the same absolute improvement, but
-given that it's already significantly faster than the "files" backend
-this translates to a much larger relative improvement:
+That part I 100% agree with.  Let's accept the change, and then give
+further fixes in related areas.
 
-    Benchmark 1: rename remote (refformat = reftable, revision = HEAD~)
-      Time (mean ± σ):      18.2 ms ±   0.5 ms    [User: 12.7 ms, System: 3.0 ms]
-      Range (min … max):    17.3 ms …  21.4 ms    110 runs
+> I'd also be happy if on top we did:
+>
+>   1. When alias.foo="bar --options", turn "git foo -h" into "git bar
+>      -h", dropping "--options".
 
-    Benchmark 2: rename remote (refformat = reftable, revision = HEAD)
-      Time (mean ± σ):       8.8 ms ±   0.5 ms    [User: 3.8 ms, System: 2.9 ms]
-      Range (min … max):     7.5 ms …   9.9 ms    167 runs
+This smells like piling more voodoo magic on top, which I am not
+enthused.
 
-    Summary
-      rename remote (refformat = reftable, revision = HEAD) ran
-        2.07 ± 0.12 times faster than rename remote (refformat = reftable, revision = HEAD~)
+>   2. When alias.foo="!bar", report only the alias and do not run "bar"
+>      at all. The collateral damage here would be:
+>
+>         !git bar $(some_shell_magic_we_need)
+>
+>      but IMHO that is not all that bad. If we report the alias content,
+>      the user can probably figure out which "git help" to run next.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/remote.c | 15 +++++----------
- refs.c           |  8 +++++++-
- refs.h           |  2 ++
- 3 files changed, 14 insertions(+), 11 deletions(-)
+This I very much like, and further, I would prefer to do this for
+all aliases.
 
-diff --git a/builtin/remote.c b/builtin/remote.c
-index b1c55909184..11981f732bc 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -710,16 +710,8 @@ static int rename_one_ref(const char *old_refname, const char *referent,
- {
- 	struct rename_info *rename = cb_data;
- 	struct strbuf *new_referent = rename->buf1;
--	const char *ptr = old_refname;
- 	int error;
- 
--	if (!skip_prefix(ptr, "refs/remotes/", &ptr) ||
--	    !skip_prefix(ptr, rename->old_name, &ptr) ||
--	    !skip_prefix(ptr, "/", &ptr)) {
--		error = 0;
--		goto out;
--	}
--
- 	renamed_refname(rename, old_refname, rename->new_refname);
- 
- 	if (flags & REF_ISSYMREF) {
-@@ -976,8 +968,11 @@ static int mv(int argc, const char **argv, const char *prefix,
- 		rename.progress = start_delayed_progress(the_repository,
- 							 _("Renaming remote references"), 0);
- 
--	result = refs_for_each_rawref(get_main_ref_store(the_repository),
--				      rename_one_ref, &rename);
-+	strbuf_reset(&buf);
-+	strbuf_addf(&buf, "refs/remotes/%s/", rename.old_name);
-+
-+	result = refs_for_each_rawref_in(get_main_ref_store(the_repository), buf.buf,
-+					 rename_one_ref, &rename);
- 	if (result < 0)
- 		die(_("renaming references failed: %s"), rename.err->buf);
- 
-diff --git a/refs.c b/refs.c
-index b820c3908bd..861a0deb924 100644
---- a/refs.c
-+++ b/refs.c
-@@ -1840,7 +1840,13 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
- 
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data)
- {
--	return do_for_each_ref(refs, "", NULL, fn, 0,
-+	return refs_for_each_rawref_in(refs, "", fn, cb_data);
-+}
-+
-+int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-+			    each_ref_fn fn, void *cb_data)
-+{
-+	return do_for_each_ref(refs, prefix, NULL, fn, 0,
- 			       DO_FOR_EACH_INCLUDE_BROKEN, cb_data);
- }
- 
-diff --git a/refs.h b/refs.h
-index a39f873b1fe..9decd3126e3 100644
---- a/refs.h
-+++ b/refs.h
-@@ -428,6 +428,8 @@ int refs_for_each_namespaced_ref(struct ref_store *refs,
- 
- /* can be used to learn about broken ref and symref */
- int refs_for_each_rawref(struct ref_store *refs, each_ref_fn fn, void *cb_data);
-+int refs_for_each_rawref_in(struct ref_store *refs, const char *prefix,
-+			    each_ref_fn fn, void *cb_data);
- 
- /*
-  * Iterates over all refs including root refs, i.e. pseudorefs and HEAD.
-
--- 
-2.50.1.565.gc32cd1483b.dirty
-
+Thanks.
